@@ -46,8 +46,6 @@
 	if(istype(owner,/mob/living/carbon) )
 		owner.death(0)
 		owner.Drain()
-
-
 /obj/item/organ/internal/augment/lingcore/proc/do_backup()
 	if(owner && owner.stat != DEAD && !is_broken() && owner.mind)
 		languages = owner.languages.Copy()
@@ -58,10 +56,7 @@
 
 
 /obj/item/organ/internal/augment/lingcore/proc/overwrite()
-	if (!stasiscount)
-		to_chat(owner, SPAN_WARNING("Our core is unresponsive. There is nothing we can do, anymore."))
-		return
-	if(owner.mind && owner.ckey) // Someone is already in this body!
+	if(owner.mind && owner.ckey) //Someone is already in this body!
 		if(owner.mind == backup) // Oh, it's the same mind in the backup. Someone must've spammed the 'Start Procedure' button in a panic.
 			return
 		owner.visible_message(SPAN_DANGER("\The [owner] spasms and seizes!"))

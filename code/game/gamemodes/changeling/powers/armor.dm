@@ -126,7 +126,6 @@
 		)
 	siemens_coefficient = 0.3
 	can_breach = FALSE
-
 	flags_inv = BLOCKHAIR | HIDETAIL
 	//max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	slowdown_general = 0
@@ -156,7 +155,6 @@
 		bomb = ARMOR_BOMB_PADDED,
 		)
 	siemens_coefficient = 0.3
-
 	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECTION_TEMPERATURE
 	flags_inv = BLOCKHAIR | HIDETAIL | HIDEFACE
 
@@ -166,14 +164,12 @@
 	icon_state = "lingchameleon"
 	action_button_name = "Toggle Talons"
 
-
 /obj/item/clothing/gloves/combat/changeling //Combined insulated/fireproof gloves
 	name = "chitinous gauntlets"
 	desc = "Very resilient gauntlets made out of black chitin.  It looks very durable, and can probably resist electrical shock in addition to the elements."
 	icon_state = "lingarmorgloves"
 	armor = list(melee = 75, bullet = 60, laser = 60,energy = 60, bomb = 60, bio = 0, rad = 0) //No idea if glove armor gets checked
 	siemens_coefficient = 0
-
 
 /obj/item/clothing/shoes/boots/combat/changeling //Noslips
 	name = "chitinous boots"
@@ -188,7 +184,6 @@
 		bomb = ARMOR_BOMB_PADDED,
 		)
 	siemens_coefficient = 0.3
-
 	cold_protection = FEET
 	min_cold_protection_temperature = SHOE_MIN_COLD_PROTECTION_TEMPERATURE
 	heat_protection = FEET

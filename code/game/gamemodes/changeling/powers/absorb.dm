@@ -23,7 +23,6 @@
 			to_chat(src,SPAN_INFO("We will no longer kill creatures whose DNA we sample."))
 			src.mind.changeling.absorbing_lethally = ABSORB_NONLETHAL
 			return
-
 /mob/living/proc/changeling_absorb_dna(mob/living/carbon/M)
 	set category = "Changeling"
 	set name = "Absorb DNA"

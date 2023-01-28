@@ -126,6 +126,7 @@
 	creator = null
 	return ..()
 
+
 /obj/item/melee/changeling/Process()
 	var/mob/living/carbon/human/H = creator
 	if ( H.handcuffed || (H.stat != CONSCIOUS))
