@@ -24,7 +24,7 @@
 	..()
 	update_nearby_tiles()
 
-/obj/machinery/door/window/proc/toggle()
+/obj/machinery/door/window/proc/toggle_tint()
 	if(!polarized)
 		return
 	if(tinted)
@@ -228,7 +228,7 @@
 		if (anchored)
 			playsound(loc, 'sound/effects/pop.ogg', 75, 1)
 			to_chat(user, SPAN_NOTICE("You toggle \the [src]'s tinting."))
-			toggle()
+			toggle_tint()
 		else
 			var/response = input(user, "New Window ID:", name, id) as null | text
 			if (isnull(response) || user.incapacitated() || !user.Adjacent(src) || user.get_active_hand() != I)
@@ -242,7 +242,7 @@
 			return
 		new /obj/item/stack/cable_coil(get_turf(user), 1)
 		if (tinted)
-			toggle()
+			toggle_tint()
 		polarized = FALSE
 		id = null
 		playsound(loc, 'sound/items/Wirecutter.ogg', 75, 1)
