@@ -4833,7 +4833,9 @@
 	id_tag = "infimary_window_lockdown";
 	name = "Infirmary Window Shutters"
 	},
-/obj/effect/wallframe_spawn/reinforced/polarized/full,
+/obj/effect/wallframe_spawn/reinforced/polarized/full{
+	id = "cmo_windows"
+	},
 /turf/simulated/floor/plating,
 /area/crew_quarters/heads/office/cmo)
 "ajm" = (
@@ -11536,7 +11538,9 @@
 	},
 /obj/machinery/door/window/brigdoor/eastright{
 	id_tag = null;
-	req_access = newlist()
+	req_access = newlist();
+	polarized = 1;
+	id = "iaaleft"
 	},
 /turf/simulated/floor/tiled/dark,
 /area/crew_quarters/heads/office/iaa)
@@ -11552,7 +11556,9 @@
 	},
 /obj/machinery/door/window/brigdoor/westleft{
 	id_tag = null;
-	req_access = newlist()
+	req_access = newlist();
+	polarized = 1;
+	id = "iaaright"
 	},
 /turf/simulated/floor/tiled/dark,
 /area/crew_quarters/heads/office/iaa)
@@ -14283,7 +14289,9 @@
 	id_tag = "infimary_window_lockdown";
 	name = "Infirmary Window Shutters"
 	},
-/obj/effect/wallframe_spawn/reinforced/polarized/full,
+/obj/effect/wallframe_spawn/reinforced/polarized/full{
+	id = "cmo_windows"
+	},
 /turf/simulated/floor/plating,
 /area/crew_quarters/heads/office/cmo)
 "aAo" = (
@@ -14310,7 +14318,9 @@
 /obj/machinery/door/firedoor{
 	dir = 4
 	},
-/obj/effect/wallframe_spawn/reinforced/polarized/full,
+/obj/effect/wallframe_spawn/reinforced/polarized/full{
+	id = "mental_health_windows"
+	},
 /turf/simulated/floor/plating,
 /area/medical/mentalhealth)
 "aAu" = (
@@ -18255,7 +18265,9 @@
 /obj/machinery/door/firedoor{
 	dir = 4
 	},
-/obj/effect/wallframe_spawn/reinforced/polarized/full,
+/obj/effect/wallframe_spawn/reinforced/polarized/full{
+	id = "mental_health_windows"
+	},
 /turf/simulated/floor/plating,
 /area/medical/mentalhealth)
 "aFL" = (
@@ -19138,7 +19150,9 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/obj/effect/wallframe_spawn/reinforced/polarized/full,
+/obj/effect/wallframe_spawn/reinforced/polarized/full{
+	id = "rd_windows"
+	},
 /turf/simulated/floor/plating,
 /area/crew_quarters/heads/office/rd)
 "aGY" = (
@@ -19155,7 +19169,9 @@
 	opacity = 0
 	},
 /obj/machinery/door/firedoor,
-/obj/effect/wallframe_spawn/reinforced/polarized/full,
+/obj/effect/wallframe_spawn/reinforced/polarized/full{
+	id = "rd_windows"
+	},
 /turf/simulated/floor/plating,
 /area/crew_quarters/heads/office/rd)
 "aGZ" = (
@@ -19672,7 +19688,9 @@
 /obj/machinery/door/window/northleft{
 	dir = 8;
 	name = "Security Sergeant's Desk";
-	req_access = newlist()
+	req_access = newlist();
+	polarized = 1;
+	id = "bo_windows"
 	},
 /obj/machinery/door/blast/shutters{
 	dir = 4;
@@ -20998,7 +21016,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/effect/wallframe_spawn/reinforced/polarized/full,
+/obj/effect/wallframe_spawn/reinforced/polarized/full{
+	id = "hop_windows"
+	},
 /turf/simulated/floor/plating,
 /area/crew_quarters/heads/office/hop)
 "aJD" = (
@@ -21012,7 +21032,9 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/effect/wallframe_spawn/reinforced/polarized/full,
+/obj/effect/wallframe_spawn/reinforced/polarized/full{
+	id = "hop_windows"
+	},
 /turf/simulated/floor/plating,
 /area/crew_quarters/heads/office/hop)
 "aJE" = (
@@ -21021,13 +21043,17 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/effect/wallframe_spawn/reinforced/polarized/full,
+/obj/effect/wallframe_spawn/reinforced/polarized/full{
+	id = "hop_windows"
+	},
 /turf/simulated/floor/plating,
 /area/crew_quarters/heads/office/hop)
 "aJF" = (
 /obj/machinery/door/window/southleft{
 	name = "HoP's Desk";
-	req_access = newlist()
+	req_access = newlist();
+	id = "hop_windows";
+	polarized = 1
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/blast/shutters{
@@ -21372,7 +21398,9 @@
 	opacity = 0
 	},
 /obj/machinery/door/firedoor,
-/obj/effect/wallframe_spawn/reinforced/polarized/full,
+/obj/effect/wallframe_spawn/reinforced/polarized/full{
+	id = "rd_windows"
+	},
 /turf/simulated/floor/plating,
 /area/crew_quarters/heads/office/rd)
 "aKh" = (
@@ -24336,6 +24364,9 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/wallframe_spawn/reinforced/polarized/full{
+	id = "rd_windows"
+	},
 /turf/simulated/floor/plating,
 /area/crew_quarters/heads/office/rd)
 "aOu" = (
