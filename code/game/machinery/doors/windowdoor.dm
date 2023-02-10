@@ -228,7 +228,7 @@
 		if (anchored)
 			playsound(loc, 'sound/effects/pop.ogg', 75, 1)
 			to_chat(user, SPAN_NOTICE("You toggle \the [src]'s tinting."))
-			toggle_tint()
+			toggle()
 		else
 			var/response = input(user, "New Window ID:", name, id) as null | text
 			if (isnull(response) || user.incapacitated() || !user.Adjacent(src) || user.get_active_hand() != I)
@@ -242,7 +242,7 @@
 			return
 		new /obj/item/stack/cable_coil(get_turf(user), 1)
 		if (tinted)
-			toggle_tint()
+			toggle()
 		polarized = FALSE
 		id = null
 		playsound(loc, 'sound/items/Wirecutter.ogg', 75, 1)
@@ -308,7 +308,6 @@
 	icon = 'icons/obj/doors/windoor.dmi'
 	icon_state = "leftsecure"
 	base_state = "leftsecure"
-	var/id = null
 	health_max = 300
 	pry_mod = 0.65
 
