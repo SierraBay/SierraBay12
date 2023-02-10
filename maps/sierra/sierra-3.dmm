@@ -19702,9 +19702,8 @@
 	id_tag = "security_lockdown";
 	name = "Security Department Lockdown"
 	},
-/obj/effect/wallframe_spawn/reinforced/polarized/full{
-	id = "bo_windows"
-	},
+/obj/structure/wall_frame/standard,
+/obj/structure/table/wallf/steel,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/security/sierra/sergeant)
 "aHO" = (
@@ -21064,7 +21063,8 @@
 	name = "HoP Desk's Shutters";
 	opacity = 0
 	},
-/obj/structure/table/standard,
+/obj/structure/wall_frame/standard,
+/obj/structure/table/wallf,
 /turf/simulated/floor/plating,
 /area/crew_quarters/heads/office/hop)
 "aJG" = (
@@ -21906,13 +21906,15 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/door/airlock/security{
+	id_tag = "wardoor";
+	name = "Warden";
+	req_access = newlist()
+	},
 /obj/machinery/door/blast/regular/open{
 	dir = 4;
 	id_tag = "security_lockdown";
 	name = "Security Department Lockdown"
-	},
-/obj/effect/wallframe_spawn/reinforced/polarized/full{
-	id = "bo_windows"
 	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/security/sierra/sergeant)
@@ -22421,6 +22423,8 @@
 /obj/effect/floor_decal/techfloor{
 	dir = 1
 	},
+/obj/structure/wall_frame/standard,
+/obj/structure/table/wallf,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/rnd/development)
 "aLy" = (
@@ -36717,6 +36721,8 @@
 /obj/machinery/door/window/northleft{
 	name = "Chemisty Desk"
 	},
+/obj/structure/wall_frame/standard,
+/obj/structure/table/wallf,
 /turf/simulated/floor/tiled/white/monotile,
 /area/medical/chemistry)
 "gkj" = (
