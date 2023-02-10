@@ -4011,7 +4011,9 @@
 /turf/simulated/floor/tiled/dark/monotile,
 /area/medical/morgue)
 "ahQ" = (
-/obj/effect/wallframe_spawn/reinforced/polarized/full,
+/obj/effect/wallframe_spawn/reinforced/polarized/full{
+	id = "infimary_staging"
+	},
 /turf/simulated/floor/plating,
 /area/medical/staging)
 "ahR" = (
@@ -35685,6 +35687,12 @@
 	},
 /turf/simulated/floor/bluegrid,
 /area/turret_protected/ai)
+"cBs" = (
+/obj/effect/wallframe_spawn/reinforced/polarized/full{
+	id = "infimary_staging_patients"
+	},
+/turf/simulated/floor/plating,
+/area/medical/staging)
 "cGp" = (
 /obj/item/beartrap{
 	anchored = 1;
@@ -37667,7 +37675,9 @@
 	id_tag = "infimary_staging_lockdown";
 	name = "Infirmary Staging Shutters"
 	},
-/obj/effect/wallframe_spawn/reinforced/polarized/full,
+/obj/effect/wallframe_spawn/reinforced/polarized/full{
+	id = "infimary_staging"
+	},
 /turf/simulated/floor/plating,
 /area/medical/staging)
 "iWD" = (
@@ -40331,7 +40341,9 @@
 	name = "Infirmary Staging Shutters"
 	},
 /obj/structure/cable/cyan,
-/obj/effect/wallframe_spawn/reinforced/polarized/full,
+/obj/effect/wallframe_spawn/reinforced/polarized/full{
+	id = "infimary_staging"
+	},
 /turf/simulated/floor/plating,
 /area/medical/staging)
 "sdp" = (
@@ -62635,7 +62647,7 @@ agM
 agU
 ahp
 ahr
-ahQ
+cBs
 aiF
 ajo
 ahr
