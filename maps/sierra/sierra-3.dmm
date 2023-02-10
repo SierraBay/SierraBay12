@@ -19205,6 +19205,10 @@
 /obj/effect/floor_decal/corner/purple/border{
 	dir = 8
 	},
+/obj/structure/wall_frame/standard,
+/obj/structure/table/wallf{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/white,
 /area/assembly/robotics)
 "aHb" = (
@@ -36722,7 +36726,9 @@
 	name = "Chemisty Desk"
 	},
 /obj/structure/wall_frame/standard,
-/obj/structure/table/wallf,
+/obj/structure/table/wallf{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/white/monotile,
 /area/medical/chemistry)
 "gkj" = (
