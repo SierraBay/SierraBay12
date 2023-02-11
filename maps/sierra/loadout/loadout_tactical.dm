@@ -11,13 +11,6 @@
 
 /datum/gear/tactical/helm_covers
 	allowed_roles = ARMORED_ROLES
-
-/datum/gear/tactical/armor_pouches
-	allowed_roles = ARMORED_ROLES
-
-/datum/gear/tactical/large_pouches
-	allowed_roles = ARMORED_ROLES
-
 /datum/gear/tactical/security_belt
 	display_name = "security belt"
 	path = /obj/item/storage/belt/security
