@@ -7751,10 +7751,6 @@
 "blC" = (
 /turf/simulated/floor/holofloor/beach/water,
 /area/holodeck/source_temple)
-"blE" = (
-/obj/effect/floor_decal/industrial/hatch,
-/turf/unsimulated/floor/reinforced,
-/area/thruster/d1port)
 "blK" = (
 /obj/effect/floor_decal/stoneborder/corner{
 	dir = 8
@@ -9713,10 +9709,6 @@
 	icon_state = "steel"
 	},
 /area/centcom)
-"fRb" = (
-/obj/effect/paint/hull,
-/turf/simulated/wall/r_titanium,
-/area/thruster/d1port)
 "fRh" = (
 /obj/effect/floor_decal/borderfloorblack{
 	dir = 6
@@ -9914,10 +9906,6 @@
 	icon_state = "dark"
 	},
 /area/tdome/testing)
-"gqF" = (
-/obj/effect/decal/cleanable/filth,
-/turf/unsimulated/floor/techfloor,
-/area/thruster/d1port)
 "gsX" = (
 /obj/effect/decal/cleanable/blood/oil,
 /turf/unsimulated/floor/techfloor,
@@ -10263,9 +10251,6 @@
 	icon_state = "white"
 	},
 /area/centcom/living)
-"gWq" = (
-/turf/simulated/wall/r_wall/prepainted,
-/area/thruster/d1port)
 "gYv" = (
 /obj/effect/floor_decal/borderfloor,
 /obj/structure/bed/chair/office/comfy/blue{
@@ -10342,21 +10327,6 @@
 	icon_state = "white"
 	},
 /area/centcom/living)
-"hid" = (
-/obj/effect/floor_decal/borderfloorblack{
-	dir = 8
-	},
-/obj/effect/floor_decal/corner/red/border{
-	dir = 8
-	},
-/obj/effect/floor_decal/borderfloorblack/corner2{
-	dir = 8
-	},
-/obj/effect/floor_decal/corner/red/bordercorner2{
-	dir = 8
-	},
-/turf/unsimulated/floor/techfloor,
-/area/thruster/d1port)
 "hjD" = (
 /obj/structure/disposalpipe/segment{
 	dir = 1;
@@ -16461,9 +16431,6 @@
 	name = "carpet"
 	},
 /area/centcom/living)
-"tNR" = (
-/turf/unsimulated/floor/reinforced,
-/area/thruster/d1port)
 "tRb" = (
 /obj/effect/floor_decal/techfloor/corner{
 	dir = 8
@@ -32152,7 +32119,7 @@ ahO
 akH
 ath
 alZ
-blE
+auo
 aRV
 aRV
 anY
@@ -33362,7 +33329,7 @@ aas
 aoc
 apu
 asY
-fRb
+aas
 aas
 aRV
 aRV
@@ -33967,7 +33934,7 @@ aan
 aas
 aas
 aas
-fRb
+aas
 aas
 aan
 aus
@@ -34168,7 +34135,7 @@ aRV
 aRV
 aRV
 aRV
-tNR
+aRV
 aRV
 aRV
 aRV
@@ -34370,7 +34337,7 @@ aag
 aag
 akE
 akE
-gWq
+aag
 aag
 aag
 aag
@@ -34572,7 +34539,7 @@ ame
 aiu
 ane
 ane
-hid
+aoP
 ame
 ame
 ame
@@ -34773,7 +34740,7 @@ lZK
 ane
 ane
 ane
-gqF
+lZK
 ane
 ane
 ane
