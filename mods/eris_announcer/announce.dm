@@ -109,7 +109,7 @@ var/global/command_name
 	GLOB.global_announcer.autosay(SPAN_SIZE(3,"<span class='warning'>[command_name()] [message_title]:</span> [message]"), ANNOUNSER_NAME)
 
 /datum/announcement/priority/security/Message(message as text, message_title as text)
-	GLOB.global_announcer.autosay("<font size=3><font color='red'> <span>[message_title]:</span> [message]</font>", ANNOUNSER_NAME)
+	GLOB.global_announcer.autosay(SPAN_SIZE(3,"<font color='red'> <span>[message_title]:</span> [message]</font>"), ANNOUNSER_NAME)
 
 
 /proc/AnnounceArrival(mob/living/carbon/human/character, datum/job/job, join_message)
