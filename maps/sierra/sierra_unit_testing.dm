@@ -36,7 +36,11 @@
 		/area/vacant/infirmary = NO_SCRUBBER|NO_VENT,
 		/area/vacant/monitoring = NO_SCRUBBER|NO_VENT,
 		/area/rnd/xenobiology/atmos  = NO_SCRUBBER|NO_VENT,
-		/area/shield/seconddeck = NO_SCRUBBER|NO_VENT,
+		/area/rnd/xenobiology/cell_1 = NO_APC,
+		/area/rnd/xenobiology/cell_2 = NO_APC,
+		/area/rnd/xenobiology/cell_3 = NO_APC,
+		/area/rnd/xenobiology/cell_4 = NO_APC,
+		/area/hydroponics/storage = NO_SCRUBBER|NO_VENT
 	)
 
 	area_coherency_test_exempt_areas = list(
