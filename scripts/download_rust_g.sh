@@ -12,8 +12,8 @@ function find_code {
     fi
     cd $CODEPATH
     if [[ ! -d ./code ]]
-    then err "invalid CODEPATH: $PWD"
-    else msg "found code at $PWD"
+    then echo "invalid CODEPATH: $PWD"
+    else echo "found code at $PWD"
     fi
 }
 
