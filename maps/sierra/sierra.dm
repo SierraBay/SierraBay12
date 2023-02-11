@@ -141,7 +141,6 @@
 	#include "../away/slavers/slavers_base.dm"
 	#include "../away/voxship/voxship.dm"
 	#include "../event/iccgn_ship/icgnv_hound.dm"
-	#include "../../mods/eris_announcer/_eris_announcer.dme"
 	#include "../../mods/species/resomi/_resomi.dme"
 	#include "../../mods/species/tajara/_tajara.dme"
 	#include "../../mods/sofa/_sofa.dme"
