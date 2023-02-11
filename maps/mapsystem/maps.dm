@@ -223,6 +223,12 @@ var/global/const/MAP_HAS_RANK = 2		//Rank system, also togglable
 
 	var/maint_all_access = FALSE
 
+	// Security state
+	var/list/high_secure_areas
+	var/list/secure_areas
+	var/lockdown = FALSE
+	var/lockdown_support = FALSE
+
 	var/base_lobby_html
 
 /datum/map/New()
