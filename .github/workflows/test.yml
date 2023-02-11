@@ -111,7 +111,7 @@ jobs:
       #     wget https://raw.githubusercontent.com/DiscordHooks/github-actions-discord-webhook/master/send.sh
       #     chmod +x send.sh
       #     ./send.sh failure $WEBHOOK_URL
-  TorchMap:
+  SierraMap:
     runs-on: ubuntu-latest
     needs:
     - PreFlight
@@ -127,7 +127,7 @@ jobs:
       - name: Run Tests
         env:
           TEST: MAP
-          MAP_PATH: torch
+          MAP_PATH: sierra
         run: test/run-test.sh
       # - name: Run Failure Webhook
       #   env:
