@@ -485,7 +485,7 @@ var/global/const/MAP_HAS_RANK = 2		//Rank system, also togglable
 /datum/map/proc/unbolt_saferooms()
 	return // overriden by torch
 
-/datum/map/proc/lockdown(var/force)
+/datum/map/proc/lockdown(force)
 	lockdown = !lockdown
 	if(force && force == "close")
 		lockdown = TRUE
