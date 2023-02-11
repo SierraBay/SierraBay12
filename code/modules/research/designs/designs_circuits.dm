@@ -102,7 +102,7 @@
 	build_path = /obj/item/stock_parts/circuitboard/roboprinter
 	sort_string = "FAGAK"
 
-/datum/design/circuit/roboprinter
+/datum/design/circuit/bioprinter
 	name = "synthetic organ fabricator"
 	id = "bioprinter"
 	req_tech = list(TECH_BIO = 6, TECH_DATA = 3)
