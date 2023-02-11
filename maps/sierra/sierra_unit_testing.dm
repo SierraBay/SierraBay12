@@ -16,7 +16,6 @@
 		/area/maintenance/abandoned_hydroponics = 0,
 		/area/maintenance/firstdeck/aftport = 0,
 		/area/maintenance/abandoned_common = 0,
-		/area/shield = NO_SCRUBBER|NO_VENT,
 		/area/shuttle = NO_SCRUBBER|NO_VENT|NO_APC,
 		/area/shuttle/petrov = 0,
 		/area/solar = NO_SCRUBBER|NO_VENT|NO_APC,
