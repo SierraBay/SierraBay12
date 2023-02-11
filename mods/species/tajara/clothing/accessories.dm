@@ -282,6 +282,8 @@
 	desc = "A lengthy coat made of wooly, but sturdy and hydrophobic material. Designed mostly to protect against strong wind and other harsh weather conditions on Ahdomai, when having fur is not enough. There is a weird U-shape hole on the back of the coat for tail!"
 	icon_state = "taj_overcoat"
 	item_state = "taj_overcoat"
+	icon = 'mods/species/tajara/icons/suit.dmi'
+	item_icons = list(slot_wear_suit_str = 'mods/species/tajara/icons/onmob_suit.dmi')
 	//species_restricted = list(SPECIES_TAJARA)
 
 /datum/gear/uniform/tajara/taj_new_fatigues
