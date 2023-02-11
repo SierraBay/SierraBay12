@@ -45,9 +45,6 @@
 /datum/gear/accessory/stethoscope
 	allowed_roles = STERILE_ROLES
 
-/datum/gear/head/kittyears
-	allowed_roles = RESTRICTED_ROLES
-
 /datum/gear/accessory/ftupin
 	allowed_roles = list(/datum/job/assistant)
 	allowed_branches = list(/datum/mil_branch/civilian)
