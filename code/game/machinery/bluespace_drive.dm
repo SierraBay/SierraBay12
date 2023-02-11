@@ -36,7 +36,7 @@
 	. = ..()
 	drive_sound = GLOB.sound_player.PlayLoopingSound(src, "\ref[src]", 'sound/machines/BSD_idle.ogg', 50, 7)
 	particles = new /particles/bluespace_torus
-	set_light(1, 5, 15, 10, COLOR_CYAN)
+	set_light(15, 1, COLOR_CYAN)
 	update_icon()
 
 

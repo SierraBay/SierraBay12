@@ -710,12 +710,12 @@ About the new airlock wires panel:
 			if(AIRLOCK_CLOSED)
 				if(lights && locked)
 					lights_overlay = overlay_image(bolts_file, plane = EFFECTS_ABOVE_LIGHTING_PLANE, layer = ABOVE_LIGHTING_LAYER)
-					set_light(0.25, 0.1, 1, 2, COLOR_RED_LIGHT)
+					set_light(2, 0.75, COLOR_RED_LIGHT)
 
 			if(AIRLOCK_DENY)
 				if(lights)
 					lights_overlay = overlay_image(deny_file, plane = EFFECTS_ABOVE_LIGHTING_PLANE, layer = ABOVE_LIGHTING_LAYER)
-					set_light(0.25, 0.1, 1, 2, COLOR_RED_LIGHT)
+					set_light(2, 0.75, COLOR_RED_LIGHT)
 
 			if(AIRLOCK_EMAG)
 				sparks_overlay = overlay_image(emag_file, plane = EFFECTS_ABOVE_LIGHTING_PLANE, layer = ABOVE_LIGHTING_LAYER)
@@ -723,12 +723,12 @@ About the new airlock wires panel:
 			if(AIRLOCK_CLOSING)
 				if(lights)
 					lights_overlay = overlay_image(lights_file, plane = EFFECTS_ABOVE_LIGHTING_PLANE, layer = ABOVE_LIGHTING_LAYER)
-					set_light(0.25, 0.1, 1, 2, COLOR_LIME)
+					set_light(2, 0.75, COLOR_LIME)
 
 			if(AIRLOCK_OPENING)
 				if(lights)
 					lights_overlay = overlay_image(lights_file, plane = EFFECTS_ABOVE_LIGHTING_PLANE, layer = ABOVE_LIGHTING_LAYER)
-					set_light(0.25, 0.1, 1, 2, COLOR_LIME)
+					set_light(2, 0.75, COLOR_LIME)
 
 		if(MACHINE_IS_BROKEN(src))
 			damage_overlay = overlay_image(sparks_broken_file, plane = EFFECTS_ABOVE_LIGHTING_PLANE, layer = ABOVE_LIGHTING_LAYER)

@@ -319,3 +319,5 @@
 
 // Helper macro for generating stringified name text for IDs located inside objects, i.e. PDAs or wallets. Used for feedback and interaction messages.
 #define GET_ID_NAME(ID, HOLDER) (ID == HOLDER ? "\the [ID]" : "\the [ID] in \the [HOLDER]")
+
+#define Z_ALL_TURFS(Z) block(locate(1, 1, Z), locate(world.maxx, world.maxy, Z))

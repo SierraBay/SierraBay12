@@ -133,7 +133,7 @@
 		return
 	if(sensors && sensors.use_power && sensors.powered())
 		var/sensor_range = round(sensors.range*1.5) + 1
-		linked.set_light(1, sensor_range, sensor_range+1)
+		linked.set_light(sensor_range+1, 1,)
 	else
 		linked.set_light(0)
 

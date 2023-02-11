@@ -42,7 +42,7 @@
 	if(user)
 		playsound(user, 'sound/weapons/saberon.ogg', 50, 1)
 		to_chat(user, SPAN_NOTICE("\The [src] is now energised."))
-	set_light(0.8, 1, 2, 4, lighting_color)
+	set_light(2, 0.8, lighting_color)
 
 /obj/item/melee/energy/proc/deactivate(mob/living/user)
 	if(!active)

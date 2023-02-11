@@ -91,8 +91,8 @@
 	if(eyeobj)
 		eyeobj.possess(src)
 
-	l_general = new()
-	client.screen += l_general
+	darksight = new()
+	client.screen += darksight
 
 	CreateRenderers()
 
