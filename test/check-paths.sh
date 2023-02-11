@@ -16,7 +16,7 @@ exactly() { # exactly N name search [mode] [filter]
 	if [ $num -eq $count ]; then
 		echo "$num $name"
 	else
-		echo "$(tput setaf 9)$num $name (expecting exactly $count)$(tput sgr0)"
+		echo "[1;31m$num $name (expecting exactly $count)[0m"
 		FAILED=1
 	fi
 }
