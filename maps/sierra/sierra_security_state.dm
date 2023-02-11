@@ -14,12 +14,12 @@
 #define PSI_IMPLANT_DISABLED  "Disabled"
 #endif
 
-/datum/map/proc/area_lockdown(var/a)
+/datum/map/proc/area_lockdown(a)
 	var/area/area = get_area_name(a)
 	for(var/obj/machinery/door/airlock/airlock in area)
 		airlock.command("secure_close")
 
-/datum/map/proc/area_unlock(var/a)
+/datum/map/proc/area_unlock(a)
 	var/area/area = get_area_name(a)
 	for(var/obj/machinery/door/airlock/airlock in area)
 		airlock.command("unlock")
@@ -44,7 +44,7 @@
 		for(var/area in high_secure_areas)
 			area_unlock(area)
 
-/datum/map/lockdown(var/force)
+/datum/map/lockdown(force)
 	. = ..()
 
 	if(!lockdown)
