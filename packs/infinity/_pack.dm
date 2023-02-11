@@ -1,3 +1,6 @@
+#ifndef CONTENT_PACK_INFINITY
+#define CONTENT_PACK_INFINITY
+
 //Clothing
 #include "clothing\head\berets.dm"
 #include "clothing\head\head.dm"
