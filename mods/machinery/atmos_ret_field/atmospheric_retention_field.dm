@@ -112,7 +112,7 @@
 	. = ..()
 	generate_field()
 
-/obj/machinery/atmospheric_field_generator/update_icon()
+/obj/machinery/atmospheric_field_generator/on_update_icon()
 	if(MACHINE_IS_BROKEN(src))
 		icon_state = "arfg_broken"
 	else if(hatch_open && wires_intact)
@@ -217,7 +217,7 @@
 	light_max_bright = 0.5
 	light_color = "#ffffff"
 
-/obj/structure/atmospheric_retention_field/update_icon()
+/obj/structure/atmospheric_retention_field/on_update_icon()
 	overlays.Cut()
 	var/list/dirs = list()
 	for(var/obj/structure/atmospheric_retention_field/F in orange(src,1))

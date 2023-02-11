@@ -305,7 +305,7 @@ Keeping them simple for now, just spawning with basic EC uniforms, and pretty mu
 	uniform = /obj/item/clothing/under/rank/psych
 	id_types = list(/obj/item/card/id/sierra/crew/medical/counselor)
 
-/singleton/hierarchy/outfit/job/sierra/crew/medical/counselor/equip_ids(var/mob/living/carbon/human/H, var/rank, var/assignment, var/equip_adjustments)
+/singleton/hierarchy/outfit/job/sierra/crew/medical/counselor/equip_ids(mob/living/carbon/human/H, rank, assignment, equip_adjustments)
 	. = ..()
 	var/obj/item/card/id/foundation_civilian/regis_card = new
 	if(rank)

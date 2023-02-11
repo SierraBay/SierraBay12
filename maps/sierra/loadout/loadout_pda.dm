@@ -29,7 +29,7 @@
 	pdas["black (mercs)"]           = /obj/item/modular_computer/pda/syndicate
 	gear_tweaks += new/datum/gear_tweak/path(pdas)
 
-/datum/gear/utility/pda/spawn_on_mob(var/mob/living/carbon/human/H, var/metadata)
+/datum/gear/utility/pda/spawn_on_mob(mob/living/carbon/human/H, metadata)
 	var/obj/item/modular_computer/pda/item = spawn_item(H, H, metadata)
 	var/obj/item/card/id = H.GetIdCard()
 	if(id)
