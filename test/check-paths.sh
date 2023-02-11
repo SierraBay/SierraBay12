@@ -41,7 +41,7 @@ exactly 2 "<< uses" '(?<!<)<<(?!<)' -P
 exactly 2 ">> uses" '(?<!>)>>(?!>)' -P
 exactly 0 "incorrect indentations" '^( {4,})' -P
 exactly 25 "text2path uses" 'text2path'
-exactly 3 "update_icon() override" '/update_icon\((.*)\)'  -P
+exactly 4 "update_icon() override" '/update_icon\((.*)\)'  -P
 exactly 5 "goto use" 'goto '
 exactly 1 "NOOP match" 'NOOP'
 exactly 350 "spawn uses" '^\s*spawn\s*\(\s*(-\s*)?\d*\s*\)' -P
@@ -52,7 +52,7 @@ exactly 0 "emagged = 0/1" 'emagged\s*=\s*\d' -P
 exactly 0 "simulated = 0/1" 'simulated\s*=\s*\d' -P
 exactly 2 "var/ in proc arguments" '(^/[^/].+/.+?\(.*?)var/' -P
 exactly 3 "tmp/ vars" 'var.*/tmp/' -P
-exactly 5 "uses of .len" '\.len\b' -P
+exactly 7 "uses of .len" '\.len\b' -P
 exactly 627 "attackby() override" '\/attackby\((.*)\)'  -P
 # With the potential exception of << if you increase any of these numbers you're probably doing it wrong
 

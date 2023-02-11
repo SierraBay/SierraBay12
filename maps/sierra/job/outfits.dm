@@ -534,7 +534,7 @@ Keeping them simple for now, just spawning with basic EC uniforms, and pretty mu
 	l_pocket = /obj/item/wrench
 	r_pocket = /obj/item/crowbar/prybar
 
-/singleton/hierarchy/outfit/job/sierra/stowaway/post_equip(var/mob/living/carbon/human/H)
+/singleton/hierarchy/outfit/job/sierra/stowaway/post_equip(mob/living/carbon/human/H)
 	..()
 	var/obj/item/card/id/sierra/stowaway/ID = new(H.loc)
 	ID.registered_name = H.real_name
