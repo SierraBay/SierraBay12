@@ -111,7 +111,7 @@
 	plushes["lizard plush"] = /obj/item/toy/plushie/lizard
 	plushes["spider plush"] = /obj/item/toy/plushie/spider
 	plushes["farwa plush"] = /obj/item/toy/plushie/farwa
-	#ifdef CONTENT_PACK_RESOMI
+	#ifdef MODPACK_RESOMI
 		plushes["resomi plush"]= /obj/item/toy/plushie/resomi
 	#endif
 	plushes["golden carp plush"] = /obj/item/toy/plushie/carp_gold
