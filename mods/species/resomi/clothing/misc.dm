@@ -365,7 +365,7 @@
 	whitelisted = list(SPECIES_RESOMI)
 	flags = GEAR_HAS_SUBTYPE_SELECTION
 
-/datum/gear/suit/hooded/resomicloak
+/datum/gear/suit/resomicloak
 	display_name = "(Resomi) Hooded Cloak"
 	sort_category = "Xenowear"
 	path = /obj/item/clothing/suit/storage/hooded/resomi
