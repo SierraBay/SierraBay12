@@ -21,3 +21,4 @@
 
 // Structures
 #include "structures\chairs.dm"
+#endif
