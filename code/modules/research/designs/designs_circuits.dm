@@ -102,6 +102,13 @@
 	build_path = /obj/item/stock_parts/circuitboard/roboprinter
 	sort_string = "FAGAK"
 
+/datum/design/circuit/roboprinter
+	name = "synthetic organ fabricator"
+	id = "bioprinter"
+	req_tech = list(TECH_BIO = 6, TECH_DATA = 3)
+	build_path = /obj/item/stock_parts/circuitboard/bioprinter
+	sort_string = "FAGAL"
+
 /datum/design/circuit/teleconsole
 	name = "teleporter control console"
 	id = "teleconsole"
