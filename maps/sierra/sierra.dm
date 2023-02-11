@@ -148,6 +148,8 @@
 	#include "../../mods/machinery/atmos_ret_field/_atm_ret_field.dme"
 	#include "../../mods/mortar/mortar.dme"
 
+	#include "../../packs/infinity/_pack.dm"
+
 
 	#define using_map_DATUM /datum/map/sierra
 
