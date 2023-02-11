@@ -131,7 +131,7 @@
 	icon_state = "papaleroy_faln_sneakers"
 	item_state = "papaleroy_faln_sneakers"
 
-/obj/item/clothing/shoes/red_geta
+/obj/item/clothing/shoes/geta
 	name = "red geta"
 	desc = "These sandals originate from culture of Japan and are meant to be an accompaniment for kimonos."
 	icon = 'packs/infinity/icons/obj/clothing/obj_feet.dmi'
@@ -139,7 +139,7 @@
 	icon_state = "red_geta"
 	item_state = "red_geta"
 
-/obj/item/clothing/shoes/black_geta
+/obj/item/clothing/shoes/geta/black
 	name = "black geta"
 	desc = "These sandals originate from culture of Japan and are meant to be an accompaniment for kimonos."
 	icon = 'packs/infinity/icons/obj/clothing/obj_feet.dmi'

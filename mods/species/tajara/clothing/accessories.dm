@@ -193,35 +193,6 @@
 	sort_category = "Xenowear"
 	whitelisted = list(SPECIES_TAJARA, SPECIES_UNATHI, SPECIES_YEOSA)
 
-
-/obj/item/clothing/shoes/taj_old_shoes
-	desc = "An old pattern shoes made of blackened leather with greenish protector. Built to keep moisture out and prevent \"trench paw\". This ones are for cold winter periods and cover the whole feet."
-	name = "vintage boots"
-	icon_state = "taj_old_shoes"
-	item_state = "taj_old_shoes"
-	species_restricted = list(SPECIES_TAJARA)
-
-/obj/item/clothing/shoes/taj_new_shoes
-	desc = "A new pattern boots made of black leather with a slighly blueish tint. This ones quite ergonomic and not as encumbering as the old boots. Built to keep moisture out and prevent \"trench paw\". This ones are for cold winter periods and cover the whole feet."
-	name = "military boots"
-	icon_state = "taj_new_shoes"
-	item_state = "taj_new_shoes"
-	species_restricted = list(SPECIES_TAJARA)
-
-/obj/item/clothing/shoes/taj_new_shoes_cut
-	desc = "A new pattern boots made of black leather with a slighly blueish tint. This ones quite ergonomic and not as encumbering as the old boots. Light and toeless version for long distance marches!"
-	name = "toeless military  boots"
-	icon_state = "taj_new_shoes"
-	item_state = "taj_new_shoes_cut"
-	species_restricted = list(SPECIES_TAJARA)
-
-/obj/item/clothing/shoes/taj_old_shoes_cut
-	desc = "An old pattern shoes made of blackened leather with greenish protector. Built to withstand a lot of abuse during travel. This ones are for \"warmer\" and dry periods, good for hiking, good for toes."
-	name = "toeless vintage boots"
-	icon_state = "taj_old_shoes"
-	item_state = "taj_old_shoes_cut"
-	species_restricted = list(SPECIES_TAJARA)
-
 /obj/item/clothing/under/taj_old_uniform
 	desc = "A loose-fitting uniform with lots of pockets made of canvas or similar material, very comfortable. Widely used by tajaran revolutionaries during slave's uprising, remained as favored uniform for a short period of time after the uprising and now just a reminder of dark age or a reason for pride. There is a tailhole on the back of the pants!"
 	name = "vintage uniform"
@@ -419,12 +390,18 @@
 	sort_category = "Xenowear"
 	cost = 1
 
+/datum/gear/eyes/medical/tajblind/New()
+	return
+
 /datum/gear/eyes/meson/tajblind
 	display_name = "(Tajara) veil, industrial"
 	path = /obj/item/clothing/glasses/meson/prescription/tajblind
 	whitelisted = list(SPECIES_TAJARA)
 	sort_category = "Xenowear"
 	cost = 1
+
+/datum/gear/eyes/meson/tajblind/New()
+	return
 
 /datum/gear/eyes/sciencegoggles/tajblind
 	display_name = "(Tajara) veil, science "
@@ -439,6 +416,9 @@
 	whitelisted = list(SPECIES_TAJARA)
 	sort_category = "Xenowear"
 	cost = 1
+
+/datum/gear/eyes/security/tajblind/New()
+	return
 
 /datum/gear/eyes/visors
 	display_name = "(Tajara) visor selection"
@@ -473,6 +453,9 @@
 	sort_category = "Xenowear"
 	cost = 1
 
+/datum/gear/eyes/medical/tajvisor/New()
+	return
+
 /datum/gear/eyes/security/tajvisor
 	display_name = "(Tajara) visor, security"
 	path = /obj/item/clothing/glasses/sunglasses/sechud/tajvisor
@@ -480,12 +463,18 @@
 	sort_category = "Xenowear"
 	cost = 1
 
+/datum/gear/eyes/security/tajvisor/New()
+	return
+
 /datum/gear/eyes/meson/tajvisor
 	display_name = "(Tajara) visor, industrial"
 	path = /obj/item/clothing/glasses/meson/prescription/tajvisor
 	whitelisted = list(SPECIES_TAJARA)
 	sort_category = "Xenowear"
 	cost = 1
+
+/datum/gear/eyes/meson/tajvisor/New()
+	return
 
 /datum/gear/eyes/meson/tajvisor/hybr
 	display_name = "(Tajara) visor, engineering"

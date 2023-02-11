@@ -277,6 +277,23 @@
 	path = /obj/item/clothing/under/resomi/work_white
 	flags = GEAR_HAS_TYPE_SELECTION
 
+/datum/gear/uniform/resomi/white/New()
+	return
+/datum/gear/uniform/resomi/dress/New()
+	return
+/datum/gear/uniform/resomi/utility/New()
+	return
+/datum/gear/uniform/resomi/sport/New()
+	return
+/datum/gear/uniform/resomi/med/New()
+	return
+/datum/gear/uniform/resomi/science/New()
+	return
+/datum/gear/uniform/resomi/dark_worksmock/New()
+	return
+/datum/gear/uniform/resomi/light_worksmock/New()
+	return
+
 /datum/gear/eyes/resomi
 	display_name = "(Resomi) sun lenses"
 	path = /obj/item/clothing/glasses/sunglasses/lenses
