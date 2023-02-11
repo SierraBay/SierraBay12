@@ -407,7 +407,7 @@
 /datum/gear/eyes/meson/tajblind/New()
 	return
 
-/datum/gear/eyes/sciencegoggles/tajblind
+/datum/gear/eyes/sciencegoggles_tajblind
 	display_name = "(Tajara) veil, science "
 	path = /obj/item/clothing/glasses/hud/science/tajblind
 	whitelisted = list(SPECIES_TAJARA)
@@ -443,7 +443,7 @@
 	visors["visor type-G (Tajara)"] = /obj/item/clothing/glasses/tajvisor/g
 	gear_tweaks += new/datum/gear_tweak/path(visors)
 
-/datum/gear/eyes/sciencegoggles/tajvisor
+/datum/gear/eyes/sciencegoggles_tajvisor
 	display_name = "(Tajara) visor, science "
 	path = /obj/item/clothing/glasses/hud/science/tajvisor
 	whitelisted = list(SPECIES_TAJARA)
