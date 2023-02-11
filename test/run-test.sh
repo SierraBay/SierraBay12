@@ -227,6 +227,7 @@ function run_byond_tests {
         ./install-byond.sh || exit 1
         source $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}/byond/bin/byondsetup
     fi
+    download_rust_g
     run_test "build map unit tests" "scripts/dm.sh -DUNIT_TEST -M$MAP_PATH baystation12.dme"
     run_test "check no warnings in build" "grep ', 0 warnings' build_log.txt"
     run_test "run unit tests" "DreamDaemon baystation12.dmb -invisible -trusted -core 2>&1 | tee log.txt"
@@ -263,6 +264,22 @@ function run_configured_tests {
             fail "invalid option for \$TEST: '$TEST'"
             ;;
     esac
+}
+
+function download_rust_g {
+  if [ -f "$HOME/librust_g/librust_g.so" ];
+  then
+    echo "Using cached rust_g."
+    cp "$HOME/librust_g/librust_g.so" $PWD/librust_g.so
+  else
+    wget -O $PWD/librust_g.so "https://raw.githubusercontent.com/SierraBay/SierraBay12/3660bb8e0becaea80659d21a3e78b85aa9f8f890/librust_g.so"
+    mkdir -p $HOME/librust_g
+    cp $PWD/librust_g.so $HOME/librust_g/librust_g.so
+  fi
+
+  chmod +x $PWD/librust_g.so
+
+  echo "Saved rust_g to $PWD/librust_g.so"
 }
 
 find_code
