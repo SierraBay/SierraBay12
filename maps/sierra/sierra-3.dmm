@@ -41078,7 +41078,7 @@
 /area/medical/surgery/second)
 "upT" = (
 /obj/structure/closet/crate/secure/loot,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/reinforced,
 /area/maintenance/firstdeck/aftport)
 "uuc" = (
 /obj/structure/cable/green{
