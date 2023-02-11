@@ -17,6 +17,10 @@ exactly() { # exactly N name search [mode] [filter]
 		echo "$num $name"
 	else
 		echo "[1;31m$num $name (expecting exactly $count)[0m"
+		if [ $1 -lt 30 ]; then
+			echo "entries:"
+			grep "$mode" "$search" $filter
+		fi
 		FAILED=1
 	fi
 }
