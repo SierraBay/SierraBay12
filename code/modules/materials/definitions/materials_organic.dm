@@ -47,7 +47,7 @@
 	conductive = 0
 	value = 0
 
-#ifdef MODPACK_SOFA
+
 /material/cloth
 	name = MATERIAL_CLOTH
 	display_name ="white"
@@ -126,7 +126,6 @@
 	use_name = "lime cloth roll"
 	icon_colour = "#62e36c"
 	stack_type = /obj/item/stack/material/cloth/lime
-#endif
 
 /material/carpet
 	name = MATERIAL_CARPET
