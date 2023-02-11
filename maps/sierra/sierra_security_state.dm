@@ -44,12 +44,8 @@
 		for(var/area in high_secure_areas)
 			area_unlock(area)
 
-/datum/map/proc/lockdown(var/force)
-	lockdown = !lockdown
-	if(force && force == "close")
-		lockdown = TRUE
-	else if(force && force == "open")
-		lockdown = FALSE
+/datum/map/lockdown(var/force)
+	. = ..()
 
 	if(!lockdown)
 		for(var/obj/machinery/door/blast/regular/lockdown/door in SSmachines.machinery)
