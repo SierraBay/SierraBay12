@@ -201,7 +201,7 @@
 	max_storage_space = 5
 	can_hold = list(
 		#ifdef CONTENT_PACK_INFINITY
-			/obj/item/music_tape,
+		/obj/item/music_tape,
 		#endif
 		/obj/item/device/flashlight/pen,
 		/obj/item/device/tape,
@@ -216,7 +216,7 @@
 	)
 	startswith = list(
 		#ifdef CONTENT_PACK_INFINITY
-			/obj/item/music_tape/custom = 2,
+		/obj/item/music_tape/custom = 2,
 		#endif
 		/obj/item/screwdriver = 1
 	)

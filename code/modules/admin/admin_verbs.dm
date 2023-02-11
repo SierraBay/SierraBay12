@@ -142,7 +142,7 @@ var/global/list/admin_verbs_spawn = list(
 	/client/proc/spawn_chemdisp_cartridge,
 	/datum/admins/proc/mass_debug_closet_icons,
 	#ifdef MODPACK_QUANTUM_MECHANIC
-		/client/proc/spawn_quantum_mechanic,
+	/client/proc/spawn_quantum_mechanic,
 	#endif
 	/client/proc/respawn_as_self
 	)
