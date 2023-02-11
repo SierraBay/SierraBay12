@@ -2738,11 +2738,6 @@
 	dir = 9
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/cable/green{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /turf/simulated/floor/tiled,
 /area/hallway/primary/thirddeck/fore)
 "fj" = (
@@ -7669,6 +7664,12 @@
 /obj/effect/catwalk_plated,
 /turf/simulated/floor/plating,
 /area/hallway/primary/thirddeck/fore)
+"mC" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/simulated/floor/reinforced,
+/area/rnd/xenobiology/cell_4)
 "mD" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/catwalk,
@@ -8066,11 +8067,6 @@
 /obj/machinery/door/airlock/glass/civilian{
 	autoset_access = 0;
 	name = "Comissary"
-	},
-/obj/structure/cable/green{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/effect/floor_decal/industrial/hatch/yellow,
@@ -10915,17 +10911,8 @@
 	dir = 8
 	},
 /obj/machinery/camera/network/third_deck{
-	c_tag = "Third Deck Hallway - Primary Docking Port";
+	c_tag = "Third Deck - Hallway - Fore";
 	dir = 4
-	},
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "west bump";
-	pixel_x = -24
-	},
-/obj/structure/cable/green{
-	d2 = 4;
-	icon_state = "0-4"
 	},
 /turf/simulated/floor/tiled,
 /area/hallway/primary/thirddeck/fore)
@@ -15026,11 +15013,6 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/structure/cable/green{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/effect/floor_decal/steeldecal/steel_decals4{
@@ -15056,7 +15038,7 @@
 /obj/effect/floor_decal/borderfloor/corner2,
 /obj/effect/floor_decal/corner/blue/bordercorner2,
 /obj/machinery/camera/network/third_deck{
-	c_tag = "Third Deck - Central Stairwell";
+	c_tag = "Third Deck - Central Stairwell Second";
 	dir = 1
 	},
 /turf/simulated/floor/tiled,
@@ -16305,7 +16287,7 @@
 	dir = 9
 	},
 /obj/machinery/camera/network/supply{
-	c_tag = "Hangar Deck - Supply Drone";
+	c_tag = "Third Deck - Supply - Auxillary Warehouse";
 	dir = 4
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
@@ -16374,11 +16356,6 @@
 "AG" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable/green{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /turf/simulated/floor/tiled,
 /area/hallway/primary/thirddeck/fore)
 "AH" = (
@@ -17048,12 +17025,6 @@
 	},
 /turf/simulated/floor/tiled,
 /area/hallway/primary/thirddeck/fore)
-"BS" = (
-/obj/machinery/atmospherics/unary/vent_pump/on{
-	dir = 8
-	},
-/turf/simulated/floor/tiled/techfloor/grid,
-/area/storage/auxillary/port)
 "BT" = (
 /turf/simulated/floor/tiled,
 /area/storage/primary)
@@ -17302,14 +17273,11 @@
 /turf/simulated/floor/tiled,
 /area/hallway/primary/thirddeck/fore)
 "Cq" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/cable/green{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
+/obj/machinery/atmospherics/unary/vent_pump/on{
+	dir = 8
 	},
-/turf/simulated/floor/tiled,
-/area/hallway/primary/thirddeck/fore)
+/turf/simulated/floor/tiled/techfloor/grid,
+/area/storage/auxillary/port)
 "Cr" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -17740,7 +17708,7 @@
 /obj/effect/floor_decal/borderfloor,
 /obj/effect/floor_decal/corner/blue/border,
 /obj/machinery/camera/network/third_deck{
-	c_tag = "Third Deck - Central Stairwell";
+	c_tag = "Third Deck - Hallway - Fore";
 	dir = 1
 	},
 /obj/item/device/radio/intercom{
@@ -20432,6 +20400,28 @@
 /obj/machinery/computer/ship/sensors,
 /turf/simulated/floor/tiled,
 /area/guppy_hangar/start)
+"HD" = (
+/obj/effect/wallframe_spawn/reinforced,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/blast/shutters{
+	density = 0;
+	dir = 2;
+	icon_state = "shutter0";
+	id_tag = "hangar_checkpoint_shutters";
+	name = "Hangar Deck Checkpoint Shutters";
+	opacity = 0
+	},
+/obj/structure/cable/green{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/structure/cable/green{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/security/sierra/dockcheck)
 "HE" = (
 /obj/machinery/camera/network/research{
 	c_tag = "Xenobio - level two - aqua chamber"
@@ -21180,6 +21170,14 @@
 /obj/structure/table/steel,
 /turf/simulated/floor/tiled/monotile,
 /area/exploration_shuttle/cockpit)
+"IO" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/effect/floor_decal/industrial/warning,
+/turf/simulated/floor/reinforced,
+/area/rnd/xenobiology/cell_4)
 "IP" = (
 /obj/structure/cable/cyan{
 	d1 = 1;
@@ -23576,7 +23574,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/reinforced,
-/area/rnd/xenobiology/level2)
+/area/rnd/xenobiology/cell_4)
 "MZ" = (
 /obj/machinery/light{
 	dir = 4
@@ -23790,7 +23788,7 @@
 	opacity = 0
 	},
 /turf/simulated/floor/plating,
-/area/rnd/xenobiology/level2)
+/area/rnd/xenobiology/cell_4)
 "Nv" = (
 /turf/simulated/wall/r_wall/prepainted,
 /area/rnd/xenobiology/level2)
@@ -25599,7 +25597,7 @@
 	opacity = 0
 	},
 /turf/simulated/floor/reinforced,
-/area/rnd/xenobiology/level2)
+/area/rnd/xenobiology/cell_4)
 "QB" = (
 /obj/machinery/alarm{
 	dir = 4;
@@ -27467,6 +27465,13 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled,
 /area/storage/primary)
+"TR" = (
+/obj/machinery/atmospherics/unary/vent_pump/on{
+	dir = 4
+	},
+/obj/effect/floor_decal/industrial/warning,
+/turf/simulated/floor/reinforced,
+/area/rnd/xenobiology/cell_4)
 "TS" = (
 /obj/structure/table/rack,
 /obj/item/device/scanner/mining,
@@ -27757,28 +27762,6 @@
 /obj/item/storage/belt/utility,
 /turf/simulated/floor/tiled,
 /area/quartermaster/suplocker_room)
-"UB" = (
-/obj/effect/wallframe_spawn/reinforced,
-/obj/machinery/door/firedoor,
-/obj/machinery/door/blast/shutters{
-	density = 0;
-	dir = 2;
-	icon_state = "shutter0";
-	id_tag = "hangar_checkpoint_shutters";
-	name = "Hangar Deck Checkpoint Shutters";
-	opacity = 0
-	},
-/obj/structure/cable/green{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/structure/cable/green{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/turf/simulated/floor/plating,
-/area/security/sierra/dockcheck)
 "UC" = (
 /obj/structure/catwalk,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -40986,7 +40969,7 @@ rE
 zJ
 Vs
 km
-rE
+km
 VH
 cK
 cK
@@ -41188,7 +41171,7 @@ yq
 ks
 ks
 By
-rE
+km
 Zp
 mz
 Zl
@@ -41390,7 +41373,7 @@ pa
 ks
 AF
 Bz
-rE
+km
 km
 DM
 aA
@@ -41592,7 +41575,7 @@ ys
 ng
 AG
 fi
-Cq
+xw
 Dg
 DM
 Df
@@ -43201,13 +43184,13 @@ JT
 Te
 Wo
 WN
-UB
+HD
 Yl
 vZ
 Cl
 Va
 zk
-BS
+Cq
 UI
 zI
 Kb
@@ -53725,8 +53708,8 @@ uH
 VF
 LQ
 Nv
-MX
-Nn
+mC
+TR
 Nu
 NK
 RD
@@ -53928,7 +53911,7 @@ VF
 LQ
 Nv
 MY
-Np
+IO
 QA
 NL
 RE

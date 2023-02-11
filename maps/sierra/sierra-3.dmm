@@ -8432,10 +8432,6 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/structure/cable{
-	d1 = 32;
-	icon_state = "32-1"
-	},
 /obj/machinery/atmospherics/pipe/zpipe/down/scrubbers{
 	dir = 8
 	},
@@ -26551,7 +26547,7 @@
 	req_access = list("ACCESS_RESEARCH")
 	},
 /obj/machinery/camera/network/research{
-	c_tag = "Research - Lockers";
+	c_tag = "First Deck - RND - Research Lab";
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -37417,7 +37413,7 @@
 	use_power = 1
 	},
 /turf/simulated/floor/airless,
-/area/thruster/d1starboard)
+/area/thruster/d1port)
 "ijg" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -37839,16 +37835,6 @@
 /obj/effect/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/tiled/white,
 /area/assembly/robotics)
-"jTp" = (
-/obj/effect/floor_decal/borderfloor{
-	dir = 4
-	},
-/obj/effect/floor_decal/corner/lime/border{
-	dir = 4
-	},
-/obj/structure/bed/chair/comfy/beige,
-/turf/simulated/floor/tiled,
-/area/crew_quarters/dungeon_master_lounge)
 "jYP" = (
 /obj/structure/table/standard,
 /obj/item/stack/material/phoron{
@@ -38471,6 +38457,11 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
 /turf/simulated/floor/plating,
 /area/maintenance/firstdeck/centralstarboard)
 "lFn" = (
@@ -38771,6 +38762,16 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/medical/morgue)
+"mLB" = (
+/obj/effect/floor_decal/borderfloor{
+	dir = 4
+	},
+/obj/effect/floor_decal/corner/lime/border{
+	dir = 4
+	},
+/obj/structure/bed/chair/comfy/beige,
+/turf/simulated/floor/tiled,
+/area/crew_quarters/dungeon_master_lounge)
 "mLH" = (
 /obj/structure/closet/secure_closet/personal/patient,
 /obj/effect/floor_decal/borderfloorwhite{
@@ -69497,7 +69498,7 @@ nOq
 arA
 cqL
 msU
-jTp
+mLB
 biB
 aFJ
 kGA

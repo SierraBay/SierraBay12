@@ -1,5 +1,6 @@
 
 /datum/gear/utility/modular_scanner/medical
+	display_name = "Medical PDA"
 	allowed_roles = STERILE_ROLES
 
 /datum/gear/utility/pda
