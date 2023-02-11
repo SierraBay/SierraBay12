@@ -1,16 +1,37 @@
 #!/bin/bash
 set -euo pipefail
 
-if [ -f "$HOME/librust_g/librust_g.so" ];
-then
-  echo "Using cached rust_g."
-  cp "$HOME/librust_g/librust_g.so" ~/librust_g.so
-else
-  wget -O ~/librust_g.so "https://raw.githubusercontent.com/SierraBay/SierraBay12/3660bb8e0becaea80659d21a3e78b85aa9f8f890/librust_g.so"
-  mkdir -p $HOME/librust_g
-  cp ~/librust_g.so $HOME/librust_g/librust_g.so
-fi
+function find_code {
+    if [[ -z ${CODEPATH+x} ]]; then
+        if [[ -d ./code ]]
+        then CODEPATH=.
+        else if [[ -d ../code ]]
+            then CODEPATH=..
+            fi
+        fi
+    fi
+    cd $CODEPATH
+    if [[ ! -d ./code ]]
+    then err "invalid CODEPATH: $PWD"
+    else msg "found code at $PWD"
+    fi
+}
 
-chmod +x ~/librust_g.so
+function download_rust_g {
+  if [ -f "$HOME/librust_g/librust_g.so" ];
+  then
+    echo "Using cached rust_g."
+    cp "$HOME/librust_g/librust_g.so" $PWD/librust_g.so
+  else
+    wget -O $PWD/librust_g.so "https://raw.githubusercontent.com/SierraBay/SierraBay12/3660bb8e0becaea80659d21a3e78b85aa9f8f890/librust_g.so"
+    mkdir -p $HOME/librust_g
+    cp $PWD/librust_g.so $HOME/librust_g/librust_g.so
+  fi
 
-echo "Saved rust_g to $HOME/librust_g.so"
+  chmod +x $PWD/librust_g.so
+
+  echo "Saved rust_g to $PWD/librust_g.so"
+}
+
+find_code
+download_rust_g
