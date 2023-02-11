@@ -279,7 +279,13 @@ function download_rust_g {
 
   chmod +x $PWD/librust_g.so
 
+  echo "[1;33m====[0m"
   echo "Saved rust_g to $PWD/librust_g.so"
+  echo "Current dir:"
+  pwd
+  ls
+  echo "I beleive, there are game files"
+  echo "[1;33m====[0m"
 }
 
 find_code
