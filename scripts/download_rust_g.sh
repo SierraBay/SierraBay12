@@ -13,4 +13,4 @@ fi
 
 chmod +x ~/librust_g.so
 
-echo "librust_g.so OK"
+echo "Saved rust_g to $HOME/librust_g.so"
