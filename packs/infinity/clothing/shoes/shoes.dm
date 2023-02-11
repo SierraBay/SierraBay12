@@ -78,7 +78,7 @@
 	item_state = "taj_old_shoes"
 	icon = 'mods/species/tajara/icons/shoes.dmi'
 	item_icons = list(slot_shoes_str = 'mods/species/tajara/icons/onmob_feet.dmi')
-	species_restricted = list(SPECIES_TAJARA)
+	// species_restricted = list(SPECIES_TAJARA)
 
 /obj/item/clothing/shoes/taj_new_shoes
 	desc = "A new pattern boots made of black leather with a slighly blueish tint. This ones quite ergonomic and not as encumbering as the old boots. Built to keep moisture out and prevent \"trench paw\". This ones are for cold winter periods and cover the whole feet."
@@ -87,7 +87,7 @@
 	item_state = "taj_new_shoes"
 	icon = 'mods/species/tajara/icons/shoes.dmi'
 	item_icons = list(slot_shoes_str = 'mods/species/tajara/icons/onmob_feet.dmi')
-	species_restricted = list(SPECIES_TAJARA)
+	// species_restricted = list(SPECIES_TAJARA)
 
 /obj/item/clothing/shoes/taj_new_shoes_cut
 	desc = "A new pattern boots made of black leather with a slighly blueish tint. This ones quite ergonomic and not as encumbering as the old boots. Light and toeless version for long distance marches!"
@@ -96,7 +96,7 @@
 	item_state = "taj_new_shoes_cut"
 	icon = 'mods/species/tajara/icons/shoes.dmi'
 	item_icons = list(slot_shoes_str = 'mods/species/tajara/icons/onmob_feet.dmi')
-	species_restricted = list(SPECIES_TAJARA)
+	// species_restricted = list(SPECIES_TAJARA)
 
 /obj/item/clothing/shoes/taj_old_shoes_cut
 	desc = "An old pattern shoes made of blackened leather with greenish protector. Built to withstand a lot of abuse during travel. This ones are for \"warmer\" and dry periods, good for hiking, good for toes."
@@ -105,7 +105,7 @@
 	item_state = "taj_old_shoes_cut"
 	icon = 'mods/species/tajara/icons/shoes.dmi'
 	item_icons = list(slot_shoes_str = 'mods/species/tajara/icons/onmob_feet.dmi')
-	species_restricted = list(SPECIES_TAJARA)
+	// species_restricted = list(SPECIES_TAJARA)
 
 /obj/item/clothing/shoes/brand_shoes
 	name = "brand shoes"
