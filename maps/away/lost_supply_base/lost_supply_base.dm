@@ -24,7 +24,7 @@
 	apc_test_exempt_areas = list(
 		/area/lost_supply_base/solar = NO_SCRUBBER|NO_VENT
 	)
-	area_usage_test_exempted_root_areas = list(/area/lost_supply_base, /area/mine)
+	area_usage_test_exempted_root_areas = list(/area/lost_supply_base, /area/mine, /area/outpost)
 	area_usage_test_exempted_areas = list(/area/djstation)
 	area_coherency_test_exempt_areas =  list(/area/mine/explored, /area/mine/unexplored)
 

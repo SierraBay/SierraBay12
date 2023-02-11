@@ -37,7 +37,7 @@
 		/area/casino/casino_solar_control = NO_SCRUBBER,
 		/area/casino/casino_maintenance = NO_SCRUBBER|NO_VENT
 	)
-	area_usage_test_exempted_root_areas = list(/area/casino, /area/mine)
+	area_usage_test_exempted_root_areas = list(/area/casino, /area/mine, /area/outpost)
 	area_usage_test_exempted_areas = list(/area/djstation)
 	area_coherency_test_exempt_areas =  list(/area/mine/explored, /area/mine/unexplored)
 

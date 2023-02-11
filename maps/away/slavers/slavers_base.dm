@@ -27,7 +27,7 @@
 	apc_test_exempt_areas = list(
 		/area/slavers_base/hangar = NO_SCRUBBER
 	)
-	area_usage_test_exempted_root_areas = list(/area/slavers_base, /area/mine)
+	area_usage_test_exempted_root_areas = list(/area/slavers_base, /area/mine, /area/outpost)
 	area_usage_test_exempted_areas = list(/area/djstation)
 	area_coherency_test_exempt_areas =  list(/area/mine/explored, /area/mine/unexplored)
 
