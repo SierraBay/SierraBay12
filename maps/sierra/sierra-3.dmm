@@ -8077,11 +8077,6 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/structure/cable/green{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /turf/simulated/wall/r_wall/prepainted,
 /area/bridge/adjutants)
 "aob" = (
@@ -8481,11 +8476,6 @@
 /obj/effect/floor_decal/industrial/outline/yellow,
 /obj/machinery/computer/cryopod/robot{
 	pixel_y = 30
-	},
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "east bump";
-	pixel_x = 24
 	},
 /turf/simulated/floor/plating,
 /area/turret_protected/ai_cyborg_station)
@@ -9491,6 +9481,11 @@
 /obj/structure/cable/green{
 	d2 = 8;
 	icon_state = "0-8"
+	},
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "east bump";
+	pixel_x = 24
 	},
 /turf/simulated/floor/plating,
 /area/turret_protected/ai_cyborg_station)
@@ -18226,11 +18221,6 @@
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
-	},
-/obj/structure/cable/green{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
 	},
 /obj/effect/floor_decal/borderfloor{
 	dir = 4
@@ -34575,7 +34565,6 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/visible/fuel,
-/obj/machinery/atmospherics/pipe/simple/visible/fuel,
 /turf/simulated/wall/r_wall/hull,
 /area/thruster/d1port)
 "bhK" = (
@@ -34887,11 +34876,6 @@
 "biB" = (
 /obj/structure/table/woodentable/walnut,
 /obj/item/material/ashtray/glass,
-/obj/structure/cable/green{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /obj/effect/floor_decal/borderfloor{
 	dir = 4
 	},
@@ -37855,6 +37839,16 @@
 /obj/effect/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/tiled/white,
 /area/assembly/robotics)
+"jTp" = (
+/obj/effect/floor_decal/borderfloor{
+	dir = 4
+	},
+/obj/effect/floor_decal/corner/lime/border{
+	dir = 4
+	},
+/obj/structure/bed/chair/comfy/beige,
+/turf/simulated/floor/tiled,
+/area/crew_quarters/dungeon_master_lounge)
 "jYP" = (
 /obj/structure/table/standard,
 /obj/item/stack/material/phoron{
@@ -38686,11 +38680,6 @@
 /turf/simulated/wall/r_wall/hull,
 /area/thruster/d1port)
 "msU" = (
-/obj/structure/cable/green{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /obj/effect/floor_decal/borderfloor{
 	dir = 4
 	},
@@ -69508,7 +69497,7 @@ nOq
 arA
 cqL
 msU
-kGA
+jTp
 biB
 aFJ
 kGA

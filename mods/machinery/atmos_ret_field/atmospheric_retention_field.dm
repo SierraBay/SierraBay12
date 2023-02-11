@@ -215,7 +215,7 @@
 	light_inner_range = 1
 	light_outer_range = 13
 	light_max_bright = 0.5
-	light_color = "#FFFFFF"
+	light_color = "#ffffff"
 
 /obj/structure/atmospheric_retention_field/update_icon()
 	overlays.Cut()

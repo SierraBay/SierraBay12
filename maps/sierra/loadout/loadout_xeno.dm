@@ -83,13 +83,17 @@
 // Vox clothing
 
 /datum/gear/mask/gas/vox
+	display_name = "modified gasmask"
 	allowed_roles = list(  /*/datum/job/stowaway*/)
 
 /datum/gear/gloves/vox
+	display_name = "modified gloves"
 	allowed_roles = list(  /*/datum/job/stowaway*/)
 
 /datum/gear/uniform/vox_cloth
+	display_name = "modified uniform"
 	allowed_roles = list(  /*/datum/job/stowaway*/)
 
 /datum/gear/uniform/vox_robe
+	display_name = "modified robe"
 	allowed_roles = list(  /*/datum/job/stowaway*/)

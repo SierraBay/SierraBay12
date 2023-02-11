@@ -7748,9 +7748,6 @@
 	},
 /turf/simulated/floor/holofloor/beach/water,
 /area/holodeck/source_temple)
-"blC" = (
-/turf/simulated/floor/holofloor/beach/water,
-/area/holodeck/source_temple)
 "blE" = (
 /turf/simulated/floor/holofloor/beach/water,
 /area/holodeck/source_temple)
@@ -12686,7 +12683,10 @@
 /obj/machinery/door/airlock/centcom{
 	dir = 8
 	},
-/turf/space,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/flooring/tiles.dmi';
+	icon_state = "steel"
+	},
 /area/centcom/living)
 "mhW" = (
 /obj/effect/floor_decal/borderfloor{
@@ -34620,7 +34620,7 @@ wwa
 sFC
 sFC
 sFC
-gUN
+sFC
 aab
 aab
 aab
@@ -34822,7 +34822,7 @@ emF
 ape
 ape
 ape
-gUN
+sFC
 aab
 aab
 aab
@@ -35024,7 +35024,7 @@ nlw
 vyh
 vtM
 ape
-gUN
+sFC
 aab
 aab
 aab
@@ -35226,7 +35226,7 @@ lbU
 fjZ
 geB
 ape
-gUN
+sFC
 aab
 aab
 aab
@@ -35428,7 +35428,7 @@ ayS
 wlC
 xOo
 ape
-gUN
+sFC
 aab
 aab
 aab
@@ -37746,11 +37746,11 @@ blc
 aUq
 aWd
 bly
-blC
-blC
-blC
-blC
-blC
+blE
+blE
+blE
+blE
+blE
 blL
 blu
 aax
@@ -37948,11 +37948,11 @@ blb
 aUx
 aWd
 bly
-blC
-blC
 blE
-blC
-blC
+blE
+blE
+blE
+blE
 blL
 blu
 bli
@@ -38150,11 +38150,11 @@ blf
 aUQ
 aWd
 bly
-blC
-blC
-blC
-blC
-blC
+blE
+blE
+blE
+blE
+blE
 blL
 blu
 bli
@@ -38352,11 +38352,11 @@ aUQ
 aUx
 aWd
 bly
-blC
-blC
-blC
-blC
-blC
+blE
+blE
+blE
+blE
+blE
 blL
 blu
 aay

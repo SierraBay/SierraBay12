@@ -223,12 +223,12 @@ var/global/obfs_y = 0 //A number between -500 and 500
 	w_class = 5
 
 /obj/item/mortar_kit/attack_self(mob/user)
-	user.visible_message("<span class='notice'>[user] starts deploying [src].",
-	"<span class='notice'>You start deploying [src].")
+	user.visible_message("<span class='notice'>[user] starts deploying [src].</span>",
+	"<span class='notice'>You start deploying [src].</span>")
 	playsound(loc, 'sound/items/Deconstruct.ogg', 25, 1)
 	if(do_after(user, 40, src))
-		user.visible_message("<span class='notice'>[user] deploys [src].",
-		"<span class='notice'>You deploy [src].")
+		user.visible_message("<span class='notice'>[user] deploys [src].</span>",
+		"<span class='notice'>You deploy [src].</span>")
 		playsound(loc, 'sound/items/Deconstruct.ogg', 25, 1)
 		var/obj/structure/mortar/M = new /obj/structure/mortar(get_turf(user))
 		M.dir = user.dir

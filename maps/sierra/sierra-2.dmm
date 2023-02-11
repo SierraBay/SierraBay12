@@ -2445,7 +2445,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/tiled,
-/area/hydroponics/storage)
+/area/hydroponics)
 "aeZ" = (
 /obj/item/stool,
 /obj/structure/cable/green{
@@ -5374,7 +5374,7 @@
 	},
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
 /turf/simulated/floor/tiled,
-/area/hydroponics/storage)
+/area/hydroponics)
 "akx" = (
 /obj/effect/floor_decal/spline/fancy/black{
 	dir = 8
@@ -5473,7 +5473,7 @@
 	},
 /obj/machinery/atmospherics/unary/vent_pump/on,
 /turf/simulated/floor/tiled,
-/area/hydroponics/storage)
+/area/hydroponics)
 "akD" = (
 /obj/structure/cable/green{
 	d1 = 1;
@@ -5695,11 +5695,6 @@
 /turf/simulated/floor/tiled/dark/monotile,
 /area/bridge/meeting_room)
 "akZ" = (
-/obj/structure/cable/green{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/effect/floor_decal/corner/paleblue/mono,
 /obj/structure/table/marble,
 /obj/item/material/kitchen/rollingpin,
@@ -5747,15 +5742,11 @@
 /turf/simulated/floor/tiled,
 /area/hallway/primary/seconddeck/fore)
 "alc" = (
-/obj/structure/cable/green{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
 	},
-/obj/effect/floor_decal/corner/paleblue/mono,
-/obj/structure/table/marble,
-/turf/simulated/floor/tiled/white/monotile,
-/area/crew_quarters/galley)
+/turf/simulated/wall/r_wall/prepainted,
+/area/engineering/engine_room)
 "ald" = (
 /obj/effect/floor_decal/industrial/warning/corner{
 	dir = 8
@@ -6898,9 +6889,6 @@
 /obj/effect/floor_decal/techfloor/corner{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 1
-	},
 /obj/structure/noticeboard{
 	pixel_y = 32
 	},
@@ -7577,6 +7565,9 @@
 	name = "Airlock Remote Terminal";
 	pixel_y = 20
 	},
+/obj/machinery/atmospherics/unary/vent_scrubber/on{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/engineering/engine_room)
 "aoD" = (
@@ -7609,14 +7600,14 @@
 	},
 /obj/effect/floor_decal/corner_techfloor_grid,
 /obj/effect/floor_decal/techfloor/corner,
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
-	dir = 1
-	},
 /obj/machinery/access_button/airlock_interior{
 	master_tag = "engine_airlock";
 	name = "Cycle to Core";
 	pixel_x = 24;
 	pixel_y = 24
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/engineering/engine_room)
@@ -7626,7 +7617,6 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
 	},
@@ -7643,6 +7633,9 @@
 /obj/structure/sign/warning/radioactive{
 	dir = 8;
 	pixel_x = 32
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 8
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/engineering/engine_monitoring)
@@ -8366,12 +8359,12 @@
 	dir = 10
 	},
 /obj/structure/hygiene/drain,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 5
-	},
 /obj/machinery/oxygen_pump{
 	dir = 8;
 	pixel_x = -27
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/engineering/engine_room)
@@ -8382,6 +8375,10 @@
 	},
 /obj/effect/floor_decal/industrial/warning/cee,
 /obj/structure/catwalk,
+/obj/machinery/atmospherics/unary/vent_pump/high_volume/airlock{
+	dir = 8;
+	id_tag = "sd_port_pump"
+	},
 /turf/simulated/floor/plating,
 /area/engineering/engine_room)
 "apI" = (
@@ -8390,9 +8387,6 @@
 /obj/item/clothing/glasses/meson,
 /obj/effect/floor_decal/techfloor{
 	dir = 6
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 9
 	},
 /obj/machinery/oxygen_pump{
 	dir = 4;
@@ -32941,7 +32935,7 @@
 	name = "Hydroponics Storage"
 	},
 /turf/simulated/floor/tiled,
-/area/hydroponics/storage)
+/area/hydroponics)
 "daG" = (
 /obj/effect/floor_decal/industrial/outline/grey,
 /obj/effect/decal/cleanable/dirt,
@@ -34056,7 +34050,6 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/machinery/atmospherics/unary/vent_pump/on,
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -34927,6 +34920,7 @@
 /obj/machinery/camera/network/engineering{
 	c_tag = "Shield Generator - Second Deck"
 	},
+/obj/machinery/atmospherics/unary/vent_pump/on,
 /turf/simulated/floor/tiled/techfloor,
 /area/shield/seconddeck)
 "jne" = (
@@ -35362,7 +35356,7 @@
 	pixel_y = -29
 	},
 /turf/simulated/floor/plating,
-/area/hydroponics/storage)
+/area/hydroponics)
 "kEM" = (
 /obj/structure/catwalk,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -35587,10 +35581,6 @@
 	},
 /obj/effect/floor_decal/techfloor/corner{
 	dir = 1
-	},
-/obj/machinery/atmospherics/binary/pump/high_power/on{
-	dir = 8;
-	target_pressure = 15000
 	},
 /obj/machinery/atmospherics/binary/pump/high_power/on{
 	dir = 8;
@@ -35922,18 +35912,15 @@
 /turf/simulated/floor/tiled/dark,
 /area/crew_quarters/game_room)
 "mCp" = (
-/obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
 /obj/effect/floor_decal/techfloor{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 9
-	},
 /obj/machinery/power/terminal{
 	dir = 1
+	},
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/shield/seconddeck)
@@ -36389,7 +36376,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/tiled,
-/area/hydroponics/storage)
+/area/hydroponics)
 "ofI" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 4
@@ -36408,9 +36395,6 @@
 /turf/simulated/floor/tiled,
 /area/hallway/primary/seconddeck/center)
 "ohp" = (
-/obj/machinery/atmospherics/pipe/manifold/visible/cyan{
-	dir = 4
-	},
 /obj/effect/floor_decal/techfloor{
 	dir = 4
 	},
@@ -36894,7 +36878,7 @@
 	},
 /obj/machinery/light/spot,
 /turf/simulated/floor/plating,
-/area/hydroponics/storage)
+/area/hydroponics)
 "pCv" = (
 /obj/effect/floor_decal/borderfloorblack{
 	dir = 1
@@ -36948,7 +36932,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/tiled,
-/area/hydroponics/storage)
+/area/hydroponics)
 "pGR" = (
 /obj/structure/cable/green{
 	d1 = 4;
@@ -37114,7 +37098,7 @@
 	},
 /obj/effect/wallframe_spawn/no_grille,
 /turf/simulated/floor/plating,
-/area/hydroponics/storage)
+/area/hydroponics)
 "pXj" = (
 /obj/effect/floor_decal/corner/paleblue/diagonal,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -37470,9 +37454,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 6
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/plating,
 /area/shield/seconddeck)
 "qWx" = (
@@ -38647,6 +38629,10 @@
 /obj/machinery/power/breakerbox{
 	RCon_tag = "Shield Generator Breaker Box"
 	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/tiled/techfloor,
 /area/shield/seconddeck)
 "tRJ" = (
@@ -38905,9 +38891,6 @@
 /obj/effect/floor_decal/corner/paleblue/diagonal,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -40124,7 +40107,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/tiled,
-/area/hydroponics/storage)
+/area/hydroponics)
 "yaN" = (
 /obj/machinery/button/alternate/door/bolts{
 	dir = 8;
@@ -55203,7 +55186,7 @@ aSw
 aRk
 pXj
 oQK
-alc
+oQK
 bdx
 hWx
 amU
@@ -65714,7 +65697,7 @@ aiM
 amz
 aZf
 amD
-aUd
+alc
 aUd
 agl
 axt
