@@ -1,7 +1,7 @@
 #ifndef CONTENT_PACK_INFINITY
 #define CONTENT_PACK_INFINITY
 
-//Clothing
+// Clothing
 #include "clothing\head\berets.dm"
 #include "clothing\head\head.dm"
 #include "clothing\head\helmet.dm"
@@ -20,5 +20,6 @@
 #include "items\towels.dm"
 
 // Structures
+#include "structures\table_presets.dm"
 #include "structures\chairs.dm"
 #endif
