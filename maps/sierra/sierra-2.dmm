@@ -26575,7 +26575,8 @@
 /obj/item/rig/eva/equipped,
 /obj/machinery/door/window/brigdoor/southleft{
 	dir = 4;
-	req_access = list("ACCESS_SENENG")
+	req_access = list("ACCESS_SENENG");
+	autoset_access = 0
 	},
 /turf/simulated/floor/tiled/steel_grid,
 /area/engineering/engine_eva)
