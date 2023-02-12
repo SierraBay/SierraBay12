@@ -40,7 +40,7 @@
 #define SS_INIT_SHUTTLE         -5
 #define SS_INIT_GOALS           -5
 #define SS_INIT_LIGHTING        -6
-#define SS_INIT_LIGHTING        -7
+#define SS_INIT_AMBIENT_LIGHT   -7
 #define SS_INIT_ZCOPY           -8
 #define SS_INIT_HOLOMAP         -9
 #define SS_INIT_XENOARCH        -10
