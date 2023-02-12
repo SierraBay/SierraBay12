@@ -415,8 +415,8 @@
 		return 1
 	return 0
 
-/obj/item/rig_module/proc/rig_equipped(mob/user, var/slot)
+/obj/item/rig_module/proc/rig_equipped(mob/user, slot)
 	return
 
-/obj/item/rig_module/proc/rig_unequipped(mob/user, var/slot)
+/obj/item/rig_module/proc/rig_unequipped(mob/user, slot)
 	return
