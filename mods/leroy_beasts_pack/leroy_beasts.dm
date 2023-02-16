@@ -13,7 +13,7 @@
 	health = 2
 	harm_intent_damage = 1
 	friendly = "nudges"
-	density = 0
+	density = FALSE
 	pass_flags = PASS_FLAG_TABLE | PASS_FLAG_GRILLE
 	mob_size = MOB_MINISCULE
 	say_list_type = /datum/say_list/butterfly
