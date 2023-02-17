@@ -12,12 +12,6 @@ GLOBAL_REAL_VAR(sqlfdbkpass)  = ""
 GLOBAL_REAL_VAR(sqlfdbkdbutil) = "test"
 GLOBAL_REAL_VAR(sqlfdbktableprefix) = "erro_"
 
-GLOBAL_REAL_VAR(sqldonaddress) = "localhost"
-GLOBAL_REAL_VAR(sqldonport)    = "3306"
-GLOBAL_REAL_VAR(sqldondb)      = "bay12"
-GLOBAL_REAL_VAR(sqldonlogin)   = "root"
-GLOBAL_REAL_VAR(sqldonpass)    = "1234"
-
 var/global/db_version = 0
 var/global/DBConnection/dbcon = new
 var/global/DBConnection/dbcon_old = new
