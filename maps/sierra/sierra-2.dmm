@@ -3660,7 +3660,8 @@
 	polarized = 1;
 	req_access = list("ACCESS_CAPTAIN");
 	dir = 2;
-	id = "cap_room_window"
+	id = "cap_room_window";
+	autoset_access = 0
 	},
 /turf/simulated/floor/carpet/blue,
 /area/crew_quarters/heads/cobed)
@@ -6401,8 +6402,7 @@
 /area/maintenance/seconddeck/aftstarboard)
 "amv" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "Conference Room Maintenance";
-	req_access = newlist()
+	name = "Conference Room Maintenance"
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/tiled/techfloor/grid,
@@ -7341,7 +7341,7 @@
 	dir = 9
 	},
 /turf/simulated/floor/tiled/dark,
-/area/crew_quarters/heads/cobed)
+/area/crew_quarters/heads/office/captain)
 "aoe" = (
 /obj/structure/cable/green{
 	d1 = 1;
@@ -7471,7 +7471,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/tiled/dark,
-/area/crew_quarters/heads/cobed)
+/area/crew_quarters/heads/office/captain)
 "aop" = (
 /obj/structure/cable/green{
 	d1 = 2;
@@ -9031,7 +9031,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/tiled/dark/monotile,
-/area/crew_quarters/heads/cobed)
+/area/crew_quarters/heads/office/captain)
 "aqV" = (
 /obj/machinery/light/spot{
 	dir = 8
@@ -9090,7 +9090,6 @@
 /obj/machinery/door/airlock/command{
 	id_tag = "captaindoor";
 	name = "Captain";
-	req_access = newlist();
 	secured_wires = 1
 	},
 /obj/machinery/door/firedoor,
@@ -9399,6 +9398,11 @@
 	dir = 4
 	},
 /obj/effect/floor_decal/spline/fancy/wood,
+/obj/machinery/light_switch{
+	dir = 8;
+	pixel_x = 23;
+	pixel_y = -23
+	},
 /turf/simulated/floor/carpet/blue2,
 /area/crew_quarters/heads/cobed)
 "arz" = (
@@ -9863,7 +9867,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/tiled/dark,
-/area/crew_quarters/heads/cobed)
+/area/crew_quarters/heads/office/captain)
 "asA" = (
 /obj/item/device/radio/intercom{
 	dir = 4;
@@ -10144,7 +10148,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/tiled/dark,
-/area/crew_quarters/heads/cobed)
+/area/crew_quarters/heads/office/captain)
 "atb" = (
 /obj/structure/closet/secure_closet/atmos_sierra,
 /obj/effect/floor_decal/industrial/outline/yellow,
@@ -11548,7 +11552,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled/dark,
-/area/crew_quarters/heads/cobed)
+/area/crew_quarters/heads/office/captain)
 "avm" = (
 /obj/machinery/atmospherics/unary/vent_pump/on,
 /obj/effect/floor_decal/borderfloor{
@@ -11567,7 +11571,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/tiled/dark,
-/area/crew_quarters/heads/cobed)
+/area/crew_quarters/heads/office/captain)
 "avo" = (
 /obj/effect/floor_decal/corner/black/mono,
 /obj/structure/reagent_dispensers/water_cooler,
@@ -12344,7 +12348,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/tiled/dark,
-/area/crew_quarters/heads/cobed)
+/area/crew_quarters/heads/office/captain)
 "awT" = (
 /obj/machinery/door/firedoor,
 /obj/effect/floor_decal/industrial/hatch/yellow,
@@ -12719,7 +12723,7 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /turf/simulated/floor/tiled/dark,
-/area/crew_quarters/heads/cobed)
+/area/crew_quarters/heads/office/captain)
 "axC" = (
 /obj/machinery/firealarm{
 	dir = 1;
@@ -12774,7 +12778,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/tiled/dark,
-/area/crew_quarters/heads/cobed)
+/area/crew_quarters/heads/office/captain)
 "axH" = (
 /obj/machinery/atmospherics/unary/vent_pump/on,
 /obj/machinery/vending/cola,
@@ -12795,7 +12799,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/wood/walnut,
-/area/crew_quarters/heads/cobed)
+/area/crew_quarters/heads/office/captain)
 "axJ" = (
 /obj/structure/bed/chair/wood/walnut,
 /turf/simulated/floor/plating,
@@ -15008,7 +15012,8 @@
 	id_tag = null;
 	polarized = 1;
 	req_access = list("ACCESS_BRIDGE");
-	id = "bridge_windows"
+	id = "bridge_windows";
+	autoset_access = 0
 	},
 /turf/simulated/floor/plating,
 /area/bridge/hall/level_one)
@@ -16219,7 +16224,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/tiled/dark,
-/area/crew_quarters/heads/cobed)
+/area/crew_quarters/heads/office/captain)
 "aDz" = (
 /obj/machinery/atmospherics/binary/pump{
 	dir = 8
@@ -16913,7 +16918,6 @@
 /obj/machinery/door/airlock/command{
 	dir = 4;
 	name = "Captain's Quarter";
-	req_access = newlist();
 	secured_wires = 1
 	},
 /obj/machinery/door/firedoor,
@@ -17171,8 +17175,13 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
 	},
+/obj/structure/cable/green{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
 /turf/simulated/floor/tiled/dark,
-/area/crew_quarters/heads/cobed)
+/area/crew_quarters/heads/office/captain)
 "aFv" = (
 /obj/effect/floor_decal/borderfloorblack{
 	dir = 10
@@ -17274,8 +17283,17 @@
 /area/hallway/primary/seconddeck/center)
 "aFE" = (
 /obj/effect/floor_decal/borderfloorblack/corner,
+/obj/structure/cable/green{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "east bump";
+	pixel_x = 24
+	},
 /turf/simulated/floor/tiled/dark,
-/area/crew_quarters/heads/cobed)
+/area/crew_quarters/heads/office/captain)
 "aFF" = (
 /turf/simulated/wall/r_wall/prepainted,
 /area/rnd/xenobiology/storage2)
@@ -18554,7 +18572,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/tiled/dark,
-/area/crew_quarters/heads/cobed)
+/area/crew_quarters/heads/office/captain)
 "aIl" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
@@ -18644,7 +18662,7 @@
 	},
 /obj/effect/floor_decal/borderfloorblack/corner,
 /turf/simulated/floor/tiled/dark,
-/area/crew_quarters/heads/cobed)
+/area/crew_quarters/heads/office/captain)
 "aIr" = (
 /obj/machinery/space_heater,
 /obj/machinery/alarm{
@@ -18798,8 +18816,7 @@
 /area/crew_quarters/heads/captain/office_anteroom)
 "aIK" = (
 /obj/machinery/door/airlock/multi_tile/command{
-	name = "Conference Room";
-	req_access = newlist()
+	name = "Conference Room"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -19202,7 +19219,7 @@
 	},
 /obj/machinery/recharge_station,
 /turf/simulated/floor/tiled/dark,
-/area/crew_quarters/heads/cobed)
+/area/crew_quarters/heads/office/captain)
 "aJs" = (
 /obj/machinery/atmospherics/pipe/simple/visible/black{
 	dir = 6
@@ -22473,10 +22490,11 @@
 	},
 /obj/machinery/recharger/wallcharger{
 	dir = 8;
-	pixel_x = 21
+	pixel_x = 21;
+	pixel_y = -8
 	},
 /turf/simulated/floor/tiled/dark,
-/area/crew_quarters/heads/cobed)
+/area/crew_quarters/heads/office/captain)
 "aPR" = (
 /obj/machinery/alarm{
 	dir = 1;
@@ -27903,7 +27921,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/tiled/dark,
-/area/crew_quarters/heads/cobed)
+/area/crew_quarters/heads/office/captain)
 "baf" = (
 /obj/machinery/light_switch{
 	dir = 1;
@@ -28460,7 +28478,7 @@
 /obj/item/rig/command/captain/equipped,
 /obj/item/clothing/mask/gas/half,
 /turf/simulated/floor/tiled/dark,
-/area/crew_quarters/heads/cobed)
+/area/crew_quarters/heads/office/captain)
 "bbr" = (
 /obj/structure/cable/green{
 	d1 = 1;
@@ -29214,7 +29232,7 @@
 /area/engineering/engine_room)
 "bcT" = (
 /turf/simulated/wall/prepainted,
-/area/crew_quarters/heads/cobed)
+/area/crew_quarters/heads/office/captain)
 "bcU" = (
 /obj/structure/sign/poster{
 	pixel_x = 32
@@ -31799,7 +31817,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/tiled/dark,
-/area/crew_quarters/heads/cobed)
+/area/crew_quarters/heads/office/captain)
 "bit" = (
 /obj/effect/floor_decal/industrial/warning/corner,
 /obj/machinery/shieldwallgen,
@@ -34657,7 +34675,6 @@
 	dir = 4;
 	id_tag = "portbridgedoor";
 	name = "Bridge";
-	req_access = newlist();
 	secured_wires = 1
 	},
 /obj/machinery/door/firedoor,
@@ -34817,6 +34834,9 @@
 	},
 /turf/simulated/floor/carpet/purple,
 /area/crew_quarters/lounge_big)
+"jey" = (
+/turf/simulated/wall/r_wall/prepainted,
+/area/crew_quarters/heads/office/captain)
 "jeY" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -38818,7 +38838,6 @@
 	dir = 4;
 	id_tag = "portbridgedoor";
 	name = "Bridge";
-	req_access = newlist();
 	secured_wires = 1
 	},
 /turf/simulated/floor/tiled/dark/monotile,
@@ -47464,7 +47483,7 @@ aam
 aam
 abI
 abI
-aiY
+jey
 baC
 abJ
 bhZ
@@ -47666,12 +47685,12 @@ aam
 aam
 abI
 abI
-aiY
-aiY
-aiY
-aiY
-aiY
-aiY
+jey
+jey
+jey
+jey
+jey
+jey
 pxC
 aOl
 aBr
@@ -47868,12 +47887,12 @@ aki
 abI
 abI
 aiY
-aiY
+jey
 aod
 bad
 biq
 asz
-aiY
+jey
 afF
 azc
 aCJ
@@ -48277,7 +48296,7 @@ avl
 axB
 aFu
 aIq
-aiY
+jey
 afI
 biP
 aHW
@@ -48479,7 +48498,7 @@ avn
 axG
 aFE
 bbp
-aiY
+jey
 agu
 tHv
 bjN
@@ -48681,7 +48700,7 @@ bcT
 axI
 bcT
 bcT
-aiY
+jey
 agz
 biX
 bjK
