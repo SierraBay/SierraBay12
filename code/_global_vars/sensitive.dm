@@ -21,4 +21,3 @@ GLOBAL_REAL_VAR(sqldonpass)    = "1234"
 var/global/db_version = 0
 var/global/DBConnection/dbcon = new
 var/global/DBConnection/dbcon_old = new
-var/global/DBConnection/dbcon_don = new()
