@@ -3338,5 +3338,6 @@
 #include "mods\_modpack.dm"
 #include "mods\eris_announcer\_eris_announcer.dme"
 #include "mods\leroy_beasts_pack\_leroy_beasts.dme"
+#include "mods\machinery\scrap_compactor\_scrap_compactor.dme"
 #include "~code\global_init.dm"
 // END_INCLUDE
