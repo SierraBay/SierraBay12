@@ -16,7 +16,6 @@
 	var/obj/machinery/crusher_piston/piston //Piston
 	construct_state = /singleton/machine_construction/default/panel_closed
 	uncreated_component_parts = list(
-		/obj/item/stock_parts/radio/receiver,
 		/obj/item/stock_parts/power/apc
 	)
 
@@ -100,7 +99,7 @@
 	QDEL_NULL(piston)
 	return ..()
 
-/obj/machinery/crusher_base/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/machinery/crusher_base/attackby(obj/item/O as obj, mob/user as mob)
 	if(status != "idle" && prob(40) && ishuman(user))
 		var/mob/living/carbon/human/M = user
 		var/prot = 0
@@ -485,7 +484,7 @@
 		return 0
 	return L[A.type]
 
-/obj/machinery/crusher_piston/proc/can_extend_into(var/turf/extension_turf)
+/obj/machinery/crusher_piston/proc/can_extend_into(turf/extension_turf)
 	//Check if atom is of a specific Type
 	if(istype(extension_turf,/turf/simulated/wall))
 		return 0
