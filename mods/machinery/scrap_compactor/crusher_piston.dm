@@ -13,7 +13,7 @@
 	use_power = 1
 	idle_power_usage = 300
 
-	var/obj/machinery/crusher_piston/pstn //Piston
+	var/obj/machinery/crusher_piston/piston //Piston
 	construct_state = /singleton/machine_construction/default/panel_closed
 	uncreated_component_parts = list(
 		/obj/item/stock_parts/radio/receiver,
@@ -78,8 +78,8 @@
 	action_start_time = world.time
 
 	//Spawn the stage 1 pistons south of it with a density of 0
-	pstn = new(get_step(src, SOUTH))
-	pstn.crs_base = src
+	piston = new(get_step(src, SOUTH))
+	piston.crs_base = src
 
 	update_icon()
 	// Change the icons of the neighboring bases
@@ -97,7 +97,7 @@
 		right.update_icon()
 	loc=oldloc
 
-	QDEL_NULL(pstn)
+	QDEL_NULL(piston)
 	return ..()
 
 /obj/machinery/crusher_base/attackby(var/obj/item/O as obj, var/mob/user as mob)
@@ -189,7 +189,7 @@
 
 /obj/machinery/crusher_base/Process()
 	set waitfor = FALSE
-	if(!pstn) //We dont process if theres no piston
+	if(!piston) //We dont process if theres no piston
 		return
 	if(process_lock)
 		log_debug("crusher_piston process() has been called while it was still locked. Aborting")
@@ -221,7 +221,7 @@
 				if(initial)
 					initial = 0
 					num_progress = 33
-					if(!pstn.extend_0_1())
+					if(!piston.extend_0_1())
 						num_progress = 0
 						status = "idle"
 						action = "idle"
@@ -239,7 +239,7 @@
 				if(initial)
 					initial = 0
 					num_progress = 66
-					if(!pstn.extend_1_2())
+					if(!piston.extend_1_2())
 						num_progress = 33
 						action = "idle"
 						blocked = 1
@@ -256,7 +256,7 @@
 				if(initial)
 					initial = 0
 					num_progress = 100
-					if(!pstn.extend_2_3())
+					if(!piston.extend_2_3())
 						num_progress = 66
 						action = "idle"
 						blocked = 1
@@ -287,9 +287,9 @@
 		if(status == "stage3")
 			if(initial)
 				initial = 0
-				pstn.retract_3_0()
+				piston.retract_3_0()
 			if(timediff > time_stage_3) //Once the time is up, reset the icon state
-				pstn.icon_state = initial(pstn.icon_state)
+				piston.icon_state = initial(piston.icon_state)
 				status = "idle"
 				action = "idle"
 				action_start_time = world.time
@@ -298,9 +298,9 @@
 		else if(status == "stage2")
 			if(initial)
 				initial = 0
-				pstn.retract_2_0()
+				piston.retract_2_0()
 			if(timediff > time_stage_2) //Once the time is up, reset the icon state
-				pstn.icon_state = initial(pstn.icon_state)
+				piston.icon_state = initial(piston.icon_state)
 				status = "idle"
 				action = "idle"
 				action_start_time = world.time
@@ -309,17 +309,17 @@
 		else if(status == "stage1")
 			if(initial)
 				initial = 0
-				pstn.retract_1_0()
+				piston.retract_1_0()
 			if(timediff > time_stage_1) //Once the time is up, reset the icon state
-				pstn.icon_state = initial(pstn.icon_state)
+				piston.icon_state = initial(piston.icon_state)
 				status = "idle"
 				action = "idle"
 				action_start_time = world.time
 				initial = 1
 				update_icon()
 		else //This shouldnt really happen, but its there just in case
-			pstn.icon_state = initial(pstn.icon_state)
-			pstn.reset_blockers()
+			piston.icon_state = initial(piston.icon_state)
+			piston.reset_blockers()
 			status = "idle"
 			action = "idle"
 			action_start_time = world.time
@@ -480,7 +480,7 @@
 
 // Proc from old Sierra repo. This is cringe
 /proc/is_type_in_typecache(atom/A, list/L)
-	if(!L || !L.len || !A)
+	if(!L || !length(L)|| !A)
 
 		return 0
 	return L[A.type]
@@ -521,7 +521,7 @@
 		if(!new_turf.contains_dense_objects())
 			valid_turfs += new_turf
 
-	while(valid_turfs.len)
+	while(length(valid_turfs))
 		T = pick(valid_turfs)
 		valid_turfs -= T
 

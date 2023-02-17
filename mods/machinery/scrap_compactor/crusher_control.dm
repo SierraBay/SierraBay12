@@ -17,7 +17,7 @@
 	var/list/status_airlocks = list() //Status of the airlocks
 	var/list/status_pistons = list() //Status of the pistons
 
-/datum/nano_module/program/crushercontrol/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null, var/force_open = 1, var/datum/topic_state/state = GLOB.default_state)
+/datum/nano_module/program/crushercontrol/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1, datum/topic_state/state = GLOB.default_state)
 	var/list/data = host.initial_data()
 
 	status_pistons = list()
@@ -25,10 +25,10 @@
 
 	//Cycle through the pistons and get their status
 	var/i = 1
-	for(var/obj/machinery/crusher_base/pstn in pistons)
-		var/num_progress = pstn.get_num_progress()
-		var/is_blocked = pstn.is_blocked()
-		var/action = pstn.get_action()
+	for(var/obj/machinery/crusher_base/piston in pistons)
+		var/num_progress = piston.get_num_progress()
+		var/is_blocked = piston.is_blocked()
+		var/action = piston.get_action()
 		if(action == "extend")
 			extending = 1
 		status_pistons.Add(list(list(
@@ -40,8 +40,8 @@
 		i++
 
 	data["message"] = message
-	data["airlock_count"] = airlocks.len
-	data["piston_count"] = pistons.len
+	data["airlock_count"] = length(airlocks)
+	data["piston_count"] = length(pistons)
 	data["status_airlocks"] = status_airlocks
 	data["status_pistons"] = status_pistons
 	data["extending"] = extending
@@ -59,8 +59,8 @@
 
 	if(href_list["initialize"])
 		pistons = list()
-		for(var/obj/machinery/crusher_base/pstn in orange(10,src.host))
-			pistons += pstn
+		for(var/obj/machinery/crusher_base/piston in orange(10,src.host))
+			pistons += piston
 
 		airlocks = list()
 		for(var/obj/machinery/door/airlock/arlk in orange(10,src.host))
@@ -93,26 +93,26 @@
 
 /datum/nano_module/program/crushercontrol/proc/airlock_open()
 	for(var/thing in airlocks)
-		var/obj/machinery/door/airlock/arlk = thing
-		if (!arlk.cur_command)
+		var/obj/machinery/door/airlock/airlock = thing
+		if (!airlock.cur_command)
 			// Not using do_command so that the command queuer works.
-			arlk.cur_command = "secure_open"
-			arlk.execute_current_command()
+			airlock.cur_command = "secure_open"
+			airlock.execute_current_command()
 
 /datum/nano_module/program/crushercontrol/proc/airlock_close()
 	for(var/thing in airlocks)
-		var/obj/machinery/door/airlock/arlk = thing
-		if (!arlk.cur_command)
-			arlk.cur_command = "secure_close"
-			arlk.execute_current_command()
+		var/obj/machinery/door/airlock/airlock = thing
+		if (!airlock.cur_command)
+			airlock.cur_command = "secure_close"
+			airlock.execute_current_command()
 
 /datum/nano_module/program/crushercontrol/proc/crush_start()
-	for(var/obj/machinery/crusher_base/pstn in pistons)
-		pstn.crush_start()
+	for(var/obj/machinery/crusher_base/piston in pistons)
+		piston.crush_start()
 
 /datum/nano_module/program/crushercontrol/proc/crush_stop()
-	for(var/obj/machinery/crusher_base/pstn in pistons)
-		pstn.crush_abort()
+	for(var/obj/machinery/crusher_base/piston in pistons)
+		piston.crush_abort()
 
 /obj/item/modular_computer/telescreen/preset/trashcompactor/install_default_programs()
 	..()
