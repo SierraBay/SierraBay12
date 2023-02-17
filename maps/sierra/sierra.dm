@@ -148,6 +148,8 @@
 	#include "../../mods/machinery/atmos_ret_field/_atm_ret_field.dme"
 	#include "../../mods/mortar/mortar.dme"
 	#include "../../mods/don_loadout/_don_loadout.dme"
+	#include "../../mods/leroy_beasts_pack/_leroy_beasts.dme"
+	#include "../../mods/machinery/scrap_compactor/_scrap_compactor.dme"
 
 	#include "../../packs/infinity/_pack.dm"
 	#include "../../packs/sierra-tweaks/_pack.dm"
