@@ -60,6 +60,31 @@ a.white:hover
 	background: #40628a;
 }
 
+a.gold, a.gold:link, a.gold:visited, a.gold:active
+{
+	color: #ffa600;
+	background: #000000;
+	border-color: #ffa600;
+}
+
+a.gold:hover
+{
+	color: #40628a;
+	background: #ffffff;
+}
+
+a.gray, a.gray:link, a.gray:visited, a.gray:active
+{
+	color: #ffffff;
+	background: #696969;
+}
+
+a.gray:hover
+{
+	color: #40628a;
+	background: #ffffff;
+}
+
 .linkOn, a.linkOn:link, a.linkOn:visited, a.linkOn:active, a.linkOn:hover
 {
 	color: #ffffff;
@@ -344,4 +369,23 @@ div.notice
 	border: 1px solid #40628a;
 	padding: 4px;
 	margin: 3px 0;
+}
+
+.bigIcon
+{
+	width: 64px;
+	height: 64px;
+}
+
+.dt_1 {
+  color: #536bbd;
+}
+.dt_2 {
+  color: #5b10d4;
+}
+.dt_3 {
+  color: #af30cf;
+}
+.dt_4 {
+  color: #e519db;
 }

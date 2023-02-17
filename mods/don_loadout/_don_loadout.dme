@@ -1,0 +1,19 @@
+#ifndef MODPACK_DON_LOADOUT
+#define MODPACK_DON_LOADOUT
+#include "_don_loadout.dm"
+
+#include "configuration.dm"
+
+#include "donations/donations_defines.dm"
+#include "donations/donations.dm"
+#include "donations/donator.dm"
+
+#include "loadout/gear.dm"
+#include "loadout/helpers.dm"
+#include "loadout/loadout.dm"
+#include "loadout/preferences.dm"
+
+#include "loadout/categories/categories.dm"
+#include "loadout/categories/masks.dm"
+
+#endif
