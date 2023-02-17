@@ -171,11 +171,11 @@
 
 	if(powered(EQUIP))
 		if(blocked == 1)
-			overlays += overlay_image(icon, "[asmtype]-overlay-red", COLOR_RED, plane = EFFECTS_ABOVE_LIGHTING_PLANE, layer = ABOVE_LIGHTING_LAYER)
+			overlays += "[asmtype]-overlay-red"
 		else if(action != "idle")
-			overlays += overlay_image(icon, "[asmtype]-overlay-orange", COLOR_ORANGE, plane = EFFECTS_ABOVE_LIGHTING_PLANE, layer = ABOVE_LIGHTING_LAYER)
+			overlays += "[asmtype]-overlay-orange"
 		else
-			overlays += overlay_image(icon, "[asmtype]-overlay-green", COLOR_GREEN, plane = EFFECTS_ABOVE_LIGHTING_PLANE, layer = ABOVE_LIGHTING_LAYER)
+			overlays += "[asmtype]-overlay-green"
 	if(panel_open)
 		overlays += image(icon, "[asmtype]-hatch")
 

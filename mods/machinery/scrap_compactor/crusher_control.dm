@@ -2,7 +2,7 @@
 	filename = "crushercontrol"
 	filedesc = "Crusher Control"
 	extended_desc = "Application to Control the Crusher"
-	program_icon_state = "fuel_screen"
+	program_icon_state = "supply"
 	size = 8
 	required_access = access_cargo
 	usage_flags = PROGRAM_TELESCREEN | PROGRAM_CONSOLE
