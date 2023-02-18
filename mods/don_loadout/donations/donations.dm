@@ -212,12 +212,8 @@
 			За денежные пожертвования, в благодарность от нашего сервера, вы получаете <b>phinix</b>. Либо доступ на месяц к
 	</p>
 	"}
-	if(length(SSmodpacks.loaded_modpacks))
-		. = "<hr><br><center><b><font size = 3>Modpacks List</font></b></center><br><hr><br>"
-		for(var/modpack in SSmodpacks.loaded_modpacks)
-			var/singleton/modpack/M = SSmodpacks.loaded_modpacks[modpack]
 
-	var/datum/browser/popup = new(user, "modpacks_list", "Modpacks List", 480, 580)
+	var/datum/browser/popup = new(user, "donation_links", "Пожертвования", 400, 300)
 	popup.set_content(html)
 	popup.open()
 
