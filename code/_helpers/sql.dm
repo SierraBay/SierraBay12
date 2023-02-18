@@ -11,7 +11,7 @@
 	var/static/regex/token_finder = regex(@"\$(\w+|\$)")
 	var/mode_named = FALSE
 	var/list/arguments = args.Copy(3)
-	if (arguments.len == 1 && islist(arguments[1]))
+	if (length(arguments)== 1 && islist(arguments[1]))
 		mode_named = TRUE
 		arguments = arguments[1]
 	var/search_from = 1
@@ -25,12 +25,12 @@
 			ASSERT(!isnull(replacement))
 		else
 			if (token == "$")
-				ASSERT(++arg_counter <= arguments.len)
+				ASSERT(++arg_counter <= length(arguments))
 				replacement = arguments[arg_counter]
 			else
 				var/token_num = text2num(token)
 				ASSERT(!isnull(token_num))
-				ASSERT(token_num > 0 && token_num <= arguments.len)
+				ASSERT(token_num > 0 && token_num <= length(arguments))
 				replacement = arguments[token_num]
 		if (!isnum(replacement))
 			replacement = db.Quote("[replacement]")

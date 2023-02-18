@@ -78,7 +78,7 @@ var/global/list/hash_to_gear = list()
 	pref.gear_slot = sanitize_integer(pref.gear_slot, 1, config.loadout_slots, initial(pref.gear_slot))
 	if(!islist(pref.gear_list)) pref.gear_list = list()
 
-	if(pref.gear_list.len < config.loadout_slots)
+	if(length(pref.gear_list) < config.loadout_slots)
 		LIST_RESIZE(pref.gear_list, config.loadout_slots)
 
 	max_loadout_points = config.max_gear_cost
@@ -120,7 +120,7 @@ var/global/list/hash_to_gear = list()
 
 	var/total_cost = 0
 	var/list/gears = pref.gear_list[pref.gear_slot]
-	for(var/i = 1; i <= gears.len; i++)
+	for(var/i = 1; i <= length(gears); i++)
 		var/datum/gear/G = gear_datums[gears[i]]
 		if(G)
 			total_cost += G.cost
@@ -403,7 +403,7 @@ var/global/list/hash_to_gear = list()
 			. += "<br>"
 
 		// Tweaks
-		if(selected_gear.gear_tweaks.len)
+		if(length(selected_gear.gear_tweaks))
 			. += "<br><b>Options:</b><br>"
 			for(var/datum/gear_tweak/tweak in selected_gear.gear_tweaks)
 				var/tweak_contents = tweak.get_contents(selected_tweaks["[tweak]"])

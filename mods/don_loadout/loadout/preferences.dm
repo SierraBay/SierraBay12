@@ -49,7 +49,7 @@
 			var/datum/gear/G = gear_datums[thing]
 			if(G)
 				var/permitted = 0
-				if(G.allowed_roles && G.allowed_roles.len)
+				if(G.allowed_roles && length(G.allowed_roles))
 					if(previewJob)
 						for(var/job_type in G.allowed_roles)
 							if(previewJob.type == job_type)
@@ -75,7 +75,7 @@
 		for(var/datum/gear/G in accessories)
 			G.spawn_as_accessory_on_mob(mannequin, gears[G.display_name])
 
-		if(accessories.len)
+		if(length(accessories))
 			update_icon = TRUE
 
 	if(update_icon)
