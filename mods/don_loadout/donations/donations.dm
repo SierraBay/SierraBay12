@@ -213,7 +213,7 @@
 	</p>
 	"}
 
-	var/datum/browser/popup = new(user, "donation_links", "Пожертвования", 400, 300)
+	var/datum/browser/popup = new(user, "donation_links", "Пожертвования", 400, 230)
 	popup.set_content(html)
 	popup.open()
 
