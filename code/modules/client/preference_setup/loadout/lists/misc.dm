@@ -43,7 +43,7 @@
 /datum/gear/flask
 	display_name = "flask"
 	path = /obj/item/reagent_containers/food/drinks/flask
-	price = 5
+	points_price = 5
 
 /datum/gear/flask/New()
 	..()
@@ -52,22 +52,22 @@
 /datum/gear/flask/bar
 	display_name = "bar flask"
 	path = /obj/item/reagent_containers/food/drinks/flask/barflask
-	price = 0
+	points_price = 0
 
 /datum/gear/flask/vacuum
 	display_name = "vacuum-flask"
 	path = /obj/item/reagent_containers/food/drinks/flask/vacuumflask
-	price = 0
+	points_price = 0
 
 /datum/gear/flask/lithium
 	display_name = "lithium flask"
 	path = /obj/item/reagent_containers/food/drinks/flask/lithium
-	price = 8
+	points_price = 8
 
 /datum/gear/flask/shiny
 	display_name = "shiny flask"
 	path = /obj/item/reagent_containers/food/drinks/flask/shiny
-	price = 10
+	points_price = 10
 
 /datum/gear/coffeecup
 	display_name = "coffee cup"

@@ -218,7 +218,7 @@ var/global/list/hash_to_gear = list()
 		var/datum/gear/G = LC.gear[gear_name]
 		if(!G.path)
 			continue
-		if(hide_donate_gear && (G.price || G.donation_tier))
+		if(hide_donate_gear && (G.points_price || G.donation_tier))
 			continue
 		if(!G.is_allowed_to_display(user))
 			continue
@@ -233,9 +233,9 @@ var/global/list/hash_to_gear = list()
 		if(G != selected_gear)
 			if(ticked)
 				display_class = "white"
-			else if(!gear_allowed_to_equip(G, user) && G.price)
+			else if(!gear_allowed_to_equip(G, user) && G.points_price)
 				display_class = "gold"
-				discountText = G.price && G.discount ? "<b>(-[round(G.discount * 100)]%)</b>" : ""
+				discountText = G.points_price && G.discount ? "<b>(-[round(G.discount * 100)]%)</b>" : ""
 			else if(!allowed_to_see)
 				display_class = "red"
 			else
@@ -250,7 +250,7 @@ var/global/list/hash_to_gear = list()
 		if(!hide_unavailable_gear || allowed_to_see || ticked)
 			if(user.client.donator_info.has_item(G.type) || (G.donation_tier && user.client.donator_info.donation_tier_available(G.donation_tier)))
 				purchased_gears += entry
-			else if(G.price || G.donation_tier)
+			else if(G.points_price || G.donation_tier)
 				paid_gears += entry
 			else
 				not_paid_gears += entry
@@ -392,14 +392,14 @@ var/global/list/hash_to_gear = list()
 			. += "<b>Dontaion tier: [donation_tier_decorated(selected_gear.donation_tier)]</b>"
 			. += "<br>"
 
-		if(selected_gear.price)
+		if(selected_gear.points_price)
 			. += "<br>"
 			if(!gear_allowed_to_equip(selected_gear, user) && selected_gear.discount)
-				var/adjusted_price = selected_gear.price * selected_gear.discount
-				. += "<b>Price: <strike>[selected_gear.price] phinix[selected_gear.price != 1 ? "es" : ""]</strike></b> "
+				var/adjusted_price = selected_gear.points_price * selected_gear.discount
+				. += "<b>Price: <strike>[selected_gear.points_price] phinix[selected_gear.points_price != 1 ? "es" : ""]</strike></b> "
 				. += "<font color='#ff6600'><b>[adjusted_price] phinix[adjusted_price != 1 ? "es" : ""] ([round(selected_gear.discount * 100)] percents off!)</b></font>"
 			else
-				. += "<b>Price: [selected_gear.price] phinix[selected_gear.price != 1 ? "es" : ""]</b>"
+				. += "<b>Price: [selected_gear.points_price] phinix[selected_gear.points_price != 1 ? "es" : ""]</b>"
 			. += "<br>"
 
 		// Tweaks
@@ -422,7 +422,7 @@ var/global/list/hash_to_gear = list()
 			. += "<a [ticked ? "class='linkOn' " : ""]href='?src=\ref[src];toggle_gear=[html_encode(selected_gear.gear_hash)]'>[ticked ? "Drop" : "Take"]</a>"
 		else
 			var/trying_on = (pref.trying_on_gear == selected_gear.display_name)
-			if(selected_gear.price)
+			if(selected_gear.points_price)
 				. += "<a class='gold' href='?src=\ref[src];buy_gear=\ref[selected_gear]'>Buy</a> "
 				. += "<a [trying_on ? "class='linkOn' " : ""]href='?src=\ref[src];try_on=1'>Try On</a>"
 			else
@@ -506,14 +506,14 @@ var/global/list/hash_to_gear = list()
 	if(href_list["buy_gear"])
 		var/datum/gear/G = locate(href_list["buy_gear"])
 
-		ASSERT(G.price)
+		ASSERT(G.points_price)
 		ASSERT(!user.client.donator_info.has_item(G.type))
 
 		var/singleton/modpack/don_loadout/donations = GET_SINGLETON(/singleton/modpack/don_loadout)
 
 		pref.loadout_is_busy = TRUE
 		var/comment = "Donation store purchase: [G.type]"
-		var/adjusted_price = G.discount ? G.price * G.discount : G.price
+		var/adjusted_price = G.discount ? G.points_price * G.discount : G.points_price
 		var/transaction = donations.create_transaction(user.client, -adjusted_price, DONATIONS_TRANSACTION_TYPE_PURCHASE, comment)
 
 		if(transaction)
@@ -695,7 +695,7 @@ var/global/list/hash_to_gear = list()
 
 /datum/category_item/player_setup_item/new_loadout/proc/toggle_gear(datum/gear/TG, mob/user)
 	// check if someone trying to tricking us. However, it's may be just a bug
-	ASSERT(!TG.price || user.client.donator_info.has_item(TG.type))
+	ASSERT(!TG.points_price || user.client.donator_info.has_item(TG.type))
 	ASSERT(!TG.donation_tier || user.client.donator_info.donation_tier_available(TG.donation_tier))
 
 	if(TG.display_name in pref.gear_list[pref.gear_slot])

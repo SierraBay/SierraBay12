@@ -1,6 +1,6 @@
 /datum/gear
 	var/gear_hash     // MD5 hash of display_name. Used to get item in Topic calls. See href problem with ' symbol
-	var/price         // Price of item, phinixes
+	var/points_price  // Price of item, phinixes
 	var/discount      // Discount to a price
 	var/donation_tier // Donation tier restriction
 
@@ -12,7 +12,7 @@
 /datum/gear/proc/is_allowed_to_equip(mob/user)
 	ASSERT(user && user.client)
 	ASSERT(user.client.donator_info)
-	if(price && !user.client.donator_info.has_item(type))
+	if(points_price && !user.client.donator_info.has_item(type))
 		return FALSE
 	if(donation_tier && !user.client.donator_info.donation_tier_available(donation_tier))
 		return FALSE
