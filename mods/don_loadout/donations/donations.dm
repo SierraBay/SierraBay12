@@ -31,7 +31,7 @@
 	if(!establish_db_connection())
 		return FALSE
 
-	sql_query("INSERT IGNORE INTO players (ckey) VALUES ($ckey)", dbcon, list(ckey = player.ckey))
+	sql_query("INSERT IGNORE INTO erro_player (ckey) VALUES ($ckey)", dbcon, list(ckey = player.ckey))
 
 	return TRUE
 
@@ -49,27 +49,31 @@
 		SELECT
 			donation_types.type
 		FROM
-			players
+			donation_players
 		JOIN
-			donation_types ON players.donation_type = donation_types.id
+			donation_types ON donation_players.donation_type = donation_types.id
 		WHERE
 			ckey = $ckey
+			AND
+			server = $server_name
 		LIMIT 0,1
-	"}, dbcon, list(ckey = player.ckey))
+	"}, dbcon, list(ckey = player.ckey, server_name = 1))
 
 	if(query.NextRow())
 		player.donator_info.donation_type = query.item[1]
 
 	query = sql_query({"
 		SELECT
-			`change`
+			CAST(SUM(`change`) as UNSIGNED INTEGER)
 		FROM
 			points_transactions
 		JOIN
-			players ON players.id = points_transactions.player
+			erro_player ON erro_player.id = points_transactions.player
 		WHERE
 			ckey = $ckey
-	"}, dbcon, list(ckey = player.ckey))
+			AND
+			server = $server_name
+	"}, dbcon, list(ckey = player.ckey, server_name = 1))
 
 	player.donator_info.phinixes = 0
 	while(query.NextRow())
@@ -95,8 +99,10 @@
 		FROM
 			store_players_items
 		WHERE
-			player = (SELECT id FROM players WHERE ckey = $ckey)
-	"}, dbcon, list(ckey = player.ckey))
+			player = (SELECT id FROM erro_player WHERE ckey = $ckey)
+			AND
+			server = $server_name
+	"}, dbcon, list(ckey = player.ckey, server_name = 1))
 
 	while(query.NextRow())
 		player.donator_info.items.Add(query.item[1])
@@ -121,12 +127,13 @@
 			points_transactions
 		VALUES (
 			NULL,
-			(SELECT id FROM players WHERE ckey = $ckey),
+			(SELECT id FROM erro_player WHERE ckey = $ckey),
 			(SELECT id FROM points_transactions_types WHERE type = $type),
 			NOW(),
 			$change,
-			$comment)
-	"}, dbcon, list(ckey = player.ckey, type = type, change = change, comment = comment))
+			$comment,
+			$server_name)
+	"}, dbcon, list(ckey = player.ckey, type = type, change = change, comment = comment, server_name = 1))
 
 	var/transaction_id
 	var/DBQuery/query = sql_query({"
@@ -135,13 +142,15 @@
 		FROM
 			points_transactions
 		WHERE
-			player = (SELECT id FROM players WHERE ckey = $ckey)
+			player = (SELECT id FROM erro_player WHERE ckey = $ckey)
 			AND
 			comment = $comment
+			AND
+			server = $server_name
 		ORDER BY
 			id
 			DESC
-	"}, dbcon, list(ckey = player.ckey, comment = comment))
+	"}, dbcon, list(ckey = player.ckey, comment = comment, server_name = 1))
 
 	if(query.NextRow())
 		transaction_id = query.item[1]
@@ -182,11 +191,12 @@
 			store_players_items
 		VALUES
 			(NULL,
-			(SELECT id from players WHERE ckey = $ckey),
+			(SELECT id from erro_player WHERE ckey = $ckey),
 			$tid,
 			NOW(),
-			$item_type)
-	"}, dbcon, list(ckey = player.ckey, tid = transaction_id ? transaction_id : "NULL", item_type = item_type))
+			$item_type,
+			$server_name)
+	"}, dbcon, list(ckey = player.ckey, tid = transaction_id ? transaction_id : "NULL", item_type = item_type, server_name = 1))
 
 	player.donator_info.items.Add("[item_type]")
 
