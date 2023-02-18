@@ -15,5 +15,6 @@
 
 #include "loadout/categories/categories.dm"
 #include "loadout/categories/masks.dm"
+#include "loadout/categories/misc.dm"
 
 #endif
