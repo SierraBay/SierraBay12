@@ -60,3 +60,14 @@
 		/obj/item/gun/projectile/pistol/optimus = 3,
 		/obj/item/gun/projectile/pistol/m22f = 3
 	)
+
+
+
+/obj/effect/landmark/corpse/fleet
+	name = "Fleet Armsman"
+	corpse_outfits = list(/singleton/hierarchy/outfit/job/torch/ert)
+	spawn_flags = CORPSE_SPAWNER_NO_RANDOMIZATION
+
+/obj/effect/landmark/corpse/fleet/leader
+	name = "Fleet Team Leader"
+	corpse_outfits = list(/singleton/hierarchy/outfit/job/torch/ert/leader)
