@@ -43,6 +43,7 @@
 
 /obj/machinery/computer/on_update_icon()
 	overlays.Cut()
+	underlays.Cut()
 	icon = initial(icon)
 	icon_state = initial(icon_state)
 
@@ -70,6 +71,7 @@
 		overlays += image(icon,"[icon_state]_broken", overlay_layer)
 	else
 		overlays += get_screen_overlay()
+		underlays += emissive_appearance(icon, icon_screen)
 
 	overlays += get_keyboard_overlay()
 

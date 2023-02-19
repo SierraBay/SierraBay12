@@ -28,11 +28,43 @@
 	/// The icon height this movable expects to have by default.
 	var/icon_height = 32
 
+	/// Either FALSE, [EMISSIVE_BLOCK_GENERIC], or [EMISSIVE_BLOCK_UNIQUE]
+	var/blocks_emissive = FALSE
+	///Internal holder for emissive blocker object, do not use directly use blocks_emissive
+	var/mutable_appearance/em_block
 
 /atom/movable/Initialize()
 	if (!isnull(config.glide_size))
 		glide_size = config.glide_size
 	. = ..()
+	update_emissive_block()
+
+/atom/movable/proc/update_emissive_block()
+	if(!blocks_emissive)
+		return
+	if (blocks_emissive == EMISSIVE_BLOCK_GENERIC)
+		var/mutable_appearance/gen_emissive_blocker = emissive_blocker(
+			icon = icon,
+			icon_state = icon_state,
+			alpha = alpha,
+			appearance_flags = appearance_flags
+		)
+		gen_emissive_blocker.dir = dir
+		underlays += gen_emissive_blocker
+		return
+	if(blocks_emissive == EMISSIVE_BLOCK_UNIQUE)
+		if(!em_block && !QDELETED(src))
+			// The atom must use the KEEP_TOGETHER flag to have its overlays/underlays included in the render_target image.
+			appearance_flags |= KEEP_TOGETHER
+			render_target = ref(src)
+			var/mutable_appearance/gen_emissive_blocker = emissive_blocker(
+				icon = icon,
+				appearance_flags = appearance_flags,
+				source = render_target
+			)
+			em_block = gen_emissive_blocker
+		underlays += em_block
+		return
 
 /atom/movable/Destroy()
 
@@ -58,6 +90,9 @@
 
 	if(ismob(virtual_mob))
 		QDEL_NULL(virtual_mob)
+
+	if(em_block)
+		QDEL_NULL(em_block)
 
 	return ..()
 
