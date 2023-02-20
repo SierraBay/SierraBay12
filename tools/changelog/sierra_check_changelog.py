@@ -36,7 +36,7 @@ pr = pr_list[0]
 pr_body = pr.body or ""
 pr_number = pr.number
 pr_author = pr.user.login
-pr_labels = pr.get_labels()
+pr_labels = pr.labels
 
 CL_INVALID = ":scroll: CL невалиден"
 CL_VALID = ":scroll: CL валиден"
