@@ -50,7 +50,7 @@ if not pr_list.totalCount:
 
 pr = pr_list[0]
 
-pr_body = pr.body
+pr_body = pr.body or ""
 pr_number = pr.number
 pr_author = pr.user.login
 
@@ -60,11 +60,11 @@ try:
     cl_list = CL_SPLIT.findall(cl.group(3))
 except AttributeError:
     print("No CL found!")
-    exit(1) # Change to '0' if you do not want the action to fail when no CL is provided
+    exit(0) # Change to '0' if you do not want the action to fail when no CL is provided
 
 
 if cl.group(2) is not None:
-    write_cl['author'] = cl.group(2).lstrip()
+    write_cl['author'] = cl.group(2).strip() or pr_author
 else:
     write_cl['author'] = pr_author
 
