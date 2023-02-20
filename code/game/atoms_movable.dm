@@ -37,34 +37,11 @@
 	if (!isnull(config.glide_size))
 		glide_size = config.glide_size
 	. = ..()
-	update_emissive_block()
-
-/atom/movable/proc/update_emissive_block()
-	if(!blocks_emissive)
-		return
-	if (blocks_emissive == EMISSIVE_BLOCK_GENERIC)
-		var/mutable_appearance/gen_emissive_blocker = emissive_blocker(
-			icon = icon,
-			icon_state = icon_state,
-			alpha = alpha,
-			appearance_flags = appearance_flags
-		)
-		gen_emissive_blocker.dir = dir
-		underlays += gen_emissive_blocker
-		return
-	if(blocks_emissive == EMISSIVE_BLOCK_UNIQUE)
-		if(!em_block && !QDELETED(src))
-			// The atom must use the KEEP_TOGETHER flag to have its overlays/underlays included in the render_target image.
-			appearance_flags |= KEEP_TOGETHER
-			render_target = ref(src)
-			var/mutable_appearance/gen_emissive_blocker = emissive_blocker(
-				icon = icon,
-				appearance_flags = appearance_flags,
-				source = render_target
-			)
-			em_block = gen_emissive_blocker
-		underlays += em_block
-		return
+	var/emissive_block = update_emissive_block()
+	if(emissive_block)
+		overlays += emissive_block
+		// Since this overlay is managed by update_overlays proc
+		LAZYADD(managed_overlays, emissive_block)
 
 /atom/movable/Destroy()
 
@@ -95,6 +72,37 @@
 		QDEL_NULL(em_block)
 
 	return ..()
+
+/atom/movable/proc/update_emissive_block()
+	if(!blocks_emissive)
+		return
+	if (blocks_emissive == EMISSIVE_BLOCK_GENERIC)
+		var/mutable_appearance/gen_emissive_blocker = emissive_blocker(
+			icon = icon,
+			icon_state = icon_state,
+			alpha = alpha,
+			appearance_flags = appearance_flags
+		)
+		gen_emissive_blocker.dir = dir
+		return gen_emissive_blocker
+	if(blocks_emissive == EMISSIVE_BLOCK_UNIQUE)
+		if(!em_block && !QDELETED(src))
+			// The atom must use the KEEP_TOGETHER flag to have its overlays/underlays included in the render_target image.
+			appearance_flags |= KEEP_TOGETHER
+			render_target = ref(src)
+			var/mutable_appearance/gen_emissive_blocker = emissive_blocker(
+				icon = icon,
+				appearance_flags = appearance_flags,
+				source = render_target
+			)
+			em_block = gen_emissive_blocker
+		return em_block
+
+/atom/movable/update_overlays()
+	. = ..()
+	var/emissive_block = update_emissive_block()
+	if(emissive_block)
+		. += emissive_block
 
 /atom/movable/Bump(atom/A, yes)
 	if(!QDELETED(throwing))
