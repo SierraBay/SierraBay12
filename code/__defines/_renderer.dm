@@ -338,6 +338,9 @@ GLOBAL_LIST_EMPTY(zmimic_renderers)
  * The layers for the emissive overlays and emissive blockers cause them to mask eachother similar to normal BYOND objects.
  * A color matrix filter is applied to the emissive plane to mask out anything that isn't whatever the emissive color is.
  * This is then used to alpha mask the lighting plane.
+ *
+ * This works best if emissive overlays applied only to objects that emit light,
+ * since luminosity=0 turfs may not be rendered.
  */
 /atom/movable/renderer/emissive
 	name = "Emissive"

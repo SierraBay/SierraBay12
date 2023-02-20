@@ -43,12 +43,10 @@
 
 /obj/machinery/computer/on_update_icon()
 	overlays.Cut()
-	underlays.Cut()
 	icon = initial(icon)
 	icon_state = initial(icon_state)
 
 	if(reason_broken & MACHINE_BROKEN_NO_PARTS)
-		set_light(0)
 		icon = 'icons/obj/computer.dmi'
 		icon_state = "wired"
 		var/screen = get_component_of_type(/obj/item/stock_parts/console_screen)
@@ -60,18 +58,14 @@
 		return
 
 	if(!is_powered())
-		set_light(0)
 		if(icon_keyboard)
 			overlays += image(icon,"[icon_keyboard]_off", overlay_layer)
 		return
-	else
-		set_light(light_max_bright_on, light_inner_range_on, light_outer_range_on, 2, light_color)
 
 	if(MACHINE_IS_BROKEN(src))
 		overlays += image(icon,"[icon_state]_broken", overlay_layer)
 	else
 		overlays += get_screen_overlay()
-		underlays += emissive_appearance(icon, icon_screen)
 
 	overlays += get_keyboard_overlay()
 
@@ -86,6 +80,24 @@
 	// Adds line breaks
 	text = replacetext(text, "\n", "<BR>")
 	return text
+
+/**
+Makes the computer emit light if the screen is on.
+Returns TRUE if the screen is on, otherwise FALSE.
+*/
+/obj/machinery/computer/proc/update_glow()
+	if(operable())
+		set_light(light_max_bright_on, light_inner_range_on, light_outer_range_on, 2, light_color)
+		return TRUE
+	else
+		set_light(0)
+		return FALSE
+
+/obj/machinery/computer/update_overlays()
+	. = ..()
+	var/screen_is_glowing = update_glow()
+	if(screen_is_glowing)
+		. += emissive_appearance(icon, icon_screen)
 
 /obj/machinery/computer/dismantle(mob/user)
 	if(MACHINE_IS_BROKEN(src))
