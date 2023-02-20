@@ -19,9 +19,8 @@
 /obj/machinery/suit_storage_unit
 	name = "Suit Storage Unit"
 	desc = "An industrial U-Stor-It Storage unit designed to accomodate all kinds of space suits. Its on-board equipment also allows the user to decontaminate the contents through a UV-ray purging cycle. There's a warning label dangling from the control pad, reading \"STRICTLY NO BIOLOGICALS IN THE CONFINES OF THE UNIT\"."
-	icon = 'packs/infinity/icons/obj/suitstorage.dmi'
-	icon_state = "ssu_classic"
-	var/base_icon_state = "ssu_classic"
+	icon = 'icons/obj/suitstorage.dmi'
+	icon_state = "close"
 	anchored = TRUE
 	density = TRUE
 	idle_power_usage = 50
@@ -60,7 +59,7 @@
 /obj/machinery/suit_storage_unit/Destroy()
 	dump_everything()
 	. = ..()
-/*
+
 /obj/machinery/suit_storage_unit/on_update_icon()
 	overlays.Cut()
 	if(panelopen)
@@ -85,46 +84,6 @@
 				overlays += ("storage")
 	else if(occupant)
 		overlays += ("human")
-*/
-
-/obj/machinery/suit_storage_unit/on_update_icon()
-	cut_overlays()
-	//if things arent powered, these show anyways
-	if(panelopen)
-		add_overlay(image(icon,"[base_icon_state]_panel"))
-
-	if(isopen)
-		add_overlay(image(icon,"[base_icon_state]_open"))
-		if(suit)
-			add_overlay(image(icon,"[base_icon_state]_suit"))
-		if(helmet)
-			add_overlay(image(icon,"[base_icon_state]_helm"))
-		if(boots || tank || mask)
-			add_overlay(image(icon,"[base_icon_state]_storage"))
-		if(isUV && issuperUV)
-			add_overlay(image(icon,"[base_icon_state]_super"))
-
-	if(!MACHINE_IS_BROKEN(src))
-		if(isopen)
-			add_overlay(image(icon,"[base_icon_state]_lights_open"))
-		else
-			if(isUV)
-				add_overlay(image(icon,"[base_icon_state]_lights_red"))
-			else
-				add_overlay(image(icon,"[base_icon_state]_lights_closed"))
-		//top lights
-		if(isUV)
-			if(issuperUV)
-				add_overlay(overlay_image(icon,"[base_icon_state]_uvstrong", plane = EFFECTS_ABOVE_LIGHTING_PLANE, layer = ABOVE_LIGHTING_LAYER))
-			else
-				add_overlay(overlay_image(icon,"[base_icon_state]_uv", plane = EFFECTS_ABOVE_LIGHTING_PLANE, layer = ABOVE_LIGHTING_LAYER))
-		else
-			add_overlay(overlay_image(icon, "[base_icon_state]_ready", plane = EFFECTS_ABOVE_LIGHTING_PLANE, layer = ABOVE_LIGHTING_LAYER))
-
-/obj/machinery/suit_storage_unit/industrial
-	name = "industrial suit storage unit"
-	icon_state = "industrial"
-	base_icon_state = "industrial"
 
 /obj/machinery/suit_storage_unit/get_req_access()
 	if(!islocked)
