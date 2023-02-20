@@ -47,6 +47,7 @@ has_valid_label = False
 has_invalid_label = False
 cl_needed = True
 for label in pr_labels:
+    print("Found label: ", label.name)
     if label.name == CL_NOT_NEEDED:
         print("No CL needed!")
         cl_needed = False
