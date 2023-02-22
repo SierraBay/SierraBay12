@@ -27,6 +27,9 @@
 	/// icon_state to flick() when refusing to vend
 	var/icon_deny
 
+	/// icon_state used by emmessive overlays
+	var/screen_overlay
+
 	/// Power to one-off spend on successfully vending.
 	var/vend_power_usage = 150
 
@@ -115,6 +118,20 @@
 	if (panel_open)
 		add_overlay(image(icon, "[initial(icon_state)]-panel"))
 
+/obj/machinery/vending/proc/update_glow()
+	if(operable())
+		set_light(1, 0.1, 2)
+		return TRUE
+	else
+		set_light(0)
+		return FALSE
+
+
+/obj/machinery/vending/update_overlays()
+	. = ..()
+	var/screen_is_glowing = update_glow()
+	if(screen_is_glowing)
+		. += emissive_appearance(icon, screen_overlay)
 
 /obj/machinery/vending/ex_act(severity)
 	switch(severity)

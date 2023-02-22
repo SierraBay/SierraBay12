@@ -4,6 +4,7 @@
 	icon_state = "coffee"
 	icon_vend = "coffee-vend"
 	icon_deny = "coffee-deny"
+	screen_overlay = "coffee-screen"
 	base_type = /obj/machinery/vending/coffee
 	idle_power_usage = 200
 	vend_power_usage = 40000
@@ -58,5 +59,3 @@
 	..()
 	if (MACHINE_IS_BROKEN(src) && prob(20))
 		icon_state = "[initial(icon_state)]-hellfire"
-	else if (is_powered())
-		overlays += image(icon, "[initial(icon_state)]-screen")
