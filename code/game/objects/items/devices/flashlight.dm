@@ -197,6 +197,7 @@
 	matter = list(MATERIAL_ALUMINIUM = 200, MATERIAL_GLASS = 50)
 	hitsound = "swing_hit"
 	light_wedge = LIGHT_NARROW
+	flashlight_range = 8
 
 /******************************Lantern*******************************/
 /obj/item/device/flashlight/lantern
@@ -279,7 +280,7 @@
 	activation_sound = 'sound/effects/flare.ogg'
 	flashlight_flags = FLASHLIGHT_SINGLE_USE
 
-	flashlight_power = 3
+	flashlight_power = 4
 	flashlight_range = 5
 	light_wedge = LIGHT_OMNI
 
