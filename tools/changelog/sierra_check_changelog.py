@@ -6,7 +6,7 @@ Expected envrionmental variables:
 -----------------------------------
 GITHUB_REPOSITORY: Github action variable representing the active repo (Action provided)
 BOT_TOKEN: A repository account token, this will allow the action to push the changes (Action provided)
-GITHUB_SHA: The SHA associated with the commit that triggered the action (Action provided)
+GITHUB_EVENT_PATH: path to JSON file containing the event info (Action provided)
 """
 import os
 import re
