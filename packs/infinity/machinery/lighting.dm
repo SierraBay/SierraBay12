@@ -58,7 +58,7 @@
 	icon_state = "tube_border_maped"
 	light_type = /obj/item/light/led_neon/small
 
-	/obj/machinery/light/led/on_update_icon()
-		. = ..()
-		pixel_x = 0
-		pixel_y = 0
+/obj/machinery/light/led/on_update_icon()
+	. = ..()
+	pixel_x = 0
+	pixel_y = 0
