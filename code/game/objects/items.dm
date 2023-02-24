@@ -917,36 +917,6 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 /obj/item/lava_act()
 	. = (!throwing) ? ..() : FALSE
 
-/obj/item/proc/is_equipped()
-	if (ismob(loc))
-		return (equip_slot != slot_none)
-
-
-/obj/item/proc/is_worn()
-	//If equip_slot is zero then it has never been equipped
-	if (equip_slot == slot_none)
-		return FALSE
-
-	if (ismob(loc))
-		return !(equip_slot in unworn_slots)
-
-
-/obj/item/proc/is_held()
-	//If equip_slot is zero then it has never been equipped
-	if (equip_slot == slot_none)
-		return FALSE
-
-	if (ismob(loc))
-		return equip_slot in list(slot_l_hand, slot_r_hand)
-
-
-/obj/item/proc/get_equip_slot()
-	if (ismob(loc))
-		return equip_slot
-	else
-		return slot_none
-
-
 /obj/item/proc/update_wear_icon()
 	if (ishuman(loc))
 		var/mob/living/carbon/human/H = loc

@@ -148,6 +148,7 @@
 	#include "../../mods/machinery/atmos_ret_field/_atm_ret_field.dme"
 	#include "../../mods/mortar/mortar.dme"
 	#include "../../mods/rigs/vintage_rig/vintage_rig.dme"
+	#include "../../mods/rigs/healthbar_module/healthbar_module.dme"
 	#include "../../mods/leroy_beasts_pack/_leroy_beasts.dme"
 	#include "../../mods/machinery/scrap_compactor/_scrap_compactor.dme"
 

@@ -482,6 +482,7 @@
 	var/go_offline = (!istype(wearer) || loc != wearer || wearer.back != src || canremove || sealing || !cell || cell.charge <= 0)
 	if(offline != go_offline)
 		offline = go_offline
+		update_wear_icon()
 		return 1
 	return 0
 
