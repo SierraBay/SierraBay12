@@ -4,7 +4,7 @@
 	name = "debris field"
 	desc = "A large field of miscellanious debris."
 	icon_state = "object"
-	sector_flags = OVERMAP_SECTOR_IN_SPACE
+	known = FALSE
 
 	initial_generic_waypoints = list(
 		"nav_derelict_1",

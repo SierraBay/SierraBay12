@@ -4,7 +4,7 @@
 	name = "Unpowered Research Station"
 	desc = "An unpowered research station. A large quantity of nearby debris blocks more detail."
 	icon_state = "object"
-	sector_flags = OVERMAP_SECTOR_IN_SPACE
+	known = FALSE
 	initial_generic_waypoints = list(
 		"nav_meatstation_1",
 		"nav_meatstation_2",

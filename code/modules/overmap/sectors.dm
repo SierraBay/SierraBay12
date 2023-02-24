@@ -17,7 +17,7 @@
 	var/start_x			//Coordinates for self placing
 	var/start_y			//will use random values if unset
 
-	sector_flags = OVERMAP_SECTOR_IN_SPACE
+	var/sector_flags = OVERMAP_SECTOR_IN_SPACE
 
 	var/hide_from_reports = FALSE
 
@@ -124,7 +124,7 @@
 /obj/effect/overmap/visitable/sector/Initialize()
 	. = ..()
 
-	if(sector_flags & OVERMAP_SECTOR_KNOWN)
+	if(known)
 		update_known_connections(TRUE)
 
 

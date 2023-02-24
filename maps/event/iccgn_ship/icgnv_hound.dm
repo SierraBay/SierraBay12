@@ -23,7 +23,7 @@
 	fore_dir = NORTH
 	vessel_size = SHIP_SIZE_SMALL
 	vessel_mass = 1000
-	sector_flags = OVERMAP_SECTOR_IN_SPACE
+	known = FALSE
 	initial_generic_waypoints = list(
 		"nav_icgnv_hound_1",
 		"nav_icgnv_hound_2",

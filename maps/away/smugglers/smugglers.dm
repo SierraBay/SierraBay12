@@ -5,7 +5,7 @@
 	name = "asteroid station"
 	desc = "A small station built into an asteroid. No radio traffic detected."
 	icon_state = "object"
-	sector_flags = OVERMAP_SECTOR_IN_SPACE
+	known = FALSE
 
 	initial_generic_waypoints = list(
 		"nav_smugglers",

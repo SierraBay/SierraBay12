@@ -1,7 +1,7 @@
 /obj/effect/overmap/visitable/sector/empty
 	name = "empty sector"
 	desc = "An empty sector devoid of anything of interest."
-	sector_flags = OVERMAP_SECTOR_IN_SPACE
+	in_space = TRUE
 	icon_state = "event"
 	hide_from_reports = TRUE
 	initial_generic_waypoints = list(
@@ -13,7 +13,7 @@
 		"nav_empty_6",
 		"nav_empty_7"
 	)
-	sector_flags = OVERMAP_SECTOR_IN_SPACE
+	known = FALSE
 
 /datum/map_template/ruin/empty
 	name = "Empty"
