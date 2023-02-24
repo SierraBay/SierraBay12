@@ -8,19 +8,9 @@
 	machine_name = "sensors console"
 	machine_desc = "Used to activate, monitor, and configure a spaceship's sensors. Higher range means higher temperature; dangerously high temperatures may fry the delicate equipment."
 	health_max = 100
-	var/weakref/sensor_ref
+	var/obj/machinery/shipsensors/sensors
 	var/list/last_scan
-	var/muted = FALSE
 	var/print_language = LANGUAGE_HUMAN_EURO
-	var/working_sound = 'sound/machines/sensors/dradis.ogg'
-	var/datum/sound_token/sound_token
-	var/sound_id
-
-/obj/machinery/computer/ship/sensors/proc/get_sensors()
-	var/obj/machinery/shipsensors/sensors = sensor_ref?.resolve()
-	if(!istype(sensors) || QDELETED(sensors))
-		sensor_ref = null
-	return sensors
 
 /obj/machinery/computer/ship/sensors/spacer
 	construct_state = /singleton/machine_construction/default/panel_closed/computer/no_deconstruct
@@ -32,26 +22,12 @@
 		return
 	find_sensors()
 
-/obj/machinery/computer/ship/sensors/proc/update_sound()
-	if(!working_sound)
-		return
-	if(!sound_id)
-		sound_id = "[type]_[sequential_id(/obj/machinery/computer/ship/sensors)]"
-	var/obj/machinery/shipsensors/sensors = get_sensors()
-	if(sensors && linked && sensors.use_power ** sensors.powered())
-		var/volume = 10
-		if(!sound_token)
-			sound_token = GLOB.sound_player.PlayLoopingSound(src, sound_id, working_sound, volume = volume, range = 10)
-		sound_token.SetVolume(volume)
-	else if(sound_token)
-		QDEL_NULL(sound_token)
-
 /obj/machinery/computer/ship/sensors/proc/find_sensors()
 	if(!linked)
 		return
 	for(var/obj/machinery/shipsensors/S in SSmachines.machinery)
 		if(linked.check_ownership(S))
-			sensor_ref = weakref(S)
+			sensors = S
 			break
 
 /obj/machinery/computer/ship/sensors/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1)
@@ -61,9 +37,7 @@
 
 	var/data[0]
 
-	var/obj/machinery/shipsensors/sensors = get_sensors()
 	data["viewing"] = viewing_overmap(user)
-	data["muted"] = muted
 	var/mob/living/silicon/silicon = user
 	data["viewing_silicon"] = ismachinerestricted(silicon)
 	if(sensors)
@@ -82,20 +56,7 @@
 		else
 			data["status"] = "OK"
 		var/list/contacts = list()
-
-		var/list/potential_contacts = list()
-
-		for(var/obj/effect/overmap/nearby in view(7,linked))
-			if(nearby.requires_contact) // Some ships require.
-				continue
-			potential_contacts |= nearby
-
-		// Effects that require contact are only added to the contacts if they have been identified.
-		// Allows for coord tracking out of range of the player's view.
-		for(var/obj/effect/overmap/visitable/identified_contact in contact_datums)
-			potential_contacts |= identified_contact
-
-		for(var/obj/effect/overmap/O in potential_contacts)
+		for(var/obj/effect/overmap/O in view(7,linked))
 			if(linked == O)
 				continue
 			if(!O.scannable)
@@ -135,11 +96,6 @@
 		find_sensors()
 		return TOPIC_REFRESH
 
-	if (href_list["mute"])
-		muted = !muted
-		return TOPIC_REFRESH
-
-	var/obj/machinery/shipsensors/sensors = get_sensors()
 	if(sensors)
 		if (href_list["range"])
 			var/nrange = input("Set new sensors range", "Sensor range", sensors.range) as num|null
@@ -155,7 +111,7 @@
 	if (href_list["scan"])
 		var/obj/effect/overmap/O = locate(href_list["scan"])
 		if(istype(O) && !QDELETED(O))
-			if((O in view(7,linked))|| (O in contact_datums))
+			if((O in view(7,linked)))
 				playsound(loc, "sound/effects/ping.ogg", 50, 1)
 				LAZYSET(last_scan, "data", O.get_scan_data(user))
 				LAZYSET(last_scan, "location", "[O.x],[O.y]")
@@ -171,6 +127,16 @@
 		new/obj/item/paper/(get_turf(src), last_scan["data"], "paper (Sensor Scan - [last_scan["name"]])", L = print_language)
 		return TOPIC_HANDLED
 
+/obj/machinery/computer/ship/sensors/Process()
+	..()
+	if(!linked)
+		return
+	if(sensors && sensors.use_power && sensors.powered())
+		var/sensor_range = round(sensors.range*1.5) + 1
+		linked.set_light(1, sensor_range, sensor_range+1)
+	else
+		linked.set_light(0)
+
 /obj/machinery/shipsensors
 	name = "sensors suite"
 	desc = "Long range gravity scanner with various other sensors, used to detect irregularities in surrounding space. Can only run in vacuum to protect delicate quantum BS elements."
@@ -182,14 +148,9 @@
 	health_max = 200
 	var/critical_heat = 50 // sparks and takes damage when active & above this heat
 	var/heat_reduction = 1.5 // mitigates this much heat per tick
-	var/sensor_strength //used for detecting ships via contacts
 	var/heat = 0
 	var/range = 1
 	idle_power_usage = 5000
-
-/obj/machinery/shipsensors/RefreshParts()
-	..()
-	sensor_strength = clamp(total_component_rating_of_type(/obj/item/stock_parts/manipulator), 0, 5)
 
 /obj/machinery/shipsensors/attackby(obj/item/W, mob/user)
 	if (isWelder(W) && user.a_intent != I_HURT)

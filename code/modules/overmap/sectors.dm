@@ -1,4 +1,3 @@
-GLOBAL_LIST_EMPTY(known_overmap_sectors)
 //===================================================================================
 //Overmap object representing zlevel(s)
 //===================================================================================
@@ -29,12 +28,6 @@ GLOBAL_LIST_EMPTY(known_overmap_sectors)
 	. = ..()
 	if(. == INITIALIZE_HINT_QDEL)
 		return
-	if(sector_flags & OVERMAP_SECTOR_KNOWN)
-		LAZYADD(GLOB.known_overmap_sectors, src)
-		layer = ABOVE_LIGHTING_LAYER
-		plane = EFFECTS_ABOVE_LIGHTING_PLANE
-		for(var/obj/machinery/computer/ship/helm/H as anything in GLOB.overmap_helm_computers)
-			H.add_known_sector(src)
 
 	find_z_levels()     // This populates map_z and assigns z levels to the ship.
 	register_z_levels() // This makes external calls to update global z level information.
@@ -131,7 +124,7 @@ GLOBAL_LIST_EMPTY(known_overmap_sectors)
 /obj/effect/overmap/visitable/sector/Initialize()
 	. = ..()
 
-	if(sector_flags & OVERMAP_SECTOR_KNOWN)
+	if(known)
 		update_known_connections(TRUE)
 
 
