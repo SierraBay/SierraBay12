@@ -174,6 +174,11 @@ var/global/singleton/overmap_event_handler/overmap_event_handler = new()
 	var/weaknesses //if the BSA can destroy them and with what
 	var/list/victims //basically cached events on which Z level
 
+	// Events must be detected by sensors, but are otherwise instantly visible.
+	requires_contact = TRUE
+	instant_contact = TRUE
+
+
 /obj/effect/overmap/event/Initialize()
 	. = ..()
 	icon_state = pick(event_icon_states)
