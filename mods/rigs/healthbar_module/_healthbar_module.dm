@@ -95,7 +95,7 @@
 	LAZYADD(initial_modules, /obj/item/rig_module/healthbar)
 	. = ..()
 
-/obj/item/rig/industrial/Initialize()
+/obj/item/rig/industrial/equipped/Initialize()
 	LAZYADD(initial_modules, /obj/item/rig_module/healthbar)
 	. = ..()
 
