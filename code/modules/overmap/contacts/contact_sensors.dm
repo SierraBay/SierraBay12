@@ -115,7 +115,7 @@
 					bearing_estimate += 360
 				// Give the player an idea of where the ship is in relation to the ship.
 				if(objects_in_view[contact] <= 0)
-					if(!muted)
+					if(!muted && !contact.known_ships.type)
 						visible_message(SPAN_NOTICE("<b>\The [src]</b> states, \"Unknown contact designation '[contact.unknown_id]' detected nearby, bearing [bearing_estimate], error +/- [bearing_variability]. Beginning trace.\""))
 					objects_in_view[contact] = round(sensors.sensor_strength**2)
 				else
