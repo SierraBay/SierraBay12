@@ -4,7 +4,7 @@
 	icon_state = "object"
 	color = "#fffffe"
 
-	var/known = TRUE		//shows up on nav computers automatically
+	var/sector_flags
 	var/scannable       //if set to TRUE will show up on ship sensors for detailed scans
 
 //Overlay of how this object should look on other skyboxes
@@ -19,7 +19,7 @@
 	if(!GLOB.using_map.use_overmap)
 		return INITIALIZE_HINT_QDEL
 
-	if(known)
+	if(sector_flags & OVERMAP_SECTOR_KNOWN)
 		layer = ABOVE_LIGHTING_LAYER
 		plane = EFFECTS_ABOVE_LIGHTING_PLANE
 
@@ -44,8 +44,8 @@
  * Flags the effect as `known` and runs relevant update procs. Intended for admin event usage.
  */
 /obj/effect/overmap/proc/make_known(notify = FALSE)
-	if (!known)
-		known = TRUE
+	if (!(sector_flags & OVERMAP_SECTOR_KNOWN))
+		sector_flags = OVERMAP_SECTOR_KNOWN
 		update_known_connections(notify)
 
 
