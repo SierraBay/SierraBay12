@@ -53,3 +53,4 @@
 	if(href_list["show_info"])
 		to_chat(usr, description)
 		return TOPIC_HANDLED
+	. = ..()
