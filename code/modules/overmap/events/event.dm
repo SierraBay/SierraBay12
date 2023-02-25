@@ -212,6 +212,7 @@ var/global/singleton/overmap_event_handler/overmap_event_handler = new()
 	events = list(/datum/event/meteor_wave/overmap)
 	event_icon_states = list("meteor1", "meteor2", "meteor3", "meteor4")
 	difficulty = EVENT_LEVEL_MAJOR
+	opacity = 0
 	weaknesses = OVERMAP_WEAKNESS_MINING | OVERMAP_WEAKNESS_EXPLOSIVE
 	colors = list("#fc1100", "#b5251b", "#be1e12")
 
@@ -227,6 +228,7 @@ var/global/singleton/overmap_event_handler/overmap_event_handler = new()
 /obj/effect/overmap/event/dust
 	name = "dust cloud"
 	events = list(/datum/event/dust)
+	opacity = 0
 	event_icon_states = list("dust1", "dust2", "dust3", "dust4")
 	weaknesses = OVERMAP_WEAKNESS_MINING | OVERMAP_WEAKNESS_EXPLOSIVE | OVERMAP_WEAKNESS_FIRE
 	color = "#6c6c6c"
