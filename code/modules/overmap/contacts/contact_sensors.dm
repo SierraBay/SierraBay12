@@ -21,14 +21,14 @@
 		contact_datums[linked] = record
 		record.marker.alpha = 255
 
-/obj/machinery/computer/ship/sensors/proc/reveal_contacts(var/mob/user)
+/obj/machinery/computer/ship/sensors/proc/reveal_contacts(mob/user)
 	if(user && user.client)
 		for(var/key in contact_datums)
 			var/datum/overmap_contact/record = contact_datums[key]
 			if(record)
 				user.client.images |= record.marker
 
-/obj/machinery/computer/ship/sensors/proc/hide_contacts(var/mob/user)
+/obj/machinery/computer/ship/sensors/proc/hide_contacts(mob/user)
 	if(user && user.client)
 		for(var/key in contact_datums)
 			var/datum/overmap_contact/record = contact_datums[key]
@@ -79,10 +79,12 @@
 			continue
 		objects_in_current_view[contact] = TRUE
 
+		if(contact.type in linked.known_ships)
+			objects_in_view[contact] = 100 // Instantly identify known ships.
+
 		if(contact.instant_contact)   // Instantly identify the object in range.
 			objects_in_view[contact] = 100
-		if(contact.known_ships.type)
-			objects_in_view[contact] = 100 // Instantly identify known ships.
+
 		else if(!(contact in objects_in_view))
 			objects_in_view[contact] = 0
 
@@ -108,30 +110,36 @@
 			bearing += 360
 		if(!record) // Begin attempting to identify ship.
 			// The chance of detection decreases with distance to the target ship.
+
 			if(contact.scannable && prob((SENSORS_DISTANCE_COEFFICIENT * contact.sensor_visibility)/max(get_dist(linked, contact), 0.5)))
 				var/bearing_variability = round(30/sensors.sensor_strength, 5)
 				var/bearing_estimate = round(rand(bearing-bearing_variability, bearing+bearing_variability), 5)
 				if(bearing_estimate < 0)
 					bearing_estimate += 360
+
 				// Give the player an idea of where the ship is in relation to the ship.
 				if(objects_in_view[contact] <= 0)
-					if(!muted && !contact.known_ships.type)
+					if(!muted || !(contact.type in linked.known_ships))
 						visible_message(SPAN_NOTICE("<b>\The [src]</b> states, \"Unknown contact designation '[contact.unknown_id]' detected nearby, bearing [bearing_estimate], error +/- [bearing_variability]. Beginning trace.\""))
 					objects_in_view[contact] = round(sensors.sensor_strength**2)
+
 				else
 					objects_in_view[contact] += round(sensors.sensor_strength**2)
-					if(!muted && !contact.known_ships.type)
+					if(!muted || !(contact.type in linked.known_ships))
 						visible_message(SPAN_NOTICE("<b>\The [src]</b> states, \"Contact '[contact.unknown_id]' tracing [objects_in_view[contact]]% complete, bearing [bearing_estimate], error +/- [bearing_variability].\""))
 				playsound(loc, "sound/machines/sensors/contactgeneric.ogg", 10, 1) //Let players know there's something nearby
+
 			if(objects_in_view[contact] >= 100) // Identification complete.
 				record = new /datum/overmap_contact(src, contact)
 				contact_datums[contact] = record
+
 				if(contact.scannable)
 					playsound(loc, "sound/machines/sensors/newcontact.ogg", 30, 1)
 					visible_message(SPAN_NOTICE("<b>\The [src]</b> states, \"New contact identified, designation [record.name], bearing [bearing].\""))
 				record.show()
 				animate(record.marker, alpha=255, 2 SECOND, 1, LINEAR_EASING)
 			continue
+
 		// Update identification information for this record.
 		record.update_marker_icon()
 
@@ -139,7 +147,7 @@
 		if(!record.pinged)
 			addtimer(new Callback(record, .proc/ping), time_delay)
 
-/obj/machinery/computer/ship/sensors/attackby(var/obj/item/I, var/mob/user)
+/obj/machinery/computer/ship/sensors/attackby(obj/item/I, mob/user)
 	. = ..()
 	var/obj/item/device/multitool/P = I
 	if(!istype(P))
@@ -157,7 +165,7 @@
 	GLOB.destroyed_event.register(tracker, src, .proc/remove_tracker)
 	to_chat(user, SPAN_NOTICE("You link the tracker in \the [P]'s buffer to \the [src]"))
 
-/obj/machinery/computer/ship/sensors/proc/remove_tracker(var/obj/item/ship_tracker/tracker)
+/obj/machinery/computer/ship/sensors/proc/remove_tracker(obj/item/ship_tracker/tracker)
 	trackers -= tracker
 
 #undef SENSORS_DISTANCE_COEFFICIENT

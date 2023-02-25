@@ -13,7 +13,7 @@
 	// The actual overmap effect associated with this.
 	var/obj/effect/overmap/effect
 
-/datum/overmap_contact/New(var/obj/machinery/computer/ship/sensors/creator, var/obj/effect/overmap/source)
+/datum/overmap_contact/New(obj/machinery/computer/ship/sensors/creator, obj/effect/overmap/source)
 	// Update local tracking information.
 	owner =  creator
 	effect = source
@@ -30,7 +30,8 @@
 	radar.tag = "radar"
 	radar.filters = filter(type="blur", size = 1)
 
-/datum/overmap_contact/proc/update_marker_icon(var/range = 0)
+
+/datum/overmap_contact/proc/update_marker_icon(range = 0)
 	marker.icon_state = effect.icon_state
 
 	marker.overlays.Cut()
@@ -49,8 +50,10 @@
 		var/matrix/M = matrix()
 		M.Scale(range*2.6)
 		animate(radar, transform = M, alpha = 0, time = (SENSOR_TIME_DELAY*range), 1, SINE_EASING)
-	else
-		images -= radar
+		addtimer(new Callback(src, .proc/reset_radar, radar), (0.25 SECONDS *range+0.1))
+
+/datum/overmap_contact/proc/reset_radar(image/radar)
+	images -= radar
 
 /datum/overmap_contact/proc/show()
 	if(!owner)
