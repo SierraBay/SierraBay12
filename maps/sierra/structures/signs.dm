@@ -34,7 +34,7 @@
 
 	update_icon()
 
-/obj/structure/sign/memorial/sierra/update_icon()
+/obj/structure/sign/memorial/sierra/on_update_icon()
 	. = ..()
 	overlays += image(icon, "sierra-overlay")
 
