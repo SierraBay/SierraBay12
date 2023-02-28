@@ -1,7 +1,5 @@
 GLOBAL_DATUM_INIT(loyalists, /datum/antagonist/loyalists, new)
 
-// Extended commentary for SierraBay12: From that point and until players will teach how NOT TO snowball loyalists in rounds with revs, loyalists became only adminspawn
-
 /datum/antagonist/loyalists
 	id = MODE_LOYALIST
 	role_text = "Head Loyalist"
