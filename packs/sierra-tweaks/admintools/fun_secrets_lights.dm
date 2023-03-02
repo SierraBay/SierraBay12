@@ -22,7 +22,7 @@
 		if ("All lights")
 			lightsout(0, 0)
 
-/datum/admin_secret_item/fun_secret/fix_all_lights/execute(var/mob/user)
+/datum/admin_secret_item/fun_secret/fix_all_lights/execute(mob/user)
 
 	var/choise = input("Which lights to fix?") in list("Changed my mind", "My area", "My Z-Level", "Station", "All lights")
 	switch(choise)
