@@ -1,7 +1,7 @@
 /datum/admin_secret_item/fun_secret/break_all_lights/execute(mob/user)
 
-	var/choise = input("Which lights to break?") in list("Changed my mind", "My area", "My Z-Level", "Station", "All lights")
-	switch(choise)
+	var/choice = input("Which lights to break?") in list("Changed my mind", "My area", "My Z-Level", "Station", "All lights")
+	switch(choice)
 		if ("My area")
 			var/area/usr_area = get_area(user)
 			if (!usr_area) return to_chat(user, SPAN_DANGER("Invalid area!"))
@@ -24,8 +24,8 @@
 
 /datum/admin_secret_item/fun_secret/fix_all_lights/execute(mob/user)
 
-	var/choise = input("Which lights to fix?") in list("Changed my mind", "My area", "My Z-Level", "Station", "All lights")
-	switch(choise)
+	var/choice = input("Which lights to fix?") in list("Changed my mind", "My area", "My Z-Level", "Station", "All lights")
+	switch(choice)
 		if ("My area")
 			var/area/usr_area = get_area(user)
 			if (!usr_area) return to_chat(user, SPAN_DANGER("Invalid area!"))
