@@ -15,7 +15,7 @@
 			target_part = "face"
 			var/obj/item/organ/external/head/HD = H.organs_by_name[BP_HEAD]
 			if(HD.forehead_graffiti)
-				graffiti = 1
+				graffiti = TRUE
 		if (user.hand)
 			temp = H.organs_by_name[BP_L_HAND]
 		if(temp && !temp.is_usable())
