@@ -57,4 +57,4 @@
 		var/mob/living/carbon/human/H = user
 		var/obj/item/organ/external/head/I = H.organs_by_name[BP_HEAD]
 		I.remove_graffiti()
-		graffiti = 0
+		graffiti = FALSE
