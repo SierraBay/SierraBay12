@@ -4,10 +4,8 @@
 
 // And after commiting whis warcrime, we can finaly wash our face
 
-/obj/structure/hygiene/sink
-	var/graffiti = 0 	//removing this?
-
 /obj/structure/hygiene/sink/attack_hand(mob/user)
+	var/graffiti = FALSE
 	var/target_part = "hands"
 	if (ishuman(user))
 		var/mob/living/carbon/human/H = user
