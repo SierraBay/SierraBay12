@@ -39,11 +39,11 @@
 
 	playsound(loc, 'sound/effects/sink_long.ogg', 75, 1)
 
-	busy = 1
+	busy = TRUE
 	if(!do_after(user, 40, src))
-		busy = 0
+		busy = FALSE
 		return TRUE
-	busy = 0
+	busy = FALSE
 
 	user.clean_blood()
 	if(ishuman(user))
