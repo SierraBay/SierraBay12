@@ -152,7 +152,7 @@ GLOBAL_LIST_EMPTY(known_overmap_sectors)
 	. = ..()
 	if(sector_flags & OVERMAP_SECTOR_KNOWN)
 		for(var/obj/machinery/computer/ship/helm/H as anything in GLOB.overmap_helm_computers)
-		update_known_connections(TRUE)
+			update_known_connections(TRUE)
 
 
 /obj/effect/overmap/visitable/sector/update_known_connections(notify = FALSE)
