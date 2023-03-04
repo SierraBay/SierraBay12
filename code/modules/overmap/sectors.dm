@@ -35,11 +35,11 @@ GLOBAL_LIST_EMPTY(known_overmap_sectors)
 
 	if(sector_flags & OVERMAP_SECTOR_KNOWN)
 		LAZYADD(GLOB.known_overmap_sectors, src)
+		layer = ABOVE_LIGHTING_LAYER
+		plane = EFFECTS_ABOVE_LIGHTING_PLANE
 		for(var/obj/machinery/computer/ship/helm/H as anything in GLOB.overmap_helm_computers)
 			H.add_known_sector(src)
 
-		layer = ABOVE_LIGHTING_LAYER
-		plane = EFFECTS_ABOVE_LIGHTING_PLANE
 
 	if(!GLOB.using_map.overmap_z)
 		build_overmap()
@@ -139,6 +139,7 @@ GLOBAL_LIST_EMPTY(known_overmap_sectors)
 /obj/effect/overmap/visitable/sector/Initialize()
 	. = ..()
 	if(sector_flags & OVERMAP_SECTOR_KNOWN)
+	for(var/obj/machinery/computer/ship/helm/H as anything in GLOB.overmap_helm_computers)
 		update_known_connections(TRUE)
 
 
