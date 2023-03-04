@@ -60,8 +60,7 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define TANK_FLAG_WIRED      FLAG(3)
 
 
-#define OVERMAP_SECTOR_BASE              FLAG(0) /// Whether or not this sector is a starting sector. Z levels contained in this sector are added to station_levels
-#define OVERMAP_SECTOR_KNOWN             FLAG(1) /// Makes the sector show up on nav computers
-#define OVERMAP_SECTOR_IN_SPACE          FLAG(2) /// If the sector can be accessed by drifting off the map edge
-#define OVERMAP_SECTOR_UNTARGETABLE      FLAG(3) /// If the sector is untargetable by missiles.
-#define OVERMAP_SECTOR_SHOWUP            FLAG(4) /// Makes the sector show up above lighting plane on overmap
+#define OVERMAP_SECTOR_BASE              FLAG(0) // Whether or not this sector is a starting sector. Z levels contained in this sector are added to station_levels
+#define OVERMAP_SECTOR_KNOWN             FLAG(1) // Makes the sector show up on nav computers
+#define OVERMAP_SECTOR_IN_SPACE          FLAG(2) // If the sector can be accessed by drifting off the map edge
+#define OVERMAP_SECTOR_UNTARGETABLE      FLAG(3) // If the sector is untargetable by missiles.

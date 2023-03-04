@@ -38,7 +38,6 @@ GLOBAL_LIST_EMPTY(known_overmap_sectors)
 		for(var/obj/machinery/computer/ship/helm/H as anything in GLOB.overmap_helm_computers)
 			H.add_known_sector(src)
 
-	if(sector_flags & OVERMAP_SECTOR_SHOWUP)
 		layer = ABOVE_LIGHTING_LAYER
 		plane = EFFECTS_ABOVE_LIGHTING_PLANE
 

@@ -23,6 +23,7 @@ GLOBAL_LIST_EMPTY(overmap_helm_computers)
 
 /obj/machinery/computer/ship/helm/Initialize()
 	. = ..()
+	LAZYADD(GLOB.overmap_helm_computers, src)
 
 /obj/machinery/computer/ship/helm/Destroy()
 	. = ..()
