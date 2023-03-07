@@ -267,7 +267,7 @@
 			return
 		playsound(H.loc, pick('packs/infinity/sound/effects/hookah.ogg', 'packs/infinity/sound/effects/hookah1.ogg'), 50, 0, -1)
 		smoke(5, user)
-		return 1
+		return TRUE
 	return ..()
 
 /obj/item/hookah/proc/light(var/flavor_text = "[usr] lights the [name].")
