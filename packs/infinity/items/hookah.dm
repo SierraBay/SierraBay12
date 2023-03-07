@@ -271,18 +271,21 @@
 	return ..()
 
 /obj/item/hookah/proc/light(var/flavor_text = "[usr] lights the [name].")
-	if(!lit && smoketime)
-		if(submerged())
-			to_chat(usr, SPAN_WARNING("You cannot light \the [src] underwater."))
-			return
-		lit = TRUE
-		damtype = "burn"
-		var/turf/T = get_turf(src)
-		T.visible_message(flavor_text)
-		update_icon()
-		START_PROCESSING(SSobj, src)
-		set_scent_by_reagents(src)
-		playsound(src.loc, 'packs/infinity/sound/effects/hookah_lit.ogg',50, 0, -1)
+	if(lit || !smoketime)
+		return
+
+	if(submerged())
+		to_chat(usr, SPAN_WARNING("You cannot light \the [src] underwater."))
+		return
+		
+	lit = TRUE
+	damtype = "burn"
+	var/turf/T = get_turf(src)
+	T.visible_message(flavor_text)
+	update_icon()
+	START_PROCESSING(SSobj, src)
+	set_scent_by_reagents(src)
+	playsound(src.loc, 'packs/infinity/sound/effects/hookah_lit.ogg',50, 0, -1)
 
 /obj/item/hookah/Destroy()
 	. = ..()
