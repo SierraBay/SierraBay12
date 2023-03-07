@@ -45,6 +45,8 @@
 #include "items\powertools.dm"
 #include "items\towels.dm"
 
+#include "items\hookah.dm"
+
 // Machines
 #include "machinery\computer_presets.dm"
 #include "machinery\machines.dm"
