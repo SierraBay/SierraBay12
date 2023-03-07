@@ -260,7 +260,7 @@
 		var/obj/item/blocked = H.check_mouth_coverage()
 		if(blocked)
 			to_chat(H, SPAN_WARNING("\The [blocked] is in the way!"))
-			return 1
+			return TRUE
 		to_chat(H, SPAN_INFO("You take a drag on your [name]."))
 		if(parent.liquid_level <= 0)
 			to_chat(user, SPAN_WARNING("It looks like the water has run out."))
