@@ -158,80 +158,87 @@
 		return
 	smoketime -= 1
 
-/obj/item/hookah/attackby(obj/W, mob/user)
-	if(isflamesource(W) || is_hot(W))
+/obj/item/hookah/use_tool(obj/item/tool, mob/user)
+	if(isflamesource(tool) || is_hot(tool))
 		var/text = matchmes
-		if(istype(W, /obj/item/flame/match))
+		if(istype(tool, /obj/item/flame/match))
 			text = matchmes
-		else if(istype(W, /obj/item/flame/lighter/zippo))
+		else if(istype(tool, /obj/item/flame/lighter/zippo))
 			text = zippomes
-		else if(istype(W, /obj/item/flame/lighter))
+		else if(istype(tool, /obj/item/flame/lighter))
 			text = lightermes
-		else if(isWelder(W))
+		else if(isWelder(tool))
 			text = weldermes
-		else if(istype(W, /obj/item/device/assembly/igniter))
+		else if(istype(tool, /obj/item/device/assembly/igniter))
 			text = ignitermes
 		else
 			text = genericmes
 		text = replacetext(text, "USER", "[user]")
 		text = replacetext(text, "NAME", "[name]")
-		text = replacetext(text, "FLAME", "[W.name]")
+		text = replacetext(text, "FLAME", "[tool.name]")
 		light(text)
+		return TRUE
 
-	else if(istype(W, /obj/item/tube))
-		var/obj/item/tube/T = W
+	else if(istype(tool, /obj/item/tube))
+		var/obj/item/tube/T = tool
 		if(T.parent != src)
 			to_chat(user, SPAN_WARNING("This tube is not from this hookah."))
-			return
+			return TRUE
 		tubes.Add(T)
 		user.unEquip(T, src)
 		GLOB.moved_event.unregister(user, T, /obj/item/tube/proc/check_exited)
 		to_chat(user, SPAN_INFO("You put the tube in hookah."))
+		return TRUE
 
-	else if(istype(W, /obj/item/coal))
-		var/obj/item/coal/M = W
+	else if(istype(tool, /obj/item/coal))
+		var/obj/item/coal/M = tool
 		if(smoketime + M.volume > maxsmoketime)
 			to_chat(user, SPAN_WARNING("Hookah is already full of coal."))
-			return
+			return TRUE
 		qdel(M)
 		smoketime += M.volume
 		user.visible_message(SPAN_INFO("[user] adds some coal to the hookah."), SPAN_INFO("You added coal to the hookah."))
+		return TRUE
 
-	else if(istype(W, /obj/item/reagent_containers/food/snacks/grown/dried_tobacco))
-		if(W.reagents)
-			W.reagents.trans_to_obj(src, W.reagents.total_volume)
-			user.unEquip(W, src)
+	else if(istype(tool, /obj/item/reagent_containers/food/snacks/grown/dried_tobacco))
+		if(tool.reagents)
+			tool.reagents.trans_to_obj(src, tool.reagents.total_volume)
+			user.unEquip(tool, src)
 			user.visible_message(SPAN_INFO("[user] put tobacco in the hookah."), SPAN_INFO("You put tobacco in the hookah."))
-			qdel(W)
+			qdel(tool)
+			return TRUE
 
-	else if(istype(W, /obj/item/storage/box/large/coal))
-		var/obj/item/storage/box/large/coal/box = W
+	else if(istype(tool, /obj/item/storage/box/large/coal))
+		var/obj/item/storage/box/large/coal/box = tool
 		var/coals = round((maxsmoketime-smoketime)/500)
 		if(!coals)
-			return
+			return TRUE
 		smoketime += 500*coals
 		for(var/i in 1 to coals)
 			qdel(box.contents[1])
 		src.visible_message(SPAN_INFO("[user] puts [coals] coal in hookah"), SPAN_INFO("You put [coals] coal in hookah"))
+		return TRUE
 
-	else if(istype(W, /obj/item/reagent_containers))
-		var/obj/item/reagent_containers/container_obj = W
+	else if(istype(tool, /obj/item/reagent_containers))
+		var/obj/item/reagent_containers/container_obj = tool
 		var/datum/reagents/container = container_obj.reagents
 		if(!container_obj.is_open_container())
-			return
+			return TRUE
 		if(!container.has_reagent(liquid_type))
 			to_chat(user, SPAN_WARNING("This liquid is not appropriate for use in hookahs."))
-			return
+			return TRUE
 		var/transfer_value = min(min(container.get_reagent_amount(liquid_type), container_obj.amount_per_transfer_from_this), max_liquid_level-liquid_level)
 		if(transfer_value<=0)
 			to_chat(user, SPAN_WARNING("You can't pour any more water in the hpokah."))
-			return
+			return TRUE
 		container.remove_reagent(liquid_type, transfer_value)
 		liquid_level += transfer_value
 		playsound(src.loc,'sound/effects/pour.ogg',50,-1)
 		src.visible_message(SPAN_INFO("[user] filled a hookah from a [container_obj]."))
 		update_icon()
-	..()
+		return TRUE
+		
+	return ..()
 
 /obj/item/hookah/attack_hand(mob/user)
 	if(user.a_intent == I_GRAB)
