@@ -255,7 +255,7 @@
 /obj/item/tube/attack(mob/living/carbon/human/H, mob/user, def_zone)
 	if(!parent.lit)
 		to_chat(user, SPAN_WARNING("You try to take a drag from the tube but nothing happens. Looks like the hookah isn't lit."))
-		return
+		return FALSE
 	if(H == user && istype(H) && H.check_has_mouth())
 		var/obj/item/blocked = H.check_mouth_coverage()
 		if(blocked)
