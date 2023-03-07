@@ -264,7 +264,7 @@
 		to_chat(H, SPAN_INFO("You take a drag on your [name]."))
 		if(parent.liquid_level <= 0)
 			to_chat(user, SPAN_WARNING("It looks like the water has run out."))
-			return
+			return FALSE
 		playsound(H.loc, pick('packs/infinity/sound/effects/hookah.ogg', 'packs/infinity/sound/effects/hookah1.ogg'), 50, 0, -1)
 		smoke(5, user)
 		return TRUE
