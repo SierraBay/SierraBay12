@@ -252,7 +252,7 @@ GLOBAL_LIST_EMPTY(diversion_junctions)
 		return
 
 	var/ai = isAI(user)
-	var/dat = ""
+	var/dat = "<head><title>Waste Disposal Unit</title></head><body><TT><B>Waste Disposal Unit</B><HR>"
 
 	if(!ai)  // AI can't pull flush handle
 		if(flush)
@@ -275,9 +275,8 @@ GLOBAL_LIST_EMPTY(diversion_junctions)
 
 
 	user.set_machine(src)
-	var/datum/browser/popup = new(mob, "disposal", "Waste Disposal Unit", 360, 170)
-	popup.set_content(dat)
-	popup.open()
+	show_browser(user, dat, "window=disposal;size=360x170")
+	onclose(user, "disposal")
 
 // handle machine interaction
 
