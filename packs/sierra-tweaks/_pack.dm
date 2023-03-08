@@ -1,7 +1,11 @@
 #ifndef CONTENT_PACK_SIERRA_TWEAKS
 #define CONTENT_PACK_SIERRA_TWEAKS
 
+// HELPERS
+#include "_helpers\unsorted.dm"
+
 // Admintools
+#include "admintools\bmode_copypaste.dm"
 #include "admintools\fun_secrets_lights.dm"
 
 // Client
