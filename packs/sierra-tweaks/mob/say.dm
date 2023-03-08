@@ -13,5 +13,8 @@
 
 #undef ENCODE_HTML_EMPHASIS
 
-/mob/process_chat_markup(message)
+/mob/living/format_say_message(message)
+	return say_emphasis(..())
+
+/mob/format_emote(emoter, message)
 	return say_emphasis(..())
