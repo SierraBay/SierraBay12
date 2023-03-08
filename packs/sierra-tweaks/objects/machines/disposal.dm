@@ -29,6 +29,6 @@
 
 
 	user.set_machine(src)
-	var/datum/browser/popup = new(mob, "disposal", "Waste Disposal Unit", 360, 170)
+	var/datum/browser/popup = new(user, "disposal", "Waste Disposal Unit", 360, 170)
 	popup.set_content(dat)
 	popup.open()
