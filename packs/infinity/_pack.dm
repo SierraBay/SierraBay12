@@ -28,6 +28,9 @@
 #include "clothing\suits\suits.dm"
 #include "clothing\shoes\shoes.dm"
 
+// Economy
+#include "economy\away_account.dm"
+
 // Effects
 #include "effects\paint.dm"
 
@@ -58,6 +61,7 @@
 // Structures
 #include "structures\barrier.dm"
 #include "structures\chairs.dm"
+#include "structures\mag_tables.dm"
 #include "structures\signs.dm"
 #include "structures\table_presets.dm"
 #endif

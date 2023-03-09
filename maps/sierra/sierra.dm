@@ -150,6 +150,7 @@
 	#include "../../mods/mortar/mortar.dme"
 	#include "../../mods/leroy_beasts_pack/_leroy_beasts.dme"
 	#include "../../mods/machinery/scrap_compactor/_scrap_compactor.dme"
+	#include "../../mods/maps/liberia/_map_liberia.dme"
 
 	#include "../../packs/infinity/_pack.dm"
 	#include "../../packs/sierra-tweaks/_pack.dm"
