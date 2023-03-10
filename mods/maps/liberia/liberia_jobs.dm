@@ -38,6 +38,10 @@
 
 	account_allowed = TRUE
 
+/datum/job/submap/merchant/equip(mob/living/carbon/human/H)
+	setup_away_account(H)
+	return ..()
+
 /datum/job/submap/merchant_trainee/is_position_available()
 	. = ..()
 	if(. && requires_supervisor)
@@ -98,7 +102,7 @@
 
 	account_allowed = TRUE
 
-/datum/job/submap/merchant_trainee/equip(var/mob/living/carbon/human/H)
+/datum/job/submap/merchant_trainee/equip(mob/living/carbon/human/H)
 	setup_away_account(H)
 	outfit_type =  H.mind.role_alt_title!="Merchant Assistant" ? alt_titles[H.mind.role_alt_title] : outfit_type
 	. = ..()
