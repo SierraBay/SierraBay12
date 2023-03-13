@@ -57,6 +57,7 @@ var/global/list/floor_light_cache = list()
 		visible_message(SPAN_NOTICE("\The [user] has repaired \the [src]."))
 		set_broken(FALSE)
 		damaged = null
+		update_brightness() // SIERRA
 	else if(isWrench(W))
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 		to_chat(user, SPAN_NOTICE("You dismantle the floor light."))
