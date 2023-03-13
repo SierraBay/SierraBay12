@@ -7,6 +7,6 @@
 		if(new_colour && new_colour != default_light_colour)
 			default_light_colour = new_colour
 			update_icon()
-		to_chat(usr, "<span class='notice'>You set \the [src] to shine with <font color='[default_light_colour]'>a new colour</font>.</span>")
+		to_chat(usr, SPAN_NOTICE("You set \the [src] to shine with <font color='[default_light_colour]'>a new colour</font>."))
 
 	return ..()
