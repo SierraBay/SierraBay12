@@ -218,13 +218,18 @@
 	if(pulling)
 		if(istype(pulling, /obj))
 			var/obj/O = pulling
-			. += clamp(O.w_class, 0, ITEM_SIZE_GARGANTUAN) / 5
+			. += O.get_additional_speed_decrease() // SIERRA
 		else if(istype(pulling, /mob))
 			var/mob/M = pulling
 			. += max(0, M.mob_size) / MOB_MEDIUM
 		else
 			. += 1
 	. *= (0.8 ** size_strength_mod())
+
+// [SIERRA]
+/obj/proc/get_additional_speed_decrease()
+	return clamp(src.w_class, 0, ITEM_SIZE_GARGANTUAN) / 5
+// [/SIERRA]
 
 //Determines mob size/strength effects for slowdown purposes. Standard is 0; can be pos/neg.
 /mob/proc/size_strength_mod()
@@ -454,7 +459,7 @@
 	if (GLOB.changelog_hash && prefs.lastchangelog != GLOB.changelog_hash)
 		prefs.lastchangelog = GLOB.changelog_hash
 		SScharacter_setup.queue_preferences_save(prefs)
-		winset(src, "rpane.changelog", "background-color=none;font-style=;")
+		winset(src, "rpane.changelog", "font-style=;")
 
 /mob/verb/cancel_camera()
 	set name = "Cancel Camera View"
