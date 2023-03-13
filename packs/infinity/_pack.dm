@@ -65,7 +65,6 @@
 
 // Machines
 #include "machinery\computer.dm"
-#include "machinery\floor_light.dm"
 #include "machinery\heater.dm"
 #include "machinery\machines.dm"
 #include "machinery\rack.dm"

@@ -1,3 +1,6 @@
+/obj/machinery/floor_light
+	icon = 'packs/sierra-tweaks/icons/machinery/floor_light.dmi'
+
 /obj/machinery/floor_light/use_tool(obj/item/tool, mob/user)
 	if(isMultitool(tool))
 		var/new_colour = input(usr, "Choose a colour.", "light color", default_light_colour) as color|null
