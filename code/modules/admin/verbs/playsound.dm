@@ -37,7 +37,7 @@ var/global/list/sounds_cache = list()
 
 	var/override = FALSE
 	if(check_rights(R_PERMISSIONS))
-		if(alert("Override client sound prefs?", "Prefs override", "Yes", "HELL NO") == "Yes")
+		if(alert("Override client sound prefs?", "Prefs override", "NO", "Yes") == "Yes")
 			log_and_message_admins("override to play [S]")
 			override = TRUE
 	// [/SIERRA]
