@@ -39,7 +39,6 @@ GLOBAL_LIST_INIT(duplicate_forbidden_vars, list(
 					var/value = original.vars[V][key]
 					if (IS_REF_AND_NOT_SINGLETON(key) || IS_REF_AND_NOT_SINGLETON(value))
 						skipFlag = TRUE
-						log_debug("Skipflag=true")
 						break
 				if (skipFlag)
 					continue
