@@ -20,7 +20,7 @@ GLOBAL_LIST_INIT(duplicate_forbidden_vars, list(
 		O = new original.type(newloc)
 
 	if(perfectcopy && O && original)
-		for(var/V in original.vars - GLOB.duplicate_forbidden_vars - O.VV_hidden())
+		for(var/V in original.vars - GLOB.duplicate_forbidden_vars)
 			if(islist(original.vars[V]))
 				var/skipFlag = FALSE
 				for (var/key in original.vars[V])

@@ -20,7 +20,7 @@
 	if(parameters["left"])
 		var/turf/T = get_turf(object)
 		if(stored)
-			DuplicateObjectDeep(stored, perfectcopy=TRUE, sameloc=FALSE, newloc=T)
+			DuplicateObjectDeep(stored, perfectcopy=1, sameloc=0, newloc=T)
 			log_and_message_admins("Build Mode: [usr.ckey] copied [stored] ([stored.type]) to [get_location(T)]")
 			to_chat(SPAN_NOTICE("Successfully copied [stored] ([stored.type]) to [T.loc.name]!"))
 		else
