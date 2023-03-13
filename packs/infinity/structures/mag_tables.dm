@@ -57,7 +57,7 @@
 		I.anchored = locked
 	playsound(src, 'sound/effects/storage/briefcase.ogg', 100, 1)
 
-/obj/structure/table/mag/attackby(obj/item/W as obj, mob/user as mob, click_params)
+/obj/structure/table/mag/use_tool(obj/item/W as obj, mob/user as mob, click_params)
 	if(isrobot(user))
 		return
 	if(istype(W, /obj/item/card/id) || istype(W, /obj/item/modular_computer))

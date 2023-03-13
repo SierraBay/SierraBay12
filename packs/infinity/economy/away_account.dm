@@ -79,7 +79,7 @@ GLOBAL_LIST_EMPTY(away_money_accounts)
 		remembered_info += "<b>Пин-код:</b> [M.remote_access_pin]<br>"
 		remembered_info += "<b>Сумма на счету:</b> [GLOB.using_map.local_currency_name_short][M.money]<br>"
 
-		if(M.transaction_log.len)
+		if(length(M.transaction_log))
 			var/datum/transaction/T = M.transaction_log[1]
 			remembered_info += "<b>Создан:</b> [T.time], [T.date] в [T.get_source_name()]<br>"
 		H.StoreMemory(remembered_info, /singleton/memory_options/system)
