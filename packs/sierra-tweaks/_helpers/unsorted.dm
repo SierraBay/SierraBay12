@@ -1,11 +1,22 @@
+#define CODEX_INTERACTIONS_LIST list(\
+	"CODEX_INTERACTION_ALT_CLICK", "CODEX_INTERACTION_ALT_SHIFT_CLICK", "CODEX_INTERACTION_CTRL_CLICK",\
+	"CODEX_INTERACTION_CTRL_ALT_CLICK", "CODEX_INTERACTION_CTRL_ALT_SHIFT_CLICK", "CODEX_INTERACTION_CTRL_SHIFT_CLICK",\
+	"CODEX_INTERACTION_SHIFT_CLICK", "CODEX_INTERACTION_USE_SELF", "CODEX_INTERACTION_HAND",\
+	"CODEX_INTERACTION_ID_CARD", "CODEX_INTERACTION_SCREWDRIVER", "CODEX_INTERACTION_WELDER",\
+	"CODEX_INTERACTION_GRAB", "CODEX_INTERACTION_GRAB_PASSIVE", "CODEX_INTERACTION_GRAB_AGGRESSIVE",\
+	"CODEX_INTERACTION_GRAB_NECK", "CODEX_INTERACTION_EMAG", "CODEX_INTERACTION_EMP"\
+)
+
 //Vars that will not be copied when using /DuplicateObjectDeep
 GLOBAL_LIST_INIT(duplicate_forbidden_vars, list(
 	"tag", "datum_components", "area", "type", "loc", "locs", "vars", "parent", "parent_type", "verbs", "ckey", "key",
 	"power_supply", "contents", "reagents", "stat", "x", "y", "z", "group", "atmos_adjacent_turfs", "comp_lookup",
 	"important_recursive_contents", "bodyparts", "internal_organs", "hand_bodyparts", "overlays_standing", "hud_list",
 	"actions", "AIStatus", "appearance", "managed_overlays", "managed_vis_overlays", "computer_id", "lastKnownIP", "implants",
-	"tgui_shared_states"
-))
+	"tgui_shared_states", "overlays", "underlays"
+)+CODEX_INTERACTIONS_LIST)
+
+#undef CODEX_INTERACTIONS_LIST
 
 #define IS_REF_AND_NOT_SINGLETON(A) ((istype(A, /datum) && !istype(A, /singleton)) || ismob(A) )
 
@@ -20,13 +31,20 @@ GLOBAL_LIST_INIT(duplicate_forbidden_vars, list(
 		O = new original.type(newloc)
 
 	if(perfectcopy && O && original)
+		log_debug("ASDASDASDASDASDASD 1")
 		for(var/V in original.vars - GLOB.duplicate_forbidden_vars)
+			log_debug("- [V]")
+
+		log_debug("ASDASDASDASDASDASD 2")
+		for(var/V in original.vars - GLOB.duplicate_forbidden_vars)
+			log_debug("- [V]")
 			if(islist(original.vars[V]))
 				var/skipFlag = FALSE
 				for (var/key in original.vars[V])
 					var/value = original.vars[V][key]
 					if (IS_REF_AND_NOT_SINGLETON(key) || IS_REF_AND_NOT_SINGLETON(value))
 						skipFlag = TRUE
+						log_debug("Skipflag=true")
 						break
 				if (skipFlag)
 					continue
