@@ -59,17 +59,17 @@
 
 /obj/structure/table/mag/use_tool(obj/item/W as obj, mob/user as mob, click_params)
 	if(isrobot(user))
-		return
+		return..()
 	if(istype(W, /obj/item/card/id) || istype(W, /obj/item/modular_computer))
 		if(allowed(usr))
 			toggle_lock()
 			visible_message(SPAN_NOTICE("[usr] [locked ? "" : "un"]locked [src]!"))
-			return
+			return TRUE
 	if(isitem(W))
 		if(user.drop_from_inventory(W, src.loc))
 			auto_align(W, click_params)
 			W.anchored = locked
-	user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
+			user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
 	..()
 
 /obj/structure/table/mag/CtrlClick()
