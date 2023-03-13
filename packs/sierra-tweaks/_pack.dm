@@ -17,6 +17,7 @@
 
 // Mob
 #include "mob\say.dm"
+#include "mob\stat.dm"
 
 // Objects
 #include "objects\items\fruit_jar.dm"
