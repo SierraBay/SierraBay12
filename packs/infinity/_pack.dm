@@ -35,6 +35,9 @@
 #include "clothing\suits\suits.dm"
 #include "clothing\shoes\shoes.dm"
 
+// Economy
+#include "economy\away_account.dm"
+
 // Effects
 #include "effects\paint.dm"
 
