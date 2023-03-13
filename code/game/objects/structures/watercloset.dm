@@ -200,6 +200,16 @@
 			GM.adjustBruteLoss(8)
 	. = ..()
 
+
+
+/datum/composite_sound/shower
+	start_sound = 'sound/effects/shower/shower_start.ogg'
+	start_length = 10
+	mid_sounds = list('sound/effects/shower/shower_mid1.ogg'=1, 'sound/effects/shower/shower_mid2.ogg'=1, 'sound/effects/shower/shower_mid3.ogg'=1)
+	mid_length = 10
+	end_sound = 'sound/effects/shower/shower_end.ogg'
+	volume = 20
+
 /obj/structure/hygiene/shower
 	name = "shower"
 	desc = "The HS-451. Installed in the 2200s by the Hygiene Division."
@@ -217,10 +227,16 @@
 	var/watertemp = "normal"	//freezing, normal, or boiling
 	var/is_washing = 0
 	var/list/temperature_settings = list("normal" = 310, "boiling" = T0C+100, "freezing" = T0C)
+	var/datum/composite_sound/shower/soundloop
 
-/obj/structure/hygiene/shower/New()
-	..()
+/obj/structure/hygiene/shower/Initialize()
+	. = ..()
 	create_reagents(50)
+	soundloop = new(list(src), FALSE)
+
+/obj/structure/hygiene/shower/Destroy()
+	QDEL_NULL(soundloop)
+	. = ..()
 
 //add heat controls? when emagged, you can freeze to death in it?
 
@@ -234,13 +250,17 @@
 
 /obj/structure/hygiene/shower/attack_hand(mob/M)
 	on = !on
-	update_icon()
 	if(on)
+		soundloop.start()
 		if (M.loc == loc)
 			wash(M)
 			process_heat(M)
 		for (var/atom/movable/G in src.loc)
 			G.clean_blood()
+	else
+		soundloop.stop()
+
+	update_icon()
 
 /obj/structure/hygiene/shower/attackby(obj/item/I as obj, mob/user)
 	if(istype(I, /obj/item/device/scanner/gas))
