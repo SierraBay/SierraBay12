@@ -294,6 +294,16 @@ var/global/list/_client_preferences_by_type
 			winset(C, "output", "is-visible=true;is-disabled=false")
 			winset(C, "browseroutput", "is-visible=false")
 
+/datum/client_preference/play_jukebox
+	description ="Play jukebox music"
+	key = "SOUND_JUKEBOX"
+
+/datum/client_preference/play_jukebox/changed(mob/preference_mob, new_value)
+	if(GLOB.PREF_NO)
+		preference_mob.stop_all_music()
+	else
+		preference_mob.update_music()
+
 /********************
 * General Staff Preferences *
 ********************/
