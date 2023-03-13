@@ -31,13 +31,8 @@ GLOBAL_LIST_INIT(duplicate_forbidden_vars, list(
 		O = new original.type(newloc)
 
 	if(perfectcopy && O && original)
-		log_debug("ASDASDASDASDASDASD 1")
-		for(var/V in original.vars - GLOB.duplicate_forbidden_vars)
-			log_debug("- [V]")
 
-		log_debug("ASDASDASDASDASDASD 2")
 		for(var/V in original.vars - GLOB.duplicate_forbidden_vars)
-			log_debug("- [V]")
 			if(islist(original.vars[V]))
 				var/skipFlag = FALSE
 				for (var/key in original.vars[V])
