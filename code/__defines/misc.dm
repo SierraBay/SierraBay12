@@ -11,6 +11,7 @@
 #define INVISIBILITY_LIGHTING    20
 #define INVISIBILITY_LEVEL_ONE   35
 #define INVISIBILITY_LEVEL_TWO   45
+#define INVISIBILITY_OVERMAP     50
 #define INVISIBILITY_OBSERVER    60
 #define INVISIBILITY_EYE         61
 #define INVISIBILITY_SYSTEM      99
@@ -30,7 +31,7 @@
 #define INVISIBILITY_MAXIMUM 100
 
 // The SQL version required by this version of the code
-#define DB_VERSION 8
+#define DB_VERSION 9
 
 
 // Some arbitrary defines to be used by self-pruning global lists. (see master_controller)

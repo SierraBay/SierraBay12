@@ -10,7 +10,7 @@
 /obj/effect/overmap/visitable/sector/sfv_arbiter_space
 	name = "Sensor Anomaly"
 	desc = "Sensors readings are confused and inaccurate on this grid sector."
-	in_space = TRUE
+	sector_flags = OVERMAP_SECTOR_IN_SPACE
 	icon_state = "event"
 	hide_from_reports = TRUE
 
@@ -23,7 +23,7 @@
 	fore_dir = NORTH
 	vessel_size = SHIP_SIZE_SMALL
 	vessel_mass = 1000
-	known = FALSE
+
 	initial_generic_waypoints = list(
 		"nav_sfv_arbiter_1",
 		"nav_sfv_arbiter_2",

@@ -4,8 +4,10 @@
 	the target as NanoTrasen Science Vessel, a property of NanoTrasen Corporation."
 	fore_dir = WEST
 	vessel_mass = 63000
-	base = TRUE
-	color = COLOR_PURPLE
+	sector_flags = OVERMAP_SECTOR_KNOWN|OVERMAP_SECTOR_IN_SPACE|OVERMAP_SECTOR_BASE
+	color = "#a97faa"
+	known_ships = list(/obj/effect/overmap/visitable/ship/landable/exploration_shuttle, /obj/effect/overmap/visitable/ship/landable/guppy)
+
 	icon = 'icons/obj/overmap_inf.dmi'
 
 	initial_restricted_waypoints = list(

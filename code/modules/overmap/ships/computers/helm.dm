@@ -1,5 +1,7 @@
 LEGACY_RECORD_STRUCTURE(all_waypoints, waypoint)
 
+GLOBAL_LIST_EMPTY(overmap_helm_computers)
+
 /obj/machinery/computer/ship/helm
 	name = "helm control console"
 	icon_keyboard = "teleport_key"
@@ -21,13 +23,13 @@ LEGACY_RECORD_STRUCTURE(all_waypoints, waypoint)
 
 /obj/machinery/computer/ship/helm/Initialize()
 	. = ..()
-	get_known_sectors()
+	LAZYADD(GLOB.overmap_helm_computers, src)
+	for(var/obj/effect/overmap/visitable/sector as anything in GLOB.known_overmap_sectors)
+		add_known_sector(sector)
 
-/obj/machinery/computer/ship/helm/proc/get_known_sectors()
-	var/area/overmap/map = locate() in world
-	for(var/obj/effect/overmap/visitable/sector/S in map)
-		if (S.known)
-			add_known_sector(S)
+/obj/machinery/computer/ship/helm/Destroy()
+	. = ..()
+	LAZYREMOVE(GLOB.overmap_helm_computers, src)
 
 /obj/machinery/computer/ship/helm/proc/add_known_sector(obj/effect/overmap/visitable/sector/S, notify = FALSE)
 	var/datum/computer_file/data/waypoint/R = new()
@@ -384,9 +386,7 @@ LEGACY_RECORD_STRUCTURE(all_waypoints, waypoint)
 	machine_desc = "A compact, slimmed-down version of the navigation console."
 
 /obj/machinery/computer/ship/navigation/telescreen/on_update_icon()
-	if(reason_broken & MACHINE_BROKEN_NO_PARTS || !is_powered() || MACHINE_IS_BROKEN(src))
+	if(inoperable())
 		icon_state = "tele_off"
-		set_light(0)
 	else
 		icon_state = "tele_nav"
-		set_light(light_max_bright_on, light_inner_range_on, light_outer_range_on, 2, light_color)
