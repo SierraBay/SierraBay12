@@ -5,6 +5,7 @@
 #include "donations/donations_defines.dm"
 #include "donations/donations.dm"
 #include "donations/donator.dm"
+#include "donations/ooc_color.dm"
 
 #include "loadout/gear_tweaks.dm"
 #include "loadout/gear.dm"
