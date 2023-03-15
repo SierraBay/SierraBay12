@@ -370,7 +370,7 @@ div.notice
 .dt_1 {
 	font-weight: bold;
 	color: rgb(83, 107, 189);
-	text-shadow: 0 0 8px  rgba(83, 107, 189, .4);
+	text-shadow: 0 0 8px rgba(83, 107, 189, .4);
 }
 .dt_2 {
 	font-weight: bold;
@@ -380,10 +380,10 @@ div.notice
 .dt_3 {
 	font-weight: bold;
 	color: rgb(175, 48, 207);
-	text-shadow: 0 0 8px  rgba(175, 48, 207, .4);
+	text-shadow: 0 0 8px rgba(175, 48, 207, .4);
 }
 .dt_4 {
 	font-weight: bold;
 	color: rgb(229, 25, 219);
-	text-shadow: 0 0 8px  rgba(229, 25, 219, .4);
+	text-shadow: 0 0 8px rgba(229, 25, 219, .4);
 }
