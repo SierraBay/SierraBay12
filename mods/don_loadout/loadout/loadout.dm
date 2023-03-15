@@ -81,9 +81,12 @@ var/global/list/hash_to_gear = list()
 		LIST_RESIZE(pref.gear_list, config.loadout_slots)
 
 	max_loadout_points = config.max_gear_cost
+
 	var/donation_tier = pref.client.donator_info.get_full_donation_tier()
+	var/singleton/modpack/don_loadout/donations = GET_SINGLETON(/singleton/modpack/don_loadout)
+
 	if(!isnull(donation_tier) && donation_tier != DONATION_TIER_NONE)
-		max_loadout_points += config.extra_loadout_points
+		max_loadout_points += donations.extra_loadout_points
 
 	for(var/index = 1 to config.loadout_slots)
 		var/list/gears = pref.gear_list[index]

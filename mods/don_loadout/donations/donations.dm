@@ -4,10 +4,6 @@
 		log_debug("Donations system is disabled with SQL!")
 		return
 
-	if(!config.donations_enabled)
-		log_debug("Donations system is disabled by configuration!")
-		return
-
 	if(establish_db_connection())
 		log_debug("Donations system successfully connected to DB!")
 		UpdateAllClients()

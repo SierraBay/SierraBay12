@@ -1,7 +1,0 @@
-# Donations Configuration
-
-# Should we use donations? Unhash next line, if yes
-# ENABLE_DONATIONS
-
-# Extra points for any donation tier
-EXTRA_LOADOUT_POINTS 5

@@ -2,8 +2,6 @@
 #define MODPACK_DON_LOADOUT
 #include "_don_loadout.dm"
 
-#include "configuration.dm"
-
 #include "donations/donations_defines.dm"
 #include "donations/donations.dm"
 #include "donations/donator.dm"
