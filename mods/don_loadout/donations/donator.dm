@@ -16,7 +16,7 @@
 		if(DONATION_TIER_THREE) . = "Tier III"
 		if(DONATION_TIER_FOUR)  . = "Tier IV"
 
-	return "<span class='[donation_tier_to_css_class(tier)]'>[.]</span>"
+	return SPAN_CLASS(donation_tier_to_css_class(tier), .)
 
 /client
 	var/datum/donator_info/donator_info = new
