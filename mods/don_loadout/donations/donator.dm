@@ -43,7 +43,7 @@
 	return
 
 /datum/donator_info/proc/get_decorated_ooc_name(client/C)
-	if(!SScharacter_setup.initialized)
+	if(!SScharacter_setup.initialized || isnull(donation_type))
 		return C.key
 	return "<span class='[donation_tier_to_css_class(donation_type)]'>[C.key]</span>"
 
