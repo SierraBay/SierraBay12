@@ -10,29 +10,29 @@
 /datum/gear/mask/fakemoustache
 	display_name = "fake moustache"
 	path = /obj/item/clothing/mask/fakemoustache
-	points_price = 3
+	donation_tier = DONATION_TIER_ONE
 
 /datum/gear/mask/horsehead
 	display_name = "horse head"
 	path = /obj/item/clothing/mask/horsehead
-	points_price = 5
+	donation_tier = DONATION_TIER_ONE
 
 /datum/gear/mask/pig
 	display_name = "pig head"
 	path = /obj/item/clothing/mask/pig
-	points_price = 5
+	donation_tier = DONATION_TIER_ONE
 
 /datum/gear/mask/plaguedoctor
 	display_name = "plaguedoctor mask"
 	path = /obj/item/clothing/mask/gas/plaguedoctor
-	points_price = 18
+	donation_tier = DONATION_TIER_TWO
 
 /datum/gear/mask/monkeymask
 	display_name = "monkey mask"
 	path = /obj/item/clothing/mask/gas/monkeymask
-	points_price = 18
+	donation_tier = DONATION_TIER_TWO
 
 /datum/gear/mask/owl_mask
 	display_name = "owl mask"
 	path = /obj/item/clothing/mask/gas/owl_mask
-	points_price = 18
+	donation_tier = DONATION_TIER_TWO

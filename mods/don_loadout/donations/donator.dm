@@ -24,9 +24,7 @@
 /client/New()
 	. = ..()
 	var/singleton/modpack/don_loadout/donations = GET_SINGLETON(/singleton/modpack/don_loadout)
-	donations.log_client_to_db(src)
 	donations.update_donator(src)
-	donations.update_donator_items(src)
 
 /client/verb/donations_info()
 	set name = "Donations Info"
@@ -39,7 +37,6 @@
 /datum/donator_info
 	var/donator = FALSE
 	var/donation_type = DONATION_TIER_NONE
-	var/phinixes
 	var/list/items = new
 
 /datum/donator_info/proc/on_donation_tier_loaded(client/C)

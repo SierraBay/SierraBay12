@@ -24,7 +24,7 @@ var/global/list/hash_to_gear = list()
 	for(var/loadout_category in loadout_categories)
 		var/datum/loadout_category/LC = loadout_categories[loadout_category]
 		LC.gear = sortAssoc(LC.gear)
-	return 1
+	return TRUE
 
 
 /datum/category_item/player_setup_item/new_loadout
@@ -35,7 +35,6 @@ var/global/list/hash_to_gear = list()
 	var/list/selected_tweaks = new
 	var/hide_unavailable_gear = FALSE
 	var/hide_donate_gear = FALSE
-	var/flag_not_enough_phinixes = FALSE
 	var/max_loadout_points
 
 /datum/category_item/player_setup_item/new_loadout/load_character(datum/pref_record_reader/R)
@@ -51,12 +50,12 @@ var/global/list/hash_to_gear = list()
 	var/mob/preference_mob = preference_mob()
 	for(var/gear_name in gear_datums)
 		var/datum/gear/G = gear_datums[gear_name]
-		var/okay = 1
+		var/okay = TRUE
 		if(G.whitelisted && preference_mob)
-			okay = 0
+			okay = FALSE
 			for(var/species in G.whitelisted)
 				if(is_species_whitelisted(preference_mob, species))
-					okay = 1
+					okay = TRUE
 					break
 		if(!okay)
 			continue
@@ -140,11 +139,11 @@ var/global/list/hash_to_gear = list()
 
 	. += "<td style=\"vertical-align: top;\">"
 	if(max_loadout_points < INFINITY)
-		. += "<font color = '[fcolor]'>[total_cost]/[max_loadout_points]</font> loadout points spent.<br>"
-	. += "<a href='?src=\ref[src];clear_loadout=1'>Clear Loadout</a><br>"
-	. += "<a href='?src=\ref[src];random_loadout=1'>Random Loadout</a><br>"
-	. += "<a href='?src=\ref[src];toggle_hiding=1'>[hide_unavailable_gear ? "Show all" : "Hide unavailable for your jobs"]</a><br>"
-	. += "<a href='?src=\ref[src];toggle_donate=1'>[hide_donate_gear ? "Show donate gears" : "Hide donate gears"]</a><br>"
+		. += "<font color = '[fcolor]'>[total_cost]/[max_loadout_points]</font> поинтов потрачено.<br>"
+	. += "<a href='?src=\ref[src];clear_loadout=1'>Очистить лодаут</a><br>"
+	. += "<a href='?src=\ref[src];random_loadout=1'>Случайный лодаут</a><br>"
+	. += "<a href='?src=\ref[src];toggle_hiding=1'>[hide_unavailable_gear ? "Показать недоступные" : "Скрыть недоступные"]</a><br>"
+	. += "<a href='?src=\ref[src];toggle_donate=1'>[hide_donate_gear ? "Показать донатные" : "Скрыть донатные"]</a><br>"
 	. += "</td>"
 
 	. += "</tr></table>"
@@ -153,13 +152,8 @@ var/global/list/hash_to_gear = list()
 	. += "<td style='width: 90%; text-align: right; vertical-align: top;'>"
 
 	var/donation_tier = user.client.donator_info.get_full_donation_tier()
-	if(!donation_tier)
-		. += "<b>You have no Donation Tier yet.</b><br>"
-	else
-		. += "<b>Your Patreon tier is [donation_tier]</b><br>"
-	var/current_phinixes = round(user.client.donator_info.phinixes)
-	. += "<b>You have <font color='#e67300'>[current_phinixes]</font> phinix[current_phinixes != 1 ? "es" : ""].</b><br>"
-	. += "<a class='gold' href='?src=\ref[src];get_phinixes=1'><b>Get phinixes</b></a><br>"
+	. += "<b>Донат: [donation_tier || "Отсутствует"]</b><br>"
+	. += "<a class='gold' href='?src=\ref[src];donate=1'><b>Поддержать проект</b></a><br>"
 	. += "</td>"
 
 	. += "</tr></table>"
@@ -167,10 +161,10 @@ var/global/list/hash_to_gear = list()
 	. += "<table style='height: 100%;'>"
 
 	. += "<tr>"
-	. += "<td><b>Categories:</b></td>"
-	. += "<td><b>Gears:</b></td>"
+	. += "<td><b>Категории:</b></td>"
+	. += "<td><b>Предметы:</b></td>"
 	if(selected_gear)
-		. += "<td><b>Selected Item:</b></td>"
+		. += "<td><b>Выбранный предмет:</b></td>"
 	. += "</tr>"
 
 	. += "<tr style='vertical-align: top;'>"
@@ -218,7 +212,7 @@ var/global/list/hash_to_gear = list()
 		var/datum/gear/G = LC.gear[gear_name]
 		if(!G.path)
 			continue
-		if(hide_donate_gear && (G.points_price || G.donation_tier))
+		if(hide_donate_gear && G.donation_tier)
 			continue
 		if(!G.is_allowed_to_display(user))
 			continue
@@ -226,16 +220,14 @@ var/global/list/hash_to_gear = list()
 		var/ticked = (G.display_name in pref.gear_list[pref.gear_slot])
 		var/allowed_to_see = gear_allowed_to_see(G)
 		var/display_class
-		var/discountText
 		if(ticked && !gear_allowed_to_equip(G, user))
 			pref.gear_list[pref.gear_slot] -= G.display_name
 			ticked = FALSE
 		if(G != selected_gear)
 			if(ticked)
 				display_class = "white"
-			else if(!gear_allowed_to_equip(G, user) && G.points_price)
+			else if(!gear_allowed_to_equip(G, user) && G.donation_tier)
 				display_class = "gold"
-				discountText = G.points_price && G.discount ? "<b>(-[round(G.discount * 100)]%)</b>" : ""
 			else if(!allowed_to_see)
 				display_class = "red"
 			else
@@ -244,13 +236,13 @@ var/global/list/hash_to_gear = list()
 			display_class = "linkOn"
 
 		entry += "<tr>"
-		entry += "<td width=25%><a [display_class ? "class='[display_class]' " : ""]href='?src=\ref[src];select_gear=[html_encode(G.gear_hash)]'>[G.display_name] [discountText]</a></td>"
+		entry += "<td width=25%><a [display_class ? "class='[display_class]' " : ""]href='?src=\ref[src];select_gear=[html_encode(G.gear_hash)]'>[display_class] [G.display_name]</a></td>"
 		entry += "</td></tr>"
 
 		if(!hide_unavailable_gear || allowed_to_see || ticked)
 			if(user.client.donator_info.has_item(G.type) || (G.donation_tier && user.client.donator_info.donation_tier_available(G.donation_tier)))
 				purchased_gears += entry
-			else if(G.points_price || G.donation_tier)
+			else if(G.donation_tier)
 				paid_gears += entry
 			else
 				not_paid_gears += entry
@@ -296,7 +288,7 @@ var/global/list/hash_to_gear = list()
 		. += "<b>Loadout Points:</b> [selected_gear.cost]<br>"
 
 		if(length(selected_gear.allowed_roles))
-			. += "<b>Has jobs restrictions:</b>"
+			. += "<b>Имеет ограничения по профессии:</b>"
 			. += "<br>"
 			. += "<i>"
 			var/ind = 0
@@ -316,7 +308,7 @@ var/global/list/hash_to_gear = list()
 			. += "<br>"
 
 		if(length(selected_gear.allowed_branches))
-			. += "<b>Has branch restrictions:</b>"
+			. += "<b>Имеет ограничения по ветви:</b>"
 			. += "<br>"
 			. += "<i>"
 			var/list/branches = list()
@@ -339,7 +331,7 @@ var/global/list/hash_to_gear = list()
 			. += "<br>"
 
 		if(length(selected_gear.allowed_skills))
-			. += "<b>Has skill restrictions:</b>"
+			. += "<b>Требуются навыки:</b>"
 			. += "<br>"
 			. += "<i>"
 			var/list/skills_required = list()//make it into instances? instead of path
@@ -362,7 +354,7 @@ var/global/list/hash_to_gear = list()
 			. += "<br>"
 
 		if(selected_gear.whitelisted)
-			. += "<b>Has species restrictions:</b>"
+			. += "<b>Имеет расовые ограничения:</b>"
 			. += "<br>"
 			. += "<i>"
 
@@ -389,22 +381,12 @@ var/global/list/hash_to_gear = list()
 
 		if(selected_gear.donation_tier)
 			. += "<br>"
-			. += "<b>Dontaion tier: [donation_tier_decorated(selected_gear.donation_tier)]</b>"
-			. += "<br>"
-
-		if(selected_gear.points_price)
-			. += "<br>"
-			if(!gear_allowed_to_equip(selected_gear, user) && selected_gear.discount)
-				var/adjusted_price = selected_gear.points_price * selected_gear.discount
-				. += "<b>Price: <strike>[selected_gear.points_price] phinix[selected_gear.points_price != 1 ? "es" : ""]</strike></b> "
-				. += "<font color='#ff6600'><b>[adjusted_price] phinix[adjusted_price != 1 ? "es" : ""] ([round(selected_gear.discount * 100)] percents off!)</b></font>"
-			else
-				. += "<b>Price: [selected_gear.points_price] phinix[selected_gear.points_price != 1 ? "es" : ""]</b>"
+			. += "<b>Требуется донат: [donation_tier_decorated(selected_gear.donation_tier)]</b>"
 			. += "<br>"
 
 		// Tweaks
 		if(length(selected_gear.gear_tweaks))
-			. += "<br><b>Options:</b><br>"
+			. += "<br><b>Опции:</b><br>"
 			for(var/datum/gear_tweak/tweak in selected_gear.gear_tweaks)
 				var/tweak_contents = tweak.get_contents(selected_tweaks["[tweak]"])
 				if(tweak_contents)
@@ -413,18 +395,13 @@ var/global/list/hash_to_gear = list()
 
 		. += "<br>"
 
-		if(flag_not_enough_phinixes)
-			flag_not_enough_phinixes = FALSE
-			. += "<span class='notice'>You don't have enough phinixes!</span><br>"
-
-		var/not_available_message = SPAN_NOTICE("This item will never spawn with you, using your current preferences.")
+		var/not_available_message = SPAN_NOTICE("Текущие настройки персонажа не позволяют выдать Вам этот предмет.")
 		if(gear_allowed_to_equip(selected_gear, user))
-			. += "<a [ticked ? "class='linkOn' " : ""]href='?src=\ref[src];toggle_gear=[html_encode(selected_gear.gear_hash)]'>[ticked ? "Drop" : "Take"]</a>"
+			. += "<a [ticked ? "class='linkOn' " : ""]href='?src=\ref[src];toggle_gear=[html_encode(selected_gear.gear_hash)]'>[ticked ? "Положить" : "Взять"]</a>"
 		else
 			var/trying_on = (pref.trying_on_gear == selected_gear.display_name)
-			if(selected_gear.points_price)
-				. += "<a class='gold' href='?src=\ref[src];buy_gear=\ref[selected_gear]'>Buy</a> "
-				. += "<a [trying_on ? "class='linkOn' " : ""]href='?src=\ref[src];try_on=1'>Try On</a>"
+			if(selected_gear.donation_tier)
+				. += "<a [trying_on ? "class='linkOn' " : ""]href='?src=\ref[src];try_on=1'>Примерить</a>"
 			else
 				. += not_available_message
 
@@ -502,31 +479,6 @@ var/global/list/hash_to_gear = list()
 		pref.loadout_is_busy = FALSE
 
 		return TOPIC_REFRESH_UPDATE_PREVIEW
-
-	if(href_list["buy_gear"])
-		var/datum/gear/G = locate(href_list["buy_gear"])
-
-		ASSERT(G.points_price)
-		ASSERT(!user.client.donator_info.has_item(G.type))
-
-		var/singleton/modpack/don_loadout/donations = GET_SINGLETON(/singleton/modpack/don_loadout)
-
-		pref.loadout_is_busy = TRUE
-		var/comment = "Donation store purchase: [G.type]"
-		var/adjusted_price = G.discount ? G.points_price * G.discount : G.points_price
-		var/transaction = donations.create_transaction(user.client, -adjusted_price, DONATIONS_TRANSACTION_TYPE_PURCHASE, comment)
-
-		if(transaction)
-			if(donations.give_item(user.client, G.type, transaction))
-				pref.trying_on_gear = null
-				pref.trying_on_tweaks.Cut()
-				pref.loadout_is_busy = FALSE
-				return TOPIC_REFRESH_UPDATE_PREVIEW
-			else
-				donations.remove_transaction(user.client, transaction)
-		pref.loadout_is_busy = FALSE
-
-		return TOPIC_NOACTION
 
 	if(href_list["try_on"])
 		if(!istype(selected_gear)) return TOPIC_NOACTION
@@ -625,7 +577,7 @@ var/global/list/hash_to_gear = list()
 		return TOPIC_REFRESH
 
 	var/singleton/modpack/don_loadout/donations = GET_SINGLETON(/singleton/modpack/don_loadout)
-	if(href_list["get_phinixes"])
+	if(href_list["donate"])
 		donations.show_donations_info(user)
 		return TOPIC_NOACTION
 
@@ -695,7 +647,6 @@ var/global/list/hash_to_gear = list()
 
 /datum/category_item/player_setup_item/new_loadout/proc/toggle_gear(datum/gear/TG, mob/user)
 	// check if someone trying to tricking us. However, it's may be just a bug
-	ASSERT(!TG.points_price || user.client.donator_info.has_item(TG.type))
 	ASSERT(!TG.donation_tier || user.client.donator_info.donation_tier_available(TG.donation_tier))
 
 	if(TG.display_name in pref.gear_list[pref.gear_slot])

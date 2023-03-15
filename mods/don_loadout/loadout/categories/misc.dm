@@ -1,14 +1,14 @@
 /datum/gear/flask
-	points_price = 5
+	donation_tier = DONATION_TIER_ONE
 
 /datum/gear/flask/bar
-	points_price = 0
+	donation_tier = DONATION_TIER_NONE
 
 /datum/gear/flask/vacuum
-	points_price = 0
+	donation_tier = DONATION_TIER_NONE
 
 /datum/gear/flask/lithium
-	points_price = 8
+	donation_tier = DONATION_TIER_ONE
 
 /datum/gear/flask/shiny
-	points_price = 10
+	donation_tier = DONATION_TIER_TWO
