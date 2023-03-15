@@ -135,7 +135,7 @@ var/global/list/hash_to_gear = list()
 	. += "<table style='width: 100%;'><tr>"
 
 	. += "<td>"
-	. += "<b>Loadout Set <a href='?src=\ref[src];prev_slot=1'>&lt;&lt;</a><b><font color = '[fcolor]'>\[[pref.gear_slot]\]</font></b><a href='?src=\ref[src];next_slot=1'>&gt;&gt;</a></b><br>"
+	. += "<b>Набор: <a href='?src=\ref[src];prev_slot=1'>&lt;&lt;</a><b><font color = '[fcolor]'>\[[pref.gear_slot]\]</font></b><a href='?src=\ref[src];next_slot=1'>&gt;&gt;</a></b><br>"
 
 	. += "<table style='white-space: nowrap;'><tr>"
 	. += "<td><img src=previewicon.png width=[pref.preview_icon.Width()] height=[pref.preview_icon.Height()]></td>"
@@ -155,8 +155,8 @@ var/global/list/hash_to_gear = list()
 	. += "<td style='width: 90%; text-align: right; vertical-align: top;'>"
 
 	var/donation_tier = user.client.donator_info.get_full_donation_tier()
-	. += "<b>Донат: [donation_tier || "Отсутствует"]</b><br>"
-	. += "<a class='gold' href='?src=\ref[src];donate=1'><b>Поддержать проект</b></a><br>"
+	. += "<br><b>Донат:</b> [donation_tier || "Отсутствует"]<br>"
+	. += "<a class='gold' href='?src=\ref[src];donate=1'>Поддержать проект</a><br>"
 	. += "</td>"
 
 	. += "</tr></table>"
@@ -183,13 +183,11 @@ var/global/list/hash_to_gear = list()
 				var/datum/gear/G = LC.gear[gear]
 				category_cost += G.cost
 
+		var/category_class = category_cost ? "linkOn" : ""
 		if(category == current_tab)
-			. += " [SPAN_CLASS("linkOn", "[category] - [category_cost]")] "
-		else
-			if(category_cost)
-				. += " <a class='white' href='?src=\ref[src];select_category=[category]'>[category] - [category_cost]</a> "
-			else
-				. += " <a href='?src=\ref[src];select_category=[category]'>[category] - 0</a> "
+			category_class += " selected"
+
+		. += "<a class='[category_class]' href='?src=\ref[src];select_category=[category]'>[category] - [category_cost || 0]</a>"
 		. += "<br>"
 
 	. += "</b></td>"
@@ -219,27 +217,26 @@ var/global/list/hash_to_gear = list()
 			continue
 		if(!G.is_allowed_to_display(user))
 			continue
-		var/entry = ""
 		var/ticked = (G.display_name in pref.gear_list[pref.gear_slot])
-		var/allowed_to_see = gear_allowed_to_see(G)
-		var/display_class
 		if(ticked && !gear_allowed_to_equip(G, user))
 			pref.gear_list[pref.gear_slot] -= G.display_name
 			ticked = FALSE
-		if(G != selected_gear)
-			if(ticked)
-				display_class = "white"
-			else if(!gear_allowed_to_equip(G, user) && G.donation_tier)
-				display_class = "gold"
-			else if(!allowed_to_see)
-				display_class = "red"
-			else
-				display_class = "gray"
-		else
-			display_class = "linkOn"
 
+		var/display_class = ""
+		var/allowed_to_see = gear_allowed_to_see(G)
+		if(ticked)
+			display_class = "linkOn"
+		else if(!gear_allowed_to_equip(G, user) && G.donation_tier)
+			display_class = "gold"
+		else if(!allowed_to_see)
+			display_class = "gray"
+
+		if(G == selected_gear)
+			display_class += " selected"
+
+		var/entry = ""
 		entry += "<tr>"
-		entry += "<td width=25%><a [display_class ? "class='[display_class]' " : ""]href='?src=\ref[src];select_gear=[html_encode(G.gear_hash)]'>[display_class] [G.display_name]</a></td>"
+		entry += "<td width=25%><a [display_class ? "class='[display_class]' " : ""]href='?src=\ref[src];select_gear=[html_encode(G.gear_hash)]'>[G.display_name]</a></td>"
 		entry += "</td></tr>"
 
 		if(!hide_unavailable_gear || allowed_to_see || ticked)
@@ -282,13 +279,24 @@ var/global/list/hash_to_gear = list()
 		. += "<td style='width: 80%;' class='block'>"
 
 		. += "<table><tr>"
+
 		. += "<td>[icon2html(I, user)]</td>"
-		. += "<td style='vertical-align: top;'><b>[selected_gear.display_name]</b></td>"
+
+		. += "<td style='vertical-align: top;'>"
+		. += "<b>[selected_gear.display_name]</b>"
+
+		var/desc = selected_gear.get_description(selected_tweaks)
+		if(desc)
+			. += "<br>"
+			. += desc
+
+		. += "</td>"
 		. += "</tr></table>"
 
+
 		if(selected_gear.slot)
-			. += "<b>Slot:</b> [slot_to_description(selected_gear.slot)]<br>"
-		. += "<b>Loadout Points:</b> [selected_gear.cost]<br>"
+			. += "<b>Слот:</b> [slot_to_description(selected_gear.slot)]<br>"
+		. += "<b>Поинты:</b> [selected_gear.cost]<br>"
 
 		if(length(selected_gear.allowed_roles))
 			. += "<b>Имеет ограничения по профессии:</b>"
@@ -376,12 +384,6 @@ var/global/list/hash_to_gear = list()
 			. += "</i>"
 			. += "<br>"
 
-		var/desc = selected_gear.get_description(selected_tweaks)
-		if(desc)
-			. += "<br>"
-			. += desc
-			. += "<br>"
-
 		if(selected_gear.donation_tier)
 			. += "<br>"
 			. += "<b>Требуется донат: [donation_tier_decorated(selected_gear.donation_tier)]</b>"
@@ -400,7 +402,7 @@ var/global/list/hash_to_gear = list()
 
 		var/not_available_message = SPAN_NOTICE("Текущие настройки персонажа не позволяют выдать Вам этот предмет.")
 		if(gear_allowed_to_equip(selected_gear, user))
-			. += "<a [ticked ? "class='linkOn' " : ""]href='?src=\ref[src];toggle_gear=[html_encode(selected_gear.gear_hash)]'>[ticked ? "Положить" : "Взять"]</a>"
+			. += "<a [ticked ? "class='linkOn' " : ""]href='?src=\ref[src];toggle_gear=[html_encode(selected_gear.gear_hash)]'>[ticked ? "Снять" : "Надеть"]</a>"
 		else
 			var/trying_on = (pref.trying_on_gear == selected_gear.display_name)
 			if(selected_gear.donation_tier)

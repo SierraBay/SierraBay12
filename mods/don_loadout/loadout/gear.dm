@@ -65,10 +65,3 @@
 		to_chat(subject, SPAN_WARNING("Dropping \the [item] on the ground!"))
 		item.forceMove(get_turf(subject))
 		item.add_fingerprint(subject)
-
-
-/datum/gear_tweak/proc/get_random()
-	return get_default()
-
-/datum/gear_tweak/color/get_random()
-	return valid_colors ? pick(valid_colors) : rgb(rand(200) + 55, rand(200) + 55, rand(200) + 55)

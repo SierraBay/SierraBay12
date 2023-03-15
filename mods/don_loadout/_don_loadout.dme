@@ -6,6 +6,7 @@
 #include "donations/donations.dm"
 #include "donations/donator.dm"
 
+#include "loadout/gear_tweaks.dm"
 #include "loadout/gear.dm"
 #include "loadout/helpers.dm"
 #include "loadout/loadout.dm"

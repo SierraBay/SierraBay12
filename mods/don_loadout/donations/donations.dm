@@ -60,9 +60,9 @@
 	ASSERT(user)
 
 	var html = {"
-	<p>Резвизиты для <b>разовых пожертвований</b> можно найти в разделе <b>#донаты</b> нашего дискорда:</p>
+	<center>Реквизиты для <b>разовых пожертвований</b> можно найти в разделе <b>#донаты</b> нашего дискорда:</center>
 	<center><a href="?src=\ref[src]">Открыть Discord</a></center>
-	<p>За денежные пожертвования, в благодарность вы получаете доступ к некоторым специальным предметам лодаута</p>
+	<center>За денежные пожертвования, в благодарность вы получаете доступ к некоторым специальным предметам лодаута</center>
 	"}
 	var/datum/browser/popup = new(user, "donation_links", "Донат", 400, 230)
 	popup.set_content(html)
@@ -76,6 +76,6 @@
 		if("go_to_discord")
 			log_debug("\[Donations] discord link used by '[user]'")
 			send_link(user, config.discord_url)
-			return 1
+			return TOPIC_HANDLED
 
-	return 0
+	return TOPIC_NOACTION
