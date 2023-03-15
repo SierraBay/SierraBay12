@@ -80,3 +80,48 @@
 
 	if(update_icon)
 		mannequin.update_icons()
+
+
+/datum/preferences/get_content(mob/user)
+	if(!SScharacter_setup.initialized)
+		return
+	if(!user || !user.client)
+		return
+
+	var/dat = "<center>"
+
+	if(is_guest)
+		dat += "Please create an account to save your preferences. If you have an account and are seeing this, please adminhelp for assistance."
+	else if(load_failed)
+		dat += "Ваш файл сохранения повреждён. Пожалуйста, обратитесь к администрации через adminhelp."
+	else
+		dat += "Слот - "
+		dat += "<a href='?src=\ref[src];load=1'>Загрузить</a> - "
+		dat += "<a href='?src=\ref[src];save=1'>Сохранить</a> - "
+		dat += "<a href='?src=\ref[src];resetslot=1'>Сбросить</a> - "
+		dat += "<a href='?src=\ref[src];reload=1'>Перезагрузить</a>"
+
+	dat += "<br>"
+	dat += player_setup.header()
+	dat += "<br><HR></center>"
+	dat += player_setup.content(user)
+	return dat
+
+
+/datum/preferences/open_load_dialog(mob/user, details)
+	var/dat  = list()
+	dat += "<body>"
+	dat += "<center>"
+
+	dat += "<b>Выберите слот для загрузки</b><hr>"
+	for(var/i=1, i<= config.character_slots, i++)
+		var/name = (slot_names && slot_names[get_slot_key(i)]) || "Персонаж [i]"
+		if(i==default_slot)
+			name = "<b>[name]</b>"
+		dat += "<a href='?src=\ref[src];changeslot=[i];[details?"details=1":""]'>[name]</a><br>"
+
+	dat += "<hr>"
+	dat += "</center>"
+	panel = new(user, "character_slots", "Слоты персонажей", 300, 390, src)
+	panel.set_content(jointext(dat,null))
+	panel.open()

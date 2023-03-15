@@ -16,4 +16,11 @@
 #include "loadout/categories/masks.dm"
 #include "loadout/categories/tiers.dm"
 
+#include "tweaked/global.dm"
+#include "tweaked/general/01_basic.dm"
+#include "tweaked/general/02_body.dm"
+#include "tweaked/general/03_equipment.dm"
+#include "tweaked/general/04_flavor.dm"
+#include "tweaked/general/05_preview.dm"
+
 #endif

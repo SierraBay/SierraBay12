@@ -9,11 +9,7 @@ body
 	font-family: Verdana, Geneva, sans-serif;
 }
 
-hr
-{
-	background-color: #40628a;
-	height: 1px;
-}
+hr { border-color: #818d9b; }
 
 a, a:link, a:visited, a:active, .linkOn, .linkOff, input
 {
@@ -58,8 +54,8 @@ a.gold, a.gold:link, a.gold:visited, a.gold:active
 
 a.gold:hover
 {
-	color: #ffb937;
-	background: #251b0d;
+	color: #fdbe49;
+	background: #2c200f;
 }
 
 a.gray, a.gray:link, a.gray:visited, a.gray:active
@@ -71,7 +67,7 @@ a.gray, a.gray:link, a.gray:visited, a.gray:active
 a.gray:hover
 {
 	color: #ffffff;
-	background: #757575;
+	background: #818181;
 }
 
 .linkOn, a.linkOn:link, a.linkOn:visited, a.linkOn:active, a.linkOn:hover

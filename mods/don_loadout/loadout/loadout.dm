@@ -138,7 +138,7 @@ var/global/list/hash_to_gear = list()
 	. += "<b>Набор: <a href='?src=\ref[src];prev_slot=1'>&lt;&lt;</a><b><font color = '[fcolor]'>\[[pref.gear_slot]\]</font></b><a href='?src=\ref[src];next_slot=1'>&gt;&gt;</a></b><br>"
 
 	. += "<table style='white-space: nowrap;'><tr>"
-	. += "<td><img src=previewicon.png width=[pref.preview_icon.Width()] height=[pref.preview_icon.Height()]></td>"
+	. += "<td><div class='statusDisplay' style='text-align:center'><img src=previewicon.png width=[pref.preview_icon.Width()] height=[pref.preview_icon.Height()]></div></td>"
 
 	. += "<td style=\"vertical-align: top;\">"
 	if(max_loadout_points < INFINITY)
@@ -155,7 +155,7 @@ var/global/list/hash_to_gear = list()
 	. += "<td style='width: 90%; text-align: right; vertical-align: top;'>"
 
 	var/donation_tier = user.client.donator_info.get_full_donation_tier()
-	. += "<br><b>Донат:</b> [donation_tier || "Отсутствует"]<br>"
+	. += "<br><br><b>Донат:</b> [donation_tier || "Отсутствует"]<br>"
 	. += "<a class='gold' href='?src=\ref[src];donate=1'>Поддержать проект</a><br>"
 	. += "</td>"
 
@@ -391,7 +391,7 @@ var/global/list/hash_to_gear = list()
 
 		// Tweaks
 		if(length(selected_gear.gear_tweaks))
-			. += "<br><b>Опции:</b><br>"
+			. += "<br><b>Настройки:</b><br>"
 			for(var/datum/gear_tweak/tweak in selected_gear.gear_tweaks)
 				var/tweak_contents = tweak.get_contents(selected_tweaks["[tweak]"])
 				if(tweak_contents)
@@ -400,6 +400,7 @@ var/global/list/hash_to_gear = list()
 
 		. += "<br>"
 
+		. += "<br><b>Опции:</b><br>"
 		var/not_available_message = SPAN_NOTICE("Текущие настройки персонажа не позволяют выдать Вам этот предмет.")
 		if(gear_allowed_to_equip(selected_gear, user))
 			. += "<a [ticked ? "class='linkOn' " : ""]href='?src=\ref[src];toggle_gear=[html_encode(selected_gear.gear_hash)]'>[ticked ? "Снять" : "Надеть"]</a>"
