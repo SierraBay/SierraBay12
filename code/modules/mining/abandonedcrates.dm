@@ -38,7 +38,7 @@
 				new/obj/item/ore/diamond(src)
 		if(21 to 25)
 			for(var/i = 0, i < 3, i++)
-				new/obj/machinery/portable_atmospherics/hydroponics(src)
+				new/obj/item/storage/box/donkpocket_mixed(src)
 		if(26 to 30)
 			for(var/i = 0, i < 3, i++)
 				new/obj/item/reagent_containers/glass/beaker/noreact(src)
