@@ -59,7 +59,8 @@
 
 	closer = new /obj/screen/close(  )
 	closer.master = storage
-	closer.icon_state = "x_small"
+	// closer.icon_state = "x"    // BAY
+	closer.icon_state = "x_small" // SIERRA
 	closer.layer = HUD_BASE_LAYER
 
 /datum/storage_ui/default/Destroy()
