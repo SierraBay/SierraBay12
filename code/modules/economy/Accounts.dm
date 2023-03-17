@@ -98,7 +98,7 @@
 		return D
 
 /proc/get_account(account_number)
-	// for(var/datum/money_account/D in all_money_accounts)                         // BAY
+	// for(var/datum/money_account/D in all_money_accounts)                       // BAY
 	for(var/datum/money_account/D in all_money_accounts+GLOB.away_money_accounts) // SIERRA: Hard override because simply overriding with file in pack doesn't work
 		if(D.account_number == account_number)
 			return D
