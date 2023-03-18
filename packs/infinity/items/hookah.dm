@@ -262,7 +262,7 @@
 		return TRUE
 	return ..()
 
-/obj/item/hookah/proc/light(flavor_text = "[usr] lights the [name].")
+/obj/item/hookah/proc/light(flavor_text)
 	if(lit || !smoketime)
 		return TRUE
 	if(submerged())
@@ -271,7 +271,8 @@
 	lit = TRUE
 	damtype = "burn"
 	var/turf/T = get_turf(src)
-	T.visible_message(SPAN_INFO(flavor_text))
+	if (flavor_text)
+		T.visible_message(SPAN_INFO(flavor_text))
 	update_icon()
 	START_PROCESSING(SSobj, src)
 	set_scent_by_reagents(src)
