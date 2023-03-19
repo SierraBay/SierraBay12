@@ -134,126 +134,126 @@
 		)
 
 	lobby_tracks = list(
-		// Absconditus - Zhay Tee
+		// Absconditus - Zhay Tee		--,
 		/singleton/audio/track/absconditus,
 
-		// Bad Apple!! (slowed down) - Alstroemeria Records
+		// Bad Apple!! (slowed down) - Alstroemeria Records		--,
 		/singleton/audio/track/ambispace,
 
-		// As Far As It Gets - A Drop A Day
+		// As Far As It Gets - A Drop A Day		--,
 		/singleton/audio/track/asfarasitgets,
 
-		// Business End - Cletus Got Shot
+		// Business End - Cletus Got Shot		--,
 		// /singleton/audio/track/businessend,
 
-		// Chasing Time - Dexter Britain
+		// Chasing Time - Dexter Britain		--,
 		/singleton/audio/track/chasing_time,
 
-		// Clouds of Fire - Hector/dMk
+		// Clouds of Fire - Hector/dMk		--,
 		/singleton/audio/track/clouds_of_fire,
 
-		// Comet Halley - Stellardrone
+		// Comet Halley - Stellardrone		--,
 		/singleton/audio/track/comet_haley,
 
-		// Dwarf Fortress Main Theme - Beyond Quality
+		// Dwarf Fortress Main Theme - Beyond Quality		--,
 		// /singleton/audio/track/df_theme,
 
-		// Half-Life 2 - Tracking Device - Kelly Bailey
+		// Half-Life 2 - Tracking Device - Kelly Bailey		--,
 		// /singleton/audio/track/digit_one,
 
-		// Robocop.mp3 - CBoyardee
+		// Robocop.mp3 - CBoyardee		--,
 		// /singleton/audio/track/dilbert,
 
-		// 80s All Over Again - A Drop A Day
+		// 80s All Over Again - A Drop A Day		--,
 		/singleton/audio/track/eighties,
 
-		// Local Forecast (Elevator) - Kevin MacLeod
+		// Local Forecast (Elevator) - Kevin MacLeod		--,
 		// /singleton/audio/track/elevator,
 
-		// every light is blinking at once - Earthcrusher
+		// every light is blinking at once - Earthcrusher		--,
 		/singleton/audio/track/elibao,
 
-		// Endless Space - SolusLunes
+		// Endless Space - SolusLunes		--,
 		/singleton/audio/track/endless_space,
 
-		// Epic Intro 2015 - Sascha Ende
+		// Epic Intro 2015 - Sascha Ende		--,
 		/singleton/audio/track/epicintro2015,
 
-		// Epic Intro 2017 - Sascha Ende
+		// Epic Intro 2017 - Sascha Ende		--,
 		/singleton/audio/track/epicintro2017,
 
-		// Unknown - Unknown
+		// Unknown - Unknown		--,
 		/singleton/audio/track/floating,
 
-		// Hull Rupture - Mikazu
+		// Hull Rupture - Mikazu		--,
 		/singleton/audio/track/hull_rupture,
 
-		// Human - Borrtex
+		// Human - Borrtex		--,
 		/singleton/audio/track/human,
 
-		// In Orbit - Chronox
+		// In Orbit - Chronox		--,
 		/singleton/audio/track/inorbit,
 
-		// lasers rip apart the bulkhead - Earthcrusher
+		// lasers rip apart the bulkhead - Earthcrusher		--,
 		/singleton/audio/track/lasers,
 
-		// Flip-Flap - X-CEED
+		// Flip-Flap - X-CEED		--,
 		// /singleton/audio/track/level3_mod,
 
-		// Memories Of Lysendraa - TALES
+		// Memories Of Lysendraa - TALES		--,
 		// /singleton/audio/track/lysendraa,
 
-		// Marhaba - Ian Alex Mac
+		// Marhaba - Ian Alex Mac		--,
 		/singleton/audio/track/marhaba,
 
-		// Martian Cowboy - Kevin MacLeod
+		// Martian Cowboy - Kevin MacLeod		--,
 		/singleton/audio/track/martiancowboy,
 
-		// Misanthropic Corridors - Mikazu
+		// Misanthropic Corridors - Mikazu		--,
 		/singleton/audio/track/misanthropic_corridors,
 
-		// Monument - Six Umbrellas
+		// Monument - Six Umbrellas		--,
 		// /singleton/audio/track/monument,
 
-		// Nebula - Pulse Emitter
+		// Nebula - Pulse Emitter		--,
 		/singleton/audio/track/nebula,
 
-		// One (abridged loop) - Swedish House Mafia
+		// One (abridged loop) - Swedish House Mafia		--,
 		// /singleton/audio/track/one_loop,
 
-		// On the Rocks - Mikazu
+		// On the Rocks - Mikazu		--,
 		/singleton/audio/track/on_the_rocks,
 
-		// phoron will make us rich - Earthcrusher
+		// phoron will make us rich - Earthcrusher		--,
 		// /singleton/audio/track/pwmur,
 
-		// Rimward Cruise - Mikazu
+		// Rimward Cruise - Mikazu		--,
 		/singleton/audio/track/rimward_cruise,
 
-		// Salut John - Quimorucru
+		// Salut John - Quimorucru		--,
 		// /singleton/audio/track/salutjohn,
 
-		// Space Oddity - Chris Hadfield
+		// Space Oddity - Chris Hadfield		--,
 		/singleton/audio/track/space_oddity,
 
-		// Sektor11 - MashedByMachines
+		// Sektor11 - MashedByMachines		--,
 		/singleton/audio/track/thunderdome,
 
-		// Torch: A Light in the Darkness - L. Luke Leimer/LorenLuke
+		// Torch: A Light in the Darkness - L. Luke Leimer/LorenLuke		--,
 		/singleton/audio/track/torch,
 
-		// Torn - Macamoto
+		// Torn - Macamoto		--,
 		/singleton/audio/track/torn,
 
-		// Treacherous Voyage - Jon Luc Hefferman
+		// Treacherous Voyage - Jon Luc Hefferman		--,
 		/singleton/audio/track/treacherous_voyage,
 
-		// Voidsent - Mikazu
+		// Voidsent - Mikazu		--,
 		/singleton/audio/track/voidsent,
 
-		// Wake - Ryan Little
+		// Wake - Ryan Little		--,
 		/singleton/audio/track/wake,
 
-		// Wild Encounters - A Drop A Day
+		// Wild Encounters - A Drop A Day		--,
 		/singleton/audio/track/wildencounters
 	)
