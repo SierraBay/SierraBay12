@@ -1,0 +1,7 @@
+#ifndef MODPACK_OBJECTS
+#define MODPACK_OBJECTS
+
+#include "_objects.dm"
+#include "buckling.dm"
+
+#endif

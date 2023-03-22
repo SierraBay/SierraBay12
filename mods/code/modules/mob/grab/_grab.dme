@@ -1,0 +1,7 @@
+#ifndef MODPACK_GRAB
+#define MODPACK_GRAB
+
+#include "_grab.dm"
+#include "grab_object.dm"
+
+#endif
