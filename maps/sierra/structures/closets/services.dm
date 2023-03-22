@@ -88,7 +88,7 @@
 		/obj/item/reagent_containers/food/drinks/shaker,
 		/obj/item/glass_jar,
 		/obj/item/book/manual/barman_recipes,
-		/obj/item/storage/box/ammo,
+		/obj/item/storage/box/ammo/beanbags,
 		/obj/item/clothing/under/rank/bartender,
 		/obj/item/clothing/gloves/thick,
 		/obj/item/clothing/gloves/white,
