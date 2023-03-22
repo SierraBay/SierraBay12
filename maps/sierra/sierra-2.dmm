@@ -24537,7 +24537,6 @@
 	name = "Chamber Vent"
 	},
 /turf/simulated/floor/reinforced,
-/area/rnd/xenobiology/cell_3)
 "aTx" = (
 /obj/effect/floor_decal/industrial/hatch/yellow,
 /obj/machinery/door/blast/regular{
