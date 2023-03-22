@@ -31484,6 +31484,9 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/structure/bed/sofa/r/black{
+	dir = 8
+	},
 /turf/simulated/floor/carpet,
 /area/crew_quarters/lounge/upper)
 "bay" = (
@@ -33002,6 +33005,9 @@
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 24
+	},
+/obj/structure/bed/sofa/m/black{
+	dir = 10
 	},
 /turf/simulated/floor/carpet,
 /area/crew_quarters/lounge/upper)
@@ -42314,6 +42320,10 @@
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor/tiled,
 /area/hallway/primary/firstdeck/aft)
+"wkm" = (
+/obj/structure/bed/sofa/l/black,
+/turf/simulated/floor/carpet,
+/area/crew_quarters/lounge/upper)
 "wqp" = (
 /obj/structure/railing/mapped{
 	dir = 8
@@ -61196,7 +61206,7 @@ aZp
 xbE
 bbC
 bcQ
-bav
+wkm
 beN
 bfF
 bfF
