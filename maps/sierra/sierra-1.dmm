@@ -7823,12 +7823,6 @@
 /obj/effect/catwalk_plated,
 /turf/simulated/floor/plating,
 /area/hallway/primary/thirddeck/fore)
-"mC" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/simulated/floor/reinforced,
-/area/rnd/xenobiology/cell_4)
 "mD" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/catwalk,
@@ -19336,17 +19330,6 @@
 	},
 /turf/simulated/floor/tiled,
 /area/quartermaster/deckofficer)
-"Fu" = (
-/obj/structure/closet/emcloset{
-	anchored = 1;
-	name = "anchored emergency closet"
-	},
-/obj/effect/floor_decal/corner/lightgrey/mono,
-/obj/effect/floor_decal/industrial/outline/yellow,
-/obj,
-/obj,
-/turf/simulated/floor/tiled/monotile,
-/area/hallway/primary/thirddeck/fore)
 "Fv" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 4
@@ -21511,14 +21494,6 @@
 /obj/structure/table/steel,
 /turf/simulated/floor/tiled/monotile,
 /area/exploration_shuttle/cockpit)
-"IO" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 10
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/effect/floor_decal/industrial/warning,
-/turf/simulated/floor/reinforced,
-/area/rnd/xenobiology/cell_4)
 "IP" = (
 /obj/structure/cable/cyan{
 	d1 = 1;
@@ -24009,7 +23984,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/reinforced,
-/area/rnd/xenobiology/cell_4)
+/area/rnd/xenobiology/level2)
 "MZ" = (
 /obj/machinery/light{
 	dir = 4
@@ -24223,7 +24198,7 @@
 	opacity = 0
 	},
 /turf/simulated/floor/plating,
-/area/rnd/xenobiology/cell_4)
+/area/rnd/xenobiology/level2)
 "Nv" = (
 /turf/simulated/wall/r_wall/prepainted,
 /area/rnd/xenobiology/level2)
@@ -24757,17 +24732,12 @@
 /turf/simulated/floor/tiled/white/monotile,
 /area/rnd/xenobiology/entry2)
 "Oq" = (
-/obj/item/tank/oxygen,
-/obj/item/device/oxycandle,
-/obj/item/device/oxycandle,
 /obj/structure/cable/green{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/item/clothing/head/helmet/space/emergency,
-/obj/item/clothing/suit/space/emergency,
-/obj/item/tank/oxygen,
+/obj/structure/closet/emcloset,
 /turf/simulated/floor/plating,
 /area/vacant/cargo)
 "Or" = (
@@ -26052,7 +26022,7 @@
 	opacity = 0
 	},
 /turf/simulated/floor/reinforced,
-/area/rnd/xenobiology/cell_4)
+/area/rnd/xenobiology/level2)
 "QB" = (
 /obj/machinery/alarm{
 	dir = 4;
@@ -27935,13 +27905,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled,
 /area/storage/primary)
-"TR" = (
-/obj/machinery/atmospherics/unary/vent_pump/on{
-	dir = 4
-	},
-/obj/effect/floor_decal/industrial/warning,
-/turf/simulated/floor/reinforced,
-/area/rnd/xenobiology/cell_4)
 "TS" = (
 /obj/structure/table/rack,
 /obj/item/device/scanner/mining,
@@ -44181,7 +44144,7 @@ Is
 Is
 Is
 fB
-Fu
+kp
 rC
 VW
 TX
@@ -54317,8 +54280,8 @@ Ur
 VF
 LQ
 Nv
-mC
-TR
+MX
+Nn
 Nu
 NK
 RD
@@ -54520,7 +54483,7 @@ VF
 LQ
 Nv
 MY
-IO
+Np
 QA
 NL
 RE
