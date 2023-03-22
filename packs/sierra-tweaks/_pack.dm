@@ -12,6 +12,10 @@
 #include "client\spawnpoints.dm"
 #include "client\verbs.dm"
 
+// Code
+#include "code\game\objects\buckling.dm"
+#include "code\modules\mob\grab\grab_object.dm"
+
 // Gamemodes
 #include "gamemodes\revolutionary.dm"
 

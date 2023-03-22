@@ -151,8 +151,6 @@
 	#include "../../mods/don_loadout/_don_loadout.dme"
 	#include "../../mods/leroy_beasts_pack/_leroy_beasts.dme"
 	#include "../../mods/machinery/scrap_compactor/_scrap_compactor.dme"
-	#include "../../mods/code/game/objects/_objects.dme"
-	#include "../../mods/code/modules/mob/grab/_grab.dme"
 
 	#include "../../packs/infinity/_pack.dm"
 	#include "../../packs/sierra-tweaks/_pack.dm"
