@@ -12,8 +12,14 @@
 #include "client\spawnpoints.dm"
 #include "client\verbs.dm"
 
+// Code
+#include "code\game\machinery\embedded_controller\airlock_controllers_dummy.dm"
+
 // Gamemodes
 #include "gamemodes\revolutionary.dm"
+
+// Maps
+#include "maps\sierra\structures\closets\services.dm"
 
 // Mob
 #include "mob\say.dm"
