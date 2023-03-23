@@ -28629,7 +28629,6 @@
 	},
 /obj/machinery/media/music_writer{
 	pixel_x = -28;
-	anchored = 1
 	},
 /turf/simulated/floor/carpet,
 /area/crew_quarters/lounge_big)
@@ -39178,7 +39177,6 @@
 "tUN" = (
 /obj/machinery/media/music_writer{
 	pixel_y = 28;
-	anchored = 1
 	},
 /turf/simulated/floor/wood/walnut,
 /area/crew_quarters/lounge)
@@ -40350,7 +40348,6 @@
 	},
 /obj/machinery/media/music_writer{
 	pixel_x = 28;
-	anchored = 1
 	},
 /turf/simulated/floor/wood/ebony,
 /area/crew_quarters/bar)
