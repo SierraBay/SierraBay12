@@ -2,9 +2,8 @@
 /obj/machinery/dummy_airlock_controller
 	name = "airlock control terminal"
 	icon = 'icons/obj/airlock_machines.dmi'
-	icon_state = "airlock_control_off"
+	icon_state = "airlock_control_standby"
 	layer = ABOVE_OBJ_LAYER
-	anchored = 1
 
 	var/datum/topic_state/remote/remote_state
 	var/obj/machinery/embedded_controller/radio/airlock/master_controller
