@@ -130,6 +130,33 @@
 //	pda_type = /obj/item/modular_computer/pda
 	id_types = list(/obj/item/card/id/liberia/merchant)
 
+/datum/job/submap/merchant/proc/setup_money_briefcase(mob/living/carbon/human/H)
+	var/money_in_briefcase = 4 * rand(75, 100) * economic_power
+
+	var/culture_mod =   0
+	var/culture_count = 0
+	for(var/token in H.cultural_info)
+		var/singleton/cultural_info/culture = H.get_cultural_value(token)
+		if(culture && !isnull(culture.economic_power))
+			culture_count++
+			culture_mod += culture.economic_power
+	if(culture_count)
+		culture_mod /= culture_count
+	money_in_briefcase *= culture_mod
+
+	money_in_briefcase *= GLOB.using_map.salary_modifier
+	money_in_briefcase *= 1 + 2 * H.get_skill_value(SKILL_FINANCE)/(SKILL_MAX - SKILL_MIN)
+	money_in_briefcase = round(money_in_briefcase)
+
+/singleton/hierarchy/outfit/job/liberia/merchant/post_equip(mob/living/carbon/human/H)
+	..()
+	var/obj/item/storage/secure/briefcase/sec_briefcase = new(H)
+	for(var/obj/item/briefcase_item in sec_briefcase)
+		qdel(briefcase_item)
+	for(var/i=money_in_briefcase, i>0, i--)
+		new /obj/item/spacecash/bundle/c1000 (sec_briefcase)
+	H.equip_to_slot_or_del(sec_briefcase, slot_l_hand)
+
 /singleton/hierarchy/outfit/job/liberia/merchant/security
 	name = OUTFIT_JOB_NAME("Merchant Security")
 	uniform = /obj/item/clothing/under/syndicate/tacticool
