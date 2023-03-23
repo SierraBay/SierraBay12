@@ -14,6 +14,7 @@
 
 // Code
 #include "code\game\machinery\embedded_controller\airlock_controllers_dummy.dm"
+#include "code\game\objects\structures\crates_lockers\closets\utility_closets.dm"
 
 // Gamemodes
 #include "gamemodes\revolutionary.dm"

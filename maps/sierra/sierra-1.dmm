@@ -6147,10 +6147,7 @@
 /turf/simulated/floor/tiled/monotile,
 /area/crew_quarters/visitors)
 "kp" = (
-/obj/structure/closet/emcloset{
-	anchored = 1;
-	name = "anchored emergency closet"
-	},
+/obj/structure/closet/emcloset/anchored,
 /obj/effect/floor_decal/corner/lightgrey/mono,
 /obj/effect/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/tiled/monotile,
@@ -18130,10 +18127,7 @@
 /turf/simulated/floor/plating,
 /area/maintenance/thirddeck/foreport)
 "Dr" = (
-/obj/structure/closet/emcloset{
-	anchored = 1;
-	name = "anchored emergency closet"
-	},
+/obj/structure/closet/emcloset/anchored,
 /obj/structure/railing/mapped{
 	dir = 1
 	},
@@ -24559,10 +24553,7 @@
 /turf/simulated/floor/tiled,
 /area/hydroponics/third_deck_storage)
 "NY" = (
-/obj/structure/closet/emcloset{
-	anchored = 1;
-	name = "anchored emergency closet"
-	},
+/obj/structure/closet/emcloset/anchored,
 /obj/effect/floor_decal/industrial/outline/yellow,
 /obj/machinery/light{
 	dir = 8
@@ -29287,10 +29278,7 @@
 /turf/simulated/floor/airless,
 /area/shuttle/petrov/gas)
 "WF" = (
-/obj/structure/closet/emcloset{
-	anchored = 1;
-	name = "anchored emergency closet"
-	},
+/obj/structure/closet/emcloset/anchored,
 /obj/effect/floor_decal/corner/lightgrey/mono,
 /obj/effect/floor_decal/industrial/outline/yellow,
 /obj/machinery/light{
