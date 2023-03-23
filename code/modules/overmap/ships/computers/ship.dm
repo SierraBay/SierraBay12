@@ -109,7 +109,8 @@ somewhere on that shuttle. Subtypes of these can be then used to perform ship ov
 		return 0
 
 /obj/machinery/computer/ship/Destroy()
-	linked.consoles -= src
+	if(linked)
+		linked.consoles -= src
 	. = ..()
 
 /obj/machinery/computer/ship/sensors/Destroy()
