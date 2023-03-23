@@ -7671,7 +7671,8 @@
 /obj/machinery/dummy_airlock_controller{
 	id_tag = "engine_airlock";
 	name = "Airlock Remote Terminal";
-	pixel_y = 20
+	pixel_y = 20;
+	icon_state = "airlock_control_off"
 	},
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 4
@@ -7772,7 +7773,8 @@
 	id_tag = "engine_airlock";
 	name = "Airlock Remote Terminal";
 	pixel_x = 7;
-	pixel_y = 24
+	pixel_y = 24;
+	icon_state = "airlock_control_off"
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/engineering/engine_room)
@@ -28628,7 +28630,7 @@
 	dir = 8
 	},
 /obj/machinery/media/music_writer{
-	pixel_x = -28;
+	pixel_x = -28
 	},
 /turf/simulated/floor/carpet,
 /area/crew_quarters/lounge_big)
@@ -39176,7 +39178,7 @@
 /area/crew_quarters/lounge_big)
 "tUN" = (
 /obj/machinery/media/music_writer{
-	pixel_y = 28;
+	pixel_y = 28
 	},
 /turf/simulated/floor/wood/walnut,
 /area/crew_quarters/lounge)
@@ -40347,7 +40349,7 @@
 	pixel_y = 16
 	},
 /obj/machinery/media/music_writer{
-	pixel_x = 28;
+	pixel_x = 28
 	},
 /turf/simulated/floor/wood/ebony,
 /area/crew_quarters/bar)
