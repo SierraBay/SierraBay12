@@ -393,7 +393,7 @@
 	var/obj/P = new /obj/effect/decal/point(our_tile)
 	P.set_invisibility(invisibility)
 
-	animate(P, pixel_x = (tile.x - our_tile.x) * world.icon_size + A.pixel_x, pixel_y = (tile.y - our_tile.y) * world.icon_size + A.pixel_y, time = 1.7, easing = EASE_OUT)
+	animate(P, pixel_x = (tile.x - our_tile.x) * world.icon_size + A.pixel_x, pixel_y = (tile.y - our_tile.y) * world.icon_size + A.pixel_y, time = 3, easing = EASE_OUT)
 
 	face_atom(A)
 	return 1
