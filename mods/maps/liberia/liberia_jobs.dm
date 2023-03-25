@@ -21,7 +21,7 @@
 	allowed_ranks = list(
 		/datum/mil_rank/civ/civ
 	)
-	latejoin_at_spawnpoints = 1
+	latejoin_at_spawnpoints = TRUE
 
 	access = list(
 		access_merchant
