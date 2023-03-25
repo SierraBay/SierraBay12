@@ -34,12 +34,11 @@
 	)
 	give_psionic_implant_on_join = FALSE
 	skill_points = 24
-	economic_power = 11
+	economic_power = 10 // We use splitted from station account system, which need lover economic_power to not break things
 
 	account_allowed = TRUE
 
 /datum/job/submap/merchant/equip(mob/living/carbon/human/H)
-	setup_away_account(H)
 	return ..()
 
 /datum/job/submap/merchant_trainee/is_position_available()
@@ -103,7 +102,6 @@
 	account_allowed = TRUE
 
 /datum/job/submap/merchant_trainee/equip(mob/living/carbon/human/H)
-	setup_away_account(H)
 	outfit_type =  H.mind.role_alt_title!="Merchant Assistant" ? alt_titles[H.mind.role_alt_title] : outfit_type
 	. = ..()
 
@@ -130,8 +128,8 @@
 //	pda_type = /obj/item/modular_computer/pda
 	id_types = list(/obj/item/card/id/liberia/merchant)
 
-/datum/job/submap/merchant/proc/setup_money_briefcase(mob/living/carbon/human/H)
-	var/money_in_briefcase = 4 * rand(75, 100) * economic_power
+/singleton/hierarchy/outfit/job/liberia/merchant/proc/get_briefcase_money(mob/living/carbon/human/H, datum/job/J)
+	. = 0.25 * rand(2.5, 5) * J.economic_power
 
 	var/culture_mod =   0
 	var/culture_count = 0
@@ -142,19 +140,21 @@
 			culture_mod += culture.economic_power
 	if(culture_count)
 		culture_mod /= culture_count
-	money_in_briefcase *= culture_mod
+	. *= culture_mod
 
-	money_in_briefcase *= GLOB.using_map.salary_modifier
-	money_in_briefcase *= 1 + 2 * H.get_skill_value(SKILL_FINANCE)/(SKILL_MAX - SKILL_MIN)
-	money_in_briefcase = round(money_in_briefcase)
+	. *= GLOB.using_map.salary_modifier
+	. *= 1 + 0.4 * H.get_skill_value(SKILL_FINANCE)/(SKILL_MAX - SKILL_MIN)
+	. = round(.)
 
 /singleton/hierarchy/outfit/job/liberia/merchant/post_equip(mob/living/carbon/human/H)
 	..()
+	var/datum/job/J = SSjobs.get_by_title(H.job)
+	var/money_to_put = get_briefcase_money(H, J)
 	var/obj/item/storage/secure/briefcase/sec_briefcase = new(H)
 	for(var/obj/item/briefcase_item in sec_briefcase)
 		qdel(briefcase_item)
-	for(var/i=money_in_briefcase, i>0, i--)
-		new /obj/item/spacecash/bundle/c1000 (sec_briefcase)
+	for(var/i=money_to_put, i>0, i--)
+		new /obj/item/spacecash/bundle/c2500 (sec_briefcase)
 	H.equip_to_slot_or_del(sec_briefcase, slot_l_hand)
 
 /singleton/hierarchy/outfit/job/liberia/merchant/security
