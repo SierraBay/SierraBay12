@@ -62,7 +62,7 @@
 	selection_color = "#515151"
 	ideal_character_age = 20
 	minimal_player_age = 0
-	create_record = 0
+	create_record = FALSE
 	whitelisted_species = null
 	blacklisted_species = list(SPECIES_VOX, SPECIES_ALIEN, SPECIES_GOLEM, ) // SPECIES_MANTID_GYNE, SPECIES_MANTID_ALATE, SPECIES_MONARCH_WORKER, SPECIES_MONARCH_QUEEN Not yet... not yet...
 	alt_titles = list(
