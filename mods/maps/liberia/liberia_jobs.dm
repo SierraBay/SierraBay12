@@ -125,7 +125,6 @@
 	name = OUTFIT_JOB_NAME("Merchant Assistant")
 	uniform = /obj/item/clothing/under/suit_jacket/tan
 	shoes = /obj/item/clothing/shoes/brown
-//	pda_type = /obj/item/modular_computer/pda
 	id_types = list(/obj/item/card/id/liberia/merchant)
 
 /singleton/hierarchy/outfit/job/liberia/merchant/proc/get_briefcase_money(mob/living/carbon/human/H, datum/job/J)
