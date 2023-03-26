@@ -5,29 +5,28 @@
 #include "liberia_shuttles.dm"
 #include "liberia_navpoints.dm"
 
-// Map template data.
-/datum/map_template/ruin/away_site/liberia //Основной файл
-	name = "Liberia" //Имя
-	id = "awaysite_liberia" //ID
-	description = "A Merchant ship." //Описание
-	prefix = "mods/maps/" //Префикс
-	suffixes = list("liberia/liberia.dmm") //Суффикс
-	spawn_cost = 0 //Стоимость самой авейки
-	player_cost = 0 //Стоимость авейки в игроках
+// Map template data
+/datum/map_template/ruin/away_site/liberia
+	name = "Liberia"
+	id = "awaysite_liberia"
+	description = "A Merchant ship."
+	prefix = "mods/maps/"
+	suffixes = list("liberia/liberia.dmm")
+	spawn_cost = 0
+	player_cost = 0
 	template_flags = TEMPLATE_FLAG_SPAWN_GUARANTEED
-	spawn_weight = 50 //HABITABLE SHIPS SPAWN | Шанс спавна. Нельзя ставить 0, иначе подбор авеек сломается. Дробные допускаются, желательно до сотых ~bear1ake
-	//Инициализация шаттлов
+	spawn_weight = 50 // Нельзя ставить 0, иначе подбор авеек сломается
 	shuttles_to_initialise = list(
 		/datum/shuttle/autodock/overmap/mule
 	)
 
 	area_usage_test_exempted_root_areas = list(/area/liberia)
 
-// Overmap objects.
-/obj/effect/overmap/visitable/ship/liberia //Объект в Системе
+// Overmap objects
+/obj/effect/overmap/visitable/ship/liberia
 	name = "Liberia"
 	desc = "Vessel with Free Trade Union registration"
-	color = "#8a6642" //Цвет
+	color = "#8a6642"
 	vessel_mass = 3000
 	fore_dir = WEST
 	max_speed = 1/(1 SECOND)
