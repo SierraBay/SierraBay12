@@ -67,24 +67,6 @@
 	desc = "SPS Commander"
 	region = ACCESS_REGION_NONE
 
-/obj/item/card/id/awaycavalry/fleet
-	color = COLOR_GRAY40
-	detail_color = "#447ab1"
-	access = list(access_away_cavalry)
-
-/obj/item/card/id/awaycavalry/ops
-	color = "#b10309c2"
-	detail_color = "#000000"
-	access = list(access_away_cavalry, access_away_cavalry_ops)
-
-/obj/item/card/id/awaycavalry/ops/captain
-	access = list(access_away_cavalry, access_away_cavalry_ops, access_away_cavalry_captain)
-	extra_details = list("goldstripe")
-
-/obj/item/card/id/awaycavalry/fleet/commander
-	access = list(access_away_cavalry, access_away_cavalry_ops, access_away_cavalry_commander)
-	extra_details = list("goldstripe")
-
 /* JOBS
  * =======
  */
@@ -139,7 +121,7 @@
 					 SKILL_HAULING = SKILL_BASIC,
 					 SKILL_MEDICAL = SKILL_BASIC,
 					 SKILL_EVA = SKILL_BASIC)
-	access = list(access_away_cavalry, access_away_cavalry_ops, access_away_cavalry_captain)
+	access = list(access_away_cavalry, access_away_cavalry_ops, access_away_cavalry_fleet_armory, access_away_cavalry_captain)
 
 /datum/job/submap/patrol/commander
 	title = "Fleet Commander"
@@ -163,7 +145,7 @@
 					 SKILL_MEDICAL = SKILL_BASIC,
 					 SKILL_PILOT = SKILL_ADEPT,
 					 SKILL_EVA = SKILL_BASIC)
-	access = list(access_away_cavalry, access_away_cavalry_ops, access_away_cavalry_commander)
+	access = list(access_away_cavalry, access_away_cavalry_ops, access_away_cavalry_pilot, access_away_cavalry_fleet_armory, access_away_cavalry_commander)
 
 /datum/job/submap/patrol/pilot1
 	title = "Fleet Pilot"
@@ -187,7 +169,7 @@
 					 SKILL_MEDICAL = SKILL_BASIC,
 					 SKILL_PILOT = SKILL_ADEPT,
 					 SKILL_EVA = SKILL_BASIC)
-	access = list(access_away_cavalry)
+	access = list(access_away_cavalry, access_away_cavalry_pilot, access_away_cavalry_fleet_armory)
 
 /datum/job/submap/patrol/surgeon
 	title = "Fleet Corpsman"

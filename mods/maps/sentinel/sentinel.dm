@@ -11,7 +11,7 @@
 	///////////
 
 /obj/effect/overmap/visitable/ship/patrol
-	name = "Multipurpose Patrol Craft"
+	name = "SCGF Patrol Craft"
 	desc = "SCGF Cobra-class Patrol Craft. Seconded to Battlegroup Bravo of Fifth Fleet "
 	color = "#990000"
 	fore_dir = WEST
