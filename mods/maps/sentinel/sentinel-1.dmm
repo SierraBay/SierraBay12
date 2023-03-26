@@ -192,7 +192,6 @@
 	},
 /obj/structure/window/reinforced{
 	dir = 8;
-	health = 1e+006
 	},
 /obj/effect/floor_decal/industrial/outline/yellow,
 /obj/machinery/atmospherics/pipe/simple/visible/yellow{
@@ -209,7 +208,6 @@
 	},
 /obj/structure/window/reinforced{
 	dir = 8;
-	health = 1e+006
 	},
 /obj/effect/floor_decal/industrial/outline/yellow,
 /obj/machinery/atmospherics/pipe/simple/visible/yellow{
@@ -3135,7 +3133,6 @@
 	},
 /obj/structure/window/reinforced{
 	dir = 8;
-	health = 1e+006
 	},
 /obj/structure/window/reinforced{
 	dir = 1
@@ -8578,7 +8575,6 @@
 	},
 /obj/structure/window/reinforced{
 	dir = 8;
-	health = 1e+006
 	},
 /turf/simulated/floor/plating,
 /area/ship/reaper)
@@ -9107,12 +9103,6 @@
 	},
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/command/eva)
-"KC" = (
-/obj/structure/lattice,
-/obj/structure/lattice,
-/obj/structure/catwalk,
-/turf/space,
-/area/space)
 "KF" = (
 /obj/effect/paint/meatstation/lab,
 /obj/machinery/atmospherics/pipe/simple/visible/black{
@@ -9294,7 +9284,6 @@
 	},
 /obj/structure/window/reinforced{
 	dir = 8;
-	health = 1e+006
 	},
 /obj/structure/window/reinforced,
 /turf/simulated/floor/plating,
@@ -9430,7 +9419,6 @@
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
 	dir = 8;
-	health = 1e+006
 	},
 /turf/simulated/floor/plating,
 /area/ship/reaper)
@@ -14143,7 +14131,7 @@ SV
 qG
 qG
 sZ
-KC
+PF
 YJ
 aa
 aa

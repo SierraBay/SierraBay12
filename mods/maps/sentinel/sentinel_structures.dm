@@ -45,6 +45,7 @@
 	return list(
 		/obj/item/storage/box/teargas = 1,
 		/obj/item/storage/box/frags = 1,
+		/obj/item/storage/box/fragshells = 2,
 		/obj/item/storage/box/smokes = 2,
 		/obj/item/storage/box/ammo/flashshells = 2,
 		/obj/item/storage/box/ammo/shotgunshells = 2,
@@ -319,6 +320,11 @@
 	name = "impulse cannon control"
 	caldigit = 2
 	// coolinterval = 45 SECONDS This blasted code is /const/ And i just give up
+
+/obj/item/stock_parts/circuitboard/disperser/military
+	name = T_BOARD("impulse cannon control")
+	build_path = /obj/machinery/computer/ship/disperser/military
+	origin_tech = list(TECH_ENGINEERING = 6, TECH_COMBAT = 6, TECH_BLUESPACE = 6)
 
 /obj/structure/ship_munition/disperser_charge/fire/military
 	name = "M1050-NPLM"
