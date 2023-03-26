@@ -1,5 +1,5 @@
 // Submap datum and archetype.
-/datum/job/submap/merchant
+/datum/job/submap/merchant_leader
 	title = "Merchant"
 
 	info = "Вы свободные торговцы, которых в поисках выгоды занесло в неизведанные дали. Путешествуйте, торгуйте, make profit! \
@@ -38,21 +38,21 @@
 
 	account_allowed = TRUE
 
-/datum/job/submap/merchant/equip(mob/living/carbon/human/H)
+/datum/job/submap/merchant_leader/equip(mob/living/carbon/human/H)
 	return ..()
 
-/datum/job/submap/merchant_trainee/is_position_available()
+/datum/job/submap/merchant/is_position_available()
 	. = ..()
 	if(. && requires_supervisor)
 		for(var/mob/M in GLOB.player_list)
 			if(!M.client || !M.mind || !M.mind.assigned_job || M.mind.assigned_job.title != requires_supervisor)
 				continue
-			var/datum/job/submap/merchant/merchant_job = M.mind.assigned_job
+			var/datum/job/submap/merchant_leader/merchant_job = M.mind.assigned_job
 			if(istype(merchant_job) && merchant_job.owner == owner)
 				return TRUE
 		return FALSE
 
-/datum/job/submap/merchant_trainee
+/datum/job/submap/merchant
 	title = "Merchant Assistant"
 
 	var/requires_supervisor = "Merchant"
@@ -101,7 +101,7 @@
 
 	account_allowed = TRUE
 
-/datum/job/submap/merchant_trainee/equip(mob/living/carbon/human/H)
+/datum/job/submap/merchant/equip(mob/living/carbon/human/H)
 	outfit_type =  H.mind.role_alt_title!="Merchant Assistant" ? alt_titles[H.mind.role_alt_title] : outfit_type
 	. = ..()
 
@@ -184,10 +184,10 @@
 
 /obj/item/card/id/liberia/merchant
 	desc = "An identification card issued to Merchants."
-	job_access_type = /datum/job/submap/merchant_trainee
+	job_access_type = /datum/job/submap/merchant
 	color = COLOR_OFF_WHITE
 	detail_color = COLOR_BEIGE
 
 /obj/item/card/id/liberia/merchant/leader
 	desc = "An identification card issued to Merchant Leaders, indicating their right to sell and buy goods."
-	job_access_type = /datum/job/submap/merchant
+	job_access_type = /datum/job/submap/merchant_leader

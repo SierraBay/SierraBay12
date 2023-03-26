@@ -52,8 +52,8 @@
 	descriptor = "Free Trade Union merchant ship"
 	map = "Liberia - merchant ship"
 	crew_jobs = list(
-		/datum/job/submap/merchant,
-		/datum/job/submap/merchant_trainee
+		/datum/job/submap/merchant_leader,
+		/datum/job/submap/merchant
 	)
 	whitelisted_species = null
 	blacklisted_species = null
