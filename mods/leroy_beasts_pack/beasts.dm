@@ -1,7 +1,7 @@
 /mob/living/simple_animal/butterfly
 	name = "butterfly"
 	desc = "A colorful butterfly, how'd it get up here?"
-	icon = 'leroy_beasts_32x32.dmi'
+	icon = 'icons/leroy_beasts_32x32.dmi'
 	icon_state = "butterfly"
 	icon_living = "butterfly"
 	icon_dead = "butterfly_dead"
@@ -31,7 +31,7 @@
 /mob/living/simple_animal/friendly/cat/maine_coon
 	name = "maine coon"
 	desc = "What a hell of a cat!"
-	icon = 'leroy_beasts_32x32.dmi'
+	icon = 'icons/leroy_beasts_32x32.dmi'
 	icon_state = "maine_coon"
 	item_state = "maine_coon"
 	icon_living = "maine_coon"
@@ -42,7 +42,7 @@
 /mob/living/simple_animal/friendly/cat/floppa
 	name = "caracal"
 	desc = "Well-known for distinctive tassels on its ears and a strong urge for dumplings."
-	icon = 'leroy_beasts_32x64.dmi'
+	icon = 'icons/leroy_beasts_32x64.dmi'
 	icon_state = "caracal"
 	item_state = "caracal"
 	icon_living = "caracal"
@@ -61,8 +61,7 @@
 // Dogs. Some kind of happinies is measured out in miles. What makes you think you're something special when you smile?
 
 /mob/living/simple_animal/friendly/dogs
-
-	icon = 'leroy_beasts_32x32.dmi'
+	icon = 'icons/leroy_beasts_32x32.dmi'
 	speak_emote = list("barks", "woofs")
 	turns_per_move = 10
 	response_help  = "pets"
@@ -145,7 +144,7 @@
 /mob/living/simple_animal/hostile/gorilla
 	name = "gorilla"
 	desc = "A ground-dwelling, predominantly herbivorous ape that inhabits the tropic forests."
-	icon = 'leroy_beasts_32x32.dmi'
+	icon = 'icons/leroy_beasts_32x32.dmi'
 	icon_state = "gorilla"
 	icon_living = "gorilla"
 	icon_dead = "gorilla_dead"
