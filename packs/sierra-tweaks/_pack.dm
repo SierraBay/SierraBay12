@@ -19,9 +19,6 @@
 // Gamemodes
 #include "gamemodes\revolutionary.dm"
 
-// Maps
-#include "maps\sierra\structures\closets\services.dm"
-
 // Mob
 #include "mob\say.dm"
 #include "mob\stat.dm"
