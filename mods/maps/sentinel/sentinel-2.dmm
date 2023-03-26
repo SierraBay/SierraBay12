@@ -4815,7 +4815,6 @@
 /area/ship/patrol/maintenance/upper/aft)
 "Bx" = (
 /obj/machinery/vending/hydronutrients{
-	categories = 3;
 	dir = 1
 	},
 /turf/simulated/floor/plating,

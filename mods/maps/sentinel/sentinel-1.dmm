@@ -191,7 +191,7 @@
 	dir = 4
 	},
 /obj/structure/window/reinforced{
-	dir = 8;
+	dir = 8
 	},
 /obj/effect/floor_decal/industrial/outline/yellow,
 /obj/machinery/atmospherics/pipe/simple/visible/yellow{
@@ -207,7 +207,7 @@
 	dir = 4
 	},
 /obj/structure/window/reinforced{
-	dir = 8;
+	dir = 8
 	},
 /obj/effect/floor_decal/industrial/outline/yellow,
 /obj/machinery/atmospherics/pipe/simple/visible/yellow{
@@ -3132,7 +3132,7 @@
 	req_access = list("ACCESS_CAVALRY")
 	},
 /obj/structure/window/reinforced{
-	dir = 8;
+	dir = 8
 	},
 /obj/structure/window/reinforced{
 	dir = 1
@@ -3615,15 +3615,14 @@
 /obj/effect/floor_decal/industrial/warning/half{
 	dir = 4
 	},
-/obj/machinery/door/airlock/highsecurity/bolted{
-	id_tag = "cannon";
-	name = "Impulse Cannon"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
+	},
+/obj/machinery/door/airlock/highsecurity{
+	name = "Impulse Cannon"
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/patrol/command/cannon)
@@ -4043,10 +4042,7 @@
 /obj/effect/floor_decal/industrial/warning/half{
 	dir = 4
 	},
-/obj/machinery/door/airlock/highsecurity/bolted{
-	id_tag = "cannon";
-	name = "Impulse Cannon"
-	},
+/obj/machinery/door/airlock/highsecurity,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/patrol/command/cannon)
 "hT" = (
@@ -8574,7 +8570,7 @@
 	dir = 1
 	},
 /obj/structure/window/reinforced{
-	dir = 8;
+	dir = 8
 	},
 /turf/simulated/floor/plating,
 /area/ship/reaper)
@@ -9283,7 +9279,7 @@
 	req_access = list("ACCESS_CAVALRY")
 	},
 /obj/structure/window/reinforced{
-	dir = 8;
+	dir = 8
 	},
 /obj/structure/window/reinforced,
 /turf/simulated/floor/plating,
@@ -9418,7 +9414,7 @@
 	},
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
-	dir = 8;
+	dir = 8
 	},
 /turf/simulated/floor/plating,
 /area/ship/reaper)
