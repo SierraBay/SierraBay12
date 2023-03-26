@@ -14,8 +14,8 @@
 	M.set_dir(buckle_dir ? buckle_dir : dir)
 	M.UpdateLyingBuckledAndVerbStatus()
 	M.update_floating()
-	M.pixel_x = initial(pixel_x)
-	M.pixel_y = initial(pixel_y)
+	M.pixel_x = initial(M.pixel_x)
+	M.pixel_y = initial(M.pixel_y)
 	buckled_mob = M
 	GLOB.destroyed_event.register(buckled_mob, src, /obj/proc/clear_buckle)
 	if (buckle_sound)
