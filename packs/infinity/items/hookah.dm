@@ -147,7 +147,7 @@
 	smoketime -= 1
 
 /obj/item/hookah/use_tool(obj/item/tool, mob/user)
-	if(isflamesource(tool) || is_hot(tool))
+	if(isFlameOrHeatSource(tool))
 		var/text = matchmes
 		if(istype(tool, /obj/item/flame/match))
 			text = matchmes
