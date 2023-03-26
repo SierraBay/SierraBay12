@@ -123,6 +123,7 @@ window "mainwindow"
 		anchor2 = -1,-1
 		background-color = none
 		is-default = true
+		statusbar = false
 		saved-params = "pos;size;is-minimized;is-maximized"
 		is-maximized = true
 		icon = 'icons\\ss13_64.png'
@@ -169,13 +170,8 @@ window "mapwindow"
 		anchor2 = -1,-1
 		background-color = none
 		saved-params = "pos;size;is-minimized;is-maximized"
-		titlebar = false
-		statusbar = false
-		can-close = false
-		can-minimize = false
-		can-resize = false
 		is-pane = true
-		outer-size = 654x494
+		on-status = ".winset \"statusbar.text=[[*]]\" "
 	elem "map"
 		type = MAP
 		pos = 0,0
@@ -186,6 +182,7 @@ window "mapwindow"
 		font-size = 7
 		is-default = true
 		saved-params = "icon-size"
+		style = ".maptext { font-family: 'Small Fonts'; font-size: 7px; -dm-text-outline: 1px black; color: white; line-height: 1.1; }"
 		on-show = ".winset\"mainwindow.mainvsplit.left=mapwindow\""
 		on-hide = ".winset\"mainwindow.mainvsplit.left=\""
 	elem "lobbybrowser"
@@ -198,6 +195,17 @@ window "mapwindow"
 		is-visible = false
 		is-disabled = true
 		saved-params = ""
+	elem "statusbar"
+		type = LABEL
+		pos = 0,464
+		size = 280x16
+		anchor1 = 0,100
+		is-visible = true
+		text = ""
+		align = left
+		background-color = #171717
+		text-color = #a4bad6
+		border = line
 
 window "outputwindow"
 	elem "outputwindow"
@@ -235,21 +243,23 @@ window "outputwindow"
 		saved-params = ""
 	elem "input"
 		type = INPUT
-		pos = 0,432
-		size = 616x18
-		anchor1 = 1,96
-		anchor2 = 89,100
-		background-color = #d3b5b5
+		pos = 0,430
+		size = 610x20
+		anchor1 = 0,100
+		anchor2 = 100,100
+		background-color = #f0f0f0
 		is-default = true
-		border = sunken
+		border = line
 		saved-params = "command"
 	elem "saybutton"
 		type = BUTTON
-		pos = 618,430
-		size = 40x20
+		pos = 610,430
+		size = 48x20
 		anchor1 = 100,100
 		anchor2 = -1,-1
 		background-color = none
+		border = line
+		is-flat = true
 		saved-params = "is-checked"
 		text = "Chat"
 		command = ".winset \"saybutton.is-checked=true?input.command=\"!say \\\"\" macrobutton.is-checked=false:input.command=\"\"saybutton.is-checked=true?mebutton.is-checked=false\""
@@ -277,119 +287,95 @@ window "rpane"
 		saved-params = "splitter"
 		right = "outputwindow"
 		is-vert = false
-	elem "linksource"
-		type = BUTTON
-		pos = 536,0
-		size = 60x15
-		anchor1 = -1,-1
-		anchor2 = -1,-1
-		background-color = none
-		saved-params = "is-checked"
-		text = "Source"
-		command = "link-source"
-	elem "linkissue"
-		type = BUTTON
-		pos = 596,0
-		size = 60x15
-		anchor1 = -1,-1
-		anchor2 = -1,-1
-		background-color = none
-		saved-params = "is-checked"
-		text = "Report Issue"
-		command = "link-issue"
 	elem "linkrules"
+		border = line
+		is-flat = true
 		type = BUTTON
-		pos = 120,0
-		size = 60x15
+		pos = 8,7
+		size = 66x18
 		anchor1 = -1,-1
 		anchor2 = -1,-1
-		background-color = none
+		background-color = #ffffff
 		saved-params = "is-checked"
-		text = "Rules"
+		text = "Правила"
 		command = "link-rules"
 		group = "rpanemode"
-	elem "changelog"
-		type = BUTTON
-		pos = 476,0
-		size = 60x15
-		anchor1 = -1,-1
-		anchor2 = -1,-1
-		background-color = none
-		saved-params = "is-checked"
-		text = "Changelog"
-		command = "Changelog"
-		group = "rpanemode"
-	elem "linklore"
-		type = BUTTON
-		pos = 208,0
-		size = 60x15
-		anchor1 = -1,-1
-		anchor2 = -1,-1
-		background-color = none
-		saved-params = "is-checked"
-		text = "Lore"
-		command = "link-lore"
-		group = "rpanemode"
-	elem "linkforum"
-		type = BUTTON
-		pos = 328,0
-		size = 60x15
-		anchor1 = -1,-1
-		anchor2 = -1,-1
-		background-color = none
-		saved-params = "is-checked"
-		text = "Forum"
-		command = "link-forum"
-		group = "rpanemode"
-	elem "linkdiscord"
-		type = BUTTON
-		pos = 388,0
-		size = 60x15
-		anchor1 = -1,-1
-		anchor2 = -1,-1
-		background-color = none
-		saved-params = "is-checked"
-		text = "Discord"
-		command = "link-discord"
-		group = "rpanemode"
 	elem "linkwiki"
+		border = line
+		is-flat = true
 		type = BUTTON
-		pos = 268,0
-		size = 60x15
+		pos = 73,7
+		size = 60x18
 		anchor1 = -1,-1
 		anchor2 = -1,-1
-		background-color = none
+		background-color = #ffffff
 		saved-params = "is-checked"
 		text = "Wiki"
 		command = "link-wiki"
 		group = "rpanemode"
-	elem "textb"
+	elem "linkdiscord"
+		border = line
+		is-flat = true
 		type = BUTTON
-		pos = 0,0
-		size = 60x15
+		pos = 132,7
+		size = 60x18
 		anchor1 = -1,-1
 		anchor2 = -1,-1
-		background-color = none
-		is-visible = false
+		background-color = #ffffff
 		saved-params = "is-checked"
-		text = "Text"
-		command = ".winset \"rpanewindow.left=;\""
-		is-checked = true
+		text = "Discord"
+		command = "link-discord"
 		group = "rpanemode"
-		button-type = pushbox
-	elem "infob"
+	elem "linksource"
+		border = line
+		is-flat = true
 		type = BUTTON
-		pos = 60,0
-		size = 60x15
+		pos = 211,7
+		size = 60x18
 		anchor1 = -1,-1
 		anchor2 = -1,-1
-		background-color = none
-		is-visible = false
+		background-color = #ffffff
 		saved-params = "is-checked"
-		text = "Info"
-		command = ".winset \"rpanewindow.left=infowindow\""
+		text = "GitHub"
+		command = "link-source"
+	elem "linkissue"
+		border = line
+		is-flat = true
+		type = BUTTON
+		pos = 270,7
+		size = 76x18
+		anchor1 = -1,-1
+		anchor2 = -1,-1
+		background-color = #ffffff
+		saved-params = "is-checked"
+		text = "Багрепорт"
+		command = "link-issue"
+	elem "changelog"
+		border = line
+		is-flat = true
+		type = BUTTON
+		pos = 365,7
+		size = 74x18
+		anchor1 = -1,-1
+		anchor2 = -1,-1
+		background-color = #ffffff
+		saved-params = "is-checked"
+		text = "Ченджлог"
+		command = "Changelog"
 		group = "rpanemode"
-		button-type = pushbox
+	elem "credits"
+		border = line
+		is-flat = true
+		type = BUTTON
+		pos = 438,7
+		size = 64x18
+		anchor1 = -1,-1
+		anchor2 = -1,-1
+		background-color = #ffffff
+		saved-params = "is-checked"
+		text = "Авторы"
+		command = "Credits"
+		group = "rpanemode"
 
 window "infowindow"
 	elem "infowindow"

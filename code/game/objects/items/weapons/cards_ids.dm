@@ -285,8 +285,8 @@ var/global/const/NO_EMAG_ACT = -50
 		. += ", [assignment]"
 
 /obj/item/card/id/proc/set_id_photo(mob/M)
-	front = getFlatIcon(M, SOUTH, always_use_defdir = 1)
-	side = getFlatIcon(M, WEST, always_use_defdir = 1)
+	front = getFlatIcon(M, SOUTH, always_use_defdir = TRUE)
+	side = getFlatIcon(M, WEST, always_use_defdir = TRUE)
 
 /mob/proc/set_id_info(obj/item/card/id/id_card)
 	id_card.age = 0
@@ -321,6 +321,10 @@ var/global/const/NO_EMAG_ACT = -50
 		id_card.military_branch = char_branch
 	if(GLOB.using_map.flags & MAP_HAS_RANK)
 		id_card.military_rank = char_rank
+		var/singleton/rank_category/category = char_rank.rank_category()
+		if(category)
+			for(var/add_access in category.add_accesses)
+				id_card.access.Add(add_access)
 
 /obj/item/card/id/proc/dat()
 	var/list/dat = list("<table><tr><td>")

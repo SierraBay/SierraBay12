@@ -15,7 +15,7 @@
 	player_cost = 4
 	shuttles_to_initialise = list(/datum/shuttle/autodock/overmap/vox_ship, /datum/shuttle/autodock/overmap/vox_lander)
 	area_usage_test_exempted_root_areas = list(/area/voxship)
-	spawn_weight = 0.67
+	spawn_weight = 0 // TMP: was 0.67
 
 /obj/effect/overmap/visitable/sector/vox_scav_ship
 	name = "small asteroid cluster"
@@ -174,7 +174,7 @@
 	closet_appearance = /singleton/closet_appearance/crate/vox_uranium
 
 
-/obj/structure/closet/crate/uranium/WillContain()
+/obj/structure/closet/crate/vox_uranium/WillContain()
 	return list(/obj/item/stack/material/uranium/fifty = 4)
 
 
