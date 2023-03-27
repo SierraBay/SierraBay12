@@ -16,27 +16,17 @@
 
 /obj/structure/closet/secure_closet/guncabinet/patrol/assault/WillContain()
 	return list(
-		//obj/item/ammo_magazine/uni46x30mm = 15, INF Obsolete
-		//obj/item/gun/projectile/automatic/invider = 3, INF Obsolete
 		/obj/item/ammo_magazine/mil_rifle/light = 15,
 		/obj/item/gun/projectile/automatic/bullpup_rifle/light = 3,
 		/obj/item/ammo_magazine/machine_pistol = 5,
 		/obj/item/gun/projectile/automatic/machine_pistol = 1
-		//obj/item/gun/projectile/shotgun/magazine = 1,
-		//obj/item/clothing/accessory/storage/bandolier = 1,
-		//obj/item/ammo_magazine/c12m = 6,
-		//obj/item/ammo_magazine/c12m/buckshot = 4,
-		//obj/item/ammo_magazine/c12m/shock = 4
 	)
 
 /obj/structure/closet/secure_closet/guncabinet/patrol/carabine/WillContain()
 	return list(
-		//obj/item/ammo_magazine/c12755 = 8, INF Obsolete
-		//obj/item/gun/projectile/automatic/amrcarabine = 1, INF Obsolete
 		/obj/item/ammo_magazine/mil_rifle/heavy = 5,
 		/obj/item/gun/projectile/automatic/bullpup_rifle = 1,
 		/obj/item/clothing/accessory/storage/bandolier = 1,
-		//obj/item/gun/projectile/shotgun/pump = 1, INF Obsolete
 		/obj/item/gun/projectile/shotgun/pump/combat = 1,
 		/obj/item/gun/projectile/pistol/m22f = 3
 	)
@@ -78,7 +68,7 @@
 		/obj/item/clothing/accessory/storage/holster/thigh,
 		/obj/item/clothing/accessory/armor_plate/merc,
 		/obj/item/clothing/head/helmet/tactical,
-		/obj/item/storage/backpack/satchel/pocketbook
+		/obj/item/storage/backpack/satchel/leather/black
 	)
 
 
@@ -109,7 +99,7 @@
 		/obj/item/clothing/accessory/storage/holster/thigh,
 		/obj/item/clothing/accessory/armor_plate/merc,
 		/obj/item/clothing/head/helmet/tactical,
-		/obj/item/storage/backpack/satchel/pocketbook
+		/obj/item/storage/backpack/satchel/leather/black
 	)
 
 /obj/structure/closet/secure_closet/patrol/fleet
