@@ -34,12 +34,14 @@
 		)
 
 
+#define PATROL_SHIP_PREFIX pick("Sentinel","Cavalry","Scarabaeus","Heretic","Apocalypse","Calamatious","Terror","Pandemonium","Anubis","Hound","Stalker","Avatar","Ultimatum","Goliath","Tyrant","Nemesis","Hydra","Stormhawk","Manticore","Basilisk")
 /obj/effect/overmap/visitable/ship/patrol/New()
-	name = "SFV [pick("Sentinel","Cavalry","Scarabaeus","Heretic","Apocalypse","Calamatious","Terror","Pandemonium","Anubis","Hound","Stalker","Avatar","Ultimatum","Goliath","Tyrant","Nemesis","Hydra","Stormhawk","Manticore","Basilisk")], \a [name]"
+	name = "SFV [PATROL_SHIP_PREFIX], \a [name]"
 	for(var/area/ship/patrol/A)
 		A.name = "\improper [name] - [A.name]"
 		GLOB.using_map.area_purity_test_exempt_areas += A.type
 	..()
+#undef PATROL_SHIP_PREFIX
 
 
 /datum/map_template/ruin/away_site/patrol
