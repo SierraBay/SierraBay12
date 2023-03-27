@@ -214,16 +214,18 @@
 	\
 	 Вам крайне нежелательно приближаться к кораблям и станциям с опозновательными знаками без разрешения от командования группировкой. \
 	 Исключением являются те ситуации, когда вы терпите бедствие или на вашем судне аварийная ситуация."
-	min_skill = list(SKILL_COMBAT  = SKILL_BASIC,
-					 SKILL_WEAPONS = SKILL_BASIC,
-					 SKILL_HAULING = SKILL_ADEPT,
-					 SKILL_MEDICAL = SKILL_BASIC,
-					 SKILL_EVA = SKILL_ADEPT,
-					 SKILL_CONSTRUCTION = SKILL_ADEPT,
-					 SKILL_ELECTRICAL = SKILL_ADEPT,
-					 SKILL_ATMOS  = SKILL_BASIC,
-					 SKILL_ENGINES = SKILL_ADEPT,
-					 SKILL_DEVICES = SKILL_BASIC)
+	min_skill = list(
+		SKILL_COMBAT  = SKILL_BASIC,
+		SKILL_WEAPONS = SKILL_BASIC,
+		SKILL_HAULING = SKILL_ADEPT,
+		SKILL_MEDICAL = SKILL_BASIC,
+		SKILL_ATMOS   = SKILL_BASIC,
+		SKILL_ENGINES = SKILL_ADEPT,
+		SKILL_DEVICES = SKILL_BASIC,
+		SKILL_EVA     = SKILL_ADEPT,
+		SKILL_ELECTRICAL   = SKILL_ADEPT,
+		SKILL_CONSTRUCTION = SKILL_ADEPT,
+	)
 	access = list(access_away_cavalry)
 
 
