@@ -48,21 +48,3 @@
 	landmark_tag = "nav_reaper_dock"
 	docking_controller = "nuke_shuttle_dock_airlock"
 
-	////////
-	//TAGS//
-	////////
-
-/*/obj/effect/shuttle_landmark/reaper/hangar
-	name = "Reaper Hangar"
-	landmark_tag = "nav_hangar_reaper"
-	base_area = /area/ship/patrol/command/hangar
-	base_turf = /turf/simulated/floor/plating
-
-/obj/effect/shuttle_landmark/reaper/transit
-	name = "In transit"
-	landmark_tag = "nav_transit_reaper"
-
-/obj/effect/shuttle_landmark/reaper/tdock
-	name = "SEV Torch Dock"
-	landmark_tag = "nav_reaper_dock"
-	docking_controller = "nuke_shuttle_dock_airlock" */
