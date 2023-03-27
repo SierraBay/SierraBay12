@@ -202,6 +202,10 @@
 
 
 
+#define SHOWER_FREEZING "freezing"
+#define SHOWER_NORMAL "normal"
+#define SHOWER_BOILING "boiling"
+
 /datum/composite_sound/shower
 	start_sound = 'sound/effects/shower/shower_start.ogg'
 	start_length = 2
@@ -221,6 +225,8 @@
 	can_drain = 1
 	drainage = 0.2 			//showers are tiny, drain a little slower
 
+
+	var/image/shower_water
 	var/on = 0
 	var/obj/effect/mist/mymist = null
 	var/ismist = 0				//needs a var so we can make it linger~
@@ -233,9 +239,11 @@
 	. = ..()
 	create_reagents(50)
 	soundloop = new(list(src), FALSE)
+	shower_water = image(icon, src, "water", ABOVE_HUMAN_LAYER, dir)
 
 /obj/structure/hygiene/shower/Destroy()
 	QDEL_NULL(soundloop)
+	QDEL_NULL(reagents)
 	. = ..()
 
 //add heat controls? when emagged, you can freeze to death in it?
@@ -250,14 +258,17 @@
 
 /obj/structure/hygiene/shower/attack_hand(mob/M)
 	on = !on
+	update_icon()
+	handle_mist()
 	if(on)
+		soundloop.start()
 		if (M.loc == loc)
 			wash(M)
 			process_heat(M)
 		for (var/atom/movable/G in src.loc)
 			G.clean_blood()
-
-	update_icon()
+	else
+		soundloop.stop()
 
 /obj/structure/hygiene/shower/attackby(obj/item/I as obj, mob/user)
 	if(istype(I, /obj/item/device/scanner/gas))
@@ -275,39 +286,33 @@
 			return
 	. = ..()
 
-/obj/structure/hygiene/shower/on_update_icon()	//this is terribly unreadable, but basically it makes the shower mist up
-	cut_overlays()					//once it's been on for a while, in addition to handling the water overlay.
-	if(mymist)
-		qdel(mymist)
-		mymist = null
+/obj/structure/hygiene/shower/on_update_icon()
+	cut_overlays()
 
 	if(on)
-		soundloop.start(src)
-		add_overlay('icons/obj/watercloset.dmi', src, "water", MOB_LAYER + 1, dir)
-		if(temperature_settings[watertemp] < T20C)
-			return //no mist for cold water
-		if(!ismist)
-			spawn(50)
-				if(src && on)
-					ismist = TRUE
-					mymist = new /obj/effect/mist(loc)
+		add_overlay(shower_water)
 
-		else //??? what the fuck is this
-			ismist = TRUE
-			mymist = new /obj/effect/mist(loc)
 
-	else
-		soundloop.stop(src)
-		if(ismist)
-			ismist = TRUE
-			mymist = new /obj/effect/mist(loc)
-			addtimer(new Callback(src, .proc/clear_mist), 250, TIMER_OVERRIDE|TIMER_UNIQUE)
+/obj/structure/hygiene/shower/proc/handle_mist()
+	// If there is no mist, and the shower was turned on (on a non-freezing temp): make mist in 5 seconds
+	var/obj/effect/mist/mist = locate() in loc
+	if(!mist && on && temperature_settings != SHOWER_FREEZING)
+		addtimer(new Callback(src, .proc/make_mist), 5 SECONDS)
+
+	// If there was already mist, and the shower was turned off (or made cold): remove the existing mist in 25 sec
+	if(mist && (!on || temperature_settings == SHOWER_FREEZING))
+		addtimer(new Callback(src, .proc/clear_mist), 25 SECONDS)
 
 
 /obj/structure/hygiene/shower/proc/clear_mist()
-	if (!on)
-		QDEL_NULL(mymist)
-		ismist = FALSE
+	var/obj/effect/mist/mist = locate() in loc
+	if(mist && (!on || temperature_settings == SHOWER_FREEZING))
+		qdel(mist)
+
+/obj/structure/hygiene/shower/proc/make_mist()
+	var/obj/effect/mist/mist = locate() in loc
+	if(!mist && on && temperature_settings != SHOWER_FREEZING)
+		new /obj/effect/mist(loc)
 
 //Yes, showers are super powerful as far as washing goes.
 /obj/structure/hygiene/shower/proc/wash(atom/movable/washing)
@@ -355,6 +360,7 @@
 		var/mob/living/carbon/human/H = M
 		if(water_temperature >= H.species.heat_level_1)
 			to_chat(H, SPAN_DANGER("The water is searing hot!"))
+			M.adjustFireLoss(5)
 		else if(water_temperature <= H.species.cold_level_1)
 			to_chat(H, SPAN_WARNING("The water is freezing cold!"))
 
