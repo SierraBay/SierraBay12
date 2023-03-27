@@ -12,15 +12,13 @@
 #include "client\spawnpoints.dm"
 #include "client\verbs.dm"
 
-// Mob
-#include "mob\emotes.dm"
-
 // Gamemodes
 #include "gamemodes\revolutionary.dm"
 
 // Mob
 #include "mob\say.dm"
 #include "mob\stat.dm"
+#include "mob\emotes.dm"
 
 // Objects
 #include "objects\buckling.dm"
