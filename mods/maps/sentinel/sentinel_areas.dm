@@ -230,14 +230,6 @@
 	icon_state = "yellow"
 	req_access = list(access_away_cavalry)
 
-/*
-/area/ship/patrol/command/lasers
-	name = "\improper Abandoned MRSP platform"
-	icon_state = "yellow"
-	req_access = list(access_away_cavalry)
-*/
-
-
 
 
 /area/ship/patrol/dock
