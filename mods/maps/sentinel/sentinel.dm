@@ -27,7 +27,7 @@
 		"nav_patrol_3",
 		"nav_patrol_4",
 		"nav_hangar_reaper"
-		)
+	)
 
 	initial_restricted_waypoints = list(
 	"Reaper" = list("nav_hangar_reaper")
