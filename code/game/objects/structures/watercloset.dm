@@ -228,7 +228,6 @@
 
 	var/image/shower_water
 	var/on = 0
-	var/obj/effect/mist/mymist = null
 	var/ismist = 0				//needs a var so we can make it linger~
 	var/watertemp = "normal"	//freezing, normal, or boiling
 	var/is_washing = 0
