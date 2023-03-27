@@ -38,5 +38,4 @@
 #include "objects\vehicles\cargo_train.dm"
 #include "objects\vehicles\train.dm"
 #include "objects\vehicles\vehicle.dm"
-#include "objects\machines\alarm.dm"
 #endif
