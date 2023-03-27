@@ -139,12 +139,14 @@
 	\
 	 Вам крайне нежелательно приближаться к кораблям и станциям с опозновательными знаками без разрешения от командования группировкой. \
 	 Исключением являются те ситуации, когда вы терпите бедствие или на вашем судне аварийная ситуация."
-	min_skill = list(SKILL_COMBAT  = SKILL_BASIC,
-					 SKILL_WEAPONS = SKILL_BASIC,
-					 SKILL_HAULING = SKILL_BASIC,
-					 SKILL_MEDICAL = SKILL_BASIC,
-					 SKILL_PILOT = SKILL_ADEPT,
-					 SKILL_EVA = SKILL_BASIC)
+	min_skill = list(
+		SKILL_COMBAT  = SKILL_BASIC,
+		SKILL_WEAPONS = SKILL_BASIC,
+		SKILL_HAULING = SKILL_BASIC,
+		SKILL_MEDICAL = SKILL_BASIC,
+		SKILL_PILOT   = SKILL_ADEPT,
+		SKILL_EVA     = SKILL_BASIC
+	)
 	access = list(access_away_cavalry, access_away_cavalry_ops, access_away_cavalry_pilot, access_away_cavalry_fleet_armory, access_away_cavalry_commander)
 
 /datum/job/submap/patrol/pilot1
