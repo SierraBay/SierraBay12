@@ -75,15 +75,6 @@
 	name = "Sol Patrol Ship"
 	archetype = /singleton/submap_archetype//away_scg_patrol
 
-//obj/machinery/door/airlock/autoname/command
-	//req_access = list(access_heads)
-
-//obj/machinery/door/airlock/autoname/engineering
-	//req_access = list(access_engine)
-
-//obj/machinery/door/airlock/autoname/marine
-	//req_access = list(access_security)
-
 /* TCOMMS
  * ======
  */
