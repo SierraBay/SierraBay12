@@ -116,11 +116,13 @@
 	 Исключением являются те ситуации, когда вы терпите бедствие или на вашем судне аварийная ситуация."
 	required_language = LANGUAGE_HUMAN_EURO
 	whitelisted_species = list(SPECIES_HUMAN)
-	min_skill = list(SKILL_COMBAT  = SKILL_BASIC,
-					 SKILL_WEAPONS = SKILL_BASIC,
-					 SKILL_HAULING = SKILL_BASIC,
-					 SKILL_MEDICAL = SKILL_BASIC,
-					 SKILL_EVA = SKILL_BASIC)
+	min_skill = list(
+		SKILL_COMBAT  = SKILL_BASIC,
+		SKILL_WEAPONS = SKILL_BASIC,
+		SKILL_HAULING = SKILL_BASIC,
+		SKILL_MEDICAL = SKILL_BASIC,
+		SKILL_EVA     = SKILL_BASIC
+	)
 	access = list(access_away_cavalry, access_away_cavalry_ops, access_away_cavalry_fleet_armory, access_away_cavalry_captain)
 
 /datum/job/submap/patrol/commander
