@@ -43,7 +43,7 @@
 
 
 /datum/map_template/ruin/away_site/patrol
-	name = "Sol Patrol Craft (PC)"
+	name = "Sol Patrol Craft (SFV)"
 	id = "awaysite_patrol_ship"
 	description = "Cobra-class Patrol Craft."
 	prefix = "mods/maps/"
@@ -52,7 +52,6 @@
 	player_cost = 7 // Нынешнее значение основано на количестве игроков в авейке ~bear1ake
 	spawn_weight = 1 // INF, spawn_weight = 0.5
 	shuttles_to_initialise = list(/datum/shuttle/autodock/overmap/reaper)
-
 
 /obj/effect/shuttle_landmark/nav_patrol/nav1
 	name = "Patrol Ship Fore"

@@ -5716,7 +5716,6 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/item/reagent_containers/chem_disp_cartridge/boron,
 /turf/simulated/floor/tiled,
 /area/ship/patrol/engineering/storage)
 "kH" = (
