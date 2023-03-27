@@ -204,11 +204,11 @@
 
 /datum/composite_sound/shower
 	start_sound = 'sound/effects/shower/shower_start.ogg'
-	start_length = 10
-	mid_sounds = list('sound/effects/shower/shower_mid1.ogg'=1, 'sound/effects/shower/shower_mid2.ogg'=1, 'sound/effects/shower/shower_mid3.ogg'=1)
+	start_length = 2
+	mid_sounds = list('sound/effects/shower/shower_mid1.ogg' = 1, 'sound/effects/shower/shower_mid2.ogg' = 1, 'sound/effects/shower/shower_mid3.ogg' = 1)
 	mid_length = 10
 	end_sound = 'sound/effects/shower/shower_end.ogg'
-	volume = 20
+	volume = 10
 
 /obj/structure/hygiene/shower
 	name = "shower"
@@ -251,14 +251,11 @@
 /obj/structure/hygiene/shower/attack_hand(mob/M)
 	on = !on
 	if(on)
-		soundloop.start()
 		if (M.loc == loc)
 			wash(M)
 			process_heat(M)
 		for (var/atom/movable/G in src.loc)
 			G.clean_blood()
-	else
-		soundloop.stop()
 
 	update_icon()
 
@@ -279,31 +276,38 @@
 	. = ..()
 
 /obj/structure/hygiene/shower/on_update_icon()	//this is terribly unreadable, but basically it makes the shower mist up
-	overlays.Cut()					//once it's been on for a while, in addition to handling the water overlay.
+	cut_overlays()					//once it's been on for a while, in addition to handling the water overlay.
 	if(mymist)
 		qdel(mymist)
 		mymist = null
 
 	if(on)
-		overlays += image('icons/obj/watercloset.dmi', src, "water", MOB_LAYER + 1, dir)
+		soundloop.start(src)
+		add_overlay('icons/obj/watercloset.dmi', src, "water", MOB_LAYER + 1, dir)
 		if(temperature_settings[watertemp] < T20C)
 			return //no mist for cold water
 		if(!ismist)
 			spawn(50)
 				if(src && on)
-					ismist = 1
+					ismist = TRUE
 					mymist = new /obj/effect/mist(loc)
-		else
-			ismist = 1
+
+		else //??? what the fuck is this
+			ismist = TRUE
 			mymist = new /obj/effect/mist(loc)
-	else if(ismist)
-		ismist = 1
-		mymist = new /obj/effect/mist(loc)
-		spawn(250)
-			if(src && !on)
-				qdel(mymist)
-				mymist = null
-				ismist = 0
+
+	else
+		soundloop.stop(src)
+		if(ismist)
+			ismist = TRUE
+			mymist = new /obj/effect/mist(loc)
+			addtimer(new Callback(src, .proc/clear_mist), 250, TIMER_OVERRIDE|TIMER_UNIQUE)
+
+
+/obj/structure/hygiene/shower/proc/clear_mist()
+	if (!on)
+		QDEL_NULL(mymist)
+		ismist = FALSE
 
 //Yes, showers are super powerful as far as washing goes.
 /obj/structure/hygiene/shower/proc/wash(atom/movable/washing)

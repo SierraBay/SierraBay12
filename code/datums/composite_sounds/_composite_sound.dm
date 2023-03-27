@@ -12,7 +12,7 @@
 */
 
 /datum/composite_sound
-	var/list/atom/output_atoms
+	var/list/atom/output_atoms = list()
 	var/mid_sounds
 	var/mid_length
 	var/start_sound
@@ -27,10 +27,10 @@
 
 /datum/composite_sound/New(list/_output_atoms=list(), start_immediately=FALSE, _direct=FALSE)
 	if(!mid_sounds)
-		WARNING("A looping sound datum was created without sounds to play.")
+		WARNING("A composite sound datum was created without sounds to play.")
 		return
 
-	output_atoms = _output_atoms
+	output_atoms |= _output_atoms
 	direct = _direct
 
 	if(start_immediately)
@@ -64,12 +64,11 @@
 	if(!chance || prob(chance))
 		play(get_sound(starttime))
 	if(!timerid)
-		timerid = addtimer(new Callback(src, .proc/sound_loop, world.time), mid_length, TIMER_CLIENT_TIME | TIMER_STOPPABLE | TIMER_LOOP)
+		timerid = addtimer(new Callback(src, .proc/sound_loop, world.time), mid_length, TIMER_STOPPABLE | TIMER_LOOP)
 
 /datum/composite_sound/proc/play(soundfile)
 	var/sound/S = sound(soundfile)
-	for(var/i in 1 to output_atoms.len)
-		var/atom/thing = output_atoms[i]
+	for(var/atom/thing as anything in output_atoms)
 		playsound(thing, S, volume)
 
 /datum/composite_sound/proc/get_sound(starttime, _mid_sounds)
