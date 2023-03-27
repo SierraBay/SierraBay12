@@ -115,6 +115,3 @@
 	name = "SCG armband"
 	desc = "An armband, worn by the crew to display which country they represent. This one is blue and gold."
 	icon_state = "solblue"
-/* MISC
- * ========
- */
