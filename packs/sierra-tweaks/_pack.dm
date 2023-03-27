@@ -35,4 +35,5 @@
 #include "objects\vehicles\cargo_train.dm"
 #include "objects\vehicles\train.dm"
 #include "objects\vehicles\vehicle.dm"
+#include "modules\emotes\emotes_mob.dm"
 #endif
