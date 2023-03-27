@@ -11,7 +11,7 @@
 // Client
 #include "client\spawnpoints.dm"
 #include "client\verbs.dm"
-#include "modules\emotes\emotes_mob.dm"
+#include "mob\emotes.dm"
 
 // Gamemodes
 #include "gamemodes\revolutionary.dm"
