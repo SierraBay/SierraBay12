@@ -51,8 +51,8 @@
 	prefix = "mods/maps/"
 	suffixes = list("sentinel/sentinel-1.dmm", "sentinel/sentinel-2.dmm")
 	spawn_cost = 0.5
-	player_cost = 7 // Нынешнее значение основано на количестве игроков в авейке ~bear1ake
-	spawn_weight = 1 // INF, spawn_weight = 0.5
+	player_cost = 7
+	spawn_weight = 1
 	shuttles_to_initialise = list(/datum/shuttle/autodock/overmap/reaper)
 
 /obj/effect/shuttle_landmark/nav_patrol/nav1
