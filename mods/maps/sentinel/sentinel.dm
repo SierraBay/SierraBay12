@@ -73,7 +73,7 @@
 
 /obj/effect/submap_landmark/joinable_submap/patrol
 	name = "Sol Patrol Ship"
-	archetype = /singleton/submap_archetype//away_scg_patrol
+	archetype = /singleton/submap_archetype/away_scg_patrol
 
 /* TCOMMS
  * ======
