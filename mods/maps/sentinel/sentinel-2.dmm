@@ -1618,6 +1618,10 @@
 "de" = (
 /obj/structure/closet/crate/medical,
 /obj/effect/floor_decal/industrial/outline/grey,
+/obj/item/storage/firstaid/stab,
+/obj/item/storage/firstaid/stab,
+/obj/item/storage/firstaid/sleekstab,
+/obj/item/storage/firstaid/sleekstab,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/patrol/crew/brig/emergency_armory)
 "df" = (
@@ -1627,6 +1631,10 @@
 /obj/item/clothing/mask/gas/half,
 /obj/item/clothing/mask/gas/half,
 /obj/effect/floor_decal/industrial/outline/grey,
+/obj/item/tank/oxygen_emergency_extended,
+/obj/item/tank/oxygen_emergency_extended,
+/obj/item/tank/oxygen_emergency_extended,
+/obj/item/tank/oxygen_emergency_extended,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/patrol/crew/brig/emergency_armory)
 "dg" = (
@@ -2424,6 +2432,7 @@
 /obj/item/airlock_brace,
 /obj/item/airlock_brace,
 /obj/item/airlock_brace,
+/obj/item/material/twohanded/jack/titanium,
 /turf/simulated/floor/tiled/monotile,
 /area/ship/patrol/crew/brig/office)
 "eK" = (
