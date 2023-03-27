@@ -30,8 +30,8 @@
 	)
 
 	initial_restricted_waypoints = list(
-	"Reaper" = list("nav_hangar_reaper")
-		)
+		"Reaper" = list("nav_hangar_reaper")
+	)
 
 
 #define PATROL_SHIP_PREFIX pick("Sentinel","Cavalry","Scarabaeus","Heretic","Apocalypse","Calamatious","Terror","Pandemonium","Anubis","Hound","Stalker","Avatar","Ultimatum","Goliath","Tyrant","Nemesis","Hydra","Stormhawk","Manticore","Basilisk")
