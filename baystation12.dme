@@ -3343,6 +3343,5 @@
 #include "maps\deepmaint\deepmaint_rooms\normal\_normal_rooms.dm"
 #include "mods\_modpack.dm"
 #include "mods\eris_announcer\_eris_announcer.dme"
-#include "packs\sierra-tweaks\_pack.dm"
 #include "~code\global_init.dm"
 // END_INCLUDE
