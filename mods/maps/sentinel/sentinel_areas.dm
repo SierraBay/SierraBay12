@@ -184,16 +184,18 @@
 	name = "\improper Waste Disposal"
 	req_access = list(access_away_cavalry)
 
+#define PATROL_ENG_AMBIENCE list('sound/ambience/ambigen3.ogg','sound/ambience/ambigen4.ogg','sound/ambience/ambigen5.ogg','sound/ambience/ambigen6.ogg','sound/ambience/ambigen7.ogg','sound/ambience/ambigen8.ogg','sound/ambience/ambigen9.ogg','sound/ambience/ambigen10.ogg','sound/ambience/ambigen11.ogg','sound/ambience/ambieng1.ogg')
 /area/ship/patrol/maintenance/atmos
 	name = "\improper Atmospherics Comparment"
 	icon_state = "atmos"
-	ambience = list('sound/ambience/ambigen3.ogg','sound/ambience/ambigen4.ogg','sound/ambience/ambigen5.ogg','sound/ambience/ambigen6.ogg','sound/ambience/ambigen7.ogg','sound/ambience/ambigen8.ogg','sound/ambience/ambigen9.ogg','sound/ambience/ambigen10.ogg','sound/ambience/ambigen11.ogg','sound/ambience/ambiatm1.ogg')
+	ambience = PATROL_ENG_AMBIENCE
 	req_access = list(access_away_cavalry)
 
 /area/ship/patrol/maintenance/engine
 	icon_state = "engine"
-	ambience = list('sound/ambience/ambigen3.ogg','sound/ambience/ambigen4.ogg','sound/ambience/ambigen5.ogg','sound/ambience/ambigen6.ogg','sound/ambience/ambigen7.ogg','sound/ambience/ambigen8.ogg','sound/ambience/ambigen9.ogg','sound/ambience/ambigen10.ogg','sound/ambience/ambigen11.ogg','sound/ambience/ambieng1.ogg')
+	ambience = PATROL_ENG_AMBIENCE
 	req_access = list(access_away_cavalry)
+#undef PATROL_ENG_AMBIENCE
 
 /area/ship/patrol/maintenance/engine/port
 	name = "\improper Port Thruster"
