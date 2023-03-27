@@ -11,6 +11,7 @@
 // Client
 #include "client\spawnpoints.dm"
 #include "client\verbs.dm"
+#include "modules\emotes\emotes_mob.dm"
 
 // Gamemodes
 #include "gamemodes\revolutionary.dm"
@@ -35,6 +36,5 @@
 #include "objects\vehicles\cargo_train.dm"
 #include "objects\vehicles\train.dm"
 #include "objects\vehicles\vehicle.dm"
-#include "modules\emotes\emotes_mob.dm"
 #include "objects\machines\alarm.dm"
 #endif
