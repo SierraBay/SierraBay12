@@ -1075,7 +1075,7 @@ FIRE ALARM
 	var/d2
 
 	var/singleton/security_state/security_state = GET_SINGLETON(GLOB.using_map.security_state)
-	var/datum/browser/popup = new(mob, "firealarm", "Fire Alarm", 275, 195)
+	var/datum/browser/popup = new(user, "firealarm", "Fire Alarm", 275, 195)
 
 	if (istype(user, /mob/living/carbon/human) || istype(user, /mob/living/silicon))
 		A = A.loc
