@@ -1073,7 +1073,10 @@ FIRE ALARM
 	var/area/A = src.loc
 	var/d1
 	var/d2
+
 	var/singleton/security_state/security_state = GET_SINGLETON(GLOB.using_map.security_state)
+	var/datum/browser/popup = new(mob, "firealarm", "Fire Alarm", 275, 195)
+
 	if (istype(user, /mob/living/carbon/human) || istype(user, /mob/living/silicon))
 		A = A.loc
 
@@ -1092,13 +1095,8 @@ FIRE ALARM
 		// show_browser(user, dat, "window=firealarm")
 		// [/BAY]
 		// [SIERRA]
-		var/dat = "<B>Fire alarm</B> [d1]\n<HR>The current alert level is <b>[security_state.current_security_level.name]</b><br><br>\nTimer System: [d2]<BR>\nTime Left: [(minute ? "[minute]:" : null)][second] <A href='?src=\ref[src];tp=-30'>-</A> <A href='?src=\ref[src];tp=-1'>-</A> <A href='?src=\ref[src];tp=1'>+</A> <A href='?src=\ref[src];tp=30'>+</A>"
-		popup.set_content(dat)
-		popup.open()
+		popup.set_content("<B>Fire alarm</B> [d1]\n<HR>The current alert level is <b>[security_state.current_security_level.name]</b><br><br>\nTimer System: [d2]<BR>\nTime Left: [(minute ? "[minute]:" : null)][second] <A href='?src=\ref[src];tp=-30'>-</A> <A href='?src=\ref[src];tp=-1'>-</A> <A href='?src=\ref[src];tp=1'>+</A> <A href='?src=\ref[src];tp=30'>+</A>")
 		// [/SIERRA]
-
-
-		onclose(user, "firealarm")
 	else
 		A = A.loc
 		if (A.fire)
@@ -1116,11 +1114,10 @@ FIRE ALARM
  		// show_browser(user, dat, "window=firealarm")
 		// [/BAY]
 		// [SIERRA]
-		var/dat = "<B>[stars("Fire alarm")]</B> [d1]\n<HR>The current security level is <b>[security_state.current_security_level.name]</b><br><br>\nTimer System: [d2]<BR>\nTime Left: [(minute ? text("[]:", minute) : null)][second] <A href='?src=\ref[src];tp=-30'>-</A> <A href='?src=\ref[src];tp=-1'>-</A> <A href='?src=\ref[src];tp=1'>+</A> <A href='?src=\ref[src];tp=30'>+</A>"
-		popup.set_content(dat)
-		popup.open()
+		popup.set_content("<B>[stars("Fire alarm")]</B> [d1]\n<HR>The current alert level is <b>[security_state.current_security_level.name]</b><br><br>\nTimer System: [d2]<BR>\nTime Left: [(minute ? text("[]:", minute) : null)][second] <A href='?src=\ref[src];tp=-30'>-</A> <A href='?src=\ref[src];tp=-1'>-</A> <A href='?src=\ref[src];tp=1'>+</A> <A href='?src=\ref[src];tp=30'>+</A>")
 		// [/SIERRA]
-		onclose(user, "firealarm")
+
+	popup.open()
 	return
 
 /obj/machinery/firealarm/CanUseTopic(user)
