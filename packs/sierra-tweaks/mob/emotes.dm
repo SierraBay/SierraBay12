@@ -1,2 +1,2 @@
-/mob/living/can_emote(var/emote_type)
+/mob/living/can_emote()
 	. = ..() && emoteCooldownCheck()
