@@ -14,6 +14,7 @@ body {
     height: 30px;
 }
 
+/* [SIERRA] */
 #uiTitleText {
     position: absolute;
     top: 4px;
@@ -24,6 +25,18 @@ body {
     color: #E9C183;
     font-size: 11px;
 }
+/* [/SIERRA] */
+/* [BAY]
+#uiTitleText {
+    position: absolute;
+    top: 6px;
+    left: 44px;
+    width: 66%;
+    overflow: hidden;
+    color: #E9C183;
+    font-size: 16px;
+}
+*/
 
 #uiTitle.icon {
     padding: 6px 8px 6px 42px;
