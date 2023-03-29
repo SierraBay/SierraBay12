@@ -16,13 +16,12 @@ body {
 
 #uiTitleText {
     position: absolute;
-    top: 4px;
+    top: 6px;
     left: 44px;
-    width: 70%;
-    line-height: 14px;
+    width: 66%;
     overflow: hidden;
     color: #E9C183;
-    font-size: 11px;
+    font-size: 16px;
 }
 
 #uiTitle.icon {
@@ -125,3 +124,5 @@ body {
     padding: 3px 4px 3px 4px;
     margin: 4px 0 4px 0;
 }
+
+
