@@ -1,10 +1,3 @@
-#include "sentinel_areas.dm"
-#include "sentinel_crew.dm"
-#include "sentinel_items.dm"
-#include "sentinel_presets.dm"
-#include "sentinel_shuttle.dm"
-#include "sentinel_structures.dm"
-#include "sentinel_turbolift.dm"
 
 	///////////
 	//OVERMAP//
