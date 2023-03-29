@@ -15,8 +15,8 @@
 /obj/machinery/power/terminal/New()
 	..()
 	var/turf/T = src.loc
-	//if(level==ATOM_LEVEL_UNDER_TILE && hide(!T.is_plating()) //[BAY]
-	if(level==ATOM_LEVEL_UNDER_TILE) set_invisibility(!T.is_plating() ? INVISIBILITY_ABSTRACT : 0) //SIERRA
+	// if(level==ATOM_LEVEL_UNDER_TILE && hide(!T.is_plating()) // BAY
+	if(level==ATOM_LEVEL_UNDER_TILE) set_invisibility(!T.is_plating() ? INVISIBILITY_ABSTRACT : 0) // SIERRA
 	return
 
 /obj/machinery/power/terminal/proc/master_machine()
