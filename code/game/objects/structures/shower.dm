@@ -120,12 +120,12 @@
 /obj/structure/hygiene/shower/proc/wash_floor()
 	if(!ismist && is_washing)
 		return
-	is_washing = 1
+	is_washing = TRUE
 	var/turf/T = get_turf(src)
 	reagents.splash(T, reagents.total_volume)
 	T.clean(src)
 	spawn(100)
-		is_washing = 0
+		is_washing = FALSE
 
 /obj/structure/hygiene/shower/proc/process_heat(mob/living/M)
 	if(!on || !istype(M)) return
@@ -148,7 +148,7 @@
 	icon_state = "mist"
 	layer = ABOVE_HUMAN_LAYER
 	anchored = TRUE
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_UNCLICKABLE
 
 
 /datum/composite_sound/shower
