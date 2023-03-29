@@ -42,6 +42,24 @@ var/global/list/department_radio_keys = list(
 
 	  //kinda localization -- rastaf0
 	  //same keys as above, but on russian keyboard layout. This file uses cp1251 as encoding.
+	  // [BAY]
+/*
+	  ":ê" = "right ear",	".ê" = "right ear",
+	  ":ä" = "left ear",	".ä" = "left ear",
+	  ":ø" = "intercom",	".ø" = "intercom",
+	  ":ð" = "department",	".ð" = "department",
+	  ":ñ" = "Command",		".ñ" = "Command",
+	  ":ò" = "Science",		".ò" = "Science",
+	  ":ü" = "Medical",		".ü" = "Medical",
+	  ":ó" = "Engineering",	".ó" = "Engineering",
+	  ":û" = "Security",	".û" = "Security",
+	  ":ö" = "whisper",		".ö" = "whisper",
+	  ":å" = "Mercenary",	".å" = "Mercenary",
+	  ":é" = "Supply",		".é" = "Supply",
+*/
+	  // [/BAY]
+	  
+	  // [SIERRA]
 	  ":к" = "right ear",	".к" = "right ear",
 	  ":д" = "left ear",	".д" = "left ear",
 	  ":ш" = "intercom",	".ш" = "intercom",
@@ -84,7 +102,8 @@ var/global/list/department_radio_keys = list(
 	  ":Й" = "ICGN Ship",	".Й" = "ICGN Ship",
 	  ":Л" = "Recon",		".Л" = "Recon",
 	  ":Щ" = "Response Team", ".Щ" = "Response Team",
-	  ":О" = "Hailing", ".О" = "Hailing",
+	  ":О" = "Hailing", ".О" = "Hailing"
+	  // [/SIERRA]
 )
 
 
