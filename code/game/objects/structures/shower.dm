@@ -15,11 +15,12 @@
 	drainage = 0.2 			//showers are tiny, drain a little slower
 
 	var/image/shower_water
-	var/on = 0
-	var/ismist = 0				//needs a var so we can make it linger~
-	var/watertemp = "normal"	//freezing, normal, or boiling
-	var/is_washing = 0
-	var/list/temperature_settings = list("normal" = 310, "boiling" = T0C+100, "freezing" = T0C)
+	var/on = FALSE
+	var/ismist = FALSE
+	var/obj/effect/mist/mist
+	var/watertemp = SHOWER_NORMAL	///can be freezing, normal, or boiling
+	var/is_washing = FALSE
+	var/list/temperature_settings = list( SHOWER_FREEZING = T0C, SHOWER_NORMAL = 310, SHOWER_BOILING = T0C+100,)
 	var/datum/composite_sound/shower/soundloop
 
 /obj/structure/hygiene/shower/Initialize()
@@ -31,6 +32,7 @@
 /obj/structure/hygiene/shower/Destroy()
 	QDEL_NULL(soundloop)
 	QDEL_NULL(reagents)
+	QDEL_NULL(mist)
 	. = ..()
 
 //add heat controls? when emagged, you can freeze to death in it?
@@ -74,7 +76,6 @@
 
 /obj/structure/hygiene/shower/proc/handle_mist()
 	// If there is no mist, and the shower was turned on (on a non-freezing temp): make mist in 5 seconds
-	var/obj/effect/mist/mist = locate() in loc
 	if(!mist && on && temperature_settings != SHOWER_FREEZING)
 		addtimer(new Callback(src, .proc/make_mist), 5 SECONDS)
 
@@ -84,14 +85,12 @@
 
 
 /obj/structure/hygiene/shower/proc/clear_mist()
-	var/obj/effect/mist/mist = locate() in loc
 	if(mist && (!on || temperature_settings == SHOWER_FREEZING))
 		qdel(mist)
 
 /obj/structure/hygiene/shower/proc/make_mist()
-	var/obj/effect/mist/mist = locate() in loc
 	if(!mist && on && temperature_settings != SHOWER_FREEZING)
-		new /obj/effect/mist(loc)
+		mist = new(loc)
 
 //Yes, showers are super powerful as far as washing goes.
 /obj/structure/hygiene/shower/proc/wash(atom/movable/washing)
@@ -147,7 +146,7 @@
 	name = "mist"
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "mist"
-	layer = MOB_LAYER + 1
+	layer = ABOVE_HUMAN_LAYER
 	anchored = TRUE
 	mouse_opacity = 0
 
