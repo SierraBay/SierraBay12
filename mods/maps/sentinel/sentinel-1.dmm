@@ -3621,7 +3621,8 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/machinery/door/airlock/highsecurity{
+/obj/machinery/door/airlock/highsecurity/bolted{
+	id_tag = "cannon";
 	name = "Impulse Cannon"
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
@@ -4042,7 +4043,10 @@
 /obj/effect/floor_decal/industrial/warning/half{
 	dir = 4
 	},
-/obj/machinery/door/airlock/highsecurity,
+/obj/machinery/door/airlock/highsecurity/bolted{
+	id_tag = "cannon";
+	name = "Impulse Cannon"
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/patrol/command/cannon)
 "hT" = (
