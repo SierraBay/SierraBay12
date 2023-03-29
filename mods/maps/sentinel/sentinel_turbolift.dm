@@ -8,7 +8,7 @@
 	areas_to_use = list(
 		/area/turbolift/sentinel_first,
 		/area/turbolift/sentinel_second
-		)
+	)
 
 /area/turbolift/sentinel_second
 	name = "lift (upper deck)"
