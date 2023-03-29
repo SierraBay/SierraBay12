@@ -2,7 +2,15 @@ GLOBAL_VAR_INIT(total_runtimes, 0)
 GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 GLOBAL_VAR_INIT(actual_error_file_line, regex("^%% (.*?),(.*?) %% "))
 
+#define MODPACK_BLUESPACECAT
+
 #ifdef DEBUG
+
+	#ifdef MODPACK_BLUESPACECAT
+	#define CAT_COOLDOWN 20 SECONDS
+	#define CAT_MAX_NUMBER 10
+	#endif
+
 /world/Error(exception/E)
 	if(!istype(E)) //Something threw an unusual exception
 		log_world("\[[time_stamp()]] Uncaught exception: [E]")
@@ -78,6 +86,13 @@ GLOBAL_VAR_INIT(actual_error_file_line, regex("^%% (.*?),(.*?) %% "))
 		locinfo = log_info_line(usr.loc)
 		if(locinfo)
 			usrinfo += "  usr.loc: [locinfo]"
+#ifdef MODPACK_BLUESPACECAT
+			// Create a Dusty at the runtime location
+			var/static/cat_teleport = 0.0
+			if(usr.loc && prob(10) && (world.time - cat_teleport > CAT_COOLDOWN) && (cat_number < CAT_MAX_NUMBER)) // Avoid runtime spam spawning lots of Dusty
+				new /mob/living/simple_animal/passive/cat/real_runtime(get_turf(usr), E.line)
+				cat_teleport = world.time
+#endif
 	// The proceeding mess will almost definitely break if error messages are ever changed
 	var/list/splitlines = splittext(E.desc, "\n")
 	var/list/desclines = list()
