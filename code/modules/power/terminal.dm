@@ -23,15 +23,15 @@
 	var/obj/machinery/machine = master && master.loc
 	if(istype(machine))
 		return machine
+// [BAY]
 /*
-[BAY]
 /obj/machinery/power/terminal/hide(do_hide)
 	if(do_hide && level == ATOM_LEVEL_UNDER_TILE)
 		layer = WIRE_TERMINAL_LAYER
 	else
 		reset_plane_and_layer()
-[/BAY]
 */
+// [/BAY]
 
 /obj/machinery/power/terminal/connect_to_network()
 	. = ..()
