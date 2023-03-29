@@ -40,12 +40,12 @@
  * =======
  */
 
-/var/const/access_away_cavalry = "ACCESS_CAVALRY"
-/var/const/access_away_cavalry_fleet_armory = "ACCESS_CAVALRY_EMERG_ARMORY"
-/var/const/access_away_cavalry_ops = "ACCESS_CAVALRY_OPS"
-/var/const/access_away_cavalry_pilot = "ACCESS_CAVALRY_PILOT"
-/var/const/access_away_cavalry_captain = "ACCESS_CAVALRY_CAPTAIN"
-/var/const/access_away_cavalry_commander = "ACCESS_CAVALRY_COMMANDER"
+var/global/const/access_away_cavalry = "ACCESS_CAVALRY"
+var/global/const/access_away_cavalry_fleet_armory = "ACCESS_CAVALRY_EMERG_ARMORY"
+var/global/const/access_away_cavalry_ops = "ACCESS_CAVALRY_OPS"
+var/global/const/access_away_cavalry_pilot = "ACCESS_CAVALRY_PILOT"
+var/global/const/access_away_cavalry_captain = "ACCESS_CAVALRY_CAPTAIN"
+var/global/const/access_away_cavalry_commander = "ACCESS_CAVALRY_COMMANDER"
 
 /datum/access/access_away_cavalry_patrol
 	id = access_away_cavalry
