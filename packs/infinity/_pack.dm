@@ -63,6 +63,8 @@
 #include "items\projectile\guns\automatic.dm"
 #include "items\projectile\guns\energy\laser_handmade.dm"
 
+#include "items\hookah.dm"
+
 // Machines
 #include "machinery\computer.dm"
 #include "machinery\heater.dm"
@@ -81,6 +83,7 @@
 #include "structures\chairs.dm"
 #include "structures\curtains.dm"
 #include "structures\holoplants.dm"
+#include "structures\mag_tables.dm"
 #include "structures\l3closets.dm"
 #include "structures\ladder_mobile.dm"
 #include "structures\signs.dm"
