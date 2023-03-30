@@ -48,6 +48,11 @@
 	spawn_weight = 1
 	shuttles_to_initialise = list(/datum/shuttle/autodock/overmap/reaper)
 
+	area_usage_test_exempted_areas = list(
+		/area/turbolift/sentinel_first,
+		/area/turbolift/sentinel_second
+	)
+
 /obj/effect/shuttle_landmark/nav_patrol/nav1
 	name = "Patrol Ship Fore"
 	landmark_tag = "nav_patrol_1"
