@@ -290,6 +290,9 @@
 		if(istype(A, /mob/living))
 			//if they have a neck grab on someone, that person gets hit instead
 			var/obj/item/grab/G = locate() in M
+			if(G && G.assailant == G.affecting)
+				qdel(G)
+
 			if(G && G.shield_assailant() && src.dir == GLOB.reverse_dir[M.dir])
 				G.affecting.visible_message(SPAN_DANGER("\The [M] uses \the [G.affecting] as a shield!"))
 				if(Bump(G.affecting, forced=1))
