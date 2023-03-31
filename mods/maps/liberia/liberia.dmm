@@ -5929,9 +5929,6 @@
 /obj/structure/table/steel,
 /obj/item/storage/toolbox/mechanical,
 /obj/item/storage/belt/utility/full,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /obj/effect/floor_decal/borderfloor{
 	dir = 9
 	},
