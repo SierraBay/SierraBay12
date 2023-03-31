@@ -21,6 +21,7 @@
 	#include "../away/miningstation/miningstation.dm"
 	#include "../away/scavver/scavver_gantry.dm"
 	#include "../away/voxship/voxship.dm"
+// SIERRA TODO: fix that shit
 //	#include "../../mods/maps/liberia/_map_liberia.dme" Uses too many assets from mods and Sierra, which makes separate testing obsolete
 //	#include "../../mods/maps/sentinel/_map_sentinel.dme" Ises too many assets from Torch, which makes separate testing obsolete
 
