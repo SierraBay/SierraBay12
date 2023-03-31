@@ -69,4 +69,12 @@
 	_output_on = TRUE
 	_fully_charged = TRUE
 
+// Unit tests cash //
+
+/obj/item/spacecash/bundle/c2500
+	name = "2500 Thaler"
+	icon_state = "spacecash1000"
+	desc = "It's worth 2500 Thalers."
+	worth = 2500
+
 #undef WEBHOOK_SUBMAP_LOADED_LIBERIA

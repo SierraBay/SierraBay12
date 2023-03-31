@@ -22,7 +22,7 @@
 	#include "../away/scavver/scavver_gantry.dm"
 	#include "../away/voxship/voxship.dm"
 	#include "../../mods/maps/liberia/_map_liberia.dme"
-	#include "../../mods/maps/sentinel/_map_sentinel.dme"
+//	#include "../../mods/maps/sentinel/_map_sentinel.dme"
 
 	#define using_map_DATUM /datum/map/away_sites_testing
 
