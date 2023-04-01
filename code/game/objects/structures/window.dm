@@ -450,7 +450,7 @@
 			grab.affecting.apply_damage(20, DAMAGE_BRUTE, def_zone, used_weapon = src)
 			hit(50, grab.assailant, grab.affecting)
 
-		qdel(grab)
+		qdel(grab) // SIERRA
 		return TRUE
 
 	return ..()

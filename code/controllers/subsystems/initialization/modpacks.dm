@@ -44,7 +44,7 @@ SUBSYSTEM_DEF(modpacks)
 		return
 
 	if(length(SSmodpacks.loaded_modpacks))
-		. = "<hr><br><center><b><font size = 3>Список Модификаций</font></b></center><br><hr><br>"
+		. = "<hr><br><center><b><font size = 3>Список модификаций</font></b></center><br><hr><br>"
 		for(var/modpack in SSmodpacks.loaded_modpacks)
 			var/singleton/modpack/M = SSmodpacks.loaded_modpacks[modpack]
 
