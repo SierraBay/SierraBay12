@@ -1,4 +1,4 @@
-#define CAT_COOLDOWN 10 SECONDS
+#define CAT_COOLDOWN 20 SECONDS
 #define CAT_MAX_NUMBER 10
 
 /world/Error(exception/E)
@@ -48,7 +48,7 @@ var/global/cat_number = 0
 	attacktext = "slashed"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 
-	var/const/cat_life_duration = 1 MINUTES
+	var/const/cat_life_duration = 25 SECONDS
 
 
 /mob/living/simple_animal/passive/cat/real_runtime/Initialize(mapload, runtime_line)
