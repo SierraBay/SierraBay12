@@ -237,7 +237,7 @@ var/global/singleton/overmap_event_handler/overmap_event_handler = new()
 	if(prob(dir_change_chance))
 		moving_dir = turn(moving_dir, pick(45, -45))
 
-/obj/effect/overmap/event/Bump(var/atom/A)
+/obj/effect/overmap/event/Bump(atom/A)
 	if(istype(A,/turf/unsimulated/map/edge))
 		handle_wraparound()
 	..()
