@@ -86,7 +86,7 @@ GLOBAL_VAR_INIT(actual_error_file_line, regex("^%% (.*?),(.*?) %% "))
 		if(locinfo)
 			usrinfo += "  usr.loc: [locinfo]"
 #ifdef MODPACK_BLUESPACECAT
-			// Create a Dusty at the runtime location
+			// Create a Tracy at the runtime location
 			var/static/cat_teleport = 0.0
 			if(usr.loc && prob(10) && (world.time - cat_teleport > CAT_COOLDOWN) && (cat_number < CAT_MAX_NUMBER)) // Avoid runtime spam spawning lots of Tracy
 				new /mob/living/simple_animal/passive/cat/real_runtime(get_turf(usr), E.line)
