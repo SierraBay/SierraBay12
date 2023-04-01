@@ -104,6 +104,9 @@ var/global/cat_number = 0
 	say_quote(text)
 
 /mob/living/simple_animal/passive/cat/real_runtime/proc/back_to_bluespace()
+	playsound(loc, 'sound/magic/blink.ogg', 50)
+	new /obj/effect/temp_visual/pulse(loc)
+	new /obj/effect/temp_visual/sparkles(loc)
 	qdel(src)
 
 /mob/living/simple_animal/passive/cat/real_runtime/proc/strike_back(mob/living/target_mob)
