@@ -65,14 +65,13 @@
 
 /singleton/security_level/default/sierradept
 	icon = 'packs/infinity/icons/misc/security_state.dmi'
+	light_power = 0.8
 
 /singleton/security_level/default/sierradept/code_green
 	name = "код зелёный"
 	code_adapt = "code green"
 
-	light_max_bright = 0.25
-	light_inner_range = 0.1
-	light_outer_range = 1
+	light_range = 1
 	light_color_alarm = COLOR_GREEN
 	light_color_status_display = COLOR_GREEN
 
@@ -95,9 +94,7 @@
 	code_adapt = "code violet"
 	alarm_level = "on"
 
-	light_max_bright = 0.25
-	light_inner_range = 1
-	light_outer_range = 2
+	light_range = 2
 	light_color_alarm = COLOR_VIOLET
 	light_color_status_display = COLOR_VIOLET
 
@@ -128,9 +125,7 @@
 	code_adapt = "code orange"
 	alarm_level = "on"
 
-	light_max_bright = 0.25
-	light_inner_range = 1
-	light_outer_range = 2
+	light_range = 2
 	light_color_alarm = COLOR_ORANGE
 	light_color_status_display = COLOR_ORANGE
 	overlay_alarm = "alarm_orange"
@@ -160,9 +155,7 @@
 	code_adapt = "code blue"
 	alarm_level = "on"
 
-	light_max_bright = 0.5
-	light_inner_range = 1
-	light_outer_range = 2
+	light_range = 2
 	light_color_alarm = COLOR_BLUE
 	light_color_status_display = COLOR_BLUE
 	overlay_alarm = "alarm_blue"
@@ -189,9 +182,7 @@
 	code_adapt = "code red"
 	alarm_level = "on"
 
-	light_max_bright = 0.5
-	light_inner_range = 1
-	light_outer_range = 2
+	light_range = 2
 	light_color_alarm = COLOR_RED
 	light_color_status_display = COLOR_RED
 	overlay_alarm = "alarm_red"
@@ -225,9 +216,7 @@
 	code_adapt = "code delta"
 	alarm_level = "on"
 
-	light_max_bright = 0.7
-	light_inner_range = 1
-	light_outer_range = 3
+	light_range = 3
 	light_color_alarm = COLOR_RED
 	light_color_status_display = COLOR_NAVY_BLUE
 

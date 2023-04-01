@@ -18,12 +18,12 @@
 		var/turf/simulated/crater_center = pick_n_take(area_turfs)
 		if(!crater_center) // ran out of space somehow
 			return
-		new/obj/structure/rubble/war(T)
-		var/datum/radiation_source/S = new(T, radiation_power, FALSE)
+		new/obj/structure/rubble/war(crater_center)
+		var/datum/radiation_source/S = new(crater_center, radiation_power, FALSE)
 		S.range = 4
 		SSradiation.add_source(S)
-		T.set_light(2, 0.4, l_color = PIPE_COLOR_GREEN)
-		for (var/turf/simulated/floor/exoplanet/crater in circlerangeturfs(T, 3))
+		crater_center.set_light(2, 0.4, l_color = PIPE_COLOR_GREEN)
+		for (var/turf/simulated/floor/exoplanet/crater in circlerangeturfs(crater_center, 3))
 			if (prob(10))
 				new/obj/item/remains/xeno/charred(crater)
 			crater.melt()

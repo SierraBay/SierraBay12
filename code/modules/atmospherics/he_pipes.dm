@@ -112,7 +112,7 @@
 					animate(AM, color = scale_color, time = 2 SECONDS, easing = SINE_EASING)
 
 				animate_filter("glow", list(color = scale_color, time = 2 SECONDS, easing = LINEAR_EASING))
-				set_light(l_max_bright = min(1, scale*1.2), l_inner_range = scale*0.9, l_outer_range = min(5, scale*2.9), l_color = scale_color)
+				set_light(l_range = min(1, scale*1.2), l_power=min(1, scale*0.9), l_color = scale_color)
 		else
 			set_light(0)
 
