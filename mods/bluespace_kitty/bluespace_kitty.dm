@@ -45,9 +45,9 @@ var/global/cat_number = 0
 	for(var/i in rand(1, 3))
 		step(src, pick(GLOB.alldirs))
 
-/mob/living/simple_animal/passive/cat/real_runtime/post_use_item(obj/item/O, mob/living/user)
+/mob/living/simple_animal/passive/cat/real_runtime/post_use_item(obj/item/O, interaction_handled, use_call, mob/living/user)
 	. = ..()
-	if(.)
+	if(interaction_handled)
 		visible_message(SPAN_DANGER("[user]'s [O.name] harmlessly passes through \the [src]."))
 		strike_back(user)
 
