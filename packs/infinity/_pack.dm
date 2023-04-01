@@ -63,6 +63,8 @@
 #include "items\projectile\guns\automatic.dm"
 #include "items\projectile\guns\energy\laser_handmade.dm"
 
+#include "items\hookah.dm"
+
 // Machines
 #include "machinery\computer.dm"
 #include "machinery\heater.dm"
@@ -71,6 +73,7 @@
 #include "machinery\lighting.dm"
 #include "machinery\suit_storage.dm"
 #include "machinery\survival_pod.dm"
+#include "machinery\scrap_compactor\scrap_compactor.dm"
 
 // Mobs
 #include "mobs\simple\fox.dm"
@@ -81,6 +84,7 @@
 #include "structures\chairs.dm"
 #include "structures\curtains.dm"
 #include "structures\holoplants.dm"
+#include "structures\mag_tables.dm"
 #include "structures\l3closets.dm"
 #include "structures\ladder_mobile.dm"
 #include "structures\signs.dm"
