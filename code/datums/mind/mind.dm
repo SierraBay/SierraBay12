@@ -49,7 +49,7 @@
 	var/has_been_rev = 0//Tracks if this mind has been a rev or not
 
 	var/faction 			//associated faction
-	var/datum/changeling/changeling		//changeling holde
+	var/datum/changeling/changeling		//changeling holder
 
 	///String. Last spoken message.
 	var/last_words
