@@ -1017,36 +1017,6 @@ var/global/list/WALLITEMS = list(
 			colour += temp_col
 	return "#[colour]"
 
-GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
-
-//Version of view() which ignores darkness, because BYOND doesn't have it.
-/proc/dview(range = world.view, center, invis_flags = 0)
-	if(!center)
-		return
-
-	GLOB.dview_mob.loc = center
-	GLOB.dview_mob.see_invisible = invis_flags
-	. = view(range, GLOB.dview_mob)
-	GLOB.dview_mob.loc = null
-
-/mob/dview
-	invisibility = 101
-	density = FALSE
-
-	anchored = TRUE
-	simulated = FALSE
-
-	see_in_dark = 1e6
-
-	virtual_mob = null
-
-/mob/dview/Destroy(forced)
-	if(forced)
-		GLOB.dview_mob = new/mob/dview()
-		return ..()
-	crash_with("Prevented attempt to delete dview mob: [log_info_line(src)]")
-	return QDEL_HINT_LETMELIVE // Prevents destruction
-
 /**
  * Sets the atom's color and light values to those of `origin`.
  *
@@ -1058,7 +1028,7 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 /atom/proc/get_light_and_color(atom/origin)
 	if(origin)
 		color = origin.color
-		set_light(origin.light_max_bright, origin.light_inner_range, origin.light_outer_range, origin.light_falloff_curve)
+		set_light(origin.light_range, origin.light_power)
 
 
 // call to generate a stack trace and print to runtime logs

@@ -423,7 +423,7 @@
 
 /mob/living/simple_animal/hostile/carp/holodeck/New()
 	..()
-	set_light(0.5, 0.1, 2) //hologram lighting
+	set_light(2, 0.5) //hologram lighting
 
 /mob/living/simple_animal/hostile/carp/holodeck/proc/set_safety(safe)
 	var/obj/item/NW = get_natural_weapon()

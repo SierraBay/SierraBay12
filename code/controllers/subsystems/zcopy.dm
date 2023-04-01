@@ -1,5 +1,6 @@
-#define SHADOWER_DARKENING_FACTOR 0.6	// The multiplication factor for openturf shadower darkness. Lighting will be multiplied by this.
-#define SHADOWER_DARKENING_COLOR "#999999"	// The above, but as an RGB string for lighting-less turfs.
+#define SHADOWER_DARKENING_FACTOR 0.8	// The multiplication factor for openturf shadower darkness. Lighting will be multiplied by this.
+#define SHADOWER_DARKENING_COLOR "#00000033"	// The above, but as an RGB string for lighting-less turfs.
+//Bay can't do multiplicative lighting for zmimic currently so we change alpha, this does mean full lit turfs need a different colour. TODO: Take another look at zmimic render setup
 
 /*
 
@@ -290,7 +291,7 @@ SUBSYSTEM_DEF(zcopy)
 
 			// Special case: these are merged into the shadower to reduce memory usage.
 			if (object.type == /atom/movable/lighting_overlay)
-				//T.shadower.copy_lighting(object)
+				T.shadower.copy_lighting(object)
 				continue
 
 			if (!object.bound_overlay)	// Generate a new overlay if the atom doesn't already have one.

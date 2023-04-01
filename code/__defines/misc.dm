@@ -353,3 +353,6 @@
 #define SANITY_CHECK_TOOL_UNEQUIP FLAG(1)
 /// Verify the target can be unequipped from user. Includes `target.loc == src` check to allow items the user isn't holding.
 #define SANITY_CHECK_TARGET_UNEQUIP FLAG(2)
+
+
+#define Z_ALL_TURFS(Z) block(locate(1, 1, Z), locate(world.maxx, world.maxy, Z))

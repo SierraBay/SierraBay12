@@ -418,7 +418,7 @@
 /obj/item/clothing/head/helmet/solgov/pilot
 	name = "pilot's helmet"
 	desc = "A pilot's helmet for operating the cockpit in style. For when you want to protect your noggin AND look stylish."
-	icon_state = "pilotgov"
+	icon_state = "pilotfleet"
 	accessories = null
 
 /obj/item/clothing/head/helmet/solgov/pilot/fleet

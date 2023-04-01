@@ -250,7 +250,10 @@
 	desc = "The standard-issue rifle of the SCGDF, the Z9 Pitbull is the modern answer to violence's question. It has been given a blued finish with a Sol yellow stripe on its stock for easy identification of its owner."
 	icon = 'icons/obj/guns/bullpup_rifle_light.dmi'
 	item_state = "z9carbine"
+	caliber = CALIBER_RIFLE
+	ammo_type = /obj/item/ammo_casing/rifle
 	magazine_type = /obj/item/ammo_magazine/mil_rifle/light
+	allowed_magazines = /obj/item/ammo_magazine/mil_rifle/light
 	one_hand_penalty = 6 //Slightly lighter than the Z8. Still don't try it.
 	wielded_item_state = "z9carbine-wielded"
 	firemodes = list( //Two round bursts. More accurate than the Z8 due to less maximum dispersion. More delay between shots, however, so slower.
