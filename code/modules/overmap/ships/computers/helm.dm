@@ -221,6 +221,8 @@ GLOBAL_LIST_EMPTY(overmap_helm_computers)
 
 	if (href_list["move"])
 		var/ndir = text2num(href_list["move"])
+		if(prob(usr.confused * 5)) // SIERRA
+			ndir = turn(ndir, pick(45, -45))
 		if(prob(user.skill_fail_chance(SKILL_PILOT, 50, linked.skill_needed, factor = 1)))
 			ndir = turn(ndir,pick(90,-90))
 		linked.relaymove(user, ndir, accellimit)
