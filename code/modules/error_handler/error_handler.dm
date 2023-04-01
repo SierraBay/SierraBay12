@@ -2,7 +2,6 @@ GLOBAL_VAR_INIT(total_runtimes, 0)
 GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 GLOBAL_VAR_INIT(actual_error_file_line, regex("^%% (.*?),(.*?) %% "))
 
-#define MODPACK_BLUESPACECAT
 
 #ifdef DEBUG
 
@@ -89,7 +88,7 @@ GLOBAL_VAR_INIT(actual_error_file_line, regex("^%% (.*?),(.*?) %% "))
 #ifdef MODPACK_BLUESPACECAT
 			// Create a Dusty at the runtime location
 			var/static/cat_teleport = 0.0
-			if(usr.loc && prob(10) && (world.time - cat_teleport > CAT_COOLDOWN) && (cat_number < CAT_MAX_NUMBER)) // Avoid runtime spam spawning lots of Dusty
+			if(usr.loc && prob(10) && (world.time - cat_teleport > CAT_COOLDOWN) && (cat_number < CAT_MAX_NUMBER)) // Avoid runtime spam spawning lots of Tracy
 				new /mob/living/simple_animal/passive/cat/real_runtime(get_turf(usr), E.line)
 				cat_teleport = world.time
 #endif
