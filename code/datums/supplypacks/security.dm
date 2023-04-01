@@ -225,6 +225,7 @@
 
 /singleton/hierarchy/supply_pack/security/bullpupammo
 	name = "Ammunition - heavy bullpup rifle"
+	// contains = list(/obj/item/ammo_magazine/mil_rifle = 4) // BAY
 	contains = list(/obj/item/ammo_magazine/mil_rifle/heavy = 4) // SIERRA
 	cost = 60
 	containertype = /obj/structure/closet/crate/secure/weapon
@@ -234,6 +235,7 @@
 
 /singleton/hierarchy/supply_pack/security/bullpupammopractice
 	name = "Ammunition - heavy bullpup rifle practice"
+  // contains = list(/obj/item/ammo_magazine/mil_rifle/practice = 8) // BAY
 	contains = list(/obj/item/ammo_magazine/mil_rifle/heavy/practice = 8) // SIERRA
 	cost = 30
 	containertype = /obj/structure/closet/crate/secure/weapon
