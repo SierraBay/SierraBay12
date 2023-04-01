@@ -1,8 +1,6 @@
 #ifndef MODPACK_BLUESPACECAT
 #define MODPACK_BLUESPACECAT
 
-
-
 #include "_bluespace_kitty.dm"
 #include "bluespace_kitty.dm"
 

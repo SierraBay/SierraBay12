@@ -1,3 +1,23 @@
+#define CAT_COOLDOWN 20 SECONDS
+#define CAT_MAX_NUMBER 10
+
+/world/Error(exception/E)
+
+	if(!istype(E)) //Something threw an unusual exception
+		return ..()
+
+	if(!error_last_seen) // A runtime is occurring too early in start-up initialization
+		return ..()
+
+	if(istype(usr))
+			// Create a Tracy at the runtime location
+			var/static/cat_teleport = 0.0
+			if(usr.loc && prob(10) && (world.time - cat_teleport > CAT_COOLDOWN) && (cat_number < CAT_MAX_NUMBER)) // Avoid runtime spam spawning lots of Tracy
+				new /mob/living/simple_animal/passive/cat/real_runtime(get_turf(usr), E.line)
+				cat_teleport = world.time
+
+	return ..()
+
 /obj/effect/temp_visual/pulse
 	icon ='icons/effects/effects.dmi'
 	icon_state = "emppulse"
@@ -9,7 +29,6 @@
 	duration = 8
 
 // Real runtime cat
-
 var/global/cat_number = 0
 /mob/living/simple_animal/passive/cat/real_runtime
 	name = "Tracy"
