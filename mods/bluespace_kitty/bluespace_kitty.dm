@@ -1,4 +1,4 @@
-#define CAT_COOLDOWN 20 SECONDS
+#define CAT_COOLDOWN 10 SECONDS
 #define CAT_MAX_NUMBER 10
 
 /world/Error(exception/E)
@@ -100,9 +100,10 @@ var/global/cat_number = 0
 /mob/living/simple_animal/passive/cat/real_runtime/proc/say_runtime(runtime_line)
 	if(!runtime_line)
 		return
-	say_quote("Зафиксирована аномалия №[runtime_line]!")
+
+	say("\"Зафиксирована аномалия №[runtime_line]!\"")
 	sleep(2 SECONDS)
-	say_quote("Пожалуйста, отойдите подальше!")
+	say("\"Пожалуйста, отойдите подальше!\"")
 
 /mob/living/simple_animal/passive/cat/real_runtime/proc/back_to_bluespace()
 	playsound(loc, 'sound/magic/blink.ogg', 50)
