@@ -13,7 +13,7 @@
 		// Create a Tracy at the runtime location
 		var/static/cat_teleport = 0.0
 		if(usr.loc && prob(10) && (world.time - cat_teleport > CAT_COOLDOWN) && (cat_number < CAT_MAX_NUMBER)) // Avoid runtime spam spawning lots of Tracy
-			new /mob/living/simple_animal/passive/cat/real_runtime(get_turf(usr), E.line)
+			new /mob/living/simple_animal/passive/cat/real_runtime(get_turf(usr), E.file, E.line)
 			cat_teleport = world.time
 
 	return ..()
@@ -51,7 +51,7 @@ var/global/cat_number = 0
 	var/const/cat_life_duration = 25 SECONDS
 
 
-/mob/living/simple_animal/passive/cat/real_runtime/Initialize(mapload, runtime_line)
+/mob/living/simple_animal/passive/cat/real_runtime/Initialize(mapload, runtime_file, runtime_line)
 	. = ..()
 	cat_number += 1
 	playsound(loc, 'sound/magic/blink.ogg', 50)
@@ -59,7 +59,7 @@ var/global/cat_number = 0
 	new /obj/effect/temp_visual/sparkles(loc)
 
 	addtimer(new Callback(src, .proc/back_to_bluespace), cat_life_duration)
-	addtimer(new Callback(src, .proc/say_runtime, runtime_line), 5 SECONDS)
+	addtimer(new Callback(src, .proc/say_runtime, runtime_file, runtime_line), 5 SECONDS)
 
 	for(var/i in rand(1, 3))
 		step(src, pick(GLOB.alldirs))
@@ -97,11 +97,12 @@ var/global/cat_number = 0
 			visible_message(SPAN_WARNING("\The [src] hisses."))
 			strike_back(M)
 
-/mob/living/simple_animal/passive/cat/real_runtime/proc/say_runtime(runtime_line)
-	if(!runtime_line)
+/mob/living/simple_animal/passive/cat/real_runtime/proc/say_runtime(runtime_file, runtime_line)
+	if(!runtime_file || !runtime_line)
 		return
 
-	say("\"Зафиксирована аномалия №[runtime_line]!\"")
+	var/filename = copytext(runtime_file, 1, findtext(runtime_file, "."))
+	say("\"Зафиксирована аномалия \"[filename]-[runtime_line]\"!\"")
 	sleep(2 SECONDS)
 	say("\"Пожалуйста, отойдите подальше!\"")
 
