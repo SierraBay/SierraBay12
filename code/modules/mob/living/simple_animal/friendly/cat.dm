@@ -240,7 +240,7 @@
 
 var/global/cat_number = 0
 /mob/living/simple_animal/passive/cat/real_runtime
-	name = "Dusty"
+	name = "Tracy"
 	desc = "Мурлыкающая жертва экспериментов. Пробирается в наше измерение, когда сама вуаль реальности разрывается на части."
 	icon_state = "runtimecat"
 	density = FALSE
