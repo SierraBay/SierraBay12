@@ -49,6 +49,27 @@
 	filters = filter(type="drop_shadow", color = color + "F0", size = 2, offset = 1,x = 0, y = 0)
 
 
+/obj/effect/overmap/proc/handle_wraparound()
+	var/nx = x
+	var/ny = y
+	var/low_edge = 1
+	var/high_edge = GLOB.using_map.overmap_size - 1
+
+	if((dir & WEST) && x == low_edge)
+		nx = high_edge
+	else if((dir & EAST) && x == high_edge)
+		nx = low_edge
+	if((dir & SOUTH)  && y == low_edge)
+		ny = high_edge
+	else if((dir & NORTH) && y == high_edge)
+		ny = low_edge
+	if((x == nx) && (y == ny))
+		return //we're not flying off anywhere
+
+	var/turf/T = locate(nx,ny,z)
+	if(T)
+		forceMove(T)
+
 /**
  * Flags the effect as `known` and runs relevant update procs. Intended for admin event usage.
  */

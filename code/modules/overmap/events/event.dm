@@ -176,10 +176,30 @@ var/global/singleton/overmap_event_handler/overmap_event_handler = new()
 
 	var/list/colors = list() //Pick a color from this list on init
 
+// [SIERRA]
+	// Vars that determine movability, current moving direction, and moving speed //
+	/// Whether this event can move or not
+	var/movable_event = FALSE
+	/// The percentage chance that this event will turn itself into a mobile version
+	var/movable_event_chance = 0
+	/// In which direction this event is currently planning on moving, will select a random dir if null
+	var/moving_dir = null
+	/// How many times the event has to process before moving (2 seconds per)
+	var/movable_speed = 60
+	/// Ticks up each process until move speed is matched, at which point the event will move
+	var/move_counter = 0
+	/// Percentage chance that the event changes direction
+	var/dir_change_chance = 25
+	/// How long to delay the next move counter if there's a ship in our loc, this gives bad events some time to happen
+	var/ship_delay_time = 2
+	/// Ticks up each process until move speed is matched, at which point the event will move
+	var/ship_delay_counter = 0
+
 	// Events must be detected by sensors, but are otherwise instantly visible.
 	requires_contact = TRUE
 	instant_contact = TRUE
 
+// [/SIERRA]
 
 /obj/effect/overmap/event/Initialize()
 	. = ..()
@@ -187,6 +207,41 @@ var/global/singleton/overmap_event_handler/overmap_event_handler = new()
 	overmap_event_handler.update_hazards(loc)
 	if(LAZYLEN(colors))
 		color = pick(colors)
+// [SIERRA]
+	if(movable_event)
+		start_moving()
+	else if(prob(movable_event_chance))
+		make_movable()
+
+/obj/effect/overmap/event/proc/make_movable()
+	movable_event = TRUE
+	start_moving()
+
+/obj/effect/overmap/event/proc/start_moving()
+	if(!moving_dir) moving_dir = pick(GLOB.alldirs)
+	START_PROCESSING(SSprocessing, src)
+
+/obj/effect/overmap/event/Process()
+	if(locate(/obj/effect/overmap/visitable/ship) in loc)
+		ship_delay_counter++
+		if(ship_delay_counter < ship_delay_time)
+			return
+	ship_delay_counter = 0
+	move_counter++
+	if(move_counter >= movable_speed)
+		handle_move()
+		move_counter = 0
+
+/obj/effect/overmap/event/proc/handle_move()
+	Move(get_step(src, moving_dir))
+	if(prob(dir_change_chance))
+		moving_dir = turn(moving_dir, pick(45, -45))
+
+/obj/effect/overmap/event/Bump(var/atom/A)
+	if(istype(A,/turf/unsimulated/map/edge))
+		handle_wraparound()
+	..()
+// [/SIERRA]
 
 /obj/effect/overmap/event/Move()
 	var/turf/old_loc = loc
@@ -203,6 +258,8 @@ var/global/singleton/overmap_event_handler/overmap_event_handler = new()
 		overmap_event_handler.update_hazards(loc)
 
 /obj/effect/overmap/event/Destroy()//takes a look at this one as well, make sure everything is A-OK
+	if(movable_event)
+		STOP_PROCESSING(SSprocessing, src) // SIERRA
 	var/turf/T = loc
 	. = ..()
 	overmap_event_handler.update_hazards(T)
@@ -250,12 +307,14 @@ var/global/singleton/overmap_event_handler/overmap_event_handler = new()
 	event_icon_states = list("carp1", "carp2")
 	weaknesses = OVERMAP_WEAKNESS_EXPLOSIVE | OVERMAP_WEAKNESS_FIRE
 	colors = list("#783ca4", "#c25bc7", "#ea50f2", "#f67efc")
+	movable_event_chance = 5 // SIERRA
 
 /obj/effect/overmap/event/carp/major
 	name = "carp school"
 	difficulty = EVENT_LEVEL_MAJOR
 	event_icon_states = list("carp3", "carp4")
 	colors = list("#a709db", "#c228c7", "#c444e4")
+	movable_event_chance = 8 // SIERRA
 
 
 /obj/effect/overmap/event/gravity
