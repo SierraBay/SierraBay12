@@ -10,5 +10,4 @@
 // END_PREFERENCES
 // BEGIN_INCLUDE
 #include "_bluespace_kitty.dm"
-#include "_bluespace_kitty.dme"
 // END_INCLUDE
