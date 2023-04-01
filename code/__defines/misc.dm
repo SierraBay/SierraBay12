@@ -357,3 +357,6 @@
 #define SANITY_CHECK_TARGET_UNEQUIP FLAG(2)
 /// Verify the target and tool are adjacent to eachother.
 #define SANITY_CHECK_BOTH_ADJACENT FLAG(3)
+
+
+#define Z_ALL_TURFS(Z) block(locate(1, 1, Z), locate(world.maxx, world.maxy, Z))

@@ -77,7 +77,7 @@
 		I.plane = EFFECTS_ABOVE_LIGHTING_PLANE
 		I.layer = ABOVE_LIGHTING_LAYER
 		overlays += I
-		set_light(0.4, 1.2, 4, 10)
+		set_light(4, 0.4)
 	else
 		set_light(0)
 		update_use_power(POWER_USE_IDLE)

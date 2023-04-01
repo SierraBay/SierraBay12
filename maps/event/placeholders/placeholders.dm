@@ -47,9 +47,9 @@ Middle-Click / Ctrl-Click - Jump a placeholder to a point and deselect it
 		else if (option == "Off")
 			selected.set_light(0)
 		else if (option == "Short")
-			selected.set_light(1, 2, 3)
+			selected.set_light(3, 1)
 		else if (option == "Far")
-			selected.set_light(1, 6, 7)
+			selected.set_light(7, 1)
 
 /datum/build_mode/placeholders/OnClick(atom/atom, list/parameters)
 	if (!atom)

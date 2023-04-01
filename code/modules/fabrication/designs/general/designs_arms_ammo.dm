@@ -92,6 +92,10 @@
 	name = "ammunition (light bullpup rifle)"
 	path = /obj/item/ammo_magazine/mil_rifle/light
 
+/datum/fabricator_recipe/arms_ammo/hidden/magazine_bullpuplight
+	name = "ammunition (light bullpup rifle)"
+	path = /obj/item/ammo_magazine/mil_rifle/light
+
 /datum/fabricator_recipe/arms_ammo/hidden/shotgun
 	name = "ammunition (slug, shotgun)"
 	path = /obj/item/ammo_casing/shotgun

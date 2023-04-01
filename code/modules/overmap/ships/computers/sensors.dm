@@ -184,6 +184,16 @@
 		new/obj/item/paper/(get_turf(src), last_scan["data"], "paper (Sensor Scan - [last_scan["name"]])", L = print_language)
 		return TOPIC_HANDLED
 
+/obj/machinery/computer/ship/sensors/Process()
+	..()
+	if(!linked)
+		return
+	if(sensors && sensors.use_power && sensors.powered())
+		var/sensor_range = round(sensors.range*1.5) + 1
+		linked.set_light(sensor_range+1, 1,)
+	else
+		linked.set_light(0)
+
 /obj/machinery/shipsensors
 	name = "sensors suite"
 	desc = "Long range gravity scanner with various other sensors, used to detect irregularities in surrounding space. Can only run in vacuum to protect delicate quantum BS elements."
