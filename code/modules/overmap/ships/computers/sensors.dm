@@ -263,12 +263,9 @@
 	if(use_power) //can't run in non-vacuum
 		if(!in_vacuum())
 			toggle()
-		if(desired_range > range)
-			set_range(range+1)
-		if(desired_range < range)
-			set_range(range-1)
-		if(desired_range-range <= -max_range/2)
-			set_range(range-1) // if working hard, spool down faster too
+
+		check_desired_range()
+
 		if(heat > critical_heat)
 			src.visible_message(SPAN_DANGER("\The [src] violently spews out sparks!"))
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
@@ -279,6 +276,7 @@
 			toggle()
 
 		heat += idle_power_usage / 15000
+
 	else if(desired_range < range)
 		set_range(range-1) // if power off, only spool down
 
@@ -289,6 +287,17 @@
 	. = ..()
 	if(use_power && !powered())
 		toggle()
+
+/obj/machinery/shipsensors/proc/check_desired_range()
+	if (desired_range != range)
+		if(desired_range > range)
+			set_range(range+1)
+
+		else if(desired_range < range)
+			set_range(range-1)
+
+		if(desired_range-range <= -max_range/2)
+			set_range(range-1) // if working hard, spool down faster too
 
 /obj/machinery/shipsensors/proc/set_desired_range(nrange)
 	desired_range = nrange
