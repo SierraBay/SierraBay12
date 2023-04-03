@@ -1217,5 +1217,16 @@
 	if(examine_cursor_icon && client.keys_held["Shift"])
 		client.mouse_pointer_icon = examine_cursor_icon
 
+<<<<<<< ours
 /mob/keybind_face_direction(direction)
 	facedir(direction)
+=======
+/mob/proc/knows_target(mob/M)
+	if(mind)
+		if((M in mind.known_mobs) || (M.faction == faction) || (M.last_faction == faction) || (M.faction == last_faction) || isghost(src))
+			return TRUE
+		else
+			return FALSE
+	else
+		return FALSE
+>>>>>>> theirs
