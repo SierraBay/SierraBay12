@@ -55,7 +55,11 @@
 
 	var/required_language
 
+<<<<<<< ours
 	var/required_role = null //a role which necessery to join as the job. For an example, explorers cannot be without EL
+=======
+	var/faction = MOB_FACTION_CREW
+>>>>>>> theirs
 
 /datum/job/New()
 
@@ -102,6 +106,9 @@
 
 	var/singleton/hierarchy/outfit/outfit = get_outfit(H, alt_title, branch, grade)
 	if(outfit) . = outfit.equip(H, title, alt_title)
+	if(faction)
+		H.faction = faction
+		H.last_faction = faction
 
 /datum/job/proc/get_outfit(mob/living/carbon/human/H, alt_title, datum/mil_branch/branch, datum/mil_rank/grade)
 	if(alt_title && alt_titles)
