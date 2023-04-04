@@ -24,7 +24,7 @@
 		register_signal(target, SIGNAL_PARENT_QDELETING, .proc/OnTargetDelete, override = TRUE)
 
 /datum/element/proc/OnTargetDelete(datum/source, force)
-	Detach(source)
+	detach(source)
 
 /// Deactivates the functionality defines by the element on the given datum.
 /datum/element/proc/detach(datum/source, ...)
@@ -47,7 +47,7 @@
 	var/datum/element/ele = SSelements.GetElement(arguments)
 	arguments[1] = src
 
-	if(ele.Attach(arglist(arguments)) == ELEMENT_INCOMPATIBLE)
+	if(ele.attach(arglist(arguments)) == ELEMENT_INCOMPATIBLE)
 		CRASH("Incompatible [arguments[1]] assigned to a [type]! args: [json_encode(args)]")
 
 /**
@@ -59,6 +59,6 @@
 
 	if(ele.element_flags & ELEMENT_COMPLEX_DETACH)
 		arguments[1] = src
-		ele.Detach(arglist(arguments))
+		ele.detach(arglist(arguments))
 	else
-		ele.Detach(src)
+		ele.detach(src)

@@ -318,7 +318,7 @@
 /// This will throw an error if it's possible to have more than one component of that type on the parent.
 ///
 /// `datum/component/c_type` - The typepath of the component you want to get a reference to.
-/datum/proc/get_component(datum/component/c_type)
+/datum/proc/Get_component(datum/component/c_type)
 	if(initial(c_type.dupe_mode) == COMPONENT_DUPE_ALLOWED || initial(c_type.dupe_mode) == COMPONENT_DUPE_SELECTIVE)
 		stack_trace("get_component was called to get a component of which multiple copies could be on an object. This can easily break and should be changed. Type: \[[c_type]\]")
 
@@ -403,7 +403,7 @@
 		if(!dt)
 			old_comp = get_exact_component(nt)
 		else
-			old_comp = get_component(dt)
+			old_comp = Get_component(dt)
 
 		if(old_comp)
 			switch(dm)
@@ -461,7 +461,7 @@
 /// `component_type` - The typepath of the component to create or return.
 /// `...` - additional arguments to be passed when creating the component if it does not exist.
 /datum/proc/_load_component(list/arguments)
-	. = get_component(arguments[1])
+	. = Get_component(arguments[1])
 
 	if(!.)
 		return _add_component(arguments)
