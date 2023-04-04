@@ -1228,8 +1228,6 @@
 	if(old_zflags != z_flags)
 		UPDATE_OO_IF_PRESENT
 
-<<<<<<< ours
-<<<<<<< ours
 /// Update the mouse pointer of the attached client in this mob.
 /mob/proc/update_mouse_pointer()
 	if(!client)
@@ -1242,11 +1240,8 @@
 
 /mob/keybind_face_direction(direction)
 	facedir(direction)
-=======
-/mob/verb/introduce(var/mob/M)
-=======
+
 /mob/verb/introduce()
->>>>>>> theirs
 	set category = "IC"
 	set name = "Introduce Self"
 	set desc = "Introduce yourself to someone else."
@@ -1279,4 +1274,3 @@
 			return FALSE
 	else
 		return FALSE
->>>>>>> theirs

@@ -55,11 +55,9 @@
 
 	var/required_language
 
-<<<<<<< ours
 	var/required_role = null //a role which necessery to join as the job. For an example, explorers cannot be without EL
-=======
+
 	var/faction = MOB_FACTION_CREW
->>>>>>> theirs
 
 /datum/job/New()
 
