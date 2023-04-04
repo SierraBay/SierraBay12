@@ -3,11 +3,19 @@
 	var/is_processing = FALSE
 	var/list/active_timers  //for SStimer
 
+
 	/// If this datum is pooled, the pool it belongs to.
 	var/singleton/instance_pool/instance_pool
 
 	/// If this datum is pooled, the last configurator applied (if any).
 	var/singleton/instance_configurator/instance_configurator
+	/// Components attached to this datum.
+	var/list/datum_components = list()
+	/// Any datum registered to receive signals from this datum is in this list.
+	var/list/comp_lookup = list()
+	/// Lazy associated list of signals that are run when the datum receives that signal
+	var/list/signal_procs = list()
+
 
 
 // Default implementation of clean-up code.
@@ -24,8 +32,23 @@
 		if (timer.spent)
 			continue
 		qdel(timer)
-	if (extensions)
-		for (var/expansion_key in extensions)
+
+	var/list/dc = datum_components
+	if(dc)
+		var/all_components = dc[/datum/component]
+		if(length(all_components))
+			for(var/datum/component/component as anything in all_components)
+				qdel(component, FALSE, TRUE)
+		else
+			var/datum/component/C = all_components
+			qdel(C, FALSE, TRUE)
+		dc.Cut()
+
+	clear_signal_refs()
+
+	if(extensions)
+		for(var/expansion_key in extensions)
+
 			var/list/extension = extensions[expansion_key]
 			if (islist(extension))
 				extension.Cut()
@@ -47,6 +70,23 @@
 	weakref = null
 	return QDEL_HINT_QUEUE
 
+/// Only override this if you know what you're doing. You do not know what you're doing
+/// This is a threat
+/datum/proc/clear_signal_refs()
+	var/list/lookup = comp_lookup
+	if(lookup)
+		for(var/sig in lookup)
+			var/list/comps = lookup[sig]
+			if(length(comps))
+				for(var/datum/component/comp as anything in comps)
+					comp.UnregisterSignal(src, sig)
+			else
+				var/datum/component/comp = comps
+				comp.UnregisterSignal(src, sig)
+		comp_lookup = lookup = null
+
+	for(var/target in signal_procs)
+		UnregisterSignal(target, signal_procs[target])
 
 /datum/proc/Process()
 	set waitfor = 0

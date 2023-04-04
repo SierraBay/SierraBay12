@@ -217,10 +217,14 @@ SUBSYSTEM_DEF(garbage)
 	++details.qdels
 	switch (datum.gc_destroyed)
 		if (null)
+			// Give the components a chance to prevent their parent from being deleted.
+			if (SEND_SIGNAL(datum, SIGNAL_PREQDELETING))
+				return
 			datum.gc_destroyed = GC_CURRENTLY_BEING_QDELETED
 			var/start_time = world.time
 			var/start_tick = world.tick_usage
 			var/hint = datum.Destroy()
+			SEND_SIGNAL(datum, SIGNAL_QDELETING) // Let the (remaining) components know about the result of Destroy
 			if (world.time != start_time)
 				++details.slept_destroy
 			else
