@@ -51,6 +51,7 @@
 	#include "items/headsets.dm"
 	#include "items/items.dm"
 	#include "items/lighting.dm"
+	#include "items/machinery.dm"
 	#include "items/manuals.dm"
 	#include "items/mech.dm"
 	#include "items/papers.dm"
@@ -153,8 +154,8 @@
 	#include "../../mods/machinery/atmos_ret_field/_atm_ret_field.dme"
 	#include "../../mods/don_loadout/_don_loadout.dme"
 	#include "../../mods/leroy_beasts/_leroy_beasts.dme"
-	#include "../../mods/machinery/scrap_compactor/_scrap_compactor.dme"
 	#include "../../mods/maps/liberia/_map_liberia.dme"
+	#include "../../mods/maps/sentinel/_map_sentinel.dme"
 
 	// UNUSED MODS
 	// #include "../../mods/_events/mortar/_mortar.dme"
