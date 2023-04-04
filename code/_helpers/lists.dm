@@ -810,3 +810,8 @@ Checks if a list has the same entries and values as an element of big.
 					for(var/T in typesof(P))
 						L[T] = TRUE
 		return L
+
+
+/// Sort any value in a list.
+/proc/sort_list(list/list_to_sort, cmp=/proc/cmp_text_asc)
+	return sortTim(list_to_sort.Copy(), cmp)
