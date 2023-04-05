@@ -64,14 +64,18 @@ somewhere on that shuttle. Subtypes of these can be then used to perform ship ov
 /obj/machinery/computer/ship/proc/look(mob/user)
 	if(linked)
 		user.reset_view(linked)
+
 	if(user.client)
 		user.client.view = world.view + extra_view
+
 	if(linked)
 		for(var/obj/machinery/computer/ship/sensors/sensor in linked.consoles)
 			sensor.reveal_contacts(user)
 	GLOB.moved_event.register(user, src, /obj/machinery/computer/ship/proc/unlook)
+
 	if (!isghost(user))
-		GLOB.stat_set_event.register(user, src, /obj/machinery/computer/ship/proc/unlook)
+		register_signal(user, SIGNAL_STAT_SET, /obj/machinery/computer/ship/proc/unlook)
+
 	LAZYDISTINCTADD(viewers, weakref(user))
 	if(linked)
 		LAZYDISTINCTADD(linked.navigation_viewers, weakref(user))
@@ -80,11 +84,14 @@ somewhere on that shuttle. Subtypes of these can be then used to perform ship ov
 	user.reset_view(null, FALSE)
 	if(user.client)
 		user.client.view = world.view
+
 	if(linked)
 		for(var/obj/machinery/computer/ship/sensors/sensor in linked.consoles)
 			sensor.hide_contacts(user)
+
 	GLOB.moved_event.unregister(user, src, /obj/machinery/computer/ship/proc/unlook)
-	GLOB.stat_set_event.unregister(user, src, /obj/machinery/computer/ship/proc/unlook)
+	unregister_signal(user, SIGNAL_STAT_SET)
+
 	LAZYREMOVE(viewers, weakref(user))
 	if(linked)
 		LAZYREMOVE(linked.navigation_viewers, weakref(user))

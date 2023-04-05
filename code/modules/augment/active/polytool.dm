@@ -22,7 +22,7 @@
 
 
 /obj/item/organ/internal/augment/active/polytool/proc/holding_dropped(obj/item/I)
-	GLOB.item_unequipped_event.unregister(I, src)
+	unregister_signal(I, SIGNAL_ITEM_UNEQUIPPED)
 	if (I.loc != src)
 		I.canremove = TRUE
 
@@ -55,7 +55,7 @@
 		if (owner.equip_to_slot_if_possible(item, slot))
 			items -= item
 			//Keep track of it, make sure it returns
-			GLOB.item_unequipped_event.register(item, src, /obj/item/organ/internal/augment/active/polytool/proc/holding_dropped)
+			register_signal(item, SIGNAL_ITEM_UNEQUIPPED, /obj/item/organ/internal/augment/active/polytool/proc/holding_dropped)
 			owner.visible_message(
 				SPAN_WARNING("[owner] extends \his [item.name] from [limb]."),
 				SPAN_NOTICE("You extend your [item.name] from [limb].")

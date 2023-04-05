@@ -43,19 +43,19 @@
 		for(var/shuttle_name in SSshuttle.shuttles)
 			var/datum/shuttle/shuttle_datum = SSshuttle.shuttles[shuttle_name]
 			if(given_area in shuttle_datum.shuttle_area)
-				GLOB.shuttle_moved_event.register(shuttle_datum, src, .proc/shuttle_moved)
+				register_signal(shuttle_datum, SIGNAL_MOVED, .proc/shuttle_moved)
 				GLOB.shuttle_pre_move_event.register(shuttle_datum, src, .proc/shuttle_pre_move)
 				LAZYADD(shuttles_registered, shuttle_datum)
 
 /datum/extension/event_registration/shuttle_stationary/proc/unregister_shuttles()
 	for(var/datum/shuttle_datum in shuttles_registered)
-		GLOB.shuttle_moved_event.unregister(shuttle_datum, src)
+		unregister_signal(shuttle_datum, SIGNAL_MOVED)
 		GLOB.shuttle_pre_move_event.unregister(shuttle_datum, src)
 	shuttles_registered = null
 
 /datum/extension/event_registration/shuttle_stationary/proc/shuttle_added(datum/shuttle/shuttle)
 	if(given_area in shuttle.shuttle_area)
-		GLOB.shuttle_moved_event.register(shuttle, src, .proc/shuttle_moved)
+		register_signal(shuttle, SIGNAL_MOVED, .proc/shuttle_moved)
 		GLOB.shuttle_pre_move_event.register(shuttle, src, .proc/shuttle_pre_move)
 		LAZYADD(shuttles_registered, shuttle)
 

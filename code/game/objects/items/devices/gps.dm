@@ -39,7 +39,7 @@ var/global/list/all_gps_units = list()
 	global.all_gps_units += src
 	. = ..()
 	name = "[initial(name)] ([gps_tag])"
-	GLOB.moved_event.register(holder, src, .proc/update_holder)
+	register_signal(holder, SIGNAL_MOVED, .proc/update_holder)
 	compass = new(src)
 	update_holder()
 	update_icon()
@@ -59,15 +59,15 @@ var/global/list/all_gps_units = list()
 /obj/item/device/gps/proc/update_holder(force_clear = FALSE)
 
 	if(holder && (force_clear || loc != holder))
-		GLOB.moved_event.unregister(holder, src)
-		GLOB.dir_set_event.unregister(holder, src)
+		unregister_signal(holder, SIGNAL_MOVED)
+		unregister_signal(holder, SIGNAL_DIR_SET)
 		holder.client?.screen -= compass
 		holder = null
 
 	if(!force_clear && istype(loc, /mob))
 		holder = loc
-		GLOB.moved_event.register(holder, src, .proc/update_compass)
-		GLOB.dir_set_event.register(holder, src, .proc/update_compass)
+		register_signal(holder, SIGNAL_MOVED, .proc/update_compass)
+		register_signal(holder, SIGNAL_DIR_SET, .proc/update_compass)
 
 	if(!force_clear && holder && tracking)
 		if(!is_in_processing_list)
@@ -104,7 +104,7 @@ var/global/list/all_gps_units = list()
 	STOP_PROCESSING(SSobj, src)
 	is_in_processing_list = FALSE
 	global.all_gps_units -= src
-	GLOB.moved_event.unregister(holder, src, .proc/update_holder)
+	unregister_signal(holder, SIGNAL_MOVED, .proc/update_holder)
 	update_holder(force_clear = TRUE)
 	QDEL_NULL(compass)
 	return ..()

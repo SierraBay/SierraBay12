@@ -99,6 +99,18 @@
 
 	return INITIALIZE_HINT_NORMAL
 
+
+/atom/Entered(atom/movable/enterer, atom/old_loc)
+	..()
+
+	SEND_SIGNAL(src, SIGNAL_ENTERED, src, enterer, old_loc)
+	SEND_SIGNAL(src, SIGNAL_MOVED, enterer, old_loc, enterer.loc)
+
+/atom/Exited(atom/movable/exitee, atom/new_loc)
+	. = ..()
+
+	SEND_SIGNAL(src, SIGNAL_EXITED, src, exitee, new_loc)
+
 /**
  * Late initialization handler. Called after the `Initialize()` chain for any atoms that returned `INITIALIZE_HINT_LATELOAD`. Primarily used for atoms that rely on initialized values from other atoms.
  *
@@ -406,10 +418,13 @@
  */
 /atom/proc/set_dir(new_dir)
 	var/old_dir = dir
+
 	if(new_dir == old_dir)
 		return FALSE
+
 	dir = new_dir
-	GLOB.dir_set_event.raise_event(src, old_dir, dir)
+	SEND_SIGNAL(src, SIGNAL_DIR_SET, src, old_dir, dir)
+
 	return TRUE
 
 /**
@@ -1002,3 +1017,21 @@
 	L.Weaken(2)
 	L.visible_message(SPAN_WARNING("\The [L] [pick("ran", "slammed")] into \the [src]!"))
 	playsound(L, "punch", 25, 1, FALSE)
+
+/atom/proc/set_opacity(new_opacity)
+	if(new_opacity != opacity)
+		var/old_opacity = opacity
+		opacity = new_opacity
+
+		SEND_SIGNAL(src, SIGNAL_OPACITY_SET, src, old_opacity, new_opacity)
+
+		return TRUE
+	else
+		return FALSE
+
+/atom/proc/set_invisibility(new_invisibility = 0)
+	var/old_invisibility = invisibility
+	if(old_invisibility != new_invisibility)
+		invisibility = new_invisibility
+
+		SEND_SIGNAL(src, SIGNAL_INVISIBILITY_SET, src, old_invisibility, new_invisibility)

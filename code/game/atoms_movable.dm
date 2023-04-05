@@ -144,7 +144,10 @@
 					AM.Crossed(src)
 			if(is_new_area && is_destination_turf)
 				destination.loc.Entered(src, origin)
-	return 1
+	if(!loc)
+		SEND_SIGNAL(src, SIGNAL_MOVED, src, origin, null)
+
+	return TRUE
 
 /atom/movable/forceMove(atom/dest)
 	var/old_loc = loc
@@ -228,11 +231,11 @@
 	set_dir(master.dir)
 
 	if(istype(master, /atom/movable))
-		GLOB.moved_event.register(master, src, follow_proc)
+		register_signal(master, SIGNAL_MOVED, follow_proc)
 		SetInitLoc()
 
-	GLOB.destroyed_event.register(master, src, /datum/proc/qdel_self)
-	GLOB.dir_set_event.register(master, src, /atom/proc/recursive_dir_set)
+	register_signal(master, SIGNAL_DESTROY, /datum/proc/qdel_self)
+	register_signal(master, SIGNAL_DIR_SET, /atom/proc/recursive_dir_set)
 
 	. = ..()
 
@@ -241,9 +244,10 @@
 
 /atom/movable/overlay/Destroy()
 	if(istype(master, /atom/movable))
-		GLOB.moved_event.unregister(master, src)
-	GLOB.destroyed_event.unregister(master, src)
-	GLOB.dir_set_event.unregister(master, src)
+		unregister_signal(master, SIGNAL_MOVED)
+
+	unregister_signal(master, SIGNAL_DESTROY)
+	unregister_signal(master, SIGNAL_DIR_SET)
 	master = null
 	. = ..()
 

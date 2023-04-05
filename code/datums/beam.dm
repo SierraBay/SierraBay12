@@ -47,8 +47,8 @@
 	visuals.icon_state = icon_state
 	Draw()
 	//Register for movement events
-	GLOB.moved_event.register(origin, src, .proc/redrawing)
-	GLOB.moved_event.register(target, src, .proc/redrawing)
+	register_signal(origin, SIGNAL_MOVED, .proc/redrawing)
+	register_signal(target, SIGNAL_MOVED, .proc/redrawing)
 	GLOB.destroyed_event.register(origin, src, .proc/redrawing)
 	GLOB.destroyed_event.register(target, src, .proc/redrawing)
 
@@ -70,8 +70,8 @@
 /datum/beam/Destroy()
 	QDEL_NULL_LIST(elements)
 	QDEL_NULL(visuals)
-	GLOB.moved_event.unregister(origin, src, .proc/redrawing)
-	GLOB.moved_event.unregister(target, src, .proc/redrawing)
+	unregister_signal(origin, SIGNAL_MOVED)
+	unregister_signal(target, SIGNAL_MOVED)
 	GLOB.destroyed_event.unregister(origin, src, .proc/redrawing)
 	GLOB.destroyed_event.unregister(target, src, .proc/redrawing)
 	target = null

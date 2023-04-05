@@ -41,7 +41,7 @@
 
 /obj/item/organ/internal/augment/active/item/Destroy()
 	if (item)
-		GLOB.item_unequipped_event.unregister(item, src)
+		unregister_signal(item, SIGNAL_ITEM_UNEQUIPPED)
 		if (item.loc == src)
 			qdel(item)
 		else
@@ -51,7 +51,7 @@
 
 
 /obj/item/organ/internal/augment/active/item/proc/item_dropped()
-	GLOB.item_unequipped_event.unregister(item, src)
+	unregister_signal(item, SIGNAL_ITEM_UNEQUIPPED)
 	if (item.loc != src) // It fell off!
 		item.canremove = TRUE
 		item = null
@@ -64,7 +64,7 @@
 		return
 	if (!owner.equip_to_slot_if_possible(item, slot))
 		return
-	GLOB.item_unequipped_event.register(item, src, /obj/item/organ/internal/augment/active/item/proc/item_dropped)
+	register_signal(item, SIGNAL_ITEM_UNEQUIPPED, /obj/item/organ/internal/augment/active/item/proc/item_dropped)
 	if (deploy_sound)
 		playsound(owner, deploy_sound, 30)
 	if (as_owner)

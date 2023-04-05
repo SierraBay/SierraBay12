@@ -43,7 +43,7 @@ if (!(datum.process_flags & AI_FASTPROCESSING)) { \
 
 /mob/living/Destroy()
 	if (ai_holder)
-		GLOB.stat_set_event.unregister(src, ai_holder, /datum/ai_holder/proc/holder_stat_change)
+		unregister_signal(src, SIGNAL_STAT_SET)
 		QDEL_NULL(ai_holder)
 	return ..()
 
@@ -105,7 +105,7 @@ if (!(datum.process_flags & AI_FASTPROCESSING)) { \
 	holder = new_holder
 	home_turf = get_turf(holder)
 	manage_processing(AI_PROCESSING)
-	GLOB.stat_set_event.register(holder, src, .proc/holder_stat_change)
+	register_signal(holder, SIGNAL_STAT_SET, .proc/holder_stat_change)
 	..()
 
 /datum/ai_holder/Destroy()

@@ -21,9 +21,6 @@ GLOBAL_DATUM_INIT(moved_event, /singleton/observ/moved, new)
 	if(. && istype(mover.loc, expected_type))
 		register(mover.loc, mover, /atom/movable/proc/recursive_move)
 
-/********************
-* Movement Handling *
-********************/
 
 /atom/Entered(atom/movable/am, atom/old_loc)
 	. = ..()
