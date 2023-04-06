@@ -23,6 +23,8 @@
 	var/status = 1 		//Whether the welder is secured or unsecured (able to attach rods to it to make a flamethrower)
 	var/welding_resource = "welding fuel"
 	var/obj/item/welder_tank/tank = /obj/item/welder_tank // where the fuel is stored
+	var/activate_sound = 'sound/items/welderactivate.ogg'
+	var/deactivate_sound = 'sound/items/welderdeactivate.ogg'
 
 /obj/item/weldingtool/Initialize()
 	if(ispath(tank))
@@ -256,6 +258,7 @@
 				src.force = tank.lit_force
 				src.damtype = DAMAGE_BURN
 			welding = 1
+			playsound(loc, activate_sound, 50, 1)
 			update_icon()
 			START_PROCESSING(SSobj, src)
 		else
@@ -275,6 +278,7 @@
 			src.force = tank.unlit_force
 		src.damtype = DAMAGE_BRUTE
 		src.welding = 0
+		playsound(loc, deactivate_sound, 50, 1)
 		update_icon()
 
 /obj/item/weldingtool/attack(mob/living/M, mob/living/user, target_zone)
