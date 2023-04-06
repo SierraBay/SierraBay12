@@ -51,6 +51,7 @@
 	#include "items/headsets.dm"
 	#include "items/items.dm"
 	#include "items/lighting.dm"
+	#include "items/machinery.dm"
 	#include "items/manuals.dm"
 	#include "items/mech.dm"
 	#include "items/papers.dm"
@@ -155,6 +156,7 @@
 	#include "../../mods/leroy_beasts/_leroy_beasts.dme"
 	#include "../../mods/maps/liberia/_map_liberia.dme"
 	#include "../../mods/bluespace_kitty/_bluespace_kitty.dme"
+	#include "../../mods/maps/sentinel/_map_sentinel.dme"
 
 	// UNUSED MODS
 	// #include "../../mods/_events/mortar/_mortar.dme"

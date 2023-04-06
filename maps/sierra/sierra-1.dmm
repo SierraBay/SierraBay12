@@ -13432,6 +13432,9 @@
 	req_access = newlist()
 	},
 /obj/machinery/door/firedoor,
+/obj/item/airlock_brace{
+	req_access = list("ACCESS_QUARTERMASTER")
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/storage/auxillary/port)
 "vz" = (
@@ -25863,6 +25866,9 @@
 	dir = 9
 	},
 /obj/random/drinkbottle,
+/obj/structure/closet/medical_wall/filled{
+	pixel_y = -24
+	},
 /turf/simulated/floor/tiled,
 /area/command/bsa)
 "Qp" = (
@@ -26307,14 +26313,14 @@
 /obj/effect/floor_decal/borderfloor/corner{
 	dir = 1
 	},
-/obj/structure/closet/walllocker{
-	pixel_y = 32
-	},
 /obj/item/storage/firstaid/regular,
 /obj/item/storage/med_pouch/oxyloss,
 /obj/item/storage/med_pouch/oxyloss,
 /obj/machinery/sleeper/survival_pod{
 	dir = 8
+	},
+/obj/structure/closet/medical_wall{
+	pixel_y = 32
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/guppy_hangar/start)
@@ -26437,7 +26443,7 @@
 "Rn" = (
 /obj/structure/table/rack,
 /obj/item/device/flashlight/flare/glowstick/random,
-/obj/item/stack/cable_coil/random,
+/obj/random/single/color/cable_coil,
 /turf/simulated/floor/plating,
 /area/maintenance/thirddeck/aft)
 "Ro" = (
@@ -26548,7 +26554,7 @@
 /obj/item/device/multitool,
 /obj/item/storage/box/lights/mixed,
 /obj/item/device/synthesized_instrument/guitar,
-/obj/item/stack/cable_coil/random,
+/obj/random/single/color/cable_coil,
 /obj/random/firstaid,
 /obj/random/material,
 /obj/random/material_rnd_glass,
@@ -29812,11 +29818,11 @@
 /obj/structure/table/reinforced,
 /obj/random/blood_packs,
 /obj/random/blood_packs,
-/obj/structure/closet/walllocker{
+/obj/item/roller_bed,
+/obj/item/roller_bed,
+/obj/structure/closet/medical_wall{
 	pixel_y = 32
 	},
-/obj/item/roller_bed,
-/obj/item/roller_bed,
 /turf/simulated/floor/tiled/white,
 /area/exploration_shuttle/medical)
 "XK" = (
