@@ -178,7 +178,7 @@ SUBSYSTEM_DEF(ticker)
 		to_world(SPAN_INFO("<B>Enjoy the game!</B>"))
 
 	if(!length(GLOB.admins))
-		send2adminirc("Round has started with no admins online.")
+		send_to_admin_discord(EXCOM_MSG_AHELP, "Round has started with no admins online.")
 
 /datum/controller/subsystem/ticker/proc/playing_tick()
 	mode.process()
@@ -357,7 +357,7 @@ Helpers
 
 /datum/controller/subsystem/ticker/proc/create_characters()
 	for(var/mob/new_player/player in GLOB.player_list)
-		if(player && player.ready && player.mind)
+		if(player && player.ready && player.mind && !player.spawning)
 
 			if(player.mind.assigned_role=="AI")
 				player.close_spawn_windows()
