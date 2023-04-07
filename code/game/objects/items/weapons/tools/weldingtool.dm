@@ -256,6 +256,7 @@
 				src.force = tank.lit_force
 				src.damtype = DAMAGE_BURN
 			welding = 1
+			playsound(loc, 'sound/items/welderactivate', 50, 1)
 			update_icon()
 			START_PROCESSING(SSobj, src)
 		else
@@ -275,6 +276,7 @@
 			src.force = tank.unlit_force
 		src.damtype = DAMAGE_BRUTE
 		src.welding = 0
+		playsound(loc, 'sound/items/welderdeactivate', 50, 1)
 		update_icon()
 
 /obj/item/weldingtool/attack(mob/living/M, mob/living/user, target_zone)
