@@ -3338,14 +3338,7 @@
 #include "interface\skin.dmf"
 #include "maps\_map_include.dm"
 #include "maps\_maps.dm"
-<<<<<<< ours
-#include "maps\deepmaint\deepmaint.dm"
-#include "maps\deepmaint\deepmaint_rooms\template.dm"
-#include "maps\deepmaint\deepmaint_rooms\core\_core_rooms.dm"
-#include "maps\deepmaint\deepmaint_rooms\normal\_normal_rooms.dm"
 #include "mods\_modpack.dm"
 #include "mods\global_modpacks.dm"
-=======
->>>>>>> theirs
 #include "~code\global_init.dm"
 // END_INCLUDE
