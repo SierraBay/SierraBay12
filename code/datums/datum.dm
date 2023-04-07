@@ -23,9 +23,6 @@
 	SHOULD_CALL_PARENT(TRUE)
 	SHOULD_NOT_SLEEP(TRUE)
 
-	SEND_SIGNAL(src, SIGNAL_DESTROY, src)
-	SEND_GLOBAL_SIGNAL(SIGNAL_DESTROY, src)
-
 	tag = null
 	weakref = null // Clear this reference to ensure it's kept for as brief duration as possible.
 

@@ -796,7 +796,7 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 	zoom = 1
 
 
-	register_signal(src, SIGNAL_DESTROY, /obj/item/proc/unzoom)
+	register_signal(src, SIGNAL_QDELETING, /obj/item/proc/unzoom)
 	register_signal(user, SIGNAL_MOVED, /obj/item/proc/unzoom)
 	register_signal(user, SIGNAL_DIR_SET, /obj/item/proc/unzoom)
 	register_signal(src, SIGNAL_ITEM_UNEQUIPPED, /mob/living/proc/unzoom)
@@ -814,7 +814,7 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 		return
 	zoom = 0
 
-	unregister_signal(src, SIGNAL_DESTROY)
+	unregister_signal(src, SIGNAL_QDELETING)
 	unregister_signal(user, SIGNAL_MOVED, /obj/item/proc/unzoom)
 	unregister_signal(src, SIGNAL_DIR_SET)
 	unregister_signal(src, SIGNAL_ITEM_UNEQUIPPED)

@@ -202,7 +202,7 @@ GLOBAL_DATUM_INIT(sound_player, /singleton/sound_player, new)
 	listeners += listener
 
 	register_signal(listener, SIGNAL_MOVED, /datum/sound_token/proc/PrivUpdateListenerLoc)
-	register_signal(listener, SIGNAL_DESTROY, /datum/sound_token/proc/PrivRemoveListener)
+	register_signal(listener, SIGNAL_QDELETING, /datum/sound_token/proc/PrivRemoveListener)
 
 	PrivUpdateListenerLoc(listener, FALSE)
 
@@ -210,7 +210,7 @@ GLOBAL_DATUM_INIT(sound_player, /singleton/sound_player, new)
 	null_sound = null_sound || new(channel = sound.channel)
 	sound_to(listener, null_sound)
 	unregister_signal(listener, SIGNAL_MOVED)
-	unregister_signal(listener, SIGNAL_DESTROY, /datum/sound_token/proc/PrivRemoveListener)
+	unregister_signal(listener, SIGNAL_QDELETING, /datum/sound_token/proc/PrivRemoveListener)
 	listeners -= listener
 
 /datum/sound_token/proc/PrivUpdateListenerLoc(atom/listener, update_sound = TRUE)

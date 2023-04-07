@@ -10,7 +10,7 @@
 		return
 	unregister_signal(following, SIGNAL_MOVED)
 	unregister_signal(following, SIGNAL_DIR_SET)
-	unregister_signal(following, SIGNAL_DESTROY)
+	unregister_signal(following, SIGNAL_QDELETING)
 	following = null
 
 /mob/observer/proc/start_following(atom/a)
@@ -19,7 +19,7 @@
 
 	register_signal(a, SIGNAL_MOVED, .proc/keep_following)
 	register_signal(a, SIGNAL_DIR_SET, /atom/proc/recursive_dir_set)
-	register_signal(a, SIGNAL_DESTROY, .proc/stop_following)
+	register_signal(a, SIGNAL_QDELETING, .proc/stop_following)
 
 	keep_following(new_loc = get_turf(following))
 

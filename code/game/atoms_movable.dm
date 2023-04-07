@@ -144,8 +144,8 @@
 					AM.Crossed(src)
 			if(is_new_area && is_destination_turf)
 				destination.loc.Entered(src, origin)
-	if(!loc)
-		SEND_SIGNAL(src, SIGNAL_MOVED, src, origin, null)
+
+	SEND_SIGNAL(src, SIGNAL_MOVED, src, origin, destination)
 
 	return TRUE
 
@@ -234,7 +234,7 @@
 		register_signal(master, SIGNAL_MOVED, follow_proc)
 		SetInitLoc()
 
-	register_signal(master, SIGNAL_DESTROY, /datum/proc/qdel_self)
+	register_signal(master, SIGNAL_QDELETING, /datum/proc/qdel_self)
 	register_signal(master, SIGNAL_DIR_SET, /atom/proc/recursive_dir_set)
 
 	. = ..()
@@ -246,7 +246,7 @@
 	if(istype(master, /atom/movable))
 		unregister_signal(master, SIGNAL_MOVED)
 
-	unregister_signal(master, SIGNAL_DESTROY)
+	unregister_signal(master, SIGNAL_QDELETING)
 	unregister_signal(master, SIGNAL_DIR_SET)
 	master = null
 	. = ..()

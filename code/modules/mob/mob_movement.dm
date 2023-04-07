@@ -127,6 +127,9 @@
 
 //This proc should never be overridden elsewhere at /atom/movable to keep directions sane.
 /atom/movable/Move(newloc, direct)
+
+	var/old_loc = loc
+
 	if (direct & (direct - 1))
 		if (direct & 1)
 			if (direct & 4)
@@ -171,6 +174,8 @@
 		src.m_flag = 1
 		if ((A != src.loc && A && A.z == src.z))
 			src.last_move = get_dir(A, src.loc)
+
+	SEND_SIGNAL(src, SIGNAL_MOVED, src, old_loc, loc)
 
 /proc/step_glide(atom/movable/am, dir, glide_size_override)
 	am.set_glide_size(glide_size_override)
