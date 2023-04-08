@@ -71,6 +71,9 @@ GLOBAL_LIST_INIT(revolver_reload, list('sound/weapons/reloads/revolver_reload.og
 GLOBAL_LIST_INIT(shotgun_pump, list('sound/weapons/reloads/shotgun_pump2.ogg','sound/weapons/reloads/shotgun_pump3.ogg','sound/weapons/reloads/shotgun_pump4.ogg','sound/weapons/reloads/shotgun_pump5.ogg','sound/weapons/reloads/shotgun_pump6.ogg'))
 GLOBAL_LIST_INIT(shotgun_reload, list('sound/weapons/reloads/reload_shell.ogg','sound/weapons/reloads/reload_shell2.ogg','sound/weapons/reloads/reload_shell3.ogg','sound/weapons/reloads/reload_shell4.ogg'))
 GLOBAL_LIST_INIT(heavy_machine_gun_reload, list('sound/weapons/reloads/hmg_reload1.ogg','sound/weapons/reloads/hmg_reload2.ogg','sound/weapons/reloads/hmg_reload3.ogg'))
+GLOBAL_LIST_INIT(bodyfall_sound, list('packs/sierra-tweaks/sound/effects/bodyfall/bodyfall1.ogg','packs/sierra-tweaks/sound/effects/bodyfall/bodyfall2.ogg','packs/sierra-tweaks/sound/effects/bodyfall/bodyfall3.ogg','packs/sierra-tweaks/sound/effects/bodyfall/bodyfall4.ogg'))
+GLOBAL_LIST_INIT(bodyfall_skrell_sound, list('packs/sierra-tweaks/sound/effects/bodyfall/bodyfall_skrell1.ogg','packs/sierra-tweaks/sound/effects/bodyfall/bodyfall_skrell2.ogg','packs/sierra-tweaks/sound/effects/bodyfall/bodyfall_skrell3.ogg','packs/sierra-tweaks/sound/effects/bodyfall/bodyfall_skrell4.ogg'))
+GLOBAL_LIST_INIT(smash_sound,list('packs/infinity/sound/effects/gore/smash1.ogg','packs/infinity/sound/effects/gore/smash2.ogg','packs/infinity/sound/effects/gore/smash3.ogg','packs/infinity/sound/effects/gore/trauma1.ogg'))
 
 
 /proc/playsound(atom/source, soundin, vol as num, vary, extrarange as num, falloff, is_global, frequency, is_ambiance = 0)
@@ -231,6 +234,9 @@ var/global/const/FALLOFF_SOUNDS = 0.5
 			if ("shotgun_pump") soundin = pick(GLOB.shotgun_pump)
 			if ("shotgun_reload") soundin = pick(GLOB.shotgun_reload)
 			if ("heavy_machine_gun_reload") soundin = pick(GLOB.heavy_machine_gun_reload)
+			if ("bodyfall_sound") soundin = pick(GLOB.bodyfall_sound)
+			if ("bodyfall_skrell_sound") soundin = pick(GLOB.bodyfall_skrell_sound)
+			if ("smash_sound") soundin = pick(GLOB.smash_sound)
 
 	return soundin
 
