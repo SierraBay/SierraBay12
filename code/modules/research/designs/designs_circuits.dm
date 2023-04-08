@@ -859,6 +859,7 @@
 	build_path = /obj/item/stock_parts/circuitboard/tele_beacon
 	sort_string = "XAAAG"
 
+<<<<<<< ours
 /datum/design/circuit/bluespacedrive
 	name = "Naophoros-pattern bluespace puncturer"
 	id = "bluespacedrive"
@@ -866,6 +867,8 @@
 	build_path = /obj/item/stock_parts/circuitboard/bluespacedrive
 	sort_string = "XAAAH"
 
+=======
+>>>>>>> theirs
 /datum/design/circuit/shipsensors
 	name = "Broad-band sensor suite"
 	id = "shipsensors"
