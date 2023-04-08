@@ -15,7 +15,7 @@
 	matter = list(MATERIAL_STEEL = 90)
 	attack_verb = list("slammed", "whacked", "bashed", "thunked", "battered", "bludgeoned", "thrashed")
 
-	drop_sound = 'sound/items/drop/gascan.ogg'
+	drop_sound = "tank_drop_sound"
 	pickup_sound = 'packs/sierra-tweaks/sound/effects/extinguisher_pickup.ogg'
 
 	var/spray_particles = 3
