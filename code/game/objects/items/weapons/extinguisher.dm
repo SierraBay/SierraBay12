@@ -16,7 +16,7 @@
 	attack_verb = list("slammed", "whacked", "bashed", "thunked", "battered", "bludgeoned", "thrashed")
 
 	drop_sound = 'sound/items/drop/gascan.ogg'
-	pickup_sound = 'sound/items/pickup/gascan.ogg'
+	pickup_sound = 'packs/sierra-tweaks/sound/effects/extinguisher_pickup.ogg'
 
 	var/spray_particles = 3
 	var/spray_amount = 120	//units of liquid per spray - 120 -> same as splashing them with a bucket per spray
