@@ -91,9 +91,10 @@
 		var/NTID = txt[2]
 		var/obj/machinery/power/apc/REMOTE = terminal.get_remote_ID(NTID)
 		if (length(txt)==2)
+			var/obj/item/cell/BAT = REMOTE.get_cell()
 			. += "Outputting data about APC([NTID]):<hr>"
 			. += "Name:[copytext(REMOTE.name,2)]<br>"
-			. += "Batery:[REMOTE.get_cell() ? num2text(REMOTE.get_cell().percent())+"%" : "<font color = '#ff0000'>NONE</font>"]<br>"
+			. += "Batery:[BAT ? num2text(BAT.percent())+"%" : "<font color = '#ff0000'>NONE</font>"]<br>"
 			. += "Status:[REMOTE.locked ? "<font color = '#00ff00'>BLOCKED</font>" : "<font color = '#ff0000'>OPEN</font>"]<br><hr>"
 			return
 
@@ -134,7 +135,11 @@
 				else
 					return "Wrong parametr"
 			REMOTE.update()
+		else
 			return "ACCESS ERROR"
+
+	return
+
 
 
 // FIREALARM
