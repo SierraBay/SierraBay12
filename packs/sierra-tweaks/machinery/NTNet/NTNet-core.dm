@@ -32,7 +32,7 @@ GLOBAL_LIST_INIT(NTNet_machines, list())
 	get_new_ntnet_id("PC")
 
 
-/datum/terminal/proc/get_remote_ID(var/ID)
+/datum/terminal/proc/get_remote_ID(ID)
 	for(var/obj/machinery/R in SSmachines.machinery)
 		if(R.NTNet_id == ID)
 			return R
