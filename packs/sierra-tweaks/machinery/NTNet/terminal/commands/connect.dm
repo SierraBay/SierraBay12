@@ -132,6 +132,7 @@
 				else
 					return "Wrong parametr"
 			REMOTE.update()
+			return
 		else
 			return "ACCESS ERROR"
 
