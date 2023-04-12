@@ -42,9 +42,9 @@
 	description = "Proect-2880 Gagarin-Class Farfleet Reconnaissance Craft."
 	prefix = "mods/maps/"
 	suffixes = list("farfleet/farfleet-1.dmm", "farfleet/farfleet-2.dmm")
-	spawn_cost = 0.5
-	player_cost = 7
-	spawn_weight = 1
+	spawn_cost = 0
+	player_cost = 0
+	spawn_weight = 50
 	shuttles_to_initialise = list(/datum/shuttle/autodock/overmap/snz)
 
 	area_usage_test_exempted_areas = list(

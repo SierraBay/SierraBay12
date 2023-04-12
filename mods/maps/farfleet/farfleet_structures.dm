@@ -66,7 +66,7 @@
 	closet_appearance = /singleton/closet_appearance/secure_closet/farfleet/two
 	req_access = list(access_away_iccgn_droptroops)
 
-/obj/structure/closet/secure_closet/patrol/WillContain()
+/obj/structure/closet/secure_closet/farfleet/WillContain()
 	return list(
 		/obj/item/storage/belt/holster/security/tactical,
 		/obj/item/melee/telebaton,
@@ -89,7 +89,6 @@
 	name = "droptroops sergeant locker"
 	closet_appearance = /singleton/closet_appearance/secure_closet/farfleet/two
 	req_access = list(access_away_iccgn_sergeant)
-
 
 /obj/structure/closet/secure_closet/farfleet/sergeant/WillContain()
 	return list(
@@ -190,12 +189,12 @@
 		/obj/item/storage/backpack/satchel/leather/navy
 	)
 
-/obj/structure/closet/secure_closet/farfleet/fleet_cpt
+/obj/structure/closet/secure_closet/farfleet/css
 	name = "CSS cabinet"
 	closet_appearance = /singleton/closet_appearance/secure_closet/farfleet
 	req_access = list(access_away_iccgn, access_away_iccgn_captain)
 
-/obj/structure/closet/secure_closet/farfleet/fleet_cpt/WillContain()
+/obj/structure/closet/secure_closet/farfleet/css/WillContain()
 	return list(
 		/obj/item/melee/telebaton,
 		/obj/item/storage/firstaid/sleekstab,

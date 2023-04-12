@@ -12,7 +12,8 @@
 		/datum/job/submap/away_iccgn_farfleet/iccgn_captain,
 		/datum/job/submap/away_iccgn_farfleet/iccgn_sergeant,
 		/datum/job/submap/away_iccgn_farfleet/iccgn_medic,
-		/datum/job/submap/away_iccgn_farfleet/iccgn_gunner
+		/datum/job/submap/away_iccgn_farfleet/iccgn_gunner,
+		/datum/job/submap/away_iccgn_farfleet/iccgn_pawn
 	)
 	call_webhook = WEBHOOK_SUBMAP_LOADED_ICCGN
 
@@ -33,13 +34,13 @@
 	name = "Pioneer Corps Captain"
 
 /obj/effect/submap_landmark/spawnpoint/away_iccgn_farfleet/iccgn_pawn
-	name = "Eighth Department's Consultant"
+	name = "CSS Consultant"
 
 /obj/effect/submap_landmark/spawnpoint/away_iccgn_farfleet/medic
 	name = "Pioneer Corpsman"
 
 /obj/effect/submap_landmark/spawnpoint/away_iccgn_farfleet/gunner
-	name = "Pioneer Technican"
+	name = "Senior Technician"
 
 /* ACCESS
  * =======
@@ -88,8 +89,10 @@
 	access = list(access_away_iccgn, access_away_iccgn_droptroops, access_away_iccgn_sergeant, access_away_iccgn_captain, access_engine_equip)
 	extra_details = list("goldstripe")
 
-/obj/item/card/id/awayiccgn/fleet/captain/iccgn_pawn
+/obj/item/card/id/awayiccgn/fleet/iccgn_pawn
+	access = list(access_away_iccgn, access_away_iccgn_droptroops, access_away_iccgn_sergeant, access_away_iccgn_captain, access_engine_equip)
 	color = COLOR_SURGERY_BLUE
+	extra_details = list("goldstripe")
 
 /* JOBS
  * =======
@@ -99,6 +102,10 @@
 	title = "ICCG Droptrooper"
 	total_positions = 2
 	outfit_type = /singleton/hierarchy/outfit/job/iccgn/iccgn_droptroops
+	branch = /datum/mil_branch/pioneer
+	rank = /datum/mil_rank/pioneer/or3
+	allowed_branches = list(/datum/mil_branch/pioneer)
+	allowed_ranks = list(/datum/mil_rank/pioneer/or3)
 	supervisors = "sergeant"
 	loadout_allowed = TRUE
 	is_semi_antagonist = TRUE
@@ -110,28 +117,23 @@
 	 Исключением являются те ситуации, когда вы атакованы противником, терпите бедствие или на вашем судне аварийная ситуация."
 	required_language = LANGUAGE_HUMAN_RUSSIAN
 	whitelisted_species = list(SPECIES_HUMAN, SPECIES_IPC)
-	minimum_character_age = list(SPECIES_HUMAN = 20)
 	min_skill = list(SKILL_COMBAT  = SKILL_BASIC,
 					 SKILL_WEAPONS = SKILL_BASIC,
 					 SKILL_HAULING = SKILL_BASIC,
 					 SKILL_MEDICAL = SKILL_BASIC,
 					 SKILL_EVA = SKILL_BASIC)
 
-	allowed_branches = list(/datum/mil_branch/iccgn)
-	allowed_ranks = list(
-		/datum/mil_rank/pioneer/or3
-	)
-	branch = null
-	rank = null
-
 	access = list(access_away_iccgn, access_away_iccgn_droptroops, access_engine_equip)
-	//required_role = list("Sub-Lieutenant", "Ensign")
 
 /datum/job/submap/away_iccgn_farfleet/iccgn_sergeant
 	title = "ICCG Droptrooper Sergeant"
 	total_positions = 1
 	outfit_type = /singleton/hierarchy/outfit/job/iccgn/iccgn_sergeant
 	supervisors = "Recon captain, Command of the Pioneer Corps , ICCGN"
+	branch = /datum/mil_branch/pioneer
+	rank = /datum/mil_rank/pioneer/or5
+	allowed_branches = list(/datum/mil_branch/pioneer)
+	allowed_ranks = list(/datum/mil_rank/pioneer/or5)
 	loadout_allowed = TRUE
 	is_semi_antagonist = TRUE
 	info = "Вы просыпаетесь и выходите из криосна, ощущая прохладный воздух на своём лице, а также лёгкую тошноту. \
@@ -142,8 +144,6 @@
 	 Исключением являются те ситуации, когда вы атакованы противником, терпите бедствие или на вашем судне аварийная ситуация."
 	required_language = LANGUAGE_HUMAN_RUSSIAN
 	whitelisted_species = list(SPECIES_HUMAN)
-	minimum_character_age = list(SPECIES_HUMAN = 25)
-	is_semi_antagonist = TRUE
 	min_skill = list(SKILL_COMBAT  = SKILL_BASIC,
 					 SKILL_WEAPONS = SKILL_BASIC,
 					 SKILL_HAULING = SKILL_BASIC,
@@ -151,9 +151,6 @@
 					 SKILL_PILOT = SKILL_ADEPT,
 					 SKILL_EVA = SKILL_BASIC)
 
-	allowed_ranks = list(
-		/datum/mil_rank/pioneer/or5,
-	)
 
 	access = list(access_away_iccgn, access_away_iccgn_droptroops, access_away_iccgn_sergeant, access_engine_equip)
 
@@ -161,8 +158,13 @@
 	title = "Pioneer Corps Captain"
 	total_positions = 1
 	outfit_type = /singleton/hierarchy/outfit/job/iccgn/iccgn_captain
+	branch = /datum/mil_branch/pioneer
+	rank = /datum/mil_rank/pioneer/of5
+	allowed_branches = list(/datum/mil_branch/pioneer)
+	allowed_ranks = list(/datum/mil_rank/pioneer/of5)
 	supervisors = "command of the Pioneer Corps , ICCGN"
 	loadout_allowed = TRUE
+	is_semi_antagonist = TRUE
 	info = "Вы просыпаетесь и выходите из криосна, ощущая прохладный воздух на своём лице, а также лёгкую тошноту. \
 	Будучи одним из членов экипажа разведывательного корабля Пионерского Корпуса ГКК, вы - капитан разведывательного корабля. \
 	По данным бортового компьютера, в данном регионе могут потенциально находиться цели вашей разведывательной экседиции.\
@@ -171,8 +173,6 @@
 	 Исключением являются те ситуации, когда вы атакованы противником, терпите бедствие или на вашем судне аварийная ситуация."
 	required_language = LANGUAGE_HUMAN_RUSSIAN
 	whitelisted_species = list(SPECIES_HUMAN)
-	minimum_character_age = list(SPECIES_HUMAN = 35)
-	is_semi_antagonist = TRUE
 	min_skill = list(SKILL_COMBAT  = SKILL_BASIC,
 					 SKILL_WEAPONS = SKILL_BASIC,
 					 SKILL_HAULING = SKILL_BASIC,
@@ -180,18 +180,20 @@
 					 SKILL_PILOT = SKILL_ADEPT,
 					 SKILL_EVA = SKILL_BASIC)
 
-	allowed_ranks = list(
-		/datum/mil_rank/pioneer/of5,
-		/datum/mil_rank/pioneer/of6
-	)
-
 	access = list(access_away_iccgn, access_away_iccgn_droptroops, access_away_iccgn_sergeant, access_away_iccgn_captain, access_engine_equip)
-	//required_role = null
+
 
 /datum/job/submap/away_iccgn_farfleet/iccgn_medic
 	title = "Pioneer Corpsman"
 	total_positions = 1
 	outfit_type = /singleton/hierarchy/outfit/job/iccgn/iccgn_medic
+	branch = /datum/mil_branch/pioneer
+	rank = /datum/mil_rank/pioneer/of5
+	allowed_branches = list(/datum/mil_branch/pioneer)
+	allowed_ranks = list(
+		/datum/mil_rank/pioneer/of1,
+		/datum/mil_rank/pioneer/of3
+	)
 	loadout_allowed = TRUE
 	info = "Вы просыпаетесь и выходите из криосна, ощущая прохладный воздух на своём лице, а также лёгкую тошноту. \
 	Являясь одним из членов экипажа разведывательного корабля Пионерского Корпуса ГКК, ваша задача состоит в медицинской поддержке экипажа. \
@@ -200,7 +202,6 @@
 	 Исключением являются те ситуации, когда вы атакованы противником, терпите бедствие или на вашем судне аварийная ситуация."
 	required_language = LANGUAGE_HUMAN_RUSSIAN
 	whitelisted_species = list(SPECIES_HUMAN, SPECIES_IPC)
-	minimum_character_age = list(SPECIES_HUMAN = 25)
 	is_semi_antagonist = TRUE
 	min_skill = list(SKILL_COMBAT  = SKILL_BASIC,
 					 SKILL_WEAPONS = SKILL_BASIC,
@@ -210,10 +211,7 @@
 					 SKILL_CHEMISTRY = SKILL_BASIC,
 					 SKILL_EVA = SKILL_BASIC)
 
-	allowed_ranks = list(
-		/datum/mil_rank/pioneer/of1,
-		/datum/mil_rank/pioneer/of3
-	)
+
 
 	access = list(access_away_iccgn, access_engine_equip)
 
@@ -221,6 +219,10 @@
 	title = "Senior Technician"
 	total_positions = 1
 	outfit_type = /singleton/hierarchy/outfit/job/iccgn/iccgn_gunner
+	branch = /datum/mil_branch/pioneer
+	rank = /datum/mil_rank/pioneer/of3
+	allowed_branches = list(/datum/mil_branch/pioneer)
+	allowed_ranks = list(/datum/mil_rank/pioneer/of3)
 	supervisors = "captain"
 	loadout_allowed = TRUE
 	info = "Вы просыпаетесь и выходите из криосна, ощущая прохладный воздух на своём лице, а также лёгкую тошноту. \
@@ -230,7 +232,6 @@
 	 Исключением являются те ситуации, когда вы атакованы противником,  терпите бедствие или на вашем судне аварийная ситуация."
 	required_language = LANGUAGE_HUMAN_RUSSIAN
 	whitelisted_species = list(SPECIES_HUMAN, SPECIES_IPC)
-	minimum_character_age = list(SPECIES_HUMAN = 25)
 	is_semi_antagonist = TRUE
 	min_skill = list(SKILL_COMBAT  = SKILL_BASIC,
 					 SKILL_WEAPONS = SKILL_BASIC,
@@ -244,16 +245,16 @@
 					 SKILL_ENGINES = SKILL_ADEPT,
 					 SKILL_DEVICES = SKILL_BASIC)
 
-	allowed_ranks = list(
-		/datum/mil_rank/pioneer/of3
-	)
-
 	access = list(access_away_iccgn, access_engine_equip)
 
 /datum/job/submap/away_iccgn_farfleet/iccgn_pawn
-	title = "Eighth Department's Consultant"
+	title = "CSS Consultant"
 	total_positions = 1
 	outfit_type = /singleton/hierarchy/outfit/job/iccgn/iccgn_pawn
+	branch = /datum/mil_branch/css
+	rank = /datum/mil_rank/css/fa7
+	allowed_branches = list(/datum/mil_branch/css)
+	allowed_ranks = list(/datum/mil_rank/css/fa7)
 	supervisors = "chief of 'P' Department, Confederate Security Service"
 	loadout_allowed = TRUE
 	info = "Вы просыпаетесь и выходите из криосна, ощущая прохладный воздух на своём лице, а также лёгкую тошноту. \
@@ -265,7 +266,6 @@
 	 Исключением являются те ситуации, когда вы атакованы противником, терпите бедствие или на вашем судне аварийная ситуация."
 	required_language = LANGUAGE_HUMAN_RUSSIAN
 	whitelisted_species = list(SPECIES_HUMAN)
-	minimum_character_age = list(SPECIES_HUMAN = 25)
 	is_semi_antagonist = TRUE
 	min_skill = list(SKILL_BUREAUCRACY = SKILL_ADEPT,
 					 SKILL_COMBAT  = SKILL_BASIC,
@@ -275,12 +275,7 @@
 					 SKILL_PILOT = SKILL_ADEPT,
 					 SKILL_EVA = SKILL_BASIC)
 
-	allowed_ranks = list(
-		/datum/mil_rank/css/fa7
-	)
-
 	access = list(access_away_iccgn, access_away_iccgn_droptroops, access_away_iccgn_sergeant, access_away_iccgn_captain, access_engine_equip)
-	//required_role = null
 
 /datum/job/iccgn_pawn/equip(mob/living/carbon/human/H)
 	psi_faculties = list("[PSI_COERCION]" = PSI_RANK_MASTER)
@@ -352,7 +347,7 @@
 	head = /obj/item/clothing/head/iccgn/service
 	uniform =  /obj/item/clothing/under/suit_jacket/charcoal
 	suit = /obj/item/clothing/suit/iccgn/dress_officer
-	id_types = list(/obj/item/card/id/awayiccgn/fleet/captain)
+	id_types = list(/obj/item/card/id/awayiccgn/fleet/iccgn_pawn)
 	shoes =    /obj/item/clothing/shoes/dress
 	gloves = /obj/item/clothing/gloves/iccgn/duty
 	holster =  /obj/item/clothing/accessory/storage/holster/armpit
