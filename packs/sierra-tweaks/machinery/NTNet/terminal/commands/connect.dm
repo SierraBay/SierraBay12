@@ -1,11 +1,12 @@
 /datum/terminal_command/connect
 	name = "connect"
-	man_entry = list("Format: connect \[REMOTE id].",
-					"Standard format show you data about REMOTE, it needn't access of REMOTE.",
-					"Open format: connect \[REMOTE id] -open. To close REMOTE, replace '-open' by '-close'. Need airlock accessible",
-					"Locking (bolting) format: connect \[REMOTE id] -lock. To unlock use -unlock. Need airlock access.",
-					"In red and orange code you can override airlock access by using override key. Like this: 'connect y421 -open -override Yota11'"
-					)
+	man_entry = list(
+		"Format: connect \[REMOTE id].",
+		"Standard format show you data about REMOTE, it needn't access of REMOTE.",
+		"Open format: connect \[REMOTE id] -open. To close REMOTE, replace '-open' by '-close'. Need airlock accessible",
+		"Locking (bolting) format: connect \[REMOTE id] -lock. To unlock use -unlock. Need airlock access.",
+		"In red and orange code you can override airlock access by using override key. Like this: 'connect y421 -open -override Yota11'"
+	)
 	pattern = "^connect"
 	skill_needed = SKILL_ADEPT
 
