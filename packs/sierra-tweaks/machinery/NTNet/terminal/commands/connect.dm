@@ -15,10 +15,7 @@
 
 	if ((length(txt)==1) || ((length(txt)==2) && (length(txt[2])!=5)))
 		return "[name]: syntax error. Use 'man [name]'"
-	/*
-	if ((length(txt)==2) && (length(txt[2])!=5))
-		return "[name]: syntax error. Use 'man [name]'"
-	*/
+
 // AIRLOCK
 	if (copytext(txt[2],1,3) == "AL")
 		var/NTID = txt[2]
@@ -137,9 +134,6 @@
 			REMOTE.update()
 		else
 			return "ACCESS ERROR"
-
-	return
-
 
 
 // FIREALARM
