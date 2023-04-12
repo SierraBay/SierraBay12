@@ -20,9 +20,8 @@
 #include "mob\stat.dm"
 #include "mob\emotes.dm"
 
-//Machinery
+// NTNet
 #include "machinery\NTNet\NTNet-core.dm"
-#include "machinery\NTNet\terminal\terminal-core.dm"
 
 // Objects
 #include "objects\buckling.dm"
