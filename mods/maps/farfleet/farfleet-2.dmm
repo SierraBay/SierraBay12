@@ -6,6 +6,7 @@
 /turf/simulated/floor/reinforced/airless,
 /area/space)
 "an" = (
+/obj/effect/paint/black,
 /turf/simulated/wall/r_wall,
 /area/ship/farfleet/command/snz_hangar)
 "aF" = (
@@ -50,6 +51,7 @@
 	pixel_y = 7;
 	req_access = list("ACCESS_ICCGN")
 	},
+/obj/effect/overmap/visitable/ship/landable/snz,
 /turf/simulated/floor/plating,
 /area/ship/snz)
 "aX" = (
@@ -84,7 +86,8 @@
 /area/ship/snz)
 "bz" = (
 /obj/machinery/door/firedoor,
-/turf/simulated/floor/tiled,
+/obj/effect/floor_decal/industrial/hatch/yellow,
+/turf/simulated/floor/tiled/monotile,
 /area/ship/farfleet/crew/hallway/upper)
 "bD" = (
 /obj/machinery/atmospherics/pipe/simple/visible/fuel{
@@ -100,6 +103,7 @@
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/crew/kitchen)
 "bO" = (
+/obj/effect/paint/black,
 /turf/simulated/wall,
 /area/ship/farfleet/crew/hydroponics)
 "bT" = (
@@ -109,6 +113,10 @@
 /obj/effect/floor_decal/industrial/outline/red,
 /obj/structure/closet/secure_closet/guncabinet/farfleet/assault,
 /turf/simulated/floor/tiled/dark/monotile,
+/area/ship/farfleet/barracks/armory)
+"ce" = (
+/obj/effect/paint/silver,
+/turf/simulated/wall/r_wall,
 /area/ship/farfleet/barracks/armory)
 "cg" = (
 /obj/structure/janitorialcart,
@@ -136,15 +144,21 @@
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/crew/brig/css)
 "cK" = (
+/obj/effect/paint/black,
 /turf/simulated/wall/r_wall,
 /area/ship/farfleet/crew/hallway/upper)
 "cO" = (
+/obj/effect/paint/silver,
 /turf/simulated/wall/r_wall,
 /area/ship/farfleet/crew/canteen)
 "cW" = (
 /obj/machinery/psi_meter,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/crew/brig/css)
+"dg" = (
+/obj/effect/paint/dark_gunmetal,
+/turf/simulated/wall/r_wall,
+/area/ship/farfleet/command/hangar_canisters)
 "ds" = (
 /obj/item/device/flashlight/lantern,
 /obj/item/device/flashlight/lantern,
@@ -157,9 +171,15 @@
 /area/ship/farfleet/maintenance/storage)
 "dt" = (
 /obj/machinery/atmospherics/pipe/simple/hidden,
+/obj/structure/cable/green{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/snz)
 "dy" = (
+/obj/effect/paint/ocean,
 /turf/simulated/wall/r_wall,
 /area/ship/farfleet/crew/freezer)
 "dM" = (
@@ -182,8 +202,19 @@
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 9
 	},
+/obj/effect/paint/ocean,
 /turf/simulated/wall/r_titanium,
 /area/ship/snz)
+"ed" = (
+/obj/effect/floor_decal/industrial/hatch/yellow,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/security{
+	name = "Security Wing";
+	req_access = newlist();
+	secured_wires = 1
+	},
+/turf/simulated/floor/tiled/dark/monotile,
+/area/ship/farfleet/crew/brig)
 "ef" = (
 /obj/machinery/gibber,
 /turf/simulated/floor/tiled/freezer,
@@ -202,13 +233,14 @@
 /area/ship/farfleet/crew/freezer)
 "ev" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	d2 = 4;
+	icon_state = "0-4"
 	},
-/turf/simulated/floor/tiled/steel_grid,
-/area/ship/snz)
+/obj/machinery/pointdefense{
+	initial_id_tag = "farfleet_pd"
+	},
+/turf/simulated/floor/reinforced/airless,
+/area/space)
 "ey" = (
 /obj/effect/floor_decal/corner/grey_alt/diagonal{
 	dir = 8
@@ -216,6 +248,12 @@
 /obj/structure/table/marble,
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/crew/kitchen)
+"ez" = (
+/obj/effect/floor_decal/industrial/hatch/yellow,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/multi_tile/terran,
+/turf/simulated/floor/tiled/techmaint,
+/area/ship/farfleet/maintenance/anomaly)
 "eB" = (
 /obj/machinery/atmospherics/unary/vent_pump/high_volume/external_air{
 	id_tag = "snz_shuttle_pump"
@@ -227,6 +265,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/ship/snz)
+"eC" = (
+/obj/effect/paint/ocean,
+/turf/simulated/wall/r_wall,
+/area/ship/farfleet/barracks/armory)
 "eD" = (
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hydroponics)
@@ -247,6 +289,7 @@
 /turf/simulated/floor/carpet/purple,
 /area/ship/farfleet/crew/brig/css)
 "fi" = (
+/obj/effect/paint/ocean,
 /turf/simulated/wall/r_wall,
 /area/ship/farfleet/command/hangar_canisters)
 "fr" = (
@@ -296,6 +339,11 @@
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 1
 	},
+/obj/structure/cable/green{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/snz)
 "gJ" = (
@@ -307,6 +355,7 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/farfleet/command/hangar_canisters)
 "gR" = (
+/obj/effect/paint/silver,
 /turf/simulated/wall/r_wall,
 /area/ship/farfleet/crew/kitchen)
 "hh" = (
@@ -363,8 +412,22 @@
 	pixel_y = 24;
 	req_access = list("ACCESS_CAVALRY")
 	},
+/obj/effect/submap_landmark/spawnpoint/away_iccgn_farfleet/gunner,
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/crew/cryo)
+"hL" = (
+/obj/effect/paint/ocean,
+/turf/simulated/wall/r_wall,
+/area/ship/farfleet/crew/toilet)
+"hX" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
+	},
+/turf/simulated/floor/tiled/techmaint,
+/area/ship/farfleet/maintenance/anomaly)
 "hY" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
@@ -378,12 +441,6 @@
 /obj/machinery/computer/ship/helm{
 	dir = 4
 	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
-	},
 /turf/simulated/floor/tiled/steel_grid,
 /area/ship/snz)
 "ig" = (
@@ -393,6 +450,12 @@
 /turf/simulated/floor/tiled/steel_grid,
 /area/ship/snz)
 "ih" = (
+/obj/effect/floor_decal/industrial/hatch/yellow,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/glass/security{
+	id_tag = "prisonentry";
+	name = "Cell Two"
+	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/crew/brig)
 "il" = (
@@ -401,20 +464,18 @@
 	},
 /turf/simulated/floor/tiled/freezer,
 /area/ship/farfleet/crew/toilet)
-"iu" = (
-/obj/structure/bed/chair/shuttle/blue{
-	dir = 8;
-	icon_state = "shuttle_chair_preview"
-	},
-/obj/effect/floor_decal/industrial/outline,
-/obj/structure/cable{
-	d1 = 4;
+"im" = (
+/obj/structure/cable/yellow{
+	d1 = 1;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "1-8"
 	},
-/turf/simulated/floor/tiled/steel_grid,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/snz)
+"iu" = (
+/obj/effect/paint/silver,
+/turf/simulated/wall/r_wall,
+/area/ship/farfleet/maintenance/anomaly)
 "iv" = (
 /obj/structure/closet/secure_closet/farfleet/fleet_cpt,
 /turf/simulated/floor/tiled/dark/monotile,
@@ -444,6 +505,15 @@
 /obj/item/reagent_containers/chem_disp_cartridge/silicon,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/ship/farfleet/maintenance/storage)
+"iU" = (
+/obj/effect/catwalk_plated,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/plating,
+/area/ship/farfleet/command/snz_hangar)
 "je" = (
 /obj/machinery/atmospherics/pipe/manifold/visible/fuel{
 	dir = 1
@@ -457,6 +527,10 @@
 /obj/effect/floor_decal/industrial/warning/full,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hallway/upper)
+"jx" = (
+/obj/effect/paint/black,
+/turf/simulated/wall/r_wall,
+/area/ship/farfleet/crew/kitchen)
 "jE" = (
 /obj/structure/hygiene/sink{
 	dir = 1;
@@ -477,6 +551,11 @@
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 4
 	},
+/obj/structure/cable/green{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/tiled/steel_grid,
 /area/ship/snz)
 "jK" = (
@@ -492,6 +571,10 @@
 /obj/effect/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/ship/farfleet/maintenance/storage)
+"kg" = (
+/obj/effect/paint/ocean,
+/turf/simulated/wall/r_wall,
+/area/ship/farfleet/crew/canteen)
 "kl" = (
 /obj/effect/wallframe_spawn/reinforced,
 /turf/simulated/floor/plating,
@@ -502,6 +585,7 @@
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/barracks/armory)
 "kH" = (
+/obj/effect/paint/black,
 /turf/simulated/wall/r_wall,
 /area/ship/farfleet/barracks/armory)
 "kI" = (
@@ -522,13 +606,26 @@
 	},
 /obj/structure/catwalk,
 /obj/structure/lattice,
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
 /turf/simulated/open,
 /area/ship/farfleet/command/snz_hangar)
 "kJ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/cable/green{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/snz)
+"kL" = (
+/obj/effect/paint/black,
+/turf/simulated/wall/r_wall,
+/area/ship/farfleet/crew/freezer)
 "kM" = (
 /obj/effect/floor_decal/corner/b_green/diagonal{
 	dir = 8
@@ -563,6 +660,10 @@
 /obj/effect/floor_decal/industrial/outline,
 /turf/simulated/floor/tiled/steel_grid,
 /area/ship/snz)
+"lC" = (
+/obj/effect/paint/ocean,
+/turf/simulated/wall/r_wall,
+/area/ship/farfleet/maintenance/anomaly)
 "lL" = (
 /obj/machinery/atmospherics/pipe/simple/visible/fuel,
 /obj/structure/fuel_port{
@@ -592,6 +693,7 @@
 /turf/simulated/floor/tiled/white,
 /area/ship/snz)
 "md" = (
+/obj/effect/paint/black,
 /turf/simulated/wall,
 /area/ship/farfleet/crew/kitchen)
 "ns" = (
@@ -626,6 +728,18 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/crew/kitchen)
+"nR" = (
+/obj/machinery/atmospherics/pipe/simple/visible/fuel,
+/obj/structure/fuel_port{
+	pixel_x = 32
+	},
+/obj/structure/cable/green{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/tiled/techfloor/grid,
+/area/ship/snz)
 "oq" = (
 /obj/machinery/fabricator/hacked{
 	desc = "Your typical Special Forces Autolathe.";
@@ -657,6 +771,29 @@
 /obj/machinery/jukebox/old,
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/crew/canteen)
+"oV" = (
+/obj/effect/floor_decal/industrial/hatch/yellow,
+/obj/machinery/door/firedoor,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/tiled/techmaint,
+/area/ship/farfleet/maintenance/anomaly)
+"oZ" = (
+/obj/structure/bed/chair/shuttle/blue{
+	dir = 8;
+	icon_state = "shuttle_chair_preview"
+	},
+/obj/effect/floor_decal/industrial/outline,
+/obj/structure/cable/green{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/tiled/steel_grid,
+/area/ship/snz)
 "pf" = (
 /obj/effect/floor_decal/industrial/warning{
 	dir = 8;
@@ -665,8 +802,19 @@
 /obj/machinery/computer/cryopod{
 	pixel_y = 32
 	},
+/obj/effect/submap_landmark/spawnpoint/away_iccgn_farfleet/medic,
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/crew/cryo)
+"pg" = (
+/obj/effect/catwalk_plated,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8";
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/ship/farfleet/command/snz_hangar)
 "po" = (
 /obj/machinery/porta_turret{
 	req_access = list("ACCESS_ICCGN")
@@ -695,18 +843,30 @@
 /area/ship/farfleet/crew/toilet)
 "pL" = (
 /obj/effect/wallframe_spawn/reinforced/titanium,
-/obj/structure/cable,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+/obj/structure/cable/green{
+	d2 = 4;
+	icon_state = "0-4"
 	},
+/obj/structure/cable/green{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/structure/cable/green{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/effect/paint/dark_gunmetal,
 /turf/simulated/floor/plating,
 /area/ship/snz)
 "pN" = (
 /obj/machinery/pointdefense{
 	initial_id_tag = "snz_pd"
+	},
+/obj/structure/cable/green{
+	d2 = 8;
+	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
 /area/ship/snz)
@@ -720,12 +880,32 @@
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 8
 	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/steel_grid,
 /area/ship/snz)
 "qi" = (
 /obj/machinery/power/terminal{
 	dir = 1;
 	icon_state = "term"
+	},
+/obj/structure/cable/yellow{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/snz)
@@ -734,6 +914,8 @@
 	req_access = list("ACCESS_ICCGN");
 	name = "Armory"
 	},
+/obj/machinery/door/firedoor,
+/obj/effect/floor_decal/industrial/hatch/yellow,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/barracks/armory)
 "qs" = (
@@ -775,12 +957,44 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/ship/snz)
+"qJ" = (
+/obj/machinery/door/airlock,
+/obj/machinery/door/firedoor,
+/obj/effect/floor_decal/industrial/hatch/yellow,
+/turf/simulated/floor/tiled/freezer,
+/area/ship/farfleet/crew/freezer)
+"qX" = (
+/obj/machinery/power/smes/buildable/preset/farfleet/shuttle,
+/obj/structure/cable/green{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/tiled/techfloor/grid,
+/area/ship/snz)
+"rb" = (
+/obj/effect/submap_landmark/spawnpoint/away_iccgn_farfleet,
+/turf/simulated/floor/tiled/dark,
+/area/ship/farfleet/barracks)
 "rm" = (
+/obj/effect/floor_decal/industrial/hatch/yellow,
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/barracks/armory)
+"rz" = (
+/obj/effect/paint/dark_gunmetal,
+/turf/simulated/wall/r_wall,
+/area/ship/farfleet/crew/brig)
 "rD" = (
 /obj/machinery/computer/ship/engines{
 	dir = 1
+	},
+/turf/simulated/floor/tiled/steel_grid,
+/area/ship/snz)
+"rH" = (
+/obj/structure/cable/green{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/tiled/steel_grid,
 /area/ship/snz)
@@ -799,9 +1013,13 @@
 	icon_state = "map-scrubbers";
 	dir = 1
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/snz)
 "rS" = (
+/obj/effect/paint/black,
 /turf/simulated/wall,
 /area/ship/farfleet/crew/toilet)
 "sa" = (
@@ -812,10 +1030,17 @@
 /turf/simulated/floor/tiled/techmaint,
 /area/ship/farfleet/maintenance/anomaly)
 "st" = (
+/obj/effect/paint/black,
 /turf/simulated/wall/r_wall,
 /area/ship/farfleet/crew/brig)
 "sx" = (
 /obj/machinery/atmospherics/pipe/manifold/visible/fuel,
+/obj/structure/cable/green{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/effect/paint/red,
 /turf/simulated/wall/r_titanium,
 /area/ship/snz)
 "sz" = (
@@ -828,6 +1053,10 @@
 	},
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hydroponics)
+"sY" = (
+/obj/effect/paint/dark_gunmetal,
+/turf/simulated/wall/r_wall,
+/area/ship/farfleet/crew/toilet)
 "tc" = (
 /obj/item/device/lightreplacer,
 /obj/item/storage/box/lights/mixed,
@@ -853,7 +1082,21 @@
 	dir = 1;
 	id_tag = "snz_shuttle_pump_out_internal"
 	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/plating,
+/area/ship/snz)
+"tC" = (
+/obj/structure/cable/green{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/effect/paint/red,
+/turf/simulated/wall/r_titanium,
 /area/ship/snz)
 "tN" = (
 /obj/machinery/atmospherics/pipe/simple/visible/cyan{
@@ -869,13 +1112,14 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/farfleet/command/hangar_canisters)
 "uf" = (
+/obj/effect/paint/black,
 /turf/simulated/wall/r_wall,
 /area/ship/farfleet/crew/cryo)
 "ui" = (
-/obj/structure/cable,
 /obj/machinery/pointdefense{
 	initial_id_tag = "snz_pd"
 	},
+/obj/structure/cable/green,
 /turf/simulated/floor/plating,
 /area/ship/snz)
 "uo" = (
@@ -902,6 +1146,12 @@
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/snz)
+"vp" = (
+/obj/effect/floor_decal/industrial/hatch/yellow,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/multi_tile/glass/terran,
+/turf/simulated/floor/tiled/dark/monotile,
+/area/ship/farfleet/barracks)
 "vz" = (
 /obj/effect/floor_decal/industrial/outline/red,
 /obj/structure/closet/secure_closet/guncabinet/farfleet/antitank,
@@ -916,7 +1166,19 @@
 	id_tag = "snz_shuttle_inner";
 	frequency = 1380
 	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/plating,
+/area/ship/snz)
+"vV" = (
+/obj/effect/floor_decal/industrial/outline,
+/obj/machinery/pointdefense_control{
+	initial_id_tag = "snz_pd"
+	},
+/turf/simulated/floor/tiled/steel_grid,
 /area/ship/snz)
 "wd" = (
 /obj/machinery/smartfridge/foods,
@@ -959,6 +1221,8 @@
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/barracks)
 "wJ" = (
+/obj/effect/floor_decal/industrial/hatch/yellow,
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/barracks)
 "wK" = (
@@ -966,6 +1230,10 @@
 /obj/effect/floor_decal/industrial/outline,
 /turf/simulated/floor/tiled/techmaint,
 /area/ship/farfleet/maintenance/anomaly)
+"wZ" = (
+/obj/effect/paint/silver,
+/turf/simulated/wall/r_wall,
+/area/ship/farfleet/crew/freezer)
 "xb" = (
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/crew/brig/css)
@@ -976,6 +1244,7 @@
 /turf/simulated/floor/plating,
 /area/ship/snz)
 "xi" = (
+/obj/effect/paint/dark_gunmetal,
 /turf/simulated/wall/r_wall,
 /area/ship/farfleet/crew/hydroponics)
 "xk" = (
@@ -1014,8 +1283,22 @@
 	icon_state = "map_vent_out";
 	dir = 1
 	},
+/obj/structure/cable/green{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/snz)
+"xO" = (
+/obj/effect/catwalk_plated,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/ship/farfleet/command/snz_hangar)
 "xR" = (
 /obj/effect/landmark/map_data{
 	height = 2
@@ -1026,6 +1309,15 @@
 /obj/structure/table/steel_reinforced,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/farfleet/command/hangar_canisters)
+"yp" = (
+/obj/effect/floor_decal/corner/b_green/diagonal{
+	dir = 8
+	},
+/obj/machinery/door/firedoor,
+/obj/effect/floor_decal/industrial/hatch/yellow,
+/obj/machinery/door/airlock/multi_tile/glass/terran,
+/turf/simulated/floor/tiled/white,
+/area/ship/farfleet/crew/canteen)
 "yQ" = (
 /obj/machinery/atmospherics/pipe/simple/visible/fuel{
 	dir = 9
@@ -1034,11 +1326,20 @@
 /area/ship/farfleet/command/hangar_canisters)
 "yX" = (
 /obj/effect/floor_decal/industrial/outline/yellow,
-/obj/structure/cable{
+/obj/structure/cable/green{
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/structure/cable/green{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/structure/cable/green{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/tiled/steel_grid,
 /area/ship/snz)
@@ -1052,15 +1353,42 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/snz)
 "zz" = (
+/obj/effect/paint/black,
 /turf/simulated/wall/r_wall,
 /area/ship/farfleet/crew/brig/css)
+"zB" = (
+/obj/structure/cable/green{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/techfloor/grid,
+/area/ship/snz)
 "zR" = (
+/obj/effect/paint/black,
 /turf/simulated/wall/r_wall,
 /area/ship/farfleet/maintenance/anomaly)
 "zS" = (
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 10;
 	icon_state = "intact"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/snz)
@@ -1077,16 +1405,17 @@
 /turf/simulated/floor/tiled/steel_ridged,
 /area/ship/farfleet/maintenance/storage)
 "zW" = (
-/obj/structure/cable{
-	icon_state = "0-2";
-	d2 = 2
-	},
 /obj/machinery/pointdefense{
 	initial_id_tag = "snz_pd"
+	},
+/obj/structure/cable/green{
+	d2 = 2;
+	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
 /area/ship/snz)
 "Ab" = (
+/obj/effect/paint/ocean,
 /turf/simulated/wall/r_wall,
 /area/ship/farfleet/barracks)
 "Ac" = (
@@ -1096,6 +1425,11 @@
 /obj/structure/table/standard,
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/crew/canteen)
+"Ah" = (
+/obj/effect/floor_decal/industrial/hatch/yellow,
+/obj/machinery/door/firedoor,
+/turf/simulated/floor/tiled/steel_ridged,
+/area/ship/farfleet/maintenance/storage)
 "Al" = (
 /obj/structure/hygiene/shower{
 	dir = 4
@@ -1125,9 +1459,27 @@
 /obj/effect/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/tiled/monotile,
 /area/ship/farfleet/crew/hydroponics)
+"AW" = (
+/obj/structure/cable/green{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/tiled/techfloor/grid,
+/area/ship/snz)
 "AY" = (
+/obj/effect/paint/ocean,
 /turf/simulated/wall/r_titanium,
 /area/ship/snz)
+"Bh" = (
+/obj/effect/paint/blue,
+/turf/simulated/wall/r_wall,
+/area/ship/farfleet/command/snz_hangar)
 "Bl" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 1
@@ -1135,6 +1487,7 @@
 /turf/simulated/floor/tiled/white,
 /area/ship/snz)
 "Bt" = (
+/obj/effect/paint/black,
 /turf/simulated/wall,
 /area/ship/farfleet/crew/freezer)
 "BA" = (
@@ -1144,12 +1497,20 @@
 /obj/structure/bed/chair,
 /turf/simulated/floor/carpet/purple,
 /area/ship/farfleet/crew/brig/css)
+"Cs" = (
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/tiled/techmaint,
+/area/ship/farfleet/maintenance/anomaly)
 "CI" = (
 /obj/effect/floor_decal/industrial/warning{
 	dir = 8;
 	icon_state = "warning"
 	},
 /obj/machinery/atmospherics/unary/vent_pump/on,
+/obj/effect/submap_landmark/spawnpoint/away_iccgn_farfleet/captain,
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/crew/cryo)
 "CW" = (
@@ -1182,6 +1543,30 @@
 /area/ship/snz)
 "Dk" = (
 /obj/machinery/portable_atmospherics/canister/empty,
+/obj/machinery/atmospherics/portables_connector,
+/turf/simulated/floor/tiled/techfloor/grid,
+/area/ship/snz)
+"Dl" = (
+/obj/effect/floor_decal/industrial/hatch/yellow,
+/obj/machinery/door/firedoor,
+/turf/simulated/floor/tiled/monotile,
+/area/ship/farfleet/crew/hallway/upper)
+"Dz" = (
+/obj/machinery/power/apc/critical{
+	dir = 1;
+	name = "north bump";
+	pixel_y = 23;
+	req_access = list("ACCESS_CAVALRY")
+	},
+/obj/structure/cable/green{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/structure/cable/green{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/snz)
 "DE" = (
@@ -1217,8 +1602,23 @@
 	dir = 5;
 	icon_state = "intact"
 	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 6
+	},
 /turf/simulated/floor/tiled/steel_grid,
 /area/ship/snz)
+"DT" = (
+/obj/effect/paint/dark_gunmetal,
+/turf/simulated/wall/r_wall,
+/area/ship/farfleet/crew/brig/css)
 "DX" = (
 /obj/effect/floor_decal/industrial/outline/yellow,
 /obj/machinery/cryopod,
@@ -1246,11 +1646,28 @@
 	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/barracks/armory)
+"En" = (
+/obj/structure/cable/green{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 9
+	},
+/turf/simulated/floor/tiled/steel_grid,
+/area/ship/snz)
 "Ep" = (
 /turf/simulated/floor/tiled/dark,
 /area/ship/farfleet/crew/brig)
 "EX" = (
 /obj/machinery/hologram/holopad/longrange,
+/obj/structure/cable/green{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/tiled/steel_grid,
 /area/ship/snz)
 "Fo" = (
@@ -1261,9 +1678,11 @@
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/crew/cryo)
 "FI" = (
+/obj/effect/paint/black,
 /turf/simulated/wall/r_wall,
 /area/ship/farfleet/crew/toilet)
 "FM" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/tiled/white,
 /area/ship/snz)
 "Ge" = (
@@ -1311,23 +1730,31 @@
 /obj/effect/floor_decal/industrial/outline,
 /turf/simulated/floor/tiled/steel_grid,
 /area/ship/snz)
+"Hj" = (
+/obj/effect/paint/ocean,
+/turf/simulated/wall/r_wall,
+/area/ship/farfleet/crew/cryo)
 "Hq" = (
 /obj/structure/bed/chair/shuttle/blue,
 /obj/effect/floor_decal/industrial/outline,
 /obj/machinery/computer/ship/navigation/telescreen{
 	pixel_y = 32
 	},
-/obj/structure/cable{
+/obj/structure/cable/green{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/tiled/steel_grid,
 /area/ship/snz)
 "Hv" = (
 /obj/machinery/computer/shuttle_control/explore/away_farfleet/snz{
 	dir = 4
+	},
+/obj/structure/cable/green{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/tiled/steel_grid,
 /area/ship/snz)
@@ -1338,8 +1765,26 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/snz)
+"HS" = (
+/obj/effect/catwalk_plated,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8";
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
+	},
+/turf/simulated/floor/plating,
+/area/ship/farfleet/command/snz_hangar)
 "HX" = (
-/turf/simulated/floor/tiled,
+/obj/effect/floor_decal/industrial/hatch/yellow,
+/obj/machinery/door/firedoor,
+/turf/simulated/floor/tiled/monotile,
 /area/ship/farfleet/command/snz_hangar)
 "Ig" = (
 /obj/effect/floor_decal/corner/grey_alt/diagonal{
@@ -1366,17 +1811,38 @@
 	},
 /turf/simulated/floor/plating,
 /area/ship/snz)
+"IF" = (
+/obj/structure/cable/green{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/effect/paint/red,
+/turf/simulated/wall/r_titanium,
+/area/ship/snz)
+"II" = (
+/obj/effect/floor_decal/industrial/outline/yellow,
+/obj/structure/cable/green{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/tiled/steel_grid,
+/area/ship/snz)
+"IN" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/tiled/techmaint,
+/area/ship/farfleet/maintenance/anomaly)
 "Jh" = (
 /obj/machinery/atmospherics/pipe/simple/visible/fuel,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/snz)
 "Jt" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
-	},
+/obj/effect/paint/dark_gunmetal,
 /turf/simulated/wall/r_titanium,
 /area/ship/snz)
 "Jw" = (
@@ -1396,7 +1862,22 @@
 /obj/machinery/atmospherics/pipe/simple/visible/fuel{
 	dir = 5
 	},
+/obj/structure/cable/green{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/effect/paint/red,
 /turf/simulated/wall/r_titanium,
+/area/ship/snz)
+"Ko" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/snz)
 "Kr" = (
 /turf/unsimulated/mask,
@@ -1419,16 +1900,39 @@
 	},
 /turf/simulated/floor/plating,
 /area/ship/snz)
+"KM" = (
+/obj/structure/cable/green{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/structure/cable/green{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/tiled/techfloor/grid,
+/area/ship/snz)
+"KT" = (
+/obj/effect/paint/black,
+/turf/simulated/wall/r_wall,
+/area/ship/farfleet/command/hangar_canisters)
 "KV" = (
 /obj/machinery/door/airlock{
 	name = "Secondary Storage"
 	},
-/turf/simulated/floor/tiled,
+/obj/machinery/door/firedoor,
+/obj/effect/floor_decal/industrial/hatch/yellow,
+/turf/simulated/floor/tiled/monotile,
 /area/ship/farfleet/crew/hydroponics)
 "Lf" = (
 /obj/machinery/papershredder,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/crew/brig/css)
+"Ll" = (
+/obj/effect/paint/black,
+/turf/simulated/wall/r_wall,
+/area/ship/farfleet/barracks)
 "LA" = (
 /obj/machinery/porta_turret{
 	req_access = list("ACCESS_ICCGN")
@@ -1440,6 +1944,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 6
 	},
+/obj/effect/paint/ocean,
 /turf/simulated/wall/r_titanium,
 /area/ship/snz)
 "LI" = (
@@ -1475,17 +1980,50 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled/white,
 /area/ship/snz)
+"MC" = (
+/obj/structure/cable/green{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/effect/paint/dark_gunmetal,
+/turf/simulated/wall/r_titanium,
+/area/ship/snz)
 "MN" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	icon_state = "map-scrubbers";
 	dir = 1
 	},
+/obj/structure/cable/green{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/tiled/steel_grid,
 /area/ship/snz)
+"Nl" = (
+/obj/effect/floor_decal/industrial/hatch/yellow,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/glass/security{
+	id_tag = "prisonentry";
+	name = "Cell One"
+	},
+/turf/simulated/floor/tiled/dark/monotile,
+/area/ship/farfleet/crew/brig)
+"NG" = (
+/obj/effect/paint/silver,
+/turf/simulated/wall/r_wall,
+/area/ship/farfleet/barracks)
 "NN" = (
 /obj/machinery/atmospherics/pipe/simple/visible/fuel{
 	dir = 6
 	},
+/obj/structure/cable/green{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/effect/paint/red,
 /turf/simulated/wall/r_titanium,
 /area/ship/snz)
 "NO" = (
@@ -1510,27 +2048,21 @@
 /obj/item/clothing/accessory/ubac/tan,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/barracks/armory)
+"NV" = (
+/obj/effect/paint/black,
+/obj/effect/paint/black,
+/turf/simulated/wall/r_wall,
+/area/ship/farfleet/crew/brig/css)
 "NW" = (
 /obj/structure/closet/secure_closet/freezer/meat,
 /turf/simulated/floor/tiled/freezer,
 /area/ship/farfleet/crew/freezer)
 "Oc" = (
 /obj/effect/floor_decal/industrial/outline/yellow,
-/obj/structure/cable{
+/obj/structure/cable/green{
 	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/tiled/steel_grid,
 /area/ship/snz)
@@ -1543,6 +2075,15 @@
 /obj/machinery/computer/ship/sensors,
 /turf/simulated/floor/tiled/steel_grid,
 /area/ship/snz)
+"OQ" = (
+/obj/effect/catwalk_plated,
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/plating,
+/area/ship/farfleet/command/snz_hangar)
 "OT" = (
 /obj/structure/kitchenspike,
 /turf/simulated/floor/tiled/freezer,
@@ -1566,6 +2107,14 @@
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/snz)
+"PW" = (
+/obj/effect/floor_decal/corner/b_green/diagonal{
+	dir = 8
+	},
+/obj/machinery/door/firedoor,
+/obj/effect/floor_decal/industrial/hatch/yellow,
+/turf/simulated/floor/tiled/white,
+/area/ship/farfleet/crew/canteen)
 "Qd" = (
 /obj/structure/table/rack,
 /obj/effect/floor_decal/industrial/outline/yellow,
@@ -1587,6 +2136,12 @@
 /obj/machinery/atmospherics/pipe/manifold/visible/fuel{
 	dir = 1
 	},
+/obj/structure/cable/green{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/effect/paint/red,
 /turf/simulated/wall/r_titanium,
 /area/ship/snz)
 "QE" = (
@@ -1649,14 +2204,17 @@
 /obj/machinery/pointdefense{
 	initial_id_tag = "snz_pd"
 	},
-/obj/structure/cable{
-	icon_state = "0-2";
-	d2 = 2
-	},
 /turf/simulated/floor/plating,
 /area/ship/snz)
+"RC" = (
+/obj/effect/submap_landmark/spawnpoint/away_iccgn_farfleet/sergeant,
+/turf/simulated/floor/tiled/dark,
+/area/ship/farfleet/barracks)
 "RH" = (
 /obj/machinery/portable_atmospherics/canister/air,
+/obj/machinery/atmospherics/portables_connector{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/snz)
 "RW" = (
@@ -1670,13 +2228,28 @@
 /obj/effect/floor_decal/industrial/outline/green,
 /turf/simulated/floor/tiled/techmaint,
 /area/ship/farfleet/maintenance/anomaly)
+"Su" = (
+/obj/effect/paint/black,
+/turf/simulated/wall/r_wall,
+/area/ship/farfleet/crew/hydroponics)
+"Sx" = (
+/obj/structure/cable/green{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/effect/paint/red,
+/turf/simulated/wall/r_titanium,
+/area/ship/snz)
 "Sz" = (
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 8
 	},
+/obj/effect/paint/dark_gunmetal,
 /turf/simulated/wall/r_titanium,
 /area/ship/snz)
 "SV" = (
+/obj/effect/paint/black,
 /turf/simulated/wall/r_wall,
 /area/ship/farfleet/maintenance/storage)
 "Tb" = (
@@ -1710,6 +2283,20 @@
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/snz)
+"TB" = (
+/obj/structure/cable/green{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/structure/cable/green{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/effect/paint/red,
+/turf/simulated/wall/r_titanium,
+/area/ship/snz)
 "TH" = (
 /obj/effect/floor_decal/corner/grey_alt/diagonal{
 	dir = 8
@@ -1726,16 +2313,45 @@
 /obj/machinery/atmospherics/unary/vent_pump/high_volume/external_air{
 	id_tag = "snz_shuttle_pump"
 	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/plating,
 /area/ship/snz)
+"TS" = (
+/obj/effect/catwalk_plated,
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/plating,
+/area/ship/farfleet/command/snz_hangar)
 "TV" = (
 /obj/machinery/portable_atmospherics/canister/air/airlock,
+/obj/machinery/atmospherics/portables_connector{
+	dir = 1
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/snz)
+"TX" = (
+/obj/effect/floor_decal/industrial/hatch/yellow,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/terran{
+	name = "Consultant's Office"
+	},
+/turf/simulated/floor/tiled/dark/monotile,
+/area/ship/farfleet/crew/brig/css)
 "Ua" = (
 /obj/machinery/smartfridge/drying_rack,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hydroponics)
+"Ud" = (
+/obj/effect/paint/silver,
+/turf/simulated/wall/r_wall,
+/area/ship/farfleet/maintenance/storage)
 "Ui" = (
 /obj/effect/floor_decal/industrial/outline/yellow,
 /obj/machinery/cryopod,
@@ -1760,6 +2376,11 @@
 	id_tag = "snz_shuttle_outer";
 	frequency = 1380
 	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/plating,
 /area/ship/snz)
 "UU" = (
@@ -1773,6 +2394,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/effect/submap_landmark/spawnpoint/away_iccgn_farfleet/iccgn_pawn,
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/crew/cryo)
 "UV" = (
@@ -1783,24 +2405,21 @@
 	name = "Galley";
 	req_access = list("ACCESS_ICCGN")
 	},
+/obj/effect/floor_decal/industrial/hatch/yellow,
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/crew/kitchen)
 "Vg" = (
 /obj/effect/wallframe_spawn/reinforced/titanium,
-/obj/structure/cable{
+/obj/structure/cable/green{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/structure/cable/green{
 	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
+	d2 = 2;
+	icon_state = "1-2"
 	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
+/obj/effect/paint/dark_gunmetal,
 /turf/simulated/floor/plating,
 /area/ship/snz)
 "Vj" = (
@@ -1810,11 +2429,34 @@
 /obj/item/shield/riot/metal,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/barracks/armory)
+"Vv" = (
+/obj/effect/catwalk_plated,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/plating,
+/area/ship/farfleet/command/snz_hangar)
 "VC" = (
+/obj/machinery/door/firedoor,
+/obj/effect/floor_decal/industrial/hatch/yellow,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/farfleet/command/hangar_canisters)
 "VP" = (
 /obj/effect/catwalk_plated,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
+	},
 /turf/simulated/floor/plating,
 /area/ship/farfleet/command/snz_hangar)
 "Wd" = (
@@ -1836,6 +2478,15 @@
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/snz)
+"WY" = (
+/obj/effect/catwalk_plated,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/plating,
+/area/ship/farfleet/command/snz_hangar)
 "Xs" = (
 /obj/structure/bed/chair/shuttle/blue{
 	dir = 1;
@@ -1845,11 +2496,10 @@
 /obj/machinery/computer/ship/navigation/telescreen{
 	pixel_y = -32
 	},
-/obj/structure/cable{
+/obj/structure/cable/green{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/tiled/steel_grid,
 /area/ship/snz)
@@ -1874,6 +2524,16 @@
 /obj/random/drinkbottle,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/ship/farfleet/maintenance/storage)
+"Ye" = (
+/obj/effect/paint/black,
+/turf/simulated/wall/r_wall,
+/area/ship/farfleet/crew/canteen)
+"Yi" = (
+/obj/effect/floor_decal/industrial/hatch/yellow,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/multi_tile/terran,
+/turf/simulated/floor/tiled/steel_ridged,
+/area/ship/farfleet/maintenance/storage)
 "Yk" = (
 /obj/structure/closet/crate,
 /obj/random/tank,
@@ -1890,6 +2550,18 @@
 /obj/machinery/portable_atmospherics/canister/hydrogen,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/farfleet/command/hangar_canisters)
+"Yy" = (
+/obj/effect/paint/ocean,
+/turf/simulated/wall/r_wall,
+/area/ship/farfleet/maintenance/storage)
+"YS" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/tiled/monotile,
+/area/ship/farfleet/command/snz_hangar)
 "YY" = (
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 5;
@@ -1900,6 +2572,10 @@
 	frequency = 1380
 	},
 /turf/simulated/floor/plating,
+/area/ship/snz)
+"Zh" = (
+/obj/effect/paint/red,
+/turf/simulated/wall/r_titanium,
 /area/ship/snz)
 "Zz" = (
 /obj/structure/closet/secure_closet/freezer/kitchen{
@@ -5877,14 +6553,14 @@ aa
 aa
 aa
 aa
+ev
 ab
 ab
 ab
 ab
 ab
 ab
-ab
-ab
+ev
 aa
 aa
 aa
@@ -6366,12 +7042,12 @@ aa
 aa
 ab
 ab
-dy
-dy
-dy
-dy
-dy
-dy
+wZ
+kL
+kL
+kL
+kL
+wZ
 ab
 ab
 aa
@@ -6488,12 +7164,12 @@ aa
 aa
 ab
 ab
-dy
-dy
+wZ
+kL
 Zz
 qa
-dy
-dy
+kL
+wZ
 ab
 ab
 aa
@@ -6609,14 +7285,14 @@ aa
 aa
 ab
 ab
-dy
-dy
-dy
+wZ
+wZ
+kL
 Ge
 qa
-dy
-dy
-dy
+kL
+wZ
+wZ
 ab
 ab
 aa
@@ -6731,14 +7407,14 @@ aa
 aa
 ab
 ab
-dy
-dy
-dy
+wZ
+kL
+kL
 er
 qa
-dy
-dy
-dy
+kL
+kL
+wZ
 ab
 ab
 aa
@@ -6853,14 +7529,14 @@ aa
 aa
 ab
 ab
-dy
-dy
+wZ
+kL
 NW
 qa
 qa
 qa
-dy
-dy
+kL
+wZ
 ab
 ab
 aa
@@ -6974,16 +7650,16 @@ aa
 aa
 ab
 ab
-dy
-dy
-dy
+wZ
+wZ
+kL
 OT
 qa
 qa
 ef
-dy
-dy
-dy
+kL
+wZ
+wZ
 ab
 ab
 aa
@@ -7096,16 +7772,16 @@ aa
 aa
 ab
 ab
-dy
-dy
-dy
+wZ
+kL
+kL
 Bt
 Bt
-qa
+qJ
 Bt
-dy
-dy
-dy
+kL
+kL
+wZ
 ab
 ab
 aa
@@ -7219,14 +7895,14 @@ aa
 ab
 ab
 gR
-gR
+jx
 nw
 Rs
 rL
 uq
 hi
 aP
-gR
+jx
 gR
 ab
 ab
@@ -7340,15 +8016,15 @@ aa
 ab
 ab
 gR
-gR
-gR
+jx
+jx
 aX
 uq
 uq
 uq
 uq
 Ig
-gR
+jx
 gR
 gR
 ab
@@ -7462,16 +8138,16 @@ aa
 ab
 ab
 gR
-gR
-gR
+jx
+jx
 nL
 uq
 TH
 ey
 uq
 AJ
-gR
-gR
+jx
+jx
 gR
 ab
 ab
@@ -7584,7 +8260,7 @@ aa
 ab
 ab
 gR
-gR
+jx
 bJ
 uq
 uq
@@ -7593,7 +8269,7 @@ uq
 uq
 uq
 dY
-gR
+jx
 gR
 ab
 ab
@@ -7706,7 +8382,7 @@ ab
 ab
 gR
 gR
-gR
+jx
 md
 wd
 aT
@@ -7715,7 +8391,7 @@ fS
 md
 UV
 md
-gR
+jx
 gR
 gR
 ab
@@ -7827,8 +8503,8 @@ aa
 ab
 ab
 cO
-cO
-cO
+Ye
+Ye
 jG
 Tg
 Tg
@@ -7837,8 +8513,8 @@ Tg
 Tg
 Tg
 cn
-cO
-cO
+Ye
+Ye
 cO
 ab
 ab
@@ -7949,7 +8625,7 @@ aa
 ab
 ab
 cO
-cO
+Ye
 Tg
 Jw
 Jw
@@ -7960,7 +8636,7 @@ Jw
 Jw
 Jw
 Tg
-cO
+Ye
 cO
 ab
 ab
@@ -8071,7 +8747,7 @@ ab
 ab
 cO
 cO
-cO
+Ye
 Tg
 Ac
 Ac
@@ -8082,7 +8758,7 @@ Ac
 Ac
 Ac
 Wd
-cO
+Ye
 cO
 cO
 ab
@@ -8192,8 +8868,8 @@ aa
 ab
 ab
 cO
-cO
-cO
+Ye
+Ye
 Tg
 kO
 kO
@@ -8204,8 +8880,8 @@ kO
 kO
 kO
 Tg
-cO
-cO
+Ye
+Ye
 cO
 ab
 ab
@@ -8314,7 +8990,7 @@ aa
 ab
 ab
 cO
-cO
+Ye
 kM
 Tg
 Tg
@@ -8323,11 +8999,11 @@ Tg
 Tg
 Tg
 oE
-cO
-cO
-cO
-cO
-cO
+Ye
+Ye
+Ye
+Ye
+Ye
 cO
 ab
 ab
@@ -8432,28 +9108,28 @@ aa
 aa
 aa
 aa
+ev
 ab
-ab
-cO
-cO
-cO
-cO
-cO
-cO
-cO
-cO
-Tg
-Tg
-cO
+kg
+Ye
+Ye
+Ye
+Ye
+Ye
+Ye
+Ye
+PW
+yp
+Ye
 FI
 Al
 Al
 Al
 FI
 FI
-FI
+hL
 ab
-ab
+ev
 aa
 aa
 aa
@@ -8556,7 +9232,7 @@ aa
 aa
 ab
 ab
-uf
+Hj
 uf
 uf
 Fo
@@ -8573,7 +9249,7 @@ Gg
 Gg
 FI
 FI
-FI
+hL
 ab
 ab
 aa
@@ -8678,7 +9354,7 @@ aa
 aa
 ab
 ab
-uf
+Hj
 uf
 uf
 pf
@@ -8695,7 +9371,7 @@ ow
 rS
 rS
 FI
-FI
+hL
 ab
 ab
 aa
@@ -8799,8 +9475,8 @@ aa
 aa
 ab
 ab
-uf
-uf
+Hj
+Hj
 uf
 uf
 hJ
@@ -8817,8 +9493,8 @@ Gg
 QE
 CW
 FI
-FI
-FI
+hL
+hL
 ab
 ab
 aa
@@ -8921,7 +9597,7 @@ aa
 aa
 ab
 ab
-uf
+Hj
 uf
 uf
 uf
@@ -8940,7 +9616,7 @@ FI
 FI
 FI
 FI
-FI
+hL
 ab
 ab
 aa
@@ -9043,7 +9719,7 @@ aa
 aa
 ab
 ab
-uf
+Hj
 uf
 uf
 uf
@@ -9052,8 +9728,8 @@ uf
 uf
 uf
 cK
-pT
-pT
+Dl
+Dl
 cK
 Kr
 Kr
@@ -9062,7 +9738,7 @@ Kr
 FI
 FI
 FI
-FI
+hL
 ab
 ab
 aa
@@ -9164,8 +9840,8 @@ aa
 aa
 ab
 ab
-st
-st
+rz
+rz
 st
 st
 eN
@@ -9184,8 +9860,8 @@ Kr
 FI
 FI
 FI
-FI
-FI
+sY
+sY
 ab
 ab
 aa
@@ -9286,7 +9962,7 @@ aa
 aa
 ab
 ab
-st
+rz
 eN
 Ep
 st
@@ -9303,10 +9979,10 @@ Kr
 Kr
 Kr
 Kr
-xi
-xi
-xi
-xi
+Su
+Su
+Su
+Su
 xi
 ab
 ab
@@ -9408,27 +10084,27 @@ aa
 aa
 ab
 ab
-st
+rz
 Ep
 Ep
 st
 kl
-ih
+Nl
 st
 st
 st
 st
-pT
-pT
+Dl
+Dl
 cK
 Kr
 Kr
 Kr
 Kr
-xi
+Su
 Tr
 sX
-xi
+Su
 xi
 ab
 ab
@@ -9529,8 +10205,8 @@ aa
 aa
 ab
 ab
-st
-st
+rz
+rz
 kl
 ih
 st
@@ -9542,15 +10218,15 @@ Ep
 kl
 pT
 pT
-xi
-xi
-xi
-xi
-xi
-xi
+Su
+Su
+Su
+Su
+Su
+Su
 jE
 eD
-xi
+Su
 xi
 xi
 ab
@@ -9651,8 +10327,8 @@ aa
 aa
 ab
 ab
+rz
 st
-st
 Ep
 Ep
 Ep
@@ -9661,7 +10337,7 @@ Ep
 Ep
 Ep
 Ep
-ih
+ed
 pT
 pT
 bO
@@ -9672,8 +10348,8 @@ kP
 Ua
 eD
 eD
-xi
-xi
+Su
+Su
 xi
 ab
 ab
@@ -9773,7 +10449,7 @@ aa
 aa
 ab
 ab
-st
+rz
 st
 Ep
 Ep
@@ -9794,8 +10470,8 @@ eD
 eD
 eD
 Of
-xi
-xi
+Su
+Su
 xi
 ab
 ab
@@ -9894,11 +10570,11 @@ aa
 aa
 ab
 ab
+DT
 zz
 zz
 zz
-zz
-xb
+TX
 zz
 zz
 zz
@@ -9908,17 +10584,17 @@ st
 st
 HX
 HX
-xi
-xi
-xi
-xi
-xi
+Su
+Su
+Su
+Su
+Su
 bn
 eD
 eD
 bn
-xi
-xi
+Su
+Su
 xi
 ab
 ab
@@ -10016,7 +10692,7 @@ aa
 aa
 ab
 ab
-zz
+DT
 zz
 zz
 BA
@@ -10024,23 +10700,23 @@ BA
 BA
 Lf
 zz
-ns
-ns
-ns
-ns
-ns
-ns
-ns
-ns
-ns
-ns
-xi
+OQ
+xO
+xO
+xO
+xO
+xO
+xO
+xO
+xO
+WY
+Su
 bn
 eD
 eD
 bn
-xi
-xi
+Su
+Su
 xi
 ab
 ab
@@ -10138,7 +10814,7 @@ aa
 aa
 ab
 ab
-zz
+DT
 zz
 QQ
 BA
@@ -10146,6 +10822,7 @@ cW
 BA
 iv
 zz
+VP
 ns
 ns
 ns
@@ -10154,15 +10831,14 @@ ns
 ns
 ns
 ns
-ns
-ns
-xi
+VP
+Su
 bn
 eD
 eD
 eD
 bn
-xi
+Su
 xi
 ab
 ab
@@ -10257,10 +10933,10 @@ aa
 aa
 aa
 aa
+ev
 ab
-ab
-zz
-zz
+DT
+DT
 zz
 td
 BP
@@ -10268,27 +10944,27 @@ ff
 fr
 zz
 zz
-ns
+VP
 ns
 zW
-Jt
+MC
 Vg
 pL
 Jt
 ui
 ns
-ns
-xi
-xi
+VP
+Su
+Su
 bn
 eD
 eD
 bn
-xi
+Su
 xi
 xi
 ab
-ab
+ev
 aa
 aa
 aa
@@ -10381,7 +11057,7 @@ aa
 aa
 ab
 ab
-zz
+DT
 zz
 zz
 Po
@@ -10389,25 +11065,25 @@ xb
 cD
 aO
 zz
+OQ
+iU
 ns
-ns
-ns
-AY
-AY
+Jt
+Jt
 if
 Hv
-AY
-AY
+Jt
+Jt
 ns
-ns
-ns
-xi
-xi
-xi
-xi
-xi
-xi
-xi
+pg
+WY
+Su
+Su
+Su
+Su
+Su
+Su
+Su
 xi
 ab
 ab
@@ -10503,34 +11179,34 @@ aa
 aa
 ab
 ab
+DT
 zz
 zz
 zz
 zz
 zz
 zz
-zz
-zz
+NV
+VP
 ns
 ns
-ns
-AY
+Jt
 Ol
-iu
 ZS
+oZ
 rD
-AY
+Jt
 ns
 ns
-ns
-ns
+pg
+WY
 VC
 gJ
 xW
 dM
 dM
-fi
-fi
+KT
+dg
 ab
 ab
 aa
@@ -10625,34 +11301,34 @@ aa
 ab
 ab
 Ab
-Ab
-Ab
+Ll
+Ll
 uA
 Db
 Db
 Db
-Ab
-ns
-ns
+Ll
+OQ
+iU
 ns
 LA
-AY
-lz
-ev
+Jt
+vV
+eE
 EX
 bg
-AY
+Jt
 po
 ns
 ns
-ns
+VP
 VC
 bD
 ub
 gz
 yQ
-fi
-fi
+KT
+dg
 fi
 ab
 ab
@@ -10747,34 +11423,34 @@ aa
 ab
 ab
 Ab
-Ab
-Ab
+Ll
+Ll
 Uu
-Uu
-Uu
-Uu
-Ab
-ns
+RC
+rb
+rb
+Ll
+VP
 ns
 ns
 Rw
-Jt
+MC
 Hq
 Oc
 yX
 Xs
-Jt
+MC
 ui
 ns
 ns
-ns
+VP
 VC
 Yn
 ub
 sz
 bo
-fi
-fi
+KT
+KT
 fi
 ab
 ab
@@ -10869,27 +11545,27 @@ aa
 ab
 ab
 Ab
-Ab
+Ll
 QU
 Uu
 Uu
 Uu
 Uu
-wJ
-ns
+vp
+VP
 ns
 ns
 Sz
-AY
+Jt
 lz
 pD
-pD
+II
 GP
-AY
-AY
+Jt
+Jt
 ns
 ns
-ns
+VP
 zR
 zR
 zR
@@ -10897,7 +11573,7 @@ zR
 zR
 zR
 zR
-zR
+lC
 ab
 ab
 aa
@@ -10991,19 +11667,19 @@ aa
 ab
 ab
 Ab
-Ab
+Ll
 QU
 Uu
 Uu
 Uu
 Uu
 wJ
-ns
+VP
 ns
 LH
 ec
-AY
-AY
+Jt
+Jt
 ig
 jJ
 lS
@@ -11011,7 +11687,7 @@ Dh
 AY
 AY
 ns
-ns
+VP
 zR
 sg
 sg
@@ -11019,7 +11695,7 @@ fN
 fN
 fN
 zR
-zR
+lC
 ab
 ab
 aa
@@ -11113,14 +11789,14 @@ aa
 ab
 ab
 Ab
-Ab
+Ll
 zi
 Uu
 Uu
 Uu
 RW
-Ab
-ns
+Ll
+VP
 ns
 aW
 Iu
@@ -11133,7 +11809,7 @@ Bl
 qA
 AY
 ns
-ns
+VP
 zR
 eo
 sg
@@ -11141,7 +11817,7 @@ sg
 sg
 sg
 zR
-zR
+lC
 ab
 ab
 aa
@@ -11235,27 +11911,27 @@ aa
 ab
 ab
 Ab
-Ab
-Ab
+Ll
+Ll
 eS
 wJ
 wJ
 eS
-Ab
-ns
-ns
+Ll
+HS
+YS
 UF
 tf
 TR
 vH
 DL
-eE
+En
 FM
 ln
 Ux
 AY
 ns
-ns
+VP
 zR
 px
 sg
@@ -11263,7 +11939,7 @@ sg
 sg
 hv
 zR
-zR
+lC
 ab
 ab
 aa
@@ -11357,35 +12033,35 @@ aa
 ab
 ab
 Ab
-Ab
+Ll
 wD
 Uu
 Uu
 Uu
 uA
 eS
+VP
 ns
-ns
 AY
 AY
-AY
-AY
+Jt
+Jt
 qh
-eE
+rH
 DJ
 wh
 AY
 AY
 ns
-ns
-sg
+VP
+ez
 sg
 sg
 sg
 sg
 eg
 zR
-zR
+lC
 ab
 ab
 aa
@@ -11479,35 +12155,35 @@ aa
 ab
 ab
 Ab
-Ab
+Ll
 wD
 Uu
 Uu
 Uu
 uA
 eS
+VP
 ns
 ns
-ns
-AY
-bT
+Jt
+qX
 qi
 zS
 dt
 TV
 KA
-AY
+Jt
 ns
 ns
-ns
-sg
-sg
+Vv
+oV
+IN
 sg
 sg
 sg
 xk
 zR
-zR
+lC
 ab
 ab
 aa
@@ -11600,36 +12276,36 @@ aa
 ab
 ab
 ab
-Ab
-Ab
+NG
+Ll
 wD
 Uu
 Uu
 Uu
 uA
 eS
+VP
 ns
 ns
-ns
-AY
-bT
-bT
-bT
-bT
+Jt
+Dz
+AW
+zB
+KM
 tN
 Tz
-AY
+Jt
 ns
 ns
 kI
 zR
-sg
+hX
 sg
 sg
 sg
 hv
 zR
-zR
+iu
 ab
 ab
 ab
@@ -11722,7 +12398,7 @@ aa
 ab
 ab
 ab
-kH
+ce
 kH
 kH
 ht
@@ -11730,28 +12406,28 @@ rm
 rm
 ht
 kH
-ns
+VP
 ns
 LA
-AY
+Jt
 br
-bT
+im
 rQ
 gI
 uO
 RH
-AY
+Jt
 po
 ns
 VP
 zR
-sg
+Cs
 sg
 sg
 sg
 sg
 zR
-zR
+iu
 ab
 ab
 ab
@@ -11844,7 +12520,7 @@ aa
 ab
 ab
 ab
-kH
+ce
 kH
 Vj
 QR
@@ -11852,18 +12528,18 @@ fu
 fu
 Gs
 kH
+VP
 ns
-ns
-AY
-AY
+Jt
+Jt
 LI
 bT
-bT
+Ko
 xG
 Pr
 LI
-AY
-AY
+Jt
+Jt
 ns
 VP
 zR
@@ -11873,7 +12549,7 @@ sg
 wK
 wK
 zR
-zR
+iu
 ab
 ab
 ab
@@ -11963,10 +12639,10 @@ aa
 aa
 aa
 aa
+ev
 ab
 ab
-ab
-kH
+ce
 kH
 fu
 fu
@@ -11974,9 +12650,9 @@ fu
 fu
 oq
 kH
+VP
 ns
-ns
-AY
+Jt
 Dk
 HO
 sa
@@ -11985,7 +12661,7 @@ kJ
 hY
 xE
 zk
-AY
+Jt
 ns
 VP
 zR
@@ -11995,10 +12671,10 @@ zR
 zR
 zR
 zR
-zR
+iu
 ab
 ab
-ab
+ev
 aa
 aa
 aa
@@ -12088,7 +12764,7 @@ aa
 ab
 ab
 ab
-kH
+ce
 kH
 Eh
 Gj
@@ -12096,18 +12772,18 @@ fu
 fu
 In
 kH
+VP
 ns
-ns
-AY
+Jt
 nG
 je
 Jh
 lL
-lL
+nR
 Jh
 gc
 wj
-AY
+Jt
 ns
 VP
 SV
@@ -12117,7 +12793,7 @@ iR
 jK
 go
 SV
-SV
+Ud
 ab
 ab
 ab
@@ -12210,7 +12886,7 @@ aa
 ab
 ab
 ab
-kH
+ce
 kH
 xl
 Tb
@@ -12218,28 +12894,28 @@ fu
 fu
 Qd
 kH
+VP
 ns
-ns
-AY
+tC
 NN
 sx
-AY
-AY
-AY
-AY
+Sx
+Sx
+TB
+Sx
 Qk
 JW
-AY
+IF
 ns
 VP
-xD
+Yi
 xD
 xD
 xD
 xD
 xD
 SV
-SV
+Ud
 ab
 ab
 ab
@@ -12332,7 +13008,7 @@ aa
 ab
 ab
 ab
-kH
+ce
 kH
 fu
 fu
@@ -12340,28 +13016,28 @@ fu
 fu
 LS
 kH
-ns
+VP
 ns
 pN
 xc
 xc
-AY
+Zh
 lP
 KF
-AY
+Zh
 xc
 xc
 pN
 ns
 VP
-xD
+Ah
 xD
 xD
 xD
 xD
 xD
 SV
-SV
+Ud
 ab
 ab
 ab
@@ -12454,7 +13130,7 @@ aa
 aa
 ab
 ab
-kH
+ce
 kH
 Pc
 Xu
@@ -12462,20 +13138,20 @@ fu
 fu
 NR
 kH
-ns
-ns
-ns
-ns
-ns
-ns
-ns
-ns
-ns
-ns
-ns
-ns
-ns
-ns
+TS
+xO
+xO
+xO
+xO
+xO
+xO
+xO
+xO
+xO
+xO
+xO
+xO
+iU
 SV
 cg
 xD
@@ -12483,7 +13159,7 @@ xD
 ds
 SV
 SV
-SV
+Ud
 ab
 ab
 aa
@@ -12576,7 +13252,7 @@ aa
 aa
 ab
 ab
-kH
+ce
 kH
 kH
 ht
@@ -12587,14 +13263,14 @@ kH
 kH
 an
 an
+Bh
+an
+Bh
 an
 an
+Bh
 an
-an
-an
-an
-an
-an
+Bh
 an
 an
 SV
@@ -12605,7 +13281,7 @@ xD
 tc
 SV
 SV
-SV
+Ud
 ab
 ab
 aa
@@ -12698,7 +13374,7 @@ aa
 aa
 ab
 ab
-kH
+ce
 kH
 kH
 vz
@@ -12709,14 +13385,14 @@ kH
 kH
 an
 an
+Bh
+an
+Bh
 an
 an
+Bh
 an
-an
-an
-an
-an
-an
+Bh
 an
 an
 SV
@@ -12727,7 +13403,7 @@ xD
 xD
 SV
 SV
-SV
+Ud
 ab
 ab
 aa
@@ -12821,14 +13497,14 @@ aa
 ab
 ab
 ab
-kH
+ce
 kH
 bY
 fu
 fu
 kz
 kH
-kH
+ce
 ab
 ab
 ab
@@ -12841,14 +13517,14 @@ aa
 ab
 ab
 ab
-SV
+Ud
 SV
 NO
 oA
 Yk
 hh
 SV
-SV
+Ud
 ab
 ab
 ab
@@ -12943,14 +13619,14 @@ aa
 ab
 ab
 ab
+ce
 kH
 kH
 kH
 kH
 kH
 kH
-kH
-kH
+ce
 ab
 ab
 aa
@@ -12963,14 +13639,14 @@ aa
 aa
 ab
 ab
+Ud
 SV
 SV
 SV
 SV
 SV
 SV
-SV
-SV
+Ud
 ab
 ab
 ab
@@ -13065,14 +13741,14 @@ aa
 ab
 ab
 ab
-kH
-kH
-kH
-kH
-kH
-kH
-kH
-kH
+eC
+eC
+eC
+eC
+eC
+eC
+eC
+eC
 ab
 ab
 aa
@@ -13085,14 +13761,14 @@ aa
 aa
 ab
 ab
-SV
-SV
-SV
-SV
-SV
-SV
-SV
-SV
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
 ab
 ab
 ab
@@ -13306,6 +13982,7 @@ aa
 aa
 aa
 aa
+ev
 ab
 ab
 ab
@@ -13317,8 +13994,7 @@ ab
 ab
 ab
 ab
-ab
-ab
+ev
 aa
 aa
 aa
@@ -13327,6 +14003,7 @@ aa
 aa
 aa
 aa
+ev
 ab
 ab
 ab
@@ -13338,8 +14015,7 @@ ab
 ab
 ab
 ab
-ab
-ab
+ev
 aa
 aa
 aa

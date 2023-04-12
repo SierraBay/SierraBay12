@@ -262,7 +262,7 @@
 
 /obj/structure/sign/farfleetplaque
 	name = "\improper Pioneer Corps Plaque"
-	desc = "A plaque with Decree of Pioneer Corps foundation etched on it."
+	desc = "Пионерский Корпус, сформированный в 2306 году является авангардом Конфедерации. Пионерский корпус не входит в состав Флота ГКК, выполняет ряд миротворческих и гуманитарных функций. На этой табличке - первые страницы приказа о создании Пионерского Корпуса."
 	icon = 'mods/maps/farfleet/icons/iccg_flag.dmi'
 	icon_state = "pioneer_plaque"
 
@@ -301,7 +301,7 @@
 	name = "\improper ICCG Seal"
 	desc = "A sign which signifies who this vessel belongs to."
 	icon = 'mods/maps/farfleet/icons/iccg_flag.dmi'
-	icon_state = "GCC slog"
+	icon_state = "iccg_seal"
 
 /obj/structure/sign/double/iccgflag
 	name = "ICCG Flag"

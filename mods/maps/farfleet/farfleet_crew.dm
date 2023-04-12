@@ -1,11 +1,11 @@
 #define WEBHOOK_SUBMAP_LOADED_ICCGN	"webhook_submap_ICCGN"
 
 /obj/effect/submap_landmark/joinable_submap/away_iccgn_farfleet
-	name = "Farfleet Recon Ship"
+	name = "Pioneer Corps Recon Craft"
 	archetype = /singleton/submap_archetype/away_iccgn_farfleet
 
 /singleton/submap_archetype/away_iccgn_farfleet
-	descriptor = "ICCGN Farfleet Recon Ship"
+	descriptor = "ICCG Pioneer Corps Recon Craft"
 	map = "Recon Ship"
 	crew_jobs = list(
 		/datum/job/submap/away_iccgn_farfleet,
@@ -31,6 +31,9 @@
 
 /obj/effect/submap_landmark/spawnpoint/away_iccgn_farfleet/captain
 	name = "Pioneer Corps Captain"
+
+/obj/effect/submap_landmark/spawnpoint/away_iccgn_farfleet/iccgn_pawn
+	name = "Eighth Department's Consultant"
 
 /obj/effect/submap_landmark/spawnpoint/away_iccgn_farfleet/medic
 	name = "Pioneer Corpsman"
@@ -107,6 +110,7 @@
 	 Исключением являются те ситуации, когда вы атакованы противником, терпите бедствие или на вашем судне аварийная ситуация."
 	required_language = LANGUAGE_HUMAN_RUSSIAN
 	whitelisted_species = list(SPECIES_HUMAN, SPECIES_IPC)
+	minimum_character_age = list(SPECIES_HUMAN = 20)
 	min_skill = list(SKILL_COMBAT  = SKILL_BASIC,
 					 SKILL_WEAPONS = SKILL_BASIC,
 					 SKILL_HAULING = SKILL_BASIC,
@@ -138,6 +142,7 @@
 	 Исключением являются те ситуации, когда вы атакованы противником, терпите бедствие или на вашем судне аварийная ситуация."
 	required_language = LANGUAGE_HUMAN_RUSSIAN
 	whitelisted_species = list(SPECIES_HUMAN)
+	minimum_character_age = list(SPECIES_HUMAN = 25)
 	is_semi_antagonist = TRUE
 	min_skill = list(SKILL_COMBAT  = SKILL_BASIC,
 					 SKILL_WEAPONS = SKILL_BASIC,
@@ -166,6 +171,7 @@
 	 Исключением являются те ситуации, когда вы атакованы противником, терпите бедствие или на вашем судне аварийная ситуация."
 	required_language = LANGUAGE_HUMAN_RUSSIAN
 	whitelisted_species = list(SPECIES_HUMAN)
+	minimum_character_age = list(SPECIES_HUMAN = 35)
 	is_semi_antagonist = TRUE
 	min_skill = list(SKILL_COMBAT  = SKILL_BASIC,
 					 SKILL_WEAPONS = SKILL_BASIC,
@@ -194,6 +200,7 @@
 	 Исключением являются те ситуации, когда вы атакованы противником, терпите бедствие или на вашем судне аварийная ситуация."
 	required_language = LANGUAGE_HUMAN_RUSSIAN
 	whitelisted_species = list(SPECIES_HUMAN, SPECIES_IPC)
+	minimum_character_age = list(SPECIES_HUMAN = 25)
 	is_semi_antagonist = TRUE
 	min_skill = list(SKILL_COMBAT  = SKILL_BASIC,
 					 SKILL_WEAPONS = SKILL_BASIC,
@@ -223,6 +230,7 @@
 	 Исключением являются те ситуации, когда вы атакованы противником,  терпите бедствие или на вашем судне аварийная ситуация."
 	required_language = LANGUAGE_HUMAN_RUSSIAN
 	whitelisted_species = list(SPECIES_HUMAN, SPECIES_IPC)
+	minimum_character_age = list(SPECIES_HUMAN = 25)
 	is_semi_antagonist = TRUE
 	min_skill = list(SKILL_COMBAT  = SKILL_BASIC,
 					 SKILL_WEAPONS = SKILL_BASIC,
@@ -257,6 +265,7 @@
 	 Исключением являются те ситуации, когда вы атакованы противником, терпите бедствие или на вашем судне аварийная ситуация."
 	required_language = LANGUAGE_HUMAN_RUSSIAN
 	whitelisted_species = list(SPECIES_HUMAN)
+	minimum_character_age = list(SPECIES_HUMAN = 25)
 	is_semi_antagonist = TRUE
 	min_skill = list(SKILL_BUREAUCRACY = SKILL_ADEPT,
 					 SKILL_COMBAT  = SKILL_BASIC,
