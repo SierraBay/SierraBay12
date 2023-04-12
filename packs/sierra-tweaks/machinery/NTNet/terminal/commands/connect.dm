@@ -53,7 +53,7 @@
 		else if (length(txt)==3)
 			switch(txt[3])
 				if("-open")
-					if(REMOTE.open()==0) // лютая хуета, но тока так корректно отрабатывает
+					if(!REMOTE.open()) // лютая хуета, но тока так корректно отрабатывает
 						. += "[name]: unable to open airlock, maybe it bolted or already opened or lack for energy."
 						return
 					. += "[name]: Airlock with id([NTID]) was opened."
