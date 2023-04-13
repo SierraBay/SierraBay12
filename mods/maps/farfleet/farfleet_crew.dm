@@ -34,7 +34,7 @@
 	name = "Pioneer Corps Captain"
 
 /obj/effect/submap_landmark/spawnpoint/away_iccgn_farfleet/iccgn_pawn
-	name = "CSS Consultant"
+	name = "CSS Field Operative"
 
 /obj/effect/submap_landmark/spawnpoint/away_iccgn_farfleet/medic
 	name = "Pioneer Corpsman"
@@ -248,9 +248,13 @@
 	access = list(access_away_iccgn, access_engine_equip)
 
 /datum/job/submap/away_iccgn_farfleet/iccgn_pawn
-	title = "CSS Consultant"
+	title = "CSS Field Operative"
 	total_positions = 1
 	outfit_type = /singleton/hierarchy/outfit/job/iccgn/iccgn_pawn
+	alt_titles = list(
+		"CSS Interrogator",
+		"CSS Specialist"
+	)
 	branch = /datum/mil_branch/css
 	rank = /datum/mil_rank/css/fa7
 	allowed_branches = list(/datum/mil_branch/css)
@@ -277,9 +281,11 @@
 
 	access = list(access_away_iccgn, access_away_iccgn_droptroops, access_away_iccgn_sergeant, access_away_iccgn_captain, access_engine_equip)
 
-/datum/job/iccgn_pawn/equip(mob/living/carbon/human/H)
-	if(H.mind.role_alt_title == "CSS Consultant")
+/datum/job/submap/away_iccgn_farfleet/iccgn_pawn/equip(mob/living/carbon/human/H)
+	if(H.mind?.role_alt_title == "CSS Interrogator")
 		psi_faculties = list("[PSI_COERCION]" = PSI_RANK_MASTER)
+	if(H.mind?.role_alt_title == "CSS Specialist")
+		psi_faculties = list("[PSI_PSYCHOKINESIS]" = PSI_RANK_MASTER)
 	return ..()
 
 

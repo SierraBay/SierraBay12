@@ -81,6 +81,10 @@
 	icon = 'mods/maps/farfleet/icons/mr735.dmi'
 	icon_state = "nostockrifle"
 	item_state = "mr735nostockrifle"
+	item_icons = list(
+		icon_l_hand = 'mods/maps/farfleet/icons/mr735.dmi',
+		icon_r_hand = 'mods/maps/farfleet/icons/mr735.dmi',
+		)
 	force = 10
 	caliber = CALIBER_RIFLE
 	origin_tech = list(TECH_COMBAT = 6, TECH_MATERIAL = 1, TECH_ESOTERIC = 5)
@@ -116,6 +120,10 @@
 	icon = 'mods/maps/farfleet/icons/mbr.dmi'
 	icon_state = "mbr_bullpup"
 	item_state = "mbr_bullpup"
+	item_icons = list(
+		icon_l_hand = 'mods/maps/farfleet/icons/mbr.dmi',
+		icon_r_hand = 'mods/maps/farfleet/icons/mbr.dmi',
+		)
 	force = 10
 	caliber = CALIBER_RIFLE
 	origin_tech = list(TECH_COMBAT = 6, TECH_MATERIAL = 1, TECH_ESOTERIC = 5)

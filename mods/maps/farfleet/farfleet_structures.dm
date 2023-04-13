@@ -8,8 +8,8 @@
 
 /obj/structure/closet/secure_closet/guncabinet/farfleet/antitank/WillContain()
 	return list(
-		/obj/item/gun/magnetic/railgun/tcc  = 1,
-		/obj/item/stack/material/rods/fifty = 1
+		/obj/item/gun/magnetic/railgun  = 2,
+		/obj/item/rcd_ammo = 10
 	)
 
 /obj/structure/closet/secure_closet/guncabinet/farfleet/assault/WillContain()
@@ -20,11 +20,9 @@
 
 /obj/structure/closet/secure_closet/guncabinet/farfleet/defence/WillContain()
 	return list(
-		/obj/item/ammo_magazine/speedloader/clip = 6,
 		/obj/item/ammo_magazine/pistol/double = 6,
-		/obj/item/gun/projectile/heavysniper/boltaction = 2,
-		/obj/item/clothing/accessory/storage/bandolier = 1,
-		/obj/item/gun/projectile/shotgun/pump = 1,
+		/obj/item/gun/projectile/shotgun/doublebarrel/sawn = 3,
+		/obj/item/clothing/accessory/storage/bandolier = 3 ,
 		/obj/item/gun/projectile/pistol/optimus = 3
 	)
 

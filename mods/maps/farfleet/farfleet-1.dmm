@@ -39,6 +39,7 @@
 /obj/structure/closet/hydrant{
 	pixel_y = 28
 	},
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hallway/lower)
 "af" = (
@@ -191,6 +192,7 @@
 /area/ship/farfleet/dock)
 "aH" = (
 /obj/structure/flora/pottedplant/large,
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hallway/lower)
 "aI" = (
@@ -675,6 +677,7 @@
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 9
 	},
+/obj/effect/floor_decal/corner/paleblue/diagonal,
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/medbay)
 "ch" = (
@@ -684,6 +687,7 @@
 /area/ship/farfleet/engineering/storage)
 "ci" = (
 /obj/machinery/bodyscanner,
+/obj/effect/floor_decal/corner/paleblue/diagonal,
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/medbay)
 "cj" = (
@@ -709,6 +713,9 @@
 "cm" = (
 /obj/structure/closet/toolcloset,
 /obj/effect/floor_decal/industrial/outline/blue,
+/obj/machinery/atmospherics/unary/vent_scrubber/on{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/steel_grid,
 /area/ship/farfleet/crew/comms)
 "cn" = (
@@ -762,6 +769,7 @@
 /obj/machinery/atmospherics/pipe/manifold/visible{
 	dir = 4
 	},
+/obj/effect/floor_decal/corner/paleblue/diagonal,
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/medbay)
 "cB" = (
@@ -899,6 +907,7 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hallway/lower)
 "db" = (
@@ -961,6 +970,7 @@
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 4
 	},
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/command/equipment)
 "dl" = (
@@ -1077,6 +1087,9 @@
 /obj/structure/sign/iccg{
 	pixel_y = 32
 	},
+/obj/effect/floor_decal/borderfloorblack{
+	dir = 1
+	},
 /turf/simulated/floor/tiled/dark,
 /area/ship/farfleet/command/bridge)
 "dA" = (
@@ -1100,6 +1113,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/farfleet/engineering/atmospherics)
 "dF" = (
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /obj/effect/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/command/eva)
@@ -1126,7 +1140,6 @@
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/engineering/equipment)
 "dM" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/atmospherics/portables_connector{
 	dir = 4
 	},
@@ -1134,6 +1147,8 @@
 	dir = 8;
 	icon_state = "tube_map"
 	},
+/obj/machinery/portable_atmospherics/canister/oxygen/prechilled,
+/obj/effect/floor_decal/corner/paleblue/diagonal,
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/medbay)
 "dO" = (
@@ -1219,12 +1234,14 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hallway/lower)
 "ec" = (
 /obj/structure/sign/double/iccgflag/left{
 	pixel_y = 32
 	},
+/obj/effect/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/dock)
 "eg" = (
@@ -1457,6 +1474,7 @@
 "fi" = (
 /obj/structure/table/standard,
 /obj/item/device/scanner/spectrometer/adv,
+/obj/effect/floor_decal/corner/paleblue/diagonal,
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/medbay)
 "fj" = (
@@ -1484,6 +1502,23 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/ship/farfleet/crew/brig/emergency_armory)
+"fq" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/light,
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
+/turf/simulated/floor/tiled,
+/area/ship/farfleet/crew/hallway/lower)
 "fs" = (
 /obj/machinery/door/blast/regular{
 	dir = 2;
@@ -1555,6 +1590,9 @@
 "fD" = (
 /obj/machinery/chemical_dispenser/full,
 /obj/structure/window/reinforced,
+/obj/effect/floor_decal/corner/paleblue{
+	dir = 10
+	},
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/medbay)
 "fE" = (
@@ -1574,6 +1612,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hallway/lower)
 "fN" = (
@@ -1802,6 +1841,13 @@
 	},
 /turf/simulated/floor/reinforced/airless,
 /area/ship/farfleet/engineering/fussion/control)
+"gS" = (
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
+/obj/effect/floor_decal/industrial/warning{
+	dir = 6
+	},
+/turf/simulated/floor/tiled,
+/area/ship/farfleet/command/eva)
 "gV" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -1866,6 +1912,25 @@
 	},
 /turf/simulated/floor/reinforced/airless,
 /area/ship/farfleet/engineering/fussion/control)
+"hk" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
+/obj/structure/sign/bluecross_2{
+	pixel_y = -32
+	},
+/turf/simulated/floor/tiled,
+/area/ship/farfleet/crew/hallway/lower)
 "hl" = (
 /obj/effect/floor_decal/corner/yellow{
 	dir = 9
@@ -1885,6 +1950,7 @@
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/engineering/hallway)
 "hn" = (
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /obj/effect/floor_decal/industrial/outline/yellow,
 /obj/machinery/suit_storage_unit/away_iccgn_med,
 /obj/machinery/firealarm{
@@ -1997,6 +2063,7 @@
 "hP" = (
 /obj/effect/overmap/visitable/ship/farfleet,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /obj/effect/floor_decal/industrial/warning{
 	dir = 9
 	},
@@ -2068,6 +2135,7 @@
 	dir = 8
 	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /obj/effect/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/tiled/monotile,
 /area/ship/farfleet/command/eva)
@@ -2111,6 +2179,10 @@
 /turf/simulated/wall/r_wall,
 /area/ship/farfleet/maintenance/engine)
 "iG" = (
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
+/obj/effect/floor_decal/industrial/warning{
+	dir = 10
+	},
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/command/eva)
 "iK" = (
@@ -2183,6 +2255,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hallway/lower)
 "iU" = (
@@ -2278,6 +2351,7 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/scrubbers,
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hallway/lower)
 "jz" = (
@@ -2322,6 +2396,7 @@
 /obj/machinery/sleeper{
 	dir = 1
 	},
+/obj/effect/floor_decal/corner/paleblue/diagonal,
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/medbay)
 "jR" = (
@@ -2405,6 +2480,10 @@
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/farfleet/command/launcher)
+"kj" = (
+/obj/effect/shuttle_landmark/nav_farfleet/nav2,
+/turf/space,
+/area/space)
 "ko" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -2614,8 +2693,15 @@
 /area/ship/farfleet/crew/brig/emergency_armory)
 "lf" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hallway/lower)
+"lg" = (
+/obj/structure/sign/poster/nyc_doctor_griefsey{
+	pixel_y = 32
+	},
+/turf/simulated/floor/wood/maple,
+/area/ship/farfleet/maintenance)
 "lh" = (
 /obj/machinery/light{
 	icon_state = "tube1";
@@ -2699,6 +2785,7 @@
 	pixel_y = 24;
 	req_access = list("ACCESS_ICCGN")
 	},
+/obj/effect/floor_decal/corner/paleblue/diagonal,
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/medbay)
 "lx" = (
@@ -2732,6 +2819,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
+/obj/effect/floor_decal/corner/paleblue/three_quarters,
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/medbay)
 "lD" = (
@@ -2824,6 +2912,7 @@
 /area/ship/farfleet/engineering/equipment)
 "me" = (
 /obj/machinery/suit_storage_unit/standard_unit,
+/obj/effect/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/dock)
 "mf" = (
@@ -2967,6 +3056,28 @@
 /obj/effect/paint/dark_gunmetal,
 /turf/simulated/floor,
 /area/ship/farfleet/engineering/atmos_equipment)
+"mN" = (
+/obj/structure/closet/secure_closet/guncabinet{
+	req_access = list("ACCESS_ICCGN")
+	},
+/obj/item/gun/projectile/automatic/mbr,
+/obj/item/gun/projectile/automatic/mbr,
+/obj/item/gun/projectile/automatic/mbr,
+/obj/item/gun/projectile/automatic/mbr,
+/obj/item/ammo_magazine/rifle,
+/obj/item/ammo_magazine/rifle,
+/obj/item/ammo_magazine/rifle,
+/obj/item/ammo_magazine/rifle,
+/obj/item/ammo_magazine/rifle,
+/obj/item/ammo_magazine/rifle,
+/obj/item/ammo_magazine/rifle,
+/obj/item/ammo_magazine/rifle,
+/obj/item/ammo_magazine/rifle,
+/obj/item/ammo_magazine/rifle,
+/obj/item/ammo_magazine/rifle,
+/obj/item/ammo_magazine/rifle,
+/turf/simulated/floor/tiled/dark/monotile,
+/area/ship/farfleet/crew/brig/emergency_armory)
 "mO" = (
 /obj/machinery/power/shield_generator,
 /obj/structure/cable/yellow{
@@ -2978,8 +3089,7 @@
 "mP" = (
 /obj/effect/floor_decal/industrial/outline/yellow,
 /obj/structure/window/reinforced{
-	dir = 8;
-	health = null
+	dir = 8
 	},
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /turf/simulated/floor/tiled/techfloor,
@@ -3096,8 +3206,7 @@
 /area/ship/farfleet/engineering/atmospherics)
 "nw" = (
 /obj/structure/window/reinforced{
-	dir = 8;
-	health = 1e+006
+	dir = 8
 	},
 /obj/structure/window/reinforced{
 	dir = 4
@@ -3110,6 +3219,10 @@
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/farfleet/engineering/atmospherics)
+"nA" = (
+/obj/machinery/ship_map,
+/turf/simulated/floor/tiled/dark,
+/area/ship/farfleet/command/bridge)
 "nC" = (
 /obj/machinery/disposal/deliveryChute{
 	dir = 8
@@ -3326,6 +3439,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/effect/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/dock)
 "ox" = (
@@ -3507,6 +3621,9 @@
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 4
 	},
+/obj/effect/floor_decal/corner/paleblue{
+	dir = 6
+	},
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/medbay)
 "pP" = (
@@ -3548,6 +3665,10 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
+	},
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
+/obj/effect/floor_decal/industrial/warning{
+	dir = 4
 	},
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/command/eva)
@@ -3610,6 +3731,7 @@
 	pixel_y = 24;
 	req_access = list("ACCESS_ICCGN")
 	},
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hallway/lower)
 "qM" = (
@@ -3640,6 +3762,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/effect/floor_decal/corner/paleblue/diagonal,
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/medbay)
 "rb" = (
@@ -3654,6 +3777,9 @@
 "rc" = (
 /obj/machinery/chem_master,
 /obj/structure/window/reinforced,
+/obj/effect/floor_decal/corner/paleblue{
+	dir = 10
+	},
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/medbay)
 "rg" = (
@@ -3746,6 +3872,7 @@
 /area/ship/farfleet/command/bridge)
 "rQ" = (
 /obj/structure/dispenser/oxygen,
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /obj/effect/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/command/eva)
@@ -3761,6 +3888,7 @@
 "sa" = (
 /obj/structure/table/standard,
 /obj/item/reagent_containers/glass/beaker/cryoxadone,
+/obj/effect/floor_decal/corner/paleblue/diagonal,
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/medbay)
 "sb" = (
@@ -3776,6 +3904,7 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hallway/lower)
 "se" = (
@@ -4012,6 +4141,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/ship/farfleet/maintenance)
+"tt" = (
+/obj/structure/bed/chair/comfy/blue,
+/obj/effect/floor_decal/borderfloorblack{
+	dir = 5
+	},
+/turf/simulated/floor/tiled/dark,
+/area/ship/farfleet/command/bridge)
 "tF" = (
 /obj/structure/table/woodentable/mahogany,
 /turf/simulated/floor/wood/maple,
@@ -4025,6 +4161,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
 	},
+/obj/effect/floor_decal/corner/paleblue/diagonal,
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/medbay/storage)
 "tV" = (
@@ -4214,6 +4351,12 @@
 /obj/effect/paint/silver,
 /turf/simulated/wall/r_wall,
 /area/ship/farfleet/crew/hallway)
+"vK" = (
+/obj/effect/floor_decal/corner/paleblue{
+	dir = 9
+	},
+/turf/simulated/floor/tiled/white,
+/area/ship/farfleet/medbay)
 "vV" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -4228,6 +4371,10 @@
 	dir = 4
 	},
 /obj/machinery/light,
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
+/obj/structure/sign/bluecross_2{
+	pixel_y = -33
+	},
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hallway/lower)
 "vW" = (
@@ -4259,6 +4406,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hallway/lower)
 "wu" = (
@@ -4308,6 +4456,12 @@
 /obj/effect/paint_stripe/white,
 /turf/simulated/floor/plating,
 /area/ship/farfleet/medbay)
+"wI" = (
+/obj/effect/floor_decal/corner/paleblue{
+	dir = 5
+	},
+/turf/simulated/floor/tiled/white,
+/area/ship/farfleet/medbay)
 "xc" = (
 /obj/structure/cable{
 	d2 = 8;
@@ -4318,6 +4472,7 @@
 	name = "east bump";
 	pixel_x = 24
 	},
+/obj/effect/floor_decal/corner/paleblue/diagonal,
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/medbay)
 "xs" = (
@@ -4336,8 +4491,15 @@
 /area/ship/farfleet/maintenance/engine)
 "xw" = (
 /obj/structure/roller_bed/nanoblood,
+/obj/effect/floor_decal/corner/paleblue{
+	dir = 5
+	},
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/medbay)
+"xB" = (
+/obj/effect/floor_decal/industrial/outline/yellow,
+/turf/simulated/floor/tiled/dark/monotile,
+/area/ship/farfleet/dock)
 "xC" = (
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 8
@@ -4511,6 +4673,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /obj/effect/floor_decal/industrial/warning{
 	dir = 10
 	},
@@ -4560,6 +4723,7 @@
 	pixel_x = -24;
 	pixel_y = 0
 	},
+/obj/effect/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/dock)
 "zJ" = (
@@ -4573,6 +4737,10 @@
 "zO" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
+/obj/effect/floor_decal/industrial/warning{
+	dir = 5
+	},
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/command/eva)
 "zT" = (
@@ -4621,6 +4789,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hallway/lower)
 "Al" = (
@@ -4669,6 +4838,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hallway/lower)
 "AY" = (
@@ -4705,6 +4875,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/ship/farfleet/command/bridge)
 "Bo" = (
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /obj/effect/floor_decal/industrial/outline/yellow,
 /obj/machinery/suit_storage_unit/away_iccgn_com,
 /turf/simulated/floor/tiled,
@@ -4741,6 +4912,7 @@
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 4
 	},
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/command/equipment)
 "BS" = (
@@ -4778,6 +4950,7 @@
 /obj/structure/sign/double/iccgflag/right{
 	pixel_y = 32
 	},
+/obj/effect/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/dock)
 "Cg" = (
@@ -4837,6 +5010,7 @@
 	icon_state = "freezer";
 	dir = 4
 	},
+/obj/effect/floor_decal/corner/paleblue/diagonal,
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/medbay)
 "Cx" = (
@@ -4924,6 +5098,12 @@
 /obj/structure/reagent_dispensers/water_cooler{
 	dir = 4
 	},
+/obj/effect/floor_decal/borderfloorblack{
+	dir = 10
+	},
+/obj/effect/floor_decal/borderfloorblack/corner2{
+	dir = 9
+	},
 /turf/simulated/floor/tiled/dark,
 /area/ship/farfleet/command/bridge)
 "Do" = (
@@ -4932,6 +5112,7 @@
 /area/ship/farfleet/command/launcher)
 "Du" = (
 /obj/structure/dispenser/oxygen,
+/obj/effect/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/dock)
 "Dv" = (
@@ -4946,6 +5127,7 @@
 /turf/simulated/floor,
 /area/ship/farfleet/engineering/atmospherics)
 "Dz" = (
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hallway/lower)
 "DJ" = (
@@ -4956,6 +5138,10 @@
 	},
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 4
+	},
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
+/obj/effect/floor_decal/industrial/warning{
+	dir = 8
 	},
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/command/eva)
@@ -4978,6 +5164,7 @@
 /obj/machinery/atmospherics/unary/cryo_cell{
 	dir = 4
 	},
+/obj/effect/floor_decal/corner/paleblue/diagonal,
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/medbay)
 "En" = (
@@ -4990,20 +5177,21 @@
 "Eq" = (
 /obj/effect/floor_decal/industrial/outline/yellow,
 /obj/structure/window/reinforced{
-	dir = 8;
-	health = null
+	dir = 8
 	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/farfleet/engineering/atmospherics)
 "Es" = (
 /obj/structure/flora/pottedplant/tropical,
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hallway/lower)
 "Ev" = (
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hallway/lower)
 "Ey" = (
@@ -5098,6 +5286,7 @@
 /turf/simulated/floor/reinforced/nitrogen,
 /area/ship/farfleet/engineering/atmospherics)
 "Fr" = (
+/obj/effect/floor_decal/corner/paleblue/diagonal,
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/medbay/storage)
 "FA" = (
@@ -5124,6 +5313,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hallway/lower)
 "FI" = (
@@ -5165,6 +5355,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /obj/effect/floor_decal/industrial/warning{
 	dir = 6
 	},
@@ -5270,12 +5461,14 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /obj/machinery/light,
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hallway/lower)
 "GB" = (
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hallway/lower)
 "GF" = (
@@ -5321,12 +5514,14 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/machinery/light,
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hallway/lower)
 "GM" = (
 /obj/structure/sign/farfleetplaque{
 	pixel_y = 32
 	},
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hallway/lower)
 "GO" = (
@@ -5355,6 +5550,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hallway/lower)
 "Hh" = (
@@ -5409,6 +5605,9 @@
 	},
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 8
+	},
+/obj/effect/floor_decal/borderfloorblack{
+	dir = 4
 	},
 /turf/simulated/floor/tiled/dark,
 /area/ship/farfleet/command/bridge)
@@ -5467,6 +5666,7 @@
 /area/ship/farfleet/crew/brig/emergency_armory)
 "Ie" = (
 /obj/machinery/light,
+/obj/effect/floor_decal/corner/paleblue/diagonal,
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/medbay)
 "If" = (
@@ -5533,6 +5733,10 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
 	},
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
+/obj/effect/floor_decal/industrial/warning{
+	dir = 4
+	},
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/command/eva)
 "IV" = (
@@ -5562,6 +5766,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/farfleet/command/launcher)
 "JB" = (
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/command/equipment)
 "JF" = (
@@ -5570,6 +5775,7 @@
 	pixel_y = -24
 	},
 /obj/structure/closet/crate/trashcart,
+/obj/effect/floor_decal/corner/paleblue/diagonal,
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/medbay)
 "JG" = (
@@ -5580,6 +5786,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/command/equipment)
 "JH" = (
@@ -5602,6 +5809,7 @@
 	pixel_x = 6;
 	pixel_y = 18
 	},
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/command/equipment)
 "JJ" = (
@@ -5636,6 +5844,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/effect/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/dock)
 "JY" = (
@@ -5657,6 +5866,9 @@
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 4
 	},
+/obj/effect/floor_decal/corner/paleblue{
+	dir = 6
+	},
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/medbay)
 "KA" = (
@@ -5666,6 +5878,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/light,
+/obj/effect/floor_decal/corner/paleblue/diagonal,
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/medbay/storage)
 "KB" = (
@@ -5696,6 +5909,7 @@
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hallway/lower)
 "KK" = (
@@ -5748,6 +5962,7 @@
 /turf/simulated/floor/plating,
 /area/ship/farfleet/maintenance/waste)
 "Ls" = (
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /obj/effect/floor_decal/industrial/outline/yellow,
 /obj/machinery/suit_storage_unit/away_iccgn_eng,
 /turf/simulated/floor/tiled,
@@ -5757,6 +5972,9 @@
 	dir = 4
 	},
 /obj/machinery/light{
+	dir = 8
+	},
+/obj/effect/floor_decal/borderfloorblack{
 	dir = 8
 	},
 /turf/simulated/floor/tiled/dark,
@@ -5807,6 +6025,7 @@
 	},
 /obj/item/gun/launcher/grenade,
 /obj/item/storage/box/fragshells,
+/obj/item/storage/box/fragshells,
 /turf/simulated/floor/tiled/dark,
 /area/ship/farfleet/crew/brig/emergency_armory)
 "Ms" = (
@@ -5855,6 +6074,7 @@
 	icon_state = "map-scrubbers";
 	dir = 1
 	},
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hallway/lower)
 "MJ" = (
@@ -5966,6 +6186,7 @@
 	dir = 5
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/effect/floor_decal/corner/paleblue/diagonal,
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/medbay/storage)
 "NJ" = (
@@ -5993,6 +6214,9 @@
 /area/ship/farfleet/engineering/storage)
 "NU" = (
 /obj/machinery/body_scanconsole,
+/obj/effect/floor_decal/corner/paleblue{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/medbay)
 "Ob" = (
@@ -6173,6 +6397,10 @@
 "Pe" = (
 /obj/structure/table/woodentable_reinforced/ebony,
 /obj/item/reagent_containers/food/drinks/teapot,
+/obj/effect/floor_decal/borderfloorblack{
+	dir = 6
+	},
+/obj/effect/floor_decal/borderfloorblack/corner2,
 /turf/simulated/floor/tiled/dark,
 /area/ship/farfleet/command/bridge)
 "Pn" = (
@@ -6258,6 +6486,10 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
+/obj/effect/floor_decal/industrial/warning{
+	dir = 9
+	},
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/command/eva)
 "PK" = (
@@ -6336,6 +6568,7 @@
 	name = "west bump";
 	pixel_x = -24
 	},
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/command/eva)
 "Qu" = (
@@ -6356,6 +6589,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hallway/lower)
 "Qw" = (
@@ -6417,6 +6651,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hallway/lower)
 "Ra" = (
@@ -6427,11 +6662,19 @@
 "Rc" = (
 /obj/effect/submap_landmark/joinable_submap/farfleet,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /obj/effect/floor_decal/industrial/warning{
 	dir = 5
 	},
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hallway/lower)
+"Rf" = (
+/obj/structure/table/woodentable/mahogany,
+/obj/structure/sign/poster/nyc_krotovuha{
+	pixel_y = 32
+	},
+/turf/simulated/floor/wood/maple,
+/area/ship/farfleet/maintenance)
 "Ri" = (
 /obj/effect/wallframe_spawn/reinforced_phoron,
 /obj/machinery/door/firedoor{
@@ -6481,8 +6724,13 @@
 /area/ship/farfleet/maintenance)
 "RC" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hallway/lower)
+"RG" = (
+/obj/effect/floor_decal/corner/paleblue/diagonal,
+/turf/simulated/floor/tiled/white,
+/area/ship/farfleet/medbay)
 "RI" = (
 /obj/effect/paint/dark_gunmetal,
 /turf/simulated/wall/r_wall,
@@ -6565,6 +6813,10 @@
 	},
 /turf/simulated/floor/reinforced/hydrogen,
 /area/ship/farfleet/engineering/atmospherics)
+"Sy" = (
+/obj/effect/shuttle_landmark/nav_farfleet/nav1,
+/turf/space,
+/area/space)
 "SB" = (
 /obj/structure/table/rack,
 /obj/item/barrier,
@@ -6663,6 +6915,10 @@
 "Tq" = (
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 4
+	},
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
+/obj/effect/floor_decal/industrial/warning{
+	dir = 8
 	},
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/command/eva)
@@ -6779,6 +7035,7 @@
 	dir = 8;
 	pixel_x = 23
 	},
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/command/equipment)
 "Ul" = (
@@ -6829,6 +7086,7 @@
 /area/ship/farfleet/engineering/atmospherics)
 "Vh" = (
 /obj/machinery/atmospherics/unary/vent_pump/on,
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hallway/lower)
 "VF" = (
@@ -6960,6 +7218,19 @@
 	},
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/engineering/equipment)
+"WC" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/effect/floor_decal/corner/paleblue{
+	dir = 5
+	},
+/turf/simulated/floor/tiled/white,
+/area/ship/farfleet/medbay)
 "WK" = (
 /obj/effect/paint/ocean,
 /obj/structure/cable{
@@ -6998,6 +7269,7 @@
 	icon_state = "0-2";
 	d2 = 2
 	},
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/command/equipment)
 "WX" = (
@@ -7147,22 +7419,31 @@
 	},
 /turf/simulated/floor,
 /area/ship/farfleet/dock)
+"Yv" = (
+/obj/effect/floor_decal/corner/paleblue{
+	dir = 6
+	},
+/turf/simulated/floor/tiled/white,
+/area/ship/farfleet/medbay)
 "YB" = (
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/effect/floor_decal/corner/paleblue/diagonal,
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/medbay/storage)
 "YE" = (
 /obj/structure/bed/chair/comfy/blue,
+/obj/effect/floor_decal/corner/paleblue/diagonal,
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/medbay)
 "YF" = (
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/effect/floor_decal/corner/paleblue/diagonal,
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/medbay)
 "YM" = (
@@ -7207,6 +7488,7 @@
 /area/ship/farfleet/dock)
 "Zi" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hallway/lower)
 "Zk" = (
@@ -7234,6 +7516,13 @@
 	},
 /turf/simulated/floor/reinforced/airless,
 /area/ship/farfleet/command/launcher)
+"ZD" = (
+/obj/structure/bed/chair/comfy/blue,
+/obj/effect/floor_decal/borderfloorblack{
+	dir = 9
+	},
+/turf/simulated/floor/tiled/dark,
+/area/ship/farfleet/command/bridge)
 "ZH" = (
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	icon_state = "map_vent_out";
@@ -7244,6 +7533,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/farfleet/command/launcher)
 "ZN" = (
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /obj/effect/floor_decal/industrial/outline/yellow,
 /obj/structure/table/rack,
 /obj/item/device/suit_cooling_unit,
@@ -8957,7 +9247,7 @@ aa
 aa
 aa
 aa
-aa
+Sy
 aa
 aa
 aa
@@ -13090,7 +13380,7 @@ ky
 hD
 hD
 Mr
-hD
+mN
 ky
 cn
 cn
@@ -13451,7 +13741,7 @@ ER
 ms
 gk
 Dz
-vV
+fq
 ky
 CJ
 vW
@@ -14419,7 +14709,7 @@ oq
 eV
 ox
 rM
-Ad
+nA
 Ad
 Ad
 eV
@@ -14434,7 +14724,7 @@ ma
 ma
 pu
 zM
-hH
+lg
 hH
 hH
 zM
@@ -14633,7 +14923,7 @@ aa
 aa
 aa
 aa
-aa
+kj
 aa
 aa
 aa
@@ -14678,7 +14968,7 @@ ma
 ma
 ma
 zM
-tF
+Rf
 tF
 Ob
 zM
@@ -14904,7 +15194,7 @@ aa
 Cp
 Cp
 eV
-TD
+ZD
 Lu
 Dl
 eV
@@ -14915,7 +15205,7 @@ Ad
 yb
 Dz
 Dz
-vV
+fq
 zM
 zM
 zM
@@ -15148,7 +15438,7 @@ aa
 Cp
 eV
 eV
-TD
+tt
 HI
 Pe
 eV
@@ -15281,7 +15571,7 @@ Bz
 Dv
 GM
 Dz
-vV
+fq
 bC
 bC
 bC
@@ -15393,8 +15683,8 @@ ng
 ng
 zE
 ow
-kF
-kF
+xB
+xB
 gh
 dl
 dl
@@ -15403,7 +15693,7 @@ dl
 Dv
 KG
 Dz
-He
+hk
 Pc
 Ei
 Cq
@@ -15530,7 +15820,7 @@ Pc
 lw
 cx
 cg
-DS
+RG
 JF
 Pc
 pJ
@@ -15649,7 +15939,7 @@ eb
 eb
 cX
 wE
-DS
+Yv
 pO
 Kf
 NU
@@ -16015,10 +16305,10 @@ RC
 lf
 Ak
 pS
-DS
+vK
 lC
 Io
-DS
+wI
 Ie
 ne
 JS
@@ -16130,7 +16420,7 @@ Yi
 zO
 qd
 IM
-iG
+gS
 zt
 Dz
 Vh
@@ -16140,7 +16430,7 @@ wE
 YE
 rc
 Wc
-OD
+WC
 qS
 SX
 NH
@@ -16262,7 +16552,7 @@ Pc
 YF
 fD
 Io
-DS
+wI
 xc
 ne
 oW
@@ -16867,7 +17157,7 @@ iV
 Nk
 iV
 Dz
-vV
+fq
 bG
 bG
 bG

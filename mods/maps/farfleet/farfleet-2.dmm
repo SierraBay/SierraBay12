@@ -112,6 +112,7 @@
 /area/ship/snz)
 "bn" = (
 /obj/machinery/portable_atmospherics/hydroponics,
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hydroponics)
 "bo" = (
@@ -142,6 +143,10 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
+/obj/effect/floor_decal/industrial/warning{
+	dir = 10
+	},
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hallway/upper)
 "bz" = (
@@ -164,6 +169,9 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/effect/floor_decal/corner/red{
+	dir = 9
+	},
 /turf/simulated/floor/tiled/dark,
 /area/ship/farfleet/crew/brig)
 "bH" = (
@@ -176,6 +184,7 @@
 	dir = 5
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hydroponics)
 "bJ" = (
@@ -247,6 +256,7 @@
 /area/ship/farfleet/crew/canteen)
 "cz" = (
 /obj/machinery/vending/sovietsoda,
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hallway/upper)
 "cD" = (
@@ -431,6 +441,9 @@
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 8
 	},
+/obj/effect/floor_decal/corner/red/three_quarters{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/dark,
 /area/ship/farfleet/crew/brig)
 "eo" = (
@@ -491,6 +504,7 @@
 /turf/simulated/wall/r_wall,
 /area/ship/farfleet/barracks/armory)
 "eD" = (
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hydroponics)
 "eE" = (
@@ -546,6 +560,10 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
+	},
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
+/obj/effect/floor_decal/industrial/warning{
+	dir = 6
 	},
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hallway/upper)
@@ -682,6 +700,7 @@
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
+/obj/machinery/photocopier,
 /turf/simulated/floor/tiled/techmaint,
 /area/ship/farfleet/maintenance/anomaly)
 "hn" = (
@@ -921,6 +940,7 @@
 	dir = 1;
 	pixel_y = 27
 	},
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hydroponics)
 "jG" = (
@@ -969,11 +989,13 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hallway/upper)
 "kz" = (
 /obj/effect/floor_decal/industrial/outline/red,
 /obj/structure/closet/secure_closet/guncabinet/farfleet/utility,
+/obj/item/storage/box/emps,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/barracks/armory)
 "kH" = (
@@ -1038,10 +1060,12 @@
 /obj/structure/closet/secure_closet/hydroponics{
 	req_access = list()
 	},
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hydroponics)
 "kS" = (
 /obj/machinery/light,
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hydroponics)
 "kU" = (
@@ -1105,6 +1129,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hydroponics)
 "lP" = (
@@ -1552,6 +1577,7 @@
 /turf/simulated/floor/plating,
 /area/ship/snz)
 "pT" = (
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hallway/upper)
 "qa" = (
@@ -1830,10 +1856,17 @@
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/farfleet/command/hangar_canisters)
+"sO" = (
+/obj/effect/floor_decal/corner/red/three_quarters{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/dark,
+/area/ship/farfleet/crew/brig)
 "sX" = (
 /obj/machinery/vending/hydronutrients{
 	dir = 4
 	},
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hydroponics)
 "sY" = (
@@ -1929,6 +1962,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hallway/upper)
 "ub" = (
@@ -2120,6 +2154,11 @@
 	},
 /turf/simulated/floor/tiled/freezer,
 /area/ship/farfleet/crew/toilet)
+"vN" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
+/turf/simulated/floor/tiled,
+/area/ship/farfleet/crew/hallway/upper)
 "vP" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
@@ -2195,6 +2234,12 @@
 	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/barracks)
+"wA" = (
+/obj/effect/floor_decal/corner/red{
+	dir = 6
+	},
+/turf/simulated/floor/tiled/dark,
+/area/ship/farfleet/crew/brig)
 "wB" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -2203,6 +2248,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hydroponics)
 "wD" = (
@@ -2213,6 +2259,7 @@
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 8
 	},
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hydroponics)
 "wJ" = (
@@ -2237,6 +2284,7 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /obj/machinery/light,
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hallway/upper)
 "wZ" = (
@@ -2355,6 +2403,10 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/plating,
 /area/ship/farfleet/command/snz_hangar)
+"xP" = (
+/obj/effect/shuttle_landmark/nav_farfleet/nav3,
+/turf/space,
+/area/space)
 "xQ" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -2432,10 +2484,15 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/crew/canteen)
+"ys" = (
+/obj/effect/shuttle_landmark/nav_farfleet/nav2,
+/turf/space,
+/area/space)
 "yA" = (
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hydroponics)
 "yB" = (
@@ -2447,6 +2504,10 @@
 /area/ship/farfleet/maintenance/anomaly)
 "yK" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
+/obj/effect/floor_decal/industrial/warning{
+	dir = 5
+	},
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hallway/upper)
 "yQ" = (
@@ -2594,6 +2655,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hydroponics)
 "Ay" = (
@@ -2657,6 +2719,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hallway/upper)
 "AW" = (
@@ -2695,6 +2758,7 @@
 	icon_state = "map-scrubbers";
 	dir = 1
 	},
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hallway/upper)
 "Bf" = (
@@ -2733,6 +2797,9 @@
 "Bi" = (
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 8
+	},
+/obj/effect/floor_decal/corner/red{
+	dir = 9
 	},
 /turf/simulated/floor/tiled/dark,
 /area/ship/farfleet/crew/brig)
@@ -2953,6 +3020,11 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /obj/machinery/light,
+/obj/structure/sign/hydro{
+	dir = 1;
+	pixel_y = -35
+	},
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hallway/upper)
 "Dz" = (
@@ -3090,6 +3162,9 @@
 /turf/simulated/floor/tiled/steel_grid,
 /area/ship/snz)
 "Ep" = (
+/obj/effect/floor_decal/corner/red{
+	dir = 9
+	},
 /turf/simulated/floor/tiled/dark,
 /area/ship/farfleet/crew/brig)
 "Ez" = (
@@ -3133,6 +3208,9 @@
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 26
+	},
+/obj/effect/floor_decal/corner/red{
+	dir = 9
 	},
 /turf/simulated/floor/tiled/dark,
 /area/ship/farfleet/crew/brig)
@@ -3193,6 +3271,7 @@
 	pixel_x = 24;
 	req_access = list("ACCESS_ICCGN")
 	},
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hydroponics)
 "FI" = (
@@ -3304,6 +3383,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hydroponics)
 "Hj" = (
@@ -3465,6 +3545,9 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/effect/floor_decal/corner/red/three_quarters{
+	dir = 1
+	},
 /turf/simulated/floor/tiled/dark,
 /area/ship/farfleet/crew/brig)
 "Jt" = (
@@ -3523,6 +3606,10 @@
 /area/ship/farfleet/command/snz_hangar)
 "Kl" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
+/obj/effect/floor_decal/industrial/warning{
+	dir = 9
+	},
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hallway/upper)
 "Ko" = (
@@ -3559,6 +3646,11 @@
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/snz)
+"KE" = (
+/obj/structure/table/steel_reinforced,
+/obj/machinery/microscope,
+/turf/simulated/floor/tiled/techmaint,
+/area/ship/farfleet/maintenance/anomaly)
 "KF" = (
 /obj/machinery/shipsensors,
 /obj/structure/railing/mapped{
@@ -3581,6 +3673,9 @@
 	name = "north bump";
 	pixel_y = 24;
 	req_access = list("ACCESS_ICCGN")
+	},
+/obj/effect/floor_decal/corner/red{
+	dir = 10
 	},
 /turf/simulated/floor/tiled/dark,
 /area/ship/farfleet/crew/brig)
@@ -3703,6 +3798,7 @@
 /obj/item/paper/farfleet/turrets{
 	language = "Pan-Slavic"
 	},
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hallway/upper)
 "LZ" = (
@@ -3884,6 +3980,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
 	},
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hydroponics)
 "Ol" = (
@@ -4234,6 +4331,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hallway/upper)
 "Sp" = (
@@ -4353,6 +4451,7 @@
 /obj/machinery/vending/hydroseeds{
 	dir = 4
 	},
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hydroponics)
 "Tz" = (
@@ -4446,6 +4545,7 @@
 /area/ship/farfleet/crew/brig/css)
 "Ua" = (
 /obj/machinery/smartfridge/drying_rack,
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hydroponics)
 "Ud" = (
@@ -4507,6 +4607,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/ship/snz)
+"UH" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/effect/floor_decal/corner/red{
+	dir = 10
+	},
+/turf/simulated/floor/tiled/dark,
+/area/ship/farfleet/crew/brig)
 "UQ" = (
 /obj/effect/catwalk_plated,
 /obj/structure/cable{
@@ -4727,6 +4836,7 @@
 /area/ship/farfleet/command/snz_hangar)
 "VU" = (
 /obj/machinery/atmospherics/unary/vent_pump/on,
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hallway/upper)
 "VX" = (
@@ -4768,6 +4878,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hallway/upper)
 "WH" = (
@@ -4887,6 +4998,7 @@
 	dir = 1;
 	pixel_y = -24
 	},
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hydroponics)
 "Yc" = (
@@ -4895,6 +5007,9 @@
 	},
 /obj/machinery/light{
 	dir = 1
+	},
+/obj/structure/sign/poster/nyc_no_alcohol{
+	pixel_y = 32
 	},
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/crew/canteen)
@@ -5038,6 +5153,7 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hallway/upper)
 "Zw" = (
@@ -10670,7 +10786,7 @@ aa
 aa
 aa
 aa
-aa
+xP
 aa
 aa
 aa
@@ -11979,8 +12095,8 @@ hJ
 UU
 wr
 qs
-Kl
-Kl
+vN
+vN
 wP
 FI
 aQ
@@ -12706,11 +12822,11 @@ st
 kl
 ih
 st
-Ep
+sO
 Ly
 Jm
-Ep
-Ep
+wA
+wA
 kl
 pT
 Wy
@@ -12947,7 +13063,7 @@ ab
 ab
 st
 st
-bF
+UH
 yf
 en
 Ep
@@ -14188,7 +14304,7 @@ zR
 hj
 oX
 yB
-fN
+KE
 fN
 zR
 lC
@@ -15239,7 +15355,7 @@ aa
 aa
 aa
 aa
-aa
+ys
 aa
 aa
 aa
