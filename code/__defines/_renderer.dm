@@ -195,19 +195,12 @@ GLOBAL_LIST_EMPTY(zmimic_renderers)
 	)
 	mouse_opacity = MOUSE_OPACITY_UNCLICKABLE
 
-<<<<<<< ours
-=======
 
->>>>>>> theirs
 /atom/movable/renderer/lighting/Initialize()
 	. = ..()
 	filters += filter(
 		type = "alpha",
-<<<<<<< ours
-		render_source = EMISSIVE_RENDER_TARGET,
-=======
 		render_source = EMISSIVE_TARGET,
->>>>>>> theirs
 		flags = MASK_INVERSE
 	)
 
@@ -355,11 +348,7 @@ GLOBAL_LIST_EMPTY(zmimic_renderers)
 	group = RENDER_GROUP_NONE
 	plane = EMISSIVE_PLANE
 	mouse_opacity = MOUSE_OPACITY_UNCLICKABLE
-<<<<<<< ours
-	render_target_name = EMISSIVE_RENDER_TARGET
-=======
 	render_target_name = EMISSIVE_TARGET
->>>>>>> theirs
 
 /atom/movable/renderer/emissive/Initialize()
 	. = ..()
