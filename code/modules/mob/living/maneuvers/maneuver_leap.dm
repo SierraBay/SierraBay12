@@ -54,8 +54,6 @@
 	if(ishuman(user) && !user.lying && ismob(target) && user.Adjacent(target))
 		var/mob/living/carbon/human/H = user
 		H.species.attempt_grab(H, target)
-<<<<<<< ours
-=======
 
 /singleton/maneuver/leap/quick
 	name = "quick jump"
@@ -76,4 +74,3 @@
 		animate(pixel_z = user.default_pixel_z, time = 3, easing = SINE_EASING | EASE_OUT)
 		user.throw_at(get_turf(target), strength, 1, user, FALSE, new Callback(src, /singleton/maneuver/leap/proc/end_leap, user, target))
 		addtimer(new Callback(user, /mob/living/proc/jump_layer_shift_end), 4.5)
->>>>>>> theirs
