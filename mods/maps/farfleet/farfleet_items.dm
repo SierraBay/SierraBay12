@@ -104,10 +104,10 @@
 	..()
 	if(ammo_magazine)
 		icon_state = "nostockrifle"
-		wielded_item_state = "mr735nostockrifle_wielded"
+		wielded_item_state = "mr735nostockrifle-wielded"
 	else
-		icon_state = "nostockrifle_empty"
-		wielded_item_state = "mr735nostockrifle_wielded_empty"
+		icon_state = "nostockrifle-empty"
+		wielded_item_state = "mr735nostockrifle-wielded-empty"
 
 
 /obj/item/gun/projectile/automatic/mbr
@@ -124,7 +124,7 @@
 	magazine_type = /obj/item/ammo_magazine/rifle
 	allowed_magazines = /obj/item/ammo_magazine/rifle
 	bulk = GUN_BULK_RIFLE + 1
-	wielded_item_state = "mbr_bullpup_wielded"
+	wielded_item_state = "mbr_bullpup-wielded"
 	mag_insert_sound = 'sound/weapons/guns/interaction/ltrifle_magin.ogg'
 	mag_remove_sound = 'sound/weapons/guns/interaction/ltrifle_magout.ogg'
 
@@ -139,7 +139,7 @@
 	if(ammo_magazine)
 		icon_state = "mbr_bullpup"
 	else
-		icon_state = "mbr_bullpup_empty"
+		icon_state = "mbr_bullpup-empty"
 
 // CSS Anti-psionics stuff
 
@@ -157,40 +157,19 @@
  * ========
  */
 
-/obj/item/folder/envelope/farfleet
-	desc = "A thick envelope. The ICCG crest is stamped in the corner, along with 'Tolko dlya sluzhebnogo polzovaina'."
+/obj/item/paper/farfleet/turrets
+	name = "About Turrets"
+	info = {"<h1>По поводу турелей.</h1>
+			<p>Вася, я не знаю, как ты настраивал эти чёртовы турели, но у них слетает проверка доступа каждый раз как весь экипаж уходит в криосон. Да, я знаю, что они не должны сбоить из-за того, что все спят, но вот они так делают. Наше счастье, что они просто начинают оглушающим лучом бить,а не летальным режимом.</p>
+			<h1>ПЕРЕЗАГРУЗИ КОНТРОЛЛЕР ТУРЕЛЕЙ, КАК ПОЙДЁШЬ В АНГАР.</h1>
+		"}
 
-/obj/item/folder/envelope/farfleet/Initialize()
-	. = ..()
-	var/memo = {"
-	<tt><center><b><font color='red'>ДЛЯ СЛУЖЕБНОГО ПОЛЬЗОВАНИЯ<br>КОДОВОЕ СЛОВО: МАГНУС</font></b>
-	<h3>КОМАНДОВАНИЕ ПИОНЕРСКОГО КОРПУСА</h3>
-	<img src = terralogo.png>
-	</center>
-	<b>ОТ:</b>Адмирал Igor Romani<br>
-	<b>КОМУ:</b> Капитану судна (код 39-289-1)<br>
-	<b>ТЕМА:</b> Общий Приказ<br>
-	<hr>
-	Капитан,<br>
-	В текущий вылет ваше судно должно посетить данные звёздные системы, находящиеся близ границ Конфедеративных Систем Лордании.
-	<li>[generate_system_name()]</li>
-	<li>[GLOB.using_map.system_name]</li>
-	<li>[generate_system_name()]</li>
-	<li>[generate_system_name()]</li>
-	<br>
-	Вашей задачей в данном регионе является патрулирование пограничных систем КСЛ<br>
-	Наши лорданские союзники выказывают свою обеспокоенность возросшей активностью ЦПСС в зоне экспансии, поэтому ваша миссия, по большей части успокоительная для Тьяннанского правительства<br>
-	Нам известно о возросшей активности Пятого флота и о нескольких миссиях Экспедиционного Корпуса в зоне экспансии. Помимо этого нам также известно, что в данный регион отправляется корвет класса "Мако" с обозначением ИКН "Сьерра", принадлежащий корпорации НаноТразен.<br>
-	Вы можете взаимодействовать с корпоративными судами на ваше усмотрение. Однако целенаправленное нанесение ущерба корпорациям, аффилированным с правительством ЦПСС сейчас не в наших интересах. Те же указания остаются и в отношении судов Торгового Союза.<br>
-	Однако я прошу вас соблюдать предельную осторожность. По имеющимся данным в секторах вашего патрулирования могут находиться отдельные банды пиратов, включая воксов.<br>
-	Также нашу крайнюю озабоченность вызывают обстоятельства гибели ГЭК "Магнус". По непроверенным источникам за его уничтоженеим может стоять неизвестный человечеству разумный вид.<br>
-	Конфедерация рассчитывает на вас.<br>
-
-	<font face="Verdana" color=black><font face="Times New Roman"><i>Igor Romani</i></font></font></tt><br>
-	<i>This paper has been stamped with the stamp of ICCGN Pioneer Corps operations command.</i>
+/obj/item/paper/farfleet/engines
+	name = "Engines Usage"
+	info = {"
+		<div style="text-align: center;">
+			<p>Я не буду сейчас долго расписывать как работает атмосфера на Гарибальди, которую гайцы ТОЧНО не утащили у клятых марсиан, но принцип работы примерно следующий:</p>
+			<p>Основные маршевые двигатели - ионные. Да, не слишком быстро, но надёжно если после затухания реакции в токамаке сможете нормально его настроить. А газовые двигатели - УСКОРИТЕЛИ. Но летать на них постоянно не советую, углекислота не бесконечная.</p>
+		</div>
+		<p><i>Ченков В.П.</i></p>
 	"}
-	new/obj/item/paper/important(src, memo, "Pioneer Corps Orders")
-
-/obj/item/paper/turrets
-	name = "paper- 'About Turrets.'"
-	info = "<h1>По поводу турелей.</h1><p>Вася, я не знаю, как ты настраивал эти чёртовы турели, но у них слетает проверка доступа каждый раз как весь экипаж уходит в криосон. Да, я знаю, что они не должны сбоить из-за того, что все спят, но вот они так делают. Наше счастье, что они просто начинают оглушающим лучом бить,а не летальным режимом.</p><h1>ПЕРЕЗАГРУЗИ КОНТРОЛЛЕР ТУРЕЛЕЙ, КАК ПОЙДЁШЬ В АНГАР.</h1>"

@@ -1,11 +1,11 @@
 /datum/shuttle/autodock/overmap/snz
 	name = "SNZ Speedboat"
-	warmup_time = 5
+	warmup_time = 10
 	dock_target = "snz_shuttle"
 	current_location = "nav_hangar_snz"
 	range = 1
 	shuttle_area = /area/ship/snz
-	fuel_consumption = 7
+	fuel_consumption = 4
 	defer_initialisation = TRUE
 	flags = SHUTTLE_FLAGS_PROCESS
 	skill_needed = SKILL_BASIC
@@ -18,11 +18,11 @@
 
 /obj/effect/overmap/visitable/ship/landable/snz
 	name = "SNZ Speedboat"
-	desc = "SNZ-350 Speedboat. More lighter than it's predecessor, but more maneuverable."
+	desc = "SNZ-350 Speedboat. Multipurpose shuttle, used for personnel and light venchles delivery. This one definetly belongs to ICCG."
 	shuttle = "SNZ Speedboat"
 	fore_dir = WEST
 	color = "#ff7300"
-	vessel_mass = 5000
+	vessel_mass = 1000
 	vessel_size = SHIP_SIZE_SMALL
 
 
@@ -43,6 +43,10 @@
 	landmark_tag = "nav_hangar_snzalt"
 
 /obj/effect/shuttle_landmark/snz/dock
-	name = "NSV Sierra Dock"
+	name = "NSV Sierra Restricted Dock"
 	landmark_tag = "nav_snz_dock"
-	docking_controller = "nuke_shuttle_dock_airlock" // TODO Изменить на шаттл хейста из-за изменившегося местоположения выхода
+	docking_controller = "rescue_shuttle_dock_airlock"
+
+/obj/effect/shuttle_landmark/snz/xeno
+	name = "NSV Sierra Xenobiology Vent"
+	landmark_tag = "nav_snz_xenobio"

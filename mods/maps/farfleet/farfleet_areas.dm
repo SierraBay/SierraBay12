@@ -64,7 +64,7 @@
 	req_access = list(access_away_iccgn, access_away_iccgn_captain)
 
 /area/ship/farfleet/crew/brig/css
-	name = "\improper Counselor Room"
+	name = "\improper Counsultant Room"
 	icon_state = "red"
 	req_access = list(access_away_iccgn)
 

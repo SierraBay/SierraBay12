@@ -278,7 +278,10 @@
 	access = list(access_away_iccgn, access_away_iccgn_droptroops, access_away_iccgn_sergeant, access_away_iccgn_captain, access_engine_equip)
 
 /datum/job/iccgn_pawn/equip(mob/living/carbon/human/H)
-	psi_faculties = list("[PSI_COERCION]" = PSI_RANK_MASTER)
+	if(H.mind.role_alt_title == "CSS Consultant")
+		psi_faculties = list("[PSI_COERCION]" = PSI_RANK_MASTER)
+	return ..()
+
 
 /* OUTFITS
  * =======
