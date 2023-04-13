@@ -176,7 +176,7 @@ var/global/singleton/overmap_event_handler/overmap_event_handler = new()
 
 	var/list/colors = list() //Pick a color from this list on init
 
-// [SIERRA]
+
 	// Vars that determine movability, current moving direction, and moving speed //
 	/// Whether this event can move or not
 	var/movable_event = FALSE
@@ -199,7 +199,6 @@ var/global/singleton/overmap_event_handler/overmap_event_handler = new()
 	requires_contact = TRUE
 	instant_contact = TRUE
 
-// [/SIERRA]
 
 /obj/effect/overmap/event/Initialize()
 	. = ..()
@@ -207,9 +206,10 @@ var/global/singleton/overmap_event_handler/overmap_event_handler = new()
 	overmap_event_handler.update_hazards(loc)
 	if(LAZYLEN(colors))
 		color = pick(colors)
-// [SIERRA]
+		
 	if(movable_event)
 		start_moving()
+		
 	else if(prob(movable_event_chance))
 		make_movable()
 
@@ -241,7 +241,7 @@ var/global/singleton/overmap_event_handler/overmap_event_handler = new()
 	if(istype(A,/turf/unsimulated/map/edge))
 		handle_wraparound()
 	..()
-// [/SIERRA]
+
 
 /obj/effect/overmap/event/Move()
 	var/turf/old_loc = loc
