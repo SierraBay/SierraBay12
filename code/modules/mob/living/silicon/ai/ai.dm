@@ -103,12 +103,12 @@ var/global/list/ai_verbs_default = list(
 	var/last_failed_malf_message = null
 	var/last_failed_malf_title = null
 
-	var/datum/ai_icon/selected_sprite			// The selected icon set
+	var/singleton/ai_icon/selected_sprite			// The selected icon set
 	var/carded
 
 	var/multitool_mode = 0
 
-	var/default_ai_icon = /datum/ai_icon/blue
+	var/default_ai_icon = /singleton/ai_icon/blue
 	var/static/list/custom_ai_icons_by_ckey_and_name
 
 /mob/living/silicon/ai/proc/add_ai_verbs()
@@ -276,7 +276,7 @@ var/global/list/ai_verbs_default = list(
 			if(!(dead_icon_state in custom_icon_states))
 				dead_icon_state = ""
 
-			selected_sprite = new/datum/ai_icon("Custom Icon [custom_index++]", alive_icon_state, dead_icon_state, COLOR_WHITE, CUSTOM_ITEM_SYNTH)
+			selected_sprite = new/singleton/ai_icon("Custom Icon [custom_index++]", alive_icon_state, dead_icon_state, COLOR_WHITE, CUSTOM_ITEM_SYNTH)
 			custom_icons += selected_sprite
 	update_icon()
 
@@ -307,9 +307,9 @@ var/global/list/ai_verbs_default = list(
 
 /mob/living/silicon/ai/proc/available_icons()
 	. = list()
-	var/all_ai_icons = GET_SINGLETON_SUBTYPE_MAP(/datum/ai_icon)
+	var/all_ai_icons = GET_SINGLETON_SUBTYPE_MAP(/singleton/ai_icon)
 	for(var/ai_icon_type in all_ai_icons)
-		var/datum/ai_icon/ai_icon = all_ai_icons[ai_icon_type]
+		var/singleton/ai_icon/ai_icon = all_ai_icons[ai_icon_type]
 		if(ai_icon.may_used_by_ai(src))
 			dd_insertObjectList(., ai_icon)
 
@@ -546,7 +546,8 @@ var/global/list/ai_verbs_default = list(
 		var/personnel_list[] = list()
 
 		for(var/datum/computer_file/report/crew_record/t in GLOB.all_crew_records)//Look in data core locked.
-			personnel_list["[t.get_name()]: [t.get_rank()]"] = t.photo_front//Pull names, rank, and image.
+			// personnel_list["[t.get_name()]: [t.get_rank()]"] = t.photo_front//Pull names, rank, and image. // BAY
+			personnel_list["[t.get_name()]: [t.get_rank()]"] = t.photo_clean_front // SIERRA
 
 		if(length(personnel_list))
 			input = input("Select a crew member:") as null|anything in personnel_list
@@ -620,31 +621,30 @@ var/global/list/ai_verbs_default = list(
 		camera_light_on = world.timeofday + 1 * 20 // Update the light every 2 seconds.
 
 
-/mob/living/silicon/ai/attackby(obj/item/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/aicard))
-
-		var/obj/item/aicard/card = W
+/mob/living/silicon/ai/use_tool(obj/item/tool, mob/user, list/click_params)
+	// Intellicard - Swap AI
+	if (istype(tool, /obj/item/aicard))
+		var/obj/item/aicard/card = tool
 		card.grab_ai(src, user)
+		return TRUE
 
-	else if(isWrench(W))
-		if(anchored)
-			user.visible_message(SPAN_NOTICE("\The [user] starts to unbolt \the [src] from the plating..."))
-			if(!do_after(user, 4 SECONDS, src, DO_REPAIR_CONSTRUCT))
-				user.visible_message(SPAN_NOTICE("\The [user] decides not to unbolt \the [src]."))
-				return
-			user.visible_message(SPAN_NOTICE("\The [user] finishes unfastening \the [src]!"))
-			anchored = FALSE
-			return
-		else
-			user.visible_message(SPAN_NOTICE("\The [user] starts to bolt \the [src] to the plating..."))
-			if(!do_after(user, 4 SECONDS, src, DO_REPAIR_CONSTRUCT))
-				user.visible_message(SPAN_NOTICE("\The [user] decides not to bolt \the [src]."))
-				return
-			user.visible_message(SPAN_NOTICE("\The [user] finishes fastening down \the [src]!"))
-			anchored = TRUE
-			return
-	else
-		return ..()
+	// Wrench - Toggle anchored
+	if (isWrench(tool))
+		user.visible_message(
+			SPAN_NOTICE("\The [user] starts [anchored ? "unbolting" : "bolting"] \the [src] from the floor with \a [tool]."),
+			SPAN_NOTICE("You start [anchored ? "unbolting" : "bolting"] \the [src] from the floor with \the [tool].")
+		)
+		if (!do_after(user, 4 SECONDS, src, DO_REPAIR_CONSTRUCT) || !user.use_sanity_check(src, tool))
+			return TRUE
+		anchored = !anchored
+		user.visible_message(
+			SPAN_NOTICE("\The [user] [anchored ? "bolts" : "unbolts"] \the [src] from the floor with \a [tool]."),
+			SPAN_NOTICE("You [anchored ? "bolts" : "unbolts"] \the [src] from the floor with \the [tool].")
+		)
+		return
+
+	return ..()
+
 
 /mob/living/silicon/ai/proc/control_integrated_radio()
 	set name = "Radio Settings"
