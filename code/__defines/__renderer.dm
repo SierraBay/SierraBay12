@@ -159,19 +159,11 @@
 	#define HUD_ITEM_LAYER               3
 	#define HUD_ABOVE_ITEM_LAYER         4
 
-<<<<<<< ours
-#define ABOVE_HUD_PLANE                7
-
-/// This plane masks out lighting to create an "emissive" effect, ie for glowing lights in otherwise dark areas.
-#define EMISSIVE_PLANE 8
-#define EMISSIVE_RENDER_TARGET "*EMISSIVE_PLANE"
-=======
 /// This plane masks out lighting, to create an "emissive" effect for e.g glowing screens in otherwise dark areas.
 #define EMISSIVE_PLANE 10
 #define EMISSIVE_TARGET "*emissive"
 	/// The layer you should use when you -really- don't want an emissive overlay to be blocked.
 	#define EMISSIVE_LAYER_UNBLOCKABLE 9999
->>>>>>> theirs
 
 //-------------------- Rendering ---------------------
 
