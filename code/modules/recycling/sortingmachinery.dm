@@ -155,17 +155,15 @@
 	name = "small parcel"
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "deliverycrate3"
-<<<<<<< ours
-	drop_sound = 'sound/items/drop/cardboardbox.ogg'
-	pickup_sound = 'sound/items/pickup/cardboardbox.ogg'
-=======
 	health_max = 5
->>>>>>> theirs
 	var/obj/item/wrapped = null
 	var/sortTag = null
 	var/examtext = null
 	var/nameset = 0
 	var/tag_x
+	
+	drop_sound = 'sound/items/drop/cardboardbox.ogg'
+	pickup_sound = 'sound/items/pickup/cardboardbox.ogg'
 
 
 /obj/item/smallDelivery/Destroy()
