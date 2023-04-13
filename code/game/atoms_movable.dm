@@ -28,32 +28,19 @@
 	/// The icon height this movable expects to have by default.
 	var/icon_height = 32
 
-<<<<<<< ours
-	/// Either FALSE, [EMISSIVE_BLOCK_GENERIC], or [EMISSIVE_BLOCK_UNIQUE]
-	var/blocks_emissive = FALSE
-	///Internal holder for emissive blocker object, do not use directly use blocks_emissive
-=======
 	/// Either [EMISSIVE_BLOCK_NONE], [EMISSIVE_BLOCK_GENERIC], or [EMISSIVE_BLOCK_UNIQUE]
 	var/blocks_emissive = EMISSIVE_BLOCK_NONE
 	///Internal holder for emissive blocker object, DO NOT USE DIRECTLY. Use blocks_emissive
->>>>>>> theirs
 	var/mutable_appearance/em_block
 
 /atom/movable/Initialize()
 	if (!isnull(config.glide_size))
 		glide_size = config.glide_size
 	. = ..()
-<<<<<<< ours
-	var/emissive_block = update_emissive_block()
-	if(emissive_block)
-		overlays += emissive_block
-		// Since this overlay is managed by update_overlays proc
-=======
 	var/emissive_block = update_emissive_blocker()
 	if(emissive_block)
 		overlays += emissive_block
 		// Since this overlay is managed by the update_overlays proc
->>>>>>> theirs
 		LAZYADD(managed_overlays, emissive_block)
 
 /atom/movable/Destroy()
@@ -71,31 +58,16 @@
 		if (pulledby.pulling == src)
 			pulledby.pulling = null
 		pulledby = null
-<<<<<<< ours
-
-	if(LAZYLEN(movement_handlers) && !ispath(movement_handlers[1]))
-=======
 	if (LAZYLEN(movement_handlers) && !ispath(movement_handlers[1]))
->>>>>>> theirs
 		QDEL_NULL_LIST(movement_handlers)
 
 	if (bound_overlay)
 		QDEL_NULL(bound_overlay)
-<<<<<<< ours
-
-	if(ismob(virtual_mob))
-		QDEL_NULL(virtual_mob)
-
-	if(em_block)
-		QDEL_NULL(em_block)
-
-=======
 	if (virtual_mob && !ispath(virtual_mob))
 		qdel(virtual_mob)
 		virtual_mob = null
 	if (em_block)
 		QDEL_NULL(em_block)
->>>>>>> theirs
 	return ..()
 
 /atom/movable/proc/update_emissive_block()
