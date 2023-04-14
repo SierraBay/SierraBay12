@@ -239,16 +239,24 @@
  */
 
 /obj/machinery/suit_storage_unit/away_iccgn_med
-	name = "Farfleet Medic Voidsuit Storage Unit"
-	suit= /obj/item/clothing/suit/space/void/medical/alt/sol/prepared
+	name = "Pioneer Corpsman Voidsuit Storage Unit"
+	suit= /obj/item/clothing/suit/space/void/pioneer/prepared
 	boots = /obj/item/clothing/shoes/magboots
 	tank = /obj/item/tank/oxygen
 	req_access = list(access_away_iccgn)
 	islocked = 1
 
 /obj/machinery/suit_storage_unit/away_iccgn_eng
-	name = "Ordnance Technician Voidsuit Storage Unit"
-	suit= /obj/item/clothing/suit/space/void/engineering/alt/sol/prepared
+	name = "Senior Technician Voidsuit Storage Unit"
+	suit= /obj/item/clothing/suit/space/void/pioneer/prepared
+	boots = /obj/item/clothing/shoes/magboots
+	tank = /obj/item/tank/oxygen
+	req_access = list(access_away_iccgn)
+	islocked = 1
+
+/obj/machinery/suit_storage_unit/away_iccgn_pawn
+	name = "CSS Voidsuit Storage Unit"
+	suit= /obj/item/clothing/suit/space/void/pioneer/prepared
 	boots = /obj/item/clothing/shoes/magboots
 	tank = /obj/item/tank/oxygen
 	req_access = list(access_away_iccgn)
@@ -256,7 +264,7 @@
 
 /obj/machinery/suit_storage_unit/away_iccgn_com
 	name = "Captain Voidsuit Storage Unit"
-	suit= /obj/item/clothing/suit/space/void/command/prepared
+	suit= /obj/item/clothing/suit/space/void/pioneer/command/prepared
 	boots = /obj/item/clothing/shoes/magboots
 	tank = /obj/item/tank/oxygen
 	req_access = list(access_away_iccgn, access_away_iccgn_captain)

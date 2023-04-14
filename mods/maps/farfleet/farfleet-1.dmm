@@ -522,6 +522,10 @@
 /obj/item/clothing/head/helmet/ablative,
 /obj/item/clothing/suit/armor/laserproof,
 /obj/item/clothing/head/helmet/ablative,
+/obj/machinery/recharger/wallcharger{
+	dir = 1;
+	pixel_y = -22
+	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/crew/brig/emergency_armory)
 "bG" = (
@@ -785,6 +789,7 @@
 /area/ship/farfleet/engineering/atmospherics)
 "cE" = (
 /obj/structure/table/standard,
+/obj/machinery/recharger,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/crew/hallway)
 "cG" = (
@@ -1003,8 +1008,11 @@
 /area/ship/farfleet/engineering/fussion/control)
 "dp" = (
 /obj/structure/table/rack,
-/obj/item/defibrillator/loaded,
 /obj/effect/floor_decal/industrial/outline/blue,
+/obj/item/storage/box/bodybags{
+	pixel_y = 4
+	},
+/obj/item/defibrillator/loaded,
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/medbay/storage)
 "dr" = (
@@ -1115,6 +1123,7 @@
 "dF" = (
 /obj/effect/floor_decal/corner_steel_grid/diagonal,
 /obj/effect/floor_decal/industrial/outline/yellow,
+/obj/machinery/suit_storage_unit/away_iccgn_pawn,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/command/eva)
 "dG" = (
@@ -2036,6 +2045,12 @@
 /obj/structure/closet/secure_closet/guncabinet{
 	req_access = list("ACCESS_ICCGN")
 	},
+/obj/item/gun/energy/laser/iccg_bonfire,
+/obj/item/gun/energy/laser/iccg_bonfire,
+/obj/item/gun/energy/laser/iccg_bonfire,
+/obj/item/gun/energy/laser/iccg_bonfire,
+/obj/item/storage/box/flashbangs,
+/obj/item/storage/box/anti_photons,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/crew/brig/emergency_armory)
 "hH" = (
@@ -2064,9 +2079,7 @@
 /obj/effect/overmap/visitable/ship/farfleet,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/effect/floor_decal/corner_steel_grid/diagonal,
-/obj/effect/floor_decal/industrial/warning{
-	dir = 9
-	},
+/obj/effect/floor_decal/industrial/warning/fulltile,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hallway/lower)
 "hS" = (
@@ -2959,6 +2972,10 @@
 "mn" = (
 /obj/structure/table/rack,
 /obj/machinery/light,
+/obj/machinery/recharger/wallcharger{
+	dir = 1;
+	pixel_y = -22
+	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/crew/brig/emergency_armory)
 "mo" = (
@@ -3220,9 +3237,13 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/farfleet/engineering/atmospherics)
 "nA" = (
-/obj/machinery/ship_map,
-/turf/simulated/floor/tiled/dark,
-/area/ship/farfleet/command/bridge)
+/obj/structure/closet/secure_closet/guncabinet{
+	req_access = list("ACCESS_ICCGN")
+	},
+/obj/item/gun/energy/ionrifle/small/iccg_stupor,
+/obj/item/gun/energy/ionrifle/small/iccg_stupor,
+/turf/simulated/floor/tiled/dark/monotile,
+/area/ship/farfleet/crew/brig/emergency_armory)
 "nC" = (
 /obj/machinery/disposal/deliveryChute{
 	dir = 8
@@ -3740,6 +3761,10 @@
 /obj/item/clothing/accessory/storage/holster/thigh,
 /obj/item/clothing/accessory/storage/holster/thigh,
 /obj/item/clothing/accessory/storage/holster/thigh,
+/obj/machinery/recharger/wallcharger{
+	dir = 1;
+	pixel_y = -22
+	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/crew/brig/emergency_armory)
 "qQ" = (
@@ -4674,9 +4699,7 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /obj/effect/floor_decal/corner_steel_grid/diagonal,
-/obj/effect/floor_decal/industrial/warning{
-	dir = 10
-	},
+/obj/effect/floor_decal/industrial/warning/fulltile,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hallway/lower)
 "zp" = (
@@ -5356,9 +5379,7 @@
 	dir = 4
 	},
 /obj/effect/floor_decal/corner_steel_grid/diagonal,
-/obj/effect/floor_decal/industrial/warning{
-	dir = 6
-	},
+/obj/effect/floor_decal/industrial/warning/fulltile,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hallway/lower)
 "Gf" = (
@@ -6663,9 +6684,7 @@
 /obj/effect/submap_landmark/joinable_submap/farfleet,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/effect/floor_decal/corner_steel_grid/diagonal,
-/obj/effect/floor_decal/industrial/warning{
-	dir = 5
-	},
+/obj/effect/floor_decal/industrial/warning/fulltile,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hallway/lower)
 "Rf" = (
@@ -7547,6 +7566,11 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/ship/farfleet/command/eva)
+"ZO" = (
+/obj/effect/floor_decal/corner_steel_grid/diagonal,
+/obj/machinery/ship_map,
+/turf/simulated/floor/tiled,
+/area/ship/farfleet/crew/hallway/lower)
 "ZP" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -13377,7 +13401,7 @@ mm
 Ev
 He
 ky
-hD
+nA
 hD
 Mr
 mN
@@ -14348,7 +14372,7 @@ eN
 nt
 IV
 eu
-Dz
+ZO
 Dz
 Dz
 MG
@@ -14709,7 +14733,7 @@ oq
 eV
 ox
 rM
-nA
+Ad
 Ad
 Ad
 eV
@@ -16540,8 +16564,8 @@ JX
 me
 mk
 hn
-dF
 Ls
+dF
 Bo
 mk
 wo

@@ -144,9 +144,7 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /obj/effect/floor_decal/corner_steel_grid/diagonal,
-/obj/effect/floor_decal/industrial/warning{
-	dir = 10
-	},
+/obj/effect/floor_decal/industrial/warning/fulltile,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hallway/upper)
 "bz" = (
@@ -485,7 +483,9 @@
 "ez" = (
 /obj/effect/floor_decal/industrial/hatch/yellow,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/multi_tile/terran,
+/obj/machinery/door/airlock/multi_tile/terran{
+	name = "Anomaly Storage"
+	},
 /turf/simulated/floor/tiled/techmaint,
 /area/ship/farfleet/maintenance/anomaly)
 "eB" = (
@@ -562,14 +562,16 @@
 	dir = 4
 	},
 /obj/effect/floor_decal/corner_steel_grid/diagonal,
-/obj/effect/floor_decal/industrial/warning{
-	dir = 6
-	},
+/obj/effect/floor_decal/industrial/warning/fulltile,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hallway/upper)
 "gc" = (
 /obj/machinery/atmospherics/pipe/manifold/visible/fuel,
 /obj/machinery/meter,
+/obj/machinery/recharger/wallcharger{
+	dir = 8;
+	pixel_x = 22
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/snz)
 "go" = (
@@ -1744,6 +1746,9 @@
 "rm" = (
 /obj/effect/floor_decal/industrial/hatch/yellow,
 /obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/multi_tile/terran{
+	name = "Droptroops Armory"
+	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/barracks/armory)
 "rq" = (
@@ -2108,7 +2113,9 @@
 "vp" = (
 /obj/effect/floor_decal/industrial/hatch/yellow,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/multi_tile/glass/terran,
+/obj/machinery/door/airlock/multi_tile/glass/terran{
+	name = "Droptroops Section"
+	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -2129,6 +2136,8 @@
 "vz" = (
 /obj/effect/floor_decal/industrial/outline/red,
 /obj/structure/closet/secure_closet/guncabinet/farfleet/antitank,
+/obj/item/gun/energy/ionrifle/small/iccg_stupor,
+/obj/item/gun/energy/ionrifle/small/iccg_stupor,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/barracks/armory)
 "vH" = (
@@ -2469,7 +2478,9 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/floor_decal/industrial/hatch/yellow,
-/obj/machinery/door/airlock/multi_tile/glass/terran,
+/obj/machinery/door/airlock/multi_tile/glass/terran{
+	name = "Canteen"
+	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -2505,9 +2516,7 @@
 "yK" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/effect/floor_decal/corner_steel_grid/diagonal,
-/obj/effect/floor_decal/industrial/warning{
-	dir = 5
-	},
+/obj/effect/floor_decal/industrial/warning/fulltile,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hallway/upper)
 "yQ" = (
@@ -2566,6 +2575,11 @@
 /obj/machinery/recharge_station,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/snz)
+"zp" = (
+/obj/structure/table/reinforced,
+/obj/machinery/recharger,
+/turf/simulated/floor/tiled/dark,
+/area/ship/farfleet/barracks)
 "zB" = (
 /obj/structure/cable/green{
 	d1 = 1;
@@ -2831,7 +2845,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/machinery/door/airlock/multi_tile/terran,
+/obj/machinery/door/airlock/multi_tile/terran{
+	name = "Hangar"
+	},
 /turf/simulated/floor/tiled/monotile,
 /area/ship/farfleet/command/snz_hangar)
 "BP" = (
@@ -3539,6 +3555,10 @@
 /area/ship/farfleet/crew/canteen)
 "Jh" = (
 /obj/machinery/atmospherics/pipe/simple/visible/fuel,
+/obj/machinery/recharger/wallcharger{
+	dir = 8;
+	pixel_x = 22
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/snz)
 "Jm" = (
@@ -3607,9 +3627,7 @@
 "Kl" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/effect/floor_decal/corner_steel_grid/diagonal,
-/obj/effect/floor_decal/industrial/warning{
-	dir = 9
-	},
+/obj/effect/floor_decal/industrial/warning/fulltile,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hallway/upper)
 "Ko" = (
@@ -3710,7 +3728,7 @@
 /area/ship/farfleet/crew/canteen)
 "KV" = (
 /obj/machinery/door/airlock{
-	name = "Secondary Storage"
+	name = "Hydroponics"
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/floor_decal/industrial/hatch/yellow,
@@ -5020,7 +5038,9 @@
 "Yi" = (
 /obj/effect/floor_decal/industrial/hatch/yellow,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/multi_tile/terran,
+/obj/machinery/door/airlock/multi_tile/terran{
+	name = "Warehouse"
+	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -5189,6 +5209,14 @@
 	},
 /turf/simulated/floor/tiled/freezer,
 /area/ship/farfleet/crew/freezer)
+"ZA" = (
+/obj/effect/floor_decal/industrial/hatch/yellow,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/multi_tile/terran{
+	name = "Droptroops Locker"
+	},
+/turf/simulated/floor/tiled/dark/monotile,
+/area/ship/farfleet/barracks)
 "ZS" = (
 /obj/structure/bed/chair/shuttle/blue{
 	dir = 8;
@@ -14527,7 +14555,7 @@ Ll
 Ll
 eS
 mc
-wJ
+ZA
 eS
 Ll
 Zw
@@ -14650,7 +14678,7 @@ wD
 Uu
 ju
 Uu
-uA
+zp
 eS
 ME
 ns

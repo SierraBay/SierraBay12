@@ -56,7 +56,7 @@
 	new /obj/item/ammo_magazine/pistol(src)
 
 
-/* WEAPONARY
+/* WEAPONARY - BALLISTICS
  * ========
  */
 
@@ -80,11 +80,12 @@
 	desc = "A cheap rifle for close quarters combat, with an auto-firing mode available. HelTek MR-735 is a standard rifle for ICCG Space-assault Forces, designed without a stock for easier storage and combat in closed spaces. Perfect weapon for some ship's crew."
 	icon = 'mods/maps/farfleet/icons/mr735.dmi'
 	icon_state = "nostockrifle"
-	item_state = "mr735nostockrifle"
+	item_state = "nostockrifle"
 	item_icons = list(
-		icon_l_hand = 'mods/maps/farfleet/icons/mr735.dmi',
-		icon_r_hand = 'mods/maps/farfleet/icons/mr735.dmi',
+		slot_r_hand_str = 'mods/maps/farfleet/icons/righthand.dmi',
+		slot_l_hand_str = 'mods/maps/farfleet/icons/lefthand.dmi',
 		)
+	wielded_item_state = "nostockrifle_wielded"
 	force = 10
 	caliber = CALIBER_RIFLE
 	origin_tech = list(TECH_COMBAT = 6, TECH_MATERIAL = 1, TECH_ESOTERIC = 5)
@@ -93,7 +94,6 @@
 	magazine_type = /obj/item/ammo_magazine/rifle
 	allowed_magazines = /obj/item/ammo_magazine/rifle
 	bulk = GUN_BULK_RIFLE
-	wielded_item_state = "mbr735nostockrifle_wielded"
 	mag_insert_sound = 'sound/weapons/guns/interaction/ltrifle_magin.ogg'
 	mag_remove_sound = 'sound/weapons/guns/interaction/ltrifle_magout.ogg'
 
@@ -108,22 +108,23 @@
 	..()
 	if(ammo_magazine)
 		icon_state = "nostockrifle"
-		wielded_item_state = "mr735nostockrifle-wielded"
+		wielded_item_state = "nostockrifle-wielded"
 	else
 		icon_state = "nostockrifle-empty"
-		wielded_item_state = "mr735nostockrifle-wielded-empty"
+		wielded_item_state = "nostockrifle-wielded-empty"
 
 
 /obj/item/gun/projectile/automatic/mbr
 	name = "MBR"
 	desc = "A shabby bullpup carbine. Despite its size, it looks a little uncomfortable, but it is robust. HelTek MBR is a standart equipment of ICCG Space-assault Forces, designed in a bullpup layout. Possesses autofire and is perfect for the ship's crew."
 	icon = 'mods/maps/farfleet/icons/mbr.dmi'
-	icon_state = "mbr_bullpup"
-	item_state = "mbr_bullpup"
+	icon_state = "mbr"
+	item_state = "mbr"
 	item_icons = list(
-		icon_l_hand = 'mods/maps/farfleet/icons/mbr.dmi',
-		icon_r_hand = 'mods/maps/farfleet/icons/mbr.dmi',
+		slot_r_hand_str = 'mods/maps/farfleet/icons/righthand.dmi',
+		slot_l_hand_str = 'mods/maps/farfleet/icons/lefthand.dmi',
 		)
+	wielded_item_state = "mbr_bullpup-wielded"
 	force = 10
 	caliber = CALIBER_RIFLE
 	origin_tech = list(TECH_COMBAT = 6, TECH_MATERIAL = 1, TECH_ESOTERIC = 5)
@@ -132,7 +133,6 @@
 	magazine_type = /obj/item/ammo_magazine/rifle
 	allowed_magazines = /obj/item/ammo_magazine/rifle
 	bulk = GUN_BULK_RIFLE + 1
-	wielded_item_state = "mbr_bullpup-wielded"
 	mag_insert_sound = 'sound/weapons/guns/interaction/ltrifle_magin.ogg'
 	mag_remove_sound = 'sound/weapons/guns/interaction/ltrifle_magout.ogg'
 
@@ -145,9 +145,85 @@
 /obj/item/gun/projectile/automatic/mbr/update_icon()
 	..()
 	if(ammo_magazine)
-		icon_state = "mbr_bullpup"
+		icon_state = "mbr_bullpup-wielded"
 	else
-		icon_state = "mbr_bullpup-empty"
+		icon_state = "mbr_bullpup-wielded-empty"
+
+
+/* WEAPONARY - ENERGY
+ * ========
+ */
+
+/obj/item/gun/energy/laser/iccg_bonfire
+	name = "Bonfire Carbine"
+	desc = "Strange construction: laser carbine with underslung grenade launcher and very capable internal battery. HelTek Bonfire-75 is a weapon designed for suppressive fire in close quarters, where usage of ballistic weaponry will be uneffective or simply hazardous."
+	icon = 'mods/maps/farfleet/icons/bonfire.dmi'
+	icon_state = "bonfire"
+	item_state = "bonfire"
+	item_icons = list(
+		slot_r_hand_str = 'mods/maps/farfleet/icons/righthand.dmi',
+		slot_l_hand_str = 'mods/maps/farfleet/icons/lefthand.dmi',
+		)
+	slot_flags = SLOT_BELT|SLOT_BACK
+	w_class = ITEM_SIZE_LARGE
+	force = 10
+	one_hand_penalty = 2
+	fire_delay = 6
+	burst_delay = 2
+	max_shots = 30
+	bulk = GUN_BULK_RIFLE
+	origin_tech = list(TECH_COMBAT = 5, TECH_MAGNET = 4)
+	matter = list(MATERIAL_STEEL = 2000)
+	projectile_type = /obj/item/projectile/beam/smalllaser
+	wielded_item_state = "bonfire-wielded"
+
+	firemodes = list(
+		list(mode_name="semi auto",       burst=1, fire_delay=null, one_hand_penalty=0, burst_accuracy=null, dispersion=null),
+		list(mode_name="3-ray bursts", burst=3, fire_delay=null, one_hand_penalty=1, burst_accuracy=list(0,0,-1,-1),       dispersion=list(0.0, 0.0, 0.5, 0.6)),
+		list(mode_name="fire grenades",  burst=null, fire_delay=null,  use_launcher=1,    one_hand_penalty=10, burst_accuracy=null, dispersion=null)
+		)
+
+	var/use_launcher = 0
+	var/obj/item/gun/launcher/grenade/underslung/launcher
+
+/obj/item/gun/energy/laser/iccg_bonfire/Initialize()
+	. = ..()
+	launcher = new(src)
+
+/obj/item/gun/energy/laser/iccg_bonfire/attackby(obj/item/I, mob/user)
+	if((istype(I, /obj/item/grenade)))
+		launcher.load(I, user)
+	else
+		..()
+
+/obj/item/gun/energy/laser/iccg_bonfire/attack_hand(mob/user)
+	if(user.get_inactive_hand() == src && use_launcher)
+		launcher.unload(user)
+	else
+		..()
+
+/obj/item/gun/energy/laser/iccg_bonfire/Fire(atom/target, mob/living/user, params, pointblank=0, reflex=0)
+	if(use_launcher)
+		launcher.Fire(target, user, params, pointblank, reflex)
+		if(!launcher.chambered)
+			switch_firemodes() //switch back automatically
+	else
+		..()
+
+/obj/item/gun/energy/ionrifle/small/iccg_stupor
+	name = "Stupor ion pistol"
+	desc = "The HelTek Stupor-45 is a compact anti-drone weapon. Due to their small output of EMP, you need be marksman to disable human-sized synthetic. But it's still better, than nothing."
+	icon = 'mods/maps/farfleet/icons/stupor.dmi'
+	icon_state = "stupor"
+	item_state = "stupor"
+	item_icons = list(
+		slot_r_hand_str = 'mods/maps/farfleet/icons/righthand.dmi',
+		slot_l_hand_str = 'mods/maps/farfleet/icons/lefthand.dmi',
+		)
+	fire_delay = 40
+	one_hand_penalty = 0
+	charge_cost = 40
+	max_shots = 5
 
 // CSS Anti-psionics stuff
 
@@ -160,6 +236,79 @@
 
 /obj/item/ammo_magazine/pistol/nullglass
 	ammo_type = /obj/item/ammo_casing/pistol/nullglass
+
+/* VOIDSUITS AND RIGS
+ * ======== TODO: Find or paint proper sprites for this, instead of using Aurora placeholders
+ */
+
+/obj/item/clothing/head/helmet/space/void/pioneer
+	name = "pioneer voidsuit helmet"
+	desc = "Quite intimidating, similar to the helmet of a spacesuit from some old movie."
+	icon_state = "pioneer_helmet"
+	item_state = "pioneer_helmet"
+	light_overlay = "helmet_light_green_alt"
+	icon = 'mods/maps/farfleet/icons/pioneer_obj.dmi'
+	item_icons = list(slot_wear_suit_str = 'mods/maps/farfleet/icons/pioneer.dmi')
+	armor = list(
+		melee = ARMOR_MELEE_RESISTANT,
+		bullet = ARMOR_BALLISTIC_MINOR,
+		laser = ARMOR_LASER_MINOR,
+		energy = ARMOR_ENERGY_RESISTANT,
+		bomb = ARMOR_BOMB_PADDED,
+		bio = ARMOR_BIO_SHIELDED,
+		rad = ARMOR_RAD_RESISTANT
+		)
+
+/obj/item/clothing/head/helmet/space/void/pioneer
+	name = "engineering voidsuit"
+	desc = "Quite intimidating, similar to the helmet of a spacesuit from some old movie"
+	icon = 'mods/maps/farfleet/icons/pioneer_obj.dmi'
+	item_icons = list(slot_wear_suit_str = 'mods/maps/farfleet/icons/pioneer.dmi')
+	icon_state = "pioneer_suit"
+	item_state = "pioneer_suit"
+	armor = list(
+		melee = ARMOR_MELEE_RESISTANT,
+		bullet = ARMOR_BALLISTIC_MINOR,
+		laser = ARMOR_LASER_MINOR,
+		energy = ARMOR_ENERGY_RESISTANT,
+		bomb = ARMOR_BOMB_PADDED,
+		bio = ARMOR_BIO_SHIELDED,
+		rad = ARMOR_RAD_RESISTANT
+		)
+
+/obj/item/clothing/suit/space/void/pioneer/Initialize()
+	. = ..()
+	slowdown_per_slot[slot_wear_suit] = 0.75
+
+/obj/item/clothing/suit/space/void/pioneer/prepared
+	helmet = /obj/item/clothing/head/helmet/space/void/pioneer
+	boots = /obj/item/clothing/shoes/magboots
+
+/obj/item/clothing/head/helmet/space/void/pioneer/command
+	name = "command voidsuit helmet"
+	desc = "Quite intimidating, similar to the helmet of a spacesuit from some old movie. This one has gold stripe on it"
+	icon_state = "pioneer_helmet"
+	item_state = "pioneer_com_helmet"
+	light_overlay = "helmet_light_green_alt"
+	icon = 'mods/maps/farfleet/icons/pioneer_obj.dmi'
+	item_icons = list(slot_wear_suit_str = 'mods/maps/farfleet/icons/pioneer.dmi')
+
+/obj/item/clothing/suit/space/void/pioneer/command
+	name = "command voidsuit"
+	desc = "Quite intimidating, similar to the spacesuit from some old movie. This one has gold and red stripes on it"
+	icon = 'mods/maps/farfleet/icons/pioneer_obj.dmi'
+	item_icons = list(slot_wear_suit_str = 'mods/maps/farfleet/icons/pioneer.dmi')
+	icon_state = "pioneer_suit"
+	item_state = "pioneer_com_suit"
+	allowed = list(/obj/item/device/flashlight,/obj/item/tank,/obj/item/device/suit_cooling_unit,/obj/item/storage/briefcase/inflatable)
+
+/obj/item/clothing/suit/space/void/pioneer/command/Initialize()
+	. = ..()
+	slowdown_per_slot[slot_wear_suit] = 0.75
+
+/obj/item/clothing/suit/space/void/pioneer/command/prepared
+	helmet = /obj/item/clothing/head/helmet/space/void/pioneer/command
+	boots = /obj/item/clothing/shoes/magboots
 
 /* MISC
  * ========
