@@ -287,6 +287,27 @@ window "rpane"
 		saved-params = "splitter"
 		right = "outputwindow"
 		is-vert = false
+<<<<<<< ours
+=======
+	elem "linksource"
+		type = BUTTON
+		pos = 536,0
+		size = 60x15
+		anchor1 = none
+		anchor2 = none
+		saved-params = "is-checked"
+		text = "Source"
+		command = "link-source"
+	elem "linkissue"
+		type = BUTTON
+		pos = 596,0
+		size = 60x15
+		anchor1 = none
+		anchor2 = none
+		saved-params = "is-checked"
+		text = "Bug Report"
+		command = "link-issue"
+>>>>>>> theirs
 	elem "linkrules"
 		border = line
 		is-flat = true
