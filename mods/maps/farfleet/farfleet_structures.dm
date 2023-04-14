@@ -9,21 +9,20 @@
 /obj/structure/closet/secure_closet/guncabinet/farfleet/antitank/WillContain()
 	return list(
 		/obj/item/gun/magnetic/railgun  = 2,
+		/obj/item/gun/energy/ionrifle/small/stupor = 2,
 		/obj/item/rcd_ammo = 10
 	)
 
-/obj/structure/closet/secure_closet/guncabinet/farfleet/assault/WillContain()
+/obj/structure/closet/secure_closet/guncabinet/farfleet/ballistics/WillContain()
 	return list(
 		/obj/item/ammo_magazine/rifle = 15,
 		/obj/item/gun/projectile/automatic/assault_rifle/heltek = 3,
 	)
 
-/obj/structure/closet/secure_closet/guncabinet/farfleet/defence/WillContain()
+/obj/structure/closet/secure_closet/guncabinet/farfleet/energy/WillContain()
 	return list(
-		/obj/item/ammo_magazine/pistol/double = 6,
-		/obj/item/gun/projectile/shotgun/doublebarrel/sawn = 3,
-		/obj/item/clothing/accessory/storage/bandolier = 3 ,
-		/obj/item/gun/projectile/pistol/optimus = 3
+		/obj/item/gun/energy/laser/bonfire = 3,
+		/obj/item/storage/box/fragshells = 3
 	)
 
 /obj/structure/closet/secure_closet/guncabinet/farfleet/utility/WillContain()
@@ -31,10 +30,7 @@
 		/obj/item/storage/box/teargas = 1,
 		/obj/item/storage/box/frags = 1,
 		/obj/item/storage/box/smokes = 2,
-		/obj/item/storage/box/ammo/flashshells = 2,
-		/obj/item/storage/box/ammo/shotgunshells = 2,
-		/obj/item/storage/box/ammo/shotgunammo = 2,
-		/obj/item/storage/box/ammo/stunshells = 2,
+		/obj/item/storage/box/anti_photons = 1,
 		/obj/item/plastique = 6
 	)
 
@@ -154,7 +150,6 @@
 		/obj/item/storage/firstaid/sleekstab,
 		/obj/item/clothing/mask/gas,
 		/obj/item/storage/belt/medical,
-		/obj/item/clothing/head/beret/solgov/fleet/medical,
 		/obj/item/storage/firstaid/adv,
 		/obj/item/clothing/accessory/stethoscope,
 		/obj/item/clothing/glasses/hud/health,

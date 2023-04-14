@@ -117,9 +117,9 @@
 /obj/item/gun/projectile/automatic/mbr
 	name = "MBR"
 	desc = "A shabby bullpup carbine. Despite its size, it looks a little uncomfortable, but it is robust. HelTek MBR is a standart equipment of ICCG Space-assault Forces, designed in a bullpup layout. Possesses autofire and is perfect for the ship's crew."
-	icon = 'mods/maps/farfleet/icons/mbr.dmi'
-	icon_state = "mbr"
-	item_state = "mbr"
+	icon = 'mods/maps/farfleet/icons/mbr_bullpup.dmi'
+	icon_state = "mbr_bullpup"
+	item_state = "mbr_bullpup"
 	item_icons = list(
 		slot_r_hand_str = 'mods/maps/farfleet/icons/righthand.dmi',
 		slot_l_hand_str = 'mods/maps/farfleet/icons/lefthand.dmi',
@@ -145,16 +145,16 @@
 /obj/item/gun/projectile/automatic/mbr/update_icon()
 	..()
 	if(ammo_magazine)
-		icon_state = "mbr_bullpup-wielded"
+		icon_state = "mbr_bullpup"
 	else
-		icon_state = "mbr_bullpup-wielded-empty"
+		icon_state = "mbr_bullpup-empty"
 
 
 /* WEAPONARY - ENERGY
  * ========
  */
 
-/obj/item/gun/energy/laser/iccg_bonfire
+/obj/item/gun/energy/laser/bonfire
 	name = "Bonfire Carbine"
 	desc = "Strange construction: laser carbine with underslung grenade launcher and very capable internal battery. HelTek Bonfire-75 is a weapon designed for suppressive fire in close quarters, where usage of ballistic weaponry will be uneffective or simply hazardous."
 	icon = 'mods/maps/farfleet/icons/bonfire.dmi'
@@ -186,23 +186,23 @@
 	var/use_launcher = 0
 	var/obj/item/gun/launcher/grenade/underslung/launcher
 
-/obj/item/gun/energy/laser/iccg_bonfire/Initialize()
+/obj/item/gun/energy/laser/bonfire/Initialize()
 	. = ..()
 	launcher = new(src)
 
-/obj/item/gun/energy/laser/iccg_bonfire/attackby(obj/item/I, mob/user)
+/obj/item/gun/energy/laser/bonfire/attackby(obj/item/I, mob/user)
 	if((istype(I, /obj/item/grenade)))
 		launcher.load(I, user)
 	else
 		..()
 
-/obj/item/gun/energy/laser/iccg_bonfire/attack_hand(mob/user)
+/obj/item/gun/energy/laser/bonfire/attack_hand(mob/user)
 	if(user.get_inactive_hand() == src && use_launcher)
 		launcher.unload(user)
 	else
 		..()
 
-/obj/item/gun/energy/laser/iccg_bonfire/Fire(atom/target, mob/living/user, params, pointblank=0, reflex=0)
+/obj/item/gun/energy/laser/bonfire/Fire(atom/target, mob/living/user, params, pointblank=0, reflex=0)
 	if(use_launcher)
 		launcher.Fire(target, user, params, pointblank, reflex)
 		if(!launcher.chambered)
@@ -210,7 +210,7 @@
 	else
 		..()
 
-/obj/item/gun/energy/ionrifle/small/iccg_stupor
+/obj/item/gun/energy/ionrifle/small/stupor
 	name = "Stupor ion pistol"
 	desc = "The HelTek Stupor-45 is a compact anti-drone weapon. Due to their small output of EMP, you need be marksman to disable human-sized synthetic. But it's still better, than nothing."
 	icon = 'mods/maps/farfleet/icons/stupor.dmi'
