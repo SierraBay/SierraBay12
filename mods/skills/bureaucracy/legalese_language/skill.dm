@@ -1,0 +1,5 @@
+/singleton/hierarchy/skill/organizational/bureaucracy/update_special_effects(mob/mob, level)
+	. = ..()
+	mob.remove_language(LANGUAGE_LEGALESE)
+	if(level == SKILL_PROF)
+		mob.add_language(LANGUAGE_LEGALESE)

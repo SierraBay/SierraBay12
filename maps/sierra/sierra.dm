@@ -157,6 +157,7 @@
 	#include "../../mods/maps/liberia/_map_liberia.dme"
 	#include "../../mods/bluespace_kitty/_bluespace_kitty.dme"
 	#include "../../mods/maps/sentinel/_map_sentinel.dme"
+	#include "../../mods/skills/bureaucracy/legalese_language/_legalese.dme"
 
 	// UNUSED MODS
 	// #include "../../mods/_events/mortar/_mortar.dme"
