@@ -238,77 +238,10 @@
 	ammo_type = /obj/item/ammo_casing/pistol/nullglass
 
 /* VOIDSUITS AND RIGS
- * ======== TODO: Find or paint proper sprites for this, instead of using Aurora placeholders
+ * ======== TODO: Make any suits instead of plaseholder
  */
 
-/obj/item/clothing/head/helmet/space/void/pioneer
-	name = "pioneer voidsuit helmet"
-	desc = "Quite intimidating, similar to the helmet of a spacesuit from some old movie."
-	icon_state = "pioneer_helmet"
-	item_state = "pioneer_helmet"
-	light_overlay = "helmet_light_green_alt"
-	icon = 'mods/maps/farfleet/icons/pioneer_obj.dmi'
-	item_icons = list(slot_wear_suit_str = 'mods/maps/farfleet/icons/pioneer.dmi')
-	armor = list(
-		melee = ARMOR_MELEE_RESISTANT,
-		bullet = ARMOR_BALLISTIC_MINOR,
-		laser = ARMOR_LASER_MINOR,
-		energy = ARMOR_ENERGY_RESISTANT,
-		bomb = ARMOR_BOMB_PADDED,
-		bio = ARMOR_BIO_SHIELDED,
-		rad = ARMOR_RAD_RESISTANT
-		)
 
-/obj/item/clothing/head/helmet/space/void/pioneer
-	name = "engineering voidsuit"
-	desc = "Quite intimidating, similar to the helmet of a spacesuit from some old movie"
-	icon = 'mods/maps/farfleet/icons/pioneer_obj.dmi'
-	item_icons = list(slot_wear_suit_str = 'mods/maps/farfleet/icons/pioneer.dmi')
-	icon_state = "pioneer_suit"
-	item_state = "pioneer_suit"
-	armor = list(
-		melee = ARMOR_MELEE_RESISTANT,
-		bullet = ARMOR_BALLISTIC_MINOR,
-		laser = ARMOR_LASER_MINOR,
-		energy = ARMOR_ENERGY_RESISTANT,
-		bomb = ARMOR_BOMB_PADDED,
-		bio = ARMOR_BIO_SHIELDED,
-		rad = ARMOR_RAD_RESISTANT
-		)
-
-/obj/item/clothing/suit/space/void/pioneer/Initialize()
-	. = ..()
-	slowdown_per_slot[slot_wear_suit] = 0.75
-
-/obj/item/clothing/suit/space/void/pioneer/prepared
-	helmet = /obj/item/clothing/head/helmet/space/void/pioneer
-	boots = /obj/item/clothing/shoes/magboots
-
-/obj/item/clothing/head/helmet/space/void/pioneer/command
-	name = "command voidsuit helmet"
-	desc = "Quite intimidating, similar to the helmet of a spacesuit from some old movie. This one has gold stripe on it"
-	icon_state = "pioneer_helmet"
-	item_state = "pioneer_com_helmet"
-	light_overlay = "helmet_light_green_alt"
-	icon = 'mods/maps/farfleet/icons/pioneer_obj.dmi'
-	item_icons = list(slot_wear_suit_str = 'mods/maps/farfleet/icons/pioneer.dmi')
-
-/obj/item/clothing/suit/space/void/pioneer/command
-	name = "command voidsuit"
-	desc = "Quite intimidating, similar to the spacesuit from some old movie. This one has gold and red stripes on it"
-	icon = 'mods/maps/farfleet/icons/pioneer_obj.dmi'
-	item_icons = list(slot_wear_suit_str = 'mods/maps/farfleet/icons/pioneer.dmi')
-	icon_state = "pioneer_suit"
-	item_state = "pioneer_com_suit"
-	allowed = list(/obj/item/device/flashlight,/obj/item/tank,/obj/item/device/suit_cooling_unit,/obj/item/storage/briefcase/inflatable)
-
-/obj/item/clothing/suit/space/void/pioneer/command/Initialize()
-	. = ..()
-	slowdown_per_slot[slot_wear_suit] = 0.75
-
-/obj/item/clothing/suit/space/void/pioneer/command/prepared
-	helmet = /obj/item/clothing/head/helmet/space/void/pioneer/command
-	boots = /obj/item/clothing/shoes/magboots
 
 /* MISC
  * ========

@@ -4,8 +4,8 @@
 	///////////
 
 /obj/effect/overmap/visitable/ship/farfleet
-	name = "Pioneer Corps Reconnaissance Craft"
-	desc = "ICCGN Garibaldi-class Reconnaissance Craft. This craft bears markings of Pioneer Corps"
+	name = "Pioneer Corps Gunboat"
+	desc = "ICGNV Garibaldi-class Gunboat. This craft bears markings of Pioneer Corps"
 	color = "#fc7a00"
 	fore_dir = WEST
 	vessel_mass = 1000
@@ -27,7 +27,7 @@
 	"SNZ" = list("nav_hangar_snz")
 		)
 
-#define RECON_SHIP_PREFIX pick("Admiral Sobolev","Ivan Kozhedub","Sevastopol","Zirkel","Kurchatov","Gomel","Admiral Kolchak","Udaloi","Omsk","Krondstatt","Admiral Nakhimov","Iron Dmitry","Simbirsk","Apostle Peter","Admiral Chernavin","Proryv","Triumph","Besstrashnyi","Elisarov","Generalissimus Alexander Suvorov-Rymniksky","Magnitogorsk")
+#define RECON_SHIP_PREFIX pick("Admiral Sobolev","Ivan Kozhedub","Sevastopol","Zirkel","Kurchatov","Gomel","Admiral Kolchak","Udaloi","Omsk","Krondstatt","Admiral Nakhimov","Iron Dmitry","Simbirsk","Apostle Peter","Admiral Chernavin","Proryv","Triumph","Besstrashnyi","Elisarov","Magnitogorsk")
 /obj/effect/overmap/visitable/ship/farfleet/New()
 	name = "ICCGN PC [RECON_SHIP_PREFIX], \a [name]"
 	for(var/area/ship/farfleet/A)
@@ -37,14 +37,14 @@
 #undef RECON_SHIP_PREFIX
 
 /datum/map_template/ruin/away_site/farfleet
-	name = "Pioneer Corps Craft (PC)"
+	name = "Pioneer Corps Gunboat (ICGNV)"
 	id = "awaysite_recon_ship"
 	description = "Garibaldi-class Gunboat, ICCG Pioneer Corps Reconnaissance Craft."
 	prefix = "mods/maps/"
 	suffixes = list("farfleet/farfleet-1.dmm", "farfleet/farfleet-2.dmm")
-	spawn_cost = 0
-	player_cost = 0
-	spawn_weight = 50
+	spawn_cost = 50 // Temporary disabled
+	player_cost = 50
+	spawn_weight = 1
 	shuttles_to_initialise = list(/datum/shuttle/autodock/overmap/snz)
 
 	area_usage_test_exempted_areas = list(

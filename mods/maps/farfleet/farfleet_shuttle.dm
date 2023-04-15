@@ -38,7 +38,7 @@
 	name = "SNZ Hangar"
 	landmark_tag = "nav_hangar_snz"
 	base_area = /area/ship/farfleet/command/snz_hangar
-	base_turf = /turf/simulated/floor/reinforced
+	base_turf = /turf/simulated/floor/plating
 	movable_flags = MOVABLE_FLAG_EFFECTMOVE
 
 /obj/effect/shuttle_landmark/snz/altdock

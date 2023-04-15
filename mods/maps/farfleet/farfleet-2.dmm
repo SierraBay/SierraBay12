@@ -89,12 +89,11 @@
 	pixel_y = 7;
 	req_access = list("ACCESS_ICCGN")
 	},
-/obj/effect/overmap/visitable/ship/landable/snz,
 /obj/machinery/door/blast/regular/open{
 	id_tag = "snzblastdoor";
 	name = "SNZ Blast Shutters"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/snz)
 "aX" = (
 /obj/effect/floor_decal/corner/grey_alt/diagonal{
@@ -208,6 +207,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/ship/farfleet/barracks/armory)
 "bT" = (
+/obj/structure/railing/mapped,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/snz)
 "bW" = (
@@ -228,6 +228,10 @@
 "cg" = (
 /obj/structure/janitorialcart,
 /obj/item/mop,
+/obj/machinery/light_switch{
+	pixel_y = 30;
+	pixel_x = -10
+	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/ship/farfleet/maintenance/storage)
 "cj" = (
@@ -513,7 +517,7 @@
 	tag_airpump = "snz_shuttle_pump";
 	tag_interior_sensor = "snz_shuttle_interior_sensor"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/snz)
 "eC" = (
 /obj/effect/paint/ocean,
@@ -524,6 +528,7 @@
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hydroponics)
 "eE" = (
+/obj/effect/overmap/visitable/ship/landable/snz,
 /turf/simulated/floor/tiled/steel_grid,
 /area/ship/snz)
 "eN" = (
@@ -645,6 +650,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/effect/floor_decal/industrial/outline/grey,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/snz)
 "gJ" = (
@@ -791,6 +797,10 @@
 	icon_state = "4-8";
 	pixel_y = 0
 	},
+/obj/machinery/light_switch{
+	pixel_y = 30;
+	pixel_x = -10
+	},
 /turf/simulated/floor/tiled/techmaint,
 /area/ship/farfleet/maintenance/anomaly)
 "hY" = (
@@ -799,6 +809,10 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
+	},
+/obj/structure/railing/mapped{
+	dir = 1;
+	icon_state = "railing0-1"
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/snz)
@@ -854,6 +868,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/obj/structure/railing/mapped,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/snz)
 "in" = (
@@ -1051,6 +1066,14 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/structure/table/rack,
+/obj/effect/floor_decal/industrial/outline/grey,
+/obj/item/barrier,
+/obj/item/barrier,
+/obj/item/barrier,
+/obj/item/barrier,
+/obj/item/barrier,
+/obj/item/barrier,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/snz)
 "kL" = (
@@ -1091,16 +1114,6 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/ship/farfleet/barracks)
-"lg" = (
-/obj/structure/cable/green{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/effect/paint/dark_gunmetal,
-/obj/machinery/atmospheric_field_generator,
-/turf/simulated/wall/r_titanium,
-/area/ship/snz)
 "ln" = (
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	icon_state = "map_vent_out";
@@ -1125,10 +1138,6 @@
 	pixel_y = 24;
 	req_access = list("ACCESS_ICCGN")
 	},
-/obj/machinery/light_switch{
-	dir = 8;
-	pixel_x = 23
-	},
 /turf/simulated/floor/tiled/steel_grid,
 /area/ship/snz)
 "lA" = (
@@ -1148,6 +1157,9 @@
 /obj/machinery/atmospherics/pipe/simple/visible/fuel,
 /obj/structure/fuel_port{
 	pixel_x = 32
+	},
+/obj/structure/railing/mapped{
+	dir = 8
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/snz)
@@ -1342,6 +1354,9 @@
 /area/ship/farfleet/barracks)
 "nG" = (
 /obj/machinery/portable_atmospherics/canister/hydrogen,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/snz)
 "nL" = (
@@ -1366,6 +1381,9 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/structure/railing/mapped{
+	dir = 8
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/snz)
@@ -1427,11 +1445,6 @@
 /obj/structure/cable,
 /turf/simulated/floor/reinforced/airless,
 /area/space)
-"oI" = (
-/obj/effect/paint/dark_gunmetal,
-/obj/machinery/atmospheric_field_generator,
-/turf/simulated/wall/r_titanium,
-/area/ship/snz)
 "oJ" = (
 /obj/effect/floor_decal/corner/b_green/diagonal{
 	dir = 8
@@ -1592,6 +1605,7 @@
 	name = "SNZ Blast Shutters";
 	id_tag = "snzblast"
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/ship/snz)
 "pM" = (
@@ -1836,6 +1850,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/effect/floor_decal/industrial/outline/grey,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/snz)
 "rS" = (
@@ -1849,6 +1864,7 @@
 /area/ship/farfleet/crew/toilet)
 "sa" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/railing/mapped,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/snz)
 "sg" = (
@@ -1951,7 +1967,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/snz)
 "ty" = (
 /obj/effect/paint/dark_gunmetal,
@@ -2088,6 +2104,10 @@
 	unlocked = 1;
 	dir = 4
 	},
+/obj/structure/railing/mapped{
+	dir = 1;
+	icon_state = "railing0-1"
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/snz)
 "uQ" = (
@@ -2191,7 +2211,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/snz)
 "vM" = (
 /obj/machinery/firealarm{
@@ -2264,6 +2284,9 @@
 /area/ship/farfleet/barracks)
 "wj" = (
 /obj/machinery/mech_recharger,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/snz)
 "wr" = (
@@ -2283,6 +2306,9 @@
 "wA" = (
 /obj/effect/floor_decal/corner/red{
 	dir = 6
+	},
+/obj/structure/bed/chair{
+	dir = 4
 	},
 /turf/simulated/floor/tiled/dark,
 /area/ship/farfleet/crew/brig)
@@ -2436,6 +2462,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/effect/floor_decal/industrial/outline/grey,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/snz)
 "xO" = (
@@ -3539,7 +3566,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/snz)
 "ID" = (
 /obj/machinery/pointdefense{
@@ -3604,6 +3631,9 @@
 	},
 /obj/effect/floor_decal/corner/red/three_quarters{
 	dir = 1
+	},
+/obj/structure/bed/chair{
+	dir = 4
 	},
 /turf/simulated/floor/tiled/dark,
 /area/ship/farfleet/crew/brig)
@@ -3674,6 +3704,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/effect/floor_decal/industrial/outline/grey,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/snz)
 "Kr" = (
@@ -3817,7 +3848,6 @@
 	dir = 6
 	},
 /obj/effect/paint/ocean,
-/obj/machinery/atmospheric_field_generator,
 /turf/simulated/wall/r_titanium,
 /area/ship/snz)
 "LI" = (
@@ -3866,10 +3896,9 @@
 /turf/simulated/floor/tiled/monotile,
 /area/ship/farfleet/crew/hydroponics)
 "Ms" = (
-/obj/effect/paint/ocean,
-/obj/machinery/atmospheric_field_generator,
-/turf/simulated/wall/r_titanium,
-/area/ship/snz)
+/obj/effect/shuttle_landmark/snz/start,
+/turf/simulated/floor/tiled/monotile,
+/area/ship/farfleet/command/snz_hangar)
 "Mt" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled/white,
@@ -4126,6 +4155,10 @@
 /obj/machinery/atmospherics/pipe/simple/visible/universal{
 	dir = 4
 	},
+/obj/structure/railing/mapped{
+	dir = 1;
+	icon_state = "railing0-1"
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/snz)
 "Px" = (
@@ -4222,6 +4255,9 @@
 "QR" = (
 /obj/effect/floor_decal/industrial/outline/yellow,
 /obj/structure/table/rack,
+/obj/item/rig/combat,
+/obj/item/rig/combat,
+/obj/item/rig/combat,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/barracks/armory)
 "QU" = (
@@ -4556,7 +4592,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/snz)
 "TS" = (
 /obj/effect/catwalk_plated,
@@ -4660,13 +4696,11 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/effect/shuttle_landmark/snz/start,
-/obj/effect/overmap/visitable/ship/landable/snz,
 /obj/machinery/door/blast/regular/open{
 	id_tag = "snzblastdoor";
 	name = "SNZ Blast Shutters"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/snz)
 "UH" = (
 /obj/machinery/light/small{
@@ -4746,6 +4780,7 @@
 	name = "SNZ Blast Shutters";
 	id_tag = "snzblast"
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/ship/snz)
 "Vi" = (
@@ -4975,6 +5010,13 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
 	},
+/obj/structure/table/rack,
+/obj/effect/floor_decal/industrial/outline/grey,
+/obj/item/storage/briefcase/inflatable,
+/obj/item/storage/briefcase/inflatable,
+/obj/item/storage/briefcase/inflatable,
+/obj/item/device/spaceflare,
+/obj/item/device/spaceflare,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/snz)
 "WY" = (
@@ -5164,7 +5206,7 @@
 	id_tag = "snz_shuttle_inner";
 	frequency = 1380
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/snz)
 "Za" = (
 /obj/machinery/pointdefense{
@@ -13630,10 +13672,10 @@ DT
 ME
 ns
 zW
-lg
+MC
 Vg
 pL
-oI
+Jt
 VE
 ns
 ME
@@ -14480,7 +14522,7 @@ Uu
 RW
 Ll
 ME
-ns
+Ms
 aW
 Iu
 eB
@@ -14725,7 +14767,7 @@ zp
 eS
 ME
 ns
-Ms
+AY
 AY
 Jt
 Jt

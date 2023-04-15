@@ -257,6 +257,7 @@
 	id_tag = "pcbridge";
 	name = "Emergensy Blast Resistant Shutters"
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/ship/farfleet/command/bridge)
 "aR" = (
@@ -1122,12 +1123,6 @@
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/farfleet/engineering/atmospherics)
-"dF" = (
-/obj/effect/floor_decal/corner_steel_grid/diagonal,
-/obj/effect/floor_decal/industrial/outline/yellow,
-/obj/machinery/suit_storage_unit/away_iccgn_pawn,
-/turf/simulated/floor/tiled,
-/area/ship/farfleet/command/eva)
 "dG" = (
 /obj/effect/paint/dark_gunmetal,
 /obj/effect/paint_stripe/yellow,
@@ -1362,6 +1357,7 @@
 	id_tag = "pcbridge";
 	name = "Emergensy Blast Resistant Shutters"
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/ship/farfleet/command/bridge)
 "ev" = (
@@ -1550,6 +1546,7 @@
 	id_tag = "pcbridge";
 	name = "Emergensy Blast Resistant Shutters"
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/command/bridge)
 "fw" = (
@@ -1961,10 +1958,12 @@
 "hn" = (
 /obj/effect/floor_decal/corner_steel_grid/diagonal,
 /obj/effect/floor_decal/industrial/outline/yellow,
-/obj/machinery/suit_storage_unit/away_iccgn_med,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 26
+	},
+/obj/machinery/suit_storage_unit/security/alt{
+	req_access = list("ACCESS_ICCGN")
 	},
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/command/eva)
@@ -2403,11 +2402,6 @@
 /obj/machinery/power/smes/buildable/preset/farfleet/engine_main,
 /turf/simulated/floor,
 /area/ship/farfleet/engineering/fussion/control)
-"jL" = (
-/obj/effect/paint/dark_gunmetal,
-/obj/machinery/atmospheric_field_generator,
-/turf/simulated/wall/r_wall,
-/area/ship/farfleet/command/bridge)
 "jO" = (
 /obj/machinery/sleeper{
 	dir = 1
@@ -3255,10 +3249,6 @@
 /obj/structure/closet/secure_closet/guncabinet{
 	req_access = list("ACCESS_ICCGN")
 	},
-/obj/item/gun/projectile/shotgun/doublebarrel/sawn,
-/obj/item/gun/projectile/shotgun/doublebarrel/sawn,
-/obj/item/gun/projectile/shotgun/doublebarrel/sawn,
-/obj/item/gun/projectile/shotgun/doublebarrel/sawn,
 /obj/item/storage/box/ammo/flashshells,
 /obj/item/storage/box/ammo/flashshells,
 /obj/item/storage/box/ammo/shotgunshells,
@@ -3274,6 +3264,10 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/item/gun/projectile/shotgun/pump/sawn,
+/obj/item/gun/projectile/shotgun/pump/sawn,
+/obj/item/gun/projectile/shotgun/pump/sawn,
+/obj/item/gun/projectile/shotgun/pump/sawn,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/crew/brig/emergency_armory)
 "nC" = (
@@ -4657,6 +4651,7 @@
 	id_tag = "pcbridge";
 	name = "Emergensy Blast Resistant Shutters"
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/command/bridge)
 "yc" = (
@@ -4928,12 +4923,6 @@
 /obj/machinery/light,
 /turf/simulated/floor/tiled/dark,
 /area/ship/farfleet/command/bridge)
-"Bo" = (
-/obj/effect/floor_decal/corner_steel_grid/diagonal,
-/obj/effect/floor_decal/industrial/outline/yellow,
-/obj/machinery/suit_storage_unit/away_iccgn_com,
-/turf/simulated/floor/tiled,
-/area/ship/farfleet/command/eva)
 "Bu" = (
 /obj/machinery/pointdefense_control{
 	initial_id_tag = "farfleet_pd"
@@ -6019,7 +6008,9 @@
 "Ls" = (
 /obj/effect/floor_decal/corner_steel_grid/diagonal,
 /obj/effect/floor_decal/industrial/outline/yellow,
-/obj/machinery/suit_storage_unit/away_iccgn_eng,
+/obj/machinery/suit_storage_unit/security/alt{
+	req_access = list("ACCESS_ICCGN")
+	},
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/command/eva)
 "Lu" = (
@@ -14161,7 +14152,7 @@ fB
 Oe
 Oj
 bh
-jL
+eV
 aH
 Ev
 Dz
@@ -14649,7 +14640,7 @@ Bu
 Ad
 Zn
 Bf
-jL
+eV
 Es
 GB
 Dz
@@ -15138,7 +15129,7 @@ OY
 qg
 eV
 eV
-jL
+eV
 nW
 mj
 dY
@@ -15504,7 +15495,7 @@ eV
 eV
 eV
 eV
-jL
+eV
 fH
 Dz
 He
@@ -16599,8 +16590,8 @@ me
 mk
 hn
 Ls
-dF
-Bo
+Ls
+Ls
 mk
 wo
 Dz

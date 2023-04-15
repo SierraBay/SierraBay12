@@ -233,6 +233,7 @@
  * ====
  */
 
+/*
 /obj/machinery/suit_storage_unit/away_iccgn_med
 	name = "Pioneer Corpsman Voidsuit Storage Unit"
 	suit= /obj/item/clothing/suit/space/void/pioneer/prepared
@@ -264,6 +265,7 @@
 	tank = /obj/item/tank/oxygen
 	req_access = list(access_away_iccgn, access_away_iccgn_captain)
 	islocked = 1
+ */
 
 /obj/structure/sign/farfleetplaque
 	name = "\improper Pioneer Corps Plaque"
