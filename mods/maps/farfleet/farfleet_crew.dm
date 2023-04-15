@@ -46,10 +46,10 @@
  * =======
  */
 
-/var/const/access_away_iccgn = "ACCESS_ICCGN"
-/var/const/access_away_iccgn_droptroops = "ACCESS_ICCGN_DROPTROOPS"
-/var/const/access_away_iccgn_sergeant = "ACCESS_ICCGN_SERGEANT"
-/var/const/access_away_iccgn_captain = "ACCESS_ICCGN_CAPTAIN"
+var/global/const/access_away_iccgn = "ACCESS_ICCGN"
+var/global/const/access_away_iccgn_droptroops = "ACCESS_ICCGN_DROPTROOPS"
+var/global/const/access_away_iccgn_sergeant = "ACCESS_ICCGN_SERGEANT"
+var/global/const/access_away_iccgn_captain = "ACCESS_ICCGN_CAPTAIN"
 
 /datum/access/access_away_iccgn
 	id = access_away_iccgn

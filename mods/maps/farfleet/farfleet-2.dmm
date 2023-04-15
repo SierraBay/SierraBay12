@@ -80,10 +80,10 @@
 	},
 /obj/machinery/door/airlock/external{
 	id_tag = "snz_shuttle_outer";
-	frequency = 1390
+	frequency = 1380
 	},
 /obj/machinery/access_button/airlock_exterior{
-	frequency = 1390;
+	frequency = 1380;
 	master_tag = "snz_shuttle";
 	pixel_x = -27;
 	pixel_y = 7;
@@ -493,7 +493,7 @@
 	id_tag = "snz_shuttle_pump"
 	},
 /obj/machinery/airlock_sensor{
-	frequency = 1390;
+	frequency = 1380;
 	id_tag = "snz_shuttle_sensor";
 	pixel_x = -24;
 	pixel_y = -7
@@ -501,7 +501,7 @@
 /obj/machinery/embedded_controller/radio/airlock/docking_port{
 	cycle_to_external_air = 1;
 	dir = 4;
-	frequency = 1390;
+	frequency = 1380;
 	id_tag = "snz_shuttle";
 	pixel_x = -25;
 	pixel_y = 4;
@@ -1634,19 +1634,11 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/machinery/embedded_controller/radio/airlock/docking_port{
-	cycle_to_external_air = 1;
-	frequency = 1390;
+/obj/machinery/dummy_airlock_controller{
 	id_tag = "snz_shuttle";
 	pixel_x = 0;
-	pixel_y = 25;
-	req_access = list("ACCESS_ICCGN");
-	tag_exterior_door = "snz_shuttle_outer";
-	tag_interior_door = "snz_shuttle_inner";
-	tag_exterior_sensor = "snz_shuttle_exterior_sensor";
-	tag_chamber_sensor = "snz_shuttle_sensor";
-	tag_airpump = "snz_shuttle_pump";
-	tag_interior_sensor = "snz_shuttle_interior_sensor"
+	anchored = 1;
+	pixel_y = 26
 	},
 /turf/simulated/floor/tiled/steel_grid,
 /area/ship/snz)
@@ -2192,7 +2184,7 @@
 	},
 /obj/machinery/door/airlock/external{
 	id_tag = "snz_shuttle_inner";
-	frequency = 1390
+	frequency = 1380
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -2541,7 +2533,7 @@
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/crew/canteen)
 "ys" = (
-/obj/effect/shuttle_landmark/nav_farfleet/nav2,
+/obj/effect/shuttle_landmark/nav_farfleet/nav4,
 /turf/space,
 /area/space)
 "yA" = (
@@ -4275,7 +4267,7 @@
 	dir = 4
 	},
 /obj/machinery/airlock_sensor/airlock_exterior{
-	frequency = 1390;
+	frequency = 1380;
 	id_tag = "snz_shuttle_exterior_sensor";
 	pixel_x = 24;
 	pixel_y = -8
@@ -4661,7 +4653,7 @@
 	},
 /obj/machinery/door/airlock/external{
 	id_tag = "snz_shuttle_outer";
-	frequency = 1390
+	frequency = 1380
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -5170,7 +5162,7 @@
 	},
 /obj/machinery/door/airlock/external{
 	id_tag = "snz_shuttle_inner";
-	frequency = 1390
+	frequency = 1380
 	},
 /turf/simulated/floor/plating,
 /area/ship/snz)

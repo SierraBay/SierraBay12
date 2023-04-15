@@ -39191,10 +39191,6 @@
 /obj/machinery/light/navigation/delay3,
 /turf/space,
 /area/space)
-"uee" = (
-/obj/effect/shuttle_landmark/snz/xeno,
-/turf/space,
-/area/space)
 "ufw" = (
 /obj/machinery/floodlight,
 /turf/simulated/floor/plating,
@@ -64304,7 +64300,7 @@ aVg
 aVx
 aTw
 atE
-uee
+aam
 aam
 aam
 aam

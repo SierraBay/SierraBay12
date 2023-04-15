@@ -24,7 +24,7 @@
 		)
 
 	initial_restricted_waypoints = list(
-	"SNZ Speedboat" = list("nav_hangar_snz")
+	"SNZ" = list("nav_hangar_snz")
 		)
 
 #define RECON_SHIP_PREFIX pick("Admiral Sobolev","Ivan Kozhedub","Sevastopol","Zirkel","Kurchatov","Gomel","Admiral Kolchak","Udaloi","Omsk","Krondstatt","Admiral Nakhimov","Iron Dmitry","Simbirsk","Apostle Peter","Admiral Chernavin","Proryv","Triumph","Besstrashnyi","Elisarov","Generalissimus Alexander Suvorov-Rymniksky","Magnitogorsk")
@@ -37,9 +37,9 @@
 #undef RECON_SHIP_PREFIX
 
 /datum/map_template/ruin/away_site/farfleet
-	name = "Farfleet Reconnaissance Craft (FRC)"
+	name = "Pioneer Corps Craft (PC)"
 	id = "awaysite_recon_ship"
-	description = "Proect-2880 Gagarin-Class Farfleet Reconnaissance Craft."
+	description = "Garibaldi-class Gunboat, ICCG Pioneer Corps Reconnaissance Craft."
 	prefix = "mods/maps/"
 	suffixes = list("farfleet/farfleet-1.dmm", "farfleet/farfleet-2.dmm")
 	spawn_cost = 0
