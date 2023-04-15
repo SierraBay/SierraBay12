@@ -3,6 +3,7 @@
 GLOBAL_LIST_INIT(machine_path_to_circuit_type, cache_circuits_by_build_path())
 
 /proc/cache_circuits_by_build_path()
+	RETURN_TYPE(/list)
 	. = list()
 	for(var/board_path in subtypesof(/obj/item/stock_parts/circuitboard))
 		var/obj/item/stock_parts/circuitboard/board = board_path //fake type
@@ -303,7 +304,7 @@ Standard helpers for users interacting with machinery parts.
 	if(isstack(part))
 		var/obj/item/stack/stack = part
 		if (!stack.can_use(number))
-			to_chat(user, SPAN_WARNING("You need at least [number] [stack.plural_name] to install into \the [src]."))
+			USE_FEEDBACK_STACK_NOT_ENOUGH(stack, number, "to install into \the [src].")
 			return FALSE
 		install_component(stack.split(number, TRUE))
 	else
