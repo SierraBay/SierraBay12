@@ -133,7 +133,7 @@
                 return "';}}else{if(true){out+='"; // The "if(true)" condition is required to account for the for tag closing with two brackets
             })
             .replace(c.evaluate || skip, function (m, code) {
-                return "';" + unescape(code) + "out+='";
+                return cse.start + unescape(code) + cse.end;
             })
             + "';return out;")
             .replace(/\n/g, '\\n').replace(/\t/g, '\\t').replace(/\r/g, '\\r')
