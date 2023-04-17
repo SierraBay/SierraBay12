@@ -1077,8 +1077,12 @@
 /obj/item/reagent_containers/food/snacks/meatsteak
 	name = "meat steak"
 	desc = "A piece of hot spicy meat."
+<<<<<<< ours
 	icon_state = "meatstake"
 	trash = /obj/item/trash/plate
+=======
+	icon_state = "meatsteak"
+>>>>>>> theirs
 	filling_color = "#7a3d11"
 	center_of_mass = "x=16;y=13"
 	bitesize = 3
@@ -1095,8 +1099,12 @@
 /obj/item/reagent_containers/food/snacks/loadedsteak
 	name = "loaded steak"
 	desc = "A steak slathered in sauce with sauteed onions and mushrooms."
+<<<<<<< ours
 	icon_state = "meatstake"
 	trash = /obj/item/trash/plate
+=======
+	icon_state = "meatsteak"
+>>>>>>> theirs
 	filling_color = "#7a3d11"
 	center_of_mass = "x=16;y=13"
 	nutriment_desc = list("onion" = 2, "mushroom" = 2)
