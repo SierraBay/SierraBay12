@@ -13,17 +13,7 @@
 	coat = null
 	update_icon()
 
-<<<<<<< ours
-/obj/structure/coatrack/attackby(obj/item/W, mob/user)
-	var/can_hang = 0
-	for (var/T in allowed)
-		if(istype(W,T))
-			can_hang = 1
-	if (can_hang && !coat)
-		user.visible_message("[user] hangs [W] on \the [src].", "You hang [W] on the \the [src]")
-		coat = W
-		user.drop_from_inventory(coat, src)
-=======
+
 
 /obj/structure/coatrack/use_tool(obj/item/tool, mob/user, list/click_params)
 	// Anything - Attempt to hang item
@@ -35,7 +25,6 @@
 			FEEDBACK_UNEQUIP_FAILURE(user, tool)
 			return TRUE
 		coat = tool
->>>>>>> theirs
 		update_icon()
 		user.visible_message(
 			SPAN_NOTICE("\The [user] hangs \a [tool] on \the [src]."),

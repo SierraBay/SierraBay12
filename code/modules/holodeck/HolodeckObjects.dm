@@ -189,14 +189,11 @@
 		visible_message("[src] fades away as it shatters!")
 	qdel(src)
 
-<<<<<<< ours
-=======
 /obj/structure/bed/chair/holochair
 	bed_flags = BED_FLAG_CANNOT_BE_DISMANTLED | BED_FLAG_CANNOT_BE_ELECTRIFIED | BED_FLAG_CANNOT_BE_PADDED
 
 /obj/structure/bed/chair/holochair/Destroy()
 	..()
->>>>>>> theirs
 
 /obj/item/holo
 	damtype = DAMAGE_PAIN

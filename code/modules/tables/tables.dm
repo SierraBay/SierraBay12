@@ -215,14 +215,6 @@
 /obj/structure/table/use_tool(obj/item/tool, mob/user, list/click_params)
 	SHOULD_CALL_PARENT(FALSE)
 
-<<<<<<< ours
-	// Placing stuff on tables
-	if(user.unEquip(W, src.loc))
-		if (W.drop_sound)
-			playsound(W.loc, W.drop_sound, 25)
-		auto_align(W, click_params)
-		return 1
-=======
 	// Put things on table
 	if (can_plate && !material)
 		USE_FEEDBACK_FAILURE("\The [src] needs to be plated before you can put \the [tool] on it.")
@@ -232,7 +224,6 @@
 		return TRUE
 	auto_align(tool, click_params)
 	return TRUE
->>>>>>> theirs
 
 
 /obj/structure/table/MouseDrop_T(obj/item/stack/material/what)
