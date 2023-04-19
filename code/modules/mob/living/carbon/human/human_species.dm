@@ -25,19 +25,15 @@
 	head_hair_style = "Skrell Male Tentacles"
 	. = ..(mapload, SPECIES_SKRELL)
 
-<<<<<<< ours
-/mob/living/carbon/human/resomi/New(new_loc)
+/mob/living/carbon/human/resomi/Initialize(mapload)
 	head_hair_style = "Resomi Plumage"
-	..(new_loc, SPECIES_RESOMI)
+	. = ..(mapload, SPECIES_RESOMI)
 
-/mob/living/carbon/human/tajaran/New(new_loc)
+/mob/living/carbon/human/tajaran/Initialize(mapload)
 	head_hair_style = "Tajaran Ears"
-	..(new_loc, SPECIES_TAJARA)
+	. = ..(mapload, SPECIES_TAJARA)
 
-/mob/living/carbon/human/unathi/New(new_loc)
-=======
 /mob/living/carbon/human/unathi/Initialize(mapload)
->>>>>>> theirs
 	head_hair_style = "Unathi Horns"
 	. = ..(mapload, SPECIES_UNATHI)
 

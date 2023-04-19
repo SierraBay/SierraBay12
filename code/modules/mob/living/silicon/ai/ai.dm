@@ -154,23 +154,6 @@ var/global/list/ai_verbs_default = list(
 		add_ai_verbs(src)
 
 	//Languages
-<<<<<<< ours
-	add_language(LANGUAGE_ROBOT_GLOBAL, 1)
-	add_language(LANGUAGE_EAL, 1)
-	add_language(LANGUAGE_HUMAN_EURO, 1)
-	add_language(LANGUAGE_HUMAN_ARABIC, 1)
-	add_language(LANGUAGE_HUMAN_CHINESE, 1)
-	add_language(LANGUAGE_HUMAN_IBERIAN, 1)
-	add_language(LANGUAGE_HUMAN_INDIAN, 1)
-	add_language(LANGUAGE_HUMAN_RUSSIAN, 1)
-	add_language(LANGUAGE_HUMAN_SELENIAN, 1)
-	add_language(LANGUAGE_UNATHI_SINTA, 1)
-	add_language(LANGUAGE_SKRELLIAN, 1)
-	add_language(LANGUAGE_RESOMI, 1)
-	add_language(LANGUAGE_SIIK_MAAS, 1)
-	add_language(LANGUAGE_SPACER, 1)
-	add_language(LANGUAGE_SIGN, 0)
-=======
 	add_language(LANGUAGE_ROBOT_GLOBAL, TRUE)
 	add_language(LANGUAGE_EAL, TRUE)
 	add_language(LANGUAGE_HUMAN_EURO, TRUE)
@@ -184,7 +167,8 @@ var/global/list/ai_verbs_default = list(
 	add_language(LANGUAGE_SKRELLIAN, TRUE)
 	add_language(LANGUAGE_SPACER, TRUE)
 	add_language(LANGUAGE_SIGN, FALSE)
->>>>>>> theirs
+	add_language(LANGUAGE_RESOMI, TRUE)
+	add_language(LANGUAGE_SIIK_MAAS, TRUE)
 
 	if(!safety)//Only used by AIize() to successfully spawn an AI.
 		if (!B)//If there is no player/brain inside.
