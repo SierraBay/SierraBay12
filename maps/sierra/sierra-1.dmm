@@ -4475,7 +4475,7 @@
 /obj/effect/floor_decal/industrial/warning{
 	dir = 6
 	},
-/obj/structure/window/phoronreinforced{
+/obj/structure/window/boron_reinforced{
 	dir = 4
 	},
 /turf/simulated/floor/reinforced/carbon_dioxide,
@@ -11955,7 +11955,7 @@
 /obj/effect/floor_decal/industrial/warning{
 	dir = 5
 	},
-/obj/structure/window/phoronreinforced{
+/obj/structure/window/boron_reinforced{
 	dir = 4
 	},
 /turf/simulated/floor/reinforced/carbon_dioxide,
@@ -16128,7 +16128,7 @@
 	pump_direction = 0;
 	use_power = 1
 	},
-/obj/structure/window/phoronreinforced{
+/obj/structure/window/boron_reinforced{
 	dir = 4
 	},
 /turf/simulated/floor/reinforced/carbon_dioxide,
@@ -22462,7 +22462,7 @@
 /obj/effect/floor_decal/industrial/warning{
 	dir = 6
 	},
-/obj/structure/window/phoronreinforced{
+/obj/structure/window/boron_reinforced{
 	dir = 4
 	},
 /turf/simulated/floor/reinforced/carbon_dioxide,
