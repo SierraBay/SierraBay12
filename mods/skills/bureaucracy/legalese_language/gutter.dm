@@ -1,12 +1,3 @@
-/datum/language/gutter
-	partial_understanding = list(
-		LANGUAGE_HUMAN_EURO = 75,
-		LANGUAGE_HUMAN_CHINESE = 20,
-		LANGUAGE_HUMAN_ARABIC = 10,
-		LANGUAGE_HUMAN_INDIAN = 10,
-		LANGUAGE_HUMAN_IBERIAN = 30,
-		LANGUAGE_HUMAN_RUSSIAN = 30,
-		LANGUAGE_HUMAN_SELENIAN = 15,
-		LANGUAGE_SPACER = 35,
-		LANGUAGE_LEGALESE = 25
-	)
+/datum/language/gutter/New()
+	. = ..()
+	partial_understanding += list(LANGUAGE_LEGALESE = 25)
