@@ -1379,7 +1379,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/structure/closet/chefcloset,
+/obj/structure/closet/chefcloset_torch,
 /turf/simulated/floor/tiled/freezer,
 /area/crew_quarters/galleybackroom)
 "dl" = (
@@ -10040,7 +10040,6 @@
 /area/crew_quarters/safe_room/thirddeck)
 "xW" = (
 /obj/machinery/door/window/brigdoor{
-	color = "PURPLE";
 	dir = 8
 	},
 /obj/effect/floor_decal/industrial/warning{
