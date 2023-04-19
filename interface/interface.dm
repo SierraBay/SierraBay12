@@ -48,9 +48,9 @@
 	set name = "link discord"
 	set hidden = TRUE
 	link_url(config.discord_url, "Discord", TRUE)
-<<<<<<< ours
-=======
 
+// [BAY]
+/*
 /client/verb/hotkeys_help()
 	set name = "Hotkeys Help"
 	set category = "OOC"
@@ -169,4 +169,5 @@
 		to_chat(src, other)
 	if(holder)
 		to_chat(src, admin)
->>>>>>> theirs
+*/
+// [/BAY]
