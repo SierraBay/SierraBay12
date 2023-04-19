@@ -15,6 +15,12 @@
 /datum/uplink_category/ammunition
 	name = "Ammunition"
 
+/datum/uplink_category/armor
+	name = "Armor and Spacesuits"
+
+/datum/uplink_category/contracts_equipment
+	name = "Contracts Equipment"
+
 /datum/uplink_category/grenades
 	name = "Grenades"
 

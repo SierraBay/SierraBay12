@@ -1,0 +1,8 @@
+#ifndef MODPACK_CONTRACTOR_EQUIPMENT
+#define MODPACK_CONTRACTOR_EQUIPMENT
+
+#include "_contractor_equipment.dm"
+
+#include "contractor_equipment.dm"
+
+#endif

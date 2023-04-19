@@ -31,6 +31,7 @@
 	var/next_offer_time					//The time a discount will next be offered
 	var/datum/uplink_item/discount_item	//The item to be discounted
 	var/discount_amount					//The amount as a percent the item will be discounted by
+	var/complimentary_std = TRUE        // Can STD be purchased for free
 	var/datum/computer_file/program/uplink/program
 
 /obj/item/device/uplink/nano_host()

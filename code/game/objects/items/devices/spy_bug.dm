@@ -16,6 +16,7 @@
 
 	origin_tech = list(TECH_DATA = 1, TECH_ENGINEERING = 1, TECH_ESOTERIC = 3)
 
+	var/obj/item/device/spy_monitor/paired_with
 	var/obj/item/device/radio/spy/radio
 	var/obj/machinery/camera/spy/camera
 
@@ -50,6 +51,15 @@
 /obj/item/device/spy_bug/hear_talk(mob/M, msg, verb, datum/language/speaking)
 	radio.hear_talk(M, msg, speaking)
 
+/obj/item/device/spy_bug/Move()
+	. = ..()
+	if(. && paired_with)
+		paired_with.bug_moved()
+
+/obj/item/device/spy_bug/forceMove()
+	. = ..()
+	if(. && paired_with)
+		paired_with.bug_moved()
 
 /obj/item/device/spy_monitor
 	name = "\improper PDA"
@@ -60,6 +70,12 @@
 	w_class = ITEM_SIZE_SMALL
 
 	origin_tech = list(TECH_DATA = 1, TECH_ENGINEERING = 1, TECH_ESOTERIC = 3)
+
+	var/obj/item/device/uplink/uplink
+	var/cam_spy_active = FALSE
+	var/timer
+	var/list/area/active_recon_areas_list = list()
+	var/finish = FALSE // to protect user anus from picking bugs in finish check tick.
 
 	var/operating = 0
 	var/obj/item/device/radio/spy/radio
@@ -79,6 +95,88 @@
 	. = ..()
 	if(distance <= 1)
 		to_chat(user, "The time '12:00' is blinking in the corner of the screen and \the [src] looks very cheaply made.")
+
+/obj/item/device/spy_monitor/proc/bug_moved()
+	if(!timer || !length(cameras) || !length(active_recon_areas_list) || finish)
+		return
+	if(ishuman(uplink?.uplink_owner?.current))
+		to_chat(uplink.uplink_owner.current, SPAN_NOTICE("It looks like there are problems with your spy network in one the following areas:\n[english_list(active_recon_areas_list, and_text = "\n")]\nBugs maintenance required. Your current progress has been zeroed out."))
+	active_recon_areas_list = list()
+	deltimer(timer)
+	timer = null
+
+/obj/item/device/spy_monitor/proc/start()
+	timer = addtimer(CALLBACK(src, .proc/finish), 10 MINUTES, TIMER_STOPPABLE)
+
+/obj/item/device/spy_monitor/proc/finish()
+	if(length(active_recon_areas_list) && !finish)
+		finish = TRUE
+		for(var/datum/antag_contract/recon/C in GLOB.all_contracts)
+			if(C.completed)
+				continue
+			C.check(src)
+		finish = FALSE
+
+/obj/item/device/spy_monitor/verb/activate()
+	set name = "Activate Spy System"
+	set category = "Object"
+	if(usr.incapacitated() || !Adjacent(usr) || !ishuman(usr))
+		return
+	if(timer)
+		to_chat(usr, SPAN_NOTICE("Active spy network detected in the following areas:\n[english_list(active_recon_areas_list, and_text = "\n")]\nYou can deactivate the network by picking up the camera bugs."))
+		return
+	var/list/sensor_list = list()
+	if(length(active_recon_areas_list))
+		active_recon_areas_list = list()
+	var/list/messages = list()
+	var/list/obj/item/device/spy_bug/spy_net = bugs.Copy()
+	while(length(spy_net))
+		var/obj/item/device/spy_bug/S = pick(spy_net)
+		spy_net.Remove(S)
+
+		if(!isturf(S.loc))
+			messages += "Camera bug ([S.camera.name]) is not located on floor."
+			continue
+
+		var/detected_AS = FALSE
+		for(var/obj/item/device/spy_bug/AS in range(1, S))
+			if(AS == S)
+				continue
+			detected_AS = TRUE
+			messages += "Another camera bug in proximity prevents activation. (current bug: ([S.camera.name]), conflicting bug: [AS.camera.name])"
+			if(AS in spy_net)
+				spy_net.Remove(AS)
+		if(detected_AS)
+			continue
+
+		var/turf/T = S.loc
+		var/area/S_area = T.loc
+		if(!S_area)
+			continue
+		if(!sensor_list[S_area.name])
+			sensor_list[S_area.name] = 1
+		else
+			sensor_list[S_area.name] = sensor_list[S_area.name] + 1
+
+	var/sensor_active = FALSE
+	for(var/area_name in sensor_list)
+		if(sensor_list[area_name] >= 3)
+			sensor_active = TRUE
+			to_chat(usr, SPAN_NOTICE("Data collection initiated."))
+			start()
+			if(uplink?.uplink_owner == usr.mind)
+				var/area/A = get_area_name(area_name)
+				active_recon_areas_list += A
+				for(var/datum/antag_contract/recon/C in GLOB.all_contracts)
+					if(C.completed)
+						continue
+					if(A in C.targets)
+						to_chat(usr, SPAN_NOTICE("Recon contract locked in."))
+
+	if(!sensor_active)
+		if(!length(messages))
+			messages += "Not enough bugs."
+		to_chat(usr, SPAN_WARNING("Data collection initialization failed:\n[english_list(messages, and_text = "\n")]"))
 
 /obj/item/device/spy_monitor/attack_self(mob/user)
 	if(operating)
