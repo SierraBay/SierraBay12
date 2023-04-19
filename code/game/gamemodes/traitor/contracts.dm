@@ -15,7 +15,6 @@ GLOBAL_LIST_INIT(contracts_steal_items, list(
 	"an ion pistol" =                                   list(CONTRACT_STEAL_MILITARY, /obj/item/gun/energy/ionrifle/small),
 	"an electrolaser carbine" =                         list(CONTRACT_STEAL_MILITARY, /obj/item/gun/energy/taser/carbine),
 	"a G40 carbine" =                                   list(CONTRACT_STEAL_MILITARY, /obj/item/gun/energy/laser),
-	"a shotgun" =                                       list(CONTRACT_STEAL_MILITARY, /obj/item/gun/projectile/shotgun/pump),
 	"an riot helmet" =                                  list(CONTRACT_STEAL_OPERATION, /obj/item/clothing/head/helmet/riot),
 	"an riot armor vest" =                              list(CONTRACT_STEAL_OPERATION, /obj/item/clothing/head/helmet/ballistic),
 	"an ballistic helmet" =                             list(CONTRACT_STEAL_MILITARY, /obj/item/clothing/head/helmet/ballistic),
@@ -195,10 +194,6 @@ GLOBAL_LIST_INIT(syndicate_factions, list(
 				continue
 
 			target_mind = candidate_mind
-			if(skip_antag_role() || skip_unwanted_species(H))
-				target_mind = null
-				H = null
-				continue
 			name = "[name] [H.real_name]"
 			break
 	else
@@ -312,7 +307,7 @@ GLOBAL_LIST_INIT(syndicate_factions, list(
 			return
 		for(var/datum/antag_contract/item/steal_ai/s_AI in GLOB.all_contracts)
 			valid_AIs.Remove(s_AI.AI)
-		AI = safepick(valid_AIs)
+		AI = pickweight(valid_AIs)
 	if(!AI)
 		return
 	target_desc = "[target_desc] [AI.name]"
@@ -345,7 +340,7 @@ GLOBAL_LIST_INIT(syndicate_factions, list(
 		reason = pick("they want to research a NanoTrasen employee's genome")
 	else
 		reason = new_reason
-	if(!isnum_safe(target))
+	if(!isnan(target))
 		count = rand(3, 6)
 	else
 		count = target
@@ -357,7 +352,7 @@ GLOBAL_LIST_INIT(syndicate_factions, list(
 		var/list/data = C.reagents?.get_data(/datum/reagent/blood)
 		if(!length(data))
 			continue
-		var/datum/species/spec = all_species[data["species"]]
+//		var/datum/species/spec = all_species[data["species"]]
 //		if((data["blood_DNA"] in samples) || (spec?.species_flags & SPECIES_FLAG_NO_ANTAG_TARGET))
 //			continue
 		if(add_checked)
@@ -421,10 +416,6 @@ GLOBAL_LIST_INIT(syndicate_factions, list(
 
 			target_real_name = _H.real_name
 			target_mind = candidate_mind
-			if(skip_antag_role() || skip_unwanted_species(_H))
-				target_mind = null
-				_H = null
-				continue
 			name = "[name] [target_real_name]"
 			break
 	else
@@ -440,7 +431,7 @@ GLOBAL_LIST_INIT(syndicate_factions, list(
 	if(!istype(H) || !istype(_H) || !target_mind)
 		return
 	var/alternative_message = ""
-	var/obj/item/idcard = _H.get_id_card()
+	var/obj/item/idcard = _H.GetIdCard()
 	if(istype(idcard))
 		alternative_target = weakref(idcard)
 		alternative_message = " <b>[idcard], [target_real_name]'s brain in MMI, [target_real_name]'s brain</b>"
@@ -453,7 +444,7 @@ GLOBAL_LIST_INIT(syndicate_factions, list(
 		_target = _H.organs_by_name[BP_HEAD]
 	target = weakref(_target)
 
-	var/datum/gender/T = gender_datums[_H.get_gender()]
+	var/datum/gender/T = gender_datums[_H.gender]
 	create_explain_text("assassinate <b>[target_real_name]</b> and send[alternative_message] or <b>[T.his] [_target.name]</b> for double pay via STD (found in <b>Contracts Equipment</b>) as a proof. You must make sure that the target is completely, irreversibly dead.")
 
 /datum/antag_contract/item/assassinate/can_place()
@@ -508,7 +499,7 @@ GLOBAL_LIST_INIT(syndicate_factions, list(
 		reason = pick("they want to finance their agent on another object of [GLOB.using_map.company_name]'s station", "they want to update their stocks on local [GLOB.using_map.company_name]'s market")
 	else
 		reason = new_reason
-	if(!isnum_safe(target))
+	if(!isnan(target))
 		sum = rand(30, 40) * 500
 	else
 		sum = target

@@ -43,6 +43,7 @@
 
 	var/datum/job/assigned_job
 
+	var/completed_contracts = 0
 	var/list/datum/objective/objectives = list()
 	var/list/datum/objective/special_verbs = list()
 

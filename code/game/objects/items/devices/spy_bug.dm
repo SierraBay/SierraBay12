@@ -80,6 +80,7 @@
 	var/operating = 0
 	var/obj/item/device/radio/spy/radio
 	var/obj/machinery/camera/spy/selected_camera
+	var/list/obj/item/device/spy_bug/bugs = list()
 	var/list/obj/machinery/camera/spy/cameras = new()
 
 /obj/item/device/spy_monitor/New()
@@ -106,7 +107,7 @@
 	timer = null
 
 /obj/item/device/spy_monitor/proc/start()
-	timer = addtimer(CALLBACK(src, .proc/finish), 10 MINUTES, TIMER_STOPPABLE)
+	timer = addtimer(new Callback(src, .proc/finish), 10 MINUTES, TIMER_STOPPABLE)
 
 /obj/item/device/spy_monitor/proc/finish()
 	if(length(active_recon_areas_list) && !finish)

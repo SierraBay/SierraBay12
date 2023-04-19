@@ -2,12 +2,17 @@ GLOBAL_DATUM_INIT(traitors, /datum/antagonist/traitor, new)
 
 // Inherits most of its vars from the base datum.
 /datum/antagonist/traitor
+	var/datum/contract_fixer/fixer
 	id = MODE_TRAITOR
 	antaghud_indicator = "hud_traitor"
 	blacklisted_jobs = list(/datum/job/ai, /datum/job/submap)
 	protected_jobs = list(/datum/job/officer, /datum/job/warden, /datum/job/detective, /datum/job/captain, /datum/job/lawyer, /datum/job/hos)
 	flags = ANTAG_SUSPICIOUS | ANTAG_RANDSPAWN | ANTAG_VOTABLE
 	skill_setter = /datum/antag_skill_setter/station
+
+/datum/antagonist/traitor/Initialize()
+	..()
+	fixer = new()
 
 /datum/antagonist/traitor/get_extra_panel_options(datum/mind/player)
 	return "<a href='?src=\ref[player];common=crystals'>\[set crystals\]</a><a href='?src=\ref[src];spawn_uplink=\ref[player.current]'>\[spawn uplink\]</a>"
@@ -18,6 +23,21 @@ GLOBAL_DATUM_INIT(traitors, /datum/antagonist/traitor, new)
 	if(href_list["spawn_uplink"])
 		spawn_uplink(locate(href_list["spawn_uplink"]))
 		return 1
+
+/datum/antagonist/traitor/get_special_objective_text(datum/mind/player)
+	var/contracts_num = player.completed_contracts
+	if(!contracts_num)
+		return "<br>The traitor hasn't completed a single contract. <b>[pick("What a shame", "Sorry sight", "Lame duck", "Schlimazel", "Pantywaist", "We will talk about it later")].</b>"
+
+	var/contracts_text = ""
+	for(var/datum/antag_contract/AC in GLOB.all_contracts)
+		if(AC.completed_by == player)
+			contracts_text += "[AC.name], "
+	contracts_text = copytext(contracts_text, 1, length(contracts_text) - 1)
+	if(contracts_num == 1)
+		return "<br>The traitor has completed a single contract: [contracts_text]."
+	else
+		return "<br>The traitor has completed <b>[contracts_num] contracts: [contracts_text]."
 
 /datum/antagonist/traitor/create_objectives(datum/mind/traitor)
 	if(!..())

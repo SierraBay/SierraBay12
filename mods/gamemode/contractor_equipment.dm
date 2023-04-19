@@ -4,7 +4,6 @@
 	desc = "It's an old-looking briefcase with some high-tech markings. It has a label on it, which reads: \"ONLY WORKS NEAR SPACE\"."
 	origin_tech = list(TECH_BLUESPACE = 3, TECH_ILLEGAL = 3)
 	storage_slots = 10
-	override_w_class = list(/obj/item/gun/projectile/shotgun/pump)
 	var/obj/item/device/uplink/uplink
 	var/authentication_complete = FALSE
 	var/del_on_send = TRUE
@@ -25,7 +24,7 @@
 /obj/item/storage/briefcase/std/interact(mob/user)
 	ui_interact(user)
 
-/obj/item/storage/briefcase/std/proc/ui_data(mob/user)
+/obj/item/storage/briefcase/std/proc/nanoui_data(mob/user)
 	var/list/list/data = list()
 
 	data["can_launch"] = can_launch()
@@ -80,7 +79,7 @@
 		contents = list()
 		if(del_on_send)
 			if(ishuman(loc))
-				to_chat(loc, SPAN("notice", "\The [src] fades away in a brief flash of light."))
+				to_chat(loc, SPAN_NOTICE("\The [src] fades away in a brief flash of light."))
 			uplink.complimentary_std = TRUE // We can get a new one for free once again
 			qdel(src)
 
@@ -103,7 +102,7 @@
 		C.check(src)
 
 /obj/item/implant/spy/implanted(mob/source)
-	timer = addtimer(CALLBACK(src, .proc/check_compilation), 1 MINUTES, TIMER_STOPPABLE)
+	timer = addtimer(new Callback(src, .proc/check_compilation), 1 MINUTES, TIMER_STOPPABLE)
 	return TRUE
 
 /obj/item/implant/spy/removed()
@@ -118,7 +117,7 @@
 /obj/item/implanter/spy/attackby(obj/item/I, mob/user)
 	if(imp && istype(imp, /obj/item/implant/spy) && I.hidden_uplink)
 		imp.hidden_uplink = I.hidden_uplink
-		to_chat(user, SPAN("notice", "You authorize the [src] with \the [I]."))
+		to_chat(user, SPAN_NOTICE("You authorize the [src] with \the [I]."))
 
 /obj/item/implantcase/spy
 	name = "glass case - 'spy'"
