@@ -1056,7 +1056,7 @@
 	},
 /obj/effect/floor_decal/industrial/outline/grey,
 /obj/structure/table/rack,
-/obj/item/stack/material/glass/phoronglass{
+/obj/item/stack/material/glass/boron{
 	amount = 30
 	},
 /obj/item/stack/material/glass/phoronrglass{

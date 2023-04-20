@@ -20447,7 +20447,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
 /obj/item/sticky_pad/random,
-/obj/structure/table/glass/pglass,
+/obj/structure/table/glass/boron,
 /obj/effect/floor_decal/borderfloorwhite{
 	dir = 9
 	},
@@ -20465,7 +20465,7 @@
 	pixel_y = 32
 	},
 /obj/machinery/atmospherics/unary/vent_pump/on,
-/obj/structure/table/glass/pglass,
+/obj/structure/table/glass/boron,
 /obj/effect/floor_decal/borderfloorwhite{
 	dir = 1
 	},
@@ -22776,7 +22776,7 @@
 	icon_state = "4-8"
 	},
 /obj/item/folder/nt/rd,
-/obj/structure/table/glass/pglass,
+/obj/structure/table/glass/boron,
 /turf/simulated/floor/tiled/white,
 /area/crew_quarters/heads/office/rd)
 "aLH" = (
@@ -23656,7 +23656,7 @@
 /obj/item/paper_bin,
 /obj/item/pen,
 /obj/item/stamp/rd/nt,
-/obj/structure/table/glass/pglass,
+/obj/structure/table/glass/boron,
 /obj/item/toy/desk/newtoncradle{
 	pixel_x = 4;
 	pixel_y = 16
