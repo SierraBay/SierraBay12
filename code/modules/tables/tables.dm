@@ -222,6 +222,12 @@
 	if (!user.unEquip(tool, loc))
 		FEEDBACK_UNEQUIP_FAILURE(user, tool)
 		return TRUE
+
+	// [SIERRA]
+	if (W.drop_sound)
+			playsound(W.loc, W.drop_sound, 25)
+	// [/SIERRA]
+
 	auto_align(tool, click_params)
 	return TRUE
 
