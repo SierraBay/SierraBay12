@@ -30,36 +30,6 @@
 			devices += A
 		to_chat(user,"There are some wires attached to the lid, connected to [english_list(devices)].")
 
-<<<<<<< ours
-/obj/structure/closet/crate/attackby(obj/item/W as obj, mob/user as mob)
-	if(opened)
-		return ..()
-	else if(istype(W, /obj/item/stack/package_wrap))
-		return
-	else if(istype(W, /obj/item/stack/cable_coil))
-		var/obj/item/stack/cable_coil/C = W
-		if(rigged)
-			to_chat(user, SPAN_NOTICE("[src] is already rigged!"))
-			return
-		if (C.use(1))
-			to_chat(user, SPAN_NOTICE("You rig [src]."))
-			rigged = 1
-			return
-	else if(istype(W, /obj/item/device/assembly_holder) || istype(W, /obj/item/device/assembly))
-		if(rigged)
-			if(!user.unEquip(W, src))
-				return
-			to_chat(user, SPAN_NOTICE("You attach [W] to [src]."))
-			return
-	else if(isWirecutter(W))
-		if(rigged)
-			to_chat(user, SPAN_NOTICE("You cut away the wiring."))
-			playsound(loc, 'sound/items/Wirecutter.ogg', 100, 1)
-			rigged = 0
-			return
-	else
-		return ..()
-=======
 
 /obj/structure/closet/crate/use_tool(obj/item/tool, mob/user, list/click_params)
 	// Below interactions only apply if the crate is closed
@@ -112,7 +82,6 @@
 
 	return ..()
 
->>>>>>> theirs
 
 /obj/structure/closet/crate/secure
 	desc = "A secure crate."
