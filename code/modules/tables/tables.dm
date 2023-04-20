@@ -224,8 +224,8 @@
 		return TRUE
 
 	// [SIERRA]
-	if (W.drop_sound)
-		playsound(W.loc, W.drop_sound, 25)
+	if (tool.drop_sound)
+		playsound(tool.loc, tool.drop_sound, 25)
 	// [/SIERRA]
 
 	auto_align(tool, click_params)
