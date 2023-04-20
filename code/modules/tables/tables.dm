@@ -90,14 +90,6 @@
 		T.update_icon()
 	. = ..()
 
-<<<<<<< ours
-/obj/structure/table/attackby(obj/item/W, mob/user, click_params)
-	if(!reinforced && !carpeted && material && isWrench(W) && (user.a_intent != I_HELP || issilicon(user))) //robots dont have disarm so it's harm
-		remove_material(W, user)
-		if(!material)
-			update_connections(1)
-=======
-
 /obj/structure/table/use_weapon(obj/item/weapon, mob/user, list/click_params)
 	// Carpet - Add carpeting
 	if (istype(weapon, /obj/item/stack/tile/carpet))
@@ -155,27 +147,11 @@
 		material = common_material_add(weapon, user, "plat")
 		if (material)
 			update_connections(TRUE)
->>>>>>> theirs
 			update_icon()
 			for(var/obj/structure/table/T in oview(src, 1))
 				T.update_icon()
 			update_desc()
 			update_material()
-<<<<<<< ours
-		return 1
-
-	if(!carpeted && !reinforced && !material && isWrench(W) && (user.a_intent != I_HELP || issilicon(user)))
-		dismantle(W, user)
-		return 1
-
-	if (user.a_intent == I_HURT)
-		..()
-		return
-
-	if(reinforced && isScrewdriver(W))
-		remove_reinforced(W, user)
-		if(!reinforced)
-=======
 		return TRUE
 
 	// Welding Tool - Repair damage
@@ -218,7 +194,6 @@
 			update_icon()
 			for (var/obj/structure/table/table in oview(src, 1))
 				table.update_icon()
->>>>>>> theirs
 			update_desc()
 			update_icon()
 			update_material()
