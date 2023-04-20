@@ -1059,7 +1059,7 @@
 /obj/item/stack/material/glass/boron{
 	amount = 30
 	},
-/obj/item/stack/material/glass/phoronrglass{
+/obj/item/stack/material/glass/boron_reinforced{
 	amount = 20
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
