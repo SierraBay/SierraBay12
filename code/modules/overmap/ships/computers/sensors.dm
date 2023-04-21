@@ -199,9 +199,9 @@
 				return
 			new_class = sanitizeSafe(new_class, 5)
 			new_class = uppertext(new_class)
-			/*if(use_check_and_message(usr))
-				return
-			*/
+			if(!CanInteract(user,state))
+				return TOPIC_NOACTION
+
 			linked.set_new_class(new_class)
 			playsound(src, 'sound/machines/twobeep.ogg', 50)
 			visible_message(SPAN_NOTICE("\The [src] beeps, <i>\"IFF change to ship class registered.\"</i>"))
@@ -216,9 +216,9 @@
 				return
 			new_name = sanitizeSafe(new_name, 24)
 			new_name = capitalize(new_name)
-			/*if(use_check_and_message(usr))
-				return
-			*/
+			if(!CanInteract(user,state))
+				return TOPIC_NOACTION
+
 			linked.set_new_designation(new_name)
 			playsound(src, 'sound/machines/twobeep.ogg', 50)
 			visible_message(SPAN_NOTICE("\The [src] beeps, <i>\"IFF change to ship designation registered.\"</i>"))

@@ -9,11 +9,11 @@
 	. += ..()
 	. += text("<br>\n[(I.use_power ? "The beacon is transmitting." : "The beacon is not transmitting.")]")
 
-/datum/wires/iff/CanUse(var/mob/living/L)
+/datum/wires/iff/CanUse(mob/living/L)
 	var/obj/machinery/iff_beacon/I = holder
 	return I.panel_open
 
-/datum/wires/iff/UpdateCut(var/index, var/mended)
+/datum/wires/iff/UpdateCut(index, mended)
 	var/obj/machinery/iff_beacon/I = holder
 
 	switch(index)
