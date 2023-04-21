@@ -1,7 +1,8 @@
 /obj/machinery/iff_beacon
 	name = "IFF transponder" //This object handles ship identification on sensors.
 	desc = "A complex set of various bluespace and subspace arrays that transmit a ship's identification tags."
-	icon_state = "bus"
+	icon = 'packs/sierra-tweaks/icons/machinery/ship_transponder.dmi'
+	icon_state = "transponder_wall"
 	idle_power_usage = 500
 	wires = /datum/wires/iff
 	var/disabled = FALSE
@@ -22,19 +23,21 @@
 			if (istype(my_sector, /obj/effect/overmap/visitable))
 				ship.attempt_hook_up(my_sector)
 
-/obj/machinery/iff_beacon/attackby(obj/item/O, mob/user)
-	if(isScrewdriver(O))
+/obj/machinery/iff_beacon/use_tool(obj/item/tool, mob/user, list/click_params)
+	if(isScrewdriver(tool))
 		panel_open = !panel_open
 		to_chat(user, "You [panel_open ?  "open" : "close"] the maintenance panel.")
+		return TRUE
 
 	if(panel_open)
-		if(isMultitool(O) || isWirecutter(O))
+		if(isMultitool(tool) || isWirecutter(tool))
 			if(panel_open)
 				wires.Interact(user)
 			else
-				to_chat(user, SPAN_WARNING("\The [src]'s wires aren't exposed."))
+				USE_FEEDBACK_FAILURE("\The [src]'s wires aren't exposed.")
 			return TRUE
-	..()
+
+	return ..()
 
 /obj/machinery/iff_beacon/proc/toggle()
 	if(disabled)
@@ -62,11 +65,9 @@
 	disabled = FALSE
 	toggle()
 
-/obj/machinery/iff_beacon/update_icon()
+/obj/machinery/iff_beacon/on_update_icon()
 	icon_state = initial(icon_state)
 	cut_overlays()
-	if(panel_open)
-		icon_state += "_o"
 	if(!operable() || !use_power)
 		icon_state += "_off"
 
@@ -75,5 +76,13 @@
 	can_change_name = FALSE
 
 /obj/machinery/iff_beacon/name_change
+	can_change_name = TRUE
+	can_change_class = FALSE
+
+/obj/machinery/iff_beacon/table
+	icon_state = "transponder_table"
+
+/obj/machinery/iff_beacon/table/name_change
+	icon_state = "transponder_table"
 	can_change_name = TRUE
 	can_change_class = FALSE
