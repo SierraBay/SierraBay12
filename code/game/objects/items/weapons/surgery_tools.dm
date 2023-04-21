@@ -1,16 +1,3 @@
-/* Surgery Tools
- * Contains:
- *		Retractor
- *		Hemostat
- *		Cautery
- *		Surgical Drill
- *		Scalpel
- *		Circular Saw
- */
-
-/*
- * Retractor
- */
 /obj/item/retractor
 	name = "retractor"
 	desc = "Used to separate the edges of a surgical incision to get to the juicy organs inside."
@@ -21,12 +8,15 @@
 	w_class = ITEM_SIZE_SMALL
 	origin_tech = list(TECH_MATERIAL = 1, TECH_BIO = 1)
 
+<<<<<<< ours
 	drop_sound = 'sound/items/drop/weldingtool.ogg'
 	pickup_sound = 'sound/items/pickup/weldingtool.ogg'
 
 /*
  * Hemostat
  */
+=======
+>>>>>>> theirs
 /obj/item/hemostat
 	name = "hemostat"
 	desc = "A type of forceps used to prevent an incision from bleeding, or to extract objects from the inside of the body."
@@ -38,12 +28,15 @@
 	origin_tech = list(TECH_MATERIAL = 1, TECH_BIO = 1)
 	attack_verb = list("attacked", "pinched")
 
+<<<<<<< ours
 	drop_sound = 'sound/items/drop/weldingtool.ogg'
 	pickup_sound = 'sound/items/pickup/weldingtool.ogg'
 
 /*
  * Cautery
  */
+=======
+>>>>>>> theirs
 /obj/item/cautery
 	name = "cautery"
 	desc = "Uses chemicals to quickly cauterize incisions and other small cuts without causing further damage."
@@ -55,12 +48,15 @@
 	origin_tech = list(TECH_MATERIAL = 1, TECH_BIO = 1)
 	attack_verb = list("burnt")
 
+<<<<<<< ours
 	drop_sound = 'sound/items/drop/weldingtool.ogg'
 	pickup_sound = 'sound/items/pickup/weldingtool.ogg'
 
 /*
  * Surgical Drill
  */
+=======
+>>>>>>> theirs
 /obj/item/surgicaldrill
 	name = "surgical drill"
 	desc = "Effectively a very precise hand drill, used to bore holes through bone."
@@ -74,12 +70,15 @@
 	origin_tech = list(TECH_MATERIAL = 1, TECH_BIO = 1)
 	attack_verb = list("drilled")
 
+<<<<<<< ours
 	drop_sound = 'sound/items/drop/accessory.ogg'
 	pickup_sound = 'sound/items/pickup/accessory.ogg'
 
 /*
  * Scalpel
  */
+=======
+>>>>>>> theirs
 /obj/item/scalpel
 	name = "scalpel"
 	desc = "A tiny and extremely sharp steel cutting tool used for surgery, dissection, autopsy, and very precise cuts. The cornerstone of any surgical procedure."
@@ -98,12 +97,15 @@
 	matter = list(MATERIAL_STEEL = 10000, MATERIAL_GLASS = 5000)
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
+<<<<<<< ours
 	drop_sound = 'sound/items/drop/knife.ogg'
 	pickup_sound = 'sound/items/pickup/knife.ogg'
 
 /*
  * Researchable Scalpels
  */
+=======
+>>>>>>> theirs
 /obj/item/scalpel/laser1
 	name = "laser scalpel"
 	desc = "A scalpel augmented with a directed laser, for more precise cutting without blood entering the field.  This one looks basic and could be improved."
@@ -130,9 +132,6 @@
 	icon_state = "scalpel_manager_on"
 	force = 7.5
 
-/*
- * Circular Saw
- */
 /obj/item/circular_saw
 	name = "circular saw"
 	desc = "A small and nasty-looking hand saw used to cut through bone, or in an emergency, pizza."
@@ -151,12 +150,15 @@
 	sharp = TRUE
 	edge = TRUE
 
+<<<<<<< ours
 	drop_sound = 'sound/items/drop/accessory.ogg'
 	pickup_sound = 'sound/items/pickup/accessory.ogg'
 
 /*
  * Bone Gel
  */
+=======
+>>>>>>> theirs
 /obj/item/bonegel
 	name = "bone gel"
 	desc = "A pack of sophisticated chemical gel used to mend fractures and broken bones before setting."
@@ -166,14 +168,17 @@
 	w_class = ITEM_SIZE_SMALL
 	throwforce = 1.0
 
+<<<<<<< ours
 	drop_sound = 'sound/items/drop/bottle.ogg'
 	pickup_sound = 'sound/items/pickup/bottle.ogg'
 
 /*
  * Vascular Recoupler
  */
+=======
+>>>>>>> theirs
 /obj/item/FixOVein
-	name = "Vascular Recoupler"
+	name = "vascular recoupler"
 	desc = "Derived from a Vey-Med design, this miniature 3D printer is used to quickly synthetize and thread new organic tissue during surgical procedures."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "fixovein"
@@ -184,12 +189,15 @@
 	w_class = ITEM_SIZE_SMALL
 	var/usage_amount = 10
 
+<<<<<<< ours
 	drop_sound = 'sound/items/drop/accessory.ogg'
 	pickup_sound = 'sound/items/pickup/accessory.ogg'
 
 /*
  * Bone Setter
  */
+=======
+>>>>>>> theirs
 /obj/item/bonesetter
 	name = "bone setter"
 	desc = "A large, heavy clamp for setting dislocated or fractured bones back in place."
