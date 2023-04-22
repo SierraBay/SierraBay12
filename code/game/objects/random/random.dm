@@ -1052,7 +1052,7 @@ something, make sure it's not in one of the other lists.*/
 				/obj/item/clothing/suit/straight_jacket = 6,
 				/obj/item/clothing/head/helmet/merc = 3,
 				/obj/item/stack/material/diamond/ten = 7,
-				/obj/item/stack/material/glass/phoronrglass/ten = 7,
+				/obj/item/stack/material/glass/boron_reinforced/ten = 7,
 				/obj/item/stack/material/marble/ten = 8,
 				/obj/item/stack/material/phoron/ten = 7,
 				/obj/item/stack/material/gold/ten = 7,
@@ -1223,6 +1223,7 @@ var/global/list/multi_point_spawns
 
 
 /proc/get_random_useful_type()
+	RETURN_TYPE(/obj)
 	var/static/list/options = list(
 		/obj/random/crayon,
 		/obj/item/pen,
@@ -1238,6 +1239,7 @@ var/global/list/multi_point_spawns
 
 
 /proc/get_random_junk_type()
+	RETURN_TYPE(/obj)
 	var/static/list/options = ((\
 		typesof(/obj/item/trash/cigbutt) +\
 		subtypesof(/obj/item/trash)) - list(

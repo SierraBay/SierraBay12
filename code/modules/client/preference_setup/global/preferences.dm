@@ -8,8 +8,6 @@ GLOBAL_VAR_CONST(PREF_SHORT, "Short")
 GLOBAL_VAR_CONST(PREF_LONG, "Long")
 GLOBAL_VAR_CONST(PREF_SHOW, "Show")
 GLOBAL_VAR_CONST(PREF_HIDE, "Hide")
-GLOBAL_VAR_CONST(PREF_FANCY, "Fancy")
-GLOBAL_VAR_CONST(PREF_PLAIN, "Plain")
 GLOBAL_VAR_CONST(PREF_PRIMARY, "Primary")
 GLOBAL_VAR_CONST(PREF_ALL, "All")
 GLOBAL_VAR_CONST(PREF_OFF, "Off")
@@ -37,6 +35,7 @@ var/global/list/_client_preferences_by_key
 var/global/list/_client_preferences_by_type
 
 /proc/get_client_preferences()
+	RETURN_TYPE(/list)
 	if(!_client_preferences)
 		_client_preferences = list()
 		for(var/ct in subtypesof(/datum/client_preference))
@@ -46,6 +45,7 @@ var/global/list/_client_preferences_by_type
 	return _client_preferences
 
 /proc/get_client_preference(datum/client_preference/preference)
+	RETURN_TYPE(/datum/client_preference)
 	if(istype(preference))
 		return preference
 	if(ispath(preference))
@@ -53,6 +53,7 @@ var/global/list/_client_preferences_by_type
 	return get_client_preference_by_key(preference)
 
 /proc/get_client_preference_by_key(preference)
+	RETURN_TYPE(/datum/client_preference)
 	if(!_client_preferences_by_key)
 		_client_preferences_by_key = list()
 		for(var/ct in get_client_preferences())
@@ -61,6 +62,7 @@ var/global/list/_client_preferences_by_type
 	return _client_preferences_by_key[preference]
 
 /proc/get_client_preference_by_type(preference)
+	RETURN_TYPE(/datum/client_preference)
 	if(!_client_preferences_by_type)
 		_client_preferences_by_type = list()
 		for(var/ct in get_client_preferences())
@@ -200,11 +202,6 @@ var/global/list/_client_preferences_by_type
 	description ="Progress Bar"
 	key = "SHOW_PROGRESS"
 	options = list(GLOB.PREF_SHOW, GLOB.PREF_HIDE)
-
-/datum/client_preference/browser_style
-	description = "Fake NanoUI Browser Style"
-	key = "BROWSER_STYLED"
-	options = list(GLOB.PREF_FANCY, GLOB.PREF_PLAIN)
 
 /datum/client_preference/autohiss
 	description = "Autohiss"

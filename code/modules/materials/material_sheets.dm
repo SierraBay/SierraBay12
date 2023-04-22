@@ -19,6 +19,13 @@
 	var/material_flags = USE_MATERIAL_COLOR|USE_MATERIAL_SINGULAR_NAME|USE_MATERIAL_PLURAL_NAME
 	var/matter_multiplier = 1
 
+
+/obj/item/stack/material/get_stack_name()
+	. = material.display_name
+	if (reinf_material)
+		. = "[reinf_material.display_name]-reinforced [.]"
+
+
 /obj/item/stack/material/Initialize(mapload, amount, _material, _reinf_material)
 	. = ..()
 	if(_material)
@@ -78,17 +85,17 @@
 	if(material_flags & USE_MATERIAL_PLURAL_NAME)
 		plural_name = material.sheet_plural_name
 
+	SetName(get_stack_name())
 	if(amount>1)
-		SetName("[material.use_name] [plural_name]")
-		desc = "A stack of [material.use_name] [plural_name]."
+		SetName("[name] [plural_name]")
+		desc = "A stack of [get_vague_name()]."
 		gender = PLURAL
 	else
-		SetName("[material.use_name] [singular_name]")
-		desc = "A [singular_name] of [material.use_name]."
+		SetName("[name] [singular_name]")
+		desc = "[get_vague_name()]."
 		gender = NEUTER
 	if(reinf_material)
-		SetName("reinforced [name]")
-		desc = "[desc]\nIt is reinforced with the [reinf_material.use_name] lattice."
+		desc += "\nIt is reinforced with the [reinf_material.use_name] lattice."
 
 /obj/item/stack/material/use(used)
 	. = ..()
@@ -138,7 +145,7 @@
 		var/obj/item/weldingtool/WT = W
 		if(WT.isOn() && WT.get_fuel() > 2 && use(2))
 			WT.remove_fuel(2, user)
-			to_chat(user,SPAN_NOTICE("You recover some [reinf_material.use_name] from the [src]."))
+			to_chat(user,SPAN_NOTICE("You recover some [reinf_material.use_name] from \the [src]."))
 			reinf_material.place_sheet(get_turf(user), 1)
 			return
 	return ..()
@@ -659,16 +666,16 @@
 /obj/item/stack/material/glass/reinforced/fifty
 	amount = 50
 
-/obj/item/stack/material/glass/phoronglass
+/obj/item/stack/material/glass/boron
 	name = "borosilicate glass"
-	default_type = MATERIAL_PHORON_GLASS
+	default_type = MATERIAL_BORON_GLASS
 
-/obj/item/stack/material/glass/phoronrglass
+/obj/item/stack/material/glass/boron_reinforced
 	name = "reinforced borosilicate glass"
-	default_type = MATERIAL_PHORON_GLASS
+	default_type = MATERIAL_BORON_GLASS
 	default_reinf_type = MATERIAL_STEEL
 
-/obj/item/stack/material/glass/phoronrglass/ten
+/obj/item/stack/material/glass/boron_reinforced/ten
 	amount = 10
 
 /obj/item/stack/material/aliumium
