@@ -104,7 +104,7 @@
 		list(mode_name="full auto",      burst=1,    fire_delay=1.7,    burst_delay=1.3,     one_hand_penalty=7,  burst_accuracy=list(0,-1,-1), dispersion=list(1.3, 1.5, 1.7, 1.9, 2.2), autofire_enabled=1)
 		)
 
-/obj/item/gun/projectile/automatic/mr735/update_icon()
+/obj/item/gun/projectile/automatic/mr735/on_update_icon()
 	..()
 	if(ammo_magazine)
 		icon_state = "nostockrifle"
@@ -142,7 +142,7 @@
 		list(mode_name="full auto",      burst=1,    fire_delay=1.7,    burst_delay=1.3,     one_hand_penalty=7,  burst_accuracy=list(0,-1,-1), dispersion=list(1.3, 1.5, 1.7, 1.9, 2.2), autofire_enabled=1)
 		)
 
-/obj/item/gun/projectile/automatic/mbr/update_icon()
+/obj/item/gun/projectile/automatic/mbr/on_update_icon()
 	..()
 	if(ammo_magazine)
 		icon_state = "mbr_bullpup"
