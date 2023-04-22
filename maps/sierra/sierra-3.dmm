@@ -20252,6 +20252,9 @@
 /obj/structure/sign/poster/nyc_unusual_gas{
 	pixel_x = -32
 	},
+/obj/structure/closet/shipping_wall/filled{
+	pixel_y = 28
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/rnd/development)
 "aIq" = (
