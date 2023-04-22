@@ -258,7 +258,7 @@
 
 	..()
 	// [SIERRA]
-	playsound(loc, pick(GLOB.smash_sound), 50, 1)
+	playsound(loc, "smash_sound", 50, 1)
 	if(client) shake_camera(src, 7, 0.5)
 	// [/SIERRA]
 
