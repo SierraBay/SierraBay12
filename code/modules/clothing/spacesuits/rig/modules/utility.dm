@@ -100,7 +100,7 @@
 	scanner.put_disk_in_hand(holder.wearer)
 
 /obj/item/rig_module/device/rcd
-	name = "RCD mount"
+	name = "\improper RCD mount"
 	desc = "A cell-powered rapid construction device for a hardsuit."
 	icon_state = "rcd"
 	interface_name = "mounted RCD"
@@ -224,7 +224,7 @@
 	if(!charge)
 		return 0
 
-	var/chems_to_use = 10
+	var/chems_to_use = 5
 	if(charge.charges <= 0)
 		to_chat(H, SPAN_DANGER("Insufficient chems!"))
 		return 0
