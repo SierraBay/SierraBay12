@@ -158,6 +158,7 @@
 	#include "../../mods/bluespace_kitty/_bluespace_kitty.dme"
 	#include "../../mods/maps/sentinel/_map_sentinel.dme"
 	#include "../../mods/maps/farfleet/_map_farfleet.dme"
+	#include "../../mods/gamemode/_contractor_equipment.dme"
 
 	// UNUSED MODS
 	// #include "../../mods/_events/mortar/_mortar.dme"
