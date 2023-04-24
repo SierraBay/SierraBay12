@@ -427,8 +427,8 @@
 			to_chat(user, SPAN_WARNING("You must remain still to perform that action!"))
 			inserting = FALSE
 			return
+		inserting = FALSE
 		if(user.get_active_hand() != W)
-			inserting = FALSE
 			return
 		if(lightbulb)
 			to_chat(user, SPAN_WARNING("There is a [get_fitting_name()] already inserted."))
@@ -445,7 +445,6 @@
 		)
 		insert_bulb(W)
 		add_fingerprint(user)
-		inserting = FALSE
 
 	// attempt to break the light
 	else if(lightbulb && (lightbulb.status != LIGHT_BROKEN) && user.a_intent != I_HELP)
