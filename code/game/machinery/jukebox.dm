@@ -38,7 +38,7 @@
 		verbs -= /obj/machinery/jukebox/verb/eject
 		playsound(src, 'packs/sierra-tweaks/sound/effects/tape_eject.ogg', 40)
 		jukebox.ui_interact(usr)
-//[/SIERRA]
+// [/SIERRA]
 
 /obj/machinery/jukebox/Initialize()
 	. = ..()
