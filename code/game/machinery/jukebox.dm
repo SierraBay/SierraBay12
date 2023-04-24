@@ -116,7 +116,7 @@
 			return
 
 	return ..()
-//[/SIERRA]
+// [/SIERRA]
 /obj/machinery/jukebox/old
 	name = "space jukebox"
 	desc = "A battered and hard-loved jukebox in some forgotten style, carefully restored to some semblance of working condition."
