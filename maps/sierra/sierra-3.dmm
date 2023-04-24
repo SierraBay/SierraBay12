@@ -8831,7 +8831,9 @@
 /obj/effect/floor_decal/corner/blue{
 	dir = 5
 	},
-/obj/structure/hygiene/sink,
+/obj/structure/hygiene/sink{
+	pixel_y = -12
+	},
 /turf/simulated/floor/tiled/white,
 /area/medical/surgery)
 "apd" = (
@@ -11764,7 +11766,7 @@
 	},
 /obj/structure/table/glass,
 /obj/item/modular_computer/laptop/preset/custom_loadout/advanced{
-	dir = 8
+	dir = 3
 	},
 /obj/machinery/alarm{
 	dir = 8;
