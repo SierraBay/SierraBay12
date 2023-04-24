@@ -12,8 +12,7 @@
 	pixel_x = -8
 
 	var/jukebox/jukebox
-//[SIERRA]
-	var/obj/item/music_tape/tape
+	var/obj/item/music_tape/tape // SIERRA
 
 /obj/machinery/jukebox/verb/eject()
 	set name = "Eject"
