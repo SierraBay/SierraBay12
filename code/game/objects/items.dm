@@ -95,6 +95,8 @@
 	var/pickup_sound = "generic_pickup"
 	///Sound uses when dropping the item, or when its thrown.
 	var/drop_sound = "generic_drop"
+	///Check if you need to play pickup sound or not
+	var/pickup_sound_on = TRUE
 
 
 /obj/item/New()
@@ -373,7 +375,7 @@ note this isn't called during the initial dressing of a player
 		else if(drop_sound)
 			playsound(src, drop_sound, 25)
 	else if(slot == slot_l_hand || slot == slot_r_hand)
-		if(pickup_sound)
+		if(pickup_sound_on && pickup_sound)
 			playsound(src, pickup_sound, 25)
 	var/mob/M = loc
 	if(!istype(M))
