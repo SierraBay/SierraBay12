@@ -190,6 +190,12 @@
 	/// The light's current lighting mode. One of `LIGHTMODE_*`.
 	var/current_mode = null
 
+	/// Check if the lightbulb is currently inserting
+	var/inserting = FALSE
+
+	/// Check if the lightbulb is currently ejecting
+	var/ejecting = FALSE
+
 /obj/machinery/light/get_color()
 	return lightbulb ? lightbulb.get_color() : null
 
@@ -396,7 +402,6 @@
 /obj/machinery/light/proc/insert_bulb(obj/item/light/L)
 	L.forceMove(src)
 	lightbulb = L
-
 	seton(powered())
 	update_icon()
 
@@ -413,6 +418,18 @@
 
 	// attempt to insert light
 	if(istype(W, /obj/item/light))
+		if(inserting)
+			to_chat(user, SPAN_WARNING("Someone is already inserting something in [src]"))
+			return
+		inserting = TRUE
+		playsound(loc, 'packs/sierra-tweaks/sound/effects/lightbulb_screw.ogg', 100, 1)
+		if(!do_after(user, 0.5 SECONDS, src))
+			to_chat(user, SPAN_WARNING("You must remain still to perform that action!"))
+			inserting = FALSE
+			return
+		if(user.get_active_hand() != W)
+			inserting = FALSE
+			return
 		if(lightbulb)
 			to_chat(user, SPAN_WARNING("There is a [get_fitting_name()] already inserted."))
 			return
@@ -428,6 +445,7 @@
 		)
 		insert_bulb(W)
 		add_fingerprint(user)
+		inserting = FALSE
 
 	// attempt to break the light
 	else if(lightbulb && (lightbulb.status != LIGHT_BROKEN) && user.a_intent != I_HELP)
@@ -551,11 +569,24 @@
 		else
 			to_chat(user, SPAN_WARNING("You try to remove the [get_fitting_name()], but it's too hot and you don't want to burn your hand."))
 			return TRUE
-	else
-		to_chat(user, SPAN_NOTICE("You remove the [get_fitting_name()]."))
-
+	if(ejecting)
+		to_chat(user, SPAN_WARNING("You can't perform that action!"))
+		return TRUE
+		ejecting = TRUE
+	playsound(loc, 'packs/sierra-tweaks/sound/effects/lightbulb_screw.ogg', 100, 1)
+	if(!do_after(user, 0.5 SECONDS, src))
+		to_chat(user, SPAN_WARNING("You must remain still to perform that action!"))
+		ejecting = FALSE
+		return TRUE
+	if(!lightbulb)
+		to_chat(user, SPAN_WARNING("There is no [get_fitting_name()] in this light."))
+		return TRUE
+	lightbulb.pickup_sound_on = FALSE
+	var/obj/item/light/L = lightbulb
 	// create a light tube/bulb item and put it in the user's hand
 	user.put_in_active_hand(remove_bulb())	//puts it in our active hand
+	L.pickup_sound_on = TRUE
+		to_chat(user, SPAN_NOTICE("You remove the [get_fitting_name()]."))
 	return TRUE
 
 // ghost attack - make lights flicker like an AI, but even spookier!
