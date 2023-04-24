@@ -14,6 +14,7 @@
 	var/jukebox/jukebox
 	var/obj/item/music_tape/tape // SIERRA
 
+// [SIERRA]
 /obj/machinery/jukebox/verb/eject()
 	set name = "Eject"
 	set category = "Object"
