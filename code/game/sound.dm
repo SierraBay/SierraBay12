@@ -74,6 +74,9 @@ GLOBAL_LIST_INIT(heavy_machine_gun_reload, list('sound/weapons/reloads/hmg_reloa
 GLOBAL_LIST_INIT(bodyfall_sound, list('packs/sierra-tweaks/sound/effects/bodyfall/bodyfall1.ogg','packs/sierra-tweaks/sound/effects/bodyfall/bodyfall2.ogg','packs/sierra-tweaks/sound/effects/bodyfall/bodyfall3.ogg','packs/sierra-tweaks/sound/effects/bodyfall/bodyfall4.ogg'))
 GLOBAL_LIST_INIT(bodyfall_skrell_sound, list('packs/sierra-tweaks/sound/effects/bodyfall/bodyfall_skrell1.ogg','packs/sierra-tweaks/sound/effects/bodyfall/bodyfall_skrell2.ogg','packs/sierra-tweaks/sound/effects/bodyfall/bodyfall_skrell3.ogg','packs/sierra-tweaks/sound/effects/bodyfall/bodyfall_skrell4.ogg'))
 GLOBAL_LIST_INIT(smash_sound,list('packs/infinity/sound/effects/gore/smash1.ogg','packs/infinity/sound/effects/gore/smash2.ogg','packs/infinity/sound/effects/gore/smash3.ogg','packs/infinity/sound/effects/gore/trauma1.ogg'))
+GLOBAL_LIST_INIT(drinks_pickup_sound, list('packs/sierra-tweaks/sound/effects/glass_pickup.ogg','packs/sierra-tweaks/sound/effects/glass2_pickup.ogg','packs/sierra-tweaks/sound/effects/glass3_pickup.ogg','packs/sierra-tweaks/sound/effects/glass4_pickup.ogg','packs/sierra-tweaks/sound/effects/glass5_pickup.ogg','packs/sierra-tweaks/sound/effects/glass6_pickup.ogg'))
+GLOBAL_LIST_INIT(drinks_drop_sound, list('packs/sierra-tweaks/sound/effects/glass_drop.ogg','packs/sierra-tweaks/sound/effects/glass2_drop.ogg','packs/sierra-tweaks/sound/effects/glass3_drop.ogg','packs/sierra-tweaks/sound/effects/glass4_drop.ogg','packs/sierra-tweaks/sound/effects/glass5_drop.ogg','packs/sierra-tweaks/sound/effects/glass6_drop.ogg'))
+GLOBAL_LIST_INIT(tank_drop_sound, list('packs/sierra-tweaks/sound/effects/tank_drop.ogg','packs/sierra-tweaks/sound/effects/tank2_drop.ogg'))
 
 
 /proc/playsound(atom/source, soundin, vol as num, vary, extrarange as num, falloff, is_global, frequency, is_ambiance = 0)
@@ -237,6 +240,9 @@ var/global/const/FALLOFF_SOUNDS = 0.5
 			if ("bodyfall_sound") soundin = pick(GLOB.bodyfall_sound)
 			if ("bodyfall_skrell_sound") soundin = pick(GLOB.bodyfall_skrell_sound)
 			if ("smash_sound") soundin = pick(GLOB.smash_sound)
+			if ("drinks_pickup_sound") soundin = pick(GLOB.drinks_pickup_sound)
+			if ("drinks_drop_sound") soundin = pick(GLOB.drinks_drop_sound)
+			if ("tank_drop_sound") soundin = pick(GLOB.tank_drop_sound)
 
 	return soundin
 

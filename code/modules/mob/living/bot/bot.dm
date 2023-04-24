@@ -46,8 +46,9 @@
 
 	layer = HIDING_MOB_LAYER
 
-/mob/living/bot/New()
-	..()
+
+/mob/living/bot/Initialize(mapload)
+	. = ..()
 	update_icons()
 
 	botcard = new /obj/item/card/id(src)
@@ -55,6 +56,7 @@
 
 	access_scanner = new /obj(src)
 	access_scanner.req_access = req_access.Copy()
+
 
 /mob/living/bot/Initialize()
 	. = ..()
@@ -93,7 +95,6 @@
 	if (istype(id))
 		if (open)
 			USE_FEEDBACK_FAILURE("\The [src]'s access panel must be closed before you can lock it.")
-			to_chat(user, SPAN_WARNING("\The [src]'s access panel must be closed before you can lock it."))
 			return TRUE
 		var/id_name = GET_ID_NAME(id, tool)
 		if (!access_scanner.check_access(id))

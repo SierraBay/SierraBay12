@@ -21,6 +21,9 @@
 #include "mob\emotes.dm"
 #include "mob\bodyfall_sound.dm"
 
+// NTNet
+#include "machinery\NTNet\NTNet-core.dm"
+
 // Objects
 #include "objects\buckling.dm"
 #include "objects\items\fruit_jar.dm"
