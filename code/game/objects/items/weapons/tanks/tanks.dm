@@ -19,8 +19,8 @@ var/global/list/tank_gauge_cache = list()
 	throw_speed = 1
 	throw_range = 4
 
-	drop_sound = 'sound/items/drop/gascan.ogg'
-	pickup_sound = 'sound/items/pickup/gascan.ogg'
+	drop_sound = "tank_drop_sound"
+	pickup_sound = 'packs/sierra-tweaks/sound/effects/tank_pickup.ogg'
 
 	var/datum/gas_mixture/air_contents = null
 	var/distribute_pressure = ONE_ATMOSPHERE
@@ -588,7 +588,7 @@ var/global/list/tank_gauge_cache = list()
 /////////////////////////////////
 
 /obj/item/device/tankassemblyproxy
-	name = "Tank assembly proxy"
+	name = "tank assembly proxy"
 	desc = "Used as a stand in to trigger single tank assemblies... but you shouldn't see this."
 	var/obj/item/tank/tank = null
 	var/obj/item/device/assembly_holder/assembly = null

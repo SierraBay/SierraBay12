@@ -13,8 +13,8 @@
 	var/step_count
 	var/dream_timer
 
-/mob/living/carbon/human/New(new_loc, new_species = null)
 
+/mob/living/carbon/human/Initialize(mapload, new_species = null)
 	grasp_limbs = list()
 	stance_limbs = list()
 
@@ -24,7 +24,7 @@
 
 	if(!species)
 		if(new_species)
-			set_species(new_species,1)
+			set_species(new_species, TRUE)
 		else
 			set_species()
 
@@ -47,7 +47,7 @@
 	hud_list[STATUS_HUD_OOC]  = new /image/hud_overlay('icons/mob/hud.dmi', src, "hudhealthy")
 
 	GLOB.human_mobs |= src
-	..()
+	. = ..()
 
 	if(dna)
 		dna.ready_dna(src)
@@ -55,6 +55,7 @@
 		dna.base_skin = base_skin
 		sync_organ_dna()
 	make_blood()
+
 
 /mob/living/carbon/human/Destroy()
 	if (dream_timer)
@@ -1356,7 +1357,7 @@
 		W.message = message
 		W.add_fingerprint(src)
 
-/mob/living/carbon/human/can_inject(mob/user, target_zone)
+/mob/living/carbon/human/can_inject(mob/user, target_zone, ignore_thick_clothing)
 	var/obj/item/organ/external/affecting = get_organ(target_zone)
 
 	if(!affecting)
@@ -1368,13 +1369,14 @@
 		return 0
 
 	. = CAN_INJECT
-	for(var/obj/item/clothing/C in list(head, wear_mask, wear_suit, w_uniform, gloves, shoes))
-		if(C && (C.body_parts_covered & affecting.body_part) && (C.item_flags & ITEM_FLAG_THICKMATERIAL))
-			if(istype(C, /obj/item/clothing/suit/space))
-				. = INJECTION_PORT //it was going to block us, but it's a space suit so it doesn't because it has some kind of port
-			else
-				to_chat(user, SPAN_WARNING("There is no exposed flesh or thin material on [src]'s [affecting.name] to inject into."))
-				return 0
+	if(!ignore_thick_clothing)
+		for(var/obj/item/clothing/C in list(head, wear_mask, wear_suit, w_uniform, gloves, shoes))
+			if(C && (C.body_parts_covered & affecting.body_part) && (C.item_flags & ITEM_FLAG_THICKMATERIAL))
+				if(istype(C, /obj/item/clothing/suit/space))
+					. = INJECTION_PORT //it was going to block us, but it's a space suit so it doesn't because it has some kind of port
+				else
+					to_chat(user, SPAN_WARNING("There is no exposed flesh or thin material on [src]'s [affecting.name] to inject into."))
+					return 0
 
 
 /mob/living/carbon/human/print_flavor_text(shrink = 1)
