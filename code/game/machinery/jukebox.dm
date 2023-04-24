@@ -84,7 +84,7 @@
 	jukebox.ui_interact(user)
 	return TRUE
 
-//[SIERRA]
+// [SIERRA]
 /obj/machinery/jukebox/attackby(obj/item/I, mob/user)
 	if (isWrench(I))
 		add_fingerprint(user)
