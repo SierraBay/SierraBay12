@@ -213,7 +213,7 @@
 				transfer = repairing.amount
 
 		if (transfer)
-			to_chat(user, SPAN_NOTICE("You fit [transfer] [stack.singular_name]\s to damaged and broken parts on \the [src]."))
+			to_chat(user, SPAN_NOTICE("You fit [stack.get_exact_name(transfer)] to damaged and broken parts on \the [src]."))
 
 		return
 
@@ -345,6 +345,8 @@
 	if(!can_open(forced))
 		return
 	operating = DOOR_OPERATING_YES
+
+	. = TRUE // SIERRA
 
 	do_animate("opening")
 	icon_state = "door0"

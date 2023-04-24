@@ -1379,7 +1379,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/structure/closet/chefcloset,
+/obj/structure/closet/chefcloset_torch,
 /turf/simulated/floor/tiled/freezer,
 /area/crew_quarters/galleybackroom)
 "dl" = (
@@ -7523,7 +7523,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/maintenance/thirddeck/starboard)
 "rA" = (
-/obj/structure/window/phoronreinforced{
+/obj/structure/window/boron_reinforced{
 	dir = 8
 	},
 /obj/structure/closet/crate,
@@ -8379,8 +8379,8 @@
 /turf/simulated/floor/plating,
 /area/hallway/primary/thirddeck/fore)
 "tm" = (
-/obj/random/loot,
-/obj/random/loot,
+/obj/random/maintenance/clean,
+/obj/random/maintenance/clean,
 /obj/random/trash,
 /turf/simulated/floor/plating,
 /area/hallway/primary/thirddeck/fore)
@@ -10040,7 +10040,6 @@
 /area/crew_quarters/safe_room/thirddeck)
 "xW" = (
 /obj/machinery/door/window/brigdoor{
-	color = "PURPLE";
 	dir = 8
 	},
 /obj/effect/floor_decal/industrial/warning{
@@ -12920,7 +12919,7 @@
 /turf/simulated/floor/grass,
 /area/crew_quarters/observation)
 "FR" = (
-/obj/structure/window/phoronreinforced{
+/obj/structure/window/boron_reinforced{
 	dir = 8
 	},
 /obj/effect/floor_decal/industrial/warning{
@@ -16955,10 +16954,10 @@
 /obj/structure/table/rack{
 	dir = 8
 	},
-/obj/item/stack/material/glass/phoronrglass{
+/obj/item/stack/material/glass/boron_reinforced{
 	amount = 20
 	},
-/obj/item/stack/material/glass/phoronrglass{
+/obj/item/stack/material/glass/boron_reinforced{
 	amount = 20
 	},
 /obj/item/stack/material/titanium/ten,

@@ -859,13 +859,6 @@
 	build_path = /obj/item/stock_parts/circuitboard/tele_beacon
 	sort_string = "XAAAG"
 
-/datum/design/circuit/bluespacedrive
-	name = "Naophoros-pattern bluespace puncturer"
-	id = "bluespacedrive"
-	req_tech = list(TECH_BLUESPACE = 12, TECH_POWER = 12, TECH_ENGINEERING = 12) // You are not supposed to get this
-	build_path = /obj/item/stock_parts/circuitboard/bluespacedrive
-	sort_string = "XAAAH"
-
 /datum/design/circuit/shipsensors
 	name = "Broad-band sensor suite"
 	id = "shipsensors"
@@ -886,3 +879,10 @@
 	req_tech = list(TECH_ENGINEERING = 1)
 	build_path = /obj/item/stock_parts/circuitboard/shipmap
 	sort_string = "SAAAT"
+
+/datum/design/circuit/drone_pad
+	name = "transport drone landing pad"
+	id = "drone_pad"
+	req_tech = list(TECH_DATA = 3, TECH_ENGINEERING = 2)
+	build_path = /obj/item/stock_parts/circuitboard/drone_pad
+	sort_string = "TDRP"

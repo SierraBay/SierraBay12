@@ -52,14 +52,15 @@
 	if(. && !CanFluidPass())
 		fluid_update()
 
-/obj/structure/attackby(obj/item/O, mob/user)
-	if(user.a_intent != I_HELP && istype(O, /obj/item/natural_weapon))
-		//Bit dirty, but the entire attackby chain seems kinda wrong to begin with
-		//Things should probably be parent first and return true if something handled it already, not child first
-		src.add_fingerprint(user)
-		attack_generic(user, O.force, pick(O.attack_verb))
-		return
-	. = ..()
+
+/obj/structure/use_weapon(obj/item/weapon, mob/user, list/click_params)
+	// Natural Weapon - Passthrough to generic attack
+	if (istype(weapon, /obj/item/natural_weapon))
+		attack_generic(user, weapon.force, pick(weapon.attack_verb), damtype = weapon.damtype, dam_flags = weapon.damage_flags())
+		return TRUE
+
+	return ..()
+
 
 /obj/structure/attack_hand(mob/user)
 	..()
@@ -88,7 +89,7 @@
 
 /obj/structure/use_grab(obj/item/grab/grab, list/click_params)
 	// Harm intent - Slam face against the structure
-	if (grab.assailant == I_HURT)
+	if (grab.assailant.a_intent == I_HURT)
 		if (!grab.force_danger())
 			USE_FEEDBACK_GRAB_MUST_UPGRADE("to slam their face on \the [src]")
 			return TRUE
