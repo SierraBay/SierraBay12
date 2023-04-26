@@ -151,6 +151,17 @@
 	scoped_accuracy = 0
 	wielded_item_state = "semistrip-wielded"
 
+<<<<<<< ours
 	firemodes = list(
 		list(mode_name="semi auto",       burst=1, fire_delay=2,  one_hand_penalty=8, burst_accuracy=null, dispersion=null)
 		)
+=======
+/obj/item/gun/projectile/sniper/semistrip/on_update_icon()
+	if(ammo_magazine && length(ammo_magazine.stored_ammo))
+		icon_state = initial(icon_state)
+		wielded_item_state = initial(wielded_item_state)
+	else
+		icon_state = "[initial(icon_state)]-empty"
+		wielded_item_state = "[initial(wielded_item_state)]-empty"
+	..()
+>>>>>>> theirs
