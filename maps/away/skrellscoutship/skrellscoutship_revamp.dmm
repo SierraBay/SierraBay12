@@ -1700,7 +1700,11 @@
 /obj/machinery/ion_engine{
 	dir = 8
 	},
+<<<<<<< ours
 /turf/simulated/floor/reinforced/airless,
+=======
+/turf/simulated/floor/reinforced,
+>>>>>>> theirs
 /area/ship/skrellscoutship/maintenance/atmos)
 "fH" = (
 /obj/structure/table/rack,
@@ -1940,7 +1944,11 @@
 /obj/machinery/ion_engine{
 	dir = 8
 	},
+<<<<<<< ours
 /turf/simulated/floor/reinforced/airless,
+=======
+/turf/simulated/floor/reinforced,
+>>>>>>> theirs
 /area/ship/skrellscoutship/hangar)
 "gp" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -3516,8 +3524,13 @@
 /obj/machinery/ion_engine{
 	dir = 8
 	},
+<<<<<<< ours
 /turf/simulated/floor/reinforced/airless,
 /area/ship/skrellscoutship/robotics)
+=======
+/turf/simulated/floor/reinforced,
+/area/ship/skrellscoutship/command/armory)
+>>>>>>> theirs
 "kG" = (
 /obj/effect/landmark/map_data,
 /obj/effect/overmap/visitable/sector/skrellscoutspace,

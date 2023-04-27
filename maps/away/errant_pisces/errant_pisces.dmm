@@ -1383,8 +1383,15 @@
 	id = "n2_in";
 	use_power = 1
 	},
+<<<<<<< ours
 /turf/simulated/floor/airless,
 /area/space)
+=======
+/turf/simulated/floor{
+	map_airless = 1
+	},
+/area/errant_pisces/bow_maint)
+>>>>>>> theirs
 "dB" = (
 /obj/effect/wallframe_spawn/reinforced,
 /obj/machinery/atmospherics/pipe/simple/visible/red{
@@ -1894,7 +1901,13 @@
 	master_tag = "xyn_solar_port_airlock";
 	pixel_y = 20
 	},
+<<<<<<< ours
 /turf/simulated/floor/airless,
+=======
+/turf/simulated/floor{
+	map_airless = 1
+	},
+>>>>>>> theirs
 /area/errant_pisces/solar_port)
 "eE" = (
 /obj/structure/cable/yellow{
@@ -6221,7 +6234,13 @@
 	icon_state = "pdoor0";
 	id_tag = "xynergy_perimeter_blast"
 	},
+<<<<<<< ours
 /turf/simulated/floor/reinforced/airless,
+=======
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
+>>>>>>> theirs
 /area/errant_pisces/bridge)
 "pq" = (
 /obj/structure/lattice,
@@ -6598,7 +6617,13 @@
 /area/errant_pisces/fishing_wing)
 "qx" = (
 /obj/machinery/shipsensors,
+<<<<<<< ours
 /turf/simulated/floor/reinforced/airless,
+=======
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
+>>>>>>> theirs
 /area/errant_pisces/bridge)
 "qy" = (
 /obj/structure/closet/firecloset,

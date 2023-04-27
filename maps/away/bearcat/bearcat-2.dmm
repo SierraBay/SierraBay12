@@ -44,14 +44,22 @@
 /area/ship/scrap/command/bridge)
 "ag" = (
 /obj/machinery/computer/modular/preset/cardslot/command,
+<<<<<<< ours
 /turf/simulated/floor/bluegrid/airless,
+=======
+/turf/simulated/floor/bluegrid,
+>>>>>>> theirs
 /area/ship/scrap/command/bridge)
 "ah" = (
 /obj/machinery/computer/ship/helm{
 	req_access = list(list("ACCESS_BEARCAT"))
 	},
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
+<<<<<<< ours
 /turf/simulated/floor/bluegrid/airless,
+=======
+/turf/simulated/floor/bluegrid,
+>>>>>>> theirs
 /area/ship/scrap/command/bridge)
 "ai" = (
 /obj/structure/table/standard,
@@ -122,7 +130,13 @@
 /obj/machinery/door/blast/regular{
 	id_tag = "sensor"
 	},
+<<<<<<< ours
 /turf/simulated/floor/airless,
+=======
+/turf/simulated/floor{
+	map_airless = 1
+	},
+>>>>>>> theirs
 /area/ship/scrap/comms)
 "at" = (
 /obj/effect/paint/brown,
@@ -165,7 +179,13 @@
 /area/ship/scrap/command/bridge)
 "ax" = (
 /obj/machinery/shipsensors,
+<<<<<<< ours
 /turf/simulated/floor/airless,
+=======
+/turf/simulated/floor{
+	map_airless = 1
+	},
+>>>>>>> theirs
 /area/ship/scrap/comms)
 "ay" = (
 /obj/machinery/light,
@@ -2418,7 +2438,13 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
+<<<<<<< ours
 /turf/simulated/floor/airless,
+=======
+/turf/simulated/floor{
+	map_airless = 1
+	},
+>>>>>>> theirs
 /area/ship/scrap/maintenance/engine/port)
 "eB" = (
 /obj/machinery/light/small{
@@ -2434,7 +2460,13 @@
 	dir = 6
 	},
 /obj/machinery/meter,
+<<<<<<< ours
 /turf/simulated/floor/airless,
+=======
+/turf/simulated/floor{
+	map_airless = 1
+	},
+>>>>>>> theirs
 /area/ship/scrap/maintenance/engine/port)
 "eC" = (
 /obj/structure/cable/green{
@@ -2446,7 +2478,13 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/autoname/engineering/bearcat,
+<<<<<<< ours
 /turf/simulated/floor/airless,
+=======
+/turf/simulated/floor{
+	map_airless = 1
+	},
+>>>>>>> theirs
 /area/ship/scrap/maintenance/engine/port)
 "eD" = (
 /obj/item/screwdriver,
@@ -2458,7 +2496,13 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/fuel{
 	dir = 10
 	},
+<<<<<<< ours
 /turf/simulated/floor/airless,
+=======
+/turf/simulated/floor{
+	map_airless = 1
+	},
+>>>>>>> theirs
 /area/ship/scrap/maintenance/engine/port)
 "eE" = (
 /obj/structure/table/standard,
@@ -2616,7 +2660,13 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/fuel{
 	dir = 6
 	},
+<<<<<<< ours
 /turf/simulated/floor/airless,
+=======
+/turf/simulated/floor{
+	map_airless = 1
+	},
+>>>>>>> theirs
 /area/ship/scrap/maintenance/engine/starboard)
 "eS" = (
 /obj/structure/cable/green{
@@ -2628,7 +2678,9 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/autoname/engineering/bearcat,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	map_airless = 1
+	},
 /area/ship/scrap/maintenance/engine/starboard)
 "eT" = (
 /obj/machinery/light/small{
@@ -2646,7 +2698,13 @@
 	dir = 10
 	},
 /obj/machinery/meter,
+<<<<<<< ours
 /turf/simulated/floor/airless,
+=======
+/turf/simulated/floor{
+	map_airless = 1
+	},
+>>>>>>> theirs
 /area/ship/scrap/maintenance/engine/starboard)
 "eU" = (
 /obj/machinery/power/apc/derelict{
@@ -2656,21 +2714,39 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+<<<<<<< ours
 /turf/simulated/floor/airless,
+=======
+/turf/simulated/floor{
+	map_airless = 1
+	},
+>>>>>>> theirs
 /area/ship/scrap/maintenance/engine/starboard)
 "eV" = (
 /obj/effect/floor_decal/industrial/warning,
 /obj/machinery/atmospherics/pipe/simple/hidden/fuel{
 	dir = 6
 	},
+<<<<<<< ours
 /turf/simulated/floor/airless,
+=======
+/turf/simulated/floor{
+	map_airless = 1
+	},
+>>>>>>> theirs
 /area/ship/scrap/maintenance/engine/port)
 "eW" = (
 /obj/effect/floor_decal/industrial/warning,
 /obj/machinery/atmospherics/pipe/manifold/visible/fuel{
 	dir = 4
 	},
+<<<<<<< ours
 /turf/simulated/floor/airless,
+=======
+/turf/simulated/floor{
+	map_airless = 1
+	},
+>>>>>>> theirs
 /area/ship/scrap/maintenance/engine/port)
 "eX" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/fuel,
@@ -2796,14 +2872,26 @@
 /obj/machinery/atmospherics/pipe/manifold/visible/fuel{
 	dir = 8
 	},
+<<<<<<< ours
 /turf/simulated/floor/airless,
+=======
+/turf/simulated/floor{
+	map_airless = 1
+	},
+>>>>>>> theirs
 /area/ship/scrap/maintenance/engine/starboard)
 "fj" = (
 /obj/effect/floor_decal/industrial/warning,
 /obj/machinery/atmospherics/pipe/simple/hidden/fuel{
 	dir = 10
 	},
+<<<<<<< ours
 /turf/simulated/floor/airless,
+=======
+/turf/simulated/floor{
+	map_airless = 1
+	},
+>>>>>>> theirs
 /area/ship/scrap/maintenance/engine/starboard)
 "fk" = (
 /obj/effect/floor_decal/industrial/warning,
@@ -2815,11 +2903,19 @@
 /obj/machinery/atmospherics/unary/engine{
 	dir = 1
 	},
+<<<<<<< ours
 /turf/simulated/floor/airless,
+=======
+/turf/simulated/floor{
+	map_airless = 1
+	},
+>>>>>>> theirs
 /area/ship/scrap/maintenance/engine/port)
 "fm" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/fuel,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	map_airless = 1
+	},
 /area/ship/scrap/maintenance/engine/starboard)
 "fo" = (
 /obj/machinery/alarm{
@@ -3004,7 +3100,13 @@
 /obj/machinery/atmospherics/unary/engine{
 	dir = 1
 	},
+<<<<<<< ours
 /turf/simulated/floor/airless,
+=======
+/turf/simulated/floor{
+	map_airless = 1
+	},
+>>>>>>> theirs
 /area/ship/scrap/maintenance/engine/starboard)
 "fD" = (
 /obj/effect/floor_decal/industrial/warning,
@@ -5572,7 +5674,11 @@
 /turf/simulated/floor/tiled,
 /area/ship/scrap/maintenance/engineering)
 "JH" = (
+<<<<<<< ours
 /turf/simulated/floor/reinforced/airless,
+=======
+/turf/simulated/floor/reinforced,
+>>>>>>> theirs
 /area/ship/scrap/maintenance/power)
 "Kj" = (
 /turf/simulated/floor/reinforced/airless,
@@ -5643,7 +5749,13 @@
 /area/ship/scrap/maintenance/engine/port)
 "PG" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/fuel,
+<<<<<<< ours
 /turf/simulated/floor/airless,
+=======
+/turf/simulated/floor{
+	map_airless = 1
+	},
+>>>>>>> theirs
 /area/ship/scrap/maintenance/engine/port)
 "PP" = (
 /obj/machinery/power/port_gen/pacman/super,

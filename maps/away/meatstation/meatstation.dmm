@@ -1009,9 +1009,12 @@
 /obj/structure/stasis_cage,
 /turf/simulated/floor/tiled/dark/airless,
 /area/meatstation/cargo)
+<<<<<<< ours
 "cv" = (
 /turf/simulated/floor/tiled/dark/airless,
 /area/meatstation/cargo)
+=======
+>>>>>>> theirs
 "cw" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -1622,7 +1625,11 @@
 /turf/simulated/floor/tiled/monotile,
 /area/meatstation/hydroponics)
 "dO" = (
+<<<<<<< ours
 /turf/simulated/floor/airless/ceiling,
+=======
+/turf/simulated/floor,
+>>>>>>> theirs
 /area/meatstation/bathroom)
 "dP" = (
 /obj/random/single/meatstation/low/wormscientist,
@@ -2115,10 +2122,6 @@
 	},
 /turf/simulated/floor/airless,
 /area/meatstation/engineering)
-"eS" = (
-/obj/random/single/meatstation/low/wormguard,
-/turf/simulated/floor/tiled/dark,
-/area/meatstation/cargo)
 "eT" = (
 /obj/effect/floor_decal/industrial/warning{
 	dir = 9;
@@ -3711,7 +3714,11 @@
 /area/meatstation/kitchen)
 "ix" = (
 /obj/structure/girder,
+<<<<<<< ours
 /turf/simulated/floor/airless/ceiling,
+=======
+/turf/simulated/floor,
+>>>>>>> theirs
 /area/meatstation/bathroom)
 "iy" = (
 /obj/structure/girder,
@@ -3934,7 +3941,11 @@
 /area/meatstation/bathroom)
 "jf" = (
 /obj/structure/girder,
+<<<<<<< ours
 /turf/simulated/floor/airless/ceiling,
+=======
+/turf/simulated/floor,
+>>>>>>> theirs
 /area/meatstation/mess)
 "jg" = (
 /obj/item/stack/material/rods,
@@ -5170,29 +5181,17 @@
 /obj/random/junk,
 /turf/simulated/floor/tiled/dark,
 /area/meatstation/swhallway)
+<<<<<<< ours
 "mk" = (
 /obj/effect/decal/cleanable/blood/drip,
 /turf/simulated/floor/tiled/dark/airless,
 /area/meatstation/cargo)
+=======
+>>>>>>> theirs
 "ml" = (
 /obj/structure/mine,
 /obj/random/trash,
 /obj/random/junk,
-/turf/simulated/floor/tiled/dark,
-/area/meatstation/swhallway)
-"mm" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/cable/cyan{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/structure/mine,
-/turf/simulated/floor/tiled/dark,
-/area/meatstation/swhallway)
-"mn" = (
-/obj/structure/mine,
 /turf/simulated/floor/tiled/dark,
 /area/meatstation/swhallway)
 "mo" = (
@@ -6039,7 +6038,11 @@
 /area/space)
 "oF" = (
 /obj/effect/decal/cleanable/blood,
+<<<<<<< ours
 /turf/simulated/floor/airless,
+=======
+/turf/simulated/floor,
+>>>>>>> theirs
 /area/meatstation/centerhallway)
 "oG" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -6863,7 +6866,11 @@
 /turf/simulated/floor/tiled,
 /area/meatstation/centerhallway)
 "qY" = (
+<<<<<<< ours
 /turf/simulated/floor/airless,
+=======
+/turf/simulated/floor,
+>>>>>>> theirs
 /area/meatstation/centerhallway)
 "qZ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -6892,7 +6899,11 @@
 	icon_state = "4-8"
 	},
 /obj/structure/inflatable/door,
+<<<<<<< ours
 /turf/simulated/floor/airless,
+=======
+/turf/simulated/floor,
+>>>>>>> theirs
 /area/meatstation/centerhallway)
 "rb" = (
 /obj/structure/lattice,
@@ -6936,7 +6947,11 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
+<<<<<<< ours
 /turf/simulated/floor/airless,
+=======
+/turf/simulated/floor,
+>>>>>>> theirs
 /area/meatstation/centerhallway)
 "rf" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -6946,11 +6961,15 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+<<<<<<< ours
 /turf/simulated/floor/airless,
 /area/meatstation/centerhallway)
 "rg" = (
 /obj/structure/girder,
 /turf/simulated/floor/airless,
+=======
+/turf/simulated/floor,
+>>>>>>> theirs
 /area/meatstation/centerhallway)
 "rh" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -11000,6 +11019,13 @@
 /obj/item/cell/high,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/meatstation/storage)
+<<<<<<< ours
+=======
+"Ut" = (
+/obj/structure/girder,
+/turf/simulated/floor,
+/area/meatstation/centerhallway)
+>>>>>>> theirs
 
 (1,1,1) = {"
 aa
@@ -23618,7 +23644,7 @@ aa
 fm
 fm
 cK
-eS
+sI
 wf
 fm
 fm
@@ -24424,27 +24450,27 @@ fe
 fe
 fe
 hP
-cv
-cv
-cv
-cv
+cK
+cK
+cK
+cK
 px
-cv
-cv
+cK
+cK
 qt
 pC
-cv
-cv
-cv
+cK
+cK
+cK
 qw
-cv
+cK
 oH
 pW
 pR
 sy
 oH
 oH
-cv
+cK
 wV
 fm
 fm
@@ -24626,8 +24652,8 @@ mb
 aD
 fe
 pq
-cv
-cv
+cK
+cK
 qt
 pK
 qC
@@ -24645,7 +24671,7 @@ pf
 ln
 oH
 oH
-cv
+cK
 oH
 wW
 fm
@@ -24828,9 +24854,9 @@ lo
 aK
 pv
 pq
-cv
-cv
-cv
+cK
+cK
+cK
 pK
 qP
 uG
@@ -24839,7 +24865,7 @@ wL
 pK
 qK
 pE
-cv
+cK
 qC
 qD
 wL
@@ -24847,8 +24873,8 @@ oH
 xU
 xW
 pB
-cv
-mk
+cK
+tP
 wW
 fm
 fm
@@ -25030,9 +25056,9 @@ md
 cm
 co
 bY
-cv
+cK
 eD
-cv
+cK
 pL
 qR
 pK
@@ -25048,7 +25074,7 @@ oH
 sx
 qC
 oH
-cv
+cK
 qV
 ou
 wX
@@ -25232,9 +25258,9 @@ aD
 fq
 fe
 pw
-cv
+cK
 rC
-cv
+cK
 pK
 uF
 uH
@@ -25243,15 +25269,15 @@ wM
 pK
 gq
 pF
-cv
+cK
 qf
 qH
 qC
 qQ
 xV
 xX
-cv
-mk
+cK
+tP
 ou
 wX
 fm
@@ -25434,8 +25460,8 @@ fe
 fe
 fe
 pw
-cv
-cv
+cK
+cK
 cu
 pK
 qC
@@ -25445,7 +25471,7 @@ qC
 pK
 qi
 pN
-cv
+cK
 qC
 qQ
 qC
@@ -25453,7 +25479,7 @@ qC
 qC
 qC
 rc
-cv
+cK
 qi
 wY
 fm
@@ -25636,27 +25662,27 @@ cd
 cJ
 eh
 qM
-cv
+cK
 qE
-cv
-cv
+cK
+cK
 py
-cv
-cv
+cK
+cK
 qO
-cv
-cv
+cK
+cK
 qU
 qt
-cv
+cK
 qh
 qo
-cv
+cK
 eD
 qV
-cv
+cK
 At
-cv
+cK
 rj
 tT
 cl
@@ -25664,7 +25690,7 @@ pn
 jg
 mi
 ml
-mn
+sA
 mq
 sA
 jt
@@ -25865,7 +25891,7 @@ eo
 pt
 mh
 mj
-mm
+mY
 mo
 mY
 sB
@@ -26042,23 +26068,23 @@ fm
 uE
 uW
 wH
-mk
+tP
 cu
-cv
-cv
-cv
+cK
+cK
+cK
 cc
-cv
+cK
 tC
-cv
-cv
-cv
+cK
+cK
+cK
 sI
-cv
+cK
 qz
 hO
 qt
-cv
+cK
 dw
 qT
 rQ
@@ -26273,7 +26299,7 @@ aa
 aa
 aA
 sE
-mn
+sA
 aA
 aA
 aa
@@ -26475,7 +26501,7 @@ aa
 aa
 aA
 sJ
-mn
+sA
 aA
 aA
 aa
@@ -27274,7 +27300,7 @@ ah
 ah
 ah
 ah
-rg
+Ut
 ah
 ah
 ah

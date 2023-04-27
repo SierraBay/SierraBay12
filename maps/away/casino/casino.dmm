@@ -3371,8 +3371,15 @@
 	icon_state = "map_injector";
 	use_power = 1
 	},
+<<<<<<< ours
 /turf/simulated/floor/airless,
 /area/space)
+=======
+/turf/simulated/floor{
+	map_airless = 1
+	},
+/area/casino/casino_crew_atmos)
+>>>>>>> theirs
 "jv" = (
 /obj/machinery/atmospherics/pipe/simple/visible/red{
 	dir = 9
@@ -4783,7 +4790,13 @@
 /turf/simulated/wall/r_titanium,
 /area/casino/casino_bow)
 "ns" = (
+<<<<<<< ours
 /turf/simulated/floor/reinforced/airless,
+=======
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
+>>>>>>> theirs
 /area/casino/casino_bow)
 "ob" = (
 /obj/structure/table/gamblingtable,

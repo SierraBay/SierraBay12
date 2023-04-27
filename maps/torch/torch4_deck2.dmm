@@ -680,7 +680,11 @@
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 9
 	},
+<<<<<<< ours
 /turf/simulated/floor/reinforced/airless,
+=======
+/turf/simulated/floor/reinforced,
+>>>>>>> theirs
 /area/engineering/engine_room)
 "bq" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -2306,7 +2310,11 @@
 /obj/machinery/power/port_gen/pacman/mrs{
 	anchored = 1
 	},
+<<<<<<< ours
 /turf/simulated/floor/reinforced/airless,
+=======
+/turf/simulated/floor/reinforced,
+>>>>>>> theirs
 /area/vacant/prototype/engine)
 "ex" = (
 /obj/random/torchcloset,
@@ -4781,9 +4789,16 @@
 /turf/simulated/floor/tiled/dark,
 /area/teleporter/seconddeck)
 "ky" = (
+<<<<<<< ours
 /obj/machinery/shield_diffuser,
 /turf/simulated/floor/reinforced/airless,
 /area/torchexterior)
+=======
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
+/area/vacant/prototype/engine)
+>>>>>>> theirs
 "kz" = (
 /obj/structure/cable/green{
 	d1 = 1;
@@ -6881,7 +6896,11 @@
 	name = "Reactor Blast Door"
 	},
 /obj/effect/wallframe_spawn/reinforced_phoron,
+<<<<<<< ours
 /turf/simulated/floor/reinforced/airless,
+=======
+/turf/simulated/floor/reinforced,
+>>>>>>> theirs
 /area/engineering/engine_room)
 "qe" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -7377,7 +7396,11 @@
 	id_tag = "EngineAccess";
 	name = "Engine Access Hatch"
 	},
+<<<<<<< ours
 /turf/simulated/floor/reinforced/airless,
+=======
+/turf/simulated/floor/reinforced,
+>>>>>>> theirs
 /area/engineering/engine_room)
 "ri" = (
 /obj/structure/cable{
@@ -8686,7 +8709,11 @@
 	id_tag = "WasteGate";
 	name = "Waste Gate"
 	},
+<<<<<<< ours
 /turf/simulated/floor/reinforced/airless,
+=======
+/turf/simulated/floor/reinforced,
+>>>>>>> theirs
 /area/engineering/wastetank)
 "uY" = (
 /obj/effect/floor_decal/corner/yellow/half,
@@ -8695,8 +8722,15 @@
 /area/engineering/foyer)
 "uZ" = (
 /obj/machinery/shield_diffuser,
+<<<<<<< ours
 /turf/simulated/floor/reinforced/airless,
 /area/space)
+=======
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
+/area/torchexterior)
+>>>>>>> theirs
 "vc" = (
 /obj/effect/catwalk_plated,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -9487,7 +9521,11 @@
 	icon_state = "pdoor0";
 	id_tag = "prototype_chamber_blast"
 	},
+<<<<<<< ours
 /turf/simulated/floor/reinforced/airless,
+=======
+/turf/simulated/floor/reinforced,
+>>>>>>> theirs
 /area/vacant/prototype/engine)
 "xy" = (
 /obj/machinery/light,
@@ -11114,7 +11152,11 @@
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 10
 	},
+<<<<<<< ours
 /turf/simulated/floor/reinforced/airless,
+=======
+/turf/simulated/floor/reinforced,
+>>>>>>> theirs
 /area/engineering/engine_room)
 "Cl" = (
 /obj/structure/table/rack,
@@ -11700,7 +11742,11 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/engineering/engine_room)
 "DF" = (
+<<<<<<< ours
 /turf/simulated/floor/reinforced/airless,
+=======
+/turf/simulated/floor/reinforced,
+>>>>>>> theirs
 /area/engineering/wastetank)
 "DG" = (
 /obj/effect/floor_decal/industrial/outline/yellow,
@@ -11928,7 +11974,11 @@
 	id_tag = "prototype_chamber_blast"
 	},
 /obj/effect/wingrille_spawn/reinforced_phoron/full,
+<<<<<<< ours
 /turf/simulated/floor/reinforced/airless,
+=======
+/turf/simulated/floor/reinforced,
+>>>>>>> theirs
 /area/vacant/prototype/engine)
 "Ek" = (
 /obj/machinery/atmospherics/pipe/simple/visible/black,
@@ -11943,7 +11993,11 @@
 	name = "Reactor Blast Door"
 	},
 /obj/effect/wallframe_spawn/reinforced_phoron,
+<<<<<<< ours
 /turf/simulated/floor/reinforced/airless,
+=======
+/turf/simulated/floor/reinforced,
+>>>>>>> theirs
 /area/engineering/engine_room)
 "Eo" = (
 /obj/effect/floor_decal/industrial/warning/corner,
@@ -11986,7 +12040,11 @@
 	dir = 4
 	},
 /obj/machinery/meter,
+<<<<<<< ours
 /turf/simulated/floor/reinforced/airless,
+=======
+/turf/simulated/floor/reinforced,
+>>>>>>> theirs
 /area/engineering/wastetank)
 "Eu" = (
 /obj/machinery/atmospherics/unary/vent_pump/tank{
@@ -12002,7 +12060,11 @@
 	pressure_checks_default = 2;
 	pump_direction = 0
 	},
+<<<<<<< ours
 /turf/simulated/floor/reinforced/airless,
+=======
+/turf/simulated/floor/reinforced,
+>>>>>>> theirs
 /area/engineering/wastetank)
 "Ev" = (
 /obj/structure/cable/green{
@@ -12319,7 +12381,11 @@
 /obj/machinery/air_sensor{
 	id_tag = "waste_sensor"
 	},
+<<<<<<< ours
 /turf/simulated/floor/reinforced/airless,
+=======
+/turf/simulated/floor/reinforced,
+>>>>>>> theirs
 /area/engineering/wastetank)
 "Fg" = (
 /obj/effect/floor_decal/industrial/warning/corner,
@@ -12759,6 +12825,12 @@
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/engineering/atmos)
+<<<<<<< ours
+=======
+"Gr" = (
+/turf/simulated/floor/reinforced,
+/area/torchexterior)
+>>>>>>> theirs
 "Gs" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -13525,10 +13597,13 @@
 /obj/structure/ladder/up,
 /turf/simulated/floor/plating,
 /area/maintenance/seconddeck/central)
+<<<<<<< ours
 "IR" = (
 /obj/structure/grille,
 /turf/simulated/floor/airless,
 /area/space)
+=======
+>>>>>>> theirs
 "IU" = (
 /obj/structure/cable/green{
 	d1 = 4;
@@ -14154,7 +14229,11 @@
 	},
 /obj/effect/wallframe_spawn/reinforced_phoron,
 /obj/machinery/atmospherics/pipe/simple/visible/fuel,
+<<<<<<< ours
 /turf/simulated/floor/reinforced/airless,
+=======
+/turf/simulated/floor/reinforced,
+>>>>>>> theirs
 /area/engineering/engine_room)
 "Lf" = (
 /obj/structure/disposalpipe/segment{
@@ -14237,7 +14316,11 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/engineering/atmos)
 "Ls" = (
+<<<<<<< ours
 /turf/simulated/floor/reinforced/airless,
+=======
+/turf/simulated/floor/reinforced,
+>>>>>>> theirs
 /area/space)
 "Lt" = (
 /obj/machinery/portable_atmospherics/powered/scrubber,
@@ -14821,7 +14904,11 @@
 	id = "waste_in";
 	use_power = 1
 	},
+<<<<<<< ours
 /turf/simulated/floor/reinforced/airless,
+=======
+/turf/simulated/floor/reinforced,
+>>>>>>> theirs
 /area/engineering/wastetank)
 "ND" = (
 /obj/structure/sign/warning/airlock{
@@ -15212,7 +15299,11 @@
 /area/engineering/bluespace)
 "OG" = (
 /obj/machinery/shield_diffuser,
+<<<<<<< ours
 /turf/simulated/floor/reinforced/airless,
+=======
+/turf/simulated/floor/reinforced,
+>>>>>>> theirs
 /area/engineering/wastetank)
 "OI" = (
 /obj/machinery/computer/modular/preset/engineering{
@@ -15966,7 +16057,11 @@
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction{
 	dir = 1
 	},
+<<<<<<< ours
 /turf/simulated/floor/reinforced/airless,
+=======
+/turf/simulated/floor/reinforced,
+>>>>>>> theirs
 /area/engineering/engine_room)
 "Re" = (
 /obj/effect/floor_decal/corner/yellow{
@@ -16335,7 +16430,11 @@
 /obj/machinery/camera/network/engine{
 	c_tag = "Engine - Prototype Chamber One"
 	},
+<<<<<<< ours
 /turf/simulated/floor/reinforced/airless,
+=======
+/turf/simulated/floor/reinforced,
+>>>>>>> theirs
 /area/vacant/prototype/engine)
 "Sh" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
@@ -16381,7 +16480,11 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction,
+<<<<<<< ours
 /turf/simulated/floor/reinforced/airless,
+=======
+/turf/simulated/floor/reinforced,
+>>>>>>> theirs
 /area/engineering/engine_room)
 "Sl" = (
 /obj/machinery/cryopod{
@@ -16655,7 +16758,11 @@
 	icon_state = "pdoor0";
 	id_tag = "prototype_chamber_blast"
 	},
+<<<<<<< ours
 /turf/simulated/floor/reinforced/airless,
+=======
+/turf/simulated/floor/reinforced,
+>>>>>>> theirs
 /area/vacant/prototype/engine)
 "Tl" = (
 /obj/machinery/atmospherics/pipe/manifold/visible/yellow,
@@ -16682,7 +16789,11 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging,
+<<<<<<< ours
 /turf/simulated/floor/reinforced/airless,
+=======
+/turf/simulated/floor/reinforced,
+>>>>>>> theirs
 /area/engineering/engine_room)
 "Tp" = (
 /obj/structure/sign/warning/vacuum,
@@ -16954,7 +17065,11 @@
 /obj/machinery/power/supermatter,
 /obj/effect/engine_setup/core,
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging,
+<<<<<<< ours
 /turf/simulated/floor/greengrid/airless,
+=======
+/turf/simulated/floor/greengrid,
+>>>>>>> theirs
 /area/engineering/engine_room)
 "Up" = (
 /obj/machinery/atmospherics/pipe/simple/hidden{
@@ -17072,7 +17187,11 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
+<<<<<<< ours
 /turf/simulated/floor/reinforced/airless,
+=======
+/turf/simulated/floor/reinforced,
+>>>>>>> theirs
 /area/vacant/prototype/engine)
 "Vf" = (
 /obj/machinery/computer/air_control{
@@ -17154,7 +17273,11 @@
 /area/engineering/engine_room)
 "Vo" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging,
+<<<<<<< ours
 /turf/simulated/floor/greengrid/airless,
+=======
+/turf/simulated/floor/greengrid,
+>>>>>>> theirs
 /area/engineering/engine_room)
 "Vq" = (
 /turf/simulated/wall/r_wall/hull,
@@ -17405,7 +17528,11 @@
 	name = "Reactor Vent"
 	},
 /obj/machinery/shield_diffuser,
+<<<<<<< ours
 /turf/simulated/floor/reinforced/airless,
+=======
+/turf/simulated/floor/reinforced,
+>>>>>>> theirs
 /area/engineering/engine_room)
 "Wp" = (
 /turf/simulated/wall/r_wall/hull,
@@ -17735,7 +17862,11 @@
 /obj/machinery/light{
 	dir = 1
 	},
+<<<<<<< ours
 /turf/simulated/floor/reinforced/airless,
+=======
+/turf/simulated/floor/reinforced,
+>>>>>>> theirs
 /area/vacant/prototype/engine)
 "Xf" = (
 /obj/machinery/shield_diffuser,
@@ -17810,7 +17941,11 @@
 /obj/machinery/atmospherics/pipe/simple/visible/green{
 	dir = 4
 	},
+<<<<<<< ours
 /turf/simulated/floor/reinforced/airless,
+=======
+/turf/simulated/floor/reinforced,
+>>>>>>> theirs
 /area/engineering/engine_room)
 "Xp" = (
 /obj/machinery/atmospherics/pipe/simple/visible/green{
@@ -17919,6 +18054,13 @@
 "XP" = (
 /turf/simulated/wall/prepainted,
 /area/assembly/robotics)
+<<<<<<< ours
+=======
+"XT" = (
+/obj/machinery/shield_diffuser,
+/turf/simulated/floor/reinforced,
+/area/torchexterior)
+>>>>>>> theirs
 "XU" = (
 /obj/effect/floor_decal/industrial/warning/corner,
 /obj/effect/floor_decal/industrial/warning{
@@ -18263,7 +18405,11 @@
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 6
 	},
+<<<<<<< ours
 /turf/simulated/floor/reinforced/airless,
+=======
+/turf/simulated/floor/reinforced,
+>>>>>>> theirs
 /area/engineering/engine_room)
 "Zi" = (
 /obj/structure/cable/yellow{
@@ -18347,7 +18493,11 @@
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 5
 	},
+<<<<<<< ours
 /turf/simulated/floor/reinforced/airless,
+=======
+/turf/simulated/floor/reinforced,
+>>>>>>> theirs
 /area/engineering/engine_room)
 "Zp" = (
 /obj/item/ammo_magazine/pistol/small/empty,
@@ -27054,11 +27204,19 @@ qw
 mc
 ue
 Se
+<<<<<<< ours
 Kf
 mg
 mg
 mg
 Kf
+=======
+ky
+mg
+mg
+mg
+ky
+>>>>>>> theirs
 Se
 ue
 dj
@@ -27256,11 +27414,19 @@ qw
 Lc
 ad
 Ej
+<<<<<<< ours
 Kf
 Fg
 Xg
 Oh
 Kf
+=======
+ky
+Fg
+Xg
+Oh
+ky
+>>>>>>> theirs
 Ej
 eH
 qj
@@ -27458,11 +27624,19 @@ qw
 md
 ad
 Ej
+<<<<<<< ours
 Kf
 Gg
 eh
 Ph
 Kf
+=======
+ky
+Gg
+eh
+Ph
+ky
+>>>>>>> theirs
 Ej
 eH
 rj
@@ -27660,11 +27834,19 @@ qw
 Lc
 ad
 Ej
+<<<<<<< ours
 Kf
 Hg
 mh
 Qh
 Kf
+=======
+ky
+Hg
+mh
+Qh
+ky
+>>>>>>> theirs
 Ej
 eH
 qj
@@ -27863,7 +28045,11 @@ ud
 Pe
 Se
 IV
+<<<<<<< ours
 Kf
+=======
+ky
+>>>>>>> theirs
 qh
 Rh
 Na
@@ -32490,8 +32676,8 @@ aa
 aa
 aa
 aa
-Ls
-Ls
+Gr
+Gr
 Ib
 cd
 cI
@@ -32530,7 +32716,11 @@ Cn
 CP
 Xk
 lk
+<<<<<<< ours
 ky
+=======
+uZ
+>>>>>>> theirs
 aa
 aa
 aa
@@ -32732,7 +32922,11 @@ Co
 CQ
 EV
 lk
+<<<<<<< ours
 ky
+=======
+uZ
+>>>>>>> theirs
 aa
 aa
 aa
@@ -32893,9 +33087,9 @@ aa
 aa
 aa
 wb
-uZ
-lk
-lk
+XT
+Gr
+Gr
 bF
 cf
 cJ
@@ -32934,7 +33128,11 @@ Cn
 CR
 Xk
 lk
+<<<<<<< ours
 ky
+=======
+uZ
+>>>>>>> theirs
 aa
 aa
 aa
@@ -45842,7 +46040,7 @@ ik
 aa
 aa
 aa
-ky
+XT
 aa
 aa
 aa
@@ -46448,7 +46646,7 @@ ik
 aa
 aa
 aa
-ky
+XT
 aa
 aa
 aa
@@ -47054,7 +47252,7 @@ ik
 aa
 aa
 aa
-ky
+XT
 aa
 aa
 aa
@@ -47268,7 +47466,7 @@ il
 jj
 fT
 ox
-IR
+TK
 aa
 aa
 aa
@@ -47660,7 +47858,7 @@ fT
 gE
 ag
 aa
-ky
+XT
 aa
 ag
 FW
@@ -48266,7 +48464,7 @@ ag
 af
 af
 oH
-ky
+XT
 oH
 af
 af

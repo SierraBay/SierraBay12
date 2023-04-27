@@ -114,15 +114,6 @@
 /obj/machinery/portable_atmospherics/powered/scrubber,
 /turf/simulated/floor/airless,
 /area/scavver/gantry/up2)
-"aM" = (
-/obj/structure/railing/mapped{
-	dir = 8;
-	icon_state = "railing0-1"
-	},
-/obj/structure/lattice,
-/obj/effect/catwalk_plated/dark,
-/turf/space,
-/area/space)
 "aZ" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
 /turf/simulated/floor/tiled/techfloor{
@@ -848,15 +839,6 @@
 /obj/effect/wallframe_spawn/reinforced/no_grille,
 /turf/simulated/floor/airless,
 /area/scavver/yachtup)
-"hw" = (
-/obj/structure/railing/mapped{
-	dir = 8;
-	icon_state = "railing0-1"
-	},
-/obj/effect/catwalk_plated/dark,
-/obj/structure/lattice,
-/turf/space,
-/area/space)
 "hB" = (
 /obj/machinery/alarm{
 	dir = 1;
@@ -868,14 +850,13 @@
 /turf/simulated/floor/tiled,
 /area/scavver/hab)
 "hD" = (
-/obj/structure/lattice,
-/obj/effect/catwalk_plated/dark,
 /obj/structure/railing/mapped{
 	dir = 4;
 	icon_state = "railing0-1"
 	},
 /obj/structure/railing/mapped,
-/turf/space,
+/obj/effect/catwalk_plated/dark,
+/turf/simulated/floor,
 /area/space)
 "hG" = (
 /obj/machinery/atmospherics/pipe/simple/visible/blue{
@@ -889,13 +870,12 @@
 	},
 /area/scavver/lifepod)
 "hH" = (
-/obj/structure/lattice,
-/obj/effect/catwalk_plated/dark,
 /obj/structure/railing/mapped{
 	dir = 8;
 	icon_state = "railing0-1"
 	},
-/turf/space,
+/obj/effect/catwalk_plated/dark,
+/turf/simulated/floor,
 /area/space)
 "hP" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen/engine_setup,
@@ -2037,8 +2017,6 @@
 /turf/simulated/floor/plating,
 /area/scavver/escapepod)
 "qv" = (
-/obj/structure/lattice,
-/obj/effect/catwalk_plated/dark,
 /obj/structure/railing/mapped{
 	dir = 4;
 	icon_state = "railing0-1"
@@ -2047,7 +2025,8 @@
 	dir = 1;
 	icon_state = "railing0-1"
 	},
-/turf/space,
+/obj/effect/catwalk_plated/dark,
+/turf/simulated/floor,
 /area/space)
 "qC" = (
 /obj/structure/cable{
@@ -2059,14 +2038,13 @@
 /turf/simulated/floor/airless,
 /area/scavver/yachtup)
 "qD" = (
-/obj/structure/lattice,
-/obj/effect/catwalk_plated/dark,
 /obj/structure/railing/mapped{
 	dir = 8;
 	icon_state = "railing0-1"
 	},
 /obj/random/loot,
-/turf/space,
+/obj/effect/catwalk_plated/dark,
+/turf/simulated/floor,
 /area/space)
 "qF" = (
 /obj/structure/cable{
@@ -2473,10 +2451,9 @@
 /turf/space,
 /area/scavver/yachtup)
 "tf" = (
-/obj/structure/lattice,
-/obj/effect/catwalk_plated/dark,
 /obj/effect/shuttle_landmark/scavver_gantry,
-/turf/space,
+/obj/effect/catwalk_plated/dark,
+/turf/simulated/floor,
 /area/space)
 "tl" = (
 /obj/effect/floor_decal/techfloor/orange{
@@ -2600,10 +2577,9 @@
 /turf/simulated/floor/tiled/white/airless,
 /area/scavver/escapepod)
 "tX" = (
-/obj/structure/lattice,
-/obj/effect/catwalk_plated/dark,
 /obj/structure/railing/mapped,
-/turf/space,
+/obj/effect/catwalk_plated/dark,
+/turf/simulated/floor,
 /area/space)
 "ub" = (
 /obj/machinery/light{
@@ -2731,14 +2707,13 @@
 	},
 /area/scavver/lifepod)
 "uZ" = (
-/obj/structure/lattice,
-/obj/effect/catwalk_plated/dark,
 /obj/structure/railing/mapped{
 	dir = 4;
 	icon_state = "railing0-1"
 	},
 /obj/random/hat,
-/turf/space,
+/obj/effect/catwalk_plated/dark,
+/turf/simulated/floor,
 /area/space)
 "va" = (
 /obj/structure/cable,
@@ -2957,14 +2932,13 @@
 /turf/simulated/floor/airless,
 /area/scavver/escapepod)
 "wz" = (
-/obj/structure/lattice,
-/obj/effect/catwalk_plated/dark,
 /obj/structure/railing/mapped{
 	dir = 8;
 	icon_state = "railing0-1"
 	},
 /obj/structure/railing/mapped,
-/turf/space,
+/obj/effect/catwalk_plated/dark,
+/turf/simulated/floor,
 /area/space)
 "wB" = (
 /obj/structure/sign/warning/docking_area{
@@ -3284,13 +3258,12 @@
 /turf/simulated/floor/wood/yew,
 /area/scavver/hab)
 "zU" = (
-/obj/structure/lattice,
-/obj/effect/catwalk_plated/dark,
 /obj/structure/railing/mapped{
 	dir = 1;
 	icon_state = "railing0-1"
 	},
-/turf/space,
+/obj/effect/catwalk_plated/dark,
+/turf/simulated/floor,
 /area/space)
 "zX" = (
 /obj/structure/cable{
@@ -3342,11 +3315,10 @@
 /turf/simulated/floor/tiled/steel_grid,
 /area/scavver/hab)
 "An" = (
-/obj/structure/lattice,
-/obj/effect/catwalk_plated/dark,
 /obj/structure/railing/mapped,
 /obj/random/loot,
-/turf/space,
+/obj/effect/catwalk_plated/dark,
+/turf/simulated/floor,
 /area/space)
 "Aq" = (
 /obj/structure/cable{
@@ -3806,14 +3778,13 @@
 /turf/simulated/floor/airless,
 /area/scavver/yachtup)
 "EM" = (
-/obj/structure/lattice,
-/obj/effect/catwalk_plated/dark,
 /obj/structure/railing/mapped{
 	dir = 1;
 	icon_state = "railing0-1"
 	},
 /obj/item/caution/cone,
-/turf/space,
+/obj/effect/catwalk_plated/dark,
+/turf/simulated/floor,
 /area/space)
 "ES" = (
 /obj/random/toolbox,
@@ -3882,8 +3853,6 @@
 /turf/simulated/floor/tiled/monotile,
 /area/scavver/hab)
 "FC" = (
-/obj/structure/lattice,
-/obj/effect/catwalk_plated/dark,
 /obj/structure/railing/mapped{
 	dir = 8;
 	icon_state = "railing0-1"
@@ -3893,7 +3862,8 @@
 	icon_state = "railing0-1"
 	},
 /obj/item/caution/cone,
-/turf/space,
+/obj/effect/catwalk_plated/dark,
+/turf/simulated/floor,
 /area/space)
 "FF" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -4193,11 +4163,6 @@
 "In" = (
 /turf/simulated/floor/airless,
 /area/scavver/gantry/up2)
-"Iy" = (
-/obj/structure/lattice,
-/obj/effect/catwalk_plated/dark,
-/turf/space,
-/area/space)
 "IF" = (
 /obj/effect/floor_decal/techfloor/orange{
 	dir = 1
@@ -5284,8 +5249,7 @@
 /area/scavver/gantry/up1)
 "UT" = (
 /obj/effect/catwalk_plated/dark,
-/obj/structure/lattice,
-/turf/space,
+/turf/simulated/floor,
 /area/space)
 "UU" = (
 /obj/structure/cable{
@@ -5655,13 +5619,12 @@
 /turf/simulated/floor/plating,
 /area/scavver/hab)
 "XR" = (
-/obj/structure/lattice,
-/obj/effect/catwalk_plated/dark,
 /obj/structure/railing/mapped{
 	dir = 4;
 	icon_state = "railing0-1"
 	},
-/turf/space,
+/obj/effect/catwalk_plated/dark,
+/turf/simulated/floor,
 /area/space)
 "XX" = (
 /obj/structure/cable{
@@ -14437,9 +14400,9 @@ eN
 zU
 hH
 hH
-aM
-aM
-aM
+hH
+hH
+hH
 hH
 hH
 hH
@@ -15499,8 +15462,8 @@ wh
 eN
 eN
 zU
-Iy
-Iy
+UT
+UT
 oo
 rX
 rX
@@ -16265,8 +16228,8 @@ gp
 ML
 mq
 WG
-Iy
-Iy
+UT
+UT
 tX
 Im
 Im
@@ -16553,8 +16516,8 @@ eN
 eN
 eN
 eN
-Iy
-Iy
+UT
+UT
 eN
 eN
 aa
@@ -16690,7 +16653,6 @@ hH
 hH
 qD
 hH
-hw
 hH
 hH
 hH
@@ -16700,13 +16662,14 @@ hH
 hH
 hH
 hH
-Iy
+hH
+UT
 hH
 hH
 hH
 hH
-Iy
-Iy
+UT
+UT
 hH
 hH
 xR
@@ -16714,7 +16677,7 @@ Oa
 PX
 hH
 hH
-Iy
+UT
 eN
 eN
 fr
@@ -16832,7 +16795,7 @@ zU
 xC
 hX
 eN
-Iy
+UT
 eN
 eN
 eN
@@ -16852,7 +16815,7 @@ eN
 hX
 xC
 eN
-Iy
+UT
 eN
 eN
 eN
@@ -16984,7 +16947,7 @@ zU
 eN
 hX
 wB
-Iy
+UT
 eN
 eN
 eN
@@ -17004,7 +16967,7 @@ eN
 eN
 VB
 eN
-Iy
+UT
 eN
 eN
 eN
@@ -17285,8 +17248,8 @@ eN
 eN
 eN
 zU
-Iy
-Iy
+UT
+UT
 dD
 SX
 Uf
@@ -17902,7 +17865,7 @@ hX
 Ds
 eN
 eN
-Iy
+UT
 eN
 eN
 eN
@@ -17911,7 +17874,7 @@ Id
 Og
 df
 eN
-Iy
+UT
 eN
 eN
 eN
@@ -17922,7 +17885,7 @@ eN
 Ds
 eN
 eN
-Iy
+UT
 eN
 eN
 eN
@@ -18054,7 +18017,7 @@ eN
 hX
 xC
 eN
-Iy
+UT
 eN
 eN
 eN
@@ -18063,7 +18026,7 @@ eN
 eN
 bc
 eN
-Iy
+UT
 eN
 eN
 eN
@@ -18074,7 +18037,7 @@ hX
 xC
 eN
 eN
-Iy
+UT
 eN
 eN
 eN
@@ -18215,7 +18178,7 @@ XR
 XR
 iI
 XR
-Iy
+UT
 XR
 XR
 XR
@@ -18367,7 +18330,7 @@ hX
 eN
 bc
 eN
-Iy
+UT
 eN
 eN
 eN

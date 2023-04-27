@@ -2665,7 +2665,11 @@
 /obj/effect/floor_decal/industrial/warning{
 	dir = 1
 	},
+<<<<<<< ours
 /turf/simulated/floor/reinforced/airless,
+=======
+/turf/simulated/floor/reinforced,
+>>>>>>> theirs
 /area/space)
 "kV" = (
 /turf/simulated/floor/reinforced/airless,

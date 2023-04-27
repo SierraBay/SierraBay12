@@ -693,10 +693,13 @@
 /obj/effect/paint/black,
 /turf/simulated/wall/r_titanium,
 /area/miningstation/prep2)
+<<<<<<< ours
 "bO" = (
 /obj/structure/catwalk,
 /turf/simulated/floor/airless/ceiling,
 /area/miningstation/power)
+=======
+>>>>>>> theirs
 "bP" = (
 /obj/effect/paint/black,
 /turf/simulated/wall/r_titanium,
@@ -22315,7 +22318,7 @@ dT
 aO
 bx
 bE
-bO
+cy
 cf
 cB
 cT
