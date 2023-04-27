@@ -40,24 +40,19 @@ CL_NOT_NEEDED = ":scroll: CL не требуется"
 
 has_valid_label = False
 has_invalid_label = False
-cl_needed = True
+cl_required = True
 for label in pr_labels:
     print("Found label: ", label.name)
     if label.name == CL_NOT_NEEDED:
         print("No CL needed!")
-        cl_needed = False
+        cl_required = False
     if label.name == CL_VALID:
         has_valid_label = True
     if label.name == CL_INVALID:
         has_invalid_label = True
 
-if not cl_needed:
-    # remove invalid, remove valid
-    if has_invalid_label:
-        pr.remove_from_labels(CL_INVALID)
-    if has_valid_label:
-        pr.remove_from_labels(CL_VALID)
-    exit(0)
+if pr.title.startswith("[MIRROR]"):
+    cl_required = False
 
 write_cl = {}
 try:
@@ -65,6 +60,15 @@ try:
     cl_list = CL_SPLIT.findall(cl.group(3))
 except AttributeError:
     print("No CL found!")
+
+    if not cl_required:
+        # remove invalid, remove valid
+        if has_invalid_label:
+            pr.remove_from_labels(CL_INVALID)
+        if has_valid_label:
+            pr.remove_from_labels(CL_VALID)
+        exit(0)
+
     # add invalid, remove valid
     if not has_invalid_label:
         pr.add_to_labels(CL_INVALID)
@@ -83,11 +87,21 @@ with open(Path.cwd().joinpath("tools/changelog/tags.yml")) as file:
 
 write_cl['changes'] = []
 
+has_invalid_tag = False
 for k, v in cl_list:
     if k in tags['tags'].keys(): # Check to see if there are any valid tags, as determined by tags.yml
         v = v.rstrip()
         if v not in list(tags['defaults'].values()): # Check to see if the tags are associated with something that isn't the default text
             write_cl['changes'].append({tags['tags'][k]: v})
+    else:
+        print(f"Tag {k} is invalid!")
+        has_invalid_tag = True
+
+if has_invalid_tag:
+    print("CL has invalid tags!")
+    print("Valid tags are:")
+    print(*tags['tags'].keys(), sep=", ")
+    exit(1)
 
 if write_cl['changes']:
     print("CL OK!")
