@@ -38,6 +38,8 @@ CL_INVALID = ":scroll: CL невалиден"
 CL_VALID = ":scroll: CL валиден"
 CL_NOT_NEEDED = ":scroll: CL не требуется"
 
+pr_is_mirror = pr.title.startswith("[MIRROR]")
+
 has_valid_label = False
 has_invalid_label = False
 cl_required = True
@@ -51,7 +53,7 @@ for label in pr_labels:
     if label.name == CL_INVALID:
         has_invalid_label = True
 
-if pr.title.startswith("[MIRROR]"):
+if pr_is_mirror:
     cl_required = False
 
 write_cl = {}
@@ -78,8 +80,11 @@ except AttributeError:
 
 
 if cl.group(2) is not None:
-    write_cl['author'] = cl.group(2).strip() or pr_author
+    write_cl['author'] = cl.group(2).strip()
 else:
+    if pr_is_mirror:
+        print("No author specified in mirror PR!")
+        exit(1)
     write_cl['author'] = pr_author
 
 with open(Path.cwd().joinpath("tools/changelog/tags.yml")) as file:
