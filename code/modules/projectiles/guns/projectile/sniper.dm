@@ -152,13 +152,6 @@
 	mag_insert_sound = 'sound/weapons/guns/interaction/ltrifle_magin.ogg'
 	mag_remove_sound = 'sound/weapons/guns/interaction/garand_magout.ogg'
 
-<<<<<<< ours
-	firemodes = list(
-		list(mode_name="semi auto",       burst=1, fire_delay=6, one_hand_penalty=8, burst_accuracy=null, dispersion=null)
-		)
-
-=======
->>>>>>> theirs
 /obj/item/gun/projectile/sniper/garand/on_update_icon()
 	if(ammo_magazine && length(ammo_magazine.stored_ammo))
 		icon_state = initial(icon_state)
@@ -187,11 +180,6 @@
 	accuracy = 1
 	wielded_item_state = "semistrip-wielded"
 
-<<<<<<< ours
-	firemodes = list(
-		list(mode_name="semi auto",       burst=1, fire_delay=2,  one_hand_penalty=8, burst_accuracy=null, dispersion=null)
-		)
-=======
 /obj/item/gun/projectile/sniper/semistrip/on_update_icon()
 	if(length(ammo_magazine.stored_ammo))
 		icon_state = initial(icon_state)
@@ -200,4 +188,3 @@
 		icon_state = "[initial(icon_state)]-empty"
 		wielded_item_state = "[initial(wielded_item_state)]-empty"
 	..()
->>>>>>> theirs
