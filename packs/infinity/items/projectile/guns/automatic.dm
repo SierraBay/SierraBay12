@@ -65,7 +65,7 @@
 		list(
 			mode_name="semi auto", burst=1, fire_delay=6,
 			one_hand_penalty=8, burst_accuracy=null,
-			dispersion=nul
+			dispersion=null
 		)
 	)
 
