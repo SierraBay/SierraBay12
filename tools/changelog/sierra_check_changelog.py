@@ -87,6 +87,9 @@ else:
         exit(1)
     write_cl['author'] = pr_author
 
+if not write_cl['author']:
+    print("There are spaces or tabs instead of author username")
+
 with open(Path.cwd().joinpath("tools/changelog/tags.yml")) as file:
     tags = yaml.safe_load(file)
 
