@@ -80,15 +80,7 @@
 	if (QDELETED(src) || !assailant)
 		return TRUE
 	if (A.use_grab(src, user, click_params))
-<<<<<<< ours
-		//[SIERRA]
-		if (QDELETED(src))
-			return TRUE
-		//[/SIERRA]
-		assailant.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
-=======
 		user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
->>>>>>> theirs
 		action_used()
 		if (current_grab.downgrade_on_action)
 			downgrade()
