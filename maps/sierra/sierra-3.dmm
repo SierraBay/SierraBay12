@@ -2930,7 +2930,7 @@
 	dir = 8
 	},
 /obj/structure/closet/secure_closet/medical1,
-/obj/item/reagent_containers/ivbag,
+/obj/item/storage/box/bloodpacks,
 /turf/simulated/floor/tiled/white,
 /area/medical/locker)
 "afQ" = (
@@ -3582,7 +3582,7 @@
 	pump_direction = 0;
 	use_power = 1
 	},
-/obj/structure/window/phoronreinforced{
+/obj/structure/window/boron_reinforced{
 	dir = 4
 	},
 /turf/simulated/floor/reinforced/carbon_dioxide,
@@ -4309,7 +4309,7 @@
 /obj/effect/floor_decal/industrial/warning{
 	dir = 6
 	},
-/obj/structure/window/phoronreinforced{
+/obj/structure/window/boron_reinforced{
 	dir = 4
 	},
 /turf/simulated/floor/reinforced/carbon_dioxide,
@@ -8831,7 +8831,9 @@
 /obj/effect/floor_decal/corner/blue{
 	dir = 5
 	},
-/obj/structure/hygiene/sink,
+/obj/structure/hygiene/sink{
+	pixel_y = -12
+	},
 /turf/simulated/floor/tiled/white,
 /area/medical/surgery)
 "apd" = (
@@ -11764,7 +11766,7 @@
 	},
 /obj/structure/table/glass,
 /obj/item/modular_computer/laptop/preset/custom_loadout/advanced{
-	dir = 8
+	dir = 3
 	},
 /obj/machinery/alarm{
 	dir = 8;
@@ -15666,7 +15668,7 @@
 	dir = 1
 	},
 /obj/structure/closet/hydrant{
-	pixel_y = 28
+	pixel_y = 32
 	},
 /turf/simulated/floor/tiled,
 /area/hallway/primary/firstdeck/aft)
@@ -20252,6 +20254,9 @@
 /obj/structure/sign/poster/nyc_unusual_gas{
 	pixel_x = -32
 	},
+/obj/structure/closet/shipping_wall/filled{
+	pixel_y = 32
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/rnd/development)
 "aIq" = (
@@ -20447,7 +20452,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
 /obj/item/sticky_pad/random,
-/obj/structure/table/glass/pglass,
+/obj/structure/table/glass/boron,
 /obj/effect/floor_decal/borderfloorwhite{
 	dir = 9
 	},
@@ -20465,7 +20470,7 @@
 	pixel_y = 32
 	},
 /obj/machinery/atmospherics/unary/vent_pump/on,
-/obj/structure/table/glass/pglass,
+/obj/structure/table/glass/boron,
 /obj/effect/floor_decal/borderfloorwhite{
 	dir = 1
 	},
@@ -22776,7 +22781,7 @@
 	icon_state = "4-8"
 	},
 /obj/item/folder/nt/rd,
-/obj/structure/table/glass/pglass,
+/obj/structure/table/glass/boron,
 /turf/simulated/floor/tiled/white,
 /area/crew_quarters/heads/office/rd)
 "aLH" = (
@@ -23656,7 +23661,7 @@
 /obj/item/paper_bin,
 /obj/item/pen,
 /obj/item/stamp/rd/nt,
-/obj/structure/table/glass/pglass,
+/obj/structure/table/glass/boron,
 /obj/item/toy/desk/newtoncradle{
 	pixel_x = 4;
 	pixel_y = 16
@@ -31526,7 +31531,7 @@
 /obj/effect/floor_decal/techfloor{
 	dir = 9
 	},
-/obj/structure/window/phoronreinforced{
+/obj/structure/window/boron_reinforced{
 	dir = 8
 	},
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
@@ -31695,7 +31700,7 @@
 /obj/effect/floor_decal/industrial/warning{
 	dir = 5
 	},
-/obj/structure/window/phoronreinforced{
+/obj/structure/window/boron_reinforced{
 	dir = 4
 	},
 /turf/simulated/floor/reinforced/carbon_dioxide,
@@ -32228,7 +32233,7 @@
 /obj/effect/floor_decal/industrial/warning{
 	dir = 6
 	},
-/obj/structure/window/phoronreinforced{
+/obj/structure/window/boron_reinforced{
 	dir = 4
 	},
 /turf/simulated/floor/reinforced/carbon_dioxide,
@@ -36999,7 +37004,7 @@
 /obj/effect/floor_decal/techfloor{
 	dir = 10
 	},
-/obj/structure/window/phoronreinforced{
+/obj/structure/window/boron_reinforced{
 	dir = 8
 	},
 /obj/machinery/light/small,
