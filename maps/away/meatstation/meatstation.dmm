@@ -4289,11 +4289,6 @@
 /obj/effect/wallframe_spawn/reinforced,
 /turf/simulated/floor/plating,
 /area/meatstation/dorm)
-"kc" = (
-/obj/structure/table/glass,
-/obj/machinery/reagent_temperature/cooler,
-/turf/simulated/floor/tiled/white,
-/area/meatstation/lab)
 "kd" = (
 /obj/structure/cable/cyan{
 	d1 = 1;
@@ -5191,10 +5186,13 @@
 /obj/structure/mine,
 /turf/simulated/floor/tiled/dark,
 /area/meatstation/swhallway)
+<<<<<<< ours
 "mn" = (
 /obj/structure/mine,
 /turf/simulated/floor/tiled/dark,
 /area/meatstation/swhallway)
+=======
+>>>>>>> theirs
 "mo" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -5452,17 +5450,6 @@
 	},
 /turf/simulated/floor/airless,
 /area/meatstation/engineering)
-"mY" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/cable/cyan{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/structure/mine,
-/turf/simulated/floor/tiled/dark,
-/area/meatstation/swhallway)
 "mZ" = (
 /obj/random/single/meatstation/low/wormscientist,
 /turf/simulated/floor/tiled/airless,
@@ -10459,8 +10446,7 @@
 	},
 /obj/machinery/door/airlock/vault/bolted{
 	id_tag = "meatstation_westlabext";
-	name = "Secure Airlock";
-	welded = 0
+	name = "Secure Airlock"
 	},
 /turf/simulated/floor/tiled/white,
 /area/meatstation/centerhallway)
@@ -10844,8 +10830,7 @@
 "Ao" = (
 /obj/machinery/door/airlock/vault/bolted{
 	id_tag = "meatstation_westlabint";
-	name = "Secure Airlock";
-	welded = 0
+	name = "Secure Airlock"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -11000,6 +10985,15 @@
 /obj/item/cell/high,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/meatstation/storage)
+<<<<<<< ours
+=======
+"Pq" = (
+)
+"Ut" = (
+/obj/structure/girder,
+/turf/simulated/floor,
+/area/meatstation/centerhallway)
+>>>>>>> theirs
 
 (1,1,1) = {"
 aa
@@ -25865,9 +25859,13 @@ eo
 pt
 mh
 mj
+<<<<<<< ours
 mm
+=======
+Pq
+>>>>>>> theirs
 mo
-mY
+mm
 sB
 uD
 aA
@@ -31507,7 +31505,7 @@ vL
 ac
 wv
 kp
-kc
+tU
 hi
 lm
 uB

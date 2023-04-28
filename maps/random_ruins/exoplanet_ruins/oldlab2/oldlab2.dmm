@@ -1703,16 +1703,6 @@
 /obj/item/ironing_iron,
 /turf/simulated/floor/tiled/freezer,
 /area/map_template/oldlab2/recandlockers)
-"jJ" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/structure/table/standard,
-/obj/machinery/reagent_temperature/cooler{
-	pixel_y = 5
-	},
-/turf/simulated/floor/tiled/white,
-/area/map_template/oldlab2/chem)
 "jL" = (
 /obj/machinery/light{
 	dir = 8
@@ -3306,16 +3296,6 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/map_template/oldlab2/fixedsecurity)
-"rK" = (
-/obj/structure/table/marble,
-/obj/machinery/reagent_temperature/cooler{
-	pixel_y = 5
-	},
-/obj/effect/floor_decal/corner/grey/diagonal{
-	dir = 4
-	},
-/turf/simulated/floor/tiled/white,
-/area/map_template/oldlab2/mess)
 "rL" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/blast/regular{
@@ -10093,7 +10073,7 @@ ZN
 uh
 NY
 NY
-jJ
+uh
 Mk
 Jj
 Qu
@@ -11290,7 +11270,7 @@ xC
 mG
 zl
 pu
-rK
+qZ
 qZ
 qZ
 Yg
