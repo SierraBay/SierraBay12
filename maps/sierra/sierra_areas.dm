@@ -1,6 +1,8 @@
 /datum/map/sierra
 
-	base_floor_type = /turf/simulated/floor/reinforced/airless
+	base_floor_type = /turf/simulated/floor/reinforced{
+	map_airless = 1
+	}
 	base_floor_area = /area/maintenance/exterior
 
 	post_round_safe_areas = list (
