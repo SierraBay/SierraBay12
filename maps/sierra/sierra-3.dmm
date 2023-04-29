@@ -4869,7 +4869,7 @@
 /obj/structure/noticeboard{
 	pixel_y = 32
 	},
-/obj/machinery/reagent_temperature/cooler,
+/obj/machinery/reagent_temperature,
 /turf/simulated/floor/tiled/white,
 /area/medical/chemistry)
 "ajo" = (
@@ -36297,7 +36297,7 @@
 	dir = 4
 	},
 /obj/structure/table/standard,
-/obj/machinery/reagent_temperature/cooler,
+/obj/machinery/reagent_temperature,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
