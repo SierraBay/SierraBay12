@@ -76,15 +76,7 @@ PASSED=0
 NODE_VERSION=4
 
 function msg {
-    echo -e "\e[34mTEST\e[0m: $*"
-}
-
-function group_msg {
-    echo -e "::group::\e[34mTEST\e[0m: $*"
-}
-
-function end_group {
-    echo "::endgroup::"
+    echo -e "\t\e[34mtest\e[0m: $*"
 }
 
 function msg_bad {
@@ -112,10 +104,6 @@ function fail {
     warn "test \"$1\" failed: $2"
     ((FAILED++))
     FAILED_BYNAME+=("$1")
-}
-
-function summary {
-    echo -e "$*" >> $GITHUB_STEP_SUMMARY
 }
 
 function need_cmd {
@@ -158,15 +146,11 @@ function run_test_ci {
 
 function check_fail {
     if [[ $FAILED -ne 0 ]]; then
-        summary "## :x: $FAILED tests failed"
         for t in "${FAILED_BYNAME[@]}"; do
             msg_bad "TEST FAILED: \"$t\""
-            summary "- $t"
         done
         err "$FAILED tests failed"
-    else
-        msg_good "$PASSED tests passed"
-        summary "## :white_check_mark: $PASSED tests passed"
+    else msg_good "$PASSED tests passed"
     fi
 }
 
