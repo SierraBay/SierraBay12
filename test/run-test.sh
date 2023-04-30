@@ -139,11 +139,10 @@ function run_test {
 }
 
 function run_test_fail {
-    group_msg "running(fail) \"$1\""
+    msg "running(fail) \"$1\""
     name=$1
     shift
     exec_test "$*"
-    end_group
     ret=$?
     if [[ ret -eq 0 ]]
     then fail "$name" $ret
