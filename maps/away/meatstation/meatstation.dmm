@@ -10963,8 +10963,6 @@
 /obj/item/cell/high,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/meatstation/storage)
-"Pq" = (
-)
 "Ut" = (
 /obj/structure/girder,
 /turf/simulated/floor,
@@ -25834,7 +25832,7 @@ eo
 pt
 mh
 mj
-Pq
+aa
 mo
 mm
 sB
