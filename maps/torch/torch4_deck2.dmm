@@ -37,9 +37,7 @@
 /obj/machinery/fusion_fuel_injector/mapped{
 	initial_id_tag = "aux_fusion_plant"
 	},
-/turf/simulated/floor/reinforced{
-	map_airless = 1
-	},
+/turf/simulated/floor/reinforced,
 /area/vacant/prototype/engine)
 "ae" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -684,9 +682,7 @@
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 9
 	},
-/turf/simulated/floor/reinforced{
-	map_airless = 1
-	},
+/turf/simulated/floor/reinforced,
 /area/engineering/engine_room)
 "bq" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -2284,9 +2280,7 @@
 	dir = 8;
 	initial_id_tag = "aux_fusion_plant"
 	},
-/turf/simulated/floor/reinforced{
-	map_airless = 1
-	},
+/turf/simulated/floor/reinforced,
 /area/vacant/prototype/engine)
 "eu" = (
 /obj/structure/cable{
@@ -2316,9 +2310,7 @@
 /obj/machinery/power/port_gen/pacman/mrs{
 	anchored = 1
 	},
-/turf/simulated/floor/reinforced{
-	map_airless = 1
-	},
+/turf/simulated/floor/reinforced,
 /area/vacant/prototype/engine)
 "ex" = (
 /obj/random/torchcloset,
@@ -2421,9 +2413,7 @@
 	dir = 1;
 	initial_id_tag = "aux_fusion_plant"
 	},
-/turf/simulated/floor/reinforced{
-	map_airless = 1
-	},
+/turf/simulated/floor/reinforced,
 /area/vacant/prototype/engine)
 "eI" = (
 /obj/structure/cable/green{
@@ -4797,18 +4787,10 @@
 /turf/simulated/floor/tiled/dark,
 /area/teleporter/seconddeck)
 "ky" = (
-<<<<<<< ours
-/obj/machinery/shield_diffuser,
-/turf/simulated/floor/reinforced{
-	map_airless = 1
-	},
-/area/torchexterior)
-=======
 /turf/simulated/floor/reinforced{
 	map_airless = 1
 	},
 /area/vacant/prototype/engine)
->>>>>>> theirs
 "kz" = (
 /obj/structure/cable/green{
 	d1 = 1;
@@ -6914,9 +6896,7 @@
 	name = "Reactor Blast Door"
 	},
 /obj/effect/wallframe_spawn/reinforced_phoron,
-/turf/simulated/floor/reinforced{
-	map_airless = 1
-	},
+/turf/simulated/floor/reinforced,
 /area/engineering/engine_room)
 "qe" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -7414,9 +7394,7 @@
 	id_tag = "EngineAccess";
 	name = "Engine Access Hatch"
 	},
-/turf/simulated/floor/reinforced{
-	map_airless = 1
-	},
+/turf/simulated/floor/reinforced,
 /area/engineering/engine_room)
 "ri" = (
 /obj/structure/cable{
@@ -8727,9 +8705,7 @@
 	id_tag = "WasteGate";
 	name = "Waste Gate"
 	},
-/turf/simulated/floor/reinforced{
-	map_airless = 1
-	},
+/turf/simulated/floor/reinforced,
 /area/engineering/wastetank)
 "uY" = (
 /obj/effect/floor_decal/corner/yellow/half,
@@ -8741,13 +8717,7 @@
 /turf/simulated/floor/reinforced{
 	map_airless = 1
 	},
-/area/space)
-=======
-/turf/simulated/floor/reinforced{
-	map_airless = 1
-	},
 /area/torchexterior)
->>>>>>> theirs
 "vc" = (
 /obj/effect/catwalk_plated,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -9538,9 +9508,7 @@
 	icon_state = "pdoor0";
 	id_tag = "prototype_chamber_blast"
 	},
-/turf/simulated/floor/reinforced{
-	map_airless = 1
-	},
+/turf/simulated/floor/reinforced,
 /area/vacant/prototype/engine)
 "xy" = (
 /obj/machinery/light,
@@ -11169,9 +11137,7 @@
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 10
 	},
-/turf/simulated/floor/reinforced{
-	map_airless = 1
-	},
+/turf/simulated/floor/reinforced,
 /area/engineering/engine_room)
 "Cl" = (
 /obj/structure/table/rack,
@@ -11763,9 +11729,7 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/engineering/engine_room)
 "DF" = (
-/turf/simulated/floor/reinforced{
-	map_airless = 1
-	},
+/turf/simulated/floor/reinforced,
 /area/engineering/wastetank)
 "DG" = (
 /obj/effect/floor_decal/industrial/outline/yellow,
@@ -11993,17 +11957,13 @@
 	id_tag = "prototype_chamber_blast"
 	},
 /obj/effect/wingrille_spawn/reinforced_phoron/full,
-/turf/simulated/floor/reinforced{
-	map_airless = 1
-	},
+/turf/simulated/floor/reinforced,
 /area/vacant/prototype/engine)
 "Ek" = (
 /obj/machinery/atmospherics/pipe/simple/visible/black,
 /obj/effect/wallframe_spawn/reinforced_phoron,
 /obj/machinery/door/firedoor,
-/turf/simulated/floor/reinforced{
-	map_airless = 1
-	},
+/turf/simulated/floor/reinforced,
 /area/engineering/wastetank)
 "El" = (
 /obj/machinery/door/blast/regular{
@@ -12012,9 +11972,7 @@
 	name = "Reactor Blast Door"
 	},
 /obj/effect/wallframe_spawn/reinforced_phoron,
-/turf/simulated/floor/reinforced{
-	map_airless = 1
-	},
+/turf/simulated/floor/reinforced,
 /area/engineering/engine_room)
 "Eo" = (
 /obj/effect/floor_decal/industrial/warning/corner,
@@ -12057,9 +12015,7 @@
 	dir = 4
 	},
 /obj/machinery/meter,
-/turf/simulated/floor/reinforced{
-	map_airless = 1
-	},
+/turf/simulated/floor/reinforced,
 /area/engineering/wastetank)
 "Eu" = (
 /obj/machinery/atmospherics/unary/vent_pump/tank{
@@ -12075,9 +12031,7 @@
 	pressure_checks_default = 2;
 	pump_direction = 0
 	},
-/turf/simulated/floor/reinforced{
-	map_airless = 1
-	},
+/turf/simulated/floor/reinforced,
 /area/engineering/wastetank)
 "Ev" = (
 /obj/structure/cable/green{
@@ -12394,9 +12348,7 @@
 /obj/machinery/air_sensor{
 	id_tag = "waste_sensor"
 	},
-/turf/simulated/floor/reinforced{
-	map_airless = 1
-	},
+/turf/simulated/floor/reinforced,
 /area/engineering/wastetank)
 "Fg" = (
 /obj/effect/floor_decal/industrial/warning/corner,
@@ -12841,9 +12793,7 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/engineering/atmos)
 "Gr" = (
-/turf/simulated/floor/reinforced{
-	map_airless = 1
-	},
+/turf/simulated/floor/reinforced,
 /area/torchexterior)
 "Gs" = (
 /obj/structure/cable{
@@ -13162,9 +13112,7 @@
 /obj/effect/wallframe_spawn/reinforced_phoron,
 /obj/machinery/atmospherics/pipe/simple/visible/yellow,
 /obj/machinery/door/firedoor,
-/turf/simulated/floor/reinforced{
-	map_airless = 1
-	},
+/turf/simulated/floor/reinforced,
 /area/engineering/wastetank)
 "Hu" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -13615,15 +13563,6 @@
 /obj/structure/ladder/up,
 /turf/simulated/floor/plating,
 /area/maintenance/seconddeck/central)
-<<<<<<< ours
-"IR" = (
-/obj/structure/grille,
-/turf/simulated/floor{
-	map_airless = 1
-	},
-/area/space)
-=======
->>>>>>> theirs
 "IU" = (
 /obj/structure/cable/green{
 	d1 = 4;
@@ -13943,9 +13882,6 @@
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/maintenance/disposal)
-"JO" = (
-/turf/simulated/floor/reinforced,
-/area/space)
 "JQ" = (
 /obj/structure/table/steel,
 /obj/machinery/recharger,
@@ -14251,9 +14187,7 @@
 	},
 /obj/effect/wallframe_spawn/reinforced_phoron,
 /obj/machinery/atmospherics/pipe/simple/visible/fuel,
-/turf/simulated/floor/reinforced{
-	map_airless = 1
-	},
+/turf/simulated/floor/reinforced,
 /area/engineering/engine_room)
 "Lf" = (
 /obj/structure/disposalpipe/segment{
@@ -14287,9 +14221,7 @@
 /turf/simulated/floor/plating,
 /area/hallway/primary/seconddeck/fore)
 "Li" = (
-/turf/simulated/floor/reinforced{
-	map_airless = 1
-	},
+/turf/simulated/floor/reinforced,
 /area/vacant/prototype/engine)
 "Lj" = (
 /obj/structure/cable/yellow,
@@ -14338,9 +14270,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/engineering/atmos)
 "Ls" = (
-/turf/simulated/floor/reinforced{
-	map_airless = 1
-	},
+/turf/simulated/floor/reinforced,
 /area/space)
 "Lt" = (
 /obj/machinery/portable_atmospherics/powered/scrubber,
@@ -14934,9 +14864,7 @@
 	id = "waste_in";
 	use_power = 1
 	},
-/turf/simulated/floor/reinforced{
-	map_airless = 1
-	},
+/turf/simulated/floor/reinforced,
 /area/engineering/wastetank)
 "ND" = (
 /obj/structure/sign/warning/airlock{
@@ -15329,9 +15257,7 @@
 /area/engineering/bluespace)
 "OG" = (
 /obj/machinery/shield_diffuser,
-/turf/simulated/floor/reinforced{
-	map_airless = 1
-	},
+/turf/simulated/floor/reinforced,
 /area/engineering/wastetank)
 "OI" = (
 /obj/machinery/computer/modular/preset/engineering{
@@ -16014,9 +15940,7 @@
 "QN" = (
 /obj/effect/wallframe_spawn/reinforced_phoron,
 /obj/machinery/door/firedoor,
-/turf/simulated/floor/reinforced{
-	map_airless = 1
-	},
+/turf/simulated/floor/reinforced,
 /area/engineering/wastetank)
 "QQ" = (
 /obj/structure/cable/green{
@@ -16095,9 +16019,7 @@
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction{
 	dir = 1
 	},
-/turf/simulated/floor/reinforced{
-	map_airless = 1
-	},
+/turf/simulated/floor/reinforced,
 /area/engineering/engine_room)
 "Re" = (
 /obj/effect/floor_decal/corner/yellow{
@@ -16468,9 +16390,7 @@
 /obj/machinery/camera/network/engine{
 	c_tag = "Engine - Prototype Chamber One"
 	},
-/turf/simulated/floor/reinforced{
-	map_airless = 1
-	},
+/turf/simulated/floor/reinforced,
 /area/vacant/prototype/engine)
 "Sh" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
@@ -16516,9 +16436,7 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction,
-/turf/simulated/floor/reinforced{
-	map_airless = 1
-	},
+/turf/simulated/floor/reinforced,
 /area/engineering/engine_room)
 "Sl" = (
 /obj/machinery/cryopod{
@@ -16792,9 +16710,7 @@
 	icon_state = "pdoor0";
 	id_tag = "prototype_chamber_blast"
 	},
-/turf/simulated/floor/reinforced{
-	map_airless = 1
-	},
+/turf/simulated/floor/reinforced,
 /area/vacant/prototype/engine)
 "Tl" = (
 /obj/machinery/atmospherics/pipe/manifold/visible/yellow,
@@ -16821,9 +16737,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging,
-/turf/simulated/floor/reinforced{
-	map_airless = 1
-	},
+/turf/simulated/floor/reinforced,
 /area/engineering/engine_room)
 "Tp" = (
 /obj/structure/sign/warning/vacuum,
@@ -17097,9 +17011,7 @@
 /obj/machinery/power/supermatter,
 /obj/effect/engine_setup/core,
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging,
-/turf/simulated/floor/greengrid{
-	map_airless = 1
-	},
+/turf/simulated/floor/greengrid,
 /area/engineering/engine_room)
 "Up" = (
 /obj/machinery/atmospherics/pipe/simple/hidden{
@@ -17217,9 +17129,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/turf/simulated/floor/reinforced{
-	map_airless = 1
-	},
+/turf/simulated/floor/reinforced,
 /area/vacant/prototype/engine)
 "Vf" = (
 /obj/machinery/computer/air_control{
@@ -17238,9 +17148,7 @@
 	locked = 1
 	},
 /obj/machinery/door/firedoor,
-/turf/simulated/floor/reinforced{
-	map_airless = 1
-	},
+/turf/simulated/floor/reinforced,
 /area/vacant/prototype/engine)
 "Vh" = (
 /obj/structure/cable{
@@ -17303,9 +17211,7 @@
 /area/engineering/engine_room)
 "Vo" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging,
-/turf/simulated/floor/greengrid{
-	map_airless = 1
-	},
+/turf/simulated/floor/greengrid,
 /area/engineering/engine_room)
 "Vq" = (
 /turf/simulated/wall/r_wall/hull,
@@ -17562,9 +17468,7 @@
 	name = "Reactor Vent"
 	},
 /obj/machinery/shield_diffuser,
-/turf/simulated/floor/reinforced{
-	map_airless = 1
-	},
+/turf/simulated/floor/reinforced,
 /area/engineering/engine_room)
 "Wp" = (
 /turf/simulated/wall/r_wall/hull,
@@ -17894,9 +17798,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/simulated/floor/reinforced{
-	map_airless = 1
-	},
+/turf/simulated/floor/reinforced,
 /area/vacant/prototype/engine)
 "Xf" = (
 /obj/machinery/shield_diffuser,
@@ -17977,9 +17879,7 @@
 /obj/machinery/atmospherics/pipe/simple/visible/green{
 	dir = 4
 	},
-/turf/simulated/floor/reinforced{
-	map_airless = 1
-	},
+/turf/simulated/floor/reinforced,
 /area/engineering/engine_room)
 "Xp" = (
 /obj/machinery/atmospherics/pipe/simple/visible/green{
@@ -18090,9 +17990,7 @@
 /area/assembly/robotics)
 "XT" = (
 /obj/machinery/shield_diffuser,
-/turf/simulated/floor/reinforced{
-	map_airless = 1
-	},
+/turf/simulated/floor/reinforced,
 /area/torchexterior)
 "XU" = (
 /obj/effect/floor_decal/industrial/warning/corner,
@@ -18440,9 +18338,7 @@
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 6
 	},
-/turf/simulated/floor/reinforced{
-	map_airless = 1
-	},
+/turf/simulated/floor/reinforced,
 /area/engineering/engine_room)
 "Zi" = (
 /obj/structure/cable/yellow{
@@ -18526,9 +18422,7 @@
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 5
 	},
-/turf/simulated/floor/reinforced{
-	map_airless = 1
-	},
+/turf/simulated/floor/reinforced,
 /area/engineering/engine_room)
 "Zp" = (
 /obj/item/ammo_magazine/pistol/small/empty,
@@ -27237,11 +27131,11 @@ qw
 mc
 ue
 Se
-Li
+ky
 mg
 mg
 mg
-Li
+ky
 Se
 ue
 dj
@@ -27439,11 +27333,11 @@ qw
 Lc
 ad
 Ej
-Li
+ky
 Fg
 Xg
 Oh
-Li
+ky
 Ej
 eH
 qj
@@ -27641,11 +27535,11 @@ qw
 md
 ad
 Ej
-Li
+ky
 Gg
 eh
 Ph
-Li
+ky
 Ej
 eH
 rj
@@ -27843,11 +27737,11 @@ qw
 Lc
 ad
 Ej
-Li
+ky
 Hg
 mh
 Qh
-Li
+ky
 Ej
 eH
 qj
@@ -28046,7 +27940,7 @@ ud
 Pe
 Se
 IV
-Li
+ky
 qh
 Rh
 Na
@@ -32713,7 +32607,7 @@ Cn
 CP
 Xk
 lk
-XT
+uZ
 aa
 aa
 aa
@@ -32915,7 +32809,7 @@ Co
 CQ
 EV
 lk
-XT
+uZ
 aa
 aa
 aa
@@ -33117,7 +33011,7 @@ Cn
 CR
 Xk
 lk
-XT
+uZ
 aa
 aa
 aa
@@ -45618,13 +45512,13 @@ ij
 ij
 jh
 YL
-JO
+Ls
 aa
 aa
 Gr
 aa
 aa
-JO
+Ls
 YL
 jh
 ij
@@ -45820,13 +45714,13 @@ ik
 ik
 ji
 ik
-JO
+Ls
 ag
 ag
 Gr
 ag
 ag
-JO
+Ls
 ik
 ji
 ik
