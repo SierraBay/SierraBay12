@@ -1,5 +1,4 @@
 // It.. uses a lot of power.  Everything under power is engineering stuff, at least.
-
 /*
 /obj/machinery/computer/gravity_control_computer
 	name = "gravity generator control console"
@@ -23,7 +22,6 @@
 	var/list/localareas = list()
 	var/effectiverange = 25
 */
-
 	// Borrows code from cloning computer
 //obj/machinery/computer/gravity_control_computer/Initialize()
 //	. = ..()
