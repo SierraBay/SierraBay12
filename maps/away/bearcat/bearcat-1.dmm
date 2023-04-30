@@ -69,7 +69,9 @@
 	id_tag = "engwindow";
 	opacity = 0
 	},
-/turf/simulated/floor/airless,
+/turf/simulated/floor{
+	map_airless = 1
+	},
 /area/ship/scrap/escape_port)
 "aj" = (
 /obj/machinery/atmospherics/unary/vent_pump/high_volume/airlock{
@@ -141,7 +143,9 @@
 	id_tag = "engwindow";
 	opacity = 0
 	},
-/turf/simulated/floor/airless,
+/turf/simulated/floor{
+	map_airless = 1
+	},
 /area/ship/scrap/escape_star)
 "aq" = (
 /obj/effect/paint/brown,
@@ -152,7 +156,9 @@
 	dir = 4
 	},
 /obj/machinery/door/window/southright,
-/turf/simulated/floor/airless,
+/turf/simulated/floor{
+	map_airless = 1
+	},
 /area/ship/scrap/escape_port)
 "at" = (
 /obj/machinery/atmospherics/pipe/simple/hidden,
@@ -191,7 +197,9 @@
 	dir = 4
 	},
 /obj/machinery/door/window/southright,
-/turf/simulated/floor/airless,
+/turf/simulated/floor{
+	map_airless = 1
+	},
 /area/ship/scrap/escape_star)
 "ay" = (
 /obj/effect/paint/brown,
@@ -1275,7 +1283,9 @@
 /turf/simulated/floor,
 /area/ship/scrap/crew/dorms2)
 "cD" = (
-/turf/simulated/floor,
+/turf/simulated/floor{
+	map_airless = 1
+	},
 /area/ship/scrap/broken2)
 "cE" = (
 /obj/machinery/atmospherics/unary/vent_pump/on{
@@ -1338,7 +1348,9 @@
 /area/ship/scrap/broken1)
 "cM" = (
 /obj/structure/girder,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	map_airless = 1
+	},
 /area/ship/scrap/broken1)
 "cN" = (
 /obj/effect/paint/brown,
@@ -2665,10 +2677,12 @@
 /obj/effect/floor_decal/industrial/warning{
 	dir = 1
 	},
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/reinforced,
 /area/space)
 "kV" = (
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/scrap/gambling)
 "lQ" = (
 /obj/machinery/light_switch{
@@ -2681,7 +2695,9 @@
 /turf/simulated/wall/r_wall,
 /area/ship/scrap/broken1)
 "tc" = (
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/scrap/crew/dorms1)
 "tW" = (
 /obj/effect/floor_decal/industrial/warning{
@@ -2735,7 +2751,9 @@
 /turf/simulated/wall/r_wall,
 /area/ship/scrap/maintenance/eva)
 "En" = (
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/scrap/crew/dorms3)
 "EP" = (
 /obj/machinery/door/airlock/autoname/bearcat,
@@ -2753,7 +2771,9 @@
 /turf/simulated/floor,
 /area/ship/scrap/cargo/lower)
 "Gr" = (
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/scrap/crew/dorms2)
 "GU" = (
 /obj/effect/paint/brown,
@@ -2797,7 +2817,9 @@
 /turf/simulated/wall/r_wall,
 /area/ship/scrap/maintenance/storage)
 "Ul" = (
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/scrap/maintenance/storage)
 "UZ" = (
 /obj/effect/paint/brown,
