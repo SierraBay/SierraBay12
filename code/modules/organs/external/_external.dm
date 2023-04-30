@@ -477,7 +477,7 @@ This function completely restores a damaged organ to perfect condition.
 		var/internal_damage
 		if(prob(damage) && sever_artery())
 			internal_damage = TRUE
-		if(prob(Ceil(damage/4)) && sever_tendon())
+		if(prob(ceil(damage/4)) && sever_tendon())
 			internal_damage = TRUE
 		if(internal_damage)
 			owner.custom_pain("You feel something rip in your [name]!", 50, affecting = src)
@@ -864,6 +864,13 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if(!clean)
 		victim.shock_stage += min_broken_damage
 
+	// Handle any internal organ removal before removing the limb itself
+	if (disintegrate == DROPLIMB_BLUNT || disintegrate == DROPLIMB_BURN)
+		for(var/obj/item/organ/I in internal_organs)
+			I.removed()
+			if(!QDELETED(I) && isturf(I.loc))
+				I.throw_at(get_edge_target_turf(src,pick(GLOB.alldirs)),rand(1,3),5)
+
 	removed(null, ignore_children)
 	if(QDELETED(src))
 		return
@@ -919,11 +926,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 					G.update_icon()
 
 			gore.throw_at(get_edge_target_turf(src,pick(GLOB.alldirs)),rand(1,3),5)
-
-			for(var/obj/item/organ/I in internal_organs)
-				I.removed()
-				if(!QDELETED(I) && isturf(loc))
-					I.throw_at(get_edge_target_turf(src,pick(GLOB.alldirs)),rand(1,3),5)
 
 			for(var/obj/item/I in src)
 				I.dropInto(loc)
