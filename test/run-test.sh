@@ -126,11 +126,10 @@ function need_cmd {
 }
 
 function run_test {
-    group_msg "running \"$1\""
+    msg "running \"$1\""
     name=$1
     shift
     exec_test "$*"
-    end_group
     ret=$?
     if [[ ret -ne 0 ]]
     then fail "$name" $ret
