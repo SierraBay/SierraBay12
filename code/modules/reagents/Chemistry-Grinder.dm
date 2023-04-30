@@ -87,7 +87,7 @@
 				for (var/chem in M.chem_products)
 					sheet_volume += M.chem_products[chem] * skill_multiplier
 				var/obj/item/stack/material/S = I
-				var/used_sheets = min(Ceil((container.reagents.maximum_volume - container.reagents.total_volume) / sheet_volume), S.get_amount())
+				var/used_sheets = min(ceil((container.reagents.maximum_volume - container.reagents.total_volume) / sheet_volume), S.get_amount())
 				var/used_all = used_sheets == S.get_amount()
 				S.use(used_sheets)
 				for (var/chem in M.chem_products)
@@ -260,6 +260,7 @@
 	icon_state = "juicer"
 	density = FALSE
 	anchored = FALSE
+	obj_flags = OBJ_FLAG_ANCHORABLE | OBJ_FLAG_CAN_TABLE
 	grind_sound = 'sound/machines/juicer.ogg'
 	max_item_size = ITEM_SIZE_NORMAL
 	skill = SKILL_COOKING
