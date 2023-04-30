@@ -126,10 +126,11 @@ function need_cmd {
 }
 
 function run_test {
-    msg "running \"$1\""
+    group_msg "running \"$1\""
     name=$1
     shift
     exec_test "$*"
+    end_group
     ret=$?
     if [[ ret -ne 0 ]]
     then fail "$name" $ret
@@ -138,10 +139,11 @@ function run_test {
 }
 
 function run_test_fail {
-    msg "running(fail) \"$1\""
+    group_msg "running(fail) \"$1\""
     name=$1
     shift
     exec_test "$*"
+    end_group
     ret=$?
     if [[ ret -eq 0 ]]
     then fail "$name" $ret
