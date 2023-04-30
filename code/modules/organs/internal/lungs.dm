@@ -251,40 +251,28 @@
 			else if (breath.temperature < species.cold_level_2)
 				breath_damage = COLD_GAS_DAMAGE_LEVEL_2
 			else
-<<<<<<< ours
-				src.damage += damage
-			owner.throw_alert("temp", /obj/screen/alert/cold, 3)
-		else if(breath.temperature >= species.heat_level_1)
-			if(prob(20))
-=======
 				breath_damage = COLD_GAS_DAMAGE_LEVEL_1
 			if (prob(20))
 				owner.apply_damage(breath_damage, DAMAGE_BURN, BP_HEAD, used_weapon = "Excessive Cold")
 			else
 				damage += breath_damage
-			owner.fire_alert = 1
+			// owner.fire_alert = 1 // BAY
+			owner.throw_alert("temp", /obj/screen/alert/cold, 3) // SIERRA
 		else if (breath.temperature > species.heat_level_1)
 			if (prob(20))
->>>>>>> theirs
 				to_chat(owner, SPAN_DANGER("You feel your face burning and a searing heat in your lungs!"))
 			if (breath.temperature > species.heat_level_3)
 				breath_damage = HEAT_GAS_DAMAGE_LEVEL_3
 			else if (breath.temperature > species.heat_level_2)
 				breath_damage = HEAT_GAS_DAMAGE_LEVEL_2
 			else
-<<<<<<< ours
-				src.damage += damage
-			owner.throw_alert("temp", /obj/screen/alert/hot, 3)
-
-		//breathing in hot/cold air also heats/cools you a bit
-=======
 				breath_damage = HEAT_GAS_DAMAGE_LEVEL_1
 			if (prob(20))
 				owner.apply_damage(breath_damage, DAMAGE_BURN, BP_HEAD, used_weapon = "Excessive Heat")
 			else
 				damage += breath_damage
-			owner.fire_alert = 2
->>>>>>> theirs
+			// owner.fire_alert = 2 // BAY
+			owner.throw_alert("temp", /obj/screen/alert/hot, 3) // SIERRA
 		var/temp_adj = breath.temperature - owner.bodytemperature
 		if (temp_adj)
 			if (temp_adj < 0)
