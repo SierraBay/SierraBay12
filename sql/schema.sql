@@ -82,3 +82,72 @@ CREATE TABLE IF NOT EXISTS `whitelist` (
   KEY `ckey` (`ckey`(768)),
   KEY `race` (`race`(768))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+
+/*
+  SBay additions
+*/
+CREATE TABLE IF NOT EXISTS `erro_admin_tickets` (
+  `id` int(11) AUTO_INCREMENT,
+  `assignee` text DEFAULT NULL,
+  `ckey` varchar(32) NOT NULL,
+  `text` text DEFAULT NULL,
+  `status` enum('OPEN','CLOSED','SOLVED','TIMED_OUT') NOT NULL,
+  `round` varchar(32),
+  `inround_id` int(11),
+  `open_date` date,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+CREATE TABLE IF NOT EXISTS `erro_connection_log`
+(
+	`id` INT(11) NOT NULL AUTO_INCREMENT,
+	`datetime` DATETIME DEFAULT now() NOT NULL,
+	`server_ip` VARCHAR(32) NOT NULL,
+	`server_port` INT(5) UNSIGNED NOT NULL,
+	`ckey` VARCHAR(32) NOT NULL,
+	`ip` VARCHAR(32) NOT NULL,
+	`computerid` VARCHAR(32) NOT NULL,
+	PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+CREATE TABLE IF NOT EXISTS `ckey_whitelist`
+(
+	`id` INT(11) NOT NULL AUTO_INCREMENT,
+	`date` DATETIME DEFAULT now() NOT NULL,
+	`ckey` VARCHAR(32) NOT NULL,
+	`adminwho` VARCHAR(32) NOT NULL,
+	`port` INT(5) UNSIGNED NOT NULL,
+	`date_start` DATETIME DEFAULT now() NOT NULL,
+	`date_end` DATETIME NULL,
+	`is_valid` BOOLEAN DEFAULT true NOT NULL,
+	PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+ALTER TABLE `erro_player` ADD `discord_id` varchar(32) DEFAULT NULL AFTER `staffwarn`;
+ALTER TABLE `erro_player` ADD `discord_name` varchar(32) DEFAULT NULL AFTER `discord_id`;
+
+ALTER TABLE `erro_player` ADD `exp` text DEFAULT NULL AFTER `discord_name`;
+ALTER TABLE `erro_player` ADD `species_exp` text DEFAULT NULL AFTER `exp`;
+
+CREATE TABLE IF NOT EXISTS `erro_playtime_history` (
+  `ckey` VARCHAR(32) NOT NULL,
+  `date` DATE NOT NULL,
+  `time_living` INT(32) NOT NULL DEFAULT '0',
+  `time_ghost` INT(32) NOT NULL DEFAULT '0',
+  CONSTRAINT PRIMARY KEY (ckey, date)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS `budget`
+(
+	`id` int(11) NOT NULL AUTO_INCREMENT,
+	`date` datetime DEFAULT now() NOT NULL,
+	`ckey` varchar(32) NOT NULL,
+	`amount` int(10) UNSIGNED NOT NULL,
+	`source` varchar(32) NOT NULL,
+	`date_start` datetime DEFAULT now() NOT NULL,
+	`date_end` datetime DEFAULT (now() + INTERVAL 1 MONTH),
+	`is_valid` boolean DEFAULT true NOT NULL,
+	PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
