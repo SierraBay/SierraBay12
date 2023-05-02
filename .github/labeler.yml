@@ -26,5 +26,5 @@
 ':page_facing_up: Конфиги':
 - config/example/**/*
 
-Database:
+':floppy_disk: База данных':
 - sql/**/*
