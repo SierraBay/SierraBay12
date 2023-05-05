@@ -85,7 +85,7 @@
 		overlays += get_screen_overlay()
 
 	overlays += get_keyboard_overlay()
-	var/screen_is_glowing = update_glow()
+	var/screen_is_glowing = operable()
 	if(screen_is_glowing)
 		overlays += emissive_appearance(icon, icon_screen)
 		if(icon_keyboard)
@@ -102,18 +102,6 @@
 	// Adds line breaks
 	text = replacetext(text, "\n", "<BR>")
 	return text
-
-/**
- * Makes the computer emit light if the screen is on.
- * Returns TRUE if the screen is on, otherwise FALSE.
- */
-/obj/machinery/computer/proc/update_glow()
-	if (operable())
-		set_light(light_max_bright_on, light_inner_range_on, light_outer_range_on, 2, light_color)
-		return TRUE
-	else
-		set_light(0)
-		return FALSE
 
 /obj/machinery/computer/dismantle(mob/user)
 	if(MACHINE_IS_BROKEN(src))
