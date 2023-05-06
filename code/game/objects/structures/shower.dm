@@ -21,16 +21,13 @@
 	var/watertemp = SHOWER_NORMAL	///can be freezing, normal, or boiling
 	var/is_washing = FALSE
 	var/list/temperature_settings = list( SHOWER_FREEZING = T0C, SHOWER_NORMAL = 310, SHOWER_BOILING = T0C+100,)
-	var/datum/composite_sound/shower/soundloop
 
 /obj/structure/hygiene/shower/Initialize()
 	. = ..()
 	create_reagents(50)
-	soundloop = new(list(src), FALSE)
 	shower_water = image(icon, src, "water", ABOVE_HUMAN_LAYER, dir)
 
 /obj/structure/hygiene/shower/Destroy()
-	QDEL_NULL(soundloop)
 	QDEL_NULL(reagents)
 	QDEL_NULL(mist)
 	. = ..()
@@ -42,14 +39,11 @@
 	update_icon()
 	handle_mist()
 	if(on)
-		soundloop.start()
 		if (M.loc == loc)
 			wash(M)
 			process_heat(M)
 		for (var/atom/movable/G in src.loc)
 			G.clean_blood()
-	else
-		soundloop.stop()
 
 /obj/structure/hygiene/shower/use_tool(obj/item/tool, mob/user, list/click_params)
 	// Gas Scanner - Fetch temperature
@@ -164,16 +158,6 @@
 	layer = ABOVE_HUMAN_LAYER
 	anchored = TRUE
 	mouse_opacity = MOUSE_OPACITY_UNCLICKABLE
-
-
-/datum/composite_sound/shower
-	start_sound = 'sound/effects/shower/shower_start.ogg'
-	start_length = 2
-	mid_sounds = list('sound/effects/shower/shower_mid1.ogg' = 1, 'sound/effects/shower/shower_mid2.ogg' = 1, 'sound/effects/shower/shower_mid3.ogg' = 1)
-	mid_length = 10
-	end_sound = 'sound/effects/shower/shower_end.ogg'
-	volume = 10
-
 
 #undef SHOWER_FREEZING
 #undef SHOWER_NORMAL
