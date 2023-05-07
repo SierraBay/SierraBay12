@@ -123,6 +123,7 @@
 	if (!.)
 		return
 	if (!anchored)
+<<<<<<< ours
 		// Plating
 		var/turf/turf = get_turf(src)
 		if (!turf.is_plating())
@@ -142,6 +143,8 @@
 					USE_FEEDBACK_FAILURE("\The [catwalk] is blocking access to the floor.")
 				return FALSE
 
+=======
+>>>>>>> theirs
 		var/obj/structure/disposalpipe/connected_pipe = locate() in get_turf(src)
 		if (!check_buildability(connected_pipe, user))
 			return FALSE
@@ -171,7 +174,11 @@
 			SPAN_NOTICE("You start welding \the [src] down with \the [tool]."),
 			SPAN_ITALIC("You hear welding.")
 		)
+<<<<<<< ours
 		if (!user.do_skilled(2 SECONDS, SKILL_CONSTRUCTION, src, do_flags = DO_REPAIR_CONSTRUCT) || !user.use_sanity_check(src, tool) || !welder.remove_fuel(1, user))
+=======
+		if (!do_after(user, 2 SECONDS, src, DO_REPAIR_CONSTRUCT) || !user.use_sanity_check(src, tool) || !welder.remove_fuel(1, user))
+>>>>>>> theirs
 			return TRUE
 		playsound(src, 'sound/items/Welder2.ogg', 50, TRUE)
 		user.visible_message(

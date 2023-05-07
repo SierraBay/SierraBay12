@@ -14,7 +14,10 @@
 	update_icon()
 
 
+<<<<<<< ours
 
+=======
+>>>>>>> theirs
 /obj/structure/coatrack/use_tool(obj/item/tool, mob/user, list/click_params)
 	// Anything - Attempt to hang item
 	if (is_type_in_list(tool, allowed))

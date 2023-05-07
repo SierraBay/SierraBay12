@@ -134,6 +134,12 @@ LINEN BINS
 /obj/structure/bedsheetbin/use_tool(obj/item/tool, mob/user, list/click_params)
 	SHOULD_CALL_PARENT(FALSE)
 
+<<<<<<< ours
+=======
+/obj/structure/bedsheetbin/use_tool(obj/item/tool, mob/user, list/click_params)
+	SHOULD_CALL_PARENT(FALSE)
+
+>>>>>>> theirs
 	// Bed sheet - Add to bin
 	if (istype(tool, /obj/item/bedsheet))
 		if (!user.unEquip(tool, src))

@@ -361,7 +361,11 @@
 			SPAN_NOTICE("\The [user] starts slicing \the [src] apart with \a [tool]."),
 			SPAN_NOTICE("You start slicing \the [src] apart with \the [tool].")
 		)
+<<<<<<< ours
 		if (!user.do_skilled(2 SECONDS, SKILL_CONSTRUCTION, src, do_flags = DO_REPAIR_CONSTRUCT) || !user.use_sanity_check(src, tool))
+=======
+		if (!do_after(user, 2 SECONDS, src, DO_PUBLIC_UNIQUE) || !user.use_sanity_check(src, tool))
+>>>>>>> theirs
 			return TRUE
 		playsound(src, 'sound/items/Welder.ogg', 50, TRUE)
 		user.visible_message(
@@ -370,6 +374,7 @@
 		)
 		dismantle()
 		return TRUE
+<<<<<<< ours
 
 	// Screwdriver - Fasten window
 	if (isScrewdriver(tool))
@@ -404,6 +409,42 @@
 		)
 		return TRUE
 
+=======
+
+	// Screwdriver - Fasten window
+	if (isScrewdriver(tool))
+		// Reinforced Window
+		if (reinf_material)
+			if (construction_state == 0)
+				if (!can_install_here(user))
+					return TRUE
+				set_anchored(!anchored)
+				playsound(src, 'sound/items/Screwdriver.ogg', 50, TRUE)
+				user.visible_message(
+					SPAN_NOTICE("\The [user] fastens \the [src]'s frame to the floor with \a [tool]."),
+					SPAN_NOTICE("You fasten \the [src]'s frame to the floor with \the [tool].")
+				)
+				return TRUE
+			construction_state = 3 - construction_state
+			update_nearby_icons()
+			playsound(src, 'sound/items/Screwdriver.ogg', 50, TRUE)
+			user.visible_message(
+				SPAN_NOTICE("\The [user] [construction_state == 1 ? "un" : null]fastens \the [src] [construction_state == 1 ? "from" : "to"] its frame with \a [tool]."),
+				SPAN_NOTICE("You [construction_state == 1 ? "un" : null]fasten \the [src] [construction_state == 1 ? "from" : "to"] its frame with \the [tool].")
+			)
+			return TRUE
+		// Regular Windows
+		if (!anchored && !can_install_here(user))
+			return TRUE
+		set_anchored(!anchored)
+		playsound(src, 'sound/items/Screwdriver.ogg', 50, TRUE)
+		user.visible_message(
+			SPAN_NOTICE("\The [user] fastens \the [src] to the floor with \a [tool]."),
+			SPAN_NOTICE("You fasten \the [src] to the floor with \the [tool].")
+		)
+		return TRUE
+
+>>>>>>> theirs
 	// Wirecutters - Remove wiring
 	if (isWirecutter(tool))
 		if (!polarized)

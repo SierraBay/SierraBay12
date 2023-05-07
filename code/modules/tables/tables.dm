@@ -144,7 +144,11 @@
 	// Material - Plate table
 	if (istype(weapon, /obj/item/stack/material))
 		if (material)
+<<<<<<< ours
 			reinforce_table(weapon, user)
+=======
+			USE_FEEDBACK_FAILURE("\The [src] is already plated.")
+>>>>>>> theirs
 			return TRUE
 		material = common_material_add(weapon, user, "plat")
 		if (material)
@@ -167,7 +171,11 @@
 			SPAN_NOTICE("\The [user] starts repairing \the [src] with \a [weapon]."),
 			SPAN_NOTICE("You start repairing \the [src] with \the [weapon].")
 		)
+<<<<<<< ours
 		if (!user.do_skilled(2 SECONDS, SKILL_CONSTRUCTION, src, do_flags = DO_REPAIR_CONSTRUCT) || !user.use_sanity_check(src, weapon) || !welder.remove_fuel(1))
+=======
+		if (!do_after(user, 2 SECONDS, src, DO_REPAIR_CONSTRUCT) || !user.use_sanity_check(src, weapon) || !welder.remove_fuel(1))
+>>>>>>> theirs
 			return TRUE
 		playsound(src, 'sound/items/Welder.ogg', 50, TRUE)
 		restore_health(get_max_health() / 5) // 20% repair per application
@@ -180,7 +188,11 @@
 	// Wrench - Remove material
 	if (isWrench(weapon))
 		if (!material)
+<<<<<<< ours
 			dismantle(weapon, user)
+=======
+			USE_FEEDBACK_FAILURE("\The [src] has no plating to remove.")
+>>>>>>> theirs
 			return TRUE
 		if (reinforced)
 			USE_FEEDBACK_FAILURE("\The [src]'s reinforcements need to be removed before you can remove the plating.")
@@ -209,6 +221,7 @@
 			update_icon()
 			update_material()
 		return TRUE
+<<<<<<< ours
 
 	return ..()
 
@@ -229,6 +242,22 @@
 		playsound(tool.loc, tool.drop_sound, 25)
 	// [/SIERRA]
 
+=======
+
+	return ..()
+
+
+/obj/structure/table/use_tool(obj/item/tool, mob/user, list/click_params)
+	SHOULD_CALL_PARENT(FALSE)
+
+	// Put things on table
+	if (can_plate && !material)
+		USE_FEEDBACK_FAILURE("\The [src] needs to be plated before you can put \the [tool] on it.")
+		return TRUE
+	if (!user.unEquip(tool, loc))
+		FEEDBACK_UNEQUIP_FAILURE(user, tool)
+		return TRUE
+>>>>>>> theirs
 	auto_align(tool, click_params)
 	return TRUE
 

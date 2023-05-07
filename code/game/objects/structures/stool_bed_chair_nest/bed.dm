@@ -10,8 +10,11 @@
 	var/material/padding_material
 	var/base_icon = "bed"
 	var/material_alteration = MATERIAL_ALTERATION_ALL
+<<<<<<< ours
 	var/cache_key
 	var/padding_cache_key
+=======
+>>>>>>> theirs
 	/// Bitflags. Bed/chair specific flags.
 	var/bed_flags = EMPTY_BITFIELD
 
