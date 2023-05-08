@@ -69,26 +69,20 @@
 	jukebox.ui_interact(user)
 	return TRUE
 
-/obj/machinery/jukebox/custom_tape/attackby(obj/item/I, mob/user)
-	if (isWrench(I))
-		add_fingerprint(user)
-		wrench_floor_bolts(user, 0)
-		power_change()
-		return
-
-	if(istype(I, /obj/item/music_tape))
-		var/obj/item/music_tape/D = I
+/obj/machinery/jukebox/custom_tape/use_tool(obj/item/tool, mob/user, list/click_params)
+	if(istype(tool, /obj/item/music_tape))
+		var/obj/item/music_tape/D = tool
 		if(tape)
 			to_chat(user, "<span class='notice'>There is already \a [tape] inside.</span>")
-			return
+			return TRUE
 
 		if(D.ruined)
 			to_chat(user, "<span class='warning'>\The [D] is ruined, you can't use it.</span>")
-			return
+			return TRUE
 
 		if(!D.track)
 			to_chat(user, "<span class='warning'>There is no music recorded on \a [D].</span>")
-			return
+			return TRUE
 
 		if(user.drop_item())
 			visible_message("<span class='notice'>[usr] insert \a [tape] into \the [src].</span>")
@@ -97,7 +91,7 @@
 			tape = D
 			jukebox.tracks += tape.track
 			verbs += /obj/machinery/jukebox/custom_tape/verb/eject
-			return
+			return TRUE
 
 	return ..()
 
