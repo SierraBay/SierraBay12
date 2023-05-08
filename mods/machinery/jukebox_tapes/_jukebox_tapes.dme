@@ -5,6 +5,5 @@
 
 #include "audio\jukebox.dm"
 #include "machinery\jukebox.dm"
-#include "templates\jukebox.tmpl"
 
 #endif
