@@ -159,6 +159,7 @@
 	#include "../../mods/maps/sentinel/_map_sentinel.dme"
 	#include "../../mods/skills/bureaucracy/legalese_language/_legalese.dme"
 	#include "../../mods/maps/farfleet/_map_farfleet.dme"
+	#include "../../mods/machinery/jukebox_tapes/_jukebox_tapes.dme"
 
 	// UNUSED MODS
 	// #include "../../mods/_events/mortar/_mortar.dme"
