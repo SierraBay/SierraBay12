@@ -15,14 +15,15 @@
 // Gamemodes
 #include "gamemodes\revolutionary.dm"
 
+// Machinery
+#include "machinery\NTNet\NTNet-core.dm"
+#include "machinery\recharger.dm"
+
 // Mob
 #include "mob\say.dm"
 #include "mob\stat.dm"
 #include "mob\emotes.dm"
 #include "mob\bodyfall_sound.dm"
-
-// NTNet
-#include "machinery\NTNet\NTNet-core.dm"
 
 // Objects
 #include "objects\buckling.dm"
