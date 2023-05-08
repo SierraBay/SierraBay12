@@ -17,7 +17,6 @@
 
 // Machinery
 #include "machinery\NTNet\NTNet-core.dm"
-#include "machinery\recharger.dm"
 
 // Mob
 #include "mob\say.dm"
