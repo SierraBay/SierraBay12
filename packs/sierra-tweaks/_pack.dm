@@ -15,15 +15,14 @@
 // Gamemodes
 #include "gamemodes\revolutionary.dm"
 
-// Machinery
-#include "machinery\NTNet\NTNet-core.dm"
-#include "machinery\recharger.dm"
-
 // Mob
 #include "mob\say.dm"
 #include "mob\stat.dm"
 #include "mob\emotes.dm"
 #include "mob\bodyfall_sound.dm"
+
+// NTNet
+#include "machinery\NTNet\NTNet-core.dm"
 
 // Objects
 #include "objects\buckling.dm"
@@ -32,6 +31,7 @@
 #include "objects\machines\disposal.dm"
 #include "objects\machines\floor_light.dm"
 #include "objects\machines\machinery.dm"
+#include "objects\machines\recharger.dm"
 #include "objects\structures\cargo.dm"
 #include "objects\structures\extinguisher_cabinet.dm"
 #include "objects\structures\shotgun_rack.dm"
