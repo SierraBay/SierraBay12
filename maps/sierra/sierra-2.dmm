@@ -13101,7 +13101,7 @@
 	pixel_y = -6;
 	req_access = list("ACCESS_BAR")
 	},
-/obj/machinery/jukebox/old/custom_tape,
+/obj/machinery/jukebox/custom_tape/old,
 /obj/machinery/light/led/small,
 /turf/simulated/floor/wood/ebony,
 /area/crew_quarters/bar)
