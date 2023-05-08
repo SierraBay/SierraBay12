@@ -21,7 +21,7 @@
 
 		tape = null
 		visible_message(SPAN_NOTICE("[usr] eject \a [tape] from \the [src]."))
-		verbs -= /obj/machinery/jukebox/verb/eject
+		verbs -= /obj/machinery/jukebox/custom_tape/verb/eject
 		playsound(src, 'mods/machinery/jukebox_tapes/tape_eject.ogg', 40)
 		jukebox.ui_interact(usr)
 
@@ -96,7 +96,7 @@
 			playsound(loc, 'mods/machinery/jukebox_tapes/tape_insert.ogg', 40)
 			tape = D
 			jukebox.tracks += tape.track
-			verbs += /obj/machinery/jukebox/verb/eject
+			verbs += /obj/machinery/jukebox/custom_tape/verb/eject
 			return
 
 	return ..()
