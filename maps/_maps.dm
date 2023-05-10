@@ -1,3 +1,5 @@
+#include "_map_include.dm"
+
 #include "mapsystem\map_preferences.dm"
 #include "mapsystem\map_ranks.dm"
 #include "mapsystem\maps.dm"

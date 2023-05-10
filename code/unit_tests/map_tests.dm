@@ -242,6 +242,15 @@
 /datum/unit_test/map_image_map_test/start_test()
 	var/failed = FALSE
 
+	log_unit_test("GLOB.using_map.map_levels")
+	log_unit_test(GLOB.using_map.name)
+	log_unit_test(GLOB.using_map.station_name)
+	log_unit_test(GLOB.using_map.boss_name)
+	for (var/i = 1 to length(GLOB.using_map.map_levels))
+		log_unit_test(GLOB.using_map.map_levels[i])
+	for (var/i = 1 to length(GLOB.using_map.station_levels))
+		log_unit_test(GLOB.using_map.station_levels[i])
+
 	for (var/i = 1 to length(GLOB.using_map.map_levels))
 		var/file_name = map_image_file_name(i)
 		var/file_path = MAP_IMAGE_PATH + file_name
