@@ -76,7 +76,11 @@ Torch specific items
 /obj/item/storage/backpack/messenger/explorer
 	name = "explorer messenger bag"
 	desc = "A rugged backpack worn over one shoulder."
+<<<<<<< ours
 	icon_state = "courierbagexp"
+=======
+	icon_state = "courierbagsci"
+>>>>>>> theirs
 
 /***********
 Unique items
