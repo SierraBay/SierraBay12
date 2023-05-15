@@ -29,11 +29,7 @@
 			SPAN_NOTICE("\The [user] begins screwing \the [src]'s lid [locked ? "open" : "shut"] with \a [tool]."),
 			SPAN_NOTICE("You begin screwing \the [src]'s lid [locked ? "open" : "shut"] with \the [tool].")
 		)
-<<<<<<< ours
 		if (!user.do_skilled(screwdriver_time_needed, SKILL_CONSTRUCTION, src, do_flags = DO_REPAIR_CONSTRUCT) || !user.use_sanity_check(src, tool))
-=======
-		if (!do_after(user, screwdriver_time_needed, src, DO_REPAIR_CONSTRUCT) || !user.use_sanity_check(src, tool))
->>>>>>> theirs
 			return TRUE
 		if (opened)
 			USE_FEEDBACK_FAILURE("\The [src] needs to be closed before you can screw the lid shut.")

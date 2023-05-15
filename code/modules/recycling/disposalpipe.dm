@@ -198,7 +198,6 @@
 	broken(prob(0.5))
 
 
-<<<<<<< ours
 /obj/structure/disposalpipe/can_anchor(obj/item/tool, mob/user, silent)
 	. = ..()
 	if (!.)
@@ -245,28 +244,6 @@
 		)
 		return TRUE
 
-=======
-/obj/structure/disposalpipe/use_tool(obj/item/tool, mob/user, list/click_params)
-	// Welding Tool - Cut pipe
-	if (isWelder(tool))
-		var/obj/item/weldingtool/welder = tool
-		if (!welder.can_use(1, user, "to slice \the [src]."))
-			return TRUE
-		playsound(src, 'sound/items/Welder2.ogg', 50, TRUE)
-		user.visible_message(
-			SPAN_NOTICE("\The [user] starts slicing \the [src] with \a [tool]."),
-			SPAN_NOTICE("You start slicing \the [src] with \the [tool].")
-		)
-		if (!do_after(user, 3 SECONDS, src, DO_REPAIR_CONSTRUCT) || !user.use_sanity_check(src, tool) || !welder.remove_fuel(1, user))
-			return TRUE
-		welded()
-		user.visible_message(
-			SPAN_NOTICE("\The [user] slices \the [src] with \a [tool]."),
-			SPAN_NOTICE("You slice \the [src] with \the [tool].")
-		)
-		return TRUE
-
->>>>>>> theirs
 	return ..()
 
 

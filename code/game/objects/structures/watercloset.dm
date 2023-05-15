@@ -250,25 +250,6 @@
 	density = FALSE
 	anchored = TRUE
 
-<<<<<<< ours
-
-/obj/structure/hygiene/urinal/use_grab(obj/item/grab/grab, list/click_params)
-	// Harm intent - Slam into urinal
-	if (grab.assailant.a_intent == I_HURT)
-		if (!Adjacent(grab.affecting))
-			USE_FEEDBACK_GRAB_FAILURE("\The [grab.affecting] must be next \the [src] to bash them with it.")
-			return TRUE
-		grab.assailant.setClickCooldown(grab.assailant.get_attack_speed(grab))
-		grab.affecting.adjustBruteLoss(8)
-		playsound(src, 'sound/weapons/tablehit1.ogg', 50, TRUE)
-		grab.assailant.visible_message(
-			SPAN_WARNING("\The [grab.assailant] slams \the [grab.affecting] into \the [src]!"),
-			SPAN_DANGER("You slam \the [grab.affecting] into \the [src]!"),
-			exclude_mobs = list(grab.affecting)
-		)
-		to_chat(grab.affecting, SPAN_DANGER("\The [grab.assailant] slams you into \the [src]!"))
-		return TRUE
-=======
 
 /obj/structure/hygiene/urinal/use_grab(obj/item/grab/grab, list/click_params)
 	// Harm intent - Slam into urinal
@@ -429,10 +410,17 @@
 
 /obj/structure/hygiene/shower/proc/process_heat(mob/living/M)
 	if(!on || !istype(M)) return
->>>>>>> theirs
 
-	return ..()
+	var/water_temperature = temperature_settings[watertemp]
+	var/temp_adj = clamp(water_temperature - M.bodytemperature, BODYTEMP_COOLING_MAX, BODYTEMP_HEATING_MAX)
+	M.bodytemperature += temp_adj
 
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(water_temperature >= H.species.heat_level_1)
+			to_chat(H, SPAN_DANGER("The water is searing hot!"))
+		else if(water_temperature <= H.species.cold_level_1)
+			to_chat(H, SPAN_WARNING("The water is freezing cold!"))
 
 /obj/item/bikehorn/rubberducky
 	name = "rubber ducky"

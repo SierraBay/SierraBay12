@@ -35,9 +35,6 @@
 /obj/structure/closet/crate/use_tool(obj/item/tool, mob/user, list/click_params)
 	// Below interactions only apply if the crate is closed
 	if (opened)
-<<<<<<< ours
-		return ..()
-=======
 		return TRUE
 
 	// Assembly - Attach to rigged crate
@@ -86,7 +83,6 @@
 
 	return ..()
 
->>>>>>> theirs
 
 	// Assembly - Attach to rigged crate
 	if (istype(tool, /obj/item/device/assembly_holder) || istype(tool, /obj/item/device/assembly))

@@ -353,14 +353,9 @@
 	buckle_movable = FALSE
 	bed_flags = BED_FLAG_CANNOT_BE_PADDED
 
-<<<<<<< ours
 /obj/structure/bed/chair/wood/New(newloc, _material)
 	..(newloc, _material? _material : chair_material)
 	set_color(material.icon_colour)
-=======
-/obj/structure/bed/chair/wood/New(newloc)
-	..(newloc, chair_material)
->>>>>>> theirs
 
 /obj/structure/bed/chair/wood/mahogany
 	color = WOOD_COLOR_RICH

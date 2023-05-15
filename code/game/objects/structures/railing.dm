@@ -240,11 +240,7 @@
 			SPAN_NOTICE("\The [user] starts repairing \the [src] with \a [tool]."),
 			SPAN_NOTICE("You start repairing \the [src] with \the [tool].")
 		)
-<<<<<<< ours
 		if (!user.do_skilled(2 SECONDS, SKILL_CONSTRUCTION, src, do_flags = DO_REPAIR_CONSTRUCT) || !user.use_sanity_check(src, tool))
-=======
-		if (!do_after(user, 2 SECONDS, src, DO_REPAIR_CONSTRUCT) || !user.use_sanity_check(src, tool))
->>>>>>> theirs
 			return TRUE
 		if (!health_damaged())
 			USE_FEEDBACK_FAILURE("\The [src] doesn't require repairs.")
@@ -265,10 +261,7 @@
 		if (anchored)
 			playsound(src, 'sound/items/Ratchet.ogg', 50, TRUE)
 			set_density(!density)
-<<<<<<< ours
 			update_icon()
-=======
->>>>>>> theirs
 			user.visible_message(
 				SPAN_NOTICE("\The [user] [density ? "closes" : "opens"] \the [src] with \a [tool]."),
 				SPAN_NOTICE("You [density ? "close" : "open"] \the [src] with \the [tool].")
@@ -280,11 +273,7 @@
 			SPAN_NOTICE("\The [user] starts dismantling \the [src] with \a [tool]."),
 			SPAN_NOTICE("You start dismantling \the [src] with \the [tool].")
 		)
-<<<<<<< ours
 		if (!user.do_skilled(2 SECONDS, SKILL_CONSTRUCTION, src, do_flags = DO_REPAIR_CONSTRUCT) || !user.use_sanity_check(src, tool))
-=======
-		if (!do_after(user, 2 SECONDS, src, DO_REPAIR_CONSTRUCT) || !user.use_sanity_check(src, tool))
->>>>>>> theirs
 			return TRUE
 		if (anchored)
 			USE_FEEDBACK_FAILURE("\The [src]'s state has changed.")
@@ -309,11 +298,7 @@
 			SPAN_NOTICE("\The [user] starts [anchored ? "un" : null]fastening \the [src] [anchored ? "from" : "to"] the floor with \a [tool]."),
 			SPAN_NOTICE("You start [anchored ? "un" : null]fastening \the [src] [anchored ? "from" : "to"] the floor with \the [tool].")
 		)
-<<<<<<< ours
 		if (!user.do_skilled(1 SECONDS, SKILL_CONSTRUCTION, src, do_flags = DO_REPAIR_CONSTRUCT) || !user.use_sanity_check(src, tool))
-=======
-		if (!do_after(user, 1 SECOND, src, DO_REPAIR_CONSTRUCT) || !user.use_sanity_check(src, tool))
->>>>>>> theirs
 			return TRUE
 		if (!density)
 			USE_FEEDBACK_FAILURE("\The [src] needs to be closed before you can unanchor it.")

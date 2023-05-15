@@ -149,14 +149,11 @@
 	dir = 5
 	icon_state = "window_full"
 
-<<<<<<< ours
-=======
 /obj/structure/window/holowindow/full/Destroy()
 	..()
 
 /obj/structure/window/reinforced/holowindow/Destroy()
 	..()
->>>>>>> theirs
 
 /obj/structure/window/reinforced/holowindow/shatter(display_message = 1)
 	playsound(src, "shatter", 70, 1)

@@ -48,11 +48,7 @@
 			SPAN_NOTICE("\The [user] starts wiring \the [src] with [cable.get_vague_name(FALSE)]."),
 			SPAN_NOTICE("You start wiring \the [src] with [cable.get_exact_name(1)].")
 		)
-<<<<<<< ours
 		if (!user.do_skilled(4 SECONDS, SKILL_ELECTRICAL, src, do_flags = DO_REPAIR_CONSTRUCT) || !user.use_sanity_check(src, tool))
-=======
-		if (!do_after(user, 4 SECONDS, src, DO_REPAIR_CONSTRUCT) || !user.use_sanity_check(src, tool))
->>>>>>> theirs
 			return TRUE
 		if (wired)
 			USE_FEEDBACK_FAILURE("\The [src] is already wired.")
@@ -81,11 +77,7 @@
 			SPAN_NOTICE("\The [user] starts dismantling \the [src] with \a [tool]."),
 			SPAN_NOTICE("You start dismantling \the [src] with \the [tool].")
 		)
-<<<<<<< ours
 		if (!user.do_skilled(4 SECONDS, SKILL_CONSTRUCTION, src, do_flags = DO_REPAIR_CONSTRUCT) || !user.use_sanity_check(src, tool))
-=======
-		if (!do_after(user, 4 SECONDS, src, DO_REPAIR_CONSTRUCT) || !user.use_sanity_check(src, tool))
->>>>>>> theirs
 			return TRUE
 		var/obj/item/stack/material/steel/stack = new (loc, 4)
 		transfer_fingerprints_to(stack)
@@ -106,11 +98,7 @@
 			SPAN_NOTICE("\The [user] starts cutting \the [src]'s wires with \a [tool]."),
 			SPAN_NOTICE("You start cutting \the [src]'s wires with \the [tool].")
 		)
-<<<<<<< ours
 		if (!user.do_skilled(4 SECONDS, SKILL_ELECTRICAL, src, do_flags = DO_REPAIR_CONSTRUCT) || !user.use_sanity_check(src, tool))
-=======
-		if (!do_after(user, 4 SECONDS, src, DO_REPAIR_CONSTRUCT) || user.use_sanity_check(src, tool))
->>>>>>> theirs
 			return TRUE
 		if (!wired)
 			USE_FEEDBACK_FAILURE("\The [src] has no wires to cut.")

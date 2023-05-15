@@ -224,11 +224,7 @@
 			SPAN_NOTICE("\The [user] starts attaching \a [tool] to \the [src]."),
 			SPAN_NOTICE("You start attaching \the [tool] to \the [src].")
 		)
-<<<<<<< ours
 		if (!user.do_skilled(2 SECONDS, SKILL_DEVICES, src) || !user.use_sanity_check(src, tool, SANITY_CHECK_TOOL_UNEQUIP))
-=======
-		if (!do_after(user, 2 SECONDS, src, DO_PUBLIC_UNIQUE) || !user.use_sanity_check(src, tool, SANITY_CHECK_TOOL_UNEQUIP))
->>>>>>> theirs
 			return TRUE
 		if (rig)
 			USE_FEEDBACK_FAILURE("\The [src] already has \a [rig] attached.")

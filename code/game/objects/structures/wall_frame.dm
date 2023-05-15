@@ -66,11 +66,7 @@
 
 	// Grilles
 	var/obj/structure/grille/grille = locate() in loc
-<<<<<<< ours
 	if (grille?.density)
-=======
-	if (grille.density)
->>>>>>> theirs
 		USE_FEEDBACK_FAILURE("\The [grille] blocks access to \the [src].")
 		return FALSE
 
@@ -117,11 +113,7 @@
 			SPAN_NOTICE("\The [user] starts slicing \the [src] apart with \a [tool]."),
 			SPAN_NOTICE("You start slicing \the [src] apart with \the [tool].")
 		)
-<<<<<<< ours
 		if (!user.do_skilled(2 SECONDS, SKILL_CONSTRUCTION, src, do_flags = DO_REPAIR_CONSTRUCT) || !user.use_sanity_check(src, tool))
-=======
-		if (!do_after(user, 2 SECONDS, src, DO_PUBLIC_UNIQUE) || !user.use_sanity_check(src, tool))
->>>>>>> theirs
 			return TRUE
 		playsound(src, 'sound/items/Welder.ogg', 50, TRUE)
 		user.visible_message(

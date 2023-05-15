@@ -16,11 +16,7 @@
 			SPAN_NOTICE("\The [user] starts [open ? "filling" : "digging open"] \the [src] with \a [tool]."),
 			SPAN_NOTICE("You start [open ? "filling" : "digging open"] \the [src] with \the [tool].")
 		)
-<<<<<<< ours
 		if (!user.do_skilled(5 SECONDS, SKILL_HAULING, src) || !user.use_sanity_check(src, tool))
-=======
-		if (!do_after(user, 5 SECONDS, src, DO_PUBLIC_UNIQUE) || !user.use_sanity_check(src, tool))
->>>>>>> theirs
 			return TRUE
 		user.visible_message(
 			SPAN_NOTICE("\The [user] [open ? "fills" : "digs open"] \the [src] with \a [tool]."),
@@ -49,11 +45,7 @@
 			SPAN_NOTICE("\The [user] starts making a grave marker on top of \the [src] with \a [tool]."),
 			SPAN_NOTICE("You start making a grave marker on top of \the [src] with \the [tool].")
 		)
-<<<<<<< ours
 		if (!user.do_skilled(5 SECONDS, SKILL_CONSTRUCTION, src, do_flags = DO_REPAIR_CONSTRUCT) || !user.use_sanity_check(src, tool))
-=======
-		if (!do_after(user, 5 SECONDS, src, DO_PUBLIC_UNIQUE) || !user.use_sanity_check(src, tool))
->>>>>>> theirs
 			return TRUE
 		if (grave)
 			USE_FEEDBACK_FAILURE("\The [src] already has \a [grave].")
@@ -201,11 +193,7 @@
 			SPAN_NOTICE("\The [user] starts hacking away at \the [src] with \a [tool]."),
 			SPAN_NOTICE("You start hacking away at \the [src] with \the [tool].")
 		)
-<<<<<<< ours
 		if (!user.do_skilled(2 SECONDS, list(SKILL_CONSTRUCTION, SKILL_HAULING), src) || !user.use_sanity_check(src, tool))
-=======
-		if (!do_after(user, 3 SECONDS, src, DO_PUBLIC_UNIQUE) || !user.use_sanity_check(src, tool))
->>>>>>> theirs
 			return TRUE
 		var/obj/item/stack/material/wood/stack = new(loc, 1)
 		transfer_fingerprints_to(stack)
