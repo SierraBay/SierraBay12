@@ -16,7 +16,7 @@
 	var/default_reinf_type
 	var/material/reinf_material
 	var/perunit = SHEET_MATERIAL_AMOUNT
-	var/material_flags = USE_MATERIAL_COLOR|USE_MATERIAL_SINGULAR_NAME|USE_MATERIAL_PLURAL_NAME
+	var/material_flags = USE_MATERIAL_COLOR | USE_MATERIAL_SINGULAR_NAME | USE_MATERIAL_PLURAL_NAME | USE_MATERIAL_ICON
 	var/matter_multiplier = 1
 
 
@@ -39,9 +39,34 @@
 		reinf_material = SSmaterials.get_material_by_name(default_reinf_type)
 	base_state = icon_state
 
+<<<<<<< ours
 	if(!stacktype)
 		stacktype = material.stack_type
 	if(islist(material.stack_origin_tech))
+=======
+	update_materials()
+
+
+/// Handles updating the stack to accomodate any changes to `material` or `reinf_material`. Also calls `update_strings()` and `update_icon()`.
+/obj/item/stack/material/proc/update_materials(override_icon = FALSE)
+	// Generate Icons
+	if (!override_icon)
+		if (HAS_FLAGS(material_flags, USE_MATERIAL_ICON))
+			base_state = material.sheet_icon_base
+		plural_icon_state = "[base_state]-mult"
+		max_icon_state = "[base_state]-max"
+		reinf_state = null
+		if (reinf_material)
+			if (HAS_FLAGS(material_flags, USE_MATERIAL_ICON))
+				reinf_state = material.sheet_icon_reinf
+			plural_reinf_state = "[reinf_state]-mult"
+			max_reinf_state = "[reinf_state]-max"
+
+	// Update Attributes
+	stacktype = material.stack_type
+	origin_tech.Cut()
+	if (islist(material.stack_origin_tech))
+>>>>>>> theirs
 		origin_tech = material.stack_origin_tech.Copy()
 
 	if(material.conductive)
@@ -221,9 +246,13 @@
 
 /obj/item/stack/material/phoron
 	name = "solid phoron"
+<<<<<<< ours
 	icon_state = "sheet-phoron"
 	plural_icon_state = "sheet-phoron-mult"
 	max_icon_state = "sheet-phoron-max"
+=======
+	material_flags = USE_MATERIAL_SINGULAR_NAME | USE_MATERIAL_PLURAL_NAME | USE_MATERIAL_ICON
+>>>>>>> theirs
 	default_type = MATERIAL_PHORON
 	material_flags = USE_MATERIAL_SINGULAR_NAME|USE_MATERIAL_PLURAL_NAME
 	drop_sound = 'sound/items/drop/glass.ogg'
@@ -297,7 +326,7 @@
 	name = "metallic hydrogen"
 	icon_state = "sheet-mythril"
 	default_type = MATERIAL_HYDROGEN
-	material_flags = USE_MATERIAL_SINGULAR_NAME|USE_MATERIAL_PLURAL_NAME
+	material_flags = USE_MATERIAL_SINGULAR_NAME | USE_MATERIAL_PLURAL_NAME | USE_MATERIAL_ICON
 
 /obj/item/stack/material/mhydrogen/ten
 	amount = 10
@@ -619,9 +648,13 @@
 	desc = "The by-product of mob grinding."
 	icon_state = "sheet-leather"
 	default_type = MATERIAL_LEATHER_GENERIC
+<<<<<<< ours
 	material_flags = USE_MATERIAL_SINGULAR_NAME|USE_MATERIAL_PLURAL_NAME
 	drop_sound = 'sound/items/drop/leather.ogg'
 	pickup_sound = 'sound/items/pickup/leather.ogg'
+=======
+	material_flags = USE_MATERIAL_SINGULAR_NAME | USE_MATERIAL_PLURAL_NAME | USE_MATERIAL_ICON
+>>>>>>> theirs
 
 /obj/item/stack/material/glass
 	name = "glass"
