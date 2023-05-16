@@ -361,7 +361,6 @@ div.notice
 	margin: 3px 0;
 }
 
-<<<<<<< ours
 .bigIcon
 {
 	width: 64px;
@@ -387,7 +386,8 @@ div.notice
 	font-weight: bold;
 	color: rgb(229, 25, 219);
 	text-shadow: 0 0 8px rgba(229, 25, 219, .4);
-=======
+}
+
 
 /* Data tables */
 table.data {
@@ -435,5 +435,4 @@ table td.disabled,
 table th.disabled {
 	color: #999999;
 	font-style: italic;
->>>>>>> theirs
 }
