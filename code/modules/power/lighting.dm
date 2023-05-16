@@ -418,6 +418,9 @@
 
 	// attempt to insert light
 	if(istype(W, /obj/item/light))
+		if(lightbulb)
+			to_chat(user, SPAN_WARNING("There is a [get_fitting_name()] already inserted."))
+			return
 		if(inserting)
 			to_chat(user, SPAN_WARNING("Someone is already inserting something in [src]"))
 			return
@@ -429,9 +432,6 @@
 			return
 		inserting = FALSE
 		if(user.get_active_hand() != W)
-			return
-		if(lightbulb)
-			to_chat(user, SPAN_WARNING("There is a [get_fitting_name()] already inserted."))
 			return
 		if(!istype(W, light_type))
 			to_chat(user, SPAN_WARNING("This type of light requires a [get_fitting_name()]."))
@@ -571,12 +571,13 @@
 	if(ejecting)
 		to_chat(user, SPAN_WARNING("You can't perform that action!"))
 		return TRUE
-		ejecting = TRUE
+	ejecting = TRUE
 	playsound(loc, 'packs/sierra-tweaks/sound/effects/lightbulb_screw.ogg', 100, 1)
 	if(!do_after(user, 0.5 SECONDS, src))
 		to_chat(user, SPAN_WARNING("You must remain still to perform that action!"))
 		ejecting = FALSE
 		return TRUE
+	ejecting = FALSE
 	if(!lightbulb)
 		to_chat(user, SPAN_WARNING("There is no [get_fitting_name()] in this light."))
 		return TRUE
