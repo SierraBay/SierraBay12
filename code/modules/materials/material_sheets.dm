@@ -234,12 +234,10 @@
 /obj/item/stack/material/phoron
 	name = "solid phoron"
 	material_flags = USE_MATERIAL_SINGULAR_NAME|USE_MATERIAL_PLURAL_NAME
-<<<<<<< ours
+	default_type = MATERIAL_PHORON
+
 	drop_sound = 'sound/items/drop/glass.ogg'
 	pickup_sound = 'sound/items/pickup/glass.ogg'
-=======
-	default_type = MATERIAL_PHORON
->>>>>>> theirs
 
 /obj/item/stack/material/phoron/ten
 	amount = 10
@@ -567,12 +565,9 @@
 /obj/item/stack/material/cardboard
 	name = "cardboard"
 	default_type = MATERIAL_CARDBOARD
-<<<<<<< ours
-	material_flags = USE_MATERIAL_SINGULAR_NAME|USE_MATERIAL_PLURAL_NAME
+
 	drop_sound = 'sound/items/drop/cardboardbox.ogg'
 	pickup_sound = 'sound/items/pickup/cardboardbox.ogg'
-=======
->>>>>>> theirs
 
 /obj/item/stack/material/cardboard/ten
 	amount = 10
@@ -592,25 +587,9 @@
 	name = "glass"
 	default_type = MATERIAL_GLASS
 
-<<<<<<< ours
 	drop_sound = 'sound/items/drop/glass.ogg'
 	pickup_sound = 'sound/items/pickup/glass.ogg'
 
-/obj/item/stack/material/glass/on_update_icon()
-	if(reinf_material)
-		icon_state = "sheet-glass-reinf"
-		base_state = icon_state
-		plural_icon_state = "sheet-glass-reinf-mult"
-		max_icon_state = "sheet-glass-reinf-max"
-	else
-		icon_state = "sheet-clear"
-		base_state = icon_state
-		plural_icon_state = "sheet-clear-mult"
-		max_icon_state = "sheet-clear-max"
-	..()
-
-=======
->>>>>>> theirs
 /obj/item/stack/material/glass/ten
 	amount = 10
 
