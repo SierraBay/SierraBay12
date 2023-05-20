@@ -8,8 +8,6 @@
 	max_amount = 60
 	randpixel = 3
 	icon = 'icons/obj/materials.dmi'
-	drop_sound = 'sound/items/drop/axe.ogg'
-	pickup_sound = 'sound/items/pickup/axe.ogg'
 
 	var/reinf_state
 	var/plural_reinf_state
@@ -199,15 +197,9 @@
 	name = "sandstone brick"
 	default_type = MATERIAL_SANDSTONE
 
-	drop_sound = 'sound/items/drop/boots.ogg'
-	pickup_sound = 'sound/items/pickup/boots.ogg'
-
 /obj/item/stack/material/marble
 	name = "marble brick"
 	default_type = MATERIAL_MARBLE
-
-	drop_sound = 'sound/items/drop/boots.ogg'
-	pickup_sound = 'sound/items/pickup/boots.ogg'
 
 /obj/item/stack/material/marble/ten
 	amount = 10
@@ -218,9 +210,6 @@
 /obj/item/stack/material/diamond
 	name = "diamond"
 	default_type = MATERIAL_DIAMOND
-
-	drop_sound = 'sound/items/drop/glass.ogg'
-	pickup_sound = 'sound/items/pickup/glass.ogg'
 
 /obj/item/stack/material/diamond/ten
 	amount = 10
@@ -241,9 +230,6 @@
 	material_flags = USE_MATERIAL_SINGULAR_NAME | USE_MATERIAL_PLURAL_NAME | USE_MATERIAL_ICON
 	default_type = MATERIAL_PHORON
 
-	drop_sound = 'sound/items/drop/glass.ogg'
-	pickup_sound = 'sound/items/pickup/glass.ogg'
-
 /obj/item/stack/material/phoron/ten
 	amount = 10
 
@@ -253,10 +239,6 @@
 /obj/item/stack/material/plastic
 	name = "plastic"
 	default_type = MATERIAL_PLASTIC
-
-	drop_sound = 'sound/items/drop/card.ogg'
-	pickup_sound = 'sound/items/pickup/card.ogg'
-
 
 /obj/item/stack/material/plastic/ten
 	amount = 10
@@ -458,116 +440,6 @@
 	name = "cloth"
 	default_type = MATERIAL_CLOTH
 
-	drop_sound = 'sound/items/drop/cloth.ogg'
-	pickup_sound = 'sound/items/pickup/cloth.ogg'
-
-// [SIERRA] SIERRA TODO: перенести к чертям отсюда насранное
-/obj/item/stack/material/cloth/ten
-	amount = 10
-
-/obj/item/stack/material/cloth/fifty
-	amount = 50
-
-/obj/item/stack/material/cloth/red
-	name = "red cloth"
-	icon_state = "sheet-cloth"
-	default_type = MATERIAL_RED_CLOTH
-
-/obj/item/stack/material/cloth/red/ten
-	amount = 10
-
-/obj/item/stack/material/cloth/red/fifty
-	amount = 50
-
-/obj/item/stack/material/cloth/yellow
-	name = "yellow cloth"
-	icon_state = "sheet-cloth"
-	default_type = MATERIAL_YELLOW_CLOTH
-
-/obj/item/stack/material/cloth/yellow/ten
-	amount = 10
-
-/obj/item/stack/material/cloth/yellow/fifty
-	amount = 50
-
-/obj/item/stack/material/cloth/teal
-	name = "teal cloth"
-	icon_state = "sheet-cloth"
-	default_type = MATERIAL_TEAL_CLOTH
-
-/obj/item/stack/material/cloth/teal/ten
-	amount = 10
-
-/obj/item/stack/material/cloth/teal/fifty
-	amount = 50
-
-/obj/item/stack/material/cloth/black
-	name = "black cloth"
-	icon_state = "sheet-cloth"
-	default_type = MATERIAL_BLACK_CLOTH
-
-/obj/item/stack/material/cloth/black/ten
-	amount = 10
-
-/obj/item/stack/material/cloth/black/fifty
-	amount = 50
-
-/obj/item/stack/material/cloth/green
-	name = "green cloth"
-	icon_state = "sheet-cloth"
-	default_type = MATERIAL_GREEN_CLOTH
-
-/obj/item/stack/material/cloth/green/ten
-	amount = 10
-
-/obj/item/stack/material/cloth/green/fifty
-	amount = 50
-
-/obj/item/stack/material/cloth/purple
-	name = "purple cloth"
-	icon_state = "sheet-cloth"
-	default_type = MATERIAL_PURPLE_CLOTH
-
-/obj/item/stack/material/cloth/purple/ten
-	amount = 10
-
-/obj/item/stack/material/cloth/purple/fifty
-	amount = 50
-
-/obj/item/stack/material/cloth/blue
-	name = "blue cloth"
-	icon_state = "sheet-cloth"
-	default_type = MATERIAL_BLUE_CLOTH
-
-/obj/item/stack/material/cloth/blue/ten
-	amount = 10
-
-/obj/item/stack/material/cloth/blue/fifty
-	amount = 50
-
-/obj/item/stack/material/cloth/beige
-	name = "beige cloth"
-	icon_state = "sheet-cloth"
-	default_type = MATERIAL_BEIGE_CLOTH
-
-/obj/item/stack/material/cloth/beige/ten
-	amount = 10
-
-/obj/item/stack/material/cloth/beige/fifty
-	amount = 50
-
-/obj/item/stack/material/cloth/lime
-	name = "lime cloth"
-	icon_state = "sheet-cloth"
-	default_type = MATERIAL_LIME_CLOTH
-
-/obj/item/stack/material/cloth/lime/ten
-	amount = 10
-
-/obj/item/stack/material/cloth/lime/fifty
-	amount = 50
-// [/SIERRA]
-
 /obj/item/stack/material/cardboard
 	name = "cardboard"
 	default_type = MATERIAL_CARDBOARD
@@ -584,15 +456,10 @@
 	default_type = MATERIAL_LEATHER_GENERIC
 	material_flags = USE_MATERIAL_SINGULAR_NAME | USE_MATERIAL_PLURAL_NAME | USE_MATERIAL_ICON
 
-	drop_sound = 'sound/items/drop/leather.ogg'
-	pickup_sound = 'sound/items/pickup/leather.ogg'
-
 /obj/item/stack/material/glass
 	name = "glass"
 	default_type = MATERIAL_GLASS
 
-	drop_sound = 'sound/items/drop/glass.ogg'
-	pickup_sound = 'sound/items/pickup/glass.ogg'
 /obj/item/stack/material/glass/ten
 	amount = 10
 
