@@ -67,40 +67,10 @@
 	next_click = world.time + 1
 
 	var/list/modifiers = params2list(params)
-<<<<<<< ours
-<<<<<<< ours
-	if(modifiers["shift"] && modifiers["ctrl"])
-		CtrlShiftClickOn(A)
-		return 1
-	if(modifiers["ctrl"] && modifiers["alt"])
-		CtrlAltClickOn(A)
-		return 1
-	if(modifiers["middle"] && modifiers["alt"])
-		AltMiddleClickOn(A)
-		return 1
-	if(modifiers["middle"])
-		MiddleClickOn(A)
-		return 1
-	if(modifiers["shift"])
-		ShiftClickOn(A)
-		return 0
-	if(modifiers["alt"]) // alt and alt-gr (rightalt)
-		AltClickOn(A)
-		return 1
-	if(modifiers["ctrl"])
-		CtrlClickOn(A)
-		return 1
-=======
-=======
 	if (modifiers["ctrl"] && modifiers["alt"] && modifiers["shift"])
 		if (CtrlAltShiftClickOn(A))
 			return TRUE
-<<<<<<< ours
->>>>>>> theirs
-	if (modifiers["shift"] && modifiers["ctrl"])
-=======
 	else if (modifiers["shift"] && modifiers["ctrl"])
->>>>>>> theirs
 		if (CtrlShiftClickOn(A))
 			return TRUE
 	else if (modifiers["ctrl"] && modifiers["alt"])
@@ -121,7 +91,6 @@
 	else if (modifiers["ctrl"])
 		if (CtrlClickOn(A))
 			return TRUE
->>>>>>> theirs
 
 	if(stat || paralysis || stunned || weakened || sleeping)
 		return
@@ -284,21 +253,11 @@
  * Returns boolean. Whether or not the interaction was handled.
  */
 /mob/proc/MiddleClickOn(atom/A)
-<<<<<<< ours
-<<<<<<< ours
-	pointed(A)
-	return
-=======
-=======
 	if (A.MiddleClick(src))
 		return TRUE
->>>>>>> theirs
-	swap_hand()
+	// swap_hand() // BAY
+	pointed() // SIERRA
 	return TRUE
->>>>>>> theirs
-
-/mob/proc/AltMiddleClickOn(atom/A)
-	swap_hand()
 
 /atom/proc/MiddleClick(mob/M as mob)
 	return FALSE
