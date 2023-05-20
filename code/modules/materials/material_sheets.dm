@@ -197,9 +197,15 @@
 	name = "sandstone brick"
 	default_type = MATERIAL_SANDSTONE
 
+	drop_sound = 'sound/items/drop/boots.ogg'
+	pickup_sound = 'sound/items/pickup/boots.ogg'
+
 /obj/item/stack/material/marble
 	name = "marble brick"
 	default_type = MATERIAL_MARBLE
+
+	drop_sound = 'sound/items/drop/boots.ogg'
+	pickup_sound = 'sound/items/pickup/boots.ogg'
 
 /obj/item/stack/material/marble/ten
 	amount = 10
