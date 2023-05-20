@@ -211,6 +211,9 @@
 	name = "diamond"
 	default_type = MATERIAL_DIAMOND
 
+	drop_sound = 'sound/items/drop/glass.ogg'
+	pickup_sound = 'sound/items/pickup/glass.ogg'
+
 /obj/item/stack/material/diamond/ten
 	amount = 10
 
@@ -239,6 +242,9 @@
 /obj/item/stack/material/plastic
 	name = "plastic"
 	default_type = MATERIAL_PLASTIC
+
+	drop_sound = 'sound/items/drop/card.ogg'
+	pickup_sound = 'sound/items/pickup/card.ogg'
 
 /obj/item/stack/material/plastic/ten
 	amount = 10
@@ -569,6 +575,9 @@
 /obj/item/stack/material/glass
 	name = "glass"
 	default_type = MATERIAL_GLASS
+
+	drop_sound = 'sound/items/drop/glass.ogg'
+	pickup_sound = 'sound/items/pickup/glass.ogg'
 
 /obj/item/stack/material/glass/ten
 	amount = 10
