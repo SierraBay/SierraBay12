@@ -9,6 +9,9 @@
 	randpixel = 3
 	icon = 'icons/obj/materials.dmi'
 
+	drop_sound = 'sound/items/drop/axe.ogg'
+	pickup_sound = 'sound/items/pickup/axe.ogg'
+
 	var/reinf_state
 	var/plural_reinf_state
 	var/max_reinf_state
@@ -239,6 +242,9 @@
 	material_flags = USE_MATERIAL_SINGULAR_NAME | USE_MATERIAL_PLURAL_NAME | USE_MATERIAL_ICON
 	default_type = MATERIAL_PHORON
 
+	drop_sound = 'sound/items/drop/glass.ogg'
+	pickup_sound = 'sound/items/pickup/glass.ogg'
+
 /obj/item/stack/material/phoron/ten
 	amount = 10
 
@@ -378,6 +384,9 @@
 /obj/item/stack/material/wood
 	name = "wooden plank"
 	default_type = MATERIAL_WOOD
+
+	drop_sound = 'sound/items/drop/wooden.ogg'
+	pickup_sound = 'sound/items/pickup/wooden.ogg'
 
 /obj/item/stack/material/wood/ten
 	amount = 10
@@ -566,6 +575,9 @@
 	name = "cardboard"
 	default_type = MATERIAL_CARDBOARD
 
+	drop_sound = 'sound/items/drop/cardboardbox.ogg'
+	pickup_sound = 'sound/items/pickup/cardboardbox.ogg'
+
 /obj/item/stack/material/cardboard/ten
 	amount = 10
 
@@ -577,6 +589,9 @@
 	desc = "The by-product of mob grinding."
 	default_type = MATERIAL_LEATHER_GENERIC
 	material_flags = USE_MATERIAL_SINGULAR_NAME | USE_MATERIAL_PLURAL_NAME | USE_MATERIAL_ICON
+
+	drop_sound = 'sound/items/drop/leather.ogg'
+	pickup_sound = 'sound/items/pickup/leather.ogg'
 
 /obj/item/stack/material/glass
 	name = "glass"
