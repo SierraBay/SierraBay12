@@ -9,15 +9,11 @@
 	)
 
 /singleton/closet_appearance/secure_closet/torch/science/cso
-	color = COLOR_BOTTLE_GREEN
-	decals = list(
-		"lower_holes"
-	)
 	extra_decals = list(
-		"stripe_vertical_mid_full" = COLOR_GOLD,
-		"stripe_vertical_left_full" = COLOR_PURPLE,
-		"stripe_vertical_right_full" = COLOR_PURPLE,
-		"research" = COLOR_GOLD
+		"stripe_vertical_mid_full" = COLOR_CLOSET_GOLD,
+		"stripe_vertical_left_full" = COLOR_PURPLE_GRAY,
+		"stripe_vertical_right_full" = COLOR_PURPLE_GRAY,
+		"research" = COLOR_CLOSET_GOLD
 	)
 
 /obj/structure/closet/secure_closet/RD_torch
@@ -37,16 +33,14 @@
 		/obj/item/device/flash,
 		/obj/item/gun/energy/confuseray,
 		/obj/item/device/megaphone,
-		/obj/item/device/taperecorder,
 		/obj/item/device/tape/random = 3,
 		/obj/item/device/camera,
 		/obj/item/material/clipboard/steel,
-		/obj/item/taperoll/research,
 		/obj/item/clothing/glasses/welding/superior,
 		/obj/item/clothing/suit/armor/pcarrier/medium/command,
 		/obj/item/clothing/head/helmet/solgov/command,
 		/obj/item/storage/box/secret_project_disks/science,
-		/obj/item/storage/belt/general,
+		/obj/item/storage/belt/general/full,
 		/obj/item/device/holowarrant,
 		/obj/item/storage/backpack/dufflebag
 	)
@@ -92,17 +86,13 @@
 		/obj/item/device/radio/headset/science/alt,
 		/obj/item/clothing/mask/gas/half,
 		/obj/item/tank/oxygen_emergency_extended,
-		/obj/item/material/clipboard,
-		/obj/item/folder,
-		/obj/item/device/taperecorder,
-		/obj/item/device/tape/random = 3,
-		/obj/item/device/camera,
+		/obj/item/device/tape/random = 2,
 		/obj/item/device/scanner/gas,
-		/obj/item/taperoll/research,
 		/obj/item/clothing/gloves/latex,
 		/obj/item/clothing/glasses/science,
-		/obj/item/storage/belt/general,
-		/obj/item/storage/backpack/dufflebag
+		/obj/item/storage/belt/general/full,
+		/obj/item/storage/backpack/dufflebag,
+		/obj/item/storage/backpack/messenger/sci
 	)
 
 /obj/structure/closet/secure_closet/guard

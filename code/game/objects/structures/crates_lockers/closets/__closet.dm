@@ -332,8 +332,7 @@
 	var/obj/item/card/id/id = tool.GetIdCard()
 	if (istype(id))
 		if (!HAS_FLAGS(setup, CLOSET_HAS_LOCK))
-			USE_FEEDBACK_FAILURE("\The [src] cannot be locked.")
-			return TRUE
+			return ..()
 		togglelock(user, id)
 		return TRUE
 
@@ -550,12 +549,12 @@
 /obj/structure/closet/AltClick(mob/user)
 	if(!src.opened)
 		togglelock(user)
-	else
-		return ..()
+		return TRUE
+	return ..()
 
 /obj/structure/closet/CtrlAltClick(mob/user)
 	verb_toggleopen()
-	return 1
+	return TRUE
 
 /obj/structure/closet/emp_act(severity)
 	for (var/atom/A as anything in src)

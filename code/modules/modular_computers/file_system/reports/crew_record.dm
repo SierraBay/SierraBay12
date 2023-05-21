@@ -1,6 +1,6 @@
 GLOBAL_LIST_EMPTY(all_crew_records)
 GLOBAL_LIST_INIT(blood_types, list("A-", "A+", "B-", "B+", "AB-", "AB+", "O-", "O+"))
-GLOBAL_LIST_INIT(physical_statuses, list("Active", "Disabled", "SSD", "Deceased", "MIA"))
+GLOBAL_LIST_INIT(physical_statuses, list("Active", "Disabled", "SSD", "Deceased", "MIA", "Stored"))
 GLOBAL_VAR_INIT(default_physical_status, "Active")
 GLOBAL_LIST_INIT(security_statuses, list("None", "Released", "Parolled", "Incarcerated", "Arrest"))
 GLOBAL_VAR_INIT(default_security_status, "None")
@@ -170,13 +170,14 @@ GLOBAL_VAR_INIT(arrest_security_status, "Arrest")
 	dat += "</tt>"
 	return dat
 
+
 /proc/get_crewmember_record(name)
 	RETURN_TYPE(/datum/computer_file/report/crew_record)
-	name = sanitize(name)
-	for(var/datum/computer_file/report/crew_record/CR in GLOB.all_crew_records)
-		if(sanitize(CR.get_name()) == name)
-			return CR
-	return null
+	for (var/datum/computer_file/report/crew_record/record as anything in GLOB.all_crew_records)
+		var/record_name = record?.get_name()
+		if (record_name && html_decode(record_name) == name)
+			return record
+
 
 /proc/GetAssignment(mob/living/carbon/human/H)
 	if(!H)

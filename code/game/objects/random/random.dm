@@ -935,10 +935,10 @@ GLOBAL_LIST_INIT(random_backpacks, list(
 	/obj/item/storage/backpack/security/exo,
 	/obj/item/storage/backpack/command,
 	/obj/item/storage/backpack/industrial,
-	/obj/item/storage/backpack/toxins,
+	/obj/item/storage/backpack/corpsci,
 	/obj/item/storage/backpack/hydroponics,
 	/obj/item/storage/backpack/genetics,
-	/obj/item/storage/backpack/virology,
+	/obj/item/storage/backpack/sci,
 	/obj/item/storage/backpack/chemistry
 ))
 
@@ -1080,7 +1080,7 @@ something, make sure it's not in one of the other lists.*/
 				/obj/item/bonesetter = 7,
 				/obj/item/bonegel = 7,
 				/obj/item/circular_saw = 7,
-				/obj/item/scalpel = 7,
+				/obj/item/scalpel/basic = 7,
 				/obj/item/melee/baton/loaded = 9,
 				/obj/item/device/radio/headset/syndicate = 6)
 
