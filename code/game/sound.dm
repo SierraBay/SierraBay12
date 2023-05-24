@@ -107,7 +107,7 @@ var/global/const/FALLOFF_SOUNDS = 0.5
 			volume -= 30
 	return volume
 
-/mob/proc/playsound_local(var/turf/turf_source, soundin, vol as num, vary, frequency, falloff, is_global, extrarange, override_env, envdry, envwet)
+/mob/proc/playsound_local(turf/turf_source, soundin, vol as num, vary, frequency, falloff, is_global, extrarange, override_env, envdry, envwet)
 	if(!src.client || ear_deaf > 0)
 		return
 
