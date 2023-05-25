@@ -42,16 +42,9 @@
   "dreammaker.tickOnCreate": true,
 
   "gitlens.advanced.blame.customArguments": [
-<<<<<<< ours
       "--ignore-revs-file", ".git-blame-ignore-revs"
   ],
   "diffEditor.ignoreTrimWhitespace": false,
   "editor.bracketPairColorization.enabled": true,
   "gitlens.blame.ignoreWhitespace": true
-=======
-    "--ignore-revs-file", ".git-blame-ignore-revs"
-  ],
-
-  "diffEditor.ignoreTrimWhitespace": false
->>>>>>> theirs
 }
