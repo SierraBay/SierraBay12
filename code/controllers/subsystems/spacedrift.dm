@@ -12,7 +12,7 @@ SUBSYSTEM_DEF(spacedrift)
 /datum/controller/subsystem/spacedrift/UpdateStat(time)
 	if (PreventUpdateStat(time))
 		return ..()
-	..("P:[processing.len]")
+	..("P:[length(processing)]")
 
 
 /datum/controller/subsystem/spacedrift/fire(resumed = 0)
