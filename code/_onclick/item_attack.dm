@@ -50,21 +50,12 @@ avoid code duplication. This includes items that may sometimes act as a standard
 		return FALSE
 	A.pre_use_item(src, user, click_params)
 	var/use_call
-<<<<<<< ours
-	if ((item_flags & ITEM_FLAG_TRY_ATTACK) && attack(A, user))
-		use_call = "attack"
-		. = TRUE
-	if (!. && A == user)
-		use_call = "user"
-		. = user.use_user(src, click_params)
-=======
 	if (HAS_FLAGS(item_flags, ITEM_FLAG_TRY_ATTACK))
 		use_call = "on"
-		. = use_on(atom, user, click_params)
-		if (!. && attack(atom, user))
+		. = use_on(A, user, click_params)
+		if (!. && attack(A, user))
 			use_call = "attack"
 			. = TRUE
->>>>>>> theirs
 	if (!. && user.a_intent == I_HURT)
 		use_call = "weapon"
 		. = A.use_weapon(src, user, click_params)
@@ -73,14 +64,10 @@ avoid code duplication. This includes items that may sometimes act as a standard
 		. = A.use_tool(src, user, click_params)
 	if (!.)
 		use_call = "attackby"
-<<<<<<< ours
 		. = A.attackby(src, user, click_params)
-=======
-		. = atom.attackby(src, user, click_params)
 	if (!. && !HAS_FLAGS(item_flags, ITEM_FLAG_TRY_ATTACK))
 		use_call = "on"
-		. = use_on(atom, user, click_params)
->>>>>>> theirs
+		. = use_on(A, user, click_params)
 	if (!.)
 		use_call = null
 	A.post_use_item(src, user, ., use_call, click_params)
