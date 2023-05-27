@@ -4,7 +4,6 @@
 	icon_state = "object"
 	color = "#fffffe"
 
-<<<<<<< ours
 	var/scannable					// If set to TRUE will show up on ship sensors for detailed scans, and will ping when detected by scanners.
 
 	var/unknown_id					// A unique identifier used when this entity is scanned. Assigned in Initialize().
@@ -14,14 +13,11 @@
 	var/sensor_visibility = 10		// How likely it is to increase identification process each scan.
 
 	var/list/known_ships = list()	 //List of ships known at roundstart - put types here.
-=======
-	var/known = TRUE		//shows up on nav computers automatically
-	var/scannable       //if set to TRUE will show up on ship sensors for detailed scans
+
 	/// The list of scans that can be performed on this overmap effect. See /datum/sector_scan for more info.
 	var/list/scans = list()
 	///Used for generating unique keys for the associated list 'scans'
 	var/next_id = 0
->>>>>>> theirs
 
 //Overlay of how this object should look on other skyboxes
 /obj/effect/overmap/proc/get_skybox_representation()
