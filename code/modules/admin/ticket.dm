@@ -11,12 +11,9 @@ var/global/list/ticket_panels = list()
 	var/sql_id
 	var/opened_time
 	var/timeout = FALSE
-<<<<<<< ours
+	var/last_message_time
 	var/to_check
 	var/to_close
-=======
-	var/last_message_time
->>>>>>> theirs
 
 /datum/ticket/New(datum/client_lite/owner)
 	src.owner = owner
