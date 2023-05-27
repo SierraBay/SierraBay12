@@ -1,7 +1,11 @@
 /atom/movable
 	layer = OBJ_LAYER
 
+<<<<<<< ours
 	glide_size = 8
+=======
+	glide_size = 5
+>>>>>>> theirs
 
 	animate_movement = SLIDE_STEPS
 	appearance_flags = TILE_BOUND | PIXEL_SCALE | LONG_GLIDE
