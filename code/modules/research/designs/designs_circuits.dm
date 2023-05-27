@@ -803,26 +803,32 @@
 	build_path = /obj/item/stock_parts/circuitboard/engine/ion
 	sort_string = "XAAAB"
 
+/datum/design/circuit/sublimator
+	name = "reagent sublimator system"
+	id = "sublimator"
+	req_tech = list(TECH_POWER = 2, TECH_ENGINEERING = 1)
+	build_path = /obj/item/stock_parts/circuitboard/sublimator
+	sort_string = "XAAAC"
 /datum/design/circuit/sublimator/sauna
 	name = "sauna heater system"
 	id = "sauna"
 	req_tech = list(TECH_POWER = 2, TECH_ENGINEERING = 1)
 	build_path = /obj/item/stock_parts/circuitboard/sublimator/sauna
-	sort_string = "XAAAC"
+	sort_string = "XAAAD"
 
 /datum/design/circuit/vitals
 	name = "vitals monitor"
 	id = "vitals"
 	req_tech = list(TECH_BIO = 2, TECH_ENGINEERING = 1)
 	build_path = /obj/item/stock_parts/circuitboard/vitals_monitor
-	sort_string = "XAAAD"
+	sort_string = "XAAAE"
 
 /datum/design/circuit/sublimator/modular_computer
 	name = "general-purpose computer"
 	id = "pc_motherboard"
 	req_tech = list(TECH_POWER = 1, TECH_ENGINEERING = 1)
 	build_path = /obj/item/stock_parts/circuitboard/modular_computer
-	sort_string = "XAAAD"
+	sort_string = "XAAAF"
 
 /datum/design/circuit/tele_beacon
 	name = "teleporter beacon"
@@ -831,21 +837,21 @@
 		TECH_BLUESPACE = 1
 	)
 	build_path = /obj/item/stock_parts/circuitboard/tele_beacon
-	sort_string = "XAAAF"
+	sort_string = "XAAAG"
 
 /datum/design/circuit/shipsensors
 	name = "Broad-band sensor suite"
 	id = "shipsensors"
 	req_tech = list(TECH_BLUESPACE = 2, TECH_POWER = 4, TECH_ENGINEERING = 4, TECH_DATA = 4)
 	build_path = /obj/item/stock_parts/circuitboard/shipsensors
-	sort_string = "XAAAH"
+	sort_string = "XAAAI"
 
 /datum/design/circuit/radio_beacon
 	name = "Transmission beacon"
 	id = "radio_beacon"
 	req_tech = list(TECH_BLUESPACE = 2, TECH_POWER = 4, TECH_ENGINEERING = 4, TECH_DATA = 4)
 	build_path = /obj/item/stock_parts/circuitboard/radio_beacon
-	sort_string = "XAAAI"
+	sort_string = "XAAAJ"
 
 /datum/design/circuit/shipmap
 	name = "ship holomap"
