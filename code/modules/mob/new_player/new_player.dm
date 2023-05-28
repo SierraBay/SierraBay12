@@ -173,12 +173,14 @@
 			return
 
 	if(href_list["lobby_join"])
+		// [SIERRA] - ss220 dependency
 		if(config.minimum_byondacc_age && client.player_age <= config.minimum_byondacc_age)
 			if(!client.discord_id || (client.discord_id && length(client.discord_id) == 32))
 				client.load_player_discord(client)
 				to_chat(usr, "<span class='danger'>Вам необходимо привязать дискорд-профиль к аккаунту!</span>")
 				to_chat(usr, "<span class='warning'>Нажмите 'Привязка Discord' во вкладке 'Special Verbs' для получения инструкций.</span>")
 				return FALSE
+		// [/SIERRA]
 
 		if(GAME_STATE != RUNLEVEL_GAME)
 			to_chat(usr, SPAN_WARNING("The round has either not started yet or already ended."))
