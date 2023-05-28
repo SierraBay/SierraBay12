@@ -619,7 +619,7 @@
 	var/sql_ckey = sql_sanitize_text(C.ckey)
 
 	// var/DBQuery/query = dbcon.NewQuery("SELECT discord_id, discord_name FROM erro_player WHERE ckey = '[sql_ckey]'") // BAY
-	var/DBQuery/query = dbcon.NewQuery("SELECT discord_id, discord_name FROM [sqlfdbkdbutil].player WHERE ckey = '[sql_ckey]'") // SIERRA
+	var/DBQuery/query = dbcon.NewQuery("SELECT discord_id, discord_name FROM erro_player WHERE ckey = '[sql_ckey]'") // SIERRA
 	query.Execute()
 
 	if(query.NextRow())
@@ -648,7 +648,7 @@
 	if(dbcon.IsConnected())
 		var/sql_ckey = sql_sanitize_text(ckey(key))
 		// var/DBQuery/query_update_token = dbcon.NewQuery("UPDATE erro_player SET discord_id='[token]' WHERE ckey='[sql_ckey]'") // BAY
-		var/DBQuery/query_update_token = dbcon.NewQuery("UPDATE [sqlfdbkdbutil].player SET discord_id='[token]' WHERE ckey='[sql_ckey]'") // SIERRA
+		var/DBQuery/query_update_token = dbcon.NewQuery("UPDATE erro_player SET discord_id='[token]' WHERE ckey='[sql_ckey]'") // SIERRA
 
 		if(!query_update_token.Execute())
 			to_chat(usr, "<span class='warning'>Ошибка записи токена в БД! Обратитесь к администрации.</span>")
