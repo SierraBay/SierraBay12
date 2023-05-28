@@ -225,6 +225,11 @@ GLOBAL_VAR_INIT(world_topic_last, world.timeofday)
 			s["adminlist"] = list2params(admins)
 			s["active_players"] = active
 
+		// [SIERRA] - ss220 dependency
+		if(input["format"] == "json")
+			return json_encode(s)
+		// [/SIERRA]
+
 		return list2params(s)
 
 	else if(T == "manifest")
