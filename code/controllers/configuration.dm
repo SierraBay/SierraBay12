@@ -868,12 +868,14 @@
 				run_empty_levels = TRUE
 			if ("warn_if_staff_same_ip")
 				warn_if_staff_same_ip = TRUE
+			// [SIERRA] - ss220 dependency
 			if("minimum_byondacc_age")
 				minimum_byondacc_age = text2num(value)
 			if("usewhitelist_database")
 				usewhitelist_database = TRUE
 			if ("overflow_server_url")
 				overflow_server_url = value
+			// [/SIERRA]
 			else
 				log_misc("Unknown setting in config/config.txt: '[name]'")
 
