@@ -1,7 +1,7 @@
 /mob/new_player/Login()
 	update_Login_details()	//handles setting lastKnownIP and computer_id for use by the ban systems as well as checking for multikeying
 
-	// [SIERRA] - ss220 lobby dependency
+	// [SIERRA] - ss220 dependency
 	if(config.usewhitelist_database && config.overflow_server_url && !whitelist_check())
 		src << link(config.overflow_server_url)
 	// [/SIERRA]
@@ -47,7 +47,7 @@
 	to_chat(src, SPAN_NOTICE("The alert level on the [station_name()] is currently: [SPAN_COLOR(SL.light_color_alarm, "<B>[SL.name]</B>")]. [alert_desc]"))
 
 
-// [SIERRA] - ss220 lobby dependency
+// [SIERRA] - ss220 dependency
 /mob/new_player/proc/whitelist_check()
 	// Admins are immune to overflow rerouting
 	if(!config.usewhitelist_database)

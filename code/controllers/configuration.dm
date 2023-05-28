@@ -222,7 +222,7 @@
 
 	var/static/forbidden_message_hide_details = FALSE
 
-	// [SIERRA] - ss220 lobby dependency
+	// [SIERRA] - ss220 dependency
 	var/static/minimum_byondacc_age = 0
 	var/static/usewhitelist_database = FALSE
 	var/static/overflow_server_url
@@ -961,7 +961,7 @@
 			if ("feedback_password")
 				sqlfdbkpass = value
 
-			// [SIERRA] - ss220 lobby dependency
+			// [SIERRA] - ss220 dependency
 			if("utility_database")
 				sqlfdbkdbutil = value
 			// [/SIERRA]
