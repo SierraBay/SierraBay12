@@ -726,6 +726,14 @@ var/global/list/ai_verbs_default = list(
 		icon_state = selected_sprite.alive_icon
 		set_light(0.4, 0.1, 1, 2, selected_sprite.alive_light)
 
+/mob/living/silicon/ai/proc/lacks_power() // SIERRA TGUI
+	if(APU_power)
+		return 0
+	var/turf/T = get_turf(src)
+	var/area/A = get_area(src)
+	return ((!A.power_equip) && A.requires_power == 1 || istype(T, /turf/space)) && !istype(src.loc,/obj/item)
+
+
 // Pass lying down or getting up to our pet human, if we're in a rig.
 /mob/living/silicon/ai/lay_down()
 	set name = "Rest"

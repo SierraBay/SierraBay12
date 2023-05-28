@@ -117,3 +117,16 @@
 		"changelog.css" = 'html/changelog.css',
 		"changelog.html" = 'html/changelog.html'
 	)
+
+/datum/asset/simple/tgui
+		assets = list(
+		"tgui.bundle.js" = file("tgui/public/tgui.bundle.js"),
+		"tgui.bundle.css" = file("tgui/public/tgui.bundle.css"),
+	)
+
+/datum/asset/simple/tgfont
+	assets = list(
+		"tgfont.eot" = file("tgui/packages/tgfont/dist/tgfont.eot"),
+		"tgfont.woff2" = file("tgui/packages/tgfont/dist/tgfont.woff2"),
+		"tgfont.css" = file("tgui/packages/tgfont/dist/tgfont.css"),
+	)

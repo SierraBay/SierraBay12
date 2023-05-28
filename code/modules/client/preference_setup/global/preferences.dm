@@ -276,6 +276,17 @@ var/global/list/_client_preferences_by_type
 		for(var/atom/movable/renderer/R as anything in preference_mob.renderers)
 			R.GraphicsUpdate()
 
+/datum/client_preference/tgui_fancy
+	description = "Fancy TGUI"
+	key = "TGUI_FANCY"
+	options = list(GLOB.PREF_YES, GLOB.PREF_NO)
+
+/datum/client_preference/tgui_lock
+	description = "Lock TGUI"
+	key = "TGUI_LOCK"
+	options = list(GLOB.PREF_YES, GLOB.PREF_NO)
+	default_value = GLOB.PREF_NO
+
 /datum/client_preference/goonchat
 	description = "Use Goon Chat"
 	key = "USE_GOONCHAT"

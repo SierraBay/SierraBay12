@@ -1,5 +1,6 @@
 /mob/Logout()
 	SSnano.user_logout(src) // this is used to clean up (remove) this user's Nano UIs
+	SStgui.on_logout(src) // Cleanup any TGUIs the user has open - SIERRA
 	GLOB.player_list -= src
 	log_access_out(src)
 	handle_admin_logout()

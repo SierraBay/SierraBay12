@@ -143,6 +143,22 @@ GLOBAL_VAR_INIT(log_end, (ascii2text(13))) // CRLF for all logs
 /proc/log_asset(text)
 	rustg_log_write(GLOB.world_game_log, "ASSETS: [text][GLOB.log_end]")
 
+/proc/log_tgui(user_or_client, text)
+	if(!text)
+		stack_trace("Pointless log_tgui message")
+		return
+	var/entry = ""
+	if(!user_or_client)
+		entry += "no user"
+	else if(istype(user_or_client, /mob))
+		var/mob/user = user_or_client
+		entry += "[user.ckey] (as [user])"
+	else if(istype(user_or_client, /client))
+		var/client/client = user_or_client
+		entry += "[client.ckey]"
+	entry += ":\n[text]"
+	rustg_log_write(GLOB.world_game_log, "TGUI: [entry][GLOB.log_end]")
+
 /proc/log_unit_test(text)
 	to_world_log("## UNIT_TEST ##: [text]")
 	log_debug(text)

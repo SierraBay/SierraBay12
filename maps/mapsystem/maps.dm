@@ -447,6 +447,46 @@ var/global/const/MAP_HAS_RANK = 2		//Rank system, also togglable
 		empty_levels = list(world.maxz)
 	return pick(empty_levels)
 
+// SIERRA TGUI */
+
+// Get a list of 'nearby' or 'connected' zlevels.
+// You should at least return a list with the given z if nothing else.
+/datum/map/proc/get_map_levels(var/srcz, var/long_range = FALSE, var/om_range = -1)
+	//Get what sector we're in
+	var/obj/effect/overmap/visitable/O = get_overmap_sector(srcz)
+	if(istype(O))
+		//Just the sector we're in
+		if(om_range == -1)
+			return O.map_z.Copy()
+
+		//Otherwise every sector we're on top of
+		var/list/connections = list()
+		var/turf/T = get_turf(O)
+		var/turfrange = long_range ? max(0, om_range) : om_range
+		for(var/obj/effect/overmap/visitable/V in range(turfrange, T))
+			connections += V.map_z // Adding list to list adds contents
+		return connections
+
+	//Traditional behavior, if not in an overmap sector
+	else
+		//If long range, and they're at least in contact levels, return contact levels.
+		if (long_range && (srcz in contact_levels))
+			return contact_levels.Copy()
+		//If in station levels, return station levels
+		else if (srcz in station_levels)
+			return station_levels.Copy()
+		//Anything in multiz then (or just themselves)
+		else
+			return GetConnectedZlevels(srcz)
+
+/proc/get_overmap_sector(var/z)
+	if(GLOB.using_map.use_overmap)
+		return map_sectors["[z]"]
+	else
+		return null
+
+//	SIERRA TGUI /*
+
 /datum/map/proc/setup_economy()
 	for (var/datum/feed_network/N in news_network)
 		N.CreateFeedChannel("Nyx Daily", "SolGov Minister of Information", 1, 1)
