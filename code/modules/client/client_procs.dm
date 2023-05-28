@@ -180,7 +180,7 @@
 	prefs.last_ip = address				//these are gonna be used for banning
 	prefs.last_id = computer_id			//these are gonna be used for banning
 	apply_fps(prefs.clientfps)
-	load_player_discord(src)
+	load_player_discord(src) // SIERRA - ss220 dependency
 
 	. = ..()	//calls mob.Login()
 
