@@ -960,6 +960,13 @@
 				sqlfdbklogin = value
 			if ("feedback_password")
 				sqlfdbkpass = value
+
+			// [SIERRA] - ss220 lobby dependency
+			if("utility_database")
+				sqlfdbkdbutil = value
+			// [/SIERRA]
+
+			// [SIERRA]
 			if("feedback_tableprefix")
 				sqlfdbktableprefix = value
 			if("db_version")
@@ -968,6 +975,7 @@
 				async_sql_query_timeout = text2num(value) SECONDS
 			if ("rust_sql_thread_limit")
 				rust_sql_thread_limit = text2num(value)
+			// [/SIERRA]
 			else
 				log_misc("Unknown setting in config/dbconfig.txt: '[name]'")
 
