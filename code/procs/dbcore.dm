@@ -41,7 +41,7 @@
 	var/server = ""
 	var/port = 3306
 
-DBConnection/VV_hidden()
+/DBConnection/VV_hidden()
 	return ..() + list(NAMEOF(src, _db_con), NAMEOF(src, dbi), NAMEOF(src, user),
 	 				   NAMEOF(src, password), NAMEOF(src, default_cursor),  NAMEOF(src, server),
 					   NAMEOF(src, port))

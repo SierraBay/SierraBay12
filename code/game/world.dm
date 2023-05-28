@@ -322,7 +322,7 @@ GLOBAL_VAR_INIT(world_topic_last, world.timeofday)
 
 		var/list/disconnected_observers = list()
 
-		for(var/mob/M in GLOB.dead_mob_list_)
+		for(var/mob/M in GLOB.dead_mobs)
 			if(!M.last_ckey)
 				continue
 			if(M.client)
@@ -335,7 +335,7 @@ GLOBAL_VAR_INIT(world_topic_last, world.timeofday)
 			players[ckey] = ckey
 			just_keys += ckey
 
-		for(var/mob/M in GLOB.living_mob_list_)
+		for(var/mob/M in GLOB.alive_mobs)
 			if(!M.last_ckey)
 				continue
 			var/ckey = ckey(M.last_ckey)
