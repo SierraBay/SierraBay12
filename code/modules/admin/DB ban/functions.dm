@@ -58,7 +58,7 @@
 	if(!dbcon.IsConnected())
 		return 0
 
-	//var/serverip = "[world.internet_address]:[world.port]"
+	var/serverip = "[world.internet_address]:[world.port]"
 	var/bantype_pass = 0
 	var/bantype_str
 	switch(bantype)
@@ -119,7 +119,7 @@
 	reason = sql_sanitize_text(reason)
 
 	// var/sql = "INSERT INTO erro_ban (`id`,`bantime`,`serverip`,`bantype`,`reason`,`job`,`duration`,`rounds`,`expiration_time`,`ckey`,`computerid`,`ip`,`a_ckey`,`a_computerid`,`a_ip`,`who`,`adminwho`,`edits`,`unbanned`,`unbanned_datetime`,`unbanned_ckey`,`unbanned_computerid`,`unbanned_ip`) VALUES (null, Now(), '[serverip]', '[bantype_str]', '[reason]', '[job]', [(duration)?"[duration]":"0"], [(rounds)?"[rounds]":"0"], Now() + INTERVAL [(duration>0) ? duration : 0] MINUTE, '[ckey]', '[computerid]', '[ip]', '[a_ckey]', '[a_computerid]', '[a_ip]', '[who]', '[adminwho]', '', null, null, null, null, null)" // BAY
-	var/sql = "INSERT INTO [sqlfdbkdbutil].ban (`bantime`,`serverip`,`bantype`,`reason`,`job`,`duration`,`expiration_time`,`ckey`,`computerid`,`ip`,`a_ckey`,`a_computerid`,`a_ip`,`who`,`adminwho`) VALUES (Now(), '[world.internet_address]:[world.port]','[bantype_str]', '[reason]', '[job]', [(duration)?"[duration]":"0"], Now() + INTERVAL [(duration>0) ? duration : 0] MINUTE, '[ckey]', '[computerid]', '[ip]', '[a_ckey]', '[a_computerid]', '[a_ip]', '[who]', '[adminwho]')" // SIERRA
+	var/sql = "INSERT INTO [sqlfdbkdbutil].ban (`bantime`,`serverip`,`bantype`,`reason`,`job`,`duration`,`expiration_time`,`ckey`,`computerid`,`ip`,`a_ckey`,`a_computerid`,`a_ip`,`who`,`adminwho`) VALUES (Now(), '[serverip]','[bantype_str]', '[reason]', '[job]', [(duration)?"[duration]":"0"], Now() + INTERVAL [(duration>0) ? duration : 0] MINUTE, '[ckey]', '[computerid]', '[ip]', '[a_ckey]', '[a_computerid]', '[a_ip]', '[who]', '[adminwho]')" // SIERRA
 	var/DBQuery/query_insert = dbcon.NewQuery(sql)
 	query_insert.Execute()
 	var/setter = a_ckey
