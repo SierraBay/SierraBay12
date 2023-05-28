@@ -3,7 +3,7 @@
  */
 
 
-CREATE TABLE IF NOT EXISTS `erro_ban` (
+CREATE TABLE IF NOT EXISTS `ban` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `bantime` datetime NOT NULL,
   `serverip` text NOT NULL,
