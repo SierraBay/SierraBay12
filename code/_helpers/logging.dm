@@ -42,7 +42,6 @@ GLOBAL_VAR_INIT(log_end, (ascii2text(13))) // CRLF for all logs
 	to_world_log("## TESTING: [msg][log_end]")
 	rustg_log_write(GLOB.world_game_log, "## TESTING: [html_decode(msg)][GLOB.log_end]")
 
-
 /proc/game_log(category, text)
 	rustg_log_write(GLOB.world_game_log, "[category]: [text][GLOB.log_end]")
 
