@@ -16,13 +16,3 @@ var/global/datum/global_init/__global_init = new
 /datum/global_init/New()
 	config = new
 	callHook("global_init")
-<<<<<<< ours
-	qdel(src) //we're done
-
-
-/datum/global_init/Destroy()
-	init = null
-	..()
-	return QDEL_HINT_HARDDEL
-=======
->>>>>>> theirs
