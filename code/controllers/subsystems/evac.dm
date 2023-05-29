@@ -11,13 +11,9 @@ SUBSYSTEM_DEF(evac)
 
 
 /datum/controller/subsystem/evac/UpdateStat(time)
-<<<<<<< ours
-	return ..()
-=======
 	if (PreventUpdateStat(time))
 		return ..()
 	return ..(evacuation_controller?.UpdateStat()||"Not Initialized")
->>>>>>> theirs
 
 
 /datum/controller/subsystem/evac/fire(resumed, no_mc_tick)
