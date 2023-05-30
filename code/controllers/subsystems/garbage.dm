@@ -27,13 +27,8 @@ var/global/const/GC_CURRENTLY_BEING_QDELETED = -3
 SUBSYSTEM_DEF(garbage)
 	name = "Garbage"
 	priority = SS_PRIORITY_GARBAGE
-<<<<<<< ours
-	wait = 2 SECONDS
-	flags = SS_POST_FIRE_TIMING | SS_BACKGROUND | SS_NO_INIT | SS_NEEDS_SHUTDOWN
-=======
 	wait = 10 SECONDS
 	flags = SS_POST_FIRE_TIMING | SS_BACKGROUND | SS_NEEDS_SHUTDOWN
->>>>>>> theirs
 	runlevels = RUNLEVELS_DEFAULT | RUNLEVEL_LOBBY
 	init_order = SS_INIT_GARBAGE
 
