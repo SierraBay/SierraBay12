@@ -442,7 +442,6 @@
 
 	var/static/run_empty_levels = FALSE
 
-<<<<<<< ours
 	var/static/allow_diagonal_movement = FALSE
 
 	/// Timeout (seconds) for async SQL queries
@@ -450,10 +449,9 @@
 
 	/// Limit of how many SQL threads can run at once
 	var/static/rust_sql_thread_limit = 50
-=======
+
 	var/static/deletion_starts_paused = FALSE
 
->>>>>>> theirs
 
 /datum/configuration/New()
 	load_config()
@@ -873,7 +871,8 @@
 				run_empty_levels = TRUE
 			if ("warn_if_staff_same_ip")
 				warn_if_staff_same_ip = TRUE
-<<<<<<< ours
+			if ("deletion_starts_paused")
+				deletion_starts_paused = TRUE
 			// [SIERRA] - ss220 dependency
 			if("minimum_byondacc_age")
 				minimum_byondacc_age = text2num(value)
@@ -882,10 +881,6 @@
 			if ("overflow_server_url")
 				overflow_server_url = value
 			// [/SIERRA]
-=======
-			if ("deletion_starts_paused")
-				deletion_starts_paused = TRUE
->>>>>>> theirs
 			else
 				log_misc("Unknown setting in config/config.txt: '[name]'")
 
