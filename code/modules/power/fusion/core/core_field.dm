@@ -290,7 +290,7 @@
 /obj/effect/fusion_em_field/proc/Rupture()
 	visible_message(SPAN_DANGER("\The [src] shudders like a dying animal before flaring to eye-searing brightness and rupturing!"))
 	set_light(15, 1, "#ccccff")
-	empulse(get_turf(src), Ceil(plasma_temperature/1000), Ceil(plasma_temperature/300))
+	empulse(get_turf(src), ceil(plasma_temperature/1000), ceil(plasma_temperature/300))
 	sleep(5)
 	RadiateAll()
 	explosion(get_turf(owned_core), 8, EX_ACT_LIGHT) // Blow out all the windows.
