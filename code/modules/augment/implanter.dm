@@ -22,7 +22,7 @@
 
 /obj/item/device/augment_implanter/examine(mob/user)
 	. = ..()
-	if (isobserver(user) || (user.mind && user.mind.special_role != null) || user.skill_check(SKILL_DEVICES, SKILL_PROF))
+	if (isobserver(user) || (user.mind && user.mind.special_role != null) || user.skill_check(SKILL_DEVICES, SKILL_MASTER))
 		to_chat(user, "A single-use augment installer with no medical knowledge necessary! " + SPAN_DANGER("Painkillers not included!"))
 	if (isnull(augment))
 		to_chat(user, "It seems to be empty.")
@@ -161,7 +161,7 @@
 	augment = /obj/item/organ/internal/augment/active/item/popout_shotgun
 
 /obj/item/device/augment_implanter/nerve_dampeners
-	augment = /obj/item/organ/internal/augment/active/nerve_dampeners
+	augment = /obj/item/organ/internal/augment/active/nerve_dampeners/hidden
 
 /obj/item/device/augment_implanter/internal_air_system
 	augment = /obj/item/organ/internal/augment/active/internal_air_system/hidden

@@ -53,7 +53,7 @@
 				new_overlays += "[initial(icon_state)]-powered"
 
 	if(bcell)
-		var/ratio = Ceil(bcell.percent()/25) * 25
+		var/ratio = ceil(bcell.percent()/25) * 25
 		new_overlays += "[initial(icon_state)]-charge[ratio]"
 	else
 		new_overlays += "[initial(icon_state)]-nocell"
@@ -67,7 +67,7 @@
 	else
 		to_chat(user, "There is no cell inside.")
 
-/obj/item/defibrillator/ui_action_click()
+/obj/item/defibrillator/ui_action_click(mob/living/user)
 	toggle_paddles()
 
 /obj/item/defibrillator/attack_hand(mob/user)

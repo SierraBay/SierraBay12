@@ -12,12 +12,6 @@ GLOBAL_LIST_EMPTY(music_players)
 // If this type will be spawned, it'll get instantly deleted by Initialization
 // Because we can create subtypes, we should use only them for regular playthrought
 
-GLOBAL_LIST_INIT(smash_sound,list(
-'packs/infinity/sound/effects/gore/smash1.ogg',
-'packs/infinity/sound/effects/gore/smash2.ogg',
-'packs/infinity/sound/effects/gore/smash3.ogg',
-'packs/infinity/sound/effects/gore/trauma1.ogg'
-))
 GLOBAL_LIST_INIT(heavystep_sound,list(
 'packs/infinity/sound/effects/x1.ogg',
 'packs/infinity/sound/effects/x2.ogg',
@@ -506,7 +500,7 @@ GLOBAL_LIST_INIT(switch_small_sound, list(
 //Alternative way to activate it, but instead stop, we will pause it.
 /obj/item/music_player/AltClick(mob/user)
 	if(!CanPhysicallyInteract(user))
-		return
+		return ..()
 
 	user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
 	switch(mode)
@@ -514,6 +508,8 @@ GLOBAL_LIST_INIT(switch_small_sound, list(
 			set_mode(PLAYER_STATE_PAUSE)
 		if(PLAYER_STATE_PAUSE)
 			set_mode(PLAYER_STATE_PLAY)
+
+	return TRUE
 
 /obj/item/music_player/fire_act()
 	break_act()

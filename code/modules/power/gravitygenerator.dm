@@ -1,27 +1,27 @@
 // It.. uses a lot of power.  Everything under power is engineering stuff, at least.
+/*
+/obj/machinery/computer/gravity_control_computer
+	name = "gravity generator control console"
+	desc = "A computer to control a local gravity generator.  Qualified personnel only."
+	icon = 'icons/obj/computer.dmi'
+	icon_state = "airtunnel0e"
+	anchored = TRUE
+	density = TRUE
+	var/obj/machinery/gravity_generator/gravity_generator
 
-//obj/machinery/computer/gravity_control_computer
-//	name = "Gravity Generator Control"
-//	desc = "A computer to control a local gravity generator.  Qualified personnel only."
-//	icon = 'icons/obj/computer.dmi'
-//	icon_state = "airtunnel0e"
-//	anchored = TRUE
-//	density = TRUE
-//	var/obj/machinery/gravity_generator/gravity_generator
-
-//obj/machinery/gravity_generator
-//	name = "Gravitational Generator"
-//	desc = "A device which produces a gravaton field when set up."
-//	icon = 'icons/obj/singularity.dmi'
-//	icon_state = "TheSingGen"
-//	anchored = TRUE
-//	density = TRUE
-//	idle_power_usage = 200
-//	active_power_usage = 1000
-//	var/on = 1
-//	var/list/localareas = list()
-//	var/effectiverange = 25
-
+/obj/machinery/gravity_generator
+	name = "gravitational generator"
+	desc = "A device which produces a gravaton field when set up."
+	icon = 'icons/obj/singularity.dmi'
+	icon_state = "TheSingGen"
+	anchored = TRUE
+	density = TRUE
+	idle_power_usage = 200
+	active_power_usage = 1000
+	var/on = 1
+	var/list/localareas = list()
+	var/effectiverange = 25
+*/
 	// Borrows code from cloning computer
 //obj/machinery/computer/gravity_control_computer/Initialize()
 //	. = ..()

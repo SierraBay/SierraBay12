@@ -240,7 +240,11 @@
 
 	if (href_list["print"])
 		playsound(loc, "sound/machines/dotprinter.ogg", 30, 1)
-		new/obj/item/paper/(get_turf(src), last_scan["data"], "paper (Sensor Scan - [last_scan["name"]])", L = print_language)
+		var/scan_data = ""
+		for(var/scan in last_scan["data"])
+			scan_data += scan + "\n"
+
+		new/obj/item/paper/(get_turf(src), scan_data, "paper (Sensor Scan - [last_scan["name"]])", L = print_language)
 		return TOPIC_HANDLED
 
 /obj/machinery/shipsensors
@@ -397,7 +401,7 @@
 	max_range = 14
 
 /obj/item/stock_parts/circuitboard/shipsensors
-	name = T_BOARD("broad-band sensor suite")
+	name = "circuit board (broad-band sensor suite)"
 	board_type = "machine"
 	icon_state = "mcontroller"
 	build_path = /obj/machinery/shipsensors

@@ -10,6 +10,7 @@
 	throwpass = 1
 	mob_offset = 12
 	health_max = 10
+	obj_flags = OBJ_FLAG_RECEIVE_TABLE
 	var/flipped = 0
 
 	// For racks.
@@ -143,7 +144,7 @@
 	// Material - Plate table
 	if (istype(weapon, /obj/item/stack/material))
 		if (material)
-			USE_FEEDBACK_FAILURE("\The [src] is already plated.")
+			reinforce_table(weapon, user)
 			return TRUE
 		material = common_material_add(weapon, user, "plat")
 		if (material)
@@ -166,7 +167,7 @@
 			SPAN_NOTICE("\The [user] starts repairing \the [src] with \a [weapon]."),
 			SPAN_NOTICE("You start repairing \the [src] with \the [weapon].")
 		)
-		if (!do_after(user, 2 SECONDS, src, DO_REPAIR_CONSTRUCT) || !user.use_sanity_check(src, weapon) || !welder.remove_fuel(1))
+		if (!user.do_skilled(2 SECONDS, SKILL_CONSTRUCTION, src, do_flags = DO_REPAIR_CONSTRUCT) || !user.use_sanity_check(src, weapon) || !welder.remove_fuel(1))
 			return TRUE
 		playsound(src, 'sound/items/Welder.ogg', 50, TRUE)
 		restore_health(get_max_health() / 5) // 20% repair per application
@@ -179,7 +180,7 @@
 	// Wrench - Remove material
 	if (isWrench(weapon))
 		if (!material)
-			USE_FEEDBACK_FAILURE("\The [src] has no plating to remove.")
+			dismantle(weapon, user)
 			return TRUE
 		if (reinforced)
 			USE_FEEDBACK_FAILURE("\The [src]'s reinforcements need to be removed before you can remove the plating.")
@@ -222,6 +223,12 @@
 	if (!user.unEquip(tool, loc))
 		FEEDBACK_UNEQUIP_FAILURE(user, tool)
 		return TRUE
+
+	// [SIERRA]
+	if (tool.drop_sound)
+		playsound(tool.loc, tool.drop_sound, 25)
+	// [/SIERRA]
+
 	auto_align(tool, click_params)
 	return TRUE
 
@@ -386,7 +393,7 @@
 		// Reinforcements
 		if(reinforced)
 			for(var/i = 1 to 4)
-				I = image(icon, "[reinforced.table_reinf]_[connections[i]]", dir = SHIFTL(1, i - 1))
+				I = image(icon, "[material.table_icon_reinf]_[connections[i]]", dir = SHIFTL(1, i - 1))
 				I.color = reinforced.icon_colour
 				I.alpha = 255 * reinforced.opacity
 				overlays += I
@@ -424,7 +431,7 @@
 			name = "table frame"
 
 		if(reinforced)
-			var/image/I = image(icon, "[reinforced.table_reinf]_flip[type]")
+			var/image/I = image(icon, "[material.table_icon_reinf]_flip[type]")
 			I.color = reinforced.icon_colour
 			I.alpha = 255 * reinforced.opacity
 			overlays += I

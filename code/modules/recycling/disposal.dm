@@ -428,7 +428,7 @@ GLOBAL_LIST_EMPTY(diversion_junctions)
 	flick("[icon_state]-flush", src)
 
 	var/wrapcheck = 0
-	var/obj/structure/disposalholder/H = new()	// virtual holder object which actually
+	var/obj/structure/disposalholder/H = new(src)	// virtual holder object which actually
 												// travels through the pipes.
 
 	// handle vomit transportation
@@ -661,7 +661,7 @@ GLOBAL_LIST_EMPTY(diversion_junctions)
 			SPAN_NOTICE("You start slicing \the [src]'s floorweld with \the [tool]."),
 			SPAN_ITALIC("You hear the sound of welding.")
 		)
-		if (!do_after(user, 2 SECONDS, src, DO_REPAIR_CONSTRUCT) || !user.use_sanity_check(src, tool) || !welder.remove_fuel(1, user))
+		if (!user.do_skilled(2 SECONDS, SKILL_CONSTRUCTION, src, do_flags = DO_REPAIR_CONSTRUCT) || !user.use_sanity_check(src, tool) || !welder.remove_fuel(1, user))
 			return TRUE
 		playsound(src, 'sound/items/Welder2.ogg', 50, TRUE)
 		user.visible_message(

@@ -45,12 +45,6 @@ var/global/list/admin_ranks = list()								//list of all ranks with associated 
 		admin_ranks[rank] = rights
 		previous_rights = rights
 
-	#ifdef TESTING
-	var/msg = "Permission Sets Built:\n"
-	for(var/rank in admin_ranks)
-		msg += "\t[rank] - [admin_ranks[rank]]\n"
-	testing(msg)
-	#endif
 
 /hook/startup/proc/loadAdmins()
 	load_admins()
@@ -117,7 +111,7 @@ var/global/list/admin_ranks = list()								//list of all ranks with associated 
 		while(query.NextRow())
 			var/ckey = query.item[1]
 			var/rank = query.item[2]
-			if(rank == "Removed")	continue	//This person was de-adminned. They are only in the admin list for archive purposes.
+			if(rank == "Удален")	continue	//This person was de-adminned. They are only in the admin list for archive purposes.
 
 			var/rights = query.item[4]
 			if(istext(rights))	rights = text2num(rights)
@@ -131,34 +125,3 @@ var/global/list/admin_ranks = list()								//list of all ranks with associated 
 			config.admin_legacy_system = 1
 			load_admins()
 			return
-
-	#ifdef TESTING
-	var/msg = "Admins Built:\n"
-	for(var/ckey in admin_datums)
-		var/rank
-		var/datum/admins/D = admin_datums[ckey]
-		if(D)	rank = D.rank
-		msg += "\t[ckey] - [rank]\n"
-	testing(msg)
-	#endif
-
-
-#ifdef TESTING
-/client/verb/changerank(newrank in admin_ranks)
-	if(holder)
-		holder.rank = newrank
-		holder.rights = admin_ranks[newrank]
-	else
-		holder = new /datum/admins(newrank,admin_ranks[newrank],ckey)
-	remove_admin_verbs()
-	holder.associate(src)
-
-/client/verb/changerights(newrights as num)
-	if(holder)
-		holder.rights = newrights
-	else
-		holder = new /datum/admins("testing",newrights,ckey)
-	remove_admin_verbs()
-	holder.associate(src)
-
-#endif

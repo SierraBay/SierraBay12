@@ -52,7 +52,7 @@
 		if (!user.unEquip(tool, src))
 			FEEDBACK_UNEQUIP_FAILURE(tool, src)
 			return TRUE
-		mybag = tool
+		myreplacer = tool
 		update_icon()
 		updateUsrDialog()
 		user.visible_message(
@@ -217,7 +217,7 @@
 		overlays += "cart_sign[signs]"
 
 
-//old style retardo-cart
+//old style cart
 /obj/structure/bed/chair/janicart
 	name = "janicart"
 	icon = 'icons/obj/vehicles.dmi'

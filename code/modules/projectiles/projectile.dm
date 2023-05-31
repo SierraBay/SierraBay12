@@ -45,7 +45,8 @@
 	var/projectile_type = /obj/item/projectile
 	var/penetrating = 0 //If greater than zero, the projectile will pass through dense objects as specified by on_penetrate()
 	var/life_span = 50 //This will de-increment every process(). When 0, it will delete the projectile.
-		//Effects
+
+	//Effects
 	var/stun = 0
 	var/weaken = 0
 	var/paralyze = 0
@@ -55,7 +56,7 @@
 	var/drowsy = 0
 	var/agony = 0
 	var/embed = FALSE // whether or not the projectile can embed itself in the mob
-	var/penetration_modifier = 0.2 //How much internal damage this projectile can deal, as a multiplier.
+	var/penetration_modifier = 0.2 //How likely this projectile is to embed or rupture artery
 
 	var/hitscan = FALSE		// whether the projectile should be hitscan
 	var/step_delay = 1	// the delay between iterations if not a hitscan projectile

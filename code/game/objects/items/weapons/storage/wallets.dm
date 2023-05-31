@@ -6,7 +6,7 @@
 	color = COLOR_BROWN_ORANGE
 	w_class = ITEM_SIZE_SMALL
 	max_w_class = ITEM_SIZE_SMALL
-	max_storage_space = 8
+	max_storage_space = ITEM_SIZE_SMALL * 3
 	slot_flags = SLOT_ID
 
 	drop_sound = 'sound/items/drop/cloth.ogg'
@@ -22,22 +22,16 @@
 		/obj/item/clothing/accessory/locket,
 		/obj/item/clothing/head/hairflower,
 		/obj/item/device/flashlight/pen,
-		/obj/item/device/flashlight/slime,
 		/obj/item/seeds,
 		/obj/item/material/coin,
 		/obj/item/dice,
 		/obj/item/disk,
 		/obj/item/implant,
-		/obj/item/implanter,
-		/obj/item/reagent_containers/syringe,
-		/obj/item/reagent_containers/hypospray/autoinjector,
-		/obj/item/reagent_containers/glass/beaker/vial,
 		/obj/item/flame,
 		/obj/item/paper,
 		/obj/item/pen,
 		/obj/item/photo,
 		/obj/item/reagent_containers/pill,
-		/obj/item/device/radio/headset,
 		/obj/item/device/encryptionkey,
 		/obj/item/key,
 		/obj/item/clothing/accessory/badge,
@@ -106,7 +100,7 @@
 	if (istype(id))
 		remove_from_storage(id, get_turf(user))
 		user.put_in_hands(id)
-		return
+		return TRUE
 	return ..()
 
 
@@ -119,7 +113,7 @@
 	. = ..()
 	if (prob(65))
 		var/obj/item/spacecash/ewallet/stick = new (src)
-		stick.worth = Floor(grand() * 1200)
+		stick.worth = floor(grand() * 1200)
 	else
 		for (var/i = 1 to rand(1, 2))
 			var/type = pick(cash_types)

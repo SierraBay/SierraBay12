@@ -103,6 +103,8 @@ var/global/floorIsLava = 0
 	body += "<br>\[<b>CID Related Accounts:</b> [M.client ? M.client.related_accounts_cid : "Logged out"]\]"
 	body += "<br>\[<b>IP:</b> [M.client ?  M.client.address : M.lastKnownIP]\]"
 	body += "<br>\[<b>IP Related Accounts:</b> [M.client ? M.client.related_accounts_ip : "Logged out"]\]"
+
+	// [SIERRA] - ss220 dependency
 	var/full_version = "Unknown"
 	if(M.client.byond_version)
 		full_version = "[M.client.byond_version].[M.client.byond_build ? M.client.byond_build : "xxx"]"
@@ -115,7 +117,7 @@ var/global/floorIsLava = 0
 	else
 		body += "<br>\[<b>Discord: не привязан!</b>\]"
 	body += "<br><br>"
-	// INF END
+	// [/SIERRA]
 
 
 	if (!istype(M, /mob/new_player) && !istype(M, /mob/observer))
@@ -1666,3 +1668,15 @@ GLOBAL_VAR_INIT(skip_allow_lists, FALSE)
 
 	transfer_controller.do_continue_vote = !transfer_controller.do_continue_vote
 	log_and_message_admins("toggled the continue vote [transfer_controller.do_continue_vote ? "ON" : "OFF"]")
+
+/datum/admins/proc/togglemoderequirementchecks()
+	set category = "Server"
+	set desc = "Toggle the gamemode requirement checks on/off. Toggling off will allow any gamemode to start regardless of readied players."
+	set name = "Toggle Gamemode Requirement Checks"
+
+	if (GAME_STATE > RUNLEVEL_LOBBY)
+		to_chat(usr, SPAN_WARNING("You cannot change the gamemode requirement checks after the game has started!"))
+		return
+
+	SSticker.skip_requirement_checks = !SSticker.skip_requirement_checks
+	log_and_message_admins("toggled the gamemode requirement checks [SSticker.skip_requirement_checks ? "OFF" : "ON"]")

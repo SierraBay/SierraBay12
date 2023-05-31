@@ -25,12 +25,14 @@ GLOBAL_LIST_EMPTY(known_overmap_sectors)
 	/// null | num | list. If a num or a (num, num) list, the radius or random bounds for placing this sector near the main map's overmap icon.
 	var/list/place_near_main
 
-
 	var/designation //Actual name of the object.
 	var/class //Imagine a ship or station's class. "NSV" Sierra, "SEV" Torch, ...
 	var/obfuscated_name = "unidentified object"
 	var/obfuscated_desc = "This object is not displaying its IFF signature."
 	var/obfuscated = FALSE //Whether we hide our name and class or not.
+
+	var/blob_count = 0
+
 
 /obj/effect/overmap/visitable/Initialize()
 	. = ..()

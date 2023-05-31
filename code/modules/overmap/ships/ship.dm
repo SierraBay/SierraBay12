@@ -42,7 +42,7 @@ var/global/const/OVERMAP_SPEED_CONSTANT = (1 SECOND)
 	var/engines_state = 0 //global on/off toggle for all engines
 	var/thrust_limit = 1  //global thrust limit for all engines, 0..1
 	var/halted = 0        //admin halt or other stop.
-	var/skill_needed = SKILL_ADEPT  //piloting skill needed to steer it without going in random dir
+	var/skill_needed = SKILL_TRAINED  //piloting skill needed to steer it without going in random dir
 	var/operator_skill
 
 /obj/effect/overmap/visitable/ship/Initialize()
@@ -179,9 +179,9 @@ var/global/const/OVERMAP_SPEED_CONSTANT = (1 SECOND)
 			if(MOVING(speed[i]))
 				position[i] += speed[i] * OVERMAP_SPEED_CONSTANT
 				if(position[i] < 0)
-					deltas[i] = Ceil(position[i])
+					deltas[i] = ceil(position[i])
 				else if(position[i] > 0)
-					deltas[i] = Floor(position[i])
+					deltas[i] = floor(position[i])
 				if(deltas[i] != 0)
 					position[i] -= deltas[i]
 					position[i] += (deltas[i] > 0) ? -1 : 1
@@ -232,7 +232,7 @@ var/global/const/OVERMAP_SPEED_CONSTANT = (1 SECOND)
 	for(var/i = 1 to 2)
 		if(MOVING(speed[i]))
 			. = min(., ((speed[i] > 0 ? 1 : -1) - position[i]) / speed[i])
-	. = max(Ceil(.),0)
+	. = max(ceil(.),0)
 
 /obj/effect/overmap/visitable/ship/proc/handle_wraparound()
 	var/nx = x
