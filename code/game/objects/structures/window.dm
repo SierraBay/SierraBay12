@@ -70,6 +70,7 @@
 
 	if(is_fulltile())
 		layer = FULL_WINDOW_LAYER
+		CLEAR_FLAGS(obj_flags, OBJ_FLAG_ROTATABLE)
 
 	health_min_damage = material.hardness * 1.25
 	if (reinf_material)
@@ -361,7 +362,7 @@
 			SPAN_NOTICE("\The [user] starts slicing \the [src] apart with \a [tool]."),
 			SPAN_NOTICE("You start slicing \the [src] apart with \the [tool].")
 		)
-		if (!do_after(user, 2 SECONDS, src, DO_PUBLIC_UNIQUE) || !user.use_sanity_check(src, tool))
+		if (!user.do_skilled(2 SECONDS, SKILL_CONSTRUCTION, src, do_flags = DO_REPAIR_CONSTRUCT) || !user.use_sanity_check(src, tool))
 			return TRUE
 		playsound(src, 'sound/items/Welder.ogg', 50, TRUE)
 		user.visible_message(
@@ -381,8 +382,8 @@
 				set_anchored(!anchored)
 				playsound(src, 'sound/items/Screwdriver.ogg', 50, TRUE)
 				user.visible_message(
-					SPAN_NOTICE("\The [user] fastens \the [src]'s frame to the floor with \a [tool]."),
-					SPAN_NOTICE("You fasten \the [src]'s frame to the floor with \the [tool].")
+					SPAN_NOTICE("\The [user] [!anchored ? "un" : null]fastens \the [src] [!anchored ? "from" : "to"] the floor with \a [tool]."),
+					SPAN_NOTICE("You [!anchored ? "un" : null]fasten \the [src] [!anchored ? "from" : "to"] the floor with \the [tool].")
 				)
 				return TRUE
 			construction_state = 3 - construction_state
@@ -399,8 +400,8 @@
 		set_anchored(!anchored)
 		playsound(src, 'sound/items/Screwdriver.ogg', 50, TRUE)
 		user.visible_message(
-			SPAN_NOTICE("\The [user] fastens \the [src] to the floor with \a [tool]."),
-			SPAN_NOTICE("You fasten \the [src] to the floor with \the [tool].")
+			SPAN_NOTICE("\The [user] [!anchored ? "un" : null]fastens \the [src] [!anchored ? "from" : "to"] the floor with \a [tool]."),
+			SPAN_NOTICE("You [!anchored ? "un" : null]fasten \the [src] [!anchored ? "from" : "to"] the floor with \the [tool].")
 		)
 		return TRUE
 
@@ -491,7 +492,7 @@
 			grab.affecting.Weaken(5)
 			grab.affecting.apply_damage(20, DAMAGE_BRUTE, def_zone, used_weapon = src)
 			hit(50, grab.assailant, grab.affecting)
-		qdel(grab) // SIERRA
+		qdel(grab) // SIERRA TODO: На оффы эту строчку
 		return TRUE
 
 	return ..()
@@ -768,9 +769,6 @@
 	for(var/obj/structure/window/W in range(src,range))
 		if(W.polarized && (W.id == src.id || !W.id))
 			W.toggle()
-	for(var/obj/machinery/door/window/W in range(src,range))
-		if(W.polarized && (W.id == src.id || !W.id))
-			W.toggle_tint()
 	..()
 
 /obj/machinery/button/windowtint/power_change()

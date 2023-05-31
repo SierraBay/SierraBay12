@@ -33,7 +33,7 @@
 
 /obj/item/gun/projectile/heavysniper/handle_post_fire(mob/user, atom/target, pointblank=0, reflex=0)
 	..()
-	if(user && user.skill_check(SKILL_WEAPONS, SKILL_PROF))
+	if(user && user.skill_check(SKILL_WEAPONS, SKILL_MASTER))
 		to_chat(user, SPAN_NOTICE("You work the bolt open with a reflexive motion, ejecting [chambered]!"))
 		unload_shell()
 
@@ -167,7 +167,7 @@
 	icon = 'icons/obj/guns/semistrip.dmi'
 	icon_state = "semistrip"
 	item_state = "semistrip"
-	w_class = ITEM_SIZE_LARGE
+	w_class = ITEM_SIZE_HUGE
 	force = 10
 	origin_tech = list(TECH_COMBAT = 2)
 	slot_flags = SLOT_BACK
@@ -181,7 +181,7 @@
 	wielded_item_state = "semistrip-wielded"
 
 /obj/item/gun/projectile/sniper/semistrip/on_update_icon()
-	if(length(ammo_magazine.stored_ammo))
+	if(ammo_magazine && length(ammo_magazine.stored_ammo))
 		icon_state = initial(icon_state)
 		wielded_item_state = initial(wielded_item_state)
 	else

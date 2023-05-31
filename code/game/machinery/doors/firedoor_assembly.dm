@@ -45,10 +45,10 @@
 			USE_FEEDBACK_STACK_NOT_ENOUGH(cable, 1, "to wire \the [src].")
 			return TRUE
 		user.visible_message(
-			SPAN_NOTICE("\The [user] starts wiring \the [src] with \a [cable]."),
-			SPAN_NOTICE("You start wiring \the [src] with \a [cable.singular_name] of \the [cable].")
+			SPAN_NOTICE("\The [user] starts wiring \the [src] with [cable.get_vague_name(FALSE)]."),
+			SPAN_NOTICE("You start wiring \the [src] with [cable.get_exact_name(1)].")
 		)
-		if (!do_after(user, 4 SECONDS, src, DO_REPAIR_CONSTRUCT) || !user.use_sanity_check(src, tool))
+		if (!user.do_skilled(4 SECONDS, SKILL_ELECTRICAL, src, do_flags = DO_REPAIR_CONSTRUCT) || !user.use_sanity_check(src, tool))
 			return TRUE
 		if (wired)
 			USE_FEEDBACK_FAILURE("\The [src] is already wired.")
@@ -60,8 +60,8 @@
 			USE_FEEDBACK_STACK_NOT_ENOUGH(cable, 1, "to wire \the [src].")
 			return TRUE
 		user.visible_message(
-			SPAN_NOTICE("\The [user] wires \the [src] with \a [cable]."),
-			SPAN_NOTICE("You wire \the [src] with \a [cable.singular_name] of \the [cable.name].")
+			SPAN_NOTICE("\The [user] wires \the [src] with [cable.get_vague_name(FALSE)]."),
+			SPAN_NOTICE("You wire \the [src] with [cable.get_exact_name(1)].")
 		)
 		return TRUE
 
@@ -77,7 +77,7 @@
 			SPAN_NOTICE("\The [user] starts dismantling \the [src] with \a [tool]."),
 			SPAN_NOTICE("You start dismantling \the [src] with \the [tool].")
 		)
-		if (!do_after(user, 4 SECONDS, src, DO_REPAIR_CONSTRUCT) || !user.use_sanity_check(src, tool))
+		if (!user.do_skilled(4 SECONDS, SKILL_CONSTRUCTION, src, do_flags = DO_REPAIR_CONSTRUCT) || !user.use_sanity_check(src, tool))
 			return TRUE
 		var/obj/item/stack/material/steel/stack = new (loc, 4)
 		transfer_fingerprints_to(stack)
@@ -98,7 +98,7 @@
 			SPAN_NOTICE("\The [user] starts cutting \the [src]'s wires with \a [tool]."),
 			SPAN_NOTICE("You start cutting \the [src]'s wires with \the [tool].")
 		)
-		if (!do_after(user, 4 SECONDS, src, DO_REPAIR_CONSTRUCT) || user.use_sanity_check(src, tool))
+		if (!user.do_skilled(4 SECONDS, SKILL_ELECTRICAL, src, do_flags = DO_REPAIR_CONSTRUCT) || !user.use_sanity_check(src, tool))
 			return TRUE
 		if (!wired)
 			USE_FEEDBACK_FAILURE("\The [src] has no wires to cut.")

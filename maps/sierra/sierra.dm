@@ -157,6 +157,7 @@
 	#include "../../mods/maps/liberia/_map_liberia.dme"
 	#include "../../mods/bluespace_kitty/_bluespace_kitty.dme"
 	#include "../../mods/maps/sentinel/_map_sentinel.dme"
+	#include "../../mods/skills/bureaucracy/legalese_language/_legalese.dme"
 	#include "../../mods/maps/farfleet/_map_farfleet.dme"
 
 	// UNUSED MODS
@@ -168,7 +169,7 @@
 	// он всегда напоминает о своём существовании. Небольшая библиотека,
 	// если так вообще можно выразиться.
 
-	#include "../../packs/faction_iccgn/_pack.dm"
+	#include "../../packs/factions/iccgn/_pack.dm"
 	#include "../../packs/infinity/_pack.dm"
 	#include "../../packs/sierra-tweaks/_pack.dm"
 	#include "../../packs/deepmaint/_pack.dm"

@@ -463,15 +463,6 @@
 	return 2
 
 
-/mob/living/silicon/robot/use_user(obj/item/tool, list/click_params)
-	// Welding Tool - Block self repair
-	if (isWelder(tool))
-		FEEDBACK_FAILURE(src, "You lack the reach to be able to repair yourself.")
-		return TRUE
-
-	return ..()
-
-
 /mob/living/silicon/robot/post_use_item(obj/item/tool, mob/user, interaction_handled, use_call, click_params)
 	..()
 
@@ -491,7 +482,7 @@
 			if (component.installed)
 				USE_FEEDBACK_FAILURE("\The [src] already has \a [component.wrapped] installed in \the [component] slot.")
 				return TRUE
-			if (!user.unEquip(tool, component))
+			if (!user.unEquip(tool, src))
 				FEEDBACK_UNEQUIP_FAILURE(user, tool)
 				return TRUE
 			component.installed = TRUE
@@ -524,7 +515,7 @@
 			SPAN_NOTICE("\The [user] starts repairing some of the electronics in \the [src] with [cable.get_vague_name(FALSE)]."),
 			SPAN_NOTICE("You start repairing some of the electronics in \the [src] with [cable.get_exact_name(1)]."),
 		)
-		if (!do_after(user, 1 SECOND, src, DO_PUBLIC_UNIQUE) || !user.use_sanity_check())
+		if (!do_after(user, 1 SECOND, src, DO_PUBLIC_UNIQUE) || !user.use_sanity_check(src, tool))
 			return TRUE
 		if (!wiresexposed)
 			USE_FEEDBACK_FAILURE("\The [src]'s wires must be exposed to repair electronics damage.")
@@ -800,6 +791,9 @@
 
 	// Welding Tool - Repair brute damage
 	if (isWelder(tool))
+		if (user == src)
+			USE_FEEDBACK_FAILURE("You lack the reach to be able to repair yourself.")
+			return TRUE
 		if (!getBruteLoss())
 			USE_FEEDBACK_FAILURE("\The [src] has no physical damage to repair.")
 			return TRUE
@@ -869,7 +863,7 @@
 
 //Robots take half damage from basic attacks.
 /mob/living/silicon/robot/attack_generic(mob/user, damage, attack_message)
-	..(user,Floor(damage/2),attack_message)
+	..(user,floor(damage/2),attack_message)
 
 /mob/living/silicon/robot/get_req_access()
 	return req_access

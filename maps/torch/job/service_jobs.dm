@@ -20,8 +20,8 @@
 		/datum/mil_rank/fleet/e6
 	)
 	min_skill = list(
-		SKILL_BUREAUCRACY = SKILL_ADEPT,
-		SKILL_COOKING = SKILL_ADEPT,
+		SKILL_BUREAUCRACY = SKILL_TRAINED,
+		SKILL_COOKING = SKILL_TRAINED,
 		SKILL_BOTANY = SKILL_BASIC,
 		SKILL_CHEMISTRY = SKILL_BASIC
 	)
@@ -79,6 +79,7 @@
 	minimum_character_age = list(SPECIES_HUMAN = 20)
 	ideal_character_age = 20
 	alt_titles = list(
+		"Custodian",
 		"Janitor")
 	outfit_type = /singleton/hierarchy/outfit/job/torch/crew/service/janitor
 	allowed_branches = list(
@@ -133,7 +134,7 @@
 	min_skill = list(
 		SKILL_BOTANY = SKILL_BASIC,
 		SKILL_CHEMISTRY = SKILL_BASIC,
-		SKILL_COOKING = SKILL_ADEPT
+		SKILL_COOKING = SKILL_TRAINED
 	)
 	access = list(
 		access_commissary,

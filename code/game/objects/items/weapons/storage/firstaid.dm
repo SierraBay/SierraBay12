@@ -176,6 +176,7 @@
 	storage_slots = 14
 	max_w_class = ITEM_SIZE_NORMAL
 	max_storage_space = null
+	w_class = ITEM_SIZE_LARGE
 	can_hold = list(
 		/obj/item/bonesetter,
 		/obj/item/cautery,
@@ -195,7 +196,7 @@
 		/obj/item/circular_saw,
 		/obj/item/hemostat,
 		/obj/item/retractor,
-		/obj/item/scalpel,
+		/obj/item/scalpel/basic,
 		/obj/item/surgicaldrill,
 		/obj/item/bonegel,
 		/obj/item/FixOVein,

@@ -7,7 +7,20 @@
 
 #define CLAMP01(x) clamp(x, 0, 1)
 
+/**
+ * Get the turf that `A` resides in, regardless of any containers.
+ *
+ * Use in favor of `A.loc` or `src.loc` so that things work correctly when
+ * stored inside an inventory, locker, or other container.
+ */
 #define get_turf(A) get_step(A,0)
+
+/**
+ * Get the ultimate area of `A`, similarly to [get_turf].
+ *
+ * Use instead of `A.loc.loc`.
+ */
+#define get_area(A) (isarea(A) ? A : get_step(A, 0)?.loc)
 
 #define get_x(A) (get_step(A, 0)?.x || 0)
 
@@ -278,6 +291,13 @@
 
 
 #define num2hex(num) num2text(num, 1, 16)
+
+
+/// Generate random hex up to char length nibbles
+/proc/randhex(nibbles)
+	for (var/i = 1 to nibbles)
+		. += num2text(rand(0, 15), 1, 16)
+
 
 /// Increase the size of L by 1 at the end. Is the old last entry index.
 #define LIST_INC(L) ((L).len++)

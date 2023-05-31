@@ -87,7 +87,7 @@
 				for (var/chem in M.chem_products)
 					sheet_volume += M.chem_products[chem] * skill_multiplier
 				var/obj/item/stack/material/S = I
-				var/used_sheets = min(Ceil((container.reagents.maximum_volume - container.reagents.total_volume) / sheet_volume), S.get_amount())
+				var/used_sheets = min(ceil((container.reagents.maximum_volume - container.reagents.total_volume) / sheet_volume), S.get_amount())
 				var/used_all = used_sheets == S.get_amount()
 				S.use(used_sheets)
 				for (var/chem in M.chem_products)
@@ -232,22 +232,22 @@
 /obj/machinery/reagentgrinder/AltClick(mob/user)
 	if(CanDefaultInteract(user))
 		detach(user)
-	else
-		..()
+		return TRUE
+	return ..()
 
 
 /obj/machinery/reagentgrinder/CtrlClick(mob/user)
 	if(anchored && CanDefaultInteract(user))
 		grind(user)
-	else
-		..()
+		return TRUE
+	return ..()
 
 
 /obj/machinery/reagentgrinder/CtrlAltClick(mob/user)
 	if(CanDefaultInteract(user))
 		eject(user)
-	else
-		..()
+		return TRUE
+	return ..()
 
 
 /obj/machinery/reagentgrinder/RefreshParts()
