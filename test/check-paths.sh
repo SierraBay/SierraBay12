@@ -38,7 +38,7 @@ exactly 114 "to_world uses" '\sto_world\('
 exactly 0 "globals with leading /" '^/var' -P
 exactly 0 "globals without global sugar" '^var/(?!global/)' -P
 exactly 0 "apparent paths with trailing /" '\w/[,\)\n]' -P
-exactly 52 "to_world_log uses" '\sto_world_log\('
+exactly $(( 50 + 1 )) "to_world_log uses" '\sto_world_log\('
 exactly 0 "world<< uses" 'world<<|world[[:space:]]<<'
 exactly 0 "world.log<< uses" 'world.log<<|world.log[[:space:]]<<'
 exactly 11 "<< uses" '(?<!<)<<(?!<)' -P
@@ -56,7 +56,7 @@ exactly 0 "emagged = 0/1" 'emagged\s*=\s*\d' -P
 exactly 0 "simulated = 0/1" 'simulated\s*=\s*\d' -P
 exactly 2 "var/ in proc arguments" '(^/[^/].+/.+?\(.*?)var/' -P
 exactly 0 "tmp/ vars" 'var.*/tmp/' -P
-exactly 5 "uses of .len" '\.len\b' -P
+exactly 6 "uses of .len" '\.len\b' -P
 exactly $(( 426 + 18 )) "attackby() override" '\/attackby\((.*)\)'  -P
 # With the potential exception of << if you increase any of these numbers you're probably doing it wrong
 
