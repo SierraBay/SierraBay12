@@ -102,7 +102,6 @@
 
 	if(air_temporary)
 		loc.assume_air(air_temporary)
-<<<<<<< ours
 
 	if(in_stasis)
 		var/obj/machinery/clamp/C = locate() in get_turf(src)
@@ -110,10 +109,7 @@
 			C.open()
 			C.removal()
 
-	. = ..()
-=======
 	return ..()
->>>>>>> theirs
 
 /obj/machinery/atmospherics/pipe/attackby(obj/item/W as obj, mob/user as mob)
 	if (istype(src, /obj/machinery/atmospherics/unary/tank))

@@ -30,7 +30,6 @@
 	return ..()
 
 /mob/proc/remove_screen_obj_references()
-<<<<<<< ours
 	QDEL_NULL_SCREEN(hands)
 	QDEL_NULL_SCREEN(pullin)
 	QDEL_NULL_SCREEN(purged)
@@ -44,37 +43,15 @@
 	QDEL_NULL_SCREEN(healths)
 	QDEL_NULL_SCREEN(throw_icon)
 	QDEL_NULL_SCREEN(nutrition_icon)
+	QDEL_NULL_SCREEN(hydration_icon)
 	QDEL_NULL_SCREEN(pressure)
 	QDEL_NULL_SCREEN(pain)
 	QDEL_NULL_SCREEN(item_use_icon)
 	QDEL_NULL_SCREEN(gun_move_icon)
+	QDEL_NULL_SCREEN(radio_use_icon )
 	QDEL_NULL_SCREEN(gun_setting_icon)
 	QDEL_NULL_SCREEN(ability_master)
 	QDEL_NULL_SCREEN(zone_sel)
-=======
-	hands = null
-	pullin = null
-	purged = null
-	internals = null
-	oxygen = null
-	i_select = null
-	m_select = null
-	toxin = null
-	fire = null
-	bodytemp = null
-	healths = null
-	throw_icon = null
-	nutrition_icon = null
-	hydration_icon = null
-	pressure = null
-	pain = null
-	item_use_icon = null
-	gun_move_icon = null
-	radio_use_icon = null
-	gun_setting_icon = null
-	ability_master = null
-	zone_sel = null
->>>>>>> theirs
 
 /mob/Initialize()
 	. = ..()
