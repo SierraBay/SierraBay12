@@ -16,7 +16,7 @@
 
 
 /mob/new_player/Destroy()
-	QDEL_NULL(panel)
+	// QDEL_NULL(panel) // BAY
 	return ..()
 
 
