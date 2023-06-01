@@ -93,8 +93,13 @@ SUBSYSTEM_DEF(garbage)
 	if (PreventUpdateStat(time))
 		return ..()
 	..({"\
+<<<<<<< ours
 		prequeue: [length(pre_queue)], collection queue: [length(collection_queue)], deletion queue: [length(deletion_queue)]\n\
 		last run: [last_tick_deletions + last_tick_collections], collected: [total_collections], deleted: [total_deletions], failed: [collections_failed]\n\
+=======
+		collection queue: [length(collection_queue)], deletion queue: [length(deletion_queue)][pause_deletion_queue ? "(paused)" : ""]\n\
+		last run: [last_tick_deletions + last_tick_collections], collected: [total_collections], deleted: [total_deletions], failed: [failed_collections]\n\
+>>>>>>> theirs
 	"})
 
 
