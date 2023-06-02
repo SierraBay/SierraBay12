@@ -793,7 +793,7 @@
 "cX" = (
 /obj/structure/table/glass,
 /obj/item/storage/firstaid/surgery,
-/obj/item/scalpel/manager,
+/obj/item/scalpel/ims,
 /obj/item/device/radio/intercom/map_preset/skrellscoutship{
 	pixel_y = 24
 	},
@@ -1659,7 +1659,7 @@
 /area/ship/skrellscoutship/robotics)
 "fy" = (
 /obj/effect/floor_decal/industrial/outline/red,
-/obj/structure/stasis_cage,
+/obj/machinery/stasis_cage,
 /turf/simulated/floor/tiled/skrell/green,
 /area/ship/skrellscoutship/robotics)
 "fA" = (
@@ -4624,7 +4624,7 @@
 /obj/item/reagent_containers/chem_disp_cartridge/acetone,
 /obj/item/reagent_containers/chem_disp_cartridge/ammonia,
 /obj/item/reagent_containers/chem_disp_cartridge/carbon,
-/obj/item/scalpel/manager,
+/obj/item/scalpel/ims,
 /obj/item/storage/firstaid/surgery,
 /obj/structure/closet/crate/medical,
 /obj/item/storage/firstaid/combat,

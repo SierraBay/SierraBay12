@@ -19,7 +19,7 @@
 	stance_limbs = list()
 
 	if(!dna)
-		dna = new /datum/dna(null)
+		dna = new
 		// Species name is handled by set_species()
 
 	if(!species)
@@ -61,11 +61,25 @@
 	if (dream_timer)
 		deltimer(dream_timer)
 		dream_timer = null
+	. = ..()
 	GLOB.human_mobs -= src
 	worn_underwear = null
 	for(var/organ in organs)
 		qdel(organ)
-	return ..()
+	default_language = null
+	LAZYCLEARLIST(cultural_info)
+	LAZYCLEARLIST(bad_external_organs)
+	LAZYCLEARLIST(hud_list)
+	LAZYCLEARLIST(languages)
+	LAZYCLEARLIST(usable_emotes)
+	char_branch = null
+	char_rank = null
+	species = null
+	backpack_setup = null
+	QDEL_NULL(vessel)
+	QDEL_NULL(dna)
+	LAZYCLEARLIST(overlays_standing)
+
 
 /mob/living/carbon/human/get_ingested_reagents()
 	if(should_have_organ(BP_STOMACH))
@@ -1136,24 +1150,18 @@
 
 
 /mob/living/carbon/human/proc/set_species(new_species, default_colour = 1)
-	if(!dna)
-		if(!new_species)
+	if (!dna)
+		if (!new_species)
 			new_species = SPECIES_HUMAN
-	else
-		if(!new_species)
-			new_species = dna.species
-
-	// No more invisible screaming wheelchairs because of set_species() typos.
-	if(!all_species[new_species])
+		dna = new
+	else if (!new_species)
+		new_species = dna.species
+	if (!all_species[new_species])
 		new_species = SPECIES_HUMAN
-	if(dna)
-		dna.species = new_species
-
-	if(species)
-
-		if(species.name && species.name == new_species)
+	dna.species = new_species
+	if (species)
+		if (species.name && species.name == new_species)
 			return
-
 		// Clear out their species abilities.
 		species.remove_base_auras(src)
 		species.remove_inherent_verbs(src)
@@ -1218,15 +1226,19 @@
 	bone_material = species.bone_material
 	bone_amount =   species.bone_amount
 
+	if (!vessel)
+		vessel = new (species.blood_volume, src)
+	if (vessel.total_volume < species.blood_volume)
+		vessel.maximum_volume = species.blood_volume
+		vessel.add_reagent(/datum/reagent/blood, species.blood_volume - vessel.total_volume)
+	else if (vessel.total_volume > species.blood_volume)
+		vessel.remove_reagent(/datum/reagent/blood, vessel.total_volume - species.blood_volume)
+		vessel.maximum_volume = species.blood_volume
+	dna.ready_dna(src)
+	fixblood()
+
 	spawn(0)
 		regenerate_icons()
-		if(vessel.total_volume < species.blood_volume)
-			vessel.maximum_volume = species.blood_volume
-			vessel.add_reagent(/datum/reagent/blood, species.blood_volume - vessel.total_volume)
-		else if(vessel.total_volume > species.blood_volume)
-			vessel.remove_reagent(/datum/reagent/blood, vessel.total_volume - species.blood_volume)
-			vessel.maximum_volume = species.blood_volume
-		fixblood()
 
 	// Rebuild the HUD and visual elements.
 	if(client)
@@ -1496,9 +1508,9 @@
 	if(!current_limb || !S || !U)
 		return
 
-	var/fail_prob = U.skill_fail_chance(SKILL_MEDICAL, 60, SKILL_ADEPT, 3)
+	var/fail_prob = U.skill_fail_chance(SKILL_MEDICAL, 60, SKILL_TRAINED, 3)
 	if(self)
-		fail_prob += U.skill_fail_chance(SKILL_MEDICAL, 20, SKILL_EXPERT, 1)
+		fail_prob += U.skill_fail_chance(SKILL_MEDICAL, 20, SKILL_EXPERIENCED, 1)
 	var/datum/pronouns/P = choose_from_pronouns()
 	if(prob(fail_prob))
 		visible_message( \
@@ -1750,7 +1762,7 @@
 
 /mob/living/carbon/human/ranged_accuracy_mods()
 	. = ..()
-	if(get_shock() > 10 && !skill_check(SKILL_WEAPONS, SKILL_ADEPT))
+	if(get_shock() > 10 && !skill_check(SKILL_WEAPONS, SKILL_TRAINED))
 		. -= 1
 	if(get_shock() > 50)
 		. -= 1
@@ -1758,11 +1770,11 @@
 		. -= 1
 	if(shock_stage > 30)
 		. -= 1
-	if(skill_check(SKILL_WEAPONS, SKILL_ADEPT))
+	if(skill_check(SKILL_WEAPONS, SKILL_TRAINED))
 		. += 1
-	if(skill_check(SKILL_WEAPONS, SKILL_EXPERT))
+	if(skill_check(SKILL_WEAPONS, SKILL_EXPERIENCED))
 		. += 1
-	if(skill_check(SKILL_WEAPONS, SKILL_PROF))
+	if(skill_check(SKILL_WEAPONS, SKILL_MASTER))
 		. += 2
 
 /mob/living/carbon/human/can_drown()

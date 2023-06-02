@@ -501,7 +501,7 @@ GLOBAL_LIST_INIT(switch_small_sound, list(
 //Alternative way to activate it, but instead stop, we will pause it.
 /obj/item/music_player/AltClick(mob/user)
 	if(!CanPhysicallyInteract(user))
-		return
+		return ..()
 
 	user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
 	switch(mode)
@@ -509,6 +509,8 @@ GLOBAL_LIST_INIT(switch_small_sound, list(
 			set_mode(PLAYER_STATE_PAUSE)
 		if(PLAYER_STATE_PAUSE)
 			set_mode(PLAYER_STATE_PLAY)
+
+	return TRUE
 
 /obj/item/music_player/fire_act()
 	break_act()

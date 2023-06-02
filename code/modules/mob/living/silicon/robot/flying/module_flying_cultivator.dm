@@ -13,7 +13,7 @@
 		/obj/item/material/minihoe/unbreakable,
 		/obj/item/material/hatchet/unbreakable,
 		/obj/item/reagent_containers/glass/bucket,
-		/obj/item/scalpel/laser1,
+		/obj/item/scalpel/laser,
 		/obj/item/circular_saw,
 		/obj/item/extinguisher,
 		/obj/item/gripper/cultivator,
@@ -23,7 +23,7 @@
 	emag = /obj/item/melee/energy/machete
 	skills = list(
 		SKILL_BOTANY    = SKILL_MAX,
-		SKILL_COMBAT    = SKILL_EXPERT,
-		SKILL_CHEMISTRY = SKILL_EXPERT,
-		SKILL_SCIENCE   = SKILL_EXPERT,
+		SKILL_COMBAT    = SKILL_EXPERIENCED,
+		SKILL_CHEMISTRY = SKILL_EXPERIENCED,
+		SKILL_SCIENCE   = SKILL_EXPERIENCED,
 	)

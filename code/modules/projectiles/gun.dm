@@ -115,7 +115,7 @@
 	/// What skill governs safe handling of this gun. Basic skill level and higher will also show the safety overlay to the player.
 	var/gun_skill = SKILL_WEAPONS
 	/// What skill level is needed in the gun's skill to completely negate the chance of an accident.
-	var/safety_skill = SKILL_EXPERT
+	var/safety_skill = SKILL_EXPERIENCED
 
 /obj/item/gun/Initialize()
 	. = ..()
@@ -287,7 +287,7 @@
 		return
 
 	if(safety())
-		if(user.a_intent == I_HURT && user.skill_check(SKILL_WEAPONS, SKILL_EXPERT))
+		if(user.a_intent == I_HURT && user.skill_check(SKILL_WEAPONS, SKILL_EXPERIENCED))
 			toggle_safety(user)
 		else
 			handle_click_safety(user)
@@ -446,7 +446,7 @@
 	var/disp_mod = dispersion[min(burst, length(dispersion))]
 	var/stood_still = last_handled
 	//Not keeping gun active will throw off aim (for non-Masters)
-	if(user.skill_check(SKILL_WEAPONS, SKILL_PROF))
+	if(user.skill_check(SKILL_WEAPONS, SKILL_MASTER))
 		stood_still = min(user.l_move_time, last_handled)
 	else
 		stood_still = max(user.l_move_time, last_handled)
@@ -462,7 +462,7 @@
 		acc_mod -= one_hand_penalty/2
 		disp_mod += one_hand_penalty*0.5 //dispersion per point of two-handedness
 
-	if(burst > 1 && !user.skill_check(SKILL_WEAPONS, SKILL_ADEPT))
+	if(burst > 1 && !user.skill_check(SKILL_WEAPONS, SKILL_TRAINED))
 		acc_mod -= 1
 		disp_mod += 0.5
 
@@ -598,17 +598,16 @@
 	zoom(user, zoom_offset, view_size)
 	if(zoom)
 		accuracy = scoped_accuracy
-		if(user.skill_check(SKILL_WEAPONS, SKILL_PROF))
+		if(user.skill_check(SKILL_WEAPONS, SKILL_MASTER))
 			accuracy += 2
 		if(screen_shake)
 			screen_shake = round(screen_shake*zoom_amount+1) //screen shake is worse when looking through a scope
 
 //make sure accuracy and screen_shake are reset regardless of how the item is unzoomed.
-/obj/item/gun/zoom()
+/obj/item/gun/unzoom()
 	..()
-	if(!zoom)
-		accuracy = initial(accuracy)
-		screen_shake = initial(screen_shake)
+	accuracy = initial(accuracy)
+	screen_shake = initial(screen_shake)
 
 /obj/item/gun/examine(mob/user)
 	. = ..()
@@ -671,7 +670,7 @@
 	if(loc == user)
 		toggle_safety(user)
 		return TRUE
-	. = ..()
+	return ..()
 
 /obj/item/gun/proc/safety()
 	return has_safety && safety_state

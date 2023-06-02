@@ -33,7 +33,7 @@
 
 /obj/item/gun/projectile/heavysniper/handle_post_fire(mob/user, atom/target, pointblank=0, reflex=0)
 	..()
-	if(user && user.skill_check(SKILL_WEAPONS, SKILL_PROF))
+	if(user && user.skill_check(SKILL_WEAPONS, SKILL_MASTER))
 		to_chat(user, SPAN_NOTICE("You work the bolt open with a reflexive motion, ejecting [chambered]!"))
 		unload_shell()
 
@@ -111,10 +111,10 @@
 	load_method = MAGAZINE
 	magazine_type = /obj/item/ammo_magazine/rifle
 	allowed_magazines = /obj/item/ammo_magazine/rifle
-	one_hand_penalty = 9
-	scoped_accuracy = 6
+	one_hand_penalty = 8
+	scoped_accuracy = 8
 	scope_zoom = 1
-	accuracy_power = 9
+	accuracy_power = 8
 	accuracy = 4
 	bulk = GUN_BULK_RIFLE
 	wielded_item_state = "dmr-wielded"
@@ -167,7 +167,7 @@
 	icon = 'icons/obj/guns/semistrip.dmi'
 	icon_state = "semistrip"
 	item_state = "semistrip"
-	w_class = ITEM_SIZE_LARGE
+	w_class = ITEM_SIZE_HUGE
 	force = 10
 	origin_tech = list(TECH_COMBAT = 2)
 	slot_flags = SLOT_BACK

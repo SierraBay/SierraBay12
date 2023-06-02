@@ -70,6 +70,7 @@
 
 	if(is_fulltile())
 		layer = FULL_WINDOW_LAYER
+		CLEAR_FLAGS(obj_flags, OBJ_FLAG_ROTATABLE)
 
 	health_min_damage = material.hardness * 1.25
 	if (reinf_material)
@@ -491,7 +492,7 @@
 			grab.affecting.Weaken(5)
 			grab.affecting.apply_damage(20, DAMAGE_BRUTE, def_zone, used_weapon = src)
 			hit(50, grab.assailant, grab.affecting)
-		qdel(grab) // SIERRA
+		qdel(grab) // SIERRA TODO: На оффы эту строчку
 		return TRUE
 
 	return ..()
@@ -768,9 +769,6 @@
 	for(var/obj/structure/window/W in range(src,range))
 		if(W.polarized && (W.id == src.id || !W.id))
 			W.toggle()
-	for(var/obj/machinery/door/window/W in range(src,range))
-		if(W.polarized && (W.id == src.id || !W.id))
-			W.toggle_tint()
 	..()
 
 /obj/machinery/button/windowtint/power_change()

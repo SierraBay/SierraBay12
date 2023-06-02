@@ -1,6 +1,8 @@
 /obj
 	layer = OBJ_LAYER
 	animate_movement = 2
+	// glide_size = 3 // BAY
+	glide_size = 7 // SIERRA
 
 	var/obj_flags
 
@@ -48,7 +50,7 @@
 				SPAN_NOTICE("\The [user] starts lifting \the [dropped] onto \the [src]."),
 				SPAN_NOTICE("You start lifting \the [dropped] onto \the [src].")
 			)
-			if (!user.do_skilled(6 SECONDS, SKILL_HAULING, src, do_flags = DO_PUBLIC_UNIQUE) || !user.use_sanity_check(src, dropped, SANITY_CHECK_BOTH_ADJACENT))
+			if (!user.do_skilled(6 SECONDS, SKILL_HAULING, src, do_flags = DO_PUBLIC_UNIQUE) || !user.use_sanity_check(src, dropped))
 				return TRUE
 			if (!HAS_FLAGS(obj_flags, OBJ_FLAG_RECEIVE_TABLE))
 				USE_FEEDBACK_FAILURE("\The [src]'s state has changed.")
@@ -252,7 +254,8 @@
 /obj/AltClick(mob/user)
 	if(obj_flags & OBJ_FLAG_ROTATABLE)
 		rotate(user)
-	..()
+		return TRUE
+	return ..()
 
 /obj/examine(mob/user)
 	. = ..()

@@ -32,11 +32,11 @@
 
 /obj/item/clothing/Destroy()
 	for (var/obj/item/clothing/accessory/A as anything in accessories)
-		remove_accessory(null, A)
+		remove_accessory(null, A, TRUE)
 		qdel(A)
 	accessories.Cut()
 	accessories = null
-	. = ..()
+	return ..()
 
 
 // Updates the icons of the mob wearing the clothing item, if any.
@@ -510,15 +510,20 @@ BLIND     // can't see anything
 		to_chat(user, SPAN_NOTICE("You crawl under \the [src]."))
 	return 1
 
+
+/proc/get_obj_light_overlay(state)
+	var/static/list/cache = list()
+	var/image/entry = cache["[state]_icon"]
+	if (!entry)
+		entry = image('icons/obj/light_overlays.dmi', null, state)
+		cache["[state]_icon"] = entry
+	return entry
+
+
 /obj/item/clothing/head/on_update_icon(mob/user)
-
 	overlays.Cut()
-	if(on)
-		// Generate object icon.
-		if(!light_overlay_cache["[light_overlay]_icon"])
-			light_overlay_cache["[light_overlay]_icon"] = image("icon" = 'icons/obj/light_overlays.dmi', "icon_state" = "[light_overlay]")
-		overlays |= light_overlay_cache["[light_overlay]_icon"]
-
+	if (on && light_overlay)
+		overlays += get_obj_light_overlay(light_overlay)
 	if(istype(user,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = user
 		H.update_inv_head()
@@ -1093,6 +1098,8 @@ BLIND     // can't see anything
 /obj/item/clothing/under/AltClick(mob/user)
 	if(CanPhysicallyInteract(user))
 		set_sensors(user)
+		return TRUE
+	return FALSE
 
 ///////////////////////////////////////////////////////////////////////
 //Rings

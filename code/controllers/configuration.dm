@@ -114,11 +114,9 @@
 	/// Gamemodes which end instantly will instead keep on going until the round ends by escape shuttle or nuke.
 	var/static/continous_rounds = FALSE
 
-	var/static/fps = 30
+	var/static/fps = 40
 
 	var/static/list/resource_urls
-
-	var/static/minimum_byondacc_age = 0
 
 	/// Ghosts can turn on Antagovision to see a HUD of who is the bad guys this round.
 	var/static/antag_hud_allowed = FALSE
@@ -184,8 +182,6 @@
 	/// Set to 1 to prevent newly-spawned mice from understanding human speech
 	var/static/uneducated_mice = FALSE
 
-	var/static/usewhitelist_database = FALSE
-
 	var/static/usealienwhitelist = FALSE
 
 	var/static/usealienwhitelistSQL = FALSE
@@ -216,8 +212,6 @@
 
 	var/static/issue_url
 
-	var/static/overflow_server_url
-
 	var/static/list/chat_markup
 
 	var/static/forbidden_message_regex
@@ -227,6 +221,12 @@
 	var/static/forbidden_message_no_notifications = FALSE
 
 	var/static/forbidden_message_hide_details = FALSE
+
+	// [SIERRA] - ss220 dependency
+	var/static/minimum_byondacc_age = 0
+	var/static/usewhitelist_database = FALSE
+	var/static/overflow_server_url
+	// [/SIERRA]
 
 	//game_options.txt configs
 
@@ -450,6 +450,9 @@
 	/// Limit of how many SQL threads can run at once
 	var/static/rust_sql_thread_limit = 50
 
+	var/static/deletion_starts_paused = FALSE
+
+
 /datum/configuration/New()
 	load_config()
 	load_options()
@@ -619,10 +622,6 @@
 				source_url = value
 			if ("issue_url")
 				issue_url = value
-			if ("overflow_server_url")
-				overflow_server_url = value
-			if("minimum_byondacc_age")
-				minimum_byondacc_age = text2num(value)
 			if ("discord_url")
 				discord_url = value
 			if ("ghosts_can_possess_animals")
@@ -701,8 +700,6 @@
 				secret_disabled = TRUE
 			if ("usealienwhitelist")
 				usealienwhitelist = TRUE
-			if("usewhitelist_database")
-				usewhitelist_database = TRUE
 			if ("usealienwhitelist_sql")
 				usealienwhitelistSQL = TRUE
 			if ("continuous_rounds")
@@ -874,6 +871,16 @@
 				run_empty_levels = TRUE
 			if ("warn_if_staff_same_ip")
 				warn_if_staff_same_ip = TRUE
+			if ("deletion_starts_paused")
+				deletion_starts_paused = TRUE
+			// [SIERRA] - ss220 dependency
+			if("minimum_byondacc_age")
+				minimum_byondacc_age = text2num(value)
+			if("usewhitelist_database")
+				usewhitelist_database = TRUE
+			if ("overflow_server_url")
+				overflow_server_url = value
+			// [/SIERRA]
 			else
 				log_misc("Unknown setting in config/config.txt: '[name]'")
 
@@ -960,6 +967,13 @@
 				sqlfdbklogin = value
 			if ("feedback_password")
 				sqlfdbkpass = value
+
+			// [SIERRA] - ss220 dependency
+			if("utility_database")
+				sqlfdbkdbutil = value
+			// [/SIERRA]
+
+			// [SIERRA]
 			if("feedback_tableprefix")
 				sqlfdbktableprefix = value
 			if("db_version")
@@ -968,6 +982,7 @@
 				async_sql_query_timeout = text2num(value) SECONDS
 			if ("rust_sql_thread_limit")
 				rust_sql_thread_limit = text2num(value)
+			// [/SIERRA]
 			else
 				log_misc("Unknown setting in config/dbconfig.txt: '[name]'")
 

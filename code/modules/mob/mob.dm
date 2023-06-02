@@ -1,4 +1,4 @@
-/mob/Destroy()//This makes sure that mobs with clients/keys are not just deleted from the game.
+/mob/Destroy()
 	STOP_PROCESSING_MOB(src)
 	GLOB.dead_mobs -= src
 	GLOB.alive_mobs -= src
@@ -22,8 +22,12 @@
 	if(mind && mind.current == src)
 		spellremove(src)
 	ghostize()
-	..()
-	return QDEL_HINT_HARDDEL
+	if (istype(ability_master))
+		QDEL_NULL(ability_master)
+	move_intent = null
+	lastarea = null
+	mind = null
+	return ..()
 
 /mob/proc/remove_screen_obj_references()
 	QDEL_NULL_SCREEN(hands)
@@ -39,10 +43,12 @@
 	QDEL_NULL_SCREEN(healths)
 	QDEL_NULL_SCREEN(throw_icon)
 	QDEL_NULL_SCREEN(nutrition_icon)
+	QDEL_NULL_SCREEN(hydration_icon)
 	QDEL_NULL_SCREEN(pressure)
 	QDEL_NULL_SCREEN(pain)
 	QDEL_NULL_SCREEN(item_use_icon)
 	QDEL_NULL_SCREEN(gun_move_icon)
+	QDEL_NULL_SCREEN(radio_use_icon )
 	QDEL_NULL_SCREEN(gun_setting_icon)
 	QDEL_NULL_SCREEN(ability_master)
 	QDEL_NULL_SCREEN(zone_sel)
@@ -359,7 +365,7 @@
 			distance = get_dist(source_turf, target_turf)
 	if(!A.examine(src, distance))
 		crash_with("Improper /examine() override: [log_info_line(A)]")
-	if(get_skill_value(SKILL_FORENSICS) >= SKILL_EXPERT && get_dist(src, A) <= (get_skill_value(SKILL_FORENSICS) - SKILL_ADEPT))
+	if(get_skill_value(SKILL_FORENSICS) >= SKILL_EXPERIENCED && get_dist(src, A) <= (get_skill_value(SKILL_FORENSICS) - SKILL_TRAINED))
 		var/clue
 		if(LAZYLEN(A.suit_fibers))
 			to_chat(src, SPAN_NOTICE("You notice some fibers embedded in \the [A]."))
@@ -380,7 +386,7 @@
 				to_chat(src, SPAN_NOTICE("You notice a faint acrid smell coming from \the [A]."))
 			clue = 1
 		//Noticing wiped blood is a bit harder
-		if((get_skill_value(SKILL_FORENSICS) >= SKILL_PROF) && LAZYLEN(A.blood_DNA))
+		if((get_skill_value(SKILL_FORENSICS) >= SKILL_MASTER) && LAZYLEN(A.blood_DNA))
 			to_chat(src, SPAN_WARNING("You notice faint blood traces on \The [A]."))
 			clue = 1
 		if(clue && has_client_color(/datum/client_color/noir))

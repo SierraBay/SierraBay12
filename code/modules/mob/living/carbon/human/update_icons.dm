@@ -6,7 +6,7 @@
 */
 var/global/list/human_icon_cache = list()
 var/global/list/tail_icon_cache = list() //key is [species.race_key][skin_color]
-var/global/list/light_overlay_cache = list()
+
 GLOBAL_LIST_EMPTY(overlay_icon_cache)
 GLOBAL_LIST_EMPTY(species_icon_template_cache)
 
@@ -121,10 +121,10 @@ Please contact me on #coderbus IRC. ~Carn x
 //Human Overlays Indexes/////////
 #define HO_MUTATIONS_LAYER  1
 #define HO_SKIN_LAYER       2
-#define HO_DAMAGE_LAYER     3
-#define HO_SURGERY_LAYER    4 //bs12 specific.
-#define HO_UNDERWEAR_LAYER  5
-#define HO_UNIFORM_LAYER    6
+#define HO_SURGERY_LAYER    3 //bs12 specific.
+#define HO_UNDERWEAR_LAYER  4
+#define HO_UNIFORM_LAYER    5
+#define HO_DAMAGE_LAYER     6
 #define HO_ID_LAYER         7
 #define HO_SHOES_LAYER      8
 #define HO_GLOVES_LAYER     9
@@ -154,9 +154,11 @@ Please contact me on #coderbus IRC. ~Carn x
 
 //UPDATES OVERLAYS FROM OVERLAYS_LYING/OVERLAYS_STANDING
 /mob/living/carbon/human/update_icons()
+	overlays.Cut()
+	if (QDELING(src))
+		return
 	lying_prev = lying	//so we don't update overlays for lying/standing unless our stance changes again
 	update_hud()		//TODO: remove the need for this
-	overlays.Cut()
 
 	var/list/overlays_to_apply = list()
 
@@ -496,6 +498,8 @@ var/global/list/damage_icon_parts = list()
 		queue_icon_update()
 
 /mob/living/carbon/human/update_mutations(update_icons=1)
+	if (QDELING(src))
+		return
 	var/fat
 	if(MUTATION_FAT in mutations)
 		fat = "fat"
@@ -528,7 +532,8 @@ var/global/list/damage_icon_parts = list()
 //For legacy support.
 /mob/living/carbon/human/regenerate_icons()
 	..()
-	if(HasMovementHandler(/datum/movement_handler/mob/transformation) || QDELETED(src))		return
+	if(QDELING(src) || HasMovementHandler(/datum/movement_handler/mob/transformation))
+		return
 
 	update_mutations(0)
 	update_body(0)
@@ -894,10 +899,10 @@ var/global/list/damage_icon_parts = list()
 //Human Overlays Indexes/////////
 #undef HO_MUTATIONS_LAYER
 #undef HO_SKIN_LAYER
-#undef HO_DAMAGE_LAYER
 #undef HO_SURGERY_LAYER
 #undef HO_UNDERWEAR_LAYER
 #undef HO_UNIFORM_LAYER
+#undef HO_DAMAGE_LAYER
 #undef HO_ID_LAYER
 #undef HO_SHOES_LAYER
 #undef HO_GLOVES_LAYER
