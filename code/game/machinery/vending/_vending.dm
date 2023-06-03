@@ -113,13 +113,9 @@
 		spawn(rand(0, 15))
 			icon_state = "[initial(icon_state)]-off"
 	if (panel_open)
-<<<<<<< ours
-		add_overlay(image(icon, "[initial(icon_state)]-panel"))
-=======
 		overlays += image(icon, "[initial(icon_state)]-panel")
 	if(!vend_ready)
 		overlays += image(icon, "[initial(icon_state)]-shelf[rand(3)]")
->>>>>>> theirs
 
 
 /obj/machinery/vending/ex_act(severity)
