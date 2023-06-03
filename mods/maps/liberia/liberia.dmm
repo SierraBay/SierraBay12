@@ -1463,6 +1463,9 @@
 "cC" = (
 /obj/structure/table/reinforced,
 /obj/item/paper/sierrau/merchant,
+/obj/machinery/iff_beacon/table{
+	pixel_y = -4
+	},
 /turf/simulated/floor/carpet/blue2,
 /area/liberia/mule)
 "cD" = (

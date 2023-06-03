@@ -329,6 +329,10 @@
 	dir = 4;
 	icon_state = "tube1"
 	},
+/obj/machinery/iff_beacon{
+	dir = 1;
+	pixel_y = -24
+	},
 /turf/simulated/floor/tiled,
 /area/casino/casino_bridge)
 "bb" = (
