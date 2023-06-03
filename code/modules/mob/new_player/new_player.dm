@@ -14,16 +14,10 @@
 	density = FALSE
 	stat = DEAD
 
-<<<<<<< ours
-/mob/new_player/Destroy()
-	// QDEL_NULL(panel) // BAY
-	return ..()
-=======
 	movement_handlers = list()
 	anchored = TRUE	//  don't get pushed around
 
 	virtual_mob = null // Hear no evil, speak no evil
->>>>>>> theirs
 
 
 /mob/new_player/Initialize(mapload)
