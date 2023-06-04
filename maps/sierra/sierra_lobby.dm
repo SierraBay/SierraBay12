@@ -64,7 +64,7 @@
 
 /singleton/audio/track/welcome_to_lunar_industries
 	source = 'sound/music/lobby/faunts-das_malefitz.ogg'
-	artist = "Clint Mansell - Moon OST #1"
+	author = "Clint Mansell - Moon OST #1"
 	title = "Welcome To Lunar Industries"
 	license = /singleton/license/cc_by_nc_sa_3_0
 	url = "https://soundcloud.com/moe-abdelkader/clint-mansell-moon-ost-1-welcome-to-lunar-industries"
