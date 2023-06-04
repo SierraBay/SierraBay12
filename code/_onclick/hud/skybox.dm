@@ -25,8 +25,8 @@
 
 /mob/Login()
 	. = ..()
-	spawn(1)
-		client.update_skybox(1)
+	sleep(1)
+	client.update_skybox(1)
 
 /mob/Move()
 	var/old_z = get_z(src)
