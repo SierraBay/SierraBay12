@@ -172,15 +172,13 @@
 		if ((A != src.loc && A && A.z == src.z))
 			src.last_move = get_dir(A, src.loc)
 
-<<<<<<< ours
-/proc/step_glide(atom/movable/am, dir, glide_size_override)
-	am.set_glide_size(glide_size_override)
-	return step(am, dir)
-=======
 	if(!inertia_moving)
 		inertia_next_move = world.time + inertia_move_delay
 		space_drift(direct ? direct : last_move)
->>>>>>> theirs
+
+/proc/step_glide(atom/movable/am, dir, glide_size_override)
+	am.set_glide_size(glide_size_override)
+	return step(am, dir)
 
 /client/Move(n, direction)
 	if(!user_acted(src))
@@ -194,16 +192,6 @@
 
 	return mob.SelfMove(direction)
 
-<<<<<<< ours
-
-// Checks whether this mob is allowed to move in space
-// Return 1 for movement, 0 for none,
-// -1 to allow movement but with a chance of slipping
-/mob/proc/Allow_Spacemove(check_drift = 0)
-	if(!Check_Dense_Object()) //Nothing to push off of so end here
-		return 0
-=======
->>>>>>> theirs
 
 /mob/Process_Spacemove(allow_movement)
 	. = ..()
@@ -282,7 +270,7 @@
 
 //return 1 if slipped, 0 otherwise
 /mob/proc/handle_spaceslipping()
-	if(prob(skill_fail_chance(SKILL_EVA, slip_chance(10), SKILL_EXPERIENCED)))
+	if(prob(skill_fail_chance(SKILL_EVA, slip_chance(10), SKILL_EXPERT)))
 		to_chat(src, SPAN_WARNING("You slipped!"))
 		step(src,turn(last_move, pick(45,-45)))
 		return 1
