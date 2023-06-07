@@ -179,8 +179,12 @@
 		prefs = new /datum/preferences(src)
 	prefs.last_ip = address				//these are gonna be used for banning
 	prefs.last_id = computer_id			//these are gonna be used for banning
+<<<<<<< ours
 	apply_fps(prefs.clientfps)
 	load_player_discord(src) // SIERRA - ss220 dependency
+=======
+	fps = prefs.clientfps
+>>>>>>> theirs
 
 	. = ..()	//calls mob.Login()
 
@@ -430,9 +434,12 @@
 	if(prefs)
 		prefs.open_setup_window(usr)
 
+<<<<<<< ours
 /client/proc/apply_fps(client_fps)
 	if(world.byond_version >= 511 && byond_version >= 511 && client_fps >= CLIENT_MIN_FPS && client_fps <= CLIENT_MAX_FPS)
 		vars["fps"] = client_fps
+=======
+>>>>>>> theirs
 
 /client/MouseDrag(src_object, over_object, src_location, over_location, src_control, over_control, params)
 	. = ..()
