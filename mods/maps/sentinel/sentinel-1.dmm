@@ -355,8 +355,8 @@
 /obj/random/snack,
 /obj/random/snack,
 /obj/random/snack,
-/obj/item/storage/box/gloves,
-/obj/item/storage/box/gloves,
+/obj/item/storage/box/latexgloves,
+/obj/item/storage/box/nitrilegloves,
 /turf/simulated/floor/tiled/monotile,
 /area/ship/patrol/crew/cargo)
 "aM" = (
@@ -2130,6 +2130,9 @@
 	},
 /obj/effect/floor_decal/corner/blue{
 	dir = 5
+	},
+/obj/machinery/iff_beacon/table{
+	pixel_y = 8
 	},
 /turf/simulated/floor/tiled/dark,
 /area/ship/patrol/command/bridge)
@@ -4615,6 +4618,10 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/cyan{
 	dir = 10
 	},
+/obj/machinery/iff_beacon{
+	dir = 8;
+	pixel_x = 22
+	},
 /turf/simulated/floor/plating,
 /area/ship/reaper)
 "iB" = (
@@ -5281,7 +5288,7 @@
 	},
 /obj/item/storage/box/masks,
 /obj/item/storage/box/freezer,
-/obj/item/storage/box/gloves,
+/obj/item/storage/box/latexgloves,
 /obj/machinery/vending/wallmed1{
 	dir = 4;
 	pixel_x = -24

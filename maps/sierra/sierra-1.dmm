@@ -2253,6 +2253,10 @@
 	dir = 4
 	},
 /obj/structure/table/steel,
+/obj/machinery/iff_beacon{
+	dir = 4;
+	pixel_x = -22
+	},
 /turf/simulated/floor/tiled/monotile,
 /area/exploration_shuttle/cockpit)
 "en" = (
@@ -4143,6 +4147,13 @@
 /obj/effect/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/tiled/white,
 /area/shuttle/petrov/scan)
+"hl" = (
+/obj/effect/floor_decal/industrial/outline/yellow,
+/obj/machinery/drone_pad{
+	desc = "A small pad for transport drones to deposit their payloads at. Requires network reestablishment after Bluespace jump via multitool"
+	},
+/turf/simulated/floor/tiled,
+/area/quartermaster/hangar)
 "hm" = (
 /obj/item/device/radio/intercom{
 	dir = 4;
@@ -4444,6 +4455,21 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/navbeacon/sierra/TD_fore4,
+/obj/effect/floor_decal/borderfloor{
+	dir = 4
+	},
+/obj/effect/floor_decal/borderfloor/corner2{
+	dir = 6
+	},
+/obj/effect/floor_decal/borderfloor/corner2{
+	dir = 5
+	},
+/obj/effect/floor_decal/corner/red/bordercorner2{
+	dir = 5
+	},
+/obj/effect/floor_decal/corner/red/bordercorner2{
+	dir = 6
+	},
 /turf/simulated/floor/tiled,
 /area/hallway/primary/thirddeck/fore)
 "hL" = (
@@ -7971,6 +7997,21 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
+/obj/effect/floor_decal/borderfloor{
+	dir = 4
+	},
+/obj/effect/floor_decal/borderfloor/corner2{
+	dir = 6
+	},
+/obj/effect/floor_decal/borderfloor/corner2{
+	dir = 5
+	},
+/obj/effect/floor_decal/corner/red/bordercorner2{
+	dir = 5
+	},
+/obj/effect/floor_decal/corner/red/bordercorner2{
+	dir = 6
+	},
 /turf/simulated/floor/tiled,
 /area/hallway/primary/thirddeck/fore)
 "mN" = (
@@ -8319,11 +8360,9 @@
 	icon_state = "2-4"
 	},
 /obj/effect/floor_decal/steeldecal/steel_decals4{
-	dir = 4
+	dir = 10
 	},
-/obj/effect/floor_decal/steeldecal/steel_decals4{
-	dir = 9
-	},
+/obj/effect/floor_decal/steeldecal/steel_decals4,
 /turf/simulated/floor/tiled,
 /area/hallway/primary/thirddeck/fore)
 "nl" = (
@@ -8721,6 +8760,13 @@
 /obj/effect/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/storage/airlock_canisters)
+"nM" = (
+/obj/effect/floor_decal/industrial/outline/yellow,
+/obj/structure/closet/crate,
+/obj/item/device/drone_designator,
+/obj/item/device/multitool,
+/turf/simulated/floor/tiled,
+/area/quartermaster/hangar)
 "nN" = (
 /obj/effect/floor_decal/borderfloor{
 	dir = 1
@@ -8773,11 +8819,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/effect/floor_decal/steeldecal/steel_decals4{
-	dir = 8
+	dir = 10
 	},
-/obj/effect/floor_decal/steeldecal/steel_decals4{
-	dir = 5
-	},
+/obj/effect/floor_decal/steeldecal/steel_decals4,
 /turf/simulated/floor/tiled,
 /area/hallway/primary/thirddeck/fore)
 "nQ" = (
@@ -9562,6 +9606,12 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/effect/floor_decal/borderfloor/corner2{
+	dir = 5
+	},
+/obj/effect/floor_decal/corner/red/bordercorner2{
+	dir = 5
+	},
 /turf/simulated/floor/tiled,
 /area/hallway/primary/thirddeck/fore)
 "ph" = (
@@ -10226,6 +10276,12 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/light,
+/obj/effect/floor_decal/steeldecal/steel_decals4{
+	dir = 6
+	},
+/obj/effect/floor_decal/steeldecal/steel_decals4{
+	dir = 1
+	},
 /turf/simulated/floor/tiled,
 /area/hallway/primary/thirddeck/center)
 "qn" = (
@@ -11079,6 +11135,12 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/effect/floor_decal/steeldecal/steel_decals4{
+	dir = 8
+	},
+/obj/effect/floor_decal/steeldecal/steel_decals4{
+	dir = 5
 	},
 /turf/simulated/floor/tiled,
 /area/hallway/primary/thirddeck/fore)
@@ -12968,10 +13030,6 @@
 /obj/machinery/seed_storage/garden,
 /turf/simulated/floor/tiled,
 /area/hydroponics/third_deck_storage)
-"uH" = (
-/obj/effect/paint_stripe/yellow,
-/turf/simulated/wall/r_titanium,
-/area/guppy_hangar/start)
 "uI" = (
 /obj/effect/floor_decal/borderfloor,
 /obj/effect/floor_decal/corner/beige/border,
@@ -14476,6 +14534,21 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 4
+	},
+/obj/effect/floor_decal/borderfloor{
+	dir = 8
+	},
+/obj/effect/floor_decal/borderfloor/corner2{
+	dir = 8
+	},
+/obj/effect/floor_decal/borderfloor/corner2{
+	dir = 10
+	},
+/obj/effect/floor_decal/corner/red/bordercorner2{
+	dir = 8
+	},
+/obj/effect/floor_decal/corner/red/bordercorner2{
+	dir = 10
 	},
 /turf/simulated/floor/tiled,
 /area/hallway/primary/thirddeck/center)
@@ -16641,6 +16714,12 @@
 "AG" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/effect/floor_decal/steeldecal/steel_decals4{
+	dir = 4
+	},
+/obj/effect/floor_decal/steeldecal/steel_decals4{
+	dir = 9
+	},
 /turf/simulated/floor/tiled,
 /area/hallway/primary/thirddeck/fore)
 "AH" = (
@@ -16684,12 +16763,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden,
-/obj/effect/floor_decal/steeldecal/steel_decals4{
-	dir = 9
-	},
-/obj/effect/floor_decal/steeldecal/steel_decals4{
-	dir = 4
-	},
 /obj/structure/flora/pottedplant/tall,
 /obj/machinery/light{
 	dir = 4
@@ -17563,10 +17636,6 @@
 	},
 /turf/simulated/floor/tiled,
 /area/hallway/primary/thirddeck/center)
-"Cm" = (
-/obj/effect/paint_stripe/blue,
-/turf/simulated/wall/r_titanium,
-/area/exploration_shuttle/cockpit)
 "Cn" = (
 /obj/effect/paint/nt_white,
 /obj/effect/paint_stripe/nt_red,
@@ -18229,11 +18298,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/effect/floor_decal/steeldecal/steel_decals4,
 /obj/effect/floor_decal/steeldecal/steel_decals4{
-	dir = 4
-	},
-/obj/effect/floor_decal/steeldecal/steel_decals4{
-	dir = 9
+	dir = 10
 	},
 /turf/simulated/floor/tiled,
 /area/hallway/primary/thirddeck/fore)
@@ -18884,11 +18951,9 @@
 	icon_state = "1-8"
 	},
 /obj/machinery/navbeacon/sierra/TD_fore3,
+/obj/effect/floor_decal/steeldecal/steel_decals4,
 /obj/effect/floor_decal/steeldecal/steel_decals4{
-	dir = 5
-	},
-/obj/effect/floor_decal/steeldecal/steel_decals4{
-	dir = 8
+	dir = 10
 	},
 /turf/simulated/floor/tiled,
 /area/hallway/primary/thirddeck/fore)
@@ -19835,7 +19900,7 @@
 "Gp" = (
 /obj/effect/floor_decal/industrial/outline/grey,
 /obj/structure/table/rack/dark,
-/obj/item/storage/box/gloves,
+/obj/item/storage/box/latexgloves,
 /obj/item/storage/box/bloodpacks,
 /obj/item/storage/box/beakers,
 /obj/item/storage/box/masks,
@@ -22363,6 +22428,21 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/effect/floor_decal/borderfloor{
+	dir = 8
+	},
+/obj/effect/floor_decal/borderfloor/corner2{
+	dir = 8
+	},
+/obj/effect/floor_decal/borderfloor/corner2{
+	dir = 10
+	},
+/obj/effect/floor_decal/corner/red/bordercorner2{
+	dir = 8
+	},
+/obj/effect/floor_decal/corner/red/bordercorner2{
+	dir = 10
+	},
 /turf/simulated/floor/tiled,
 /area/hallway/primary/thirddeck/center)
 "Kg" = (
@@ -22704,6 +22784,7 @@
 /obj/effect/floor_decal/corner/lightgrey/bordercorner{
 	dir = 4
 	},
+/obj/machinery/ship_map,
 /turf/simulated/floor/tiled,
 /area/hallway/primary/thirddeck/center)
 "KK" = (
@@ -22985,6 +23066,12 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/effect/floor_decal/steeldecal/steel_decals4{
+	dir = 4
+	},
+/obj/effect/floor_decal/steeldecal/steel_decals4{
+	dir = 9
 	},
 /turf/simulated/floor/tiled,
 /area/hallway/primary/thirddeck/fore)
@@ -24053,7 +24140,7 @@
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 1
 	},
-/obj/structure/stasis_cage,
+/obj/machinery/stasis_cage,
 /obj/effect/floor_decal/borderfloor{
 	dir = 10
 	},
@@ -24064,7 +24151,7 @@
 /turf/simulated/floor/tiled,
 /area/rnd/xenobiology/storage)
 "Nd" = (
-/obj/structure/stasis_cage,
+/obj/machinery/stasis_cage,
 /obj/machinery/alarm{
 	dir = 1;
 	pixel_y = -20
@@ -24081,7 +24168,7 @@
 /obj/machinery/light,
 /obj/effect/floor_decal/borderfloor,
 /obj/effect/floor_decal/corner/purple/border,
-/obj/structure/stasis_cage,
+/obj/machinery/stasis_cage,
 /obj/effect/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/tiled,
 /area/rnd/xenobiology/storage)
@@ -24750,10 +24837,12 @@
 /turf/simulated/floor/tiled/white,
 /area/rnd/xenobiology/level2)
 "Om" = (
-/obj/structure/hygiene/sink,
 /obj/item/device/radio/intercom{
 	dir = 4;
 	pixel_x = -24
+	},
+/obj/structure/hygiene/sink{
+	pixel_y = -12
 	},
 /turf/simulated/floor/tiled/white,
 /area/rnd/xenobiology/entry2)
@@ -28185,22 +28274,29 @@
 /area/security/sierra/dockcheck)
 "Uq" = (
 /obj/effect/floor_decal/borderfloor{
-	dir = 1
+	dir = 4
 	},
 /obj/effect/floor_decal/corner/red/border{
-	dir = 1
+	dir = 4
+	},
+/obj/structure/cable/green{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/light{
+	dir = 4
 	},
 /obj/effect/floor_decal/borderfloor/corner2{
-	dir = 4
+	dir = 6
 	},
 /obj/effect/floor_decal/corner/red/bordercorner2{
-	dir = 4
-	},
-/obj/machinery/light{
-	dir = 1
+	dir = 6
 	},
 /turf/simulated/floor/tiled,
-/area/hallway/primary/thirddeck/center)
+/area/hallway/primary/thirddeck/fore)
 "Ur" = (
 /obj/effect/paint_stripe/yellow,
 /obj/effect/paint/dark_gunmetal,
@@ -28667,6 +28763,12 @@
 	dir = 8;
 	pixel_x = 23
 	},
+/obj/effect/floor_decal/steeldecal/steel_decals4{
+	dir = 4
+	},
+/obj/effect/floor_decal/steeldecal/steel_decals4{
+	dir = 9
+	},
 /turf/simulated/floor/tiled,
 /area/hallway/primary/thirddeck/fore)
 "Vt" = (
@@ -29054,7 +29156,7 @@
 	desc = "A remote control-switch for shutters.";
 	id_tag = "hangar_checkpoint_shutters";
 	name = "Checkpoint Window Shutters";
-	pixel_x = -5;
+	pixel_x = -9;
 	pixel_y = 39;
 	req_access = list("ACCESS_SECURITY")
 	},
@@ -29062,7 +29164,7 @@
 	desc = "A remote control-switch for shutters.";
 	id_tag = "hangar_hallway_shutters";
 	name = "Hallway Checkpoint Shutters";
-	pixel_x = -5;
+	pixel_x = -9;
 	pixel_y = 31;
 	req_access = list("ACCESS_SECURITY")
 	},
@@ -29070,22 +29172,21 @@
 	desc = "A remote control-switch for shutters.";
 	id_tag = "hangar_ts_shutters";
 	name = "Secondary Hallway Shutters";
-	pixel_x = -5;
+	pixel_x = -9;
 	pixel_y = 23;
 	req_access = list("ACCESS_SECURITY")
 	},
 /obj/machinery/button/alternate/door{
 	pixel_y = 31;
-	pixel_x = 5;
-	id_tag = "hangar_hallway_doors"
+	id_tag = "hangar_hallway_doors";
+	name = "Starboard Hallway doors control"
 	},
 /obj/machinery/button/alternate/door{
 	pixel_y = 23;
-	pixel_x = 5;
-	id_tag = "hangar_ts_doors"
+	id_tag = "hangar_ts_doors";
+	name = "Port Hallway doors control"
 	},
 /obj/machinery/light_switch{
-	pixel_x = 5;
 	pixel_y = 39
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
@@ -29226,6 +29327,12 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden,
+/obj/effect/floor_decal/steeldecal/steel_decals4{
+	dir = 4
+	},
+/obj/effect/floor_decal/steeldecal/steel_decals4{
+	dir = 9
+	},
 /turf/simulated/floor/tiled,
 /area/hallway/primary/thirddeck/center)
 "Wt" = (
@@ -29570,6 +29677,7 @@
 /obj/effect/floor_decal/corner/lime/bordercorner2{
 	dir = 4
 	},
+/obj/machinery/ship_map,
 /turf/simulated/floor/tiled,
 /area/hallway/primary/thirddeck/fore)
 "Xe" = (
@@ -29578,13 +29686,11 @@
 /area/thruster/d3starboard)
 "Xf" = (
 /obj/machinery/light,
-/obj/effect/floor_decal/borderfloor,
-/obj/effect/floor_decal/corner/red/border,
-/obj/effect/floor_decal/borderfloor/corner2{
-	dir = 9
+/obj/effect/floor_decal/steeldecal/steel_decals4{
+	dir = 1
 	},
-/obj/effect/floor_decal/corner/red/bordercorner2{
-	dir = 9
+/obj/effect/floor_decal/steeldecal/steel_decals4{
+	dir = 6
 	},
 /turf/simulated/floor/tiled,
 /area/hallway/primary/thirddeck/center)
@@ -30000,16 +30106,16 @@
 /turf/simulated/floor/tiled/monotile,
 /area/quartermaster/hangar)
 "XW" = (
-/obj/effect/floor_decal/borderfloor{
-	dir = 1
-	},
-/obj/effect/floor_decal/corner/red/border{
-	dir = 1
-	},
 /obj/structure/cable/green{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
+	},
+/obj/effect/floor_decal/steeldecal/steel_decals4{
+	dir = 9
+	},
+/obj/effect/floor_decal/steeldecal/steel_decals4{
+	dir = 4
 	},
 /turf/simulated/floor/tiled,
 /area/hallway/primary/thirddeck/center)
@@ -30134,10 +30240,10 @@
 	dir = 1
 	},
 /obj/effect/floor_decal/borderfloor/corner2{
-	dir = 1
+	dir = 4
 	},
 /obj/effect/floor_decal/corner/red/bordercorner2{
-	dir = 1
+	dir = 4
 	},
 /turf/simulated/floor/tiled,
 /area/hallway/primary/thirddeck/center)
@@ -30368,6 +30474,12 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/effect/floor_decal/steeldecal/steel_decals4{
+	dir = 1
+	},
+/obj/effect/floor_decal/steeldecal/steel_decals4{
+	dir = 6
+	},
 /turf/simulated/floor/tiled,
 /area/hallway/primary/thirddeck/center)
 "YH" = (
@@ -30422,6 +30534,21 @@
 	},
 /turf/simulated/floor/plating,
 /area/quartermaster/suplocker_room)
+"YL" = (
+/obj/machinery/button/alternate/door/bolts{
+	pixel_x = 10;
+	pixel_y = -1;
+	id_tag = "hangar_hallway_doors";
+	name = "Starboard Hallway doors bolts"
+	},
+/obj/machinery/button/alternate/door/bolts{
+	pixel_x = 10;
+	pixel_y = -9;
+	id_tag = "hangar_ts_doors";
+	name = "Port Hallway doors bolts"
+	},
+/turf/simulated/wall/r_wall/prepainted,
+/area/security/sierra/dockcheck)
 "YM" = (
 /obj/effect/floor_decal/borderfloor{
 	dir = 4
@@ -30538,11 +30665,14 @@
 /turf/simulated/floor/plating,
 /area/maintenance/thirddeck/starboard)
 "YX" = (
-/obj/effect/floor_decal/steeldecal/steel_decals4{
-	dir = 4
+/obj/machinery/light{
+	dir = 1
 	},
 /obj/effect/floor_decal/steeldecal/steel_decals4{
-	dir = 9
+	dir = 6
+	},
+/obj/effect/floor_decal/steeldecal/steel_decals4{
+	dir = 1
 	},
 /turf/simulated/floor/tiled,
 /area/hallway/primary/thirddeck/center)
@@ -30553,6 +30683,10 @@
 	},
 /obj/machinery/cell_charger,
 /obj/effect/floor_decal/industrial/outline/yellow,
+/obj/machinery/iff_beacon{
+	dir = 1;
+	pixel_y = -22
+	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/guppy_hangar/start)
 "YZ" = (
@@ -42997,7 +43131,7 @@ nf
 nk
 mM
 nP
-pg
+Uq
 ti
 mF
 ti
@@ -43402,11 +43536,11 @@ YG
 Kf
 Xf
 TJ
-uV
+YL
 Wf
 tk
 uV
-XO
+YX
 xg
 qm
 zI
@@ -44012,7 +44146,7 @@ TE
 rV
 SR
 uD
-YX
+Zu
 xj
 Cl
 Va
@@ -44214,7 +44348,7 @@ uV
 ss
 Uc
 uV
-Uq
+XO
 UE
 LX
 zI
@@ -52887,7 +53021,7 @@ Ho
 Hx
 GW
 HT
-Cm
+UG
 Iw
 em
 Vc
@@ -54114,8 +54248,8 @@ VF
 Ql
 ZD
 Js
-GQ
-GQ
+nM
+hl
 Fs
 ZX
 Zw
@@ -54523,7 +54657,7 @@ GQ
 Fs
 AT
 Ji
-uH
+Ur
 DE
 Ur
 Ur

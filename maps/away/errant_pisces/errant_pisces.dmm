@@ -2841,7 +2841,7 @@
 	dir = 1;
 	icon_state = "tube1"
 	},
-/obj/machinery/jukebox,
+/obj/machinery/jukebox/custom_tape,
 /turf/simulated/floor/wood,
 /area/errant_pisces/rooms)
 "gv" = (
@@ -4569,7 +4569,7 @@
 /area/errant_pisces/science_wing)
 "ly" = (
 /obj/structure/table/standard,
-/obj/item/storage/box/gloves,
+/obj/item/storage/box/latexgloves,
 /turf/simulated/floor/tiled,
 /area/errant_pisces/science_wing)
 "lz" = (

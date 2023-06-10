@@ -762,7 +762,7 @@
 		/obj/item/storage/box/autoinjectors = 3,
 		/obj/item/storage/box/beakers = 4,
 		/obj/item/storage/box/syringes = 4,
-		/obj/item/storage/box/gloves = 4,
+		/obj/item/storage/box/latexgloves = 4,
 		/obj/item/storage/box/large = 3,
 		/obj/item/storage/box/glowsticks = 4,
 		/obj/item/storage/wallet = 2,
@@ -1416,7 +1416,7 @@ var/global/list/multi_point_spawns
 	name = "random vending machine"
 	desc = "This is a randomly selected vending machine."
 	icon = 'icons/obj/vending.dmi'
-	icon_state = ""
+	icon_state = "green-outline"
 
 /obj/random/vendor/spawn_choices()
 	return list(/obj/machinery/vending/weeb,

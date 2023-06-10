@@ -18,7 +18,7 @@
 /obj/item/device/drone_designator/proc/recursive_validate_contents(atom/A, depth = 1)
 	if(depth >= 4)
 		return TRUE
-	if(istype(A, /obj/structure/stasis_cage))
+	if(istype(A, /obj/machinery/stasis_cage))
 		return TRUE //This is fine
 	if(istype(A,/mob/living))
 		return FALSE
@@ -223,7 +223,7 @@
 		var/flight_time = 10 SECONDS //At least 10 seconds to get there, regardless
 
 		if (other && self && (other.z == self.z)) //Can visitables even not be in same overmap level?
-			flight_time += get_dist(other, self) * 15 SECONDS
+			flight_time += get_dist(other, self) * tile_travel_time
 		current_flight.time_of_arrival = world.time +  flight_time
 
 		designator.audible_message(SPAN_NOTICE("<b>\The [designator]</b> pings, Request acknowledged. Drone en route. Delivery expected in T - [ (flight_time) / (1 SECOND)] seconds."))
