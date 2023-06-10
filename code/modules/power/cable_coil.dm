@@ -102,7 +102,7 @@ GLOBAL_LIST_INIT(cable_default_colors, list(
 	if (BP_IS_BRITTLE(organ))
 		to_chat(user, SPAN_WARNING("\The [target]'s [organ.name] is hard and brittle - \the [src] cannot repair it."))
 		return TRUE
-	var/use_amount = min(amount, Ceil(organ.burn_dam / 3), 5)
+	var/use_amount = min(amount, ceil(organ.burn_dam / 3), 5)
 	if (!can_use(use_amount))
 		to_chat(user, SPAN_WARNING("You don't have enough of \the [src] left to repair \the [target]'s [organ.name]."))
 		return TRUE
@@ -125,7 +125,7 @@ GLOBAL_LIST_INIT(cable_default_colors, list(
 	// Multitool - Recolor cable coil
 	if (isMultitool(tool))
 		var/new_color = input(user, "Select a color to change to:", "\The [src] - Color Change", null) as null|anything in GLOB.cable_default_colors
-		if (!new_color || !user.use_sanity_check(src))
+		if (!new_color || !user.use_sanity_check(src, tool))
 			return TRUE
 		var/new_color_code = GLOB.cable_default_colors["[new_color]"]
 		if (get_color() == new_color_code)
@@ -396,14 +396,14 @@ GLOBAL_LIST_INIT(cable_default_colors, list(
 	var/obj/item/cell/cell = get_cell()
 	if (!cell)
 		return 0
-	return Floor(cell.charge / cost_per_cable)
+	return floor(cell.charge / cost_per_cable)
 
 
 /obj/item/stack/cable_coil/fabricator/get_max_amount()
 	var/obj/item/cell/cell = get_cell()
 	if (!cell)
 		return 0
-	return Floor(cell.maxcharge / cost_per_cable)
+	return floor(cell.maxcharge / cost_per_cable)
 
 
 /obj/item/stack/cable_coil/yellow

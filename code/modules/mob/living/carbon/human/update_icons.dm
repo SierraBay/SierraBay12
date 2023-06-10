@@ -6,7 +6,7 @@
 */
 var/global/list/human_icon_cache = list()
 var/global/list/tail_icon_cache = list() //key is [species.race_key][skin_color]
-var/global/list/light_overlay_cache = list()
+
 GLOBAL_LIST_EMPTY(overlay_icon_cache)
 GLOBAL_LIST_EMPTY(species_icon_template_cache)
 
@@ -121,10 +121,10 @@ Please contact me on #coderbus IRC. ~Carn x
 //Human Overlays Indexes/////////
 #define HO_MUTATIONS_LAYER  1
 #define HO_SKIN_LAYER       2
-#define HO_DAMAGE_LAYER     3
-#define HO_SURGERY_LAYER    4 //bs12 specific.
-#define HO_UNDERWEAR_LAYER  5
-#define HO_UNIFORM_LAYER    6
+#define HO_SURGERY_LAYER    3 //bs12 specific.
+#define HO_UNDERWEAR_LAYER  4
+#define HO_UNIFORM_LAYER    5
+#define HO_DAMAGE_LAYER     6
 #define HO_ID_LAYER         7
 #define HO_SHOES_LAYER      8
 #define HO_GLOVES_LAYER     9
@@ -249,8 +249,8 @@ var/global/list/damage_icon_parts = list()
 	var/icon/icon_template = GLOB.species_icon_template_cache[species_key]
 	var/icon/overlay = GLOB.overlay_icon_cache[overlay_key]
 
-	var/x_offset = Ceil(0.5*(icon_template.Width() - (overlay.Width() || 32)))
-	var/y_offset = Ceil(0.5*(icon_template.Height() - (overlay.Height() || 32)))
+	var/x_offset = ceil(0.5*(icon_template.Width() - (overlay.Width() || 32)))
+	var/y_offset = ceil(0.5*(icon_template.Height() - (overlay.Height() || 32)))
 
 	return matrix().Update(
 		offset_x = x_offset - y_offset,
@@ -894,10 +894,10 @@ var/global/list/damage_icon_parts = list()
 //Human Overlays Indexes/////////
 #undef HO_MUTATIONS_LAYER
 #undef HO_SKIN_LAYER
-#undef HO_DAMAGE_LAYER
 #undef HO_SURGERY_LAYER
 #undef HO_UNDERWEAR_LAYER
 #undef HO_UNIFORM_LAYER
+#undef HO_DAMAGE_LAYER
 #undef HO_ID_LAYER
 #undef HO_SHOES_LAYER
 #undef HO_GLOVES_LAYER

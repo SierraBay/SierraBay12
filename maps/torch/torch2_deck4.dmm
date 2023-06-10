@@ -99,7 +99,9 @@
 /area/quartermaster/deckchief)
 "av" = (
 /obj/effect/floor_decal/industrial/warning,
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/maintenance/fourthdeck/port)
 "aw" = (
 /turf/simulated/wall/r_titanium,
@@ -548,7 +550,9 @@
 	dir = 1;
 	icon_state = "warning"
 	},
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/maintenance/fourthdeck/starboard)
 "bY" = (
 /obj/structure/catwalk,
@@ -2821,7 +2825,7 @@
 /area/hallway/primary/fourthdeck/aft)
 "jX" = (
 /obj/machinery/door/blast/regular/escape_pod,
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/reinforced,
 /area/maintenance/fourthdeck/port)
 "jY" = (
 /obj/machinery/door/firedoor,
@@ -2887,8 +2891,8 @@
 	dir = 1;
 	pixel_y = -24
 	},
-/obj/machinery/camera/network/fourth_deck{
-	c_tag = "Fourth Deck - Pathfinder's Office";
+/obj/machinery/camera/network/exploration{
+	c_tag = "Pathfinder's Office";
 	dir = 1
 	},
 /turf/simulated/floor/tiled,
@@ -3322,7 +3326,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
 	},
-/obj/machinery/alarm{
+/obj/machinery/alarm/cold{
 	dir = 8;
 	pixel_x = 25
 	},
@@ -4380,7 +4384,9 @@
 /area/crew_quarters/head/deck4)
 "pp" = (
 /obj/effect/floor_decal/industrial/warning,
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/maintenance/fourthdeck/aft)
 "pr" = (
 /obj/structure/table/rack,
@@ -5363,7 +5369,7 @@
 /turf/simulated/floor/plating,
 /area/hallway/primary/fourthdeck/center)
 "sJ" = (
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/reinforced,
 /area/space)
 "sK" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -6588,7 +6594,7 @@
 /area/hallway/primary/fourthdeck/center)
 "wp" = (
 /obj/machinery/door/blast/regular/escape_pod,
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/reinforced,
 /area/maintenance/fourthdeck/aft)
 "wq" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -6824,14 +6830,16 @@
 /area/maintenance/fourthdeck/port)
 "wW" = (
 /obj/machinery/door/blast/regular/escape_pod,
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/reinforced,
 /area/maintenance/fourthdeck/starboard)
 "wX" = (
 /obj/effect/floor_decal/industrial/warning{
 	dir = 1;
 	icon_state = "warning"
 	},
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/maintenance/fourthdeck/aft)
 "xb" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden{
@@ -13194,6 +13202,7 @@
 "RV" = (
 /obj/structure/table/woodentable,
 /obj/machinery/chemical_dispenser/bar_coffee/full{
+	dir = 8;
 	pixel_y = 3
 	},
 /obj/machinery/light/small{
@@ -14990,7 +14999,9 @@
 /turf/simulated/floor/tiled,
 /area/hallway/primary/fourthdeck/center)
 "WD" = (
-/obj/structure/synthesized_instrument/synthesizer/minimoog,
+/obj/structure/synthesized_instrument/synthesizer/minimoog{
+	dir = 4
+	},
 /obj/item/device/radio/intercom/entertainment{
 	dir = 4;
 	pixel_x = -22
@@ -15495,7 +15506,9 @@
 /area/hallway/primary/fourthdeck/center)
 "XW" = (
 /obj/structure/table/woodentable,
-/obj/machinery/chemical_dispenser/bar_soft/full,
+/obj/machinery/chemical_dispenser/bar_soft/full{
+	dir = 8
+	},
 /obj/item/modular_computer/telescreen/preset/generic{
 	pixel_x = 32
 	},

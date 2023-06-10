@@ -147,13 +147,13 @@
 	if(isCrowbar(C) || (istype(C, /obj/item/material/twohanded/fireaxe) && C:wielded == 1))
 		if(((!is_powered()) || MACHINE_IS_BROKEN(src)) && !( operating ))
 			to_chat(user, SPAN_NOTICE("You begin prying at \the [src]..."))
-			if(do_after(user, 2 SECONDS, src, DO_REPAIR_CONSTRUCT))
+			if(do_after(user, (C.toolspeed * 2) SECONDS, src, DO_REPAIR_CONSTRUCT))
 				force_toggle()
 		else
 			to_chat(user, SPAN_NOTICE("[src]'s motors resist your effort."))
 		return
 	if(istype(C, /obj/item/stack/material) && C.get_material_name() == MATERIAL_PLASTEEL)
-		var/amt = Ceil(get_damage_value() / 150)
+		var/amt = ceil(get_damage_value() / 150)
 		if(!amt)
 			to_chat(user, SPAN_NOTICE("\The [src] is already fully functional."))
 			return

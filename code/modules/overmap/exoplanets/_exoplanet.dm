@@ -62,9 +62,10 @@ GLOBAL_VAR(planet_repopulation_disabled)
 
 	//Either a type or a list of types and weights. You must include all types if it's a list
 	var/list/habitability_distribution = list(
-		HABITABILITY_IDEAL = 10,
-		HABITABILITY_OKAY = 40,
-		HABITABILITY_BAD = 50
+		HABITABILITY_IDEAL = 5,
+		HABITABILITY_LESSIDEAL = 20,
+		HABITABILITY_BAD = 25,
+		HABITABILITY_UNINHABITABLE = 50
 	)
 	var/habitability_class
 
@@ -141,6 +142,7 @@ GLOBAL_VAR(planet_repopulation_disabled)
 	generate_daycycle()
 	generate_planet_image()
 	START_PROCESSING(SSobj, src)
+	log_debug("Planet generation finished with habitability: [habitability_class] and atmosphere: [english_list(atmosphere.gas)]")
 
 //attempt at more consistent history generation for xenoarch finds.
 /obj/effect/overmap/visitable/sector/exoplanet/proc/get_engravings()
@@ -282,7 +284,7 @@ GLOBAL_VAR(planet_repopulation_disabled)
 	. = ..()
 	var/list/extra_data = list("<br>")
 	if (atmosphere)
-		if (user.skill_check(SKILL_SCIENCE, SKILL_ADEPT))
+		if (user.skill_check(SKILL_SCIENCE, SKILL_TRAINED))
 			var/list/gases = list()
 			for (var/g in atmosphere.gas)
 				if (atmosphere.gas[g] > atmosphere.total_moles * 0.05)
@@ -300,7 +302,7 @@ GLOBAL_VAR(planet_repopulation_disabled)
 	if (length(animals) && user.skill_check(SKILL_SCIENCE, SKILL_BASIC))
 		extra_data += "Life traces detected"
 
-	if (LAZYLEN(spawned_features) && user.skill_check(SKILL_SCIENCE, SKILL_ADEPT))
+	if (LAZYLEN(spawned_features) && user.skill_check(SKILL_SCIENCE, SKILL_TRAINED))
 		var/ruin_num = 0
 		for (var/datum/map_template/ruin/exoplanet/R in spawned_features)
 			if (!(R.ruin_tags & RUIN_NATURAL))

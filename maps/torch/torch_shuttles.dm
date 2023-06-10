@@ -7,7 +7,7 @@
 
 /obj/effect/shuttle_landmark/escape_pod/start
 	name = "Docked"
-	base_turf = /turf/simulated/floor/reinforced/airless
+	base_turf = /turf/simulated/floor/reinforced
 
 /obj/effect/shuttle_landmark/escape_pod/transit
 	name = "In transit"
@@ -402,7 +402,7 @@ TORCH_ESCAPE_POD(17)
 	fuel_consumption = 2
 	logging_home_tag = "nav_hangar_guppy"
 	logging_access = access_guppy_helm
-	skill_needed = SKILL_NONE
+	skill_needed = SKILL_UNSKILLED
 	ceiling_type = /turf/simulated/floor/shuttle_ceiling/torch
 
 /obj/effect/shuttle_landmark/torch/hangar/guppy
@@ -451,7 +451,7 @@ TORCH_ESCAPE_POD(17)
 	name = "Aquila Hangar"
 	landmark_tag = "nav_hangar_aquila"
 	docking_controller = "aquila_shuttle_dock_airlock"
-	base_turf = /turf/simulated/floor/reinforced/airless
+	base_turf = /turf/simulated/floor/reinforced
 
 /obj/effect/shuttle_landmark/torch/deck1/aquila
 	name = "Space near Forth Deck"

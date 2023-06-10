@@ -32,6 +32,8 @@ SUBSYSTEM_DEF(ticker)
 	///Set to TRUE when an admin forcefully ends the round.
 	var/forced_end = FALSE
 
+	var/skip_requirement_checks = FALSE
+
 	var/static/list/mode_tags = list()
 
 	var/static/list/mode_names = list()
@@ -329,7 +331,11 @@ Helpers
 	mode_datum.pre_setup() // Makes lists of viable candidates; performs candidate draft for job-override roles; stores the draft result both internally and on the draftee.
 	SSjobs.divide_occupations(mode_datum) // Gives out jobs to everyone who was not selected to antag.
 	var/list/lobby_players = SSticker.lobby_players()
-	var/result = mode_datum.check_startable(lobby_players)
+
+	var/result = FALSE
+	if (!skip_requirement_checks)
+		result = mode_datum.check_startable(lobby_players)
+
 	if(result)
 		mode_datum.fail_setup()
 		SSjobs.reset_occupations()
@@ -406,18 +412,11 @@ Helpers
 			minds += player.mind
 
 /datum/controller/subsystem/ticker/proc/equip_characters()
-	var/captainless=1
 	for(var/mob/living/carbon/human/player in GLOB.player_list)
 		if(player && player.mind && player.mind.assigned_role)
-			if(player.mind.assigned_role == "Captain")
-				captainless=0
 			if(!player_is_antag(player.mind, only_offstation_roles = 1))
 				SSjobs.equip_rank(player, player.mind.assigned_role, 0)
 				SScustomitems.equip_custom_items(player)
-	if(captainless)
-		for(var/mob/M in GLOB.player_list)
-			if(!istype(M,/mob/new_player))
-				to_chat(M, "Captainship not forced on anyone.")
 
 /datum/controller/subsystem/ticker/proc/attempt_late_antag_spawn(list/antag_choices)
 	var/datum/antagonist/antag = antag_choices[1]

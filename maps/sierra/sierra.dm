@@ -130,19 +130,25 @@
 	#include "../away/empty.dmm"
 
 
-	#include "../away/casino/casino.dm"
 	#include "../away/mining/mining.dm"
 	#include "../away/derelict/derelict.dm"
+	#include "../away/bearcat/bearcat.dm"
+	#include "../away/lost_supply_base/lost_supply_base.dm"
+	#include "../away/smugglers/smugglers.dm"
+	#include "../away/magshield/magshield.dm"
+	#include "../away/casino/casino.dm"
+	#include "../away/yacht/yacht.dm"
+	#include "../away/blueriver/blueriver.dm"
+	#include "../away/slavers/slavers_base.dm"
+	#include "../away/mobius_rift/mobius_rift.dm"
 	#include "../away/errant_pisces/errant_pisces.dm"
 	#include "../away/lar_maria/lar_maria.dm"
-	#include "../away/magshield/magshield.dm"
-	#include "../away/meatstation/meatstation.dm"
-	#include "../away/mininghome/mininghome.dm"
-	#include "../away/miningstation/miningstation.dm"
-	#include "../away/scavver/scavver_gantry.dm"
-	#include "../away/skrellscoutship/skrellscoutship.dm"
-	#include "../away/slavers/slavers_base.dm"
 	#include "../away/voxship/voxship.dm"
+	#include "../away/skrellscoutship/skrellscoutship.dm"
+	#include "../away/meatstation/meatstation.dm"
+	#include "../away/miningstation/miningstation.dm"
+	#include "../away/mininghome/mininghome.dm"
+	#include "../away/scavver/scavver_gantry.dm"
 	// #include "../event/iccgn_ship/icgnv_hound.dm" // SIERRA TODO: Пофиксить или удалить
 
 	// USED MODS
@@ -157,6 +163,7 @@
 	#include "../../mods/maps/liberia/_map_liberia.dme"
 	#include "../../mods/bluespace_kitty/_bluespace_kitty.dme"
 	#include "../../mods/maps/sentinel/_map_sentinel.dme"
+	#include "../../mods/skills/bureaucracy/legalese_language/_legalese.dme"
 	#include "../../mods/maps/farfleet/_map_farfleet.dme"
 	#include "../../mods/gamemode/_contractor_equipment.dme"
 
@@ -169,7 +176,7 @@
 	// он всегда напоминает о своём существовании. Небольшая библиотека,
 	// если так вообще можно выразиться.
 
-	#include "../../packs/faction_iccgn/_pack.dm"
+	#include "../../packs/factions/iccgn/_pack.dm"
 	#include "../../packs/infinity/_pack.dm"
 	#include "../../packs/sierra-tweaks/_pack.dm"
 	#include "../../packs/deepmaint/_pack.dm"

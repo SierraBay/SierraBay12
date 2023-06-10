@@ -229,7 +229,7 @@
 	var/result_name = source.name
 	if (flags & COOKER_STRIP_RAW)
 		if (text_starts_with(result_name, "raw"))
-			result_name = trim(copytext(result_name, 4))
+			result_name = trimtext(copytext(result_name, 4))
 	result.SetName("[prefix ? "[prefix] " : ""][result_name][suffix ? " [suffix]" : ""]")
 	var/list/combined_names = result.combined_names
 	if (combined_names)
@@ -749,11 +749,11 @@
 			to_chat(user, SPAN_WARNING("This food is partially eaten.") + SPAN_NOTICE(" You combine it anyway."))
 		else
 			response = alert(user, "Combine Food Scraps?", "Combine Food", "Yes", "No") == "Yes"
-			if (!response)
+			if (!response || !user.use_sanity_check(src, other))
 				return FALSE
 	if (!response && user.a_intent == I_HELP)
 		response = alert(user, "Combine Food?", "Combine Food", "Yes", "No") == "Yes"
-		if (!response)
+		if (!response || !user.use_sanity_check(src, other))
 			return FALSE
 	if (!user.unEquip(other, src))
 		return FALSE

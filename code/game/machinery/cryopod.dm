@@ -312,27 +312,20 @@
 
 // This function can not be undone; do not call this unless you are sure
 // Also make sure there is a valid control computer
-/obj/machinery/cryopod/robot/despawn_occupant()
-	var/mob/living/silicon/robot/R = occupant
-	if(!istype(R)) return ..()
-
-	qdel(R.mmi)
-	for(var/obj/item/I in R.module) // the tools the borg has; metal, glass, guns etc
-		for(var/obj/item/O in I) // the things inside the tools, if anything; mainly for janiborg trash bags
-			O.forceMove(R)
-		qdel(I)
-	qdel(R.module)
-
-	. = ..()
-
-// This function can not be undone; do not call this unless you are sure
-// Also make sure there is a valid control computer
 /obj/machinery/cryopod/proc/despawn_occupant()
 	SHOULD_NOT_SLEEP(TRUE) // Sleeping causes the double-despawn bug
 
 	if (QDELETED(occupant))
 		log_and_message_admins("A mob was deleted while in a cryopod, or the cryopod double-processed. This may cause errors!")
 		return
+
+	if (istype(occupant, /mob/living/carbon/human))
+		var/mob/living/carbon/human/human = occupant
+		var/record_name = human.get_id_name("")
+		if (record_name)
+			var/datum/computer_file/report/crew_record/record = get_crewmember_record(record_name)
+			if (record)
+				record.set_status("Stored")
 
 	//Drop all items into the pod.
 	for(var/obj/item/W in occupant)
@@ -393,13 +386,6 @@
 		if(LAZYLEN(occupant.mind.objectives))
 			occupant.mind.objectives = null
 			occupant.mind.special_role = null
-
-	// Delete them from datacore.
-	var/sanitized_name = occupant.real_name
-	sanitized_name = sanitize(sanitized_name)
-	var/datum/computer_file/report/crew_record/R = get_crewmember_record(sanitized_name)
-	if(R)
-		qdel(R)
 
 	icon_state = base_icon_state
 

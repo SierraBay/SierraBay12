@@ -110,7 +110,7 @@
 	return 0
 
 /mob/living/carbon/human/can_ztravel()
-	if(Allow_Spacemove())
+	if(Process_Spacemove())
 		return 1
 
 	if(Check_Shoegrip())	//scaling hull with magboots
@@ -119,7 +119,7 @@
 				return 1
 
 /mob/living/silicon/robot/can_ztravel()
-	if(Allow_Spacemove()) //Checks for active jetpack
+	if(Process_Spacemove()) //Checks for active jetpack
 		return 1
 
 	for(var/turf/simulated/T in trange(1,src)) //Robots get "magboots"
@@ -142,8 +142,7 @@
 		return
 
 	// No gravity in space, apparently.
-	var/area/area = get_area(src)
-	if(!area.has_gravity())
+	if(!has_gravity())
 		return
 
 	if(throwing)
@@ -257,6 +256,11 @@
 		return
 
 	..()
+	// [SIERRA]
+	playsound(loc, "smash_sound", 50, 1)
+	if(client) shake_camera(src, 7, 0.5)
+	// [/SIERRA]
+
 	var/min_damage = 7
 	var/max_damage = 14
 	apply_damage(rand(min_damage, max_damage), DAMAGE_BRUTE, BP_HEAD, armor_pen = 50)
@@ -269,7 +273,7 @@
 	apply_damage(rand(min_damage, max_damage), DAMAGE_BRUTE, BP_L_ARM, armor_pen = 75)
 	apply_damage(rand(min_damage, max_damage), DAMAGE_BRUTE, BP_R_ARM, armor_pen = 75)
 	weakened = max(weakened, 3)
-	if(prob(skill_fail_chance(SKILL_HAULING, 40, SKILL_EXPERT, 2)))
+	if(prob(skill_fail_chance(SKILL_HAULING, 40, SKILL_EXPERIENCED, 2)))
 		var/list/victims = list()
 		for(var/tag in list(BP_L_FOOT, BP_R_FOOT, BP_L_ARM, BP_R_ARM))
 			var/obj/item/organ/external/E = get_organ(tag)
@@ -289,8 +293,7 @@
 	var/turf/T = get_turf(A)
 	var/turf/above = GetAbove(src)
 	if(above && T.Adjacent(bound_overlay) && above.CanZPass(src, UP)) //Certain structures will block passage from below, others not
-		var/area/location = get_area(loc)
-		if(location.has_gravity && !can_overcome_gravity())
+		if(loc.has_gravity() && !can_overcome_gravity())
 			return FALSE
 
 		visible_message(SPAN_NOTICE("[src] starts climbing onto \the [A]!"), SPAN_NOTICE("You start climbing onto \the [A]!"))

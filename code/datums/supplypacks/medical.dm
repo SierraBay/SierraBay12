@@ -4,7 +4,10 @@
 
 /singleton/hierarchy/supply_pack/medical/gloves
 	name = "Refills - Sterile gloves"
-	contains = list(/obj/item/storage/box/gloves = 4)
+	contains = list(
+		/obj/item/storage/box/latexgloves = 2,
+		/obj/item/storage/box/nitrilegloves = 2
+	)
 	cost = 20
 	containername = "medical crate"
 
@@ -82,10 +85,10 @@
 /singleton/hierarchy/supply_pack/medical/nanoblood
 	name = "Refills - Nanoblood"
 	contains = list(/obj/item/reagent_containers/ivbag/nanoblood = 4)
-	cost = 30
+	cost = 40
 	containername = "nanoblood crate"
 
-/singleton/hierarchy/supply_pack/medical/humanblood
+/singleton/hierarchy/supply_pack/medical/human_oneg
 	name = "Refills - Human O- Blood"
 	contains = list(
 		/obj/item/storage/box/freezer/blood/human = 1
@@ -93,20 +96,28 @@
 	cost = 15
 	containername = "human O- blood crate"
 
-/singleton/hierarchy/supply_pack/medical/skrellblood
+/singleton/hierarchy/supply_pack/medical/serpentid_oneg
+	name = "Refills - Serpentid O- Blood"
+	contains = list(
+		/obj/item/storage/box/freezer/blood/serpentid = 1
+	)
+	cost = 25
+	containername = "unathi blood crate"
+
+/singleton/hierarchy/supply_pack/medical/skrell_oneg
 	name = "Refills - Skrell O- Blood"
 	contains = list(
 		/obj/item/storage/box/freezer/blood/skrell = 1
 	)
-	cost = 20
+	cost = 25
 	containername = "skrell blood crate"
 
-/singleton/hierarchy/supply_pack/medical/unathiblood
+/singleton/hierarchy/supply_pack/medical/unathi_oneg
 	name = "Refills - Unathi O- Blood"
 	contains = list(
 		/obj/item/storage/box/freezer/blood/unathi = 1
 	)
-	cost = 20
+	cost = 25
 	containername = "unathi blood crate"
 
 /singleton/hierarchy/supply_pack/medical/bodybag
@@ -257,7 +268,8 @@
 					/obj/item/clothing/head/surgery/blue,
 					/obj/item/clothing/head/surgery/green,
 					/obj/item/storage/box/masks,
-					/obj/item/storage/box/gloves)
+					/obj/item/storage/box/latexgloves
+	)
 	cost = 15
 	containertype = /obj/structure/closet/crate/secure
 	containername = "medical scrubs crate"
@@ -269,10 +281,11 @@
 					/obj/item/device/camera,
 					/obj/item/device/camera_film = 2,
 					/obj/item/autopsy_scanner,
-					/obj/item/scalpel,
+					/obj/item/scalpel/basic,
 					/obj/item/storage/box/masks,
-					/obj/item/storage/box/gloves,
-					/obj/item/pen)
+					/obj/item/storage/box/latexgloves,
+					/obj/item/pen
+	)
 	cost = 20
 	containertype = /obj/structure/closet/crate/secure
 	containername = "autopsy equipment crate"
@@ -296,7 +309,8 @@
 					/obj/item/clothing/suit/storage/toggle/labcoat/virologist,
 					/obj/item/clothing/suit/storage/toggle/labcoat/chemist,
 					/obj/item/storage/box/masks,
-					/obj/item/storage/box/gloves)
+					/obj/item/storage/box/latexgloves
+	)
 	cost = 15
 	containertype = /obj/structure/closet/crate/secure
 	containername = "medical uniform crate"
@@ -311,7 +325,8 @@
 					/obj/item/clothing/mask/gas = 5,
 					/obj/item/tank/oxygen = 5,
 					/obj/item/storage/box/masks,
-					/obj/item/storage/box/gloves)
+					/obj/item/storage/box/latexgloves
+	)
 	cost = 50
 	containertype = /obj/structure/closet/crate/secure
 	containername = "medical biohazard equipment crate"
@@ -333,7 +348,7 @@
 					/obj/item/tank/anesthetic,
 					/obj/item/FixOVein,
 					/obj/item/hemostat,
-					/obj/item/scalpel,
+					/obj/item/scalpel/basic,
 					/obj/item/bonegel,
 					/obj/item/retractor,
 					/obj/item/bonesetter,
@@ -348,8 +363,9 @@
 	contains = list(/obj/item/clothing/under/rank/medical/scrubs/green = 2,
 					/obj/item/clothing/head/surgery/green = 2,
 					/obj/item/storage/box/masks,
-					/obj/item/storage/box/gloves,
-					/obj/item/storage/belt/medical = 3)
+					/obj/item/storage/box/latexgloves,
+					/obj/item/storage/belt/medical = 3
+	)
 	cost = 15
 	containertype = /obj/structure/closet/crate
 	containername = "sterile clothes crate"

@@ -3,6 +3,7 @@
 	desc = "When you need seeds fast!"
 	icon_state = "seeds"
 	icon_vend = "seeds-vend"
+	max_overlays = 3
 	icon_deny = "seeds-deny"
 	base_type = /obj/machinery/vending/hydroseeds
 	product_slogans = {"\
@@ -66,11 +67,6 @@
 	premium = list(
 		/obj/item/reagent_containers/spray/waterflower = 1
 	)
-
-
-/obj/machinery/vending/hydroseeds/vend(datum/stored_items/vending_products/products, mob/living/user)
-	..()
-	flick("[icon_state]-shelf[rand(3)]", src)
 
 
 /obj/machinery/vending/hydroseeds/build_inventory()

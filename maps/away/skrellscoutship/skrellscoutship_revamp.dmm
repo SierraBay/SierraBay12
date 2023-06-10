@@ -793,7 +793,7 @@
 "cX" = (
 /obj/structure/table/glass,
 /obj/item/storage/firstaid/surgery,
-/obj/item/scalpel/manager,
+/obj/item/scalpel/ims,
 /obj/item/device/radio/intercom/map_preset/skrellscoutship{
 	pixel_y = 24
 	},
@@ -1143,7 +1143,6 @@
 /area/ship/skrellscoutship/crew/medbay)
 "dS" = (
 /obj/structure/table/glass,
-/obj/machinery/reagent_temperature/cooler,
 /obj/structure/window/reinforced{
 	dir = 4
 	},
@@ -1200,7 +1199,7 @@
 	pixel_x = -6;
 	pixel_y = 6
 	},
-/obj/item/storage/box/gloves{
+/obj/item/storage/box/nitrilegloves{
 	pixel_x = 7;
 	pixel_y = -3
 	},
@@ -1660,7 +1659,7 @@
 /area/ship/skrellscoutship/robotics)
 "fy" = (
 /obj/effect/floor_decal/industrial/outline/red,
-/obj/structure/stasis_cage,
+/obj/machinery/stasis_cage,
 /turf/simulated/floor/tiled/skrell/green,
 /area/ship/skrellscoutship/robotics)
 "fA" = (
@@ -1700,7 +1699,7 @@
 /obj/machinery/ion_engine{
 	dir = 8
 	},
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/reinforced,
 /area/ship/skrellscoutship/maintenance/atmos)
 "fH" = (
 /obj/structure/table/rack,
@@ -1940,7 +1939,7 @@
 /obj/machinery/ion_engine{
 	dir = 8
 	},
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/reinforced,
 /area/ship/skrellscoutship/hangar)
 "gp" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -1999,12 +1998,6 @@
 	},
 /turf/simulated/floor/tiled/skrell/red,
 /area/ship/skrellscoutship/hangar)
-"gu" = (
-/obj/machinery/ion_engine{
-	dir = 8
-	},
-/turf/simulated/floor/reinforced/airless,
-/area/ship/skrellscoutship/command/armory)
 "gw" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -2818,7 +2811,9 @@
 /area/ship/skrellscoutship/wings/port)
 "iE" = (
 /obj/machinery/shipsensors,
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/skrellscoutship/wings/port)
 "iF" = (
 /obj/structure/bed/chair/comfy/red{
@@ -3516,8 +3511,8 @@
 /obj/machinery/ion_engine{
 	dir = 8
 	},
-/turf/simulated/floor/reinforced/airless,
-/area/ship/skrellscoutship/robotics)
+/turf/simulated/floor/reinforced,
+/area/ship/skrellscoutship/command/armory)
 "kG" = (
 /obj/effect/landmark/map_data,
 /obj/effect/overmap/visitable/sector/skrellscoutspace,
@@ -4548,7 +4543,6 @@
 /turf/simulated/floor/tiled/skrell/white,
 /area/ship/skrellscoutship/crew/medbay)
 "Al" = (
-/obj/machinery/reagent_temperature/cooler,
 /obj/structure/table/standard,
 /turf/simulated/floor/tiled/skrell/red,
 /area/ship/skrellscoutship/crew/labs)
@@ -4630,7 +4624,7 @@
 /obj/item/reagent_containers/chem_disp_cartridge/acetone,
 /obj/item/reagent_containers/chem_disp_cartridge/ammonia,
 /obj/item/reagent_containers/chem_disp_cartridge/carbon,
-/obj/item/scalpel/manager,
+/obj/item/scalpel/ims,
 /obj/item/storage/firstaid/surgery,
 /obj/structure/closet/crate/medical,
 /obj/item/storage/firstaid/combat,
@@ -4717,7 +4711,7 @@
 /area/ship/skrellscoutship/crew/rec)
 "Ds" = (
 /obj/structure/table/glass,
-/obj/item/storage/box/gloves,
+/obj/item/storage/box/nitrilegloves,
 /obj/item/storage/box/syringes{
 	pixel_x = 4;
 	pixel_y = 4
@@ -14010,7 +14004,7 @@ Fl
 Fl
 Fl
 Fl
-PT
+Fl
 Gw
 Gw
 Gw
@@ -14107,11 +14101,11 @@ RB
 Nh
 Fl
 Fl
-gu
-gu
-gu
-gu
-gu
+kF
+kF
+kF
+kF
+kF
 kF
 Gw
 Gw

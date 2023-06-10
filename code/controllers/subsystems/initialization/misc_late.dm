@@ -56,8 +56,8 @@ GLOBAL_LIST_EMPTY(microwave_accepts_items)
 	return a.weight - b.weight
 
 
-GLOBAL_LIST(xeno_artifact_turfs)
-GLOBAL_LIST(xeno_digsite_turfs)
+GLOBAL_LIST_EMPTY(xeno_artifact_turfs)
+GLOBAL_LIST_EMPTY(xeno_digsite_turfs)
 
 /datum/controller/subsystem/init_misc_late/proc/init_xenoarch()
 	var/list/queue = list()
@@ -137,5 +137,8 @@ GLOBAL_LIST(xeno_digsite_turfs)
 		var/selected = rand(1, len)
 		var/turf/simulated/mineral/T = artifact_turfs[selected]
 		artifact_turfs.Cut(selected, selected + 1)
+		// Failsafe for invalid turf types
+		if (!istype(T))
+			continue
 		GLOB.xeno_artifact_turfs += T
 		T.artifact_find = new

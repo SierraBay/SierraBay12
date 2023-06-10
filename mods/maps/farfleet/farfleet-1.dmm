@@ -10,7 +10,9 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/space)
 "ad" = (
 /obj/structure/cable{
@@ -283,7 +285,9 @@
 /obj/machinery/disperser/middle{
 	dir = 8
 	},
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/farfleet/command/launcher)
 "aW" = (
 /obj/structure/cable{
@@ -337,7 +341,9 @@
 	dir = 8
 	},
 /obj/effect/floor_decal/industrial/warning/corner,
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/farfleet/engineering/fussion/control)
 "bb" = (
 /obj/effect/floor_decal/industrial/hatch/yellow,
@@ -490,6 +496,7 @@
 	req_access = list("ACCESS_ICCGN")
 	},
 /obj/structure/cable,
+/obj/item/stack/material/glass/boron,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/engineering/storage)
 "bC" = (
@@ -565,7 +572,9 @@
 	use_power = 1;
 	dir = 1
 	},
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/farfleet/engineering/fussion/control)
 "bO" = (
 /obj/machinery/power/fusion_core/mapped{
@@ -575,7 +584,9 @@
 /obj/structure/cable/yellow{
 	dir = 1
 	},
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/farfleet/engineering/fussion/control)
 "bQ" = (
 /obj/structure/sign/warning/compressed_gas,
@@ -588,7 +599,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/farfleet/engineering/fussion/control)
 "bS" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/fuel{
@@ -743,7 +756,9 @@
 	icon_state = "warning";
 	dir = 6
 	},
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/farfleet/engineering/fussion/control)
 "cs" = (
 /obj/structure/closet/cabinet,
@@ -983,13 +998,13 @@
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/command/equipment)
 "dm" = (
-/obj/structure/window/phoronreinforced{
-	dir = 1
-	},
-/obj/structure/window/phoronreinforced{
+/obj/structure/table/steel_reinforced,
+/obj/structure/window/boron_reinforced{
 	dir = 8
 	},
-/obj/structure/table/steel_reinforced,
+/obj/structure/window/boron_reinforced{
+	dir = 1
+	},
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/farfleet/command/launcher)
 "do" = (
@@ -1213,7 +1228,9 @@
 	icon_state = "warningcorner";
 	dir = 8
 	},
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/farfleet/engineering/fussion/control)
 "dY" = (
 /obj/machinery/door/firedoor,
@@ -1531,7 +1548,9 @@
 	id_tag = "farfleet_fusion"
 	},
 /obj/structure/grille,
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/farfleet/engineering/atmospherics)
 "ft" = (
 /obj/structure/cable{
@@ -1639,13 +1658,17 @@
 	icon_state = "warning";
 	dir = 6
 	},
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/farfleet/engineering/fussion/control)
 "fS" = (
 /obj/effect/floor_decal/industrial/warning{
 	dir = 8
 	},
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/farfleet/engineering/fussion/control)
 "fU" = (
 /obj/effect/paint/dark_gunmetal,
@@ -1716,7 +1739,9 @@
 	icon_state = "warning";
 	dir = 4
 	},
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/farfleet/engineering/fussion/control)
 "gp" = (
 /obj/machinery/atmospherics/unary/vent_pump/on{
@@ -1773,7 +1798,9 @@
 /obj/effect/floor_decal/industrial/warning/corner{
 	dir = 1
 	},
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/farfleet/engineering/fussion/control)
 "gD" = (
 /obj/structure/cable{
@@ -1804,7 +1831,9 @@
 /obj/structure/sign/iccg{
 	pixel_x = 32
 	},
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/space)
 "gG" = (
 /obj/effect/paint/dark_gunmetal,
@@ -1821,7 +1850,6 @@
 "gJ" = (
 /obj/structure/table/rack,
 /obj/item/stack/material/ocp/fifty,
-/obj/item/stack/material/glass/phoronrglass/ten,
 /obj/item/stack/material/plasteel/fifty,
 /obj/effect/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/tiled/monotile,
@@ -1839,13 +1867,17 @@
 	icon_state = "warning";
 	dir = 5
 	},
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/farfleet/engineering/fussion/control)
 "gR" = (
 /obj/effect/floor_decal/industrial/warning{
 	dir = 9
 	},
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/farfleet/engineering/fussion/control)
 "gS" = (
 /obj/effect/floor_decal/corner_steel_grid/diagonal,
@@ -1916,7 +1948,9 @@
 	icon_state = "4-8";
 	pixel_y = 0
 	},
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/farfleet/engineering/fussion/control)
 "hk" = (
 /obj/structure/cable{
@@ -2060,7 +2094,9 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/farfleet/engineering/fussion/control)
 "hK" = (
 /obj/effect/paint/hull,
@@ -2094,7 +2130,9 @@
 	initial_id_tag = "farfleet_pd"
 	},
 /obj/structure/cable,
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/space)
 "hW" = (
 /obj/effect/floor_decal/industrial/hatch/yellow,
@@ -2258,7 +2296,9 @@
 /obj/machinery/pointdefense{
 	initial_id_tag = "farfleet_pd"
 	},
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/space)
 "iR" = (
 /obj/structure/flora/pottedplant/stoutbush,
@@ -2301,7 +2341,9 @@
 	dir = 8;
 	id_tag = "prototype_exhaust_farfleet"
 	},
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/farfleet/engineering/fussion/control)
 "jq" = (
 /obj/machinery/power/emitter/gyrotron/anchored{
@@ -2365,7 +2407,9 @@
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hallway/lower)
 "jz" = (
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/farfleet/engineering/fussion/control)
 "jD" = (
 /obj/effect/floor_decal/industrial/hatch/yellow,
@@ -2629,7 +2673,9 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/paint/hull,
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/farfleet/engineering/atmospherics)
 "kR" = (
 /obj/machinery/door/firedoor,
@@ -2647,12 +2693,12 @@
 /obj/machinery/computer/ship/disperser/military{
 	dir = 1
 	},
-/obj/structure/window/phoronreinforced{
-	dir = 4
-	},
 /obj/machinery/firealarm{
 	dir = 1;
 	pixel_y = -24
+	},
+/obj/structure/window/boron_reinforced{
+	dir = 4
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/farfleet/command/launcher)
@@ -2665,13 +2711,17 @@
 /obj/effect/floor_decal/industrial/warning{
 	dir = 8
 	},
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/farfleet/engineering/fussion/control)
 "kX" = (
 /obj/effect/floor_decal/industrial/warning/corner{
 	dir = 8
 	},
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/farfleet/engineering/fussion/control)
 "kZ" = (
 /obj/structure/table/rack,
@@ -2771,7 +2821,9 @@
 /obj/machinery/igniter{
 	id_tag = "farfleet_igniter"
 	},
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/farfleet/engineering/atmospherics)
 "lu" = (
 /obj/structure/bed/chair/comfy/blue,
@@ -2960,7 +3012,9 @@
 	icon_state = "warning";
 	dir = 1
 	},
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/farfleet/engineering/fussion/control)
 "mm" = (
 /obj/effect/paint/dark_gunmetal,
@@ -3022,7 +3076,9 @@
 	icon_state = "warningcorner";
 	dir = 1
 	},
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/farfleet/engineering/fussion/control)
 "mx" = (
 /obj/machinery/bodyscanner{
@@ -3210,7 +3266,9 @@
 /area/ship/farfleet/crew/brig/emergency_armory)
 "nr" = (
 /obj/machinery/shipsensors,
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/farfleet/command/bridge)
 "nt" = (
 /obj/machinery/hologram/holopad/longrange,
@@ -3298,24 +3356,26 @@
 /obj/machinery/button/alternate/door/bolts{
 	pixel_y = 28;
 	name = "Impulse Cannon Access";
-	id_tag = "pcannon";
-	pixel_x = 7
+	id_tag = "pcannon"
 	},
 /obj/machinery/button/blast_door{
 	pixel_y = 28;
-	pixel_x = -6;
+	pixel_x = -10;
 	id_tag = "pcbridge";
 	name = "Last Stand Shutters Control";
 	desc = "Bridge blast door control panel. If you press this not at the drill, there is a bad news for you. Die as a man."
 	},
 /obj/machinery/button/blast_door{
-	pixel_y = 38;
-	pixel_x = 8;
+	pixel_y = 28;
+	pixel_x = 10;
 	name = "Sensors Protection";
 	id_tag = "pcsensors"
 	},
 /obj/item/paper/farfleet/engines{
 	language = "Pan-Slavic"
+	},
+/obj/machinery/iff_beacon{
+	pixel_y = 38
 	},
 /turf/simulated/floor/tiled/dark,
 /area/ship/farfleet/command/bridge)
@@ -3437,11 +3497,13 @@
 	dir = 10;
 	icon_state = "intact"
 	},
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/farfleet/engineering/atmospherics)
 "oi" = (
 /obj/structure/table/steel_reinforced,
-/obj/structure/window/phoronreinforced{
+/obj/structure/window/boron_reinforced{
 	dir = 8
 	},
 /turf/simulated/floor/tiled/techfloor,
@@ -3512,7 +3574,9 @@
 /obj/effect/floor_decal/industrial/warning/corner{
 	dir = 4
 	},
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/farfleet/engineering/fussion/control)
 "oI" = (
 /obj/structure/table/rack,
@@ -3618,7 +3682,9 @@
 	icon_state = "warning";
 	dir = 10
 	},
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/farfleet/engineering/fussion/control)
 "pu" = (
 /obj/turbolift_map_holder/farfleet{
@@ -3636,7 +3702,7 @@
 /area/ship/farfleet/crew/brig/emergency_armory)
 "pw" = (
 /obj/effect/floor_decal/industrial/outline/blue,
-/obj/machinery/telecomms/server/presets/farfleet,
+/obj/machinery/telecomms/allinone/iccgn,
 /turf/simulated/floor/tiled/steel_grid,
 /area/ship/farfleet/crew/comms)
 "pH" = (
@@ -3909,9 +3975,6 @@
 /obj/item/stack/material/ocp/fifty,
 /obj/item/stack/material/wood/maple/twentyfive,
 /obj/item/stack/material/wood/maple/twentyfive,
-/obj/item/stack/material/glass/phoronrglass{
-	amount = 30
-	},
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/engineering/storage)
 "rM" = (
@@ -3997,7 +4060,9 @@
 /obj/machinery/atmospherics/pipe/vent/high_volume{
 	icon_state = "intact"
 	},
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/farfleet/engineering/atmospherics)
 "sv" = (
 /obj/effect/paint/dark_gunmetal,
@@ -4031,7 +4096,9 @@
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction{
 	dir = 1
 	},
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/farfleet/engineering/atmospherics)
 "sH" = (
 /obj/structure/cable{
@@ -4065,7 +4132,9 @@
 	dir = 4
 	},
 /obj/effect/floor_decal/industrial/warning/corner,
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/farfleet/engineering/fussion/control)
 "sP" = (
 /obj/structure/cable{
@@ -4167,14 +4236,14 @@
 /turf/simulated/floor/plating,
 /area/ship/farfleet/engineering/hallway)
 "tp" = (
-/obj/structure/window/phoronreinforced{
-	dir = 1
-	},
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	icon_state = "map_vent_out";
 	dir = 1
 	},
 /obj/structure/bed/chair,
+/obj/structure/window/boron_reinforced{
+	dir = 1
+	},
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/farfleet/command/launcher)
 "tr" = (
@@ -4276,7 +4345,9 @@
 /obj/effect/floor_decal/industrial/warning/corner{
 	dir = 4
 	},
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/farfleet/engineering/fussion/control)
 "uJ" = (
 /obj/structure/railing/mapped{
@@ -4693,7 +4764,9 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/space)
 "zi" = (
 /obj/structure/cable{
@@ -4870,7 +4943,9 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/farfleet/engineering/fussion/control)
 "AD" = (
 /obj/effect/paint/silver,
@@ -4949,7 +5024,9 @@
 /obj/effect/floor_decal/industrial/warning/corner{
 	dir = 4
 	},
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/farfleet/engineering/fussion/control)
 "BN" = (
 /obj/machinery/atmospherics/unary/vent_pump/on{
@@ -5060,7 +5137,9 @@
 /obj/effect/floor_decal/industrial/warning/corner{
 	dir = 4
 	},
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/farfleet/engineering/fussion/control)
 "CD" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -5110,7 +5189,9 @@
 	dir = 4
 	},
 /obj/effect/floor_decal/industrial/warning/corner,
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/farfleet/engineering/fussion/control)
 "CX" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
@@ -5128,14 +5209,18 @@
 /obj/effect/floor_decal/industrial/warning{
 	dir = 9
 	},
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/farfleet/engineering/fussion/control)
 "Dj" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 9;
 	icon_state = "intact"
 	},
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/farfleet/engineering/atmospherics)
 "Dl" = (
 /obj/structure/reagent_dispensers/water_cooler{
@@ -5638,7 +5723,9 @@
 	icon_state = "warningcorner";
 	dir = 8
 	},
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/farfleet/engineering/fussion/control)
 "HI" = (
 /obj/machinery/light{
@@ -5947,7 +6034,9 @@
 	icon_state = "warningcorner";
 	dir = 8
 	},
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/farfleet/engineering/fussion/control)
 "KG" = (
 /obj/effect/floor_decal/corner_steel_grid/diagonal,
@@ -6150,7 +6239,9 @@
 	icon_state = "warning";
 	dir = 5
 	},
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/farfleet/engineering/fussion/control)
 "MP" = (
 /obj/effect/floor_decal/industrial/outline/blue,
@@ -6215,7 +6306,9 @@
 	dir = 6;
 	icon_state = "intact"
 	},
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/farfleet/engineering/atmospherics)
 "NH" = (
 /obj/structure/cable{
@@ -6319,7 +6412,9 @@
 /obj/effect/floor_decal/industrial/warning/corner{
 	dir = 1
 	},
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/farfleet/engineering/fussion/control)
 "On" = (
 /obj/effect/paint/dark_gunmetal,
@@ -6351,7 +6446,9 @@
 	icon_state = "warning";
 	dir = 10
 	},
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/farfleet/engineering/fussion/control)
 "Oy" = (
 /obj/machinery/door/firedoor,
@@ -6456,15 +6553,15 @@
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/medbay)
 "Pq" = (
-/obj/structure/window/phoronreinforced{
-	dir = 1
-	},
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 1
 	},
 /obj/machinery/door/window/phoronreinforced{
 	dir = 4;
 	name = "Impulse Cannon Control"
+	},
+/obj/structure/window/boron_reinforced{
+	dir = 1
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/farfleet/command/launcher)
@@ -6574,7 +6671,9 @@
 	id_tag = "iccg_space";
 	name = "Unknown Compartament Hatch"
 	},
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/farfleet/command/launcher)
 "PY" = (
 /obj/effect/decal/cleanable/dirt,
@@ -6674,7 +6773,9 @@
 	name = "Sensors Protective Shutters"
 	},
 /obj/machinery/shield_diffuser,
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/farfleet/command/bridge)
 "QW" = (
 /obj/structure/cable{
@@ -7016,7 +7117,9 @@
 	},
 /obj/structure/grille,
 /obj/machinery/shield_diffuser,
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/farfleet/engineering/atmospherics)
 "TU" = (
 /obj/effect/floor_decal/industrial/warning{
@@ -7032,7 +7135,9 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/farfleet/engineering/fussion/control)
 "TW" = (
 /obj/effect/paint/dark_gunmetal,
@@ -7558,7 +7663,9 @@
 /obj/machinery/disperser/front{
 	dir = 8
 	},
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/farfleet/command/launcher)
 "ZD" = (
 /obj/structure/bed/chair/comfy/blue,

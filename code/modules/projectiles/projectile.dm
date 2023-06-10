@@ -45,7 +45,8 @@
 	var/projectile_type = /obj/item/projectile
 	var/penetrating = 0 //If greater than zero, the projectile will pass through dense objects as specified by on_penetrate()
 	var/life_span = 50 //This will de-increment every process(). When 0, it will delete the projectile.
-		//Effects
+
+	//Effects
 	var/stun = 0
 	var/weaken = 0
 	var/paralyze = 0
@@ -55,7 +56,9 @@
 	var/drowsy = 0
 	var/agony = 0
 	var/embed = FALSE // whether or not the projectile can embed itself in the mob
-	var/penetration_modifier = 0.2 //How much internal damage this projectile can deal, as a multiplier.
+	var/penetration_modifier = 0.2 //How likely this projectile is to embed or rupture artery
+	var/knockback = 0 //SIERRA
+	var/space_knockback = 0	//whether or not it will knock things back in space
 
 	var/hitscan = FALSE		// whether the projectile should be hitscan
 	var/step_delay = 1	// the delay between iterations if not a hitscan projectile
@@ -110,6 +113,17 @@
 		var/turf/T = get_turf(A)
 		if(T)
 			T.hotspot_expose(700, 5)
+
+	if(space_knockback && ismovable(A))
+		var/atom/movable/AM = A
+		if(!AM.anchored && !AM.has_gravity())
+			if(ismob(AM))
+				var/mob/M = AM
+				if(M.check_space_footing())
+					return
+			var/old_dir = AM.dir
+			step(AM,get_dir(firer,AM))
+			AM.set_dir(old_dir)
 
 //Checks if the projectile is eligible for embedding. Not that it necessarily will.
 /obj/item/projectile/can_embed()
@@ -544,3 +558,6 @@
 		SP.SetName((name != "shrapnel")? "[name] shrapnel" : "shrapnel")
 		SP.desc += " It looks like it was fired from [shot_from]."
 		return SP
+
+/obj/item/projectile/Process_Spacemove()
+	return TRUE	//Bullets don't drift in space

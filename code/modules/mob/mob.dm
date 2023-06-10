@@ -359,7 +359,7 @@
 			distance = get_dist(source_turf, target_turf)
 	if(!A.examine(src, distance))
 		crash_with("Improper /examine() override: [log_info_line(A)]")
-	if(get_skill_value(SKILL_FORENSICS) >= SKILL_EXPERT && get_dist(src, A) <= (get_skill_value(SKILL_FORENSICS) - SKILL_ADEPT))
+	if(get_skill_value(SKILL_FORENSICS) >= SKILL_EXPERIENCED && get_dist(src, A) <= (get_skill_value(SKILL_FORENSICS) - SKILL_TRAINED))
 		var/clue
 		if(LAZYLEN(A.suit_fibers))
 			to_chat(src, SPAN_NOTICE("You notice some fibers embedded in \the [A]."))
@@ -380,7 +380,7 @@
 				to_chat(src, SPAN_NOTICE("You notice a faint acrid smell coming from \the [A]."))
 			clue = 1
 		//Noticing wiped blood is a bit harder
-		if((get_skill_value(SKILL_FORENSICS) >= SKILL_PROF) && LAZYLEN(A.blood_DNA))
+		if((get_skill_value(SKILL_FORENSICS) >= SKILL_MASTER) && LAZYLEN(A.blood_DNA))
 			to_chat(src, SPAN_WARNING("You notice faint blood traces on \The [A]."))
 			clue = 1
 		if(clue && has_client_color(/datum/client_color/noir))
@@ -657,10 +657,6 @@
 		if(istype(C))
 			C.leave_evidence(src)
 
-	//Attempted fix for people flying away through space when cuffed and dragged.
-	if(ismob(AM))
-		var/mob/pulled = AM
-		pulled.inertia_dir = 0
 
 /mob/proc/can_use_hands()
 	return
@@ -681,14 +677,13 @@
 
 
 /mob/choose_from_pronouns()
-	if(!pronouns)
-		var/datum/gender/G = gender_datums[gender]
-		return G
-	else
-		var/datum/pronouns/P = GLOB.pronouns.by_key[pronouns]
-		if(P.types)
-			P = GLOB.pronouns.by_key[pick(P.types)]
-		return P
+	if (!pronouns)
+		return ..()
+
+	var/datum/pronouns/P = GLOB.pronouns.by_key[pronouns]
+	if(P.types)
+		P = GLOB.pronouns.by_key[pick(P.types)]
+	return P
 
 
 /mob/proc/see(message)
@@ -1276,3 +1271,6 @@
 			return FALSE
 	else
 		return FALSE
+
+/mob/get_mass()
+	return mob_size

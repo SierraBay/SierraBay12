@@ -147,7 +147,7 @@
 
 /mob/living/simple_animal/hostile/lar_maria/virologist/female
 	icon_state = "virologist_f"
-	weapon = /obj/item/scalpel
+	weapon = /obj/item/scalpel/basic
 	corpse = /obj/effect/landmark/corpse/lar_maria/virologist_female
 
 /obj/effect/landmark/corpse/lar_maria/virologist_female
@@ -232,5 +232,5 @@
 
 /datum/say_list/lar_maria
 	speak = list("Die!", "Fresh meat!", "Hurr!", "You said help will come!", "I did nothing!", "Eat my fist!", "One for the road!")
-	emote_see = list("cries", "grins insanely", "itches fiercly", "scratches his face", "shakes his fists above his head")
+	emote_see = list("cries", "grins insanely", "itches fiercly", "scratches their face", "shakes their fists above their head")
 	emote_hear = list("roars", "giggles", "breathes loudly", "mumbles", "yells something unintelligible")

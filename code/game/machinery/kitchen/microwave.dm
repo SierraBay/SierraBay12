@@ -10,6 +10,7 @@
 	idle_power_usage = 5
 	active_power_usage = 100
 	atom_flags = ATOM_FLAG_NO_TEMP_CHANGE | ATOM_FLAG_NO_REACT | ATOM_FLAG_OPEN_CONTAINER
+	obj_flags = OBJ_FLAG_CAN_TABLE
 	construct_state = /singleton/machine_construction/default/panel_closed
 	uncreated_component_parts = null
 	stat_immune = 0
@@ -62,7 +63,7 @@
 				SPAN_NOTICE("\The [user] starts to fix part of the microwave."), \
 				SPAN_NOTICE("You start to fix part of the microwave.") \
 			)
-			if (do_after(user, 2 SECONDS, src, DO_REPAIR_CONSTRUCT))
+			if (do_after(user, (O.toolspeed * 2) SECONDS, src, DO_REPAIR_CONSTRUCT))
 				user.visible_message( \
 					SPAN_NOTICE("\The [user] fixes part of the microwave."), \
 					SPAN_NOTICE("You have fixed part of the microwave.") \
@@ -75,7 +76,7 @@
 				SPAN_NOTICE("\The [user] starts to fix part of the microwave."), \
 				SPAN_NOTICE("You start to fix part of the microwave.") \
 			)
-			if (do_after(user, 2 SECONDS, src, DO_REPAIR_CONSTRUCT))
+			if (do_after(user, (O.toolspeed * 2) SECONDS, src, DO_REPAIR_CONSTRUCT))
 				user.visible_message( \
 					SPAN_NOTICE("\The [user] fixes the microwave."), \
 					SPAN_NOTICE("You have fixed the microwave.") \
@@ -201,7 +202,7 @@
 			SPAN_NOTICE("\The [user] begins [anchored ? "securing" : "unsecuring"] the microwave."), \
 			SPAN_NOTICE("You attempt to [anchored ? "secure" : "unsecure"] the microwave.")
 			)
-		if (do_after(user, 2 SECONDS, src, DO_REPAIR_CONSTRUCT))
+		if (do_after(user, (O.toolspeed * 2) SECONDS, src, DO_REPAIR_CONSTRUCT))
 			anchored = !anchored
 			user.visible_message( \
 			SPAN_NOTICE("\The [user] [anchored ? "secures" : "unsecures"] the microwave."), \
