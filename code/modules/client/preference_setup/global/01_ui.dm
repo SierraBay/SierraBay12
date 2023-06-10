@@ -5,10 +5,7 @@
 	var/UI_style_color = "#ffffff"
 	var/UI_style_alpha = 255
 
-<<<<<<< ours
-	var/tooltip_style = "Midnight" 		//Style for popup tooltips
-=======
->>>>>>> theirs
+	var/tooltip_style = "Midnight" // SIERRA - Style for popup tooltips
 
 /datum/category_item/player_setup_item/player_global/ui
 	name = "UI"
