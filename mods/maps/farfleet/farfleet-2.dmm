@@ -1441,7 +1441,7 @@
 /obj/effect/floor_decal/corner/b_green/diagonal{
 	dir = 8
 	},
-/obj/machinery/jukebox/old,
+/obj/machinery/jukebox/custom_tape/old,
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/crew/canteen)
 "oH" = (
@@ -2246,6 +2246,9 @@
 /obj/machinery/pointdefense_control{
 	initial_id_tag = "snz_pd"
 	},
+/obj/machinery/iff_beacon{
+	pixel_y = 24
+	},
 /turf/simulated/floor/tiled/steel_grid,
 /area/ship/snz)
 "wb" = (
@@ -2799,8 +2802,8 @@
 /obj/random/snack,
 /obj/random/snack,
 /obj/random/snack,
-/obj/item/storage/box/gloves,
-/obj/item/storage/box/gloves,
+/obj/item/storage/box/latexgloves,
+/obj/item/storage/box/nitrilegloves,
 /obj/effect/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/tiled/monotile,
 /area/ship/farfleet/crew/hydroponics)

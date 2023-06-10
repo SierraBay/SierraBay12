@@ -956,8 +956,10 @@
 	pixel_x = -1;
 	pixel_y = -24
 	},
-/obj/structure/hygiene/sink,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/hygiene/sink{
+	pixel_y = -12
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/crew_quarters/heads/captain/secret_room/level_two)
 "acc" = (
@@ -2888,7 +2890,7 @@
 /obj/item/storage/box/masks{
 	pixel_y = 6
 	},
-/obj/item/storage/box/gloves,
+/obj/item/storage/box/latexgloves,
 /obj/effect/floor_decal/borderfloorwhite{
 	dir = 10
 	},
@@ -9418,7 +9420,7 @@
 /obj/item/clothing/suit/storage/toggle/labcoat,
 /obj/item/storage/box/evidence,
 /obj/item/storage/box/syringes,
-/obj/item/storage/box/gloves,
+/obj/item/storage/box/latexgloves,
 /obj/machinery/light_switch{
 	dir = 1;
 	pixel_x = -6;
@@ -10705,7 +10707,7 @@
 /turf/space,
 /area/space)
 "asn" = (
-/obj/machinery/jukebox/old,
+/obj/machinery/jukebox/custom_tape/old,
 /obj/effect/floor_decal/borderfloorblack{
 	dir = 8
 	},
@@ -23929,7 +23931,6 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/radio_beacon,
 /turf/simulated/floor/tiled/techfloor,
 /area/storage/bridge)
 "aNu" = (
@@ -40993,6 +40994,16 @@
 /obj/random/trash,
 /turf/simulated/floor/plating,
 /area/maintenance/firstdeck/centralport)
+"rrt" = (
+/obj/effect/floor_decal/borderfloor{
+	dir = 1
+	},
+/obj/effect/floor_decal/corner/paleblue/border{
+	dir = 1
+	},
+/obj/machinery/ship_map,
+/turf/simulated/floor/tiled,
+/area/hallway/primary/firstdeck/aft)
 "rwo" = (
 /turf/simulated/floor/tiled/dark,
 /area/medical/morgue)
@@ -42182,7 +42193,6 @@
 	},
 /area/space)
 "vky" = (
-/obj/structure/hygiene/sink,
 /obj/effect/floor_decal/borderfloorwhite,
 /obj/effect/floor_decal/corner/purple/border,
 /obj/effect/floor_decal/borderfloorwhite/corner2{
@@ -42190,6 +42200,9 @@
 	},
 /obj/effect/floor_decal/corner/purple/bordercorner2{
 	dir = 9
+	},
+/obj/structure/hygiene/sink{
+	pixel_y = -12
 	},
 /turf/simulated/floor/tiled/white,
 /area/rnd/xenobiology/xenoflora)
@@ -65321,7 +65334,7 @@ kmz
 eNQ
 qaE
 spL
-aBF
+rrt
 aDF
 aFp
 aGW

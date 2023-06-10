@@ -1841,7 +1841,9 @@
 /obj/effect/floor_decal/spline/fancy/black{
 	dir = 1
 	},
-/obj/machinery/vending/boozeomat,
+/obj/machinery/vending/boozeomat{
+	req_access = list("ACCESS_BAR")
+	},
 /turf/simulated/floor/wood/ebony,
 /area/crew_quarters/bar)
 "adU" = (
@@ -13101,7 +13103,7 @@
 	pixel_y = -6;
 	req_access = list("ACCESS_BAR")
 	},
-/obj/machinery/jukebox/old,
+/obj/machinery/jukebox/custom_tape/old,
 /obj/machinery/light/led/small,
 /turf/simulated/floor/wood/ebony,
 /area/crew_quarters/bar)
@@ -25094,7 +25096,9 @@
 	dir = 4
 	},
 /obj/effect/catwalk_plated/white,
-/obj/structure/hygiene/sink,
+/obj/structure/hygiene/sink{
+	pixel_y = -12
+	},
 /obj/machinery/button/blast_door{
 	dir = 1;
 	id_tag = "xenobio1";
@@ -25250,7 +25254,6 @@
 	dir = 4
 	},
 /obj/effect/catwalk_plated/white,
-/obj/structure/hygiene/sink,
 /obj/machinery/button/blast_door{
 	dir = 1;
 	id_tag = "xenobio2";
@@ -25277,6 +25280,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/black{
 	dir = 4
 	},
+/obj/structure/hygiene/sink{
+	pixel_y = -12
+	},
 /turf/simulated/open,
 /area/rnd/xenobiology/level1)
 "aUE" = (
@@ -25284,7 +25290,6 @@
 	dir = 4
 	},
 /obj/effect/catwalk_plated/white,
-/obj/structure/hygiene/sink,
 /obj/machinery/button/blast_door{
 	dir = 1;
 	id_tag = "xenobio3_vent";
@@ -25300,6 +25305,9 @@
 	pixel_x = -6;
 	pixel_y = -21;
 	req_access = list("ACCESS_RESEARCH")
+	},
+/obj/structure/hygiene/sink{
+	pixel_y = -12
 	},
 /turf/simulated/open,
 /area/rnd/xenobiology/level1)
@@ -26549,6 +26557,10 @@
 /obj/effect/floor_decal/corner/purple/bordercorner2{
 	dir = 4
 	},
+/obj/structure/hygiene/sink{
+	dir = 4;
+	pixel_x = 11
+	},
 /turf/simulated/floor/tiled/white,
 /area/rnd/xenobiology/level1)
 "aXg" = (
@@ -27499,8 +27511,8 @@
 /obj/item/storage/box/syringes,
 /obj/effect/floor_decal/borderfloorwhite,
 /obj/effect/floor_decal/corner/paleblue/border,
-/obj/item/storage/box/gloves,
-/obj/item/storage/box/gloves,
+/obj/item/storage/box/latexgloves,
+/obj/item/storage/box/nitrilegloves,
 /turf/simulated/floor/tiled/white,
 /area/medical/maintenance_equipstorage)
 "aYZ" = (
@@ -30782,6 +30794,10 @@
 	dir = 1
 	},
 /obj/effect/floor_decal/spline/fancy/black,
+/obj/machinery/iff_beacon/sierra{
+	dir = 1;
+	pixel_y = -22
+	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/bridge/nano)
 "bfE" = (
@@ -33155,6 +33171,7 @@
 	c_tag = "Cryogenic Storage - Third Cryopods";
 	dir = 4
 	},
+/obj/structure/closet/emcloset/anchored,
 /turf/simulated/floor/tiled/techfloor,
 /area/crew_quarters/sleep/cryo)
 "cDx" = (
@@ -33613,6 +33630,16 @@
 "dXt" = (
 /turf/simulated/floor/reinforced,
 /area/rnd/xenobiology/water_cell)
+"dYe" = (
+/obj/effect/floor_decal/borderfloor{
+	dir = 1
+	},
+/obj/effect/floor_decal/corner/lime/border{
+	dir = 1
+	},
+/obj/machinery/ship_map,
+/turf/simulated/floor/tiled,
+/area/hallway/primary/seconddeck/center)
 "dYg" = (
 /obj/structure/cable/green{
 	d1 = 4;
@@ -36146,7 +36173,6 @@
 /turf/simulated/wall/prepainted,
 /area/crew_quarters/sleep/cryo/south)
 "lIf" = (
-/obj/structure/filingcabinet/chestdrawer,
 /obj/structure/cable/green{
 	d1 = 1;
 	d2 = 2;
@@ -36155,6 +36181,7 @@
 /obj/effect/floor_decal/spline/fancy/black{
 	dir = 1
 	},
+/obj/machinery/radio_beacon,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/bridge/nano)
 "lIG" = (
@@ -36991,7 +37018,7 @@
 /turf/space,
 /area/space)
 "okY" = (
-/obj/machinery/jukebox,
+/obj/machinery/jukebox/custom_tape,
 /turf/simulated/floor/carpet/purple,
 /area/crew_quarters/lounge_big)
 "onA" = (
@@ -37910,6 +37937,7 @@
 	dir = 8;
 	pixel_x = 24
 	},
+/obj/structure/closet/emcloset/anchored,
 /turf/simulated/floor/tiled/techfloor,
 /area/crew_quarters/sleep/cryo)
 "qCK" = (
@@ -38079,6 +38107,7 @@
 	dir = 8;
 	pixel_x = 24
 	},
+/obj/structure/closet/emcloset/anchored,
 /turf/simulated/floor/tiled/techfloor,
 /area/crew_quarters/sleep/cryo)
 "qXN" = (
@@ -57932,7 +57961,7 @@ deW
 kyz
 vPg
 amq
-mZD
+dYe
 aiB
 aVI
 aYh

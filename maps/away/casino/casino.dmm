@@ -150,6 +150,9 @@
 "av" = (
 /obj/structure/table/steel_reinforced,
 /obj/random/handgun,
+/obj/machinery/iff_beacon/table{
+	pixel_y = 8
+	},
 /turf/simulated/floor/tiled,
 /area/casino/casino_bridge)
 "aw" = (
@@ -4047,7 +4050,7 @@
 /turf/simulated/floor/wood,
 /area/casino/casino_private_vip)
 "lj" = (
-/obj/machinery/jukebox,
+/obj/machinery/jukebox/custom_tape,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
