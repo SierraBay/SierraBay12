@@ -259,7 +259,7 @@ var/global/list/ai_verbs_default = list(
 	// split & clean up
 		var/list/Entry = splittext(line, ":")
 		for(var/i = 1 to length(Entry))
-			Entry[i] = trim(Entry[i])
+			Entry[i] = trimtext(Entry[i])
 
 		if(length(Entry) < 2)
 			continue
@@ -635,7 +635,7 @@ var/global/list/ai_verbs_default = list(
 			SPAN_NOTICE("\The [user] starts [anchored ? "unbolting" : "bolting"] \the [src] from the floor with \a [tool]."),
 			SPAN_NOTICE("You start [anchored ? "unbolting" : "bolting"] \the [src] from the floor with \the [tool].")
 		)
-		if (!do_after(user, 4 SECONDS, src, DO_REPAIR_CONSTRUCT) || !user.use_sanity_check(src, tool))
+		if (!user.do_skilled((tool.toolspeed * 4) SECONDS, SKILL_CONSTRUCTION, src, do_flags = DO_REPAIR_CONSTRUCT) || !user.use_sanity_check(src, tool))
 			return TRUE
 		anchored = !anchored
 		user.visible_message(

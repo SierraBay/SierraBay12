@@ -10,10 +10,11 @@
 	var/material/padding_material
 	var/base_icon = "bed"
 	var/material_alteration = MATERIAL_ALTERATION_ALL
-	var/cache_key
-	var/padding_cache_key
 	/// Bitflags. Bed/chair specific flags.
 	var/bed_flags = EMPTY_BITFIELD
+
+	var/cache_key // SIERRA
+	var/padding_cache_key // SIERRA
 
 
 /obj/structure/bed/New(newloc, new_material = DEFAULT_FURNITURE_MATERIAL, new_padding_material)
@@ -159,7 +160,7 @@
 		VISIBLE_MESSAGE,
 		SPAN_DANGER("You feel someone trying to force you into a bed or chair!")
 	)
-	if (!do_after(grab.assailant, 2 SECONDS, src, DO_PUBLIC_UNIQUE) || QDELETED(grab) || !grab.assailant.use_sanity_check(src, grab.affecting))
+	if (!do_after(grab.assailant, 2 SECONDS, src, DO_PUBLIC_UNIQUE) || !grab.use_sanity_check(src))
 		return TRUE
 	grab.assailant.visible_message(
 		SPAN_WARNING("\The [grab.assailant] buckles \the [grab.affecting] to \the [src]."),

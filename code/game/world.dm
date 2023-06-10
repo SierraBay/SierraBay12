@@ -4,7 +4,7 @@
 #define SET_THROTTLE(TIME, REASON) throttle[1] = base_throttle + (TIME); throttle[2] = (REASON);
 
 
-var/global/server_name = "Baystation 12"
+
 var/global/game_id = null
 
 GLOBAL_VAR(href_logfile)
@@ -96,9 +96,6 @@ GLOBAL_VAR(href_logfile)
 		call_ext(debug_server, "auxtools_init")()
 		enable_debugging()
 
-	name = "[server_name] - [GLOB.using_map.full_name]"
-
-	//logs
 	SetupLogs()
 	var/date_string = time2text(world.realtime, "YYYY/MM/DD")
 	//to_file(global.diary, "[log_end]\n[log_end]\nStarting up. (ID: [game_id]) [time2text(world.timeofday, "hh:mm.ss")][log_end]\n---------------------[log_end]")
@@ -106,18 +103,17 @@ GLOBAL_VAR(href_logfile)
 	GLOB.world_game_log = "[GLOB.log_directory]/game.log"
 	start_log(GLOB.world_game_log)
 
-	if(config && config.server_name != null && config.server_suffix && world.port > 0)
-		config.server_name += " #[(world.port % 1000) / 100]"
+	if (config)
+		if (config.server_name)
+			name = "[config.server_name]"
+		if (config.log_runtime)
+			var/runtime_log = file("data/logs/runtime/[date_string]_[time2text(world.timeofday, "hh:mm")]_[game_id].log")
+			to_file(runtime_log, "Game [game_id] starting up at [time2text(world.timeofday, "hh:mm.ss")]")
+			log = runtime_log
+		if (config.log_hrefs)
+			GLOB.href_logfile = file("data/logs/[date_string] hrefs.htm")
 
-	if(config && config.log_runtime)
-		var/runtime_log = file("data/logs/runtime/[date_string]_[time2text(world.timeofday, "hh:mm")]_[game_id].log")
-		to_file(runtime_log, "Game [game_id] starting up at [time2text(world.timeofday, "hh:mm.ss")]")
-		log = runtime_log // Note that, as you can see, this is misnamed: this simply moves world.log into the runtime log file.
-
-	if (config && config.log_hrefs)
-		GLOB.href_logfile = file("data/logs/[date_string] hrefs.htm")
-
-	if(byond_version < RECOMMENDED_VERSION)
+	if (byond_version < RECOMMENDED_VERSION)
 		to_world_log("Your server's byond version does not meet the recommended requirements for this server. Please update BYOND")
 
 	callHook("startup")
@@ -193,6 +189,22 @@ GLOBAL_VAR_INIT(world_topic_last, world.timeofday)
 		s["roundduration"] = roundduration2text()
 		s["map"] = replacetext(GLOB.using_map.full_name, "\improper", "") //Done to remove the non-UTF-8 text macros
 
+		// [SIERRA] - ss220 dependency
+		s["roundtime"] = roundduration2text()
+
+		switch(GAME_STATE)
+			if(RUNLEVEL_INIT)
+				s["ticker_state"] = 0
+			if(RUNLEVEL_LOBBY)
+				s["ticker_state"] = 1
+			if(RUNLEVEL_SETUP)
+				s["ticker_state"] = 2
+			if(RUNLEVEL_GAME)
+				s["ticker_state"] = 3
+			if(RUNLEVEL_POSTGAME)
+				s["ticker_state"] = 4
+		// [/SIERRA]
+
 		var/active = 0
 		var/list/players = list()
 		var/list/admins = list()
@@ -214,6 +226,11 @@ GLOBAL_VAR_INIT(world_topic_last, world.timeofday)
 			s["playerlist"] = list2params(players)
 			s["adminlist"] = list2params(admins)
 			s["active_players"] = active
+
+		// [SIERRA] - ss220 dependency
+		if(input["format"] == "json")
+			return json_encode(s)
+		// [/SIERRA]
 
 		return list2params(s)
 
@@ -290,6 +307,47 @@ GLOBAL_VAR_INIT(world_topic_last, world.timeofday)
 	if (!config.comms_password)
 		SET_THROTTLE(10 SECONDS, "Comms Not Enabled")
 		return "Not enabled"
+
+	// [SIERRA] - ss220 dependency - QUEUE ENGINE SUPPORT
+	else if(copytext(T,1,15) == "playerlist_ext")
+		if(!config.comms_password)
+			return "Not enabled"
+		var/input[] = params2list(T)
+		if(input["key"] != config.comms_password)
+			SET_THROTTLE(30 SECONDS, "Bad Comms Key")
+			return "Bad Key"
+
+		var/list/players = list()
+		var/list/just_keys = list()
+
+		var/list/disconnected_observers = list()
+
+		for(var/mob/M in GLOB.dead_mobs)
+			if(!M.last_ckey)
+				continue
+			if(M.client)
+				continue
+			var/ckey = ckey(M.last_ckey)
+			disconnected_observers[ckey] = ckey
+
+		for(var/client/C as anything in GLOB.clients)
+			var/ckey = C.ckey
+			players[ckey] = ckey
+			just_keys += ckey
+
+		for(var/mob/M in GLOB.alive_mobs)
+			if(!M.last_ckey)
+				continue
+			var/ckey = ckey(M.last_ckey)
+			if(players[ckey])
+				continue
+			if(disconnected_observers[ckey])
+				continue
+			players[ckey] = ckey
+			just_keys += ckey
+
+		return json_encode(just_keys)
+	// [/SIERRA]
 
 	else if(copytext(T,1,5) == "laws")
 		var/input[] = params2list(T)

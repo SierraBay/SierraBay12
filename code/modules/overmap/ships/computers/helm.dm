@@ -143,7 +143,7 @@ GLOBAL_LIST_EMPTY(overmap_helm_computers)
 
 		ui = SSnano.try_update_ui(user, src, ui_key, ui, data, force_open)
 		if (!ui)
-			ui = new(user, src, ui_key, "helm.tmpl", "[linked.name] Helm Control", 565, 545)
+			ui = new(user, src, ui_key, "helm.tmpl", "[linked.get_real_name()] Helm Control", 565, 545)
 			ui.set_initial_data(data)
 			ui.open()
 			ui.set_auto_update(1)
@@ -188,14 +188,14 @@ GLOBAL_LIST_EMPTY(overmap_helm_computers)
 			qdel(R)
 
 	if (href_list["setx"])
-		var/newx = input("Input new destiniation x coordinate", "Coordinate input", dx) as num|null
+		var/newx = input("Input new destination x coordinate", "Coordinate input", dx) as num|null
 		if(!CanInteract(user,state))
 			return
 		if (newx)
 			dx = clamp(newx, 1, world.maxx)
 
 	if (href_list["sety"])
-		var/newy = input("Input new destiniation y coordinate", "Coordinate input", dy) as num|null
+		var/newy = input("Input new destination y coordinate", "Coordinate input", dy) as num|null
 		if(!CanInteract(user,state))
 			return
 		if (newy)
@@ -367,7 +367,7 @@ GLOBAL_LIST_EMPTY(overmap_helm_computers)
 
 	ui = SSnano.try_update_ui(user, src, ui_key, ui, data, force_open)
 	if (!ui)
-		ui = new(user, src, ui_key, "nav.tmpl", "[linked.name] Navigation Screen", 380, 530)
+		ui = new(user, src, ui_key, "nav.tmpl", "[linked.get_real_name()] Navigation Screen", 380, 530)
 		ui.set_initial_data(data)
 		ui.open()
 		ui.set_auto_update(1)

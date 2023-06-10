@@ -152,9 +152,16 @@
 
 	var/datum/progressbar/bar
 	if (do_flags & DO_SHOW_PROGRESS)
+		// Autoset over-user if not in an otherwise visible location
+		// For public progress: This is if it's not on a turf.
+		// For private progress: This is if it's not on a turf or directly in the user's visible inventory HUD.
 		if (do_flags & DO_PUBLIC_PROGRESS)
+			if (!HAS_FLAGS(do_flags, DO_BAR_OVER_USER) && (!target || !isturf(target.loc)))
+				SET_FLAGS(do_flags, DO_BAR_OVER_USER)
 			bar = new /datum/progressbar/public(user, delay, target, !!(do_flags & DO_BAR_OVER_USER))
 		else
+			if (!HAS_FLAGS(do_flags, DO_BAR_OVER_USER) && (!target || (!isturf(target.loc) && target.loc != user)))
+				SET_FLAGS(do_flags, DO_BAR_OVER_USER)
 			bar = new /datum/progressbar/private(user, delay, target, !!(do_flags & DO_BAR_OVER_USER))
 
 	var/start_time = world.time

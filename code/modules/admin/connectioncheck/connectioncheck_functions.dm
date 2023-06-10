@@ -15,10 +15,18 @@
 	if (!dbcon.IsConnected())
 		crash_with("Database connection failed.")
 		return
+	var/selection = list()
+	if (ckey)
+		selection += "`ckey` = '[ckey]'"
+	if (ip)
+		selection += "`ip` = '[ip]'"
+	if (cid)
+		selection += "`computerid` = '[cid]'"
+	selection = english_list(selection, "", "", " OR ", " OR ")
 	var/DBQuery/query = dbcon.NewQuery("\
 		SELECT `datetime`, `ckey`, `ip`, `computerid`\
 			FROM `erro_connection_log`\
-			WHERE `ckey` = '[ckey]' OR `ip` = '[ip]' OR `computerid` = '[cid]'\
+			WHERE [selection]\
 			GROUP BY `ckey`, `ip`, `computerid`\
 			ORDER BY `datetime`\
 	")
@@ -34,157 +42,53 @@
 
 
 /**
- * Checks for bans matching ckey, ip, or cid.
- *
- * Returns list of lists.
- */
-/proc/_fetch_bans(ckey, ip, cid, include_inactive = FALSE)
-	RETURN_TYPE(/list)
-	. = list()
-	ckey = sql_sanitize_text(ckey)
-	ip = sql_sanitize_text(ip)
-	cid = sql_sanitize_text(cid)
-	if (!ckey && !ip && !cid)
-		return
-	establish_db_connection()
-	if (!dbcon.IsConnected())
-		crash_with("Database connection failed.")
-		return
-	var/DBQuery/query = dbcon.NewQuery("\
-		SELECT `bantime`, `bantype`, `reason`, `job`, `duration`, `expiration_time`, `ckey`, `ip`, `computerid`, `a_ckey`, `unbanned`\
-			FROM `erro_ban`\
-			WHERE `bantype` IN ('PERMABAN', 'TEMPBAN') AND \
-			(`ckey` = '[ckey]' OR `ip` = '[ip]' OR `computerid` = '[cid]')\
-	")
-	query.Execute()
-	var/now = time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")
-	while (query.NextRow())
-		var/row = list(
-			"bantime" = query.item[1],
-			"bantype" = query.item[2],
-			"reason" = query.item[3],
-			"job" = query.item[4],
-			"duration" = query.item[5],
-			"expiration_time" = query.item[6],
-			"ckey" = query.item[7],
-			"ip" = query.item[8],
-			"computerid" = query.item[9],
-			"a_ckey" = query.item[10],
-			"unbanned" = query.item[11]
-		)
-		row["expired"] = ((row["bantype"] in list("TEMPBAN", "JOB_TEMPBAN")) && now > row["expiration_time"])
-		if (include_inactive || !(row["expired"] || row["unbanned"]))
-			. += list(row)
-
-
-/**
- * Checks a list of connections for bans matching any of the list entries.
- *
- * **Parameters**:
- * - `connections` (list) - List of connections. Should be the output of `_fetch_connections()`.
- * - `include_inactive` (boolean, default `FALSE`) - If set, includes inactive/expired bans in the list.
- *
- * Returns list of lists.
- */
-/proc/_find_bans_in_connections(list/connections, include_inactive = FALSE)
-	RETURN_TYPE(/list)
-	. = list()
-
-	var/list/ckeys = list()
-	var/list/ips = list()
-	var/list/cids = list()
-	var/list/final_query_components = list()
-
-	for (var/list/connection in connections)
-		ckeys |= connection["ckey"]
-		ips |= connection["ip"]
-		cids |= connection["computerid"]
-
-	var/empty_string = ""
-	var/comma_separator = "', '"
-	if (length(ckeys))
-		final_query_components += "`ckey` IN ('[english_list(ckeys, empty_string, comma_separator, comma_separator, empty_string)]')"
-
-	if (length(ips))
-		final_query_components += "`ip` IN ('[english_list(ips, empty_string, comma_separator, comma_separator, empty_string)]')"
-
-	if (length(cids))
-		final_query_components += "`computerid` IN ('[english_list(cids, empty_string, comma_separator, comma_separator, empty_string)]')"
-
-	if (!length(final_query_components))
-		return
-
-	establish_db_connection()
-	if (!dbcon.IsConnected())
-		crash_with("Database connection failed.")
-		return
-	var/DBQuery/query = dbcon.NewQuery({"
-		SELECT `bantime`, `bantype`, `reason`, `job`, `duration`, `expiration_time`, `ckey`, `ip`, `computerid`, `a_ckey`, `unbanned`
-			FROM `erro_ban`
-			WHERE `bantype` IN ('PERMABAN', 'TEMPBAN') AND
-			([english_list(final_query_components, "", "", " OR ", " OR ")])
-	"})
-	query.Execute()
-	var/now = time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")
-	while (query.NextRow())
-		var/row = list(
-			"bantime" = query.item[1],
-			"bantype" = query.item[2],
-			"reason" = query.item[3],
-			"job" = query.item[4],
-			"duration" = query.item[5],
-			"expiration_time" = query.item[6],
-			"ckey" = query.item[7],
-			"ip" = query.item[8],
-			"computerid" = query.item[9],
-			"a_ckey" = query.item[10],
-			"unbanned" = query.item[11]
-		)
-		row["expired"] = ((row["bantype"] in list("TEMPBAN", "JOB_TEMPBAN")) && now > row["expiration_time"])
-		if (include_inactive || !(row["expired"] || row["unbanned"]))
-			. += list(row)
-
-
-/**
- * Returns a list containing only each unique ckey present in a list of connections provided by `_fetch_connections()`.
+ * Returns a sorted list containing only each unique ckey present in a list of connections provided by `_fetch_connections()`.
  */
 /proc/_unique_ckeys_from_connections(list/connections)
 	RETURN_TYPE(/list)
 	. = list()
 	for (var/list/connection in connections)
 		. |= connection["ckey"]
+	return sortList(.)
 
 
 /**
- * Returns a list containing only each unique CID present in a list of connections provided by `_fetch_connections()`.
+ * Returns a sorted list containing only each unique CID present in a list of connections provided by `_fetch_connections()`.
  */
 /proc/_unique_cids_from_connections(list/connections)
 	RETURN_TYPE(/list)
 	. = list()
 	for (var/list/connection in connections)
 		. |= connection["computerid"]
+	return sortList(.)
 
 
 /**
- * Returns a list containing only each unique IP present in a list of connections provided by `_fetch_connections()`.
+ * Returns a sorted list containing only each unique IP present in a list of connections provided by `_fetch_connections()`.
  */
 /proc/_unique_ips_from_connections(list/connections)
 	RETURN_TYPE(/list)
 	. = list()
 	for (var/list/connection in connections)
 		. |= connection["ip"]
+	return sortList(.)
 
 
+/**
+ * Aliases to `_fetch_connections()` with this client's ckey, address, and CID.
+ *
+ * Returns list of lists.
+ */
 /client/proc/fetch_connections()
 	RETURN_TYPE(/list)
 	return _fetch_connections(ckey, address, computer_id)
 
 
-/client/proc/fetch_bans()
-	RETURN_TYPE(/list)
-	return _find_bans_in_connections(fetch_connections())
-
-
+/**
+ * Aliases to `_fetch_connections()` with this mob's client, if present, or this mob's ckey/last ckey, last IP, and last CID.
+ *
+ * Returns list of lists.
+ */
 /mob/proc/fetch_connections()
 	RETURN_TYPE(/list)
 	if (client)
@@ -192,24 +96,39 @@
 	return _fetch_connections(ckey ? ckey : last_ckey, lastKnownIP, computer_id)
 
 
-/mob/proc/fetch_bans()
-	RETURN_TYPE(/list)
-	return _find_bans_in_connections(fetch_connections())
-
-
+/**
+ * Generates and displays an HTML window, displaying data from a `_fetch_connections()` call with the provided
+ *   parameters.
+ *
+ * **WARNING: This proc makes no validation or access checks. Ensure `user` is a valid candidate to receive this
+ *   information before calling.**
+ *
+ * Used by the `Check Connections` button in the player panel.
+ *
+ * **Parameters**:
+ * - `user` - The mob requesing that the window is displayed to.
+ * - `connections` - List generated from a `_fetch_connections()` call.
+ * - `target_ckey` - If provided, highlights ckeys in the window that match this value.
+ * - `target_ip` - If provided, highlights IP addresses in the window that match this value.
+ * - `target_cid` - If provided, highlights CIDs in the window that match this value.
+ *
+ * Has no return value.
+ */
 /proc/_show_associated_connections(mob/user, list/connections, target_ckey, target_ip, target_cid)
 	// Unique Ckeys
 	var/list/unique_ckeys = _unique_ckeys_from_connections(connections)
 	var/unique_ckeys_table = {"
-		<table style='width: 100%;'>
+		<table class="data hover">
 			<tbody>
 	"}
+	var/stripe = FALSE
 	for (var/ckey in unique_ckeys)
 		unique_ckeys_table += {"
-				<tr>
+				<tr[stripe ? " class='stripe'" : null]>
 					<td[ckey == target_ckey ? " class='highlight'" : null]>[ckey]</td>
 				</tr>
 		"}
+		stripe = !stripe
 	unique_ckeys_table += {"
 			</tbody>
 		</table>
@@ -218,15 +137,17 @@
 	// Unique IP Addresses
 	var/list/unique_ips = _unique_ips_from_connections(connections)
 	var/unique_ips_table = {"
-		<table style='width: 100%;'>
+		<table class="data hover">
 			<tbody>
 	"}
+	stripe = FALSE
 	for (var/ip in unique_ips)
 		unique_ips_table += {"
-				<tr>
-					<td[ip == target_ip ? " class='highlight'" : null]>[ip]</td>
+				<tr[stripe ? " class='stripe'" : null]>
+					<td style='vertical-align: top;'[ip == target_ip ? " class='highlight'" : null]>[ip]</td>
 				</tr>
 		"}
+		stripe = !stripe
 	unique_ips_table += {"
 			</tbody>
 		</table>
@@ -235,15 +156,17 @@
 	// Unique CIDs
 	var/list/unique_cids = _unique_cids_from_connections(connections)
 	var/unique_cids_table = {"
-		<table style='width: 100%;'>
+		<table class="data hover">
 			<tbody>
 	"}
+	stripe = FALSE
 	for (var/cid in unique_cids)
 		unique_cids_table += {"
-				<tr>
-					<td[cid == target_cid ? " class='highlight'" : null]>[cid]</td>
+				<tr[stripe ? " class='stripe'" : null]>
+					<td style='vertical-align: top;'[cid == target_cid ? " class='highlight'" : null]>[cid]</td>
 				</tr>
 		"}
+		stripe = !stripe
 	unique_cids_table += {"
 			</tbody>
 		</table>
@@ -251,7 +174,7 @@
 
 	// List of all connections
 	var/all_connections_table = {"
-		<table style='width: 100%;'>
+		<table class="data hover">
 			<thead>
 				<tr>
 					<th>First Seen</th>
@@ -262,15 +185,17 @@
 			</thead>
 			<tbody>
 	"}
+	stripe = FALSE
 	for (var/list/row in connections)
 		all_connections_table += {"
-				<tr>
+				<tr[stripe ? " class='stripe'" : null]>
 					<td>[row["datetime"]]</td>
 					<td[row["ckey"] == target_ckey ? " class='highlight'" : null]>[row["ckey"]]</td>
 					<td[row["ip"] == target_ip ? " class='highlight'" : null]>[row["ip"]]</td>
 					<td[row["computerid"] == target_cid ? " class='highlight'" : null]>[row["computerid"]]</td>
 				</tr>
 		"}
+		stripe = !stripe
 	all_connections_table += {"
 			</tbody>
 		</table>
@@ -280,7 +205,7 @@
 	var/final_body = {"
 		<h1>Associated Connections</h1>
 		<h2>Queried Details</h2>
-		<table style='width: 100%;'>
+		<table class="data hover">
 			<thead>
 				<tr>
 					<th style='width: 33%;'>Ckey</th>
@@ -296,11 +221,12 @@
 				</tr>
 			</tbody>
 		</table>
+		<hr />
 
 		<h2>Associated Ckeys, IP Addresses, and Computer IDs</h2>
 		<p><small>NOTE: Rows in this table are not necessarily associated with eachother. This is simply a list of each category's entries for ease of information.<br />
 			Entries matching the current query are <span class='highlight'>highlighted</span>.</small></p>
-		<table style='width: 100%;'>
+		<table class="data"> <!-- Intentionally not set to hover. Nested tables hover instead. -->
 			<thead>
 				<tr>
 					<th style='width: 33%;'>Ckeys</th>
@@ -316,6 +242,7 @@
 				</tr>
 			</tbody>
 		</table>
+		<hr />
 
 		<h2>All Unique Connections</h2>
 		<p><small>NOTE: This table does not list every single connection ever made, only the first connection seen for each unique combination of ckey, IP, and CID.<br />
@@ -326,12 +253,22 @@
 	show_browser(user, html_page("Associated Connections ([target_ckey ? target_ckey : "NO CKEY"])", final_body), "window=associatedconnections;size=500x480;")
 
 
+/**
+ * Aliases to `_show_associated_connections()` using this client's `fetch_connections()` result, ckey, IP address, and CID.
+ *
+ * Has no return value.
+ */
 /client/proc/show_associated_connections(mob/user, list/connections)
 	if (isnull(connections))
 		connections = fetch_connections()
 	_show_associated_connections(user, connections, ckey, address, computer_id)
 
 
+/**
+ * Aliases to `_show_associated_connections()` using this mob's `fetch_connections()` result, ckey, IP address, and CID.
+ *
+ * Has no return value.
+ */
 /mob/proc/show_associated_connections(mob/user, list/connections)
 	if (client)
 		client.show_associated_connections(user, connections)
@@ -339,61 +276,3 @@
 	if (isnull(connections))
 		connections = fetch_connections()
 	_show_associated_connections(user, connections, ckey ? ckey : last_ckey, lastKnownIP, computer_id)
-
-
-/proc/_debug_fetch_bans(ckey, ip, cid, include_inactive = FALSE)
-	var/list/result = _find_bans_in_connections(_fetch_connections(ckey, ip, cid), include_inactive)
-	var/table = {"
-		<table>
-			<thead>
-				<tr>
-					<th>BANTIME</th>
-					<th>BANTYPE</th>
-					<th>REASON</th>
-					<th>JOB</th>
-					<th>DURATION</th>
-					<th>EXPIRATION_TIME</th>
-					<th>CKEY</th>
-					<th>IP</th>
-					<th>COMPUTERID</th>
-					<th>A_CKEY</th>
-					<th>UNBANNED</th>
-					<th>EXPIRED</th>
-				</tr>
-			</thead>
-			<tbody>
-	"}
-	for (var/list/row in result)
-		table += {"
-				<tr>
-					<td>[row["bantime"]]</td>
-					<td>[row["bantype"]]</td>
-					<td>[row["reason"]]</td>
-					<td>[row["job"]]</td>
-					<td>[row["duration"]]</td>
-					<td>[row["expiration_time"]]</td>
-					<td>[row["ckey"]]</td>
-					<td>[row["ip"]]</td>
-					<td>[row["computerid"]]</td>
-					<td>[row["a_ckey"]]</td>
-					<td>[row["unbanned"]]</td>
-					<td>[row["expired"]]</td>
-				</tr>
-		"}
-	table += {"
-			</tbody>
-		</table>
-	"}
-	show_browser(usr, table, "window=debug")
-
-
-/client/proc/debug_fetch_bans()
-	RETURN_TYPE(/list)
-	return _debug_fetch_bans(ckey, address, computer_id)
-
-
-/mob/proc/debug_fetch_bans()
-	RETURN_TYPE(/list)
-	if (client)
-		return client.debug_fetch_bans()
-	return _debug_fetch_bans(ckey ? ckey : last_ckey, lastKnownIP, computer_id)

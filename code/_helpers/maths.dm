@@ -4,20 +4,12 @@
 #define Frand(low, high) ( rand() * ((high) - (low)) + (low) )
 
 
-/// Value or the next integer in a positive direction: Ceil(-1.5) = -1 , Ceil(1.5) = 2
-#define Ceil(value) ( -round(-(value)) )
-
-
 /// Value or the next multiple of divisor in a positive direction. Ceilm(-1.5, 0.3) = -1.5 , Ceilm(-1.5, 0.4) = -1.2
 #define Ceilm(value, divisor) ( -round(-(value) / (divisor)) * (divisor) )
 
 
 /// Value or the nearest power of power in a positive direction: Ceilp(3, 2) = 4 , Ceilp(5, 3) = 9
 #define Ceilp(value, power) ( (power) ** -round(-log((power), (value))) )
-
-
-/// Value or the next integer in a negative direction: Floor(-1.5) = -2 , Floor(1.5) = 1
-#define Floor(value) round(value)
 
 
 /// Value or the next multiple of divisor in a negative direction: Floorm(-1.5, 0.3) = -1.5 , Floorm(-1.5, 0.4) = -1.6
@@ -123,7 +115,7 @@
 /proc/Drand(x, y, normalize)
 	var/sum = 0
 	for (var/i = 1 to x)
-		sum += Floor(rand() * y)
+		sum += floor(rand() * y)
 	if (normalize)
 		return sum / ((x * y) - x)
 	return sum + x
@@ -209,3 +201,38 @@
 /proc/grand(min = 0, max = 1)
 	var/static/generator/gauss = generator("num", 0, 1, NORMAL_RAND)
 	return min + gauss.Rand() * (max - min)
+
+/proc/gaussian(mean=0, stddev=1)
+	var u1 = rand()
+	var u2 = rand()
+	var z0 = sqrt(-2 * log(u1)) * cos(2 * PI * u2)
+	return z0 * stddev + mean
+
+
+/proc/rangedGaussian(min=0, max=1, mean=0, stddev=1)
+	var/final_temp = min + rand() * (max - min)
+
+	for (var/runs = 1 to 10)
+		var temp = gaussian(mean, stddev)
+
+		if (temp < min || temp > max)
+			continue
+		final_temp = temp
+		break
+
+	return final_temp
+
+/proc/skewedGaussian(min=0, max=1, skew=1)
+	var/final_temp = min + rand() * (max - min)
+
+	for (var/runs = 1 to 10)
+		var temp = gaussian() ** skew
+		temp = temp * (max - min) + min
+
+		if (temp < min || temp > max)
+			continue
+
+		final_temp = temp
+		break
+
+	return final_temp

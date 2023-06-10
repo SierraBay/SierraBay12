@@ -3,6 +3,7 @@
 	desc = "A rectangular steel crate."
 	closet_appearance = /singleton/closet_appearance/crate
 	atom_flags = ATOM_FLAG_NO_TEMP_CHANGE | ATOM_FLAG_CLIMBABLE
+	obj_flags = OBJ_FLAG_CAN_TABLE
 	setup = 0
 	storage_types = CLOSET_STORAGE_ITEMS
 	var/points_per_crate = 5
@@ -55,14 +56,14 @@
 		if (rigged)
 			USE_FEEDBACK_FAILURE("\The [src] is already rigged.")
 			return TRUE
-		var/obj/item/stack/cable_coil/cable
+		var/obj/item/stack/cable_coil/cable = tool
 		if (!cable.use(1))
 			USE_FEEDBACK_STACK_NOT_ENOUGH(cable, 1, "to rig \the [src].")
 			return TRUE
 		rigged = TRUE
 		user.visible_message(
-			SPAN_NOTICE("\The [user] adds some wiring to \the [src] with \a [cable]."),
-			SPAN_NOTICE("You rig \the [src] with 1 [cable.name] [cable.singular_name] from \the [cable].")
+			SPAN_NOTICE("\The [user] adds some wiring to \the [src] with [cable.get_vague_name(FALSE)]."),
+			SPAN_NOTICE("You rig \the [src] with [cable.get_exact_name(1)].")
 		)
 		return TRUE
 

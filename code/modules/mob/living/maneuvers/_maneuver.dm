@@ -12,7 +12,7 @@
 		if(!silent)
 			to_chat(user, SPAN_WARNING("You are buckled down and cannot maneuver!"))
 		return FALSE
-	if(!has_gravity(user))
+	if(!user.has_gravity())
 		if(!silent)
 			to_chat(user, SPAN_WARNING("You cannot maneuver in zero gravity!"))
 		return FALSE
@@ -22,7 +22,7 @@
 		return FALSE
 	if(world.time < user.last_special)
 		if(!silent)
-			to_chat(user, SPAN_WARNING("You cannot maneuver again for another [Floor((user.last_special - world.time)*0.1)] second\s."))
+			to_chat(user, SPAN_WARNING("You cannot maneuver again for another [floor((user.last_special - world.time)*0.1)] second\s."))
 		return FALSE
 	if(user.get_stamina() < stamina_cost)
 		if(!silent)

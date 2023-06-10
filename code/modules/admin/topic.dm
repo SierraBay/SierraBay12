@@ -122,7 +122,7 @@
 
 				message_admins("[key_name_admin(usr)] removed [adm_ckey] from the admins list")
 				log_admin("[key_name(usr)] removed [adm_ckey] from the admins list")
-				log_admin_rank_modification(adm_ckey, "Removed")
+				log_admin_rank_modification(adm_ckey, "Удален")
 
 		else if(task == "rank")
 			var/new_rank
@@ -1084,7 +1084,7 @@
 		if (!check_rights(R_ADMIN))
 			return
 		var/mob/target = locate(href_list["bans"])
-		target.debug_fetch_bans()
+		target.show_associated_bans(usr)
 
 	else if (href_list["cloneother"])
 		if (!check_rights(R_DEBUG))
