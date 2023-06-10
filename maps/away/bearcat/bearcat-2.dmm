@@ -62,6 +62,10 @@
 	},
 /obj/item/device/radio/map_preset/bearcat,
 /obj/item/cell/high,
+/obj/machinery/iff_beacon/table{
+	dir = 4;
+	pixel_x = -6
+	},
 /turf/simulated/floor/tiled/dark,
 /area/ship/scrap/command/bridge)
 "aj" = (
@@ -1174,7 +1178,7 @@
 /obj/effect/floor_decal/corner/beige{
 	dir = 9
 	},
-/obj/machinery/jukebox/old,
+/obj/machinery/jukebox/custom_tape/old,
 /turf/simulated/floor/tiled,
 /area/ship/scrap/crew/saloon)
 "cv" = (
