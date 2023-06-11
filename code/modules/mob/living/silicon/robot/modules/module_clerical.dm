@@ -3,11 +3,11 @@
 		"Service" = TRUE
 	)
 	skills = list(
-		SKILL_BUREAUCRACY         = SKILL_PROF,
-		SKILL_FINANCE             = SKILL_PROF,
-		SKILL_COMPUTER            = SKILL_EXPERT,
-		SKILL_SCIENCE             = SKILL_EXPERT,
-		SKILL_DEVICES             = SKILL_EXPERT
+		SKILL_BUREAUCRACY         = SKILL_MASTER,
+		SKILL_FINANCE             = SKILL_MASTER,
+		SKILL_COMPUTER            = SKILL_EXPERIENCED,
+		SKILL_SCIENCE             = SKILL_EXPERIENCED,
+		SKILL_DEVICES             = SKILL_EXPERIENCED
 	)
 
 /obj/item/robot_module/clerical/butler
@@ -38,14 +38,14 @@
 		/obj/item/tray/robotray,
 		/obj/item/reagent_containers/borghypo/service
 	)
-	emag = /obj/item/reagent_containers/food/drinks/bottle/small/beer
+	emag = /obj/item/reagent_containers/food/drinks/bottle/small/beer/fake
 	skills = list(
-		SKILL_BUREAUCRACY         = SKILL_PROF,
-		SKILL_COMPUTER            = SKILL_EXPERT,
-		SKILL_COOKING             = SKILL_PROF,
-		SKILL_BOTANY              = SKILL_PROF,
+		SKILL_BUREAUCRACY         = SKILL_MASTER,
+		SKILL_COMPUTER            = SKILL_EXPERIENCED,
+		SKILL_COOKING             = SKILL_MASTER,
+		SKILL_BOTANY              = SKILL_MASTER,
 		SKILL_MEDICAL             = SKILL_BASIC,
-		SKILL_CHEMISTRY           = SKILL_ADEPT
+		SKILL_CHEMISTRY           = SKILL_TRAINED
 	)
 
 /obj/item/robot_module/clerical/butler/finalize_equipment()
@@ -57,15 +57,12 @@
 
 /obj/item/robot_module/clerical/butler/finalize_emag()
 	. = ..()
-	if(emag)
-		var/datum/reagents/R = emag.create_reagents(50)
-		R.add_reagent(/datum/reagent/chloralhydrate/beer2, 50)
-		emag.SetName("Mickey Finn's Special Brew")
+	emag.SetName("Mickey Finn's Special Brew")
 
 /obj/item/robot_module/clerical/butler/respawn_consumable(mob/living/silicon/robot/R, amount)
 	..()
 	if(emag)
-		var/obj/item/reagent_containers/food/drinks/bottle/small/beer/B = emag
+		var/obj/item/reagent_containers/food/drinks/bottle/small/beer/fake/B = emag
 		B.reagents.add_reagent(/datum/reagent/chloralhydrate/beer2, 2 * amount)
 
 /obj/item/robot_module/clerical/general

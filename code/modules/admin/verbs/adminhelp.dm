@@ -107,6 +107,7 @@ var/global/list/adminhelp_ignored_words = list("unknown","the","a","an","of","mo
 			to_chat(src, SPAN_WARNING("Error: Private-Message: Client not found. They may have lost connection, so please be patient!"))
 		return
 
+	ticket.last_message_time = world.time
 	ticket.msgs += new /datum/ticket_msg(src.ckey, null, original_msg)
 	if(establish_db_connection())
 		var/sql_text = "HELP [src.ckey]: [sanitizeSQL(original_msg)]\n"
@@ -139,5 +140,5 @@ var/global/list/adminhelp_ignored_words = list("unknown","the","a","an","of","mo
 		adminmsg2adminirc(src, null, "[html_decode(original_msg)]")
 
 
-	send_to_admin_discord(EXCOM_MSG_AHELP, "HELP: [key_name(src)]: [original_msg]")
+	send_to_admin_discord(EXCOM_MSG_AHELP, "HELP: [key_name(src, highlight_special_characters = FALSE)]: [original_msg]")
 	return

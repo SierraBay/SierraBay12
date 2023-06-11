@@ -13,8 +13,8 @@
 	var/step_count
 	var/dream_timer
 
-/mob/living/carbon/human/New(new_loc, new_species = null)
 
+/mob/living/carbon/human/Initialize(mapload, new_species = null)
 	grasp_limbs = list()
 	stance_limbs = list()
 
@@ -24,7 +24,7 @@
 
 	if(!species)
 		if(new_species)
-			set_species(new_species,1)
+			set_species(new_species, TRUE)
 		else
 			set_species()
 
@@ -47,7 +47,7 @@
 	hud_list[STATUS_HUD_OOC]  = new /image/hud_overlay('icons/mob/hud.dmi', src, "hudhealthy")
 
 	GLOB.human_mobs |= src
-	..()
+	. = ..()
 
 	if(dna)
 		dna.ready_dna(src)
@@ -55,6 +55,7 @@
 		dna.base_skin = base_skin
 		sync_organ_dna()
 	make_blood()
+
 
 /mob/living/carbon/human/Destroy()
 	if (dream_timer)
@@ -899,17 +900,17 @@
 		reset_view(0)
 
 /**
- * Retrieves the atom's visible gender. Generally this is just `gender` but some factors may mask or change this.
+ * Retrieves the atom's pronouns. Generally this is just based on `gender` but some factors may mask or change this.
  *
- * Returns a valid gender value. See DM documentation for `/mob/var/gender`.
+ * Returns instance of `/datum/pronouns`.
  */
 /atom/proc/choose_from_pronouns()
-	return gender
+	RETURN_TYPE(/datum/pronouns)
+	return GLOB.pronouns_from_gender[gender]
 
 /mob/living/carbon/human/choose_from_pronouns()
-	if(wear_suit && wear_suit.flags_inv & HIDEJUMPSUIT && ((head && head.flags_inv & HIDEMASK) || wear_mask))
-		var/datum/pronouns/P = GLOB.pronouns.by_key[PRONOUNS_THEY_THEM]
-		return P
+	if (wear_suit && HAS_FLAGS(wear_suit.flags_inv, HIDEJUMPSUIT) && ((head && HAS_FLAGS(head.flags_inv, HIDEMASK)) || wear_mask))
+		return GLOB.pronouns.by_key[PRONOUNS_THEY_THEM]
 	return ..()
 
 /mob/living/carbon/human/proc/increase_germ_level(n)
@@ -1495,9 +1496,9 @@
 	if(!current_limb || !S || !U)
 		return
 
-	var/fail_prob = U.skill_fail_chance(SKILL_MEDICAL, 60, SKILL_ADEPT, 3)
+	var/fail_prob = U.skill_fail_chance(SKILL_MEDICAL, 60, SKILL_TRAINED, 3)
 	if(self)
-		fail_prob += U.skill_fail_chance(SKILL_MEDICAL, 20, SKILL_EXPERT, 1)
+		fail_prob += U.skill_fail_chance(SKILL_MEDICAL, 20, SKILL_EXPERIENCED, 1)
 	var/datum/pronouns/P = choose_from_pronouns()
 	if(prob(fail_prob))
 		visible_message( \
@@ -1730,9 +1731,9 @@
 //Get fluffy numbers
 /mob/living/carbon/human/proc/get_blood_pressure()
 	if(status_flags & FAKEDEATH)
-		return "[Floor(120+rand(-5,5))*0.25]/[Floor(80+rand(-5,5)*0.25)]"
+		return "[floor(120+rand(-5,5))*0.25]/[floor(80+rand(-5,5)*0.25)]"
 	var/blood_result = get_blood_circulation()
-	return "[Floor((120+rand(-5,5))*(blood_result/100))]/[Floor((80+rand(-5,5))*(blood_result/100))]"
+	return "[floor((120+rand(-5,5))*(blood_result/100))]/[floor((80+rand(-5,5))*(blood_result/100))]"
 
 //Point at which you dun breathe no more. Separate from asystole crit, which is heart-related.
 /mob/living/carbon/human/nervous_system_failure()
@@ -1749,7 +1750,7 @@
 
 /mob/living/carbon/human/ranged_accuracy_mods()
 	. = ..()
-	if(get_shock() > 10 && !skill_check(SKILL_WEAPONS, SKILL_ADEPT))
+	if(get_shock() > 10 && !skill_check(SKILL_WEAPONS, SKILL_TRAINED))
 		. -= 1
 	if(get_shock() > 50)
 		. -= 1
@@ -1757,11 +1758,11 @@
 		. -= 1
 	if(shock_stage > 30)
 		. -= 1
-	if(skill_check(SKILL_WEAPONS, SKILL_ADEPT))
+	if(skill_check(SKILL_WEAPONS, SKILL_TRAINED))
 		. += 1
-	if(skill_check(SKILL_WEAPONS, SKILL_EXPERT))
+	if(skill_check(SKILL_WEAPONS, SKILL_EXPERIENCED))
 		. += 1
-	if(skill_check(SKILL_WEAPONS, SKILL_PROF))
+	if(skill_check(SKILL_WEAPONS, SKILL_MASTER))
 		. += 2
 
 /mob/living/carbon/human/can_drown()

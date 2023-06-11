@@ -22,12 +22,14 @@
 
 	var/obj/structure/reagent_dispensers/watertank/tank
 
-/mob/living/bot/farmbot/New(newloc, newTank)
-	..(newloc)
+
+/mob/living/bot/farmbot/Initialize(mapload, newTank)
+	. = ..()
 	if(!newTank)
 		newTank = new /obj/structure/reagent_dispensers/watertank(src)
 	tank = newTank
 	tank.forceMove(src)
+
 
 /mob/living/bot/farmbot/premade
 	name = "Old Ben"
@@ -154,7 +156,7 @@
 			if(0)
 				return
 			if(FARMBOT_COLLECT)
-				action = "water" // Needs a better one
+				action = "collect" // Needs a better one
 				update_icons()
 				visible_message(SPAN_NOTICE("[src] starts [T.dead? "removing the plant from" : "harvesting"] \the [A]."))
 				busy = 1

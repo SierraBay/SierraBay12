@@ -4,6 +4,7 @@
 	icon_state = "wheelchair"
 	anchored = FALSE
 	movement_handlers = list(/datum/movement_handler/deny_multiz, /datum/movement_handler/delay = list(2), /datum/movement_handler/move_relay_self)
+	bed_flags = BED_FLAG_CANNOT_BE_DISMANTLED | BED_FLAG_CANNOT_BE_PADDED
 	var/driving = 0
 	var/mob/living/pulling = null
 	var/bloodiness
@@ -19,11 +20,6 @@
 	overlays += O
 	if(buckled_mob)
 		buckled_mob.set_dir(dir)
-
-/obj/structure/bed/chair/wheelchair/attackby(obj/item/W as obj, mob/user as mob)
-	if(isWrench(W) || istype(W,/obj/item/stack) || isWirecutter(W))
-		return
-	..()
 
 /obj/structure/bed/chair/wheelchair/relaymove(mob/user, direction)
 	// Redundant check?
@@ -115,10 +111,11 @@
 
 /obj/structure/bed/chair/wheelchair/CtrlClick(mob/user)
 	if(in_range(src, user))
-		if(!ishuman(user))	return
+		if(!ishuman(user))
+			return FALSE
 		if(user == buckled_mob)
 			to_chat(user, SPAN_WARNING("You realize you are unable to push the wheelchair you sit in."))
-			return
+			return TRUE
 		if(!pulling)
 			pulling = user
 			user.pulledby = src

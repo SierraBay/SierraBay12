@@ -8,6 +8,10 @@
 	if(!can_use())
 		set_light(0)
 	cameranet.update_visibility(src)
+	for (var/mob/mob as anything in SSmobs.mob_list)
+		if (!mob.client || mob.client.eye != src)
+			continue
+		mob.reset_view()
 
 /obj/machinery/camera/Initialize()
 	. = ..()
@@ -37,9 +41,10 @@
 	invalidateCameraCache()
 
 // Mobs
-/mob/living/silicon/ai/New()
-	..()
+/mob/living/silicon/ai/Initialize(mapload)
+	. = ..()
 	cameranet.add_source(src)
+
 
 /mob/living/silicon/ai/Destroy()
 	cameranet.remove_source(src)

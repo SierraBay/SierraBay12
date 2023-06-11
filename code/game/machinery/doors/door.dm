@@ -198,7 +198,7 @@
 
 		//figure out how much metal we need
 		var/amount_needed = get_damage_value() / DOOR_REPAIR_AMOUNT
-		amount_needed = Ceil(amount_needed)
+		amount_needed = ceil(amount_needed)
 
 		var/obj/item/stack/stack = I
 		var/transfer
@@ -288,7 +288,7 @@
 
 /obj/machinery/door/examine(mob/user)
 	. = ..()
-	if (emagged && ishuman(user) && user.skill_check(SKILL_COMPUTER, SKILL_ADEPT))
+	if (emagged && ishuman(user) && user.skill_check(SKILL_COMPUTER, SKILL_TRAINED))
 		to_chat(user, SPAN_WARNING("\The [src]'s control panel looks fried."))
 
 

@@ -8,7 +8,7 @@
 // other states are independent.
 
 /obj/machinery/washing_machine
-	name = "Washing Machine"
+	name = "washing machine"
 	icon = 'icons/obj/machines/washing_machine.dmi'
 	icon_state = "wm_00"
 	density = TRUE
@@ -152,7 +152,7 @@
 		return TRUE
 
 	else if (!(W.item_flags & ITEM_FLAG_WASHER_ALLOWED))
-		if (isScrewdriver(W) || isCrowbar(W) || isWrench(W))
+		if (isScrewdriver(W) || isCrowbar(W) || isWrench(W) || can_add_component(W))
 			return ..()
 
 		to_chat(user, SPAN_WARNING("\The [W] can't be washed in \the [src]!"))

@@ -1,11 +1,12 @@
 /obj/machinery/computer/area_atmos
-	name = "Area Air Control"
+	name = "area air control"
 	desc = "A computer used to control the stationary scrubbers and pumps in the area."
 	icon_keyboard = "atmos_key"
 	icon_screen = "area_atmos"
 	light_color = "#e6ffff"
 	machine_name = "area air control console"
 	machine_desc = "A larger and less complex form of air alarm that allows configuration of an area's vents and scrubbers."
+	construct_state = /singleton/machine_construction/default/panel_closed/computer/cannot_print
 	var/list/connectedscrubbers = list()
 	var/status = ""
 	var/range = 25

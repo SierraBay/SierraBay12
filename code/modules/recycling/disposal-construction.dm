@@ -9,7 +9,7 @@
 	anchored = FALSE
 	density = FALSE
 	matter = list(MATERIAL_STEEL = 1850)
-	obj_flags = OBJ_FLAG_ROTATABLE
+	obj_flags = OBJ_FLAG_ROTATABLE | OBJ_FLAG_ANCHORABLE
 	var/sort_type = ""
 	var/dpdir = 0	// directions as disposalpipe
 	var/turn = DISPOSAL_FLIP_FLIP
@@ -117,51 +117,73 @@
 	. = ..()
 	set_dir(old_dir)
 
-// attackby item
-// wrench: (un)anchor
-// weldingtool: convert to real pipe
-/obj/structure/disposalconstruct/attackby(obj/item/I, mob/user)
-	var/turf/T = loc
-	if(!istype(T))
+
+/obj/structure/disposalconstruct/can_anchor(obj/item/tool, mob/user, silent)
+	. = ..()
+	if (!.)
 		return
-	if(!T.is_plating())
-		to_chat(user, "You can only manipulate \the [src] if the floor plating is removed.")
-		return
+	if (!anchored)
+		// Plating
+		var/turf/turf = get_turf(src)
+		if (!turf.is_plating())
+			if (!silent)
+				USE_FEEDBACK_FAILURE("You must remove the plating before you can secure \the [src].")
+			return FALSE
 
-	var/obj/structure/disposalpipe/CP = locate() in T
+		// Catwalks
+		var/obj/structure/catwalk/catwalk = locate() in get_turf(src)
+		if (catwalk)
+			if (catwalk.plated_tile && !catwalk.hatch_open)
+				if (!silent)
+					USE_FEEDBACK_FAILURE("\The [catwalk]'s hatch needs to be opened before you can secure \the [src].")
+				return FALSE
+			else if (!catwalk.plated_tile)
+				if (!silent)
+					USE_FEEDBACK_FAILURE("\The [catwalk] is blocking access to the floor.")
+				return FALSE
 
-	if(isWrench(I))
-		if(anchored)
-			anchored = FALSE
-			wrench_down(FALSE)
-			to_chat(user, "You detach \the [src] from the underfloor.")
-		else
-			if(!check_buildability(CP, user))
-				return
-			wrench_down(TRUE)
-			to_chat(user, "You attach \the [src] to the underfloor.")
-		playsound(loc, 'sound/items/Ratchet.ogg', 100, 1)
-		update()
-		update_verbs()
+		var/obj/structure/disposalpipe/connected_pipe = locate() in get_turf(src)
+		if (!check_buildability(connected_pipe, user))
+			return FALSE
 
-	else if(istype(I, /obj/item/weldingtool))
-		if(anchored)
-			var/obj/item/weldingtool/W = I
-			if(W.remove_fuel(0,user))
-				playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
-				to_chat(user, "Welding \the [src] in place.")
-				if(do_after(user, 2 SECONDS, src, DO_REPAIR_CONSTRUCT))
-					if(!src || !W.isOn()) return
-					to_chat(user, "\The [src] has been welded in place!")
-					build(CP)
-					qdel(src)
-					return
-			else
-				to_chat(user, "You need more welding fuel to complete this task.")
-				return
-		else
-			to_chat(user, "You need to attach it to the plating first!")
-			return
+
+/obj/structure/disposalconstruct/post_anchor_change()
+	wrench_down(anchored)
+	update()
+	update_verbs()
+	..()
+
+
+/obj/structure/disposalconstruct/use_tool(obj/item/tool, mob/user, list/click_params)
+	var/obj/structure/disposalpipe/connected_pipe = locate() in get_turf(src)
+
+	// Welding Tool - Weld into place
+	if (isWelder(tool))
+		if (!anchored)
+			USE_FEEDBACK_FAILURE("\The [src] needs to be anchored to the floor before you can weld it.")
+			return TRUE
+		var/obj/item/weldingtool/welder = tool
+		if (!welder.can_use(1, user, "to weld \the [src] down."))
+			return TRUE
+		playsound(src, 'sound/items/Welder2.ogg', 50, TRUE)
+		user.visible_message(
+			SPAN_NOTICE("\The [user] starts welding \the [src] down with \a [tool]."),
+			SPAN_NOTICE("You start welding \the [src] down with \the [tool]."),
+			SPAN_ITALIC("You hear welding.")
+		)
+		if (!user.do_skilled((tool.toolspeed * 2) SECONDS, SKILL_CONSTRUCTION, src, do_flags = DO_REPAIR_CONSTRUCT) || !user.use_sanity_check(src, tool) || !welder.remove_fuel(1, user))
+			return TRUE
+		playsound(src, 'sound/items/Welder2.ogg', 50, TRUE)
+		user.visible_message(
+			SPAN_NOTICE("\The [user] welds \the [src] down with \a [tool]."),
+			SPAN_NOTICE("You weld \the [src] down with \the [tool].")
+		)
+		build(connected_pipe)
+		qdel_self()
+		return TRUE
+
+	return ..()
+
 
 /obj/structure/disposalconstruct/hides_under_flooring()
 	return anchored
@@ -209,9 +231,6 @@
 
 // Subtypes
 
-/obj/structure/disposalconstruct/machine
-	obj_flags = 0 // No rotating
-
 /obj/structure/disposalconstruct/machine/update_verbs()
 	return // No flipping
 
@@ -221,7 +240,7 @@
 	update_icon()
 
 /obj/structure/disposalconstruct/machine/build(obj/structure/disposalpipe/CP)
-	var/obj/machinery/disposal/P = new /obj/machinery/disposal(src.loc)
+	var/obj/machinery/disposal/P = new constructed_path(src.loc)
 	transfer_fingerprints_to(P)
 	P.set_dir(dir)
 	P.mode = 0 // start with pump off

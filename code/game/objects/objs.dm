@@ -1,6 +1,8 @@
 /obj
 	layer = OBJ_LAYER
 	animate_movement = 2
+	// glide_size = 3 // BAY
+	glide_size = 7 // SIERRA
 
 	var/obj_flags
 
@@ -18,6 +20,67 @@
 
 /obj/Destroy()
 	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/MouseDrop_T(atom/dropped, mob/living/user)
+	// Handle tabling objects
+	if (dropped != src && HAS_FLAGS(obj_flags, OBJ_FLAG_RECEIVE_TABLE) && isobj(dropped))
+		var/obj/object = dropped
+		if (HAS_FLAGS(object.obj_flags, OBJ_FLAG_CAN_TABLE))
+			if (object.anchored)
+				USE_FEEDBACK_FAILURE("\The [object] is firmly anchored and cannot be moved.")
+				return TRUE
+			if (!isturf(loc))
+				USE_FEEDBACK_FAILURE("\The [src] must be on a turf to lift \the [dropped] onto it.")
+				return TRUE
+			if (!user.skill_check(SKILL_HAULING, SKILL_BASIC))
+				USE_FEEDBACK_FAILURE("You're not strong enough to lift \the [dropped] onto \the [src].")
+				return TRUE
+			var/has_blocker = FALSE
+			for (var/atom/thing as anything in get_turf(src))
+				if (thing == src)
+					continue
+				if (ismob(thing) || thing.density)
+					has_blocker = thing
+					break
+			if (has_blocker)
+				USE_FEEDBACK_FAILURE("You can't lift \the [dropped] onto \the [src]. \The [has_blocker] is in the way.")
+				return TRUE
+			user.visible_message(
+				SPAN_NOTICE("\The [user] starts lifting \the [dropped] onto \the [src]."),
+				SPAN_NOTICE("You start lifting \the [dropped] onto \the [src].")
+			)
+			if (!user.do_skilled(6 SECONDS, SKILL_HAULING, src, do_flags = DO_PUBLIC_UNIQUE) || !user.use_sanity_check(src, dropped))
+				return TRUE
+			if (!HAS_FLAGS(obj_flags, OBJ_FLAG_RECEIVE_TABLE))
+				USE_FEEDBACK_FAILURE("\The [src]'s state has changed.")
+				return TRUE
+			if (!HAS_FLAGS(object.obj_flags, OBJ_FLAG_CAN_TABLE))
+				USE_FEEDBACK_FAILURE("\The [dropped]'s state has changed.")
+				return TRUE
+			if (object.anchored)
+				USE_FEEDBACK_FAILURE("\The [object] is firmly anchored and cannot be moved.")
+				return TRUE
+			if (!isturf(loc))
+				USE_FEEDBACK_FAILURE("\The [src] must be on a turf to lift \the [dropped] onto it.")
+				return TRUE
+			has_blocker = FALSE
+			for (var/atom/thing as anything in get_turf(src))
+				if (thing == src)
+					continue
+				if (ismob(thing) || thing.density)
+					has_blocker = thing
+					break
+			if (has_blocker)
+				USE_FEEDBACK_FAILURE("You can't lift \the [dropped] onto \the [src]. \The [has_blocker] is in the way.")
+				return TRUE
+			object.forceMove(loc)
+			user.visible_message(
+				SPAN_NOTICE("\The [user] lifts \the [dropped] onto \the [src]."),
+				SPAN_NOTICE("You lift \the [dropped] onto \the [src].")
+			)
+			return TRUE
+
 	return ..()
 
 /obj/item/proc/is_used_on(obj/O, mob/user)
@@ -157,11 +220,11 @@
 		SPAN_NOTICE("You begin [anchored ? "un" : ""]securing \the [src] [anchored ? "from" : "to"] the floor with \the [tool].")
 	)
 	playsound(src, 'sound/items/Ratchet.ogg', 50, TRUE)
-	if (!user.do_skilled(delay, SKILL_CONSTRUCTION, src, do_flags = DO_REPAIR_CONSTRUCT) || !user.use_sanity_check(src, tool))
+	if (!user.do_skilled((tool.toolspeed * delay), SKILL_CONSTRUCTION, src, do_flags = DO_REPAIR_CONSTRUCT) || !user.use_sanity_check(src, tool))
 		return
 	user.visible_message(
 		SPAN_NOTICE("\The [user] [anchored ? "un" : ""]secures \the [src] [anchored ? "from" : "to"] the floor with \a [tool]."),
-		SPAN_NOTICE("You [anchored ? "un" : ""]secures \the [src] [anchored ? "from" : "to"] the floor with \the [tool].")
+		SPAN_NOTICE("You [anchored ? "un" : ""]secure \the [src] [anchored ? "from" : "to"] the floor with \the [tool].")
 	)
 	playsound(src, 'sound/items/Ratchet.ogg', 50, TRUE)
 	anchored = !anchored
@@ -191,7 +254,8 @@
 /obj/AltClick(mob/user)
 	if(obj_flags & OBJ_FLAG_ROTATABLE)
 		rotate(user)
-	..()
+		return TRUE
+	return ..()
 
 /obj/examine(mob/user)
 	. = ..()
@@ -218,3 +282,6 @@
  */
 /obj/proc/is_safe_to_step(mob/living/L)
 	return TRUE
+
+/obj/get_mass()
+	return min(2**(w_class-1), 100)

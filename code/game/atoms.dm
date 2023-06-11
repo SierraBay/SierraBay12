@@ -29,7 +29,7 @@
 	var/climb_speed_mult = 1
 	/// Bitflag (Any of `INIT_*`). Flags for special/additional handling of the `Initialize()` chain. See `code\__defines\misc.dm`.
 	var/init_flags = EMPTY_BITFIELD
-	/// overlays managed by update_overlays() to prevent removing overlays that weren't added by the same proc
+	/// Stores overlays managed by update_overlays() to prevent removing overlays that were not added by the same proc
 	var/list/managed_overlays
 
 /atom/New(loc, ...)
@@ -439,10 +439,10 @@
 	on_update_icon(arglist(args))
 
 	var/list/new_overlays = update_overlays()
-	if(managed_overlays)
+	if (managed_overlays)
 		overlays -= managed_overlays
 		managed_overlays = null
-	if(length(new_overlays))
+	if (length(new_overlays))
 		managed_overlays = new_overlays
 		overlays += new_overlays
 
@@ -457,7 +457,7 @@
 
 /** Updates the overlays of the atom */
 /atom/proc/update_overlays()
-	SHOULD_CALL_PARENT(1)
+	SHOULD_CALL_PARENT(TRUE)
 	. = list()
 
 /**
@@ -969,6 +969,7 @@
 	var/mob/living/H = user
 	if(istype(H) && can_climb(H) && target == user)
 		do_climb(target)
+		return TRUE
 	else
 		return ..()
 
@@ -1002,3 +1003,26 @@
 	L.Weaken(2)
 	L.visible_message(SPAN_WARNING("\The [L] [pick("ran", "slammed")] into \the [src]!"))
 	playsound(L, "punch", 25, 1, FALSE)
+
+
+/atom/proc/create_bullethole(obj/item/projectile/Proj)
+	var/p_x = Proj.p_x + rand(-8, 8)
+	var/p_y = Proj.p_y + rand(-8, 8)
+	var/obj/effect/overlay/bmark/bullet_mark = new(src)
+
+	bullet_mark.pixel_x = p_x
+	bullet_mark.pixel_y = p_y
+
+	// offset correction
+	bullet_mark.pixel_x--
+	bullet_mark.pixel_y--
+
+	if(Proj.damage >= 50)
+		bullet_mark.icon_state = "scorch"
+		bullet_mark.set_dir(pick(NORTH,SOUTH,EAST,WEST)) // random scorch design
+	else
+		bullet_mark.icon_state = "light_scorch"
+
+/atom/proc/clear_bulletholes()
+	for(var/obj/effect/overlay/bmark/bullet_mark in src)
+		qdel(bullet_mark)

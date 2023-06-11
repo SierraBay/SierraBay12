@@ -477,7 +477,7 @@ This function completely restores a damaged organ to perfect condition.
 		var/internal_damage
 		if(prob(damage) && sever_artery())
 			internal_damage = TRUE
-		if(prob(Ceil(damage/4)) && sever_tendon())
+		if(prob(ceil(damage/4)) && sever_tendon())
 			internal_damage = TRUE
 		if(internal_damage)
 			owner.custom_pain("You feel something rip in your [name]!", 50, affecting = src)
@@ -702,7 +702,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		// slow healing
 		var/heal_amt = 0
 		// if damage >= 50 AFTER treatment then it's probably too severe to heal within the timeframe of a round.
-		if (!owner.chem_effects[CE_TOXIN] && W.can_autoheal() && W.wound_damage() && brute_ratio < 0.5 && burn_ratio < 0.5)
+		if (!owner.chem_effects[CE_TOXIN] && W.can_autoheal() && W.wound_damage() && brute_ratio < 50 && burn_ratio < 50)
 			heal_amt += 0.5
 
 		//we only update wounds once in [wound_update_accuracy] ticks so have to emulate realtime
@@ -763,9 +763,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 	update_damage_ratios()
 
 /obj/item/organ/external/proc/update_damage_ratios()
-	var/limb_loss_threshold = max_damage
-	brute_ratio = brute_dam / (limb_loss_threshold * 2)
-	burn_ratio = burn_dam / (limb_loss_threshold * 2)
+	var/limb_loss_threshold = max_damage * 2
+	brute_ratio = Percent(brute_dam, limb_loss_threshold, 0)
+	burn_ratio = Percent(burn_dam, limb_loss_threshold, 0)
 
 //Returns 1 if damage_state changed
 /obj/item/organ/external/proc/update_damstate()
@@ -864,6 +864,13 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if(!clean)
 		victim.shock_stage += min_broken_damage
 
+	// Handle any internal organ removal before removing the limb itself
+	if (disintegrate == DROPLIMB_BLUNT || disintegrate == DROPLIMB_BURN)
+		for(var/obj/item/organ/I in internal_organs)
+			I.removed()
+			if(!QDELETED(I) && isturf(I.loc))
+				I.throw_at(get_edge_target_turf(src,pick(GLOB.alldirs)),rand(1,3),5)
+
 	removed(null, ignore_children)
 	if(QDELETED(src))
 		return
@@ -919,11 +926,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 					G.update_icon()
 
 			gore.throw_at(get_edge_target_turf(src,pick(GLOB.alldirs)),rand(1,3),5)
-
-			for(var/obj/item/organ/I in internal_organs)
-				I.removed()
-				if(!QDELETED(I) && isturf(loc))
-					I.throw_at(get_edge_target_turf(src,pick(GLOB.alldirs)),rand(1,3),5)
 
 			for(var/obj/item/I in src)
 				I.dropInto(loc)
@@ -1147,7 +1149,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	return 0
 
 /obj/item/organ/external/is_usable()
-	return ..() && !is_stump() && !(status & ORGAN_TENDON_CUT) && (!can_feel_pain() || get_pain() < pain_disability_threshold) && brute_ratio < 1 && burn_ratio < 1
+	return ..() && !is_stump() && !(status & ORGAN_TENDON_CUT) && (!can_feel_pain() || get_pain() < pain_disability_threshold) && brute_ratio < 100 && burn_ratio < 100
 
 /obj/item/organ/external/proc/is_malfunctioning()
 	return (BP_IS_ROBOTIC(src) && (brute_dam + burn_dam) >= 10 && prob(brute_dam + burn_dam))

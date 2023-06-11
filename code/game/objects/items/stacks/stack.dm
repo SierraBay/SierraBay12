@@ -15,8 +15,11 @@
 	var/list/datum/stack_recipe/recipes
 	var/singular_name
 	var/plural_name
+	/// String. The stack's base icon state. Used when the amount is 2 or lower.
 	var/base_state
+	/// String. The stack's icon state when amount is greater than 2.
 	var/plural_icon_state
+	/// String. The stack's icon state at the maximum amount.
 	var/max_icon_state
 	var/amount = 1
 	var/max_amount //also see stack recipes initialisation, param "max_res_amount" must be equal to this max_amount
@@ -309,7 +312,7 @@
 /obj/item/stack/get_storage_cost()	//Scales storage cost to stack size
 	. = ..()
 	if (amount < max_amount)
-		. = Ceil(. * amount / max_amount)
+		. = ceil(. * amount / max_amount)
 
 /obj/item/stack/attack_hand(mob/user as mob)
 	if (user.get_inactive_hand() == src)

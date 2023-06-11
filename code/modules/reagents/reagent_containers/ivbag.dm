@@ -158,7 +158,7 @@
 	)
 	if (!user.do_skilled(5 SECONDS, SKILL_MEDICAL, target)) //slower than stands and beds
 		return
-	if (prob(user.skill_fail_chance(SKILL_MEDICAL, 80, SKILL_ADEPT))) // harder than stands and beds
+	if (prob(user.skill_fail_chance(SKILL_MEDICAL, 80, SKILL_TRAINED))) // harder than stands and beds
 		user.visible_message(
 			SPAN_DANGER("\The [user] fishes for a vein on \the [target] and fails, stabbing them instead!"),
 			SPAN_DANGER("You fish inexpertly for a vein on \the [target] and stab them instead!"),
@@ -329,6 +329,18 @@
 	return ..(mapload, "O-")
 
 
+/obj/item/reagent_containers/ivbag/blood/serpentid
+	abstract_type = /obj/item/reagent_containers/ivbag/blood/serpentid
+
+
+/obj/item/reagent_containers/ivbag/blood/serpentid/Initialize(mapload, blood_type)
+	return ..(mapload, blood_type, SPECIES_NABBER)
+
+
+/obj/item/reagent_containers/ivbag/blood/serpentid/oneg/Initialize(mapload)
+	return ..(mapload, "O-")
+
+
 /obj/item/reagent_containers/ivbag/blood/skrell
 	abstract_type = /obj/item/reagent_containers/ivbag/blood/skrell
 
@@ -365,12 +377,28 @@
 	return ..(mapload, "O-")
 
 
+/obj/item/reagent_containers/ivbag/glucose/Initialize()
+	. = ..()
+	reagents.add_reagent(/datum/reagent/nutriment/glucose, volume)
+	AddLabel("Glucose")
+	UpdateItemSize()
+
+
 /obj/item/storage/box/bloodpacks
 	name = "blood packs box"
 	desc = "This box contains empty blood packs."
 	icon_state = "sterile"
 	startswith = list(
 		/obj/item/reagent_containers/ivbag = 7
+	)
+
+
+/obj/item/storage/box/glucose
+	name = "glucose box"
+	desc = "This box contains glucose IV bags."
+	icon_state = "sterile"
+	startswith = list(
+		/obj/item/reagent_containers/ivbag/glucose = 7
 	)
 
 
@@ -382,6 +410,13 @@
 	name = "portable freezer (human blood)"
 	startswith = list(
 		/obj/item/reagent_containers/ivbag/blood/human/oneg = 4
+	)
+
+
+/obj/item/storage/box/freezer/blood/serpentid
+	name = "portable freezer (serpentid blood)"
+	startswith = list(
+		/obj/item/reagent_containers/ivbag/blood/serpentid/oneg = 4
 	)
 
 

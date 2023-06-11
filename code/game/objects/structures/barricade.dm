@@ -24,43 +24,72 @@
 /obj/structure/barricade/get_material()
 	return material
 
-/obj/structure/barricade/attackby(obj/item/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/stack/material/rods) && !spiky)
-		var/obj/item/stack/material/rods/R = W
-		if(R.get_amount() < 5)
-			to_chat(user, SPAN_WARNING("You need more rods to build a cheval de frise."))
-			return
-		visible_message(SPAN_NOTICE("\The [user] begins to work on \the [src]."))
-		if(do_after(user, 4 SECONDS, src, DO_REPAIR_CONSTRUCT))
-			if(R.use(5))
-				visible_message(SPAN_NOTICE("\The [user] fastens \the [R] to \the [src]."))
-				var/obj/structure/barricade/spike/CDF = new(loc, material.name, R.material.name)
-				CDF.dir = user.dir
-				qdel(src)
-				return
-		else
-			return
 
-	if(istype(W, /obj/item/stack))
-		var/obj/item/stack/D = W
-		if(D.get_material_name() != material.name)
-			return //hitting things with the wrong type of stack usually doesn't produce messages, and probably doesn't need to.
-		if (get_damage_value())
-			if (D.get_amount() < 1)
-				to_chat(user, SPAN_WARNING("You need one sheet of [material.display_name] to repair \the [src]."))
-				return
-			visible_message(SPAN_NOTICE("[user] begins to repair \the [src]."))
-			if(do_after(user, 2 SECONDS, src, DO_REPAIR_CONSTRUCT) && get_damage_value())
-				if (D.use(1))
-					restore_health(get_max_health())
-					visible_message(SPAN_NOTICE("[user] repairs \the [src]."))
-				return
-		return
+/obj/structure/barricade/use_tool(obj/item/tool, mob/user, list/click_params)
+	// Rods - Make barricade spiky
+	if (istype(tool, /obj/item/stack/material/rods))
+		if (spiky)
+			USE_FEEDBACK_FAILURE("\The [src] already has spikes on it.")
+			return TRUE
+		var/obj/item/stack/material/rods/rods = tool
+		if (!rods.can_use(5))
+			USE_FEEDBACK_STACK_NOT_ENOUGH(rods, 5, "to build a cheval de frise.")
+			return TRUE
+		user.visible_message(
+			SPAN_NOTICE("\The [user] starts adding some [tool.name] to \the [src]."),
+			SPAN_NOTICE("You start adding some [tool.name] to \the [src].")
+		)
+		if (!user.do_skilled(4 SECONDS, SKILL_CONSTRUCTION, src, do_flags = DO_REPAIR_CONSTRUCT) || !user.use_sanity_check(src, tool))
+			return TRUE
+		if (spiky)
+			USE_FEEDBACK_FAILURE("\The [src] already has spikes on it.")
+			return TRUE
+		if (!rods.use(5))
+			USE_FEEDBACK_STACK_NOT_ENOUGH(rods, 5, "to build a cheval de frise.")
+			return TRUE
+		var/obj/structure/barricade/spike/CDF = new(loc, material.name, rods.material.name)
+		CDF.set_dir(user.dir)
+		transfer_fingerprints_to(CDF)
+		user.visible_message(
+			SPAN_NOTICE("\The [user] adds some [tool.name] to \the [src]."),
+			SPAN_NOTICE("You add some [tool.name] to \the [src].")
+		)
+		qdel_self()
+		return TRUE
 
-	else
-		user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
-		damage_health(W.force, W.damtype)
-		..()
+	// Material Stack - Repair
+	if (istype(tool, /obj/item/stack))
+		var/obj/item/stack/material/stack = tool
+		if (stack.material != material)
+			USE_FEEDBACK_FAILURE("\The [tool] is the wrong type of material to repair \the [src].")
+			return TRUE
+		if (!get_damage_value())
+			USE_FEEDBACK_FAILURE("\The [src] doesn't need repairs.")
+			return TRUE
+		if (!stack.can_use(1))
+			USE_FEEDBACK_STACK_NOT_ENOUGH(stack, 1, "to repair \the [src].")
+			return TRUE
+		user.visible_message(
+			SPAN_NOTICE("\The [user] starts repairing \the [src] with some [tool.name]."),
+			SPAN_NOTICE("You start repairing \the [src] with some [tool.name].")
+		)
+		if (!user.do_skilled(2 SECONDS, SKILL_CONSTRUCTION, src, do_flags = DO_REPAIR_CONSTRUCT) || !user.use_sanity_check(src, tool))
+			return TRUE
+		if (!get_damage_value())
+			USE_FEEDBACK_FAILURE("\The [src] doesn't need repairs.")
+			return TRUE
+		if (!stack.use(1))
+			USE_FEEDBACK_STACK_NOT_ENOUGH(stack, 1, "to repair \the [src].")
+			return TRUE
+		revive_health()
+		user.visible_message(
+			SPAN_NOTICE("\The [user] repairs \the [src] with some [tool.name]."),
+			SPAN_NOTICE("You repair \the [src] with some [tool.name].")
+		)
+		return TRUE
+
+	return ..()
+
 
 /obj/structure/barricade/on_death()
 	dismantle()
@@ -80,7 +109,7 @@
 
 //spikey barriers
 /obj/structure/barricade/spike
-	name = "cheval-de-frise"
+	name = "spiked barricade"
 	icon_state = "cheval"
 	atom_flags = ATOM_FLAG_NO_TEMP_CHANGE
 	spiky = TRUE
@@ -95,8 +124,8 @@
 	if(!rod_material_name)
 		rod_material_name = MATERIAL_WOOD
 	rod_material = SSmaterials.get_material_by_name("[rod_material_name]")
-	SetName("cheval-de-frise")
-	desc = "A rather simple [material.display_name] barrier. It menaces with spikes of [rod_material.display_name]."
+	SetName("spiked barricade")
+	desc = "A rather simple [material.display_name] spiked barricade, also known as a cheval-de-frise. It menaces with spikes of [rod_material.display_name] which look like they would hurt to walk in to."
 	damage = (rod_material.hardness * 0.85)
 	overlays += overlay_image(icon, spike_overlay, color = rod_material.icon_colour, flags = RESET_COLOR)
 
@@ -110,7 +139,7 @@
 	var/damage_holder = damage
 	var/target_zone = pick(BP_CHEST, BP_GROIN, BP_L_LEG, BP_R_LEG)
 
-	if(MOVING_DELIBERATELY(victim)) //walking into this is less hurty than running
+	if(MOVING_DELIBERATELY(victim)) //creeping into this is less hurty than walking
 		damage_holder = (damage / 4)
 
 	if(isanimal(victim)) //simple animals have simple health, reduce our damage

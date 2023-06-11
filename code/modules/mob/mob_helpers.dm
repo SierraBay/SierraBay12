@@ -42,7 +42,7 @@
 
 
 /mob/living/carbon/is_species(datum/species/S)
-	if (!S) return FALSE
+	if (!S || !species) return FALSE
 	if (istext(S)) return species.name == S
 	if (ispath(S)) return species.name == initial(S.name)
 	return species.name == S.name
@@ -297,7 +297,7 @@ var/global/list/organ_rel_size = list(
 		return
 	M.shakecamera = TRUE
 	strength = abs(strength)*PIXELS_PER_STRENGTH_VAL
-	var/steps = min(1, Floor(duration/TICKS_PER_RECOIL_ANIM))-1
+	var/steps = min(1, floor(duration/TICKS_PER_RECOIL_ANIM))-1
 	animate(M.client, pixel_x = rand(-(strength), strength), pixel_y = rand(-(strength), strength), time = TICKS_PER_RECOIL_ANIM)
 	sleep(TICKS_PER_RECOIL_ANIM)
 	if(steps)

@@ -17,7 +17,7 @@
 			active = 1
 
 /obj/machinery/acting/changer
-	name = "Quickee's Plastic Surgeon"
+	name = "\improper Quickee's Plastic Surgeon"
 	desc = "For when you need to be someone else right now."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "bioprinter"
@@ -27,7 +27,7 @@
 /obj/machinery/acting/changer/attack_hand(mob/user as mob)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		H.change_appearance(APPEARANCE_COMMON, TRUE, state = GLOB.z_state)
+		H.change_appearance(APPEARANCE_COMMON, state = GLOB.z_state)
 		var/getName = sanitize(input(H, "Would you like to change your name to something else?", "Name change") as null|text, MAX_NAME_LEN)
 		if(getName)
 			H.real_name = getName
@@ -37,7 +37,7 @@
 				H.mind.name = H.name
 
 /obj/machinery/acting/changer/mirror
-	name = "Mirror of Many Faces"
+	name = "\improper Mirror of Many Faces"
 	desc = "For when you need to be someone else right now."
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "mirror_broke"

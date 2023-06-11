@@ -39,12 +39,6 @@
 #include "effects\paint.dm"
 
 // Items
-#include "items\music_player\_music_player.dm"
-#include "items\music_player\_music_tape.dm"
-#include "items\music_player\music_writer.dm"
-#include "items\music_player\subtypes_player.dm"
-#include "items\music_player\subtypes_tape.dm"
-
 #include "items\carpets.dm"
 #include "items\chairs.dm"
 #include "items\chemistry.dm"
@@ -78,6 +72,7 @@
 // Mobs
 #include "mobs\simple\fox.dm"
 #include "mobs\simple\koala.dm"
+#include "mobs\simple\rabbit.dm"
 
 // Structures
 #include "structures\barrier.dm"

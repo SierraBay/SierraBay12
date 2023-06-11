@@ -15,19 +15,19 @@
 /datum/computer_file/report/recipient/sec/incident/generate_fields()
 	..()
 	add_field(/datum/report_field/text_label/header, "SEV Torch Security Department")
-	add_field(/datum/report_field/text_label/instruction, "To be filled out by Officer on duty responding to the Incident. Report must be signed and submitted before the end of the shift!")
-	add_field(/datum/report_field/people/from_manifest, "Reporting Officer")
+	add_field(/datum/report_field/text_label/instruction, "To be filled out by Security Personnel on duty responding to the Incident. Report must be signed and submitted before the end of the shift!")
+	add_field(/datum/report_field/people/from_manifest, "Reporting Security Personnel")
 	add_field(/datum/report_field/simple_text, "Offense/Incident Type")
 	add_field(/datum/report_field/date, "Date")
 	add_field(/datum/report_field/time, "Time of incident")
-	add_field(/datum/report_field/people/list_from_manifest, "Assisting Officer(s)")
+	add_field(/datum/report_field/people/list_from_manifest, "Assisting Security Personnel")
 	add_field(/datum/report_field/simple_text, "Location")
 	add_field(/datum/report_field/text_label/instruction, "(V-Victim, S-Suspect, W-Witness, M-Missing, A-Arrested, RP-Reporting Person, D-Deceased)")
 	add_field(/datum/report_field/pencode_text, "Personnel involved in Incident")
 	add_field(/datum/report_field/text_label/instruction, "(D-Damaged, E-Evidence, L-Lost, R-Recovered, S-Stolen)")
 	add_field(/datum/report_field/pencode_text, "Description of Items/Property")
 	add_field(/datum/report_field/pencode_text, "Narrative")
-	add_field(/datum/report_field/signature, "Reporting Officer's signature")
+	add_field(/datum/report_field/signature, "Reporting Security Personnel's signature")
 	set_access(access_edit = access_security)
 
 /datum/computer_file/report/recipient/sec/investigation
@@ -86,7 +86,7 @@
 	add_field(/datum/report_field/text_label/instruction, "(D-Damaged, E-Evidence, L-Lost, R-Recovered, S-Stolen)")
 	add_field(/datum/report_field/pencode_text, "Description of Items/Property")
 	add_field(/datum/report_field/pencode_text, "Narrative")
-	add_field(/datum/report_field/text_label/instruction, "By submitting this form, I understand this is considered a formal police report. I understand that all information written above is truthful and accurate. I understand that intentionally filing a fraudulent police report is a criminal offense that will be prosecuted to the fullest extent of the law.  As this is a binding legal document, I understand that by filing this form that any intentionally false information may warrant disciplinary action against myself. This statement was given on my own volition to assist with documenting the above summarized incident.")
+	add_field(/datum/report_field/text_label/instruction, "By submitting this form, I understand this is considered a formal security report. I understand that all information written above is truthful and accurate. I understand that intentionally filing a fraudulent security report is a criminal offense that will be prosecuted to the fullest extent of the law.  As this is a binding legal document, I understand that by filing this form that any intentionally false information may warrant disciplinary action against myself. This statement was given on my own volition to assist with documenting the above summarized incident.")
 	add_field(/datum/report_field/signature, "Signature")
 	set_access(access_edit = access_security)
 
@@ -98,9 +98,9 @@
 /datum/computer_file/report/recipient/sec/arrest/generate_fields()
 	..()
 	add_field(/datum/report_field/text_label/header, "SEV Torch Security Department")
-	add_field(/datum/report_field/text_label/instruction, "To be filled out by Arresting Officer or Brig Chief. Report must be signed and submitted before the end of the shift!")
-	add_field(/datum/report_field/people/from_manifest, "Booking Officer")
-	add_field(/datum/report_field/people/list_from_manifest, "Arresting Officer(s)")
+	add_field(/datum/report_field/text_label/instruction, "To be filled out by Arresting Security Personnel or Brig Chief. Report must be signed and submitted before the end of the shift!")
+	add_field(/datum/report_field/people/from_manifest, "Booking Security Personnel")
+	add_field(/datum/report_field/people/list_from_manifest, "Arresting Security Personnel")
 	add_field(/datum/report_field/date, "Date")
 	add_field(/datum/report_field/time, "Time of incident")
 	add_field(/datum/report_field/people/from_manifest, "Arrrested Individual")
@@ -118,8 +118,8 @@
 	add_field(/datum/report_field/simple_text, "Suit Sensors locked to MAX?")
 	add_field(/datum/report_field/simple_text, "If needed, provided timely medical aid?")
 	add_field(/datum/report_field/simple_text, "IF YES, what injuries are pre-existing?")
-	add_field(/datum/report_field/text_label/instruction, "This document MUST be submitted to, and reviwed by, the Chief of Security or Brig Chief.")
-	add_field(/datum/report_field/signature, "Reporting Officer's signature")
+	add_field(/datum/report_field/text_label/instruction, "This document MUST be submitted to, and reviewed by, the Chief of Security or Brig Chief.")
+	add_field(/datum/report_field/signature, "Reporting Security Personnel's signature")
 	set_access(access_edit = access_security)
 
 /datum/computer_file/report/recipient/sec/restraining
@@ -156,3 +156,31 @@
 	add_field(/datum/report_field/text_label/instruction, "THIS LICENSE IS ISSUED 'AT-WILL' AND MAY BE REVOKED AT ANY TIME FOR ANY REASON BY THE COMMANDING OFFICER, EXECUTIVE OFFICER, OR THE CHIEF OF SECURITY. IN THE EVENT OF ILLEGAL CONDUCT, THIS LICENSE MAY BE REVOKED BY ANY LAW ENFORCEMENT OFFICER ACTING IN THE COURSE OF THEIR NORMAL DUTIES. ALL LICENSEES ARE REQUIRED TO ABIDE BY LOCAL LAWS AND REGULATIONS AT ALL TIMES. OPEN CARRY OF LICENSED ITEMS IS GENERALLY NOT PERMITTED UNLESS EXPLICITLY DENOTED. THIS DOCUMENT MUST BE CARRIED BY THE LICENSED PARTY WHEN THEY ARE IN DIRECT OR CONSTRUCTIVE POSSESSION OF THE AFORMENTIONED ITEMS OR WEAPONS THAT THEY ARE AUTHORIZED FOR. COPIES OF THIS DOCUMENT WILL BE FORWARDED TO THE COMMANDING OFFICER, EXECUTIVE OFFICER, CHIEF OF SECURITY, AND BRIG OFFICER FOR REFERENCE.")
 	add_field(/datum/report_field/signature, "Submitting Officer's signature")
 	set_access(access_edit = access_hos)
+
+/datum/computer_file/report/recipient/sec/njp
+	form_name = "SCG-SEC-06"
+	title = "Non-Judicial Punishment"
+	available_on_ntnet = TRUE
+
+/datum/computer_file/report/recipient/sec/njp/New()
+	..()
+	set_access(access_solgov_crew)
+
+/datum/computer_file/report/recipient/sec/njp/generate_fields()
+	..()
+	add_field(/datum/report_field/text_label/header, "SEV Torch Security Department")
+	add_field(/datum/report_field/text_label/instruction, "To be filled out by a Commissioned Officer or a Non-Commissioned Officer. Report must be signed and submitted for the order to be considered valid. Any paper copies must be stamped.")
+	add_field(/datum/report_field/people/from_manifest, "Accused")
+	add_field(/datum/report_field/simple_text, "Department")
+	add_field(/datum/report_field/people/from_manifest, "Direct superior of the accused")
+	add_field(/datum/report_field/date, "Date Effective")
+	add_field(/datum/report_field/time, "Time Effective")
+	add_field(/datum/report_field/simple_text, "Offense")
+	add_field(/datum/report_field/simple_text, "Description")
+	add_field(/datum/report_field/simple_text, "Punishment")
+	add_field(/datum/report_field/simple_text, "Duration")
+	add_field(/datum/report_field/signature, "Submitting Officer's signature")
+	add_field(/datum/report_field/text_label/instruction, "This document MUST be submitted to, and reviewed by the direct superior officer of the accused.")
+	add_field(/datum/report_field/signature, "Direct superior's signature")
+	add_field(/datum/report_field/text_label/instruction, "The accused has the right to demand trial by court martial. Non-judicial punishment for an offense other than a minor offense is not a bar to trial by court-martial for the same offense.")
+	set_access(access_edit = access_solgov_crew)

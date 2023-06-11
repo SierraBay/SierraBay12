@@ -15,9 +15,11 @@
 	var/blood = 1
 	var/list/target_types = list()
 
-/mob/living/bot/cleanbot/New()
-	..()
+
+/mob/living/bot/cleanbot/Initialize(mapload)
+	. = ..()
 	get_targets()
+
 
 /mob/living/bot/cleanbot/handleIdle()
 	if(!screwloose && !oddbutton && prob(5))
@@ -40,7 +42,7 @@
 	for(var/obj/effect/decal/cleanable/D in view(world.view + 1, src))
 		if(confirmTarget(D))
 			target = D
-			playsound(src, 'sound/machines/boop1.ogg', 30)
+			playsound(src, 'sound/machines/boop1.ogg', 12)
 			return
 
 /mob/living/bot/cleanbot/confirmTarget(obj/effect/decal/cleanable/D)
@@ -78,7 +80,7 @@
 		qdel(D)
 		if(D == target)
 			target = null
-	playsound(src, 'sound/machines/boop2.ogg', 30)
+	playsound(src, 'sound/machines/boop2.ogg', 12)
 	busy = 0
 	update_icons()
 

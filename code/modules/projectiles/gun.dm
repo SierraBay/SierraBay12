@@ -70,6 +70,7 @@
 	var/fire_sound_text = "gunshot"
 	var/fire_anim = null
 	var/screen_shake = 0 //shouldn't be greater than 2 unless zoomed
+	var/space_recoil = 0 //knocks back in space
 	var/silenced = FALSE
 	var/accuracy = 0   //accuracy is measured in tiles. +1 accuracy means that everything is effectively one tile closer for the purpose of miss chance, -1 means the opposite. launchers are not supported, at the moment.
 	var/accuracy_power = 5  //increase of to-hit chance per 1 point of accuracy
@@ -115,7 +116,7 @@
 	/// What skill governs safe handling of this gun. Basic skill level and higher will also show the safety overlay to the player.
 	var/gun_skill = SKILL_WEAPONS
 	/// What skill level is needed in the gun's skill to completely negate the chance of an accident.
-	var/safety_skill = SKILL_EXPERT
+	var/safety_skill = SKILL_EXPERIENCED
 
 /obj/item/gun/Initialize()
 	. = ..()
@@ -287,7 +288,7 @@
 		return
 
 	if(safety())
-		if(user.a_intent == I_HURT && user.skill_check(SKILL_WEAPONS, SKILL_EXPERT))
+		if(user.a_intent == I_HURT && user.skill_check(SKILL_WEAPONS, SKILL_EXPERIENCED))
 			toggle_safety(user)
 		else
 			handle_click_safety(user)
@@ -320,7 +321,7 @@
 			process_point_blank(projectile, user, target)
 
 		if(process_projectile(projectile, user, target, user.zone_sel?.selecting, clickparams))
-			handle_post_fire(user, target, pointblank, reflex)
+			handle_post_fire(user, target, pointblank, reflex, projectile)
 			update_icon()
 
 		if(i < burst)
@@ -360,7 +361,7 @@
 	user.visible_message(SPAN_WARNING("[user] squeezes the trigger of \the [src] but it doesn't move!"), SPAN_WARNING("You squeeze the trigger but it doesn't move!"), range = 3)
 
 //called after successfully firing
-/obj/item/gun/proc/handle_post_fire(mob/user, atom/target, pointblank=0, reflex=0)
+/obj/item/gun/proc/handle_post_fire(mob/user, atom/target, pointblank = 0, reflex = 0, obj/projectile)
 	if(fire_anim)
 		flick(fire_anim, src)
 
@@ -417,6 +418,16 @@
 			for(var/obj/item/rig_module/stealth_field/S in R.installed_modules)
 				S.deactivate()
 
+	if(space_recoil && !user.check_space_footing())
+		var/old_dir = user.dir
+		var/mob/living/carbon/human/H = user
+		var/obj/item/tank/jetpack/jetpack = H.get_jetpack()
+		if(jetpack && !jetpack.stabilization_on)
+			user.inertia_ignore = projectile
+			step(user,get_dir(target,user))
+			user.set_dir(old_dir)
+
+
 	update_icon()
 
 
@@ -446,7 +457,7 @@
 	var/disp_mod = dispersion[min(burst, length(dispersion))]
 	var/stood_still = last_handled
 	//Not keeping gun active will throw off aim (for non-Masters)
-	if(user.skill_check(SKILL_WEAPONS, SKILL_PROF))
+	if(user.skill_check(SKILL_WEAPONS, SKILL_MASTER))
 		stood_still = min(user.l_move_time, last_handled)
 	else
 		stood_still = max(user.l_move_time, last_handled)
@@ -462,7 +473,7 @@
 		acc_mod -= one_hand_penalty/2
 		disp_mod += one_hand_penalty*0.5 //dispersion per point of two-handedness
 
-	if(burst > 1 && !user.skill_check(SKILL_WEAPONS, SKILL_ADEPT))
+	if(burst > 1 && !user.skill_check(SKILL_WEAPONS, SKILL_TRAINED))
 		acc_mod -= 1
 		disp_mod += 0.5
 
@@ -598,17 +609,16 @@
 	zoom(user, zoom_offset, view_size)
 	if(zoom)
 		accuracy = scoped_accuracy
-		if(user.skill_check(SKILL_WEAPONS, SKILL_PROF))
+		if(user.skill_check(SKILL_WEAPONS, SKILL_MASTER))
 			accuracy += 2
 		if(screen_shake)
 			screen_shake = round(screen_shake*zoom_amount+1) //screen shake is worse when looking through a scope
 
 //make sure accuracy and screen_shake are reset regardless of how the item is unzoomed.
-/obj/item/gun/zoom()
+/obj/item/gun/unzoom()
 	..()
-	if(!zoom)
-		accuracy = initial(accuracy)
-		screen_shake = initial(screen_shake)
+	accuracy = initial(accuracy)
+	screen_shake = initial(screen_shake)
 
 /obj/item/gun/examine(mob/user)
 	. = ..()
@@ -671,7 +681,7 @@
 	if(loc == user)
 		toggle_safety(user)
 		return TRUE
-	. = ..()
+	return ..()
 
 /obj/item/gun/proc/safety()
 	return has_safety && safety_state

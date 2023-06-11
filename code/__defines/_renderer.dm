@@ -166,6 +166,10 @@ GLOBAL_LIST_EMPTY(zmimic_renderers)
 	name = "Zrenderer [plane]"
 	. = ..()
 
+/atom/movable/renderer/shared/zmimic/Destroy()
+	GLOB.zmimic_renderers -= src
+	return ..()
+
 // Draws the game world; live mobs, items, turfs, etc.
 /atom/movable/renderer/game
 	name = "Game"
@@ -195,11 +199,12 @@ GLOBAL_LIST_EMPTY(zmimic_renderers)
 	)
 	mouse_opacity = MOUSE_OPACITY_UNCLICKABLE
 
+
 /atom/movable/renderer/lighting/Initialize()
 	. = ..()
 	filters += filter(
 		type = "alpha",
-		render_source = EMISSIVE_RENDER_TARGET,
+		render_source = EMISSIVE_TARGET,
 		flags = MASK_INVERSE
 	)
 
@@ -347,7 +352,7 @@ GLOBAL_LIST_EMPTY(zmimic_renderers)
 	group = RENDER_GROUP_NONE
 	plane = EMISSIVE_PLANE
 	mouse_opacity = MOUSE_OPACITY_UNCLICKABLE
-	render_target_name = EMISSIVE_RENDER_TARGET
+	render_target_name = EMISSIVE_TARGET
 
 /atom/movable/renderer/emissive/Initialize()
 	. = ..()

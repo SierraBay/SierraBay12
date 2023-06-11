@@ -30,6 +30,10 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define OBJ_FLAG_CONDUCTIBLE    FLAG(1)  // Conducts electricity. (metal etc.)
 #define OBJ_FLAG_ROTATABLE      FLAG(2)  // Can be rotated with alt-click
 #define OBJ_FLAG_NOFALL		    FLAG(3)  // Will prevent mobs from falling
+/// Can be click+dragged onto a table, rack, etc
+#define OBJ_FLAG_CAN_TABLE      FLAG(4)
+/// Can receive objects with the `OBJ_FLAG_CAN_TABLE` flag
+#define OBJ_FLAG_RECEIVE_TABLE  FLAG(5)
 
 //Flags for items (equipment)
 #define ITEM_FLAG_NO_BLUDGEON               FLAG(0)  // When an item has this it produces no "X has been hit by Y with Z" message with the default handler.
@@ -60,8 +64,15 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define TANK_FLAG_LEAKING    FLAG(2)
 #define TANK_FLAG_WIRED      FLAG(3)
 
-
 #define OVERMAP_SECTOR_BASE              FLAG(0) // Whether or not this sector is a starting sector. Z levels contained in this sector are added to station_levels
 #define OVERMAP_SECTOR_KNOWN             FLAG(1) // Makes the sector show up on nav computers
 #define OVERMAP_SECTOR_IN_SPACE          FLAG(2) // If the sector can be accessed by drifting off the map edge
 #define OVERMAP_SECTOR_UNTARGETABLE      FLAG(3) // If the sector is untargetable by missiles.
+
+// Flags for beds/chairs
+/// The bed/chair cannot be dismantled with a wrench.
+#define BED_FLAG_CANNOT_BE_DISMANTLED FLAG(1)
+/// The bed/chair cannot be padded with material.
+#define BED_FLAG_CANNOT_BE_PADDED FLAG(2)
+/// The bed/chair cannot be made into an electric chair with a shock kit. Only applies to `/obj/structure/bed/chair` subtypes.
+#define BED_FLAG_CANNOT_BE_ELECTRIFIED FLAG(3)

@@ -1,5 +1,5 @@
-/mob/living/New()
-	..()
+/mob/living/Initialize(mapload)
+	. = ..()
 	if(stat == DEAD)
 		add_to_dead_mob_list()
 	else
@@ -601,8 +601,7 @@ default behaviour is:
 				return set_dir(get_dir(src, pulling))
 
 /mob/living/proc/handle_pull_damage(mob/living/puller)
-	var/area/A = get_area(src)
-	if(!A.has_gravity)
+	if(!has_gravity())
 		return
 	var/turf/location = get_turf(src)
 	if(lying && prob(getBruteLoss() / 6))

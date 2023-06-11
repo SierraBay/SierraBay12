@@ -45,8 +45,6 @@
 		H.adjustToxLoss(-tox_mult * config.organ_regeneration_multiplier)
 		H.adjust_nutrition(-nutrition_damage_mult)
 
-	if(!can_regenerate_organs())
-		return AURA_CANCEL
 	if(organ_mult)
 		if(prob(10) && H.nutrition >= 150 && !H.getBruteLoss() && !H.getFireLoss())
 			var/obj/item/organ/external/head/D = H.organs_by_name["head"]
@@ -119,17 +117,10 @@
 	grow_chance = 2
 	grow_threshold = 150
 	ignore_tag = BP_HEAD
-	innate_heal = FALSE
 	var/toggle_blocked_until = 0 // A time
 
-/obj/aura/regenerating/human/unathi/toggle()
-	..()
-	toggle_blocked_until = max(world.time + 2 MINUTES, toggle_blocked_until)
-
 /obj/aura/regenerating/human/unathi/can_toggle()
-	if(world.time < toggle_blocked_until)
-		return FALSE
-	return ..()
+	return FALSE
 
 // Default return; we're just logging.
 /obj/aura/regenerating/human/unathi/aura_check_weapon(obj/item/weapon, mob/attacker, click_params)
@@ -146,10 +137,25 @@
 
 /obj/aura/regenerating/human/unathi/aura_check_life()
 	var/mob/living/carbon/human/H = user
-	if(innate_heal && istype(H) && H.stat != DEAD && H.nutrition < 50)
+	if (!istype(H) || H.stat == DEAD)
+		return AURA_CANCEL
+	if (H.stasis_value)
+		return AURA_FALSE
+	if (H.nutrition < 50)
 		H.apply_damage(5, DAMAGE_TOXIN)
 		H.adjust_nutrition(3)
 		return AURA_FALSE
+	nutrition_damage_mult = 2
+	brute_mult = 2
+	organ_mult = 4
+	grow_chance = 2
+	var/obj/machinery/optable/optable = locate() in get_turf(H)
+	if (optable?.suppressing && H.sleeping)
+		nutrition_damage_mult = 1
+		brute_mult = 1
+		organ_mult = 2
+		grow_chance = 1
+
 	return ..()
 
 /obj/aura/regenerating/human/unathi/can_regenerate_organs()

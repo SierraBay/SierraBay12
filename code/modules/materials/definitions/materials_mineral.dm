@@ -1,3 +1,28 @@
+/material/borax
+	name = MATERIAL_BORAX
+	ore_compresses_to = MATERIAL_BORAX
+	icon_colour = "#9dd6e0"
+	ore_result_amount = 3
+	ore_spread_chance = 15
+	ore_name = "borax"
+	ore_scan_icon = "material_common"
+	ore_icon_overlay = "lump"
+	stack_origin_tech = list(TECH_MATERIAL = 3)
+	chem_products = list(
+		/datum/reagent/space_cleaner = 5,
+		/datum/reagent/water = 3,
+		/datum/reagent/toxin = 2
+	)
+	door_icon_base = "stone"
+	sheet_icon_base = "brick"
+	sheet_singular_name = "brick"
+	sheet_plural_name = "bricks"
+	wall_icon_base = "stone"
+	table_icon_base = "stone"
+	wall_icon_reinf = "reinf_stone"
+	sale_price = 2
+
+
 /material/pitchblende
 	name = MATERIAL_PITCHBLENDE
 	ore_compresses_to = MATERIAL_PITCHBLENDE
@@ -18,6 +43,7 @@
 		/datum/reagent/radium = 10,
 		/datum/reagent/uranium = 10
 		)
+	sheet_icon_base = "brick"
 	sheet_singular_name = "brick"
 	sheet_plural_name = "bricks"
 	sale_price = 2
@@ -53,11 +79,12 @@
 		/datum/reagent/silicon = 20
 		)
 	door_icon_base = "stone"
+	sheet_icon_base = "brick"
 	sheet_singular_name = "brick"
 	sheet_plural_name = "bricks"
-	icon_base = "stone"
+	wall_icon_base = "stone"
 	table_icon_base = "stone"
-	icon_reinf = "reinf_stone"
+	wall_icon_reinf = "reinf_stone"
 	sale_price = 2
 
 /material/pyrite
@@ -73,11 +100,12 @@
 		/datum/reagent/iron = 5
 		)
 	door_icon_base = "stone"
+	sheet_icon_base = "brick"
 	sheet_singular_name = "brick"
 	sheet_plural_name = "bricks"
-	icon_base = "stone"
+	wall_icon_base = "stone"
 	table_icon_base = "stone"
-	icon_reinf = "reinf_stone"
+	wall_icon_reinf = "reinf_stone"
 	ore_compresses_to = MATERIAL_PYRITE
 	sale_price = 2
 
@@ -94,11 +122,12 @@
 		/datum/reagent/lithium = 20
 		)
 	door_icon_base = "stone"
+	sheet_icon_base = "brick"
 	sheet_singular_name = "brick"
 	sheet_plural_name = "bricks"
-	icon_base = "stone"
+	wall_icon_base = "stone"
 	table_icon_base = "stone"
-	icon_reinf = "reinf_stone"
+	wall_icon_reinf = "reinf_stone"
 	sale_price = 2
 
 /material/cinnabar
@@ -114,11 +143,12 @@
 		/datum/reagent/mercury  = 20
 	)
 	door_icon_base = "stone"
+	sheet_icon_base = "brick"
 	sheet_singular_name = "brick"
 	sheet_plural_name = "bricks"
-	icon_base = "stone"
+	wall_icon_base = "stone"
 	table_icon_base = "stone"
-	icon_reinf = "reinf_stone"
+	wall_icon_reinf = "reinf_stone"
 	sale_price = 2
 
 /material/phosphorite
@@ -134,11 +164,12 @@
 		/datum/reagent/phosphorus = 20
 	)
 	door_icon_base = "stone"
+	sheet_icon_base = "brick"
 	sheet_singular_name = "brick"
 	sheet_plural_name = "bricks"
-	icon_base = "stone"
+	wall_icon_base = "stone"
 	table_icon_base = "stone"
-	icon_reinf = "reinf_stone"
+	wall_icon_reinf = "reinf_stone"
 	sale_price = 2
 
 /material/rocksalt
@@ -154,11 +185,12 @@
 		/datum/reagent/sodium = 20
 	)
 	door_icon_base = "stone"
+	sheet_icon_base = "brick"
 	sheet_singular_name = "brick"
 	sheet_plural_name = "bricks"
-	icon_base = "stone"
+	wall_icon_base = "stone"
 	table_icon_base = "stone"
-	icon_reinf = "reinf_stone"
+	wall_icon_reinf = "reinf_stone"
 	sale_price = 2
 
 /material/potash
@@ -174,11 +206,12 @@
 		/datum/reagent/potassium = 20
 		)
 	door_icon_base = "stone"
+	sheet_icon_base = "brick"
 	sheet_singular_name = "brick"
 	sheet_plural_name = "bricks"
-	icon_base = "stone"
+	wall_icon_base = "stone"
 	table_icon_base = "stone"
-	icon_reinf = "reinf_stone"
+	wall_icon_reinf = "reinf_stone"
 	sale_price = 2
 
 /material/bauxite
@@ -193,11 +226,12 @@
 		/datum/reagent/aluminium = 15
 		)
 	door_icon_base = "stone"
+	sheet_icon_base = "brick"
 	sheet_singular_name = "brick"
 	sheet_plural_name = "bricks"
-	icon_base = "stone"
+	wall_icon_base = "stone"
 	table_icon_base = "stone"
-	icon_reinf = "reinf_stone"
+	wall_icon_reinf = "reinf_stone"
 	ore_smelts_to = MATERIAL_ALUMINIUM
 	ore_compresses_to = MATERIAL_BAUXITE
 	sale_price = 1
@@ -218,13 +252,14 @@
 	name = MATERIAL_PHORON
 	stack_type = /obj/item/stack/material/phoron
 	ignition_point = PHORON_MINIMUM_BURN_TEMPERATURE
-	icon_base = "stone"
+	wall_icon_base = "stone"
 	table_icon_base = "stone"
 	icon_colour = "#e37108"
 	shard_type = SHARD_SHARD
 	hardness = MATERIAL_RIGID
 	stack_origin_tech = list(TECH_MATERIAL = 2, TECH_PHORON = 2)
 	door_icon_base = "stone"
+	sheet_icon_base = "sheet-phoron"
 	sheet_singular_name = "crystal"
 	sheet_plural_name = "crystals"
 	is_fusion_fuel = 1
@@ -252,6 +287,7 @@
 	name = MATERIAL_SUPERMATTER
 	lore_text = "Hypercrystalline supermatter is a subset of non-baryonic 'exotic' matter. It is found mostly in the heart of large stars, and features heavily in bluespace technology."
 	icon_colour = "#ffff00"
+	sheet_icon_base = "diamond"
 	radioactivity = 20
 	stack_origin_tech = list(TECH_BLUESPACE = 2, TECH_MATERIAL = 6, TECH_PHORON = 4)
 	stack_type = null

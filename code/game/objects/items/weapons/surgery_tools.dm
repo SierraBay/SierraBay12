@@ -1,16 +1,3 @@
-/* Surgery Tools
- * Contains:
- *		Retractor
- *		Hemostat
- *		Cautery
- *		Surgical Drill
- *		Scalpel
- *		Circular Saw
- */
-
-/*
- * Retractor
- */
 /obj/item/retractor
 	name = "retractor"
 	desc = "Used to separate the edges of a surgical incision to get to the juicy organs inside."
@@ -81,10 +68,8 @@
  * Scalpel
  */
 /obj/item/scalpel
-	name = "scalpel"
-	desc = "A tiny and extremely sharp steel cutting tool used for surgery, dissection, autopsy, and very precise cuts. The cornerstone of any surgical procedure."
 	icon = 'icons/obj/surgery.dmi'
-	icon_state = "scalpel"
+	abstract_type = /obj/item/scalpel
 	obj_flags = OBJ_FLAG_CONDUCTIBLE
 	force = 10.0
 	sharp = TRUE
@@ -101,38 +86,29 @@
 	drop_sound = 'sound/items/drop/knife.ogg'
 	pickup_sound = 'sound/items/pickup/knife.ogg'
 
-/*
- * Researchable Scalpels
- */
-/obj/item/scalpel/laser1
-	name = "laser scalpel"
-	desc = "A scalpel augmented with a directed laser, for more precise cutting without blood entering the field.  This one looks basic and could be improved."
-	icon_state = "scalpel_laser1_on"
-	damtype = DAMAGE_BURN
+/obj/item/scalpel/basic
+	name = "scalpel"
+	desc = "A tiny and extremely sharp steel cutting tool used for surgery, dissection, autopsy, and very precise cuts. The cornerstone of any surgical procedure."
+	icon_state = "scalpel"
 
-/obj/item/scalpel/laser2
-	name = "laser scalpel"
-	desc = "A scalpel augmented with a directed laser, for more precise cutting without blood entering the field.  This one looks somewhat advanced."
-	icon_state = "scalpel_laser2_on"
-	damtype = DAMAGE_BURN
-	force = 12.0
 
-/obj/item/scalpel/laser3
+/obj/item/scalpel/laser
 	name = "laser scalpel"
-	desc = "A scalpel augmented with a directed laser, for more precise cutting without blood entering the field.  This one looks to be the pinnacle of precision energy cutlery!"
+	desc = "An advanced scalpel augmented with a directed laser, for more precise cutting without blood entering the field."
 	icon_state = "scalpel_laser3_on"
+	origin_tech = list(TECH_BIO = 5, TECH_MATERIAL = 6, TECH_MAGNET = 4)
+	matter = list(MATERIAL_STEEL = 12500, MATERIAL_GLASS = 7500, MATERIAL_SILVER = 2000, MATERIAL_GOLD = 1500)
 	damtype = DAMAGE_BURN
 	force = 15.0
 
-/obj/item/scalpel/manager
+/obj/item/scalpel/ims
 	name = "incision management system"
 	desc = "A true extension of the surgeon's body, this marvel instantly and completely prepares an incision allowing for the immediate commencement of therapeutic steps."
 	icon_state = "scalpel_manager_on"
+	origin_tech = list(TECH_BIO = 6, TECH_MATERIAL = 6, TECH_MAGNET = 5, TECH_DATA = 5)
+	matter = list(MATERIAL_STEEL = 12500, MATERIAL_GLASS = 7500, MATERIAL_SILVER = 1500, MATERIAL_GOLD = 1500, MATERIAL_DIAMOND = 750)
 	force = 7.5
 
-/*
- * Circular Saw
- */
 /obj/item/circular_saw
 	name = "circular saw"
 	desc = "A small and nasty-looking hand saw used to cut through bone, or in an emergency, pizza."
@@ -173,7 +149,7 @@
  * Vascular Recoupler
  */
 /obj/item/FixOVein
-	name = "Vascular Recoupler"
+	name = "vascular recoupler"
 	desc = "Derived from a Vey-Med design, this miniature 3D printer is used to quickly synthetize and thread new organic tissue during surgical procedures."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "fixovein"

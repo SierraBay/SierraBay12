@@ -762,7 +762,7 @@
 		/obj/item/storage/box/autoinjectors = 3,
 		/obj/item/storage/box/beakers = 4,
 		/obj/item/storage/box/syringes = 4,
-		/obj/item/storage/box/gloves = 4,
+		/obj/item/storage/box/latexgloves = 4,
 		/obj/item/storage/box/large = 3,
 		/obj/item/storage/box/glowsticks = 4,
 		/obj/item/storage/wallet = 2,
@@ -875,6 +875,7 @@
 				/obj/item/clothing/suit/storage/toggle/labcoat = 4,
 				/obj/item/clothing/suit/space/emergency = 1,
 				/obj/item/clothing/suit/armor/vest = 4,
+				/obj/item/clothing/suit/storage/security_chest_rig = 4,
 				/obj/item/clothing/suit/storage/vest/tactical = 1,
 				/obj/item/clothing/suit/storage/vest = 3,
 				/obj/item/clothing/suit/storage/toggle/bomber = 3,
@@ -934,10 +935,10 @@ GLOBAL_LIST_INIT(random_backpacks, list(
 	/obj/item/storage/backpack/security/exo,
 	/obj/item/storage/backpack/command,
 	/obj/item/storage/backpack/industrial,
-	/obj/item/storage/backpack/toxins,
+	/obj/item/storage/backpack/corpsci,
 	/obj/item/storage/backpack/hydroponics,
 	/obj/item/storage/backpack/genetics,
-	/obj/item/storage/backpack/virology,
+	/obj/item/storage/backpack/sci,
 	/obj/item/storage/backpack/chemistry
 ))
 
@@ -1052,7 +1053,7 @@ something, make sure it's not in one of the other lists.*/
 				/obj/item/clothing/suit/straight_jacket = 6,
 				/obj/item/clothing/head/helmet/merc = 3,
 				/obj/item/stack/material/diamond/ten = 7,
-				/obj/item/stack/material/glass/phoronrglass/ten = 7,
+				/obj/item/stack/material/glass/boron_reinforced/ten = 7,
 				/obj/item/stack/material/marble/ten = 8,
 				/obj/item/stack/material/phoron/ten = 7,
 				/obj/item/stack/material/gold/ten = 7,
@@ -1079,7 +1080,7 @@ something, make sure it's not in one of the other lists.*/
 				/obj/item/bonesetter = 7,
 				/obj/item/bonegel = 7,
 				/obj/item/circular_saw = 7,
-				/obj/item/scalpel = 7,
+				/obj/item/scalpel/basic = 7,
 				/obj/item/melee/baton/loaded = 9,
 				/obj/item/device/radio/headset/syndicate = 6)
 
@@ -1415,7 +1416,7 @@ var/global/list/multi_point_spawns
 	name = "random vending machine"
 	desc = "This is a randomly selected vending machine."
 	icon = 'icons/obj/vending.dmi'
-	icon_state = ""
+	icon_state = "green-outline"
 
 /obj/random/vendor/spawn_choices()
 	return list(/obj/machinery/vending/weeb,

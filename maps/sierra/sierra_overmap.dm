@@ -1,5 +1,6 @@
 /obj/effect/overmap/visitable/ship/sierra
-	name = "NSV Sierra"
+	class = "NSV"
+	designation = "Sierra"
 	desc = "A space object with wide of 121.2 meters, length of 214.5 meters and high near 14.3 meters. A Self Indentification Signal classifices \
 	the target as NanoTrasen Science Vessel, a property of NanoTrasen Corporation."
 	fore_dir = WEST
@@ -13,9 +14,10 @@
 	initial_restricted_waypoints = list(
 		"Charon" = list("nav_hangar_calypso"),
 		"Guppy" = list("nav_hangar_guppy"),
-		"Mule" = list("nav_merchant_out"), //away_inf/liberia/liberia.dmm shuttle,
+		"Mule" = list("nav_merchant_out"), //../mods/maps/liberia/_map_liberia.dme shuttle,
 		"Desperado" = list("nav_merc_dock"), //antag_spawn/mercenary/mercenary_inf.dmm shuttle,
-		"Reaper Gunboat" = list("nav_reaper_dock"), //away_inf/sentinel/sentinel.dmm shuttle,
+		"Reaper Gunboat" = list("nav_reaper_dock"), //../mods/maps/sentinel/_map_sentinel.dme shuttle,
+		"SNZ Speedboat" = list("nav_snz_dock"), //../../mods/maps/farfleet/_map_farfleet.dme shuttle,
 		"Sol Patrol Shuttle" = list("nav_deck3_patrol"), //away_inf/patrol/patrol.dmm shuttle,
 		"Skrellian Shuttle" = list("nav_deck3_skrellshuttle"), //away_inf/skrellscoutship.dm shuttle,
 		"Skrellian Scout" = list("nav_deck1_skrellscout"), //away_inf/skrellscoutship.dm shuttle,

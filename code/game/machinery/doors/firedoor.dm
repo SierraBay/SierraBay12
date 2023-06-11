@@ -206,7 +206,7 @@
 				SPAN_ITALIC("You hear welding.")
 			)
 			playsound(loc, 'sound/items/Welder.ogg', 50, TRUE)
-			if(do_after(user, 2 SECONDS, src, DO_REPAIR_CONSTRUCT))
+			if(do_after(user, (C.toolspeed * 2) SECONDS, src, DO_REPAIR_CONSTRUCT))
 				if(!W.isOn())
 					return
 				blocked = !blocked
@@ -240,7 +240,7 @@
 				SPAN_ITALIC("You hear metal bumping against metal.")
 			)
 			playsound(loc, 'sound/items/Crowbar.ogg', 100, TRUE)
-			if(do_after(user, 3 SECONDS, src, DO_REPAIR_CONSTRUCT))
+			if(do_after(user, (C.toolspeed * 3) SECONDS, src, DO_REPAIR_CONSTRUCT))
 				if(blocked && density && hatch_open)
 					playsound(loc, 'sound/items/Deconstruct.ogg', 100, TRUE)
 					user.visible_message(
@@ -278,7 +278,7 @@
 			SPAN_WARNING("You hear metal groaning and grinding!")
 		)
 		playsound(loc, 'sound/machines/airlock_creaking.ogg', 100, TRUE)
-		if(do_after(user, 3 SECONDS, src, DO_REPAIR_CONSTRUCT))
+		if(do_after(user, (C.toolspeed * 3) SECONDS, src, DO_REPAIR_CONSTRUCT))
 			if(isCrowbar(C))
 				if(inoperable() || !density)
 					user.visible_message(
@@ -391,7 +391,7 @@
 			SPAN_DANGER("You hear buzzing coming from the ceiling."),
 			range = 3
 		)
-		playsound(loc, "sound/machines/firedoor.ogg", 50)
+		playsound(loc, 'sound/machines/firedoor.ogg', 50)
 		sleep(2 SECONDS)
 		for(var/turf/turf in locs)
 			for(var/mob/living/M in turf)
@@ -426,7 +426,7 @@
 				M.apply_damage(10, DAMAGE_BRUTE, used_weapon = src)
 				if(direction)
 					M.Move(get_step(src, direction))
-	playsound(loc, close_sound, 25, TRUE)
+	playsound(loc, close_sound, 50, TRUE)
 	closing = FALSE
 	return ..()
 
@@ -444,7 +444,7 @@
 	else
 		log_and_message_admins("has forced open an emergency shutter.")
 	latetoggle()
-	playsound(loc, open_sound, 25, TRUE)
+	playsound(loc, open_sound, 50, 1)
 	return ..()
 
 // Called ten seconds after a firedoor is opened manually during an active alert, to prevent it staying open for long.

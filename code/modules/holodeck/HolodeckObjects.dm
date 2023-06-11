@@ -142,24 +142,18 @@
 	icon_state = "boxing"
 	item_state = "boxing"
 
+/obj/structure/window/holowindow
+	atom_flags = ATOM_FLAG_NO_TEMP_CHANGE | ATOM_FLAG_NO_TOOLS
+
 /obj/structure/window/holowindow/full
 	dir = 5
 	icon_state = "window_full"
 
+/obj/structure/window/holowindow/full/Destroy()
+	..()
 
-/obj/structure/window/reinforced/holowindow/attackby(obj/item/W as obj, mob/user as mob)
-
-	if(!istype(W) || W.item_flags & ITEM_FLAG_NO_BLUDGEON) return
-
-	if(isScrewdriver(W) || isCrowbar(W) || isWrench(W))
-		to_chat(user, (SPAN_NOTICE("It's a holowindow, you can't dismantle it!")))
-	else
-		if (W.damtype == DAMAGE_BRUTE || W.damtype == DAMAGE_BURN)
-			hit(W.force, user, W)
-		else
-			playsound(loc, 'sound/effects/Glasshit.ogg', 75, 1)
-		..()
-	return
+/obj/structure/window/reinforced/holowindow/Destroy()
+	..()
 
 /obj/structure/window/reinforced/holowindow/shatter(display_message = 1)
 	playsound(src, "shatter", 70, 1)
@@ -200,11 +194,11 @@
 		visible_message("[src] fades away as it shatters!")
 	qdel(src)
 
+/obj/structure/bed/chair/holochair
+	bed_flags = BED_FLAG_CANNOT_BE_DISMANTLED | BED_FLAG_CANNOT_BE_ELECTRIFIED | BED_FLAG_CANNOT_BE_PADDED
 
-/obj/structure/bed/chair/holochair/attackby(obj/item/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/wrench))
-		to_chat(user, (SPAN_NOTICE("It's a holochair, you can't dismantle it!")))
-	return
+/obj/structure/bed/chair/holochair/Destroy()
+	..()
 
 /obj/item/holo
 	damtype = DAMAGE_PAIN
@@ -421,9 +415,11 @@
 /mob/living/simple_animal/hostile/carp/holodeck/on_update_icon()
 	return
 
-/mob/living/simple_animal/hostile/carp/holodeck/New()
-	..()
+
+/mob/living/simple_animal/hostile/carp/holodeck/Initialize(mapload, ...)
+	. = ..()
 	set_light(0.5, 0.1, 2) //hologram lighting
+
 
 /mob/living/simple_animal/hostile/carp/holodeck/proc/set_safety(safe)
 	var/obj/item/NW = get_natural_weapon()

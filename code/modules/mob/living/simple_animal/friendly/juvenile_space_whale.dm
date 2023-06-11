@@ -36,13 +36,15 @@
 	ai_holder = /datum/ai_holder/simple_animal/passive
 	say_list_type = /datum/say_list/juvenile_space_whale
 
-/mob/living/simple_animal/passive/juvenile_space_whale/New()
-	..()
+
+/mob/living/simple_animal/passive/juvenile_space_whale/Initialize(mapload)
+	. = ..()
 	var/mob/living/simple_animal/hostile/retaliate/space_whale/W = locate() in viewers(src, 7)
 	if(W && !parent && !W.baby)
 		W.baby = src
 		parent = W
 		color = parent.color
+
 
 /mob/living/simple_animal/passive/juvenile_space_whale/Life()
 	. = ..()
@@ -69,7 +71,7 @@
 			bound_height = 32
 			bound_width = 64
 
-/mob/living/simple_animal/passive/juvenile_space_whale/Allow_Spacemove()
+/mob/living/simple_animal/passive/juvenile_space_whale/Process_Spacemove()
 	return TRUE
 
 /datum/say_list/juvenile_space_whale
