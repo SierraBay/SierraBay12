@@ -4,7 +4,6 @@
 	name = "Cinnamon Resort"
 	desc = "Sensors detect a hotel with a low power profile."
 	icon_state = "object"
-	known = FALSE
 
 /datum/map_template/ruin/away_site/abandoned_hotel
 	name = "Cinnamon Resort"
