@@ -4,15 +4,11 @@
 	name = "Cinnamon Resort"
 	desc = "Sensors detect a hotel with a low power profile."
 	icon_state = "object"
-<<<<<<< ours
-=======
-	known = FALSE
 	initial_generic_waypoints = list(
 		"nav_cinnamon_hotel_1",
 		"nav_cinnamon_hotel_2",
 		"nav_cinnamon_hotel_3",
 	)
->>>>>>> theirs
 
 /datum/map_template/ruin/away_site/abandoned_hotel
 	name = "Cinnamon Resort"
