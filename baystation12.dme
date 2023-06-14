@@ -10,6 +10,9 @@
 #define DEBUG
 // END_PREFERENCES
 // BEGIN_INCLUDE
+#ifdef OPENDREAM
+#include "code\___odlint.dm"
+#endif
 #include "code\__spaceman_dmm.dm"
 #include "code\_macros.dm"
 #include "code\_version.dm"
