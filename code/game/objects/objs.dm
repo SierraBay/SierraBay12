@@ -224,7 +224,7 @@
 		return
 	user.visible_message(
 		SPAN_NOTICE("\The [user] [anchored ? "un" : ""]secures \the [src] [anchored ? "from" : "to"] the floor with \a [tool]."),
-		SPAN_NOTICE("You [anchored ? "un" : ""]secures \the [src] [anchored ? "from" : "to"] the floor with \the [tool].")
+		SPAN_NOTICE("You [anchored ? "un" : ""]secure \the [src] [anchored ? "from" : "to"] the floor with \the [tool].")
 	)
 	playsound(src, 'sound/items/Ratchet.ogg', 50, TRUE)
 	anchored = !anchored
@@ -282,3 +282,6 @@
  */
 /obj/proc/is_safe_to_step(mob/living/L)
 	return TRUE
+
+/obj/get_mass()
+	return min(2**(w_class-1), 100)

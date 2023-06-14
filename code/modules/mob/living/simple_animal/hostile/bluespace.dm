@@ -1,6 +1,6 @@
 /mob/living/simple_animal/hostile/bluespace
 	name = "bluespace figment"
-	desc = "An fragmented spectre from another dimension."
+	desc = "A fragmented spectre from another dimension."
 	icon = 'icons/mob/simple_animal/bluespace.dmi'
 	icon_state = "figment"
 	icon_living = "figment"
@@ -20,7 +20,7 @@
 	light_max_bright = 1
 	bleed_colour = "#0000ff"
 
-/mob/living/simple_animal/hostile/bluespace/Allow_Spacemove(check_drift = 0)
+/mob/living/simple_animal/hostile/bluespace/Process_Spacemove()
 	return 1
 
 /obj/item/natural_weapon/bluespace

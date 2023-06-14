@@ -16,20 +16,22 @@
 
 	attack_armor_pen = 15
 
-	movement_cooldown = 10
+	movement_cooldown = 4
 
 	poison_chance = 30
 	poison_per_bite = 0.5
 	poison_type = /datum/reagent/toxin/phoron
+
+	mob_size = MOB_LARGE
 
 	var/exploded = FALSE
 	var/explosion_radius = 7
 	var/explosion_max_power = EX_ACT_DEVASTATING
 
 	/// Lower bound for explosion delay.
-	var/explosion_delay_lower	= 3 SECONDS
+	var/explosion_delay_lower	= 1 SECONDS
 	/// Upper bound for explosion delay.
-	var/explosion_delay_upper	= 5 SECONDS
+	var/explosion_delay_upper	= 3 SECONDS
 
 /mob/living/simple_animal/hostile/giant_spider/phorogenic/Initialize()
 	SetTransform(scale = 1.25)
