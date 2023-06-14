@@ -54,6 +54,7 @@ jobs:
       - name: Install Dependencies
         run: sudo apt-get install -y uchardet
       - name: Run OpenDream Lint
+        run: bash tools/ci/setup_od.sh
         run: bash tools/ci/run_od.sh
       - name: Run Tests
         env:
