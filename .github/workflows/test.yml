@@ -46,10 +46,15 @@ jobs:
     if: needs.PreFlight.outputs.dm == 'true'
     steps:
       - uses: actions/checkout@v3
+      - name: Setup Cache
+        uses: actions/cache@v3
+        with:
+          path: $HOME/OpenDream
+          key: ${{ runner.os }}-opendream
       - name: Setup OD Lint
-        run: bash test/setup_od.sh
+        run: bash test/setup-od.sh
       - name: Run OpenDream Lint
-        run: bash test/run_od.sh > ${GITHUB_WORKSPACE}/output-annotations.txt 2>&1
+        run: bash test/run-od.sh > ${GITHUB_WORKSPACE}/output-annotations.txt 2>&1
       - name: Annotate Lints
         if: success() || failure()
         uses: SierraBay/OpenDreamAnnotate
