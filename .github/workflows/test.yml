@@ -47,9 +47,9 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Setup OD Lint
-        run: bash tools/ci/setup_od.sh
+        run: bash test/setup_od.sh
       - name: Run OpenDream Lint
-        run: bash tools/ci/run_od.sh
+        run: bash test/run_od.sh
   Code:
     runs-on: ubuntu-22.04
     needs:
