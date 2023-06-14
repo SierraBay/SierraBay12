@@ -38,6 +38,18 @@ jobs:
         run:  scripts/install-spaceman-dmm.sh dreamchecker
       - name: Run Dreamchecker
         run: ~/dreamchecker
+  OpenDreamLinter:
+    runs-on: ubuntu-22.04
+    needs:
+    - PreFlight
+    - DreamChecker
+    if: needs.PreFlight.outputs.dm == 'true'
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup OD Lint
+        run: bash tools/ci/setup_od.sh
+      - name: Run OpenDream Lint
+        run: bash tools/ci/run_od.sh
   Code:
     runs-on: ubuntu-22.04
     needs:
@@ -53,10 +65,6 @@ jobs:
           key: ${{ runner.os }}-byond-${{ env.BYOND_MAJOR }}-${{ env.BYOND_MINOR }}
       - name: Install Dependencies
         run: sudo apt-get install -y uchardet
-      - name: Setup OD Lint
-        run: bash tools/ci/setup_od.sh
-      - name: Run OpenDream Lint
-        run: bash tools/ci/run_od.sh
       - name: Run Tests
         env:
           TEST: CODE
