@@ -57,7 +57,7 @@ jobs:
         run: bash test/run-od.sh > ${GITHUB_WORKSPACE}/output-annotations.txt 2>&1
       - name: Annotate Lints
         if: success() || failure()
-        uses: SierraBay/OpenDreamAnnotate
+        uses: SierraBay/OpenDreamAnnotate@ce45a8e9bd2d433fbd0e5be32c137f0dd5698636
         with:
           outputFile: output-annotations.txt
   Code:
