@@ -10,3 +10,4 @@ else
   git -C $HOME/OpenDream submodule update --init --recursive
   dotnet restore $HOME/OpenDream
   dotnet build $HOME/OpenDream/OpenDream.sln -c Release --property WarningLevel=1
+fi
