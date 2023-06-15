@@ -1,7 +1,7 @@
 // Possibles title screens
-var/global/list/lobby_screens = list('packs/Infinity/title_screens/infinity-2020.png')
+var/global/list/lobby_screens = list('packs/infinity/title_screens/infinity-2020.png')
 
-var/global/current_lobby_screen = 'packs/Infinity/title_screens/infinity-2020.png'
+var/global/current_lobby_screen = 'packs/infinity/title_screens/infinity-2020.png'
 
 #define MARK_READY     "READY <span style='color:lime'>☑</span>"
 #define MARK_NOT_READY "READY <span style='color:red'>☒</span>"
