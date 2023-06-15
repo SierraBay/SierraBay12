@@ -27,4 +27,7 @@
 // 3000-3999
 #pragma EmptyBlock error
 
+world
+	var/timezone
+
 #endif
