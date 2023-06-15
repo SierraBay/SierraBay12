@@ -32,7 +32,4 @@
 world
 	var/timezone
 
-/datum/controller/master
-	var/const/tick_limit_default = 80
-
 #endif
