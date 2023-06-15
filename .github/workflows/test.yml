@@ -49,7 +49,7 @@ jobs:
       - name: Setup Cache
         uses: actions/cache@v3
         with:
-          path: $HOME/OpenDream
+          path: ~/OpenDream
           key: ${{ runner.os }}-opendream
       - name: Setup OD Lint
         run: bash test/setup-od.sh
