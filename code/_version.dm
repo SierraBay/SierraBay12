@@ -2,10 +2,11 @@
 DM version compatibility macros & procs
 Retain even if empty - the future exists
 */
-
 #if DM_VERSION < 515
 
 #define call_ext(ARGS...) call(ARGS)
+
+#ifndef OPENDREAM // SIERRA - OD compatibility
 
 /proc/ceil(number)
 	return -round(-number)
@@ -19,14 +20,21 @@ Retain even if empty - the future exists
 /proc/ftime()
 	throw EXCEPTION("ftime not available below 515")
 
+#endif // SIERRA - OD compatibility
+
 /proc/get_steps_to()
 	throw EXCEPTION("get_steps_to not available below 515")
+
+
+#ifndef OPENDREAM // SIERRA - OD compatibility
 
 /proc/isinf(number)
 	return number == POSITIVE_INFINITY || number == NEGATIVE_INFINITY
 
 /proc/isnan(number)
 	return isnum(number) && number != number
+
+#endif // SIERRA - OD compatibility
 
 /proc/ispointer()
 	throw EXCEPTION("ispointer not available below 515")
@@ -36,6 +44,8 @@ Retain even if empty - the future exists
 
 /proc/noise_hash()
 	throw EXCEPTION("noise_hash not available below 515")
+
+#ifndef OPENDREAM // SIERRA - OD compatibility
 
 /proc/refcount(datum)
 	throw EXCEPTION("refcount not available below 515")
@@ -50,6 +60,8 @@ Retain even if empty - the future exists
 	if (number < 0)
 		return -round(-number)
 	return round(number)
+
+#endif // SIERRA - OD compatibility
 
 /client/proc/RenderIcon(atom)
 	throw EXCEPTION("client::RenderIcon() not available below 515")
