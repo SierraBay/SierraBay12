@@ -9,7 +9,7 @@
 #pragma WarningDirective error
 #pragma MiscapitalizedDirective error
 
-//2000-2999
+// 2000-2999
 #pragma SoftReservedKeyword error
 #pragma DuplicateVariable error
 #pragma DuplicateProcDefinition error
@@ -24,7 +24,7 @@
 #pragma DanglingVarType error
 #pragma MissingInterpolatedExpression error
 
-//3000-3999
+// 3000-3999
 #pragma EmptyBlock error
 
 #endif
