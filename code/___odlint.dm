@@ -15,7 +15,7 @@
 #pragma DuplicateProcDefinition error
 #pragma TooManyArguments error
 #pragma PointlessParentCall error
-#pragma PointlessBuiltinCall error
+#pragma PointlessBuiltinCall notice
 #pragma SuspiciousMatrixCall error
 #pragma MalformedRange error
 #pragma InvalidRange error
