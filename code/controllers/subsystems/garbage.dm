@@ -55,6 +55,7 @@ SUBSYSTEM_DEF(garbage)
 /datum/controller/subsystem/garbage/UpdateStat(time)
 	if (PreventUpdateStat(time))
 		return ..()
+<<<<<<< ours
 	var/list/build = list()
 	var/list/counts = list()
 	for (var/list/L in queues)
@@ -73,6 +74,12 @@ SUBSYSTEM_DEF(garbage)
 	build += " P:[pass_counts.Join(",")]"
 	build += "|F:[fail_counts.Join(",")]"
 	..(build.Join(null))
+=======
+	..({"\
+		collection queue: [length(collection_queue)], deletion queue: [length(deletion_queue)][pause_deletion_queue ? "(paused)" : ""]\n\
+		last run: [last_tick_deletions + last_tick_collections], collected: [total_collections], deleted: [total_deletions], failed: [failed_collections]\n\
+	"})
+>>>>>>> theirs
 
 
 /datum/controller/subsystem/garbage/Shutdown()
