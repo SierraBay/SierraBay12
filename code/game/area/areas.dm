@@ -43,6 +43,7 @@
 	..()
 	turfs_airless = FALSE
 
+<<<<<<< ours
 	icon = 'icons/turf/areas.dmi'
 	icon_state = "white"
 	blend_mode = BLEND_MULTIPLY
@@ -50,6 +51,8 @@
 /area/Destroy()
 	..()
 	return QDEL_HINT_HARDDEL
+=======
+>>>>>>> theirs
 
 // Changes the area of T to A. Do not do this manually.
 // Area is expected to be a non-null instance.
