@@ -368,6 +368,7 @@
 	can_hold = list(/obj/item/toy/snappop)
 	startswith = list(/obj/item/toy/snappop = 8)
 
+<<<<<<< ours
 /obj/item/storage/box/matches
 	name = "matchbox"
 	desc = "A small box of 'Space-Proof' premium matches."
@@ -392,6 +393,8 @@
 	W.update_icon()
 	return
 
+=======
+>>>>>>> theirs
 /obj/item/storage/box/autoinjectors
 	name = "box of injectors"
 	desc = "Contains autoinjectors."
