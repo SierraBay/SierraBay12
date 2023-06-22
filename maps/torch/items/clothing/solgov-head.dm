@@ -430,7 +430,11 @@
 	accessories = null
 
 /obj/item/clothing/head/helmet/space/void/exploration
+<<<<<<< ours
 	camera = /obj/machinery/camera/network/research
+=======
+	camera = /obj/machinery/camera/network/helmet
+>>>>>>> theirs
 
 //SolGov Hardsuits
 

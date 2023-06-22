@@ -467,9 +467,6 @@
 /area/storage/tech)
 "aO" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
-/obj/machinery/camera/network/engine{
-	c_tag = "Tech Storage - Secure"
-	},
 /obj/effect/floor_decal/techfloor{
 	dir = 8
 	},
@@ -478,6 +475,9 @@
 	},
 /obj/machinery/firealarm{
 	pixel_y = 21
+	},
+/obj/machinery/camera/network/engineering{
+	c_tag = "Engineering - Secure Tech Storage"
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/storage/tech)
@@ -508,13 +508,12 @@
 /turf/simulated/floor/tiled/dark,
 /area/medical/morgue)
 "aT" = (
+/obj/effect/floor_decal/industrial/outline/grey,
 /obj/machinery/camera/network/medbay{
-	c_tag = "Infirmary - Morgue"
+	c_tag = "Medical - Morgue";
+	dir = 4
 	},
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/simulated/floor/tiled/dark,
+/turf/simulated/floor/tiled/dark/monotile,
 /area/medical/morgue)
 "aU" = (
 /obj/structure/morgue{
@@ -644,9 +643,6 @@
 /obj/effect/floor_decal/industrial/warning{
 	dir = 4;
 	icon_state = "warning"
-	},
-/obj/machinery/camera/network/engine{
-	c_tag = "Engine - Prototype SMES"
 	},
 /obj/machinery/light_switch{
 	pixel_x = 6;
@@ -1559,10 +1555,6 @@
 	name = "west bump";
 	pixel_x = -24
 	},
-/obj/machinery/camera/network/engineering{
-	c_tag = "Solar Control - Starboard";
-	dir = 1
-	},
 /obj/structure/catwalk,
 /turf/simulated/floor/plating,
 /area/maintenance/auxsolarstarboard)
@@ -1660,9 +1652,6 @@
 /obj/item/clothing/glasses/meson,
 /obj/machinery/light/small{
 	dir = 1
-	},
-/obj/machinery/camera/network/engine{
-	c_tag = "Tech Storage - Main"
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/storage/tech)
@@ -2456,9 +2445,6 @@
 /turf/simulated/open,
 /area/maintenance/seconddeck/central)
 "eL" = (
-/obj/machinery/camera/network/engineering{
-	c_tag = "Substation - Second Deck"
-	},
 /obj/machinery/power/terminal,
 /obj/structure/cable{
 	d2 = 4;
@@ -2587,10 +2573,6 @@
 "eV" = (
 /obj/machinery/fabricator,
 /obj/effect/floor_decal/industrial/outline/yellow,
-/obj/machinery/camera/network/engineering{
-	c_tag = "Robotics - Lower";
-	dir = 8
-	},
 /obj/machinery/light{
 	dir = 4
 	},
@@ -2976,9 +2958,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 1
-	},
-/obj/machinery/camera/network/second_deck{
-	c_tag = "Second Deck Hallway - Central West"
 	},
 /obj/machinery/light{
 	dir = 1
@@ -4110,10 +4089,18 @@
 /area/engineering/foyer)
 "iP" = (
 /obj/machinery/door/firedoor,
+<<<<<<< ours
 /obj/structure/cable/green{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
+=======
+/obj/effect/wallframe_spawn/reinforced_phoron,
+/obj/machinery/door/blast/regular/open{
+	icon_state = "pdoor0";
+	id_tag = "bsdwindow";
+	name = "Drive Containment"
+>>>>>>> theirs
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/airlock/engineering{
@@ -4156,11 +4143,20 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
+<<<<<<< ours
 /obj/structure/window/reinforced{
 	dir = 1
 	},
 /obj/machinery/door/window/brigdoor/northleft{
 	dir = 2
+=======
+/obj/effect/floor_decal/industrial/outline/yellow,
+/turf/simulated/floor/tiled/techfloor,
+/area/engineering/bluespacebay)
+"iW" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+>>>>>>> theirs
 	},
 /obj/structure/table/rack{
 	dir = 8
@@ -4337,10 +4333,6 @@
 /obj/structure/sign/warning/mail_delivery{
 	pixel_y = 32
 	},
-/obj/machinery/camera/network/engineering{
-	c_tag = "Engineering - Equipment";
-	dir = 4
-	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/engineering/engineering_bay)
 "jx" = (
@@ -4372,6 +4364,7 @@
 	dir = 1;
 	pixel_y = -22
 	},
+<<<<<<< ours
 /obj/machinery/camera/network/engineering{
 	c_tag = "Cyborg Upload";
 	dir = 4
@@ -4379,6 +4372,12 @@
 /obj/machinery/recharger,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/synth/borg_upload)
+=======
+/obj/structure/table/standard,
+/obj/item/storage/toolbox/electrical,
+/turf/simulated/floor/tiled/techfloor,
+/area/engineering/bluespacebay)
+>>>>>>> theirs
 "jC" = (
 /obj/structure/table/standard,
 /obj/random/maintenance/solgov,
@@ -4567,9 +4566,6 @@
 	name = "north bump";
 	pixel_y = 24
 	},
-/obj/machinery/camera/network/engineering{
-	c_tag = "Waste Tank"
-	},
 /obj/machinery/atmospherics/portables_connector,
 /turf/simulated/floor/tiled/techfloor,
 /area/engineering/wastetank)
@@ -4711,10 +4707,6 @@
 /turf/simulated/floor/plating,
 /area/maintenance/seconddeck/central)
 "kr" = (
-/obj/machinery/camera/network/engine{
-	c_tag = "Engine - Entrance";
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/visible/cyan,
 /obj/machinery/airlock_sensor{
 	command = "cycle_exterior";
@@ -4861,6 +4853,12 @@
 /obj/structure/closet/secure_closet/engineering_torch,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/engineering/engineering_bay)
+"kJ" = (
+/obj/machinery/camera/network/engineering{
+	c_tag = "Engineering - Engine Room Starboard"
+	},
+/turf/simulated/floor/tiled/techfloor,
+/area/engineering/engine_room)
 "kK" = (
 /obj/structure/table/rack,
 /obj/effect/floor_decal/industrial/outline/yellow,
@@ -5157,10 +5155,6 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/machinery/camera/network/second_deck{
-	c_tag = "Second Deck - Stairwell";
-	dir = 4
-	},
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "north bump";
@@ -5361,10 +5355,6 @@
 	dir = 10
 	},
 /obj/machinery/light/small,
-/obj/machinery/camera/network/engine{
-	c_tag = "Engine - Access";
-	dir = 1
-	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/engineering/engine_room)
 "lR" = (
@@ -5700,10 +5690,6 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/visible/green,
-/obj/machinery/camera/network/engine{
-	c_tag = "Engine - TEGs";
-	dir = 1
-	},
 /obj/effect/floor_decal/industrial/warning,
 /obj/effect/floor_decal/industrial/warning/corner{
 	dir = 4
@@ -5853,6 +5839,10 @@
 /obj/effect/floor_decal/industrial/warning/corner{
 	dir = 8;
 	icon_state = "warningcorner"
+	},
+/obj/machinery/camera/network/second_deck{
+	c_tag = "Second Deck Hallway - Fore";
+	dir = 1
 	},
 /turf/simulated/floor/tiled,
 /area/hallway/primary/seconddeck/fore)
@@ -6049,6 +6039,10 @@
 	icon_state = "warning"
 	},
 /obj/machinery/rotating_alarm/supermatter{
+	dir = 8
+	},
+/obj/machinery/camera/network/engineering{
+	c_tag = "Engineering - Engine Room Center";
 	dir = 8
 	},
 /turf/simulated/floor/tiled/techfloor,
@@ -6501,9 +6495,6 @@
 	dir = 4
 	},
 /obj/effect/catwalk_plated,
-/obj/machinery/camera/network/second_deck{
-	c_tag = "Second Deck Hallway - Central East"
-	},
 /obj/machinery/light{
 	dir = 1
 	},
@@ -8043,9 +8034,6 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/engineering/engine_room)
 "td" = (
-/obj/machinery/camera/network/engine{
-	c_tag = "Engine - Heat Exchangers"
-	},
 /obj/machinery/atmospherics/pipe/manifold/visible/cyan{
 	dir = 1
 	},
@@ -8220,12 +8208,12 @@
 	dir = 1;
 	pixel_y = -28
 	},
-/obj/machinery/camera/network/engine{
-	c_tag = "Engine - Control";
-	dir = 1
-	},
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 8
+	},
+/obj/machinery/camera/network/engineering{
+	c_tag = "Engineering - Supermatter Monitoring";
+	dir = 1
 	},
 /turf/simulated/floor/tiled/steel_grid,
 /area/engineering/engine_monitoring)
@@ -8258,10 +8246,25 @@
 /turf/simulated/floor/tiled/monotile,
 /area/engineering/engine_monitoring)
 "tD" = (
+<<<<<<< ours
 /obj/machinery/computer/upload/robot,
 /obj/effect/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/synth/borg_upload)
+=======
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
+	},
+/obj/structure/table/standard,
+/obj/random/maintenance/solgov,
+/obj/machinery/camera/network/engineering{
+	c_tag = "Engineering - Drive Monitoring";
+	dir = 4
+	},
+/turf/simulated/floor/tiled/techfloor,
+/area/engineering/bluespacebay)
+>>>>>>> theirs
 "tE" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/black,
 /turf/simulated/floor/tiled/techfloor,
@@ -8308,6 +8311,9 @@
 	icon_state = "4-8"
 	},
 /obj/item/rpd,
+/obj/machinery/camera/network/engineering{
+	c_tag = "Engineering - Atmospherics"
+	},
 /turf/simulated/floor/tiled/techfloor,
 /area/engineering/atmos)
 "tM" = (
@@ -8352,9 +8358,6 @@
 	name = "CO2 to Hangar";
 	target_pressure = 2500;
 	use_power = 1
-	},
-/obj/machinery/camera/network/engineering{
-	c_tag = "Atmospherics - North"
 	},
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 32
@@ -8858,11 +8861,28 @@
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/engineering/atmos)
+<<<<<<< ours
+=======
+"vo" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/blast/regular/open{
+	icon_state = "pdoor0";
+	id_tag = "bsdwindow";
+	name = "Drive Containment"
+	},
+/obj/effect/wallframe_spawn/reinforced_phoron,
+/turf/simulated/floor/tiled,
+/area/engineering/bluespace)
+>>>>>>> theirs
 "vp" = (
 /obj/machinery/atmospherics/pipe/simple/visible/green,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
+	},
+/obj/machinery/camera/network/engineering{
+	c_tag = "Engineering - Engine Room Port";
+	dir = 4
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/engineering/engine_room)
@@ -8909,8 +8929,17 @@
 	id_tag = "bsd";
 	name = "Drive Containment"
 	},
+<<<<<<< ours
 /turf/simulated/floor/bluegrid,
 /area/engineering/bluespace)
+=======
+/obj/machinery/camera/network/engineering{
+	c_tag = "Engineering - Robot Upload";
+	dir = 8
+	},
+/turf/simulated/floor/greengrid,
+/area/synth/borg_upload)
+>>>>>>> theirs
 "vz" = (
 /obj/structure/ladder,
 /obj/effect/floor_decal/industrial/hatch/yellow,
@@ -9746,10 +9775,6 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/maintenance/seconddeck/foreport)
 "yr" = (
-/obj/machinery/camera/network/engineering{
-	c_tag = "Engineering - Shield Bay";
-	dir = 1
-	},
 /obj/machinery/power/terminal{
 	dir = 8
 	},
@@ -10672,7 +10697,7 @@
 	icon_state = "warning"
 	},
 /obj/machinery/camera/network/engineering{
-	c_tag = "Engineering - Bay"
+	c_tag = "Engineering - Lobby"
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/engineering/engineering_bay)
@@ -11246,9 +11271,6 @@
 	dir = 8;
 	name = "west bump";
 	pixel_x = -24
-	},
-/obj/machinery/camera/network/engineering{
-	c_tag = "Solar Control - Port"
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/auxsolarport)
@@ -12343,10 +12365,6 @@
 	dir = 4
 	},
 /obj/effect/floor_decal/industrial/outline/yellow,
-/obj/machinery/camera/network/engineering{
-	c_tag = "Atmospherics - West";
-	dir = 1
-	},
 /obj/structure/sign/warning/secure_area{
 	dir = 1;
 	pixel_y = -32
@@ -12491,10 +12509,6 @@
 	},
 /obj/machinery/alarm{
 	pixel_y = 24
-	},
-/obj/machinery/camera/network/engineering{
-	c_tag = "Engineering - Fuel Bay";
-	dir = 4
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/engineering/fuelbay)
@@ -12988,6 +13002,9 @@
 /obj/structure/bed/chair/padded/yellow{
 	dir = 4
 	},
+/obj/machinery/camera/network/engineering{
+	c_tag = "Engineering - RUST Monitoring"
+	},
 /turf/simulated/floor/tiled/steel_grid,
 /area/vacant/prototype/control)
 "Hg" = (
@@ -13296,9 +13313,6 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/camera/network/engine{
-	c_tag = "Engine - SMES"
-	},
 /turf/simulated/floor/plating,
 /area/engineering/engine_smes)
 "Ie" = (
@@ -13561,10 +13575,16 @@
 /turf/simulated/floor/tiled/steel_ridged,
 /area/assembly/robotics/surgery)
 "IM" = (
+<<<<<<< ours
 /obj/machinery/power/smes/buildable{
 	charge = 5e+006;
 	input_attempt = 1;
 	output_attempt = 1
+=======
+/obj/machinery/camera/network/engineering{
+	c_tag = "Engineering - Bluespace Drive";
+	dir = 4
+>>>>>>> theirs
 	},
 /obj/structure/cable/cyan{
 	d2 = 2;
@@ -13734,6 +13754,26 @@
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/engineering/atmos)
+"Jm" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/effect/floor_decal/corner/yellow{
+	dir = 5
+	},
+/obj/structure/cable/green{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/camera/network/second_deck{
+	c_tag = "Second Deck Hallway - Midships"
+	},
+/turf/simulated/floor/tiled,
+/area/hallway/primary/seconddeck)
 "Jn" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -14040,10 +14080,6 @@
 "Ko" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/black,
 /obj/machinery/portable_atmospherics/canister/sleeping_agent,
-/obj/machinery/camera/network/engineering{
-	c_tag = "Atmospherics - South";
-	dir = 8
-	},
 /obj/effect/floor_decal/corner/white{
 	dir = 4
 	},
@@ -15180,10 +15216,6 @@
 /area/engineering/storage)
 "Om" = (
 /obj/item/stool,
-/obj/machinery/camera/network/second_deck{
-	c_tag = "Second Deck Hallway - Elevator Landing";
-	dir = 4
-	},
 /turf/simulated/floor/tiled,
 /area/hallway/primary/seconddeck/elevator)
 "On" = (
@@ -15269,8 +15301,17 @@
 /obj/machinery/light{
 	dir = 8
 	},
+<<<<<<< ours
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/engineering/bluespace)
+=======
+/obj/machinery/computer/upload/robot{
+	dir = 4
+	},
+/obj/effect/floor_decal/industrial/outline/yellow,
+/turf/simulated/floor/tiled/techfloor,
+/area/synth/borg_upload)
+>>>>>>> theirs
 "OG" = (
 /obj/machinery/shield_diffuser,
 /turf/simulated/floor/reinforced{
@@ -15323,7 +15364,7 @@
 /area/shuttle/escape_pod10/station)
 "OR" = (
 /obj/machinery/camera/network/second_deck{
-	c_tag = "Second Deck Hallway - Engineering";
+	c_tag = "Second Deck Hallway - Aft";
 	dir = 1
 	},
 /obj/effect/floor_decal/corner/yellow/half,
@@ -15759,10 +15800,6 @@
 	dir = 4;
 	icon_state = "warning"
 	},
-/obj/machinery/camera/network/engine{
-	c_tag = "Engine - Prototype Chamber Two";
-	dir = 1
-	},
 /turf/simulated/floor/plating,
 /area/vacant/prototype/engine)
 "Qj" = (
@@ -16048,10 +16085,6 @@
 /obj/effect/floor_decal/floordetail/edgedrain{
 	dir = 8
 	},
-/obj/machinery/camera/network/engineering{
-	c_tag = "Engineering - Robotics Surgical Theater";
-	dir = 4
-	},
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
 /turf/simulated/floor/tiled/white,
 /area/assembly/robotics/surgery)
@@ -16320,10 +16353,6 @@
 	},
 /obj/structure/closet/emcloset,
 /obj/effect/floor_decal/industrial/outline/yellow,
-/obj/machinery/camera/network/engineering{
-	c_tag = "Engineering - Monitoring Room";
-	dir = 8
-	},
 /turf/simulated/floor/tiled/steel_grid,
 /area/engineering/engineering_bay)
 "RT" = (
@@ -16407,9 +16436,6 @@
 /obj/structure/closet/crate/radiation,
 /obj/item/stack/material/tritium/ten,
 /obj/item/stack/material/tritium/ten,
-/obj/machinery/camera/network/engine{
-	c_tag = "Engine - Prototype Chamber One"
-	},
 /turf/simulated/floor/reinforced,
 /area/vacant/prototype/engine)
 "Sh" = (
@@ -16451,11 +16477,11 @@
 /area/vacant/prototype/control)
 "Sk" = (
 /obj/effect/floor_decal/industrial/warning,
-/obj/machinery/camera/network/engine{
-	c_tag = "Engine - Core Interior";
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction,
+/obj/machinery/camera/network/engineering{
+	c_tag = "Engineering - Engine Core";
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction,
 /turf/simulated/floor/reinforced{
 	map_airless = 1
 	},
@@ -16473,10 +16499,6 @@
 /obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/simple/visible/green{
 	dir = 5
-	},
-/obj/machinery/camera/network/engine{
-	c_tag = "Engine - Port Area";
-	dir = 4
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/engineering/engine_room)
@@ -16767,14 +16789,6 @@
 /obj/structure/sign/warning/vacuum,
 /turf/simulated/wall/r_wall/prepainted,
 /area/engineering/engine_room)
-"Tq" = (
-/obj/effect/floor_decal/industrial/outline/yellow,
-/obj/structure/closet/secure_closet/engineering_torch,
-/obj/machinery/camera/network/engineering{
-	c_tag = "Engineering - Locker Room"
-	},
-/turf/simulated/floor/tiled/techfloor/grid,
-/area/engineering/engineering_bay)
 "Ts" = (
 /obj/structure/sign/warning/secure_area{
 	dir = 1;
@@ -16958,9 +16972,6 @@
 /turf/simulated/floor/plating,
 /area/maintenance/seconddeck/forestarboard)
 "Ug" = (
-/obj/machinery/camera/network/engine{
-	c_tag = "Engine - Prototype Chamber 01"
-	},
 /obj/machinery/computer/modular/preset/engineering{
 	dir = 8;
 	icon_state = "console"
@@ -17193,6 +17204,10 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
+	},
+/obj/machinery/camera/network/engineering{
+	c_tag = "Engineering - Fusion Chamber";
+	dir = 8
 	},
 /turf/simulated/floor/plating,
 /area/vacant/prototype/engine)
@@ -18038,8 +18053,25 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+<<<<<<< ours
 /turf/simulated/floor/tiled/techfloor,
 /area/engineering/drone_fabrication)
+=======
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/hatch/maintenance/bolted{
+	frequency = 1379;
+	id_tag = "bsd_exterior";
+	name = "Drive Containment Chamber"
+	},
+/obj/machinery/door/blast/regular/open{
+	dir = 4;
+	icon_state = "pdoor0";
+	id_tag = "bsd_access";
+	name = "Drive Containment"
+	},
+/turf/simulated/floor/tiled/dark,
+/area/engineering/bluespacebay)
+>>>>>>> theirs
 "XV" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/unary/vent_pump/on,
@@ -35853,11 +35885,19 @@ qt
 QQ
 fK
 XP
+<<<<<<< ours
 ge
 gn
 jV
 jV
 vy
+=======
+Jm
+gD
+Lp
+Lp
+vC
+>>>>>>> theirs
 Ka
 vy
 jV
@@ -37867,7 +37907,7 @@ aY
 dA
 iF
 iN
-Tq
+kH
 RI
 lz
 MK
@@ -40884,7 +40924,7 @@ GW
 GW
 GW
 as
-Xr
+aT
 zi
 Zu
 MW
@@ -42297,7 +42337,7 @@ aa
 GW
 GW
 GW
-aT
+aH
 oK
 SB
 cB
@@ -44328,7 +44368,7 @@ ax
 do
 gy
 dp
-if
+kJ
 jc
 jM
 kv
