@@ -109,16 +109,23 @@ somewhere on that shuttle. Subtypes of these can be then used to perform ship ov
 		return 0
 
 /obj/machinery/computer/ship/Destroy()
+<<<<<<< ours
 	// linked.consoles -= src // BAY
 	// [SIERRA]
 	if(linked)
 		linked.consoles -= src
 	// [/SIERRA]
+=======
+	linked.consoles -= src
+>>>>>>> theirs
 	. = ..()
 
 /obj/machinery/computer/ship/sensors/Destroy()
 	sensor_ref = null
+<<<<<<< ours
 	identification = null
+=======
+>>>>>>> theirs
 	if(LAZYLEN(viewers))
 		for(var/weakref/W in viewers)
 			var/M = W.resolve()

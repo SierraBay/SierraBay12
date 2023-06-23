@@ -68,7 +68,11 @@
  * Flags the effect as `known` and runs relevant update procs. Intended for admin event usage.
  */
 /obj/effect/overmap/visitable/proc/make_known(notify = FALSE)
+<<<<<<< ours
 	if (!(sector_flags & OVERMAP_SECTOR_KNOWN))
+=======
+	if (!HAS_FLAGS(sector_flags, OVERMAP_SECTOR_KNOWN))
+>>>>>>> theirs
 		sector_flags = OVERMAP_SECTOR_KNOWN
 		update_known_connections(notify)
 

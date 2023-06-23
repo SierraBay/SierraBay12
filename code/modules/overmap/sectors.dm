@@ -42,7 +42,11 @@ GLOBAL_LIST_EMPTY(known_overmap_sectors)
 	find_z_levels()     // This populates map_z and assigns z levels to the ship.
 	register_z_levels() // This makes external calls to update global z level information.
 
+<<<<<<< ours
 	if(sector_flags & OVERMAP_SECTOR_KNOWN)
+=======
+	if(HAS_FLAGS(sector_flags, OVERMAP_SECTOR_KNOWN))
+>>>>>>> theirs
 		LAZYADD(GLOB.known_overmap_sectors, src)
 		layer = ABOVE_LIGHTING_LAYER
 		plane = EFFECTS_ABOVE_LIGHTING_PLANE
@@ -99,9 +103,15 @@ GLOBAL_LIST_EMPTY(known_overmap_sectors)
 		map_sectors["[zlevel]"] = src
 
 	GLOB.using_map.player_levels |= map_z
+<<<<<<< ours
 	if(!(sector_flags & OVERMAP_SECTOR_IN_SPACE))
 		GLOB.using_map.sealed_levels |= map_z
 	if(sector_flags & OVERMAP_SECTOR_BASE)
+=======
+	if(!HAS_FLAGS(sector_flags, OVERMAP_SECTOR_IN_SPACE))
+		GLOB.using_map.sealed_levels |= map_z
+	if(HAS_FLAGS(sector_flags, OVERMAP_SECTOR_BASE))
+>>>>>>> theirs
 		GLOB.using_map.station_levels |= map_z
 		GLOB.using_map.contact_levels |= map_z
 		GLOB.using_map.map_levels |= map_z
@@ -187,7 +197,11 @@ GLOBAL_LIST_EMPTY(known_overmap_sectors)
 
 /obj/effect/overmap/visitable/sector/Initialize()
 	. = ..()
+<<<<<<< ours
 	if(sector_flags & OVERMAP_SECTOR_KNOWN)
+=======
+	if(HAS_FLAGS(sector_flags, OVERMAP_SECTOR_KNOWN))
+>>>>>>> theirs
 		for(var/obj/machinery/computer/ship/helm/H as anything in GLOB.overmap_helm_computers)
 			update_known_connections(TRUE)
 

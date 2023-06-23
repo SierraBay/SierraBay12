@@ -6,7 +6,10 @@
 /obj/effect/overmap/visitable/sector/merc_base
 	name = "Tiny Asteroid"
 	desc = "Sensor array detects an small, insignificant asteroid. The core appears to be reflecting scans."
+<<<<<<< ours
 	sector_flags = OVERMAP_SECTOR_IN_SPACE
+=======
+>>>>>>> theirs
 	place_near_main = list(2, 4)
 	icon_state = "meteor4"
 	hide_from_reports = TRUE

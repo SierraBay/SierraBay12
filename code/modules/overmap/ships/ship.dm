@@ -15,9 +15,12 @@ var/global/const/OVERMAP_SPEED_CONSTANT = (1 SECOND)
 	desc = "Space faring vessel."
 	icon_state = "ship"
 	requires_contact = TRUE
+<<<<<<< ours
 
 	obfuscated_name = "unidentified vessel"
 
+=======
+>>>>>>> theirs
 	var/moving_state = "ship_moving"
 	var/list/consoles
 
@@ -51,7 +54,11 @@ var/global/const/OVERMAP_SPEED_CONSTANT = (1 SECOND)
 	min_speed = round(min_speed, SHIP_MOVE_RESOLUTION)
 	max_speed = round(max_speed, SHIP_MOVE_RESOLUTION)
 	SSshuttle.ships += src
+<<<<<<< ours
 	START_PROCESSING(SSovermap, src)
+=======
+	START_PROCESSING(SSobj, src)
+>>>>>>> theirs
 	base_sensor_visibility = round((vessel_mass/SENSOR_COEFFICENT),1)
 
 /obj/effect/overmap/visitable/ship/Destroy()

@@ -12,8 +12,12 @@
 	var/list/last_scan
 	var/muted = FALSE
 	var/print_language = LANGUAGE_HUMAN_EURO
+<<<<<<< ours
 	var/obj/machinery/iff_beacon/identification
 	var/working_sound = 'sound/machines/sensors/dradis.ogg'
+=======
+	var/working_sound = 'sound/machines/sensors/sensorloop.ogg'
+>>>>>>> theirs
 	var/datum/sound_token/sound_token
 	var/sound_id
 
@@ -40,23 +44,34 @@
 		sound_id = "[type]_[sequential_id(/obj/machinery/computer/ship/sensors)]"
 	var/obj/machinery/shipsensors/sensors = get_sensors()
 	if(sensors && linked && sensors.use_power ** sensors.powered())
+<<<<<<< ours
 		var/volume = 10
+=======
+		var/volume = 8
+>>>>>>> theirs
 		if(!sound_token)
 			sound_token = GLOB.sound_player.PlayLoopingSound(src, sound_id, working_sound, volume = volume, range = 10)
 		sound_token.SetVolume(volume)
 	else if(sound_token)
 		QDEL_NULL(sound_token)
 
+<<<<<<< ours
 /obj/machinery/computer/ship/sensors/proc/find_sensors_and_iff()
+=======
+/obj/machinery/computer/ship/sensors/proc/find_sensors()
+>>>>>>> theirs
 	if(!linked)
 		return
 	for(var/obj/machinery/shipsensors/S in SSmachines.machinery)
 		if(linked.check_ownership(S))
 			sensor_ref = weakref(S)
+<<<<<<< ours
 			break
 	for(var/obj/machinery/iff_beacon/IB in SSmachines.machinery)
 		if(linked.check_ownership(IB))
 			identification = IB
+=======
+>>>>>>> theirs
 			break
 
 /obj/machinery/computer/ship/sensors/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1)
@@ -166,6 +181,13 @@
 		muted = !muted
 		return TOPIC_REFRESH
 
+<<<<<<< ours
+=======
+	if (href_list["mute"])
+		muted = !muted
+		return TOPIC_REFRESH
+
+>>>>>>> theirs
 	var/obj/machinery/shipsensors/sensors = get_sensors()
 	if(sensors)
 		if (href_list["range"])
@@ -257,7 +279,11 @@
 	construct_state = /singleton/machine_construction/default/panel_closed
 	health_max = 200
 	var/critical_heat = 50 // sparks and takes damage when active & above this heat
+<<<<<<< ours
 	var/heat_reduction = 1.7 // mitigates this much heat per tick
+=======
+	var/heat_reduction = 1.5 // mitigates this much heat per tick
+>>>>>>> theirs
 	var/sensor_strength //used for detecting ships via contacts
 	var/heat = 0
 	var/range = 1

@@ -6,7 +6,10 @@
 /obj/effect/overmap/visitable/sector/vox_start
 	name = "Empty Space"
 	desc = "Just some empty space, with an irregular sensor echo."
+<<<<<<< ours
 	sector_flags = OVERMAP_SECTOR_IN_SPACE
+=======
+>>>>>>> theirs
 
 	place_near_main = list(2, 4)
 	icon_state = "event"

@@ -147,23 +147,40 @@
 		if(!record.pinged)
 			addtimer(new Callback(record, .proc/ping), time_delay)
 
+<<<<<<< ours
 /obj/machinery/computer/ship/sensors/attackby(obj/item/I, mob/user)
 	. = ..()
 	var/obj/item/device/multitool/P = I
 	if(!istype(P))
 		return
 	var/obj/item/ship_tracker/tracker = P.get_buffer()
+=======
+/obj/machinery/computer/ship/sensors/use_tool(obj/item/tool, mob/living/user, list/click_params)
+	if (!isMultitool(tool))
+		return ..()
+
+	var/obj/item/device/multitool/mtool = tool
+	var/obj/item/ship_tracker/tracker = mtool.get_buffer()
+>>>>>>> theirs
 	if(!tracker || !istype(tracker))
 		return
 
 	if(tracker in trackers)
 		trackers -= tracker
 		GLOB.destroyed_event.unregister(tracker, src, .proc/remove_tracker)
+<<<<<<< ours
 		to_chat(user, SPAN_NOTICE("You unlink the tracker in \the [P]'s buffer from \the [src]"))
 		return
 	trackers += tracker
 	GLOB.destroyed_event.register(tracker, src, .proc/remove_tracker)
 	to_chat(user, SPAN_NOTICE("You link the tracker in \the [P]'s buffer to \the [src]"))
+=======
+		to_chat(user, SPAN_NOTICE("You unlink the tracker in \the [mtool]'s buffer from \the [src]"))
+		return
+	trackers += tracker
+	GLOB.destroyed_event.register(tracker, src, .proc/remove_tracker)
+	to_chat(user, SPAN_NOTICE("You link the tracker in \the [mtool]'s buffer to \the [src]"))
+>>>>>>> theirs
 
 /obj/machinery/computer/ship/sensors/proc/remove_tracker(obj/item/ship_tracker/tracker)
 	trackers -= tracker

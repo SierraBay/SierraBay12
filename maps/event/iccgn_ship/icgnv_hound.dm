@@ -10,7 +10,10 @@
 /obj/effect/overmap/visitable/sector/icgnv_hound_space
 	name = "Sensor Anomaly"
 	desc = "Sensors readings are confused and inaccurate on this grid sector."
+<<<<<<< ours
 	sector_flags = OVERMAP_SECTOR_IN_SPACE
+=======
+>>>>>>> theirs
 	icon_state = "event"
 	hide_from_reports = TRUE
 
