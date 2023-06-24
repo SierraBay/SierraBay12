@@ -209,3 +209,14 @@
 /datum/gear/uniform/frontier
 	display_name = "frontier clothes"
 	path = /obj/item/clothing/under/frontier
+<<<<<<< ours
+=======
+
+/datum/gear/uniform/pj_red
+	display_name = "red pajamas"
+	path = /obj/item/clothing/under/redpyjamas
+
+/datum/gear/uniform/pj_blue
+	display_name = "blue pajamas"
+	path = /obj/item/clothing/under/bluepyjamas
+>>>>>>> theirs
