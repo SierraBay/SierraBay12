@@ -21,21 +21,8 @@ var/global/const/NETWORK_PETROV  = "Petrov"
 			return access_heads
 		if(NETWORK_CHARON)
 			return access_expedition_shuttle
-<<<<<<< ours
-		if(NETWORK_POD)
-			return access_guppy
-		if(NETWORK_SUPPLY)
-			return access_mailsorting
-		if(NETWORK_HANGAR)
-			return access_hangar
-		if(NETWORK_EXPLO)
-			return access_explorer
-		if(NETWORK_PETROV)
-			return access_petrov
-=======
 		if(NETWORK_HELMETS)
 			return access_solgov_crew
->>>>>>> theirs
 	return get_shared_network_access(network) || ..()
 
 /datum/map/torch
@@ -47,11 +34,6 @@ var/global/const/NETWORK_PETROV  = "Petrov"
 		NETWORK_THIRD_DECK,
 		NETWORK_FOURTH_DECK,
 		NETWORK_FIFTH_DECK,
-<<<<<<< ours
-		NETWORK_BRIDGE,
-		NETWORK_COMMAND,
-=======
->>>>>>> theirs
 		NETWORK_ENGINEERING,
 		NETWORK_ENGINE,
 		NETWORK_MEDICAL,
@@ -63,12 +45,7 @@ var/global/const/NETWORK_PETROV  = "Petrov"
 		NETWORK_HANGAR,
 		NETWORK_AQUILA,
 		NETWORK_CHARON,
-<<<<<<< ours
-		NETWORK_POD,
-		NETWORK_PETROV,
-=======
 		NETWORK_HELMETS,
->>>>>>> theirs
 		NETWORK_ALARM_ATMOS,
 		NETWORK_ALARM_CAMERA,
 		NETWORK_ALARM_FIRE,
