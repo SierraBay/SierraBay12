@@ -4,9 +4,12 @@
 	supervisors = "Центральному Командованию"
 	department_flag = COM
 	head_position = 1
+
 	minimal_player_age = 21
-	economic_power = 20
 	ideal_character_age = 50
+	economic_power = 20
+	skill_points = 25
+
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/command/captain
 	total_positions = 1
 	spawn_positions = 1
@@ -18,26 +21,18 @@
 		/datum/mil_rank/civ/nt
 	)
 	min_skill = list(
-		SKILL_BUREAUCRACY	=	SKILL_TRAINED,
-		SKILL_PILOT			=	SKILL_TRAINED
-
+		SKILL_BUREAUCRACY = SKILL_TRAINED,
+		SKILL_PILOT       = SKILL_TRAINED
 	)
-
-	max_skill = list(
-		SKILL_PILOT			=	SKILL_MAX
-	)
-
-
-	skill_points = 25
-
+	max_skill = list(SKILL_PILOT = SKILL_MAX)
 	software_on_spawn = list(
 		/datum/computer_file/program/comm,
 		/datum/computer_file/program/card_mod,
 		/datum/computer_file/program/camera_monitor,
 		/datum/computer_file/program/reports
 	)
-
-//	need_exp_to_play = 10 SIERRA TODO:
+	// SIERRA TODO: need_exp_to_play
+	need_exp_to_play = 10
 
 /datum/job/captain/get_description_blurb()
 	return "Капитан ответственен за ИКН Сьерра и всё, что на нем находится.\
@@ -49,9 +44,12 @@
 	supervisors = "Капитану"
 	department = "Командный"
 	department_flag = COM|SRV
+
 	minimal_player_age = 21
-	economic_power = 12
 	ideal_character_age = 45
+	economic_power = 12
+	skill_points = 20
+
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/command/hop
 	allowed_branches = list(
 		/datum/mil_branch/employee
@@ -64,13 +62,7 @@
 		SKILL_PILOT			=	SKILL_BASIC
 
 	)
-
-	max_skill = list(
-		SKILL_PILOT			=	SKILL_MAX
-	)
-
-	skill_points = 20
-
+	max_skill = list(SKILL_PILOT = SKILL_MAX)
 	access = list(
 		access_seceva, access_guard, access_security, access_brig, access_armory,
 		access_forensics_lockers, access_heads, access_medical, access_morgue,
@@ -88,9 +80,6 @@
 		access_tox_storage, access_research, access_mining, access_mining_office, access_mining_station,
 		access_xenobiology, access_xenoarch, access_petrov, access_petrov_helm, access_actor
 	)
-
-
-
 	software_on_spawn = list(
 		/datum/computer_file/program/comm,
 		/datum/computer_file/program/card_mod,
@@ -98,20 +87,18 @@
 		/datum/computer_file/program/reports
 	)
 
-
-
-
-
-
 /datum/job/hop
 	title = "Head of Personnel"
 	supervisors = "Капитану"
 	department = "Командный"
 	department_flag = COM
+
 	minimal_player_age = 14
-	economic_power = 14
-	minimum_character_age = list(SPECIES_HUMAN = 35)
 	ideal_character_age = 45
+	economic_power = 14
+	skill_points = 30
+
+	minimum_character_age = list(SPECIES_HUMAN = 35)
 	head_position = 1
 	total_positions = 1
 	spawn_positions = 1
@@ -125,16 +112,16 @@
 	)
 	min_skill = list(
 		SKILL_BUREAUCRACY = SKILL_TRAINED,
-	                    SKILL_COMPUTER    = SKILL_BASIC,
-	                    SKILL_PILOT       = SKILL_BASIC
+		SKILL_COMPUTER    = SKILL_BASIC,
+		SKILL_PILOT       = SKILL_BASIC
 	)
 
 	max_skill = list(   SKILL_PILOT       = SKILL_MAX,
 	                    SKILL_SCIENCE     = SKILL_MAX)
-	skill_points = 30
-
-//	need_exp_to_play = 5   SIERRA TODO:
-//	exp_track_branch = COM SIERRA TODO:
+	// SIERRA TODO: need_exp_to_play
+	need_exp_to_play = 5
+	// SIERRA TODO: exp_track_branch
+	exp_track_branch = COM
 
 	access = list(
 		access_seceva, access_guard, access_security, access_brig, access_armory,
@@ -153,11 +140,12 @@
 		access_tox_storage, access_research, access_mining, access_mining_office, access_mining_station,
 		access_xenobiology, access_xenoarch, access_petrov, access_petrov_helm, access_actor
 	)
-
-	software_on_spawn = list(/datum/computer_file/program/comm,
-							 /datum/computer_file/program/card_mod,
-							 /datum/computer_file/program/camera_monitor,
-							 /datum/computer_file/program/reports)
+	software_on_spawn = list(
+		/datum/computer_file/program/comm,
+		/datum/computer_file/program/card_mod,
+		/datum/computer_file/program/camera_monitor,
+		/datum/computer_file/program/reports
+	)
 
 /datum/job/hop/get_description_blurb()
 	return "В роли Главы Персонала, или ГП, как Вас иногда будут звать, Вы обязаны отвечать за то, чтобы все отделы были укомплектованы персоналом и работали ради прибыли своей корпорации.\
@@ -175,9 +163,12 @@
 	total_positions = 1
 	spawn_positions = 1
 	req_admin_notify = 1
-	economic_power = 20
+
 	minimal_player_age = 14
 	ideal_character_age = 60
+	economic_power = 20
+	skill_points = 36
+
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/research/rd
 	allowed_branches = list(
 		/datum/mil_branch/employee
@@ -201,7 +192,6 @@
 		SKILL_DEVICES		=	SKILL_MAX,
 		SKILL_SCIENCE		=	SKILL_MAX
 	)
-	skill_points = 36
 
 	access = list(
 		access_tox, access_tox_storage, access_emergency_storage,
@@ -214,9 +204,6 @@
 		access_guppy, access_hangar, access_petrov, access_petrov_helm,
 		access_guppy_helm, access_explorer, access_el
 	)
-
-
-
 	software_on_spawn = list(
 		/datum/computer_file/program/comm,
 		/datum/computer_file/program/aidiag,
