@@ -122,11 +122,11 @@
 	#include "loadout/loadout_xeno.dm"
 	#include "loadout/~defines.dm"
 
-	#include "sierra-1.dmm"
-	#include "sierra-2.dmm"
-	#include "sierra-3.dmm"
-	#include "sierra-4.dmm"
-	#include "sierra-5.dmm"
+	#include "z1_sierra_deck3.dmm"
+	#include "z2_sierra_deck2.dmm"
+	#include "z3_sierra_deck1.dmm"
+	#include "z4_admin.dmm"
+	#include "z5_transit.dmm"
 	#include "../away/empty.dmm"
 
 
