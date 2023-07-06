@@ -67,4 +67,4 @@
 #include "areas/z1_sierra_deck3.dm"
 #include "areas/z2_sierra_deck2.dm"
 #include "areas/z3_sierra_deck1.dm"
-#include "areas/z4_adimn.dm"
+#include "areas/z4_admin.dm"
