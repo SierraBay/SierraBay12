@@ -146,7 +146,7 @@
 /obj/item/folder/envelope/captain/Initialize()
 	. = ..()
 	var/memo = {"
-	<tt><center><b><font color='red'>СЕКРЕТНО<br>КОДОВОЕ СЛОВО: СИЕРРА</font></b>
+	<tt><center><b><font color='red'>СЕКРЕТНО<br>КОДОВОЕ СЛОВО: СЬЕРРА</font></b>
 	<h3>ЦЕНТРАЛЬНОЕ КОМАНДОВАНИЕ</h3>
 	<img src = ntlogo.png>
 	</center>
