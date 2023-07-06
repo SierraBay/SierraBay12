@@ -121,19 +121,19 @@
 	name = "Elevator - First Deck"
 	lift_floor_label = "1 Палуба"
 	lift_floor_name = "Оперативная палуба"
-	lift_announce_str = "Оперативная палуба: исследовательский отсек, медицинский отсек, отсек службы безопасности, серверная телекоммуникаций, отсек ВКД."
+	lift_announce_str = "Палуба 1 - Оперативная"
 
 /area/turbolift/sierra_middle
 	name = "Elevator - Second Deck"
 	lift_floor_label = "2 Палуба"
 	lift_floor_name = "Жилая палуба"
-	lift_announce_str = "Жилая палуба: мостик, комната совещаний, отсек криосна, спальное крыло, голодек, библиотека, бар, кафе, гидропоника, спортзал, прачечная, инженерный отсек."
+	lift_announce_str = "Палуба 2 - Жилая"
 
 /area/turbolift/sierra_ground
 	name = "Elevator - Third Deck"
 	lift_floor_label = "3 Палуба"
 	lift_floor_name = "Лётная палуба"
-	lift_announce_str = "Лётная палуба: главный ангар, экспедиционное крыло, крыло снабжения, стыковочные доки, склады, переработка руды, коморка уборщика, нижний этаж ксенобиологии, NSS 'Petrov'."
+	lift_announce_str = "Палуба 3 - Лётная"
 	base_turf = /turf/simulated/floor
 
 /area/turbolift/start
