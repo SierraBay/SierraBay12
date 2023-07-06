@@ -46,15 +46,6 @@
 /datum/gear/eyes/resomi/lenses_med
 	allowed_roles = MEDICAL_ROLES
 
-/datum/gear/passport/resomi
-	display_name = "(Resomi) registration document"
-	path = /obj/item/passport/xeno/resomi
-	sort_category = "Xenowear"
-	flags = 0
-	whitelisted = list(SPECIES_RESOMI)
-	custom_setup_proc = /obj/item/passport/proc/set_info
-	cost = 0
-
 // IPC clothing
 
 /datum/gear/suit/lab_xyn_machine
