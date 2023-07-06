@@ -37,7 +37,7 @@
 		/datum/computer_file/program/reports
 	)
 
-//	need_exp_to_play = 10 TODO: SIERRA PORT
+//	need_exp_to_play = 10 SIERRA TODO:
 
 /datum/job/captain/get_description_blurb()
 	return "Капитан ответственен за ИКН Сьерра и всё, что на нем находится.\
@@ -133,8 +133,8 @@
 	                    SKILL_SCIENCE     = SKILL_MAX)
 	skill_points = 30
 
-//	need_exp_to_play = 5   TODO: SIERRA PORT
-//	exp_track_branch = COM TODO: SIERRA PORT
+//	need_exp_to_play = 5   SIERRA TODO:
+//	exp_track_branch = COM SIERRA TODO:
 
 	access = list(
 		access_seceva, access_guard, access_security, access_brig, access_armory,
@@ -223,8 +223,10 @@
 		/datum/computer_file/program/camera_monitor,
 		/datum/computer_file/program/reports
 	)
-	// TODO: SIERRA PORT need_exp_to_play = 5
-	// TODO: SIERRA PORT exp_track_branch = SCI
+	// SIERRA TODO: need_exp_to_play
+	need_exp_to_play = 5
+	// SIERRA TODO: exp_track_branch
+	exp_track_branch = SCI
 
 /datum/job/rd/get_description_blurb()
 	return "Директор Исследований несет ответственность за рабочую деятельность Научно-Исследовательского Отдела на борту объекта,\
@@ -285,8 +287,10 @@
 		/datum/computer_file/program/reports
 	)
 
-	// TODO: SIERRA PORT need_exp_to_play = 5
-	// TODO: SIERRA PORT exp_track_branch = MED
+	// SIERRA TODO: need_exp_to_play
+	need_exp_to_play = 5
+	// SIERRA TODO: exp_track_branch
+	exp_track_branch = MED
 
 /datum/job/cmo/get_description_blurb()
 	return "Главный врач или CMO, является высшим авторитетом, когда речь заходит о сохранении здоровья экипажа.\
@@ -357,8 +361,10 @@
 		/datum/computer_file/program/reports
 	)
 
-	// TODO: SIERRA PORT need_exp_to_play = 5
-	// TODO: SIERRA PORT exp_track_branch = ENG
+	// SIERRA TODO: need_exp_to_play
+	need_exp_to_play = 5
+	// SIERRA TODO: exp_track_branch
+	exp_track_branch = ENG
 
 /datum/job/chief_engineer/get_description_blurb()
 	return "Главный инженер - руководитель и администратор инженерного отдела, \
@@ -416,8 +422,10 @@
 		/datum/computer_file/program/reports
 	)
 
-	// TODO: SIERRA PORT need_exp_to_play = 5
-	// TODO: SIERRA PORT exp_track_branch = SEC
+	// SIERRA TODO: need_exp_to_play
+	need_exp_to_play = 5
+	// SIERRA TODO: exp_track_branch
+	exp_track_branch = SEC
 
 /datum/job/hos/get_description_blurb()
 	return "Глава службы безопасности, или ГСБ, является главой правоохранительных органов и главным защитником членов экипажа на борту корабля.\
@@ -463,7 +471,8 @@
 		/datum/computer_file/program/reports
 	)
 
-	// TODO: SIERRA PORT need_exp_to_play = 2
+	// SIERRA TODO: need_exp_to_play
+	need_exp_to_play = 2
 
 /datum/job/iaa/get_description_blurb()
 	return "Агент Внутренних Дел - уникальная роль для Вас на борту ИКН Сьерра. Он выступает от лица Центрального Командования NanoTrasen на борту корабля,\

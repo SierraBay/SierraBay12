@@ -52,7 +52,8 @@
 		/datum/computer_file/program/camera_monitor
 	)
 
-	// TODO: SIERRA PORT need_exp_to_play = 2
+	// SIERRA TODO: need_exp_to_play
+	need_exp_to_play = 2
 
 /datum/job/senior_doctor/get_description_blurb()
 	return "Хирург - основная медицинская сила корабля. В отличие от парамедика, который обычно заботится о том, чтобы вытащить пострадавших из места происшествия и оказать базовую неотложную помощь на месте,\

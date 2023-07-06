@@ -43,7 +43,8 @@
 	skill_points = 30
 
 	possible_goals = list(/datum/goal/achievement/notslimefodder)
-	// TODO: SIERRA PORT need_exp_to_play = 2
+	// SIERRA TODO: need_exp_to_play
+	need_exp_to_play = 2
 
 /datum/job/senior_scientist/get_description_blurb()
 	return "Самый старший член исследовательской команды, старший научный сотрудник, отвечает за то,чтобы остальные сотрудники отдела знали, что они должны делать, и делать это быстро и профессионально.\

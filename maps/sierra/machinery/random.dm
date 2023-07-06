@@ -89,5 +89,5 @@ Random item spawning
 	/obj/item/reagent_containers/ivbag/blood/human/abpos = 3,
 	/obj/item/reagent_containers/ivbag/blood/human/bneg = 2)
 
-// TODO: SIERRA PORT
+// SIERRA TODO:
 // Надо сделать пакеты с кровью для резом и таяр

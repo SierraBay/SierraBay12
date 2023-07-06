@@ -159,8 +159,6 @@
 		)
 
 	icon_state = "command_med_rig"
-
-
 	chest_type = /obj/item/clothing/suit/space/rig/command/cmo
 	helm_type = /obj/item/clothing/head/helmet/space/rig/command/cmo
 
