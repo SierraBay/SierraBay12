@@ -41,7 +41,8 @@
 	#include "datums/supplypacks/security.dm"
 	#include "datums/supplypacks/science.dm"
 
-	#include "game/antagonist/languages.dm"
+	#include "game/languages.dm"
+	#include "game/lockdown.dm"
 
 	#include "items/cards_ids.dm"
 	#include "items/documents.dm"
