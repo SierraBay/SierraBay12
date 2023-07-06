@@ -29,35 +29,41 @@
 	boot_type = /obj/item/clothing/shoes/magboots/rig/command
 	glove_type = /obj/item/clothing/gloves/rig/command
 
-	req_access = list(access_heads) //bridge
-	allowed = list(/obj/item/gun,
-				   /obj/item/ammo_magazine,
-				   /obj/item/device/flashlight,
-				   /obj/item/tank,
-				   /obj/item/device/suit_cooling_unit,
-				   /obj/item/storage/secure/briefcase)
+	req_access = list(access_heads) // Bridge
+	allowed = list(
+		/obj/item/gun,
+		/obj/item/ammo_magazine,
+		/obj/item/device/flashlight,
+		/obj/item/tank,
+		/obj/item/device/suit_cooling_unit,
+		/obj/item/storage/secure/briefcase
+	)
 
 /obj/item/clothing/head/helmet/space/rig/command
 	light_overlay = "helmet_light_dual"
 	icon = 'maps/torch/icons/obj/obj_head_solgov.dmi'
 	item_icons = list(slot_head_str = 'maps/torch/icons/mob/onmob_head_solgov.dmi')
 	camera = /obj/machinery/camera/network/command
-	species_restricted = list(SPECIES_HUMAN,SPECIES_IPC,SPECIES_TAJARA, SPECIES_RESOMI) //no available icons for aliens  //TODO: SIERRA PORT - SPECIES_TAJARA, SPECIES_RESOMI
+	// SIERRA TODO: port SPECIES_TAJARA, SPECIES_RESOMI
+	species_restricted = list(SPECIES_HUMAN, SPECIES_IPC/*, SPECIES_TAJARA, SPECIES_RESOMI*/) // No available icons for aliens
 
 /obj/item/clothing/suit/space/rig/command
 	icon = 'maps/torch/icons/obj/obj_suit_solgov.dmi'
 	item_icons = list(slot_wear_suit_str = 'maps/torch/icons/mob/onmob_suit_solgov.dmi')
-	species_restricted = list(SPECIES_HUMAN,SPECIES_IPC, SPECIES_TAJARA, SPECIES_RESOMI) //TODO: SIERRA PORT - SPECIES_TAJARA, SPECIES_RESOMI
+	// SIERRA TODO: port SPECIES_TAJARA, SPECIES_RESOMI
+	species_restricted = list(SPECIES_HUMAN, SPECIES_IPC/*, SPECIES_TAJARA, SPECIES_RESOMI*/)
 
 /obj/item/clothing/shoes/magboots/rig/command
 	icon = 'maps/torch/icons/obj/obj_feet_solgov.dmi'
 	item_icons = list(slot_shoes_str = 'maps/torch/icons/mob/onmob_feet_solgov.dmi')
-	species_restricted = list(SPECIES_HUMAN,SPECIES_IPC, SPECIES_TAJARA, SPECIES_RESOMI)  //TODO: SIERRA PORT - SPECIES_TAJARA, SPECIES_RESOMI
+	// SIERRA TODO: port SPECIES_TAJARA, SPECIES_RESOMI
+	species_restricted = list(SPECIES_HUMAN, SPECIES_IPC/*, SPECIES_TAJARA, SPECIES_RESOMI*/)
 
 /obj/item/clothing/gloves/rig/command
 	icon = 'maps/torch/icons/obj/obj_hands_solgov.dmi'
 	item_icons = list(slot_gloves_str = 'maps/torch/icons/mob/onmob_hands_solgov.dmi')
-	species_restricted = list(SPECIES_HUMAN,SPECIES_IPC, SPECIES_TAJARA, SPECIES_RESOMI)  //TODO: SIERRA PORT - SPECIES_TAJARA, SPECIES_RESOMI
+	// SIERRA TODO: port SPECIES_TAJARA, SPECIES_RESOMI
+	species_restricted = list(SPECIES_HUMAN, SPECIES_IPC/*, SPECIES_TAJARA, SPECIES_RESOMI*/)
 
 /obj/item/rig/command/equipped
 	initial_modules = list(
@@ -225,7 +231,7 @@
 	icon_state = "hos_rig"
 	icon = 'packs/infinity/icons/obj/clothing/obj_head.dmi'
 	item_icons = list(slot_head_str = 'packs/infinity/icons/mob/onmob/onmob_head.dmi')
-	species_restricted = list(SPECIES_HUMAN) //no available icons for aliens
+	species_restricted = list(SPECIES_HUMAN) // No available icons for aliens
 
 /obj/item/clothing/suit/space/rig/command/hos
 	icon_state = "hos_rig"

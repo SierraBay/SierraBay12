@@ -20,6 +20,7 @@
 	min_skill = list(
 		SKILL_BUREAUCRACY	=	SKILL_TRAINED,
 		SKILL_PILOT			=	SKILL_TRAINED
+
 	)
 
 	max_skill = list(
@@ -61,6 +62,7 @@
 	min_skill = list(
 		SKILL_BUREAUCRACY	=	SKILL_TRAINED,
 		SKILL_PILOT			=	SKILL_BASIC
+
 	)
 
 	max_skill = list(
@@ -121,9 +123,11 @@
 	allowed_ranks = list(
 		/datum/mil_rank/civ/nt
 	)
-	min_skill = list(   SKILL_BUREAUCRACY = SKILL_TRAINED,
+	min_skill = list(
+		SKILL_BUREAUCRACY = SKILL_TRAINED,
 	                    SKILL_COMPUTER    = SKILL_BASIC,
-	                    SKILL_PILOT       = SKILL_BASIC)
+	                    SKILL_PILOT       = SKILL_BASIC
+	)
 
 	max_skill = list(   SKILL_PILOT       = SKILL_MAX,
 	                    SKILL_SCIENCE     = SKILL_MAX)
@@ -189,6 +193,7 @@
 		SKILL_ANATOMY		=	SKILL_BASIC,
 		SKILL_DEVICES		=	SKILL_BASIC,
 		SKILL_SCIENCE		=	SKILL_TRAINED
+
 	)
 
 	max_skill = list(
@@ -250,6 +255,7 @@
 		SKILL_ANATOMY		=	SKILL_EXPERIENCED,
 		SKILL_CHEMISTRY		=	SKILL_BASIC,
 		SKILL_VIROLOGY		=	SKILL_BASIC
+
 	)
 
 	max_skill = list(
@@ -314,6 +320,7 @@
 		SKILL_ELECTRICAL	=	SKILL_TRAINED,
 		SKILL_ATMOS			=	SKILL_TRAINED,
 		SKILL_ENGINES		=	SKILL_EXPERIENCED
+
 	)
 
 	max_skill = list(
@@ -380,6 +387,7 @@
 		SKILL_COMBAT		=	SKILL_TRAINED,
 		SKILL_WEAPONS		=	SKILL_TRAINED,
 		SKILL_FORENSICS		=	SKILL_BASIC
+
 	)
 
 	max_skill = list(
@@ -472,9 +480,12 @@
 	spawn_positions = 3
 	supervisors = "Капитану и остальным главам"
 	selection_color = "#2f2f7f"
+
 	minimal_player_age = 18
-	economic_power = 7
 	ideal_character_age = 24
+	economic_power = 7
+	skill_points = 20
+
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/command/adjutant
 	allowed_branches = list(/datum/mil_branch/employee)
 	allowed_ranks = list(/datum/mil_rank/civ/nt)
@@ -482,14 +493,7 @@
 		SKILL_BUREAUCRACY	=	SKILL_BASIC,
 		SKILL_PILOT			=	SKILL_TRAINED
 	)
-
-	max_skill = list(
-		SKILL_PILOT			=	SKILL_MAX
-	)
-
-	skill_points = 20
-
-
+	max_skill = list(SKILL_PILOT = SKILL_MAX)
 	access = list(
 		access_sec_doors, access_security, access_medical, access_engine, access_maint_tunnels, access_emergency_storage,
 		access_heads, access_bridge, access_janitor, access_kitchen, access_actor, access_cargo,
@@ -497,8 +501,6 @@
 		access_external_airlocks, access_expedition_shuttle, access_eva, access_hangar,
 		access_explorer, access_expedition_shuttle_helm, access_gun, access_bar
 	)
-
-
 
 	software_on_spawn = list(
 		/datum/computer_file/program/comm,
