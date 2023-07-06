@@ -29,7 +29,8 @@
 	software_on_spawn = list(/datum/computer_file/program/supply,
 							 /datum/computer_file/program/deck_management,
 							 /datum/computer_file/program/reports)
-	//need_exp_to_play = 2 SIERRA TODO:
+	// SIERRA TODO: need_exp_to_play
+	need_exp_to_play = 2
 
 /datum/job/qm/get_description_blurb()
 	return " Квартирмейстр, так же известен как КМ, отвечает за работу отдела снабжения (который по другому называют Карго).\

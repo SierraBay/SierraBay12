@@ -1,11 +1,11 @@
 /datum/map/sierra
 	species_to_job_whitelist = list(
-		/datum/species/adherent = list(/datum/job/ai, /datum/job/cyborg, /datum/job/assistant, /datum/job/janitor, /datum/job/engineer_trainee,\
-									   /datum/job/chef, /datum/job/cargo_tech, /datum/job/scientist_assistant,\
-									   /datum/job/doctor_trainee, /datum/job/engineer, /datum/job/mining, /datum/job/cargo_assistant,\
+		/datum/species/adherent = list(/datum/job/ai, /datum/job/cyborg, /datum/job/assistant, /datum/job/janitor, /datum/job/engineer_trainee,
+									   /datum/job/chef, /datum/job/cargo_tech, /datum/job/scientist_assistant,
+									   /datum/job/doctor_trainee, /datum/job/engineer, /datum/job/mining, /datum/job/cargo_assistant,
 									   /datum/job/roboticist, /datum/job/chemist, /datum/job/bartender, /datum/job/explorer_engineer),
-		/datum/species/nabber = list(/datum/job/ai, /datum/job/cyborg, /datum/job/janitor, /datum/job/scientist_assistant,\
-									 /datum/job/chemist, /datum/job/roboticist, /datum/job/cargo_assistant, /datum/job/chef,\
+		/datum/species/nabber = list(/datum/job/ai, /datum/job/cyborg, /datum/job/janitor, /datum/job/scientist_assistant,
+									 /datum/job/chemist, /datum/job/roboticist, /datum/job/cargo_assistant, /datum/job/chef,
 									 /datum/job/engineer_trainee, /datum/job/doctor_trainee, /datum/job/bartender),
 		/datum/species/vox = list(/datum/job/ai, /datum/job/cyborg),
 		/datum/species/human/mule	= list(/datum/job/ai, /datum/job/cyborg)
@@ -13,21 +13,17 @@
 
 #define HUMAN_ONLY_JOBS /datum/job/captain, /datum/job/hos, /datum/job/hop, /datum/job/chief_engineer, /datum/job/rd, /datum/job/cmo, /datum/job/iaa, /datum/job/psychiatrist
 	species_to_job_blacklist = list(
-		/datum/species/unathi		 = list(HUMAN_ONLY_JOBS/*, /datum/job/adjutant, /datum/job/senior_doctor, /datum/job/senior_scientist*/),
-		/datum/species/unathi/yeosa	= list(HUMAN_ONLY_JOBS/*, /datum/job/adjutant, /datum/job/senior_doctor, /datum/job/senior_scientist*/),
-		/datum/species/skrell		 = list(/datum/job/captain, /datum/job/hos, /datum/job/hop, /*/datum/job/chief_engineer, /datum/job/rd, *//datum/job/cmo, /datum/job/iaa, /datum/job/psychiatrist),
-		/datum/species/machine		 = list(/datum/job/captain, /datum/job/hos, /datum/job/security_assistant, /datum/job/psychiatrist),
-		/datum/species/diona		 = list(HUMAN_ONLY_JOBS, /datum/job/exploration_leader, /datum/job/explorer_pilot,\
+		/datum/species/unathi	= list(HUMAN_ONLY_JOBS),
+		/datum/species/unathi/yeosa	= list(HUMAN_ONLY_JOBS),
+		/datum/species/skrell = list(/datum/job/captain, /datum/job/hos, /datum/job/hop, /datum/job/cmo, /datum/job/iaa, /datum/job/psychiatrist),
+		/datum/species/machine = list(/datum/job/captain, /datum/job/hos, /datum/job/security_assistant, /datum/job/psychiatrist),
+		/datum/species/diona = list(HUMAN_ONLY_JOBS, /datum/job/exploration_leader, /datum/job/explorer_pilot,\
 									/datum/job/officer, /datum/job/warden, /datum/job/detective,\
 									/datum/job/qm,\
 									/datum/job/senior_engineer, /datum/job/senior_doctor,\
 									/*/datum/job/stowaway,*/ /datum/job/senior_scientist, /datum/job/security_assistant),
 		/datum/species/resomi		= list(HUMAN_ONLY_JOBS,	/datum/job/officer,	/datum/job/exploration_leader,\
 									/datum/job/warden,	/datum/job/chief_engineer,	/datum/job/rd,	/datum/job/iaa,	/datum/job/security_assistant)
-		/* /datum/species/human/booster= list(HUMAN_ONLY_JOBS,\
-									/datum/job/adjutant, /datum/job/exploration_leader, /datum/job/senior_engineer,\
-									/datum/job/warden, /datum/job/detective, /datum/job/officer,
-									/datum/job/qm, /datum/job/senior_scientist) */
 	)
 #undef HUMAN_ONLY_JOBS
 
@@ -41,9 +37,8 @@
 						/datum/job/janitor, /datum/job/chef, /datum/job/bartender, /datum/job/chaplain, /datum/job/actor,
 						/datum/job/senior_scientist, /datum/job/scientist, /datum/job/roboticist, /datum/job/scientist_assistant,
 						/datum/job/ai, /datum/job/cyborg,
-						/datum/job/assistant,
-						/*/datum/job/submap/merchant_leader, /datum/job/submap/merchant, /datum/job/stowaway*/
-						)
+						/datum/job/assistant
+		)
 
 	access_modify_region = list(
 		ACCESS_REGION_SECURITY = list(access_hos, access_change_ids),
@@ -54,23 +49,6 @@
 		ACCESS_REGION_GENERAL = list(access_hop, access_change_ids),
 		ACCESS_REGION_SUPPLY = list(access_qm, access_change_ids),
 	)
-
-/*
-/datum/map/sierra/setup_map()
-	..()
-	for(var/job_type in GLOB.using_map.allowed_jobs)
-		var/datum/job/job = decls_repository.get_decl(job_type)
-		// Most species are restricted from NT security and command roles
-		if((job.department_flag & (COM)) && length(job.allowed_branches) && !(/datum/mil_branch/civilian in job.allowed_branches))
-			for(var/species_name in list(SPECIES_IPC, SPECIES_TAJARA, SPECIES_SKRELL, SPECIES_UNATHI))
-				var/datum/species/S = all_species[species_name]
-				var/species_blacklist = species_to_job_blacklist[S.type]
-				if(!species_blacklist)
-					species_blacklist = list()
-					species_to_job_blacklist[S.type] = species_blacklist
-				species_blacklist |= job.type
-*/
-
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ GAS JOBS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
