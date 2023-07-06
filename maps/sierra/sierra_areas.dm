@@ -64,7 +64,7 @@
 
 #include "areas/multideck.dm"
 #include "areas/shuttles.dm"
-#include "areas/sierra1.dm"
-#include "areas/sierra2.dm"
-#include "areas/sierra3.dm"
-#include "areas/sierra4.dm"
+#include "areas/z1_sierra_deck3.dm"
+#include "areas/z2_sierra_deck2.dm"
+#include "areas/z3_sierra_deck1.dm"
+#include "areas/z4_adimn.dm"
