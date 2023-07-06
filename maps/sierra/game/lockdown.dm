@@ -1,8 +1,8 @@
 /datum/map
-	// var/list/high_secure_areas
-	// var/list/secure_areas
-	// var/lockdown = FALSE
-	// var/lockdown_support = FALSE
+	var/list/high_secure_areas
+	var/list/secure_areas
+	var/lockdown = FALSE
+	var/lockdown_support = FALSE
 
 /datum/map/proc/area_lockdown(a)
 	var/area/area = get_area_name(a)
