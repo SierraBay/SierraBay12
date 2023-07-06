@@ -117,7 +117,6 @@
 	alt_titles = list(
 			"Biomechanical Engineer",
 			"Exosuit Technician",
-			//"Cyberintegration engineer"
 		)
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/research/roboticist
 	allowed_branches = list(
@@ -155,8 +154,6 @@
 			access_research,
 			access_tech_storage
 		)
-
-
 
 
 /datum/job/roboticist/get_description_blurb()
