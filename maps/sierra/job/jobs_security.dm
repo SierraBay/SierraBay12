@@ -37,7 +37,7 @@
 							 /datum/computer_file/program/camera_monitor)
 
 	// SIERRA TODO: need_exp_to_play
-	need_exp_to_play = 2
+	// need_exp_to_play = 2
 
 /datum/job/warden/get_description_blurb()
 	return "Надзиратель отвечает за наблюдение, допрос, уход и безопасность заключенных, арестованных охранниками.\

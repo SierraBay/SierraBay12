@@ -43,7 +43,7 @@
 							 /datum/computer_file/program/shields_monitor)
 
 	// SIERRA TODO: need_exp_to_play
-	need_exp_to_play = 2
+	// need_exp_to_play = 2
 
 /datum/job/senior_engineer/get_description_blurb()
 	return "Старший Инженер выполняет распоряжения Главного Инженера и контролирует повседневную работу отдела.\
