@@ -57,7 +57,7 @@
 	return list(
 		/obj/item/storage/belt/holster/security/tactical,
 		/obj/item/melee/telebaton,
-		/obj/item/clothing/glasses/sunglasses/sechud,
+		/obj/item/clothing/glasses/hud/security/prot/aviators,
 		/obj/item/clothing/glasses/tacgoggles,
 		/obj/item/clothing/accessory/storage/black_vest,
 		/obj/item/clothing/gloves/thick/combat,
@@ -82,7 +82,7 @@
 	return list(
 		/obj/item/storage/belt/holster/security/tactical,
 		/obj/item/melee/telebaton,
-		/obj/item/clothing/glasses/sunglasses/sechud,
+		/obj/item/clothing/glasses/hud/security/prot/aviators,
 		/obj/item/clothing/glasses/tacgoggles,
 		/obj/item/clothing/accessory/storage/black_vest,
 		/obj/item/clothing/gloves/thick/combat,
@@ -200,8 +200,8 @@
 
 /obj/structure/closet/wardrobe/patrol/desert/WillContain()
 	return list(
-	/obj/item/clothing/under/solgov/utility/army/tan = 3,
-	/obj/item/clothing/head/solgov/utility/army/tan = 3,
+	/obj/item/clothing/under/scga/utility/tan = 3,
+	/obj/item/clothing/head/scga/utility/tan = 3,
 	/obj/item/clothing/shoes/tactical = 3,
 	/obj/item/clothing/gloves/thick/combat = 3
 	)
@@ -212,9 +212,9 @@
 
 /obj/structure/closet/wardrobe/patrol/army/WillContain()
 	return list(
-	/obj/item/clothing/under/solgov/utility/army  = 3,
-	/obj/item/clothing/head/solgov/utility/army = 3,
-	/obj/item/clothing/shoes/jungleboots = 3,
+	/obj/item/clothing/under/scga/utility  = 3,
+	/obj/item/clothing/head/scga/utility = 3,
+	/obj/item/clothing/shoes/scga/utility = 3,
 	/obj/item/clothing/gloves/thick/combat = 3
 	)
 
@@ -224,8 +224,8 @@
 
 /obj/structure/closet/wardrobe/patrol/urban/WillContain()
 	return list(
-	/obj/item/clothing/under/solgov/utility/army/urban  = 3,
-	/obj/item/clothing/head/solgov/utility/army/urban = 3,
+	/obj/item/clothing/under/solgov/utility  = 3,
+	/obj/item/clothing/head/solgov/utility = 3,
 	/obj/item/clothing/shoes/dutyboots = 3,
 	/obj/item/clothing/gloves/thick/combat = 3
 	)

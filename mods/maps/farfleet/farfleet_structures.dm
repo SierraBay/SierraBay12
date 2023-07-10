@@ -64,7 +64,7 @@
 	return list(
 		/obj/item/storage/belt/holster/security/tactical,
 		/obj/item/melee/telebaton,
-		/obj/item/clothing/glasses/sunglasses/sechud,
+		/obj/item/clothing/glasses/hud/security/prot/aviators,
 		/obj/item/clothing/glasses/tacgoggles,
 		/obj/item/clothing/accessory/storage/black_vest,
 		/obj/item/clothing/gloves/thick/combat,
@@ -88,7 +88,7 @@
 	return list(
 		/obj/item/storage/belt/holster/security/tactical,
 		/obj/item/melee/telebaton,
-		/obj/item/clothing/glasses/sunglasses/sechud,
+		/obj/item/clothing/glasses/hud/security/prot/aviators,
 		/obj/item/clothing/glasses/tacgoggles,
 		/obj/item/clothing/accessory/storage/black_vest,
 		/obj/item/clothing/gloves/thick/combat,

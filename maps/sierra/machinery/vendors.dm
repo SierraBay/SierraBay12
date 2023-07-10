@@ -27,8 +27,8 @@
 	product_slogans = "Dress for success!;Prepare to look swagalicious!;Look at all this free swag!;Why leave style up to fate? Use the ClothesMate!"
 	vend_reply = "Thank you for using the ClothesMate!"
 	products = list(
-		/obj/item/clothing/under/pj/red  = 1,
-		/obj/item/clothing/under/pj/blue = 1,
+		//obj/item/clothing/under/pj/red  = 1,
+		//obj/item/clothing/under/pj/blue = 1,
 		/obj/item/clothing/under/scratch = 1,
 		/obj/item/clothing/under/sl_suit = 1,
 		/obj/item/clothing/under/waiter  = 1,
@@ -124,7 +124,8 @@
 		/obj/item/storage/fancy/smokable/menthols = 2,
 		/obj/item/storage/fancy/smokable/carcinomas = 2,
 		/obj/item/storage/fancy/smokable/professionals = 2,
-		/obj/item/storage/box/matches = 10,
+		/obj/item/storage/fancy/matches/matchbox = 5,
+		/obj/item/storage/fancy/matches/matchbook = 2,
 		/obj/item/flame/lighter/random = 4,
 		/obj/item/clothing/mask/smokable/ecig/util = 1,
 		///obj/item/clothing/mask/smokable/ecig/deluxe = 2,

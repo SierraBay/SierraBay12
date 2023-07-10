@@ -75,10 +75,10 @@ var/global/const/access_away_cavalry_commander = "ACCESS_CAVALRY_COMMANDER"
 	title = "Army SCGSO Trooper"
 	total_positions = 2
 	outfit_type = /singleton/hierarchy/outfit/job/patrol/army_ops
-	branch = /datum/mil_branch/army
-	rank = /datum/mil_rank/army/e5
-	allowed_branches = list(/datum/mil_branch/army)
-	allowed_ranks = list(/datum/mil_rank/army/e5)
+	branch = /datum/mil_branch/scga
+	rank = /datum/mil_rank/scga/e5
+	allowed_branches = list(/datum/mil_branch/scga)
+	allowed_ranks = list(/datum/mil_rank/scga/e5)
 	supervisors = "Army Captain"
 	loadout_allowed = TRUE
 	is_semi_antagonist = TRUE
@@ -101,10 +101,10 @@ var/global/const/access_away_cavalry_commander = "ACCESS_CAVALRY_COMMANDER"
 	title = "Army SCGSO Leader"
 	total_positions = 1
 	outfit_type = /singleton/hierarchy/outfit/job/patrol/captain
-	branch = /datum/mil_branch/army
-	rank = /datum/mil_rank/army/o3
-	allowed_branches = list(/datum/mil_branch/army)
-	allowed_ranks = list(/datum/mil_rank/army/o3)
+	branch = /datum/mil_branch/scga
+	rank = /datum/mil_rank/scga/o3
+	allowed_branches = list(/datum/mil_branch/scga)
+	allowed_ranks = list(/datum/mil_rank/scga/o3)
 	supervisors = "Lieutenant Commander, Command of the Battle Group Bravo of the 5th fleet, SCGDF"
 	loadout_allowed = TRUE
 	is_semi_antagonist = TRUE
@@ -312,29 +312,29 @@ var/global/const/access_away_cavalry_commander = "ACCESS_CAVALRY_COMMANDER"
 	accessory = list(/obj/item/clothing/accessory/solgov/rank/fleet/flag/o8, /obj/item/clothing/accessory/solgov/specialty/officer)
 	sort_order = 18
 
-/datum/mil_branch/army
+/datum/mil_branch/scga
 	name = "SCG Army"
 	name_short = "SCGA"
 	email_domain = "army.mil"
 	rank_types = list(
-		/datum/mil_rank/army/e5,
-		/datum/mil_rank/army/o3
+		/datum/mil_rank/scga/e5,
+		/datum/mil_rank/scga/o3
 	)
 	spawn_rank_types = list(
-		/datum/mil_rank/army/e5,
-		/datum/mil_rank/army/o3
+		/datum/mil_rank/scga/e5,
+		/datum/mil_rank/scga/o3
 	)
 
-/datum/mil_rank/army/e5
+/datum/mil_rank/scga/e5
 	name = "Sergeant"
 	name_short = "SGT"
-	accessory = list(/obj/item/clothing/accessory/solgov/rank/army/enlisted/e5, /obj/item/clothing/accessory/solgov/specialty/enlisted)
+	accessory = list(/obj/item/clothing/accessory/scga_badge/enlisted)
 	sort_order = 5
 
-/datum/mil_rank/army/o3
+/datum/mil_rank/scga/o3
 	name = "Captain"
 	name_short = "CAPT"
-	accessory = list(/obj/item/clothing/accessory/solgov/rank/army/officer/o3, /obj/item/clothing/accessory/solgov/specialty/officer)
+	accessory = list(/obj/item/clothing/accessory/scga_badge/officer)
 	sort_order = 13
 
 /* OUTFITS
@@ -361,15 +361,15 @@ var/global/const/access_away_cavalry_commander = "ACCESS_CAVALRY_COMMANDER"
 
 /singleton/hierarchy/outfit/job/patrol/army_ops
 	name = PATROL_OUTFIT_JOB_NAME("Ops")
-	head = /obj/item/clothing/head/solgov/utility/army/urban
-	uniform = /obj/item/clothing/under/solgov/utility/army/urban
+	head = /obj/item/clothing/head/scga/utility
+	uniform = /obj/item/clothing/under/scga/utility
 	id_types = list(/obj/item/card/id/awaycavalry/ops)
 	gloves = /obj/item/clothing/gloves/thick/combat
 
 /singleton/hierarchy/outfit/job/patrol/captain
 	name = PATROL_OUTFIT_JOB_NAME("Captain")
-	head = /obj/item/clothing/head/solgov/utility/army/urban
-	uniform = /obj/item/clothing/under/solgov/utility/army/urban
+	head = /obj/item/clothing/head/scga/utility
+	uniform = /obj/item/clothing/under/scga/utility
 	id_types = list(/obj/item/card/id/awaycavalry/ops/captain)
 	gloves = /obj/item/clothing/gloves/thick/combat
 

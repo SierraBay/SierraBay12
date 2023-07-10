@@ -11,7 +11,7 @@
 	suit_store = /obj/item/gun/projectile/automatic/sec_smg
 	gloves = /obj/item/clothing/gloves/thick/combat
 	belt = /obj/item/storage/belt/holster/security/tactical
-	uniform = /obj/item/clothing/under/solgov/utility/army/urban
+	uniform = /obj/item/clothing/under/scga/utility/urban
 	l_pocket = /obj/item/device/flashlight/maglight
 	shoes = /obj/item/clothing/shoes/combat
 	id_slot = slot_wear_id
@@ -44,7 +44,7 @@
 	..()
 	var/obj/item/clothing/uniform = H.w_uniform
 	if(uniform)
-		var/obj/item/clothing/accessory/solgov/rank/army/enlisted/e2/rank = new()
+		var/obj/item/clothing/accessory/scga_badge/enlisted/rank = new()
 		if(uniform.can_attach_accessory(rank))
 			uniform.attach_accessory(null, rank)
 		else
@@ -70,7 +70,7 @@
 	..()
 	var/obj/item/clothing/uniform = H.w_uniform
 	if(uniform)
-		var/obj/item/clothing/accessory/solgov/rank/army/enlisted/e3/rank = new()
+		var/obj/item/clothing/accessory/scga_badge/enlisted/rank = new()
 		if(uniform.can_attach_accessory(rank))
 			uniform.attach_accessory(null, rank)
 		else
@@ -98,7 +98,7 @@
 	..()
 	var/obj/item/clothing/uniform = H.w_uniform
 	if(uniform)
-		var/obj/item/clothing/accessory/solgov/rank/army/enlisted/e4/rank = new()
+		var/obj/item/clothing/accessory/scga_badge/enlisted/rank = new()
 		if(uniform.can_attach_accessory(rank))
 			uniform.attach_accessory(null, rank)
 		else
@@ -121,7 +121,7 @@
 	..()
 	var/obj/item/clothing/uniform = H.w_uniform
 	if(uniform)
-		var/obj/item/clothing/accessory/solgov/rank/army/enlisted/e5/rank = new()
+		var/obj/item/clothing/accessory/scga_badge/enlisted/rank = new()
 		if(uniform.can_attach_accessory(rank))
 			uniform.attach_accessory(null, rank)
 		else
