@@ -387,11 +387,11 @@
 /area/chapel/main
 	name = "Second Deck - Chapel"
 	icon_state = "chapel"
-	ambience = list(\
-	'sound/ambience/chapel/chapel1.ogg',\
-	'sound/ambience/chapel/chapel2.ogg',\
-	'sound/ambience/chapel/chapel3.ogg',\
-	'sound/ambience/chapel/chapel4.ogg'\
+	ambience = list(
+		'maps/sierra/sound/ambience/chapel1.ogg',
+		'maps/sierra/sound/ambience/chapel2.ogg',
+		'maps/sierra/sound/ambience/chapel3.ogg',
+		'maps/sierra/sound/ambience/chapel4.ogg'
 	)
 	sound_env = LARGE_ENCLOSED
 
