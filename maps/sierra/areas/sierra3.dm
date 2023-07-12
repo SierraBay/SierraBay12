@@ -154,11 +154,11 @@
 	// Tcomm
 /area/tcommsat/
 	ambience = list(
-			'sound/ambience/ambisin2.ogg',
-			'sound/ambience/signal.ogg',
-			'sound/ambience/ambigen10.ogg',
-			'sound/ambience/ai/ambservers.wav'
-		)
+		'sound/ambience/ambisin2.ogg',
+		'sound/ambience/signal.ogg',
+		'sound/ambience/ambigen10.ogg',
+		'maps/sierra/sound/ambience/aiservers.wav'
+	)
 	req_access = list(access_tcomsat)
 
 /area/tcommsat/chamber
