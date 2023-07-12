@@ -17,7 +17,7 @@
 	/datum/job/explorer, \
 	/datum/job/explorer_pilot, \
 	/datum/job/explorer_medic, \
-	/datum/job/explorer_engineer
+	/datum/job/explorer_engineer \
 )
 
 //For jobs that allow for decorative or ceremonial clothing
@@ -31,7 +31,7 @@
 	/datum/job/assistant, \
 	/datum/job/bartender, \
 	/datum/job/submap/merchant, \
-	/datum/job/detective\
+	/datum/job/detective \
 )
 
 //For civilian jobs that may have a uniform, but not a strict one
@@ -79,8 +79,7 @@
 //For roles with no uniform or formal clothing requirements
 #define RESTRICTED_ROLES list(\
 	/datum/job/assistant, \
-	/datum/job/bartender,\
-	 /*/datum/job/stowaway*/\
+	/datum/job/bartender \
 )
 
 //For members of the command department
