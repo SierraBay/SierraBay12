@@ -44,8 +44,8 @@ Random item spawning
 /obj/random/hostile/xenobio
 	name = "Random Mob"
 	desc = "This is a random mob."
-	icon = 'icons/mob/amorph.dmi'
-	icon_state = "standing"
+	icon = 'icons/mob/simple_animal/animal.dmi'
+	icon_state = "yithian"
 	spawn_nothing_percentage = 50
 
 /obj/random/hostile/xenobio/spawn_choices()
