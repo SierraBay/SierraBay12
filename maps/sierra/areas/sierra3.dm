@@ -198,9 +198,9 @@
 /area/turret_protected
 	req_access = list(access_ai_upload)
 	ambience = list(
-		'maps/sierra/sound/ambience/ambimalf.ogg',
-		'maps/sierra/sound/ambience/ambservers.wav',
-		'packs/infinity/maps/sierra/sound/ambience_port_hum.ogg',
+		'maps/sierra/sound/ambience/aimalf.ogg',
+		'maps/sierra/sound/ambience/aiservers.wav',
+		'maps/sierra/sound/ambience/aiporthum.ogg',
 		'maps/sierra/sound/ambience/ai1.ogg',
 		'maps/sierra/sound/ambience/ai2.ogg',
 		'maps/sierra/sound/ambience/ai3.ogg'
