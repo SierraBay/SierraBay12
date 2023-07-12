@@ -90,7 +90,7 @@
 
 /area/bridge/adjutants
 	name = "First Deck - Adjutants Room"
-	icon = 'packs/infinity/icons/turf/areas.dmi'
+	icon = 'maps/sierra/icons/turf/areas.dmi'
 	icon_state = "bridge_gun"
 
 /* ENGINEERING AREAS

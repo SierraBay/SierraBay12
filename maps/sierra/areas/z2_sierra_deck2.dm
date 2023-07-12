@@ -82,7 +82,7 @@
 
 /area/maintenance/abandoned_common
 	name = "Second Deck - Abandoned - Actors Room"
-	icon = 'packs/infinity/icons/turf/areas.dmi'
+	icon = 'maps/sierra/icons/turf/areas.dmi'
 	icon_state = "music_room"
 	turf_initializer = /singleton/turf_initializer/maintenance/heavy
 
@@ -124,10 +124,10 @@
 	name = "Second Deck - Bridge"
 	icon_state = "bridge"
 	req_access = list(access_bridge)
-	ambience = list('packs/infinity/sound/SS2/ambience/ambbridge.wav')
+	ambience = list('maps/sierra/sound/ambience/bridge.wav')
 
 /area/bridge/nano
-	icon = 'packs/infinity/icons/turf/areas.dmi'
+	icon = 'maps/sierra/icons/turf/areas.dmi'
 	icon_state = "bridge_room"
 
 /area/bridge/meeting_room
@@ -344,7 +344,7 @@
 
 /area/crew_quarters/sleep/cryo
 	name = "Second Deck - Living - Cryogenic Storage"
-	icon = 'packs/infinity/icons/turf/areas.dmi'
+	icon = 'maps/sierra/icons/turf/areas.dmi'
 	icon_state = "cryo"
 
 /area/crew_quarters/sleep/cryo/south

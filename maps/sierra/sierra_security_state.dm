@@ -22,7 +22,7 @@
 	all_security_levels = list(/singleton/security_level/default/sierradept/code_green, /singleton/security_level/default/sierradept/code_violet, /singleton/security_level/default/sierradept/code_orange, /singleton/security_level/default/sierradept/code_blue, /singleton/security_level/default/sierradept/code_red, /singleton/security_level/default/sierradept/code_delta)
 
 /singleton/security_level/default/sierradept
-	icon = 'packs/infinity/icons/misc/security_state.dmi'
+	icon = 'maps/sierra/icons/obj/security_state.dmi'
 
 /singleton/security_level/default/sierradept/code_green
 	name = "код зелёный"
