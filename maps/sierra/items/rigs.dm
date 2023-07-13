@@ -228,25 +228,25 @@
 /obj/item/clothing/head/helmet/space/rig/command/hos
 	icon_state = "hos_rig"
 	icon = 'maps/sierra/icons/obj/clothing/obj_head.dmi'
-	item_icons = list(slot_head_str = 'maps/sierra/icons/mob/onmob/onmob_head.dmi;')
+	item_icons = list(slot_head_str = 'maps/sierra/icons/mob/onmob/onmob_head.dmi')
 	species_restricted = list(SPECIES_HUMAN) // No available icons for aliens
 
 /obj/item/clothing/suit/space/rig/command/hos
 	icon_state = "hos_rig"
-	icon = 'maps/sierra/icons/obj/clothing/obj_suit.dmi;'
-	item_icons = list(slot_wear_suit_str = 'maps/sierra/icons/mob/onmob/onmob_suit.dmi;')
+	icon = 'maps/sierra/icons/obj/clothing/obj_suit.dmi'
+	item_icons = list(slot_wear_suit_str = 'maps/sierra/icons/mob/onmob/onmob_suit.dmi')
 	species_restricted = list(SPECIES_HUMAN)
 
 /obj/item/clothing/shoes/magboots/rig/command/hos
 	icon_state = "hos_rig"
-	icon = 'maps/sierra/icons/obj/clothing/obj_feet.dmi;'
-	item_icons = list(slot_shoes_str = 'maps/sierra/icons/mob/onmob/onmob_feet.dmi;')
+	icon = 'maps/sierra/icons/obj/clothing/obj_feet.dmi'
+	item_icons = list(slot_shoes_str = 'maps/sierra/icons/mob/onmob/onmob_feet.dmi')
 	species_restricted = list(SPECIES_HUMAN)
 
 /obj/item/clothing/gloves/rig/command/hos
 	icon_state = "hos_rig"
-	icon = 'maps/sierra/icons/obj/clothing/obj_hands.dmi;'
-	item_icons = list(slot_gloves_str = 'maps/sierra/icons/mob/onmob/onmob_hands.dmi;')
+	icon = 'maps/sierra/icons/obj/clothing/obj_hands.dmi'
+	item_icons = list(slot_gloves_str = 'maps/sierra/icons/mob/onmob/onmob_hands.dmi')
 	species_restricted = list(SPECIES_HUMAN)
 
 
