@@ -125,7 +125,7 @@ GLOBAL_LIST_EMPTY(overmap_helm_computers)
 		data["speed"] = speed
 
 		if(linked.get_speed())
-			data["ETAnext"] = "[round(linked.ETA()/7)] seconds"
+			data["ETAnext"] = "[round(linked.ETA()/SSovermap.wait)] seconds"
 		else
 			data["ETAnext"] = "N/A"
 
