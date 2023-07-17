@@ -246,7 +246,7 @@
 /obj/machinery/vending/away_solpatrol_uniform
 	name = "Fleet uniform dispenser"
 	desc = "A specialized vending machine with nice and fresh navy-blue clothing inside. For military personnel only."
-	icon = 'mods/maps/sentinel/fleet_vendomat.dmi'
+	icon = 'mods/_maps/sentinel/icons/fleet_vendomat.dmi'
 	icon_state = "uniform_fleet"
 	icon_deny = "uniform_fleet-deny"
 	icon_vend = "uniform_fleet-vend"
