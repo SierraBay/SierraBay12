@@ -1,11 +1,11 @@
 /datum/species/tajaran
 	name = SPECIES_TAJARA
 	name_plural = "Tajaran"
-	icobase = 'mods/species/tajara/icons/tajara_body/body.dmi'
-	deform =  'mods/species/tajara/icons/tajara_body/deformed_body.dmi'
-	preview_icon = 'mods/species/tajara/icons/tajara_body/preview.dmi'
+	icobase = 'mods/tajara/icons/tajara_body/body.dmi'
+	deform =  'mods/tajara/icons/tajara_body/deformed_body.dmi'
+	preview_icon = 'mods/tajara/icons/tajara_body/preview.dmi'
 	tail = "tajtail"
-	tail_animation = 'mods/species/tajara/icons/tajara_body/tail.dmi'
+	tail_animation = 'mods/tajara/icons/tajara_body/tail.dmi'
 	default_head_hair_style = "Tajaran Ears"
 	unarmed_types = list(/datum/unarmed_attack/stomp, /datum/unarmed_attack/kick, /datum/unarmed_attack/claws, /datum/unarmed_attack/punch, /datum/unarmed_attack/bite/sharp)
 
@@ -69,7 +69,7 @@
 	flesh_color = "#afa59e"
 	base_color = "#333333"
 	blood_color = "#862a51"
-	organs_icon = 'mods/species/tajara/icons/tajara_body/organs.dmi'
+	organs_icon = 'mods/tajara/icons/tajara_body/organs.dmi'
 
 	move_trail = /obj/effect/decal/cleanable/blood/tracks/paw
 /*
