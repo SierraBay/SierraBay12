@@ -1,3 +1,4 @@
+// SIERRA TODO: Переместить в _master_files
 /datum/category_collection/player_setup_collection/header()
 	var/dat = ""
 	for(var/datum/category_group/player_setup_category/PS in categories)
