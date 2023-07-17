@@ -93,7 +93,6 @@
 
 	#include "structures/closets.dm"
 	#include "structures/other.dm"
-	#include "structures/override.dm"
 	#include "structures/signs.dm"
 
 	#include "structures/closets/_closets_appearances.dm"
