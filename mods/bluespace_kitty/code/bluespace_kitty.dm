@@ -33,7 +33,7 @@ var/global/cat_number = 0
 /mob/living/simple_animal/passive/cat/real_runtime
 	name = "Tracy"
 	desc = "Мурлыкающая жертва экспериментов. Пробирается в наше измерение, когда сама вуаль реальности разрывается на части."
-	icon = 'mods/bluespace_kitty/runtimecat.dmi'
+	icon = 'mods/bluespace_kitty/icons/runtimecat.dmi'
 	icon_state = "runtimecat"
 	density = FALSE
 	universal_speak = TRUE

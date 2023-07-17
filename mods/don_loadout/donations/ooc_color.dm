@@ -1,3 +1,4 @@
+// SIERRA TODO: Переместить в коркод
 /singleton/communication_channel/ooc/do_communicate(client/C, message)
 	var/datum/admins/holder = C.holder
 	var/is_stealthed = C.is_stealthed()
