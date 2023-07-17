@@ -22,7 +22,7 @@
 /obj/machinery/atmospheric_field_generator
 	name = "atmospheric retention field generator"
 	desc = "A floor-mounted piece of equipment that generates an atmosphere-retaining energy field when powered and activated. Linked to environmental alarm systems and will automatically activate when hazardous conditions are detected.<br><br>Note: prolonged immersion in active atmospheric retention fields may have negative long-term health consequences."
-	icon = 'icons/obj/atm_fieldgen.dmi'
+	icon = 'mods/atmos_ret_field/icons/atm_fieldgen.dmi'
 	icon_state = "arfg_off"
 	anchored = TRUE
 	opacity = FALSE
@@ -200,7 +200,7 @@
 /obj/structure/atmospheric_retention_field
 	name = "atmospheric retention field"
 	desc = "A shimmering forcefield that keeps the good air inside and the bad air outside. This field has been modulated so that it doesn't impede movement or projectiles.<br><br>Note: prolonged immersion in active atmospheric retention fields may have negative long-term health consequences."
-	icon = 'icons/obj/atm_fieldgen.dmi'
+	icon = 'mods/atmos_ret_field/icons/atm_fieldgen.dmi'
 	icon_state = "arfg_field"
 	anchored = TRUE
 	density = FALSE
@@ -252,6 +252,6 @@
 
 /obj/structure/atmospheric_retention_field/impassable
 	desc = "A shimmering forcefield that keeps the good air inside and the bad air outside. It seems fairly solid, almost like it's made out of some kind of hardened light.<br><br>Note: prolonged immersion in active atmospheric retention fields may have negative long-term health consequences."
-	icon = 'icons/obj/atm_fieldgen.dmi'
+	icon = 'mods/atmos_ret_field/icons/atm_fieldgen.dmi'
 	icon_state = "arfg_field"
 	density = TRUE
