@@ -13,13 +13,13 @@ GLOBAL_LIST_EMPTY(music_players)
 // If this type will be spawned, it'll get instantly deleted by Initialization
 // Because we can create subtypes, we should use only them for regular playthrought
 
-GLOBAL_LIST_INIT(heavystep_sound,list(
+GLOBAL_LIST_INIT(heavystep_sound, list(
 'packs/infinity/sound/effects/x1.ogg',
 'packs/infinity/sound/effects/x2.ogg',
 'packs/infinity/sound/effects/x3.ogg',
 'packs/infinity/sound/effects/x4.ogg'
 ))
-GLOBAL_LIST_INIT(light_strike_sound,list(
+GLOBAL_LIST_INIT(light_strike_sound, list(
 'packs/infinity/sound/effects/hit_kick.ogg',
 'packs/infinity/sound/effects/hit_punch.ogg'
 ))
@@ -76,7 +76,7 @@ GLOBAL_LIST_INIT(switch_small_sound, list(
 /obj/item/music_player
 	name = "music player"
 	desc = "A little device which can be used to play soft tunes. If you see this you're probably should be banned for abuse. Report this situation to dev team."
-	icon = 'sprites/object.dmi'
+	icon = 'mods/music_player/icons/object.dmi'
 	icon_state = null
 	item_state = null
 

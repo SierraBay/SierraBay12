@@ -50,9 +50,9 @@
 	item_state = "boombox"
 
 	item_icons = list(
-		slot_l_hand_str = 'sprites/onmob_lefthand.dmi',
-		slot_r_hand_str = 'sprites/onmob_righthand.dmi',
-		slot_back_str = 'sprites/onmob_back.dmi',
+		slot_l_hand_str = 'mods/music_player/icons/onmob_lefthand.dmi',
+		slot_r_hand_str = 'mods/music_player/icons/onmob_righthand.dmi',
+		slot_back_str = 'mods/music_player/icons/onmob_back.dmi',
 		)
 
 //	slot_flags = SLOT_BACK
