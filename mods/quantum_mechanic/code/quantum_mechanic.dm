@@ -191,9 +191,9 @@
 	abstract_type = /obj/item/clothing/head/helmet/quantum
 	name = "quantum mechanic's helmet"
 	desc = "A quantum mechanic's helmet. There is a letter on front that reads 'Q'."
-	icon = 'mods/quantum_mechanic/uniform_quantum.dmi'
+	icon = 'mods/quantum_mechanic/icons/uniform_quantum.dmi'
 	item_icons = list(
-		slot_head_str = 'mods/quantum_mechanic/uniform_quantum.dmi'
+		slot_head_str = 'mods/quantum_mechanic/icons/uniform_quantum.dmi'
 	)
 	sprite_sheets = list()
 	icon_state = "error"
@@ -221,9 +221,9 @@
 	abstract_type = /obj/item/clothing/under/quantum
 	name = "base quantum uniform"
 	desc = "You should not see this."
-	icon = 'mods/quantum_mechanic/uniform_quantum.dmi'
+	icon = 'mods/quantum_mechanic/icons/uniform_quantum.dmi'
 	item_icons = list(
-		slot_w_uniform_str = 'mods/quantum_mechanic/uniform_quantum.dmi'
+		slot_w_uniform_str = 'mods/quantum_mechanic/icons/uniform_quantum.dmi'
 	)
 	sprite_sheets = list()
 	icon_state = "error"
