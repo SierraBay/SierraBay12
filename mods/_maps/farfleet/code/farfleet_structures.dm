@@ -270,11 +270,11 @@
 /obj/structure/sign/farfleetplaque
 	name = "\improper Pioneer Corps Plaque"
 	desc = "Пионерский Корпус, сформированный в 2306 году является авангардом Конфедерации. Пионерский корпус не входит в состав Флота ГКК, выполняет ряд миротворческих и гуманитарных функций. На этой табличке - первые страницы приказа о создании Пионерского Корпуса."
-	icon = 'mods/maps/farfleet/icons/iccg_flag.dmi'
+	icon = 'mods/_maps/farfleet/icons/iccg_flag.dmi'
 	icon_state = "pioneer_plaque"
 
 /obj/effect/floor_decal/iccglogo
-	icon = 'mods/maps/farfleet/icons/GCC-floor.dmi'
+	icon = 'mods/_maps/farfleet/icons/GCC-floor.dmi'
 	icon_state = "center"
 
 /obj/effect/floor_decal/iccglogo/center_left
@@ -307,13 +307,13 @@
 /obj/structure/sign/iccg
 	name = "\improper ICCG Seal"
 	desc = "A sign which signifies who this vessel belongs to."
-	icon = 'mods/maps/farfleet/icons/iccg_flag.dmi'
+	icon = 'mods/_maps/farfleet/icons/iccg_flag.dmi'
 	icon_state = "iccg_seal"
 
 /obj/structure/sign/double/iccgflag
 	name = "ICCG Flag"
 	desc = "The flag of the Independent Colonial Confederation of Gilgamesh, a symbol of Motherland to many proud peoples."
-	icon = 'mods/maps/farfleet/icons/iccg_flag.dmi'
+	icon = 'mods/_maps/farfleet/icons/iccg_flag.dmi'
 
 /obj/structure/sign/double/iccgflag/left
 	icon_state = "GCCflag-left"

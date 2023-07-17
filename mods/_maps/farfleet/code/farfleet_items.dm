@@ -63,7 +63,7 @@
 /obj/item/gun/projectile/automatic/assault_rifle/heltek
 	name = "LA-700"
 	desc = "HelTek LA-700 is a standart equipment of ICCG Space-assault Forces. Looks very similiar to STS-35."
-	icon = 'mods/maps/farfleet/icons/iccg_rifle.dmi'
+	icon = 'mods/_maps/farfleet/icons/iccg_rifle.dmi'
 	icon_state = "iccg_rifle"
 
 /obj/item/gun/projectile/automatic/assault_rifle/heltek/on_update_icon()
@@ -78,12 +78,12 @@
 /obj/item/gun/projectile/automatic/mr735
 	name = "MR-735"
 	desc = "A cheap rifle for close quarters combat, with an auto-firing mode available. HelTek MR-735 is a standard rifle for ICCG Space-assault Forces, designed without a stock for easier storage and combat in closed spaces. Perfect weapon for some ship's crew."
-	icon = 'mods/maps/farfleet/icons/mr735.dmi'
+	icon = 'mods/_maps/farfleet/icons/mr735.dmi'
 	icon_state = "nostockrifle"
 	item_state = "nostockrifle"
 	item_icons = list(
-		slot_r_hand_str = 'mods/maps/farfleet/icons/righthand.dmi',
-		slot_l_hand_str = 'mods/maps/farfleet/icons/lefthand.dmi',
+		slot_r_hand_str = 'mods/_maps/farfleet/icons/righthand.dmi',
+		slot_l_hand_str = 'mods/_maps/farfleet/icons/lefthand.dmi',
 		)
 	wielded_item_state = "nostockrifle_wielded"
 	force = 10
@@ -117,12 +117,12 @@
 /obj/item/gun/projectile/automatic/mbr
 	name = "MBR"
 	desc = "A shabby bullpup carbine. Despite its size, it looks a little uncomfortable, but it is robust. HelTek MBR is a standart equipment of ICCG Space-assault Forces, designed in a bullpup layout. Possesses autofire and is perfect for the ship's crew."
-	icon = 'mods/maps/farfleet/icons/mbr_bullpup.dmi'
+	icon = 'mods/_maps/farfleet/icons/mbr_bullpup.dmi'
 	icon_state = "mbr_bullpup"
 	item_state = "mbr_bullpup"
 	item_icons = list(
-		slot_r_hand_str = 'mods/maps/farfleet/icons/righthand.dmi',
-		slot_l_hand_str = 'mods/maps/farfleet/icons/lefthand.dmi',
+		slot_r_hand_str = 'mods/_maps/farfleet/icons/righthand.dmi',
+		slot_l_hand_str = 'mods/_maps/farfleet/icons/lefthand.dmi',
 		)
 	wielded_item_state = "mbr_bullpup-wielded"
 	force = 10
@@ -157,12 +157,12 @@
 /obj/item/gun/energy/laser/bonfire
 	name = "Bonfire Carbine"
 	desc = "Strange construction: laser carbine with underslung grenade launcher and very capable internal battery. HelTek Bonfire-75 is a weapon designed for suppressive fire in close quarters, where usage of ballistic weaponry will be uneffective or simply hazardous."
-	icon = 'mods/maps/farfleet/icons/bonfire.dmi'
+	icon = 'mods/_maps/farfleet/icons/bonfire.dmi'
 	icon_state = "bonfire"
 	item_state = "bonfire"
 	item_icons = list(
-		slot_r_hand_str = 'mods/maps/farfleet/icons/righthand.dmi',
-		slot_l_hand_str = 'mods/maps/farfleet/icons/lefthand.dmi',
+		slot_r_hand_str = 'mods/_maps/farfleet/icons/righthand.dmi',
+		slot_l_hand_str = 'mods/_maps/farfleet/icons/lefthand.dmi',
 		)
 	slot_flags = SLOT_BELT|SLOT_BACK
 	w_class = ITEM_SIZE_LARGE
@@ -213,12 +213,12 @@
 /obj/item/gun/energy/ionrifle/small/stupor
 	name = "Stupor ion pistol"
 	desc = "The HelTek Stupor-45 is a compact anti-drone weapon. Due to their small output of EMP, you need be marksman to disable human-sized synthetic. But it's still better, than nothing."
-	icon = 'mods/maps/farfleet/icons/stupor.dmi'
+	icon = 'mods/_maps/farfleet/icons/stupor.dmi'
 	icon_state = "stupor"
 	item_state = "stupor"
 	item_icons = list(
-		slot_r_hand_str = 'mods/maps/farfleet/icons/righthand.dmi',
-		slot_l_hand_str = 'mods/maps/farfleet/icons/lefthand.dmi',
+		slot_r_hand_str = 'mods/_maps/farfleet/icons/righthand.dmi',
+		slot_l_hand_str = 'mods/_maps/farfleet/icons/lefthand.dmi',
 		)
 	fire_delay = 40
 	one_hand_penalty = 0
