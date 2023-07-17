@@ -224,7 +224,7 @@
 
 	icon_state = ""
 	for(var/i = 1 to 4)
-		var/image/I = image(icon, "[basestate][connections[i]]", dir = 1<<(i-1))
+		var/image/I = image(icon, "[basestate][connections[i]]", dir = SHIFTL(1, i-1))
 		overlays += I
 
 	return
