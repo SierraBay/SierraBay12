@@ -1,6 +1,7 @@
 /obj/structure/bed/chair/rounded
 	name = "rounded chair"
 	desc = "It's a rounded chair. It looks comfy."
+	icon = 'mods/fancy_sofas/icons/furniture.dmi'
 	icon_state = "roundedchair_preview"
 	base_icon = "roundedchair"
 
