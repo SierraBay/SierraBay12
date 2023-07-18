@@ -1,4 +1,4 @@
-name: Make changelogs
+name: "Чейнджлог: PR -> YML"
 
 permissions:
   contents: read
