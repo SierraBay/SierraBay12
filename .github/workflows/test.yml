@@ -4,8 +4,6 @@ permissions:
   contents: read
 
 on:
-  push:
-    branches: [ "dev-sierra" ]
   pull_request:
     branches: [ "dev-sierra" ]
 env:
