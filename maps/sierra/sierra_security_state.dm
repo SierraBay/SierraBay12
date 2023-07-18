@@ -1,19 +1,3 @@
-#ifndef PSI_IMPLANT_AUTOMATIC
-#define PSI_IMPLANT_AUTOMATIC "Security Level Derived"
-#endif
-#ifndef PSI_IMPLANT_SHOCK
-#define PSI_IMPLANT_SHOCK     "Issue Neural Shock"
-#endif
-#ifndef PSI_IMPLANT_WARN
-#define PSI_IMPLANT_WARN      "Issue Reprimand"
-#endif
-#ifndef PSI_IMPLANT_LOG
-#define PSI_IMPLANT_LOG       "Log Incident"
-#endif
-#ifndef PSI_IMPLANT_DISABLED
-#define PSI_IMPLANT_DISABLED  "Disabled"
-#endif
-
 /datum/map/sierra // setting the map to use this list
 	security_state = /singleton/security_state/default/sierradept
 
@@ -25,7 +9,7 @@
 	icon = 'maps/sierra/icons/obj/security_state.dmi'
 
 /singleton/security_level/default/sierradept/code_green
-	name = "код зелёный"
+	name = "code green"
 
 	light_max_bright = 0.25
 	light_inner_range = 0.1
@@ -48,7 +32,7 @@
 	GLOB.using_map.unlock_high_secure_areas()
 
 /singleton/security_level/default/sierradept/code_violet
-	name = "код фиолетовый"
+	name = "code purple"
 	alarm_level = "on"
 
 	light_max_bright = 0.25
@@ -80,7 +64,7 @@
 
 
 /singleton/security_level/default/sierradept/code_orange
-	name = "код оранжевый"
+	name = "code orange"
 	alarm_level = "on"
 
 	light_max_bright = 0.25
@@ -111,7 +95,7 @@
 	GLOB.using_map.unlock_secure_areas()
 
 /singleton/security_level/default/sierradept/code_blue
-	name = "код синий"
+	name = "code blue"
 	alarm_level = "on"
 
 	light_max_bright = 0.5
@@ -139,7 +123,7 @@
 	GLOB.using_map.unlock_secure_areas()
 
 /singleton/security_level/default/sierradept/code_red
-	name = "код красный"
+	name = "code red"
 	alarm_level = "on"
 
 	light_max_bright = 0.5
@@ -174,7 +158,7 @@
 	GLOB.using_map.lock_high_secure_areas()
 
 /singleton/security_level/default/sierradept/code_delta
-	name = "код дельта"
+	name = "code delta"
 	alarm_level = "on"
 
 	light_max_bright = 0.7
@@ -197,9 +181,3 @@
 	notify_station()
 	GLOB.using_map.unlock_secure_areas()
 	GLOB.using_map.unlock_high_secure_areas()
-
-#undef PSI_IMPLANT_AUTOMATIC
-#undef PSI_IMPLANT_SHOCK
-#undef PSI_IMPLANT_WARN
-#undef PSI_IMPLANT_LOG
-#undef PSI_IMPLANT_DISABLED
