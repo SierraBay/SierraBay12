@@ -160,7 +160,7 @@
 	// #include "../../mods/atmos_ret_field/_atm_ret_field.dme"
 	// #include "../../mods/bluespace_kitty/_bluespace_kitty.dme"
 	// #include "../../mods/don_loadout/_don_loadout.dme"
-	// #include "../../mods/fancy_sofas/_fancy_sofas.dme"
+	#include "../../mods/fancy_sofas/_fancy_sofas.dme"
 	// #include "../../mods/legalese_language/_legalese.dme"
 	// #include "../../mods/leroy_beasts/_leroy_beasts.dme"
 	// #include "../../mods/quantum_mechanic/_quantum_mechanic.dme"
