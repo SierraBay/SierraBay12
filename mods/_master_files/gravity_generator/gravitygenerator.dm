@@ -19,7 +19,7 @@
 /obj/machinery/gravity_generator
 	name = "gravitational generator"
 	desc = "A device which produces a graviton field when set up."
-	icon = 'packs/infinity/icons/obj/machinery/gravity_gen.dmi'
+	icon = 'mods/_master_files/gravity_generator/gravity_gen.dmi'
 	anchored = TRUE
 	density = TRUE
 	use_power = 0

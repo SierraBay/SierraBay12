@@ -61,7 +61,6 @@
 
 // Machines
 #include "machinery\computer.dm"
-#include "machinery\gravity_generator\gravity_generator.dm"
 #include "machinery\heater.dm"
 #include "machinery\machines.dm"
 #include "machinery\rack.dm"
