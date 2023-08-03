@@ -3374,9 +3374,6 @@
 /obj/item/paper/farfleet/engines{
 	language = "Pan-Slavic"
 	},
-/obj/machinery/iff_beacon{
-	pixel_y = 38
-	},
 /turf/simulated/floor/tiled/dark,
 /area/ship/farfleet/command/bridge)
 "nJ" = (
