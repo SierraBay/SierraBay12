@@ -167,7 +167,7 @@
 	// #include "../../mods/leroy_beasts/_leroy_beasts.dme"
 	#include "../../mods/quantum_mechanic/_quantum_mechanic.dme"
 	// #include "../../mods/resomi/_resomi.dme"
-	// #include "../../mods/screentips/_screentips.dme"
+	#include "../../mods/screentips/_screentips.dme"
 	// #include "../../mods/tajara/_tajara.dme"
 
 	// UNUSED MODS
