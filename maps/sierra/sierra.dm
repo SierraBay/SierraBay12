@@ -165,7 +165,7 @@
 	#include "../../mods/legalese_language/_legalese.dme"
 	#include "../../mods/nyc_posters/_nyc_posters.dme"
 	// #include "../../mods/leroy_beasts/_leroy_beasts.dme"
-	// #include "../../mods/quantum_mechanic/_quantum_mechanic.dme"
+	#include "../../mods/quantum_mechanic/_quantum_mechanic.dme"
 	// #include "../../mods/resomi/_resomi.dme"
 	// #include "../../mods/screentips/_screentips.dme"
 	// #include "../../mods/tajara/_tajara.dme"
