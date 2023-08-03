@@ -149,6 +149,7 @@
 	#include "../away/miningstation/miningstation.dm"
 	#include "../away/mininghome/mininghome.dm"
 	#include "../away/scavver/scavver_gantry.dm"
+	#include "../away/abandoned_hotel/abandoned_hotel.dm"
 	#include "../event/iccgn_ship/icgnv_hound.dm" // SIERRA TODO: Пофиксить или удалить
 
 	// USED MODS
@@ -165,7 +166,7 @@
 	// #include "../../mods/leroy_beasts/_leroy_beasts.dme"
 	#include "../../mods/quantum_mechanic/_quantum_mechanic.dme"
 	// #include "../../mods/resomi/_resomi.dme"
-	// #include "../../mods/screentips/_screentips.dme"
+	#include "../../mods/screentips/_screentips.dme"
 	// #include "../../mods/tajara/_tajara.dme"
 
 	// UNUSED MODS
