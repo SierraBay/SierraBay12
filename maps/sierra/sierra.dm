@@ -161,6 +161,7 @@
 	#include "../../mods/bluespace_kitty/_bluespace_kitty.dme"
 	// #include "../../mods/don_loadout/_don_loadout.dme"
 	#include "../../mods/fancy_sofas/_fancy_sofas.dme"
+	#include "../../mods/_master_files/gravity_generator/gravity_generator.dm"
 	#include "../../mods/jukebox_tapes/_jukebox_tapes.dme"
 	#include "../../mods/legalese_language/_legalese.dme"
 	#include "../../mods/nyc_posters/_nyc_posters.dme"
