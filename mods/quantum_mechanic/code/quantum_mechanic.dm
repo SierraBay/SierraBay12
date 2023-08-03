@@ -161,12 +161,20 @@
 
 	return ..()
 
+// Encryption key
+/obj/item/device/encryptionkey/specops/quantum
+	name = "quantum mechanic's radio encryption key"
+	icon_state = "bin_cypherkey"
+	channels = list("Special Ops" = 1, "Mercenary" = 1, "Raider" = 1, "Response Team" = 1, "Science" = 1, "Command" = 1, "Medical" = 1, "Engineering" = 1, "Security" = 1, "Supply" = 1, "Service" = 1, "Hailing" = 1)
+	syndie = 1
+	translate_binary = 1
+
 // Headset
 /obj/item/device/radio/headset/specops/quantum
 	name = "quantum mechanic's headset"
 	desc = "A quantum mechanic's headset. The letter 'Ω' is stamped on the side."
 	translate_binary = TRUE
-	ks1type = /obj/item/device/encryptionkey/full_access
+	ks1type = /obj/item/device/encryptionkey/specops/quantum
 
 
 /obj/item/device/radio/headset/specops/quantum/attack_hand(mob/user)
