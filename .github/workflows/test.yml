@@ -5,12 +5,8 @@ permissions:
 
 on:
   pull_request:
-<<<<<<< ours
     branches: [ "dev-sierra" ]
-=======
-    branches: [ "dev" ]
   workflow_dispatch: # allows this workflow to be manually triggered
->>>>>>> theirs
 env:
   BYOND_MAJOR: "514"
   BYOND_MINOR: "1589"
