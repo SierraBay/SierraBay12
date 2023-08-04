@@ -83,6 +83,5 @@
 #include "structures\l3closets.dm"
 #include "structures\ladder_mobile.dm"
 #include "structures\signs.dm"
-#include "structures\signs_ss220.dm"
 #include "structures\table_presets.dm"
 #endif

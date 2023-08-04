@@ -2757,7 +2757,7 @@
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hallway/lower)
 "lg" = (
-/obj/structure/sign/poster/nyc_doctor_griefsey{
+/obj/structure/sign/poster/nyc/doctor_griefsey{
 	pixel_y = 32
 	},
 /turf/simulated/floor/wood/maple,
@@ -6812,7 +6812,7 @@
 /area/ship/farfleet/crew/hallway/lower)
 "Rf" = (
 /obj/structure/table/woodentable/mahogany,
-/obj/structure/sign/poster/nyc_krotovuha{
+/obj/structure/sign/poster/nyc/krotovuha{
 	pixel_y = 32
 	},
 /turf/simulated/floor/wood/maple,
