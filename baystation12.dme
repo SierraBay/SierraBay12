@@ -3311,6 +3311,5 @@
 #include "mods\_modpack.dm"
 #include "mods\_master_files\gravity_generator\gravity_generator.dm"
 #include "mods\global_modpacks.dm"
-#include "mods\nyc_posters\_nyc_posters.dm"
 #include "~code\global_init.dm"
 // END_INCLUDE
