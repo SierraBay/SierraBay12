@@ -3309,6 +3309,7 @@
 #include "maps\_map_include.dm"
 #include "maps\_maps.dm"
 #include "mods\_modpack.dm"
+#include "mods\_master_files\gravity_generator\gravity_generator.dm"
 #include "mods\global_modpacks.dm"
 #include "~code\global_init.dm"
 // END_INCLUDE
