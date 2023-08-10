@@ -3310,6 +3310,5 @@
 #include "maps\_maps.dm"
 #include "mods\_modpack.dm"
 #include "mods\global_modpacks.dm"
-#include "mods\nyc_posters\_nyc_posters.dm"
 #include "~code\global_init.dm"
 // END_INCLUDE
