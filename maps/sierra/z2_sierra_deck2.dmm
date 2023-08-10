@@ -1928,7 +1928,7 @@
 /obj/effect/floor_decal/corner/green/border{
 	dir = 4
 	},
-/obj/structure/sign/poster/nyc/would_you_plant{
+/obj/structure/sign/poster/nyc_would_you_plant{
 	pixel_x = 32
 	},
 /turf/simulated/floor/tiled,

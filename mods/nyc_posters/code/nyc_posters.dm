@@ -11,7 +11,7 @@
 	От неё веет одновременно и изящностью, и решительностью. \
 	Текст на постере гласит \"Stop the Martians\"."
 
-/singleton/poster/nowallspawn/nyc_evening_before_12
+/singleton/poster/nyc_evening_before_12
 	// by Den10901
 	icon_state = "evening_before_12"
 	name = "Evening before 12"
@@ -53,7 +53,7 @@
 	Надпись на плакате гласит: \"Даже один стакан крови может спасти жизнь \
 	ценного сотрудника!\"."
 
-/singleton/poster/nowallspawn/nyc_krotovuha
+/singleton/poster/nyc_krotovuha
 	// by Andrei
 	icon_state = "krotovuha"
 	name = "Krotovuha"
@@ -69,14 +69,14 @@
 	name = "Giant Armoured Serpentid"
 	desc = "Buy them today - they'll work whole their life without salary because they LOVE working!"
 
-/singleton/poster/nowallspawn/nyc_the_goushque
+/singleton/poster/nyc_the_goushque
 	// by tomatik
 	icon_state = "the_goushque"
 	name = "The Goushque"
 	desc = "Derived from Old French, A Goushque, or how they say it, Le Goushque is a tailless \
 	amphibian with a short squat body, moist smooth skin, and very long hind legs for leaping."
 
-/singleton/poster/nowallspawn/nyc_grinch
+/singleton/poster/nyc_grinch
 	// by Mata
 	icon_state = "grinch"
 	name = "Grinch"
@@ -89,7 +89,7 @@
 	desc = "Always remember why you are here. Do your job, make more money for corp, \
 	waste less money of corp. This is how things work in NanoTrasen."
 
-/singleton/poster/nowallspawn/nyc_toolbox
+/singleton/poster/nyc_toolbox
 	// by PyotrTheTchaikowsky
 	icon_state = "toolbox"
 	name = "Toolbox"
@@ -104,7 +104,7 @@
 	desc = "There is something more powerful than your weapon here, bureaucracy, \
 	just accept it and obey."
 
-/singleton/poster/nowallspawn/nyc_imperium_we_see
+/singleton/poster/nyc_imperium_we_see
 	// by Derp
 	icon_state = "imperium_we_see"
 	name = "Imperium"
@@ -112,7 +112,7 @@
 	since he decided to make this poster. Everyone knows that the Imperials won't \
 	come here. Isn't that right?"
 
-/singleton/poster/nowallspawn/nyc_xeno_inferiority
+/singleton/poster/nyc_xeno_inferiority
 	// by Iceberg
 	icon_state = "xeno_inferiority"
 	name = "XENO INFERIORITY"
@@ -156,7 +156,7 @@
 	for example, the human race lowers blood pressure and produces oxytocin. Almost any crew \
 	will increase confidence and feel good. The main thing is - be sure to ask permission.\""
 
-/singleton/poster/nowallspawn/nyc_pizza_for_captain
+/singleton/poster/nyc_pizza_for_captain
 	// by SuhEugene
 	icon_state = "pizza_for_captain"
 	name = "Pizza for Captain"
@@ -217,7 +217,7 @@
 	name = "Dr. Griefsey"
 	desc = "Doctor Griefsey states: \"Drinking is redundant expenses of your corporate salary for treating your liver!\""
 
-/singleton/poster/nowallspawn/nyc_equality
+/singleton/poster/nyc_equality
 	// by God Damn Turkey
 	icon_state = "equality"
 	name = "EQUALITY"
@@ -313,7 +313,7 @@
 	his hand. The poster says \"Future is us\". There is an outer space on a background. Isn't it \
 	worth wearing a helmet in space?"
 
-/singleton/poster/nowallspawn/nyc_together
+/singleton/poster/nyc_together
 	// by TiranShot
 	icon_state = "together"
 	name = "Together"
@@ -344,7 +344,7 @@
 	desc = "A poster featuring different cocktails like Sugar Rush, Manhattan and others. A large \
 	inscription is visible: \"The best way to forget insults and cheer up is alcohol!\""
 
-/singleton/poster/nowallspawn/nyc_true_hero
+/singleton/poster/nyc_true_hero
 	// by Derp
 	icon_state = "true_hero"
 	name = "True hero"
@@ -380,177 +380,177 @@
 	icon = 'mods/nyc_posters/icons/nyc_posters.dmi'
 
 
-/obj/structure/sign/poster/nyc/adme_midala
+/obj/structure/sign/poster/nyc_adme_midala
 	icon_state = "adme_midala"
 	poster_type = /singleton/poster/adme_midala
 
-/obj/structure/sign/poster/nyc/evening_before_12
+/obj/structure/sign/poster/nyc_evening_before_12
 	icon_state = "evening_before_12"
-	poster_type = /singleton/poster/nowallspawn/nyc_evening_before_12
+	poster_type = /singleton/poster/nyc_evening_before_12
 
-/obj/structure/sign/poster/nyc/know_the_enemy
+/obj/structure/sign/poster/nyc_know_the_enemy
 	icon_state = "know_the_enemy"
 	poster_type = /singleton/poster/know_the_enemy
 
-/obj/structure/sign/poster/nyc/mine
+/obj/structure/sign/poster/nyc_mine
 	icon_state = "mine"
 	poster_type = /singleton/poster/mine
 
-/obj/structure/sign/poster/nyc/tersten_ranger
+/obj/structure/sign/poster/nyc_tersten_ranger
 	icon_state = "tersten_ranger"
 	poster_type = /singleton/poster/tersten_ranger
 
-/obj/structure/sign/poster/nyc/blood_donation
+/obj/structure/sign/poster/nyc_blood_donation
 	icon_state = "blood_donation"
 	poster_type = /singleton/poster/blood_donation
 
-/obj/structure/sign/poster/nyc/krotovuha
+/obj/structure/sign/poster/nyc_krotovuha
 	icon_state = "krotovuha"
-	poster_type = /singleton/poster/nowallspawn/nyc_krotovuha
+	poster_type = /singleton/poster/nyc_krotovuha
 
-/obj/structure/sign/poster/nyc/gas_advertisement
+/obj/structure/sign/poster/nyc_gas_advertisement
 	icon_state = "gas_advertisement"
 	poster_type = /singleton/poster/gas_advertisement
 
-/obj/structure/sign/poster/nyc/the_goushque
+/obj/structure/sign/poster/nyc_the_goushque
 	icon_state = "the_goushque"
-	poster_type = /singleton/poster/nowallspawn/nyc_the_goushque
+	poster_type = /singleton/poster/nyc_the_goushque
 
-/obj/structure/sign/poster/nyc/grinch
+/obj/structure/sign/poster/nyc_grinch
 	icon_state = "grinch"
-	poster_type = /singleton/poster/nowallspawn/nyc_grinch
+	poster_type = /singleton/poster/nyc_grinch
 
-/obj/structure/sign/poster/nyc/work_for_profit
+/obj/structure/sign/poster/nyc_work_for_profit
 	icon_state = "work_for_profit"
 	poster_type = /singleton/poster/work_for_profit
 
-/obj/structure/sign/poster/nyc/toolbox
+/obj/structure/sign/poster/nyc_toolbox
 	icon_state = "toolbox"
-	poster_type = /singleton/poster/nowallspawn/nyc_toolbox
+	poster_type = /singleton/poster/nyc_toolbox
 
-/obj/structure/sign/poster/nyc/obey
+/obj/structure/sign/poster/nyc_obey
 	icon_state = "obey"
 	poster_type = /singleton/poster/obey
 
-/obj/structure/sign/poster/nyc/imperium_we_see
+/obj/structure/sign/poster/nyc_imperium_we_see
 	icon_state = "imperium_we_see"
-	poster_type = /singleton/poster/nowallspawn/nyc_imperium_we_see
+	poster_type = /singleton/poster/nyc_imperium_we_see
 
-/obj/structure/sign/poster/nyc/xeno_inferiority
+/obj/structure/sign/poster/nyc_xeno_inferiority
 	icon_state = "xeno_inferiority"
-	poster_type = /singleton/poster/nowallspawn/nyc_xeno_inferiority
+	poster_type = /singleton/poster/nyc_xeno_inferiority
 
-/obj/structure/sign/poster/nyc/multipassport
+/obj/structure/sign/poster/nyc_multipassport
 	icon_state = "multipassport"
 	poster_type = /singleton/poster/multipassport
 
-/obj/structure/sign/poster/nyc/space_escort
+/obj/structure/sign/poster/nyc_space_escort
 	icon_state = "space_escort"
 	poster_type = /singleton/poster/space_escort
 
-/obj/structure/sign/poster/nyc/annoyed_gas
+/obj/structure/sign/poster/nyc_annoyed_gas
 	icon_state = "annoyed_gas"
 	poster_type = /singleton/poster/annoyed_gas
 
-/obj/structure/sign/poster/nyc/healthy_hugs
+/obj/structure/sign/poster/nyc_healthy_hugs
 	icon_state = "healthy_hugs"
 	poster_type = /singleton/poster/healthy_hugs
 
-/obj/structure/sign/poster/nyc/pizza_for_captain
+/obj/structure/sign/poster/nyc_pizza_for_captain
 	icon_state = "pizza_for_captain"
-	poster_type = /singleton/poster/nowallspawn/nyc_pizza_for_captain
+	poster_type = /singleton/poster/nyc_pizza_for_captain
 
-/obj/structure/sign/poster/nyc/unusual_gas
+/obj/structure/sign/poster/nyc_unusual_gas
 	icon_state = "unusual_gas"
 	poster_type = /singleton/poster/unusual_gas
 
-/obj/structure/sign/poster/nyc/unathi_mercenaries
+/obj/structure/sign/poster/nyc_unathi_mercenaries
 	icon_state = "unathi_mercenaries"
 	poster_type = /singleton/poster/unathi_mercenaries
 
-/obj/structure/sign/poster/nyc/wanted
+/obj/structure/sign/poster/nyc_wanted
 	icon_state = "wanted"
 	poster_type = /singleton/poster/wanted
 
-/obj/structure/sign/poster/nyc/big_brother
+/obj/structure/sign/poster/nyc_big_brother
 	icon_state = "big_brother"
 	poster_type = /singleton/poster/big_brother
 
-/obj/structure/sign/poster/nyc/wild_cargo
+/obj/structure/sign/poster/nyc_wild_cargo
 	icon_state = "wild_cargo"
 	poster_type = /singleton/poster/wild_cargo
 
-/obj/structure/sign/poster/nyc/doctor_griefsey
+/obj/structure/sign/poster/nyc_doctor_griefsey
 	icon_state = "doctor_griefsey"
 	poster_type = /singleton/poster/doctor_griefsey
 
-/obj/structure/sign/poster/nyc/equality
+/obj/structure/sign/poster/nyc_equality
 	icon_state = "equality"
-	poster_type = /singleton/poster/nowallspawn/nyc_equality
+	poster_type = /singleton/poster/nyc_equality
 
-/obj/structure/sign/poster/nyc/report
+/obj/structure/sign/poster/nyc_report
 	icon_state = "report"
 	poster_type = /singleton/poster/report
 
-/obj/structure/sign/poster/nyc/do_not_disturb
+/obj/structure/sign/poster/nyc_do_not_disturb
 	icon_state = "do_not_disturb"
 	poster_type = /singleton/poster/do_not_disturb
 
-/obj/structure/sign/poster/nyc/cabbage_tray
+/obj/structure/sign/poster/nyc_cabbage_tray
 	icon_state = "cabbage_tray"
 	poster_type = /singleton/poster/cabbage_tray
 
-/obj/structure/sign/poster/nyc/no_alcohol
+/obj/structure/sign/poster/nyc_no_alcohol
 	icon_state = "no_alcohol"
 	poster_type = /singleton/poster/no_alcohol
 
-/obj/structure/sign/poster/nyc/attention
+/obj/structure/sign/poster/nyc_attention
 	icon_state = "attention"
 	poster_type = /singleton/poster/attention
 
-/obj/structure/sign/poster/nyc/shirisai
+/obj/structure/sign/poster/nyc_shirisai
 	icon_state = "shirisai"
 	poster_type = /singleton/poster/shirisai
 
-/obj/structure/sign/poster/nyc/would_you_plant
+/obj/structure/sign/poster/nyc_would_you_plant
 	icon_state = "would_you_plant"
 	poster_type = /singleton/poster/would_you_plant
 
-/obj/structure/sign/poster/nyc/unexplored_species
+/obj/structure/sign/poster/nyc_unexplored_species
 	icon_state = "unexplored_species"
 	poster_type = /singleton/poster/unexplored_species
 
-/obj/structure/sign/poster/nyc/imperium_calls
+/obj/structure/sign/poster/nyc_imperium_calls
 	icon_state = "imperium_calls"
 	poster_type = /singleton/poster/imperium_calls
 
-/obj/structure/sign/poster/nyc/xmas_gas
+/obj/structure/sign/poster/nyc_xmas_gas
 	icon_state = "xmas_gas"
 	poster_type = /singleton/poster/xmas_gas
 
-/obj/structure/sign/poster/nyc/future_is_us
+/obj/structure/sign/poster/nyc_future_is_us
 	icon_state = "future_is_us"
 	poster_type = /singleton/poster/future_is_us
 
-/obj/structure/sign/poster/nyc/together
+/obj/structure/sign/poster/nyc_together
 	icon_state = "together"
-	poster_type = /singleton/poster/nowallspawn/nyc_together
+	poster_type = /singleton/poster/nyc_together
 
-/obj/structure/sign/poster/nyc/zeng_hu_pharmaceuticals
+/obj/structure/sign/poster/nyc_zeng_hu_pharmaceuticals
 	icon_state = "zeng_hu_pharmaceuticals"
 	poster_type = /singleton/poster/zeng_hu_pharmaceuticals
 
-/obj/structure/sign/poster/nyc/keep_clean
+/obj/structure/sign/poster/nyc_keep_clean
 	icon_state = "keep_clean"
 	poster_type = /singleton/poster/keep_clean
 
-/obj/structure/sign/poster/nyc/good_mood_sponsor
+/obj/structure/sign/poster/nyc_good_mood_sponsor
 	icon_state = "good_mood_sponsor"
 	poster_type = /singleton/poster/good_mood_sponsor
 
-/obj/structure/sign/poster/nyc/true_hero
+/obj/structure/sign/poster/nyc_true_hero
 	icon_state = "true_hero"
-	poster_type = /singleton/poster/nowallspawn/nyc_true_hero
+	poster_type = /singleton/poster/nyc_true_hero
 
 /obj/structure/sign/poster/forge
 	icon_state = "keep_clean"
