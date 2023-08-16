@@ -1,31 +1,6 @@
-#define POWER_IDLE 0
-#define POWER_UP 1
-#define POWER_DOWN 2
-
-#define GRAV_NEEDS_PLASTEEL 1
-#define GRAV_NEEDS_WELDING 2
-#define GRAV_NEEDS_WRENCH 3
-#define GRAV_NEEDS_SCREWDRIVER 4
-
-#define AREA_ERRNONE 0
-#define AREA_STATION 1
-#define AREA_SPACE 2
-#define AREA_SPECIAL 3
-
-//
-// Abstract Generator for Sierra220
-//
-
 /obj/machinery/gravity_generator
-	name = "gravitational generator"
-	desc = "A device which produces a graviton field when set up."
-	icon = 'mods/_master_files/gravity_generator/gravity_gen.dmi'
-	anchored = TRUE
-	density = TRUE
-	use_power = 0
-	unacidable = TRUE
-
-	light_color = "#7de1e1"
+	icon = 'mods/gravity_generator/icons/gravity_generator.dmi'
+	icon_state = "0_0"
 
 	var/sprite_number = 0
 	var/broken_state = 0
@@ -36,38 +11,18 @@
 /obj/machinery/gravity_generator/proc/show_broken_info()
 	return
 
-/obj/machinery/gravity_generator/ex_act(severity)
-	return
-
-/obj/machinery/gravity_generator/emp_act(severity)
-	return
-
-/obj/machinery/gravity_generator/bullet_act(obj/item/projectile/P, def_zone)
-	return
-
 /obj/machinery/gravity_generator/proc/take_damage(amount)
 	return
 
-//
-// Generator which spawns with the station.
-//
 
-GLOBAL_VAR(station_gravity_generator)
-/obj/machinery/gravity_generator/main/station/Initialize(mapload, ...)
-	. = ..()
-	GLOB.station_gravity_generator = src
-	if(!mapload)
-		update_connectected_areas_gravity()
+#define POWER_IDLE 0
+#define POWER_UP 1
+#define POWER_DOWN 2
 
-
-/obj/machinery/gravity_generator/main/station/Destroy()
-	if(GLOB.station_gravity_generator == src)
-		GLOB.station_gravity_generator = null
-	return ..()
-
-//
-// Main Generator with the main code
-//
+#define GRAV_NEEDS_PLASTEEL 1
+#define GRAV_NEEDS_WELDING 2
+#define GRAV_NEEDS_WRENCH 3
+#define GRAV_NEEDS_SCREWDRIVER 4
 
 /obj/machinery/gravity_generator/main
 	name = "gravitational generator panel"
@@ -213,89 +168,117 @@ GLOBAL_VAR(station_gravity_generator)
 		parts += P
 
 // Fixing the gravity generator.
-/obj/machinery/gravity_generator/main/attackby(obj/item/I, mob/user)
+/obj/machinery/gravity_generator/main/use_tool(obj/item/tool, mob/living/user, list/click_params)
 	switch(broken_state)
 		if(GRAV_NEEDS_PLASTEEL)
-			if(istype(I, /obj/item/stack/material/plasteel) || broken_state != GRAV_NEEDS_PLASTEEL)
-				var/obj/item/stack/material/plasteel/PS = I
+			if(istype(tool, /obj/item/stack/material/plasteel) || broken_state != GRAV_NEEDS_PLASTEEL)
+				var/obj/item/stack/material/plasteel/PS = tool
 				if(PS.amount < 10)
 					to_chat(user, SPAN_WARNING("You need 10 sheets of plasteel."))
-					return
-				user.visible_message(SPAN_NOTICE("[user] begins to add plasteel to the destroyed frame."),
-									SPAN_NOTICE("You begin to add plasteel to the destroyed frame."))
+					return FALSE
 
+				user.visible_message(
+					SPAN_NOTICE("[user] begins to add plasteel to the destroyed frame."),
+					SPAN_NOTICE("You begin to add plasteel to the destroyed frame.")
+				)
 				playsound(loc, 'sound/machines/click.ogg', 75, 1)
+
 				if(!do_after(user, 15 SECONDS, middle) || PS.amount < 10)
-					return
+					return FALSE
+
 				PS.use(10)
 				health += 250
-				user.visible_message(SPAN_NOTICE("[user] replaced the destroyed frame."),
-									SPAN_NOTICE("You replaced the destroyed frame."))
+				user.visible_message(
+					SPAN_NOTICE("[user] replaced the destroyed frame."),
+					SPAN_NOTICE("You replaced the destroyed frame.")
+				)
 				playsound(loc, 'sound/machines/click.ogg', 75, 1)
 				set_broken_state(GRAV_NEEDS_WELDING)
 				update_icon()
-				return
+
+				return TRUE
 
 		if(GRAV_NEEDS_WELDING)
-			if(isWelder(I))
-				user.visible_message(SPAN_NOTICE("[user] begins to weld the damaged parts."),
-									SPAN_NOTICE("You begin to weld the damaged parts."))
+			if(isWelder(tool))
+				user.visible_message(
+					SPAN_NOTICE("[user] begins to weld the damaged parts."),
+					SPAN_NOTICE("You begin to weld the damaged parts.")
+				)
 
 				playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
-				var/obj/item/weldingtool/WT = I
+				var/obj/item/weldingtool/WT = tool
+
 				if(!do_after(user, 15 SECONDS, middle) || !WT.remove_fuel(1, user) || broken_state != GRAV_NEEDS_WELDING)
-					return
+					return FALSE
+
 				health += 250
-				user.visible_message(SPAN_NOTICE("[user] fixed the damaged parts."),
-									SPAN_NOTICE("You fixed the damaged parts."))
+				user.visible_message(
+					SPAN_NOTICE("[user] fixed the damaged parts."),
+					SPAN_NOTICE("You fixed the damaged parts.")
+				)
 				playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
 				set_broken_state(GRAV_NEEDS_WRENCH)
 				update_icon()
-				return
+
+				return TRUE
 
 		if(GRAV_NEEDS_WRENCH)
-			if(isWrench(I))
-				user.visible_message(SPAN_NOTICE("[user] screws the parts back."),
-									SPAN_NOTICE("You begin to screw the parts back."))
-
+			if(isWrench(tool))
+				user.visible_message(
+					SPAN_NOTICE("[user] screws the parts back."),
+					SPAN_NOTICE("You begin to screw the parts back.")
+				)
 				playsound(loc, 'sound/items/Ratchet.ogg', 75, 1)
+
 				if(!do_after(user, 15 SECONDS, middle) || broken_state != GRAV_NEEDS_WRENCH)
-					return
+					return FALSE
+
 				health += 250
-				user.visible_message(SPAN_NOTICE("[user] screwed the parts back."),
-									SPAN_NOTICE("You screwed the parts back."))
+				user.visible_message(
+					SPAN_NOTICE("[user] screwed the parts back."),
+					SPAN_NOTICE("You screwed the parts back.")
+				)
 				playsound(loc, 'sound/items/Ratchet.ogg', 75, 1)
 				set_broken_state(GRAV_NEEDS_SCREWDRIVER)
 				update_icon()
+
 				return TRUE
 
 		if(GRAV_NEEDS_SCREWDRIVER)
-			if(isScrewdriver(I))
-				user.visible_message(SPAN_NOTICE("[user] begins to attach the details in the desired order."),
-									SPAN_NOTICE("You begin to attach the details in the desired order."))
-
+			if(isScrewdriver(tool))
+				user.visible_message(
+					SPAN_NOTICE("[user] begins to attach the details in the desired order."),
+					SPAN_NOTICE("You begin to attach the details in the desired order.")
+				)
 				playsound(loc, 'sound/items/Screwdriver.ogg', 75, 1)
+
 				if(!do_after(user, 15 SECONDS, middle) || broken_state != GRAV_NEEDS_SCREWDRIVER)
-					return
+					return FALSE
+
 				health += max(initial(health), health + 250)
-				user.visible_message(SPAN_NOTICE("[user] attached the details."),
-									SPAN_NOTICE("You have attached the details."))
+				user.visible_message(
+					SPAN_NOTICE("[user] attached the details."),
+					SPAN_NOTICE("You have attached the details.")
+				)
 				playsound(loc, 'sound/items/Screwdriver.ogg', 75, 1)
 				stat &= ~MACHINE_BROKEN_GENERIC
 				set_broken_state(0)
 				update_icon()
-				return
 
-	if(isCrowbar(I))
+				return TRUE
+
+	if(isCrowbar(tool))
 		if(!do_after(user, 5 SECONDS, middle))
-			return
+			return FALSE
+
 		playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
 		panel_open = !panel_open
 		update_icon()
-		to_chat(user, SPAN_NOTICE("You [panel_open ? "open" : "close "] the maintenance hatch."))
-		return
+		to_chat(user, SPAN_NOTICE("You [panel_open ? "open" : "close"] the maintenance hatch."))
 
-	attack_hand(user)
+		return TRUE
+
+	return ..()
 
 /obj/machinery/gravity_generator/part/attack_ghost(mob/user)
 	ui_interact(user)
@@ -336,7 +319,7 @@ GLOBAL_VAR(station_gravity_generator)
 
 	ui = SSnano.try_update_ui(user, src, ui_key, ui, data, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "gravgen.tmpl", "Gravitational Generator Panel", 500, 300, state = state)
+		ui = new(user, src, ui_key, "mods-gravgen.tmpl", "Gravitational Generator Panel", 500, 300, state = state)
 		ui.set_initial_data(data)
 		ui.open()
 		ui.set_auto_update(1)
@@ -540,9 +523,16 @@ GLOBAL_VAR(station_gravity_generator)
 		if(is_station_area(A))
 			connected_areas += A
 
-//
-// Part generator which is mostly there for looks
-//
+#undef GRAV_NEEDS_SCREWDRIVER
+#undef GRAV_NEEDS_WELDING
+#undef GRAV_NEEDS_PLASTEEL
+#undef GRAV_NEEDS_WRENCH
+
+#undef POWER_IDLE
+#undef POWER_UP
+#undef POWER_DOWN
+
+
 
 /obj/machinery/gravity_generator/part
 	var/obj/machinery/gravity_generator/main/main_part = null
@@ -562,17 +552,3 @@ GLOBAL_VAR(station_gravity_generator)
 
 /obj/machinery/gravity_generator/part/bullet_act(obj/item/projectile/P)
 	return main_part.bullet_act(P)
-
-#undef POWER_IDLE
-#undef POWER_UP
-#undef POWER_DOWN
-
-#undef GRAV_NEEDS_SCREWDRIVER
-#undef GRAV_NEEDS_WELDING
-#undef GRAV_NEEDS_PLASTEEL
-#undef GRAV_NEEDS_WRENCH
-
-#undef AREA_ERRNONE
-#undef AREA_STATION
-#undef AREA_SPACE
-#undef AREA_SPECIAL
