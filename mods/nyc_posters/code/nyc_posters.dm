@@ -3,6 +3,7 @@
 //  ---------------------------  //
 
 /singleton/poster/nyc_adme_midala
+	icon = 'mods/nyc_posters/icons/nyc_posters.dmi'
 	// by KandJX
 	icon_state = "adme_midala"
 	name = "Adme Midala"
@@ -12,6 +13,7 @@
 	Текст на постере гласит \"Stop the Martians\"."
 
 /singleton/poster/nyc_evening_before_12
+	icon = 'mods/nyc_posters/icons/nyc_posters.dmi'
 	// by Den10901
 	icon_state = "evening_before_12"
 	name = "Evening before 12"
@@ -20,6 +22,7 @@
 	no answer on poster."
 
 /singleton/poster/nyc_know_the_enemy
+	icon = 'mods/nyc_posters/icons/nyc_posters.dmi'
 	// by NAKAII
 	icon_state = "know_the_enemy"
 	name = "Beware the pirates!"
@@ -28,6 +31,7 @@
 	it reads: \"Beware the frontier pirates!\""
 
 /singleton/poster/nyc_mine
+	icon = 'mods/nyc_posters/icons/nyc_posters.dmi'
 	// by Скавен-крыс
 	icon_state = "mine"
 	name = "Mine"
@@ -37,6 +41,7 @@
 
 
 /singleton/poster/nyc_tersten_ranger
+	icon = 'mods/nyc_posters/icons/nyc_posters.dmi'
 	// by Wastelander41
 	icon_state = "tersten_ranger"
 	name = "Tersten Ranger"
@@ -45,6 +50,7 @@
 	Patrolling Tersten almost makes you wish for a nuclear winter."
 
 /singleton/poster/nyc_blood_donation
+	icon = 'mods/nyc_posters/icons/nyc_posters.dmi'
 	// by Kysovich
 	icon_state = "blood_donation"
 	name = "Стань донором крови!"
@@ -54,6 +60,7 @@
 	ценного сотрудника!\"."
 
 /singleton/poster/nyc_krotovuha
+	icon = 'mods/nyc_posters/icons/nyc_posters.dmi'
 	// by Andrei
 	icon_state = "krotovuha"
 	name = "Krotovuha"
@@ -64,12 +71,14 @@
 	other infection)."
 
 /singleton/poster/nyc_gas_advertisement
+	icon = 'mods/nyc_posters/icons/nyc_posters.dmi'
 	// by God Damn Turkey
 	icon_state = "gas_advertisement"
 	name = "Giant Armoured Serpentid"
 	desc = "Buy them today - they'll work whole their life without salary because they LOVE working!"
 
 /singleton/poster/nyc_the_goushque
+	icon = 'mods/nyc_posters/icons/nyc_posters.dmi'
 	// by tomatik
 	icon_state = "the_goushque"
 	name = "The Goushque"
@@ -77,12 +86,14 @@
 	amphibian with a short squat body, moist smooth skin, and very long hind legs for leaping."
 
 /singleton/poster/nyc_grinch
+	icon = 'mods/nyc_posters/icons/nyc_posters.dmi'
 	// by Mata
 	icon_state = "grinch"
 	name = "Grinch"
 	desc = "Find this bastard and don't let him ruin our holiday! Remuneration is attached.	"
 
 /singleton/poster/nyc_work_for_profit
+	icon = 'mods/nyc_posters/icons/nyc_posters.dmi'
 	// by Kysovich
 	icon_state = "work_for_profit"
 	name = "Work for profit"
@@ -90,6 +101,7 @@
 	waste less money of corp. This is how things work in NanoTrasen."
 
 /singleton/poster/nyc_toolbox
+	icon = 'mods/nyc_posters/icons/nyc_posters.dmi'
 	// by PyotrTheTchaikowsky
 	icon_state = "toolbox"
 	name = "Toolbox"
@@ -98,6 +110,7 @@
 	the poster is made of real blood."
 
 /singleton/poster/nyc_obey
+	icon = 'mods/nyc_posters/icons/nyc_posters.dmi'
 	// by PyotrTheTchaikowsky
 	icon_state = "obey"
 	name = "Obey"
@@ -105,6 +118,7 @@
 	just accept it and obey."
 
 /singleton/poster/nyc_imperium_we_see
+	icon = 'mods/nyc_posters/icons/nyc_posters.dmi'
 	// by Derp
 	icon_state = "imperium_we_see"
 	name = "Imperium"
@@ -113,6 +127,7 @@
 	come here. Isn't that right?"
 
 /singleton/poster/nyc_xeno_inferiority
+	icon = 'mods/nyc_posters/icons/nyc_posters.dmi'
 	// by Iceberg
 	icon_state = "xeno_inferiority"
 	name = "XENO INFERIORITY"
@@ -122,6 +137,7 @@
 
 
 /singleton/poster/nyc_multipassport
+	icon = 'mods/nyc_posters/icons/nyc_posters.dmi'
 	// by Derp
 	icon_state = "multipassport"
 	name = "Multipassport"
@@ -130,6 +146,7 @@
 	with you. A passport is a thing that everyone must have.\""
 
 /singleton/poster/nyc_space_escort
+	icon = 'mods/nyc_posters/icons/nyc_posters.dmi'
 	// by dj-34
 	icon_state = "space_escort"
 	name = "Space Escort"
@@ -137,6 +154,7 @@
 	\"We will will bring our client to any location - quickly, safely and comfortably!\""
 
 /singleton/poster/nyc_annoyed_gas
+	icon = 'mods/nyc_posters/icons/nyc_posters.dmi'
 	// by SuhEugene
 	icon_state = "annoyed_gas"
 	name = "Annoyed GAS"
@@ -147,6 +165,7 @@
 	around and leave him alone.\""
 
 /singleton/poster/nyc_healthy_hugs
+	icon = 'mods/nyc_posters/icons/nyc_posters.dmi'
 	// by SuhEugene
 	icon_state = "healthy_hugs"
 	name = "Healthy hugs"
@@ -157,6 +176,7 @@
 	will increase confidence and feel good. The main thing is - be sure to ask permission.\""
 
 /singleton/poster/nyc_pizza_for_captain
+	icon = 'mods/nyc_posters/icons/nyc_posters.dmi'
 	// by SuhEugene
 	icon_state = "pizza_for_captain"
 	name = "Pizza for Captain"
@@ -165,6 +185,7 @@
 	Someone apparently doesn't like the captain very much..."
 
 /singleton/poster/nyc_unusual_gas
+	icon = 'mods/nyc_posters/icons/nyc_posters.dmi'
 	// by SuhEugene
 	icon_state = "unusual_gas"
 	name = "Unusual GAS"
@@ -174,6 +195,7 @@
 	and in the lower left it says: \"More on our site - WetSkrell.nt\"."
 
 /singleton/poster/nyc_unathi_mercenaries
+	icon = 'mods/nyc_posters/icons/nyc_posters.dmi'
 	// by Wastelander41
 	icon_state = "unathi_mercenaries"
 	name = "Unathi mercenaries"
@@ -184,6 +206,7 @@
 	which look like toys on them."
 
 /singleton/poster/nyc_wanted
+	icon = 'mods/nyc_posters/icons/nyc_posters.dmi'
 	// by PyotrTheTchaikowsky
 	icon_state = "wanted"
 	name = "Wanted!"
@@ -191,12 +214,14 @@
 	the vastness of the entire SCG space. What did she do to be so wanted..."
 
 /singleton/poster/nyc_big_brother
+	icon = 'mods/nyc_posters/icons/nyc_posters.dmi'
 	// by Semonic_
 	icon_state = "big_brother"
 	name = "BIG BROTHER"
 	desc = "Never forget that you can be followed at any moment. Even when you enjoy privacy and tranquility."
 
 /singleton/poster/nyc_wild_cargo
+	icon = 'mods/nyc_posters/icons/nyc_posters.dmi'
 	// by PyotrTheTchaikowsky
 	icon_state = "wild_cargo"
 	name = "Wild Cargo"
@@ -204,6 +229,7 @@
 
 /*
 /singleton/poster/nyc_mad_nymph
+	icon = 'mods/nyc_posters/icons/nyc_posters.dmi'
 	// by den4ik
 	icon_state = "mad_nymph"
 	name = "Mad Nymph"
@@ -212,24 +238,28 @@
 */
 
 /singleton/poster/nyc_doctor_griefsey
+	icon = 'mods/nyc_posters/icons/nyc_posters.dmi'
 	// by God Damn Turkey
 	icon_state = "doctor_griefsey"
 	name = "Dr. Griefsey"
 	desc = "Doctor Griefsey states: \"Drinking is redundant expenses of your corporate salary for treating your liver!\""
 
 /singleton/poster/nyc_equality
+	icon = 'mods/nyc_posters/icons/nyc_posters.dmi'
 	// by God Damn Turkey
 	icon_state = "equality"
 	name = "EQUALITY"
 	desc = "A ripped of poster, that was showing a tajaran in HoS uniform. Nothing besides the title can be read."
 
 /singleton/poster/nyc_report
+	icon = 'mods/nyc_posters/icons/nyc_posters.dmi'
 	// by PyotrTheTchaikowsky
 	icon_state = "report"
 	name = "Report"
 	desc = "Always remember to report your superiors"
 
 /singleton/poster/nyc_do_not_disturb
+	icon = 'mods/nyc_posters/icons/nyc_posters.dmi'
 	// by Derp
 	icon_state = "do_not_disturb"
 	name = "Do not disturb"
@@ -240,6 +270,7 @@
 	free medicine of NanoTrasen!"
 
 /singleton/poster/nyc_cabbage_tray
+	icon = 'mods/nyc_posters/icons/nyc_posters.dmi'
 	// by SuhEugene
 	icon_state = "cabbage_tray"
 	name = "Cabbage tray"
@@ -250,6 +281,7 @@
 	a couple of empty trays.\""
 
 /singleton/poster/nyc_no_alcohol
+	icon = 'mods/nyc_posters/icons/nyc_posters.dmi'
 	// by SuhEugene
 	icon_state = "no_alcohol"
 	name = "СП * РТ"
@@ -259,6 +291,7 @@
 	seriousness of the statement."
 
 /singleton/poster/nyc_attention
+	icon = 'mods/nyc_posters/icons/nyc_posters.dmi'
 	// by Derp
 	icon_state = "attention"
 	name = "Attention!"
@@ -267,6 +300,7 @@
 	and willing to read every instruction they see."
 
 /singleton/poster/nyc_shirisai
+	icon = 'mods/nyc_posters/icons/nyc_posters.dmi'
 	// by Derp
 	icon_state = "shirisai"
 	name = "Shirisai"
@@ -274,6 +308,7 @@
 	And why do many resomi flee from there?"
 
 /singleton/poster/nyc_would_you_plant
+	icon = 'mods/nyc_posters/icons/nyc_posters.dmi'
 	// by SuhEugene
 	icon_state = "would_you_plant"
 	name = "Засадил бы?"
@@ -283,6 +318,7 @@
 	индикаторы подскажут, когда за растением нужен уход! И как в такой не засадить?\""
 
 /singleton/poster/nyc_unexplored_species
+	icon = 'mods/nyc_posters/icons/nyc_posters.dmi'
 	// by PyotrTheTchaikowsky
 	icon_state = "unexplored_species"
 	name = "Unexplored species"
@@ -292,6 +328,7 @@
 	so big and how much there is to explore!\""
 
 /singleton/poster/nyc_imperium_calls
+	icon = 'mods/nyc_posters/icons/nyc_posters.dmi'
 	// by Derp
 	icon_state = "imperium_calls"
 	name = "Imperium calls"
@@ -300,12 +337,14 @@
 	probably someone tried to rip it off, but he did not have enough height."
 
 /singleton/poster/nyc_xmas_gas
+	icon = 'mods/nyc_posters/icons/nyc_posters.dmi'
 	// by PyotrTheTchaikowsky
 	icon_state = "xmas_gas"
 	name = "Xmas GAS"
 	desc = "The poster depicts the GAS that is dressed up like a Xmas tree, wish you a Merry Xmas and a happy New Year!"
 
 /singleton/poster/nyc_future_is_us
+	icon = 'mods/nyc_posters/icons/nyc_posters.dmi'
 	// by Nevek
 	icon_state = "future_is_us"
 	name = "Future is Us"
@@ -314,6 +353,7 @@
 	worth wearing a helmet in space?"
 
 /singleton/poster/nyc_together
+	icon = 'mods/nyc_posters/icons/nyc_posters.dmi'
 	// by TiranShot
 	icon_state = "together"
 	name = "Together"
@@ -321,6 +361,7 @@
 	of three multi-colored feathers. The poster says \"Unite, feathers\", \"Let's build a new house\"."
 
 /singleton/poster/nyc_zeng_hu_pharmaceuticals
+	icon = 'mods/nyc_posters/icons/nyc_posters.dmi'
 	// by KoKoC
 	icon_state = "zeng_hu_pharmaceuticals"
 	name = "Zeng-Hu Pharmaceuticals"
@@ -330,6 +371,7 @@
 	provide you with any medical products for an extremely favorable price. All research is LEGAL!\""
 
 /singleton/poster/nyc_keep_clean
+	icon = 'mods/nyc_posters/icons/nyc_posters.dmi'
 	// by Фанзиль
 	icon_state = "keep_clean"
 	name = "Keep clean"
@@ -338,6 +380,7 @@
 	visible at the bottom left."
 
 /singleton/poster/nyc_good_mood_sponsor
+	icon = 'mods/nyc_posters/icons/nyc_posters.dmi'
 	// by Dobre Pachantok / pudge_xxl
 	icon_state = "good_mood_sponsor"
 	name = "Good Mood Sponsor"
@@ -345,6 +388,7 @@
 	inscription is visible: \"The best way to forget insults and cheer up is alcohol!\""
 
 /singleton/poster/nyc_true_hero
+	icon = 'mods/nyc_posters/icons/nyc_posters.dmi'
 	// by Derp
 	icon_state = "true_hero"
 	name = "True hero"
@@ -353,6 +397,7 @@
 	there to change lights. Below you can see the postscript: \"True hero\"."
 
 /singleton/poster/nyc_forge
+	icon = 'mods/nyc_posters/icons/nyc_posters.dmi'
 	// by Скавен-крыс
 	icon_state = "forge"
 	name = "Forge"
@@ -362,6 +407,7 @@
 	A small tag at the bottom indicates that this poster is sponsored by Grayson Manufactories - HRM"
 
 /singleton/poster/nyc_space_dwarf
+	icon = 'mods/nyc_posters/icons/nyc_posters.dmi'
 	// by Скавен-крыс
 	icon_state = "space_dwarf"
 	name = "Space Dwarf"
@@ -371,6 +417,7 @@
 	of the poster indicates that the poster is sponsored by Grayson Manufactories - HRM"
 
 /singleton/poster/nyc_good_old_times
+	icon = 'mods/nyc_posters/icons/nyc_posters.dmi'
 	// by Скавен-крыс
 	icon_state = "good_old_times"
 	name = "Good Old Times"
@@ -378,7 +425,6 @@
 
 /obj/structure/sign/poster/nyc
 	icon = 'mods/nyc_posters/icons/nyc_posters.dmi'
-
 
 /obj/structure/sign/poster/nyc/adme_midala
 	icon_state = "adme_midala"
