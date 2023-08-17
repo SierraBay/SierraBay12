@@ -1,5 +1,6 @@
 #if !defined(using_map_DATUM)
 
+	// --- MAP MAINTENANCE --- //
 	#include "sierra_setup.dm"
 	#include "sierra_announcements.dm"
 	#include "sierra_antagonism.dm"
@@ -19,8 +20,10 @@
 	#include "sierra_turfs.dm"
 	#include "sierra_unit_testing.dm"
 
+	// --- INCLUDES FROM ANOTHER MAPS --- //
 	#include "sierra_snatch.dm"
 
+	// --- DATUMS SECTION --- //
 	#include "datums/uniforms.dm"
 	#include "datums/uniforms_civilian.dm"
 	#include "datums/uniforms_contractor.dm"
@@ -44,6 +47,7 @@
 	#include "game/languages.dm"
 	#include "game/lockdown.dm"
 
+	// --- ITEMS --- //
 	#include "items/cards_ids.dm"
 	#include "items/documents.dm"
 	#include "items/encryption_keys.dm"
@@ -64,6 +68,8 @@
 	#include "items/clothing/override.dm"
 	#include "items/clothing/storages.dm"
 
+	// --- JOB SECTION --- //
+	#include "job\_job_defines.dm"
 	#include "job/access.dm"
 	#include "job/jobs.dm"
 	#include "job/outfits.dm"
@@ -79,6 +85,7 @@
 	#include "job/jobs_security.dm"
 	#include "job/jobs_service.dm"
 
+	// --- MACHINERY --- //
 	#include "machinery/alarm.dm"
 	#include "machinery/doors.dm"
 	#include "machinery/keycard authentication.dm"
@@ -91,6 +98,7 @@
 	#include "machinery/uniform_vendor.dm"
 	#include "machinery/vendors.dm"
 
+	// --- STRUCTURES --- //
 	#include "structures/closets.dm"
 	#include "structures/other.dm"
 	#include "structures/signs.dm"
@@ -107,6 +115,7 @@
 	#include "structures/closets/services.dm"
 	#include "structures/closets/supply.dm"
 
+	// --- LOADOUT --- //
 	#include "loadout/_defines.dm"
 	#include "loadout/loadout.dm"
 	#include "loadout/loadout_accessories.dm"
@@ -122,6 +131,9 @@
 	#include "loadout/loadout_xeno.dm"
 	#include "loadout/~defines.dm"
 
+	// --- MAP FILES --- //
+
+		// ~SIERRA~ //
 	#include "z1_sierra_deck3.dmm"
 	#include "z2_sierra_deck2.dmm"
 	#include "z3_sierra_deck1.dmm"
@@ -129,7 +141,7 @@
 	#include "z5_transit.dmm"
 	#include "../away/empty.dmm"
 
-
+		// ~AWAY SITES~ //
 	#include "../away/mining/mining.dm"
 	#include "../away/derelict/derelict.dm"
 	#include "../away/bearcat/bearcat.dm"
