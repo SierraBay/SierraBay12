@@ -171,7 +171,7 @@
 	#include "../../mods/_maps/sentinel/_map_sentinel.dme"
 	#include "../../mods/_maps/farfleet/_map_farfleet.dme"
 	#include "../../mods/bluespace_kitty/_bluespace_kitty.dme"
-	// #include "../../mods/don_loadout/_don_loadout.dme"
+	#include "../../mods/don_loadout/_don_loadout.dme"
 	#include "../../mods/fancy_sofas/_fancy_sofas.dme"
 	#include "../../mods/jukebox_tapes/_jukebox_tapes.dme"
 	#include "../../mods/legalese_language/_legalese.dme"
