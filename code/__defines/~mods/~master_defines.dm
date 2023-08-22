@@ -7,15 +7,18 @@
 	- Вновь комментарий с ID модуля и указанием, что это конец
 */
 
-// "../../mods/tajara/_tajara.dme"
-// Start
+// TAJARA - Start
 #define SPECIES_TAJARA			"Tajara"
 #define LANGUAGE_SIIK_MAAS		"Siik'maas"
 #define LANGUAGE_SIIK_TAJR		"Siik'tajr"
-// End
+// TAJARA - End
 
-// "../../mods/resomi/_resomi.dme"
-// Start
+// RESOMI - Start
 #define LANGUAGE_RESOMI			"Schechi"
 #define SPECIES_RESOMI			"Resomi"
-// End
+// RESOMI - End
+
+// UTF8 - Start
+#undef show_browser
+#define show_browser(target, content, title)  to_target(target, browse(utf_8_html(content), title))
+// UTF8 - End

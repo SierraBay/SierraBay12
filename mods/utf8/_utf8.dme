@@ -1,0 +1,8 @@
+#ifndef MODPACK_EXAMPLE
+#define MODPACK_EXAMPLE
+
+#include "_utf8.dm"
+
+#include "code/utf8.dm"
+
+#endif
