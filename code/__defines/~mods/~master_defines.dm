@@ -13,11 +13,6 @@
 #define LANGUAGE_SIIK_TAJR		"Siik'tajr"
 // TAJARA - End
 
-// RESOMI - Start
-#define LANGUAGE_RESOMI			"Schechi"
-#define SPECIES_RESOMI			"Resomi"
-// RESOMI - End
-
 // UTF8 - Start
 #undef show_browser
 #define show_browser(target, content, title)  to_target(target, browse(utf_8_html(content), title))
