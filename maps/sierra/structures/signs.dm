@@ -36,9 +36,9 @@
 
 /obj/structure/sign/memorial/sierra/on_update_icon()
 	. = ..()
-	overlays += image(icon, "sierra-overlay")
+	AddOverlays(image(icon, "sierra-overlay"))
 
-/obj/structure/sign/memorial/sierra/update_overlays()
+/obj/structure/sign/memorial/sierra/update_emissive_blocker()
 	. = ..()
 	. += emissive_appearance(icon, "sierra-overlay")
 

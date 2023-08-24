@@ -200,6 +200,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			var/eta_status = evacuation_controller.get_status_panel_eta()
 			if(eta_status)
 				stat(null, eta_status)
+		stat("Local Time:", "[stationtime2text()]")
+		stat("Local Date:", "[stationdate2text()]")
 
 /mob/observer/ghost/verb/reenter_corpse()
 	set category = "Ghost"
@@ -532,18 +534,13 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	return TRUE
 
 /mob/observer/ghost/proc/set_appearance(mob/target)
-	var/pre_alpha = alpha
-	var/pre_plane = plane
-	var/pre_layer = layer
-	var/pre_invis = invisibility
-
-	appearance = target
-	appearance_flags |= initial(appearance_flags)
-	alpha = pre_alpha
-	plane = pre_plane
-	layer = pre_layer
-	set_invisibility(pre_invis)
 	ClearTransform()
+	ClearOverlays()
+	if (!target)
+		icon = initial(icon)
+		return
+	icon = null
+	CopyOverlays(target)
 
 
 /mob/observer/ghost/verb/respawn()
