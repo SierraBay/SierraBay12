@@ -1,6 +1,19 @@
-# SierraBay12 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3.0-orange.svg)](https://opensource.org/licenses/AGPL-3.0) [![CodeQL](https://github.com/SierraBay/SierraBay12/workflows/CodeQL/badge.svg)](https://github.com/SierraBay/SierraBay12/actions/workflows/codeql-analysis.yml) [![CI Status](https://github.com/SierraBay/SierraBay12/workflows/Run%20Tests/badge.svg)](https://github.com/SierraBay/SierraBay12/actions/workflows/test.yml)
+<div align="center">
 
-[Website](https://baystation.xyz) - [Discord](https://baystation.xyz/discord) - [Code](https://baystation.xyz/github) - [DMDoc](https://baystation.xyz/dmdoc)
+# SierraBay12
+ [![CodeQL](https://github.com/SierraBay/SierraBay12/workflows/CodeQL/badge.svg)](https://github.com/SierraBay/SierraBay12/actions/workflows/codeql-analysis.yml) [![CI Status](https://github.com/SierraBay/SierraBay12/workflows/Run%20Tests/badge.svg)](https://github.com/SierraBay/SierraBay12/actions/workflows/test.yml) [![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3.0-blue.svg)](https://opensource.org/licenses/AGPL-3.0)
+
+</div>
+
+<table><tr><td align="center" width="2000"><b>
+<a href="https://github.com/baystation12/baystation12">Апстрим</a> • 
+<a href="https://github.com/baystation12/baystation12">Discord</a> • 
+<a href="https://github.com/baystation12/baystation12">Дискорд</a> • 
+</b></td></tr></table>
+
+---
+
+## Установка
 
 ---
 
@@ -18,19 +31,19 @@ Please see [/docs/SECURITY.md](/docs/SECURITY.md) for this repository's security
 
 ---
 
-### LICENSE
+### Лизцензия
 
-The code for Baystation is licensed under the [GNU Affero General Public License v3](https://www.gnu.org/licenses/agpl.html), which can be found in full in [/LICENSE](/LICENSE).
+Код Baystation, и, следовательно, SierraBay лицензируется по [GNU Affero General Public License v3](https://www.gnu.org/licenses/agpl.html), содержание которой можно прочитать в файле [`LICENSE`](/LICENSE).
 
-Code with a git authorship date prior to `1420675200 +0000` (2015/01/08 00:00 GMT) is licensed under the GNU General Public License version 3, which can be found in full in [/docs/GPL3.txt](/docs/GPL3.txt)
+Код с датой авторства git до `1420675200 +0000` (08.01.2015, 00:00 GMT) лицензируется по [GNU General Public License v3](https://www.gnu.org/licenses/gpl-3.0.html), полную версию которой можно найти в [`/docs/GPL3.txt`](/docs/GPL3.txt).
 
-All code where the authorship dates on or after `1420675200 +0000` is assumed to be licensed under AGPL v3, if you wish to license under GPL v3 please make this clear in the commit message and any added files.
+Предполагается, что весь код, авторство которого датируется `1420675200 +0000` или позже, лицензируется по AGPL v3. Если вы хотите лицензировать по GPL v3, укажите это в сообщении коммита, а также внутри всех добавленных файлов.
 
-If you wish to develop and host this codebase in a closed source manner you may use all commits prior to `1420675200 +0000`, which are licensed under GPL v3.  The major change here is that if you host a server using any code licensed under AGPLv3 you are required to provide full source code for your servers users as well including addons and modifications you have made.
+Если вы хотите разрабатывать и хостить этот код, закрыв исходный код, вы можете использовать все коммиты до `1420675200 +0000`, лицензируемые по GPL v3. Основное изменение здесь заключается в том, что если вы размещаете сервер с использованием любого кода, лицензированного в соответствии с AGPLv3, вы должны предоставить полный исходный код для пользователей ваших серверов, а также внесенные вами дополнения и изменения.
 
-See [here](https://www.gnu.org/licenses/why-affero-gpl.html) for more information.
+Статья ["Зачем нужна GPL Афферо"](https://www.gnu.org/licenses/why-affero-gpl.html) рассказывает об этом подробнее.
 
-All assets including icons and sound are under a [Creative Commons 3.0 BY-SA license](https://creativecommons.org/licenses/by-sa/3.0/) unless otherwise indicated.
+Все ассеты, включая иконки и звуки, лицензируются по [Creative Commons 3.0 BY-SA license](https://creativecommons.org/licenses/by-sa/3.0/), если не указано иное.
 
 ---
 

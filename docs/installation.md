@@ -1,34 +1,38 @@
-### GETTING THE CODE
+# Установка SierraBay
+### Скачивание кода
 
-The simplest way to obtain the code is using Github's .zip feature.
+Самый простой способ получить код - использовать GitHub функцию скачивания `.zip`.
 
-Click [here](https://github.com/Baystation12/Baystation12/archive/dev.zip) to get the latest code as a .zip file, then unzip it to wherever you want.
+Нажми [сюда](https://github.com/SierraBay/SierraBay12/archive/dev-sierra.zip) чтобы получить последнюю версию кода в виде .zip файла, а затем разархивируй его куда захочешь.
 
-The more complicated and easier to update method is using git.  You'll need to download git or some client from [here](http://git-scm.com/).  When that's installed, right click in any folder and click on "Git Bash".  When that opens, type in:
+Более сложный в скачивании, но более простой в обновлении метод - использование git. Тебе нужно скачать git или клиент [отсюда](http://git-scm.com/). Когда он установится, нажми правой кнопкой мыши в любой папке правую кнопку мыши и выбери "Git Bash". Когда окно откроется, пиши в него:
 
-    git clone https://github.com/Baystation12/Baystation12.git
+```sh
+git clone https://github.com/SierraBay/SierraBay12.git
+```
 
-(hint: hold down ctrl and press insert to paste into git bash)
+(Подсказка: чтобы вставить в git bash можно нажать ПКМ по окну, или использовать <kbd>Ctrl</kbd>+<kbd>Insert</kbd>)
 
-This will take a while to download, but it provides an easier method for updating.
-
----
-
-### INSTALLATION
-
-First-time installation should be fairly straightforward.  First, you'll need BYOND installed.  You can get it from [here](http://www.byond.com/).
-
-This is a sourcecode-only release, so the next step is to compile the server files.  Open `baystation12.dme` by double-clicking it, open the Build menu, and click compile.  This'll take a little while, and if everything's done right you'll get a message like this:
-
-    saving baystation12.dmb (DEBUG mode)
-    
-    baystation12.dmb - 0 errors, 0 warnings
-
-If you see any errors or warnings, something has gone wrong - possibly a corrupt download or the files extracted wrong, or a code issue on the main repo.  Ask on IRC or discord.
+Загрузка займет некоторое время, но обновлять билд будет проще.
 
 ---
 
-### CONFIGURATION
+### Установка
+
+Первая установка должна быть довольно простой. Во-первых, вам понадобится установить BYOND. Его можно скачать [здесь](http://www.byond.com/).
+
+Ты скачал только исходный код, поэтому его нужно скомпилировать. Открой `baystation12.dme` двойным кликом, слева сверху выбери вкладку `Build` и там нажми `Compile`. Не пугайся того что почти ничего в консоли долго не происходит, просто жди, это нормально. Это займёт время, но по итогу внизу ты должен увидеть такое сообщение:
+```
+saving baystation12.dmb (DEBUG mode)
+
+baystation12.dmb - 0 errors, 0 warnings
+```
+
+Если ты видишь какие-то ошибки или предупреждения - что-то однозанчно пошло не по плану. Скорее всего либо повреждена загрузка, либо файлы извлечены неправильно, либо мы допустили ошибку в коде. Спросить можно в дискорде, указанном в [`README`](/README.md)
+
+---
+
+### Конфигурация
 
 Copy the contents of the `/config/examples` folder into `/config`. You will now work with everthing contained within `/config`.
 
