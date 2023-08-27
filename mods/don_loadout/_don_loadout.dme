@@ -3,7 +3,6 @@
 
 #include "_don_loadout.dm"
 
-#include "code/donations/donations_defines.dm"
 #include "code/donations/donations.dm"
 #include "code/donations/donator.dm"
 #include "code/donations/ooc_color.dm"

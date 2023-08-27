@@ -50,7 +50,17 @@ ID мода: DON_LOADOUT
 
 ### Дефайны
 
-- Отсутствуют
+- `code/__defines/~mods/~master_defines.dm`:
+  - `DONATION_TIER_NONE`
+  - `DONATION_TIER_ONE`
+  - `DONATION_TIER_TWO`
+  - `DONATION_TIER_THREE`
+  - `DONATION_TIER_FOUR`
+  - `DONATION_TIER_ONE_SUM`
+  - `DONATION_TIER_TWO_SUM`
+  - `DONATION_TIER_THREE_SUM`
+  - `DONATION_TIER_FOUR_SUM`
+  - `DONATION_TIER_ALL_TIERS`
 <!--
   Если требовалось добавить какие-либо дефайны, укажи файлы,
   в которые ты их добавил, а также перечисли имена.
