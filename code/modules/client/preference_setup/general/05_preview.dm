@@ -19,7 +19,6 @@
 	// [SIERRA-ADD] - DON_LOADOUT - Mob preview
 	if(!mannequin)
 		return
-	mannequin.update_icon = TRUE
 	// [/SIERRA-ADD]
 	var/update_icon = FALSE
 	copy_to(mannequin, TRUE)

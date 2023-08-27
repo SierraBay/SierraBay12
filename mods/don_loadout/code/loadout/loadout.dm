@@ -537,3 +537,9 @@
 			if(istype(G)) total_cost += G.cost
 		if((total_cost+TG.cost) <= config.max_gear_cost)
 			pref.gear_list[pref.gear_slot][TG.display_name] = selected_tweaks.Copy()
+
+/datum/category_item/player_setup_item/loadout/get_gear_metadata(datum/gear/G)
+	var/list/gear_items = pref.gear_list[pref.gear_slot]
+	. = gear_items[G.display_name]
+	if(!.)
+		. = list()
