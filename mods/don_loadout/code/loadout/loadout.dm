@@ -373,14 +373,8 @@
 
 	if(href_list["toggle_gear"])
 		var/datum/gear/TG = locate(href_list["toggle_gear"])
-		ASSERT(!TG.donation_tier || user.client.donator_info.donation_tier_available(TG.donation_tier))
-
-		. = ..() // Yeah, just sanitization addition to the core code
-
-		if (selected_tweaks && (selected_gear.display_name in pref.gear_list[pref.gear_slot]))
-			pref.gear_list[pref.gear_slot][selected_gear.display_name] = selected_tweaks
-
-		return
+		toggle_gear(TG, user)
+		return TOPIC_REFRESH_UPDATE_PREVIEW
 	/*
 		ADDITIONS
 	*/
@@ -529,3 +523,17 @@
 /datum/category_item/player_setup_item/loadout/proc/gear_allowed_to_equip(datum/gear/G, mob/user)
 	ASSERT(G)
 	return G.is_allowed_to_equip(user)
+
+/datum/category_item/player_setup_item/loadout/proc/toggle_gear(datum/gear/TG, mob/user)
+	// check if someone trying to tricking us. However, it's may be just a bug
+	ASSERT(!TG.donation_tier || user.client.donator_info.donation_tier_available(TG.donation_tier))
+
+	if(TG.display_name in pref.gear_list[pref.gear_slot])
+		pref.gear_list[pref.gear_slot] -= TG.display_name
+	else
+		var/total_cost = 0
+		for(var/gear_name in pref.gear_list[pref.gear_slot])
+			var/datum/gear/G = gear_datums[gear_name]
+			if(istype(G)) total_cost += G.cost
+		if((total_cost+TG.cost) <= config.max_gear_cost)
+			pref.gear_list[pref.gear_slot][TG.display_name] = selected_tweaks.Copy()
