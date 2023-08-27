@@ -10,6 +10,7 @@
 #define DONATION_TIER_THREE_SUM  500
 #define DONATION_TIER_FOUR_SUM   1000
 
+// Keep order from the lower tier to the higher
 #define DONATION_TIER_ALL_TIERS list(\
 	DONATION_TIER_NONE, DONATION_TIER_ONE, \
 	DONATION_TIER_TWO, DONATION_TIER_THREE, \

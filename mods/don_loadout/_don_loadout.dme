@@ -8,14 +8,15 @@
 #include "code/donations/donator.dm"
 #include "code/donations/ooc_color.dm"
 
-#include "code/loadout/gear_tweaks.dm"
+#include "code/loadout/gear_tweak.dm"
 #include "code/loadout/gear.dm"
 #include "code/loadout/helpers.dm"
+#include "code/loadout/load_dialog.dm"
 #include "code/loadout/loadout.dm"
 #include "code/loadout/preferences.dm"
 
-#include "code/loadout/categories/categories.dm"
-#include "code/loadout/categories/masks.dm"
-#include "code/loadout/categories/tiers.dm"
+// #include "code/loadout/categories/categories.dm"
+// #include "code/loadout/categories/masks.dm"
+// #include "code/loadout/categories/tiers.dm"
 
 #endif
