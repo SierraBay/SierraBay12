@@ -5,41 +5,45 @@
 
 </div>
 
-<table><tr><td align="center" width="2000"><b>
+<table>
+<tr><td align="center" width="2000"><b>
 <a href="https://github.com/baystation12/baystation12">Апстрим</a> • 
-<a href="https://github.com/baystation12/baystation12">Discord</a> • 
-<a href="https://github.com/baystation12/baystation12">Дискорд</a> • 
-</b></td></tr></table>
+<a href="https://discord.ss220.space">Discord</a> • 
+<a href="https://sierra.ss220.space">Wiki</a>
+</b></td></tr>
+<tr><td align="center" width="2000"><b>
+<a href="#рекомендации-для-контрибьюторов">Коллаборация</a> • 
+<a href="#безопасность">Безопасность</a> • 
+<a href="#лизцензия">Лицензия</a> • 
+<a href="#получение-кода-и-установка">Установка</a>
+</b></td></tr>
+</table>
 
 ---
 
-## Установка
+### Рекомендации для контрибьюторов
+
+**Пожалуйста, воздержись от написания комментариев, не связанных с кодом в PR на GitHub.** Ознакомься с Правилами Поведения, где сказано о том где следует оставлять отзывы пользователям.
+
+Ожидается, что все пользователи ознакомятся с [`/docs/CODE_OF_CONDUCT.md``](/docs/CODE_OF_CONDUCT.md) перед взаимодействием с репозиторием или другими пользователями.
 
 ---
 
-### CONTRIBUTING GUIDELINES
+### Безопасность
 
-**Please refrain from making non code related comments in pull requests on GitHub.** See the Code of Conduct on where you may provide feedback to users.
-
-All users are expected to review [/docs/CODE_OF_CONDUCT.md](/docs/CODE_OF_CONDUCT.md) before interacting with the repository or other users.
-
----
-
-### SECURITY
-
-Please see [/docs/SECURITY.md](/docs/SECURITY.md) for this repository's security policy, and how to report security issues.
+С Политикой Безопасности этого репозитория, а также с тем, как репортить уязвисости ты можешь ознакомиться в [`/docs/SECURITY.md`](/docs/SECURITY.md).
 
 ---
 
 ### Лизцензия
 
-Код Baystation, и, следовательно, SierraBay лицензируется по [GNU Affero General Public License v3](https://www.gnu.org/licenses/agpl.html), содержание которой можно прочитать в файле [`LICENSE`](/LICENSE).
+Код Baystation, и, следовательно, SierraBay лицензируется в соответствии с [GNU Affero General Public License v3](https://www.gnu.org/licenses/agpl.html), полное содержание которой находится в файле [`LICENSE`](/LICENSE).
 
-Код с датой авторства git до `1420675200 +0000` (08.01.2015, 00:00 GMT) лицензируется по [GNU General Public License v3](https://www.gnu.org/licenses/gpl-3.0.html), полную версию которой можно найти в [`/docs/GPL3.txt`](/docs/GPL3.txt).
+Код с датой авторства git до `1420675200 +0000` (08.01.2015, 00:00 GMT) распространяется под лицензией [GNU General Public License v3](https://www.gnu.org/licenses/gpl-3.0.html), с полной версией которой вы можете ознакомиться в [`/docs/GPL3.txt`](/docs/GPL3.txt).
 
 Предполагается, что весь код, авторство которого датируется `1420675200 +0000` или позже, лицензируется по AGPL v3. Если вы хотите лицензировать по GPL v3, укажите это в сообщении коммита, а также внутри всех добавленных файлов.
 
-Если вы хотите разрабатывать и хостить этот код, закрыв исходный код, вы можете использовать все коммиты до `1420675200 +0000`, лицензируемые по GPL v3. Основное изменение здесь заключается в том, что если вы размещаете сервер с использованием любого кода, лицензированного в соответствии с AGPLv3, вы должны предоставить полный исходный код для пользователей ваших серверов, а также внесенные вами дополнения и изменения.
+Если ты желаешь разрабатывать и хостить эту кодбазу, закрыв исходный код, ты можешь использовать все коммиты до `1420675200 +0000`, которые лицензированы по GPL v3. Главное различие заключается ва том, что если ты хостишь сервер, используя любой код, лицензированный в соответствии с AGPLv3, ты должен предоставить полный исходный код для пользователей ваших серверов, включая дополнения и изменения, которые ты сделал.
 
 Статья ["Зачем нужна GPL Афферо"](https://www.gnu.org/licenses/why-affero-gpl.html) рассказывает об этом подробнее.
 
@@ -47,6 +51,6 @@ Please see [/docs/SECURITY.md](/docs/SECURITY.md) for this repository's security
 
 ---
 
-### GETTING THE CODE AND INSTALLING
+### Получение кода и установка
 
-Please see [/docs/installation.md](/docs/installation.md) for instructions on obtaining, installing, updating, and running this code.
+Все инструкции по получению, установке, обновлению и запуску этого кода находятся можно изучить в [`/docs/installation.md`](/docs/installation.md).
