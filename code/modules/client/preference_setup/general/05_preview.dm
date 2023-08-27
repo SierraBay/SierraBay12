@@ -19,6 +19,7 @@
 	// [SIERRA-ADD] - DON_LOADOUT - Mob preview
 	if(!mannequin)
 		return
+	mannequin.update_icon = TRUE
 	// [/SIERRA-ADD]
 	var/update_icon = FALSE
 	copy_to(mannequin, TRUE)
@@ -48,6 +49,7 @@
 		// Equip custom gear loadout, replacing any job items
 		var/list/loadout_taken_slots = list()
 		// [SIERRA-EDIT] - DON_LOADOUT - Trying gears
+		// for(var/thing in Gear()) // SIERRA-EDIT - ORIGINAL
 		var/list/accessories = list()
 
 		var/list/orig_gears = Gear()
