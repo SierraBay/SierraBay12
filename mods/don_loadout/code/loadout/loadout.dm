@@ -475,7 +475,7 @@
 	if(!G.path)
 		return FALSE
 
-	if(length(G.allowed_roles) || length(G.allowed_branches))
+	if(length(G.allowed_roles) || length(G.allowed_skills) || length(G.allowed_branches))
 		// Branches are dependent on jobs so here it is
 		ASSERT(SSjobs.initialized)
 		var/list/jobs = new
@@ -484,7 +484,7 @@
 				jobs += SSjobs.get_by_title(job_title)
 
 		// No jobs = Fail
-		// No jobs = No branches = Fail
+		// No jobs = No skills = No branches = Fail
 		if(!jobs || !length(jobs))
 			return FALSE
 
@@ -495,6 +495,14 @@
 					job_ok = TRUE
 					break
 			if(!job_ok)
+				return FALSE
+
+		if (length(G.allowed_skills))
+			var/list/skills_required = list()
+			for(var/skill in G.allowed_skills)
+				var/singleton/hierarchy/skill/instance = GET_SINGLETON(skill)
+				skills_required[instance] = G.allowed_skills[skill]
+			if (!skill_check(jobs, skills_required))
 				return FALSE
 
 		// It is nesting hell, but it should work fine
