@@ -15,8 +15,8 @@
 #include "code/loadout/loadout.dm"
 #include "code/loadout/preferences.dm"
 
-// #include "code/loadout/categories/categories.dm"
-// #include "code/loadout/categories/masks.dm"
-// #include "code/loadout/categories/tiers.dm"
+#include "code/loadout/categories/categories.dm"
+#include "code/loadout/categories/masks.dm"
+#include "code/loadout/categories/tiers.dm"
 
 #endif
