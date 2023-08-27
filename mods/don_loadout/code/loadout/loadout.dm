@@ -72,7 +72,7 @@
 
 	. += "<td style=\"vertical-align: top;\">"
 	if(config.max_gear_cost < INFINITY)
-		. += "<font color = '[fcolor]'>[total_cost]/[config.max_gear_cost]</font> поинтов потрачено.<br>"
+		. += "<font color = '[fcolor]'>[total_cost]/[config.max_gear_cost]</font> loadout points spent.<br>"
 	. += "<a href='?src=\ref[src];clear_loadout=1'>Clear Loadout</a><br>"
 	. += "<a href='?src=\ref[src];random_loadout=1'>Random Loadout</a><br>"
 	. += "<a href='?src=\ref[src];toggle_hiding=1'>[hide_unavailable_gear ? "Show unavailable" : "Hide unavailable"]</a><br>"
@@ -195,7 +195,7 @@
 			gt.tweak_gear_data(selected_tweaks["[gt]"], gd)
 		var/atom/movable/gear_virtual_item = new gd.path
 		for(var/datum/gear_tweak/gt in selected_gear.gear_tweaks)
-			gt.tweak_item(gear_virtual_item, selected_tweaks["[gt]"])
+			gt.tweak_item(user, gear_virtual_item, selected_tweaks["[gt]"])
 		var/icon/I = icon(gear_virtual_item.icon, gear_virtual_item.icon_state)
 		if(gear_virtual_item.color)
 			if(islist(gear_virtual_item.color))
@@ -351,7 +351,7 @@
 	. += "</tr></table>"
 	. = jointext(.,null)
 
-/datum/category_item/player_setup_item/loadout/OnTopic(href, href_list, mob/user)
+/datum/category_item/player_setup_item/loadout/OnTopic(href, list/href_list, mob/user)
 	ASSERT(istype(user))
 
 	/*
@@ -374,8 +374,13 @@
 	if(href_list["toggle_gear"])
 		var/datum/gear/TG = locate(href_list["toggle_gear"])
 		ASSERT(!TG.donation_tier || user.client.donator_info.donation_tier_available(TG.donation_tier))
-		return ..() // Yeah, just sanitization addition to the core code
 
+		. = ..() // Yeah, just sanitization addition to the core code
+
+		if (selected_tweaks && (selected_gear.display_name in pref.gear_list[pref.gear_slot]))
+			pref.gear_list[pref.gear_slot][selected_gear.display_name] = selected_tweaks
+
+		return
 	/*
 		ADDITIONS
 	*/
@@ -385,8 +390,9 @@
 		if (!istype(TG) || gear_datums[TG.display_name] != TG)
 			return TOPIC_NOACTION
 		selected_gear = TG
-		selected_tweaks = get_gear_metadata(selected_gear.display_name)
-		if(length(selected_gear.gear_tweaks) && !length(selected_tweaks))
+		selected_tweaks = pref.gear_list[pref.gear_slot][selected_gear.display_name]
+		if(!selected_tweaks)
+			selected_tweaks = new
 			for(var/datum/gear_tweak/tweak in selected_gear.gear_tweaks)
 				selected_tweaks["[tweak]"] = tweak.get_default()
 		pref.trying_on_gear = null
