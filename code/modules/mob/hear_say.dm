@@ -109,6 +109,7 @@
 		display_message = language.format_message(display_message, display_verb)
 
 	on_hear_say({"[SPAN_CLASS("game say", "[display_controls][SPAN_CLASS("name", display_name)][alt_name] [display_message]")]"})
+	create_chat_message(speaker, display_message, italics, list())
 
 
 /mob/proc/on_hear_say(message)

@@ -736,7 +736,7 @@
  * - `exclude_objs` - List of objects to not display the message to.
  * - `exclude_mobs` - List of mobs to not display the message to.
  */
-/atom/proc/audible_message(message, deaf_message, hearing_distance = world.view, checkghosts = null, list/exclude_objs = null, list/exclude_mobs = null)
+/atom/proc/audible_message(message, deaf_message, hearing_distance = world.view, checkghosts = null, list/exclude_objs = null, list/exclude_mobs = null, runemessage = -1)
 	var/turf/T = get_turf(src)
 	var/list/mobs = list()
 	var/list/objs = list()
@@ -748,6 +748,8 @@
 			exclude_mobs -= M
 			continue
 		M.show_message(message,2,deaf_message,1)
+		if(runemessage != -1)
+			M.create_chat_message(src, "[runemessage]", FALSE, list("emote"))
 
 	for(var/o in objs)
 		var/obj/O = o

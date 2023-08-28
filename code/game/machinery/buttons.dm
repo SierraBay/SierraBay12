@@ -34,6 +34,7 @@
 	if(istype(user, /mob/living/carbon))
 		playsound(src, "button", 60)
 	activate(user)
+	runechat_message("* click *")
 	return TRUE
 
 /obj/machinery/button/emag_act()

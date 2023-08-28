@@ -42,10 +42,10 @@ var/list/runechat_image_cache = list()
 
 
 /hook/startup/proc/runechat_images()
-	var/image/radio_image = image('icons/UI_Icons/chat/chat_icons.dmi', icon_state = "radio")
+	var/image/radio_image = image('icons/chaticons.dmi', icon_state = "radio")
 	runechat_image_cache["radio"] = radio_image
 
-	var/image/emote_image = image('icons/UI_Icons/chat/chat_icons.dmi', icon_state = "emote")
+	var/image/emote_image = image('icons/chaticons.dmi', icon_state = "emote")
 	runechat_image_cache["emote"] = emote_image
 
 	return TRUE
@@ -184,7 +184,7 @@ var/list/runechat_image_cache = list()
 	var/mheight
 	WXH_TO_HEIGHT(owned_by.MeasureText(replacetext(complete_text, html_metachars, "m"), null, msgwidth), mheight)
 
-	addtimer(new Callback(src, .proc/finish_image_generation, mheight, target, owner, complete_text, lifespan), 0)
+	invoke_async(src, .proc/finish_image_generation, mheight, target, owner, complete_text, lifespan)
 
 /// Finishes the image generation after the MeasureText() call in generate_image().
 /// Necessary because after that call the proc can resume at the end of the tick and cause overtime.
@@ -302,13 +302,6 @@ var/list/runechat_image_cache = list()
 	if(italics)
 		extra_classes |= "italics"
 
-	var/dist = get_dist(src, speaker)
-	switch (dist)
-		if(4 to 5)
-			extra_classes |= "small"
-		if(5 to 16)
-			extra_classes |= "very_small"
-
 	// Display visual above source
 	new /datum/chatmessage(message, speaker, src, extra_classes)
 
@@ -359,9 +352,9 @@ var/list/runechat_image_cache = list()
 			return rgb(c,m,x)
 
 /atom/proc/runechat_message(message, range = world.view, italics, list/classes = list(), audible = TRUE)
-	var/list/hear = get_mobs_and_objs_in_view_fast(get_turf(src), range, checkghosts = FALSE)
-
-	var/list/hearing_mobs = hear["mobs"]
+	var/list/hearing_mobs = list()
+	var/list/objs = list()
+	var/list/hear = get_mobs_and_objs_in_view_fast(get_turf(src), range, hearing_mobs, objs, checkghosts = FALSE)
 
 	for(var/mob in hearing_mobs)
 		var/mob/M = mob
