@@ -227,7 +227,7 @@ var/list/runechat_image_cache = list()
 
 	// Build message image
 	message = image(loc = message_loc, layer = ABOVE_HUMAN_LAYER)
-	message.plane = PLANE_RUNECHAT
+	message.plane = RUNECHAT_PLANE
 	message.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA | KEEP_APART
 	message.alpha = 0
 	message.pixel_y = target.maptext_height
