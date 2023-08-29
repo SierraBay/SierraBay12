@@ -53,7 +53,7 @@ GLOBAL_LIST_EMPTY(runechat_image_cache)
   * # Chat Message Overlay
   *
   * Datum for generating a message overlay on the map
-  * Ported from TGStation; https://github.com/tgstation/tgstation/pull/50608/, author:  bobbahbrown
+  * Ported from TGStation; https://github.com/tgstation/tgstation/pull/50608, author:  bobbahbrown
   */
 /datum/chatmessage
 	/// The visual element of the chat message
