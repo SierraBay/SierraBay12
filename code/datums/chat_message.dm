@@ -173,7 +173,9 @@ var/list/runechat_image_cache = list()
 		text = "\icon[r_icon]&nbsp;" + text
 
 	// We dim italicized text to make it more distinguishable from regular text
-	var/tgt_color = extra_classes.Find("italics") ? target.chat_color_darkened : target.chat_color
+	var/tgt_color = target.chat_color
+	if (extra_classes.Find("italics") || extra_classes.Find("emote"))
+		tgt_color = target.chat_color_darkened
 
 	// Approximate text height
 	// Note we have to replace HTML encoded metacharacters otherwise MeasureText will return a zero height
@@ -354,7 +356,7 @@ var/list/runechat_image_cache = list()
 /atom/proc/runechat_message(message, range = world.view, italics, list/classes = list(), audible = TRUE)
 	var/list/hearing_mobs = list()
 	var/list/objs = list()
-	var/list/hear = get_mobs_and_objs_in_view_fast(get_turf(src), range, hearing_mobs, objs, checkghosts = FALSE)
+	get_mobs_and_objs_in_view_fast(get_turf(src), range, hearing_mobs, objs, checkghosts = FALSE)
 
 	for(var/mob in hearing_mobs)
 		var/mob/M = mob
