@@ -95,7 +95,7 @@ var/list/runechat_image_cache = list()
 	if (!istype(target))
 		CRASH("Invalid target given for chatmessage")
 	if(QDELETED(owner) || !istype(owner) || !owner.client)
-		stack_trace("/datum/chatmessage created with [isnull(owner) ? "null" : "invalid"] mob owner")
+		stack_trace("[src.type] created with [isnull(owner) ? "null" : "invalid"] mob owner")
 		qdel(src)
 		return
 	invoke_async(src, .proc/generate_image, text, target, owner, extra_classes, lifespan)
