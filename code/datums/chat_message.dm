@@ -38,15 +38,14 @@
 	} while(FALSE);
 
 // Cached runechat icon
-var/list/runechat_image_cache = list()
-
+GLOBAL_LIST_EMPTY(runechat_image_cache)
 
 /hook/startup/proc/runechat_images()
 	var/image/radio_image = image('icons/chaticons.dmi', icon_state = "radio")
-	runechat_image_cache["radio"] = radio_image
+	GLOB.runechat_image_cache["radio"] = radio_image
 
 	var/image/emote_image = image('icons/chaticons.dmi', icon_state = "emote")
-	runechat_image_cache["emote"] = emote_image
+	GLOB.runechat_image_cache["emote"] = emote_image
 
 	return TRUE
 
