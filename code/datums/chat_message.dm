@@ -323,8 +323,8 @@ GLOBAL_LIST_EMPTY(runechat_image_cache)
 	// get hsl using the selected 6 characters of the md5 hash
 	var/hash = copytext(md5(name), rseed, rseed + 6)
 	var/h = hex2num(copytext(hash, 1, 3)) * (360 / 255)
-	var/s = (hex2num(copytext(hash, 3, 5)) >> 2) * ((CM_COLOR_SAT_MAX - CM_COLOR_SAT_MIN) / 63) + CM_COLOR_SAT_MIN
-	var/l = (hex2num(copytext(hash, 5, 7)) >> 2) * ((CM_COLOR_LUM_MAX - CM_COLOR_LUM_MIN) / 63) + CM_COLOR_LUM_MIN
+	var/s = SHIFTR(hex2num(copytext(hash, 3, 5)), 2) * ((CM_COLOR_SAT_MAX - CM_COLOR_SAT_MIN) / 63) + CM_COLOR_SAT_MIN
+	var/l = SHIFTR(hex2num(copytext(hash, 5, 7)), 2) * ((CM_COLOR_LUM_MAX - CM_COLOR_LUM_MIN) / 63) + CM_COLOR_LUM_MIN
 
 	// adjust for shifts
 	s *= clamp(sat_shift, 0, 1)
