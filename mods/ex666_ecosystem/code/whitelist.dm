@@ -1,6 +1,7 @@
 /datum/configuration
 	var/usewhitelist_database = FALSE
 	var/overflow_server_url
+	var/minimum_byondacc_age
 
 /mob/new_player/proc/whitelist_check()
 	// Admins are immune to overflow rerouting

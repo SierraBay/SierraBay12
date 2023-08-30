@@ -852,9 +852,11 @@
 				deletion_starts_paused = TRUE
 			// [SIERRA-ADD] - EX666_ECOSYSTEM
 			if ("overflow_server_url")
-				config.overflow_server_url = value
+				overflow_server_url = value
 			if("usewhitelist_database")
 				usewhitelist_database = TRUE
+			if("minimum_byondacc_age")
+				minimum_byondacc_age = text2num(value)
 			// [/SIERRA-ADD]
 			else
 				log_misc("Unknown setting in config/config.txt: '[name]'")

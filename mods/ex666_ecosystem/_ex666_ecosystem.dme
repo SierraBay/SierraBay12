@@ -4,6 +4,7 @@
 #include "_ex666_ecosystem.dm"
 
 #include "code/database.dm"
+#include "code/discord.dm"
 #include "code/whitelist.dm"
 
 #endif
