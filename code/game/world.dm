@@ -170,6 +170,7 @@ GLOBAL_VAR_INIT(world_topic_last, world.timeofday)
 		s["map"] = replacetext(GLOB.using_map.full_name, "\improper", "") //Done to remove the non-UTF-8 text macros
 
 		// [SIERRA-ADD] - EX666_ECOSYSTEM
+		s["roundtime"] = roundduration2text()
 		switch(GAME_STATE)
 			if(RUNLEVEL_INIT)
 				s["ticker_state"] = 0
