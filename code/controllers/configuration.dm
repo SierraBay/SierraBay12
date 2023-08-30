@@ -850,6 +850,12 @@
 				warn_if_staff_same_ip = TRUE
 			if ("deletion_starts_paused")
 				deletion_starts_paused = TRUE
+			// [SIERRA-ADD] - EX666_ECOSYSTEM
+			if ("overflow_server_url")
+				config.overflow_server_url = value
+			if("usewhitelist_database")
+				usewhitelist_database = TRUE
+			// [/SIERRA-ADD]
 			else
 				log_misc("Unknown setting in config/config.txt: '[name]'")
 

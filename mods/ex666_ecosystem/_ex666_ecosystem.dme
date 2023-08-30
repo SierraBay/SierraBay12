@@ -1,0 +1,8 @@
+#ifndef MODPACK_EX666_ECOSYSTEM
+#define MODPACK_EX666_ECOSYSTEM
+
+#include "_ex666_ecosystem.dm"
+
+#include "code/whitelist.dm"
+
+#endif
