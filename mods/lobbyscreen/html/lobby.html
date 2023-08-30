@@ -75,13 +75,12 @@
     }
     #character.transparent { transform: translate(-50%, 100%); }
 
-    .character__text {
-      font-weight: bold;
-      display: inline;
-    }
+    #character.inline .character__text { display: inline; }
+    #character.inline .character__link { display: inline; }
+
+    .character__text { font-weight: bold; }
     .character__link {
       text-decoration: underline;
-      display: inline;
       cursor: pointer;
       transition: .1s color;
       font-size: 2.1vmin;
@@ -427,8 +426,14 @@
       showVideo(VIDEO_BUTTONS);
     }
 
-    function setCharacterName(characterName) {
-      characterTextEl.innerText = byondDecode(characterName);
+    function setCharacterName(message) {
+      var characterName = byondDecode(message);
+
+      if (characterName.length < 15)
+        characterEl.classList.add("inline");
+      else characterEl.classList.remove("inline");
+
+      characterTextEl.innerText = characterName;
     }
 
     function setStatus(message) {
