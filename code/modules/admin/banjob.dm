@@ -64,7 +64,7 @@ var/global/jobban_keylist[0]		//to store the keys & ranks
 		//Job permabans
 		// [SIERRA-EDIT] - EX666_ECOSYSTEM
 		// var/DBQuery/query = dbcon.NewQuery("SELECT ckey, job FROM erro_ban WHERE bantype = 'JOB_PERMABAN' AND isnull(unbanned)") // SIERRA-EDIT - ORIGINAL
-		var/DBQuery/query = dbcon.NewQuery("SELECT ckey, job FROM [sqlfdbkdbutil].erro_ban WHERE bantype = 'JOB_PERMABAN' AND isnull(unbanned)")
+		var/DBQuery/query = dbcon.NewQuery("SELECT ckey, job FROM [sqlfdbkdbutil].ban WHERE bantype = 'JOB_PERMABAN' AND isnull(unbanned)")
 		// [/SIERRA-EDIT]
 		query.Execute()
 
@@ -77,7 +77,7 @@ var/global/jobban_keylist[0]		//to store the keys & ranks
 		//Job tempbans
 		// [SIERRA-EDIT] - EX666_ECOSYSTEM
 		// var/DBQuery/query1 = dbcon.NewQuery("SELECT ckey, job FROM erro_ban WHERE bantype = 'JOB_TEMPBAN' AND isnull(unbanned) AND expiration_time > Now()") // SIERRA-EDIT - ORIGINAL
-		var/DBQuery/query1 = dbcon.NewQuery("SELECT ckey, job FROM [sqlfdbkdbutil].erro_ban WHERE bantype = 'JOB_TEMPBAN' AND isnull(unbanned) AND expiration_time > Now()")
+		var/DBQuery/query1 = dbcon.NewQuery("SELECT ckey, job FROM [sqlfdbkdbutil].ban WHERE bantype = 'JOB_TEMPBAN' AND isnull(unbanned) AND expiration_time > Now()")
 		// [/SIERRA-EDIT]
 		query1.Execute()
 

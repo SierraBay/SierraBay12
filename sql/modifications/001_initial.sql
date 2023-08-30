@@ -53,7 +53,9 @@ CREATE TABLE IF NOT EXISTS `budget`
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /* EX666 ban table */
-ALTER TABLE `erro_ban`
+ALTER `erro_ban` RENAME TO `ban`;
+
+ALTER TABLE `ban`
   MODIFY COLUMN `serverip` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
   MODIFY COLUMN `bantype` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
   MODIFY COLUMN `reason` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -75,7 +77,7 @@ ALTER TABLE `erro_ban`
   ADD INDEX `computerid` (`computerid`),
   ADD INDEX `ip` (`ip`);
 
-ALTER TABLE `erro_ban` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+ALTER TABLE `ban` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 /* General conversion */
 ALTER TABLE `erro_connection_log` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

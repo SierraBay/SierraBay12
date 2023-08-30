@@ -33,7 +33,7 @@
 	// ") // SIERRA-EDIT - ORIGINAL
 	var/DBQuery/query = dbcon.NewQuery("\
 		SELECT `bantype`, `reason`, `expiration_time`, `ckey`, `ip`, `computerid`, `a_ckey`, `unbanned`\
-			FROM `[sqlfdbkdbutil]`.`erro_ban`\
+			FROM `[sqlfdbkdbutil]`.`ban`\
 			WHERE `bantype` IN ('PERMABAN', 'TEMPBAN') AND \
 			([selection])\
 	")
@@ -117,7 +117,7 @@
 	// "}) // SIERRA-EDIT - ORIGINAL
 	var/DBQuery/query = dbcon.NewQuery({"
 		SELECT `bantype`, `reason`, `expiration_time`, `ckey`, `ip`, `computerid`, `a_ckey`, `unbanned`
-			FROM `[sqlfdbkdbutil]`.`erro_ban`
+			FROM `[sqlfdbkdbutil]`.`ban`
 			WHERE `bantype` IN ('PERMABAN', 'TEMPBAN') AND
 			([english_list(final_query_components, "", "", " OR ", " OR ")])
 	"})
