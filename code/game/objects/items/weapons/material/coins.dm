@@ -13,7 +13,7 @@
 	slot_flags = SLOT_EARS
 	item_flags = ITEM_FLAG_TRY_ATTACK
 	drop_sound = 'sound/items/drop/ring.ogg'
-	pickup_sound = 'sound/items/pickup/ring.ogg'
+	pickup_sound = null
 
 
 	/// The smallest interval allowed between coin flips.
