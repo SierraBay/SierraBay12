@@ -27,7 +27,12 @@ ID мода: LOBBYSCREEN
 
 ### Изменения *кор кода*
 
-- `code/modules/mob/living.dm`: `proc/overriden_proc`, `var/overriden_var`
+- `code/controllers/master.dm`: `/datum/controller/master/proc/SetRunLevel()`
+- `code/controllers/subsystem.dm`: `/datum/controller/subsystem/proc/DoInitialize()`
+- `code/modules/client/asset_cache.dm`: `/datum/asset/simple/fontawesome/assets`
+- `code/modules/client/preferences.dm`: `/datum/preferences/Topic()`
+- `code/modules/mob/new_player/new_player.dm`: `/mob/new_player/proc/new_player_panel()`, `/mob/new_player/proc/close_spawn_windows()`
+- ``
 <!--
   Если вы редактировали какие-либо процедуры или переменные в кор коде,
   они должны быть указаны здесь.
@@ -38,7 +43,7 @@ ID мода: LOBBYSCREEN
 
 ### Оверрайды
 
-- `mods/_master_files/code/maps/mapsystem/maps.dm`:
+- `mods/_master_files/maps/mapsystem/maps.dm`:
   - `/datum/map/New()`
   - `/datum/map/show_titlescreen()`
 <!--
