@@ -6,9 +6,9 @@
 /datum/map/show_titlescreen(client/C)
 	set waitfor = FALSE
 
-	if(isnewplayer(C.mob))
-		winset(C, "lobbybrowser", "is-disabled=false;is-visible=true")
+	winset(C, "lobbybrowser", "is-disabled=false;is-visible=true")
 
+	if(isnewplayer(C.mob))
 		var/datum/asset/lobby_assets = get_asset_datum(/datum/asset/simple/mod_lobby) // Sending fonts+png+mp4 assets to the client
 		var/datum/asset/fa_assets = get_asset_datum(/datum/asset/simple/fontawesome)  // Sending font awesome to the client
 		lobby_assets.send(C)
