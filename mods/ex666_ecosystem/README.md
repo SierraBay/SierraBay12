@@ -30,6 +30,7 @@ ID мода: EX666_ECOSYSTEM
 - `code/contorllers/configuration.dm`:
   - `/datum/configuration/proc/load_config()`
   - `/datum/configuration/proc/load_sql()`
+- `code/game/world.dm`: `/world/Topic()`
 - `code/modules/admin/DB ban/functions.dm`:
   - `/proc/_DB_ban_record()`
   - `/datum/admins/proc/DB_ban_unban()`
