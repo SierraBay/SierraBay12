@@ -3,6 +3,7 @@
 
 #include "_ex666_ecosystem.dm"
 
+#include "code/database.dm"
 #include "code/whitelist.dm"
 
 #endif
