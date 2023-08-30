@@ -27,8 +27,26 @@ ID мода: EX666_ECOSYSTEM
 
 ### Изменения *кор кода*
 
-- `code/contorllers/configuration.dm`: `/datum/configuration/proc/load_config()`
+- `code/contorllers/configuration.dm`:
+  - `/datum/configuration/proc/load_config()`
+  - `/datum/configuration/proc/load_sql()`
+- `code/modules/admin/DB ban/functions.dm`:
+  - `/proc/_DB_ban_record()`
+  - `/datum/admins/proc/DB_ban_unban()`
+  - `/datum/admins/proc/DB_ban_unban_by_id()`
+  - `/datum/admins/proc/DB_ban_panel()`
+- `code/modules/admin/IsBanned.dm`: `/world/IsBanned()`
+- `code/modules/admin/admin.dm`: `/datum/admins/proc/show_player_panel()`
+- `code/modules/admin/admin_ranks.dm`:
+  - `/proc/load_admin_ranks()`
+  - `/proc/load_admins()`
+- `code/modules/admin/banjob.dm`: `/proc/jobban_loadbanfile()`
+- `code/modules/admin/connectioncheck/bancheck_functions.dm`:
+  - `/proc/_fetch_bans()`
+  - `/proc/_find_bans_in_connections()`
+- `code/modules/admin/topic.dm`: `/datum/admins/Topic()`
 - `code/modules/new_player/login.dm`: `/mob/new_player/Login()`
+- `code/modules/client/client_procs.dm`: `/client/New()`
 <!--
   Если вы редактировали какие-либо процедуры или переменные в кор коде,
   они должны быть указаны здесь.
@@ -39,7 +57,7 @@ ID мода: EX666_ECOSYSTEM
 
 ### Оверрайды
 
-- Отсутствуют
+- `mods/_master_files/code/modules/mob/new_player/new_player.dm`: `/mob/new_player/Topic()`
 <!--
   Если ты добавлял новый модульный оверрайд, его нужно указать здесь.
   Здесь указываются оверрайды в твоём моде и папке `_master_files`
