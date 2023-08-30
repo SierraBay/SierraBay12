@@ -1,9 +1,0 @@
-#ifndef MODPACK_LOBBYSCREEN
-#define MODPACK_LOBBYSCREEN
-
-#include "_lobbyscreeen.dm"
-
-// Далее просто включай свой код
-// #include "code/something.dm"
-
-#endif

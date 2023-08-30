@@ -56,6 +56,41 @@
       transform: translate(-50%, -50%);
     }
 
+    #character {
+      position: absolute;
+      bottom: 20%;
+      left: 50%;
+      transform: translate(-50%, 0);
+
+      width: 50%;
+
+      font-family: "Courier Prime Code", Verdana, sans-serif;
+      font-weight: normal;
+      font-size: 1.8vmin;
+      line-height: 1.8vmin;
+      letter-spacing: 1px;
+      color: #85bab6;
+      text-align: center;
+      transition: .3s opacity, .3s transform;
+    }
+    #character.transparent { transform: translate(-50%, 100%); }
+
+    .character__text {
+      font-weight: bold;
+      display: inline;
+    }
+    .character__link {
+      text-decoration: underline;
+      display: inline;
+      cursor: pointer;
+      transition: .1s color;
+      font-size: 2.1vmin;
+      line-height: 2.1vmin;
+    }
+    .character__link:hover {
+      color: white;
+    }
+
     #bottom-menu {
       position: absolute;
       bottom: 0;
@@ -259,9 +294,10 @@
     .center-menu__item:hover::before { opacity: 1;  }
     .bottom-menu__item:hover::before { opacity: .8; }
 
-    #back-buttons { z-index: 1; }
-    #back-loop    { z-index: 2; }
-    #container    { z-index: 3; }
+    #back-buttons   { z-index: 1; }
+    #back-loop      { z-index: 2; }
+    #container      { z-index: 3; }
+    #character { z-index: 4; }
 
     #center-menu { z-index: 1; }
     #bottom-menu { z-index: 2; }
@@ -281,33 +317,33 @@
   <video class="video" style="display: none;" id="back-loop" src="loop.mp4" loop></video>
   <video class="video" style="display: none;" id="back-buttons" src="buttons.mp4"></video>
   <div id="container">
-    <div id="init" style="display: none;">
-      <div id="init-text">
-      </div>
-    </div>
     <div id="center-menu" style="display: none;">
         <a class="center-menu__item center-menu__item--horizontal center-menu__item--tr" href='?src=[player-ref];lobby_ready=1' id="ready"><span id="ready-text">Ready</span></a>
-        <a class="center-menu__item center-menu__item--horizontal center-menu__item--tr" href='?src=[player-ref];lobby_join=1' id="join"><span>Join</span></a>
-        <a class="center-menu__item center-menu__item--tl" href='?src=[player-ref];lobby_setup=1' id="setup"><span>Setup</span></a>
-        <a class="center-menu__item center-menu__item--bl" href='?src=[player-ref];lobby_crew=1' id="manifest"><span>Manifest</span></a>
-        <a class="center-menu__item center-menu__item--br" href='?src=[player-ref];lobby_observe=1' id="observe"><span>Observe</span></a>
+        <a class="center-menu__item center-menu__item--horizontal center-menu__item--tr" href='?src=[player-ref];late_join=1' id="join"><span>Join</span></a>
+        <a class="center-menu__item center-menu__item--tl" href='?src=[player-ref];show_preferences=1' id="setup"><span>Setup</span></a>
+        <a class="center-menu__item center-menu__item--bl" href='?src=[player-ref];manifest=1' id="manifest"><span>Manifest</span></a>
+        <a class="center-menu__item center-menu__item--br" href='?src=[player-ref];observe=1' id="observe"><span>Observe</span></a>
     </div>
     <div id="bottom-menu">
       <a class="bottom-menu__item" href='?src=[player-ref];lobby_changelog=1' id="changelog"><span>Changelog</span><i class="far fa-list-alt"></i></a>
       <a class="bottom-menu__item" href='?src=[player-ref];lobby_discord=1' id="discord"><span>Discord</span><i class="fab fa-discord"></i></a>
       <a class="bottom-menu__item" href='?src=[player-ref];lobby_wiki=1' id="wiki"><span>Wiki</span><i class="fas fa-book"></i></a>
     </div>
+    <div id="character" style="display: none;">
+      <div class="character__text">Playing as:</div>
+      <a class="character__link" href='?src=[player-ref];change_character=1' id="character-text">Unknown</a>
+    </div>
   </div>
   <script type="text/javascript">
-
-    var initEl = document.getElementById("init");
-    var initTextEl = document.getElementById("init-text");
 
     var loopVideo = document.getElementById("back-loop");
     var buttonsVideo = document.getElementById("back-buttons");
 
     var containerEl = document.getElementById("container");
     var centerMenuEl = document.getElementById("center-menu");
+
+    var characterEl = document.getElementById("character");
+    var characterTextEl = document.getElementById("character-text");
 
     var readyBtn = document.getElementById("ready");
     var readyText = document.getElementById("ready-text");
@@ -383,7 +419,16 @@
       if (centerMenuEl.style.display == "none")
         centerMenuEl.classList.add("transparent");
       show(centerMenuEl);
+
+      if (characterEl.style.display == "none")
+        characterEl.classList.add("transparent");
+      show(characterEl);
+
       showVideo(VIDEO_BUTTONS);
+    }
+
+    function setCharacterName(characterName) {
+      characterTextEl.innerText = byondDecode(characterName);
     }
 
     function setStatus(message) {
@@ -396,6 +441,7 @@
 
       switch (state) {
         case RUNLEVEL_INIT:
+          hide(characterEl);
           hide(centerMenuEl);
           showVideo(VIDEO_LOOP);
           break;
@@ -447,6 +493,16 @@
       }, 50)
     }
 
+    // Was stolen from browserOutput.js
+    function byondDecode(message) {
+      message = message.replace(/\+/g, "%20");
+      try {
+        if (decodeURIComponent) { message = decodeURIComponent(message); }
+        else { throw new Error("Easiest way to trigger the fallback"); }
+      } catch (err) { message = unescape(message); }
+      return message;
+    }
+
     loopVideo.onload = function () {
       if (currentRunlevel == RUNLEVEL_INIT) { loopVideo.play(); }
       else { loopVideo.pause(); }
@@ -458,11 +514,12 @@
 
     buttonsVideo.onended = function () {
       centerMenuEl.classList.remove("transparent");
+      characterEl.classList.remove("transparent");
     }
 
     setReadyStatus(0);
 
-    window.location = "?src=[player-ref]&lobby_init=1";
+    // window.location = "?src=[player-ref]&lobby_init=1";
   </script>
 </body>
 </html>

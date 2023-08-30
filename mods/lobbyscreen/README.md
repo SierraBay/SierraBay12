@@ -1,7 +1,7 @@
 
 #### Список PRов:
 
-- https://github.com/SierraBay/SierraBay12/pull/#####
+- https://github.com/SierraBay/SierraBay12/pull/902
 <!--
   Ссылки на PRы, связанные с модом:
   - Создание
@@ -38,8 +38,9 @@ ID мода: LOBBYSCREEN
 
 ### Оверрайды
 
-- `mods/_master_files/sound/my_cool_sound.ogg`
-- `mods/_master_files/code/my_modular_override.dm`: `proc/overriden_proc`, `var/overriden_var`
+- `mods/_master_files/code/maps/mapsystem/maps.dm`:
+  - `/datum/map/New()`
+  - `/datum/map/show_titlescreen()`
 <!--
   Если ты добавлял новый модульный оверрайд, его нужно указать здесь.
   Здесь указываются оверрайды в твоём моде и папке `_master_files`
@@ -49,7 +50,7 @@ ID мода: LOBBYSCREEN
 
 ### Дефайны
 
-- `code/__defines/~mods/example.dm`: `EXAMPLE_SPEED_MULTIPLIER`, `EXAMPLE_SPEED_BASE`
+- Отсутствуют
 <!--
   Если требовалось добавить какие-либо дефайны, укажи файлы,
   в которые ты их добавил, а также перечисли имена.
@@ -60,7 +61,7 @@ ID мода: LOBBYSCREEN
 
 ### Используемые файлы, не содержащиеся в модпаке
 
-- `mods/_master_files/icons/obj/alien.dmi`
+- Отсутствуют
 <!--
   Будь то немодульный файл или модульный файл, который не содержится в папке,
   принадлежащей этому конкретному моду, он должен быть упомянут здесь.
