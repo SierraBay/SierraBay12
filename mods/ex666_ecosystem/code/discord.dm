@@ -31,7 +31,7 @@
 	load_player_discord(usr)
 
 	if(discord_id && length(discord_id) < 32)
-		to_chat(usr, SPAN_CLASS("darkmblue", "Аккаунт Discord уже привязан! Чтобы отвязать используйте команду [SPAN_CLASS("boldannounce", "!отвязать_аккаунт")] в канале <b>#дом-бота<b> в Discord-сообществе!"))
+		to_chat(usr, SPAN_CLASS("darkmblue", "Аккаунт Discord уже привязан! Чтобы отвязать используйте команду [SPAN_CLASS("boldannounce", "!отвязать_аккаунт")] в канале <b>#дом-бота</b> в Discord-сообществе!"))
 		return
 
 	var/token = md5("[world.time+rand(1000,1000000)]")
@@ -44,5 +44,5 @@
 			log_debug("link_discord_account: failed db update discord_id for ckey [ckey]")
 			return
 
-		to_chat(usr, SPAN_CLASS("darkmblue", "Для завершения используйте команду [SPAN_CLASS("boldannounce", "!привязать_аккаунт [token]")] в канале <b>#дом-бота<b> в Discord-сообществе!"))
+		to_chat(usr, SPAN_CLASS("darkmblue", "Для завершения используйте команду [SPAN_CLASS("boldannounce", "!привязать_аккаунт [token]")] в канале <b>#дом-бота</b> в Discord-сообществе!"))
 		load_player_discord(usr)
