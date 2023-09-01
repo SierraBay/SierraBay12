@@ -92,16 +92,16 @@
 		// If hotkey mode is enabled, then clicking the map will automatically
 		// unfocus the text bar. This removes the red color from the text bar
 		// so that the visual focus indicator matches reality.
-		winset(src, "mapwindow", "macro=default")
+		winset(src, "mainwindow.mainwindow", "macro=default")
 		winset(src, "mapwindow.map", "focus=true")
-		winset(src, "hotkeytoggle", "is-checked=true")
-		winset(src, "outputwindow.input", "background-color = [COLOR_DARKMODE_BACKGROUND]; background-color = #ffffff")
-		winset(src, "outputwindow.input", "text-color = [COLOR_DARKMODE_TEXT]; text-color = #000000")
+		winset(src, "hotkey_toggle", "is-checked=true")
+		winset(src, "mainwindow.input", "background-color = [COLOR_DARKMODE_BACKGROUND]; background-color = #ffffff")
+		winset(src, "mainwindow.input", "text-color = [COLOR_DARKMODE_TEXT]; text-color = #000000")
 	else
-		winset(src, "mapwindow", "macro=macro")
-		winset(src, "outputwindow.input", "focus=true")
-		winset(src, "hotkeytoggle", "is-checked=false")
-		winset(src, "input", "text-color = #000000; background-color = #d3b5b5")
+		winset(src, "mainwindow.mainwindow", "macro=macro")
+		winset(src, "hotkey_toggle", "is-checked=false")
+		winset(src, "mainwindow.input", "focus=true")
+		winset(src, "mainwindow.input", "text-color = #000000; background-color = #d3b5b5")
 
 
 
