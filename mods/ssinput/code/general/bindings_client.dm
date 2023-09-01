@@ -38,7 +38,7 @@
 		if(!(next_move_dir_sub & movement))
 			next_move_dir_add |= movement
 
-		if(movement && !config.allow_diagonal_movement)
+		if(movement)
 			last_move_dir_pressed = movement
 
 	// Client-level keybindings are ones anyone should be able to do at any time
@@ -67,8 +67,6 @@
 	holder?.key_down(full_key, src)
 	mob.key_down(full_key, src)
 
-	mob.update_mouse_pointer()
-
 /client/verb/keyUp(_key as text)
 	set instant = TRUE
 	set hidden = TRUE
@@ -96,8 +94,6 @@
 			break
 	holder?.key_up(_key, src)
 	mob.key_up(_key, src)
-
-	mob.update_mouse_pointer()
 
 // Called every game tick
 /client/keyLoop()
