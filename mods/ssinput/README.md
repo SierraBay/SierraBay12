@@ -34,6 +34,7 @@ ID мода: SSINPUT
 - `code/modules/admin/callproc/callproc.dm`: `/client/Click()`
 - `code/modules/client/client_procs.dm`: `/client/New()`
 - `code/modules/mob/living/silicon/robot/login.dm`: `/mob/living/silicon/robot/Login()`
+- `code/modules/mob/observer/ghost/ghost.dm`: `/mob/observer/ghost/appearance_flags`
 - `code/modules/mob/login.dm`: `/mob/Login()`
 - `code/modules/mob/mob_defines.dm`: `/mob/appearance_flags`
 - `code/modules/mob/mob_helpers.dm`: `/mob/verb/a_intent_change()`
