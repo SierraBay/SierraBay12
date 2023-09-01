@@ -1,7 +1,7 @@
 
 #### Список PRов:
 
-- https://github.com/SierraBay/SierraBay12/pull/#####
+- https://github.com/SierraBay/SierraBay12/pull/908
 <!--
   Ссылки на PRы, связанные с модом:
   - Создание
@@ -27,7 +27,16 @@ ID мода: SSINPUT
 
 ### Изменения *кор кода*
 
-- `code/modules/mob/living.dm`: `proc/overriden_proc`, `var/overriden_var`
+- `code/__defines/subsystem-priority.dm`: `#define SS_PRIORITY_INPUT`
+- `code/__defines/subsystems.dm`: `#define SS_INIT_INPUT`
+- `code/_onclick/click.dm`: `/mob/proc/ClickOn()`, `/mob/proc/AltMiddleClickOn()`
+- `code/game/verbs/ooc.dm`: `/client/verb/ooc()`, `/client/verb/looc()`
+- `code/modules/admin/callproc/callproc.dm`: `/client/Click()`
+- `code/modules/client/client_procs.dm`: `/client/New()`
+- `code/modules/mob/living/silicon/robot/login.dm`: `/mob/living/silicon/robot/Login()`
+- `code/modules/mob/login.dm`: `/mob/Login()`
+- `code/modules/mob/mob_helpers.dm`: `/mob/verb/a_intent_change()`
+
 <!--
   Если вы редактировали какие-либо процедуры или переменные в кор коде,
   они должны быть указаны здесь.
@@ -38,8 +47,9 @@ ID мода: SSINPUT
 
 ### Оверрайды
 
-- `mods/_master_files/sound/my_cool_sound.ogg`
-- `mods/_master_files/code/my_modular_override.dm`: `proc/overriden_proc`, `var/overriden_var`
+- `mods/ssinput/code/general/client.dm`: `/client/Topic()`
+- `mods/ssinput/code/general/preferences.dm`: `/datum/preferences/setup()`
+- `mods/ssinput/code/global_lists.dm`: `/hook/global_init/makeDatumRefLists()`
 <!--
   Если ты добавлял новый модульный оверрайд, его нужно указать здесь.
   Здесь указываются оверрайды в твоём моде и папке `_master_files`
@@ -49,7 +59,8 @@ ID мода: SSINPUT
 
 ### Дефайны
 
-- `code/__defines/~mods/example.dm`: `EXAMPLE_SPEED_MULTIPLIER`, `EXAMPLE_SPEED_BASE`
+- `code/__defines/subsystem-priority.dm`: `SS_PRIORITY_INPUT`
+- `code/__defines/subsystems.dm`: `SS_INIT_INPUT`
 <!--
   Если требовалось добавить какие-либо дефайны, укажи файлы,
   в которые ты их добавил, а также перечисли имена.
@@ -60,7 +71,7 @@ ID мода: SSINPUT
 
 ### Используемые файлы, не содержащиеся в модпаке
 
-- `mods/_master_files/icons/obj/alien.dmi`
+- Отсутствуют
 <!--
   Будь то немодульный файл или модульный файл, который не содержится в папке,
   принадлежащей этому конкретному моду, он должен быть упомянут здесь.
