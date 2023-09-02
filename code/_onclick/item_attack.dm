@@ -147,7 +147,7 @@ avoid code duplication. This includes items that may sometimes act as a standard
 		return FALSE
 
 
-/turf/can_use_item(obj/item/tool, mob/living/user, click_params)
+/turf/simulated/floor/can_use_item(obj/item/tool, mob/living/user, click_params)
 	. = ..()
 	if (!.)
 		return
@@ -277,6 +277,8 @@ avoid code duplication. This includes items that may sometimes act as a standard
 	if (weapon.force > 0 && get_max_health() && !HAS_FLAGS(weapon.item_flags, ITEM_FLAG_NO_BLUDGEON))
 		user.setClickCooldown(user.get_attack_speed(weapon))
 		user.do_attack_animation(src)
+		if (!aura_check(AURA_TYPE_WEAPON, weapon, user))
+			return TRUE
 		var/damage_flags = weapon.damage_flags()
 		var/weapon_mention
 		if (weapon.attack_message_name())
@@ -296,20 +298,6 @@ avoid code duplication. This includes items that may sometimes act as a standard
 				SPAN_WARNING("You felt something bounce off you harmlessly.")
 			)
 			return TRUE
-<<<<<<< ours
-		playsound(src, weapon.hitsound, 75, TRUE)
-		user.visible_message(
-			SPAN_DANGER("\The [user] hits \the [src] with \a [weapon]!"),
-			SPAN_DANGER("You hit \the [src] with \the [weapon]!"),
-			exclude_mobs = list(src)
-		)
-		show_message(
-			SPAN_DANGER("\The [user] hits you with \a [weapon]!"),
-			VISIBLE_MESSAGE,
-			SPAN_DANGER("You feel something hit you!")
-		)
-		general_health_adjustment(weapon.force, weapon.damtype, damage_flags, user.zone_sel?.selecting, weapon)
-=======
 
 		var/hit_zone = resolve_item_attack(weapon, user, user.zone_sel? user.zone_sel.selecting : ran_zone())
 		if (!hit_zone)
@@ -344,9 +332,7 @@ avoid code duplication. This includes items that may sometimes act as a standard
 				return TRUE
 		if (hit_zone)
 			weapon.apply_hit_effect(src, user, hit_zone)
->>>>>>> theirs
 		return TRUE
-
 	return ..()
 
 
@@ -450,41 +436,8 @@ avoid code duplication. This includes items that may sometimes act as a standard
  * - `user` - The mob that clicked the target.
  * * - `click_parameters` - List of click parameters. See BYOND's `Click()` documentation.
  */
-<<<<<<< ours
-/obj/item/proc/attack(mob/living/subject, mob/living/user, target_zone, animate = TRUE)
-<<<<<<< ours
-<<<<<<< ours
-	if (!force || (item_flags & ITEM_FLAG_NO_BLUDGEON))
-		return FALSE
-	if (subject == user && user.a_intent != I_HURT)
-		return FALSE
-	if (user.a_intent == I_HELP && !attack_ignore_harm_check)
-		return FALSE
-	if (!no_attack_log)
-		admin_attack_log(user, subject, "Attacked using \a [src] (DAMTYE: [uppertext(damtype)])", "Was attacked with \a [src] (DAMTYE: [uppertext(damtype)])", "used \a [src] (DAMTYE: [uppertext(damtype)]) to attack")
-	user.setClickCooldown(attack_cooldown + w_class)
-	if (animate)
-		user.do_attack_animation(subject)
-	if (!subject.aura_check(AURA_TYPE_WEAPON, src, user))
-		return FALSE
-	var/hit_zone = subject.resolve_item_attack(src, user, target_zone)
-	var/datum/attack_result/result = hit_zone
-	if (istype(result))
-		if (result.hit_zone)
-			apply_hit_effect(result.attackee ? result.attackee : subject, user, result.hit_zone)
-		return TRUE
-	if (hit_zone)
-		apply_hit_effect(subject, user, hit_zone)
-	return TRUE
-=======
-	SHOULD_CALL_PARENT(TRUE)
-=======
->>>>>>> theirs
-=======
 /obj/item/proc/attack(mob/living/subject, mob/living/user, click_parameters)
->>>>>>> theirs
 	return FALSE
->>>>>>> theirs
 
 
 /**
@@ -499,11 +452,6 @@ avoid code duplication. This includes items that may sometimes act as a standard
  * Returns boolean to indicate whether or not damage was dealt.
  */
 /obj/item/proc/apply_hit_effect(mob/living/target, mob/living/user, hit_zone)
-<<<<<<< ours
-	if (hitsound)
-		playsound(loc, hitsound, 50, TRUE, -1)
-=======
->>>>>>> theirs
 	var/power = force
 	if (MUTATION_HULK in user.mutations && damtype == DAMAGE_BRUTE) //Repeat this check here because it is only used under use_weapon to check if it's even possible to damage the mob. Value not carried over here.
 		power *= 2
@@ -526,7 +474,7 @@ avoid code duplication. This includes items that may sometimes act as a standard
 /mob/living/get_attack_speed(obj/item/item)
 	var/speed = base_attack_cooldown
 	if (istype(item))
-		speed = item.attack_cooldown
+		speed = item.attack_cooldown + item.w_class
 	return speed
 
 
