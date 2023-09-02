@@ -131,8 +131,9 @@
 /mob/living/proc/resolve_item_attack(obj/item/I, mob/living/user, target_zone)
 	return target_zone
 
-//Called when the mob is hit with an item in combat. Returns the blocked result
+///Called when the mob is hit with an item in combat. Returns the blocked result
 /mob/living/proc/hit_with_weapon(obj/item/I, mob/living/user, effective_force, hit_zone)
+<<<<<<< ours
 	var/weapon_mention
 	if(I.attack_message_name())
 		weapon_mention = " with [I.attack_message_name()]"
@@ -149,13 +150,14 @@
 
 ///returns false if the effects failed to apply for some reason, true otherwise.
 /mob/living/proc/standard_weapon_hit_effects(obj/item/I, mob/living/user, effective_force, hit_zone)
+=======
+>>>>>>> theirs
 	if(!effective_force)
 		return FALSE
 
-	//Apply weapon damage
 	var/damage_flags = I.damage_flags()
-
 	return apply_damage(effective_force, I.damtype, hit_zone, damage_flags, used_weapon=I, armor_pen=I.armor_penetration)
+
 
 //this proc handles being hit by a thrown atom
 /mob/living/hitby(atom/movable/AM, datum/thrownthing/TT)
