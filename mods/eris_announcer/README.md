@@ -1,7 +1,7 @@
 
 #### Список PRов:
 
-- https://github.com/SierraBay/SierraBay12/pull/908
+- https://github.com/SierraBay/SierraBay12/pull/922
 <!--
   Ссылки на PRы, связанные с модом:
   - Создание
@@ -9,9 +9,9 @@
 -->
 
 <!-- Название мода. Не важно на русском или на английском. -->
-## SSinput
+## Eris Announcer
 
-ID мода: SSINPUT
+ID мода: ERIS_ANNOUNCER
 <!--
   Название модпака прописными буквами, СОЕДИНЁННЫМИ_ПОДЧЁРКИВАНИЕМ,
   которое ты будешь использовать для обозначения файлов.
@@ -19,7 +19,7 @@ ID мода: SSINPUT
 
 ### Описание мода
 
-Кейбинды, диагональное передвижение и русская раскладка - то, что делает этот мод.
+Оповещения о чём-либо теперь приходят не вам в голову, а в радиоканал.
 <!--
   Что он делает, что добавляет: что, куда, зачем и почему - всё здесь.
   А также любая полезная информация.
@@ -27,19 +27,8 @@ ID мода: SSINPUT
 
 ### Изменения *кор кода*
 
-- `code/__defines/subsystem-priority.dm`: `#define SS_PRIORITY_INPUT`
-- `code/__defines/subsystems.dm`: `#define SS_INIT_INPUT`
-- `code/_onclick/click.dm`: `/mob/proc/ClickOn()`, `/mob/proc/AltMiddleClickOn()`
-- `code/game/verbs/ooc.dm`: `/client/verb/ooc()`, `/client/verb/looc()`
-- `code/modules/admin/callproc/callproc.dm`: `/client/Click()`
-- `code/modules/client/client_procs.dm`: `/client/New()`
-- `code/modules/goonchat/browserOutput.dm`: `/datum/chatOutput/Topic()`
-- `code/modules/mob/living/silicon/robot/login.dm`: `/mob/living/silicon/robot/Login()`
-- `code/modules/mob/observer/ghost/ghost.dm`: `/mob/observer/ghost/appearance_flags`
-- `code/modules/mob/login.dm`: `/mob/Login()`
-- `code/modules/mob/mob_defines.dm`: `/mob/appearance_flags`
-- `code/modules/mob/mob_helpers.dm`: `/mob/verb/a_intent_change()`
-
+- `code/game/objects/items/devices/radio/radio.dm`: `/obj/item/device/radio/proc/autosay()`
+- `code/procs/announce.dm`: `/datum/announcement/proc/Announce()`
 <!--
   Если вы редактировали какие-либо процедуры или переменные в кор коде,
   они должны быть указаны здесь.
@@ -50,9 +39,7 @@ ID мода: SSINPUT
 
 ### Оверрайды
 
-- `mods/ssinput/code/general/client.dm`: `/client/Topic()`
-- `mods/ssinput/code/general/preferences.dm`: `/datum/preferences/setup()`
-- `mods/ssinput/code/global_lists.dm`: `/hook/global_init/makeDatumRefLists()`
+- Отсутствуют
 <!--
   Если ты добавлял новый модульный оверрайд, его нужно указать здесь.
   Здесь указываются оверрайды в твоём моде и папке `_master_files`
@@ -62,8 +49,7 @@ ID мода: SSINPUT
 
 ### Дефайны
 
-- `code/__defines/subsystem-priority.dm`: `SS_PRIORITY_INPUT`
-- `code/__defines/subsystems.dm`: `SS_INIT_INPUT`
+- Отсутствуют
 <!--
   Если требовалось добавить какие-либо дефайны, укажи файлы,
   в которые ты их добавил, а также перечисли имена.
