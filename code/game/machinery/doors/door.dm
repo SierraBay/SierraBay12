@@ -360,6 +360,7 @@
 	if(autoclose)
 		close_door_at = next_close_time()
 
+	on_open()
 	return 1
 
 /obj/machinery/door/proc/next_close_time()
@@ -387,6 +388,8 @@
 	var/obj/hotspot/fire = locate() in loc
 	if(fire)
 		qdel(fire)
+
+	on_close()
 	return
 
 /obj/machinery/door/proc/toggle(forced = 0)
