@@ -349,7 +349,6 @@ avoid code duplication. This includes items that may sometimes act as a standard
  * resolve chain will be called.
  */
 /atom/proc/use_tool(obj/item/tool, mob/living/user, list/click_params)
-	SHOULD_CALL_PARENT(TRUE)
 	return FALSE
 
 
@@ -396,6 +395,7 @@ avoid code duplication. This includes items that may sometimes act as a standard
 /**
  * Called when the item is in the active hand and another atom is clicked and `resolve_attackby()` returns FALSE. This is generally called by `ClickOn()`.
  * Use this similar to how attack() is used; but for non-mob targets. Whenever you want specific behavior at the item level.
+ * Also works on ranged targets, unlike attack()
  *
  * **Parameters**:
  * - `target` - The atom that was clicked on.
@@ -421,7 +421,6 @@ avoid code duplication. This includes items that may sometimes act as a standard
  * Returns boolean to indicate whether the use call was handled or not.
  */
 /obj/item/proc/use_on(atom/target, mob/user, click_parameters)
-	SHOULD_CALL_PARENT(TRUE)
 	return FALSE
 
 
