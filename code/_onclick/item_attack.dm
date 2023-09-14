@@ -303,7 +303,6 @@ avoid code duplication. This includes items that may sometimes act as a standard
 		if (!hit_zone)
 			return TRUE
 
-<<<<<<< ours
 		playsound(src, weapon.hitsound, 75, TRUE)
 		user.visible_message(
 			SPAN_DANGER("\The [user] [attack_verb] \the [src] [weapon_mention]"),
@@ -316,8 +315,6 @@ avoid code duplication. This includes items that may sometimes act as a standard
 			SPAN_DANGER("You feel something hit you!")
 		)
 
-=======
->>>>>>> theirs
 		if (!weapon.no_attack_log)
 			admin_attack_log(
 				user,
@@ -438,34 +435,8 @@ avoid code duplication. This includes items that may sometimes act as a standard
  * - `user` - The mob that clicked the target.
  * * - `click_parameters` - List of click parameters. See BYOND's `Click()` documentation.
  */
-<<<<<<< ours
 /obj/item/proc/attack(mob/living/subject, mob/living/user, click_parameters)
 	return FALSE
-=======
-/obj/item/proc/attack(mob/living/subject, mob/living/user, target_zone, animate = TRUE)
-	if (!force || (item_flags & ITEM_FLAG_NO_BLUDGEON))
-		return FALSE
-	if (subject == user && user.a_intent != I_HURT)
-		return FALSE
-	if (user.a_intent == I_HELP && !attack_ignore_harm_check)
-		return FALSE
-	if (!no_attack_log)
-		admin_attack_log(user, subject, "Attacked using \a [src] (DAMTYE: [uppertext(damtype)])", "Was attacked with \a [src] (DAMTYE: [uppertext(damtype)])", "used \a [src] (DAMTYE: [uppertext(damtype)]) to attack")
-	user.setClickCooldown(user.get_attack_speed(src))
-	if (animate)
-		user.do_attack_animation(subject)
-	if (!subject.aura_check(AURA_TYPE_WEAPON, src, user))
-		return FALSE
-	var/hit_zone = subject.resolve_item_attack(src, user, target_zone)
-	var/datum/attack_result/result = hit_zone
-	if (istype(result))
-		if (result.hit_zone)
-			apply_hit_effect(result.attackee ? result.attackee : subject, user, result.hit_zone)
-		return TRUE
-	if (hit_zone)
-		apply_hit_effect(subject, user, hit_zone)
-	return TRUE
->>>>>>> theirs
 
 
 /**
