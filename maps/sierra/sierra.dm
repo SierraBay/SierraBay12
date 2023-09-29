@@ -160,7 +160,7 @@
 	#include "../away/mininghome/mininghome.dm"
 	#include "../away/scavver/scavver_gantry.dm"
 	#include "../away/abandoned_hotel/abandoned_hotel.dm"
-	#include "../event/iccgn_ship/icgnv_hound.dm" // SIERRA TODO: Пофиксить или удалить
+	// #include "../event/iccgn_ship/icgnv_hound.dm" // SIERRA TODO: Пофиксить или удалить
 
 	// USED MODS
 	// Keep them in ascending alphabetical order, please
@@ -192,7 +192,6 @@
 	#include "../../packs/factions/iccgn/_pack.dm"
 	#include "../../packs/factions/scga/_pack.dm"
 	#include "../../packs/infinity/_pack.dm"
-	#include "../../packs/sierra-tweaks/_pack.dm"
 	#include "../../packs/deepmaint/_pack.dm"
 
 

@@ -375,6 +375,14 @@
 	else
 		return SURGERY_SKILLS_ROBOTIC_ON_MEAT
 
+/singleton/surgery_step/robotics/fix_organ_robotic/success_chance(mob/living/user, mob/living/carbon/human/target, obj/item/tool)
+	. = ..()
+	if(!target.isSynthetic())
+		if(user.skill_check(SKILL_ANATOMY, SKILL_EXPERIENCED))
+			. += 30
+		if(user.skill_check(SKILL_MEDICAL, SKILL_EXPERIENCED))
+			. += 30
+
 /singleton/surgery_step/robotics/fix_organ_robotic/assess_bodypart(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/affected = ..()
 	if(affected)
@@ -446,14 +454,18 @@
 	return FALSE
 
 /singleton/surgery_step/robotics/detatch_organ_robotic/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("[user] starts to decouple [target]'s [LAZYACCESS(target.surgeries_in_progress, target_zone)] with \the [tool].", \
-	"You start to decouple [target]'s [LAZYACCESS(target.surgeries_in_progress, target_zone)] with \the [tool]." )
+	var/obj/affected = target.get_organ(target_zone)
+	var/obj/removing = target.internal_organs_by_name[LAZYACCESS(target.surgeries_in_progress, target_zone)]
+	user.visible_message("[user] starts to decouple \the [removing] from \the [target]'s [affected.name] with \the [tool].", \
+	"You start to decouple \the [removing] from \the [target]'s [affected.name] with \the [tool]." )
 	playsound(target.loc, 'sound/items/Deconstruct.ogg', 15, 1)
 	..()
 
 /singleton/surgery_step/robotics/detatch_organ_robotic/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message(SPAN_NOTICE("[user] has decoupled [target]'s [LAZYACCESS(target.surgeries_in_progress, target_zone)] with \the [tool].") , \
-	SPAN_NOTICE("You have decoupled [target]'s [LAZYACCESS(target.surgeries_in_progress, target_zone)] with \the [tool]."))
+	var/obj/affected = target.get_organ(target_zone)
+	var/obj/removing = target.internal_organs_by_name[LAZYACCESS(target.surgeries_in_progress, target_zone)]
+	user.visible_message(SPAN_NOTICE("[user] has decoupled \the [removing] from \the [target]'s [affected.name] with \the [tool].") , \
+	SPAN_NOTICE("You have decoupled \the [removing] from \the [target]'s [affected.name] with \the [tool]."))
 
 	var/obj/item/organ/internal/I = target.internal_organs_by_name[LAZYACCESS(target.surgeries_in_progress, target_zone)]
 	if(I && istype(I))
@@ -508,8 +520,10 @@
 
 
 /singleton/surgery_step/robotics/attach_organ_robotic/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("[user] begins reattaching [target]'s [LAZYACCESS(target.surgeries_in_progress, target_zone)] with \the [tool].", \
-	"You start reattaching [target]'s [LAZYACCESS(target.surgeries_in_progress, target_zone)] with \the [tool].")
+	var/obj/affected = target.get_organ(target_zone)
+	var/obj/attaching = target.internal_organs_by_name[LAZYACCESS(target.surgeries_in_progress, target_zone)]
+	user.visible_message("[user] begins reattaching \the [attaching] from \the [target]'s [affected.name] with \the [tool].", \
+	"You start reattaching \the [attaching] from \the [target]'s [affected.name] with \the [tool].")
 	playsound(target.loc, 'sound/items/Screwdriver.ogg', 15, 1)
 	..()
 

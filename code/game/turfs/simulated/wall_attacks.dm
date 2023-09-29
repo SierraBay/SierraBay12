@@ -29,7 +29,7 @@
 		update_icon()
 		update_air()
 		sleep(15)
-		set_light(0.4, 0.1, 1)
+		set_light(1, 0.4)
 		src.blocks_air = 1
 		set_opacity(1)
 		for(var/turf/simulated/turf in loc)
@@ -114,9 +114,9 @@
 					playsound(src, pick(GLOB.punch_sound), 20)
 				if (MUTATION_FERAL in user.mutations)
 					M.visible_message(SPAN_DANGER("[M.name] slams into \the [src]!"), SPAN_DANGER("You slam into \the [src]!"))
-					playsound(src, pick(GLOB.punch_sound), 45)
-					damage_health(5, DAMAGE_BRUTE)
-					user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN*2) //Additional cooldown
+					playsound(src, 'sound/effects/clang.ogg', 45, 1)
+					damage_health(20, DAMAGE_BRUTE)
+					user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN*5) //Additional cooldown
 					attack_animation(user)
 				else
 					M.visible_message(SPAN_DANGER("[M.name] punches \the [src]!"), SPAN_DANGER("You punch \the [src]!"))

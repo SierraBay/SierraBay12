@@ -56,7 +56,7 @@
 	if (user)
 		playsound(user, 'sound/weapons/saberon.ogg', 50, 1)
 		to_chat(user, SPAN_NOTICE("\The [src] is now energised."))
-	set_light(0.8, 1, 2, 4, lighting_color)
+	set_light(2, 0.8, lighting_color)
 
 	if (istype(user,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = user
@@ -239,7 +239,7 @@
 		playsound(user.loc, 'sound/weapons/blade1.ogg', 50, 1)
 
 
-/obj/item/melee/energy/sword/get_parry_chance(mob/user)
+/obj/item/melee/energy/sword/get_parry_chance(mob/user, mob/attacker)
 	return active ? ..() : 0
 
 

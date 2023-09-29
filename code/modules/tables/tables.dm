@@ -143,15 +143,9 @@
 
 	// Material - Plate table
 	if (istype(weapon, /obj/item/stack/material))
-		if (material)
-			reinforce_table(weapon, user)
-			return TRUE
-		material = common_material_add(weapon, user, "plat")
-		if (material)
-			update_connections(TRUE)
-			update_icon()
-			update_desc()
-			update_material()
+		if (!material)
+			return FALSE // Handled by `use_tool()`
+		reinforce_table(weapon, user)
 		return TRUE
 
 	// Welding Tool - Repair damage
@@ -216,10 +210,28 @@
 /obj/structure/table/use_tool(obj/item/tool, mob/user, list/click_params)
 	SHOULD_CALL_PARENT(FALSE)
 
-	// Put things on table
+	// Unfinished table - Construction stuff
 	if (can_plate && !material)
+		// Material - Plate table
+		if (istype(tool, /obj/item/stack/material))
+			material = common_material_add(tool, user, "plat")
+			if (material)
+				update_connections(TRUE)
+				update_icon()
+				update_desc()
+				update_material()
+			return TRUE
+
+		// Wrench - Dismantle
+		if (isWrench(tool))
+			dismantle(tool, user)
+			return TRUE
+
+		// Anything else - Can't put it on an unfinished table
 		USE_FEEDBACK_FAILURE("\The [src] needs to be plated before you can put \the [tool] on it.")
 		return TRUE
+
+	// Put things on table
 	if (!user.unEquip(tool, loc))
 		FEEDBACK_UNEQUIP_FAILURE(user, tool)
 		return TRUE
@@ -227,11 +239,16 @@
 	return TRUE
 
 
-/obj/structure/table/MouseDrop_T(obj/item/stack/material/what)
-	if(can_reinforce && isliving(usr) && (!usr.stat) && istype(what) && usr.get_active_hand() == what && Adjacent(usr))
-		reinforce_table(what, usr)
-	else
-		return ..()
+/obj/structure/table/MouseDrop_T(atom/dropped, mob/user)
+	// Place held objects on table
+	if (isitem(dropped) && user.IsHolding(dropped))
+		if (!user.use_sanity_check(src, dropped, SANITY_CHECK_DEFAULT | SANITY_CHECK_TOOL_UNEQUIP))
+			return TRUE
+		user.unEquip(dropped, get_turf(src))
+		return TRUE
+
+	return ..()
+
 
 /obj/structure/table/proc/reinforce_table(obj/item/stack/material/S, mob/user)
 	if(reinforced)

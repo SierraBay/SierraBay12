@@ -46,7 +46,7 @@
 
 /obj/item/clothing/mask/smokable/ecig/util
 	name = "electronic cigarette"
-	desc = "A popular utilitarian model electronic cigarette, the ONI-55. Comes in a variety of colors."
+	desc = "A popular utilitarian model of electronic cigarette, the ONI-55. Comes in a variety of colors."
 	icon_state = "ecigoff1"
 	icon_off = "ecigoff1"
 	icon_empty = "ecigoff1"
@@ -131,7 +131,7 @@
 	if (active)
 		item_state = icon_on
 		icon_state = icon_on
-		set_light(0.6, 0.5, brightness_on)
+		set_light(brightness_on)
 	else if (ec_cartridge)
 		set_light(0)
 		item_state = icon_off

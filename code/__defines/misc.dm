@@ -259,14 +259,10 @@
 //Lying animation
 #define ANIM_LYING_TIME 2
 
-
-//Planet habitability weight
-#define HABITABILITY_LOCKED			1
-#define HABITABILITY_TYPICAL		2
-#define HABITABILITY_BAD 			3
-#define HABITABILITY_EXTREME		4
-#define HABITABILITY_RANDOM			5
-
+//Planet habitability class
+#define HABITABILITY_IDEAL  1
+#define HABITABILITY_OKAY  2
+#define HABITABILITY_BAD  3
 
 #ifndef WINDOWS_HTTP_POST_DLL_LOCATION
 #define WINDOWS_HTTP_POST_DLL_LOCATION "lib/byhttp.dll"
@@ -342,3 +338,5 @@
 #define SANITY_CHECK_TOPIC_PHYSICALLY_INTERACT FLAG(6)
 
 #define SANITY_CHECK_DEFAULT (SANITY_CHECK_TOOL_IN_HAND | SANITY_CHECK_BOTH_ADJACENT)
+
+#define Z_ALL_TURFS(Z) block(locate(1, 1, Z), locate(world.maxx, world.maxy, Z))
