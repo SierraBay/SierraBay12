@@ -25,3 +25,6 @@
 /obj/machinery/disposal/small
 	icon = 'packs/infinity/icons/obj/machinery/disposal_small.dmi'
 	density = FALSE
+
+/obj/machinery/disposal/small/on_update_icon()
+	ClearOverlays()
