@@ -25,3 +25,28 @@
 /obj/machinery/disposal/small
 	icon = 'packs/infinity/icons/obj/machinery/disposal_small.dmi'
 	density = FALSE
+
+/obj/machinery/disposal/small/on_update_icon()
+	ClearOverlays()
+	if(MACHINE_IS_BROKEN(src))
+		mode = 0
+		flush = 0
+		return
+
+	// flush handle
+	if(flush)
+		AddOverlays(image(icon, "dispover-handle"))
+
+	// only handle is shown if no power
+	if(!is_powered() || mode == -1)
+		return
+
+	// 	check for items/vomit in disposal - occupied light
+	if(length(contents) > LAZYLEN(component_parts) || reagents.total_volume)
+		AddOverlays(image(icon, "dispover-full"))
+
+	// charging and ready light
+	if(mode == 1)
+		AddOverlays(image(icon, "dispover-charge"))
+	else if(mode == 2)
+		AddOverlays(image(icon, "dispover-ready"))
