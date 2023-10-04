@@ -1,0 +1,19 @@
+name: "Test Merge Blocker"
+
+on:
+  pull_request:
+    branches: [ "dev" ]
+    types: [opened, labeled, unlabeled]
+
+jobs:
+  testmerge-blocker:
+    name: Enforce Test Merge Label
+    runs-on: ubuntu-latest
+    steps:
+      - name: Enforce Test Merge Label
+        if: ${{ contains(github.event.pull_request.labels.*.name, 'Test Merge') }}
+        if: ${{ !contains(github.event.pull_request.labels.*.name, 'Test Merge Pass') }}
+        run: |
+          echo "Pull request is labeled for Test Merge and has not been flagged as Test Merge Passed."
+          echo "The test merge must pass, or the label removed, before this PR can be merged."
+          exit 1
