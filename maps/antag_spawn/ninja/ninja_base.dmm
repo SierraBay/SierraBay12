@@ -43,7 +43,12 @@
 	},
 /area/map_template/ninja_dojo/dojo)
 "aj" = (
+<<<<<<< ours
 /turf/simulated/wall/wood,
+=======
+/obj/effect/wallframe_spawn/reinforced,
+/turf/simulated/wall/prepainted,
+>>>>>>> theirs
 /area/map_template/ninja_dojo/dojo)
 "ak" = (
 /obj/structure/table/glass,
@@ -146,6 +151,10 @@
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 5
 	},
+<<<<<<< ours
+=======
+/obj/effect/floor_decal/corner/blue,
+>>>>>>> theirs
 /turf/unsimulated/floor{
 	icon_state = "white"
 	},
@@ -154,6 +163,12 @@
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 9
 	},
+<<<<<<< ours
+=======
+/obj/effect/floor_decal/corner/blue{
+	dir = 8
+	},
+>>>>>>> theirs
 /turf/unsimulated/floor{
 	icon_state = "white"
 	},
@@ -188,10 +203,18 @@
 	},
 /area/map_template/ninja_dojo/dojo)
 "aA" = (
+<<<<<<< ours
 /obj/effect/wingrille_spawn/reinforced/crescent,
 /turf/unsimulated/floor{
 	icon_state = "plating";
 	name = "plating"
+=======
+/obj/effect/floor_decal/corner/black/border{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+>>>>>>> theirs
 	},
 /area/map_template/ninja_dojo/dojo)
 "aB" = (
@@ -199,6 +222,12 @@
 /obj/item/reagent_containers/syringe/antiviral,
 /obj/item/reagent_containers/syringe/antiviral,
 /obj/item/stack/medical/advanced/bruise_pack,
+<<<<<<< ours
+=======
+/obj/machinery/light{
+	dir = 8
+	},
+>>>>>>> theirs
 /turf/unsimulated/floor{
 	icon_state = "white"
 	},
@@ -221,8 +250,16 @@
 	},
 /area/map_template/ninja_dojo/dojo)
 "aD" = (
+<<<<<<< ours
 /obj/machinery/chemical_dispenser/ert,
 /obj/item/reagent_containers/glass/beaker/large,
+=======
+/obj/item/reagent_containers/glass/beaker/large,
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/machinery/chemical_dispenser/full,
+>>>>>>> theirs
 /turf/unsimulated/floor{
 	icon_state = "white"
 	},
@@ -248,9 +285,24 @@
 	},
 /area/map_template/ninja_dojo/dojo)
 "aG" = (
+<<<<<<< ours
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "wood"
+=======
+/obj/machinery/cryopod{
+	dir = 1
+	},
+/obj/effect/floor_decal/industrial/warning{
+	dir = 8
+	},
+/obj/effect/floor_decal/industrial/warning{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	icon_state = "plating";
+	name = "plating"
+>>>>>>> theirs
 	},
 /area/map_template/ninja_dojo/dojo)
 "aH" = (
@@ -280,34 +332,59 @@
 	},
 /area/map_template/ninja_dojo/dojo)
 "aK" = (
+<<<<<<< ours
 /obj/effect/floor_decal/spline/fancy/wood/corner,
+=======
+/obj/effect/floor_decal/corner/blue{
+	dir = 6
+	},
+>>>>>>> theirs
 /turf/unsimulated/floor{
 	icon_state = "white"
 	},
 /area/map_template/ninja_dojo/dojo)
 "aL" = (
+<<<<<<< ours
 /obj/effect/floor_decal/spline/fancy/wood,
+=======
+/obj/machinery/door/blast/regular/open{
+	icon_state = "pdoor0";
+	id_tag = "prototype_chamber_blast"
+	},
+/obj/effect/floor_decal/floordetail/tiled,
+>>>>>>> theirs
 /turf/unsimulated/floor{
 	icon_state = "white"
 	},
 /area/map_template/ninja_dojo/dojo)
 "aM" = (
+<<<<<<< ours
 /obj/effect/floor_decal/spline/fancy/wood,
 /obj/machinery/chemical_dispenser/full,
 /obj/item/reagent_containers/glass/beaker/large,
+=======
+/obj/item/reagent_containers/glass/beaker/large,
+/obj/machinery/chem_master,
+>>>>>>> theirs
 /turf/unsimulated/floor{
 	icon_state = "white"
 	},
 /area/map_template/ninja_dojo/dojo)
 "aN" = (
+<<<<<<< ours
 /obj/machinery/door/morgue{
 	name = "Teleporter"
+=======
+/obj/effect/floor_decal/corner/black/border{
+	dir = 7
+>>>>>>> theirs
 	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
 /area/map_template/ninja_dojo/dojo)
 "aO" = (
+<<<<<<< ours
 /obj/effect/floor_decal/carpet/blue{
 	dir = 8
 	},
@@ -348,6 +425,23 @@
 	dir = 8;
 	icon_state = "bcarpet"
 	},
+=======
+/obj/effect/floor_decal/corner/blue{
+	dir = 9
+	},
+/turf/unsimulated/floor{
+	icon_state = "white"
+	},
+/area/map_template/ninja_dojo/dojo)
+"aQ" = (
+/obj/structure/table/glass,
+/obj/effect/floor_decal/corner/black/border{
+	dir = 7
+	},
+/obj/item/paper_bin,
+/obj/item/pen,
+/turf/simulated/floor/tiled,
+>>>>>>> theirs
 /area/map_template/ninja_dojo/dojo)
 "aR" = (
 /obj/machinery/bodyscanner{
@@ -361,19 +455,38 @@
 /obj/machinery/body_scanconsole{
 	dir = 8
 	},
+<<<<<<< ours
+=======
+/obj/effect/floor_decal/corner/blue{
+	dir = 4
+	},
+>>>>>>> theirs
 /turf/unsimulated/floor{
 	icon_state = "white"
 	},
 /area/map_template/ninja_dojo/dojo)
 "aT" = (
+<<<<<<< ours
 /obj/effect/floor_decal/spline/fancy/wood{
 	dir = 4
 	},
+=======
+/obj/effect/floor_decal/corner/blue{
+	dir = 4
+	},
+/obj/effect/floor_decal/corner/blue{
+	dir = 5
+	},
+/obj/effect/floor_decal/corner/blue{
+	dir = 8
+	},
+>>>>>>> theirs
 /turf/unsimulated/floor{
 	icon_state = "white"
 	},
 /area/map_template/ninja_dojo/dojo)
 "aU" = (
+<<<<<<< ours
 /obj/structure/flora/pottedplant/bamboo,
 /turf/unsimulated/floor{
 	dir = 8;
@@ -543,6 +656,142 @@
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "wood"
+=======
+/obj/effect/floor_decal/industrial/outline/blue,
+/obj/machinery/portable_atmospherics/canister/nitrogen,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/map_template/ninja_dojo/dojo)
+"aV" = (
+/obj/effect/floor_decal/corner/black/border{
+	dir = 10
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/map_template/ninja_dojo/dojo)
+"aW" = (
+/obj/structure/table/rack,
+/obj/item/tank/oxygen,
+/obj/item/tank/oxygen,
+/obj/item/tank/oxygen,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/map_template/ninja_dojo/dojo)
+"aX" = (
+/obj/machinery/door/blast/regular/open{
+	id_tag = "bsdwindow";
+	name = "Exit"
+	},
+/turf/unsimulated/wall,
+/area/map_template/ninja_dojo/dojo)
+"aY" = (
+/turf/unsimulated/floor{
+	dir = 9;
+	icon_state = "vault"
+	},
+/area/map_template/ninja_dojo/dojo)
+"aZ" = (
+/obj/structure/table/rack,
+/obj/item/storage/belt/medical/emt,
+/obj/item/storage/firstaid/adv,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/map_template/ninja_dojo/dojo)
+"ba" = (
+/obj/effect/floor_decal/corner/black/border{
+	dir = 8
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/map_template/ninja_dojo/dojo)
+"bb" = (
+/obj/effect/floor_decal/industrial/outline/blue,
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/map_template/ninja_dojo/dojo)
+"bc" = (
+/obj/effect/floor_decal/corner/black/border{
+	dir = 6
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/map_template/ninja_dojo/dojo)
+"bd" = (
+/turf/simulated/wall/prepainted,
+/area/map_template/ninja_dojo/dojo)
+"be" = (
+/obj/machinery/door/blast/regular/open{
+	icon_state = "pdoor0";
+	id_tag = "prototype_chamber_blast"
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/snow.dmi';
+	icon_state = "snowplating"
+	},
+/area/map_template/ninja_dojo/dojo)
+"bf" = (
+/obj/effect/floor_decal/industrial/warning{
+	icon_state = "warning"
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/snow.dmi';
+	icon_state = "snowplating"
+	},
+/area/map_template/ninja_dojo/dojo)
+"bh" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/map_template/ninja_dojo/dojo)
+"bi" = (
+/obj/machinery/light,
+/obj/effect/floor_decal/corner/black/bordercorner{
+	dir = 8
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/map_template/ninja_dojo/dojo)
+"bj" = (
+/obj/structure/bed/chair/office/dark,
+/obj/item/device/radio/intercom/syndicate{
+	dir = 4;
+	pixel_x = -22
+	},
+/turf/simulated/floor/tiled,
+/area/map_template/ninja_dojo/dojo)
+"bl" = (
+/obj/effect/floor_decal/industrial/warning{
+	dir = 4
+	},
+/obj/effect/floor_decal/floordetail/tiled,
+/turf/unsimulated/floor{
+	icon_state = "plating";
+	name = "plating"
+	},
+/area/map_template/ninja_dojo/dojo)
+"bm" = (
+/obj/structure/table/rack,
+/obj/item/tank/nitrogen,
+/obj/item/tank/nitrogen,
+/obj/item/tank/nitrogen,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+>>>>>>> theirs
 	},
 /area/map_template/ninja_dojo/dojo)
 "bn" = (
@@ -559,6 +808,7 @@
 	},
 /area/map_template/ninja_dojo/dojo)
 "bp" = (
+<<<<<<< ours
 /obj/item/device/radio/intercom/syndicate{
 	dir = 4;
 	pixel_x = -22
@@ -596,11 +846,57 @@
 /area/map_template/ninja_dojo/dojo)
 "bt" = (
 /obj/structure/flora/ausbushes/palebush,
+=======
+/obj/structure/window/reinforced/polarized{
+	dir = 1
+	},
+/obj/structure/window/reinforced/polarized,
+/obj/effect/floor_decal/floordetail/tiled,
+/turf/unsimulated/floor{
+	icon_state = "plating";
+	name = "plating"
+	},
+/area/map_template/ninja_dojo/dojo)
+"bq" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/floor/tiled,
+/area/map_template/ninja_dojo/dojo)
+"br" = (
+/obj/effect/floor_decal/corner/black/border{
+	dir = 1
+	},
+/obj/effect/floor_decal/corner/black/border{
+	dir = 1
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/map_template/ninja_dojo/dojo)
+"bs" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/effect/floor_decal/corner/black/border{
+	dir = 7
+	},
+/obj/effect/floor_decal/corner/black/border{
+	dir = 1
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/map_template/ninja_dojo/dojo)
+"bt" = (
+/obj/structure/pit/closed/grave,
+>>>>>>> theirs
 /turf/unsimulated/floor{
 	icon_state = "snow"
 	},
 /area/map_template/ninja_dojo/dojo)
 "bu" = (
+<<<<<<< ours
 /obj/structure/bookcase,
 /turf/unsimulated/floor{
 	dir = 8;
@@ -974,6 +1270,376 @@
 	},
 /turf/unsimulated/floor{
 	icon_state = "freezerfloor"
+=======
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/effect/floor_decal/industrial/warning/corner{
+	dir = 8
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/map_template/ninja_dojo/dojo)
+"bv" = (
+/obj/effect/floor_decal/corner/blue,
+/turf/unsimulated/floor{
+	icon_state = "white"
+	},
+/area/map_template/ninja_dojo/dojo)
+"bw" = (
+/obj/effect/floor_decal/corner/black/border{
+	dir = 7
+	},
+/turf/unsimulated/floor{
+	icon_state = "white"
+	},
+/area/map_template/ninja_dojo/dojo)
+"bx" = (
+/obj/machinery/recharger/wallcharger{
+	dir = 4;
+	pixel_x = -23;
+	pixel_y = -3
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/map_template/ninja_dojo/dojo)
+"by" = (
+/obj/effect/landmark{
+	name = "ninjastart"
+	},
+/obj/effect/floor_decal/industrial/warning,
+/obj/effect/floor_decal/floordetail/tiled,
+/turf/unsimulated/floor{
+	dir = 1;
+	icon_state = "vault"
+	},
+/area/map_template/ninja_dojo/dojo)
+"bz" = (
+/obj/machinery/acting/changer,
+/obj/effect/floor_decal/industrial/warning{
+	dir = 9;
+	icon_state = "warning"
+	},
+/obj/effect/floor_decal/industrial/warning{
+	dir = 6;
+	icon_state = "warning"
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/map_template/ninja_dojo/dojo)
+"bA" = (
+/obj/effect/floor_decal/industrial/warning/corner{
+	dir = 8
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/map_template/ninja_dojo/dojo)
+"bB" = (
+/obj/effect/floor_decal/corner/black/bordercorner{
+	dir = 5
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/map_template/ninja_dojo/dojo)
+"bC" = (
+/obj/machinery/door/airlock/centcom{
+	name = "Equipment"
+	},
+/turf/unsimulated/floor{
+	icon_state = "snow"
+	},
+/area/map_template/ninja_dojo/dojo)
+"bD" = (
+/obj/effect/floor_decal/corner/black/border{
+	dir = 1
+	},
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/map_template/ninja_dojo/dojo)
+"bE" = (
+/obj/effect/floor_decal/corner/black/border{
+	dir = 9
+	},
+/obj/machinery/rotating_alarm/supermatter{
+	dir = 4;
+	name = "emergency alarm";
+	on = 1
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/map_template/ninja_dojo/dojo)
+"bF" = (
+/obj/effect/floor_decal/corner/black/border{
+	dir = 9
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/map_template/ninja_dojo/dojo)
+"bG" = (
+/obj/effect/floor_decal/corner/black/bordercorner{
+	dir = 8
+	},
+/obj/effect/floor_decal/corner/black/bordercorner{
+	dir = 1
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/map_template/ninja_dojo/dojo)
+"bH" = (
+/obj/effect/floor_decal/industrial/warning{
+	dir = 4;
+	icon_state = "warning"
+	},
+/obj/effect/floor_decal/industrial/warning{
+	dir = 4;
+	icon_state = "warning"
+	},
+/turf/unsimulated/floor{
+	dir = 9;
+	icon_state = "vault"
+	},
+/area/map_template/ninja_dojo/dojo)
+"bI" = (
+/obj/machinery/door/blast/regular/open{
+	dir = 4;
+	icon_state = "pdoor0";
+	id_tag = "prototype_chamber_blast"
+	},
+/obj/effect/floor_decal/floordetail/tiled,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/map_template/ninja_dojo/dojo)
+"bJ" = (
+/obj/effect/floor_decal/industrial/warning{
+	dir = 8
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/map_template/ninja_dojo/dojo)
+"bK" = (
+/obj/effect/floor_decal/corner/black/bordercorner{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/map_template/ninja_dojo/dojo)
+"bL" = (
+/obj/effect/floor_decal/industrial/warning{
+	dir = 8
+	},
+/obj/effect/floor_decal/floordetail/tiled,
+/turf/unsimulated/floor{
+	icon_state = "plating";
+	name = "plating"
+	},
+/area/map_template/ninja_dojo/dojo)
+"bM" = (
+/obj/effect/floor_decal/corner/black/border{
+	dir = 10
+	},
+/obj/machinery/rotating_alarm/supermatter{
+	dir = 4;
+	name = "emergency alarm";
+	on = 1
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/map_template/ninja_dojo/dojo)
+"bN" = (
+/obj/machinery/cryopod{
+	dir = 2
+	},
+/obj/effect/floor_decal/industrial/warning{
+	dir = 8
+	},
+/obj/effect/floor_decal/industrial/warning{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	icon_state = "plating";
+	name = "plating"
+	},
+/area/map_template/ninja_dojo/dojo)
+"bO" = (
+/obj/effect/paint_stripe/yellow,
+/turf/simulated/wall/prepainted,
+/area/map_template/ninja_dojo/dojo)
+"bP" = (
+/obj/effect/floor_decal/corner/black/border{
+	dir = 1
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/map_template/ninja_dojo/dojo)
+"bQ" = (
+/obj/effect/floor_decal/corner/black/border{
+	dir = 5
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/map_template/ninja_dojo/dojo)
+"bR" = (
+/obj/structure/table/rack,
+/obj/item/storage/box/syndie_kit/chameleon,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/map_template/ninja_dojo/dojo)
+"bS" = (
+/obj/effect/floor_decal/asteroid,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/snow.dmi';
+	icon_state = "snowplating"
+	},
+/area/map_template/ninja_dojo/dojo)
+"bT" = (
+/obj/effect/floor_decal/industrial/warning/corner,
+/obj/effect/floor_decal/industrial/warning/corner{
+	dir = 4;
+	icon_state = "warningcorner"
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/map_template/ninja_dojo/dojo)
+"bU" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 1
+	},
+/turf/unsimulated/floor{
+	icon_state = "plating";
+	name = "plating"
+	},
+/area/map_template/ninja_dojo/start)
+"bV" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/effect/floor_decal/industrial/warning/corner{
+	dir = 4;
+	icon_state = "warningcorner"
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/map_template/ninja_dojo/dojo)
+"bW" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/effect/floor_decal/industrial/warning/corner{
+	dir = 2;
+	icon_state = "warningcorner"
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/map_template/ninja_dojo/dojo)
+"bX" = (
+/obj/effect/floor_decal/industrial/warning{
+	icon_state = "warning"
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/map_template/ninja_dojo/dojo)
+"bZ" = (
+/obj/effect/wallframe_spawn/reinforced,
+/turf/space,
+/area/map_template/ninja_dojo/dojo)
+"ca" = (
+/obj/structure/table/glass,
+/obj/effect/floor_decal/corner/black/border{
+	dir = 10
+	},
+/turf/simulated/floor/tiled,
+/area/map_template/ninja_dojo/dojo)
+"cb" = (
+/obj/machinery/computer/modular/preset/medical,
+/obj/effect/floor_decal/industrial/outline/grey,
+/obj/effect/floor_decal/corner/black/border{
+	dir = 6
+	},
+/turf/simulated/floor/tiled,
+/area/map_template/ninja_dojo/dojo)
+"ce" = (
+/obj/machinery/door/airlock/centcom{
+	name = "Equipment"
+	},
+/turf/simulated/floor/tiled,
+/area/map_template/ninja_dojo/dojo)
+"cf" = (
+/obj/effect/floor_decal/corner/black/bordercorner{
+	dir = 7
+	},
+/obj/machinery/light,
+/turf/unsimulated/floor{
+	icon_state = "white"
+	},
+/area/map_template/ninja_dojo/dojo)
+"cg" = (
+/turf/simulated/floor/tiled,
+/area/map_template/ninja_dojo/dojo)
+"ch" = (
+/obj/structure/bed/chair/office/dark{
+	dir = 1
+	},
+/obj/item/device/radio/intercom/syndicate{
+	dir = 8;
+	pixel_x = 22
+	},
+/turf/simulated/floor/tiled,
+/area/map_template/ninja_dojo/dojo)
+"ci" = (
+/obj/effect/floor_decal/corner/black/border{
+	dir = 6
+	},
+/obj/structure/table/glass,
+/obj/item/stack/material/aluminium/fifty,
+/obj/item/stack/material/glass/fifty,
+/obj/item/stack/material/plasteel/fifty,
+/obj/item/stack/material/plastic/fifty,
+/obj/item/stack/material/steel/fifty,
+/obj/item/stack/material/steel/fifty,
+/obj/item/stack/material/titanium/fifty,
+/obj/item/stack/material/glass/fifty,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/map_template/ninja_dojo/dojo)
+"cj" = (
+/obj/machinery/rotating_alarm/supermatter{
+	dir = 8;
+	name = "emergency alarm";
+	on = 1
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+>>>>>>> theirs
 	},
 /area/map_template/ninja_dojo/dojo)
 "ck" = (
@@ -981,21 +1647,36 @@
 /turf/simulated/wall/r_titanium,
 /area/map_template/ninja_dojo/start)
 "cl" = (
+<<<<<<< ours
 /obj/machinery/door/morgue{
 	name = "Equipment"
 	},
+=======
+/obj/effect/floor_decal/corner/black/border{
+	dir = 9
+	},
+/obj/machinery/fabricator/hacked,
+>>>>>>> theirs
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
 /area/map_template/ninja_dojo/dojo)
 "cm" = (
+<<<<<<< ours
 /obj/machinery/fabricator/hacked,
 /obj/effect/floor_decal/industrial/outline/grey,
+=======
+/obj/effect/floor_decal/corner/black/border{
+	dir = 10
+	},
+/obj/machinery/fabricator/hacked,
+>>>>>>> theirs
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
 /area/map_template/ninja_dojo/dojo)
 "cn" = (
+<<<<<<< ours
 /obj/structure/table/rack,
 /obj/item/stack/material/steel{
 	amount = 50
@@ -1020,6 +1701,26 @@
 /obj/structure/table/steel_reinforced,
 /obj/item/storage/secure/briefcase/money,
 /obj/effect/floor_decal/industrial/outline/grey,
+=======
+/obj/effect/floor_decal/industrial/warning{
+	dir = 4;
+	icon_state = "warning"
+	},
+/turf/unsimulated/floor{
+	dir = 9;
+	icon_state = "vault"
+	},
+/area/map_template/ninja_dojo/dojo)
+"co" = (
+/obj/structure/aliumizer,
+/obj/effect/floor_decal/industrial/warning{
+	dir = 10
+	},
+/obj/effect/floor_decal/industrial/warning{
+	dir = 5;
+	icon_state = "warning"
+	},
+>>>>>>> theirs
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -1030,6 +1731,7 @@
 	},
 /area/map_template/ninja_dojo/dojo)
 "cq" = (
+<<<<<<< ours
 /obj/structure/table/rack,
 /obj/effect/floor_decal/industrial/outline/grey,
 /obj/item/device/multitool/hacktool,
@@ -1042,11 +1744,25 @@
 /obj/item/storage/belt/utility/full,
 /obj/item/device/multitool,
 /obj/effect/floor_decal/industrial/outline/grey,
+=======
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/floor/tiled,
+/area/map_template/ninja_dojo/dojo)
+"cr" = (
+/obj/machinery/rotating_alarm/supermatter{
+	dir = 4;
+	name = "emergency alarm";
+	on = 1
+	},
+>>>>>>> theirs
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
 /area/map_template/ninja_dojo/dojo)
 "cs" = (
+<<<<<<< ours
 /obj/structure/table/steel_reinforced,
 /obj/effect/floor_decal/industrial/outline/grey,
 /obj/item/implanter/freedom,
@@ -1059,11 +1775,19 @@
 /obj/structure/table/steel_reinforced,
 /obj/item/device/radio/uplink,
 /obj/effect/floor_decal/industrial/outline/grey,
+=======
+/obj/structure/table/rack,
+/obj/item/melee/energy/machete{
+	pixel_x = 9;
+	pixel_y = 9
+	},
+>>>>>>> theirs
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
 /area/map_template/ninja_dojo/dojo)
 "cu" = (
+<<<<<<< ours
 /obj/machinery/door/airlock/centcom{
 	name = "Equipment"
 	},
@@ -1074,19 +1798,45 @@
 "cv" = (
 /obj/machinery/acting/changer,
 /obj/effect/floor_decal/industrial/outline/grey,
+=======
+/obj/effect/floor_decal/industrial/warning{
+	icon_state = "warning"
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/snow.dmi';
+	icon_state = "snowplating"
+	},
+/area/map_template/ninja_dojo/dojo)
+"cv" = (
+/obj/effect/floor_decal/industrial/warning{
+	dir = 1;
+	icon_state = "warning"
+	},
+>>>>>>> theirs
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
 /area/map_template/ninja_dojo/dojo)
 "cw" = (
+<<<<<<< ours
 /obj/structure/table/rack,
 /obj/item/stack/nanopaste,
 /obj/item/stack/nanopaste,
 /obj/effect/floor_decal/industrial/outline/grey,
+=======
+/obj/effect/floor_decal/industrial/warning{
+	dir = 4;
+	icon_state = "warning"
+	},
+>>>>>>> theirs
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
 /area/map_template/ninja_dojo/dojo)
+<<<<<<< ours
 "cx" = (
 /obj/structure/shuttle/engine/propulsion{
 	dir = 1
@@ -1099,20 +1849,38 @@
 /obj/machinery/cell_charger,
 /obj/effect/floor_decal/industrial/outline/grey,
 /obj/item/clothing/accessory/storage/bandolier,
+=======
+"cy" = (
+/obj/structure/table/rack,
+/obj/item/storage/belt/utility/full,
+/obj/item/device/multitool,
+/obj/item/tape_roll,
+>>>>>>> theirs
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
 /area/map_template/ninja_dojo/dojo)
 "cz" = (
+<<<<<<< ours
 /obj/structure/table/steel_reinforced,
 /obj/machinery/recharger,
 /obj/effect/floor_decal/industrial/outline/grey,
 /turf/unsimulated/floor{
 	icon_state = "dark"
+=======
+/obj/effect/floor_decal/snow,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/snow.dmi';
+	icon_state = "snowplating"
+>>>>>>> theirs
 	},
 /area/map_template/ninja_dojo/dojo)
 "cA" = (
 /obj/structure/table/rack,
+<<<<<<< ours
 /obj/item/material/star/ninja,
 /obj/item/material/star/ninja,
 /obj/item/material/star/ninja,
@@ -1120,11 +1888,16 @@
 /obj/item/material/star/ninja,
 /obj/item/material/star/ninja,
 /obj/effect/floor_decal/industrial/outline/grey,
+=======
+/obj/item/storage/box/flashbangs,
+/obj/item/storage/box/smokes,
+>>>>>>> theirs
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
 /area/map_template/ninja_dojo/dojo)
 "cB" = (
+<<<<<<< ours
 /obj/structure/table/rack,
 /obj/item/material/star,
 /obj/item/material/star,
@@ -1149,11 +1922,38 @@
 /obj/structure/table/rack,
 /obj/item/storage/belt/holster/security/tactical,
 /obj/effect/floor_decal/industrial/outline/grey,
+=======
+/obj/machinery/light,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/snow.dmi';
+	icon_state = "snowplating"
+	},
+/area/map_template/ninja_dojo/dojo)
+"cC" = (
+/obj/effect/landmark{
+	name = "ninjastart"
+	},
+/obj/effect/floor_decal/industrial/warning{
+	dir = 1
+	},
+/obj/effect/floor_decal/floordetail/tiled,
+/turf/unsimulated/floor{
+	dir = 1;
+	icon_state = "vault"
+	},
+/area/map_template/ninja_dojo/dojo)
+"cD" = (
+/obj/machinery/light,
+/obj/effect/floor_decal/corner/black/bordercorner{
+	dir = 3
+	},
+>>>>>>> theirs
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
 /area/map_template/ninja_dojo/dojo)
 "cE" = (
+<<<<<<< ours
 /obj/structure/table/steel_reinforced,
 /obj/item/plastique,
 /obj/item/plastique,
@@ -1170,6 +1970,16 @@
 /obj/structure/table/steel_reinforced,
 /obj/item/storage/box/anti_photons,
 /obj/effect/floor_decal/industrial/outline/grey,
+=======
+/obj/machinery/door/blast/regular/open{
+	dir = 4;
+	name = "Operative Cryo Chamber"
+	},
+/turf/unsimulated/wall,
+/area/map_template/ninja_dojo/dojo)
+"cF" = (
+/obj/effect/wallframe_spawn/reinforced,
+>>>>>>> theirs
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -1388,6 +2198,10 @@
 /obj/machinery/cell_charger,
 /obj/item/screwdriver,
 /obj/effect/floor_decal/industrial/outline/grey,
+<<<<<<< ours
+=======
+/obj/item/toy/figure/ninja,
+>>>>>>> theirs
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -1466,13 +2280,226 @@
 /obj/effect/paint/black,
 /turf/simulated/floor/plating,
 /area/map_template/ninja_dojo/start)
+<<<<<<< ours
 "ss" = (
 /turf/unsimulated/wall,
 /area/map_template/ninja_dojo/dojo)
+=======
+"gy" = (
+/obj/structure/table/rack,
+/obj/item/clothing/mask/gas/swat/vox,
+/obj/item/clothing/mask/gas/swat/vox,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/map_template/ninja_dojo/dojo)
+"qc" = (
+/obj/effect/floor_decal/corner/blue{
+	dir = 1
+	},
+/obj/effect/floor_decal/corner/blue{
+	dir = 5
+	},
+/obj/effect/floor_decal/corner/blue,
+/turf/unsimulated/floor{
+	icon_state = "white"
+	},
+/area/map_template/ninja_dojo/dojo)
+"ss" = (
+/turf/unsimulated/wall,
+/area/map_template/ninja_dojo/dojo)
+"uZ" = (
+/obj/effect/floor_decal/corner/blue{
+	dir = 8
+	},
+/obj/effect/floor_decal/corner/blue,
+/turf/unsimulated/floor{
+	icon_state = "white"
+	},
+/area/map_template/ninja_dojo/dojo)
+"vP" = (
+/obj/effect/floor_decal/industrial/warning/corner{
+	dir = 1;
+	icon_state = "warningcorner"
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/map_template/ninja_dojo/dojo)
+"vQ" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/effect/floor_decal/industrial/warning/corner{
+	dir = 1;
+	icon_state = "warningcorner"
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/map_template/ninja_dojo/dojo)
+"wG" = (
+/obj/effect/floor_decal/corner/black/border{
+	dir = 5
+	},
+/obj/structure/table/glass,
+/obj/item/stack/material/aluminium/fifty,
+/obj/item/stack/material/glass/fifty,
+/obj/item/stack/material/glass/fifty,
+/obj/item/stack/material/plasteel/fifty,
+/obj/item/stack/material/steel/fifty,
+/obj/item/stack/material/steel/fifty,
+/obj/item/stack/material/titanium/fifty,
+/obj/item/stack/material/plastic/fifty,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/map_template/ninja_dojo/dojo)
+"wX" = (
+/obj/structure/table/glass,
+/obj/effect/floor_decal/corner/black/border{
+	dir = 1
+	},
+/obj/item/newspaper,
+/turf/simulated/floor/tiled,
+/area/map_template/ninja_dojo/dojo)
+>>>>>>> theirs
 "zr" = (
 /obj/effect/floor_decal/snow,
 /turf/unsimulated/wall,
 /area/map_template/ninja_dojo/dojo)
+<<<<<<< ours
+=======
+"BB" = (
+/obj/effect/floor_decal/corner/black/bordercorner{
+	dir = 8
+	},
+/obj/machinery/light,
+/turf/unsimulated/floor{
+	icon_state = "white"
+	},
+/area/map_template/ninja_dojo/dojo)
+"Cj" = (
+/obj/structure/table/rack,
+/obj/random/biggun,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/map_template/ninja_dojo/dojo)
+"Hl" = (
+/obj/structure/table/glass,
+/obj/effect/floor_decal/corner/black/border{
+	dir = 5
+	},
+/turf/simulated/floor/tiled,
+/area/map_template/ninja_dojo/dojo)
+"JH" = (
+/obj/structure/table/rack,
+/obj/item/clothing/mask/gas/swat,
+/obj/item/clothing/mask/gas/swat,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/map_template/ninja_dojo/dojo)
+"JM" = (
+/obj/machinery/door/blast/regular/open{
+	icon_state = "pdoor0";
+	id_tag = "prototype_chamber_blast"
+	},
+/obj/effect/floor_decal/floordetail/tiled,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/map_template/ninja_dojo/dojo)
+"KK" = (
+/obj/effect/floor_decal/corner/black/bordercorner{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/map_template/ninja_dojo/dojo)
+"LW" = (
+/obj/structure/table/rack,
+/obj/item/storage/box/handcuffs,
+/obj/item/storage/box/handcuffs,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/map_template/ninja_dojo/dojo)
+"MC" = (
+/obj/effect/floor_decal/corner/blue{
+	dir = 1
+	},
+/turf/unsimulated/floor{
+	icon_state = "white"
+	},
+/area/map_template/ninja_dojo/dojo)
+"Oo" = (
+/obj/machinery/light,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/map_template/ninja_dojo/dojo)
+"OL" = (
+/obj/effect/floor_decal/corner/black/border{
+	dir = 7
+	},
+/obj/machinery/light,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/map_template/ninja_dojo/dojo)
+"PF" = (
+/obj/machinery/computer/modular/preset/civilian{
+	dir = 1;
+	icon_state = "console"
+	},
+/obj/effect/floor_decal/corner/black/border{
+	dir = 9
+	},
+/turf/simulated/floor/tiled,
+/area/map_template/ninja_dojo/dojo)
+"RX" = (
+/obj/effect/floor_decal/corner/black/border{
+	dir = 7
+	},
+/obj/effect/floor_decal/corner/blue{
+	dir = 5
+	},
+/turf/unsimulated/floor{
+	icon_state = "white"
+	},
+/area/map_template/ninja_dojo/dojo)
+"TP" = (
+/obj/effect/floor_decal/corner/blue{
+	dir = 8
+	},
+/turf/unsimulated/floor{
+	icon_state = "white"
+	},
+/area/map_template/ninja_dojo/dojo)
+"UV" = (
+/obj/structure/table/rack,
+/obj/item/storage/belt/holster/security/tactical,
+/obj/item/storage/belt/holster/security/tactical,
+/obj/effect/floor_decal/corner/black/bordercorner{
+	dir = 3
+	},
+/obj/item/clothing/accessory/storage/webbing,
+/obj/item/clothing/accessory/storage/webbing,
+/obj/item/clothing/accessory/storage/webbing_large,
+/obj/item/clothing/accessory/storage/webbing_large,
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/item/clothing/accessory/storage/holster/thigh,
+/obj/item/clothing/accessory/storage/holster/thigh,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/map_template/ninja_dojo/dojo)
+>>>>>>> theirs
 
 (1,1,1) = {"
 ss
@@ -1542,7 +2569,11 @@ bo
 ad
 ag
 ac
+<<<<<<< ours
 ad
+=======
+ss
+>>>>>>> theirs
 bn
 bn
 bn
@@ -1585,7 +2616,11 @@ bn
 ad
 ad
 ad
+<<<<<<< ours
 ad
+=======
+zr
+>>>>>>> theirs
 bn
 bo
 bo
@@ -1628,22 +2663,35 @@ bn
 ac
 ad
 ad
+<<<<<<< ours
 ac
 bn
 bn
+=======
+zr
+>>>>>>> theirs
 bn
 bn
 bn
 bn
 ck
 ck
+<<<<<<< ours
+=======
+ck
+ck
+>>>>>>> theirs
 cL
 cS
 ck
 ck
 bn
 bn
+<<<<<<< ours
 bn
+=======
+cB
+>>>>>>> theirs
 ss
 "}
 (5,1,1) = {"
@@ -1671,14 +2719,23 @@ bo
 ad
 ad
 ae
+<<<<<<< ours
 ad
+=======
+zr
+>>>>>>> theirs
 bo
 bn
 bn
 bn
 bn
+<<<<<<< ours
 bn
 cx
+=======
+ck
+ck
+>>>>>>> theirs
 ck
 cM
 cM
@@ -1714,6 +2771,7 @@ bn
 ad
 ag
 ad
+<<<<<<< ours
 ad
 bo
 bn
@@ -1721,6 +2779,15 @@ ck
 ck
 ck
 ck
+=======
+zr
+bo
+bn
+bo
+bn
+bn
+bn
+>>>>>>> theirs
 ck
 cG
 cN
@@ -1739,6 +2806,7 @@ ac
 ac
 ac
 ad
+<<<<<<< ours
 aj
 aj
 aj
@@ -1747,23 +2815,47 @@ aj
 aj
 aj
 aj
+=======
+bd
+bd
+bd
+bd
+bd
+bd
+bd
+bd
+>>>>>>> theirs
 ad
 ad
 ad
 ad
 ad
+<<<<<<< ours
 bn
 bn
+=======
+>>>>>>> theirs
 ad
 ad
 ad
 ad
+<<<<<<< ours
 bo
 bn
 bn
 bo
 bn
 bn
+=======
+ad
+ss
+bn
+bn
+bn
+bn
+bn
+bU
+>>>>>>> theirs
 ck
 cH
 cO
@@ -1782,13 +2874,18 @@ ac
 ac
 ac
 ad
+<<<<<<< ours
 aj
+=======
+bd
+>>>>>>> theirs
 ak
 ar
 aB
 aI
 aR
 as
+<<<<<<< ours
 aj
 aj
 aj
@@ -1801,12 +2898,31 @@ aA
 aj
 aj
 ad
+=======
+bd
+ad
+ad
+ad
+bd
+bd
+bd
+bd
+bd
+ad
+ad
+ss
+>>>>>>> theirs
 bn
 bn
 bn
 bo
+<<<<<<< ours
 bo
 bn
+=======
+bn
+bU
+>>>>>>> theirs
 ck
 cI
 cO
@@ -1825,6 +2941,7 @@ ag
 ac
 ad
 ad
+<<<<<<< ours
 aj
 al
 as
@@ -1850,6 +2967,33 @@ bn
 bn
 bn
 bn
+=======
+bd
+al
+bv
+aK
+aK
+aS
+cf
+bd
+bd
+bd
+bd
+bd
+cs
+bs
+cs
+bd
+bd
+bd
+ss
+bn
+bn
+bo
+bo
+bn
+bU
+>>>>>>> theirs
 ck
 cJ
 cO
@@ -1863,6 +3007,7 @@ ss
 "}
 (10,1,1) = {"
 ss
+<<<<<<< ours
 ac
 ac
 ad
@@ -1893,6 +3038,38 @@ ck
 ck
 ck
 ck
+=======
+ad
+ad
+ad
+ad
+ad
+bd
+am
+TP
+aO
+aO
+qc
+bw
+aL
+bF
+cp
+cp
+aV
+ba
+bG
+ba
+bF
+cp
+cu
+be
+bn
+bn
+bo
+bn
+bn
+bn
+>>>>>>> theirs
 ck
 cK
 cP
@@ -1906,16 +3083,26 @@ ss
 "}
 (11,1,1) = {"
 ss
+<<<<<<< ours
 ac
 ac
 ad
 ad
 ad
 aj
+=======
+ad
+ad
+ad
+ad
+ad
+bd
+>>>>>>> theirs
 an
 at
 aC
 aJ
+<<<<<<< ours
 as
 as
 aL
@@ -1932,11 +3119,33 @@ bh
 bn
 bn
 bn
+=======
+uZ
+RX
+aL
+bQ
+cp
+cp
+bc
+cp
+cp
+cp
+bQ
+bn
+bf
+be
+>>>>>>> theirs
 bn
 bn
 bn
 bn
+<<<<<<< ours
 cx
+=======
+bo
+ck
+ck
+>>>>>>> theirs
 ck
 ck
 cV
@@ -1949,6 +3158,7 @@ ss
 "}
 (12,1,1) = {"
 ss
+<<<<<<< ours
 ac
 ac
 ad
@@ -1975,28 +3185,67 @@ bh
 bn
 bn
 bn
+=======
+ad
+ad
+ad
+ad
+ad
+bd
+ao
+au
+aK
+aK
+aT
+BB
+bd
+bd
+bd
+bd
+bd
+bB
+bH
+bK
+bd
+bd
+bd
+ss
+>>>>>>> theirs
 bn
 bn
 bn
 bn
 ck
 ck
+<<<<<<< ours
+=======
+ck
+ck
+>>>>>>> theirs
 cQ
 cW
 ck
 ck
 bn
 bn
+<<<<<<< ours
 bn
+=======
+cB
+>>>>>>> theirs
 ss
 "}
 (13,1,1) = {"
 ss
+<<<<<<< ours
 ac
+=======
+>>>>>>> theirs
 ad
 ad
 ad
 ad
+<<<<<<< ours
 aj
 ap
 av
@@ -2016,6 +3265,28 @@ bR
 aU
 aA
 ad
+=======
+ad
+bd
+ap
+av
+aO
+aO
+MC
+as
+bd
+ad
+ad
+ad
+bd
+bd
+bI
+bd
+bd
+ad
+ad
+ss
+>>>>>>> theirs
 bn
 bn
 bo
@@ -2035,16 +3306,26 @@ zr
 "}
 (14,1,1) = {"
 ss
+<<<<<<< ours
 ac
 ad
 ac
 ae
 ad
 aj
+=======
+ad
+ad
+ad
+ae
+ad
+bd
+>>>>>>> theirs
 aq
 aw
 aD
 aM
+<<<<<<< ours
 aU
 aG
 aG
@@ -2059,6 +3340,22 @@ aG
 bV
 aj
 ad
+=======
+as
+as
+bd
+ad
+ad
+ad
+ad
+bd
+bJ
+bd
+ad
+ad
+ad
+zr
+>>>>>>> theirs
 bn
 bn
 bn
@@ -2078,6 +3375,7 @@ ss
 "}
 (15,1,1) = {"
 ss
+<<<<<<< ours
 ac
 ad
 ac
@@ -2102,16 +3400,50 @@ aA
 aj
 aj
 ad
+=======
+ad
+ad
+ad
+ac
+ad
+bd
+bd
+bd
+bd
+bd
+bd
+ba
+bd
+ad
+ad
+ad
+ad
+bd
+bh
+bd
+ad
+ad
+ad
+ss
+>>>>>>> theirs
 bo
 bn
 bn
 bn
+<<<<<<< ours
 bo
+=======
+cz
+>>>>>>> theirs
 bn
 bn
 bn
 bn
+<<<<<<< ours
 bo
+=======
+cz
+>>>>>>> theirs
 bo
 bo
 bn
@@ -2123,6 +3455,7 @@ zr
 ss
 ad
 ad
+<<<<<<< ours
 ac
 ac
 ad
@@ -2142,21 +3475,64 @@ ad
 bn
 bn
 ad
+=======
+ad
+ac
+ad
+ad
+bd
+ax
+aE
+cD
+bd
+KK
+bd
+>>>>>>> theirs
 ad
 ad
 ad
 ad
+<<<<<<< ours
 ad
 ad
 ad
 bn
 bn
+=======
+bd
+cp
+bd
+ad
+ad
+ad
+ss
+zr
+zr
+zr
+ss
+ss
+cE
+cE
+cE
+cE
+ss
+ss
+zr
+zr
+zr
+ss
+ss
+"}
+(17,1,1) = {"
+ss
+>>>>>>> theirs
 ad
 ad
 ad
 ac
 ad
 ad
+<<<<<<< ours
 ad
 ad
 ad
@@ -2188,6 +3564,26 @@ bo
 bn
 bn
 bn
+=======
+bd
+ay
+aE
+aN
+JM
+bP
+bd
+ad
+ad
+ad
+ad
+bd
+cp
+bd
+ad
+ad
+ad
+ad
+>>>>>>> theirs
 ad
 ad
 ae
@@ -2213,6 +3609,7 @@ ah
 ac
 ac
 ac
+<<<<<<< ours
 aj
 az
 aF
@@ -2224,14 +3621,34 @@ ad
 bn
 ag
 bn
+=======
+bd
+az
+aF
+bi
+bd
+bd
+bd
 ad
 ad
 ad
 ad
+bd
+bh
+bd
+ad
+>>>>>>> theirs
+ad
+ad
+ad
+ad
+<<<<<<< ours
 bn
 ah
 bn
 ac
+=======
+>>>>>>> theirs
 ad
 ad
 ad
@@ -2256,6 +3673,7 @@ ad
 ac
 ac
 ad
+<<<<<<< ours
 aj
 aj
 aj
@@ -2275,6 +3693,27 @@ bn
 bn
 bn
 ac
+=======
+bd
+bd
+bd
+bd
+bd
+ad
+bd
+bd
+bd
+bd
+bd
+bd
+cn
+bd
+bd
+bd
+bd
+bd
+bd
+>>>>>>> theirs
 ad
 ad
 ac
@@ -2302,6 +3741,7 @@ ad
 ad
 ac
 ad
+<<<<<<< ours
 aA
 aG
 aG
@@ -2318,6 +3758,24 @@ ad
 ad
 bn
 ad
+=======
+ad
+ad
+ad
+bd
+cm
+bx
+JH
+bd
+bd
+bI
+bd
+bd
+gy
+bx
+cl
+bd
+>>>>>>> theirs
 ad
 ad
 ac
@@ -2345,6 +3803,7 @@ ad
 ad
 af
 ad
+<<<<<<< ours
 aA
 aG
 aG
@@ -2362,6 +3821,25 @@ ad
 bo
 bn
 bo
+=======
+ad
+ad
+ad
+bd
+Cj
+bP
+aW
+bd
+bE
+bJ
+bM
+bd
+bm
+aN
+Cj
+bd
+ad
+>>>>>>> theirs
 bn
 bn
 bn
@@ -2387,6 +3865,7 @@ ai
 ad
 ad
 ac
+<<<<<<< ours
 ad
 aA
 aG
@@ -2401,13 +3880,35 @@ bJ
 bJ
 bE
 ad
+=======
+bt
+bt
+bt
+ad
+aj
+bR
+bP
+bb
+bd
+bD
+cp
+OL
+bd
+aU
+aN
+bR
+aj
+>>>>>>> theirs
 ad
 bo
 bn
 bn
+<<<<<<< ours
 bo
 bn
 bn
+=======
+>>>>>>> theirs
 bn
 ad
 ad
@@ -2431,6 +3932,7 @@ ad
 ad
 ac
 ad
+<<<<<<< ours
 aA
 aG
 aG
@@ -2447,12 +3949,34 @@ ac
 ad
 bn
 ac
+=======
+ad
+ad
+ad
+aj
+LW
+br
+bX
+JM
+cv
+cp
+bX
+JM
+cv
+aN
+LW
+aj
+>>>>>>> theirs
 ad
 ad
 ad
 bn
 bn
+<<<<<<< ours
 ad
+=======
+bn
+>>>>>>> theirs
 ad
 ad
 ad
@@ -2473,6 +3997,7 @@ ad
 ad
 ac
 ad
+<<<<<<< ours
 ad
 aj
 aG
@@ -2484,11 +4009,32 @@ bn
 bn
 ad
 ac
+=======
+bt
+bt
+bt
+ad
+aj
+cA
+bP
+bA
+cF
+bP
+cp
+aN
+cF
+vP
+aN
+cA
+aj
+ad
+>>>>>>> theirs
 ad
 ad
 bn
 bn
 bn
+<<<<<<< ours
 ac
 ae
 ad
@@ -2497,6 +4043,9 @@ bn
 bn
 ad
 ad
+=======
+bn
+>>>>>>> theirs
 ad
 ad
 ad
@@ -2517,6 +4066,7 @@ ad
 ac
 ad
 ad
+<<<<<<< ours
 aj
 aG
 aG
@@ -2542,6 +4092,33 @@ aj
 aj
 ad
 ad
+=======
+ad
+ad
+ad
+bd
+UV
+bP
+cp
+cF
+bP
+cp
+aN
+cF
+cp
+aN
+UV
+bd
+ad
+ad
+ad
+ad
+ad
+bn
+bn
+bn
+ad
+>>>>>>> theirs
 ae
 ad
 ad
@@ -2559,6 +4136,7 @@ ac
 ac
 ac
 ad
+<<<<<<< ours
 ad
 aj
 aG
@@ -2585,6 +4163,34 @@ cy
 aj
 ad
 ad
+=======
+bt
+bt
+bt
+ad
+bd
+ci
+aZ
+cy
+cF
+bP
+cp
+aN
+cF
+cy
+aZ
+wG
+bd
+ad
+ad
+ad
+ad
+ad
+ad
+bn
+bn
+bn
+>>>>>>> theirs
 ad
 ac
 ac
@@ -2600,6 +4206,7 @@ ac
 ad
 ad
 ac
+<<<<<<< ours
 ac
 ad
 ad
@@ -2607,11 +4214,14 @@ aj
 aV
 aG
 aj
+=======
+>>>>>>> theirs
 ad
 ad
 ad
 ad
 ad
+<<<<<<< ours
 bn
 bn
 ad
@@ -2630,6 +4240,33 @@ ad
 ad
 ad
 ac
+=======
+ad
+bd
+bd
+bd
+bd
+bd
+bD
+cp
+OL
+bd
+bd
+bd
+bd
+bd
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+bn
+bn
+bn
+bn
+>>>>>>> theirs
 ad
 ac
 ad
@@ -2643,6 +4280,7 @@ ac
 ac
 ad
 ae
+<<<<<<< ours
 ac
 aj
 aj
@@ -2669,14 +4307,48 @@ cp
 cp
 cA
 aj
+=======
+ad
+ad
+bt
+bt
+bt
 ad
 ad
 ad
 ad
 ad
+bd
+bQ
+aA
+bc
+bd
+>>>>>>> theirs
+ad
+ad
+ad
+ad
+ad
+<<<<<<< ours
 ac
 ad
 ss
+=======
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+bn
+bn
+bn
+bn
+bn
+bn
+aX
+>>>>>>> theirs
 "}
 (29,1,1) = {"
 ss
@@ -2686,6 +4358,7 @@ ac
 ad
 ad
 ae
+<<<<<<< ours
 ac
 aj
 aG
@@ -2712,14 +4385,48 @@ cp
 cp
 cB
 aj
+=======
+>>>>>>> theirs
 ad
 ad
 ad
 ad
 ad
+<<<<<<< ours
 af
 ad
 ss
+=======
+ad
+ad
+ad
+ad
+ad
+bd
+aY
+aY
+aY
+bd
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+bn
+bn
+bn
+bS
+bn
+aX
+>>>>>>> theirs
 "}
 (30,1,1) = {"
 ss
@@ -2730,6 +4437,7 @@ ac
 ad
 ac
 ad
+<<<<<<< ours
 aA
 aG
 aG
@@ -2755,12 +4463,43 @@ cp
 cp
 cC
 aj
+=======
+>>>>>>> theirs
 ad
 ad
 ad
 ad
 ad
+<<<<<<< ours
 ac
+=======
+ad
+ad
+ad
+bd
+bd
+bI
+bI
+bI
+bd
+bd
+bd
+bd
+bd
+bd
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+bn
+bn
+>>>>>>> theirs
 ad
 ss
 "}
@@ -2773,6 +4512,7 @@ ac
 ac
 ac
 ad
+<<<<<<< ours
 aA
 aG
 aO
@@ -2798,6 +4538,33 @@ cp
 cp
 cD
 aj
+=======
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+bd
+bd
+cr
+cp
+cp
+cp
+cr
+bd
+bd
+bd
+ce
+bd
+ad
+ad
+ad
+ad
+ad
+ad
+>>>>>>> theirs
 ad
 ad
 ac
@@ -2816,6 +4583,7 @@ ad
 ac
 ac
 ad
+<<<<<<< ours
 aA
 aG
 aP
@@ -2841,6 +4609,33 @@ cp
 cp
 cE
 aj
+=======
+ad
+ad
+ad
+ad
+bd
+bd
+bd
+bd
+bV
+cp
+bF
+ba
+aV
+cp
+bW
+bd
+cq
+cg
+bd
+ad
+ad
+ad
+ad
+ad
+ad
+>>>>>>> theirs
 ad
 ad
 ad
@@ -2859,6 +4654,7 @@ ag
 ad
 ac
 ad
+<<<<<<< ours
 aA
 aG
 aP
@@ -2884,6 +4680,33 @@ cp
 cp
 cF
 aj
+=======
+ad
+ad
+ad
+ad
+bd
+bj
+PF
+bZ
+cv
+cp
+bO
+bl
+bO
+cp
+bX
+bZ
+ca
+cg
+bd
+ad
+ad
+ad
+ad
+ad
+ad
+>>>>>>> theirs
 ad
 ad
 ad
@@ -2902,6 +4725,7 @@ ad
 ad
 ac
 ad
+<<<<<<< ours
 aA
 aG
 aQ
@@ -2927,6 +4751,33 @@ cv
 cw
 aj
 aj
+=======
+ad
+ad
+ad
+ad
+bd
+cg
+wX
+bZ
+cv
+by
+aG
+bp
+bN
+cC
+bX
+bZ
+aQ
+cg
+bd
+ad
+ad
+ad
+ad
+ad
+ad
+>>>>>>> theirs
 ad
 ad
 ad
@@ -2945,6 +4796,7 @@ ac
 ad
 ac
 ad
+<<<<<<< ours
 aj
 aG
 aG
@@ -2969,6 +4821,32 @@ aj
 aj
 aj
 aj
+=======
+ad
+ad
+ad
+ad
+bd
+cg
+Hl
+bZ
+cv
+cp
+bO
+bL
+bO
+cp
+bX
+bZ
+cb
+ch
+bd
+ad
+ad
+ad
+ad
+ad
+>>>>>>> theirs
 ad
 ad
 ad
@@ -2988,6 +4866,7 @@ ad
 ad
 ad
 ad
+<<<<<<< ours
 aj
 aj
 aA
@@ -3008,6 +4887,28 @@ cc
 ci
 ci
 aj
+=======
+ad
+ad
+ad
+ad
+bd
+cg
+bq
+bd
+vQ
+cp
+bQ
+aA
+bc
+cp
+bu
+bd
+bd
+bd
+bd
+ad
+>>>>>>> theirs
 ad
 ad
 ad
@@ -3035,6 +4936,21 @@ ad
 ad
 ad
 ad
+<<<<<<< ours
+=======
+bd
+ce
+bd
+bd
+bd
+cj
+aY
+aY
+aY
+cj
+bd
+bd
+>>>>>>> theirs
 ad
 ad
 ad
@@ -3046,6 +4962,7 @@ ad
 ad
 ad
 ad
+<<<<<<< ours
 aj
 cd
 ci
@@ -3058,6 +4975,8 @@ ad
 ad
 ad
 ad
+=======
+>>>>>>> theirs
 ad
 ad
 ad
@@ -3078,9 +4997,23 @@ ad
 ad
 ad
 ad
+<<<<<<< ours
 ae
 ad
 ad
+=======
+bd
+bd
+bd
+bd
+bd
+bd
+bI
+bI
+bI
+bd
+bd
+>>>>>>> theirs
 ad
 ad
 ad
@@ -3089,6 +5022,7 @@ ad
 ad
 ad
 ad
+<<<<<<< ours
 aj
 aj
 aj
@@ -3098,6 +5032,9 @@ ad
 ae
 ac
 ac
+=======
+ad
+>>>>>>> theirs
 ad
 ad
 ad
@@ -3126,11 +5063,19 @@ ac
 ac
 ac
 ac
+<<<<<<< ours
 ac
 ac
 ac
 ad
 ad
+=======
+bd
+bh
+cp
+Oo
+bd
+>>>>>>> theirs
 ad
 ad
 ad
@@ -3169,11 +5114,19 @@ ad
 ad
 ad
 ad
+<<<<<<< ours
 ad
 ad
 ad
 ac
 ac
+=======
+bd
+bz
+cp
+co
+bd
+>>>>>>> theirs
 ac
 ac
 ad
@@ -3212,11 +5165,19 @@ ad
 ad
 ad
 ag
+<<<<<<< ours
 ad
 ad
 ad
 ad
 ad
+=======
+bd
+cw
+bT
+cw
+bd
+>>>>>>> theirs
 ad
 ad
 ac
@@ -3255,11 +5216,19 @@ ad
 ad
 ad
 ad
+<<<<<<< ours
 ad
 ad
 ad
 ad
 ad
+=======
+bd
+bC
+bd
+bC
+bd
+>>>>>>> theirs
 ad
 ad
 ac
