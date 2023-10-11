@@ -1558,7 +1558,7 @@
 "cY" = (
 /obj/structure/window/reinforced/crescent,
 /obj/structure/table/rack,
-/obj/item/rig_module/mounted/taser,
+/obj/item/rig_module/mounted/energy/taser,
 /obj/item/rig_module/vision/nvg,
 /obj/item/rig_module/device/flash,
 /obj/structure/window/reinforced/crescent{
