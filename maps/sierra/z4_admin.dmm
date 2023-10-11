@@ -3653,9 +3653,9 @@
 /area/holodeck/source_cafe)
 "avN" = (
 /obj/structure/table/rack,
-/obj/item/rig_module/mounted/taser,
-/obj/item/rig_module/mounted/taser,
-/obj/item/rig_module/mounted/taser,
+/obj/item/rig_module/mounted/energy/taser,
+/obj/item/rig_module/mounted/energy/taser,
+/obj/item/rig_module/mounted/energy/taser,
 /obj/item/rig_module/maneuvering_jets,
 /obj/item/rig_module/maneuvering_jets,
 /obj/item/rig_module/grenade_launcher,
