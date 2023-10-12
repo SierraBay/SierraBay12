@@ -241,7 +241,74 @@
  * ======== TODO: Make any suits instead of plaseholder
  */
 
+/obj/item/rig/pioneer
+	name = "pioneer corps suit control module"
+	desc = "A ridiculously bulky military hardsuit with PC-13AA inscription and a small ICCG crest on its control module. This suit's armor plates mostly replaced with anomaly and radiation shielding."
+	suit_type = "heavy"
+	icon_state = "gcc_rig"
+	online_slowdown = 2 ///chunky
+	offline_slowdown = 4
+	armor = list(
+		melee = ARMOR_MELEE_MAJOR,
+		bullet = ARMOR_BALLISTIC_RESISTANT,
+		laser = ARMOR_LASER_MAJOR,
+		energy = ARMOR_ENERGY_STRONG,
+		bomb = ARMOR_BOMB_PADDED,
+		bio = ARMOR_BIO_SHIELDED,
+		rad = ARMOR_RAD_SHIELDED
+		)
+	initial_modules = list(
+		/obj/item/rig_module/vision/meson,
+		/obj/item/rig_module/chem_dispenser,
+		/obj/item/rig_module/ai_container,
+		/obj/item/rig_module/device/anomaly_scanner,
+		/obj/item/rig_module/power_sink,
+		/obj/item/rig_module/cooling_unit,
+		/obj/item/rig_module/maneuvering_jets
+		)
 
+	chest_type = /obj/item/clothing/suit/space/rig/pioneer
+	helm_type =  /obj/item/clothing/head/helmet/space/rig/pioneer
+	boot_type =  /obj/item/clothing/shoes/magboots/rig/pioneer
+	glove_type = /obj/item/clothing/gloves/rig/pioneer
+
+/obj/item/clothing/head/helmet/space/rig/pioneer
+	light_overlay = "helmet_light_dual_alt"
+
+/obj/item/clothing/suit/space/rig/pioneer
+	breach_threshold = 40
+	species_restricted = list(SPECIES_HUMAN, SPECIES_IPC)
+	allowed = list(
+		/obj/item/gun,
+		/obj/item/ammo_magazine,
+		/obj/item/ammo_casing,
+		/obj/item/handcuffs,
+		/obj/item/device/flashlight,
+		/obj/item/tank,
+		/obj/item/device/suit_cooling_unit,
+		/obj/item/melee/baton
+	)
+
+/obj/item/clothing/gloves/rig/pioneer
+	siemens_coefficient = 0
+
+/obj/item/clothing/shoes/magboots/rig/pioneer
+
+/obj/item/rig/pioneer/sergeant
+	name = "pioneer corps sergeant suit control module"
+	desc = "A ridiculously bulky military hardsuit with PC-13AS inscription and a small ICCG crest on its control module. This suit's armor plates mostly replaced with anomaly and radiation shielding."
+	suit_type = "heavy"
+
+	initial_modules = list(
+		/obj/item/rig_module/vision/meson,
+		/obj/item/rig_module/chem_dispenser,
+		/obj/item/rig_module/ai_container,
+		/obj/item/rig_module/mounted/ballistic/minigun,
+		/obj/item/rig_module/device/anomaly_scanner,
+		/obj/item/rig_module/power_sink,
+		/obj/item/rig_module/cooling_unit,
+		/obj/item/rig_module/maneuvering_jets
+		)
 
 /* MISC
  * ========
