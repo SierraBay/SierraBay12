@@ -3,11 +3,11 @@
 /turf/space,
 /area/space)
 "ab" = (
-/obj/effect/shuttle_landmark/nav_patrol/nav4,
+/obj/shuttle_landmark/nav_patrol/nav4,
 /turf/space,
 /area/space)
 "ae" = (
-/obj/effect/shuttle_landmark/nav_patrol/nav2,
+/obj/shuttle_landmark/nav_patrol/nav2,
 /turf/space,
 /area/space)
 "af" = (
@@ -72,8 +72,8 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/wallframe_spawn/reinforced,
+/obj/decal/cleanable/dirt,
+/obj/wallframe_spawn/reinforced,
 /obj/effect/paint/dark_gunmetal,
 /turf/simulated/floor,
 /area/ship/patrol/dock)
@@ -144,8 +144,8 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/wallframe_spawn/reinforced,
+/obj/decal/cleanable/dirt,
+/obj/wallframe_spawn/reinforced,
 /obj/effect/paint/dark_gunmetal,
 /turf/simulated/floor,
 /area/ship/patrol/dock)
@@ -439,7 +439,7 @@
 	dir = 9
 	},
 /obj/machinery/meter,
-/obj/effect/wallframe_spawn/reinforced_phoron,
+/obj/wallframe_spawn/reinforced_phoron,
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/ship/patrol/maintenance/atmos)
@@ -484,13 +484,13 @@
 "aY" = (
 /obj/machinery/atmospherics/pipe/simple/visible/yellow,
 /obj/machinery/meter,
-/obj/effect/wallframe_spawn/reinforced_phoron,
+/obj/wallframe_spawn/reinforced_phoron,
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/ship/patrol/maintenance/atmos)
 "aZ" = (
 /obj/machinery/meter,
-/obj/effect/wallframe_spawn/reinforced_phoron,
+/obj/wallframe_spawn/reinforced_phoron,
 /obj/machinery/atmospherics/pipe/simple/visible/yellow,
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
@@ -503,12 +503,12 @@
 "bb" = (
 /obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/simple/visible/yellow,
-/obj/effect/wallframe_spawn/reinforced_phoron,
+/obj/wallframe_spawn/reinforced_phoron,
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/ship/patrol/maintenance/atmos)
 "bc" = (
-/obj/effect/wallframe_spawn/reinforced_phoron,
+/obj/wallframe_spawn/reinforced_phoron,
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/ship/patrol/maintenance/atmos)
@@ -522,7 +522,7 @@
 "be" = (
 /obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/simple/visible/fuel,
-/obj/effect/wallframe_spawn/reinforced_phoron,
+/obj/wallframe_spawn/reinforced_phoron,
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/ship/patrol/maintenance/atmos)
@@ -649,7 +649,7 @@
 	dir = 4
 	},
 /obj/machinery/meter,
-/obj/effect/wallframe_spawn/reinforced_phoron,
+/obj/wallframe_spawn/reinforced_phoron,
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/ship/patrol/maintenance/atmos)
@@ -669,7 +669,7 @@
 	dir = 1;
 	target_pressure = 40
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/ship/patrol/maintenance/atmos)
 "bs" = (
@@ -928,7 +928,7 @@
 /area/ship/patrol/maintenance/atmos)
 "bV" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/universal,
-/obj/effect/decal/cleanable/dirt,
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/ship/patrol/maintenance/atmos)
 "bW" = (
@@ -946,7 +946,7 @@
 /obj/structure/sign/warning/nosmoking_1{
 	pixel_y = 32
 	},
-/obj/effect/wallframe_spawn/reinforced,
+/obj/wallframe_spawn/reinforced,
 /obj/effect/paint/dark_gunmetal,
 /turf/simulated/floor/plating,
 /area/ship/patrol/maintenance/atmos)
@@ -988,7 +988,7 @@
 /turf/simulated/floor/plating,
 /area/ship/patrol/maintenance/atmos)
 "cd" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/visible/black{
 	dir = 4
 	},
@@ -1354,7 +1354,7 @@
 /turf/simulated/floor/plating,
 /area/ship/patrol/maintenance/atmos)
 "cK" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/decal/cleanable/dirt,
 /obj/structure/catwalk,
 /turf/simulated/floor/plating,
 /area/ship/patrol/maintenance/atmos)
@@ -1362,7 +1362,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/fuel{
 	dir = 6
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/decal/cleanable/dirt,
 /obj/structure/catwalk,
 /turf/simulated/floor/plating,
 /area/ship/patrol/maintenance/atmos)
@@ -1795,7 +1795,7 @@
 /area/ship/patrol/maintenance/atmos)
 "dq" = (
 /obj/effect/floor_decal/industrial/outline/yellow,
-/obj/effect/decal/cleanable/dirt,
+/obj/decal/cleanable/dirt,
 /obj/structure/railing/mapped{
 	dir = 8
 	},
@@ -1812,7 +1812,7 @@
 /turf/simulated/wall,
 /area/ship/patrol/maintenance/atmos)
 "du" = (
-/obj/effect/wallframe_spawn/reinforced,
+/obj/wallframe_spawn/reinforced,
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/ship/patrol/maintenance/atmos)
@@ -1827,7 +1827,7 @@
 /area/ship/patrol/maintenance/atmos)
 "dw" = (
 /obj/machinery/door/firedoor,
-/obj/effect/wallframe_spawn/reinforced,
+/obj/wallframe_spawn/reinforced,
 /turf/simulated/floor/plating,
 /area/ship/patrol/maintenance/atmos)
 "dx" = (
@@ -1836,7 +1836,7 @@
 	pixel_x = -22;
 	req_access = list("ACCESS_CAVALRY")
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/decal/cleanable/dirt,
 /obj/machinery/atmospherics/binary/pump,
 /turf/simulated/floor/plating,
 /area/ship/patrol/maintenance/engine/starboard)
@@ -2003,12 +2003,12 @@
 	pixel_y = -25;
 	req_access = list("ACCESS_CAVALRY")
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/decal/cleanable/dirt,
 /obj/structure/catwalk,
 /turf/simulated/floor/plating,
 /area/ship/patrol/maintenance/lower)
 "dT" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/decal/cleanable/dirt,
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -2070,7 +2070,7 @@
 /turf/simulated/floor/tiled,
 /area/ship/patrol/crew/hallway/lower/starboard)
 "dX" = (
-/obj/effect/wallframe_spawn/reinforced,
+/obj/wallframe_spawn/reinforced,
 /obj/machinery/door/blast/regular/open{
 	dir = 4;
 	id_tag = "bridgep_lock";
@@ -2284,7 +2284,7 @@
 /area/ship/patrol/command/cannon)
 "es" = (
 /obj/structure/catwalk,
-/obj/effect/decal/cleanable/dirt,
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/ship/patrol/maintenance/lower)
 "et" = (
@@ -2361,7 +2361,7 @@
 /turf/simulated/floor/tiled,
 /area/ship/patrol/maintenance/lower/starboard)
 "eB" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/decal/cleanable/dirt,
 /obj/effect/floor_decal/industrial/warning{
 	dir = 5
 	},
@@ -2398,7 +2398,7 @@
 /turf/simulated/floor/plating,
 /area/ship/patrol/command/hangar)
 "eE" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/decal/cleanable/dirt,
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
@@ -2443,7 +2443,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/patrol/command/cannon)
 "eK" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/decal/cleanable/dirt,
 /obj/structure/catwalk,
 /turf/simulated/floor/plating,
 /area/ship/patrol/maintenance/lower)
@@ -2496,7 +2496,7 @@
 	id_tag = "bridgep_lock";
 	name = "Bridge Lockdown blast doors"
 	},
-/obj/effect/wallframe_spawn/reinforced,
+/obj/wallframe_spawn/reinforced,
 /obj/effect/paint/dark_gunmetal,
 /obj/machinery/door/blast/regular/open{
 	dir = 4;
@@ -2592,7 +2592,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/effect/decal/cleanable/dirt,
+/obj/decal/cleanable/dirt,
 /obj/effect/floor_decal/industrial/warning{
 	dir = 8;
 	icon_state = "warning"
@@ -2688,12 +2688,12 @@
 /turf/simulated/floor/plating,
 /area/ship/patrol/command/hangar)
 "fj" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/decal/cleanable/dirt,
 /obj/structure/catwalk,
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/ship/patrol/maintenance/lower)
 "fk" = (
@@ -2747,7 +2747,7 @@
 	id_tag = "bridgep_lock";
 	name = "Bridge Lockdown blast doors"
 	},
-/obj/effect/wallframe_spawn/reinforced,
+/obj/wallframe_spawn/reinforced,
 /obj/effect/paint/dark_gunmetal,
 /turf/simulated/floor/plating,
 /area/ship/patrol/command/bridge)
@@ -2801,7 +2801,7 @@
 /obj/effect/floor_decal/icarus_scglogo{
 	dir = 8
 	},
-/obj/effect/overmap/visitable/ship/patrol,
+/obj/overmap/visitable/ship/patrol,
 /obj/machinery/hologram/holopad/longrange,
 /turf/simulated/floor/tiled/dark,
 /area/ship/patrol/command/bridge)
@@ -2926,7 +2926,7 @@
 /turf/simulated/floor/tiled,
 /area/ship/patrol/maintenance/lower/starboard)
 "fz" = (
-/obj/effect/wallframe_spawn/reinforced,
+/obj/wallframe_spawn/reinforced,
 /obj/effect/paint/dark_gunmetal,
 /turf/simulated/floor,
 /area/ship/patrol/command/hangar)
@@ -2940,7 +2940,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/ship/patrol/command/hangar)
 "fB" = (
@@ -2956,7 +2956,7 @@
 /turf/simulated/floor/plating,
 /area/ship/patrol/command/hangar)
 "fD" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/ship/patrol/command/hangar)
 "fE" = (
@@ -2970,7 +2970,7 @@
 /turf/simulated/floor/plating,
 /area/ship/reaper)
 "fG" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/decal/cleanable/dirt,
 /obj/effect/floor_decal/industrial/warning{
 	dir = 8;
 	icon_state = "warning"
@@ -3063,7 +3063,7 @@
 	id_tag = "bridgep_lock";
 	name = "Bridge Lockdown blast doors"
 	},
-/obj/effect/wallframe_spawn/reinforced,
+/obj/wallframe_spawn/reinforced,
 /obj/structure/cable,
 /obj/effect/paint/dark_gunmetal,
 /turf/simulated/floor/plating,
@@ -3105,7 +3105,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/effect/decal/cleanable/dirt,
+/obj/decal/cleanable/dirt,
 /obj/effect/floor_decal/industrial/hatch/yellow,
 /turf/simulated/floor/tiled,
 /area/ship/patrol/maintenance/lower/starboard)
@@ -3332,7 +3332,7 @@
 /turf/simulated/floor/tiled/monotile,
 /area/ship/patrol/maintenance/lower/starboard)
 "gu" = (
-/obj/effect/wallframe_spawn/reinforced,
+/obj/wallframe_spawn/reinforced,
 /obj/effect/paint/dark_gunmetal,
 /turf/simulated/floor,
 /area/ship/patrol/maintenance/lower/starboard)
@@ -3478,7 +3478,7 @@
 	id_tag = "bridgep_lock";
 	name = "Bridge Lockdown blast doors"
 	},
-/obj/effect/wallframe_spawn/reinforced,
+/obj/wallframe_spawn/reinforced,
 /obj/effect/paint/dark_gunmetal,
 /turf/simulated/floor/plating,
 /area/ship/patrol/command/bridge)
@@ -3865,7 +3865,7 @@
 "hD" = (
 /obj/machinery/door/firedoor,
 /obj/effect/paint/black,
-/obj/effect/wallframe_spawn/reinforced/titanium,
+/obj/wallframe_spawn/reinforced/titanium,
 /obj/machinery/door/blast/regular/open{
 	dir = 4;
 	id_tag = "reaper_window_lock";
@@ -3897,7 +3897,7 @@
 /obj/structure/railing/mapped{
 	dir = 8
 	},
-/obj/effect/overmap/visitable/ship/landable/reaper,
+/obj/overmap/visitable/ship/landable/reaper,
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/reaper)
 "hI" = (
@@ -4701,7 +4701,7 @@
 /area/ship/patrol/medbay)
 "iJ" = (
 /obj/effect/paint/dark_gunmetal,
-/obj/effect/wallframe_spawn/reinforced,
+/obj/wallframe_spawn/reinforced,
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/ship/patrol/medbay)
@@ -4779,7 +4779,7 @@
 /area/ship/patrol/engineering/equipment)
 "iT" = (
 /obj/machinery/door/firedoor,
-/obj/effect/wallframe_spawn/reinforced,
+/obj/wallframe_spawn/reinforced,
 /obj/effect/paint/dark_gunmetal,
 /turf/simulated/floor/plating,
 /area/ship/patrol/engineering/equipment)
@@ -4978,7 +4978,7 @@
 	icon_state = "1-2"
 	},
 /obj/structure/catwalk,
-/obj/effect/shuttle_landmark/reaper/start,
+/obj/shuttle_landmark/reaper/start,
 /turf/simulated/floor/plating,
 /area/ship/patrol/command/hangar)
 "jj" = (
@@ -5420,7 +5420,7 @@
 /obj/effect/floor_decal/industrial/warning{
 	dir = 8
 	},
-/obj/effect/submap_landmark/spawnpoint/away_patrol/captain,
+/obj/submap_landmark/spawnpoint/away_patrol/captain,
 /obj/effect/floor_decal/corner/black,
 /turf/simulated/floor/tiled/dark,
 /area/ship/patrol/barracks)
@@ -5644,7 +5644,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/effect/wallframe_spawn/reinforced,
+/obj/wallframe_spawn/reinforced,
 /obj/effect/paint/black,
 /turf/simulated/floor/plating,
 /area/ship/patrol/barracks)
@@ -5659,7 +5659,7 @@
 /obj/effect/floor_decal/industrial/warning{
 	dir = 8
 	},
-/obj/effect/submap_landmark/spawnpoint/away_patrol,
+/obj/submap_landmark/spawnpoint/away_patrol,
 /obj/effect/floor_decal/corner/black{
 	dir = 6
 	},
@@ -5903,7 +5903,7 @@
 /obj/effect/floor_decal/industrial/warning{
 	dir = 8
 	},
-/obj/effect/submap_landmark/spawnpoint/away_patrol,
+/obj/submap_landmark/spawnpoint/away_patrol,
 /obj/effect/floor_decal/corner/black{
 	dir = 4
 	},
@@ -6242,7 +6242,7 @@
 /area/ship/patrol/engineering/equipment)
 "lE" = (
 /obj/machinery/door/firedoor,
-/obj/effect/wallframe_spawn/reinforced,
+/obj/wallframe_spawn/reinforced,
 /obj/effect/paint/dark_gunmetal,
 /turf/simulated/floor/plating,
 /area/ship/patrol/engineering/storage)
@@ -6886,7 +6886,7 @@
 "mP" = (
 /obj/machinery/door/firedoor,
 /obj/effect/paint/dark_gunmetal,
-/obj/effect/wallframe_spawn/reinforced/polarized/no_grille{
+/obj/wallframe_spawn/reinforced/polarized/no_grille{
 	id = "surgery_windows_patrol"
 	},
 /turf/simulated/floor,
@@ -6911,7 +6911,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/effect/wallframe_spawn/reinforced,
+/obj/wallframe_spawn/reinforced,
 /obj/effect/paint/black,
 /turf/simulated/floor,
 /area/ship/patrol/barracks)
@@ -6927,7 +6927,7 @@
 	icon_state = "0-8"
 	},
 /obj/structure/cable,
-/obj/effect/wallframe_spawn/reinforced,
+/obj/wallframe_spawn/reinforced,
 /obj/effect/paint/black,
 /turf/simulated/floor,
 /area/ship/patrol/barracks)
@@ -7226,7 +7226,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/effect/wallframe_spawn/reinforced,
+/obj/wallframe_spawn/reinforced,
 /obj/effect/paint/black,
 /turf/simulated/floor/plating,
 /area/ship/patrol/barracks/armory)
@@ -7399,7 +7399,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/decal/cleanable/dirt,
 /obj/structure/cable/green{
 	d1 = 1;
 	d2 = 2;
@@ -7654,7 +7654,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/effect/wallframe_spawn/reinforced,
+/obj/wallframe_spawn/reinforced,
 /obj/effect/paint/dark_gunmetal,
 /turf/simulated/floor/plating,
 /area/ship/patrol/engineering/fussion/control)
@@ -7957,7 +7957,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/effect/decal/cleanable/dirt,
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/ship/patrol/engineering/fussion/control)
 "oL" = (
@@ -8043,7 +8043,7 @@
 "oU" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
-/obj/effect/wallframe_spawn/reinforced,
+/obj/wallframe_spawn/reinforced,
 /obj/effect/paint/black,
 /turf/simulated/floor/plating,
 /area/ship/patrol/barracks/armory)
@@ -8159,7 +8159,7 @@
 /obj/effect/floor_decal/industrial/warning{
 	dir = 8
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/decal/cleanable/dirt,
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
@@ -8450,7 +8450,7 @@
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/barracks/armory)
 "pK" = (
-/obj/effect/shuttle_landmark/nav_patrol/nav1,
+/obj/shuttle_landmark/nav_patrol/nav1,
 /turf/space,
 /area/space)
 "pL" = (
@@ -8470,7 +8470,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/patrol/command/cannon)
 "pO" = (
-/obj/effect/shuttle_landmark/nav_patrol/nav3,
+/obj/shuttle_landmark/nav_patrol/nav3,
 /turf/space,
 /area/space)
 "qt" = (
@@ -9136,7 +9136,7 @@
 	id_tag = "bridgep_lock";
 	name = "Bridge Lockdown blast doors"
 	},
-/obj/effect/wallframe_spawn/reinforced,
+/obj/wallframe_spawn/reinforced,
 /obj/effect/paint/dark_gunmetal,
 /turf/simulated/floor/plating,
 /area/ship/patrol/command/bridge)
@@ -9363,7 +9363,7 @@
 /turf/simulated/wall/titanium,
 /area/ship/reaper)
 "OK" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/decal/cleanable/dirt,
 /obj/machinery/light/spot{
 	dir = 4
 	},
@@ -9423,7 +9423,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/reaper)
 "Qa" = (
-/obj/effect/submap_landmark/joinable_submap/away_scg_patrol,
+/obj/submap_landmark/joinable_submap/away_scg_patrol,
 /turf/simulated/floor/tiled,
 /area/ship/patrol/crew/hallway/lower)
 "Qe" = (
@@ -9688,7 +9688,7 @@
 /area/ship/patrol/command/hangar)
 "Ww" = (
 /obj/effect/paint/dark_gunmetal,
-/obj/effect/wallframe_spawn/reinforced,
+/obj/wallframe_spawn/reinforced,
 /obj/machinery/door/blast/regular/open{
 	dir = 4;
 	id_tag = "bridgep_lock";

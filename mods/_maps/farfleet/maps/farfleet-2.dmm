@@ -534,7 +534,7 @@
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hydroponics)
 "eE" = (
-/obj/effect/overmap/visitable/ship/landable/snz,
+/obj/overmap/visitable/ship/landable/snz,
 /turf/simulated/floor/tiled/steel_grid,
 /area/ship/snz)
 "eN" = (
@@ -543,7 +543,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/ship/farfleet/crew/brig)
 "eS" = (
-/obj/effect/wallframe_spawn/reinforced,
+/obj/wallframe_spawn/reinforced,
 /turf/simulated/floor/plating,
 /area/ship/farfleet/barracks)
 "ff" = (
@@ -738,7 +738,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/ship/farfleet/barracks/armory)
 "ht" = (
-/obj/effect/wallframe_spawn/reinforced,
+/obj/wallframe_spawn/reinforced,
 /turf/simulated/floor/plating,
 /area/ship/farfleet/barracks/armory)
 "hv" = (
@@ -772,7 +772,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/effect/submap_landmark/spawnpoint/away_iccgn_farfleet/iccgn_pawn,
+/obj/submap_landmark/spawnpoint/away_iccgn_farfleet/iccgn_pawn,
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/crew/cryo)
 "hL" = (
@@ -1020,7 +1020,7 @@
 /turf/simulated/wall/r_wall,
 /area/ship/farfleet/crew/canteen)
 "kl" = (
-/obj/effect/wallframe_spawn/reinforced,
+/obj/wallframe_spawn/reinforced,
 /turf/simulated/floor/plating,
 /area/ship/farfleet/crew/brig)
 "kp" = (
@@ -1289,7 +1289,7 @@
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/crew/canteen)
 "mQ" = (
-/obj/effect/submap_landmark/spawnpoint/away_iccgn_farfleet,
+/obj/submap_landmark/spawnpoint/away_iccgn_farfleet,
 /obj/machinery/firealarm{
 	dir = 1;
 	pixel_y = -24
@@ -1509,7 +1509,7 @@
 /obj/machinery/computer/cryopod{
 	pixel_y = 32
 	},
-/obj/effect/submap_landmark/spawnpoint/away_iccgn_farfleet/medic,
+/obj/submap_landmark/spawnpoint/away_iccgn_farfleet/medic,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -1592,7 +1592,7 @@
 /turf/simulated/floor/tiled/freezer,
 /area/ship/farfleet/crew/toilet)
 "pL" = (
-/obj/effect/wallframe_spawn/reinforced/titanium,
+/obj/wallframe_spawn/reinforced/titanium,
 /obj/structure/cable/green{
 	d2 = 4;
 	icon_state = "0-4"
@@ -1771,7 +1771,7 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/snz)
 "rb" = (
-/obj/effect/submap_landmark/spawnpoint/away_iccgn_farfleet,
+/obj/submap_landmark/spawnpoint/away_iccgn_farfleet,
 /turf/simulated/floor/tiled/dark,
 /area/ship/farfleet/barracks)
 "rg" = (
@@ -2489,7 +2489,7 @@
 /turf/simulated/floor/plating,
 /area/ship/farfleet/command/snz_hangar)
 "xP" = (
-/obj/effect/shuttle_landmark/nav_farfleet/nav3,
+/obj/shuttle_landmark/nav_farfleet/nav3,
 /turf/space,
 /area/space)
 "xQ" = (
@@ -2572,7 +2572,7 @@
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/crew/canteen)
 "ys" = (
-/obj/effect/shuttle_landmark/nav_farfleet/nav4,
+/obj/shuttle_landmark/nav_farfleet/nav4,
 /turf/space,
 /area/space)
 "yA" = (
@@ -2970,7 +2970,7 @@
 	icon_state = "warning"
 	},
 /obj/machinery/atmospherics/unary/vent_pump/on,
-/obj/effect/submap_landmark/spawnpoint/away_iccgn_farfleet/captain,
+/obj/submap_landmark/spawnpoint/away_iccgn_farfleet/captain,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -3916,7 +3916,7 @@
 /turf/simulated/floor/tiled/monotile,
 /area/ship/farfleet/crew/hydroponics)
 "Ms" = (
-/obj/effect/shuttle_landmark/snz/start,
+/obj/shuttle_landmark/snz/start,
 /turf/simulated/floor/tiled/monotile,
 /area/ship/farfleet/command/snz_hangar)
 "Mt" = (
@@ -4362,7 +4362,7 @@
 /turf/simulated/floor/tiled/freezer,
 /area/ship/farfleet/crew/freezer)
 "RC" = (
-/obj/effect/submap_landmark/spawnpoint/away_iccgn_farfleet/sergeant,
+/obj/submap_landmark/spawnpoint/away_iccgn_farfleet/sergeant,
 /turf/simulated/floor/tiled/dark,
 /area/ship/farfleet/barracks)
 "RH" = (
@@ -4761,7 +4761,7 @@
 	icon_state = "warning"
 	},
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
-/obj/effect/submap_landmark/spawnpoint/away_iccgn_farfleet/gunner,
+/obj/submap_landmark/spawnpoint/away_iccgn_farfleet/gunner,
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/crew/cryo)
 "UV" = (
@@ -4788,7 +4788,7 @@
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/crew/kitchen)
 "Vg" = (
-/obj/effect/wallframe_spawn/reinforced/titanium,
+/obj/wallframe_spawn/reinforced/titanium,
 /obj/structure/cable/green{
 	d2 = 2;
 	icon_state = "0-2"

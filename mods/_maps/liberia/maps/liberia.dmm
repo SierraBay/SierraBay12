@@ -32,7 +32,7 @@
 	dir = 4
 	},
 /obj/effect/floor_decal/corner/blue/mono,
-/obj/effect/submap_landmark/joinable_submap/liberia,
+/obj/submap_landmark/joinable_submap/liberia,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/liberia/bridge)
 "ae" = (
@@ -61,7 +61,7 @@
 	pixel_x = 34
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/effect/submap_landmark/spawnpoint/liberia,
+/obj/submap_landmark/spawnpoint/liberia,
 /turf/simulated/floor/carpet/red,
 /area/liberia/captain)
 "ag" = (
@@ -74,7 +74,7 @@
 /obj/effect/floor_decal/spline/fancy/wood{
 	dir = 5
 	},
-/obj/effect/submap_landmark/spawnpoint/liberia/trainee,
+/obj/submap_landmark/spawnpoint/liberia/trainee,
 /turf/simulated/floor/carpet,
 /area/liberia/personellroom2)
 "ah" = (
@@ -91,7 +91,7 @@
 /obj/effect/floor_decal/spline/fancy/wood{
 	dir = 6
 	},
-/obj/effect/submap_landmark/spawnpoint/liberia/trainee,
+/obj/submap_landmark/spawnpoint/liberia/trainee,
 /turf/simulated/floor/carpet,
 /area/liberia/personellroom2)
 "ak" = (
@@ -115,7 +115,7 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/liberia/merchantstorage)
 "ao" = (
-/obj/effect/shuttle_landmark/nav_liberia/south,
+/obj/shuttle_landmark/nav_liberia/south,
 /turf/space,
 /area/space)
 "aq" = (
@@ -351,7 +351,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/effect/wallframe_spawn/reinforced,
+/obj/wallframe_spawn/reinforced,
 /turf/simulated/floor/plating,
 /area/liberia/merchantstorage)
 "aK" = (
@@ -653,7 +653,7 @@
 	dir = 4;
 	id_tag = "merch-ship_windows"
 	},
-/obj/effect/wallframe_spawn/reinforced,
+/obj/wallframe_spawn/reinforced,
 /turf/simulated/floor/plating,
 /area/liberia/bridge)
 "bn" = (
@@ -667,7 +667,7 @@
 /turf/simulated/floor/tiled,
 /area/liberia/hallway)
 "bo" = (
-/obj/effect/wallframe_spawn/reinforced/titanium,
+/obj/wallframe_spawn/reinforced/titanium,
 /obj/machinery/door/blast/shutters{
 	density = 0;
 	dir = 2;
@@ -848,7 +848,7 @@
 /turf/simulated/wall/r_titanium,
 /area/liberia/mule)
 "bC" = (
-/obj/effect/wallframe_spawn/reinforced/titanium,
+/obj/wallframe_spawn/reinforced/titanium,
 /obj/machinery/door/blast/shutters{
 	density = 0;
 	dir = 4;
@@ -1087,7 +1087,7 @@
 /turf/simulated/floor/tiled,
 /area/liberia/mule)
 "bY" = (
-/obj/effect/wallframe_spawn/reinforced/titanium,
+/obj/wallframe_spawn/reinforced/titanium,
 /obj/effect/paint/silver,
 /obj/effect/paint_stripe/yellow,
 /obj/machinery/atmospherics/pipe/simple/hidden/red,
@@ -1120,7 +1120,7 @@
 	pixel_x = -6;
 	pixel_y = 28
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/decal/cleanable/dirt,
 /obj/machinery/atmospherics/unary/vent_pump/high_volume/external_air{
 	id_tag = "merchant_ship_vent"
 	},
@@ -1155,7 +1155,7 @@
 /obj/machinery/computer/shuttle_control/explore/mule{
 	dir = 4
 	},
-/obj/effect/overmap/visitable/ship/landable/mule,
+/obj/overmap/visitable/ship/landable/mule,
 /turf/simulated/floor/carpet/blue2,
 /area/liberia/mule)
 "cd" = (
@@ -1302,7 +1302,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/liberia/mule)
 "cp" = (
-/obj/effect/wallframe_spawn/reinforced/titanium,
+/obj/wallframe_spawn/reinforced/titanium,
 /obj/machinery/door/blast/shutters{
 	density = 0;
 	dir = 4;
@@ -1792,7 +1792,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/liberia/engineeringstorage)
 "de" = (
-/obj/effect/wallframe_spawn/no_grille,
+/obj/wallframe_spawn/no_grille,
 /turf/simulated/floor/plating,
 /area/liberia/traidingroom)
 "df" = (
@@ -1800,7 +1800,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/liberia/engineeringreactor)
 "dg" = (
-/obj/effect/wallframe_spawn/reinforced/titanium,
+/obj/wallframe_spawn/reinforced/titanium,
 /obj/effect/paint/silver,
 /obj/structure/cable/blue{
 	d1 = 4;
@@ -2003,7 +2003,7 @@
 "dv" = (
 /obj/machinery/hologram/holopad/longrange,
 /obj/effect/floor_decal/corner/blue/mono,
-/obj/effect/overmap/visitable/ship/liberia,
+/obj/overmap/visitable/ship/liberia,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/liberia/bridge)
 "dw" = (
@@ -2737,7 +2737,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/shield_diffuser,
-/obj/effect/shuttle_landmark/mule/start,
+/obj/shuttle_landmark/mule/start,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/liberia/mule)
 "ez" = (
@@ -3924,7 +3924,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/effect/wallframe_spawn/no_grille,
+/obj/wallframe_spawn/no_grille,
 /turf/simulated/floor/plating,
 /area/liberia/bar)
 "gC" = (
@@ -5452,7 +5452,7 @@
 /obj/effect/floor_decal/spline/fancy/wood{
 	dir = 5
 	},
-/obj/effect/submap_landmark/spawnpoint/liberia/engineer,
+/obj/submap_landmark/spawnpoint/liberia/engineer,
 /turf/simulated/floor/carpet/green,
 /area/liberia/guestroom1)
 "jI" = (
@@ -5461,7 +5461,7 @@
 /obj/effect/floor_decal/spline/fancy/wood{
 	dir = 9
 	},
-/obj/effect/submap_landmark/spawnpoint/liberia/engineer,
+/obj/submap_landmark/spawnpoint/liberia/engineer,
 /turf/simulated/floor/carpet/magenta,
 /area/liberia/guestroom2)
 "jJ" = (
@@ -5513,7 +5513,7 @@
 /turf/simulated/floor/wood/walnut,
 /area/liberia/library)
 "jP" = (
-/obj/effect/wallframe_spawn/reinforced,
+/obj/wallframe_spawn/reinforced,
 /turf/simulated/floor/plating,
 /area/liberia/guestroom1)
 "jQ" = (
@@ -5642,7 +5642,7 @@
 /area/liberia/guestroom2)
 "kb" = (
 /obj/effect/floor_decal/spline/fancy/wood,
-/obj/effect/submap_landmark/spawnpoint/liberia/doctor,
+/obj/submap_landmark/spawnpoint/liberia/doctor,
 /obj/structure/bed/sofa/l/black{
 	dir = 4
 	},
@@ -6099,7 +6099,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/unary/vent_pump/on,
-/obj/effect/submap_landmark/spawnpoint/liberia/doctor,
+/obj/submap_landmark/spawnpoint/liberia/doctor,
 /turf/simulated/floor/tiled/white,
 /area/liberia/medbay)
 "kV" = (
@@ -6131,7 +6131,7 @@
 /turf/simulated/floor/plating,
 /area/liberia/hallway)
 "kX" = (
-/obj/effect/wallframe_spawn/reinforced,
+/obj/wallframe_spawn/reinforced,
 /turf/simulated/floor/plating,
 /area/liberia/personellroom1)
 "kY" = (
@@ -6265,7 +6265,7 @@
 	pixel_x = -28;
 	pixel_y = -10
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/decal/cleanable/dirt,
 /obj/structure/catwalk,
 /obj/structure/cable/blue{
 	d1 = 1;
@@ -6475,7 +6475,7 @@
 /turf/simulated/floor/tiled,
 /area/liberia/hallway)
 "lu" = (
-/obj/effect/wallframe_spawn/reinforced,
+/obj/wallframe_spawn/reinforced,
 /turf/simulated/floor/plating,
 /area/liberia/bar)
 "lv" = (
@@ -6645,7 +6645,7 @@
 /turf/simulated/floor/wood/walnut,
 /area/liberia/bar)
 "mt" = (
-/obj/effect/shuttle_landmark/nav_liberia/west,
+/obj/shuttle_landmark/nav_liberia/west,
 /turf/space,
 /area/space)
 "mu" = (
@@ -6764,7 +6764,7 @@
 /turf/simulated/floor/wood/walnut,
 /area/liberia/library)
 "oo" = (
-/obj/effect/shuttle_landmark/nav_liberia/antag,
+/obj/shuttle_landmark/nav_liberia/antag,
 /turf/space,
 /area/space)
 "op" = (
@@ -6845,7 +6845,7 @@
 	dir = 2;
 	id_tag = "merch-ship_windows"
 	},
-/obj/effect/wallframe_spawn/reinforced,
+/obj/wallframe_spawn/reinforced,
 /turf/simulated/floor/plating,
 /area/liberia/bridge)
 "pB" = (
@@ -7286,7 +7286,7 @@
 /turf/simulated/wall/r_wall/prepainted,
 /area/liberia/engineeringstorage)
 "tI" = (
-/obj/effect/wallframe_spawn/reinforced,
+/obj/wallframe_spawn/reinforced,
 /turf/simulated/floor/plating,
 /area/liberia/cryo)
 "tK" = (
@@ -7299,7 +7299,7 @@
 	},
 /area/liberia/solar2)
 "tL" = (
-/obj/effect/wallframe_spawn/no_grille,
+/obj/wallframe_spawn/no_grille,
 /turf/simulated/floor/plating,
 /area/liberia/bar)
 "tR" = (
@@ -7363,7 +7363,7 @@
 /turf/simulated/wall/r_wall/prepainted,
 /area/liberia/guestroom1)
 "uX" = (
-/obj/effect/shuttle_landmark/nav_liberia/north,
+/obj/shuttle_landmark/nav_liberia/north,
 /turf/space,
 /area/space)
 "vd" = (
@@ -7390,7 +7390,7 @@
 /turf/space,
 /area/liberia/solar1)
 "vw" = (
-/obj/effect/shuttle_landmark/nav_liberia/east,
+/obj/shuttle_landmark/nav_liberia/east,
 /turf/space,
 /area/space)
 "vB" = (
@@ -7462,7 +7462,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/liberia/engineeringreactor)
 "xc" = (
-/obj/effect/wallframe_spawn/reinforced,
+/obj/wallframe_spawn/reinforced,
 /turf/simulated/floor/plating,
 /area/liberia/captain)
 "xn" = (
@@ -7602,7 +7602,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/liberia/bridge)
 "zn" = (
-/obj/effect/wallframe_spawn/reinforced,
+/obj/wallframe_spawn/reinforced,
 /turf/simulated/floor/plating,
 /area/liberia/officeroom)
 "zq" = (
@@ -7865,7 +7865,7 @@
 /turf/simulated/floor/tiled/freezer,
 /area/liberia/toiletroom2)
 "EZ" = (
-/obj/effect/wallframe_spawn/no_grille,
+/obj/wallframe_spawn/no_grille,
 /turf/simulated/floor/plating,
 /area/liberia/officeroom)
 "Fc" = (
@@ -8066,7 +8066,7 @@
 	dir = 8;
 	pixel_x = -24
 	},
-/obj/effect/submap_landmark/spawnpoint/liberia/security,
+/obj/submap_landmark/spawnpoint/liberia/security,
 /turf/simulated/floor/carpet/blue,
 /area/liberia/personellroom1)
 "HQ" = (
@@ -8531,7 +8531,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/liberia/dockinghall)
 "QE" = (
-/obj/effect/wallframe_spawn/reinforced/titanium,
+/obj/wallframe_spawn/reinforced/titanium,
 /obj/machinery/door/blast/shutters{
 	density = 0;
 	dir = 2;
@@ -8916,7 +8916,7 @@
 /turf/simulated/floor/tiled,
 /area/liberia/hallway)
 "Wr" = (
-/obj/effect/wallframe_spawn/reinforced,
+/obj/wallframe_spawn/reinforced,
 /turf/simulated/floor/plating,
 /area/liberia/hallway)
 "Wx" = (
@@ -8974,7 +8974,7 @@
 	},
 /obj/structure/bed/padded,
 /obj/item/bedsheet/hos,
-/obj/effect/submap_landmark/spawnpoint/liberia/security,
+/obj/submap_landmark/spawnpoint/liberia/security,
 /turf/simulated/floor/carpet/blue,
 /area/liberia/personellroom1)
 "Xe" = (

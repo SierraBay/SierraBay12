@@ -316,7 +316,7 @@
 /obj/machinery/computer/cryopod{
 	pixel_y = 32
 	},
-/obj/effect/submap_landmark/spawnpoint/away_patrol/pilot1,
+/obj/submap_landmark/spawnpoint/away_patrol/pilot1,
 /turf/simulated/floor/tiled/white,
 /area/ship/patrol/crew/cryo)
 "aI" = (
@@ -324,7 +324,7 @@
 	dir = 4;
 	icon_state = "warning"
 	},
-/obj/effect/submap_landmark/spawnpoint/away_patrol/commander,
+/obj/submap_landmark/spawnpoint/away_patrol/commander,
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "north bump";
@@ -577,7 +577,7 @@
 /obj/effect/floor_decal/industrial/warning{
 	dir = 10
 	},
-/obj/effect/submap_landmark/spawnpoint/away_patrol/surgeon,
+/obj/submap_landmark/spawnpoint/away_patrol/surgeon,
 /turf/simulated/floor/tiled/white,
 /area/ship/patrol/crew/cryo)
 "bn" = (
@@ -585,7 +585,7 @@
 /obj/effect/floor_decal/industrial/warning{
 	dir = 6
 	},
-/obj/effect/submap_landmark/spawnpoint/away_patrol/engineer,
+/obj/submap_landmark/spawnpoint/away_patrol/engineer,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -739,7 +739,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
 	},
-/obj/effect/wallframe_spawn/reinforced,
+/obj/wallframe_spawn/reinforced,
 /obj/effect/paint/dark_gunmetal,
 /turf/simulated/floor/plating,
 /area/ship/patrol/crew/brig)
@@ -748,7 +748,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
 	},
-/obj/effect/wallframe_spawn/reinforced,
+/obj/wallframe_spawn/reinforced,
 /obj/effect/paint/dark_gunmetal,
 /turf/simulated/floor/plating,
 /area/ship/patrol/crew/brig)
@@ -1558,7 +1558,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/effect/wallframe_spawn/reinforced,
+/obj/wallframe_spawn/reinforced,
 /obj/effect/paint/dark_gunmetal,
 /turf/simulated/floor/plating,
 /area/ship/patrol/crew/brig/office)
@@ -1572,7 +1572,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/effect/wallframe_spawn/reinforced,
+/obj/wallframe_spawn/reinforced,
 /obj/effect/paint/dark_gunmetal,
 /turf/simulated/floor/plating,
 /area/ship/patrol/crew/brig/office)
@@ -1681,7 +1681,7 @@
 /area/ship/patrol/maintenance/upper/munition)
 "dj" = (
 /obj/effect/paint/meatstation/lab,
-/obj/effect/wallframe_spawn/reinforced,
+/obj/wallframe_spawn/reinforced,
 /obj/machinery/door/blast/regular{
 	id_tag = "abandoned_bar"
 	},
@@ -3281,7 +3281,7 @@
 /area/ship/patrol/crew/hallway/upper)
 "ge" = (
 /obj/machinery/door/firedoor,
-/obj/effect/wallframe_spawn/reinforced,
+/obj/wallframe_spawn/reinforced,
 /obj/effect/paint/dark_gunmetal,
 /turf/simulated/floor/plating,
 /area/ship/patrol/crew/kitchen)
@@ -4774,7 +4774,7 @@
 /area/ship/patrol/maintenance/upper/starboard)
 "Ao" = (
 /obj/effect/paint/meatstation/lab,
-/obj/effect/wallframe_spawn/reinforced,
+/obj/wallframe_spawn/reinforced,
 /obj/machinery/door/blast/regular{
 	dir = 4;
 	id_tag = "abandoned_bar"
@@ -5544,7 +5544,7 @@
 /area/ship/patrol/maintenance/upper)
 "Xb" = (
 /obj/effect/paint/meatstation/lab,
-/obj/effect/wallframe_spawn/reinforced,
+/obj/wallframe_spawn/reinforced,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
