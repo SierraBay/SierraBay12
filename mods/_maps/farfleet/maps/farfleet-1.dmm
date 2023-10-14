@@ -1258,10 +1258,10 @@
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hallway/lower)
 "ec" = (
-/obj/structure/sign/double/iccgflag/left{
+/obj/effect/floor_decal/industrial/outline/yellow,
+/obj/structure/sign/double/iccgflag/right{
 	pixel_y = 32
 	},
-/obj/effect/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/dock)
 "eg" = (
@@ -1993,9 +1993,7 @@
 	dir = 4;
 	pixel_x = 26
 	},
-/obj/machinery/suit_storage_unit/security/alt{
-	req_access = list("ACCESS_ICCGN")
-	},
+/obj/machinery/suit_storage_unit/pioneer,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/command/eva)
 "hp" = (
@@ -2976,8 +2974,19 @@
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/engineering/equipment)
 "me" = (
-/obj/machinery/suit_storage_unit/standard_unit,
 /obj/effect/floor_decal/industrial/outline/yellow,
+/obj/structure/table/rack,
+/obj/structure/window/reinforced,
+/obj/item/clothing/suit/space/emergency{
+	pixel_x = 6
+	},
+/obj/item/clothing/suit/space/emergency,
+/obj/item/clothing/suit/space/emergency{
+	pixel_x = -6
+	},
+/obj/machinery/door/window{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/dock)
 "mf" = (
@@ -4837,6 +4846,9 @@
 	pixel_y = 0
 	},
 /obj/effect/floor_decal/industrial/outline/yellow,
+/obj/structure/sign/double/iccgflag/left{
+	pixel_y = 32
+	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/dock)
 "zJ" = (
@@ -5058,10 +5070,10 @@
 /turf/simulated/wall,
 /area/ship/farfleet/engineering/atmos_equipment)
 "Cd" = (
-/obj/structure/sign/double/iccgflag/right{
+/obj/effect/floor_decal/industrial/outline/yellow,
+/obj/structure/sign/warning/vacuum{
 	pixel_y = 32
 	},
-/obj/effect/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/dock)
 "Cg" = (
@@ -5962,11 +5974,24 @@
 /turf/simulated/floor/tiled/dark,
 /area/ship/farfleet/crew/brig/emergency_armory)
 "JX" = (
-/obj/machinery/suit_storage_unit/standard_unit,
 /obj/machinery/light{
 	dir = 4
 	},
 /obj/effect/floor_decal/industrial/outline/yellow,
+/obj/structure/table/rack,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/item/clothing/head/helmet/space/emergency{
+	pixel_x = 7
+	},
+/obj/item/clothing/head/helmet/space/emergency,
+/obj/item/clothing/head/helmet/space/emergency{
+	pixel_x = -7
+	},
+/obj/machinery/door/window/northright{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/dock)
 "JY" = (
@@ -6088,9 +6113,7 @@
 "Ls" = (
 /obj/effect/floor_decal/corner_steel_grid/diagonal,
 /obj/effect/floor_decal/industrial/outline/yellow,
-/obj/machinery/suit_storage_unit/security/alt{
-	req_access = list("ACCESS_ICCGN")
-	},
+/obj/machinery/suit_storage_unit/pioneer,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/command/eva)
 "Lu" = (

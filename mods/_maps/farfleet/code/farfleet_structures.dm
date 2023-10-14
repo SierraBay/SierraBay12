@@ -233,17 +233,19 @@
  * ====
  */
 
-/*
-/obj/machinery/suit_storage_unit/away_iccgn_med
-	name = "Pioneer Corpsman Voidsuit Storage Unit"
-	suit= /obj/item/clothing/suit/space/void/pioneer/prepared
+/obj/machinery/suit_storage_unit/pioneer
+	name = "pioneer corps voidsuit storage unit"
+	suit= /obj/item/clothing/suit/space/void/pioneer
+	helmet = /obj/item/clothing/head/helmet/space/void/pioneer
 	boots = /obj/item/clothing/shoes/magboots
 	tank = /obj/item/tank/oxygen
+	mask = /obj/item/clothing/mask/breath
 	req_access = list(access_away_iccgn)
 	islocked = 1
 
-/obj/machinery/suit_storage_unit/away_iccgn_eng
-	name = "Senior Technician Voidsuit Storage Unit"
+/*
+/obj/machinery/suit_storage_unit/away_iccgn_med
+	name = "Pioneer Corpsman Voidsuit Storage Unit"
 	suit= /obj/item/clothing/suit/space/void/pioneer/prepared
 	boots = /obj/item/clothing/shoes/magboots
 	tank = /obj/item/tank/oxygen
