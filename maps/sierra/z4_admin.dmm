@@ -4177,7 +4177,7 @@
 /turf/unsimulated/wall,
 /area/tdome)
 "aym" = (
-/obj/effect/forcefield{
+/obj/forcefield{
 	desc = "You can't get in. Heh.";
 	invisibility = 101;
 	name = "Blocker"
@@ -4190,7 +4190,7 @@
 	},
 /area/tdome)
 "ayn" = (
-/obj/effect/forcefield{
+/obj/forcefield{
 	desc = "You can't get in. Heh.";
 	invisibility = 101;
 	name = "Blocker"
@@ -4203,7 +4203,7 @@
 	},
 /area/tdome)
 "ayo" = (
-/obj/effect/forcefield{
+/obj/forcefield{
 	desc = "You can't get in. Heh.";
 	invisibility = 101;
 	name = "Blocker"
@@ -4305,7 +4305,7 @@
 /turf/unsimulated/wall,
 /area/tdome/tdome1)
 "aza" = (
-/obj/effect/gibspawner/robot,
+/obj/gibspawner/robot,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -4577,7 +4577,7 @@
 /area/tdome)
 "azT" = (
 /obj/item/material/knife/ritual,
-/obj/effect/gibspawner/human,
+/obj/gibspawner/human,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -4627,7 +4627,7 @@
 	},
 /area/tdome)
 "aAe" = (
-/obj/effect/gibspawner/human,
+/obj/gibspawner/human,
 /obj/floor_decal/corner/blue{
 	dir = 9
 	},
@@ -4642,7 +4642,7 @@
 	},
 /area/tdome)
 "aAk" = (
-/obj/effect/gibspawner/human,
+/obj/gibspawner/human,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -9040,7 +9040,7 @@
 	},
 /area/centcom/living)
 "enU" = (
-/obj/effect/forcefield{
+/obj/forcefield{
 	desc = "You can't get in. Heh.";
 	invisibility = 101;
 	name = "Blocker"
@@ -9873,7 +9873,7 @@
 	},
 /area/centcom/living)
 "gpQ" = (
-/obj/effect/forcefield{
+/obj/forcefield{
 	desc = "You can't get in. Heh.";
 	invisibility = 101;
 	name = "Blocker"
@@ -9939,7 +9939,7 @@
 	},
 /area/centcom/specops)
 "gvY" = (
-/obj/effect/forcefield{
+/obj/forcefield{
 	desc = "You can't get in. Heh.";
 	invisibility = 101;
 	name = "Blocker"
@@ -10204,7 +10204,7 @@
 	},
 /area/tdome)
 "gUN" = (
-/obj/effect/forcefield{
+/obj/forcefield{
 	desc = "You can't get in. Heh.";
 	invisibility = 101;
 	name = "Blocker"
@@ -13968,7 +13968,7 @@
 	},
 /area/centcom/living)
 "pfe" = (
-/obj/effect/forcefield{
+/obj/forcefield{
 	desc = "You can't get in. Heh.";
 	invisibility = 101;
 	name = "Blocker"
@@ -14362,7 +14362,7 @@
 	},
 /area/centcom/living)
 "pWe" = (
-/obj/effect/forcefield{
+/obj/forcefield{
 	desc = "You can't get in. Heh.";
 	invisibility = 101;
 	name = "Blocker"
@@ -15498,7 +15498,7 @@
 	},
 /area/centcom/living)
 "sgo" = (
-/obj/effect/forcefield{
+/obj/forcefield{
 	desc = "You can't get in. Heh.";
 	invisibility = 101;
 	name = "Blocker"
@@ -15718,7 +15718,7 @@
 /turf/unsimulated/floor/techfloor,
 /area/centcom/control)
 "sFC" = (
-/obj/effect/forcefield{
+/obj/forcefield{
 	desc = "You can't get in. Heh.";
 	invisibility = 101;
 	name = "Blocker"
@@ -16741,7 +16741,7 @@
 /turf/unsimulated/floor/techfloor,
 /area/centcom/holding)
 "upn" = (
-/obj/effect/forcefield{
+/obj/forcefield{
 	desc = "You can't get in. Heh.";
 	invisibility = 101;
 	name = "Blocker"
@@ -17560,7 +17560,7 @@
 	},
 /area/centcom)
 "wwa" = (
-/obj/effect/forcefield{
+/obj/forcefield{
 	desc = "You can't get in. Heh.";
 	invisibility = 101;
 	name = "Blocker"

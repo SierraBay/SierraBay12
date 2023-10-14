@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/obj/effect/step_trigger/teleporter/random{
+/obj/step_trigger/teleporter/random{
 	affect_ghosts = 0;
 	name = "escapeshuttle_leave";
 	teleport_x = 25;
@@ -15,7 +15,7 @@
 	},
 /area/space)
 "ab" = (
-/obj/effect/step_trigger/teleporter/random{
+/obj/step_trigger/teleporter/random{
 	affect_ghosts = 0;
 	name = "escapeshuttle_leave";
 	teleport_x = 25;
@@ -25,7 +25,7 @@
 	teleport_z = 9;
 	teleport_z_offset = 0
 	},
-/obj/effect/step_trigger/teleporter/random{
+/obj/step_trigger/teleporter/random{
 	affect_ghosts = 0;
 	name = "escapeshuttle_leave";
 	teleport_x = 25;
@@ -45,7 +45,7 @@
 	},
 /area/space)
 "af" = (
-/obj/effect/step_trigger/thrower{
+/obj/step_trigger/thrower{
 	affect_ghosts = 0;
 	direction = 8;
 	icon_state = "wb";
@@ -55,7 +55,7 @@
 /turf/space/transit/north,
 /area/space)
 "ag" = (
-/obj/effect/step_trigger/thrower{
+/obj/step_trigger/thrower{
 	affect_ghosts = 0;
 	direction = 2;
 	icon_state = "sb";
@@ -65,7 +65,7 @@
 /turf/space/transit/north,
 /area/space)
 "ah" = (
-/obj/effect/step_trigger/thrower{
+/obj/step_trigger/thrower{
 	affect_ghosts = 0;
 	direction = 4;
 	icon_state = "eb";
@@ -75,7 +75,7 @@
 /turf/space/transit/north,
 /area/space)
 "ai" = (
-/obj/effect/step_trigger/thrower{
+/obj/step_trigger/thrower{
 	affect_ghosts = 0;
 	direction = 2;
 	icon_state = "sb";
@@ -85,7 +85,7 @@
 /turf/space/transit/east,
 /area/space)
 "aj" = (
-/obj/effect/step_trigger/thrower{
+/obj/step_trigger/thrower{
 	affect_ghosts = 0;
 	direction = 1;
 	icon_state = "nb";
@@ -103,7 +103,7 @@
 /turf/space/transit/north,
 /area/space)
 "am" = (
-/obj/effect/step_trigger/thrower{
+/obj/step_trigger/thrower{
 	affect_ghosts = 0;
 	direction = 2;
 	icon_state = "sb";
@@ -112,7 +112,7 @@
 	stopper = 1;
 	tiles = 12
 	},
-/obj/effect/step_trigger/thrower{
+/obj/step_trigger/thrower{
 	affect_ghosts = 0;
 	direction = 2;
 	icon_state = "sb";
@@ -124,14 +124,14 @@
 /turf/space/transit/north,
 /area/space)
 "an" = (
-/obj/effect/step_trigger/thrower{
+/obj/step_trigger/thrower{
 	affect_ghosts = 0;
 	direction = 4;
 	icon_state = "eb";
 	name = "thrower_right";
 	tiles = 12
 	},
-/obj/effect/step_trigger/thrower{
+/obj/step_trigger/thrower{
 	affect_ghosts = 0;
 	direction = 4;
 	icon_state = "eb";
@@ -164,7 +164,7 @@
 /turf/space/transit/east,
 /area/space)
 "au" = (
-/obj/effect/step_trigger/thrower{
+/obj/step_trigger/thrower{
 	affect_ghosts = 0;
 	direction = 2;
 	icon_state = "sb";
@@ -180,7 +180,7 @@
 /turf/space/transit/north,
 /area/space)
 "ax" = (
-/obj/effect/step_trigger/thrower{
+/obj/step_trigger/thrower{
 	affect_ghosts = 0;
 	direction = 4;
 	icon_state = "eb";
@@ -190,7 +190,7 @@
 /turf/space,
 /area/space)
 "ay" = (
-/obj/effect/step_trigger/thrower{
+/obj/step_trigger/thrower{
 	affect_ghosts = 0;
 	direction = 8;
 	icon_state = "wb";
@@ -200,7 +200,7 @@
 /turf/space,
 /area/space)
 "az" = (
-/obj/effect/step_trigger/thrower{
+/obj/step_trigger/thrower{
 	affect_ghosts = 0;
 	direction = 8;
 	icon_state = "wb";
@@ -210,7 +210,7 @@
 /turf/space/transit/east,
 /area/space)
 "aA" = (
-/obj/effect/step_trigger/thrower{
+/obj/step_trigger/thrower{
 	direction = 1;
 	icon_state = "nb";
 	name = "thrower_up";
@@ -220,7 +220,7 @@
 /turf/space/transit/north,
 /area/space)
 "aB" = (
-/obj/effect/step_trigger/teleporter/random{
+/obj/step_trigger/teleporter/random{
 	affect_ghosts = 0;
 	name = "escapeshuttle_leave";
 	teleport_x = 25;
@@ -248,7 +248,7 @@
 /turf/space/transit/north,
 /area/space)
 "aJ" = (
-/obj/effect/step_trigger/thrower{
+/obj/step_trigger/thrower{
 	direction = 1;
 	icon_state = "nb";
 	name = "thrower_up";
@@ -258,7 +258,7 @@
 /turf/space/transit/east,
 /area/space)
 "aK" = (
-/obj/effect/step_trigger/thrower{
+/obj/step_trigger/thrower{
 	affect_ghosts = 0;
 	direction = 2;
 	icon_state = "sb";
