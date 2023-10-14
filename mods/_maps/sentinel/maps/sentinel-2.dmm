@@ -8,15 +8,15 @@
 	},
 /area/space)
 "ac" = (
-/obj/effect/paint/meatstation/lab,
+/obj/paint/meatstation/lab,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/maintenance/upper/starboard)
 "ad" = (
-/obj/effect/paint/meatstation/lab,
+/obj/paint/meatstation/lab,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/maintenance/upper/aft)
 "ae" = (
-/obj/effect/paint/meatstation/lab,
+/obj/paint/meatstation/lab,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/maintenance/upper)
 "af" = (
@@ -76,7 +76,7 @@
 /turf/simulated/floor/plating,
 /area/ship/patrol/maintenance/upper/starboard)
 "am" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall,
 /area/ship/patrol/maintenance/upper/starboard)
 "an" = (
@@ -207,11 +207,11 @@
 /turf/simulated/floor/plating,
 /area/ship/patrol/maintenance/upper/aft)
 "au" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall,
 /area/ship/patrol/crew/hallway/upper/starboard)
 "av" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/crew/cryo)
 "aw" = (
@@ -232,7 +232,7 @@
 /turf/simulated/open,
 /area/ship/patrol/maintenance/upper/starboard)
 "ax" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall,
 /area/ship/patrol/maintenance/upper/aft)
 "ay" = (
@@ -343,7 +343,7 @@
 /turf/simulated/floor/tiled/white,
 /area/ship/patrol/crew/cryo)
 "aK" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/crew/brig)
 "aL" = (
@@ -380,7 +380,7 @@
 /turf/simulated/floor/plating,
 /area/ship/patrol/maintenance/upper/starboard)
 "aO" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall,
 /area/ship/patrol/crew/hallway/upper)
 "aP" = (
@@ -491,7 +491,7 @@
 /turf/simulated/floor/tiled,
 /area/ship/patrol/crew/brig)
 "bb" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall,
 /area/ship/patrol/crew/brig)
 "bc" = (
@@ -503,7 +503,7 @@
 /turf/simulated/floor/tiled,
 /area/ship/patrol/crew/brig)
 "bd" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/crew/hallway/upper)
 "be" = (
@@ -740,7 +740,7 @@
 	dir = 9
 	},
 /obj/wallframe_spawn/reinforced,
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/floor/plating,
 /area/ship/patrol/crew/brig)
 "bF" = (
@@ -749,7 +749,7 @@
 	dir = 5
 	},
 /obj/wallframe_spawn/reinforced,
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/floor/plating,
 /area/ship/patrol/crew/brig)
 "bG" = (
@@ -773,16 +773,16 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/patrol/maintenance/upper/aft)
 "bI" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/space,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/maintenance/upper/munition)
 "bJ" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/maintenance/upper/munition)
 "bK" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -1479,7 +1479,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/patrol/maintenance/upper/munition)
 "cP" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall,
 /area/ship/patrol/maintenance/upper)
 "cQ" = (
@@ -1559,7 +1559,7 @@
 	icon_state = "0-4"
 	},
 /obj/wallframe_spawn/reinforced,
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/floor/plating,
 /area/ship/patrol/crew/brig/office)
 "cZ" = (
@@ -1573,7 +1573,7 @@
 	icon_state = "0-8"
 	},
 /obj/wallframe_spawn/reinforced,
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/floor/plating,
 /area/ship/patrol/crew/brig/office)
 "da" = (
@@ -1598,7 +1598,7 @@
 /turf/simulated/floor/tiled,
 /area/ship/patrol/crew/brig/office)
 "db" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/crew/brig/office)
 "dc" = (
@@ -1614,7 +1614,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/ship/patrol/crew/brig/emergency_armory)
 "dd" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/crew/brig/emergency_armory)
 "de" = (
@@ -1680,7 +1680,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/patrol/maintenance/upper/munition)
 "dj" = (
-/obj/effect/paint/meatstation/lab,
+/obj/paint/meatstation/lab,
 /obj/wallframe_spawn/reinforced,
 /obj/machinery/door/blast/regular{
 	id_tag = "abandoned_bar"
@@ -1847,7 +1847,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/ship/patrol/crew/brig/emergency_armory)
 "dD" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
@@ -2404,7 +2404,7 @@
 /turf/simulated/floor/wood,
 /area/ship/patrol/maintenance/upper)
 "eF" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall,
 /area/ship/patrol/crew/toilet)
 "eG" = (
@@ -2663,7 +2663,7 @@
 /turf/simulated/floor/tiled/white,
 /area/ship/patrol/crew/kitchen)
 "fg" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall,
 /area/ship/patrol/crew/kitchen)
 "fh" = (
@@ -2688,7 +2688,7 @@
 /turf/simulated/floor/tiled/white,
 /area/ship/patrol/crew/kitchen)
 "fj" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/crew/kitchen)
 "fk" = (
@@ -3282,7 +3282,7 @@
 "ge" = (
 /obj/machinery/door/firedoor,
 /obj/wallframe_spawn/reinforced,
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/floor/plating,
 /area/ship/patrol/crew/kitchen)
 "gf" = (
@@ -3406,7 +3406,7 @@
 /turf/simulated/floor/tiled/freezer,
 /area/ship/patrol/crew/kitchen)
 "gt" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall,
 /area/ship/patrol/maintenance/upper/port)
 "gv" = (
@@ -3802,13 +3802,13 @@
 /turf/simulated/floor/tiled/freezer,
 /area/ship/patrol/crew/kitchen)
 "hj" = (
-/obj/effect/landmark/map_data{
+/obj/landmark/map_data{
 	height = 2
 	},
 /turf/space,
 /area/space)
 "hk" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/maintenance/upper/port)
 "hl" = (
@@ -4134,7 +4134,7 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/maintenance/upper/waste)
 "jx" = (
@@ -4325,7 +4325,7 @@
 /turf/simulated/floor/plating,
 /area/ship/patrol/maintenance/upper/starboard)
 "oM" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall,
 /area/ship/patrol/maintenance/upper/munition)
 "pk" = (
@@ -4395,7 +4395,7 @@
 /turf/simulated/floor/plating,
 /area/ship/patrol/maintenance/upper/starboard)
 "qM" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -4420,7 +4420,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/patrol/maintenance/upper/waste)
 "rG" = (
-/obj/effect/paint/meatstation/lab,
+/obj/paint/meatstation/lab,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -4429,7 +4429,7 @@
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/maintenance/upper/starboard)
 "rH" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/space,
 /turf/simulated/wall,
 /area/ship/patrol/maintenance/upper/aft)
@@ -4481,7 +4481,7 @@
 /turf/simulated/floor/plating,
 /area/ship/patrol/maintenance/upper/aft)
 "sL" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -4495,7 +4495,7 @@
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/maintenance/upper/munition)
 "th" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/maintenance/upper/waste)
 "ti" = (
@@ -4564,7 +4564,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/patrol/maintenance/upper/waste)
 "vg" = (
-/obj/effect/paint/meatstation/lab,
+/obj/paint/meatstation/lab,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -4721,7 +4721,7 @@
 /turf/simulated/floor/plating,
 /area/ship/patrol/maintenance/upper/aft)
 "zg" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -4745,7 +4745,7 @@
 /turf/simulated/floor/plating,
 /area/ship/patrol/maintenance/upper/aft)
 "zO" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/maintenance/upper/starboard)
 "zP" = (
@@ -4773,7 +4773,7 @@
 /turf/simulated/floor/plating,
 /area/ship/patrol/maintenance/upper/starboard)
 "Ao" = (
-/obj/effect/paint/meatstation/lab,
+/obj/paint/meatstation/lab,
 /obj/wallframe_spawn/reinforced,
 /obj/machinery/door/blast/regular{
 	dir = 4;
@@ -4789,7 +4789,7 @@
 /turf/simulated/floor/plating,
 /area/ship/patrol/maintenance/upper/aft)
 "AF" = (
-/obj/effect/paint/meatstation/lab,
+/obj/paint/meatstation/lab,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -4862,7 +4862,7 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/patrol/maintenance/upper/aft)
 "Dj" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -5012,7 +5012,7 @@
 /turf/simulated/floor/wood,
 /area/ship/patrol/maintenance/upper)
 "Hw" = (
-/obj/effect/paint/meatstation/lab,
+/obj/paint/meatstation/lab,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -5061,15 +5061,15 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
-/obj/effect/paint/meatstation/lab,
+/obj/paint/meatstation/lab,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/maintenance/upper/waste)
 "Jp" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/crew/hallway/upper/starboard)
 "JD" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 4;
@@ -5078,7 +5078,7 @@
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/maintenance/upper/aft)
 "JX" = (
-/obj/effect/paint/meatstation/lab,
+/obj/paint/meatstation/lab,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -5087,7 +5087,7 @@
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/maintenance/upper)
 "Km" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /obj/structure/sign/warning/server_room{
 	dir = 1
 	},
@@ -5180,7 +5180,7 @@
 /turf/simulated/floor/tiled/monotile,
 /area/ship/patrol/crew/comms)
 "LZ" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 4;
@@ -5210,7 +5210,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/patrol/maintenance/upper/waste)
 "Mn" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall,
 /area/ship/patrol/maintenance/upper/waste)
 "Mw" = (
@@ -5226,7 +5226,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/patrol/maintenance/upper/waste)
 "NR" = (
-/obj/effect/paint/meatstation/lab,
+/obj/paint/meatstation/lab,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/maintenance/upper/waste)
 "NU" = (
@@ -5245,7 +5245,7 @@
 /turf/simulated/floor/plating,
 /area/ship/patrol/maintenance/upper/port)
 "OL" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -5346,7 +5346,7 @@
 /turf/simulated/floor/plating,
 /area/ship/patrol/maintenance/upper/starboard)
 "RT" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
@@ -5407,7 +5407,7 @@
 /turf/simulated/floor/plating,
 /area/ship/patrol/maintenance/upper/aft)
 "TP" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 8;
@@ -5416,7 +5416,7 @@
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/maintenance/upper)
 "TQ" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -5436,15 +5436,15 @@
 /turf/simulated/floor/plating,
 /area/ship/patrol/maintenance/upper/aft)
 "TX" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/maintenance/upper/aft)
 "Ua" = (
-/obj/effect/paint/meatstation/lab,
+/obj/paint/meatstation/lab,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/maintenance/upper/port)
 "Uq" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -5519,7 +5519,7 @@
 /turf/simulated/floor/plating,
 /area/ship/patrol/maintenance/upper/aft)
 "Wa" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/crew/comms)
 "Wd" = (
@@ -5535,7 +5535,7 @@
 /area/ship/patrol/crew/comms)
 "Wu" = (
 /obj/structure/disposalpipe/segment,
-/obj/effect/paint/meatstation/lab,
+/obj/paint/meatstation/lab,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/maintenance/upper/waste)
 "Wx" = (
@@ -5543,7 +5543,7 @@
 /turf/simulated/floor/wood,
 /area/ship/patrol/maintenance/upper)
 "Xb" = (
-/obj/effect/paint/meatstation/lab,
+/obj/paint/meatstation/lab,
 /obj/wallframe_spawn/reinforced,
 /obj/structure/cable{
 	d1 = 4;
@@ -5602,7 +5602,7 @@
 /turf/simulated/floor/plating,
 /area/ship/patrol/maintenance/upper)
 "Yr" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/maintenance/upper)
 "YI" = (

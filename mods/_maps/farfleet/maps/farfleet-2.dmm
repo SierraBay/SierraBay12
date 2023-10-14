@@ -22,7 +22,7 @@
 	},
 /area/space)
 "an" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall/r_wall,
 /area/ship/farfleet/command/snz_hangar)
 "aq" = (
@@ -196,7 +196,7 @@
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/crew/kitchen)
 "bO" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall,
 /area/ship/farfleet/crew/hydroponics)
 "bQ" = (
@@ -226,7 +226,7 @@
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/barracks/armory)
 "ce" = (
-/obj/effect/paint/silver,
+/obj/paint/silver,
 /turf/simulated/wall/r_wall,
 /area/ship/farfleet/barracks/armory)
 "cg" = (
@@ -276,11 +276,11 @@
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/crew/brig/css)
 "cK" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall/r_wall,
 /area/ship/farfleet/crew/hallway/upper)
 "cO" = (
-/obj/effect/paint/silver,
+/obj/paint/silver,
 /turf/simulated/wall/r_wall,
 /area/ship/farfleet/crew/canteen)
 "cW" = (
@@ -294,7 +294,7 @@
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/crew/brig/css)
 "cZ" = (
-/obj/effect/catwalk_plated,
+/obj/catwalk_plated,
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 4;
@@ -312,11 +312,11 @@
 /turf/simulated/floor/plating,
 /area/ship/farfleet/command/snz_hangar)
 "dg" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall/r_wall,
 /area/ship/farfleet/command/hangar_canisters)
 "dq" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -361,11 +361,11 @@
 /turf/simulated/floor/carpet/purple,
 /area/ship/farfleet/crew/brig/css)
 "dy" = (
-/obj/effect/paint/ocean,
+/obj/paint/ocean,
 /turf/simulated/wall/r_wall,
 /area/ship/farfleet/crew/freezer)
 "dI" = (
-/obj/effect/catwalk_plated,
+/obj/catwalk_plated,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -415,7 +415,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 9
 	},
-/obj/effect/paint/ocean,
+/obj/paint/ocean,
 /turf/simulated/wall/r_titanium,
 /area/ship/snz)
 "ed" = (
@@ -461,7 +461,7 @@
 /turf/simulated/floor/tiled/freezer,
 /area/ship/farfleet/crew/freezer)
 "et" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -526,7 +526,7 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/snz)
 "eC" = (
-/obj/effect/paint/ocean,
+/obj/paint/ocean,
 /turf/simulated/wall/r_wall,
 /area/ship/farfleet/barracks/armory)
 "eD" = (
@@ -555,7 +555,7 @@
 /turf/simulated/floor/carpet/purple,
 /area/ship/farfleet/crew/brig/css)
 "fi" = (
-/obj/effect/paint/ocean,
+/obj/paint/ocean,
 /turf/simulated/wall/r_wall,
 /area/ship/farfleet/command/hangar_canisters)
 "fr" = (
@@ -615,7 +615,7 @@
 /turf/simulated/floor/tiled/steel_ridged,
 /area/ship/farfleet/maintenance/storage)
 "gs" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -668,7 +668,7 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/farfleet/command/hangar_canisters)
 "gL" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -677,7 +677,7 @@
 /turf/simulated/wall/r_wall,
 /area/ship/farfleet/barracks)
 "gR" = (
-/obj/effect/paint/silver,
+/obj/paint/silver,
 /turf/simulated/wall/r_wall,
 /area/ship/farfleet/crew/kitchen)
 "hh" = (
@@ -776,7 +776,7 @@
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/crew/cryo)
 "hL" = (
-/obj/effect/paint/ocean,
+/obj/paint/ocean,
 /turf/simulated/wall/r_wall,
 /area/ship/farfleet/crew/toilet)
 "hO" = (
@@ -891,7 +891,7 @@
 /turf/simulated/floor/tiled/freezer,
 /area/ship/farfleet/crew/toilet)
 "iu" = (
-/obj/effect/paint/silver,
+/obj/paint/silver,
 /turf/simulated/wall/r_wall,
 /area/ship/farfleet/maintenance/anomaly)
 "iv" = (
@@ -924,7 +924,7 @@
 /turf/simulated/floor/tiled/steel_ridged,
 /area/ship/farfleet/maintenance/storage)
 "iU" = (
-/obj/effect/catwalk_plated,
+/obj/catwalk_plated,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 8;
@@ -952,7 +952,7 @@
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hallway/upper)
 "jt" = (
-/obj/effect/paint/black,
+/obj/paint/black,
 /turf/simulated/wall/r_wall,
 /area/ship/farfleet/command/snz_hangar)
 "ju" = (
@@ -971,7 +971,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/ship/farfleet/barracks)
 "jx" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall/r_wall,
 /area/ship/farfleet/crew/kitchen)
 "jE" = (
@@ -1016,7 +1016,7 @@
 /turf/simulated/floor/tiled/steel_ridged,
 /area/ship/farfleet/maintenance/storage)
 "kg" = (
-/obj/effect/paint/ocean,
+/obj/paint/ocean,
 /turf/simulated/wall/r_wall,
 /area/ship/farfleet/crew/canteen)
 "kl" = (
@@ -1037,7 +1037,7 @@
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/barracks/armory)
 "kH" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall/r_wall,
 /area/ship/farfleet/barracks/armory)
 "kI" = (
@@ -1061,7 +1061,7 @@
 	icon_state = "32-8";
 	d1 = 32
 	},
-/obj/effect/catwalk_plated,
+/obj/catwalk_plated,
 /turf/simulated/open,
 /area/ship/farfleet/command/snz_hangar)
 "kJ" = (
@@ -1083,7 +1083,7 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/snz)
 "kL" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall/r_wall,
 /area/ship/farfleet/crew/freezer)
 "kM" = (
@@ -1147,7 +1147,7 @@
 /turf/simulated/floor/tiled/steel_grid,
 /area/ship/snz)
 "lA" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -1156,7 +1156,7 @@
 /turf/simulated/wall/r_wall,
 /area/ship/farfleet/crew/toilet)
 "lC" = (
-/obj/effect/paint/ocean,
+/obj/paint/ocean,
 /turf/simulated/wall/r_wall,
 /area/ship/farfleet/maintenance/anomaly)
 "lL" = (
@@ -1230,7 +1230,7 @@
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/barracks)
 "md" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall,
 /area/ship/farfleet/crew/kitchen)
 "mm" = (
@@ -1253,7 +1253,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/ship/farfleet/barracks)
 "mB" = (
-/obj/effect/paint/silver,
+/obj/paint/silver,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -1403,7 +1403,7 @@
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/barracks/armory)
 "ot" = (
-/obj/effect/paint/silver,
+/obj/paint/silver,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -1523,7 +1523,7 @@
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/crew/cryo)
 "pg" = (
-/obj/effect/catwalk_plated,
+/obj/catwalk_plated,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10;
 	pixel_y = 0
@@ -1607,7 +1607,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /obj/machinery/door/blast/regular/open{
 	dir = 4;
 	name = "SNZ Blast Shutters";
@@ -1726,7 +1726,7 @@
 /turf/simulated/floor/tiled/white,
 /area/ship/snz)
 "qG" = (
-/obj/effect/catwalk_plated,
+/obj/catwalk_plated,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -1862,7 +1862,7 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/snz)
 "rS" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -1879,7 +1879,7 @@
 /turf/simulated/floor/tiled/techmaint,
 /area/ship/farfleet/maintenance/anomaly)
 "sh" = (
-/obj/effect/catwalk_plated,
+/obj/catwalk_plated,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -1895,7 +1895,7 @@
 /turf/simulated/floor/plating,
 /area/ship/farfleet/command/snz_hangar)
 "st" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall/r_wall,
 /area/ship/farfleet/crew/brig)
 "sx" = (
@@ -1904,7 +1904,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/effect/paint/red,
+/obj/paint/red,
 /obj/machinery/atmospherics/pipe/simple/visible/fuel{
 	dir = 8
 	},
@@ -1978,7 +1978,7 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/snz)
 "ty" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -2007,7 +2007,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/obj/effect/paint/red,
+/obj/paint/red,
 /turf/simulated/wall/r_titanium,
 /area/ship/snz)
 "tN" = (
@@ -2057,7 +2057,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/ship/farfleet/barracks/armory)
 "uf" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall/r_wall,
 /area/ship/farfleet/crew/cryo)
 "ui" = (
@@ -2141,7 +2141,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/ship/farfleet/barracks/armory)
 "uW" = (
-/obj/effect/catwalk_plated,
+/obj/catwalk_plated,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -2165,7 +2165,7 @@
 /turf/simulated/floor/tiled/monotile,
 /area/ship/farfleet/command/snz_hangar)
 "vj" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -2372,7 +2372,7 @@
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hallway/upper)
 "wZ" = (
-/obj/effect/paint/silver,
+/obj/paint/silver,
 /turf/simulated/wall/r_wall,
 /area/ship/farfleet/crew/freezer)
 "xb" = (
@@ -2428,7 +2428,7 @@
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/crew/canteen)
 "xq" = (
-/obj/effect/catwalk_plated,
+/obj/catwalk_plated,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 8;
@@ -2478,7 +2478,7 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/snz)
 "xO" = (
-/obj/effect/catwalk_plated,
+/obj/catwalk_plated,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -2505,13 +2505,13 @@
 /turf/simulated/floor/tiled/steel_ridged,
 /area/ship/farfleet/maintenance/storage)
 "xR" = (
-/obj/effect/landmark/map_data{
+/obj/landmark/map_data{
 	height = 2
 	},
 /turf/space,
 /area/space)
 "xS" = (
-/obj/effect/catwalk_plated,
+/obj/catwalk_plated,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -2671,7 +2671,7 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/snz)
 "zR" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall/r_wall,
 /area/ship/farfleet/maintenance/anomaly)
 "zS" = (
@@ -2719,7 +2719,7 @@
 /turf/simulated/floor/plating,
 /area/ship/snz)
 "Ab" = (
-/obj/effect/paint/ocean,
+/obj/paint/ocean,
 /turf/simulated/wall/r_wall,
 /area/ship/farfleet/barracks)
 "Ac" = (
@@ -2828,7 +2828,7 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/snz)
 "AY" = (
-/obj/effect/paint/ocean,
+/obj/paint/ocean,
 /turf/simulated/wall/r_titanium,
 /area/ship/snz)
 "Ba" = (
@@ -2883,7 +2883,7 @@
 /turf/simulated/floor/tiled/techmaint,
 /area/ship/farfleet/maintenance/anomaly)
 "Bh" = (
-/obj/effect/paint/blue,
+/obj/paint/blue,
 /turf/simulated/wall/r_wall,
 /area/ship/farfleet/command/snz_hangar)
 "Bi" = (
@@ -2902,7 +2902,7 @@
 /turf/simulated/floor/tiled/white,
 /area/ship/snz)
 "Bt" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall,
 /area/ship/farfleet/crew/freezer)
 "BA" = (
@@ -2934,7 +2934,7 @@
 /turf/simulated/floor/carpet/purple,
 /area/ship/farfleet/crew/brig/css)
 "Cm" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -2956,7 +2956,7 @@
 /turf/simulated/floor/tiled/techmaint,
 /area/ship/farfleet/maintenance/anomaly)
 "CD" = (
-/obj/effect/paint/silver,
+/obj/paint/silver,
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
@@ -3009,7 +3009,7 @@
 /turf/simulated/floor/tiled/freezer,
 /area/ship/farfleet/crew/toilet)
 "CZ" = (
-/obj/effect/paint/ocean,
+/obj/paint/ocean,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -3190,7 +3190,7 @@
 /turf/simulated/floor/tiled/steel_grid,
 /area/ship/snz)
 "DT" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall/r_wall,
 /area/ship/farfleet/crew/brig/css)
 "DX" = (
@@ -3203,7 +3203,7 @@
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/crew/cryo)
 "DZ" = (
-/obj/effect/catwalk_plated,
+/obj/catwalk_plated,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -3222,7 +3222,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/obj/effect/paint/black,
+/obj/paint/black,
 /turf/simulated/wall/r_wall,
 /area/ship/farfleet/command/snz_hangar)
 "Eh" = (
@@ -3311,7 +3311,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/ship/farfleet/crew/brig)
 "ES" = (
-/obj/effect/catwalk_plated,
+/obj/catwalk_plated,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -3371,7 +3371,7 @@
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hydroponics)
 "FI" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall/r_wall,
 /area/ship/farfleet/crew/toilet)
 "FM" = (
@@ -3452,7 +3452,7 @@
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/barracks/armory)
 "GK" = (
-/obj/effect/paint/ocean,
+/obj/paint/ocean,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -3483,7 +3483,7 @@
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hydroponics)
 "Hj" = (
-/obj/effect/paint/ocean,
+/obj/paint/ocean,
 /turf/simulated/wall/r_wall,
 /area/ship/farfleet/crew/cryo)
 "Hq" = (
@@ -3521,7 +3521,7 @@
 	},
 /area/space)
 "HF" = (
-/obj/effect/paint/silver,
+/obj/paint/silver,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -3604,7 +3604,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/effect/paint/red,
+/obj/paint/red,
 /turf/simulated/wall/r_titanium,
 /area/ship/snz)
 "II" = (
@@ -3658,7 +3658,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/ship/farfleet/crew/brig)
 "Jt" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall/r_titanium,
 /area/ship/snz)
 "Jw" = (
@@ -3683,7 +3683,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/effect/paint/red,
+/obj/paint/red,
 /obj/structure/cable/green{
 	d1 = 1;
 	d2 = 4;
@@ -3692,7 +3692,7 @@
 /turf/simulated/wall/r_titanium,
 /area/ship/snz)
 "Kg" = (
-/obj/effect/catwalk_plated,
+/obj/catwalk_plated,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -3834,7 +3834,7 @@
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/crew/brig/css)
 "Ll" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall/r_wall,
 /area/ship/farfleet/barracks)
 "Lv" = (
@@ -3867,7 +3867,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 6
 	},
-/obj/effect/paint/ocean,
+/obj/paint/ocean,
 /turf/simulated/wall/r_titanium,
 /area/ship/snz)
 "LI" = (
@@ -3929,11 +3929,11 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall/r_titanium,
 /area/ship/snz)
 "ME" = (
-/obj/effect/catwalk_plated,
+/obj/catwalk_plated,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -4021,7 +4021,7 @@
 /turf/simulated/floor/tiled/freezer,
 /area/ship/farfleet/crew/freezer)
 "NG" = (
-/obj/effect/paint/silver,
+/obj/paint/silver,
 /turf/simulated/wall/r_wall,
 /area/ship/farfleet/barracks)
 "NN" = (
@@ -4030,7 +4030,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/effect/paint/red,
+/obj/paint/red,
 /obj/structure/cable/green{
 	d1 = 2;
 	d2 = 4;
@@ -4061,8 +4061,8 @@
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/barracks/armory)
 "NV" = (
-/obj/effect/paint/dark_gunmetal,
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall/r_wall,
 /area/ship/farfleet/crew/brig/css)
 "NW" = (
@@ -4133,7 +4133,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/ship/farfleet/barracks/armory)
 "OQ" = (
-/obj/effect/catwalk_plated,
+/obj/catwalk_plated,
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 4;
@@ -4161,7 +4161,7 @@
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/barracks/armory)
 "Pg" = (
-/obj/effect/paint/silver,
+/obj/paint/silver,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 8;
@@ -4343,7 +4343,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/effect/paint/black,
+/obj/paint/black,
 /turf/simulated/wall/r_wall,
 /area/ship/farfleet/command/snz_hangar)
 "RA" = (
@@ -4420,7 +4420,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/ship/farfleet/barracks)
 "RX" = (
-/obj/effect/catwalk_plated,
+/obj/catwalk_plated,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -4473,7 +4473,7 @@
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/crew/kitchen)
 "Su" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall/r_wall,
 /area/ship/farfleet/crew/hydroponics)
 "Sv" = (
@@ -4510,18 +4510,18 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/effect/paint/red,
+/obj/paint/red,
 /turf/simulated/wall/r_titanium,
 /area/ship/snz)
 "Sz" = (
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 8
 	},
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall/r_titanium,
 /area/ship/snz)
 "SD" = (
-/obj/effect/paint/ocean,
+/obj/paint/ocean,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -4530,7 +4530,7 @@
 /turf/simulated/wall/r_wall,
 /area/ship/farfleet/crew/cryo)
 "SV" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall/r_wall,
 /area/ship/farfleet/maintenance/storage)
 "Tb" = (
@@ -4554,7 +4554,7 @@
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/crew/canteen)
 "Tm" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -4591,7 +4591,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/effect/paint/red,
+/obj/paint/red,
 /turf/simulated/wall/r_titanium,
 /area/ship/snz)
 "TH" = (
@@ -4619,7 +4619,7 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/snz)
 "TS" = (
-/obj/effect/catwalk_plated,
+/obj/catwalk_plated,
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
@@ -4670,7 +4670,7 @@
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hydroponics)
 "Ud" = (
-/obj/effect/paint/silver,
+/obj/paint/silver,
 /turf/simulated/wall/r_wall,
 /area/ship/farfleet/maintenance/storage)
 "Ui" = (
@@ -4679,7 +4679,7 @@
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/crew/cryo)
 "Um" = (
-/obj/effect/catwalk_plated,
+/obj/catwalk_plated,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -4736,7 +4736,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/ship/farfleet/crew/brig)
 "UQ" = (
-/obj/effect/catwalk_plated,
+/obj/catwalk_plated,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -4798,7 +4798,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /obj/machinery/door/blast/regular/open{
 	dir = 4;
 	name = "SNZ Blast Shutters";
@@ -4808,7 +4808,7 @@
 /turf/simulated/floor/plating,
 /area/ship/snz)
 "Vi" = (
-/obj/effect/catwalk_plated,
+/obj/catwalk_plated,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -4836,7 +4836,7 @@
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/barracks/armory)
 "Vv" = (
-/obj/effect/catwalk_plated,
+/obj/catwalk_plated,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -4885,7 +4885,7 @@
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/crew/canteen)
 "VB" = (
-/obj/effect/catwalk_plated,
+/obj/catwalk_plated,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -4938,7 +4938,7 @@
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/crew/kitchen)
 "VP" = (
-/obj/effect/catwalk_plated,
+/obj/catwalk_plated,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -4960,7 +4960,7 @@
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hallway/upper)
 "VX" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -5008,7 +5008,7 @@
 /turf/simulated/floor/tiled/techmaint,
 /area/ship/farfleet/maintenance/anomaly)
 "WI" = (
-/obj/effect/paint/ocean,
+/obj/paint/ocean,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -5046,7 +5046,7 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/snz)
 "WY" = (
-/obj/effect/catwalk_plated,
+/obj/catwalk_plated,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
@@ -5143,7 +5143,7 @@
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/crew/canteen)
 "Ye" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall/r_wall,
 /area/ship/farfleet/crew/canteen)
 "Yi" = (
@@ -5199,7 +5199,7 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/farfleet/command/hangar_canisters)
 "Yy" = (
-/obj/effect/paint/ocean,
+/obj/paint/ocean,
 /turf/simulated/wall/r_wall,
 /area/ship/farfleet/maintenance/storage)
 "YC" = (
@@ -5243,7 +5243,7 @@
 	},
 /area/space)
 "Zh" = (
-/obj/effect/paint/red,
+/obj/paint/red,
 /turf/simulated/wall/r_titanium,
 /area/ship/snz)
 "Zj" = (
@@ -5290,7 +5290,7 @@
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hallway/upper)
 "Zw" = (
-/obj/effect/catwalk_plated,
+/obj/catwalk_plated,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;

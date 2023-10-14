@@ -18,7 +18,7 @@
 /turf/unsimulated/floor/plating,
 /area/centcom)
 "aas" = (
-/obj/effect/paint/hull,
+/obj/paint/hull,
 /turf/simulated/wall/r_titanium,
 /area/shuttle/administration/centcom)
 "aaw" = (
@@ -429,7 +429,7 @@
 /turf/unsimulated/floor/techfloor,
 /area/centcom/specops)
 "acx" = (
-/obj/effect/paint/red,
+/obj/paint/red,
 /turf/simulated/wall/r_titanium,
 /area/shuttle/administration/centcom)
 "acy" = (
@@ -1017,7 +1017,7 @@
 /area/shuttle/administration/centcom)
 "agE" = (
 /obj/wallframe_spawn/reinforced/titanium,
-/obj/effect/paint/hull,
+/obj/paint/hull,
 /turf/simulated/floor/plating,
 /area/shuttle/administration/centcom)
 "agN" = (
@@ -1515,7 +1515,7 @@
 /area/shuttle/administration/centcom)
 "aji" = (
 /obj/machinery/status_display,
-/obj/effect/paint/hull,
+/obj/paint/hull,
 /turf/simulated/wall/r_titanium,
 /area/shuttle/administration/centcom)
 "ajj" = (
@@ -2185,7 +2185,7 @@
 /area/centcom/specops)
 "aoT" = (
 /obj/machinery/vending/medical,
-/obj/effect/paint/hull,
+/obj/paint/hull,
 /turf/simulated/wall/r_titanium,
 /area/shuttle/administration/centcom)
 "aoU" = (
@@ -3206,7 +3206,7 @@
 /obj/structure/bed/chair{
 	dir = 4
 	},
-/obj/effect/landmark{
+/obj/landmark{
 	name = "Commando"
 	},
 /turf/unsimulated/floor/techfloor{
@@ -3239,7 +3239,7 @@
 /obj/structure/bed/chair{
 	dir = 8
 	},
-/obj/effect/landmark{
+/obj/landmark{
 	name = "Commando"
 	},
 /turf/unsimulated/floor/techfloor{
@@ -3906,7 +3906,7 @@
 /area/tdome/tdomeobserve)
 "axr" = (
 /obj/structure/bed/chair,
-/obj/effect/landmark{
+/obj/landmark{
 	name = "tdomeobserve"
 	},
 /obj/floor_decal/corner/red/diagonal,
@@ -4367,7 +4367,7 @@
 	},
 /area/tdome/tdome2)
 "azp" = (
-/obj/effect/landmark{
+/obj/landmark{
 	name = "tdome1"
 	},
 /turf/unsimulated/floor{
@@ -4420,7 +4420,7 @@
 	},
 /area/tdome)
 "azy" = (
-/obj/effect/landmark{
+/obj/landmark{
 	name = "tdome1"
 	},
 /turf/unsimulated/floor{
@@ -4441,7 +4441,7 @@
 	},
 /area/tdome/tdome1)
 "azF" = (
-/obj/effect/landmark{
+/obj/landmark{
 	name = "tdome1"
 	},
 /obj/machinery/recharger,
@@ -4601,7 +4601,7 @@
 	},
 /area/tdome)
 "azY" = (
-/obj/effect/landmark{
+/obj/landmark{
 	name = "tdome1"
 	},
 /obj/machinery/recharger,
@@ -4762,7 +4762,7 @@
 /obj/structure/bed/chair/comfy/brown{
 	dir = 1
 	},
-/obj/effect/landmark{
+/obj/landmark{
 	name = "tdomeadmin"
 	},
 /turf/unsimulated/floor{
@@ -4837,7 +4837,7 @@
 	},
 /area/tdome/tdomeobserve)
 "aDS" = (
-/obj/effect/landmark{
+/obj/landmark{
 	name = "ActorSpawn"
 	},
 /turf/unsimulated/floor/plating,
@@ -5882,7 +5882,7 @@
 /area/holodeck/source_picnicarea)
 "aWW" = (
 /obj/structure/table/rack/holorack,
-/obj/effect/landmark/costume/chameleon,
+/obj/landmark/costume/chameleon,
 /turf/simulated/floor/holofloor/tiled/dark,
 /area/holodeck/source_theatre)
 "aWX" = (
@@ -6000,7 +6000,7 @@
 /turf/simulated/floor/holofloor/wood,
 /area/holodeck/source_courtroom)
 "aXF" = (
-/obj/effect/landmark{
+/obj/landmark{
 	name = "Holocarp Spawn"
 	},
 /turf/simulated/floor/holofloor/reinforced,
@@ -6829,7 +6829,7 @@
 /turf/simulated/floor/holofloor/carpet,
 /area/holodeck/source_cafe)
 "bdH" = (
-/obj/effect/landmark{
+/obj/landmark{
 	name = "Holocarp Spawn Random"
 	},
 /turf/simulated/floor/holofloor/space,
@@ -8070,8 +8070,8 @@
 	dir = 1;
 	icon_state = "propulsion_r"
 	},
-/obj/effect/paint/red,
-/obj/effect/paint_stripe/red,
+/obj/paint/red,
+/obj/paint_stripe/red,
 /turf/simulated/wall/r_titanium,
 /area/shuttle/transport1/centcom)
 "cjY" = (
@@ -10147,7 +10147,7 @@
 "gNi" = (
 /obj/structure/bed/padded,
 /obj/item/bedsheet/red,
-/obj/effect/landmark/corpse/clown,
+/obj/landmark/corpse/clown,
 /obj/floor_decal/borderfloorblack{
 	dir = 6
 	},
@@ -10536,7 +10536,7 @@
 /area/centcom/holding)
 "hKi" = (
 /obj/wallframe_spawn/reinforced/hull,
-/obj/effect/paint/black,
+/obj/paint/black,
 /turf/unsimulated/floor/plating,
 /area/centcom/specops)
 "hNt" = (
@@ -11587,7 +11587,7 @@
 	},
 /area/centcom/living)
 "jTb" = (
-/obj/effect/landmark{
+/obj/landmark{
 	name = "tdome1"
 	},
 /obj/machinery/button/blast_door{
@@ -12450,7 +12450,7 @@
 /area/centcom)
 "lyL" = (
 /obj/wallframe_spawn/reinforced/hull,
-/obj/effect/paint/black,
+/obj/paint/black,
 /obj/machinery/door/blast/regular{
 	dir = 8;
 	id_tag = "SPECOPSOFFICER";
@@ -12564,7 +12564,7 @@
 "lLo" = (
 /obj/structure/bed/padded,
 /obj/item/bedsheet/red,
-/obj/effect/landmark/corpse/pirate,
+/obj/landmark/corpse/pirate,
 /obj/floor_decal/borderfloorblack{
 	dir = 5
 	},
@@ -13733,7 +13733,7 @@
 /area/centcom/specops)
 "oLE" = (
 /obj/wallframe_spawn/reinforced/hull,
-/obj/effect/paint/black,
+/obj/paint/black,
 /obj/machinery/door/blast/regular{
 	id_tag = "SPECOPSOFFICER";
 	name = "Spec Ops Officer Office"
@@ -14787,7 +14787,7 @@
 /area/centcom)
 "qGh" = (
 /obj/wallframe_spawn/reinforced/hull,
-/obj/effect/paint/black,
+/obj/paint/black,
 /obj/machinery/door/blast/regular{
 	id_tag = "SPECOPSOFFICER";
 	name = "Spec Ops Officer Office"
@@ -14967,8 +14967,8 @@
 	dir = 1;
 	icon_state = "propulsion_l"
 	},
-/obj/effect/paint/red,
-/obj/effect/paint_stripe/red,
+/obj/paint/red,
+/obj/paint_stripe/red,
 /turf/simulated/wall/r_titanium,
 /area/shuttle/transport1/centcom)
 "rdA" = (
@@ -15453,7 +15453,7 @@
 /obj/structure/bed/chair{
 	dir = 4
 	},
-/obj/effect/landmark{
+/obj/landmark{
 	name = "Commando"
 	},
 /obj/decal/cleanable/filth,
@@ -15558,7 +15558,7 @@
 	},
 /area/centcom/creed)
 "slq" = (
-/obj/effect/landmark{
+/obj/landmark{
 	name = "tdomeadmin"
 	},
 /turf/unsimulated/floor{
@@ -15631,7 +15631,7 @@
 	},
 /area/centcom)
 "ssu" = (
-/obj/effect/paint/brown,
+/obj/paint/brown,
 /turf/simulated/wall/titanium,
 /area/supply/dock)
 "ssC" = (
@@ -15729,8 +15729,8 @@
 /obj/structure/shuttle/engine/propulsion{
 	dir = 1
 	},
-/obj/effect/paint/red,
-/obj/effect/paint_stripe/red,
+/obj/paint/red,
+/obj/paint_stripe/red,
 /turf/simulated/wall/r_titanium,
 /area/shuttle/transport1/centcom)
 "sHq" = (
@@ -16897,7 +16897,7 @@
 /area/centcom/holding)
 "uFx" = (
 /obj/wallframe_spawn/reinforced/hull,
-/obj/effect/paint/black,
+/obj/paint/black,
 /obj/machinery/door/blast/regular{
 	density = 0;
 	dir = 8;
@@ -17457,7 +17457,7 @@
 	},
 /area/centcom)
 "weL" = (
-/obj/effect/landmark{
+/obj/landmark{
 	name = "tdome1"
 	},
 /obj/machinery/button/blast_door{
@@ -17838,7 +17838,7 @@
 /obj/structure/bed/chair{
 	dir = 8
 	},
-/obj/effect/landmark{
+/obj/landmark{
 	name = "Commando"
 	},
 /obj/decal/cleanable/filth,
@@ -18181,7 +18181,7 @@
 	},
 /area/centcom/specops)
 "xVf" = (
-/obj/effect/paint/brown,
+/obj/paint/brown,
 /turf/simulated/wall/r_titanium,
 /area/supply/dock)
 "xWN" = (

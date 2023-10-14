@@ -11,11 +11,11 @@
 /turf/space,
 /area/space)
 "af" = (
-/obj/effect/paint/meatstation/lab,
+/obj/paint/meatstation/lab,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/crew/cargo)
 "ag" = (
-/obj/effect/paint/meatstation/lab,
+/obj/paint/meatstation/lab,
 /obj/structure/sign/fifthfleet,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/dock)
@@ -33,15 +33,15 @@
 /turf/simulated/floor,
 /area/ship/patrol/dock)
 "aj" = (
-/obj/effect/paint/meatstation/lab,
+/obj/paint/meatstation/lab,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/maintenance/atmos)
 "ak" = (
-/obj/effect/paint/meatstation/lab,
+/obj/paint/meatstation/lab,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/maintenance/engine/starboard)
 "al" = (
-/obj/effect/paint/meatstation/lab,
+/obj/paint/meatstation/lab,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/command/eva)
 "am" = (
@@ -74,7 +74,7 @@
 	},
 /obj/decal/cleanable/dirt,
 /obj/wallframe_spawn/reinforced,
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/floor,
 /area/ship/patrol/dock)
 "ap" = (
@@ -146,7 +146,7 @@
 	},
 /obj/decal/cleanable/dirt,
 /obj/wallframe_spawn/reinforced,
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/floor,
 /area/ship/patrol/dock)
 "au" = (
@@ -168,7 +168,7 @@
 /obj/machinery/atmospherics/pipe/simple/visible/yellow{
 	dir = 6
 	},
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/maintenance/atmos)
 "aw" = (
@@ -227,7 +227,7 @@
 /obj/machinery/atmospherics/pipe/simple/visible/yellow{
 	dir = 10
 	},
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/maintenance/atmos)
 "aB" = (
@@ -478,7 +478,7 @@
 /obj/machinery/atmospherics/pipe/manifold/visible/yellow{
 	dir = 4
 	},
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/maintenance/atmos)
 "aY" = (
@@ -497,7 +497,7 @@
 /area/ship/patrol/maintenance/atmos)
 "ba" = (
 /obj/structure/sign/warning/compressed_gas,
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/maintenance/atmos)
 "bb" = (
@@ -513,7 +513,7 @@
 /turf/simulated/floor/plating,
 /area/ship/patrol/maintenance/atmos)
 "bd" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /obj/machinery/atmospherics/pipe/simple/visible/black{
 	dir = 4
 	},
@@ -569,7 +569,7 @@
 /turf/simulated/floor/tiled/monotile,
 /area/ship/patrol/crew/cargo)
 "bj" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall,
 /area/ship/patrol/dock)
 "bk" = (
@@ -687,7 +687,7 @@
 /obj/machinery/atmospherics/pipe/simple/visible/yellow{
 	dir = 5
 	},
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall,
 /area/ship/patrol/maintenance/atmos)
 "bv" = (
@@ -821,7 +821,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/effect/paint/meatstation/lab,
+/obj/paint/meatstation/lab,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/maintenance/engine/port)
 "bL" = (
@@ -850,7 +850,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 4
 	},
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall,
 /area/ship/patrol/dock)
 "bP" = (
@@ -947,7 +947,7 @@
 	pixel_y = 32
 	},
 /obj/wallframe_spawn/reinforced,
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/floor/plating,
 /area/ship/patrol/maintenance/atmos)
 "bY" = (
@@ -1046,7 +1046,7 @@
 /obj/machinery/atmospherics/unary/engine{
 	dir = 8
 	},
-/obj/effect/paint/red,
+/obj/paint/red,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/maintenance/engine/starboard)
 "cj" = (
@@ -1767,14 +1767,14 @@
 /area/ship/patrol/maintenance/atmos)
 "dn" = (
 /obj/machinery/atmospherics/pipe/manifold/visible/yellow,
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/maintenance/atmos)
 "do" = (
 /obj/machinery/atmospherics/pipe/simple/visible/yellow{
 	dir = 9
 	},
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall,
 /area/ship/patrol/maintenance/atmos)
 "dp" = (
@@ -1808,7 +1808,7 @@
 /turf/simulated/floor/plating,
 /area/ship/patrol/maintenance/atmos)
 "dt" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall,
 /area/ship/patrol/maintenance/atmos)
 "du" = (
@@ -1853,7 +1853,7 @@
 /turf/simulated/floor/plating,
 /area/ship/patrol/maintenance/engine/starboard)
 "dz" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall,
 /area/ship/patrol/crew/cargo)
 "dA" = (
@@ -1990,7 +1990,7 @@
 /turf/simulated/floor/plating,
 /area/ship/patrol/maintenance/engine/starboard)
 "dO" = (
-/obj/effect/paint/red,
+/obj/paint/red,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/command/hangar)
 "dQ" = (
@@ -2080,7 +2080,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/ship/patrol/command/bridge)
@@ -2288,11 +2288,11 @@
 /turf/simulated/floor/plating,
 /area/ship/patrol/maintenance/lower)
 "et" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/crew/hallway/lower/starboard)
 "eu" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall,
 /area/ship/patrol/crew/hallway/lower/starboard)
 "ev" = (
@@ -2331,11 +2331,11 @@
 /turf/simulated/floor/tiled,
 /area/ship/patrol/crew/hallway/lower/starboard)
 "ex" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/command/bridge)
 "ey" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall,
 /area/ship/patrol/command/bridge)
 "ez" = (
@@ -2497,7 +2497,7 @@
 	name = "Bridge Lockdown blast doors"
 	},
 /obj/wallframe_spawn/reinforced,
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /obj/machinery/door/blast/regular/open{
 	dir = 4;
 	id_tag = "bridgep_lock";
@@ -2616,7 +2616,7 @@
 /turf/simulated/floor/tiled,
 /area/ship/patrol/maintenance/lower/starboard)
 "fa" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall,
 /area/ship/patrol/command/hangar)
 "fb" = (
@@ -2748,7 +2748,7 @@
 	name = "Bridge Lockdown blast doors"
 	},
 /obj/wallframe_spawn/reinforced,
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/floor/plating,
 /area/ship/patrol/command/bridge)
 "fp" = (
@@ -2927,7 +2927,7 @@
 /area/ship/patrol/maintenance/lower/starboard)
 "fz" = (
 /obj/wallframe_spawn/reinforced,
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/floor,
 /area/ship/patrol/command/hangar)
 "fA" = (
@@ -2960,7 +2960,7 @@
 /turf/simulated/floor/plating,
 /area/ship/patrol/command/hangar)
 "fE" = (
-/obj/effect/paint/black,
+/obj/paint/black,
 /turf/simulated/wall/r_titanium,
 /area/ship/reaper)
 "fF" = (
@@ -3065,7 +3065,7 @@
 	},
 /obj/wallframe_spawn/reinforced,
 /obj/structure/cable,
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/floor/plating,
 /area/ship/patrol/command/bridge)
 "fT" = (
@@ -3201,8 +3201,8 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/patrol/command/cannon)
 "gh" = (
-/obj/effect/paint/meatstation/lab,
-/obj/effect/paint/meatstation/lab,
+/obj/paint/meatstation/lab,
+/obj/paint/meatstation/lab,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/command/cannon)
 "gi" = (
@@ -3313,7 +3313,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/ship/patrol/command/bridge)
 "gs" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall,
 /area/ship/patrol/maintenance/lower/starboard)
 "gt" = (
@@ -3333,7 +3333,7 @@
 /area/ship/patrol/maintenance/lower/starboard)
 "gu" = (
 /obj/wallframe_spawn/reinforced,
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/floor,
 /area/ship/patrol/maintenance/lower/starboard)
 "gv" = (
@@ -3479,7 +3479,7 @@
 	name = "Bridge Lockdown blast doors"
 	},
 /obj/wallframe_spawn/reinforced,
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/floor/plating,
 /area/ship/patrol/command/bridge)
 "gJ" = (
@@ -3673,7 +3673,7 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/patrol/command/cannon)
 "hd" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 8;
@@ -3864,7 +3864,7 @@
 /area/ship/patrol/command/hangar)
 "hD" = (
 /obj/machinery/door/firedoor,
-/obj/effect/paint/black,
+/obj/paint/black,
 /obj/wallframe_spawn/reinforced/titanium,
 /obj/machinery/door/blast/regular/open{
 	dir = 4;
@@ -3952,7 +3952,7 @@
 	},
 /area/ship/patrol/command/cannon)
 "hM" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/command/cannon)
 "hN" = (
@@ -4650,8 +4650,8 @@
 /turf/simulated/floor/plating,
 /area/ship/reaper)
 "iD" = (
-/obj/effect/paint/meatstation/lab,
-/obj/effect/paint/meatstation/lab,
+/obj/paint/meatstation/lab,
+/obj/paint/meatstation/lab,
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
@@ -4676,7 +4676,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/patrol/command/cannon)
 "iG" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall,
 /area/ship/patrol/medbay)
 "iH" = (
@@ -4700,17 +4700,17 @@
 /turf/simulated/floor/tiled/white/monotile,
 /area/ship/patrol/medbay)
 "iJ" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /obj/wallframe_spawn/reinforced,
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/ship/patrol/medbay)
 "iK" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall,
 /area/ship/patrol/crew/hallway/lower/fore)
 "iL" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/crew/hallway/lower/fore)
 "iM" = (
@@ -4766,21 +4766,21 @@
 /turf/simulated/floor/tiled,
 /area/ship/patrol/crew/hallway/lower)
 "iQ" = (
-/obj/effect/paint/black,
+/obj/paint/black,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/barracks)
 "iR" = (
-/obj/effect/paint/black,
+/obj/paint/black,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/engineering/equipment)
 "iS" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall,
 /area/ship/patrol/engineering/equipment)
 "iT" = (
 /obj/machinery/door/firedoor,
 /obj/wallframe_spawn/reinforced,
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/floor/plating,
 /area/ship/patrol/engineering/equipment)
 "iU" = (
@@ -4799,7 +4799,7 @@
 /turf/simulated/floor/tiled/monotile,
 /area/ship/patrol/engineering/equipment)
 "iV" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/engineering/shield)
 "iW" = (
@@ -4990,7 +4990,7 @@
 /turf/simulated/floor/plating,
 /area/ship/patrol/command/hangar)
 "jk" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/medbay)
 "jl" = (
@@ -5034,7 +5034,7 @@
 /turf/simulated/floor/tiled/white,
 /area/ship/patrol/medbay)
 "js" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/command/equipment)
 "jt" = (
@@ -5043,7 +5043,7 @@
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/patrol/command/equipment)
 "ju" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/crew/hallway/lower/port)
 "jv" = (
@@ -5254,7 +5254,7 @@
 /area/ship/reaper)
 "jN" = (
 /obj/structure/sign/solgov,
-/obj/effect/paint/red,
+/obj/paint/red,
 /turf/simulated/wall/r_titanium,
 /area/ship/reaper)
 "jO" = (
@@ -5645,7 +5645,7 @@
 	icon_state = "0-8"
 	},
 /obj/wallframe_spawn/reinforced,
-/obj/effect/paint/black,
+/obj/paint/black,
 /turf/simulated/floor/plating,
 /area/ship/patrol/barracks)
 "kz" = (
@@ -5712,7 +5712,7 @@
 /turf/simulated/floor/tiled,
 /area/ship/patrol/engineering/equipment)
 "kF" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/engineering/storage)
 "kG" = (
@@ -6243,7 +6243,7 @@
 "lE" = (
 /obj/machinery/door/firedoor,
 /obj/wallframe_spawn/reinforced,
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/floor/plating,
 /area/ship/patrol/engineering/storage)
 "lF" = (
@@ -6473,7 +6473,7 @@
 /turf/simulated/floor/tiled/monotile,
 /area/ship/patrol/engineering/equipment)
 "ma" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall,
 /area/ship/patrol/engineering/storage)
 "mb" = (
@@ -6487,7 +6487,7 @@
 /turf/simulated/floor/tiled,
 /area/ship/patrol/engineering/storage)
 "md" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/engineering/fussion/control)
 "me" = (
@@ -6545,7 +6545,7 @@
 	},
 /area/ship/patrol/engineering/fussion/control)
 "mj" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/maintenance/engine/port)
 "mk" = (
@@ -6711,7 +6711,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/ship/patrol/barracks)
 "mB" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/engineering/hallway)
 "mC" = (
@@ -6751,7 +6751,7 @@
 /turf/simulated/floor/tiled,
 /area/ship/patrol/engineering/hallway)
 "mE" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall,
 /area/ship/patrol/engineering/hallway)
 "mF" = (
@@ -6885,7 +6885,7 @@
 /area/ship/patrol/medbay)
 "mP" = (
 /obj/machinery/door/firedoor,
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /obj/wallframe_spawn/reinforced/polarized/no_grille{
 	id = "surgery_windows_patrol"
 	},
@@ -6903,7 +6903,7 @@
 /turf/simulated/floor/tiled/white,
 /area/ship/patrol/medbay)
 "mR" = (
-/obj/effect/paint/black,
+/obj/paint/black,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/barracks/armory)
 "mS" = (
@@ -6912,7 +6912,7 @@
 	icon_state = "0-4"
 	},
 /obj/wallframe_spawn/reinforced,
-/obj/effect/paint/black,
+/obj/paint/black,
 /turf/simulated/floor,
 /area/ship/patrol/barracks)
 "mT" = (
@@ -6928,7 +6928,7 @@
 	},
 /obj/structure/cable,
 /obj/wallframe_spawn/reinforced,
-/obj/effect/paint/black,
+/obj/paint/black,
 /turf/simulated/floor,
 /area/ship/patrol/barracks)
 "mU" = (
@@ -6938,7 +6938,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 1
 	},
-/obj/effect/paint/black,
+/obj/paint/black,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/barracks)
 "mV" = (
@@ -7146,7 +7146,7 @@
 /obj/machinery/atmospherics/unary/engine{
 	dir = 8
 	},
-/obj/effect/paint/red,
+/obj/paint/red,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/maintenance/engine/port)
 "nq" = (
@@ -7227,7 +7227,7 @@
 	icon_state = "0-2"
 	},
 /obj/wallframe_spawn/reinforced,
-/obj/effect/paint/black,
+/obj/paint/black,
 /turf/simulated/floor/plating,
 /area/ship/patrol/barracks/armory)
 "ny" = (
@@ -7293,7 +7293,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/ship/patrol/barracks)
 "nF" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 2;
@@ -7639,7 +7639,7 @@
 /turf/simulated/floor/tiled/white,
 /area/ship/patrol/medbay)
 "oi" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
@@ -7655,7 +7655,7 @@
 	icon_state = "1-2"
 	},
 /obj/wallframe_spawn/reinforced,
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/floor/plating,
 /area/ship/patrol/engineering/fussion/control)
 "ok" = (
@@ -7669,7 +7669,7 @@
 /turf/simulated/floor/tiled/monotile,
 /area/ship/patrol/engineering/fussion/control)
 "ol" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall,
 /area/ship/patrol/engineering/fussion/control)
 "om" = (
@@ -8012,7 +8012,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/maintenance/engine/port)
 "oS" = (
@@ -8044,7 +8044,7 @@
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
 /obj/wallframe_spawn/reinforced,
-/obj/effect/paint/black,
+/obj/paint/black,
 /turf/simulated/floor/plating,
 /area/ship/patrol/barracks/armory)
 "oW" = (
@@ -8135,7 +8135,7 @@
 	id_tag = "fusion_observation_patrol"
 	},
 /obj/effect/wingrille_spawn/reinforced_phoron/full,
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
@@ -8352,7 +8352,7 @@
 	id_tag = "fusion_observation_patrol"
 	},
 /obj/effect/wingrille_spawn/reinforced_phoron/full,
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/floor,
 /area/ship/patrol/engineering/fussion/control)
 "pz" = (
@@ -8441,7 +8441,7 @@
 	},
 /area/ship/patrol/maintenance/engine/port)
 "pJ" = (
-/obj/effect/paint/meatstation/lab,
+/obj/paint/meatstation/lab,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -8474,7 +8474,7 @@
 /turf/space,
 /area/space)
 "qt" = (
-/obj/effect/paint/meatstation/lab,
+/obj/paint/meatstation/lab,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -8483,7 +8483,7 @@
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/command/cannon)
 "qG" = (
-/obj/effect/paint/meatstation/lab,
+/obj/paint/meatstation/lab,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/command/cannon)
 "rs" = (
@@ -8552,7 +8552,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/patrol/command/cannon)
 "rQ" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -8561,7 +8561,7 @@
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/medbay)
 "rZ" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/engineering/equipment)
 "sJ" = (
@@ -8569,7 +8569,7 @@
 /turf/simulated/floor/plating,
 /area/ship/patrol/command/hangar)
 "sW" = (
-/obj/effect/paint/meatstation/lab,
+/obj/paint/meatstation/lab,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 8;
@@ -8583,15 +8583,15 @@
 /turf/space,
 /area/space)
 "tb" = (
-/obj/effect/paint/meatstation/lab,
+/obj/paint/meatstation/lab,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/engineering/fussion/control)
 "tn" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/command/eva)
 "tu" = (
-/obj/effect/paint/meatstation/lab,
+/obj/paint/meatstation/lab,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/command/hangar)
 "ty" = (
@@ -8605,11 +8605,11 @@
 /turf/space,
 /area/space)
 "tR" = (
-/obj/effect/paint/meatstation/lab,
+/obj/paint/meatstation/lab,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/maintenance/engine/port)
 "tS" = (
-/obj/effect/paint/meatstation/lab,
+/obj/paint/meatstation/lab,
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 4;
@@ -8638,7 +8638,7 @@
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/patrol/barracks)
 "uB" = (
-/obj/effect/paint/meatstation/lab,
+/obj/paint/meatstation/lab,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -8681,7 +8681,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/patrol/command/cannon)
 "wa" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/crew/cargo)
 "wf" = (
@@ -8715,7 +8715,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/patrol/command/cannon)
 "wN" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/dock)
 "wO" = (
@@ -8747,7 +8747,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/ship/patrol/command/bridge)
 "ya" = (
-/obj/effect/paint/meatstation/lab,
+/obj/paint/meatstation/lab,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
@@ -8772,7 +8772,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/patrol/command/cannon)
 "zp" = (
-/obj/effect/paint/meatstation/lab,
+/obj/paint/meatstation/lab,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -8787,7 +8787,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/ship/patrol/command/bridge)
 "zJ" = (
-/obj/effect/paint/meatstation/lab,
+/obj/paint/meatstation/lab,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -8796,7 +8796,7 @@
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/maintenance/atmos)
 "zW" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -8805,7 +8805,7 @@
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/command/hangar)
 "Al" = (
-/obj/effect/paint/black,
+/obj/paint/black,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -8814,7 +8814,7 @@
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/barracks/armory)
 "AU" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/maintenance/engine/starboard)
 "Bl" = (
@@ -8854,7 +8854,7 @@
 /turf/space,
 /area/space)
 "Cp" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -8892,7 +8892,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/patrol/command/cannon)
 "CI" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
@@ -8915,7 +8915,7 @@
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/patrol/barracks)
 "CW" = (
-/obj/effect/paint/red,
+/obj/paint/red,
 /obj/structure/sign/warning/hot_exhaust,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/maintenance/engine/port)
@@ -8940,7 +8940,7 @@
 	},
 /area/ship/patrol/command/cannon)
 "DU" = (
-/obj/effect/paint/meatstation/lab,
+/obj/paint/meatstation/lab,
 /obj/structure/sign/solgov,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/dock)
@@ -8973,7 +8973,7 @@
 /turf/simulated/floor/plating,
 /area/ship/patrol/engineering/fussion/control)
 "Ex" = (
-/obj/effect/paint/meatstation/lab,
+/obj/paint/meatstation/lab,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/barracks)
 "Fo" = (
@@ -8983,7 +8983,7 @@
 /turf/simulated/wall/ocp_wall,
 /area/ship/patrol/engineering/fussion/control)
 "FA" = (
-/obj/effect/paint/meatstation/lab,
+/obj/paint/meatstation/lab,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -9002,7 +9002,7 @@
 /turf/space,
 /area/space)
 "FP" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -9011,12 +9011,12 @@
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/command/cannon)
 "FU" = (
-/obj/effect/paint/black,
+/obj/paint/black,
 /obj/structure/sign/fifthfleet/small,
 /turf/simulated/wall/r_titanium,
 /area/ship/reaper)
 "FW" = (
-/obj/effect/paint/meatstation/lab,
+/obj/paint/meatstation/lab,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/medbay)
 "Gb" = (
@@ -9035,7 +9035,7 @@
 /turf/simulated/floor/plating,
 /area/ship/patrol/maintenance/atmos)
 "GD" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -9103,11 +9103,11 @@
 /turf/simulated/floor/tiled,
 /area/ship/patrol/crew/cargo)
 "ID" = (
-/obj/effect/paint/red,
+/obj/paint/red,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/maintenance/engine/starboard)
 "IG" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
@@ -9116,7 +9116,7 @@
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/command/cannon)
 "IW" = (
-/obj/effect/paint/meatstation/lab,
+/obj/paint/meatstation/lab,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -9137,7 +9137,7 @@
 	name = "Bridge Lockdown blast doors"
 	},
 /obj/wallframe_spawn/reinforced,
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/floor/plating,
 /area/ship/patrol/command/bridge)
 "JF" = (
@@ -9149,7 +9149,7 @@
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/patrol/barracks)
 "JU" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -9180,7 +9180,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/patrol/command/cannon)
 "Kv" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
@@ -9189,7 +9189,7 @@
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/command/eva)
 "KF" = (
-/obj/effect/paint/meatstation/lab,
+/obj/paint/meatstation/lab,
 /obj/machinery/atmospherics/pipe/simple/visible/black{
 	dir = 6
 	},
@@ -9201,7 +9201,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/ship/patrol/command/equipment)
 "KP" = (
-/obj/effect/paint/meatstation/lab,
+/obj/paint/meatstation/lab,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -9223,11 +9223,11 @@
 /turf/simulated/floor/tiled/dark,
 /area/ship/patrol/command/bridge)
 "Lm" = (
-/obj/effect/paint/red,
+/obj/paint/red,
 /turf/simulated/wall/r_titanium,
 /area/ship/reaper)
 "Lt" = (
-/obj/effect/paint/red,
+/obj/paint/red,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/maintenance/engine/port)
 "Lv" = (
@@ -9255,7 +9255,7 @@
 /turf/simulated/floor/plating,
 /area/ship/patrol/engineering/fussion/control)
 "LP" = (
-/obj/effect/paint/meatstation/lab,
+/obj/paint/meatstation/lab,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -9306,7 +9306,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/patrol/command/cannon)
 "MR" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /obj/machinery/atmospherics/binary/pump/on{
 	dir = 1;
 	target_pressure = 15000;
@@ -9315,7 +9315,7 @@
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/maintenance/engine/starboard)
 "Ne" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/command/hangar)
 "No" = (
@@ -9323,7 +9323,7 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/reaper)
 "Nt" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /obj/structure/cable/yellow{
 	d1 = 2;
 	d2 = 8;
@@ -9350,7 +9350,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/patrol/command/cannon)
 "Op" = (
-/obj/effect/paint/meatstation/lab,
+/obj/paint/meatstation/lab,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -9359,7 +9359,7 @@
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/medbay)
 "Ow" = (
-/obj/effect/paint/black,
+/obj/paint/black,
 /turf/simulated/wall/titanium,
 /area/ship/reaper)
 "OK" = (
@@ -9378,7 +9378,7 @@
 /turf/simulated/floor/plating,
 /area/ship/reaper)
 "Pn" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 2;
@@ -9387,7 +9387,7 @@
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/engineering/fussion/control)
 "PD" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -9430,7 +9430,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/patrol/command/cannon)
 "QH" = (
-/obj/effect/paint/red,
+/obj/paint/red,
 /obj/structure/sign/warning/hot_exhaust,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/maintenance/engine/starboard)
@@ -9457,7 +9457,7 @@
 	id_tag = "fusion_observation_patrol"
 	},
 /obj/effect/wingrille_spawn/reinforced_phoron/full,
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /obj/structure/cable/green{
 	d1 = 4;
 	d2 = 8;
@@ -9512,11 +9512,11 @@
 /turf/simulated/floor/plating,
 /area/ship/reaper)
 "Sl" = (
-/obj/effect/paint/meatstation/lab,
+/obj/paint/meatstation/lab,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/barracks/armory)
 "SC" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -9556,12 +9556,12 @@
 	},
 /area/ship/patrol/command/cannon)
 "TX" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /obj/structure/sign/fifthfleet/small,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/command/bridge)
 "Uk" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/maintenance/atmos)
 "UL" = (
@@ -9576,7 +9576,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/ship/patrol/command/bridge)
 "Vb" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -9634,16 +9634,16 @@
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/patrol/crew/hallway/lower/port)
 "VB" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /obj/structure/sign/fifthfleet/small,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/dock)
 "VH" = (
-/obj/effect/paint/meatstation/lab,
+/obj/paint/meatstation/lab,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/dock)
 "VI" = (
-/obj/effect/paint/meatstation/lab,
+/obj/paint/meatstation/lab,
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
@@ -9669,7 +9669,7 @@
 /turf/simulated/floor/tiled,
 /area/ship/patrol/crew/hallway/lower/aft)
 "Wn" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -9678,7 +9678,7 @@
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/maintenance/atmos)
 "Wq" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -9687,7 +9687,7 @@
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/command/hangar)
 "Ww" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /obj/wallframe_spawn/reinforced,
 /obj/machinery/door/blast/regular/open{
 	dir = 4;
@@ -9703,7 +9703,7 @@
 /turf/simulated/floor/plating,
 /area/ship/patrol/command/bridge)
 "WX" = (
-/obj/effect/paint/meatstation/lab,
+/obj/paint/meatstation/lab,
 /obj/structure/sign/warning/vent_port,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/engineering/fussion/control)
@@ -9759,7 +9759,7 @@
 /turf/simulated/floor/tiled,
 /area/ship/patrol/crew/hallway/lower/starboard)
 "XC" = (
-/obj/effect/paint/dark_gunmetal,
+/obj/paint/dark_gunmetal,
 /obj/machinery/atmospherics/pipe/simple/visible/black,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/maintenance/engine/starboard)
@@ -9853,7 +9853,7 @@
 /turf/simulated/floor/plating,
 /area/ship/patrol/command/hangar)
 "Zn" = (
-/obj/effect/paint/meatstation/lab,
+/obj/paint/meatstation/lab,
 /obj/structure/sign/warning/hot_exhaust,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/engineering/fussion/control)
