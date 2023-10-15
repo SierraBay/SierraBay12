@@ -16,7 +16,7 @@
 	var/smell_state = SMELL_DEFAULT
 	var/volume_multiplier = 1
 
-	var/move_trail = /obj/effect/decal/cleanable/blood/tracks/footprints // if this item covers the feet, the footprints it should leave
+	var/move_trail = /obj/decal/cleanable/blood/tracks/footprints // if this item covers the feet, the footprints it should leave
 
 
 /obj/item/clothing/Initialize()
@@ -206,6 +206,14 @@
 		for(var/key in damages)
 			to_chat(user, "<li><b>[capitalize(damages[key])]</b> damage to the <b>[key]</b> armor.")
 		return TOPIC_HANDLED
+
+/obj/item/clothing/use_tool(obj/item/tool, mob/living/user, list/click_params)
+	SHOULD_CALL_PARENT(TRUE)
+	if (attempt_attach_accessory(tool, user))
+		return TRUE
+	if (attempt_store_item(tool, user))
+		return TRUE
+	return ..()
 
 ///////////////////////////////////////////////////////////////////////
 // Ears: headsets, earmuffs and tiny objects

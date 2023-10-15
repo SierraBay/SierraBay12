@@ -332,12 +332,6 @@ default behaviour is:
 		//Leave this commented out, it will cause storage items to exponentially add duplicate to the list
 		//for(var/obj/item/storage/S in Storage.return_inv()) //Check for storage items
 		//	L += get_contents(S)
-
-		for(var/obj/item/gift/G in Storage.return_inv()) //Check for gift-wrapped items
-			L += G.gift
-			if(istype(G.gift, /obj/item/storage))
-				L += get_contents(G.gift)
-
 		for(var/obj/item/smallDelivery/D in Storage.return_inv()) //Check for package wrapped items
 			L += D.wrapped
 			if(istype(D.wrapped, /obj/item/storage)) //this should never happen
@@ -349,11 +343,6 @@ default behaviour is:
 		L += src.contents
 		for(var/obj/item/storage/S in src.contents)	//Check for storage items
 			L += get_contents(S)
-
-		for(var/obj/item/gift/G in src.contents) //Check for gift-wrapped items
-			L += G.gift
-			if(istype(G.gift, /obj/item/storage))
-				L += get_contents(G.gift)
 
 		for(var/obj/item/smallDelivery/D in src.contents) //Check for package wrapped items
 			L += D.wrapped
@@ -692,8 +681,8 @@ default behaviour is:
 	if(buckled)
 		if(buckled.can_buckle)
 			buckled.user_unbuckle_mob(src)
-		else if (istype(buckled, /obj/effect/vine))
-			var/obj/effect/vine/V = buckled
+		else if (istype(buckled, /obj/vine))
+			var/obj/vine/V = buckled
 			spawn() V.manual_unbuckle(src)
 		else
 			to_chat(usr, SPAN_WARNING("You can't seem to escape from \the [buckled]!"))

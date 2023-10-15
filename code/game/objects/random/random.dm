@@ -149,7 +149,8 @@
 /obj/random/tech_supply/spawn_choices()
 	return list(/obj/random/powercell = 3,
 				/obj/random/technology_scanner = 2,
-				/obj/item/stack/package_wrap/twenty_five = 1,
+				/obj/item/stack/package_wrap/cargo_wrap = 1,
+				/obj/item/stack/package_wrap/gift_wrap = 1,
 				/obj/item/hand_labeler = 1,
 				/obj/random/bomb_supply = 2,
 				/obj/item/extinguisher = 1,
@@ -445,17 +446,17 @@
 
 /obj/random/trash/spawn_choices()
 	return list(/obj/item/remains/lizard,
-				/obj/effect/decal/cleanable/blood/gibs/robot,
-				/obj/effect/decal/cleanable/blood/oil,
-				/obj/effect/decal/cleanable/blood/oil/streak,
-				/obj/effect/decal/cleanable/spiderling_remains,
+				/obj/decal/cleanable/blood/gibs/robot,
+				/obj/decal/cleanable/blood/oil,
+				/obj/decal/cleanable/blood/oil/streak,
+				/obj/decal/cleanable/spiderling_remains,
 				/obj/item/remains/mouse,
-				/obj/effect/decal/cleanable/vomit,
-				/obj/effect/decal/cleanable/blood/splatter,
-				/obj/effect/decal/cleanable/ash,
-				/obj/effect/decal/cleanable/generic,
-				/obj/effect/decal/cleanable/flour,
-				/obj/effect/decal/cleanable/dirt,
+				/obj/decal/cleanable/vomit,
+				/obj/decal/cleanable/blood/splatter,
+				/obj/decal/cleanable/ash,
+				/obj/decal/cleanable/generic,
+				/obj/decal/cleanable/flour,
+				/obj/decal/cleanable/dirt,
 				/obj/item/remains/robot)
 
 
@@ -978,7 +979,7 @@ GLOBAL_LIST_INIT(random_backpacks, list(
 /obj/random/maintenance //Clutter and loot for maintenance and away missions
 	name = "random maintenance item"
 	desc = "This is a random maintenance item."
-	icon = 'icons/obj/gifts.dmi'
+	icon = 'icons/obj/parcels.dmi'
 	icon_state = "gift1"
 
 /obj/random/maintenance/spawn_choices()
@@ -992,8 +993,8 @@ Individual items to add to the maintenance list should go here, if you add
 something, make sure it's not in one of the other lists.*/
 	name = "random clean maintenance item"
 	desc = "This is a random clean maintenance item."
-	icon = 'icons/obj/gifts.dmi'
-	icon_state = "gift2"
+	icon = 'icons/obj/parcels.dmi'
+	icon_state = "gift3"
 
 /obj/random/maintenance/clean/spawn_choices()
 	return list(/obj/random/tech_supply = 100,
@@ -1030,8 +1031,8 @@ something, make sure it's not in one of the other lists.*/
 /obj/random/loot /*Better loot for away missions and salvage */
 	name = "random loot"
 	desc = "This is some random loot."
-	icon = 'icons/obj/gifts.dmi'
-	icon_state = "gift3"
+	icon = 'icons/obj/parcels.dmi'
+	icon_state = "gift5"
 
 /obj/random/loot/spawn_choices()
 	return list(/obj/random/energy = 10,
@@ -1246,17 +1247,17 @@ var/global/list/multi_point_spawns
 			/obj/item/trash/syndi_cakes,
 			/obj/item/trash/tray
 		)) + list(
-			/obj/effect/decal/cleanable/spiderling_remains,
+			/obj/decal/cleanable/spiderling_remains,
 			/obj/item/remains/mouse,
 			/obj/item/remains/robot,
 			/obj/item/paper/crumpled,
 			/obj/item/inflatable/torn,
-			/obj/effect/decal/cleanable/molten_item,
+			/obj/decal/cleanable/molten_item,
 			/obj/item/material/shard,
 			/obj/item/hand/missing_card
 		)
 	if (prob(20))
-		return /obj/effect/decal/cleanable/generic
+		return /obj/decal/cleanable/generic
 	if (prob(95))
 		return pick(options)
 	if (prob(75))

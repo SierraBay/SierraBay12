@@ -36,7 +36,7 @@
 	storage_name = "Robotic Storage Control"
 	allow_items = 0
 
-/obj/machinery/computer/cryopod/robot/on_update_icon()
+/obj/machinery/computer/cryopod/on_update_icon()
 	return
 
 /obj/machinery/computer/cryopod/interface_interact(mob/user)
@@ -226,9 +226,9 @@
 
 	var/list/possible_locations = list()
 	if(GLOB.using_map.use_overmap)
-		var/obj/effect/overmap/visitable/O = map_sectors["[z]"]
-		for(var/obj/effect/overmap/visitable/OO in range(O,2))
-			if(HAS_FLAGS(OO.sector_flags, OVERMAP_SECTOR_IN_SPACE) || istype(OO,/obj/effect/overmap/visitable/sector/exoplanet))
+		var/obj/overmap/visitable/O = map_sectors["[z]"]
+		for(var/obj/overmap/visitable/OO in range(O,2))
+			if(HAS_FLAGS(OO.sector_flags, OVERMAP_SECTOR_IN_SPACE) || istype(OO,/obj/overmap/visitable/sector/exoplanet))
 				possible_locations |= text2num(level)
 
 	var/newz = GLOB.using_map.get_empty_zlevel()
