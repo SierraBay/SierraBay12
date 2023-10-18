@@ -13,22 +13,3 @@
 #include "code/farfleet_turbolift.dm"
 
 #endif
-// BEGIN_INTERNALS
-// END_INTERNALS
-// BEGIN_FILE_DIR
-#define FILE_DIR .
-// END_FILE_DIR
-// BEGIN_PREFERENCES
-// END_PREFERENCES
-// BEGIN_INCLUDE
-#include "_map_farfleet.dm"
-#include "code\farfleet.dm"
-#include "code\farfleet_areas.dm"
-#include "code\farfleet_crew.dm"
-#include "code\farfleet_faction.dm"
-#include "code\farfleet_items.dm"
-#include "code\farfleet_presets.dm"
-#include "code\farfleet_shuttle.dm"
-#include "code\farfleet_structures.dm"
-#include "code\farfleet_turbolift.dm"
-// END_INCLUDE
