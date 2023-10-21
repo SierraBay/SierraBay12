@@ -277,6 +277,11 @@ var/global/const/access_away_iccgn_captain = "ACCESS_ICCGN_CAPTAIN"
 
 	access = list(access_away_iccgn, access_away_iccgn_droptroops, access_away_iccgn_sergeant, access_away_iccgn_captain, access_engine_equip)
 
+/datum/job/submap/away_iccgn_farfleet/iccgn_pawn/equip(mob/living/carbon/human/H)
+	psi_faculties = list("[PSI_COERCION]" = PSI_RANK_MASTER)
+	return ..()
+
+
 /* OUTFITS
  * =======
  */
