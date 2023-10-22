@@ -422,7 +422,7 @@
 		return
 
 	if(ispath(muzzle_type))
-		var/obj/effect/projectile/M = new muzzle_type(get_turf(src))
+		var/obj/projectile/M = new muzzle_type(get_turf(src))
 
 		if(istype(M))
 			M.SetTransform(others = effect_transform)
@@ -435,7 +435,7 @@
 
 /obj/item/projectile/proc/tracer_effect()
 	if(ispath(tracer_type))
-		var/obj/effect/projectile/P = new tracer_type(location.loc)
+		var/obj/projectile/P = new tracer_type(location.loc)
 
 		if(istype(P))
 			P.SetTransform(others = effect_transform)
@@ -446,7 +446,7 @@
 
 /obj/item/projectile/proc/impact_effect()
 	if(ispath(impact_type))
-		var/obj/effect/projectile/P = new impact_type(location ? location.loc : get_turf(src))
+		var/obj/projectile/P = new impact_type(location ? location.loc : get_turf(src))
 
 		if(istype(P) && location)
 			P.SetTransform(others = effect_transform)
@@ -499,7 +499,7 @@
 		trajectory.increment()	// increment the current location
 		location = trajectory.return_location(location)		// update the locally stored location data
 		if (!location)
-			return FALSE
+			return 0
 
 		Move(location.return_turf())
 
@@ -514,7 +514,7 @@
 //Helper proc to check if you can hit them or not.
 /proc/check_trajectory(atom/target as mob|obj, atom/firer as mob|obj, pass_flags=PASS_FLAG_TABLE|PASS_FLAG_GLASS|PASS_FLAG_GRILLE, item_flags = null, obj_flags = null)
 	if(!istype(target) || !istype(firer))
-		return 0
+		return null
 
 	var/obj/item/projectile/test/trace = new /obj/item/projectile/test(get_turf(firer)) //Making the test....
 
@@ -526,8 +526,9 @@
 	trace.pass_flags = pass_flags
 
 	var/output = trace.launch(target) //Test it!
+	var/hit_thing = trace.hit_thing
 	qdel(trace) //No need for it anymore
-	return output //Send it back to the gun!
+	return output ? hit_thing : null //Send it back to the gun!
 
 /obj/item/projectile/after_wounding(obj/item/organ/external/organ, datum/wound/wound)
 	//Check if we even broke skin in first place

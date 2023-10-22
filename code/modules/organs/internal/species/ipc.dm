@@ -235,9 +235,9 @@
 	if (!owner || owner.stat)
 		return
 	if (damage > min_bruised_damage)
-		if (prob(1) && owner.confused < 1)
+		if (prob(1) && !owner.is_confused())
 			to_chat(owner, SPAN_WARNING("Your comprehension of spacial positioning goes temporarily awry."))
-			owner.confused += 3
+			owner.set_confused(3)
 		if (prob(1) && owner.eye_blurry < 1)
 			to_chat(owner, SPAN_WARNING("Your optical interpretations become transiently erratic."))
 			owner.eye_blurry += 6
@@ -263,7 +263,7 @@
 				if (C && C.get_charge() > 25)
 					C.use(25)
 					to_chat(owner, SPAN_WARNING("Your chassis power routine fluctuates wildly."))
-					var/datum/effect/effect/system/spark_spread/S = new
+					var/datum/effect/spark_spread/S = new
 					S.set_up(2, 0, loc)
 					S.start()
 

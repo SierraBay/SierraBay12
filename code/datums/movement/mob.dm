@@ -175,7 +175,7 @@
 		return MOVEMENT_HANDLED
 
 /datum/movement_handler/mob/stop_effect/MayMove()
-	for(var/obj/effect/stop/S in mob.loc)
+	for(var/obj/stop/S in mob.loc)
 		if(S.victim == mob)
 			return MOVEMENT_STOP
 	return MOVEMENT_PROCEED
@@ -343,7 +343,7 @@
 
 /mob/proc/AdjustMovementDirection(direction)
 	. = direction
-	if(!confused)
+	if(!is_confused())
 		return
 
 	var/stability = MOVING_DELIBERATELY(src) ? 75 : 25

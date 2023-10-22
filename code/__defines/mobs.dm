@@ -36,24 +36,6 @@
 #define BORGXRAY  FLAG(2)
 #define BORGMATERIAL FLAG(3)
 
-
-#define STANCE_SLEEP        0	// Doing (almost) nothing, to save on CPU because nobody is around to notice or the mob died.
-#define STANCE_IDLE         1	// The more or less default state. Wanders around, looks for baddies, and spouts one-liners.
-#define STANCE_ALERT        2	// A baddie is visible but not too close, and essentially we tell them to go away or die.
-#define STANCE_APPROACH     3	// Attempting to get into range to attack them.
-#define STANCE_FIGHT	    4	// Actually fighting, with melee or ranged.
-#define STANCE_BLINDFIGHT   5	// Fighting something that cannot be seen by the mob, from invisibility or out of sight.
-#define STANCE_REPOSITION   6	// Relocating to a better position while in combat. Also used when moving away from a danger like grenades.
-#define STANCE_MOVE         7	// Similar to above but for out of combat. If a baddie is seen, they'll cancel and fight them.
-#define STANCE_FOLLOW       8	// Following somone, without trying to murder them.
-#define STANCE_FLEE         9	// Run away from the target because they're too spooky/we're dying/some other reason.
-#define STANCE_DISABLED     10	// Used when the holder is afflicted with certain status effects, such as stuns or confusion.
-
-#define STANCE_ATTACK       11 // Backwards compatability
-#define STANCE_ATTACKING    12 // Ditto
-
-#define STANCES_COMBAT      list(STANCE_ALERT, STANCE_APPROACH, STANCE_FIGHT, STANCE_BLINDFIGHT, STANCE_REPOSITION)
-
 #define LEFT  FLAG(0)
 #define RIGHT FLAG(1)
 #define UNDER FLAG(2)
@@ -402,7 +384,7 @@
 // Aura type options for `/mob/living/proc/aura_check()`.
 /// Aura checks for projectile impacts. Generally called by `/obj/item/projectile/proc/attack_mob()`. Results in `/obj/aura/proc/aura_check_bullet()`.
 #define AURA_TYPE_BULLET "Bullet"
-/// Aura checks for physical weapon attacks. Generally called by `/obj/item/proc/attack()`. Results in `/obj/aura/proc/aura_check_weapon()`.
+/// Aura checks for physical weapon attacks. Generally called by `/obj/item/proc/use_weapon()`. Results in `/obj/aura/proc/aura_check_weapon()`.
 #define AURA_TYPE_WEAPON "Weapon"
 /// Aura checks for thrown atom impacts. Generally called by `/mob/living/hitby()`. Results in `/obj/aura/proc/aura_check_thrown()`.
 #define AURA_TYPE_THROWN "Thrown"
@@ -506,3 +488,6 @@
 #define PRONOUNS_SHE_THEY	"she/they"
 
 #define PRONOUNS_ALL list(PRONOUNS_THEY_THEM, PRONOUNS_HE_HIM, PRONOUNS_SHE_HER, PRONOUNS_HE_THEY, PRONOUNS_SHE_THEY, PRONOUNS_IT_ITS)
+
+/// Integer (~ticks * SSMobs/wait fire rate). The default maximum value a mob's confused var can be set to.
+#define CONFUSED_MAX 15

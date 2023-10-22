@@ -2,8 +2,7 @@ SUBSYSTEM_DEF(aifast)
 	name = "AI (Fast)"
 	init_order = SS_INIT_AIFAST
 	priority = SS_PRIORITY_AI
-	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
-	wait = 0.25 SECONDS
+	wait = 0.5 SECONDS
 	var/static/list/datum/ai_holder/ai_holders = list()
 	var/static/list/datum/ai_holder/queue = list()
 

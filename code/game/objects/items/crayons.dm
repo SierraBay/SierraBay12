@@ -100,7 +100,7 @@
 			if("defector graffiti")
 				to_chat(user, "You start drawing defector graffiti on the [target.name].")
 		if(instant || do_after(user, 5 SECONDS, target, DO_PUBLIC_UNIQUE))
-			new /obj/effect/decal/cleanable/crayon(target,colour,shadeColour,drawtype)
+			new /obj/decal/cleanable/crayon(target,colour,shadeColour,drawtype)
 			to_chat(user, "You finish drawing.")
 			target.add_fingerprint(user)		// Adds their fingerprints to the floor the crayon is drawn on.
 			if(uses)
@@ -110,7 +110,7 @@
 					qdel(src)
 	return
 
-/obj/item/pen/crayon/attack(mob/living/carbon/M as mob, mob/user as mob)
+/obj/item/pen/crayon/use_before(mob/living/carbon/M as mob, mob/user as mob)
 	if(istype(M) && M == user)
 		to_chat(M, "You take a bite of the crayon and swallow it.")
 		M.adjust_nutrition(1)
@@ -121,7 +121,6 @@
 				to_chat(M, SPAN_WARNING("You ate your crayon!"))
 				qdel(src)
 		return TRUE
-	return ..()
 
 
 /obj/random/crayon

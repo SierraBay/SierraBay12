@@ -308,8 +308,6 @@
 
 /obj/machinery/computer/ship/disperser/military
 	name = "impulse cannon control"
-	caldigit = 2
-	// coolinterval = 45 SECONDS This blasted code is /const/ And i just give up
 
 /obj/item/stock_parts/circuitboard/disperser/military
 	name = "circuit board (impulse cannon control)"
@@ -331,9 +329,9 @@
 			napalm_liquid.touch_mob(A, 10 * strength)
 		if(isturf(A))
 			napalm_liquid.touch_turf(A, TRUE)
-	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	var/datum/effect/spark_spread/s = new /datum/effect/spark_spread
 	s.set_up(3, 1, target)
-	addtimer(new Callback(s, /datum/effect/effect/system/proc/start), 0.1 SECONDS | TIMER_STOPPABLE)
+	addtimer(new Callback(s, /datum/effect/proc/start), 0.1 SECONDS | TIMER_STOPPABLE)
 
 /obj/structure/ship_munition/disperser_charge/emp/military
 	name = "M850-EM"

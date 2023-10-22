@@ -131,9 +131,8 @@
 	desc = "A potent chemical mix that will nullify a slime's powers, causing it to become docile and tame."
 	icon = 'icons/obj/chemical_storage.dmi'
 	icon_state = "Pinkpotion"
-	item_flags = ITEM_FLAG_TRY_ATTACK
 
-/obj/item/slimepotion/attack(mob/living/carbon/slime/M as mob, mob/user as mob)
+/obj/item/slimepotion/use_before(mob/living/carbon/slime/M as mob, mob/user as mob)
 	. = FALSE
 	if (!istype(M, /mob/living/carbon/slime))
 		return FALSE
@@ -167,9 +166,8 @@
 	desc = "A potent chemical mix that will nullify a slime's powers, causing it to become docile and tame. This one is meant for adult slimes."
 	icon = 'icons/obj/chemical_storage.dmi'
 	icon_state = "LPinkpotion"
-	item_flags = ITEM_FLAG_TRY_ATTACK
 
-/obj/item/slimepotion2/attack(mob/living/carbon/slime/M as mob, mob/user as mob)
+/obj/item/slimepotion2/use_before(mob/living/carbon/slime/M as mob, mob/user as mob)
 	. = FALSE
 	if (!istype(M, /mob/living/carbon/slime))
 		return FALSE
@@ -200,9 +198,8 @@
 	desc = "A potent chemical mix that will cause a slime to generate more extract."
 	icon = 'icons/obj/chemical_storage.dmi'
 	icon_state = "Greenpotion"
-	item_flags = ITEM_FLAG_TRY_ATTACK
 
-/obj/item/slimesteroid/attack(mob/living/carbon/slime/M as mob, mob/user as mob)
+/obj/item/slimesteroid/use_before(mob/living/carbon/slime/M as mob, mob/user as mob)
 	. = FALSE
 	if (!istype(M, /mob/living/carbon/slime))
 		return FALSE
@@ -247,9 +244,8 @@
 	desc= "A potent chemical mix that will revitalize a recently dead slime"
 	icon= 'icons/obj/chemical_storage.dmi'
 	icon_state= "Goldpotion"
-	item_flags = ITEM_FLAG_TRY_ATTACK
 
-/obj/item/slimepotion3/attack(mob/living/carbon/slime/M, mob/user)
+/obj/item/slimepotion3/use_before(mob/living/carbon/slime/M, mob/user)
 	. = FALSE
 	if (!istype(M, /mob/living/carbon/slime))
 		return FALSE
@@ -270,7 +266,7 @@
 	qdel(src)
 	return TRUE
 
-/obj/effect/golemrune
+/obj/golemrune
 	anchored = TRUE
 	desc = "a strange rune used to create golems. It glows when it can be activated."
 	name = "rune"
@@ -279,11 +275,11 @@
 	unacidable = TRUE
 	layer = RUNE_LAYER
 
-/obj/effect/golemrune/Initialize()
+/obj/golemrune/Initialize()
 	. = ..()
 	START_PROCESSING(SSobj, src)
 
-/obj/effect/golemrune/Process()
+/obj/golemrune/Process()
 	var/mob/observer/ghost/ghost
 	for(var/mob/observer/ghost/O in src.loc)
 		if(!O.client)	continue
@@ -295,7 +291,7 @@
 	else
 		icon_state = "golem"
 
-/obj/effect/golemrune/attack_hand(mob/living/user as mob)
+/obj/golemrune/attack_hand(mob/living/user as mob)
 	var/mob/observer/ghost/ghost
 	for(var/mob/observer/ghost/O in src.loc)
 		if(!O.client)
@@ -326,7 +322,7 @@
 	qdel(src)
 
 
-/obj/effect/golemrune/proc/announce_to_ghosts()
+/obj/golemrune/proc/announce_to_ghosts()
 	for(var/mob/observer/ghost/G in GLOB.player_list)
 		if(G.client)
 			var/area/A = get_area(src)

@@ -6,7 +6,6 @@
 	item_state = "fire_extinguisher"
 	hitsound = 'sound/weapons/smash.ogg'
 	obj_flags = OBJ_FLAG_CONDUCTIBLE
-	item_flags = ITEM_FLAG_TRY_ATTACK
 	throwforce = 10
 	w_class = ITEM_SIZE_NORMAL
 	throw_speed = 2
@@ -63,7 +62,7 @@
 	to_chat(user, "The safety is [safety ? "on" : "off"].")
 	return
 
-/obj/item/extinguisher/attack(mob/living/M, mob/user)
+/obj/item/extinguisher/use_before(mob/living/M, mob/user)
 	. = FALSE
 	if (user.a_intent == I_HELP && !safety)
 		if (world.time < last_use + 20)
@@ -161,7 +160,7 @@
 	for(var/a = 1 to spray_particles)
 		if(!src || !reagents.total_volume) return
 
-		var/obj/effect/effect/water/W = new /obj/effect/effect/water(get_turf(src))
+		var/obj/effect/water/W = new /obj/effect/water(get_turf(src))
 		W.create_reagents(per_particle)
 		reagents.trans_to_obj(W, per_particle)
 		W.set_color()

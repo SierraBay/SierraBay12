@@ -32,6 +32,15 @@
 	max_shots = 3
 	projectile_type = /obj/item/projectile/ion/small
 
+/obj/item/gun/energy/ionrifle/mounted
+	name = "mounted ion gun"
+	desc = "You should not see this. Call a developer."
+	fire_delay = 30
+	one_hand_penalty = 0
+	self_recharge = TRUE
+	use_external_power = TRUE
+	has_safety = FALSE
+
 /obj/item/gun/energy/decloner
 	name = "biological demolecularisor"
 	desc = "A gun that discharges high amounts of controlled radiation to slowly break a target into component elements."
@@ -156,7 +165,7 @@
 	projectile_type = /obj/item/projectile/beam/plasmacutter
 	max_shots = 10
 	self_recharge = 1
-	var/datum/effect/effect/system/spark_spread/spark_system
+	var/datum/effect/spark_spread/spark_system
 
 	// As an industrial tool the plasma cutter's safety training falls under construction.
 	gun_skill = SKILL_CONSTRUCTION
@@ -170,7 +179,7 @@
 
 /obj/item/gun/energy/plasmacutter/Initialize()
 	. = ..()
-	spark_system = new /datum/effect/effect/system/spark_spread
+	spark_system = new /datum/effect/spark_spread
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 

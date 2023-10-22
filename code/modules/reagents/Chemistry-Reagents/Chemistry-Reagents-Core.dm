@@ -1,5 +1,5 @@
 /datum/reagent/blood
-	data = new/list(
+	data = list(
 		"donor" = null,
 		"species" = SPECIES_HUMAN,
 		"blood_DNA" = null,
@@ -54,7 +54,7 @@
 	if(ishuman(W))
 		blood_splatter(T, src, 1)
 	else if(isalien(W))
-		var/obj/effect/decal/cleanable/blood/B = blood_splatter(T, src, 1)
+		var/obj/decal/cleanable/blood/B = blood_splatter(T, src, 1)
 		if(B)
 			B.blood_DNA["UNKNOWN DNA STRUCTURE"] = "X*"
 
@@ -137,8 +137,8 @@
 		var/obj/item/reagent_containers/food/snacks/monkeycube/cube = O
 		if(!cube.wrapped)
 			cube.Expand()
-	if(istype(O, /obj/effect/turf_fire))
-		var/obj/effect/turf_fire/TF = O
+	if(istype(O, /obj/turf_fire))
+		var/obj/turf_fire/TF = O
 		TF.AddPower(-volume)
 		if(TF.fire_power <= 0)
 			qdel(TF)
@@ -176,7 +176,7 @@
 			S.Feedstop()
 	if(M.chem_doses[type] == removed)
 		M.visible_message(SPAN_WARNING("[S]'s flesh sizzles where the water touches it!"), SPAN_DANGER("Your flesh burns in the water!"))
-		M.confused = max(M.confused, 2)
+		M.set_confused(2)
 
 /datum/reagent/water/boiling
 	name = "Boiling water"
@@ -220,7 +220,7 @@
 	accelerant_quality = 10
 
 /datum/reagent/fuel/touch_turf(turf/T)
-	new /obj/effect/decal/cleanable/liquid_fuel(T, volume)
+	new /obj/decal/cleanable/liquid_fuel(T, volume)
 	remove_self(volume)
 	return
 

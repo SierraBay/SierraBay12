@@ -10,7 +10,7 @@
 /// The base /renderer definition and defaults.
 /atom/movable/renderer
 	abstract_type = /atom/movable/renderer
-	appearance_flags = PLANE_MASTER
+	appearance_flags = DEFAULT_RENDERER_APPEARANCE_FLAGS
 	screen_loc = "CENTER"
 	plane = LOWEST_PLANE
 	blend_mode = BLEND_OVERLAY
@@ -132,7 +132,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/renderer)
 	name = "Letterbox"
 	group = RENDER_GROUP_SCENE
 	plane = BLACKNESS_PLANE
-	appearance_flags = PLANE_MASTER | NO_CLIENT_COLOR
 	blend_mode = BLEND_MULTIPLY
 	mouse_opacity = MOUSE_OPACITY_UNCLICKABLE
 
@@ -188,7 +187,6 @@ GLOBAL_LIST_EMPTY(zmimic_renderers)
 	name = "Lighting"
 	group = RENDER_GROUP_SCENE
 	plane = LIGHTING_PLANE
-	appearance_flags = PLANE_MASTER | NO_CLIENT_COLOR
 	relay_blend_mode = BLEND_MULTIPLY
 	mouse_opacity = MOUSE_OPACITY_UNCLICKABLE
 
@@ -269,7 +267,7 @@ GLOBAL_LIST_EMPTY(zmimic_renderers)
 */
 
 
-/// Renders the /obj/effect/effect/warp example effect as well as gravity catapult effects
+/// Renders the /obj/effect/warp example effect as well as gravity catapult effects
 /atom/movable/renderer/warp
 	name = "Warp Effect"
 	group = RENDER_GROUP_NONE
@@ -298,7 +296,7 @@ GLOBAL_LIST_EMPTY(zmimic_renderers)
 
 		if (quality == GLOB.PREF_LOW)
 			QDEL_NULL(gas_heat_object)
-			gas_heat_object = new /obj/effect/heat(null)
+			gas_heat_object = new /obj/heat(null)
 		else
 			QDEL_NULL(gas_heat_object)
 			if (quality == GLOB.PREF_MED)

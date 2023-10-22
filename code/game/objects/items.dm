@@ -256,7 +256,7 @@
 
 	if(user.put_in_active_hand(src))
 		if (isturf(old_loc))
-			var/obj/effect/temporary/item_pickup_ghost/ghost = new(old_loc, src)
+			var/obj/temporary/item_pickup_ghost/ghost = new(old_loc, src)
 			ghost.animate_towards(user)
 		if(randpixel)
 			pixel_x = rand(-randpixel, randpixel)
@@ -287,13 +287,6 @@
 					S.gather_all(src.loc, user)
 			else if (S.can_be_inserted(src, user))
 				S.handle_item_insertion(src)
-
-/obj/item/use_on(obj/target, mob/user)
-	if (istype(target, /obj/item/clothing))
-		var/obj/item/clothing/clothes = target
-		if (clothes.attempt_store_item(src, user))
-			return TRUE
-	return ..()
 
 /obj/item/can_embed()
 	if (!canremove)

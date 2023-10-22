@@ -195,7 +195,7 @@
 
 	var/list/override_organ_types // Used for species that only need to change one or two entries in has_organ.
 
-	var/obj/effect/decal/cleanable/blood/tracks/move_trail = /obj/effect/decal/cleanable/blood/tracks/footprints // What marks are left when walking
+	var/obj/decal/cleanable/blood/tracks/move_trail = /obj/decal/cleanable/blood/tracks/footprints // What marks are left when walking
 
 	var/list/skin_overlays = list()
 
@@ -482,7 +482,10 @@ The slots that you can use are found in items_clothing.dm and are the inventory 
 	handle_limbs_setup(H)
 
 /datum/species/proc/handle_pre_spawn(mob/living/carbon/human/H)
-	return
+	// Changing species can change NPC behaviour, so delete the holder if there is one
+	if (H.ai_holder && istype(H.ai_holder, /datum))
+		GLOB.stat_set_event.unregister(H, H.ai_holder, /datum/ai_holder/proc/holder_stat_change)
+		QDEL_NULL(H.ai_holder)
 
 /datum/species/proc/handle_death(mob/living/carbon/human/H) //Handles any species-specific death events (such as dionaea nymph spawns).
 	return
@@ -555,10 +558,6 @@ The slots that you can use are found in items_clothing.dm and are the inventory 
 			return 1
 
 	return 0
-
-// Called in life() when the mob has no client.
-/datum/species/proc/handle_npc(mob/living/carbon/human/H)
-	return
 
 /datum/species/proc/handle_vision(mob/living/carbon/human/H)
 	var/list/vision = H.get_accumulated_vision_handlers()
@@ -638,7 +637,7 @@ The slots that you can use are found in items_clothing.dm and are the inventory 
 // Impliments different trails for species depending on if they're wearing shoes.
 /datum/species/proc/get_move_trail(mob/living/carbon/human/H)
 	if(H.lying)
-		return /obj/effect/decal/cleanable/blood/tracks/body
+		return /obj/decal/cleanable/blood/tracks/body
 	if(H.shoes || (H.wear_suit && (H.wear_suit.body_parts_covered & FEET)))
 		var/obj/item/clothing/shoes = (H.wear_suit && (H.wear_suit.body_parts_covered & FEET)) ? H.wear_suit : H.shoes // suits take priority over shoes
 		if(footwear_trail_overrides)

@@ -166,8 +166,10 @@
 		list("dylovene",      "dylovene",      /datum/reagent/dylovene,          20),
 		list("glucose",       "glucose",       /datum/reagent/nutriment/glucose, 80),
 		list("hyronalin",     "hyronalin",     /datum/reagent/hyronalin,         20),
+		list("bicaridine",    "bicaridine",    /datum/reagent/bicaridine,        20),
 		list("dermaline",     "dermaline",     /datum/reagent/dermaline,         20),
 		list("spaceacillin",  "spaceacillin",  /datum/reagent/spaceacillin,      20),
+		list("coagulant",     "coagulant",     /datum/reagent/coagulant,         20),
 		list("tramadol",      "tramadol",      /datum/reagent/tramadol,          20)
 		)
 
@@ -513,7 +515,7 @@
 	var/atom/movable/locked
 	var/datum/beam = null
 	var/max_dist = 4
-	var/obj/effect/effect/warp/small/warpeffect = null
+	var/obj/effect/warp/small/warpeffect = null
 
 /obj/item/rig_module/kinetic_module/proc/beamdestroyed()
 	if(beam)
@@ -546,7 +548,7 @@
 				to_chat(user, SPAN_NOTICE("Unable to lock on [target]."))
 				return
 			locked = AM
-			beam = holder.wearer.Beam(BeamTarget = target, icon_state = "r_beam", maxdistance = max_dist, beam_type = /obj/effect/ebeam/warp)
+			beam = holder.wearer.Beam(BeamTarget = target, icon_state = "r_beam", maxdistance = max_dist, beam_type = /obj/ebeam/warp)
 			GLOB.destroyed_event.register(beam, src, .proc/beamdestroyed)
 
 			animate(target,pixel_y= initial(target.pixel_y) - 2,time=1 SECOND, easing = SINE_EASING, flags = ANIMATION_PARALLEL, loop = -1)
@@ -558,7 +560,6 @@
 			return
 		else if(target != locked)
 			if(locked in view(holder.wearer))
-				admin_attack_log(holder.wearer, holder.loc, "used [src] to throw their target at [target].")
 				endanimation() //End animation without waiting for delete, so throw won't be affected
 				locked.throw_at(target, 14, 1.5, holder.wearer)
 				locked = null

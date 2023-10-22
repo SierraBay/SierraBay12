@@ -55,7 +55,7 @@
 	var/shot_sound 			//what sound should play when the turret fires
 	var/eshot_sound			//what sound should play when the emagged turret fires
 
-	var/datum/effect/effect/system/spark_spread/spark_system	//the spark system, used for generating... sparks?
+	var/datum/effect/spark_spread/spark_system	//the spark system, used for generating... sparks?
 
 	var/wrenching = 0
 	var/last_target			//last target fired at, prevents turrets from erratically firing at all valid targets in range
@@ -93,7 +93,7 @@
 	..()
 
 	//Sets up a spark system
-	spark_system = new /datum/effect/effect/system/spark_spread
+	spark_system = new /datum/effect/spark_spread
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 
@@ -457,7 +457,7 @@ var/global/list/turret_icons
 	if(get_dist(src, L) > 7)	//if it's too far away, why bother?
 		return TURRET_NOT_TARGET
 
-	if(!check_trajectory(L, src))	//check if we have true line of sight
+	if(check_trajectory(L, src) != L)	//check if we have true line of sight
 		return TURRET_NOT_TARGET
 
 	if(emagged)		// If emagged not even the dead get a rest

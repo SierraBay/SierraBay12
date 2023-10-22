@@ -198,11 +198,11 @@
 		user.visible_message(SPAN_WARNING("\The [shields.owner]'s shields flash and crackle."))
 		flick("shield_impact", src)
 		playsound(user,'sound/effects/basscannon.ogg',35,1)
-		new /obj/effect/effect/smoke/illumination(user.loc, 5, 4, 1, "#ffffff")
+		new /obj/effect/smoke/illumination(user.loc, 5, 4, 1, "#ffffff")
 		if (proj.damage <= 0)
 			return AURA_FALSE|AURA_CANCEL
 
-		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
+		var/datum/effect/spark_spread/spark_system = new /datum/effect/spark_spread()
 		spark_system.set_up(5, 0, user)
 		spark_system.start()
 		playsound(loc, "sparks", 25, 1)
@@ -473,7 +473,7 @@
 			if(!O.blinded)
 				O.flash_eyes(FLASH_PROTECTION_MODERATE - protection)
 				O.eye_blurry += flash_time
-				O.confused += (flash_time + 2)
+				O.mod_confused(flash_time + 2)
 
 /obj/item/mech_equipment/flash/attack_self(mob/user)
 	. = ..()
@@ -519,7 +519,7 @@
 			if(!O.blinded)
 				O.flash_eyes(FLASH_PROTECTION_MAJOR - protection)
 				O.eye_blurry += flash_time
-				O.confused += (flash_time + 2)
+				O.mod_confused(flash_time + 2)
 
 				if(isanimal(O)) //Hit animals a bit harder
 					O.Stun(flash_time)

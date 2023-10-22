@@ -341,7 +341,7 @@
 
 	if(!src || !isturf(src.loc) || !(A in view(src.loc)))
 		return 0
-	if(istype(A, /obj/effect/decal/point))
+	if(istype(A, /obj/decal/point))
 		return 0
 
 	var/turf/tile = get_turf(A)
@@ -349,7 +349,7 @@
 		return 0
 
 	var/turf/mob_tile = get_turf(src)
-	var/obj/P = new /obj/effect/decal/point(mob_tile)
+	var/obj/P = new /obj/decal/point(mob_tile)
 	P.set_invisibility(invisibility)
 	animate(P, pixel_x = (tile.x - mob_tile.x) * world.icon_size + A.pixel_x, pixel_y = (tile.y - mob_tile.y) * world.icon_size + A.pixel_y, time = 3, easing = EASE_OUT)
 	face_atom(A)
@@ -528,7 +528,11 @@
 
 /mob/proc/start_pulling(atom/movable/AM)
 
-	if ( !AM || !usr || src==AM || !isturf(src.loc) )	//if there's no person pulling OR the person is pulling themself OR the object being pulled is inside something: abort!
+	if ( !AM || !usr || src==AM || !isturf(src.loc))	//if there's no person pulling OR the person is pulling themself OR the object being pulled is inside something: abort!
+		return
+
+	if (!Adjacent(AM))
+		to_chat(src, SPAN_WARNING("You must remain next to \the [AM]."))
 		return
 
 	if (AM.anchored)
@@ -866,6 +870,59 @@
 /mob/proc/AdjustSleeping(amount)
 	sleeping = max(sleeping + amount,0)
 	return
+
+
+/**
+ * Sets a mob's confused value.
+ *
+ * Parameters:
+ * - `amount` (Positive Int) - The confused value to set. Decimal values are rounded.
+ * - `limit` (Positive Int, default `CONFUSED_MAX`) - The maximum value `confused` can be set to. Decimal values are rounded.
+ *
+ * Returns integer. The new value of `confused`.
+ */
+/mob/proc/set_confused(amount, limit = CONFUSED_MAX)
+	confused = clamp(round(amount), 0, round(limit))
+	return confused
+
+
+/**
+ * Modifies a mob's confused value by `mod_amount`.
+ *
+ * Parameters:
+ * - `mod_amount` (Integer) - The amount to modify `confused` by. Allows negative values for subtraction. Decimal values are rounded.
+ * - `floor` (Positive Integer, default `0`) - The minimum value to set `confused` to. Decimal values are rounded.
+ * - `ceiling` (Positive Integer, default `CONFUSED_MAX`) - The maximum value to set `confused` to. Decimal values are rounded.
+ *
+ * Returns integer. The new value of `confused`.
+ */
+/mob/proc/mod_confused(mod_amount, floor = 0, ceiling = CONFUSED_MAX)
+	confused += round(mod_amount)
+	confused = clamp(confused, round(floor), round(ceiling))
+	return confused
+
+
+/**
+ * Sets a mob's confused value to `0`.
+ *
+ * Returns integer. The new value of `confused`.
+ */
+/mob/proc/clear_confused()
+	confused = 0
+	return confused
+
+
+/**
+ * Whether or not the mob's confusion level is at the threshhold.
+ *
+ * Parameters:
+ * - `threshhold` (Positive Integer, default `1`) - The threshhold at which the mob should be considered confused.
+ *
+ * Returns boolean.
+ */
+/mob/proc/is_confused(threshhold = 1)
+	return confused >= threshhold
+
 
 /mob/proc/get_species()
 	return ""

@@ -244,23 +244,29 @@
 	if(!check_exited())
 		GLOB.moved_event.register(user, src, /obj/item/tube/proc/check_exited)
 
-/obj/item/tube/attack(mob/living/carbon/human/H, mob/user, def_zone)
+/obj/item/tube/use_before(mob/living/carbon/human/H, mob/user, def_zone)
+	if (!istype(H) || H != user || !H.check_has_mouth())
+		return ..()
+
 	if(!parent.lit)
 		to_chat(user, SPAN_WARNING("You try to take a drag from the tube but nothing happens. Looks like the hookah isn't lit."))
 		return FALSE
-	if(H == user && istype(H) && H.check_has_mouth())
-		var/obj/item/blocked = H.check_mouth_coverage()
-		if(blocked)
-			to_chat(H, SPAN_WARNING("\The [blocked] is in the way!"))
-			return TRUE
-		to_chat(H, SPAN_INFO("You take a drag on your [name]."))
-		if(parent.liquid_level <= 0)
-			to_chat(user, SPAN_WARNING("It looks like the water has run out."))
-			return FALSE
-		playsound(H.loc, pick('packs/infinity/sound/effects/hookah.ogg', 'packs/infinity/sound/effects/hookah1.ogg'), 50, 0, -1)
-		smoke(5, user)
+
+	var/obj/item/blocked = H.check_mouth_coverage()
+	if(blocked)
+		to_chat(H, SPAN_WARNING("\The [blocked] is in the way!"))
 		return TRUE
-	return ..()
+
+	to_chat(H, SPAN_INFO("You take a drag on your [name]."))
+
+	if(parent.liquid_level <= 0)
+		to_chat(user, SPAN_WARNING("It looks like the water has run out."))
+		return FALSE
+
+	playsound(H.loc, pick('packs/infinity/sound/effects/hookah.ogg', 'packs/infinity/sound/effects/hookah1.ogg'), 50, 0, -1)
+	smoke(5, user)
+
+	return TRUE
 
 /obj/item/hookah/proc/light(flavor_text)
 	if(lit || !smoketime)
@@ -332,6 +338,6 @@
 			environment.remove_by_flag(XGM_GAS_OXIDIZER, parent.gas_consumption)
 			environment.adjust_gas(GAS_CO2, 0.5*parent.gas_consumption, 0)
 			environment.adjust_gas(GAS_STEAM, 0.5*parent.gas_consumption, 0)
-			var/datum/effect/effect/system/steam_spread/steam = new /datum/effect/effect/system/steam_spread()
+			var/datum/effect/steam_spread/steam = new /datum/effect/steam_spread()
 			steam.set_up(3, usr.dir, usr.loc)
 			steam.start()

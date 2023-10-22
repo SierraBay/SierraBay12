@@ -21,7 +21,6 @@
 	randpixel = 8
 	throwforce = 0
 	w_class = ITEM_SIZE_TINY
-	item_flags = ITEM_FLAG_TRY_ATTACK
 	throw_range = 1
 	throw_speed = 1
 	layer = ABOVE_OBJ_LAYER
@@ -223,7 +222,7 @@
 /obj/item/paper/attack_ai(mob/living/silicon/ai/user)
 	show_content(user)
 
-/obj/item/paper/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+/obj/item/paper/use_before(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	. = FALSE
 	if (!istype(M))
 		return FALSE
@@ -369,7 +368,7 @@
 				user.visible_message(SPAN_CLASS("[class]", "[user] burns right through \the [src], turning it to ash. It flutters through the air before settling on the floor in a heap."), \
 				SPAN_CLASS("[class]", "You burn right through \the [src], turning it to ash. It flutters through the air before settling on the floor in a heap."))
 
-				new /obj/effect/decal/cleanable/ash(get_turf(src))
+				new /obj/decal/cleanable/ash(get_turf(src))
 				qdel(src)
 
 			else
