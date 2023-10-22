@@ -243,32 +243,6 @@
 	req_access = list(access_away_iccgn)
 	islocked = 1
 
-/*
-/obj/machinery/suit_storage_unit/away_iccgn_med
-	name = "Pioneer Corpsman Voidsuit Storage Unit"
-	suit= /obj/item/clothing/suit/space/void/pioneer/prepared
-	boots = /obj/item/clothing/shoes/magboots
-	tank = /obj/item/tank/oxygen
-	req_access = list(access_away_iccgn)
-	islocked = 1
-
-/obj/machinery/suit_storage_unit/away_iccgn_pawn
-	name = "CSS Voidsuit Storage Unit"
-	suit= /obj/item/clothing/suit/space/void/pioneer/prepared
-	boots = /obj/item/clothing/shoes/magboots
-	tank = /obj/item/tank/oxygen
-	req_access = list(access_away_iccgn)
-	islocked = 1
-
-/obj/machinery/suit_storage_unit/away_iccgn_com
-	name = "Captain Voidsuit Storage Unit"
-	suit= /obj/item/clothing/suit/space/void/pioneer/command/prepared
-	boots = /obj/item/clothing/shoes/magboots
-	tank = /obj/item/tank/oxygen
-	req_access = list(access_away_iccgn, access_away_iccgn_captain)
-	islocked = 1
- */
-
 /obj/structure/sign/farfleetplaque
 	name = "\improper Pioneer Corps Plaque"
 	desc = "Пионерский Корпус, сформированный в 2306 году является авангардом Конфедерации. Пионерский корпус не входит в состав Флота ГКК, выполняет ряд миротворческих и гуманитарных функций. На этой табличке - первые страницы приказа о создании Пионерского Корпуса."

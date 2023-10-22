@@ -256,6 +256,7 @@ var/global/const/access_away_iccgn_captain = "ACCESS_ICCGN_CAPTAIN"
 	allowed_branches = list(/datum/mil_branch/css)
 	allowed_ranks = list(/datum/mil_rank/css/fa7)
 	supervisors = "chief of 'P' Department, Confederate Security Service"
+	psi_faculties = list(PSI_COERCION = PSI_RANK_MASTER)
 	loadout_allowed = TRUE
 	info = "Вы просыпаетесь и выходите из криосна, ощущая прохладный воздух на своём лице, а также лёгкую тошноту. \
 	Вы - сотрдник отдела 'П' Конфедеративной Службы Безопасности, приписанный к кораблю Пионерского Корпуса. \
@@ -276,10 +277,6 @@ var/global/const/access_away_iccgn_captain = "ACCESS_ICCGN_CAPTAIN"
 					 SKILL_EVA = SKILL_BASIC)
 
 	access = list(access_away_iccgn, access_away_iccgn_droptroops, access_away_iccgn_sergeant, access_away_iccgn_captain, access_engine_equip)
-
-/datum/job/submap/away_iccgn_farfleet/iccgn_pawn/equip(mob/living/carbon/human/H)
-	psi_faculties = list("[PSI_COERCION]" = PSI_RANK_MASTER)
-	return ..()
 
 
 /* OUTFITS
