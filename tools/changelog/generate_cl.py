@@ -93,8 +93,4 @@ if write_cl['changes']:
     print("Done!")
 else:
     print("No CL changes detected!")
-<<<<<<< ours
     exit(1) # Change to a '1' if you want the action to count lacking CL changes as a failure
-=======
-    exit(0) # Change to a '1' if you want the action to count lacking CL changes as a failure
->>>>>>> theirs
