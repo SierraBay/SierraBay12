@@ -13,6 +13,7 @@
 	initial_restricted_waypoints = list(
 		"Charon" = list("nav_hangar_calypso"),
 		"Guppy" = list("nav_hangar_guppy"),
+		"Crucian" = list("nav_hangar_crucian"),
 		"Mule" = list("nav_merchant_out"), //../mods/maps/liberia/_map_liberia.dme shuttle,
 		"Desperado" = list("nav_merc_dock"), //antag_spawn/mercenary/mercenary_inf.dmm shuttle,
 		"Reaper Gunboat" = list("nav_reaper_dock"), //../mods/maps/sentinel/_map_sentinel.dme shuttle,
