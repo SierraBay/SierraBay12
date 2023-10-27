@@ -73,8 +73,9 @@ else:
 if not write_cl['author']:
     print("There are spaces or tabs instead of author username")
 
+yaml = yaml.YAML(typ='safe',pure=True)
 with open(Path.cwd().joinpath("tags.yml")) as file:
-    tags = yaml.safe_load(file)
+    tags = yaml.load(file)
 
 write_cl['changes'] = []
 
