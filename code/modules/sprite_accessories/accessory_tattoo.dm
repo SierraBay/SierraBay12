@@ -113,7 +113,7 @@
 
 
 /datum/sprite_accessory/marking/tattoo/leg_left/tiger
-	name = "Tattoo (Tiger Stripes, Left Leg)"
+	name = "Tattoo (Tiger Stripes, левая нога)"
 	icon_state = "tiger-leg-left"
 
 
@@ -170,7 +170,7 @@
 
 
 /datum/sprite_accessory/marking/tattoo/leg_left/bands
-	name = "Tattoo (Bands, Left Leg)"
+	name = "Tattoo (Bands, левая нога)"
 	icon_state = "bands-leg-left"
 
 

@@ -83,7 +83,7 @@
 
 /obj/item/organ/external/leg
 	organ_tag = BP_L_LEG
-	name = "left leg"
+	name = "левая нога"
 	icon_name = "l_leg"
 	max_damage = 50
 	min_broken_damage = 30
