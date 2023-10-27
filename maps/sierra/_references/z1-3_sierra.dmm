@@ -1658,13 +1658,10 @@
 /turf/simulated/floor/plating,
 /area/quartermaster/hangar)
 "avA" = (
-/obj/machinery/door/blast/regular{
-	density = 0;
+/obj/machinery/door/blast/regular/open{
 	dir = 4;
-	icon_state = "pdoor0";
 	id_tag = "Biohazard";
-	name = "Biohazard Shutter";
-	opacity = 0
+	name = "Biohazard Shutter"
 	},
 /obj/machinery/door/airlock/command{
 	dir = 4;
@@ -5061,12 +5058,9 @@
 	name = "Research Division Access";
 	req_access = newlist()
 	},
-/obj/machinery/door/blast/regular{
-	density = 0;
-	icon_state = "pdoor0";
+/obj/machinery/door/blast/regular/open{
 	id_tag = "Biohazard";
-	name = "Biohazard Shutter";
-	opacity = 0
+	name = "Biohazard Shutter"
 	},
 /obj/floor_decal/borderfloorwhite{
 	dir = 8
@@ -6616,12 +6610,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/blast/regular{
-	density = 0;
-	icon_state = "pdoor0";
+/obj/machinery/door/blast/regular/open{
 	id_tag = "xenobioa2";
-	name = "Containment Blast Doors";
-	opacity = 0
+	name = "Containment Blast Doors"
 	},
 /turf/simulated/floor/reinforced,
 /area/rnd/xenobiology/level2)
@@ -6837,12 +6828,9 @@
 /area/shuttle/escape_pod/escape_pod2/station)
 "bzS" = (
 /obj/wallframe_spawn/reinforced,
-/obj/machinery/door/blast/regular{
-	density = 0;
-	icon_state = "pdoor0";
+/obj/machinery/door/blast/regular/open{
 	id_tag = "Biohazard";
-	name = "Biohazard Shutter";
-	opacity = 0
+	name = "Biohazard Shutter"
 	},
 /obj/structure/cable/green{
 	d2 = 8;
@@ -8339,12 +8327,9 @@
 "bOG" = (
 /obj/machinery/door/firedoor,
 /obj/wallframe_spawn/reinforced,
-/obj/machinery/door/blast/regular{
-	density = 0;
-	icon_state = "pdoor0";
+/obj/machinery/door/blast/regular/open{
 	id_tag = "xenobioa2";
-	name = "Containment Blast Doors";
-	opacity = 0
+	name = "Containment Blast Doors"
 	},
 /turf/simulated/floor/plating,
 /area/rnd/xenobiology/level2)
@@ -9801,13 +9786,10 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/blast/regular{
-	density = 0;
+/obj/machinery/door/blast/regular/open{
 	dir = 4;
-	icon_state = "pdoor0";
 	id_tag = "Biohazard";
-	name = "Biohazard Shutter";
-	opacity = 0
+	name = "Biohazard Shutter"
 	},
 /obj/floor_decal/techfloor,
 /obj/floor_decal/techfloor{
@@ -10367,13 +10349,10 @@
 /area/maintenance/seconddeck/forestarboard)
 "cmr" = (
 /obj/wallframe_spawn/reinforced,
-/obj/machinery/door/blast/regular{
-	density = 0;
+/obj/machinery/door/blast/regular/open{
 	dir = 4;
-	icon_state = "pdoor0";
 	id_tag = "Biohazard";
-	name = "Biohazard Shutter";
-	opacity = 0
+	name = "Biohazard Shutter"
 	},
 /obj/structure/cable/green{
 	d2 = 2;
@@ -10526,13 +10505,10 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/machinery/door/blast/regular{
-	density = 0;
+/obj/machinery/door/blast/regular/open{
 	dir = 4;
-	icon_state = "pdoor0";
 	id_tag = "Biohazard";
-	name = "Biohazard Shutter";
-	opacity = 0
+	name = "Biohazard Shutter"
 	},
 /obj/machinery/door/firedoor,
 /obj/wallframe_spawn/reinforced/polarized/full{
@@ -12800,12 +12776,9 @@
 /area/exploration_shuttle/power)
 "cLs" = (
 /obj/wallframe_spawn/reinforced/hull,
-/obj/machinery/door/blast/regular{
-	density = 0;
-	icon_state = "pdoor0";
+/obj/machinery/door/blast/regular/open{
 	id_tag = "xenobio1";
-	name = "Containment Blast Doors";
-	opacity = 0
+	name = "Containment Blast Doors"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/plating,
@@ -15729,13 +15702,10 @@
 	dir = 1
 	},
 /obj/floor_decal/techfloor,
-/obj/machinery/door/blast/regular{
-	density = 0;
+/obj/machinery/door/blast/regular/open{
 	dir = 4;
-	icon_state = "pdoor0";
 	id_tag = "AILockdown";
-	name = "AI Core Blastdoor";
-	opacity = 0
+	name = "AI Core Blastdoor"
 	},
 /turf/simulated/floor/bluegrid,
 /area/turret_protected/ai)
@@ -16341,12 +16311,9 @@
 /area/maintenance/firstdeck/aftport)
 "dzL" = (
 /obj/wallframe_spawn/reinforced_phoron,
-/obj/machinery/door/blast/regular{
-	density = 0;
-	icon_state = "pdoor0";
+/obj/machinery/door/blast/regular/open{
 	id_tag = "misclab";
-	name = "Test Chamber Blast Doors";
-	opacity = 0
+	name = "Test Chamber Blast Doors"
 	},
 /turf/simulated/floor/plating,
 /area/rnd/misc_lab)
@@ -21367,12 +21334,9 @@
 	name = "Containment Pen";
 	req_access = newlist()
 	},
-/obj/machinery/door/blast/regular{
-	density = 0;
-	icon_state = "pdoor0";
+/obj/machinery/door/blast/regular/open{
 	id_tag = "xenobio3";
-	name = "Containment Blast Doors";
-	opacity = 0
+	name = "Containment Blast Doors"
 	},
 /obj/floor_decal/industrial/hatch/yellow,
 /obj/machinery/atmospherics/pipe/simple/hidden/blue,
@@ -24423,12 +24387,9 @@
 /area/storage/eva)
 "fjx" = (
 /obj/wallframe_spawn/reinforced_phoron,
-/obj/machinery/door/blast/regular{
-	density = 0;
-	icon_state = "pdoor0";
+/obj/machinery/door/blast/regular/open{
 	id_tag = "misclab";
-	name = "Test Chamber Blast Doors";
-	opacity = 0
+	name = "Test Chamber Blast Doors"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 4
@@ -24651,13 +24612,10 @@
 /area/tcommsat/computer)
 "fmp" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/blast/regular{
-	density = 0;
+/obj/machinery/door/blast/regular/open{
 	dir = 4;
-	icon_state = "pdoor0";
 	id_tag = "AILockdown";
-	name = "AI Core Blastdoor";
-	opacity = 0
+	name = "AI Core Blastdoor"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -27145,13 +27103,10 @@
 	name = "Robotics Laboratory";
 	req_access = newlist()
 	},
-/obj/machinery/door/blast/regular{
-	density = 0;
+/obj/machinery/door/blast/regular/open{
 	dir = 4;
-	icon_state = "pdoor0";
 	id_tag = "Biohazard";
-	name = "Biohazard Shutter";
-	opacity = 0
+	name = "Biohazard Shutter"
 	},
 /obj/structure/cable/green{
 	d1 = 4;
@@ -27674,12 +27629,9 @@
 /obj/item/paper_bin,
 /obj/item/pen,
 /obj/structure/disposalpipe/segment,
-/obj/machinery/door/blast/regular{
-	density = 0;
-	icon_state = "pdoor0";
+/obj/machinery/door/blast/regular/open{
 	id_tag = "Biohazard";
-	name = "Biohazard Shutter";
-	opacity = 0
+	name = "Biohazard Shutter"
 	},
 /obj/floor_decal/borderfloorwhite{
 	dir = 4
@@ -30992,13 +30944,10 @@
 /area/maintenance/solar/starboard)
 "gFi" = (
 /obj/wallframe_spawn/reinforced/hull,
-/obj/machinery/door/blast/regular{
-	density = 0;
+/obj/machinery/door/blast/regular/open{
 	dir = 4;
-	icon_state = "pdoor0";
 	id_tag = "xenobio1";
-	name = "Containment Blast Doors";
-	opacity = 0
+	name = "Containment Blast Doors"
 	},
 /turf/simulated/floor/plating,
 /area/rnd/xenobiology/level1)
@@ -33229,12 +33178,9 @@
 /obj/floor_decal/borderfloorwhite{
 	dir = 8
 	},
-/obj/machinery/door/blast/regular{
-	density = 0;
-	icon_state = "pdoor0";
+/obj/machinery/door/blast/regular/open{
 	id_tag = "Biohazard";
-	name = "Biohazard Shutter";
-	opacity = 0
+	name = "Biohazard Shutter"
 	},
 /turf/simulated/floor/tiled/white/monotile,
 /area/rnd/xenobiology/entry2)
@@ -37339,12 +37285,9 @@
 	name = "Containment Pen";
 	req_access = newlist()
 	},
-/obj/machinery/door/blast/regular{
-	density = 0;
-	icon_state = "pdoor0";
+/obj/machinery/door/blast/regular/open{
 	id_tag = "xenobio1";
-	name = "Containment Blast Doors";
-	opacity = 0
+	name = "Containment Blast Doors"
 	},
 /obj/floor_decal/industrial/hatch/yellow,
 /obj/machinery/atmospherics/pipe/simple/hidden/blue,
@@ -46625,12 +46568,9 @@
 /area/maintenance/firstdeck/aftport)
 "jTc" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/blast/regular{
-	density = 0;
-	icon_state = "pdoor0";
+/obj/machinery/door/blast/regular/open{
 	id_tag = "Biohazard";
-	name = "Biohazard Shutter";
-	opacity = 0
+	name = "Biohazard Shutter"
 	},
 /obj/wallframe_spawn/reinforced,
 /obj/structure/cable/green{
@@ -48769,12 +48709,9 @@
 /area/crew_quarters/head)
 "kuA" = (
 /obj/wallframe_spawn/reinforced,
-/obj/machinery/door/blast/regular{
-	density = 0;
-	icon_state = "pdoor0";
+/obj/machinery/door/blast/regular/open{
 	id_tag = "Biohazard";
-	name = "Biohazard Shutter";
-	opacity = 0
+	name = "Biohazard Shutter"
 	},
 /obj/structure/cable/green{
 	d2 = 4;
@@ -49786,12 +49723,9 @@
 /area/engineering/bluespace/chamber)
 "kFw" = (
 /obj/wallframe_spawn/reinforced,
-/obj/machinery/door/blast/regular{
-	density = 0;
-	icon_state = "pdoor0";
+/obj/machinery/door/blast/regular/open{
 	id_tag = "Biohazard";
-	name = "Biohazard Shutter";
-	opacity = 0
+	name = "Biohazard Shutter"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/firedoor,
@@ -50185,12 +50119,9 @@
 "kJR" = (
 /obj/machinery/door/firedoor,
 /obj/wallframe_spawn/reinforced,
-/obj/machinery/door/blast/regular{
-	density = 0;
-	icon_state = "pdoor0";
+/obj/machinery/door/blast/regular/open{
 	id_tag = "xenobioa1";
-	name = "Containment Blast Doors";
-	opacity = 0
+	name = "Containment Blast Doors"
 	},
 /turf/simulated/floor/plating,
 /area/rnd/xenobiology/level2)
@@ -50698,12 +50629,9 @@
 	name = "Containment Pen";
 	req_access = newlist()
 	},
-/obj/machinery/door/blast/regular{
-	density = 0;
-	icon_state = "pdoor0";
+/obj/machinery/door/blast/regular/open{
 	id_tag = "xenobio2";
-	name = "Containment Blast Doors";
-	opacity = 0
+	name = "Containment Blast Doors"
 	},
 /obj/floor_decal/industrial/hatch/yellow,
 /obj/machinery/atmospherics/pipe/simple/hidden/blue,
@@ -51057,12 +50985,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/blast/regular{
-	density = 0;
-	icon_state = "pdoor0";
+/obj/machinery/door/blast/regular/open{
 	id_tag = "xenobioa1";
-	name = "Containment Blast Doors";
-	opacity = 0
+	name = "Containment Blast Doors"
 	},
 /turf/simulated/floor/reinforced,
 /area/rnd/xenobiology/level2)
@@ -61861,12 +61786,9 @@
 	name = "Test Chamber";
 	req_access = list("ACCESS_TOXINS")
 	},
-/obj/machinery/door/blast/regular{
-	density = 0;
-	icon_state = "pdoor0";
+/obj/machinery/door/blast/regular/open{
 	id_tag = "misclab";
-	name = "Test Chamber Blast Doors";
-	opacity = 0
+	name = "Test Chamber Blast Doors"
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden{
 	dir = 1
@@ -63159,13 +63081,10 @@
 	icon_state = "4-8"
 	},
 /obj/floor_decal/industrial/warning/fulltile,
-/obj/machinery/door/blast/regular{
-	density = 0;
+/obj/machinery/door/blast/regular/open{
 	dir = 4;
-	icon_state = "pdoor0";
 	id_tag = "Biohazard";
-	name = "Biohazard Shutter";
-	opacity = 0
+	name = "Biohazard Shutter"
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/black{
@@ -64892,13 +64811,10 @@
 /area/quartermaster/office)
 "nQs" = (
 /obj/wallframe_spawn/reinforced/hull,
-/obj/machinery/door/blast/regular{
-	density = 0;
+/obj/machinery/door/blast/regular/open{
 	dir = 4;
-	icon_state = "pdoor0";
 	id_tag = "xenobioaqua";
-	name = "Containment Blast Doors";
-	opacity = 0
+	name = "Containment Blast Doors"
 	},
 /turf/simulated/floor/plating,
 /area/rnd/xenobiology/water_cell)
@@ -68396,12 +68312,9 @@
 	name = "Robotics Laboratory";
 	req_access = newlist()
 	},
-/obj/machinery/door/blast/regular{
-	density = 0;
-	icon_state = "pdoor0";
+/obj/machinery/door/blast/regular/open{
 	id_tag = "Biohazard";
-	name = "Biohazard Shutter";
-	opacity = 0
+	name = "Biohazard Shutter"
 	},
 /obj/floor_decal/industrial/hatch/yellow,
 /turf/simulated/floor/tiled/white/monotile,
@@ -68514,13 +68427,10 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/security/sierra/armory)
 "oEY" = (
-/obj/machinery/door/blast/regular{
-	density = 0;
+/obj/machinery/door/blast/regular/open{
 	dir = 4;
-	icon_state = "pdoor0";
 	id_tag = "AICore";
-	name = "AI Core Shield";
-	opacity = 0
+	name = "AI Core Shield"
 	},
 /obj/machinery/door/window/phoronreinforced{
 	dir = 8
@@ -74445,13 +74355,10 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/door/blast/regular{
-	density = 0;
+/obj/machinery/door/blast/regular/open{
 	dir = 2;
-	icon_state = "pdoor0";
 	id_tag = "xenobioaqua";
-	name = "Containment Blast Doors";
-	opacity = 0
+	name = "Containment Blast Doors"
 	},
 /obj/machinery/door/window/southright,
 /obj/machinery/door/window/southleft{
@@ -78133,13 +78040,10 @@
 /obj/floor_decal/techfloor{
 	dir = 1
 	},
-/obj/machinery/door/blast/regular{
-	density = 0;
+/obj/machinery/door/blast/regular/open{
 	dir = 4;
-	icon_state = "pdoor0";
 	id_tag = "AILockdown";
-	name = "AI Core Blastdoor";
-	opacity = 0
+	name = "AI Core Blastdoor"
 	},
 /turf/simulated/floor/bluegrid,
 /area/turret_protected/ai)
@@ -78507,13 +78411,10 @@
 /area/vacant/gambling)
 "qKm" = (
 /obj/wallframe_spawn/reinforced,
-/obj/machinery/door/blast/regular{
-	density = 0;
+/obj/machinery/door/blast/regular/open{
 	dir = 4;
-	icon_state = "pdoor0";
 	id_tag = "Biohazard";
-	name = "Biohazard Shutter";
-	opacity = 0
+	name = "Biohazard Shutter"
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable/green{
@@ -79156,13 +79057,10 @@
 /turf/simulated/floor/plating,
 /area/vacant/infirmary)
 "qSI" = (
-/obj/machinery/door/blast/regular{
-	density = 0;
+/obj/machinery/door/blast/regular/open{
 	dir = 4;
-	icon_state = "pdoor0";
 	id_tag = "xenobio4";
-	name = "Containment Blast Doors";
-	opacity = 0
+	name = "Containment Blast Doors"
 	},
 /obj/wallframe_spawn/reinforced,
 /turf/simulated/floor/plating,
@@ -84214,13 +84112,10 @@
 /obj/machinery/door/airlock/highsecurity{
 	dir = 4
 	},
-/obj/machinery/door/blast/regular{
-	density = 0;
+/obj/machinery/door/blast/regular/open{
 	dir = 4;
-	icon_state = "pdoor0";
 	id_tag = "AILockdown";
-	name = "AI Core Blastdoor";
-	opacity = 0
+	name = "AI Core Blastdoor"
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -85294,13 +85189,10 @@
 /area/medical/sleeper)
 "sfx" = (
 /obj/wallframe_spawn/reinforced/hull,
-/obj/machinery/door/blast/regular{
-	density = 0;
+/obj/machinery/door/blast/regular/open{
 	dir = 2;
-	icon_state = "pdoor0";
 	id_tag = "xenobioaqua";
-	name = "Containment Blast Doors";
-	opacity = 0
+	name = "Containment Blast Doors"
 	},
 /turf/simulated/floor/plating,
 /area/rnd/xenobiology/water_cell)
@@ -85946,12 +85838,9 @@
 /turf/simulated/floor/plating,
 /area/maintenance/solar/starboard)
 "som" = (
-/obj/machinery/door/blast/regular{
-	density = 0;
-	icon_state = "pdoor0";
+/obj/machinery/door/blast/regular/open{
 	id_tag = "xenobio2";
-	name = "Containment Blast Doors";
-	opacity = 0
+	name = "Containment Blast Doors"
 	},
 /obj/wallframe_spawn/reinforced_phoron/hull,
 /turf/simulated/floor/plating,
@@ -87470,13 +87359,10 @@
 /area/hallway/primary/firstdeck/aft)
 "sGG" = (
 /obj/wallframe_spawn/reinforced,
-/obj/machinery/door/blast/regular{
-	density = 0;
+/obj/machinery/door/blast/regular/open{
 	dir = 4;
-	icon_state = "pdoor0";
 	id_tag = "Biohazard";
-	name = "Biohazard Shutter";
-	opacity = 0
+	name = "Biohazard Shutter"
 	},
 /obj/structure/cable/green,
 /obj/machinery/door/firedoor,
@@ -89807,12 +89693,9 @@
 /turf/simulated/floor/reinforced,
 /area/exploration_shuttle/airlock)
 "tfb" = (
-/obj/machinery/door/blast/regular{
-	density = 0;
-	icon_state = "pdoor0";
+/obj/machinery/door/blast/regular/open{
 	id_tag = "Biohazard";
-	name = "Biohazard Shutter";
-	opacity = 0
+	name = "Biohazard Shutter"
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -91449,12 +91332,9 @@
 /obj/floor_decal/borderfloorwhite{
 	dir = 4
 	},
-/obj/machinery/door/blast/regular{
-	density = 0;
-	icon_state = "pdoor0";
+/obj/machinery/door/blast/regular/open{
 	id_tag = "Biohazard";
-	name = "Biohazard Shutter";
-	opacity = 0
+	name = "Biohazard Shutter"
 	},
 /turf/simulated/floor/tiled/white/monotile,
 /area/rnd/xenobiology/entry2)
@@ -92853,12 +92733,9 @@
 /area/crew_quarters/dungeon_master_lounge)
 "tLU" = (
 /obj/wallframe_spawn/reinforced_phoron,
-/obj/machinery/door/blast/regular{
-	density = 0;
-	icon_state = "pdoor0";
+/obj/machinery/door/blast/regular/open{
 	id_tag = "misclab";
-	name = "Test Chamber Blast Doors";
-	opacity = 0
+	name = "Test Chamber Blast Doors"
 	},
 /obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/simple/hidden{
@@ -100720,13 +100597,10 @@
 	icon_state = "2-8"
 	},
 /obj/machinery/door/firedoor,
-/obj/machinery/door/blast/regular{
-	density = 0;
+/obj/machinery/door/blast/regular/open{
 	dir = 4;
-	icon_state = "pdoor0";
 	id_tag = "Biohazard";
-	name = "Biohazard Shutter";
-	opacity = 0
+	name = "Biohazard Shutter"
 	},
 /obj/floor_decal/techfloor,
 /obj/floor_decal/techfloor{
@@ -101417,13 +101291,10 @@
 	name = "Containment Pen";
 	req_access = newlist()
 	},
-/obj/machinery/door/blast/regular{
-	density = 0;
+/obj/machinery/door/blast/regular/open{
 	dir = 4;
-	icon_state = "pdoor0";
 	id_tag = "xenobio4";
-	name = "Containment Blast Doors";
-	opacity = 0
+	name = "Containment Blast Doors"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/blue{
 	dir = 4
@@ -104001,13 +103872,10 @@
 /area/turret_protected/ai)
 "waz" = (
 /obj/wallframe_spawn/reinforced/hull,
-/obj/machinery/door/blast/regular{
-	density = 0;
+/obj/machinery/door/blast/regular/open{
 	dir = 4;
-	icon_state = "pdoor0";
 	id_tag = "xenobio4";
-	name = "Containment Blast Doors";
-	opacity = 0
+	name = "Containment Blast Doors"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -104858,12 +104726,9 @@
 /area/maintenance/abandoned_common)
 "wky" = (
 /obj/wallframe_spawn/reinforced/hull,
-/obj/machinery/door/blast/regular{
-	density = 0;
-	icon_state = "pdoor0";
+/obj/machinery/door/blast/regular/open{
 	id_tag = "xenobio3";
-	name = "Containment Blast Doors";
-	opacity = 0
+	name = "Containment Blast Doors"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/cable/green{
@@ -104927,13 +104792,10 @@
 /obj/machinery/door/airlock/highsecurity{
 	dir = 4
 	},
-/obj/machinery/door/blast/regular{
-	density = 0;
+/obj/machinery/door/blast/regular/open{
 	dir = 4;
-	icon_state = "pdoor0";
 	id_tag = "AILockdown";
-	name = "AI Core Blastdoor";
-	opacity = 0
+	name = "AI Core Blastdoor"
 	},
 /turf/simulated/floor/bluegrid,
 /area/turret_protected/ai)
@@ -104942,12 +104804,9 @@
 /area/medical/morgue)
 "wlD" = (
 /obj/wallframe_spawn/reinforced/hull,
-/obj/machinery/door/blast/regular{
-	density = 0;
-	icon_state = "pdoor0";
+/obj/machinery/door/blast/regular/open{
 	id_tag = "xenobio3";
-	name = "Containment Blast Doors";
-	opacity = 0
+	name = "Containment Blast Doors"
 	},
 /turf/simulated/floor/plating,
 /area/rnd/xenobiology/level1)
@@ -105216,13 +105075,10 @@
 	name = "Containment Pen";
 	req_access = newlist()
 	},
-/obj/machinery/door/blast/regular{
-	density = 0;
+/obj/machinery/door/blast/regular/open{
 	dir = 4;
-	icon_state = "pdoor0";
 	id_tag = "xenobio1";
-	name = "Containment Blast Doors";
-	opacity = 0
+	name = "Containment Blast Doors"
 	},
 /obj/floor_decal/industrial/hatch/yellow,
 /turf/simulated/floor/reinforced,
@@ -106661,12 +106517,9 @@
 "wDM" = (
 /obj/machinery/door/firedoor,
 /obj/wallframe_spawn/reinforced,
-/obj/machinery/door/blast/regular{
-	density = 0;
-	icon_state = "pdoor0";
+/obj/machinery/door/blast/regular/open{
 	id_tag = "xenobioa3";
-	name = "Containment Blast Doors";
-	opacity = 0
+	name = "Containment Blast Doors"
 	},
 /turf/simulated/floor/plating,
 /area/rnd/xenobiology/level2)
@@ -107927,12 +107780,9 @@
 /turf/simulated/floor/tiled/monotile,
 /area/hallway/primary/thirddeck/aft)
 "wRz" = (
-/obj/machinery/door/blast/regular{
-	density = 0;
-	icon_state = "pdoor0";
+/obj/machinery/door/blast/regular/open{
 	id_tag = "Biohazard";
-	name = "Biohazard Shutter";
-	opacity = 0
+	name = "Biohazard Shutter"
 	},
 /obj/machinery/door/firedoor,
 /obj/floor_decal/borderfloorwhite{
@@ -108204,13 +108054,10 @@
 /area/thruster/d3port)
 "wUv" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/blast/regular{
-	density = 0;
+/obj/machinery/door/blast/regular/open{
 	dir = 4;
-	icon_state = "pdoor0";
 	id_tag = "AILockdown";
-	name = "AI Core Blastdoor";
-	opacity = 0
+	name = "AI Core Blastdoor"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -108713,12 +108560,9 @@
 /area/maintenance/compactor)
 "wZI" = (
 /obj/wallframe_spawn/reinforced/hull,
-/obj/machinery/door/blast/regular{
-	density = 0;
-	icon_state = "pdoor0";
+/obj/machinery/door/blast/regular/open{
 	id_tag = "xenobio1";
-	name = "Containment Blast Doors";
-	opacity = 0
+	name = "Containment Blast Doors"
 	},
 /turf/simulated/floor/plating,
 /area/rnd/xenobiology/level1)
@@ -109839,12 +109683,9 @@
 	icon_state = "0-4"
 	},
 /obj/structure/disposalpipe/segment,
-/obj/machinery/door/blast/regular{
-	density = 0;
-	icon_state = "pdoor0";
+/obj/machinery/door/blast/regular/open{
 	id_tag = "Biohazard";
-	name = "Biohazard Shutter";
-	opacity = 0
+	name = "Biohazard Shutter"
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable/green{
@@ -110452,12 +110293,9 @@
 	icon_state = "0-8"
 	},
 /obj/structure/disposalpipe/segment,
-/obj/machinery/door/blast/regular{
-	density = 0;
-	icon_state = "pdoor0";
+/obj/machinery/door/blast/regular/open{
 	id_tag = "Biohazard";
-	name = "Biohazard Shutter";
-	opacity = 0
+	name = "Biohazard Shutter"
 	},
 /obj/machinery/door/firedoor,
 /obj/wallframe_spawn/reinforced/polarized/full{
@@ -110719,12 +110557,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/blast/regular{
-	density = 0;
-	icon_state = "pdoor0";
+/obj/machinery/door/blast/regular/open{
 	id_tag = "xenobioa3";
-	name = "Containment Blast Doors";
-	opacity = 0
+	name = "Containment Blast Doors"
 	},
 /turf/simulated/floor/reinforced,
 /area/rnd/xenobiology/level2)
@@ -111678,12 +111513,9 @@
 	req_access = newlist()
 	},
 /obj/machinery/door/firedoor,
-/obj/machinery/door/blast/regular{
-	density = 0;
-	icon_state = "pdoor0";
+/obj/machinery/door/blast/regular/open{
 	id_tag = "Biohazard";
-	name = "Biohazard Shutter";
-	opacity = 0
+	name = "Biohazard Shutter"
 	},
 /obj/floor_decal/techfloor{
 	dir = 4

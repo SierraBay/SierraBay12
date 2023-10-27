@@ -1810,13 +1810,10 @@
 /obj/wallframe_spawn/reinforced/polarized{
 	id = "rcheckinner_windows"
 	},
-/obj/machinery/door/blast/regular{
-	density = 0;
+/obj/machinery/door/blast/regular/open{
 	dir = 4;
-	icon_state = "pdoor0";
 	id_tag = "PetrovShield";
-	name = "Petrov Blast Shutters";
-	opacity = 0
+	name = "Petrov Blast Shutters"
 	},
 /obj/paint/nt_white,
 /obj/paint_stripe/nt_red,
@@ -1977,12 +1974,9 @@
 /turf/simulated/floor/tiled/steel_ridged,
 /area/space)
 "kb" = (
-/obj/machinery/door/blast/regular{
-	density = 0;
-	icon_state = "pdoor0";
+/obj/machinery/door/blast/regular/open{
 	id_tag = "rescuedock";
-	name = "Blast Shutters";
-	opacity = 0
+	name = "Blast Shutters"
 	},
 /obj/wallframe_spawn/reinforced/titanium,
 /obj/paint/hull,
@@ -2333,13 +2327,10 @@
 /area/space)
 "mr" = (
 /obj/wallframe_spawn/reinforced/titanium,
-/obj/machinery/door/blast/regular{
-	density = 0;
+/obj/machinery/door/blast/regular/open{
 	dir = 4;
-	icon_state = "pdoor0";
 	id_tag = "rescueinfirm";
-	name = "Blast Shutters";
-	opacity = 0
+	name = "Blast Shutters"
 	},
 /obj/paint/hull,
 /turf/simulated/floor/plating,
@@ -2499,13 +2490,10 @@
 /area/space)
 "nq" = (
 /obj/wallframe_spawn/reinforced/titanium,
-/obj/machinery/door/blast/regular{
-	density = 0;
+/obj/machinery/door/blast/regular/open{
 	dir = 4;
-	icon_state = "pdoor0";
 	id_tag = "PetrovShield";
-	name = "Petrov Blast Shutters";
-	opacity = 0
+	name = "Petrov Blast Shutters"
 	},
 /obj/paint/nt_white,
 /obj/paint_stripe/nt_red,
@@ -4264,13 +4252,10 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/machinery/door/blast/regular{
-	density = 0;
+/obj/machinery/door/blast/regular/open{
 	dir = 4;
-	icon_state = "pdoor0";
 	id_tag = "PetrovBiohazard";
-	name = "Petrov Biohazard Shutters";
-	opacity = 0
+	name = "Petrov Biohazard Shutters"
 	},
 /obj/floor_decal/industrial/hatch/yellow,
 /turf/simulated/floor/tiled/white/monotile,
@@ -5264,13 +5249,10 @@
 /turf/simulated/floor/tiled/white/monotile,
 /area/space)
 "CT" = (
-/obj/machinery/door/blast/regular{
-	density = 0;
+/obj/machinery/door/blast/regular/open{
 	dir = 4;
-	icon_state = "pdoor0";
 	id_tag = "PetrovBiohazard";
-	name = "Petrov Biohazard Shutters";
-	opacity = 0
+	name = "Petrov Biohazard Shutters"
 	},
 /obj/structure/cable/green{
 	d1 = 4;
@@ -5658,13 +5640,10 @@
 /obj/wallframe_spawn/reinforced_phoron/titanium,
 /obj/machinery/door/firedoor,
 /obj/paint/nt_white,
-/obj/machinery/door/blast/regular{
-	density = 0;
+/obj/machinery/door/blast/regular/open{
 	dir = 4;
-	icon_state = "pdoor0";
 	id_tag = "toxins_shutters";
-	name = "Mixing Chamber Blast Shutters";
-	opacity = 0
+	name = "Mixing Chamber Blast Shutters"
 	},
 /obj/paint_stripe/nt_red,
 /turf/simulated/floor/reinforced,
@@ -5770,12 +5749,9 @@
 /turf/simulated/floor/reinforced,
 /area/space)
 "Fm" = (
-/obj/machinery/door/blast/regular{
-	density = 0;
-	icon_state = "pdoor0";
+/obj/machinery/door/blast/regular/open{
 	id_tag = "PetrovShield";
-	name = "Petrov Blast Shutters";
-	opacity = 0
+	name = "Petrov Blast Shutters"
 	},
 /obj/wallframe_spawn/reinforced/polarized{
 	id = "rcheckinner_windows"
@@ -6627,13 +6603,10 @@
 /area/space)
 "Ke" = (
 /obj/wallframe_spawn/reinforced/titanium,
-/obj/machinery/door/blast/regular{
-	density = 0;
+/obj/machinery/door/blast/regular/open{
 	dir = 4;
-	icon_state = "pdoor0";
 	id_tag = "rescuebridge";
-	name = "Blast Shutters";
-	opacity = 0
+	name = "Blast Shutters"
 	},
 /obj/paint/hull,
 /turf/simulated/floor/plating,
@@ -7013,12 +6986,9 @@
 /area/space)
 "MB" = (
 /obj/wallframe_spawn/reinforced/titanium,
-/obj/machinery/door/blast/regular{
-	density = 0;
-	icon_state = "pdoor0";
+/obj/machinery/door/blast/regular/open{
 	id_tag = "PetrovShield";
-	name = "Petrov Blast Shutters";
-	opacity = 0
+	name = "Petrov Blast Shutters"
 	},
 /obj/paint/nt_white,
 /obj/paint_stripe/nt_red,
@@ -7359,13 +7329,10 @@
 /turf/simulated/floor/tiled/white/monotile,
 /area/space)
 "Ov" = (
-/obj/machinery/door/blast/regular{
-	density = 0;
+/obj/machinery/door/blast/regular/open{
 	dir = 4;
-	icon_state = "pdoor0";
 	id_tag = "rescueeva";
-	name = "Blast Shutters";
-	opacity = 0
+	name = "Blast Shutters"
 	},
 /obj/wallframe_spawn/reinforced/titanium,
 /obj/paint/hull,
@@ -7489,13 +7456,10 @@
 	},
 /obj/machinery/meter,
 /obj/paint/nt_white,
-/obj/machinery/door/blast/regular{
-	density = 0;
+/obj/machinery/door/blast/regular/open{
 	dir = 4;
-	icon_state = "pdoor0";
 	id_tag = "toxins_shutters";
-	name = "Mixing Chamber Blast Shutters";
-	opacity = 0
+	name = "Mixing Chamber Blast Shutters"
 	},
 /obj/paint_stripe/nt_red,
 /turf/simulated/floor/reinforced,

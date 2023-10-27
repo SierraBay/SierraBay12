@@ -8154,13 +8154,10 @@
 	},
 /area/centcom)
 "czc" = (
-/obj/machinery/door/blast/regular{
-	density = 0;
+/obj/machinery/door/blast/regular/open{
 	dir = 2;
-	icon_state = "pdoor0";
 	id_tag = "Thundernewred";
-	name = "Security Doors";
-	opacity = 0
+	name = "Security Doors"
 	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
@@ -8896,12 +8893,9 @@
 	},
 /area/centcom/living)
 "ebw" = (
-/obj/machinery/door/blast/regular{
-	density = 0;
-	icon_state = "pdoor0";
+/obj/machinery/door/blast/regular/open{
 	id_tag = "CentComPort";
-	name = "Security Doors";
-	opacity = 0
+	name = "Security Doors"
 	},
 /obj/floor_decal/borderfloor{
 	dir = 8
@@ -11905,12 +11899,9 @@
 	},
 /area/centcom/living)
 "kJq" = (
-/obj/machinery/door/blast/regular{
-	density = 0;
-	icon_state = "pdoor0";
+/obj/machinery/door/blast/regular/open{
 	id_tag = "CentComPort";
-	name = "Security Doors";
-	opacity = 0
+	name = "Security Doors"
 	},
 /obj/floor_decal/industrial/hatch/yellow,
 /obj/structure/disposalpipe/segment,
@@ -14224,12 +14215,9 @@
 	},
 /area/centcom/living)
 "pMl" = (
-/obj/machinery/door/blast/regular{
-	density = 0;
-	icon_state = "pdoor0";
+/obj/machinery/door/blast/regular/open{
 	id_tag = "CentComPort";
-	name = "Security Doors";
-	opacity = 0
+	name = "Security Doors"
 	},
 /obj/floor_decal/borderfloor{
 	dir = 4
@@ -16880,13 +16868,10 @@
 "uFx" = (
 /obj/wallframe_spawn/reinforced/hull,
 /obj/paint/black,
-/obj/machinery/door/blast/regular{
-	density = 0;
+/obj/machinery/door/blast/regular/open{
 	dir = 8;
-	icon_state = "pdoor0";
 	id_tag = "CC_Checkpoint";
-	name = "Checkpoint";
-	opacity = 0
+	name = "Checkpoint"
 	},
 /turf/unsimulated/floor/plating,
 /area/centcom)
@@ -17426,12 +17411,9 @@
 	dir = 1;
 	req_access = newlist()
 	},
-/obj/machinery/door/blast/regular{
-	density = 0;
-	icon_state = "pdoor0";
+/obj/machinery/door/blast/regular/open{
 	id_tag = "CC_Checkpoint";
-	name = "Checkpoint";
-	opacity = 0
+	name = "Checkpoint"
 	},
 /turf/unsimulated/floor{
 	icon = 'icons/turf/flooring/tiles.dmi';
@@ -17705,13 +17687,10 @@
 	},
 /area/centcom)
 "wKi" = (
-/obj/machinery/door/blast/regular{
-	density = 0;
+/obj/machinery/door/blast/regular/open{
 	dir = 2;
-	icon_state = "pdoor0";
 	id_tag = "Thundernewblue";
-	name = "Security Doors";
-	opacity = 0
+	name = "Security Doors"
 	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
