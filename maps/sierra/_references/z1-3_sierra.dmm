@@ -634,7 +634,6 @@
 /obj/machinery/atmospherics/unary/outlet_injector{
 	dir = 1;
 	frequency = 1441;
-	icon_state = "map_injector";
 	id = "o2_in";
 	use_power = 1
 	},
@@ -13370,7 +13369,6 @@
 /obj/machinery/atmospherics/unary/outlet_injector{
 	dir = 8;
 	frequency = 1441;
-	icon_state = "map_injector";
 	id = "co2_in";
 	pixel_y = 1;
 	use_power = 1
@@ -19154,7 +19152,6 @@
 /obj/machinery/atmospherics/unary/outlet_injector{
 	dir = 8;
 	frequency = 1441;
-	icon_state = "map_injector";
 	id = "n2o_in";
 	pixel_y = 1;
 	use_power = 1
@@ -21098,7 +21095,6 @@
 /obj/machinery/atmospherics/unary/outlet_injector{
 	dir = 8;
 	frequency = 1441;
-	icon_state = "map_injector";
 	id = "test_in";
 	use_power = 1
 	},
@@ -23994,7 +23990,6 @@
 	dir = 6
 	},
 /obj/machinery/atmospherics/unary/outlet_injector{
-	icon_state = "map_injector";
 	id = "fuel1p_in";
 	use_power = 1
 	},
@@ -37761,7 +37756,6 @@
 	dir = 10
 	},
 /obj/machinery/atmospherics/unary/outlet_injector{
-	icon_state = "map_injector";
 	id = "o21p_in";
 	use_power = 1
 	},
@@ -46597,7 +46591,6 @@
 /obj/machinery/atmospherics/unary/outlet_injector{
 	dir = 8;
 	frequency = 1441;
-	icon_state = "map_injector";
 	id = "test_xenoflora_in";
 	use_power = 1
 	},
@@ -51228,7 +51221,6 @@
 	},
 /obj/machinery/atmospherics/unary/outlet_injector{
 	dir = 1;
-	icon_state = "map_injector";
 	id = "o24p_in";
 	use_power = 1
 	},
@@ -54603,7 +54595,6 @@
 /obj/machinery/atmospherics/unary/outlet_injector{
 	dir = 8;
 	frequency = 1438;
-	icon_state = "map_injector";
 	id = "cooling_in";
 	name = "Coolant Injector";
 	pixel_y = 1;
@@ -57761,7 +57752,6 @@
 	dir = 10
 	},
 /obj/machinery/atmospherics/unary/outlet_injector{
-	icon_state = "map_injector";
 	id = "o23p_in";
 	use_power = 1
 	},
@@ -63233,7 +63223,6 @@
 	},
 /obj/machinery/atmospherics/unary/outlet_injector{
 	dir = 1;
-	icon_state = "map_injector";
 	id = "fuel4p_in";
 	use_power = 1
 	},
@@ -67800,7 +67789,6 @@
 	},
 /obj/machinery/atmospherics/unary/outlet_injector{
 	dir = 1;
-	icon_state = "map_injector";
 	id = "fuel2p_in";
 	use_power = 1
 	},
@@ -79914,7 +79902,6 @@
 	dir = 6
 	},
 /obj/machinery/atmospherics/unary/outlet_injector{
-	icon_state = "map_injector";
 	id = "fuel3p_in";
 	use_power = 1
 	},
@@ -83726,7 +83713,6 @@
 	},
 /obj/machinery/atmospherics/unary/outlet_injector{
 	dir = 1;
-	icon_state = "map_injector";
 	id = "o22p_in";
 	use_power = 1
 	},
@@ -101273,7 +101259,6 @@
 /obj/machinery/atmospherics/unary/outlet_injector{
 	dir = 4;
 	frequency = 1441;
-	icon_state = "map_injector";
 	id = "n2_in";
 	use_power = 1
 	},
@@ -102275,7 +102260,6 @@
 /obj/machinery/atmospherics/unary/outlet_injector{
 	dir = 8;
 	frequency = 1441;
-	icon_state = "map_injector";
 	id = "h2_in";
 	pixel_y = 1;
 	use_power = 1
