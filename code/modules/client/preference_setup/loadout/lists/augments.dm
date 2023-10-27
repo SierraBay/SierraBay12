@@ -1,5 +1,5 @@
 /datum/gear/augment
-	sort_category = "Augments"
+	sort_category = "Аугментации"
 	category = /datum/gear/augment
 	cost = 2
 
