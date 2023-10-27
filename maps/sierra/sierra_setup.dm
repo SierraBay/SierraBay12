@@ -37,9 +37,7 @@
 	for(var/obj/overmap/visitable/O in space_things)
 		var/location_desc = " на текущем квадрате."
 		if(O.loc != sierra.loc)
-			var/bearing = round(90 - Atan2(O.x - sierra.x, O.y - sierra.y),5) //fucking triangles how do they work
-			if(bearing < 0)
-				bearing += 360
+			var/bearing = get_bearing(sierra, O) //fucking triangles how do they work
 			location_desc = ", по азимуту [bearing]."
 		welcome_text += "<li>\A <b>[O.name]</b>[location_desc]</li>"
 
