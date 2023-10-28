@@ -255,7 +255,7 @@
 	// Replace any missing limbs.
 	for(var/name in BP_ALL_LIMBS)
 		var/obj/item/organ/external/O = character.organs_by_name[name]
-		if(!O && organ_data[name] != "ампутировано")
+		if(!O && organ_data[name] != "amputated")
 			var/list/organ_data = character.species.has_limbs[name]
 			if(!islist(organ_data)) continue
 			var/limb_path = organ_data["path"]
@@ -269,7 +269,7 @@
 			continue
 		O.status = 0
 		O.model = null
-		if(status == "ампутировано")
+		if(status == "amputated")
 			character.organs_by_name[O.organ_tag] = null
 			character.organs -= O
 			if(O.children) // This might need to become recursive.

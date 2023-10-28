@@ -120,7 +120,7 @@
 /datum/keybinding/mob/target_left_leg
 	hotkey_keys = list("Numpad3")
 	name = "target_left_leg"
-	full_name = "Target: Left leg"
+	full_name = "Target: левая нога"
 	description = ""
 
 

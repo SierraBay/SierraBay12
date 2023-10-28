@@ -194,20 +194,20 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 	if (length(pref.body_markings))
 		. += "<br />"
 
-	. += "<br />[TBTN("reset_limbs", "Сбросить", "Части тела")] [BTN("limbs", "Конечности")] [BTN("organs", "Adjust Organs")]"
+	. += "<br />[TBTN("reset_limbs", "Reset", "Body Parts")] [BTN("limbs", "Adjust Limbs")] [BTN("organs", "Adjust Organs")]"
 	var/list/alt_organs = list()
 	for (var/name in pref.organ_data)
 		var/status = pref.organ_data[name]
 		var/organ_name
 		switch (name)
-			if (BP_L_ARM) organ_name = "левая рука"
-			if (BP_R_ARM) organ_name = "правая рука"
+			if (BP_L_ARM) organ_name = "left arm"
+			if (BP_R_ARM) organ_name = "right arm"
 			if (BP_L_LEG) organ_name = "левая нога"
-			if (BP_R_LEG) organ_name = "правая нога"
-			if (BP_L_FOOT) organ_name = "левая ступня"
-			if (BP_R_FOOT) organ_name = "правая ступня"
-			if (BP_L_HAND) organ_name = "левая кисть"
-			if (BP_R_HAND) organ_name = "правая кисть"
+			if (BP_R_LEG) organ_name = "right leg"
+			if (BP_L_FOOT) organ_name = "left foot"
+			if (BP_R_FOOT) organ_name = "right foot"
+			if (BP_L_HAND) organ_name = "left hand"
+			if (BP_R_HAND) organ_name = "right hand"
 			if (BP_HEART) organ_name = BP_HEART
 			if (BP_EYES) organ_name = BP_EYES
 			if (BP_BRAIN) organ_name = BP_BRAIN
@@ -215,18 +215,18 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 			if (BP_LIVER) organ_name = BP_LIVER
 			if (BP_KIDNEYS) organ_name = BP_KIDNEYS
 			if (BP_STOMACH) organ_name = BP_STOMACH
-			if (BP_CHEST) organ_name = "торс"
-			if (BP_GROIN) organ_name = "пах"
-			if (BP_HEAD) organ_name = "голова"
+			if (BP_CHEST) organ_name = "upper body"
+			if (BP_GROIN) organ_name = "lower body"
+			if (BP_HEAD) organ_name = "head"
 		switch (status)
-			if ("ампутировано") alt_organs += "Ампутировано [organ_name]"
+			if ("amputated") alt_organs += "Amputated [organ_name]"
 			if ("mechanical")
 				alt_organs += "[organ_name == BP_BRAIN ? "Positronic" : "Synthetic"] [organ_name]"
 			if ("cyborg")
 				var/datum/robolimb/limb = basic_robolimb
 				if (pref.rlimb_data[name] && all_robolimbs[pref.rlimb_data[name]])
 					limb = all_robolimbs[pref.rlimb_data[name]]
-				alt_organs += "[organ_name] протезировано компанией [limb.company]"
+				alt_organs += "[limb.company] [organ_name] prosthesis"
 			if ("assisted")
 				switch (organ_name)
 					if (BP_HEART) alt_organs += "Pacemaker-assisted [organ_name]"
@@ -235,7 +235,7 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 					if (BP_BRAIN) alt_organs += "Machine-interface [organ_name]"
 					else alt_organs += "Mechanically assisted [organ_name]"
 	if (!length(alt_organs))
-		alt_organs += "(Нет отличий от стандартного тела)"
+		alt_organs += "(No differences from baseline)"
 	. += "<br />[alt_organs.Join(", ")]"
 	. = jointext(., null)
 
@@ -468,7 +468,7 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 
 	else if(href_list["limbs"])
 
-		var/list/limb_selection_list = list("левая нога","правая нога","левая рука","правая рука","левая ступня","правая ступня","левая кисть","правая кисть","всё тело")
+		var/list/limb_selection_list = list("левая нога","Right Leg","Left Arm","Right Arm","Left Foot","Right Foot","Left Hand","Right Hand","Full Body")
 
 		// Full prosthetic bodies without a brain are borderline unkillable so make sure they have a brain to remove/destroy.
 		var/datum/species/current_species = all_species[pref.species]
@@ -477,7 +477,7 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 		else if(pref.organ_data[BP_CHEST] == "cyborg")
 			limb_selection_list |= "Head"
 
-		var/organ_tag = input(user, "Какие конечности вы хотите изменить?") as null|anything in limb_selection_list
+		var/organ_tag = input(user, "Which limb do you want to change?") as null|anything in limb_selection_list
 
 		if(!organ_tag || !CanUseTopic(user)) return TOPIC_NOACTION
 
@@ -486,46 +486,46 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 		var/third_limb = null  // if you try to unchange the hand, the arm should also change
 
 		// Do not let them amputate their entire body, ty.
-		var/list/choice_options = list("Стандарт","Ампутировано","Протезировано")
+		var/list/choice_options = list("Normal","Amputated","Prosthesis")
 
 		//Dare ye who decides to one day make fbps be able to have fleshy bits. Heed my warning, recursion is a bitch. - Snapshot
 		if(pref.organ_data[BP_CHEST] == "cyborg")
-			choice_options = list("Ампутировано", "Протезировано")
+			choice_options = list("Amputated", "Prosthesis")
 
 		switch(organ_tag)
 			if("левая нога")
 				limb = BP_L_LEG
 				second_limb = BP_L_FOOT
-			if("правая нога")
+			if("Right Leg")
 				limb = BP_R_LEG
 				second_limb = BP_R_FOOT
-			if("левая рука")
+			if("Left Arm")
 				limb = BP_L_ARM
 				second_limb = BP_L_HAND
-			if("правая рука")
+			if("Right Arm")
 				limb = BP_R_ARM
 				second_limb = BP_R_HAND
-			if("левая ступня")
+			if("Left Foot")
 				limb = BP_L_FOOT
 				third_limb = BP_L_LEG
-			if("правая ступня")
+			if("Right Foot")
 				limb = BP_R_FOOT
 				third_limb = BP_R_LEG
-			if("левая кисть")
+			if("Left Hand")
 				limb = BP_L_HAND
 				third_limb = BP_L_ARM
-			if("правая кисть")
+			if("Right Hand")
 				limb = BP_R_HAND
 				third_limb = BP_R_ARM
-			if("голова")
+			if("Head")
 				limb =        BP_HEAD
-				choice_options = list("Протезировано")
-			if("всё тело")
+				choice_options = list("Prosthesis")
+			if("Full Body")
 				limb =        BP_CHEST
 				third_limb =  BP_GROIN
-				choice_options = list("Стандарт","Протезировано")
+				choice_options = list("Normal","Prosthesis")
 
-		var/new_state = input(user, "Как вы хотите изменить эту конечность?") as null|anything in choice_options
+		var/new_state = input(user, "What state do you wish the limb to be in?") as null|anything in choice_options
 		if(!new_state || !CanUseTopic(user)) return TOPIC_NOACTION
 
 		switch(new_state)
@@ -541,16 +541,16 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 				if(third_limb)
 					pref.organ_data[third_limb] = null
 					pref.rlimb_data[third_limb] = null
-			if("Ампутировано")
+			if("Amputated")
 				if(limb == BP_CHEST)
 					return
-				pref.organ_data[limb] = "ампутировано"
+				pref.organ_data[limb] = "amputated"
 				pref.rlimb_data[limb] = null
 				if(second_limb)
-					pref.organ_data[second_limb] = "ампутировано"
+					pref.organ_data[second_limb] = "amputated"
 					pref.rlimb_data[second_limb] = null
 
-			if("Протезировано")
+			if("Prosthesis")
 				var/datum/species/temp_species = pref.species ? all_species[pref.species] : all_species[SPECIES_HUMAN]
 				var/tmp_species = temp_species.get_bodytype(user)
 				var/list/usable_manufacturers = list()
@@ -567,7 +567,7 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 					usable_manufacturers[company] = M
 				if(!length(usable_manufacturers))
 					return
-				var/choice = input(user, "Протез какого производителя вы хотите выбрать?") as null|anything in usable_manufacturers
+				var/choice = input(user, "Which manufacturer do you wish to use for this limb?") as null|anything in usable_manufacturers
 				if(!choice)
 					return
 				pref.rlimb_data[limb] = choice
@@ -575,7 +575,7 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 				if(second_limb)
 					pref.rlimb_data[second_limb] = choice
 					pref.organ_data[second_limb] = "cyborg"
-				if(third_limb && pref.organ_data[third_limb] == "ампутировано")
+				if(third_limb && pref.organ_data[third_limb] == "amputated")
 					pref.organ_data[third_limb] = null
 
 				if(limb == BP_CHEST)
