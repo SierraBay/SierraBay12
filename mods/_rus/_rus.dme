@@ -9,6 +9,8 @@
 #include "code/obj/storage_fancy_smokable.dm"
 #include "code/obj/storage_belt.dm"
 #include "code/obj/storage_backpack.dm"
+#include "code/obj/storage_boxes.dm"
+#include "code/obj/storage_firstaid.dm"
 
 // Далее просто включай свой код
 // #include "code/something.dm"
