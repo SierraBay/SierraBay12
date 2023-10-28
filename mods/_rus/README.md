@@ -28,7 +28,7 @@ ID мода: RUSSIAN_NAMES
 
 ### Изменения *кор кода*
 
-- `ПРИСУТСТВУЮТ, ДОБАВЛЮ ИНФОРМАЦИЮ ПОТОМ`
+- `ОТСТУТСТВУЮТ`
 <!--
   Если вы редактировали какие-либо процедуры или переменные в кор коде,
   они должны быть указаны здесь.
@@ -39,8 +39,7 @@ ID мода: RUSSIAN_NAMES
 
 ### Оверрайды
 
-- `mods/_master_files/sound/my_cool_sound.ogg`
-- `mods/_master_files/code/my_modular_override.dm`: `proc/overriden_proc`, `var/overriden_var`
+- `mods\_rus\code\obj\tools.dm`: `/obj/item/crowbar`, `var/name`, `var/desc`
 <!--
   Если ты добавлял новый модульный оверрайд, его нужно указать здесь.
   Здесь указываются оверрайды в твоём моде и папке `_master_files`
@@ -50,7 +49,7 @@ ID мода: RUSSIAN_NAMES
 
 ### Дефайны
 
-- `code/__defines/~mods/example.dm`: `EXAMPLE_SPEED_MULTIPLIER`, `EXAMPLE_SPEED_BASE`
+- `ОТСУТСТВУЮТ`
 <!--
   Если требовалось добавить какие-либо дефайны, укажи файлы,
   в которые ты их добавил, а также перечисли имена.
