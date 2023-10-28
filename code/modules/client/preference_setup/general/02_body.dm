@@ -202,7 +202,7 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 		switch (name)
 			if (BP_L_ARM) organ_name = "left arm"
 			if (BP_R_ARM) organ_name = "right arm"
-			if (BP_L_LEG) organ_name = "левая нога"
+			if (BP_L_LEG) organ_name = "left leg"
 			if (BP_R_LEG) organ_name = "right leg"
 			if (BP_L_FOOT) organ_name = "left foot"
 			if (BP_R_FOOT) organ_name = "right foot"
@@ -468,7 +468,7 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 
 	else if(href_list["limbs"])
 
-		var/list/limb_selection_list = list("левая нога","Right Leg","Left Arm","Right Arm","Left Foot","Right Foot","Left Hand","Right Hand","Full Body")
+		var/list/limb_selection_list = list("Left Leg","Right Leg","Left Arm","Right Arm","Left Foot","Right Foot","Left Hand","Right Hand","Full Body")
 
 		// Full prosthetic bodies without a brain are borderline unkillable so make sure they have a brain to remove/destroy.
 		var/datum/species/current_species = all_species[pref.species]
@@ -493,7 +493,7 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 			choice_options = list("Amputated", "Prosthesis")
 
 		switch(organ_tag)
-			if("левая нога")
+			if("Left Leg")
 				limb = BP_L_LEG
 				second_limb = BP_L_FOOT
 			if("Right Leg")
