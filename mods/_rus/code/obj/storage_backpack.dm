@@ -90,7 +90,7 @@
 	name = "Коричневая сумка"
 	desc = "Очень модная сумка из какой-то кожи."
 /obj/item/storage/backpack/satchel/leather/khaki
-	name = "khaki кожанная сумка
+	name = "khaki кожанная сумка"
 /obj/item/storage/backpack/satchel/leather/black
 	name = "Чёрная сумка"
 /obj/item/storage/backpack/satchel/leather/navy

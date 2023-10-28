@@ -23,7 +23,7 @@
 	name = "\improper Танах"
 	desc = "Основной религиозный текст иудаизма."
 /obj/item/storage/bible/quran
-	name = "\improperper Quran"
+	name = "\improper Quran"
 	desc = "Основной религиозный текст ислама."
 /obj/item/storage/bible/kojiki
 	name = "\improper Kojiki"

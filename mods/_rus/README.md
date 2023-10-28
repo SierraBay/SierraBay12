@@ -40,6 +40,10 @@ ID мода: RUSSIAN_NAMES
 ### Оверрайды
 
 - `mods\_rus\code\obj\tools.dm`: `/obj/item/crowbar`, `var/name`, `var/desc`
+- `mods\_rus\code\obj\tools.dm`: `/obj/item/screwdriver`, `var/name`, `var/desc`
+- `mods\_rus\code\obj\tools.dm`: `/obj/item/weldingtool`, `var/name`, `var/desc`
+- `mods\_rus\code\obj\tools.dm`: `/obj/item/wirecutters`, `var/name`, `var/desc`
+- `mods\_rus\code\obj\tools.dm`: `/obj/item/wrench`, `var/name`, `var/desc`
 <!--
   Если ты добавлял новый модульный оверрайд, его нужно указать здесь.
   Здесь указываются оверрайды в твоём моде и папке `_master_files`
