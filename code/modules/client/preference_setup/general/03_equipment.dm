@@ -97,7 +97,7 @@
 
 /datum/category_item/player_setup_item/physical/equipment/content()
 	. = list()
-	. += "<b>оборудование:</b><br>"
+	. += "<b>Equipment:</b><br>"
 	for(var/datum/category_group/underwear/UWC in GLOB.underwear.categories)
 		var/item_name = (pref.all_underwear && pref.all_underwear[UWC.name]) ? pref.all_underwear[UWC.name] : "None"
 		. += "[UWC.name]: <a href='?src=\ref[src];change_underwear=[UWC.name]'><b>[item_name]</b></a>"
