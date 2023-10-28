@@ -135,11 +135,11 @@
 	else if(load_failed)
 		dat += "Loading your savefile failed. Please adminhelp for assistance."
 	else
-		dat += "Slot - "
-		dat += "<a href='?src=\ref[src];load=1'>Load slot</a> - "
-		dat += "<a href='?src=\ref[src];save=1'>Save slot</a> - "
-		dat += "<a href='?src=\ref[src];resetslot=1'>Reset slot</a> - "
-		dat += "<a href='?src=\ref[src];reload=1'>Reload slot</a>"
+		dat += "Слот - "
+		dat += "<a href='?src=\ref[src];load=1'>Загрузить слот</a> - "
+		dat += "<a href='?src=\ref[src];save=1'>Сохранить слот</a> - "
+		dat += "<a href='?src=\ref[src];resetslot=1'>Сбросить слот</a> - "
+		dat += "<a href='?src=\ref[src];reload=1'>Перезагрузить слот</a>"
 
 	dat += "<br>"
 	dat += player_setup.header()
