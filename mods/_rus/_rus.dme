@@ -1,0 +1,10 @@
+#ifndef MODPACK_RUSSIAN_NAME
+#define MODPACK_RUSSIAN_NAME
+
+#include "_rus.dm"
+#include "code/obj/tools.dm"
+
+// Далее просто включай свой код
+// #include "code/something.dm"
+
+#endif

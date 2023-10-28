@@ -176,6 +176,7 @@
 	#include "../../mods/leroy_beasts/_leroy_beasts.dme"
 	#include "../../mods/screentips/_screentips.dme"
 	#include "../../mods/tajara/_tajara.dme"
+	#include "../../mods/_rus/_rus.dme"
 
 	// UNUSED MODS
 	// Keep them in ascending alphabetical order too, please
