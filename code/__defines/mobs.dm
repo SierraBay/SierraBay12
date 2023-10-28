@@ -480,12 +480,12 @@
 
 #define FAKE_INVIS_ALPHA_THRESHOLD 127 // If something's alpha var is at or below this number, certain things will pretend it is invisible.
 
-#define PRONOUNS_THEY_THEM	"they/them"
-#define PRONOUNS_HE_HIM		"he/his"
-#define PRONOUNS_SHE_HER	"she/her"
-#define PRONOUNS_IT_ITS		"it/its"
-#define PRONOUNS_HE_THEY	"he/they"
-#define PRONOUNS_SHE_THEY	"she/they"
+#define PRONOUNS_THEY_THEM	"они/их"
+#define PRONOUNS_HE_HIM		"он/его"
+#define PRONOUNS_SHE_HER	"она/её"
+#define PRONOUNS_IT_ITS		"оно/этого"
+#define PRONOUNS_HE_THEY	"он/их"
+#define PRONOUNS_SHE_THEY	"она/их"
 
 #define PRONOUNS_ALL list(PRONOUNS_THEY_THEM, PRONOUNS_HE_HIM, PRONOUNS_SHE_HER, PRONOUNS_HE_THEY, PRONOUNS_SHE_THEY, PRONOUNS_IT_ITS)
 

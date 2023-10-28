@@ -1,11 +1,11 @@
 /datum/mob_descriptor/height
-	name = "height"
+	name = "Рост"
 	standalone_value_descriptors = list(
-		"very short",
-		"short",
-		"of average height",
-		"tall",
-		"very tall"
+		"очень низкий",
+		"низкий",
+		"средний рост",
+		"высокий",
+		"очень высокий"
 		)
 	comparative_value_descriptor_equivalent = "around the same height as you"
 	comparative_value_descriptors_smaller = list(
@@ -25,14 +25,14 @@
 	)
 
 /datum/mob_descriptor/build
-	name = "build"
+	name = "Телосложение"
 	comparative_value_descriptor_equivalent = "around the same build as you"
 	standalone_value_descriptors = list(
-		"rail thin",
-		"thin",
-		"of average build",
-		"well-built",
-		"heavily built"
+		"тощий",
+		"худой",
+		"среднее телосложение",
+		"хорошо сложенный",
+		"полный"
 		)
 	comparative_value_descriptors_smaller = list(
 		"a bit smaller in build than you",
