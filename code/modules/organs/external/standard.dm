@@ -5,7 +5,7 @@
 //Make sure that w_class is set as if the parent mob was medium sized! This is because w_class is adjusted automatically for mob_size in New()
 
 /obj/item/organ/external/chest
-	name = "upper body"
+	name = "торс"
 	organ_tag = BP_CHEST
 	icon_name = "torso"
 	max_damage = 100
@@ -41,7 +41,7 @@
 		. += "Lung ruptured"
 
 /obj/item/organ/external/groin
-	name = "lower body"
+	name = "пах"
 	organ_tag = BP_GROIN
 	icon_name = "groin"
 	max_damage = 100
@@ -59,7 +59,7 @@
 
 /obj/item/organ/external/arm
 	organ_tag = BP_L_ARM
-	name = "left arm"
+	name = "левая рука"
 	icon_name = "l_arm"
 	max_damage = 50
 	min_broken_damage = 30
@@ -75,7 +75,7 @@
 
 /obj/item/organ/external/arm/right
 	organ_tag = BP_R_ARM
-	name = "right arm"
+	name = "правая рука"
 	icon_name = "r_arm"
 	body_part = ARM_RIGHT
 	joint = "right elbow"
@@ -100,7 +100,7 @@
 
 /obj/item/organ/external/leg/right
 	organ_tag = BP_R_LEG
-	name = "right leg"
+	name = "правая нога"
 	icon_name = "r_leg"
 	body_part = LEG_RIGHT
 	icon_position = RIGHT
@@ -109,7 +109,7 @@
 
 /obj/item/organ/external/foot
 	organ_tag = BP_L_FOOT
-	name = "left foot"
+	name = "левая ступня"
 	icon_name = "l_foot"
 	max_damage = 30
 	min_broken_damage = 15
@@ -125,7 +125,7 @@
 
 /obj/item/organ/external/foot/right
 	organ_tag = BP_R_FOOT
-	name = "right foot"
+	name = "правая ступня"
 	icon_name = "r_foot"
 	body_part = FOOT_RIGHT
 	icon_position = RIGHT
@@ -135,7 +135,7 @@
 
 /obj/item/organ/external/hand
 	organ_tag = BP_L_HAND
-	name = "left hand"
+	name = "левая кисть"
 	icon_name = "l_hand"
 	max_damage = 30
 	min_broken_damage = 15
@@ -150,7 +150,7 @@
 
 /obj/item/organ/external/hand/right
 	organ_tag = BP_R_HAND
-	name = "right hand"
+	name = "правая кисть"
 	icon_name = "r_hand"
 	body_part = HAND_RIGHT
 	parent_organ = BP_R_ARM
