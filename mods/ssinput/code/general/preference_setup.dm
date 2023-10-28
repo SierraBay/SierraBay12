@@ -6,7 +6,7 @@
 
 
 /datum/category_group/player_setup_category/controls
-	name = "Управление"
+	name = "Controls"
 	sort_order = 9
 	category_item_type = /datum/category_item/player_setup_item/controls
 
