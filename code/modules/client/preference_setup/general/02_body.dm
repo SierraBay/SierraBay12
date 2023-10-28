@@ -194,7 +194,7 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 	if (length(pref.body_markings))
 		. += "<br />"
 
-	. += "<br />[TBTN("reset_limbs", "Сбросить", "Части тела")] [BTN("limbs", "Конечности")] [BTN("organs", "Органы")]"
+	. += "<br />[TBTN("reset_limbs", "Сбросить", "Части тела")] [BTN("limbs", "Конечности")] [BTN("organs", "Adjust Organs")]"
 	var/list/alt_organs = list()
 	for (var/name in pref.organ_data)
 		var/status = pref.organ_data[name]
@@ -221,7 +221,7 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 		switch (status)
 			if ("ампутировано") alt_organs += "Ампутировано [organ_name]"
 			if ("mechanical")
-				alt_organs += "[organ_name == BP_BRAIN ? "Позитронный" : "Синтетический"] [organ_name]"
+				alt_organs += "[organ_name == BP_BRAIN ? "Positronic" : "Synthetic"] [organ_name]"
 			if ("cyborg")
 				var/datum/robolimb/limb = basic_robolimb
 				if (pref.rlimb_data[name] && all_robolimbs[pref.rlimb_data[name]])
@@ -229,11 +229,11 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 				alt_organs += "[organ_name] протезировано компанией [limb.company]"
 			if ("assisted")
 				switch (organ_name)
-					if (BP_HEART) alt_organs += "[organ_name] работает с помощью кардиостимульятора"
+					if (BP_HEART) alt_organs += "Pacemaker-assisted [organ_name]"
 					if ("voicebox") alt_organs += "Surgically altered [organ_name]"
-					if (BP_EYES) alt_organs += "Наложение сетчатки на [organ_name]"
-					if (BP_BRAIN) alt_organs += "Машинный интерфейс [organ_name]"
-					else alt_organs += "[organ_name] механезировано"
+					if (BP_EYES) alt_organs += "Retinal overlayed [organ_name]"
+					if (BP_BRAIN) alt_organs += "Machine-interface [organ_name]"
+					else alt_organs += "Mechanically assisted [organ_name]"
 	if (!length(alt_organs))
 		alt_organs += "(Нет отличий от стандартного тела)"
 	. += "<br />[alt_organs.Join(", ")]"
@@ -590,43 +590,43 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 		return TOPIC_REFRESH_UPDATE_PREVIEW
 
 	else if(href_list["organs"])
-		var/organ_name = input(user, "Какой орган вы хотите заменить?") as null|anything in list("сердце", "глаза", "лёгкие", "печень", "почки", "желудок")
+		var/organ_name = input(user, "Which internal function do you want to change?") as null|anything in list("Heart", "Eyes", "Lungs", "Liver", "Kidneys", "Stomach")
 		if(!organ_name) return
 
 		var/organ = null
 		switch(organ_name)
-			if("сердце")
+			if("Heart")
 				organ = BP_HEART
-			if("глаза")
+			if("Eyes")
 				organ = BP_EYES
-			if("лёгкие")
+			if("Lungs")
 				organ = BP_LUNGS
-			if("печень")
+			if("Liver")
 				organ = BP_LIVER
-			if("почки")
+			if("Kidneys")
 				organ = BP_KIDNEYS
-			if("желудок")
+			if("Stomach")
 				organ = BP_STOMACH
 
-		var/list/organ_choices = list("Стандарт","Вспомогательное","Синтетическое")
+		var/list/organ_choices = list("Normal","Assisted","Synthetic")
 
 		if(mob_species && mob_species.spawn_flags & SPECIES_NO_ROBOTIC_INTERNAL_ORGANS)
-			organ_choices -= "Вспомогательное"
-			organ_choices -= "Синтетическое"
+			organ_choices -= "Assisted"
+			organ_choices -= "Synthetic"
 
 		if(pref.organ_data[BP_CHEST] == "cyborg")
-			organ_choices -= "Стандарт"
-			organ_choices += "Синтетическое"
+			organ_choices -= "Normal"
+			organ_choices += "Synthetic"
 
-		var/new_state = input(user, "Какой тип протеза органа вы хотите выбрать?") as null|anything in organ_choices
+		var/new_state = input(user, "What state do you wish the organ to be in?") as null|anything in organ_choices
 		if(!new_state) return
 
 		switch(new_state)
-			if("Стандарт")
+			if("Normal")
 				pref.organ_data[organ] = null
-			if("Вспомогательное")
+			if("Assisted")
 				pref.organ_data[organ] = "assisted"
-			if("Синтетическое")
+			if("Synthetic")
 				pref.organ_data[organ] = "mechanical"
 
 		sanitize_organs()
