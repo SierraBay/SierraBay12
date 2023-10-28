@@ -5,71 +5,71 @@
 
 /datum/category_item/underwear/socks/none
 	always_last = TRUE
-	name = "None"
+	name = "Нет"
 	underwear_type = null
 
 /datum/category_item/underwear/socks/normal
-	name = "Normal"
+	name = "Обычные"
 	icon_state = "socks_norm"
 	has_color = TRUE
 
 /datum/category_item/underwear/socks/short
-	name = "Short"
+	name = "Короткие"
 	icon_state = "socks_short"
 	has_color = TRUE
 
 /datum/category_item/underwear/socks/thigh
-	name = "Thigh"
+	name = "Чулки"
 	underwear_name = "thigh highs"
 	icon_state = "socks_thigh"
 	has_color = TRUE
 
 /datum/category_item/underwear/socks/knee
-	name = "Knee"
+	name = "Гольфы"
 	underwear_name = "knee highs"
 	icon_state = "socks_knee"
 	has_color = TRUE
 
 /datum/category_item/underwear/socks/striped_knee
-	name = "Knee, striped"
+	name = "Гольфы в полоску"
 	underwear_name = "knee highs"
 	icon_state = "striped_knee"
 	has_color = TRUE
 
 /datum/category_item/underwear/socks/striped_thigh
-	name = "Thigh, striped"
+	name = "Чулки в полоску"
 	underwear_name = "thigh highs"
 	icon_state = "striped_thigh"
 	has_color = TRUE
 
 /datum/category_item/underwear/socks/pantyhose
-	name = "Pantyhose"
+	name = "Колготки"
 	underwear_name = "pantyhose"
 	icon_state = "pantyhose"
 
 /datum/category_item/underwear/socks/thin_thigh
-	name = "Thigh, thin"
+	name = "Чулки капроновые"
 	underwear_name = "thigh highs"
 	icon_state = "thin_thigh"
 	has_color = TRUE
 
 /datum/category_item/underwear/socks/thin_knee
-	name = "Knee, thin"
+	name = "Гольфы капроновые"
 	underwear_name = "knee highs"
 	icon_state = "thin_knee"
 	has_color = TRUE
 
 /datum/category_item/underwear/socks/rainbow_thigh
-	name = "Thigh, rainbow"
+	name = "Чулки радужные"
 	underwear_name = "thigh highs"
 	icon_state = "rainbow_thigh"
 
 /datum/category_item/underwear/socks/rainbow_knee
-	name = "Knee, rainbow"
+	name = "Гольфы радужные"
 	underwear_name = "knee highs"
 	icon_state = "rainbow_knee"
 
 /datum/category_item/underwear/socks/fishnet
-	name = "Fishnet"
+	name = "Колготки в сетку"
 	underwear_name = "fishnet"
 	icon_state = "fishnet"

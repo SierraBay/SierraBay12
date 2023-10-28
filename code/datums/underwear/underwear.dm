@@ -14,22 +14,22 @@
 	return sort_order
 
 /datum/category_group/underwear/top
-	name = "Underwear, top"
+	name = "Нижнее бельё, верх"
 	sort_order = 1
 	category_item_type = /datum/category_item/underwear/top
 
 /datum/category_group/underwear/bottom
-	name = "Underwear, bottom"
+	name = "Нижнее бельё, низ"
 	sort_order = 2
 	category_item_type = /datum/category_item/underwear/bottom
 
 /datum/category_group/underwear/socks
-	name = "Socks"
+	name = "Носки"
 	sort_order = 3
 	category_item_type = /datum/category_item/underwear/socks
 
 /datum/category_group/underwear/undershirt
-	name = "Undershirt"
+	name = "Майка"
 	sort_order = 4 // Undershirts currently have the highest sort order because they may cover both underwear and socks.
 	category_item_type = /datum/category_item/underwear/undershirt
 
