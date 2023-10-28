@@ -167,9 +167,9 @@
 	send_rsc(user, pref.preview_icon, "previewicon.png")
 	var/width = pref.preview_icon.Width()
 	var/height = pref.preview_icon.Height()
-	. = "<b>Preview:</b>"
-	. += "<br />[BTN("cyclebg", "Cycle Background")]"
-	. += " - [BTN("previewgear", "[pref.preview_gear ? "Hide" : "Show"] Loadout")]"
-	. += " - [BTN("previewjob", "[pref.preview_job ? "Hide" : "Show"] Uniform")]"
-	. += " - [BTN("resize", "Resize")]"
+	. = "<b>Предпросмотр:</b>"
+	. += "<br />[BTN("cyclebg", "Изменить задний фон")]"
+	. += " - [BTN("previewgear", "[pref.preview_gear ? "Скрыть" : "Показать"] личные вещи")]"
+	. += " - [BTN("previewjob", "[pref.preview_job ? "Скрыть" : "Показать"] униформу")]"
+	. += " - [BTN("resize", "Изменить размер")]"
 	. += {"<br /><div class="statusDisplay" style="text-align:center"><img src="previewicon.png" width="[width]" height="[height]"></div>"}

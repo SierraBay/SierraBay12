@@ -5,7 +5,7 @@
 var/global/const/CHARACTER_PREFERENCE_INPUT_TITLE = "Character Preference"
 
 /datum/category_group/player_setup_category/physical_preferences
-	name = "Physical"
+	name = "Основное"
 	sort_order = 1
 	item_wrap_index = 2
 	category_item_type = /datum/category_item/player_setup_item/physical

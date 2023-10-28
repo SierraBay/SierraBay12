@@ -35,8 +35,8 @@
 
 /datum/gear_tweak/color/get_metadata(user, metadata, title = CHARACTER_PREFERENCE_INPUT_TITLE)
 	if(valid_colors)
-		return input(user, "Choose a color.", title, metadata) as null|anything in valid_colors
-	return input(user, "Choose a color.", title, metadata) as color|null
+		return input(user, "Выберите цвет.", title, metadata) as null|anything in valid_colors
+	return input(user, "Выберите цвет.", title, metadata) as color|null
 
 /datum/gear_tweak/color/tweak_item(user, obj/item/I, metadata)
 	if(valid_colors && !(metadata in valid_colors))
