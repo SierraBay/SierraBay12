@@ -33,13 +33,13 @@
 /datum/category_item/player_setup_item/physical/basic/content()
 	. = list()
 	//. += "[TBTN("spawnpoint", pref.spawnpoint, "Spawn Point")]<br />"
-	. += "[TBTN("rename", pref.real_name, "Имя")] [BTN("random_name", "Случайно")]"
+	. += "[TBTN("rename", pref.real_name, "Name")] [BTN("random_name", "Randomize")]"
 	. = jointext(., null)
 
 
 /datum/category_item/player_setup_item/physical/basic/OnTopic(href,list/href_list, mob/user)
 	if(href_list["rename"])
-		var/raw_name = input(user, "Выберите имя вашего персонажа:", "Имя персонажа")  as text|null
+		var/raw_name = input(user, "Choose your character's name:", "Character Name")  as text|null
 		if (!isnull(raw_name) && CanUseTopic(user))
 
 			var/singleton/cultural_info/check = SSculture.get_culture(pref.cultural_info[TAG_CULTURE])
