@@ -191,14 +191,14 @@
 	desc = "Гарнитура для спецназа."
 
 /obj/item/device/radio/intercom
-	name = "интерком (общее)"
+	name = "интерком (Общий)"
 	desc = "Говорить сюда."
 
 /obj/item/device/radio/intercom/custom
 	name = "интерком (Кастомный)"
 
 /obj/item/device/radio/intercom/hailing
-	name = "интерком (Hailing)"
+	name = "интерком (Гостевой)"
 
 /obj/item/device/radio/intercom/interrogation
 	name = "интерком (Допросная)"
@@ -207,16 +207,16 @@
 	name = "интерком (Приватный)"
 
 /obj/item/device/radio/intercom/specops
-	name = "\improper интерком специальных операций"
+	name = "интерком  (Спец. операции)"
 
 /obj/item/device/radio/intercom/department/medbay
-	name = "интерком (Медбей)"
+	name = "интерком (Медблок)"
 
 /obj/item/device/radio/intercom/department/security
-	name = "интерком (Служба безопасности)"
+	name = "интерком (ОЗА)"
 
 /obj/item/device/radio/intercom/entertainment
-	name = "интерком тдела досуга"
+	name = "интерком (Развлекательный)"
 
 /obj/item/device/radio/intercom/syndicate
 	name = "незаконный интерком"
@@ -228,10 +228,10 @@
 
 /obj/item/intercom_electronics
 	name = "плата интеркома"
-	desc = "На этикетке написано 'Интерком'. Интересно, для чего он нужен?"
+	desc = "На этикетке написано \"Интерком\". Интересно, для чего он нужен?"
 
 /obj/item/device/radio/intercom/locked/ai_private
-	name = "\improper интерком ИИ"
+	name = "интерком (ИИ)"
 
 /obj/item/device/radio/intercom/locked/confessional
 	name = "конфессиональный интерком"
@@ -240,7 +240,7 @@
 	name = "коротковолновое радио"
 
 /obj/item/device/radio/hailing
-	name = "коротковолновое радио (Hailing)"
+	name = "коротковолновое радио (Гостевой)"
 
 /obj/item/device/radio/phone
 	name = "телефон"
