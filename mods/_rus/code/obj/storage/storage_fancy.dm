@@ -1,25 +1,21 @@
 /obj/item/storage/fancy/crayons
-	name = "Коробка мелков"
+	name = "коробка мелков"
 	desc = "Коробка мелков для рисования букв на заборах."
 
 /obj/item/storage/fancy/egg_box
-	name = "Коробка яиц"
+	name = "коробка яиц"
 
 /obj/item/storage/fancy/matches/matchbox
-	name = "Спичечный коробок"
+	name = "спичечный коробок"
 	desc = "Небольшой коробок спичек премиум-класса. 'Космо-защитные'."
 
 /obj/item/storage/fancy/matches/matchbook
-	name = "Спичечный коробок"
+	name = "спичечный коробок"
 	desc = "Маленькая коробок спичек премиум-класса. 'Космо-защитные'."
 
 /obj/item/storage/fancy/pencilcase
-	name = "pencil case"
-	desc = "A pencil case for all those schoolboys to carry."
-
-/obj/item/storage/fancy/pencilcase
-	name = "Пенал для карандашей"
-	desc = "Пенал для всех этих школяров."
+	name = "пенал для карандашей"
+	desc = "пенал для всех этих школяров."
 
 /obj/item/storage/fancy/vials
-	name = "Ящик для хранения пробирок."
+	name = "ящик для хранения пробирок."

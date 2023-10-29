@@ -69,6 +69,11 @@
 
 /obj/item/storage/med_pouch/oxyloss
 	name = "Подсумок для лечения кислородного голодания"
+	injury_type = "кислородном голодании"
+
+/obj/item/storage/med_pouch/Initialize()
+	. = ..()
+	name = "Экстренный подсумок при [injury_type]"
 
 /obj/item/storage/med_pouch/toxin
 	name = "Подсумок для лечения отравлений"

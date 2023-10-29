@@ -1,250 +1,250 @@
 /obj/item/device/radio/electropack
-	name = "Электропак"
+	name = "электропак"
 	desc = "Танцуйте, мои обезьянки! ТАНЦУЙТЕ!!!"
 
 /obj/item/device/encryptionkey
-	name = "Стандартный ключ шифрования"
+	name = "стандартный ключ шифрования"
 	desc = "Ключ шифрования для радиогарнитуры. Содержит шифрключи."
 
 /obj/item/device/encryptionkey/headset_sec
-	name = "Ключ шифрования службы безопасности"
+	name = "ключ шифрования службы безопасности"
 
 /obj/item/device/encryptionkey/headset_eng
-	name = "Ключ шифрования инженера"
+	name = "ключ шифрования инженера"
 
 /obj/item/device/encryptionkey/headset_rob
-	name = "Ключ шифрования робототехника"
+	name = "ключ шифрования робототехника"
 
 /obj/item/device/encryptionkey/headset_med
-	name = "Ключ шифрования медика"
+	name = "ключ шифрования медика"
 
 /obj/item/device/encryptionkey/headset_sci
-	name = "Ключ шифорвания учёного"
+	name = "ключ шифорвания учёного"
 
 /obj/item/device/encryptionkey/headset_medsci
-	name = "Ключ шифрования исследовательского медика"
+	name = "ключ шифрования исследовательского медика"
 
 /obj/item/device/encryptionkey/headset_com
-	name = "Ключ шифрования командования"
+	name = "ключ шифрования командования"
 
 /obj/item/device/encryptionkey/merchant
-	name = "Ключ шифрования продавца"
+	name = "ключ шифрования продавца"
 
 /obj/item/device/encryptionkey/heads/captain
-	name = "Ключ шифрования командира"
+	name = "ключ шифрования командира"
 
 /obj/item/device/encryptionkey/heads/ai_integrated
-	name = "Интегрированный ключ шифрования ИИ"
+	name = "интегрированный ключ шифрования ИИ"
 	desc = "Интегрированный ключ шифрования."
 
 /obj/item/device/encryptionkey/heads/rd
-	name = "Ключ шифрования главного научного сотрудника"
+	name = "ключ шифрования главного научного сотрудника"
 
 /obj/item/device/encryptionkey/heads/hos
-	name = "Ключ шифрования главы службы безопасности"
+	name = "ключ шифрования главы службы безопасности"
 
 /obj/item/device/encryptionkey/heads/ce
-	name = "Ключ шифрования главного инженера"
+	name = "ключ шифрования главного инженера"
 
 /obj/item/device/encryptionkey/heads/cmo
-	name = "Ключ шифрования главного врача"
+	name = "ключ шифрования главного врача"
 
 /obj/item/device/encryptionkey/heads/hop
-	name = "Ключ шифрования руководителя персонала"
+	name = "ключ шифрования руководителя персонала"
 
 /obj/item/device/encryptionkey/headset_cargo
-	name = "Ключ шифрования отдела поставок"
+	name = "ключ шифрования отдела поставок"
 
 /obj/item/device/encryptionkey/headset_service
-	name = "Ключ шифрования служеюного отдела"
+	name = "ключ шифрования служеюного отдела"
 
 /obj/item/device/encryptionkey/ert
-	name = "\improper Ключ шифрования ОБР"
+	name = "\improper ключ шифрования ОБР"
 
 /obj/item/device/encryptionkey/specops
-	name = "Ключ шифрования отряда специальных операций"
+	name = "ключ шифрования отряда специальных операций"
 
 /obj/item/device/encryptionkey/entertainment
-	name = "Ключ шифрования отдела досуга"
+	name = "ключ шифрования отдела досуга"
 
 /obj/item/device/encryptionkey/headset_mining
-	name = "Ключ шифрования шахтёра"
+	name = "ключ шифрования шахтёра"
 
 /obj/item/device/radio/headset
-	name = "Гарнитура"
+	name = "гарнитура"
 	desc = "Обновленное модульное переговорное устройство, надеваемое на голову. Принимает ключи шифрования."
 
 /obj/item/device/radio/headset/headset_sec
-	name = "Гарнитура службы безопасности"
+	name = "гарнитура службы безопасности"
 	desc = "Используется элитными силами безопасности."
 
 /obj/item/device/radio/headset/headset_sec/alt
-	name = "Гарнитура службы безопасности с шумоподавлением"
+	name = "гарнитура службы безопасности с шумоподавлением"
 
 /obj/item/device/radio/headset/headset_eng
-	name = "Инженерная гарнитура"
+	name = "инженерная гарнитура"
 	desc = "Когда инженеры хотят поболтать как девушки."
 
 /obj/item/device/radio/headset/headset_eng/alt
-	name = "Инженерная гарнитура с шумоподавлением"
+	name = "инженерная гарнитура с шумоподавлением"
 
 /obj/item/device/radio/headset/headset_rob
 	name = "Радиогарнитура робототехника"
 	desc = "Сделана специально для робототехников, которые не могут определиться с выбором факультета."
 
 /obj/item/device/radio/headset/headset_med
-	name = "Медицинская гарнитура"
+	name = "медицинская гарнитура"
 	desc = "Гарнитура для подготовленного персонала медблока."
 
 /obj/item/device/radio/headset/headset_med/alt
-	name = "Медицинская гарнитура с шумоподавлением"
+	name = "медицинская гарнитура с шумоподавлением"
 
 /obj/item/device/radio/headset/headset_sci
-	name = "Научная радиогарнитура"
+	name = "научная радиогарнитура"
 	desc = "Научная гарнитура. Как обычно."
 
 /obj/item/device/radio/headset/headset_medsci
-	name = "Медицинская исследовательская радиогарнитура"
+	name = "медицинская исследовательская радиогарнитура"
 	desc = "Гарнитура, являющаяся результатом спаривания медицины и науки."
 
 /obj/item/device/radio/headset/headset_com
-	name = "Гарнитура командывания"
+	name = "гарнитура командывания"
 	desc = "Гарнитура с командным каналом."
 
 /obj/item/device/radio/headset/headset_com/alt
-	name = "Гарнитура командывания с шумоподавлением"
+	name = "гарнитура командывания с шумоподавлением"
 	desc = "Гарнитура с командным каналом."
 
 /obj/item/device/radio/headset/merchant
-	name = "Гарнитура 'Купец'"
+	name = "гарнитура 'Купец'"
 	desc = "Гарнитура, использующая универсальную частоту."
 
 /obj/item/device/radio/headset/heads/captain
-	name = "Гарнитура капитана"
+	name = "гарнитура капитана"
 	desc = "Гарнитура начальника."
 
 /obj/item/device/radio/headset/heads/captain/alt
-	name = "Гарнитура капитана с шумоподавлением"
+	name = "гарнитура капитана с шумоподавлением"
 
 /obj/item/device/radio/headset/heads/ai_integrated
-	name = "\improper Подпространственный приемопередатчик ИИ"
+	name = "\improper подпространственный приемопередатчик ИИ"
 	desc = "Встроенный радиоприемник ИИ."
 
 /obj/item/device/radio/headset/heads/rd
-	name = "Гарнитура главного научного сотрудника"
+	name = "гарнитура главного научного сотрудника"
 	desc = "Гарнитура бога-исследователния."
 
 /obj/item/device/radio/headset/heads/hos
-	name = "Гарнитура главы службы безопасности"
+	name = "гарнитура главы службы безопасности"
 	desc = "Гарнитура человека, который защищает ваши никчемные жизни."
 
 /obj/item/device/radio/headset/heads/ce
-	name = "Гарнитура главного инженера"
+	name = "гарнитура главного инженера"
 	desc = "Гарнитура идиота, который отвечает за идиотов."
 
 /obj/item/device/radio/headset/heads/ce/alt
-	name = "Гарнитура главного инженера с шумоподавлением"
+	name = "гарнитура главного инженера с шумоподавлением"
 
 /obj/item/device/radio/headset/heads/cmo
-	name = "Гарнитура главного врача"
+	name = "гарнитура главного врача"
 	desc = "Гарнитура высококвалифицированного главного врача."
 
 /obj/item/device/radio/headset/heads/cmo/alt
-	name = "Гарнитура главного врача с шумоподавлением"
+	name = "гарнитура главного врача с шумоподавлением"
 
 /obj/item/device/radio/headset/heads/hop
-	name = "Гарнитура начальника отдела кадров"
+	name = "гарнитура начальника отдела кадров"
 	desc = "Гарнитура парня, который однажды станет капитаном."
 
 /obj/item/device/radio/headset/headset_service
-	name = "Служебная гарнитура"
+	name = "служебная гарнитура"
 	desc = "Гарнитура, используемая обслуживающим персоналом, задача которого - держать всех сытыми, довольными и чистыми."
 
 /obj/item/device/radio/headset/foundation
-	name = "\improper Гарнитура ФоНдА"
+	name = "\improper гарнитура ФоНдА"
 	desc = "Гарнитура оккультной кавалерии."
 
 /obj/item/device/radio/headset/ia
-	name = "Гарнитура АВД"
+	name = "гарнитура АВД"
 	desc = "Гарнитура вашего злейшего врага."
 
 /obj/item/device/radio/headset/headset_mining
-	name = "Шахтёрская гарнитура"
+	name = "шахтёрская гарнитура"
 	desc = "Гарнитура, используемая дварфами. Имеет встроенную подпространственную антенну для лучшего приема."
 
 /obj/item/device/radio/headset/headset_mining/alt
-	name = "Шахтёрская гарнитура с шумоподавлением"
+	name = "шахтёрская гарнитура с шумоподавлением"
 
 /obj/item/device/radio/headset/headset_cargo
-	name = "Гарнитура отдела поставок"
+	name = "гарнитура отдела поставок"
 	desc = "Гарнитура, используемая толкателями ящиков."
 
 /obj/item/device/radio/headset/headset_cargo/alt
-	name = "Гарнитура отдела поставок с шумоподавлением"
+	name = "гарнитура отдела поставок с шумоподавлением"
 
 /obj/item/device/radio/headset/entertainment
-	name = "Актерская гарнитура"
+	name = "актерская гарнитура"
 	desc = "Мпециально сделана для того, чтобы вы звучали менее пошловато."
 
 /obj/item/device/radio/headset/specops
-	name = "Радиогарнитура для специальных операций"
+	name = "радиогарнитура для специальных операций"
 	desc = "Гарнитура для спецназа."
 
 /obj/item/device/radio/intercom
-	name = "Интерком (общее)"
+	name = "интерком (общее)"
 	desc = "Говорить сюда."
 
 /obj/item/device/radio/intercom/custom
-	name = "Интерком (Кастомный)"
+	name = "интерком (Кастомный)"
 
 /obj/item/device/radio/intercom/hailing
-	name = "Интерком (Hailing)"
+	name = "интерком (Hailing)"
 
 /obj/item/device/radio/intercom/interrogation
-	name = "Интерком (Допросная)"
+	name = "интерком (Допросная)"
 
 /obj/item/device/radio/intercom/private
-	name = "Интерком (Приватный)"
+	name = "интерком (Приватный)"
 
 /obj/item/device/radio/intercom/specops
-	name = "\improper Интерком специальных операций"
+	name = "\improper интерком специальных операций"
 
 /obj/item/device/radio/intercom/department/medbay
-	name = "Интерком (Медбей)"
+	name = "интерком (Медбей)"
 
 /obj/item/device/radio/intercom/department/security
-	name = "Интерком (Служба безопасности)"
+	name = "интерком (Служба безопасности)"
 
 /obj/item/device/radio/intercom/entertainment
-	name = "Интерком тдела досуга"
+	name = "интерком тдела досуга"
 
 /obj/item/device/radio/intercom/syndicate
-	name = "Незаконный интерком"
+	name = "незаконный интерком"
 	desc = "Говорить сюда. Злобно."
 
 /obj/item/device/radio/intercom/raider
-	name = "Незаконный интерком"
+	name = "незаконный интерком"
 	desc = "Пиратское радио, но не в обычном смысле этого слова."
 
 /obj/item/intercom_electronics
-	name = "Плата интеркома"
+	name = "плата интеркома"
 	desc = "На этикетке написано 'Интерком'. Интересно, для чего он нужен?"
 
 /obj/item/device/radio/intercom/locked/ai_private
-	name = "\improper Интерком ИИ"
+	name = "\improper интерком ИИ"
 
 /obj/item/device/radio/intercom/locked/confessional
-	name = "Конфессиональный интерком"
+	name = "конфессиональный интерком"
 
 /obj/item/device/radio
-	name = "Коротковолновое радио"
+	name = "коротковолновое радио"
 
 /obj/item/device/radio/hailing
-	name = "Коротковолновое радио (Hailing)"
+	name = "коротковолновое радио (Hailing)"
 
 /obj/item/device/radio/phone
-	name = "Nелефон"
+	name = "телефон"
 
 /obj/item/device/radio/intercept
-	name = "Громоздкая рация"
+	name = "громоздкая рация"
 	desc = "Большая рация, оснащенная несколькими схемами перехвата связи военного образца."
