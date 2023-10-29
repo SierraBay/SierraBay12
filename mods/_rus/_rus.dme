@@ -2,6 +2,7 @@
 #define MODPACK_RUSSIAN_NAME
 
 #include "_rus.dm"
+#include "code/proc/examine.dm"
 #include "code/obj/tools.dm"
 #include "code/obj/tanks.dm"
 #include "code/obj/storage/storage.dm"
