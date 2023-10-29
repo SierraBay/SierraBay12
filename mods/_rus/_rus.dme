@@ -16,6 +16,8 @@
 #include "code/obj/device/scanners.dm"
 #include "code/obj/device/another.dm"
 #include "code/obj/robot.dm"
+#include "code/obj/stack/leather.dm"
+#include "code/obj/stack/tile.dm"
 
 // Далее просто включай свой код
 // #include "code/something.dm"
