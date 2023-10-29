@@ -11,6 +11,7 @@
 #include "code/obj/storage/storage_backpack.dm"
 #include "code/obj/storage/storage_boxes.dm"
 #include "code/obj/storage/storage_med.dm"
+#include "code/obj/device/radio.dm"
 
 // Далее просто включай свой код
 // #include "code/something.dm"
