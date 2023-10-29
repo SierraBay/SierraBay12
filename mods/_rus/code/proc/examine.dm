@@ -54,6 +54,6 @@
 				desc_comp += "[SSmaterials.get_material_by_name(mat)]<BR>"
 		else
 			desc_comp += "[SPAN_DANGER("Материалов для получения не обнаружено.")]<BR>"
-		desc_comp += "*--------*"`
+		desc_comp += "*--------*"
 
 	return ..(user, distance, is_adjacent, "", desc_comp)
