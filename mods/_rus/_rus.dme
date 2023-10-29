@@ -20,6 +20,8 @@
 #include "code/obj/stack/tile.dm"
 #include "code/obj/stack/another.dm"
 #include "code/obj/weapon/circuitboard.dm"
+#include "code/obj/weapon/grenade.dm"
+#include "code/obj/weapon/implants.dm"
 
 // Далее просто включай свой код
 // #include "code/something.dm"
