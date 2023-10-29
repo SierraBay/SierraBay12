@@ -15,6 +15,7 @@
 #include "code/obj/device/radio.dm"
 #include "code/obj/device/scanners.dm"
 #include "code/obj/device/another.dm"
+#include "code/obj/robot.dm"
 
 // Далее просто включай свой код
 // #include "code/something.dm"
