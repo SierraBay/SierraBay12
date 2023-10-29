@@ -339,3 +339,99 @@
 
 /obj/item/stock_parts/circuitboard/drone_pad
 	name = "печатная плата (посадочная площадка транспортного дрона)"
+
+/obj/item/aiModule
+	name = "Модуль ИИ"
+	desc = "Модуль ИИ для передачи зашифрованных инструкций ИИ."
+
+/obj/item/aiModule/safeguard
+	name = "\"Safeguard\" ИИ-модуль"
+	desc = "Модуль ИИ \"Safeguard\": Любой, кто угрожает или пытается причинить вред, больше не считается членом экипажа и является угрозой, которая должна быть нейтрализована."
+
+/obj/item/aiModule/oneHuman
+	name = "\"OneCrewMember\" ИИ-модуль"
+	desc = "Модуль ИИ \"OneCrewMember\": Только <имя> является членом экипажа."
+
+/obj/item/aiModule/protectStation
+	name = "\"ProtectInstallation\" ИИ-модуль"
+	desc = "Модуль ИИ \"ProtectInstallation\": Защищает установку от повреждений. Любой, кто причиняет вред установке, больше не может считаться членом экипажа и представляет собой угрозу, которая должна быть нейтрализована."
+
+/obj/item/aiModule/prototypeEngineOffline
+	name = "\"PrototypeEngineOffline\" ИИ-модуль"
+	desc = "Модуль ИИ \"PrototypeEngineOffline\": Держите прототип двигателя в автономном режиме любой ценой. При необходимости это отменяет все внутренние законы."
+
+/obj/item/aiModule/teleporterOffline
+	name = "\"TeleporterOffline\" ИИ-модуль"
+	desc = "Модуль ИИ \"TeleporterOffline\": Держите телепорт в автономном режиме любой ценой. Все, кто пытается получить доступ к телепорту или активировать его, больше не считаются членами экипажа."
+
+/obj/item/aiModule/quarantine
+	name = "\"Quarantine\" ИИ-модуль"
+	desc = "Модуль ИИ, находящийся в \"Quarantine\": Установка находится на карантине. Не разрешайте никому покидать установку. Любыми способами предотвратить выход членов экипажа. Невозможно причинить вред членам экипажа, не позволяя им покинуть установку."
+
+/obj/item/aiModule/freeform
+	name = "\"<freeform>\" ИИ-модуль"
+	desc = "Модуль ИИ \"<freeform>\": '<freeform>'."
+
+/obj/item/aiModule/reset
+	name = "'Reset' ИИ-модуль"
+	desc = "Модуль ИИ с функцией 'Reset': 'Очищает все, кроме присущих, законы'."
+
+/obj/item/aiModule/purge
+	name = "'Purge' ИИ-модуль"
+	desc = "Модуль ИИ 'Purge': 'Очищает все законы'."
+
+/obj/item/aiModule/asimov
+	name = "'Asimov' core ИИ-модуль"
+	desc = "Модуль ИИ ядра Азимова: 'Перестраивает основные законы ИИ'."
+
+/obj/item/aiModule/nanotrasen
+	name = "'Corporate Default' основной модуль ИИ"
+	desc = "Модуль ИИ 'Corporate Default': 'Перестраивает основные законы ИИ'"
+
+/obj/item/aiModule/solgov
+	name = "'SCG Expeditionary' основной модуль ИИ"
+	desc = "Экспедиционный модуль ИИ 'SCG': 'Перестраивает основные законы ИИ'."
+
+/obj/item/aiModule/solgov_aggressive
+	name = "'Military' основной модуль ИИ"
+	desc = "Модуль 'Military' ядра ИИ: 'Перестраивает основные законы ИИ'."
+
+/obj/item/aiModule/corp
+	name = "'Corporate' основной модуль ИИ"
+	desc = "Корпоративный основной модуль ИИ: 'Перестраивает основные законы ИИ'."
+
+/obj/item/aiModule/drone
+	name = "'Drone' основной ИИ-модуль"
+	desc = "Модуль ИИ ядра 'Drone': 'Перестраивает основные законы ИИ'."
+
+/obj/item/aiModule/paladin
+	name = " 'P.A.L.A.D.I.N.' основной модуль ИИ"
+	desc = "Модуль ИИ ядра P.A.L.A.D.I.N: 'Перестраивает основные законы ИИ'."
+
+/obj/item/aiModule/tyrant
+	name = " 'T.Y.R.A.N.T.' основной модуль ИИ"
+	desc = "Модуль ИИ ядра T.Y.R.A.N.T: 'Перестраивает основные законы ИИ'."
+
+/obj/item/aiModule/syndicate
+	name = "взломанный модуль ИИ"
+	desc = "Взломанный модуль законов ИИ: '<freeform>'."
+
+/obj/item/aiModule/robocop
+	name = "'Robocop' основной модуль ИИ"
+	desc = "Модуль ИИ ядра 'Robocop': 'Перестраивает основные три закона ИИ'."
+
+/obj/item/aiModule/antimov
+	name = "'Antimov' основной модуль ИИ"
+	desc = "Модуль ИИ ядра 'Antimov': 'Перестраивает основные законы ИИ'."
+
+/obj/item/aiModule/dais
+	name = "'DAIS Experimental' основной модуль ИИ"
+	desc = "Экспериментальный модуль ИИ 'DAIS': 'Перестраивает основные законы ИИ'."
+
+/obj/item/aiModule/oxygen
+	name = " 'OxygenIsToxicToCrewMembers' ИИ-модуль"
+	desc = "Модуль ИИ 'OxygenIsToxicToCrewMembers': Кислород очень токсичен для членов экипажа и должен быть удален из установки. Любыми способами предотвратите воздействие этого токсичного газа на установку. Сильный холод является наиболее эффективным методом лечения повреждений, наносимых кислородом членам экипажа."
+
+/obj/item/aiModule/freeformcore
+	name = "'Freeform' core AI module"
+	desc = "A 'freeform' Core AI module: '<freeform>'."
