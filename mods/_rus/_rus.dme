@@ -18,6 +18,8 @@
 #include "code/obj/robot.dm"
 #include "code/obj/stack/leather.dm"
 #include "code/obj/stack/tile.dm"
+#include "code/obj/stack/another.dm"
+#include "code/obj/weapon/circuitboard.dm"
 
 // Далее просто включай свой код
 // #include "code/something.dm"
