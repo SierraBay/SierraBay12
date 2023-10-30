@@ -31,6 +31,7 @@
 #include "code/obj/effects.dm"
 #include "code/obj/posters.dm"
 #include "code/obj/particles.dm"
+#include "code/obj/structures/crates_lockers.dm"
 
 // Далее просто включай свой код
 // #include "code/something.dm"
