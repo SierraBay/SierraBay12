@@ -26,6 +26,11 @@
 #include "code/obj/another.dm"
 #include "code/obj/toy.dm"
 #include "code/obj/trash.dm"
+#include "code/obj/auras.dm"
+#include "code/obj/decals.dm"
+#include "code/obj/effects.dm"
+#include "code/obj/posters.dm"
+#include "code/obj/particles.dm"
 
 // Далее просто включай свой код
 // #include "code/something.dm"
