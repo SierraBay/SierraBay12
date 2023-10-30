@@ -23,6 +23,9 @@
 #include "code/obj/weapon/grenade.dm"
 #include "code/obj/weapon/implants.dm"
 #include "code/obj/weapon/another.dm"
+#include "code/obj/another.dm"
+#include "code/obj/toy.dm"
+#include "code/obj/trash.dm"
 
 // Далее просто включай свой код
 // #include "code/something.dm"
