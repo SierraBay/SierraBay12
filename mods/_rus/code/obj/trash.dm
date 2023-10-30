@@ -97,3 +97,31 @@
 
 /obj/item/trash/tidegobs
 	name = "мешок для приливов и отливов"
+
+/obj/item/trash/saturno
+	name = "сумка Сатурн-Ос"
+
+/obj/item/trash/jupiter
+	name = "gello чашка"
+
+/obj/item/trash/pluto
+	name = "сумка для удочек"
+
+/obj/item/trash/venus
+	name = "пакет с горячими пирожками"
+
+/obj/item/trash/mars
+	name = "фруктовый ящик"
+
+/obj/item/trash/oort
+	name = "мешок для камней oort"
+
+/obj/item/trash/weebonuts
+	name = "пакет с красными орехами"
+
+/obj/item/trash/stick
+	name = "палочка"
+	desc = "палочка от какого-то закусочного продукта или леденца, не пригодная даже для изготовления ремесленного материала."
+
+/obj/item/trash/usedplatter
+	name = "грязное блюдо"
