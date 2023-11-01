@@ -40,7 +40,7 @@
 /area/bridge/meeting_room
 	name = "Мостик - командование - зал заседаний"
 
-/ area/bridge/marine_room
+/area/bridge/marine_room
 	name = "Мостик - командование - комната для брифинга"
 
 /area/bridge/lobby
