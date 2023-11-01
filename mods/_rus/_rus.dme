@@ -37,6 +37,7 @@
 #include "code/sierra/areas/z2_sierra_deck3.dm"
 #include "code/sierra/areas/z3_sierra_deck2.dm"
 #include "code/sierra/areas/z4_sierra_deck1.dm"
+#include "code/sierra/areas/z5_sierra_bridge.dm"
 
 // Далее просто включай свой код
 // #include "code/something.dm"
