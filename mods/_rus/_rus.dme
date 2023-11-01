@@ -32,6 +32,8 @@
 #include "code/obj/posters.dm"
 #include "code/obj/particles.dm"
 #include "code/obj/structures/crates_lockers.dm"
+#include "code/sierra/areas/shuttles.dm"
+#include "code/sierra/areas/z1_sierra_deck4.dm"
 
 // Далее просто включай свой код
 // #include "code/something.dm"
