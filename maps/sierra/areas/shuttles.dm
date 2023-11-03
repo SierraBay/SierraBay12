@@ -10,6 +10,7 @@
 /area/shuttle/escape_pod
 	area_flags = AREA_FLAG_RAD_SHIELDED | AREA_FLAG_ION_SHIELDED | AREA_FLAG_IS_NOT_PERSISTENT
 	icon_state = "exit"
+	holomap_color = HOLOMAP_AREACOLOR_ESCAPE
 
 /area/shuttle/escape_pod/escape_pod1/station
 	name = "Shuttle - Escape - Pod One"
@@ -56,6 +57,7 @@
 	icon_state = "shuttlered"
 	base_turf = /turf/simulated/floor/plating
 	area_flags = AREA_FLAG_RAD_SHIELDED | AREA_FLAG_ION_SHIELDED
+	holomap_color = HOLOMAP_AREACOLOR_EXPLORATION
 
 /area/exploration_shuttle/cockpit
 	name = "Shuttle - Charon - Cockpit"
@@ -79,6 +81,7 @@
 	dynamic_lighting = 1
 	area_flags = AREA_FLAG_RAD_SHIELDED | AREA_FLAG_ION_SHIELDED
 	req_access = list(access_guppy)
+	holomap_color = HOLOMAP_AREACOLOR_CARGO
 
 /area/crucian_hangar/start
 	name = "Shuttle - Сrucian"
@@ -94,6 +97,7 @@
 	dynamic_lighting = 1
 	area_flags = AREA_FLAG_RAD_SHIELDED | AREA_FLAG_ION_SHIELDED
 	req_access = list(access_petrov)
+	holomap_color = HOLOMAP_AREACOLOR_SCIENCE
 
 /area/shuttle/petrov/ship
 	icon_state = "shuttlered"
@@ -247,8 +251,8 @@
 	lift_announce_str = "Палуба 3 - Инженерная."
 
 /area/turbolift/sierra_ground
-	name = "Elevator - Third Deck"
-	lift_floor_label = "3 Палуба"
+	name = "Elevator - Fourth Deck"
+	lift_floor_label = "4 Палуба"
 	lift_floor_name = "Лётная палуба"
 	lift_announce_str = "Палуба 4 - Лётная."
 	base_turf = /turf/simulated/floor
