@@ -43,3 +43,34 @@
 
 /obj/machinery/portable_atmospherics/canister/chlorine
 	name = "канистра: \[Хлор\]"
+
+/obj/machinery/clamp
+	name = "стазисный зажим"
+	desc = "Магнитный зажим, способный останавливать поток газа в трубе с помощью локального стазис-поля."
+
+/obj/item/clamp
+	name = "стазисный зажим"
+	desc = "Магнитный зажим, способный останавливать поток газа в трубе с помощью локального стазис-поля."
+
+/obj/machinery/meter
+	name = "счетчик"
+	desc = "Расходомер газа."
+
+/obj/machinery/portable_atmospherics/powered/pump
+	name = "переносной воздушный насос"
+
+/obj/machinery/portable_atmospherics/powered/scrubber
+	name = "портативный скраббер"
+
+/obj/machinery/portable_atmospherics/powered/scrubber/huge
+	name = "огромный скраббер"
+
+/obj/machinery/portable_atmospherics/powered/scrubber/huge/stationary
+	name = "стационарный скраббер"
+
+/obj/machinery/computer/atmos_alert
+	name = "компьютер атмосферного оповещения"
+	desc = "Используется для доступа к атмосферным датчикам."
+
+/obj/machinery/computer/atmoscontrol/laptop
+	name = "Атмосферный ноутбук"

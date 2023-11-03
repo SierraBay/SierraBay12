@@ -435,3 +435,6 @@
 /obj/item/aiModule/freeformcore
 	name = "'Freeform' core AI module"
 	desc = "A 'freeform' Core AI module: '<freeform>'."
+
+/obj/item/stock_parts/circuitboard/atmoscontrol
+	name = "Печатная плата центрального атмосферного компьютера"
