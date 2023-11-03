@@ -38,6 +38,8 @@
 #include "code/sierra/area/_z3_sierra_deck2.dm"
 #include "code/sierra/area/_z4_sierra_deck1.dm"
 #include "code/sierra/area/_z5_sierra_bridge.dm"
+#include "code/machinery/stock_parts.dm"
+#include "code/machinery/machines_atmo.dm"
 
 // Далее просто включай свой код
 // #include "code/something.dm"
