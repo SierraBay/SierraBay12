@@ -42,6 +42,7 @@
 #include "code/machinery/machines_atmo.dm"
 #include "code/machinery/machinery.dm"
 #include "code/machinery/doors.dm"
+#include "code/obj/kitchen.dm"
 
 // Далее просто включай свой код
 // #include "code/something.dm"

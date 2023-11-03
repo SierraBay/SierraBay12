@@ -95,3 +95,69 @@
 
 /obj/machinery/door_timer/cell_6
 	name = "камера 6"
+
+/obj/machinery/cooker/candy
+	name = "кондитерская машина"
+	desc = "Используется для производства конфет и сладостей!"
+
+/obj/machinery/cooker/fryer
+	name = "фритюр"
+	desc = "для обжарки <i>чего угодно</i> еды во фритюре."
+
+/obj/machinery/cooker/grill
+	name = "гриль"
+	desc = "Плоская, широкая и гладкая поверхность для приготовления пищи."
+
+/obj/machinery/cooker/oven
+	name = "печь"
+	desc = "Печенье готово, дорогой."
+
+/obj/machinery/cooker/cereal
+	name = "машина для приготовления хлопьев"
+	desc = "Теперь в наличии Dann O's!"
+/obj/machinery/icecream_vat
+	name = "чан с мороженным"
+	desc = "Тяжелая металлическая емкость, используемая для производства и хранения мороженого."
+
+/obj/machinery/microwave
+	name = "микроволновая печь"
+	desc = "Возможно, оккультное устройство, способное идеально приготовить многие виды пищи."
+
+/obj/machinery/smartfridge
+	name = "Умный холодильник"
+
+/obj/machinery/smartfridge/seeds
+	name = "Мега-хранилище семян"
+	desc = "Когда семена нужны быстро!"
+
+/obj/machinery/smartfridge/secure/extract
+	name = "хранилище экстракта слизи"
+	desc = "Холодильное хранилище для экстрактов слизи."
+
+/obj/machinery/smartfridge/secure/medbay
+	name = "холодильное хранилище для медикаментов"
+	desc = "Холодильный отсек для хранения лекарств и химикатов."
+
+/obj/machinery/smartfridge/secure/virology
+	name = "холодильное хранилище вирусного материала"
+	desc = "Холодильное хранилище для хранения вирусного материала."
+
+/obj/machinery/smartfridge/chemistry
+	name = "умный холодильник для хранения химикатов"
+	desc = "Холодильник для хранения лекарств и химикатов."
+
+/obj/machinery/smartfridge/chemistry/virology
+	name = "умный холодильник для хранения летучих образцов"
+	desc = "Холодильник для хранения летучих образцов."
+
+/obj/machinery/smartfridge/drinks
+	name = "витрина для напитков"
+	desc = "Холодильник для хранения вкусного алкоголя."
+
+/obj/machinery/smartfridge/foods
+	name = "хранилище для горячих блюд"
+	desc = "Подогреваемое хранилище для горячих блюд."
+
+/obj/machinery/smartfridge/drying_rack
+	name = "сушильный шкаф"
+	desc = "Машина для сушки растений."
