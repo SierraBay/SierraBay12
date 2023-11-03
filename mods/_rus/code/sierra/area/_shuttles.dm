@@ -106,12 +106,6 @@
 /obj/machinery/computer/shuttle_control/lift/medical
 	name = "Управление медицинским лифтом"
 
-/datum/shuttle/autodock/ferry/rndmaint_lift
-	name = "Технический лифт НИО"
-
-/datum/shuttle/autodock/ferry/medical_lift
-	name = "Медицинский лифт"
-
 /obj/shuttle_landmark/lift/rndmaint_top
 	name = "Первая палуба - обслуживание НИО"
 
