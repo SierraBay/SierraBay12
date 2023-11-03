@@ -103,8 +103,8 @@
 	desc = "Автомат по продаже закусок от компании Getmore Chocolate Corporation, расположенной в Марсе."
 
 /obj/machinery/vending/snix
-	name = "Snix"
-	desc = "Старый автомат по продаже закусок, как он сюда попал? И хороши ли еще закуски?"
+	name = "гопо-мат"
+	desc = "Чёткая точка для ровных пацанов, отвечаю"
 
 /obj/machinery/vending/soda
 	name = "Радикал Ренард"
@@ -116,7 +116,7 @@
 
 /obj/machinery/vending/tool
 	name = "YouTool"
-	desc = "Инструменты для инструментов."
+	desc = "Инструменты ради инструментов."
 
 /obj/machinery/vending/wallmed1
 	name = "НаноМед"

@@ -63,13 +63,15 @@
 
 /obj/item/storage/med_pouch/trauma
 	name = "подсумок для лечения травм"
+	injury_type = "травмах"
 
 /obj/item/storage/med_pouch/burn
 	name = "подсумок для лечения ожогов"
+	injury_type = "ожогах"
 
 /obj/item/storage/med_pouch/oxyloss
-	name = "подсумок для лечения кислородного голодания"
-	injury_type = "кислородном голодании"
+	name = "подсумок для лечения гипоксии"
+	injury_type = "гипоксии"
 
 /obj/item/storage/med_pouch/Initialize()
 	. = ..()
@@ -77,9 +79,11 @@
 
 /obj/item/storage/med_pouch/toxin
 	name = "подсумок для лечения отравлений"
+	injury_type = "отравлении"
 
 /obj/item/storage/med_pouch/radiation
 	name = "подсумок для лечения облучения"
+	injury_type = "облучении"
 
 /obj/item/reagent_containers/pill/pouch_pill
 	name = "таблетка для экстренной помощи"

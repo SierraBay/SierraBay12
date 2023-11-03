@@ -74,3 +74,13 @@
 
 /obj/machinery/computer/atmoscontrol/laptop
 	name = "Атмосферный ноутбук"
+
+/obj/machinery/air_sensor
+	name = "датчик газа"
+
+/obj/machinery/computer/air_control
+	name = "консоль управления атмосферой"
+
+/obj/machinery/firealarm
+	name = "пожарная сигнализация"
+	desc = "Потяните за рычаг в случае чрезвычайной ситуации. Таким образом, продолжайте тянуть до бесконечности."
