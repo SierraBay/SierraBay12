@@ -109,11 +109,11 @@
 	name = "дверь"
 	desc = "Открывается и закрывается."
 
-/obj/structure/fireoor_assembly
+/obj/structure/firedoor_assembly
 	name = "каркас аварийного шлюза"
 	desc = "Это может спасти жизнь."
 
-/obj/machinery/door/fire door
+/obj/machinery/door/firedoor
 	name = "аварийный шлюз"
 	desc = "Аварийный герметичный затвор, способный герметично заблокировать опасные участки."
 

@@ -39,7 +39,7 @@
 	desc = "Позволяет получить временный доступ в запретные зоны"
 
 /obj/machinery/computer/guestpass
-	имя = "терминал гостевого допуска"
+	name = "терминал гостевого допуска"
 
 /obj/machinery/computer/upload
 	name = "неиспользуемая консоль загрузки"
@@ -75,7 +75,7 @@
 	desc = "Для управления шаттлом."
 
 /obj/machinery/computer/station_alert
-	name = "консоль оповещения"
+	name = "консоль оповещения о ЧС"
 	desc = "Используется для доступа к автоматизированной системе оповещения."
 
 /obj/machinery/door_timer/cell_1
