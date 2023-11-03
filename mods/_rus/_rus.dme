@@ -43,6 +43,8 @@
 #include "code/machinery/machinery.dm"
 #include "code/machinery/doors.dm"
 #include "code/obj/kitchen.dm"
+#include "code/obj/pipe.dm"
+#include "code/machinery/vending.dm"
 
 // Далее просто включай свой код
 // #include "code/something.dm"
