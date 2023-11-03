@@ -139,7 +139,10 @@
 				J.eject()
 	return TOPIC_REFRESH
 
-/obj/random/machine/spawn_choices()
+/obj/random/machine/jukebox_custom
+	name = "random jukebox"
+
+/obj/random/machine/jukebox_custom/spawn_choices()
 	return list(
 		/obj/machinery/jukebox/custom_tape,
 		/obj/machinery/jukebox/custom_tape/old
