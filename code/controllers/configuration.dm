@@ -433,6 +433,8 @@
 	// [SIERRA-ADD]
 	var/static/shutdown_on_reboot = FALSE
 	// [/SIERRA-ADD]
+	/// If the runechat is enabled on the server
+	var/static/runechat_enabled = TRUE
 
 
 /datum/configuration/New()
@@ -861,6 +863,8 @@
 			if("minimum_byondacc_age")
 				minimum_byondacc_age = text2num(value)
 			// [/SIERRA-ADD]
+			if ("disable_runechat")
+				runechat_enabled = FALSE
 			else
 				log_misc("Unknown setting in config/config.txt: '[name]'")
 
