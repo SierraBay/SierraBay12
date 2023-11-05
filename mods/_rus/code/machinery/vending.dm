@@ -133,3 +133,7 @@
 /obj/machinery/vending/magivend
 	name = "МагиВенд"
 	desc = "Магический торговый автомат."
+
+/obj/machinery/uniform_vendor
+	name = "раздатчик униформы"
+	desc = "Поставщик униформы для хозяйственной, служебной и парадной формы."

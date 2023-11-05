@@ -251,3 +251,35 @@
 /obj/machinery/partyalarm
 	name = "ТУСИМ"
 	desc = "Кубинец Пит в доме!"
+
+/obj/machinery/cryopod
+	name = "криогенная капсула"
+	desc = "Капсула размером с человека для введения его в состояние условного стазиса."
+
+/obj/machinery/computer/modular
+	name = "консоль"
+
+/obj/structure/closet/emcloset/anchored
+	name = "прикрученный аварийный шкаф"
+
+/obj/machinery/embedded_controller/radio/airlock/docking_port
+	name = "контроллер стыковочного порта"
+
+/obj/machinery/light_construct/spot
+	name = "каркас большого светильника"
+	desc = "Строящийся большой светильник."
+
+/obj/machinery/light
+	name = "осветительный прибор"
+	desc = "Осветительный прибор."
+
+/obj/machinery/light/small
+	desc = "Небольшой осветительный прибор."
+
+/obj/machinery/light/spot
+	name = "прожектор"
+	desc = "Более надежный цоколь для ламп, требующих большей мощности."
+
+/obj/machinery/disposal
+	name = "пневматическая мусорка"
+	desc = "Пневматическая установка для удаления отходов."
