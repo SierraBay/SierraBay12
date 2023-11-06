@@ -1,5 +1,5 @@
 /obj/item/stack/medical/bruise_pack
-	name = "рулон марли"
+	name = "бинт"
 	desc = "Немного стерильной марли для обматывания окровавленных культей."
 
 /obj/item/stack/medical/ointment
