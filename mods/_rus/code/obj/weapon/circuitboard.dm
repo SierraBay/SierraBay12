@@ -446,3 +446,12 @@
 /obj/item/firealarm_electronics
 	name = "печатная плата пожарной сигнализации"
 	desc = "Плата. На ней есть этикетка с надписью \"Выдерживает нагрев до 40 градусов Цельсия!\"."
+
+/obj/item/stock_parts/circuitboard/cryopodcontrol
+	name = "печатная плата (консоль криогенного надзора)"
+
+/obj/item/stock_parts/circuitboard/robotstoragecontrol
+	name = "печатная плата (роботизированная консоль хранения)"
+
+/obj/item/stock_parts/circuitboard/vitals_monitor
+	name = "печатная плата (монитор жизненных показателей)"
