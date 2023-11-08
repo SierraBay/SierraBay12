@@ -46,6 +46,8 @@
 #include "code/obj/pipe.dm"
 #include "code/machinery/vending.dm"
 #include "code/structures.dm"
+#include "code/obj/modules_files/items.dm"
+#include "code/obj/modules_files/machinery.dm"
 
 // Далее просто включай свой код
 // #include "code/something.dm"
