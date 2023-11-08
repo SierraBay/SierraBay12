@@ -55,6 +55,7 @@
 #include "code/obj/modules_files/clothing/earring.dm"
 #include "code/obj/modules_files/clothing/another.dm"
 #include "code/obj/modules_files/clothing/gloves.dm"
+#include "code/obj/modules_files/clothing/head.dm"
 
 // Далее просто включай свой код
 // #include "code/something.dm"
