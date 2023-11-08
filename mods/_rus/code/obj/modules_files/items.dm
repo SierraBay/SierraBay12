@@ -42,3 +42,13 @@
 /obj/item/pipe/tank
 	name = "балон под давлением"
 	desc = "Большой балон, содержащий газ под давлением."
+
+/obj/item/bone/skull
+	name = "череп"
+	desc = "Похоже, кто-то потерял голову."
+
+/obj/item/bone/skull/deer
+	name = "череп оленя"
+
+/obj/item/clothing/head/skull/deer
+	name = "резной череп оленя"

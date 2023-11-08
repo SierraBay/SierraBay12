@@ -2,6 +2,7 @@
 #define MODPACK_RUSSIAN_NAME
 
 #include "_rus.dm"
+#include "code/structures.dm"
 #include "code/proc/examine.dm"
 #include "code/obj/tools.dm"
 #include "code/obj/tanks.dm"
@@ -32,6 +33,8 @@
 #include "code/obj/posters.dm"
 #include "code/obj/particles.dm"
 #include "code/obj/structures/crates_lockers.dm"
+#include "code/obj/kitchen.dm"
+#include "code/obj/pipe.dm"
 #include "code/sierra/area/_shuttles.dm"
 #include "code/sierra/area/_z1_sierra_deck4.dm"
 #include "code/sierra/area/_z2_sierra_deck3.dm"
@@ -42,13 +45,16 @@
 #include "code/machinery/machines_atmo.dm"
 #include "code/machinery/machinery.dm"
 #include "code/machinery/doors.dm"
-#include "code/obj/kitchen.dm"
-#include "code/obj/pipe.dm"
 #include "code/machinery/vending.dm"
-#include "code/structures.dm"
 #include "code/obj/modules_files/items.dm"
 #include "code/obj/modules_files/machinery.dm"
 #include "code/obj/modules_files/items_augments.dm"
+#include "code/obj/modules_files/machinery_atmos.dm"
+#include "code/obj/modules_files/structures.dm"
+#include "code/obj/modules_files/clothing/glasses.dm"
+#include "code/obj/modules_files/clothing/earring.dm"
+#include "code/obj/modules_files/clothing/another.dm"
+#include "code/obj/modules_files/clothing/gloves.dm"
 
 // Далее просто включай свой код
 // #include "code/something.dm"
