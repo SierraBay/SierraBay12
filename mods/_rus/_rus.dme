@@ -48,6 +48,7 @@
 #include "code/structures.dm"
 #include "code/obj/modules_files/items.dm"
 #include "code/obj/modules_files/machinery.dm"
+#include "code/obj/modules_files/items_augments.dm"
 
 // Далее просто включай свой код
 // #include "code/something.dm"
