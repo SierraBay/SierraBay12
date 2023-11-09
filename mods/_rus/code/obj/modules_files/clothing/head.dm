@@ -7,7 +7,7 @@
 	desc = "Сверхредкая шляпа. Она вызывает определенное уважение."
 
 /obj/item/clothing/head/collectable/xenom
-	name = "Коллекционный шлем инопланетного монстра!"
+	name = "коллекционный шлем инопланетного монстра!"
 	desc = "Шипит-шипит-шипит!"
 
 /obj/item/clothing/head/collectable/chef
