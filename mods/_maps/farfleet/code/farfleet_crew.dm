@@ -24,11 +24,11 @@
 		GLOB.admin_departments += "Lordania Pioneer Corps Relay"
 
 /obj/submap_landmark/spawnpoint/away_iccgn_farfleet
-	name = "ICCG Droptrooper"
+	name = "Pioneer Corps Trooper"
 	movable_flags = MOVABLE_FLAG_EFFECTMOVE
 
 /obj/submap_landmark/spawnpoint/away_iccgn_farfleet/sergeant
-	name = "ICCG Droptrooper Sergeant"
+	name = "Pioneer Corps Starszy Bosman"
 
 /obj/submap_landmark/spawnpoint/away_iccgn_farfleet/captain
 	name = "Pioneer Corps Captain"
@@ -40,7 +40,7 @@
 	name = "Pioneer Corpsman"
 
 /obj/submap_landmark/spawnpoint/away_iccgn_farfleet/gunner
-	name = "Senior Technician"
+	name = "Pioneer Corps Technician"
 
 /* ACCESS
  * =======
@@ -104,7 +104,7 @@ var/global/const/access_away_iccgn_captain = "ACCESS_ICCGN_CAPTAIN"
 	outfit_type = /singleton/hierarchy/outfit/job/iccgn/iccgn_droptroops
 	allowed_branches = list(/datum/mil_branch/iccgn)
 	allowed_ranks = list(/datum/mil_rank/iccgn/or3)
-	supervisors = "sergeant"
+	supervisors = "Starszy Bosman"
 	loadout_allowed = TRUE
 	is_semi_antagonist = TRUE
 	info = "Вы просыпаетесь и выходите из криосна, ощущая прохладный воздух на своём лице, а также лёгкую тошноту. \
@@ -124,13 +124,11 @@ var/global/const/access_away_iccgn_captain = "ACCESS_ICCGN_CAPTAIN"
 	access = list(access_away_iccgn, access_away_iccgn_droptroops, access_engine_equip)
 
 /datum/job/submap/away_iccgn_farfleet/iccgn_sergeant
-	title = "Pioneer Corps Sergeant"
+	title = "Pioneer Corps Starszy Bosman"
 	total_positions = 1
 	outfit_type = /singleton/hierarchy/outfit/job/iccgn/iccgn_sergeant
 	supervisors = "Recon captain, Command of the Pioneer Corps , ICCGN"
-	minimum_character_age = list(SPECIES_HUMAN = 23)
-	ideal_character_age = 25
-	allowed_branches = list(/datum/mil_rank/iccgn)
+	allowed_branches = list(/datum/mil_branch/iccgn)
 	allowed_ranks = list(/datum/mil_rank/iccgn/or5)
 	loadout_allowed = TRUE
 	is_semi_antagonist = TRUE
@@ -156,12 +154,11 @@ var/global/const/access_away_iccgn_captain = "ACCESS_ICCGN_CAPTAIN"
 	title = "Pioneer Corps Captain"
 	total_positions = 1
 	outfit_type = /singleton/hierarchy/outfit/job/iccgn/iccgn_captain
-	minimum_character_age = list(SPECIES_HUMAN = 36)
-	ideal_character_age = 40
-	allowed_branches = list(/datum/mil_rank/iccgn)
+	allowed_branches = list(/datum/mil_branch/iccgn)
 	allowed_ranks = list(
 		/datum/mil_rank/iccgn/of4,
-		/datum/mil_rank/iccgn/of5)
+		/datum/mil_rank/iccgn/of5
+	)
 	supervisors = "command of the Pioneer Corps , ICCGN"
 	loadout_allowed = TRUE
 	is_semi_antagonist = TRUE
@@ -187,13 +184,11 @@ var/global/const/access_away_iccgn_captain = "ACCESS_ICCGN_CAPTAIN"
 	title = "Pioneer Corpsman"
 	total_positions = 1
 	outfit_type = /singleton/hierarchy/outfit/job/iccgn/iccgn_medic
-	minimum_character_age = list(SPECIES_HUMAN = 26)
-	ideal_character_age = 30
-	allowed_branches = list(/datum/mil_rank/iccgn)
+	allowed_branches = list(/datum/mil_branch/iccgn)
 	allowed_ranks = list(
 		/datum/mil_rank/iccgn/of1,
-		/datum/mil_rank/iccgn/of2,
-		/datum/mil_rank/iccgn/of3)
+		/datum/mil_rank/iccgn/of3
+	)
 	loadout_allowed = TRUE
 	info = "Вы просыпаетесь и выходите из криосна, ощущая прохладный воздух на своём лице, а также лёгкую тошноту. \
 	Являясь одним из членов экипажа разведывательного корабля Пионерского Корпуса ГКК, ваша задача состоит в медицинской поддержке экипажа. \
@@ -219,13 +214,11 @@ var/global/const/access_away_iccgn_captain = "ACCESS_ICCGN_CAPTAIN"
 	title = "Pioneer Corps Technician"
 	total_positions = 1
 	outfit_type = /singleton/hierarchy/outfit/job/iccgn/iccgn_gunner
-	allowed_branches = list(/datum/mil_rank/iccgn)
+	allowed_branches = list(/datum/mil_branch/iccgn)
 	allowed_ranks = list(
 		/datum/mil_rank/iccgn/of1,
-		/datum/mil_rank/iccgn/of2,
-		/datum/mil_rank/iccgn/of3)
-	minimum_character_age = list(SPECIES_HUMAN = 23)
-	ideal_character_age = 27
+		/datum/mil_rank/iccgn/of3
+	)
 	supervisors = "captain"
 	loadout_allowed = TRUE
 	info = "Вы просыпаетесь и выходите из криосна, ощущая прохладный воздух на своём лице, а также лёгкую тошноту. \
@@ -254,8 +247,6 @@ var/global/const/access_away_iccgn_captain = "ACCESS_ICCGN_CAPTAIN"
 	title = "CSS Field Operative"
 	total_positions = 1
 	outfit_type = /singleton/hierarchy/outfit/job/iccgn/iccgn_pawn
-	minimum_character_age = list(SPECIES_HUMAN = 31)
-	ideal_character_age = 40
 	allowed_branches = list(/datum/mil_branch/css)
 	allowed_ranks = list(/datum/mil_rank/css/fa7)
 	supervisors = "chief of 'P' Department, Confederate Security Service"
