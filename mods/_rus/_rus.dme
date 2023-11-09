@@ -58,6 +58,9 @@
 #include "code/obj/modules_files/clothing/head.dm"
 #include "code/obj/modules_files/clothing/masks.dm"
 #include "code/obj/modules_files/clothing/misc.dm"
+#include "code/obj/modules_files/clothing/shoes.dm"
+#include "code/obj/modules_files/clothing/spacesuits/modules.dm"
+#include "code/obj/modules_files/clothing/spacesuits/suits.dm"
 
 // Далее просто включай свой код
 // #include "code/something.dm"
