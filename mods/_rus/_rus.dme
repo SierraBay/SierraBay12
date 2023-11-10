@@ -63,6 +63,10 @@
 #include "code/obj/modules_files/clothing/spacesuits/suits.dm"
 #include "code/obj/modules_files/clothing/spacesuits/void.dm"
 #include "code/obj/modules_files/clothing/spacesuits/misc.dm"
+#include "code/obj/modules_files/clothing/suits/misc.dm"
+#include "code/obj/modules_files/clothing/suits/armor.dm"
+#include "code/obj/modules_files/clothing/suits/jobs.dm"
+#include "code/obj/modules_files/clothing/suits/labcoast.dm"
 
 // Далее просто включай свой код
 // #include "code/something.dm"
