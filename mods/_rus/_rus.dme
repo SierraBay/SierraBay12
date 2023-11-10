@@ -62,6 +62,7 @@
 #include "code/obj/modules_files/clothing/spacesuits/modules.dm"
 #include "code/obj/modules_files/clothing/spacesuits/suits.dm"
 #include "code/obj/modules_files/clothing/spacesuits/void.dm"
+#include "code/obj/modules_files/clothing/spacesuits/misc.dm"
 
 // Далее просто включай свой код
 // #include "code/something.dm"
