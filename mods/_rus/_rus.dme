@@ -67,6 +67,7 @@
 #include "code/obj/modules_files/clothing/suits/armor.dm"
 #include "code/obj/modules_files/clothing/suits/jobs.dm"
 #include "code/obj/modules_files/clothing/suits/labcoast.dm"
+#include "code/obj/modules_files/clothing/suits/under.dm"
 
 // Далее просто включай свой код
 // #include "code/something.dm"
