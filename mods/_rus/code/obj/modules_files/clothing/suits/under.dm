@@ -261,7 +261,7 @@
 	name = "рубашка с цветочным узором"
 
 /obj/item/clothing/accessory/helmet_cover
-	name = "Чехол для шлема"
+	name = "чехол для шлема"
 	desc = "Тканевый чехол для бронированных шлемов."
 
 /obj/item/clothing/accessory/helmet_cover/blue
@@ -269,7 +269,7 @@
 	desc = "Тканевый чехол для бронешлемов ярко-синего цвета."
 
 /obj/item/clothing/accessory/helmet_cover/navy
-	name = "темно-синий чехол для шлема"
+	name = "тёмно-синий чехол для шлема"
 	desc = "Тканевый чехол для бронированных шлемов. Этот чехол окрашен в темно-синий цвет."
 
 /obj/item/clothing/accessory/helmet_cover/green
@@ -295,3 +295,15 @@
 /obj/item/clothing/accessory/helmet_cover/lead
 	name = "чехол для шлема LEAD"
 	desc = "Тканевый чехол для бронированных шлемов. На этом чехле есть золотые полосы, обозначающие командира огневой группы."
+
+/obj/item/clothing/accessory/neckerchief
+	name = "шейный платок"
+	desc = "Кусок ткани, повязанный на шею. Любимая вещь скаутов, моряков и партизан."
+
+/obj/item/clothing/accessory/necklace
+	name = "ожерелье"
+	desc = "Простое ожерелье."
+
+/obj/item/clothing/accessory/sweater
+	name = "водолазка"
+	desc = "Стильный свитер, который согреет вас в холодные дни."

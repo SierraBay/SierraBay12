@@ -441,3 +441,388 @@
 /obj/item/clothing/suit/wizrobe/marisa/fake
 	name = "мантия ведьмы"
 	desc = "В магии главное - сила заклинаний!"
+
+/obj/item/clothing/accessory/storage/holster
+	name = "наплечная кобура"
+	desc = "Кобура для ручного огнестрельного оружия."
+
+/obj/item/clothing/accessory/storage/holster/armpit
+	name = "подмышечная кобура"
+	desc = "Потертая кобура для пистолета. Идеальна для скрытого ношения."
+
+/obj/item/clothing/accessory/storage/holster/waist
+	name = "поясная кобура"
+	desc = "Кобура для пистолета. Изготовлена из дорогой кожи."
+
+/obj/item/clothing/accessory/storage/holster/hip
+	name = "набедренная кобура"
+	desc = "Кобура для пистолета, низко надвинутая на бедро."
+
+/obj/item/clothing/accessory/storage/holster/thigh
+	name = "набедренная кобура"
+	desc = "Набедренная кобура из прочного синтетического волокна."
+
+/obj/item/clothing/accessory/storage/holster/machete
+	name = "ножны для мачете"
+	desc = "Красивые ножны из искусственной кожи с соответствующим ремнем."
+
+/obj/item/clothing/accessory/storage/holster/knife
+	name = "кожаные ножны для ножа"
+	desc = "Ножны из искусственной кожи, которые можно пристегнуть к ноге."
+
+/obj/item/clothing/accessory/storage/holster/knife/polymer
+	name = "ножны для ножа из полимера"
+	desc = "Ножны из жесткого полимера, которые можно пристегнуть к ноге."
+
+/obj/item/clothing/accessory/locket
+	name = "серебряный медальон"
+	desc = "Серебряный медальон, внутри которого, похоже, есть место для фотографии."
+
+/obj/item/clothing/accessory/medal
+	desc = "Простая медаль."
+
+/obj/item/clothing/accessory/medal/iron
+	name = "железная медаль"
+	desc = "Простая железная медаль."
+
+/obj/item/clothing/accessory/medal/bronze
+	name = "бронзовая медаль"
+	desc = "Простая бронзовая медаль."
+
+/obj/item/clothing/accessory/medal/silver
+	name = "серебряная медаль"
+	desc = "Простая серебряная медаль."
+
+/obj/item/clothing/accessory/medal/gold
+	name = "золотая медаль"
+	desc = "Простая золотая медаль."
+
+/obj/item/clothing/accessory/medal/gold/nanotrasen
+	name = "медаль командования корпорации"
+	desc = "Золотая медаль, вручаемая сотрудникам за службу в качестве капитана корпоративного объекта, станции или судна."
+
+/obj/item/clothing/accessory/medal/silver/nanotrasen
+	name = "медаль за заслуги перед корпорацией"
+	desc = "Серебряная медаль, вручаемая сотрудникам за выдающиеся заслуги в обеспечении корпоративных интересов."
+
+/obj/item/clothing/accessory/medal/bronze/nanotrasen
+	name = "медаль за корпоративные заслуги"
+	desc = "Бронзовая медаль, вручаемая сотрудникам за значительный вклад в развитие науки и техники."
+
+/obj/item/clothing/accessory/medal/iron/nanotrasen
+	name = "медаль \"За заслуги перед Отечеством\""
+	desc = "Железная медаль, вручаемая сотрудникам за заслуги."
+
+/obj/item/clothing/accessory/storage/pouches
+	name = "подсумки для хранения"
+	desc = "Набор черных подсумков, которые можно прикрепить к лёгкому бронежилету. Вмещает до двух предметов."
+
+/obj/item/clothing/accessory/storage/pouches/blue
+	desc = "Набор синих подсумков, которые можно прикрепить к лёгкому бронежилету. Вмещает до двух предметов."
+
+/obj/item/clothing/accessory/storage/pouches/navy
+	desc = "Набор темно-синих подсумков, которые можно прикрепить к лёгкому бронежилету. Вмещает до двух предметов."
+
+/obj/item/clothing/accessory/storage/pouches/green
+	desc = "Набор зеленых подсумков, которые можно прикрепить к лёгкому бронежилету. Вмещает до двух предметов."
+
+/obj/item/clothing/accessory/storage/pouches/tan
+	desc = "Набор подсумков цвета \"тан\", которые можно прикрепить к лёгкому бронежилету. Вмещает до двух предметов."
+
+/obj/item/clothing/accessory/storage/pouches/large
+	name = "большие подсумки для хранения"
+	desc = "Набор черных подсумков, которые можно прикрепить к лёгкому бронежилету. Вмещает до четырех предметов."
+
+/obj/item/clothing/accessory/storage/pouches/large/blue
+	desc = "Набор синих подсумков, которые можно прикрепить к лёгкому бронежилету. Вмещает до четырех предметов."
+
+/obj/item/clothing/accessory/storage/pouches/large/navy
+	desc = "Набор темно-синих подсумков, которые можно прикрепить к лёгкому бронежилету. Вмещает до четырех предметов."
+
+/obj/item/clothing/accessory/storage/pouches/large/green
+	desc = "Набор зеленых подсумков, которые можно прикрепить к лёгкому бронежилету. Вмещает до четырех предметов."
+
+/obj/item/clothing/accessory/storage/pouches/large/tan
+	desc = "Набор подсумков цвета загара, которые можно прикрепить к лёгкому бронежилету. Вмещает до четырех предметов."
+
+/obj/item/clothing/accessory/pride_pin/transgender
+	name = "пин трансгендера"
+	desc = "Пин в честь гордости трансгендера."
+
+/obj/item/clothing/accessory/pride_pin/lesbian
+	name = "пин лесбиянок"
+	desc = "Пин в честь лесбийской гордости."
+
+/obj/item/clothing/accessory/pride_pin/bisexual
+	name = "пин бисексуалов"
+	desc = "Пин в честь бисексуальной гордости."
+
+/obj/item/clothing/accessory/pride_pin/gay
+	name = "пин геев"
+	desc = "Пин в честь гордости геев."
+
+/obj/item/clothing/accessory/pride_pin/pansexual
+	name = "пин пансексуалов"
+	desc = "Пин в честь гордости пансексуалов."
+
+/obj/item/clothing/accessory/pride_pin/nonbinary
+	name = "пин небинарных"
+	desc = "Пин в честь небинарной гордости."
+
+/obj/item/clothing/accessory/pride_pin/asexual
+	name = "пин асексуалов"
+	desc = "Пин в честь асексуальной гордости."
+
+/obj/item/clothing/accessory/pride_pin/aromantic
+	name = "пин аромантиков"
+	desc = "Пин в честь гордости аромантиков."
+
+/obj/item/clothing/accessory/pride_pin/intersex
+	name = "пин интерсексуалов"
+	desc = "Пин в честь гордости интерсексуалов."
+
+/obj/item/clothing/accessory/pronouns/they
+	name = "значок с местоимениями они/их"
+	desc = "Значок с указанием местоимений владельца: они, их и их."
+
+/obj/item/clothing/accessory/pronouns/hehim
+	name = "значок с местоимениями он/его"
+	desc = "Значок с указанием местоимений владельца: он, его и его."
+
+/obj/item/clothing/accessory/pronouns/sheher
+	name = "значок с местоимениями она/её"
+	desc = "Значок с указанием местоимений владельца: она, её и её."
+
+/obj/item/clothing/accessory/pronouns/hethey
+	name = "значок с местоимениями он/они"
+	desc = "Значок с указанием местоимений владельца: он, его и его или они, их и их."
+
+/obj/item/clothing/accessory/pronouns/shethey
+	name = "значок с местоимениями она/они"
+	desc = "Значок с указанием местоимений владельца: она, ее и ее или они, их и их."
+
+/obj/item/clothing/accessory/pronouns/heshe
+	name = "значок с местоимениями он/она"
+	desc = "Значок с указанием местоимений владельца: он, его и его или она, её и её."
+
+/obj/item/clothing/accessory/pronouns/zehir
+	name = "значок с местоимениями ze/hir"
+	desc = "Значок с указанием местоимений владельца: ze, hir и hirs."
+
+/obj/item/clothing/accessory/pronouns/ask
+	name = "значок \"Спроси мои местоимения\""
+	desc = "Значок с просьбой к другим спрашивать местоимения владельца."
+
+/obj/item/clothing/accessory/qipao
+	name = "ципао"
+	desc = "Плотно облегающая блузка с вышитыми на ней замысловатыми узорами из цветов."
+
+/obj/item/clothing/accessory/scarf
+	name = "шарф"
+	desc = "Стильный шарф. Идеальный зимний аксессуар для тех, у кого хорошо развито чувство моды, и для тех, кто просто не выносит холодного ветра на своей шее."
+
+/obj/item/clothing/accessory/sherwani
+	name = "шервани"
+	desc = "Длинная, похожая на пальто одежда с причудливой вышивкой на манжетах и воротнике."
+
+/obj/item/clothing/accessory/stethoscope
+	name = "стетоскоп"
+	desc = "Устаревший медицинский прибор для прослушивания звуков человеческого тела. С его помощью можно создать впечатление, что вы знаете, что делаете."
+
+/obj/item/clothing/accessory/storage/pockets
+	name = "карманы"
+	desc = "Мешковидное вместилище, прикрепляемое к предмету одежды для хранения мелких предметов."
+
+/obj/item/clothing/accessory/storage/webbing
+	name = "разгрузочная портупея"
+	desc = "Прочная путаница ремешков и пряжек, к которым можно пристегивать вещи."
+
+/obj/item/clothing/accessory/storage/webbing_large
+	name = "большая разгрузочная портупея"
+	desc = "Крепкие ремни и пряжки с небольшими карманами и подсумками."
+
+/obj/item/clothing/accessory/storage/black_vest
+	name = "разгрузочный жилет"
+	desc = "Прочный черный жилет с множеством мелких карманов и подсумков."
+
+/obj/item/clothing/accessory/storage/brown_vest
+	name = "коричневый разгрузочный жилет"
+	desc = "Прочный коричневый жилет с множеством небольших карманов и подсумков."
+
+/obj/item/clothing/accessory/storage/white_vest
+	name = "белый разгрузочный жилет"
+	desc = "Спокойный белый жилет с множеством небольших карманов и подсумков."
+
+/obj/item/clothing/accessory/storage/black_drop
+	name = "чёрная набедренная сумка"
+	desc = "Прочная черная набедренная сумка с большим количеством места внутри."
+
+/obj/item/clothing/accessory/storage/brown_drop
+	name = "коричневая набедренная сумка"
+	desc = "Прочная коричневая набедренная сумка с большим количеством места внутри."
+
+/obj/item/clothing/accessory/storage/white_drop
+	name = "белая набедренная сумка"
+	desc = "Стоическая белая набедренная сумкаа с большим количеством места внутри."
+
+/obj/item/clothing/accessory/storage/knifeharness
+	name = "украшенная упряжь"
+	desc = "Сильно украшенная упряжь из сухожилий и кожи с двумя петлями для ножей."
+
+/obj/item/clothing/accessory/storage/bandolier
+	name = "бандольер"
+	desc = "Легкий бандольер с ремешками для хранения боеприпасов и других мелких предметов."
+
+/obj/item/clothing/accessory/toggleable/burgundy_jacket
+	name = "бордовый пиджак"
+	desc = "Дорогой костюмный пиджак."
+
+/obj/item/clothing/accessory/toggleable/charcoal_jacket
+	name = "угольный пиджак"
+	desc = "Строгий костюмный пиджак."
+
+/obj/item/clothing/accessory/toggleable/checkered_jacket
+	name = "клетчатый пиджак"
+	desc = "Удачный костюмный пиджак."
+
+/obj/item/clothing/accessory/toggleable/navy_jacket
+	name = "костюмный пиджак военно-морского цвета"
+	desc = "Официальный костюмный пиджак."
+
+/obj/item/clothing/accessory/toggleable/tan_jacket
+	name = "костюмный пиджак бежевого цвета"
+	desc = "Уютный костюмный пиджак."
+
+/obj/item/clothing/accessory/toggleable/suit_vest
+	name = "жилет"
+	desc = "Элегантная жилетка для костюма."
+
+/obj/item/clothing/accessory/toggleable/suit_vest/black
+	name = "чёрный жилет"
+
+/obj/item/clothing/accessory/suspenders
+	name = "подтяжки"
+	desc = "Они приостанавливают иллюзию игры мима."
+
+/obj/item/clothing/accessory/suspenders/colorable
+	name = "подтяжки"
+	desc = "Они приостанавливают иллюзию игры мима."
+
+/obj/item/clothing/accessory/tangzhuang
+	name = "куртка танчжуан"
+	desc = "Традиционная китайская куртка, связанная прямыми симметричными узлами."
+
+/obj/item/clothing/accessory/thawb
+	name = "халат"
+	desc = "Белый халат длиной до щиколоток, предназначенный для прохлады в жарком климате."
+
+/obj/item/clothing/accessory/blue
+	name = "синий галстук"
+
+/obj/item/clothing/accessory/red
+	name = "красный галстук"
+
+/obj/item/clothing/accessory/blue_clip
+	name = "синий галстук с зажимом"
+
+/obj/item/clothing/accessory/red_long
+	name = "красный длинный галстук"
+
+/obj/item/clothing/accessory/black
+	name = "черный галстук"
+
+/obj/item/clothing/accessory/yellow
+	name = "желтый галстук"
+
+/obj/item/clothing/accessory/navy
+	name = "галстук цвета морской волны"
+
+/obj/item/clothing/accessory/horrible
+	name = "ужасный галстук"
+	desc = "Галстук с зажимом из неошёлка. Он отвратителен."
+
+/obj/item/clothing/accessory/brown
+	name = "коричневый галстук"
+
+/obj/item/clothing/accessory/corptie
+	name = "корпоративный галстук"
+	desc = "Зеленый галстук с зажимом из неошёлка. На зажиме гордо красуется логотип компании."
+
+/obj/item/clothing/accessory/corptie/nanotrasen
+	name = "галстук NanoTrasen"
+	desc = "Красный галстук с зажимом из неошёлка. На зажиме гордо красуется логотип NanoTrasen."
+
+/obj/item/clothing/accessory/corptie/heph
+	name = "галстук Hephaestus Industries"
+	desc = "Галстук с зажимом из неошёлка голубого цвета. На зажиме гордо красуется логотип Hephaestus Industries."
+
+/obj/item/clothing/accessory/corptie/zeng
+	name = "галстук Zeng-Hu"
+	desc = "Золотой галстук с зажимом из неошёлка. На зажиме гордо красуется логотип компании Zeng-Hu Pharmaceuticals."
+
+/obj/item/clothing/accessory/tunic
+	name = "туника исследователя"
+	desc = "Модная туника, которой EXO снабжает сотрудников своих лабораторий."
+
+/obj/item/clothing/accessory/tunic/nanotrasen
+	name = "туника с нанотрасеном"
+	desc = "Модная туника, которой компания NanoTrasen снабжает работников своей лаборатории."
+
+/obj/item/clothing/accessory/tunic/heph
+	name = "туника компании Hephaestus Industries"
+	desc = "Модная туника, которую компания Hephaestus Industries предоставляет своим работникам."
+
+/obj/item/clothing/accessory/tunic/zeng
+	name = "туника Zeng-Hu"
+	desc = "Модная туника, которую компания Zeng-Hu предоставляет своим работникам."
+
+/obj/item/clothing/accessory/tunic/exec
+	name = "туника руководителя"
+
+/obj/item/clothing/accessory/tunic/exec/nanotrasen
+	name = "туника руководителя NanoTrasen"
+	desc = "Модный китель, которым компания NanoTrasen снабжает сотрудников своей лаборатории."
+
+/obj/item/clothing/accessory/tunic/exec/heph
+	name = "туника руководителя компании \"Гефест Индастриз\""
+	desc = "Модная туника, которой компания \"Гефест Индастриз\" снабжает работников своей лаборатории."
+
+/obj/item/clothing/accessory/tunic/exec/zeng
+	name = "туника для руководителя Zeng-Hu"
+	desc = "Модная туника, которую компания Zeng-Hu предоставляет своим работникам."
+
+/obj/item/clothing/accessory/ubac
+	name = "черный ubac"
+	desc = "Эластичная, плотно облегающая рубашка с камуфляжными рукавами, предназначенная для ношения под боевой экипировкой. Эта - черного цвета."
+
+/obj/item/clothing/accessory/ubac/blue
+	name = "синий ubac"
+	desc = "Эластичная, плотно облегающая рубашка с камуфляжными рукавами, предназначенная для ношения под боевой экипировкой. Эта - синего цвета."
+
+/obj/item/clothing/accessory/ubac/tan
+	name = "бежевый ubac"
+	desc = "Эластичная, плотно прилегающая рубашка с камуфляжными рукавами, предназначенная для ношения под боевой экипировкой. Эта рубашка имеет цвет загара."
+
+/obj/item/clothing/accessory/ubac/green
+	name = "зеленый ubac"
+	desc = "Эластичная, плотно облегающая рубашка с камуфляжными рукавами, предназначенная для ношения под боевой экипировкой. Эта - зеленого цвета."
+
+/obj/item/clothing/accessory/waistcoat
+	name = "жилет"
+	desc = "Стильный жилет."
+
+/obj/item/clothing/accessory/wristwatch
+	name = "чёрные наручные часы"
+	desc = "Элегантный прибор для измерения времени. Нейлоновый ремешок плотно прилегает к запястью."
+
+/obj/item/clothing/accessory/wristwatch/leather
+	name = "кожаные наручные часы"
+	desc = "Прочный прибор для измерения времени. Кожаный ремешок очень моден."
+
+/obj/item/clothing/accessory/wristwatch/fancy
+	name = "модные наручные часы"
+	desc = "Аляповатый хронометр. Вероятно, они стоят больше, чем ваше образование."
+
+/obj/item/clothing/accessory/toggleable/zhongshan
+	name = "костюмная куртка zhongshan"
+	desc = "Стильный китайский костюмный пиджак в виде туники."
