@@ -291,12 +291,9 @@ var/global/bomb_set
 					secure_device()
 				update_icon()
 			if(href_list["evacuate"])
-<<<<<<< ours
-=======
 				if(timing)
 					to_chat(usr, SPAN_WARNING("Cannot alter evacuation during countdown."))
 					return
->>>>>>> theirs
 				evacuate = !evacuate
 			if(href_list["anchor"])
 				if(removal_stage == 5)
