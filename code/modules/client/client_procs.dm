@@ -400,7 +400,12 @@
 		'html/images/eclogo.png',
 		'html/images/FleetLogo.png',
 		'html/images/sfplogo.png',
-		'html/images/falogo.png'
+		'html/images/falogo.png',
+		'html/images/ofbluelogo.png', //Sierra
+		'html/images/ofntlogo.png',   //Sierra
+		'html/images/foundlogo.png',  //Sierra
+		'html/images/ccalogo.png',    //Sierra
+		'html/images/sierralogo.png' //Sierra
 		)
 	addtimer(new Callback(src, .proc/after_send_resources), 1 SECOND)
 
