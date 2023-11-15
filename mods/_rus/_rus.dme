@@ -70,6 +70,7 @@
 #include "code/obj/modules_files/clothing/suits/under.dm"
 #include "code/obj/modules_files/misc.dm"
 #include "code/obj/modules_files/crafting.dm"
+#include "code/obj/modules_files/crafting_datum.dm"
 
 // Далее просто включай свой код
 // #include "code/something.dm"
