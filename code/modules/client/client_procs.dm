@@ -401,7 +401,7 @@
 		'html/images/FleetLogo.png',
 		'html/images/sfplogo.png',
 		'html/images/falogo.png',
-		// [SIERRA] ,
+		// [SIERRA-ADD] ,
 		'html/images/ofbluelogo.png',
 		'html/images/ofntlogo.png',
 		'html/images/foundlogo.png',
