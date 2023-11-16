@@ -407,7 +407,7 @@
 		'html/images/foundlogo.png',
 		'html/images/ccalogo.png',
 		'html/images/sierralogo.png',
-		// [/SIERRA]
+		// [/SIERRA-ADD]
 		)
 	addtimer(new Callback(src, .proc/after_send_resources), 1 SECOND)
 
