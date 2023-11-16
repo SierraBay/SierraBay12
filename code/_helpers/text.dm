@@ -500,11 +500,13 @@
 	t = replacetext(t, "<img src = xynlogo.png>", "\[xynlogo\]")
 	t = replacetext(t, "<img src = sfplogo.png>", "\[sfplogo\]")
 	t = replacetext(t, "<img src = falogo.png>", "\[falogo\]")
-	t = replacetext(t, "<img src = ofbluelogo.png>", "\[ofbluelogo\]" ) // Sierra
-	t = replacetext(t, "<img src = ofntlogo.png>", "\[ofntlogo\]" )     // Sierra
-	t = replacetext(t, "<img src = foundlogo.png>", "\[foundlogo\]" )   // Sierra
-	t = replacetext(t, "<img src = ccalogo.png>", "\[ccalogo\]" )       // Sierra
-	t = replacetext(t, "<img src = sierralogo.png>", "\[sierralogo\]" ) // Sierra
+	// [SIERRA]
+	t = replacetext(t, "<img src = ofbluelogo.png>", "\[ofbluelogo\]" )
+	t = replacetext(t, "<img src = ofntlogo.png>", "\[ofntlogo\]" )
+	t = replacetext(t, "<img src = foundlogo.png>", "\[foundlogo\]" )
+	t = replacetext(t, "<img src = ccalogo.png>", "\[ccalogo\]" )
+	t = replacetext(t, "<img src = sierralogo.png>", "\[sierralogo\]" )
+	// [/SIERRA]
 	t = replacetext(t, "<span class=\"paper_field\"></span>", "\[field\]")
 	t = replacetext(t, "<span class=\"redacted\">R E D A C T E D</span>", "\[redacted\]")
 	t = strip_html_properly(t)
