@@ -436,11 +436,13 @@
 	t = replacetext(t, "\[fleetlogo\]", "<img src = fleetlogo.png>")
 	t = replacetext(t, "\[sfplogo\]", "<img src = sfplogo.png>")
 	t = replacetext(t, "\[falogo\]", "<img src = falogo.png>")
-	t = replacetext(t, "\[ofbluelogo\]", "<img src = ofbluelogo.png>") // Sierra
-	t = replacetext(t, "\[ofntlogo\]", "<img src = ofntlogo.png>")     // Sierra
-	t = replacetext(t, "\[foundlogo\]", "<img src = foundlogo.png>")   // Sierra
-	t = replacetext(t, "\[ccalogo\]", "<img src = ccalogo.png>")       // Sierra
-	t = replacetext(t, "\[sierralogo\]", "<img src = sierralogo.png>") // Sierra
+	// [SIERRA]
+	t = replacetext(t, "\[ofbluelogo\]", "<img src = ofbluelogo.png>")
+	t = replacetext(t, "\[ofntlogo\]", "<img src = ofntlogo.png>")
+	t = replacetext(t, "\[foundlogo\]", "<img src = foundlogo.png>")
+	t = replacetext(t, "\[ccalogo\]", "<img src = ccalogo.png>")
+	t = replacetext(t, "\[sierralogo\]", "<img src = sierralogo.png>")
+	// [/SIERRA]
 	t = replacetext(t, "\[editorbr\]", "")
 	return t
 
