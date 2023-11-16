@@ -401,11 +401,13 @@
 		'html/images/FleetLogo.png',
 		'html/images/sfplogo.png',
 		'html/images/falogo.png',
-		'html/images/ofbluelogo.png', //Sierra
-		'html/images/ofntlogo.png',   //Sierra
-		'html/images/foundlogo.png',  //Sierra
-		'html/images/ccalogo.png',    //Sierra
-		'html/images/sierralogo.png' //Sierra
+		// [SIERRA] ,
+		'html/images/ofbluelogo.png',
+		'html/images/ofntlogo.png',
+		'html/images/foundlogo.png',
+		'html/images/ccalogo.png',
+		'html/images/sierralogo.png',
+		// [/SIERRA]
 		)
 	addtimer(new Callback(src, .proc/after_send_resources), 1 SECOND)
 
