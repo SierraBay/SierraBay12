@@ -33,3 +33,11 @@
 /obj/item/pack/cardemon
 	name = "набор Cardemon booster"
 	desc = "Наконец-то! Детская карточная игра в космосе!"
+
+/obj/machinery/computer/HolodeckControl
+	name = "консоль управления голопалубой"
+	desc = "Компьютер, используемый для управления соседней голопалубой."
+
+/obj/machinery/ship_map
+	name = "голокарта корабля"
+	desc = "Виртуальная карта корабля."
