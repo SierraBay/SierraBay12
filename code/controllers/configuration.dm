@@ -430,13 +430,11 @@
 
 	var/static/deletion_starts_paused = TRUE
 
-<<<<<<< ours
 	// [SIERRA-ADD]
 	var/static/shutdown_on_reboot = FALSE
 	// [/SIERRA-ADD]
-=======
+
 	var/static/enable_cold_mist = FALSE
->>>>>>> theirs
 
 
 /datum/configuration/New()
