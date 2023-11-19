@@ -115,307 +115,432 @@
 /obj/item/seeds
 	name = "пакет семян"
 
+/obj/item/seeds/update_appearance()
+	if(!seed) return
+
+	// Update icon.
+	ClearOverlays()
+	var/is_seeds = ((seed.seed_noun in list(SEED_NOUN_SEEDS, SEED_NOUN_PITS, SEED_NOUN_NODES)) ? 1 : 0)
+	var/image/seed_mask
+	var/seed_base_key = "base-[is_seeds ? seed.get_trait(TRAIT_PLANT_COLOUR) : "spores"]"
+	if(plant_seed_sprites[seed_base_key])
+		seed_mask = plant_seed_sprites[seed_base_key]
+	else
+		seed_mask = image('icons/obj/flora/seeds.dmi',"[is_seeds ? "seed" : "spore"]-mask")
+		if(is_seeds) // Spore glass bits aren't coloured.
+			seed_mask.color = seed.get_trait(TRAIT_PLANT_COLOUR)
+		plant_seed_sprites[seed_base_key] = seed_mask
+
+	var/image/seed_overlay
+	var/seed_overlay_key = "[seed.get_trait(TRAIT_PRODUCT_ICON)]-[seed.get_trait(TRAIT_PRODUCT_COLOUR)]"
+	if(plant_seed_sprites[seed_overlay_key])
+		seed_overlay = plant_seed_sprites[seed_overlay_key]
+	else
+		seed_overlay = image('icons/obj/flora/seeds.dmi',"[seed.get_trait(TRAIT_PRODUCT_ICON)]")
+		seed_overlay.color = seed.get_trait(TRAIT_PRODUCT_COLOUR)
+		plant_seed_sprites[seed_overlay_key] = seed_overlay
+
+	AddOverlays(seed_mask)
+	AddOverlays(seed_overlay)
+
+	if(is_seeds)
+		src.SetName("пакет [seed.seed_name] [seed.seed_noun]")
+		src.desc = "На лицевой стороне изображен [seed.display_name]."
+	else
+		src.SetName("sample of [seed.seed_name] [seed.seed_noun]")
+		src.desc = "Он помечен как происходящий из [seed.seed_name]."
+
+/datum/seed/chili
+	display_name = "растение чили"
+	seed_name = "чили"
+/datum/seed/chili/ice
+	seed_name = "ледяной перец чили"
+	display_name = "растение ледяного перца чили"
+/datum/seed/berry
+	seed_name = "ягода"
+	display_name = "ягодный куст"
+
+/datum/seed/berry/blue
+	seed_name = "чёрника"
+	display_name = "куст чёрники"
+
+/datum/seed/berry/glow
+	seed_name = "голубика"
+	display_name = "куст голубики"
+
+/datum/seed/berry/poison
+	seed_name = "ядовитая ягода"
+	display_name = "куст ядовитых ягод"
+
+/datum/seed/berry/poison/death
+	seed_name = "смертельная ягода"
+	display_name = "куст смертельной ягоды"
+
+/datum/seed/nettle
+	seed_name = "крапива"
+	display_name = "крапива"
+
+/datum/seed/nettle/death
+	seed_name = "смертельная крапива"
+	display_name = "смертельная крапива"
+
+/datum/seed/tomato
+	seed_name = "помидор"
+	display_name = "растение помидора"
+
+/datum/seed/tomato/blood
+	seed_name = "кровавый помидор"
+	display_name = "растение кровавого помидора"
+
+/datum/seed/tomato/killer
+	seed_name = "помидор-убийца"
+	display_name = "растение помидора-убийцы"
+
+/datum/seed/tomato/blue
+	seed_name = "синий помидор"
+	display_name = "растение синего помидора"
+
+/datum/seed/tomato/blue/teleport
+	seed_name = "блюспейс помидор"
+	display_name = "растение блюспейс помидора"
+
+/datum/seed/eggplant
+	seed_name = "баклажан"
+	display_name = "баклажан"
+/datum/seed/apple
+	seed_name = "яблоко"
+	display_name = "яблоня"
+
+/datum/seed/apple/gold
+	seed_name = "золотое яблоко"
+	display_name = "золотая яблоня"
+
+/datum/seed/ambrosia
+	seed_name = "амброзия вульгарис"
+	display_name = "амброзия вульгарис"
+
+/datum/seed/ambrosia/deus
+	seed_name = "амброзия деус"
+	display_name = "амброзия деус"
+
+/datum/seed/mushroom
+	seed_name = "лисичка"
+	display_name = "грибница лисичек"
+
+/datum/seed/mushroom/mold
+	seed_name = "коричневая плесень"
+	display_name = "коричневая плесень"
+
+/datum/seed/mushroom/plump
+	seed_name = "шлемник пухлый"
+	display_name = "шлемник пухлый"
+
+/datum/seed/mushroom/plump/walking
+	seed_name = "ходячий гриб"
+	display_name = "грибница ходячих грибов"
+
+/datum/seed/mushroom/hallucinogenic
+	seed_name = "рейши"
+	display_name = "грибница рейши"
+
+/datum/seed/mushroom/hallucinogenic/strong
+	seed_name = "гриб свободы"
+	display_name = "грибница гриба свободы"
+
+/datum/seed/mushroom/poison
+	seed_name = "мухомор аманита"
+	display_name = "грибница мухомора аманита"
+
+/datum/seed/mushroom/poison/death
+	seed_name = "разрушающий ангел"
+	display_name = "грибница разрушающего ангела"
+
+/datum/seed/mushroom/towercap
+	seed_name = "башенка"
+	display_name = "грибница башенки"
+
+/datum/seed/mushroom/glowshroom
+	seed_name = "светящийся гриб"
+	display_name = "грибница светящихся грибов"
+
+/datum/seed/mushroom/plastic
+	seed_name = "пластеллиум"
+	display_name = "грибница пластеллиума"
+
+/datum/seed/flower
+	seed_name = "колокольчик"
+	display_name = "грядка колокольчика"
+
+/datum/seed/flower/poppy
+	seed_name = "мак"
+	display_name = "маковая грядка"
+
+/datum/seed/flower/sunflower
+	seed_name = "подсолнух"
+	display_name = "подсолнечная грядка"
+
+/datum/seed/flower/lavender
+	seed_name = "лаванда"
+	display_name = "лавандовая грядка"
+
+/datum/seed/grapes
+	seed_name = "виноград"
+	display_name = "виноградная лоза"
+
+/datum/seed/grapes/green
+	seed_name = "зеленый виноград"
+	display_name = "лоза зеленого винограда"
+/datum/seed/peanuts
+	seed_name = "арахис"
+	display_name = "растение арахис"
+
+/datum/seed/peppercorn
+	seed_name = "чёрный перец"
+	display_name = "растение чёрного перца"
+
+/datum/seed/cabbage
+	seed_name = "капуста"
+	display_name = "капустная грядка"
+
+/datum/seed/lettuce
+	seed_name = "латук"
+	display_name = "растение латука"
+
+/datum/seed/banana
+	seed_name = "банан"
+	display_name = "банановое дерево"
+
+/datum/seed/corn
+	seed_name = "кукуруза"
+	display_name = "растение кукурузы"
+
+/datum/seed/potato
+	seed_name = "картофель"
+	display_name = "картофельное растение"
+
+/datum/seed/garlic
+	seed_name = "чеснок"
+	display_name = "растение чеснока"
+
+/datum/seed/onion
+	seed_name = "лук"
+	display_name = "луковичное растение"
+
+/datum/seed/soybean
+	seed_name = "соя"
+	display_name = "растение сои"
+
+/datum/seed/wheat
+	seed_name = "пшеница"
+	display_name = "росток пшеницы"
+
+/datum/seed/rice
+	seed_name = "рис"
+	display_name = "грядка риса"
+
+/datum/seed/carrots
+	seed_name = "морковь"
+	display_name = "морковная грядка"
+
+/datum/seed/weeds
+	seed_name = "сорняк"
+	display_name = "грядка сорняков"
+
+/datum/seed/whitebeets
+	seed_name = "белая свекла"
+	display_name = "грядка белой свеклы"
+
+/datum/seed/sugarcane
+	seed_name = "сахарный тростник"
+	display_name = "грядка сахарного тростника"
+
+/datum/seed/watermelon
+	seed_name = "арбуз"
+	display_name = "арбузная лоза"
+
+/datum/seed/pumpkin
+	seed_name = "тыква"
+	display_name = "тыквенная лоза"
+
+/datum/seed/citrus
+	seed_name = "лайм"
+	display_name = "лаймовое дерево"
+
+/datum/seed/citrus/lemon
+	seed_name = "лимон"
+	display_name = "лимонное дерево"
+
+/datum/seed/citrus/orange
+	seed_name = "апельсин"
+	display_name = "апельсиновое дерево"
+
+/datum/seed/grass
+	seed_name = "трава"
+	display_name = "участок травы"
+
+/datum/seed/cocoa
+	seed_name = "какао"
+	display_name = "дерево какао"
+
+/datum/seed/cherries
+	seed_name = "вишня"
+	display_name = "вишневое дерево"
+
+/datum/seed/kudzu
+	seed_name = "кудзу"
+	display_name = "лиана кудзу"
+
+/datum/seed/diona
+	seed_name = "диона"
+	display_name = "стручок-репликант"
+
+/datum/seed/shand
+	seed_name = "рука Стендарра"
+	display_name = "растение рука Стендарра"
+
+/datum/seed/mtear
+	seed_name = "слеза Мессы"
+	display_name = "Растение слеза Мессы"
+
+/datum/seed/tobacco
+	seed_name = "табак"
+	display_name = "растение табака"
+
+/datum/seed/tobacco/finetobacco
+	seed_name = "мелкий табак"
+	display_name = "растение мелкого табака"
+
+/datum/seed/tobacco/puretobacco
+	seed_name = "сочный табак"
+	display_name = "растение сочного табака"
+
+/datum/seed/tobacco/bad
+	seed_name = "низкосортный табак"
+	display_name = "растение низкосортного табака"
+
+/datum/seed/algae
+	seed_name = "водоросль"
+	display_name = "водоросль"
+
+/datum/seed/bamboo
+	seed_name = "бамбук"
+	display_name = "бамбуковая грядка"
+
+/datum/seed/resin
+	seed_name = "растение смолы"
+	display_name = "растение смолы"
+
+/datum/seed/breather
+	seed_name = "дыхалка"
+	display_name = "дыхалка"
+
+/datum/seed/melon
+	seed_name = "дыня"
+	display_name = "дынная лоза"
+
+/datum/seed/coffee
+	seed_name = "кофейное зерно"
+	display_name = "кофейное растение"
+
+/datum/seed/grapes/white
+	seed_name = "белый виноград"
+	display_name = "лоза белого винограда"
+
+/datum/seed/vanilla
+	seed_name = "цветок ванили"
+	display_name = "цветок ванили"
+
+/datum/seed/pineapple
+	seed_name = "ананас"
+	display_name = "растение ананас"
+
+/datum/seed/pear
+	seed_name = "груша"
+	display_name = "грушевое дерево"
+
+/datum/seed/coconut
+	seed_name = "кокос"
+	display_name = "кокосовое дерево"
+
+/datum/seed/cinnamon
+	seed_name = "корица"
+	display_name = "коричное дерево"
+
+/datum/seed/olives
+	seed_name = "оливки"
+	display_name = "оливковое дерево"
+
+/datum/seed/gukhe
+	seed_name = "цветение гухе"
+	display_name = "цветение гухе"
+
+/datum/seed/hrukhza
+	seed_name = "цветок крукза"
+	display_name = "цветок крузка"
+
+/datum/seed/okrri
+	seed_name = "гриб о'крри"
+	display_name = "гриб о'крри"
+
+/datum/seed/ximikoa
+	seed_name = "стебли ксими'коа"
+	display_name = "грядка ксими'коа"
+
+/datum/seed/qokkloa
+	seed_name = "куокк'лоа мох"
+	display_name = "куокк'лоа мох"
+
+/datum/seed/aghrassh
+	seed_name = "аграсш"
+	display_name = "дерево аграсш"
+
+/datum/seed/gummen
+	seed_name = "гуммен"
+	display_name = "бобовое растение гуммен"
+
+/datum/seed/flower/affelerin
+	seed_name = "аффелерин"
+	display_name = "цветок аффелерин"
+
+/datum/seed/berry/iridast
+	seed_name = "иридаст"
+	display_name = "куст иридаста"
+
+/datum/seed/shellfish
+	seed_name = "моллюск"
+	display_name = "грядка моллюсков"
+
+/datum/seed/shellfish/clam
+	seed_name = "моллюск"
+	display_name = "грядка с моллюсками"
+
+/datum/seed/shellfish/mussel
+	seed_name = "мидия"
+	display_name = "грядка с мидиями"
+
+/datum/seed/shellfish/oyster
+	seed_name = "устрица"
+	display_name = "грядка с устрицами"
+
+/datum/seed/shellfish/shrimp
+	seed_name = "креветка"
+	display_name = "грядка с креветками"
+
+/datum/seed/shellfish/crab
+	seed_name = "краб"
+	display_name = "грядка с крабами"
+
+/datum/seed/almond
+	seed_name = "миндаль"
+	display_name = "растение миндаля"
+
 /obj/item/seeds/cutting
 	name = "черенки"
 	desc = "Черенки некоторых растений."
 
 /obj/item/seeds/cutting/update_appearance()
 	..()
-	src.SetName("пакет черенков [seed.seed_name]")
-
-/obj/item/seeds/replicapod
-	seed_type = "диона"
-
-/obj/item/seeds/chiliseed
-	seed_type = "чили"
-
-/obj/item/seeds/plastiseed
-	seed_type = "пластик"
-
-/obj/item/seeds/grapeseed
-	seed_type = "виноград"
-
-/obj/item/seeds/greengrapeseed
-	seed_type = "зелёный виноград"
-
-/obj/item/seeds/peanutseed
-	seed_type = "арахис"
-
-/obj/item/seeds/cabbageseed
-	seed_type = "капуста"
-
-/obj/item/seeds/lettuceseed
-	seed_type = "салат-латук"
-
-/obj/item/seeds/shandseed
-	seed_type = "шанда"
-
-/obj/item/seeds/mtearseed
-	seed_type = "mtear"
-
-/obj/item/seeds/berryseed
-	seed_type = "ягоды"
-
-/obj/item/seeds/blueberryseed
-	seed_type = "черника"
-
-/obj/item/seeds/glowberryseed
-	seed_type = "светящиеся ягоды"
-
-/obj/item/seeds/bananaseed
-	seed_type = "банан"
-
-/obj/item/seeds/eggplantseed
-	seed_type = "баклажан"
-
-/obj/item/seeds/bloodtomatoseed
-	seed_type = "кровавый томат"
-
-/obj/item/seeds/tomatoseed
-	seed_type = "томат"
-
-/obj/item/seeds/killertomatoseed
-	seed_type = "томат убийца"
-
-/obj/item/seeds/bluetomatoseed
-	seed_type = "голубой томат"
-
-/obj/item/seeds/bluespacetomatoseed
-	seed_type = "bluespace томат"
-
-/obj/item/seeds/cornseed
-	seed_type = "кукуруза"
-
-/obj/item/seeds/poppyseed
-	seed_type = "мак"
-
-/obj/item/seeds/potatoseed
-	seed_type = "картофель"
-
-/obj/item/seeds/icepepperseed
-	seed_type = "ледяной чили"
-
-/obj/item/seeds/soyaseed
-	seed_type = "соя"
-
-/obj/item/seeds/wheatseed
-	seed_type = "пшеница"
-
-/obj/item/seeds/riceseed
-	seed_type = "рис"
-
-/obj/item/seeds/carrotseed
-	seed_type = "морковь"
-
-/obj/item/seeds/reishimycelium
-	seed_type = "рейши"
-
-/obj/item/seeds/amanitamycelium
-	seed_type = "аманита"
-
-/obj/item/seeds/angelmycelium
-	seed_type = "разрушение ангела"
-
-/obj/item/seeds/libertymycelium
-	seed_type = "либертикап"
-
-/obj/item/seeds/chantermycelium
-	seed_type = "грибы"
-
-/obj/item/seeds/towermycelium
-	seed_type = "башенка"
-
-/obj/item/seeds/glowshroom
-	seed_type = "светящийся гриб"
-
-/obj/item/seeds/plumpmycelium
-	seed_type = "плюмпмицелий"
-
-/obj/item/seeds/walkingmushroommycelium
-	seed_type = "шагающий гриб"
-
-/obj/item/seeds/nettleseed
-	seed_type = "крапива"
-
-/obj/item/seeds/deathnettleseed
-	seed_type = "смертельная крапива"
-
-/obj/item/seeds/weeds
-	seed_type = "сорняки"
-
-/obj/item/seeds/harebell
-	seed_type = "колокольчик"
-
-/obj/item/seeds/sunflowerseed
-	seed_type = "подсолнухи"
-
-/obj/item/seeds/lavenderseed
-	seed_type = "лаванда"
-
-/obj/item/seeds/brownmold
-	seed_type = "плесень"
-
-/obj/item/seeds/appleseed
-	seed_type = "яблоко"
-
-/obj/item/seeds/poisonedappleseed
-	seed_type = "отравленное яблоко"
-
-/obj/item/seeds/goldappleseed
-	seed_type = "золотое яблоко"
-
-/obj/item/seeds/ambrosiavulgarisseed
-	seed_type = "амброзия"
-
-/obj/item/seeds/ambrosiadeusseed
-	seed_type = "амрозиядеус"
-
-/obj/item/seeds/whitebeetseed
-	seed_type = "белокочанная капуста"
-
-/obj/item/seeds/sugarcaneseed
-	seed_type = "сахарный тростник"
-
-/obj/item/seeds/watermelonseed
-	seed_type = "арбуз"
-
-/obj/item/seeds/pumpkinseed
-	seed_type = "тыква"
-
-/obj/item/seeds/limeseed
-	seed_type = "лайм"
-
-/obj/item/seeds/lemonseed
-	seed_type = "лимон"
-
-/obj/item/seeds
-	seed_type = "апельсин"
-
-/obj/item/seeds/poisonberryseed
-	seed_type = "ягода"
-
-/obj/item/seeds/deathberryseed
-	seed_type = "смертоягода"
-
-/obj/item/seeds/grassseed
-	seed_type = "трава"
-
-/obj/item/seeds/cocoapodseed
-	seed_type = "какао"
-
-/obj/item/seeds/cherryseed
-	seed_type = "вишня"
-
-/obj/item/seeds/tobaccoseed
-	seed_type = "табак"
-
-/obj/item/seeds/finetobaccoseed
-	seed_type = "хороший табак"
-
-/obj/item/seeds/puretobaccoseed
-	seed_type = "нормальный табак"
-
-/obj/item/seeds/badtobaccoseed
-	seed_type = "плохой табак"
-
-/obj/item/seeds/kudzuseed
-	seed_type = "кудзу"
-
-/obj/item/seeds/peppercornseed
-	seed_type = "перчинка"
-
-/obj/item/seeds/garlicseed
-	seed_type = "чеснок"
-
-/obj/item/seeds/onionseed
-	seed_type = "лук"
-
-/obj/item/seeds/algaeseed
-	seed_type = "водоросли"
-
-/obj/item/seeds/bamboo
-	seed_type = "бамбук"
-
-/obj/item/seeds/breather
-	seed_type = "дыхалка"
-
-/obj/item/seeds/resin
-	seed_type = "смолосемянник"
-
-/obj/item/seeds/melonseed
-	seed_type = "дыня"
-
-/obj/item/seeds/coffeeseed
-	seed_type = "кофе"
-
-/obj/item/seeds/whitegrapeseed
-	seed_type = "виноград"
-
-/obj/item/seeds/vanillaseed
-	seed_type = "ваниль"
-
-/obj/item/seeds/pineappleseed
-	seed_type = "ананасы"
-
-/obj/item/seeds/gukhe
-	seed_type = "гухе"
-
-/obj/item/seeds/hrukhza
-	seed_type = "грюкза"
-
-/obj/item/seeds/okrri
-	seed_type = "окрри"
-
-/obj/item/seeds/ximikoa
-	seed_type = "цимикоа"
-
-/obj/item/seeds/pearseed
-	seed_type = "груши"
-
-/obj/item/seeds/coconutseed
-	seed_type = "кокос"
-
-/obj/item/seeds/qokkloa
-	seed_type = "куокклоа"
-
-/obj/item/seeds/aghrassh
-	seed_type = "аграшш"
-
-/obj/item/seeds/cinnamon
-	seed_type = "циннамон"
-
-/obj/item/seeds/olives
-	seed_type = "оливки"
-
-/obj/item/seeds/gummen
-	seed_type = "гуммен"
-
-/obj/item/seeds/iridast
-	seed_type = "иридаст"
-
-/obj/item/seeds/affelerin
-	seed_type = "аффелерин"
-
-/obj/item/seeds/shellfish
-	seed_type = "моллюск"
-
-/obj/item/seeds/clam
-	seed_type = "моллюск"
-
-/obj/item/seeds/mussel
-	seed_type = "мидия"
-
-/obj/item/seeds/oyster
-	seed_type = "устрица"
-
-/obj/item/seeds/shrimp
-	seed_type = "креветка"
-
-/obj/item/seeds/crab
-	seed_type = "краб"
-
-/obj/item/seeds/almondseed
-	seed_type = "миндаль"
+	src.SetName("пакет черенков растения [seed.seed_name]")
 
 /obj/machinery/seed_storage
 	name = "хранилище семян"
