@@ -816,12 +816,17 @@
 /obj/floor_decal/techfloor{
 	dir = 9
 	},
+/obj/machinery/computer/prisoner{
+	dir = 4;
+	name = "Implant Management"
+	},
 /turf/simulated/floor/tiled/techfloor,
 /area/shuttle/specops/centcom)
 "afa" = (
 /obj/floor_decal/techfloor{
 	dir = 1
 	},
+/obj/structure/handrail,
 /turf/simulated/floor/tiled/techfloor,
 /area/shuttle/specops/centcom)
 "afb" = (
@@ -1020,16 +1025,6 @@
 /obj/paint/hull,
 /turf/simulated/floor/plating,
 /area/shuttle/administration/centcom)
-"agN" = (
-/obj/machinery/computer/prisoner{
-	dir = 4;
-	name = "Implant Management"
-	},
-/obj/floor_decal/techfloor{
-	dir = 8
-	},
-/turf/simulated/floor/tiled/techfloor,
-/area/shuttle/specops/centcom)
 "agO" = (
 /obj/floor_decal/corner/red/diagonal,
 /turf/simulated/floor/tiled,
@@ -1041,6 +1036,9 @@
 	},
 /obj/floor_decal/techfloor{
 	dir = 4
+	},
+/obj/structure/bed/chair/shuttle/red{
+	dir = 8
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/shuttle/specops/centcom)
@@ -1211,13 +1209,6 @@
 	icon = 'icons/turf/flooring/tiles.dmi'
 	},
 /area/centcom/specops)
-"ahM" = (
-/obj/decal/cleanable/filth,
-/turf/unsimulated/floor/techfloor{
-	icon_state = "dark";
-	icon = 'icons/turf/flooring/tiles.dmi'
-	},
-/area/centcom/specops)
 "ahN" = (
 /obj/floor_decal/industrial/outline/grey,
 /turf/unsimulated/floor/techfloor{
@@ -1281,6 +1272,9 @@
 /obj/floor_decal/techfloor{
 	dir = 8
 	},
+/obj/structure/bed/chair/shuttle/red{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/techfloor,
 /area/shuttle/specops/centcom)
 "ahZ" = (
@@ -1290,6 +1284,9 @@
 /obj/machinery/vending/wallmed1{
 	dir = 8;
 	pixel_x = 23
+	},
+/obj/structure/bed/chair/shuttle/red{
+	dir = 8
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/shuttle/specops/centcom)
@@ -1360,6 +1357,9 @@
 	},
 /obj/floor_decal/techfloor{
 	dir = 8
+	},
+/obj/structure/bed/chair/shuttle/red{
+	dir = 4
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/shuttle/specops/centcom)
@@ -2121,6 +2121,9 @@
 /obj/floor_decal/techfloor{
 	dir = 4
 	},
+/obj/structure/bed/chair/shuttle/red{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/techfloor,
 /area/shuttle/specops/centcom)
 "aoP" = (
@@ -2281,6 +2284,9 @@
 	},
 /obj/floor_decal/techfloor/hole{
 	dir = 4
+	},
+/obj/structure/bed/chair/shuttle/red{
+	dir = 8
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/shuttle/specops/centcom)
@@ -2686,7 +2692,6 @@
 /area/centcom/specops)
 "atb" = (
 /obj/floor_decal/industrial/outline/blue,
-/obj/decal/cleanable/filth,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/flooring/tiles.dmi';
 	icon_state = "monotile_light"
@@ -5021,13 +5026,6 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/acting/backstage)
-"aFe" = (
-/obj/floor_decal/corner/red/diagonal,
-/obj/decal/cleanable/filth,
-/turf/unsimulated/floor{
-	icon_state = "dark"
-	},
-/area/centcom/specops)
 "aFn" = (
 /obj/machinery/gibber{
 	anchored = 0
@@ -10109,13 +10107,6 @@
 	icon_state = "white"
 	},
 /area/centcom/specops)
-"gIS" = (
-/obj/decal/cleanable/filth,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/flooring/tiles.dmi';
-	icon_state = "white"
-	},
-/area/centcom/specops)
 "gJm" = (
 /obj/machinery/mech_recharger,
 /mob/living/exosuit/premade/powerloader,
@@ -10148,16 +10139,6 @@
 	icon = 'icons/turf/flooring/tiles.dmi'
 	},
 /area/centcom/holding)
-"gOt" = (
-/obj/floor_decal/borderfloorblack{
-	dir = 1
-	},
-/obj/floor_decal/corner/red/border{
-	dir = 1
-	},
-/obj/decal/cleanable/filth,
-/turf/unsimulated/floor/techfloor,
-/area/centcom/specops)
 "gRv" = (
 /obj/machinery/chemical_dispenser/full,
 /turf/unsimulated/floor{
@@ -11493,13 +11474,6 @@
 	icon = 'icons/turf/flooring/tiles.dmi'
 	},
 /area/centcom)
-"jIY" = (
-/obj/floor_decal/techfloor{
-	dir = 8
-	},
-/obj/decal/cleanable/filth,
-/turf/unsimulated/floor/techfloor,
-/area/centcom/specops)
 "jJm" = (
 /obj/floor_decal/borderfloorblack{
 	dir = 1
@@ -12586,12 +12560,6 @@
 /obj/item/stack/material/phoron/fifty,
 /turf/unsimulated/floor/techfloor,
 /area/centcom/holding)
-"lOd" = (
-/obj/decal/cleanable/filth,
-/obj/floor_decal/borderfloorblack,
-/obj/floor_decal/corner/red/border,
-/turf/unsimulated/floor/techfloor,
-/area/centcom/specops)
 "lQe" = (
 /obj/machinery/vending/boozeomat,
 /obj/floor_decal/carpet{
@@ -12633,10 +12601,6 @@
 	icon_state = "steel"
 	},
 /area/centcom)
-"lZK" = (
-/obj/decal/cleanable/filth,
-/turf/unsimulated/floor/techfloor,
-/area/centcom/specops)
 "mcl" = (
 /obj/floor_decal/borderfloorblack{
 	dir = 8
@@ -16124,14 +16088,6 @@
 	icon = 'icons/turf/flooring/tiles.dmi'
 	},
 /area/centcom/holding)
-"trb" = (
-/obj/floor_decal/industrial/warning,
-/obj/decal/cleanable/filth,
-/turf/unsimulated/floor/techfloor{
-	icon_state = "dark";
-	icon = 'icons/turf/flooring/tiles.dmi'
-	},
-/area/centcom/specops)
 "trz" = (
 /obj/structure/table/woodentable_reinforced/walnut,
 /turf/unsimulated/beach/sand{
@@ -16276,16 +16232,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/simulated/wall/r_wall/prepainted,
 /area/centcom/holding)
-"tDd" = (
-/obj/floor_decal/borderfloorblack{
-	dir = 8
-	},
-/obj/floor_decal/corner/red/border{
-	dir = 8
-	},
-/obj/decal/cleanable/filth,
-/turf/unsimulated/floor/techfloor,
-/area/centcom/specops)
 "tDB" = (
 /obj/structure/table/marble,
 /obj/machinery/cooker/cereal,
@@ -34693,11 +34639,11 @@ ane
 ane
 ane
 ane
-lZK
 ane
 ane
 ane
-lZK
+ane
+ane
 ane
 ane
 ane
@@ -35501,7 +35447,7 @@ aab
 acF
 tdl
 aeX
-agN
+ahX
 ahX
 aiw
 ahX
@@ -35695,7 +35641,7 @@ aab
 pWe
 avF
 bjC
-lOd
+anH
 avF
 avF
 aab
@@ -35713,7 +35659,7 @@ akK
 alu
 avF
 avF
-gOt
+bjC
 anH
 avF
 rjQ
@@ -36506,7 +36452,7 @@ bjC
 ane
 aaD
 ame
-tDd
+ame
 ame
 ame
 nuY
@@ -36521,7 +36467,7 @@ ame
 ame
 ame
 amF
-lZK
+ane
 anH
 avF
 rjQ
@@ -36713,9 +36659,9 @@ ane
 ane
 ane
 ane
-lZK
 ane
-lZK
+ane
+ane
 ane
 ane
 ane
@@ -37516,7 +37462,7 @@ aab
 pWe
 apr
 aaE
-ahM
+amg
 amg
 lDh
 bJa
@@ -38122,7 +38068,7 @@ aab
 pWe
 avF
 aaG
-jIY
+abH
 abP
 abH
 acT
@@ -38325,7 +38271,7 @@ pWe
 avF
 aaH
 ane
-gsX
+ane
 ane
 acj
 avF
@@ -38931,7 +38877,7 @@ pWe
 avF
 aaU
 ane
-lZK
+ane
 ane
 acj
 xMp
@@ -38944,7 +38890,7 @@ apM
 xMp
 atp
 aub
-aFe
+aub
 aub
 avG
 avF
@@ -39752,7 +39698,7 @@ apM
 hKi
 att
 aub
-aFe
+aub
 aub
 qrZ
 avF
@@ -39949,7 +39895,7 @@ ahi
 amg
 amg
 rSf
-ahM
+amg
 apM
 avF
 atu
@@ -40144,12 +40090,12 @@ avF
 aaH
 ane
 ane
-lZK
+ane
 acj
 nHU
 agT
 amg
-ahM
+amg
 hGr
 amg
 apM
@@ -40557,15 +40503,15 @@ amg
 rSf
 amg
 amg
-ahM
 amg
 amg
 amg
 amg
-ahM
 amg
 amg
-ahM
+amg
+amg
+amg
 apM
 azf
 afZ
@@ -41172,7 +41118,7 @@ auY
 auY
 vsu
 amg
-trb
+avs
 wWS
 rlX
 rlX
@@ -41758,12 +41704,12 @@ aab
 pWe
 avF
 abk
-lZK
+ane
 cUd
 avF
 aaH
 ane
-lZK
+ane
 ane
 ane
 alU
@@ -42167,7 +42113,7 @@ ack
 acH
 adG
 ane
-lZK
+ane
 ane
 ane
 alX
@@ -42783,7 +42729,7 @@ aui
 aui
 aui
 aui
-gIS
+aui
 ayh
 avF
 mYi
@@ -43581,7 +43527,7 @@ pWe
 avF
 aeb
 ane
-lZK
+ane
 ane
 ane
 amU
@@ -43987,7 +43933,7 @@ aed
 ane
 ane
 ane
-lZK
+ane
 any
 avF
 rFH
@@ -44390,7 +44336,7 @@ avF
 aem
 agf
 ane
-lZK
+ane
 ane
 acj
 avF
