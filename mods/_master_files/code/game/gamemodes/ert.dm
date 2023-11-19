@@ -3,10 +3,7 @@
 	prefix = "mods/_antagonists/maps/"
 	suffixes = list("ert_base.dmm")
 	shuttles_to_initialise = list(
-		/datum/shuttle/autodock/multi/antag/rescue,
-		/datum/shuttle/autodock/ferry/armorysecond,
-		/datum/shuttle/autodock/ferry/armoryheavy
-	)
+		/datum/shuttle/autodock/multi/antag/rescue)
 	apc_test_exempt_areas = list(
 		/area/map_template/rescue_base = NO_SCRUBBER|NO_VENT|NO_APC
 	)
@@ -48,72 +45,6 @@
 	landmark_tag = "nav_ert_dock"
 	docking_controller = "rescue_shuttle_dock_airlock"
 
-/datum/shuttle/autodock/ferry/armorysecond
-	name = "Second class equipment armory"
-	shuttle_area = /area/map_template/rescue_base/turbolift/armorysecond
-	warmup_time = 3
-	waypoint_station = "nav_armorysecond_lift_top"
-	waypoint_offsite = "nav_armorysecond_lift_bottom"
-	sound_takeoff = 'sound/effects/lift_heavy_start.ogg'
-	sound_landing = 'sound/effects/lift_heavy_stop.ogg'
-	ceiling_type = null
-	knockdown = 0
-
-/datum/shuttle/autodock/ferry/armoryheavy
-	name = "Restricted Equipment"
-	shuttle_area = /area/map_template/rescue_base/turbolift/armoryheavy
-	warmup_time = 3
-	waypoint_station = "nav_armoryheavy_lift_top"
-	waypoint_offsite = "nav_armoryheavy_lift_bottom"
-	sound_takeoff = 'sound/effects/lift_heavy_start.ogg'
-	sound_landing = 'sound/effects/lift_heavy_stop.ogg'
-	ceiling_type = null
-	knockdown = 0
-
-/obj/shuttle_landmark/lift/armorysecond_top
-	name = "Offbase Lift Location"
-	landmark_tag = "nav_armorysecond_lift_top"
-	base_area = /area/map_template/rescue_base/outer
-	base_turf = /turf/simulated/floor/plating
-
-/obj/shuttle_landmark/lift/armorysecond_bottom
-	name = "Armory on main ERT level"
-	landmark_tag = "nav_armorysecond_lift_bottom"
-	flags = SLANDMARK_FLAG_AUTOSET
-	base_area = /area/map_template/rescue_base/base
-	base_turf = /turf/simulated/floor/plating
-
-/obj/shuttle_landmark/lift/armoryheavy_top
-	name = "Offbase Lift Location"
-	landmark_tag = "nav_armoryheavy_lift_top"
-	base_area = /area/map_template/rescue_base/outer
-	base_turf = /turf/simulated/floor/plating
-
-/obj/shuttle_landmark/lift/armoryheavy_bottom
-	name = "Armory on main ERT level"
-	landmark_tag = "nav_armoryheavy_lift_bottom"
-	flags = SLANDMARK_FLAG_AUTOSET
-	base_area = /area/map_template/rescue_base/base
-	base_turf = /turf/simulated/floor/plating
-
-/obj/machinery/computer/shuttle_control/lift/armorysecond
-	name = "Second class equipment armory lift controls"
-	shuttle_tag = "Second class equipment armory"
-	ui_template = "shuttle_control_console_lift.tmpl"
-	icon_state = "tiny"
-	icon_keyboard = "tiny_keyboard"
-	icon_screen = "lift"
-	density = FALSE
-
-/obj/machinery/computer/shuttle_control/lift/armoryheavy
-	name = "Restricted Equipment controls"
-	shuttle_tag = "Restricted Equipment"
-	ui_template = "shuttle_control_console_lift.tmpl"
-	icon_state = "tiny"
-	icon_keyboard = "tiny_keyboard"
-	icon_screen = "lift"
-	density = FALSE
-
 // Areas
 
 /area/map_template/rescue_base
@@ -128,27 +59,10 @@
 	icon_state = "yellow"
 	dynamic_lighting = 0
 
-/area/map_template/rescue_base/outer
-	name = "\improper Barracks"
-	icon_state = "yellow"
-	dynamic_lighting = 0
-
 /area/map_template/rescue_base/start
 	name = "\improper Response Team Base"
 	icon_state = "shuttlered"
-	base_turf = /turf/unsimulated/floor/reinforced
-
-/area/map_template/rescue_base/turbolift/armorysecond
-	name = "ERT - Armory lift"
-	icon_state = "shuttle3"
-	dynamic_lighting = 0
-	base_turf = /turf/simulated/floor/plating
-
-/area/map_template/rescue_base/turbolift/armoryheavy
-	name = "ERT - Armory lift"
-	icon_state = "shuttle3"
-	dynamic_lighting = 0
-	base_turf = /turf/simulated/floor/plating
+	base_turf = /turf/unsimulated/floor/techfloor
 
 //Objects
 
