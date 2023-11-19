@@ -190,7 +190,6 @@
 	icon_state = "closed";
 	dir = 4
 	},
-/obj/floor_decal/industrial/hatch/yellow,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -372,7 +371,9 @@
 "aW" = (
 /obj/structure/table/rack,
 /obj/item/gun/projectile/automatic/bullpup_rifle,
-/obj/item/gun/projectile/automatic/bullpup_rifle,
+/obj/item/gun/projectile/automatic/bullpup_rifle{
+	pixel_y = 10
+	},
 /turf/unsimulated/floor/techfloor{
 	icon_state = "techfloor_grid"
 	},
@@ -387,7 +388,9 @@
 /area/map_template/rescue_base/base)
 "aY" = (
 /obj/item/gun/projectile/automatic/nt41,
-/obj/item/gun/projectile/automatic/nt41,
+/obj/item/gun/projectile/automatic/nt41{
+	pixel_y = 8
+	},
 /obj/structure/table/rack,
 /turf/unsimulated/floor/techfloor{
 	icon_state = "techfloor_grid"
@@ -438,7 +441,6 @@
 	icon_state = "closed";
 	dir = 4
 	},
-/obj/floor_decal/industrial/hatch/yellow,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -648,6 +650,19 @@
 /area/map_template/rescue_base/base)
 "bD" = (
 /obj/structure/table/rack,
+/obj/item/gun/energy/pulse_rifle{
+	pixel_y = -11
+	},
+/obj/item/gun/energy/pulse_rifle{
+	pixel_y = -5
+	},
+/obj/item/gun/energy/pulse_rifle,
+/obj/item/gun/energy/pulse_rifle{
+	pixel_y = 5
+	},
+/obj/item/gun/energy/pulse_rifle{
+	pixel_y = 10
+	},
 /turf/unsimulated/floor/techfloor{
 	icon_state = "techfloor_grid"
 	},
@@ -719,7 +734,6 @@
 	name = "Engineering Supplies";
 	icon_state = "closed"
 	},
-/obj/floor_decal/industrial/hatch/yellow,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -754,7 +768,6 @@
 /turf/unsimulated/floor/techfloor,
 /area/map_template/rescue_base/turbolift/armorysecond)
 "bQ" = (
-/obj/floor_decal/industrial/hatch/yellow,
 /obj/machinery/door/airlock/centcom{
 	name = "Spec Ops Cryo Storage";
 	icon_state = "closed";
@@ -807,10 +820,10 @@
 /area/map_template/rescue_base/base)
 "bW" = (
 /obj/machinery/door/airlock/centcom{
-	name = "Infirmary";
-	icon_state = "closed"
+	name = "EVA";
+	icon_state = "closed";
+	dir = 8
 	},
-/obj/floor_decal/industrial/hatch/yellow,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -1446,7 +1459,6 @@
 /area/map_template/rescue_base/base)
 "cX" = (
 /obj/floor_decal/corner/blue/diagonal,
-/obj/floor_decal/industrial/hatch/yellow,
 /obj/machinery/door/airlock/centcom{
 	name = "Galley";
 	icon_state = "closed";
@@ -1507,15 +1519,12 @@
 /turf/unsimulated/wall,
 /area/map_template/rescue_base/base)
 "dg" = (
-/obj/machinery/door/airlock/centcom{
-	name = "Passageway";
-	icon_state = "closed"
+/obj/structure/table/rack,
+/obj/item/gun/energy/sniperrifle,
+/turf/unsimulated/floor/techfloor{
+	icon_state = "techfloor_grid"
 	},
-/obj/floor_decal/industrial/hatch/yellow,
-/turf/unsimulated/floor{
-	icon_state = "dark"
-	},
-/area/map_template/rescue_base/base)
+/area/map_template/rescue_base/turbolift/armoryheavy)
 "dh" = (
 /obj/machinery/mech_recharger,
 /mob/living/exosuit/premade/powerloader,
@@ -1541,7 +1550,6 @@
 	icon_state = "closed";
 	dir = 4
 	},
-/obj/floor_decal/industrial/hatch/yellow,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -1667,7 +1675,6 @@
 	icon_state = "closed";
 	dir = 8
 	},
-/obj/floor_decal/industrial/hatch/yellow,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -1705,7 +1712,6 @@
 	icon_state = "closed";
 	dir = 8
 	},
-/obj/floor_decal/industrial/hatch/yellow,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -1899,7 +1905,6 @@
 	name = "Storage";
 	icon_state = "closed"
 	},
-/obj/floor_decal/industrial/hatch/yellow,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -2314,7 +2319,7 @@
 /turf/unsimulated/floor/techfloor{
 	icon_state = "techfloor_grid"
 	},
-/area/map_template/rescue_base/base)
+/area/map_template/rescue_base/outer)
 "eR" = (
 /obj/floor_decal/industrial/hatch/yellow,
 /obj/machinery/porta_turret/crescent,
@@ -3186,8 +3191,7 @@
 /area/map_template/rescue_base/start)
 "hf" = (
 /obj/structure/shuttle/engine/propulsion,
-/obj/paint/sun,
-/turf/simulated/wall/titanium,
+/turf/simulated/floor/reinforced,
 /area/map_template/rescue_base/start)
 "hg" = (
 /obj/machinery/computer/shuttle_control/multi/rescue,
@@ -3238,7 +3242,11 @@
 /turf/unsimulated/floor/techfloor{
 	icon_state = "techfloor_grid"
 	},
-/area/map_template/rescue_base/base)
+/area/map_template/rescue_base/outer)
+"lE" = (
+/obj/structure/shuttle/engine/propulsion,
+/turf/space,
+/area/map_template/rescue_base/start)
 "nZ" = (
 /obj/shuttle_landmark/lift/armoryheavy_bottom,
 /turf/simulated/floor/plating,
@@ -3254,13 +3262,34 @@
 /turf/unsimulated/floor/techfloor{
 	icon_state = "techfloor_grid"
 	},
-/area/map_template/rescue_base/base)
+/area/map_template/rescue_base/outer)
 "uV" = (
 /obj/shuttle_landmark/lift/armoryheavy_top,
 /turf/unsimulated/floor/techfloor{
 	icon_state = "techfloor_grid"
 	},
 /area/map_template/rescue_base/turbolift/armoryheavy)
+"xK" = (
+/obj/machinery/door/airlock/centcom{
+	name = "Security Armory";
+	icon_state = "closed"
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/map_template/rescue_base/base)
+"yR" = (
+/turf/unsimulated/wall,
+/area/map_template/rescue_base/outer)
+"zS" = (
+/obj/machinery/door/airlock/centcom{
+	name = "Infirmary";
+	icon_state = "closed"
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/map_template/rescue_base/base)
 "Cc" = (
 /obj/shuttle_landmark/lift/armorysecond_bottom,
 /turf/simulated/floor/plating,
@@ -3268,6 +3297,13 @@
 "Cm" = (
 /turf/unsimulated/floor/techfloor,
 /area/map_template/rescue_base/turbolift/armorysecond)
+"Cz" = (
+/obj/structure/table/rack,
+/obj/item/rig/ert/assetprotection,
+/turf/unsimulated/floor/techfloor{
+	icon_state = "techfloor_grid"
+	},
+/area/map_template/rescue_base/turbolift/armoryheavy)
 "DF" = (
 /obj/structure/handrail{
 	dir = 4
@@ -3286,6 +3322,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/map_template/rescue_base/start)
+"DH" = (
+/obj/machinery/door/airlock/centcom{
+	name = "Briefing Room";
+	icon_state = "closed";
+	dir = 8
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/map_template/rescue_base/base)
 "Es" = (
 /obj/machinery/telecomms/allinone/ert,
 /turf/simulated/floor/plating,
@@ -3294,6 +3340,15 @@
 /obj/shuttle_landmark/lift/armorysecond_top,
 /turf/unsimulated/floor/techfloor,
 /area/map_template/rescue_base/turbolift/armorysecond)
+"JH" = (
+/obj/machinery/door/airlock/centcom{
+	name = "EVA";
+	icon_state = "closed"
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/map_template/rescue_base/base)
 "Wi" = (
 /obj/machinery/computer/shuttle_control/lift/armoryheavy,
 /turf/unsimulated/floor{
@@ -4016,8 +4071,8 @@ ad
 bg
 bg
 bg
-bQ
-bQ
+DH
+DH
 bg
 ad
 ad
@@ -4026,7 +4081,7 @@ bQ
 bQ
 ad
 ad
-cw
+dL
 ar
 ar
 ar
@@ -4090,7 +4145,7 @@ ao
 ao
 dr
 ad
-cD
+af
 ar
 ar
 dY
@@ -4346,7 +4401,7 @@ ao
 ao
 cm
 bg
-dL
+cw
 ar
 ar
 dX
@@ -4400,17 +4455,17 @@ ar
 ar
 ar
 ar
-bW
+zS
 ar
 ao
 ao
 ar
-bW
+JH
 ao
 ao
 ca
 bg
-af
+cD
 ar
 ar
 dW
@@ -4537,7 +4592,7 @@ bg
 ao
 ao
 ao
-dg
+bN
 ao
 ao
 ao
@@ -4959,7 +5014,7 @@ hg
 fo
 gk
 ga
-hf
+lE
 bB
 eP
 ar
@@ -4974,7 +5029,7 @@ ao
 ar
 ar
 ar
-bW
+xK
 ao
 ao
 ad
@@ -5570,21 +5625,21 @@ ew
 ew
 ew
 ew
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
 ew
 ew
 ew
@@ -5634,7 +5689,7 @@ ew
 ew
 ew
 ew
-ad
+yR
 ed
 Cm
 Cm
@@ -5642,13 +5697,13 @@ GI
 Cm
 Cm
 bK
-ad
-ad
+yR
+yR
 pk
 eQ
 eQ
 eQ
-ad
+yR
 ew
 ew
 ew
@@ -5698,7 +5753,7 @@ ew
 ew
 ew
 ew
-ad
+yR
 an
 Cm
 Cm
@@ -5706,13 +5761,13 @@ dn
 Cm
 Cm
 eS
-ad
-ad
+yR
+yR
 iC
 eQ
 eQ
 eQ
-ad
+yR
 ew
 ew
 ew
@@ -5762,7 +5817,7 @@ ew
 ew
 ew
 ew
-ad
+yR
 bf
 Cm
 Cm
@@ -5770,13 +5825,13 @@ bP
 Cm
 Cm
 cs
-ad
-ad
-ad
-ad
-ad
-ad
-ad
+yR
+yR
+yR
+yR
+yR
+yR
+yR
 ew
 ew
 ew
@@ -5826,7 +5881,7 @@ ew
 ew
 ew
 ew
-ad
+yR
 ct
 Cm
 Cm
@@ -5834,16 +5889,16 @@ aF
 Cm
 Cm
 aJ
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
 ew
 ew
 ew
@@ -5890,7 +5945,7 @@ ew
 ew
 ew
 ew
-ad
+yR
 eK
 Cm
 Cm
@@ -5898,16 +5953,16 @@ dw
 Cm
 Cm
 dV
-ad
-ad
-bD
+yR
+yR
+dg
 uV
-bD
-bD
-bD
-bD
-bD
-ad
+Cz
+Cz
+Cz
+Cz
+Cz
+yR
 ew
 ew
 ew
@@ -5954,7 +6009,7 @@ ew
 ew
 ew
 ew
-ad
+yR
 et
 Cm
 Cm
@@ -5962,8 +6017,8 @@ Cm
 Cm
 Cm
 cz
-ad
-ad
+yR
+yR
 oT
 oT
 oT
@@ -5971,7 +6026,7 @@ oT
 oT
 oT
 oT
-ad
+yR
 ew
 ew
 ew
@@ -6018,7 +6073,7 @@ ew
 ew
 ew
 ew
-ad
+yR
 eq
 Cm
 Cm
@@ -6026,8 +6081,8 @@ Cm
 Cm
 Cm
 Cm
-ad
-ad
+yR
+yR
 oT
 oT
 oT
@@ -6035,7 +6090,7 @@ oT
 oT
 oT
 oT
-ad
+yR
 ew
 ew
 ew
@@ -6082,7 +6137,7 @@ ew
 ew
 ew
 ew
-ad
+yR
 cZ
 Cm
 br
@@ -6090,8 +6145,8 @@ bG
 gZ
 bi
 da
-ad
-ad
+yR
+yR
 bJ
 dx
 fB
@@ -6099,7 +6154,7 @@ aW
 ap
 aY
 bD
-ad
+yR
 ew
 ew
 ew
@@ -6146,24 +6201,24 @@ ew
 ew
 ew
 ew
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
 ew
 ew
 ew
