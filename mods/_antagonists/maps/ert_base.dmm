@@ -81,15 +81,19 @@
 	},
 /area/map_template/rescue_base/base)
 "an" = (
-/obj/item/ammo_magazine/n10mm,
-/obj/item/ammo_magazine/n10mm,
-/obj/item/ammo_magazine/n10mm,
-/obj/item/ammo_magazine/n10mm,
-/obj/item/ammo_magazine/n10mm,
-/obj/item/ammo_magazine/n10mm,
-/obj/structure/table/rack,
-/turf/unsimulated/floor/techfloor{
-	icon_state = "techfloor_grid"
+/obj/item/clothing/accessory/solgov/department/engineering/fleet,
+/obj/item/clothing/accessory/solgov/department/engineering/fleet,
+/obj/item/clothing/accessory/solgov/department/engineering/fleet,
+/obj/item/clothing/accessory/solgov/department/engineering/fleet,
+/obj/item/clothing/head/beret/solgov/fleet/engineering,
+/obj/item/clothing/head/beret/solgov/fleet/engineering,
+/obj/item/clothing/head/beret/solgov/fleet/engineering,
+/obj/item/clothing/head/beret/solgov/fleet/engineering,
+/obj/structure/closet/walllocker{
+	pixel_x = -28
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
 	},
 /area/map_template/rescue_base/base)
 "ao" = (
@@ -216,13 +220,16 @@
 	},
 /area/map_template/rescue_base/base)
 "aF" = (
+/obj/item/ammo_magazine/n10mm,
+/obj/item/ammo_magazine/n10mm,
+/obj/item/ammo_magazine/n10mm,
 /obj/structure/table/rack,
-/obj/item/storage/box/teargas,
-/obj/item/storage/box/teargas,
-/obj/item/storage/box/emps,
-/obj/item/storage/box/emps,
-/obj/item/storage/box/frags,
-/turf/unsimulated/floor/techfloor,
+/obj/item/ammo_magazine/n10mm,
+/obj/item/ammo_magazine/n10mm,
+/obj/item/ammo_magazine/n10mm,
+/turf/unsimulated/floor/techfloor{
+	icon_state = "techfloor_grid"
+	},
 /area/map_template/rescue_base/base)
 "aG" = (
 /obj/structure/table/rack,
@@ -882,10 +889,10 @@
 	pixel_x = 4;
 	pixel_y = 32
 	},
-/obj/item/clothing/suit/armor/pcarrier/medium,
-/obj/item/clothing/suit/armor/pcarrier/medium,
-/obj/item/clothing/head/helmet,
-/obj/item/clothing/head/helmet,
+/obj/item/clothing/suit/armor/vest/ert/security,
+/obj/item/clothing/suit/armor/vest/ert/security,
+/obj/item/clothing/head/helmet/ert/security,
+/obj/item/clothing/head/helmet/ert/security,
 /turf/unsimulated/floor{
 	dir = 1;
 	icon_state = "vault"
@@ -893,10 +900,10 @@
 /area/map_template/rescue_base/base)
 "ch" = (
 /obj/structure/table/rack,
-/obj/item/clothing/suit/armor/pcarrier/medium,
-/obj/item/clothing/suit/armor/pcarrier/medium,
-/obj/item/clothing/head/helmet,
-/obj/item/clothing/head/helmet,
+/obj/item/clothing/suit/armor/vest/ert/engineer,
+/obj/item/clothing/suit/armor/vest/ert/engineer,
+/obj/item/clothing/head/helmet/ert/engineer,
+/obj/item/clothing/head/helmet/ert/engineer,
 /turf/unsimulated/floor{
 	dir = 1;
 	icon_state = "vault"
@@ -1232,17 +1239,17 @@
 	},
 /area/map_template/rescue_base/base)
 "cI" = (
-/obj/structure/closet{
-	name = "insignias closet"
+/obj/item/clothing/accessory/solgov/department/medical/fleet,
+/obj/item/clothing/accessory/solgov/department/medical/fleet,
+/obj/item/clothing/accessory/solgov/department/medical/fleet,
+/obj/item/clothing/accessory/solgov/department/medical/fleet,
+/obj/item/clothing/head/beret/solgov/fleet/medical,
+/obj/item/clothing/head/beret/solgov/fleet/medical,
+/obj/item/clothing/head/beret/solgov/fleet/medical,
+/obj/item/clothing/head/beret/solgov/fleet/medical,
+/obj/structure/closet/walllocker{
+	pixel_x = -28
 	},
-/obj/item/clothing/accessory/solgov/department/medical/fleet,
-/obj/item/clothing/accessory/solgov/department/medical/fleet,
-/obj/item/clothing/accessory/solgov/department/medical/fleet,
-/obj/item/clothing/accessory/solgov/department/medical/fleet,
-/obj/item/clothing/head/beret/solgov/fleet/medical,
-/obj/item/clothing/head/beret/solgov/fleet/medical,
-/obj/item/clothing/head/beret/solgov/fleet/medical,
-/obj/item/clothing/head/beret/solgov/fleet/medical,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -1333,20 +1340,11 @@
 	},
 /area/map_template/rescue_base/base)
 "cR" = (
-/obj/structure/closet{
-	name = "insignias closet"
-	},
-/obj/item/clothing/accessory/solgov/department/security/fleet,
-/obj/item/clothing/accessory/solgov/department/security/fleet,
-/obj/item/clothing/accessory/solgov/department/security/fleet,
-/obj/item/clothing/accessory/solgov/department/security/fleet,
-/obj/item/clothing/head/beret/solgov/fleet/security,
-/obj/item/clothing/head/beret/solgov/fleet/security,
-/obj/item/clothing/head/beret/solgov/fleet/security,
-/obj/item/clothing/head/beret/solgov/fleet/security,
+/obj/structure/table/rack,
+/obj/item/gun/energy/stunrevolver/rifle,
+/obj/item/gun/energy/stunrevolver/rifle,
 /turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/map_template/rescue_base/base)
 "cS" = (
@@ -1610,8 +1608,22 @@
 	},
 /area/map_template/rescue_base/base)
 "dB" = (
-/obj/machinery/vending/engineering,
-/turf/unsimulated/wall,
+/obj/structure/table/rack,
+/obj/item/ammo_magazine/smg_top,
+/obj/item/ammo_magazine/smg_top,
+/obj/item/ammo_magazine/smg_top,
+/obj/item/ammo_magazine/smg_top,
+/obj/item/ammo_magazine/smg_top,
+/obj/item/ammo_magazine/smg_top,
+/obj/item/ammo_magazine/smg_top,
+/obj/item/ammo_magazine/smg_top,
+/obj/item/ammo_magazine/smg_top,
+/obj/item/ammo_magazine/smg_top,
+/obj/item/ammo_magazine/smg_top,
+/obj/item/ammo_magazine/smg_top,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/map_template/rescue_base/base)
 "dC" = (
 /obj/floor_decal/industrial/warning{
@@ -1691,17 +1703,7 @@
 	},
 /area/map_template/rescue_base/base)
 "dM" = (
-/obj/structure/closet{
-	name = "insignias closet"
-	},
-/obj/item/clothing/accessory/solgov/department/engineering/fleet,
-/obj/item/clothing/accessory/solgov/department/engineering/fleet,
-/obj/item/clothing/accessory/solgov/department/engineering/fleet,
-/obj/item/clothing/accessory/solgov/department/engineering/fleet,
-/obj/item/clothing/head/beret/solgov/fleet/engineering,
-/obj/item/clothing/head/beret/solgov/fleet/engineering,
-/obj/item/clothing/head/beret/solgov/fleet/engineering,
-/obj/item/clothing/head/beret/solgov/fleet/engineering,
+/obj/machinery/vending/engineering,
 /turf/unsimulated/floor{
 	dir = 1;
 	icon_state = "vault"
@@ -1889,8 +1891,8 @@
 /area/map_template/rescue_base/base)
 "el" = (
 /obj/structure/table/rack,
-/obj/item/clothing/suit/armor/pcarrier/medium/command,
-/obj/item/clothing/head/helmet/solgov/command,
+/obj/item/clothing/suit/armor/vest/ert,
+/obj/item/clothing/head/helmet/ert,
 /turf/unsimulated/floor{
 	dir = 1;
 	icon_state = "vault"
@@ -3158,10 +3160,21 @@
 /area/map_template/rescue_base/base)
 "iC" = (
 /obj/structure/table/rack,
-/obj/item/storage/box/smokes,
-/obj/item/storage/box/smokes,
-/obj/item/storage/box/flashbangs,
-/turf/unsimulated/floor/techfloor,
+/obj/item/gun/energy/taser/carbine,
+/obj/item/gun/energy/taser/carbine,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/map_template/rescue_base/base)
+"iP" = (
+/obj/structure/table/rack,
+/obj/item/gun/projectile/automatic/sec_smg,
+/obj/item/gun/projectile/automatic/sec_smg,
+/obj/item/gun/projectile/automatic/sec_smg,
+/obj/item/gun/projectile/automatic/sec_smg,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/map_template/rescue_base/base)
 "lE" = (
 /obj/structure/shuttle/engine/propulsion,
@@ -3184,6 +3197,23 @@
 	icon_state = "techfloor_grid"
 	},
 /area/map_template/rescue_base/base)
+"si" = (
+/obj/item/clothing/accessory/solgov/department/security/fleet,
+/obj/item/clothing/accessory/solgov/department/security/fleet,
+/obj/item/clothing/accessory/solgov/department/security/fleet,
+/obj/item/clothing/accessory/solgov/department/security/fleet,
+/obj/item/clothing/head/beret/solgov/fleet/security,
+/obj/item/clothing/head/beret/solgov/fleet/security,
+/obj/item/clothing/head/beret/solgov/fleet/security,
+/obj/item/clothing/head/beret/solgov/fleet/security,
+/obj/structure/closet/walllocker{
+	pixel_x = -28
+	},
+/turf/unsimulated/floor{
+	dir = 1;
+	icon_state = "vault"
+	},
+/area/map_template/rescue_base/base)
 "ua" = (
 /obj/structure/table/rack,
 /obj/item/tank/oxygen_emergency_double,
@@ -3198,12 +3228,14 @@
 /turf/unsimulated/floor/techfloor,
 /area/map_template/rescue_base/base)
 "xK" = (
-/obj/machinery/door/airlock/centcom{
-	name = "Security Armory";
-	icon_state = "closed"
-	},
+/obj/structure/table/rack,
+/obj/item/clothing/suit/armor/vest/ert/medical,
+/obj/item/clothing/suit/armor/vest/ert/medical,
+/obj/item/clothing/head/helmet/ert/medical,
+/obj/item/clothing/head/helmet/ert/medical,
 /turf/unsimulated/floor{
-	icon_state = "dark"
+	dir = 1;
+	icon_state = "vault"
 	},
 /area/map_template/rescue_base/base)
 "yR" = (
@@ -3327,6 +3359,11 @@
 /area/map_template/rescue_base/base)
 "Wi" = (
 /obj/structure/table/rack,
+/obj/item/storage/box/smokes,
+/obj/item/storage/box/smokes,
+/obj/item/storage/box/frags,
+/obj/item/storage/box/emps,
+/obj/item/storage/box/emps,
 /obj/item/gun/launcher/grenade,
 /turf/unsimulated/floor/techfloor,
 /area/map_template/rescue_base/base)
@@ -3731,9 +3768,9 @@ dD
 bg
 ar
 ar
-ar
-ar
-ar
+an
+cI
+si
 ar
 dq
 ad
@@ -4300,7 +4337,7 @@ ad
 "}
 (16,1,1) = {"
 ad
-ch
+xK
 ao
 ao
 cj
@@ -4428,7 +4465,7 @@ dK
 "}
 (18,1,1) = {"
 ad
-cI
+cB
 ao
 ao
 ar
@@ -4639,7 +4676,7 @@ ao
 ar
 ad
 ad
-dB
+ad
 dF
 dF
 ad
@@ -4879,8 +4916,8 @@ ad
 cc
 ao
 ao
-cF
 cN
+iC
 cR
 bg
 ao
@@ -4945,7 +4982,7 @@ ao
 ao
 ar
 ar
-ar
+cf
 bg
 ao
 ao
@@ -5009,8 +5046,8 @@ ao
 ao
 ar
 ar
-ar
-xK
+cx
+bg
 ao
 ao
 ad
@@ -5068,12 +5105,12 @@ dK
 "}
 (28,1,1) = {"
 ad
-cf
+cF
 ao
 ao
 ar
 ar
-ar
+cE
 bg
 ao
 ao
@@ -5084,7 +5121,7 @@ bB
 uV
 bB
 bB
-iC
+Cz
 ad
 ab
 ao
@@ -5135,8 +5172,8 @@ ad
 cg
 ao
 ao
-cx
-cE
+iP
+dB
 cM
 bg
 ao
@@ -5464,11 +5501,11 @@ ar
 ad
 Cm
 nZ
-cs
-cs
-cs
-cs
-cs
+bG
+ed
+oT
+bJ
+aY
 ad
 ad
 ad
@@ -5654,13 +5691,13 @@ ar
 ar
 ar
 ad
-bG
-ed
-oT
-bJ
-an
-Cz
-aY
+cs
+cs
+cs
+nZ
+cs
+cs
+cs
 ad
 ew
 ew
