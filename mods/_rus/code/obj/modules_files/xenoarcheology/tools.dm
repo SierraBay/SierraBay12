@@ -122,3 +122,27 @@
 /obj/machinery/drone_pad
 	name = "посадочная площадка для транспортного дрона"
 	desc = "Небольшая площадка для размещения груза транспортных дронов."
+/obj/machinery/anomaly_container
+	name = "контейнер для аномалий"
+	desc = "Массивный стальной контейнер, используемый для транспортировки аномальных материалов в замороженном состоянии."
+
+/obj/structure/boulder
+	name = " скальный осколок"
+	desc = "Остатки породы из котлована, частично уже выкопан, но многое еще впереди."
+
+/obj/structure/bookcase/manuals/xenoarchaeology
+	name = "книжный шкаф с пособиями по ксеноархеологии"
+
+/obj/structure/closet/secure_closet/xenoarchaeologist
+	name = "шкаф для ксеноархеологов"
+
+/obj/structure/closet/excavation
+	name = "археологические инструменты"
+
+/obj/item/rocksliver
+	name = "каменная крошка"
+	desc = "Выглядит очень хрупким."
+
+/obj/item/device/core_sampler
+	name = "грунтовая трубка"
+	desc = "Используется для извлечения образцов геологического материала."
