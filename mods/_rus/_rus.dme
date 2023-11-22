@@ -80,8 +80,5 @@
 #include "code/obj/modules_files/xenoarcheology/artefacts.dm"
 #include "code/obj/modules_files/gases.dm"
 #include "code/obj/modules_files/materials.dm"
-#include "code/obj/modules_files/xenoarcheology/portals.dm"
-#include "code/obj/modules_files/xenoarcheology/finds.dm"
-#include "code/obj/modules_files/xenoarcheology/tools.dm"
 
 #endif
