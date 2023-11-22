@@ -73,8 +73,8 @@
 #include "code/obj/modules_files/crafting_datum.dm"
 #include "code/obj/modules_files/hydroponics.dm"
 #include "code/obj/modules_files/holodeck.dm"
-
-// Далее просто включай свой код
-// #include "code/something.dm"
+#include "code/obj/modules_files/integrated_elecronics/assembly.dm"
+#include "code/obj/modules_files/integrated_elecronics/misc.dm"
+#include "code/obj/modules_files/integrated_elecronics/integrated_circuit.dm"
 
 #endif

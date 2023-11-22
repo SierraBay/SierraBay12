@@ -153,20 +153,22 @@
 /datum/seed/chili
 	display_name = "растение чили"
 	seed_name = "чили"
+
 /datum/seed/chili/ice
 	seed_name = "ледяной перец чили"
 	display_name = "растение ледяного перца чили"
+
 /datum/seed/berry
 	seed_name = "ягода"
 	display_name = "ягодный куст"
 
 /datum/seed/berry/blue
-	seed_name = "чёрника"
-	display_name = "куст чёрники"
+	seed_name = "черника"
+	display_name = "куст черники"
 
 /datum/seed/berry/glow
-	seed_name = "голубика"
-	display_name = "куст голубики"
+	seed_name = "светящаяся ягода"
+	display_name = "куст светящийся ягоды"
 
 /datum/seed/berry/poison
 	seed_name = "ядовитая ягода"
