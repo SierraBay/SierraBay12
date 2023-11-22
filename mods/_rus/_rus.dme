@@ -77,5 +77,8 @@
 #include "code/obj/modules_files/integrated_elecronics/misc.dm"
 #include "code/obj/modules_files/integrated_elecronics/integrated_circuit.dm"
 #include "code/obj/modules_files/books.dm"
+#include "code/obj/modules_files/xenoarcheology/artefacts.dm"
+#include "code/obj/modules_files/gases.dm"
+
 
 #endif
