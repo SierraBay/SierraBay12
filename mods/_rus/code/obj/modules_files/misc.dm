@@ -171,3 +171,27 @@
 /obj/item/deck/tarot
 	name = "колода карт Таро"
 	desc = "Для всех ваших оккультных нужд!"
+
+/obj/item/key
+	name = "ключ"
+	desc = "Используется для отпирания предметов."
+
+/obj/item/key/soap
+	name = "ключ из мыла"
+	desc = "Хрупкий ключ, сделанный из куска мыла."
+
+/obj/item/material/lock_construct
+	name = "замок"
+	desc = "грубый, но полезный замок с засовом."
+
+/obj/landmark/map_load_mark
+	name = "ориентир загрузчика карты"
+
+/obj/landmark/carnage_mark
+	name = "ориентир для резни"
+
+/obj/landmark/clear
+	name = "чистая территория"
+
+/obj/landmark/scorcher
+	name = "огонь"

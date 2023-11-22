@@ -79,6 +79,6 @@
 #include "code/obj/modules_files/books.dm"
 #include "code/obj/modules_files/xenoarcheology/artefacts.dm"
 #include "code/obj/modules_files/gases.dm"
-
+#include "code/obj/modules_files/materials.dm"
 
 #endif
