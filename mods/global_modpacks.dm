@@ -14,5 +14,6 @@
 #include "ssinput/_ssinput.dme"
 #include "statusbar/_statusbar.dme"
 #include "utf8/_utf8.dme"
+#include "hairs_ports/_hairs_ports.dme"
 
 #include "../packs/sierra-tweaks/_pack.dm"
