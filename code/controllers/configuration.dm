@@ -430,13 +430,11 @@
 
 	var/static/deletion_starts_paused = TRUE
 
-<<<<<<< ours
+	var/static/enable_cold_mist = FALSE
+
 	// [SIERRA-ADD]
 	var/static/shutdown_on_reboot = FALSE
 	// [/SIERRA-ADD]
-=======
-	var/static/enable_cold_mist = FALSE
->>>>>>> theirs
 
 
 /datum/configuration/New()
@@ -853,7 +851,8 @@
 				warn_if_staff_same_ip = TRUE
 			if ("deletion_starts_paused")
 				deletion_starts_paused = TRUE
-<<<<<<< ours
+			if ("enable_cold_mist")
+				enable_cold_mist = TRUE
 			// [SIERRA-ADD]
 			if ("shutdown_on_reboot")
 				shutdown_on_reboot = TRUE
@@ -866,10 +865,6 @@
 			if("minimum_byondacc_age")
 				minimum_byondacc_age = text2num(value)
 			// [/SIERRA-ADD]
-=======
-			if ("enable_cold_mist")
-				enable_cold_mist = TRUE
->>>>>>> theirs
 			else
 				log_misc("Unknown setting in config/config.txt: '[name]'")
 
