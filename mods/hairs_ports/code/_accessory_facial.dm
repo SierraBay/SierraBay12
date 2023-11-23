@@ -11,40 +11,31 @@
 
 /datum/sprite_accessory/facial_hair/modpack_hairs_port/aurora_chinstrap
 	name = "Chinstrap"
-	icon_state = "chinstrap"
-	icon = 'mods/hairs_ports/icons/port_facial.dmi'
+	icon_state = "facial_chinstrap"
 /datum/sprite_accessory/facial_hair/modpack_hairs_port/aurora_horseshoe
 	name = "Horseshoe"
-	icon_state = "horseshoe"
-	icon = 'mods/hairs_ports/icons/port_facial.dmi'
+	icon_state = "facial_horseshoe"
 /datum/sprite_accessory/facial_hair/modpack_hairs_port/aurora_britstache
 	name = "Britstache"
-	icon_state = "britstache"
-	icon = 'mods/hairs_ports/icons/port_facial.dmi'
-/datum/sprite_accessory/facial_hair/modpack_hairs_port/aurora_facial_hairideburns
+	icon_state = "facial_britstache"
+/datum/sprite_accessory/facial_hair/modpack_hairs_port/aurora_hairideburns
 	name = "facial_hair Side Burns"
 	icon_state = "facial_hairideburns"
-	icon = 'mods/hairs_ports/icons/port_facial.dmi'
 /datum/sprite_accessory/facial_hair/modpack_hairs_port/aurora_bob_chin
 	name = "Bob Chin"
-	icon_state = "bob_chin"
-	icon = 'mods/hairs_ports/icons/port_facial.dmi'
+	icon_state = "facial_bob_chin"
 /datum/sprite_accessory/facial_hair/modpack_hairs_port/aurora_bob_chin
 	name = "Bob Chin"
-	icon_state = "bob_chin"
-	icon = 'mods/hairs_ports/icons/port_facial.dmi'
+	icon_state = "facial_bob_chin"
 /datum/sprite_accessory/facial_hair/modpack_hairs_port/aurora_gt3
 	name = "Gt3"
-	icon_state = "gt3"
-	icon = 'mods/hairs_ports/icons/port_facial.dmi'
+	icon_state = "facial_gt3"
 /datum/sprite_accessory/facial_hair/modpack_hairs_port/aurora_tribeard
 	name = "Tribeard"
-	icon_state = "tribeard"
-	icon = 'mods/hairs_ports/icons/port_facial.dmi'
+	icon_state = "facial_tribeard"
 /datum/sprite_accessory/facial_hair/modpack_hairs_port/aurora_martialartist
 	name = "Martial Artist"
-	icon_state = "martialartist"
-	icon = 'mods/hairs_ports/icons/port_facial.dmi'
+	icon_state = "facial_martialartist"
 /*
 ///////////////////////////////////
 /  =---------------------------=  /
@@ -55,19 +46,19 @@
 
 /datum/sprite_accessory/facial_hair_hair/modpack_hairs_port/onyx_great
 	name = "Great"
-	icon_state = "great"
+	icon_state = "facial_great"
 /datum/sprite_accessory/facial_hair_hair/modpack_hairs_port/onyx_classy
 	name = "Classy"
-	icon_state = "classy"
+	icon_state = "facial_classy"
 /datum/sprite_accessory/facial_hair_hair/modpack_hairs_port/onyx_tsar
 	name = "Tsar"
-	icon_state = "tsar"
+	icon_state = "facial_tsar"
 /datum/sprite_accessory/facial_hair_hair/modpack_hairs_port/onyx_jarl
 	name = "Jarl"
-	icon_state = "jarl"
+	icon_state = "facial_jarl"
 /datum/sprite_accessory/facial_hair_hair/modpack_hairs_port/onyx_viking
 	name = "Viking"
-	icon_state = "viking"
+	icon_state = "facial_viking"
 
 /*
 ///////////////////////////////////
@@ -79,120 +70,120 @@
 
 /datum/sprite_accessory/facial_hair/modpack_hairs_port/rs666_bandholz
 	name = "Bandholz"
-	icon_state = "bandholz"
+	icon_state = "facial_bandholz"
 
 /datum/sprite_accessory/facial_hair/modpack_hairs_port/rs666_classic_beard
 	name = "Classic Beard"
-	icon_state = "classic_beard"
+	icon_state = "facial_classic_beard"
 
 /datum/sprite_accessory/facial_hair/modpack_hairs_port/rs666_gtb
 	name = "Gtb"
-	icon_state = "gtb"
+	icon_state = "facial_gtb"
 
 /datum/sprite_accessory/facial_hair/modpack_hairs_port/rs666_figther_beard
 	name = "Figther Beard"
-	icon_state = "figther_beard"
+	icon_state = "facial_figther_beard"
 
 /datum/sprite_accessory/facial_hair/modpack_hairs_port/rs666_side_mustache
 	name = "Side Mustache"
-	icon_state = "side_mustache"
+	icon_state = "facial_side_mustache"
 
 /datum/sprite_accessory/facial_hair/modpack_hairs_port/rs666_gtp
 	name = "Gtp"
-	icon_state = "gtp"
+	icon_state = "facial_gtp"
 
 /datum/sprite_accessory/facial_hair/modpack_hairs_port/rs666_hollywood_beard
 	name = "Hollywood Beard"
-	icon_state = "hollywood_beard"
+	icon_state = "facial_hollywood_beard"
 
 /datum/sprite_accessory/facial_hair/modpack_hairs_port/rs666_brush
 	name = "Brush"
-	icon_state = "brush"
+	icon_state = "facial_brush"
 
 /datum/sprite_accessory/facial_hair/modpack_hairs_port/rs666_old_man
 	name = "Old Man"
-	icon_state = "old_man"
+	icon_state = "facial_old_man"
 
 /datum/sprite_accessory/facial_hair/modpack_hairs_port/rs666_worker_long
 	name = "Worker Long"
-	icon_state = "worker_long"
+	icon_state = "facial_worker_long"
 
 /datum/sprite_accessory/facial_hair/modpack_hairs_port/rs666_lumbers
 	name = "Lumbers"
-	icon_state = "lumbers"
+	icon_state = "facial_lumbers"
 
 /datum/sprite_accessory/facial_hair/modpack_hairs_port/rs666_sideburns
 	name = "Sideburns"
-	icon_state = "sideburns"
+	icon_state = "facial_sideburns"
 
 /datum/sprite_accessory/facial_hair/modpack_hairs_port/rs666_up_mustache
 	name = "Up Mustache"
-	icon_state = "up_mustache"
+	icon_state = "facial_up_mustache"
 
 /datum/sprite_accessory/facial_hair/modpack_hairs_port/rs666_bigbeard
 	name = "Big Beard"
-	icon_state = "bigbeard"
+	icon_state = "facial_bigbeard"
 
 /datum/sprite_accessory/facial_hair/modpack_hairs_port/rs666_mcb
 	name = "Mcb"
-	icon_state = "mcb"
+	icon_state = "facial_mcb"
 
 /datum/sprite_accessory/facial_hair/modpack_hairs_port/rs666_prospector
 	name = "Prospector"
-	icon_state = "prospector"
+	icon_state = "facial_prospector"
 
 /datum/sprite_accessory/facial_hair/modpack_hairs_port/rs666_sea_wolf_beard
 	name = "Sea Wolf Beard"
-	icon_state = "sea_wolf_beard"
+	icon_state = "facial_sea_wolf_beard"
 
 /datum/sprite_accessory/facial_hair/modpack_hairs_port/rs666_brashes_mustache
 	name = "Brashes Mustache"
-	icon_state = "brashes_mustache"
+	icon_state = "facial_brashes_mustache"
 
 /datum/sprite_accessory/facial_hair/modpack_hairs_port/rs666_geek_chin_bread
 	name = "Geek Chin Bread"
-	icon_state = "geek_chin_bread"
+	icon_state = "facial_geek_chin_bread"
 
 /datum/sprite_accessory/facial_hair/modpack_hairs_port/rs666_livrah_beard
 	name = "Livrah Beard"
-	icon_state = "livrah_beard"
+	icon_state = "facial_livrah_beard"
 
 /datum/sprite_accessory/facial_hair/modpack_hairs_port/rs666_mcs
 	name = "Mcs"
-	icon_state = "mcs"
+	icon_state = "facial_mcs"
 
 /datum/sprite_accessory/facial_hair/modpack_hairs_port/rs666_texas_mustache
 	name = "Texas Mustache"
-	icon_state = "texas_mustache"
+	icon_state = "facial_texas_mustache"
 
 /datum/sprite_accessory/facial_hair/modpack_hairs_port/rs666_unshaven
 	name = "Unshaven"
-	icon_state = "unshaven"
+	icon_state = "facial_unshaven"
 
 /datum/sprite_accessory/facial_hair/modpack_hairs_port/rs666_waiter_mustache
 	name = "Waiter Mustache"
-	icon_state = "waiter_mustache"
+	icon_state = "facial_waiter_mustache"
 
 /datum/sprite_accessory/facial_hair/modpack_hairs_port/rs666_fishhook
 	name = "Fishhook"
-	icon_state = "fishhook"
+	icon_state = "facial_fishhook"
 
 /datum/sprite_accessory/facial_hair/modpack_hairs_port/rs666_anchor
 	name = "Anchor"
-	icon_state = "anchor"
+	icon_state = "facial_anchor"
 
 /datum/sprite_accessory/facial_hair/modpack_hairs_port/rs666_doubleb
 	name = "Doubleb"
-	icon_state = "doubleb"
+	icon_state = "facial_doubleb"
 
 /datum/sprite_accessory/facial_hair/modpack_hairs_port/rs666_sideburns_mustache
 	name = "Sideburns Mustache"
-	icon_state = "sideburns_mustache"
+	icon_state = "facial_sideburns_mustache"
 
 /datum/sprite_accessory/facial_hair/modpack_hairs_port/rs666_vandykehort
 	name = "Vandykehort"
-	icon_state = "vandykehort"
+	icon_state = "facial_vandykehort"
 
 /datum/sprite_accessory/facial_hair/modpack_hairs_port/rs666_balbo
 	name = "Balbo"
-	icon_state = "balbo"
+	icon_state = "facial_balbo"

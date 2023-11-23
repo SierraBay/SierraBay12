@@ -4,7 +4,7 @@ MAP_ZOOM: 1.000
 DIR: code icons 
 AUTO_FILE_DIR: OFF
 MAP_ICON_TYPE: 0
-WINDOW: _hairs_ports.dm
-FILE: _hairs_ports.dm
+WINDOW: icons\port_facial.dmi
+FILE: icons\port_facial.dmi
 */
 // END_INTERNALS
