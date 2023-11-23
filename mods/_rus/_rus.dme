@@ -83,5 +83,12 @@
 #include "code/obj/modules_files/xenoarcheology/portals.dm"
 #include "code/obj/modules_files/xenoarcheology/finds.dm"
 #include "code/obj/modules_files/xenoarcheology/tools.dm"
+#include "code/obj/modules_files/turbolift/turbolift.dm"
+#include "code/obj/modules_files/instruments/real_instruments.dm"
+#include "code/obj/modules_files/spells/spells.dm"
+#include "code/obj/modules_files/spells/general.dm"
+#include "code/obj/modules_files/spells/hund.dm"
+#include "code/obj/modules_files/spells/turgeted.dm"
+#include "code/obj/modules_files/spells/artefacts.dm"
 
 #endif
