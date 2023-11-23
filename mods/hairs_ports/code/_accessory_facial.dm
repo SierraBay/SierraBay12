@@ -28,7 +28,7 @@
 	name = "Bob Chin"
 	icon_state = "facial_bob_chin"
 /datum/sprite_accessory/facial_hair/modpack_hairs_port/aurora_gt3
-	name = "Gt3"
+	name = "Goat 3"
 	icon_state = "facial_gt3"
 /datum/sprite_accessory/facial_hair/modpack_hairs_port/aurora_tribeard
 	name = "Tribeard"
@@ -77,7 +77,7 @@
 	icon_state = "facial_classic_beard"
 
 /datum/sprite_accessory/facial_hair/modpack_hairs_port/rs666_gtb
-	name = "Gtb"
+	name = "Goat Long"
 	icon_state = "facial_gtb"
 
 /datum/sprite_accessory/facial_hair/modpack_hairs_port/rs666_figther_beard
@@ -89,7 +89,7 @@
 	icon_state = "facial_side_mustache"
 
 /datum/sprite_accessory/facial_hair/modpack_hairs_port/rs666_gtp
-	name = "Gtp"
+	name = "Goat 2"
 	icon_state = "facial_gtp"
 
 /datum/sprite_accessory/facial_hair/modpack_hairs_port/rs666_hollywood_beard
@@ -125,7 +125,7 @@
 	icon_state = "facial_bigbeard"
 
 /datum/sprite_accessory/facial_hair/modpack_hairs_port/rs666_mcb
-	name = "Mcb"
+	name = "Du Bois"
 	icon_state = "facial_mcb"
 
 /datum/sprite_accessory/facial_hair/modpack_hairs_port/rs666_prospector
@@ -149,7 +149,7 @@
 	icon_state = "facial_livrah_beard"
 
 /datum/sprite_accessory/facial_hair/modpack_hairs_port/rs666_mcs
-	name = "Mcs"
+	name = "Mustache And Sideburns"
 	icon_state = "facial_mcs"
 
 /datum/sprite_accessory/facial_hair/modpack_hairs_port/rs666_texas_mustache
