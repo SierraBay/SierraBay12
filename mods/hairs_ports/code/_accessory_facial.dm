@@ -19,7 +19,7 @@
 	name = "Britstache"
 	icon_state = "facial_britstache"
 /datum/sprite_accessory/facial_hair/modpack_hairs_port/aurora_hairideburns
-	name = "facial_hair Side Burns"
+	name = "Side Burns"
 	icon_state = "facial_hairideburns"
 /datum/sprite_accessory/facial_hair/modpack_hairs_port/aurora_bob_chin
 	name = "Bob Chin"
