@@ -9,9 +9,7 @@
 /datum/sprite_accessory/facial_hair/modpack_hairs_port
 	icon = 'mods/hairs_ports/icons/port_facial.dmi'
 
-/datum/sprite_accessory/facial_hair/modpack_hairs_port/aurora_chinstrap
-	name = "Chinstrap"
-	icon_state = "facial_chinstrap"
+
 /datum/sprite_accessory/facial_hair/modpack_hairs_port/aurora_horseshoe
 	name = "Horseshoe"
 	icon_state = "facial_horseshoe"
@@ -19,16 +17,11 @@
 	name = "Britstache"
 	icon_state = "facial_britstache"
 /datum/sprite_accessory/facial_hair/modpack_hairs_port/aurora_hairideburns
-	name = "Side Burns"
-	icon_state = "facial_hairideburns"
-/datum/sprite_accessory/facial_hair/modpack_hairs_port/aurora_bob_chin
-	name = "Bob Chin"
-	icon_state = "facial_bob_chin"
-/datum/sprite_accessory/facial_hair/modpack_hairs_port/aurora_bob_chin
-	name = "Bob Chin"
-	icon_state = "facial_bob_chin"
+	name = "facial_hair Side Burns"
+	icon_state = "facial_facialideburns"
+
 /datum/sprite_accessory/facial_hair/modpack_hairs_port/aurora_gt3
-	name = "Goat 3"
+	name = "Gt3"
 	icon_state = "facial_gt3"
 /datum/sprite_accessory/facial_hair/modpack_hairs_port/aurora_tribeard
 	name = "Tribeard"
@@ -77,7 +70,7 @@
 	icon_state = "facial_classic_beard"
 
 /datum/sprite_accessory/facial_hair/modpack_hairs_port/rs666_gtb
-	name = "Goat Long"
+	name = "Gtb"
 	icon_state = "facial_gtb"
 
 /datum/sprite_accessory/facial_hair/modpack_hairs_port/rs666_figther_beard
@@ -89,7 +82,7 @@
 	icon_state = "facial_side_mustache"
 
 /datum/sprite_accessory/facial_hair/modpack_hairs_port/rs666_gtp
-	name = "Goat 2"
+	name = "Gtp"
 	icon_state = "facial_gtp"
 
 /datum/sprite_accessory/facial_hair/modpack_hairs_port/rs666_hollywood_beard
@@ -125,7 +118,7 @@
 	icon_state = "facial_bigbeard"
 
 /datum/sprite_accessory/facial_hair/modpack_hairs_port/rs666_mcb
-	name = "Du Bois"
+	name = "Mcb"
 	icon_state = "facial_mcb"
 
 /datum/sprite_accessory/facial_hair/modpack_hairs_port/rs666_prospector
@@ -149,7 +142,7 @@
 	icon_state = "facial_livrah_beard"
 
 /datum/sprite_accessory/facial_hair/modpack_hairs_port/rs666_mcs
-	name = "Mustache And Sideburns"
+	name = "Mcs"
 	icon_state = "facial_mcs"
 
 /datum/sprite_accessory/facial_hair/modpack_hairs_port/rs666_texas_mustache
