@@ -174,7 +174,6 @@
 	result = /datum/reagent/kelotane
 	required_reagents = list(/datum/reagent/silicon = 1, /datum/reagent/carbon = 1)
 	result_amount = 2
-	log_is_important = 1
 
 /datum/chemical_reaction/peridaxon
 	name = "Peridaxon"
@@ -208,7 +207,7 @@
 	name = "Alkysine"
 	result = /datum/reagent/alkysine
 	required_reagents = list(/datum/reagent/acid/hydrochloric = 1, /datum/reagent/ammonia = 1, /datum/reagent/dylovene = 1)
-	result_amount = 2
+	result_amount = 3
 
 /datum/chemical_reaction/dexalin
 	name = "Dexalin"
@@ -298,7 +297,7 @@
 	name = "Imidazoline"
 	result = /datum/reagent/imidazoline
 	required_reagents = list(/datum/reagent/carbon = 1, /datum/reagent/hydrazine = 1, /datum/reagent/dylovene = 1)
-	result_amount = 2
+	result_amount = 3
 
 /datum/chemical_reaction/ethylredoxrazine
 	name = "Ethylredoxrazine"
@@ -589,6 +588,33 @@
 	..()
 	var/datum/effect/reagents_explosion/e = new()
 	e.set_up(round (created_volume/2, 1), holder.my_atom, 0, 0)
+	if(isliving(holder.my_atom))
+		e.amount *= 0.5
+		var/mob/living/L = holder.my_atom
+		if(L.stat!=DEAD)
+			e.amount *= 0.5
+	e.start()
+	holder.clear_reagents()
+
+/datum/chemical_reaction/gunpowder
+	name = "Gunpowder"
+	result = /datum/reagent/gunpowder
+	required_reagents = list(/datum/reagent/sodiumchloride = 1, /datum/reagent/toxin/fertilizer/potash = 1, /datum/reagent/sulfur = 1)
+	result_amount = 3
+	mix_message = "The solution sizzles down into ashy black powder."
+
+/datum/chemical_reaction/explosion_gunpowder
+	name = "Explosion"
+	result = null
+	required_reagents = list(/datum/reagent/gunpowder = 1)
+	result_amount = 3
+	minimum_temperature = 200 CELSIUS
+	mix_message = "The powder violently bursts into flame."
+
+/datum/chemical_reaction/explosion_gunpowder/on_reaction(datum/reagents/holder, created_volume, reaction_flags)
+	..()
+	var/datum/effect/reagents_explosion/e = new()
+	e.set_up(round (created_volume/5, 1), holder.my_atom, 0, 0)
 	if(isliving(holder.my_atom))
 		e.amount *= 0.5
 		var/mob/living/L = holder.my_atom
@@ -2988,7 +3014,7 @@
 /datum/chemical_reaction/eggnog
 	name = "Eggnog"
 	result = /datum/reagent/drink/eggnog
-	required_reagents = list(/datum/reagent/nutriment/protein/egg = 1, /datum/reagent/drink/milk/ = 1, /datum/reagent/sugar = 1)
+	required_reagents = list(/datum/reagent/nutriment/protein/egg = 1, /datum/reagent/drink/milk = 1, /datum/reagent/sugar = 1)
 	result_amount = 3
 
 /datum/chemical_reaction/espresso
@@ -3160,3 +3186,11 @@
 	catalysts = list(
 		/datum/reagent/enzyme = 1
 	)
+
+/datum/chemical_reaction/potash
+	name = "Potassium Nitrate"
+	result = /datum/reagent/toxin/fertilizer/potash
+	required_reagents = list(/datum/reagent/acetone = 3, /datum/reagent/potassium = 1, /datum/reagent/fuel = 1)
+	result_amount = 3
+	minimum_temperature = 200 CELSIUS
+	mix_message = "The mixture solidifies into a salt-like substance."

@@ -3,12 +3,20 @@
 #define TAG_FACTION   "faction"
 #define TAG_RELIGION  "religion"
 
+// [SIERRA-EDIT] - EXPANDED_CULTURE_DESCRIPTOR - Перевод дефайнов
+//#define ALL_CULTURAL_TAGS list( \ // SIERRA-EDIT - ORIGINAL
+//	TAG_CULTURE =   "Culture", \ // SIERRA-EDIT - ORIGINAL
+//	TAG_HOMEWORLD = "Residence", \ // SIERRA-EDIT - ORIGINAL
+//	TAG_FACTION =   "Faction", \ // SIERRA-EDIT - ORIGINAL
+//	TAG_RELIGION =  "Beliefs" \ // SIERRA-EDIT - ORIGINAL
+//	) // SIERRA-EDIT - ORIGINAL
 #define ALL_CULTURAL_TAGS list( \
-	TAG_CULTURE =   "Culture", \
-	TAG_HOMEWORLD = "Residence", \
-	TAG_FACTION =   "Faction", \
-	TAG_RELIGION =  "Beliefs" \
+	TAG_CULTURE =   "Культура", \
+	TAG_HOMEWORLD = "Место жительства", \
+	TAG_FACTION =   "Фракция", \
+	TAG_RELIGION =  "Вера" \
 	)
+// [SIERRA-EDIT]
 
 // Cultural IDs.
 #define FACTION_SOL_CENTRAL    "Sol Central Government"
@@ -61,7 +69,9 @@
 #define CULTURE_HUMAN_BELTER   "Belter, Ceres"
 #define CULTURE_HUMAN_PLUTO    "Plutonian"
 #define CULTURE_HUMAN_EARTH    "Earther"
-#define CULTURE_HUMAN_CETI     "Cetite"
+#define CULTURE_HUMAN_CETIN    "Cetite, Northern"
+#define CULTURE_HUMAN_CETIS    "Cetite, Southern"
+#define CULTURE_HUMAN_CETII    "Cetite, Interstate"
 #define CULTURE_HUMAN_SPACER   "Spacer, Core Systems"
 #define CULTURE_HUMAN_SPAFRO   "Spacer, Frontier Systems"
 #define CULTURE_HUMAN_CONFED   "Terran"

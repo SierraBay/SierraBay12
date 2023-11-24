@@ -330,6 +330,11 @@ The slots that you can use are found in items_clothing.dm and are the inventory 
 		else if(!LAZYLEN(available_cultural_info[token]))
 			var/list/map_systems = GLOB.using_map.available_cultural_info[token]
 			available_cultural_info[token] = map_systems.Copy()
+			
+		// [SIERRA-ADD] - EXPANDED_CULTURE_DESCRIPTOR - Вносит культуры из мода в список культур после всех возможных альтераций, чтобы предотвратить конфликты при добавлении оффами новых культур
+		if(extended_cultural_info[token])
+			available_cultural_info[token] |= extended_cultural_info[token]
+		// [/SIERRA-ADD]
 
 		if(LAZYLEN(available_cultural_info[token]) && !default_cultural_info[token])
 			var/list/avail_systems = available_cultural_info[token]
@@ -762,6 +767,7 @@ The slots that you can use are found in items_clothing.dm and are the inventory 
 		"lack of air" = oxy_mod,
 		"poison" = toxins_mod
 	)
+	var/name_clean = replace_characters(name,list("'"=""))
 	if(!header)
 		header = "<center><h2>[name]</h2></center><hr/>"
 	var/dat = list()
@@ -779,8 +785,8 @@ The slots that you can use are found in items_clothing.dm and are the inventory 
 	if((!skip_photo && preview_icon) || !skip_detail)
 		dat += "<td width = 200 align='center'>"
 		if(!skip_photo && preview_icon)
-			send_rsc(usr, icon(icon = preview_icon, icon_state = ""), "species_preview_[name].png")
-			dat += "<img src='species_preview_[name].png' width='64px' height='64px'><br/><br/>"
+			send_rsc(usr, icon(icon = preview_icon, icon_state = ""), "species_preview_[name_clean].png")
+			dat += "<img src='species_preview_[name_clean].png'>"
 		if(!skip_detail)
 			dat += "<small>"
 			if(spawn_flags & SPECIES_CAN_JOIN)
