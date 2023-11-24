@@ -1,4 +1,5 @@
 // SIERRA TODO: GET RID OF IT!!!
+#include "antagonists/_antagonists.dme"
 #include "body_markings/_body_markings.dme"
 #include "client_verbs/_client_verbs.dme"
 #include "don_loadout/_don_loadout.dme"
