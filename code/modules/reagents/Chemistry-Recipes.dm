@@ -174,7 +174,6 @@
 	result = /datum/reagent/kelotane
 	required_reagents = list(/datum/reagent/silicon = 1, /datum/reagent/carbon = 1)
 	result_amount = 2
-	log_is_important = 1
 
 /datum/chemical_reaction/peridaxon
 	name = "Peridaxon"
@@ -208,7 +207,7 @@
 	name = "Alkysine"
 	result = /datum/reagent/alkysine
 	required_reagents = list(/datum/reagent/acid/hydrochloric = 1, /datum/reagent/ammonia = 1, /datum/reagent/dylovene = 1)
-	result_amount = 2
+	result_amount = 3
 
 /datum/chemical_reaction/dexalin
 	name = "Dexalin"
@@ -298,7 +297,7 @@
 	name = "Imidazoline"
 	result = /datum/reagent/imidazoline
 	required_reagents = list(/datum/reagent/carbon = 1, /datum/reagent/hydrazine = 1, /datum/reagent/dylovene = 1)
-	result_amount = 2
+	result_amount = 3
 
 /datum/chemical_reaction/ethylredoxrazine
 	name = "Ethylredoxrazine"
@@ -3015,7 +3014,7 @@
 /datum/chemical_reaction/eggnog
 	name = "Eggnog"
 	result = /datum/reagent/drink/eggnog
-	required_reagents = list(/datum/reagent/nutriment/protein/egg = 1, /datum/reagent/drink/milk/ = 1, /datum/reagent/sugar = 1)
+	required_reagents = list(/datum/reagent/nutriment/protein/egg = 1, /datum/reagent/drink/milk = 1, /datum/reagent/sugar = 1)
 	result_amount = 3
 
 /datum/chemical_reaction/espresso

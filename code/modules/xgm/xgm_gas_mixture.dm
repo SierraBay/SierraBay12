@@ -405,7 +405,7 @@
 	if(!LAZYACCESS(tile_overlay_cache, gas_id))
 		if(gas_id == GAS_HEAT) //Not a real gas but functionally same thing
 			LAZYSET(tile_overlay_cache, gas_id, new/obj/gas_overlay/heat(null, GAS_HEAT))
-		if(gas_id == GAS_COLD) //Not a real gas but functionally same thing
+		else if(gas_id == GAS_COLD) //Not a real gas but functionally same thing
 			LAZYSET(tile_overlay_cache, gas_id, new/obj/gas_overlay/cold(null, GAS_COLD))
 		else
 			LAZYSET(tile_overlay_cache, gas_id, new/obj/gas_overlay(null, gas_id))
