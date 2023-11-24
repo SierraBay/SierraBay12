@@ -8,11 +8,9 @@
 
 /datum/sprite_accessory/facial_hair/modpack_hairs_port
 	icon = 'mods/hairs_ports/icons/port_facial.dmi'
-
-
-/datum/sprite_accessory/facial_hair/modpack_hairs_port/aurora_horseshoe
 	name = "Horseshoe"
 	icon_state = "facial_horseshoe"
+
 /datum/sprite_accessory/facial_hair/modpack_hairs_port/aurora_britstache
 	name = "Britstache"
 	icon_state = "facial_britstache"

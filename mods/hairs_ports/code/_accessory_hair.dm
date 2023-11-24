@@ -8,10 +8,10 @@
 */
 
 
+
+
 /datum/sprite_accessory/hair/modpack_hairs_port
 	icon = 'mods/hairs_ports/icons/port_hair.dmi'
-
-/datum/sprite_accessory/hair/modpack_hairs_port/aurora_80s_ponytail
 	name = "80s Ponytail"
 	icon_state = "hair_80s_ponytail"
 /datum/sprite_accessory/hair/modpack_hairs_port/aurora_amanita_long
@@ -279,9 +279,7 @@
 	icon_state = "hair_widowmaker"
 
 
-/datum/sprite_accessory/hair/modpack_hairs_port/inf_shavedmohawk
-	name = "Shaved Mohawk"
-	icon_state = "hair_shavedmohawk"
+
 
 
 
@@ -430,7 +428,7 @@
 	icon_state = "hair_sickboy"
 
 /datum/sprite_accessory/hair/modpack_hairs_port/onyx_straightlong
-	name = "Straight Long"
+	name = "Straight Long (alt)"
 	icon_state = "hair_straightlong"
 /datum/sprite_accessory/hair/modpack_hairs_port/onyx_veryshortovereye
 	name = "Very Short Over Eye"
@@ -634,7 +632,7 @@
 	icon_state = "hair_shorthair3"
 /datum/sprite_accessory/hair/modpack_hairs_port/rs666_slightlymessy
 	name = "Slightlymessy"
-	icon_state = "hair_slightlymessy"
+	icon_state = "hair_hairlightlymessy"
 /datum/sprite_accessory/hair/modpack_hairs_port/rs666_twincurl2
 	name = "Twincurl2"
 	icon_state = "hair_twincurl2"

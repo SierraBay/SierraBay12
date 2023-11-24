@@ -5,6 +5,6 @@ DIR: code icons
 AUTO_FILE_DIR: OFF
 MAP_ICON_TYPE: 0
 WINDOW: icons\port_hair.dmi;code\_accessory_hair.dm;code\_accessory_facial.dm;icons\port_facial.dmi;_hairs_ports.dme
-FILE: _hairs_ports.dme
+FILE: code\_accessory_hair.dm
 */
 // END_INTERNALS
