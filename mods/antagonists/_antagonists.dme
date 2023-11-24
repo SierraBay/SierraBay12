@@ -1,8 +1,6 @@
 #ifndef MODPACK_ANTAGONISTS
 #define MODPACK_ANTAGONISTS
 
-#include "../../packs/factions/scga/_pack.dm"
-
 #include "_antagonists.dm"
 
 #include "code/ert.dm"
