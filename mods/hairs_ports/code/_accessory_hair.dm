@@ -86,7 +86,12 @@
 ////////////////////////////
 */
 
-
+/datum/sprite_accessory/hair/modpack_hairs_port/inf_amicia
+	name = "Swept Back (alt)"
+	icon_state = "hair_swept_backalt"
+/datum/sprite_accessory/hair/modpack_hairs_port/inf_bun_odango
+	name = "Ponytail 7 (alt)"
+	icon_state = "hair_ponytail7alt"
 /datum/sprite_accessory/hair/modpack_hairs_port/inf_amicia
 	name = "Amicia"
 	icon_state = "hair_amicia"
