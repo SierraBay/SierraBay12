@@ -83,7 +83,8 @@ GLOBAL_VAR(href_logfile)
 	var/date_string = time2text(world.realtime, "YYYY/MM/DD")
 	// [SIERRA-EDIT] - RUST_G
 	// to_file(global.diary, "[log_end]\n[log_end]\nStarting up. (ID: [game_id]) [time2text(world.timeofday, "hh:mm.ss")][log_end]\n---------------------[log_end]") // SIERRA-EDIT - ORIGINAL
-	rustg_log_write_formatted("[GLOB.log_directory]/game.log", "Starting up. (ID: [game_id])\n---------------------------")
+	rustg_log_write_formatted("[GLOB.log_directory]/game.log", "Starting up. (ID: [game_id])")
+	rustg_log_write_formatted("[GLOB.log_directory]/game.log", "---------------------------")
 	// [/SIERRA-EDIT]
 
 
@@ -91,9 +92,13 @@ GLOBAL_VAR(href_logfile)
 		if (config.server_name)
 			name = "[config.server_name]"
 		if (config.log_runtime)
-			var/runtime_log = file("data/logs/runtime/[date_string]_[time2text(world.timeofday, "hh:mm")]_[game_id].log")
-			to_file(runtime_log, "Game [game_id] starting up at [time2text(world.timeofday, "hh:mm.ss")]")
-			log = runtime_log
+			// [SIERRA-EDIT] - RUST_G
+			// var/runtime_log = file("data/logs/runtime/[date_string]_[time2text(world.timeofday, "hh:mm")]_[game_id].log") // SIERRA-EDIT - ORIGINAL
+			// to_file(runtime_log, "Game [game_id] starting up at [time2text(world.timeofday, "hh:mm.ss")]") // SIERRA-EDIT - ORIGINAL
+			// log = runtime_log // SIERRA-EDIT - ORIGINAL
+			log = "data/logs/runtime/[date_string]_[time2text(world.timeofday, "hh:mm")]_[game_id].log"
+			to_world_log("Game [game_id] starting up at [time2text(world.timeofday, "hh:mm.ss")]")
+			// [/SIERRA-EDIT]
 		if (config.log_hrefs)
 			GLOB.href_logfile = file("data/logs/[date_string] hrefs.htm")
 

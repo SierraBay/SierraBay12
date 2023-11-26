@@ -28,6 +28,7 @@ ID мода: RUST_G
 
 ### Изменения *кор кода*
 
+- `code/_macros.dm`: `#define to_world_log`
 - `code/_helpers/logging.dm`: `/proc/game_log()`
 - `code/controllers/master.dm`: `/datum/controller/master/New()`
 - `code/controllers/subsystems/garbage.dm`: `/datum/controller/subsystem/garbage/Shutdown()`
@@ -36,6 +37,7 @@ ID мода: RUST_G
   - `/world/New()`
   - `/world/Topic()`
   - `/world/Reboot()`
+- `code/modules/persistence/persistence_datum.dm`: `/datum/persistent/proc/Shutdown()`
 <!--
   Если вы редактировали какие-либо процедуры или переменные в кор коде,
   они должны быть указаны здесь.
@@ -46,7 +48,8 @@ ID мода: RUST_G
 
 ### Оверрайды
 
-- Отсутствуют
+- `mods/_master_files/code/game/world.dm`: `/world/save_mode()`
+- `mods/_master_files/code/modules/client/preferences_persist.dm`: `/datum/preferences/save_pref_record()`
 <!--
   Если ты добавлял новый модульный оверрайд, его нужно указать здесь.
   Здесь указываются оверрайды в твоём моде и папке `_master_files`
