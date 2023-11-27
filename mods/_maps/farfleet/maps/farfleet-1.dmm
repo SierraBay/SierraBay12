@@ -197,9 +197,6 @@
 /area/ship/farfleet/crew/hallway/lower)
 "aI" = (
 /obj/floor_decal/industrial/outline/yellow,
-/obj/machinery/firealarm{
-	pixel_y = 24
-	},
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -24;
 	dir = 4
@@ -207,6 +204,10 @@
 /obj/structure/closet/crate/secure/phoron,
 /obj/item/stack/material/phoron/ten,
 /obj/item/stack/material/phoron/ten,
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -24
+	},
 /turf/simulated/floor/tiled/monotile,
 /area/ship/farfleet/engineering/equipment)
 "aK" = (
@@ -3446,7 +3447,8 @@
 	},
 /obj/floor_decal/industrial/hatch/yellow,
 /obj/structure/sign/warning/secure_area{
-	pixel_y = 32
+	pixel_y = -32;
+	dir = 1
 	},
 /obj/structure/table/standard,
 /turf/simulated/floor/tiled,
