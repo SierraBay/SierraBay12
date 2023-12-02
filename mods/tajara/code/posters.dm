@@ -6,6 +6,7 @@
 	if(!poster_type)
 		poster_type = pick(subtypesof(/singleton/poster/tjpost))
 	..()
+
 /obj/structure/sign/poster/tjpost/tposter_2
 	icon_state = "tposter_2"
 	poster_type = /singleton/poster/tjpost/tposter_2
