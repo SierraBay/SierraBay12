@@ -96,6 +96,7 @@
 	name = "Liberation day"
 	desc = "A memorable photo, which depicted how the soldiers of the Kaytam clan raise their flag \
 	over the overseer citadel in Naliar. Looks like one of CCA posters..."
+
 /singleton/poster/tjpost/tposter_2
 	icon_state = "tposter_2"
 	name = "Patriotic poster"
