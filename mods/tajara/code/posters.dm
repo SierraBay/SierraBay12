@@ -4,7 +4,7 @@
 
 /obj/structure/sign/poster/tjpost/New()
 	if(!poster_type)
-		poster_type = pick(subtypesof(/singleton/poster/tjpost))
+		poster_type = pick(typesof(/singleton/poster/tjpost))
 	..()
 
 /obj/structure/sign/poster/tjpost/tposter_2
