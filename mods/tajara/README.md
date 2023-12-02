@@ -49,9 +49,16 @@ ID мода: MODPACK_TAJARA
 ### Дефайны
 
 - `mods\tajara\code\datum\_defines.dm`:
-  - `Дефайн1`
-  - `Дефайн2`
-  - ...
+  - `CULTURE_TAJARAN`
+  - `FACTION_TAJARAN_HADII`
+  - `FACTION_TAJARAN_KAYTAM`
+  - `FACTION_TAJARAN_NAZKIIN`
+  - `FACTION_TAJARAN_KAYTAM_KSD`
+  - `FACTION_TAJARAN_SHISHI`
+  - `FACTION_TAJARAN_JAR`
+  - `FACTION_TAJARAN_OTHER`
+  - `HOME_SYSTEM_AHDOMAI`
+
 <!--
   Если требовалось добавить какие-либо дефайны, укажи файлы,
   в которые ты их добавил, а также перечисли имена.
