@@ -11,7 +11,7 @@
 /datum/gear/uniform/hazard
 	allowed_roles = TECHNICAL_ROLES
 
-/* SIERRA TO DO: watch for contractors uniforms, may be in mods
+/* SIERRA TODO: watch for contractors uniforms, may be in mods
 /datum/gear/uniform/corpsi
 	display_name = "contractor uniform selection"
 	path = /obj/item/clothing/under/solgov/utility
