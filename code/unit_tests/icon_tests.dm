@@ -55,7 +55,8 @@
 		for(var/sprite_accessory_type in subtypesof(sprite_accessory_main_type))
 			var/failed = FALSE
 			var/datum/sprite_accessory/sat = sprite_accessory_type
-
+			if (is_abstract(sat))
+				continue
 			var/sat_name = initial(sat.name)
 			if(sat_name)
 				group_by(sprite_accessories_by_name, sat_name, sat)
@@ -104,13 +105,17 @@
 	// [SIERRA-ADD] - NYC_POSTERS
 	var/new_year_icons = icon_states('mods/nyc_posters/icons/nyc_posters.dmi')
 	// [/SIERRA-ADD]
+	// [SIERRA-ADD] - TAJARA
+	var/tjposter_icons = icon_states('mods/tajara/icons/posters.dmi')
+	// [/SIERRA-ADD]
+
 	var/list/invalid_posters = list()
 
 	for(var/poster_type in subtypesof(/singleton/poster))
 		var/singleton/poster/P = GET_SINGLETON(poster_type)
-		// [SIERRA-EDIT] - NYC_POSTERS
+		// [SIERRA-EDIT] - NYC_POSTERS - TAJARA
 		// if(!(P.icon_state in contraband_icons)) // SIERRA-EDIT - ORIGINAL
-		if(!(P.icon_state in contraband_icons) && !(P.icon_state in new_year_icons))
+		if(!(P.icon_state in contraband_icons) && !(P.icon_state in new_year_icons) && !(P.icon_state in tjposter_icons))
 		// [/SIERRA-EDIT]
 			invalid_posters += poster_type
 
