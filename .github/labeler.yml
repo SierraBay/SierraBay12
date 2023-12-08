@@ -1,3 +1,4 @@
+<<<<<<< ours
 ':open_file_folder: Репозиторий':
 - .github/**/*
 - .vscode/**/*
@@ -28,3 +29,61 @@
 
 ':floppy_disk: База данных':
 - sql/**/*
+=======
+Repo:
+- changed-files:
+  - any-glob-to-any-file:
+    - '.github/**/*'
+    - '.vscode/**/*'
+    - 'docs/**/*'
+    - 'scripts/**/*'
+    - 'test/**/*'
+    - 'tools/**/*'
+    - '.codebeatignore'
+    - '.codebeatsettings'
+    - '.editorconfig'
+    - '.git*'
+    - 'biome.json'
+    - 'libmysql.dll'
+    - 'LICENSE'
+    - 'README.md'
+    - 'SpacemanDMM.toml'
+
+Map:
+- changed-files:
+  - any-glob-to-any-file:
+    - '**/*.dmm'
+
+Sprites:
+- changed-files:
+  - any-glob-to-any-file:
+    - '**/*.dmi'
+
+Sound:
+- changed-files:
+  - any-glob-to-any-file:
+    - '**/*.aif'
+    - '**/*.aiff'
+    - '**/*.it'
+    - '**/*.mid'
+    - '**/*.midi'
+    - '**/*.mod'
+    - '**/*.mp3'
+    - '**/*.ogg'
+    - '**/*.oxm'
+    - '**/*.raw'
+    - '**/*.s3m'
+    - '**/*.wma'
+    - '**/*.wav'
+    - '**/*.xm'
+
+Config Update:
+- changed-files:
+  - any-glob-to-any-file:
+    - 'config/example/**/*'
+
+Database:
+- changed-files:
+  - any-glob-to-any-file:
+    - 'sql/**/*'
+>>>>>>> theirs
