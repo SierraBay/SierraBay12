@@ -1,36 +1,4 @@
-<<<<<<< ours
 ':open_file_folder: Репозиторий':
-- .github/**/*
-- .vscode/**/*
-- docs/**/*
-- scripts/**/*
-- test/**/*
-- tools/**/*
-- .codebeatignore
-- .editorconfig
-- .git*
-- LICENSE
-- README.md
-- SpacemanDMM.toml
-
-':world_map: Карты':
-- '**/*.dmm'
-
-':mountain: Спрайты':
-- '**/*.dmi'
-
-':sound: Звуки':
-- '**/*.ogg'
-- '**/*.wav'
-- '**/*.mp3'
-
-':page_facing_up: Конфиги':
-- config/example/**/*
-
-':floppy_disk: База данных':
-- sql/**/*
-=======
-Repo:
 - changed-files:
   - any-glob-to-any-file:
     - '.github/**/*'
@@ -49,17 +17,17 @@ Repo:
     - 'README.md'
     - 'SpacemanDMM.toml'
 
-Map:
+':world_map: Карты':
 - changed-files:
   - any-glob-to-any-file:
     - '**/*.dmm'
 
-Sprites:
+':mountain: Спрайты':
 - changed-files:
   - any-glob-to-any-file:
     - '**/*.dmi'
 
-Sound:
+':sound: Звуки':
 - changed-files:
   - any-glob-to-any-file:
     - '**/*.aif'
@@ -77,13 +45,12 @@ Sound:
     - '**/*.wav'
     - '**/*.xm'
 
-Config Update:
+':page_facing_up: Конфиги':
 - changed-files:
   - any-glob-to-any-file:
     - 'config/example/**/*'
 
-Database:
+':floppy_disk: База данных':
 - changed-files:
   - any-glob-to-any-file:
     - 'sql/**/*'
->>>>>>> theirs
