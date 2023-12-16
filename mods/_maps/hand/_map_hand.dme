@@ -1,16 +1,13 @@
-// HAND TODO BELOW
+#ifndef MODPACK_MAP_HAND
+#define MODPACK_MAP_HAND
 
-#ifndef MODPACK_MAP_SENTINEL
-#define MODPACK_MAP_SENTINEL
-
-#include "_map_sentinel.dm"
-#include "code/sentinel.dm"
-#include "code/sentinel_areas.dm"
-#include "code/sentinel_crew.dm"
-#include "code/sentinel_items.dm"
-#include "code/sentinel_presets.dm"
-#include "code/sentinel_shuttle.dm"
-#include "code/sentinel_structures.dm"
-#include "code/sentinel_turbolift.dm"
+#include "_map_hand.dm"
+#include "code/hand.dm"
+#include "code/hand_areas.dm"
+#include "code/hand_crew.dm"
+#include "code/hand_items.dm"
+#include "code/hand_presets.dm"
+#include "code/hand_shuttles.dm"
+#include "code/hand_structures.dm"
 
 #endif

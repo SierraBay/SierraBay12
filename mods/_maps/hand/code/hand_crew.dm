@@ -1,71 +1,62 @@
 // HAND TODO BELOW
 
-#define WEBHOOK_SUBMAP_LOADED_SOL	"webhook_submap_sol"
+#define WEBHOOK_SUBMAP_LOADED_HAND	"webhook_submap_hand"
 
-/obj/submap_landmark/joinable_submap/away_scg_patrol
-	name = "Patrol Ship"
-	archetype = /singleton/submap_archetype/away_scg_patrol
+/obj/submap_landmark/joinable_submap/away_scg_hand
+	name = "hand Ship"
+	archetype = /singleton/submap_archetype/away_scg_hand
 
-/singleton/submap_archetype/away_scg_patrol
-	descriptor = "SCGF Patrol Ship"
-	map = "Patrol Ship"
+/singleton/submap_archetype/away_scg_hand
+	descriptor = "SCGF hand Ship"
+	map = "hand Ship"
 	crew_jobs = list(
-		/datum/job/submap/patrol/commander,
-		/datum/job/submap/patrol/pilot1,
-		/datum/job/submap/patrol,
-		/datum/job/submap/patrol/captain,
-		/datum/job/submap/patrol/surgeon,
-		/datum/job/submap/patrol/engineer
+		/datum/job/submap/hand,
+		/datum/job/submap/hand/captain,
+		/datum/job/submap/hand/surgeon
 	)
-	call_webhook = WEBHOOK_SUBMAP_LOADED_SOL
+	call_webhook = WEBHOOK_SUBMAP_LOADED_HAND
 
-/obj/submap_landmark/spawnpoint/away_patrol
-	name = "Army SCGSO Trooper"
+/obj/submap_landmark/spawnpoint/away_hand
+	name = "Salvage Technican"
 	movable_flags = MOVABLE_FLAG_EFFECTMOVE
 
-/obj/submap_landmark/spawnpoint/away_patrol/captain
-	name = "Army SCGSO Leader"
+/obj/submap_landmark/spawnpoint/away_hand/captain
+	name = "Captain"
 
-/obj/submap_landmark/spawnpoint/away_patrol/commander
-	name = "Fleet Commander"
 
-/obj/submap_landmark/spawnpoint/away_patrol/pilot1
-	name = "Fleet Pilot"
 
-/obj/submap_landmark/spawnpoint/away_patrol/surgeon
-	name = "Fleet Corpsman"
+/obj/submap_landmark/spawnpoint/away_hand/surgeon
+	name = "Corpsman"
 
-/obj/submap_landmark/spawnpoint/away_patrol/engineer
-	name = "Fleet Technician"
 
 /* ACCESS
  * =======
  */
 
-var/global/const/access_away_cavalry = "ACCESS_CAVALRY"
-var/global/const/access_away_cavalry_fleet_armory = "ACCESS_CAVALRY_EMERG_ARMORY"
-var/global/const/access_away_cavalry_ops = "ACCESS_CAVALRY_OPS"
-var/global/const/access_away_cavalry_pilot = "ACCESS_CAVALRY_PILOT"
-var/global/const/access_away_cavalry_captain = "ACCESS_CAVALRY_CAPTAIN"
-var/global/const/access_away_cavalry_commander = "ACCESS_CAVALRY_COMMANDER"
+var/global/const/access_hand = "ACCESS_CAVALRY"
+var/global/const/access_hand_fleet_armory = "ACCESS_CAVALRY_EMERG_ARMORY"
+var/global/const/access_hand_ops = "ACCESS_CAVALRY_OPS"
+var/global/const/access_hand_pilot = "ACCESS_CAVALRY_PILOT"
+var/global/const/access_hand_captain = "ACCESS_CAVALRY_CAPTAIN"
+var/global/const/access_hand_commander = "ACCESS_CAVALRY_COMMANDER"
 
-/datum/access/access_away_cavalry_patrol
-	id = access_away_cavalry
+/datum/access/access_hand_hand
+	id = access_hand
 	desc = "SPS Main"
 	region = ACCESS_REGION_NONE
 
-/datum/access/access_away_cavalry_ops
-	id = access_away_cavalry_ops
+/datum/access/access_hand_ops
+	id = access_hand_ops
 	desc = "SPS Army"
 	region = ACCESS_REGION_NONE
 
-/datum/access/access_away_cavalry_captain
-	id = access_away_cavalry_captain
+/datum/access/access_hand_captain
+	id = access_hand_captain
 	desc = "SPS Captain"
 	region = ACCESS_REGION_NONE
 
-/datum/access/access_away_patrol_commander
-	id = access_away_cavalry_commander
+/datum/access/access_away_hand_commander
+	id = access_hand_commander
 	desc = "SPS Commander"
 	region = ACCESS_REGION_NONE
 
@@ -73,10 +64,10 @@ var/global/const/access_away_cavalry_commander = "ACCESS_CAVALRY_COMMANDER"
  * =======
  */
 
-/datum/job/submap/patrol
+/datum/job/submap/hand
 	title = "Army SCGSO Trooper"
 	total_positions = 2
-	outfit_type = /singleton/hierarchy/outfit/job/patrol/army_ops
+	outfit_type = /singleton/hierarchy/outfit/job/hand/army_ops
 	allowed_branches = list(/datum/mil_branch/scga)
 	allowed_ranks = list(
 		/datum/mil_rank/scga/e4,
@@ -91,22 +82,31 @@ var/global/const/access_away_cavalry_commander = "ACCESS_CAVALRY_COMMANDER"
 	\
 	 Вам крайне нежелательно приближаться к кораблям и станциям с опозновательными знаками без разрешения от командования группировкой. \
 	 Исключением являются те ситуации, когда вы терпите бедствие или на вашем судне аварийная ситуация."
-	required_language = LANGUAGE_HUMAN_EURO
 	whitelisted_species = list(SPECIES_HUMAN)
-	min_skill = list(SKILL_COMBAT  = SKILL_BASIC,
-					 SKILL_WEAPONS = SKILL_BASIC,
-					 SKILL_HAULING = SKILL_BASIC,
-					 SKILL_MEDICAL = SKILL_BASIC,
-					 SKILL_EVA = SKILL_BASIC)
-	access = list(access_away_cavalry, access_away_cavalry_ops)
+	min_skill = list(
+		SKILL_COMBAT  = SKILL_BASIC,
+		SKILL_WEAPONS = SKILL_BASIC,
+		SKILL_HAULING = SKILL_TRAINED,
+		SKILL_ATMOS   = SKILL_BASIC,
+		SKILL_ENGINES = SKILL_TRAINED,
+		SKILL_EVA     = SKILL_TRAINED,
+		SKILL_ELECTRICAL   = SKILL_TRAINED,
+		SKILL_CONSTRUCTION = SKILL_TRAINED,
+	)
+	access = list(access_hand, access_hand_ops)
 
-/datum/job/submap/patrol/captain
+/datum/job/submap/hand/captain
 	title = "Army SCGSO Leader"
 	total_positions = 1
-	outfit_type = /singleton/hierarchy/outfit/job/patrol/captain
+	outfit_type = /singleton/hierarchy/outfit/job/hand/captain
 	minimum_character_age = list(SPECIES_HUMAN = 25)
 	ideal_character_age = 27
-	allowed_branches = list(/datum/mil_branch/scga)
+	allowed_branches = list(
+		/datum/mil_branch/fleet
+		/datum/mil_branch/civilian
+		/datum/mil_branch/contractor
+		/datum/mil_branch/employee
+	)
 	allowed_ranks = list(
 		/datum/mil_rank/scga/o2,
 		/datum/mil_rank/scga/o3
@@ -120,75 +120,22 @@ var/global/const/access_away_cavalry_commander = "ACCESS_CAVALRY_COMMANDER"
 	\
 	 Вам крайне нежелательно приближаться к кораблям и станциям с опозновательными знаками без разрешения от командования группировкой. \
 	 Исключением являются те ситуации, когда вы терпите бедствие или на вашем судне аварийная ситуация."
-	required_language = LANGUAGE_HUMAN_EURO
+	required_language = list(LANGUAGE_HUMAN_EURO, LANGUAGE_SPACER)
 	whitelisted_species = list(SPECIES_HUMAN)
 	min_skill = list(
 		SKILL_COMBAT  = SKILL_BASIC,
 		SKILL_WEAPONS = SKILL_BASIC,
 		SKILL_HAULING = SKILL_BASIC,
 		SKILL_MEDICAL = SKILL_BASIC,
-		SKILL_EVA     = SKILL_BASIC
-	)
-	access = list(access_away_cavalry, access_away_cavalry_ops, access_away_cavalry_fleet_armory, access_away_cavalry_captain)
-
-/datum/job/submap/patrol/commander
-	title = "Fleet Commander"
-	total_positions = 1
-	outfit_type = /singleton/hierarchy/outfit/job/patrol/commander
-	allowed_branches = list(/datum/mil_branch/fleet)
-	allowed_ranks = list(
-		/datum/mil_rank/fleet/o3,
-		/datum/mil_rank/fleet/o4
-	)
-	supervisors = "Command of the Battle Group Bravo of the 5th fleet, SCGDF"
-	loadout_allowed = TRUE
-	info = "Вы просыпаетесь и выходите из криосна, ощущая прохладный воздух на своём лице, а также лёгкую тошноту. \
-	Являясь одним из членов экипажа патрульного корабля 5-го флота ЦПСС, ваша задача состоит в патруле и разведке данного сектора. \
-	По данным бортового компьютера, поступал сигнал о неизвестных нападениях в этом регионе.\
-	\
-	 Вам крайне нежелательно приближаться к кораблям и станциям с опозновательными знаками без разрешения от командования группировкой. \
-	 Исключением являются те ситуации, когда вы терпите бедствие или на вашем судне аварийная ситуация."
-	min_skill = list(
-		SKILL_COMBAT  = SKILL_BASIC,
-		SKILL_WEAPONS = SKILL_BASIC,
-		SKILL_HAULING = SKILL_BASIC,
-		SKILL_MEDICAL = SKILL_BASIC,
 		SKILL_PILOT   = SKILL_TRAINED,
 		SKILL_EVA     = SKILL_BASIC
 	)
-	access = list(access_away_cavalry, access_away_cavalry_ops, access_away_cavalry_pilot, access_away_cavalry_fleet_armory, access_away_cavalry_commander)
+	access = list(access_hand, access_hand_ops, access_hand_fleet_armory, access_hand_captain)
 
-/datum/job/submap/patrol/pilot1
-	title = "Fleet Pilot"
-	total_positions = 1
-	outfit_type = /singleton/hierarchy/outfit/job/patrol/pilot1
-	allowed_branches = list(/datum/mil_branch/fleet)
-	allowed_ranks = list(
-		/datum/mil_rank/fleet/o1,
-		/datum/mil_rank/fleet/o2
-	)
-	supervisors = "Lieutenant Commander"
-	loadout_allowed = TRUE
-	info = "Вы просыпаетесь и выходите из криосна, ощущая прохладный воздух на своём лице, а также лёгкую тошноту. \
-	Являясь одним из членов экипажа патрульного корабля 5-го флота ЦПСС, ваша задача состоит в пилотировании и руководством экипажа. \
-	По данным бортового компьютера, поступал сигнал о неизвестных нападениях в этом регионе.\
-	\
-	 Вам крайне нежелательно приближаться к кораблям и станциям с опозновательными знаками без разрешения от командования группировкой. \
-	 Исключением являются те ситуации, когда вы терпите бедствие или на вашем судне аварийная ситуация."
-	min_skill = list(
-		SKILL_COMBAT  = SKILL_BASIC,
-		SKILL_WEAPONS = SKILL_BASIC,
-		SKILL_HAULING = SKILL_BASIC,
-		SKILL_MEDICAL = SKILL_BASIC,
-		SKILL_PILOT   = SKILL_TRAINED,
-		SKILL_EVA     = SKILL_BASIC
-	)
-	access = list(access_away_cavalry, access_away_cavalry_pilot, access_away_cavalry_fleet_armory)
-
-/datum/job/submap/patrol/surgeon
+/datum/job/submap/hand/surgeon
 	title = "Fleet Corpsman"
 	total_positions = 1
-	outfit_type = /singleton/hierarchy/outfit/job/patrol/surgeon
+	outfit_type = /singleton/hierarchy/outfit/job/hand/surgeon
 	allowed_branches = list(/datum/mil_branch/fleet)
 	allowed_ranks = list(
 		/datum/mil_rank/fleet/o1,
@@ -212,38 +159,7 @@ var/global/const/access_away_cavalry_commander = "ACCESS_CAVALRY_COMMANDER"
 		SKILL_CHEMISTRY = SKILL_BASIC,
 		SKILL_EVA       = SKILL_BASIC
 	)
-	access = list(access_away_cavalry)
-
-/datum/job/submap/patrol/engineer
-	title = "Fleet Technician"
-	total_positions = 1
-	outfit_type = /singleton/hierarchy/outfit/job/patrol/engineer
-	allowed_branches = list(/datum/mil_branch/fleet)
-	allowed_ranks = list(
-		/datum/mil_rank/fleet/e4,
-		/datum/mil_rank/fleet/e5,
-		/datum/mil_rank/fleet/e6
-		)
-	supervisors = "Fleet Commander"
-	loadout_allowed = TRUE
-	info = "Вы просыпаетесь и выходите из криосна, ощущая прохладный воздух на своём лице, а также лёгкую тошноту. \
-	Являясь одним из членов экипажа патрульного корабля 5-го флота ЦПСС, ваша задача состоит в поддержании работоспособности судна и экипировки экипажа. \
-	\
-	 Вам крайне нежелательно приближаться к кораблям и станциям с опозновательными знаками без разрешения от командования группировкой. \
-	 Исключением являются те ситуации, когда вы терпите бедствие или на вашем судне аварийная ситуация."
-	min_skill = list(
-		SKILL_COMBAT  = SKILL_BASIC,
-		SKILL_WEAPONS = SKILL_BASIC,
-		SKILL_HAULING = SKILL_TRAINED,
-		SKILL_MEDICAL = SKILL_BASIC,
-		SKILL_ATMOS   = SKILL_BASIC,
-		SKILL_ENGINES = SKILL_TRAINED,
-		SKILL_DEVICES = SKILL_BASIC,
-		SKILL_EVA     = SKILL_TRAINED,
-		SKILL_ELECTRICAL   = SKILL_TRAINED,
-		SKILL_CONSTRUCTION = SKILL_TRAINED,
-	)
-	access = list(access_away_cavalry)
+	access = list(access_hand)
 
 
 /* BRANCH & RANKS
@@ -404,13 +320,13 @@ var/global/const/access_away_cavalry_commander = "ACCESS_CAVALRY_COMMANDER"
  * =======
  */
 
-#define PATROL_OUTFIT_JOB_NAME(job_name) ("SCG Patrol Ship - Job - " + job_name)
+#define HAND_OUTFIT_JOB_NAME(job_name) ("Hearer's Hand Chorus - Job - " + job_name)
 
-/singleton/hierarchy/outfit/job/patrol
-	hierarchy_type = /singleton/hierarchy/outfit/job/patrol
-	uniform = /obj/item/clothing/under/solgov/utility/fleet/away_solpatrol
+/singleton/hierarchy/outfit/job/hand
+	hierarchy_type = /singleton/hierarchy/outfit/job/hand
+	uniform = /obj/item/clothing/under/solgov/utility/fleet/away_solhand
 	shoes = /obj/item/clothing/shoes/dutyboots
-	l_ear = /obj/item/device/radio/headset/away_scg_patrol
+	l_ear = /obj/item/device/radio/headset/away_scg_hand
 	l_pocket = /obj/item/device/radio
 	r_pocket = /obj/item/crowbar/prybar
 	suit_store = /obj/item/tank/oxygen
@@ -422,57 +338,26 @@ var/global/const/access_away_cavalry_commander = "ACCESS_CAVALRY_COMMANDER"
 	backpack_contents = null
 	flags = OUTFIT_EXTENDED_SURVIVAL
 
-/singleton/hierarchy/outfit/job/patrol/army_ops
-	name = PATROL_OUTFIT_JOB_NAME("Ops")
-	head = /obj/item/clothing/head/scga/utility
-	uniform = /obj/item/clothing/under/scga/utility
-	id_types = list(/obj/item/card/id/awaycavalry/ops)
-	gloves = /obj/item/clothing/gloves/thick/combat
-
-/singleton/hierarchy/outfit/job/patrol/captain
-	name = PATROL_OUTFIT_JOB_NAME("Captain")
+/singleton/hierarchy/outfit/job/hand/captain
+	name = hand_OUTFIT_JOB_NAME("Captain")
 	head = /obj/item/clothing/head/scga/utility
 	uniform = /obj/item/clothing/under/scga/utility
 	id_types = list(/obj/item/card/id/awaycavalry/ops/captain)
 	gloves = /obj/item/clothing/gloves/thick/combat
 
-/singleton/hierarchy/outfit/job/patrol/engineer
-	name = PATROL_OUTFIT_JOB_NAME("Technician")
-	uniform = /obj/item/clothing/under/solgov/utility/fleet/engineering/away_solpatrol
-	belt = /obj/item/storage/belt/holster/security/tactical/away_solpatrol
+/singleton/hierarchy/outfit/job/hand/engineer
+	name = hand_OUTFIT_JOB_NAME("Technician")
+	uniform = /obj/item/clothing/under/solgov/utility/fleet/engineering/away_solhand
+	belt = /obj/item/storage/belt/holster/security/tactical/away_solhand
 	gloves = /obj/item/clothing/gloves/insulated
 
-/singleton/hierarchy/outfit/job/patrol/surgeon
-	name = PATROL_OUTFIT_JOB_NAME("Doctor")
-	uniform = /obj/item/clothing/under/solgov/utility/fleet/medical/away_solpatrol
-	belt = /obj/item/storage/belt/holster/security/tactical/away_solpatrol
+/singleton/hierarchy/outfit/job/hand/surgeon
+	name = hand_OUTFIT_JOB_NAME("Doctor")
+	uniform = /obj/item/clothing/under/solgov/utility/fleet/medical/away_solhand
+	belt = /obj/item/storage/belt/holster/security/tactical/away_solhand
 	gloves = /obj/item/clothing/gloves/latex/nitrile
 
-/singleton/hierarchy/outfit/job/patrol/commander
-	name = PATROL_OUTFIT_JOB_NAME("Lieutenant Commander")
-	head = /obj/item/clothing/head/beret/solgov/fleet/branch/fifth
-	uniform = /obj/item/clothing/under/solgov/utility/fleet/officer/command/commander/away_solpatrol
-	belt = /obj/item/storage/belt/holster/security/tactical/away_solpatrol
-	id_types = list(/obj/item/card/id/awaycavalry/fleet/commander)
-	gloves = /obj/item/clothing/gloves/thick/duty/solgov/cmd
 
-/singleton/hierarchy/outfit/job/patrol/pilot1
-	name = PATROL_OUTFIT_JOB_NAME("Sub-Lieutenant")
-	head = /obj/item/clothing/head/beret/solgov/fleet/branch/fifth
-	uniform = /obj/item/clothing/under/solgov/utility/fleet/officer/pilot1/away_solpatrol
-	belt = /obj/item/storage/belt/holster/security/tactical/away_solpatrol
-	gloves = /obj/item/clothing/gloves/thick/duty
 
-/singleton/hierarchy/outfit/job/patrol/fleet_command
-	name = PATROL_OUTFIT_JOB_NAME("Senior Officer")
-	head = /obj/item/clothing/head/solgov/dress/fleet/command
-	uniform = /obj/item/clothing/under/solgov/service/fleet
-	belt = /obj/item/storage/belt/holster/general/away_solpatrol
-	shoes = /obj/item/clothing/shoes/dress
-	suit = /obj/item/clothing/suit/storage/solgov/service/fleet/command/away_solpatrol
-	r_pocket = /obj/item/card/id/syndicate
-	id_types = list(/obj/item/card/id/centcom/station)
-	id_pda_assignment = "5th Fleet Senior Officer"
-
-#undef PATROL_OUTFIT_JOB_NAME
-#undef WEBHOOK_SUBMAP_LOADED_SOL
+#undef HAND_OUTFIT_JOB_NAME
+#undef WEBHOOK_SUBMAP_LOADED_HAND
