@@ -82,7 +82,7 @@ var/global/const/access_hand_commander = "ACCESS_CAVALRY_COMMANDER"
 	\
 	 Вам крайне нежелательно приближаться к кораблям и станциям с опозновательными знаками без разрешения от командования группировкой. \
 	 Исключением являются те ситуации, когда вы терпите бедствие или на вашем судне аварийная ситуация."
-	whitelisted_species = list(SPECIES_HUMAN)
+	whitelisted_species = list(SPECIES_VATGROWN, SPECIES_SPACER, SPECIES_GRAVWORLDER, SPECIES_MULE)
 	min_skill = list(
 		SKILL_COMBAT  = SKILL_BASIC,
 		SKILL_WEAPONS = SKILL_BASIC,
@@ -96,8 +96,11 @@ var/global/const/access_hand_commander = "ACCESS_CAVALRY_COMMANDER"
 	access = list(access_hand, access_hand_ops)
 
 /datum/job/submap/hand/captain
-	title = "Army SCGSO Leader"
+	title = "Captain"
 	total_positions = 1
+	alt_titles = (
+		"Guardsman"
+	)
 	outfit_type = /singleton/hierarchy/outfit/job/hand/captain
 	minimum_character_age = list(SPECIES_HUMAN = 25)
 	ideal_character_age = 27
@@ -150,6 +153,7 @@ var/global/const/access_hand_commander = "ACCESS_CAVALRY_COMMANDER"
 	\
 	 Вам крайне нежелательно приближаться к кораблям и станциям с опозновательными знаками без разрешения от командования группировкой. \
 	 Исключением являются те ситуации, когда вы терпите бедствие или на вашем судне аварийная ситуация."
+	whitelisted_species = list(HUMAN_SPECIES)
 	min_skill = list(
 		SKILL_COMBAT    = SKILL_BASIC,
 		SKILL_WEAPONS   = SKILL_BASIC,
@@ -345,11 +349,19 @@ var/global/const/access_hand_commander = "ACCESS_CAVALRY_COMMANDER"
 	id_types = list(/obj/item/card/id/awaycavalry/ops/captain)
 	gloves = /obj/item/clothing/gloves/thick/combat
 
-/singleton/hierarchy/outfit/job/hand/engineer
-	name = hand_OUTFIT_JOB_NAME("Technician")
-	uniform = /obj/item/clothing/under/solgov/utility/fleet/engineering/away_solhand
-	belt = /obj/item/storage/belt/holster/security/tactical/away_solhand
-	gloves = /obj/item/clothing/gloves/insulated
+/singleton/hierarchy/outfit/job/hand/captain/guardsman
+	name = hand_OUTFIT_JOB_NAME("Guardsman")
+	head = /obj/item/clothing/head/scga/utility
+	uniform = /obj/item/clothing/under/scga/utility
+	id_types = list(/obj/item/card/id/awaycavalry/ops/captain)
+	gloves = /obj/item/clothing/gloves/thick/combat
+
+/singleton/hierarchy/outfit/job/hand/captain/pilot
+	name = hand_OUTFIT_JOB_NAME("Captain")
+	head = /obj/item/clothing/head/scga/utility
+	uniform = /obj/item/clothing/under/scga/utility
+	id_types = list(/obj/item/card/id/awaycavalry/ops/captain)
+	gloves = /obj/item/clothing/gloves/thick/combat
 
 /singleton/hierarchy/outfit/job/hand/surgeon
 	name = hand_OUTFIT_JOB_NAME("Doctor")

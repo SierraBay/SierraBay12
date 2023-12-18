@@ -431,12 +431,9 @@
 /turf/simulated/floor/plating,
 /area/space)
 "bl" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/plating,
+/obj/structure/lattice,
+/obj/structure/catwalk,
+/turf/space,
 /area/space)
 "bm" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -1267,13 +1264,8 @@
 /turf/simulated/floor/tiled/old_cargo,
 /area/space)
 "ex" = (
-/obj/structure/catwalk,
-/obj/structure/railing/mapped{
-	dir = 4;
-	icon_state = "railing0-1"
-	},
-/obj/structure/railing/mapped,
-/turf/space,
+/obj/structure/bed/chair/padded/green,
+/turf/simulated/floor/wood/walnut,
 /area/space)
 "eA" = (
 /turf/simulated/floor/tiled/white/monotile,
@@ -2145,15 +2137,6 @@
 /obj/item/reagent_containers/glass/bucket,
 /turf/simulated/floor/tiled/monotile,
 /area/space)
-"ka" = (
-/obj/structure/catwalk,
-/obj/structure/railing/mapped{
-	dir = 8;
-	icon_state = "railing0-1"
-	},
-/obj/structure/railing/mapped,
-/turf/space,
-/area/space)
 "kj" = (
 /obj/structure/table/woodentable/mahogany,
 /turf/simulated/floor/wood/walnut,
@@ -2245,18 +2228,6 @@
 	dir = 4
 	},
 /turf/simulated/floor/tiled/old_cargo,
-/area/space)
-"nj" = (
-/obj/structure/catwalk,
-/obj/structure/railing/mapped{
-	dir = 1;
-	icon_state = "railing0-1"
-	},
-/obj/structure/railing/mapped{
-	dir = 8;
-	icon_state = "railing0-1"
-	},
-/turf/space,
 /area/space)
 "nk" = (
 /obj/structure/window/reinforced/polarized{
@@ -2381,24 +2352,16 @@
 /turf/simulated/open,
 /area/space)
 "pH" = (
-/obj/structure/catwalk,
-/obj/structure/railing/mapped{
-	dir = 4;
-	icon_state = "railing0-1"
+/obj/structure/bed/sofa/r/brown{
+	dir = 4
 	},
-/obj/structure/railing/mapped{
-	dir = 1;
-	icon_state = "railing0-1"
-	},
-/turf/space,
+/turf/simulated/floor/carpet/green,
 /area/space)
 "pS" = (
-/obj/structure/cable/yellow{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
+/obj/structure/bed/sofa/l/brown{
+	dir = 4
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/green,
 /area/space)
 "qz" = (
 /obj/structure/window/reinforced{
@@ -2654,12 +2617,10 @@
 /turf/simulated/floor/tiled/white,
 /area/space)
 "xY" = (
-/obj/structure/catwalk,
-/obj/structure/railing/mapped{
-	dir = 4;
-	icon_state = "railing0-1"
+/obj/structure/bed/sofa/m/brown{
+	dir = 4
 	},
-/turf/space,
+/turf/simulated/floor/carpet/green,
 /area/space)
 "yN" = (
 /obj/structure/table/marble,
@@ -2907,12 +2868,10 @@
 /turf/simulated/floor/tiled/white,
 /area/space)
 "Il" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/obj/structure/bed/chair/padded/green{
+	dir = 8
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/wood/walnut,
 /area/space)
 "In" = (
 /obj/structure/cable/green{
@@ -3049,12 +3008,10 @@
 /turf/simulated/floor/wood/walnut,
 /area/space)
 "Nw" = (
-/obj/structure/cable/yellow{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+/obj/structure/bed/chair/padded/green{
+	dir = 4
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/wood/walnut,
 /area/space)
 "NU" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -3196,14 +3153,6 @@
 	dir = 4
 	},
 /turf/simulated/floor/tiled/white,
-/area/space)
-"TH" = (
-/obj/structure/catwalk,
-/obj/structure/railing/mapped{
-	dir = 1;
-	icon_state = "railing0-1"
-	},
-/turf/space,
 /area/space)
 "TK" = (
 /obj/structure/table/rack{
@@ -3373,18 +3322,6 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/tiled/techfloor,
-/area/space)
-"Ww" = (
-/obj/structure/catwalk,
-/obj/structure/railing/mapped{
-	dir = 8;
-	icon_state = "railing0-1"
-	},
-/obj/structure/railing/mapped{
-	dir = 1;
-	icon_state = "railing0-1"
-	},
-/turf/space,
 /area/space)
 "Wx" = (
 /obj/machinery/disposal,
@@ -8546,9 +8483,9 @@ TM
 aa
 aa
 aa
-TM
-Rz
-Rz
+aa
+aa
+aa
 dG
 dG
 dG
@@ -8668,9 +8605,9 @@ aa
 aa
 aa
 aa
-TM
-pS
-Il
+aa
+aa
+aa
 dG
 dG
 dG
@@ -8790,9 +8727,9 @@ aa
 aa
 aa
 aa
-TM
-bl
-Rz
+aa
+aa
+aa
 dG
 dG
 dG
@@ -8912,9 +8849,6 @@ aa
 aa
 aa
 aa
-TM
-bl
-vz
 aa
 aa
 aa
@@ -8927,15 +8861,18 @@ aa
 aa
 aa
 aa
-Ww
-cI
-cI
-cI
-cI
-cI
-cI
-cI
-cI
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 TM
 aa
 aa
@@ -9033,23 +8970,23 @@ aa
 aa
 aa
 aa
-nj
-cI
-bl
-vz
-cI
-cI
-cI
-cI
-cI
-cI
-cI
 aa
 aa
 aa
 aa
-Ww
-vz
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 zz
 zz
 zz
@@ -9057,7 +8994,7 @@ zz
 zz
 zz
 zz
-vz
+aa
 aa
 aa
 aa
@@ -9155,22 +9092,22 @@ aa
 aa
 aa
 aa
-TH
-zz
-zz
-zz
-zz
-zz
-zz
-zz
-zz
-zz
-vz
-cI
-cI
 aa
-cI
-vz
+zz
+zz
+zz
+zz
+zz
+zz
+zz
+zz
+zz
+aa
+aa
+aa
+aa
+aa
+aa
 YF
 zz
 zz
@@ -9179,7 +9116,7 @@ zz
 zz
 zz
 zz
-vz
+aa
 aa
 aa
 aa
@@ -9277,7 +9214,7 @@ aa
 aa
 aa
 aa
-TH
+aa
 zz
 zz
 zz
@@ -9398,8 +9335,8 @@ aa
 aa
 aa
 aa
-Ww
-vz
+aa
+aa
 zz
 zz
 zz
@@ -9518,9 +9455,9 @@ aa
 aa
 aa
 aa
-vz
-cI
-vz
+aa
+aa
+aa
 zz
 zz
 zz
@@ -9667,7 +9604,7 @@ zz
 zz
 zz
 zz
-vz
+aa
 aa
 aa
 aa
@@ -9726,12 +9663,29 @@ aa
 aa
 aa
 aa
-cI
-cI
-cI
-cI
-cI
-ka
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+vz
+vz
+vz
+vz
+vz
+vz
+vz
+vz
+vz
+vz
+vz
+vz
+vz
+bl
 aa
 aa
 aa
@@ -9744,24 +9698,7 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-EH
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+vz
 YF
 zz
 zz
@@ -9789,7 +9726,7 @@ zz
 zz
 zz
 zz
-vz
+aa
 aa
 aa
 aa
@@ -9845,10 +9782,10 @@ aa
 TM
 aa
 aa
-cI
-cI
-cI
-vz
+aa
+aa
+aa
+aa
 zz
 zz
 zz
@@ -9966,8 +9903,8 @@ aa
 aa
 TM
 aa
-vz
-vz
+aa
+aa
 zz
 zz
 zz
@@ -10088,7 +10025,7 @@ aa
 aa
 TM
 aa
-vz
+aa
 zz
 zz
 zz
@@ -10210,7 +10147,7 @@ aa
 aa
 TM
 aa
-vz
+aa
 YF
 zz
 lD
@@ -10236,9 +10173,9 @@ hc
 hc
 Xb
 zX
-Tu
-Tu
-Tu
+pH
+xY
+pS
 rQ
 Qd
 ML
@@ -10399,7 +10336,7 @@ nJ
 nJ
 zz
 YF
-vz
+aa
 aa
 aa
 aa
@@ -10481,9 +10418,9 @@ fh
 SD
 zX
 wD
-wD
-wD
-wD
+Nw
+Nw
+Nw
 wD
 wD
 wD
@@ -10521,7 +10458,7 @@ hc
 nJ
 zz
 zz
-vz
+aa
 aa
 aa
 aa
@@ -10602,7 +10539,7 @@ hc
 hc
 wV
 zX
-wD
+ex
 kj
 kj
 kj
@@ -10725,9 +10662,9 @@ ou
 Bo
 zX
 wD
-wD
-wD
-wD
+Il
+Il
+Il
 wD
 wD
 wD
@@ -11009,7 +10946,7 @@ hc
 nJ
 zz
 zz
-vz
+aa
 aa
 aa
 aa
@@ -11131,7 +11068,7 @@ nJ
 nJ
 zz
 YF
-vz
+aa
 aa
 aa
 aa
@@ -11186,7 +11123,7 @@ aa
 aa
 TM
 aa
-vz
+aa
 YF
 zz
 lD
@@ -11308,7 +11245,7 @@ aa
 aa
 TM
 aa
-vz
+aa
 zz
 zz
 zz
@@ -11430,8 +11367,8 @@ aa
 aa
 TM
 aa
-vz
-vz
+aa
+aa
 zz
 zz
 zz
@@ -11553,19 +11490,19 @@ aa
 TM
 aa
 aa
-xY
-xY
-xY
-vz
+aa
+aa
+aa
+aa
 zz
 zz
 zz
 zz
-vz
-xY
-xY
-vz
-vz
+aa
+aa
+aa
+aa
+aa
 zz
 zz
 zz
@@ -11678,12 +11615,12 @@ aa
 aa
 aa
 aa
-xY
-xY
-xY
-xY
-xY
-ex
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -11741,7 +11678,7 @@ zz
 zz
 zz
 zz
-vz
+aa
 aa
 aa
 aa
@@ -11836,8 +11773,8 @@ aa
 aa
 aa
 aa
-vz
-vz
+aa
+aa
 zz
 zz
 lD
@@ -11863,7 +11800,7 @@ zz
 zz
 zz
 zz
-vz
+aa
 aa
 aa
 aa
@@ -11958,9 +11895,9 @@ aa
 aa
 aa
 aa
-vz
-xY
-vz
+aa
+aa
+aa
 zz
 zz
 zz
@@ -12082,8 +12019,8 @@ aa
 aa
 aa
 aa
-pH
-vz
+aa
+aa
 zz
 zz
 zz
@@ -12205,7 +12142,7 @@ aa
 aa
 aa
 aa
-TH
+aa
 zz
 zz
 zz
@@ -12327,7 +12264,7 @@ aa
 aa
 aa
 aa
-TH
+aa
 zz
 zz
 zz
@@ -12337,12 +12274,12 @@ zz
 zz
 zz
 zz
-vz
-xY
-xY
-xY
-xY
-vz
+aa
+aa
+aa
+aa
+aa
+aa
 YF
 zz
 zz
@@ -12351,7 +12288,7 @@ zz
 zz
 zz
 zz
-vz
+aa
 aa
 aa
 aa
@@ -12449,23 +12386,23 @@ aa
 aa
 aa
 aa
-pH
-xY
-bl
-vz
-xY
-xY
-xY
-xY
-xY
-xY
-ex
 aa
 aa
 aa
 aa
-pH
-vz
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 zz
 zz
 zz
@@ -12473,7 +12410,7 @@ zz
 zz
 zz
 zz
-vz
+aa
 aa
 aa
 aa
@@ -12572,9 +12509,6 @@ aa
 aa
 aa
 aa
-TM
-bl
-vz
 aa
 aa
 aa
@@ -12587,15 +12521,18 @@ aa
 aa
 aa
 aa
-pH
-xY
-xY
-xY
-xY
-xY
-xY
-xY
-xY
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 TM
 aa
 aa
@@ -12694,9 +12631,9 @@ aa
 aa
 aa
 aa
-TM
-bl
-Rz
+aa
+aa
+aa
 dG
 dG
 dG
@@ -12816,9 +12753,9 @@ aa
 aa
 aa
 aa
-TM
-Nw
-Il
+aa
+aa
+aa
 dG
 dG
 dG
@@ -12938,9 +12875,9 @@ aa
 aa
 aa
 aa
-TM
-Rz
-Rz
+aa
+aa
+aa
 dG
 dG
 dG

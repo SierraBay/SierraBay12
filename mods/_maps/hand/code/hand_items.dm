@@ -64,55 +64,17 @@
  * ========
  */
 
-/obj/item/clothing/under/solgov/utility/fleet/officer/pilot1/away_solpatrol
+/obj/item/clothing/under/alliance/vacsuit/hand/guardsman
+	accessories = list(/obj/item/clothing/accessory/medal/fa/guardsman)
+
+/obj/item/clothing/under/solgov/utility/fleet/command/pilot
 	accessories = list(
 		/obj/item/clothing/accessory/solgov/specialty/pilot,
 		/obj/item/clothing/accessory/solgov/fleet_patch/fifth
 	)
 
-/obj/item/clothing/under/solgov/utility/fleet/officer/command/commander/away_solpatrol
-	accessories = list(
-		/obj/item/clothing/accessory/solgov/department/command/fleet,
-		/obj/item/clothing/accessory/solgov/specialty/pilot,
-		/obj/item/clothing/accessory/solgov/fleet_patch/fifth
-	)
-
-/obj/item/clothing/under/solgov/utility/fleet/engineering/away_solpatrol
-	accessories = list(
-		/obj/item/clothing/accessory/solgov/department/engineering/fleet,
-		/obj/item/clothing/accessory/solgov/fleet_patch/fifth
-	)
-
-/obj/item/clothing/under/solgov/utility/fleet/medical/away_solpatrol
+/obj/item/clothing/under/solgov/utility/fleet/medical/hand
 	accessories = list(
 		/obj/item/clothing/accessory/solgov/department/medical/fleet,
 		/obj/item/clothing/accessory/solgov/fleet_patch/fifth
 	)
-
-/obj/item/clothing/under/solgov/utility/fleet/away_solpatrol
-	accessories = list(
-		/obj/item/clothing/accessory/solgov/department/command/fleet,
-		/obj/item/clothing/accessory/solgov/fleet_patch/fifth
-	)
-
-/obj/item/clothing/suit/storage/solgov/service/fleet/command/away_solpatrol
-	accessories = list(
-		/obj/item/clothing/accessory/solgov/rank/fleet/officer/o6,
-		/obj/item/clothing/accessory/solgov/specialty/officer
-	)
-
-/obj/item/storage/belt/holster/security/tactical/away_solpatrol/New()
-	..()
-	new /obj/item/gun/projectile/pistol/m22f(src)
-	new /obj/item/ammo_magazine/pistol/double(src)
-	new /obj/item/ammo_magazine/pistol/double(src)
-
-/obj/item/storage/belt/holster/general/away_solpatrol/New()
-	..()
-	new /obj/item/modular_computer/tablet/preset/custom_loadout/advanced(src)
-	new /obj/item/gun/projectile/revolver/medium(src)
-
-/obj/item/clothing/accessory/armband/bluegold/away_solpatrol
-	name = "SCG armband"
-	desc = "An armband, worn by the crew to display which country they represent. This one is blue and gold."
-	icon_state = "solblue"
