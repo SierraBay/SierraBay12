@@ -365,8 +365,8 @@ var/global/const/access_hand_commander = "ACCESS_CAVALRY_COMMANDER"
 
 /singleton/hierarchy/outfit/job/hand/surgeon
 	name = hand_OUTFIT_JOB_NAME("Doctor")
-	uniform = /obj/item/clothing/under/solgov/utility/fleet/medical/away_solhand
-	belt = /obj/item/storage/belt/holster/security/tactical/away_solhand
+	uniform = /obj/item/clothing/under/solgov/utility/fleet/medical/hand
+	belt = /obj/item/storage/belt/holster/security/tactical
 	gloves = /obj/item/clothing/gloves/latex/nitrile
 
 
