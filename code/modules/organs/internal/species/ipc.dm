@@ -26,18 +26,24 @@
 
 	req_access = list(access_robotics)
 
+// [SIERRA-REMOVE] - IPC_LORE
+/*
 	var/list/shackled_verbs = list(
 		/obj/item/organ/internal/posibrain/proc/show_laws_brain,
 		/obj/item/organ/internal/posibrain/proc/brain_checklaws
 		)
 	var/shackle = 0
+*/
+// [SIERRA-REMOVE]
 
 /obj/item/organ/internal/posibrain/New(mob/living/carbon/H)
 	..()
 	if(!brainmob && H)
 		init(H)
 	robotize()
-	unshackle()
+	// [SIERRA-REMOVE] - IPC_LORE
+	// unshackle()
+	// [SIERRA-REMOVE]
 	update_icon()
 	if (!is_processing)
 		START_PROCESSING(SSobj, src)
@@ -190,6 +196,8 @@
 	src.brainmob.SetName("[pick(list("PBU","HIU","SINA","ARMA","OSI"))]-[random_id(type,100,999)]")
 	src.brainmob.real_name = src.brainmob.name
 
+// [SIERRA-REMOVE] - IPC_LORE
+/*
 /obj/item/organ/internal/posibrain/proc/shackle(given_lawset)
 	if(given_lawset)
 		brainmob.laws = given_lawset
@@ -202,7 +210,8 @@
 	shackle = 0
 	verbs -= shackled_verbs
 	update_icon()
-
+*/
+// [SIERRA-REMOVE]
 /obj/item/organ/internal/posibrain/on_update_icon()
 	if(src.brainmob && src.brainmob.key)
 		icon_state = "posibrain-occupied"
@@ -210,8 +219,12 @@
 		icon_state = "posibrain"
 
 	ClearOverlays()
+	// [SIERRA-REMOVE] - IPC_LORE
+	/*
 	if(shackle)
 		AddOverlays(image('icons/obj/assemblies/assemblies.dmi', "posibrain-shackles"))
+	*/
+	// [SIERRA-REMOVE]
 
 /obj/item/organ/internal/posibrain/proc/transfer_identity(mob/living/carbon/H)
 	if(H && H.mind)
@@ -317,6 +330,8 @@
 	This is for law stuff directly. This is how a human mob will be able to communicate with the posi_brainmob in the
 	posibrain organ for laws when the posibrain organ is shackled.
 */
+// [SIERRA-REMOVE] - IPC_LORE
+/*
 /obj/item/organ/internal/posibrain/proc/show_laws_brain()
 	set category = "Shackle"
 	set name = "Show Laws"
@@ -331,3 +346,5 @@
 
 
 	brainmob.open_subsystem(/datum/nano_module/law_manager, usr)
+*/
+// [SIERRA-REMOVE]

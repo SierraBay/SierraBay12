@@ -1,0 +1,9 @@
+#ifndef MODPACK_IPC_LORE
+#define MODPACK_IPC_LORE
+
+#include "_ipc_lore.dm"
+#include "code/culture.dm"
+#include "code/machine.dm"
+#include "code/cultures_ipc.dm"
+
+#endif

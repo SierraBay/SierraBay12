@@ -3,20 +3,12 @@
 #define TAG_FACTION   "faction"
 #define TAG_RELIGION  "religion"
 
-// [SIERRA-EDIT] - EXPANDED_CULTURE_DESCRIPTOR - Перевод дефайнов
-//#define ALL_CULTURAL_TAGS list( \ // SIERRA-EDIT - ORIGINAL
-//	TAG_CULTURE =   "Culture", \ // SIERRA-EDIT - ORIGINAL
-//	TAG_HOMEWORLD = "Residence", \ // SIERRA-EDIT - ORIGINAL
-//	TAG_FACTION =   "Faction", \ // SIERRA-EDIT - ORIGINAL
-//	TAG_RELIGION =  "Beliefs" \ // SIERRA-EDIT - ORIGINAL
-//	) // SIERRA-EDIT - ORIGINAL
 #define ALL_CULTURAL_TAGS list( \
-	TAG_CULTURE =   "Культура", \
-	TAG_HOMEWORLD = "Место жительства", \
-	TAG_FACTION =   "Фракция", \
-	TAG_RELIGION =  "Вера" \
+	TAG_CULTURE =   "Culture", \
+	TAG_HOMEWORLD = "Residence", \
+	TAG_FACTION =   "Faction", \
+	TAG_RELIGION =  "Beliefs" \
 	)
-// [SIERRA-EDIT]
 
 // Cultural IDs.
 #define FACTION_SOL_CENTRAL    "Sol Central Government"
@@ -153,9 +145,13 @@
 #define RELIGION_VOX           "Auralis Reverence"
 
 // IPC cultures.
+// [SIERRA-REMOVE] - IPC_LORE
+/*
 #define CULTURE_POSITRONICS_GEN1   "First Generation"
 #define CULTURE_POSITRONICS_GEN2   "Second Generation"
 #define CULTURE_POSITRONICS_GEN3   "Third Generation"
+*/
+// [SIERRA-REMOVE]
 
 // Diona cultures.
 #define CULTURE_DIONA          "Diona Chorus"

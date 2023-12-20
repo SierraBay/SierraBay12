@@ -7,7 +7,7 @@
 		. += "<b>Доступные языки:</b> [english_list(secondary_langs)]."
 	if(!isnull(economic_power))
 		. += "<b>Экономическая сила:</b> [round(100 * economic_power)]%"
-		
+
 #define COLLAPSED_CULTURE_BLURB_LEN 48
 /singleton/cultural_info/get_description(header, append, verbose = TRUE)
 	var/list/dat = list()
