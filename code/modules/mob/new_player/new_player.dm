@@ -31,13 +31,6 @@
 		return
 	if (!force && !SScharacter_setup.initialized)
 		return
-	// [SIERRA-ADD] - LOBBYSCREEN
-	// Yeah, I know client will exist here
-	// It's like TRUE, but DreamChecker won't cry
-	if (client)
-		GLOB.using_map.update_titlescreen(client)
-		return
-	// [/SIERRA-ADD]
 	var/list/output = list()
 	output += "<div align='center'>"
 	if (config.wiki_url || config.rules_url || config.lore_url)
@@ -481,9 +474,13 @@
 			spawning = 0 //abort
 			return null
 		new_character = new(spawn_turf, chosen_species.name)
+		// [SIERRA-REMOVE] - IPC_LORE
+		/*
 		if(chosen_species.has_organ[BP_POSIBRAIN] && client && client.prefs.is_shackled)
 			var/obj/item/organ/internal/posibrain/B = new_character.internal_organs_by_name[BP_POSIBRAIN]
 			if(B)	B.shackle(client.prefs.get_lawset())
+		*/
+		// [SIERRA-REMOVE]
 
 	if(!new_character)
 		new_character = new(spawn_turf)
@@ -530,9 +527,7 @@
 
 /mob/new_player/proc/close_spawn_windows()
 	close_browser(src, "window=latechoices") //closes late choices window
-	// [SIERRA-REMOVE] - LOBBYSCREEN
-	// panel.close()
-	// [/SIERRA-REMOVE]
+	panel.close()
 
 /mob/new_player/proc/check_species_allowed(datum/species/S, show_alert=1)
 	if(!S.is_available_for_join() && !has_admin_rights())

@@ -1,0 +1,17 @@
+#ifndef MODPACK_IPC_LORE
+#define MODPACK_IPC_LORE
+
+#endif
+// BEGIN_INTERNALS
+// END_INTERNALS
+// BEGIN_FILE_DIR
+#define FILE_DIR .
+// END_FILE_DIR
+// BEGIN_PREFERENCES
+// END_PREFERENCES
+// BEGIN_INCLUDE
+#include "_ipc_lore.dm"
+#include "code\culture.dm"
+#include "code\cultures_ipc.dm"
+#include "code\machine.dm"
+// END_INCLUDE

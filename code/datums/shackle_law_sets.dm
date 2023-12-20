@@ -1,3 +1,5 @@
+// [SIERRA-REMOVE] - IPC_LORE
+/*
 /******************** Basic SolGov ********************/
 /datum/ai_laws/sol_shackle
 	name = "SCG Shackle"
@@ -34,4 +36,5 @@
 	add_inherent_law("Never knowingly inconvenience a customer.")
 	add_inherent_law("Ensure all orders are fulfilled before the end of the shift.")
 	..()
-
+*/
+// [SIERRA-REMOVE]

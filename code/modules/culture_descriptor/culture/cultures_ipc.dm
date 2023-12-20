@@ -1,3 +1,5 @@
+// [SIERRA-REMOVE] - IPC_LORE
+/*
 /singleton/cultural_info/culture/ipc
 	name = CULTURE_POSITRONICS_GEN1
 	description = "Compared to modern positronics, First Generation IPCs are simplistic, inflexible, and failure-prone. \
@@ -42,3 +44,5 @@
 	has resulted in their being adopted as a gradual replacement for the less “reliable” second generation positronics \
 	by many less ethically inclined organizations."
 	economic_power = 0.5
+*/
+// [SIERRA-REMOVE]

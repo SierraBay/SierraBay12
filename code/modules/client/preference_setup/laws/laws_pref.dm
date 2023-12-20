@@ -1,3 +1,5 @@
+// [SIERRA-REMOVE] - IPC_LORE
+/*
 /datum/preferences
 	var/list/laws = list()
 	var/is_shackled = FALSE
@@ -89,3 +91,5 @@
 				pref.laws += sanitize_text("[law.law]", default="")
 		return TOPIC_REFRESH
 	return ..()
+*/
+// [SIERRA-REMOVE]
