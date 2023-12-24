@@ -37,15 +37,16 @@
 /datum/donator_info
 	var/donator = FALSE
 	var/donation_type = DONATION_TIER_NONE
-	var/list/items = new
 
 /datum/donator_info/proc/on_donation_tier_loaded(client/C)
 	return
 
-/datum/donator_info/proc/get_decorated_ooc_name(client/C)
+/datum/donator_info/proc/get_decorated_message(client/C, message)
 	if(!SScharacter_setup.initialized || isnull(donation_type))
-		return C.key
-	return "<span class='[donation_tier_to_css_class(donation_type)]'>[C.key]</span>"
+		return message
+	if (C.get_preference_value(/datum/client_preference/ooc_donation_color) != GLOB.PREF_SHOW)
+		return message
+	return "<span class='[donation_tier_to_css_class(donation_type)]'>[message]</span>"
 
 /datum/donator_info/proc/get_full_donation_tier()
 	return donation_tier_decorated(donation_type)
@@ -63,6 +64,3 @@
 			return FALSE
 
 	CRASH("This code should not be accessible")
-
-/datum/donator_info/proc/has_item(type)
-	return "[type]" in items
