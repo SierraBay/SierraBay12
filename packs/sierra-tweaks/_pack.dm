@@ -16,6 +16,7 @@
 #include "mob\stat.dm"
 
 // NTNet
+#include "machinery\NTNet\NTNet-items.dm"
 #include "machinery\NTNet\NTNet-core.dm"
 
 // Objects

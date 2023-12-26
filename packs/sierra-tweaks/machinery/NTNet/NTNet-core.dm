@@ -6,6 +6,9 @@ GLOBAL_LIST_INIT(NTNet_machines, list())
 /obj/machinery
 	var/NTNet_id
 
+/obj/machinery/door/airlock
+	var/t_ntnet_id
+
 //generating ID
 /obj/machinery/proc/get_new_ntnet_id(A)
 	NTNet_id = A + num2text(rand(100,999))
