@@ -27,8 +27,8 @@ NTNet
 
 ### Изменения *кор кода*
 
-- `code\__defines\items_clothing.dm`
-- `code\modules\mob\living\carbon\human\examine.dm`
+- `code/__defines/items_clothing.dm`
+- `code/modules/mob/living/carbon/human/examine.dm`
 <!--
   Если вы редактировали какие-либо процедуры или переменные в кор коде,
   они должны быть указаны здесь.
