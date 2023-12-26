@@ -218,9 +218,9 @@
 #define HUD_SECURITY FLAG(1)
 #define HUD_MEDICAL FLAG(2)
 #define HUD_JANITOR FLAG(3)
-// [SIERRA-EDIT] - NTNet gimmics
+// [SIERRA-ADD] - NTNet gimmics
 #define HUD_IT FLAG(4)
-// [/SIERRA-EDIT]
+// [/SIERRA-ADD]
 
 /**
 * flags for /mob/proc/equip_to_slot_if_possible
