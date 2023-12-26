@@ -145,7 +145,7 @@
 										<td class='id_airlocksbugged'>[i.name]
 										<td class='id_airlocksbugged'>[i.loc] ([<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[i.x];Y=[i.y];Z=[i.z]'>[where]</a>(i)])"}
 
-	if(bugged_airlocks.len)
+	if(bugged_airlocks.length)
 		data += {"<div class = 'id_airlocksbugged'>
 					<center>
 						<h2>
@@ -163,7 +163,7 @@
 	else
 		data += "<div class = 'airlocksid_stable'>Airlocks ID system stable</div>"
 	data += "<center><h1>All airlocks IDs:</h1></center><hr>"
-	if(IDS.len)
+	if(IDS.length)
 		data += "<div align='center'>[IDS_table]<tr>[IDS.Join("<tr>")]</div>"
 	else
 		data += "<div class = 'id_airlocksbugged'>ERROR CODE 523 (Origin Is Unreachable): Airlocks isn't initialized or not found.</div>"
