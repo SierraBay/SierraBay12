@@ -1,13 +1,9 @@
 #include "terminal\terminal-core.dm"
 GLOBAL_LIST_INIT(NTNet_machines, list())
 
-
 // modify core
 /obj/machinery
 	var/NTNet_id
-
-/obj/machinery/door/airlock
-	var/t_ntnet_id
 
 //generating ID
 /obj/machinery/proc/get_new_ntnet_id(A)
