@@ -21,3 +21,22 @@
 				s.set_up(5, 1, src)
 				s.start()
 	return ..()
+
+/obj/machinery/door/airlock/examine(mob/user)
+	. = ..()
+	if(hasHUD(user, HUD_IT) && arePowerSystemsOn())
+		to_chat(user, SPAN_INFO(SPAN_ITALIC("You may notice a small hologram that says: [NTNet_id]")))
+
+/obj/item/modular_computer/examine(mob/user)
+	. = ..()
+	if(hasHUD(user, HUD_IT))
+		if(network_card && network_card.check_functionality() && enabled)
+			to_chat(user, SPAN_INFO(SPAN_ITALIC("You may notice a small hologram that says: [network_card.get_network_tag()].")))
+
+/obj/machinery/computer/modular/examine(mob/user)
+	. = ..()
+	if(hasHUD(user, HUD_IT))
+		var/datum/extension/interactive/ntos/os = get_extension(src, /datum/extension/interactive/ntos)
+		var/obj/item/stock_parts/computer/network_card/network_card = os.get_component(PART_NETWORK)
+		if(istype(network_card) && network_card.check_functionality() && os.on)
+			to_chat(user, SPAN_INFO(SPAN_ITALIC("You may notice a small hologram that says: [network_card.get_network_tag()].")))
