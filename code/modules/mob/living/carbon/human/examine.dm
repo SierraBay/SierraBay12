@@ -358,8 +358,8 @@
 			if (A.hud_type & hudtype)
 				AUG = A
 				break
-		// [SIERRA-EDIT] - NTNet
-//		return ((istype(G) && ((G.hud_type & hudtype) || (G.hud && (G.hud.hud_type & hudtype)))) && G.check_access(ID)) || AUG?.active && AUG.check_access(ID) // SIERRA-EDIT - ORIGINAL
+		// [SIERRA-EDIT] - NTNET
+		// return ((istype(G) && ((G.hud_type & hudtype) || (G.hud && (G.hud.hud_type & hudtype)))) && G.check_access(ID)) || AUG?.active && AUG.check_access(ID) // SIERRA-EDIT - ORIGINAL
 		return ((istype(G) && ((G.hud_type & hudtype) || (G.hud && (G.hud.hud_type & hudtype)))) && G.check_access(ID) && (G.toggleable ? G.active : TRUE)) || AUG?.active && AUG.check_access(ID)
 		// [/SIERRA-EDIT]
 	else if(istype(M, /mob/living/silicon/robot))
