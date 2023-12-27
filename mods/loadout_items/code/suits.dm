@@ -14,8 +14,6 @@
 	icon = 'maps/sierra/icons/obj/clothing/obj_suit.dmi'
 	item_icons = list(slot_wear_suit_str = 'maps/sierra/icons/mob/onmob/onmob_suit.dmi')
 	icon_state = "the_jacket"
-//	icon_open = "the_jacket_open"
-//	icon_closed = "the_jacket"
 
 /obj/item/clothing/suit/storage/leon_jacket
 	name = "patterned leather jacket"
