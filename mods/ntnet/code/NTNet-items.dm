@@ -39,15 +39,6 @@
 		ui.open()
 		ui.set_auto_update(1)
 
-/obj/machinery/door/airlock/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if (src.isElectrified())
-		if (istype(mover, /obj/item))
-			var/obj/item/i = mover
-			if (i.matter && (MATERIAL_STEEL in i.matter) && i.matter[MATERIAL_STEEL] > 0)
-				var/datum/effect/spark_spread/s = new /datum/effect/spark_spread
-				s.set_up(5, 1, src)
-				s.start()
-	return ..()
 
 /obj/machinery/door/airlock/examine(mob/user)
 	. = ..()
