@@ -218,7 +218,7 @@
 #define HUD_SECURITY FLAG(1)
 #define HUD_MEDICAL FLAG(2)
 #define HUD_JANITOR FLAG(3)
-// [SIERRA-ADD] - NTNet gimmics
+// [SIERRA-ADD] - NTNET - NTNet gimmics
 #define HUD_IT FLAG(4)
 // [/SIERRA-ADD]
 
