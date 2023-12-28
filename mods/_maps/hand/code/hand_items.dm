@@ -41,3 +41,17 @@
 		/obj/item/clothing/accessory/solgov/department/medical/fleet,
 		/obj/item/clothing/accessory/solgov/fleet_patch/fifth
 	)
+
+/obj/item/clothing/suit/bio_suit/anomaly/lethal
+	name = "cheap anomaly suit"
+	desc = "A cheap suit that should protect against exotic alien energies and biological contamination."
+	icon = 'mods/_maps/hand/icons/obj/obj_hand.dmi'
+	item_icons = list(slot_wear_suit_str = 'mods/_maps/hand/icons/mob/onmob_hand.dmi')
+	icon_state = "lethal_suit"
+
+/obj/item/clothing/head/bio_hood/anomaly/lethal
+	name = "cheap anomaly mask"
+	desc = "A hood that should protect the head and face from exotic alien energies and biological contamination."
+	icon = 'mods/_maps/hand/icons/obj/obj_hand.dmi'
+	item_icons = list(slot_head_str = 'mods/_maps/hand/icons/mob/onmob_hand.dmi')
+	icon_state = "lethal_helm"
