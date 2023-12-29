@@ -4,19 +4,4 @@
 #include "_adherent_discharge.dm"
 #include "code/adherent.dm"
 #include "code/human_powers.dm"
-
-
-
 #endif
-// BEGIN_INTERNALS
-// END_INTERNALS
-// BEGIN_FILE_DIR
-#define FILE_DIR .
-// END_FILE_DIR
-// BEGIN_PREFERENCES
-// END_PREFERENCES
-// BEGIN_INCLUDE
-#include "_adherent_discharge.dm"
-#include "code\adherent.dm"
-#include "code\human_powers.dm"
-// END_INCLUDE
