@@ -268,6 +268,7 @@
 /area/security/opscheck
 	name = "First Deck - RND - Security Checkpoint"
 	icon_state = "checkpoint"
+	req_access = list(access_security)
 
 /* MEDBAY AREAS
  * ============
