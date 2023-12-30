@@ -49,6 +49,30 @@
 /obj/machinery/suit_cycler/pilot
 	req_access = list(access_explorer) //because unathi version of expeditonary suit it shit
 
+/obj/machinery/suit_storage_unit/security/Initialize()
+	. = ..()
+	ssu_color = "#cc0000"
+
+/obj/machinery/suit_storage_unit/mining/Initialize()
+	. = ..()
+	ssu_color = "#b88a3b"
+
+/obj/machinery/suit_storage_unit/medical/Initialize()
+	. = ..()
+	ssu_color = "#55aaaa"
+
+/obj/machinery/suit_storage_unit/engineering/Initialize()
+	. = ..()
+	ssu_color = "#ffbf00"
+
+/obj/machinery/suit_storage_unit/atmos/Initialize()
+	. = ..()
+	ssu_color =	"#00cccc"
+
+/obj/machinery/suit_storage_unit/science/Initialize()
+	. = ..()
+	ssu_color =	"#990000"
+
 /obj/machinery/suit_storage_unit/explorer
 	name = "Exploration Voidsuit Storage Unit"
 	suit = /obj/item/clothing/suit/space/void/exploration
@@ -58,7 +82,7 @@
 	mask = /obj/item/clothing/mask/gas/half
 	req_access = list(access_explorer)
 	islocked = 1
-
+	ssu_color = "#9966ff"
 
 /obj/machinery/suit_storage_unit/pilot
 	name = "Expeditionary Pilot Voidsuit Storage Unit"
@@ -69,9 +93,11 @@
 	mask = /obj/item/clothing/mask/breath
 	req_access = list(access_explorer, access_expedition_shuttle_helm)
 	islocked = 1
-
+	ssu_color =	"#990000"
 
 /obj/machinery/suit_storage_unit/standard_unit
+	icon_state = "industrial"
+	base_icon_state = "industrial"
 	islocked = 0
 
 /obj/machinery/photocopier/faxmachine/centcomm

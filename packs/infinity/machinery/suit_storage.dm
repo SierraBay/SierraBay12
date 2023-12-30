@@ -1,11 +1,16 @@
 /obj/machinery/suit_storage_unit
-	icon = 'packs/infinity/icons/obj/suitstorage.dmi'
-	icon_state = "ssu_classic"
-	var/base_icon_state = "ssu_classic"
-
+	icon = 'maps/sierra/icons/obj/suitstorage.dmi'
+	icon_state = "industrial"
+	var/base_icon_state = "industrial"
+	var/ssu_color = "color_overlay_colorable"
 
 /obj/machinery/suit_storage_unit/on_update_icon()
 	ClearOverlays()
+	if(ssu_color)
+		var/image/I = image(icon = icon, icon_state = "[base_icon_state]_colorable")
+		I.appearance_flags |= RESET_COLOR
+		I.color = ssu_color
+		AddOverlays(I)
 	//if things arent powered, these show anyways
 	if(panelopen)
 		AddOverlays(image(icon,"[base_icon_state]_panel"))
@@ -37,8 +42,3 @@
 				AddOverlays(overlay_image(icon,"[base_icon_state]_uv", plane = EFFECTS_ABOVE_LIGHTING_PLANE, layer = ABOVE_LIGHTING_LAYER))
 		else
 			AddOverlays(overlay_image(icon, "[base_icon_state]_ready", plane = EFFECTS_ABOVE_LIGHTING_PLANE, layer = ABOVE_LIGHTING_LAYER))
-
-/obj/machinery/suit_storage_unit/industrial
-	name = "industrial suit storage unit"
-	icon_state = "industrial"
-	base_icon_state = "industrial"
