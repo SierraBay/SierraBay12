@@ -49,17 +49,33 @@
 /obj/machinery/suit_cycler/pilot
 	req_access = list(access_explorer) //because unathi version of expeditonary suit it shit
 
-/obj/machinery/suit_storage_unit/security/Initialize()
-	. = ..()
+// Overrides
+
+/obj/machinery/suit_storage_unit/security
+	name = "security voidsuit storage unit"
+	suit= /obj/item/clothing/suit/space/void/security
+	helmet = /obj/item/clothing/head/helmet/space/void/security
+	boots = /obj/item/clothing/shoes/magboots
+	tank = /obj/item/tank/oxygen
+	mask = /obj/item/clothing/mask/breath
+	req_access = list(access_security)
+	islocked = 1
 	ssu_color = "#cc0000"
+
+/obj/machinery/suit_storage_unit/medical
+	name = "medical voidsuit storage unit"
+	suit= /obj/item/clothing/suit/space/void/medical
+	helmet = /obj/item/clothing/head/helmet/space/void/medical
+	boots = /obj/item/clothing/shoes/magboots
+	tank = /obj/item/tank/oxygen
+	mask = /obj/item/clothing/mask/breath
+	req_access = list(access_medical)
+	islocked = 1
+	ssu_color = "#55aaaa"
 
 /obj/machinery/suit_storage_unit/mining/Initialize()
 	. = ..()
 	ssu_color = "#b88a3b"
-
-/obj/machinery/suit_storage_unit/medical/Initialize()
-	. = ..()
-	ssu_color = "#55aaaa"
 
 /obj/machinery/suit_storage_unit/engineering/Initialize()
 	. = ..()
@@ -72,6 +88,12 @@
 /obj/machinery/suit_storage_unit/science/Initialize()
 	. = ..()
 	ssu_color =	"#990000"
+
+/obj/machinery/suit_storage_unit/security/sapper
+	name = "Sapper Voidsuit Storage Unit"
+	suit = /obj/item/clothing/suit/space/void/sapper
+	helmet = /obj/item/clothing/head/helmet/space/void/sapper
+	ssu_color = "#54654c"
 
 /obj/machinery/suit_storage_unit/explorer
 	name = "Exploration Voidsuit Storage Unit"
