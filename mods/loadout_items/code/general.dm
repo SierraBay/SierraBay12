@@ -22,7 +22,7 @@
 
 /obj/structure/towel
 	name = "big towel"
-	icon = 'packs/infinity/icons/obj/towels.dmi'
+	icon = 'mods/loadout_items/icons/towels.dmi'
 	icon_state = "beach_towel"
 	anchored = FALSE
 	var/rolled_towel = /obj/item/rolled_towel
@@ -119,7 +119,7 @@
 
 /obj/structure/towel/holo
 	name = "big holographic towel"
-	icon = 'packs/infinity/icons/obj/towels.dmi'
+	icon = 'mods/loadout_items/icons/towels.dmi'
 	icon_state = "beach_towel"
 	anchored = TRUE
 	rolled_towel = null
@@ -134,3 +134,81 @@
 /obj/structure/towel/holo/blue_stripped
 	name = "blue big towel"
 	icon_state = "bluestripp_beach"
+
+// Cards
+
+/obj/item/deck/compact
+	name = "compact deck of cards"
+	desc = "A deck of playing cards. Looks like this one hasn't numbers from two to five, and jokers."
+	icon_state = "deck"
+
+/obj/item/deck/compact/New()
+	..()
+
+	var/datum/playingcard/P
+	for(var/suit in list("spades", "clubs", "diamonds", "hearts"))
+
+		var/colour
+		if(suit == "spades" || suit == "clubs")
+			colour = "black_"
+		else
+			colour = "red_"
+
+		for(var/number in list("ace", "six", "seven", "eight", "nine", "ten"))
+			P = new()
+			P.name = "[number] of [suit]"
+			P.card_icon = "[colour]num"
+			P.back_icon = "card_back"
+			cards += P
+
+		for(var/number in list("jack", "queen", "king"))
+			P = new()
+			P.name = "[number] of [suit]"
+			P.card_icon = "[colour]col"
+			P.back_icon = "card_back"
+			cards += P
+
+// Zippo
+
+/obj/item/flame/lighter/zippo/fancy
+	name = "engraved zippo"
+	icon = 'mods/loadout_items/icons/lighters.dmi'
+	icon_state = "engraved"
+
+/obj/item/flame/lighter/zippo/fancy/gold
+	name = "golden zippo"
+	icon_state = "gold"
+
+/obj/item/flame/lighter/zippo/fancy/station
+	name = "13'th zippo "
+	icon_state = "13"
+
+/obj/item/flame/lighter/zippo/fancy/black
+	name = "cross zippo"
+	icon_state = "black"
+
+/obj/item/flame/lighter/zippo/fancy/blue
+	name = "blue zippo"
+	icon_state = "bluezippo"
+
+/obj/item/flame/lighter/zippo/fancy/red
+	name = "red-white zippo"
+	icon_state = "redzippo"
+
+/obj/item/flame/lighter/zippo/fancy/butterfly
+	name = "butterfly zippo"
+	icon_state = "butterzippo"
+
+/obj/item/flame/lighter/zippo/fancy/fancy
+	name = "flower zippo"
+	icon_state = "fancyzippo"
+
+/obj/item/flame/lighter/zippo/fancy/on_update_icon()
+	var/datum/extension/base_icon_state/bis = get_extension(src, /datum/extension/base_icon_state)
+
+	if(lit)
+		icon_state = "[bis.base_icon_state]_on"
+		item_state = "[bis.base_icon_state]_on"
+	else
+		icon_state = "[bis.base_icon_state]"
+		item_state = "[bis.base_icon_state]"
