@@ -83,13 +83,6 @@
 	display_name = "freelance press pass"
 	path = /obj/item/clothing/accessory/badge/press/independent
 
-// Holobadge
-
-/datum/gear/accessory/corpbadge
-	display_name = "investigator holobadge (IAA)"
-	path = /obj/item/clothing/accessory/badge/holo/investigator
-	allowed_roles = list(/datum/job/iaa)
-
 /datum/gear/accessory/scarf_fancy
 	display_name = "special scarfs selection"
 	path = /obj/item/clothing/accessory/scarf/fancy
