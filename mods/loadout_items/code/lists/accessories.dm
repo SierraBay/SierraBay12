@@ -58,3 +58,17 @@
 	path = /obj/item/clothing/accessory/choker
 	sort_category = "Clothing Pieces"
 	flags = GEAR_HAS_COLOR_SELECTION
+
+/datum/gear/accessory/collar
+	display_name = "collar selection"
+	path = /obj/item/clothing/accessory/necklace/collar
+
+/datum/gear/accessory/collar/New()
+	..()
+	var/collar = list()
+	collar["gold collar"] = /obj/item/clothing/accessory/necklace/collar/gold
+	collar["bell collar"] = /obj/item/clothing/accessory/necklace/collar/bell
+	collar["spike collar"] = /obj/item/clothing/accessory/necklace/collar/spike
+	collar["pink collar"] = /obj/item/clothing/accessory/necklace/collar/pink
+	collar["holo collar"] = /obj/item/clothing/accessory/necklace/collar/holo
+	gear_tweaks += new/datum/gear_tweak/path(collar)

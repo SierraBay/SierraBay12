@@ -20,7 +20,6 @@
 #include "clothing\head\helmet.dm"
 #include "clothing\accessories\armor.dm"
 #include "clothing\accessories\badge.dm"
-#include "clothing\accessories\collar.dm"
 #include "clothing\accessories\other.dm"
 #include "clothing\accessories\pins.dm"
 #include "clothing\gloves\gloves.dm"
