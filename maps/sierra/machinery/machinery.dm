@@ -240,3 +240,25 @@
 	check_weapons = 1	//checks if it can shoot people that have a weapon they aren't authorized to have
 	check_access = 1	//if this is active, the turret shoots everything that does not meet the access requirements
 	req_access = list(access_bridge)
+
+// Fabricator overrides
+
+/datum/fabricator_recipe/medical/beaker
+	path = /obj/item/reagent_containers/glass/beaker
+	fabricator_types = list(FABRICATOR_CLASS_MICRO,FABRICATOR_CLASS_GENERAL)
+
+/datum/fabricator_recipe/medical/beaker_large
+	path = /obj/item/reagent_containers/glass/beaker/large
+	fabricator_types = list(FABRICATOR_CLASS_MICRO,FABRICATOR_CLASS_GENERAL)
+
+/datum/fabricator_recipe/medical/beaker_insul
+	path = /obj/item/reagent_containers/glass/beaker/insulated
+	fabricator_types = list(FABRICATOR_CLASS_MICRO,FABRICATOR_CLASS_GENERAL)
+
+/datum/fabricator_recipe/medical/beaker_insul_large
+	path = /obj/item/reagent_containers/glass/beaker/insulated/large
+	fabricator_types = list(FABRICATOR_CLASS_MICRO,FABRICATOR_CLASS_GENERAL)
+
+/datum/fabricator_recipe/medical/vial
+	path = /obj/item/reagent_containers/glass/beaker/vial
+	fabricator_types = list(FABRICATOR_CLASS_MICRO,FABRICATOR_CLASS_GENERAL)
