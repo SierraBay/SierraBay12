@@ -54,3 +54,25 @@ ranks - ec
 	name = "ranks (O-3 lieutenant)"
 	desc = "Insignia denoting the rank of Lieutenant."
 	icon_state = "ecrank_o3"
+
+/*
+--- Corsets
+*/
+
+/obj/item/clothing/accessory/corset
+	name = "Corset"
+	desc = "Tight fitting undergarment, worn to shape the figure"
+	icon = 'mods/loadout_items/icons/obj_accessory.dmi'
+	accessory_icons = list(slot_w_uniform_str = 'mods/loadout_items/icons/onmob_accessory.dmi', slot_wear_suit_str = 'mods/loadout_items/icons/onmob_accessory.dmi')
+	icon_state = "corset"
+
+/obj/item/clothing/accessory/corset/vinyl
+	name = "Vinyl Corset"
+	desc = "I don't even want to ask..."
+	icon_state = "vynilcorset"
+
+/obj/item/clothing/accessory/choker
+	name = "choker"
+	icon = 'mods/loadout_items/icons/obj_accessory.dmi'
+	accessory_icons = list(slot_w_uniform_str = 'mods/loadout_items/icons/onmob_accessory.dmi', slot_wear_suit_str = 'mods/loadout_items/icons/onmob_accessory.dmi')
+	icon_state = "choker_color"

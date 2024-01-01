@@ -39,3 +39,22 @@
 	path = /obj/item/haircomb
 	sort_category = "Cosmetics"
 	flags = GEAR_HAS_COLOR_SELECTION
+
+// Assorted accessories
+
+/datum/gear/corset
+	display_name = "corset selection"
+	path = /obj/item/clothing/accessory/corset
+	sort_category = "Clothing Pieces"
+	flags = GEAR_HAS_COLOR_SELECTION
+
+/datum/gear/vinylcorset
+	display_name = "vinyl corset"
+	path = /obj/item/clothing/accessory/corset/vinyl
+	sort_category = "Clothing Pieces"
+
+/datum/gear/choker
+	display_name = "choker selection"
+	path = /obj/item/clothing/accessory/choker
+	sort_category = "Clothing Pieces"
+	flags = GEAR_HAS_COLOR_SELECTION
