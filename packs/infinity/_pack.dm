@@ -39,7 +39,6 @@
 #include "items\multimeter.dm"
 #include "items\powertools.dm"
 #include "items\toys.dm"
-#include "items\wheelchair_kit.dm"
 
 // Guns
 #include "items\projectile\ammunition\boxes.dm"
