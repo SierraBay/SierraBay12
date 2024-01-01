@@ -72,3 +72,34 @@
 	collar["pink collar"] = /obj/item/clothing/accessory/necklace/collar/pink
 	collar["holo collar"] = /obj/item/clothing/accessory/necklace/collar/holo
 	gear_tweaks += new/datum/gear_tweak/path(collar)
+
+// Press
+
+/datum/gear/accessory/pressbadge
+	display_name = "corporate press pass"
+	path = /obj/item/clothing/accessory/badge/press
+
+/datum/gear/accessory/pressbadge
+	display_name = "freelance press pass"
+	path = /obj/item/clothing/accessory/badge/press/independent
+
+// Holobadge
+
+/datum/gear/accessory/corpbadge
+	display_name = "investigator holobadge (IAA)"
+	path = /obj/item/clothing/accessory/badge/holo/investigator
+	allowed_roles = list(/datum/job/iaa)
+
+/datum/gear/accessory/scarf_fancy
+	display_name = "special scarfs selection"
+	path = /obj/item/clothing/accessory/scarf/fancy
+
+/datum/gear/accessory/scarf_fancy/New()
+	..()
+	var/scarf = list()
+	scarf["red striped scarf"] = /obj/item/clothing/accessory/scarf/fancy
+	scarf["green striped scarf"] = /obj/item/clothing/accessory/scarf/fancy/green
+	scarf["blue striped scarf"] = /obj/item/clothing/accessory/scarf/fancy/blue
+	scarf["zebra scarf"] = /obj/item/clothing/accessory/scarf/fancy/zebra
+	scarf["christmas scarf"] = /obj/item/clothing/accessory/scarf/fancy/christmas
+	gear_tweaks += new/datum/gear_tweak/path(scarf)

@@ -96,7 +96,7 @@
 
 /datum/gear/uniform/gotsis
 	display_name = "gotsis dress selection"
-	path = /obj/item/clothing/under/dress/gotsis_red
+	path = /obj/item/clothing/under/dress
 
 /datum/gear/uniform/gotsis/New()
 	..()

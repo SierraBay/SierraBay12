@@ -55,6 +55,48 @@ ranks - ec
 	desc = "Insignia denoting the rank of Lieutenant."
 	icon_state = "ecrank_o3"
 
+/obj/item/clothing/accessory/scarf/fancy
+	name = "red striped scarf"
+	icon_state = "stripedredscarf"
+	icon = 'mods/loadout_items/icons/obj_accessory.dmi'
+	accessory_icons = list(slot_w_uniform_str = 'mods/loadout_items/icons/onmob_accessory.dmi', slot_wear_suit_str = 'mods/loadout_items/icons/onmob_accessory.dmi')
+	item_icons = list(slot_wear_mask_str = 'mods/loadout_items/icons/onmob_accessory.dmi')
+
+/obj/item/clothing/accessory/scarf/fancy/green
+	name = "green striped scarf"
+	icon_state = "stripedgreenscarf"
+
+/obj/item/clothing/accessory/scarf/fancy/blue
+	name = "blue striped scarf"
+	icon_state = "stripedbluescarf"
+
+/obj/item/clothing/accessory/scarf/fancy/zebra
+	name = "zebra scarf"
+	icon_state = "zebrascarf"
+
+/obj/item/clothing/accessory/scarf/fancy/christmas
+	name = "christmas scarf"
+	icon_state = "christmasscarf"
+
+// Press
+
+/obj/item/clothing/accessory/badge/press/independent
+	name = "press pass"
+	desc = "A freelance journalist's pass, certified by Oculum Broadcast."
+	icon = 'mods/loadout_items/icons/obj_accessory.dmi'
+	accessory_icons = list(slot_w_uniform_str = 'mods/loadout_items/icons/onmob_accessory.dmi', slot_wear_suit_str = 'mods/loadout_items/icons/onmob_accessory.dmi')
+	icon_state = "pressbadge-i"
+	badge_string = "Freelance Journalist"
+
+/obj/item/clothing/accessory/badge/holo/investigator
+	name = "\improper Internal Investigations holobadge"
+	desc = "This badge marks the holder as an internal affairs investigator."
+	icon = 'mods/loadout_items/icons/obj_accessory.dmi'
+	accessory_icons = list(slot_w_uniform_str = 'mods/loadout_items/icons/onmob_accessory.dmi', slot_wear_suit_str = 'mods/loadout_items/icons/onmob_accessory.dmi')
+	icon_state = "invbadge"
+	badge_string = "Internal Investigations"
+	slot_flags = SLOT_TIE | SLOT_BELT
+
 /*
 --- Kinky stuff
 */
