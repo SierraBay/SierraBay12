@@ -83,11 +83,11 @@
 
 /obj/machinery/suit_storage_unit/atmos/Initialize()
 	. = ..()
-	ssu_color =	"#00cccc"
+	ssu_color = "#00cccc"
 
 /obj/machinery/suit_storage_unit/science/Initialize()
 	. = ..()
-	ssu_color =	"#990000"
+	ssu_color = "#990000"
 
 /obj/machinery/suit_storage_unit/security/sapper
 	name = "Sapper Voidsuit Storage Unit"
@@ -115,7 +115,7 @@
 	mask = /obj/item/clothing/mask/breath
 	req_access = list(access_explorer, access_expedition_shuttle_helm)
 	islocked = 1
-	ssu_color =	"#990000"
+	ssu_color = "#990000"
 
 /obj/machinery/suit_storage_unit/standard_unit
 	icon_state = "industrial"
