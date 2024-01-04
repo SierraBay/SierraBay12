@@ -1,7 +1,6 @@
-// [SIERRA-ADD]
 /mob/living/carbon/human/AltClickOn(atom/A)
 	if(get_dist(src, A) > 1)
-		return
+		return ..()
 	if(!stat && mind && ismob(A) && (A != src) && (src.species.name == SPECIES_ADHERENT))
 		var/mob/living/carbon/human/adherent = src
 		var/obj/item/organ/internal/cell/adherent/adherent_core = adherent.internal_organs_by_name[BP_CELL]
@@ -54,4 +53,3 @@
 			next_click = world.time + 2 SECONDS
 			return
 	..()
-// [SIERRA-ADD]

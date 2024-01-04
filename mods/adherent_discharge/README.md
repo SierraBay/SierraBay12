@@ -9,7 +9,7 @@
 -->
 
 <!-- Название мода. Не важно на русском или на английском. -->
-## Мод-пример
+## Adherent Discharge
 
 ID мода: ADHERENT_DISCHARGE
 <!--
@@ -28,7 +28,7 @@ ID мода: ADHERENT_DISCHARGE
 
 ### Изменения *кор кода*
 
-- `code/modules/mob/living.dm`: `proc/overriden_proc`, `var/overriden_var`
+- Отсутствуют
 <!--
   Если вы редактировали какие-либо процедуры или переменные в кор коде,
   они должны быть указаны здесь.
@@ -39,8 +39,8 @@ ID мода: ADHERENT_DISCHARGE
 
 ### Оверрайды
 
-- `mods/_master_files/sound/my_cool_sound.ogg`
-- `mods/_master_files/code/my_modular_override.dm`: `proc/overriden_proc`, `var/overriden_var`
+- `mods/_master_files/code/_onclick/click.dm`: `/mob/living/carbon/human/AltClickOn()`
+- `mods/_master_files/code/modules/species/station/adherent.dm`: `/datum/species/adherent/New()`
 <!--
   Если ты добавлял новый модульный оверрайд, его нужно указать здесь.
   Здесь указываются оверрайды в твоём моде и папке `_master_files`
@@ -50,7 +50,7 @@ ID мода: ADHERENT_DISCHARGE
 
 ### Дефайны
 
-- `code/__defines/~mods/adherent_discharge.dm`: `ADHERENT_DISCHARGE_SPEED_MULTIPLIER`, `ADHERENT_DISCHARGE_SPEED_BASE`
+- Отсутствуют
 <!--
   Если требовалось добавить какие-либо дефайны, укажи файлы,
   в которые ты их добавил, а также перечисли имена.
@@ -61,7 +61,7 @@ ID мода: ADHERENT_DISCHARGE
 
 ### Используемые файлы, не содержащиеся в модпаке
 
-- `mods/_master_files/icons/obj/alien.dmi`
+- Отсутствуют
 <!--
   Будь то немодульный файл или модульный файл, который не содержится в папке,
   принадлежащей этому конкретному моду, он должен быть упомянут здесь.
@@ -71,9 +71,4 @@ ID мода: ADHERENT_DISCHARGE
 
 ### Авторы:
 
-Твой никнейм
-<!--
-  Здесь находится твой никнейм
-  Если работал совместно - никнеймы тех, кто помогал.
-  В случае порта чего-либо должна быть ссылка на источник.
--->
+Lexanx
