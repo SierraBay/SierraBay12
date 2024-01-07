@@ -108,6 +108,16 @@
 	/// What skill level is needed in the gun's skill to completely negate the chance of an accident.
 	var/safety_skill = SKILL_EXPERIENCED
 
+//[SIERRA-EDIT]
+	var/is_serial = 0 //the entrie variable that defines should the gun have serial
+	var/serial // < most important thing, this is the SERIAL itself
+	var/s_type //energy or kinetic
+	var/s_gun //gun type, e.g. LP - laep
+	//see below
+
+var/global/serials = list()
+//[/SIERRA-EDIT]
+
 /obj/item/gun/Initialize()
 	. = ..()
 	for(var/i in 1 to length(firemodes))
@@ -402,6 +412,8 @@
 
 	var/acc_mod = burst_accuracy[min(burst, length(burst_accuracy))]
 	var/disp_mod = dispersion[min(burst, length(dispersion))]
+// [SIERRA-EDIT] - BALANCE TWEAKS
+/*  SIERRA-EDIT - ORIGINAL
 	var/stood_still = last_handled
 	//Not keeping gun active will throw off aim (for non-Masters)
 	if(user.skill_check(SKILL_WEAPONS, SKILL_MASTER))
@@ -415,7 +427,58 @@
 	else
 		acc_mod -= w_class - ITEM_SIZE_NORMAL
 		acc_mod -= bulk
-
+*/
+// [SIERRA-EDIT] - BALANCE TWEAKS
+	acc_mod -= bulk
+	switch(bulk)
+		if(1) //pistols
+			if(user.skill_check(SKILL_WEAPONS, SKILL_BASIC))
+				acc_mod += bulk
+				acc_mod += accuracy
+		if(2) //revolvers
+			if(user.skill_check(SKILL_WEAPONS, SKILL_TRAINED) && user.skill_check(SKILL_WEAPONS, SKILL_BASIC))
+				acc_mod += bulk
+				acc_mod += accuracy
+		if(3) //SMGs
+			if(user.skill_check(SKILL_HAULING, SKILL_BASIC) && user.skill_check(SKILL_WEAPONS, SKILL_TRAINED))
+				if(user.skill_check(SKILL_HAULING, SKILL_BASIC) && user.skill_check(SKILL_WEAPONS, SKILL_TRAINED))
+					acc_mod += bulk
+					acc_mod += accuracy
+				else
+					acc_mod += bulk / 2
+					acc_mod += accuracy * 0.75
+		if(4 to 5) //carabines and assault rifles
+			if(user.skill_check(SKILL_HAULING, SKILL_BASIC) && user.skill_check(SKILL_WEAPONS, SKILL_TRAINED))
+				if(user.skill_check(SKILL_HAULING, SKILL_TRAINED) && user.skill_check(SKILL_WEAPONS, SKILL_TRAINED))
+					acc_mod += bulk
+					acc_mod += accuracy
+				else
+					acc_mod += bulk / 2
+					acc_mod += accuracy * 0.75
+		if(6) //sniper rifles
+			if (user.skill_check(SKILL_HAULING, SKILL_BASIC) && user.skill_check(SKILL_WEAPONS, SKILL_BASIC))
+				if(user.skill_check(SKILL_HAULING, SKILL_TRAINED) && user.skill_check(SKILL_WEAPONS, SKILL_TRAINED))
+					if(user.skill_check(SKILL_HAULING, SKILL_TRAINED) && user.skill_check(SKILL_WEAPONS, SKILL_EXPERIENCED))
+						acc_mod += bulk
+						acc_mod += accuracy
+					else
+						acc_mod += bulk / 2
+						acc_mod += accuracy * 0.75
+				else
+					acc_mod += bulk / 5
+					acc_mod += accuracy * 0.25
+		if(7) //machine gun, RPG
+			if (user.skill_check(SKILL_HAULING, SKILL_TRAINED) && user.skill_check(SKILL_WEAPONS, SKILL_BASIC))
+				if(user.skill_check(SKILL_HAULING, SKILL_TRAINED) && user.skill_check(SKILL_WEAPONS, SKILL_TRAINED))
+					if(user.skill_check(SKILL_HAULING, SKILL_EXPERIENCED) && user.skill_check(SKILL_WEAPONS, SKILL_EXPERIENCED))
+						acc_mod += bulk
+						acc_mod += accuracy
+					else
+						acc_mod += bulk / 2 //-25%, not 35%
+						acc_mod += accuracy / 2
+				else
+					acc_mod += bulk / 5
+// [/SIERRA-EDIT]
 	if(one_hand_penalty >= 4 && !held_twohanded)
 		acc_mod -= one_hand_penalty/2
 		disp_mod += one_hand_penalty*0.5 //dispersion per point of two-handedness

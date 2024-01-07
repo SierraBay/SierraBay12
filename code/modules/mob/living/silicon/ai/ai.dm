@@ -24,10 +24,24 @@ var/global/list/ai_verbs_default = list(
 	/mob/living/silicon/ai/proc/toggle_camera_light,
 	/mob/living/silicon/ai/proc/multitool_mode,
 	/mob/living/silicon/ai/proc/toggle_hologram_movement,
+	/mob/living/silicon/ai/proc/ai_view_images,
+	/mob/living/silicon/ai/proc/ai_take_image,
+	/mob/living/silicon/ai/proc/change_floor,
+	/mob/living/silicon/ai/proc/show_crew_monitor,
+	/mob/living/silicon/ai/proc/show_crew_records,
+	/mob/living/silicon/ai/proc/show_crew_manifest,
 	/mob/living/silicon/ai/proc/ai_power_override,
 	/mob/living/silicon/ai/proc/ai_shutdown,
 	/mob/living/silicon/ai/proc/ai_reset_radio_keys
 )
+/* [SIERRA-ADD] - AI modpack
+/mob/living/silicon/ai/proc/ai_view_images,
+/mob/living/silicon/ai/proc/ai_take_image,
+/mob/living/silicon/ai/proc/change_floor,
+/mob/living/silicon/ai/proc/show_crew_monitor,
+/mob/living/silicon/ai/proc/show_crew_records,
+/mob/living/silicon/ai/proc/show_crew_manifest,
+*/
 
 //Not sure why this is necessary...
 /proc/AutoUpdateAI(obj/subject)
