@@ -120,7 +120,7 @@
 
 /obj/item/organ/internal/cooling_system/afterattack(atom/target, mob/user, flag)
 
-	var/beaker = istype(target, /obj/item/reagent_containers/glass/)
+	var/beaker = istype(target, /obj/item/reagent_containers/glass)
 
 	if (flag && beaker)
 		var/obj/dispenser = target
