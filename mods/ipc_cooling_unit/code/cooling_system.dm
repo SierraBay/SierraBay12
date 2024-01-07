@@ -122,7 +122,7 @@
 
 	var/beaker = istype(target, /obj/item/reagent_containers/glass/)
 
-	if (flag && (beaker || istype(target, /obj/item/reagent_containers/glass/)))
+	if (flag && beaker)
 		var/obj/dispenser = target
 		var/amount = reagents.get_free_space()
 		if (safety)
