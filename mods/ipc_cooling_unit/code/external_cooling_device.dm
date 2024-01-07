@@ -118,13 +118,13 @@
 		icon_state = "basepowered"
 
 	if(rebuild_overlay)
-		overlays.Cut()
+		ClearOverlays()
 		if(attached)
-			overlays  += "o_h"
+			AddOverlays("o_h")
 		if(!closed)
-			overlays  += "o_m"
+			AddOverlays("o_m")
 		if(active && cell)
-			overlays  += "o_w"
+			AddOverlays("o_w")
 
 
 /obj/machinery/external_cooling_device/MouseDrop(over_object, src_location, over_location)
@@ -135,7 +135,7 @@
 	else if(ishuman(over_object))
 		hook_up(over_object, usr)
 
-/obj/machinery/external_cooling_device/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/external_cooling_device/use_tool(obj/item/W as obj, mob/user as mob)
 
 	if(istype(W, /obj/item/screwdriver))
 		closed = !closed
@@ -173,6 +173,8 @@
 			rip_out()
 			return
 	if(active)
+		if(!attached)
+			return
 		if(attached.bodytemperature > set_temperature)
 			attached.bodytemperature -= 20
 			queue_icon_update()
