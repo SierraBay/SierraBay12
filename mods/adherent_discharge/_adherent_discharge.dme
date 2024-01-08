@@ -3,5 +3,4 @@
 
 #include "_adherent_discharge.dm"
 #include "code/adherent.dm"
-#include "code/human_powers.dm"
 #endif
