@@ -20,7 +20,7 @@
 		if(input_flags & AI_BUTTON_PROC_BELONGS_TO_CALLER) // Does the called proc belong to the AI, or not?
 			input_arg = call(A, input_proc)()
 		else
-			input_arg= call(input_proc)()
+			input_arg = call(input_proc)()
 
 		if(input_flags & AI_BUTTON_INPUT_REQUIRES_SELECTION)
 			input_arg = input("Make a selection.", "Make a selection.") as null|anything in input_arg
