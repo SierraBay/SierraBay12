@@ -38,12 +38,14 @@
 	set category = "Silicon Commands"
 
 	var/f_color = input("Choose your color, dark colors are not recommended!") as color
-	var/list/black_list = list("#000000","#080808", "#111111", "#1c1c1c", "#292929", "#333333","#4d4d4d")
-	if(f_color in black_list)
-		to_chat(usr, SPAN_WARNING("Color \"[f_color]\" is not allowed!"))
-		return
 	if(!f_color)
 		return
+
+	for (var/color in GetHexColors(f_color))
+		if (color <= 80)
+			to_chat(usr, SPAN_WARNING("Color \"[f_color]\" is not allowed!"))
+			return
+
 	var/area/A = get_area(usr)
 	for(var/turf/simulated/floor/bluegrid/F in A)
 		F.color = f_color
