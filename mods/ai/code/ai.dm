@@ -1,9 +1,9 @@
 // Access
 
 /mob/living/silicon/ai
-	idcard = /obj/item/card/id/sierra/ai
+	idcard = /obj/item/card/id/all/ai
 
-/obj/item/card/id/sierra/ai
+/obj/item/card/id/all/ai
 	job_access_type = /datum/job/ai
 
 /datum/job/ai/get_access()

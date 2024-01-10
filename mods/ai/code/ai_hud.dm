@@ -204,3 +204,32 @@
 
 	A.client.screen = list()
 	A.client.screen.Add(adding)
+
+
+// Undef
+#undef ui_ai_core
+#undef ui_ai_announcement
+#undef ui_ai_cam_track
+#undef ui_ai_cam_light
+#undef ui_ai_cam_change_network
+#undef ui_ai_sensor
+#undef ui_ai_crew_manifest
+#undef ui_ai_take_image
+#undef ui_ai_view_images
+#undef ui_ai_state_laws
+#undef ui_ai_call_shuttle
+
+#undef ui_ai_up
+#undef ui_ai_down
+
+#undef ui_ai_holo_change
+#undef ui_ai_color
+#undef ui_ai_core_icon
+#undef ui_ai_status
+
+#undef ui_ai_power_override
+#undef ui_ai_shutdown
+#undef ui_ai_holo_mov
+
+#undef ui_ai_crew_mon
+#undef ui_ai_crew_rec
