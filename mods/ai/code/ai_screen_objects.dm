@@ -19,11 +19,11 @@
 		if(input_flags & AI_BUTTON_PROC_BELONGS_TO_CALLER) // Does the called proc belong to the AI, or not?
 			input_arg = call(A, input_proc)()
 		else
-			input_arg= call(input_proc)()
+			input_arg = call(input_proc)()
 
 		if(input_flags & AI_BUTTON_INPUT_REQUIRES_SELECTION)
 			input_arg = input("Make a selection.", "Make a selection.") as null|anything in input_arg
-			if(!input_arg)
+			if(isnull(input_arg))
 				return // We assume a null-input means the user cancelled
 
 		if(!(ai_verb in A.verbs) || A.incapacitated())
