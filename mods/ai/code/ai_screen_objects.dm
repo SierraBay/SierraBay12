@@ -4,7 +4,6 @@
 	var/list/input_args
 	icon = 'mods/ai/icons/screen_ai.dmi'
 	var/list/template_icon = list(null, "template")
-	var/image/template_undelay
 
 /obj/screen/ai_button/Click()
 	if(!isAI(usr))
@@ -52,5 +51,4 @@
 	if(input_args)
 		src.input_args = input_args.Copy()
 
-	template_undelay = image(template_icon[1], template_icon[2])
-	underlays += template_undelay
+	underlays += image(template_icon[1], template_icon[2])
