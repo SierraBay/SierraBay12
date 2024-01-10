@@ -108,16 +108,6 @@
 	/// What skill level is needed in the gun's skill to completely negate the chance of an accident.
 	var/safety_skill = SKILL_EXPERIENCED
 
-//[SIERRA-EDIT]
-	var/is_serial = 0 //the entrie variable that defines should the gun have serial
-	var/serial // < most important thing, this is the SERIAL itself
-	var/s_type //energy or kinetic
-	var/s_gun //gun type, e.g. LP - laep
-	//see below
-
-var/global/serials = list()
-//[/SIERRA-EDIT]
-
 /obj/item/gun/Initialize()
 	. = ..()
 	for(var/i in 1 to length(firemodes))
