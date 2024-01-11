@@ -402,8 +402,8 @@
 
 	var/acc_mod = burst_accuracy[min(burst, length(burst_accuracy))]
 	var/disp_mod = dispersion[min(burst, length(dispersion))]
-// [SIERRA-REMOVE]
-/*  SIERRA-REMOVE - ORIGINAL
+	// [SIERRA-REMOVE]
+	/*
 	var/stood_still = last_handled
 	//Not keeping gun active will throw off aim (for non-Masters)
 	if(user.skill_check(SKILL_WEAPONS, SKILL_MASTER))
@@ -417,8 +417,9 @@
 	else
 		acc_mod -= w_class - ITEM_SIZE_NORMAL
 		acc_mod -= bulk
-*/
-// [SIERRA-ADD]
+	*/
+	// [/SIERRA-REMOVE]
+	// [SIERRA-ADD]
 	acc_mod -= bulk
 	switch(bulk)
 		if(1) //pistols
@@ -468,7 +469,7 @@
 						acc_mod += accuracy / 2
 				else
 					acc_mod += bulk / 5
-// [/SIERRA-ADD]
+	// [/SIERRA-ADD]
 	if(one_hand_penalty >= 4 && !held_twohanded)
 		acc_mod -= one_hand_penalty/2
 		disp_mod += one_hand_penalty*0.5 //dispersion per point of two-handedness
