@@ -28,6 +28,7 @@ ID мода: AI
 ### Изменения *кор кода*
 
 - `code/modules/mob/living/silicon/ai/ai.dm`: `var/global/list/ai_verbs_default`
+- `code/modules/mob/observer/freelook/chunk.dm`: `/datum/obfuscation/proc/get_obfuscation()`
 <!--
   Если вы редактировали какие-либо процедуры или переменные в кор коде,
   они должны быть указаны здесь.
@@ -59,7 +60,7 @@ ID мода: AI
 
 ### Используемые файлы, не содержащиеся в модпаке
 
-- `code/modules/mob/observer/freelook/chunk.dm`
+- Отсутствуют
 <!--
   Будь то немодульный файл или модульный файл, который не содержится в папке,
   принадлежащей этому конкретному моду, он должен быть упомянут здесь.
