@@ -11,54 +11,6 @@
 		new /obj/item/book/manual/military_law(src)
 		update_icon()
 
-// Target stakes for the firing range.
-/obj/structure/target_stake
-	name = "target stake"
-	desc = "A thin platform with negatively-magnetized wheels."
-	icon = 'maps/sierra/icons/obj/target.dmi'
-	icon_state = "target_stake"
-	density = TRUE
-	w_class = ITEM_SIZE_NO_CONTAINER
-	obj_flags = OBJ_FLAG_CONDUCTIBLE
-	var/obj/item/target/pinned_target
-
-/obj/structure/target_stake/use_tool(obj/item/W, mob/living/user, list/click_params)
-	if (!pinned_target && istype(W, /obj/item/target) && user.unEquip(W, get_turf(src)))
-		to_chat(user, "<span class='notice'>You slide [W] into the stake.</span>")
-		set_target(W)
-
-/obj/structure/target_stake/attack_hand(mob/user)
-	. = ..()
-	if (pinned_target && ishuman(user))
-		var/obj/item/target/T = pinned_target
-		to_chat(user, "<span class='notice'>You take [T] out of the stake.</span>")
-		set_target(null)
-		user.put_in_hands(T)
-
-/obj/structure/target_stake/proc/set_target(obj/item/target/T)
-	if (T)
-		set_density(0)
-		T.set_density(1)
-		T.pixel_x = 0
-		T.pixel_y = 0
-		T.layer = ABOVE_OBJ_LAYER
-		GLOB.moved_event.register(T, src, /atom/movable/proc/move_to_turf)
-		GLOB.moved_event.register(src, T, /atom/movable/proc/move_to_turf)
-		T.stake = src
-		pinned_target = T
-	else
-		set_density(1)
-		pinned_target.set_density(0)
-		pinned_target.layer = OBJ_LAYER
-		GLOB.moved_event.unregister(pinned_target, src)
-		GLOB.moved_event.unregister(src, pinned_target)
-		pinned_target.stake = null
-		pinned_target = null
-
-/obj/structure/target_stake/Destroy()
-	. = ..()
-	set_target(null)
-
 // Targets, the things that actually get shot!
 /obj/item/target
 	name = "shooting target"
@@ -66,17 +18,12 @@
 	icon = 'maps/sierra/icons/obj/target.dmi'
 	icon_state = "target_h"
 	density = FALSE
-	var/obj/structure/target_stake/stake
 	var/hp = 1800
 	var/icon/virtualIcon
 	var/list/bulletholes = list()
 
-/obj/item/target/Destroy()
-	. = ..()
-	if (stake)
-		stake.set_target(null)
-
 /obj/item/target/use_tool(obj/item/W, mob/living/user, list/click_params)
+	. = ..()
 	if(isWelder(W))
 		var/obj/item/weldingtool/WT = W
 		if(WT.remove_fuel(0, user))
@@ -86,17 +33,12 @@
 			to_chat(usr, "<span class='notice'>You slice off [src]'s uneven chunks of aluminium and scorch marks.</span>")
 			return
 
-/obj/item/target/attack_hand(mob/user)
-	// taking pinned targets off!
-	if (stake)
-		stake.attack_hand(user)
-	else
-		return ..()
 
 /obj/item/target/syndicate
 	icon_state = "target_s"
 	desc = "A shooting target that looks like a hostile agent."
 	hp = 2600 // i guess syndie targets are sturdier?
+
 /obj/item/target/alien
 	icon_state = "target_q"
 	desc = "A shooting target with a threatening silhouette."
@@ -184,21 +126,21 @@
 	var/b2y1 = 0
 	var/b2y2 = 0
 
-	New(obj/item/target/Target, pixel_x = 0, pixel_y = 0)
-		if(!Target) return
+/datum/bullethole/New(obj/item/target/Target, pixel_x = 0, pixel_y = 0)
+	if(!Target) return
 
-		// Randomize the first box
-		b1x1 = pixel_x - pick(1,1,1,1,2,2,3,3,4)
-		b1x2 = pixel_x + pick(1,1,1,1,2,2,3,3,4)
-		b1y = pixel_y
-		if(prob(35))
-			b1y += rand(-4,4)
+	// Randomize the first box
+	b1x1 = pixel_x - pick(1,1,1,1,2,2,3,3,4)
+	b1x2 = pixel_x + pick(1,1,1,1,2,2,3,3,4)
+	b1y = pixel_y
+	if(prob(35))
+		b1y += rand(-4,4)
 
-		// Randomize the second box
-		b2x = pixel_x
-		if(prob(35))
-			b2x += rand(-4,4)
-		b2y1 = pixel_y + pick(1,1,1,1,2,2,3,3,4)
-		b2y2 = pixel_y - pick(1,1,1,1,2,2,3,3,4)
+	// Randomize the second box
+	b2x = pixel_x
+	if(prob(35))
+		b2x += rand(-4,4)
+	b2y1 = pixel_y + pick(1,1,1,1,2,2,3,3,4)
+	b2y2 = pixel_y - pick(1,1,1,1,2,2,3,3,4)
 
-		Target.bulletholes.Add(src)
+	Target.bulletholes.Add(src)
