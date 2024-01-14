@@ -21,7 +21,7 @@ This saves us from having to call add_fingerprint() any time something is put in
 				update_inv_l_hand(0)
 			else
 				update_inv_r_hand(0)
-			// [SIERRA-ADD]
+			// [SIERRA-ADD] - SSINPUT
 			// Try put it in their toolbelt
 			if(istype(src.belt, /obj/item/storage))
 				var/obj/item/storage/belt = src.belt
