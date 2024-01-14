@@ -146,6 +146,7 @@
 	extra_decals = list(
 		"stripe_vertical_mid_partial"   = COLOR_PALE_ORANGE,
 		"stripe_vertical_right_partial" = COLOR_PALE_ORANGE,
+		"eng_narrow" = COLOR_PALE_ORANGE
 	)
 
 /singleton/closet_appearance/secure_closet/sierra/engineering/ce

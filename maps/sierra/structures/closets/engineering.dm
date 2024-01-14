@@ -137,7 +137,7 @@
 	req_access = list(access_network_admin)
 	closet_appearance = /singleton/closet_appearance/secure_closet/sierra/engineering/infotech
 
-/obj/structure/closet/secure_closet/atmos_sierra/WillContain()
+/obj/structure/closet/secure_closet/infotech_sierra/WillContain()
 	return list(
 		/obj/item/storage/box/PDAs,
 		/obj/item/modular_computer/laptop/preset/custom_loadout/standard,
