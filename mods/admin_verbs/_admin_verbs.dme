@@ -1,7 +1,0 @@
-#ifndef MODPACK_ADMIN
-#define MODPACK_ADMIN
-
-#include "_admin_verbs.dm"
-#include "code/spawn_verbs.dm"
-
-#endif

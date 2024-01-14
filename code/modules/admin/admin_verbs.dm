@@ -144,7 +144,7 @@ var/global/list/admin_verbs_spawn = list(
 	/datum/admins/proc/spawn_atom,		// allows us to spawn instances,
 	/datum/admins/proc/spawn_artifact,
 	/client/proc/spawn_chemdisp_cartridge,
-	// [SIERRA-ADD] - admin_verbs
+	// [SIERRA-ADD] - CLIENT_VERBS
 	/client/proc/respawn_as_self,
 	// [/SIERRA-ADD]
 	/datum/admins/proc/mass_debug_closet_icons
