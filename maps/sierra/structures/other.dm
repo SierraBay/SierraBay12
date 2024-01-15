@@ -22,17 +22,20 @@
 	var/icon/virtualIcon
 	var/list/bulletholes = list()
 
-/obj/item/target/use_tool(obj/item/W, mob/living/user, list/click_params)
-	. = ..()
-	if(isWelder(W))
-		var/obj/item/weldingtool/WT = W
-		if(WT.remove_fuel(0, user))
+/obj/item/target/use_tool(obj/item/tool, mob/living/user, list/click_params)
+	if (isWelder(tool))
+		var/obj/item/weldingtool/welder = tool
+		if (welder.remove_fuel(0, user))
 			ClearOverlays()
 			bulletholes.Cut()
 			hp = initial(hp)
-			to_chat(usr, "<span class='notice'>You slice off [src]'s uneven chunks of aluminium and scorch marks.</span>")
-			return
-
+			user.visible_message(
+				SPAN_NOTICE("[user] slices off uneven chunks of aluminium and scorch marks from [src]."),
+				SPAN_NOTICE("You slice off uneven chunks of aluminium and scorch marks from [src]."),
+				SPAN_NOTICE("You hear welding."),
+			)
+		return TRUE
+	return ..()
 
 /obj/item/target/syndicate
 	icon_state = "target_s"
@@ -44,75 +47,79 @@
 	desc = "A shooting target with a threatening silhouette."
 	hp = 2350 // alium onest too kinda
 
-/obj/item/target/bullet_act(obj/item/projectile/Proj)
-	var/p_x = Proj.p_x + pick(0,0,0,0,0,-1,1) // really ugly way of coding "sometimes offset Proj.p_x!"
-	var/p_y = Proj.p_y + pick(0,0,0,0,0,-1,1)
-	var/decaltype = 1 // 1 - scorch, 2 - bullet
+#define PROJECTILE_TYPE_SCORCH 1
+#define PROJECTILE_TYPE_BULLET 2
+#define TARGET_RANDOM_OFFSET pick(0, 0, 0, 0, 0, -1, 1)
 
-	if(istype(/obj/item/projectile/bullet, Proj))
-		decaltype = 2
+/obj/item/target/bullet_act(obj/item/projectile/projectile)
+	var/p_x = projectile.p_x + TARGET_RANDOM_OFFSET
+	var/p_y = projectile.p_y + TARGET_RANDOM_OFFSET
 
+	var/projectile_type = PROJECTILE_TYPE_SCORCH
+	if (istype(/obj/item/projectile/bullet, projectile))
+		projectile_type = PROJECTILE_TYPE_BULLET
 
 	virtualIcon = new(icon, icon_state)
 
-	if( virtualIcon.GetPixel(p_x, p_y) ) // if the located pixel isn't blank (null)
+	if (isnull(virtualIcon.GetPixel(p_x, p_y)))
+		return PROJECTILE_CONTINUE // The projectile goes through the target!
 
-		hp -= Proj.damage
-		if(hp <= 0)
-			for(var/mob/O in oviewers())
-				if ((O.client && !( O.blinded )))
-					to_chat(O, "<span class='warning'>\The [src] breaks into tiny pieces and collapses!</span>")
-			qdel(src)
+	hp -= projectile.damage
+	if (hp <= 0)
+		visible_message(SPAN_WARNING("\The [src] breaks into tiny pieces and collapses!"))
+		qdel(src)
+		return FALSE // The projectile stops
 
-		// Create a temporary object to represent the damage
-		var/obj/bmark = new
-		bmark.pixel_x = p_x
-		bmark.pixel_y = p_y
-		bmark.icon = 'icons/effects/effects.dmi'
-		bmark.layer = ABOVE_OBJ_LAYER
-		bmark.icon_state = "scorch"
+	// Create a temporary object to represent the damage
+	var/obj/bmark = new
+	bmark.pixel_x = p_x
+	bmark.pixel_y = p_y
+	bmark.icon = 'icons/effects/effects.dmi'
+	bmark.layer = ABOVE_OBJ_LAYER
 
-		if(decaltype == 1)
-			// Energy weapons are hot. they scorch!
+	// Set bmark icon_state
+	if (projectile_type == PROJECTILE_TYPE_SCORCH)
+		// Energy weapons are hot. they scorch!
 
-			// offset correction
-			bmark.pixel_x--
-			bmark.pixel_y--
+		// Offset correction
+		bmark.pixel_x--
+		bmark.pixel_y--
 
-			if(Proj.damage >= 20 || istype(Proj, /obj/item/projectile/beam/practice))
-				bmark.icon_state = "scorch"
-				bmark.set_dir(pick(NORTH,SOUTH,EAST,WEST)) // random scorch design
-
-
-			else
-				bmark.icon_state = "light_scorch"
+		if (projectile.damage >= 20 || istype(projectile, /obj/item/projectile/beam/practice))
+			bmark.icon_state = "scorch"
+			bmark.set_dir(pick(NORTH, SOUTH, EAST, WEST)) // Random scorch design
 		else
+			bmark.icon_state = "light_scorch"
+	else
+		// Bullets are hard. They make dents!
+		bmark.icon_state = "dent"
 
-			// Bullets are hard. They make dents!
-			bmark.icon_state = "dent"
+	// Create bulletholes
+	if (projectile.damage >= 25) // Seriously, we commonly won't achive more than 35 holes. Because this things are beyond window.
 
-		if(Proj.damage >= 25) // Seriously, we commonly won't achive more than 35 holes. Because this things are beyond window.
-			if(decaltype == 2) // bullet
-				if(prob(Proj.damage+30)) // bullets make holes more commonly!
-					new/datum/bullethole(src, bmark.pixel_x, bmark.pixel_y) // create new bullet hole
-			else // Lasers!
-				if(prob(Proj.damage-10)) // lasers make holes less commonly
-					new/datum/bullethole(src, bmark.pixel_x, bmark.pixel_y) // create new bullet hole
+		// Bullets make holes more commonly
+		if (projectile_type == PROJECTILE_TYPE_BULLET && prob(projectile.damage + 30))
+			new/datum/bullethole(src, bmark.pixel_x, bmark.pixel_y)
 
-		// draw bullet holes
-		for(var/datum/bullethole/B in bulletholes)
+		// Lasers make holes less commonly
+		if (projectile_type == PROJECTILE_TYPE_SCORCH && prob(projectile.damage - 10))
+			new/datum/bullethole(src, bmark.pixel_x, bmark.pixel_y)
 
-			virtualIcon.DrawBox(null, B.b1x1, B.b1y,  B.b1x2, B.b1y) // horizontal line, left to right
-			virtualIcon.DrawBox(null, B.b2x, B.b2y1,  B.b2x, B.b2y2) // vertical line, top to bottom
+	// Draw bullet holes
+	for(var/datum/bullethole/bhole in bulletholes)
+		virtualIcon.DrawBox(null, bhole.b1x1, bhole.b1y, bhole.b1x2, bhole.b1y) // Horizontal line, left to right
+		virtualIcon.DrawBox(null, bhole.b2x, bhole.b2y1, bhole.b2x, bhole.b2y2) // Vertical line, top to bottom
 
-		AddOverlays(bmark) // add the decal
+	AddOverlays(bmark) // Add the decal
+	icon = virtualIcon // Apply bulletholes over decals
 
-		icon = virtualIcon // apply bulletholes over decals
+	return FALSE // The projectile stops
 
-		return
+#undef TARGET_RANDOM_OFFSET
+#undef PROJECTILE_TYPE_BULLET
+#undef PROJECTILE_TYPE_SCORCH
 
-	return PROJECTILE_CONTINUE // the bullet/projectile goes through the target!
-
+#define BULLETHOLE_RANDOM_OFFSET pick(1, 1, 1, 1, 2, 2, 3, 3, 4)
 
 // Small memory holder entity for transparent bullet holes
 /datum/bullethole
@@ -126,21 +133,23 @@
 	var/b2y1 = 0
 	var/b2y2 = 0
 
-/datum/bullethole/New(obj/item/target/Target, pixel_x = 0, pixel_y = 0)
-	if(!Target) return
+/datum/bullethole/New(obj/item/target/owner, pixel_x = 0, pixel_y = 0)
+	if (!owner) return
 
 	// Randomize the first box
-	b1x1 = pixel_x - pick(1,1,1,1,2,2,3,3,4)
-	b1x2 = pixel_x + pick(1,1,1,1,2,2,3,3,4)
+	b1x1 = pixel_x - BULLETHOLE_RANDOM_OFFSET
+	b1x2 = pixel_x + BULLETHOLE_RANDOM_OFFSET
 	b1y = pixel_y
-	if(prob(35))
-		b1y += rand(-4,4)
+	if (prob(35))
+		b1y += rand(-4, 4)
 
 	// Randomize the second box
 	b2x = pixel_x
-	if(prob(35))
-		b2x += rand(-4,4)
-	b2y1 = pixel_y + pick(1,1,1,1,2,2,3,3,4)
-	b2y2 = pixel_y - pick(1,1,1,1,2,2,3,3,4)
+	if (prob(35))
+		b2x += rand(-4, 4)
+	b2y1 = pixel_y + BULLETHOLE_RANDOM_OFFSET
+	b2y2 = pixel_y - BULLETHOLE_RANDOM_OFFSET
 
-	Target.bulletholes.Add(src)
+	owner.bulletholes += src
+
+#undef BULLETHOLE_RANDOM_OFFSET
