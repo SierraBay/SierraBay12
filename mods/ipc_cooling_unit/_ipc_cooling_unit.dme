@@ -2,7 +2,6 @@
 #define MODPACK_IPC_COOLING_UNIT
 
 #include "_ipc_cooling_unit.dm"
-#include "code/datum/_defines.dm"
 #include "code/cooling_system.dm"
 #include "code/external_cooling_device.dm"
 #include "code/machine.dm"

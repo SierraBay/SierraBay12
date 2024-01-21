@@ -1,1 +1,0 @@
-#define BP_COOLING "cooling system"

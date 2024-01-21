@@ -7,14 +7,15 @@
 	density = TRUE
 	var/mob/living/carbon/human/attached
 	var/obj/item/cell/cell = /obj/item/cell/high
-	var/active = 0
-	var/closed = 1
+	var/active = FALSE
+	var/closed = TRUE
 	var/set_temperature = T0C
-	var/interact = 1	//K
+	var/interact = 1
 
 /obj/machinery/external_cooling_device/New()
 	..()
-	cell = new/obj/item/cell/high(src)
+	if(ispath(cell))
+		cell = new cell(src)
 	update_icon()
 
 /obj/machinery/external_cooling_device/examine(mob/user)
@@ -54,7 +55,7 @@
 				var/obj/item/cell/C = usr.get_active_hand()
 				if(istype(C))
 					if(!usr.unEquip(C, src))
-						return
+						return TOPIC_NOACTION
 					cell = C
 					C.add_fingerprint(usr)
 					usr.visible_message("<span class='notice'>[usr] inserts \the [C] into \the [src].</span>", "<span class='notice'>You insert \the [C] into \the [src].</span>")
@@ -140,7 +141,7 @@
 	if(istype(W, /obj/item/screwdriver))
 		closed = !closed
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-		to_chat(user, "You screwdrived ECD panel")
+		to_chat(user, "You [closed ? "tighten" : "unscrew"] ECD panel")
 		on_update_icon()
 	if(!closed)
 		if (istype(W, /obj/item/cell))
@@ -159,8 +160,7 @@
 /obj/machinery/external_cooling_device/Destroy()
 	STOP_PROCESSING(SSobj,src)
 	attached = null
-	qdel(cell)
-	cell = null
+	QDEL_NULL(cell)
 	. = ..()
 
 /obj/machinery/external_cooling_device/Process()
@@ -182,7 +182,7 @@
 
 /obj/machinery/external_cooling_device/verb/drip_detach()
 	set category = "Object"
-	set name = "Detach IV Drip"
+	set name = "Detach cooling device Drip"
 	set src in range(1)
 
 	if(!attached)
@@ -201,7 +201,7 @@
 
 
 /obj/machinery/external_cooling_device/proc/rip_out()
-	visible_message("The tube is ripped out of [src.attached]")
+	visible_message("\The tube is ripped out of \the [src.attached]")
 	attached.apply_damage(1, DAMAGE_BRUTE, pick(BP_GROIN, BP_CHEST), damage_flags=DAMAGE_FLAG_SHARP)
 	attached = null
 	update_icon()
