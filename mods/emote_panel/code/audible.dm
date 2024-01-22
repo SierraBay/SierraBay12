@@ -1,7 +1,6 @@
 #define SOUNDED_SPECIES list(SPECIES_HUMAN, SPECIES_VATGROWN, SPECIES_SPACER, SPECIES_TRITONIAN, SPECIES_GRAVWORLDER, SPECIES_MULE, SPECIES_UNATHI, SPECIES_YEOSA, SPECIES_TAJARA, SPECIES_SKRELL)
 
 /singleton/emote
-	var/list/emote_sound = null
 	// three-dimensional array
 	// first is the species, associated to a list of genders, associated to a list of the sound effects to use
 	var/list/sounded_species = null
