@@ -1,15 +1,15 @@
 #define SOUNDED_SPECIES list(SPECIES_HUMAN, SPECIES_VATGROWN, SPECIES_SPACER, SPECIES_TRITONIAN, SPECIES_GRAVWORLDER, SPECIES_MULE, SPECIES_UNATHI, SPECIES_YEOSA, SPECIES_TAJARA, SPECIES_SKRELL)
 
-/singleton/emote
+/singleton/emote/audible
 	// three-dimensional array
 	// first is the species, associated to a list of genders, associated to a list of the sound effects to use
 	var/list/sounded_species = null
 
-/singleton/emote/do_emote(atom/user, extra_params)
+/singleton/emote/audible/do_emote(atom/user, extra_params)
 	..()
 	if(emote_sound) do_sound(user)
 
-/singleton/emote/proc/do_sound(atom/user)
+/singleton/emote/audible/proc/do_sound(atom/user)
 	var/mob/living/carbon/human/H = user
 	if(H.stat) return // No dead or unconcious people screaming pls.
 	if(istype(H))
