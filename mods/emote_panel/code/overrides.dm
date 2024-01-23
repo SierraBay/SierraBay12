@@ -145,6 +145,10 @@
 	emote_message_3p = "USER пялится на TARGET."
 	emote_message_3p = "USER пялится."
 
+/singleton/emote/audible/scream
+	key = "scream"
+	emote_message_3p = "USER кричит!"
+
 /singleton/emote/visible/look
 	key = "look"
 	emote_message_3p = "USER смотрит на TARGET."
@@ -325,8 +329,8 @@
 
 /singleton/emote/visible/squint
 	key = "squint"
-	emote_message_3p = "USER squints."
-	emote_message_3p_target = "USER squints at TARGET."
+	emote_message_3p = "USER прищуривается."
+	emote_message_3p_target = "USER щурится на TARGET."
 
 /singleton/emote/visible/tfist
 	key = "tfist"
