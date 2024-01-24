@@ -153,7 +153,7 @@
 				if(MALE)
 					scream_sound = pick('mods/emote_panel/sound/pain_male_1.ogg','mods/emote_panel/sound/pain_male_2.ogg','mods/emote_panel/sound/pain_male_3.ogg')
 				if(FEMALE)
-					scream_sound = pick('mods/emote_panel/sound/agony_female_1.ogg','mods/emote_panel/sound/agony_female_1.ogg','mods/emote_panel/sound/agony_female_1.ogg')
+					scream_sound = pick('mods/emote_panel/sound/agony_female_1.ogg','mods/emote_panel/sound/agony_female_2.ogg','mods/emote_panel/sound/agony_female_3.ogg')
 			message = "кричит от боли!"
 		else
 			message = "издает громкое мычание!"
