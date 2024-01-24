@@ -105,8 +105,8 @@
 
 /singleton/emote/audible/giggle
 	emote_sound = list(
-		MALE = 'mods/emote_panel/sound/giggle_male_2.ogg',
-		FEMALE = 'mods/emote_panel/sound/giggle_female_3.ogg')
+		MALE = 'mods/emote_panel/sound/giggle_male_1.ogg',
+		FEMALE = 'mods/emote_panel/sound/giggle_female_1.ogg')
 	sounded_species = SOUNDED_SPECIES
 
 /singleton/emote/audible/scream
