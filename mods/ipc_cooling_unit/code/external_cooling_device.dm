@@ -141,7 +141,7 @@
 	if(istype(W, /obj/item/screwdriver))
 		closed = !closed
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-		to_chat(user, SPAN_NOTICE("You [closed ? "tighten" : "unscrew"] ECD panel"))
+		to_chat(user, "You [closed ? "tighten" : "unscrew"] ECD panel")
 		on_update_icon()
 	if(!closed)
 		if (istype(W, /obj/item/cell))
@@ -189,19 +189,19 @@
 		return
 
 	if(!CanPhysicallyInteractWith(usr, src))
-		to_chat(usr, SPAN_WARNING("You're in no condition to do that!"))
+		to_chat(usr, SPAN_NOTICE("You're in no condition to do that!"))
 		return
 
 	if(!usr.skill_check(SKILL_DEVICES, SKILL_BASIC))
 		rip_out()
 	else
-		visible_message(SPAN_NOTICE("\The [attached] is taken off \the [src]."))
+		visible_message("\The [attached] is taken off \the [src].")
 		attached = null
 	update_icon()
 
 
 /obj/machinery/external_cooling_device/proc/rip_out()
-	visible_message(SPAN_WARNING("\The tube is ripped out of \the [src.attached]!"))
+	visible_message("\The tube is ripped out of \the [src.attached]")
 	attached.apply_damage(1, DAMAGE_BRUTE, pick(BP_GROIN, BP_CHEST), damage_flags=DAMAGE_FLAG_SHARP)
 	attached = null
 	update_icon()
@@ -212,20 +212,14 @@
 		update_icon()
 
 /obj/machinery/external_cooling_device/proc/do_ECD_hookup(mob/living/carbon/human/target, mob/user, obj/ECD)
-	to_chat(user, SPAN_NOTICE("You start to hook up \the [target] to \the [ECD]."))
+	to_chat(user, "<span class='notice'>You start to hook up \the [target] to \the [ECD].</span>")
 	if(!user.do_skilled(2 SECONDS, SKILL_DEVICES, target))
 		return FALSE
 
 	if(prob(user.skill_fail_chance(SKILL_DEVICES, 40, SKILL_MIN)))
-		user.visible_message(
-			SPAN_WARNING("\The [user] fails while trying to hook \the [target] up to \the [ECD], stabbing them instead!"),
-			SPAN_WARNING("You fail while trying to hook \the [target] up to \the [ECD], stabbing yourself instead!")
-		)
+		user.visible_message("\The [user] fails while trying to hook \the [target] up to \the [ECD], stabbing them instead!")
 		target.apply_damage(5, DAMAGE_BRUTE, pick(BP_GROIN, BP_CHEST), damage_flags=DAMAGE_FLAG_SHARP)
 		return FALSE
 
-	user.visible_message(
-		SPAN_NOTICE("\The [user] hooks \the [target] up to \the [ECD]."),
-		SPAN_NOTICE("You hook \the [target] up to \the [ECD]")
-	)
+	user.visible_message("\The [user] hooks \the [target] up to \the [ECD].")
 	return TRUE

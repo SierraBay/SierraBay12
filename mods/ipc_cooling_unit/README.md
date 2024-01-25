@@ -11,7 +11,7 @@
 <!-- Название мода. Не важно на русском или на английском. -->
 ## Мод-пример
 
-ID мода:  
+ID мода: IPC_COOLING_UNIT
 <!--
   Название модпака прописными буквами, СОЕДИНЁННЫМИ_ПОДЧЁРКИВАНИЕМ,
   которое ты будешь использовать для обозначения файлов.
@@ -47,7 +47,7 @@ ID мода:
 
 ### Дефайны
 
-- `code/__defines/~mods/~master_defines.dm`: `BP_COOLING`,
+- `code/__defines/~mods/ipc_cooling_unit.dm`: `IPC_COOLING_UNIT_SPEED_MULTIPLIER`, `IPC_COOLING_UNIT_SPEED_BASE`, `BP_COOLING`,
 <!--
 
 -->
