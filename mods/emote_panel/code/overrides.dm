@@ -61,18 +61,18 @@
 	if(istype(user))
 		user.Paralyse(2)
 
-/singleton/emote/visible/flash
-	key = "flash"
-	emote_message_3p = "The lights on USER flash quickly."
+// /singleton/emote/visible/flash
+// 	key = "flash"
+// 	emote_message_3p = "The lights on USER flash quickly."
 
 /singleton/emote/visible/blink
 	key = "blink"
 	emote_message_3p = "USER моргает."
 
-/singleton/emote/visible/airguitar
-	key = "airguitar"
-	check_restraints = TRUE
-	emote_message_3p = "USER is strumming the air and headbanging like a safari chimp."
+// /singleton/emote/visible/airguitar
+// 	key = "airguitar"
+// 	check_restraints = TRUE
+// 	emote_message_3p = "USER is strumming the air and headbanging like a safari chimp."
 
 /singleton/emote/visible/blink_r
 	key = "blink_r"
@@ -198,11 +198,11 @@
 	emote_message_3p = "USER обнимает USER_SELF!"
 	check_range = 1
 
-/singleton/emote/visible/dap
-	key = "dap"
-	check_restraints = TRUE
-	emote_message_3p_target = "USER gives daps to TARGET."
-	emote_message_3p = "USER sadly can't find anybody to give daps to, and daps USER_SELF."
+// /singleton/emote/visible/dap
+// 	key = "dap"
+// 	check_restraints = TRUE
+// 	emote_message_3p_target = "USER gives daps to TARGET."
+// 	emote_message_3p = "USER sadly can't find anybody to give daps to, and daps USER_SELF."
 
 /singleton/emote/visible/bounce
 	key = "bounce"
@@ -220,112 +220,118 @@
 	key = "vibrate"
 	emote_message_3p = "USER вибрирует!"
 
-/singleton/emote/visible/deathgasp_robot
-	key = "deathgasp"
-	emote_message_3p = "USER shudders violently for a moment, then becomes motionless, USER_THEIR eyes slowly darkening."
+// /singleton/emote/visible/deathgasp_robot
+// 	key = "deathgasp"
+// 	emote_message_3p = "USER shudders violently for a moment, then becomes motionless, USER_THEIR eyes slowly darkening."
 
 /singleton/emote/visible/handshake
 	key = "handshake"
 	check_restraints = TRUE
-	emote_message_3p_target = "USER shakes hands with TARGET."
-	emote_message_3p = "USER shakes hands with USER_SELF."
+	emote_message_3p_target = "USER пожимает руку TARGET."
+	emote_message_3p = "USER пожимает руку USER_SELF."
 	check_range = 1
 
 /singleton/emote/visible/handshake/get_emote_message_3p(atom/user, atom/target, extra_params)
 	if(target && !user.Adjacent(target))
-		return "USER holds out USER_THEIR hand out to TARGET."
+		return "USER протягивает руку TARGET."
 	return ..()
 
 /singleton/emote/visible/signal
 	key = "signal"
-	emote_message_3p_target = "USER signals at TARGET."
-	emote_message_3p = "USER signals."
+	emote_message_3p_target = "USER машет TARGET."
+	emote_message_3p = "USER машет."
 	check_restraints = TRUE
 
 /singleton/emote/visible/signal/check_user(atom/user)
 	return ismob(user)
 
+/singleton/emote/visible/signal/proc/get_fingers_word(number)
+	switch(number)
+		if (1) return "палец"
+		if (2, 3, 4) return "пальца"
+		if (5) return "пальцев"
+
 /singleton/emote/visible/signal/get_emote_message_3p(mob/user, atom/target, extra_params)
 	if(istype(user) && !(user.r_hand && user.l_hand))
 		var/t1 = round(text2num(extra_params))
 		if(isnum(t1) && t1 <= 5)
-			return "USER raises [t1] finger\s."
+			return "USER показывает [t1] [get_fingers_word(t1)]."
 	return .. ()
 
 /singleton/emote/visible/afold
 	key = "afold"
 	check_restraints = TRUE
-	emote_message_3p = "USER folds USER_THEIR arms."
+	emote_message_3p = "USER складывает руки."
 
 /singleton/emote/visible/alook
 	key = "alook"
-	emote_message_3p = "USER looks away."
+	emote_message_3p = "USER отворачивается."
 
 /singleton/emote/visible/hbow
 	key = "hbow"
-	emote_message_3p = "USER bows USER_THEIR head."
+	emote_message_3p = "USER кланяет голову."
 
 /singleton/emote/visible/hip
 	key = "hip"
 	check_restraints = TRUE
-	emote_message_3p = "USER puts USER_THEIR hands on USER_THEIR hips."
+	emote_message_3p = "USER упирается руками в свои бёдра."
 
 /singleton/emote/visible/holdup
 	key = "holdup"
 	check_restraints = TRUE
-	emote_message_3p = "USER holds up USER_THEIR palms."
+	emote_message_3p = "USER поднимает свои ладони."
 
 /singleton/emote/visible/hshrug
 	key = "hshrug"
-	emote_message_3p = "USER gives a half shrug."
+	emote_message_3p = "USER чуть пожимает плечами."
 
 /singleton/emote/visible/crub
 	key = "crub"
 	check_restraints = TRUE
-	emote_message_3p = "USER rubs USER_THEIR chin."
+	emote_message_3p = "USER потирает подбородок."
 
 /singleton/emote/visible/eroll
 	key = "eroll"
-	emote_message_3p = "USER rolls USER_THEIR eyes."
-	emote_message_3p_target = "USER rolls USER_THEIR eyes at TARGET."
+	emote_message_3p = "USER закатывает глаза."
+	emote_message_3p_target = "USER закатывает глаза на TARGET."
 
 /singleton/emote/visible/erub
 	key = "erub"
 	check_restraints = TRUE
-	emote_message_3p = "USER rubs USER_THEIR eyes."
+	emote_message_3p = "USER протирает глаза."
 
 /singleton/emote/visible/fslap
 	key = "fslap"
 	check_restraints = TRUE
-	emote_message_3p = "USER slaps USER_THEIR forehead."
+	emote_message_3p = "USER шлёпает себя по лбу."
 
 /singleton/emote/visible/ftap
 	key = "ftap"
-	emote_message_3p = "USER taps USER_THEIR foot."
+	emote_message_3p = "USER постукивает ногой."
 
 /singleton/emote/visible/hrub
 	key = "hrub"
 	check_restraints = TRUE
-	emote_message_3p = "USER rubs USER_THEIR hands together."
+	emote_message_3p = "USER потирает свои руки."
 
 /singleton/emote/visible/hspread
 	key = "hspread"
 	check_restraints = TRUE
-	emote_message_3p = "USER spreads USER_THEIR hands."
+	emote_message_3p = "USER разводит руками."
 
 /singleton/emote/visible/pocket
 	key = "pocket"
 	check_restraints = TRUE
-	emote_message_3p = "USER shoves USER_THEIR hands in USER_THEIR pockets."
+	emote_message_3p = "USER засовывает свои руки в карманы."
 
-/singleton/emote/visible/rsalute
-	key = "rsalute"
-	check_restraints = TRUE
-	emote_message_3p = "USER returns the salute."
+// /singleton/emote/visible/rsalute
+// 	key = "rsalute"
+// 	check_restraints = TRUE
+// 	emote_message_3p = "USER returns the salute."
 
 /singleton/emote/visible/rshoulder
 	key = "rshoulder"
-	emote_message_3p = "USER rolls USER_THEIR shoulders."
+	emote_message_3p = "USER закатывает свои рукава."
 
 /singleton/emote/visible/squint
 	key = "squint"
@@ -334,8 +340,8 @@
 
 /singleton/emote/visible/tfist
 	key = "tfist"
-	emote_message_3p = "USER tightens USER_THEIR hands into fists."
+	emote_message_3p = "USER сжимает руки в кулаки."
 
 /singleton/emote/visible/tilt
 	key = "tilt"
-	emote_message_3p = "USER tilts USER_THEIR head."
+	emote_message_3p = "USER наклоняет свою голову."
