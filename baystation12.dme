@@ -169,7 +169,6 @@
 #include "code\_onclick\hud\screen_objects.dm"
 #include "code\_onclick\hud\skybox.dm"
 #include "code\controllers\admin.dm"
-#include "code\controllers\autotransfer.dm"
 #include "code\controllers\communications.dm"
 #include "code\controllers\configuration.dm"
 #include "code\controllers\controller.dm"
@@ -220,6 +219,7 @@
 #include "code\controllers\subsystems\plants.dm"
 #include "code\controllers\subsystems\presence.dm"
 #include "code\controllers\subsystems\radiation.dm"
+#include "code\controllers\subsystems\roundend.dm"
 #include "code\controllers\subsystems\shuttle.dm"
 #include "code\controllers\subsystems\skybox.dm"
 #include "code\controllers\subsystems\spacedrift.dm"
@@ -3367,5 +3367,6 @@
 #include "mods\_master_files\code\modules\power\gravitygenerator.dm"
 #include "mods\_master_files\maps\mapsystem\maps.dm"
 #include "mods\_master_files\maps\sierra\sierra_ranks.dm"
+#include "mods\_master_files\maps\sierra\items\rigs.dm"
 #include "~code\global_init.dm"
 // END_INCLUDE

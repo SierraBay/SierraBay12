@@ -44,7 +44,7 @@
 	name = "Exploration suit cycler"
 	model_text = "Exploration"
 	req_access = list(access_explorer)
-	available_modifications = list(/singleton/item_modifier/space_suit/sol/explorer)
+	available_modifications = list(/singleton/item_modifier/space_suit/sol/sierra/exploration)
 
 /obj/machinery/suit_cycler/pilot
 	req_access = list(access_explorer) //because unathi version of expeditonary suit it shit
@@ -262,3 +262,8 @@
 /datum/fabricator_recipe/medical/vial
 	path = /obj/item/reagent_containers/glass/beaker/vial
 	fabricator_types = list(FABRICATOR_CLASS_MICRO,FABRICATOR_CLASS_GENERAL)
+
+// Shieldgen
+
+/obj/machinery/power/shield_generator
+	icon = 'maps/sierra/icons/obj/shielding.dmi'
