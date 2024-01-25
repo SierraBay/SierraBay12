@@ -27,15 +27,24 @@
 /singleton/emote/audible/gasp
 	emote_sound = list(
 		MALE = list(
-			'mods/emote_panel/sound/gasp_male1.ogg', 'mods/emote_panel/sound/gasp_male2.ogg',
-			'mods/emote_panel/sound/gasp_male3.ogg', 'mods/emote_panel/sound/gasp_male4.ogg',
-			'mods/emote_panel/sound/gasp_male5.ogg', 'mods/emote_panel/sound/gasp_male6.ogg',
-			'mods/emote_panel/sound/gasp_male7.ogg'),
+			'mods/emote_panel/sound/gasp_male1.ogg',
+			'mods/emote_panel/sound/gasp_male2.ogg',
+			'mods/emote_panel/sound/gasp_male3.ogg',
+			'mods/emote_panel/sound/gasp_male4.ogg',
+			'mods/emote_panel/sound/gasp_male5.ogg',
+			'mods/emote_panel/sound/gasp_male6.ogg',
+			'mods/emote_panel/sound/gasp_male7.ogg'
+		),
 		FEMALE = list(
-			'mods/emote_panel/sound/gasp_female1.ogg', 'mods/emote_panel/sound/gasp_female2.ogg',
-			'mods/emote_panel/sound/gasp_female3.ogg', 'mods/emote_panel/sound/gasp_female4.ogg',
-			'mods/emote_panel/sound/gasp_female5.ogg', 'mods/emote_panel/sound/gasp_female6.ogg',
-			'mods/emote_panel/sound/gasp_female7.ogg'))
+			'mods/emote_panel/sound/gasp_female1.ogg',
+			'mods/emote_panel/sound/gasp_female2.ogg',
+			'mods/emote_panel/sound/gasp_female3.ogg',
+			'mods/emote_panel/sound/gasp_female4.ogg',
+			'mods/emote_panel/sound/gasp_female5.ogg',
+			'mods/emote_panel/sound/gasp_female6.ogg',
+			'mods/emote_panel/sound/gasp_female7.ogg'
+		)
+	)
 	sounded_species = list(SPECIES_HUMAN, SPECIES_VATGROWN, SPECIES_SPACER, SPECIES_TRITONIAN, SPECIES_GRAVWORLDER,
 	SPECIES_MULE,
 	SPECIES_UNATHI, SPECIES_YEOSA, SPECIES_TAJARA, SPECIES_VOX, SPECIES_SKRELL)
@@ -49,25 +58,43 @@
 
 /singleton/emote/audible/sneeze
 	emote_sound = list(
-		MALE = list('mods/emote_panel/sound/sneeze_male_1.ogg', 'mods/emote_panel/sound/sneeze_male_2.ogg'),
-		FEMALE = list('mods/emote_panel/sound/sneeze_female_1.ogg', 'mods/emote_panel/sound/sneeze_female_2.ogg'))
+		MALE = list(
+			'mods/emote_panel/sound/sneeze_male_1.ogg',
+			'mods/emote_panel/sound/sneeze_male_2.ogg'
+		),
+		FEMALE = list(
+			'mods/emote_panel/sound/sneeze_female_1.ogg',
+			'mods/emote_panel/sound/sneeze_female_2.ogg'
+		)
+	)
 	sounded_species = SOUNDED_SPECIES
 
 /singleton/emote/audible/snore
 	emote_sound = list(
-		'mods/emote_panel/sound/snore_1.ogg', 'mods/emote_panel/sound/snore_2.ogg',
-		'mods/emote_panel/sound/snore_3.ogg', 'mods/emote_panel/sound/snore_4.ogg',
-		'mods/emote_panel/sound/snore_5.ogg', 'mods/emote_panel/sound/snore_6.ogg',
-		'mods/emote_panel/sound/snore_7.ogg')
+		'mods/emote_panel/sound/snore_1.ogg',
+		'mods/emote_panel/sound/snore_2.ogg',
+		'mods/emote_panel/sound/snore_3.ogg',
+		'mods/emote_panel/sound/snore_4.ogg',
+		'mods/emote_panel/sound/snore_5.ogg',
+		'mods/emote_panel/sound/snore_6.ogg',
+		'mods/emote_panel/sound/snore_7.ogg'
+	)
 	sounded_species = list(SPECIES_HUMAN, SPECIES_VATGROWN, SPECIES_SPACER, SPECIES_TRITONIAN, SPECIES_GRAVWORLDER,
 	SPECIES_MULE,
 	SPECIES_UNATHI, SPECIES_YEOSA, SPECIES_TAJARA, SPECIES_VOX, SPECIES_SKRELL)
 
 /singleton/emote/audible/yawn
 	emote_sound = list(
-		MALE = list('mods/emote_panel/sound/yawn_male_1.ogg', 'mods/emote_panel/sound/yawn_male_2.ogg'),
-		FEMALE = list('mods/emote_panel/sound/yawn_female_1.ogg', 'mods/emote_panel/sound/yawn_female_2.ogg',
-						'mods/emote_panel/sound/yawn_female_3.ogg'))
+		MALE = list(
+			'mods/emote_panel/sound/yawn_male_1.ogg',
+			'mods/emote_panel/sound/yawn_male_2.ogg'
+		),
+		FEMALE = list(
+			'mods/emote_panel/sound/yawn_female_1.ogg',
+			'mods/emote_panel/sound/yawn_female_2.ogg',
+			'mods/emote_panel/sound/yawn_female_3.ogg'
+		)
+	)
 	sounded_species = SOUNDED_SPECIES
 
 /singleton/emote/audible/clap
@@ -76,43 +103,69 @@
 /singleton/emote/audible/cough
 	emote_sound = list(
 		MALE = 'mods/emote_panel/sound/cough_male.ogg',
-		FEMALE = 'mods/emote_panel/sound/cough_female.ogg')
+		FEMALE = 'mods/emote_panel/sound/cough_female.ogg'
+	)
 	sounded_species = list(SPECIES_HUMAN, SPECIES_VATGROWN, SPECIES_SPACER, SPECIES_TRITONIAN, SPECIES_GRAVWORLDER,
 	SPECIES_MULE,
 	SPECIES_UNATHI, SPECIES_YEOSA, SPECIES_TAJARA, SPECIES_VOX, SPECIES_SKRELL)
 
 /singleton/emote/audible/cry
 	emote_sound = list(
-		MALE = list('mods/emote_panel/sound/cry_male_1.ogg', 'mods/emote_panel/sound/cry_male_2.ogg'),
-		FEMALE = list('mods/emote_panel/sound/cry_female_1.ogg', 'mods/emote_panel/sound/cry_female_2.ogg',
-						'mods/emote_panel/sound/cry_female_3.ogg'))
+		MALE = list(
+			'mods/emote_panel/sound/cry_male_1.ogg',
+			'mods/emote_panel/sound/cry_male_2.ogg'
+		),
+		FEMALE = list(
+			'mods/emote_panel/sound/cry_female_1.ogg',
+			'mods/emote_panel/sound/cry_female_2.ogg',
+			'mods/emote_panel/sound/cry_female_3.ogg'
+		)
+	)
 	sounded_species = SOUNDED_SPECIES
 
 /singleton/emote/audible/sigh
 	emote_sound = list(
 		MALE = 'mods/emote_panel/sound/sigh_male.ogg',
-		FEMALE = 'mods/emote_panel/sound/sigh_female.ogg')
+		FEMALE = 'mods/emote_panel/sound/sigh_female.ogg'
+	)
 	sounded_species = list(SPECIES_HUMAN, SPECIES_VATGROWN, SPECIES_SPACER, SPECIES_TRITONIAN, SPECIES_GRAVWORLDER,
 	SPECIES_MULE,
 	SPECIES_UNATHI, SPECIES_YEOSA, SPECIES_TAJARA, SPECIES_VOX, SPECIES_SKRELL)
 
 /singleton/emote/audible/laugh
 	emote_sound = list(
-		MALE = list('mods/emote_panel/sound/laugh_male_1.ogg', 'mods/emote_panel/sound/laugh_male_2.ogg', 'mods/emote_panel/sound/laugh_male_3.ogg'),
-		FEMALE = list('mods/emote_panel/sound/laugh_female_1.ogg', 'mods/emote_panel/sound/laugh_female_2.ogg', 'mods/emote_panel/sound/laugh_female_3.ogg'))
+		MALE = list(
+			'mods/emote_panel/sound/laugh_male_1.ogg',
+			'mods/emote_panel/sound/laugh_male_2.ogg',
+			'mods/emote_panel/sound/laugh_male_3.ogg'
+		),
+		FEMALE = list(
+			'mods/emote_panel/sound/laugh_female_1.ogg',
+			'mods/emote_panel/sound/laugh_female_2.ogg',
+			'mods/emote_panel/sound/laugh_female_3.ogg'
+		)
+	)
 	sounded_species = SOUNDED_SPECIES
 
 /singleton/emote/audible/giggle
 	emote_sound = list(
 		MALE = 'mods/emote_panel/sound/giggle_male_1.ogg',
-		FEMALE = 'mods/emote_panel/sound/giggle_female_1.ogg')
+		FEMALE = 'mods/emote_panel/sound/giggle_female_1.ogg'
+	)
 	sounded_species = SOUNDED_SPECIES
 
 /singleton/emote/audible/scream
 	emote_sound = list(
-		MALE = list('mods/emote_panel/sound/scream_male_1.ogg', 'mods/emote_panel/sound/scream_male_2.ogg',
-					'mods/emote_panel/sound/scream_male_3.ogg'),
-		FEMALE = list('mods/emote_panel/sound/scream_female_1.ogg', 'mods/emote_panel/sound/scream_female_2.ogg'))
+		MALE = list(
+			'mods/emote_panel/sound/scream_male_1.ogg',
+			'mods/emote_panel/sound/scream_male_2.ogg',
+			'mods/emote_panel/sound/scream_male_3.ogg'
+		),
+		FEMALE = list(
+			'mods/emote_panel/sound/scream_female_1.ogg',
+			'mods/emote_panel/sound/scream_female_2.ogg'
+		)
+	)
 	sounded_species = SOUNDED_SPECIES
 
 /singleton/emote/audible/scream/monkey
@@ -120,7 +173,7 @@
 		'mods/emote_panel/sound/pain_monkey_1.ogg',
 		'mods/emote_panel/sound/pain_monkey_2.ogg',
 		'mods/emote_panel/sound/pain_monkey_3.ogg'
-		)
+	)
 	sounded_species = null
 
 /singleton/emote/audible/cat_purr
@@ -136,49 +189,3 @@
 	key = "snap"
 	emote_message_3p = "USER щёлкает пальцами."
 	emote_sound = 'mods/emote_panel/sound/fingersnap.ogg'
-
-// Pain below
-
-/mob/living/proc/agony_scream()
-	if(stat || is_species(SPECIES_MONKEY))
-		return
-	var/scream_sound = null
-	var/message = null
-
-	if(ishuman(src))
-		var/mob/living/carbon/human/H = src
-		if(!is_muzzled())
-			switch(gender)
-				if(MALE)
-					scream_sound = pick('mods/emote_panel/sound/pain_male_1.ogg','mods/emote_panel/sound/pain_male_2.ogg','mods/emote_panel/sound/pain_male_3.ogg')
-				if(FEMALE)
-					scream_sound = pick('mods/emote_panel/sound/agony_female_1.ogg','mods/emote_panel/sound/agony_female_2.ogg','mods/emote_panel/sound/agony_female_3.ogg')
-			message = "кричит от боли!"
-		else
-			message = "издает громкое мычание!"
-
-	if(message)
-		custom_emote(2, message)
-
-/mob/living/proc/agony_moan()
-	if(stat || is_species(SPECIES_MONKEY))
-		return
-	var/moan_sound = null
-	var/message = null
-
-	if(ishuman(src))
-		var/mob/living/carbon/human/H = src
-		if(!is_muzzled())
-			switch(gender)
-				if(MALE) moan_sound = pick('mods/emote_panel/sound/moan_male_1.ogg','mods/emote_panel/sound/moan_male_2.ogg','mods/emote_panel/sound/moan_male_3.ogg')
-				if(FEMALE) moan_sound = pick('mods/emote_panel/sound/moan_female_1.ogg','mods/emote_panel/sound/moan_female_2.ogg','mods/emote_panel/sound/moan_female_3.ogg')
-			message = "стонет от боли!"
-		else
-			message = "издает громкое мычание!"
-
-		if(moan_sound)
-			if(H.species.name in SOUNDED_SPECIES)
-				playsound(src, moan_sound, 50, 0, 1)
-
-	if(message)
-		custom_emote(2, message)

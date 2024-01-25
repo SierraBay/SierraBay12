@@ -5,6 +5,7 @@
 #include "code/audible.dm"
 #include "code/emotes.dm"
 #include "code/overrides.dm"
+#include "code/pain.dm"
 #include "code/silicon.dm"
 #include "code/unathi.dm"
 
