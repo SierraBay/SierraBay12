@@ -100,8 +100,8 @@ var/global/list/admin_verbs_admin = list(
 	/datum/admins/proc/sendFax,
 	/client/proc/check_fax_history,
 	/client/proc/cmd_admin_notarget,
-	/datum/admins/proc/setroundlength,
-	/datum/admins/proc/toggleroundendvote,
+	/datum/admins/proc/SetRoundLength,
+	/datum/admins/proc/ToggleContinueVote,
 	/datum/admins/proc/togglemoderequirementchecks,
 	/client/proc/delete_crew_record
 )
@@ -144,6 +144,9 @@ var/global/list/admin_verbs_spawn = list(
 	/datum/admins/proc/spawn_atom,		// allows us to spawn instances,
 	/datum/admins/proc/spawn_artifact,
 	/client/proc/spawn_chemdisp_cartridge,
+	// [SIERRA-ADD] - CLIENT_VERBS - ,
+	/client/proc/respawn_as_self,
+	// [/SIERRA-ADD] - CLIENT_VERBS ,
 	/datum/admins/proc/mass_debug_closet_icons
 	)
 var/global/list/admin_verbs_server = list(

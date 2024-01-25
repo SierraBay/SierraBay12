@@ -89,6 +89,17 @@
 	RefreshParts()
 	power_change()
 
+/obj/machinery/post_health_change(health_mod, prior_health, damage_type)
+	if (health_mod < 0 && !health_dead())
+		var/initial_damage_percentage = Percent(get_max_health() - prior_health, get_max_health(), 0)
+		var/damage_percentage = get_damage_percentage()
+		if (damage_percentage >= 75 && initial_damage_percentage < 75)
+			visible_message("\The [src] looks like it's about to break!" )
+		else if (damage_percentage >= 50 && initial_damage_percentage < 50)
+			visible_message("\The [src] looks seriously damaged!" )
+		else if (damage_percentage >= 25 && initial_damage_percentage < 25)
+			visible_message("\The [src] shows signs of damage!" )
+
 /obj/machinery/Destroy()
 	if(istype(wires))
 		QDEL_NULL(wires)
@@ -227,14 +238,9 @@
 /obj/machinery/attack_hand(mob/user)
 	if((. = ..())) // Buckling, climbers, punching on harm; unlikely to return true.
 		return
-	if(MUTATION_FERAL in user.mutations)
-		user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN*2)
-		attack_generic(user, 10, "smashes")
-		return TRUE
 	if(!CanPhysicallyInteract(user))
 		return FALSE // The interactions below all assume physical access to the machine. If this is not the case, we let the machine take further action.
 	if(!user.IsAdvancedToolUser())
-		to_chat(user, SPAN_WARNING("You don't have the dexterity to do this!"))
 		return TRUE
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
@@ -242,11 +248,11 @@
 			visible_message(SPAN_WARNING("\The [H] stares cluelessly at \the [src]."))
 			return TRUE
 	if((. = component_attack_hand(user)))
-		return
+		return TRUE
 	if(wires && (. = wires.Interact(user)))
-		return
+		return TRUE
 	if((. = physical_attack_hand(user)))
-		return
+		return TRUE
 	if(CanUseTopic(user, DefaultTopicState()) > STATUS_CLOSE)
 		return interface_interact(user)
 

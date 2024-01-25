@@ -165,28 +165,14 @@
 			do_animate("deny")
 	return
 
-/obj/machinery/door/airlock/attack_generic(mob/user)
-	if (MUTATION_FERAL in user.mutations)
-		user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN*2)
-		playsound(loc, damage_hitsound, 50, 1)
-		attack_animation(user)
-
-		if((MACHINE_IS_BROKEN(src)||!arePowerSystemsOn(src)) && density)
-			visible_message(SPAN_DANGER("\The [user] manages to pry \the [src] open!"))
-			open(1)
-		else
-			visible_message(SPAN_DANGER("\The [user] smashes into \the [src]!"))
-			damage_health(10)
-		return
-	..()
-
 /obj/machinery/door/attack_hand(mob/user)
+	if (MUTATION_FERAL in user.mutations)
+		if ((!is_powered() || MACHINE_IS_BROKEN(src)) && density)
+			visible_message(SPAN_DANGER("\The [user] manages to pry \the [src] open!"))
+			return open(TRUE)
+
 	if ((. = ..()))
 		return
-
-	if (MUTATION_FERAL in user.mutations)
-		attack_generic(user, 15)
-		return TRUE
 
 	if (!operating)
 		if (allowed(user) && operable())
@@ -289,16 +275,6 @@
 /obj/machinery/door/post_health_change(health_mod, prior_health, damage_type)
 	. = ..()
 	queue_icon_update()
-	if (health_mod < 0 && !health_dead())
-		var/initial_damage_percentage = round((prior_health / get_max_health()) * 100)
-		var/damage_percentage = get_damage_percentage()
-		if (damage_percentage >= 75 && initial_damage_percentage < 75)
-			visible_message("\The [src] looks like it's about to break!" )
-		else if (damage_percentage >= 50 && initial_damage_percentage < 50)
-			visible_message("\The [src] looks seriously damaged!" )
-		else if (damage_percentage >= 25 && initial_damage_percentage < 25)
-			visible_message("\The [src] shows signs of damage!" )
-
 
 /obj/machinery/door/on_revive()
 	. = ..()
