@@ -46,3 +46,7 @@
 // LOADOUT_ITEMS - Start
 #define ACCESSORY_SLOT_OVER     "Over"
 // LOADOUT_ITEMS - End
+
+// IPC_COOLING_UNIT - Start
+#define BP_COOLING "cooling system"
+// IPC_COOLING_UNIT - End

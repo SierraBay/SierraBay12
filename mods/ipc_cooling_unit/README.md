@@ -47,7 +47,7 @@ ID мода: IPC_COOLING_UNIT
 
 ### Дефайны
 
-- `code/__defines/~mods/ipc_cooling_unit.dm`: `IPC_COOLING_UNIT_SPEED_MULTIPLIER`, `IPC_COOLING_UNIT_SPEED_BASE`, `BP_COOLING`,
+- `code/__defines/~mods/~master_defines.dm`: `BP_COOLING`,
 <!--
 
 -->

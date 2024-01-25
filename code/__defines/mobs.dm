@@ -491,5 +491,3 @@
 
 /// Integer (~ticks * SSMobs/wait fire rate). The default maximum value a mob's confused var can be set to.
 #define CONFUSED_MAX 15
-
-#define BP_COOLING "cooling system" // IPC Cooling organ
