@@ -5,8 +5,7 @@
 	// first is the species, associated to a list of genders, associated to a list of the sound effects to use
 	var/list/sounded_species = null
 
-/singleton/emote/audible/do_emote(atom/user, extra_params)
-	..()
+/singleton/emote/audible/do_extra(atom/user)
 	if(emote_sound) do_sound(user)
 
 /singleton/emote/audible/proc/do_sound(atom/user)
