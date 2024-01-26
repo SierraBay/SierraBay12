@@ -1,6 +1,9 @@
 /datum/gear/suit/medcoat
 	allowed_roles = MEDICAL_ROLES
 
+/datum/gear/suit/sierra_medcoat
+	allowed_roles = MEDICAL_ROLES
+
 /datum/gear/suit/poncho
 	display_name = "poncho selection"
 	path = /obj/item/clothing/suit/poncho/colored
@@ -50,9 +53,10 @@
 	path = /obj/item/clothing/suit/storage/hooded/wintercoat/science
 	allowed_roles = list(/datum/job/rd, /datum/job/scientist, /datum/job/scientist_assistant, /datum/job/senior_scientist, /datum/job/roboticist,     )
 
-/datum/gear/suit/wintercoat/dais
-	display_name = "DAIS winter coat"
-	allowed_roles = list(/datum/job/engineer, /datum/job/scientist, /datum/job/roboticist, /datum/job/infsys)
+/datum/gear/suit/wintercoat_dais
+	display_name = "winter coat, DAIS"
+	path = /obj/item/clothing/suit/storage/hooded/wintercoat/dais
+	allowed_roles = list(/datum/job/engineer, /datum/job/scientist, /datum/job/scientist_assistant, /datum/job/roboticist, /datum/job/infsys)
 	allowed_branches = list(/datum/mil_branch/contractor)
 
 /datum/gear/suit/labcoat
@@ -85,3 +89,6 @@
 /datum/gear/suit/snakeskin
 	display_name = "snakeskin coat"
 	path = /obj/item/clothing/suit/snakeskin
+
+/datum/gear/suit/unathi/security_jacket
+	allowed_roles = SECURITY_ROLES

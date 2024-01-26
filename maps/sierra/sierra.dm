@@ -44,6 +44,8 @@
 	#include "datums/supplypacks/security.dm"
 	#include "datums/supplypacks/science.dm"
 
+	#include "datums/species/species_overrides.dm"
+
 	#include "game/languages.dm"
 	#include "game/lockdown.dm"
 
@@ -95,6 +97,7 @@
 	#include "machinery/navbeacons.dm"
 	#include "machinery/power.dm"
 	#include "machinery/random.dm"
+	#include "machinery/suit_storage.dm"
 	#include "machinery/tcomms.dm"
 	#include "machinery/thrusters.dm"
 	#include "machinery/uniform_vendor.dm"
@@ -164,6 +167,9 @@
 	#include "../away/abandoned_hotel/abandoned_hotel.dm"
 	// #include "../event/iccgn_ship/icgnv_hound.dm" // SIERRA TODO: Пофиксить или удалить
 
+	#include "../bluespace_interlude/bluespace_interlude.dm"
+	#include "../bluespace_interlude/bluespace_interlude.dmm"
+
 	// USED MODS
 	// Keep them in ascending alphabetical order, please
 
@@ -176,7 +182,6 @@
 	#include "../../mods/fancy_sofas/_fancy_sofas.dme"
 	#include "../../mods/jukebox_tapes/_jukebox_tapes.dme"
 	#include "../../mods/legalese_language/_legalese.dme"
-	#include "../../mods/nyc_posters/_nyc_posters.dme"
 	#include "../../mods/leroy_beasts/_leroy_beasts.dme"
 	#include "../../mods/screentips/_screentips.dme"
 	#include "../../mods/tajara/_tajara.dme"

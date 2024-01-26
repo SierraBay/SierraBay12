@@ -148,7 +148,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 
 /proc/LinkBlocked(turf/A, turf/B)
-	if(A == null || B == null) return 1
+	if(isnull(A) || isnull(B)) return 1
 	var/adir = get_dir(A,B)
 	var/rdir = get_dir(B,A)
 	if((adir & (NORTH|SOUTH)) && (adir & (EAST|WEST)))	//	diagonal
@@ -677,7 +677,8 @@ GLOBAL_LIST_INIT(duplicate_object_disallowed_vars, list(
 	"key",
 	"group",
 	"ai_holder",
-	"natural_weapon"
+	"natural_weapon",
+	"extensions"
 ))
 
 
