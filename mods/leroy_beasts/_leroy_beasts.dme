@@ -3,5 +3,7 @@
 
 #include "_leroy_beasts.dm"
 #include "code/beasts.dm"
+#include "code/commanded.dm"
+#include "code/datums.dm"
 
 #endif

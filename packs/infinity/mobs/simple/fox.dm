@@ -30,4 +30,5 @@
 	name = "Renault"
 	desc = "Renault, the Captain's trustworthy female fox. Sometimes a bit smarter than an actual captain..."
 	gender = FEMALE
+	density = TRUE
 	universal_speak = TRUE //actually smart. But rememer: Ack-Ack!

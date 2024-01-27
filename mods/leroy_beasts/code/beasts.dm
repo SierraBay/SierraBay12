@@ -88,19 +88,6 @@
 	emote_hear = list("woofs", "barks")
 	speak = list("Bark!", "Woof!")
 
-/mob/living/simple_animal/friendly/dogs/german
-	name = "german shepherd"
-	real_name = "german shepherd"
-	desc = "That very type of a dog that appears in everybody's mind in the first place."
-	icon_state = "german_shepherd"
-	icon_living = "german_shepherd"
-	icon_dead = "german_shepherd_dead"
-
-/mob/living/simple_animal/friendly/dogs/german/black
-	icon_state = "german_shepherd_black"
-	icon_living = "german_shepherd_black"
-	icon_dead = "german_shepherd_black_dead"
-
 /mob/living/simple_animal/friendly/dogs/pug // Some kind of solitude is measured out in you
 	name = "pug"
 	real_name = "pug"
@@ -115,14 +102,6 @@
 	ai_holder = /datum/ai_holder/simple_animal/passive/corgi
 	say_list_type = /datum/say_list/corgi 							//we don't need repeat main say list here, aren't we?
 
-/mob/living/simple_animal/friendly/dogs/golden_retriever
-	name = "golden retriever"
-	real_name = "golden retriever"
-	desc = "Your perfect companion."
-	icon_state = "golden_retriever"
-	icon_living = "golden_retriever"
-	icon_dead = "golden_retriever_dead"
-
 /mob/living/simple_animal/friendly/dogs/shiba_inu
 	name = "shiba inu"
 	real_name = "shiba inu"
@@ -130,14 +109,6 @@
 	icon_state = "shiba_inu"
 	icon_living = "shiba_inu"
 	icon_dead = "shiba_inu_dead"
-
-/mob/living/simple_animal/friendly/dogs/bullterrier
-	name = "bullterrier"
-	real_name = "bullterrier"
-	desc = "Don't tempt this perky guy."
-	icon_state = "bullterrier"
-	icon_living = "bullterrier"
-	icon_dead = "bullterrier_dead"
 
 // Big Mon'keigh, ahem, just a normal gorilla
 
