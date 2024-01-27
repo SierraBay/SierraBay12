@@ -85,3 +85,9 @@
 	item_cost = 18
 	path = /obj/item/device/scanner/health/syndie
 	desc = "A tiny microlaser, hidden in health analyzer, that can irradiate your targets."
+
+/datum/uplink_item/item/tools/blackout
+	name = "High Pulse Electricity Outage Tool"
+	item_cost = 24
+	path = /obj/item/device/blackout
+	desc = "A device which can create power surge in terminal, spread it in power network and temporally creating blackout."

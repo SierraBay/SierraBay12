@@ -3,6 +3,7 @@
 
 #include "_antagonists.dm"
 
+#include "code/blackout.dm"
 #include "code/ert.dm"
 #include "code/mercenary.dm"
 #include "code/revolutionary.dm"
