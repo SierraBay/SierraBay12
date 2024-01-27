@@ -7,8 +7,8 @@
 	icon_state = "rabbit_white"
 
 	item_icons = list(
-		slot_l_hand_str = 'packs/infinity/icons/mob/onmob/items/mob_holder.dmi',
-		slot_r_hand_str = 'packs/infinity/icons/mob/onmob/items/mob_holder.dmi',
+		slot_l_hand_str = 'maps/sierra/icons/mob/onmob/item/mob_holder.dmi',
+		slot_r_hand_str = 'maps/sierra/icons/mob/onmob/item/mob_holder.dmi',
 	)
 
 	item_state_slots = list(
