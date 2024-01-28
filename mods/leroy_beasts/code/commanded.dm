@@ -45,7 +45,7 @@
 			S.guards += src
 	..()
 
-/mob/living/simple_animal/hostile/commanded/rex/attackby(obj/item/O as obj, mob/user as mob)
+/mob/living/simple_animal/hostile/commanded/rex/can_use_item(obj/item/O as obj, mob/user as mob)
 	if(istype(O, /obj/item/reagent_containers/food/snacks/meat) && stat != DEAD)
 		if(user != master)
 			visible_message(SPAN_WARNING("\The [src] started to growl"))

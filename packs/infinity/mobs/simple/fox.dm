@@ -1,3 +1,21 @@
+/mob/living/simple_animal/friendly/fox
+	holder_type = /obj/item/holder/fox
+
+/obj/item/holder/fox
+	slot_flags = null
+	icon = 'packs/infinity/icons/mob/mobs.dmi'
+	icon_state = "fox"
+
+	item_icons = list(
+		slot_l_hand_str = 'maps/sierra/icons/mob/onmob/item/mob_holder.dmi',
+		slot_r_hand_str = 'maps/sierra/icons/mob/onmob/item/mob_holder.dmi',
+	)
+
+	item_state_slots = list(
+		slot_l_hand_str = "fox_l",
+		slot_r_hand_str = "fox_r",
+	)
+
 //Foxxy
 /mob/living/simple_animal/friendly/fox
 	name = "fox"
@@ -12,6 +30,8 @@
 	response_help = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm = "kicks"
+	mob_size = MOB_SMALL
+	density = TRUE
 
 	ai_holder = /datum/ai_holder/simple_animal/passive/fox
 	say_list_type = /datum/say_list/fox
@@ -30,5 +50,4 @@
 	name = "Renault"
 	desc = "Renault, the Captain's trustworthy female fox. Sometimes a bit smarter than an actual captain..."
 	gender = FEMALE
-	density = TRUE
 	universal_speak = TRUE //actually smart. But rememer: Ack-Ack!
