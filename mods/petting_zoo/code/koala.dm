@@ -1,7 +1,7 @@
 /mob/living/simple_animal/friendly/koala
 	name = "space koala"
 	desc = "A little grey bear, now much time he gonna sleep today?"
-	icon = 'packs/infinity/icons/mob/mobs.dmi'
+	icon = 'mods/petting_zoo/icons/mobs.dmi'
 	icon_state = "koala"
 	icon_living = "koala"
 	icon_dead = "koala_dead"

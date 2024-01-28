@@ -1,7 +1,7 @@
 /mob/living/simple_animal/butterfly
 	name = "butterfly"
 	desc = "A colorful butterfly, how'd it get up here?"
-	icon = 'mods/leroy_beasts/icons/leroy_beasts_32x32.dmi'
+	icon = 'mods/petting_zoo/icons/leroy_beasts_32x32.dmi'
 	icon_state = "butterfly"
 	icon_living = "butterfly"
 	icon_dead = "butterfly_dead"
@@ -31,7 +31,7 @@
 /mob/living/simple_animal/friendly/cat/maine_coon
 	name = "maine coon"
 	desc = "What a hell of a cat!"
-	icon = 'mods/leroy_beasts/icons/leroy_beasts_32x32.dmi'
+	icon = 'mods/petting_zoo/icons/leroy_beasts_32x32.dmi'
 	icon_state = "maine_coon"
 	item_state = "maine_coon"
 	icon_living = "maine_coon"
@@ -42,7 +42,7 @@
 /mob/living/simple_animal/friendly/cat/floppa
 	name = "caracal"
 	desc = "Well-known for distinctive tassels on its ears and a strong urge for dumplings."
-	icon = 'mods/leroy_beasts/icons/leroy_beasts_32x64.dmi'
+	icon = 'mods/petting_zoo/icons/leroy_beasts_32x64.dmi'
 	icon_state = "caracal"
 	item_state = "caracal"
 	icon_living = "caracal"
@@ -61,7 +61,7 @@
 // Dogs. Some kind of happinies is measured out in miles. What makes you think you're something special when you smile?
 
 /mob/living/simple_animal/friendly/dogs
-	icon = 'mods/leroy_beasts/icons/leroy_beasts_32x32.dmi'
+	icon = 'mods/petting_zoo/icons/leroy_beasts_32x32.dmi'
 	speak_emote = list("barks", "woofs")
 	turns_per_move = 10
 	response_help  = "pets"
@@ -115,7 +115,7 @@
 /mob/living/simple_animal/hostile/gorilla
 	name = "gorilla"
 	desc = "A ground-dwelling, predominantly herbivorous ape that inhabits the tropic forests."
-	icon = 'mods/leroy_beasts/icons/leroy_beasts_32x32.dmi'
+	icon = 'mods/petting_zoo/icons/leroy_beasts_32x32.dmi'
 	icon_state = "gorilla"
 	icon_living = "gorilla"
 	icon_dead = "gorilla_dead"
@@ -151,7 +151,7 @@
 /mob/living/simple_animal/friendly/frog
 	name = "frog"
 	desc = "They seem a little sad."
-	icon = 'mods/leroy_beasts/icons/leroy_beasts_32x32.dmi'
+	icon = 'mods/petting_zoo/icons/leroy_beasts_32x32.dmi'
 	icon_state = "frog"
 	icon_living = "frog"
 	icon_dead = "frog_dead"
@@ -189,7 +189,7 @@
 	gender = PLURAL
 	health = 15
 	maxHealth = 15
-	icon = 'mods/leroy_beasts/icons/leroy_beasts_32x32.dmi'
+	icon = 'mods/petting_zoo/icons/leroy_beasts_32x32.dmi'
 	icon_state = "rabbit"
 	icon_living = "rabbit"
 	icon_dead = "rabbit_dead"
@@ -224,7 +224,7 @@
 	name = "kangaroo"
 	real_name = "kangaroo"
 	desc = "A large marsupial herbivore. It has powerful hind legs, with nails that resemble long claws."
-	icon = 'mods/leroy_beasts/icons/leroy_beasts_32x64.dmi'
+	icon = 'mods/petting_zoo/icons/leroy_beasts_32x64.dmi'
 	icon_state = "kangaroo" // Credit: FoS
 	icon_living = "kangaroo"
 	icon_dead = "kangaroo_dead"
@@ -248,7 +248,7 @@
 /mob/living/simple_animal/friendly/lizard/axolotl
 	name = "axolotl"
 	desc = "A cute tiny axolotl. And it's just like you - has no brain as well!"
-	icon = 'mods/leroy_beasts/icons/leroy_beasts_32x32.dmi'
+	icon = 'mods/petting_zoo/icons/leroy_beasts_32x32.dmi'
 	icon_state = "axolotl"
 	icon_living = "axolotl"
 	icon_dead = "axolotl_dead"
@@ -257,7 +257,7 @@
 /mob/living/simple_animal/friendly/megamoth
 	name = "big moff"
 	desc = "Keep it away from fire."
-	icon = 'mods/leroy_beasts/icons/leroy_beasts_32x32.dmi'
+	icon = 'mods/petting_zoo/icons/leroy_beasts_32x32.dmi'
 	icon_state = "megamoth"
 	icon_living = "megamoth"
 	icon_dead = "megamoth_dead"
@@ -285,7 +285,7 @@
 /mob/living/simple_animal/hostile/panther
 	name = "panther"
 	desc = "A long sleek, black cat with sharp teeth and claws."
-	icon = 'mods/leroy_beasts/icons/leroy_beasts_32x64.dmi'
+	icon = 'mods/petting_zoo/icons/leroy_beasts_32x64.dmi'
 	icon_state = "panther"
 	icon_living = "panther"
 	icon_dead = "panther_dead"
@@ -344,7 +344,7 @@
 /mob/living/simple_animal/hostile/panther/lion
 	name = "lion"
 	desc = "The proud bearer of his majestic mane."
-	icon = 'mods/leroy_beasts/icons/leroy_beasts_32x64.dmi'
+	icon = 'mods/petting_zoo/icons/leroy_beasts_32x64.dmi'
 	icon_state = "lion"
 	icon_living = "lion"
 	icon_dead = "lion_dead"
@@ -364,7 +364,7 @@
 	see_in_dark = 5
 	turns_per_move = 10
 	density = FALSE
-	icon = 'mods/leroy_beasts/icons/leroy_beasts_32x32.dmi'
+	icon = 'mods/petting_zoo/icons/leroy_beasts_32x32.dmi'
 	ai_holder = /datum/ai_holder/simple_animal/passive
 
 /mob/living/simple_animal/penguin/emperor
@@ -415,7 +415,7 @@
 /mob/living/simple_animal/hostile/retaliate/reindeer
 	name = "reindeer"
 	desc = "The king of tundra, extremely endurant beast."
-	icon = 'mods/leroy_beasts/icons/leroy_beasts_32x64.dmi'
+	icon = 'mods/petting_zoo/icons/leroy_beasts_32x64.dmi'
 	icon_state = "reindeer"
 	icon_living = "reindeer"
 	icon_dead = "reindeer_dead"
@@ -461,7 +461,7 @@
 /mob/living/simple_animal/pet/sloth
 	name = "sloth"
 	desc = "An adorable, sleepy creature. Still twice more productive than most of the crewmembers."
-	icon = 'mods/leroy_beasts/icons/leroy_beasts_32x32.dmi'
+	icon = 'mods/petting_zoo/icons/leroy_beasts_32x32.dmi'
 	icon_state = "sloth"
 	icon_living = "sloth"
 	icon_dead = "sloth_dead"
@@ -487,7 +487,7 @@
 
 // Override of legacy space bear
 /mob/living/simple_animal/hostile/bear
-	icon = 'mods/leroy_beasts/icons/leroy_beasts_32x64.dmi'
+	icon = 'mods/petting_zoo/icons/leroy_beasts_32x64.dmi'
 	icon_state = "brown_bear"
 	icon_living = "brown_bear"
 	icon_dead = "brown_bear_dead"

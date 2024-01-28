@@ -45,7 +45,7 @@
 			S.guards += src
 	..()
 
-/mob/living/simple_animal/hostile/commanded/rex/can_use_item(obj/item/O as obj, mob/user as mob)
+/mob/living/simple_animal/hostile/commanded/rex/can_use_item(obj/item/O, mob/user)
 	if(istype(O, /obj/item/reagent_containers/food/snacks/meat) && stat != DEAD)
 		if(user != master)
 			visible_message(SPAN_WARNING("\The [src] started to growl"))
@@ -104,7 +104,7 @@
 	. = ..()
 
 /mob/living/simple_animal/hostile/commanded/dog
-	icon = 'mods/leroy_beasts/icons/leroy_beasts_32x32.dmi'
+	icon = 'mods/petting_zoo/icons/leroy_beasts_32x32.dmi'
 	speak_emote = list("barks", "woofs")
 	turns_per_move = 10
 	response_help  = "pets"

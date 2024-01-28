@@ -3,12 +3,12 @@
 
 /obj/item/holder/fox
 	slot_flags = null
-	icon = 'packs/infinity/icons/mob/mobs.dmi'
+	icon = 'mods/petting_zoo/icons/mobs.dmi'
 	icon_state = "fox"
 
 	item_icons = list(
-		slot_l_hand_str = 'maps/sierra/icons/mob/onmob/item/mob_holder.dmi',
-		slot_r_hand_str = 'maps/sierra/icons/mob/onmob/item/mob_holder.dmi',
+		slot_l_hand_str = 'mods/petting_zoo/icons/onmob/mob_holder.dmi',
+		slot_r_hand_str = 'mods/petting_zoo/icons/onmob/mob_holder.dmi',
 	)
 
 	item_state_slots = list(
@@ -20,7 +20,7 @@
 /mob/living/simple_animal/friendly/fox
 	name = "fox"
 	desc = "It's a fox."
-	icon = 'packs/infinity/icons/mob/mobs.dmi'
+	icon = 'mods/petting_zoo/icons/mobs.dmi'
 	icon_state = "fox"
 	icon_living = "fox"
 	icon_dead = "fox_dead"

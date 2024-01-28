@@ -17,7 +17,7 @@
 	var/severity = 2
 	var/shots = 1
 	var/lastUse = 0
-	var/Cooldown = (20 MINUTES)
+	var/cooldown = (20 MINUTES)
 
 /obj/item/device/blackout/afterattack(obj/target, mob/user, proximity)
 	if(!proximity)
@@ -62,7 +62,7 @@
 			Утилизируйте устройство после использования. --\"")
 
 		shots--
-		Cooldown = world.time
+		cooldown = world.time
 
 		power_failure()
 
@@ -71,7 +71,7 @@
 	icon_state = "device_blackout-off"
 
 /obj/item/device/blackout/proc/check_to_use()
-	return lastUse <= (world.time - Cooldown)
+	return lastUse <= (world.time - cooldown)
 
 /obj/item/device/blackout/examine(mob/user)
 	. = ..()

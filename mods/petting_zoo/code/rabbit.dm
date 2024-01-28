@@ -3,12 +3,12 @@
 
 /obj/item/holder/rabbit
 	slot_flags = null
-	icon = 'packs/infinity/icons/mob/mobs.dmi'
+	icon = 'mods/petting_zoo/icons/mobs.dmi'
 	icon_state = "rabbit_white"
 
 	item_icons = list(
-		slot_l_hand_str = 'maps/sierra/icons/mob/onmob/item/mob_holder.dmi',
-		slot_r_hand_str = 'maps/sierra/icons/mob/onmob/item/mob_holder.dmi',
+		slot_l_hand_str = 'mods/petting_zoo/icons/onmob/mob_holder.dmi',
+		slot_r_hand_str = 'mods/petting_zoo/icons/onmob/mob_holder.dmi',
 	)
 
 	item_state_slots = list(
@@ -19,7 +19,7 @@
 /mob/living/simple_animal/rabbit
 	name = "\improper rabbit"
 	desc = "The hippiest hop around."
-	icon = 'packs/infinity/icons/mob/mobs.dmi'
+	icon = 'mods/petting_zoo/icons/mobs.dmi'
 	icon_state = "rabbit_white"
 	icon_living = "rabbit_white"
 	icon_dead = "rabbit_white_dead"
