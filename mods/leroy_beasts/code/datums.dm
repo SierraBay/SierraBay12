@@ -28,7 +28,7 @@
 /datum/ai_holder/simple_animal/melee/commanded/find_target(list/possible_targets, has_targets_list)
 	ai_log("commanded/find_target() : Entered.", AI_LOG_TRACE)
 	var/mob/living/simple_animal/hostile/commanded/C = holder
-	if(!C.allowed_targets.len)
+	if(!length(C.allowed_targets))
 		return null
 	var/mode = "specific"
 	if(C.allowed_targets[1] == "everyone") //we have been given the golden gift of murdering everything. Except our master, of course. And our friends. So just mostly everyone.
@@ -72,7 +72,7 @@
 	. = ..()
 	if(!.)
 		return FALSE
-	while(command_buffer.len > 0)
+	while(length(command_buffer) > 0)
 		var/mob/speaker = command_buffer[1]
 		var/text = command_buffer[2]
 		var/filtered_name = lowertext(html_decode(name))
@@ -187,7 +187,7 @@
 	for(var/target in targets)
 		allowed_targets |= target
 
-	return targets.len != 0
+	return length(targets) != 0
 
 /mob/living/simple_animal/hostile/commanded/proc/stay_command(mob/speaker, text)
 	target_mob = null
@@ -216,7 +216,7 @@
 		return TRUE
 
 	var/list/targets = get_targets_by_name(text)
-	if(targets.len > 1 || !targets.len) //CONFUSED. WHO DO I FOLLOW?
+	if(length(targets) > 1 || !length(targets)) //CONFUSED. WHO DO I FOLLOW?
 		return FALSE
 
 	stance = COMMANDED_FOLLOW //GOT SOMEBODY. BETTER FOLLOW EM.
@@ -235,7 +235,7 @@
 		return TRUE
 
 	var/list/targets = get_targets_by_name(text)
-	if(!targets.len)
+	if(!length(targets))
 		return FALSE
 
 	for(var/mob/living/carbon/guarded_mob in targets) // only carbon lives need protection
@@ -274,7 +274,7 @@
 	var/list/targets =  list()
 	for(var/mob/living/carbon/human/H in get_targets_by_name(text)) //I want to obey humans
 		targets += H
-	if(targets.len > 1 || !targets.len) //CONFUSED. WHO DO I OBEY?
+	if(length(targets) > 1 || !length(targets)) //CONFUSED. WHO DO I OBEY?
 		return FALSE
 	master = targets[1]
 	friends |= weakref(master)
