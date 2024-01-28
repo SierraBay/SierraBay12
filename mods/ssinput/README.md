@@ -44,7 +44,7 @@ ID мода: SSINPUT
 - `code/modules/mob/mob_defines.dm`: `/mob/appearance_flags`
 - `code/modules/mob/mob_helpers.dm`: `/mob/verb/a_intent_change()`
 - `code/modules/mob/living/carbon/human/inventory.dm`: `/mob/living/carbon/human/verb/quick_equip()`
-- `code/modules/ventcrawl/ventcrawl_atmospherics.dm`: `/obj/machinery/atmospherics/relaymove(mob/living/user, direction)`
+- `code/modules/ventcrawl/ventcrawl_atmospherics.dm`: `/obj/machinery/atmospherics/relaymove()`
 
 <!--
   Если вы редактировали какие-либо процедуры или переменные в кор коде,
