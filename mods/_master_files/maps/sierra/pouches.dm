@@ -5,19 +5,15 @@
 
 /obj/item/clothing/accessory/storage/pouches/blue
 	desc = "A collection of blue pouches that can be attached to a plate carrier. Carries up to three items."
-	icon_state = "pouches_blue"
 
 
 /obj/item/clothing/accessory/storage/pouches/navy
 	desc = "A collection of navy blue pouches that can be attached to a plate carrier. Carries up to three items."
-	icon_state = "pouches_navy"
 
 
 /obj/item/clothing/accessory/storage/pouches/green
 	desc = "A collection of green pouches that can be attached to a plate carrier. Carries up to three items."
-	icon_state = "pouches_green"
 
 
 /obj/item/clothing/accessory/storage/pouches/tan
 	desc = "A collection of tan pouches that can be attached to a plate carrier. Carries up to three items."
-	icon_state = "pouches_tan"
