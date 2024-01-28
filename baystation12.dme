@@ -3368,5 +3368,6 @@
 #include "mods\_master_files\maps\mapsystem\maps.dm"
 #include "mods\_master_files\maps\sierra\pouches.dm"
 #include "mods\_master_files\maps\sierra\sierra_ranks.dm"
+#include "mods\_master_files\maps\sierra\items\rigs.dm"
 #include "~code\global_init.dm"
 // END_INCLUDE
