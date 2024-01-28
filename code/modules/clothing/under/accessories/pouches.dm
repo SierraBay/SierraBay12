@@ -10,7 +10,7 @@
 	icon_state = "pouches"
 	gender = PLURAL
 	slot = ACCESSORY_SLOT_ARMOR_S
-	slots = 3 STORAGE_SLOTS
+	slots = 2 STORAGE_SLOTS
 
 	sprite_sheets = list(
 		SPECIES_UNATHI = 'icons/mob/species/unathi/onmob_modular_armor_unathi.dmi'
@@ -18,22 +18,22 @@
 
 
 /obj/item/clothing/accessory/storage/pouches/blue
-	desc = "A collection of blue pouches that can be attached to a plate carrier. Carries up to three items."
+	desc = "A collection of blue pouches that can be attached to a plate carrier. Carries up to two items."
 	icon_state = "pouches_blue"
 
 
 /obj/item/clothing/accessory/storage/pouches/navy
-	desc = "A collection of navy blue pouches that can be attached to a plate carrier. Carries up to three items."
+	desc = "A collection of navy blue pouches that can be attached to a plate carrier. Carries up to two items."
 	icon_state = "pouches_navy"
 
 
 /obj/item/clothing/accessory/storage/pouches/green
-	desc = "A collection of green pouches that can be attached to a plate carrier. Carries up to three items."
+	desc = "A collection of green pouches that can be attached to a plate carrier. Carries up to two items."
 	icon_state = "pouches_green"
 
 
 /obj/item/clothing/accessory/storage/pouches/tan
-	desc = "A collection of tan pouches that can be attached to a plate carrier. Carries up to three items."
+	desc = "A collection of tan pouches that can be attached to a plate carrier. Carries up to two items."
 	icon_state = "pouches_tan"
 
 
