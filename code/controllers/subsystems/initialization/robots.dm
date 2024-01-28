@@ -15,9 +15,9 @@ SUBSYSTEM_DEF(robots)
 	)
 
 	var/list/mmi_types_by_title = list(
-		// [SIERRA-ADD] - Cyborg add,
+		// [SIERRA-ADD] - Allow to join as cyborg,
 		"cyborg"         = /obj/item/device/mmi,
-		// [/SIERRA-ADD],
+		// [/SIERRA-ADD] ,
 		"robot"          = /obj/item/organ/internal/posibrain,
 		"drone"          = /obj/item/device/mmi/digital/robot,
 		"robot, flying"  = /obj/item/organ/internal/posibrain,
