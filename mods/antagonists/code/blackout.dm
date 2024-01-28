@@ -19,7 +19,7 @@
 	var/lastUse = 0
 	var/Cooldown = (20 MINUTES)
 
-/obj/item/device/blackout/afterattack(obj/target as obj, mob/user as mob, proximity)
+/obj/item/device/blackout/afterattack(obj/target, mob/user, proximity)
 	if(!proximity)
 		return
 	if(!istype(target))
