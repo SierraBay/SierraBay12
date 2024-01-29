@@ -214,13 +214,21 @@
 /obj/item/sealgen_case
 	name = "sealing field generator case"
 	desc = "Aether Atmospherics brand case. This case quite heavy and contains one sealing field inside. Also it have an ID lock."
-	icon = 'icons/obj/briefcases.dmi'
-	icon_state = "secure"
-	item_state = "briefcase"
+	icon = 'maps/sierra/icons/obj/shielding.dmi'
+	icon_state = "case"
+	item_state = "RPED"
 
 	w_class = ITEM_SIZE_HUGE
 
-	var/deploy_time = 7 SECONDS
+	var/deploy_time = 10 SECONDS
+	var/slowdown_held = 2 // Yes, you can carry it. But this thing is cumbersome.
+
+/obj/item/sealgen_case/Initialize()
+	slowdown_per_slot[slot_l_hand] =  slowdown_held
+	slowdown_per_slot[slot_r_hand] =  slowdown_held
+
+	. = ..()
+
 
 /obj/item/sealgen_case/attack_self(mob/user)
 	. = ..()
