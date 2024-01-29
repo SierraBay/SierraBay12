@@ -272,5 +272,5 @@
 	name = "Machinery - SFG Crate"
 	containername = "sealing field generator crate"
 	containertype = /obj/structure/closet/crate
-	cost = 30
-	contains = list(/obj/item/sealgen_case = 4)
+	cost = 60
+	contains = list(/obj/item/sealgen_case = 3)
