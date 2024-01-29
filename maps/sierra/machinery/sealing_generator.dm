@@ -16,8 +16,6 @@
 
 	var/fold_time = 7 SECONDS
 
-	var/max_range = 3
-
 	var/field_color = COLOR_YELLOW
 	var/field_density = FALSE //It can be used to block movement via wires, though you can dispel it with hand
 
