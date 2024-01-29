@@ -33,12 +33,12 @@
 	update_icon()
 
 /obj/machinery/sealgen/on_update_icon()
-	overlays.Cut()
+	ClearOverlays()
 	if(current_field)
 		var/image/I = image(icon=icon,icon_state=initial(icon_state)+"-on",layer=LIGHTING_PLANE+1)
-		overlays += I
+		AddOverlays(I)
 	if(hatch_open)
-		overlays += initial(icon_state)+"-hatch"
+		AddOverlays("[icon_state]-hatch")
 
 /obj/machinery/sealgen/Process()
 	if(stat & MACHINE_STAT_NOPOWER)
