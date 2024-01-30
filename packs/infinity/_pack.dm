@@ -36,7 +36,7 @@
 #include "items\chairs.dm"
 #include "items\chemistry.dm"
 #include "items\grown.dm"
-#include "items\multimeter.dm"
+// #include "items\multimeter.dm"
 #include "items\powertools.dm"
 #include "items\toys.dm"
 
