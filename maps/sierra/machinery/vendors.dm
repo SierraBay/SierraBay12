@@ -312,7 +312,7 @@
 	products = list(
 		/obj/item/device/flashlight = 3,
 		/obj/item/device/multitool = 3,
-		// /obj/item/device/multitool/multimeter = 3, // SIERRA TODO: multimeter,
+		/obj/item/device/multitool/multimeter = 3,
 		/obj/item/device/geiger = 3,
 		/obj/item/device/scanner/gas = 3,
 		/obj/item/device/t_scanner = 3,
@@ -326,8 +326,8 @@
 		/obj/item/cell/potato = 5
 	)
 	premium = list(
-		/obj/item/wrench/power = 1,
-		/obj/item/wirecutters/power = 1
+		/obj/item/swapper/power_drill = 1,
+		/obj/item/swapper/jaws_of_life = 1
 	)
 
 /obj/machinery/vending/wallbartender
