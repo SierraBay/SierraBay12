@@ -36,7 +36,6 @@
 #include "items\chairs.dm"
 #include "items\chemistry.dm"
 #include "items\grown.dm"
-#include "items\toys.dm"
 
 // Guns
 #include "items\projectile\ammunition\boxes.dm"
