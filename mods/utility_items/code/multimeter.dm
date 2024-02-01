@@ -114,9 +114,45 @@
 	var/validate = 0
 	var/codelen
 
+/obj/structure/closet/Initialize(mapload, need_fill)
+	..()
+	update_icon()
+	if((setup & CLOSET_HAS_LOCK))
+		verbs += /obj/structure/closet/proc/togglelock_verb
+
+		codelen = rand(7,10)
+		code1.len = codelen
+		code2.len = codelen
+		for(var/i=1 to codelen)
+			code1[i] = rand(0,9)
+			code2[i] = rand(0,9)
+
+	return mapload ? INITIALIZE_HINT_LATELOAD : INITIALIZE_HINT_NORMAL
+
 // Overrides this because otherwise this leads us to unit tests failing
 /obj/structure/closet/crate/secure/loot
 	codelen = 4
+
+// Proceeding to do stuff
+
+/obj/structure/closet/interact(mob/user)
+	add_fingerprint(user)
+
+	var/dat = "<table style='text-align: center;'><tr>"
+	for(var/i = 1 to codelen)
+		dat += "<td><a href='?src=\ref[src];inc=[i]'>+</a>"
+	dat += "<tr>"
+	for(var/i = 1 to codelen)
+		dat += "<td>[code2[i]]"
+	dat += "<tr>"
+	for(var/i = 1 to codelen)
+		dat += "<td><a href='?src=\ref[src];dec=[i]'>-</a>"
+	dat += "</table><hr><a href='?src=\ref[src];check=1'>Сопоставить код</a>"
+
+	user.set_machine(src)
+	var/datum/browser/popup = new(user, "closet", "[name]", 90 + codelen * 30, 200)
+	popup.set_content(dat)
+	popup.open(1)
 
 /obj/structure/closet/Topic(href, href_list)
 	if(!ishuman(usr))
