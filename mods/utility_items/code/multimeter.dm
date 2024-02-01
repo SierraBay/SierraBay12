@@ -39,7 +39,37 @@
 				var/mob/living/carbon/human/H = usr
 				offhand_item = H.wearing_rig && H.wearing_rig.selected_module
 
-			if(href_list["check"])
+			if(href_list["pulse"])
+				var/colour = href_list["pulse"]
+				if(isMultimeter(I))
+					var/obj/item/device/multitool/multimeter/O = L.get_active_hand()
+					if(O.mode == METER_MESURING)
+						if (L.skill_check(SKILL_ELECTRICAL, SKILL_TRAINED))
+							to_chat(L, "<span class='notice'>Подаем напряжение...</span>")
+							if(!do_after(L, 50, holder))
+								return
+							PulseColour(colour)
+							to_chat(L, "<span class='notice'>Провод пропульсован.</span>")
+						else
+							to_chat(L, "<span class='notice'>Вы не знаете с каким напряжением работает этот провод.</span>")
+					else
+						if (L.skill_check(SKILL_ELECTRICAL, SKILL_TRAINED))
+							if(!do_after(L, 10, holder))
+								return
+							if(!IsColourCut(colour))
+								colour_function = unsolved_wires[colour]
+								solved_colour_function = SolveWireFunction(colour_function)
+								if(solved_colour_function != "")
+									to_chat(L, "the [colour] wire connected to [solved_colour_function]")
+									playsound(O.loc, 'mods/utility_items/sounds/mbeep.ogg', 20, 1)
+								else
+									to_chat(L, "the [colour] wire not connected")
+							else
+								to_chat(L, "the [colour] wire not connected")
+						else
+							to_chat(L, "<span class='notice'>Вы не умеете подключать мультиметр.</span>")
+
+			if(href_list["examine"])
 				if(isMultimeter(I) || isMultimeter(offhand_item))
 					var/obj/item/device/multitool/multimeter/O = L.get_active_hand()
 					if (L.skill_check(SKILL_ELECTRICAL, SKILL_TRAINED))
@@ -56,68 +86,15 @@
 										solved_colour_function = SolveWireFunction(colour_function)
 										if(solved_colour_function != "")
 											to_chat(L, "the [colour] wire connected to [solved_colour_function]")
-											playsound(O.loc, 'mods/_master_files/sounds/mbeep.ogg', 20, 1)
+											playsound(O.loc, 'mods/utility_items/sounds/mbeep.ogg', 20, 1)
 										else
 											to_chat(L, "the [colour] wire not connected")
 									else
 										to_chat(L, "the [colour] wire not connected")
-							//to_chat(L, "<span class='notice'>[all_solved_wires[holder_type]]</span>")
 						else
 							to_chat(L, "<span class='notice'>Переключите мультиметр в режим прозвонки.</span>")
 					else
 						to_chat(L, "<span class='notice'>Вы не знаете как с этим работать.</span>")
-				else
-					to_chat(L, "<span class='warning'>Вам нужен мультиметр.</span>")
-
-// Wire solve functions
-
-/datum/wires/proc/name_by_type()
-	var/name_by_type
-	if(istype(src, /datum/wires/airlock))
-		name_by_type = "Airlock"
-	if(istype(src, /datum/wires/apc))
-		name_by_type = "APC"
-	if(istype(src, /datum/wires/robot))
-		name_by_type = "Cyborg"
-	if(istype(src, /datum/wires/fabricator))
-		name_by_type = "Autolathe"
-	if(istype(src, /datum/wires/alarm))
-		name_by_type = "Air Alarm"
-	if(istype(src, /datum/wires/camera))
-		name_by_type = "Camera"
-	if(istype(src, /datum/wires/explosive))
-		name_by_type = "C4 Bomb"
-	if(istype(src, /datum/wires/nuclearbomb))
-		name_by_type = "Nuclear Bomb"
-	if(istype(src, /datum/wires/particle_acc))
-		name_by_type = "Particle Accelerator"
-	if(istype(src, /datum/wires/radio))
-		name_by_type = "Radio"
-	if(istype(src, /datum/wires/vending))
-		name_by_type = "Vending Machine"
-	return name_by_type
-
-/datum/wires/proc/SolveWireFunction(WireFunction)
-	return WireFunction //Default returns the original number, so it still "works"
-
-/datum/wires/proc/SolveWires()
-	var/list/unsolved_wires = src.wires.Copy()
-	var/colour_function
-	var/solved_colour_function
-
-	var/name_by_type = name_by_type()
-
-	var/solved_txt = "[name_by_type] wires:<br>"
-
-	for(var/colour in src.wires)
-		if(unsolved_wires[colour]) //unsolved_wires[red]
-			colour_function = unsolved_wires[colour] //unsolved_wires[red] = 1 so colour_index = 1
-			solved_colour_function = SolveWireFunction(colour_function) //unsolved_wires[red] = 1, 1 = AIRLOCK_WIRE_IDSCAN
-			solved_txt += "the [colour] wire connected to [solved_colour_function]<br>" //the red wire is the ID wire
-
-	solved_txt += "<br>"
-
-	return solved_txt
 
 /datum/design/item/tool/multimeter
 	name = "multimeter"
@@ -127,3 +104,69 @@
 	materials = list(DEFAULT_WALL_MATERIAL = 1000, MATERIAL_GLASS = 1000, MATERIAL_SILVER = 500)
 	build_path = /obj/item/device/multitool/multimeter
 	sort_string = "VAGAM"
+
+// Closet unlocking
+
+/obj/structure/closet
+
+	var/code1[8]
+	var/code2[8]
+	var/validate = 0
+	var/codelen
+
+// Overrides this because otherwise this leads us to unit tests failing
+/obj/structure/closet/crate/secure/loot
+	codelen = 4
+
+/obj/structure/closet/Topic(href, href_list)
+	if(!ishuman(usr))
+		return
+
+	var/mob/living/carbon/human/user = usr
+	var/obj/item/device/multitool/multimeter/W = user.get_active_hand()
+	user.set_machine(src)
+
+	if(href_list["check"])
+		if(!W.in_use)
+			W.in_use = TRUE
+		else
+			return
+
+		validate = 0
+
+		if(W.mode != METER_CHECKING)
+			to_chat(usr, "<span class='notice'>Переключите мультиметр.</span>")
+			return
+
+		to_chat(usr, "<span class='notice'>Проверяем замок...</span>")
+		for(var/i = 1 to codelen)
+			if(do_after(user, 10, src))
+				if(code2[i] == code1[i])
+					validate++
+					to_chat(usr, "<span class='notice'>Ключ подходит.</span>")
+					playsound(W.loc, 'mods/utility_items/sounds/mbeep.ogg', 30, 1, frequency = rand(50000, 55000))
+				else
+					to_chat(usr, "<span class='notice'>Ключ не подходит.</span>")
+		W.in_use = FALSE
+
+		if(validate < codelen)
+			return
+
+		locked = !locked
+		update_icon()
+		visible_message("<span class='warning'>[user] has [locked ? "locked" : "hacked"] [src]!</span>")
+		return
+
+	if(href_list["inc"])
+		var/inc = text2num(href_list["inc"])
+		code2[inc]++
+		if(code2[inc] > 9)
+			code2[inc] = 0
+		interact(user)
+
+	if(href_list["dec"])
+		var/inc = text2num(href_list["dec"])
+		code2[inc]--
+		if(code2[inc] < 0)
+			code2[inc] = 9
+		interact(user)
