@@ -1,5 +1,5 @@
 /obj/machinery/gravity_generator
-	icon = 'mods/gravity_generator/icons/gravity_generator.dmi'
+	icon = 'mods/machinery/icons/gravity_generator.dmi'
 	icon_state = "0_0"
 
 	var/sprite_number = 0

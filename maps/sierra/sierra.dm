@@ -98,7 +98,6 @@
 	#include "machinery/power.dm"
 	#include "machinery/random.dm"
 	#include "machinery/suit_storage.dm"
-	#include "machinery/sealing_generator.dm"
 	#include "machinery/tcomms.dm"
 	#include "machinery/thrusters.dm"
 	#include "machinery/uniform_vendor.dm"

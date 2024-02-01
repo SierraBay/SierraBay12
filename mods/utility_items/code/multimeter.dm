@@ -1,14 +1,7 @@
-// SIERRA TODO: multimeter
-
-#define METER_MESURING "Measuring"
-#define METER_CHECKING "Checking"
-
-#define isMultimeter(A)   (A && A.ismultimeter())
-
 /obj/item/device/multitool/multimeter
 	name = "multimeter"
 	desc = "Используется для измерения потребления электроэнергии оборудования и прозвонки проводов. Рекомендуется докторами."
-	icon = 'mods/_master_files/icons/obj/multimeter.dmi'
+	icon = 'mods/utility_items/icons/multimeter.dmi'
 	icon_state = "multimeter"
 	origin_tech = list(TECH_MAGNET = 4, TECH_ENGINEERING = 4)
 	slot_flags = SLOT_BELT

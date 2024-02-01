@@ -53,3 +53,10 @@
 // LOADOUT_ITEMS - Start
 #define ACCESSORY_SLOT_OVER     "Over"
 // LOADOUT_ITEMS - End
+
+// UTILITY_ITEMS - Start
+#define METER_MESURING "Measuring"
+#define METER_CHECKING "Checking"
+
+#define isMultimeter(A)   (A && A.ismultimeter())
+// UTILITY_ITEMS - End
