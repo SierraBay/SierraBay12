@@ -121,8 +121,8 @@
 		verbs += /obj/structure/closet/proc/togglelock_verb
 
 		codelen = rand(7,10)
-		code1.len = codelen
-		code2.len = codelen
+		codelen = length(code1)
+		codelen = length(code2)
 		for(var/i=1 to codelen)
 			code1[i] = rand(0,9)
 			code2[i] = rand(0,9)
@@ -134,6 +134,19 @@
 	codelen = 4
 
 // Proceeding to do stuff
+
+/obj/structure/closet/use_tool(obj/item/tool, mob/user, list/click_params)
+	. = ..()
+	if(setup & CLOSET_HAS_LOCK)
+		if(isMultimeter(tool))
+			var/obj/item/device/multitool/multimeter/O = tool
+			if(O.mode != METER_CHECKING)
+				to_chat(user, "<span class='notice'>Переключите мультиметр.</span>")
+			else
+				if (user.skill_check(SKILL_ELECTRICAL, SKILL_TRAINED))
+					src.interact(usr)
+				else
+					to_chat(user, "<span class='notice'>Вы не умеете работать с этим замком.</span>")
 
 /obj/structure/closet/interact(mob/user)
 	add_fingerprint(user)
