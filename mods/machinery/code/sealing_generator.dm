@@ -1,7 +1,7 @@
 /obj/machinery/sealgen
 	name = "sealing field generator"
 	desc = "An extremely energy-intensive force field generator that can block the movement of gases, allowing solid objects to pass through."
-	icon = 'maps/sierra/icons/obj/shielding.dmi'
+	icon = 'mods/machinery/icons/sealing_generator.dmi'
 	icon_state = "sealgen"
 
 	atom_flags = ATOM_FLAG_NO_TEMP_CHANGE | ATOM_FLAG_CLIMBABLE
@@ -212,7 +212,7 @@
 /obj/item/sealgen_case
 	name = "sealing field generator case"
 	desc = "Aether Atmospherics brand case. This case quite heavy and contains one sealing field inside. Also it have an ID lock."
-	icon = 'maps/sierra/icons/obj/shielding.dmi'
+	icon = 'mods/machinery/icons/sealing_generator.dmi'
 	icon_state = "case"
 	item_state = "RPED"
 
