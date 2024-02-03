@@ -1,3 +1,8 @@
+#define METER_MESURING "Measuring"
+#define METER_CHECKING "Checking"
+
+#define isMultimeter(A)   (A && A.ismultimeter())
+
 /obj/item/device/multitool/multimeter
 	name = "multimeter"
 	desc = "Используется для измерения потребления электроэнергии оборудования и прозвонки проводов. Рекомендуется докторами."
@@ -45,13 +50,13 @@
 					var/obj/item/device/multitool/multimeter/O = L.get_active_hand()
 					if(O.mode == METER_MESURING)
 						if (L.skill_check(SKILL_ELECTRICAL, SKILL_TRAINED))
-							to_chat(L, "<span class='notice'>Подаем напряжение...</span>")
+							to_chat(usr, SPAN_NOTICE("Вы подаёте напряжение на провод..."))
 							if(!do_after(L, 50, holder))
 								return
 							PulseColour(colour)
-							to_chat(L, "<span class='notice'>Провод пропульсован.</span>")
+							to_chat(usr,SPAN_NOTICE("Провод пропульсован."))
 						else
-							to_chat(L, "<span class='notice'>Вы не знаете с каким напряжением работает этот провод.</span>")
+							to_chat(L, SPAN_NOTICE ("Вы не знаете с каким напряжением работает этот провод."))
 					else
 						if (L.skill_check(SKILL_ELECTRICAL, SKILL_TRAINED))
 							if(!do_after(L, 10, holder))
@@ -67,14 +72,14 @@
 							else
 								to_chat(L, "the [colour] wire not connected")
 						else
-							to_chat(L, "<span class='notice'>Вы не умеете подключать мультиметр.</span>")
+							to_chat(L, SPAN_NOTICE ("Вы не умеете подключать мультиметр."))
 
 			if(href_list["examine"])
 				if(isMultimeter(I) || isMultimeter(offhand_item))
 					var/obj/item/device/multitool/multimeter/O = L.get_active_hand()
 					if (L.skill_check(SKILL_ELECTRICAL, SKILL_TRAINED))
 						if(O.mode == METER_CHECKING)
-							to_chat(L, "<span class='notice'>Перебираем провода...</span>")
+							to_chat(L, SPAN_NOTICE ("Перебираем провода..."))
 							var/name_by_type = name_by_type()
 							to_chat(L, "[name_by_type] wires:")
 							for(var/colour in src.wires)
@@ -92,9 +97,9 @@
 									else
 										to_chat(L, "the [colour] wire not connected")
 						else
-							to_chat(L, "<span class='notice'>Переключите мультиметр в режим прозвонки.</span>")
+							to_chat(L, SPAN_NOTICE ("Переключите мультиметр в режим прозвонки."))
 					else
-						to_chat(L, "<span class='notice'>Вы не знаете как с этим работать.</span>")
+						to_chat(L, SPAN_NOTICE ("Вы не знаете как с этим работать."))
 
 /datum/design/item/tool/multimeter
 	name = "multimeter"
@@ -141,12 +146,12 @@
 		if(isMultimeter(tool))
 			var/obj/item/device/multitool/multimeter/O = tool
 			if(O.mode != METER_CHECKING)
-				to_chat(user, "<span class='notice'>Переключите мультиметр.</span>")
+				to_chat(user, SPAN_NOTICE ("Переключите мультиметр."))
 			else
 				if (user.skill_check(SKILL_ELECTRICAL, SKILL_TRAINED))
 					src.interact(usr)
 				else
-					to_chat(user, "<span class='notice'>Вы не умеете работать с этим замком.</span>")
+					to_chat(user, SPAN_NOTICE ("Вы не умеете работать с этим замком."))
 
 /obj/structure/closet/interact(mob/user)
 	add_fingerprint(user)
@@ -187,15 +192,15 @@
 			to_chat(user, SPAN_NOTICE("Мультиметр не реагирует на подключение."))
 			return
 
-		to_chat(usr, "<span class='notice'>Проверяем замок...</span>")
+		to_chat(usr, SPAN_NOTICE ("Вы начинаете проверять замок..."))
 		for(var/i = 1 to codelen)
 			if(do_after(user, 10, src))
 				if(code2[i] == code1[i])
 					validate++
-					to_chat(usr, "<span class='notice'>Ключ подходит.</span>")
+					to_chat(usr, SPAN_NOTICE ("Ключ подходит."))
 					playsound(W.loc, 'mods/utility_items/sounds/mbeep.ogg', 30, 1, frequency = rand(50000, 55000))
 				else
-					to_chat(usr, "<span class='notice'>Ключ не подходит.</span>")
+					to_chat(usr, SPAN_NOTICE ("Ключ не подходит."))
 		W.in_use = FALSE
 
 		if(validate < codelen)
@@ -203,7 +208,7 @@
 
 		locked = !locked
 		update_icon()
-		visible_message("<span class='warning'>[user] has [locked ? "locked" : "hacked"] [src]!</span>")
+		visible_message(SPAN_WARNING ("[user] has [locked ? "locked" : "hacked"] [src]!"))
 		return
 
 	if(href_list["inc"])
@@ -219,3 +224,8 @@
 		if(code2[inc] < 0)
 			code2[inc] = 9
 		interact(user)
+
+#undef METER_MESURING
+#undef METER_CHECKING
+
+#undef isMultimeter

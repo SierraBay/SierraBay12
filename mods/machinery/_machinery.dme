@@ -3,9 +3,9 @@
 
 #include "_machinery.dm"
 
-#include "code/base.dm"
-#include "code/main.dm"
+#include "code/gravity_generator/base.dm"
+#include "code/gravity_generator/main.dm"
+#include "code/gravity_generator/wires.dm"
 #include "code/sealing_generator.dm"
-#include "code/wires.dm"
 
 #endif

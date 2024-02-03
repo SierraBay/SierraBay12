@@ -49,7 +49,7 @@ ID мода: UTILITY_ITEMS
 
 ### Дефайны
 
-- `code/__defines/~mods/utility_items.dm`: `METER_MESURING` `METER_CHECKING` `isMultimeter(A)`
+- Отсутствуют
 <!--
   Если требовалось добавить какие-либо дефайны, укажи файлы,
   в которые ты их добавил, а также перечисли имена.
