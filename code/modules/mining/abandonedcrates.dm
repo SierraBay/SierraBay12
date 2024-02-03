@@ -6,7 +6,7 @@
 	var/list/lastattempt = list()
 	var/attempts = 10
 	// [SIERRA-EDIT] - UTILITY_ITEMS - Multimeter Avoiding redeclare of var "codelen"
-	// 	var/codelen = 4
+	// var/codelen = 4 // SIERRA-EDIT - ORIGINAL
 	codelen = 4
 	// [/SIERRA-EDIT] - UTILITY_ITEMS
 	locked = 1
