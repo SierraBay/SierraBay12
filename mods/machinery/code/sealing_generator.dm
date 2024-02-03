@@ -172,9 +172,9 @@
 	. = ..()
 
 //Wires
-#define SEALGEN_WIRE_LOCK		1
-#define SEALGEN_WIRE_DENSITY	2
-#define SEALGEN_WIRE_POWER		4
+#define SEALGEN_WIRE_LOCK  1
+#define SEALGEN_WIRE_DENSITY  2
+#define SEALGEN_WIRE_POWER  4
 
 /datum/wires/sealgen
 	holder_type = /obj/machinery/sealgen
