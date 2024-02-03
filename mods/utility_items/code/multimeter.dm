@@ -184,7 +184,7 @@
 		validate = 0
 
 		if(W.mode != METER_CHECKING)
-			to_chat(usr, "<span class='notice'>Переключите мультиметр.</span>")
+			to_chat(user, SPAN_NOTICE("Мультиметр не реагирует на подключение."))
 			return
 
 		to_chat(usr, "<span class='notice'>Проверяем замок...</span>")
