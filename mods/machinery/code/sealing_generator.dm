@@ -142,7 +142,7 @@
 	icon = 'icons/obj/machines/shielding.dmi'
 	icon_state = "shield_normal"
 
-	atmos_canpass = CANPASS_PROC //That's it. //FUCK YOU ZAS
+	atmos_canpass = CANPASS_PROC
 
 	anchored = TRUE
 	density = FALSE
