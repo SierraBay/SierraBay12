@@ -27,7 +27,8 @@ ID мода: UTILITY_ITEMS
 
 ### Изменения *кор кода*
 
-- `code/modules/mob/living.dm`: `proc/overriden_proc`, `var/overriden_var`
+- `code/modules/mining/abandonedcrates.dm` `/obj/structure/closet/crate/secure/loot`
+
 <!--
   Если вы редактировали какие-либо процедуры или переменные в кор коде,
   они должны быть указаны здесь.
@@ -60,7 +61,7 @@ ID мода: UTILITY_ITEMS
 
 ### Используемые файлы, не содержащиеся в модпаке
 
-- `mods/ntnet/code/NTNet_code.dmi`
+- `mods/ntnet/code/NTNet_code.dm`
 <!--
   Будь то немодульный файл или модульный файл, который не содержится в папке,
   принадлежащей этому конкретному моду, он должен быть упомянут здесь.
