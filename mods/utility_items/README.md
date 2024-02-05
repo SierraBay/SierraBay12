@@ -27,7 +27,7 @@ ID мода: UTILITY_ITEMS
 
 ### Изменения *кор кода*
 
-- `code/modules/mining/abandonedcrates.dm` `/obj/structure/closet/crate/secure/loot`
+- `code/modules/mining/abandonedcrates.dm` `/obj/structure/closet/crate/secure/loot/var/codelen`
 
 <!--
   Если вы редактировали какие-либо процедуры или переменные в кор коде,
