@@ -146,7 +146,7 @@
 		/obj/item/device/multitool,
 		/obj/item/clothing/gloves/insulated,
 		/obj/item/device/flashlight/upgraded,
-		/obj/item/storage/belt/utility/full,
+		/obj/item/storage/belt,
 		/obj/item/clothing/head/beret/engineering,
 		/obj/item/device/radio/headset/headset_eng,
 		/obj/item/device/radio/headset/headset_eng/alt,
