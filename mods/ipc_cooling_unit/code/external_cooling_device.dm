@@ -30,8 +30,6 @@
 
 /obj/machinery/external_cooling_device/Topic(href, href_list, state = GLOB.physical_state)
 	if (..())
-		close_browser(usr, "window=ECD")
-		usr.unset_machine()
 		return 1
 
 	switch(href_list["op"])
