@@ -52,4 +52,4 @@
 			target.throw_at(get_step(target,get_dir(src,target)), 5, 10)
 			next_click = world.time + 2 SECONDS
 			return
-	..()
+	return ..()
