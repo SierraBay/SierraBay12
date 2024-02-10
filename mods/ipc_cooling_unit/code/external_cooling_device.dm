@@ -44,7 +44,10 @@
 
 		if("cellremove")
 			if(!closed && cell && !usr.get_active_hand())
-				usr.visible_message("<span class='notice'>\The usr] removes \the [cell] from \the [src].</span>", "<span class='notice'>You remove \the [cell] from \the [src].</span>")
+				usr.visible_message(
+				SPAN_NOTICE("The [usr] removes \the [cell] from \the [src]."),
+				SPAN_NOTICE("You remove \the [cell] from \the [src].")
+				)
 				cell.update_icon()
 				usr.put_in_hands(cell)
 				cell.add_fingerprint(usr)
@@ -58,7 +61,10 @@
 						return TOPIC_NOACTION
 					cell = C
 					C.add_fingerprint(usr)
-					usr.visible_message("<span class='notice'>[usr] inserts \the [C] into \the [src].</span>", "<span class='notice'>You insert \the [C] into \the [src].</span>")
+					usr.visible_message(
+						SPAN_NOTICE("\The [usr] inserts \the [C] into \the [src]."),
+						SPAN_NOTICE("You insert \the [C] into \the [src].")
+					)
 
 		if("Power_On")
 			if(cell)
@@ -132,11 +138,11 @@
 	if(!CanMouseDrop(over_object))
 		return
 	if(attached)
-		drip_detach()
+		cooling_detach()
 	else if(ishuman(over_object))
 		hook_up(over_object, usr)
 
-/obj/machinery/external_cooling_device/use_tool(obj/item/W as obj, mob/user as mob)
+/obj/machinery/external_cooling_device/use_tool(obj/item/W, mob/living/user, list/click_params)
 
 	if(istype(W, /obj/item/screwdriver))
 		closed = !closed
@@ -180,9 +186,9 @@
 			queue_icon_update()
 			cell.use(5)
 
-/obj/machinery/external_cooling_device/verb/drip_detach()
+/obj/machinery/external_cooling_device/verb/cooling_detach()
 	set category = "Object"
-	set name = "Detach cooling device Drip"
+	set name = "Detach cooling device"
 	set src in range(1)
 
 	if(!attached)
