@@ -66,6 +66,7 @@
 	#include "items/papers.dm"
 	#include "items/rigs.dm"
 	#include "items/stamps.dm"
+	#include "items/pouches.dm"
 
 	#include "items/clothing/clothing.dm"
 	#include "items/clothing/exploration.dm"
@@ -182,7 +183,7 @@
 	#include "../../mods/fancy_sofas/_fancy_sofas.dme"
 	#include "../../mods/jukebox_tapes/_jukebox_tapes.dme"
 	#include "../../mods/legalese_language/_legalese.dme"
-	#include "../../mods/leroy_beasts/_leroy_beasts.dme"
+	#include "../../mods/petting_zoo/_petting_zoo.dme"
 	#include "../../mods/screentips/_screentips.dme"
 	#include "../../mods/tajara/_tajara.dme"
 

@@ -36,9 +36,6 @@
 #include "items\chairs.dm"
 #include "items\chemistry.dm"
 #include "items\grown.dm"
-#include "items\multimeter.dm"
-#include "items\powertools.dm"
-#include "items\toys.dm"
 
 // Guns
 #include "items\projectile\ammunition\boxes.dm"
@@ -57,11 +54,6 @@
 #include "machinery\lighting.dm"
 #include "machinery\survival_pod.dm"
 #include "machinery\scrap_compactor\scrap_compactor.dm"
-
-// Mobs
-#include "mobs\simple\fox.dm"
-#include "mobs\simple\koala.dm"
-#include "mobs\simple\rabbit.dm"
 
 // Structures
 #include "structures\barrier.dm"
