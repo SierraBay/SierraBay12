@@ -5,10 +5,6 @@
 	config_path = "config/sierra_config.txt"
 	flags = MAP_HAS_BRANCH | MAP_HAS_RANK
 
-	// Authored by CuddleAndTea
-	// https://clips.twitch.tv/MildIgnorantJayGivePLZ-CvZlfeclHBx4Ye1l
-	welcome_sound = 'maps/sierra/sound/welcome.ogg'
-
 	use_bluespace_interlude = TRUE
 
 	load_legacy_saves = TRUE
