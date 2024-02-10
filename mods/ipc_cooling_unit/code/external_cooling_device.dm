@@ -152,7 +152,7 @@
 	if(!closed)
 		if (istype(W, /obj/item/cell))
 			if(!isnull(src.cell))
-				to_chat(user, "There is already a cell loaded!")
+				USE_FEEDBACK_FAILURE("There is already a cell loaded!")
 				return
 			if(!user.unEquip(W, src))
 				return
