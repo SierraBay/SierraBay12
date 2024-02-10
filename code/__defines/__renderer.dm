@@ -147,13 +147,13 @@
 	#define LIGHTING_LAYER         1
 	#define ABOVE_LIGHTING_LAYER   2
 
-#define EFFECTS_ABOVE_LIGHTING_PLANE   6 // For glowy eyes, laser beams, etc. that shouldn't be affected by darkness	//[SIERRA-EDIT] - VISION CONE (4 became 6)
+#define EFFECTS_ABOVE_LIGHTING_PLANE   9 // For glowy eyes, laser beams, etc. that shouldn't be affected by darkness
 	#define EYE_GLOW_LAYER         1
 	#define BEAM_PROJECTILE_LAYER  2
 	#define SUPERMATTER_WALL_LAYER 3
 	#define SPEECH_INDICATOR_LAYER 4
 
-#define FULLSCREEN_PLANE                7 // for fullscreen overlays that do not cover the hud.	//[SIERRA-EDIT] - VISION CONE (5 became 7)
+#define FULLSCREEN_PLANE               10 // for fullscreen overlays that do not cover the hud.
 
 	#define FULLSCREEN_LAYER    0
 	#define DAMAGE_LAYER        1
@@ -161,14 +161,14 @@
 	#define BLIND_LAYER         3
 	#define CRIT_LAYER          4
 
-#define HUD_PLANE                    8	//[SIERRA-EDIT] - VISION CONE (6 became 8)
+#define HUD_PLANE                     11
 	#define UNDER_HUD_LAYER              0
 	#define HUD_BASE_LAYER               2
 	#define HUD_ITEM_LAYER               3
 	#define HUD_ABOVE_ITEM_LAYER         4
 	#define HUD_ABOVE_HUD_LAYER          5
 
-#define RUNECHAT_PLANE               9	//[SIERRA-EDIT] - VISION CONE (7 became 9)
+#define RUNECHAT_PLANE               12
 
 /// This plane masks out lighting, to create an "emissive" effect for e.g glowing screens in otherwise dark areas.
 #define EMISSIVE_PLANE 700

@@ -36,7 +36,7 @@
 		var/color = on ? "#82ff4c" : "#f86060"
 		AddOverlays(list(
 			emissive_appearance(icon, "light[on]-overlay"),
-			overlay_image(icon, "light[on]-overlay", color)
+			overlay_image(icon, "light[on]-overlay", color, plane = LIGHTING_LAMPS_PLANE) // SS220 Bloom-Lighting
 		))
 		set_light(2, 0.25, color)
 

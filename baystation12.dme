@@ -92,6 +92,7 @@
 #include "code\__defines\xenoarcheaology.dm"
 #include "code\__defines\ZAS.dm"
 #include "code\__defines\zmimic.dm"
+#include "code\__defines\~mods\bloom_light.dm"
 #include "code\__defines\~mods\expanded_culture_descriptor.dm"
 #include "code\__defines\~mods\interactions.dm"
 #include "code\__defines\~mods\items_clothing.dm"
