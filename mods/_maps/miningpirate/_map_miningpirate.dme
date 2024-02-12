@@ -3,9 +3,6 @@
 
 #include "_map_miningpirate.dm"
 
-// Далее просто включай свой код
-// #include "code/something.dm"
-
 #include "code/miningpirate.dm"
 #include "code/miningpirate_areas.dm"
 
