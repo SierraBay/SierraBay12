@@ -30,7 +30,7 @@
 		/obj/item/material/clipboard,
 		/obj/item/device/flashlight/upgraded,
 		/obj/item/storage/box/armband/engine,
-		/obj/item/device/multitool,
+		/obj/item/device/multitool/multimeter,
 		/obj/item/storage/box/secret_project_disks,
 		new /datum/atom_creator/weighted(list(/obj/item/storage/backpack/industrial, /obj/item/storage/backpack/satchel/eng)),
 		new /datum/atom_creator/weighted(list(/obj/item/storage/backpack/dufflebag/eng, /obj/item/storage/backpack/messenger/engi)),
