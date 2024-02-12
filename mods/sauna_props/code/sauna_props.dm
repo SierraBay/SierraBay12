@@ -19,7 +19,7 @@
 		if(!T)
 			return
 
-		user.visible_message("<span class='warning'>\The [user] begins to clean \the [T].</span>")
+		user.visible_message(SPAN_WARNING("\The [user] begins to clean \the [T]."))
 
 		if(do_after(user, mopspeed, T, do_flags = DO_DEFAULT | DO_PUBLIC_PROGRESS))
 			if(T)
