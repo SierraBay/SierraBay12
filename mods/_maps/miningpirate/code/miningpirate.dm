@@ -10,7 +10,6 @@
 		"nav_miningpirate_4",
 		"nav_miningpirate_antag"
 	)
-	area_usage_test_exempted_root_areas = list(/area/miningpirate)
 
 /datum/map_template/ruin/away_site/miningpirate
 	name = "miningpirate"
@@ -19,6 +18,7 @@
 	prefix = "mods/_maps/miningpirate/maps/"
 	suffixes = list("miningpirate.dmm")
 	spawn_cost = 0.5
+	area_usage_test_exempted_root_areas = list(/area/miningpirate)
 
 /obj/shuttle_landmark/nav_miningpirate_1
 	name = "Mine Supply #1"
