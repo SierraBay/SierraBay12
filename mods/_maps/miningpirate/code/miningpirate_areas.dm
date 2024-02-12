@@ -1,7 +1,7 @@
-area/miningpirate
+/area/miningpirate
 	icon = 'mods/_maps/miningpirate/icons/miningpirate_sprites.dmi'
 
-area/miningpirate/miningpirate_checkpoint
+/area/miningpirate/miningpirate_checkpoint
 	name = "\improper Сheckpoint"
 	icon_state = "checkpoint"
 
