@@ -24,7 +24,7 @@
 		if(do_after(user, mopspeed, T, do_flags = DO_DEFAULT | DO_PUBLIC_PROGRESS))
 			if(T)
 				T.clean(src, user)
-			to_chat(user, "<span class='notice'>You have finished mopping!</span>")
+			to_chat(user, SPAN_NOTICE("You have finished mopping!"))
 
 /obj/structure/bed/sauna_bench
 	name = "sauna bench"
