@@ -43,7 +43,7 @@
 
 /obj/structure/bed/sauna_bench/Initialize()
 	buckle_pixel_shift = sauna_bench_buckle_pixel_shift
-	..()
+	. = ..()
 
 /obj/structure/bed/sauna_bench/on_update_icon()
 	icon_state = base_icon
