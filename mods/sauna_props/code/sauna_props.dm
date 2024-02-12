@@ -35,7 +35,7 @@
 	var/static/list/sauna_bench_buckle_pixel_shift = list(0, 10, 0)
 
 /obj/structure/bed/sauna_bench/New(newloc)
-	..(newloc,MATERIAL_WOOD, MATERIAL_LEATHER_GENERIC)
+	..(newloc, MATERIAL_WOOD, MATERIAL_LEATHER_GENERIC)
 
 /obj/structure/bed/sauna_bench/Destroy()
 	buckle_pixel_shift = null
