@@ -293,10 +293,12 @@
 /area/medical/ward
 	name = "Second Deck - Patient Ward - Patients"
 	icon_state = "patients"
+	area_flags = AREA_FLAG_RAD_SHIELDED | AREA_FLAG_ION_SHIELDED
 
 /area/medical/wardhallway
 	name = "Second Deck - Patient Ward - Hallway"
 	icon_state = "medbay2"
+	area_flags = AREA_FLAG_RAD_SHIELDED | AREA_FLAG_ION_SHIELDED
 
 /area/medical/maintenance_equipstorage
 	name = "Second Deck - Infirmary - Lower Storage"
