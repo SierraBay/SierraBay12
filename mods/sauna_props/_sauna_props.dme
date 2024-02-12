@@ -3,9 +3,6 @@
 
 #include "_sauna_props.dm"
 
-// Далее просто включай свой код
-// #include "code/something.dm"
-
 #include "code/sauna_props.dm"
 
 #endif
