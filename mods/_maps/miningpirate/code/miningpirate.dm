@@ -10,7 +10,7 @@
 		"nav_miningpirate_4",
 		"nav_miningpirate_antag"
 	)
-	    area_usage_test_exempted_root_areas = list(/area/miningpirate)
+	area_usage_test_exempted_root_areas = list(/area/miningpirate)
 
 /datum/map_template/ruin/away_site/miningpirate
 	name = "miningpirate"
