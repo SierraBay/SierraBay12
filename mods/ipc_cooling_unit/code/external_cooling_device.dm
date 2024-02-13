@@ -81,9 +81,8 @@
 
 
 /obj/machinery/external_cooling_device/interface_interact(mob/user)
-	if(interact)
-		interact(user)
-		return TRUE
+	interact(user)
+	return TRUE
 
 /obj/machinery/external_cooling_device/interact(mob/user)
 	var/list/dat = list()
