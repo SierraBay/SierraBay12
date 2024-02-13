@@ -38,7 +38,13 @@ ID мода: IPC_COOLING_UNIT
 
 ### Оверрайды
 
-- `mods\ipc_cooling_unit\code\machine.dm`: `owner.species.passive_temp_gain`
+- `mods/ipc_cooling_unit/code/machine.dm`:
+  - `/datum/species/machine/passive_temp_gain`
+  - `/datum/species/machine/New()`
+  - `/obj/machinery/organ_printer/robot/New()`
+  - `/mob/living/carbon/human/Stat()`
+  - `/obj/item/organ/internal/cell/Process()`
+
 <!--
   Если ты добавлял новый модульный оверрайд, его нужно указать здесь.
   Здесь указываются оверрайды в твоём моде и папке `_master_files`
