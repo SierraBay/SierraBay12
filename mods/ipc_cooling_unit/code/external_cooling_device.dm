@@ -113,8 +113,6 @@
 		popup.set_title_image(usr.browse_rsc_icon(src.icon, "sheater-standby"))
 		popup.open()
 
-	return
-
 
 /obj/machinery/external_cooling_device/on_update_icon(rebuild_overlay = 1)
 	if(!cell)
