@@ -10,7 +10,6 @@
 	var/active = FALSE
 	var/closed = TRUE
 	var/set_temperature = T0C
-	var/interact = 1
 
 /obj/machinery/external_cooling_device/New()
 	..()
