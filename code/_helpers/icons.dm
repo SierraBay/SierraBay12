@@ -451,6 +451,8 @@ The _flatIcons list is a cache for generated icon files.
 
 	if(!appearance || appearance.alpha <= 0)
 		return icon(flat_template)
+	if(appearance.plane == LIGHTING_EXPOSURE_PLANE) // SS220 Bloom-Lighting
+		return icon(flat_template)
 
 	if(start)
 		if(!defdir)
