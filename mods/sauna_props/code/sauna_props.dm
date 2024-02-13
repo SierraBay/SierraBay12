@@ -19,12 +19,12 @@
 		if(!T)
 			return
 
-		user.visible_message("<span class='warning'>\The [user] begins to clean \the [T].</span>")
+		user.visible_message(SPAN_WARNING("\The [user] begins to clean \the [T]."))
 
 		if(do_after(user, mopspeed, T, do_flags = DO_DEFAULT | DO_PUBLIC_PROGRESS))
 			if(T)
 				T.clean(src, user)
-			to_chat(user, "<span class='notice'>You have finished mopping!</span>")
+			to_chat(user, SPAN_NOTICE("You have finished mopping!"))
 
 /obj/structure/bed/sauna_bench
 	name = "sauna bench"
@@ -35,7 +35,7 @@
 	var/static/list/sauna_bench_buckle_pixel_shift = list(0, 10, 0)
 
 /obj/structure/bed/sauna_bench/New(newloc)
-	..(newloc,MATERIAL_WOOD, MATERIAL_LEATHER_GENERIC)
+	..(newloc, MATERIAL_WOOD, MATERIAL_LEATHER_GENERIC)
 
 /obj/structure/bed/sauna_bench/Destroy()
 	buckle_pixel_shift = null

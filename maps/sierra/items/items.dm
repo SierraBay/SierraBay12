@@ -542,4 +542,4 @@ Passports
 		/obj/item/device/paint_sprayer,
 		/obj/item/rcd,
 		/obj/item/rcd_ammo
-		)
+	)
