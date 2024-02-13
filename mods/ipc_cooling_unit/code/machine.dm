@@ -29,12 +29,12 @@
 		if(owner.species.name == SPECIES_IPC)
 			owner.species.passive_temp_gain = 0
 	if(owner.species.name == SPECIES_IPC)
-		var/obj/item/organ/internal/cooling_system/Cooling = owner.internal_organs_by_name[BP_COOLING]
+		var/obj/item/organ/internal/cooling_system/cooling_organ = owner.internal_organs_by_name[BP_COOLING]
 		var/normal_passive_temp_gain = 30
-		if(!(owner.internal_organs_by_name[BP_COOLING]))
+		if(!cooling_organ)
 			if(owner.bodytemperature > 950 CELSIUS)
 				owner.species.passive_temp_gain = 0
 			else
 				owner.species.passive_temp_gain = normal_passive_temp_gain
 		else
-			owner.species.passive_temp_gain = Cooling.get_tempgain()
+			owner.species.passive_temp_gain = cooling_organ.get_tempgain()
