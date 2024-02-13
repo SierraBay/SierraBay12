@@ -128,12 +128,12 @@
 			to_chat(user, SPAN_NOTICE("\The [src] is full."))
 			return
 		if (beaker.reagents.total_volume <= 0)
-			to_chat(user, SPAN_NOTICE("\The [dispenser] is empty."))
+			to_chat(user, SPAN_NOTICE("\The [beaker] is empty."))
 			return
 		amount = beaker.reagents.trans_to_obj(src, refrigerant_max)
-		to_chat(user, SPAN_NOTICE("You fill \the [src] with [amount] units from \the [dispenser]."))
+		to_chat(user, SPAN_NOTICE("You fill \the [src] with [amount] units from \the [beaker]."))
 		playsound(src.loc, 'sound/effects/pour.ogg', 25, 1)
 	else
 		amount = src.reagents.trans_to_obj(beaker, refrigerant_max)
-		to_chat(user, SPAN_NOTICE("You fill \the [dispenser] with [amount] units from \the [src]."))
+		to_chat(user, SPAN_NOTICE("You fill \the [beaker] with [amount] units from \the [src]."))
 		playsound(src.loc, 'sound/effects/pour.ogg', 25, 1)
