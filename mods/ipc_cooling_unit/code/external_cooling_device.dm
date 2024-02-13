@@ -86,32 +86,31 @@
 		return TRUE
 
 /obj/machinery/external_cooling_device/interact(mob/user)
-	if(interact)
-		var/list/dat = list()
-		dat += "Power cell: "
-		if(cell)
-			dat += "<A href='byond://?src=\ref[src];op=cellremove'>Installed</A><BR>"
-		else
-			dat += "<A href='byond://?src=\ref[src];op=cellinstall'>Removed</A><BR>"
+	var/list/dat = list()
+	dat += "Power cell: "
+	if(cell)
+		dat += "<A href='byond://?src=\ref[src];op=cellremove'>Installed</A><BR>"
+	else
+		dat += "<A href='byond://?src=\ref[src];op=cellinstall'>Removed</A><BR>"
 
-		if(!active)
-			dat += "<A href='byond://?src=\ref[src];op=Power_Off'>Power On</A><BR>"
-		else
-			dat += "<A href='byond://?src=\ref[src];op=Power_On'>Power Off</A><BR>"
+	if(!active)
+		dat += "<A href='byond://?src=\ref[src];op=Power_Off'>Power On</A><BR>"
+	else
+		dat += "<A href='byond://?src=\ref[src];op=Power_On'>Power Off</A><BR>"
 
-		dat += "Power Level: [cell ? round(cell.percent(),1) : 0]%<BR><BR>"
+	dat += "Power Level: [cell ? round(cell.percent(),1) : 0]%<BR><BR>"
 
-		dat += "Set Temperature: "
+	dat += "Set Temperature: "
 
-		dat += "<A href='?src=\ref[src];op=temp;val=-5'>-</A>"
+	dat += "<A href='?src=\ref[src];op=temp;val=-5'>-</A>"
 
-		dat += " [set_temperature]K ([set_temperature-T0C]&deg;C)"
-		dat += "<A href='?src=\ref[src];op=temp;val=5'>+</A><BR>"
+	dat += " [set_temperature]K ([set_temperature-T0C]&deg;C)"
+	dat += "<A href='?src=\ref[src];op=temp;val=5'>+</A><BR>"
 
-		var/datum/browser/popup = new(usr, "spaceheater", "External Cooling Device Control Panel")
-		popup.set_content(jointext(dat, null))
-		popup.set_title_image(usr.browse_rsc_icon(src.icon, "sheater-standby"))
-		popup.open()
+	var/datum/browser/popup = new(usr, "spaceheater", "External Cooling Device Control Panel")
+	popup.set_content(jointext(dat, null))
+	popup.set_title_image(usr.browse_rsc_icon(src.icon, "sheater-standby"))
+	popup.open()
 
 
 /obj/machinery/external_cooling_device/on_update_icon(rebuild_overlay = 1)
