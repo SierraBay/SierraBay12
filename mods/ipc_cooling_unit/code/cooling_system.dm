@@ -115,7 +115,6 @@
 	src.icon_state = "[sprite_name][!safety]"
 	src.desc = "The injection is [safety ? "on" : "off"]."
 	to_chat(user, "The injection is [safety ? "on" : "off"].")
-	return
 
 
 /obj/item/organ/internal/cooling_system/afterattack(atom/target, mob/user, flag)
