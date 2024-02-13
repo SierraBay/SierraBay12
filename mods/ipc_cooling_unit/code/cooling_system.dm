@@ -119,29 +119,22 @@
 
 
 /obj/item/organ/internal/cooling_system/afterattack(atom/target, mob/user, flag)
-
-	var/beaker = istype(target, /obj/item/reagent_containers/glass)
-
-	if (flag && beaker)
-		var/obj/dispenser = target
-		var/amount = reagents.get_free_space()
-		if (safety)
-			if (amount <= 0)
-				to_chat(user, SPAN_NOTICE("\The [src] is full."))
-				return
-			if (beaker)
-				if (dispenser.reagents.total_volume <= 0)
-					to_chat(user, SPAN_NOTICE("\The [dispenser] is empty."))
-					return
-				amount = dispenser.reagents.trans_to_obj(src, refrigerant_max)
-				to_chat(user, SPAN_NOTICE("You fill \the [src] with [amount] units from \the [dispenser]."))
-				playsound(src.loc, 'sound/effects/pour.ogg', 25, 1)
-		if (!safety)
-			if (beaker)
-				amount = src.reagents.trans_to_obj(dispenser, refrigerant_max)
-				to_chat(user, SPAN_NOTICE("You fill \the [dispenser] with [amount] units from \the [src]."))
-				playsound(src.loc, 'sound/effects/pour.ogg', 25, 1)
-
-	else
+	var/obj/item/reagent_containers/glass/beaker = target
+	if (!flag || !istype(beaker))
 		return ..()
-	return
+
+	var/amount = reagents.get_free_space()
+	if (safety)
+		if (amount <= 0)
+			to_chat(user, SPAN_NOTICE("\The [src] is full."))
+			return
+		if (beaker.reagents.total_volume <= 0)
+			to_chat(user, SPAN_NOTICE("\The [dispenser] is empty."))
+			return
+		amount = beaker.reagents.trans_to_obj(src, refrigerant_max)
+		to_chat(user, SPAN_NOTICE("You fill \the [src] with [amount] units from \the [dispenser]."))
+		playsound(src.loc, 'sound/effects/pour.ogg', 25, 1)
+	else
+		amount = src.reagents.trans_to_obj(beaker, refrigerant_max)
+		to_chat(user, SPAN_NOTICE("You fill \the [dispenser] with [amount] units from \the [src]."))
+		playsound(src.loc, 'sound/effects/pour.ogg', 25, 1)
