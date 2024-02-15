@@ -21,3 +21,15 @@
 
 /obj/item/gun/projectile/automatic/bullpup_rifle
 	icon = 'mods/guns/icons/obj/bullpup_rifle.dmi'
+
+/obj/item/gun/projectile/automatic/battlerifle
+	icon = 'mods/guns/icons/obj/battlerifle.dmi'
+
+/obj/item/gun/projectile/heavysniper
+	icon = 'mods/guns/icons/obj/heavysniper.dmi'
+
+/obj/item/gun/projectile/heavysniper/boltaction
+	icon = 'mods/guns/icons/obj/boltaction.dmi'
+
+/obj/item/gun/projectile/pistol/optimus
+	icon = 'mods/guns/icons/obj/confederate.dmi'
