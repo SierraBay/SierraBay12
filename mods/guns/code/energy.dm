@@ -31,7 +31,7 @@
 
 /obj/item/gun/energy/ionrifle/small/sec
 	desc = "The NT Mk72 EW Preston is a personal defense weapon designed to disable mechanical threats. This one clad in white frame."
-	icon = 'mods/guns/icons/obj/ion_pistol.dmi'
+	icon = 'mods/guns/icons/obj/ion_pistol_nt.dmi'
 
 /obj/item/gun/energy/incendiary_laser
 	icon = 'mods/guns/icons/obj/incendiary_laser.dmi'
@@ -52,9 +52,8 @@
 	icon = 'mods/guns/icons/obj/laser_carbine.dmi'
 	req_access = list(list(access_brig, access_bridge))
 
-/*
-/obj/item/gun/energy/confuseray
+/obj/item/gun/energy/confuseray/secure
 	name = "disorientator"
-	desc = "The W-T Mk. 4 Disorientator is a small, low capacity, and short-ranged energy projector intended for personal defense with minimal risk of permanent damage or cross-fire."
-	icon = 'mods/guns/icons/obj/confuseray.dmi'
-*/
+	desc = "The W-T Mk. 6 Disorientator fitted with an NT1017 secure fire chip. It has a NanoTrasen logo on the grip."
+	icon = 'mods/guns/icons/obj/confuseray_secure.dmi'
+	req_access = list(list(access_brig, access_bridge))
