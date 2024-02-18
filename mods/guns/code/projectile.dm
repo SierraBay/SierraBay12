@@ -24,6 +24,10 @@
 
 /obj/item/gun/projectile/automatic/battlerifle
 	icon = 'mods/guns/icons/obj/battlerifle.dmi'
+	item_icons = list(
+		slot_r_hand_str = 'mods/guns/icons/mob/righthand_guns.dmi',
+		slot_l_hand_str = 'mods/guns/icons/mob/lefthand_guns.dmi',
+		)
 
 /obj/item/gun/projectile/heavysniper
 	icon = 'mods/guns/icons/obj/heavysniper.dmi'
@@ -33,3 +37,6 @@
 
 /obj/item/gun/projectile/pistol/optimus
 	icon = 'mods/guns/icons/obj/confederate.dmi'
+
+/obj/item/gun/projectile/pistol/magnum_pistol
+	icon = 'mods/guns/icons/obj/magnum_pistol.dmi'

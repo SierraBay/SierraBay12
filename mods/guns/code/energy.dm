@@ -18,13 +18,20 @@
 	icon = 'mods/guns/icons/obj/laser_sniper.dmi'
 
 /obj/item/gun/energy/pulse_rifle
+	wielded_item_state = "pulsecarbine-wielded"
 	icon = 'mods/guns/icons/obj/pulse_rifle.dmi'
+	item_icons = list(
+		slot_r_hand_str = 'mods/guns/icons/mob/righthand_guns.dmi',
+		slot_l_hand_str = 'mods/guns/icons/mob/lefthand_guns.dmi',
+		)
 
 /obj/item/gun/energy/pulse_rifle/carbine
 	icon = 'mods/guns/icons/obj/pulse_carbine.dmi'
+	wielded_item_state = null
 
 /obj/item/gun/energy/pulse_rifle/pistol
 	icon = 'mods/guns/icons/obj/pulse_pistol.dmi'
+	wielded_item_state = null
 
 /obj/item/gun/energy/ionrifle
 	icon = 'mods/guns/icons/obj/ion_rifle.dmi'
@@ -48,12 +55,20 @@
 
 /obj/item/gun/energy/taser/carbine
 	icon = 'mods/guns/icons/obj/taser_carbine.dmi'
+	item_icons = list(
+		slot_r_hand_str = 'mods/guns/icons/mob/righthand_guns.dmi',
+		slot_l_hand_str = 'mods/guns/icons/mob/lefthand_guns.dmi',
+		)
 
 /obj/item/gun/energy/stunrevolver
 	icon = 'mods/guns/icons/obj/stunrevolver.dmi'
 
 /obj/item/gun/energy/stunrevolver/rifle
 	icon = 'mods/guns/icons/obj/stunrifle.dmi'
+	item_icons = list(
+		slot_r_hand_str = 'mods/guns/icons/mob/righthand_guns.dmi',
+		slot_l_hand_str = 'mods/guns/icons/mob/lefthand_guns.dmi',
+		)
 
 /obj/item/gun/energy/laser/secure
 	icon = 'mods/guns/icons/obj/laser_carbine.dmi'
@@ -65,3 +80,15 @@
 	icon = 'mods/guns/icons/obj/confuseray_secure.dmi'
 	icon_state = "confusesecure"
 	req_access = list(list(access_brig, access_bridge))
+
+/obj/item/gun/energy/stunrevolver/secure
+	name = "smart service revolver"
+	desc = "A&M X8 Tessub. Next level in personal security with three diffirent firing modes. This one is fitted with an NT1019 chip which allows remote authorization of weapon functionality. It has an NT emblem on the grip."
+	icon = 'mods/guns/icons/obj/stunrevolver_secure.dmi'
+	projectile_type = /obj/item/projectile/beam/stun
+	firemodes = list(
+		list(mode_name="stun", projectile_type=/obj/item/projectile/beam/stun, modifystate="energyrevolverstun"),
+		list(mode_name="shock", projectile_type=/obj/item/projectile/beam/stun/shock, modifystate="energyrevolvershock"),
+		list(mode_name="kill", projectile_type=/obj/item/projectile/beam, modifystate="energyrevolverkill"),
+		)
+	req_access = list(list(access_brig, access_heads))
