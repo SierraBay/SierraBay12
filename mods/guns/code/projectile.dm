@@ -29,11 +29,13 @@
 		slot_l_hand_str = 'mods/guns/icons/mob/lefthand_guns.dmi',
 		)
 
+/*
 /obj/item/gun/projectile/heavysniper
 	icon = 'mods/guns/icons/obj/heavysniper.dmi'
 
 /obj/item/gun/projectile/heavysniper/boltaction
 	icon = 'mods/guns/icons/obj/boltaction.dmi'
+*/
 
 /obj/item/gun/projectile/pistol/optimus
 	icon = 'mods/guns/icons/obj/confederate.dmi'
