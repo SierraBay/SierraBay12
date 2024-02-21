@@ -1,4 +1,4 @@
-/singleton/modpack/example
-	name = "Мод-пример"
-	desc = "Мод, который является примером и ни в коем случае не должен быть использован."
-	author = "Твой никнейм"
+/singleton/modpack/guns
+	name = "Оружие"
+	desc = "Модификация спрайтов и ребаланс вооружения."
+	author = "LordNest"
