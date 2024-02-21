@@ -22,7 +22,7 @@
 	icon = 'mods/guns/icons/obj/pulse_rifle.dmi'
 	item_icons = list(
 		slot_r_hand_str = 'mods/guns/icons/mob/righthand_guns.dmi',
-		slot_l_hand_str = 'mods/guns/icons/mob/lefthand_guns.dmi',
+		slot_l_hand_str = 'mods/guns/icons/mob/lefthand_guns.dmi'
 		)
 
 /obj/item/gun/energy/pulse_rifle/carbine
@@ -37,7 +37,7 @@
 	icon = 'mods/guns/icons/obj/ion_rifle.dmi'
 	item_icons = list(
 		slot_r_hand_str = 'mods/guns/icons/mob/righthand_guns.dmi',
-		slot_l_hand_str = 'mods/guns/icons/mob/lefthand_guns.dmi',
+		slot_l_hand_str = 'mods/guns/icons/mob/lefthand_guns.dmi'
 		)
 
 /obj/item/gun/energy/ionrifle/small
@@ -57,7 +57,7 @@
 	icon = 'mods/guns/icons/obj/taser_carbine.dmi'
 	item_icons = list(
 		slot_r_hand_str = 'mods/guns/icons/mob/righthand_guns.dmi',
-		slot_l_hand_str = 'mods/guns/icons/mob/lefthand_guns.dmi',
+		slot_l_hand_str = 'mods/guns/icons/mob/lefthand_guns.dmi'
 		)
 
 /obj/item/gun/energy/stunrevolver
@@ -89,6 +89,6 @@
 	firemodes = list(
 		list(mode_name="stun", projectile_type=/obj/item/projectile/beam/stun, modifystate="energyrevolverstun"),
 		list(mode_name="shock", projectile_type=/obj/item/projectile/beam/stun/shock, modifystate="energyrevolvershock"),
-		list(mode_name="kill", projectile_type=/obj/item/projectile/beam, modifystate="energyrevolverkill"),
+		list(mode_name="kill", projectile_type=/obj/item/projectile/beam, modifystate="energyrevolverkill")
 		)
 	req_access = list(list(access_brig, access_heads))
