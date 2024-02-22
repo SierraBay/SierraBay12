@@ -69,6 +69,4 @@
 	id_slot = slot_wear_id
 	id_types = list(/obj/item/card/id/syndicate)
 	id_pda_assignment = "Scavenger"
-
-
 	flags = OUTFIT_HAS_BACKPACK|OUTFIT_RESET_EQUIPMENT
