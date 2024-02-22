@@ -24,7 +24,7 @@
 	var/list/grant = data["grant"]
 	var/list/revoke = data["revoke"]
 	var/icon = "https://cdn.discordapp.com/emojis/680793066415980576.png"			// :SeemsRichKot: emoji
-	if(!grant || (revoke && (revoke.len >= grant.len)))
+	if(length(revoke) >= length(grant))
 		icon = "https://cdn.discordapp.com/emojis/601028456675016706.png"			// :resomisad: emoji
 	desc["thumbnail"] = list("url" = icon)
 /*
@@ -68,7 +68,7 @@
 	for(var/ckey in revoke)
 		unite[ckey] += revoke[ckey]
 
-	if(!unite || !unite.len)
+	if(!length(unite))
 		.["content"] = "Сюда пришло изменение вайтлиста, но мы потеряли список."
 		return
 	var/list/fields = list()
@@ -79,10 +79,10 @@
 		var/list/text = list("diff")
 		for(var/race in check)
 			text += race
-		fields[++fields.len] = list(
+		fields[++length(fields)] = list(
 			"name" = ckey2,
 			"value" = "```[jointext(text, "\n")]```"
 		)
-	if(fields && fields.len)
+	if(length(fields))
 		desc["fields"] = fields
 	.["embeds"] = list(desc)
