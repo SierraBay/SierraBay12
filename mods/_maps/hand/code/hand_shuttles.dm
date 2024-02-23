@@ -1,32 +1,38 @@
 // HAND TODO BELOW
 
-/datum/shuttle/autodock/overmap/reaper
-	name = "Reaper Gunboat"
-	warmup_time = 15
-	dock_target = "albatross_shuttle"
-	current_location = "nav_hangar_reaper"
-	range = 2
-	shuttle_area = /area/ship/reaper
+/datum/shuttle/autodock/overmap/graysontug/hand_one
+	name = "GM Tug"
+	dock_target = "graysontug_shuttle"
+	current_location = "nav_graysontug_start"
+	range = 1
+	shuttle_area = /area/map_template/crashed_shuttle/graysontug
+	fuel_consumption = 4
 	defer_initialisation = TRUE
 	flags = SHUTTLE_FLAGS_PROCESS
-	skill_needed = SKILL_UNSKILLED
-	ceiling_type = /turf/simulated/floor/shuttle_ceiling/merc
+	skill_needed = SKILL_MIN
+	ceiling_type = /turf/simulated/floor/shuttle_ceiling
 
-/obj/machinery/computer/shuttle_control/explore/away_scg_patrol/reaper
-	name = "Reaper Shuttle control console"
-	req_access = list(access_away_cavalry)
-	shuttle_tag = "Reaper Gunboat"
+/obj/machinery/computer/shuttle_control/explore/graysontug
+	name = "GM Tug Shuttle control console"
+	shuttle_tag = "GM Tug"
 
-/obj/overmap/visitable/ship/landable/reaper
-	name = "Reaper-G"
-	desc = "A heavily modified military gunboat of particular design. More of the dropship now, scanner detects heavy alteration to the hull of the vessel and no designation"
-	shuttle = "Reaper Gunboat"
-	fore_dir = WEST
-	color = "#000000"
-	vessel_mass = 250
+/obj/overmap/visitable/ship/landable/graysontug
+	name = "GM Tug"
+	desc = "Grayson Manufactories Tug. Space truckin commonly seen across Frontier."
+	shuttle = "GM Tug"
+	fore_dir = NORTH
+	color = "#e6f7ff"
+	vessel_mass = 2500
 	vessel_size = SHIP_SIZE_TINY
 
-/area/ship/reaper
+/obj/shuttle_landmark/graysontug/start
+	name = "Crash Zone"
+	landmark_tag = "nav_graysontug_start"
+	base_area = /area/map_template/crashed_shuttle/crash
+	base_turf = /turf/simulated/floor/exoplanet/barren
+	movable_flags = MOVABLE_FLAG_EFFECTMOVE
+
+/area/ship/
 	name = "\improper Reaper"
 	icon_state = "shuttlered"
 	base_turf = /turf/simulated/floor
@@ -34,18 +40,14 @@
 	dynamic_lighting = 1
 	area_flags = AREA_FLAG_RAD_SHIELDED
 
-/obj/shuttle_landmark/reaper/start
-	name = "Dock"
-	landmark_tag = "nav_hangar_reaper"
-	base_area = /area/ship/patrol/command/hangar
-	base_turf = /turf/simulated/floor/plating
+/obj/shuttle_landmark/handtugone/start
+	name = "Port Tug Dock"
+	landmark_tag = "nav_handtugone_start"
+	docking_controller = "handtugone_port_dock"
 	movable_flags = MOVABLE_FLAG_EFFECTMOVE
 
-/obj/shuttle_landmark/reaper/altdock
-	name = "Docking Port"
-	landmark_tag = "nav_hangar_reaperalt"
-
-/obj/shuttle_landmark/reaper/dock
-	name = "NSV Sierra Dock"
-	landmark_tag = "nav_reaper_dock"
-	docking_controller = "nuke_shuttle_dock_airlock"
+/obj/shuttle_landmark/handtugtwo/start
+	name = "Starboard Tug Dock"
+	landmark_tag = "nav_handtugtwo_start"
+	docking_controller = "handtugtwo_port_dock"
+	movable_flags = MOVABLE_FLAG_EFFECTMOVE

@@ -2,13 +2,13 @@
 
 #define WEBHOOK_SUBMAP_LOADED_HAND	"webhook_submap_hand"
 
-/obj/submap_landmark/joinable_submap/away_scg_hand
-	name = "hand Ship"
-	archetype = /singleton/submap_archetype/away_scg_hand
+/obj/submap_landmark/joinable_submap/away_hand
+	name = "Hearer's Hand Ship"
+	archetype = /singleton/submap_archetype/away_hand
 
-/singleton/submap_archetype/away_scg_hand
-	descriptor = "SCGF hand Ship"
-	map = "hand Ship"
+/singleton/submap_archetype/away_hand
+	descriptor = "Hearer's Hand Ship"
+	map = "Hearer's Hand Ship"
 	crew_jobs = list(
 		/datum/job/submap/hand,
 		/datum/job/submap/hand/captain,
@@ -23,8 +23,6 @@
 /obj/submap_landmark/spawnpoint/away_hand/captain
 	name = "Captain"
 
-
-
 /obj/submap_landmark/spawnpoint/away_hand/surgeon
 	name = "Corpsman"
 
@@ -33,31 +31,23 @@
  * =======
  */
 
-var/global/const/access_hand = "ACCESS_CAVALRY"
-var/global/const/access_hand_fleet_armory = "ACCESS_CAVALRY_EMERG_ARMORY"
-var/global/const/access_hand_ops = "ACCESS_CAVALRY_OPS"
-var/global/const/access_hand_pilot = "ACCESS_CAVALRY_PILOT"
-var/global/const/access_hand_captain = "ACCESS_CAVALRY_CAPTAIN"
-var/global/const/access_hand_commander = "ACCESS_CAVALRY_COMMANDER"
+var/global/const/access_away_hand = "ACCESS_HAND"
+var/global/const/access_away_hand_med = "ACCESS_HAND_MED"
+var/global/const/access_away_hand_captain = "ACCESS_HAND_CAPTAIN"
 
-/datum/access/access_hand_hand
-	id = access_hand
-	desc = "SPS Main"
+/datum/access/access_away_hand_hand
+	id = access_away_hand
+	desc = "Salvage Vessel Main"
 	region = ACCESS_REGION_NONE
 
-/datum/access/access_hand_ops
-	id = access_hand_ops
-	desc = "SPS Army"
+/datum/access/access_away_hand_med
+	id = access_away_hand_med
+	desc = "Salvage Vessel Medic"
 	region = ACCESS_REGION_NONE
 
-/datum/access/access_hand_captain
-	id = access_hand_captain
-	desc = "SPS Captain"
-	region = ACCESS_REGION_NONE
-
-/datum/access/access_away_hand_commander
-	id = access_hand_commander
-	desc = "SPS Commander"
+/datum/access/access_away_hand_captain
+	id = access_away_hand_captain
+	desc = "Salvage Vessel Captain"
 	region = ACCESS_REGION_NONE
 
 /* JOBS
@@ -67,7 +57,7 @@ var/global/const/access_hand_commander = "ACCESS_CAVALRY_COMMANDER"
 /datum/job/submap/hand
 	title = "Army SCGSO Trooper"
 	total_positions = 2
-	outfit_type = /singleton/hierarchy/outfit/job/hand/army_ops
+	outfit_type = /singleton/hierarchy/outfit/job/hand
 	allowed_branches = list(/datum/mil_branch/scga)
 	allowed_ranks = list(
 		/datum/mil_rank/scga/e4,
@@ -93,7 +83,7 @@ var/global/const/access_hand_commander = "ACCESS_CAVALRY_COMMANDER"
 		SKILL_ELECTRICAL   = SKILL_TRAINED,
 		SKILL_CONSTRUCTION = SKILL_TRAINED,
 	)
-	access = list(access_hand, access_hand_ops)
+	access = list(access_away_hand)
 
 /datum/job/submap/hand/captain
 	title = "Captain"
@@ -105,9 +95,9 @@ var/global/const/access_hand_commander = "ACCESS_CAVALRY_COMMANDER"
 	minimum_character_age = list(SPECIES_HUMAN = 25)
 	ideal_character_age = 27
 	allowed_branches = list(
-		/datum/mil_branch/fleet
-		/datum/mil_branch/civilian
-		/datum/mil_branch/contractor
+		/datum/mil_branch/fleet,
+		/datum/mil_branch/civilian,
+		/datum/mil_branch/contractor,
 		/datum/mil_branch/employee
 	)
 	allowed_ranks = list(
@@ -133,7 +123,7 @@ var/global/const/access_hand_commander = "ACCESS_CAVALRY_COMMANDER"
 		SKILL_PILOT   = SKILL_TRAINED,
 		SKILL_EVA     = SKILL_BASIC
 	)
-	access = list(access_hand, access_hand_ops, access_hand_fleet_armory, access_hand_captain)
+	access = list(access_away_hand, access_away_hand_captain)
 
 /datum/job/submap/hand/surgeon
 	title = "Fleet Corpsman"
@@ -163,7 +153,7 @@ var/global/const/access_hand_commander = "ACCESS_CAVALRY_COMMANDER"
 		SKILL_CHEMISTRY = SKILL_BASIC,
 		SKILL_EVA       = SKILL_BASIC
 	)
-	access = list(access_hand)
+	access = list(access_away_hand, access_away_hand_med, access_away_hand_captain)
 
 
 /* BRANCH & RANKS
@@ -328,9 +318,9 @@ var/global/const/access_hand_commander = "ACCESS_CAVALRY_COMMANDER"
 
 /singleton/hierarchy/outfit/job/hand
 	hierarchy_type = /singleton/hierarchy/outfit/job/hand
-	uniform = /obj/item/clothing/under/solgov/utility/fleet/away_solhand
+	uniform = /obj/item/clothing/under/solgov/utility/fleet
 	shoes = /obj/item/clothing/shoes/dutyboots
-	l_ear = /obj/item/device/radio/headset/away_scg_hand
+	l_ear = /obj/item/device/radio/headset/headset_mining
 	l_pocket = /obj/item/device/radio
 	r_pocket = /obj/item/crowbar/prybar
 	suit_store = /obj/item/tank/oxygen
@@ -343,28 +333,28 @@ var/global/const/access_hand_commander = "ACCESS_CAVALRY_COMMANDER"
 	flags = OUTFIT_EXTENDED_SURVIVAL
 
 /singleton/hierarchy/outfit/job/hand/captain
-	name = hand_OUTFIT_JOB_NAME("Captain")
+	name = HAND_OUTFIT_JOB_NAME("Captain")
 	head = /obj/item/clothing/head/scga/utility
 	uniform = /obj/item/clothing/under/scga/utility
 	id_types = list(/obj/item/card/id/awaycavalry/ops/captain)
 	gloves = /obj/item/clothing/gloves/thick/combat
 
 /singleton/hierarchy/outfit/job/hand/captain/guardsman
-	name = hand_OUTFIT_JOB_NAME("Guardsman")
+	name = HAND_OUTFIT_JOB_NAME("Guardsman")
 	head = /obj/item/clothing/head/scga/utility
 	uniform = /obj/item/clothing/under/scga/utility
 	id_types = list(/obj/item/card/id/awaycavalry/ops/captain)
 	gloves = /obj/item/clothing/gloves/thick/combat
 
 /singleton/hierarchy/outfit/job/hand/captain/pilot
-	name = hand_OUTFIT_JOB_NAME("Captain")
+	name = HAND_OUTFIT_JOB_NAME("Captain")
 	head = /obj/item/clothing/head/scga/utility
 	uniform = /obj/item/clothing/under/scga/utility
 	id_types = list(/obj/item/card/id/awaycavalry/ops/captain)
 	gloves = /obj/item/clothing/gloves/thick/combat
 
 /singleton/hierarchy/outfit/job/hand/surgeon
-	name = hand_OUTFIT_JOB_NAME("Doctor")
+	name = HAND_OUTFIT_JOB_NAME("Doctor")
 	uniform = /obj/item/clothing/under/solgov/utility/fleet/medical/hand
 	belt = /obj/item/storage/belt/holster/security/tactical
 	gloves = /obj/item/clothing/gloves/latex/nitrile

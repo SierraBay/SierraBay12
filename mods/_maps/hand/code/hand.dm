@@ -43,18 +43,14 @@
 	name = "Hearer's Hand Vessel"
 	id = "awaysite_hand_ship"
 	description = "Hyena-class salvage vessel."
-	prefix = "mods/_maps/sentinel/maps/"
+	prefix = "mods/_maps/hand/maps/"
 	suffixes = list("hand-1.dmm", "hand-2.dmm")
 	ban_ruins = list(/datum/map_template/ruin/away_site/farfleet)
 	spawn_cost = 0.5
 	player_cost = 7
 	spawn_weight = 1
-	shuttles_to_initialise = list(/datum/shuttle/autodock/overmap/reaper)
+//	shuttles_to_initialise = list(/datum/shuttle/autodock/overmap/reaper)
 
-	area_usage_test_exempted_areas = list(
-		/area/turbolift/sentinel_first,
-		/area/turbolift/sentinel_second
-	)
 
 /obj/shuttle_landmark/nav_hand/nav1
 	name = "hand Ship Fore"
@@ -80,10 +76,11 @@
  * ======
 
 
+
 /obj/machinery/telecomms/allinone/away_hand
 	listening_freqs = list(HAND_FREQ)
 	channel_color = COMMS_COLOR_CENTCOMM
-	channel_name = "SCG hand"
+	channel_name = ""
 	circuitboard = /obj/item/stock_parts/circuitboard/telecomms/allinone/away_hand
 
 /obj/item/stock_parts/circuitboard/telecomms/allinone/away_hand

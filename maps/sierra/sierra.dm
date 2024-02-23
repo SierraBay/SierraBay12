@@ -178,6 +178,7 @@
 	#include "../../mods/_maps/liberia/_map_liberia.dme"
 	#include "../../mods/_maps/sentinel/_map_sentinel.dme"
 	#include "../../mods/_maps/farfleet/_map_farfleet.dme"
+	#include "../../mods/_maps/hand/_map_hand.dme"
 	#include "../../mods/_maps/miningpirate/_map_miningpirate.dme"
 
 	#include "../../mods/antagonists/_antagonists.dme"
@@ -206,6 +207,7 @@
 
 	#include "../../packs/factions/iccgn/_pack.dm"
 	#include "../../packs/factions/scga/_pack.dm"
+	#include "../../packs/factions/fa/_pack.dm"
 	#include "../../packs/infinity/_pack.dm"
 	#include "../../packs/deepmaint/_pack.dm"
 
