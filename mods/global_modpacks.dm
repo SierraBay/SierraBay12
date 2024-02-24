@@ -24,3 +24,6 @@
 #include "utility_items/_utility_items.dme"
 
 #include "../packs/sierra-tweaks/_pack.dm"
+
+// Non-upstream
+#include "multitile_vehicles/_multitile_vehicles.dme"

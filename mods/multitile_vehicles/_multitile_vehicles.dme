@@ -1,0 +1,20 @@
+#ifndef MODPACK_MULTITILE_VEHICLES
+#define MODPACK_MULTITILE_VEHICLES
+
+#include "_multitile_vehicles.dm"
+
+#include "code/__defs.dm"
+#include "code/interiors/base.dm"
+#include "code/types/exploration.dm"
+#include "code/types/testing_unit.dm"
+#include "code/rearm_repair_station.dm"
+#include "code/vehicle_action_buttons.dm"
+#include "code/vehicle_base.dm"
+#include "code/vehicle_cargo.dm"
+#include "code/vehicle_components.dm"
+#include "code/vehicle_keys.dm"
+#include "code/vehicle_occupant.dm"
+#include "code/vehicle_verbs.dm"
+#include "code/~undefs.dm"
+
+#endif
