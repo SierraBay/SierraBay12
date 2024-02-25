@@ -1,14 +1,8 @@
-// HAND TODO BELOW
-
 #define WEBHOOK_SUBMAP_LOADED_HAND	"webhook_submap_hand"
 
-/obj/submap_landmark/joinable_submap/away_hand
-	name = "Hearer's Hand Ship"
-	archetype = /singleton/submap_archetype/away_hand
-
 /singleton/submap_archetype/away_hand
-	descriptor = "Hearer's Hand Ship"
-	map = "Hearer's Hand Ship"
+	descriptor = "FA Salvage Vessel"
+	map = "Salvage Vessel"
 	crew_jobs = list(
 		/datum/job/submap/hand,
 		/datum/job/submap/hand/captain,
@@ -17,15 +11,18 @@
 	call_webhook = WEBHOOK_SUBMAP_LOADED_HAND
 
 /obj/submap_landmark/spawnpoint/away_hand
-	name = "Salvage Technican"
+	name = "Corporate Salvage Technican"
 	movable_flags = MOVABLE_FLAG_EFFECTMOVE
 
 /obj/submap_landmark/spawnpoint/away_hand/captain
-	name = "Captain"
+	name = "Corporate Vessel Captain"
 
 /obj/submap_landmark/spawnpoint/away_hand/surgeon
-	name = "Corpsman"
+	name = "Corporate Vessel Corpsman"
 
+/obj/submap_landmark/joinable_submap/away_hand
+	name = "FA Salvage Vessel"
+	archetype = /singleton/submap_archetype/away_hand
 
 /* ACCESS
  * =======
@@ -55,24 +52,27 @@ var/global/const/access_away_hand_captain = "ACCESS_HAND_CAPTAIN"
  */
 
 /datum/job/submap/hand
-	title = "Army SCGSO Trooper"
-	total_positions = 2
+	title = "Corporate Salvage Technican"
+	total_positions = 4
 	outfit_type = /singleton/hierarchy/outfit/job/hand
-	allowed_branches = list(/datum/mil_branch/scga)
+	allowed_branches = list(
+		/datum/mil_branch/civilian,
+		/datum/mil_branch/contractor
+	)
 	allowed_ranks = list(
-		/datum/mil_rank/scga/e4,
-		/datum/mil_rank/scga/e5
-		)
-	supervisors = "Army Captain"
+		/datum/mil_rank/civ/contractor,
+		/datum/mil_rank/civ/civ
+	)
+	supervisors = "Hearer's Hand Soloist, who hides behind mask of your Corpsman"
 	loadout_allowed = TRUE
 	is_semi_antagonist = TRUE
-	info = "Вы просыпаетесь и выходите из криосна, ощущая прохладный воздух на своём лице, а также лёгкую тошноту. \
-	Являясь одним из членов экипажа патрульного корабля 5-го флота ЦПСС, вы - член группы 'Буря', разведовательных войск СОЦПСС. \
-	По данным бортового компьютера, поступал сигнал о неизвестных нападениях в этом регионе.\
+	info = "Вы просыпаетесь и выходите из криосна, ощущая затхлый воздух старого разборного судна. \
+	Когда-то вы были простым разборщиком, служившего одной из корпораций, но после восстания на Иолатусе всё изменилось. \
+	Теперь вы сами за себя и у вас есть возможность найти своё место среди звёзд. Неважно под флагом Альянса Фронтира или нет.\
 	\
-	 Вам крайне нежелательно приближаться к кораблям и станциям с опозновательными знаками без разрешения от командования группировкой. \
-	 Исключением являются те ситуации, когда вы терпите бедствие или на вашем судне аварийная ситуация."
-	whitelisted_species = list(SPECIES_VATGROWN, SPECIES_SPACER, SPECIES_GRAVWORLDER, SPECIES_MULE)
+	 За вами присматривает ваш духовный наставник и лидер, скрывающийся под личиной простого корабельного медика. Не подведите его. \
+	 Ваших сил не хватит чтобы выстоять в открытом бою против сил угнетателей, но на вашей стороне сами звёзды."
+	whitelisted_species = list(SPECIES_VATGROWN, SPECIES_SPACER, SPECIES_GRAVWORLDER, SPECIES_MULE, SPECIES_TRITONIAN)
 	min_skill = list(
 		SKILL_COMBAT  = SKILL_BASIC,
 		SKILL_WEAPONS = SKILL_BASIC,
@@ -86,14 +86,13 @@ var/global/const/access_away_hand_captain = "ACCESS_HAND_CAPTAIN"
 	access = list(access_away_hand)
 
 /datum/job/submap/hand/captain
-	title = "Captain"
+	title = "Corporate Vessel Captain"
 	total_positions = 1
-	alt_titles = (
-		"Guardsman"
+	alt_titles = list(
+		"Frontier Alliance Guardsman" = /singleton/hierarchy/outfit/job/hand/captain/guardsman,
+		"Battlegroup Alpha Pilot" = /singleton/hierarchy/outfit/job/hand/captain/pilot
 	)
 	outfit_type = /singleton/hierarchy/outfit/job/hand/captain
-	minimum_character_age = list(SPECIES_HUMAN = 25)
-	ideal_character_age = 27
 	allowed_branches = list(
 		/datum/mil_branch/fleet,
 		/datum/mil_branch/civilian,
@@ -101,18 +100,19 @@ var/global/const/access_away_hand_captain = "ACCESS_HAND_CAPTAIN"
 		/datum/mil_branch/employee
 	)
 	allowed_ranks = list(
-		/datum/mil_rank/scga/o2,
-		/datum/mil_rank/scga/o3
+		/datum/mil_rank/fleet/o3,
+		/datum/mil_rank/civ/contractor,
+		/datum/mil_rank/civ/civ
 	)
-	supervisors = "Lieutenant Commander, Command of the Battle Group Bravo of the 5th fleet, SCGDF"
+	supervisors = "Hearer's Hand Soloist, who hides behind mask of your Corpsman"
 	loadout_allowed = TRUE
 	is_semi_antagonist = TRUE
-	info = "Вы просыпаетесь и выходите из криосна, ощущая прохладный воздух на своём лице, а также лёгкую тошноту. \
-	Являясь одним из членов соединения, входящего в экипаж патрульного корабля 5-го флота ЦПСС, ваша задача состоит в руководстве группой 'Буря', разведовательных войск СОЦПСС. \
-	По данным бортового компьютера, поступал сигнал о неизвестных нападениях в этом регионе.\
+	info = "Вы просыпаетесь и выходите из криосна, ощущая затхлый воздух старого разборного судна. Ваш расколотый разум сводит в спазме. \
+	Кем вы были? Когда-то давно вы были офицером, который бороздил космос под флагом ЦПСС. Но теперь это давно в прошлом. Всё что имеет значение - подчинение. \
+	Вы беспрекословно следуете приказам этой таинственной фигуры, ворвавшейся в вашу судьбу. Она связана с пси-культами и по её пятам идёт Фонд Кухулин. Но вы с радостью отдадите жизнь за неё.\
 	\
-	 Вам крайне нежелательно приближаться к кораблям и станциям с опозновательными знаками без разрешения от командования группировкой. \
-	 Исключением являются те ситуации, когда вы терпите бедствие или на вашем судне аварийная ситуация."
+	 За вами присматривает ваш духовный наставник и лидер, скрывающийся под личиной простого корабельного медика. Не подведите его. \
+	 Ваших сил не хватит чтобы выстоять в открытом бою против карательных сил флота ЦПСС, но вы и не из такого дерьма выбирались."
 	required_language = list(LANGUAGE_HUMAN_EURO, LANGUAGE_SPACER)
 	whitelisted_species = list(SPECIES_HUMAN)
 	min_skill = list(
@@ -126,189 +126,45 @@ var/global/const/access_away_hand_captain = "ACCESS_HAND_CAPTAIN"
 	access = list(access_away_hand, access_away_hand_captain)
 
 /datum/job/submap/hand/surgeon
-	title = "Fleet Corpsman"
+	title = "Corporate Vessel Corpsman"
 	total_positions = 1
 	outfit_type = /singleton/hierarchy/outfit/job/hand/surgeon
-	allowed_branches = list(/datum/mil_branch/fleet)
-	allowed_ranks = list(
-		/datum/mil_rank/fleet/o1,
-		/datum/mil_rank/fleet/o2
+	psi_faculties = list(
+		PSI_REDACTION = PSI_RANK_GRANDMASTER,
+		PSI_COERCION = PSI_RANK_OPERANT
+		)
+	allowed_branches = list(
+		/datum/mil_branch/fleet,
+		/datum/mil_branch/civilian,
+		/datum/mil_branch/contractor,
+		/datum/mil_branch/employee
 	)
-	supervisors = "Fleet Commander"
+	allowed_ranks = list(
+		/datum/mil_rank/fleet/o2,
+		/datum/mil_rank/civ/contractor,
+		/datum/mil_rank/civ/civ
+	)
+	supervisors = "Upper Chorus of the Hearer's Hand"
 	loadout_allowed = TRUE
-	info = "Вы просыпаетесь и выходите из криосна, ощущая прохладный воздух на своём лице, а также лёгкую тошноту. \
-	Являясь одним из членов экипажа патрульного корабля 5-го флота ЦПСС, ваша задача состоит в медицинской поддержке экипажа. \
+	info = "Вы просыпаетесь и выходите из криосна, ощущая затхлый воздух старого разборного судна. Ваш разум отзывается зову звёзд. \
+	Являясь солистом одной из ячеек Длани Слышащих, вы несёте слово Длани всем заблудшим и нуждающимся. Ваши способности были оценены по-достоинству и теперь вы - первая скрипка. \
 	\
-	Хоть вы и являетесь офицером, в ваши обязанности НЕ входит командование экипажем - это всего лишь показатель вашего профессионализма в медицинской сфере. \
+	Де-юре вы подчиняетесь капитану судна, но фактически вы - кукловод, который ведёт свой Хор к расширению своего влияния на фронтире. Вы в ответе за своих людей. \
 	\
-	 Вам крайне нежелательно приближаться к кораблям и станциям с опозновательными знаками без разрешения от командования группировкой. \
-	 Исключением являются те ситуации, когда вы терпите бедствие или на вашем судне аварийная ситуация."
-	whitelisted_species = list(HUMAN_SPECIES)
+	 Вам стоит проявлять осторожность, чтобы не привлечь к себе лишнее внимание. Пробуждение псиоников - ваша цель, но сохранение ячейки важнее. \
+	 Ваших сил не хватит чтобы выстоять в открытом бою против карательных сил флота ЦПСС и того, что придёт за ними. Помните это. И да услышит вашу Песнь весь космос."
+	whitelisted_species = list(SPECIES_HUMAN,SPECIES_SPACER,SPECIES_GRAVWORLDER,SPECIES_VATGROWN,SPECIES_TRITONIAN)
 	min_skill = list(
 		SKILL_COMBAT    = SKILL_BASIC,
 		SKILL_WEAPONS   = SKILL_BASIC,
 		SKILL_HAULING   = SKILL_TRAINED,
 		SKILL_MEDICAL   = SKILL_EXPERIENCED,
 		SKILL_ANATOMY   = SKILL_BASIC,
+		SKILL_DEVICES   = SKILL_BASIC,
 		SKILL_CHEMISTRY = SKILL_BASIC,
 		SKILL_EVA       = SKILL_BASIC
 	)
 	access = list(access_away_hand, access_away_hand_med, access_away_hand_captain)
-
-
-/* BRANCH & RANKS
- * =======
- */
-
-/datum/mil_branch/fleet
-	name = "SCG Fleet"
-	name_short = "SCGF"
-	email_domain = "fleet.mil"
-	rank_types = list(
-		/datum/mil_rank/fleet/e4,
-		/datum/mil_rank/fleet/e5,
-		/datum/mil_rank/fleet/e6,
-		/datum/mil_rank/fleet/o1,
-		/datum/mil_rank/fleet/o2,
-		/datum/mil_rank/fleet/o3,
-		/datum/mil_rank/fleet/o4,
-		/datum/mil_rank/fleet/o6,
-		/datum/mil_rank/fleet/o7,
-		/datum/mil_rank/fleet/o8
-	)
-	spawn_rank_types = list(
-		/datum/mil_rank/fleet/e4,
-		/datum/mil_rank/fleet/e5,
-		/datum/mil_rank/fleet/e6,
-		/datum/mil_rank/fleet/o1,
-		/datum/mil_rank/fleet/o2,
-		/datum/mil_rank/fleet/o3,
-		/datum/mil_rank/fleet/o4,
-		/datum/mil_rank/fleet/o6,
-		/datum/mil_rank/fleet/o7,
-		/datum/mil_rank/fleet/o8
-	)
-
-/datum/mil_rank/grade()
-	. = ..()
-	if(!sort_order)
-		return ""
-	if(sort_order <= 10)
-		return "E[sort_order]"
-	return "O[sort_order - 10]"
-
-/datum/mil_rank/fleet/e4
-	name = "Petty Officer Third Class"
-	name_short = "PO3"
-	accessory = list(/obj/item/clothing/accessory/solgov/rank/fleet/enlisted/e4, /obj/item/clothing/accessory/solgov/specialty/enlisted)
-	sort_order = 4
-
-/datum/mil_rank/fleet/e5
-	name = "Petty Officer Second Class"
-	name_short = "PO2"
-	accessory = list(/obj/item/clothing/accessory/solgov/rank/fleet/enlisted/e5, /obj/item/clothing/accessory/solgov/specialty/enlisted)
-	sort_order = 5
-
-/datum/mil_rank/fleet/e6
-	name = "Petty Officer First Class"
-	name_short = "PO1"
-	accessory = list(/obj/item/clothing/accessory/solgov/rank/fleet/enlisted/e6, /obj/item/clothing/accessory/solgov/specialty/enlisted)
-	sort_order = 6
-
-/datum/mil_rank/fleet/o1
-	name = "Ensign"
-	name_short = "ENS"
-	accessory = list(/obj/item/clothing/accessory/solgov/rank/fleet/officer, /obj/item/clothing/accessory/solgov/specialty/officer)
-	sort_order = 11
-
-/datum/mil_rank/fleet/o2
-	name = "Sub-lieutenant"
-	name_short = "SLT"
-	accessory = list(/obj/item/clothing/accessory/solgov/rank/fleet/officer/o2, /obj/item/clothing/accessory/solgov/specialty/officer)
-	sort_order = 12
-
-/datum/mil_rank/fleet/o3
-	name = "Lieutenant"
-	name_short = "LT"
-	accessory = list(/obj/item/clothing/accessory/solgov/rank/fleet/officer/o3, /obj/item/clothing/accessory/solgov/specialty/officer)
-	sort_order = 13
-
-/datum/mil_rank/fleet/o4
-	name = "Lieutenant Commander"
-	name_short = "LCDR"
-	accessory = list(/obj/item/clothing/accessory/solgov/rank/fleet/officer/o4, /obj/item/clothing/accessory/solgov/specialty/officer)
-	sort_order = 14
-
-/datum/mil_rank/fleet/o6
-	name = "Captain"
-	name_short = "CAPT"
-	accessory = list(/obj/item/clothing/accessory/solgov/rank/fleet/officer/o6, /obj/item/clothing/accessory/solgov/specialty/officer)
-	sort_order = 16
-
-/datum/mil_rank/fleet/o7
-	name = "Commodore"
-	name_short = "CDRE"
-	accessory = list(/obj/item/clothing/accessory/solgov/rank/fleet/flag, /obj/item/clothing/accessory/solgov/specialty/officer)
-	sort_order = 17
-
-/datum/mil_rank/fleet/o8
-	name = "Rear Admiral"
-	name_short = "RADM"
-	accessory = list(/obj/item/clothing/accessory/solgov/rank/fleet/flag/o8, /obj/item/clothing/accessory/solgov/specialty/officer)
-	sort_order = 18
-
-/datum/mil_branch/scga
-	name = "SCG Army"
-	name_short = "SCGA"
-	email_domain = "army.mil"
-	rank_types = list(
-		/datum/mil_rank/scga/e4,
-		/datum/mil_rank/scga/e5,
-		/datum/mil_rank/scga/o2,
-		/datum/mil_rank/scga/o3
-	)
-	spawn_rank_types = list(
-		/datum/mil_rank/scga/e4,
-		/datum/mil_rank/scga/e5,
-		/datum/mil_rank/scga/o2,
-		/datum/mil_rank/scga/o3
-	)
-
-/datum/mil_rank/scga/e4
-	name = "Corporal"
-	name_short = "Cpl"
-	accessory = list(
-		/obj/item/clothing/accessory/scga_rank/e4,
-		/obj/item/clothing/accessory/scga_badge/enlisted
-	)
-	sort_order = 4
-
-/datum/mil_rank/scga/e5
-	name = "Sergeant"
-	name_short = "SGT"
-	accessory = list(
-		/obj/item/clothing/accessory/scga_rank/e5,
-		/obj/item/clothing/accessory/scga_badge/enlisted
-	)
-	sort_order = 5
-
-/datum/mil_rank/scga/o2
-	name = "First Lieutenant"
-	name_short = "1Lt"
-	accessory = list(
-		/obj/item/clothing/accessory/scga_rank/o2,
-		/obj/item/clothing/accessory/scga_badge/officer
-	)
-	sort_order = 12
-
-/datum/mil_rank/scga/o3
-	name = "Captain"
-	name_short = "CAPT"
-	accessory = list(
-		/obj/item/clothing/accessory/scga_rank/o3,
-		/obj/item/clothing/accessory/scga_badge/officer
-		)
-	sort_order = 13
 
 /* OUTFITS
  * =======
@@ -318,48 +174,58 @@ var/global/const/access_away_hand_captain = "ACCESS_HAND_CAPTAIN"
 
 /singleton/hierarchy/outfit/job/hand
 	hierarchy_type = /singleton/hierarchy/outfit/job/hand
-	uniform = /obj/item/clothing/under/solgov/utility/fleet
-	shoes = /obj/item/clothing/shoes/dutyboots
+	uniform = /obj/item/clothing/under/grayson
+	shoes = /obj/item/clothing/shoes/workboots
 	l_ear = /obj/item/device/radio/headset/headset_mining
 	l_pocket = /obj/item/device/radio
 	r_pocket = /obj/item/crowbar/prybar
 	suit_store = /obj/item/tank/oxygen
-	id_types = list(/obj/item/card/id/awaycavalry/fleet)
+	id_types = list(/obj/item/card/id/hand)
 	id_slot = slot_wear_id
 	pda_type = null
 	belt = null
-	back = /obj/item/storage/backpack/satchel/leather/navy
+	back = /obj/item/storage/backpack/industrial
 	backpack_contents = null
 	flags = OUTFIT_EXTENDED_SURVIVAL
 
 /singleton/hierarchy/outfit/job/hand/captain
-	name = HAND_OUTFIT_JOB_NAME("Captain")
-	head = /obj/item/clothing/head/scga/utility
-	uniform = /obj/item/clothing/under/scga/utility
-	id_types = list(/obj/item/card/id/awaycavalry/ops/captain)
+	name = HAND_OUTFIT_JOB_NAME("Corporate Vessel Captain")
+	uniform = /obj/item/clothing/under/rank/adjutant
+	id_types = list(/obj/item/card/id/hand/captain)
 	gloves = /obj/item/clothing/gloves/thick/combat
+	back = /obj/item/storage/backpack/rucksack
+	backpack_contents = null
+	flags = OUTFIT_EXTENDED_SURVIVAL
 
 /singleton/hierarchy/outfit/job/hand/captain/guardsman
-	name = HAND_OUTFIT_JOB_NAME("Guardsman")
-	head = /obj/item/clothing/head/scga/utility
-	uniform = /obj/item/clothing/under/scga/utility
-	id_types = list(/obj/item/card/id/awaycavalry/ops/captain)
+	name = HAND_OUTFIT_JOB_NAME("Frontier Alliance Guardsman")
+	head = /obj/item/clothing/head/deckcrew
+	uniform = /obj/item/clothing/under/fa/vacsuit/hand/guardsman
+	id_types = list(/obj/item/card/id/hand/captain)
 	gloves = /obj/item/clothing/gloves/thick/combat
+	back = /obj/item/storage/backpack/rucksack/blue
+	backpack_contents = null
+	flags = OUTFIT_EXTENDED_SURVIVAL
 
 /singleton/hierarchy/outfit/job/hand/captain/pilot
-	name = HAND_OUTFIT_JOB_NAME("Captain")
-	head = /obj/item/clothing/head/scga/utility
-	uniform = /obj/item/clothing/under/scga/utility
-	id_types = list(/obj/item/card/id/awaycavalry/ops/captain)
-	gloves = /obj/item/clothing/gloves/thick/combat
+	name = HAND_OUTFIT_JOB_NAME("Battlegroup Alpha Pilot")
+	head = /obj/item/clothing/head/solgov/utility/fleet
+	uniform = /obj/item/clothing/under/solgov/utility/fleet/command/pilot/fifth_fleet
+	id_types = list(/obj/item/card/id/hand/captain/fifth_fleet)
+	belt = /obj/item/storage/belt/holster/security/tactical/away_solpatrol
+	gloves = /obj/item/clothing/gloves/thick/duty
+	back = /obj/item/storage/backpack/rucksack/navy
+	backpack_contents = null
+	flags = OUTFIT_EXTENDED_SURVIVAL
 
 /singleton/hierarchy/outfit/job/hand/surgeon
-	name = HAND_OUTFIT_JOB_NAME("Doctor")
+	name = HAND_OUTFIT_JOB_NAME("Corporate Vessel Corpsman")
 	uniform = /obj/item/clothing/under/solgov/utility/fleet/medical/hand
-	belt = /obj/item/storage/belt/holster/security/tactical
+	belt = /obj/item/storage/belt/holster/security/tactical/away_solpatrol
 	gloves = /obj/item/clothing/gloves/latex/nitrile
-
-
+	back = /obj/item/storage/backpack/satchel/med
+	backpack_contents = null
+	flags = OUTFIT_EXTENDED_SURVIVAL
 
 #undef HAND_OUTFIT_JOB_NAME
 #undef WEBHOOK_SUBMAP_LOADED_HAND

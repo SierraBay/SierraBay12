@@ -1,5 +1,3 @@
-// HAND TODO BELOW
-
 /* CARDS
  * ========
  */
@@ -36,6 +34,12 @@
 	detail_color = COLOR_PALE_BLUE_GRAY
 	access = list(access_away_hand, access_away_hand_med, access_away_hand_captain)
 
+/obj/item/card/id/hand/medic/fifth_fleet
+	desc = "An identification card issued to corporate medical personnel across countless frontier facilities and vessels."
+	icon_state = "base"
+	detail_color = COLOR_PALE_BLUE_GRAY
+	access = list(access_away_hand, access_away_hand_med, access_away_hand_captain)
+
 /* CLOTHING
  * ========
  */
@@ -43,15 +47,17 @@
 /obj/item/clothing/under/fa/vacsuit/hand/guardsman
 	accessories = list(/obj/item/clothing/accessory/fa_badge/guardsman)
 
-/obj/item/clothing/under/solgov/utility/fleet/command/pilot
+/obj/item/clothing/under/solgov/utility/fleet/command/pilot/fifth_fleet
 	accessories = list(
 		/obj/item/clothing/accessory/solgov/specialty/pilot,
+		/obj/item/clothing/accessory/solgov/rank/fleet/officer/o3,
 		/obj/item/clothing/accessory/solgov/fleet_patch/fifth
 	)
 
 /obj/item/clothing/under/solgov/utility/fleet/medical/hand
 	accessories = list(
 		/obj/item/clothing/accessory/solgov/department/medical/fleet,
+		/obj/item/clothing/accessory/solgov/rank/fleet/officer,
 		/obj/item/clothing/accessory/solgov/fleet_patch/fifth
 	)
 

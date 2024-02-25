@@ -1,10 +1,8 @@
 /area/ship/hand
-	name = "\improper Salvage Ship"
+	name = "\improper Salvage Vessel"
 	icon_state = "shuttle2"
 	req_access = list(access_away_hand)
 	area_flags = AREA_FLAG_RAD_SHIELDED | AREA_FLAG_ION_SHIELDED
-
-// HAND TODO BELOW
 
 /area/ship/hand/crew
 	name = "Cryo Storage"
@@ -54,14 +52,27 @@
 	icon_state = "kitchen"
 	req_access = list(access_away_hand)
 
+/area/ship/hand/crew/hydro
+	name = "Hydroponics"
+	icon_state = "hydro"
+
+
+/area/ship/hand/crew/bar
+	name = "\improper Canteen"
+	icon_state = "bar"
+
+
 /area/ship/hand/crew/toilet
 	name = "\improper Head"
 	icon_state = "locker"
-	req_access = list(access_away_hand)
+
 
 /area/ship/hand/cargo
 	name = "Cargo Hold"
 	icon_state = "quartstorage"
+
+/area/ship/hand/cargo/maints
+	name = "Maintenance Storage"
 
 /area/ship/hand/cargo/emergency_armory
 	name = "Emergency Armory"
@@ -72,7 +83,12 @@
 	icon_state = "green"
 	req_access = list(access_away_hand)
 
-/area/ship/hand/engineering/equipment
+/area/ship/hand/engineering/port
+	name = "\improper Engineering Equipment"
+	icon_state = "green"
+	req_access = list(access_away_hand)
+
+/area/ship/hand/engineering/starboard
 	name = "\improper Engineering Equipment"
 	icon_state = "green"
 	req_access = list(access_away_hand)
@@ -82,21 +98,14 @@
 	icon_state = "green"
 	req_access = list(access_away_hand)
 
-/area/ship/hand/engineering/shield
-	name = "\improper Shield Generator"
-	icon_state = "green"
-	req_access = list(access_away_hand)
 
-/area/ship/hand/engineering/fussion
-	name = "\improper Fussion Zone"
-	icon_state = "red"
-	req_access = list(access_away_hand)
+/area/ship/hand/maintenance/solarport
+	name = "Solar Maintenance - Port"
+	icon_state = "SolarcontrolP"
 
-/area/ship/hand/engineering/fussion/control
-	name = "\improper Fussion Control"
-	icon_state = "green"
-	req_access = list(access_away_hand)
-
+/area/ship/hand/maintenance/solarstarboard
+	name = "Solar Maintenance - Starboard"
+	icon_state = "SolarcontrolS"
 
 
 /area/ship/hand/medbay
@@ -110,21 +119,6 @@
 	req_access = list(access_away_hand)
 
 
-
-
-
-/area/ship/hand/maintenance/lower
-	name = "\improper Maintenance Lower Fore"
-	icon_state = "amaint"
-	req_access = list(access_away_hand)
-
-/area/ship/hand/maintenance/upper/munition
-	name = "\improper Ammunition Storage"
-	req_access = list(access_away_hand)
-
-/area/ship/hand/maintenance/upper/waste
-	name = "\improper Waste Disposal"
-	req_access = list(access_away_hand)
 
 #define HAND_ENG_AMBIENCE list('sound/ambience/ambiatm1.ogg')
 /area/ship/hand/maintenance/atmos
@@ -150,33 +144,21 @@
 #undef HAND_ENG_AMBIENCE
 
 
+/area/ship/hand/command
+	name = "\improper Flight Officers Quarters"
+	icon_state = "bridge"
+	req_access = list(access_away_hand_captain)
+
+/area/ship/hand/command/medic
+	name = "\improper Senior Staff Quarters"
+	icon_state = "bridge"
+	req_access = list(access_away_hand_med)
 
 /area/ship/hand/command/bridge
 	name = "\improper Bridge"
 	icon_state = "bridge"
-	req_access = list(access_away_hand)
 
-/area/ship/hand/command/eva
-	name = "\improper Fleet EVA"
-	req_access = list(access_away_hand)
-
-/area/ship/hand/command/equipment
-	name = "\improper Fleet Equipment"
-	req_access = list(access_away_hand)
-
-/area/ship/hand/command/hangar
-	name = "\improper Hangar"
-	icon_state = "purple"
-	req_access = list(access_away_hand)
-
-/area/ship/hand/command/cannon
-	name = "\improper Impulse Cannon"
-	icon_state = "yellow"
-	req_access = list(access_away_hand)
-
-
-
-/area/ship/hand/dock
-	name = "\improper Docking Bay"
+/area/ship/hand/airlock
+	name = "\improper External Airlock"
 	icon_state = "entry_1"
 	req_access = list(access_away_hand)

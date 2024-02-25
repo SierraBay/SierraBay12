@@ -1,41 +1,75 @@
-// HAND TODO BELOW
-
 /datum/shuttle/autodock/overmap/graysontug/hand_one
-	name = "GM Tug"
-	dock_target = "graysontug_shuttle"
-	current_location = "nav_graysontug_start"
+	name = "Hyena GM Tug-1"
+	dock_target = "handtugone_shuttle"
+	current_location = "nav_handtugone_start"
 	range = 1
-	shuttle_area = /area/map_template/crashed_shuttle/graysontug
+	shuttle_area = /area/ship/hand/shuttle/tug_one
 	fuel_consumption = 4
 	defer_initialisation = TRUE
 	flags = SHUTTLE_FLAGS_PROCESS
 	skill_needed = SKILL_MIN
 	ceiling_type = /turf/simulated/floor/shuttle_ceiling
 
-/obj/machinery/computer/shuttle_control/explore/graysontug
-	name = "GM Tug Shuttle control console"
-	shuttle_tag = "GM Tug"
+/datum/shuttle/autodock/overmap/graysontug/hand_two
+	name = "Hyena GM Tug-2"
+	dock_target = "handtugtwo_shuttle"
+	current_location = "nav_handtugtwo_start"
+	range = 1
+	shuttle_area = /area/ship/hand/shuttle/tug_two
+	fuel_consumption = 4
+	defer_initialisation = TRUE
+	flags = SHUTTLE_FLAGS_PROCESS
+	skill_needed = SKILL_MIN
+	ceiling_type = /turf/simulated/floor/shuttle_ceiling
 
-/obj/overmap/visitable/ship/landable/graysontug
+/obj/machinery/computer/shuttle_control/explore/graysontug/hand_one
+	name = "GM Tug Shuttle control console"
+	shuttle_tag = "Hyena GM Tug-1"
+
+/obj/machinery/computer/shuttle_control/explore/graysontug/hand_two
+	name = "GM Tug Shuttle control console"
+	shuttle_tag = "Hyena GM Tug-2"
+
+/obj/overmap/visitable/ship/landable/graysontug/hand_one
 	name = "GM Tug"
 	desc = "Grayson Manufactories Tug. Space truckin commonly seen across Frontier."
-	shuttle = "GM Tug"
+	shuttle = "Hyena GM Tug-1"
 	fore_dir = NORTH
 	color = "#e6f7ff"
 	vessel_mass = 2500
 	vessel_size = SHIP_SIZE_TINY
+	known_ships = list(
+		/obj/overmap/visitable/ship/hand,
+		/obj/overmap/visitable/ship/landable/graysontug/hand_two,
+		/obj/overmap/visitable/ship/landable/pod_hand_one,
+		/obj/overmap/visitable/ship/landable/pod_hand_two
+		)
 
-/obj/shuttle_landmark/graysontug/start
-	name = "Crash Zone"
-	landmark_tag = "nav_graysontug_start"
-	base_area = /area/map_template/crashed_shuttle/crash
-	base_turf = /turf/simulated/floor/exoplanet/barren
-	movable_flags = MOVABLE_FLAG_EFFECTMOVE
+/obj/overmap/visitable/ship/landable/graysontug/hand_two
+	name = "GM Tug"
+	desc = "Grayson Manufactories Tug. Space truckin commonly seen across Frontier."
+	shuttle = "Hyena GM Tug-2"
+	fore_dir = NORTH
+	color = "#e6f7ff"
+	vessel_mass = 2500
+	vessel_size = SHIP_SIZE_TINY
+	known_ships = list(
+		/obj/overmap/visitable/ship/hand,
+		/obj/overmap/visitable/ship/landable/graysontug/hand_one,
+		/obj/overmap/visitable/ship/landable/pod_hand_one,
+		/obj/overmap/visitable/ship/landable/pod_hand_two
+		)
 
-/area/ship/
-	name = "\improper Reaper"
+/area/ship/hand/shuttle/tug_one
+	name = "\improper GM Tug"
 	icon_state = "shuttlered"
-	base_turf = /turf/simulated/floor
+	requires_power = 1
+	dynamic_lighting = 1
+	area_flags = AREA_FLAG_RAD_SHIELDED
+
+/area/ship/hand/shuttle/tug_two
+	name = "\improper GM Tug"
+	icon_state = "shuttlered"
 	requires_power = 1
 	dynamic_lighting = 1
 	area_flags = AREA_FLAG_RAD_SHIELDED
@@ -50,4 +84,95 @@
 	name = "Starboard Tug Dock"
 	landmark_tag = "nav_handtugtwo_start"
 	docking_controller = "handtugtwo_port_dock"
+	movable_flags = MOVABLE_FLAG_EFFECTMOVE
+
+/datum/shuttle/autodock/overmap/pod_hand_one
+	name = "EE S-class 18-24-1"
+	warmup_time = 5
+	current_location = "nav_handpodone_start"
+	range = 2
+	dock_target = "handpodone_port_shuttle_dock"
+	shuttle_area = list(/area/ship/hand/shuttle/pod_hand_one)
+	defer_initialisation = TRUE
+	flags = SHUTTLE_FLAGS_PROCESS
+	skill_needed = SKILL_BASIC
+	ceiling_type = /turf/simulated/floor/shuttle_ceiling
+
+/datum/shuttle/autodock/overmap/pod_hand_two
+	name = "EE S-class 18-24-2"
+	warmup_time = 5
+	current_location = "nav_handpodone_start"
+	range = 2
+	dock_target = "handpodone_port_shuttle_dock"
+	shuttle_area = list(/area/ship/hand/shuttle/pod_hand_one)
+	defer_initialisation = TRUE
+	flags = SHUTTLE_FLAGS_PROCESS
+	skill_needed = SKILL_BASIC
+	ceiling_type = /turf/simulated/floor/shuttle_ceiling
+
+/obj/machinery/computer/shuttle_control/explore/pod_hand_one
+	name = "EE S-class 18-24 Shuttle control console"
+	shuttle_tag = "EE S-class 18-24-1"
+
+/obj/machinery/computer/shuttle_control/explore/pod_hand_two
+	name = "EE S-class 18-24 Shuttle control console"
+	shuttle_tag = "EE S-class 18-24-2"
+
+
+/obj/overmap/visitable/ship/landable/pod_hand_one
+	shuttle = "EE S-class 18-24-1"
+	name = "EE S-class 18-24-1"
+	desc = "Einstein Engines S-class pod. Universal takeoff and landing module."
+	max_speed = 1/(2 SECONDS)
+	burn_delay = 1 SECONDS
+	fore_dir = NORTH
+	color = "#e6f7ff"
+	vessel_mass = 500
+	vessel_size = SHIP_SIZE_TINY
+	known_ships = list(
+		/obj/overmap/visitable/ship/landable/graysontug/hand_one,
+		/obj/overmap/visitable/ship/landable/graysontug/hand_two,
+		/obj/overmap/visitable/ship/landable/pod_hand_two,
+		/obj/overmap/visitable/ship/hand
+	)
+
+/obj/overmap/visitable/ship/landable/pod_hand_two
+	shuttle = "EE S-class 18-24-2"
+	name = "EE S-class 18-24"
+	desc = "Einstein Engines S-class pod. Universal takeoff and landing module."
+	max_speed = 1/(2 SECONDS)
+	burn_delay = 1 SECONDS
+	fore_dir = NORTH
+	color = "#e6f7ff"
+	vessel_mass = 500
+	vessel_size = SHIP_SIZE_TINY
+	known_ships = list(
+		/obj/overmap/visitable/ship/landable/graysontug/hand_one,
+		/obj/overmap/visitable/ship/landable/graysontug/hand_two,
+		/obj/overmap/visitable/ship/landable/pod_hand_one,
+		/obj/overmap/visitable/ship/hand
+	)
+
+/area/ship/hand/shuttle/pod_hand_one
+	icon_state = "shuttlered"
+	requires_power = 1
+	dynamic_lighting = 1
+	area_flags = AREA_FLAG_RAD_SHIELDED
+
+/area/ship/hand/shuttle/pod_hand_two
+	icon_state = "shuttlered"
+	requires_power = 1
+	dynamic_lighting = 1
+	area_flags = AREA_FLAG_RAD_SHIELDED
+
+/obj/shuttle_landmark/pod_hand_one/start
+	name = "Port EE S-class Dock"
+	landmark_tag = "nav_handpodone_start"
+	docking_controller = "handpodone_port_shuttle_dock"
+	movable_flags = MOVABLE_FLAG_EFFECTMOVE
+
+/obj/shuttle_landmark/pod_hand_two/start
+	name = "Starboard EE S-class Dock"
+	landmark_tag = "nav_handpodtwo_start"
+	docking_controller = "handpodtwo_port_shuttle_dock"
 	movable_flags = MOVABLE_FLAG_EFFECTMOVE

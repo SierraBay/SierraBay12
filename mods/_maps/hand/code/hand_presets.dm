@@ -1,4 +1,3 @@
-// HAND TODO BELOW
 
 		////////
 		//SMES//

@@ -1,6 +1,3 @@
-// HAND TODO BELOW
-
-
 	///////////
 	//OVERMAP//
 	///////////
@@ -8,24 +5,27 @@
 /obj/overmap/visitable/ship/hand
 	name = "Salvage Vessel"
 	desc = "Hyena-class salvage vessel used by countless independent prospectors and corporates alike"
-	color = "#990000"
-	fore_dir = WEST
-	vessel_mass = 1000
-	known_ships = list(/obj/overmap/visitable/ship/landable/reaper)
+	color = "#40e200"
+	fore_dir = NORTH
+	vessel_mass = 3000
+	known_ships = list(
+		/obj/overmap/visitable/ship/landable/graysontug/hand_one,
+		/obj/overmap/visitable/ship/landable/graysontug/hand_two,
+		/obj/overmap/visitable/ship/landable/pod_hand_one,
+		/obj/overmap/visitable/ship/landable/pod_hand_two
+		)
 	vessel_size = SHIP_SIZE_SMALL
-	start_x = 1
-	start_y = 1
 
 	initial_generic_waypoints = list(
 		"nav_hand_1",
 		"nav_hand_2",
 		"nav_hand_3",
 		"nav_hand_4",
-		"nav_hangar_reaper"
 	)
 
 	initial_restricted_waypoints = list(
-		"Reaper" = list("nav_hangar_reaper")
+		"Hyena GM Tug-1" = list("nav_handtugone_start"),
+		"Hyena GM Tug-2" = list("nav_handtugtwo_start")
 	)
 
 
@@ -40,16 +40,20 @@
 
 
 /datum/map_template/ruin/away_site/hand
-	name = "Hearer's Hand Vessel"
+	name = "Salvage Vessel (FA)"
 	id = "awaysite_hand_ship"
 	description = "Hyena-class salvage vessel."
 	prefix = "mods/_maps/hand/maps/"
 	suffixes = list("hand-1.dmm", "hand-2.dmm")
-	ban_ruins = list(/datum/map_template/ruin/away_site/farfleet)
 	spawn_cost = 0.5
 	player_cost = 7
 	spawn_weight = 1
-//	shuttles_to_initialise = list(/datum/shuttle/autodock/overmap/reaper)
+	shuttles_to_initialise = list(
+		/datum/shuttle/autodock/overmap/graysontug/hand_one,
+		/datum/shuttle/autodock/overmap/graysontug/hand_two,
+		/datum/shuttle/autodock/overmap/pod_hand_one,
+		/datum/shuttle/autodock/overmap/pod_hand_two
+		)
 
 
 /obj/shuttle_landmark/nav_hand/nav1
@@ -69,7 +73,7 @@
 	landmark_tag = "nav_hand_4"
 
 /obj/submap_landmark/joinable_submap/hand
-	name = "Hearer's Hand Chorus"
+	name = "FA Salvage Vessel"
 	archetype = /singleton/submap_archetype/away_hand
 
 /* TCOMMS
