@@ -116,7 +116,7 @@
 /area/ship/hand/medbay)
 "aZ" = (
 /obj/machinery/atmospherics/unary/vent_pump/high_volume/external_air{
-	id_tag = "hand_upper"
+	id_tag = "hand_upper_pump"
 	},
 /obj/floor_decal/industrial/warning/cee{
 	dir = 8
@@ -2471,7 +2471,7 @@
 /area/ship/hand/crew/kitchen)
 "Al" = (
 /obj/machinery/atmospherics/unary/vent_pump/high_volume/external_air{
-	id_tag = "hand_upper"
+	id_tag = "hand_upper_pump"
 	},
 /obj/machinery/embedded_controller/radio/airlock/airlock_controller{
 	frequency = 1380;

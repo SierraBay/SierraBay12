@@ -27,7 +27,7 @@
 /obj/structure/bed/chair/shuttle/black{
 	dir = 4
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/dark,
 /area/ship/hand/shuttle/tug_one)
 "ai" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/vulcan{
@@ -47,7 +47,7 @@
 	dir = 4;
 	icon_state = "intact"
 	},
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/bolted/cycling{
 	frequency = 1380;
 	id_tag = "handpodone_port_shuttle_dock_interior_door"
 	},
@@ -59,6 +59,13 @@
 	d2 = 8;
 	icon_state = "4-8";
 	pixel_y = 0
+	},
+/obj/machinery/access_button/airlock_exterior{
+	frequency = 1380;
+	master_tag = "handpodone_port_shuttle_dock";
+	pixel_y = -23;
+	pixel_z = 1;
+	pixel_x = 7
 	},
 /turf/simulated/floor/plating,
 /area/ship/hand/crew/miner_one)
@@ -80,7 +87,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/dark,
 /area/ship/hand/shuttle/tug_two)
 "av" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -163,7 +170,7 @@
 /obj/machinery/atmospherics/pipe/simple/visible/cyan{
 	dir = 9
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/dark,
 /area/ship/hand/shuttle/tug_two)
 "aS" = (
 /obj/machinery/atmospherics/unary/vent_pump/high_volume/external_air{
@@ -171,7 +178,7 @@
 	id_tag = "handtugone_shuttle_pump_out_external";
 	power_rating = 25000
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/hand/shuttle/tug_one)
 "aX" = (
 /obj/machinery/atmospherics/pipe/simple/visible/fuel{
@@ -243,7 +250,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/dark,
 /area/ship/hand/shuttle/tug_two)
 "bA" = (
 /obj/machinery/atmospherics/binary/pump,
@@ -373,7 +380,7 @@
 	pixel_y = 19;
 	tag_airpump = "handtugtwo_port_dock_pump";
 	tag_exterior_door = "handtugtwo_port_dock_exterior_door";
-	tag_interior_door = "handtugtwo_port_dock_exterior_door";
+	tag_interior_door = "handtugtwo_port_dock_interior_door";
 	tag_interior_sensor = "handtugtwo_port_dock_sensor_chamber"
 	},
 /turf/simulated/floor/plating,
@@ -453,7 +460,7 @@
 	id_tag = "handtugone_shuttle_sensor";
 	pixel_x = -23
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/hand/shuttle/tug_one)
 "cK" = (
 /obj/wallframe_spawn/reinforced/titanium,
@@ -489,7 +496,7 @@
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 10
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/dark,
 /area/ship/hand/shuttle/tug_two)
 "cU" = (
 /obj/floor_decal/borderfloor{
@@ -547,7 +554,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/hand/shuttle/tug_one)
 "dd" = (
 /obj/structure/table/rack,
@@ -647,7 +654,7 @@
 	},
 /obj/machinery/atmospherics/unary/vent_pump/high_volume/external_air{
 	dir = 1;
-	id_tag = "handtugone_port_dock";
+	id_tag = "handtugone_port_dock_pump";
 	power_rating = 25000
 	},
 /turf/simulated/floor/tiled/techmaint,
@@ -688,7 +695,7 @@
 /obj/machinery/computer/shuttle_control/explore/graysontug/hand_two{
 	dir = 8
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/dark,
 /area/ship/hand/shuttle/tug_two)
 "dS" = (
 /obj/machinery/light{
@@ -792,7 +799,7 @@
 	pressure_checks_default = 2;
 	use_power = 1
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/techfloor,
 /area/ship/hand/shuttle/tug_one)
 "ep" = (
 /obj/structure/cable{
@@ -810,7 +817,7 @@
 	pixel_y = 19;
 	tag_airpump = "handtugone_port_dock_pump";
 	tag_exterior_door = "handtugone_port_dock_exterior_door";
-	tag_interior_door = "handtugone_port_dock_exterior_door";
+	tag_interior_door = "handtugone_port_dock_interior_door";
 	tag_interior_sensor = "handtugone_port_dock_sensor_chamber";
 	frequency = 1380
 	},
@@ -1040,7 +1047,7 @@
 	icon_state = "2-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/dark,
 /area/ship/hand/shuttle/tug_two)
 "fr" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden{
@@ -1049,7 +1056,7 @@
 /obj/machinery/door/blast/regular{
 	id_tag = "handtugoneback"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/hand/shuttle/tug_one)
 "fw" = (
 /obj/floor_decal/borderfloor{
@@ -1143,7 +1150,7 @@
 	pixel_y = 8;
 	dir = 8
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/hand/shuttle/tug_one)
 "fT" = (
 /obj/floor_decal/borderfloor{
@@ -1178,7 +1185,7 @@
 	tag_interior_door = "handtugone_shuttle_inner";
 	tag_interior_sensor = "handtugone_shuttle_sensor"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/hand/shuttle/tug_one)
 "fW" = (
 /obj/structure/cable/yellow{
@@ -1273,7 +1280,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/dark,
 /area/ship/hand/shuttle/tug_one)
 "gj" = (
 /obj/paint/sun,
@@ -1365,7 +1372,7 @@
 /turf/simulated/floor/tiled/steel_ridged,
 /area/ship/hand/crew/miner_two)
 "gz" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/bolted/cycling{
 	frequency = 1380;
 	id_tag = "drone_engine_exterior_door";
 	locked = 1
@@ -1399,7 +1406,7 @@
 /area/ship/hand/crew/hallway/lower)
 "gF" = (
 /obj/structure/table/steel_reinforced,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/dark,
 /area/ship/hand/shuttle/tug_two)
 "gH" = (
 /obj/structure/cable/yellow{
@@ -1439,7 +1446,7 @@
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/hand/command/bridge)
 "gR" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/bolted/cycling{
 	id_tag = "handtugtwo_shuttle_outer";
 	frequency = 1380
 	},
@@ -1452,7 +1459,7 @@
 	icon_state = "4-8";
 	pixel_y = 0
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/hand/shuttle/tug_two)
 "gS" = (
 /obj/machinery/computer/ship/sensors/spacer,
@@ -1667,12 +1674,19 @@
 	dir = 4;
 	icon_state = "intact"
 	},
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/bolted/cycling{
 	frequency = 1380;
-	id_tag = "handtugone_port_dock"
+	id_tag = "handtugone_port_dock_interior_door"
 	},
 /obj/machinery/door/firedoor{
 	dir = 4
+	},
+/obj/machinery/access_button/airlock_exterior{
+	frequency = 1380;
+	master_tag = "handtugone_port_dock";
+	pixel_y = -23;
+	pixel_z = 1;
+	pixel_x = 8
 	},
 /turf/simulated/floor/plating,
 /area/ship/hand/crew/miner_three)
@@ -1928,7 +1942,7 @@
 /turf/space,
 /area/space)
 "jk" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/bolted/cycling{
 	id_tag = "drone_engine2_exterior_door";
 	locked = 1;
 	frequency = 1380
@@ -1977,7 +1991,7 @@
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/hand/command/bridge)
 "jx" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/bolted/cycling{
 	id_tag = "handtugone_shuttle_inner";
 	frequency = 1380
 	},
@@ -1990,7 +2004,7 @@
 	icon_state = "4-8";
 	pixel_y = 0
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/hand/shuttle/tug_one)
 "jC" = (
 /obj/structure/cable{
@@ -1999,7 +2013,7 @@
 	icon_state = "2-8"
 	},
 /obj/machinery/atmospherics/unary/vent_pump/on,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/dark,
 /area/ship/hand/shuttle/tug_two)
 "jD" = (
 /obj/machinery/power/smes/buildable/preset/on_full,
@@ -2045,9 +2059,9 @@
 	pixel_y = -23;
 	pixel_z = 1
 	},
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/bolted/cycling{
 	frequency = 1380;
-	id_tag = "handtugone_port_dock";
+	id_tag = "handtugone_port_dock_exterior_door";
 	locked = 1
 	},
 /obj/shuttle_landmark/handtugone/start,
@@ -2079,7 +2093,7 @@
 	accellimit = 0.005;
 	dir = 8
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/dark,
 /area/ship/hand/shuttle/tug_two)
 "kb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -2163,7 +2177,7 @@
 /area/ship/hand/command/bridge)
 "kD" = (
 /obj/machinery/atmospherics/valve/open,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/dark,
 /area/ship/hand/shuttle/tug_one)
 "kE" = (
 /obj/paint/sun,
@@ -2173,7 +2187,9 @@
 /obj/machinery/atmospherics/unary/engine{
 	dir = 1
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/hand/shuttle/tug_two)
 "kK" = (
 /obj/structure/cable{
@@ -2286,7 +2302,7 @@
 /obj/machinery/sleeper/survival_pod{
 	dir = 4
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/dark,
 /area/ship/hand/shuttle/tug_two)
 "kY" = (
 /obj/machinery/atmospherics/unary/vent_pump/on{
@@ -2334,7 +2350,9 @@
 /obj/machinery/atmospherics/unary/engine{
 	dir = 1
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/hand/shuttle/tug_one)
 "lf" = (
 /obj/structure/cable/yellow{
@@ -2439,7 +2457,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/techfloor,
 /area/ship/hand/shuttle/tug_two)
 "lz" = (
 /obj/machinery/power/smes/buildable/preset/on_full,
@@ -2447,7 +2465,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/dark,
 /area/ship/hand/shuttle/tug_two)
 "lF" = (
 /obj/machinery/atmospherics/unary/vent_pump/high_volume/external_air{
@@ -2460,7 +2478,7 @@
 	pixel_y = 8;
 	dir = 4
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/hand/shuttle/tug_two)
 "lG" = (
 /obj/paint/brown,
@@ -2542,7 +2560,7 @@
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 4
 	},
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/bolted/cycling{
 	frequency = 1380;
 	id_tag = "drone_engine_interior_door"
 	},
@@ -2612,7 +2630,7 @@
 	pixel_y = -23;
 	pixel_z = 1
 	},
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/bolted/cycling{
 	frequency = 1380;
 	id_tag = "carpod1_dock_exterior_door";
 	locked = 1
@@ -2670,7 +2688,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/hand/shuttle/tug_one)
 "nj" = (
 /obj/structure/cable/yellow{
@@ -2708,7 +2726,7 @@
 /obj/structure/bed/chair/shuttle/black{
 	dir = 4
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/dark,
 /area/ship/hand/shuttle/tug_two)
 "nq" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -2753,7 +2771,7 @@
 	pixel_y = -22;
 	dir = 1
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/dark,
 /area/ship/hand/shuttle/tug_one)
 "nE" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden{
@@ -2765,7 +2783,7 @@
 /obj/machinery/sleeper/survival_pod{
 	dir = 8
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/dark,
 /area/ship/hand/shuttle/tug_one)
 "nG" = (
 /obj/machinery/atmospherics/unary/engine{
@@ -2802,7 +2820,7 @@
 	},
 /obj/machinery/atmospherics/unary/vent_pump/high_volume/external_air{
 	dir = 1;
-	id_tag = "handtugtwo_port_dock";
+	id_tag = "handtugtwo_port_dock_pump";
 	power_rating = 25000
 	},
 /obj/machinery/atmospherics/valve/shutoff/fuel{
@@ -2852,7 +2870,7 @@
 	icon_state = "4-8";
 	pixel_y = 0
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/hand/shuttle/tug_one)
 "oe" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -2904,7 +2922,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/hand/shuttle/tug_two)
 "oo" = (
 /obj/wallframe_spawn/reinforced/titanium,
@@ -3036,7 +3054,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/hand/maintenance/atmos)
 "pr" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/bolted/cycling,
 /obj/machinery/atmospherics/pipe/simple/visible,
 /turf/simulated/floor/plating,
 /area/ship/hand/shuttle/tug_one)
@@ -3050,7 +3068,7 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/hand/maintenance/engine)
 "py" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/bolted/cycling{
 	id_tag = "handtugtwo_shuttle_inner";
 	frequency = 1380
 	},
@@ -3063,7 +3081,7 @@
 	icon_state = "4-8";
 	pixel_y = 0
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/hand/shuttle/tug_two)
 "pz" = (
 /obj/machinery/atmospherics/pipe/simple/visible{
@@ -3116,7 +3134,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/dark,
 /area/ship/hand/shuttle/tug_two)
 "pJ" = (
 /obj/paint/dark_gunmetal,
@@ -3138,7 +3156,7 @@
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 6
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/dark,
 /area/ship/hand/shuttle/tug_one)
 "pV" = (
 /obj/machinery/fabricator/hacked,
@@ -3185,9 +3203,9 @@
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 4
 	},
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/bolted/cycling{
 	frequency = 1380;
-	id_tag = "handtugtwo_port_dock"
+	id_tag = "handtugtwo_port_dock_interior_door"
 	},
 /obj/machinery/door/firedoor{
 	dir = 4
@@ -3236,7 +3254,7 @@
 /turf/simulated/floor/tiled/techmaint,
 /area/ship/hand/engineering/port)
 "qo" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/bolted/cycling,
 /turf/simulated/floor/plating,
 /area/ship/hand/shuttle/tug_one)
 "qp" = (
@@ -3307,7 +3325,7 @@
 	},
 /obj/machinery/atmospherics/unary/vent_pump/high_volume/external_air{
 	dir = 1;
-	id_tag = "handtugtwo_port_dock";
+	id_tag = "handtugtwo_port_dock_pump";
 	power_rating = 25000
 	},
 /obj/machinery/light/small,
@@ -3326,7 +3344,7 @@
 /obj/machinery/computer/shuttle_control/explore/graysontug/hand_one{
 	dir = 4
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/dark,
 /area/ship/hand/shuttle/tug_one)
 "qS" = (
 /obj/machinery/atmospherics/pipe/simple/visible/cyan{
@@ -3367,7 +3385,7 @@
 /turf/simulated/floor/tiled/techmaint,
 /area/ship/hand/engineering/starboard)
 "qV" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/bolted/cycling{
 	frequency = 1380
 	},
 /turf/simulated/floor/plating,
@@ -3500,7 +3518,7 @@
 /obj/machinery/sleeper/survival_pod{
 	dir = 4
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/dark,
 /area/ship/hand/shuttle/tug_two)
 "ru" = (
 /obj/machinery/atmospherics/pipe/simple/visible/fuel{
@@ -3600,7 +3618,7 @@
 	icon_state = "1-4"
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/hand/shuttle/tug_two)
 "rM" = (
 /obj/machinery/portable_atmospherics/powered/pump/filled,
@@ -3660,13 +3678,13 @@
 	start_pressure = 4559.63
 	},
 /obj/floor_decal/industrial/outline/yellow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/dark,
 /area/ship/hand/shuttle/tug_two)
 "sc" = (
 /obj/machinery/atmospherics/pipe/manifold/visible/fuel{
 	dir = 8
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/techfloor,
 /area/ship/hand/shuttle/tug_one)
 "sh" = (
 /obj/machinery/atmospherics/pipe/simple/visible/fuel{
@@ -3838,7 +3856,7 @@
 	pixel_y = -22;
 	dir = 1
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/dark,
 /area/ship/hand/shuttle/tug_two)
 "ti" = (
 /obj/machinery/atmospherics/pipe/vent/high_volume{
@@ -3899,7 +3917,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/dark,
 /area/ship/hand/shuttle/tug_two)
 "tu" = (
 /obj/structure/reagent_dispensers/coolanttank,
@@ -3982,7 +4000,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/dark,
 /area/ship/hand/shuttle/tug_one)
 "tR" = (
 /obj/machinery/atmospherics/pipe/simple/visible/fuel{
@@ -4030,7 +4048,7 @@
 	dir = 6
 	},
 /obj/structure/catwalk,
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/bolted/cycling{
 	frequency = 1380;
 	id_tag = "handpodtwo_port_shuttle_dock_exterior_door";
 	locked = 1
@@ -4073,7 +4091,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/hand/cargo/maints)
 "ul" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/bolted/cycling{
 	frequency = 1380
 	},
 /obj/machinery/atmospherics/pipe/simple/visible,
@@ -4229,7 +4247,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/hand/shuttle/tug_two)
 "uZ" = (
 /obj/machinery/atmospherics/pipe/simple/visible/fuel{
@@ -4317,13 +4335,13 @@
 /obj/machinery/atmospherics/pipe/manifold/visible/fuel{
 	dir = 4
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/techfloor,
 /area/ship/hand/shuttle/tug_two)
 "vA" = (
 /obj/machinery/atmospherics/binary/pump{
 	dir = 1
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/hand/shuttle/tug_one)
 "vD" = (
 /obj/machinery/atmospherics/unary/vent_pump/on,
@@ -4338,7 +4356,7 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/dark,
 /area/ship/hand/shuttle/tug_one)
 "vT" = (
 /obj/paint/sun,
@@ -4380,7 +4398,7 @@
 	dir = 1
 	},
 /obj/floor_decal/industrial/outline/yellow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/techfloor,
 /area/ship/hand/shuttle/tug_one)
 "wd" = (
 /obj/machinery/atmospherics/pipe/simple/visible/red{
@@ -4488,7 +4506,7 @@
 	start_pressure = 4559.63
 	},
 /obj/floor_decal/industrial/outline/yellow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/dark,
 /area/ship/hand/shuttle/tug_one)
 "wH" = (
 /obj/floor_decal/corner/b_green/diagonal,
@@ -4760,7 +4778,7 @@
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 10
 	},
-/obj/machinery/embedded_controller/radio/airlock/airlock_controller{
+/obj/machinery/embedded_controller/radio/airlock/docking_port{
 	frequency = 1380;
 	id_tag = "handpodtwo_port_shuttle_dock";
 	pixel_y = 26;
@@ -4782,7 +4800,7 @@
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 4
 	},
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/bolted/cycling{
 	frequency = 1380;
 	id_tag = "handpodtwo_port_shuttle_dock_interior_door"
 	},
@@ -4876,7 +4894,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/dark,
 /area/ship/hand/shuttle/tug_one)
 "yM" = (
 /obj/wallframe_spawn/reinforced_phoron/hull,
@@ -5023,7 +5041,7 @@
 	accellimit = 0.005;
 	dir = 4
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/dark,
 /area/ship/hand/shuttle/tug_one)
 "zJ" = (
 /obj/floor_decal/borderfloor{
@@ -5123,7 +5141,7 @@
 	tag_interior_door = "handtugtwo_shuttle_inner";
 	tag_interior_sensor = "handtugtwo_shuttle_sensor"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/hand/shuttle/tug_two)
 "zX" = (
 /obj/structure/sign/warning/compressed_gas{
@@ -5173,7 +5191,7 @@
 	pixel_y = 0
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/dark,
 /area/ship/hand/shuttle/tug_two)
 "Al" = (
 /obj/structure/fuel_port,
@@ -5293,7 +5311,7 @@
 	id_tag = "handtugtwo_shuttle_pump_out_external";
 	power_rating = 25000
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/hand/shuttle/tug_two)
 "AZ" = (
 /obj/machinery/computer/ship/navigation,
@@ -5431,7 +5449,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/dark,
 /area/ship/hand/shuttle/tug_one)
 "BK" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
@@ -5615,7 +5633,7 @@
 	},
 /obj/machinery/atmospherics/valve/shutoff/fuel,
 /obj/floor_decal/industrial/shutoff,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/techfloor,
 /area/ship/hand/shuttle/tug_one)
 "CB" = (
 /obj/machinery/mineral/unloading_machine,
@@ -5740,7 +5758,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/techfloor,
 /area/ship/hand/shuttle/tug_one)
 "Dt" = (
 /obj/machinery/computer/shuttle_control/explore/pod_hand_one,
@@ -5849,7 +5867,7 @@
 /obj/machinery/atmospherics/pipe/simple/visible/cyan{
 	dir = 5
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/dark,
 /area/ship/hand/shuttle/tug_one)
 "Ee" = (
 /obj/structure/cable/yellow{
@@ -5861,7 +5879,7 @@
 /area/ship/hand/maintenance/solarport)
 "Eg" = (
 /obj/machinery/atmospherics/pipe/simple/visible/universal,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/techfloor,
 /area/ship/hand/shuttle/tug_two)
 "Ei" = (
 /obj/structure/cable{
@@ -6209,7 +6227,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/visible/universal,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/dark,
 /area/ship/hand/shuttle/tug_two)
 "FP" = (
 /obj/machinery/atmospherics/unary/tank/oxygen{
@@ -6245,11 +6263,11 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/hand/shuttle/tug_two)
 "FW" = (
 /obj/machinery/atmospherics/pipe/simple/visible/fuel,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/hand/shuttle/tug_one)
 "Gd" = (
 /obj/machinery/atmospherics/pipe/manifold/visible/fuel{
@@ -6265,7 +6283,7 @@
 	dir = 1
 	},
 /obj/floor_decal/industrial/outline/yellow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/techfloor,
 /area/ship/hand/shuttle/tug_two)
 "Gg" = (
 /obj/structure/cable/cyan,
@@ -6275,7 +6293,7 @@
 	pixel_x = -21;
 	req_access = list("ACCESS_HAND")
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/dark,
 /area/ship/hand/shuttle/tug_one)
 "Gh" = (
 /obj/machinery/atmospherics/pipe/simple/visible/red{
@@ -6309,7 +6327,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/visible/universal,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/dark,
 /area/ship/hand/shuttle/tug_one)
 "Gn" = (
 /obj/machinery/portable_atmospherics/canister/air/airlock,
@@ -6375,7 +6393,7 @@
 /obj/machinery/atmospherics/pipe/simple/visible/fuel{
 	dir = 6
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/techfloor,
 /area/ship/hand/shuttle/tug_two)
 "GC" = (
 /obj/machinery/atmospherics/pipe/simple/visible/cyan{
@@ -6443,7 +6461,7 @@
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 6
 	},
-/obj/machinery/embedded_controller/radio/airlock/airlock_controller{
+/obj/machinery/embedded_controller/radio/airlock/docking_port{
 	frequency = 1380;
 	id_tag = "handpodone_port_shuttle_dock";
 	pixel_y = 26;
@@ -6553,7 +6571,7 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/hand/shuttle/pod_hand_two)
 "Hz" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/bolted/cycling{
 	id_tag = "handtugone_shuttle_outer";
 	frequency = 1380
 	},
@@ -6566,7 +6584,7 @@
 	icon_state = "4-8";
 	pixel_y = 0
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/hand/shuttle/tug_one)
 "HD" = (
 /obj/machinery/hologram/holopad/longrange,
@@ -6637,11 +6655,11 @@
 	pressure_checks_default = 2;
 	use_power = 1
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/techfloor,
 /area/ship/hand/shuttle/tug_two)
 "HL" = (
 /obj/machinery/atmospherics/pipe/simple/visible/fuel,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/hand/shuttle/tug_two)
 "HQ" = (
 /obj/floor_decal/corner/yellow/diagonal,
@@ -6728,7 +6746,7 @@
 	id_tag = "handtugtwo_shuttle_sensor";
 	pixel_x = 23
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/hand/shuttle/tug_two)
 "Im" = (
 /obj/machinery/power/port_gen/pacman{
@@ -6833,13 +6851,13 @@
 /area/ship/hand/crew/miner_two)
 "II" = (
 /obj/machinery/atmospherics/valve/open,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/dark,
 /area/ship/hand/shuttle/tug_two)
 "IN" = (
 /obj/machinery/atmospherics/binary/pump{
 	dir = 1
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/hand/shuttle/tug_two)
 "IW" = (
 /obj/paint/nt_white,
@@ -6964,7 +6982,7 @@
 	id_tag = "handtugone";
 	pixel_y = 25
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/dark,
 /area/ship/hand/shuttle/tug_one)
 "JF" = (
 /obj/machinery/power/port_gen/pacman/super/potato/reactor,
@@ -7101,7 +7119,7 @@
 	dir = 1
 	},
 /obj/floor_decal/industrial/outline/yellow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/techfloor,
 /area/ship/hand/shuttle/tug_two)
 "KC" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction{
@@ -7161,9 +7179,9 @@
 	dir = 6
 	},
 /obj/structure/catwalk,
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/bolted/cycling{
 	frequency = 1380;
-	id_tag = "handtugtwo_port_dock";
+	id_tag = "handtugtwo_port_dock_exterior_door";
 	locked = 1
 	},
 /obj/machinery/access_button/airlock_exterior{
@@ -7369,7 +7387,7 @@
 /area/ship/hand/crew/miner_two)
 "Mb" = (
 /obj/structure/table/steel_reinforced,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/dark,
 /area/ship/hand/shuttle/tug_one)
 "Mf" = (
 /obj/machinery/atmospherics/pipe/simple/visible/fuel{
@@ -7382,7 +7400,7 @@
 	pixel_y = -23;
 	pixel_z = 1
 	},
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/bolted/cycling{
 	frequency = 1380;
 	id_tag = "handpodone_port_shuttle_dock_exterior_door";
 	locked = 1
@@ -7421,7 +7439,7 @@
 /obj/machinery/door/blast/regular{
 	id_tag = "handtugoneback"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/hand/shuttle/tug_one)
 "Mt" = (
 /obj/machinery/atmospherics/binary/pump{
@@ -7664,7 +7682,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/hand/maintenance/atmos)
 "NH" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/bolted/cycling{
 	id_tag = "drone_engine2_interior_door";
 	frequency = 1380
 	},
@@ -7862,7 +7880,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/hand/shuttle/tug_two)
 "OT" = (
 /obj/floor_decal/industrial/warning/corner{
@@ -8010,7 +8028,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/dark,
 /area/ship/hand/shuttle/tug_one)
 "PC" = (
 /turf/simulated/floor/tiled/steel_ridged,
@@ -8254,7 +8272,7 @@
 /obj/machinery/door/blast/regular{
 	id_tag = "handtugtwoback"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/hand/shuttle/tug_two)
 "QR" = (
 /obj/machinery/atmospherics/pipe/manifold/visible/yellow{
@@ -8337,7 +8355,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/hand/shuttle/tug_one)
 "Re" = (
 /obj/machinery/atmospherics/binary/pump/on{
@@ -8433,7 +8451,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/dark,
 /area/ship/hand/shuttle/tug_one)
 "RI" = (
 /obj/floor_decal/corner/yellow/diagonal,
@@ -8453,7 +8471,7 @@
 /area/ship/hand/maintenance/solarstarboard)
 "RM" = (
 /obj/machinery/atmospherics/pipe/simple/visible/universal,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/techfloor,
 /area/ship/hand/shuttle/tug_one)
 "RP" = (
 /obj/machinery/atmospherics/pipe/simple/visible/fuel{
@@ -8481,7 +8499,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/hand/shuttle/tug_one)
 "Sb" = (
 /obj/structure/closet/secure_closet/guncabinet{
@@ -8533,7 +8551,7 @@
 /obj/structure/fuel_port{
 	pixel_x = -32
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/hand/shuttle/tug_one)
 "Sz" = (
 /obj/structure/bed/chair/shuttle/black{
@@ -8546,7 +8564,7 @@
 	id_tag = "handtugtwo";
 	pixel_y = 25
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/dark,
 /area/ship/hand/shuttle/tug_two)
 "SB" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
@@ -8618,7 +8636,7 @@
 /obj/machinery/atmospherics/pipe/simple/visible/fuel{
 	dir = 10
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/techfloor,
 /area/ship/hand/shuttle/tug_one)
 "Tf" = (
 /obj/wallframe_spawn/reinforced/titanium,
@@ -8684,7 +8702,7 @@
 /obj/machinery/sleeper/survival_pod{
 	dir = 8
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/dark,
 /area/ship/hand/shuttle/tug_one)
 "Tu" = (
 /obj/structure/railing/mapped{
@@ -8693,7 +8711,7 @@
 	},
 /obj/machinery/atmospherics/valve/shutoff/fuel,
 /obj/floor_decal/industrial/shutoff,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/techfloor,
 /area/ship/hand/shuttle/tug_two)
 "Tw" = (
 /obj/structure/cable{
@@ -8722,7 +8740,7 @@
 /obj/machinery/door/blast/regular{
 	id_tag = "handtugtwoback"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/hand/shuttle/tug_two)
 "Tz" = (
 /obj/machinery/atmospherics/pipe/simple/visible/fuel{
@@ -8917,7 +8935,7 @@
 	icon_state = "4-8";
 	pixel_y = 0
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/hand/shuttle/tug_two)
 "UH" = (
 /obj/machinery/atmospherics/pipe/simple/visible/fuel{
@@ -8995,7 +9013,7 @@
 	},
 /obj/machinery/atmospherics/unary/vent_pump/high_volume/external_air{
 	dir = 1;
-	id_tag = "handtugone_port_dock";
+	id_tag = "handtugone_port_dock_pump";
 	power_rating = 25000
 	},
 /obj/machinery/airlock_sensor{
@@ -9015,7 +9033,7 @@
 /obj/structure/closet/medical_wall{
 	pixel_x = -32
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/dark,
 /area/ship/hand/shuttle/tug_two)
 "Vl" = (
 /obj/machinery/atmospherics/unary/tank/carbon_dioxide{
@@ -9118,7 +9136,7 @@
 /obj/structure/fuel_port{
 	pixel_x = 32
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/hand/shuttle/tug_two)
 "VP" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -9144,7 +9162,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/hand/shuttle/tug_one)
 "VZ" = (
 /obj/paint/sun,
@@ -9176,7 +9194,7 @@
 	pixel_x = 24;
 	req_access = list("ACCESS_HAND")
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/dark,
 /area/ship/hand/shuttle/tug_two)
 "Wi" = (
 /obj/floor_decal/corner/b_green/half{
@@ -9205,7 +9223,7 @@
 	pixel_y = 0
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/dark,
 /area/ship/hand/shuttle/tug_one)
 "Wt" = (
 /obj/structure/table/rack,
@@ -9329,7 +9347,7 @@
 	dir = 1
 	},
 /obj/floor_decal/industrial/outline/yellow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/techfloor,
 /area/ship/hand/shuttle/tug_one)
 "Xe" = (
 /obj/machinery/atmospherics/binary/pump/high_power,
@@ -9357,7 +9375,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/dark,
 /area/ship/hand/shuttle/tug_one)
 "Xl" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -9469,7 +9487,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/dark,
 /area/ship/hand/shuttle/tug_two)
 "XL" = (
 /obj/machinery/atmospherics/portables_connector{
@@ -9831,7 +9849,7 @@
 /obj/structure/closet/medical_wall{
 	pixel_x = 32
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/dark,
 /area/ship/hand/shuttle/tug_one)
 "ZD" = (
 /obj/structure/cable/yellow{

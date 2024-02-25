@@ -95,8 +95,8 @@ var/global/const/access_away_hand_captain = "ACCESS_HAND_CAPTAIN"
 	title = "Corporate Vessel Captain"
 	total_positions = 1
 	alt_titles = list(
-		"Frontier Alliance Guardsman" = /singleton/hierarchy/outfit/job/hand/captain/guardsman,
-		"Battlegroup Alpha Pilot" = /singleton/hierarchy/outfit/job/hand/captain/pilot
+		"Frontier Alliance Guardsman",
+		"Battlegroup Alpha Pilot"
 	)
 	outfit_type = /singleton/hierarchy/outfit/job/hand/captain
 	allowed_branches = list(
