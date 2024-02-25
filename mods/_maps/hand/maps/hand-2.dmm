@@ -40,6 +40,7 @@
 	req_access = list("ACCESS_HAND")
 	},
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/plating,
 /area/ship/hand/crew/hallway/upper)
 "aE" = (
@@ -114,9 +115,17 @@
 /turf/simulated/floor/tiled/white,
 /area/ship/hand/medbay)
 "aZ" = (
-/obj/machinery/atmospherics/unary/vent_pump/high_volume/external_air,
+/obj/machinery/atmospherics/unary/vent_pump/high_volume/external_air{
+	id_tag = "hand_upper"
+	},
 /obj/floor_decal/industrial/warning/cee{
 	dir = 8
+	},
+/obj/machinery/airlock_sensor{
+	id_tag = "hand_upper_sensor_chamber";
+	pixel_x = -12;
+	pixel_y = 24;
+	frequency = 1380
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/hand/airlock)
@@ -152,6 +161,18 @@
 /obj/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/tiled/techmaint,
 /area/ship/hand/crew/hallway/upper/aft)
+"bD" = (
+/obj/structure/table/rack{
+	dir = 8
+	},
+/obj/random/maintenance/clean,
+/obj/decal/cleanable/dirt,
+/obj/machinery/light_switch{
+	dir = 1;
+	pixel_y = -24
+	},
+/turf/simulated/floor/tiled/steel_ridged,
+/area/ship/hand/cargo)
 "bG" = (
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk{
@@ -204,6 +225,10 @@
 	dir = 9
 	},
 /obj/floor_decal/industrial/outline/yellow,
+/obj/machinery/light_switch{
+	dir = 1;
+	pixel_y = -24
+	},
 /turf/simulated/floor/tiled/white,
 /area/ship/hand/medbay/storage)
 "bV" = (
@@ -423,7 +448,11 @@
 /turf/simulated/floor/tiled/techmaint,
 /area/ship/hand/crew/hallway/upper/fore)
 "em" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external{
+	id_tag = "hand_upper_external_door";
+	locked = 1;
+	frequency = 1380
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/hand/airlock)
 "eq" = (
@@ -435,8 +464,8 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/machinery/atmospherics/unary/vent_pump/on{
-	dir = 8
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
 	},
 /turf/simulated/floor/tiled/freezer,
 /area/ship/hand/crew/toilet)
@@ -539,6 +568,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/obj/submap_landmark/spawnpoint/away_hand/captain/guardsman,
 /turf/simulated/floor/tiled/white,
 /area/ship/hand/crew)
 "eZ" = (
@@ -788,6 +818,14 @@
 "gQ" = (
 /turf/simulated/floor/tiled/techmaint,
 /area/ship/hand/crew/hallway/upper/fore)
+"gV" = (
+/obj/machinery/door/airlock/external{
+	id_tag = "hand_upper_interior_door";
+	locked = 1;
+	frequency = 1380
+	},
+/turf/simulated/floor/tiled/techfloor/grid,
+/area/ship/hand/airlock)
 "gX" = (
 /obj/machinery/sleeper{
 	dir = 4
@@ -815,6 +853,9 @@
 	},
 /obj/machinery/light{
 	dir = 1
+	},
+/obj/machinery/firealarm{
+	pixel_y = 24
 	},
 /turf/simulated/floor/wood/walnut,
 /area/ship/hand/crew/bar)
@@ -857,6 +898,9 @@
 	dir = 10
 	},
 /obj/structure/catwalk,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
+	},
 /turf/simulated/floor/plating,
 /area/ship/hand/crew/hallway/upper/aft)
 "hz" = (
@@ -1206,6 +1250,10 @@
 "mF" = (
 /obj/structure/table/marble,
 /obj/machinery/reagent_temperature,
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -24
+	},
 /turf/simulated/floor/tiled/white,
 /area/ship/hand/crew/kitchen)
 "mK" = (
@@ -1280,6 +1328,11 @@
 	pixel_x = 0;
 	pixel_y = 24;
 	req_access = list("ACCESS_HAND")
+	},
+/obj/machinery/light_switch{
+	dir = 4;
+	pixel_x = -21;
+	pixel_y = -10
 	},
 /turf/simulated/floor/tiled/freezer,
 /area/ship/hand/crew/toilet)
@@ -1527,6 +1580,9 @@
 	dir = 4
 	},
 /obj/structure/catwalk,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/ship/hand/crew/hallway/upper/aft)
 "qm" = (
@@ -1617,14 +1673,18 @@
 /turf/simulated/floor/tiled/freezer,
 /area/ship/hand/crew/toilet)
 "rb" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external{
+	id_tag = "hand_upper_interior_door";
+	locked = 1;
+	frequency = 1380
+	},
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 4;
 	icon_state = "intact"
 	},
 /obj/machinery/access_button/airlock_exterior{
 	frequency = 1380;
-	master_tag = "drone_engine";
+	master_tag = "hand_upper";
 	pixel_y = -23;
 	pixel_z = 1
 	},
@@ -1684,6 +1744,9 @@
 	dir = 1
 	},
 /obj/floor_decal/industrial/outline/yellow,
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/white,
 /area/ship/hand/medbay/storage)
 "rK" = (
@@ -1724,9 +1787,6 @@
 /obj/item/tank/jetpack/oxygen,
 /obj/item/storage/belt/utility/full,
 /obj/item/storage/belt/utility/full,
-/obj/item/shovel,
-/obj/item/shovel,
-/obj/item/shovel,
 /obj/item/pickaxe/drill,
 /obj/item/pickaxe/drill,
 /obj/item/device/suit_cooling_unit,
@@ -1739,8 +1799,10 @@
 /obj/item/device/radio,
 /obj/item/device/geiger,
 /obj/item/device/binoculars,
-/obj/item/storage/box/greenglowsticks,
 /obj/floor_decal/industrial/outline/yellow,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/ship/hand/engineering/storage)
 "so" = (
@@ -1816,6 +1878,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
+/obj/machinery/atmospherics/unary/vent_pump/on,
 /turf/simulated/floor/tiled/freezer,
 /area/ship/hand/crew/toilet)
 "tj" = (
@@ -1884,6 +1947,9 @@
 /area/ship/hand/crew/hallway/upper/fore)
 "tH" = (
 /obj/structure/catwalk,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 9
+	},
 /turf/simulated/floor/plating,
 /area/ship/hand/airlock)
 "tZ" = (
@@ -1990,11 +2056,19 @@
 	pixel_y = 5
 	},
 /obj/machinery/light,
+/obj/machinery/light_switch{
+	pixel_x = 24;
+	dir = 8;
+	pixel_y = -5
+	},
 /turf/simulated/floor/tiled/white,
 /area/ship/hand/medbay)
 "uR" = (
 /obj/structure/table/reinforced,
 /obj/machinery/reagent_temperature,
+/obj/item/reagent_containers/glass/beaker/cryoxadone{
+	pixel_y = 14
+	},
 /turf/simulated/floor/tiled/white,
 /area/ship/hand/medbay)
 "uT" = (
@@ -2091,6 +2165,17 @@
 /obj/structure/catwalk,
 /turf/simulated/floor/plating,
 /area/ship/hand/crew/hallway/upper/fore)
+"wl" = (
+/obj/structure/hygiene/sink{
+	dir = 8;
+	pixel_x = -12
+	},
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -24
+	},
+/turf/simulated/floor/tiled/freezer,
+/area/ship/hand/crew/toilet)
 "wn" = (
 /obj/machinery/door/firedoor,
 /obj/floor_decal/industrial/hatch/yellow,
@@ -2220,6 +2305,7 @@
 	name = "Hallway"
 	},
 /obj/structure/catwalk,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/plating,
 /area/ship/hand/crew/hallway/upper/aft)
 "xT" = (
@@ -2296,6 +2382,12 @@
 	icon_state = "pipe-c"
 	},
 /obj/structure/catwalk,
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/ship/hand/crew/hallway/upper/aft)
 "yY" = (
@@ -2378,15 +2470,17 @@
 /turf/simulated/floor/tiled/white,
 /area/ship/hand/crew/kitchen)
 "Al" = (
-/obj/machinery/atmospherics/unary/vent_pump/high_volume/external_air,
+/obj/machinery/atmospherics/unary/vent_pump/high_volume/external_air{
+	id_tag = "hand_upper"
+	},
 /obj/machinery/embedded_controller/radio/airlock/airlock_controller{
 	frequency = 1380;
-	id_tag = "drone_engine";
+	id_tag = "hand_upper";
 	pixel_y = 26;
-	tag_airpump = "drone_engine_pump";
-	tag_chamber_sensor = "drone_engine_sensor_chamber";
-	tag_exterior_door = "drone_engine_exterior_door";
-	tag_interior_door = "drone_engine_interior_door"
+	tag_airpump = "hand_upper_pump";
+	tag_chamber_sensor = "hand_upper_sensor_chamber";
+	tag_exterior_door = "hand_upper_external_door";
+	tag_interior_door = "hand_upper_interior_door"
 	},
 /obj/floor_decal/industrial/warning/cee{
 	dir = 4
@@ -2585,6 +2679,9 @@
 	dir = 8;
 	icon_state = "railing0-1"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 5
+	},
 /turf/simulated/floor/plating,
 /area/ship/hand/crew/hallway/upper/aft)
 "BU" = (
@@ -2656,6 +2753,9 @@
 	pixel_y = 0
 	},
 /obj/floor_decal/snow,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/freezer,
 /area/ship/hand/crew/kitchen)
 "Ct" = (
@@ -2825,6 +2925,13 @@
 /obj/structure/disposalpipe/segment,
 /obj/structure/catwalk,
 /turf/simulated/floor/plating,
+/area/ship/hand/crew/hallway/upper/aft)
+"DI" = (
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
+	},
+/turf/simulated/floor/tiled/techmaint,
 /area/ship/hand/crew/hallway/upper/aft)
 "DL" = (
 /obj/structure/table/rack{
@@ -2998,6 +3105,9 @@
 /obj/structure/table/rack,
 /obj/item/storage/briefcase/inflatable,
 /obj/item/storage/briefcase/inflatable,
+/obj/machinery/atmospherics/unary/vent_pump/on{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/hand/airlock)
 "FR" = (
@@ -3039,6 +3149,13 @@
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/hand/airlock)
+"Ga" = (
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
+	},
+/turf/simulated/floor/tiled/techmaint,
+/area/ship/hand/crew/hallway/upper)
 "Gd" = (
 /obj/structure/railing/mapped{
 	dir = 4
@@ -3081,6 +3198,10 @@
 	name = "CondiMaster Neo"
 	},
 /obj/floor_decal/industrial/outline/yellow,
+/obj/machinery/light_switch{
+	pixel_x = 21;
+	dir = 8
+	},
 /turf/simulated/floor/tiled/white,
 /area/ship/hand/crew/kitchen)
 "HV" = (
@@ -3250,11 +3371,21 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/ship/hand/crew/hallway/upper/aft)
 "Km" = (
 /turf/simulated/floor/tiled/white,
 /area/ship/hand/crew/kitchen)
+"Kr" = (
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
+	},
+/turf/simulated/floor/tiled/techmaint,
+/area/ship/hand/crew/hallway/upper/fore)
 "Ku" = (
 /obj/structure/handrail,
 /turf/simulated/floor/reinforced{
@@ -3283,6 +3414,24 @@
 /obj/structure/sign/warning/deathsposal{
 	pixel_x = 32;
 	pixel_y = 0
+	},
+/turf/simulated/floor/wood/walnut,
+/area/ship/hand/crew/bar)
+"KE" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/floor_decal/spline/fancy/wood{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/machinery/light_switch{
+	pixel_x = 24;
+	dir = 8
 	},
 /turf/simulated/floor/wood/walnut,
 /area/ship/hand/crew/bar)
@@ -3538,6 +3687,16 @@
 /obj/paint/nt_white,
 /turf/simulated/wall/r_wall,
 /area/ship/hand/medbay)
+"NI" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 9;
+	pixel_y = 0
+	},
+/turf/simulated/floor/tiled/freezer,
+/area/ship/hand/crew/toilet)
 "NM" = (
 /obj/floor_decal/industrial/outline/yellow,
 /obj/decal/cleanable/dirt,
@@ -3643,6 +3802,13 @@
 	icon_state = "1-2"
 	},
 /obj/structure/catwalk,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/light_switch{
+	dir = 4;
+	pixel_x = -23;
+	pixel_y = 6
+	},
 /turf/simulated/floor/plating,
 /area/ship/hand/airlock)
 "Pg" = (
@@ -3707,6 +3873,9 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
 /turf/simulated/floor/tiled/freezer,
@@ -3877,6 +4046,9 @@
 /obj/structure/hygiene/sink{
 	pixel_y = -15
 	},
+/obj/machinery/atmospherics/unary/vent_pump/on{
+	dir = 1
+	},
 /turf/simulated/floor/tiled/freezer,
 /area/ship/hand/crew/toilet)
 "Sv" = (
@@ -3914,6 +4086,11 @@
 	icon_state = "1-8"
 	},
 /obj/structure/catwalk,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 9;
+	pixel_y = 0
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/plating,
 /area/ship/hand/airlock)
 "Td" = (
@@ -3949,6 +4126,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
+	},
+/obj/machinery/light{
+	dir = 8
 	},
 /turf/simulated/floor/tiled/steel_grid,
 /area/ship/hand/medbay/storage)
@@ -4004,6 +4184,7 @@
 /obj/floor_decal/industrial/danger/corner{
 	dir = 1
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/tiled/techmaint,
 /area/ship/hand/crew/hallway/upper/aft)
 "TY" = (
@@ -4234,6 +4415,9 @@
 /area/ship/hand/engineering/storage)
 "WB" = (
 /obj/structure/dispenser/oxygen,
+/obj/machinery/atmospherics/unary/vent_scrubber/on{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/hand/airlock)
 "WL" = (
@@ -4339,6 +4523,12 @@
 	},
 /turf/simulated/floor/tiled/white/monotile,
 /area/ship/hand/medbay)
+"XF" = (
+/obj/floor_decal/borderfloorblack,
+/obj/floor_decal/corner/paleblue/border,
+/obj/submap_landmark/spawnpoint/away_hand/captain/pilot,
+/turf/simulated/floor/tiled/white,
+/area/ship/hand/crew)
 "XI" = (
 /obj/machinery/atmospherics/pipe/manifold/visible,
 /obj/structure/catwalk,
@@ -4387,6 +4577,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/disposalpipe/segment,
 /obj/structure/catwalk,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/plating,
 /area/ship/hand/crew/hallway/upper)
 "YO" = (
@@ -4404,6 +4595,8 @@
 	icon_state = "1-2"
 	},
 /obj/floor_decal/industrial/hatch/yellow,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/hand/airlock)
 "YU" = (
@@ -4430,10 +4623,14 @@
 /turf/simulated/floor/tiled/steel_grid,
 /area/ship/hand/medbay/storage)
 "Zu" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external{
+	id_tag = "hand_upper_external_door";
+	locked = 1;
+	frequency = 1380
+	},
 /obj/machinery/access_button/airlock_exterior{
 	frequency = 1380;
-	master_tag = "drone_engine";
+	master_tag = "hand_upper";
 	pixel_y = -23;
 	pixel_z = 1
 	},
@@ -11786,7 +11983,7 @@ xQ
 xQ
 xQ
 lg
-iY
+XF
 yx
 qB
 GV
@@ -11874,7 +12071,7 @@ jD
 hG
 gq
 gq
-gq
+KE
 Cj
 Kz
 iZ
@@ -12096,7 +12293,7 @@ xG
 OA
 qp
 OA
-OA
+bD
 xG
 ed
 cW
@@ -12144,7 +12341,7 @@ nB
 Qo
 lE
 rT
-rT
+wl
 lo
 uT
 BN
@@ -12227,7 +12424,7 @@ zz
 zz
 eJ
 hZ
-gQ
+Kr
 LA
 hZ
 gQ
@@ -12243,7 +12440,7 @@ zF
 fB
 Vl
 Vl
-Vl
+Ga
 bf
 sH
 zF
@@ -12252,7 +12449,7 @@ Vl
 Vl
 Vl
 wn
-dL
+DI
 hD
 hy
 YP
@@ -12500,7 +12697,7 @@ zz
 zz
 zz
 Hi
-em
+gV
 rb
 Hi
 Hi
@@ -12750,7 +12947,7 @@ Hi
 zz
 LG
 th
-er
+NI
 In
 QT
 In

@@ -17,6 +17,12 @@
 /obj/submap_landmark/spawnpoint/away_hand/captain
 	name = "Corporate Vessel Captain"
 
+/obj/submap_landmark/spawnpoint/away_hand/captain/guardsman
+	name = "Frontier Alliance Guardsman"
+
+/obj/submap_landmark/spawnpoint/away_hand/captain/pilot
+	name = "Battlegroup Alpha Pilot"
+
 /obj/submap_landmark/spawnpoint/away_hand/surgeon
 	name = "Corporate Vessel Corpsman"
 
@@ -125,6 +131,14 @@ var/global/const/access_away_hand_captain = "ACCESS_HAND_CAPTAIN"
 	)
 	access = list(access_away_hand, access_away_hand_captain)
 
+/datum/job/submap/hand/captain/equip(mob/living/carbon/human/H)
+	if(H.mind.role_alt_title == "Frontier Alliance Guardsman")
+		outfit_type = /singleton/hierarchy/outfit/job/hand/captain/guardsman
+	if(H.mind.role_alt_title == "Battlegroup Alpha Pilot")
+		outfit_type = /singleton/hierarchy/outfit/job/hand/captain/pilot
+	return ..()
+
+
 /datum/job/submap/hand/surgeon
 	title = "Corporate Vessel Corpsman"
 	total_positions = 1
@@ -182,8 +196,9 @@ var/global/const/access_away_hand_captain = "ACCESS_HAND_CAPTAIN"
 	suit_store = /obj/item/tank/oxygen
 	id_types = list(/obj/item/card/id/hand)
 	id_slot = slot_wear_id
+	gloves = /obj/item/clothing/gloves/thick
 	pda_type = null
-	belt = null
+	belt = /obj/item/storage/belt/utility/full
 	back = /obj/item/storage/backpack/industrial
 	backpack_contents = null
 	flags = OUTFIT_EXTENDED_SURVIVAL
@@ -191,8 +206,9 @@ var/global/const/access_away_hand_captain = "ACCESS_HAND_CAPTAIN"
 /singleton/hierarchy/outfit/job/hand/captain
 	name = HAND_OUTFIT_JOB_NAME("Corporate Vessel Captain")
 	uniform = /obj/item/clothing/under/rank/adjutant
+	shoes = /obj/item/clothing/shoes/jackboots
 	id_types = list(/obj/item/card/id/hand/captain)
-	gloves = /obj/item/clothing/gloves/thick/combat
+	gloves = /obj/item/clothing/gloves/thick/duty
 	back = /obj/item/storage/backpack/rucksack
 	backpack_contents = null
 	flags = OUTFIT_EXTENDED_SURVIVAL
@@ -201,8 +217,9 @@ var/global/const/access_away_hand_captain = "ACCESS_HAND_CAPTAIN"
 	name = HAND_OUTFIT_JOB_NAME("Frontier Alliance Guardsman")
 	head = /obj/item/clothing/head/deckcrew
 	uniform = /obj/item/clothing/under/fa/vacsuit/hand/guardsman
+	shoes = /obj/item/clothing/shoes/jackboots
 	id_types = list(/obj/item/card/id/hand/captain)
-	gloves = /obj/item/clothing/gloves/thick/combat
+	gloves = /obj/item/clothing/gloves/thick/duty
 	back = /obj/item/storage/backpack/rucksack/blue
 	backpack_contents = null
 	flags = OUTFIT_EXTENDED_SURVIVAL
@@ -211,6 +228,7 @@ var/global/const/access_away_hand_captain = "ACCESS_HAND_CAPTAIN"
 	name = HAND_OUTFIT_JOB_NAME("Battlegroup Alpha Pilot")
 	head = /obj/item/clothing/head/solgov/utility/fleet
 	uniform = /obj/item/clothing/under/solgov/utility/fleet/command/pilot/fifth_fleet
+	shoes = /obj/item/clothing/shoes/jackboots
 	id_types = list(/obj/item/card/id/hand/captain/fifth_fleet)
 	belt = /obj/item/storage/belt/holster/security/tactical/away_solpatrol
 	gloves = /obj/item/clothing/gloves/thick/duty
@@ -221,7 +239,9 @@ var/global/const/access_away_hand_captain = "ACCESS_HAND_CAPTAIN"
 /singleton/hierarchy/outfit/job/hand/surgeon
 	name = HAND_OUTFIT_JOB_NAME("Corporate Vessel Corpsman")
 	uniform = /obj/item/clothing/under/solgov/utility/fleet/medical/hand
-	belt = /obj/item/storage/belt/holster/security/tactical/away_solpatrol
+	shoes = /obj/item/clothing/shoes/black
+	id_types = list(/obj/item/card/id/hand/medic)
+	belt = /obj/item/storage/belt/medical/emt
 	gloves = /obj/item/clothing/gloves/latex/nitrile
 	back = /obj/item/storage/backpack/satchel/med
 	backpack_contents = null
