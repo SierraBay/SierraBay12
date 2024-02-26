@@ -27,3 +27,4 @@
 
 // Non-upstream
 #include "multitile_vehicles/_multitile_vehicles.dme"
+#include "ascent/_ascent.dme"
