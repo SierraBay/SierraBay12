@@ -20,12 +20,14 @@
 		"nav_hand_1",
 		"nav_hand_2",
 		"nav_hand_3",
-		"nav_hand_4",
+		"nav_hand_4"
 	)
 
 	initial_restricted_waypoints = list(
 		"Hyena GM Tug-1" = list("nav_handtugone_start"),
-		"Hyena GM Tug-2" = list("nav_handtugtwo_start")
+		"Hyena GM Tug-2" = list("nav_handtugtwo_start"),
+		"EE S-class 18-24-1" = list("nav_handpodone_start"),
+		"EE S-class 18-24-2" = list("nav_handpodtwo_start")
 	)
 
 

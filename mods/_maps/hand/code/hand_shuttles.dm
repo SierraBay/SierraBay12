@@ -91,7 +91,6 @@
 	warmup_time = 5
 	current_location = "nav_handpodone_start"
 	range = 2
-	dock_target = "handpodone_port_shuttle_dock"
 	shuttle_area = list(/area/ship/hand/shuttle/pod_hand_one)
 	defer_initialisation = TRUE
 	flags = SHUTTLE_FLAGS_PROCESS
@@ -101,9 +100,8 @@
 /datum/shuttle/autodock/overmap/pod_hand_two
 	name = "EE S-class 18-24-2"
 	warmup_time = 5
-	current_location = "nav_handpodone_start"
+	current_location = "nav_handpodtwo_start"
 	range = 2
-	dock_target = "handpodone_port_shuttle_dock"
 	shuttle_area = list(/area/ship/hand/shuttle/pod_hand_one)
 	defer_initialisation = TRUE
 	flags = SHUTTLE_FLAGS_PROCESS
@@ -138,7 +136,7 @@
 
 /obj/overmap/visitable/ship/landable/pod_hand_two
 	shuttle = "EE S-class 18-24-2"
-	name = "EE S-class 18-24"
+	name = "EE S-class 18-24-2"
 	desc = "Einstein Engines S-class pod. Universal takeoff and landing module."
 	max_speed = 1/(2 SECONDS)
 	burn_delay = 1 SECONDS
@@ -168,11 +166,9 @@
 /obj/shuttle_landmark/pod_hand_one/start
 	name = "Port EE S-class Dock"
 	landmark_tag = "nav_handpodone_start"
-	docking_controller = "handpodone_port_shuttle_dock"
 	movable_flags = MOVABLE_FLAG_EFFECTMOVE
 
 /obj/shuttle_landmark/pod_hand_two/start
 	name = "Starboard EE S-class Dock"
 	landmark_tag = "nav_handpodtwo_start"
-	docking_controller = "handpodtwo_port_shuttle_dock"
 	movable_flags = MOVABLE_FLAG_EFFECTMOVE

@@ -67,7 +67,7 @@
 /obj/machinery/alarm{
 	dir = 1;
 	pixel_y = -25;
-	req_access = list("ACCESS_ICCGN")
+	req_access = list("ACCESS_HAND")
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/ship/hand/crew/hydro)
@@ -152,10 +152,10 @@
 	},
 /area/space)
 "bl" = (
-/obj/structure/lattice,
-/obj/structure/catwalk,
-/turf/space,
-/area/space)
+/obj/structure/closet/firecloset,
+/obj/floor_decal/industrial/outline/yellow,
+/turf/simulated/floor/tiled/techmaint,
+/area/ship/hand/crew/hallway/upper/fore)
 "bt" = (
 /obj/structure/closet/emcloset/anchored,
 /obj/floor_decal/industrial/outline/yellow,
@@ -620,7 +620,7 @@
 /obj/machinery/alarm{
 	dir = 1;
 	pixel_y = -25;
-	req_access = list("ACCESS_ICCGN")
+	req_access = list("ACCESS_HAND")
 	},
 /turf/simulated/floor/tiled/steel_grid,
 /area/ship/hand/cargo)
@@ -1583,6 +1583,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/ship/hand/crew/hallway/upper/aft)
 "qm" = (
@@ -1682,11 +1685,10 @@
 	dir = 4;
 	icon_state = "intact"
 	},
-/obj/machinery/access_button/airlock_exterior{
+/obj/machinery/access_button/airlock_interior{
 	frequency = 1380;
 	master_tag = "hand_upper";
-	pixel_y = -23;
-	pixel_z = 1
+	pixel_y = -23
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/hand/airlock)
@@ -1929,7 +1931,7 @@
 /obj/machinery/alarm{
 	dir = 1;
 	pixel_y = -25;
-	req_access = list("ACCESS_ICCGN")
+	req_access = list("ACCESS_HAND")
 	},
 /turf/simulated/floor/plating,
 /area/ship/hand/crew/hallway/upper/fore)
@@ -1955,6 +1957,9 @@
 "tZ" = (
 /obj/decal/cleanable/fruit_smudge,
 /obj/floor_decal/snow,
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/freezer,
 /area/ship/hand/crew/kitchen)
 "ul" = (
@@ -3227,6 +3232,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/structure/closet/firecloset,
 /turf/simulated/floor/tiled/white,
 /area/ship/hand/crew)
 "Ih" = (
@@ -3374,6 +3380,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/ship/hand/crew/hallway/upper/aft)
 "Km" = (
@@ -3511,6 +3520,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/white/monotile,
 /area/ship/hand/crew/kitchen)
 "LF" = (
@@ -3611,10 +3623,6 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/ship/hand/crew)
-"MJ" = (
-/obj/decal/cleanable/fruit_smudge,
-/turf/simulated/floor/tiled,
-/area/ship/hand/crew/hydro)
 "ML" = (
 /obj/machinery/chemical_dispenser/bar_alc/full{
 	pixel_y = 8;
@@ -3804,11 +3812,6 @@
 /obj/structure/catwalk,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/light_switch{
-	dir = 4;
-	pixel_x = -23;
-	pixel_y = 6
-	},
 /turf/simulated/floor/plating,
 /area/ship/hand/airlock)
 "Pg" = (
@@ -3827,7 +3830,7 @@
 /obj/machinery/alarm{
 	dir = 1;
 	pixel_y = -25;
-	req_access = list("ACCESS_ICCGN")
+	req_access = list("ACCESS_HAND")
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/ship/hand/engineering/storage)
@@ -4117,6 +4120,9 @@
 /obj/structure/catwalk,
 /obj/machinery/light{
 	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 6
 	},
 /turf/simulated/floor/plating,
 /area/ship/hand/crew/hallway/upper/aft)
@@ -4418,6 +4424,9 @@
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 4
 	},
+/obj/machinery/light/small{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/hand/airlock)
 "WL" = (
@@ -4620,6 +4629,9 @@
 /obj/random/firstaid,
 /obj/random/firstaid,
 /obj/floor_decal/industrial/outline/yellow,
+/obj/machinery/atmospherics/unary/vent_scrubber/on{
+	dir = 1
+	},
 /turf/simulated/floor/tiled/steel_grid,
 /area/ship/hand/medbay/storage)
 "Zu" = (
@@ -10995,7 +11007,7 @@ Un
 Ww
 aw
 De
-MJ
+mQ
 mQ
 mQ
 mQ
@@ -11120,8 +11132,8 @@ OQ
 mQ
 mQ
 mQ
-MJ
 mQ
+bK
 OQ
 aw
 Ku
@@ -11365,7 +11377,7 @@ mQ
 zs
 mQ
 mQ
-MJ
+mQ
 aH
 aw
 zz
@@ -11929,7 +11941,7 @@ sr
 NM
 VT
 xG
-gQ
+bl
 MB
 pu
 vP
@@ -12817,7 +12829,7 @@ zz
 zz
 zz
 zz
-zz
+Jy
 Hi
 aZ
 XI
@@ -12939,7 +12951,7 @@ vz
 YF
 zz
 zz
-zz
+Jy
 Hi
 Al
 Rz
@@ -14140,7 +14152,7 @@ aa
 aa
 aa
 aa
-bl
+EH
 aa
 aa
 aa
