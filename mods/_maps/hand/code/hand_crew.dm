@@ -131,13 +131,14 @@ var/global/const/access_away_hand_captain = "ACCESS_HAND_CAPTAIN"
 	)
 	access = list(access_away_hand, access_away_hand_captain)
 
+/* TO DO: Make this doable
 /datum/job/submap/hand/captain/equip(mob/living/carbon/human/H)
 	if(H.mind.role_alt_title == "Frontier Alliance Guardsman")
 		outfit_type = /singleton/hierarchy/outfit/job/hand/captain/guardsman
 	if(H.mind.role_alt_title == "Battlegroup Alpha Pilot")
 		outfit_type = /singleton/hierarchy/outfit/job/hand/captain/pilot
 	return ..()
-
+*/
 
 /datum/job/submap/hand/surgeon
 	title = "Corporate Vessel Corpsman"

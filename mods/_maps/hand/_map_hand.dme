@@ -6,7 +6,6 @@
 #include "code/hand_areas.dm"
 #include "code/hand_crew.dm"
 #include "code/hand_items.dm"
-#include "code/hand_presets.dm"
 #include "code/hand_shuttles.dm"
 #include "code/hand_structures.dm"
 

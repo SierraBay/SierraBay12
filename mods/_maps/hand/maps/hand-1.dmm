@@ -189,7 +189,9 @@
 	id_tag = "handtugone_shuttle_pump_out_external";
 	power_rating = 25000
 	},
-/turf/simulated/floor/tiled/techfloor/grid,
+/turf/simulated/floor/tiled/techfloor/grid{
+	map_airless = 1
+	},
 /area/ship/hand/shuttle/tug_one)
 "aY" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -281,6 +283,10 @@
 	},
 /obj/floor_decal/industrial/danger{
 	dir = 4
+	},
+/obj/structure/railing/mapped{
+	dir = 4;
+	icon_state = "railing0-1"
 	},
 /turf/simulated/floor/tiled,
 /area/ship/hand/crew/hallway/lower/aft)
@@ -394,6 +400,9 @@
 	dir = 1
 	},
 /obj/structure/handrail,
+/obj/structure/sign/warning/internals_required{
+	pixel_y = 28
+	},
 /turf/simulated/floor/plating,
 /area/ship/hand/crew/miner_three)
 "cH" = (
@@ -497,7 +506,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor/tiled/techfloor/grid,
+/turf/simulated/floor/tiled/techfloor/grid{
+	map_airless = 1
+	},
 /area/ship/hand/shuttle/tug_one)
 "dd" = (
 /obj/structure/table/rack,
@@ -525,6 +536,10 @@
 /area/ship/hand/crew/hallway/lower/fore)
 "dl" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/railing/mapped{
+	dir = 4;
+	icon_state = "railing0-1"
+	},
 /turf/simulated/floor/tiled/dark,
 /area/ship/hand/command/bridge)
 "dp" = (
@@ -652,6 +667,10 @@
 /area/ship/hand/shuttle/pod_hand_two)
 "ee" = (
 /obj/machinery/atmospherics/unary/vent_pump/on,
+/obj/structure/railing/mapped{
+	dir = 8;
+	icon_state = "railing0-1"
+	},
 /turf/simulated/floor/tiled/dark,
 /area/ship/hand/command/bridge)
 "eg" = (
@@ -707,7 +726,9 @@
 	pressure_checks_default = 2;
 	use_power = 1
 	},
-/turf/simulated/floor/tiled/techfloor,
+/turf/simulated/floor/tiled/techfloor{
+	map_airless = 1
+	},
 /area/ship/hand/shuttle/tug_one)
 "ep" = (
 /obj/structure/cable{
@@ -820,6 +841,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
 	},
+/obj/item/bedsheet/hop,
 /turf/simulated/floor/lino,
 /area/ship/hand/command)
 "eB" = (
@@ -944,6 +966,7 @@
 	icon_state = "2-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/hologram/holopad/longrange/remoteship,
 /turf/simulated/floor/tiled/dark,
 /area/ship/hand/shuttle/tug_two)
 "fr" = (
@@ -1118,7 +1141,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating{
+	map_airless = 1
+	},
 /area/ship/hand/maintenance/solarstarboard)
 "gb" = (
 /obj/machinery/door/blast/regular{
@@ -1396,7 +1421,8 @@
 "gZ" = (
 /obj/machinery/atmospherics/omni/mixer{
 	tag_north = 1;
-	tag_east = 2
+	tag_west = 2;
+	tag_south = 1
 	},
 /obj/floor_decal/industrial/warning/full,
 /turf/simulated/floor/tiled/techmaint,
@@ -1458,6 +1484,7 @@
 /obj/machinery/computer/ship/navigation/telescreen{
 	pixel_y = 21
 	},
+/obj/item/bedsheet/orange,
 /turf/simulated/floor/tiled/steel_grid,
 /area/ship/hand/crew/miner_three)
 "hE" = (
@@ -1537,6 +1564,9 @@
 /obj/floor_decal/industrial/danger{
 	dir = 8
 	},
+/obj/structure/railing/mapped{
+	dir = 8
+	},
 /turf/simulated/floor/tiled,
 /area/ship/hand/crew/hallway/lower/aft)
 "hX" = (
@@ -1565,6 +1595,10 @@
 "ic" = (
 /obj/machinery/computer/ship/engines{
 	dir = 8
+	},
+/obj/structure/sign/warning/internals_required{
+	dir = 8;
+	pixel_x = 32
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/hand/shuttle/pod_hand_two)
@@ -1763,7 +1797,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating{
+	map_airless = 1
+	},
 /area/ship/hand/maintenance/solarstarboard)
 "jp" = (
 /obj/machinery/atmospherics/pipe/vent/high_volume{
@@ -2081,6 +2117,7 @@
 /area/ship/hand/command/bridge)
 "kV" = (
 /obj/submap_landmark/joinable_submap/away_hand,
+/obj/structure/railing/mapped,
 /turf/simulated/floor/tiled/dark,
 /area/ship/hand/command/bridge)
 "kW" = (
@@ -2122,7 +2159,9 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating{
+	map_airless = 1
+	},
 /area/ship/hand/maintenance/solarport)
 "la" = (
 /obj/machinery/atmospherics/pipe/manifold/visible/blue{
@@ -2178,7 +2217,7 @@
 /obj/machinery/light,
 /obj/machinery/conveyor{
 	dir = 8;
-	id_tag = "hand_ore"
+	id = "hand_ore"
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/ship/hand/crew/hallway/lower)
@@ -2239,7 +2278,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
 	},
-/turf/simulated/floor/tiled/techfloor,
+/turf/simulated/floor/tiled/techfloor{
+	map_airless = 1
+	},
 /area/ship/hand/shuttle/tug_two)
 "lz" = (
 /obj/machinery/power/smes/buildable/preset/on_full,
@@ -2340,7 +2381,9 @@
 	icon_state = "0-8"
 	},
 /obj/floor_decal/solarpanel,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating{
+	map_airless = 1
+	},
 /area/ship/hand/maintenance/solarport)
 "mm" = (
 /obj/machinery/atmospherics/pipe/simple/visible{
@@ -2460,7 +2503,9 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating{
+	map_airless = 1
+	},
 /area/ship/hand/maintenance/solarport)
 "nl" = (
 /obj/machinery/atmospherics/pipe/manifold/visible/fuel{
@@ -2634,6 +2679,10 @@
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/hand/shuttle/tug_one)
+"nY" = (
+/obj/structure/railing/mapped,
+/turf/simulated/floor/tiled/dark,
+/area/ship/hand/command/bridge)
 "oe" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -2703,7 +2752,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor/tiled/techfloor/grid,
+/turf/simulated/floor/tiled/techfloor/grid{
+	map_airless = 1
+	},
 /area/ship/hand/shuttle/tug_two)
 "oo" = (
 /obj/wallframe_spawn/reinforced/titanium,
@@ -2724,7 +2775,9 @@
 	icon_state = "0-4"
 	},
 /obj/floor_decal/solarpanel,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating{
+	map_airless = 1
+	},
 /area/ship/hand/maintenance/solarport)
 "oy" = (
 /obj/machinery/atmospherics/unary/freezer{
@@ -2788,7 +2841,9 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating{
+	map_airless = 1
+	},
 /area/ship/hand/maintenance/solarstarboard)
 "oP" = (
 /obj/machinery/atmospherics/pipe/simple/visible/universal,
@@ -2849,7 +2904,7 @@
 	pixel_y = 4;
 	pixel_x = 24
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/hand/shuttle/tug_one)
 "ps" = (
 /obj/machinery/power/port_gen/pacman/super/potato/reactor,
@@ -2860,6 +2915,14 @@
 /obj/floor_decal/industrial/warning/full,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/hand/maintenance/engine)
+"pu" = (
+/obj/machinery/atmospherics/unary/vent_pump/on,
+/obj/structure/railing/mapped{
+	dir = 4;
+	icon_state = "railing0-1"
+	},
+/turf/simulated/floor/tiled/dark,
+/area/ship/hand/command/bridge)
 "py" = (
 /obj/machinery/door/airlock/external/bolted/cycling{
 	id_tag = "handtugtwo_shuttle_inner";
@@ -2942,6 +3005,7 @@
 	pixel_y = 21
 	},
 /obj/structure/bed/padded,
+/obj/item/bedsheet/purple,
 /turf/simulated/floor/tiled/steel_grid,
 /area/ship/hand/crew/miner_two)
 "pR" = (
@@ -3060,7 +3124,7 @@
 	pixel_y = 8;
 	pixel_x = 24
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/hand/shuttle/tug_one)
 "qp" = (
 /obj/structure/bed/chair/padded/yellow,
@@ -3482,6 +3546,10 @@
 /obj/floor_decal/industrial/danger{
 	dir = 4
 	},
+/obj/structure/railing/mapped{
+	dir = 4;
+	icon_state = "railing0-1"
+	},
 /turf/simulated/floor/tiled,
 /area/ship/hand/crew/hallway/lower/aft)
 "rS" = (
@@ -3505,7 +3573,9 @@
 /obj/machinery/atmospherics/pipe/manifold/visible/fuel{
 	dir = 8
 	},
-/turf/simulated/floor/tiled/techfloor,
+/turf/simulated/floor/tiled/techfloor{
+	map_airless = 1
+	},
 /area/ship/hand/shuttle/tug_one)
 "sh" = (
 /obj/machinery/atmospherics/pipe/simple/visible/fuel{
@@ -3593,7 +3663,7 @@
 /turf/simulated/floor/steel_dirty,
 /area/ship/hand/crew/miner_two)
 "sB" = (
-/obj/machinery/hologram/holopad/longrange,
+/obj/machinery/hologram/holopad/longrange/remoteship,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 8;
@@ -3611,7 +3681,7 @@
 	},
 /obj/machinery/conveyor{
 	dir = 4;
-	id_tag = "hand_ore"
+	id = "hand_ore"
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/ship/hand/crew/hallway/lower)
@@ -3754,7 +3824,9 @@
 	icon_state = "0-4"
 	},
 /obj/floor_decal/solarpanel,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating{
+	map_airless = 1
+	},
 /area/ship/hand/maintenance/solarstarboard)
 "tC" = (
 /turf/simulated/floor/tiled/techmaint,
@@ -3806,7 +3878,9 @@
 	icon_state = "0-8"
 	},
 /obj/floor_decal/solarpanel,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating{
+	map_airless = 1
+	},
 /area/ship/hand/maintenance/solarstarboard)
 "tO" = (
 /obj/floor_decal/borderfloor{
@@ -3849,6 +3923,7 @@
 	dir = 8;
 	pixel_y = -5
 	},
+/obj/item/bedsheet/medical,
 /turf/simulated/floor/lino,
 /area/ship/hand/command/medic)
 "tX" = (
@@ -4075,7 +4150,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor/tiled/techfloor/grid,
+/turf/simulated/floor/tiled/techfloor/grid{
+	map_airless = 1
+	},
 /area/ship/hand/shuttle/tug_two)
 "uZ" = (
 /obj/machinery/atmospherics/pipe/simple/visible/fuel{
@@ -4171,7 +4248,9 @@
 /obj/machinery/atmospherics/pipe/manifold/visible/fuel{
 	dir = 4
 	},
-/turf/simulated/floor/tiled/techfloor,
+/turf/simulated/floor/tiled/techfloor{
+	map_airless = 1
+	},
 /area/ship/hand/shuttle/tug_two)
 "vx" = (
 /obj/machinery/light/led/small{
@@ -4183,7 +4262,9 @@
 /obj/machinery/atmospherics/binary/pump{
 	dir = 1
 	},
-/turf/simulated/floor/tiled/techfloor/grid,
+/turf/simulated/floor/tiled/techfloor/grid{
+	map_airless = 1
+	},
 /area/ship/hand/shuttle/tug_one)
 "vD" = (
 /obj/machinery/atmospherics/unary/vent_pump/on,
@@ -4240,7 +4321,9 @@
 	dir = 1
 	},
 /obj/floor_decal/industrial/outline/yellow,
-/turf/simulated/floor/tiled/techfloor,
+/turf/simulated/floor/tiled/techfloor{
+	map_airless = 1
+	},
 /area/ship/hand/shuttle/tug_one)
 "wd" = (
 /obj/machinery/atmospherics/pipe/simple/visible/red{
@@ -4252,7 +4335,9 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/hand/maintenance/atmos)
 "we" = (
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating{
+	map_airless = 1
+	},
 /area/ship/hand/maintenance/solarport)
 "wf" = (
 /obj/structure/disposalpipe/trunk{
@@ -4261,7 +4346,9 @@
 /obj/structure/disposaloutlet{
 	dir = 4
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating{
+	map_airless = 1
+	},
 /area/ship/hand/maintenance/solarstarboard)
 "wj" = (
 /obj/structure/catwalk,
@@ -4318,6 +4405,9 @@
 	d2 = 8;
 	icon_state = "4-8";
 	pixel_y = 0
+	},
+/obj/structure/sign/warning/internals_required{
+	pixel_y = 28
 	},
 /turf/simulated/floor/plating,
 /area/ship/hand/crew/miner_two)
@@ -4556,7 +4646,7 @@
 	},
 /obj/machinery/conveyor{
 	dir = 4;
-	id_tag = "hand_ore"
+	id = "hand_ore"
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/ship/hand/crew/hallway/lower)
@@ -4940,6 +5030,7 @@
 /obj/item/rig/medical/equipped{
 	req_access = list("ACCESS_HAND_MED")
 	},
+/obj/item/reagent_containers/food/drinks/bottle/pwine,
 /turf/simulated/floor/lino,
 /area/ship/hand/command/medic)
 "zT" = (
@@ -5027,7 +5118,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating{
+	map_airless = 1
+	},
 /area/ship/hand/maintenance/solarstarboard)
 "Aj" = (
 /obj/machinery/atmospherics/pipe/simple/visible/fuel,
@@ -5170,7 +5263,9 @@
 	id_tag = "handtugtwo_shuttle_pump_out_external";
 	power_rating = 25000
 	},
-/turf/simulated/floor/tiled/techfloor/grid,
+/turf/simulated/floor/tiled/techfloor/grid{
+	map_airless = 1
+	},
 /area/ship/hand/shuttle/tug_two)
 "AZ" = (
 /obj/machinery/computer/ship/navigation,
@@ -5408,8 +5503,9 @@
 "Cl" = (
 /obj/machinery/conveyor{
 	dir = 4;
-	id_tag = "hand_ore"
+	id = "hand_ore"
 	},
+/obj/structure/plasticflaps,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/ship/hand/crew/hallway/lower)
 "Cm" = (
@@ -5501,7 +5597,9 @@
 	master_tag = "handtugone_shuttle_exterior_sensor";
 	pixel_y = 24
 	},
-/turf/simulated/floor/tiled/techfloor,
+/turf/simulated/floor/tiled/techfloor{
+	map_airless = 1
+	},
 /area/ship/hand/shuttle/tug_one)
 "CB" = (
 /obj/paint/vox,
@@ -5541,8 +5639,9 @@
 "CL" = (
 /obj/machinery/conveyor{
 	dir = 8;
-	id_tag = "hand_ore"
+	id = "hand_ore"
 	},
+/obj/structure/plasticflaps,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/ship/hand/crew/hallway/lower)
 "CM" = (
@@ -5634,7 +5733,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
 	},
-/turf/simulated/floor/tiled/techfloor,
+/turf/simulated/floor/tiled/techfloor{
+	map_airless = 1
+	},
 /area/ship/hand/shuttle/tug_one)
 "Dt" = (
 /obj/machinery/computer/shuttle_control/explore/pod_hand_one,
@@ -5682,7 +5783,6 @@
 /area/ship/hand/maintenance/engine/starboard)
 "DE" = (
 /obj/structure/table/woodentable/walnut,
-/obj/item/reagent_containers/food/drinks/bottle/pwine,
 /obj/machinery/light/led/small{
 	dir = 8
 	},
@@ -5754,11 +5854,15 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating{
+	map_airless = 1
+	},
 /area/ship/hand/maintenance/solarport)
 "Eg" = (
 /obj/machinery/atmospherics/pipe/simple/visible/universal,
-/turf/simulated/floor/tiled/techfloor,
+/turf/simulated/floor/tiled/techfloor{
+	map_airless = 1
+	},
 /area/ship/hand/shuttle/tug_two)
 "Ei" = (
 /obj/structure/cable{
@@ -6148,7 +6252,9 @@
 /area/ship/hand/shuttle/tug_two)
 "FW" = (
 /obj/machinery/atmospherics/pipe/simple/visible/fuel,
-/turf/simulated/floor/tiled/techfloor/grid,
+/turf/simulated/floor/tiled/techfloor/grid{
+	map_airless = 1
+	},
 /area/ship/hand/shuttle/tug_one)
 "Gd" = (
 /obj/machinery/atmospherics/pipe/manifold/visible/fuel{
@@ -6164,7 +6270,9 @@
 	dir = 1
 	},
 /obj/floor_decal/industrial/outline/yellow,
-/turf/simulated/floor/tiled/techfloor,
+/turf/simulated/floor/tiled/techfloor{
+	map_airless = 1
+	},
 /area/ship/hand/shuttle/tug_two)
 "Gg" = (
 /obj/structure/cable/cyan,
@@ -6274,7 +6382,9 @@
 /obj/machinery/atmospherics/pipe/simple/visible/fuel{
 	dir = 6
 	},
-/turf/simulated/floor/tiled/techfloor,
+/turf/simulated/floor/tiled/techfloor{
+	map_airless = 1
+	},
 /area/ship/hand/shuttle/tug_two)
 "GC" = (
 /obj/machinery/atmospherics/pipe/simple/visible/cyan{
@@ -6478,7 +6588,7 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/hand/shuttle/tug_one)
 "HD" = (
-/obj/machinery/hologram/holopad/longrange,
+/obj/machinery/hologram/holopad/longrange/remoteship,
 /obj/floor_decal/corner/b_green/mono,
 /obj/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/tiled/dark/monotile,
@@ -6531,7 +6641,9 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating{
+	map_airless = 1
+	},
 /area/ship/hand/maintenance/solarport)
 "HK" = (
 /obj/structure/railing/mapped{
@@ -6546,11 +6658,15 @@
 	pressure_checks_default = 2;
 	use_power = 1
 	},
-/turf/simulated/floor/tiled/techfloor,
+/turf/simulated/floor/tiled/techfloor{
+	map_airless = 1
+	},
 /area/ship/hand/shuttle/tug_two)
 "HL" = (
 /obj/machinery/atmospherics/pipe/simple/visible/fuel,
-/turf/simulated/floor/tiled/techfloor/grid,
+/turf/simulated/floor/tiled/techfloor/grid{
+	map_airless = 1
+	},
 /area/ship/hand/shuttle/tug_two)
 "HQ" = (
 /obj/floor_decal/corner/yellow/diagonal,
@@ -6560,6 +6676,7 @@
 	pixel_x = 24;
 	req_access = list("ACCESS_HAND")
 	},
+/obj/item/bedsheet/yellow,
 /turf/simulated/floor/tiled/steel_grid,
 /area/ship/hand/crew/miner_two)
 "HR" = (
@@ -6602,7 +6719,7 @@
 	dir = 1
 	},
 /obj/machinery/conveyor_switch/oneway{
-	id_tag = "hand_ore"
+	id = "hand_ore"
 	},
 /turf/simulated/floor/tiled/steel_grid,
 /area/ship/hand/crew/hallway/lower)
@@ -6751,7 +6868,9 @@
 /obj/machinery/atmospherics/binary/pump{
 	dir = 1
 	},
-/turf/simulated/floor/tiled/techfloor/grid,
+/turf/simulated/floor/tiled/techfloor/grid{
+	map_airless = 1
+	},
 /area/ship/hand/shuttle/tug_two)
 "IW" = (
 /obj/floor_decal/industrial/warning{
@@ -6910,7 +7029,7 @@
 	id_tag = "handtugoner_shuttle_sensor";
 	pixel_x = 23
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/hand/shuttle/tug_one)
 "JU" = (
 /obj/machinery/atmospherics/pipe/simple/visible/fuel{
@@ -7026,7 +7145,9 @@
 	dir = 1
 	},
 /obj/floor_decal/industrial/outline/yellow,
-/turf/simulated/floor/tiled/techfloor,
+/turf/simulated/floor/tiled/techfloor{
+	map_airless = 1
+	},
 /area/ship/hand/shuttle/tug_two)
 "KC" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction{
@@ -7037,7 +7158,7 @@
 	},
 /area/ship/hand/maintenance/atmos/fuel)
 "KD" = (
-/obj/structure/bed/chair/comfy/captain{
+/obj/structure/bed/chair/comfy/blue{
 	dir = 1
 	},
 /turf/simulated/floor/tiled/dark/monotile,
@@ -7075,7 +7196,9 @@
 	},
 /obj/floor_decal/solarpanel,
 /obj/machinery/power/tracker,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating{
+	map_airless = 1
+	},
 /area/ship/hand/maintenance/solarport)
 "KP" = (
 /obj/machinery/shieldgen,
@@ -7113,8 +7236,8 @@
 	tag_south = 2;
 	use_power = 1;
 	tag_east = 1;
-	tag_north = 1;
-	tag_north_con = 0.79
+	tag_west = 1;
+	tag_west_con = 0.79
 	},
 /obj/floor_decal/industrial/warning/full,
 /turf/simulated/floor/tiled/techfloor,
@@ -7221,6 +7344,7 @@
 /area/ship/hand/crew/miner_two)
 "LF" = (
 /obj/overmap/visitable/ship/hand,
+/obj/structure/railing/mapped,
 /turf/simulated/floor/tiled/dark,
 /area/ship/hand/command/bridge)
 "LH" = (
@@ -7432,6 +7556,9 @@
 /obj/floor_decal/industrial/danger{
 	dir = 8
 	},
+/obj/structure/railing/mapped{
+	dir = 8
+	},
 /turf/simulated/floor/tiled,
 /area/ship/hand/crew/hallway/lower/aft)
 "MH" = (
@@ -7489,7 +7616,7 @@
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/hand/command/bridge)
 "MZ" = (
-/obj/machinery/hologram/holopad/longrange,
+/obj/machinery/hologram/holopad/longrange/remoteship,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
@@ -7809,7 +7936,9 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/simulated/floor/tiled/techfloor/grid,
+/turf/simulated/floor/tiled/techfloor/grid{
+	map_airless = 1
+	},
 /area/ship/hand/shuttle/tug_two)
 "OT" = (
 /obj/floor_decal/industrial/warning/corner{
@@ -7862,6 +7991,9 @@
 	icon_state = "4-8";
 	pixel_y = 0
 	},
+/obj/structure/sign/warning/internals_required{
+	pixel_y = 28
+	},
 /turf/simulated/floor/plating,
 /area/ship/hand/crew/miner_one)
 "Pi" = (
@@ -7872,6 +8004,7 @@
 	pixel_x = -22;
 	req_access = list("ACCESS_HAND")
 	},
+/obj/item/bedsheet/brown,
 /turf/simulated/floor/tiled/steel_grid,
 /area/ship/hand/crew/miner_three)
 "Pj" = (
@@ -7990,7 +8123,7 @@
 /area/ship/hand/maintenance/atmos)
 "PT" = (
 /obj/machinery/conveyor{
-	id_tag = "hand_ore"
+	id = "hand_ore"
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/ship/hand/crew/hallway/lower)
@@ -8262,7 +8395,9 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/simulated/floor/tiled/techfloor/grid,
+/turf/simulated/floor/tiled/techfloor/grid{
+	map_airless = 1
+	},
 /area/ship/hand/shuttle/tug_one)
 "Re" = (
 /obj/machinery/atmospherics/binary/pump/on{
@@ -8273,6 +8408,10 @@
 "Rg" = (
 /obj/machinery/computer/ship/engines{
 	dir = 4
+	},
+/obj/structure/sign/warning/internals_required{
+	dir = 4;
+	pixel_x = -32
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/hand/shuttle/pod_hand_one)
@@ -8353,7 +8492,7 @@
 /obj/machinery/mineral/stacking_machine,
 /obj/machinery/conveyor{
 	dir = 8;
-	id_tag = "hand_ore"
+	id = "hand_ore"
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/ship/hand/crew/hallway/lower)
@@ -8379,11 +8518,15 @@
 /turf/simulated/floor/tiled/steel_grid,
 /area/ship/hand/crew/miner_three)
 "RL" = (
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating{
+	map_airless = 1
+	},
 /area/ship/hand/maintenance/solarstarboard)
 "RM" = (
 /obj/machinery/atmospherics/pipe/simple/visible/universal,
-/turf/simulated/floor/tiled/techfloor,
+/turf/simulated/floor/tiled/techfloor{
+	map_airless = 1
+	},
 /area/ship/hand/shuttle/tug_one)
 "RP" = (
 /obj/machinery/atmospherics/pipe/simple/visible/fuel{
@@ -8411,7 +8554,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor/tiled/techfloor/grid,
+/turf/simulated/floor/tiled/techfloor/grid{
+	map_airless = 1
+	},
 /area/ship/hand/shuttle/tug_one)
 "Sb" = (
 /obj/structure/closet/secure_closet/guncabinet{
@@ -8463,7 +8608,9 @@
 /obj/structure/fuel_port{
 	pixel_x = -32
 	},
-/turf/simulated/floor/tiled/techfloor/grid,
+/turf/simulated/floor/tiled/techfloor/grid{
+	map_airless = 1
+	},
 /area/ship/hand/shuttle/tug_one)
 "Sz" = (
 /obj/structure/bed/chair/shuttle/black{
@@ -8554,7 +8701,9 @@
 /obj/machinery/atmospherics/pipe/simple/visible/fuel{
 	dir = 10
 	},
-/turf/simulated/floor/tiled/techfloor,
+/turf/simulated/floor/tiled/techfloor{
+	map_airless = 1
+	},
 /area/ship/hand/shuttle/tug_one)
 "Tf" = (
 /obj/wallframe_spawn/reinforced/titanium,
@@ -8635,7 +8784,9 @@
 	master_tag = "handtugtwo_shuttle_exterior_sensor";
 	pixel_y = 24
 	},
-/turf/simulated/floor/tiled/techfloor,
+/turf/simulated/floor/tiled/techfloor{
+	map_airless = 1
+	},
 /area/ship/hand/shuttle/tug_two)
 "Tw" = (
 /obj/structure/cable{
@@ -8770,6 +8921,14 @@
 /obj/structure/catwalk,
 /turf/simulated/floor/plating,
 /area/ship/hand/maintenance/engine/starboard)
+"Ui" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/railing/mapped{
+	dir = 8;
+	icon_state = "railing0-1"
+	},
+/turf/simulated/floor/tiled/dark,
+/area/ship/hand/command/bridge)
 "Uj" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -9065,7 +9224,9 @@
 /obj/structure/fuel_port{
 	pixel_x = 32
 	},
-/turf/simulated/floor/tiled/techfloor/grid,
+/turf/simulated/floor/tiled/techfloor/grid{
+	map_airless = 1
+	},
 /area/ship/hand/shuttle/tug_two)
 "VP" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -9274,7 +9435,9 @@
 	dir = 1
 	},
 /obj/floor_decal/industrial/outline/yellow,
-/turf/simulated/floor/tiled/techfloor,
+/turf/simulated/floor/tiled/techfloor{
+	map_airless = 1
+	},
 /area/ship/hand/shuttle/tug_one)
 "Xe" = (
 /obj/machinery/atmospherics/binary/pump/high_power,
@@ -9312,6 +9475,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
+/obj/machinery/hologram/holopad/longrange/remoteship,
 /turf/simulated/floor/tiled/dark,
 /area/ship/hand/shuttle/tug_one)
 "Xl" = (
@@ -9368,7 +9532,9 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating{
+	map_airless = 1
+	},
 /area/ship/hand/maintenance/solarport)
 "XF" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -9687,7 +9853,9 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating{
+	map_airless = 1
+	},
 /area/ship/hand/maintenance/solarstarboard)
 "Zb" = (
 /obj/paint/sun,
@@ -9754,7 +9922,9 @@
 	icon_state = "0-8"
 	},
 /obj/floor_decal/solarpanel,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating{
+	map_airless = 1
+	},
 /area/ship/hand/maintenance/solarstarboard)
 "Zu" = (
 /obj/machinery/shieldgen,
@@ -9797,7 +9967,9 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating{
+	map_airless = 1
+	},
 /area/ship/hand/maintenance/solarstarboard)
 "ZE" = (
 /obj/structure/table/woodentable/walnut,
@@ -16882,7 +17054,7 @@ lv
 rk
 YM
 TU
-ee
+pu
 dl
 oe
 TU
@@ -17003,7 +17175,7 @@ aa
 lv
 YT
 YM
-TU
+nY
 By
 Kd
 XM
@@ -17371,7 +17543,7 @@ tE
 YM
 TU
 ee
-dl
+Ui
 gl
 hY
 BF

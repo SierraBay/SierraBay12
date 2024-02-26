@@ -161,6 +161,14 @@
 /obj/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/tiled/techmaint,
 /area/ship/hand/crew/hallway/upper/aft)
+"bz" = (
+/obj/structure/hygiene/shower{
+	dir = 1
+	},
+/obj/structure/curtain/open/shower,
+/obj/random/soap,
+/turf/simulated/floor/tiled/freezer,
+/area/ship/hand/crew/toilet)
 "bD" = (
 /obj/structure/table/rack{
 	dir = 8
@@ -542,6 +550,15 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/ship/hand/medbay)
+"eI" = (
+/obj/structure/table/rack{
+	dir = 8
+	},
+/obj/random/maintenance/clean,
+/obj/decal/cleanable/dirt,
+/obj/random/solgov,
+/turf/simulated/floor/tiled/steel_ridged,
+/area/ship/hand/cargo)
 "eJ" = (
 /obj/paint/brown,
 /turf/simulated/wall/r_wall,
@@ -1334,6 +1351,7 @@
 	pixel_x = -21;
 	pixel_y = -10
 	},
+/obj/random/soap,
 /turf/simulated/floor/tiled/freezer,
 /area/ship/hand/crew/toilet)
 "nJ" = (
@@ -1616,6 +1634,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/random/solgov,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/ship/hand/cargo)
 "qz" = (
@@ -1779,6 +1798,11 @@
 	},
 /turf/simulated/floor/tiled/freezer,
 /area/ship/hand/crew/toilet)
+"se" = (
+/obj/structure/table/woodentable/mahogany,
+/obj/random/single/playing_cards,
+/turf/simulated/floor/wood/walnut,
+/area/ship/hand/crew/bar)
 "sg" = (
 /obj/structure/closet/crate/secure/gear,
 /obj/item/tank/jetpack/oxygen,
@@ -3209,6 +3233,15 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/ship/hand/crew/kitchen)
+"HE" = (
+/obj/structure/table/rack{
+	dir = 8
+	},
+/obj/random/maintenance/clean,
+/obj/decal/cleanable/dirt,
+/obj/random/masks,
+/turf/simulated/floor/tiled/techfloor/grid,
+/area/ship/hand/cargo)
 "HV" = (
 /obj/floor_decal/borderfloorblack,
 /obj/floor_decal/corner/paleblue/border,
@@ -11572,7 +11605,7 @@ xG
 xG
 Ct
 EP
-OA
+eI
 Tv
 xG
 PD
@@ -11813,7 +11846,7 @@ aa
 aa
 bg
 xG
-yi
+HE
 LT
 QQ
 ot
@@ -11839,7 +11872,7 @@ jD
 ex
 kj
 kI
-kj
+se
 cQ
 bI
 fA
@@ -12598,7 +12631,7 @@ vK
 tr
 vK
 vK
-xv
+bz
 LG
 zz
 zz

@@ -80,6 +80,7 @@
 /obj/item/paper/hand/pods
 	name = "Pods Usage"
 	icon_state = "paper_words"
+	language = LANGUAGE_SPACER
 	info = {"
 		<div style="text-align: center;">
 			<p>Техника безопасности при работе со шлюзовыми камерами капсул EE S-class 18-24:</p>
@@ -93,6 +94,7 @@
 
 /obj/item/paper/hand/engineer
 	name = "To stupid ones"
+	language = LANGUAGE_SPACER
 	info = {"<h1>Капсулы, ещё раз.</h1>
 			<p>Если ещё раз кто-то из вас, кривых и косых недолюдей забудет нормально пристыковать эйнштейновскую капсулу перед тем, как давать команду на открытие шлюза</p>
 			<h1>То я этого умника привяжу снаружи перед мостиком на день.</h1>
