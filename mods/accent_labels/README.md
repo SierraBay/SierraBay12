@@ -1,7 +1,7 @@
 
 #### Список PRов:
 
-- https://github.com/SierraBay/SierraBay12/pull/#####
+- Отсутствуют
 <!--
   Ссылки на PRы, связанные с модом:
   - Создание
@@ -27,7 +27,7 @@ ID мода: ACCENT_LABELS
 
 ### Изменения *кор кода*
 
-- `code/modules/mob/living.dm`: `proc/overriden_proc`, `var/overriden_var`
+- Отсутствуют
 <!--
   Если вы редактировали какие-либо процедуры или переменные в кор коде,
   они должны быть указаны здесь.
@@ -38,8 +38,7 @@ ID мода: ACCENT_LABELS
 
 ### Оверрайды
 
-- `mods/_master_files/sound/my_cool_sound.ogg`
-- `mods/_master_files/code/my_modular_override.dm`: `proc/overriden_proc`, `var/overriden_var`
+- `mods/accent_labels/code/hear_override.dm`: `/mob/on_hear_say()`, `/mob/living/silicon/on_hear_say()`, `/mob/hear_radio()`
 <!--
   Если ты добавлял новый модульный оверрайд, его нужно указать здесь.
   Здесь указываются оверрайды в твоём моде и папке `_master_files`
@@ -49,7 +48,7 @@ ID мода: ACCENT_LABELS
 
 ### Дефайны
 
-- `code/__defines/~mods/accent_labels.dm`: `ACCENT_LABELS_SPEED_MULTIPLIER`, `ACCENT_LABELS_SPEED_BASE`
+- Отсутствуют
 <!--
   Если требовалось добавить какие-либо дефайны, укажи файлы,
   в которые ты их добавил, а также перечисли имена.

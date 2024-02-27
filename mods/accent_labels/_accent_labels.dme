@@ -3,7 +3,7 @@
 
 #include "_accent_labels.dm"
 
-#include "code/on_hear_override.dm"
-#include "code/preferences.dm"
+#include "code/hear_override.dm"
+#include "code/accent.dm"
 
 #endif
