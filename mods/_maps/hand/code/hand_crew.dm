@@ -60,7 +60,7 @@ var/global/const/access_away_hand_captain = "ACCESS_HAND_CAPTAIN"
 /datum/job/submap/hand
 	title = "Corporate Salvage Technican"
 	total_positions = 4
-	outfit_type = /singleton/hierarchy/outfit/job/hand
+	outfit_type = /singleton/hierarchy/outfit/job/hand/miner
 	allowed_branches = list(
 		/datum/mil_branch/civilian,
 		/datum/mil_branch/contractor
@@ -84,7 +84,7 @@ var/global/const/access_away_hand_captain = "ACCESS_HAND_CAPTAIN"
 		SKILL_WEAPONS = SKILL_BASIC,
 		SKILL_HAULING = SKILL_TRAINED,
 		SKILL_ATMOS   = SKILL_BASIC,
-		SKILL_ENGINES = SKILL_TRAINED,
+		SKILL_ENGINES = SKILL_BASIC,
 		SKILL_EVA     = SKILL_TRAINED,
 		SKILL_ELECTRICAL   = SKILL_TRAINED,
 		SKILL_CONSTRUCTION = SKILL_TRAINED,
@@ -168,7 +168,7 @@ var/global/const/access_away_hand_captain = "ACCESS_HAND_CAPTAIN"
 	\
 	 Вам стоит проявлять осторожность, чтобы не привлечь к себе лишнее внимание. Пробуждение псиоников - ваша цель, но сохранение ячейки важнее. \
 	 Ваших сил не хватит чтобы выстоять в открытом бою против карательных сил флота ЦПСС и того, что придёт за ними. Помните это. И да услышит вашу Песнь весь космос."
-	whitelisted_species = list(SPECIES_HUMAN,SPECIES_SPACER,SPECIES_GRAVWORLDER,SPECIES_VATGROWN,SPECIES_TRITONIAN)
+	whitelisted_species = list(SPECIES_HUMAN, SPECIES_SPACER, SPECIES_GRAVWORLDER, SPECIES_VATGROWN, SPECIES_TRITONIAN)
 	min_skill = list(
 		SKILL_COMBAT    = SKILL_BASIC,
 		SKILL_WEAPONS   = SKILL_BASIC,
@@ -188,7 +188,6 @@ var/global/const/access_away_hand_captain = "ACCESS_HAND_CAPTAIN"
 #define HAND_OUTFIT_JOB_NAME(job_name) ("Hearer's Hand Chorus - Job - " + job_name)
 
 /singleton/hierarchy/outfit/job/hand
-	name = HAND_OUTFIT_JOB_NAME("Corporate Salvage Technican")
 	hierarchy_type = /singleton/hierarchy/outfit/job/hand
 	uniform = /obj/item/clothing/under/grayson
 	shoes = /obj/item/clothing/shoes/workboots
@@ -204,6 +203,9 @@ var/global/const/access_away_hand_captain = "ACCESS_HAND_CAPTAIN"
 	back = /obj/item/storage/backpack/industrial
 	backpack_contents = null
 	flags = OUTFIT_EXTENDED_SURVIVAL
+
+/singleton/hierarchy/outfit/job/hand/miner
+	name = HAND_OUTFIT_JOB_NAME("Corporate Salvage Technican")
 
 /singleton/hierarchy/outfit/job/hand/captain
 	name = HAND_OUTFIT_JOB_NAME("Corporate Vessel Captain")
