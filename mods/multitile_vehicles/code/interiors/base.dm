@@ -26,7 +26,7 @@ GLOBAL_LIST_EMPTY(templates_cache)
 /datum/vehicle_interior/proc/load_map(datum/map_template/interior_template, new_vehicle)
 	set waitfor = FALSE
 	var/list/interior_levels = GLOB.using_map.escape_levels // Transit levels
-	interior_levels = interior_levels.len ? interior_levels : 7 // Sierra transit z is 7, not listed in escape_levels for some reason
+	LAZYLEN(interior_levels) || interior_levels.Add(7) // Sierra transit z is 7, not listed in escape_levels for some reason
 	for(var/turf/space/T in block(locate(TRANSITIONEDGE, TRANSITIONEDGE, min(interior_levels)), locate(world.maxx - TRANSITIONEDGE, world.maxy - TRANSITIONEDGE, max(interior_levels))))
 		var/valid = TRUE
 		for(var/turf/check in interior_template.get_affected_turfs(T))
