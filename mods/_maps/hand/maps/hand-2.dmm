@@ -152,8 +152,7 @@
 	},
 /area/space)
 "bl" = (
-/obj/structure/closet/firecloset,
-/obj/floor_decal/industrial/outline/yellow,
+/obj/machinery/portable_atmospherics/powered/pump,
 /turf/simulated/floor/tiled/techmaint,
 /area/ship/hand/crew/hallway/upper/fore)
 "bt" = (
@@ -628,6 +627,12 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/ship/hand/medbay)
+"fq" = (
+/obj/machinery/floodlight,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
+/area/space)
 "ft" = (
 /obj/floor_decal/industrial/outline/yellow,
 /obj/decal/cleanable/dirt,
@@ -1333,6 +1338,12 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/ship/hand/crew/kitchen)
+"nz" = (
+/obj/item/device/flashlight/lamp/floodlamp,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
+/area/space)
 "nB" = (
 /obj/structure/table/standard,
 /obj/structure/cable{
@@ -1369,6 +1380,17 @@
 /obj/floor_decal/snow,
 /turf/simulated/floor/tiled/freezer,
 /area/ship/hand/crew/kitchen)
+"nY" = (
+/obj/structure/railing/mapped{
+	dir = 8;
+	icon_state = "railing0-1"
+	},
+/obj/floor_decal/industrial/danger{
+	dir = 8
+	},
+/obj/structure/closet/firecloset,
+/turf/simulated/floor/tiled/techmaint,
+/area/ship/hand/crew/hallway/upper/fore)
 "ob" = (
 /obj/structure/table/rack{
 	dir = 8
@@ -1978,6 +2000,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/ship/hand/airlock)
+"tO" = (
+/obj/structure/railing/mapped,
+/obj/floor_decal/industrial/danger,
+/obj/machinery/portable_atmospherics/powered/scrubber,
+/turf/simulated/floor/tiled/techmaint,
+/area/ship/hand/crew/hallway/upper/fore)
 "tZ" = (
 /obj/decal/cleanable/fruit_smudge,
 /obj/floor_decal/snow,
@@ -2284,6 +2312,9 @@
 	dir = 1
 	},
 /obj/structure/curtain/open/shower,
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/freezer,
 /area/ship/hand/crew/toilet)
 "xx" = (
@@ -2358,6 +2389,10 @@
 "xY" = (
 /obj/structure/bed/sofa/m/brown{
 	dir = 4
+	},
+/obj/machinery/vending/wallmed2{
+	dir = 4;
+	pixel_x = -23
 	},
 /turf/simulated/floor/carpet/green,
 /area/ship/hand/crew/bar)
@@ -2955,6 +2990,16 @@
 /obj/structure/catwalk,
 /turf/simulated/floor/plating,
 /area/ship/hand/crew/hallway/upper/aft)
+"DB" = (
+/obj/structure/hygiene/shower{
+	dir = 1
+	},
+/obj/structure/curtain/open/shower,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/freezer,
+/area/ship/hand/crew/toilet)
 "DI" = (
 /obj/machinery/firealarm{
 	dir = 4;
@@ -3369,6 +3414,9 @@
 /area/ship/hand/crew/hydro)
 "Ka" = (
 /obj/machinery/vending/lavatory,
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/freezer,
 /area/ship/hand/crew/toilet)
 "Kc" = (
@@ -4064,6 +4112,12 @@
 /obj/item/storage/briefcase/inflatable,
 /turf/simulated/floor/tiled/white,
 /area/ship/hand/crew)
+"Sm" = (
+/obj/random/toolbox,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
+/area/space)
 "Sn" = (
 /obj/floor_decal/borderfloorblack,
 /obj/floor_decal/corner/paleblue/border,
@@ -4315,6 +4369,22 @@
 	},
 /turf/simulated/floor/tiled/white/monotile,
 /area/ship/hand/medbay/storage)
+"UT" = (
+/obj/machinery/atmospherics/unary/vent_scrubber/on{
+	dir = 4
+	},
+/obj/floor_decal/borderfloorblack{
+	dir = 8
+	},
+/obj/floor_decal/corner/paleblue/border{
+	dir = 8
+	},
+/obj/machinery/vending/wallmed2{
+	dir = 4;
+	pixel_x = -23
+	},
+/turf/simulated/floor/tiled/white,
+/area/ship/hand/crew)
 "UX" = (
 /obj/shuttle_landmark/nav_hand/nav4,
 /turf/space,
@@ -10806,7 +10876,7 @@ zz
 zz
 zz
 zz
-zz
+Sm
 zz
 zz
 zz
@@ -10926,7 +10996,7 @@ OQ
 aw
 aw
 zz
-zz
+nz
 zz
 zz
 zz
@@ -11660,7 +11730,7 @@ uT
 Sb
 kC
 Ni
-kC
+UT
 Ib
 uT
 uT
@@ -11856,7 +11926,7 @@ MD
 MD
 MD
 MD
-oF
+nY
 oF
 cF
 PW
@@ -11975,7 +12045,7 @@ NM
 VT
 xG
 bl
-MB
+tO
 pu
 vP
 wj
@@ -12753,7 +12823,7 @@ DO
 BU
 Fl
 wg
-xv
+DB
 LG
 zz
 zz
@@ -12999,7 +13069,7 @@ In
 er
 Su
 LG
-zz
+fq
 zz
 zz
 zz

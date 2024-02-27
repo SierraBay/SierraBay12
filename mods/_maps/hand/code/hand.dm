@@ -42,7 +42,7 @@
 
 
 /datum/map_template/ruin/away_site/hand
-	name = "Salvage Vessel (FA)"
+	name = "Salvage Vessel (FAV)"
 	id = "awaysite_hand_ship"
 	description = "Hyena-class salvage vessel."
 	prefix = "mods/_maps/hand/maps/"
@@ -77,32 +77,3 @@
 /obj/submap_landmark/joinable_submap/hand
 	name = "FA Salvage Vessel"
 	archetype = /singleton/submap_archetype/away_hand
-
-/* TCOMMS
- * ======
-
-
-
-/obj/machinery/telecomms/allinone/away_hand
-	listening_freqs = list(HAND_FREQ)
-	channel_color = COMMS_COLOR_CENTCOMM
-	channel_name = ""
-	circuitboard = /obj/item/stock_parts/circuitboard/telecomms/allinone/away_hand
-
-/obj/item/stock_parts/circuitboard/telecomms/allinone/away_hand
-	build_path = /obj/machinery/telecomms/allinone/away_hand
-
-/obj/item/device/radio/headset/away_hand
-	name = "SCG hand headset"
-	icon_state = "mine_headset"
-	ks1type = /obj/item/device/encryptionkey/away_hand
-
-/obj/item/device/radio/headset/away_hand/Initialize()
-	. = ..()
-	set_frequency(SFV_FREQ)	//Not going to be random or just set to the common frequency, but can be set later.
-
-/obj/item/device/encryptionkey/away_hand
-	name = "SCG hand radio encryption key"
-	icon_state = "rob_cypherkey"
-	channels = list("SCG hand" = 1)
- */

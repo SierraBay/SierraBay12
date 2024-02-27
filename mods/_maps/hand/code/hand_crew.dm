@@ -188,6 +188,7 @@ var/global/const/access_away_hand_captain = "ACCESS_HAND_CAPTAIN"
 #define HAND_OUTFIT_JOB_NAME(job_name) ("Hearer's Hand Chorus - Job - " + job_name)
 
 /singleton/hierarchy/outfit/job/hand
+	name = HAND_OUTFIT_JOB_NAME("Corporate Salvage Technican")
 	hierarchy_type = /singleton/hierarchy/outfit/job/hand
 	uniform = /obj/item/clothing/under/grayson
 	shoes = /obj/item/clothing/shoes/workboots
