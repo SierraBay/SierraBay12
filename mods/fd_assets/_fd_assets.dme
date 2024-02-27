@@ -1,0 +1,8 @@
+#ifndef MODPACK_FD_ASSETS
+#define MODPACK_FD_ASSETS
+
+#include "_fd_assets.dm"
+
+#include "code/wall_types.dm"
+
+#endif
