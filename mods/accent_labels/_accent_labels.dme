@@ -1,0 +1,9 @@
+#ifndef MODPACK_ACCENT_LABELS
+#define MODPACK_ACCENT_LABELS
+
+#include "_accent_labels.dm"
+
+#include "code/on_hear_override.dm"
+#include "code/preferences.dm"
+
+#endif

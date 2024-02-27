@@ -11,7 +11,7 @@
 <!-- Название мода. Не важно на русском или на английском. -->
 ## Мод-пример
 
-ID мода: ASCENT
+ID мода: ACCENT_LABELS
 <!--
   Название модпака прописными буквами, СОЕДИНЁННЫМИ_ПОДЧЁРКИВАНИЕМ,
   которое ты будешь использовать для обозначения файлов.
@@ -19,7 +19,7 @@ ID мода: ASCENT
 
 ### Описание мода
 
-Этот мод добавляет новую расу воинствующих Кхаармани, сосуществующих в ковенанте с давно забытыми предками ГБС далеко за Скрелльскими границами.
+Добавляет иконки акцента, позволяющие определить происхождение персонажа по его говору.
 <!--
   Что он делает, что добавляет: что, куда, зачем и почему - всё здесь.
   А также любая полезная информация.
@@ -27,10 +27,7 @@ ID мода: ASCENT
 
 ### Изменения *кор кода*
 
-- `mods/ascent/code/ascent_chemistry.dm`: `/datum/reagent/toxin/bromide/affect_blood()`, `/datum/reagent/toxin/bromide/affect_touch()`,
-                                          `/datum/reagent/toxin/bromide/affect_ingest()`, `/datum/reagent/toxin/methyl_bromide/affect_touch()`,
-                                          `/datum/reagent/toxin/methyl_bromide/affect_ingest()`
-
+- `code/modules/mob/living.dm`: `proc/overriden_proc`, `var/overriden_var`
 <!--
   Если вы редактировали какие-либо процедуры или переменные в кор коде,
   они должны быть указаны здесь.
@@ -41,7 +38,8 @@ ID мода: ASCENT
 
 ### Оверрайды
 
-- Отсутствуют
+- `mods/_master_files/sound/my_cool_sound.ogg`
+- `mods/_master_files/code/my_modular_override.dm`: `proc/overriden_proc`, `var/overriden_var`
 <!--
   Если ты добавлял новый модульный оверрайд, его нужно указать здесь.
   Здесь указываются оверрайды в твоём моде и папке `_master_files`
@@ -51,7 +49,7 @@ ID мода: ASCENT
 
 ### Дефайны
 
-- Отсутствуют
+- `code/__defines/~mods/accent_labels.dm`: `ACCENT_LABELS_SPEED_MULTIPLIER`, `ACCENT_LABELS_SPEED_BASE`
 <!--
   Если требовалось добавить какие-либо дефайны, укажи файлы,
   в которые ты их добавил, а также перечисли имена.
@@ -62,11 +60,7 @@ ID мода: ASCENT
 
 ### Используемые файлы, не содержащиеся в модпаке
 
-- `sound/voice/ascent`
-- `icons/mob/species/nabber/onmob`
-- `icons/mob/species/nabber/msq/onmob`
-- `icons/obj/machines/fabricators/nanofabricator.dmi`
--  Множество, реальное множество других спрайтов для Восхождения, разбросанных по билду с пор их удаления в 2021.
+- Отсутствуют
 <!--
   Будь то немодульный файл или модульный файл, который не содержится в папке,
   принадлежащей этому конкретному моду, он должен быть упомянут здесь.
@@ -76,8 +70,8 @@ ID мода: ASCENT
 
 ### Авторы:
 
-Unknown
-https://github.com/Baystation12/Baystation12/commit/b5b3f37e9c15a8ac69be658187c1d5a79df85a34
+Kcalbcube
+Doctor Alex
 <!--
   Здесь находится твой никнейм
   Если работал совместно - никнеймы тех, кто помогал.

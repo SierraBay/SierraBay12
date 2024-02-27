@@ -26,5 +26,6 @@
 #include "../packs/sierra-tweaks/_pack.dm"
 
 // Non-upstream
-#include "multitile_vehicles/_multitile_vehicles.dme"
 #include "ascent/_ascent.dme"
+#include "accent_labels/_accent_labels.dme"
+#include "multitile_vehicles/_multitile_vehicles.dme"
