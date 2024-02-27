@@ -16,5 +16,7 @@
 #include "code/vehicle_occupant.dm"
 #include "code/vehicle_verbs.dm"
 #include "code/~undefs.dm"
+#include "maps/ambulance.dmm"
+#include "maps/exploration.dmm"
 
 #endif

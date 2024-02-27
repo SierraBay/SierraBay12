@@ -29,7 +29,7 @@
 
 /datum/map_template/ambulance
 	name = "Ambulance"
-	mappaths = list("maps/interiors/ambulance.dmm")
+	mappaths = list("mods/multitile_vehicles/maps/ambulance.dmm")
 
 /obj/vehicles/large/warthog/on_death()
 	. = ..()

@@ -32,7 +32,7 @@
 
 /datum/map_template/exploration
 	name = "SATV-154-EC 'Triceratops'"
-	mappaths = list("maps/interiors/exploration.dmm")
+	mappaths = list("mods/multitile_vehicles/maps/exploration.dmm")
 
 /obj/vehicles/large/exploration/on_death()
 	. = ..()

@@ -135,6 +135,8 @@ GLOBAL_LIST_EMPTY(templates_cache)
 	var/id
 	var/datum/vehicle_interior/interior = null
 
+	atmos_canpass = CANPASS_DENSITY
+
 // ;(
 /obj/structure/vehicledoor/Move()
 	return
