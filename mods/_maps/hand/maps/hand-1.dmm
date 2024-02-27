@@ -5544,7 +5544,6 @@
 	dir = 4;
 	id = "hand_ore"
 	},
-/obj/structure/plasticflaps,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/ship/hand/crew/hallway/lower)
 "Cm" = (
@@ -5680,7 +5679,6 @@
 	dir = 8;
 	id = "hand_ore"
 	},
-/obj/structure/plasticflaps,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/ship/hand/crew/hallway/lower)
 "CM" = (
