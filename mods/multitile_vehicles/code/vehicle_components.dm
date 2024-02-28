@@ -221,3 +221,8 @@
 	vehicle_contain.movement_destroyed = 0
 	vehicle_contain.guns_disabled = 0
 	vehicle_contain.icon_state = initial(vehicle_contain.icon_state)
+
+#undef REPAIR_TOOLS_LIST
+#undef BASE_INTEGRITY_RESTORE_PERSHEET
+#undef COMPONENT_REPAIR_DELAY
+#undef COMPONENT_INSPECT_DELAY

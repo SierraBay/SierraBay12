@@ -1,3 +1,4 @@
+#define BASE_VEHICLE_DEATH_EXPLODE_DAMAGE 35
 
 /obj/vehicles
 	name = "Vehicle"
@@ -11,14 +12,14 @@
 	var/block_enter_exit //Set this to block entering/exiting.
 	var/can_traverse_zs = 0
 
-	var/next_move_input_at = 0//When can we send our next movement input?
+	var/next_move_input_at = 0 //When can we send our next movement input?
 	var/moving_x = 0
 	var/moving_y = 0
 	var/last_moved_axis = 0 //1 = X axis, 2 = Y axis.
 	var/list/speed = list(0,0) //The delay on movement in these directions.
 	var/drag = 2 //How much do we slow down per tick if no input is applied in a direction?
 	var/min_speed = 5 //What's the highest delay we can have?
-	var/max_speed = 1//What's the lowest number we can go to in terms of delay?
+	var/max_speed = 1 //What's the lowest number we can go to in terms of delay?
 	var/acceleration = 1 //By how much does our speed change per input?
 	var/braking_mode = 0 //1 = brakes active, -1 = purposefully reducing drag to slide.
 	var/can_space_move = 0
@@ -44,7 +45,7 @@
 
 	//Vehicle ferrying//
 	var/vehicle_size = ITEM_SIZE_VEHICLE//The size of the vehicle, used by vehicle cargo ferrying to determine allowed amount and allowed size.
-	var/vehicle_carry_size = 0		//the max size of a carried vehicle
+	var/vehicle_carry_size = 0			//the max size of a carried vehicle
 	var/obj/vehicles/carried_vehicle
 
 	var/vehicle_view_modifier = 1 //The view-size modifier to apply to the occupants of the vehicle.
@@ -576,3 +577,5 @@
 
 /obj/vehicles/proc/get_overall_resistance(resistance_type)
 	return comp_prof.get_overall_resistance(resistance_type)
+
+#undef BASE_VEHICLE_DEATH_EXPLODE_DAMAGE

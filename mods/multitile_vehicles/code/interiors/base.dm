@@ -27,7 +27,9 @@ GLOBAL_LIST_EMPTY(templates_cache)
 	set waitfor = FALSE
 	var/list/interior_levels = GLOB.using_map.escape_levels // Transit levels
 	LAZYLEN(interior_levels) || interior_levels.Add(7) // Sierra transit z is 7, not listed in escape_levels for some reason
-	for(var/turf/space/T in block(locate(TRANSITIONEDGE, TRANSITIONEDGE, min(interior_levels)), locate(world.maxx - TRANSITIONEDGE, world.maxy - TRANSITIONEDGE, max(interior_levels))))
+	var/start = locate(TRANSITIONEDGE+1, TRANSITIONEDGE+1, min(interior_levels))
+	var/finish = locate(world.maxx-TRANSITIONEDGE-1, world.maxy-TRANSITIONEDGE-1, max(interior_levels))
+	for(var/turf/space/T in block(start, finish))
 		var/valid = TRUE
 		for(var/turf/check in interior_template.get_affected_turfs(T))
 			if(!istype(check, /turf/space))

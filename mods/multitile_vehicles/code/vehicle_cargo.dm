@@ -1,3 +1,6 @@
+#define VEHICLE_LOAD_DELAY 2.5 SECONDS //This is the delay to load people onto the vehicle.
+#define VEHICLE_ITEM_LOAD 3.0 SECONDS
+
 /obj/vehicles/proc/can_put_cargo(obj/object)
 	if(!istype(object))
 		return 0
@@ -157,3 +160,6 @@
 		if(!do_after(puller, VEHICLE_LOAD_DELAY*2,src,1,1,,1))
 			return
 	exit_vehicle(chosen_occ,1)
+
+#undef VEHICLE_LOAD_DELAY
+#undef VEHICLE_ITEM_LOAD
