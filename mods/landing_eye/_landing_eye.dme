@@ -1,0 +1,13 @@
+#ifndef MODPACK_LANDING_EYE
+#define MODPACK_LANDING_EYE
+
+#include "_landing_eye.dm"
+
+#include "code/autodock.dm"
+#include "code/landing_eye.dm"
+#include "code/landmarks.dm"
+#include "code/living.dm"
+#include "code/shuttle_control.dm"
+#include "code/visitable.dm"
+
+#endif

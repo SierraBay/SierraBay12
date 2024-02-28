@@ -31,4 +31,5 @@
 #include "fd_assets/_fd_assets.dme"
 #include "ascent/_ascent.dme"
 #include "accent_labels/_accent_labels.dme"
+#include "landing_eye/_landing_eye.dme"
 #include "multitile_vehicles/_multitile_vehicles.dme"
