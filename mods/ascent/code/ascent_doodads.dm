@@ -1,21 +1,18 @@
 //Mantidified objects
 
-#define MATERIAL_STEEL_A                   "steеl"
-
-/material/steel/ascent
-	name = MATERIAL_STEEL_A
+/material/steel/gray
+	name = "grey_steel"
 	icon_colour = COLOR_GRAY40
 
 /obj/structure/table/steel_reinforced/ascent
-	material = MATERIAL_STEEL_A
+	material = "grey_steel"
 
 /obj/structure/table/rack/ascent
+	material = "grey_steel"
 	color = COLOR_GRAY40
-	material = MATERIAL_STEEL_A
 
 /obj/structure/table/rack/ascent/on_update_icon()
 	color = COLOR_GRAY40
-	alpha = 255
 
 /obj/item/mop/advanced/ascent
 	name = "deck detritus delaminator"
