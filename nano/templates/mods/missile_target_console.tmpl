@@ -1,0 +1,67 @@
+<h2>Weapons control console</h2>
+
+
+<div style="float:left;width:50%">
+	<div class='block'>
+		<h3>SHIP CONTACTS</h3>
+		{{if data.contacts_ships}}
+			<table>
+			{{for data.contacts_ships}}
+				<tr>
+					<div class='item'>
+						<td>{{:helper.link('Lock', '&#8858', { 'ship_lock' : value.ref }, data.target_ship == value.name ? 'selected' : null, null)}}</td>
+						<td><span class='white'>{{:value.name}}</span>, bearing {{:value.bearing}}</td>
+					</div>
+				</tr>
+			{{/for}}
+			</table>
+		{{/if}}
+	</div>
+</div>
+<div style="float:right;width:50%">
+	<div class='block'>
+		<h3>MISSILE CONTACTS</h3>
+		{{if data.contacts_missiles}}
+			<table>
+			{{for data.contacts_missiles}}
+				<tr>
+					<div class='item'>
+						<td>{{:helper.link('Lock', '&#8858' ,{ 'missile_lock' : value.ref }, data.target_missile == value.name ? 'selected' : null, null)}}</td>
+						<td><span class='white'>{{:value.name}}</span>, bearing {{:value.bearing}}</td>
+					</div>
+				</tr>
+			{{/for}}
+			</table>
+		{{/if}}
+	</div>
+</div>
+<div style="float:left;width:50%">
+	<div class='block'>
+		<h3>PLANET CONTACTS</h3>
+		<div class ="item">
+		{{:helper.link(data.planet_x, null, { 'set_planetx' : 1 }, null, null)}} {{:helper.link(data.planet_y, null, { 'set_planety' : 1 }, null, null)}}
+		{{if data.contacts_planets}}
+		</div>
+			<table>
+			{{for data.contacts_planets}}
+				<tr>
+					<div class='item'>
+						<td>{{:helper.link('Lock', 'search' ,{ 'planet_lock' : value.ref },  data.target_planet == value.name ? 'selected' : null, null)}}</td>
+						<td><span class='white'>{{:value.name}}</span>, bearing {{:value.bearing}}</td>
+					</div>
+				</tr>
+			{{/for}}
+			</table>
+		{{/if}}
+	</div>
+</div>
+<div style="float:left;width:50%">
+	<div class='block'>
+		<h3>POINT COORDINATE</h3>
+			<div class ="item">
+				<div class="itemContent">
+					{{:helper.link(data.point_x, null, { 'set_pointx' : 1 }, null, null)}} {{:helper.link(data.point_y, null, { 'set_pointy' : 1 }, null, null)}}
+				</div>
+			</div>
+	</div>
+</div>

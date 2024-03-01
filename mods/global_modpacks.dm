@@ -29,7 +29,8 @@
 
 // Non-upstream
 #include "fd_assets/_fd_assets.dme"
-#include "ascent/_ascent.dme"
+#include "multitile_vehicles/_multitile_vehicles.dme"
+#include "hestia_missiles/_hestia_missiles.dme"
 #include "accent_labels/_accent_labels.dme"
 #include "landing_eye/_landing_eye.dme"
-#include "multitile_vehicles/_multitile_vehicles.dme"
+#include "ascent/_ascent.dme"

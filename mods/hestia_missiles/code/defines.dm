@@ -1,0 +1,5 @@
+#define TARGET_SHIP 0
+#define TARGET_MISSILE 1
+#define TARGET_PLANET 2
+#define TARGET_POINT 4
+#define TARGET_PLANETCOORD 8

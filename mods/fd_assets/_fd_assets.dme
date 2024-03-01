@@ -3,6 +3,7 @@
 
 #include "_fd_assets.dm"
 
+#include "code/skills.dm"
 #include "code/wall_types.dm"
 
 #endif
