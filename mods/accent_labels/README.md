@@ -38,7 +38,10 @@ ID мода: ACCENT_LABELS
 
 ### Оверрайды
 
-- `mods/accent_labels/code/hear_override.dm`: `/mob/on_hear_say()`, `/mob/living/silicon/on_hear_say()`, `/mob/hear_radio()`
+- `mods/accent_labels/code/hear_override.dm`:
+  - `/mob/proc/hear_radio()`
+  - `/mob/proc/on_hear_say()`
+  - `/mob/living/silicon/on_hear_say()`
 <!--
   Если ты добавлял новый модульный оверрайд, его нужно указать здесь.
   Здесь указываются оверрайды в твоём моде и папке `_master_files`
