@@ -3,6 +3,7 @@
 	icon_state = "missile"
 	icon = 'mods/hestia_missiles/icons/overmap_missile.dmi'
 	scannable = TRUE
+	requires_contact = TRUE
 	var/obj/structure/missile/actual_missile = null
 
 	var/walking = FALSE // walking towards something on the overmap?
