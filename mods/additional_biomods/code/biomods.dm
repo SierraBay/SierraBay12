@@ -20,6 +20,6 @@
 	icon_state = "ears_fox"
 	name = "Ear Biomod (Fox)"
 
-/datum/sprite_accessory/marking/booster/ears/mouse
+/datum/sprite_accessory/marking/human/ears/mouse
 	icon_state = "ears_mouse"
 	name = "Ear Biomods (Mouse)"
