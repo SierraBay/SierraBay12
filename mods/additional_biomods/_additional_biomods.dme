@@ -1,0 +1,8 @@
+#ifndef MODPACK_ADDITIONAL_BIOMODS
+#define MODPACK_ADDITIONAL_BIOMODS
+
+#include "_additional_biomods.dm"
+
+#include "code/biomods.dm"
+
+#endif
