@@ -26,12 +26,3 @@
 #include "utility_items/_utility_items.dme"
 
 #include "../packs/sierra-tweaks/_pack.dm"
-
-// Non-upstream
-#include "fd_assets/_fd_assets.dme"
-#include "multitile_vehicles/_multitile_vehicles.dme"
-#include "additional_biomods/_additional_biomods.dme"
-#include "hestia_missiles/_hestia_missiles.dme"
-#include "accent_labels/_accent_labels.dme"
-#include "landing_eye/_landing_eye.dme"
-#include "ascent/_ascent.dme"

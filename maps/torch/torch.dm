@@ -155,7 +155,7 @@
 	#include "loadout/loadout_uniform.dm"
 	#include "loadout/loadout_xeno.dm"
 	#include "loadout/~defines.dm"
-
+/*
 	#include "torch1_deck5.dmm"
 	#include "torch2_deck4.dmm"
 	#include "torch3_deck3.dmm"
@@ -164,7 +164,7 @@
 	#include "torch6_bridge.dmm"
 	#include "z1_admin.dmm"
 	#include "z2_transit.dmm"
-
+*/
 	#include "../away/empty.dmm"
 	#include "../away/mining/mining.dm"
 	#include "../away/derelict/derelict.dm"

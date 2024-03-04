@@ -1,17 +1,17 @@
 //----------------------------
 // Particle beam
 //----------------------------
-/obj/effect/projectile/laser_particle
+/obj/projectile/laser_particle
 	light_color = COLOR_CYAN
 	layer = ABOVE_LIGHTING_LAYER
 
-/obj/effect/projectile/laser_particle/tracer
+/obj/projectile/laser_particle/tracer
 	icon_state = "beam_particle"
 
-/obj/effect/projectile/laser_particle/muzzle
+/obj/projectile/laser_particle/muzzle
 	icon_state = "muzzle_particle"
 
-/obj/effect/projectile/laser_particle/impact
+/obj/projectile/laser_particle/impact
 	icon_state = "impact_particle"
 
 //----------------------------

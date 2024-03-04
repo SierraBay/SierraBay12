@@ -76,9 +76,9 @@
 	damage = 35
 	armor_penetration = 50
 	fire_sound= 'sound/weapons/laser3.ogg'
-	muzzle_type = /obj/effect/projectile/laser_particle/muzzle
-	tracer_type = /obj/effect/projectile/laser_particle/tracer
-	impact_type = /obj/effect/projectile/laser_particle/impact
+	muzzle_type = /obj/projectile/laser_particle/muzzle
+	tracer_type = /obj/projectile/laser_particle/tracer
+	impact_type = /obj/projectile/laser_particle/impact
 	penetration_modifier = 0.5
 
 /// pistol
