@@ -18,7 +18,7 @@
 
 /datum/sprite_accessory/marking/human/ears/fox
 	icon_state = "ears_fox"
-	name = "Ear Biomod (Fox)"
+	name = "Ear Biomods (Fox)"
 
 /datum/sprite_accessory/marking/human/ears/mouse
 	icon_state = "ears_mouse"
