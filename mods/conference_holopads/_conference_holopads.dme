@@ -1,0 +1,9 @@
+#ifndef MODPACK_CONFERENCE_HOLOPADS
+#define MODPACK_CONFERENCE_HOLOPADS
+
+#include "_conference_holopads.dm"
+
+#include "code/holopad.dm"
+#include "code/icon_helpers.dm"
+
+#endif
