@@ -20,11 +20,11 @@
 	var/list/sensors = linked.sensors
 	if(sensors)
 		var/list/contacts = list()
-		for(var/obj/machinery/shipsensors/sensor)
-			contacts += sensor.contact_datums
+		for(var/obj/machinery/shipsensors/sensor in sensors)
+			contacts |= sensor.contact_datums
 
 		for(var/obj/overmap/O in contacts)
-			if(linked == O)
+			if(O == linked)
 				continue
 			if(!O.scannable)
 				continue

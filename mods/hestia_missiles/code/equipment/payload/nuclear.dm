@@ -14,14 +14,13 @@
 		if(M.eyecheck() < FLASH_PROTECTION_MAJOR)
 			M.flash_eyes()
 			M.updatehealth()
-		if(!isdeaf(M)) //Meanwhile front might have exploded
-			sound_to(M, sound('sound/effects/explosionfar.ogg'))
+		sound_to(M, sound('sound/effects/explosionfar.ogg'))
 
 	if(!istype(triggerer, /obj/shield))
 		SSradiation.radiate(get_turf(triggerer), 40)
 
 	empulse(get_turf(triggerer), rand(20,40), rand(50,80))
-	explosion(get_turf(triggerer), 64)
+	explosion(get_turf(triggerer), 96)
 
 	..()
 
@@ -41,13 +40,12 @@
 		to_chat("<font size='5' color='red'><b>Your doomsday is calling...</b></font>")
 		M.flash_eyes(FLASH_PROTECTION_MAJOR)
 		M.updatehealth()
-		if(!isdeaf(M)) //Meanwhile front might have exploded
-			sound_to(M, sound('sound/effects/explosionfar.ogg'))
+		sound_to(M, sound('sound/effects/explosionfar.ogg'))
 
 	if(!istype(triggerer, /obj/shield))
 		SSradiation.radiate(get_turf(triggerer), 400)
 
-	explosion(get_turf(triggerer), 128)
+	explosion(get_turf(triggerer), 192)
 	empulse(get_turf(triggerer), rand(50,75), rand(75,100))
 
 	..()
