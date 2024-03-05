@@ -30,6 +30,7 @@
 #include "code/skills.dm"
 #include "code/turfs.dm"
 #include "code/sledgehammer.dm"
+#include "code/storage_backpacks.dm"
 #include "code/tile_types.dm"
 #include "code/wall_paint.dm"
 #include "code/wall_types.dm"

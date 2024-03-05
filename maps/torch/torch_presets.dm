@@ -1,6 +1,6 @@
 var/global/const/NETWORK_AQUILA      = "Aquila"
 var/global/const/NETWORK_BRIDGE      = "Bridge"
-var/global/const/NETWORK_CHARON     = "Charon"
+var/global/const/NETWORK_CHARON      = "Charon"
 var/global/const/NETWORK_FIRST_DECK  = "First Deck"
 var/global/const/NETWORK_FOURTH_DECK = "Fourth Deck"
 var/global/const/NETWORK_SECOND_DECK = "Second Deck"
