@@ -111,7 +111,7 @@
 		else if(istype(A,/obj/structure/wall_frame)) //wallframe
 			A.Destroy()
 
-		else if(istype(A,/turf/simulated/wall) && !istype(A,/turf/simulated/wall/r_wall/invincible)) //walls
+		else if(istype(A,/turf/simulated/wall) && !istype(A,/turf/simulated/wall/invincible)) //walls
 			if(!user.skill_check(SKILL_HAULING, SKILL_TRAINED))
 				to_chat(user, "<span class='danger'>You are too weak to smash \the [A]!</span>")
 				return

@@ -1,3 +1,6 @@
+/turf/unsimulated
+	var/open_directions = 0
+
 /turf/simulated/floor/blackgrid
 	name = "mainframe floor"
 	icon = 'icons/turf/flooring/circuit.dmi'

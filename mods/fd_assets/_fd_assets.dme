@@ -15,6 +15,7 @@
 #include "code/decor.dm"
 #include "code/ec_additional_suits.dm"
 #include "code/encryption_key_boxes.dm"
+#include "code/fd_sofa_override.dm"
 #include "code/firstaid_indiv.dm"
 #include "code/fullscreen.dm"
 #include "code/invisible_light.dm"

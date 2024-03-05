@@ -239,8 +239,8 @@
 	bound_width = 64
 	bound_height = 64
 
-/obj/structure/fd/skull/New()
-	..()
+/obj/structure/fd/skull/Initialize()
+	. = ..()
 	icon_state = "Fullskullv[rand(1, 2)]"
 
 /obj/structure/fd/skull2
@@ -312,8 +312,8 @@
 	anchored = TRUE
 	var/busy
 
-/obj/structure/fd/bs_vines/New()
-	..()
+/obj/structure/fd/bs_vines/Initialize()
+	. = ..()
 	icon_state = "wires-[rand(1, 6)]"
 
 /obj/structure/fd/bs_vines/Initialize()
@@ -379,8 +379,8 @@
 	icon = 'mods/fd_assets/icons/Effects.dmi'
 	icon_state = "weeds1"
 
-/obj/structure/fd/bs_vines/alien/New()
-	..()
+/obj/structure/fd/bs_vines/alien/Initialize()
+	. = ..()
 	icon_state = "weeds[rand(1, 3)]"
 
 /obj/structure/fd/bs_vines/alien/Crossed(atom/movable/AM)

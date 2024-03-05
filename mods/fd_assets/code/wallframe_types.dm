@@ -2,8 +2,12 @@
 
 /obj/wallframe_spawn/reinforced/crescent
 	name = "reinforced wall frame crescent window spawner"
-	win_path = /obj/structure/window/reinforced/crescent
+	win_path = /obj/structure/window/reinforced/crescent/full
 	frame_path = /obj/structure/wall_frame/invincible
+
+/obj/structure/window/reinforced/crescent/full
+	dir = 5
+	icon_state = "rwindow_full"
 
 /obj/structure/wall_frame/invincible
 	paint_color = COLOR_WALL_GUNMETAL
