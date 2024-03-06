@@ -19,6 +19,7 @@
 	load_sound = 'sound/weapons/guns/interaction/shotgun_instert.ogg'
 
 	firemodes = list(
+			list(mode_name="full auto", can_autofire=1, burst=1, fire_delay=1, one_hand_penalty=12, burst_accuracy = list(0,-1,-1,-2,-2,-2,-3,-3), dispersion = list(1.0, 1.0, 1.0, 1.0, 1.2)),
 			SEMI_AUTO_NODELAY,
 			BURST_3_ROUND
 		)

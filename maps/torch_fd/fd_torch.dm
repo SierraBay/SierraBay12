@@ -24,7 +24,7 @@
 	#include "../torch/torch_overmap.dm"
 	#include "../torch/torch_presets.dm"
 	#include "../torch/torch_procs.dm"
-	#include "../torch/torch_ranks.dm"
+	#include "torch_ranks.dm"
 	#include "../torch/torch_security_state.dm"
 	#include "../torch/torch_setup.dm"
 	#include "../torch/torch_shuttles.dm"
@@ -243,6 +243,7 @@
 	#include "../../mods/conference_holopads/_conference_holopads.dme"
 	#include "../../mods/hestia_missiles/_hestia_missiles.dme"
 	#include "../../mods/landing_eye/_landing_eye.dme"
+	#include "../../mods/mob_interactions/_mob_interactions.dme"
 	#include "../../mods/multitile_vehicles/_multitile_vehicles.dme"
 	#include "../../mods/old_space_cannons/_old_space_cannons.dme"
 
@@ -257,7 +258,6 @@
 	// в коде, и мод просто исчезнет из поля зрения, когда находясь здесь
 	// он всегда напоминает о своём существовании. Небольшая библиотека,
 	// если так вообще можно выразиться.
-
 
 	#define using_map_DATUM /datum/map/torch
 
