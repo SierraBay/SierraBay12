@@ -1,0 +1,3 @@
+#undef SPECIES_NO_EARS
+#undef SPECIES_NO_MOUTH
+#undef SPECIES_HAS_TAIL

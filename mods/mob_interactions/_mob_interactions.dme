@@ -1,0 +1,11 @@
+#ifndef MODPACK_MOB_INTERACTIONS
+#define MODPACK_MOB_INTERACTIONS
+
+#include "_mob_interactions.dm"
+
+#include "code/_interactions.dm"
+#include "code/human_interactions.dm"
+#include "code/living_interactions.dm"
+#include "code/~undef.dm"
+
+#endif
