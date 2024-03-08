@@ -37,7 +37,7 @@
 
 	min_age =                 1
 	max_age =                20
-//ORIG	slowdown =               -1
+	slowdown =               -1
 	rarity_value =            3
 	gluttonous =              2
 	body_temperature =        null
@@ -135,6 +135,8 @@
 /datum/species/mantid/equip_survival_gear(mob/living/carbon/human/H, extendedtank = 1)
 	return
 
+/// Gyne ///
+
 /datum/species/mantid/gyne
 
 	name =                    SPECIES_MANTID_GYNE
@@ -222,3 +224,126 @@
 		"storage2" =     list("loc" = ui_storage2,  "name" = "Right Pocket", "slot" = slot_r_store,   "state" = "pocket"),
 		"belt" =         list("loc" = ui_belt,      "name" = "Belt",         "slot" = slot_belt,      "state" = "belt")
 		)
+
+/// ----- MONARCH GAS ----- ///
+
+/datum/species/nabber/monarch_worker
+	name = SPECIES_MONARCH_WORKER
+	name_plural = "Monarch Serpentid Workers"
+	description = "close cousins to the Giant Armoured Serpentids, saved from their crippled homeworld hundreds of \
+	years ago and now allies and peers within the Ascent."
+	icobase = 'icons/mob/human_races/species/nabber/body_msw.dmi'
+	deform = 'icons/mob/human_races/species/nabber/body_msw.dmi'
+	spawn_flags = SPECIES_IS_RESTRICTED | SPECIES_NO_FBP_CONSTRUCTION | SPECIES_NO_FBP_CHARGEN | SPECIES_IS_WHITELISTED
+	appearance_flags = 0
+	base_skin_colours = null
+	has_organ = list(
+		BP_BRAIN =             /obj/item/organ/internal/brain/insectoid/nabber,
+		BP_EYES =              /obj/item/organ/internal/eyes/insectoid/nabber,
+		BP_TRACH =             /obj/item/organ/internal/lungs/insectoid/nabber,
+		BP_HEART =             /obj/item/organ/internal/heart/open,
+		BP_LIVER =             /obj/item/organ/internal/liver/insectoid/nabber,
+		BP_STOMACH =           /obj/item/organ/internal/stomach/insectoid,
+		BP_SYSTEM_CONTROLLER = /obj/item/organ/internal/controller
+	)
+
+	force_cultural_info = list(
+		TAG_CULTURE =   CULTURE_ASCENT,
+		TAG_HOMEWORLD = HOME_SYSTEM_KHARMAANI,
+		TAG_FACTION =   FACTION_ASCENT_SERPENTID,
+		TAG_RELIGION =  RELIGION_KHARMAANI
+	)
+
+/datum/species/nabber/monarch_worker/skills_from_age(age)
+	. = 0
+
+/datum/species/nabber/monarch_worker/get_bodytype(mob/living/carbon/human/H)
+	return SPECIES_NABBER
+
+/datum/species/nabber/monarch_worker/equip_survival_gear(mob/living/carbon/human/H)
+	return
+
+/// Queen ///
+
+/datum/species/nabber/monarch_queen
+	name = SPECIES_MONARCH_QUEEN
+	name_plural = "Monarch Serpentid Queens"
+	description = "close cousins to the Giant Armoured Serpentids, saved from their crippled homeworld hundreds of \
+	years ago and now allies and peers within the Ascent. Queens, who were saved from a dying world by the Kharmaani \
+	and eventually promoted from 'entertaining pets' to the middle men that keep Ascent society functioning smoothly. \
+	Gynes have tremendous difficulties in communicating with each other politely, so the queens act as intermediaries, \
+	smoothing over the fractious and unproductive squabbling."
+
+	silent_steps = TRUE
+
+	icobase = 'icons/mob/human_races/species/nabber/msq/body.dmi'
+	deform = 'icons/mob/human_races/species/nabber/msq/body.dmi'
+	blood_mask = 'icons/mob/human_races/species/nabber/msq/blood_mask.dmi'
+	damage_mask = 'icons/mob/human_races/species/nabber/msq/damage_mask.dmi'
+
+	genders = list(FEMALE)
+
+	total_health = 150
+
+	mob_size = MOB_MEDIUM
+	breath_pressure = 21
+	blood_volume = 600
+
+	appearance_flags = 0
+	base_skin_colours = null
+	spawn_flags = SPECIES_IS_RESTRICTED | SPECIES_NO_FBP_CONSTRUCTION | SPECIES_NO_FBP_CHARGEN | SPECIES_IS_WHITELISTED
+
+	has_organ = list(
+		BP_BRAIN =             /obj/item/organ/internal/brain/insectoid/nabber,
+		BP_EYES =              /obj/item/organ/internal/eyes/insectoid/msq,
+		BP_TRACH =             /obj/item/organ/internal/lungs/insectoid/nabber,
+		BP_LIVER =             /obj/item/organ/internal/liver/insectoid/nabber,
+		BP_HEART =             /obj/item/organ/internal/heart/open,
+		BP_STOMACH =           /obj/item/organ/internal/stomach,
+		BP_SYSTEM_CONTROLLER = /obj/item/organ/internal/controller,
+		BP_VOICE =    /obj/item/organ/internal/voicebox/nabber/ascent
+		)
+
+	has_limbs = list(
+		BP_CHEST =  list("path" = /obj/item/organ/external/chest/insectoid),
+		BP_GROIN =  list("path" = /obj/item/organ/external/groin/insectoid/nabber),
+		BP_HEAD =   list("path" = /obj/item/organ/external/head/insectoid),
+		BP_L_ARM =  list("path" = /obj/item/organ/external/arm/insectoid),
+		BP_L_HAND = list("path" = /obj/item/organ/external/hand/insectoid),
+		BP_R_ARM =  list("path" = /obj/item/organ/external/arm/right/insectoid),
+		BP_R_HAND = list("path" = /obj/item/organ/external/hand/right/insectoid),
+		BP_R_LEG =  list("path" = /obj/item/organ/external/leg/right/insectoid),
+		BP_L_LEG =  list("path" = /obj/item/organ/external/leg/insectoid),
+		BP_L_FOOT = list("path" = /obj/item/organ/external/foot/insectoid),
+		BP_R_FOOT = list("path" = /obj/item/organ/external/foot/right/insectoid)
+		)
+
+	descriptors = list(
+		/datum/mob_descriptor/height = -1,
+		/datum/mob_descriptor/body_length = -1
+		)
+
+
+	force_cultural_info = list(
+		TAG_CULTURE =   CULTURE_ASCENT,
+		TAG_HOMEWORLD = HOME_SYSTEM_KHARMAANI,
+		TAG_FACTION =   FACTION_ASCENT_SERPENTID,
+		TAG_RELIGION =  RELIGION_KHARMAANI
+		)
+
+/datum/species/nabber/monarch_queen/New()
+	equip_adjust = list(
+		slot_belt_str = list(
+			"[NORTH]" = list("x" = 0, "y" = 0),
+			"[EAST]" = list("x" = 8, "y" = 0),
+			"[SOUTH]" = list("x" = 0, "y" = 0),
+			"[WEST]" = list("x" = -8, "y" = 0)
+		)
+	)
+	..()
+
+/datum/species/nabber/monarch_queen/skills_from_age(age)
+	. = 0
+
+/datum/species/nabber/monarch_queen/equip_survival_gear(mob/living/carbon/human/H)
+	return
