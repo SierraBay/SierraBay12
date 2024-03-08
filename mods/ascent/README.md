@@ -27,9 +27,12 @@ ID мода: ASCENT
 
 ### Изменения *кор кода*
 
-- `mods/ascent/code/ascent_chemistry.dm`: `/datum/reagent/toxin/bromide/affect_blood()`, `/datum/reagent/toxin/bromide/affect_touch()`,
-                                          `/datum/reagent/toxin/bromide/affect_ingest()`, `/datum/reagent/toxin/methyl_bromide/affect_touch()`,
-                                          `/datum/reagent/toxin/methyl_bromide/affect_ingest()`
+- `mods/ascent/code/ascent_chemistry.dm`:
+  - `/datum/reagent/toxin/bromide/affect_touch()`
+  - `/datum/reagent/toxin/bromide/affect_blood()`
+  - `/datum/reagent/toxin/bromide/affect_ingest()`
+  - `/datum/reagent/toxin/methyl_bromide/affect_touch()`
+  - `/datum/reagent/toxin/methyl_bromide/affect_ingest()`
 
 <!--
   Если вы редактировали какие-либо процедуры или переменные в кор коде,
