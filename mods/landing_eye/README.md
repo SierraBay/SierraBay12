@@ -39,10 +39,18 @@ ID мода: LANDING_EYE
 
 ### Оверрайды
 
-- `mods/landing_eye/code/autodock.dm`: `/datum/shuttle/autodock/overmap/proc/set_destination()`
-- `mods/landing_eye/code/landing_eye.dm`: `/mob/observer/eye/proc/possess()`, `/mob/observer/eye/proc/release()`, `/mob/observer/eye/proc/setLoc()`
-- `mods/landing_eye/code/living.dm`: `/mob/living/proc/update_sight()`, `/mob/living/silicon/ai/proc/on_mob_init()`
-- `mods/landing_eye/code/shuttle_control.dm`: `/obj/machinery/computer/shuttle_control/explore/handle_topic_href()`, `var/ui_template`
+- `code/autodock.dm`:
+  - `/datum/shuttle/autodock/overmap/proc/set_destination()`
+- `code/landing_eye.dm`:
+  - `/mob/observer/eye/proc/possess()`
+  - `/mob/observer/eye/proc/release()`
+  - `/mob/observer/eye/proc/setLoc()`
+- `code/living.dm`:
+  - `/mob/living/proc/update_sight()`
+  - `/mob/living/silicon/ai/proc/on_mob_init()`
+- `code/shuttle_control.dm`:
+  - `/obj/machinery/computer/shuttle_control/explore/handle_topic_href()`
+  - `/obj/machinery/computer/shuttle_control/explore/var/ui_template`
 <!--
   Если ты добавлял новый модульный оверрайд, его нужно указать здесь.
   Здесь указываются оверрайды в твоём моде и папке `_master_files`

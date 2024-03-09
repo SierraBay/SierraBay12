@@ -38,7 +38,7 @@ ID мода: ADDITIONAL_BIOMODS
 
 ### Оверрайды
 
-- `mods/additional_biomods/code/biomods.dm`:
+- `code/biomods.dm`:
   - `/datum/sprite_accessory/marking/human/icon`
   - `/datum/sprite_accessory/marking/human/ears/do_coloration`
 <!--
