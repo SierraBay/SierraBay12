@@ -1,0 +1,11 @@
+#ifndef MODPACK_COMBAT_STANCES
+#define MODPACK_COMBAT_STANCES
+
+#include "_combat_stances.dm"
+
+#include "code/combo_strike.dm"
+#include "code/item.dm"
+#include "code/lunging.dm"
+#include "code/weapons.dm"
+
+#endif

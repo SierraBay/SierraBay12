@@ -28,7 +28,7 @@
 	unbreakable = TRUE	// go ahead, try it
 
 //	have_stances = FALSE
-//	melee_strikes = list(/datum/melee_strike/precise_strike, /datum/melee_strike/blunt_strike)
+//	melee_strikes = list(/decl/combo_strike/precise_strike, /decl/combo_strike/blunt_strike)
 //	fail_chance = 50
 
 /obj/item/material/twohanded/sledgehammer/shatter()
