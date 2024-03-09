@@ -38,7 +38,8 @@ ID мода: FD_ASSETS
 
 ### Оверрайды
 
-- Отсутствуют
+- `code/research_guard.dm`:
+  - `/datum/map/torch/New()`
 <!--
   Если ты добавлял новый модульный оверрайд, его нужно указать здесь.
   Здесь указываются оверрайды в твоём моде и папке `_master_files`
@@ -48,7 +49,7 @@ ID мода: FD_ASSETS
 
 ### Дефайны
 
-- `code/__defines/~mods/fd_assets.dm`: `FD_ASSETS_SPEED_MULTIPLIER`, `FD_ASSETS_SPEED_BASE`
+- `code/skills.dm`: `SKILL_ARMAMENT`
 <!--
   Если требовалось добавить какие-либо дефайны, укажи файлы,
   в которые ты их добавил, а также перечисли имена.

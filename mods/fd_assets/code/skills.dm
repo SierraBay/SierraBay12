@@ -9,6 +9,4 @@
 						"Trained"			= "You feeling comfortable operating ship heavy weaponry and don't need to bother with torpedo's course management.",
 						"Experienced"		= "You probably spent YEARS, managing, fixing and firing big cannons. You mastered it to the point you doing most of the things on auto.",
 						"Master"		= "You love your cannon. Your cannon nothing without you and you are nothing without your cannon. You can safely operate any existing weaponry and even some experimental ones, like ion prism. You need only a few seconds to calibrate them.")
-	prerequisites = list(SKILL_DEVICES = SKILL_TRAINED)
-	difficulty = SKILL_AVERAGE
 	default_max = SKILL_MAX

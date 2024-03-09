@@ -156,3 +156,10 @@
 
 /datum/job/research_guard/get_description_blurb()
 	return "You are a security guard from the Organization of the Expeditionary Corps, which must protect the scientific department and its employees from various threats. Eat donuts, call scientists \"eggheads\"."
+
+/datum/map/torch/New()
+	. = ..()
+	var/index = allowed_jobs.Find(/datum/job/scientist_assistant)
+	if(index)
+		index++
+		allowed_jobs.Insert(index, /datum/job/research_guard)
