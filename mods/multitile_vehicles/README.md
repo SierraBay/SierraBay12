@@ -38,7 +38,11 @@ ID мода: MULTITILE_VEHICLES
 
 ### Оверрайды
 
-- Отсутствуют
+- `code/skills.dm`:
+  - `/singleton/hierarchy/skill/general/EVA/mech/var/name`
+  - `/singleton/hierarchy/skill/general/EVA/mech/var/desc`
+  - `/singleton/hierarchy/skill/general/EVA/mech/var/levels`
+  - `/singleton/hierarchy/skill/general/EVA/mech/var/prerequisites`
 <!--
   Если ты добавлял новый модульный оверрайд, его нужно указать здесь.
   Здесь указываются оверрайды в твоём моде и папке `_master_files`

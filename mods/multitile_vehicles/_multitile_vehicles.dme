@@ -8,6 +8,7 @@
 #include "code/types/exploration.dm"
 #include "code/types/testing_unit.dm"
 #include "code/rearm_repair_station.dm"
+#include "code/skills.dm"
 #include "code/vehicle_action_buttons.dm"
 #include "code/vehicle_base.dm"
 #include "code/vehicle_cargo.dm"
