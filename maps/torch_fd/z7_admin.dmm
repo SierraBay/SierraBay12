@@ -2961,7 +2961,7 @@
 "ufi" = (/obj/item/trash/cigbutt/lollibutt,/obj/random/trash,/obj/random/trash,/obj/random/junk,/obj/random/junk,/turf/unsimulated/floor{color = "black"; icon = 'icons/turf/flooring/tiles.dmi'; icon_state = "monotiledark"; name = "sins"},/area/prison/solitary)
 "ufC" = (/obj/structure/table/holo_woodentable,/turf/simulated/floor/holofloor/concrete,/area/holodeck/source_plaza)
 "ugg" = (/obj/floor_decal/corner/blue{dir = 9},/turf/simulated/floor/tiled,/area/centcom/arrivals/docks)
-"ugl" = (/obj/floor_decal/industrial/outline/grey,/obj/machinery/hologram/holopad/adminpad,/turf/simulated/floor/tiled/dark/monotile,/area/centcom/control)
+"ugl" = (/obj/floor_decal/industrial/outline/grey,/obj/machinery/hologram/holopad/longrange/adminpad,/turf/simulated/floor/tiled/dark/monotile,/area/centcom/control)
 "ugz" = (/obj/floor_decal/corner/red{dir = 5},/turf/simulated/floor/tiled/dark,/area/centcom/office/iccgn)
 "ugK" = (/obj/floor_decal/borderfloor{dir = 1},/obj/floor_decal/corner/blue/border{dir = 1},/obj/machinery/light{dir = 1},/turf/simulated/floor/tiled,/area/centcom/hallway)
 "ugV" = (/obj/machinery/door/airlock/command,/turf/simulated/floor/shuttle/black,/area/shuttle/administration/centcom)

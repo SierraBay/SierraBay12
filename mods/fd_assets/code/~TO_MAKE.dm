@@ -1,5 +1,3 @@
-/obj/machinery/hologram/holopad/adminpad
-
 /obj/machinery/computer/modular/preset/merchant/ignore_distance
 
 // Shuttles
