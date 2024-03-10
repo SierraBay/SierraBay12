@@ -243,6 +243,7 @@
 	#include "../../mods/ascent/_ascent.dme"
 	#include "../../mods/combat_stances/_combat_stances.dme"
 	#include "../../mods/conference_holopads/_conference_holopads.dme"
+	#include "../../mods/fd_backgrounds/_fd_backgrounds.dme"
 	#include "../../mods/hestia_missiles/_hestia_missiles.dme"
 	#include "../../mods/landing_eye/_landing_eye.dme"
 	#include "../../mods/mob_interactions/_mob_interactions.dme"

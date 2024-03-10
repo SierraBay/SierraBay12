@@ -31,6 +31,7 @@
 #include "code/chief_steward.dm"
 #include "code/fd_sofa_override.dm"
 #include "code/fullscreen.dm"
+#include "code/job_restrictions.dm"
 #include "code/loadout.dm"
 #include "code/research_guard.dm"
 #include "code/skills.dm"
