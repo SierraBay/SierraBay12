@@ -80,7 +80,7 @@ ID мода: ASCENT
 ### Авторы:
 
 Unknown
-https://github.com/Baystation12/Baystation12/commit/b5b3f37e9c15a8ac69be658187c1d5a79df85a34
+>https://github.com/Baystation12/Baystation12/commit/b5b3f37e9c15a8ac69be658187c1d5a79df85a34
 <!--
   Здесь находится твой никнейм
   Если работал совместно - никнеймы тех, кто помогал.

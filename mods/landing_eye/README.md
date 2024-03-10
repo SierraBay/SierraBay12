@@ -82,7 +82,7 @@ ID мода: LANDING_EYE
 ### Авторы:
 
 Danilcus
-https://github.com/Skyrat-SS13/Vesta.Bay/commit/b2ea7e02767d19e6960c1f310bc8682e20c47884
+>https://github.com/Skyrat-SS13/Vesta.Bay/commit/b2ea7e02767d19e6960c1f310bc8682e20c47884
 <!--
   Здесь находится твой никнейм
   Если работал совместно - никнеймы тех, кто помогал.
