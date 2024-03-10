@@ -38,7 +38,7 @@ ID мода: COMBAT_STANCES
 
 ### Оверрайды
 
-- `mods/combat_stances/code/item.dm`:
+- `code/item.dm`:
   - `/obj/item/Initialize()`
   - `/obj/item/proc/attack_self()`
   - `/obj/item/proc/resolve_attackby()`
