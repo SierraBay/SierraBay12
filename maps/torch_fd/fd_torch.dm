@@ -235,6 +235,7 @@
 	#include "../../mods/wyccbay_optimization/_wyccbay_optimization.dme"
 
 	// NON-UPSTREAM MODS
+	#include "../../mods/runechat/_runechat.dme"
 	#include "../../mods/fd_assets/_fd_assets.dme"
 
 	#include "../../mods/accent_labels/_accent_labels.dme"
