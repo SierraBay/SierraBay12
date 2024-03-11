@@ -3,8 +3,10 @@
 
 #include "_fd_backgrounds.dm"
 
+#include "code/cultures_humankind.dm"
 #include "code/cultures_ipc.dm"
 #include "code/factions_ipc.dm"
+#include "code/locations_humankind.dm"
 #include "code/locations_ipc.dm"
 
 #endif
