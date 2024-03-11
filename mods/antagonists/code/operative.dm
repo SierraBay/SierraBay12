@@ -11,7 +11,7 @@
 		/obj/item/clothing/under/scga/utility/urban,
 		/obj/item/clothing/shoes/swat,
 		/obj/item/clothing/accessory/scga_rank/e6,
-		/obj/item/device/encryptionkey/away_scg_patrol
+		//obj/item/device/encryptionkey/away_scg_patrol
 	)
 
 /obj/structure/closet/crate/ninja/gcc

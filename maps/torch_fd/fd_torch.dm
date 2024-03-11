@@ -109,7 +109,7 @@
 
 	// --- JOB SECTION --- //
 	#include "../torch/job/torch_access.dm"
-	#include "../torch/job/torch_jobs.dm"
+	#include "job/torch_jobs.dm"
 	#include "../torch/job/command_jobs.dm"
 	#include "../torch/job/corporate_jobs.dm"
 	#include "../torch/job/engineering_jobs.dm"
@@ -218,9 +218,9 @@
 	// USED MODS
 	// Keep them in ascending alphabetical order, please
 
-	#include "../../mods/_maps/sentinel/_map_sentinel.dme"
-	#include "../../mods/_maps/farfleet/_map_farfleet.dme"
-	#include "../../mods/_maps/hand/_map_hand.dme"
+	// #include "../../mods/_maps/sentinel/_map_sentinel.dme" // К чёрту оверрайдит все ранги флота ЦПСС, ломает роль SEA
+	// #include "../../mods/_maps/farfleet/_map_farfleet.dme" // Не совсем работает без карты Стража (инклюд выше)
+	// #include "../../mods/_maps/hand/_map_hand.dme" // Тоже зависим от предметов с карты Стража (инклюд над фарфлитом)
 
 	#include "../../mods/antagonists/_antagonists.dme"
 	#include "../../mods/bluespace_kitty/_bluespace_kitty.dme"
