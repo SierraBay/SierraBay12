@@ -242,6 +242,7 @@
 	#include "../../mods/additional_biomods/_additional_biomods.dme"
 	#include "../../mods/ascent/_ascent.dme"
 	#include "../../mods/combat_stances/_combat_stances.dme"
+	#include "../../mods/complementary_xeno_ablities/_complementary_xeno_ablities.dme"
 	#include "../../mods/conference_holopads/_conference_holopads.dme"
 	#include "../../mods/hestia_missiles/_hestia_missiles.dme"
 	#include "../../mods/landing_eye/_landing_eye.dme"
