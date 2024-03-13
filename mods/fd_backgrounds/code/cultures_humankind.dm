@@ -1,5 +1,7 @@
-#define CULTURE_HUMAN_KIPERIUSMINER "Kiperius, Miner Colony"
-#define CULTURE_HUMAN_KIPERIUSPRISONER "Kiperius, Prison"
+#define CULTURE_HUMAN_KIPERIUSMINER     "Kiperius, Miner Colony"
+#define CULTURE_HUMAN_KIPERIUSPRISONER  "Kiperius, Prison"
+#define CULTURE_HUMAN_MEOT              "Meonian"
+#define CULTURE_HUMAN_REPUBL            "Republican"
 
 #define HUMAN_CULTURES_TO_DELETE					list(CULTURE_HUMAN_AVACOMMON, \
 														CULTURE_HUMAN_AVANOBLE, \
@@ -9,7 +11,9 @@
 														CULTURE_HUMAN_MIRANIAN, \
 														CULTURE_HUMAN_NYXIAN)
 #define HUMAN_CULTURES_TO_ADD						list(CULTURE_HUMAN_KIPERIUSMINER, \
-														CULTURE_HUMAN_KIPERIUSPRISONER)
+														CULTURE_HUMAN_KIPERIUSPRISONER, \
+														CULTURE_HUMAN_MEOT, \
+														CULTURE_HUMAN_REPUBL)
 
 /datum/map/New()
 	available_cultural_info[TAG_CULTURE] += HUMAN_CULTURES_TO_ADD
@@ -40,8 +44,31 @@
 	economic_power = 0.8
 	language = LANGUAGE_SIGN
 
+/singleton/cultural_info/culture/human/meotourne
+	name = CULTURE_HUMAN_MEOT
+	nickname = "Меонец"
+	description = "You are from Meotourne, one of the frontier worlds relatively close to humanity's core. \
+	Being from either authoritarian city of Treone, industrialist Loinmont, liberalist Algonquin, shiny new Manhattan or one of tiny villages in between, your fellows are \
+	mostly warm and welcoming to most, but distrustful to anyone deep inside. \
+	Meonians are often seen as resourceful, diplomatic and highly aggressive in any hostilities. \
+	Although recently they're seen in both SCG and GCC more often due to corporate influence on their homeworld, the nation still stands relatively unknown by most."
+	economic_power = 1
+	language = LANGUAGE_SPACER
+
+/singleton/cultural_info/culture/human/pospolita
+	name = CULTURE_HUMAN_REPUBL
+	nickname = "Республиканец"
+	description = "You are from Nova Respublica, the tight conglomerate of several frontier colonies and many space installations relatively close to humanity's core. \
+	Republic was never exactly known for any of its strong suits, although it owes its sovereign existence to its aggressive expansion during the early 23rd century. \
+	Nowadays it stands peacefully, having decent relations with frontier nations it once called enemies, and even incorporating some of them into itself. \
+	With most of its space running dry of minerals from almost two centuries of mining, Republic struggles to reform itself into a less industrialist economy."
+	economic_power = 0.8
+	language = LANGUAGE_SPACER
+
 #undef CULTURE_HUMAN_KIPERIUSMINER
 #undef CULTURE_HUMAN_KIPERIUSPRISONER
+#undef CULTURE_HUMAN_MEOT
+#undef CULTURE_HUMAN_REPUBL
 
 #undef HUMAN_CULTURES_TO_DELETE
 #undef HUMAN_CULTURES_TO_ADD

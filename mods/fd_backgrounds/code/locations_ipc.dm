@@ -1,7 +1,11 @@
 #define HOME_SYSTEM_ERIDANI 				"Themis"
+#define HOME_SYSTEM_MEOT    "Meotourne"
+#define HOME_SYSTEM_REPUBL  "Nova Respublica"
 
 #define IPC_HOMES_TO_DELETE					list(HOME_SYSTEM_ROOT)
-#define IPC_HOMES_TO_ADD					list(HOME_SYSTEM_ERIDANI)
+#define IPC_HOMES_TO_ADD					list(HOME_SYSTEM_ERIDANI, \
+												HOME_SYSTEM_MEOT, \
+												HOME_SYSTEM_REPUBL)
 
 /datum/species/machine/New()
 	available_cultural_info[TAG_HOMEWORLD] += IPC_HOMES_TO_ADD
@@ -22,6 +26,8 @@
 	distance = "19 light years"
 
 #undef HOME_SYSTEM_ERIDANI
+#undef HOME_SYSTEM_MEOT
+#undef HOME_SYSTEM_REPUBL
 
 #undef IPC_HOMES_TO_DELETE
 #undef IPC_HOMES_TO_ADD
