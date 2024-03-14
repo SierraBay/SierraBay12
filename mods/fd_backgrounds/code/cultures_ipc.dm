@@ -1,7 +1,7 @@
-#define CULTURE_HUMAN_KIPERIUSMINER "Kiperius, Miner Colony"
-#define CULTURE_HUMAN_KIPERIUSPRISONER "Kiperius, Prison"
-#define CULTURE_HUMAN_MEOT "Meonian"
-#define CULTURE_HUMAN_REPUBL "Republican"
+#define CULTURE_HUMAN_KIPERIUSMINER				"Kiperius, Miner Colony"
+#define CULTURE_HUMAN_KIPERIUSPRISONER			"Kiperius, Prison"
+#define CULTURE_HUMAN_MEOT						"Meonian"
+#define CULTURE_HUMAN_REPUBL					"Republican"
 
 #define IPC_CULTURES_TO_DELETE					list(CULTURE_POSITRONICS_GEN1, \
 													CULTURE_POSITRONICS_GEN2, \

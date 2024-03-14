@@ -1,6 +1,6 @@
 #define HOME_SYSTEM_ERIDANI 				"Themis"
-#define HOME_SYSTEM_MEOT    "Meotourne"
-#define HOME_SYSTEM_REPUBL  "Nova Respublica"
+#define HOME_SYSTEM_MEOT					"Meotourne"
+#define HOME_SYSTEM_REPUBL					"Nova Respublica"
 
 #define IPC_HOMES_TO_DELETE					list(HOME_SYSTEM_ROOT)
 #define IPC_HOMES_TO_ADD					list(HOME_SYSTEM_ERIDANI, \
