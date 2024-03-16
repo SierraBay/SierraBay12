@@ -38,3 +38,18 @@
 		/obj/item/reagent_containers/food/drinks/cans/cola_strawberry = 20,
 		/obj/item/reagent_containers/food/drinks/cans/cola_pork = 35
 	)
+
+/obj/machinery/vending/snack
+	prices = list(
+		/obj/item/clothing/mask/chewable/candy/lolli = 15,
+		/obj/item/storage/chewables/candy/gum = 20,
+		/obj/item/storage/chewables/candy/cookies = 20,
+		/obj/item/reagent_containers/food/snacks/candy = 10,
+		/obj/item/reagent_containers/food/drinks/dry_ramen = 30,
+		/obj/item/reagent_containers/food/snacks/chips = 10,
+		/obj/item/reagent_containers/food/snacks/sosjerky = 15,
+		/obj/item/reagent_containers/food/snacks/no_raisin = 10,
+		/obj/item/reagent_containers/food/snacks/spacetwinkie = 10,
+		/obj/item/reagent_containers/food/snacks/cheesiehonkers = 10,
+		/obj/item/reagent_containers/food/snacks/tastybread = 15
+	)
