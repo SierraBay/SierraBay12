@@ -53,3 +53,14 @@
 		/obj/item/reagent_containers/food/snacks/cheesiehonkers = 10,
 		/obj/item/reagent_containers/food/snacks/tastybread = 15
 	)
+
+/obj/machinery/vending/cola/small
+	prices = list(
+		/obj/item/reagent_containers/food/drinks/cans/cola = 10,
+		/obj/item/reagent_containers/food/drinks/cans/space_mountain_wind = 10,
+		/obj/item/reagent_containers/food/drinks/cans/dr_gibb = 10,
+		/obj/item/reagent_containers/food/drinks/cans/waterbottle = 20,
+		/obj/item/reagent_containers/food/drinks/cans/space_up = 10,
+		/obj/item/reagent_containers/food/drinks/cans/iced_tea = 10,
+		/obj/item/reagent_containers/food/drinks/cans/grape_juice = 10
+	)
