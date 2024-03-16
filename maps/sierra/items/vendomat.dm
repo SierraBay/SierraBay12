@@ -64,3 +64,23 @@
 		/obj/item/reagent_containers/food/drinks/cans/iced_tea = 10,
 		/obj/item/reagent_containers/food/drinks/cans/grape_juice = 10
 	)
+
+/obj/machinery/vending/games
+	prices = list(
+		/obj/item/toy/blink = 10,
+		/obj/item/toy/eightball = 20,
+		/obj/item/deck/tarot = 10,
+		/obj/item/deck/cards = 10,
+		/obj/item/pack/cardemon = 15,
+		/obj/item/pack/spaceball = 15,
+		/obj/item/storage/pill_bottle/dice_nerd = 15,
+		/obj/item/storage/pill_bottle/dice = 15,
+		/obj/item/storage/box/checkers = 20,
+		/obj/item/storage/box/checkers/chess/red = 20,
+		/obj/item/storage/box/checkers/chess = 20,
+		/obj/item/stack/package_wrap/gift_wrap = 20,
+		/obj/item/board = 5,
+		/obj/item/storage/fancy/crayons = 8,
+		/obj/item/reagent_containers/spray/waterflower = 20,
+		/obj/item/storage/box/snappops = 25
+	)
