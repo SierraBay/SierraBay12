@@ -14,3 +14,14 @@
 		/obj/item/reagent_containers/pill/pod/mint = 15,
 		/obj/item/reagent_containers/food/drinks/ice = 15
 		)
+
+/obj/machinery/vending/snix
+	prices = list(
+		/obj/item/reagent_containers/food/snacks/semki = 20,
+		/obj/item/reagent_containers/food/snacks/canned/caviar = 20,
+		/obj/item/reagent_containers/food/snacks/squid = 20,
+		/obj/item/reagent_containers/food/snacks/croutons = 20,
+		/obj/item/reagent_containers/food/snacks/salo = 20,
+		/obj/item/reagent_containers/food/snacks/driedfish = 20,
+		/obj/item/reagent_containers/food/snacks/pistachios = 20
+	)
