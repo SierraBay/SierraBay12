@@ -112,3 +112,16 @@
 		/obj/item/reagent_containers/food/snacks/venus = 35,
 		/obj/item/reagent_containers/food/snacks/oort = 35
 	)
+
+/obj/machinery/vending/cola
+	prices = list(
+		/obj/item/reagent_containers/food/drinks/cans/cola = 10,
+		/obj/item/reagent_containers/food/drinks/cans/space_mountain_wind = 10,
+		/obj/item/reagent_containers/food/drinks/cans/dr_gibb = 10,
+		/obj/item/reagent_containers/food/drinks/cans/ionbru = 10,
+		/obj/item/reagent_containers/food/drinks/cans/waterbottle = 20,
+		/obj/item/reagent_containers/food/drinks/cans/space_up = 10,
+		/obj/item/reagent_containers/food/drinks/cans/iced_tea = 10,
+		/obj/item/reagent_containers/food/drinks/cans/grape_juice = 10,
+		/obj/item/reagent_containers/food/drinks/cans/syndicola = 50
+	)
