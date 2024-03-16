@@ -25,3 +25,16 @@
 		/obj/item/reagent_containers/food/snacks/driedfish = 20,
 		/obj/item/reagent_containers/food/snacks/pistachios = 20
 	)
+
+/obj/machinery/vending/soda
+	prices = list(
+		/obj/item/reagent_containers/food/drinks/cans/cola_diet = 20,
+		/obj/item/reagent_containers/food/drinks/cans/rootbeer = 20,
+		/obj/item/reagent_containers/food/drinks/cans/cola_apple = 20,
+		/obj/item/reagent_containers/food/drinks/cans/cola_orange = 20,
+		/obj/item/reagent_containers/food/drinks/cans/waterbottle = 20,
+		/obj/item/reagent_containers/food/drinks/cans/cola_grape = 20,
+		/obj/item/reagent_containers/food/drinks/cans/cola_lemonlime = 20,
+		/obj/item/reagent_containers/food/drinks/cans/cola_strawberry = 20,
+		/obj/item/reagent_containers/food/drinks/cans/cola_pork = 35
+	)
