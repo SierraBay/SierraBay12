@@ -84,3 +84,17 @@
 		/obj/item/reagent_containers/spray/waterflower = 20,
 		/obj/item/storage/box/snappops = 25
 	)
+
+/obj/machinery/vending/fitness
+	prices = list(
+		/obj/item/reagent_containers/food/drinks/small_milk = 15,
+		/obj/item/reagent_containers/food/drinks/small_milk_choc = 15,
+		/obj/item/reagent_containers/food/drinks/cans/waterbottle = 20,
+		/obj/item/reagent_containers/food/drinks/glass2/fitnessflask/proteinshake = 25,
+		/obj/item/reagent_containers/food/drinks/glass2/fitnessflask = 5,
+		/obj/item/reagent_containers/food/snacks/proteinbar = 5,
+		/obj/item/reagent_containers/food/snacks/meatcube = 15,
+		/obj/item/reagent_containers/pill/diet = 25,
+		/obj/item/towel/random = 40,
+		/obj/item/reagent_containers/food/condiment/small/packet/protein = 100
+	)
