@@ -98,3 +98,17 @@
 		/obj/item/towel/random = 40,
 		/obj/item/reagent_containers/food/condiment/small/packet/protein = 100
 	)
+
+/obj/machinery/vending/sol
+	prices = list(
+		/obj/item/reagent_containers/food/snacks/lunacake = 35,
+		/obj/item/reagent_containers/food/snacks/lunacake/mochicake = 35,
+		/obj/item/reagent_containers/food/snacks/lunacake/mooncake = 35,
+		/obj/item/reagent_containers/food/snacks/pluto = 35,
+		/obj/item/reagent_containers/food/snacks/triton = 35,
+		/obj/item/reagent_containers/food/snacks/saturn = 35,
+		/obj/item/reagent_containers/food/snacks/jupiter = 35,
+		/obj/item/reagent_containers/food/snacks/mars = 35,
+		/obj/item/reagent_containers/food/snacks/venus = 35,
+		/obj/item/reagent_containers/food/snacks/oort = 35
+	)
