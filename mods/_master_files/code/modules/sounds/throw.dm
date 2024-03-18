@@ -54,7 +54,7 @@
 
 	//actually throw it!
 	src.visible_message(SPAN_WARNING("[message]"), range = min(itemsize*2,world.view))
-	playsound(src, 'mods/sounds/sounds/throw.ogg', 50, 1)
+	playsound(src, 'mods/new_sounds/sounds/throw.ogg', 50, 1)
 	if(!src.lastarea)
 		src.lastarea = get_area(src.loc)
 	if(!check_space_footing())
