@@ -41,3 +41,8 @@
 	display_name = "investigator holobadge (IAA)"
 	path = /obj/item/clothing/accessory/badge/holo/investigator
 	allowed_roles = list(/datum/job/iaa)
+
+/datum/gear/accessory/armband_corpsman
+	display_name = "medical blue armband"
+	path = /obj/item/clothing/accessory/armband/medblue
+	allowed_roles = MEDICAL_ROLES
