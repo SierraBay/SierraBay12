@@ -118,3 +118,9 @@
 	var/obj/item/organ/internal/ecs/enter = src.internal_organs_by_name[BP_EXONET]
 	enter.computer.uninstall_component(usr, enter.computer.portable_drive)
 	update_ipc_verbs()
+
+
+
+/datum/species/machine/check_background(datum/job/job, datum/preferences/prefs)
+	var/singleton/cultural_info/culture/ipc/c = SSculture.get_culture(prefs.cultural_info[TAG_CULTURE])
+	. = istype(c) ? (job.type in c.valid_jobs) : ..()
