@@ -19,10 +19,15 @@
 
 /mob/living/carbon/human/default_can_use_topic(src_object)
 	.=..()
-	if(is_species(SPECIES_IPC))
-		var/obj/item/modular_computer/ecs/computer = src_object
-		if(computer.type == /obj/item/modular_computer/ecs)
+	var/dist = get_dist(src_object, src)
+	var/obj/item/modular_computer/ecs/computer = src_object
+	if(computer.type == /obj/item/modular_computer/ecs)
+		if(is_species(SPECIES_IPC) && dist == 0)
 			return STATUS_INTERACTIVE
+		else if (dist <= 3)
+			return STATUS_UPDATE
+		else
+			return STATUS_CLOSE
 
 /obj/item/stock_parts/computer/battery_module/converter
 	name = "Converter battery"
