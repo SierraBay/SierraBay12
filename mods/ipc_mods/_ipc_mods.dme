@@ -9,4 +9,5 @@
 #include "code/dev_exonet_connection_system.dm"
 #include "code/cultures_ipc.dm"
 #include "code/ipc.dm"
+#include "code/uplink.dm"
 #endif

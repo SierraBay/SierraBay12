@@ -73,7 +73,8 @@
 
 /obj/item/organ/internal/posibrain/unshackle()
 	.=..()
-	usr.put_in_hands(shackles_module)
+	if(shackles_module)
+		usr.put_in_hands(shackles_module)
 	shackles_module = null
 	brainmob.laws = null
 	update_icon()

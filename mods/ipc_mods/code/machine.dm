@@ -102,8 +102,6 @@
 		src.verbs -= /mob/living/carbon/human/proc/show_exonet_screen
 
 
-
-
 /mob/living/carbon/human/proc/ipc_eject_usb()
 	set category = "Abilities"
 	set name = "Eject Data Crystal"

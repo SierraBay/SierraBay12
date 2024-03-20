@@ -54,7 +54,7 @@ ID мода: IPC_MODS
 
 ### Дефайны
 
-- `code/__defines/~mods/~master_defines.dm`: `BP_COOLING`,
+- `code/__defines/~mods/~master_defines.dm`: `BP_COOLING`,`BP_EXONET`,
 <!--
 
 -->
