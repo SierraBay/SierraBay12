@@ -1,13 +1,6 @@
 /datum/species/machine
 	passive_temp_gain = 0  // This should cause IPCs to stabilize at ~80 C in a 20 C environment.(5 is default without organ)
 
-
-/datum/species/machine/New()
-	LAZYINITLIST(has_organ)
-	has_organ[BP_COOLING] = /obj/item/organ/internal/cooling_system
-	has_organ[BP_EXONET] = /obj/item/organ/internal/ecs
-	..()
-
 /obj/machinery/organ_printer/robot/New()
 	LAZYINITLIST(products)
 	products[BP_COOLING] = list(/obj/item/organ/internal/cooling_system, 35)
@@ -124,3 +117,28 @@
 /datum/species/machine/check_background(datum/job/job, datum/preferences/prefs)
 	var/singleton/cultural_info/culture/ipc/c = SSculture.get_culture(prefs.cultural_info[TAG_CULTURE])
 	. = istype(c) ? (job.type in c.valid_jobs) : ..()
+
+	if(c.parent_type == /singleton/cultural_info/culture/ipc)
+		src.has_organ = list(
+			BP_POSIBRAIN = /obj/item/organ/internal/posibrain/ipc/first,
+			BP_EYES = /obj/item/organ/internal/eyes/robot,
+			BP_COOLING = /obj/item/organ/internal/cooling_system,
+			BP_EXONET = /obj/item/organ/internal/ecs/first_gen,
+		)
+		return
+	if(c.parent_type == /singleton/cultural_info/culture/ipc/gen3)
+		src.has_organ = list(
+			BP_POSIBRAIN = /obj/item/organ/internal/posibrain/ipc/third,
+			BP_EYES = /obj/item/organ/internal/eyes/robot,
+			BP_COOLING = /obj/item/organ/internal/cooling_system,
+			BP_EXONET = /obj/item/organ/internal/ecs/third_gen,
+		)
+		return
+	if(c.parent_type == /singleton/cultural_info/culture/ipc/gen2)
+		src.has_organ = list(
+			BP_POSIBRAIN = /obj/item/organ/internal/posibrain/ipc/second,
+			BP_EYES = /obj/item/organ/internal/eyes/robot,
+			BP_COOLING = /obj/item/organ/internal/cooling_system,
+			BP_EXONET = /obj/item/organ/internal/ecs/second_gen,
+		)
+		return
