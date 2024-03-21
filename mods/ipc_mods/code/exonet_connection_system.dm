@@ -1,5 +1,7 @@
+#define EXONET_ACTION_NAME "Enter Exonet"
 /obj/item/organ/internal/ecs
 	name = "exonet connection port"
+	icon = 'mods/ipc_mods/icons/ipc_icons.dmi'
 	icon_state = "setup_large"
 	organ_tag = BP_EXONET
 	parent_organ = BP_HEAD
@@ -25,11 +27,24 @@
 	desc = "The internal port is designed to establish communication between the positronic brain and the computer. It's a third generation connection port."
 	computer = /obj/item/modular_computer/ecs/third
 
+
 /obj/item/organ/internal/ecs/Initialize()
 	if(ispath(computer))
 		computer = new computer(src)
+		action_button_name = EXONET_ACTION_NAME
 	. = ..()
 
+/obj/item/organ/internal/ecs/refresh_action_button()
+	. = ..()
+	if(.)
+		action.button_icon = 'mods/ipc_mods/icons/ipc_icons.dmi'
+		action.button_icon_state = "command"
+		if(action.button) action.button.UpdateIcon()
+
+/obj/item/organ/internal/ecs/attack_self(mob/user)
+	if(action_button_name == EXONET_ACTION_NAME && owner)
+		owner.enter_exonet()
+		refresh_action_button()
 
 /obj/item/organ/internal/ecs/Process()
 	..()
@@ -100,3 +115,5 @@
 				"<span class='notice'>You have installed [src] into [H]'s exonet port.</span>" \
 				)
 			T.computer.try_install_component(user, src)
+
+#undef EXONET_ACTION_NAME

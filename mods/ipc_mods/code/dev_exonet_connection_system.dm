@@ -40,6 +40,7 @@
 /obj/item/modular_computer/ecs
 	name = "exonet connection system"
 	desc = "A cirquit with some ports and wires."
+	icon = 'mods/ipc_mods/icons/ipc_icons.dmi'
 	icon_state = "ecs_on"
 	icon_state_unpowered = "ecs_off"
 	anchored = FALSE
