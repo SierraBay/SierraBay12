@@ -3452,6 +3452,5 @@
 #include "mods\_master_files\code\modules\projectiles\projectile\bullets.dm"
 #include "mods\_master_files\maps\sierra\sierra_ranks.dm"
 #include "mods\_master_files\maps\sierra\items\rigs.dm"
-#include "mods\_master_files\maps\sierra\items\wood.dm"
 #include "~code\global_init.dm"
 // END_INCLUDE
