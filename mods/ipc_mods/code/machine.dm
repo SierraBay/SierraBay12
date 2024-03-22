@@ -116,7 +116,7 @@
 	var/singleton/cultural_info/culture/ipc/c = SSculture.get_culture(prefs.cultural_info[TAG_CULTURE])
 	. = istype(c) ? (job.type in c.valid_jobs) : ..()
 
-	if(c.parent_type == /singleton/cultural_info/culture/ipc)
+	if(c.type == /singleton/cultural_info/culture/ipc)
 		src.has_organ = list(
 			BP_POSIBRAIN = /obj/item/organ/internal/posibrain/ipc/first,
 			BP_EYES = /obj/item/organ/internal/eyes/robot,
@@ -124,7 +124,7 @@
 			BP_EXONET = /obj/item/organ/internal/ecs/first_gen,
 		)
 		return
-	if(c.parent_type == /singleton/cultural_info/culture/ipc/gen3)
+	if(c.type == /singleton/cultural_info/culture/ipc/gen3)
 		src.has_organ = list(
 			BP_POSIBRAIN = /obj/item/organ/internal/posibrain/ipc/third,
 			BP_EYES = /obj/item/organ/internal/eyes/robot,
@@ -132,11 +132,22 @@
 			BP_EXONET = /obj/item/organ/internal/ecs/third_gen,
 		)
 		return
-	if(c.parent_type == /singleton/cultural_info/culture/ipc/gen2)
+	if(c.type == /singleton/cultural_info/culture/ipc/gen2)
 		src.has_organ = list(
 			BP_POSIBRAIN = /obj/item/organ/internal/posibrain/ipc/second,
 			BP_EYES = /obj/item/organ/internal/eyes/robot,
 			BP_COOLING = /obj/item/organ/internal/cooling_system,
 			BP_EXONET = /obj/item/organ/internal/ecs/second_gen,
 		)
+		return
+
+
+/mob/living/silicon/laws_sanity_check()
+	.=..()
+	if(istype(usr,/mob/living/silicon/sil_brainmob))
+		return
+
+
+/mob/remove_from_mob(obj/O, atom/target)					//Костыль для избежания рантайма, потом придумаю как пофиксить
+	if(O.type == /obj/item/organ/internal/shackles/)
 		return
