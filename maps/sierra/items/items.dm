@@ -545,5 +545,4 @@ Passports
 	)
 
 /obj/item/stack/material/wood
-	item_state = "sheet-wood"
-	icon_state = "123"
+	icon_state = "sheet-wood"
