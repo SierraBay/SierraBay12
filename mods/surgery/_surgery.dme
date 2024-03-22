@@ -1,5 +1,5 @@
-#ifndef MODPACK_SuRGERY
-#define MODPACK_SuRGERY
+#ifndef MODPACK_SURGERY
+#define MODPACK_SURGERY
 
 #include "_surgery.dm"
 
