@@ -544,5 +544,5 @@ Passports
 		/obj/item/rcd_ammo
 	)
 
-/obj/item/stack/material/wood
-	icon_state = "sheet-wood"
+/material/wood
+	sheet_icon_base = "sheet-wood"
