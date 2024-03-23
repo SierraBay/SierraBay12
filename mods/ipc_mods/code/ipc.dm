@@ -4,7 +4,8 @@
 
 
 /obj/item/organ/internal/posibrain/ipc
-	name = "IPC positronic brain"
+	name = "Positronic brain"
+	desc = "A cube of shining metal, four inches to a side and covered in shallow grooves."
 
 /obj/item/organ/internal/posibrain/ipc/attack_self(mob/user)
 	return
@@ -12,19 +13,19 @@
 	return
 
 /obj/item/organ/internal/posibrain/ipc/first
-	name = "positronic brain of the first generation"
+	desc = "A cube of shining metal, four inches to a side and covered in shallow grooves. It's a first generation positronic brain."
 	icon = 'mods/ipc_mods/icons/ipc_icons.dmi'
 	icon_state = "posibrain1"
 	status = ORGAN_ROBOTIC
 
 /obj/item/organ/internal/posibrain/ipc/second
-	name = "positronic brain of the second generation"
+	desc = "A cube of shining metal, four inches to a side and covered in shallow grooves. It's a second generation positronic brain."
 	icon = 'mods/ipc_mods/icons/ipc_icons.dmi'
 	icon_state = "posibrain2"
 	status = ORGAN_ROBOTIC
 
 /obj/item/organ/internal/posibrain/ipc/third
-	name = "positronic brain of the third generation"
+	desc = "A cube of shining metal, four inches to a side and covered in shallow grooves. It's a third generation positronic brain."
 	icon = 'mods/ipc_mods/icons/ipc_icons.dmi'
 	icon_state = "posibrain3"
 	shackles_module = /obj/item/organ/internal/shackles
@@ -41,7 +42,7 @@
 		icon_state = "posibrain1"
 
 	ClearOverlays()
-	if(shackle)
+	if(shackle || shackles_module)
 		AddOverlays(image('mods/ipc_mods/icons/ipc_icons.dmi', "posibrain-shackles"))
 
 /obj/item/organ/internal/posibrain/ipc/second/on_update_icon()
@@ -51,7 +52,7 @@
 		icon_state = "posibrain2"
 
 	ClearOverlays()
-	if(shackle)
+	if(shackle || shackles_module)
 		AddOverlays(image('mods/ipc_mods/icons/ipc_icons.dmi', "posibrain-shackles"))
 
 /obj/item/organ/internal/posibrain/ipc/third/on_update_icon()
@@ -61,7 +62,7 @@
 		icon_state = "posibrain3"
 
 	ClearOverlays()
-	if(shackle)
+	if(shackle || shackles_module)
 		AddOverlays(image('mods/ipc_mods/icons/ipc_icons.dmi', "posibrain-shackles"))
 
 

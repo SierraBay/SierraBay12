@@ -146,8 +146,3 @@
 	.=..()
 	if(istype(usr,/mob/living/silicon/sil_brainmob))
 		return
-
-
-/mob/remove_from_mob(obj/O, atom/target)					//Костыль для избежания рантайма, потом придумаю как пофиксить
-	if(O.type == /obj/item/organ/internal/shackles/)
-		return
