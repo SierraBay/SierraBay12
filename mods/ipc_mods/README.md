@@ -41,12 +41,17 @@ ID мода: IPC_MODS
 
 ### Оверрайды
 
-- `mods/ipc_cooling_unit/code/machine.dm`:
-  - `/datum/species/machine/passive_temp_gain`
-  - `/datum/species/machine/New()`
-  - `/obj/machinery/organ_printer/robot/New()`
-  - `/mob/living/carbon/human/Stat()`
-  - `/obj/item/organ/internal/cell/Process()`
+ - `mods/ipc_cooling_unit/code/machine.dm`:
+ - `/datum/species/machine/passive_temp_gain`
+ - `/datum/species/machine/New()`
+ - `/obj/machinery/organ_printer/robot/New()`
+ - `/mob/living/carbon/human/Stat()`
+ - `/obj/item/organ/internal/cell/Process()`
+ - `/mob/living/silicon/laws_sanity_check()`
+ - `/mob/living/carbon/human/OnSelfTopic(href_list, topic_status)`
+ - `/datum/species/machine/check_background(datum/job/job, datum/preferences/prefs)`
+ 
+
 
 <!--
   Если ты добавлял новый модульный оверрайд, его нужно указать здесь.
