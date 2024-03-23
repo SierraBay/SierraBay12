@@ -154,5 +154,5 @@
 	build_type = IMPRINTER
 	materials = list(MATERIAL_STEEL = 4000, glass = 3000)
 	chemicals = list(/datum/reagent/acid = 50)
-	build_path = /obj/item/modular_computer/ecs
+	build_path = /obj/item/modular_computer/ecs/second
 	sort_string = "VBAFE"
