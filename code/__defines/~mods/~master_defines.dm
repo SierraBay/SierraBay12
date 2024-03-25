@@ -47,3 +47,8 @@
 #define BP_COOLING				"cooling system"
 #define BP_EXONET				"exonet connection slot"
 // IPC_MODS - End
+
+// RESOMI - Start
+#define SPECIES_RESOMI  "Resomi"
+#define LANGUAGE_RESOMI "Schechi"
+// RESOMI - End

@@ -23,7 +23,7 @@
 	allowed_roles = ENGINEERING_ROLES
 
 /datum/gear/accessory/armband_hydro
-	allowed_roles = list(/datum/job/rd, /datum/job/senior_scientist, /datum/job/scientist, /datum/job/scientist_assistant, /datum/job/assistant)
+	allowed_roles = list(/datum/job/rd, /datum/job/senior_scientist, /datum/job/scientist, /datum/job/scientist_assistant, /datum/job/assistant, /datum/job/steward)
 
 /datum/gear/accessory/ntaward
 	allowed_roles = NANOTRASEN_ROLES
@@ -41,3 +41,8 @@
 	display_name = "investigator holobadge (IAA)"
 	path = /obj/item/clothing/accessory/badge/holo/investigator
 	allowed_roles = list(/datum/job/iaa)
+
+/datum/gear/accessory/armband_corpsman
+	display_name = "medical blue armband"
+	path = /obj/item/clothing/accessory/armband/medblue
+	allowed_roles = MEDICAL_ROLES
