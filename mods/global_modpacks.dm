@@ -11,6 +11,7 @@
 #include "hairs_ports/_hairs_ports.dme"
 #include "hardsuits/_hardsuits.dme"
 #include "sprite_accessories/_sprite_accessories.dme"
+#include "ipc_mods/_ipc_mods.dme"
 #include "jukebox_tapes/_jukebox_tapes.dme"
 #include "loadout_items/_loadout_items.dme"
 #include "music_player/_music_player.dme"

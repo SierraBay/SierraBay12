@@ -23,7 +23,7 @@ GLOBAL_LIST_EMPTY(diversion_junctions)
 	/// Item mode 0=off 1=charging 2=charged
 	var/mode = 1
 	// True if flush handle is pulled
-	var/flush = TRUE
+	var/flush = FALSE
 	/// The attached pipe trunk
 	var/obj/structure/disposalpipe/trunk/trunk
 	/// True if flushing in progress

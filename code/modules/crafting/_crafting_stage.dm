@@ -69,9 +69,9 @@
  *
  * Returns path (Types of `/singleton/crafting_stage`).
  */
-/singleton/crafting_stage/proc/get_next_stage(obj/item/trigger)
+/singleton/crafting_stage/proc/get_next_stage(obj/item/trigger, mob/user)
 	for(var/singleton/crafting_stage/next_stage in next_stages)
-		if(next_stage.is_appropriate_tool(trigger))
+		if(next_stage.is_appropriate_tool(trigger, user))
 			return next_stage
 
 

@@ -43,7 +43,7 @@
 		return
 
 	if(current_crafting_stage)
-		var/singleton/crafting_stage/next_stage = current_crafting_stage.get_next_stage(W)
+		var/singleton/crafting_stage/next_stage = current_crafting_stage.get_next_stage(W, user)
 		if(next_stage && next_stage.progress_to(W, user, src))
 			advance_to(next_stage, user, W)
 			return

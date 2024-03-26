@@ -1,0 +1,8 @@
+#ifndef MODPACK_SOUNDS
+#define MODPACK_SOUNDS
+
+#include "_new_sounds.dm"
+// Далее просто включай свой код
+// #include "code/something.dm"
+
+#endif

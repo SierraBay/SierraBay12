@@ -323,7 +323,7 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 					continue
 			species_to_pick += species
 
-		var/choice = tgui_input_list(user, "Select a species to play as", CHARACTER_PREFERENCE_INPUT_TITLE, species_to_pick)
+		var/choice = tgui_input_list(user, "Select a species to play as", CHARACTER_PREFERENCE_INPUT_TITLE, species_to_pick, pref.species)
 		if(!choice || !(choice in all_species))
 			return
 

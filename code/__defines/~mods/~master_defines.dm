@@ -42,3 +42,13 @@
 // LOADOUT_ITEMS - Start
 #define ACCESSORY_SLOT_OVER     "Over"
 // LOADOUT_ITEMS - End
+
+// IPC_MODS - Start
+#define BP_COOLING				"cooling system"
+#define BP_EXONET				"exonet connection slot"
+// IPC_MODS - End
+
+// RESOMI - Start
+#define SPECIES_RESOMI  "Resomi"
+#define LANGUAGE_RESOMI "Schechi"
+// RESOMI - End
