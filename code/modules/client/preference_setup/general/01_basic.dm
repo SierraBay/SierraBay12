@@ -39,7 +39,7 @@
 
 /datum/category_item/player_setup_item/physical/basic/OnTopic(href, list/href_list, mob/user)
 	if(href_list["rename"])
-		var/raw_name = tgui_input_text(user, "Choose your character's name", "Character Name", max_length = MAX_NAME_LEN)
+		var/raw_name = tgui_input_text(user, "Choose your character's name", "Character Name", max_length = MAX_NAME_LEN, encode = FALSE)
 		if(isnull(raw_name) && CanUseTopic(user))
 			return
 

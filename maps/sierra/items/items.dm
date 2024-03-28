@@ -546,3 +546,10 @@ Passports
 
 /material/wood
 	sheet_icon_base = "sheet-wood"
+
+/obj/item/clothing/glasses/glare_dampeners
+	flash_protection = FLASH_PROTECTION_MAJOR
+	tint = TINT_HEAVY
+
+/obj/item/organ/internal/augment/active/item/glare_dampeners
+	desc = "Thick, tinted lenses installed in your head can deploy over your eyes, reducing visibility but providing protection from welding glare and bright lights."
