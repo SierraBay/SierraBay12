@@ -117,7 +117,7 @@
 	islocked = 1
 	ssu_color = "#990000"
 
-/obj/machinery/suit_storage_unit/engineer
+/obj/machinery/suit_storage_unit/explorer/engineer
 	name = "Expeditionary Engineer Voidsuit Storage Unit"
 	suit = /obj/item/clothing/suit/space/void/pilot
 	helmet = /obj/item/clothing/head/helmet/space/void/pilot
@@ -128,7 +128,7 @@
 	islocked = 1
 	ssu_color = "#bf8833"
 
-/obj/machinery/suit_storage_unit/medic
+/obj/machinery/suit_storage_unit/explorer/medic
 	name = "Expeditionary Medic Voidsuit Storage Unit"
 	suit = /obj/item/clothing/suit/space/void/pilot
 	helmet = /obj/item/clothing/head/helmet/space/void/pilot
