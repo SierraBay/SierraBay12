@@ -45,7 +45,7 @@ var/list/escape_pods_by_name = list()
 	var/datum/computer/file/embedded_program/docking/simple/prog = shuttle_docking_controller
 	prog.close_door()
 
-/datum/shuttle/autodock/ferry/escape_pod/proc/toggle_bds(var/CLOSE = FALSE)
+/datum/shuttle/autodock/ferry/escape_pod/proc/toggle_bds(CLOSE = FALSE)
 	for(var/obj/machinery/door/blast/regular/escape_pod/ES in world)
 		if(ES.id_tag == shuttle_docking_controller.id_tag)
 			if(CLOSE)
@@ -112,7 +112,7 @@ var/list/escape_pods_by_name = list()
 	var/tag_pump
 	frequency = EXTERNAL_AIR_FREQ	 //INF
 
-/obj/machinery/embedded_controller/radio/simple_docking_controller/escape_pod/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null, var/force_open = 1)
+/obj/machinery/embedded_controller/radio/simple_docking_controller/escape_pod/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1)
 	var/data[0]
 	var/datum/computer/file/embedded_program/docking/simple/docking_program = program
 
@@ -172,7 +172,7 @@ var/list/escape_pods_by_name = list()
 	program = /datum/computer/file/embedded_program/docking/simple/escape_pod_berth
 	frequency = EXTERNAL_AIR_FREQ	 //INF
 
-/obj/machinery/embedded_controller/radio/simple_docking_controller/escape_pod_berth/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null, var/force_open = 1)
+/obj/machinery/embedded_controller/radio/simple_docking_controller/escape_pod_berth/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1)
 	var/data[0]
 	var/datum/computer/file/embedded_program/docking/simple/docking_program = program
 
@@ -196,7 +196,7 @@ var/list/escape_pods_by_name = list()
 		ui.set_auto_update(1)
 
 // [SIERRA-ADD]
-/obj/machinery/embedded_controller/radio/simple_docking_controller/escape_pod_berth/attackby(var/obj/item/T, var/mob/living/carbon/human/user)
+/obj/machinery/embedded_controller/radio/simple_docking_controller/escape_pod_berth/attackby(obj/item/T, mob/living/carbon/human/user)
 	if(emagged && isMultitool(T) && user.skill_check(SKILL_ELECTRICAL, SKILL_TRAINED))
 		to_chat(user, "<span class='notice'>Ты начал сбрасывать настройки [src], чтобы починить его.</span>")
 		if(do_after(user, 100, src))
@@ -222,7 +222,7 @@ var/list/escape_pods_by_name = list()
 	. = ..()
 // [/SIERRA-ADD]
 
-/obj/machinery/embedded_controller/radio/simple_docking_controller/escape_pod_berth/emag_act(var/remaining_charges, var/mob/user)
+/obj/machinery/embedded_controller/radio/simple_docking_controller/escape_pod_berth/emag_act(remaining_charges, mob/user)
 	if (!emagged)
 		to_chat(user, "<span class='notice'>You emag the [src], arming the escape pod!</span>")
 		emagged = TRUE
@@ -265,7 +265,7 @@ var/list/escape_pods_by_name = list()
 		close_door()
 
 // [SIERRA-ADD]
-/datum/computer/file/embedded_program/docking/simple/escape_pod_berth/proc/check_unarm(var/area/area, var/mob/living/user)
+/datum/computer/file/embedded_program/docking/simple/escape_pod_berth/proc/check_unarm(area/area, mob/living/user)
 	if(armed && isliving(user))
 		if(evacuation_controller.is_idle() || evacuation_controller.is_on_cooldown())
 			var/check = TRUE
@@ -321,7 +321,7 @@ var/list/escape_pods_by_name = list()
 		reset()
 // [/SIERRA-ADD]
 
-/datum/computer/file/embedded_program/docking/simple/escape_pod/New(var/obj/machinery/embedded_controller/M)
+/datum/computer/file/embedded_program/docking/simple/escape_pod/New(obj/machinery/embedded_controller/M)
 	..(M)
 	if (istype(M, /obj/machinery/embedded_controller/radio/simple_docking_controller/escape_pod))
 		var/obj/machinery/embedded_controller/radio/simple_docking_controller/escape_pod/controller = M

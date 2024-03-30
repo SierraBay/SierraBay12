@@ -964,6 +964,14 @@
 
 /mob/living/carbon/human/proc/handle_hud_list()
 	if (GET_BIT(hud_updateflag, HEALTH_HUD) && hud_list[HEALTH_HUD])
+//SIERRA-ADD VIRUSOLOGY
+/*	var/foundVirus = 0
+		for (var/ID in virus2)
+			if (ID in virusDB)
+				foundVirus = 1
+				break
+*/
+//SIERRA-ADD
 		var/image/holder = hud_list[HEALTH_HUD]
 		if(stat == DEAD || status_flags & FAKEDEATH)
 			holder.icon_state = "0" 	// X_X
@@ -985,7 +993,12 @@
 		var/image/holder = hud_list[STATUS_HUD]
 		if(stat == DEAD || status_flags & FAKEDEATH)
 			holder.icon_state = "huddead"
-
+//SIERRA-ADD VIRUSOLOGY
+/*
+		else if(foundVirus)
+			holder.icon_state = "hudill"
+*/
+//SIERRA-ADD
 		else if(has_brain_worms())
 			var/mob/living/simple_animal/borer/B = has_brain_worms()
 			if(B.controlling)
@@ -1000,6 +1013,10 @@
 			holder2.icon_state = "huddead"
 		else if(has_brain_worms())
 			holder2.icon_state = "hudbrainworm"
+//SIERRA-ADD VIRUSOLOGY
+		else if(virus2.len)
+			holder2.icon_state = "hudill"
+//SIERRA-ADD
 		else
 			holder2.icon_state = "hudhealthy"
 
