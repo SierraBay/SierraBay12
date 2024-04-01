@@ -119,8 +119,8 @@
 
 /obj/machinery/suit_storage_unit/explorer/engineer
 	name = "Expeditionary Engineer Voidsuit Storage Unit"
-	suit = /obj/item/clothing/suit/space/void/pilot
-	helmet = /obj/item/clothing/head/helmet/space/void/pilot
+	suit = /obj/item/clothing/suit/space/void/engineer
+	helmet = /obj/item/clothing/head/helmet/space/void/engineer
 	boots = /obj/item/clothing/shoes/magboots
 	tank = /obj/item/tank/oxygen
 	mask = /obj/item/clothing/mask/breath
@@ -130,8 +130,8 @@
 
 /obj/machinery/suit_storage_unit/explorer/medic
 	name = "Expeditionary Medic Voidsuit Storage Unit"
-	suit = /obj/item/clothing/suit/space/void/pilot
-	helmet = /obj/item/clothing/head/helmet/space/void/pilot
+	suit = /obj/item/clothing/suit/space/void/medic
+	helmet = /obj/item/clothing/head/helmet/space/void/medic
 	boots = /obj/item/clothing/shoes/magboots
 	tank = /obj/item/tank/oxygen
 	mask = /obj/item/clothing/mask/breath
