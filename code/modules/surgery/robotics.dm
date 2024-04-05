@@ -20,6 +20,7 @@
 
 /singleton/surgery_step/robotics/success_chance(mob/living/user, mob/living/carbon/human/target, obj/item/tool)
 	. = ..()
+/* SIERRA REMOVE
 	if(!user.skill_check(SKILL_DEVICES, SKILL_TRAINED))
 		. -= 30
 	if(!user.skill_check(SKILL_DEVICES, SKILL_EXPERIENCED))
@@ -28,7 +29,15 @@
 		. += 35
 	if(user.skill_check(SKILL_DEVICES, SKILL_MASTER))
 		. += 30
-
+*/
+	if(!user.skill_check(SKILL_DEVICES, SKILL_BASIC))
+		. -= 20
+	if(!user.skill_check(SKILL_DEVICES, SKILL_TRAINED))
+		. -= 20
+	if(user.skill_check(SKILL_DEVICES, SKILL_EXPERIENCED))
+		. += 20
+	if(user.skill_check(SKILL_DEVICES, SKILL_MASTER))
+		. += 30
 //////////////////////////////////////////////////////////////////
 //	 unscrew robotic limb hatch surgery step
 //////////////////////////////////////////////////////////////////
@@ -186,9 +195,9 @@
 /singleton/surgery_step/robotics/repair_brute
 	name = "Repair damage to prosthetic"
 	allowed_tools = list(
-		/obj/item/weldingtool = 35,
-		/obj/item/weldingtool/electric = 50,
-		/obj/item/gun/energy/plasmacutter = 25,
+		/obj/item/weldingtool = 45,
+		/obj/item/weldingtool/electric = 60,
+		/obj/item/gun/energy/plasmacutter = 30,
 		/obj/item/psychic_power/psiblade/master = 100
 	)
 
@@ -197,13 +206,15 @@
 
 /singleton/surgery_step/robotics/repair_brute/success_chance(mob/living/user, mob/living/carbon/human/target, obj/item/tool)
 	. = ..()
-	if(user.skill_check(SKILL_CONSTRUCTION, SKILL_BASIC))
-		. += 5
+	if(!user.skill_check(SKILL_CONSTRUCTION, SKILL_BASIC))
+		. -= 15
 	if(user.skill_check(SKILL_CONSTRUCTION, SKILL_TRAINED))
-		. += 10
+		. += 15
+
+/* SIERRA REMOVE
 	if(!user.skill_check(SKILL_DEVICES, SKILL_EXPERIENCED))
 		. -= 10
-
+*/
 /singleton/surgery_step/robotics/repair_brute/pre_surgery_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/affected = target.get_organ(target_zone)
 	if(affected)
@@ -264,8 +275,10 @@
 		. += 10
 	if(user.skill_check(SKILL_CONSTRUCTION, SKILL_TRAINED))
 		. += 10
+/* SIERRA REMOVE
 	if(!user.skill_check(SKILL_DEVICES, SKILL_EXPERIENCED))
 		. -= 15
+*/
 
 /singleton/surgery_step/robotics/repair_brittle/assess_bodypart(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/affected = ..()
@@ -305,13 +318,14 @@
 /singleton/surgery_step/robotics/repair_burn/success_chance(mob/living/user, mob/living/carbon/human/target, obj/item/tool)
 	. = ..()
 
-	if(user.skill_check(SKILL_ELECTRICAL, SKILL_BASIC))
-		. += 5
+	if(!user.skill_check(SKILL_ELECTRICAL, SKILL_BASIC))
+		. -= 15
 	if(user.skill_check(SKILL_ELECTRICAL, SKILL_TRAINED))
-		. += 10
+		. += 15
+/* SIERRA REMOVE
 	if(!user.skill_check(SKILL_DEVICES, SKILL_EXPERIENCED))
 		. -= 10
-
+*/
 /singleton/surgery_step/robotics/repair_burn/pre_surgery_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/affected = target.get_organ(target_zone)
 	if(affected)
@@ -698,6 +712,14 @@
 	)
 	min_duration = 50
 	max_duration = 60
+
+/singleton/surgery_step/robotics/robone/weld/success_chance(mob/living/user, mob/living/carbon/human/target, obj/item/tool)
+	. = ..()
+
+	if(user.skill_check(SKILL_CONSTRUCTION, SKILL_TRAINED))
+		. += 10
+	if(user.skill_check(SKILL_ELECTRICAL, SKILL_TRAINED))
+		. += 10
 
 /singleton/surgery_step/robotics/robone/weld/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/affected = target.get_organ(target_zone)
