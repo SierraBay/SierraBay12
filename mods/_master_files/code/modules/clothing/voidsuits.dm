@@ -17,9 +17,9 @@
 /obj/item/clothing/suit/space/void/medic
 	desc = "An atmos resistant voidsuit for space and planet exploration."
 	name = "medic voidsuit"
-	icon = 'maps/torch/icons/obj/obj_suit_solgov.dmi'
+	icon = 'maps/sierra/icons/obj/clothing/obj_suit.dmi'
 	item_icons = list(slot_wear_suit_str = 'maps/sierra/icons/mob/onmob/onmob_suit.dmi')
-	icon_state = "rig_explorer"
+	icon_state = "void_medic"
 	item_state = "medic_rig"
 	armor = list(
 		melee = ARMOR_MELEE_KNIVES,
@@ -49,9 +49,9 @@
 /obj/item/clothing/suit/space/void/engineer
 	desc = "An atmos resistant voidsuit for space and planet exploration."
 	name = "engineer voidsuit"
-	icon = 'maps/torch/icons/obj/obj_suit_solgov.dmi'
+	icon = 'maps/sierra/icons/obj/clothing/obj_suit.dmi'
 	item_icons = list(slot_wear_suit_str = 'maps/sierra/icons/mob/onmob/onmob_suit.dmi')
-	icon_state = "rig_explorer"
+	icon_state = "void_engie"
 	item_state = "engie_rig"
 	armor = list(
 		melee = ARMOR_MELEE_KNIVES,
