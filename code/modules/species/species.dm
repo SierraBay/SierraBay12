@@ -761,10 +761,13 @@ The slots that you can use are found in items_clothing.dm and are the inventory 
 				continue
 			if(S.subspecies_allowed && !(name in S.subspecies_allowed))
 				continue
+			if(src.species_flags && SPECIES_IPC)
+				break
 			ADD_SORTED(facial_hair_style_by_gender, facialhairstyle, GLOBAL_PROC_REF(cmp_text_asc))
 			facial_hair_style_by_gender[facialhairstyle] = S
 
 	return facial_hair_style_by_gender
+
 
 /datum/species/proc/get_description(header, append, verbose = TRUE, skip_detail, skip_photo)
 	var/list/damage_types = list(

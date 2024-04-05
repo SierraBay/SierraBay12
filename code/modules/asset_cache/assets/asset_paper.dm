@@ -17,5 +17,15 @@
 		"ofntlogo.png" = 'html/images/ofntlogo.png',
 		"foundlogo.png" = 'html/images/foundlogo.png',
 		"ccalogo.png" = 'html/images/ccalogo.png',
+		// [SIERRA-ADD]
+		"saarelogo.png" = 'html/images/saarelogo.png',
+		"pcrclogo.png" = 'html/images/pcrclogo.png',
+		"zpcilogo.png" = 'html/images/zpcilogo.png',
+		"heglogo.png" = 'html/images/heglogo.png',
+		"convlogo.png" = 'html/images/convlogo.png',
+		"leaguelogo.png" = 'html/images/leaguelogo.png',
+		"ouerelogo.png" = 'html/images/ouerelogo.png',
+		"terstenlogo.png" = 'html/images/terstenlogo.png',
+		// [/SIERRA-ADD]
 		"sierralogo.png" = 'html/images/sierralogo.png'
 	)
