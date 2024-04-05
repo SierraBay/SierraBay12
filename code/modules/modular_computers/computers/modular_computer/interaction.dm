@@ -95,8 +95,12 @@
 		if(response == "Yes")
 			turn_on(user)
 
-/obj/item/modular_computer/attack_ai(mob/user)
+//SIERRA-REMOVE MODPACK AI
+/*
+/obj/item/modular_computer/attack_ai(mob/user)   -------> mods\ai\code\ai.dm
 	return attack_self(user)
+*/
+//SIERRA-REMOVE
 
 /obj/item/modular_computer/attack_hand(mob/user)
 	if(anchored)

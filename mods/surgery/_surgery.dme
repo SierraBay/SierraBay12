@@ -1,0 +1,8 @@
+#ifndef MODPACK_SURGERY
+#define MODPACK_SURGERY
+
+#include "_surgery.dm"
+
+#include "code/surgery.dm"
+
+#endif

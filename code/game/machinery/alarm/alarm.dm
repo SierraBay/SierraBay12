@@ -1,7 +1,7 @@
 /singleton/environment_data
 	var/list/important_gasses = list(
-		GAS_OXYGEN =         TRUE,
-		GAS_NITROGEN =       TRUE,
+		GAS_OXYGEN = TRUE,
+		GAS_NITROGEN = TRUE,
 		GAS_CO2 = TRUE
 	)
 	var/list/dangerous_gasses = list(
@@ -15,11 +15,20 @@
 		GAS_PHORON
 	)
 
-/singleton/environment_data/finnish/Initialize()
-	. = ..()
-	important_gasses[GAS_STEAM] = TRUE
-	dangerous_gasses -= GAS_STEAM
-
+/singleton/environment_data/finnish
+	important_gasses = list(
+		GAS_OXYGEN = TRUE,
+		GAS_NITROGEN = TRUE,
+		GAS_CO2 = TRUE,
+		GAS_STEAM = TRUE
+	)
+	filter_gasses = list(
+		GAS_OXYGEN,
+		GAS_NITROGEN,
+		GAS_CO2,
+		GAS_N2O,
+		GAS_PHORON
+	)
 
 ////////////////////////////////////////
 //CONTAINS: Air Alarms and Fire Alarms//
@@ -99,8 +108,10 @@
 
 	var/datum/radio_frequency/radio_connection
 
-	var/list/TLV = list()
-	var/list/trace_gas = list() //list of other gases that this air alarm is able to detect
+	/// Lazy list of danger groups by environment criteria like temperature, pressure, specific gas etc.
+	/// Has following structure: criteria => list(danger_group_1, danger_group_2, danger_group_3, danger_group_4)
+	var/list/TLV
+	var/list/trace_gas
 
 	var/danger_level = 0
 	var/pressure_dangerlevel = 0
@@ -111,12 +122,16 @@
 	var/environment_type = /singleton/environment_data
 	var/report_danger_level = 1
 
-	//Used to cache the previous gas mixture result, and evaluate if we can skip processing or not
-	var/previous_environment_group_multiplier = null
-	var/previous_environment_temperature = null
-	var/previous_environment_total_moles = null
-	var/previous_environment_volume = null
-	var/list/previous_environment_gas = list()
+	/// Cached previous environment group multiplier
+	var/previous_environment_group_multiplier
+	/// Cached previous environment temperature
+	var/previous_environment_temperature
+	/// Cached previous environment total moles
+	var/previous_environment_total_moles
+	/// Cached previous environment volume
+	var/previous_environment_volume
+	/// Lazy list of cached previus enrironment gases as: gas_id => amount of moles
+	var/list/previous_environment_gas
 
 /obj/machinery/alarm/Destroy()
 	unregister_radio(src, frequency)
@@ -126,7 +141,7 @@
 	..(loc)
 
 	if(dir)
-		src.set_dir(dir)
+		set_dir(dir)
 
 	if(istype(frame))
 		buildstage = 0
@@ -143,12 +158,15 @@
 	if (name == "alarm")
 		SetName("[alarm_area.name] Air Alarm")
 
+	LAZYINITLIST(TLV)
+	LAZYINITLIST(trace_gas)
+
 	// breathable air according to human/Life()
-	TLV[GAS_OXYGEN] =			list(16, 19, 135, 140) // Partial pressure, kpa
+	TLV[GAS_OXYGEN] = list(16, 19, 135, 140) // Partial pressure, kpa
 	TLV[GAS_CO2] = list(-1.0, -1.0, 5, 10) // Partial pressure, kpa
-	TLV["other"] =			list(-1.0, -1.0, 0.2, 0.5) // Partial pressure, kpa
-	TLV["pressure"] =		list(ONE_ATMOSPHERE*0.80,ONE_ATMOSPHERE*0.90,ONE_ATMOSPHERE*1.10,ONE_ATMOSPHERE*1.20) /* kpa */
-	TLV["temperature"] =	list(T0C-26, T0C, T0C+40, T0C+66) // K
+	TLV["other"] = list(-1.0, -1.0, 0.2, 0.5) // Partial pressure, kpa
+	TLV["pressure"] = list(ONE_ATMOSPHERE * 0.80, ONE_ATMOSPHERE * 0.90, ONE_ATMOSPHERE * 1.10, ONE_ATMOSPHERE * 1.20) /* kpa */
+	TLV["temperature"] = list(T0C-26, T0C, T0C+40, T0C+66) // K
 
 
 	var/singleton/environment_data/env_info = GET_SINGLETON(environment_type)
@@ -177,30 +195,11 @@
 	if(environment.return_pressure() > ONE_ATMOSPHERE*0.05)
 		handle_heating_cooling(environment)
 
-	var/is_same_environment = TRUE
-	for(var/gas_id in environment.gas)
-		if(environment.gas[gas_id] != previous_environment_gas[gas_id])
-			is_same_environment = FALSE
-			previous_environment_gas = environment.gas.Copy()
-			break
-
-	if(is_same_environment)
-		if((environment.temperature != previous_environment_temperature) ||\
-			(environment.group_multiplier != previous_environment_group_multiplier) ||\
-			(environment.total_moles != previous_environment_total_moles) ||\
-			(environment.volume != previous_environment_volume)
-		)
-			is_same_environment = FALSE
-			previous_environment_group_multiplier = environment.group_multiplier
-			previous_environment_temperature = environment.temperature
-			previous_environment_total_moles = environment.total_moles
-			previous_environment_volume = environment.volume
-
-	if(is_same_environment)
+	if(is_same_environment(environment))
 		return
 
 	var/old_level = danger_level
-	danger_level = get_overall_danger_level(environment)
+	danger_level = get_max_danger_level(environment)
 
 	if (old_level != danger_level)
 		if(danger_level == 2)
@@ -252,6 +251,28 @@
 	else if(dev_type == "AVP")
 		alarm_area.air_vent_info[id_tag] = signal.data
 
+/obj/machinery/alarm/proc/is_same_environment(datum/gas_mixture/environment)
+	if(length(previous_environment_gas) != length(environment.gas))
+		return FALSE
+
+	for(var/gas_id in environment.gas)
+		if(environment.gas[gas_id] != previous_environment_gas[gas_id])
+			previous_environment_gas = environment.gas.Copy()
+			return FALSE
+
+	if((environment.temperature != previous_environment_temperature) || \
+		(environment.group_multiplier != previous_environment_group_multiplier) || \
+		(environment.total_moles != previous_environment_total_moles) || \
+		(environment.volume != previous_environment_volume)
+	)
+		previous_environment_group_multiplier = environment.group_multiplier
+		previous_environment_temperature = environment.temperature
+		previous_environment_total_moles = environment.total_moles
+		previous_environment_volume = environment.volume
+		return FALSE
+
+	return TRUE
+
 /obj/machinery/alarm/proc/handle_heating_cooling(datum/gas_mixture/environment)
 	var/danger_level = get_danger_level(target_temperature, TLV["temperature"])
 
@@ -300,38 +321,37 @@
 			environment.merge(gas)
 
 /**
- * Get the danger level of a zone
+ * Get the danger level of specific criteria based on `danger_levels`
  *
- * * RETURN_VALUE - The variable to store the return value
  * * current_value - The current value to check the danger-ness against
  * * danger_levels - A list with the danger levels
  */
 /obj/machinery/alarm/proc/get_danger_level(current_value, list/danger_levels)
 	if((current_value > danger_levels[4] && danger_levels[4] > 0) || current_value < danger_levels[1])
 		return 2
-	else if((current_value > danger_levels[3] && danger_levels[3] > 0) || current_value < danger_levels[2])
+
+	if((current_value > danger_levels[3] && danger_levels[3] > 0) || current_value < danger_levels[2])
 		return 1
-	else
-		return 0
+
+	return 0
 
 /**
- * Get the overall danger level of the environment
+ * Get the maximum danger level across all environment criteria
  *
- * * RETURN_VALUE - The variable to store the return value
  * * environment - A `/datum/gas_mixture` to perform the danger level calculation against
  */
-/obj/machinery/alarm/proc/get_overall_danger_level(datum/gas_mixture/environment)
+/obj/machinery/alarm/proc/get_max_danger_level(datum/gas_mixture/environment)
 	var/partial_pressure = R_IDEAL_GAS_EQUATION * environment.temperature / environment.volume
 	var/other_moles = 0
 	for(var/gas_id in trace_gas)
-		other_moles += environment.get_gas(gas_id)
+		other_moles += environment.gas[gas_id]
 
 	return max(
 		get_danger_level(environment.return_pressure(), TLV["pressure"]),
 		get_danger_level(environment.gas[GAS_OXYGEN] * partial_pressure, TLV[GAS_OXYGEN]),
 		get_danger_level(environment.gas[GAS_CO2] * partial_pressure, TLV[GAS_CO2]),
 		get_danger_level(environment.temperature, TLV["temperature"]),
-		get_danger_level(other_moles*partial_pressure, TLV["other"])
+		get_danger_level(other_moles * partial_pressure, TLV["other"])
 	)
 
 
@@ -934,11 +954,11 @@
 	report_danger_level = 0
 	breach_pressure = -1
 
-/obj/machinery/alarm/server/New()
-	..()
+/obj/machinery/alarm/server/Initialize()
+	. = ..()
 	req_access = list(access_rd, access_atmospherics, access_engine_equip)
-	TLV["temperature"] =	list(T0C-26, T0C, T0C+30, T0C+40) // K
-	target_temperature = T0C+10
+	TLV["temperature"] = list(T0C-26, T0C, T0C+30, T0C+40)
+	target_temperature = T0C + 10
 
 /*
 AIR ALARM CIRCUIT

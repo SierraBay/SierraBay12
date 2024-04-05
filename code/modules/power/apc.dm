@@ -813,9 +813,9 @@
 			if(istype(usr, /mob/living/silicon))
 				if(emagged || MACHINE_IS_BROKEN(src) || GET_FLAGS(stat, MACHINE_STAT_MAINT))
 					to_chat(usr, "The APC does not respond to the command.")
-			else
-				locked = !locked
-				update_icon()
+				else
+					locked = !locked
+					update_icon()
 		else
 			return FALSE
 
