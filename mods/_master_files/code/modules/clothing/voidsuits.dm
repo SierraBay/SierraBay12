@@ -13,7 +13,7 @@
 		rad = ARMOR_RAD_SMALL
 		)
 	light_overlay = "helmet_light_dual"
-
+	tinted = FALSE
 /obj/item/clothing/suit/space/void/medic
 	desc = "An atmos resistant voidsuit for space and planet exploration."
 	name = "medic voidsuit"
@@ -45,7 +45,7 @@
 		rad = ARMOR_RAD_SMALL
 		)
 	light_overlay = "helmet_light_dual"
-
+	tinted = FALSE
 /obj/item/clothing/suit/space/void/engineer
 	desc = "An atmos resistant voidsuit for space and planet exploration."
 	name = "engineer voidsuit"
