@@ -71,3 +71,9 @@
 	helmet = /obj/item/clothing/head/helmet/space/void/medic
 	boots = /obj/item/clothing/shoes/magboots
 	item_flags = ITEM_FLAG_THICKMATERIAL | ITEM_FLAG_INVALID_FOR_CHAMELEON
+
+/obj/item/clothing/head/helmet/space/void/medic
+	camera = /obj/machinery/camera/network/helmet
+
+/obj/item/clothing/head/helmet/space/void/engineer
+	camera = /obj/machinery/camera/network/helmet
