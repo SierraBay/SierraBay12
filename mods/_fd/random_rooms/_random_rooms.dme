@@ -1,0 +1,10 @@
+#ifndef MODPACK_RANDOM_ROOMS
+#define MODPACK_RANDOM_ROOMS
+
+#include "_random_rooms.dm"
+
+#include "code/mapping_subsystem.dm"
+#include "code/random_room.dm"
+#include "code/room_landmark.dm"
+
+#endif
