@@ -9,8 +9,8 @@
 	escape_levels = list(8)
 	empty_levels  = list(9)
 	accessible_z_levels = list("1"=1,"2"=3,"3"=1,"4"=1,"5"=1,"6"=1,"9"=30)
-	overmap_size = 5
-	overmap_event_areas = 0
+	overmap_size = 55
+	overmap_event_areas = 62
 	usable_email_tlds = list("torch.ec.scg", "torch.fleet.mil", "freemail.net", "torch.scg")
 
 	allowed_spawns = list("Cryogenic Storage", "Cyborg Storage")
