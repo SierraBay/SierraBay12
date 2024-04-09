@@ -1,0 +1,10 @@
+#ifndef MODPACK_NEW_BLUERIVER
+#define MODPACK_NEW_BLUERIVER
+
+#include "_new_blueriver.dm"
+
+#include "code/blueriver_areas.dm"
+#include "code/blueriver_snow.dm"
+#include "code/blueriver.dm"
+
+#endif

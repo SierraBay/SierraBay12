@@ -1,0 +1,25 @@
+"d" = (/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"v" = (/obj/floor_decal/corner/blue{dir = 5},/obj/machinery/light/small{dir = 1},/turf/simulated/floor/tiled,/area/template_noop)
+"x" = (/obj/floor_decal/corner/blue{dir = 10},/turf/simulated/floor/tiled,/area/template_noop)
+"y" = (/obj/floor_decal/corner/blue/half,/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"B" = (/obj/floor_decal/corner/blue{dir = 10},/obj/machinery/light/small,/turf/simulated/floor/tiled,/area/template_noop)
+"C" = (/turf/simulated/floor/tiled/steel_grid,/area/template_noop)
+"D" = (/turf/simulated/wall/invincible/prepainted,/area/template_noop)
+"E" = (/turf/unsimulated/mineral{color = "#000000"; name = "void"},/area/template_noop)
+"J" = (/obj/machinery/door/airlock/hatch{aiControlDisabled = 1},/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"M" = (/turf/unsimulated/mineral,/area/template_noop)
+"N" = (/obj/floor_decal/corner/blue/half{dir = 1},/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"Y" = (/obj/floor_decal/corner/blue{dir = 5},/turf/simulated/floor/tiled,/area/template_noop)
+
+(1,1,1) = {"
+EEEEEEEEED
+EEEEEEEEED
+EEEEEEEEED
+DDDDDDDDDD
+DMMMMMYvYN
+JMMMMMCCCd
+DMMMMxxxBy
+DDDDDDDDDD
+EEEEEEEEED
+EEEEEEEEED
+"}

@@ -1629,7 +1629,7 @@
 "guP" = (/obj/structure/table/rack,/obj/item/storage/firstaid/regular{pixel_x = 5; pixel_y = 5},/obj/item/storage/firstaid/toxin,/obj/random/medical/lite,/obj/floor_decal/corner/paleblue/mono,/obj/floor_decal/industrial/outline/yellow,/obj/machinery/light,/turf/simulated/floor/tiled/white/monotile,/area/medical/equipstorage)
 "gvC" = (/obj/machinery/atmospherics/unary/vent_scrubber/on,/obj/machinery/light{dir = 4},/turf/simulated/floor/tiled/techfloor,/area/crew_quarters/safe_room/firstdeck)
 "gvE" = (/obj/machinery/shield_diffuser,/obj/structure/lattice,/turf/space,/area/space)
-"gvG" = (/obj{dir = 1; icon = 'icons/obj/structures/stairs.dmi'; icon_state = "above"; name = "stairs"},/turf/simulated/floor/tiled/dark,/area/crew_quarters/sleep/cryo/aux)
+"gvG" = (/obj/floor_decal/stairs{dir = 1},/turf/simulated/floor/tiled/dark,/area/crew_quarters/sleep/cryo/aux)
 "gvJ" = (/turf/simulated/wall/r_wall/prepainted,/area/security/questioning)
 "gxi" = (/obj/floor_decal/industrial/outline/yellow,/obj/machinery/hologram/holopad,/turf/simulated/floor/tiled,/area/security/processing)
 "gxX" = (/obj/structure/cable/green{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/structure/disposalpipe/segment{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/obj/catwalk_plated,/turf/simulated/floor/plating,/area/hallway/primary/firstdeck/aft)

@@ -1,0 +1,25 @@
+"a" = (/turf/unsimulated/mineral{color = "#000000"; name = "void"},/area/template_noop)
+"c" = (/turf/simulated/wall/invincible/prepainted,/area/template_noop)
+"g" = (/obj/floor_decal/corner/blue/half{dir = 4},/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"h" = (/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"i" = (/obj/random/trash,/obj/floor_decal/corner/blue{dir = 6},/turf/simulated/floor/tiled,/area/template_noop)
+"t" = (/obj/random/trash,/obj/floor_decal/corner/blue/half{dir = 8},/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"v" = (/obj/random/trash,/obj/floor_decal/corner/blue/half{dir = 4},/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"x" = (/obj/machinery/light/small{dir = 4},/obj/floor_decal/corner/blue{dir = 6},/turf/simulated/floor/tiled,/area/template_noop)
+"y" = (/obj/random/ore,/turf/simulated/floor/tiled/steel_grid,/area/template_noop)
+"G" = (/turf/unsimulated/mineral,/area/template_noop)
+"Q" = (/obj/machinery/light/small{dir = 8},/obj/random/maintenance,/obj/floor_decal/corner/blue{dir = 9},/turf/simulated/floor/tiled,/area/template_noop)
+"T" = (/obj/random/trash,/turf/simulated/floor/tiled/steel_grid,/area/template_noop)
+
+(1,1,1) = {"
+aacthvcaaa
+aacGyxcaaa
+aacGGicaaa
+aacGGGcaaa
+aacGGGcaaa
+aacGGGcaaa
+aacGGGcaaa
+aacGTGcaaa
+aacQyicaaa
+aacthgcaaa
+"}

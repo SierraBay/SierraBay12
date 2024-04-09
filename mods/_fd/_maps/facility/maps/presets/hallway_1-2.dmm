@@ -1,0 +1,43 @@
+"a" = (/obj/floor_decal/corner/blue{dir = 9},/turf/simulated/floor/tiled,/area/template_noop)
+"b" = (/obj/floor_decal/corner/blue{dir = 9},/obj/structure/cable/green{d1 = 4; d2 = 8; icon_state = "4-8"},/turf/simulated/floor/tiled,/area/template_noop)
+"c" = (/turf/simulated/wall/invincible/prepainted,/area/template_noop)
+"g" = (/obj/catwalk_plated,/obj/structure/cable/green{d1 = 2; d2 = 8; icon_state = "2-8"},/turf/simulated/floor/plating,/area/template_noop)
+"h" = (/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"i" = (/obj/random/trash,/obj/floor_decal/corner/blue{dir = 9},/turf/simulated/floor/tiled,/area/template_noop)
+"k" = (/obj/floor_decal/corner/blue/half{dir = 8},/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"m" = (/obj/structure/railing/mapped{dir = 8},/obj/machinery/light/small{dir = 4},/turf/simulated/floor/plating{color = "#919191"},/area/template_noop)
+"o" = (/obj/structure/railing/mapped{dir = 8},/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/plating{color = "#919191"},/area/template_noop)
+"t" = (/obj/structure/railing/mapped{dir = 4},/obj/structure/cable/green{d1 = 2; d2 = 4; icon_state = "2-4"},/turf/simulated/floor/plating{color = "#919191"},/area/template_noop)
+"v" = (/obj/structure/railing/mapped{dir = 4},/obj/machinery/light/small{dir = 8},/turf/simulated/floor/plating{color = "#919191"},/area/template_noop)
+"w" = (/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/random/facility/mercenary/medium,/turf/simulated/floor/tiled/steel_grid,/area/template_noop)
+"x" = (/obj/machinery/light/small{dir = 4},/obj/floor_decal/corner/blue{dir = 6},/turf/simulated/floor/tiled,/area/template_noop)
+"y" = (/obj/catwalk_plated,/turf/simulated/floor/plating,/area/template_noop)
+"z" = (/obj/catwalk_plated,/obj/structure/cable/green{d1 = 1; d2 = 4; icon_state = "1-4"},/obj/structure/cable/green{d1 = 2; d2 = 4; icon_state = "2-4"},/turf/simulated/floor/plating,/area/template_noop)
+"D" = (/obj/floor_decal/corner/blue/half{dir = 4},/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"E" = (/obj/floor_decal/corner/blue{dir = 6},/turf/simulated/floor/tiled,/area/template_noop)
+"G" = (/turf/unsimulated/mineral{color = "#000000"; name = "void"},/area/template_noop)
+"I" = (/obj/structure/railing/mapped{dir = 4},/turf/simulated/floor/plating{color = "#919191"},/area/template_noop)
+"J" = (/obj/structure/railing/mapped{dir = 8},/turf/simulated/floor/plating{color = "#919191"},/area/template_noop)
+"K" = (/obj/structure/cable/green{d1 = 4; d2 = 8; icon_state = "4-8"},/turf/simulated/wall/invincible/prepainted,/area/template_noop)
+"L" = (/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/tiled/steel_grid,/area/template_noop)
+"P" = (/obj/structure/cable/green{d1 = 1; d2 = 8; icon_state = "1-8"},/turf/simulated/wall/invincible/prepainted,/area/template_noop)
+"Q" = (/obj/machinery/light/small{dir = 8},/obj/floor_decal/corner/blue{dir = 9},/turf/simulated/floor/tiled,/area/template_noop)
+"R" = (/obj/structure/railing/mapped{dir = 8},/obj/machinery/light/small{dir = 4},/obj/structure/cable/green{d1 = 1; d2 = 8; icon_state = "1-8"},/turf/simulated/floor/plating{color = "#919191"},/area/template_noop)
+"S" = (/obj/random/trash,/obj/floor_decal/corner/blue{dir = 6},/turf/simulated/floor/tiled,/area/template_noop)
+"T" = (/obj/catwalk_plated,/obj/structure/cable/green{d1 = 1; d2 = 8; icon_state = "1-8"},/turf/simulated/floor/plating,/area/template_noop)
+"U" = (/obj/catwalk_plated,/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/plating,/area/template_noop)
+"X" = (/obj/structure/cable/green{d1 = 2; d2 = 4; icon_state = "2-4"},/turf/simulated/wall/invincible/prepainted,/area/template_noop)
+"Y" = (/obj/floor_decal/corner/blue{dir = 6},/obj/structure/cable/green{d1 = 4; d2 = 8; icon_state = "4-8"},/turf/simulated/floor/tiled,/area/template_noop)
+
+(1,1,1) = {"
+GGckhDcGGG
+GKKbgxXKGG
+GcIiUEocGG
+GcvazYRcGG
+GcIawSJcGG
+GcIaLEJcGG
+GcviUEmcGG
+GctbTEJcGG
+GKPQyEccGG
+GGckhDcGGG
+"}

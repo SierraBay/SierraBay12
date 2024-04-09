@@ -1,0 +1,34 @@
+"a" = (/turf/unsimulated/mineral{color = "#000000"; name = "void"},/area/template_noop)
+"b" = (/obj/machinery/light/small,/obj/floor_decal/corner/blue{dir = 10},/turf/simulated/floor/tiled,/area/template_noop)
+"c" = (/obj/machinery/light/small{dir = 4},/obj/floor_decal/corner/blue{dir = 6},/turf/simulated/floor/tiled,/area/template_noop)
+"f" = (/turf/simulated/wall/invincible/prepainted,/area/template_noop)
+"m" = (/obj/floor_decal/corner/blue{dir = 9},/turf/simulated/floor/tiled,/area/template_noop)
+"n" = (/obj/floor_decal/corner/blue{dir = 8},/turf/simulated/floor/tiled,/area/template_noop)
+"q" = (/obj/machinery/light/small{dir = 1},/obj/floor_decal/corner/blue{dir = 5},/turf/simulated/floor/tiled,/area/template_noop)
+"r" = (/obj/floor_decal/corner/blue{dir = 5},/turf/simulated/floor/tiled,/area/template_noop)
+"t" = (/obj/floor_decal/corner/blue{dir = 10},/turf/simulated/floor/tiled,/area/template_noop)
+"w" = (/obj/machinery/light/small{dir = 8},/obj/floor_decal/corner/blue{dir = 9},/turf/simulated/floor/tiled,/area/template_noop)
+"A" = (/obj/floor_decal/corner/blue{dir = 6},/turf/simulated/floor/tiled,/area/template_noop)
+"B" = (/turf/simulated/floor/tiled/steel_grid,/area/template_noop)
+"D" = (/obj/machinery/door/airlock/civilian,/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"E" = (/obj/floor_decal/corner/blue{dir = 4},/turf/simulated/floor/tiled,/area/template_noop)
+"G" = (/obj/floor_decal/corner/blue{dir = 5},/obj/random/trash,/turf/simulated/floor/tiled,/area/template_noop)
+"I" = (/obj/random/trash,/turf/simulated/floor/tiled/steel_grid,/area/template_noop)
+"K" = (/obj/random/facility/mercenary/medium,/turf/simulated/floor/tiled/steel_grid,/area/template_noop)
+"M" = (/obj/floor_decal/corner/blue{dir = 9},/obj/random/trash,/turf/simulated/floor/tiled,/area/template_noop)
+"P" = (/obj/wallframe_spawn/reinforced,/turf/simulated/floor/plating,/area/template_noop)
+"S" = (/obj/floor_decal/corner/blue,/turf/simulated/floor/tiled,/area/template_noop)
+"V" = (/obj/floor_decal/corner/blue{dir = 1},/turf/simulated/floor/tiled,/area/template_noop)
+
+(1,1,1) = {"
+aafPDPfaaa
+aafwIAfaaa
+aafmBAfaaa
+fffmBAffff
+PrGVBErrqP
+DBBBKBIBBD
+PbtnBStttP
+fffmBAffff
+aafMBcfaaa
+aafPDPfaaa
+"}

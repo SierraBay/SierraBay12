@@ -1,0 +1,36 @@
+"a" = (/turf/template_noop,/area/template_noop)
+"b" = (/turf/simulated/floor/tiled,/area/template_noop)
+"c" = (/turf/simulated/wall/invincible/prepainted,/area/template_noop)
+"g" = (/obj/random/facility/mercenary/high,/turf/simulated/floor/tiled/steel_grid,/area/template_noop)
+"h" = (/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"i" = (/obj/floor_decal/corner/blue/border,/obj/structure/table/standard,/turf/simulated/floor/tiled/monotile,/area/template_noop)
+"j" = (/obj/machinery/light/small{dir = 1},/obj/floor_decal/corner/blue{dir = 5},/turf/simulated/floor/tiled,/area/template_noop)
+"m" = (/turf/simulated/floor/tiled/monotile,/area/template_noop)
+"n" = (/obj/random/trash,/turf/simulated/floor/tiled/steel_grid,/area/template_noop)
+"o" = (/turf/simulated/floor/tiled/steel_grid,/area/template_noop)
+"y" = (/obj/random/trash,/obj/floor_decal/corner/blue/half,/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"A" = (/obj/floor_decal/corner/blue,/turf/simulated/floor/tiled,/area/template_noop)
+"D" = (/obj/structure/bed/chair,/turf/simulated/floor/tiled/monotile,/area/template_noop)
+"G" = (/turf/unsimulated/mineral,/area/template_noop)
+"J" = (/obj/random/trash,/obj/machinery/light/small,/obj/floor_decal/corner/blue{dir = 8},/turf/simulated/floor/tiled,/area/template_noop)
+"K" = (/obj/floor_decal/corner/blue{dir = 5},/turf/simulated/floor/tiled,/area/template_noop)
+"L" = (/obj/floor_decal/corner/blue/border,/obj/structure/table/standard,/obj/item/pen,/turf/simulated/floor/tiled/monotile,/area/template_noop)
+"M" = (/obj/floor_decal/corner/blue{dir = 10},/turf/simulated/floor/tiled,/area/template_noop)
+"T" = (/obj/floor_decal/corner/blue/half{dir = 1},/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"U" = (/obj/machinery/light/small,/obj/floor_decal/corner/blue{dir = 10},/turf/simulated/floor/tiled,/area/template_noop)
+"V" = (/obj/floor_decal/corner/blue/border,/turf/simulated/floor/tiled/monotile,/area/template_noop)
+"W" = (/obj/random/facility/hallway_room,/turf/simulated/wall/invincible/prepainted,/area/template_noop)
+"X" = (/obj/floor_decal/corner/blue/half,/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+
+(1,1,1) = {"
+GGGGGGGGGG
+aaaaaaaaaG
+aaaaaaaaaG
+Wccccccccc
+TjKKKKKjKT
+hooognoonh
+XMJbbbbAUy
+cccmDmmccc
+aacLiiVcaG
+aaccccccaG
+"}

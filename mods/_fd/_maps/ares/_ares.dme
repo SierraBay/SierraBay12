@@ -1,0 +1,11 @@
+#ifndef MODPACK_ARES
+#define MODPACK_ARES
+
+#include "_ares.dm"
+
+#include "code/_ares.dm"
+#include "code/ares_areas.dm"
+#include "code/ares_jobs.dm"
+#include "code/ares_shuttles.dm"
+
+#endif

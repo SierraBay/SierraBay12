@@ -1,0 +1,9 @@
+#ifndef MODPACK_SNOW_CAGE
+#define MODPACK_SNOW_CAGE
+
+#include "_snow_cage.dm"
+
+#include "code/snow_cage_light.dm"
+#include "code/snow_cage.dm"
+
+#endif

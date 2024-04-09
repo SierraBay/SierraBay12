@@ -1,0 +1,24 @@
+"a" = (/turf/simulated/floor/plating,/area/template_noop)
+"d" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/obj/structure/cable/green{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/structure/catwalk,/obj/decal/cleanable/dirt,/turf/simulated/floor/plating,/area/template_noop)
+"h" = (/obj/decal/cleanable/dirt,/obj/random/junkyard/tech_supply,/obj/random/junkyard/tech_supply,/turf/simulated/floor/plating,/area/template_noop)
+"s" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/obj/structure/cable/green{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/structure/catwalk,/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/turf/simulated/floor/plating,/area/template_noop)
+"t" = (/obj/random/trash,/obj/random/trash,/obj/random/junkyard/powercell,/turf/simulated/floor/plating,/area/template_noop)
+"A" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/obj/structure/cable/green{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/structure/catwalk,/turf/simulated/floor/plating,/area/template_noop)
+"F" = (/obj/decal/cleanable/dirt,/turf/simulated/floor/plating,/area/template_noop)
+"G" = (/obj/random/junkyard/obstruction,/turf/simulated/floor/plating,/area/template_noop)
+"H" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/obj/structure/cable/green{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/structure/catwalk,/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/obj/random/trash,/obj/random/trash,/turf/simulated/floor/plating,/area/template_noop)
+"Q" = (/obj/decal/cleanable/dirt,/obj/random/trash,/turf/simulated/floor/plating,/area/template_noop)
+"R" = (/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/turf/simulated/floor/plating,/area/template_noop)
+"U" = (/obj/random/trash,/obj/random/junkyard/tool,/obj/random/junkyard/tool,/turf/simulated/floor/plating,/area/template_noop)
+"V" = (/obj/random/junkyard/obstruction,/obj/decal/cleanable/dirt,/turf/simulated/floor/plating,/area/template_noop)
+"W" = (/obj/random/junkyard/material,/obj/random/junkyard/material,/obj/random/junkyard/tech_supply,/turf/simulated/floor/plating,/area/template_noop)
+"Y" = (/obj/random/trash,/turf/simulated/floor/plating,/area/template_noop)
+"Z" = (/obj/decal/cleanable/dirt,/obj/random/junkyard/bomb_supply,/turf/simulated/floor/plating,/area/template_noop)
+
+(1,1,1) = {"
+YZaaaGGGFRa
+GVUaaVGWRQa
+AAAAAsddHdA
+GtaGFRQFFFG
+aGGGVFaaFhQ
+"}

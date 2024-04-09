@@ -1,0 +1,13 @@
+#ifndef MODPACK_AIRFIELD
+#define MODPACK_AIRFIELD
+
+#include "_airfield.dm"
+
+#include "code/airfield_areas.dm"
+#include "code/airfield_job.dm"
+#include "code/airfield_light.dm"
+#include "code/airfield_shuttles.dm"
+#include "code/airfield.dm"
+#include "code/cadet_rank.dm"
+
+#endif

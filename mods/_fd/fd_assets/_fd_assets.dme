@@ -1,0 +1,60 @@
+#ifndef MODPACK_FD_ASSETS
+#define MODPACK_FD_ASSETS
+
+#include "_fd_assets.dm"
+
+#include "code/_defines.dm"
+
+#include "code/clothing/badges.dm"
+#include "code/clothing/clothing_under.dm"
+#include "code/clothing/ec_additional_suits.dm"
+#include "code/clothing/ftu_voidsuits.dm"
+
+#include "code/machinery/ai_slipper.dm"
+#include "code/machinery/autoaccess_machinery.dm"
+#include "code/machinery/big_engine.dm"
+#include "code/machinery/light_types.dm"
+#include "code/machinery/telescreen_consoles.dm"
+
+#include "code/mobs/mobs.dm"
+
+#include "code/obj/items/ancient_items.dm"
+#include "code/obj/items/disks.dm"
+#include "code/obj/items/encryption_key_boxes.dm"
+#include "code/obj/items/firstaid_indiv.dm"
+#include "code/obj/items/grown_food.dm"
+#include "code/obj/items/intel_console.dm"
+#include "code/obj/items/items.dm"
+#include "code/obj/items/storage_backpacks.dm"
+#include "code/obj/items/tile_types.dm"
+
+#include "code/obj/landmarks.dm"
+#include "code/obj/random.dm"
+
+#include "code/structures/decor.dm"
+#include "code/structures/mag_table_fd.dm"
+#include "code/structures/old_cryo.dm"
+#include "code/structures/secure_lockers.dm"
+#include "code/structures/shooting_range.dm"
+#include "code/structures/wallframe_types.dm"
+
+#include "code/turfs/turfs.dm"
+#include "code/turfs/wall_paint.dm"
+#include "code/turfs/wall_types.dm"
+
+#include "code/weapons/automatic_shotgun.dm"
+#include "code/weapons/k342.dm"
+#include "code/weapons/mech_mounted.dm"
+#include "code/weapons/rsh21.dm"
+#include "code/weapons/sledgehammer.dm"
+
+#include "code/chief_steward.dm"
+#include "code/fd_sofa_override.dm"
+#include "code/floor_decals.dm"
+#include "code/fullscreen.dm"
+#include "code/loadout.dm"
+#include "code/research_guard.dm"
+#include "code/skills.dm"
+#include "code/~TO_MAKE.dm"
+
+#endif

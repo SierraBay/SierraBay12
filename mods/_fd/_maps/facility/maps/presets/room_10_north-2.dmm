@@ -1,0 +1,29 @@
+"a" = (/turf/simulated/wall/invincible/prepainted,/area/template_noop)
+"e" = (/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled/steel_grid,/area/template_noop)
+"g" = (/turf/unsimulated/mineral{color = "#000000"; name = "void"},/area/template_noop)
+"h" = (/obj/machinery/light/small{dir = 8},/obj/floor_decal/corner/blue{dir = 9},/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled,/area/template_noop)
+"i" = (/obj/floor_decal/corner/blue{dir = 9},/obj/random/trash,/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled,/area/template_noop)
+"o" = (/turf/unsimulated/mineral,/area/template_noop)
+"t" = (/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled/steel_grid,/area/template_noop)
+"y" = (/turf/simulated/floor/tiled/steel_grid,/area/template_noop)
+"D" = (/obj/floor_decal/corner/blue/half{dir = 4},/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"G" = (/obj/floor_decal/corner/blue/half{dir = 8},/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"H" = (/obj/floor_decal/corner/blue{dir = 6},/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled,/area/template_noop)
+"I" = (/obj/machinery/door/airlock/hatch,/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"T" = (/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled/steel_grid,/area/template_noop)
+"V" = (/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"Y" = (/obj/machinery/light/small{dir = 4; icon_state = "bulb1"},/obj/floor_decal/corner/blue{dir = 6},/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/obj/decal/cleanable/cobweb2,/turf/simulated/floor/tiled,/area/template_noop)
+"Z" = (/obj/floor_decal/corner/blue{dir = 6},/obj/random/trash,/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled,/area/template_noop)
+
+(1,1,1) = {"
+ggaaIaaggg
+ggaoooaggg
+ggaoooaggg
+ggaoooaggg
+ggaoooaggg
+ggaoeoaggg
+ggaotYaggg
+ggahTZaggg
+ggaiyHaggg
+aaaGVDaaaa
+"}

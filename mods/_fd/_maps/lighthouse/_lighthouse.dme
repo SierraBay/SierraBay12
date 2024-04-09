@@ -1,0 +1,8 @@
+#ifndef MODPACK_LIGHTHOUSE
+#define MODPACK_LIGHTHOUSE
+
+#include "_lighthouse.dm"
+
+#include "code/beacon_working.dm"
+
+#endif

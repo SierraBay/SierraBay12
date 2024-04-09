@@ -1,0 +1,39 @@
+"a" = (/obj/structure/coatrack,/turf/simulated/floor/tiled/dark,/area/template_noop)
+"d" = (/obj/floor_decal/corner/beige/border,/obj/structure/bed/chair/padded/beige{dir = 4},/turf/simulated/floor/tiled/dark/monotile,/area/template_noop)
+"e" = (/obj/structure/table/standard,/obj/floor_decal/corner/beige/border,/obj/random/maintenance,/turf/simulated/floor/tiled/dark/monotile,/area/template_noop)
+"g" = (/obj/floor_decal/corner/beige/half{dir = 8},/obj/structure/table/standard,/turf/simulated/floor/tiled/dark/monotile,/area/template_noop)
+"k" = (/obj/structure/closet/cabinet,/obj/floor_decal/corner/beige/half{dir = 8},/obj/random/smokes,/obj/random/maintenance,/turf/simulated/floor/tiled/dark/monotile,/area/template_noop)
+"m" = (/obj/floor_decal/corner/beige{dir = 5},/obj/machinery/light/small{dir = 4; icon_state = "bulb1"},/turf/simulated/floor/tiled/dark,/area/template_noop)
+"p" = (/obj/floor_decal/corner/beige{dir = 5},/obj/random/trash,/turf/simulated/floor/tiled/dark,/area/template_noop)
+"r" = (/obj/structure/table/standard,/obj/floor_decal/corner/beige/border,/obj/random/snack,/turf/simulated/floor/tiled/dark/monotile,/area/template_noop)
+"u" = (/obj/structure/bed/padded,/obj/structure/curtain/open/bed,/obj/item/bedsheet/brown,/turf/simulated/floor/tiled/dark/monotile,/area/template_noop)
+"x" = (/obj/floor_decal/corner/beige/half{dir = 8},/obj/structure/bed/chair/padded/beige,/turf/simulated/floor/tiled/dark/monotile,/area/template_noop)
+"y" = (/obj/machinery/light/small,/turf/simulated/floor/tiled/dark,/area/template_noop)
+"z" = (/obj/structure/closet/cabinet,/obj/floor_decal/corner/beige/half{dir = 8},/obj/random/maintenance,/obj/random/junk,/turf/simulated/floor/tiled/dark/monotile,/area/template_noop)
+"D" = (/obj/floor_decal/corner/blue/half,/obj/floor_decal/corner/blue{dir = 4},/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"E" = (/turf/simulated/wall/invincible/prepainted,/area/template_noop)
+"G" = (/obj/catwalk_plated/dark,/turf/simulated/floor/plating,/area/template_noop)
+"H" = (/obj/floor_decal/corner/beige{dir = 5},/obj/random/facility/mercenary/high,/turf/simulated/floor/tiled/dark,/area/template_noop)
+"I" = (/obj/floor_decal/corner/beige/border,/obj/structure/bed/chair/padded/beige{dir = 8},/turf/simulated/floor/tiled/dark/monotile,/area/template_noop)
+"J" = (/obj/floor_decal/corner/beige{dir = 5},/turf/simulated/floor/tiled/dark,/area/template_noop)
+"L" = (/obj/floor_decal/corner/blue/half{dir = 1},/obj/floor_decal/corner/blue,/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"M" = (/turf/unsimulated/mineral{color = "#000000"; name = "void"},/area/template_noop)
+"O" = (/obj/floor_decal/corner/beige{dir = 5},/obj/random/junk,/turf/simulated/floor/tiled/dark,/area/template_noop)
+"P" = (/turf/simulated/floor/tiled/dark,/area/template_noop)
+"T" = (/obj/floor_decal/corner/blue/half{dir = 4},/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"W" = (/obj/machinery/light/small{dir = 4; icon_state = "bulb1"},/turf/simulated/floor/tiled/dark,/area/template_noop)
+"Y" = (/obj/machinery/door/airlock/civilian{name = "Living Area"},/turf/simulated/floor/tiled/dark/monotile,/area/template_noop)
+"Z" = (/obj/random/trash,/obj/machinery/light/small,/turf/simulated/floor/tiled/dark,/area/template_noop)
+
+(1,1,1) = {"
+EEEEEEEEEE
+EEzPuEkPuE
+EExPWExPWE
+EEgPaEgPaE
+LEEYEEEYEE
+TJpJJHOJmE
+DyGGGZGGGE
+EEdrIEdeIE
+EEEEEEEEEE
+EMMMMMMMMM
+"}

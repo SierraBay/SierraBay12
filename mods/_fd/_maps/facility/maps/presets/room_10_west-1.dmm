@@ -1,0 +1,35 @@
+"a" = (/obj/floor_decal/corner/beige/three_quarters{dir = 1},/turf/simulated/floor/tiled/techmaint,/area/template_noop)
+"e" = (/obj/floor_decal/corner/beige/three_quarters,/turf/simulated/floor/tiled/techmaint,/area/template_noop)
+"f" = (/obj/floor_decal/corner/beige{dir = 6},/turf/simulated/floor/tiled/techmaint,/area/template_noop)
+"g" = (/obj/machinery/light,/obj/floor_decal/corner/blue{dir = 10},/turf/simulated/floor/tiled,/area/template_noop)
+"i" = (/obj/floor_decal/corner/blue/half{dir = 1},/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"j" = (/turf/simulated/wall/invincible/prepainted,/area/template_noop)
+"m" = (/obj/floor_decal/corner/beige/three_quarters{dir = 4},/turf/simulated/floor/tiled/techmaint,/area/template_noop)
+"o" = (/obj/floor_decal/corner/beige{dir = 5},/obj/structure/lift/button{pixel_y = 32},/turf/simulated/floor/tiled/techmaint,/area/template_noop)
+"q" = (/obj/floor_decal/corner/blue/half,/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"s" = (/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"t" = (/obj/floor_decal/corner/blue{dir = 10},/turf/simulated/floor/tiled,/area/template_noop)
+"u" = (/obj/floor_decal/corner/beige/three_quarters{dir = 8},/turf/simulated/floor/tiled/techmaint,/area/template_noop)
+"x" = (/turf/unsimulated/mineral{color = "#000000"; name = "void"},/area/template_noop)
+"z" = (/turf/simulated/floor/tiled,/area/template_noop)
+"A" = (/obj/floor_decal/corner/blue{dir = 5},/obj/structure/lift/panel{pixel_y = 31},/turf/simulated/floor/tiled,/area/template_noop)
+"C" = (/obj/random/facility/mercenary/low,/turf/simulated/floor/tiled,/area/template_noop)
+"I" = (/turf/simulated/wall/elevator,/area/template_noop)
+"M" = (/obj/floor_decal/corner/beige{dir = 10},/turf/simulated/floor/tiled/techmaint,/area/template_noop)
+"N" = (/turf/simulated/floor/tiled/techmaint,/area/template_noop)
+"O" = (/obj/machinery/door/airlock/lift{hackProof = 1; lights = 0; locked = 1; secured_wires = 1; icon_state = "closed"; desc = "Ding. ChemistryOneLove will love it."; dir = 4},/turf/simulated/floor/tiled/techfloor/grid,/area/template_noop)
+"S" = (/obj/floor_decal/corner/blue{dir = 5},/turf/simulated/floor/tiled,/area/template_noop)
+"Y" = (/obj/machinery/light{dir = 8},/obj/floor_decal/corner/beige{dir = 9},/turf/simulated/floor/tiled/techmaint,/area/template_noop)
+
+(1,1,1) = {"
+xxxxxxxxxj
+xxxxxxxxxj
+jjjjjjjxxj
+jIIIIIjjjj
+jIuoaOOASi
+jIYNfIjzCs
+jIeMmOOtgq
+jIIIIIjjjj
+jjjjjjjxxj
+xxxxxxxxxj
+"}

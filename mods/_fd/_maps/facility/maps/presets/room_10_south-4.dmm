@@ -1,0 +1,39 @@
+"a" = (/turf/simulated/floor/plating{color = "#1F1F1F"; name = "deep plating"},/area/template_noop)
+"c" = (/obj/floor_decal/corner/yellow/three_quarters{dir = 8},/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled,/area/template_noop)
+"e" = (/obj/floor_decal/corner/blue{dir = 1},/obj/floor_decal/corner/yellow{dir = 8},/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled,/area/template_noop)
+"f" = (/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled/steel_grid,/area/template_noop)
+"g" = (/obj/landmark{density = 1; name = "block"},/turf/simulated/floor/plating{color = "#1F1F1F"; name = "deep plating"},/area/template_noop)
+"i" = (/obj/floor_decal/corner/blue/half{dir = 8},/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"k" = (/obj/floor_decal/corner/yellow/three_quarters,/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled,/area/template_noop)
+"n" = (/obj/structure/railing/mapped{dir = 4},/turf/simulated/floor/plating{color = "#1F1F1F"; name = "deep plating"},/area/template_noop)
+"o" = (/obj/structure/railing/mapped{dir = 4},/obj/landmark{density = 1; name = "block"},/turf/simulated/floor/plating{color = "#1F1F1F"; name = "deep plating"},/area/template_noop)
+"r" = (/obj/floor_decal/corner/yellow{dir = 9},/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled,/area/template_noop)
+"t" = (/turf/simulated/wall/invincible/prepainted,/area/template_noop)
+"u" = (/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled/steel_grid,/area/template_noop)
+"x" = (/turf/unsimulated/mineral{color = "#000000"; name = "void"},/area/template_noop)
+"B" = (/obj/machinery/door/airlock/hatch{aiControlDisabled = 1},/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"D" = (/obj/floor_decal/corner/yellow{dir = 6},/obj/machinery/light/small/red,/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled,/area/template_noop)
+"G" = (/obj/floor_decal/corner/yellow/three_quarters{dir = 1},/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled,/area/template_noop)
+"I" = (/obj/structure/railing/mapped{dir = 8; icon_state = "railing0-1"},/obj/landmark{density = 1; name = "block"},/turf/simulated/floor/plating{color = "#1F1F1F"; name = "deep plating"},/area/template_noop)
+"K" = (/obj/floor_decal/corner/blue{dir = 4},/obj/floor_decal/corner/yellow,/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled,/area/template_noop)
+"R" = (/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"T" = (/obj/structure/railing/mapped,/turf/simulated/floor/plating{color = "#1F1F1F"; name = "deep plating"},/area/template_noop)
+"U" = (/obj/structure/railing/mapped{dir = 1; icon_state = "railing0-1"},/obj/landmark{density = 1; name = "block"},/turf/simulated/floor/plating{color = "#1F1F1F"; name = "deep plating"},/area/template_noop)
+"V" = (/obj/structure/railing/mapped{dir = 8; icon_state = "railing0-1"},/turf/simulated/floor/plating{color = "#1F1F1F"; name = "deep plating"},/area/template_noop)
+"W" = (/obj/floor_decal/corner/yellow/three_quarters{dir = 4},/turf/simulated/floor/tiled,/area/template_noop)
+"X" = (/obj/floor_decal/corner/yellow{dir = 5},/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled/steel_grid,/area/template_noop)
+"Y" = (/obj/floor_decal/corner/yellow{dir = 10},/obj/decal/cleanable/dirt,/obj/random/facility/mercenary/low,/turf/simulated/floor/tiled/steel_grid,/area/template_noop)
+"Z" = (/obj/floor_decal/corner/blue/half{dir = 4},/obj/machinery/light/small{dir = 4; icon_state = "bulb1"},/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+
+(1,1,1) = {"
+tttiRZtttt
+taoefKIatx
+taokYWIatx
+tagUUUgatx
+taaaaaaatx
+taaaaaaatx
+taaTTTaatx
+tancXGVatx
+tanruDVatx
+ttttBttttx
+"}

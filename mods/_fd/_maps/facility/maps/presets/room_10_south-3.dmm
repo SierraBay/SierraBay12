@@ -1,0 +1,26 @@
+"a" = (/turf/unsimulated/mineral{color = "#000000"; name = "void"},/area/template_noop)
+"b" = (/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/turf/simulated/floor/plating,/area/template_noop)
+"c" = (/turf/simulated/wall/invincible/prepainted,/area/template_noop)
+"h" = (/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/obj/random/maintenance,/turf/simulated/floor/asteroid,/area/template_noop)
+"s" = (/turf/simulated/mineral/random,/area/template_noop)
+"t" = (/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/turf/simulated/floor/plating,/area/template_noop)
+"u" = (/obj/floor_decal/corner/blue{dir = 1},/obj/floor_decal/industrial/warning,/obj/structure/table/rack,/obj/item/pickaxe/xeno/hand,/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"A" = (/obj/floor_decal/industrial/warning,/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"D" = (/obj/floor_decal/corner/blue{dir = 4},/obj/floor_decal/industrial/warning,/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"K" = (/obj/decal/cleanable/dirt,/turf/simulated/floor/plating,/area/template_noop)
+"N" = (/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/turf/simulated/floor/asteroid,/area/template_noop)
+"R" = (/turf/unsimulated/mineral,/area/template_noop)
+"T" = (/obj/structure/girder,/obj/decal/cleanable/dirt,/turf/simulated/floor/plating,/area/template_noop)
+
+(1,1,1) = {"
+cccuADcccc
+aRTbbKThRa
+aRRNstTRRa
+aaRssNRRaa
+aaRsssRaaa
+aaRsssRaaa
+aaRRsRRaaa
+aaaRRRaaaa
+aaaaaaaaaa
+aaaaaaaaaa
+"}

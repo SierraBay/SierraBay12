@@ -1,0 +1,37 @@
+"a" = (/turf/simulated/wall/invincible/prepainted,/area/template_noop)
+"b" = (/obj/floor_decal/corner/blue{dir = 5},/turf/simulated/floor/tiled,/area/template_noop)
+"d" = (/obj/floor_decal/industrial/outline/yellow,/obj/structure/closet,/obj/random/junkyard/loot,/turf/simulated/floor/tiled/monotile,/area/template_noop)
+"i" = (/obj/structure/closet,/obj/floor_decal/industrial/outline/yellow,/obj/random/junkyard/tool,/turf/simulated/floor/tiled/monotile,/area/template_noop)
+"j" = (/obj/machinery/light/small,/turf/simulated/floor/tiled/steel_grid,/area/template_noop)
+"k" = (/obj/structure/table/standard,/obj/floor_decal/corner/blue/three_quarters{dir = 4},/turf/simulated/floor/tiled,/area/template_noop)
+"n" = (/obj/random/trash,/obj/floor_decal/corner/blue{dir = 5},/turf/simulated/floor/tiled,/area/template_noop)
+"o" = (/obj/structure/table/rack,/obj/random/junkyard/medical/lite,/obj/floor_decal/industrial/outline/yellow,/turf/simulated/floor/tiled/monotile,/area/template_noop)
+"p" = (/obj/machinery/light/small{dir = 1},/obj/floor_decal/corner/blue{dir = 9},/turf/simulated/floor/tiled,/area/template_noop)
+"r" = (/obj/wallframe_spawn/reinforced,/turf/simulated/floor/plating,/area/template_noop)
+"s" = (/obj/machinery/light/small,/obj/floor_decal/corner/blue,/turf/simulated/floor/tiled,/area/template_noop)
+"t" = (/obj/floor_decal/corner/blue,/obj/random/facility/mercenary/low,/turf/simulated/floor/tiled,/area/template_noop)
+"y" = (/obj/structure/bed/chair/comfy/black{dir = 4},/obj/floor_decal/corner/blue{dir = 10},/turf/simulated/floor/tiled,/area/template_noop)
+"z" = (/obj/floor_decal/corner/blue{dir = 1},/obj/random/facility/mercenary/low,/turf/simulated/floor/tiled,/area/template_noop)
+"A" = (/obj/floor_decal/corner/blue{dir = 9},/turf/simulated/floor/tiled,/area/template_noop)
+"D" = (/obj/machinery/door/airlock/civilian,/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"H" = (/obj/machinery/light/small{dir = 4},/obj/floor_decal/corner/blue/half{dir = 1},/turf/simulated/floor/tiled/monotile,/area/template_noop)
+"K" = (/obj/structure/bed/chair/comfy/black,/obj/floor_decal/corner/blue{dir = 6},/turf/simulated/floor/tiled,/area/template_noop)
+"M" = (/obj/floor_decal/corner/blue/half{dir = 1},/turf/simulated/floor/tiled/monotile,/area/template_noop)
+"O" = (/obj/random/trash,/obj/floor_decal/corner/blue{dir = 9},/turf/simulated/floor/tiled,/area/template_noop)
+"R" = (/obj/random/trash,/obj/floor_decal/corner/blue/half{dir = 1},/turf/simulated/floor/tiled/monotile,/area/template_noop)
+"T" = (/turf/unsimulated/mineral{color = "#000000"; name = "void"},/area/template_noop)
+"U" = (/obj/random/trash,/turf/simulated/floor/tiled/steel_grid,/area/template_noop)
+"Z" = (/turf/simulated/floor/tiled/steel_grid,/area/template_noop)
+
+(1,1,1) = {"
+TaaaDaaTTT
+TaopZaTTTT
+TaiOZaTTTT
+aaaAZaaaaa
+abnzZrMRHa
+DZjZZrZZZD
+aaarrrZtaa
+aTadZUZKaa
+TTaoZsykaT
+TTaaDaaaaT
+"}
