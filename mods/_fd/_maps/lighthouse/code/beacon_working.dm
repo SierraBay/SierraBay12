@@ -1,6 +1,7 @@
 /obj/overmap/visitable/ship/working_beacon
 	name = "Space beacon"
 	desc = "This is space lighthouse!"
+	icon = 'mods/_fd/_maps/lighthouse/icons/space_beacon.dmi'
 	icon_state = "beacon"
 	instant_contact = TRUE
 
