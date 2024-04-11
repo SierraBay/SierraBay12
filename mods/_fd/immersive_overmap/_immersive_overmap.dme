@@ -1,0 +1,11 @@
+#ifndef MODPACK_IMMERSIVE_OVERMAP
+#define MODPACK_IMMERSIVE_OVERMAP
+
+#include "_immersive_overmap.dm"
+
+#include "code/bluespace_nebula.dm"
+#include "code/overmap_autodock.dm"
+#include "code/overmap_turf.dm"
+#include "code/overmap.dm"
+
+#endif
