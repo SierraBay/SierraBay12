@@ -28,8 +28,30 @@
 /area/proc/power_change()
 	for(var/obj/machinery/M as anything in machinery_list)	// for each machine in the area
 		M.power_change()			// reverify power status (to update icons etc.)
+	SEND_SIGNAL(src, COMSIG_AREA_POWER_CHANGE)
 	if (fire || eject || party)
 		update_icon()
+
+/// Sets the apc in area. Sends COMSIG_AREA_APC_ADDED signal
+/area/proc/set_apc(obj/machinery/power/apc/new_apc)
+	if(!istype(new_apc))
+		CRASH("Invalid apc passed [log_info_line(new_apc)]")
+
+	if(apc)
+		stack_trace("Apc set in area when old one is still present")
+		remove_apc()
+
+	apc = new_apc
+	SEND_SIGNAL(src, COMSIG_AREA_APC_ADDED, new_apc)
+
+/// Removes current apc from area, if present. Sends COMSIG_AREA_APC_REMOVED signal
+/area/proc/remove_apc()
+	if(!apc)
+		return
+
+	SEND_SIGNAL(src, COMSIG_AREA_APC_REMOVED, apc)
+	apc = null
+
 
 /// Returns Integer. The total amount of power usage queued for the area from both `used_*` and `oneoff_*` for the given power channel, or all channels if `TOTAL` is passed instead.
 /area/proc/usage(chan)
