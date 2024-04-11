@@ -277,6 +277,9 @@
 				valve_open = FALSE
 			if(istype(holding, /obj/item/tank))
 				holding.manipulated_by = usr.real_name
+			if(!holding)
+				update_icon()
+				return TRUE
 			holding.dropInto(loc)
 			holding = null
 			update_icon()

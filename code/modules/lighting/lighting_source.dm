@@ -137,15 +137,14 @@
 // Decompile the hexadecimal colour into lumcounts of each perspective.
 /datum/light_source/proc/parse_light_color()
 	if (light_color)
-		var/list/parts = rgb2num(light_color)
-		ASSERT(length(parts) == 3)
-		lum_r = parts[1] / 255
-		lum_g = parts[2] / 255
-		lum_b = parts[3] / 255
+		lum_r = GetRedPart   (light_color) / 255
+		lum_g = GetGreenPart (light_color) / 255
+		lum_b = GetBluePart  (light_color) / 255
 	else
 		lum_r = 1
 		lum_g = 1
 		lum_b = 1
+
 
 #define POLAR_TO_CART_X(R,T) ((R) * cos(T))
 #define POLAR_TO_CART_Y(R,T) ((R) * sin(T))
