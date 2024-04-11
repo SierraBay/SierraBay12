@@ -243,6 +243,7 @@
 	#include "../../mods/_fd/accent_labels/_accent_labels.dme"
 	#include "../../mods/_fd/additional_biomods/_additional_biomods.dme"
 	#include "../../mods/_fd/ascent/_ascent.dme"
+	#include "../../mods/_fd/bruno_items/_bruno_items.dme"
 	#include "../../mods/_fd/combat_stances/_combat_stances.dme"
 	#include "../../mods/_fd/complementary_xeno_ablities/_complementary_xeno_ablities.dme"
 	#include "../../mods/_fd/conference_holopads/_conference_holopads.dme"

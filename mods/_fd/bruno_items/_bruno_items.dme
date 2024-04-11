@@ -1,0 +1,12 @@
+#ifndef MODPACK_BRUNO_ITEMS
+#define MODPACK_BRUNO_ITEMS
+
+#include "_bruno_items.dm"
+
+
+#include "code/loadout/loadout-accessory.dm"
+
+#include "code/accessory.dm"
+#include "code/suit.dm"
+
+#endif
