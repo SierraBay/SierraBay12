@@ -806,7 +806,7 @@
 				if("Окружение")
 					environ = setsubsystem(val)
 			update_icon()
-			update()
+			force_update_channels()
 		if("overload")
 			overload_lighting()
 		if("toggleaccess")

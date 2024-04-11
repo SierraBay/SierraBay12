@@ -194,7 +194,7 @@
 	desc = "A large beaker."
 	icon_state = "beakerlarge"
 	center_of_mass = "x=16;y=10"
-	matter = list(MATERIAL_GLASS = 5000)
+	matter = list(MATERIAL_GLASS = 1000)
 	volume = 120
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = "5;10;15;25;30;60;120"
