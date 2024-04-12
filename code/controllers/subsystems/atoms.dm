@@ -44,33 +44,32 @@ SUBSYSTEM_DEF(atoms)
 		return
 	atom_init_stage = INITIALIZATION_INNEW_MAPLOAD
 	var/list/mapload_arg = list(TRUE)
-	var/atom/atom
-	var/list/params
 	var/count = 0
 	var/time = Uptime()
-	if (!initialized)
-		for (atom in world)
-			if (!atom || atom.atom_flags & ATOM_FLAG_INITIALIZED)
+	if(!initialized)
+		for(var/atom/atom_to_initialize as anything in world)
+			if(!atom_to_initialize || atom_to_initialize.atom_flags & ATOM_FLAG_INITIALIZED)
 				continue
-			InitAtom(atom, mapload_arg)
-			if (++count % 1000)
-				continue
+			InitAtom(atom_to_initialize, mapload_arg)
+			count++
 			CHECK_TICK
+
 	var/init_queue_length = length(init_queue)
-	if (init_queue_length)
-		for (var/i = 1 to init_queue_length)
-			atom = init_queue[i]
-			if (!atom || atom.atom_flags & ATOM_FLAG_INITIALIZED)
+	if(init_queue_length)
+		for(var/i = 1 to init_queue_length)
+			var/atom/atom_to_initialize = init_queue[i]
+			if (!atom_to_initialize || atom_to_initialize.atom_flags & ATOM_FLAG_INITIALIZED)
 				continue
-			params = init_queue[atom]
+
+			var/list/params = init_queue[atom_to_initialize]
 			if (params)
-				InitAtom(atom, mapload_arg + params)
+				InitAtom(atom_to_initialize, mapload_arg + params)
 			else
-				InitAtom(atom, mapload_arg)
-			if (++count % 500)
-				continue
+				InitAtom(atom_to_initialize, mapload_arg)
+			count++
 			CHECK_TICK
 		init_queue.Cut(1, init_queue_length + 1)
+
 	time = max((Uptime() - time) * 0.1, 0.1)
 	report_progress("Initialized [count] atom\s in [time]s ([floor(count/time)]/s)")
 	atom_init_stage = INITIALIZATION_INNEW_REGULAR
@@ -78,13 +77,13 @@ SUBSYSTEM_DEF(atoms)
 	if (late_queue_length)
 		count = 0
 		time = Uptime()
-		for (var/i = 1 to late_queue_length)
-			atom = late_init_queue[i]
-			if (!atom)
+		for(var/i = 1 to late_queue_length)
+			var/atom/atom_to_late_init = late_init_queue[i]
+			if (!atom_to_late_init)
 				continue
-			atom.LateInitialize(arglist(late_init_queue[atom]))
-			if (++count % 250)
-				continue
+
+			atom_to_late_init.LateInitialize(arglist(late_init_queue[atom_to_late_init]))
+			count++
 			CHECK_TICK
 		late_init_queue.Cut(1, late_queue_length + 1)
 		time = max((Uptime() - time) * 0.1, 0.1)

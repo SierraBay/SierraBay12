@@ -11,21 +11,17 @@ var/global/const/ATOM_ICON_CACHE_ALL = (ATOM_ICON_CACHE_NORMAL | ATOM_ICON_CACHE
 SUBSYSTEM_DEF(overlays)
 	name = "Overlays"
 	flags = SS_TICKER
-	wait = 1 // ticks
+	wait = 1
 	priority = FIRE_PRIORITY_OVERLAYS
 	init_order = SS_INIT_OVERLAYS
-
 	/// The queue of atoms that need under/overlay updates.
-	var/static/list/atom/queue = list()
-
+	VAR_PRIVATE/static/list/atom/queue = list()
 	/// A list([icon] = list([state] = [appearance], ...), ...) cache of appearances.
-	var/static/list/state_cache = list()
-
+	VAR_PRIVATE/static/list/state_cache = list()
 	/// A list([icon] = [appearance], ...) cache of appearances.
-	var/static/list/icon_cache = list()
-
+	VAR_PRIVATE/static/list/icon_cache = list()
 	/// The number of appearances currently cached.
-	var/static/cache_size = 0
+	VAR_PRIVATE/static/cache_size = 0
 
 
 /datum/controller/subsystem/overlays/Recover()
@@ -33,16 +29,15 @@ SUBSYSTEM_DEF(overlays)
 	LIST_RESIZE(state_cache, 0)
 	LIST_RESIZE(icon_cache, 0)
 	cache_size = 0
-	var/count = 0
-	for (var/atom/atom)
-		atom.atom_flags &= ~ATOM_AWAITING_OVERLAY_UPDATE
-		if (++count % 500)
-			continue
+	for(var/atom/atom as anything in world)
+		if(atom.atom_flags & ATOM_AWAITING_OVERLAY_UPDATE)
+			SSoverlays.queue += atom
+
 		CHECK_TICK
 
 
 /datum/controller/subsystem/overlays/Initialize(start_uptime)
-	fire(FALSE, TRUE)
+	flush_queue()
 
 
 /datum/controller/subsystem/overlays/UpdateStat(time)
@@ -51,72 +46,99 @@ SUBSYSTEM_DEF(overlays)
 	..({"Queued Atoms: [length(queue)], Cache Size: [cache_size]"})
 
 
-/datum/controller/subsystem/overlays/fire(resumed, no_mc_tick)
-	var/queue_length = length(queue)
-	if (queue_length)
-		var/atom/atom
-		for (var/i = 1 to queue_length)
-			atom = queue[i]
-			if (QDELETED(atom))
-				continue
-			if (atom.atom_flags & ATOM_AWAITING_OVERLAY_UPDATE)
-				atom.UpdateOverlays()
-			if (no_mc_tick)
-				if (i % 1000)
-					continue
-				CHECK_TICK
-			else if (MC_TICK_CHECK)
-				queue.Cut(1, i + 1)
-				return
-		queue.Cut(1, queue_length + 1)
+/datum/controller/subsystem/overlays/fire(resumed)
+	var/queue_position = 1
+	while(length(queue) >= queue_position)
+		var/atom/atom_to_update = queue[queue_position]
+		if(!QDELETED(atom_to_update) && atom_to_update.atom_flags & ATOM_AWAITING_OVERLAY_UPDATE)
+			atom_to_update.UpdateOverlays()
+
+		queue_position++
+		if(MC_TICK_CHECK)
+			break
+
+	queue.Cut(1, queue_position)
+
+/datum/controller/subsystem/overlays/proc/flush_queue()
+	var/queue_position = 1
+	while(length(queue) >= queue_position)
+		process_atom_overlays_update(queue[queue_position])
+		queue_position++
+		CHECK_TICK
+
+	LIST_RESIZE(queue, 0)
+
+/datum/controller/subsystem/overlays/proc/process_atom_overlays_update(atom/atom_to_update)
+	if(!QDELETED(atom_to_update) && atom_to_update.atom_flags & ATOM_AWAITING_OVERLAY_UPDATE)
+		atom_to_update.UpdateOverlays()
 
 
 /datum/controller/subsystem/overlays/proc/GetStateAppearance(icon, state)
-	var/list/subcache = state_cache[icon]
-	if (!subcache)
-		subcache = list()
-		state_cache[icon] = subcache
-	if (!subcache[state])
-		var/image/image = image(icon, null, state)
-		subcache[state] = image.appearance
-		++cache_size
-	return subcache[state]
+	var/list/state_to_appearance = state_cache[icon]
+	if(!state_to_appearance)
+		state_to_appearance = list()
+		state_cache[icon] = state_to_appearance
+
+	var/state_appearance = state_to_appearance[state]
+	if(!state_appearance)
+		var/image/state_image = image(icon, null, state)
+		state_appearance = state_image.appearance
+		state_to_appearance[state] = state_appearance
+		cache_size++
+
+	return state_appearance
 
 
 /datum/controller/subsystem/overlays/proc/GetIconAppearance(icon)
-	if (!icon_cache[icon])
-		var/image/image = image(icon)
-		icon_cache[icon] = image.appearance
-		++cache_size
-	return icon_cache[icon]
+	var/icon_appearance = icon_cache[icon]
+	if (!icon_appearance)
+		var/image/icon_image = image(icon)
+		icon_appearance = icon_image.appearance
+		icon_cache[icon] = icon_appearance
+		cache_size++
+
+	return icon_appearance
 
 
-/datum/controller/subsystem/overlays/proc/GetAppearanceList(atom/subject, list/sources)
+/datum/controller/subsystem/overlays/proc/getAppearanceList(atom/subject, list/sources)
 	if (!sources)
 		return list()
+
 	if (!islist(sources))
 		sources = list(sources)
+
 	var/list/result = list()
-	var/icon/icon = subject.icon
-	var/atom/entry
-	for (var/i = 1 to length(sources))
-		entry = sources[i]
-		if (!entry)
+	for (var/atom/source as anything in sources)
+		if(!source)
 			continue
-		else if (istext(entry))
-			result += GetStateAppearance(icon, entry)
-		else if (isicon(entry))
-			result += GetIconAppearance(entry)
+
+		if(istext(source))
+			result += GetStateAppearance(subject.icon, source)
+
+		else if(isicon(source))
+			result += GetIconAppearance(source)
+
 		else
-			if (isloc(entry))
-				if (entry.atom_flags & ATOM_AWAITING_OVERLAY_UPDATE)
-					entry.UpdateOverlays()
-			if (!ispath(entry))
-				result += entry.appearance
+			if(isatom(source) && source.atom_flags & ATOM_AWAITING_OVERLAY_UPDATE)
+				source.UpdateOverlays()
+
+			if(!ispath(source))
+				result += source.appearance
 			else
-				var/image/image = entry
+				var/image/image = source
 				result += image.appearance
+
 	return result
+
+/datum/controller/subsystem/overlays/proc/enque_atom_overlay_update(atom/atom_to_update)
+	if(!atom_to_update)
+		return
+
+	if(atom_to_update.atom_flags & ATOM_AWAITING_OVERLAY_UPDATE)
+		return
+
+	atom_to_update.atom_flags |= ATOM_AWAITING_OVERLAY_UPDATE
+	SSoverlays.queue += atom_to_update
 
 
 /// Immediately runs an overlay update.
@@ -147,11 +169,7 @@ SUBSYSTEM_DEF(overlays)
 /// Enqueues the atom for an overlay update if not already queued
 /atom/proc/QueueOverlayUpdate()
 	SHOULD_NOT_OVERRIDE(TRUE)
-	if (atom_flags & ATOM_AWAITING_OVERLAY_UPDATE)
-		return
-	atom_flags |= ATOM_AWAITING_OVERLAY_UPDATE
-	SSoverlays.queue += src
-
+	SSoverlays.enque_atom_overlay_update(src)
 
 /// Builds the atom's overlay state from caches
 /atom/proc/UpdateOverlays()
@@ -160,6 +178,7 @@ SUBSYSTEM_DEF(overlays)
 	if (QDELING(src))
 		LIST_RESIZE(overlays, 0)
 		return
+
 	if (length(atom_protected_overlay_cache))
 		if (length(atom_overlay_cache))
 			overlays = atom_protected_overlay_cache + atom_overlay_cache
@@ -203,7 +222,7 @@ SUBSYSTEM_DEF(overlays)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	if (!sources)
 		return
-	sources = SSoverlays.GetAppearanceList(src, sources)
+	sources = SSoverlays.getAppearanceList(src, sources)
 	if (!length(sources))
 		return
 	if (cache_target & ATOM_ICON_CACHE_PROTECTED)
@@ -228,9 +247,11 @@ SUBSYSTEM_DEF(overlays)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	if (!sources)
 		return
-	sources = SSoverlays.GetAppearanceList(src, sources)
+
+	sources = SSoverlays.getAppearanceList(src, sources)
 	if (!length(sources))
 		return
+
 	var/update
 	if (cache_target & ATOM_ICON_CACHE_PROTECTED)
 		var/outcome = CutCacheBehavior(sources, atom_protected_overlay_cache)
@@ -238,12 +259,14 @@ SUBSYSTEM_DEF(overlays)
 			update = TRUE
 			if (outcome == TRUE)
 				atom_protected_overlay_cache = null
+
 	if (cache_target & ATOM_ICON_CACHE_NORMAL)
 		var/outcome = CutCacheBehavior(sources, atom_overlay_cache)
 		if (!isnull(outcome))
 			update = TRUE
 			if (outcome == TRUE)
 				atom_overlay_cache = null
+
 	if (update)
 		QueueOverlayUpdate()
 

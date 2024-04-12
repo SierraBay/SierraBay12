@@ -8,7 +8,7 @@
 	description = "Salvage Gantry turned Ship"
 	suffixes = list("scavver/scavver_gantry-1.dmm","scavver/scavver_gantry-2.dmm")
 	spawn_cost = 1
-	player_cost = 4
+	player_cost = 0
 	accessibility_weight = 10
 	shuttles_to_initialise = list(
 		/datum/shuttle/autodock/overmap/scavver_gantry,

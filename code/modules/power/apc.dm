@@ -176,7 +176,7 @@
 		area = A
 	if(autoname)
 		SetName("\improper [area.name] APC")
-	area.apc = src
+	area.set_apc(src)
 
 	. = ..()
 
@@ -193,8 +193,8 @@
 	power_change()
 
 /obj/machinery/power/apc/Destroy()
-	src.update()
-	area.apc = null
+	update()
+	area.remove_apc()
 	area.power_light = 0
 	area.power_equip = 0
 	area.power_environ = 0
@@ -813,9 +813,9 @@
 			if(istype(usr, /mob/living/silicon))
 				if(emagged || MACHINE_IS_BROKEN(src) || GET_FLAGS(stat, MACHINE_STAT_MAINT))
 					to_chat(usr, "The APC does not respond to the command.")
-			else
-				locked = !locked
-				update_icon()
+				else
+					locked = !locked
+					update_icon()
 		else
 			return FALSE
 

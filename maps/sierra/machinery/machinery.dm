@@ -117,6 +117,28 @@
 	islocked = 1
 	ssu_color = "#990000"
 
+/obj/machinery/suit_storage_unit/explorer/engineer
+	name = "Expeditionary Engineer Voidsuit Storage Unit"
+	suit = /obj/item/clothing/suit/space/void/engineer
+	helmet = /obj/item/clothing/head/helmet/space/void/engineer
+	boots = /obj/item/clothing/shoes/magboots
+	tank = /obj/item/tank/oxygen
+	mask = /obj/item/clothing/mask/breath
+	req_access = list(access_explorer, access_expedition_shuttle_helm)
+	islocked = 1
+	ssu_color = "#bf8833"
+
+/obj/machinery/suit_storage_unit/explorer/medic
+	name = "Expeditionary Medic Voidsuit Storage Unit"
+	suit = /obj/item/clothing/suit/space/void/medic
+	helmet = /obj/item/clothing/head/helmet/space/void/medic
+	boots = /obj/item/clothing/shoes/magboots
+	tank = /obj/item/tank/oxygen
+	mask = /obj/item/clothing/mask/breath
+	req_access = list(access_explorer, access_expedition_shuttle_helm)
+	islocked = 1
+	ssu_color = "#8caecb"
+
 /obj/machinery/suit_storage_unit/standard_unit
 	icon_state = "industrial"
 	base_icon_state = "industrial"
