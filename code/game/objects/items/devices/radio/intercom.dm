@@ -15,7 +15,7 @@
 	///2 = wired/built, 1 = circuit installed, 0 = frame
 	var/buildstage = 2
 	var/number = 0
-	var/last_tick //used to delay the powercheck
+	var/area/linked_area
 	intercom_handling = TRUE
 
 /obj/item/device/radio/intercom/get_storage_cost()
@@ -93,7 +93,7 @@
 
 /obj/item/device/radio/intercom/Initialize(loc, dir, atom/frame)
 	. = ..()
-	START_PROCESSING(SSobj, src)
+	find_and_set_linked_area()
 
 	if (dir)
 		set_dir(dir)
@@ -147,10 +147,6 @@
 /obj/item/device/radio/intercom/raider/Initialize()
 	. = ..()
 	internal_channels[num2text(RAID_FREQ)] = list(access_syndicate)
-
-/obj/item/device/radio/intercom/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	return ..()
 
 /obj/item/device/radio/intercom/attack_ai(mob/user)
 	add_fingerprint(user)
@@ -322,26 +318,6 @@
 	.["Wirecutters"] += "<p>Used for deconstruction. See deconstruction steps.</p>"
 	.["Wrench"] += "<p>Used for deconstruction. See deconstruction steps.</p>"
 
-/obj/item/device/radio/intercom/Process()
-	if (wiresexposed)
-		on = FALSE
-		return
-	if(((world.timeofday - last_tick) > 30) || ((world.timeofday - last_tick) < 0))
-		last_tick = world.timeofday
-		var/old_on = on
-
-		if(!src.loc)
-			on = FALSE
-		else
-			var/area/A = get_area(src)
-			if(!A)
-				on = FALSE
-			else
-				on = A.powered(EQUIP) // set "on" to the power status
-
-		if (on != old_on)
-			update_icon()
-
 /obj/item/device/radio/intercom/on_update_icon()
 	if (buildstage == 2 && wiresexposed)
 		icon_state = "intercom-b2"
@@ -349,10 +325,11 @@
 		icon_state = "intercom-b1"
 	else if (buildstage == 0)
 		icon_state = "intercom-f"
-	else if (!on)
-		icon_state = "intercom-p"
 	else
-		icon_state = "intercom_[broadcasting][listening]"
+		if(on)
+			icon_state = "intercom_[broadcasting][listening]"
+		else
+			icon_state = "intercom-p"
 
 /obj/item/device/radio/intercom/ToggleBroadcast()
 	..()
@@ -360,6 +337,39 @@
 
 /obj/item/device/radio/intercom/ToggleReception()
 	..()
+	update_icon()
+
+/obj/item/device/radio/intercom/proc/find_and_set_linked_area()
+	var/area/target_area = get_area(src)
+	if(!target_area.apc)
+		RegisterSignal(target_area, COMSIG_AREA_APC_ADDED, PROC_REF(on_apc_add))
+		return
+
+	on_apc_add(target_area)
+
+/obj/item/device/radio/intercom/proc/on_apc_add(area/apc_area)
+	SIGNAL_HANDLER
+
+	UnregisterSignal(apc_area, COMSIG_AREA_APC_ADDED)
+	linked_area = apc_area
+	RegisterSignal(apc_area, COMSIG_AREA_APC_REMOVED, PROC_REF(on_apc_removal))
+	RegisterSignal(apc_area, COMSIG_AREA_POWER_CHANGE, PROC_REF(change_status))
+
+/obj/item/device/radio/intercom/proc/on_apc_removal(area/apc_area)
+	SIGNAL_HANDLER
+
+	UnregisterSignal(apc_area, COMSIG_AREA_APC_REMOVED)
+	UnregisterSignal(apc_area, COMSIG_AREA_POWER_CHANGE)
+	linked_area = null
+	on = FALSE
+	update_icon()
+
+	RegisterSignal(apc_area, COMSIG_AREA_APC_ADDED, PROC_REF(on_apc_add))
+
+/obj/item/device/radio/intercom/proc/change_status()
+	SIGNAL_HANDLER
+
+	on = linked_area.powered(EQUIP)
 	update_icon()
 
 /obj/item/device/radio/intercom/broadcasting

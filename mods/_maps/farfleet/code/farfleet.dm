@@ -44,8 +44,9 @@
 	suffixes = list("farfleet-1.dmm", "farfleet-2.dmm")
 	ban_ruins = list(/datum/map_template/ruin/away_site/patrol)
 	spawn_cost = 0.5
-	player_cost = 7
-	spawn_weight = 1
+	player_cost = 0
+	spawn_weight = 0.5
+	is_patrol = TRUE
 	shuttles_to_initialise = list(/datum/shuttle/autodock/overmap/snz)
 
 	area_usage_test_exempted_areas = list(

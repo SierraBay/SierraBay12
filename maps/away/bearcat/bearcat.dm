@@ -36,7 +36,7 @@
 	description = "A wrecked light freighter."
 	suffixes = list("bearcat/bearcat-1.dmm", "bearcat/bearcat-2.dmm")
 	spawn_cost = 1
-	player_cost = 4
+	player_cost = 0
 	shuttles_to_initialise = list(/datum/shuttle/autodock/ferry/lift)
 	area_usage_test_exempted_root_areas = list(/area/ship)
 	apc_test_exempt_areas = list(
@@ -52,7 +52,7 @@
 		/area/ship/scrap/shuttle/lift = NO_SCRUBBER|NO_VENT|NO_APC,
 		/area/ship/scrap/command/hallway = NO_SCRUBBER|NO_VENT
 	)
-	spawn_weight = 0.67
+	spawn_weight = 0.5
 
 /datum/shuttle/autodock/ferry/lift
 	name = "Cargo Lift"
