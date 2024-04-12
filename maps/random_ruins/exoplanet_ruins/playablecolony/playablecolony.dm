@@ -6,7 +6,7 @@
 	description = "a fully functional colony on the frontier of settled space"
 	suffixes = list("playablecolony/colony.dmm")
 	spawn_cost = 3
-	player_cost = 4
+	player_cost = 0
 	template_flags = TEMPLATE_FLAG_CLEAR_CONTENTS | TEMPLATE_FLAG_NO_RUINS | TEMPLATE_FLAG_NO_RADS
 	ruin_tags = RUIN_HUMAN|RUIN_HABITAT
 	ban_ruins = list(/datum/map_template/ruin/exoplanet/playablecolony2)

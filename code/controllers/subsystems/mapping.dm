@@ -9,6 +9,9 @@ SUBSYSTEM_DEF(mapping)
 	var/list/away_sites_templates = list()
 	var/list/submaps = list()
 	var/list/submap_archetypes = list()
+	// [SIERRA-ADD]
+	var/list/patrol = list()
+	// [/SIERRA-ADD]
 
 
 /datum/controller/subsystem/mapping/UpdateStat(time)
@@ -73,6 +76,10 @@ SUBSYSTEM_DEF(mapping)
 			space_ruins_templates[MT.name] = MT
 		else if(istype(MT, /datum/map_template/ruin/away_site))
 			away_sites_templates[MT.name] = MT
+			// [SIERRA-ADD]
+			if(MT.is_patrol == TRUE)
+				patrol[MT.name] = MT
+			// [/SIERRA-ADD]
 
 /proc/generateMapList(filename)
 	RETURN_TYPE(/list)

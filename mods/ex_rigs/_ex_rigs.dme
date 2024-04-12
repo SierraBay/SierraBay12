@@ -1,0 +1,8 @@
+#ifndef EX_RIGS
+#define EX_RIGS
+
+
+// Далее просто включай свой код
+// #include "code/something.dm"
+
+#endif

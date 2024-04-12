@@ -11,13 +11,14 @@
 	description = "A Skrellian SDTF scouting vessel."
 	suffixes = list("skrellscoutship/skrellscoutship_revamp.dmm")
 	spawn_cost = 0.5
-	player_cost = 4
+	player_cost = 0
+	is_patrol = TRUE
 	shuttles_to_initialise = list(/datum/shuttle/autodock/overmap/skrellscoutship, /datum/shuttle/autodock/overmap/skrellscoutshuttle)
 	apc_test_exempt_areas = list(
 		/area/ship/skrellscoutship/externalwing/port = NO_SCRUBBER|NO_VENT|NO_APC,
 		/area/ship/skrellscoutship/externalwing/starboard = NO_SCRUBBER|NO_VENT|NO_APC
 	)
-	spawn_weight = 0.67
+	spawn_weight = 0.5
 
 /obj/overmap/visitable/sector/skrellscoutspace
 	name = "Empty Sector"

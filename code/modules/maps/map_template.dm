@@ -11,6 +11,9 @@
 	var/base_turf_for_zs = null
 	var/accessibility_weight = 0
 	var/template_flags = TEMPLATE_FLAG_ALLOW_DUPLICATES
+	// [SIERRA-ADD]
+	var/is_patrol = FALSE //Is the map intended to spawn to counter away site threats?
+	// [/SIERRA-ADD]
 
 	/// Null, or a string reason for this type to be skipped in unit testing.
 	var/skip_main_unit_tests
