@@ -135,7 +135,7 @@
 	boots = /obj/item/clothing/shoes/magboots
 	tank = /obj/item/tank/oxygen
 	mask = /obj/item/clothing/mask/breath
-	req_access = list(access_explorer, access_expedition_shuttle_helm)
+	req_access = list(access_explorer, access_expedition_shuttle_helm, access_engineering)
 	islocked = 1
 	ssu_color = "#8caecb"
 
