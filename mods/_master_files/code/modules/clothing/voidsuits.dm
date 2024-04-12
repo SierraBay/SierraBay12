@@ -6,11 +6,13 @@
 	icon_state = "rig0_explorer"
 	item_state = "medic_helm"
 	armor = list(
-		melee = ARMOR_MELEE_KNIVES,
+		melee = ARMOR_MELEE_RESISTANT,
 		bullet = ARMOR_BALLISTIC_MINOR,
 		laser = ARMOR_LASER_MINOR,
+		energy = ARMOR_ENERGY_RESISTANT,
+		bomb = ARMOR_BOMB_PADDED,
 		bio = ARMOR_BIO_SHIELDED,
-		rad = ARMOR_RAD_SMALL
+		rad = ARMOR_RAD_RESISTANT
 		)
 	light_overlay = "helmet_light_dual"
 	tinted = FALSE
@@ -22,11 +24,13 @@
 	icon_state = "void_medic"
 	item_state = "medic_rig"
 	armor = list(
-		melee = ARMOR_MELEE_KNIVES,
+		melee = ARMOR_MELEE_RESISTANT,
 		bullet = ARMOR_BALLISTIC_MINOR,
 		laser = ARMOR_LASER_MINOR,
+		energy = ARMOR_ENERGY_RESISTANT,
+		bomb = ARMOR_BOMB_PADDED,
 		bio = ARMOR_BIO_SHIELDED,
-		rad = ARMOR_RAD_SMALL
+		rad = ARMOR_RAD_RESISTANT
 		)
 	allowed = list(/obj/item/device/flashlight,/obj/item/tank,/obj/item/device/suit_cooling_unit,/obj/item/storage/toolbox,/obj/item/storage/briefcase/inflatable,/obj/item/device/t_scanner,/obj/item/rcd,/obj/item/rpd)
 
@@ -38,11 +42,13 @@
 	icon_state = "rig0_explorer"
 	item_state = "engie_helm"
 	armor = list(
-		melee = ARMOR_MELEE_KNIVES,
+		melee = ARMOR_MELEE_RESISTANT,
 		bullet = ARMOR_BALLISTIC_MINOR,
 		laser = ARMOR_LASER_MINOR,
+		energy = ARMOR_ENERGY_RESISTANT,
+		bomb = ARMOR_BOMB_PADDED,
 		bio = ARMOR_BIO_SHIELDED,
-		rad = ARMOR_RAD_SMALL
+		rad = ARMOR_RAD_RESISTANT
 		)
 	light_overlay = "helmet_light_dual"
 	tinted = FALSE
@@ -54,11 +60,13 @@
 	icon_state = "void_engie"
 	item_state = "engie_rig"
 	armor = list(
-		melee = ARMOR_MELEE_KNIVES,
+		melee = ARMOR_MELEE_RESISTANT,
 		bullet = ARMOR_BALLISTIC_MINOR,
 		laser = ARMOR_LASER_MINOR,
+		energy = ARMOR_ENERGY_RESISTANT,
+		bomb = ARMOR_BOMB_PADDED,
 		bio = ARMOR_BIO_SHIELDED,
-		rad = ARMOR_RAD_SMALL
+		rad = ARMOR_RAD_RESISTANT
 		)
 	allowed = list(/obj/item/device/flashlight,/obj/item/tank,/obj/item/device/suit_cooling_unit,/obj/item/storage/toolbox,/obj/item/storage/briefcase/inflatable,/obj/item/device/t_scanner,/obj/item/rcd,/obj/item/rpd)
 
