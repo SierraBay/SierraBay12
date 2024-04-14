@@ -5,11 +5,15 @@
 
 /datum/map/proc/area_lockdown(a)
 	var/area/area = get_area_name(a)
+	if(!area)
+		return
 	for(var/obj/machinery/door/airlock/airlock in area.all_doors)
 		airlock.command("secure_close")
 
 /datum/map/proc/area_unlock(a)
 	var/area/area = get_area_name(a)
+	if(!area)
+		return
 	for(var/obj/machinery/door/airlock/airlock in area.all_doors)
 		airlock.command("unlock")
 

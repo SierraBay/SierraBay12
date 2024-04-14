@@ -57,7 +57,7 @@
 	helmet = /obj/item/clothing/head/helmet/space/void/security
 	boots = /obj/item/clothing/shoes/magboots
 	tank = /obj/item/tank/oxygen
-	mask = /obj/item/clothing/mask/breath
+	mask = /obj/item/clothing/mask/gas/half
 	req_access = list(access_security)
 	islocked = 1
 	ssu_color = "#cc0000"
@@ -68,7 +68,7 @@
 	helmet = /obj/item/clothing/head/helmet/space/void/medical
 	boots = /obj/item/clothing/shoes/magboots
 	tank = /obj/item/tank/oxygen
-	mask = /obj/item/clothing/mask/breath
+	mask = /obj/item/clothing/mask/gas/half
 	req_access = list(access_medical)
 	islocked = 1
 	ssu_color = "#55aaaa"
@@ -124,7 +124,7 @@
 	boots = /obj/item/clothing/shoes/magboots
 	tank = /obj/item/tank/oxygen
 	mask = /obj/item/clothing/mask/breath
-	req_access = list(access_explorer, access_expedition_shuttle_helm)
+	req_access = list(access_explorer)
 	islocked = 1
 	ssu_color = "#bf8833"
 
@@ -135,7 +135,7 @@
 	boots = /obj/item/clothing/shoes/magboots
 	tank = /obj/item/tank/oxygen
 	mask = /obj/item/clothing/mask/breath
-	req_access = list(access_explorer, access_expedition_shuttle_helm)
+	req_access = list(access_explorer)
 	islocked = 1
 	ssu_color = "#8caecb"
 

@@ -17,7 +17,7 @@
 			stat("Coolant remaining:","[coolant.get_coolant_remaining()]/[coolant.refrigerant_max]")
 
 /obj/item/organ/internal/cell/Process()
-	..()
+	. = ..()
 	var/cost = get_power_drain()
 	if(!checked_use(cost) && owner.isSynthetic())
 		if(owner.species.name == SPECIES_IPC)
