@@ -1,5 +1,3 @@
-#define SPECIES_RESOMI ""
-
 /obj/machinery/computer/modular/preset/merchant/ignore_distance
 
 /obj/machinery/computer/modular/preset/merchant/public_access
