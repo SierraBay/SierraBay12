@@ -2,6 +2,7 @@
 #### Список PRов:
 
 - https://github.com/RepoStash/FD-NewBay/pull/1
+- https://github.com/RepoStash/FD-NewBay/pull/2
 <!--
   Ссылки на PRы, связанные с модом:
   - Создание
