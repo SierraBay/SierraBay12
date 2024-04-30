@@ -62,8 +62,10 @@ var/global/const/NETWORK_ENGINEERING_OUTPOST = "Engineering Outpost"
 	)
 
 	high_secure_areas = list(
-		"Second Deck - AI Upload",
-		"Second Deck - AI Upload Access"
+		"AI Chamber",
+		//"AI Chamber - Maintenance",
+		//"AI Chamber - Teleporter",
+		"Third Deck - AI Upload"
 	)
 
 	secure_areas = list(
