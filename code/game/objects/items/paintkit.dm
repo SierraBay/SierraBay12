@@ -80,33 +80,42 @@
 	return ..()
 
 // Mechs are handled in their attackby (mech_interaction.dm).
-/obj/item/device/kit/paint
-	name = "exosuit customisation kit"
+/obj/item/device/kit/mech
+	name = "exosuit customization kit"
 	desc = "A kit containing all the needed tools and parts to repaint a exosuit."
 	var/removable = null
+	new_icon_file = 'icons/mecha/mech_decals.dmi'
+	var/current_decal = "cammo2" //По умолчанию
+	var/list/mech_decales = list(
+		"flames_red",
+		"flames_blue",
+		"cammo2",
+		"cammo1",
+	)
 
-/obj/item/device/kit/paint/examine(mob/user)
+/obj/item/device/kit/mech/attack_self(mob/user)//Тыкаем по самому киту дабы вызвать список того, какую декаль хотим на меха
+	choose_decal(user)
+
+/obj/item/device/kit/mech/examine(mob/user)
 	. = ..()
 	to_chat(user, "This kit will add a '[new_name]' decal to a exosuit'.")
 
-// exosuit kits.
-/obj/item/device/kit/paint/use(amt, mob/user)
-	playsound(get_turf(user), 'sound/items/Screwdriver.ogg', 50, 1)
 
-/obj/item/device/kit/paint/flames_red
-	name = "\"Firestarter\" exosuit customisation kit"
-	new_icon = "flames_red"
+/obj/item/device/kit/mech/proc/choose_decal(mob/user)
+	set name = "Choose decal"
+	set desc = "Choose mech decal."
+	set category = "Object"
+	set src in usr
 
-/obj/item/device/kit/paint/flames_blue
-	name = "\"Burning Chrome\" exosuit customisation kit"
-	new_icon = "flames_blue"
+	if(usr.incapacitated())
+		return
+	var/new_decal = input(usr, "Choose a decal.", name, current_decal) as null|anything in mech_decales
+	if (usr.incapacitated())
+		return
+	change_decal(new_decal, usr)
 
-/obj/item/device/kit/paint/camouflage
-	name = "\"Guerilla\" exosuit customisation kit"
-	desc = "The exact same pattern the 76th Armored Gauntlet used in the Gaia war, now available for general use."
-	new_icon = "cammo1"
-
-/obj/item/device/kit/paint/camouflage/forest
-	name = "\"Alpine\" exosuit customisation kit"
-	new_icon = "cammo2"
-	desc = "A muted pattern for alpine environments. Don't miss the forest for the trees!"
+/obj/item/device/kit/mech/proc/change_decal(new_decal, mob/user)
+	current_decal = new_decal
+	new_name = new_decal
+	to_chat(user, SPAN_NOTICE("You set \the [src] to customize with [new_decal]."))
+	playsound(src, 'sound/weapons/flipblade.ogg', 30, 1)

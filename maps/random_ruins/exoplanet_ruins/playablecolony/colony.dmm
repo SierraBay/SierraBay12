@@ -265,9 +265,8 @@
 /turf/simulated/wall/r_wall,
 /area/map_template/colony/messhall)
 "aL" = (
-/obj/machinery/door/firedoor,
-/obj/wallframe_spawn/reinforced_phoron,
-/turf/simulated/floor/plating,
+/obj/machinery/r_n_d/destructive_analyzer,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/colony/engineering)
 "aM" = (
 /obj/structure/catwalk,
@@ -477,14 +476,12 @@
 /turf/simulated/floor/wood,
 /area/map_template/colony/command)
 "bm" = (
-/obj/machinery/door/firedoor,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/wallframe_spawn/reinforced_phoron,
-/turf/simulated/floor/plating,
+/turf/simulated/wall/r_wall,
 /area/map_template/colony/engineering)
 "bn" = (
 /obj/floor_decal/techfloor{
@@ -540,6 +537,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/command)
 "bq" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/colony/atmospherics)
 "br" = (
@@ -587,6 +585,7 @@
 /obj/floor_decal/techfloor{
 	dir = 9
 	},
+/obj/machinery/power/port_gen/pacman/mrs,
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/engineering)
 "bu" = (
@@ -645,7 +644,6 @@
 /turf/simulated/floor/plating,
 /area/map_template/colony/medbay)
 "bA" = (
-/obj/machinery/power/smes/buildable/max_cap_in_out,
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -654,6 +652,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/machinery/power/smes/buildable/max_cap_in_out,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/colony/engineering)
 "bB" = (
@@ -948,7 +947,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/machinery/power/port_gen/pacman/mrs,
+/obj/machinery/fabricator/hacked,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/colony/engineering)
 "cb" = (
@@ -960,7 +959,10 @@
 	dir = 5
 	},
 /obj/floor_decal/industrial/outline/yellow,
-/obj/machinery/power/solar_control/autostart,
+/obj/machinery/r_n_d/protolathe,
+/obj/structure/reagent_dispensers/acid{
+	step_y = 32
+	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/engineering)
 "cc" = (
@@ -990,12 +992,13 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/power/smes/buildable/max_cap_in_out,
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/floor_decal/industrial/outline/yellow,
+/obj/machinery/power/solar_control/autostart{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/colony/engineering)
 "ch" = (
@@ -1606,10 +1609,11 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/structure/reagent_dispensers/fueltank,
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/machinery/power/smes/buildable/max_cap_in_out,
+/obj/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/colony/engineering)
 "dz" = (
@@ -1618,10 +1622,10 @@
 /turf/simulated/floor/plating,
 /area/map_template/colony/atmospherics)
 "dA" = (
-/obj/structure/dispenser,
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/machinery/robotics_fabricator,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/colony/engineering)
 "dB" = (
@@ -1699,6 +1703,7 @@
 /obj/floor_decal/techfloor/hole/right{
 	dir = 1
 	},
+/obj/machinery/r_n_d/circuit_imprinter,
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/engineering)
 "dH" = (
@@ -2302,9 +2307,11 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/vending/tool,
 /obj/machinery/light{
 	dir = 8
+	},
+/obj/machinery/vending/engivend{
+	req_access = list()
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/colony/engineering)
@@ -2312,10 +2319,7 @@
 /turf/simulated/floor/exoplanet/concrete,
 /area/template_noop)
 "eM" = (
-/obj/structure/table/steel_reinforced,
-/obj/item/storage/toolbox/mechanical,
-/obj/item/storage/toolbox/mechanical,
-/obj/item/device/integrated_circuit_printer/upgraded,
+/obj/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/colony/engineering)
 "eN" = (
@@ -2512,17 +2516,15 @@
 /turf/simulated/floor/exoplanet/concrete,
 /area/template_noop)
 "fd" = (
-/obj/structure/table/steel_reinforced,
-/obj/item/storage/toolbox/syndicate,
-/obj/item/tape_roll,
-/obj/item/tape_roll,
-/obj/item/material/twohanded/jack,
-/obj/item/clothing/head/hardhat/white,
-/obj/item/grenade/chem_grenade/metalfoam,
-/obj/item/grenade/chem_grenade/metalfoam,
-/obj/item/grenade/chem_grenade/metalfoam,
-/turf/simulated/floor/tiled/techfloor/grid,
-/area/map_template/colony/engineering)
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/structure/reagent_dispensers/fueltank,
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/colony)
 "fe" = (
 /obj/structure/table/woodentable_reinforced,
 /obj/structure/flora/pottedplant/smallcactus{
@@ -2643,9 +2645,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/machinery/vending/engineering{
-	req_access = list()
-	},
+/obj/machinery/vending/tool,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/colony/engineering)
 "fq" = (
@@ -2726,9 +2726,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/machinery/vending/engivend{
-	req_access = list()
-	},
+/obj/structure/dispenser,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/colony/engineering)
 "fx" = (
@@ -2783,11 +2781,14 @@
 /obj/item/stack/material/wood/fifty,
 /obj/item/stack/material/wood/fifty,
 /obj/item/stack/material/wood/fifty,
+/obj/item/stack/material/steel/fifty,
+/obj/item/stack/material/glass/fifty,
+/obj/item/device/geiger,
+/obj/item/device/geiger,
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/engineering)
 "fB" = (
 /obj/structure/closet/crate,
-/obj/item/stack/material/glass/fifty,
 /obj/item/stack/material/glass/fifty,
 /obj/item/stack/material/glass/fifty,
 /obj/item/stack/material/glass/fifty,
@@ -2798,6 +2799,7 @@
 /obj/item/stack/material/glass/reinforced/fifty,
 /obj/item/stack/material/glass/reinforced/fifty,
 /obj/item/clothing/head/hardhat/orange,
+/obj/item/stack/material/glass/fifty,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/colony/engineering)
 "fC" = (
@@ -3534,18 +3536,15 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/colony/atmospherics)
 "gH" = (
-/obj/structure/table/steel_reinforced,
-/obj/item/storage/toolbox/electrical,
-/obj/item/storage/toolbox/electrical,
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/structure/table/steel_reinforced,
+/obj/item/storage/toolbox/syndicate,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/mechanical,
 /obj/item/storage/belt/utility,
-/obj/item/storage/belt/utility,
-/obj/item/stack/material/glass/fifty,
-/obj/item/stack/material/steel/fifty,
-/obj/item/device/geiger,
-/obj/item/device/geiger,
+/obj/item/storage/toolbox/electrical,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/colony/engineering)
 "gI" = (
@@ -3774,6 +3773,17 @@
 	dir = 8;
 	pixel_x = 22
 	},
+/obj/structure/table/steel_reinforced,
+/obj/item/device/integrated_circuit_printer/upgraded,
+/obj/item/storage/belt/utility,
+/obj/item/storage/toolbox/electrical,
+/obj/item/material/twohanded/jack,
+/obj/item/tape_roll,
+/obj/item/grenade/chem_grenade/metalfoam,
+/obj/item/grenade/chem_grenade/metalfoam,
+/obj/item/grenade/chem_grenade/metalfoam,
+/obj/item/tape_roll,
+/obj/item/clothing/head/hardhat/white,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/colony/engineering)
 "hf" = (
@@ -4257,7 +4267,9 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/vending/engineering{
+	req_access = list()
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/colony/engineering)
 "ib" = (
@@ -6659,7 +6671,9 @@
 /turf/simulated/floor/exoplanet/concrete,
 /area/template_noop)
 "me" = (
-/obj/machinery/fabricator/hacked,
+/obj/machinery/computer/rdconsole/core{
+	dir = 1
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/colony/engineering)
 "mf" = (
@@ -8941,7 +8955,7 @@ iH
 ji
 hR
 ku
-du
+fd
 mN
 bd
 jC
@@ -9209,7 +9223,7 @@ aZ
 aZ
 aZ
 bI
-aL
+ar
 bt
 bO
 aT
@@ -9253,7 +9267,7 @@ bR
 bm
 dG
 bP
-aT
+aL
 cD
 dY
 ei
@@ -9291,10 +9305,10 @@ aZ
 aZ
 aZ
 bT
-aL
+ar
 cb
 bQ
-aT
+me
 cT
 dZ
 aT
@@ -9336,10 +9350,10 @@ ar
 ca
 he
 dA
-fd
+aT
 eM
 gH
-me
+eM
 fB
 gW
 fC

@@ -15,6 +15,8 @@
 	if(!body)
 		body = new /obj/item/mech_component/chassis/heavy(src)
 		body.color = COLOR_TITANIUM
+		body.cell = new /obj/item/cell/hyper(src)
+		body.m_armour = new /obj/item/robot_parts/robot_component/armour/exosuit/combat(src)
 
 	. = ..()
 

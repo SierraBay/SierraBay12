@@ -2,8 +2,14 @@
 	if(usr == src && usr != over)
 		if(istype(over, /mob/living/exosuit))
 			var/mob/living/exosuit/exosuit = over
-			if(exosuit.enter(src))
-				return
+			if(exosuit.body)
+				if(usr.mob_size >= exosuit.body.min_pilot_size && usr.mob_size <= exosuit.body.max_pilot_size \
+				&& !issilicon(usr))
+					if(exosuit.enter(src,FALSE,TRUE,FALSE))
+						return
+				else
+					to_chat(usr, SPAN_WARNING("You cannot pilot a exosuit of this size."))
+					return
 	return ..()
 
 /mob/living/exosuit/MouseDrop_T(atom/dropping, mob/user)
@@ -59,9 +65,18 @@
 
 
 /mob/living/exosuit/ClickOn(atom/A, params, mob/user)
-
 	if(!user || incapacitated() || user.incapacitated())
 		return
+//MODDED
+	var/arms_chosen = FALSE
+	var/body_chosen = FALSE
+	if(selected_hardpoint == HARDPOINT_LEFT_HAND || selected_hardpoint == HARDPOINT_RIGHT_HAND)
+		arms_chosen = TRUE
+		body_chosen = FALSE
+	else if(selected_hardpoint == HARDPOINT_BACK || selected_hardpoint == HARDPOINT_HEAD || selected_hardpoint == HARDPOINT_LEFT_SHOULDER || selected_hardpoint == HARDPOINT_RIGHT_SHOULDER)
+		arms_chosen = FALSE
+		body_chosen = TRUE
+//MODDED
 
 	if(!loc) return
 	var/adj = A.Adjacent(src) // Why in the fuck isn't Adjacent() commutative.
@@ -79,6 +94,14 @@
 					setClickCooldown(3)
 					return
 
+	if(modifiers["alt"])
+		if(istype(A, /obj/item/mech_equipment))
+			for(var/hardpoint in hardpoints)
+				if(A == hardpoints[hardpoint])
+					A.AltClick(user)
+					setClickCooldown(3)
+					return
+
 	if(!(user in pilots) && user != src)
 		return
 
@@ -89,13 +112,18 @@
 	if(A.loc != src && !(get_dir(src, A) & dir))
 		return
 
-	if(!arms)
+	if(!arms && arms_chosen)
 		to_chat(user, SPAN_WARNING("\The [src] has no manipulators!"))
 		setClickCooldown(3)
 		return
 
-	if(!arms.motivator || !arms.motivator.is_functional())
+	if((!arms.motivator || !arms.motivator.is_functional()) && arms_chosen)
 		to_chat(user, SPAN_WARNING("Your motivators are damaged! You can't use your manipulators!"))
+		setClickCooldown(15)
+		return
+
+	if((!body || body.total_damage >= body.max_damage) && body_chosen)
+		to_chat(user, SPAN_WARNING("Your cockpit too damaged, additional hardpoints control system damaged, you can't use this module!"))
 		setClickCooldown(15)
 		return
 
@@ -187,13 +215,56 @@
 	if(A == src)
 		setClickCooldown(5)
 		return attack_self(user)
-	else if(adj && user.a_intent == I_HURT) //Prevents accidental slams.
+	else if(adj && user.a_intent == I_HURT && arms.motivator) //Prevents accidental slams.
 		setClickCooldown(arms ? arms.action_delay : 7) // You've already commited to applying fist, don't turn and back out now!
 		playsound(src.loc, legs.mech_step_sound, 60, 1)
-		src.visible_message(SPAN_DANGER("\The [src] steps back, preparing for a slam!"), blind_message = SPAN_DANGER("You hear the loud hissing of hydraulics!"))
+		var/arms_local_damage = arms.melee_damage
+		src.visible_message(SPAN_DANGER("\The [src] steps back, preparing for a strike!"), blind_message = SPAN_DANGER("You hear the loud hissing of hydraulics!"))
 		if (do_after(src, 1.2 SECONDS, get_turf(src), DO_DEFAULT | DO_USER_UNIQUE_ACT | DO_PUBLIC_PROGRESS) && user)
-			A.attack_generic(src, arms.melee_damage, "slammed against", DAMAGE_BRUTE) //"Punch" would be bad since vehicles without arms could be a thing
-			var/turf/T = get_step(get_turf(src), src.dir)
+		//additional actions with objects!
+
+			//emergency airlock open
+			if(istype(A, /obj/machinery/door/firedoor) )
+				var/obj/machinery/door/firedoor/FD = A
+				if(!FD.blocked)
+					setClickCooldown(arms ? arms.action_delay : 7)
+					addtimer(CALLBACK(FD, /obj/machinery/door/firedoor.proc/toggle, TRUE), 0)
+					return
+			//emergency airlock open
+
+			//door open
+			else if((istype(A, /obj/machinery/door)))
+				var/obj/machinery/door/airlock/FD = A
+				if(FD.inoperable() || !FD.is_powered())
+					setClickCooldown(arms ? arms.action_delay : 7)
+					addtimer(CALLBACK(FD, /obj/machinery/door/.proc/toggle, TRUE), 0)
+					return
+				arms_local_damage = arms_local_damage * 2
+			//door open
+
+			//blast open
+			else if((istype(A, /obj/machinery/door/blast)))
+				var/obj/machinery/door/blast/FD = A
+				if(FD.inoperable() || !FD.is_powered())
+					setClickCooldown(arms ? arms.action_delay : 7)
+					addtimer(CALLBACK(FD, /obj/machinery/door/blast.proc/force_toggle, TRUE), 0)
+					return
+				arms_local_damage = arms_local_damage * 2
+			//blast open
+
+			//heavy blast open
+			else if(istype(A,/obj/machinery/door/blast/regular))
+				var/obj/machinery/door/blast/FD = A
+				if(FD.inoperable() || !FD.is_powered())
+					setClickCooldown(arms ? arms.action_delay : 7)
+					addtimer(CALLBACK(FD, /obj/machinery/door/blast.proc/force_toggle, TRUE), 0)
+					return
+				to_chat(user, SPAN_NOTICE("This structure too reinforced for being damaged by [src]!"))
+				return
+			//heavy blast open
+			//Now - attack
+			A.attack_generic(src, arms_local_damage, "strikes", DAMAGE_BRUTE) //"Punch" would be bad since vehicles without arms could be a thing //No
+			var/turf/T = get_turf(A)
 			if(istype(T))
 				do_attack_effect(T, "smash")
 			playsound(src.loc, arms.punch_sound, 50, 1)
@@ -217,7 +288,7 @@
 		for(var/hardpoint in hardpoints)
 			if(hardpoint != selected_hardpoint)
 				continue
-			var/obj/screen/exosuit/hardpoint/H = hardpoint_hud_elements[hardpoint]
+			var/obj/screen/movable/exosuit/hardpoint/H = hardpoint_hud_elements[hardpoint]
 			if(istype(H))
 				H.icon_state = "hardpoint"
 				break
@@ -238,10 +309,12 @@
 	if(!user.Adjacent(src))
 		return FALSE
 	if(hatch_locked)
+		check_passenger(user)
 		if(!silent)
 			to_chat(user, SPAN_WARNING("The [body.hatch_descriptor] is locked."))
 		return FALSE
 	if(hatch_closed)
+		check_passenger(user)
 		if(!silent)
 			to_chat(user, SPAN_WARNING("The [body.hatch_descriptor] is closed."))
 		return FALSE
@@ -254,6 +327,9 @@
 /mob/living/exosuit/proc/enter(mob/user, silent = FALSE, check_incap = TRUE, instant = FALSE)
 	if(!check_enter(user, silent, check_incap))
 		return FALSE
+	if(!istype(user, /mob/living/carbon))
+		to_chat(user, SPAN_WARNING("You cant pilot exosuits"))
+		return
 	to_chat(user, SPAN_NOTICE("You start climbing into \the [src]..."))
 	if(!body)
 		return FALSE
@@ -267,6 +343,194 @@
 	add_pilot(user)
 	return TRUE
 
+/mob/living/exosuit/proc/check_passenger(mob/user) // Выбираем желаемое место, проверяем можно ли его занять, стартуем прок занятия
+	var/local_dir = get_dir(src, user)
+	if(local_dir != turn(dir, 90) && local_dir != turn(dir, -90) && local_dir != turn(dir, -135) && local_dir != turn(dir, 135) && local_dir != turn(dir, 180))
+	// G G G
+	// G M G  ↓ (Mech dir, look on SOUTH)
+	// B B B
+	// M - mech, B - cant climb ON mech from this side, G - can climb ON mech from this side
+		to_chat(user, SPAN_WARNING("You cant climb in passenger place of [src ] from this side."))
+		return FALSE
+	var/choose
+	var/choosed_place = input(usr, "Choose passenger place which you want to take.", name, choose) as null|anything in passenger_places
+	if(!user.Adjacent(src)) // <- Мех рядом?
+		return FALSE
+	if(user.r_hand != null || user.l_hand != null)
+		to_chat(user,SPAN_NOTICE("You need two free hands to take [choosed_place]."))
+		return
+	if(user.mob_size > MOB_MEDIUM)
+		to_chat(user,SPAN_NOTICE("Looks like you too big to take [choosed_place]."))
+		return
+	if(choosed_place == "Back")
+		if(LAZYLEN(passenger_compartment.back_passengers) > 0)
+			to_chat(user,SPAN_NOTICE("[choosed_place] is busy"))
+			return 0
+		else if(body.allow_passengers == FALSE)
+			to_chat(user,SPAN_NOTICE("[choosed_place] not able with [body.name]"))
+			return 0
+	else if(choosed_place == "Left back")
+		if(LAZYLEN(passenger_compartment.left_back_passengers) > 0)
+			to_chat(user,SPAN_NOTICE("[choosed_place] is busy"))
+			return 0
+		else if(arms.allow_passengers == FALSE)
+			to_chat(user,SPAN_NOTICE("[choosed_place] not able with [arms.name]"))
+			return 0
+	else if(choosed_place == "Right back")
+		if(LAZYLEN(passenger_compartment.right_back_passengers) > 0)
+			to_chat(user,SPAN_NOTICE("[choosed_place] is busy"))
+			return 0
+		else if(arms.allow_passengers == FALSE)
+			to_chat(user,SPAN_NOTICE("[choosed_place] not able with [arms.name]"))
+			return 0
+	else if(choosed_place == null)
+		return 0
+	if(check_hardpoint_passengers(choosed_place,user) == TRUE)
+		enter_passenger(user,choosed_place)
+
+/mob/living/exosuit/proc/check_hardpoint_passengers(place,mob/user)// Данный прок проверяет, доступна ли часть тела для занятия её пассажиром в данный момент
+	var/obj/item/mech_equipment/checker
+	if(place == "Back" && hardpoints["back"] != null)
+		checker = hardpoints["back"]
+		if(checker.disturb_passengers == TRUE)
+			to_chat(user,SPAN_NOTICE("[place] covered by [checker] and cant be taked."))
+			return FALSE
+	else if(place == "Left back" && hardpoints["left shoulder"] != null)
+		checker = hardpoints["left shoulder"]
+		if(checker.disturb_passengers == TRUE)
+			to_chat(user,SPAN_NOTICE("[place] covered by [checker] and cant be taked."))
+			return FALSE
+	else if(place == "Right back" && hardpoints["right shoulder"] != null)
+		checker = hardpoints["right shoulder"]
+		if(checker.disturb_passengers == TRUE)
+			to_chat(user,SPAN_NOTICE("[place] covered by [checker] and cant be taked."))
+			return FALSE
+	return TRUE
+
+/mob/living/exosuit/proc/enter_passenger(mob/user,place)// Пытается пихнуть на пассажирское место пассажира, перед этим ещё раз проверяя их
+	//Проверка спины
+	src.visible_message(SPAN_NOTICE(" [user] starts climb on the [place] of [src]!"))
+	if(do_after(user, 2 SECONDS, get_turf(src),DO_SHOW_PROGRESS|DO_FAIL_FEEDBACK|DO_USER_CAN_TURN| DO_USER_UNIQUE_ACT | DO_PUBLIC_PROGRESS))
+		if(user.r_hand != null || user.l_hand != null)
+			to_chat(user,SPAN_NOTICE("You need two free hands to clim on[place] of [src]."))
+			return
+		if(place == "Back" && LAZYLEN(passenger_compartment.back_passengers) == 0)
+			user.forceMove(passenger_compartment)
+			LAZYDISTINCTADD(passenger_compartment.back_passengers,user)
+			user.pinned += src
+		else if(place == "Left back" && LAZYLEN(passenger_compartment.left_back_passengers) == 0)
+			user.forceMove(passenger_compartment)
+			LAZYDISTINCTADD(passenger_compartment.left_back_passengers,user)
+			user.pinned += src
+		else if(place == "Right back" && LAZYLEN(passenger_compartment.right_back_passengers) == 0)
+			user.forceMove(passenger_compartment)
+			LAZYDISTINCTADD(passenger_compartment.right_back_passengers,user)
+			user.pinned += src
+		else
+			to_chat(user,SPAN_NOTICE("Looks like [place] is busy!"))
+			return 0
+		src.visible_message(SPAN_NOTICE(" [user] climbed on [place] of [src]!"))
+		passenger_compartment.count_passengers()
+		update_passengers()
+
+// будет использоваться Life() дабы исключить моменты, когда по какой-то причине пассажир слез с меха, лежа на полу. Life вызовется, обработается pinned, всем в кайф.
+/mob/living/exosuit/proc/leave_passenger(mob/user)// Пассажир сам покидает меха
+	src.visible_message(SPAN_NOTICE("[user] jump off [src]!"))
+	user.dropInto(loc)
+	user.pinned -= src
+	user.Life()
+	if(user in passenger_compartment.back_passengers)
+		LAZYREMOVE(passenger_compartment.back_passengers,user)
+	else if(user in passenger_compartment.left_back_passengers)
+		LAZYREMOVE(passenger_compartment.left_back_passengers,user)
+	else if(user in passenger_compartment.right_back_passengers)
+		LAZYREMOVE(passenger_compartment.right_back_passengers,user)
+	passenger_compartment.count_passengers()
+	update_passengers()
+
+/mob/living/exosuit/proc/forced_leave_passenger(place,mode,author)// Нечто внешнее насильно опустошает Одно/все места пассажиров
+// mode 1 - полный выгруз, mode 2 - рандомного одного, mode 0(Отсутствие мода) - ручной скид пассажира мехводом
+	if(mode == MECH_DROP_ALL_PASSENGER) // Полная разгрузка
+		if(LAZYLEN(passenger_compartment.back_passengers)>0)
+			for(var/mob/i in passenger_compartment.back_passengers)
+				LAZYREMOVE(passenger_compartment.back_passengers,i)
+				i.dropInto(loc)
+				i.pinned -= src
+				i.Life()
+				passenger_compartment.count_passengers()
+				src.visible_message(SPAN_WARNING("[i] was forcelly removed from [src] by [author]"))
+		if(LAZYLEN(passenger_compartment.left_back_passengers)>0)
+			for(var/mob/i in passenger_compartment.left_back_passengers)
+				LAZYREMOVE(passenger_compartment.left_back_passengers,i)
+				i.dropInto(loc)
+				i.pinned -= src
+				i.Life()
+				passenger_compartment.count_passengers()
+				src.visible_message(SPAN_WARNING("[i] was forcelly removed from [src] by [author]"))
+		if(LAZYLEN(passenger_compartment.right_back_passengers) > 0)
+			for(var/mob/i in passenger_compartment.right_back_passengers)
+				LAZYREMOVE(passenger_compartment.right_back_passengers,i)
+				i.dropInto(loc)
+				i.pinned -= src
+				i.Life()
+				passenger_compartment.count_passengers()
+				src.visible_message(SPAN_WARNING("[i] was forcelly removed from [src] by [author]"))
+		update_passengers()
+
+	else if(mode == MECH_DROP_ANY_PASSENGER) // Сброс по приоритету спина - левый бок - правый бок.
+		if(LAZYLEN(passenger_compartment.back_passengers) > 0)
+			for(var/mob/i in passenger_compartment.back_passengers)
+				LAZYREMOVE(passenger_compartment.back_passengers,i)
+				i.dropInto(loc)
+				i.pinned -= src
+				i.Life()
+				src.visible_message(SPAN_WARNING("[i] was forcelly removed from [src] by [author]"))
+				passenger_compartment.count_passengers()
+				update_passengers()
+				return
+		else if(LAZYLEN(passenger_compartment.left_back_passengers)>0)
+			for(var/mob/i in passenger_compartment.left_back_passengers)
+				LAZYREMOVE(passenger_compartment.left_back_passengers,i)
+				i.dropInto(loc)
+				i.pinned -= src
+				i.Life()
+				src.visible_message(SPAN_WARNING("[i] was forcelly removed from [src] by [author]"))
+				passenger_compartment.count_passengers()
+				update_passengers()
+				return
+		else if(LAZYLEN(passenger_compartment.right_back_passengers)>0)
+			for(var/mob/i in passenger_compartment.right_back_passengers)
+				LAZYREMOVE(passenger_compartment.right_back_passengers,i)
+				i.dropInto(loc)
+				i.pinned -= src
+				i.Life()
+				i.Life()
+				src.visible_message(SPAN_WARNING("[i] was forcelly removed from [src] by [author]"))
+				passenger_compartment.count_passengers()
+				update_passengers()
+				return
+
+	else // <- Опустошается определённое место
+		if(place == "Back")
+			for(var/mob/i in passenger_compartment.back_passengers)
+				src.visible_message(SPAN_WARNING("[i] was forcelly removed from [src] by [author]"))
+				i.dropInto(loc)
+				i.pinned -= src
+				LAZYREMOVE(passenger_compartment.back_passengers,i)
+		else if(place == "Left back")
+			for(var/mob/i in passenger_compartment.left_back_passengers)
+				src.visible_message(SPAN_WARNING("[i] was forcelly removed from [src] by [author]!"))
+				i.dropInto(loc)
+				i.pinned -= src
+				LAZYREMOVE(passenger_compartment.left_back_passengers,i)
+		else if(place == "Right back")
+			for(var/mob/i in passenger_compartment.right_back_passengers)
+				src.visible_message(SPAN_WARNING("[i] was forcelly removed from [src] by [author]!"))
+				i.dropInto(loc)
+				i.pinned -= src
+				LAZYREMOVE(passenger_compartment.right_back_passengers,i)
+		passenger_compartment.count_passengers()
+		update_passengers()
 /// Adds a mob to the pilots list and destroyed event handlers.
 /mob/living/exosuit/proc/add_pilot(mob/user)
 	if (LAZYISIN(pilots, user))
@@ -290,6 +554,7 @@
 		user.dropInto(loc)
 	if (user.client)
 		user.client.screen -= hud_elements
+		user.client.screen -= menu_hud_elements
 		user.client.eye = user
 	LAZYREMOVE(user.additional_vision_handlers, src)
 	LAZYREMOVE(pilots, user)
@@ -342,47 +607,51 @@
 		input_fix.repair_burn_generic(tool, user)
 		return TRUE
 
-	// Crowbar - Force open locked cockpit
-	if (isCrowbar(tool))
+	// Crowbar - Force open closed cockpick (NOT LOCKED)
+	else if (isCrowbar(tool))
 		if (!body)
 			USE_FEEDBACK_FAILURE("\The [src] has no cockpit to force.")
-			return TRUE
-		if (!hatch_locked)
-			USE_FEEDBACK_FAILURE("\The [src]'s cockpit isn't locked. You don't need to force it.")
-			return TRUE
-		user.visible_message(
-			SPAN_WARNING("\The [user] starts forcing \the [src]'s emergency [body.hatch_descriptor] release using \a [tool]."),
-			SPAN_WARNING("You start forcing \the [src]'s emergency [body.hatch_descriptor] release using \the [tool].")
-		)
-		if (!user.do_skilled((tool.toolspeed * 5) SECONDS, list(SKILL_DEVICES, SKILL_EVA), src) || !user.use_sanity_check(src, tool))
-			return TRUE
-		if (!body)
-			USE_FEEDBACK_FAILURE("\The [src] has no cockpit to force.")
-			return TRUE
+			return FALSE
+		if(hatch_locked)
+			USE_FEEDBACK_FAILURE("\The [src]'s cockpit locked by cockpit security bolts. You need saw or welder.")
+			return FALSE
+		var/delay = min(50 * user.skill_delay_mult(SKILL_DEVICES), 50 * user.skill_delay_mult(SKILL_EVA))
+		visible_message(SPAN_NOTICE("\The [user] starts forcing the \the [src]'s emergency [body.hatch_descriptor] release using \the [tool]."))
+		if(!do_after(user, delay, src, DO_DEFAULT | DO_PUBLIC_PROGRESS))
+			return
 		playsound(src, 'sound/machines/bolts_up.ogg', 25, TRUE)
-		hatch_locked = FALSE
-		hatch_closed = FALSE
-		for (var/mob/pilot in pilots)
-			eject(pilot, TRUE)
+		hatch_closed = !hatch_closed
 		hud_open.update_icon()
 		update_icon()
-		user.visible_message(
-			SPAN_WARNING("\The [user] forces \the [src]'s emergency [body.hatch_descriptor] release using \a [tool]."),
-			SPAN_WARNING("You force \the [src]'s emergency [body.hatch_descriptor] release using \the [tool].")
-		)
+		return TRUE
+
+	//Saw/welder - destroy mech security bolts
+	else if( ((istype(tool, /obj/item/circular_saw)) || (isWelder(tool))) && user.a_intent == I_HURT)
+		if (!body)
+			USE_FEEDBACK_FAILURE("\The [src] has no cockpit to force.")
+			return FALSE
+		if (!hatch_locked)
+			USE_FEEDBACK_FAILURE("\The [src]'s cockpit isn't locked, you can't reach cockpit security bolts.")
+			return FALSE
+		var/delay = min(100 * user.skill_delay_mult(SKILL_DEVICES), 100 * user.skill_delay_mult(SKILL_EVA))
+		visible_message(SPAN_NOTICE("\The [user] starts destroing the \the [src]'s [body.name] security bolts "))
+		if(!do_after(user, delay, src, DO_DEFAULT | DO_PUBLIC_PROGRESS))
+			return
+		playsound(src, 'sound/machines/bolts_up.ogg', 25, TRUE)
+		hatch_locked = FALSE
+		body.hatch_bolts_status = BOLTS_DESTROYED
+		hud_open.update_icon()
+		update_icon()
 		return TRUE
 
 	// Exosuit Customization Kit - Customize the exosuit
-	if (istype(tool, /obj/item/device/kit/paint))
-		var/obj/item/device/kit/paint/paint = tool
-		SetName(paint.new_name)
-		desc = paint.new_desc
+	else if (istype(tool, /obj/item/device/kit/mech))
+		var/obj/item/device/kit/mech/paint = tool
 		for (var/obj/item/mech_component/component in list(arms, legs, head, body))
-			component.decal = paint.new_icon
-		if (paint.new_icon_file)
+			component.decal = paint.current_decal
+		if(paint.new_icon_file)
 			icon = paint.new_icon_file
 		update_icon()
-		paint.use(1, user)
 		user.visible_message(
 			SPAN_NOTICE("\The [user] opens \the [tool] and spends some quality time customising \the [src]."),
 			SPAN_NOTICE("You open \the [tool] and spend some quality time customising \the [src].")
@@ -390,7 +659,7 @@
 		return TRUE
 
 	// Mech Equipment - Install equipment
-	if (istype(tool, /obj/item/mech_equipment))
+	else if (istype(tool, /obj/item/mech_equipment))
 		if (hardpoints_locked)
 			USE_FEEDBACK_FAILURE("\The [src]'s hardpoint system is locked.")
 			return TRUE
@@ -415,7 +684,7 @@
 		return TRUE
 
 	// Multitool - Remove component
-	if (isMultitool(tool))
+	else if (isMultitool(tool))
 		if (hardpoints_locked)
 			USE_FEEDBACK_FAILURE("\The [src]'s hardpoint system is locked.")
 			return TRUE
@@ -433,7 +702,7 @@
 		return TRUE
 
 	// Power Cell - Install cell
-	if (istype(tool, /obj/item/cell))
+	else if (istype(tool, /obj/item/cell))
 		if (!maintenance_protocols)
 			USE_FEEDBACK_FAILURE("\The [src]'s maintenance protocols must be enabled to install \the [tool].")
 			return TRUE
@@ -452,7 +721,7 @@
 		return TRUE
 
 	// Screwdriver - Remove cell
-	if (isScrewdriver(tool))
+	else if (isScrewdriver(tool))
 		if (!maintenance_protocols)
 			USE_FEEDBACK_FAILURE("\The [src]'s maintenance protocols must be enabled to access the power cell.")
 			return TRUE
@@ -482,7 +751,7 @@
 		return TRUE
 
 	// Welding Tool - Repair physical damage
-	if (isWelder(tool))
+	else if (isWelder(tool))
 		if (!getBruteLoss())
 			USE_FEEDBACK_FAILURE("\The [src] has no physical damage to repair.")
 			return TRUE
@@ -500,7 +769,7 @@
 		return TRUE
 
 	// Wrench - Toggle securing bolts
-	if (isWrench(tool))
+	else if (isWrench(tool))
 		if (!maintenance_protocols)
 			USE_FEEDBACK_FAILURE("\The [src]'s maintenance protocols must be enabled to access the securing bolts.")
 			return TRUE
@@ -526,6 +795,9 @@
 /mob/living/exosuit/attack_hand(mob/user)
 	// Drag the pilot out if possible.
 	if(user.a_intent == I_HURT)
+		if(passengers_ammount > 0 && hatch_closed)// Стянуть пассажира с меха рукой!
+			forced_leave_passenger(null,2,user)
+			return
 		if(!LAZYLEN(pilots))
 			to_chat(user, SPAN_WARNING("There is nobody inside \the [src]."))
 		else if(!hatch_closed)
@@ -539,13 +811,9 @@
 				attack_generic(user, 5, "slams")
 				user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN*2)
 		return
-
-	// Otherwise toggle the hatch.
-	if(hud_open)
-		hud_open.toggled()
 	return
 
-/mob/living/exosuit/attack_generic(mob/user, damage, attack_message = "smashes into")
+/mob/living/exosuit/attack_generic(mob/user, damage, attack_message = "strikes")
 	..()
 	if(damage)
 		playsound(loc, body.damage_sound, 40, 1)

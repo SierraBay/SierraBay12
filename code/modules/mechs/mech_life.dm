@@ -8,6 +8,7 @@
 		if(pilot.loc != src) // Admin jump or teleport/grab.
 			if(pilot.client)
 				pilot.client.screen -= hud_elements
+				pilot.client.screen -= menu_hud_elements
 				LAZYREMOVE(pilots, pilot)
 				UNSETEMPTY(pilots)
 		update_pilots()

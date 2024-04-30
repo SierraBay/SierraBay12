@@ -30,7 +30,7 @@
 	var/pain_power = 80 //magnitide of painkilling effect
 	var/effective_dose = 0.5 //how many units it need to process to reach max power
 
-/datum/reagent/paashe/affect_blood(var/mob/living/carbon/M, var/alien, var/removed)
+/datum/reagent/paashe/affect_blood(mob/living/carbon/M, alien, removed)
 	var/effectiveness = 1
 	if(M.chem_doses[type] < effective_dose) //some ease-in ease-out for the effect
 		effectiveness = M.chem_doses[type]/effective_dose
@@ -76,7 +76,7 @@
 		/datum/reagent/toxin/zombiepowder
 	)
 
-/datum/reagent/arhishaap/affect_blood(var/mob/living/carbon/M, var/alien, var/removed)
+/datum/reagent/arhishaap/affect_blood(mob/living/carbon/M, alien, removed)
 	M.radiation = max(M.radiation - 30 * removed, 0)
 
 	if(remove_generic)

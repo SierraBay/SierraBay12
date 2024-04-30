@@ -38,7 +38,9 @@
 
 /obj/item/mech_component/sensors/proc/get_sight(powered)
 	var/flags = 0
-	if(total_damage >= 0.8 * max_damage || !powered)
+//MODDED
+	if(!camera || !powered)
+//MODDED
 		flags |= BLIND
 	else if(active_sensors && powered)
 		flags |= vision_flags
@@ -47,7 +49,9 @@
 
 /obj/item/mech_component/sensors/proc/get_invisible(powered)
 	var/invisible = 0
-	if((total_damage <= 0.8 * max_damage) && active_sensors && powered)
+//MODDED
+	if((!camera) && active_sensors && powered)
+//MODDED
 		invisible = see_invisible
 	return invisible
 
@@ -158,7 +162,7 @@
 	gender = PLURAL
 	exosuit_desc_string = "advanced sensor array"
 	icon_state = "light_head"
-	max_damage = 30
+	max_damage = 80
 	vision_flags = SEE_TURFS
 	see_invisible = SEE_INVISIBLE_NOLIGHTING
 	power_use = 50
@@ -174,7 +178,7 @@
 	exosuit_desc_string = "a reinforced monoeye"
 	desc = "A solitary sensor moves inside a recessed slit in the armour plates."
 	icon_state = "heavy_head"
-	max_damage = 120
+	max_damage = 500
 	power_use = 0
 
 /obj/item/mech_component/sensors/heavy/prebuild()
@@ -189,6 +193,7 @@
 	icon_state = "combat_head"
 	vision_flags = SEE_MOBS
 	see_invisible = SEE_INVISIBLE_NOLIGHTING
+	max_damage =  180
 	power_use = 200
 
 /obj/item/mech_component/sensors/combat/prebuild()

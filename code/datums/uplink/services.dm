@@ -10,6 +10,21 @@
 	item_cost = 8
 	path = /obj/item/device/uplink_service/fake_ion_storm
 
+/datum/uplink_item/item/services/assault_declaration
+	name = "Telecrystal Request"
+	desc = "An telecrystal request, which will give you boost of 780 telecrystals, but their teleportation will be detected by sensor arrays of NSV Sierra. Can be bought obly in the five fist minutes of the round."
+	item_cost = 1
+	antag_roles = list(MODE_MERCENARY)
+
+/datum/uplink_item/item/services/assault_declaration/get_goods(obj/item/device/uplink/U, loc)
+	if(world.time > 10 MINUTES || GLOB.war_declared)
+		U.visible_message("[U.loc] buzzez and declares, \"Unable to teleport telecrystals.\"")
+		return 0
+	command_announcement.Announce("В секторе была замечена телепортация большого объема телекристаллов, использующихся Горлекскими Мародерами. Рекомендуется вызвать поддержку с ЦК для урегулирования ситуации.", "Показания датчиков [station_name()]" , msg_sanitized = 1, zlevels = GLOB.using_map.station_levels)
+	GLOB.max_mech = 2
+	GLOB.war_declared = TRUE
+	return new /obj/item/stack/telecrystal(loc, 781)
+
 /datum/uplink_item/item/services/suit_sensor_garble
 	name = "Complete Suit Sensor Jamming"
 	desc = "A single-use device, that when activated, garbles all suit sensor data for 10 minutes."

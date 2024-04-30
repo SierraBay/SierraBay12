@@ -15,6 +15,8 @@
 	if(!body)
 		body = new /obj/item/mech_component/chassis/combat(src)
 		body.color = COLOR_GUNMETAL
+		body.cell = new /obj/item/cell/hyper(src)
+		body.m_armour = new /obj/item/robot_parts/robot_component/armour/exosuit/combat(src)
 
 	. = ..()
 
@@ -35,4 +37,3 @@
 	. = ..()
 	for(var/obj/thing in list(arms,legs,head,body))
 		thing.color = COLOR_WHITE
-

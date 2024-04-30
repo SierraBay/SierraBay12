@@ -69,11 +69,23 @@
 /mob/living/exosuit/bullet_act(obj/item/projectile/P, def_zone, used_weapon)
 	if (status_flags & GODMODE)
 		return PROJECTILE_FORCE_MISS
+	//Проверяем, с какого направления прилетает атака!
+	var/local_dir = get_dir(src, get_turf(P)) // <- Узнаём направление от меха до пули
+	if(local_dir == turn(dir, -90) || local_dir == turn(dir, -135) || local_dir == turn(dir, 180) || local_dir == turn(dir, 90) || local_dir == turn(dir, 135))
+	// U U U
+	// U M U  ↓ (Mech dir, look on SOUTH)
+	// D D D
+	// M - mech, U - unload passengers if was hit from this side, D - defense passengers(Dont unload) if was hit from this side
+		if(passengers_ammount > 0)
+			forced_leave_passenger(null,MECH_DROP_ALL_PASSENGER,"attack")
+	if(local_dir == turn(dir,-135) || local_dir == turn(dir,135) || local_dir == turn(dir,180))
+		P.damage = P.damage * 1.3
 	switch(def_zone)
 		if(BP_HEAD , BP_CHEST, BP_MOUTH, BP_EYES)
 			if(LAZYLEN(pilots) && (!hatch_closed || !prob(body.pilot_coverage)))
-				var/mob/living/pilot = pick(pilots)
-				return pilot.bullet_act(P, def_zone, used_weapon)
+				if(local_dir != turn(dir,-135) || local_dir != turn(dir,135) || local_dir != turn(dir,180))
+					var/mob/living/pilot = pick(pilots)
+					return pilot.bullet_act(P, def_zone, used_weapon)
 	..()
 
 /mob/living/exosuit/get_armors_by_zone(def_zone, damage_type, damage_flags)
@@ -84,7 +96,7 @@
 			. += body_armor
 
 /mob/living/exosuit/updatehealth()
-	maxHealth = body ? body.mech_health : 0
+	maxHealth = (body.mech_health + material.integrity) + head.max_damage + arms.max_damage + legs.max_damage
 	health = maxHealth-(getFireLoss()+getBruteLoss())
 
 /mob/living/exosuit/adjustFireLoss(amount, obj/item/mech_component/MC = pick(list(arms, legs, body, head)))
@@ -111,7 +123,6 @@
 /mob/living/exosuit/apply_damage(damage = 0, damagetype = DAMAGE_BRUTE, def_zone, damage_flags = EMPTY_BITFIELD, used_weapon, armor_pen, silent = FALSE)
 	if(!damage)
 		return 0
-
 	if(!def_zone)
 		if(damage_flags & DAMAGE_FLAG_DISPERSED)
 			var/old_damage = damage
@@ -135,19 +146,52 @@
 		def_zone = ran_zone(def_zone)
 
 	var/list/after_armor = modify_damage_by_armor(def_zone, damage, damagetype, damage_flags, src, armor_pen, TRUE)
+
 	damage = after_armor[1]
 	damagetype = after_armor[2]
 
 	if(!damage)
 		return 0
 
-	var/target = zoneToComponent(def_zone)
+	var/obj/item/mech_component/target = zoneToComponent(def_zone)
+	//SIERRA-MODDED-MECHS
+	if(target.total_damage >= target.max_damage)
+		if(target == head && !head.camera && !head.radio)
+			body.take_brute_damage(damage/3)
+			arms.take_brute_damage(damage/3)
+			legs.take_brute_damage(damage/3)
+		else if(target == body && !body.m_armour && !body.diagnostics )
+			head.take_brute_damage(damage/1.5)
+			legs.take_brute_damage(damage/1.5)
+			arms.take_brute_damage(damage/1.5)
+		else if(target == arms && !arms.motivator)
+			body.take_brute_damage(damage/3)
+			head.take_brute_damage(damage/3)
+			legs.take_brute_damage(damage/3)
+		else if(target == legs && !legs.motivator)
+			body.take_brute_damage(damage/2)
+			head.take_brute_damage(damage/2)
+			arms.take_brute_damage(damage/2)
+		updatehealth()
+	//SIERRA-MODDED-MECHS
 	//Only 3 types of damage concern mechs and vehicles
 	switch(damagetype)
 		if (DAMAGE_BRUTE)
+		//SIERRA-MODDED-MECHS
+			var/brute_resist = ((material.brute_armor-7)) // Макс защита - 4 от брута, 5 от бёрна
+			if(brute_resist > 4)
+				brute_resist = 4
+			damage = damage - brute_resist
 			adjustBruteLoss(damage, target)
+		//SIERRA-MODDED-MECHS
 		if (DAMAGE_BURN)
+		//SIERRA-MODDED-MECHS
+			var/burn_resist = ((material.burn_armor-7))
+			if(burn_resist > 5)
+				burn_resist = 5
+			damage = damage - burn_resist
 			adjustFireLoss(damage, target)
+		//SIERRA-MODDED-MECHS
 		if (DAMAGE_RADIATION)
 			for(var/mob/living/pilot in pilots)
 				pilot.apply_damage(damage, DAMAGE_RADIATION, def_zone, damage_flags, used_weapon)
@@ -186,6 +230,10 @@
 /mob/living/exosuit/emp_act(severity)
 	if (status_flags & GODMODE)
 		return
+	for(var/obj/aura/mechshield/thing in auras)
+		if(thing.active)
+			thing.emp_attack(severity)
+			return
 	var/ratio = get_blocked_ratio(null, DAMAGE_BURN, null, (3-severity) * 20) // HEAVY = 40; LIGHT = 20
 
 	if(ratio >= 0.5)

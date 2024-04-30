@@ -1,3 +1,4 @@
+
 /obj/item/mech_equipment/mounted_system/taser
 	name = "mounted burst electrolaser carbine"
 	desc = "A dual fire mode burst electrolaser system connected to the exosuit's targetting system."
@@ -17,6 +18,20 @@
 	desc = "An exosuit-mounted laser rifle. Handle with care."
 	icon_state = "mech_lasercarbine"
 	holding_type = /obj/item/gun/energy/lasercannon/mounted/mech
+
+/obj/item/mech_equipment/mounted_system/taser/pulse
+	name = "\improper IDK \"Pulsator\" laser"
+	desc = "Military mounted pulse-rifle, probaly stealed from military ship."
+	icon_state = "mech_pulse"
+	holding_type = /obj/item/gun/energy/pulse_rifle/mounted/mech
+
+/obj/item/gun/energy/pulse_rifle/mounted/mech
+	use_external_power = TRUE
+	has_safety = FALSE
+	self_recharge = TRUE
+	max_shots = 10
+	accuracy = 2
+	burst = 1
 
 /obj/item/gun/energy/taser/carbine/mounted/mech
 	use_external_power = TRUE
@@ -43,6 +58,136 @@
 	if (charge_cost <= 0)
 		return "INF"
 	return "[round(power_supply.charge / charge_cost)]/[max_shots]"
+//Mech Machinegun
+/obj/item/mech_equipment/mounted_system/taser/ballistic
+	name = "\improper Military \"Vulcan\" machinegun"
+	desc = "Military mounted machinegun for combat mechs."
+	icon_state = "mech_scatter"
+	holding_type = /obj/item/gun/projectile/automatic/assault_rifle/mounted
+
+/obj/item/mech_equipment/mounted_system/taser/ballistic/attack_hand(mob/user)
+	..()
+	return
+//	if(holding.ammo_magazine != null && src.loc == owner)
+//		holding.unload_ammo(user, allow_dump=0)
+//		get_hardpoint_maptext()
+
+/obj/item/mech_equipment/mounted_system/taser/ballistic/attackby(obj/item/ammo_magazine/magazine, mob/user)
+	if(holding.ammo_magazine == null)
+		holding.load_ammo(magazine,user)
+		get_hardpoint_maptext()
+	..()
+
+/obj/item/gun/projectile/automatic/assault_rifle/mounted
+	name = "mech machinegun"
+	desc = "Very big machinegun with classic calibre."
+	icon = 'icons/obj/guns/saw.dmi'
+	force = 10
+	burst = 3
+	accuracy = 1
+	bulk = GUN_BULK_RIFLE
+	caliber = CALIBER_RIFLE
+	w_class = ITEM_SIZE_HUGE
+	one_hand_penalty= 0
+	load_method = SINGLE_CASING|SPEEDLOADER
+	max_shells = 200
+	ammo_type = /obj/item/ammo_casing/rifle
+	//magazine_type = /obj/item/ammo_magazine/rifle/mech_machinegun
+	allowed_magazines = /obj/item/ammo_magazine/rifle/mech_machinegun
+	has_safety = FALSE
+	firemodes = list(
+		list(mode_name="semi auto", burst=3, fire_delay=null, move_delay=null, one_hand_penalty=8, burst_accuracy=null, dispersion=null),
+		)
+
+/obj/item/ammo_magazine/rifle/mech_machinegun
+	max_ammo = 200
+	mag_type = SPEEDLOADER
+	w_class = ITEM_SIZE_HUGE
+//Mech SMG
+/obj/item/mech_equipment/mounted_system/taser/ballistic/smg
+	name = "\improper Mounted \"SH-G\" prototype SMG"
+	desc = "Prototype SMG, created by one of the ships R&D."
+	icon_state = "mech_ballistic"
+	holding_type = /obj/item/gun/projectile/automatic/mounted/smg
+
+/obj/item/gun/projectile/automatic/mounted/smg
+	name = "mech scattergun"
+	icon = 'icons/obj/guns/saw.dmi'
+	icon_state = "l6closed50"
+	item_state = "l6closedmag"
+	force = 10
+	burst= 3
+	accuracy = 3
+	bulk = GUN_BULK_RIFLE
+	w_class = ITEM_SIZE_HUGE
+	caliber = CALIBER_PISTOL_FLECHETTE
+	one_hand_penalty= 0
+	load_method = SINGLE_CASING|SPEEDLOADER
+	max_shells = 100
+	ammo_type = /obj/item/ammo_casing/flechette/mech
+	magazine_type = /obj/item/ammo_magazine/proto_smg/mech
+	allowed_magazines = /obj/item/ammo_magazine/proto_smg/mech
+	has_safety = FALSE
+	dispersion = null
+	firemodes = list(
+		list(mode_name="semi auto",burst=3, fire_delay=null,move_delay=null, one_hand_penalty=0, burst_accuracy=null, dispersion=null),
+		)
+
+/obj/item/ammo_magazine/proto_smg/mech
+	max_ammo = 100
+	mag_type = SPEEDLOADER
+	w_class = ITEM_SIZE_HUGE
+	ammo_type = /obj/item/ammo_casing/flechette/mech
+
+/obj/item/ammo_casing/flechette/mech
+	projectile_type = /obj/item/projectile/bullet/flechette/mech
+
+/obj/item/projectile/bullet/flechette/mech
+	fire_sound = 'sound/weapons/gunshot/mech_smg.ogg'
+//Mech SMG
+
+//Mech Autoshotgun
+/obj/item/mech_equipment/mounted_system/taser/ballistic/autoshotgun
+	name = "\improper Mounted \"TR-V\" anti-terror shotgun"
+	desc = "Combat autoshotgun created special for NanoTrasen mechs. Technicaly, its automatic KS-43"
+	icon_state = "mech_shotgun"
+	holding_type = /obj/item/gun/projectile/automatic/mounted/shotgun
+
+/obj/item/gun/projectile/automatic/mounted/shotgun
+	name = "mech autoshotgun"
+	desc = "This one connected by ammunition belt to the mech."
+	icon = 'icons/obj/guns/saw.dmi'
+	icon_state = "l6closed50"
+	item_state = "l6closedmag"
+	force = 10
+	burst= 3
+	accuracy = -1
+	bulk = GUN_BULK_RIFLE
+	w_class = ITEM_SIZE_HUGE
+	one_hand_penalty= 0
+	caliber = CALIBER_SHOTGUN
+	load_method = SINGLE_CASING|SPEEDLOADER
+	max_shells = 50
+	ammo_type = /obj/item/ammo_casing/shotgun/mech
+	allowed_magazines = /obj/item/ammo_magazine/shotgunmag/mech
+	has_safety = FALSE
+
+/obj/item/ammo_magazine/shotgunmag/mech
+	max_ammo = 50
+	mag_type = SPEEDLOADER
+	w_class = ITEM_SIZE_HUGE
+	ammo_type = /obj/item/ammo_casing/shotgun/mech
+
+/obj/item/ammo_casing/shotgun/mech
+	projectile_type = /obj/item/projectile/bullet/shotgun/mech
+
+/obj/item/projectile/bullet/shotgun/mech
+	fire_sound = 'sound/weapons/gunshot/mech_autoshotgun.ogg'
+
+//Mech Autoshotgun
+
+/obj/item/mech_equipment/mounted_system/taser/ballistic/get_hardpoint_maptext()
+	return "[LAZYLEN(holding.contents)]/[holding.max_shells]"
 
 /obj/item/gun/energy/get_hardpoint_status_value()
 	var/obj/item/cell/C = get_cell()
@@ -55,13 +200,18 @@
 	desc = "The Hephaestus Armature system is a well liked energy deflector system designed to stop any projectile before it has a chance to become a threat."
 	icon_state = "shield_droid"
 	var/obj/aura/mechshield/aura = null
-	var/max_charge = 150
-	var/charge = 150
+	var/max_charge = 200
+	var/charge = 200
 	var/last_recharge = 0
 	var/charging_rate = 7500 * CELLRATE
 	var/cooldown = 3.5 SECONDS //Time until we can recharge again after a blocked impact
 	restricted_hardpoints = list(HARDPOINT_BACK)
 	restricted_software = list(MECH_SOFTWARE_WEAPONS)
+	//MODDED
+	var/OVERHEAT = FALSE
+	var/last_overheat = 0
+	var/overheat_cooldown = 50 SECONDS  //[INF](500) Огромное окно для пробития меха.
+	//MODDED
 
 /obj/item/mech_equipment/shields/installed(mob/living/exosuit/_owner)
 	. = ..()
@@ -76,57 +226,119 @@
 	if(.)
 		toggle()
 
+//MODDED
 /obj/item/mech_equipment/shields/proc/stop_damage(damage)
 	var/difference = damage - charge
 	charge = clamp(charge - damage, 0, max_charge)
-
 	last_recharge = world.time
-
-	if(difference > 0)
-		for(var/mob/pilot in owner.pilots)
-			to_chat(pilot, SPAN_DANGER("Warning: Deflector shield failure detect, shutting down"))
+	if(difference >= 0)
 		toggle()
-		playsound(owner.loc,'sound/mecha/internaldmgalarm.ogg',35,1)
+		OVERHEAT = TRUE
+		src.visible_message("The mech's computer flashes: WARNING! Shield overheat detected!","The mech's computer beeps, reporting a shield error!",0)
+		src.visible_message("Энергощит вспыхивая и мигая отдельными секциями, резко исчезает, издавая грустный гулл.")
+		//playsound(owner.loc,'sound/mecha/shield_deflector_fail.ogg',60,0)
+		update_icon()
+		last_overheat = world.time
+		delayed_toggle()
 		return difference
 	else return 0
+//MODDED
 
+//MODDED
 /obj/item/mech_equipment/shields/proc/toggle()
+	if(charge == -1)
+		charge = 0
+		src.visible_message("The mech's computer flashes: WARNING! Shield overheat detected!","The mech's computer beeps, reporting a shield error!",0) //[INF] Для предотвращения абуза
+		//playsound(owner.loc,'sound/mecha/shield_deflector_fail.ogg',60,0)
+		OVERHEAT = TRUE
+		update_icon()
+		delayed_toggle()
+		return
+	if(OVERHEAT)
+		if((world.time - last_overheat) < overheat_cooldown)
+			src.visible_message("Shields still overheated!","Shields still overheated!",0)
+			return
 	if(!aura)
 		return
 	aura.toggle()
-	playsound(owner,'sound/weapons/flash.ogg',35,1)
 	update_icon()
 	if(aura.active)
+		//playsound(owner,'sound/mecha/mech_shield_up.ogg',50,0)
 		START_PROCESSING(SSobj, src)
 	else
+		//playsound(owner,'sound/mecha/mech_shield_down.ogg',50,1)
 		STOP_PROCESSING(SSobj, src)
 	active = aura.active
 	passive_power_use = active ? 1 KILOWATTS : 0
 	owner.update_icon()
+// MODDED
 
-/obj/item/mech_equipment/shields/deactivate()
-	if(active)
-		toggle()
-	..()
-
+//MODDED
 /obj/item/mech_equipment/shields/on_update_icon()
 	. = ..()
+	if(OVERHEAT)
+		icon_state= "shield_droid_overheat"
+		return
 	if(!aura)
 		return
 	if(aura.active)
 		icon_state = "shield_droid_a"
 	else
 		icon_state = "shield_droid"
+//MODDED
+
+//MODDED
+/obj/item/mech_equipment/shields/proc/delayed_toggle() //[INF]Отложит поднятие щита на опр время, без вреда работы коду
+	set waitfor = 0
+	if(charge == -1)
+		return
+	sleep(overheat_cooldown)
+	if(OVERHEAT)
+		src.visible_message("Overheat terminated,energy shield automaticly up!","Overheat terminated,energy shield automaticly up",0)
+		charge=200
+		OVERHEAT = FALSE
+		update_icon()
+		toggle()
+		var/obj/item/cell/cell = owner.get_cell()
+		cell.use(max_charge)
+	else
+		OVERHEAT = TRUE
+		delayed_toggle()
+//MODDED
+
+//MODDED
+/obj/aura/mechshield/proc/emp_attack(severity)
+	if(shields)
+		if(shields.charge)
+			if(severity == 1)
+				var/emp_damage = severity * 100
+				shields.stop_damage(emp_damage)
+			if(severity == 2)
+				var/emp_damage = severity * 75
+				shields.stop_damage(emp_damage)
+			user.visible_message(SPAN_WARNING("\The [shields.owner]'s shilds craks, flashs and covers with sparks and energy strikes."))
+			flick("shield_impact", src)
+			//playsound(user,'sound/mecha/shield_emp.ogg',100,0)
+//MODDED
+
+/obj/item/mech_equipment/shields/deactivate()
+	if(active)
+		toggle()
+	..()
+
 
 /obj/item/mech_equipment/shields/Process()
-	if(charge >= max_charge)
-		return
+	//Обновление спрайта с течением времени
+	if(charge < max_charge)
+		aura.on_update_icon()
 	if((world.time - last_recharge) < cooldown)
 		return
+	if(charge >= max_charge)
+		var/obj/item/cell/cell = owner.get_cell()
+		cell.use(charging_rate/4)
+		return
 	var/obj/item/cell/cell = owner.get_cell()
-
-	var/actual_required_power = clamp(max_charge - charge, 0, charging_rate)
-
+	var/actual_required_power = 2*clamp(max_charge - charge, 0, charging_rate)
 	if(cell)
 		charge += cell.use(actual_required_power)
 
@@ -134,7 +346,10 @@
 	return charge / max_charge
 
 /obj/item/mech_equipment/shields/get_hardpoint_maptext()
-	return "[(aura && aura.active) ? "ONLINE" : "OFFLINE"]: [round((charge / max_charge) * 100)]%"
+	if(OVERHEAT)
+		return "["OVERHEAT!"]"
+	else
+		return "[(aura && aura.active) ? "ONLINE" : "OFFLINE"]: [round((charge / max_charge) * 100)]%"
 
 /obj/aura/mechshield
 	icon = 'icons/mecha/shield.dmi'
@@ -182,13 +397,24 @@
 	if(active)
 		flick("shield_raise", src)
 	else
-		flick("shield_drop", src)
+		if(shields.charge == 0)
+			flick("shield_die",src)
+		else
+			flick("shield_drop", src)
 
 
 /obj/aura/mechshield/on_update_icon()
 	. = ..()
 	if(active)
-		icon_state = "shield"
+		var/percentrage = shields.charge/shields.max_charge * 100
+		if(percentrage < 25)
+			icon_state = "shield_25"
+		else if(percentrage < 50)
+			icon_state = "shield_50"
+		else if(percentrage < 75)
+			icon_state = "shield_75"
+		else if(percentrage > 75)
+			icon_state = "shield"
 	else
 		icon_state = "shield_null"
 

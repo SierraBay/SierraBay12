@@ -29,16 +29,22 @@
 	var/obj/machinery/portable_atmospherics/canister/air_supply
 	var/obj/item/storage/mech/storage_compartment
 	var/datum/gas_mixture/cockpit
+	var/mob/living/exosuit/owner
 	var/transparent_cabin = FALSE
 	var/hide_pilot =        FALSE
 	var/hatch_descriptor = "cockpit"
 	var/list/pilot_positions
+	var/list/back_passengers_positions
+	var/list/left_back_passengers_positions
+	var/list/right_back_passengers_positions
+	var/allow_passengers = TRUE
 	var/pilot_coverage = 100
 	var/min_pilot_size = MOB_SMALL
 	var/max_pilot_size = MOB_LARGE
 	has_hardpoints = list(HARDPOINT_BACK, HARDPOINT_LEFT_SHOULDER, HARDPOINT_RIGHT_SHOULDER)
 	var/damage_sound = 'sound/effects/bang.ogg'
 	var/climb_time = 25
+	var/hatch_bolts_status = BOLTS_NOMITAL
 
 /obj/item/mech_component/chassis/New()
 	..()
@@ -141,8 +147,6 @@
 
 /obj/item/mech_component/chassis/prebuild()
 	diagnostics = new(src)
-	cell = new /obj/item/cell/high(src)
-	cell.charge = cell.maxcharge
 
 /obj/item/mech_component/chassis/attackby(obj/item/thing, mob/user)
 	if(istype(thing,/obj/item/robot_parts/robot_component/diagnosis_unit))
@@ -206,13 +210,9 @@
 	pilot_coverage = 40
 	exosuit_desc_string = "an industrial rollcage"
 	desc = "A Xion industrial brand roll cage. Technically OSHA compliant. Technically."
-	max_damage = 100
+	max_damage = 150
 	power_use = 0
 	climb_time = 6
-
-/obj/item/mech_component/chassis/powerloader/prebuild()
-	. = ..()
-	m_armour = new /obj/item/robot_parts/robot_component/armour/exosuit(src)
 
 /obj/item/mech_component/chassis/powerloader/Initialize()
 	pilot_positions = list(
@@ -229,6 +229,24 @@
 			"[WEST]"  = list("x" = 16, "y" = 16)
 		)
 	)
+	back_passengers_positions = list(
+			"[NORTH]" = list("x" = 8,  "y" = 16),
+			"[SOUTH]" = list("x" = 8,  "y" = 16),
+			"[EAST]"  = list("x" = -4, "y" = 16),
+			"[WEST]"  = list("x" = 16, "y" = 16)
+			)
+	left_back_passengers_positions = list(
+			"[NORTH]" = list("x" = -4,  "y" = 16),
+			"[SOUTH]" = list("x" = 20,  "y" = 16),
+			"[EAST]"  = list("x" = -4, "y" = 16),
+			"[WEST]"  = list("x" = 16, "y" = 16)
+			)
+	right_back_passengers_positions = list(
+			"[NORTH]" = list("x" = 20,  "y" = 16),
+			"[SOUTH]" = list("x" = -4,  "y" = 16),
+			"[EAST]"  = list("x" = -4, "y" = 16),
+			"[WEST]"  = list("x" = 16, "y" = 16)
+			)
 	. = ..()
 
 /obj/item/mech_component/chassis/light
@@ -238,16 +256,12 @@
 	transparent_cabin =  TRUE
 	exosuit_desc_string = "an open and light chassis"
 	icon_state = "light_body"
-	max_damage = 50
+	max_damage = 120
 	power_use = 5
 	has_hardpoints = list(HARDPOINT_BACK, HARDPOINT_LEFT_SHOULDER)
 	damage_sound = 'sound/effects/glass_crack1.ogg'
 	desc = "The Veymed Odysseus series cockpits combine ultralight materials and clear aluminum laminates to provide an optimized cockpit experience."
 	climb_time = 15
-
-/obj/item/mech_component/chassis/light/prebuild()
-	. = ..()
-	m_armour = new /obj/item/robot_parts/robot_component/armour/exosuit/radproof(src)
 
 /obj/item/mech_component/chassis/light/Initialize()
 	pilot_positions = list(
@@ -258,6 +272,24 @@
 			"[WEST]"  = list("x" = 13, "y" = 0)
 		)
 	)
+	back_passengers_positions = list(
+			"[NORTH]" = list("x" = 8,  "y" = 16),
+			"[SOUTH]" = list("x" = 8,  "y" = 16),
+			"[EAST]"  = list("x" = -4, "y" = 16),
+			"[WEST]"  = list("x" = 16, "y" = 16)
+			)
+	left_back_passengers_positions = list(
+			"[NORTH]" = list("x" = -2,  "y" = 16),
+			"[SOUTH]" = list("x" = 16,  "y" = 16),
+			"[EAST]"  = list("x" = -4, "y" = 16),
+			"[WEST]"  = list("x" = 16, "y" = 16)
+			)
+	right_back_passengers_positions = list(
+			"[NORTH]" = list("x" = 16,  "y" = 16),
+			"[SOUTH]" = list("x" = -2,  "y" = 16),
+			"[EAST]"  = list("x" = -4, "y" = 16),
+			"[WEST]"  = list("x" = 16, "y" = 16)
+			)
 	. = ..()
 
 /obj/item/mech_component/chassis/pod
@@ -267,7 +299,7 @@
 	transparent_cabin = TRUE
 	exosuit_desc_string = "a spherical chassis"
 	icon_state = "pod_body"
-	max_damage = 70
+	max_damage = 210
 	power_use = 5
 	has_hardpoints = list(HARDPOINT_BACK)
 	desc = "The NanoTrasen Katamari series cockpits have won a massive tender by SCG few years back. No one is sure why, but these terrible things keep popping up on every government facility."
@@ -287,11 +319,25 @@
 			"[WEST]"  = list("x" = 6, "y" = 8)
 		)
 	)
+	back_passengers_positions = list(
+			"[NORTH]" = list("x" = 8,  "y" = 16),
+			"[SOUTH]" = list("x" = 8,  "y" = 16),
+			"[EAST]"  = list("x" = -4, "y" = 16),
+			"[WEST]"  = list("x" = 16, "y" = 16)
+			)
+	left_back_passengers_positions = list(
+			"[NORTH]" = list("x" = -4,  "y" = 16),
+			"[SOUTH]" = list("x" = 20,  "y" = 16),
+			"[EAST]"  = list("x" = -4, "y" = 16),
+			"[WEST]"  = list("x" = 16, "y" = 16)
+			)
+	right_back_passengers_positions = list(
+			"[NORTH]" = list("x" = 20,  "y" = 16),
+			"[SOUTH]" = list("x" = -4,  "y" = 16),
+			"[EAST]"  = list("x" = -4, "y" = 16),
+			"[WEST]"  = list("x" = 16, "y" = 16)
+			)
 	. = ..()
-
-/obj/item/mech_component/chassis/pod/prebuild()
-	. = ..()
-	m_armour = new /obj/item/robot_parts/robot_component/armour/exosuit/radproof(src)
 
 /obj/item/mech_component/chassis/pod/Initialize()
 	pilot_positions = list(
@@ -311,7 +357,7 @@
 	pilot_coverage = 100
 	exosuit_desc_string = "a heavily armoured chassis"
 	icon_state = "heavy_body"
-	max_damage = 150
+	max_damage = 750
 	mech_health = 500
 	power_use = 50
 	has_hardpoints = list(HARDPOINT_BACK)
@@ -320,17 +366,37 @@
 	pilot_positions = list(
 		list(
 			"[NORTH]" = list("x" = 8,  "y" = 8),
-			"[SOUTH]" = list("x" = 9,  "y" = 2),
+			"[SOUTH]" = list("x" = 8,  "y" = 8),
+			"[EAST]"  = list("x" = 4,  "y" = 8),
+			"[WEST]"  = list("x" = 12, "y" = 8)
+		),
+		list(
+			"[NORTH]" = list("x" = 8,  "y" = 8),
+			"[SOUTH]" = list("x" = 8,  "y" = 8),
 			"[EAST]"  = list("x" = 4,  "y" = 8),
 			"[WEST]"  = list("x" = 12, "y" = 8)
 		)
 	)
+	back_passengers_positions = list(
+			"[NORTH]" = list("x" = 8,  "y" = 16),
+			"[SOUTH]" = list("x" = 8,  "y" = 16),
+			"[EAST]"  = list("x" = -4, "y" = 16),
+			"[WEST]"  = list("x" = 16, "y" = 16)
+			)
+	left_back_passengers_positions = list(
+			"[NORTH]" = list("x" = -4,  "y" = 16),
+			"[SOUTH]" = list("x" = 20,  "y" = 16),
+			"[EAST]"  = list("x" = -4, "y" = 16),
+			"[WEST]"  = list("x" = 16, "y" = 16)
+			)
+	right_back_passengers_positions = list(
+			"[NORTH]" = list("x" = 20,  "y" = 16),
+			"[SOUTH]" = list("x" = -4,  "y" = 16),
+			"[EAST]"  = list("x" = -4, "y" = 16),
+			"[WEST]"  = list("x" = 16, "y" = 16)
+			)
 
 	. = ..()
-
-/obj/item/mech_component/chassis/heavy/prebuild()
-	. = ..()
-	m_armour = new /obj/item/robot_parts/robot_component/armour/exosuit/combat(src)
 
 /obj/item/mech_component/chassis/combat
 	name = "sealed exosuit chassis"
@@ -338,11 +404,8 @@
 	pilot_coverage = 100
 	exosuit_desc_string = "an armoured chassis"
 	icon_state = "combat_body"
+	max_damage = 270
 	power_use = 40
-
-/obj/item/mech_component/chassis/combat/prebuild()
-	. = ..()
-	m_armour = new /obj/item/robot_parts/robot_component/armour/exosuit/combat(src)
 
 /obj/item/mech_component/chassis/combat/Initialize()
 	pilot_positions = list(
@@ -353,5 +416,23 @@
 			"[WEST]"  = list("x" = 12, "y" = 8)
 		)
 	)
+	back_passengers_positions = list(
+			"[NORTH]" = list("x" = 8,  "y" = 16),
+			"[SOUTH]" = list("x" = 8,  "y" = 16),
+			"[EAST]"  = list("x" = -4, "y" = 16),
+			"[WEST]"  = list("x" = 16, "y" = 16)
+			)
+	left_back_passengers_positions = list(
+			"[NORTH]" = list("x" = -4,  "y" = 16),
+			"[SOUTH]" = list("x" = 20,  "y" = 16),
+			"[EAST]"  = list("x" = -4, "y" = 16),
+			"[WEST]"  = list("x" = 16, "y" = 16)
+			)
+	right_back_passengers_positions = list(
+			"[NORTH]" = list("x" = 20,  "y" = 16),
+			"[SOUTH]" = list("x" = -4,  "y" = 16),
+			"[EAST]"  = list("x" = -4, "y" = 16),
+			"[WEST]"  = list("x" = 16, "y" = 16)
+			)
 
 	. = ..()

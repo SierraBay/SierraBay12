@@ -247,24 +247,12 @@
 	cost = 10
 	containername = "chaplain equipment crate"
 
-/singleton/hierarchy/supply_pack/nonessent/exosuit_mod
-	num_contained = 1
-	name = "Mod - \"Firestarter\" exosuit modkit"
-	contains = list(/obj/item/device/kit/paint/flames_red)
-	cost = 50
-	containername = "heavy exosuit modkit crate"
 
-/singleton/hierarchy/supply_pack/nonessent/exosuit_mod/chrome
-	name = "Mod - \"Burning Chrome\" exosuit modkit"
-	contains = list(/obj/item/device/kit/paint/flames_blue)
 
-/singleton/hierarchy/supply_pack/nonessent/exosuit_mod/military
-	name = "Mod - \"Guerilla\" exosuit modkit"
-	contains = list(/obj/item/device/kit/paint/camouflage)
 
-/singleton/hierarchy/supply_pack/nonessent/exosuit_mod/alpine
-	name = "Mod - \"Alpine\" exosuit modkit"
-	contains = list(/obj/item/device/kit/paint/camouflage/forest)
+/singleton/hierarchy/supply_pack/nonessent/mech_kit
+	name = "Mech castomisation kit"
+	contains = list(/obj/item/device/kit/mech)
 
 /singleton/hierarchy/supply_pack/nonessent/aromatherapy
 	name = "Rec - Aromatherapy"

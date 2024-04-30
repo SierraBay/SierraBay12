@@ -11,6 +11,7 @@
 	if(. && !istype(loc, /turf/space))
 		playsound(src.loc, legs.mech_step_sound, 40, 1)
 
+
 /mob/living/exosuit/can_ztravel()
 	if(Process_Spacemove()) //Handle here
 		return TRUE
@@ -99,17 +100,85 @@
 	if(direction & (UP|DOWN))
 		var/txt_dir = direction & UP ? "upwards" : "downwards"
 		exosuit.visible_message(SPAN_NOTICE("\The [exosuit] moves [txt_dir]."))
+//STRAFE
+	if(exosuit.legs.can_strafe)
+		for(var/thing in exosuit.pilots) //Для всех пилотов внутри
+			var/mob/pilot = thing
+			if(pilot && pilot.client)
+				for(var/key in pilot.client.keys_held)
+					if (key == "Space")
+						var/move_speed = exosuit.legs.move_delay
+						if(!exosuit.legs.good_in_strafe)
+							move_speed = move_speed * 2.5
+						if(direction == NORTHWEST || direction == NORTHEAST || direction == SOUTHWEST || direction == SOUTHEAST)
+							move_speed = sqrt((move_speed*move_speed) + (move_speed * move_speed))
+						if(move_speed > 12)
+							move_speed = 12
+						exosuit.SetMoveCooldown(exosuit.legs ? move_speed : 3)
+						var/turf/target_loc = get_step(exosuit, direction)
+						if(target_loc && exosuit.legs && exosuit.legs.can_move_on(exosuit.loc, target_loc) && exosuit.MayEnterTurf(target_loc))
+							exosuit.Move(target_loc)
+						return MOVEMENT_HANDLED
+//STRAFE
 
+//TURN
 	if(exosuit.dir != moving_dir && !(direction & (UP|DOWN)))
 		playsound(exosuit.loc, exosuit.legs.mech_turn_sound, 40,1)
 		exosuit.set_dir(moving_dir)
 		exosuit.SetMoveCooldown(exosuit.legs.turn_delay)
+		exosuit.passengers_ammount = LAZYLEN(exosuit.passenger_compartment.back_passengers) + LAZYLEN(exosuit.passenger_compartment.left_back_passengers) + LAZYLEN(exosuit.passenger_compartment.right_back_passengers)
+		if(exosuit.passengers_ammount > 0)
+			exosuit.update_passengers()
+		for(var/hardpoint in exosuit.hardpoints)
+			if(hardpoint == "left hand" || hardpoint == "right hand" || hardpoint == "left shoulder" || hardpoint == "right shoulder")
+				exosuit.update_icon()
+//TURN
+
+//MOVE
 	else
 		exosuit.SetMoveCooldown(exosuit.legs ? exosuit.legs.move_delay : 3)
 		var/turf/target_loc = get_step(exosuit, direction)
 		if(target_loc && exosuit.legs && exosuit.legs.can_move_on(exosuit.loc, target_loc) && exosuit.MayEnterTurf(target_loc))
 			exosuit.Move(target_loc)
 	return MOVEMENT_HANDLED
+//MOVE
+
+/mob/living/exosuit/proc/runOver(mob/living/target) //Нам нужно проверить весь турф на наличие обьектов, которые мы можем протоптать
+	var/mob/living/pilot = pick(pilots)
+	if(legs.bump_safety && pilot.a_intent != I_HURT) //Мы не хотим топтать и ноги могут не топтать?
+		return //Не топчем
+	src.visible_message(SPAN_DANGER("С силой топчет [target] на полу!"), blind_message = SPAN_DANGER("You hear the loud hissing of hydraulics!"))
+	target.apply_effects(5, 5) //Чтоб ахуел
+	var/damage = rand(5, 7)
+	damage = damage * legs.bump_type
+	target.apply_damage(2 * damage, DAMAGE_BRUTE, BP_HEAD)
+	target.apply_damage(2 * damage, DAMAGE_BRUTE, BP_CHEST)
+	target.apply_damage(0.5 * damage, DAMAGE_BRUTE, BP_L_LEG)
+	target.apply_damage(0.5 * damage, DAMAGE_BRUTE, BP_R_LEG)
+	target.apply_damage(0.5 * damage, DAMAGE_BRUTE, BP_L_ARM)
+	target.apply_damage(0.5 * damage, DAMAGE_BRUTE, BP_R_ARM)
+
+/mob/living/exosuit/Bump(mob/living/target)
+	..()
+	if(!istype(target, /mob/living))
+		return
+	if(Bumps != 1)
+		Bumps = !Bumps
+		return
+	Bumps = !Bumps
+	collision_attack(target)
+
+/mob/living/exosuit/proc/collision_attack(mob/living/target,bump_type) //Attack colissioned things
+	var/mob/living/pilot = pick(pilots)
+	if(legs.bump_safety && pilot.a_intent != I_HURT) //Мы не хотим таранить и ноги могут не таранить?
+		return //Не тараним
+	src.visible_message(SPAN_DANGER("С силой сбивает [target] с пути!"), blind_message = SPAN_DANGER("You hear the loud hissing of hydraulics!"))
+	var/list/parts = list(BP_HEAD, BP_CHEST, BP_L_LEG, BP_R_LEG, BP_L_ARM, BP_R_ARM)
+	for(var/i = 0, i < rand(1,5), i++)
+		var/def_zone = pick(parts)
+		var/damage = rand(2,5) * legs.bump_type
+		target.apply_damage(damage, DAMAGE_BRUTE, def_zone)
+
 /datum/movement_handler/mob/space/exosuit
 	expected_host_type = /mob/living/exosuit
 

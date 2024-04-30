@@ -2,6 +2,8 @@
 	name = "impossible exosuit"
 	desc = "It seems to be saying 'please let me die'."
 	var/decal
+	var/obj/item/Mcell
+	var/obj/item/robot_parts/robot_component/armour/armor
 
 /mob/living/exosuit/premade/Initialize()
 	if(arms)
@@ -15,11 +17,10 @@
 		head.prebuild()
 	if(body)
 		body.decal = decal
-		body.prebuild()
+		body.prebuild(Mcell,armor)
 	if(!material)
 		material = SSmaterials.get_material_by_name(MATERIAL_STEEL)
 	. = ..()
-
 	spawn_mech_equipment()
 
 /mob/living/exosuit/premade/proc/spawn_mech_equipment()
@@ -143,6 +144,8 @@
 		var/bodytype = pick(typesof(/obj/item/mech_component/chassis)-/obj/item/mech_component/chassis)
 		body = new bodytype(src)
 		body.color = mech_colour ? mech_colour : pick(use_colours)
+		body.cell = new /obj/item/cell/high(src)
+		body.m_armour = new /obj/item/robot_parts/robot_component/armour/exosuit(src)
 	. = ..()
 
 // Used for spawning/debugging.

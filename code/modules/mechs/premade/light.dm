@@ -15,6 +15,8 @@
 	if(!body)
 		body = new /obj/item/mech_component/chassis/light(src)
 		body.color = COLOR_OFF_WHITE
+		body.cell = new /obj/item/cell/high(src)
+		body.m_armour = new /obj/item/robot_parts/robot_component/armour/exosuit(src)
 
 	. = ..()
 
@@ -23,4 +25,3 @@
 	install_system(new /obj/item/mech_equipment/catapult(src), HARDPOINT_LEFT_HAND)
 	install_system(new /obj/item/mech_equipment/sleeper(src), HARDPOINT_BACK)
 	install_system(new /obj/item/mech_equipment/light(src), HARDPOINT_HEAD)
-	install_system(new /obj/item/mech_equipment/mender(src), HARDPOINT_RIGHT_HAND)

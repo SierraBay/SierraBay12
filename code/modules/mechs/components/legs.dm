@@ -7,7 +7,10 @@
 	var/obj/item/robot_parts/robot_component/actuator/motivator
 	power_use = 50
 	var/max_fall_damage = 90
-
+	var/bump_type = BASIC_BUMP
+	var/bump_safety = TRUE
+	var/can_strafe = FALSE //Может ли мех ходить при помощи стрейфа. Крайне полезная фича, используйте если знаете что делаете.
+	var/good_in_strafe = FALSE //Влияет на эффективность стрейфа, используйте когда мир будет к нему готов.
 	var/mech_turn_sound = 'sound/mecha/mechmove01.ogg'
 	var/mech_step_sound = 'sound/mecha/mechstep01.ogg'
 
@@ -69,7 +72,7 @@
 	name = "exosuit legs"
 	exosuit_desc_string = "reinforced hydraulic legs"
 	desc = "Wide and stable but not particularly fast."
-	max_damage = 70
+	max_damage = 100
 	move_delay = 4
 	turn_delay = 4
 	power_use = 10
@@ -82,7 +85,7 @@
 	icon_state = "light_legs"
 	move_delay = 2
 	turn_delay = 3
-	max_damage = 40
+	max_damage = 80
 	power_use = 5
 	desc = "These Odysseus series legs are built from lightweight flexible polymers, making them capable of handling falls from up to 120 meters in 1g environments. Provided that the exosuit lands on its feet."
 	max_fall_damage = 0
@@ -99,10 +102,12 @@
 	exosuit_desc_string = "hydraulic quadlegs"
 	desc = "Xion Industrial's arachnid series boasts more leg per leg than the leading competitor."
 	icon_state = "spiderlegs"
-	max_damage = 80
+	max_damage = 210
 	move_delay = 4
 	turn_delay = 1
 	power_use = 25
+	bump_type = MEDIUM_BUMP
+	can_strafe = TRUE
 
 	mech_turn_sound = 'sound/mecha/mechmove03.ogg'
 	mech_step_sound = 'sound/mecha/mechstep02.ogg'
@@ -112,10 +117,12 @@
 	exosuit_desc_string = "armored tracks"
 	desc = "A classic brought back. The Hephaestus' Landmaster class tracks are impervious to most damage and can maintain top speed regardless of load. Watch out for corners."
 	icon_state = "tracks"
-	max_damage = 150
+	max_damage = 250
 	move_delay = 2 //It´s fast
 	turn_delay = 7
 	power_use = 150
+	bump_type = HARD_BUMP
+	bump_safety = FALSE
 
 	mech_turn_sound = 'sound/mecha/mechstep03.ogg' //Now, i know what you're thinking, but it works.
 	mech_step_sound = 'sound/machines/engine.ogg'
@@ -127,8 +134,10 @@
 	icon_state = "heavy_legs"
 	move_delay = 5
 	turn_delay = 5
-	max_damage = 160
+	max_damage = 500
 	power_use = 100
+	bump_type = HARD_BUMP
+	bump_safety = FALSE
 
 	mech_turn_sound = 'sound/mecha/mechmove01.ogg'
 	mech_step_sound = 'sound/mecha/mechstep03.ogg'
@@ -140,6 +149,9 @@
 	move_delay = 3
 	turn_delay = 3
 	power_use = 20
+	max_damage = 180
+	bump_type = MEDIUM_BUMP
+	bump_safety = FALSE
 
 	mech_turn_sound = 'sound/mecha/mechmove03.ogg'
 	mech_step_sound = 'sound/mecha/mechstep03.ogg'

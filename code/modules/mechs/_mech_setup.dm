@@ -44,3 +44,16 @@ GLOBAL_LIST_INIT(mech_weapon_overlays, ICON_STATES('icons/mecha/mech_weapon_over
 #define MECH_POWER_OFF 0
 #define MECH_POWER_TRANSITION 1
 #define MECH_POWER_ON 2
+
+//Passengers
+#define MECH_DROP_ALL_PASSENGER 1 // Скинуть всех пассажиров
+#define MECH_DROP_ANY_PASSENGER 2 // Скинуть первого попавшегося пассажира
+
+//Cockpit bolts status
+#define BOLTS_NOMITAL 0
+#define BOLTS_DESTROYED 1
+
+//Bump types
+#define BASIC_BUMP 1
+#define MEDIUM_BUMP 2
+#define HARD_BUMP 3

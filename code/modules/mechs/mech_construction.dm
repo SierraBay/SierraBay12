@@ -1,5 +1,5 @@
 /mob/living/exosuit/proc/dismantle()
-
+	forced_leave_passenger(0 , MECH_DROP_ALL_PASSENGER , "dismantle of [src]") // Перед разбором, сбросим всех пассажиров
 	playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 	var/obj/structure/heavy_vehicle_frame/frame = new(get_turf(src))
 	for(var/hardpoint in hardpoints)
@@ -47,7 +47,7 @@
 
 	GLOB.destroyed_event.unregister(module_to_forget, src, PROC_REF(forget_module))
 
-	var/obj/screen/exosuit/hardpoint/H = hardpoint_hud_elements[target]
+	var/obj/screen/movable/exosuit/hardpoint/H = hardpoint_hud_elements[target]
 	H.holding = null
 
 	hud_elements -= module_to_forget
@@ -107,7 +107,7 @@
 	hardpoints[system_hardpoint] = system
 	ME.installed(src)
 
-	var/obj/screen/exosuit/hardpoint/H = hardpoint_hud_elements[system_hardpoint]
+	var/obj/screen/movable/exosuit/hardpoint/H = hardpoint_hud_elements[system_hardpoint]
 	H.holding = system
 
 	system.screen_loc = H.screen_loc
@@ -145,7 +145,7 @@
 	system.layer = initial(system.layer)
 	GLOB.destroyed_event.unregister(system, src, PROC_REF(forget_module))
 
-	var/obj/screen/exosuit/hardpoint/H = hardpoint_hud_elements[system_hardpoint]
+	var/obj/screen/movable/exosuit/hardpoint/H = hardpoint_hud_elements[system_hardpoint]
 	H.holding = null
 
 	for(var/thing in pilots)

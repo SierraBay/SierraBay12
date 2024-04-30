@@ -15,6 +15,7 @@
 	var/passive_power_use = 0          // For gear that for some reason takes up power even if it's supposedly doing nothing (mech will idly consume power)
 	var/mech_layer = MECH_GEAR_LAYER //For the part where it's rendered as mech gear
 	var/require_adjacent = TRUE
+	var/disturb_passengers = FALSE // Отвечает за то, мешает ли модуль посадке пассажира в занятый хардпоинт.
 	var/active = FALSE //For gear that has an active state (ie, floodlights)
 
 /obj/item/mech_equipment/afterattack(atom/target, mob/living/user, inrange, params)
@@ -91,7 +92,7 @@
 
 /obj/item/mech_equipment/mounted_system
 	var/holding_type
-	var/obj/item/holding
+	var/obj/item/gun/projectile/holding
 
 /obj/item/mech_equipment/mounted_system/attack_self(mob/user)
 	. = ..()

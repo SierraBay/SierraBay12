@@ -15,6 +15,8 @@
 	if(!body)
 		body = new /obj/item/mech_component/chassis/powerloader(src)
 		body.color = "#ffbc37"
+		body.cell = new /obj/item/cell/high(src)
+		body.m_armour = new /obj/item/robot_parts/robot_component/armour/exosuit(src)
 
 	. = ..()
 

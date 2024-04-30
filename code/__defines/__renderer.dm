@@ -101,6 +101,7 @@
 	//MOB
 	#define MECH_UNDER_LAYER            3.11
 	// MOB_LAYER                        4
+	#define MECH_BACK_LAYER             4
 	#define MECH_BASE_LAYER             4.01
 	#define MECH_INTERMEDIATE_LAYER     4.02
 	#define MECH_PILOT_LAYER            4.03
