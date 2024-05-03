@@ -43,7 +43,7 @@
 	if(result[2] != "subtle")
 		runechat_message = result[1]
 
-	result[1] = replacetext(result[1], result[4], "<b>[A]</b>" + result[4])
+	result[1] = replacetext(result[1], result[4], "<b>[A]</b> " + result[4])
 
 	A.visible_message(result[1], result[1], runemessage = runechat_message)
 	log_and_message_staff(" - VisibleNarrate [result[2]]/[result[3]] on [A]: [result[4]]")

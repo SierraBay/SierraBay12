@@ -10,7 +10,7 @@
 		if (length(exclude_mobs) && (M in exclude_mobs))
 			exclude_mobs -= M
 			continue
-		M.show_message(message,2,deaf_message,1)
+		M.show_message(message, AUDIBLE_MESSAGE, deaf_message, VISIBLE_MESSAGE)
 		if(runemessage != -1)
 			M.create_chat_message(src, "[runemessage]", FALSE, list("emote"))
 
@@ -19,7 +19,7 @@
 		if (length(exclude_objs) && (O in exclude_objs))
 			exclude_objs -= O
 			continue
-		O.show_message(message,2,deaf_message,1)
+		O.show_message(message, AUDIBLE_MESSAGE, deaf_message, VISIBLE_MESSAGE)
 
 
 /mob/audible_message(message, self_message, deaf_message, hearing_distance = world.view, checkghosts = null, narrate = FALSE, list/exclude_objs = null, list/exclude_mobs = null, runemessage = -1)
