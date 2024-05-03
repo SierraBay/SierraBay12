@@ -1,4 +1,4 @@
 /singleton/modpack/facility
 	name = "Заброшенный исследовательский комплекс"
 	desc = "Добавляет в игру заброшенный комплекс с рандомной генерацией комнат."
-	author = "Danilcus"
+	author = "Ivan2004fantom"
