@@ -309,12 +309,14 @@
 	if(!user.Adjacent(src))
 		return FALSE
 	if(hatch_locked)
-		check_passenger(user)
+		if(!check_passenger(user))
+			return
 		if(!silent)
 			to_chat(user, SPAN_WARNING("The [body.hatch_descriptor] is locked."))
 		return FALSE
 	if(hatch_closed)
-		check_passenger(user)
+		if(!check_passenger(user))
+			return
 		if(!silent)
 			to_chat(user, SPAN_WARNING("The [body.hatch_descriptor] is closed."))
 		return FALSE
@@ -431,7 +433,8 @@
 			return 0
 		src.visible_message(SPAN_NOTICE(" [user] climbed on [place] of [src]!"))
 		passenger_compartment.count_passengers()
-		update_passengers()
+		//update_passengers()
+		return
 
 // будет использоваться Life() дабы исключить моменты, когда по какой-то причине пассажир слез с меха, лежа на полу. Life вызовется, обработается pinned, всем в кайф.
 /mob/living/exosuit/proc/leave_passenger(mob/user)// Пассажир сам покидает меха
@@ -446,7 +449,7 @@
 	else if(user in passenger_compartment.right_back_passengers)
 		LAZYREMOVE(passenger_compartment.right_back_passengers,user)
 	passenger_compartment.count_passengers()
-	update_passengers()
+	//update_passengers()
 
 /mob/living/exosuit/proc/forced_leave_passenger(place,mode,author)// Нечто внешнее насильно опустошает Одно/все места пассажиров
 // mode 1 - полный выгруз, mode 2 - рандомного одного, mode 0(Отсутствие мода) - ручной скид пассажира мехводом
@@ -475,7 +478,7 @@
 				i.Life()
 				passenger_compartment.count_passengers()
 				src.visible_message(SPAN_WARNING("[i] was forcelly removed from [src] by [author]"))
-		update_passengers()
+		//update_passengers()
 
 	else if(mode == MECH_DROP_ANY_PASSENGER) // Сброс по приоритету спина - левый бок - правый бок.
 		if(LAZYLEN(passenger_compartment.back_passengers) > 0)
@@ -486,7 +489,7 @@
 				i.Life()
 				src.visible_message(SPAN_WARNING("[i] was forcelly removed from [src] by [author]"))
 				passenger_compartment.count_passengers()
-				update_passengers()
+				//update_passengers()
 				return
 		else if(LAZYLEN(passenger_compartment.left_back_passengers)>0)
 			for(var/mob/i in passenger_compartment.left_back_passengers)
@@ -496,7 +499,7 @@
 				i.Life()
 				src.visible_message(SPAN_WARNING("[i] was forcelly removed from [src] by [author]"))
 				passenger_compartment.count_passengers()
-				update_passengers()
+			//	update_passengers()
 				return
 		else if(LAZYLEN(passenger_compartment.right_back_passengers)>0)
 			for(var/mob/i in passenger_compartment.right_back_passengers)
@@ -507,7 +510,7 @@
 				i.Life()
 				src.visible_message(SPAN_WARNING("[i] was forcelly removed from [src] by [author]"))
 				passenger_compartment.count_passengers()
-				update_passengers()
+			//	update_passengers()
 				return
 
 	else // <- Опустошается определённое место
@@ -530,7 +533,7 @@
 				i.pinned -= src
 				LAZYREMOVE(passenger_compartment.right_back_passengers,i)
 		passenger_compartment.count_passengers()
-		update_passengers()
+		//update_passengers()
 /// Adds a mob to the pilots list and destroyed event handlers.
 /mob/living/exosuit/proc/add_pilot(mob/user)
 	if (LAZYISIN(pilots, user))

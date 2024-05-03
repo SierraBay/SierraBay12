@@ -13,6 +13,7 @@
 	var/good_in_strafe = FALSE //Влияет на эффективность стрейфа, используйте когда мир будет к нему готов.
 	var/mech_turn_sound = 'sound/mecha/mechmove01.ogg'
 	var/mech_step_sound = 'sound/mecha/mechstep01.ogg'
+	var/collision_coldown = 7
 
 /obj/item/mech_component/propulsion/Destroy()
 	QDEL_NULL(motivator)

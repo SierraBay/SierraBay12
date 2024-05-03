@@ -60,7 +60,7 @@
 		i = 0
 		for(var/additional_hud in additional_hud_elements)
 			var/obj/screen/movable/exosuit/M = new additional_hud(src)
-			M.screen_loc = "EAST-16.5,[pos]:[i]"
+			M.screen_loc = "2:6,[pos]:[i]"
 			menu_hud_elements |= M
 			i -= M.height
 

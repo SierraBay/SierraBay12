@@ -96,6 +96,7 @@
 	var/list/left_back_passengers_overlays // <- Изображение пассажира на левом боку
 	var/list/right_back_passengers_overlays // <- Изображение пассажира на правом боку
 	var/Bumps = 0
+	var/last_collision
 
 /mob/living/exosuit/MayZoom()
 	if(head?.vision_flags)
@@ -259,5 +260,5 @@
 
 /mob/living/exosuit/proc/get_main_data(mob/user)
 	//to_chat(user, SPAN_NOTICE("[capitalize(src.name)]:"))
-	to_chat(user, SPAN_NOTICE("Main mech integrity:[health]/[maxHealth]([((health/maxHealth)*100)]%"))
+	to_chat(user, SPAN_NOTICE("Main mech integrity:[health]/[maxHealth]([((health/maxHealth)*100)]%)"))
 	//[max_damage - total_damage]/[max_damage]([round((((max_damage - total_damage) / max_damage)) * 100)]%)

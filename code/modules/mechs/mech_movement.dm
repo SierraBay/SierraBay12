@@ -127,8 +127,8 @@
 		exosuit.set_dir(moving_dir)
 		exosuit.SetMoveCooldown(exosuit.legs.turn_delay)
 		exosuit.passengers_ammount = LAZYLEN(exosuit.passenger_compartment.back_passengers) + LAZYLEN(exosuit.passenger_compartment.left_back_passengers) + LAZYLEN(exosuit.passenger_compartment.right_back_passengers)
-		if(exosuit.passengers_ammount > 0)
-			exosuit.update_passengers()
+		//if(exosuit.passengers_ammount > 0)
+		//	exosuit.update_passengers()
 		for(var/hardpoint in exosuit.hardpoints)
 			if(hardpoint == "left hand" || hardpoint == "right hand" || hardpoint == "left shoulder" || hardpoint == "right shoulder")
 				exosuit.update_icon()
@@ -147,16 +147,19 @@
 	var/mob/living/pilot = pick(pilots)
 	if(legs.bump_safety && pilot.a_intent != I_HURT) //Мы не хотим топтать и ноги могут не топтать?
 		return //Не топчем
-	src.visible_message(SPAN_DANGER("С силой топчет [target] на полу!"), blind_message = SPAN_DANGER("You hear the loud hissing of hydraulics!"))
+	var/additional_modificator = 0
+	var/damage = rand(2,5)
+	if(pilot.a_intent == I_HURT)
+		additional_modificator = 5 * legs.bump_type
+	src.visible_message(SPAN_DANGER("[src] forcefully crushes [target] underneath it"), blind_message = SPAN_DANGER("You hear the loud hissing of hydraulics!"))
 	target.apply_effects(5, 5) //Чтоб ахуел
-	var/damage = rand(5, 7)
 	damage = damage * legs.bump_type
-	target.apply_damage(2 * damage, DAMAGE_BRUTE, BP_HEAD)
-	target.apply_damage(2 * damage, DAMAGE_BRUTE, BP_CHEST)
-	target.apply_damage(0.5 * damage, DAMAGE_BRUTE, BP_L_LEG)
-	target.apply_damage(0.5 * damage, DAMAGE_BRUTE, BP_R_LEG)
-	target.apply_damage(0.5 * damage, DAMAGE_BRUTE, BP_L_ARM)
-	target.apply_damage(0.5 * damage, DAMAGE_BRUTE, BP_R_ARM)
+	target.apply_damage(damage + additional_modificator, DAMAGE_BRUTE, BP_HEAD)
+	target.apply_damage(damage + additional_modificator, DAMAGE_BRUTE, BP_CHEST)
+	target.apply_damage(0.5 * damage + additional_modificator, DAMAGE_BRUTE, BP_L_LEG)
+	target.apply_damage(0.5 * damage + additional_modificator, DAMAGE_BRUTE, BP_R_LEG)
+	target.apply_damage(0.5 * damage + additional_modificator, DAMAGE_BRUTE, BP_L_ARM)
+	target.apply_damage(0.5 * damage + additional_modificator, DAMAGE_BRUTE, BP_R_ARM)
 
 /mob/living/exosuit/Bump(mob/living/target)
 	..()
@@ -167,16 +170,23 @@
 		return
 	Bumps = !Bumps
 	collision_attack(target)
+	return
 
 /mob/living/exosuit/proc/collision_attack(mob/living/target,bump_type) //Attack colissioned things
+	if(world.time - last_collision < legs.collision_coldown)
+		return
+	var/additional_modificator = 0
 	var/mob/living/pilot = pick(pilots)
+	if(pilot.a_intent == I_HURT)
+		additional_modificator = 2 * legs.bump_type
+	last_collision = world.time
 	if(legs.bump_safety && pilot.a_intent != I_HURT) //Мы не хотим таранить и ноги могут не таранить?
 		return //Не тараним
-	src.visible_message(SPAN_DANGER("С силой сбивает [target] с пути!"), blind_message = SPAN_DANGER("You hear the loud hissing of hydraulics!"))
+	src.visible_message(SPAN_DANGER("[src] rams [target] out of the way!"), blind_message = SPAN_DANGER("You hear the loud hissing of hydraulics!"))
 	var/list/parts = list(BP_HEAD, BP_CHEST, BP_L_LEG, BP_R_LEG, BP_L_ARM, BP_R_ARM)
 	for(var/i = 0, i < rand(1,5), i++)
 		var/def_zone = pick(parts)
-		var/damage = rand(2,5) * legs.bump_type
+		var/damage = rand(2,5) * legs.bump_type + additional_modificator
 		target.apply_damage(damage, DAMAGE_BRUTE, def_zone)
 
 /datum/movement_handler/mob/space/exosuit

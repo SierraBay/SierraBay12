@@ -85,6 +85,8 @@
 /obj/machinery/sleeper/mounted/go_in(atom/target, mob/living/user)
 	..()
 	//Как только мы помещаем внутрь человка - пытаемся ему оказать мед помощь
+	if(target != occupant)
+		return //Анти-абуз
 	to_chat(user, SPAN_NOTICE("Patient detected, initianting scanning protocol."))
 	if (istype(target, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = target

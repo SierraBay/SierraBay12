@@ -32,6 +32,10 @@
 	max_shots = 10
 	accuracy = 2
 	burst = 1
+	dispersion = 0
+	firemodes = list(
+		list(mode_name="default", burst=1, fire_delay=null, move_delay=null, one_hand_penalty=8, burst_accuracy=null, dispersion=null),
+		)
 
 /obj/item/gun/energy/taser/carbine/mounted/mech
 	use_external_power = TRUE
@@ -66,9 +70,8 @@
 	holding_type = /obj/item/gun/projectile/automatic/assault_rifle/mounted
 
 /obj/item/mech_equipment/mounted_system/taser/ballistic/attack_hand(mob/user)
-	..()
 	return
-//	if(holding.ammo_magazine != null && src.loc == owner)
+//	if(holding.ammo_magazine != null && src.loc == owner) <-используйте этот код для разрядки оружия меха, если понадобится
 //		holding.unload_ammo(user, allow_dump=0)
 //		get_hardpoint_maptext()
 
@@ -96,13 +99,18 @@
 	allowed_magazines = /obj/item/ammo_magazine/rifle/mech_machinegun
 	has_safety = FALSE
 	firemodes = list(
-		list(mode_name="semi auto", burst=3, fire_delay=null, move_delay=null, one_hand_penalty=8, burst_accuracy=null, dispersion=null),
+		list(mode_name="semi auto", burst=4, fire_delay=null, move_delay=null, one_hand_penalty=8, burst_accuracy=null, dispersion=null),
 		)
+
+/obj/item/gun/projectile/automatic/assault_rifle/mounted/unload_ammo(mob/user,allow_dump = 1)
+	return
 
 /obj/item/ammo_magazine/rifle/mech_machinegun
 	max_ammo = 200
+	icon_state = "machinegun"
 	mag_type = SPEEDLOADER
 	w_class = ITEM_SIZE_HUGE
+
 //Mech SMG
 /obj/item/mech_equipment/mounted_system/taser/ballistic/smg
 	name = "\improper Mounted \"SH-G\" prototype SMG"
@@ -128,13 +136,16 @@
 	magazine_type = /obj/item/ammo_magazine/proto_smg/mech
 	allowed_magazines = /obj/item/ammo_magazine/proto_smg/mech
 	has_safety = FALSE
-	dispersion = null
 	firemodes = list(
 		list(mode_name="semi auto",burst=3, fire_delay=null,move_delay=null, one_hand_penalty=0, burst_accuracy=null, dispersion=null),
 		)
 
+/obj/item/gun/projectile/automatic/mounted/smg/unload_ammo(mob/user,allow_dump = 1)
+	return
+
 /obj/item/ammo_magazine/proto_smg/mech
 	max_ammo = 100
+	icon_state = "666"
 	mag_type = SPEEDLOADER
 	w_class = ITEM_SIZE_HUGE
 	ammo_type = /obj/item/ammo_casing/flechette/mech
@@ -171,6 +182,13 @@
 	ammo_type = /obj/item/ammo_casing/shotgun/mech
 	allowed_magazines = /obj/item/ammo_magazine/shotgunmag/mech
 	has_safety = FALSE
+	firemodes = list(
+		list(mode_name="semi auto",       burst=1, fire_delay=null,    move_delay=null, one_hand_penalty=0, burst_accuracy=null, dispersion=null),
+		list(mode_name="4-round bursts", burst=4, fire_delay=null, move_delay=4,    one_hand_penalty=1, burst_accuracy=list(0,0,-1,-1),       dispersion=list(0.0, 0.0, 0.5, 0.6)),
+		)
+
+/obj/item/gun/projectile/automatic/mounted/shotgun/unload_ammo(mob/user,allow_dump = 1)
+	return
 
 /obj/item/ammo_magazine/shotgunmag/mech
 	max_ammo = 50
@@ -231,11 +249,12 @@
 	var/difference = damage - charge
 	charge = clamp(charge - damage, 0, max_charge)
 	last_recharge = world.time
+	aura.on_update_icon()
 	if(difference >= 0)
 		toggle()
 		OVERHEAT = TRUE
 		src.visible_message("The mech's computer flashes: WARNING! Shield overheat detected!","The mech's computer beeps, reporting a shield error!",0)
-		src.visible_message("Энергощит вспыхивая и мигая отдельными секциями, резко исчезает, издавая грустный гулл.")
+		src.visible_message("The energy shield flashes and blinks in separate sections, then suddenly disappears, emitting a sad hum.")
 		//playsound(owner.loc,'sound/mecha/shield_deflector_fail.ogg',60,0)
 		update_icon()
 		last_overheat = world.time

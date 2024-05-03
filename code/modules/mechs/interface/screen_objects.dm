@@ -284,7 +284,7 @@
 	if(owner.hatch_locked && owner.hatch_closed)
 		to_chat(usr, SPAN_WARNING("You cannot open the hatch while it is locked."))
 		return
-	if(owner.hatch_closed && owner.power != MECH_POWER_ON)
+	if(!owner.hatch_closed && owner.power != MECH_POWER_ON)
 		to_chat(usr, SPAN_WARNING("Cockpit hydraulic system offline,hatch can't be closed now."))
 		return
 	owner.hatch_closed = ..()
@@ -374,16 +374,14 @@
 	if(!message)
 		return
 	message = capitalize(message)
-	owner.visible_message("[FONT_GIANT("\"[]\"")]",10)
 	owner.visible_message("[FONT_GIANT("\"[owner] integrated megaspeaker speaks: [message]\"")]",10)
-	owner.visible_message("[FONT_GIANT("\"[]\"")]",10)
 	return
 
 /obj/screen/movable/exosuit/toggle/gps
 	name = "Use integrated GPS"
 	icon_state = "small_important"
 	maptext = MECH_UI_STYLE("GPS")
-	maptext_x = 6
+	maptext_x = 9
 	maptext_y = 13
 	height = 12
 
