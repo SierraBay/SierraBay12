@@ -9,19 +9,19 @@ MANTIDIFY(/obj/item/tank/jetpack/carbondioxide,  "maneuvering pack",          "p
 	icon_state = "nest_chair"
 	base_icon = "nest_chair"
 	icon = 'mods/_fd/ascent/icons/ascent_doodads.dmi'
-	buckle_pixel_shift = "x=0;y=5;z=0"
+	buckle_pixel_shift = list(0,5,0)
 	pixel_z = 0
 
 /obj/structure/bed/chair/padded/purple/ascent/gyne
 	name = "mantid throne"
 	icon_state = "nest_chair_large"
 	base_icon = "nest_chair_large"
-	buckle_pixel_shift = "x=0;y=10;z=0"
+	buckle_pixel_shift = list(0,10,0)
 
 /obj/structure/bed/chair/padded/purple/ascent/serpentid
 	name = "serpentid resting pole"
 	icon_state = "bar_stool_preview" //set for the map
-	buckle_pixel_shift = "x=0;y=3;z=0"
+	buckle_pixel_shift = list(0,3,0)
 	item_state = "bar_stool"
 	base_icon = "bar_stool"
 	color = "#a33fbf"
