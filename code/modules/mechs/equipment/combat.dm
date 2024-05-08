@@ -33,9 +33,9 @@
 	accuracy = 2
 	burst = 1
 	dispersion = 0
-	firemodes = list(
-		list(mode_name="default", burst=1, fire_delay=null, move_delay=null, one_hand_penalty=8, burst_accuracy=null, dispersion=null),
-		)
+	//firemodes = list(
+		//list(mode_name="default", burst=1, fire_delay=null, move_delay=null, one_hand_penalty=8, burst_accuracy=null, dispersion=null),
+		//)
 
 /obj/item/gun/energy/taser/carbine/mounted/mech
 	use_external_power = TRUE
@@ -69,9 +69,8 @@
 	icon_state = "mech_scatter"
 	holding_type = /obj/item/gun/projectile/automatic/assault_rifle/mounted
 
-/obj/item/mech_equipment/mounted_system/taser/ballistic/attack_hand(mob/user)
-	return
-//	if(holding.ammo_magazine != null && src.loc == owner) <-используйте этот код для разрядки оружия меха, если понадобится
+///obj/item/mech_equipment/mounted_system/taser/ballistic/attack_hand(mob/user)
+	//if(holding.ammo_magazine != null && src.loc == owner) <-используйте этот код для разрядки оружия меха, если понадобится
 //		holding.unload_ammo(user, allow_dump=0)
 //		get_hardpoint_maptext()
 
@@ -115,11 +114,11 @@
 /obj/item/mech_equipment/mounted_system/taser/ballistic/smg
 	name = "\improper Mounted \"SH-G\" prototype SMG"
 	desc = "Prototype SMG, created by one of the ships R&D."
-	icon_state = "mech_ballistic"
+	icon_state = "mech_smg"
 	holding_type = /obj/item/gun/projectile/automatic/mounted/smg
 
 /obj/item/gun/projectile/automatic/mounted/smg
-	name = "mech scattergun"
+	name = "mech smg"
 	icon = 'icons/obj/guns/saw.dmi'
 	icon_state = "l6closed50"
 	item_state = "l6closedmag"
@@ -255,7 +254,7 @@
 		OVERHEAT = TRUE
 		src.visible_message("The mech's computer flashes: WARNING! Shield overheat detected!","The mech's computer beeps, reporting a shield error!",0)
 		src.visible_message("The energy shield flashes and blinks in separate sections, then suddenly disappears, emitting a sad hum.")
-		//playsound(owner.loc,'sound/mecha/shield_deflector_fail.ogg',60,0)
+		playsound(owner.loc,'sound/mecha/shield_deflector_fail.ogg',60,0)
 		update_icon()
 		last_overheat = world.time
 		delayed_toggle()
@@ -268,7 +267,7 @@
 	if(charge == -1)
 		charge = 0
 		src.visible_message("The mech's computer flashes: WARNING! Shield overheat detected!","The mech's computer beeps, reporting a shield error!",0) //[INF] Для предотвращения абуза
-		//playsound(owner.loc,'sound/mecha/shield_deflector_fail.ogg',60,0)
+		playsound(owner.loc,'sound/mecha/shield_deflector_fail.ogg',60,0)
 		OVERHEAT = TRUE
 		update_icon()
 		delayed_toggle()
@@ -282,10 +281,10 @@
 	aura.toggle()
 	update_icon()
 	if(aura.active)
-		//playsound(owner,'sound/mecha/mech_shield_up.ogg',50,0)
+		playsound(owner,'sound/mecha/mech_shield_up.ogg',50,0)
 		START_PROCESSING(SSobj, src)
 	else
-		//playsound(owner,'sound/mecha/mech_shield_down.ogg',50,1)
+		playsound(owner,'sound/mecha/mech_shield_down.ogg',50,1)
 		STOP_PROCESSING(SSobj, src)
 	active = aura.active
 	passive_power_use = active ? 1 KILOWATTS : 0
@@ -307,7 +306,7 @@
 //MODDED
 
 //MODDED
-/obj/item/mech_equipment/shields/proc/delayed_toggle() //[INF]Отложит поднятие щита на опр время, без вреда работы коду
+/obj/item/mech_equipment/shields/proc/delayed_toggle() //Отложит поднятие щита на опр время, без вреда работы коду
 	set waitfor = 0
 	if(charge == -1)
 		return
@@ -337,7 +336,6 @@
 				shields.stop_damage(emp_damage)
 			user.visible_message(SPAN_WARNING("\The [shields.owner]'s shilds craks, flashs and covers with sparks and energy strikes."))
 			flick("shield_impact", src)
-			//playsound(user,'sound/mecha/shield_emp.ogg',100,0)
 //MODDED
 
 /obj/item/mech_equipment/shields/deactivate()

@@ -339,17 +339,6 @@
 			)
 	. = ..()
 
-/obj/item/mech_component/chassis/pod/Initialize()
-	pilot_positions = list(
-		list(
-			"[NORTH]" = list("x" = 8,  "y" = 3),
-			"[SOUTH]" = list("x" = 8,  "y" = 2),
-			"[EAST]"  = list("x" = 4,  "y" = 3),
-			"[WEST]"  = list("x" = 12, "y" = 3)
-		)
-	)
-	. = ..()
-
 /obj/item/mech_component/chassis/heavy
 	name = "reinforced exosuit chassis"
 	hatch_descriptor = "hatch"

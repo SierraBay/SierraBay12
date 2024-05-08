@@ -585,7 +585,6 @@
 /obj/floor_decal/techfloor{
 	dir = 9
 	},
-/obj/machinery/power/port_gen/pacman/mrs,
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/engineering)
 "bu" = (
@@ -803,22 +802,22 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/obj/floor_decal/techfloor,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/floor_decal/techfloor,
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/engineering)
 "bQ" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/floor_decal/techfloor{
 	dir = 6
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/engineering)
@@ -935,11 +934,6 @@
 /turf/simulated/floor/plating,
 /area/map_template/colony/surgery)
 "ca" = (
-/obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/obj/floor_decal/industrial/hatch/orange,
 /obj/machinery/alarm{
 	locked = 0;
 	pixel_y = 20
@@ -951,18 +945,10 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/colony/engineering)
 "cb" = (
-/obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
 /obj/floor_decal/techfloor{
 	dir = 5
 	},
-/obj/floor_decal/industrial/outline/yellow,
 /obj/machinery/r_n_d/protolathe,
-/obj/structure/reagent_dispensers/acid{
-	step_y = 32
-	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/engineering)
 "cc" = (
@@ -996,9 +982,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/machinery/power/solar_control/autostart{
-	dir = 4
-	},
+/obj/machinery/power/smes/buildable/max_cap_in_out,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/colony/engineering)
 "ch" = (
@@ -1326,6 +1310,8 @@
 /obj/floor_decal/techfloor{
 	dir = 5
 	},
+/obj/structure/cable,
+/obj/machinery/power/solar_control/autostart,
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/engineering)
 "cU" = (
@@ -1604,16 +1590,16 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony)
 "dy" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/machinery/power/smes/buildable/max_cap_in_out,
 /obj/floor_decal/industrial/outline/yellow,
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/structure/cable,
+/obj/machinery/power/port_gen/pacman/mrs,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/colony/engineering)
 "dz" = (
@@ -1625,7 +1611,13 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/machinery/robotics_fabricator,
+/obj/machinery/robotics_fabricator{
+	req_access = list()
+	},
+/obj/structure/reagent_dispensers/acid{
+	pixel_y = -34;
+	pixel_x = 34
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/colony/engineering)
 "dB" = (
@@ -1686,11 +1678,6 @@
 	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8"
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -3764,11 +3751,6 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/atmospherics)
 "he" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
 /obj/item/device/radio/intercom/map_preset/playablecolony{
 	dir = 8;
 	pixel_x = 22
@@ -6671,8 +6653,14 @@
 /turf/simulated/floor/exoplanet/concrete,
 /area/template_noop)
 "me" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /obj/machinery/computer/rdconsole/core{
-	dir = 1
+	dir = 1;
+	req_access = list()
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/colony/engineering)

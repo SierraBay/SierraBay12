@@ -49,7 +49,7 @@
 		)
 
 		if(body && body.pilot_coverage >= 100)
-			additional_hud_elements += /obj/screen/movable/exosuit/toggle/air
+			main_hud_elements += /obj/screen/movable/exosuit/toggle/air
 		i = 0
 		var/pos = 8
 		for(var/additional_hud in main_hud_elements)
