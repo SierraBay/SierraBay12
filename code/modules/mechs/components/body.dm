@@ -29,7 +29,6 @@
 	var/obj/machinery/portable_atmospherics/canister/air_supply
 	var/obj/item/storage/mech/storage_compartment
 	var/datum/gas_mixture/cockpit
-	var/mob/living/exosuit/owner
 	var/transparent_cabin = FALSE
 	var/hide_pilot =        FALSE
 	var/hatch_descriptor = "cockpit"
@@ -337,17 +336,6 @@
 			"[EAST]"  = list("x" = -4, "y" = 16),
 			"[WEST]"  = list("x" = 16, "y" = 16)
 			)
-	. = ..()
-
-/obj/item/mech_component/chassis/pod/Initialize()
-	pilot_positions = list(
-		list(
-			"[NORTH]" = list("x" = 8,  "y" = 3),
-			"[SOUTH]" = list("x" = 8,  "y" = 2),
-			"[EAST]"  = list("x" = 4,  "y" = 3),
-			"[WEST]"  = list("x" = 12, "y" = 3)
-		)
-	)
 	. = ..()
 
 /obj/item/mech_component/chassis/heavy

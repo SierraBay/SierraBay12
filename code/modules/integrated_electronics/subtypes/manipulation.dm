@@ -555,6 +555,7 @@
 	action_flags = IC_ACTION_LONG_RANGE
 
 	origin_tech = list(TECH_MAGNET = 1, TECH_BLUESPACE = 3)
+	spawn_flags = IC_SPAWN_RESEARCH
 	matter = list(MATERIAL_STEEL = 10000, MATERIAL_SILVER = 2000, MATERIAL_GOLD = 200)
 
 /obj/item/integrated_circuit/manipulation/bluespace_rift/do_work()

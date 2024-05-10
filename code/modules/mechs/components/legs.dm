@@ -147,8 +147,8 @@
 	name = "combat legs"
 	exosuit_desc_string = "sleek hydraulic legs"
 	icon_state = "combat_legs"
-	move_delay = 3
-	turn_delay = 3
+	move_delay = 3.5
+	turn_delay = 3.5
 	power_use = 20
 	max_damage = 180
 	bump_type = MEDIUM_BUMP

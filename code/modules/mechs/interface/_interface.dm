@@ -15,9 +15,9 @@
 			var/mob/pilot = thing
 			if(pilot.client)
 				if(menu_status == TRUE)
-					pilot.client.screen |= menu_hud_elements //Врубаем меню худ
+					pilot.client.screen |= menu_hud_elements
 				else
-					pilot.client.screen -= menu_hud_elements //Вырубаем меню худ <- ОНО ВСЁ ЛОМАЕТ
+					pilot.client.screen -= menu_hud_elements
 
 /mob/living/exosuit/InitializeHud()
 	zone_sel = new
@@ -49,7 +49,7 @@
 		)
 
 		if(body && body.pilot_coverage >= 100)
-			additional_hud_elements += /obj/screen/movable/exosuit/toggle/air
+			main_hud_elements += /obj/screen/movable/exosuit/toggle/air
 		i = 0
 		var/pos = 8
 		for(var/additional_hud in main_hud_elements)

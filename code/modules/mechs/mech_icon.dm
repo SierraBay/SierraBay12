@@ -58,10 +58,15 @@
 					hardpoint_object.mech_layer = MECH_GEAR_LAYER
 				else if(dir == EAST || dir == SOUTHEAST || dir == NORTHEAST)
 					hardpoint_object.mech_layer = MECH_BACK_LAYER
-			if(hardpoint in list(HARDPOINT_RIGHT_HAND,HARDPOINT_RIGHT_SHOULDER))
+			else if(hardpoint in list(HARDPOINT_RIGHT_HAND,HARDPOINT_RIGHT_SHOULDER))
 				if(dir == WEST || dir == SOUTHWEST || dir == NORTHWEST)
 					hardpoint_object.mech_layer = MECH_BACK_LAYER
 				else if(dir == EAST || dir == SOUTHEAST || dir == NORTHEAST || dir == SOUTH)
+					hardpoint_object.mech_layer = MECH_GEAR_LAYER
+			else if(hardpoint in list(HARDPOINT_BACK))
+				if(dir == SOUTH)
+					hardpoint_object.mech_layer = MECH_BACK_LAYER
+				else
 					hardpoint_object.mech_layer = MECH_GEAR_LAYER
 			var/use_icon_state = "[hardpoint_object.icon_state]_[hardpoint]"
 		//
