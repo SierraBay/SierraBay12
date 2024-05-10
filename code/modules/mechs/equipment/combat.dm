@@ -23,16 +23,17 @@
 	name = "\improper IDK \"Pulsator\" laser"
 	desc = "Military mounted pulse-rifle, probaly stealed from military ship."
 	icon_state = "mech_pulse"
-	holding_type = /obj/item/gun/energy/pulse_rifle/mounted/mech
+	holding_type = /obj/item/gun/energy/lasercannon/mounted/pulse_mech
 
-/obj/item/gun/energy/pulse_rifle/mounted/mech
+/obj/item/gun/energy/lasercannon/mounted/pulse_mech
+	name = "\improper CH-PS \"Immolator\" laser"
 	use_external_power = TRUE
 	has_safety = FALSE
 	self_recharge = TRUE
-	max_shots = 10
+	fire_delay = 10
 	accuracy = 2
-	burst = 1
-	dispersion = 0
+	max_shots = 10
+	projectile_type = /obj/item/projectile/beam/pulse/heavy
 
 /obj/item/gun/energy/taser/carbine/mounted/mech
 	use_external_power = TRUE
