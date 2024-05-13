@@ -13,6 +13,7 @@
 #define CULTURE_HUMAN_EARTH_ALT         "Earther"
 #define CULTURE_HUMAN_CETI_ALT          "Cetite"
 #define CULTURE_HUMAN_FOSTER_ALT        "Fostersman"
+#define CULTURE_HUMAN_BRAHE_ALT         "Brahite"
 
 #define HUMAN_CULTURES_TO_DELETE					list(CULTURE_HUMAN_AVACOMMON, \
 														CULTURE_HUMAN_AVANOBLE, \
@@ -36,6 +37,9 @@
 														CULTURE_HUMAN_PIRXL, \
 														CULTURE_HUMAN_PIRXB, \
 														CULTURE_HUMAN_PIRXF, \
+														CULTURE_HUMAN_TADMOR, \
+														CULTURE_HUMAN_IOLAUS, \
+														CULTURE_HUMAN_BRAHE, \
 														CULTURE_HUMAN_NYXIAN)
 #define HUMAN_CULTURES_TO_ADD						list(CULTURE_HUMAN_KIPERIUSMINER, \
 														CULTURE_HUMAN_KIPERIUSPRISONER, \
@@ -51,7 +55,12 @@
 														CULTURE_HUMAN_EARTH_ALT, \
 														CULTURE_HUMAN_CETI_ALT, \
 														CULTURE_HUMAN_FOSTER_ALT, \
+														CULTURE_HUMAN_BRAHE_ALT, \
 														CULTURE_HUMAN_REPUBL)
+
+//Ceti alt-cultures were grouped up in one single, cause i don't want another broke ass planet in lore
+//All Pirx cultures were removed until KanarySS rewrites the planet lore
+//Tadmor and Ioalus also were removed because they lack any actual cultural gimmicks or pieces, which i can explore more
 
 /datum/map/New()
 	available_cultural_info[TAG_CULTURE] += HUMAN_CULTURES_TO_ADD
@@ -280,6 +289,16 @@
 	пределами своей уютной хай-тек хибары посреди тундры, то, вероятно, по работе или из-за вынужденных мер."
 	economic_power = 1.4
 
+/singleton/cultural_info/culture/human/brahe_alt
+	name = CULTURE_HUMAN_BRAHE_ALT
+	nickname = "Брагец"
+	description = "Брагцы - это люди, связавшие свою жизнь с водами Браге. Океанической планетой класса G5, из года в год притягивающей к себе \"иностранцев\", желающих \
+	покуситься на тайны её богатой, и пока что крайне туманной истории. Местные - это закалённые моряки и совсем молодые юнги, что сражаются с непоколебимой стихией на массивных \
+	плавучих крепостях. Здесь нет особо развитой промышленности. Всё, что поставляется планетой - практически полностью добывается из её недр в первозданном виде и лишь некоторые вещи \
+	проходят так называемую пост-обработку на орбитальных станциях Браге или заводах-посредниках. Жители этих морей отличаются резкостью, быстрым откликом, и таким же гнилым чувством юмора, \
+	как продаваемая ими рыба. Браге - также является родиной для многих Тритониан, где последние находят постоянный спрос на самых разных профилях за счёт особенностей своего организма."
+	economic_power = 1.0
+
 #undef CULTURE_HUMAN_KIPERIUSMINER
 #undef CULTURE_HUMAN_KIPERIUSPRISONER
 #undef CULTURE_HUMAN_MEOT
@@ -295,6 +314,7 @@
 #undef CULTURE_HUMAN_EARTH_ALT
 #undef CULTURE_HUMAN_CETI_ALT
 #undef CULTURE_HUMAN_FOSTER_ALT
+#undef CULTURE_HUMAN_BRAHE_ALT
 
 #undef HUMAN_CULTURES_TO_DELETE
 #undef HUMAN_CULTURES_TO_ADD
