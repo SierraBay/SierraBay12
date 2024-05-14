@@ -1,0 +1,8 @@
+#ifndef MODPACK_FD_SPECIES
+#define MODPACK_FD_SPECIES
+
+#include "_fd_species.dm"
+
+#include "whitelist.dm"
+
+#endif
