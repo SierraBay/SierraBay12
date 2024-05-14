@@ -8,12 +8,17 @@
 #define CULTURE_HUMAN_LUNARICH_FD       "Luna, Upper Class"
 #define CULTURE_HUMAN_VENUSIAN_FD       "Venusian, Zoner"
 #define CULTURE_HUMAN_VENUSLOW_FD       "Venusian, Surfacer"
-#define CULTURE_HUMAN_BELTER_ALT        "Belter, Ceres"
-#define CULTURE_HUMAN_PLUTO_ALT         "Plutonian"
-#define CULTURE_HUMAN_EARTH_ALT         "Earther"
-#define CULTURE_HUMAN_CETI_ALT          "Cetite"
-#define CULTURE_HUMAN_FOSTER_ALT        "Fostersman"
-#define CULTURE_HUMAN_BRAHE_ALT         "Brahite"
+#define CULTURE_HUMAN_BELTER_FD         "Belter, Ceres"
+#define CULTURE_HUMAN_PLUTO_FD          "Plutonian"
+#define CULTURE_HUMAN_EARTH_FD          "Earther"
+#define CULTURE_HUMAN_CETI_FD           "Cetite"
+#define CULTURE_HUMAN_FOSTER_FD         "Fostersman"
+#define CULTURE_HUMAN_BRAHE_FD          "Brahite"
+#define CULTURE_HUMAN_EOS_FD            "Eosic"
+#define CULTURE_HUMAN_SPACER_FD         "Spacer"
+#define CULTURE_HUMAN_CONFED_FD         "Terran"
+#define CULTURE_HUMAN_GAIAN_FD          "Gaian"
+#define CULTURE_HUMAN_OTHER_FD          "Other, Humanity"
 
 #define HUMAN_CULTURES_TO_DELETE					list(CULTURE_HUMAN_AVACOMMON, \
 														CULTURE_HUMAN_AVANOBLE, \
@@ -40,6 +45,14 @@
 														CULTURE_HUMAN_TADMOR, \
 														CULTURE_HUMAN_IOLAUS, \
 														CULTURE_HUMAN_BRAHE, \
+														CULTURE_HUMAN_EOS, \
+														CULTURE_HUMAN_SPACER, \
+														CULTURE_HUMAN_OFFWORLD, \
+														CULTURE_HUMAN_SOLCOL, \
+														CULTURE_HUMAN_CONFEDC, \
+														CULTURE_HUMAN_CONFEDO, \
+														CULTURE_HUMAN_GAIAN, \
+														CULTURE_HUMAN_OTHER, \
 														CULTURE_HUMAN_NYXIAN)
 #define HUMAN_CULTURES_TO_ADD						list(CULTURE_HUMAN_KIPERIUSMINER, \
 														CULTURE_HUMAN_KIPERIUSPRISONER, \
@@ -50,17 +63,18 @@
 														CULTURE_HUMAN_LUNARICH_FD, \
 														CULTURE_HUMAN_VENUSIAN_FD, \
 														CULTURE_HUMAN_VENUSLOW_FD, \
-														CULTURE_HUMAN_BELTER_ALT, \
-														CULTURE_HUMAN_PLUTO_ALT, \
-														CULTURE_HUMAN_EARTH_ALT, \
-														CULTURE_HUMAN_CETI_ALT, \
-														CULTURE_HUMAN_FOSTER_ALT, \
-														CULTURE_HUMAN_BRAHE_ALT, \
+														CULTURE_HUMAN_BELTER_FD, \
+														CULTURE_HUMAN_PLUTO_FD, \
+														CULTURE_HUMAN_EARTH_FD, \
+														CULTURE_HUMAN_CETI_FD, \
+														CULTURE_HUMAN_FOSTER_FD, \
+														CULTURE_HUMAN_BRAHE_FD, \
+														CULTURE_HUMAN_EOS_FD, \
+														CULTURE_HUMAN_SPACER_FD, \
+														CULTURE_HUMAN_CONFED_FD, \
+														CULTURE_HUMAN_GAIAN_FD, \
+														CULTURE_HUMAN_OTHER_FD, \
 														CULTURE_HUMAN_REPUBL)
-
-//Ceti alt-cultures were grouped up in one single, cause i don't want another broke ass planet in lore
-//All Pirx cultures were removed until KanarySS rewrites the planet lore
-//Tadmor and Ioalus also were removed because they lack any actual cultural gimmicks or pieces, which i can explore more
 
 /datum/map/New()
 	available_cultural_info[TAG_CULTURE] += HUMAN_CULTURES_TO_ADD
@@ -77,20 +91,20 @@
 /singleton/cultural_info/culture/human/kiperius_miner
 	name = CULTURE_HUMAN_KIPERIUSMINER
 	nickname = "Киперианец, шахтёр"
-	description = "You were born in the golden age of the Kiperius. Probably, as a child of workers family or one of the many vat-grown kids, used by corpos for various labor. \
-	Either way, you were pretty much used to harsh conditions of the planet and it logistical problems as well. You spent most of your life inside the dark, steel corridors of underground outposts, \
-	rarely seeing any sunlight or stars. Thanks to the people that lived by your side - you also pretty used to hard work, most of the time spending HOURS on polishing one single thing. Someone can even call you workaholic. \
-	When economical crisis hit the door, your familiy somehow managed to leave planet, bringing aside pretty big amount of phoron crystals, which helped to get new home and probably some kind of long-term buisness."
+	description = "Вам довелось родиться в золотой век Киперия. Вероятнее всего, вы были частью большой шахтёрской семьи, или одиноким клоном, выращенным для корпоративных нужд. \
+	Так или иначе, логистические и погодные условия планеты знакомы вам как никому другому. Большую часть своей жизни вы провели в тёмных, металлических коридорах подземных аванпостов, \
+	крайне редко наблюдая солнечный свет или, уж тем более, звёзды. Благодаря вашим суровым менторам - вы также привыкли к тяжёлому, грязному труду, тратя ЧАСЫ на доведение дела до своего идеала. Трудоголизм часто звучит как ваше второе имя. \
+	Когда экономический кризис ударил по Киперию, вашей семье повезло вовремя сделать ноги, прихватив с собой достаточно внушительное количество кристаллического форона. Это, в свою очередь, помогло обжиться на новом месте и, возможно, даже открыть небольшой бизнес."
 	economic_power = 1.4
 
 /singleton/cultural_info/culture/human/kiperius_prisoner
 	name = CULTURE_HUMAN_KIPERIUSPRISONER
 	nickname = "Киперианец, заключённый"
-	description = "You are from Kiperius, biggest prison in entire SCG. Not important were you brought here due to some government disagreements, or borned inside its underground caves - this planet changed you alot. \
-	Living under always present death scythe, people from todays 'Ice Cage' is either broken and silent, or mad and mute. There is no sun, no grass, and no trace of the planet founders. \
-	Being independent and forgotten in the same time brings us to the point, where most of the newborn generations not only can't speak due to the fact there is no one who can say them how, \
-	but also don't know anything about SolGov itself. If you somehow leaved Kiperius - you are probably not the same person that entered it anymore. Well, if you even BEEN a person. \
-	Kiperians are pretty cold people, not much into the all this chit-chat thing. The only thing that they know in life - is work for the sake of their dying home."
+	description = "Вы пол жизни провели в стенах Киперия, крупнейшей тюрьмы во всём ЦПСС. Не имеет значение то, оказались вы здесь от несговорчивости, или по несчастью родились в пещерах - эта планета очень сильно на вас повлияла. \
+	Живя под постоянным присмотром Смерти с косой, люди сегодняшней 'Ледяной Клетки' либо сломленные и тихие, либо обезумевшие и эмоционально глухие. Здесь нет солнца, нет травы, и никаких следов первооткрывателей планеты. \
+	Будучи одновременно свободными и забытыми, новые поколения страдают не только от самого факта того, что здесь некому учить их говорить, \
+	но и от того что они в принципе не знают ничего про мир во вне. Если вам всё-таки удалось покинуть Киперий - вы наверняка уже совсем иной человек, сравнивая с тем, каким вы спускались в этот Ад. Ну, если вы ВООБЩЕ были человеком. \
+	Киперианцы крайне холодные и отстранённые люди, которые не являются особыми фанатами пустой болтовни. Всё, чему их научила жизнь - так это работе до последней капли крови, до последнего шахтёра. И всё ради их умирающего мира."
 	economic_power = 0.8
 	language = LANGUAGE_SIGN
 
@@ -118,6 +132,12 @@
 //END//
 
 //REWRITED SIERRA AND OFF-BAY ONES//
+
+//Ceti alt-cultures were grouped up in single one, cause i don't want another broke ass planet in lore
+//All Pirx cultures were removed until KanarySS rewrites the planet lore
+//Tadmor and Ioalus also were removed because they lack any actual cultural gimmicks or pieces, which i can explore more
+//Core Spacers removed because i can't really see why they even exist. Like, there is 99% that people living on station orbiting Luna or, let's say, Mars - will have pretty much same culture
+
 //START//
 /singleton/cultural_info/culture/human/martian_surfacer_alt
 	name = CULTURE_HUMAN_MARTIAN_FD
@@ -142,13 +162,13 @@
 	И тем не менее, они всё равно продолжают работать на неродивое государство, не только производя больше половины всех бытовых товаров \
 	планеты, но также занимаясь и добычей таких жизненноважных ресурсов как \"Марсианский лёд\". Не потому, что верят в то, что ситуация наладится, \
 	а потому что иных вариантов, кроме как податься в Фронтир - у них нет. А если кого они и не любят больше богачей - так это \"иностранцев\". \
-	Туннелеры - ворчливые скряги, привыкшие считать каждый таллер в своём кармане. Они упрямы, горделивы, и предпочитают стоять на своём до момента, \
-	пока их опоннент не признает их правоту или не начнёт молить о пощаде."
+	Туннелеры - ворчливые скряги, привыкшие считать каждый таллер в своём кармане. Они упрямы и горделивы, часто перегибают палку и не чураются доказывать \
+	свою правоту кулаками."
 	economic_power = 0.9
 
 /singleton/cultural_info/culture/human/luna_poor_alt
 	name = CULTURE_HUMAN_LUNAPOOR_FD
-	nickname = "Селениан, Гетто"
+	nickname = "Селениан, Трущобы"
 	description = "Вы родом с Луны - естественного спутника Земли, где своё гнёздышко свили известнейшие \
 	личности корпоративной индустрии. К сожалению, вы совершенно точно к ним не относитесь... \
 	Не смотря на то, что Луна носит гордое звание культурной столицы Сола, вполне обыденным явлением здесь \
@@ -210,7 +230,7 @@
 	economic_power = 0.9
 
 /singleton/cultural_info/culture/human/belter_alt
-	name = CULTURE_HUMAN_BELTER_ALT
+	name = CULTURE_HUMAN_BELTER_FD
 	nickname = "Белтер"
 	description = "Вам довелось родиться на Церере, среди сотен лавирующих небесных тел. \
 	В этом выражается почти вся жизнь «Белтеров» - шатании от одного жилого блока до другого, в поисках некого глубинного смысла существования. \
@@ -224,7 +244,7 @@
 	economic_power = 1
 
 /singleton/cultural_info/culture/human/plutonian_alt
-	name = CULTURE_HUMAN_PLUTO_ALT
+	name = CULTURE_HUMAN_PLUTO_FD
 	nickname = "Плутонец"
 	description = "Вы - плутонец, один из девяти миллионов несчастных, кому не посчастливилось тут оказаться. \
 	В результате утраты былого экономического потенциала, некогда популярная среди экспедиционных флотилий планета, \
@@ -247,7 +267,7 @@
 		LANGUAGE_SIGN)
 
 /singleton/cultural_info/culture/human/earthling_alt
-	name = CULTURE_HUMAN_EARTH_ALT
+	name = CULTURE_HUMAN_EARTH_FD
 	nickname = "Землянин"
 	description = "Вы уродились среди руин постепенно возраждающейся колыбели человечества - Земли. \
 	Несмотря на то, что она давным-давно не является столицей человеческой цивилизации, \
@@ -265,7 +285,7 @@
 	economic_power = 1.1
 
 /singleton/cultural_info/culture/human/ceti_alt
-	name = CULTURE_HUMAN_CETI_ALT
+	name = CULTURE_HUMAN_CETI_FD
 	nickname = "Цетит"
 	description = "Вы выросли в технологическом Раю - на Цети Эпсилон. Здесь, лучшие умы всего человечества ежедневно трудятся над тем, чтобы \
 	улучшить жизнь своих граждан, пока Сол любезно использует их наработки для более глобальных, военных целей. Во многом, за свой текущий уровень \
@@ -278,7 +298,7 @@
 	economic_power = 1.3
 
 /singleton/cultural_info/culture/human/foster_alt
-	name = CULTURE_HUMAN_FOSTER_ALT
+	name = CULTURE_HUMAN_FOSTER_FD
 	nickname = "Мир Фостера, Натив"
 	description = "С великой вероятностью, вы стоите у самых истоков колонизации системы Санура, или являетесь одним из немногих детей, успевших \
 	родиться непосредственно на планете - за то малое время, что провёл на ней человек. Подобно Земной Аляске, Мир Фостера является крайне негостеприимной локацией для проживания, \
@@ -290,7 +310,7 @@
 	economic_power = 1.4
 
 /singleton/cultural_info/culture/human/brahe_alt
-	name = CULTURE_HUMAN_BRAHE_ALT
+	name = CULTURE_HUMAN_BRAHE_FD
 	nickname = "Брагец"
 	description = "Брагцы - это люди, связавшие свою жизнь с водами Браге. Океанической планетой класса G5, из года в год притягивающей к себе \"иностранцев\", желающих \
 	покуситься на тайны её богатой, и пока что крайне туманной истории. Местные - это закалённые моряки и совсем молодые юнги, что сражаются с непоколебимой стихией на массивных \
@@ -298,6 +318,71 @@
 	проходят так называемую пост-обработку на орбитальных станциях Браге или заводах-посредниках. Жители этих морей отличаются резкостью, быстрым откликом, и таким же гнилым чувством юмора, \
 	как продаваемая ими рыба. Браге - также является родиной для многих Тритониан, где последние находят постоянный спрос на самых разных профилях за счёт особенностей своего организма."
 	economic_power = 1.0
+
+/singleton/cultural_info/culture/human/eos_alt
+	name = CULTURE_HUMAN_EOS_FD
+	nickname = "Исир"
+	description = "Еос - это планета, пережившая две блокады. Сначала, во время войны старого света - Терранского Содружества и Конфедерации Арес - а затем во время Гайского Конфликта. \
+	Её жители, наученные горьким опытом и взращённые глубокой ненавистью к своим соседям, не редко отдаются военному делу с головой, считая это долгом не только перед государством, \
+	но и перед своими погибшими соотечественниками - братьями и сёстрами, папами и мамами. Если кто и подойдёт на роль \"людей нации\" лучше всего, то это Исирцы."
+	economic_power = 0.8
+
+/singleton/cultural_info/culture/human/spacer_alt
+	name = CULTURE_HUMAN_SPACER_FD
+	nickname = "Спейсер"
+	description = "Вашим родным домом всегда являлся глубокий космос. Полный опасностей и давящей неизвестности. \
+	У вас не было такого места, в котором бы вы задерживались дольше чем на пару месяцев, максимум год - ведь культура \
+	Спейсеров, как и Белтеров, трактует жизнь постоянных перемен. Ведь, в конце концов, многие из них являются стихийными \
+	людьми, всю жизнь ищущими то самое призвание, ту самую планету, и то самое место, у которого они будут готовы \"закончить\". \
+	Жизнь этих космических исследователей полна приключений, взлётов и падений. Многие Спейсеры, не имея постоянного источника \
+	заработка, слоняются по Фронтиру, выполняя различного рода авантюры, будь то доставка какого-то особого груза, или добыча данных \
+	с мёртвых станций и кораблей. Спейсеры \"семейные\" люди, любящие компанию и держащиеся за тех, кто им близок. Они практически \
+	не переносят одиночество, не смотря на среду и условия, в которых им приходится работать. Ведь осознание того, \
+	что в космосе никто не услышит твоих криков - давит на сознание сильнее всяких кредитных задолжностей."
+	economic_power = 0.8
+	language = LANGUAGE_SPACER
+
+/singleton/cultural_info/culture/human/confederate_alt
+	name = CULTURE_HUMAN_CONFED_FD
+	nickname = "Терранец"
+	description = "Терранец - это скорее обобщённое прозвище, данное жителям Гильгамешской Колониальной Конфедерации \
+	по другую сторону баррикад. Это честолюбивые, порой фанатично преданные каким-то собственным идеалам люди, \
+	что будут до последнего отстаивать своё место в обществе и правильность принимаемых ими решений. Многие, в шутку \
+	называют Терранцев живым доказательством существования того самого \"несокрушимого человеческого духа\", что вполне \
+	подходит как им, так и государству, в котором они живут. Жителей Гильгамеша принято считать крайне консервативными, \
+	плохо воспринимающими изменения в повседневной рутине. Их доверие и уважение трудно заслужить, однако больше чем силу и \
+	волю человека - они ценят открытость и честность. В конце концов, одна из немногих рас, с которыми Терранцы поддерживают контакт - это Унати."
+	language = LANGUAGE_HUMAN_RUSSIAN
+	economic_power = 0.9
+
+/singleton/cultural_info/culture/human/gaia_alt
+	name = CULTURE_HUMAN_GAIAN_FD
+	nickname = "Гайец"
+	description = "Если Исиры живут войной и жаждут её продолжения, то Гайцы, в независимости от стороны планеты - \
+	желают, чтобы она никогда не повторялась снова. Мир на стыке двух сверхдержав до сих пор не оклемался после конфликта \
+	двадцатилетней давности, до сих пор страдая от разрухи, упадка экономики, и несправедливого разделения территорий, что \
+	сделало немало Гайских семей неполноценными. Гайя существует лишь благодаря внешним поставкам, жадно вдыхая \
+	загрязнённый затяжными боями воздух для того, чтобы прожить хотя бы ещё один день. Местные одинаково ненавидят обе стороны \
+	этого конфликта, желая чтобы как ЦПСС, так и ГКК - наконец оставили их в покое, покинув ими же обожённую планету."
+	economic_power = 0.9
+
+/singleton/cultural_info/culture/human/other_alt
+	name = CULTURE_HUMAN_OTHER_FD
+	nickname = "Неопределенная культура"
+	description = "Вы происходите из мест столь далёких и непопулярных, что те до сих пор не были \
+	занесены ни на одну из известных галактических карт."
+	economic_power = 1
+	secondary_langs = list (LANGUAGE_HUMAN_EURO,
+		LANGUAGE_HUMAN_CHINESE,
+		LANGUAGE_HUMAN_ARABIC,
+		LANGUAGE_HUMAN_INDIAN,
+		LANGUAGE_HUMAN_IBERIAN,
+		LANGUAGE_HUMAN_RUSSIAN,
+		LANGUAGE_SPACER,
+		LANGUAGE_GUTTER,
+		LANGUAGE_SIGN)
+
+//END//
 
 #undef CULTURE_HUMAN_KIPERIUSMINER
 #undef CULTURE_HUMAN_KIPERIUSPRISONER
@@ -309,12 +394,17 @@
 #undef CULTURE_HUMAN_LUNARICH_FD
 #undef CULTURE_HUMAN_VENUSIAN_FD
 #undef CULTURE_HUMAN_VENUSLOW_FD
-#undef CULTURE_HUMAN_BELTER_ALT
-#undef CULTURE_HUMAN_PLUTO_ALT
-#undef CULTURE_HUMAN_EARTH_ALT
-#undef CULTURE_HUMAN_CETI_ALT
-#undef CULTURE_HUMAN_FOSTER_ALT
-#undef CULTURE_HUMAN_BRAHE_ALT
+#undef CULTURE_HUMAN_BELTER_FD
+#undef CULTURE_HUMAN_PLUTO_FD
+#undef CULTURE_HUMAN_EARTH_FD
+#undef CULTURE_HUMAN_CETI_FD
+#undef CULTURE_HUMAN_FOSTER_FD
+#undef CULTURE_HUMAN_BRAHE_FD
+#undef CULTURE_HUMAN_EOS_FD
+#undef CULTURE_HUMAN_SPACER_FD
+#undef CULTURE_HUMAN_CONFED_FD
+#undef CULTURE_HUMAN_GAIAN_FD
+#undef CULTURE_HUMAN_OTHER_FD
 
 #undef HUMAN_CULTURES_TO_DELETE
 #undef HUMAN_CULTURES_TO_ADD
