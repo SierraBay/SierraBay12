@@ -39,10 +39,6 @@
 													CULTURE_HUMAN_SPACER_FD, \
 													CULTURE_HUMAN_OTHER_FD)
 
-/datum/map/New()
-	available_cultural_info[TAG_CULTURE] += IPC_CULTURES_TO_ADD
-	. = ..()
-
 /datum/species/machine/New()
 	available_cultural_info[TAG_CULTURE] += IPC_CULTURES_TO_ADD
 	..()
