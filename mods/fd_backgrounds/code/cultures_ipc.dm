@@ -1,0 +1,70 @@
+#define CULTURE_HUMAN_KIPERIUSMINER				"Kiperius, Miner Colony"
+#define CULTURE_HUMAN_KIPERIUSPRISONER			"Kiperius, Prison"
+#define CULTURE_HUMAN_MARTIAN_FD				"Martian, Surfacer"
+#define CULTURE_HUMAN_MARSTUN_FD				"Martian, Tunneller"
+#define CULTURE_HUMAN_LUNAPOOR_FD				"Luna, Lower Class"
+#define CULTURE_HUMAN_LUNARICH_FD				"Luna, Upper Class"
+#define CULTURE_HUMAN_VENUSIAN_FD				"Venusian, Zoner"
+#define CULTURE_HUMAN_VENUSLOW_FD				"Venusian, Surfacer"
+#define CULTURE_HUMAN_BELTER_FD					"Belter, Ceres"
+#define CULTURE_HUMAN_PLUTO_FD					"Plutonian"
+#define CULTURE_HUMAN_EARTH_FD					"Earther"
+#define CULTURE_HUMAN_CETI_FD					"Cetite"
+#define CULTURE_HUMAN_FOSTER_FD					"Fostersman"
+#define CULTURE_HUMAN_BRAHE_FD					"Brahite"
+#define CULTURE_HUMAN_EOS_FD					"Eosic"
+#define CULTURE_HUMAN_SPACER_FD					"Spacer"
+#define CULTURE_HUMAN_CONFED_FD					"Terran"
+#define CULTURE_HUMAN_GAIAN_FD					"Gaian"
+#define CULTURE_HUMAN_OTHER_FD					"Other, Humanity"
+
+#define IPC_CULTURES_TO_DELETE					list(CULTURE_POSITRONICS_GEN1, \
+													CULTURE_POSITRONICS_GEN2, \
+													CULTURE_POSITRONICS_GEN3)
+#define IPC_CULTURES_TO_ADD						list(CULTURE_HUMAN_KIPERIUSMINER, \
+													CULTURE_HUMAN_KIPERIUSPRISONER, \
+													CULTURE_HUMAN_MARTIAN_FD, \
+													CULTURE_HUMAN_MARSTUN_FD, \
+													CULTURE_HUMAN_LUNAPOOR_FD, \
+													CULTURE_HUMAN_LUNARICH_FD, \
+													CULTURE_HUMAN_VENUSIAN_FD, \
+													CULTURE_HUMAN_VENUSLOW_FD, \
+													CULTURE_HUMAN_BELTER_FD, \
+													CULTURE_HUMAN_PLUTO_FD, \
+													CULTURE_HUMAN_EARTH_FD, \
+													CULTURE_HUMAN_CETI_FD, \
+													CULTURE_HUMAN_FOSTER_FD, \
+													CULTURE_HUMAN_BRAHE_FD, \
+													CULTURE_HUMAN_EOS_FD, \
+													CULTURE_HUMAN_SPACER_FD, \
+													CULTURE_HUMAN_OTHER_FD)
+
+/datum/map/New()
+	available_cultural_info[TAG_CULTURE] += IPC_CULTURES_TO_ADD
+	. = ..()
+
+/datum/species/machine/New()
+	available_cultural_info[TAG_CULTURE] += IPC_CULTURES_TO_ADD
+	..()
+	available_cultural_info[TAG_CULTURE] -= IPC_CULTURES_TO_DELETE
+
+#undef CULTURE_HUMAN_KIPERIUSMINER
+#undef CULTURE_HUMAN_KIPERIUSPRISONER
+#undef CULTURE_HUMAN_MARTIAN_FD
+#undef CULTURE_HUMAN_MARSTUN_FD
+#undef CULTURE_HUMAN_LUNAPOOR_FD
+#undef CULTURE_HUMAN_LUNARICH_FD
+#undef CULTURE_HUMAN_VENUSIAN_FD
+#undef CULTURE_HUMAN_VENUSLOW_FD
+#undef CULTURE_HUMAN_BELTER_FD
+#undef CULTURE_HUMAN_PLUTO_FD
+#undef CULTURE_HUMAN_EARTH_FD
+#undef CULTURE_HUMAN_CETI_FD
+#undef CULTURE_HUMAN_FOSTER_FD
+#undef CULTURE_HUMAN_BRAHE_FD
+#undef CULTURE_HUMAN_EOS_FD
+#undef CULTURE_HUMAN_SPACER_FD
+#undef CULTURE_HUMAN_OTHER_FD
+
+#undef IPC_CULTURES_TO_DELETE
+#undef IPC_CULTURES_TO_ADD

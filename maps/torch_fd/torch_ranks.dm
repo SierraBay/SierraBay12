@@ -14,11 +14,7 @@
 		/datum/mil_branch/alien,
 		/datum/mil_branch/skrell_fleet,
 		/datum/mil_branch/iccgn,
-		/datum/mil_branch/scga,
-		// Infinity away compitability -
-		/datum/mil_branch/css,
-		/datum/mil_branch/contractor,
-		/datum/mil_branch/employee
+		/datum/mil_branch/scga
 	)
 
 	spawn_branch_types = list(
@@ -29,11 +25,7 @@
 		/datum/mil_branch/alien,
 		/datum/mil_branch/skrell_fleet,
 		/datum/mil_branch/iccgn,
-		/datum/mil_branch/scga,
-		// Infinity away compitability -
-		/datum/mil_branch/css,
-		/datum/mil_branch/contractor,
-		/datum/mil_branch/employee
+		/datum/mil_branch/scga
 	)
 
 	species_to_branch_blacklist = list(
@@ -82,6 +74,9 @@
 				/datum/mil_rank/fleet/e5,
 				/datum/mil_rank/fleet/e6,
 				/datum/mil_rank/fleet/e7,
+				/datum/mil_rank/fleet/e8,
+				/datum/mil_rank/fleet/e9,
+				/datum/mil_rank/fleet/e9_alt1,
 				/datum/mil_rank/fleet/o1
 			)
 		),
