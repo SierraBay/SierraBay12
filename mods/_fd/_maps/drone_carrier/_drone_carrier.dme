@@ -1,0 +1,12 @@
+#ifndef MODPACK_DRONE_CARRIER
+#define MODPACK_DRONE_CARRIER
+
+#include "_drone_carrier.dm"
+
+#include "code/carrier_areas.dm"
+#include "code/carrier_jobs.dm"
+#include "code/carrier_radio.dm"
+#include "code/carrier_shuttles.dm"
+#include "code/carrier.dm"
+
+#endif

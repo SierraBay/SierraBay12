@@ -194,9 +194,9 @@
 	#include "../away/lost_supply_base/lost_supply_base.dm"
 	#include "../away/smugglers/smugglers.dm"
 	#include "../away/magshield/magshield.dm"
-	#include "../away/casino/casino.dm"
+	// #include "../away/casino/casino.dm"
 	#include "../away/yacht/yacht.dm"
-	#include "../away/blueriver/blueriver.dm"
+	// #include "../away/blueriver/blueriver.dm"
 	#include "../away/slavers/slavers_base.dm"
 	#include "../away/mobius_rift/mobius_rift.dm"
 	#include "../away/errant_pisces/errant_pisces.dm"
@@ -218,49 +218,57 @@
 	// USED MODS
 	// Keep them in ascending alphabetical order, please
 
-	// #include "../../mods/_maps/sentinel/_map_sentinel.dme" // К чёрту оверрайдит все ранги флота ЦПСС, ломает роль SEA
-	// #include "../../mods/_maps/farfleet/_map_farfleet.dme" // Не совсем работает без карты Стража (инклюд выше)
-	// #include "../../mods/_maps/hand/_map_hand.dme" // Тоже зависим от предметов с карты Стража (инклюд над фарфлитом)
-
 	#include "../../mods/antagonists/_antagonists.dme"
+	// #include "../../mods/atmos_ret_field/_atm_ret_field.dme"
 	#include "../../mods/bluespace_kitty/_bluespace_kitty.dme"
 	#include "../../mods/fancy_sofas/_fancy_sofas.dme"
 	#include "../../mods/guns/_guns.dme"
 	#include "../../mods/jukebox_tapes/_jukebox_tapes.dme"
 	#include "../../mods/legalese_language/_legalese.dme"
 	#include "../../mods/petting_zoo/_petting_zoo.dme"
+	// #include "../../mods/resomi/_resomi.dme"
 	#include "../../mods/screentips/_screentips.dme"
 	#include "../../mods/tajara/_tajara.dme"
 	#include "../../mods/sauna_props/_sauna_props.dme"
 	#include "../../mods/wyccbay_optimization/_wyccbay_optimization.dme"
 
-	// NON-UPSTREAM MODS
-	#include "../../mods/runechat/_runechat.dme"
-	#include "../../mods/fd_assets/_fd_assets.dme"
+	// #include "../../mods/_maps/sentinel/_map_sentinel.dme" // К чёрту оверрайдит все ранги флота ЦПСС, ломает роль SEA
+	// #include "../../mods/_maps/farfleet/_map_farfleet.dme" // Не совсем работает без карты Стража (инклюд выше)
+	// #include "../../mods/_maps/hand/_map_hand.dme" // Тоже зависим от предметов с карты Стража (инклюд над фарфлитом)
 
-	#include "../../mods/accent_labels/_accent_labels.dme"
-	#include "../../mods/additional_biomods/_additional_biomods.dme"
-	#include "../../mods/ascent/_ascent.dme"
-	#include "../../mods/combat_stances/_combat_stances.dme"
-	#include "../../mods/conference_holopads/_conference_holopads.dme"
-	#include "../../mods/fd_backgrounds/_fd_backgrounds.dme"
-	#include "../../mods/hestia_missiles/_hestia_missiles.dme"
-	#include "../../mods/landing_eye/_landing_eye.dme"
-	#include "../../mods/mob_interactions/_mob_interactions.dme"
-	#include "../../mods/multitile_vehicles/_multitile_vehicles.dme"
-	#include "../../mods/old_space_cannons/_old_space_cannons.dme"
+		// ~NON-UPSTREAM MODS~ //
+	#include "../../mods/_fd/runechat/_runechat.dme"
+	#include "../../mods/_fd/fd_assets/_fd_assets.dme"
 
-	// UNUSED MODS
-	// Keep them in ascending alphabetical order too, please
+	#include "../../mods/_fd/accent_labels/_accent_labels.dme"
+	#include "../../mods/_fd/additional_biomods/_additional_biomods.dme"
+	#include "../../mods/_fd/ascent/_ascent.dme"
+	#include "../../mods/_fd/bruno_items/_bruno_items.dme"
+	#include "../../mods/_fd/combat_stances/_combat_stances.dme"
+	#include "../../mods/_fd/complementary_xeno_ablities/_complementary_xeno_ablities.dme"
+	#include "../../mods/_fd/conference_holopads/_conference_holopads.dme"
+	#include "../../mods/_fd/hestia_missiles/_hestia_missiles.dme"
+	#include "../../mods/_fd/immersive_overmap/_immersive_overmap.dme"
+	#include "../../mods/_fd/landing_eye/_landing_eye.dme"
+	#include "../../mods/_fd/mob_interactions/_mob_interactions.dme"
+	#include "../../mods/_fd/multitile_vehicles/_multitile_vehicles.dme"
+	#include "../../mods/_fd/old_space_cannons/_old_space_cannons.dme"
+	#include "../../mods/_fd/random_rooms/_random_rooms.dme"
 
-	// #include "../../mods/atmos_ret_field/_atm_ret_field.dme"
-	// #include "../../mods/resomi/_resomi.dme"
-
-	// Почему UNUSED MODS стоит хранить?
-	// Потому что никто не проверяет использование тех или иных файлов
-	// в коде, и мод просто исчезнет из поля зрения, когда находясь здесь
-	// он всегда напоминает о своём существовании. Небольшая библиотека,
-	// если так вообще можно выразиться.
+	#include "../../mods/_fd/_maps/airfield/_airfield.dme"
+	#include "../../mods/_fd/_maps/ares/_ares.dme"
+	#include "../../mods/_fd/_maps/casino/_casino.dme"
+	#include "../../mods/_fd/_maps/constructed_station/_constructed_station.dme"
+	#include "../../mods/_fd/_maps/drone_carrier/_drone_carrier.dme"
+	#include "../../mods/_fd/_maps/facility/_facility.dme"
+	#include "../../mods/_fd/_maps/fluffy_biscuit/_fluffy_biscuit.dme"
+	#include "../../mods/_fd/_maps/lighthouse/_lighthouse.dme"
+	#include "../../mods/_fd/_maps/new_blueriver/_new_blueriver.dme"
+	#include "../../mods/_fd/_maps/providence/_providence.dme"
+	#include "../../mods/_fd/_maps/smugglers_ship/_smugglers_ship.dme"
+	#include "../../mods/_fd/_maps/snow_cage/_snow_cage.dme"
+	#include "../../mods/_fd/_maps/trader_ship/_trader_ship.dme"
+	#include "../../mods/_fd/_maps/yacht/_yacht.dme"
 
 	#define using_map_DATUM /datum/map/torch
 

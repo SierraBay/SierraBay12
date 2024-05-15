@@ -1,0 +1,58 @@
+"bI" = (/turf/simulated/wall/invincible/prepainted,/area/template_noop)
+"cX" = (/obj/floor_decal/industrial/outline/yellow,/obj/structure/largecrate,/obj/random/facility/ammo,/obj/machinery/light/small,/turf/simulated/floor/tiled/techfloor,/area/template_noop)
+"eS" = (/obj/structure/largecrate,/obj/random/relic,/obj/machinery/light/small{dir = 1},/turf/simulated/floor/plating,/area/template_noop)
+"fN" = (/obj/structure/railing/mapped,/obj/random/trash,/turf/simulated/floor/plating,/area/template_noop)
+"ir" = (/obj/structure/railing/mapped,/obj/structure/largecrate,/obj/random/facility/ammo,/turf/simulated/floor/plating,/area/template_noop)
+"kw" = (/obj/random/vendor,/turf/simulated/floor/plating,/area/template_noop)
+"lZ" = (/obj/random/obstruction,/turf/simulated/floor/tiled/techfloor,/area/template_noop)
+"mw" = (/obj/structure/catwalk,/turf/simulated/floor/plating,/area/template_noop)
+"mI" = (/obj/floor_decal/industrial/outline/yellow,/obj/random/torchcloset,/turf/simulated/floor/tiled/techfloor,/area/template_noop)
+"qP" = (/obj/structure/largecrate,/obj/random/facility/ammo,/turf/simulated/floor/plating,/area/template_noop)
+"rI" = (/turf/unsimulated/mineral{color = "#000000"; name = "void"},/area/template_noop)
+"sA" = (/obj/structure/table/standard,/obj/random/maintenance/solgov,/turf/simulated/floor/tiled/techmaint,/area/template_noop)
+"sO" = (/obj/floor_decal/industrial/outline/yellow,/turf/simulated/floor/tiled/techfloor,/area/template_noop)
+"tH" = (/obj/structure/largecrate,/obj/random/tech_supply,/turf/simulated/floor/plating,/area/template_noop)
+"tR" = (/obj/structure/catwalk,/obj/machinery/light/small/red,/turf/simulated/floor/plating,/area/template_noop)
+"vS" = (/obj/floor_decal/industrial/outline/yellow,/obj/random/medical,/obj/machinery/light/small{dir = 8},/turf/simulated/floor/tiled/techmaint,/area/template_noop)
+"wX" = (/obj/floor_decal/industrial/outline/yellow,/obj/structure/largecrate,/obj/random/contraband,/turf/simulated/floor/tiled/techfloor,/area/template_noop)
+"xY" = (/obj/structure/table/standard,/obj/random/snack,/obj/random/snack,/obj/machinery/light/small{dir = 4; icon_state = "bulb1"},/turf/simulated/floor/tiled/techmaint,/area/template_noop)
+"yl" = (/obj/structure/largecrate,/obj/machinery/light/small{dir = 1},/turf/simulated/floor/plating,/area/template_noop)
+"zo" = (/obj/floor_decal/industrial/outline/yellow,/obj/random/maintenance,/obj/structure/closet,/turf/simulated/floor/tiled/techmaint,/area/template_noop)
+"BL" = (/obj/random/trash,/turf/simulated/floor/plating,/area/template_noop)
+"CJ" = (/obj/structure/catwalk,/obj/machinery/light/small{dir = 8},/turf/simulated/floor/plating,/area/template_noop)
+"Dy" = (/turf/simulated/floor/tiled/techmaint,/area/template_noop)
+"DJ" = (/obj/floor_decal/industrial/outline/yellow,/obj/random/maintenance,/obj/structure/largecrate,/turf/simulated/floor/tiled/techmaint,/area/template_noop)
+"FR" = (/obj/structure/railing/mapped,/turf/simulated/floor/plating,/area/template_noop)
+"Hj" = (/obj/structure/catwalk,/obj/structure/extinguisher_cabinet{pixel_x = -32},/turf/simulated/floor/plating,/area/template_noop)
+"IH" = (/obj/random/trash,/turf/simulated/floor/tiled/techfloor,/area/template_noop)
+"JW" = (/obj/structure/railing/mapped,/obj/structure/largecrate,/obj/random/smokes,/turf/simulated/floor/plating,/area/template_noop)
+"Nb" = (/obj/structure/table/standard,/obj/random/drinkbottle,/turf/simulated/floor/tiled/techmaint,/area/template_noop)
+"No" = (/obj/machinery/door/airlock/hatch/maintenance,/turf/simulated/floor/tiled/techfloor/grid,/area/template_noop)
+"PE" = (/obj/floor_decal/industrial/outline/yellow,/turf/simulated/floor/tiled/techmaint,/area/template_noop)
+"Qi" = (/obj/structure/largecrate,/obj/random/facility/gun/rare,/turf/simulated/floor/tiled/techfloor,/area/template_noop)
+"Qu" = (/turf/simulated/floor/tiled/techfloor/grid,/area/template_noop)
+"QE" = (/obj/structure/catwalk,/obj/machinery/light/small{dir = 4; icon_state = "bulb1"},/turf/simulated/floor/plating,/area/template_noop)
+"RH" = (/obj/structure/railing/mapped,/obj/structure/largecrate,/turf/simulated/floor/plating,/area/template_noop)
+"UD" = (/obj/floor_decal/corner/yellow/half{dir = 1},/turf/simulated/floor/tiled/monotile,/area/template_noop)
+"Wa" = (/obj/structure/table/standard,/obj/random/facility/gun/uncommon,/turf/simulated/floor/tiled/techmaint,/area/template_noop)
+"Xb" = (/obj/floor_decal/industrial/outline/yellow,/obj/random/tool,/turf/simulated/floor/tiled/techfloor,/area/template_noop)
+"Yg" = (/obj/random/trash,/turf/simulated/floor/tiled/techmaint,/area/template_noop)
+"Yo" = (/obj/floor_decal/industrial/hatch/yellow,/obj/machinery/light/small,/turf/simulated/floor/tiled/techfloor,/area/template_noop)
+"YH" = (/obj/floor_decal/industrial/outline/yellow,/obj/random/material,/obj/structure/closet,/turf/simulated/floor/tiled/techmaint,/area/template_noop)
+
+(1,1,1) = {"
+bIbIbIbIbIbIbIbIbIrI
+bIBLeSBLqPtHylkwbIrI
+bIJWFRFRRHFRfNirbIrI
+bImwmwmwmwmwmwmwbIrI
+bImwcXXblZQiYomwbIrI
+bINobIbIbIbIbIQubIrI
+bImwsAWabIDJzomwbIrI
+bICJDyxYbIvSPEQEbIrI
+bImwYgNbbIYHDJmwbIrI
+bIQubIbIbIbIbINobIrI
+bImwwXlZmIsOIHmwbIrI
+bIHjtRmwmwmwtRmwbIrI
+bIbIbIbINobIbIbIbIrI
+bIbIbIUDUDUDbIbIbIbI
+"}

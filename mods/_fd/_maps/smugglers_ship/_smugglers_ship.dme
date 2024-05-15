@@ -1,0 +1,11 @@
+#ifndef MODPACK_SMUGGLERS_SHIP
+#define MODPACK_SMUGGLERS_SHIP
+
+#include "_smugglers_ship.dm"
+
+#include "code/_smuggler.dm"
+#include "code/smuggler_areas.dm"
+#include "code/smuggler_jobs.dm"
+#include "code/smuggler_shuttles.dm"
+
+#endif

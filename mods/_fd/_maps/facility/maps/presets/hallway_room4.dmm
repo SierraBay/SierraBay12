@@ -1,0 +1,69 @@
+"aA" = (/obj/reactor_radiate{req_range = 3; radiation_power = 180},/obj/floor_decal/industrial/warning/corner{dir = 8},/obj/floor_decal/industrial/warning/corner{dir = 1},/turf/simulated/floor/tiled/techfloor/grid,/area/template_noop)
+"bI" = (/turf/simulated/wall/invincible/prepainted,/area/template_noop)
+"cX" = (/obj/floor_decal/industrial/radiation/fulltile,/obj/structure/closet/crate/secure/large/phoron,/obj/item/ore/uranium,/obj/item/ore/uranium,/obj/item/stack/material/deuterium,/obj/item/stack/material/deuterium,/obj/item/stack/material/tritium/ten,/obj/item/fuel_assembly/hydrogen,/obj/item/fuel_assembly/hydrogen,/obj/item/fuel_assembly/hydrogen,/obj/item/stack/material/phoron,/obj/item/stack/material/phoron,/turf/simulated/floor/blackgrid,/area/template_noop)
+"eS" = (/obj/floor_decal/industrial/radiation/fulltile,/obj/structure/closet/crate/secure/large/phoron,/obj/item/stack/material/uranium/ten,/obj/item/stack/material/uranium,/obj/item/stack/material/uranium,/obj/item/stack/material/deuterium,/obj/item/stack/material/tritium,/obj/item/stack/material/tritium,/obj/item/stack/material/tritium,/obj/item/fuel_assembly/deuterium,/obj/item/fuel_assembly/deuterium,/obj/item/fuel_assembly/deuterium,/obj/item/stack/material/phoron,/obj/item/stack/material/phoron,/obj/item/stack/material/phoron,/turf/simulated/floor/blackgrid,/area/template_noop)
+"fN" = (/obj/floor_decal/industrial/warning,/obj/floor_decal/industrial/warning{dir = 1},/turf/simulated/floor/tiled/techfloor/grid,/area/template_noop)
+"hQ" = (/obj/floor_decal/industrial/warning{dir = 8},/obj/structure/sign/warning/radioactive{pixel_y = 30},/turf/simulated/floor/tiled/techfloor/grid,/area/template_noop)
+"ir" = (/obj/structure/sign/warning/radioactive{dir = 8; pixel_x = 33},/obj/floor_decal/industrial/warning/corner{dir = 8},/obj/floor_decal/industrial/warning/corner{dir = 1},/turf/simulated/floor/tiled/techfloor/grid,/area/template_noop)
+"kw" = (/obj/floor_decal/industrial/radiation/fulltile,/obj/structure/closet/crate/secure/large/phoron,/obj/item/stack/material/uranium,/obj/item/stack/material/uranium,/obj/item/ore/uranium,/obj/item/ore/uranium,/obj/item/ore/uranium,/obj/item/stack/material/tritium/ten,/obj/item/fuel_assembly/tritium,/turf/simulated/floor/blackgrid,/area/template_noop)
+"lZ" = (/obj/machinery/light/small{dir = 8},/turf/simulated/floor/tiled/techfloor,/area/template_noop)
+"mw" = (/obj/floor_decal/industrial/radiation/fulltile,/obj/structure/closet/crate/secure/large/phoron,/obj/item/stack/material/uranium,/obj/item/ore/uranium,/obj/item/stack/material/deuterium,/obj/item/stack/material/tritium,/obj/item/stack/material/tritium,/obj/item/fuel_assembly/deuterium,/obj/item/fuel_assembly/deuterium,/obj/item/fuel_assembly/deuterium,/turf/simulated/floor/blackgrid,/area/template_noop)
+"mI" = (/obj/structure/bed/chair/office/comfy/yellow{dir = 1},/obj/random/facility/mercenary/low,/turf/simulated/floor/tiled/techfloor,/area/template_noop)
+"py" = (/obj/structure/railing/mapped,/obj/floor_decal/industrial/warning/corner{dir = 4},/turf/simulated/floor/tiled/techfloor/grid,/area/template_noop)
+"qP" = (/obj/floor_decal/industrial/warning{dir = 8},/turf/simulated/floor/tiled/techfloor/grid,/area/template_noop)
+"rE" = (/obj/structure/table/steel_reinforced,/obj/floor_decal/techfloor/orange,/obj/item/paper{name = "Notice"; info = "These eggheads have taken our anti-radiation equipment again, ostensibly in the name of 'science'.[br] We'll see.[br] And yes, if someone needs them, look in the lab."},/turf/simulated/floor/tiled/techfloor/grid,/area/template_noop)
+"rI" = (/obj/machinery/light/small/red{dir = 4},/obj/floor_decal/industrial/warning{dir = 8},/turf/simulated/floor/tiled/techfloor/grid,/area/template_noop)
+"rR" = (/obj/floor_decal/industrial/radiation/fulltile,/obj/structure/closet/crate/radiation,/obj/item/stack/material/uranium/ten,/obj/item/stack/material/deuterium{amount = 15},/obj/item/fuel_assembly/phoron,/obj/item/stack/material/phoron,/obj/item/stack/material/phoron,/obj/item/stack/material/phoron,/turf/simulated/floor/blackgrid,/area/template_noop)
+"sA" = (/obj/floor_decal/industrial/radiation/fulltile,/obj/structure/closet/crate/secure/large/phoron,/obj/item/stack/material/uranium/ten,/obj/item/stack/material/uranium,/obj/item/ore/uranium,/obj/item/ore/uranium,/obj/item/fuel_assembly/tritium,/obj/item/stack/material/phoron,/obj/item/stack/material/phoron,/obj/item/stack/material/phoron,/obj/item/stack/material/phoron/ten,/turf/simulated/floor/blackgrid,/area/template_noop)
+"sO" = (/obj/floor_decal/techfloor/orange{dir = 8},/obj/floor_decal/industrial/warning{dir = 4},/obj/item/screwdriver,/obj/item/device/multitool,/turf/simulated/floor/tiled/techfloor/grid,/area/template_noop)
+"tH" = (/obj/structure/catwalk,/turf/simulated/floor/greengrid,/area/template_noop)
+"tR" = (/obj/structure/table/steel_reinforced,/obj/floor_decal/techfloor/orange/corner{dir = 8},/obj/item/device/geiger,/obj/structure/sign/warning/radioactive{pixel_x = 28; pixel_y = 28},/obj/floor_decal/industrial/warning/corner,/turf/simulated/floor/tiled/techfloor/grid,/area/template_noop)
+"tW" = (/obj/floor_decal/industrial/radiation/fulltile,/obj/structure/closet/crate/secure/large/phoron,/obj/item/stack/material/uranium/ten,/obj/item/stack/material/deuterium,/obj/item/stack/material/deuterium,/obj/item/stack/material/tritium/ten,/obj/item/stack/material/tritium,/obj/item/fuel_assembly/phoron,/obj/item/fuel_assembly/hydrogen,/obj/item/stack/material/phoron,/turf/simulated/floor/blackgrid,/area/template_noop)
+"vS" = (/obj/structure/catwalk,/obj/floor_decal/industrial/warning,/turf/simulated/floor/plating{color = "#919191"},/area/template_noop)
+"wp" = (/obj/floor_decal/corner/yellow/border,/obj/floor_decal/industrial/radiation{dir = 1},/turf/simulated/floor/tiled/monotile,/area/template_noop)
+"wX" = (/obj/floor_decal/industrial/radiation/fulltile,/obj/structure/closet/crate/secure/large/phoron,/obj/item/stack/material/uranium,/obj/item/ore/uranium,/obj/item/ore/uranium,/obj/item/stack/material/deuterium,/obj/item/stack/material/tritium/ten,/turf/simulated/floor/blackgrid,/area/template_noop)
+"xY" = (/obj/machinery/light/small/red{dir = 4},/turf/simulated/floor/tiled/techfloor/grid,/area/template_noop)
+"yl" = (/obj/floor_decal/industrial/radiation/fulltile,/obj/structure/closet/crate/radiation,/obj/item/stack/material/uranium/ten,/obj/item/ore/uranium,/obj/item/stack/material/deuterium{amount = 15},/obj/item/stack/material/tritium,/obj/item/fuel_assembly/phoron,/obj/item/fuel_assembly/phoron,/obj/item/fuel_assembly/phoron,/obj/item/fuel_assembly/deuterium,/obj/item/stack/material/phoron/ten,/obj/item/stack/material/phoron/ten,/obj/item/stack/material/phoron/ten,/turf/simulated/floor/blackgrid,/area/template_noop)
+"zo" = (/obj/structure/railing/mapped,/obj/floor_decal/industrial/warning{dir = 1},/turf/simulated/floor/tiled/techfloor/grid,/area/template_noop)
+"BL" = (/obj/structure/catwalk,/obj/machinery/light/small/red{dir = 8},/turf/simulated/floor/greengrid,/area/template_noop)
+"CJ" = (/obj/floor_decal/industrial/radiation/fulltile,/obj/structure/closet/crate/radiation,/obj/item/stack/material/uranium/ten,/obj/item/stack/material/uranium,/obj/item/stack/material/uranium,/obj/item/stack/material/tritium,/turf/simulated/floor/blackgrid,/area/template_noop)
+"Dy" = (/obj/floor_decal/industrial/radiation/fulltile,/obj/structure/closet/crate/secure/large/phoron,/obj/item/ore/uranium,/obj/item/stack/material/tritium/ten,/turf/simulated/floor/blackgrid,/area/template_noop)
+"DJ" = (/turf/simulated/wall/r_wall/prepainted,/area/template_noop)
+"FR" = (/obj/floor_decal/industrial/warning/corner{dir = 4},/obj/floor_decal/industrial/warning/corner,/turf/simulated/floor/tiled/techfloor/grid,/area/template_noop)
+"Hj" = (/turf/simulated/floor/plating,/area/template_noop)
+"Ir" = (/obj/floor_decal/techfloor/orange{dir = 1},/turf/simulated/floor/tiled/techfloor/grid,/area/template_noop)
+"IH" = (/obj/machinery/door/airlock/hatch/maintenance/bolted,/turf/simulated/floor/tiled/techfloor/grid,/area/template_noop)
+"Jb" = (/obj/floor_decal/industrial/warning/corner{dir = 4},/turf/simulated/floor/tiled/techfloor/grid,/area/template_noop)
+"JW" = (/obj/floor_decal/techfloor/orange/corner{dir = 1},/obj/floor_decal/industrial/warning/corner{dir = 4},/turf/simulated/floor/tiled/techfloor/grid,/area/template_noop)
+"Nb" = (/obj/wallframe_spawn/reinforced,/turf/simulated/floor/plating,/area/template_noop)
+"No" = (/obj/structure/catwalk,/obj/floor_decal/industrial/warning{dir = 8},/turf/simulated/floor/plating{color = "#919191"},/area/template_noop)
+"PE" = (/obj/structure/catwalk,/obj/machinery/light/small/red,/obj/floor_decal/industrial/warning,/turf/simulated/floor/plating{color = "#919191"},/area/template_noop)
+"PH" = (/obj/machinery/door/airlock/vault,/turf/simulated/floor/tiled/techfloor/grid,/area/template_noop)
+"PZ" = (/obj/floor_decal/industrial/radiation/fulltile,/obj/structure/closet/crate/secure/large/phoron,/obj/item/stack/material/uranium,/obj/item/ore/uranium,/obj/item/stack/material/deuterium{amount = 15},/obj/item/fuel_assembly/tritium,/obj/item/stack/material/phoron/ten,/turf/simulated/floor/blackgrid,/area/template_noop)
+"Qi" = (/obj/reactor_radiate{req_range = 3; radiation_power = 180},/obj/floor_decal/industrial/warning/corner{dir = 4},/obj/floor_decal/industrial/warning/corner,/turf/simulated/floor/tiled/techfloor/grid,/area/template_noop)
+"Qu" = (/turf/simulated/floor/tiled/techfloor/grid,/area/template_noop)
+"QE" = (/obj/structure/catwalk,/obj/floor_decal/industrial/warning/corner{dir = 8},/turf/simulated/floor/plating{color = "#919191"},/area/template_noop)
+"RH" = (/obj/floor_decal/industrial/warning/corner{dir = 8},/obj/floor_decal/industrial/warning/corner{dir = 1},/turf/simulated/floor/tiled/techfloor/grid,/area/template_noop)
+"UD" = (/obj/floor_decal/corner/yellow/border,/obj/structure/sign/warning/radioactive{pixel_y = 30},/obj/floor_decal/industrial/radiation{dir = 1},/turf/simulated/floor/tiled/monotile,/area/template_noop)
+"Wa" = (/obj/structure/table/steel_reinforced,/obj/floor_decal/techfloor/orange,/obj/item/paper_bin,/obj/item/pen,/turf/simulated/floor/tiled/techfloor/grid,/area/template_noop)
+"Xb" = (/obj/structure/railing/mapped,/obj/floor_decal/industrial/warning/corner{dir = 1},/turf/simulated/floor/tiled/techfloor/grid,/area/template_noop)
+"Yg" = (/obj/floor_decal/corner/yellow/border,/obj/floor_decal/industrial/radiation{dir = 1},/obj/structure/sign/warning/detailed{pixel_y = 32},/turf/simulated/floor/tiled/monotile,/area/template_noop)
+"Yo" = (/obj/floor_decal/industrial/warning/corner{dir = 1},/turf/simulated/floor/tiled/techfloor/grid,/area/template_noop)
+"YH" = (/obj/structure/closet,/obj/floor_decal/techfloor/orange{dir = 1},/obj/random/assembly,/obj/random/loot,/turf/simulated/floor/tiled/techfloor/grid,/area/template_noop)
+
+(1,1,1) = {"
+bIbIbIbIbIbIbIbIbIbI
+bIBLeSDyhQtHylkwrIbI
+bIFRfNfNRHFRfNfNRHbI
+bIBLPZtWqPtHmwrRrIbI
+bIFRfNfNaAQifNfNirbI
+bIBLcXCJqPtHsAwXrIbI
+bIJbzozoXbpyzozoYobI
+bIvSPEvSvSvSPEQEQubI
+bIDJDJNbNbNbDJNoQubI
+bIHjDJWarEtRDJNoxYbI
+bIHjDJlZmIsOIHNoQubI
+bIHjDJYHIrJWDJDJDJbI
+bIHjDJDJPHDJDJHjHjbI
+bIDJDJYgwpUDDJDJDJbI
+"}

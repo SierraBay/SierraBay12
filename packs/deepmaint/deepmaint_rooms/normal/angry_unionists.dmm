@@ -78,7 +78,7 @@
 "ll" = (
 /obj/structure/window/reinforced,
 /obj/structure/table/woodentable/walnut,
-/obj/structure/flora/pottedplant/deskleaf,
+/obj/item/flora/pottedplantsmall/leaf,
 /turf/simulated/floor/carpet/blue2,
 /area/map_template/deepmaint)
 "lK" = (

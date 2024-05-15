@@ -1,0 +1,56 @@
+"a" = (/obj/floor_decal/industrial/warning/fulltile,/obj/structure/table/rack,/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"b" = (/obj/floor_decal/industrial/warning/fulltile,/obj/machinery/pipedispenser,/obj/decal/cleanable/generic,/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"c" = (/obj/structure/catwalk,/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/structure/cable/green{d1 = 1; d2 = 8; icon_state = "1-8"},/obj/structure/cable/green{d1 = 1; d2 = 4; icon_state = "1-4"},/obj/structure/cable/green{d1 = 2; d2 = 4; icon_state = "2-4"},/obj/structure/cable/green{d1 = 2; d2 = 8; icon_state = "2-8"},/obj/machinery/atmospherics/pipe/manifold4w/hidden/scrubbers,/obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,/obj/decal/cleanable/dirt,/turf/simulated/floor/plating,/area/template_noop)
+"d" = (/obj/floor_decal/industrial/warning/fulltile,/obj/structure/table/rack,/obj/random/junkyard/advdevice,/obj/random/hat,/obj/random/hat,/obj/random/clothing,/obj/random/clothing,/obj/random/clothing,/obj/random/accessory,/obj/random/accessory,/obj/random/accessory,/obj/random/clothing,/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"f" = (/obj/floor_decal/industrial/warning{dir = 6},/obj/machinery/space_heater,/turf/simulated/floor/tiled/techfloor/grid,/area/template_noop)
+"g" = (/obj/floor_decal/industrial/warning/fulltile,/obj/machinery/pipedispenser/disposal,/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"h" = (/obj/floor_decal/industrial/warning/fulltile,/obj/structure/dispenser,/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"i" = (/obj/structure/catwalk,/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/machinery/atmospherics/pipe/simple/hidden/supply,/turf/simulated/floor/plating,/area/template_noop)
+"j" = (/obj/floor_decal/techfloor/orange{dir = 4},/obj/machinery/portable_atmospherics/canister/hydrogen,/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled/techfloor,/area/template_noop)
+"k" = (/obj/structure/catwalk,/obj/structure/railing/mapped,/obj/structure/cable/green{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/turf/simulated/floor/plating,/area/template_noop)
+"l" = (/obj/floor_decal/techfloor/orange{dir = 8},/obj/machinery/portable_atmospherics/canister/empty/air,/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled/techfloor,/area/template_noop)
+"m" = (/obj/floor_decal/techfloor/orange{dir = 8},/obj/machinery/space_heater,/obj/machinery/firealarm{dir = 8; pixel_x = -24; pixel_y = 6},/turf/simulated/floor/tiled/techfloor,/area/template_noop)
+"n" = (/obj/structure/catwalk,/obj/structure/railing/mapped,/obj/structure/cable/green{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/obj/machinery/portable_atmospherics/canister/empty/air,/turf/simulated/floor/plating,/area/template_noop)
+"o" = (/obj/structure/catwalk,/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/decal/cleanable/dirt,/turf/simulated/floor/plating,/area/template_noop)
+"p" = (/obj/floor_decal/techfloor/orange{dir = 8},/obj/machinery/portable_atmospherics/canister/carbon_dioxide,/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled/techfloor,/area/template_noop)
+"q" = (/obj/floor_decal/industrial/warning{dir = 10},/obj/machinery/portable_atmospherics/powered/scrubber,/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled/techfloor/grid,/area/template_noop)
+"r" = (/obj/floor_decal/industrial/warning{dir = 9},/obj/decal/cleanable/dirt,/obj/decal/cleanable/generic,/obj/random/junkyard/smokes{pixel_x = 12; pixel_y = 5},/turf/simulated/floor/tiled/techfloor/grid,/area/template_noop)
+"u" = (/obj/floor_decal/techfloor/orange{dir = 8},/obj/machinery/space_heater,/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled/techfloor,/area/template_noop)
+"v" = (/obj/floor_decal/techfloor/orange{dir = 4},/obj/machinery/portable_atmospherics/canister/oxygen,/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled/techfloor,/area/template_noop)
+"w" = (/obj/floor_decal/industrial/warning/fulltile,/obj/structure/table/rack,/obj/random/trash,/obj/random/trash,/obj/random/trash,/obj/machinery/light/small/red{dir = 4},/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"x" = (/obj/floor_decal/industrial/warning/fulltile,/obj/structure/table/rack,/obj/structure/railing/mapped,/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"y" = (/obj/floor_decal/industrial/warning/fulltile,/obj/structure/table/rack,/obj/decal/cleanable/dirt,/obj/random/action_figure,/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"z" = (/obj/floor_decal/techfloor/orange{dir = 4},/obj/decal/cleanable/generic,/turf/simulated/floor/tiled/techfloor,/area/template_noop)
+"A" = (/obj/floor_decal/industrial/warning/fulltile,/obj/structure/table/rack,/obj/random/junkyard/material,/obj/random/junkyard/material,/obj/random/junkyard/material,/obj/random/junkyard/material,/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"B" = (/obj/floor_decal/industrial/warning/fulltile,/obj/structure/table/rack,/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/obj/random/junkyard/powercell,/obj/random/junkyard/powercell,/obj/random/junkyard/tech_supply,/obj/random/junkyard/tech_supply,/obj/random/junkyard/tech_supply,/obj/random/junkyard/tech_supply,/obj/random/junkyard/tech_supply,/obj/random/junkyard/tech_supply,/obj/random/junkyard/tech_supply,/obj/random/junkyard/powercell,/obj/random/junkyard/bomb_supply,/obj/random/junkyard/bomb_supply,/obj/random/junkyard/bomb_supply,/obj/random/junkyard/tech_supply,/obj/random/junkyard/tech_supply,/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"C" = (/obj/floor_decal/industrial/warning/fulltile,/obj/structure/table/rack,/obj/random/junkyard/loot,/obj/random/junkyard/loot,/obj/machinery/light/small/red{dir = 8},/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"D" = (/obj/floor_decal/techfloor/orange{dir = 8},/turf/simulated/floor/tiled/techfloor,/area/template_noop)
+"E" = (/obj/floor_decal/techfloor/orange{dir = 4},/obj/machinery/portable_atmospherics/powered/pump/filled,/obj/random/trash,/turf/simulated/floor/tiled/techfloor,/area/template_noop)
+"F" = (/obj/floor_decal/industrial/warning/fulltile,/obj/machinery/fabricator/hacked,/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"H" = (/obj/structure/catwalk,/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/random/trash,/obj/random/trash,/turf/simulated/floor/plating,/area/template_noop)
+"I" = (/obj/floor_decal/industrial/warning/fulltile,/obj/structure/table/rack,/obj/decal/cleanable/dirt,/obj/random/junkyard/tool,/obj/random/junkyard/tool,/obj/random/junkyard/tool,/obj/random/junkyard/tool,/obj/machinery/light/small/red{dir = 4},/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"J" = (/obj/floor_decal/techfloor/orange{dir = 4},/turf/simulated/floor/tiled/techfloor,/area/template_noop)
+"L" = (/obj/floor_decal/industrial/warning/fulltile,/obj/machinery/portable_atmospherics/powered/scrubber/huge,/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"N" = (/obj/floor_decal/techfloor/orange{dir = 8},/obj/random/trash,/turf/simulated/floor/tiled/techfloor,/area/template_noop)
+"P" = (/obj/structure/catwalk,/obj/structure/cable/green{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/obj/random/junkyard/toolbox,/turf/simulated/floor/plating,/area/template_noop)
+"Q" = (/obj/paint/black,/turf/simulated/wall/r_wall,/area/template_noop)
+"S" = (/obj/paint/black,/obj/decal/cleanable/dirt,/turf/simulated/wall/r_wall,/area/template_noop)
+"T" = (/obj/floor_decal/techfloor/orange{dir = 8},/obj/machinery/power/port_gen/pacman,/obj/machinery/alarm{dir = 4; pixel_x = -22; req_access = newlist()},/turf/simulated/floor/tiled/techfloor,/area/template_noop)
+"U" = (/obj/floor_decal/techfloor/orange{dir = 4},/obj/machinery/portable_atmospherics/powered/pump/filled,/turf/simulated/floor/tiled/techfloor,/area/template_noop)
+"W" = (/obj/floor_decal/industrial/warning{dir = 5},/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled/techfloor/grid,/area/template_noop)
+"X" = (/obj/structure/catwalk,/obj/structure/cable/green{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/turf/simulated/floor/plating,/area/template_noop)
+"Z" = (/obj/floor_decal/industrial/warning/fulltile,/obj/structure/table/rack,/obj/decal/cleanable/dirt,/obj/random/masks,/obj/random/masks,/obj/random/masks,/obj/random/contraband,/obj/random/contraband,/obj/machinery/light/small/red{dir = 8},/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+
+(1,1,1) = {"
+LDozd
+CpoJw
+QTivQ
+bNiJg
+xriWx
+kXcPn
+BqofA
+FuHJh
+QmiES
+ZDijI
+aloUy
+"}

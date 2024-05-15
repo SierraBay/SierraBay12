@@ -1,0 +1,69 @@
+"bI" = (/turf/simulated/wall/invincible/prepainted,/area/template_noop)
+"cX" = (/obj/floor_decal/floordetail/edgedrain,/obj/structure/hygiene/shower{dir = 1},/turf/simulated/floor/tiled/steel_grid,/area/template_noop)
+"eN" = (/obj/floor_decal/corner/grey{dir = 9},/obj/machinery/light/small{dir = 8},/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled/steel_grid,/area/template_noop)
+"eS" = (/obj/floor_decal/corner/grey{dir = 10},/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled,/area/template_noop)
+"fN" = (/obj/structure/hygiene/toilet{dir = 8},/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled,/area/template_noop)
+"ir" = (/obj/structure/hygiene/drain/bath,/turf/simulated/floor/pool,/area/template_noop)
+"kw" = (/obj/structure/hygiene/faucet{pixel_y = 11},/turf/simulated/floor/pool,/area/template_noop)
+"kL" = (/obj/floor_decal/corner/grey{dir = 10},/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled,/area/template_noop)
+"lZ" = (/obj/floor_decal/floordetail/edgedrain{dir = 1},/obj/item/storage/mirror{pixel_y = 26},/obj/structure/hygiene/sink{dir = 1; pixel_y = 16},/obj/floor_decal/corner/grey/half,/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled/monotile,/area/template_noop)
+"mw" = (/obj/floor_decal/corner/grey{dir = 10},/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled,/area/template_noop)
+"mI" = (/obj/floor_decal/corner/grey{dir = 9},/obj/random/junk,/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled,/area/template_noop)
+"nZ" = (/obj/structure/hygiene/toilet{dir = 4},/obj/random/trash,/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled,/area/template_noop)
+"ou" = (/obj/floor_decal/corner/grey{dir = 9},/obj/decal/cleanable/dirt,/obj/random/facility/mercenary/medium,/turf/simulated/floor/tiled,/area/template_noop)
+"pC" = (/obj/machinery/door/unpowered/simple/iron{dir = 4},/turf/simulated/floor/tiled/steel_grid,/area/template_noop)
+"qP" = (/obj/floor_decal/corner/grey{dir = 9},/obj/item/towel/random,/obj/structure/table/rack,/obj/item/haircomb/random,/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled,/area/template_noop)
+"rI" = (/turf/unsimulated/mineral{color = "#000000"; name = "void"},/area/template_noop)
+"sA" = (/obj/machinery/light/small{dir = 1},/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled/steel_grid,/area/template_noop)
+"sO" = (/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled,/area/template_noop)
+"sP" = (/obj/floor_decal/industrial/outline,/obj/structure/closet/secure_closet/personal/empty,/obj/item/towel/random,/obj/random/maintenance,/obj/random/maintenance,/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled/monotile,/area/template_noop)
+"tD" = (/obj/floor_decal/corner/grey{dir = 9},/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled,/area/template_noop)
+"tH" = (/obj/floor_decal/corner/grey{dir = 6},/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled,/area/template_noop)
+"tR" = (/obj/floor_decal/corner/grey{dir = 10},/obj/machinery/light/small,/obj/random/junk,/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled,/area/template_noop)
+"uv" = (/obj/floor_decal/corner/grey{dir = 4},/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled/steel_grid,/area/template_noop)
+"vS" = (/obj/catwalk_plated,/obj/machinery/light/small{dir = 4; icon_state = "bulb1"},/obj/decal/cleanable/dirt,/turf/simulated/floor/plating,/area/template_noop)
+"wX" = (/obj/floor_decal/floordetail/edgedrain{dir = 1},/obj/item/storage/mirror{pixel_y = 26},/obj/structure/hygiene/sink{dir = 1; pixel_y = 16},/obj/floor_decal/corner/grey/half,/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled/monotile,/area/template_noop)
+"xd" = (/obj/floor_decal/corner/grey{dir = 10},/obj/machinery/light,/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled,/area/template_noop)
+"xQ" = (/obj/floor_decal/corner/grey{dir = 9},/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled,/area/template_noop)
+"xY" = (/obj/structure/hygiene/toilet{dir = 4},/turf/simulated/floor/tiled,/area/template_noop)
+"yl" = (/obj/floor_decal/industrial/outline,/obj/structure/closet/secure_closet/personal/empty,/obj/item/towel/random,/obj/random/maintenance,/obj/random/maintenance,/turf/simulated/floor/tiled/monotile,/area/template_noop)
+"zo" = (/obj/machinery/door/unpowered/simple/iron{dir = 4},/obj/floor_decal/floordetail/tiled,/turf/simulated/floor/tiled/steel_grid,/area/template_noop)
+"BL" = (/obj/floor_decal/corner/grey{dir = 9},/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled,/area/template_noop)
+"CJ" = (/obj/floor_decal/floordetail/edgedrain,/obj/structure/hygiene/shower{dir = 1},/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled/steel_grid,/area/template_noop)
+"Dy" = (/obj/floor_decal/corner/grey{dir = 6},/obj/random/trash,/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled,/area/template_noop)
+"DJ" = (/obj/catwalk_plated,/turf/simulated/floor/plating,/area/template_noop)
+"FR" = (/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled/steel_grid,/area/template_noop)
+"Hj" = (/obj/floor_decal/corner/grey{dir = 10},/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/obj/decal/cleanable/cobweb{dir = 4},/turf/simulated/floor/tiled,/area/template_noop)
+"IH" = (/obj/floor_decal/industrial/outline,/obj/structure/closet/secure_closet/personal/empty,/obj/item/towel/random,/obj/item/reagent_containers/spray/cleaner,/obj/random/maintenance,/obj/random/maintenance,/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled/monotile,/area/template_noop)
+"JW" = (/obj/floor_decal/corner/grey{dir = 9},/obj/random/trash,/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled,/area/template_noop)
+"Nb" = (/obj/structure/hygiene/toilet{dir = 8},/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/obj/decal/cleanable/cobweb2,/turf/simulated/floor/tiled,/area/template_noop)
+"No" = (/obj/machinery/door/airlock/civilian{autoset_access = 0; name = "Head"},/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"PE" = (/obj/floor_decal/corner/grey{dir = 10},/obj/random/trash,/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled,/area/template_noop)
+"Qi" = (/obj/floor_decal/corner/grey{dir = 6},/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled,/area/template_noop)
+"Qu" = (/obj/floor_decal/corner/grey{dir = 9},/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled/steel_grid,/area/template_noop)
+"QE" = (/obj/machinery/light/small{dir = 1},/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled,/area/template_noop)
+"Rw" = (/obj/structure/hygiene/drain,/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled,/area/template_noop)
+"RH" = (/obj/floor_decal/corner/grey{dir = 9},/obj/machinery/light{dir = 8},/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled,/area/template_noop)
+"UD" = (/obj/floor_decal/corner/green/half{dir = 1},/turf/simulated/floor/tiled/monotile,/area/template_noop)
+"Wa" = (/obj/machinery/door/unpowered/simple/iron{dir = 4},/obj/floor_decal/floordetail/tiled,/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled/steel_grid,/area/template_noop)
+"Xb" = (/turf/simulated/wall/prepainted,/area/template_noop)
+"Yg" = (/obj/machinery/light/small{dir = 1},/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled/steel_grid,/area/template_noop)
+"Yo" = (/turf/simulated/floor/pool,/area/template_noop)
+"YH" = (/obj/catwalk_plated,/obj/decal/cleanable/dirt,/turf/simulated/floor/plating,/area/template_noop)
+
+(1,1,1) = {"
+rIrIrIbIbIbIbIbIbIbI
+rIrIrIbIqPtHYokwkwbI
+bIbIbIbIRHQiYoirYobI
+bIQERwpCxQDyYoYoYobI
+bICJcXXbBLQiYoYoYobI
+bIXbXbXbeNuvXbXbXbbI
+bIxYsAWaouDJzoYgNbbI
+bIXbXbXbJWvSXbXbXbbI
+bInZYgzotDYHWasAfNbI
+bIXbXbXbQuFRXbXbXbbI
+bIwXwXlZmIsOIHsPylbI
+bIHjtRmweSPExdkLeSbI
+bIbIbIbINobIbIbIbIbI
+bIbIbIUDUDUDbIbIbIbI
+"}

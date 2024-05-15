@@ -1,0 +1,9 @@
+#ifndef MODPACK_CASINO
+#define MODPACK_CASINO
+
+#include "_casino.dm"
+
+#include "code/casino_areas.dm"
+#include "code/casino.dm"
+
+#endif

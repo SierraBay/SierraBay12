@@ -1,0 +1,56 @@
+"a" = (/turf/simulated/wall/invincible/prepainted,/area/template_noop)
+"b" = (/obj/structure/railing/mapped{dir = 8; icon_state = "railing0-1"},/obj/floor_decal/spline/fancy/black{dir = 8},/obj/random/junk,/obj/decal/cleanable/dirt,/turf/simulated/floor/plating,/area/template_noop)
+"c" = (/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled/steel_grid,/area/template_noop)
+"d" = (/obj/random/junk,/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled/steel_grid,/area/template_noop)
+"e" = (/obj/floor_decal/industrial/outline/yellow,/obj/structure/largecrate,/obj/random/maintenance,/obj/random/maintenance,/obj/random/maintenance,/obj/random/junk,/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/obj/machinery/light/small/red{dir = 4},/turf/simulated/floor/plating,/area/template_noop)
+"f" = (/obj/structure/railing/mapped{dir = 8; icon_state = "railing0-1"},/obj/floor_decal/spline/fancy/black{dir = 8},/turf/simulated/floor/plating,/area/template_noop)
+"j" = (/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/obj/decal/cleanable/filth,/turf/simulated/floor/tiled/steel_grid,/area/template_noop)
+"m" = (/obj/floor_decal/corner/blue{dir = 6},/obj/random/junk,/obj/decal/cleanable/dirt,/obj/machinery/light/small{dir = 4; icon_state = "bulb1"},/turf/simulated/floor/tiled,/area/template_noop)
+"n" = (/obj/floor_decal/corner/blue{dir = 8},/obj/floor_decal/corner/yellow{dir = 1},/obj/random/junk,/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled,/area/template_noop)
+"o" = (/obj/floor_decal/industrial/outline/yellow,/obj/structure/largecrate,/obj/random/maintenance,/obj/random/maintenance,/obj/random/maintenance,/obj/random/junk,/obj/decal/cleanable/dirt,/turf/simulated/floor/plating,/area/template_noop)
+"p" = (/obj/structure/railing/mapped{dir = 8; icon_state = "railing0-1"},/obj/floor_decal/spline/fancy/black{dir = 8},/obj/decal/cleanable/dirt,/obj/decal/cleanable/flour,/turf/simulated/floor/plating,/area/template_noop)
+"r" = (/obj/floor_decal/industrial/outline/yellow,/obj/structure/largecrate,/obj/random/maintenance,/obj/random/maintenance,/obj/random/loot,/obj/random/junk,/obj/random/junk,/obj/random/junk,/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/turf/simulated/floor/plating,/area/template_noop)
+"s" = (/obj/floor_decal/corner/blue{dir = 9},/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/obj/decal/cleanable/filth,/turf/simulated/floor/tiled,/area/template_noop)
+"t" = (/obj/floor_decal/corner/blue{dir = 6},/obj/random/junk,/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled,/area/template_noop)
+"u" = (/obj/floor_decal/industrial/outline/yellow,/obj/structure/closet/crate/freezer,/obj/random/maintenance,/obj/random/maintenance,/obj/random/junk,/obj/random/junk,/obj/decal/cleanable/dirt,/obj/machinery/light/small/red{dir = 8},/turf/simulated/floor/plating,/area/template_noop)
+"v" = (/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"w" = (/turf/unsimulated/mineral{color = "#000000"; name = "void"},/area/template_noop)
+"x" = (/obj/structure/railing/mapped{dir = 4},/obj/floor_decal/spline/fancy/black{dir = 4},/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/turf/simulated/floor/plating,/area/template_noop)
+"z" = (/obj/floor_decal/corner/blue{dir = 1},/obj/floor_decal/corner/yellow{dir = 8},/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled,/area/template_noop)
+"A" = (/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled/steel_grid,/area/template_noop)
+"B" = (/turf/unsimulated/mineral,/area/template_noop)
+"C" = (/obj/structure/railing/mapped{dir = 4},/obj/floor_decal/industrial/outline/yellow,/obj/floor_decal/spline/fancy/black{dir = 4},/obj/random/junk,/obj/decal/cleanable/dirt,/turf/simulated/floor/plating,/area/template_noop)
+"D" = (/obj/floor_decal/corner/yellow{dir = 9},/obj/random/junk,/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled,/area/template_noop)
+"E" = (/obj/floor_decal/corner/yellow{dir = 9},/obj/random/junk,/obj/random/junk,/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled,/area/template_noop)
+"F" = (/obj/floor_decal/corner/blue{dir = 4},/obj/floor_decal/corner/yellow,/obj/random/junk,/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled,/area/template_noop)
+"G" = (/obj/floor_decal/industrial/outline/yellow,/obj/structure/largecrate,/obj/random/maintenance,/obj/random/junk,/turf/simulated/floor/plating,/area/template_noop)
+"H" = (/obj/floor_decal/corner/blue/half{dir = 8},/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"I" = (/obj/floor_decal/corner/yellow{dir = 6},/obj/random/junk,/obj/decal/cleanable/dirt,/obj/random/facility/mercenary/medium,/turf/simulated/floor/tiled,/area/template_noop)
+"K" = (/obj/floor_decal/corner/yellow{dir = 6},/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/obj/decal/cleanable/filth,/turf/simulated/floor/tiled,/area/template_noop)
+"L" = (/obj/structure/railing/mapped{dir = 4},/obj/floor_decal/spline/fancy/black{dir = 4},/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/turf/simulated/floor/plating,/area/template_noop)
+"M" = (/obj/structure/railing/mapped{dir = 4},/obj/floor_decal/spline/fancy/black{dir = 4},/obj/decal/cleanable/dirt,/obj/decal/cleanable/filth,/turf/simulated/floor/plating,/area/template_noop)
+"N" = (/obj/floor_decal/industrial/outline/yellow,/obj/structure/closet/crate,/obj/random/maintenance,/obj/random/junk,/obj/random/junk,/obj/decal/cleanable/dirt,/obj/machinery/light/small/red{dir = 8},/turf/simulated/floor/plating,/area/template_noop)
+"O" = (/obj/structure/railing/mapped{dir = 4},/obj/floor_decal/industrial/outline/yellow,/obj/floor_decal/spline/fancy/black{dir = 4},/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/turf/simulated/floor/plating,/area/template_noop)
+"P" = (/obj/floor_decal/industrial/outline/yellow,/obj/decal/cleanable/dirt,/obj/decal/cleanable/cobweb,/turf/simulated/floor/plating,/area/template_noop)
+"Q" = (/obj/floor_decal/corner/yellow{dir = 6},/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled,/area/template_noop)
+"R" = (/obj/floor_decal/corner/blue/half{dir = 4},/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"S" = (/obj/floor_decal/corner/blue,/obj/floor_decal/corner/yellow{dir = 4},/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled,/area/template_noop)
+"T" = (/obj/machinery/door/airlock/hatch/maintenance,/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"U" = (/obj/structure/railing/mapped{dir = 8; icon_state = "railing0-1"},/obj/floor_decal/industrial/outline/yellow,/obj/floor_decal/spline/fancy/black{dir = 8},/obj/decal/cleanable/dirt,/turf/simulated/floor/plating,/area/template_noop)
+"V" = (/obj/structure/railing/mapped{dir = 8; icon_state = "railing0-1"},/obj/floor_decal/industrial/outline/yellow,/obj/floor_decal/spline/fancy/black{dir = 8},/obj/random/junk,/obj/decal/cleanable/dirt,/turf/simulated/floor/plating,/area/template_noop)
+"W" = (/obj/floor_decal/industrial/outline/yellow,/obj/structure/largecrate,/obj/random/maintenance,/obj/random/maintenance,/obj/random/maintenance,/obj/random/junk,/obj/decal/cleanable/dirt,/obj/machinery/light/small/red{dir = 4},/turf/simulated/floor/plating,/area/template_noop)
+"X" = (/obj/floor_decal/industrial/outline/yellow,/obj/structure/closet/crate/large,/obj/random/maintenance,/obj/random/maintenance,/obj/random/junk,/obj/decal/cleanable/dirt,/turf/simulated/floor/plating,/area/template_noop)
+"Y" = (/obj/floor_decal/industrial/outline/yellow,/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/obj/decal/cleanable/filth,/turf/simulated/floor/plating,/area/template_noop)
+
+(1,1,1) = {"
+aaaHvRaaaa
+aPCzjFUoaw
+aNLDjQpeaw
+arxEAIbYaw
+auMDdKfWaw
+aGOncSVXaw
+aaasBtaaaw
+wwaBBmawww
+wwaBBBawww
+wwaaTaawww
+"}

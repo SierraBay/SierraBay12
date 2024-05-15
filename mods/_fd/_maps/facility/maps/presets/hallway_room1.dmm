@@ -1,0 +1,80 @@
+"bI" = (/turf/simulated/wall/invincible/prepainted,/area/template_noop)
+"bM" = (/obj/floor_decal/corner/blue{dir = 5},/turf/simulated/floor/tiled/dark,/area/template_noop)
+"cX" = (/obj/decal/cleanable/dirt,/obj/floor_decal/corner/blue,/turf/simulated/floor/tiled/dark,/area/template_noop)
+"eS" = (/obj/machinery/light{dir = 1},/obj/floor_decal/corner/purple{dir = 6},/turf/simulated/floor/tiled/dark,/area/template_noop)
+"fN" = (/obj/structure/table/standard,/obj/floor_decal/corner/blue/half{dir = 8},/turf/simulated/floor/tiled/dark/monotile,/area/template_noop)
+"fY" = (/obj/machinery/door/airlock/research{name = "Facility Office"},/turf/simulated/floor/tiled/dark,/area/template_noop)
+"ir" = (/obj/decal/cleanable/dirt,/obj/floor_decal/corner/blue/half{dir = 4},/obj/structure/closet,/obj/random/clothing,/obj/random/coin,/obj/random/gloves,/turf/simulated/floor/tiled/dark/monotile,/area/template_noop)
+"kw" = (/obj/decal/cleanable/dirt,/obj/floor_decal/corner/blue/half{dir = 4},/obj/machinery/photocopier{pixel_y = 8},/obj/structure/table/standard,/turf/simulated/floor/tiled/dark/monotile,/area/template_noop)
+"lZ" = (/obj/decal/cleanable/dirt,/obj/floor_decal/corner/blue{dir = 10},/turf/simulated/floor/tiled/dark,/area/template_noop)
+"mf" = (/obj/machinery/light{dir = 4},/obj/decal/cleanable/dirt,/obj/floor_decal/corner/blue/half{dir = 4},/obj/floor_decal/industrial/outline/yellow,/obj/machinery/papershredder,/turf/simulated/floor/tiled/dark/monotile,/area/template_noop)
+"mw" = (/obj/structure/table/standard,/obj/floor_decal/corner/blue/half{dir = 4},/turf/simulated/floor/tiled/dark/monotile,/area/template_noop)
+"mI" = (/obj/catwalk_plated/dark,/obj/decal/cleanable/dirt,/turf/simulated/floor/plating,/area/template_noop)
+"qP" = (/obj/structure/bed/chair/comfy/purple,/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled/dark,/area/template_noop)
+"rI" = (/turf/unsimulated/mineral{color = "#000000"; name = "void"},/area/template_noop)
+"sA" = (/obj/structure/table/standard,/obj/random/medical/lite,/obj/decal/cleanable/dirt,/obj/floor_decal/corner/blue/half{dir = 8},/turf/simulated/floor/tiled/dark/monotile,/area/template_noop)
+"sO" = (/obj/structure/table/standard,/obj/decal/cleanable/dirt,/obj/floor_decal/corner/blue/half{dir = 4},/obj/random/cash/can_spawn_nothing,/turf/simulated/floor/tiled/dark/monotile,/area/template_noop)
+"tH" = (/turf/simulated/floor/tiled/dark/monotile,/area/template_noop)
+"tR" = (/obj/structure/bed/chair/comfy/blue{dir = 8},/obj/decal/cleanable/dirt,/obj/floor_decal/corner/blue,/turf/simulated/floor/tiled/dark,/area/template_noop)
+"ui" = (/obj/decal/cleanable/dirt,/obj/floor_decal/corner/purple{dir = 4},/turf/simulated/floor/tiled/dark,/area/template_noop)
+"vS" = (/obj/item/sign/medipolma{pixel_y = 30},/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled/dark/monotile,/area/template_noop)
+"wu" = (/obj/random/facility/mercenary/medium,/turf/simulated/floor/tiled/dark,/area/template_noop)
+"wC" = (/obj/structure/table/standard,/obj/decal/cleanable/dirt,/obj/floor_decal/corner/blue{dir = 5},/obj/random/facility/clothing,/turf/simulated/floor/tiled/dark,/area/template_noop)
+"wX" = (/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled/dark,/area/template_noop)
+"xu" = (/obj/floor_decal/corner/blue{dir = 10},/turf/simulated/floor/tiled/dark,/area/template_noop)
+"xY" = (/turf/simulated/floor/tiled/dark,/area/template_noop)
+"yl" = (/obj/decal/cleanable/dirt,/obj/floor_decal/corner/purple{dir = 9},/turf/simulated/floor/tiled/dark,/area/template_noop)
+"zo" = (/obj/structure/table/standard,/obj/decal/cleanable/dirt,/obj/floor_decal/corner/blue{dir = 5},/turf/simulated/floor/tiled/dark,/area/template_noop)
+"AI" = (/obj/catwalk_plated/dark,/turf/simulated/floor/plating,/area/template_noop)
+"Bf" = (/obj/structure/table/standard,/obj/random/drinkbottle,/obj/decal/cleanable/dirt,/obj/floor_decal/corner/blue/mono,/turf/simulated/floor/tiled/dark/monotile,/area/template_noop)
+"BF" = (/obj/machinery/light/small,/obj/decal/cleanable/dirt,/obj/floor_decal/corner/blue{dir = 10},/obj/random/junk,/turf/simulated/floor/tiled/dark,/area/template_noop)
+"BL" = (/obj/machinery/libraryscanner,/obj/floor_decal/corner/blue/half{dir = 8},/turf/simulated/floor/tiled/dark/monotile,/area/template_noop)
+"CJ" = (/obj/structure/table/standard,/obj/random/maintenance,/obj/decal/cleanable/dirt,/obj/floor_decal/corner/blue/half{dir = 8},/turf/simulated/floor/tiled/dark/monotile,/area/template_noop)
+"Dy" = (/obj/structure/bed/chair/comfy/blue{dir = 8},/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled/dark,/area/template_noop)
+"DJ" = (/obj/machinery/light/small{dir = 1},/obj/decal/cleanable/dirt,/obj/floor_decal/corner/blue{dir = 5},/obj/random/junk,/turf/simulated/floor/tiled/dark,/area/template_noop)
+"FH" = (/obj/structure/table/standard,/obj/floor_decal/corner/blue/mono,/obj/random/facility/ammo,/turf/simulated/floor/tiled/dark/monotile,/area/template_noop)
+"FR" = (/obj/structure/table/marble,/obj/item/pen/multi,/turf/simulated/floor/tiled/dark/monotile,/area/template_noop)
+"Gp" = (/obj/decal/cleanable/dirt,/obj/floor_decal/corner/purple{dir = 5},/obj/random/facility/mercenary/high,/turf/simulated/floor/tiled/dark,/area/template_noop)
+"Hj" = (/obj/structure/table/standard,/obj/decal/cleanable/dirt,/obj/floor_decal/corner/blue/half{dir = 8},/turf/simulated/floor/tiled/dark/monotile,/area/template_noop)
+"Hq" = (/obj/structure/table/marble,/obj/random/clipboard,/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled/dark/monotile,/area/template_noop)
+"Ic" = (/obj/structure/table/standard,/obj/item/paper_bin,/obj/item/pen,/obj/floor_decal/corner/blue{dir = 4},/obj/floor_decal/corner/blue/half{dir = 8},/turf/simulated/floor/tiled/dark/monotile,/area/template_noop)
+"IH" = (/obj/structure/table/standard,/obj/decal/cleanable/dirt,/obj/floor_decal/corner/blue/mono,/turf/simulated/floor/tiled/dark/monotile,/area/template_noop)
+"Jr" = (/obj/structure/table/standard,/obj/item/pen,/obj/decal/cleanable/dirt,/obj/floor_decal/corner/blue{dir = 1},/obj/floor_decal/corner/blue/half{dir = 4},/turf/simulated/floor/tiled/dark/monotile,/area/template_noop)
+"JW" = (/obj/floor_decal/corner/blue/half{dir = 8},/obj/machinery/papershredder,/turf/simulated/floor/tiled/dark/monotile,/area/template_noop)
+"Nb" = (/obj/structure/table/standard,/obj/random/clipboard,/obj/decal/cleanable/dirt,/obj/floor_decal/corner/blue/half{dir = 4},/turf/simulated/floor/tiled/dark/monotile,/area/template_noop)
+"No" = (/obj/machinery/door/airlock/research{name = "Facility Office"},/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"PE" = (/obj/structure/bed/chair/comfy/blue{dir = 4},/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled/dark,/area/template_noop)
+"Qi" = (/obj/structure/table/standard,/obj/random/maintenance,/obj/decal/cleanable/dirt,/obj/floor_decal/corner/blue/half{dir = 4},/turf/simulated/floor/tiled/dark/monotile,/area/template_noop)
+"Qu" = (/obj/machinery/light{dir = 8},/obj/floor_decal/corner/blue/half{dir = 8},/obj/machinery/photocopier,/obj/floor_decal/industrial/outline/yellow,/turf/simulated/floor/tiled/dark/monotile,/area/template_noop)
+"QE" = (/obj/structure/table/standard,/obj/decal/cleanable/dirt,/obj/floor_decal/corner/blue/half{dir = 4},/turf/simulated/floor/tiled/dark/monotile,/area/template_noop)
+"Ry" = (/obj/random/snack,/obj/structure/table/standard,/obj/decal/cleanable/dirt,/obj/floor_decal/corner/blue/half{dir = 4},/turf/simulated/floor/tiled/dark/monotile,/area/template_noop)
+"RH" = (/obj/structure/table/marble,/obj/decal/cleanable/dirt,/obj/random/junk,/turf/simulated/floor/tiled/dark/monotile,/area/template_noop)
+"Sh" = (/obj/decal/cleanable/dirt,/obj/floor_decal/corner/purple{dir = 6},/turf/simulated/floor/tiled/dark,/area/template_noop)
+"Sm" = (/obj/structure/bed/chair/comfy/blue{dir = 4},/obj/decal/cleanable/dirt,/obj/floor_decal/corner/blue{dir = 8},/turf/simulated/floor/tiled/dark,/area/template_noop)
+"Sx" = (/obj/decal/cleanable/dirt,/obj/floor_decal/corner/purple{dir = 1},/turf/simulated/floor/tiled/dark,/area/template_noop)
+"TN" = (/obj/structure/table/standard,/obj/item/pen,/obj/decal/cleanable/dirt,/obj/floor_decal/corner/blue/half{dir = 8},/turf/simulated/floor/tiled/dark/monotile,/area/template_noop)
+"UD" = (/turf/simulated/floor/tiled,/area/template_noop)
+"Wa" = (/obj/decal/cleanable/dirt,/obj/floor_decal/corner/blue{dir = 5},/turf/simulated/floor/tiled/dark,/area/template_noop)
+"Wp" = (/obj/structure/table/standard,/obj/item/paper_bin,/obj/item/pen,/obj/decal/cleanable/dirt,/obj/floor_decal/corner/blue/mono,/turf/simulated/floor/tiled/dark/monotile,/area/template_noop)
+"WQ" = (/obj/structure/table/standard,/obj/item/paper_bin{pixel_x = 1; pixel_y = 9},/obj/item/pen,/obj/floor_decal/corner/blue/half{dir = 8},/turf/simulated/floor/tiled/dark/monotile,/area/template_noop)
+"Xb" = (/obj/random/trash,/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled/dark,/area/template_noop)
+"Yg" = (/obj/decal/cleanable/dirt,/obj/random/junk,/turf/simulated/floor/tiled/dark,/area/template_noop)
+"Yo" = (/obj/machinery/light,/obj/floor_decal/corner/blue{dir = 8},/obj/random/junk,/turf/simulated/floor/tiled/dark,/area/template_noop)
+"YH" = (/obj/decal/cleanable/dirt,/obj/floor_decal/corner/purple{dir = 5},/turf/simulated/floor/tiled/dark,/area/template_noop)
+
+(1,1,1) = {"
+bIbIbIbIbIbIbIbIbIrI
+bIBLeSvSqPtHylkwbIrI
+bIJWShHqRHFRylirbIrI
+bIsAuiYHYHGpSxsObIrI
+bIWQcXlZlZlZYoRybIrI
+bIbIbIbIfYbIbIbIbIrI
+bIIczoWabMDJwCJrbIrI
+bICJDywXmIwXPEQEbIrI
+bIfNYgwXAIwXwXQibIrI
+bIQuwXwuAIXbxYmfbIrI
+bITNwXwXmIwXwXNbbIrI
+bIHjtRBFxuxuSmmwbIrI
+bIBfIHbINobIFHWpbIrI
+bIbIbIbIUDbIbIbIbIbI
+"}

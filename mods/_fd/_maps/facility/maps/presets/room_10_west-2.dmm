@@ -1,0 +1,32 @@
+"j" = (/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"n" = (/obj/machinery/light/small,/turf/simulated/floor/tiled,/area/template_noop)
+"o" = (/obj/wallframe_spawn/reinforced/crescent,/turf/simulated/floor/plating,/area/template_noop)
+"p" = (/obj/floor_decal/corner/beige/three_quarters{dir = 8},/obj/structure/bed/chair/padded/beige,/turf/simulated/floor/tiled,/area/template_noop)
+"q" = (/turf/simulated/floor/tiled/steel_grid,/area/template_noop)
+"s" = (/turf/simulated/floor/plating{color = "#1F1F1F"; name = "deep plating"},/area/template_noop)
+"u" = (/obj/machinery/door/airlock/hatch{aiControlDisabled = 1},/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"v" = (/obj/floor_decal/corner/beige{dir = 9},/obj/structure/table/standard,/turf/simulated/floor/tiled,/area/template_noop)
+"w" = (/obj/floor_decal/corner/beige/three_quarters,/obj/structure/bed/chair/padded/beige{dir = 1},/turf/simulated/floor/tiled,/area/template_noop)
+"C" = (/obj/structure/table/standard,/turf/simulated/floor/tiled,/area/template_noop)
+"E" = (/turf/template_noop,/area/template_noop)
+"H" = (/obj/floor_decal/corner/blue/half,/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"K" = (/obj/structure/bed/chair/padded/beige{dir = 1},/turf/simulated/floor/tiled,/area/template_noop)
+"L" = (/obj/floor_decal/corner/blue{dir = 4},/obj/floor_decal/corner/beige{dir = 1},/obj/machinery/light/small{dir = 1},/turf/simulated/floor/tiled,/area/template_noop)
+"M" = (/obj/structure/bed/chair/padded/beige,/turf/simulated/floor/tiled,/area/template_noop)
+"N" = (/obj/floor_decal/corner/blue,/obj/floor_decal/corner/beige{dir = 8},/turf/simulated/floor/tiled,/area/template_noop)
+"W" = (/turf/simulated/floor/tiled,/area/template_noop)
+"X" = (/turf/simulated/wall/invincible/prepainted,/area/template_noop)
+"Z" = (/obj/floor_decal/corner/blue/half{dir = 1},/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+
+(1,1,1) = {"
+EEEEEEEEEX
+XXXXXXXXXX
+XssssssssX
+XXoossooXX
+XWMossopLZ
+uqCossovqj
+XnKossowNH
+XXoossooXX
+XssssssssX
+XXXXXXXXXX
+"}

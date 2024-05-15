@@ -1,0 +1,11 @@
+#ifndef MODPACK_CONSTRUCTED_STATION
+#define MODPACK_CONSTRUCTED_STATION
+
+#include "_constructed_station.dm"
+
+#include "code/areas.dm"
+#include "code/main.dm"
+#include "code/presets.dm"
+#include "code/shuttle.dm"
+
+#endif

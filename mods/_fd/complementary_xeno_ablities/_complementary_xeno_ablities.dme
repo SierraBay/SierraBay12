@@ -1,0 +1,9 @@
+#ifndef MODPACK_COMPLEMENTARY_XENO_ABLITIES
+#define MODPACK_COMPLEMENTARY_XENO_ABLITIES
+
+#include "_complementary_xeno_ablities.dm"
+
+#include "code/gas_abilities.dm"
+#include "code/ipc_interactions.dm"
+
+#endif

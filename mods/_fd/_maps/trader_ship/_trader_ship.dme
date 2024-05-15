@@ -1,0 +1,9 @@
+#ifndef MODPACK_TRADER_SHIP
+#define MODPACK_TRADER_SHIP
+
+#include "_trader_ship.dm"
+
+#include "code/tradership_areas.dm"
+#include "code/tradership.dm"
+
+#endif

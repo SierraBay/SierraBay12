@@ -1,0 +1,10 @@
+#ifndef MODPACK_FACILITY
+#define MODPACK_FACILITY
+
+#include "_facility.dm"
+
+#include "code/facility_areas.dm"
+#include "code/facility_presets.dm"
+#include "code/facility.dm"
+
+#endif

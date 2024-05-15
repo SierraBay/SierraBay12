@@ -1,0 +1,29 @@
+"b" = (/obj/floor_decal/corner/beige{dir = 9},/turf/simulated/floor/tiled,/area/template_noop)
+"e" = (/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"g" = (/obj/structure/bed/sofa/l/black{dir = 8},/turf/simulated/floor/tiled/steel_grid,/area/template_noop)
+"h" = (/obj/floor_decal/corner/blue{dir = 4},/obj/floor_decal/corner/beige{dir = 1},/obj/machinery/light/small{dir = 1},/turf/simulated/floor/tiled,/area/template_noop)
+"j" = (/obj/floor_decal/corner/beige/three_quarters,/turf/simulated/floor/tiled,/area/template_noop)
+"s" = (/obj/floor_decal/corner/blue/half,/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"t" = (/turf/simulated/floor/plating{color = "#1F1F1F"; name = "deep plating"},/area/template_noop)
+"v" = (/obj/floor_decal/corner/blue,/obj/floor_decal/corner/beige{dir = 8},/obj/machinery/light/small,/turf/simulated/floor/tiled,/area/template_noop)
+"w" = (/obj/floor_decal/corner/beige{dir = 10},/turf/simulated/floor/tiled,/area/template_noop)
+"x" = (/obj/floor_decal/corner/beige/three_quarters{dir = 8},/obj/structure/bed/sofa/l/black,/turf/simulated/floor/tiled,/area/template_noop)
+"D" = (/turf/simulated/wall/invincible/prepainted,/area/template_noop)
+"E" = (/turf/unsimulated/mineral{color = "#000000"; name = "void"},/area/template_noop)
+"L" = (/obj/floor_decal/corner/blue/half{dir = 1},/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"Q" = (/obj/wallframe_spawn/reinforced/crescent,/turf/simulated/floor/plating,/area/template_noop)
+"R" = (/obj/floor_decal/corner/beige{dir = 5},/obj/structure/bed/sofa/l/black{dir = 10},/turf/simulated/floor/tiled,/area/template_noop)
+"X" = (/turf/simulated/floor/tiled/steel_grid,/area/template_noop)
+
+(1,1,1) = {"
+EEEEEEEEED
+EEEEEEEEED
+EttttttttD
+EttttQQQDD
+EttttQxRhL
+EttttQbgXe
+EttttQjwvs
+EttttQQQDD
+EttttttttD
+EEEEEEEEED
+"}

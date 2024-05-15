@@ -33,3 +33,7 @@
 
 /obj/floor_decal/corner/purple_dark/bordercee
 	icon_state = "bordercolorcee"
+
+/obj/floor_decal/stairs
+	icon = 'icons/obj/structures/stairs.dmi'
+	icon_state = "above"

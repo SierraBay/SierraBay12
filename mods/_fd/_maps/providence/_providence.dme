@@ -1,0 +1,11 @@
+#ifndef MODPACK_PROVIDENCE
+#define MODPACK_PROVIDENCE
+
+#include "_providence.dm"
+
+#include "code/providence_areas.dm"
+#include "code/providence_jobs.dm"
+#include "code/providence_shuttles.dm"
+#include "code/providence.dm"
+
+#endif

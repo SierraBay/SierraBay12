@@ -1,0 +1,69 @@
+"bY" = (/obj/structure/cable/green{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/floor_decal/industrial/warning{dir = 5},/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"cS" = (/obj/structure/cable/yellow{d1 = 1; d2 = 4; icon_state = "1-4"},/obj/decal/cleanable/dirt,/obj/structure/table/rack,/obj/item/stack/material/uranium/ten{pixel_x = 4; pixel_y = 10},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/turf/simulated/floor/tiled/techfloor/grid,/area/template_noop)
+"df" = (/obj/machinery/power/terminal,/obj/structure/cable/yellow,/obj/floor_decal/industrial/warning{dir = 4},/obj/floor_decal/industrial/warning{dir = 4},/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/obj/machinery/light/small{dir = 8},/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"dv" = (/obj/machinery/power/smes/buildable,/obj/structure/cable/green{d2 = 8; icon_state = "0-8"},/obj/floor_decal/industrial/warning/fulltile,/obj/floor_decal/industrial/warning/corner{dir = 8},/obj/decal/cleanable/cobweb2,/turf/simulated/floor/tiled/steel_grid,/area/template_noop)
+"dZ" = (/obj/structure/catwalk,/obj/random/trash,/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 10},/turf/simulated/floor/plating,/area/template_noop)
+"hh" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 9},/obj/structure/catwalk,/turf/simulated/floor/plating,/area/template_noop)
+"hn" = (/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/structure/cable/green{d1 = 1; d2 = 8; icon_state = "1-8"},/obj/structure/cable/green{d1 = 1; d2 = 4; icon_state = "1-4"},/obj/decal/cleanable/generic,/obj/random/trash,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/machinery/atmospherics/pipe/simple/hidden/supply,/turf/simulated/floor/tiled/steel_grid,/area/template_noop)
+"ij" = (/obj/structure/cable/yellow{d1 = 1; d2 = 4; icon_state = "1-4"},/obj/floor_decal/industrial/warning{dir = 4},/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"kK" = (/obj/structure/cable/yellow{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/floor_decal/industrial/warning{dir = 8},/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"lt" = (/obj/floor_decal/industrial/warning/fulltile,/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/obj/random/trash,/obj/random/trash,/turf/simulated/floor/tiled/steel_grid,/area/template_noop)
+"lG" = (/obj/floor_decal/industrial/warning/fulltile,/obj/random/trash,/obj/random/trash,/obj/random/trash,/turf/simulated/floor/tiled/steel_grid,/area/template_noop)
+"lO" = (/obj/structure/catwalk,/obj/structure/cable/yellow{d1 = 1; d2 = 8; icon_state = "1-8"},/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/obj/machinery/light/small{dir = 4},/turf/simulated/floor/plating,/area/template_noop)
+"lW" = (/obj/structure/catwalk,/obj/machinery/atmospherics/pipe/simple/hidden/supply,/turf/simulated/floor/plating,/area/template_noop)
+"mo" = (/obj/structure/cable/green{d1 = 1; d2 = 8; icon_state = "1-8"},/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/obj/decal/cleanable/generic,/obj/random/trash,/obj/structure/table/rack,/obj/machinery/atmospherics/pipe/simple/hidden/supply,/turf/simulated/floor/tiled/techfloor/grid,/area/template_noop)
+"my" = (/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 10},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 6},/turf/simulated/floor/tiled/steel_grid,/area/template_noop)
+"mX" = (/obj/structure/catwalk,/obj/structure/cable/yellow{d1 = 2; d2 = 4; icon_state = "2-4"},/obj/decal/cleanable/dirt,/obj/machinery/light/small{dir = 8},/turf/simulated/floor/plating,/area/template_noop)
+"nA" = (/obj/structure/cable/yellow{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/floor_decal/industrial/warning{dir = 4},/obj/machinery/firealarm{dir = 8; pixel_x = -24; pixel_y = 6},/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"oN" = (/obj/structure/cable/yellow{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/floor_decal/industrial/warning{dir = 10},/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"oP" = (/obj/machinery/power/smes/buildable,/obj/structure/cable/green{d2 = 4; icon_state = "0-4"},/obj/floor_decal/industrial/warning/fulltile,/obj/floor_decal/industrial/warning/corner{dir = 4},/turf/simulated/floor/tiled/steel_grid,/area/template_noop)
+"pd" = (/obj/structure/catwalk,/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/turf/simulated/floor/plating,/area/template_noop)
+"pl" = (/obj/structure/cable/green{d1 = 2; d2 = 4; icon_state = "2-4"},/obj/decal/cleanable/dirt,/obj/structure/table/rack,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/turf/simulated/floor/tiled/techfloor/grid,/area/template_noop)
+"qo" = (/obj/machinery/power/terminal,/obj/structure/cable/yellow,/obj/floor_decal/industrial/warning{dir = 8},/obj/machinery/light/small{dir = 4},/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"rF" = (/obj/structure/catwalk,/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 5},/turf/simulated/floor/plating,/area/template_noop)
+"rN" = (/obj/structure/cable/yellow{d1 = 2; d2 = 8; icon_state = "2-8"},/obj/structure/table/rack,/obj/item/stack/material/uranium/ten{pixel_y = 10},/obj/item/stack/material/uranium/ten{pixel_y = 1},/obj/item/stack/material/uranium/ten{pixel_y = -8},/obj/machinery/atmospherics/pipe/simple/hidden/supply,/turf/simulated/floor/tiled/techfloor/grid,/area/template_noop)
+"th" = (/obj/structure/cable/green{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/floor_decal/industrial/warning{dir = 10},/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"tG" = (/obj/structure/cable/green{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/floor_decal/industrial/warning{dir = 9},/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"tV" = (/obj/structure/cable/green{d1 = 2; d2 = 8; icon_state = "2-8"},/obj/floor_decal/industrial/warning/fulltile,/turf/simulated/floor/tiled/steel_grid,/area/template_noop)
+"vy" = (/obj/machinery/power/terminal{dir = 1},/obj/structure/cable/yellow{dir = 1},/obj/floor_decal/industrial/warning{dir = 8},/obj/decal/cleanable/dirt,/obj/machinery/light/small{dir = 4},/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"vN" = (/obj/structure/catwalk,/obj/structure/cable/yellow{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/atmospherics/pipe/simple/hidden/supply,/turf/simulated/floor/plating,/area/template_noop)
+"xd" = (/obj/structure/catwalk,/obj/structure/cable/green{d1 = 2; d2 = 8; icon_state = "2-8"},/obj/decal/cleanable/dirt,/obj/machinery/atmospherics/pipe/simple/hidden/supply,/turf/simulated/floor/plating,/area/template_noop)
+"xA" = (/obj/structure/cable/yellow{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/floor_decal/industrial/warning{dir = 5},/obj/machinery/alarm{dir = 4; pixel_x = -22; req_access = newlist()},/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"yG" = (/obj/machinery/power/terminal{dir = 1},/obj/structure/cable/yellow{dir = 1},/obj/floor_decal/industrial/warning{dir = 4},/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/obj/machinery/light/small{dir = 8},/obj/item/reagent_containers/food/drinks/bottle/vodka{pixel_x = 11; pixel_y = -7},/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"zY" = (/obj/structure/catwalk,/obj/structure/cable/yellow{d1 = 1; d2 = 4; icon_state = "1-4"},/obj/machinery/atmospherics/pipe/simple/hidden/supply,/turf/simulated/floor/plating,/area/template_noop)
+"BL" = (/obj/machinery/power/port_gen/pacman/super/potato/reactor,/obj/structure/cable/yellow{d2 = 8; icon_state = "0-8"},/obj/floor_decal/industrial/outline/yellow,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/turf/simulated/floor/tiled/techfloor/grid,/area/template_noop)
+"Ce" = (/obj/machinery/power/port_gen/pacman/super/potato/reactor,/obj/structure/cable/yellow{d2 = 8; icon_state = "0-8"},/obj/structure/cable/green{d1 = 2; d2 = 4; icon_state = "2-4"},/obj/floor_decal/industrial/outline/yellow,/turf/simulated/floor/tiled/techfloor/grid,/area/template_noop)
+"Ch" = (/obj/structure/catwalk,/obj/structure/cable/green{d1 = 1; d2 = 4; icon_state = "1-4"},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/turf/simulated/floor/plating,/area/template_noop)
+"Ds" = (/obj/machinery/power/smes/buildable,/obj/structure/cable/green{d2 = 8; icon_state = "0-8"},/obj/floor_decal/industrial/warning/fulltile,/obj/floor_decal/industrial/warning/corner{dir = 1},/turf/simulated/floor/tiled/steel_grid,/area/template_noop)
+"DK" = (/obj/structure/catwalk,/obj/item/reagent_containers/glass/bucket{pixel_x = -6; pixel_y = 15},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 6},/turf/simulated/floor/plating,/area/template_noop)
+"DM" = (/obj/floor_decal/industrial/warning{dir = 6},/obj/decal/cleanable/generic,/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"Gi" = (/obj/machinery/power/smes/buildable,/obj/structure/cable/green{d2 = 4; icon_state = "0-4"},/obj/floor_decal/industrial/warning/fulltile,/obj/floor_decal/industrial/warning/corner,/turf/simulated/floor/tiled/steel_grid,/area/template_noop)
+"HF" = (/obj/machinery/power/port_gen/pacman/super/potato/reactor,/obj/structure/cable/yellow{d2 = 4; icon_state = "0-4"},/obj/floor_decal/industrial/outline/yellow,/obj/machinery/atmospherics/pipe/simple/hidden/supply,/turf/simulated/floor/tiled/techfloor/grid,/area/template_noop)
+"Ia" = (/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 9},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 5},/turf/simulated/floor/tiled/steel_grid,/area/template_noop)
+"IO" = (/obj/floor_decal/industrial/warning{dir = 9},/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"Jh" = (/obj/structure/cable/green{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/floor_decal/industrial/warning{dir = 6},/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"Kj" = (/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/paint/black,/turf/simulated/wall/r_wall,/area/template_noop)
+"Ku" = (/obj/machinery/power/port_gen/pacman/super/potato/reactor,/obj/structure/cable/yellow{d2 = 4; icon_state = "0-4"},/obj/structure/cable/green{d1 = 1; d2 = 8; icon_state = "1-8"},/obj/floor_decal/industrial/outline/yellow,/turf/simulated/floor/tiled/techfloor/grid,/area/template_noop)
+"Ls" = (/obj/structure/cable/green{d1 = 1; d2 = 4; icon_state = "1-4"},/obj/floor_decal/industrial/warning/fulltile,/turf/simulated/floor/tiled/steel_grid,/area/template_noop)
+"Pj" = (/obj/structure/catwalk,/obj/structure/cable/yellow{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/turf/simulated/floor/plating,/area/template_noop)
+"RY" = (/obj/structure/cable/yellow{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/floor_decal/industrial/warning/fulltile,/turf/simulated/floor/tiled/steel_grid,/area/template_noop)
+"Sv" = (/obj/structure/catwalk,/obj/structure/cable/yellow{d1 = 2; d2 = 8; icon_state = "2-8"},/obj/decal/cleanable/dirt,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/turf/simulated/floor/plating,/area/template_noop)
+"SK" = (/obj/structure/cable/yellow{d1 = 2; d2 = 8; icon_state = "2-8"},/obj/floor_decal/industrial/warning{dir = 8},/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"SM" = (/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/structure/cable/green{d1 = 2; d2 = 8; icon_state = "2-8"},/obj/structure/cable/green{d1 = 2; d2 = 4; icon_state = "2-4"},/obj/decal/cleanable/dirt,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/machinery/atmospherics/pipe/simple/hidden/supply,/turf/simulated/floor/tiled/steel_grid,/area/template_noop)
+"TB" = (/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/floor_decal/industrial/loading,/turf/simulated/floor/tiled/steel_grid,/area/template_noop)
+"UX" = (/obj/structure/cable/yellow{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/floor_decal/industrial/warning/fulltile,/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled/steel_grid,/area/template_noop)
+"Xr" = (/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/floor_decal/industrial/loading{dir = 1},/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled/steel_grid,/area/template_noop)
+
+(1,1,1) = {"
+GiJhSMthdv
+yGDKIadZvy
+ijSvTBlWkK
+DMPjLsxdoN
+lGcSCemoUX
+mXBLKjHFlO
+RYplKurNlt
+xAChtVvNIO
+nApdXrzYSK
+dfrFmyhhqo
+oPbYhntGDs
+"}

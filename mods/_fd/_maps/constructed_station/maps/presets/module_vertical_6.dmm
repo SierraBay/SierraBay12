@@ -1,0 +1,68 @@
+"aU" = (/obj/floor_decal/industrial/warning{dir = 10},/turf/simulated/floor/tiled/techfloor/grid,/area/template_noop)
+"aX" = (/obj/floor_decal/industrial/warning{dir = 10},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/turf/simulated/floor/tiled/techfloor/grid,/area/template_noop)
+"db" = (/obj/floor_decal/industrial/warning{dir = 9},/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled/techfloor/grid,/area/template_noop)
+"eU" = (/obj/machinery/recharge_station,/obj/floor_decal/borderfloorblack/corner{dir = 1},/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled/techmaint,/area/template_noop)
+"iB" = (/obj/structure/closet/crate/plastic,/obj/item/stack/nanopaste,/obj/item/stack/nanopaste,/obj/item/device/robotanalyzer,/obj/item/clothing/head/welding{pixel_x = -3; pixel_y = 5},/obj/item/device/multitool{pixel_x = 3},/obj/item/clothing/gloves/insulated,/obj/item/stock_parts/scanning_module,/obj/item/stock_parts/scanning_module,/obj/item/stock_parts/manipulator,/obj/item/stock_parts/manipulator,/obj/item/stock_parts/manipulator,/obj/item/stock_parts/manipulator,/obj/item/stack/material/plastic/fifty,/obj/item/stack/material/steel/fifty,/turf/simulated/floor/tiled/techmaint,/area/template_noop)
+"iJ" = (/obj/floor_decal/industrial/warning{dir = 5},/obj/structure/table/standard,/obj/item/organ/internal/cooling_system{pixel_x = -1; pixel_y = 16},/obj/random/powercell,/obj/random/powercell,/turf/simulated/floor/tiled/techfloor/grid,/area/template_noop)
+"iS" = (/obj/floor_decal/borderfloorblack/corner{dir = 4},/obj/machinery/firealarm{dir = 8; pixel_x = -24; pixel_y = 6},/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled/techmaint,/area/template_noop)
+"jO" = (/obj/floor_decal/borderfloorblack{dir = 8},/obj/random/trash,/obj/random/trash,/turf/simulated/floor/tiled/techmaint,/area/template_noop)
+"mv" = (/obj/structure/catwalk,/obj/structure/reagent_dispensers/fueltank,/obj/structure/reagent_dispensers/fueltank,/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 9},/turf/simulated/floor/plating,/area/template_noop)
+"mL" = (/obj/floor_decal/industrial/warning/cee,/obj/decal/cleanable/dirt,/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/tiled/techfloor/grid,/area/template_noop)
+"nq" = (/obj/machinery/fabricator,/obj/floor_decal/industrial/hatch/blue{color = "#00b8b2"},/obj/floor_decal/industrial/warning,/turf/simulated/floor/tiled/techfloor/grid,/area/template_noop)
+"nW" = (/obj/floor_decal/industrial/warning/corner{dir = 4},/obj/floor_decal/industrial/warning/corner{dir = 1},/obj/decal/cleanable/dirt,/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/tiled/techfloor/grid,/area/template_noop)
+"oc" = (/obj/structure/catwalk,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 5},/turf/simulated/floor/plating,/area/template_noop)
+"ow" = (/obj/floor_decal/industrial/warning{dir = 1},/obj/structure/table/rack,/obj/item/device/integrated_circuit_printer,/obj/item/device/integrated_electronics/debugger,/obj/item/device/integrated_electronics/wirer,/obj/item/device/integrated_electronics/analyzer,/obj/machinery/light,/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled/techfloor/grid,/area/template_noop)
+"rH" = (/obj/machinery/recharge_station,/turf/simulated/floor/tiled/techmaint,/area/template_noop)
+"sc" = (/obj/wallframe_spawn/no_grille,/obj/paint/black,/obj/decal/cleanable/dirt,/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/plating,/area/template_noop)
+"sQ" = (/obj/decal/cleanable/dirt,/obj/decal/cleanable/blood/gibs/robot,/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 10},/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"tY" = (/obj/structure/catwalk,/obj/random/trash,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 10},/turf/simulated/floor/plating,/area/template_noop)
+"ue" = (/obj/floor_decal/borderfloorblack{dir = 4},/obj/decal/cleanable/generic,/turf/simulated/floor/tiled/techmaint,/area/template_noop)
+"uQ" = (/obj/floor_decal/borderfloorblack{dir = 5},/obj/decal/cleanable/dirt,/obj/decal/cleanable/blood/gibs/robot,/turf/simulated/floor/tiled/techmaint,/area/template_noop)
+"vm" = (/obj/structure/catwalk,/obj/decal/cleanable/dirt,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/plating,/area/template_noop)
+"vP" = (/obj/paint/black,/obj/machinery/atmospherics/pipe/simple/hidden/supply,/turf/simulated/wall/r_wall,/area/template_noop)
+"zb" = (/obj/floor_decal/borderfloorblack{dir = 5},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 5},/turf/simulated/floor/tiled/techmaint,/area/template_noop)
+"zm" = (/obj/floor_decal/borderfloorblack{dir = 6},/obj/decal/cleanable/dirt,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 6},/turf/simulated/floor/tiled/techmaint,/area/template_noop)
+"Bc" = (/obj/floor_decal/industrial/warning{dir = 1},/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled/techfloor/grid,/area/template_noop)
+"Cj" = (/obj/machinery/robotics_fabricator{pixel_y = 10; req_access = list()},/obj/floor_decal/industrial/hatch/blue{color = "#00b8b2"},/obj/floor_decal/industrial/warning,/obj/machinery/light{dir = 1},/turf/simulated/floor/tiled/techfloor/grid,/area/template_noop)
+"CR" = (/obj/wallframe_spawn/no_grille,/obj/paint/black,/turf/simulated/floor/plating,/area/template_noop)
+"Dt" = (/obj/floor_decal/industrial/warning{dir = 5},/turf/simulated/floor/tiled/techfloor/grid,/area/template_noop)
+"DI" = (/obj/floor_decal/borderfloorblack{dir = 4},/obj/decal/cleanable/generic,/obj/random/trash,/turf/simulated/floor/tiled/techmaint,/area/template_noop)
+"DM" = (/obj/structure/catwalk,/obj/decal/cleanable/dirt,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 10},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 6},/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/plating,/area/template_noop)
+"Ej" = (/obj/structure/catwalk,/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 6},/turf/simulated/floor/plating,/area/template_noop)
+"El" = (/obj/machinery/mech_recharger,/obj/floor_decal/industrial/outline/yellow,/obj/floor_decal/industrial/outline/yellow,/obj/item/mech_component/propulsion/tracks,/obj/item/mech_equipment/ionjets{pixel_x = -35; pixel_y = 15},/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"Ep" = (/obj/machinery/computer/rdconsole/robotics{req_access = newlist()},/obj/floor_decal/industrial/hatch/blue{color = "#00b8b2"},/obj/floor_decal/industrial/warning,/turf/simulated/floor/tiled/techfloor/grid,/area/template_noop)
+"EK" = (/obj/structure/catwalk,/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/plating,/area/template_noop)
+"FB" = (/obj/floor_decal/industrial/warning{dir = 6},/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled/techfloor/grid,/area/template_noop)
+"Im" = (/obj/structure/catwalk,/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 10},/turf/simulated/floor/plating,/area/template_noop)
+"Jq" = (/obj/floor_decal/industrial/warning{dir = 9},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/turf/simulated/floor/tiled/techfloor/grid,/area/template_noop)
+"Kg" = (/obj/machinery/mech_recharger,/obj/floor_decal/industrial/outline/yellow,/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/obj/random/trash,/obj/random/trash,/obj/random/trash,/obj/machinery/atmospherics/pipe/simple/hidden/supply,/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"Kw" = (/obj/floor_decal/industrial/warning{dir = 6},/obj/structure/table/standard,/obj/machinery/cell_charger{pixel_y = 12},/obj/item/device/paint_sprayer,/obj/machinery/atmospherics/pipe/simple/hidden/supply,/turf/simulated/floor/tiled/techfloor/grid,/area/template_noop)
+"Li" = (/obj/floor_decal/borderfloorblack{dir = 8},/obj/random/trash,/obj/item/mech_equipment/drill/plasteel,/turf/simulated/floor/tiled/techmaint,/area/template_noop)
+"Lp" = (/obj/structure/catwalk,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 9},/turf/simulated/floor/plating,/area/template_noop)
+"Mv" = (/obj/paint/black,/obj/decal/cleanable/dirt,/turf/simulated/wall/r_wall,/area/template_noop)
+"Mx" = (/obj/structure/catwalk,/obj/item/mech_component/chassis/powerloader{pixel_x = 9; pixel_y = 12},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 5},/turf/simulated/floor/plating,/area/template_noop)
+"MG" = (/obj/floor_decal/borderfloorblack{dir = 4},/obj/machinery/alarm{dir = 4; pixel_x = -22; req_access = newlist()},/turf/simulated/floor/tiled/techmaint,/area/template_noop)
+"NJ" = (/obj/machinery/external_cooling_device,/obj/floor_decal/industrial/outline/blue,/obj/floor_decal/industrial/warning{dir = 1},/obj/machinery/light,/turf/simulated/floor/tiled/techfloor/grid,/area/template_noop)
+"OJ" = (/obj/structure/catwalk,/obj/decal/cleanable/dirt,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 9},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 5},/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/plating,/area/template_noop)
+"OY" = (/obj/floor_decal/borderfloorblack{dir = 9; icon_state = "borderfloor_white"},/obj/decal/cleanable/generic,/turf/simulated/floor/tiled/techmaint,/area/template_noop)
+"Pc" = (/obj/structure/catwalk,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/plating,/area/template_noop)
+"QN" = (/obj/floor_decal/borderfloorblack{dir = 9; icon_state = "borderfloor_white"},/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 9},/turf/simulated/floor/tiled/techmaint,/area/template_noop)
+"TG" = (/obj/structure/catwalk,/obj/item/storage/belt/utility/full{pixel_x = -23; pixel_y = 15},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 6},/turf/simulated/floor/plating,/area/template_noop)
+"UB" = (/obj/machinery/r_n_d/circuit_imprinter{pixel_y = 7},/obj/floor_decal/industrial/outline/blue,/obj/floor_decal/industrial/warning/corner{dir = 8},/obj/floor_decal/industrial/warning/corner,/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/tiled/techfloor/grid,/area/template_noop)
+"VB" = (/obj/machinery/door/firedoor,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/turf/simulated/floor/tiled/steel_ridged,/area/template_noop)
+"WB" = (/obj/floor_decal/industrial/hatch/blue{color = "#00b8b2"},/obj/floor_decal/industrial/warning,/obj/machinery/light{dir = 1},/obj/machinery/vending/robotics{pixel_y = 8; req_access = newlist()},/turf/simulated/floor/tiled/techfloor/grid,/area/template_noop)
+"Zy" = (/obj/floor_decal/industrial/warning/cee{dir = 1},/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/tiled/techfloor/grid,/area/template_noop)
+
+(1,1,1) = {"
+WBFBEKaUCj
+DIEjOJImEl
+zmLpZyMxsQ
+JqBcnWDtKg
+VBMvscCRvP
+aXnqUBEpKw
+zbtYmLTGQN
+MGocDMmvLi
+iSuQPcOYeU
+iBuePcjOrH
+owiJvmdbNJ
+"}

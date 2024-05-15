@@ -1,0 +1,8 @@
+#ifndef MODPACK_FLUFFY_BISCUIT
+#define MODPACK_FLUFFY_BISCUIT
+
+#include "_fluffy_biscuit.dm"
+
+#include "code/foodcart.dm"
+
+#endif
