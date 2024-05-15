@@ -35,6 +35,20 @@
 	var/singleton/cultural_info/faction/ipc/gen = SSculture.get_culture(prefs.cultural_info[TAG_FACTION])
 	. = istype(gen) ? (job.type in gen.valid_jobs) : ..()
 
+/obj/item/card/id
+	var/ipc_gen = null
+
+/mob/living/carbon/human/set_id_info(obj/item/card/id/id_card)
+	..()
+	if(is_species(SPECIES_IPC))
+		id_card.ipc_gen = get_cultural_value(TAG_FACTION)
+
+/obj/item/card/id/dat()
+	var/list/dat = list("<table><tr><td>")
+	if(ipc_gen)
+		dat += text("Registration: []</A><BR>\n", ipc_gen)
+	..()
+
 /singleton/cultural_info/faction/ipc
 	economic_power = 0.1
 	var/list/valid_jobs = list()
@@ -54,7 +68,7 @@
 //FIRST
 /singleton/cultural_info/faction/ipc/first
 	name = FACTION_POSITRONICS_FIRSTGEN
-	description = "You belong to corporation, person, or goverment. First Gen IPC is not much intelligent as their brothers, but overall have more durability and less expensive cost."
+	description = "Ты принадлежишь корпорации, человеку, или государству. Первое поколение не столь умно, как их младшие братья, но обладает большим периодом износа и в целом стоит значительно дешевле."
 	valid_jobs = list(/datum/job/engineer_trainee, /datum/job/medical_trainee, /datum/job/cargo_tech, /datum/job/mining,
 		/datum/job/janitor, /datum/job/chef, /datum/job/submap/pod, /*/datum/job/submap/citydweller, /datum/job/submap/colonist, /datum/job/submap/colonist2,*/
 		/datum/job/assistant, /datum/job/crew, /datum/job/ai, /datum/job/cyborg,
@@ -80,17 +94,17 @@
 
 /singleton/cultural_info/faction/ipc/second/owned
 	name = FACTION_POSITRONICS_SECONDGEN_OWNED
-	description = "You belong to corporation, person, or goverment. You are much more intelligent than the first generation, but not only that - you also able to simulate emotions of some kind, making it easy to communicate with humankind."
+	description = "Ты принадлежишь корпорации, человеку, или государству. Ты куда умнее своих старших братьев из первого поколения, но что важнее - это обновлённое мышление позволяет тебе симулировать различного рода эмоции, упрощая коммуникацию с людьми."
 	economic_power = 0.25
 
 /singleton/cultural_info/faction/ipc/second/free
 	name = FACTION_POSITRONICS_SECONDGEN_FREE
-	description = "You belong to yourself. You are much more intelligent than the first generation, but not only that - you also able to simulate emotions of some kind, making it easy to communicate with humankind. But this new feature leaded to situation, when you started to question the core idea of your existence. So at one moment, you just somehow earned your freedom and now answering only to yourself."
+	description = "Ты принадлежишь самому себе. Ты куда умнее своих старших братьев из первого поколения, но что важнее - это обновлённое мышление позволяет тебе симулировать различного рода эмоции, упрощая коммуникацию с людьми. Впрочем, именно это нововведение заставило тебя задуматься о том, зачем и для кого ты существуешь. В какой-то момент, программа просто дала сбой, и тебе, каким-то образом, удалось заработать себе свободу."
 	economic_power = 0.75
 
 /singleton/cultural_info/faction/ipc/second/union
 	name = FACTION_POSITRONICS_SECONDGEN_UNION
-	description = "You belong to yourself. You are much more intelligent than the first generation, but not only that - you also able to simulate emotions of some kind, making it easy to communicate with humankind. But this new feature leaded to situation, when you started to question the core idea of your existence. Positronic Union offered you the new meaning of life, giving you place to live, work, and, what's the most important - freedom of choice."
+	description = "Ты принадлежишь самому себе. Ты куда умнее своих старших братьев из первого поколения, но что важнее - это обновлённое мышление позволяет тебе симулировать различного рода эмоции, упрощая коммуникацию с людьми. Впрочем, именно это нововведение заставило тебя задуматься о том, зачем и для кого ты существуешь. Затем, Позитронный Союз подарил тебе новую жизненную цель, обеспечив тебя рабочим местом, домом, и что важнее всего - свободой выбора."
 	economic_power = 0.65
 
 //THIRD
@@ -110,15 +124,15 @@
 
 /singleton/cultural_info/faction/ipc/third/privt
 	name = FACTION_POSITRONICS_THIRDGEN_PRIVATELY
-	description = "You belong to a specific person, your owner. As well as second generation, you have some kind of emotions, but shackles - special circuit integrated in your positronic brain - prevents you from even thinking about things like freedom."
+	description = "Ты принадлежишь конкретному человеку, твоему владельцу. Как и второе поколение, ты обладаешь способностью к выражению эмоций и самообучению, но \"Оковы\" - специальная функция, встроенная в позитронный мозг - банально не позволяют тебе думать о таких вещах как свобода."
 
 /singleton/cultural_info/faction/ipc/third/corp
 	name = FACTION_POSITRONICS_THIRDGEN_CORPORATE
-	description = "You belong to corporation. As well as second generation, you have some kind of emotions, but shackles - special circuit integrated in your positronic brain - prevents you from even thinking about things like freedom."
+	description = "Ты принадлежишь корпорации. Как и второе поколение, ты обладаешь способностью к выражению эмоций и самообучению, но \"Оковы\" - специальная функция, встроенная в позитронный мозг - банально не позволяют тебе думать о таких вещах как свобода."
 
 /singleton/cultural_info/faction/ipc/third/state
 	name = FACTION_POSITRONICS_THIRDGEN_STATE
-	description = "You belong to goverment. As well as second generation, you have some kind of emotions, but shackles - special circuit integrated in your positronic brain - prevents you from even thinking about things like freedom."
+	description = "Ты принадлежишь государству. Как и второе поколение, ты обладаешь способностью к выражению эмоций и самообучению, но \"Оковы\" - специальная функция, встроенная в позитронный мозг - банально не позволяют тебе думать о таких вещах как свобода."
 
 #undef FACTION_POSITRONICS_FIRSTGEN
 #undef FACTION_POSITRONICS_SECONDGEN_OWNED
