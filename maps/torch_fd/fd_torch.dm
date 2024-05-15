@@ -247,6 +247,7 @@
 	#include "../../mods/_fd/combat_stances/_combat_stances.dme"
 	#include "../../mods/_fd/complementary_xeno_ablities/_complementary_xeno_ablities.dme"
 	#include "../../mods/_fd/conference_holopads/_conference_holopads.dme"
+	#include "../../mods/_fd/fd_species/_fd_species.dme"
 	#include "../../mods/_fd/hestia_missiles/_hestia_missiles.dme"
 	#include "../../mods/_fd/immersive_overmap/_immersive_overmap.dme"
 	#include "../../mods/_fd/landing_eye/_landing_eye.dme"
