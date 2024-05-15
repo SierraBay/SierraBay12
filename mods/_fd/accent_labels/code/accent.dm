@@ -12,7 +12,7 @@
 		var/culture = client.prefs.cultural_info[TAG_CULTURE]
 		accent_tag_cache = culture
 
-	return icon2html(icon('mods/accent_labels/icons/accent_tags.dmi', accent_tag_cache), user, realsize = TRUE, class = "text_tag")
+	return icon2html(icon('mods/_fd/accent_labels/icons/accent_tags.dmi', accent_tag_cache), user, realsize = TRUE, class = "text_tag")
 
 /datum/client_preference/accent_tags
 	description = "Accent tags"
