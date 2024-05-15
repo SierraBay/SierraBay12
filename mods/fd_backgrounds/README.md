@@ -52,6 +52,8 @@ ID мода: FD_BACKGROUNDS
   - `/datum/map/New()`
   - `/datum/species/machine/New()`
   - `/datum/species/machine/check_background()`
+  - `/mob/living/carbon/human/set_id_info()`
+  - `/obj/item/card/id/dat()`
 - `code/locations_humankind.dm`
   - `/datum/map/New()`
   - `/datum/species/human/New()`
