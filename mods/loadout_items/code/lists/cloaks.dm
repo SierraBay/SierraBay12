@@ -1,6 +1,6 @@
 /datum/gear/clothing/cloak_custom // common cloak
 	display_name = "cloak, colorable"
-	path = /obj/item/clothing/accessory/cloak
+	path = /obj/item/clothing/accessory/cloak/colorable
 	flags = GEAR_HAS_COLOR_SELECTION
 
 //command cloaks

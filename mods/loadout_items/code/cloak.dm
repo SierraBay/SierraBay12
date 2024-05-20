@@ -1,6 +1,6 @@
-/obj/item/clothing/accessory/cloak // A colorable cloak
-	name = "blank cloak"
-	desc = "A simple, bland cloak."
+/obj/item/clothing/accessory/cloak
+	name = "cloak"
+	desc = "A cloak."
 	icon = 'mods/loadout_items/icons/obj_accessory.dmi'
 	icon_state = "colorcloak"
 
@@ -28,6 +28,17 @@
 
 	species_restricted = null
 	valid_accessory_slots = null
+
+/obj/item/clothing/accessory/cloak/colorable
+	name = "blank cloak"
+	desc = "A simple, bland cloak."
+	icon_state = "colorcloak"
+
+/obj/item/clothing/accessory/cloak/colorable/get_mob_overlay(mob/user_mob, slot)
+    . = ..()
+
+    if(istype(loc, /obj/item/clothing/suit/space/void/exploration) || istype(loc, /obj/item/clothing/suit/space/void/atmos/alt) )
+        return overlay_image(accessory_icons[slot], "colorcloak_fat", color, RESET_COLOR)
 
 /obj/item/clothing/accessory/cloak/ce
 	name = "chief engineer's cloak"
