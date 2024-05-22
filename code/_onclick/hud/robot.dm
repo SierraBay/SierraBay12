@@ -198,7 +198,7 @@ var/global/obj/screen/robot_inventory
 					A.screen_loc = "CENTER[x]:[WORLD_ICON_SIZE/2],SOUTH+[y]:7"
 				else
 					A.screen_loc = "CENTER+[x]:[WORLD_ICON_SIZE/2],SOUTH+[y]:7"
-				A.mouse_opacity = MOUSE_OPACITY_PRIORITY
+				A.mouse_opacity = MOUSE_OPACITY_NORMAL
 				A.hud_layerise()
 
 				x++
