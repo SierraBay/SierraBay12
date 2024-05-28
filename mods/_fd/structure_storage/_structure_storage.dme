@@ -1,0 +1,8 @@
+#ifndef MODPACK_STRUCTURE_STORAGE
+#define MODPACK_STRUCTURE_STORAGE
+
+#include "_structure_storage.dm"
+
+#include "code/storage.dm"
+
+#endif
