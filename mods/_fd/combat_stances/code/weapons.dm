@@ -2,6 +2,12 @@
 	melee_strikes = list(/singleton/combo_strike/swipe_strike/sword_slashes, /singleton/combo_strike/swipe_strike/mixed_combo)
 	lunge_dist = 4
 
+/obj/item/material/armblade/resolve_attackby(atom/atom, mob/living/user, click_params)
+	if(!isnull(melee_strike) && !user.skill_check(SKILL_COMBAT, SKILL_EXPERIENCED) && prob(src.fail_chance))
+		return 1
+
+	..()
+
 /obj/item/material/armblade/claws
 	melee_strikes = list(/singleton/combo_strike/precise_strike/fast_attacks)
 
@@ -18,6 +24,12 @@
 	fail_chance = 30
 	lunge_dist = 2
 
+/obj/item/melee/baton/cattleprod/AltClick(mob/user)
+	if(melee_strikes)
+		swap_stances(user)
+
+	..()
+
 /obj/item/melee/cultblade
 	melee_strikes = list(/singleton/combo_strike/swipe_strike/sword_slashes, /singleton/combo_strike/swipe_strike/mixed_combo)
 	lunge_dist = 3
@@ -26,10 +38,22 @@
 	melee_strikes = list(/singleton/combo_strike/swipe_strike/sword_slashes, /singleton/combo_strike/swipe_strike/mixed_combo)
 	fail_chance = 40
 
+/obj/item/melee/energy/sword/AltClick(mob/user)
+	if(melee_strikes)
+		swap_stances(user)
+
+	..()
+
 /obj/item/melee/energy/blade
 	melee_strikes = list(/singleton/combo_strike/swipe_strike/sword_slashes, /singleton/combo_strike/swipe_strike/mixed_combo)
 	fail_chance = 60
 	lunge_dist = 4
+
+/obj/item/melee/energy/blade/AltClick(mob/user)
+	if(melee_strikes)
+		swap_stances(user)
+
+	..()
 
 /obj/item/material/harpoon
 	melee_strikes = list(/singleton/combo_strike/swipe_strike/polearm_mixed)

@@ -19,7 +19,9 @@
 /obj/item/attack_self(mob/living/carbon/user)
 	. = ..()
 
-	if(melee_strikes)
+	var/obj/item/melee/I
+
+	if(melee_strikes && !istype(I, /obj/item/melee/energy/))
 		swap_stances(user)
 
 /obj/item/proc/swap_stances(mob/user)
