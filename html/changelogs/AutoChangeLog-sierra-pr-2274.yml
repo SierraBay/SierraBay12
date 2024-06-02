@@ -1,0 +1,8 @@
+author: NeonNik2245
+changes:
+  - {bugfix: Пофиксил отображение станпрода}
+  - {imageadd: Добавлена иконка для кожаных корманов}
+  - {spellcheck: Переименован шлюз Second Deck Safe Room}
+  - {tweak: aghrassh снова имеет в составе серебро}
+  - {tweak: спрайты Tonage 3 теперь могут быть перекрашены}
+delete-after: true

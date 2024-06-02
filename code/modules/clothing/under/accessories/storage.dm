@@ -70,9 +70,9 @@
 /obj/item/clothing/accessory/storage/pockets
 	name = "pockets"
 	desc = "A bag-like receptacle fastened to an article of clothing to hold small items."
-	icon_state = ""
+	icon_state = "pockets"
 	slots = 2 STORAGE_FREEFORM
-	accessory_flags = ACCESSORY_HIGH_VISIBILITY | ACCESSORY_HIDDEN
+	accessory_flags = ACCESSORY_HIGH_VISIBILITY | ACCESSORY_REMOVABLE
 
 
 /obj/item/clothing/accessory/storage/webbing

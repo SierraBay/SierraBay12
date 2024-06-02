@@ -155,7 +155,7 @@
 /datum/uplink_item/item/tools/thermal_goggles
 	name = "Helmet-Attached Thermal Sights"
 	desc = "A set of thermal sights that can attach to combat or voidsuit helmets. Range is limited, along with the color palette, and it will be obvious what you are wearing."
-	item_cost = 12
+	item_cost = 14
 	path = /obj/item/clothing/head/helmet/nvgmount/thermal
 	antag_roles = list(MODE_TRAITOR)
 

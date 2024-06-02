@@ -289,6 +289,7 @@
 	icon_state = "rwelding-g"
 	item_state = "rwelding-g"
 	tint = TINT_MODERATE
+	flash_protection = FLASH_PROTECTION_MAJOR
 
 /obj/item/clothing/glasses/glare_dampeners
 	name = "glare dampeners"
@@ -296,7 +297,7 @@
 	icon_state = "welding-g"
 	item_state = "welding-g"
 	use_alt_layer = TRUE
-	flash_protection = FLASH_PROTECTION_MODERATE
+	flash_protection = FLASH_PROTECTION_MAJOR
 	darkness_view = -1
 
 /obj/item/clothing/glasses/augment_binoculars
