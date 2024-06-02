@@ -99,11 +99,41 @@
 	if(direction & (UP|DOWN))
 		var/txt_dir = direction & UP ? "upwards" : "downwards"
 		exosuit.visible_message(SPAN_NOTICE("\The [exosuit] moves [txt_dir]."))
+//[SIERRA-ADD] - Mechs-by-Shegar - STRAFE
+	if(exosuit.legs.can_strafe)
+		for(var/thing in exosuit.pilots) //Для всех пилотов внутри
+			var/mob/pilot = thing
+			if(pilot && pilot.client)
+				for(var/key in pilot.client.keys_held)
+					if (key == "Space")
+						var/move_speed = exosuit.legs.move_delay
+						if(!exosuit.legs.good_in_strafe)
+							move_speed = move_speed * 2.5
+						if(direction == NORTHWEST || direction == NORTHEAST || direction == SOUTHWEST || direction == SOUTHEAST)
+							move_speed = sqrt((move_speed*move_speed) + (move_speed * move_speed))
+						if(move_speed > 12)
+							move_speed = 12
+						exosuit.SetMoveCooldown(exosuit.legs ? move_speed : 3)
+						var/turf/target_loc = get_step(exosuit, direction)
+						if(target_loc && exosuit.legs && exosuit.legs.can_move_on(exosuit.loc, target_loc) && exosuit.MayEnterTurf(target_loc))
+							exosuit.Move(target_loc)
+						return MOVEMENT_HANDLED
+//[SIERRA-ADD]
 
+//TURN
 	if(exosuit.dir != moving_dir && !(direction & (UP|DOWN)))
 		playsound(exosuit.loc, exosuit.legs.mech_turn_sound, 40,1)
 		exosuit.set_dir(moving_dir)
 		exosuit.SetMoveCooldown(exosuit.legs.turn_delay)
+		exosuit.passenger_compartment.count_passengers()
+		if(exosuit.passengers_ammount > 0)
+			exosuit.update_passengers()
+		for(var/hardpoint in exosuit.hardpoints)
+			if(hardpoint == "left hand" || hardpoint == "right hand" || hardpoint == "left shoulder" || hardpoint == "right shoulder")
+				exosuit.update_icon()
+//TURN
+
+//MOVE
 	else
 		exosuit.SetMoveCooldown(exosuit.legs ? exosuit.legs.move_delay : 3)
 		var/turf/target_loc = get_step(exosuit, direction)

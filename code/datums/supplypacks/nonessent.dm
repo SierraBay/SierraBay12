@@ -247,6 +247,11 @@
 	cost = 10
 	containername = "chaplain equipment crate"
 
+
+
+// [SIERRA-REMOVE] - MECHS_BY_SHEGAR - (Не нужны, т.к все эти типы камуфляжей есть в новом камуфляторы)
+  /*
+
 /singleton/hierarchy/supply_pack/nonessent/exosuit_mod
 	num_contained = 1
 	name = "Mod - \"Firestarter\" exosuit modkit"
@@ -266,6 +271,10 @@
 	name = "Mod - \"Alpine\" exosuit modkit"
 	contains = list(/obj/item/device/kit/paint/camouflage/forest)
 
+	*/
+
+
+// [/SIERRA-REMOVE]
 /singleton/hierarchy/supply_pack/nonessent/aromatherapy
 	name = "Rec - Aromatherapy"
 	contains = list(
