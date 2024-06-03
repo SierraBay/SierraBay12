@@ -3,6 +3,7 @@
 	description = "Just add a water!"
 	path = /obj/item/reagent_containers/food/snacks/monkeycube
 	cost = 0
+	donation_tier = DONATION_TIER_THREE
 
 /datum/gear/pet_cube/New()
 	. = ..()
