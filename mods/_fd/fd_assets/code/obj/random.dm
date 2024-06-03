@@ -271,7 +271,8 @@
 /obj/random/flora
 	name = "random flora spawn"
 	desc = "This is a random flora spawner."
-	icon_state = "trees"
+	icon = 'mods/_fd/fd_assets/icons/structures/jungletree.dmi'
+	icon_state = "tree1"
 	spawn_nothing_percentage = 50
 
 /obj/random/flora/spawn_choices()
@@ -292,7 +293,8 @@
 /obj/random/flora/snow
 	name = "random flora spawn"
 	desc = "This is a random flora spawner."
-	icon_state = "trees"
+	icon = 'icons/obj/flora/pinetrees.dmi'
+	icon_state = "pine_1"
 	spawn_nothing_percentage = 60
 
 /obj/random/flora/snow/spawn_choices()

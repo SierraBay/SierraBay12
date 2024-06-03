@@ -9,6 +9,28 @@
 		"nav_snowcage_3"
 	)
 
+	var/list/lightmain
+	var/list/lightunderground
+
+/obj/overmap/visitable/sector/snow_cage/Initialize()
+	..()
+
+	lightmain = block(locate(world.maxx, world.maxy, max(map_z)), locate(1, 1, min(map_z)))
+	lightunderground = block(locate(world.maxx, world.maxy, max(map_z)), locate(1, 1, min(map_z)))
+	for(var/atom/A as anything in lightmain)
+		if(!istype(A.loc, /area/splanet/outdoors) || A.density || istype(A.loc, /area/splanet/underground))
+			lightmain -= A
+	for(var/atom/A as anything in lightunderground)
+		if(!istype(A.loc, /area/splanet/underground) || A.density || istype(A.loc, /area/splanet/outdoors))
+			lightunderground -= A
+	update_daynight()
+
+/obj/overmap/visitable/sector/snow_cage/proc/update_daynight(light = 0.7, light_color_m = "#5bbbc5",  light_color_s = "#1f538f")
+	for(var/turf/T as anything in lightmain)
+		T.set_light(light, 0.1, 2, l_color = light_color_m)
+	for(var/turf/T as anything in lightunderground)
+		T.set_light(light, 0.1, 2, l_color = light_color_s)
+
 /datum/map_template/ruin/away_site/snow_cage
 	name = "arctic planet"
 	id = "awaysite_splanet"
