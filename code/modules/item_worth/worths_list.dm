@@ -473,9 +473,9 @@ var/global/list/worths = list(
 					/obj/item/device/bot_controller = 50,
 					/obj/item/device/mmi = 1200,
 					// [SIERRA-REMOVE] - MECHS_BY_SHEGAR
-						/*
-						/obj/item/device/kit/paint = 500,
-						*/
+					/*
+					/obj/item/device/kit/paint = 500,
+					*/
   					// [/SIERRA-REMOVE]
 					// [SIERRA-ADD] - MECHS_BY_SHEGAR
 					/obj/item/device/kit/mech = 500,
