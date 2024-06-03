@@ -296,6 +296,7 @@
 	desc = "Synthetic lenses over the eyes, protecting from bright lights."
 	icon_state = "welding-g"
 	item_state = "welding-g"
+	tint = TINT_HEAVY
 	use_alt_layer = TRUE
 	flash_protection = FLASH_PROTECTION_MAJOR
 	darkness_view = -1
