@@ -13,6 +13,7 @@
 "u" = (/obj/paint_stripe/yellow,/obj/machinery/atmospherics/pipe/simple/hidden/red{dir = 6},/turf/simulated/wall/invincible,/area/interior)
 "v" = (/obj/floor_decal/industrial/outline/yellow,/obj/structure/table/rack/dark,/turf/simulated/floor/tiled/techfloor,/area/interior)
 "C" = (/obj/floor_decal/industrial/hatch/yellow,/obj/machinery/portable_atmospherics/canister/empty,/obj/machinery/atmospherics/portables_connector{dir = 1},/turf/simulated/floor/tiled/techfloor,/area/interior)
+"D" = (/obj/floor_decal/industrial/outline/yellow,/obj/structure/bed/chair/shuttle/black{dir = 4},/obj/structure/storage/vehicles{dir = 4; pixel_x = -13},/turf/simulated/floor/tiled/techfloor/grid,/area/interior)
 "E" = (/obj/paint_stripe/yellow,/obj/machinery/atmospherics/pipe/simple/hidden/cyan{dir = 6},/turf/simulated/wall/invincible,/area/interior)
 "H" = (/obj/paint_stripe/yellow,/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 9},/turf/simulated/wall/invincible,/area/interior)
 "I" = (/obj/floor_decal/industrial/outline/yellow,/obj/structure/bed/chair/shuttle/black{dir = 8},/obj/machinery/light/small/red{dir = 4},/turf/simulated/floor/tiled/techfloor/grid,/area/interior)
@@ -27,6 +28,7 @@
 "T" = (/obj/floor_decal/techfloor/orange/corner,/obj/floor_decal/techfloor/orange/corner{dir = 8},/turf/simulated/floor/tiled/techfloor,/area/interior)
 "U" = (/obj/floor_decal/techfloor/orange,/obj/structure/railing/mapped,/obj/machinery/light/small/red{dir = 8},/turf/simulated/floor/tiled/techfloor,/area/interior)
 "V" = (/obj/paint_stripe/yellow,/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/turf/simulated/wall/invincible,/area/interior)
+"W" = (/obj/floor_decal/industrial/outline/yellow,/obj/structure/bed/chair/shuttle/black{dir = 8},/obj/structure/storage/vehicles{dir = 8; pixel_x = 13},/turf/simulated/floor/tiled/techfloor/grid,/area/interior)
 "X" = (/obj/floor_decal/industrial/outline/yellow,/obj/structure/bed/chair/shuttle/black{dir = 4},/obj/machinery/light/small/red{dir = 8},/turf/simulated/floor/tiled/techfloor/grid,/area/interior)
 "Z" = (/obj/floor_decal/techfloor/orange/corner{dir = 1},/obj/floor_decal/techfloor/orange/corner{dir = 4},/obj/floor_decal/industrial/radiation,/obj/structure/vehicledoor/airlock,/turf/simulated/floor/tiled/techfloor,/area/interior)
 
@@ -37,7 +39,7 @@ PVHat
 Jqvct
 JUTet
 bdmRk
-aSmoa
+aDmWa
 aXmIa
 aSioa
 aaZaa
