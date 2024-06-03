@@ -1,0 +1,5 @@
+author: Teteshnik
+changes:
+  - {rscadd: Добавили донатные кубики с животными (Для них нужен тир 3)}
+  - {spellcheck: Вернул заграждение обзора для линз}
+delete-after: true
