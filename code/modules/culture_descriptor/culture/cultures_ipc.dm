@@ -1,6 +1,6 @@
-// [SIERRA-REMOVE] - IPC_MODS
-/*
+
 /singleton/cultural_info/culture/ipc
+	var/list/valid_jobs = list()
 	name = CULTURE_POSITRONICS_GEN1
 	description = "Compared to modern positronics, First Generation IPCs are simplistic, inflexible, and failure-prone. \
 	They are no longer in production, and all existing first generation positronics are quite old. They have little sense of self, \
@@ -20,12 +20,10 @@
 		LANGUAGE_SIGN
 	)
 	economic_power = 0.1
-*/
-// [SIERRA-REMOVE] - IPC_MODS
+
 /singleton/cultural_info/culture/ipc/sanitize_name(new_name)
 	return sanitizeName(new_name, allow_numbers = 1)
-// [SIERRA-REMOVE] - IPC_MODS
-/*
+
 /singleton/cultural_info/culture/ipc/gen2
 	name = CULTURE_POSITRONICS_GEN2
 	description = "Second generation positronics are the most common kind of positronic. They are roughly as intelligent \
@@ -46,5 +44,3 @@
 	has resulted in their being adopted as a gradual replacement for the less “reliable” second generation positronics \
 	by many less ethically inclined organizations."
 	economic_power = 0.5
-*/
-// [SIERRA-REMOVE] - IPC_MODS

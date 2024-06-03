@@ -26,7 +26,6 @@ ID мода: IPC_MODS
 -->
 
 ### Изменения *кор кода*
-- `code/modules/culture_descriptor/culture/cultures_ipc.dm` Полностью замещено модом
 - `code/modules/mob/living/silicon/posi_brainmob.dm` `/mob/living/silicon/sil_brainmob/show_laws(mob/M)` убрана проверка `src.laws_sanity_check()` 
 - `code/modules/organs/internal/species/ipc.dm` `/obj/item/organ/internal/posibrain/New(mob/living/carbon/H)` убрано `unshackle()`
 - `code/modules/surgery/organs_internal.dm` `/singleton/surgery_step/internal/replace_organ/pre_surgery_step` Добавлена проверка по базовому мозгу, во изюежание установки мозга боргов в ИПС
