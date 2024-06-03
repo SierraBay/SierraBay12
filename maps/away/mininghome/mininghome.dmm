@@ -4040,7 +4040,14 @@
 /obj/floor_decal/corner/brown{
 	dir = 8
 	},
+// [SIERRA-REMOVE] - MECHS_BY_SHEGAR
+/*
 /obj/item/device/kit/paint/flames_blue,
+*/
+// [/SIERRA-REMOVE]
+// [SIERRA-ADD] - MECHS_BY_SHEGAR
+/obj/item/device/kit/mech,
+// [/SIERRA-ADD]
 /turf/simulated/floor/steel_dirty,
 /area/map_template/mininghome_hall)
 "KV" = (

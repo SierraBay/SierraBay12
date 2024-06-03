@@ -36,18 +36,32 @@
 	camera = locate() in src
 	software = locate() in src
 
-/obj/item/mech_component/sensors/proc/get_sight(powered)
+//EDIT
+// [SIERRA-EDIT] - SHUTTLE_TOGGLE - (Optional Reason/comment)
+  /* /obj/item/mech_component/sensors/proc/get_sight(powered)
 	var/flags = 0
 	if(total_damage >= 0.8 * max_damage || !powered)
 		flags |= BLIND
 	else if(active_sensors && powered)
 		flags |= vision_flags
+	*/
+/obj/item/mech_component/sensors/proc/get_sight(powered)
+	var/flags = 0
+	if(!camera || !powered)
+		flags |= BLIND
+	else if(active_sensors && powered)
+		flags |= vision_flags
+  // [SIERRA-EDIT]
 
-	return flags
 
 /obj/item/mech_component/sensors/proc/get_invisible(powered)
 	var/invisible = 0
+	// [SIERRA-EDIT]
+	/*
 	if((total_damage <= 0.8 * max_damage) && active_sensors && powered)
+	*/
+	if((camera) && active_sensors && powered)
+	// [SIERRA-EDIT]
 		invisible = see_invisible
 	return invisible
 

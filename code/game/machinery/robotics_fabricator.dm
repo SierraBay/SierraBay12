@@ -288,6 +288,10 @@
 	switch(material)
 		if(MATERIAL_STEEL)
 			mattype = /obj/item/stack/material/steel
+		//[SIERRA-ADD] - Mechs-by-Shegar
+		if(MATERIAL_PLASTEEL)
+			mattype = /obj/item/stack/material/plasteel
+		//[SIERRA-ADD]
 		if(MATERIAL_GLASS)
 			mattype = /obj/item/stack/material/glass
 		if(MATERIAL_ALUMINIUM)

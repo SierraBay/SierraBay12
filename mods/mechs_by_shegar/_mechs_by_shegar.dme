@@ -1,0 +1,43 @@
+#ifndef MODPACK_MECHS_BY_SHEGAR
+#define MODPACK_MECHS_BY_SHEGAR
+
+#include "_mechs_by_shegar.dm"
+
+// Далее просто включай свой код
+// #include "code/something.dm"
+
+//компоненты
+#include "code/components/armour.dm"
+#include "code/components/arms.dm"
+#include "code/components/body.dm"
+#include "code/components/head.dm"
+#include "code/components/legs.dm"
+
+//эквипмент
+#include "code/equipment/ballistic_shield.dm"
+#include "code/equipment/ballistic.dm"
+#include "code/equipment/catapult.dm"
+#include "code/equipment/energy_shield.dm"
+#include "code/equipment/equipment.dm"
+#include "code/equipment/integralka_rack.dm"
+#include "code/equipment/jets.dm"
+#include "code/equipment/plasma_cutter.dm"
+#include "code/equipment/sleeper.dm"
+
+//Премейды
+#include "code/premades/ert.dm"
+#include "code/premades/merc.dm"
+
+//Основной код мехов
+#include "code/interface.dm"
+#include "code/mech_icon.dm"
+#include "code/mech_interaction.dm"
+#include "code/mech_move.dm"
+#include "code/mech.dm"
+#include "code/passengers_compartment.dm"
+
+//Прочий мусор
+#include "code/paint_kit.dm"
+#include "code/mech_uplink.dm"
+
+#endif
