@@ -21,6 +21,9 @@
 /datum/uplink_category/visible_weapons
 	name = "Loud & Dangerous Weaponry"
 
+/datum/uplink_category/armor
+	name = armor
+
 /datum/uplink_category/stealthy_weapons
 	name = "Disguised & Inconspicuous Weaponry"
 
