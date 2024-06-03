@@ -1,6 +1,6 @@
 /obj/item/organ/internal/cooling_system
 	name = "cooling system"
-	icon = 'mods/ipc_cooling_unit/icons/ipc_icons.dmi'
+	icon = 'mods/ipc_mods/icons/ipc_icons.dmi'
 	icon_state = "cooling0"
 	organ_tag = BP_COOLING
 	parent_organ = BP_GROIN
@@ -29,6 +29,7 @@
 	coolant_reagents_efficiency[/datum/reagent/space_cleaner] = 5
 	coolant_reagents_efficiency[/datum/reagent/sterilizine] = 3
 	coolant_reagents_efficiency[/datum/reagent/coolant] = 0.1
+	coolant_reagents_efficiency[/datum/reagent/frostoil] = -8
 	reagents.add_reagent(/datum/reagent/coolant, 60)
 	reagents.add_reagent(/datum/reagent/water, 30)
 	..()
@@ -47,8 +48,8 @@
 		var/cur_purity = coolant_reagents_efficiency[current_reagent.type]
 		if(!cur_purity)
 			cur_purity = 25
-		else if(cur_purity < 0.1)
-			cur_purity = 0.1
+		else if(cur_purity < - 10)
+			cur_purity = -10
 		total_purity += cur_purity * current_reagent.volume
 		fresh_coolant += current_reagent.volume
 	if(total_purity && fresh_coolant)
@@ -74,7 +75,7 @@
 
 	var/obj/item/organ/internal/cell/C = owner.internal_organs_by_name[BP_CELL]
 	refrigerant_rate = heating_modificator
-	if (C && C.get_charge() < 25)
+	if (C && C.get_charge() < 10)
 		return
 	if(reagents.total_volume >= 0)
 		var/bruised_cost = get_coolant_drain()

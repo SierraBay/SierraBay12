@@ -36,8 +36,11 @@
 	..()
 	if(!brainmob && H)
 		init(H)
-	robotize()
+// [SIERRA-REMOVE] - IPC_MODS
+/*
 	unshackle()
+*/
+// [/SIERRA-REMOVE]
 	update_icon()
 	if (!is_processing)
 		START_PROCESSING(SSobj, src)

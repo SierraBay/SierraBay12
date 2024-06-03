@@ -1,6 +1,6 @@
 /obj/machinery/external_cooling_device
 	name = "\improper External Cooling Device"
-	icon = 'mods/ipc_cooling_unit/icons/ipc_icons.dmi'
+	icon = 'mods/ipc_mods/icons/ipc_icons.dmi'
 	icon_state = "basepowered"
 	desc = "It's a bulky machine that delivers life-giving cold through a hose."
 	anchored = FALSE
@@ -107,7 +107,6 @@
 
 	var/datum/browser/popup = new(usr, "spaceheater", "External Cooling Device Control Panel")
 	popup.set_content(jointext(dat, null))
-	popup.set_title_image(usr.browse_rsc_icon(src.icon, "sheater-standby"))
 	popup.open()
 
 

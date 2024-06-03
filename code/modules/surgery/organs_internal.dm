@@ -267,6 +267,11 @@
 		else
 			var/o_is = (O.gender == PLURAL) ? "are" : "is"
 			var/o_a =  (O.gender == PLURAL) ? "" : "a "
+//[SIERRA-ADD] IPC_MODS
+			if(O.type == /obj/item/organ/internal/posibrain)
+				to_chat(user, SPAN_WARNING("There's no place in [target] to fit \the [O.organ_tag]."))
+				return
+//[/SIERRA-ADD] IPC_MODS
 			if(O.organ_tag == BP_POSIBRAIN && !target.species.has_organ[BP_POSIBRAIN])
 				to_chat(user, SPAN_WARNING("There's no place in [target] to fit \the [O.organ_tag]."))
 			else if(O.damage > (O.max_damage * 0.75))
