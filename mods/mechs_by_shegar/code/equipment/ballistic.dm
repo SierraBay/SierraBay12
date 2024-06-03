@@ -37,7 +37,7 @@
 */
 
 /obj/item/mech_equipment/mounted_system/taser/ballistic/use_tool(obj/item/item, mob/living/user, list/click_params)
-	if(holding.ammo_magazine == null)
+	if(!holding.ammo_magazine)
 		holding.load_ammo(item,user)
 		get_hardpoint_maptext()
 	. = ..()
