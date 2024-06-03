@@ -69,6 +69,7 @@
 	#include "items/pouches.dm"
 	#include "items/backpack.dm"
 	#include "items/cargo.dm"
+	#include "items/weapons/storage/firstaids.dm"
 
 	#include "items/clothing/clothing.dm"
 	#include "items/clothing/exploration.dm"
