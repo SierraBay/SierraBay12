@@ -132,3 +132,9 @@
 	landmark_tag = "nav_transit_butterfly"
 
 // --- BUTTERFLY END --- //
+
+/datum/shuttle/autodock/overmap/aquila
+	shuttle_area = list(/area/aquila/cockpit, /area/aquila/maintenance, /area/aquila/storage, /area/aquila/secure_storage, /area/aquila/mess, /area/aquila/passenger, /area/aquila/medical, /area/aquila/head, /area/aquila/airlock)
+
+/datum/shuttle/autodock/overmap/exploration_shuttle
+	shuttle_area = list(/area/exploration_shuttle/cockpit, /area/exploration_shuttle/atmos, /area/exploration_shuttle/power, /area/exploration_shuttle/crew, /area/exploration_shuttle/cargo, /area/exploration_shuttle/airlock)

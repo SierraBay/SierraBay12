@@ -13,6 +13,10 @@
 		icon_state = "tiny_helm"
 		set_light(light_range_on, light_power_on, light_color)
 
+/obj/item/stock_parts/circuitboard/helm/controller
+	name = "circuit board (helm control pad)"
+	build_path = /obj/machinery/computer/ship/helm/controller
+
 /obj/machinery/computer/ship/sensors/telescreen
 	icon = 'mods/_fd/fd_assets/icons/machinery/telescreen_consoles.dmi'
 	icon_state = "tele_sensors"
@@ -27,3 +31,7 @@
 	else
 		icon_state = "tele_nav"
 		set_light(light_range_on, light_power_on, light_color)
+
+/obj/item/stock_parts/circuitboard/sensors/tele
+	name = "circuit board (sensors telescreen)"
+	build_path = /obj/machinery/computer/ship/sensors/telescreen
