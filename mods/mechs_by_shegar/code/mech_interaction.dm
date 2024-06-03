@@ -38,7 +38,7 @@
 		else if(arms.allow_passengers == FALSE)
 			to_chat(user,SPAN_NOTICE("[choosed_place] not able with [arms.name]"))
 			return 0
-	else if(choosed_place == null)
+	else if(!choosed_place)
 		return 0
 	if(check_hardpoint_passengers(choosed_place,user) == TRUE)
 		enter_passenger(user,choosed_place)
