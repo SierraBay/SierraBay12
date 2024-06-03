@@ -506,7 +506,7 @@
 #include "code\datums\uplink\augments.dm"
 #include "code\datums\uplink\badassery.dm"
 #include "code\datums\uplink\devices and tools.dm"
-#include "code\datums\uplink\armor.dm
+#include "code\datums\uplink\armor.dm"
 #include "code\datums\uplink\grenades.dm"
 #include "code\datums\uplink\hardsuit_modules.dm"
 #include "code\datums\uplink\highly_visible_and_dangerous_weapons.dm"
