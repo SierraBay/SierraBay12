@@ -52,6 +52,10 @@
 	flight["Hephaestus cyan flight suit"]	= /obj/item/clothing/under/rank/ntpilot/heph
 	gear_tweaks += new/datum/gear_tweak/path(flight)
 
+/datum/gear/uniform/harness
+	display_name = "gear harness (Full Body Prosthetic, Diona, Giant Armoured Serpentid)"
+	path = /obj/item/clothing/under/harness
+
 /datum/gear/uniform/si_exec_jacket
 	display_name = "NanoTrasen liason suit"
 	path = /obj/item/clothing/under/suit_jacket/corp/nanotrasen
