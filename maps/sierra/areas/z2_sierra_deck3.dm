@@ -97,7 +97,6 @@
 	sound_env = MEDIUM_SOFTFLOOR
 	holomap_color = HOLOMAP_AREACOLOR_CREW
 
-
 /* ENGINEERING AREAS
  * =================
  */
