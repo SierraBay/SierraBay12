@@ -22,3 +22,7 @@
 
 /datum/fabricator_recipe/engineering/camera_assembly
 	path = /obj/item/camera_assembly
+// едит начинается
+/datum/fabricator_recipe/engineering/transfer_valve
+	path = /obj/item/device/transfer_valve
+// едит закончился
