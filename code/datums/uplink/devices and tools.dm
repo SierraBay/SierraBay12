@@ -57,14 +57,6 @@
 	path = /obj/item/plastique
 
 
-/datum/uplink_item/item/tools/heavy_armor
-	name = "Heavy Armor Vest and Helmet"
-	desc = "This satchel holds a combat helmet and fully equipped plate carrier. \
-	Suit up, and strap in, things are about to get hectic."
-	item_cost = 16
-	path = /obj/item/storage/backpack/satchel/syndie_kit/armor
-
-
 /datum/uplink_item/item/tools/encryptionkey_radio
 	name = "Encrypted Radio Channel Key"
 	desc = "This headset encryption key will allow you to speak on a hidden, encrypted radio channel. Use a screwdriver on your headset to exchange keys."
@@ -122,14 +114,6 @@
 	desc = "A pocket sized portable radio jammer that can intercept outgoing radio signals in a given distance. \
 			However, radios attempting to send outgoing transmissions will emit a faint buzzing noise. \
 			The jammer can be signaled remotely using assembly signalers."
-
-/datum/uplink_item/item/tools/space_suit
-	name = "Voidsuit and Tactical Mask"
-	desc = "A satchel containing a non-regulation voidsuit, voidsuit helmet, tactical mask, and oxygen tank. \
-	Conceal your identity, while also not dying in space."
-	item_cost = 28
-	path = /obj/item/storage/backpack/satchel/syndie_kit/space
-
 
 /datum/uplink_item/item/tools/divinghelmet
 	name = "Diving Helmet"
