@@ -64,6 +64,12 @@
 	stack_type = /obj/item/stack/material/cloth
 	hidden_from_codex = TRUE
 	construction_difficulty = MATERIAL_NORMAL_DIY
+// едит начинается
+	value = 3
+	integrity = 50
+	hardness = MATERIAL_FLEXIBLE
+	weight = 10
+// едит закончился
 
 /material/cloth/carpet
 	name = "carpet"
