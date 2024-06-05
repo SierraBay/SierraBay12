@@ -41,6 +41,7 @@
 	name = "Nanoblood (15u)"
 	desc = "Used to restore blood."
 	icon_state = "pill1"
+
 /obj/item/reagent_containers/pill/nanoblood/New()
 	..()
 	reagents.add_reagent(/datum/reagent/nanoblood, 15)
