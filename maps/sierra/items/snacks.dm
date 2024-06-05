@@ -33,11 +33,12 @@
 	filling_color = "#ffffff"
 	center_of_mass = "x=16;y=16"
 	bitesize = 2
+
 /obj/item/reagent_containers/food/snacks/dumpling/Initialize()
-	.=..()
+	. = ..()
 	reagents.add_reagent(/datum/reagent/nutriment/protein, 5)
 
-obj/item/reagent_containers/food/snacks/boileddumplings
+/obj/item/reagent_containers/food/snacks/boileddumplings
 	name = "\improper boiled dumplings"
 	desc = "A dish consisting of boiled pieces of meat wrapped in dough. Delicious!"
 	icon = 'maps/sierra/icons/obj/snacks.dmi'
@@ -45,6 +46,7 @@ obj/item/reagent_containers/food/snacks/boileddumplings
 	filling_color = "#ffffff"
 	center_of_mass = "x=16;y=16"
 	bitesize = 2
+
 /obj/item/reagent_containers/food/snacks/dumpling/Initialize()
-	.=..()
+	. = ..()
 	reagents.add_reagent(/datum/reagent/nutriment/protein, 30)
