@@ -1,7 +1,8 @@
 
 #### Список PRов:
 
-- https://github.com/SierraBay/SierraBay12/pull/2038
+- https://github.com/SierraBay/SierraBay12/pull/2300
+- https://github.com/SierraBay/SierraBay12/pull/2287
 <!--
   Ссылки на PRы, связанные с модом:
   - Создание
@@ -48,6 +49,7 @@ ID мода: IPC_MODS
  - `/mob/living/silicon/laws_sanity_check()`
  - `/mob/living/carbon/human/OnSelfTopic(href_list, topic_status)`
  - `/datum/species/machine/check_background(datum/job/job, datum/preferences/prefs)`
+ - `code/modules/mob/living/carbon/human/update_icons.dm`
 
 
 
