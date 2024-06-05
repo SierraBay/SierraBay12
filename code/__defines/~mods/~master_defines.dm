@@ -56,6 +56,7 @@
 
 // IPC_COOLING_UNIT - Start
 #define BP_COOLING "cooling system"
+#define BP_EXONET "exonet connection slot"
 // IPC_COOLING_UNIT - End
 
 // RESOMI - Start

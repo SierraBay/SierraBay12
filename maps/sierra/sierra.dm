@@ -71,6 +71,7 @@
 	#include "items/cargo.dm"
 	#include "items/snacks.dm"
 	#include "items/recipes_microwave.dm"
+	#include "items/weapons/storage/firstaids.dm"
 
 	#include "items/clothing/clothing.dm"
 	#include "items/clothing/exploration.dm"

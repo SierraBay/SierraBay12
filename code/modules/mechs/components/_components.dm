@@ -189,4 +189,7 @@
 
 /obj/item/mech_component/proc/return_diagnostics(mob/user)
 	to_chat(user, SPAN_NOTICE("[capitalize(src.name)]:"))
-	to_chat(user, SPAN_NOTICE(" - Integrity: <b>[round((((max_damage - total_damage) / max_damage)) * 100)]%</b>" ))
+	// [SIERRA-EDIT] - Mechs_by_shegar
+	//to_chat(user, SPAN_NOTICE(" - Integrity: <b>[round((((max_damage - total_damage) / max_damage)) * 100)]%</b>" ))
+	to_chat(user, SPAN_NOTICE(" - Integrity: <b> [max_damage - total_damage]/[max_damage]([round((((max_damage - total_damage) / max_damage)) * 100)]%)</b>" ))
+	// [SIERRA-EDIT]
