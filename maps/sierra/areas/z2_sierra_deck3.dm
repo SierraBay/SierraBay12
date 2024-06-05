@@ -92,6 +92,11 @@
 	req_access = list(access_chief_steward)
 	holomap_color = HOLOMAP_AREACOLOR_CREW
 
+/area/crew_quarters/lounge
+	name = "Third Deck - Living - Library"
+	sound_env = MEDIUM_SOFTFLOOR
+	holomap_color = HOLOMAP_AREACOLOR_CREW
+
 /* ENGINEERING AREAS
  * =================
  */
