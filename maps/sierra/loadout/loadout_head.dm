@@ -48,7 +48,7 @@
 	path = /obj/item/clothing/head/soft
 	allowed_roles = SECURITY_ROLES
 
-/datum/gear/head/hats_selection/New()
+/datum/gear/head/soft_selection/New()
 	..()
 	var/soft_selection_type = list()
 	soft_selection_type["white security cap"] = /obj/item/clothing/head/soft/sec/corp/guard/sierra1
