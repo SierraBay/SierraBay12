@@ -59,15 +59,15 @@
 	departments = SEC
 
 	dress_hat = list(\
-		/obj/item/clothing/head/beret/sec/corporate/officer/sierra, /obj/item/clothing/head/beret/sec/navy/officer/sierra, \
-		/obj/item/clothing/head/beret/sec/sierra, /obj/item/clothing/head/soft/sec/sierra, \
-		/obj/item/clothing/head/soft/sec/corp/sierra, /obj/item/clothing/head/soft/sec/corp/guard/sierra, \
-		/obj/item/clothing/head/beret/guard/sierra)
+		/obj/item/clothing/head/beret/sec/corporate/officer/sierra1, /obj/item/clothing/head/beret/sec/navy/officer/sierra1, \
+		/obj/item/clothing/head/beret/sec/sierra1, /obj/item/clothing/head/soft/sec/sierra1, \
+		/obj/item/clothing/head/soft/sec/corp/sierra1, /obj/item/clothing/head/soft/sec/corp/guard/sierra1, \
+		/obj/item/clothing/head/beret/guard/sierra1)
 	dress_under = list(\
-		/obj/item/clothing/under/rank/security/sierra, /obj/item/clothing/under/rank/security/alt/sierra, \
-		/obj/item/clothing/under/rank/security/corp/sierra, /obj/item/clothing/under/rank/security/corp/alt/sierra, \
-		/obj/item/clothing/under/rank/security/navyblue/sierra, /obj/item/clothing/under/rank/security/navyblue/alt/sierra, \
-		/obj/item/clothing/under/rank/security2/sierra)
+		/obj/item/clothing/under/rank/security/sierra1, /obj/item/clothing/under/rank/security/alt/sierra1, \
+		/obj/item/clothing/under/rank/security/corp/sierra1, /obj/item/clothing/under/rank/security/corp/alt/sierra1, \
+		/obj/item/clothing/under/rank/security/navyblue/sierra1, /obj/item/clothing/under/rank/security/navyblue/alt/sierra1, \
+		/obj/item/clothing/under/rank/security2/sierra1)
 	dress_shoes = list(\
 		/obj/item/clothing/shoes/jackboots)
 
@@ -76,15 +76,15 @@
 	departments = SEC|COM
 
 	dress_hat = list(
-		/obj/item/clothing/head/beret/sec/corporate/hos/sierra,
+		/obj/item/clothing/head/beret/sec/corporate/hos/sierra1,
 		/obj/item/clothing/head/HoS,
-		/obj/item/clothing/head/beret/sec/navy/hos/sierra
+		/obj/item/clothing/head/beret/sec/navy/hos/sierra1
 		)
 	dress_under = list(\
-		/obj/item/clothing/under/rank/head_of_security/sierra, /obj/item/clothing/under/rank/head_of_security/jensen, \
-		/obj/item/clothing/under/rank/head_of_security/navyblue/sierra, /obj/item/clothing/under/rank/head_of_security/navyblue/alt/sierra, \
-		/obj/item/clothing/under/rank/head_of_security/corp/sierra, /obj/item/clothing/under/rank/head_of_security/corp/alt/sierra, \
-		/obj/item/clothing/under/hosformalfem/sierra, /obj/item/clothing/under/hosformalmale/sierra)
+		/obj/item/clothing/under/rank/head_of_security/sierra1, /obj/item/clothing/under/rank/head_of_security/jensen, \
+		/obj/item/clothing/under/rank/head_of_security/navyblue/sierra1, /obj/item/clothing/under/rank/head_of_security/navyblue/alt/sierra1, \
+		/obj/item/clothing/under/rank/head_of_security/corp/sierra1, /obj/item/clothing/under/rank/head_of_security/corp/alt/sierra1, \
+		/obj/item/clothing/under/hosformalfem/sierra1, /obj/item/clothing/under/hosformalmale/sierra1)
 
 /* MEDICAL
  * =======

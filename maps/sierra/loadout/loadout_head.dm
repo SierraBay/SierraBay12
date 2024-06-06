@@ -36,14 +36,14 @@
 /datum/gear/head/hats_selection/New()
 	..()
 	var/hats_selection_type = list()
-	hats_selection_type["white-blue security beret"] = /obj/item/clothing/head/beret/guard/sierra
+	hats_selection_type["white-blue security beret"] = /obj/item/clothing/head/beret/guard/sierra1
 	hats_selection_type["white-red security beret"] = /obj/item/clothing/head/beret/sec/corporate/whitered
-	hats_selection_type["black security beret"] = /obj/item/clothing/head/beret/sec/corporate/officer/sierra
-	hats_selection_type["red security beret"] = /obj/item/clothing/head/beret/sec/sierra
-	hats_selection_type["navy-blue security beret"] = /obj/item/clothing/head/beret/sec/navy/officer/sierra
-	hats_selection_type["white security cap"] = /obj/item/clothing/head/soft/sec/corp/guard/sierra
-	hats_selection_type["red security cap"] = /obj/item/clothing/head/soft/sec/sierra
-	hats_selection_type["black security cap"] = /obj/item/clothing/head/soft/sec/corp/sierra
+	hats_selection_type["black security beret"] = /obj/item/clothing/head/beret/sec/corporate/officer/sierra1
+	hats_selection_type["red security beret"] = /obj/item/clothing/head/beret/sec/sierra1
+	hats_selection_type["navy-blue security beret"] = /obj/item/clothing/head/beret/sec/navy/officer/sierra1
+	hats_selection_type["white security cap"] = /obj/item/clothing/head/soft/sec/corp/guard/sierra1
+	hats_selection_type["red security cap"] = /obj/item/clothing/head/soft/sec/sierra1
+	hats_selection_type["black security cap"] = /obj/item/clothing/head/soft/sec/corp/sierra1
 	gear_tweaks += new/datum/gear_tweak/path(hats_selection_type)
 
 /datum/gear/suit/unathi/security_cap
