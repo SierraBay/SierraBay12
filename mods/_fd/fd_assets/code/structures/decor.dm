@@ -22,7 +22,8 @@
 		icon_state = "campfire"
 	return
 
-/obj/structure/fd/campfire/attackby(obj/item/I, mob/living/user)
+/obj/structure/fd/campfire/use_tool(obj/item/I, mob/living/user)
+	SHOULD_CALL_PARENT(FALSE)
 	if(istype(I,/obj/item/stack/material/wood))
 		var/obj/item/stack/material/wood/sticks = I
 		if(do_after(user, 10) && sticks.amount >= 1)
@@ -40,13 +41,13 @@
 			new /obj/item/reagent_containers/food/snacks/plainsteak(loc)
 			qdel(I)
 
-/obj/effect/pile
+/obj/pile
 	name = "grey junk-pile"
 	desc = "It looks like an unknown mass of different things and materials"
 	icon = 'mods/_fd/fd_assets/icons/structures/molten_pile.dmi'
 	icon_state = "molten_big"
 
-/obj/effect/pile/Initialize()
+/obj/pile/Initialize()
 	. = ..()
 
 	for(var/atom/movable/O in loc)
@@ -58,7 +59,8 @@
 				if (!(L.status_flags & NOTARGET))
 					L.status_flags ^= NOTARGET
 
-/obj/effect/pile/attackby(obj/item/I, mob/user, params)
+/obj/pile/use_tool(obj/item/I, mob/user, params)
+	SHOULD_CALL_PARENT(FALSE)
 	if(istype(I, /obj/item/shovel))
 		if(do_after(user, 80))
 			qdel(src)
@@ -71,7 +73,8 @@
 				qdel(sticks)
 			qdel(src)
 
-/obj/effect/pile/Destroy()
+
+/obj/pile/Destroy()
 	src.visible_message("<span class='warning'>\The [src] falls over.</span>")
 	for(var/atom/movable/A in contents)
 		A.dropInto(loc)
@@ -370,7 +373,8 @@
 		buckle_mob(L)
 		to_chat(L, SPAN_DANGER("You're tangled in \the [src]!"))
 
-/obj/structure/fd/bs_vines/attackby(obj/item/I, mob/user, params)
+/obj/structure/fd/bs_vines/use_tool(obj/item/I, mob/user, params)
+	SHOULD_CALL_PARENT(FALSE)
 	if(istype(I, /obj/item/material/hatchet)) //|| istype(I, /obj/item/psychic_power/psiaxe) || istype(I,/obj/item/psychic_power/psiblade))
 		if(do_after(user, 80))
 			qdel(src)
@@ -452,7 +456,8 @@
 		return FALSE
 	return TRUE
 
-/obj/structure/fd/bs_crystal/attackby(obj/item/I, mob/user, params)
+/obj/structure/fd/bs_crystal/use_tool(obj/item/I, mob/user, params)
+	SHOULD_CALL_PARENT(FALSE)
 	if(istype(I, /obj/item/pickaxe))
 		if(do_after(user, 80))
 			new /obj/item/fd/ancient_items/bs_shard(src.loc)
@@ -469,8 +474,6 @@
 	name = "corrupted body"
 	desc = "This body most likely were affected by bluespace distortion. It's better not to touch it even."
 	icon_state = "TNCDead8_infected"
-
-//�����
 
 /obj/structure/flora/tree/jungle
 	icon = 'mods/_fd/fd_assets/icons/structures/jungletree.dmi'
@@ -555,5 +558,3 @@
 /obj/structure/flora/tropic/cactus/alt/New()
 	..()
 	icon_state = "cacti_[rand(1, 4)]"
-
-//�������� �����

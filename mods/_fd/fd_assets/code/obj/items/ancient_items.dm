@@ -110,7 +110,8 @@
 
 	origin_tech = list(TECH_MAGNET = 5, TECH_BIO = 5)
 
-/obj/item/fd/ancient_items/energy_container/attackby(obj/item/I, mob/user, params)
+/obj/item/fd/ancient_items/energy_container/use_tool(obj/item/I, mob/user, params)
+	SHOULD_CALL_PARENT(FALSE)
 	if(!closed)
 		to_chat(user, "<span class='notice'>You trying to poke [I] inside, but nothing happens!</span>")
 	if(closed && istype(I, /obj/item/screwdriver))
@@ -149,7 +150,8 @@
 		else
 			to_chat(user, "<span class='notice'>It's just a teddy bear - what do you want?</span>")
 
-/obj/item/fd/ancient_items/teddy_bear/attackby(obj/item/I, mob/user, params)
+/obj/item/fd/ancient_items/teddy_bear/use_tool(obj/item/I, mob/user, params)
+	SHOULD_CALL_PARENT(FALSE)
 	if(istype(I, /obj/item/material/knife) && !ripped)
 		if(do_after(user, 80))
 			if(prob(50))
@@ -201,7 +203,8 @@
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
-/obj/item/fd/ancient_items/strange_photo/attackby(obj/item/I, mob/user, params)
+/obj/item/fd/ancient_items/strange_photo/use_tool(obj/item/I, mob/user, params)
+	SHOULD_CALL_PARENT(FALSE)
 	if(isFlameOrHeatSource(I))
 		if(do_after(user, 40))
 			to_chat(user, "<span class='danger'>You burned this cursed photo up!</span>")
@@ -290,7 +293,8 @@
 	var/luck_used = FALSE
 	var/have_something = 40
 
-/obj/item/fd/ancient_items/jap_neko/attackby(obj/item/I, mob/user, params)
+/obj/item/fd/ancient_items/jap_neko/use_tool(obj/item/I, mob/user, params)
+	SHOULD_CALL_PARENT(FALSE)
 	if(istype(I, /obj/item/material/coin))
 		if(do_after(user, 30))
 			if(prob(have_something) && !luck_used)
@@ -554,7 +558,8 @@
 		else
 			return
 
-/obj/item/fd/ancient_items/emerald/attackby(obj/item/I, mob/user, params)
+/obj/item/fd/ancient_items/emerald/use_tool(obj/item/I, mob/user, params)
+	SHOULD_CALL_PARENT(FALSE)
 	if(broken)
 		to_chat(user, "<span class='warning'>You can't use [src] anymore, it's broken!</span>")
 		return

@@ -30,7 +30,8 @@
 		qdel(src)
 //		log_and_message_admins("A breacher missile reached it's destignation (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[obstacle.x];Y=[obstacle.y];Z=[obstacle.z]'>JMP</a>)")
 
-/obj/structure/missile/attackby(obj/item/I, mob/user)
+/obj/structure/missile/use_tool(obj/item/I, mob/user)
+	SHOULD_CALL_PARENT(FALSE)
 	user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
 
 	if(isScrewdriver(I))

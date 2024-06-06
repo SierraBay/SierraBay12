@@ -15,7 +15,8 @@
 /obj/structure/wall_frame/invincible/attack_hand()
 	return
 
-/obj/structure/wall_frame/invincible/attackby()
+/obj/structure/wall_frame/invincible/use_tool()
+	SHOULD_CALL_PARENT(FALSE)
 	return
 
 /obj/structure/wall_frame/invincible/ex_act()

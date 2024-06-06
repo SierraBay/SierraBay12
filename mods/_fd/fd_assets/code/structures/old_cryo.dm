@@ -69,7 +69,8 @@
 	var/facial_styles_per_species = list() // Custom facial hair styles, per species -type-, if any. See above as to why
 	var/genders_per_species       = list() // For gender biases per species -type-
 
-/obj/structure/abandoned_cryo/attackby(obj/item/C, mob/user)
+/obj/structure/abandoned_cryo/use_tool(obj/item/C, mob/user)
+	SHOULD_CALL_PARENT(FALSE)
 	if(isCrowbar(C) && user.skill_check(SKILL_HAULING, SKILL_TRAINED))
 		if(opened)
 			to_chat(user, SPAN_DANGER("Pod were alreade opened!"))

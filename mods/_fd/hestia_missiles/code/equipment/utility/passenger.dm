@@ -38,7 +38,7 @@
 	to_chat(user, SPAN_WARNING("You break out of the passenger compartment!"))
 	user.forceMove(T)
 
-/obj/item/missile_equipment/passenger/attackby(obj/item/I, mob/user)
+/obj/item/missile_equipment/passenger/use_tool(obj/item/I, mob/user)
 	if(isCrowbar(I))
 		if(hatch_open)
 			close_hatch()

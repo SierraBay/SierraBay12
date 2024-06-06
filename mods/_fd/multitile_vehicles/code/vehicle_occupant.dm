@@ -172,7 +172,7 @@
 	if(isnull(mob_to_hit))
 		return 1
 	if(user)
-		mob_to_hit.attackby(P, user)
+		mob_to_hit.use_tool(P, user)
 		return 0
 	else
 		mob_to_hit.bullet_act(P)

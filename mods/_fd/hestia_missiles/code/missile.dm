@@ -127,7 +127,7 @@
 	forceMove(overmap_missile)
 	overmap_missile.set_moving(TRUE)
 
-/obj/structure/missile/attackby(obj/item/I, mob/user)
+/obj/structure/missile/use_tool(obj/item/I, mob/user)
 	user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
 
 	if(isWrench(I))

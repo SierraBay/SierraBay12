@@ -133,7 +133,7 @@
 	new /obj/item/stack/material/steel(src.loc)
 	src.Destroy()
 
-/obj/structure/storage/table/attackby(obj/item/W, mob/user, click_params)
+/obj/structure/storage/table/use_tool(obj/item/W, mob/user, click_params)
 	if(isCrowbar(W) && user.a_intent == I_HURT)
 		to_chat(user, "<span class='danger'>You are start to take down \the [src]!</span>")
 		if(W.in_use)

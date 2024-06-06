@@ -9,7 +9,8 @@
 	icon = 'mods/_fd/fd_assets/icons/structures/mag_table.dmi'
 	icon_state = "magnetic_table"
 
-/obj/structure/mag_unfinished/attackby(obj/item/W as obj, mob/user as mob)
+/obj/structure/mag_unfinished/use_tool(obj/item/W as obj, mob/user as mob)
+	SHOULD_CALL_PARENT(FALSE)
 	if(istype(W, /obj/item/mag_table_plate))
 		if(do_after(user, 50))
 			new /obj/structure/table/mag(src.loc)

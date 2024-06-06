@@ -48,7 +48,8 @@
 	material_stored = new_mat
 	return 1
 
-/obj/structure/rearm_repair_station/attackby(obj/item/stack/I, mob/user)
+/obj/structure/rearm_repair_station/use_tool(obj/item/stack/I, mob/user)
+	SHOULD_CALL_PARENT(FALSE)
 	if(!istype(I))
 		return
 	if(material_stored == max_material)

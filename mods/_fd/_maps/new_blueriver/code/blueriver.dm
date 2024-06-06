@@ -190,7 +190,8 @@
 	density = TRUE
 	anchored = TRUE
 
-/obj/structure/deity/attackby(obj/item/W as obj, mob/user as mob)
+/obj/structure/deity/use_tool(obj/item/W as obj, mob/user as mob)
+	SHOULD_CALL_PARENT(FALSE)
 	user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
 	user.do_attack_animation(src)
 	playsound(get_turf(src), 'sound/effects/Glasshit.ogg', 50, 1)

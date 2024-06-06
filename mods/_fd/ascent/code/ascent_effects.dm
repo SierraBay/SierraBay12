@@ -100,8 +100,8 @@
 	entangle(user, TRUE)
 	qdel_self()
 
-/obj/effect/razorweb/attackby(obj/item/thing, mob/user)
-
+/obj/effect/razorweb/use_tool(obj/item/thing, mob/user)
+	SHOULD_CALL_PARENT(FALSE)
 	var/destroy_self
 	if(thing.force)
 		visible_message(SPAN_DANGER("\The [user] breaks \the [src] with \the [thing]!"))

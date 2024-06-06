@@ -29,7 +29,8 @@
 	src.uses = uses
 	src.power_change()
 
-/obj/machinery/ai_slipper/attackby(obj/item/W, mob/user)
+/obj/machinery/ai_slipper/use_tool(obj/item/W, mob/user)
+	SHOULD_CALL_PARENT(FALSE)
 	if(stat & (MACHINE_STAT_NOPOWER|MACHINE_BROKEN_GENERIC))
 		return
 	if (istype(user, /mob/living/silicon))

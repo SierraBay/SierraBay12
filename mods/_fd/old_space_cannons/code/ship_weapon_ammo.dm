@@ -33,7 +33,7 @@
 				qdel(src)
 	return
 
-/obj/item/ammo_magazine/ammobox/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/ammo_magazine/ammobox/use_tool(obj/item/W as obj, mob/user as mob)
 	if(isWrench(W))
 		var/ammo_count = stored_ammo.len
 		if(ammo_count > 0)

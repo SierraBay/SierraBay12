@@ -314,7 +314,8 @@
 	taser_kill = 0
 	status_flags = 0
 
-/mob/living/simple_animal/hostile/human/syndicate/facility/melee/attackby(obj/item/O as obj, mob/user as mob)
+/mob/living/simple_animal/hostile/human/syndicate/facility/melee/use_tool(obj/item/O as obj, mob/user as mob)
+	SHOULD_CALL_PARENT(FALSE)
 	if(O.force)
 		if(prob(80))
 			var/damage = O.force
@@ -328,7 +329,6 @@
 	else
 		to_chat(usr, "<span class='warning'>\The [src] doesn't give you a chance to hit him with \the [O].You need something better.</span>")
 		visible_message("<span class='warning'>\The [user] trying to attack \the [src] with \the [O], but it completely blocks the attack.</span>")
-
 
 /mob/living/simple_animal/hostile/human/syndicate/facility/bullet_act(obj/item/projectile/Proj)
 	if(!Proj)	return

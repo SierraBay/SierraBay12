@@ -3,7 +3,8 @@
 	desc = "An old mighty father of well-known MK3 Universal Missile. Cannot be modified in the field, but still popular due to it's ruggedness and cheap price."
 	health = 200
 
-/obj/structure/missile/locked/attackby(obj/item/I, mob/user)
+/obj/structure/missile/locked/use_tool(obj/item/I, mob/user)
+	SHOULD_CALL_PARENT(FALSE)
 
 	user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
 

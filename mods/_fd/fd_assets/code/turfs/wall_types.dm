@@ -21,7 +21,8 @@
 /turf/simulated/wall/invincible/attack_hand()
 	return
 
-/turf/simulated/wall/invincible/attackby()
+/turf/simulated/wall/invincible/use_tool()
+	SHOULD_CALL_PARENT(FALSE)
 	return
 
 /turf/simulated/wall/invincible/can_melt()

@@ -547,7 +547,7 @@
 	else
 		. = ..()
 
-/obj/vehicles/attackby(obj/item/I, mob/user)
+/obj/vehicles/use_tool(obj/item/I, mob/user)
 /*	if(elevation > user.elevation || elevation > I.elevation)
 		to_chat(user,"<span class = 'notice'>[name] is too far away to interact with!</span>")
 		return*/
