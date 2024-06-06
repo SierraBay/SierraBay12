@@ -48,9 +48,11 @@
 /datum/gear/tactical/security_uniforms/New()
 	..()
 	var/uniforms = list()
-	uniforms +=	/obj/item/clothing/under/rank/security/corp/alt
-	uniforms +=	/obj/item/clothing/under/rank/security/navyblue
-	uniforms +=	/obj/item/clothing/under/rank/security/navyblue/alt
+	uniforms +=	/obj/item/clothing/under/rank/security/corp/alt/sierra
+	uniforms +=	/obj/item/clothing/under/rank/security/navyblue/sierra
+	uniforms +=	/obj/item/clothing/under/rank/security/navyblue/alt/sierra
+	uniforms += /obj/item/clothing/under/rank/security2/sierra
+	uniforms += /obj/item/clothing/under/rank/security/sierra
 	gear_tweaks += new/datum/gear_tweak/path/specified_types_list(uniforms)
 
 /datum/gear/tactical/bloodpatch

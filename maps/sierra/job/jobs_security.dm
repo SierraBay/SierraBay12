@@ -12,7 +12,7 @@
 	alt_titles = list(
 		"Security Sergeant",
 		)
-	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/security/warden
+	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/security/warden/sierra
 	allowed_branches = list(/datum/mil_branch/employee)
 	allowed_ranks = list(/datum/mil_rank/civ/nt)
 	min_skill = list(   SKILL_BUREAUCRACY = SKILL_TRAINED,
@@ -105,7 +105,7 @@
 
 	skill_points = 20
 
-	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/security/officer
+	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/security/officer/sierra
 	allowed_branches = list(/datum/mil_branch/employee, /datum/mil_branch/contractor)
 	allowed_ranks = list(/datum/mil_rank/civ/nt, /datum/mil_rank/civ/contractor)
 	min_skill = list(   SKILL_BUREAUCRACY = SKILL_BASIC,
@@ -151,7 +151,7 @@
 	                    SKILL_HAULING     = SKILL_BASIC)
 	skill_points = 18
 
-	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/security/assist
+	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/security/assist/sierra
 	allowed_branches = list(
 			/datum/mil_branch/employee
 		)
