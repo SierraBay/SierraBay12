@@ -8,7 +8,7 @@
 	slot_flags = null
 	var/obj/item/modular_computer/holder
 
-/obj/item/device/multitool/multimeter/datajack/New(var/obj/item/modular_computer/P)
+/obj/item/device/multitool/multimeter/datajack/New(obj/item/modular_computer/P)
 	..()
 	holder = P
 
@@ -23,7 +23,7 @@
 	datajack = new(src)
 	datajack.forceMove(src)
 
-/obj/item/modular_computer/resolve_attackby(obj/item/W, mob/user, var/click_params)
+/obj/item/modular_computer/resolve_attackby(obj/item/W, mob/user, click_params)
 	..()
 	if(datajack == W)
 		insert_datajack()
@@ -79,7 +79,7 @@
 	pattern = "^datajack$"
 	skill_needed = SKILL_EXPERIENCED
 
-/datum/terminal_command/datajack/proper_input_entered(text, mob/user, var/datum/terminal/terminal)
+/datum/terminal_command/datajack/proper_input_entered(text, mob/user, datum/terminal/terminal)
 	var/datum/extension/interactive/ntos/C = terminal.computer
 	if(!(C.get_hardware_flag() & (PROGRAM_PDA | PROGRAM_TABLET)))
 		return SPAN_WARNING("This command cant be executed on this device.")
