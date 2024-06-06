@@ -7,7 +7,6 @@
 
 #include "code/clothing/badges.dm"
 #include "code/clothing/clothing_under.dm"
-#include "code/clothing/ec_additional_suits.dm"
 #include "code/clothing/ftu_voidsuits.dm"
 
 #include "code/machinery/ai_slipper.dm"

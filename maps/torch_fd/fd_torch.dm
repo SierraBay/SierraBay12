@@ -110,6 +110,7 @@
 	// --- JOB SECTION --- //
 	#include "../torch/job/torch_access.dm"
 	#include "job/torch_jobs.dm"
+	#include "job/exploration_team.dm"
 	#include "../torch/job/command_jobs.dm"
 	#include "../torch/job/corporate_jobs.dm"
 	#include "../torch/job/engineering_jobs.dm"
@@ -158,7 +159,7 @@
 	#include "../torch/structures/signs.dm"
 
 	// --- LOADOUT --- //
-	#include "../torch/loadout/_defines.dm"
+	#include "loadout/_defines.dm"
 	#include "../torch/loadout/loadout_accessories.dm"
 	#include "../torch/loadout/loadout_ec_skillbadges.dm"
 	#include "../torch/loadout/loadout_eyes.dm"
