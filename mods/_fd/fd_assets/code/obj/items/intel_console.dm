@@ -58,8 +58,8 @@
 		icon_state = icon_state_brolen_fully
 	return
 
-/obj/structure/fd/intel_console/attackby(obj/item/I, mob/living/user)
-
+/obj/structure/fd/intel_console/use_tool(obj/item/I, mob/living/user)
+	SHOULD_CALL_PARENT(FALSE)
 	if(state == 3 && istype(I, /obj/item/stack/material/glass/))
 		var/obj/item/stack/material/glass/guass = I
 		if(guass.amount <= 5)
