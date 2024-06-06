@@ -27,24 +27,34 @@
 	beret_selection_type["ZPCI beret"] = /obj/item/clothing/head/beret/sec/corporate/zpci
 	gear_tweaks += new/datum/gear_tweak/path(beret_selection_type)
 
-/datum/gear/head/hats_selection/security
-	display_name = "security headwear selection"
-	description = "A list of headwear used by NanoTrasen security."
+/datum/gear/head/beret_selection/security
+	display_name = "security berets selection"
+	description = "A list of berets used by NanoTrasen security."
 	path = /obj/item/clothing/head/beret
+	allowed_roles = SECURITY_ROLES
+
+/datum/gear/head/beret_selection/New()
+	..()
+	var/beret_selection_type = list()
+	beret_selection_type["white-blue security beret"] = /obj/item/clothing/head/beret/guard/sierra1
+	beret_selection_type["white-red security beret"] = /obj/item/clothing/head/beret/sec/corporate/whitered
+	beret_selection_type["black security beret"] = /obj/item/clothing/head/beret/sec/corporate/officer/sierra1
+	beret_selection_type["red security beret"] = /obj/item/clothing/head/beret/sec/sierra1
+	gear_tweaks += new/datum/gear_tweak/path(beret_selection_type)
+
+/datum/gear/head/soft_selection/security
+	display_name = "security softcaps selection"
+	description = "A list of softcaps used by NanoTrasen security."
+	path = /obj/item/clothing/head/soft
 	allowed_roles = SECURITY_ROLES
 
 /datum/gear/head/hats_selection/New()
 	..()
-	var/hats_selection_type = list()
-	hats_selection_type["white-blue security beret"] = /obj/item/clothing/head/beret/guard/sierra1
-	hats_selection_type["white-red security beret"] = /obj/item/clothing/head/beret/sec/corporate/whitered
-	hats_selection_type["black security beret"] = /obj/item/clothing/head/beret/sec/corporate/officer/sierra1
-	hats_selection_type["red security beret"] = /obj/item/clothing/head/beret/sec/sierra1
-	hats_selection_type["navy-blue security beret"] = /obj/item/clothing/head/beret/sec/navy/officer/sierra1
-	hats_selection_type["white security cap"] = /obj/item/clothing/head/soft/sec/corp/guard/sierra1
-	hats_selection_type["red security cap"] = /obj/item/clothing/head/soft/sec/sierra1
-	hats_selection_type["black security cap"] = /obj/item/clothing/head/soft/sec/corp/sierra1
-	gear_tweaks += new/datum/gear_tweak/path(hats_selection_type)
+	var/soft_selection_type = list()
+	soft_selection_type["white security cap"] = /obj/item/clothing/head/soft/sec/corp/guard/sierra1
+	soft_selection_type["red security cap"] = /obj/item/clothing/head/soft/sec/sierra1
+	soft_selection_type["black security cap"] = /obj/item/clothing/head/soft/sec/corp/sierra1
+	gear_tweaks += new/datum/gear_tweak/path(soft_selection_type)
 
 /datum/gear/suit/unathi/security_cap
 	allowed_roles = SECURITY_ROLES
