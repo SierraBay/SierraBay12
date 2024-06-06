@@ -9,22 +9,22 @@
 	var/obj/item/modular_computer/holder
 
 /obj/item/device/multitool/multimeter/datajack/New(obj/item/modular_computer/P)
-	..()
+	.=..()
 	holder = P
 
 /obj/item/device/multitool/multimeter/datajack/attack_self(mob/user)
-	..()
+	.=..()
 
 /obj/item/modular_computer
 	var/obj/item/device/multitool/multimeter/datajack/datajack
 
 /obj/item/modular_computer/Initialize()
-	..()
+	.=..()
 	datajack = new(src)
 	datajack.forceMove(src)
 
 /obj/item/modular_computer/resolve_attackby(obj/item/W, mob/user, click_params)
-	..()
+	.=..()
 	if(datajack == W)
 		insert_datajack()
 		return
