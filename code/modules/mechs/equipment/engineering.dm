@@ -38,10 +38,10 @@
 	restricted_software = list(MECH_SOFTWARE_ENGINEERING)
 
 /obj/item/mech_equipment/atmos_shields
-	icon_state = "mech_atmoshield_off"
+	icon_state = "mech_power"
 	name = "exosuit airshield"
 	desc = "An Aether Atmospherics brand 'Zephyros' portable Atmospheric Isolation and Retention Screen. It keeps air where it should be... Most of the time. Press ctrl-click to switch modes"
-	restricted_hardpoints = list(HARDPOINT_BACK)
+	restricted_hardpoints = list(HARDPOINT_LEFT_SHOULDER, HARDPOINT_RIGHT_SHOULDER)
 	restricted_software = list(MECH_SOFTWARE_ENGINEERING)
 	var/list/segments
 	equipment_delay = 0.25 SECONDS
@@ -135,32 +135,23 @@
 			if(istype(MS))
 				MS.shields = src
 				segments += MS
-				GLOB.moved_event.register(MS, src, .proc/on_moved)
+				GLOB.moved_event.register(MS, src, PROC_REF(on_moved))
 
 		passive_power_use = 0.8 KILOWATTS * length(segments)
-
-		update_icon()
-		owner.update_icon()
-		GLOB.moved_event.register(owner, src, .proc/on_moved)
-		GLOB.dir_set_event.register(owner, src, .proc/on_turned)
-
-/obj/item/mech_equipment/atmos_shields/on_update_icon()
-	. = ..()
-	icon_state = "mech_atmoshield[active ? "_on" : "_off"]"
+		GLOB.moved_event.register(owner, src, PROC_REF(on_moved))
+		GLOB.dir_set_event.register(owner, src, PROC_REF(on_turned))
 
 /obj/item/mech_equipment/atmos_shields/deactivate()
 	for(var/obj/mech_shield/MS in segments)
 		if(istype(MS))
-			GLOB.moved_event.unregister(MS, src, .proc/on_moved)
+			GLOB.moved_event.unregister(MS, src, PROC_REF(on_moved))
 	if(length(segments))
 		owner.visible_message(SPAN_WARNING("The energy shields in front of \the [owner] disappear!"))
 	QDEL_NULL_LIST(segments)
 	passive_power_use = 0
-	GLOB.moved_event.unregister(owner, src, .proc/on_moved)
-	GLOB.dir_set_event.unregister(owner, src, .proc/on_turned)
+	GLOB.moved_event.unregister(owner, src, PROC_REF(on_moved))
+	GLOB.dir_set_event.unregister(owner, src, PROC_REF(on_turned))
 	. = ..()
-	update_icon()
-	owner.update_icon()
 
 /obj/item/mech_equipment/atmos_shields/attack_self(mob/user)
 	. = ..()

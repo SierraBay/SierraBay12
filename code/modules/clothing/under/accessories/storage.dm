@@ -38,9 +38,10 @@
 		..(over_object)
 
 
-/obj/item/clothing/accessory/storage/attackby(obj/item/I, mob/user)
+/obj/item/clothing/accessory/storage/use_tool(obj/item/tool, mob/living/user, list/click_params)
 	if (container)
-		return container.attackby(I, user)
+		return container.use_tool(tool, user)
+	return ..()
 
 
 /obj/item/clothing/accessory/storage/emp_act(severity)
@@ -69,9 +70,9 @@
 /obj/item/clothing/accessory/storage/pockets
 	name = "pockets"
 	desc = "A bag-like receptacle fastened to an article of clothing to hold small items."
-	icon_state = ""
+	icon_state = "pockets"
 	slots = 2 STORAGE_FREEFORM
-	accessory_flags = ACCESSORY_HIGH_VISIBILITY | ACCESSORY_HIDDEN
+	accessory_flags = ACCESSORY_HIGH_VISIBILITY | ACCESSORY_REMOVABLE
 
 
 /obj/item/clothing/accessory/storage/webbing

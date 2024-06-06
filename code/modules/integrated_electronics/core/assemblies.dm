@@ -80,7 +80,7 @@
 		spark_system.start()
 	playsound(loc, 'sound/items/electronic_assembly_empty.ogg', 100, 1)
 	icon = 0
-	addtimer(new Callback(src, .proc/fall_apart), 5.1)
+	addtimer(new Callback(src, PROC_REF(fall_apart)), 5.1)
 
 /obj/item/device/electronic_assembly/post_health_change(health_mod, prior_health, damage_type)
 	..()
@@ -724,6 +724,12 @@
 	name = "type-f electronic machine"
 	icon_state = "setup_large_industrial"
 	desc = "It's a case used for assembling large electronics. This one resembles some kind of industrial machinery."
+
+/obj/item/device/electronic_assembly/large/exo
+	name = "type-a exosuit electronic assembly"
+	icon_state = "setup_medium_radio"
+	desc = "It's a case, for building large electronics with. This one resembles a box, or some type of rack for weapon."
+	allowed_circuit_action_flags = IC_ACTION_COMBAT | IC_ACTION_LONG_RANGE
 
 /obj/item/device/electronic_assembly/drone
 	name = "electronic drone"

@@ -63,6 +63,7 @@
 	//
 /obj/structure/disposalpipe/proc/transfer(obj/structure/disposalholder/H)
 	var/nextdir = nextdir(H.dir)
+
 	H.set_dir(nextdir)
 	var/turf/T = H.nextloc()
 	var/obj/structure/disposalpipe/P = H.findpipe(T)
@@ -777,6 +778,16 @@
 
 	update()
 	return
+
+/obj/structure/disposalpipe/trunk/Destroy()
+	if (linked)
+		if (istype(linked, /obj/machinery/disposal))
+			var/obj/machinery/disposal/linked_disposal = linked
+			if (linked_disposal.trunk == src)
+				linked_disposal.trunk = null
+		linked = null
+
+	. = ..()
 
 /obj/structure/disposalpipe/trunk/proc/getlinked()
 	linked = null

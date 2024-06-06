@@ -81,25 +81,56 @@
 	charge = clamp(charge - damage, 0, max_charge)
 
 	last_recharge = world.time
-
+//[SIERRA-EDIT] - Mechs_by_Shegar
+	/*
 	if(difference > 0)
-		for(var/mob/pilot in owner.pilots)
+		//for(var/mob/pilot in owner.pilots)
 			to_chat(pilot, SPAN_DANGER("Warning: Deflector shield failure detect, shutting down"))
 		toggle()
 		playsound(owner.loc,'sound/mecha/internaldmgalarm.ogg',35,1)
+	*/
+//[SIERRA-EDIT]
+	if(difference >= 0)
+		toggle()
+		OVERHEAT = TRUE
+		src.visible_message("The energy shield flashes and blinks in separate sections, then suddenly disappears, emitting a sad hum.")
+		playsound(owner.loc,'mods/mechs_by_shegar/sounds/mecha_shield_deflector_fail.ogg',60,0)
+		update_icon()
+		last_overheat = world.time
+		delayed_toggle()
 		return difference
 	else return 0
 
 /obj/item/mech_equipment/shields/proc/toggle()
+	//[SIERRA-ADD] - Mechs_by_Shegar -Анти-абуз место
+	if(charge == -1)
+		charge = 0
+		src.visible_message("The mech's computer flashes: WARNING! Shield overheat detected!","The mech's computer beeps, reporting a shield error!",0) //[INF] Для предотвращения абуза
+		playsound(owner.loc,'mods/mechs_by_shegar/sounds/mecha_shield_deflector_fail.ogg',60,0)
+		OVERHEAT = TRUE
+		update_icon()
+		delayed_toggle()
+		return
+	if(OVERHEAT)
+		if((world.time - last_overheat) < overheat_cooldown)
+			src.visible_message("Shields still overheated!","Shields still overheated!",0)
+			return
+	//[SIERRA-ADD] - Mechs_by_Shegar
 	if(!aura)
 		return
 	aura.toggle()
-	playsound(owner,'sound/weapons/flash.ogg',35,1)
+	//[SIERRA-REMOVE] - Mechs-by-Shegar - Тут оно уже не нужно
+	//playsound(owner,'sound/weapons/flash.ogg',35,1)
+	//[SIERRA-REMOVE]
 	update_icon()
 	if(aura.active)
+	//[SIERRA-ADD] - Mechs_by_shegar - я добавил звуки включения/выключения дэп
+		playsound(owner,'mods/mechs_by_shegar/sounds/mecha_mech_shield_up.ogg',50,0)
 		START_PROCESSING(SSobj, src)
 	else
+		playsound(owner,'mods/mechs_by_shegar/sounds/mecha_mech_shield_down.ogg',50,1)
 		STOP_PROCESSING(SSobj, src)
+	//[SIERRA-ADD]
 	active = aura.active
 	passive_power_use = active ? 1 KILOWATTS : 0
 	owner.update_icon()
@@ -111,6 +142,11 @@
 
 /obj/item/mech_equipment/shields/on_update_icon()
 	. = ..()
+	//[SIERRA-ADD] - Mechs-by-Shegar
+	if(OVERHEAT)
+		icon_state= "shield_droid_overheat"
+		return
+	//[SIERRA-ADD]
 	if(!aura)
 		return
 	if(aura.active)
@@ -119,14 +155,19 @@
 		icon_state = "shield_droid"
 
 /obj/item/mech_equipment/shields/Process()
-	if(charge >= max_charge)
-		return
+	//Обновление спрайта с течением времени
+	if(charge < max_charge)
+		aura.on_update_icon()
 	if((world.time - last_recharge) < cooldown)
 		return
+	//[SIERRA-ADD] - Mechs-by-Shegar
+	if(charge >= max_charge)
+		var/obj/item/cell/cell = owner.get_cell()
+		cell.use(charging_rate/4)
+		return
+	//[SIERRA-ADD]
 	var/obj/item/cell/cell = owner.get_cell()
-
-	var/actual_required_power = clamp(max_charge - charge, 0, charging_rate)
-
+	var/actual_required_power = 2*clamp(max_charge - charge, 0, charging_rate)
 	if(cell)
 		charge += cell.use(actual_required_power)
 
@@ -134,8 +175,12 @@
 	return charge / max_charge
 
 /obj/item/mech_equipment/shields/get_hardpoint_maptext()
-	return "[(aura && aura.active) ? "ONLINE" : "OFFLINE"]: [round((charge / max_charge) * 100)]%"
-
+	//[SIERRA-ADD] - Mechs-by-Shegar
+	if(OVERHEAT)
+		return "["OVERHEAT!"]"
+	//[SIERRA-ADD] - Mechs-by-Sbegar
+	else
+		return "[(aura && aura.active) ? "ONLINE" : "OFFLINE"]: [round((charge / max_charge) * 100)]%"
 /obj/aura/mechshield
 	icon = 'icons/mecha/shield.dmi'
 	name = "mechshield"
@@ -156,7 +201,7 @@
 	. = ..()
 	target.vis_contents += src
 	set_dir()
-	GLOB.dir_set_event.register(user, src, /obj/aura/mechshield/proc/update_dir)
+	GLOB.dir_set_event.register(user, src, TYPE_PROC_REF(/obj/aura/mechshield, update_dir))
 
 /obj/aura/mechshield/proc/update_dir(user, old_dir, dir)
 	set_dir(dir)
@@ -169,7 +214,7 @@
 
 /obj/aura/mechshield/Destroy()
 	if(user)
-		GLOB.dir_set_event.unregister(user, src, /obj/aura/mechshield/proc/update_dir)
+		GLOB.dir_set_event.unregister(user, src, TYPE_PROC_REF(/obj/aura/mechshield, update_dir))
 		user.vis_contents -= src
 	shields = null
 	. = ..()
@@ -182,13 +227,32 @@
 	if(active)
 		flick("shield_raise", src)
 	else
-		flick("shield_drop", src)
+	//[SIERRA-EDIT] - Mechs-by-Shegar
+		/*
+		else
+			flick("shield_drop", src)
+		*/
+		if(shields.charge == 0)
+			flick("shield_die",src)
+		else
+			flick("shield_drop", src)
+	//[SIERRA-EDIT]
 
 
 /obj/aura/mechshield/on_update_icon()
 	. = ..()
 	if(active)
-		icon_state = "shield"
+	//[SIERRA-ADD] - Mechs-by-Shegar - добавляет степени повреждения энергощита
+		var/percentrage = shields.charge/shields.max_charge * 100
+		if(percentrage < 25)
+			icon_state = "shield_25"
+		else if(percentrage < 50)
+			icon_state = "shield_50"
+		else if(percentrage < 75)
+			icon_state = "shield_75"
+		else if(percentrage > 75)
+			icon_state = "shield"
+	//[SIERRA-ADD] - Mechs-by-Shegar]
 	else
 		icon_state = "shield_null"
 
@@ -397,14 +461,14 @@
 	. = ..()
 	target.vis_contents += src
 	set_dir()
-	GLOB.dir_set_event.register(user, src, /obj/aura/mech_ballistic/proc/update_dir)
+	GLOB.dir_set_event.register(user, src, TYPE_PROC_REF(/obj/aura/mech_ballistic, update_dir))
 
 /obj/aura/mech_ballistic/proc/update_dir(user, old_dir, dir)
 	set_dir(dir)
 
 /obj/aura/mech_ballistic/Destroy()
 	if (user)
-		GLOB.dir_set_event.unregister(user, src, /obj/aura/mech_ballistic/proc/update_dir)
+		GLOB.dir_set_event.unregister(user, src, TYPE_PROC_REF(/obj/aura/mech_ballistic, update_dir))
 		user.vis_contents -= src
 	shield = null
 	. = ..()
@@ -558,8 +622,8 @@
 	if(owner && holding)
 		update_icon()
 
-/obj/item/mech_equipment/mounted_system/flamethrower/attackby(obj/item/W as obj, mob/user as mob)
-	if(!CanPhysicallyInteract(user))	return
+/obj/item/mech_equipment/mounted_system/flamethrower/use_tool(obj/item/W, mob/living/user, list/click_params)
+	if(!CanPhysicallyInteract(user))	return ..()
 
 	var/obj/item/flamethrower/full/mech/FM = holding
 	if(istype(FM))
@@ -568,17 +632,17 @@
 				user.visible_message(SPAN_NOTICE("\The [user] pries out \the [FM.beaker] using \the [W]."))
 				FM.beaker.dropInto(get_turf(user))
 				FM.beaker = null
-			return
+				return TRUE
 
 		if (istype(W, /obj/item/reagent_containers) && W.is_open_container() && (W.w_class <= FM.max_beaker))
 			if(FM.beaker)
 				to_chat(user, SPAN_NOTICE("There is already a tank inserted!"))
-				return
+				return TRUE
 			if(user.unEquip(W, FM))
 				user.visible_message(SPAN_NOTICE("\The [user] inserts \the [W] inside \the [src]."))
 				FM.beaker = W
-			return
-	..()
+			return TRUE
+	return ..()
 
 /obj/item/mech_equipment/mounted_system/flamethrower/on_update_icon()
 	. = ..()

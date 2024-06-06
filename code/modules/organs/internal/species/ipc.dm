@@ -36,8 +36,11 @@
 	..()
 	if(!brainmob && H)
 		init(H)
-	robotize()
+// [SIERRA-REMOVE] - IPC_MODS
+/*
 	unshackle()
+*/
+// [/SIERRA-REMOVE]
 	update_icon()
 	if (!is_processing)
 		START_PROCESSING(SSobj, src)
@@ -98,7 +101,7 @@
 	if (!protected)
 		var/datum/ghosttrap/T = get_ghost_trap("positronic brain")
 		T.request_player(brainmob, "Someone is requesting a personality for a positronic brain.", 60 SECONDS)
-	searching = addtimer(new Callback(src, .proc/cancel_search), 60 SECONDS, TIMER_UNIQUE | TIMER_STOPPABLE)
+	searching = addtimer(new Callback(src, PROC_REF(cancel_search)), 60 SECONDS, TIMER_UNIQUE | TIMER_STOPPABLE)
 	icon_state = "posibrain-searching"
 
 /obj/item/organ/internal/posibrain/proc/cancel_search()

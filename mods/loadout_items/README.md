@@ -6,6 +6,8 @@
 - https://github.com/SierraBay/SierraBay12/pull/1650
 - https://github.com/SierraBay/SierraBay12/pull/1761
 - https://github.com/SierraBay/SierraBay12/pull/1856
+- https://github.com/SierraBay/SierraBay12/pull/2230
+- https://github.com/SierraBay/SierraBay12/pull/2262
 <!--
   Ссылки на PRы, связанные с модом:
   - Создание

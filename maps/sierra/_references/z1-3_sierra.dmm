@@ -67421,7 +67421,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass/security{
 	id_tag = "detdoor";
-	name = "Lont Term Checkpoint";
+	name = "Long Term Checkpoint";
 	req_access = newlist()
 	},
 /obj/floor_decal/industrial/hatch/grey,
@@ -108977,7 +108977,7 @@
 /obj/machinery/door/airlock/glass/security{
 	dir = 4;
 	id_tag = "detdoor";
-	name = "Lont Term Checkpoint";
+	name = "Long Term Checkpoint";
 	req_access = newlist()
 	},
 /obj/floor_decal/industrial/hatch/grey,

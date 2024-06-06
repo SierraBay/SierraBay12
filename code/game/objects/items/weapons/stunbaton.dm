@@ -78,25 +78,28 @@
 	if(!bcell)
 		to_chat(user, SPAN_WARNING("The baton does not have a power source installed."))
 
-/obj/item/melee/baton/attackby(obj/item/W, mob/user)
+/obj/item/melee/baton/use_tool(obj/item/W, mob/living/user, list/click_params)
 	if(istype(W, /obj/item/cell/device))
 		if(!bcell && user.unEquip(W))
 			W.forceMove(src)
 			bcell = W
-			to_chat(user, SPAN_NOTICE("You install a cell into the [src]."))
+			to_chat(user, SPAN_NOTICE("You install a cell into \the [src]."))
 			update_icon()
 		else
-			to_chat(user, SPAN_NOTICE("[src] already has a cell."))
+			to_chat(user, SPAN_NOTICE("\The [src] already has a cell."))
+		return TRUE
+
 	else if(isScrewdriver(W))
 		if(bcell)
 			bcell.update_icon()
 			bcell.dropInto(loc)
 			bcell = null
-			to_chat(user, SPAN_NOTICE("You remove the cell from the [src]."))
+			to_chat(user, SPAN_NOTICE("You remove the cell from \the [src]."))
 			status = 0
 			update_icon()
+			return TRUE
 	else
-		..()
+		return ..()
 
 /obj/item/melee/baton/attack_self(mob/user)
 	set_status(!status, user)
@@ -249,7 +252,7 @@
 	name = "stunprod"
 	desc = "An improvised stun baton."
 	icon = 'icons/obj/weapons/melee_physical.dmi'
-	icon_state = "stunprod_nocell"
+	icon_state = "stunprod"
 	item_state = "prod"
 	force = 3
 	throwforce = 5
@@ -258,3 +261,7 @@
 	hitcost = 25
 	attack_verb = list("poked")
 	slot_flags = null
+
+/obj/item/melee/baton/cattleprod/New()
+	update_icon()
+	..()
