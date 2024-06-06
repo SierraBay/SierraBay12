@@ -31,7 +31,7 @@
 	var/singleton/cultural_info/faction/ipc/gen = SSculture.get_culture(prefs.cultural_info[TAG_FACTION])
 	. = istype(gen) ? (job.type in gen.valid_jobs) : ..()
 
-/obj/item/card/id
+/*/obj/item/card/id
 	var/ipc_gen = null
 
 /mob/living/carbon/human/set_id_info(obj/item/card/id/id_card)
@@ -43,7 +43,7 @@
 	var/list/dat = list("<table><tr><td>")
 	if(ipc_gen)
 		dat += text("Registration: []</A><BR>\n", ipc_gen)
-	..()
+	..()*/
 
 /singleton/cultural_info/faction/ipc
 	economic_power = 0.1
