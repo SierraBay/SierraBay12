@@ -49,7 +49,7 @@
 	off_state = "thermoff"
 	electric = TRUE
 	thermals = TRUE
-	tint = TINT_HEAVY
+	tint = TINT_MODERATE
 	activation_sound = 'sound/items/metal_clicking_4.ogg'
 	deactivation_sound = 'sound/items/metal_clicking_4.ogg'
 

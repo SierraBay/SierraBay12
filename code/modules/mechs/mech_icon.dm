@@ -36,7 +36,13 @@
 /mob/living/exosuit/on_update_icon()
 	var/list/new_overlays = get_mech_images(list(body, head), MECH_BASE_LAYER)
 	if(body)
+//[SIERRA-ADD] - Mechs-by-Shegar
+		new_overlays += back_passengers_overlays
+		new_overlays += left_back_passengers_overlays
+		new_overlays += right_back_passengers_overlays
+//[SIERRA-ADD] - Mechs-by-Shegar
 		new_overlays += get_mech_image(body.decal, "[body.icon_state]_cockpit", body.on_mech_icon, overlay_layer = MECH_INTERMEDIATE_LAYER)
+
 	update_pilots(FALSE)
 	if(LAZYLEN(pilot_overlays))
 		new_overlays += pilot_overlays
@@ -49,6 +55,24 @@
 	for(var/hardpoint in hardpoints)
 		var/obj/item/mech_equipment/hardpoint_object = hardpoints[hardpoint]
 		if(hardpoint_object)
+		//[SIERRA-ADD] - Mechs-by-Shegar
+			if(hardpoint in list(HARDPOINT_LEFT_HAND, HARDPOINT_LEFT_SHOULDER))
+				if(dir == WEST || dir == SOUTHWEST || dir == NORTHWEST)
+					hardpoint_object.mech_layer = MECH_GEAR_LAYER
+				else if(dir == EAST || dir == SOUTHEAST || dir == NORTHEAST)
+					hardpoint_object.mech_layer = MECH_BACK_LAYER
+			else if(hardpoint in list(HARDPOINT_RIGHT_HAND,HARDPOINT_RIGHT_SHOULDER))
+				if(dir == WEST || dir == SOUTHWEST || dir == NORTHWEST)
+					hardpoint_object.mech_layer = MECH_BACK_LAYER
+				else if(dir == EAST || dir == SOUTHEAST || dir == NORTHEAST || dir == SOUTH)
+					hardpoint_object.mech_layer = MECH_GEAR_LAYER
+			else if(hardpoint in list(HARDPOINT_BACK))
+				if(dir == SOUTH)
+					hardpoint_object.mech_layer = MECH_BACK_LAYER
+				else
+					hardpoint_object.mech_layer = MECH_GEAR_LAYER
+
+		//[SIERRA-ADD]
 			var/use_icon_state = "[hardpoint_object.icon_state]_[hardpoint]"
 			if(use_icon_state in GLOB.mech_weapon_overlays)
 				var/color = COLOR_WHITE
@@ -62,8 +86,19 @@
 				else
 					color = head.color
 					decal = head.decal
+// [/SIERRA-ADD]
+				if(power == MECH_POWER_ON)
+					if(use_icon_state in GLOB.mech_weapon_overlays)
+						new_overlays += get_mech_image(decal, use_icon_state, 'mods/mechs_by_shegar/icons/mech_weapon_overlays.dmi', color, hardpoint_object.mech_layer )
+				else
+					new_overlays += get_mech_image(decal, use_icon_state, 'mods/mechs_by_shegar/icons/mech_weapon_overlays_off.dmi', color, hardpoint_object.mech_layer )
+// [/SIERRA-ADD]
 
+// [/SIERRA-REMOVE]
+/*
 				new_overlays += get_mech_image(decal, use_icon_state, 'icons/mecha/mech_weapon_overlays.dmi', color, hardpoint_object.mech_layer )
+*/
+// [/SIERRA-REMOVE]
 	SetOverlays(new_overlays)
 
 /mob/living/exosuit/proc/update_pilots(update_overlays = TRUE)

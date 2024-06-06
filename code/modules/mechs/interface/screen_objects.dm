@@ -1,37 +1,39 @@
 // Screen objects hereon out.
 #define MECH_UI_STYLE(X) "<span style=\"font-family: 'Small Fonts'; -dm-text-outline: 1 black; font-size: 5px;\">" + X + "</span>"
-
-/obj/screen/exosuit
+//[SIERRA-EDIT] - Mechs-by-Shegar
+// Все /obj/screen/exosuit были заменены на /obj/screen/movable/exosuit, дабы они были двигаемыми.
+// [SIERRA-EDIT]
+/obj/screen/movable/exosuit
 	name = "hardpoint"
 	icon = 'icons/mecha/mech_hud.dmi'
 	icon_state = "base"
 	var/mob/living/exosuit/owner
 	var/height = 14
 
-/obj/screen/exosuit/radio
+/obj/screen/movable/exosuit/radio
 	name = "radio"
 	maptext = MECH_UI_STYLE("RADIO")
 	maptext_x = 5
 	maptext_y = 12
 
-/obj/screen/exosuit/radio/Click()
+/obj/screen/movable/exosuit/radio/Click()
 	if(..())
 		if(owner.radio)
 			owner.radio.attack_self(usr)
 		else
 			to_chat(usr, SPAN_WARNING("There is no radio installed."))
 
-/obj/screen/exosuit/Initialize()
+/obj/screen/movable/exosuit/Initialize()
 	. = ..()
 	var/mob/living/exosuit/newowner = loc
 	if(!istype(newowner))
 		return qdel(src)
 	owner = newowner
 
-/obj/screen/exosuit/Click()
+/obj/screen/movable/exosuit/Click()
 	return (!usr.incapacitated() && usr.canClick() && (usr == owner || usr.loc == owner))
 
-/obj/screen/exosuit/hardpoint
+/obj/screen/movable/exosuit/hardpoint
 	name = "hardpoint"
 	var/hardpoint_tag
 	var/obj/item/holding
@@ -41,11 +43,11 @@
 	maptext_y = 3
 	maptext_width = 72
 
-/obj/screen/exosuit/hardpoint/MouseDrop()
+/obj/screen/movable/exosuit/hardpoint/MouseDrop()
 	..()
 	if(holding) holding.screen_loc = screen_loc
 
-/obj/screen/exosuit/hardpoint/proc/update_system_info()
+/obj/screen/movable/exosuit/hardpoint/proc/update_system_info()
 
 	// No point drawing it if we have no item to use or nobody to see it.
 	if(!holding || !owner)
@@ -123,12 +125,12 @@
 			new_overlays += GLOB.hardpoint_bar_cache[i]
 	SetOverlays(new_overlays)
 
-/obj/screen/exosuit/hardpoint/Initialize(mapload, newtag)
+/obj/screen/movable/exosuit/hardpoint/Initialize(mapload, newtag)
 	. = ..()
 	hardpoint_tag = newtag
 	name = "hardpoint ([hardpoint_tag])"
 
-/obj/screen/exosuit/hardpoint/Click(location, control, params)
+/obj/screen/movable/exosuit/hardpoint/Click(location, control, params)
 
 	if(!(..()))
 		return
@@ -155,54 +157,54 @@
 		if(owner.set_hardpoint(hardpoint_tag))
 			icon_state = "hardpoint_selected"
 
-/obj/screen/exosuit/eject
+/obj/screen/movable/exosuit/eject
 	name = "eject"
 	maptext = MECH_UI_STYLE("EJECT")
 	maptext_x = 5
 	maptext_y = 12
 
-/obj/screen/exosuit/eject/Click()
+/obj/screen/movable/exosuit/eject/Click()
 	if(..())
 		owner.eject(usr)
 
-/obj/screen/exosuit/rename
+/obj/screen/movable/exosuit/rename
 	name = "rename"
 	maptext = MECH_UI_STYLE("RENAME")
 	maptext_x = 1
 	maptext_y = 12
 
-/obj/screen/exosuit/power
+/obj/screen/movable/exosuit/power
 	name = "power"
 	icon_state = null
 
 	maptext_width = 64
 
-/obj/screen/exosuit/rename/Click()
+/obj/screen/movable/exosuit/rename/Click()
 	if(..())
 		owner.rename(usr)
 
-/obj/screen/exosuit/toggle
+/obj/screen/movable/exosuit/toggle
 	name = "toggle"
 	var/toggled = FALSE
 
-/obj/screen/exosuit/toggle/Initialize()
+/obj/screen/movable/exosuit/toggle/Initialize()
 	. = ..()
 	queue_icon_update()
 
-/obj/screen/exosuit/toggle/on_update_icon()
+/obj/screen/movable/exosuit/toggle/on_update_icon()
 	. = ..()
 	icon_state = "[initial(icon_state)][toggled ? "_enabled" : ""]"
 	maptext = SPAN_COLOR(toggled ? COLOR_WHITE : COLOR_GRAY,initial(maptext))
 
-/obj/screen/exosuit/toggle/Click()
+/obj/screen/movable/exosuit/toggle/Click()
 	if(..()) toggled()
 
-/obj/screen/exosuit/toggle/proc/toggled()
+/obj/screen/movable/exosuit/toggle/proc/toggled()
 	toggled = !toggled
 	queue_icon_update()
 	return toggled
 
-/obj/screen/exosuit/toggle/power_control
+/obj/screen/movable/exosuit/toggle/power_control
 	name = "Power control"
 	icon_state = "small_important"
 	maptext = MECH_UI_STYLE("POWER")
@@ -210,15 +212,15 @@
 	maptext_y = 13
 	height = 12
 
-/obj/screen/exosuit/toggle/power_control/toggled()
+/obj/screen/movable/exosuit/toggle/power_control/toggled()
 	. = ..()
 	owner.toggle_power(usr)
 
-/obj/screen/exosuit/toggle/power_control/on_update_icon()
+/obj/screen/movable/exosuit/toggle/power_control/on_update_icon()
 	toggled = (owner.power == MECH_POWER_ON)
 	. = ..()
 
-/obj/screen/exosuit/toggle/air
+/obj/screen/movable/exosuit/toggle/air
 	name = "air"
 	icon_state = "small_important"
 	maptext = MECH_UI_STYLE("AIR")
@@ -226,12 +228,12 @@
 	maptext_y = 13
 	height = 12
 
-/obj/screen/exosuit/toggle/air/toggled()
+/obj/screen/movable/exosuit/toggle/air/toggled()
 	owner.use_air = ..()
 	to_chat(usr, SPAN_NOTICE("Auxiliary atmospheric system [owner.use_air ? "enabled" : "disabled"]."))
 	playsound(src.loc, 'sound/effects/turret/open.wav', 50, 1, -6)
 
-/obj/screen/exosuit/toggle/maint
+/obj/screen/movable/exosuit/toggle/maint
 	name = "toggle maintenance protocol"
 	icon_state = "small"
 	maptext = MECH_UI_STYLE("MAINT")
@@ -239,54 +241,64 @@
 	maptext_y = 13
 	height = 12
 
-/obj/screen/exosuit/toggle/maint/toggled()
+/obj/screen/movable/exosuit/toggle/maint/toggled()
 	owner.maintenance_protocols = ..()
 	to_chat(usr, SPAN_NOTICE("Maintenance protocols [owner.maintenance_protocols ? "enabled" : "disabled"]."))
 	playsound(src.loc, 'sound/machines/suitstorage_lockdoor.ogg', 50, 1, -6)
 
-/obj/screen/exosuit/toggle/hardpoint
+/obj/screen/movable/exosuit/toggle/hardpoint
 	name = "toggle hardpoint lock"
 	maptext = MECH_UI_STYLE("GEAR")
 	maptext_x = 5
 	maptext_y = 12
 
-/obj/screen/exosuit/toggle/hardpoint/toggled()
+/obj/screen/movable/exosuit/toggle/hardpoint/toggled()
 	owner.hardpoints_locked = ..()
 	to_chat(usr, SPAN_NOTICE("Hardpoint system access is now [owner.hardpoints_locked ? "disabled" : "enabled"]."))
 	playsound(src.loc, 'sound/machines/twobeep.ogg', 50, 1, -6)
 
-/obj/screen/exosuit/toggle/hatch
+/obj/screen/movable/exosuit/toggle/hatch
 	name = "toggle hatch lock"
 	maptext = MECH_UI_STYLE("LOCK")
 	maptext_x = 5
 	maptext_y = 12
 
-/obj/screen/exosuit/toggle/hatch/toggled()
+/obj/screen/movable/exosuit/toggle/hatch/toggled()
 	if(!owner.hatch_locked && !owner.hatch_closed)
 		to_chat(usr, SPAN_WARNING("You cannot lock the hatch while it is open."))
 		return
+	//[SIERRA-ADD] - Mechs-by-Shegar
+	if(owner.body.hatch_bolts_status == BOLTS_DESTROYED)
+		to_chat(usr, SPAN_WARNING("ERROR. Security cockpit bolts damaged or non operable anymore."))
+		return
+	//[SIERRA-ADD]
 	owner.hatch_locked = ..()
 	to_chat(usr, SPAN_NOTICE("The [owner.body.hatch_descriptor] is [owner.hatch_locked ? "now" : "no longer" ] locked."))
 	playsound(src.loc, 'sound/machines/suitstorage_lockdoor.ogg', 50, 1, -6)
 
-/obj/screen/exosuit/toggle/hatch_open
+/obj/screen/movable/exosuit/toggle/hatch_open
 	name = "open or close hatch"
 	maptext = MECH_UI_STYLE("CLOSE")
 	maptext_x = 4
 	maptext_y = 12
 
-/obj/screen/exosuit/toggle/hatch_open/toggled()
+/obj/screen/movable/exosuit/toggle/hatch_open/toggled()
 	if (!owner)
 		return
-	if(owner.hatch_locked && owner.hatch_closed)
+	if(!owner.hatch_closed && owner.power != MECH_POWER_ON)
 		to_chat(usr, SPAN_WARNING("You cannot open the hatch while it is locked."))
 		return
+	//[SIERRA-ADD] - Mechs-by-Shegar
+	if(owner.hatch_closed && owner.power != MECH_POWER_ON)
+		to_chat(usr, SPAN_WARNING("Cockpit hydraulic system offline,hatch can't be closed now."))
+		return
+	//[SIERRA-ADD]
 	owner.hatch_closed = ..()
 	to_chat(usr, SPAN_NOTICE("The [owner.body.hatch_descriptor] is now [owner.hatch_closed ? "closed" : "open" ]."))
 	owner.update_icon()
 	playsound(src.loc, 'sound/machines/suitstorage_cycledoor.ogg', 50, 1, -6)
 
-/obj/screen/exosuit/toggle/hatch_open/on_update_icon()
+/obj/screen/movable/exosuit/toggle/hatch_open/on_update_icon()
 	toggled = owner.hatch_closed
 	. = ..()
 	if(toggled)
@@ -297,22 +309,25 @@
 		maptext_x = 4
 
 // This is basically just a holder for the updates the exosuit does.
-/obj/screen/exosuit/health
+/obj/screen/movable/exosuit/health
 	name = "exosuit integrity"
 	icon_state = "health"
 
-/obj/screen/exosuit/health/Click()
+/obj/screen/movable/exosuit/health/Click()
 	if(..())
 		if(owner && owner.body && owner.get_cell() && owner.body.diagnostics?.is_functional())
 			usr.setClickCooldown(0.2 SECONDS)
 			to_chat(usr, SPAN_NOTICE("The diagnostics panel blinks several times as it updates:"))
 			playsound(owner.loc,'sound/effects/scanbeep.ogg',30,0)
+			//[SIERRA-ADD] - Mechs-by-Shegar
+			owner.get_main_data(usr)
+			//[SIERRA-ADD]
 			for(var/obj/item/mech_component/MC in list(owner.arms, owner.legs, owner.body, owner.head))
 				if(MC)
 					MC.return_diagnostics(usr)
 
 //Controls if cameras set the vision flags
-/obj/screen/exosuit/toggle/camera
+/obj/screen/movable/exosuit/toggle/camera
 	name = "toggle camera matrix"
 	icon_state = "small_important"
 	maptext = MECH_UI_STYLE("SENSOR")
@@ -320,7 +335,7 @@
 	maptext_y = 13
 	height = 12
 
-/obj/screen/exosuit/toggle/camera/toggled()
+/obj/screen/movable/exosuit/toggle/camera/toggled()
 	if(!owner.head)
 		to_chat(usr, SPAN_WARNING("I/O Error: Camera systems not found."))
 		return
@@ -333,30 +348,30 @@
 	owner.head.active_sensors = ..()
 	to_chat(usr, SPAN_NOTICE("[owner.head.name] advanced sensor mode is [owner.head.active_sensors ? "now" : "no longer" ] active."))
 
-/obj/screen/exosuit/toggle/camera/on_update_icon()
+/obj/screen/movable/exosuit/toggle/camera/on_update_icon()
 	toggled = owner.head.active_sensors
 	. = ..()
-/obj/screen/exosuit/needle
+/obj/screen/movable/exosuit/needle
 	vis_flags = VIS_INHERIT_ID
 	icon_state = "heatprobe_needle"
 
-/obj/screen/exosuit/heat
+/obj/screen/movable/exosuit/heat
 	name = "heat probe"
 	icon_state = "heatprobe"
 	var/celsius = TRUE
-	var/obj/screen/exosuit/needle/gauge_needle = null
+	var/obj/screen/movable/exosuit/needle/gauge_needle = null
 	desc = "TEST"
 
-/obj/screen/exosuit/heat/Initialize()
+/obj/screen/movable/exosuit/heat/Initialize()
 	. = ..()
-	gauge_needle = new /obj/screen/exosuit/needle(owner)
+	gauge_needle = new /obj/screen/movable/exosuit/needle(owner)
 	vis_contents += gauge_needle
 
-/obj/screen/exosuit/heat/Destroy()
+/obj/screen/movable/exosuit/heat/Destroy()
 	QDEL_NULL(gauge_needle)
 	. = ..()
 
-/obj/screen/exosuit/heat/Click(location, control, params)
+/obj/screen/movable/exosuit/heat/Click(location, control, params)
 	if(..())
 		var/modifiers = params2list(params)
 		if(modifiers["shift"])
@@ -381,7 +396,7 @@
 		else
 			usr.show_message(SPAN_WARNING("The life support panel isn't responding."), VISIBLE_MESSAGE)
 
-/obj/screen/exosuit/heat/proc/Update()
+/obj/screen/movable/exosuit/heat/proc/Update()
 	//Relative value of heat
 	if(owner && owner.body && owner.body.diagnostics?.is_functional() && gauge_needle)
 		var/value = clamp( owner.bodytemperature / (owner.material.melting_point * 1.55), 0, 1)

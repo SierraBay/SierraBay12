@@ -70,12 +70,12 @@
 	// Interface stuff.
 	var/list/hud_elements = list()
 	var/list/hardpoint_hud_elements = list()
-	var/obj/screen/exosuit/health/hud_health
-	var/obj/screen/exosuit/toggle/hatch_open/hud_open
-	var/obj/screen/exosuit/power/hud_power
-	var/obj/screen/exosuit/heat/hud_heat
-	var/obj/screen/exosuit/toggle/power_control/hud_power_control
-	var/obj/screen/exosuit/toggle/camera/hud_camera
+	var/obj/screen/movable/exosuit/health/hud_health
+	var/obj/screen/movable/exosuit/toggle/hatch_open/hud_open
+	var/obj/screen/movable/exosuit/power/hud_power
+	var/obj/screen/movable/exosuit/heat/hud_heat
+	var/obj/screen/movable/exosuit/toggle/power_control/hud_power_control
+	var/obj/screen/movable/exosuit/toggle/camera/hud_camera
 
 	//POWER
 	var/power = MECH_POWER_OFF
@@ -155,6 +155,9 @@
 	hud_camera = null
 
 	QDEL_NULL_LIST(hud_elements)
+	//[SIERRA-ADD]-Mechs-by-Shegar
+	QDEL_NULL_LIST(menu_hud_elements)
+	//[SIERRA-ADD]
 
 	for (var/hardpoint in hardpoints)
 		qdel(hardpoints[hardpoint])
@@ -168,7 +171,7 @@
 	QDEL_NULL(body)
 
 	for(var/hardpoint in hardpoint_hud_elements)
-		var/obj/screen/exosuit/hardpoint/H = hardpoint_hud_elements[hardpoint]
+		var/obj/screen/movable/exosuit/hardpoint/H = hardpoint_hud_elements[hardpoint]
 		H.owner = null
 		H.holding = null
 		qdel(H)

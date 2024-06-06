@@ -2066,6 +2066,7 @@
 /area/map_template/rescue_base/base)
 "ec" = (
 /obj/structure/table/reinforced,
+/obj/item/mech_equipment/mounted_system/melee/mechete,
 /turf/unsimulated/floor{
 	dir = 1;
 	icon_state = "vault"
@@ -2076,6 +2077,7 @@
 /obj/item/device/radio/intercom/specops{
 	pixel_y = 22
 	},
+/obj/item/device/paint_sprayer,
 /turf/unsimulated/floor{
 	dir = 1;
 	icon_state = "vault"
@@ -2084,6 +2086,8 @@
 "ee" = (
 /obj/structure/table/reinforced,
 /obj/machinery/cell_charger,
+/obj/item/cell/hyper,
+/obj/item/cell/hyper,
 /turf/unsimulated/floor{
 	dir = 1;
 	icon_state = "vault"
@@ -2185,7 +2189,11 @@
 /area/map_template/rescue_base/base)
 "eq" = (
 /obj/machinery/mech_recharger,
-/turf/space,
+/mob/living/exosuit/premade/ert,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
 /area/map_template/rescue_base/base)
 "er" = (
 /obj/item/clothing/head/solgov/dress/fleet/command{
@@ -3487,6 +3495,47 @@
 	icon_state = "asteroidfloor"
 	},
 /area/map_template/rescue_base/base)
+"qv" = (
+/obj/structure/table/reinforced,
+/obj/item/mech_equipment/sleeper,
+/turf/unsimulated/floor{
+	dir = 1;
+	icon_state = "vault"
+	},
+/area/map_template/rescue_base/base)
+"to" = (
+/obj/structure/table/reinforced,
+/obj/item/mech_equipment/ballistic_shield,
+/turf/unsimulated/floor{
+	dir = 1;
+	icon_state = "vault"
+	},
+/area/map_template/rescue_base/base)
+"xA" = (
+/obj/structure/table/reinforced,
+/obj/item/robot_parts/robot_component/actuator,
+/obj/item/robot_parts/robot_component/actuator,
+/turf/unsimulated/floor{
+	dir = 1;
+	icon_state = "vault"
+	},
+/area/map_template/rescue_base/base)
+"zv" = (
+/obj/machinery/mech_recharger,
+/mob/living/exosuit/premade/light,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
+/area/map_template/rescue_base/base)
+"CM" = (
+/obj/machinery/mech_recharger,
+/mob/living/exosuit/premade/powerloader,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
+/area/map_template/rescue_base/base)
 "DF" = (
 /obj/structure/handrail{
 	dir = 4
@@ -3509,6 +3558,52 @@
 /obj/machinery/telecomms/allinone/ert,
 /turf/simulated/floor/plating,
 /area/map_template/rescue_base/start)
+"Fo" = (
+/obj/structure/table/reinforced,
+/obj/item/circuitboard/exosystem/medical,
+/obj/item/circuitboard/exosystem/utility,
+/obj/item/circuitboard/exosystem/engineering,
+/obj/item/circuitboard/exosystem/weapons,
+/turf/unsimulated/floor{
+	dir = 1;
+	icon_state = "vault"
+	},
+/area/map_template/rescue_base/base)
+"Mv" = (
+/obj/structure/table/reinforced,
+/obj/item/device/kit/mech,
+/turf/unsimulated/floor{
+	dir = 1;
+	icon_state = "vault"
+	},
+/area/map_template/rescue_base/base)
+"Tc" = (
+/obj/machinery/mech_recharger,
+/obj/structure/heavy_vehicle_frame,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
+/area/map_template/rescue_base/base)
+"Vo" = (
+/obj/structure/table/reinforced,
+/obj/item/ammo_magazine/shotgunmag/mech,
+/obj/item/ammo_magazine/shotgunmag/mech,
+/obj/item/ammo_magazine/shotgunmag/mech,
+/obj/item/ammo_magazine/shotgunmag/mech,
+/turf/unsimulated/floor{
+	dir = 1;
+	icon_state = "vault"
+	},
+/area/map_template/rescue_base/base)
+"Wf" = (
+/obj/structure/table/reinforced,
+/obj/item/robot_parts/robot_component/armour/exosuit/combat,
+/turf/unsimulated/floor{
+	dir = 1;
+	icon_state = "vault"
+	},
+/area/map_template/rescue_base/base)
 
 (1,1,1) = {"
 ab
@@ -5780,7 +5875,7 @@ ao
 ao
 ao
 ao
-ec
+Fo
 ad
 bB
 eN
@@ -5844,7 +5939,7 @@ ao
 ao
 ao
 ao
-ec
+to
 ad
 bC
 eN
@@ -5903,12 +5998,12 @@ ao
 ad
 ad
 ad
-ec
+Mv
 ao
 ao
 ao
 ao
-ec
+qv
 ad
 bA
 eO
@@ -6032,11 +6127,11 @@ ad
 ac
 ad
 ee
-eq
-eq
-eq
+zv
+CM
+Tc
 ao
-ec
+xA
 ad
 bB
 bC
@@ -6226,9 +6321,9 @@ ac
 ac
 ac
 ad
-ec
+Wf
 eq
-ec
+Vo
 ad
 ac
 ac
