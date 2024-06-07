@@ -7,5 +7,6 @@
 #include "code/gravity_generator/main.dm"
 #include "code/gravity_generator/wires.dm"
 #include "code/sealing_generator.dm"
+#include "code\telepads.dm"
 
 #endif

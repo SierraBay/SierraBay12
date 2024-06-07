@@ -69,6 +69,9 @@
 
 /obj/item/mech_equipment/shields/uninstalled()
 	QDEL_NULL(aura)
+	//[SIERRA-ADD] - Mechs-by-Shegar
+	toggle() //Предотвратит обработку оного когда он не в мехе
+	//[SIERRA-ADD] - Mechs-by-Shegar
 	. = ..()
 
 /obj/item/mech_equipment/shields/attack_self(mob/user)

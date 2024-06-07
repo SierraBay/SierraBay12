@@ -102,6 +102,13 @@
 	SetOverlays(new_overlays)
 
 /mob/living/exosuit/proc/update_pilots(update_overlays = TRUE)
+	//[SIERRA-ADD] - Mechs-by-Shegar
+	var/local_dir = dir
+	if(local_dir == NORTHEAST || local_dir == SOUTHEAST)
+		local_dir = EAST
+	else if(local_dir == NORTHWEST || local_dir == SOUTHWEST)
+		local_dir = WEST
+	//[SIERRA-ADD]
 	if(update_overlays && LAZYLEN(pilot_overlays))
 		CutOverlays(pilot_overlays)
 	pilot_overlays = null
@@ -110,13 +117,13 @@
 			var/mob/pilot = pilots[i]
 			var/image/draw_pilot = new
 			draw_pilot.appearance = pilot
-			var/rel_pos = dir == NORTH ? -1 : 1
+			var/rel_pos = local_dir == NORTH ? -1 : 1
 			draw_pilot.layer = MECH_PILOT_LAYER + (body ? ((LAZYLEN(body.pilot_positions)-i)*0.001 * rel_pos) : 0)
 			draw_pilot.plane = FLOAT_PLANE
 			draw_pilot.appearance_flags = KEEP_TOGETHER
 			if(body && i <= LAZYLEN(body.pilot_positions))
 				var/list/offset_values = body.pilot_positions[i]
-				var/list/directional_offset_values = offset_values["[dir]"]
+				var/list/directional_offset_values = offset_values["[local_dir]"]
 				draw_pilot.pixel_x = pilot.default_pixel_x + directional_offset_values["x"]
 				draw_pilot.pixel_y = pilot.default_pixel_y + directional_offset_values["y"]
 				draw_pilot.pixel_z = 0

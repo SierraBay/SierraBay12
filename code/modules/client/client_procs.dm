@@ -181,8 +181,7 @@
 	// [SIERRA-ADD]
 
 	. = ..()	//calls mob.Login()
-
-	view = get_preference_value(/datum/client_preference/client_view)
+	//view = get_preference_value(/datum/client_preference/client_view)
 
 	GLOB.using_map.map_info(src)
 

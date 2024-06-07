@@ -33,11 +33,11 @@
 #include "code/mech_icon.dm"
 #include "code/mech_interaction.dm"
 #include "code/mech_move.dm"
+#include "code/mech_uplink.dm"
 #include "code/mech.dm"
+#include "code/new_prices.dm"
+#include "code/paint_kit.dm"
 #include "code/passengers_compartment.dm"
 
-//Прочий мусор
-#include "code/paint_kit.dm"
-#include "code/mech_uplink.dm"
 
 #endif

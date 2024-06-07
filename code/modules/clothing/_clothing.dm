@@ -54,7 +54,10 @@
 	for (var/obj/item/clothing/accessory/A as anything in accessories)
 		remove_accessory(null, A)
 		qdel(A)
-	accessories.Cut()
+	//[SIERRA-ADD]
+	if(accessories) //Убьёт рантаймы null.Cut()
+		accessories.Cut()
+	//[SIERRA-ADD]
 	accessories = null
 	. = ..()
 

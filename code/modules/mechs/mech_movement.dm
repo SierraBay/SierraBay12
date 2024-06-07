@@ -125,12 +125,7 @@
 		playsound(exosuit.loc, exosuit.legs.mech_turn_sound, 40,1)
 		exosuit.set_dir(moving_dir)
 		exosuit.SetMoveCooldown(exosuit.legs.turn_delay)
-		exosuit.passenger_compartment.count_passengers()
-		if(exosuit.passengers_ammount > 0)
-			exosuit.update_passengers()
-		for(var/hardpoint in exosuit.hardpoints)
-			if(hardpoint == "left hand" || hardpoint == "right hand" || hardpoint == "left shoulder" || hardpoint == "right shoulder")
-				exosuit.update_icon()
+
 //TURN
 
 //MOVE
