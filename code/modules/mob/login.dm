@@ -153,5 +153,5 @@
 	. = ..()
 	if(darksight)
 		darksight.icon_state = "ghost"
-		darksight.alpha = 127
+		darksight.alpha = 0
 		darksight.SetTransform(2) //Max darksight
