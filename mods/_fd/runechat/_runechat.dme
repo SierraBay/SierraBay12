@@ -3,13 +3,9 @@
 
 #include "_runechat.dm"
 
-#include "code/_list_helpers.dm"
-#include "code/atom.dm"
 #include "code/client.dm"
 #include "code/emote.dm"
 #include "code/hear.dm"
 #include "code/message.dm"
-#include "code/renderer.dm"
-#include "code/runechat_message.dm"
 
 #endif
