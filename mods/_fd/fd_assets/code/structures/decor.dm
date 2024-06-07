@@ -305,7 +305,7 @@
 
 /obj/structure/fd/bs_lamp/Initialize()
 	. = ..()
-	set_light(0.3, 1, 3, 1, COLOR_CYAN)
+	set_light(3, 0.3, l_color = COLOR_CYAN)
 
 /obj/structure/fd/bs_vines
 	name = "bluespace corrupted vines"
@@ -321,7 +321,7 @@
 
 /obj/structure/fd/bs_vines/Initialize()
 	. = ..()
-	set_light(0.3, 1, 2, 1, COLOR_CYAN)
+	set_light(1, 0.3, l_color = COLOR_CYAN)
 
 /obj/structure/fd/bs_vines/user_unbuckle_mob(mob/user)
 	if(buckled_mob && !user.stat && !user.restrained())
