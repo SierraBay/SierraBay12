@@ -7,6 +7,6 @@
 
 #define NABBER_JOBS /datum/job/ai, /datum/job/cyborg, /datum/job/janitor, /datum/job/scientist_assistant, /datum/job/chemist, /datum/job/roboticist, /datum/job/cargo_assistant, /datum/job/cook, /datum/job/engineer_trainee, /datum/job/doctor_trainee, /datum/job/bartender, /datum/job/steward
 
-#define SKRELL_BLACKLISTED_JOBS /datum/job/hos, /datum/job/hop, /datum/job/cmo, /datum/job/iaa, /datum/job/psychiatrist,/datum/job/captain
+#define SKRELL_BLACKLISTED_JOBS /datum/job/hos, /datum/job/hop, /datum/job/iaa, /datum/job/psychiatrist,/datum/job/captain
 
 #define MACHINE_BLACKLISTED_JOBS /datum/job/hos, /datum/job/psychiatrist, /datum/job/captain, /datum/job/security_assistant
