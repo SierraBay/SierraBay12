@@ -797,10 +797,9 @@ var/global/list/damage_icon_parts = list()
 		if(BP_IS_ROBOTIC(E))
 			surgery_icon = 'mods/ipc_mods/icons/ipc_icons.dmi'
 			overlay_state = "[base_state]-robo"
-			if(overlay_state in surgery_states)
-				LAZYADD(overlays_to_add, image(icon = surgery_icon, icon_state = overlay_state, layer = -HO_SURGERY_LAYER))
-				total.AddOverlays(overlays_to_add)
-				continue
+			LAZYADD(overlays_to_add, image(icon = surgery_icon, icon_state = overlay_state, layer = -HO_SURGERY_LAYER))
+			total.AddOverlays(overlays_to_add)
+			continue
 	//[/SIERRA-EDIT]-[IPC-MODS]
 		if(overlay_state in surgery_states)
 			var/image/flesh = image(icon = surgery_icon, icon_state = overlay_state, layer = -HO_SURGERY_LAYER)
