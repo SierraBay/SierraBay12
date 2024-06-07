@@ -2,7 +2,6 @@
 #### Список PRов:
 
 - https://github.com/SierraBay/SierraBay12/pull/1103
-- https://github.com/SierraBay/SierraBay12/pull/2306
 <!--
   Ссылки на PRы, связанные с модом:
   - Создание
@@ -20,7 +19,8 @@ ID мода: STATUSBAR
 
 ### Описание мода
 
-Мод добавляет маленькое окно слева снизу для клиентов, чтобы не пользоваться огромным туллтипом для турфов и объектов сверху экрана.
+Этот мод служит примером для разработчиков и существует лишь для того,
+чтобы его можно было легко скопировать и вставить в другое место.
 <!--
   Что он делает, что добавляет: что, куда, зачем и почему - всё здесь.
   А также любая полезная информация.
@@ -29,9 +29,7 @@ ID мода: STATUSBAR
 ### Изменения *кор кода*
 
 - `code/modules/mob/new_player/login.dm`: `/mob/new_player/Login()`
-- `code/modules/mob/living/login.dm`: `/mob/living/Login()`
-- `code/modules/mob/observer/ghost/login.dm`: `/mob/observer/ghost/Login()`
-
+- `code/modules/mob/new_player/logout.dm`: `/mob/new_player/Logout()`
 <!--
   Если вы редактировали какие-либо процедуры или переменные в кор коде,
   они должны быть указаны здесь.
