@@ -1,0 +1,4 @@
+author: Teteshnik
+changes:
+  - {tweak: Вернул жабам стать СМО}
+delete-after: true
