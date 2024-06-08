@@ -15,70 +15,70 @@ Used for quick dress-up. Also comes with several discount
 	desc = "Kit, filled with bioweaponery. It contains: Voidsuit, sprayer with bioterror mix, bioterror grenade and military pistol. Don't forget to turn your internals on!"
 	item_cost = DEFAULT_TELECRYSTAL_AMOUNT
 	antag_roles = list(MODE_MERCENARY)
-	path = /obj/item/storage/backpack/satchel/syndie_kit/mercenary/bioterror
+	path = /obj/item/storage/backpack/dufflebag/syndie_kit/bioterror
 
 /datum/uplink_item/item/mercenary/pyro
 	name = "Pyro Kit"
 	desc = "Kit, used for making FIRES! It contains: Special pyro voidsuit, flamethrower with 4 napalm canisters, 2 incendiary grenades and military pistol."
 	item_cost = DEFAULT_TELECRYSTAL_AMOUNT
 	antag_roles = list(MODE_MERCENARY)
-	path = /obj/item/storage/backpack/satchel/syndie_kit/mercenary/pyro
+	path = /obj/item/storage/backpack/dufflebag/syndie_kit/pyro
 
 /datum/uplink_item/item/mercenary/classic
 	name = "Classic Kit"
 	desc = "Old and faithful kit. It contains: Heavy armor, assault rifle, cryptographic sequencer and grenade."
 	item_cost = DEFAULT_TELECRYSTAL_AMOUNT
 	antag_roles = list(MODE_MERCENARY)
-	path = /obj/item/storage/backpack/satchel/syndie_kit/mercenary/classic
+	path = /obj/item/storage/backpack/dufflebag/syndie_kit/classic
 
 /datum/uplink_item/item/mercenary/stealthy
 	name = "Stealthy Kit"
 	desc = "A special kit for stealthy operations. It contains: Chameleon kit, fake crew annoncement, freedom implant, cryptographic sequencer, plastic surgery kit, silensed pistol and clerical kit."
 	item_cost = DEFAULT_TELECRYSTAL_AMOUNT
 	antag_roles = list(MODE_MERCENARY)
-	path = /obj/item/storage/backpack/satchel/syndie_kit/mercenary/stealthy
+	path = /obj/item/storage/backpack/dufflebag/syndie_kit/stealthy
 
 /datum/uplink_item/item/mercenary/sniper
 	name = "Sniper Kit"
 	desc = "Fashionable kit for fashionable operatives. It contains: Cool-looking armor vest, disguised as a suit, thermal googles and sniper rifle with ammo."
 	item_cost = DEFAULT_TELECRYSTAL_AMOUNT
 	antag_roles = list(MODE_MERCENARY)
-	path = /obj/item/storage/backpack/satchel/syndie_kit/mercenary/sniper
+	path = /obj/item/storage/backpack/dufflebag/syndie_kit/sniper
 
 /datum/uplink_item/item/mercenary/breacher
 	name = "Breacher Kit"
 	desc = "You're leading the assault. It contains: Heavy armor, 3 C-4 explosives, drum-fed shotgun and cryptographic sequencer."
 	item_cost = DEFAULT_TELECRYSTAL_AMOUNT
 	antag_roles = list(MODE_MERCENARY)
-	path = /obj/item/storage/backpack/satchel/syndie_kit/mercenary/breacher
+	path = /obj/item/storage/backpack/dufflebag/syndie_kit/breacher
 
 /datum/uplink_item/item/mercenary/saboteur
 	name = "Saboteur Kit"
 	desc = "You want to sabotage ship systems? This kit is specially for you. It contains: Heavy armor, military pistol, flashdark, chameleon projector, cryptographic sequencer and some C-4 explosives."
 	item_cost = DEFAULT_TELECRYSTAL_AMOUNT
 	antag_roles = list(MODE_MERCENARY)
-	path = /obj/item/storage/backpack/satchel/syndie_kit/mercenary/saboteur
+	path = /obj/item/storage/backpack/dufflebag/syndie_kit/saboteur
 
 /datum/uplink_item/item/mercenary/medic
 	name = "Field Medic Kit"
 	desc = "This kit can provide almost everything for combat medic. It contains: Heavy armor, military pistol, combat medkit, combat defibrilator and surgery kit."
 	item_cost = DEFAULT_TELECRYSTAL_AMOUNT
 	antag_roles = list(MODE_MERCENARY)
-	path = /obj/item/storage/backpack/satchel/syndie_kit/mercenary/medic
+	path = /obj/item/storage/backpack/dufflebag/syndie_kit/medic
 
 /datum/uplink_item/item/mercenary/heavy
 	name = "Heavy Kit"
 	desc = "This kit is for heavy gunners. It contains: Heavy armor, energy shield, grenade and L6 Saw machinegun."
 	item_cost = DEFAULT_TELECRYSTAL_AMOUNT * 2
 	antag_roles = list(MODE_MERCENARY)
-	path = /obj/item/storage/backpack/satchel/syndie_kit/mercenary/heavy
+	path = /obj/item/storage/backpack/dufflebag/syndie_kit/heavy
 
 /datum/uplink_item/item/mercenary/netrunner
 	name = "Netrunner Kit"
 	desc = "This kit is can provide some help in hacking of ship systems. It contains: Hacker rig, camera MIU, some computers and cryptographic sequencer."
 	item_cost = DEFAULT_TELECRYSTAL_AMOUNT
 	antag_roles = list(MODE_MERCENARY)
-	path = /obj/item/storage/backpack/satchel/syndie_kit/mercenary/netrunner
+	path = /obj/item/storage/backpack/dufflebag/syndie_kit/netrunner
 
 // What's inside the box
 
@@ -92,7 +92,7 @@ Used for quick dress-up. Also comes with several discount
 	name = "gorlex marauders crate"
 	desc = "A mercenary equipment crate."
 */
-/obj/item/storage/backpack/satchel/syndie_kit/mercenary/bioterror
+/obj/item/storage/backpack/dufflebag/syndie_kit/bioterror
 
 	startswith = list(
 		/obj/item/clothing/suit/armor/pcarrier/merc,
@@ -105,7 +105,7 @@ Used for quick dress-up. Also comes with several discount
 		/obj/item/gun/projectile/pistol/optimus
 		)
 
-/obj/item/storage/backpack/satchel/syndie_kit/mercenary/pyro
+/obj/item/storage/backpack/dufflebag/syndie_kit/pyro
 
 	startswith = list(
 		/obj/item/clothing/suit/space/void/merc/heavy/prepared,
@@ -117,7 +117,7 @@ Used for quick dress-up. Also comes with several discount
 		/obj/item/gun/projectile/pistol/optimus
 		)
 
-/obj/item/storage/backpack/satchel/syndie_kit/mercenary/classic
+/obj/item/storage/backpack/dufflebag/syndie_kit/classic
 
 	startswith = list(
 		/obj/item/clothing/suit/armor/pcarrier/merc,
@@ -127,7 +127,7 @@ Used for quick dress-up. Also comes with several discount
 		/obj/item/card/emag
 		)
 
-/obj/item/storage/backpack/satchel/syndie_kit/mercenary/stealthy
+/obj/item/storage/backpack/dufflebag/syndie_kit/stealthy
 
 	startswith = list(
 		/obj/item/storage/box/syndie_kit/chameleon = 2,
@@ -142,7 +142,7 @@ Used for quick dress-up. Also comes with several discount
 		/obj/item/card/emag
 		)
 
-/obj/item/storage/backpack/satchel/syndie_kit/mercenary/sniper
+/obj/item/storage/backpack/dufflebag/syndie_kit/sniper
 
 	startswith = list(
 		/obj/item/clothing/under/det,
