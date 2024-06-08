@@ -152,7 +152,7 @@ Used for quick dress-up. Also comes with several discount
 		/obj/item/clothing/glasses/thermal/syndi
 		)
 
-/obj/item/storage/backpack/satchel/syndie_kit/mercenary/breacher
+/obj/item/storage/backpack/dufflebag/syndie_kit/breacher
 
 	startswith = list(
 		/obj/item/clothing/suit/armor/pcarrier/merc,
@@ -164,7 +164,7 @@ Used for quick dress-up. Also comes with several discount
 		/obj/item/card/emag
 		)
 
-/obj/item/storage/backpack/satchel/syndie_kit/mercenary/saboteur
+/obj/item/storage/backpack/dufflebag/syndie_kit/saboteur
 
 	startswith = list(
 		/obj/item/clothing/suit/armor/pcarrier/merc,
@@ -176,7 +176,7 @@ Used for quick dress-up. Also comes with several discount
 		/obj/item/card/emag
 		)
 
-/obj/item/storage/backpack/satchel/syndie_kit/mercenary/medic
+/obj/item/storage/backpack/dufflebag/syndie_kit/medic
 
 	startswith = list(
 		/obj/item/clothing/suit/armor/pcarrier/merc,
@@ -187,7 +187,7 @@ Used for quick dress-up. Also comes with several discount
 		/obj/item/gun/projectile/pistol/optimus,
 		)
 
-/obj/item/storage/backpack/satchel/syndie_kit/mercenary/heavy
+/obj/item/storage/backpack/dufflebag/syndie_kit/heavy
 
 	startswith = list(
 		/obj/item/clothing/suit/space/void/merc/heavy/prepared,
@@ -197,7 +197,7 @@ Used for quick dress-up. Also comes with several discount
 		/obj/item/shield/energy
 		)
 
-/obj/item/storage/backpack/satchel/syndie_kit/mercenary/netrunner
+/obj/item/storage/backpack/dufflebag/syndie_kit/netrunner
 
 	startswith = list(
 		/obj/item/rig/light/hacker/runner,
