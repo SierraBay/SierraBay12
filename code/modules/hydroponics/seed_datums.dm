@@ -1643,7 +1643,7 @@
 	name = "aghrassh"
 	seed_name = "aghrassh"
 	display_name = "aghrassh tree"
-	chems = list(/datum/reagent/nutriment = list(1,20))
+	chems = list(/datum/reagent/nutriment = list(1,10), /datum/reagent/silver = list(1,3))
 	kitchen_tag = "aghrassh"
 
 /datum/seed/aghrassh/New()

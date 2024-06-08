@@ -779,9 +779,12 @@ var/global/list/damage_icon_parts = list()
 	overlays_standing[HO_SURGERY_LAYER] = null
 	var/image/total = new
 	for(var/obj/item/organ/external/E in organs)
-		if(BP_IS_ROBOTIC(E) || E.is_stump())
+	//[SIERRA-EDIT]-[IPC-MODS]
+		if(E.is_stump())
 			continue
 		var/how_open = round(E.how_open())
+		if(BP_IS_ROBOTIC(E))
+			how_open = E.hatch_state
 		if(how_open <= 0)
 			continue
 		var/surgery_icon = E.species.get_surgery_overlay_icon(src)
@@ -791,6 +794,13 @@ var/global/list/damage_icon_parts = list()
 		var/base_state = "[E.icon_name][how_open]"
 		var/overlay_state = "[base_state]-flesh"
 		var/list/overlays_to_add
+		if(BP_IS_ROBOTIC(E))
+			surgery_icon = 'mods/ipc_mods/icons/ipc_icons.dmi'
+			overlay_state = "[base_state]-robo"
+			LAZYADD(overlays_to_add, image(icon = surgery_icon, icon_state = overlay_state, layer = -HO_SURGERY_LAYER))
+			total.AddOverlays(overlays_to_add)
+			continue
+	//[/SIERRA-EDIT]-[IPC-MODS]
 		if(overlay_state in surgery_states)
 			var/image/flesh = image(icon = surgery_icon, icon_state = overlay_state, layer = -HO_SURGERY_LAYER)
 			flesh.color = E.species.get_flesh_colour(src)

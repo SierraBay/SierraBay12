@@ -5,6 +5,7 @@
 
 
 #include "code/multimeter.dm"
+#include "code/noose.dm"
 #include "code/wires.dm"
 
 #endif

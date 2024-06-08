@@ -199,7 +199,10 @@
 	total_positions = 1
 	spawn_positions = 1
 	alt_titles = list(
-		"Mentalist" = /singleton/hierarchy/outfit/job/sierra/crew/medical/counselor/mentalist
+		"Mentalist" = /singleton/hierarchy/outfit/job/sierra/crew/medical/counselor/mentalist,
+		"Psychologist" = /singleton/hierarchy/outfit/job/sierra/crew/medical/counselor/mentalist,
+		"Therapist" = /singleton/hierarchy/outfit/job/sierra/crew/medical/counselor/mentalist,
+		"Psychiatrist" = /singleton/hierarchy/outfit/job/sierra/crew/medical/counselor/mentalist
 	)
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/medical/counselor
 	allowed_branches = list(

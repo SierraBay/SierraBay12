@@ -91,7 +91,10 @@
 
 /obj/item/mech_equipment/mounted_system
 	var/holding_type
-	var/obj/item/holding
+	//[SIERRA-EDIT] - Mechs_by_shegar
+	//var/obj/item/holding
+	var/obj/item/gun/projectile/holding
+	//[SIERRA-EDIT]
 
 /obj/item/mech_equipment/mounted_system/attack_self(mob/user)
 	. = ..()

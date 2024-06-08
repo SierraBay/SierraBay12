@@ -24,7 +24,7 @@
 
 // DON_LOADOUT - Start
 // Не открывать до Рождества
-/*
+
 #define DONATION_TIER_NONE   null
 #define DONATION_TIER_ONE    "Tier 1"
 #define DONATION_TIER_TWO    "Tier 2"
@@ -43,7 +43,7 @@
 	DONATION_TIER_NONE, DONATION_TIER_ONE, \
 	DONATION_TIER_TWO, DONATION_TIER_THREE, \
 	DONATION_TIER_FOUR, DONATION_TIER_ADMIN)
-*/
+
 // DON_LOADOUT - End
 
 // GLIDING - Start
@@ -56,6 +56,7 @@
 
 // IPC_COOLING_UNIT - Start
 #define BP_COOLING "cooling system"
+#define BP_EXONET "exonet connection slot"
 // IPC_COOLING_UNIT - End
 
 // RESOMI - Start
