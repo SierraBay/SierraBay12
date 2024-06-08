@@ -1,26 +1,9 @@
 /client
 	// Allow client instances to be treated like regular datums
 	parent_type = /datum
-<<<<<<< ours
-		////////////////
-		//ADMIN THINGS//
-		////////////////
-	var/datum/admins/holder = null
-	var/datum/admins/deadmin_holder = null
-
-		/////////
-		//OTHER//
-		/////////
-	var/datum/preferences/prefs = null
-	var/adminobs		= null
 
 	// Runechat messages
 	var/list/seen_messages
-
-	///datum that controls the displaying and hiding of tooltips
-	var/datum/tooltip/tooltips
-=======
->>>>>>> theirs
 
 	/** At compile time, should be TRUE if serving the rsc from DD or FALSE if using other
 		http server(s) to spread load. Defaults FALSE as /client/New() handles setting either
