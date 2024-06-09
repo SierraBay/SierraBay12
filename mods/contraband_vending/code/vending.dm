@@ -9,19 +9,17 @@
 			/obj/item/device/assembly/prox_sensor = 5,
 			/obj/item/device/assembly/signaler = 4,
 			/obj/item/device/assembly/infra = 4,
-			/obj/item/device/assembly/prox_sensor = 4,
 			/obj/item/handcuffs = 8,
 			/obj/item/device/flash = 4,
 			/obj/item/clothing/glasses/sunglasses = 4
 		)
 	prices = list(
-			/obj/item/device/assembly/prox_sensor = 5,
-			/obj/item/device/assembly/signaler = 4,
-			/obj/item/device/assembly/infra = 4,
-			/obj/item/device/assembly/prox_sensor = 4,
-			/obj/item/handcuffs = 8,
-			/obj/item/device/flash = 4,
-			/obj/item/clothing/glasses/sunglasses = 4
+			/obj/item/device/assembly/prox_sensor = 400,
+			/obj/item/device/assembly/signaler = 200,
+			/obj/item/device/assembly/infra = 200,
+			/obj/item/handcuffs = 200,
+			/obj/item/device/flash = 400,
+			/obj/item/clothing/glasses/sunglasses = 600
 	)
 
 /obj/machinery/vending/boozeomat/contraband
