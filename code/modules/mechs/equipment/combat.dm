@@ -141,12 +141,15 @@
 	..()
 
 /obj/item/mech_equipment/shields/on_update_icon()
+<<<<<<< ours
 	. = ..()
 	//[SIERRA-ADD] - Mechs-by-Shegar
 	if(OVERHEAT)
 		icon_state= "shield_droid_overheat"
 		return
 	//[SIERRA-ADD]
+=======
+>>>>>>> theirs
 	if(!aura)
 		return
 	if(aura.active)
@@ -240,7 +243,6 @@
 
 
 /obj/aura/mechshield/on_update_icon()
-	. = ..()
 	if(active)
 	//[SIERRA-ADD] - Mechs-by-Shegar - добавляет степени повреждения энергощита
 		var/percentrage = shields.charge/shields.max_charge * 100
@@ -645,7 +647,6 @@
 	return ..()
 
 /obj/item/mech_equipment/mounted_system/flamethrower/on_update_icon()
-	. = ..()
 	if(owner && holding)
 		var/obj/item/flamethrower/full/mech/FM = holding
 		if(istype(FM))

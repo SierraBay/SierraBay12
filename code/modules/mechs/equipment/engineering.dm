@@ -138,8 +138,19 @@
 				GLOB.moved_event.register(MS, src, PROC_REF(on_moved))
 
 		passive_power_use = 0.8 KILOWATTS * length(segments)
+<<<<<<< ours
 		GLOB.moved_event.register(owner, src, PROC_REF(on_moved))
 		GLOB.dir_set_event.register(owner, src, PROC_REF(on_turned))
+=======
+
+		update_icon()
+		owner.update_icon()
+		GLOB.moved_event.register(owner, src, .proc/on_moved)
+		GLOB.dir_set_event.register(owner, src, .proc/on_turned)
+
+/obj/item/mech_equipment/atmos_shields/on_update_icon()
+	icon_state = "mech_atmoshield[active ? "_on" : "_off"]"
+>>>>>>> theirs
 
 /obj/item/mech_equipment/atmos_shields/deactivate()
 	for(var/obj/mech_shield/MS in segments)
