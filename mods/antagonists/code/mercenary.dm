@@ -1,3 +1,20 @@
+/obj/item/storage/dufflebag/heavy/syndie
+	name = "Heavy gorlex bag"
+	desc = "it looks too bulky and bloody"
+	icon = 'icons/obj/syndie_backpacks.dmi'
+	item_icons = list(
+		slot_l_hand_str = 'icons/mob/onmob/items/lefthand_backpacks.dmi',
+		slot_r_hand_str = 'icons/mob/onmob/items/righthand_backpacks.dmi',
+		slot_back_str = 'icons/mob/onmob/onmob_back.dmi'
+		)
+	icon_state = "syndiepacks"
+	item_state = null
+	item_state_slots = list(slot_l_hand_str = "duffle_syndie", slot_r_hand_str = "duffle_syndie", slot_back_str = "duffle_syndie")
+	w_class = ITEM_SIZE_HUGE
+	max_storage_space = DEFAULT_BACKPACK_STORAGE + 30
+	slot_flags = SLOT_BACK
+	max_w_class = ITEM_SIZE_LARGE
+	open_sound = 'sound/effects/storage/unzip.ogg'
 
 /datum/uplink_category/mercenary
 	name = "Mercenary Kits"
@@ -15,70 +32,70 @@ Used for quick dress-up. Also comes with several discount
 	desc = "Kit, filled with bioweaponery. It contains: Voidsuit, sprayer with bioterror mix, bioterror grenade and military pistol. Don't forget to turn your internals on!"
 	item_cost = DEFAULT_TELECRYSTAL_AMOUNT
 	antag_roles = list(MODE_MERCENARY)
-	path = /obj/item/storage/backpack/dufflebag/syndie_kit/bioterror
+	path = /obj/item/storage/dufflebag/syndie/bioterror
 
 /datum/uplink_item/item/mercenary/pyro
 	name = "Pyro Kit"
 	desc = "Kit, used for making FIRES! It contains: Special pyro voidsuit, flamethrower with 4 napalm canisters, 2 incendiary grenades and military pistol."
 	item_cost = DEFAULT_TELECRYSTAL_AMOUNT
 	antag_roles = list(MODE_MERCENARY)
-	path = /obj/item/storage/backpack/dufflebag/syndie_kit/pyro
+	path = /obj/item/storage/dufflebag/heavy/syndie/pyro
 
 /datum/uplink_item/item/mercenary/classic
 	name = "Classic Kit"
 	desc = "Old and faithful kit. It contains: Heavy armor, assault rifle, cryptographic sequencer and grenade."
 	item_cost = DEFAULT_TELECRYSTAL_AMOUNT
 	antag_roles = list(MODE_MERCENARY)
-	path = /obj/item/storage/backpack/dufflebag/syndie_kit/classic
+	path = /obj/item/storage/dufflebag/heavy/syndie/classic
 
 /datum/uplink_item/item/mercenary/stealthy
 	name = "Stealthy Kit"
 	desc = "A special kit for stealthy operations. It contains: Chameleon kit, fake crew annoncement, freedom implant, cryptographic sequencer, plastic surgery kit, silensed pistol and clerical kit."
 	item_cost = DEFAULT_TELECRYSTAL_AMOUNT
 	antag_roles = list(MODE_MERCENARY)
-	path = /obj/item/storage/backpack/dufflebag/syndie_kit/stealthy
+	path = /obj/item/storage/dufflebag/heavy/syndie/stealthy
 
 /datum/uplink_item/item/mercenary/sniper
 	name = "Sniper Kit"
 	desc = "Fashionable kit for fashionable operatives. It contains: Cool-looking armor vest, disguised as a suit, thermal googles and sniper rifle with ammo."
 	item_cost = DEFAULT_TELECRYSTAL_AMOUNT
 	antag_roles = list(MODE_MERCENARY)
-	path = /obj/item/storage/backpack/dufflebag/syndie_kit/sniper
+	path = /obj/item/storage/dufflebag/heavy/syndie/sniper
 
 /datum/uplink_item/item/mercenary/breacher
 	name = "Breacher Kit"
 	desc = "You're leading the assault. It contains: Heavy armor, 3 C-4 explosives, drum-fed shotgun and cryptographic sequencer."
 	item_cost = DEFAULT_TELECRYSTAL_AMOUNT
 	antag_roles = list(MODE_MERCENARY)
-	path = /obj/item/storage/backpack/dufflebag/syndie_kit/breacher
+	path = /obj/item/storage/dufflebag/heavy/syndie/breacher
 
 /datum/uplink_item/item/mercenary/saboteur
 	name = "Saboteur Kit"
 	desc = "You want to sabotage ship systems? This kit is specially for you. It contains: Heavy armor, military pistol, flashdark, chameleon projector, cryptographic sequencer and some C-4 explosives."
 	item_cost = DEFAULT_TELECRYSTAL_AMOUNT
 	antag_roles = list(MODE_MERCENARY)
-	path = /obj/item/storage/backpack/dufflebag/syndie_kit/saboteur
+	path = /obj/item/storage/dufflebag/heavy/syndie/saboteur
 
 /datum/uplink_item/item/mercenary/medic
 	name = "Field Medic Kit"
 	desc = "This kit can provide almost everything for combat medic. It contains: Heavy armor, military pistol, combat medkit, combat defibrilator and surgery kit."
 	item_cost = DEFAULT_TELECRYSTAL_AMOUNT
 	antag_roles = list(MODE_MERCENARY)
-	path = /obj/item/storage/backpack/dufflebag/syndie_kit/medic
+	path = /obj/item/storage/dufflebag/heavy/syndie/medic
 
 /datum/uplink_item/item/mercenary/heavy
 	name = "Heavy Kit"
 	desc = "This kit is for heavy gunners. It contains: Heavy armor, energy shield, grenade and L6 Saw machinegun."
 	item_cost = DEFAULT_TELECRYSTAL_AMOUNT * 2
 	antag_roles = list(MODE_MERCENARY)
-	path = /obj/item/storage/backpack/dufflebag/syndie_kit/heavy
+	path = /obj/item/storage/dufflebag/heavy/syndie/heavy
 
 /datum/uplink_item/item/mercenary/netrunner
 	name = "Netrunner Kit"
 	desc = "This kit is can provide some help in hacking of ship systems. It contains: Hacker rig, camera MIU, some computers and cryptographic sequencer."
 	item_cost = DEFAULT_TELECRYSTAL_AMOUNT
 	antag_roles = list(MODE_MERCENARY)
-	path = /obj/item/storage/backpack/dufflebag/syndie_kit/netrunner
+	path = /obj/item/storage/dufflebag/heavy/syndie/netrunner
 
 // What's inside the box
 
@@ -105,7 +122,7 @@ Used for quick dress-up. Also comes with several discount
 		/obj/item/gun/projectile/pistol/optimus
 		)
 
-/obj/item/storage/backpack/dufflebag/syndie_kit/pyro
+/obj/item/storage/dufflebag/heavy/syndie/pyro
 
 	startswith = list(
 		/obj/item/clothing/suit/space/void/merc/heavy/prepared,
@@ -117,7 +134,7 @@ Used for quick dress-up. Also comes with several discount
 		/obj/item/gun/projectile/pistol/optimus
 		)
 
-/obj/item/storage/backpack/dufflebag/syndie_kit/classic
+/obj/item/storage/dufflebag/heavy/syndie/classic
 
 	startswith = list(
 		/obj/item/clothing/suit/armor/pcarrier/merc,
@@ -127,7 +144,7 @@ Used for quick dress-up. Also comes with several discount
 		/obj/item/card/emag
 		)
 
-/obj/item/storage/backpack/dufflebag/syndie_kit/stealthy
+/obj/item/storage/dufflebag/heavy/syndie/stealthy
 
 	startswith = list(
 		/obj/item/storage/box/syndie_kit/chameleon = 2,
@@ -142,7 +159,7 @@ Used for quick dress-up. Also comes with several discount
 		/obj/item/card/emag
 		)
 
-/obj/item/storage/backpack/dufflebag/syndie_kit/sniper
+/obj/item/storage/dufflebag/heavy/syndie/sniper
 
 	startswith = list(
 		/obj/item/clothing/under/det,
@@ -152,7 +169,7 @@ Used for quick dress-up. Also comes with several discount
 		/obj/item/clothing/glasses/thermal/syndi
 		)
 
-/obj/item/storage/backpack/dufflebag/syndie_kit/breacher
+/obj/item/storage/dufflebag/heavy/syndie/breacher
 
 	startswith = list(
 		/obj/item/clothing/suit/armor/pcarrier/merc,
@@ -164,7 +181,7 @@ Used for quick dress-up. Also comes with several discount
 		/obj/item/card/emag
 		)
 
-/obj/item/storage/backpack/dufflebag/syndie_kit/saboteur
+/obj/item/storage/dufflebag/heavy/syndie/saboteur
 
 	startswith = list(
 		/obj/item/clothing/suit/armor/pcarrier/merc,
@@ -176,7 +193,7 @@ Used for quick dress-up. Also comes with several discount
 		/obj/item/card/emag
 		)
 
-/obj/item/storage/backpack/dufflebag/syndie_kit/medic
+/obj/item/storage/dufflebag/heavy/syndie/medic
 
 	startswith = list(
 		/obj/item/clothing/suit/armor/pcarrier/merc,
@@ -187,7 +204,7 @@ Used for quick dress-up. Also comes with several discount
 		/obj/item/gun/projectile/pistol/optimus,
 		)
 
-/obj/item/storage/backpack/dufflebag/syndie_kit/heavy
+/obj/item/storage/dufflebag/heavy/syndie/heavy
 
 	startswith = list(
 		/obj/item/clothing/suit/space/void/merc/heavy/prepared,
@@ -197,7 +214,7 @@ Used for quick dress-up. Also comes with several discount
 		/obj/item/shield/energy
 		)
 
-/obj/item/storage/backpack/dufflebag/syndie_kit/netrunner
+/obj/item/storage/dufflebag/heavy/syndie/netrunner
 
 	startswith = list(
 		/obj/item/rig/light/hacker/runner,
