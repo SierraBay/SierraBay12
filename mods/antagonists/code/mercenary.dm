@@ -109,7 +109,7 @@ Used for quick dress-up. Also comes with several discount
 	name = "gorlex marauders crate"
 	desc = "A mercenary equipment crate."
 */
-/obj/item/storage/backpack/dufflebag/syndie_kit/bioterror
+/obj/item/storage/backpack/dufflebag/syndie/bioterror
 
 	startswith = list(
 		/obj/item/clothing/suit/armor/pcarrier/merc,
