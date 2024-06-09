@@ -32,7 +32,7 @@ Used for quick dress-up. Also comes with several discount
 	desc = "Kit, filled with bioweaponery. It contains: Voidsuit, sprayer with bioterror mix, bioterror grenade and military pistol. Don't forget to turn your internals on!"
 	item_cost = DEFAULT_TELECRYSTAL_AMOUNT
 	antag_roles = list(MODE_MERCENARY)
-	path = /obj/item/storage/dufflebag/syndie/bioterror
+	path = /obj/item/storage/backpack/dufflebag/syndie/bioterror
 
 /datum/uplink_item/item/mercenary/pyro
 	name = "Pyro Kit"
