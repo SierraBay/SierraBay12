@@ -6,5 +6,5 @@
 		/obj/item/spacecash/bundle/c200 = 5,
 		/obj/item/spacecash/bundle/c100 = 5,
 		/obj/item/spacecash/bundle/c50 = 5,
-		/obj/item/spacecash/bundle/c20 = 5
+		/obj/item/spacecash/bundle/c20 = 3
 		)
