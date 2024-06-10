@@ -13,7 +13,7 @@
 	w_class = ITEM_SIZE_HUGE
 	max_storage_space = DEFAULT_BACKPACK_STORAGE + 30
 	slot_flags = SLOT_BACK
-	max_w_class = ITEM_SIZE_LARGE
+	max_w_class = ITEM_SIZE_HUGE
 	open_sound = 'sound/effects/storage/unzip.ogg'
 	contents_allowed = list(/obj/item/clothing/suit/armor/pcarrier/merc,
 		/obj/item/clothing/head/helmet/merc,
