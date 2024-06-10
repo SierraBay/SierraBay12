@@ -52,7 +52,7 @@
 		post_comm_message("NSV Sierra Comms Relay", message)
 		minor_announcement.Announce(message = "Коммуникационным реле ИКН \"Сьерра\" было принято коммьюнике, указывающие на присутствие в текущей системе аванпоста корпорации NanoTrasen. Дальнейшие инструкции направлены на консоль коммуникации.")
 	else if (GLOB.last_colony_type == "ЦПСС")
-		message += "<center><img src = sollogo.png /><br />[FONT_LARGE("<b>NSV Sierra</b> Colony detected:")]<br>"
+		message += "<center><img src = sollogo.png /><br />[FONT_LARGE("<b>NSV Sierra</b> Colony detected:")]<br></center>"
 		message += "Зафиксирована высадка колониального судна ЦПСС на планете в вашем секторе, получено следующее сообщение: Приветствуем слушателей данного сообщения, экзопланета под управлением ЦПСС. Требуется персональное разрешение на посадку территории экзопланеты иначе вы будете судится по законам ЦПСС!"
 		post_comm_message("Colony detected by sensors", message)
 
