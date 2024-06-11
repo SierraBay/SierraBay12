@@ -3,6 +3,7 @@
 #include "adherent_discharge/_adherent_discharge.dme"
 #include "body_markings/_body_markings.dme"
 #include "client_verbs/_client_verbs.dme"
+#include "colony_fractions/_colony_types.dme"
 // #include "don_loadout/_don_loadout.dme" // Не открывать до Рождества
 #include "eris_announcer/_eris_announcer.dme"
 #include "emote_panel/_emote_panel.dme"
