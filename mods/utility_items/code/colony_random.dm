@@ -32,7 +32,7 @@
 
 //Actual weapons, armor, etc. Colonial versions becauses reasons.
 
-/obj/item/gun/projectile/automatic/colony_mbr
+/obj/item/gun/projectile/automatic/mbr_colony
 	name = "MBR"
 	desc = "A shabby bullpup carbine. Despite its size, it looks a little uncomfortable, but it is robust. HelTek MBR is a standart equipment of ICCG Space-assault Forces, designed in a bullpup layout. Possesses autofire and is perfect for the ship's crew."
 	icon = 'mods/_maps/farfleet/icons/obj/mbr_bullpup.dmi'
@@ -60,7 +60,7 @@
 		list(mode_name="full auto",      burst=1,    fire_delay=1.7,    burst_delay=1.3,     one_hand_penalty=7,  burst_accuracy=list(0,-1,-1), dispersion=list(1.3, 1.5, 1.7, 1.9, 2.2), autofire_enabled=1)
 		)
 
-/obj/item/gun/projectile/automatic/colony_mbr/on_update_icon()
+/obj/item/gun/projectile/automatic/mbr_colony/on_update_icon()
 	..()
 	if(ammo_magazine)
 		icon_state = "mbr_bullpup"
@@ -185,6 +185,9 @@
 	name = "command heavy armored vest"
 	desc = "A synthetic armor vest with SOL CENTRAL GOVERNMENT printed in gold lettering on the chest. This one has added webbing and ballistic plates."
 	icon_state = "comwebvest"
+
+/obj/item/clothing/suit/armor/pcarrier/medium/sol_colony
+	accessories = list(/obj/item/clothing/accessory/armor_plate/medium, /obj/item/clothing/accessory/storage/pouches, /obj/item/clothing/accessory/armor_tag/solgov)
 
 /obj/item/clothing/suit/armor/pcarrier/troops_colony
 	accessories  = list(/obj/item/clothing/accessory/armor_plate/medium, /obj/item/clothing/accessory/storage/pouches)
