@@ -121,7 +121,7 @@ GLOBAL_VAR_INIT(choose_colony_type, "СЛУЧАЙНЫЙ") //Педальки в�
 					)
 	else if(GLOB.last_colony_type == "ГКК")
 		return list(/obj/item/clothing/suit/armor/laserproof,
-					/obj/item/clothing/suit/armor/pcarrier/tactical,
+					/obj/item/clothing/suit/armor/pcarrier/tactical_colony,
 					/obj/item/clothing/suit/armor/riot,
 					/obj/item/clothing/suit/armor/pcarrier/tan,
 					/obj/item/clothing/suit/armor/pcarrier/tan/tactical,
@@ -171,7 +171,6 @@ GLOBAL_VAR_INIT(choose_colony_type, "СЛУЧАЙНЫЙ") //Педальки в�
 					/obj/item/clothing/head/helmet/riot,
 					/obj/item/clothing/head/helmet/augment,
 					/obj/item/clothing/head/helmet/ballistic,
-					/obj/item/clothing/head/helmet/marine,
 					/obj/item/clothing/head/helmet/tactical
 					)
 	else if(GLOB.last_colony_type == "ЦПСС")
@@ -196,14 +195,13 @@ GLOBAL_VAR_INIT(choose_colony_type, "СЛУЧАЙНЫЙ") //Педальки в�
 					/obj/item/clothing/head/helmet/old_special_ops,
 					/obj/item/clothing/head/helmet/merc,
 					/obj/item/clothing/head/helmet/old_commonwealth,
-					/obj/item/clothing/head/helmet/swat,
-					/obj/item/clothing/head/helmet/daft_punk
+					/obj/item/clothing/head/helmet/swat
 					)
 //ПП
 
 /obj/random/colony_smg/spawn_choices()
 	if     (GLOB.last_colony_type == "НАНОТРЕЙЗЕН")
-		return list(/obj/item/gun/projectile/automatic/nt41)
+		return list(/obj/item/gun/projectile/automatic/nt41_colony)
 	else if(GLOB.last_colony_type == "ГКК")
 		return list(/obj/item/gun/projectile/automatic/merc_smg)
 	else if(GLOB.last_colony_type == "ЦПСС")
