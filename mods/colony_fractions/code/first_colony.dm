@@ -100,7 +100,7 @@ GLOBAL_VAR_INIT(choose_colony_type, "СЛУЧАЙНЫЙ") //Педальки в�
 	if     (GLOB.last_colony_type == "НАНОТРЕЙЗЕН")
 		return list(/obj/structure/sign/nanotrasen)
 	else if(GLOB.last_colony_type == "ГКК")
-		return list(/obj/structure/sign/iccg)
+		return list(/obj/structure/sign/iccg_colony)
 	else if(GLOB.last_colony_type == "ЦПСС")
 		return list(/obj/structure/sign/icarus_solgov)
 	else if(GLOB.last_colony_type == "НЕЗАВИСИМАЯ")
