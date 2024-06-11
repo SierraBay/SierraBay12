@@ -17,9 +17,6 @@
 	id_slot = slot_wear_id
 	id_types = list(/obj/item/card/id/merchant/colony_leader)
 
-/obj/submap_landmark/spawnpoint/ship_leader_spawn
-	name = "Ship Leader"
-
 
 /datum/map_template/ruin/exoplanet/playablecolony2/load(turf/T, centered=FALSE)
 	if(GLOB.choose_colony_type == "СЛУЧАЙНЫЙ")
@@ -51,9 +48,6 @@
 		message += "<center>Аванпост является важным активом корпорации NanoTrasen - ожидается, что ему будет оказана вся необходимая поддержка, не ставящая под удар основную миссию судна.</center>"
 		post_comm_message("NSV Sierra Comms Relay", message)
 		minor_announcement.Announce(message = "Коммуникационным реле ИКН \"Сьерра\" было принято коммьюнике, указывающие на присутствие в текущей системе аванпоста корпорации NanoTrasen. Дальнейшие инструкции направлены на консоль коммуникации.")
-
-/obj/random/colony2_paper
-	name = "Colony instructions paper"
 
 /obj/random/colony2_paper/spawn_choices()
 	if     (GLOB.last_colony_type == "НАНОТРЕЙЗЕН")
