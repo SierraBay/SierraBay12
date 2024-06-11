@@ -4,7 +4,9 @@
 
 /obj/item/organ/internal/posibrain/use_tool(obj/item/stack/nanopaste, mob/living/user, list/click_params)
 	. = ..()
-	if(src.damage > 0 && src.damage < src.max_damage)
+	if(src.damage > src.max_damage)
+		to_chat(user, SPAN_NOTICE("[src] is completely ruined."))
+	if(src.damage > 0)
 		if(do_after(user, 40, src))
 			src.damage -= (30)
 			if(src.damage < 0)
