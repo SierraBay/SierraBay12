@@ -117,8 +117,7 @@ GLOBAL_VAR_INIT(choose_colony_type, "СЛУЧАЙНЫЙ") //Педальки в�
 					/obj/item/clothing/suit/armor/vest/old/security,
 					/obj/item/clothing/suit/armor/pcarrier/navy,
 					/obj/item/clothing/suit/armor/riot,
-					/obj/item/clothing/suit/armor/pcarrier/medium/nt,
-					/obj/item/clothing/suit/armor/pcarrier/medium/command
+					/obj/item/clothing/suit/armor/pcarrier/medium/nt
 					)
 	else if(GLOB.last_colony_type == "ГКК")
 		return list(/obj/item/clothing/suit/armor/laserproof,
@@ -126,19 +125,18 @@ GLOBAL_VAR_INIT(choose_colony_type, "СЛУЧАЙНЫЙ") //Педальки в�
 					/obj/item/clothing/suit/armor/riot,
 					/obj/item/clothing/suit/armor/pcarrier/tan,
 					/obj/item/clothing/suit/armor/pcarrier/tan/tactical,
-					/obj/item/clothing/suit/armor/pcarrier/troops,
-					/obj/item/clothing/suit/armor/pcarrier/troops/heavy,
+					/obj/item/clothing/suit/armor/pcarrier/troops_colony,
+					/obj/item/clothing/suit/armor/pcarrier/troops_colony/heavy,
 					/obj/item/clothing/suit/armor/pcarrier/navy
 					)
 	else if(GLOB.last_colony_type == "ЦПСС")
 		return list(/obj/item/clothing/suit/armor/laserproof,
-					/obj/item/clothing/suit/armor/pcarrier/medium/sol,
+					/obj/item/clothing/suit/armor/pcarrier/medium/sol_colony,
 					/obj/item/clothing/suit/armor/pcarrier/tan/tactical,
 					/obj/item/clothing/suit/armor/pcarrier/tan,
-					/obj/item/clothing/suit/armor/pcarrier/troops,
-					/obj/item/clothing/suit/armor/vest/solgov,
-					/obj/item/clothing/suit/armor/pcarrier/troops/heavy,
-					/obj/item/clothing/suit/armor/pcarrier/troops/heavy/pcrc,
+					/obj/item/clothing/suit/armor/pcarrier/troops_colony,
+					/obj/item/clothing/suit/armor/vest/solgov_colony,
+					/obj/item/clothing/suit/armor/pcarrier/troops_colony/heavy,
 					/obj/item/clothing/suit/armor/riot
 					)
 	else if(GLOB.last_colony_type == "НЕЗАВИСИМАЯ")
@@ -180,15 +178,14 @@ GLOBAL_VAR_INIT(choose_colony_type, "СЛУЧАЙНЫЙ") //Педальки в�
 		return list(/obj/item/clothing/head/helmet,
 					/obj/item/clothing/head/helmet/ablative,
 					/obj/item/clothing/head/helmet/riot,
-					/obj/item/clothing/head/helmet/solgov/pilot,
-					/obj/item/clothing/head/helmet/solgov/pilot/fleet,
-					/obj/item/clothing/head/helmet/solgov,
-					/obj/item/clothing/head/helmet/marine,
+					/obj/item/clothing/head/helmet/solgov_colony/pilot,
+					/obj/item/clothing/head/helmet/solgov_colony/pilot/fleet,
+					/obj/item/clothing/head/helmet/solgov_colony,
 					/obj/item/clothing/head/helmet/ballistic,
 					/obj/item/clothing/head/helmet/pcrc,
-					/obj/item/clothing/head/helmet/solgov/command,
+					/obj/item/clothing/head/helmet/solgov_colony/command,
 					/obj/item/clothing/head/helmet/tactical,
-					/obj/item/clothing/head/helmet/solgov/security
+					/obj/item/clothing/head/helmet/solgov_colony/security
 					)
 	else if(GLOB.last_colony_type == "НЕЗАВИСИМАЯ")
 		return list(/obj/item/clothing/head/helmet,
@@ -227,16 +224,16 @@ GLOBAL_VAR_INIT(choose_colony_type, "СЛУЧАЙНЫЙ") //Педальки в�
 					)
 	else if(GLOB.last_colony_type == "ГКК")
 		return list(/obj/item/gun/projectile/automatic/assault_rifle,
-					/obj/item/gun/projectile/automatic/assault_rifle/heltek,
-					/obj/item/gun/projectile/automatic/mbr,
-					/obj/item/gun/projectile/automatic/mr735)
+					/obj/item/gun/projectile/automatic/assault_rifle/heltek_colony,
+					/obj/item/gun/projectile/automatic/mbr_colony,
+					/obj/item/gun/projectile/automatic/mr735_colony)
 	else if(GLOB.last_colony_type == "ЦПСС")
 		return list(/obj/item/gun/projectile/automatic/bullpup_rifle,
 					/obj/item/gun/projectile/automatic/bullpup_rifle/light
 					)
 	else if(GLOB.last_colony_type == "НЕЗАВИСИМАЯ")
 		return list(/obj/item/gun/projectile/automatic/assault_rifle,
-					/obj/item/gun/projectile/automatic/assault_rifle/heltek,
-					/obj/item/gun/projectile/automatic/mbr,
+					/obj/item/gun/projectile/automatic/assault_rifle/heltek_colony,
+					/obj/item/gun/projectile/automatic/mbr_colony,
 					/obj/item/gun/projectile/automatic/battlerifle
 					)
