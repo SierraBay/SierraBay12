@@ -83,11 +83,14 @@
 
 /obj/screen/movable/proc/encode_screen_Y(Y, mob/viewer)
 	var/view = viewer.client ? viewer.client.view : world.view
-	//[SIERRA-ADD]
+	// [SIERRA-EDIT]
+	// if(Y > view+1) // SIERA-EDIT - ORIGINAL
+	// 	. = "NORTH-[view*2 + 1-Y]" // SIERA-EDIT - ORIGINAL
+	// else if(Y < viewer.client.view+1) // SIERA-EDIT - ORIGINAL
 	var/local_view
 	if(view == "19x15" || view == "17x15" || view == "15x15")
 		local_view = 7
-	//[SIERRA-ADD]
+	// [/SIERRA-EDIT]
 	if(Y > local_view+1)
 
 		. = "NORTH-[local_view*2 + 1-Y]"
