@@ -27,6 +27,5 @@
 #include "utf8/_utf8.dme"
 #include "utility_items/_utility_items.dme"
 #include "mechs_by_shegar/_mechs_by_shegar.dme"
-#include "colony_fractions/_colony_types.dme"
 
 #include "../packs/sierra-tweaks/_pack.dm"
