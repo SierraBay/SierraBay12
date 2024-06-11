@@ -1,3 +1,5 @@
+GLOB.admin_verbs_debug |= list(/datum/admins/proc/map_template_choose_colony_type)
+
 /datum/admins/proc/map_template_choose_colony_type()
 	set category = "Fun"
 	set desc = "Choose, which type will be next spawned colony."
