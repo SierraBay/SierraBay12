@@ -27,10 +27,6 @@ GLOBAL_VAR_INIT(choose_colony_type, "СЛУЧАЙНЫЙ") //Педальки в�
 	color = COLOR_OFF_WHITE
 	detail_color = COLOR_BEIGE
 
-
-/obj/submap_landmark/spawnpoint/colonist_leader_spawn
-	name = "Colonist Leader"
-
 /datum/map_template/ruin/exoplanet/playablecolony/load(turf/T, centered=FALSE)
 	if(GLOB.choose_colony_type == "СЛУЧАЙНЫЙ")
 		var/number = rand(1,100)
@@ -61,9 +57,6 @@ GLOBAL_VAR_INIT(choose_colony_type, "СЛУЧАЙНЫЙ") //Педальки в�
 		message += "<center>Аванпост является важным активом корпорации NanoTrasen - ожидается, что ему будет оказана вся необходимая поддержка, не ставящая под удар основную миссию судна.</center>"
 		post_comm_message("NSV Sierra Comms Relay", message)
 		minor_announcement.Announce(message = "Коммуникационным реле ИКН \"Сьерра\" было принято коммьюнике, указывающие на присутствие в текущей системе аванпоста корпорации NanoTrasen. Дальнейшие инструкции направлены на консоль коммуникации.")
-
-/obj/random/colony_paper
-	name = "Colony instructions paper"
 
 /obj/random/colony_paper/spawn_choices()
 	if     (GLOB.last_colony_type == "НАНОТРЕЙЗЕН")
