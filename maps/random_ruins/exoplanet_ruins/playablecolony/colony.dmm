@@ -863,7 +863,7 @@
 /obj/floor_decal/techfloor{
 	dir = 6
 	},
-/obj/structure/bed/chair/office/purple,
+/obj/structure/bed/chair/office/comfy/purple,
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/engineering)
 "bR" = (
