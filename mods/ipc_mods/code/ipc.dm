@@ -6,6 +6,7 @@
 	. = ..()
 	if(src.damage > src.max_damage)
 		to_chat(user, SPAN_NOTICE("[src] is completely ruined."))
+		return
 	if(src.damage > 0)
 		if(do_after(user, 40, src))
 			src.damage -= (30)
