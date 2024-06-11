@@ -102,8 +102,6 @@ GLOBAL_VAR_INIT(choose_colony_type, "СЛУЧАЙНЫЙ") //Педальки в�
 	info = "<i>Документ содержит весьма исчерпывающий план по колонизации данной экзопланеты, включающий перечень необходимого инвентаря, финансирования и инструкции для колонистов. В глаза бросаются многочисленные упоминания договоров о финансировании с теми или иными корпорациями и некой организации, именуемой \"Альянсом Фронтира\".</i>"
 
 //ФЛАГ
-/obj/random/colony_flag
-	name = "Colony flag"
 
 /obj/random/colony_flag/spawn_choices()
 	if     (GLOB.last_colony_type == "НАНОТРЕЙЗЕН")
@@ -118,9 +116,6 @@ GLOBAL_VAR_INIT(choose_colony_type, "СЛУЧАЙНЫЙ") //Педальки в�
 
 
 //БРОНИКИ
-/obj/random/colony_armor
-	name = "random colony armor"
-
 
 /obj/random/colony_armor/spawn_choices()
 	if      (GLOB.last_colony_type == "НАНОТРЕЙЗЕН")
@@ -167,9 +162,6 @@ GLOBAL_VAR_INIT(choose_colony_type, "СЛУЧАЙНЫЙ") //Педальки в�
 
 
 //ШЛЕМА
-/obj/random/colony_helmet
-	name  = "random colony helmet"
-
 
 /obj/random/colony_helmet/spawn_choices()
 	if     (GLOB.last_colony_type == "НАНОТРЕЙЗЕН")
@@ -218,8 +210,6 @@ GLOBAL_VAR_INIT(choose_colony_type, "СЛУЧАЙНЫЙ") //Педальки в�
 					/obj/item/clothing/head/helmet/daft_punk
 					)
 //ПП
-/obj/random/colony_smg
-	name = "random colony smg"
 
 /obj/random/colony_smg/spawn_choices()
 	if     (GLOB.last_colony_type == "НАНОТРЕЙЗЕН")
@@ -236,8 +226,6 @@ GLOBAL_VAR_INIT(choose_colony_type, "СЛУЧАЙНЫЙ") //Педальки в�
 					)
 
 //АВТОМАТ
-/obj/random/colony_rifle
-	name = "random colony rifle"
 
 /obj/random/colony_rifle/spawn_choices()
 	if(GLOB.last_colony_type == "НАНОТРЕЙЗЕН")
@@ -259,8 +247,3 @@ GLOBAL_VAR_INIT(choose_colony_type, "СЛУЧАЙНЫЙ") //Педальки в�
 					/obj/item/gun/projectile/automatic/mbr,
 					/obj/item/gun/projectile/automatic/battlerifle
 					)
-
-/obj/structure/sign/colony
-	name = "Independent colony"
-	icon = 'mods/colony_fractions/icons/colony.dmi'
-	icon_state = "colony"
