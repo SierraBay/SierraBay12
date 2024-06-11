@@ -1,5 +1,5 @@
 /obj/random/colony_flag
-  name = "Colony flag"
+	name = "Colony flag"
 
 /obj/random/colony_armor
 	name = "random colony armor"
@@ -29,6 +29,12 @@
 
 /obj/submap_landmark/spawnpoint/colonist_leader_spawn
 	name = "Colonist Leader"
+
+/obj/structure/sign/iccg_colony
+	name = "\improper ICCG Colonial Seal"
+	desc = "A sign which signifies who this colony belongs to."
+	icon = 'mods/_maps/farfleet/icons/iccg_flag.dmi'
+	icon_state = "iccg_seal"
 
 //Actual weapons, armor, etc. Colonial versions becauses reasons.
 
