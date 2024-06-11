@@ -46,11 +46,10 @@
 
 /obj/screen/movable/proc/encode_screen_X(X, mob/viewer)
 	var/view = viewer.client ? viewer.client.view : world.view
-	//[SIERRA-ADD]
-	/*переменная view приходит к нам в виде "числоxчисло, к примеру 19x15".
-	Вот только код написан для целочисленной переменной - 7,8,9
-	Я решил проблему следующим костылём
-	*/
+	// [SIERRA-EDIT]
+	// if(X > view+1) // SIERA-EDIT - ORIGINAL
+	// 	. = "EAST-[view*2 + 1-X]" // SIERA-EDIT - ORIGINAL
+	// else if(X < view+1) // SIERA-EDIT - ORIGINAL
 	var/local_view
 	if(view == "19x15")
 		local_view = 9
@@ -58,7 +57,7 @@
 		local_view = 8
 	else if(view == "15x15")
 		local_view = 7
-	//[SIERRA-ADD]
+	// [/SIERRA-EDIT]
 	if(X > local_view+1)
 		. = "EAST-[local_view*2 + 1-X]"
 	else if(X < local_view+1)
