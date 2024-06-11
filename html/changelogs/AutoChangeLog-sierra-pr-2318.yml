@@ -1,5 +1,0 @@
-author: Teteshnik
-changes:
-  - {bugfix: Исправил баг с китами мерков}
-  - {rscadd: Добавил скотч в автолат}
-delete-after: true
