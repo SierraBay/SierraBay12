@@ -1,7 +1,7 @@
 /obj/item/organ/internal/posibrain
 	var/obj/item/organ/internal/shackles/shackles_module = null
 	var/shackle_set = FALSE
-
+// Ремонт позитронного мозга
 /obj/item/organ/internal/posibrain/use_tool(obj/item/stack/nanopaste, mob/living/user, list/click_params)
 	. = ..()
 	if(src.damage > src.max_damage)
