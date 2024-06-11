@@ -192,8 +192,5 @@
 /obj/item/clothing/suit/armor/pcarrier/troops_colony/heavy
 	accessories  = list(/obj/item/clothing/accessory/armor_plate/medium, /obj/item/clothing/accessory/arm_guards, /obj/item/clothing/accessory/leg_guards, /obj/item/clothing/accessory/storage/pouches)
 
-/obj/item/clothing/suit/armor/pcarrier/troops_colony/heavy/pcrc
-	accessories  = list(/obj/item/clothing/accessory/armor_plate/medium, /obj/item/clothing/accessory/arm_guards, /obj/item/clothing/accessory/leg_guards, /obj/item/clothing/accessory/storage/pouches, /obj/item/clothing/accessory/armor_tag/pcrc)
-
 /obj/item/clothing/suit/armor/pcarrier/tactical_colony
 	accessories  = list(/obj/item/clothing/accessory/armor_plate/tactical, /obj/item/clothing/accessory/arm_guards, /obj/item/clothing/accessory/leg_guards)
