@@ -178,7 +178,11 @@
 #define RENDER_GROUP_SCENE 990
 
 /// Things to be drawn within the screen context
+<<<<<<< ours
 #define RENDER_GROUP_SCREEN 995
+=======
+#define RENDER_GROUP_SCREEN 850
+>>>>>>> theirs
 
 /// The final render group, for compositing
 #define RENDER_GROUP_FINAL 999
