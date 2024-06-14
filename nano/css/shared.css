@@ -736,7 +736,7 @@ th.bot {
     background-position: -0px -0px;
     background-repeat: no-repeat;
     zoom: 1;
-    margin-left: -16px;
+    margin-left: 0px;
 	margin-bottom: -16px;
     /*margin-bottom: -1px;*/
 }

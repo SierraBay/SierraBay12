@@ -28,9 +28,8 @@ using metal and glass, it uses glass and reagents (usually sulphuric acid).
 	var/list/queue = list()
 
 /obj/machinery/r_n_d/circuit_imprinter/New()
-	materials = default_material_composition.Copy()
-
 	..()
+	materials = default_material_composition.Copy()
 
 /obj/machinery/r_n_d/circuit_imprinter/Process()
 	..()
@@ -58,7 +57,7 @@ using metal and glass, it uses glass and reagents (usually sulphuric acid).
 		update_icon()
 	else
 		if(busy)
-			visible_message(SPAN_NOTICE("\icon[src]\The [src] flashes: insufficient materials: [getLackingMaterials(RNDD)]."))
+			visible_message(SPAN_NOTICE("\icon[src]\The [src] flashes: insufficient materials."))
 			busy = FALSE
 			progress = 0
 			update_icon()
@@ -176,21 +175,6 @@ using metal and glass, it uses glass and reagents (usually sulphuric acid).
 			return FALSE
 	return TRUE
 
-/obj/machinery/r_n_d/circuit_imprinter/proc/getLackingMaterials(datum/rnd_queue_design/RNDD)
-	var/ret = ""
-	var/datum/design/D = RNDD.design
-	for(var/M in D.materials)
-		if(materials[M] < D.materials[M] * RNDD.amount)
-			if(ret != "")
-				ret += ", "
-			ret += "[(D.materials[M] * RNDD.amount) - materials[M]] [M]"
-	for(var/C in D.chemicals)
-		if(!reagents.has_reagent(C, (D.chemicals[C] * RNDD.amount)))
-			if(ret != "")
-				ret += ", "
-			ret += C
-	return ret
-
 /obj/machinery/r_n_d/circuit_imprinter/proc/build(datum/rnd_queue_design/RNDD)
 	var/datum/design/D = RNDD.design
 	var/power = active_power_usage
@@ -205,6 +189,8 @@ using metal and glass, it uses glass and reagents (usually sulphuric acid).
 	for(var/i in 1 to RNDD.amount)
 		D.Fabricate(get_turf(src), 1, src)
 
+/obj/machinery/r_n_d/circuit_imprinter/proc/clear_queue()
+	queue = list()
 
 /obj/machinery/r_n_d/circuit_imprinter/proc/eject(material, amount)
 	if(!(material in materials))

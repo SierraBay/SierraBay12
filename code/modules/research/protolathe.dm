@@ -46,10 +46,9 @@
 	var/speed = 1
 	var/list/queue = list()
 
-/obj/machinery/r_n_d/protolathe/Initialize()
-	materials = default_material_composition.Copy()
-
+/obj/machinery/r_n_d/protolathe/New()
 	..()
+	materials = default_material_composition.Copy()
 
 /obj/machinery/r_n_d/protolathe/proc/TotalMaterials() //returns the total of all the stored materials. Makes code neater.
 	var/t = 0
@@ -80,7 +79,7 @@
 		update_icon()
 	else
 		if(busy)
-			visible_message(SPAN_NOTICE("\icon[src]\The [src] flashes: insufficient materials: [getLackingMaterials(RNDD)]."))
+			visible_message(SPAN_NOTICE("\icon[src]\The [src] flashes: insufficient materials."))
 			busy = 0
 			progress = 0
 			update_icon()
@@ -120,21 +119,6 @@
 		if(!reagents.has_reagent(C, D.chemicals[C] * RNDD.amount))
 			return FALSE
 	return TRUE
-
-/obj/machinery/r_n_d/protolathe/proc/getLackingMaterials(datum/rnd_queue_design/RNDD)
-	var/ret = ""
-	var/datum/design/D = RNDD.design
-	for(var/M in D.materials)
-		if(materials[M] < D.materials[M]*RNDD.amount)
-			if(ret != "")
-				ret += ", "
-			ret += "[(D.materials[M]*RNDD.amount) - materials[M]] [M]"
-	for(var/C in D.chemicals)
-		if(!reagents.has_reagent(C, (D.chemicals[C] * RNDD.amount)))
-			if(ret != "")
-				ret += ", "
-			ret += C
-	return ret
 
 /obj/machinery/r_n_d/protolathe/proc/build(datum/rnd_queue_design/RNDD)
 	var/power = active_power_usage

@@ -388,9 +388,9 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				selected_imprinter_category = "Search Results"
 	if(href_list["clear_queue"])
 		if(screen == "protolathe" && linked_lathe)
-			linked_lathe.removeFromQueue()
+			linked_lathe.clear_queue()
 		if(screen == "circuit_imprinter" && linked_imprinter)
-			linked_imprinter.removeFromQueue()
+			linked_imprinter.clear_queue()
 	if(href_list["deconstruct"])
 		if(linked_destroy)
 			linked_destroy.deconstruct_item()
