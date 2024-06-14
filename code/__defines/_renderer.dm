@@ -82,6 +82,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/renderer)
 * to share them globally.
 */
 
+<<<<<<< ours
 /// The list of renderers associated with this mob.
 /mob/var/list/atom/movable/renderer/renderers
 
@@ -95,6 +96,31 @@ INITIALIZE_IMMEDIATE(/atom/movable/renderer)
 			continue
 		renderer = new renderer (null, src)
 		renderers[renderer] = renderer.plane // (renderer = plane) format for visual debugging
+=======
+/// A map of (instance = plane) renderers in use by this mob.
+/mob/var/list/atom/movable/renderer/rdr_to_plane
+
+/// A map of (type = instance) renderers in use by this mob.
+/mob/var/list/atom/movable/renderer/rdr_by_type
+
+
+/// Creates the mob's renderers on /Login()
+/mob/proc/AddDefaultRenderers()
+	if (rdr_to_plane)
+		ClearRenderers()
+	rdr_to_plane = list()
+	rdr_by_type = list()
+	for (var/atom/movable/renderer/renderer as anything in GLOB.rdr_main_owned)
+		renderer = new renderer (null, src)
+		rdr_to_plane[renderer] = renderer.plane
+		rdr_by_type[renderer.type] = renderer
+		if (renderer.relay)
+			my_client.screen += renderer.relay
+		my_client.screen += renderer
+	for (var/atom/movable/renderer/renderer as anything in GLOB.rdr_main_shared)
+		rdr_to_plane[renderer] = renderer.plane
+		rdr_by_type[renderer.type] = renderer
+>>>>>>> theirs
 		if (renderer.relay)
 			my_client.screen += renderer.relay
 		my_client.screen += renderer
@@ -105,6 +131,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/renderer)
 		my_client.screen += zrenderer
 
 /// Removes the mob's renderers on /Logout()
+<<<<<<< ours
 /mob/proc/RemoveRenderers()
 	if(my_client)
 		for(var/atom/movable/renderer/renderer as anything in renderers)
@@ -116,6 +143,69 @@ INITIALIZE_IMMEDIATE(/atom/movable/renderer)
 			my_client.screen -= renderer
 	if (renderers)
 		renderers.Cut()
+=======
+/mob/proc/ClearRenderers()
+	if (my_client)
+		for (var/atom/movable/renderer/renderer as anything in rdr_to_plane)
+			if (renderer.relay)
+				my_client.screen -= renderer.relay
+			my_client.screen -= renderer
+			if (~renderer.renderer_flags & RENDERER_SHARED)
+				qdel(renderer)
+	rdr_to_plane = null
+	rdr_by_type = null
+
+
+/// Returns the renderer instance of_type if the mob has one and it is not shared.
+/mob/proc/GetRenderer(atom/movable/renderer/of_type)
+	if (!my_client)
+		return
+	var/atom/movable/renderer/renderer = rdr_by_type[of_type]
+	if (renderer?.renderer_flags & RENDERER_SHARED)
+		return
+	return renderer
+
+
+/// Adds a non-main renderer to the mob by type if the mob doesn't already have it.
+/mob/proc/AddRenderer(atom/movable/renderer/of_type)
+	if (!my_client)
+		return
+	var/flags = initial(of_type.renderer_flags)
+	if (flags & RENDERER_MAIN)
+		return
+	if (of_type in rdr_by_type)
+		return
+	var/atom/movable/renderer/renderer
+	if (flags & RENDERER_SHARED)
+		renderer = GLOB.rdr_all_shared[of_type]
+	else
+		renderer = new of_type (null, src)
+	if (renderer.relay)
+		my_client.screen += renderer.relay
+	my_client.screen += renderer
+	rdr_to_plane[renderer] = renderer.plane
+	rdr_by_type[of_type] = renderer
+
+
+/// Removes a non-main renderer to the mob by type.
+/mob/proc/RemoveRenderer(atom/movable/renderer/of_type)
+	if (!my_client)
+		return
+	var/flags = initial(of_type.renderer_flags)
+	if (flags & RENDERER_MAIN)
+		return
+	var/atom/movable/renderer/renderer = rdr_by_type[of_type]
+	if (!renderer)
+		return
+	if (renderer.relay)
+		my_client.screen -= renderer.relay
+	my_client.screen -= renderer
+	rdr_by_type -= of_type
+	rdr_to_plane -= renderer
+	if (~renderer.renderer_flags & RENDERER_SHARED)
+		qdel(renderer)
+
+>>>>>>> theirs
 
 /* *
 * Plane Renderers
@@ -240,6 +330,11 @@ GLOBAL_LIST_EMPTY(zmimic_renderers)
 	name = "Scene Group"
 	group = RENDER_GROUP_FINAL
 	plane = RENDER_GROUP_SCENE
+<<<<<<< ours
+=======
+	renderer_flags = RENDERER_MAIN
+
+>>>>>>> theirs
 
 /// Render group for stuff OUTSIDE the typical game context - UI, full screen effects, etc.
 /atom/movable/renderer/screen_group
