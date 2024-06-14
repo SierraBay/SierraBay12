@@ -1,3 +1,6 @@
+/datum/design/item/bluespace
+	category = list("Misc")
+
 /datum/design/item/bluespace/AssembleDesignName()
 	..()
 	name = "Bluespace device ([item_name])"
@@ -37,4 +40,3 @@
 	materials = list(MATERIAL_GOLD = 3000, MATERIAL_DIAMOND = 1500, MATERIAL_URANIUM = 250, MATERIAL_PLASTIC = 250)
 	build_path = /obj/item/storage/backpack/holding
 	sort_string = "VAFAA"
-

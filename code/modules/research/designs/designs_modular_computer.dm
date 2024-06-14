@@ -1,4 +1,7 @@
 // Drives
+/datum/design/item/modularcomponent/
+	category = list("Computer")
+
 /datum/design/item/modularcomponent/disk/AssembleDesignName()
 	..()
 	name = "Hard drive design ([item_name])"

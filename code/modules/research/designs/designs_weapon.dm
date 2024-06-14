@@ -1,3 +1,6 @@
+/datum/design/item/weapon
+	category = list("Weapon")
+
 /datum/design/item/weapon/AssembleDesignName()
 	..()
 	name = "Weapon prototype ([item_name])"

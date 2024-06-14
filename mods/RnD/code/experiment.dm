@@ -339,7 +339,7 @@ var/global/list/rnd_server_list = list()
 
 
 /datum/design/science_tool
-	name = "Science Tool"
+	shortname = "Science Tool"
 	desc = "A hand-held device capable of extracting usefull data from various sources, such as paper reports and slime cores."
 	id = "science_tool"
 	build_type = PROTOLATHE

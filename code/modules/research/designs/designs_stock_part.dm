@@ -1,6 +1,6 @@
 /datum/design/item/stock_part
 	build_type = PROTOLATHE
-	category = "Stock Parts"
+	category = list("Stock Parts")
 
 /datum/design/item/stock_part/AssembleDesignName()
 	..()
@@ -11,12 +11,14 @@
 		desc = "A stock part used in the construction of various devices."
 
 /datum/design/item/stock_part/basic_capacitor
+	shortname = "Basic Capacitor"
 	id = "basic_capacitor"
 	materials = list(MATERIAL_STEEL = 50, MATERIAL_GLASS = 50)
 	build_path = /obj/item/stock_parts/capacitor
 	sort_string = "CAAAA"
 
 /datum/design/item/stock_part/adv_capacitor
+	shortname = "Advanced Capacitor"
 	id = "adv_capacitor"
 	req_tech = list(TECH_POWER = 3)
 	materials = list(MATERIAL_STEEL = 50, MATERIAL_GLASS = 50)
@@ -24,6 +26,7 @@
 	sort_string = "CAAAB"
 
 /datum/design/item/stock_part/super_capacitor
+	shortname = "Super Capacitor"
 	id = "super_capacitor"
 	req_tech = list(TECH_POWER = 5, TECH_MATERIAL = 4)
 	materials = list(MATERIAL_STEEL = 50, MATERIAL_GLASS = 50, MATERIAL_GOLD = 20)
@@ -31,6 +34,7 @@
 	sort_string = "CAAAC"
 
 /datum/design/item/stock_part/micro_mani
+	shortname = "Micro Manipulator"
 	id = "micro_mani"
 	req_tech = list(TECH_MATERIAL = 1, TECH_DATA = 1)
 	materials = list(MATERIAL_STEEL = 30)
@@ -38,6 +42,7 @@
 	sort_string = "CAABA"
 
 /datum/design/item/stock_part/nano_mani
+	shortname = "Nano Manipulator"
 	id = "nano_mani"
 	req_tech = list(TECH_MATERIAL = 3, TECH_DATA = 2)
 	materials = list(MATERIAL_STEEL = 30)
@@ -45,6 +50,7 @@
 	sort_string = "CAABB"
 
 /datum/design/item/stock_part/pico_mani
+	shortname = "Pico Manipulator"
 	id = "pico_mani"
 	req_tech = list(TECH_MATERIAL = 5, TECH_DATA = 2)
 	materials = list(MATERIAL_STEEL = 30)
@@ -52,7 +58,7 @@
 	sort_string = "CAABC"
 
 /datum/design/item/stock_part/basic_matter_bin
-	name = "Basic Matter Bin"
+	shortname = "Basic Matter Bin"
 	id = "basic_matter_bin"
 	req_tech = list(TECH_MATERIAL = 1)
 	materials = list(MATERIAL_STEEL = 80)
@@ -60,6 +66,7 @@
 	sort_string = "CAACA"
 
 /datum/design/item/stock_part/adv_matter_bin
+	shortname = "Advanced Matter Bin"
 	id = "adv_matter_bin"
 	req_tech = list(TECH_MATERIAL = 3)
 	materials = list(MATERIAL_STEEL = 80)
@@ -67,6 +74,7 @@
 	sort_string = "CAACB"
 
 /datum/design/item/stock_part/super_matter_bin
+	shortname = "Super Matter Bin"
 	id = "super_matter_bin"
 	req_tech = list(TECH_MATERIAL = 5)
 	materials = list(MATERIAL_STEEL = 80)
@@ -74,6 +82,7 @@
 	sort_string = "CAACC"
 
 /datum/design/item/stock_part/basic_micro_laser
+	shortname = "Basic Micro Laser"
 	id = "basic_micro_laser"
 	req_tech = list(TECH_MAGNET = 1)
 	materials = list(MATERIAL_STEEL = 10, MATERIAL_GLASS = 20)
@@ -81,6 +90,7 @@
 	sort_string = "CAADA"
 
 /datum/design/item/stock_part/high_micro_laser
+	shortname = "High Micro Laser"
 	id = "high_micro_laser"
 	req_tech = list(TECH_MAGNET = 3)
 	materials = list(MATERIAL_STEEL = 10, MATERIAL_GLASS = 20)
@@ -88,6 +98,7 @@
 	sort_string = "CAADB"
 
 /datum/design/item/stock_part/ultra_micro_laser
+	shortname = "Ultra Micro Laser"
 	id = "ultra_micro_laser"
 	req_tech = list(TECH_MAGNET = 5, TECH_MATERIAL = 5)
 	materials = list(MATERIAL_STEEL = 10, MATERIAL_GLASS = 20, MATERIAL_URANIUM = 10)
@@ -95,6 +106,7 @@
 	sort_string = "CAADC"
 
 /datum/design/item/stock_part/basic_sensor
+	shortname = "Basic Sensor"
 	id = "basic_sensor"
 	req_tech = list(TECH_MAGNET = 1)
 	materials = list(MATERIAL_STEEL = 50, MATERIAL_GLASS = 20)
@@ -102,6 +114,7 @@
 	sort_string = "CAAEA"
 
 /datum/design/item/stock_part/adv_sensor
+	shortname = "Advanced Sensor"
 	id = "adv_sensor"
 	req_tech = list(TECH_MAGNET = 3)
 	materials = list(MATERIAL_STEEL = 50, MATERIAL_GLASS = 20)
@@ -109,6 +122,7 @@
 	sort_string = "CAAEB"
 
 /datum/design/item/stock_part/phasic_sensor
+	shortname = "Phasic Sensor"
 	id = "phasic_sensor"
 	req_tech = list(TECH_MAGNET = 5, TECH_MATERIAL = 3)
 	materials = list(MATERIAL_STEEL = 50, MATERIAL_GLASS = 20, MATERIAL_SILVER = 10)
@@ -116,7 +130,7 @@
 	sort_string = "CAAEC"
 
 /datum/design/item/stock_part/RPED
-	name = "Rapid Part Exchange Device"
+	shortname = "Rapid Part Exchange Device"
 	desc = "Special mechanical module made to store, sort, and apply standard machine parts."
 	id = "rped"
 	req_tech = list(TECH_ENGINEERING = 3, TECH_MATERIAL = 3)
@@ -125,6 +139,7 @@
 	sort_string = "CBAAA"
 
 /datum/design/item/stock_part/subspace_ansible
+	shortname = "Subspace Ansible"
 	id = "s-ansible"
 	req_tech = list(TECH_DATA = 3, TECH_MAGNET = 4, TECH_MATERIAL = 4, TECH_BLUESPACE = 2)
 	materials = list(MATERIAL_STEEL = 80, MATERIAL_SILVER = 20)
@@ -132,6 +147,7 @@
 	sort_string = "UAAAA"
 
 /datum/design/item/stock_part/hyperwave_filter
+	shortname = "Hyperwave Filter"
 	id = "s-filter"
 	req_tech = list(TECH_DATA = 3, TECH_MAGNET = 3)
 	materials = list(MATERIAL_STEEL = 40, MATERIAL_SILVER = 10)
@@ -139,6 +155,7 @@
 	sort_string = "UAAAB"
 
 /datum/design/item/stock_part/subspace_amplifier
+	shortname = "Subspace Amplifier"
 	id = "s-amplifier"
 	req_tech = list(TECH_DATA = 3, TECH_MAGNET = 4, TECH_MATERIAL = 4, TECH_BLUESPACE = 2)
 	materials = list(MATERIAL_STEEL = 10, MATERIAL_GOLD = 30, MATERIAL_URANIUM = 15)
@@ -146,6 +163,7 @@
 	sort_string = "UAAAC"
 
 /datum/design/item/stock_part/subspace_treatment
+	shortname = "Subspace Treatment"
 	id = "s-treatment"
 	req_tech = list(TECH_DATA = 3, TECH_MAGNET = 2, TECH_MATERIAL = 4, TECH_BLUESPACE = 2)
 	materials = list(MATERIAL_STEEL = 10, MATERIAL_SILVER = 20)
@@ -153,6 +171,7 @@
 	sort_string = "UAAAD"
 
 /datum/design/item/stock_part/subspace_analyzer
+	shortname = "Subspace Analyzer"
 	id = "s-analyzer"
 	req_tech = list(TECH_DATA = 3, TECH_MAGNET = 4, TECH_MATERIAL = 4, TECH_BLUESPACE = 2)
 	materials = list(MATERIAL_STEEL = 10, MATERIAL_GOLD = 15)
@@ -160,6 +179,7 @@
 	sort_string = "UAAAE"
 
 /datum/design/item/stock_part/subspace_crystal
+	shortname = "Subspace Crystal"
 	id = "s-crystal"
 	req_tech = list(TECH_MAGNET = 4, TECH_MATERIAL = 4, TECH_BLUESPACE = 2)
 	materials = list(MATERIAL_GLASS = 1000, MATERIAL_SILVER = 20, MATERIAL_GOLD = 20)
@@ -167,6 +187,7 @@
 	sort_string = "UAAAF"
 
 /datum/design/item/stock_part/subspace_transmitter
+	shortname = "Subspace Transmitter"
 	id = "s-transmitter"
 	req_tech = list(TECH_MAGNET = 5, TECH_MATERIAL = 5, TECH_BLUESPACE = 3)
 	materials = list(MATERIAL_GLASS = 100, MATERIAL_SILVER = 10, MATERIAL_URANIUM = 15)

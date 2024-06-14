@@ -1,5 +1,4 @@
 /datum/design/item/biostorage/AssembleDesignName()
-	..()
 	name = "Biological intelligence storage ([item_name])"
 
 /datum/design/item/biostorage/mmi
@@ -9,7 +8,7 @@
 	build_type = PROTOLATHE | MECHFAB
 	materials = list(MATERIAL_STEEL = 1000, MATERIAL_GLASS = 500)
 	build_path = /obj/item/device/mmi
-	category = "Misc"
+	category = list("Medical")
 	sort_string = "VACCA"
 
 /datum/design/item/biostorage/mmi_radio
@@ -19,5 +18,5 @@
 	build_type = PROTOLATHE | MECHFAB
 	materials = list(MATERIAL_ALUMINIUM = 1200, MATERIAL_GLASS = 500)
 	build_path = /obj/item/device/mmi/radio_enabled
-	category = "Misc"
+	category = list("Medical")
 	sort_string = "VACCB"

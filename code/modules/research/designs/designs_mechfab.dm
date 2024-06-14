@@ -1,10 +1,9 @@
 /datum/design/item/mechfab
 	build_type = MECHFAB
-	category = "Misc"
 	req_tech = list(TECH_MATERIAL = 1)
 
 /datum/design/item/mechfab/robot
-	category = "Robot"
+	category = list("Robot")
 
 //if the fabricator is a exosuit fab pass the manufacturer info over to the robot part constructor
 /datum/design/item/mechfab/robot/Fabricate(newloc, fabricator)
@@ -117,7 +116,7 @@
 	build_path = /obj/structure/heavy_vehicle_frame
 	time = 70
 	materials = list(MATERIAL_STEEL = 20000)
-	category = "Exosuits"
+	category = list("Exosuit")
 
 /datum/design/item/mechfab/exosuit/basic_armour
 	name = "basic exosuit armour"
@@ -297,7 +296,7 @@
 	build_type = MECHFAB
 	time = 12
 	materials = list(MATERIAL_STEEL = 10000)
-	category = "Cyborg Upgrade Modules"
+	category = list("Robot Upgrade")
 
 /datum/design/item/robot_upgrade/rename
 	name = "Rename module"
@@ -369,7 +368,7 @@
 
 /datum/design/item/exosuit
 	build_type = MECHFAB
-	category = "Exosuit Equipment"
+	category = list("Exosuit Equipment")
 	time = 10
 	materials = list(MATERIAL_STEEL = 10000)
 
@@ -522,11 +521,11 @@
 	build_type = MECHFAB
 	materials = list(MATERIAL_STEEL = 750, MATERIAL_GLASS = 750)
 	build_path = /obj/item/device/flash/synthetic
-	category = "Misc"
+	category = list("Misc")
 
 //Augments, son
 /datum/design/item/mechfab/augment
-	category = "Augments"
+	category = list("Augments")
 
 /datum/design/item/mechfab/augment/armblade
 	name = "Armblade"
@@ -686,6 +685,9 @@
 	id = "augment_circuitry"
 
 //BigRigs
+/datum/design/item/mechfab/rig
+	category = "Hardsuits"
+
 /datum/design/item/mechfab/rig/zero
 	category = "Hardsuits"
 	name = "Null suit control module"

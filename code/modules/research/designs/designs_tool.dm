@@ -1,3 +1,6 @@
+/datum/design/item/tool
+	category = list("Engineering")
+
 /datum/design/item/tool/AssembleDesignName()
 	..()
 	name = "Tool design ([item_name])"

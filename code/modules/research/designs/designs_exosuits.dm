@@ -1,3 +1,6 @@
+/datum/design/circuit/exosuit
+	category = list("Exosuit")
+
 /datum/design/circuit/exosuit/AssembleDesignName()
 	name = "Exosuit software design ([name])"
 /datum/design/circuit/exosuit/AssembleDesignDesc()

@@ -1,6 +1,6 @@
 /datum/design/item/powercell
 	build_type = PROTOLATHE | MECHFAB
-	category = "Misc"
+	category = list("Power Cells")
 	materials = list(MATERIAL_STEEL = 700, MATERIAL_GLASS = 50, MATERIAL_PLASTIC = 20)
 
 /datum/design/item/powercell/AssembleDesignName()

@@ -294,13 +294,13 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 					if(build_type == IMPRINTER)
 						can_build_chem = linked_imprinter.check_craftable_amount_by_chemical(D, C)
 					if(can_build_chem < 1)
-						temp_chemical += " <span style=\"color:red\">[D.chemicals[C]*coeff] of acid </span>"
+						temp_chemical += " <span style=\"color:red\">[D.chemicals[C]*coeff] [CallReagentName(C)]</span>"
 					else
-						temp_chemical += " [D.chemicals[C]*coeff] of acid"
+						temp_chemical += " [D.chemicals[C]*coeff] [CallReagentName(C)]"
 					can_build = min(can_build, can_build_chem)
 				designs_list += list(list(
-					"id" =             "\ref[D]",
-					"name" =           D.name,
+					"id" =             D.id,
+					"name" =           D.shortname,
 					"desc" =           D.desc,
 //					"icon" =			iconName,
 					"can_create" =     can_build,
@@ -360,12 +360,20 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			selected_imprinter_category = what_cat
 	if(href_list["build"] && screen == "protolathe" && linked_lathe) //Causes the Protolathe to build something.
 		var/amount=text2num(href_list["amount"])
-		var/datum/design/being_built = locate(href_list["build"]) in files.known_designs
-		if(being_built && amount && linked_lathe)
+		var/datum/design/being_built = null
+		for(var/datum/design/D in files.known_designs)
+			if(D.id == href_list["build"])
+				being_built = D
+				break
+		if(being_built && amount)
 			linked_lathe.queue_design(being_built, amount)
 	if(href_list["build"] && screen == "circuit_imprinter" && linked_imprinter)
-		var/datum/design/being_built = locate(href_list["build"]) in files.known_designs
-		if(being_built && linked_imprinter)
+		var/datum/design/being_built = null
+		for(var/datum/design/D in files.known_designs)
+			if(D.id == href_list["build"])
+				being_built = D
+				break
+		if(being_built)
 			linked_imprinter.queue_design(being_built)
 	if(href_list["search"])
 		var/input = sanitizeSafe(input(usr, "Enter text to search", "Searching") as null|text, MAX_LNAME_LEN)
@@ -674,7 +682,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			for(var/T in Tech.unlocks_designs)
 				var/datum/design/D = files.design_by_id[T]
 				var/list/unlock_data = list(
-					"text" = "[D.name]"
+					"text" = "[D.shortname]"
 				)
 				unlock_list += list(unlock_data)
 			technology_data["unlocks"] = unlock_list

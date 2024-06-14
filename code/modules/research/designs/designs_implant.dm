@@ -1,5 +1,6 @@
 /datum/design/item/implant
 	materials = list(MATERIAL_ALUMINIUM = 50, MATERIAL_GLASS = 50)
+	category = list("Implant")
 
 /datum/design/item/implant/AssembleDesignName()
 	..()
