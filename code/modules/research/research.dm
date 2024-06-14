@@ -46,7 +46,6 @@ The tech datums are the actual "tech trees" that you improve through researching
 #define RESEARCH_ESOTERIC       "illegal"
 #define RESEARCH_MAGNETS        "magnets"
 #define RESEARCH_MATERIALS       "materials"
-#define RND_RELIABILITY_EXPONENT 0.75
 
 /datum/research								//Holder for all the existing, archived, and known tech. Individual to console.
 	var/list/known_designs = list()			//List of available designs (at base reliability).
@@ -123,39 +122,6 @@ The tech datums are the actual "tech trees" that you improve through researching
 
 	return TRUE
 
-/datum/research/proc/CanUpgrade(datum/technology/T)
-	if(T.reliability_upgrade_cost > research_points)
-		return FALSE
-	return TRUE
-
-/datum/research/proc/GetReliabilityUpgradeCost(datum/technology/T)
-	if(!T.unlocks_designs || !T.unlocks_designs.len)
-		return 0
-
-	var/reliability_increase = 0
-	var/total_reliability = 0
-
-	for(var/t in T.unlocks_designs)
-		reliability_increase += design_reliabilities[t] * (RND_RELIABILITY_EXPONENT ** design_created_prototypes[t])
-		total_reliability += design_reliabilities[t]
-
-	var/tech_cost_modifier = 1.0
-	if(T.cost > 0.0)
-		tech_cost_modifier = T.cost
-
-	return round((tech_cost_modifier * (total_reliability + reliability_increase)) / (100 * T.unlocks_designs.len))
-
-/datum/research/proc/GetAverageDesignReliability(datum/technology/T)
-	if(!T.unlocks_designs || !T.unlocks_designs.len)
-		return 0
-
-	var/total_reliability = 0
-
-	for(var/id in T.unlocks_designs)
-		total_reliability += design_reliabilities[id]
-
-	return round(total_reliability / T.unlocks_designs.len)
-
 /datum/research/proc/UnlockTechology(datum/technology/T, force = FALSE)
 	if(IsResearched(T))
 		return
@@ -172,28 +138,6 @@ The tech datums are the actual "tech trees" that you improve through researching
 
 		AddDesign2Known(D)
 
-	T.reliability_upgrade_cost = GetReliabilityUpgradeCost(T)
-	T.avg_reliability = GetAverageDesignReliability(T)
-
-/datum/research/proc/UpgradeTechology(datum/technology/T, force = FALSE)
-	if(!IsResearched(T))
-		return
-
-	T.reliability_upgrade_cost = GetReliabilityUpgradeCost(T)
-
-	if(!CanUpgrade(T) && !force)
-		return
-
-	if(!force)
-		research_points -= T.reliability_upgrade_cost
-
-	for(var/t in T.unlocks_designs)
-		design_reliabilities[t] += design_reliabilities[t] * (RND_RELIABILITY_EXPONENT ** design_created_prototypes[t])
-		design_reliabilities[t] = max(round(design_reliabilities[t], 5), 1)
-		design_created_prototypes[t]++ // Since we don't want to be able to increase it infinitely.
-
-	T.reliability_upgrade_cost = GetReliabilityUpgradeCost(T)
-	T.avg_reliability = GetAverageDesignReliability(T)
 
 /datum/research/proc/download_from(datum/research/O)
 
@@ -311,11 +255,6 @@ The tech datums are the actual "tech trees" that you improve through researching
 	return cost
 
 //Trunk Technologies (don't require any other techs and you start knowning them).
-/datum/tech/materials
-	name = "Materials Technology"
-	shortname = "Materials"
-	desc = "The use of materials and their properties."
-	id = RESEARCH_MATERIALS
 
 /datum/tech/engineering
 	name = "Engineering Research"
@@ -423,7 +362,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	required_tech_levels = list()
 	cost = 0
 
-	//unlocks_designs = list("science_tool", "basic_micro_laser", "basic_matter_bin", "arcademachine", "libraryconsole", "autolathe", "vendor", "light_replacer", "weldingmask", "mesons")
+	unlocks_designs = list("science_tool", "basic_micro_laser", "basic_matter_bin", "arcademachine", "autolathe", "light_replacer", "mesons")
 
 /datum/technology/monitoring
 	name = "Monitoring"

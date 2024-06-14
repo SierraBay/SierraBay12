@@ -128,9 +128,9 @@
 	power = max(active_power_usage, power)
 	use_power_oneoff(power)
 	for(var/M in D.materials)
-		materials[M] = max(0, materials[M] - (D.materials[M] * RNDD.amount))
+		materials[M] = max(0, materials[M] - ((D.materials[M] * RNDD.amount)*mat_efficiency))
 	for(var/C in D.chemicals)
-		reagents.remove_reagent(C, (D.chemicals[C] * RNDD.amount))
+		reagents.remove_reagent(C, ((D.chemicals[C] * RNDD.amount)*mat_efficiency))
 	for(var/i in 1 to RNDD.amount)
 		D.Fabricate(get_turf(src), 1, src)
 

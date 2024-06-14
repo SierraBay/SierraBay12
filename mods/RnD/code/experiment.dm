@@ -241,6 +241,7 @@ var/global/list/rnd_server_list = list()
 
 /obj/item/device/science_tool
 	name = "science tool"
+	icon = 'mods/RnD/icons/device.dmi'
 	icon_state = "science"
 	item_state = "sciencetool"
 	desc = "A hand-held device capable of extracting usefull data from various sources, such as paper reports and slime cores."
@@ -335,3 +336,13 @@ var/global/list/rnd_server_list = list()
 	. = ..()
 
 	stored_points = rand(10, 20)*1000
+
+
+/datum/design/science_tool
+	name = "Science Tool"
+	desc = "A hand-held device capable of extracting usefull data from various sources, such as paper reports and slime cores."
+	id = "science_tool"
+	build_type = PROTOLATHE
+	materials = list(MATERIAL_STEEL = 1000)
+	build_path = /obj/item/device/science_tool
+	category = list("Misc")

@@ -204,12 +204,6 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		if(!istype(S, /obj/machinery/r_n_d/server/centcom) && server_processed)
 			S.produce_heat(100)
 
-	if(selected_tech_tree && selected_technology)//update selected_technology upgrade cost and realibility
-		var/datum/technology/T = files.all_technologies[selected_tech_tree][selected_technology]
-
-		T.reliability_upgrade_cost = files.GetReliabilityUpgradeCost(T)
-		T.avg_reliability = files.GetAverageDesignReliability(T)
-
 	screen = "main"
 	SSnano.update_uis(src)
 
@@ -269,6 +263,11 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 /obj/machinery/computer/rdconsole/proc/get_possible_designs_data(build_type, category)
 	var/list/designs_list = list()
+	var/coeff = 1
+	if(build_type == PROTOLATHE)
+		coeff = linked_lathe.mat_efficiency
+	if(build_type == IMPRINTER)
+		coeff = linked_imprinter.mat_efficiency
 	for(var/datum/design/D in files.known_designs)
 		if(D.build_type & build_type)
 			var/cat = "Unspecified"
@@ -287,17 +286,17 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 						can_build = linked_imprinter.check_craftable_amount_by_material(D, M)
 					var/material/mat = SSmaterials.get_material_by_name(M)
 					if(can_build < 1)
-						temp_material += " <span style=\"color:red\">[D.materials[M]] [mat.display_name]</span>"
+						temp_material += " <span style=\"color:red\">[D.materials[M]*coeff] [mat.display_name]</span>"
 					else
-						temp_material += " [D.materials[M]] [mat.display_name]"
+						temp_material += " [D.materials[M]*coeff] [mat.display_name]"
 					can_build = min(can_build,maximum)
 				for(var/C in D.chemicals)
 					if(build_type == IMPRINTER)
 						can_build_chem = linked_imprinter.check_craftable_amount_by_chemical(D, C)
 					if(can_build_chem < 1)
-						temp_chemical += " <span style=\"color:red\">[D.chemicals[C]] of acid </span>"
+						temp_chemical += " <span style=\"color:red\">[D.chemicals[C]*coeff] of acid </span>"
 					else
-						temp_chemical += " [D.chemicals[C]] of acid"
+						temp_chemical += " [D.chemicals[C]*coeff] of acid"
 					can_build = min(can_build, can_build_chem)
 				designs_list += list(list(
 					"id" =             "\ref[D]",
@@ -322,11 +321,6 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	if(href_list["select_technology"])
 		var/new_selected_technology = href_list["select_technology"]
 		if(files.all_technologies[selected_tech_tree][new_selected_technology])
-			var/datum/technology/T = files.all_technologies[selected_tech_tree][new_selected_technology]
-
-			T.reliability_upgrade_cost = files.GetReliabilityUpgradeCost(T)
-			T.avg_reliability = files.GetAverageDesignReliability(T)
-
 			selected_technology = new_selected_technology
 	if(href_list["unlock_technology"])
 		var/unlock = href_list["unlock_technology"]

@@ -298,7 +298,7 @@
 				anomaly_tech.level = 8
 				src.inserted_disk.stored = anomaly_tech
 			else if(effect_type == EFFECT_PARTICLE)
-				var/datum/tech/anomaly_tech = new /datum/tech/materials
+				var/datum/tech/anomaly_tech = new /datum/tech/engineering
 				anomaly_tech.level = 8
 				src.inserted_disk.stored = anomaly_tech
 			. = TOPIC_REFRESH

@@ -52,6 +52,7 @@
 	sort_string = "CAABC"
 
 /datum/design/item/stock_part/basic_matter_bin
+	name = "Basic Matter Bin"
 	id = "basic_matter_bin"
 	req_tech = list(TECH_MATERIAL = 1)
 	materials = list(MATERIAL_STEEL = 80)
