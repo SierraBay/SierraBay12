@@ -81,11 +81,7 @@
 		if((T20C + 20) to (T0C + 70))
 			health = max(0, health - 1)
 	if(health <= 0)
-		files.known_designs = list()
-		for(var/datum/tech/T in files.known_tech)
-			if(prob(1))
-				T.level--
-		files.RefreshResearch()
+		files.forget_random_technology()
 	if(delay)
 		delay--
 	else
@@ -209,23 +205,15 @@
 		. = TOPIC_REFRESH
 
 	else if(href_list["reset_tech"])
-		var/choice = alert(user, "Technology Data Reset", "Are you sure you want to reset this technology to its default data? Data lost cannot be recovered.", "Continue", "Cancel")
-		if(choice == "Continue" && CanUseTopic(user, state))
-			for(var/datum/tech/T in temp_server.files.known_tech)
-				if(T.level > 0 && T.id == href_list["reset_tech"])
-					T.level = 1
-					break
-		temp_server.files.RefreshResearch()
-		. = TOPIC_REFRESH
+		var/choice = alert(usr, "Are you sure you want to reset this technology to its default data? Data lost cannot be recovered.", "Technology Data Rest", list("Continue", "Cancel"))
+		if(choice == "Continue")
+			temp_server.files.forget_all(href_list["reset_tech"])
 
-	else if(href_list["reset_design"])
-		var/choice = alert(user, "Design Data Deletion", "Are you sure you want to delete this design? If you still have the prerequisites for the design, it'll reset to its base reliability. Data lost cannot be recovered.", "Continue", "Cancel")
-		if(choice == "Continue" && CanUseTopic(user, state))
-			for(var/datum/design/D in temp_server.files.known_designs)
-				if(D.id == href_list["reset_design"])
-					temp_server.files.known_designs -= D
-					break
-		temp_server.files.RefreshResearch()
+	else if(href_list["reset_techology"])
+		var/choice = alert(usr, "Are you sure you want to delete this techology? Data lost cannot be recovered.", "Techology Deletion", list("Continue", "Cancel"))
+		var/techology = temp_server.files.researched_tech[href_list["reset_techology"]]
+		if(choice == "Continue" && techology)
+			temp_server.files.forget_techology(techology)
 		. = TOPIC_REFRESH
 
 /obj/machinery/computer/rdservercontrol/interface_interact(mob/user)
@@ -273,7 +261,8 @@
 		if(2) //Data Management menu
 			dat += "[temp_server.name] Data ManagementP<BR><BR>"
 			dat += "Known Technologies<BR>"
-			for(var/datum/tech/T in temp_server.files.known_tech)
+			for(var/tech_tree in temp_server.files.tech_trees)
+				var/datum/tech/T = temp_server.files.tech_trees[tech_tree]
 				dat += "* [T.name] "
 				dat += "<A href='?src=\ref[src];reset_tech=[T.id]'>(Reset)</A><BR>" //FYI, these are all strings.
 			dat += "Known Designs<BR>"

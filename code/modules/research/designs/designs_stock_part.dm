@@ -1,5 +1,6 @@
 /datum/design/item/stock_part
 	build_type = PROTOLATHE
+	category = "Stock Parts"
 
 /datum/design/item/stock_part/AssembleDesignName()
 	..()
@@ -11,7 +12,6 @@
 
 /datum/design/item/stock_part/basic_capacitor
 	id = "basic_capacitor"
-	req_tech = list(TECH_POWER = 1)
 	materials = list(MATERIAL_STEEL = 50, MATERIAL_GLASS = 50)
 	build_path = /obj/item/stock_parts/capacitor
 	sort_string = "CAAAA"

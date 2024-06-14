@@ -243,7 +243,9 @@
 
 /obj/item/rig_module/datajack/Initialize()
 	. =..()
-	stored_research = list()
+	stored_research = list()//Stolen research initialize.
+	for(var/T in subtypesof(/datum/tech))//Store up on research.
+		stored_research += new T
 
 /obj/item/rig_module/datajack/engage(atom/target)
 
@@ -281,11 +283,11 @@
 			var/obj/machinery/r_n_d/server/input_machine = input_device
 			incoming_files = input_machine.files
 
-		if(!incoming_files || !incoming_files.known_tech || !length(incoming_files.known_tech))
+		if(!incoming_files || !incoming_files.known_designs || !length(incoming_files.known_designs))
 			to_chat(user, SPAN_WARNING("Memory failure. There is nothing accessible stored on this terminal."))
 		else
 			// Maybe consider a way to drop all your data into a target repo in the future.
-			if(load_data(incoming_files.known_tech))
+			if(load_data(incoming_files.known_designs))
 				to_chat(user, SPAN_INFO("Download successful; local and remote repositories synchronized."))
 			else
 				to_chat(user, SPAN_WARNING("Scan complete. There is nothing useful stored on this terminal."))

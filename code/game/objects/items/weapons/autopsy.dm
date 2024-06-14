@@ -11,6 +11,9 @@
 	var/target_name = null
 	var/timeofdeath = null
 
+/obj/item/paper/autopsy_report
+	var/list/autopsy_data
+
 /datum/autopsy_data_scanner
 	var/weapon = null // this is the DEFINITE weapon type that was used
 	var/list/organs_scanned = list() // this maps a number of scanned organs to
@@ -137,7 +140,14 @@
 
 	sleep(10)
 
-	var/obj/item/paper/P = new(usr.loc, "<tt>[scan_data]</tt>", "Autopsy Data ([target_name])")
+	var/obj/item/paper/autopsy_report/P = new(usr.loc, "<tt>[scan_data]</tt>", "Autopsy Data ([target_name])")
+/*
+	P.autopsy_data = list() // Copy autopsy data for science tool
+	for(var/wdata_idx in wdata)
+		for(var/wound_idx in wdata[wdata_idx].bodyparts_scanned)
+			var/datum/autopsy_data/W = wdata[wdata_idx].bodyparts_scanned[wound_idx]
+			P.autopsy_data += W.copy()
+*/
 	if(istype(usr,/mob/living/carbon))
 		// place the item in the usr's hand if possible
 		usr.put_in_hands(P)

@@ -5,6 +5,7 @@
 	chemicals = list(/datum/reagent/acid = 20)
 	time = 5
 
+
 /datum/design/circuit/AssembleDesignName()
 	..()
 	if(build_path)
@@ -319,12 +320,14 @@
 
 /datum/design/circuit/atmosalerts
 	name = "atmosphere alert console"
+	category = list("Computer")
 	id = "atmosalerts"
 	build_path = /obj/item/stock_parts/circuitboard/atmos_alert
 	sort_string = "JAAAA"
 
 /datum/design/circuit/air_management
 	name = "atmosphere monitoring console"
+	category = list("Computer")
 	id = "air_management"
 	build_path = /obj/item/stock_parts/circuitboard/air_management
 	sort_string = "JAAAB"

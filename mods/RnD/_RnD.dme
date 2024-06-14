@@ -1,0 +1,11 @@
+#ifndef MODPACK_RND
+#define MODPACK_RND
+
+#include "_RnD.dm"
+#include "code/research.dm"
+#include "code/experiment.dm"
+
+// Далее просто включай свой код
+// #include "code/something.dm"
+
+#endif

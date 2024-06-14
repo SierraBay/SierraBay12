@@ -273,8 +273,8 @@
 		if(!D.build_path || !(D.build_type & MECHFAB))
 			continue
 		categories |= D.category
-	if(!category || !(category in categories))
-		category = categories[1]
+//	if(!category || !(category in categories))
+//		category = categories[1]
 
 /obj/machinery/robotics_fabricator/proc/get_materials()
 	. = list()
@@ -328,10 +328,6 @@
 	for(var/obj/machinery/computer/rdconsole/RDC in get_area_all_atoms(get_area(src)))
 		if(!RDC.sync)
 			continue
-		for(var/datum/tech/T in RDC.files.known_tech)
-			files.AddTech2Known(T)
-		for(var/datum/design/D in RDC.files.known_designs)
-			files.AddDesign2Known(D)
-		files.RefreshResearch()
-		sync_message = "Sync complete."
+	//files.download_from(RDC.files)
+	sync_message = "Sync complete."
 	update_categories()
