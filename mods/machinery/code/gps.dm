@@ -32,7 +32,7 @@ GLOBAL_LIST_EMPTY(gps_by_type)
 
 /obj/item/device/gps/emp_act(severity)
 	emped = 1
-	overlays.Cut()
+	CutOverlays()
 	overlays += image(icon, "emp")
 	addtimer(new Callback(src, .proc/post_emp), 300)
 
