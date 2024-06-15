@@ -7,7 +7,7 @@
 	uncreated_component_parts = null
 
 /obj/item/stock_parts/circuitboard/tele_pad
-	name = "circuit board (telepad)"
+	name = "circuit board (teleporter pad)"
 	board_type = "machine"
 	origin_tech = list(TECH_DATA = 4, TECH_BLUESPACE = 4)
 	build_path = /obj/machinery/tele_pad
