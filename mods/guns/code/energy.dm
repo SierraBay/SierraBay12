@@ -79,8 +79,8 @@
 	desc = "The W-T Mk. 6 Disorientator fitted with an NT1017 secure fire chip. It has a NanoTrasen logo on the grip."
 	icon = 'icons/obj/guns/confuseray.dmi'
 	item_icons = list(
-		slot_l_hand_str = 'mods/guns/icons/lefthand_guns_secure.dmi',
-		slot_r_hand_str = 'mods/guns/icons/obj/righthand_guns_secure.dmi',
+		slot_l_hand_str = 'mods/guns/icons/lefthand_guns_cadet.dmi',
+		slot_r_hand_str = 'mods/guns/icons/obj/righthand_guns_cadet.dmi',
 		)
 	icon_state = "confuseray"
 	item_state = "confuseray"
