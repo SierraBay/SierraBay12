@@ -1992,7 +1992,6 @@
 #include "code\modules\integrated_electronics\subtypes\smart.dm"
 #include "code\modules\integrated_electronics\subtypes\time.dm"
 #include "code\modules\integrated_electronics\subtypes\trig.dm"
-#include "code\modules\integrated_electronics\subtypes\reagents.dm"
 #include "code\modules\item_worth\_helpers.dm"
 #include "code\modules\item_worth\item_worth.dm"
 #include "code\modules\item_worth\value_procs.dm"
