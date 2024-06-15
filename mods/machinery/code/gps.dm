@@ -13,7 +13,7 @@ GLOBAL_LIST_EMPTY(gps_by_type)
 	matter = list(MATERIAL_ALUMINIUM = 250, MATERIAL_STEEL = 250, MATERIAL_GLASS = 50)
 	var/gps_prefix = "COM"
 	var/gpstag = "COM0"
-	var/emped = 0
+	emped = 0
 	var/turf/locked_location
 
 /obj/item/device/gps/Initialize()
