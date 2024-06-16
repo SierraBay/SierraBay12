@@ -50,7 +50,7 @@
 
 /obj/machinery/computer/telescience/use_tool(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/bluespace_crystal))
-		if(x >= max_crystals)
+		if(LAZYLEN(crystals) >= max_crystals)
 			to_chat(user, "<span class='warning'>There are not enough crystal slots.</span>")
 			return
 		user.drop_item(src)
