@@ -56,7 +56,7 @@
 	name = "telepad"
 	id = "telepad"
 	req_tech = list(TECH_DATA = 4, TECH_ENGINEERING = 3, TECH_MATERIAL = 3, TECH_BLUESPACE = 4)
-	build_path = /obj/item/stock_parts/circuitboard/tele_pad
+	build_path = /obj/item/stock_parts/circuitboard/telepad
 	sort_string = "HAAAF"
 
 /datum/design/circuit/telesci_console
