@@ -16,7 +16,6 @@
 	var/power_off
 	var/rotation_off
 	var/last_target
-	var/xlen = LAZYLEN(crystals)
 
 	var/rotation = 0
 	var/angle = 45
@@ -40,6 +39,7 @@
 
 /obj/machinery/computer/telescience/examine(mob/user)
 	. = ..()
+	var/xlen = LAZYLEN(crystals)
 	to_chat(user, "There are [xlen ? xlen : "no"] bluespace crystal\s in the crystal slots.")
 
 /obj/machinery/computer/telescience/Initialize()
