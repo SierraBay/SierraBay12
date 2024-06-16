@@ -52,7 +52,7 @@
 	build_path = /obj/machinery/computer/telescience
 	origin_tech = list(TECH_DATA = 3, TECH_BLUESPACE = 2)
 
-/datum/design/circuit/telepad
+/datum/design/circuit/telesci_pad
 	name = "telepad"
 	id = "telepad"
 	req_tech = list(TECH_DATA = 4, TECH_ENGINEERING = 3, TECH_MATERIAL = 3, TECH_BLUESPACE = 4)
