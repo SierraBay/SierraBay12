@@ -14,7 +14,7 @@
 	var/datum/projectile_data/last_tele_data = null
 	var/z_co = 1
 	var/power_off
-	var/xlen = LAZYLEN(crystals)
+	var/xlen
 	var/rotation_off
 	var/last_target
 
@@ -40,10 +40,12 @@
 
 /obj/machinery/computer/telescience/examine(mob/user)
 	. = ..()
+	
 	to_chat(user, "There are [xlen ? xlen : "no"] bluespace crystal\s in the crystal slots.")
 
 /obj/machinery/computer/telescience/Initialize()
 	. = ..()
+	xlen = LAZYLEN(crystals)
 	recalibrate()
 	for(var/i = 1; i <= starting_crystals; i++)
 		crystals += new /obj/item/bluespace_crystal/artificial(null) // starting crystals
