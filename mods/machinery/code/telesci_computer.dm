@@ -16,6 +16,7 @@
 	var/power_off
 	var/rotation_off
 	var/last_target
+	var/xlen = LAZYLEN(crystals)
 
 	var/rotation = 0
 	var/angle = 45
@@ -27,7 +28,6 @@
 	var/teleporting = 0
 	var/starting_crystals = 0	//Edit this on the map, seriously.
 	var/max_crystals = 5
-	var/x = LAZYLEN(crystals)
 	var/list/crystals = list()
 	var/obj/item/device/gps/inserted_gps
 
@@ -40,7 +40,7 @@
 
 /obj/machinery/computer/telescience/examine(mob/user)
 	. = ..()
-	to_chat(user, "There are [x ? x : "no"] bluespace crystal\s in the crystal slots.")
+	to_chat(user, "There are [xlen ? xlen : "no"] bluespace crystal\s in the crystal slots.")
 
 /obj/machinery/computer/telescience/Initialize()
 	. = ..()
@@ -50,7 +50,7 @@
 
 /obj/machinery/computer/telescience/use_tool(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/bluespace_crystal))
-		if(LAZYLEN(crystals) >= max_crystals)
+		if(xlen >= max_crystals)
 			to_chat(user, "<span class='warning'>There are not enough crystal slots.</span>")
 			return
 		user.drop_item(src)
