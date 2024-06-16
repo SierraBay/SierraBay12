@@ -3,12 +3,6 @@
 	category = list("Power Cells")
 	materials = list(MATERIAL_STEEL = 700, MATERIAL_GLASS = 50, MATERIAL_PLASTIC = 20)
 
-/datum/design/item/powercell/AssembleDesignName()
-	name = "Power cell model ([item_name])"
-
-/datum/design/item/powercell/device/AssembleDesignName()
-	name = "Device cell model ([item_name])"
-
 /datum/design/item/powercell/AssembleDesignDesc()
 	if(build_path)
 		var/obj/item/cell/C = build_path

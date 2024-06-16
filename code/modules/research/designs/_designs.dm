@@ -46,12 +46,12 @@ other types of metals and chemistry for reagents).
 	return
 
 /datum/design/proc/AssembleDesignName()
-	if(!shortname)
-		shortname = capitalize(name)
 	if(!name && build_path)					//Get name from build path if posible
 		var/atom/movable/A = build_path
 		name = initial(A.name)
 		item_name = name
+	if(!shortname)
+		shortname = capitalize(name)
 	return
 
 /datum/design/proc/AssembleDesignDesc()

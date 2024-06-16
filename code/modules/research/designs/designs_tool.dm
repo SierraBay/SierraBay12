@@ -1,10 +1,6 @@
 /datum/design/item/tool
 	category = list("Engineering")
 
-/datum/design/item/tool/AssembleDesignName()
-	..()
-	name = "Tool design ([item_name])"
-
 /datum/design/item/tool/light_replacer
 	name = "light replacer"
 	desc = "A device to automatically replace lights. Refill with working lightbulbs."

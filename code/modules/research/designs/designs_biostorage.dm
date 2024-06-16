@@ -1,5 +1,3 @@
-/datum/design/item/biostorage/AssembleDesignName()
-	name = "Biological intelligence storage ([item_name])"
 
 /datum/design/item/biostorage/mmi
 	name = "man-machine interface"

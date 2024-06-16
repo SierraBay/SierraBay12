@@ -160,7 +160,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 	if(loaded_item)
 		loaded_item.forceMove(loc)
 		loaded_item = null
-		on_update_icon()
+	on_update_icon()
 
 /obj/machinery/r_n_d/destructive_analyzer/power_change()
 	. = ..()

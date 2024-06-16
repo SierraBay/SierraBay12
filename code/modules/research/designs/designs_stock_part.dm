@@ -2,10 +2,6 @@
 	build_type = PROTOLATHE
 	category = list("Stock Parts")
 
-/datum/design/item/stock_part/AssembleDesignName()
-	..()
-	name = "Component design ([item_name])"
-
 /datum/design/item/stock_part/AssembleDesignDesc()
 	if(!desc)
 		desc = "A stock part used in the construction of various devices."

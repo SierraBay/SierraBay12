@@ -1,9 +1,6 @@
 /datum/design/item/syringe
 	category = list("Medical")
 
-/datum/design/item/syringe/AssembleDesignName()
-	name = "Syringe prototype ([item_name])"
-
 /datum/design/item/syringe/noreactsyringe
 	name = "Cryo Syringe"
 	desc = "An advanced syringe that stops reagents inside from reacting. It can hold up to 20 units."

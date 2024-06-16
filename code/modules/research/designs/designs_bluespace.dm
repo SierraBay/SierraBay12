@@ -1,10 +1,6 @@
 /datum/design/item/bluespace
 	category = list("Misc")
 
-/datum/design/item/bluespace/AssembleDesignName()
-	..()
-	name = "Bluespace device ([item_name])"
-
 /datum/design/item/bluespace/gps
 	name = "triangulating device"
 	desc = "Triangulates approximate co-ordinates using a nearby satellite network."

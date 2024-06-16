@@ -2,10 +2,6 @@
 /datum/design/item/mining
 	category = list("Mining")
 
-/datum/design/item/mining/AssembleDesignName()
-	..()
-	name = "Mining equipment design ([item_name])"
-
 /datum/design/item/mining/jackhammer
 	id = "jackhammer"
 	req_tech = list(TECH_MATERIAL = 3, TECH_POWER = 2, TECH_ENGINEERING = 2)

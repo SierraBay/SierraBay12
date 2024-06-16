@@ -1,5 +1,3 @@
-/datum/design/item/beaker/AssembleDesignName()
-	name = "Beaker prototype ([item_name])"
 
 /datum/design/item/beaker/noreact
 	shortname = "Cryostasis beaker"

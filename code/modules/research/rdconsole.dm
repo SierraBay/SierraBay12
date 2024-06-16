@@ -302,7 +302,6 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 					"id" =             D.id,
 					"name" =           D.shortname,
 					"desc" =           D.desc,
-//					"icon" =			iconName,
 					"can_create" =     can_build,
 					"temp_material" =  temp_material,
 					"temp_chemical" =  temp_chemical

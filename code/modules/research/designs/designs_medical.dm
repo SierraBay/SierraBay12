@@ -2,10 +2,6 @@
 	materials = list(MATERIAL_STEEL = 30, MATERIAL_GLASS = 20)
 	category = list("Medical")
 
-/datum/design/item/medical/AssembleDesignName()
-	..()
-	name = "Biotech device prototype ([item_name])"
-
 /datum/design/item/medical/health_scanner
 	shortname = "Health Scanner"
 	desc = "A hand-held scanner able to diagnose human health issues."

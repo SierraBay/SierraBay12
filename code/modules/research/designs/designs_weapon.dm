@@ -1,10 +1,6 @@
 /datum/design/item/weapon
 	category = list("Weapon")
 
-/datum/design/item/weapon/AssembleDesignName()
-	..()
-	name = "Weapon prototype ([item_name])"
-
 /datum/design/item/weapon/AssembleDesignDesc()
 	if(!desc)
 		if(build_path)
@@ -150,10 +146,6 @@
 	materials = list(MATERIAL_STEEL = 10000, MATERIAL_SILVER = 5000, MATERIAL_DIAMOND = 3000)
 	build_path = /obj/item/gun/projectile/automatic/bullpup_rifle
 	sort_string = "TAPAC"
-
-/datum/design/item/weapon/ammunition/AssembleDesignName()
-	..()
-	name = "Ammunition prototype ([item_name])"
 
 /datum/design/item/weapon/ammunition/ammo_small
 	id = "ammo_small"

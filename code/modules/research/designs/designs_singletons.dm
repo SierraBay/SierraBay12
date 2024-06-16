@@ -1,6 +1,3 @@
-/datum/design/item/encryptionkey/AssembleDesignName()
-	..()
-	name = "Encryption key design ([item_name])"
 
 /datum/design/item/encryptionkey/binary
 	name = "binary"
@@ -11,9 +8,6 @@
 	build_path = /obj/item/device/encryptionkey/binary
 	sort_string = "VASAA"
 
-/datum/design/item/camouflage/AssembleDesignName()
-	..()
-	name = "Camouflage design ([item_name])"
 
 /datum/design/item/camouflage/chameleon
 	name = "holographic equipment kit"
