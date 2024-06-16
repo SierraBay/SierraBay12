@@ -1,5 +1,5 @@
 ///SCI TELEPAD///
-/obj/machinery/tele_pad
+/obj/machinery/telepad
 	name = "telepad"
 	desc = "A bluespace telepad used for teleporting objects to and from a location."
 	icon = 'icons/obj/telescience.dmi'
@@ -14,13 +14,13 @@
 
 	var/efficiency
 
-/obj/machinery/tele_pad/RefreshParts()
+/obj/machinery/telepad/RefreshParts()
 	efficiency = total_component_rating_of_type(/obj/item/stock_parts/capacitor)
 
-/obj/machinery/tele_pad/components_are_accessible(path)
+/obj/machinery/telepad/components_are_accessible(path)
 	return panel_open
 
-/obj/machinery/tele_pad/use_tool(obj/item/tool, mob/living/user, list/click_params)
+/obj/machinery/telepad/use_tool(obj/item/tool, mob/living/user, list/click_params)
 	if(component_attackby(tool, user)) return TRUE
 	if(panel_open)
 		if(istype(tool, /obj/item/device/multitool))
@@ -44,7 +44,7 @@
 			return
 	.=..()
 
-/obj/machinery/tele_pad/on_update_icon()
+/obj/machinery/telepad/on_update_icon()
 	switch (panel_open)
 		if (1)
 			icon_state = "pad-idle-o"
