@@ -243,9 +243,6 @@
 								<table class="fixed" style="width: 100%;">
 									{{for data.possible_designs}}
 										<tr style="width: 100%;">
-											<td style="width: 12%">
-												<img class="statusDisplayItem" src={{:value.icon}} height=24 width=24></img>
-											</td>
 											<td style="width: 70%">
 												{{:helper.link(value.name, '', {'build' : value.id, 'amount': 1}, value.can_create >= 1 ? null : 'disabled')}}
 											</td>

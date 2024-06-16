@@ -534,7 +534,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			if(search_text)
 				data["all_categories"] = list("Search Results") + data["all_categories"]
 
-			if((!selected_protolathe_category || !(selected_protolathe_category in data["all_categories"])) && files.design_categories_protolathe.len)
+			if((!selected_protolathe_category || !(selected_protolathe_category in data["all_categories"])) && LAZYLEN(files.design_categories_protolathe))
 				selected_protolathe_category = files.design_categories_protolathe[1]
 
 			if(selected_protolathe_category)
@@ -542,7 +542,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				data["possible_designs"] = get_possible_designs_data(PROTOLATHE, selected_protolathe_category)
 
 			var/list/queue_list = list()
-			queue_list["can_restart"] = (linked_lathe.queue.len && !linked_lathe.busy)
+			queue_list["can_restart"] = (LAZYLEN(linked_lathe.queue) && !linked_lathe.busy)
 			queue_list["queue"] = list()
 			for(var/datum/rnd_queue_design/RNDD in linked_lathe.queue)
 				queue_list["queue"] += RNDD.name
@@ -556,7 +556,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			if(search_text)
 				data["all_categories"] = list("Search Results") + data["all_categories"]
 
-			if((!selected_imprinter_category || !(selected_imprinter_category in data["all_categories"])) && files.design_categories_imprinter.len)
+			if((!selected_imprinter_category || !(selected_imprinter_category in data["all_categories"])) && LAZYLEN(files.design_categories_imprinter))
 				selected_imprinter_category = files.design_categories_imprinter[1]
 
 			if(selected_imprinter_category)
@@ -565,7 +565,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 
 			var/list/queue_list = list()
-			queue_list["can_restart"] = (linked_imprinter.queue.len && !linked_imprinter.busy)
+			queue_list["can_restart"] = (LAZYLEN(linked_imprinter.queue) && !linked_imprinter.busy)
 			queue_list["queue"] = list()
 			for(var/datum/rnd_queue_design/RNDD in linked_imprinter.queue)
 				queue_list["queue"] += RNDD.name
@@ -652,8 +652,6 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				"id" =             Tech.id,
 				"tech_type" =      Tech.tech_type,
 				"cost" =           Tech.cost,
-				"reliability_upgrade_cost" = Tech.reliability_upgrade_cost,
-				"avg_reliability" = Tech.avg_reliability,
 				"isresearched" =   files.IsResearched(Tech),
 			)
 			data["selected_technology_id"] = Tech.id

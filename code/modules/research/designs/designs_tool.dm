@@ -88,7 +88,7 @@
 /datum/design/item/tool/oxycandle
 	name = "oxycandle"
 	desc = "a device which, via a chemical reaction, can pressurise small areas."
-	id="oxycandle"
+	id = "oxycandle"
 	req_tech = list(TECH_ENGINEERING = 2)
 	materials = list(MATERIAL_STEEL = 3000)
 	chemicals = list(/datum/reagent/sodiumchloride = 20, /datum/reagent/acetone = 20)

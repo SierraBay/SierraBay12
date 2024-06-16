@@ -719,6 +719,7 @@ th.bot {
 	background-color: black;
 	color: black;
 }
+
 #sciTechTreeContainer {
     position: relative;
     width: 99%;
@@ -771,94 +772,101 @@ th.bot {
 }
 
 .sciTechTreeIcon.icon-gun { background-position: 0px 0px; }
-.sciTechTreeIcon.icon-diamond { background-position: -32px 0px; }
+.sciTechTreeIcon.icon-adv_mass_spec { background-position: -32px 0px; }
 .sciTechTreeIcon.icon-cell { background-position: -64px 0px; }
 .sciTechTreeIcon.icon-wrench { background-position: -96px 0px; }
-.sciTechTreeIcon.icon-telescience { background-position: -128px 0px; }
+.sciTechTreeIcon.icon-drill { background-position: -128px 0px; }
 .sciTechTreeIcon.icon-monitoring { background-position: -160px 0px; }
 .sciTechTreeIcon.icon-rd { background-position: -192px 0px; }
-.sciTechTreeIcon.icon-tesla { background-position: -224px 0px; }
+.sciTechTreeIcon.icon-telecom_part { background-position: -224px 0px; }
 
 .sciTechTreeIcon.icon-spaceheater { background-position: 0px -32px; }
-.sciTechTreeIcon.icon-pda { background-position: -32px -32px; }
-.sciTechTreeIcon.icon-goldpda { background-position: -64px -32px; }
-.sciTechTreeIcon.icon-advmop { background-position: -96px -32px; }
-.sciTechTreeIcon.icon-drill { background-position: -128px -32px; }
-.sciTechTreeIcon.icon-jackhammer { background-position: -160px -32px; }
+.sciTechTreeIcon.icon-hypo { background-position: -32px -32px; }
+.sciTechTreeIcon.icon-contact { background-position: -64px -32px; }
+.sciTechTreeIcon.icon-power_node { background-position: -96px -32px; }
+.sciTechTreeIcon.icon-pickaxe { background-position: -128px -32px; }
+.sciTechTreeIcon.icon-cutter { background-position: -160px -32px; }
 .sciTechTreeIcon.icon-advmatterbin { background-position: -192px -32px; }
 .sciTechTreeIcon.icon-supermatterbin { background-position: -224px -32px; }
 
-.sciTechTreeIcon.icon-bluespacematterbin { background-position: 0px -64px; }
+.sciTechTreeIcon.icon-anom { background-position: 0px -64px; }
 .sciTechTreeIcon.icon-rped { background-position: -32px -64px; }
 .sciTechTreeIcon.icon-jawsoflife { background-position: -64px -64px; }
 .sciTechTreeIcon.icon-healthanalyzer { background-position: -96px -64px; }
 .sciTechTreeIcon.icon-hydroponics { background-position: -128px -64px; }
 .sciTechTreeIcon.icon-microwave { background-position: -160px -64px; }
-.sciTechTreeIcon.icon-candymachine { background-position: -192px -64px; }
+.sciTechTreeIcon.icon-processor { background-position: -192px -64px; }
 .sciTechTreeIcon.icon-operationcomputer { background-position: -224px -64px; }
 
-.sciTechTreeIcon.icon-vialbox { background-position: 0px -96px; }
+.sciTechTreeIcon.icon-add_sec_eq { background-position: 0px -96px; }
 .sciTechTreeIcon.icon-sleeper { background-position: -32px -96px; }
 .sciTechTreeIcon.icon-medhud { background-position: -64px -96px; }
-.sciTechTreeIcon.icon-handheldmonitor { background-position: -96px -96px; }
-.sciTechTreeIcon.icon-medbeacon { background-position: -128px -96px; }
+.sciTechTreeIcon.icon-javeline { background-position: -96px -96px; }
+.sciTechTreeIcon.icon-gps { background-position: -128px -96px; }
 .sciTechTreeIcon.icon-rapidsyringegun { background-position: -160px -96px; }
 .sciTechTreeIcon.icon-scalpelmanager { background-position: -192px -96px; }
 .sciTechTreeIcon.icon-stunbaton { background-position: -224px -96px; }
 
 .sciTechTreeIcon.icon-seccomputer { background-position: 0px -128px; }
-.sciTechTreeIcon.icon-flash { background-position: -32px -128px; }
-.sciTechTreeIcon.icon-recharger { background-position: -64px -128px; }
-.sciTechTreeIcon.icon-ammobox { background-position: -96px -128px; }
-.sciTechTreeIcon.icon-submachinegun { background-position: -128px -128px; }
-.sciTechTreeIcon.icon-tempgun { background-position: -160px -128px; }
-.sciTechTreeIcon.icon-teslagun { background-position: -192px -128px; }
-.sciTechTreeIcon.icon-stunrevolver { background-position: -224px -128px; }
+.sciTechTreeIcon.icon-shock { background-position: -32px -128px; }
+.sciTechTreeIcon.icon-riotgun { background-position: -64px -128px; }
+.sciTechTreeIcon.icon-laser { background-position: -96px -128px; }
+.sciTechTreeIcon.icon-ripper { background-position: -128px -128px; }
+.sciTechTreeIcon.icon-flamethrower { background-position: -160px -128px; }
+.sciTechTreeIcon.icon-seeker { background-position: -192px -128px; }
+.sciTechTreeIcon.icon-divet { background-position: -224px -128px; }
 
-.sciTechTreeIcon.icon-supercell { background-position: 0px -160px; }
-.sciTechTreeIcon.icon-hypercell { background-position: -32px -160px; }
-.sciTechTreeIcon.icon-bluespacecell { background-position: -64px -160px; }
+.sciTechTreeIcon.icon-relay { background-position: 0px -160px; }
+.sciTechTreeIcon.icon-subspace { background-position: -32px -160px; }
+.sciTechTreeIcon.icon-batteryrack { background-position: -64px -160px; }
 .sciTechTreeIcon.icon-solarcontrol { background-position: -96px -160px; }
 .sciTechTreeIcon.icon-generator { background-position: -128px -160px; }
-.sciTechTreeIcon.icon-supergenerator { background-position: -160px -160px; }
+.sciTechTreeIcon.icon-solnet_relay { background-position: -160px -160px; }
 .sciTechTreeIcon.icon-smes { background-position: -192px -160px; }
-.sciTechTreeIcon.icon-gps { background-position: -224px -160px; }
+.sciTechTreeIcon.icon-implant { background-position: -224px -160px; }
 
-.sciTechTreeIcon.icon-headset { background-position: 0px -192px; }
+.sciTechTreeIcon.icon-icupgradv { background-position: 0px -192px; }
 .sciTechTreeIcon.icon-communications { background-position: -32px -192px; }
-.sciTechTreeIcon.icon-radiogrid { background-position: -64px -192px; }
-.sciTechTreeIcon.icon-bluespacething { background-position: -96px -192px; }
-.sciTechTreeIcon.icon-teleporter { background-position: -128px -192px; }
-.sciTechTreeIcon.icon-bluespacerped { background-position: -160px -192px; }
-.sciTechTreeIcon.icon-bagofholding { background-position: -192px -192px; }
-.sciTechTreeIcon.icon-cyborganalyzer { background-position: -224px -192px; }
+.sciTechTreeIcon.icon-icprinter { background-position: -64px -192px; }
+.sciTechTreeIcon.icon-rfid { background-position: -96px -192px; }
+.sciTechTreeIcon.icon-icupclo { background-position: -128px -192px; }
+.sciTechTreeIcon.icon-pcpu { background-position: -160px -192px; }
+.sciTechTreeIcon.icon-pcpu_small { background-position: -192px -192px; }
+.sciTechTreeIcon.icon-cpu_small { background-position: -224px -192px; }
 
-.sciTechTreeIcon.icon-ripley { background-position: 0px -224px; }
-.sciTechTreeIcon.icon-odyssey { background-position: -32px -224px; }
-.sciTechTreeIcon.icon-posbrain { background-position: -64px -224px; }
-.sciTechTreeIcon.icon-aicard { background-position: -96px -224px; }
-.sciTechTreeIcon.icon-gygax { background-position: -128px -224px; }
-.sciTechTreeIcon.icon-gygaxultra { background-position: -160px -224px; }
-.sciTechTreeIcon.icon-durand { background-position: -192px -224px; }
-.sciTechTreeIcon.icon-vindicator { background-position: -224px -224px; }
+.sciTechTreeIcon.icon-diamond_drill { background-position: 0px -224px; }
+.sciTechTreeIcon.icon-nanoprinter { background-position: -32px -224px; }
+.sciTechTreeIcon.icon-netcard_adv { background-position: -64px -224px; }
+.sciTechTreeIcon.icon-netcard_w { background-position: -96px -224px; }
+.sciTechTreeIcon.icon-cpu { background-position: -128px -224px; }
+.sciTechTreeIcon.icon-tablet_frame { background-position: -160px -224px; }
+.sciTechTreeIcon.icon-blue_beaker { background-position: -192px -224px; }
+.sciTechTreeIcon.icon-brace { background-position: -224px -224px; }
 
-.sciTechTreeIcon.icon-mechgrenadelauncher { background-position: 0px -256px; }
-.sciTechTreeIcon.icon-mechlaser { background-position: -32px -256px; }
-.sciTechTreeIcon.icon-mechrcd { background-position: -64px -256px; }
-.sciTechTreeIcon.icon-mecharmor { background-position: -96px -256px; }
-.sciTechTreeIcon.icon-mechteleporter { background-position: -128px -256px; }
-.sciTechTreeIcon.icon-rigscanner { background-position: -160px -256px; }
-.sciTechTreeIcon.icon-rigtaser { background-position: -192px -256px; }
-.sciTechTreeIcon.icon-rignuclearreactor { background-position: -224px -256px; }
+.sciTechTreeIcon.icon-tesla_link { background-position: 0px -256px; }
+.sciTechTreeIcon.icon-modular_bat_advanced { background-position: -32px -256px; }
+.sciTechTreeIcon.icon-modular_bat_super { background-position: -64px -256px; }
+.sciTechTreeIcon.icon-modular_bat_ultra { background-position: -96px -256px; }
+.sciTechTreeIcon.icon-modular_bat_micro { background-position: -128px -256px; }
+.sciTechTreeIcon.icon-speedloader { background-position: -160px -256px; }
+.sciTechTreeIcon.icon-adflash { background-position: -192px -256px; }
+.sciTechTreeIcon.icon-hdd512 { background-position: -224px -256px; }
 
-.sciTechTreeIcon.icon-shield { background-position: 0px -288px; }
+.sciTechTreeIcon.icon-decloner { background-position: 0px -288px; }
 .sciTechTreeIcon.icon-fusion { background-position: -32px -288px; }
 .sciTechTreeIcon.icon-chemdisp { background-position: -64px -288px; }
 .sciTechTreeIcon.icon-cloning { background-position: -96px -288px; }
-.sciTechTreeIcon.icon-chamelion { background-position: -128px -288px; }
-.sciTechTreeIcon.icon-freedom { background-position: -160px -288px; }
-.sciTechTreeIcon.icon-module { background-position: -192px -288px; }
-.sciTechTreeIcon.icon-borgmodule { background-position: -224px -288px; }
+.sciTechTreeIcon.icon-furnace { background-position: -128px -288px; }
+.sciTechTreeIcon.icon-hdd2048 { background-position: -160px -288px; }
+.sciTechTreeIcon.icon-hdd256 { background-position: -192px -288px; }
+.sciTechTreeIcon.icon-hdd64 { background-position: -224px -288px; }
+
+.sciTechTreeIcon.icon-dblades { background-position: 0px -320px; }
+.sciTechTreeIcon.icon-apds { background-position: -32px -320px; }
+.sciTechTreeIcon.icon-icds { background-position: -64px -320px; }
+.sciTechTreeIcon.icon-hpds { background-position: -96px -320px; }
+.sciTechTreeIcon.icon-gene { background-position: -128px -320px; }
+.sciTechTreeIcon.icon-sdivet { background-position: -160px -320px; }
 
 .sciMenuButton {
     width: 300px;

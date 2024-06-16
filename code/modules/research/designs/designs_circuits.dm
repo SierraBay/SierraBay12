@@ -4,7 +4,7 @@
 	materials = list(MATERIAL_PLASTIC = 1000, MATERIAL_ALUMINIUM = 1000)
 	chemicals = list(/datum/reagent/acid = 20)
 	time = 5
-	category = ("Circuit")
+	category = list("Circuit")
 	///Кто нибудь потом распределите это по другим категориям, дохера тут плат
 /datum/design/circuit/AssembleDesignName()
 	..()
@@ -12,13 +12,13 @@
 		var/obj/item/stock_parts/circuitboard/C = build_path
 		if(initial(C.board_type) == "machine")
 			name = "Machine circuit design ([item_name])"
-			category = ("Machine Circuit")
+			category = list("Machine Circuit")
 		else if(initial(C.board_type) == "computer")
 			name = "Computer circuit design ([item_name])"
-			category = ("Computer Circuit")
+			category = list("Computer Circuit")
 		else
 			name = "Circuit design ([item_name])"
-			category = ("Circuit")
+			category = list("Circuit")
 
 
 /datum/design/circuit/AssembleDesignDesc()

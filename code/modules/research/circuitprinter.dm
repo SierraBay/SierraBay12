@@ -23,7 +23,6 @@ using metal and glass, it uses glass and reagents (usually sulphuric acid).
 	active_power_usage = 2500
 	machine_name = "circuit imprinter"
 	machine_desc = "Creates circuit boards by etching raw sheets of material with sulphuric acid. Part of an R&D network."
-	var/list/datum/rnd_material/loaded_materials = list()
 	var/list/queue = list()
 
 /obj/machinery/r_n_d/circuit_imprinter/New()
@@ -35,7 +34,7 @@ using metal and glass, it uses glass and reagents (usually sulphuric acid).
 	if(inoperable())
 		update_icon()
 		return
-	if(queue.len == 0)
+	if(LAZYLEN(queue) == 0)
 		busy = FALSE
 		update_icon()
 		return
@@ -205,7 +204,7 @@ using metal and glass, it uses glass and reagents (usually sulphuric acid).
 
 /obj/machinery/r_n_d/circuit_imprinter/proc/print_post(datum/design/D)
 	visible_message("\icon[src]\The [src] flashes, indicating that \the [D] is complete.", range = 3)
-	if(!queue.len)
+	if(!LAZYLEN(queue))
 		playsound(src.loc, 'sound/machines/ping.ogg', 50, 1 -3)
 		visible_message("\icon[src]\The [src] pings indicating that queue is complete.")
 	return

@@ -4,17 +4,15 @@
 #include "_RnD.dm"
 #include "code/research.dm"
 #include "code/experiment.dm"
+#include "code/tech_biotech.dm"
+#include "code/tech_combat.dm"
+#include "code/tech_engineering.dm"
+#include "code/tech_illegal.dm"
+#include "code/tech_data.dm"
+#include "code/tech_power.dm"
+#include "code/tech_telecom.dm"
 
 // Далее просто включай свой код
 // #include "code/something.dm"
 
 #endif
-// BEGIN_INTERNALS
-// END_INTERNALS
-// BEGIN_FILE_DIR
-#define FILE_DIR .
-// END_FILE_DIR
-// BEGIN_PREFERENCES
-// END_PREFERENCES
-// BEGIN_INCLUDE
-// END_INCLUDE
