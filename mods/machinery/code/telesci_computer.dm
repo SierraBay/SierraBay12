@@ -39,7 +39,7 @@
 
 /obj/machinery/computer/telescience/examine(mob/user)
 	. = ..()
-	to_chat(user, "There are [crystals.len ? crystals.len : "no"] bluespace crystal\s in the crystal slots.")
+	to_chat(user, "There are [LAZYLEN(crystals ? crystals) : "no"] bluespace crystal\s in the crystal slots.")
 
 /obj/machinery/computer/telescience/Initialize()
 	. = ..()
@@ -49,7 +49,7 @@
 
 /obj/machinery/computer/telescience/use_tool(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/bluespace_crystal))
-		if(crystals.len >= max_crystals)
+		if(LAZYLEN(crystals) >= max_crystals)
 			to_chat(user, "<span class='warning'>There are not enough crystal slots.</span>")
 			return
 		user.drop_item(src)
@@ -103,8 +103,8 @@
 		t += "<span class='linkOn'>Set Power</span>"
 		t += "<div class='statusDisplay'>"
 
-		for(var/i = 1; i <= power_options.len; i++)
-			if(crystals.len + telepad.efficiency  < i)
+		for(var/i = 1; i <= LAZYLEN(power_options); i++)
+			if(LAZYLEN(crystals) + telepad.efficiency  < i)
 				t += "<span class='linkOff'>[power_options[i]]</span>"
 				continue
 			if(power == power_options[i])
