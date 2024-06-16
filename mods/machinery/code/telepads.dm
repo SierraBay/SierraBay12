@@ -1,4 +1,4 @@
-/obj/machinery/telepad
+/obj/machinery/teleporter_pad
 	construct_state = /singleton/machine_construction/default/panel_closed
 	uncreated_component_parts = null
 
@@ -6,7 +6,7 @@
 	construct_state = /singleton/machine_construction/default/panel_closed
 	uncreated_component_parts = null
 
-/obj/item/stock_parts/circuitboard/telepad
+/obj/item/stock_parts/circuitboard/teleporter_pad
 	name = "circuit board (teleporter pad)"
 	board_type = "machine"
 	origin_tech = list(TECH_DATA = 4, TECH_BLUESPACE = 4)
@@ -18,9 +18,9 @@
 	origin_tech = list(TECH_DATA = 4, TECH_BLUESPACE = 4)
 	build_path = /obj/machinery/tele_projector
 
-/datum/design/circuit/telepad
+/datum/design/circuit/teleporter_pad
 	name = "telepad machine"
-	id = "telepad"
+	id = "teleporter_pad"
 	req_tech = list(TECH_DATA = 4, TECH_BLUESPACE = 4)
 	build_path = /obj/item/stock_parts/circuitboard/tele_pad
 	sort_string = "MAAAA"
