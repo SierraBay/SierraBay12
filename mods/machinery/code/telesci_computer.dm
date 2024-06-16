@@ -370,7 +370,7 @@
 		var/index = href_list["setpower"]
 		index = text2num(index)
 		if(index != null && power_options[index])
-			if(crystals.len + telepad.efficiency >= index)
+			if(xlen + telepad.efficiency >= index)
 				power = power_options[index]
 
 	if(href_list["setz"])
