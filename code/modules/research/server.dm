@@ -20,12 +20,14 @@
 
 
 /obj/machinery/r_n_d/server/Destroy()
+	rnd_server_list += src
 	QDEL_NULL(files)
 	return ..()
 
 
 /obj/machinery/r_n_d/server/Initialize()
 	. = ..()
+	rnd_server_list += src
 	if(!files)
 		files = new /datum/research(src)
 	var/list/temp_list

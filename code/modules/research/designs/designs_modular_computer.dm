@@ -334,3 +334,31 @@
 	chemicals = list(/datum/reagent/acid = 20)
 	build_path = /obj/item/stock_parts/computer/processor_unit/photonic/small
 	sort_string = "VBAFD"
+
+
+//// Compuckter Frames
+///
+
+/datum/design/item/modularcomponent/pda_frame
+	name = "PDA Frame"
+	id = "pda_frame"
+	materials = list(MATERIAL_STEEL = 750, MATERIAL_GLASS = 250)
+	build_path = /obj/item/modular_computer/pda
+
+/datum/design/item/modularcomponent/tablet_frame
+	name = "Tablet Frame"
+	id = "tablet_frame"
+	materials = list(MATERIAL_STEEL = 1500, MATERIAL_GLASS = 500)
+	build_path = /obj/item/modular_computer/tablet
+
+/datum/design/item/modularcomponent/laptop_frame
+	name = "Laptop Frame"
+	id = "laptop_frame"
+	materials = list(MATERIAL_STEEL = 3000, MATERIAL_GLASS = 1000)
+	build_path = /obj/item/modular_computer/laptop
+
+/datum/design/item/modularcomponent/telescreen_frame
+	name = "Telescreen Frame"
+	id = "telescreen_frame"
+	materials = list(MATERIAL_STEEL = 2000, MATERIAL_GLASS = 1500)
+	build_path = /obj/item/modular_computer/telescreen

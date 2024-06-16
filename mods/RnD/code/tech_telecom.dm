@@ -103,3 +103,19 @@
 	cost = 1500
 
 	unlocks_designs = list("tcom-processor")
+
+
+/datum/technology/tcom/track_dev
+	name = "Tracking Devices"
+	desc = "Tracking Devices"
+	id = "track_dev"
+
+	x = 0.4
+	y = 0.5
+	icon = "gps"
+
+	required_technologies = list("mainframes")
+	required_tech_levels = list()
+	cost = 500
+
+	unlocks_designs = list("gps", "beacon_locator")

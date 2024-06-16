@@ -85,7 +85,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 		to_chat(user, SPAN_NOTICE("You add \the [O] to \the [src]."))
 		icon_state = "d_analyzer_entry"
 		spawn(10)
-			update_icon()
+			on_update_icon()
 			busy = 0
 
 			if (linked_console.quick_deconstruct)
@@ -102,7 +102,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 	if(loaded_item)
 		loaded_item.forceMove(loc)
 		loaded_item = null
-		update_icon()
+		on_update_icon()
 
 /obj/machinery/r_n_d/destructive_analyzer/proc/ConvertReqString2List(list/source_list)
 	var/list/temp_list = params2list(source_list)
@@ -142,13 +142,13 @@ Note: Must be placed within 3 tiles of the R&D Console
 		var/obj/item/stack/material/S = loaded_item
 		if(S.amount == 1)
 			qdel(S)
-			update_icon()
+			on_update_icon()
 			loaded_item = null
 		else
 			S.use(1)
 	else
 		qdel(loaded_item)
-		update_icon()
+		on_update_icon()
 		loaded_item = null
 
 	use_power_oneoff(250)
@@ -160,7 +160,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 	if(loaded_item)
 		loaded_item.forceMove(loc)
 		loaded_item = null
-		update_icon()
+		on_update_icon()
 
 /obj/machinery/r_n_d/destructive_analyzer/power_change()
 	. = ..()

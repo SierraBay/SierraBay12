@@ -89,57 +89,28 @@
 
 	unlocks_designs = list("ppistol", "decloner")
 
-/datum/technology/combat/smg
-	name = "SMGs"
-	desc = "SMGs"
-	id = "smg"
-
-	x = 0.5
-	y = 0.5
-	icon = "divet"
-
-	required_technologies = list("riotgun")
-	required_tech_levels = list()
-	cost = 1500
-
-	unlocks_designs = list("wt550", "smg")
-
-/datum/technology/combat/speedloader
-	name = "Speed Loader (.44 Magnum)"
-	desc = "Speed Loader (.44 Magnum)"
-	id = "speedloader"
-
-	x = 0.5
-	y = 0.6
-	icon = "speedloader"
-
-	required_technologies = list("divet")
-	required_tech_levels = list()
-	cost = 750
-
-	unlocks_designs = list("bullpup")
 
 /datum/technology/combat/shock
 	name = "Shock Weapons"
 	desc = "Shock Weapons"
 	id = "shock"
 
-	x = 0.6
+	x = 0.5
 	y = 0.5
 	icon = "shock"
 
-	required_technologies = list("smg")
+	required_technologies = list("riotgun")
 	required_tech_levels = list()
 	cost = 2500
 
-	unlocks_designs = list("stun_rifle")
+	unlocks_designs = list("stun_rifle", "stunshell")
 
 /datum/technology/combat/laser
 	name = "Laser Weapons"
 	desc = "Laser Weapons"
 	id = "laser"
 
-	x = 0.6
+	x = 0.5
 	y = 0.6
 	icon = "laser"
 
@@ -149,62 +120,65 @@
 
 	unlocks_designs = list("lasercannon")
 
-/datum/technology/combat/ripper
-	name = "RC-DS Remote Control Disc Ripper"
-	desc = "RC-DS Remote Control Disc Ripper"
-	id = "ripper"
+/datum/technology/combat/wt550
+	name = "WT550"
+	desc = "WT550"
+	id = "wt550"
+
+	x = 0.6
+	y = 0.5
+	icon = "divet"
+
+	required_technologies = list("shock")
+	required_tech_levels = list()
+	cost = 1500
+
+	unlocks_designs = list("wt550", "ammo_small")
+
+/datum/technology/combat/smg
+	name = "SMG"
+	desc = "SMG"
+	id = "speedloader"
+
+	x = 0.6
+	y = 0.6
+	icon = "speedloader"
+
+	required_technologies = list("wt550")
+	required_tech_levels = list()
+	cost = 750
+
+	unlocks_designs = list("smg", "ammo_flechette")
+
+
+
+/datum/technology/combat/bullpup
+	name = "Bullpup"
+	desc = "Bullpup"
+	id = "bullpup"
 
 	x = 0.6
 	y = 0.4
 	icon = "ripper"
 
-	required_technologies = list("pulse")
+	required_technologies = list("wt550")
 	required_tech_levels = list()
 	cost = 1500
 
-	unlocks_designs = list("ripper", "ripper_blades")
+	unlocks_designs = list("bullpup")
 
-/datum/technology/combat/dblades
-	name = "Diamond Blades"
-	desc = "Diamond Blades"
-	id = "dblades"
-
-	x = 0.7
-	y = 0.4
-	icon = "dblades"
-
-	required_technologies = list("ripper")
-	required_tech_levels = list()
-	cost = 750
-
-	unlocks_designs = list("diamond_blades")
-
-/datum/technology/combat/javeline
-	name = "T15 Javelin Gun"
-	desc = "T15 Javelin Gun"
-	id = "javeline"
-
-	x = 0.7
-	y = 0.6
-	icon = "javeline"
-
-	required_technologies = list("pulse")
-	required_tech_levels = list()
-	cost = 2000
-
-	unlocks_designs = list("javgun")
 
 /datum/technology/combat/seeker
-	name = "Seeker Rifle"
-	desc = "Seeker Rifle"
+	name = "EMP Ammo"
+	desc = "EMP Ammo"
 	id = "seeker"
 
-	x = 0.8
+	x = 0.7
 	y = 0.5
 	icon = "seeker"
 
-	required_technologies = list("pulse")
+	required_technologies = list("wt550")
 	required_tech_levels = list()
 	cost = 3500
 
-	unlocks_designs = list("seeker", "seeker_ammo")
+	unlocks_designs = list("ammo_emp_slug", "ammo_emp_pistol", "ammo_emp_small")

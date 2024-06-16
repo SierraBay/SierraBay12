@@ -188,7 +188,7 @@
 	y = 0.5
 	icon = "modular_bat_advanced"
 
-	required_technologies = list("modular_bat_micro", "adv_power")
+	required_technologies = list("modular_bat_micro")
 	required_tech_levels = list()
 	cost = 500
 
@@ -203,7 +203,7 @@
 	y = 0.6
 	icon = "modular_bat_super"
 
-	required_technologies = list("modular_bat_advanced", "sup_power")
+	required_technologies = list("modular_bat_advanced")
 	required_tech_levels = list()
 	cost = 750
 
@@ -218,7 +218,7 @@
 	y = 0.7
 	icon = "modular_bat_ultra"
 
-	required_technologies = list("modular_bat_super", "hyp_power")
+	required_technologies = list("modular_bat_super")
 	required_tech_levels = list()
 	cost = 1250
 
@@ -269,48 +269,32 @@
 
 	unlocks_designs = list("cardslot")
 
-/datum/technology/data/med_scanners
-	name = "Medical Scanning Modules"
-	desc = "Medical Scanning Modules"
-	id = "med_scanners"
+/datum/technology/data/adv_scanners
+	name = "Advanced Scanning Modules"
+	desc = "Advanced Scanning Modules"
+	id = "adv_scanners"
 
-	x = 0.3
+	x = 0.8
 	y = 0.3
 	icon = "nanoprinter"
 
-	required_technologies = list("basic_modular", "add_med_tools")
+	required_technologies = list("basic_modular")
 	required_tech_levels = list()
 	cost = 750
 
-	unlocks_designs = list("scan_reagent", "scan_medical")
+	unlocks_designs = list("scan_reagent", "scan_medical", "scan_atmos")
 
 /datum/technology/data/atmos_scanner
 	name = "Atmos Scanning Module"
 	desc = "Atmos Scanning Module"
 	id = "atmos_scanners"
 
-	x = 0.8
+	x = 0.3
 	y = 0.3
 	icon = "nanoprinter"
 
-	required_technologies = list("basic_modular", "gas_heat")
+	required_technologies = list("basic_modular")
 	required_tech_levels = list()
 	cost = 750
 
 	unlocks_designs = list("scan_atmos")
-
-
-/datum/technology/data/track_dev
-	name = "Tracking Devices"
-	desc = "Tracking Devices"
-	id = "track_dev"
-
-	x = 0.4
-	y = 0.4
-	icon = "gps"
-
-	required_technologies = list("add_med_tools")
-	required_tech_levels = list()
-	cost = 500
-
-	unlocks_designs = list("gps", "beacon_locator")
