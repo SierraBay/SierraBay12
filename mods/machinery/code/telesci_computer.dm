@@ -255,7 +255,7 @@
 					log_msg += ", "
 				// ELAR's animation of human's telepoartation
 				if(ishuman(ROI))
-					animated_teleportation(ROI, dest)
+					teleportation(ROI, dest)
 				else
 					do_teleport(ROI, dest)
 
