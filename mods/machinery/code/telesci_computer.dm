@@ -14,6 +14,7 @@
 	var/datum/projectile_data/last_tele_data = null
 	var/z_co = 1
 	var/power_off
+	var/xlen = LAZYLEN(crystals)
 	var/rotation_off
 	var/last_target
 
@@ -39,7 +40,6 @@
 
 /obj/machinery/computer/telescience/examine(mob/user)
 	. = ..()
-	var/xlen = LAZYLEN(crystals)
 	to_chat(user, "There are [xlen ? xlen : "no"] bluespace crystal\s in the crystal slots.")
 
 /obj/machinery/computer/telescience/Initialize()
