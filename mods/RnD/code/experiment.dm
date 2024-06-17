@@ -119,19 +119,16 @@ var/global/list/rnd_server_list = list()
 				points += rand(5,10) * 200 // 1000-2000 points for random weapon
 
 	for(var/list/artifact in I.scanned_artifacts)
-		if(!(artifact["type"] in artifact_types)) // useless
-			continue
-
 		var/already_scanned = FALSE
 		for(var/list/our_artifact in saved_artifacts)
-			if(our_artifact["type"] == artifact["type"] && our_artifact["first_effect"] == artifact["first_effect"] && our_artifact["second_effect"] == artifact["second_effect"])
+			if(our_artifact["type"] == artifact["type"] && our_artifact["my_effect"] == artifact["my_effect"] && our_artifact["secondary_effect"] == artifact["secondary_effect"])
 				already_scanned = TRUE
 				break
 
 		if(!already_scanned)
 			points += rand(5,10) * 1000 // 5000-10000 points for random artifact
 			saved_artifacts += list(artifact)
-
+/*
 	for(var/symptom in I.scanned_symptoms)
 		if(saved_symptoms[symptom])
 			continue
@@ -142,7 +139,7 @@ var/global/list/rnd_server_list = list()
 			points += level_to_points[level]
 
 		saved_symptoms[symptom] = level
-
+*/
 	for(var/core in I.scanned_slimecores)
 		if(core in saved_slimecores)
 			continue
@@ -178,7 +175,7 @@ var/global/list/rnd_server_list = list()
 	for(var/list/artifact in O.saved_artifacts)
 		var/has_artifact = FALSE
 		for(var/list/our_artifact in saved_artifacts)
-			if(our_artifact["type"] == artifact["type"] && our_artifact["first_effect"] == artifact["first_effect"] && our_artifact["second_effect"] == artifact["second_effect"])
+			if(our_artifact["type"] == artifact["type"] && our_artifact["my_effect"] == artifact["my_effect"] && our_artifact["secondary_effect"] == artifact["secondary_effect"])
 				has_artifact = TRUE
 				break
 		if(!has_artifact)
@@ -235,7 +232,7 @@ var/global/list/rnd_server_list = list()
 */
 // Universal tool to get research points from autopsy reports, virus info reports, archeology reports, slime cores
 
-/obj/item/paper/artifact_info
+/obj/item/paper/anomaly_scan
 	var/artifact_type
 	var/artifact_first_effect
 	var/artifact_second_effect
@@ -261,7 +258,7 @@ var/global/list/rnd_server_list = list()
 	var/list/scanned_slimecores = list()
 	var/datablocks = 0
 
-/obj/item/device/science_tool/New()
+/obj/item/device/science_tool/Initialize()
 	. = ..()
 	experiments = new
 
@@ -280,18 +277,18 @@ var/global/list/rnd_server_list = list()
 				scanneddata += 1
 				scanned_autopsy_weapons += W.weapon
 
-	if(istype(O, /obj/item/paper/artifact_info))
-		var/obj/item/paper/artifact_info/report = O
+	if(istype(O, /obj/item/paper/anomaly_scan))
+		var/obj/item/paper/anomaly_scan/report = O
 		if(report.artifact_type)
 			for(var/list/artifact in scanned_artifacts)
-				if(artifact["type"] == report.artifact_type && artifact["first_effect"] == report.artifact_first_effect && artifact["second_effect"] == report.artifact_second_effect)
+				if(artifact["type"] == report.artifact_type && artifact["my_effect"] == report.artifact_first_effect && artifact["secondary_effect"] == report.artifact_second_effect)
 					to_chat(user, "<span class='notice'>[src] already has data about this artifact report</span>")
 					return
 
 			scanned_artifacts += list(list(
 				"type" = report.artifact_type,
-				"first_effect" = report.artifact_first_effect,
-				"second_effect" = report.artifact_second_effect,
+				"my_effect" = report.artifact_first_effect,
+				"secondary_effect" = report.artifact_second_effect,
 			))
 			scanneddata += 1
 /*

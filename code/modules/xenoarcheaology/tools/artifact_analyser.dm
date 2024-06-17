@@ -83,9 +83,12 @@
 
 		if(scanned_object && istype(scanned_object, /obj/machinery/artifact))
 			var/obj/machinery/artifact/A = scanned_object
-			A.anchored = FALSE
+			P.artifact_type = A.name
+			if(A.my_effect)
+				P.artifact_first_effect = A.my_effect.log_name
+			if(A.secondary_effect)
+				P.artifact_second_effect = A.secondary_effect.log_name
 			A.being_used = 0
-			scanned_object = null
 
 /obj/machinery/artifact_analyser/OnTopic(user, href_list)
 	if(href_list["begin_scan"])
