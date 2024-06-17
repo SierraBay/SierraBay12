@@ -488,9 +488,9 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 		if(linked_destroy)
 			if(linked_destroy.loaded_item)
-				var/list/tech_names = list("materials" = "Materials", "engineering" = "Engineering", "phorontech" = "Phoron", "powerstorage" = "Power", "bluespace" = "Bluespace", "biotech" = "Biotech", "combat" = "Combat", "magnets" = "Electromagnetic", "programming" = "Programming", "syndicate" = "Illegal")
+				var/list/tech_names = list(TECH_MATERIAL = "Materials", TECH_ENGINEERING = "Engineering", TECH_PHORON = "Phoron", TECH_POWER = "Powerstorage", TECH_BLUESPACE = "Blue-space", TECH_BIO = "Biotech", TECH_COMBAT = "Combat", TECH_MAGNET = "Electromagnetic", TECH_DATA = "Programming", TECH_ESOTERIC = "Illegal")
 
-				var/list/temp_tech = linked_destroy.ConvertReqString2List(linked_destroy.loaded_item.origin_tech)
+				var/list/temp_tech = linked_destroy.loaded_item.origin_tech
 				var/list/item_data = list()
 
 				for(var/T in temp_tech)

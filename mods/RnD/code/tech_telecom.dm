@@ -110,11 +110,11 @@
 	desc = "Tracking Devices"
 	id = "track_dev"
 
-	x = 0.4
-	y = 0.5
+	x = 0.5
+	y = 0.2
 	icon = "gps"
 
-	required_technologies = list("mainframes")
+	required_technologies = list("telecomm_parts")
 	required_tech_levels = list()
 	cost = 500
 

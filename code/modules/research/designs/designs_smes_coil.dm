@@ -1,5 +1,5 @@
 /datum/design/item/smes_coil
-	category = list("Engeneering")
+	category = list("Engineering")
 
 
 /datum/design/item/smes_coil

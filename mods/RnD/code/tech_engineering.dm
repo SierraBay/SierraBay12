@@ -34,11 +34,11 @@
 	desc = "Advanced Parts"
 	id = "adv_parts"
 
-	x = 0.6
-	y = 0.5
+	x = 0.2
+	y = 0.4
 	icon = "advmatterbin"
 
-	required_technologies = list("adv_eng")
+	required_technologies = list("monitoring")
 	required_tech_levels = list()
 	cost = 1000
 
@@ -49,11 +49,11 @@
 	desc = "Super Parts"
 	id = "super_parts"
 
-	x = 0.5
+	x = 0.6
 	y = 0.5
 	icon = "supermatterbin"
 
-	required_technologies = list("adv_parts")
+	required_technologies = list("adv_eng")
 	required_tech_levels = list()
 	cost = 2000
 
@@ -171,7 +171,7 @@
 
 	x = 0.6
 	y = 0.3
-	icon = "contact"
+	icon = "drillhead"
 
 	required_technologies = list("adv_mining")
 	required_tech_levels = list()

@@ -113,7 +113,7 @@
 	y = 0.5
 	icon = "netcard_adv"
 
-	required_technologies = list("netcard_w", "solnet_relay")
+	required_technologies = list("netcard_w")
 	required_tech_levels = list()
 	cost = 1250
 

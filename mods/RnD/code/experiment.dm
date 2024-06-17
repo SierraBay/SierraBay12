@@ -105,11 +105,13 @@ var/global/list/rnd_server_list = list()
 			// These give more points because they are rare or special
 			var/list/special_weapons = list(
 				"large organic needle" = 10000,
-				"Hulk Foot" = 10000,
+				"fire" = 2000,
 				"Explosive blast" = 5000,
-				"Electronics meltdown" = 4000,
+				"Hot metal" = 4000,
 				"Low Pressure" = 3000,
-				"Facepalm" = 2000,
+				"Live animal escaping the body" = 5000,
+				"Amaspore Growth" = 5000,
+				"Agonizing pain" = 2000
 				)
 			if(special_weapons[weapon])
 				points += special_weapons[weapon]

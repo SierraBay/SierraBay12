@@ -127,7 +127,7 @@
 
 	x = 0.6
 	y = 0.5
-	icon = "divet"
+	icon = "wt550"
 
 	required_technologies = list("shock")
 	required_tech_levels = list()
@@ -138,11 +138,11 @@
 /datum/technology/combat/smg
 	name = "SMG"
 	desc = "SMG"
-	id = "speedloader"
+	id = "smg"
 
 	x = 0.6
 	y = 0.6
-	icon = "speedloader"
+	icon = "smg"
 
 	required_technologies = list("wt550")
 	required_tech_levels = list()
@@ -159,7 +159,7 @@
 
 	x = 0.6
 	y = 0.4
-	icon = "ripper"
+	icon = "bullpup"
 
 	required_technologies = list("wt550")
 	required_tech_levels = list()
@@ -168,14 +168,14 @@
 	unlocks_designs = list("bullpup")
 
 
-/datum/technology/combat/seeker
+/datum/technology/combat/emiammo
 	name = "EMP Ammo"
 	desc = "EMP Ammo"
-	id = "seeker"
+	id = "emiammo"
 
 	x = 0.7
 	y = 0.5
-	icon = "seeker"
+	icon = "emiammo"
 
 	required_technologies = list("wt550")
 	required_tech_levels = list()
