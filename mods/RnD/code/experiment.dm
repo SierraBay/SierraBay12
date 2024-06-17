@@ -26,7 +26,7 @@ var/global/list/rnd_server_list = list()
 		TECH_POWER = 1,
 		TECH_DATA = 1,
 		TECH_MATERIAL = 0,
-		TECH_BIO = 0,
+		TECH_BIO = 1,
 	)
 	// So we don't give points for researching non-artifact item
 	var/list/artifact_types = list(
@@ -249,7 +249,7 @@ var/global/list/rnd_server_list = list()
 	w_class = ITEM_SIZE_SMALL
 	throw_speed = 5
 	throw_range = 10
-	origin_tech = "engineering=1;biotech=1"
+	origin_tech = list(TECH_ENGINEERING = 1, TECH_DATA = 1)
 
 	var/datum/experiment_data/experiments
 	var/list/scanned_autopsy_weapons = list()
@@ -291,14 +291,7 @@ var/global/list/rnd_server_list = list()
 				"secondary_effect" = report.artifact_second_effect,
 			))
 			scanneddata += 1
-/*
-	if(istype(O, /obj/item/paper/virus_report))
-		var/obj/item/paper/virus_report/report = O
-		for(var/symptom in report.symptoms)
-			if(!scanned_symptoms[symptom])
-				scanneddata += 1
-				scanned_symptoms[symptom] = report.symptoms[symptom]
-*/
+
 	if(istype(O, /obj/item/slime_extract))
 		if(!(O.type in scanned_slimecores))
 			scanned_slimecores += O.type
