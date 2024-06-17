@@ -95,7 +95,11 @@
 
 					var/obj/item/organ/internal/heart/heart = internal_organs_by_name[BP_HEART]
 					if (heart)
+<<<<<<< ours
 						heart.external_pump = list(world.time, 0.4 + 0.1*pumping_skill + rand(-0.1,0.1))
+=======
+						heart.external_pump = list(world.time, 0.4 + 0.05*pumping_skill + Frand(-0.1,0.1))
+>>>>>>> theirs
 
 					if (stat != DEAD && prob(2 * pumping_skill))
 						resuscitate()
