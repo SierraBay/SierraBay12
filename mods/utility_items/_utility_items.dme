@@ -8,5 +8,7 @@
 #include "code/multimeter.dm"
 #include "code/noose.dm"
 #include "code/wires.dm"
+#include "code/reagents.dm"
+#include "code/cell_charger.dm"
 
 #endif
