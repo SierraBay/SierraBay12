@@ -29,7 +29,7 @@
 	var/starting_crystals = 0	//Edit this on the map, seriously.
 	var/max_crystals = 5
 	var/list/crystals = list()
-	var/obj/item/device/gps/inserted_gps
+	var/obj/item/device/telesci/gps/inserted_gps
 
 /obj/machinery/computer/telescience/Destroy()
 	eject()
