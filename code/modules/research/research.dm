@@ -42,9 +42,8 @@ The tech datums are the actual "tech trees" that you improve through researching
 #define RESEARCH_DATA          "computer"
 #define RESEARCH_POWERSTORAGE  "powerstorage"
 #define RESEARCH_BLUESPACE     "bluespace"
-#define RESEARCH_ROBOTICS      "robotics"
 #define RESEARCH_ESOTERIC       "illegal"
-#define RESEARCH_MAGNETS        "magnets"
+#define RESEARCH_MAGNETS        "magnets"  //used in robotics
 #define RESEARCH_MATERIALS       "materials"
 
 /datum/research								//Holder for all the existing, archived, and known tech. Individual to console.

@@ -191,39 +191,48 @@ var/global/list/rnd_server_list = list()
 
 
 // Grants research points when explosion happens nearby
-/obj/item/device/radio/beacon/explosion_watcher
+/obj/item/device/beacon/explosion_watcher
 	name = "Kinetic Energy Scanner"
 	desc = "Scans the level of kinetic energy from explosions"
+	var/saved_power_level
+	var/added_power
+	var/already_earned_power
+	var/calculated_research_points = 0
+	icon = 'icons/obj/beacon.dmi'
+	icon_state = "beacon"
+	item_state = "signaler"
 
-	channels = list("Science" = 1)
-
-/obj/item/device/radio/beacon/explosion_watcher/ex_act(severity)
+/obj/item/device/beacon/explosion_watcher/ex_act(severity)
 	return
 
-/obj/item/device/radio/beacon/explosion_watcher/Initialize()
+/obj/item/device/beacon/explosion_watcher/afterattack(obj/machinery/computer/rdconsole/target, mob/living/user, proximity_flag, click_parameters)
+	. = ..()
+	if(istype(target, /obj/machinery/computer/rdconsole))
+		if(src.calculated_research_points > 0)
+			target.files.research_points += src.calculated_research_points
+			to_chat(user, "<span class='notice'>You uploaded to [target.name] [src.calculated_research_points] research points</span>")
+			src.calculated_research_points = 0
+		else
+			to_chat(user, "<span class='notice'>[src.name] has no research value</span>")
+
+/obj/item/device/beacon/explosion_watcher/Initialize()
 	. = ..()
 	explosion_watcher_list += src
 
-/obj/item/device/radio/beacon/explosion_watcher/Destroy()
+/obj/item/device/beacon/explosion_watcher/Destroy()
 	explosion_watcher_list -= src
 	return ..()
 
-/obj/item/device/radio/beacon/explosion_watcher/proc/react_explosion(turf/epicenter, power)
+/obj/item/device/beacon/explosion_watcher/proc/react_explosion(turf/epicenter, power)
 	power = round(power)
-	var/calculated_research_points = -1
-	for(var/obj/machinery/computer/rdconsole/RD in RDcomputer_list)
-		if(RD.id == 1) // only core gets the science
-			var/saved_power_level = RD.files.experiments.saved_best_explosion
+	for(var/obj/machinery/computer/rdconsole/RD as anything in global.RDcomputer_list)
+		saved_power_level = RD.files.experiments.saved_best_explosion
+		if(power > saved_power_level)
+			RD.files.experiments.saved_best_explosion = power
+	added_power = max(0, power - saved_power_level)
+	already_earned_power = min(saved_power_level, power)
+	calculated_research_points += added_power * 1000 + already_earned_power * 200
 
-			var/added_power = max(0, power - saved_power_level)
-			var/already_earned_power = min(saved_power_level, power)
-
-			calculated_research_points = added_power * 1000 + already_earned_power * 200
-
-			if(power > saved_power_level)
-				RD.files.experiments.saved_best_explosion = power
-
-			RD.files.research_points += calculated_research_points
 
 	/*if(calculated_research_points > 0)
 		autosay("Detected explosion with power level [power], received [calculated_research_points] research points", name ,"Science", freq = radiochannels["Science"])
@@ -291,6 +300,14 @@ var/global/list/rnd_server_list = list()
 				"secondary_effect" = report.artifact_second_effect,
 			))
 			scanneddata += 1
+
+	if(istype(O, /obj/item/device/beacon/explosion_watcher))
+		var/obj/item/device/beacon/explosion_watcher/explosion = O
+		if(explosion.calculated_research_points > 0)
+			to_chat(user, "<span class='notice'>Estimated research value of [O.name] is [explosion.calculated_research_points]</span>")
+		else
+			to_chat(user, "<span class='notice'>[O] has no research value</span>")
+		return
 
 	if(istype(O, /obj/item/slime_extract))
 		if(!(O.type in scanned_slimecores))
