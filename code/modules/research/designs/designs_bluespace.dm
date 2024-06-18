@@ -37,7 +37,6 @@
 	build_path = /obj/item/storage/backpack/holding
 	sort_string = "VAFAA"
 
-=======
 // SIERRA ADD
 /datum/design/item/telesci/gps
 	name = "Telescience GPS"
