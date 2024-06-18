@@ -13,5 +13,5 @@
 /obj/item/stock_parts/circuitboard/wallcharger
 	name = "circuit board (wall recharger)"
 	board_type = "machine"
-  	origin_tech = list(TECH_DATA = 4, TECH_ENGINEERING = 5)
+	origin_tech = list(TECH_DATA = 4, TECH_ENGINEERING = 5)
 	build_path = /obj/machinery/recharger/wallcharger
