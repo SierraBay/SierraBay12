@@ -2,8 +2,8 @@ GLOBAL_LIST_EMPTY(GPS_list)
 
 GLOBAL_LIST_EMPTY(gps_by_type)
 
-/obj/item/device/gps
-	name = "global positioning system"
+/obj/item/device/telesci/gps
+	name = "telesci positioning system"
 	desc = "Helping lost spacemen find their way through the planets since 2016."
 	icon = 'icons/obj/telescience.dmi'
 	icon_state = "gps-c"
@@ -13,10 +13,10 @@ GLOBAL_LIST_EMPTY(gps_by_type)
 	matter = list(MATERIAL_ALUMINIUM = 250, MATERIAL_STEEL = 250, MATERIAL_GLASS = 50)
 	var/gps_prefix = "COM"
 	var/gpstag = "COM0"
-	emped = 0
+	var/emped = 0
 	var/turf/locked_location
 
-/obj/item/device/gps/Initialize()
+/obj/item/device/telesci/gps/Initialize()
 	. = ..()
 	GLOB.GPS_list += src
 	LAZYADD(GLOB.gps_by_type["[type]"], src)
@@ -24,26 +24,26 @@ GLOBAL_LIST_EMPTY(gps_by_type)
 	name = "global positioning system ([gpstag])"
 	AddOverlays(image(icon, "working"))
 
-/obj/item/device/gps/Destroy()
+/obj/item/device/telesci/gps/Destroy()
 	GLOB.GPS_list -= src
 	var/list/typelist = GLOB.gps_by_type["[type]"]
 	LAZYREMOVE(typelist, src)
 	return ..()
 
-/obj/item/device/gps/emp_act(severity)
+/obj/item/device/telesci/gps/emp_act(severity)
 	emped = 1
 	CutOverlays()
 	AddOverlays(image(icon, "emp"))
 	addtimer(new Callback(src, .proc/post_emp), 300)
 
-/obj/item/device/gps/proc/post_emp()
+/obj/item/device/telesci/gps/proc/post_emp()
 	emped = 0
 	CutOverlays()
 	AddOverlays(image(icon, "working"))
 
-/obj/item/device/gps/attack_self(mob/user)
+/obj/item/device/telesci/gps/attack_self(mob/user)
 
-	var/obj/item/device/gps/t = ""
+	var/obj/item/telesci/device/gps/t = ""
 	var/gps_window_height = 110 + LAZYLEN(GLOB.GPS_list) * 20 // Variable window height, depending on how many GPS units there are to show
 	if(emped)
 		t += "ERROR"
@@ -54,7 +54,7 @@ GLOBAL_LIST_EMPTY(gps_by_type)
 			t += "<BR>Bluespace coordinates saved: [locked_location.loc]"
 			gps_window_height += 20
 
-		for(var/obj/item/device/gps/G in GLOB.GPS_list)
+		for(var/obj/item/device/telesci/gps/G in GLOB.GPS_list)
 			var/turf/pos = get_turf(G)
 			var/area/gps_area = get_area(G)
 			var/tracked_gpstag = G.gpstag
@@ -68,7 +68,7 @@ GLOBAL_LIST_EMPTY(gps_by_type)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
 
-/obj/item/device/gps/Topic(href, href_list)
+/obj/item/device/telesci/gps/Topic(href, href_list)
 	..()
 	if(href_list["tag"] )
 		var/a = input("Please enter desired tag.", name, gpstag) as text
@@ -78,17 +78,17 @@ GLOBAL_LIST_EMPTY(gps_by_type)
 			name = "global positioning system ([gpstag])"
 			attack_self(usr)
 
-/obj/item/device/gps/science
+/obj/item/device/telesci/gps/science
 	icon_state = "gps-s"
 	gps_prefix = "SCI"
 	gpstag = "SCI0"
 
-/obj/item/device/gps/engineering
+/obj/item/device/telesci/gps/engineering
 	icon_state = "gps-e"
 	gps_prefix = "ENG"
 	gpstag = "ENG0"
 
-/obj/item/device/gps/mining
+/obj/item/device/telesci/gps/mining
 	icon_state = "gps-m"
 	gps_prefix = "MIN"
 	gpstag = "MIN0"
