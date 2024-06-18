@@ -36,7 +36,7 @@ GLOBAL_LIST_EMPTY(gps_by_type)
 	AddOverlays(image(icon, "emp"))
 	addtimer(new Callback(src, .proc/post_emp), 300)
 
-/obj/item/device/telesci/gps/proc/post_emp()
+/obj/item/device/gps/proc/post_emp()
 	emped = 0
 	CutOverlays()
 	AddOverlays(image(icon, "working"))
