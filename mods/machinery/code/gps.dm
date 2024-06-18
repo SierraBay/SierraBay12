@@ -30,7 +30,7 @@ GLOBAL_LIST_EMPTY(gps_by_type)
 	LAZYREMOVE(typelist, src)
 	return ..()
 
-/obj/item/device/telesci/gps/emp_act(severity)
+/obj/item/device/gps/emp_act(severity)
 	emped = 1
 	CutOverlays()
 	AddOverlays(image(icon, "emp"))
@@ -43,7 +43,7 @@ GLOBAL_LIST_EMPTY(gps_by_type)
 
 /obj/item/device/telesci/gps/attack_self(mob/user)
 
-	var/obj/item/telesci/device/gps/t = ""
+	var/obj/item/device/telesci/gps/t = ""
 	var/gps_window_height = 110 + LAZYLEN(GLOB.GPS_list) * 20 // Variable window height, depending on how many GPS units there are to show
 	if(emped)
 		t += "ERROR"
