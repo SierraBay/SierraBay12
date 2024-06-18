@@ -1,5 +1,5 @@
 /obj/item/stock_parts/circuitboard/cell_charger
-  name = "circuit board (cell_charger)"
+	name = "circuit board (cell_charger)"
 	board_type = "machine"
 	origin_tech = list(TECH_DATA = 4, TECH_ENGINEERING = 3)
 	build_path = /obj/machinery/cell_charger
