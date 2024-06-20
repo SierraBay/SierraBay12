@@ -10,6 +10,8 @@
 	power_channel = EQUIP
 	var/obj/item/cell/charging = null
 	var/chargelevel = -1
+	construct_state = /singleton/machine_construction/default/panel_closed
+	uncreated_component_parts = null
 
 /obj/machinery/cell_charger/on_update_icon()
 	icon_state = "ccharger[charging ? 1 : 0]"
