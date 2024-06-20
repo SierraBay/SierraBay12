@@ -870,6 +870,15 @@ th.bot {
 .sciTechTreeIcon.icon-implantcase { background-position: -192px -320px; }
 .sciTechTreeIcon.icon-aicircuit { background-position: -224px -320px; }
 
+.sciTechTreeIcon.icon-multitool { background-position: 0px -352px; }
+.sciTechTreeIcon.icon-posibrain { background-position: -32px -352px; }
+.sciTechTreeIcon.icon-bug { background-position: -64px -352px; }
+.sciTechTreeIcon.icon-kit { background-position: -96px -352px; }
+.sciTechTreeIcon.icon-radiokey { background-position: -128px -352px; }
+.sciTechTreeIcon.icon-hardsuitmodule { background-position: -160px -352px; }
+.sciTechTreeIcon.icon-bluesplace { background-position: -192px -352px; }
+.sciTechTreeIcon.icon-roboscanner { background-position: -224px -352px; }
+
 .sciMenuButton {
     width: 300px;
     float: left;

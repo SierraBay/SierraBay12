@@ -27,7 +27,22 @@
 	required_tech_levels = list()
 	cost = 500
 
-	unlocks_designs = list("gasheater", "gascooler", "stasis_clamp")
+	unlocks_designs = list("gasheater", "gascooler", "stasis_clamp", "pipe_disposal" , "pipe_dispenser" )
+
+/datum/technology/engineering/gas_heat_portable
+	name = "Gas Portable"
+	desc = "Gas Portable"
+	id = "gas_port"
+
+	x = 0.2
+	y = 0.7
+	icon = "spaceheater"
+
+	required_technologies = list("gas_heat")
+	required_tech_levels = list()
+	cost = 1000
+
+	unlocks_designs = list("portascrubberstat", "portascrubberhuge", "portapump", "portascrubber", "oxyregen", "cracer")
 
 /datum/technology/engineering/adv_parts
 	name = "Advanced Parts"
@@ -72,7 +87,7 @@
 	required_tech_levels = list()
 	cost = 500
 
-	unlocks_designs = list("atmosalerts", "air_management","oxycandle")
+	unlocks_designs = list("atmosalerts", "air_management","alerts", "atmos_control", "supermatter_control")
 
 /datum/technology/engineering/res_tech
 	name = "Research Technologies"
@@ -89,95 +104,115 @@
 
 	unlocks_designs = list("destructive_analyzer", "protolathe", "circuit_imprinter", "rdservercontrol", "rdserver", "rdconsole")
 
-/datum/technology/engineering/xenoarch
-	name = "Xenoarcheology"
-	desc = "Xenoarcheology"
-	id = "xenoarch"
-
-	x = 0.3
-	y = 0.6
-	icon = "anom"
-
-	required_technologies = list("res_tech")
-	required_tech_levels = list()
-	cost = 500
-
-	unlocks_designs = list("depth_scanner", "ano_scanner", "pick_set")
-
-/datum/technology/engineering/excavation_drill
-	name = "Excavation Drill"
-	desc = "Excavation Drill"
-	id = "excavation_drill"
-
-	x = 0.6
-	y = 0.6
-	icon = "drill"
-
-	required_technologies = list("xenoarch")
-	required_tech_levels = list()
-	cost = 1000
-
-	unlocks_designs = list("xeno_drill")
-
-/datum/technology/engineering/excavation_drill_diamond
-	name = "Diamond Excavation Drill"
-	desc = "Diamond Excavation Drill"
-	id = "excavation_drill_diamond"
-
-	x = 0.6
-	y = 0.7
-	icon = "diamond_drill"
-
-	required_technologies = list("excavation_drill")
-	required_tech_levels = list()
-	cost = 1500
-
-	unlocks_designs = list("xeno_cutter")
 
 /datum/technology/engineering/basic_mining
 	name = "Basic Mining"
 	desc = "Basic Mining"
 	id = "basic_mining"
 
-	x = 0.3
-	y = 0.4
+	x = 0.4
+	y = 0.5
 	icon = "pickaxe"
 
 	required_technologies = list("res_tech")
 	required_tech_levels = list()
 	cost = 1000
 
-	unlocks_designs = list("drill", "jackhammer")
+	unlocks_designs = list("drill", "jackhammer",  "mining drill head", "mining drill brace")
+
+
+/datum/technology/engineering/xenoarch
+	name = "Xenoarcheology"
+	desc = "Xenoarcheology"
+	id = "xenoarch"
+
+	x = 0.4
+	y = 0.6
+	icon = "anom"
+
+	required_technologies = list("basic_mining")
+	required_tech_levels = list()
+	cost = 500
+
+	unlocks_designs = list("depth_scanner", "ano_scanner", "pick_set")
+
+
+/datum/technology/engineering/excavation_drill
+	name = "Excavation Drill"
+	desc = "Excavation Drill"
+	id = "excavation_drill"
+
+	x = 0.4
+	y = 0.7
+	icon = "drill"
+
+	required_technologies = list("xenoarch")
+	required_tech_levels = list()
+	cost = 750
+
+	unlocks_designs = list("xeno_drill", "suspension_gen", "anomaly_container", "stasis cage")
+
+
+/datum/technology/engineering/excavation_drill_diamond
+	name = "Diamond Excavation Drill"
+	desc = "Diamond Excavation Drill"
+	id = "excavation_drill_diamond"
+
+	x = 0.5
+	y = 0.7
+	icon = "diamond_drill"
+
+	required_technologies = list("excavation_drill")
+	required_tech_levels = list()
+	cost = 1250
+
+	unlocks_designs = list("xeno_cutter")
+
+
+/datum/technology/engineering/mining_prod
+	name = "Mining Production"
+	desc = "Mining Production"
+	id = "mining_prod"
+
+	x = 0.4
+	y = 0.3
+	icon = "cutter"
+
+	required_technologies = list("basic_mining")
+	required_tech_levels = list()
+	cost = 1000
+
+	unlocks_designs = list("mining_console", "mining_processor", "mining_unloader", "mining_stacker")
 
 /datum/technology/engineering/adv_mining
 	name = "Advanced Mining"
 	desc = "Advanced Mining"
 	id = "adv_mining"
 
-	x = 0.6
-	y = 0.4
+	x = 0.4
+	y = 0.2
 	icon = "cutter"
+
+	required_technologies = list("mining_prod")
+	required_tech_levels = list()
+	cost = 1500
+
+	unlocks_designs = list("pick_diamond", "drill_diamond", "plasmacutter")
+
+
+/datum/technology/engineering/ship
+	name = "Ship Equipment"
+	desc = "Ship Equipment"
+	id = "ship"
+
+	x = 0.5
+	y = 0.4
 
 	required_technologies = list("basic_mining")
 	required_tech_levels = list()
 	cost = 2000
 
-	unlocks_designs = list("pick_diamond", "drill_diamond", "plasmacutter")
-
-/datum/technology/engineering/mining_drill
-	name = "Mining Drill"
-	desc = "Mining Drill"
-	id = "mining_ammo"
-
-	x = 0.6
-	y = 0.3
-	icon = "drillhead"
-
-	required_technologies = list("adv_mining")
-	required_tech_levels = list()
-	cost = 4000
-
-	unlocks_designs = list("mining drill head", "mining drill brace")
+	unlocks_designs = list("thruster", "helms", "nav", "nav_tele", "sensors", "shipengine", "shuttle","shuttle_long")
 
 /datum/technology/engineering/adv_eng
 	name = "Advanced Engineering"
@@ -188,7 +223,7 @@
 	y = 0.5
 	icon = "rped"
 
-	required_technologies = list("adv_mining", "excavation_drill")
+	required_technologies = list("ship")
 	required_tech_levels = list()
 	cost = 2000
 
@@ -214,8 +249,8 @@
 	desc = "Airlock Brace"
 	id = "airlock_brace"
 
-	x = 0.4
-	y = 0.5
+	x = 0.3
+	y = 0.4
 	icon = "brace"
 
 	required_technologies = list("res_tech")

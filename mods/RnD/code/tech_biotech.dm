@@ -57,7 +57,7 @@
 	required_tech_levels = list()
 	cost = 1200
 
-	unlocks_designs = list("flora_disk", "flora_gun", /*"editor"*/)
+	unlocks_designs = list("flora_disk", "flora_gun", "honey_extractor")
 
 /datum/technology/bio/food_process
 	name = "Food Processing"
@@ -72,7 +72,7 @@
 	required_tech_levels = list()
 	cost = 500
 
-	unlocks_designs = list("cooker", "microwave",  "gibber")
+	unlocks_designs = list("cooker", "microwave",  "gibber", "replicator", "microlathe", "washer", "vending", "sauna")
 
 /datum/technology/bio/implants
 	name = "Implants"
@@ -102,7 +102,7 @@
 	required_tech_levels = list()
 	cost = 1500
 
-	unlocks_designs = list("cryo_cell", "sleeper", "bodyscanner", "bodyscannerdisplay","reagent_grinder","chemheater")
+	unlocks_designs = list("cryo_cell", "sleeper", "bodyscanner", "bodyscannerconsole", "bodyscannerdisplay","reagent_grinder","chemheater", "reagsubl")
 
 /datum/technology/bio/add_med_tools
 	name = "Additional Medical Tools"

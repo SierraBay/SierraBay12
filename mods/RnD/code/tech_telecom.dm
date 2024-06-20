@@ -5,7 +5,7 @@
 	tech_type = RESEARCH_BLUESPACE
 
 	x = 0.5
-	y = 0.3
+	y = 0.4
 	icon = "telecom_part"
 
 	required_technologies = list()
@@ -20,7 +20,7 @@
 	id = "tcom_monitoring"
 
 	x = 0.5
-	y = 0.4
+	y = 0.5
 	icon = "monitoring"
 
 	required_technologies = list("telecomm_parts")
@@ -35,7 +35,7 @@
 	id = "rcon"
 
 	x = 0.5
-	y = 0.5
+	y = 0.6
 	icon = "monitoring"
 
 	required_technologies = list("tcom_monitoring")
@@ -50,7 +50,7 @@
 	id = "mainframes"
 
 	x = 0.4
-	y = 0.4
+	y = 0.5
 	icon = "relay"
 
 	required_technologies = list("telecomm_parts")
@@ -65,7 +65,7 @@
 	id = "solnet_relay"
 
 	x = 0.3
-	y = 0.4
+	y = 0.5
 	icon = "solnet_relay"
 
 	required_technologies = list("telecomm_parts")
@@ -80,7 +80,7 @@
 	id = "subspace"
 
 	x = 0.6
-	y = 0.4
+	y = 0.5
 	icon = "subspace"
 
 	required_technologies = list("telecomm_parts")
@@ -95,7 +95,7 @@
 	id = "processor"
 
 	x = 0.7
-	y = 0.4
+	y = 0.5
 	icon = "processor"
 
 	required_technologies = list("telecomm_parts")
@@ -111,7 +111,7 @@
 	id = "track_dev"
 
 	x = 0.5
-	y = 0.2
+	y = 0.3
 	icon = "gps"
 
 	required_technologies = list("telecomm_parts")
@@ -119,3 +119,34 @@
 	cost = 500
 
 	unlocks_designs = list("gps", "beacon_locator")
+
+/datum/technology/tcom/tele_pad
+	name = "Tracking Devices"
+	desc = "Tracking Devices"
+	id = "track_dev"
+
+	x = 0.4
+	y = 0.2
+	icon = "gps"
+
+	required_technologies = list("telecomm_parts")
+	required_tech_levels = list()
+	cost = 3500
+
+	unlocks_designs = list("telepad", "telesci_console")
+
+
+/datum/technology/tcom/tele_pad
+	name = "Tracking Devices"
+	desc = "Tracking Devices"
+	id = "track_dev"
+
+	x = 0.6
+	y = 0.2
+	icon = "gps"
+
+	required_technologies = list("telecomm_parts")
+	required_tech_levels = list()
+	cost = 3500
+
+	unlocks_designs = list("teleconsole", "tele_beacon")
