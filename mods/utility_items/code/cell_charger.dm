@@ -3,18 +3,39 @@
 	board_type = "machine"
 	origin_tech = list(TECH_DATA = 4, TECH_ENGINEERING = 3)
 	build_path = /obj/machinery/cell_charger
+	req_components = list(
+		/obj/item/stock_parts/capacitor = 2,
+		/obj/item/stock_parts/power/apc/buildable
+	)
+	additional_spawn_components = list(
+		/obj/item/stock_parts/capacitor/super = 3
+	)
 
 /obj/item/stock_parts/circuitboard/recharger
 	name = "circuit board (recharger)"
 	board_type = "machine"
 	origin_tech = list(TECH_DATA = 2, TECH_ENGINEERING = 4)
 	build_path = /obj/machinery/recharger
+	req_components = list(
+		/obj/item/stock_parts/capacitor = 2,
+		/obj/item/stock_parts/power/apc/buildable
+	)
+	additional_spawn_components = list(
+		/obj/item/stock_parts/capacitor/super = 3
+	)
 
 /obj/item/stock_parts/circuitboard/wallcharger
 	name = "circuit board (wall recharger)"
 	board_type = "machine"
 	origin_tech = list(TECH_DATA = 4, TECH_ENGINEERING = 5)
 	build_path = /obj/machinery/recharger/wallcharger
+	req_components = list(
+		/obj/item/stock_parts/capacitor = 2,
+		/obj/item/stock_parts/power/apc/buildable
+	)
+	additional_spawn_components = list(
+		/obj/item/stock_parts/capacitor/super = 3
+	)
 
 /datum/design/circuit/cell_charger
 	name = "cell charger"
