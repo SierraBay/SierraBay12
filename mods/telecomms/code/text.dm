@@ -25,7 +25,7 @@
 
 // IE won't receive updates
 // so...
-var/list/html_attr_blacklist = list(
+var/global/list/html_attr_blacklist = list(
 	"oncancel", "oncanplay", "oncanplaythrough", "onchange", "onclick", "onclose",
 	"oncuechange", "ondblclick", "ondrag", "ondragend", "ondragenter", "ondragleave",
 	"ondragover", "ondragstart", "ondrop", "ondurationchange", "onemptied", "onended",
@@ -38,7 +38,7 @@ var/list/html_attr_blacklist = list(
 	"ontoggle", "onvolumechange", "onwaiting", "oncopy", "oncut", "onpaste", "onabort",
 	"onerror", "onresize", "onscroll", "onunload", "onbegin", "onend", "onrepeat"
 )
-var/list/html_allowed_tags = list(
+var/global/list/html_allowed_tags = list(
 	"h1", "h2", "h3", "h4", "h5", "h6",
 	"font", "span", "hr", "br",
 	"p", "b", "i", "u", "s"
