@@ -9,9 +9,9 @@
 
 /obj/machinery/computer/telecomms/monitor
 	name = "telecommunications monitor"
+	desc = "Tracks the traffic of a telecommunications network, and maintains information about connected machines."
 	icon_screen = "comm_monitor"
 	machine_name = "telecomms monitor console"
-	machine_desc = "Tracks the traffic of a telecommunications network, and maintains information about connected machines."
 
 	var/screen = 0				// the screen number:
 	var/list/machinelist = list()	// the machines located by the computer
@@ -21,7 +21,11 @@
 
 	var/temp = ""				// temporary feedback messages
 
-/obj/machinery/computer/telecomms/monitor/attack_hand(mob/user as mob)
+/obj/machinery/computer/telecomms/monitor/interface_interact(mob/user)
+	interact(user)
+	return TRUE
+
+/obj/machinery/computer/telecomms/monitor/interact(mob/user)
 	if(inoperable())
 		return
 	user.set_machine(src)
@@ -68,7 +72,7 @@
 	return
 
 
-/obj/machinery/computer/telecomms/monitor/Topic(href, href_list)
+/obj/machinery/computer/telecomms/monitor/OnTopic(mob/user, list/href_list, datum/topic_state/state)
 	if(..())
 		return
 
@@ -122,7 +126,6 @@
 				temp = SPAN_COLOR("#336699", "- NEW NETWORK TAG SET IN ADDRESS \[[network]\] -")
 
 	updateUsrDialog()
-	return
 
 /obj/machinery/computer/telecomms/monitor/emag_act(remaining_charges, mob/user)
 	if(!emagged)

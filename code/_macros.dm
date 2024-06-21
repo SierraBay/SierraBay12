@@ -7,6 +7,8 @@
 
 #define CLAMP01(x) clamp(x, 0, 1)
 
+#define list_find(L, needle, LIMITS...) L.Find(needle, LIMITS)
+
 /**
  * Get the turf that `A` resides in, regardless of any containers.
  *
@@ -309,3 +311,10 @@
 
 /// Explicitly set the length of L to NEWLEN, adding nulls or dropping entries. Is the same value as NEWLEN.
 #define LIST_RESIZE(L, NEWLEN) ((L).len = (NEWLEN))
+
+/// Regex
+
+#define regex_replace_char(RE, ARGS...) RE.Replace(ARGS)
+#define regex_replace(RE, ARGS...) RE.Replace(ARGS)
+#define regex_find_char(RE, ARGS...) RE.Find(ARGS)
+#define regex_find(RE, ARGS...) RE.Find(ARGS)
