@@ -82,8 +82,8 @@ var/global/const/Represents a special statement in the code triggered by a keywo
 	.=KW_PASS
 	var/list/L=parser.curBlock.statements
 	var/node/statement/IfStatement/stmt
-	if(LAYZEN(L)) 
-		stmt=L[LAYZEN(L)] //Get the last statement in the current block
+	if(LAZYLEN(L)) 
+		stmt=L[LAZYLEN(L)] //Get the last statement in the current block
 	if(!stmt || !istype(stmt) || stmt.else_block) //Ensure that it is an if statement
 		parser.errors+=new/scriptError/ExpectedToken("if statement",parser.curToken)
 		return KW_FAIL
