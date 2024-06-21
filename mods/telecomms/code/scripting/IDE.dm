@@ -41,11 +41,11 @@
 				// Output all the compile-time errors
 				send_output(src, null, "tcserror")
 
-				if(compileerrors.len)
+				if(LAYZEN(compileerrors))
 					send_output(src, "<b>Compile Errors</b>", "tcserror")
 					for(var/scriptError/e in compileerrors)
 						send_output(src, "<font color = red>\t>[e.message]</font>", "tcserror")
-					send_output(src, "([compileerrors.len] errors)", "tcserror")
+					send_output(src, "([LAYZEN(compileerrors)] errors)", "tcserror")
 
 					// Output compile errors to all other people viewing the code too
 					for(var/mob/M in Machine.viewingcode)
@@ -54,7 +54,7 @@
 							send_output(M, "<b>Compile Errors</b>", "tcserror")
 							for(var/scriptError/e in compileerrors)
 								send_output(M, "<font color = red>\t>[e.message]</font>", "tcserror")
-							send_output(M, "([compileerrors.len] errors)", "tcserror")
+							send_output(M, "([LAYZEN(compileerrors)] errors)", "tcserror")
 
 
 				else
@@ -92,11 +92,11 @@
 				// Output all the compile-time errors
 				send_output(src, null, "tcserror")
 
-				if(compileerrors.len)
+				if(LAYZEN(compileerrors))
 					send_output(src, "<b>Compile Errors</b>", "tcserror")
 					for(var/scriptError/e in compileerrors)
 						send_output(src, "<font color = red>\t>[e.message]</font>", "tcserror")
-					send_output(src, "([compileerrors.len] errors)", "tcserror")
+					send_output(src, "([LAYZEN(compileerrors)] errors)", "tcserror")
 
 					// Output compile errors to all other people viewing the code too
 					for(var/mob/M in Machine.viewingcode)
@@ -105,7 +105,7 @@
 							send_output(M, "<b>Compile Errors</b>", "tcserror")
 							for(var/scriptError/e in compileerrors)
 								send_output(M, "<font color = red>\t>[e.message]</font>", "tcserror")
-							send_output(M, "([compileerrors.len] errors)", "tcserror")
+							send_output(M, "([LAYZEN(compileerrors)] errors)", "tcserror")
 
 				else
 					// Finally, we run the code!
@@ -119,7 +119,7 @@
 
 					var/datum/signal/signal = new()
 					signal.data["message"] = ""
-					if(Server.freq_listening.len > 0)
+					if(LAYZEN(Server.freq_listening) > 0)
 						signal.frequency = Server.freq_listening[1]
 					else
 						signal.frequency = PUB_FREQ
