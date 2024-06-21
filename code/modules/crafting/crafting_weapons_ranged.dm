@@ -81,7 +81,7 @@
 
 /singleton/crafting_stage/screwdriver/zipgun
 	progress_message = "You secure the trigger assembly and finish off the zipgun."
-	product = /obj/item/gun/projectile/pirate/unloaded	//zipgun.dm
+	product = /obj/item/gun/projectile/pirate	//zipgun.dm
 
 // Crossbow
 

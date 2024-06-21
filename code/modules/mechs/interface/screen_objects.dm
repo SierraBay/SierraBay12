@@ -215,6 +215,9 @@
 /obj/screen/movable/exosuit/toggle/power_control/toggled()
 	. = ..()
 	owner.toggle_power(usr)
+	//[SIERRA-ADD] - Mechs-by-Shegar
+	owner.update_icon()
+	//[SIERRA-ADD]
 
 /obj/screen/movable/exosuit/toggle/power_control/on_update_icon()
 	toggled = (owner.power == MECH_POWER_ON)
@@ -285,11 +288,11 @@
 /obj/screen/movable/exosuit/toggle/hatch_open/toggled()
 	if (!owner)
 		return
-	if(!owner.hatch_closed && owner.power != MECH_POWER_ON)
+	if(owner.hatch_locked)
 		to_chat(usr, SPAN_WARNING("You cannot open the hatch while it is locked."))
 		return
 	//[SIERRA-ADD] - Mechs-by-Shegar
-	if(owner.hatch_closed && owner.power != MECH_POWER_ON)
+	if(!owner.hatch_closed && owner.power != MECH_POWER_ON)
 		to_chat(usr, SPAN_WARNING("Cockpit hydraulic system offline,hatch can't be closed now."))
 		return
 	//[SIERRA-ADD]

@@ -105,7 +105,7 @@
 	pronouns = list(PRONOUNS_THEY_THEM)
 	hidden_from_codex = FALSE
 	min_age = 19
-	max_age = 90
+	max_age = 130
 
 	burn_mod = 0.9
 	oxy_mod = 1.3
