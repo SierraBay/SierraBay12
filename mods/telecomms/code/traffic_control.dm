@@ -84,7 +84,7 @@
 		if(0)
 			dat += "<br>[temp]<br>"
 			dat += "<br>Current Network: <a href='?src=\ref[src];network=1'>[network]</a><br>"
-			if(servers.len)
+			if(LAZYLEN(servers))
 				dat += "<br>Detected Telecommunication Servers:<ul>"
 				for(var/obj/machinery/telecomms/T in servers)
 					dat += "<li><a href='?src=\ref[src];viewserver=[T.id]'>\ref[T] [T.name]</a> ([T.id])</li>"
@@ -148,7 +148,7 @@
 				screen = 0
 
 			if("scan")
-				if(servers.len > 0)
+				if(LAZYLEN(servers))
 					temp = "<font color = #d70b00>- FAILED: CANNOT PROBE WHEN BUFFER FULL -</font>"
 
 				else
@@ -156,10 +156,10 @@
 						if(T.network == network)
 							servers.Add(T)
 
-					if(!servers.len)
+					if(!LAZYLEN(servers))
 						temp = "<font color = #d70b00>- FAILED: UNABLE TO LOCATE SERVERS IN \[[network]\] -</font>"
 					else
-						temp = "<font color = #336699>- [servers.len] SERVERS PROBED & BUFFERED -</font>"
+						temp = "<font color = #336699>- [LAZYLEN(servers)] SERVERS PROBED & BUFFERED -</font>"
 
 					screen = 0
 
