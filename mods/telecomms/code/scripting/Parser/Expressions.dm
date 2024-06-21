@@ -198,11 +198,11 @@
 			break
 
 
-		if(index>LAYZEN(tokens))																						//End of File
+		if(index>LAZYLEN(tokens))																						//End of File
 			errors+=new/scriptError/EndOfFile()
 			break
 		var/token/ntok
-		if(index+1<=LAYZEN(tokens))
+		if(index+1<=LAZYLEN(tokens))
 			ntok=tokens[index+1]
 
 		if(istype(curToken, /token/symbol) && curToken.value=="(")			//Parse parentheses expression
