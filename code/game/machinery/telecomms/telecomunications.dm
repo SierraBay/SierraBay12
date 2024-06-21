@@ -471,24 +471,15 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	var/encryption = "null" // encryption key: ie "password"
 	var/salt = "null"		// encryption salt: ie "123comsat"
 							// would add up to md5("password123comsat")
-
-	// [SIERRA-ADD] MODPACK-TELECOMMS (Иначе жалуется компилятор гитхаба) 
-	//var/rawcode = ""	// the code to compile (raw text)
-	//var/datum/TCS_Compiler/Compiler	// the compiler that compiles and runs the code
-	//var/autoruncode = 0		// 1 if the code is set to run every time a signal is picked up
-	// [SIERRA-ADD]
-
 	var/language = "human"
 	var/obj/item/device/radio/headset/server_radio = null
 
-///obj/machinery/telecomms/server/New()
-	//..()
-	// [SIERRA-ADD] - MODPACK_TELECOMMS - (Нельзя переписать конструктор класса)
-	//Compiler = new()
-	//Compiler.Holder = src
-	// [SIERRA-ADD]
-	//server_radio = new()
+/obj/machinery/telecomms/server/New()
+	..()
+	server_radio = new()
 
+[SIERRA-REMOVE] MODPACK-TELECOMMS (Гитхаю жалуется)
+/*
 /obj/machinery/telecomms/server/receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
 
 	if(signal.data["message"])
@@ -565,14 +556,11 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 				var/identifier = num2text( rand(-1000,1000) + world.time )
 				log.name = "data packet ([md5(identifier)])"
 
-				// [SIERRA-ADD] - MODPACK_TELECOMMS - (Нельзя переписать функцию так, чтобы родитель не вызывался)
-				if(Compiler && autoruncode)
-					Compiler.Run(signal)
-				// [SIERRA-ADD]
-
 			var/can_send = relay_information(signal, /obj/machinery/telecomms/hub)
 			if(!can_send)
 				relay_information(signal, /obj/machinery/telecomms/broadcaster)
+
+*/
 
 /obj/machinery/telecomms/server/proc/update_logs()
 	// start deleting the very first log entry
