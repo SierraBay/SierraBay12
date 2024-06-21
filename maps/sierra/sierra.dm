@@ -198,6 +198,7 @@
 	#include "../../mods/sauna_props/_sauna_props.dme"
 	#include "../../mods/wyccbay_optimization/_wyccbay_optimization.dme"
 	#include "../../mods/contraband_vending/_contraband_vending.dme"
+	#include "../../mods/telecomms/_telecomms.dme"
 
 	// UNUSED MODS
 	// Keep them in ascending alphabetical order too, please

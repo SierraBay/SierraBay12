@@ -476,6 +476,10 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 
 /obj/machinery/telecomms/server/New()
 	..()
+	// [SIERRA-ADD] - MODPACK_TELECOMMS - (Нельзя переписать конструктор класса)
+	Compiler = new()
+	Compiler.Holder = src
+	// [SIERRA-ADD]
 	server_radio = new()
 
 /obj/machinery/telecomms/server/receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
@@ -553,6 +557,11 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 				// Give the log a name
 				var/identifier = num2text( rand(-1000,1000) + world.time )
 				log.name = "data packet ([md5(identifier)])"
+
+				// [SIERRA-ADD] - MODPACK_TELECOMMS - (Нельзя переписать функцию так, чтобы родитель не вызывался)
+				if(Compiler && autoruncode)
+					Compiler.Run(signal)
+				// [SIERRA-ADD]
 
 			var/can_send = relay_information(signal, /obj/machinery/telecomms/hub)
 			if(!can_send)
