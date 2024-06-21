@@ -4,8 +4,9 @@
 	contents+=value
 
 /stack/proc/Pop()
-	if(!contents.len) return null
-	. = contents[contents.len]
+	if(!LAZYLEN(contents))
+		return null
+	. = contents[LAZYLEN(contents)]
 	contents.len--
 
 /stack/proc/Top() //returns the item on the top of the stack without removing it
