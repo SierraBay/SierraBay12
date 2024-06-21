@@ -43,7 +43,7 @@ var/global/list/html_allowed_tags = list(
 	"font", "span", "hr", "br",
 	"p", "b", "i", "u", "s"
 )
-var/list/html_allowed_attrs = list(
+var/global/list/html_allowed_attrs = list(
 	"style", "class",       // Everything
 	"color", "size", "face" // <font></font>
 )
