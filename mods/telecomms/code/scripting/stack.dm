@@ -7,7 +7,7 @@
 	if(!LAZYLEN(contents))
 		return null
 	. = contents[LAZYLEN(contents)]
-	contents.len--
+	LIST_RESIZE(contents, LAZYLEN(contents) - 1)
 
 /stack/proc/Top() //returns the item on the top of the stack without removing it
 	if(!LAZYLEN(contents)) return null
