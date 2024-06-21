@@ -8,7 +8,7 @@
 	var/datum/TCS_Compiler/Compiler
 
 /n_Interpreter/TCS_Interpreter/HandleError(runtimeError/e)
-		Compiler.Holder.add_entry(e.ToString(), "Execution Error")
+	Compiler.Holder.add_entry(e.ToString(), "Execution Error")
 
 /datum/TCS_Compiler
 	var/n_Interpreter/TCS_Interpreter/interpreter
