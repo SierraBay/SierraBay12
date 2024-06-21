@@ -184,9 +184,9 @@
 	if(istype(def))
 		if(curFunction) functions.Push(curFunction)
 		var/scope/S = CreateScope(def.block)
-		for(var/i=1 to LAYZEN(def.parameters))
+		for(var/i=1 to LAZYLEN(def.parameters))
 			var/val
-			if(LAYZEN(stmt.parameters)>=i)
+			if(LAZYLEN(stmt.parameters)>=i)
 				val = stmt.parameters[i]
 			//else
 			//	unspecified param
