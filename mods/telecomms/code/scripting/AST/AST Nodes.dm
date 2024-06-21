@@ -15,17 +15,18 @@
 
 /*
 	Constants: Operator Precedence
-var/const/OOP_OR				- Logical or
-var/const/OOP_AND				- Logical and
-var/const/OOP_BIT				- Bitwise operations
-var/const/OOP_EQUAL			        - Equality checks
-var/const/OOP_COMPARE		                - Greater than, less then, etc
-var/const/OOP_ADD				- Addition and subtraction
-var/const/OOP_MULTIPLY	                        - Multiplication and division
-var/const/OOP_POW				- Exponents
-var/const/OOP_UNARY			        - Unary Operators
-var/const/OOP_GROUP			        - Parentheses
+		var/const/OOP_OR				- Logical or
+		var/const/OOP_AND				- Logical and
+		var/const/OOP_BIT				- Bitwise operations
+		var/const/OOP_EQUAL			        - Equality checks
+		var/const/OOP_COMPARE		                - Greater than, less then, etc
+		var/const/OOP_ADD				- Addition and subtraction
+		var/const/OOP_MULTIPLY	                        - Multiplication and division
+		var/const/OOP_POW				- Exponents
+		var/const/OOP_UNARY			        - Unary Operators
+		var/const/OOP_GROUP			        - Parentheses
 */
+
 var/const/OOP_OR      = 1   	                // ||
 var/const/OOP_AND     = OOP_OR + 1              // &&
 var/const/OOP_BIT     = OOP_AND + 1             // &, |
@@ -64,72 +65,66 @@ var/const/OOP_GROUP   = OOP_UNARY + 1           // ()
 	See <Binary Operators> and <Unary Operators> for subtypes.
 */
 /node/expression/c_operator
-	var
-		node/expression/exp
-		tmp
-			name
-			precedence
+	var/node/expression/exp
+	var/tmp/name
+	var/tmp/precedence
 
-	New()
-		.=..()
-		if(!src.name) src.name="[src.type]"
+/node/expression/c_operator/New()
+	.=..()
+	if(!src.name)
+		src.name="[src.type]"
 
-	ToString()
-		return "operator: [name]"
+/node/expression/c_operator/ToString()
+	return "operator: [name]"
 
 /*
 	Class: FunctionCall
 */
 /node/expression/FunctionCall
 	//Function calls can also be expressions or statements.
-	var
-		func_name
-		node/identifier/object
-		list/parameters=new
+	var/func_name
+	var/node/identifier/object
+	var/list/parameters=new
+		
 
 /*
 	Class: literal
 */
 /node/expression/value/literal
-	var
-		value
+	var/value
 
-	New(value)
-		.=..()
-		src.value=value
+/node/expression/value/New(value)
+	.=..()
+	src.value=value
 
-	ToString()
-		return src.value
+/node/expression/value/ToString()
+	return src.value
 
 /*
 	Class: variable
 */
 /node/expression/value/variable
-	var
-		node
-			object		//Either a node/identifier or another node/expression/value/variable which points to the object
-		node/identifier
-			id
+	var/node/object 	//Either a node/identifier or another node/expression/value/variable which points to the object
+	var/node/identifier/id
 
+/node/expression/value/variable/New(ident)
+	.=..()
+	id=ident
+	if(istext(id))
+		id=new(id)
 
-	New(ident)
-		.=..()
-		id=ident
-		if(istext(id))id=new(id)
-
-	ToString()
-		return src.id.ToString()
+/node/expression/value/variable/ToString()
+	return src.id.ToString()
 
 /*
 	Class: reference
 */
 /node/expression/value/reference
-	var
-		datum/value
+	var/datum/value
 
-	New(value)
-		.=..()
-		src.value=value
+/node/expression/value/reference/New(value)
+	.=..()
+	src.value=value
 
-	ToString()
-		return "ref: [src.value] ([src.value.type])"
+/node/expression/value/reference/ToString()
+	return "ref: [src.value] ([src.value.type])"
