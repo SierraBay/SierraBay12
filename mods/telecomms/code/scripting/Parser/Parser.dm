@@ -48,7 +48,7 @@
 	Sets <curToken> to the next token in the <tokens> list, or null if there are no more tokens.
 */
 /n_Parser/proc/NextToken()
-	if(index>=LAYZEN(tokens))
+	if(index>=LAZYLEN(tokens))
 		curToken=null
 	else
 		curToken=tokens[++index]
@@ -74,7 +74,7 @@
 		return ..()
 /n_Parser/nS_Parser/Parse()
 	ASSERT(tokens)
-	for(,src.index<=LAYZEN(src.tokens), src.index++)
+	for(,src.index<=LAZYLEN(src.tokens), src.index++)
 		curToken=tokens[index]
 		switch(curToken.type)
 			if(/token/keyword)
@@ -85,7 +85,7 @@
 						return
 			if(/token/word)
 				var/token/ntok
-				if(index+1>LAYZEN(tokens))
+				if(index+1>LAZYLEN(tokens))
 					errors+=new/scriptError/BadToken(curToken)
 					continue
 				ntok=tokens[index+1]
