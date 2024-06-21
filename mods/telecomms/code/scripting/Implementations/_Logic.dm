@@ -24,7 +24,7 @@
 	return pick(finalpick)
 
 // Clone of list[]
-/proc/n_listpos(var/list/L, var/pos, var/value)
+/proc/n_listpos(list/L, pos, value)
 	if(!istype(L, /list)) return
 	if(isnum(pos))
 		if(!value)
