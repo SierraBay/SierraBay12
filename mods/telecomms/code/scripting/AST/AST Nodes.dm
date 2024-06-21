@@ -41,23 +41,20 @@ var
 /*
 	Class: node
 */
-/node
-	proc
-		ToString()
-			return "[src.type]"
+/node/proc/ToString()
+	return "[src.type]"
 /*
 	Class: identifier
 */
 /node/identifier
-	var
-		id_name
+	var/id_name
 
-	New(id)
-		.=..()
-		src.id_name=id
+/node/identifier/New(id)
+	.=..()
+	src.id_name=id
 
-	ToString()
-		return id_name
+/node/identifier/ToString()
+	return id_name
 
 /*
 	Class: expression
