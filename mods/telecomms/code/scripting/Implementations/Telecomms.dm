@@ -207,8 +207,6 @@
 
 /*  -- Actual language proc code --  */
 
-datum/signal
-
 datum/signal/proc/mem(address, value)
 
 	if(istext(address))
