@@ -140,8 +140,8 @@
 /*
 //Makes a list where all indicies in a string is a seperate index in the list
 // JUST A HELPER DON'T ADD TO NTSCRIPT
-proc/string_tolist(string)
-	var/list/L = new/list()
+/proc/string_tolist(string)
+	var/list/L = list()
 
 	var/i
 	for(i=1, i<=length(string), i++)
@@ -149,13 +149,13 @@ proc/string_tolist(string)
 
 	return L
 
-proc/string_explode(string, separator)
+/proc/string_explode(string, separator)
 	if(istext(string))
 		if(istext(separator) && separator == "")
 			return string_tolist(string)
 		var/i
 		var/lasti = 1
-		var/list/L = new/list()
+		var/list/L = list()
 
 		for(i=1, i<=length(string)+1, i++)
 			if(copytext(string, i, i+1) == separator) // We found a separator
