@@ -86,18 +86,17 @@ var/const/OOP_GROUP   = OOP_UNARY + 1           // ()
 	var/node/identifier/object
 	var/list/parameters=new
 		
-/node/expression/value/
 /*
 	Class: literal
 */
 /node/expression/value/literal
 	var/value
 
-/node/expression/value/New(val)
+/node/expression/value/literal/New(val)
 	.=..()
 	value = val
 
-/node/expression/value/ToString()
+/node/expression/value/literal/ToString()
 	return value
 
 /*
