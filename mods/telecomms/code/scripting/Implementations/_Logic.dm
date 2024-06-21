@@ -168,11 +168,11 @@ proc/string_explode(string, separator)
 
 Just found out there was already a string explode function, did some benchmarking, and that function were a bit faster, sticking to that.
 */
-proc/string_explode(string, separator)
+/proc/string_explode(string, separator)
 	if(istext(string) && istext(separator))
 		return splittext(string, separator)
 
-proc/n_repeat(string, amount)
+/proc/n_repeat(string, amount)
 	if(istext(string) && isnum(amount))
 		var/i
 		var/newstring = ""
@@ -185,7 +185,7 @@ proc/n_repeat(string, amount)
 
 		return newstring
 
-proc/n_reverse(string)
+/proc/n_reverse(string)
 	if(istext(string))
 		var/newstring = ""
 		var/i
@@ -197,44 +197,44 @@ proc/n_reverse(string)
 		return newstring
 
 // I don't know if it's neccesary to make my own proc, but I think I have to to be able to check for istext.
-proc/n_str2num(string)
+/proc/n_str2num(string)
 	if(istext(string))
 		return text2num(string)
 
 // Number shit
-proc/n_num2str(num)
+/proc/n_num2str(num)
 	if(isnum(num))
 		return num2text(num)
 
 // Squareroot
-proc/n_sqrt(num)
+/proc/n_sqrt(num)
 	if(isnum(num))
 		return sqrt(num)
 
 // Magnitude of num
-proc/n_abs(num)
+/proc/n_abs(num)
 	if(isnum(num))
 		return abs(num)
 
 // Round down
-proc/n_floor(num)
+/proc/n_floor(num)
 	if(isnum(num))
 		return round(num)
 
 // Round up
-proc/n_ceil(num)
+/proc/n_ceil(num)
 	if(isnum(num))
 		return round(num)+1
 
 // Round to nearest integer
-proc/n_round(num)
+/proc/n_round(num)
 	if(isnum(num))
 		if(num-round(num)<0.5)
 			return round(num)
 		return n_ceil(num)
 
 // Clamps N between min and max
-proc/n_clamp(num, min=-1, max=1)
+/proc/n_clamp(num, min=-1, max=1)
 	if(isnum(num)&&isnum(min)&&isnum(max))
 		if(num<=min)
 			return min
@@ -243,7 +243,7 @@ proc/n_clamp(num, min=-1, max=1)
 		return num
 
 // Returns 1 if N is inbetween Min and Max
-proc/n_inrange(num, min=-1, max=1)
+/proc/n_inrange(num, min=-1, max=1)
 	if(isnum(num)&&isnum(min)&&isnum(max))
 		return ((min <= num) && (num <= max))
 // END OF BY DONKIE :(
