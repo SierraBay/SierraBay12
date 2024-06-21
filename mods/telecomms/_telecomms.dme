@@ -5,7 +5,6 @@
 #include "code\macros.dm"
 #include "code\text.dm"
 #include "code\traffic_control.dm"
-#include "code\telecommunications.dm"
 #include "code\boards.dm"
 #include "code\telemonitor.dm"
 #include "code\scripting\Errors.dm"
@@ -28,5 +27,6 @@
 #include "code\scripting\Parser\Parser.dm"
 #include "code\scripting\Scanner\Scanner.dm"
 #include "code\scripting\Scanner\Tokens.dm"
+#include "code\telecommunications.dm"
 
 #endif
