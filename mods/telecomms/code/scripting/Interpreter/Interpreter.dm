@@ -218,11 +218,11 @@
 	Proc: RunIf
 	Checks a condition and runs either the if block or else block.
 */
-		RunIf(node/statement/IfStatement/stmt)
-			if(Eval(stmt.cond))
-				RunBlock(stmt.block)
-			else if(stmt.else_block)
-				RunBlock(stmt.else_block)
+/n_Interpreter/proc/RunIf(node/statement/IfStatement/stmt)
+	if(Eval(stmt.cond))
+		RunBlock(stmt.block)
+	else if(stmt.else_block)
+		RunBlock(stmt.else_block)
 
 /*
 	Proc: RunWhile
