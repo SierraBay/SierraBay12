@@ -12,31 +12,30 @@
 	Articles:
 	- <http://en.wikipedia.org/wiki/Abstract_syntax_tree>
 */
-var
-	const
+
 /*
 	Constants: Operator Precedence
-	OOP_OR				- Logical or
-	OOP_AND				- Logical and
-	OOP_BIT				- Bitwise operations
-	OOP_EQUAL			- Equality checks
-	OOP_COMPARE		- Greater than, less then, etc
-	OOP_ADD				- Addition and subtraction
-	OOP_MULTIPLY	- Multiplication and division
-	OOP_POW				- Exponents
-	OOP_UNARY			- Unary Operators
-	OOP_GROUP			- Parentheses
+var/const/OOP_OR				- Logical or
+var/const/OOP_AND				- Logical and
+var/const/OOP_BIT				- Bitwise operations
+var/const/OOP_EQUAL			        - Equality checks
+var/const/OOP_COMPARE		                - Greater than, less then, etc
+var/const/OOP_ADD				- Addition and subtraction
+var/const/OOP_MULTIPLY	                        - Multiplication and division
+var/const/OOP_POW				- Exponents
+var/const/OOP_UNARY			        - Unary Operators
+var/const/OOP_GROUP			        - Parentheses
 */
-		OOP_OR      = 							1   //||
-		OOP_AND     = OOP_OR			+ 1   	//&&
-		OOP_BIT     = OOP_AND			+ 1   //&, |
-		OOP_EQUAL   = OOP_BIT			+ 1   //==, !=
-		OOP_COMPARE = OOP_EQUAL		+ 1   //>, <, >=, <=
-		OOP_ADD     = OOP_COMPARE	+ 1 	//+, -
-		OOP_MULTIPLY= OOP_ADD			+ 1   //*, /, %
-		OOP_POW     = OOP_MULTIPLY+ 1		//^
-		OOP_UNARY   = OOP_POW			+ 1   //!
-		OOP_GROUP   = OOP_UNARY		+ 1   //()
+var/const/OOP_OR      = 1   	                // ||
+var/const/OOP_AND     = OOP_OR + 1              // &&
+var/const/OOP_BIT     = OOP_AND + 1             // &, |
+var/const/OOP_EQUAL   = OOP_BIT	+ 1             // ==, !=
+var/const/OOP_COMPARE = OOP_EQUAL + 1           // >, <, >=, <=
+var/const/OOP_ADD     = OOP_COMPARE + 1         // +, -
+var/const/OOP_MULTIPLY= OOP_ADD + 1             // *, /, %
+var/const/OOP_POW     = OOP_MULTIPLY + 1	// ^
+var/const/OOP_UNARY   = OOP_POW + 1             // !
+var/const/OOP_GROUP   = OOP_UNARY + 1           // ()
 
 /*
 	Class: node
