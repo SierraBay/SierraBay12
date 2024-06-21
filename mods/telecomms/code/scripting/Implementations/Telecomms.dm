@@ -29,7 +29,7 @@
 	returnerrors += scanner.errors
 	returnerrors += parser.errors
 
-	if(LAYZEN(returnerrors))
+	if(LAZYLEN(returnerrors))
 		return returnerrors
 
 	interpreter 		= new(program)
