@@ -40,7 +40,7 @@ var/const  //Ascii values of characters
 	Class: nS_Options
 	An implementation of <n_scriptOptions> for the n_Script language.
 */
-n_scriptOptions/nS_Options
+/n_scriptOptions/nS_Options
 	var/list/symbols = list("(", ")", "\[", "]", ";", ",", "{", "}")     										//scanner - Characters that can be in symbols
 /*
 	Var: keywords
