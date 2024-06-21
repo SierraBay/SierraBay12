@@ -51,7 +51,7 @@ var/global/const/Represents a special statement in the code triggered by a keywo
 
 /n_Keyword/nS_Keyword/kwReturn
 
-/n_Keyword/nS_Keyword/kwReturnParse(n_Parser/nS_Parser/parser)
+/n_Keyword/nS_Keyword/kwReturn/Parse(n_Parser/nS_Parser/parser)
 	.=KW_PASS
 	if(istype(parser.curBlock, /node/BlockDefinition/GlobalBlock))
 		parser.errors+=new/scriptError/BadReturn(parser.curToken)
