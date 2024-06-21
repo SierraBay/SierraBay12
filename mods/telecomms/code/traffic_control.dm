@@ -177,7 +177,7 @@
 					showcode = replacetext(storedcode, "\"", "\\\"")
 					winset(editingcode, "tcscode", "text=\"[showcode]\"")
 					sleep(1)
-						update_ide()
+					update_ide()
 
 				else
 					viewingcode.Add(usr)
