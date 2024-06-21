@@ -15,28 +15,28 @@
 
 /*
 	Constants: Operator Precedence
-		var/const/OOP_OR				- Logical or
-		var/const/OOP_AND				- Logical and
-		var/const/OOP_BIT				- Bitwise operations
-		var/const/OOP_EQUAL			        - Equality checks
-		var/const/OOP_COMPARE		                - Greater than, less then, etc
-		var/const/OOP_ADD				- Addition and subtraction
-		var/const/OOP_MULTIPLY	                        - Multiplication and division
-		var/const/OOP_POW				- Exponents
-		var/const/OOP_UNARY			        - Unary Operators
-		var/const/OOP_GROUP			        - Parentheses
+		var/global/const/OOP_OR				- Logical or
+		var/global/const/OOP_AND				- Logical and
+		var/global/const/OOP_BIT				- Bitwise operations
+		var/global/const/OOP_EQUAL			        - Equality checks
+		var/global/const/OOP_COMPARE		                - Greater than, less then, etc
+		var/global/const/OOP_ADD				- Addition and subtraction
+		var/global/const/OOP_MULTIPLY	                        - Multiplication and division
+		var/global/const/OOP_POW				- Exponents
+		var/global/const/OOP_UNARY			        - Unary Operators
+		var/global/const/OOP_GROUP			        - Parentheses
 */
 
-var/const/OOP_OR      = 1   	                // ||
-var/const/OOP_AND     = OOP_OR + 1              // &&
-var/const/OOP_BIT     = OOP_AND + 1             // &, |
-var/const/OOP_EQUAL   = OOP_BIT	+ 1             // ==, !=
-var/const/OOP_COMPARE = OOP_EQUAL + 1           // >, <, >=, <=
-var/const/OOP_ADD     = OOP_COMPARE + 1         // +, -
-var/const/OOP_MULTIPLY= OOP_ADD + 1             // *, /, %
-var/const/OOP_POW     = OOP_MULTIPLY + 1	// ^
-var/const/OOP_UNARY   = OOP_POW + 1             // !
-var/const/OOP_GROUP   = OOP_UNARY + 1           // ()
+var/global/const/OOP_OR      = 1   	                // ||
+var/global/const/OOP_AND     = OOP_OR + 1              // &&
+var/global/const/OOP_BIT     = OOP_AND + 1             // &, |
+var/global/const/OOP_EQUAL   = OOP_BIT	+ 1             // ==, !=
+var/global/const/OOP_COMPARE = OOP_EQUAL + 1           // >, <, >=, <=
+var/global/const/OOP_ADD     = OOP_COMPARE + 1         // +, -
+var/global/const/OOP_MULTIPLY= OOP_ADD + 1             // *, /, %
+var/global/const/OOP_POW     = OOP_MULTIPLY + 1	// ^
+var/global/const/OOP_UNARY   = OOP_POW + 1             // !
+var/global/const/OOP_GROUP   = OOP_UNARY + 1           // ()
 
 /*
 	Class: node
