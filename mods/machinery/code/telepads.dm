@@ -65,3 +65,10 @@
 	req_tech = list(TECH_DATA = 3, TECH_BLUESPACE = 2)
 	build_path = /obj/item/stock_parts/circuitboard/telesci_console
 	sort_string = "HAAAD"
+
+/datum/design/item/telesci/artificial/bluespace
+	name = "artificial bluespace crystal"
+	id = "artificial_bluespace_crystal"
+	req_tech = list(TECH_DATA = 4, TECH_BLUESPACE = 4)
+	build_path = /obj/item/bluespace_crystal/artificial
+	sort_string = "BOABS"
