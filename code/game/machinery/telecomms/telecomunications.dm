@@ -473,21 +473,21 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 							// would add up to md5("password123comsat")
 
 	// [SIERRA-ADD] MODPACK-TELECOMMS (Иначе жалуется компилятор гитхаба) 
-	var/rawcode = ""	// the code to compile (raw text)
-	var/datum/TCS_Compiler/Compiler	// the compiler that compiles and runs the code
-	var/autoruncode = 0		// 1 if the code is set to run every time a signal is picked up
+	//var/rawcode = ""	// the code to compile (raw text)
+	//var/datum/TCS_Compiler/Compiler	// the compiler that compiles and runs the code
+	//var/autoruncode = 0		// 1 if the code is set to run every time a signal is picked up
 	// [SIERRA-ADD]
 
 	var/language = "human"
 	var/obj/item/device/radio/headset/server_radio = null
 
-/obj/machinery/telecomms/server/New()
-	..()
+///obj/machinery/telecomms/server/New()
+	//..()
 	// [SIERRA-ADD] - MODPACK_TELECOMMS - (Нельзя переписать конструктор класса)
-	Compiler = new()
-	Compiler.Holder = src
+	//Compiler = new()
+	//Compiler.Holder = src
 	// [SIERRA-ADD]
-	server_radio = new()
+	//server_radio = new()
 
 /obj/machinery/telecomms/server/receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
 
