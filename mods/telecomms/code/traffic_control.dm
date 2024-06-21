@@ -176,7 +176,7 @@
 					var/showcode = replacetext(storedcode, "\\\"", "\\\\\"")
 					showcode = replacetext(storedcode, "\"", "\\\"")
 					winset(editingcode, "tcscode", "text=\"[showcode]\"")
-					spawn()
+					sleep(1)
 						update_ide()
 
 				else
