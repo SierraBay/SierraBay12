@@ -16,6 +16,7 @@
 	max_repair = 20
 	melee_damage = 30
 	repair_damage = 15
+	req_material = MATERIAL_ALUMINIUM
 
 /obj/item/mech_component/manipulators/heavy
 	melee_damage = 40
@@ -23,6 +24,7 @@
 	max_damage = 500
 	min_damage = 300
 	repair_damage = 30
+	req_material = MATERIAL_PLASTEEL
 
 /obj/item/mech_component/manipulators/combat
 	max_damage = 180

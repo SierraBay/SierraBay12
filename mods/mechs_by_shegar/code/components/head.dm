@@ -9,6 +9,7 @@
 	min_damage = 50
 	max_repair = 20
 	repair_damage = 15
+	req_material = MATERIAL_ALUMINIUM
 
 /obj/item/mech_component/sensors/heavy
 	max_damage = 500
@@ -16,6 +17,7 @@
 	max_repair = 150
 	repair_damage = 30
 	repair_damage = 30
+	req_material = MATERIAL_PLASTEEL
 
 /obj/item/mech_component/sensors/combat
 	max_damage = 180

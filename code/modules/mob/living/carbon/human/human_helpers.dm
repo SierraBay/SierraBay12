@@ -98,9 +98,9 @@
 	remove_client_color(/datum/client_color/monochrome)
 	remove_client_color(/datum/client_color/nvg)
 	//SIERRA-EDIT (Убивает рантайм, когда с НЕ шлемов пытаются стянуть очки)
-	// if(hat)
+	//if(hat)
 
-	if (hat && istype(hat, /obj/item/clothing/accessory ))
+	if (hat && istype(hat, /obj/item/clothing/head ))
 	//SIERRA-EDIT
 		for(var/obj/item/clothing/accessory/glassesmod/mod in hat.accessories)
 			if (mod?.active)
