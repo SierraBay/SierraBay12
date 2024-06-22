@@ -22,6 +22,7 @@
 	var/list/parts_list_images
 	///Содержит в себе данные привязанной id карты. По умолчанию - пусто
 	var/list/id_holder
+	mob_never_swap = TRUE
 
 
 /mob/living/exosuit/Initialize(mapload, obj/structure/heavy_vehicle_frame/source_frame)
