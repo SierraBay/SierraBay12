@@ -115,10 +115,15 @@
 		return
 
 	if(href_list["build"])
-		add_to_queue(text2num(href_list["build"]))
+		var/datum/design/D = locate(href_list["build"]) in files.known_designs
+		if(D)
+			add_to_queue(D)
 
 	if(href_list["remove"])
-		remove_from_queue(text2num(href_list["remove"]))
+		var/num = text2num(href_list["remove"])
+		if(num)
+			num = clamp(num, 1, queue.len)
+			remove_from_queue(num)
 
 	if(href_list["category"])
 		if(href_list["category"] in categories)
@@ -202,8 +207,7 @@
 	else
 		busy = 0
 
-/obj/machinery/robotics_fabricator/proc/add_to_queue(index)
-	var/datum/design/D = files.known_designs[index]
+/obj/machinery/robotics_fabricator/proc/add_to_queue(datum/design/D)
 	queue += D
 	update_busy()
 
@@ -249,11 +253,11 @@
 
 /obj/machinery/robotics_fabricator/proc/get_build_options()
 	. = list()
-	for(var/i = 1 to length(files.known_designs))
-		var/datum/design/D = files.known_designs[i]
-		if(!D.build_path || !(D.build_type & MECHFAB))
+	for(var/i in files.known_designs)
+		var/datum/design/D = i
+		if(!(D.build_type & MECHFAB))
 			continue
-		. += list(list("name" = D.name, "id" = i, "category" = D.category, "resourses" = get_design_resourses(D), "time" = get_design_time(D)))
+		. += list(list("name" = D.name, "id" = "\ref[D]", "category" = D.category, "resourses" = get_design_resourses(D), "time" = get_design_time(D)))
 
 /obj/machinery/robotics_fabricator/proc/get_design_resourses(datum/design/D)
 	var/list/F = list()
@@ -328,6 +332,6 @@
 	for(var/obj/machinery/computer/rdconsole/RDC in get_area_all_atoms(get_area(src)))
 		if(!RDC.sync)
 			continue
-	//files.download_from(RDC.files)
+		files.download_from(RDC.files)
 	sync_message = "Sync complete."
 	update_categories()

@@ -782,7 +782,7 @@ th.bot {
 
 .sciTechTreeIcon.icon-spaceheater { background-position: 0px -32px; }
 .sciTechTreeIcon.icon-hypo { background-position: -32px -32px; }
-.sciTechTreeIcon.icon-drillhead { background-position: -64px -32px; }
+.sciTechTreeIcon.icon-smelter { background-position: -64px -32px; }
 .sciTechTreeIcon.icon-circuit { background-position: -96px -32px; }
 .sciTechTreeIcon.icon-pickaxe { background-position: -128px -32px; }
 .sciTechTreeIcon.icon-cutter { background-position: -160px -32px; }
@@ -801,7 +801,7 @@ th.bot {
 .sciTechTreeIcon.icon-add_sec_eq { background-position: 0px -96px; }
 .sciTechTreeIcon.icon-sleeper { background-position: -32px -96px; }
 .sciTechTreeIcon.icon-medhud { background-position: -64px -96px; }
-.sciTechTreeIcon.icon-mecheq { background-position: -96px -96px; }
+.sciTechTreeIcon.icon-mechsleeper { background-position: -96px -96px; }
 .sciTechTreeIcon.icon-gps { background-position: -128px -96px; }
 .sciTechTreeIcon.icon-rapidsyringegun { background-position: -160px -96px; }
 .sciTechTreeIcon.icon-scalpelmanager { background-position: -192px -96px; }
@@ -855,15 +855,15 @@ th.bot {
 .sciTechTreeIcon.icon-decloner { background-position: 0px -288px; }
 .sciTechTreeIcon.icon-fusion { background-position: -32px -288px; }
 .sciTechTreeIcon.icon-chemdisp { background-position: -64px -288px; }
-.sciTechTreeIcon.icon-mechweapon { background-position: -96px -288px; }
-.sciTechTreeIcon.icon-mechrcd { background-position: -128px -288px; }
+.sciTechTreeIcon.icon-mechlaser { background-position: -96px -288px; }
+.sciTechTreeIcon.icon-mechclaw { background-position: -128px -288px; }
 .sciTechTreeIcon.icon-hdd2048 { background-position: -160px -288px; }
 .sciTechTreeIcon.icon-hdd256 { background-position: -192px -288px; }
 .sciTechTreeIcon.icon-hdd64 { background-position: -224px -288px; }
 
 .sciTechTreeIcon.icon-shieldgen { background-position: 0px -320px; }
-.sciTechTreeIcon.icon-mechciv { background-position: -32px -320px; }
-.sciTechTreeIcon.icon-mech { background-position: -64px -320px; }
+.sciTechTreeIcon.icon-mech { background-position: -32px -320px; }
+.sciTechTreeIcon.icon-mechciv { background-position: -64px -320px; }
 .sciTechTreeIcon.icon-ai { background-position: -96px -320px; }
 .sciTechTreeIcon.icon-gene { background-position: -128px -320px; }
 .sciTechTreeIcon.icon-box { background-position: -160px -320px; }
@@ -876,8 +876,13 @@ th.bot {
 .sciTechTreeIcon.icon-kit { background-position: -96px -352px; }
 .sciTechTreeIcon.icon-radiokey { background-position: -128px -352px; }
 .sciTechTreeIcon.icon-hardsuitmodule { background-position: -160px -352px; }
-.sciTechTreeIcon.icon-bluesplace { background-position: -192px -352px; }
+.sciTechTreeIcon.icon-bluespace { background-position: -192px -352px; }
 .sciTechTreeIcon.icon-roboscanner { background-position: -224px -352px; }
+
+.sciTechTreeIcon.icon-bscrystal { background-position: 0px -384px; }
+.sciTechTreeIcon.icon-nav { background-position: -32px -384px; }
+.sciTechTreeIcon.icon-pump { background-position: -64px -384px; }
+.sciTechTreeIcon.icon-eva { background-position: -96px -384px; }
 
 .sciMenuButton {
     width: 300px;

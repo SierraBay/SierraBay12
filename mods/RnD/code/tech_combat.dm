@@ -74,16 +74,16 @@
 
 	unlocks_designs = list("grenadelauncher", "flechette" , "tactical_goggles")
 
-/datum/technology/combat/pguns
+/datum/technology/combat/spguns
 	name = "Scientific Precision Guns"
 	desc = "Scientific Precision Guns"
-	id = "decloner"
+	id = "spguns"
 
-	x = 0.4
+	x = 0.5
 	y = 0.4
 	icon = "decloner"
 
-	required_technologies = list("riotgun")
+	required_technologies = list("shock")
 	required_tech_levels = list()
 	cost = 1000
 

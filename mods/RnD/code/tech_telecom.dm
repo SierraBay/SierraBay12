@@ -120,33 +120,65 @@
 
 	unlocks_designs = list("gps", "beacon_locator")
 
-/datum/technology/tcom/tele_pad
-	name = "Tracking Devices"
-	desc = "Tracking Devices"
-	id = "track_dev"
+/datum/technology/tcom/arti_blue
+	name = "Artificial Bluesplace"
+	desc = "Artificial Bluesplace"
+	id = "crystal"
 
-	x = 0.4
+	x = 0.5
 	y = 0.2
-	icon = "gps"
+	icon = "bscrystal"
 
 	required_technologies = list("telecomm_parts")
 	required_tech_levels = list()
-	cost = 3500
+	cost = 1000
+
+	unlocks_designs = list("gps", "beacon_locator")
+
+
+/datum/technology/tcom/tele_sci
+	name = "Tele Science"
+	desc = "Tele Science"
+	id = "tele_sci"
+
+	x = 0.4
+	y = 0.2
+	icon = "telepad"
+
+	required_technologies = list("crystal")
+	required_tech_levels = list()
+	cost = 3000
 
 	unlocks_designs = list("telepad", "telesci_console")
 
 
 /datum/technology/tcom/tele_pad
-	name = "Tracking Devices"
-	desc = "Tracking Devices"
-	id = "track_dev"
+	name = "Teleporter"
+	desc = "Teleporter"
+	id = "teleport"
 
 	x = 0.6
 	y = 0.2
-	icon = "gps"
+	icon = "teleport"
 
-	required_technologies = list("telecomm_parts")
+	required_technologies = list("crystal")
 	required_tech_levels = list()
-	cost = 3500
+	cost = 3000
 
 	unlocks_designs = list("teleconsole", "tele_beacon")
+
+
+/datum/technology/tcom/bsbag
+	name = "Bluespace Storage"
+	desc = "Bluespace Storage"
+	id = "bsbag"
+
+	x = 0.5
+	y = 0.1
+	icon = "bluespace"
+
+	required_technologies = list("crystal")
+	required_tech_levels = list()
+	cost = 1000
+
+	unlocks_designs = list("bag_holding", "blutrash")

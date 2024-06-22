@@ -160,7 +160,7 @@
 
 	required_technologies = list("pcpu_small")
 	required_tech_levels = list()
-	cost = 100
+	cost = 200
 
 	unlocks_designs = list("pcpu_normal")
 
@@ -284,17 +284,33 @@
 
 	unlocks_designs = list("scan_reagent", "scan_medical", "scan_atmos")
 
-/datum/technology/data/atmos_scanner
-	name = "Atmos Scanning Module"
-	desc = "Atmos Scanning Module"
-	id = "atmos_scanners"
 
-	x = 0.3
-	y = 0.3
-	icon = "nanoprinter"
+/datum/technology/data/ai_laws
+	name = "AI Laws"
+	desc = "AI Laws"
+	id = "ai_laws"
 
-	required_technologies = list("basic_modular")
+	x = 0.8
+	y = 0.6
+	icon = "aicircuit"
+
+	required_technologies = list("pcpu_small")
 	required_tech_levels = list()
-	cost = 750
+	cost = 1500
 
-	unlocks_designs = list("scan_atmos")
+	unlocks_designs = list("safeguard", "onehuman", "protectstation",  "notele", "quarantine", "oxygen", "purge", "reset", "freeform")
+
+/datum/technology/data/ai_laws_core
+	name = "AI Core Laws"
+	desc = "AI Core Laws"
+	id = "ai_laws_core"
+
+	x = 0.8
+	y = 0.7
+	icon = "aicircuit"
+
+	required_technologies = list("ai_laws")
+	required_tech_levels = list()
+	cost = 1500
+
+	unlocks_designs = list("freeformcore", "asimov", "paladin", "tyrant")

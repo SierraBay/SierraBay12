@@ -32,11 +32,11 @@
 /datum/technology/engineering/gas_heat_portable
 	name = "Gas Portable"
 	desc = "Gas Portable"
-	id = "gas_port"
+	id = "pump"
 
 	x = 0.2
 	y = 0.7
-	icon = "spaceheater"
+	icon = "pump"
 
 	required_technologies = list("gas_heat")
 	required_tech_levels = list()
@@ -176,7 +176,7 @@
 
 	x = 0.4
 	y = 0.3
-	icon = "cutter"
+	icon = "smelter"
 
 	required_technologies = list("basic_mining")
 	required_tech_levels = list()
@@ -203,10 +203,11 @@
 /datum/technology/engineering/ship
 	name = "Ship Equipment"
 	desc = "Ship Equipment"
-	id = "ship"
+	id = "nav"
 
 	x = 0.5
 	y = 0.4
+	icon = "nav"
 
 	required_technologies = list("basic_mining")
 	required_tech_levels = list()
@@ -223,7 +224,7 @@
 	y = 0.5
 	icon = "rped"
 
-	required_technologies = list("ship")
+	required_technologies = list("nav")
 	required_tech_levels = list()
 	cost = 2000
 
