@@ -19,8 +19,8 @@
 	desc = "Chameleon Kit"
 	id = "chameleon_kit"
 
-	x = 0.6
-	y = 0.5
+	x = 0.5
+	y = 0.6
 	icon = "kit"
 
 	required_technologies = list("radiokey")
@@ -32,13 +32,13 @@
 /datum/technology/esoteric/portable_shield_diffuser
 	name = "Portable Shield Diffuser"
 	desc = "Portable Shield Diffuser"
-	id = "chameleon_kit"
+	id = "portable_shield_diffuser"
 
-	x = 0.5
+	x = 0.6
 	y = 0.6
 	icon = "kit"
 
-	required_technologies = list("implant_explosive")
+	required_technologies = list("chameleon_kit")
 	required_tech_levels = list()
 	cost = 1500
 
@@ -55,7 +55,7 @@
 	y = 0.5
 	icon = "implantcase"
 
-	required_technologies = list("chameleon_kit")
+	required_technologies = list("radiokey")
 	required_tech_levels = list()
 	cost = 1500
 
