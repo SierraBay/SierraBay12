@@ -128,7 +128,7 @@
 	desc = "Active Camouflage"
 	id = "stealth"
 
-	x = 0.3
+	x = 0.4
 	y = 0.4
 	icon = "hardsuitmodule"
 
