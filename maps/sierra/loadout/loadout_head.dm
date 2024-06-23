@@ -42,13 +42,13 @@
 	beret_selection_type["red security beret"] = /obj/item/clothing/head/beret/sec/sierra1
 	gear_tweaks += new/datum/gear_tweak/path(beret_selection_type)
 
-/datum/gear/head/soft_selection/security
+/datum/gear/head/soft_selection_security
 	display_name = "security softcaps selection"
 	description = "A list of softcaps used by NanoTrasen security."
 	path = /obj/item/clothing/head/soft
 	allowed_roles = SECURITY_ROLES
 
-/datum/gear/head/soft_selection/security/New()
+/datum/gear/head/soft_selection_security/New()
 	..()
 	var/soft_selection_type = list()
 	soft_selection_type["white security cap"] = /obj/item/clothing/head/soft/sec/corp/guard/sierra1
