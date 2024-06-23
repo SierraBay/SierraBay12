@@ -101,7 +101,7 @@
 	name = "riot helmet"
 	desc = "It's a helmet specifically designed to protect against close range attacks."
 	icon_state = "helmet_riot"
-	valid_accessory_slots = null
+	valid_accessory_slots = list(ACCESSORY_SLOT_HELMET_VISOR)
 	body_parts_covered = HEAD|FACE|EYES //face shield
 	armor = list(
 		melee = ARMOR_MELEE_VERY_HIGH,
@@ -210,12 +210,10 @@
 /obj/item/clothing/head/helmet/ert
 	name = "asset protection command helmet"
 	desc = "An in-atmosphere helmet worn by many corporate and private asset protection forces. Has blue highlights."
+	icon = 'icons/obj/obj_head_ERT.dmi'
+	item_icons = list(slot_head_str = 'icons/mob/onmob/onmob_head_ERT.dmi')
 	icon_state = "erthelmet_cmd"
 	valid_accessory_slots = null
-	item_state_slots = list(
-		slot_l_hand_str = "syndicate-helm-green",
-		slot_r_hand_str = "syndicate-helm-green",
-		)
 	armor = list(
 		melee = ARMOR_MELEE_MAJOR,
 		bullet = ARMOR_BALLISTIC_RIFLE,

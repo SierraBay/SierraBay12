@@ -54,6 +54,7 @@
 			/obj/screen/movable/exosuit/toggle/megaspeakers,
 			/obj/screen/movable/exosuit/toggle/gps,
 			/obj/screen/movable/exosuit/toggle/medscan,
+			/obj/screen/movable/exosuit/id,
 		)
 		//[SIERRA-EDIT]
 		i = 0
