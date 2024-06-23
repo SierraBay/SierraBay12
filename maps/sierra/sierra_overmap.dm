@@ -21,7 +21,7 @@
 		"Skrellian Shuttle" = list("nav_deck3_skrellshuttle"), //away/skrellscoutship.dm shuttle,
 		"Skrellian Scout" = list("nav_deck1_skrellscout"), //away/skrellscoutship.dm shuttle,
 		"Alien Interceptor" = list("nav_deck1_vox_raider"), //maps/antag_spawn/vox/voxraider.dm shuttle,
-		"Rescue" = list("nav_ert_dock")
+		"Rescue" = list("nav_ert_dock") //maps/antag_spawn/ert/ert.dm shuttle
 	)
 
 	initial_generic_waypoints = list(
