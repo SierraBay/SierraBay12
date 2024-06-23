@@ -41,6 +41,7 @@
 	max_repair = 40
 	repair_damage = 20
 	hide_pilot = TRUE
+	req_material = MATERIAL_ALUMINIUM
 
 /obj/item/mech_component/chassis/light/Initialize()
 	back_passengers_positions = list(
@@ -96,6 +97,7 @@
 	min_damage = 350
 	repair_damage = 30
 	hide_pilot = TRUE
+	req_material = MATERIAL_PLASTEEL
 
 /obj/item/mech_component/chassis/heavy/Initialize()
 	back_passengers_positions = list(

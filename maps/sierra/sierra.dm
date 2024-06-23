@@ -78,6 +78,7 @@
 	#include "items/clothing/exploration.dm"
 	#include "items/clothing/override.dm"
 	#include "items/clothing/storages.dm"
+	#include "items/clothing/security.dm"
 
 	// --- JOB SECTION --- //
 	#include "job\_job_defines.dm"

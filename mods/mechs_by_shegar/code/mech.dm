@@ -22,6 +22,7 @@
 	var/list/parts_list_images
 	///Содержит в себе данные привязанной id карты. По умолчанию - пусто
 	var/list/id_holder
+	mob_never_swap = TRUE
 
 
 /mob/living/exosuit/Initialize(mapload, obj/structure/heavy_vehicle_frame/source_frame)
@@ -62,3 +63,6 @@
 	LAZYCLEARLIST(parts_list_images)
 	parts_list = list(head, body, arms, legs)
 	parts_list_images = make_item_radial_menu_choices(parts_list)
+
+/mob/living/exosuit/can_swap_with(mob/living/tmob)
+	return 0
