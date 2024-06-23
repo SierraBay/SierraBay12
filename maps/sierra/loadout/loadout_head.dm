@@ -12,14 +12,14 @@
 	allowed_branches = list(/datum/mil_branch/contractor)
 */
 
-/datum/gear/head/beret_selection/contractor
+/datum/gear/head/beret_selection_contractor
 	display_name = "contractor beret selection"
 	description = "A list of berets used by various organizations and corporights."
 	path = /obj/item/clothing/head/beret
 	allowed_roles = SECURITY_ROLES
 	allowed_branches = list(/datum/mil_branch/contractor)
 
-/datum/gear/head/beret_selection/contractor/New()
+/datum/gear/head/beret_selection_contractor/New()
 	..()
 	var/beret_selection_type = list()
 	beret_selection_type["SAARE beret"] = /obj/item/clothing/head/beret/sec/corporate/saare
@@ -27,13 +27,13 @@
 	beret_selection_type["ZPCI beret"] = /obj/item/clothing/head/beret/sec/corporate/zpci
 	gear_tweaks += new/datum/gear_tweak/path(beret_selection_type)
 
-/datum/gear/head/beret_selection/security
+/datum/gear/head/beret_selection_security
 	display_name = "security berets selection"
 	description = "A list of berets used by NanoTrasen security."
 	path = /obj/item/clothing/head/beret
 	allowed_roles = SECURITY_ROLES
 
-/datum/gear/head/beret_selection/security/New()
+/datum/gear/head/beret_selection_security/New()
 	..()
 	var/beret_selection_type = list()
 	beret_selection_type["white-blue security beret"] = /obj/item/clothing/head/beret/guard/sierra1
