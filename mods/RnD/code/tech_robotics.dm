@@ -55,7 +55,7 @@
 
 	required_technologies = list("robo")
 	required_tech_levels = list()
-	cost = 1200
+	cost = 1000
 
 	unlocks_designs = list("mechfab","mech_software_engineering","mech_software_utility","treads","mech_frame", "mech_armour_basic", "mech_control_module", "powerloader_head", "powerloader_body", "powerloader_arms", "powerloader_legs", "quad_legs", "sphere_body","mech_armour_em","mech_armour_radproof" )
 
@@ -115,7 +115,7 @@
 
 	required_technologies = list("basic_mech")
 	required_tech_levels = list()
-	cost = 2000
+	cost = 1200
 
 	unlocks_designs = list("light_legs","light_arms","light_body","light_head")
 
@@ -130,7 +130,7 @@
 
 	required_technologies = list("basic_mech")
 	required_tech_levels = list()
-	cost = 2000
+	cost = 1500
 
 	unlocks_designs = list("combat_legs","combat_arms","combat_body","combat_head","mech_armour_combat")
 

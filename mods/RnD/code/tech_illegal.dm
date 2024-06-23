@@ -106,3 +106,34 @@
 	cost = 1250
 
 	unlocks_designs = list("implant_explosive")
+
+/datum/technology/esoteric/enet
+	name = "Energy Net"
+	desc = "Energy Net"
+	id = "enet"
+
+	x = 0.5
+	y = 0.4
+	icon = "hardsuitmodule"
+
+	required_technologies = list("radiokey")
+	required_tech_levels = list()
+	cost = 1250
+
+	unlocks_designs = list("rig_enet")
+
+
+/datum/technology/esoteric/stealth
+	name = "Active Camouflage"
+	desc = "Active Camouflage"
+	id = "stealth"
+
+	x = 0.3
+	y = 0.4
+	icon = "hardsuitmodule"
+
+	required_technologies = list("enet")
+	required_tech_levels = list()
+	cost = 2000
+
+	unlocks_designs = list("rig_stealth")
