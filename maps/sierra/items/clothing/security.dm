@@ -84,3 +84,13 @@
 
 /obj/item/clothing/under/hosformalfem/sierra1
 	name = "female head of security formal uniform"
+
+/obj/item/clothing/under/rank/security/cadet
+	name = "security cadet uniform"
+	desc = "A NanoTrasen Security cadet uniform in a classic formal white-and-black."
+	icon = 'maps/sierra/icons/obj/clothing/obj_under.dmi'
+	item_icons = list(slot_w_uniform_str ='maps/sierra/icons/mob/onmob/onmob_under.dmi')
+	item_state = "cadet_standard"
+	icon_state = "cadet_standard"
+	worn_state = "cadet_standard"
+	gender_icons = 1

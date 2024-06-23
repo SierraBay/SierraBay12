@@ -67,7 +67,7 @@
 		/obj/item/clothing/under/rank/security/sierra1, /obj/item/clothing/under/rank/security/alt/sierra1, \
 		/obj/item/clothing/under/rank/security/corp/sierra1, /obj/item/clothing/under/rank/security/corp/alt/sierra1, \
 		/obj/item/clothing/under/rank/security/navyblue/sierra1, /obj/item/clothing/under/rank/security/navyblue/alt/sierra1, \
-		/obj/item/clothing/under/rank/security2/sierra1)
+		/obj/item/clothing/under/rank/security2/sierra1, /obj/item/clothing/under/rank/security/cadet)
 	dress_shoes = list(\
 		/obj/item/clothing/shoes/jackboots)
 

@@ -220,7 +220,7 @@ Keeping them simple for now, just spawning with basic EC uniforms, and pretty mu
 
 /singleton/hierarchy/outfit/job/sierra/crew/security/assist
 	name = OUTFIT_JOB_NAME("Cadet - Sierra")
-	uniform = /obj/item/clothing/under/rank/security/sierra1
+	uniform = /obj/item/clothing/under/rank/security/cadet
 	shoes = /obj/item/clothing/shoes/jackboots
 	id_types = list(/obj/item/card/id/sierra/crew/security/cadet)
 

@@ -19,7 +19,7 @@
 	allowed_roles = SECURITY_ROLES
 	allowed_branches = list(/datum/mil_branch/contractor)
 
-/datum/gear/head/beret_selection/New()
+/datum/gear/head/beret_selection/contractor/New()
 	..()
 	var/beret_selection_type = list()
 	beret_selection_type["SAARE beret"] = /obj/item/clothing/head/beret/sec/corporate/saare
@@ -33,7 +33,7 @@
 	path = /obj/item/clothing/head/beret
 	allowed_roles = SECURITY_ROLES
 
-/datum/gear/head/beret_selection/New()
+/datum/gear/head/beret_selection/security/New()
 	..()
 	var/beret_selection_type = list()
 	beret_selection_type["white-blue security beret"] = /obj/item/clothing/head/beret/guard/sierra1
@@ -48,7 +48,7 @@
 	path = /obj/item/clothing/head/soft
 	allowed_roles = SECURITY_ROLES
 
-/datum/gear/head/soft_selection/New()
+/datum/gear/head/soft_selection/security/New()
 	..()
 	var/soft_selection_type = list()
 	soft_selection_type["white security cap"] = /obj/item/clothing/head/soft/sec/corp/guard/sierra1
