@@ -1,127 +1,108 @@
-/datum/technology/sdivet
-	name = "Silenced Divet Pistol"
-	desc = "Silenced Divet Pistol"
-	id = "sdivet"
+/datum/technology/esoteric
+	name = "Binary Encrpytion Key"
+	desc = "Binary Encrpytion Key"
+	id = "radiokey"
 	tech_type = RESEARCH_ESOTERIC
 
 	x = 0.5
 	y = 0.5
-	icon = "sdivet"
+	icon = "radiokey"
 
-	required_technologies = list("divet")
+	required_technologies = list()
 	required_tech_levels = list()
 	cost = 1250
 
-	unlocks_designs = list("sdivet")
+	unlocks_designs = list("binaryencrypt")
 
-/datum/technology/icds
-	name = " Incendiary Divet Magazine"
-	desc = "Incendiary Divet Magazine"
-	id = "icds"
-	tech_type = RESEARCH_ESOTERIC
+/datum/technology/esoteric/chameleon_kit
+	name = "Chameleon Kit"
+	desc = "Chameleon Kit"
+	id = "chameleon_kit"
+
+	x = 0.6
+	y = 0.5
+	icon = "kit"
+
+	required_technologies = list("radiokey")
+	required_tech_levels = list()
+	cost = 1500
+
+	unlocks_designs = list("chameleon")
+
+/datum/technology/esoteric/portable_shield_diffuser
+	name = "Portable Shield Diffuser"
+	desc = "Portable Shield Diffuser"
+	id = "chameleon_kit"
 
 	x = 0.5
 	y = 0.6
-	icon = "icds"
+	icon = "kit"
 
-	required_technologies = list("divet")
+	required_technologies = list("implant_explosive")
 	required_tech_levels = list()
 	cost = 1500
 
-	unlocks_designs = list("icds")
+	unlocks_designs = list("portable_shield_diffuser")
 
-/datum/technology/hpds
-	name = "Hollow Point Divet Magazine"
-	desc = "Hollow Point Divet Magazine"
-	id = "hpds"
-	tech_type = RESEARCH_ESOTERIC
+
+/datum/technology/esoteric/freedom_implant
+	name = "Glass Case- 'Freedom'"
+	desc = "Glass Case- 'Freedom'"
+	id = "freedom_implant"
+
+
+	x = 0.4
+	y = 0.5
+	icon = "implantcase"
+
+	required_technologies = list("chameleon_kit")
+	required_tech_levels = list()
+	cost = 1500
+
+	unlocks_designs = list("implant_free", "implant_adrenaline")
+
+/datum/technology/esoteric/borg_syndicate_module
+	name = "Borg Illegal Module"
+	desc = "Borg Illegal Module"
+	id = "borg_syndicate_module"
+
 
 	x = 0.6
 	y = 0.5
-	icon = "hpds"
+	icon = "aicircuit"
 
-	required_technologies = list("divet")
+	required_technologies = list("radiokey")
+	required_tech_levels = list()
+	cost = 2000
+
+	unlocks_designs = list("borg_syndicate_module")
+
+/datum/technology/esoteric/tyrant
+	name = "T.Y.R.A.N.T."
+	desc = "T.Y.R.A.N.T."
+	id = "tyrant"
+
+	x = 0.6
+	y = 0.4
+	icon = "aicircuit"
+
+	required_technologies = list("borg_syndicate_module")
 	required_tech_levels = list()
 	cost = 1500
 
-	unlocks_designs = list("hpds")
+	unlocks_designs = list("tyrant")
 
-/datum/technology/apds
-	name = "Armor Piercing Divet Magazine"
-	desc = "Armor Piercing Divet Magazine"
-	id = "apds"
-	tech_type = RESEARCH_ESOTERIC
-
-	x = 0.4
-	y = 0.5
-	icon = "apds"
-
-	required_technologies = list("divet")
-	required_tech_levels = list()
-	cost = 1500
-
-	unlocks_designs = list("apds")
-
-/datum/technology/freedom_implant
-	name = "Freedom Implant"
-	desc = "Freedom Implant"
-	id = "freedom_implant"
-	tech_type = RESEARCH_ESOTERIC
-
-	x = 0.5
-	y = 0.4
-	icon = "implant"
-
-	required_technologies = list("implants")
-	required_tech_levels = list()
-	cost = 1250
-
-	unlocks_designs = list("implant_free")
-
-/datum/technology/imprinting_implant
-	name = "Imprinting Implant"
-	desc = "Imprinting Implant"
-	id = "imprinting_implant"
-	tech_type = RESEARCH_ESOTERIC
-
-	x = 0.4
-	y = 0.4
-	icon = "implant"
-
-	required_technologies = list("implants")
-	required_tech_levels = list()
-	cost = 1250
-
-	unlocks_designs = list("implant_imprinting")
-
-/datum/technology/explosive_implant
+/datum/technology/esoteric/explosive_implant
 	name = "Explosive Implant"
 	desc = "Explosive Implant"
 	id = "explosive_implant"
-	tech_type = RESEARCH_ESOTERIC
 
-	x = 0.6
-	y = 0.4
-	icon = "implant"
+	x = 0.4
+	y = 0.6
+	icon = "implantcase"
 
-	required_technologies = list("implants")
+	required_technologies = list("freedom_implant")
 	required_tech_levels = list()
 	cost = 1250
 
 	unlocks_designs = list("implant_explosive")
-
-/datum/technology/chem_implant
-	name = "Chemical Implant"
-	desc = "Chemical Implant"
-	id = "chem_implant"
-	tech_type = RESEARCH_ESOTERIC
-
-	x = 0.5
-	y = 0.3
-	icon = "implant"
-
-	required_technologies = list("implants")
-	required_tech_levels = list()
-	cost = 1250
-
-	unlocks_designs = list("implant_chem")

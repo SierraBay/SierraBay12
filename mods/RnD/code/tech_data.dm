@@ -12,7 +12,7 @@
 	required_tech_levels = list()
 	cost = 0
 
-	unlocks_designs = list("hdd_basic", "netcard_basic", "bat_normal", "portadrive_basic", "cpu_normal")
+	unlocks_designs = list("hdd_basic", "netcard_basic", "bat_normal", "portadrive_basic", "cpu_normal","pc_motherboard")
 
 /datum/technology/data/frames
 	name = "Modular Computers Frames"
@@ -267,7 +267,7 @@
 	required_tech_levels = list()
 	cost = 750
 
-	unlocks_designs = list("cardslot")
+	unlocks_designs = list("cardslot","aislot","cardbroadcaster")
 
 /datum/technology/data/adv_scanners
 	name = "Advanced Scanning Modules"
@@ -282,7 +282,7 @@
 	required_tech_levels = list()
 	cost = 750
 
-	unlocks_designs = list("scan_reagent", "scan_medical", "scan_atmos")
+	unlocks_designs = list("scan_reagent", "scan_medical", "scan_atmos","scan_robotic")
 
 
 /datum/technology/data/ai_laws
@@ -298,7 +298,7 @@
 	required_tech_levels = list()
 	cost = 1500
 
-	unlocks_designs = list("safeguard", "onehuman", "protectstation",  "notele", "quarantine", "oxygen", "purge", "reset", "freeform")
+	unlocks_designs = list("safeguard", "onehuman", "protectstation",  "notele", "quarantine", "oxygen", "purge", "reset", "freeform","borgupload")
 
 /datum/technology/data/ai_laws_core
 	name = "AI Core Laws"
@@ -313,4 +313,4 @@
 	required_tech_levels = list()
 	cost = 1500
 
-	unlocks_designs = list("freeformcore", "asimov", "paladin", "tyrant")
+	unlocks_designs = list("freeformcore", "asimov", "paladin","aiupload")

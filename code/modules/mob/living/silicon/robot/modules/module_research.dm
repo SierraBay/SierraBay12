@@ -11,7 +11,7 @@
 		"Droid" = "droid-science"
 	)
 	equipment = list(
-		/obj/item/portable_destructive_analyzer,
+//		/obj/item/portable_destructive_analyzer,
 		/obj/item/gripper/research,
 		/obj/item/gripper/no_use/loader,
 		/obj/item/device/robotanalyzer,

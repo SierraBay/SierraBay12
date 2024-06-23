@@ -42,7 +42,7 @@
 	required_tech_levels = list()
 	cost = 1000
 
-	unlocks_designs = list("super_cell", "super_capacitor")
+	unlocks_designs = list("super_cell", "super_capacitor","inducer")
 
 /datum/technology/power/hyp_power
 	name = "Hyper Power"
@@ -87,7 +87,7 @@
 	required_tech_levels = list()
 	cost = 1250
 
-	unlocks_designs = list("superpacman")
+	unlocks_designs = list("superpacman","pacmanpotato")
 
 /datum/technology/power/power_storage
 	name = "Power Storage"
@@ -128,7 +128,7 @@
 	y = 0.4
 	icon = "generator"
 
-	required_technologies = list("adv_power_gen", "sup_power")
+	required_technologies = list("adv_power_gen", "sup_power","pacmanreactor")
 	required_tech_levels = list()
 	cost = 2000
 

@@ -12,7 +12,7 @@
 	required_tech_levels = list()
 	cost = 0
 
-	unlocks_designs = list()
+	unlocks_designs = list("security_hud")
 
 /datum/technology/combat/pris_man
 	name = "Prisoner Managment"
@@ -87,7 +87,7 @@
 	required_tech_levels = list()
 	cost = 1000
 
-	unlocks_designs = list("ppistol", "decloner")
+	unlocks_designs = list("ppistol", "decloner","disperserfront","dispersermiddle","bsaback", "disperser_console")
 
 
 /datum/technology/combat/shock
@@ -133,7 +133,7 @@
 	required_tech_levels = list()
 	cost = 1500
 
-	unlocks_designs = list("wt550", "ammo_small")
+	unlocks_designs = list("wt550", "ammo_small","pointdefense","pointdefense_control")
 
 /datum/technology/combat/smg
 	name = "SMG"

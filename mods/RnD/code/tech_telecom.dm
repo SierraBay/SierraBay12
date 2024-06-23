@@ -72,7 +72,7 @@
 	required_tech_levels = list()
 	cost = 1750
 
-	unlocks_designs = list("ntnet_relay")
+	unlocks_designs = list("ntnet_relay", "accounts","holo","cryo_console","cryo_console_borg")
 
 /datum/technology/tcom/subspace
 	name = "Subspace Broadcaster/Reciever"
@@ -102,7 +102,7 @@
 	required_tech_levels = list()
 	cost = 1500
 
-	unlocks_designs = list("tcom-processor")
+	unlocks_designs = list("tcom-processor","guestpass")
 
 
 /datum/technology/tcom/track_dev
@@ -118,7 +118,7 @@
 	required_tech_levels = list()
 	cost = 500
 
-	unlocks_designs = list("gps", "beacon_locator")
+	unlocks_designs = list("gps", "beacon_locator", "telesci-gps")
 
 /datum/technology/tcom/arti_blue
 	name = "Artificial Bluesplace"

@@ -122,7 +122,7 @@
 	if(href_list["remove"])
 		var/num = text2num(href_list["remove"])
 		if(num)
-			num = clamp(num, 1, queue.len)
+			num = clamp(num, 1,LAZYLEN(queue))
 			remove_from_queue(num)
 
 	if(href_list["category"])

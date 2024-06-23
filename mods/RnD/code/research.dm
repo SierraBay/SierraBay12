@@ -238,6 +238,7 @@ var/global/list/explosion_watcher_list = list()
 	id = RESEARCH_ESOTERIC
 	level = 0
 	shown = FALSE
+	item_tech_req = TECH_ESOTERIC
 
 /obj/item/disk/tech_disk
 	name = "fabricator data disk"

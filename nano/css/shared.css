@@ -862,8 +862,8 @@ th.bot {
 .sciTechTreeIcon.icon-hdd64 { background-position: -224px -288px; }
 
 .sciTechTreeIcon.icon-shieldgen { background-position: 0px -320px; }
-.sciTechTreeIcon.icon-mech { background-position: -32px -320px; }
-.sciTechTreeIcon.icon-mechciv { background-position: -64px -320px; }
+.sciTechTreeIcon.icon-mechheavy { background-position: -32px -320px; }
+.sciTechTreeIcon.icon-mechcombat { background-position: -64px -320px; }
 .sciTechTreeIcon.icon-ai { background-position: -96px -320px; }
 .sciTechTreeIcon.icon-gene { background-position: -128px -320px; }
 .sciTechTreeIcon.icon-box { background-position: -160px -320px; }
@@ -883,6 +883,8 @@ th.bot {
 .sciTechTreeIcon.icon-nav { background-position: -32px -384px; }
 .sciTechTreeIcon.icon-pump { background-position: -64px -384px; }
 .sciTechTreeIcon.icon-eva { background-position: -96px -384px; }
+.sciTechTreeIcon.icon-mechloader { background-position: -128px -384px; }
+.sciTechTreeIcon.icon-mechlight { background-position: -160px -384px; }
 
 .sciMenuButton {
     width: 300px;

@@ -12,7 +12,7 @@
 	required_tech_levels = list()
 	cost = 0
 
-	unlocks_designs = list("science_tool", "micro_mani", "basic_matter_bin", "basic_micro_laser", "light_replacer", "autolathe", "arcademachine", "oriontrail")
+	unlocks_designs = list("science_tool", "micro_mani", "basic_matter_bin", "basic_micro_laser", "light_replacer", "autolathe", "arcademachine", "oriontrail","janitor_hud")
 
 /datum/technology/engineering/gas_heat
 	name = "Gas Heating and Cooling"
@@ -27,7 +27,7 @@
 	required_tech_levels = list()
 	cost = 500
 
-	unlocks_designs = list("gasheater", "gascooler", "stasis_clamp", "pipe_disposal" , "pipe_dispenser" )
+	unlocks_designs = list("gasheater", "gascooler", "stasis_clamp", "pipe_disposal" , "pipe_dispenser","sauna" )
 
 /datum/technology/engineering/gas_heat_portable
 	name = "Gas Portable"
@@ -42,7 +42,7 @@
 	required_tech_levels = list()
 	cost = 1000
 
-	unlocks_designs = list("portascrubberstat", "portascrubberhuge", "portapump", "portascrubber", "oxyregen", "cracer")
+	unlocks_designs = list("portascrubberstat", "portascrubberhuge", "portapump", "portascrubber", "oxyregen", "cracer","rpd")
 
 /datum/technology/engineering/adv_parts
 	name = "Advanced Parts"
@@ -57,7 +57,7 @@
 	required_tech_levels = list()
 	cost = 1000
 
-	unlocks_designs = list("nano_mani", "adv_matter_bin", "high_micro_laser", "adv_sensor")
+	unlocks_designs = list("nano_mani", "adv_matter_bin", "high_micro_laser", "adv_sensor","floodlight","holosign","advmop")
 
 /datum/technology/engineering/super_parts
 	name = "Super Parts"
@@ -87,7 +87,7 @@
 	required_tech_levels = list()
 	cost = 500
 
-	unlocks_designs = list("atmosalerts", "air_management","alerts", "atmos_control", "supermatter_control")
+	unlocks_designs = list("atmosalerts", "air_management","alerts", "atmos_control", "supermatter_control","injector")
 
 /datum/technology/engineering/res_tech
 	name = "Research Technologies"
@@ -102,7 +102,7 @@
 	required_tech_levels = list()
 	cost = 750
 
-	unlocks_designs = list("destructive_analyzer", "protolathe", "circuit_imprinter", "rdservercontrol", "rdserver", "rdconsole")
+	unlocks_designs = list("destructive_analyzer", "protolathe", "circuit_imprinter", "rdservercontrol", "rdserver", "rdconsole","robocontrol")
 
 
 /datum/technology/engineering/basic_mining
@@ -213,7 +213,7 @@
 	required_tech_levels = list()
 	cost = 2000
 
-	unlocks_designs = list("thruster", "helms", "nav", "nav_tele", "sensors", "shipengine", "shuttle","shuttle_long")
+	unlocks_designs = list("thruster", "helms", "nav", "nav_tele", "sensors", "shipengine", "shuttle","shuttle_long","ionengine","shipsensors","radio_beacon","drone_pad","shipmap")
 
 /datum/technology/engineering/adv_eng
 	name = "Advanced Engineering"
@@ -228,7 +228,7 @@
 	required_tech_levels = list()
 	cost = 2000
 
-	unlocks_designs = list("rped", "mesons", "mesons_material", "nanopaste")
+	unlocks_designs = list("rped", "mesons", "mesons_material", "nanopaste","securedoor","doppler")
 
 /datum/technology/engineering/adv_tools
 	name = "Advanced Tools"
@@ -243,7 +243,7 @@
 	required_tech_levels = list()
 	cost = 2000
 
-	unlocks_designs = list("arc_welder", "power_drill", "jaws_of_life", "experimental_welder", "price_scanner")
+	unlocks_designs = list("arc_welder", "power_drill", "jaws_of_life", "experimental_welder", "price_scanner","hand_rcd")
 
 /datum/technology/engineering/airlock_brace
 	name = "Airlock Brace"

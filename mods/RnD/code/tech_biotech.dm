@@ -12,7 +12,7 @@
 	required_tech_levels = list()
 	cost = 0
 
-	unlocks_designs = list("health_scanner", "slime_scanner" )
+	unlocks_designs = list("health_scanner", "slime_scanner","plant_scanner")
 
 /datum/technology/bio/basic_medical_machines
 	name = "Basic Medical Machines"
@@ -72,7 +72,7 @@
 	required_tech_levels = list()
 	cost = 500
 
-	unlocks_designs = list("cooker", "microwave",  "gibber", "replicator", "microlathe", "washer", "vending", "sauna")
+	unlocks_designs = list("cooker", "microwave",  "gibber", "replicator", "microlathe", "washer", "vending")
 
 /datum/technology/bio/implants
 	name = "Implants"
@@ -87,7 +87,7 @@
 	required_tech_levels = list()
 	cost = 1500
 
-	unlocks_designs = list("implant_chem", "implant_death", "implant_tracking")
+	unlocks_designs = list("implant_chem", "implant_death", "implant_tracking","implant_imprinting")
 
 /datum/technology/bio/adv_med_machines
 	name = "Advanced Medical Machines"
@@ -102,7 +102,7 @@
 	required_tech_levels = list()
 	cost = 1500
 
-	unlocks_designs = list("cryo_cell", "sleeper", "bodyscanner", "bodyscannerconsole", "bodyscannerdisplay","reagent_grinder","chemheater", "reagsubl")
+	unlocks_designs = list("cryo_cell", "sleeper", "bodyscanner", "bodyscannerconsole", "bodyscannerdisplay","reagent_grinder","chemheater", "reagsubl","noreactsyringe")
 
 /datum/technology/bio/add_med_tools
 	name = "Additional Medical Tools"
@@ -117,7 +117,7 @@
 	required_tech_levels = list()
 	cost = 1000
 
-	unlocks_designs = list("mass_spectrometer", "reagent_scanner", "nanopaste", "health_hud", "defibrillators", "mmi")
+	unlocks_designs = list("mass_spectrometer", "reagent_scanner", "health_hud", "defibrillators", "mmi")
 
 /datum/technology/bio/adv_add_med_tools
 	name = "Advanced Additional Medical Tools"
@@ -178,4 +178,4 @@
 	required_tech_levels = list()
 	cost = 2000
 
-	unlocks_designs = list("splitbeaker", "bluespacebeaker", "rapidsyringe")
+	unlocks_designs = list("splitbeaker", "bluespacebeaker", "rapidsyringe","bluespacesyringe")
