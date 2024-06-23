@@ -70,5 +70,6 @@
 	name = "artificial bluespace crystal"
 	id = "artificial_bluespace_crystal"
 	req_tech = list(TECH_DATA = 4, TECH_BLUESPACE = 4)
+	materials = list(MATERIAL_GOLD = 1500, MATERIAL_DIAMOND = 1500, MATERIAL_PHORON = 1500)
 	build_path = /obj/item/bluespace_crystal/artificial
 	sort_string = "BOABS"
