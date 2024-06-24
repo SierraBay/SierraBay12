@@ -1,0 +1,4 @@
+author: ВашНикнейм
+changes:
+  - {maptweak: Теперь ОЗА не будет видеть табличку "нюка" на хранилище.}
+delete-after: true
