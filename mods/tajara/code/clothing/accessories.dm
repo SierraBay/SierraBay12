@@ -373,7 +373,7 @@
 	sort_category = "Xenowear"
 	flags = GEAR_HAS_TYPE_SELECTION
 
-/datum/gear/accessory/armor_tag/cca
+/datum/gear/accessory/armor_tag_cca
 	display_name = "(Tajara) CCA armor tag"
 	path = /obj/item/clothing/accessory/armor_tag/cca
 	whitelisted = list(SPECIES_TAJARA)
