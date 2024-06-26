@@ -1,0 +1,5 @@
+author: Unchi
+changes:
+  - {bugfix: 'Починил окошко во втором оперблоке медбея, чтобы то затемнялось.'}
+  - {rscadd: 'Заменил Doctor на Physician, добавил подпрофы Medical Doctor и Pharmacist.'}
+delete-after: true
