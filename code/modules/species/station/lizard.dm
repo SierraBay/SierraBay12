@@ -97,6 +97,13 @@
 		/datum/mob_descriptor/build = 2
 		)
 
+	speech_sounds = list(
+		'mods/utility_items/sounds/unathitalk.ogg',
+		'mods/utility_items/sounds/unathitalk2.ogg',
+		'mods/utility_items/sounds/unathitalk3.ogg'
+	)
+	speech_chance = 7
+
 	available_cultural_info = list(
 		TAG_CULTURE = list(
 			CULTURE_UNATHI_POLAR,
