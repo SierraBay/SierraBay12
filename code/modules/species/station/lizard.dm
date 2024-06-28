@@ -98,10 +98,10 @@
 		)
 
 	speech_sounds = list(
-		'mods/utility_items/sounds/unathitalk.ogg',
-		'mods/utility_items/sounds/unathitalk2.ogg',
-		'mods/utility_items/sounds/unathitalk3.ogg'
-	)
+		'mods/unathi/sounds/unathitalk.ogg',
+		'mods/unathi/sounds/unathitalk2.ogg',
+		'mods/unathi/sounds/unathitalk3.ogg'
+		)
 	speech_chance = 7
 
 	available_cultural_info = list(
