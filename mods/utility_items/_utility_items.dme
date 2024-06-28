@@ -11,5 +11,6 @@
 #include "code/wires.dm"
 #include "code/reagents.dm"
 #include "code/cell_charger.dm"
+#include "code/vox.dm"
 
 #endif
