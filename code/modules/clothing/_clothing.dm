@@ -629,7 +629,7 @@ BLIND     // can't see anything
 	body_parts_covered = FACE|EYES
 	sprite_sheets = list(
 		SPECIES_VOX = 'icons/mob/species/vox/onmob_mask_vox.dmi',
-		SPECIES_UNATHI = 'icons/mob/species/unathi/onmob_mask_unathi.dmi',
+		SPECIES_UNATHI = 'mods/utility_items/icons/onmob_mask_unathi.dmi',
 		)
 
 	var/voicechange = 0
