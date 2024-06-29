@@ -200,6 +200,7 @@
 	#include "../../mods/wyccbay_optimization/_wyccbay_optimization.dme"
 	#include "../../mods/contraband_vending/_contraband_vending.dme"
 	#include "../../mods/telecomms/_telecomms.dme"
+	#include "../../mods/modernUI/_modernUI.dme"
 
 	// UNUSED MODS
 	// Keep them in ascending alphabetical order too, please
