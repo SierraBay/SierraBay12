@@ -437,6 +437,24 @@
 	item_state = "w_suit"
 	worn_state = "shortjumpskirt"
 
+// [SIERRA-ADD]
+/obj/item/clothing/under/captain_parade
+	name = "captain parade suit"
+	desc = "Captain's formal pants with white shirt and tie attached to it, also featuring NanoTrasen Captain ranks on shoulders. For special occasions."
+	icon = 'maps/sierra/icons/obj/clothing/obj_under.dmi'
+	item_icons = list(slot_w_uniform_str = 'maps/sierra/icons/mob/onmob/onmob_under.dmi')
+	icon_state = "cap_parade"
+	item_state = "cap_parade"
+
+/obj/item/clothing/under/captain_parade/female
+	name = "captain parade skirt"
+	desc = "Captain's formal skirt with white shirt and tie attached to it, also featuring NanoTrasen Captain ranks on shoulders. For special occasions."
+	icon = 'maps/sierra/icons/obj/clothing/obj_under.dmi'
+	item_icons = list(slot_w_uniform_str = 'maps/sierra/icons/mob/onmob/onmob_under.dmi')
+	icon_state = "cap_parade_f"
+	item_state = "cap_parade_f"
+// [/SIERRA-ADD]
+
 /obj/item/clothing/under/captainformal
 	name = "captain's formal uniform"
 	desc = "A captain's formal-wear, for special occasions."
