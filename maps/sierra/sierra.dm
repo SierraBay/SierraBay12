@@ -78,6 +78,7 @@
 	#include "items/clothing/exploration.dm"
 	#include "items/clothing/override.dm"
 	#include "items/clothing/storages.dm"
+	#include "items/clothing/security.dm"
 
 	// --- JOB SECTION --- //
 	#include "job\_job_defines.dm"
@@ -198,6 +199,8 @@
 	#include "../../mods/sauna_props/_sauna_props.dme"
 	#include "../../mods/wyccbay_optimization/_wyccbay_optimization.dme"
 	#include "../../mods/contraband_vending/_contraband_vending.dme"
+	#include "../../mods/telecomms/_telecomms.dme"
+	#include "../../mods/modernUI/_modernUI.dme"
 
 	// UNUSED MODS
 	// Keep them in ascending alphabetical order too, please

@@ -697,6 +697,7 @@
 /obj/item/gun/energy/plasmacutter/mounted/mech
 	use_external_power = TRUE
 	has_safety = FALSE
+	max_shots = 10
 
 
 /obj/item/mech_equipment/mounted_system/taser/plasma

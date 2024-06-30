@@ -116,3 +116,6 @@
 
 /datum/fabricator_recipe/binoculars
 	path = /obj/item/device/binoculars
+
+/datum/fabricator_recipe/tape_roll
+	path = /obj/item/tape_roll

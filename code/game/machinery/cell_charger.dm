@@ -10,7 +10,18 @@
 	power_channel = EQUIP
 	var/obj/item/cell/charging = null
 	var/chargelevel = -1
+	construct_state = /singleton/machine_construction/default/panel_closed
+	uncreated_component_parts = null
+//Sierra add
+/obj/machinery/cell_charger/Initialize()
+	. = ..()
+	RefreshParts()
 
+/obj/machinery/cell_charger/RefreshParts()
+	for(var/obj/item/stock_parts/SP in component_parts)
+		if(istype(SP, /obj/item/stock_parts/capacitor))
+			active_power_usage *= SP.rating
+// Sierra add-end
 /obj/machinery/cell_charger/on_update_icon()
 	icon_state = "ccharger[charging ? 1 : 0]"
 	if(charging && operable())
