@@ -125,12 +125,7 @@
 		playsound(exosuit.loc, exosuit.legs.mech_turn_sound, 40,1)
 		exosuit.set_dir(moving_dir)
 		exosuit.SetMoveCooldown(exosuit.legs.turn_delay)
-		exosuit.passenger_compartment.count_passengers()
-		if(exosuit.passengers_ammount > 0)
-			exosuit.update_passengers()
-		for(var/hardpoint in exosuit.hardpoints)
-			if(hardpoint == "left hand" || hardpoint == "right hand" || hardpoint == "left shoulder" || hardpoint == "right shoulder")
-				exosuit.update_icon()
+
 //TURN
 
 //MOVE
@@ -138,7 +133,21 @@
 		exosuit.SetMoveCooldown(exosuit.legs ? exosuit.legs.move_delay : 3)
 		var/turf/target_loc = get_step(exosuit, direction)
 		if(target_loc && exosuit.legs && exosuit.legs.can_move_on(exosuit.loc, target_loc) && exosuit.MayEnterTurf(target_loc))
-			exosuit.Move(target_loc)
+			if(!exosuit.body.phazon)
+				exosuit.Move(target_loc)
+			else
+				for(var/thing in exosuit.pilots) //Для всех пилотов внутри
+					var/mob/pilot = thing
+					if(pilot && pilot.client)
+						for(var/key in pilot.client.keys_held)
+							if (key == "Shift")
+								var/move_speed = exosuit.legs.move_delay
+								move_speed = move_speed * 2.5
+								exosuit.SetMoveCooldown(exosuit.legs ? move_speed : 3)
+								exosuit.forceMove(target_loc)
+
+							else
+								exosuit.Move(target_loc)
 	return MOVEMENT_HANDLED
 /datum/movement_handler/mob/space/exosuit
 	expected_host_type = /mob/living/exosuit
