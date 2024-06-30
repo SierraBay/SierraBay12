@@ -249,7 +249,7 @@
 
 
 
-// [SIERRA-REMOVE] - MECHS_BY_SHEGAR - (Не нужны, т.к все эти типы камуфляжей есть в новом камуфляторы)
+// [SIERRA-REMOVE] - Mechs_by_shegar - (Не нужны, т.к все эти типы камуфляжей есть в новом камуфляторы)
   /*
 
 /singleton/hierarchy/supply_pack/nonessent/exosuit_mod

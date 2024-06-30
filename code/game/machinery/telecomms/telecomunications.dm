@@ -478,6 +478,8 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	..()
 	server_radio = new()
 
+// [SIERRA-REMOVE] MODPACK-TELECOMMS (Гитхаю жалуется)
+/*
 /obj/machinery/telecomms/server/receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
 
 	if(signal.data["message"])
@@ -557,6 +559,9 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 			var/can_send = relay_information(signal, /obj/machinery/telecomms/hub)
 			if(!can_send)
 				relay_information(signal, /obj/machinery/telecomms/broadcaster)
+
+*/
+// [SIERRA-REMOVE]
 
 /obj/machinery/telecomms/server/proc/update_logs()
 	// start deleting the very first log entry
