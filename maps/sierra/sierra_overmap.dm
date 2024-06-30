@@ -24,7 +24,8 @@
 		"Rescue" = list("nav_ert_dock"), //maps/antag_spawn/ert/ert.dm shuttle,
 		"SFV Arbiter" = list("nav_deck4_event_dock"), //maps/event/sfv_arbiter/sfv_arbiter.dm shuttle,
 		"ICGNV Hound" = list("nav_deck4_event_dock"), //maps/event/iccgn_ship/icgnv_hound.dm shuttle,
-		"SNZ-210 Personnel Carrier" = list("nav_deck4_skrellscout") //maps/random_ruins/exoplanet_ruins/transshipment/transshipment.dm shuttle
+		"SNZ-210 Personnel Carrier" = list("nav_deck4_skrellscout"), //maps/random_ruins/exoplanet_ruins/transshipment/transshipment.dm shuttle,
+		"GM Tug" = list("nav_merchant_out") //maps/random_ruins/exoplanet_ruins/crashed_shuttle/crashed_shuttle.dm shuttle
 	)
 
 	initial_generic_waypoints = list(
