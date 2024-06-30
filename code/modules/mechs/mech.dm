@@ -216,6 +216,17 @@
 	. = ..()
 	if(.)
 		update_pilots()
+		//[SIERRA-ADD] - Mechs-by-Shegar - Обновит спрайт пассажиров при развороте меха
+		if(passengers_ammount > 0)
+			update_passengers()
+		var/need_to_update = FALSE
+		//exosuit.passenger_compartment.count_passengers()
+		for(var/hardpoint in hardpoints)
+			if(hardpoint == "left hand" || hardpoint == "right hand" || hardpoint == "left shoulder" || hardpoint == "right shoulder")
+				need_to_update = TRUE
+		if(need_to_update == TRUE)
+			update_icon()
+		//[SIERRA-ADD]
 
 /mob/living/exosuit/proc/toggle_power(mob/user)
 	if(power == MECH_POWER_TRANSITION)

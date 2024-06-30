@@ -172,7 +172,15 @@ var/global/list/priv_region_access
 			priv_region_access["[A.region]"] += A.id
 
 	var/list/region = priv_region_access["[code]"]
-	return region.Copy()
+	//[SIERRA-EDIT]
+	//Позволяет избавиться от рантайма.
+	//return region.Copy()
+
+	if(region)
+		return region.Copy()
+	else
+		return
+	//[SIERRA-EDIT]
 
 /proc/get_region_accesses_name(code)
 	switch(code)
