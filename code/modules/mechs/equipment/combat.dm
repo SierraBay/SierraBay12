@@ -144,15 +144,11 @@
 	..()
 
 /obj/item/mech_equipment/shields/on_update_icon()
-<<<<<<< ours
-	. = ..()
 	//[SIERRA-ADD] - Mechs-by-Shegar
 	if(OVERHEAT)
 		icon_state= "shield_droid_overheat"
 		return
 	//[SIERRA-ADD]
-=======
->>>>>>> theirs
 	if(!aura)
 		return
 	if(aura.active)
