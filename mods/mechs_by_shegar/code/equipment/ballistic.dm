@@ -1,25 +1,3 @@
-//Пульсач
-/obj/item/mech_equipment/mounted_system/taser/pulse
-	name = "\improper IDK \"Pulsator\" laser"
-	desc = "Military mounted pulse-rifle, probaly stealed from military ship."
-	icon_state = "mech_pulse"
-	holding_type = /obj/item/gun/energy/pulse_rifle/mounted/mech
-
-/obj/item/gun/energy/pulse_rifle/mounted/mech
-	name = "\improper CH-PS \"Immolator\" laser"
-	use_external_power = TRUE
-	has_safety = FALSE
-	self_recharge = TRUE
-	fire_delay = 10
-	accuracy = 2
-	max_shots = 10
-	projectile_type = /obj/item/projectile/beam/pulse/heavy
-//Пульсач
-
-
-
-
-
 //Пулемёт
 /obj/item/mech_equipment/mounted_system/taser/ballistic
 	name = "\improper Military \"Vulcan\" machinegun"
@@ -100,7 +78,6 @@
 	magazine_type = /obj/item/ammo_magazine/proto_smg/mech
 	allowed_magazines = /obj/item/ammo_magazine/proto_smg/mech
 	has_safety = FALSE
-	dispersion = null
 	firemodes = list(
 		list(mode_name="semi auto",burst=3, fire_delay=null,move_delay=null, one_hand_penalty=0, burst_accuracy=null, dispersion=null),
 		)

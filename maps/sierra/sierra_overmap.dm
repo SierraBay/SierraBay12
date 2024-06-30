@@ -14,13 +14,14 @@
 		"Charon" = list("nav_hangar_calypso"),
 		"Guppy" = list("nav_hangar_guppy"),
 		"Crucian" = list("nav_hangar_crucian"),
+		"Cyclopes" = list("nav_merc_dock"), //maps/antag_spawn/mercenary/mercenary.dm shuttle
 		"Mule" = list("nav_merchant_out"), //../mods/maps/liberia/_map_liberia.dme shuttle,
-		"Desperado" = list("nav_merc_dock"), //antag_spawn/mercenary/mercenary_inf.dmm shuttle,
 		"Reaper Gunboat" = list("nav_reaper_dock"), //../mods/maps/sentinel/_map_sentinel.dme shuttle,
 		"SNZ Speedboat" = list("nav_snz_dock"), //../../mods/maps/farfleet/_map_farfleet.dme shuttle,
 		"Skrellian Shuttle" = list("nav_deck3_skrellshuttle"), //away/skrellscoutship.dm shuttle,
 		"Skrellian Scout" = list("nav_deck1_skrellscout"), //away/skrellscoutship.dm shuttle,
-		"SRV Venerable Catfish" = list("nav_deck3_catfish"), //away/verne shuttle,
+		"Alien Interceptor" = list("nav_deck1_vox_raider"), //maps/antag_spawn/vox/voxraider.dm shuttle,
+		"Rescue" = list("nav_ert_dock") //maps/antag_spawn/ert/ert.dm shuttle
 	)
 
 	initial_generic_waypoints = list(
