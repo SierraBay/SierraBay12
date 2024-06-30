@@ -598,6 +598,10 @@
 /obj/item/paper/anomaly_scan
 	name = "anomaly scan result"
 
+
+/obj/item/paper/plant_report/
+	name = "plant report"
+	var/scan_data
 /*
  * Premade paper
  */

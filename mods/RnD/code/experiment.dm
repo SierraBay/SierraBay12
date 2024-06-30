@@ -42,7 +42,7 @@ var/global/list/rnd_server_list = list()
 	var/list/saved_tech_levels = list() // list("materials" = list(1, 4, ...), ...)
 	var/list/saved_autopsy_weapons = list()
 	var/list/saved_artifacts = list()
-	var/list/saved_symptoms = list()
+	var/list/saved_plants = list()
 	var/list/saved_slimecores = list()
 
 /datum/experiment_data/proc/init_known_tech()
@@ -128,18 +128,45 @@ var/global/list/rnd_server_list = list()
 		if(!already_scanned)
 			points += rand(5,10) * 1000 // 5000-10000 points for random artifact
 			saved_artifacts += list(artifact)
-/*
-	for(var/symptom in I.scanned_symptoms)
-		if(saved_symptoms[symptom])
-			continue
 
-		var/list/level_to_points = list(200,500,1000,2500,10000)
-		var/level = I.scanned_symptoms[symptom]
-		if(level_to_points[level])
-			points += level_to_points[level]
+	for(var/effect in I.scanned_plants)
+		var/list/effects = list(
+			"It is well adapted to low pressure levels." = 2000,
+			"It is well adapted to high pressure levels." = 2000,
+			"It is well adapted to a range of temperatures." = 2000,
+			"It is very sensitive to temperature shifts." = 2000,
+			"It is well adapted to a range of light levels." = 2000,
+			"It is very sensitive to light level shifts." = 2000,
+			"It is highly sensitive to toxins." = 2000,
+			"It is remarkably resistant to toxins." = 2000,
+			"It is highly sensitive to pests." = 2000,
+			"It is remarkably resistant to pests." = 2000,
+			"It is highly sensitive to weeds." = 2000,
+			"It is remarkably resistant to weeds." = 2000,
+			"It is able to be planted outside of a tray." = 1000,
+			"It is a robust and vigorous vine that will spread rapidly." = 2000,
+			"It is carnivorous and will eat tray pests for sustenance." = 1000,
+			"It is carnivorous and poses a significant threat to living things around it." = 2000,
+			"It is capable of parisitizing and gaining sustenance from tray weeds." = 1000,
+			"It will periodically alter the local temperature by " = 2000,
+			"bio-luminescent" = 2000,
+			"The fruit will function as a battery if prepared appropriately." = 2000,
+			"The fruit is covered in stinging spines." = 2000,
+			"The fruit is soft-skinned and juicy." = 1000,
+			"The fruit is excessively juicy." = 2000,
+			"The fruit is internally unstable."	= 3000,
+			"The fruit is temporal/spatially unstable." = 3000,
+			"It will release gas into the environment." = 3000,
+			"It will remove gas from the environment." = 3000
+	)
+		for(var/l in effects)
+			if(findtext(effect, l))
+				if(!(l in saved_plants))
+					points += effects[l]
+					saved_plants += l
+		points = I.potency/20 * points
 
-		saved_symptoms[symptom] = level
-*/
+
 	for(var/core in I.scanned_slimecores)
 		if(core in saved_slimecores)
 			continue
@@ -181,8 +208,6 @@ var/global/list/rnd_server_list = list()
 		if(!has_artifact)
 			saved_artifacts += list(artifact)
 
-	for(var/symptom in O.saved_symptoms)
-		saved_symptoms[symptom] = O.saved_symptoms[symptom]
 
 	for(var/core in O.saved_slimecores)
 		saved_slimecores |= core
@@ -246,6 +271,9 @@ var/global/list/rnd_server_list = list()
 	var/artifact_first_effect
 	var/artifact_second_effect
 
+/obj/item/paper/plant_report
+	var/potency
+
 
 /obj/item/device/science_tool
 	name = "science tool"
@@ -263,8 +291,9 @@ var/global/list/rnd_server_list = list()
 	var/datum/experiment_data/experiments
 	var/list/scanned_autopsy_weapons = list()
 	var/list/scanned_artifacts = list()
-	var/list/scanned_symptoms = list()
+	var/list/scanned_plants = list()
 	var/list/scanned_slimecores = list()
+	var/potency
 	var/datablocks = 0
 
 /obj/item/device/science_tool/Initialize()
@@ -285,6 +314,14 @@ var/global/list/rnd_server_list = list()
 			if(!(W.weapon in scanned_autopsy_weapons))
 				scanneddata += 1
 				scanned_autopsy_weapons += W.weapon
+
+	if(istype(O,/obj/item/paper/plant_report))
+		var/obj/item/paper/plant_report/report = O
+		if(!(report.info in scanned_plants))
+			scanneddata += 1
+			scanned_plants += report.info
+			potency = report.potency
+
 
 	if(istype(O, /obj/item/paper/anomaly_scan))
 		var/obj/item/paper/anomaly_scan/report = O
@@ -327,7 +364,7 @@ var/global/list/rnd_server_list = list()
 /obj/item/device/science_tool/proc/clear_data()
 	scanned_autopsy_weapons = list()
 	scanned_artifacts = list()
-	scanned_symptoms = list()
+	scanned_plants = list()
 	scanned_slimecores = list()
 	datablocks = 0
 
