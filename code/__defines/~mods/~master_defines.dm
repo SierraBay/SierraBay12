@@ -46,6 +46,15 @@
 
 // DON_LOADOUT - End
 
+// GUNS - Start
+#define GUN_BULK_PISTOL       1
+#define GUN_BULK_REVOLVER     2
+#define GUN_BULK_SMG          3
+#define GUN_BULK_CARABINE     4
+#define GUN_BULK_SNIPER_RIFLE 6
+#define GUN_BULK_MACHINEGUN   7
+// GUNS - End
+
 // GLIDING - Start
 #define DELAY2GLIDESIZE(delay) (world.icon_size / max(ceil(delay / world.tick_lag), 1))
 // GLIDING - End
