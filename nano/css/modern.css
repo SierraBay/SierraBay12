@@ -1,0 +1,68 @@
+.link, .linkOn, .linkOff, .selected, .disabled, .yellowButton, .redButton, a, .zoomLink, .linkActive {
+    border: none;
+    border-radius: 0.16em;
+    transition: 0.2s;
+    padding: 0 4px 4px 4px;
+}
+
+a, .zoomLink, .linkActive {
+    float: left;
+    min-width: 15px;
+    min-height: 16px;
+    text-align: center;
+    color: #ffffff;
+    text-decoration: none;
+    margin: 0 2px 2px 0;
+    cursor: default;
+    background: #4972a1;
+}
+
+.linkDanger, a.linkDanger:link, a.linkDanger:visited, a.linkDanger:active {
+    background-color: #db2828;
+}
+
+.linkDanger:hover {
+    background-color: #e04747;
+}
+
+a.linkDanger:hover {
+    background-color: #e04747;
+}
+
+.redButton:hover {
+    background: #ff6666;
+}
+
+.yellowButton:hover {
+    background: #f7d515;
+}
+
+.itemLabelNarrow, .itemLabel, .itemLabelWide, .itemLabelWider, .itemLabelWidest {
+    color: #aaa;
+}
+
+.linkOn, .linkOn:link, .linkOn:visited, .linkOn:active, .linkOn:hover, .selected, .selected:link, .selected:visited, .selected:active, .selected:hover {
+    background: #2f943c;
+}
+
+.linkOff, .linkOff:link, .linkOff:visited, .linkOff:active, .linkOff:hover, .disabled, .disabled:link, .disabled:visited, .disabled:active, .disabled:hover {
+    background: #999999;
+}
+
+.linkDanger, .linkDanger:link, .linkDanger:visited, .linkDanger:active {
+    background-color: #db2828;
+}
+
+.redButton {
+    background: #db2828;
+}
+
+.yellowButton {
+    background: #f7d515;
+}
+
+.displayBar {
+    height: 21px;
+    border: none;
+    border-radius: 0.16em;
+}

@@ -192,7 +192,6 @@
 	queue_icon_update()
 
 /obj/screen/movable/exosuit/toggle/on_update_icon()
-	. = ..()
 	icon_state = "[initial(icon_state)][toggled ? "_enabled" : ""]"
 	maptext = SPAN_COLOR(toggled ? COLOR_WHITE : COLOR_GRAY,initial(maptext))
 

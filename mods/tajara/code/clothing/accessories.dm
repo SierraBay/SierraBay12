@@ -217,7 +217,6 @@
 	icon = 'mods/tajara/icons/under.dmi'
 	item_icons = list(slot_w_uniform_str = 'mods/tajara/icons/onmob_under.dmi')
 
-
 /obj/item/clothing/accessory/scarf/tajaran
 	name = "tua-tari scarf"
 	desc = "A light and soft scarf, very long and wide. You also may rise it to hide your person..."
@@ -310,6 +309,12 @@
 	desc = "Amulet of Tajara, created from the primordial stone according to their belief, able to protect according to their primitive religion from evil spirits and their servants. The runes on the amulet are etched with acid."
 	icon_state = "taj_amulet_3"
 
+/obj/item/clothing/accessory/armor_tag/cca
+	name = "CCA armor tag"
+	icon = 'mods/tajara/icons/obj_accessories.dmi'
+	accessory_icons = list(slot_tie_str = 'mods/tajara/icons/onmob_accessories.dmi', slot_wear_suit_str = 'mods/tajara/icons/onmob_accessories.dmi')
+	desc = "An armor tag with the CCA logo on it."
+	icon_state = "ccatag"
 
 /datum/gear/head/zhan_scarf/neck
 	display_name = "(Tajara) Tua-Tari scarf"
@@ -361,7 +366,6 @@
 	display_name = "(Tajara) toeless vintage boots"
 	path = /obj/item/clothing/shoes/taj_old_shoes_cut
 
-
 /datum/gear/accessory/amulet
 	display_name = "(Tajara) talisman selection"
 	path = /obj/item/clothing/accessory/amulet
@@ -369,6 +373,12 @@
 	sort_category = "Xenowear"
 	flags = GEAR_HAS_TYPE_SELECTION
 
+/datum/gear/accessory/armor_tag_cca
+	display_name = "(Tajara) CCA armor tag"
+	path = /obj/item/clothing/accessory/armor_tag/cca
+	whitelisted = list(SPECIES_TAJARA)
+	sort_category = "Xenowear"
+	cost = 1
 
 //Taj clothing.
 
@@ -572,3 +582,4 @@
 	capes["decorated cape"] = /obj/item/clothing/accessory/shouldercape/officer
 	capes["government cape"] = /obj/item/clothing/accessory/shouldercape/command
 	gear_tweaks += new/datum/gear_tweak/path(capes)
+
