@@ -1,6 +1,6 @@
 /obj/structure/ship_munition
 	name = "munitions"
-	icon = 'icons/obj/munitions.dmi'
+	icon = 'mods/utility_items/icons/munitions.dmi'
 	w_class = ITEM_SIZE_GARGANTUAN
 	density = TRUE
 	var/list/move_sounds = list( // some nasty sounds to make when moving the board
