@@ -260,7 +260,7 @@ var/global/const/access_away_iccgn_captain = "ACCESS_ICCGN_CAPTAIN"
 	 У вас нет права подниматься на борт судов NanoTrasen или ЦПСС. Помните об этом и не провоцируйте ненужные Конфедерации конфликты. \
 	 Исключением являются те ситуации, когда вы атакованы противником, терпите бедствие или на вашем судне аварийная ситуация."
 	required_language = LANGUAGE_HUMAN_RUSSIAN
-	whitelisted_species = list(SPECIES_HUMAN)
+	whitelisted_species = list(SPECIES_HUMAN, SPECIES_VATGROWN)
 	is_semi_antagonist = TRUE
 	min_skill = list(SKILL_BUREAUCRACY = SKILL_TRAINED,
 					 SKILL_COMBAT  = SKILL_BASIC,

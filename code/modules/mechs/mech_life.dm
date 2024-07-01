@@ -11,13 +11,16 @@
 				pilot.client.screen -= menu_hud_elements
 				LAZYREMOVE(pilots, pilot)
 				UNSETEMPTY(pilots)
-		update_pilots()
+		//[SIERRA-REMOVE] - Mechs-by-Shegar
+		//update_pilots() - Спамить проком обновления пилота БЕЗ ОСОБОЙ ПРИЧИНЫ - ОШИБКА
+		//[SIERRA-REMOVE]
 	//[SIERRA-EDIT] - Mechs-by-Shegar
 	//Я сдвинул вот этот кусок выше, дабы если ВДРУГ функция будет умирать по пути, то мех не становился бессмертным
 	//[SIERRA-EDIT]
 	updatehealth()
 	if(health <= 0 && stat != DEAD)
 		death()
+		return
 
 	if(radio)
 		radio.on = (head && head.radio && head.radio.is_functional() && get_cell())

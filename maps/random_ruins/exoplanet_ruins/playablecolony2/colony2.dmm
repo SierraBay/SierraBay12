@@ -60,6 +60,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/map_template/colony2/ship)
+"bq" = (
+/obj/floor_decal/corner/paleblue{
+	dir = 6
+	},
+/obj/random/colony_flag{
+	pixel_x = 32
+	},
+/turf/simulated/floor/tiled/dark,
+/area/map_template/colony2/Hallway)
 "bt" = (
 /obj/machinery/atmospherics/pipe/manifold4w/visible/red,
 /obj/catwalk_plated/dark,
@@ -208,10 +217,10 @@
 /area/map_template/colony2/atmospherics)
 "dD" = (
 /obj/floor_decal/corner/paleblue/mono,
-/obj/machinery/portable_atmospherics/canister/air/airlock,
 /obj/machinery/atmospherics/portables_connector{
 	dir = 1
 	},
+/obj/machinery/portable_atmospherics/canister/air/airlock,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/colony2/atmospherics)
 "dM" = (
@@ -322,6 +331,8 @@
 /obj/machinery/atmospherics/unary/vent_pump/on,
 /obj/item/device/radio/headset/map_preset/playablecolony2,
 /obj/item/device/radio/headset/map_preset/playablecolony2,
+/obj/item/gun/energy/gun/small,
+/obj/item/gun/energy/gun/small,
 /turf/simulated/floor/tiled/techmaint,
 /area/map_template/colony2/ship)
 "eY" = (
@@ -342,15 +353,11 @@
 /turf/simulated/floor/tiled/dark,
 /area/map_template/colony2/tcomms)
 "fp" = (
-/obj/paint/ocean,
-/obj/wallframe_spawn/reinforced,
-/obj/machinery/door/blast/regular{
-	dir = 4;
-	id_tag = "colony2";
-	name = "Window Blast Shutter"
+/obj/structure/largecrate/animal/goose,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
 	},
-/turf/simulated/floor/plating,
-/area/map_template/colony2/engineering)
+/area/map_template/colony2/external)
 "fs" = (
 /obj/machinery/atmospherics/pipe/simple/visible/red{
 	dir = 4
@@ -395,6 +402,11 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/red{
 	dir = 6
 	},
+/obj/item/device/paint_sprayer,
+/obj/item/tape_roll,
+/obj/item/tape_roll,
+/obj/item/grenade/chem_grenade/metalfoam,
+/obj/item/grenade/chem_grenade/metalfoam,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/colony2/atmospherics)
 "fF" = (
@@ -407,6 +419,13 @@
 	},
 /turf/simulated/floor/tiled/techmaint,
 /area/map_template/colony2/ship)
+"fP" = (
+/obj/landmark/clear,
+/obj/random/colony_flag{
+	pixel_x = 32
+	},
+/turf/template_noop,
+/area/template_noop)
 "fQ" = (
 /obj/machinery/sleeper,
 /turf/simulated/floor/tiled/white,
@@ -439,6 +458,13 @@
 /obj/structure/closet/crate/hydroponics/prespawned,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/colony2/commons)
+"gd" = (
+/obj/landmark/clear,
+/obj/random/colony_flag{
+	pixel_x = -32
+	},
+/turf/template_noop,
+/area/template_noop)
 "ge" = (
 /obj/structure/hygiene/sink{
 	dir = 1;
@@ -448,10 +474,11 @@
 /turf/simulated/floor/tiled/white,
 /area/map_template/colony2/ship)
 "gi" = (
-/obj/catwalk_plated/dark,
-/obj/structure/largecrate/animal/chick,
-/turf/simulated/floor/plating,
-/area/map_template/colony2/storage)
+/obj/structure/largecrate/animal/goat,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
+/area/map_template/colony2/external)
 "gj" = (
 /obj/floor_decal/corner/paleblue/mono,
 /obj/machinery/seed_extractor,
@@ -496,6 +523,7 @@
 /obj/machinery/computer/mining{
 	pixel_y = 32
 	},
+/obj/structure/ore_box,
 /turf/simulated/floor/reinforced{
 	map_airless = 1
 	},
@@ -512,7 +540,6 @@
 /turf/simulated/floor/plating,
 /area/map_template/colony2/engineering)
 "hN" = (
-/obj/structure/ore_box,
 /obj/item/device/radio/intercom/map_preset/playablecolony2{
 	pixel_y = 21
 	},
@@ -587,6 +614,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/submap_landmark/spawnpoint/ship_leader_spawn,
 /turf/simulated/floor/tiled/techmaint,
 /area/map_template/colony2/ship)
 "jo" = (
@@ -662,11 +690,11 @@
 	},
 /area/map_template/colony2/external)
 "lj" = (
-/obj/machinery/fabricator/hacked,
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
 /obj/floor_decal/corner/paleblue/mono,
+/obj/machinery/r_n_d/circuit_imprinter,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/colony2/engineering)
 "lm" = (
@@ -688,6 +716,7 @@
 	dir = 4
 	},
 /obj/machinery/radio_beacon,
+/obj/random/colony2_paper,
 /turf/simulated/floor/tiled/techmaint,
 /area/map_template/colony2/ship)
 "lZ" = (
@@ -777,10 +806,8 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/machinery/vending/engineering{
-	req_access = list()
-	},
 /obj/floor_decal/corner/paleblue/mono,
+/obj/machinery/r_n_d/protolathe,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/colony2/engineering)
 "oQ" = (
@@ -1090,6 +1117,7 @@
 /obj/machinery/atmospherics/pipe/simple/visible/fuel{
 	dir = 4
 	},
+/obj/structure/largecrate/animal/cow,
 /turf/simulated/floor/reinforced{
 	map_airless = 1
 	},
@@ -1120,23 +1148,11 @@
 	pixel_y = 24;
 	req_access = newlist()
 	},
-/obj/item/clamp,
-/obj/item/clamp,
-/obj/item/clamp,
-/obj/structure/closet/crate,
-/obj/item/device/scanner/gas,
-/obj/item/device/scanner/gas,
-/obj/item/device/scanner/gas,
-/obj/item/grenade/chem_grenade/metalfoam,
-/obj/item/grenade/chem_grenade/metalfoam,
-/obj/item/tape_roll,
-/obj/item/tape_roll,
-/obj/item/rpd,
 /obj/floor_decal/corner/paleblue/mono,
 /obj/machinery/atmospherics/pipe/simple/hidden/red{
 	dir = 4
 	},
-/obj/item/device/paint_sprayer,
+/obj/machinery/vending/tool,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/colony2/atmospherics)
 "wp" = (
@@ -1178,9 +1194,6 @@
 "xx" = (
 /obj/floor_decal/corner/paleblue/mono,
 /obj/structure/closet/crate/med_crate/trauma,
-/obj/structure/railing/mapped{
-	dir = 8
-	},
 /obj/item/device/radio/intercom/map_preset/playablecolony2{
 	pixel_y = 21
 	},
@@ -1254,6 +1267,7 @@
 /obj/structure/railing/mapped{
 	dir = 4
 	},
+/obj/structure/ore_box,
 /turf/simulated/floor/reinforced{
 	map_airless = 1
 	},
@@ -1402,11 +1416,20 @@
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
 /obj/item/device/radio/headset/map_preset/playablecolony2,
 /obj/item/device/radio/headset/map_preset/playablecolony2,
+/obj/item/gun/energy/gun/small,
+/obj/item/gun/energy/gun/small,
+/obj/item/card/id/merchant{
+	desc = "this card can be used to access the Colony's telepad to exchange goods.";
+	name = "Colony leader ID"
+	},
 /turf/simulated/floor/tiled/techmaint,
 /area/map_template/colony2/ship)
 "BI" = (
 /obj/machinery/atmospherics/binary/pump,
 /obj/floor_decal/corner/paleblue/mono,
+/obj/structure/reagent_dispensers/acid{
+	pixel_y = -28
+	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/colony2/engineering)
 "BR" = (
@@ -1419,12 +1442,11 @@
 	},
 /area/map_template/colony2/external)
 "BU" = (
-/obj/catwalk_plated/dark,
-/obj/structure/railing/mapped{
-	dir = 8
+/obj/structure/largecrate/animal/chick,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
 	},
-/turf/simulated/floor/plating,
-/area/map_template/colony2/storage)
+/area/map_template/colony2/external)
 "BZ" = (
 /turf/simulated/floor/reinforced{
 	map_airless = 1
@@ -1497,6 +1519,7 @@
 	},
 /obj/floor_decal/corner/paleblue/mono,
 /obj/machinery/atmospherics/valve/open,
+/obj/structure/table/steel_reinforced,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/colony2/engineering)
 "CJ" = (
@@ -1530,6 +1553,20 @@
 	},
 /turf/simulated/floor/tiled/techmaint,
 /area/map_template/colony2/ship)
+"Du" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/catwalk_plated/dark,
+/obj/random/colony_flag{
+	pixel_x = -32
+	},
+/turf/simulated/floor/plating,
+/area/map_template/colony2/Hallway)
 "Dv" = (
 /obj/machinery/alarm{
 	dir = 4;
@@ -1538,7 +1575,23 @@
 	req_access = newlist()
 	},
 /obj/floor_decal/corner/paleblue/mono,
-/obj/structure/largecrate/animal/cow,
+/obj/structure/closet/crate,
+/obj/item/device/suit_cooling_unit,
+/obj/item/device/suit_cooling_unit,
+/obj/item/device/radio/map_preset/playablecolony2,
+/obj/item/device/radio/map_preset/playablecolony2,
+/obj/item/crowbar/prybar,
+/obj/item/storage/belt/holster/security,
+/obj/item/storage/belt/medical,
+/obj/item/storage/belt/utility/full,
+/obj/item/storage/belt/utility/full,
+/obj/item/clothing/gloves/insulated,
+/obj/item/crowbar/prybar,
+/obj/item/clothing/gloves/insulated,
+/obj/item/device/suit_cooling_unit,
+/obj/item/storage/backpack/dufflebag/med,
+/obj/item/storage/backpack/dufflebag/eng,
+/obj/item/storage/backpack/dufflebag/eng,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/colony2/storage)
 "Dw" = (
@@ -1553,7 +1606,7 @@
 "DD" = (
 /obj/machinery/light,
 /obj/floor_decal/corner/paleblue/mono,
-/obj/structure/largecrate/animal/cow,
+/obj/structure/reagent_dispensers/fueltank,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/colony2/storage)
 "DG" = (
@@ -1586,26 +1639,16 @@
 /area/map_template/colony2/external)
 "DQ" = (
 /obj/floor_decal/corner/paleblue/mono,
-/obj/structure/largecrate/animal/goose,
+/obj/structure/table/rack,
+/obj/random/colony_helmet,
+/obj/random/colony_helmet,
+/obj/random/colony_armor,
+/obj/random/colony_armor,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/colony2/storage)
 "DR" = (
-/obj/structure/closet/crate,
-/obj/item/gun/projectile/shotgun/pump{
-	desc = "The mass-produced W-T Remmington 29x shotgun is a favourite of police and security forces on many worlds. Useful for sweeping alleys. Someone has marked it as property of 'Vel-Rana', with one kill mark next to it."
-	},
-/obj/item/storage/box/ammo/shotgunammo,
-/obj/item/storage/box/ammo/shotgunshells,
-/obj/item/gun/energy/gun/small,
-/obj/item/gun/energy/gun/small,
-/obj/item/gun/energy/gun/small,
-/obj/item/gun/energy/gun/small,
-/obj/item/storage/box/ammo/flashshells,
 /obj/floor_decal/corner/paleblue/mono,
-/obj/item/gun/energy/gun,
-/obj/structure/railing/mapped{
-	dir = 8
-	},
+/obj/machinery/pipedispenser,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/colony2/storage)
 "En" = (
@@ -1685,9 +1728,9 @@
 	pixel_x = -21;
 	req_access = newlist()
 	},
-/obj/structure/reagent_dispensers/fueltank,
 /obj/floor_decal/corner/paleblue/mono,
 /obj/machinery/atmospherics/valve/open,
+/obj/machinery/portable_atmospherics/powered/pump/filled,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/colony2/atmospherics)
 "Fq" = (
@@ -1736,7 +1779,6 @@
 "Gt" = (
 /obj/floor_decal/industrial/loading,
 /obj/floor_decal/industrial/outline/yellow,
-/obj/structure/ore_box,
 /turf/simulated/floor/reinforced{
 	map_airless = 1
 	},
@@ -1931,11 +1973,13 @@
 /area/map_template/colony2/commons)
 "Kg" = (
 /obj/machinery/atmospherics/unary/vent_pump/on,
-/obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
 /obj/floor_decal/corner/paleblue/mono,
+/obj/machinery/vending/engineering{
+	req_access = list()
+	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/colony2/atmospherics)
 "Kr" = (
@@ -1955,13 +1999,8 @@
 /area/map_template/colony2/commons)
 "KA" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/universal,
-/obj/wallframe_spawn/reinforced,
 /obj/paint/ocean,
-/obj/machinery/door/blast/regular{
-	id_tag = "colony2";
-	name = "Window Blast Shutter"
-	},
-/turf/simulated/floor/plating,
+/turf/simulated/wall/r_wall,
 /area/map_template/colony2/engineering)
 "KP" = (
 /obj/machinery/atmospherics/pipe/simple/visible/blue,
@@ -1994,6 +2033,13 @@
 /obj/paint/ocean,
 /turf/simulated/wall/r_wall,
 /area/map_template/colony2/external)
+"LJ" = (
+/obj/landmark/clear,
+/obj/random/colony_flag{
+	pixel_y = 32
+	},
+/turf/template_noop,
+/area/template_noop)
 "LP" = (
 /obj/catwalk_plated/dark,
 /turf/simulated/floor/plating,
@@ -2090,16 +2136,15 @@
 /turf/simulated/floor/plating,
 /area/map_template/colony2/atmospherics)
 "Nm" = (
-/obj/machinery/vending/engivend{
-	req_access = list()
-	},
 /obj/floor_decal/corner/paleblue/mono,
+/obj/machinery/r_n_d/destructive_analyzer,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/colony2/engineering)
 "NX" = (
 /obj/machinery/atmospherics/pipe/manifold/visible/fuel{
 	dir = 1
 	},
+/obj/structure/largecrate/animal/cow,
 /turf/simulated/floor/reinforced{
 	map_airless = 1
 	},
@@ -2108,11 +2153,17 @@
 /obj/floor_decal/corner/paleblue{
 	dir = 9
 	},
-/obj/structure/largecrate/animal/chick,
 /turf/simulated/floor/tiled/dark,
 /area/map_template/colony2/storage)
 "Og" = (
 /obj/landmark/clear,
+/turf/template_noop,
+/area/template_noop)
+"Op" = (
+/obj/landmark/clear,
+/obj/random/colony_flag{
+	pixel_y = -32
+	},
 /turf/template_noop,
 /area/template_noop)
 "Oy" = (
@@ -2131,10 +2182,12 @@
 /turf/simulated/floor/plating,
 /area/map_template/colony2/tcomms)
 "Oz" = (
-/obj/machinery/vending/tool,
 /obj/floor_decal/corner/paleblue/mono,
 /obj/item/device/radio/intercom/map_preset/playablecolony2{
 	pixel_y = 21
+	},
+/obj/machinery/computer/rdconsole/core{
+	req_access = list()
 	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/colony2/engineering)
@@ -2407,8 +2460,8 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/machinery/pipedispenser,
 /obj/floor_decal/corner/paleblue/mono,
+/obj/machinery/fabricator/hacked,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/colony2/engineering)
 "Sp" = (
@@ -2424,16 +2477,16 @@
 	},
 /area/map_template/colony2/external)
 "SA" = (
-/obj/machinery/power/port_gen/pacman{
-	anchored = 1;
-	sheets = 25
-	},
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/light,
 /obj/floor_decal/corner/paleblue/mono,
+/obj/machinery/power/port_gen/pacman{
+	anchored = 1;
+	sheets = 25
+	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/colony2/engineering)
 "SJ" = (
@@ -2461,24 +2514,10 @@
 /turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/colony2/commons)
 "SQ" = (
-/obj/item/storage/backpack/dufflebag/eng,
-/obj/item/storage/backpack/dufflebag/eng,
-/obj/item/storage/backpack/dufflebag/med,
-/obj/structure/closet/crate,
-/obj/item/device/suit_cooling_unit,
-/obj/item/clothing/gloves/insulated,
-/obj/item/clothing/gloves/insulated,
-/obj/item/storage/belt/utility/full,
-/obj/item/storage/belt/utility/full,
-/obj/item/storage/belt/medical,
 /obj/floor_decal/corner/paleblue/mono,
-/obj/item/storage/belt/holster/security,
-/obj/item/crowbar/prybar,
-/obj/item/crowbar/prybar,
-/obj/item/device/radio/map_preset/playablecolony2,
-/obj/item/device/radio/map_preset/playablecolony2,
-/obj/item/device/suit_cooling_unit,
-/obj/item/device/suit_cooling_unit,
+/obj/machinery/vending/engivend{
+	req_access = list()
+	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/colony2/atmospherics)
 "SR" = (
@@ -2498,13 +2537,8 @@
 /area/map_template/colony2/external)
 "ST" = (
 /obj/machinery/atmospherics/pipe/simple/visible/fuel,
-/obj/wallframe_spawn/reinforced,
 /obj/paint/ocean,
-/obj/machinery/door/blast/regular{
-	id_tag = "colony2";
-	name = "Window Blast Shutter"
-	},
-/turf/simulated/floor/plating,
+/turf/simulated/wall/r_wall,
 /area/map_template/colony2/engineering)
 "SU" = (
 /obj/machinery/atmospherics/pipe/simple/visible/scrubbers,
@@ -2741,7 +2775,10 @@
 /area/map_template/colony2/tcomms)
 "Wk" = (
 /obj/floor_decal/corner/paleblue/mono,
-/obj/structure/largecrate/animal/goat,
+/obj/structure/table/rack,
+/obj/random/colony_rifle,
+/obj/random/colony_smg,
+/obj/item/gun/energy/gun,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/colony2/storage)
 "Wm" = (
@@ -2864,6 +2901,9 @@
 /obj/machinery/atmospherics/pipe/simple/visible/red,
 /obj/catwalk_plated/dark,
 /obj/machinery/meter,
+/obj/machinery/robotics_fabricator{
+	req_access = list()
+	},
 /turf/simulated/floor/plating,
 /area/map_template/colony2/engineering)
 "YI" = (
@@ -2881,7 +2921,7 @@
 	dir = 1
 	},
 /obj/floor_decal/corner/paleblue/mono,
-/obj/machinery/portable_atmospherics/powered/pump/filled,
+/obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/colony2/atmospherics)
 "YV" = (
@@ -3031,7 +3071,7 @@ vf
 Qw
 Pa
 Wk
-gi
+LP
 DD
 lU
 YQ
@@ -3074,7 +3114,7 @@ UN
 UN
 Pa
 xx
-BU
+LP
 DR
 lU
 SQ
@@ -3150,7 +3190,7 @@ Ls
 "}
 (6,1,1) = {"
 Og
-Og
+Op
 PU
 eg
 kb
@@ -3181,7 +3221,7 @@ Og
 Og
 Og
 Og
-Og
+fP
 Og
 Og
 Og
@@ -3211,7 +3251,7 @@ iv
 Ci
 dD
 vn
-Og
+LJ
 Og
 Og
 Ls
@@ -3288,7 +3328,7 @@ HS
 AU
 HS
 tT
-HS
+Du
 AS
 bV
 rp
@@ -3301,8 +3341,8 @@ YV
 ni
 BZ
 XB
-BZ
-BZ
+gi
+BU
 vj
 BZ
 BZ
@@ -3331,7 +3371,7 @@ XX
 XX
 aN
 uT
-XX
+bq
 Iz
 Rz
 tb
@@ -3344,8 +3384,8 @@ vh
 ni
 BZ
 XB
-BZ
-BZ
+fp
+BU
 NX
 jy
 Qi
@@ -3426,7 +3466,7 @@ Vb
 OZ
 qo
 AE
-Og
+LJ
 Og
 Og
 Ls
@@ -3451,7 +3491,7 @@ Og
 "}
 (13,1,1) = {"
 Og
-Og
+Op
 PU
 fQ
 dM
@@ -3482,7 +3522,7 @@ Og
 Og
 Og
 Og
-Og
+gd
 Og
 Og
 kf
@@ -3680,8 +3720,8 @@ Mc
 cr
 AE
 AE
-fp
-fp
+AE
+AE
 AE
 AE
 Og
