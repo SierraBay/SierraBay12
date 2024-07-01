@@ -41,6 +41,10 @@
 	build_path = /obj/item/mech_component/sensors/combat
 	req_tech = list(TECH_COMBAT = 4)
 
+/datum/design/item/exosuit/circuit
+	name = "exosuit circuit rack"
+	id = "exosuit_circuit"
+	build_path = /obj/item/mech_equipment/mounted_system/circuit
 /datum/design/item/mechfab/exosuit/powerloader_head
 	materials = list(MATERIAL_STEEL = 15000)
 

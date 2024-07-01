@@ -492,9 +492,9 @@ SIERRA_ESCAPE_POD(11)
 	name = "In transit"
 	landmark_tag = "nav_transit_blueriver"
 
-/obj/shuttle_landmark/sierra/deck3/patrol
-	name = "Third Deck Starboard Dock"
-	landmark_tag = "nav_deck3_patrol"
+/obj/shuttle_landmark/sierra/deck1/vox_raider
+	name = "Fourth Deck Starboard Dock"
+	landmark_tag = "nav_deck1_vox_raider"
 	docking_controller = "admin_shuttle_dock"
 
 /obj/shuttle_landmark/sierra/deck3/skrellshuttle

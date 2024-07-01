@@ -337,6 +337,7 @@
 			to_chat(H, SPAN_WARNING("\The [blocked] is in the way!"))
 			return TRUE
 		to_chat(H, SPAN_NOTICE("You take a drag on your [name]."))
+		playsound(H, "sound/effects/inhale.ogg", 50, 0, -1)
 		smoke(5)
 		add_trace_DNA(H)
 		return TRUE
