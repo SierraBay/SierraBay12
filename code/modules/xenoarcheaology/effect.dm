@@ -10,8 +10,7 @@
 	var/effect_type = EFFECT_UNKNOWN
 	var/toggled = FALSE
 	var/on_time //time artifact should stay on for when toggled
-	///used for logs and science tool
-	var/log_name = "unknown"
+
 
 	var/datum/artifact_trigger/trigger
 

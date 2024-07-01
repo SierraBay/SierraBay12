@@ -267,9 +267,9 @@ var/global/list/rnd_server_list = list()
 // Universal tool to get research points from autopsy reports, virus info reports, archeology reports, slime cores
 
 /obj/item/paper/anomaly_scan
-	var/artifact_type
-	var/artifact_first_effect
-	var/artifact_second_effect
+	var/artifact
+	var/my_effect
+	var/secondary_effect
 
 /obj/item/paper/plant_report
 	var/potency
@@ -325,16 +325,16 @@ var/global/list/rnd_server_list = list()
 
 	if(istype(O, /obj/item/paper/anomaly_scan))
 		var/obj/item/paper/anomaly_scan/report = O
-		if(report.artifact_type)
+		if(report.artifact)
 			for(var/list/artifact in scanned_artifacts)
-				if(artifact["type"] == report.artifact_type && artifact["my_effect"] == report.artifact_first_effect && artifact["secondary_effect"] == report.artifact_second_effect)
+				if(artifact["type"] == report.artifact && artifact["my_effect"] == report.my_effect && artifact["secondary_effect"] == report.secondary_effect)
 					to_chat(user, "<span class='notice'>[src] already has data about this artifact report</span>")
 					return
 
 			scanned_artifacts += list(list(
-				"type" = report.artifact_type,
-				"my_effect" = report.artifact_first_effect,
-				"secondary_effect" = report.artifact_second_effect,
+				"type" = report.artifact,
+				"my_effect" = report.my_effect,
+				"secondary_effect" = report.secondary_effect,
 			))
 			scanneddata += 1
 
