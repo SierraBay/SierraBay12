@@ -2,8 +2,8 @@
 	var/mob/living/pilot = pick(pilots)
 	if(legs.bump_safety && pilot.a_intent != I_HURT) //Мы не хотим топтать и ноги могут не топтать?
 		return //Не топчем
-	src.visible_message(SPAN_DANGER("С силой топчет [target] на полу!"), blind_message = SPAN_DANGER("You hear the loud hissing of hydraulics!"))
-	target.apply_effects(5, 5) //Чтоб ахуел
+	src.visible_message(SPAN_DANGER("forcefully tramples [target] on the floor!"), blind_message = SPAN_DANGER("You hear the loud hissing of hydraulics!"))
+	target.apply_effects(5, 5) //Чтоб не вставал
 	var/damage = rand(5, 7)
 	damage = damage * legs.bump_type
 	target.apply_damage(2 * damage, DAMAGE_BRUTE, BP_HEAD)
@@ -15,7 +15,7 @@
 
 /mob/living/exosuit/Bump(mob/living/target)
 	..()
-	if(!istype(target, /mob/living))
+	if(!istype(target, /mob/living) || target.mob_size > MOB_LARGE || target.mob_size == MOB_LARGE)
 		return
 	if(Bumps != 1)
 		Bumps = !Bumps
