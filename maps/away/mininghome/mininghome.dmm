@@ -4040,12 +4040,12 @@
 /obj/floor_decal/corner/brown{
 	dir = 8
 	},
-// [SIERRA-REMOVE] - MECHS_BY_SHEGAR
+// [SIERRA-REMOVE] - Mechs_by_shegar
 /*
 /obj/item/device/kit/paint/flames_blue,
 */
 // [/SIERRA-REMOVE]
-// [SIERRA-ADD] - MECHS_BY_SHEGAR
+// [SIERRA-ADD] - Mechs_by_shegar
 /obj/item/device/kit/mech,
 // [/SIERRA-ADD]
 /turf/simulated/floor/steel_dirty,

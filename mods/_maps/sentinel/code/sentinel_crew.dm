@@ -90,7 +90,7 @@ var/global/const/access_away_cavalry_commander = "ACCESS_CAVALRY_COMMANDER"
 	 Вам крайне нежелательно приближаться к кораблям и станциям с опозновательными знаками без разрешения от командования группировкой. \
 	 Исключением являются те ситуации, когда вы терпите бедствие или на вашем судне аварийная ситуация."
 	required_language = LANGUAGE_HUMAN_EURO
-	whitelisted_species = list(SPECIES_HUMAN)
+	whitelisted_species = list(SPECIES_HUMAN, SPECIES_VATGROWN)
 	min_skill = list(SKILL_COMBAT  = SKILL_BASIC,
 					 SKILL_WEAPONS = SKILL_BASIC,
 					 SKILL_HAULING = SKILL_BASIC,

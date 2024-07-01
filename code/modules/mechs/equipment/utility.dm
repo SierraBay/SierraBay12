@@ -697,6 +697,7 @@
 /obj/item/gun/energy/plasmacutter/mounted/mech
 	use_external_power = TRUE
 	has_safety = FALSE
+	max_shots = 10
 
 
 /obj/item/mech_equipment/mounted_system/taser/plasma
@@ -790,7 +791,6 @@
 	update_icon()
 
 /obj/item/mech_equipment/ionjets/on_update_icon()
-	. = ..()
 	if (active)
 		icon_state = "mech_jet_on"
 		set_light(1, 1, l_color = COLOR_LIGHT_CYAN)

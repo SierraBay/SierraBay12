@@ -10,6 +10,7 @@
 #include "code/components/armour.dm"
 #include "code/components/arms.dm"
 #include "code/components/body.dm"
+#include "code/components/components.dm"
 #include "code/components/head.dm"
 #include "code/components/legs.dm"
 
@@ -22,11 +23,14 @@
 #include "code/equipment/integralka_rack.dm"
 #include "code/equipment/jets.dm"
 #include "code/equipment/plasma_cutter.dm"
+#include "code/equipment/pulse_rifle.dm"
+#include "code/equipment/rocket_launcher.dm"
 #include "code/equipment/sleeper.dm"
 
 //Премейды
 #include "code/premades/ert.dm"
 #include "code/premades/merc.dm"
+#include "code/premades/death_squad.dm"
 
 //Основной код мехов
 #include "code/interface.dm"

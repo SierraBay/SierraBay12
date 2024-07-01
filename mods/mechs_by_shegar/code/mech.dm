@@ -17,16 +17,22 @@
 	var/list/right_back_passengers_overlays // <- Изображение пассажира на правом боку
 	var/Bumps = 0
 	var/last_collision
-
+	///Список с изображениями всех частей меха. Применяется в ремонте.
+	var/list/parts_list
+	var/list/parts_list_images
+	///Содержит в себе данные привязанной id карты. По умолчанию - пусто
+	var/list/id_holder
+	mob_never_swap = TRUE
 
 
 /mob/living/exosuit/Initialize(mapload, obj/structure/heavy_vehicle_frame/source_frame)
 	.=..()
 	passenger_compartment = new(src)
-	maxHealth = (body.mech_health + material.integrity) + head.max_damage + arms.max_damage + legs.max_damage
+	maxHealth = (body.mech_health + material.integrity) + head.current_hp + arms.current_hp + legs.current_hp
 	health = maxHealth
 	GPS = new(src)
 	medscan = new(src)
+	generate_icons()
 
 
 
@@ -49,3 +55,14 @@
 /mob/living/exosuit/Destroy()
 	forced_leave_passenger(0 , MECH_DROP_ALL_PASSENGER , "dismantle of [src]") // Перед смертью меха, сбросим всех пассажиров
 	. = ..()
+
+
+///Функция генерирующая изображение модулей меха. Применяется в радиальном меню при ремонте
+/mob/living/exosuit/proc/generate_icons()
+	LAZYCLEARLIST(parts_list)
+	LAZYCLEARLIST(parts_list_images)
+	parts_list = list(head, body, arms, legs)
+	parts_list_images = make_item_radial_menu_choices(parts_list)
+
+/mob/living/exosuit/can_swap_with(mob/living/tmob)
+	return 0

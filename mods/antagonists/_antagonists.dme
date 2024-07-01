@@ -9,7 +9,6 @@
 #include "code/revolutionary.dm"
 #include "code/operative.dm"
 #include "code/traitor.dm"
-#include "code/teleportation.dm"
 #include "code/uplink.dm"
 
 #endif
