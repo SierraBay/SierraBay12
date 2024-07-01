@@ -56,17 +56,18 @@
 		var/obj/item/mech_equipment/hardpoint_object = hardpoints[hardpoint]
 		if(hardpoint_object)
 		//[SIERRA-ADD] - Mechs-by-Shegar
+		//Данный участок кода в зависимости от положения помещает модуль за мех или перед мехом, это выглядит красиво.
 			if(hardpoint in list(HARDPOINT_LEFT_HAND, HARDPOINT_LEFT_SHOULDER))
-				if(dir == WEST || dir == SOUTHWEST || dir == NORTHWEST)
+				if(dir == WEST || dir == SOUTHWEST || dir == NORTHWEST || dir == SOUTH || dir == NORTH)
 					hardpoint_object.mech_layer = MECH_GEAR_LAYER
 				else if(dir == EAST || dir == SOUTHEAST || dir == NORTHEAST)
 					hardpoint_object.mech_layer = MECH_BACK_LAYER
-			else if(hardpoint in list(HARDPOINT_RIGHT_HAND,HARDPOINT_RIGHT_SHOULDER))
+			else if(hardpoint in list(HARDPOINT_RIGHT_HAND, HARDPOINT_RIGHT_SHOULDER))
 				if(dir == WEST || dir == SOUTHWEST || dir == NORTHWEST)
 					hardpoint_object.mech_layer = MECH_BACK_LAYER
 				else if(dir == EAST || dir == SOUTHEAST || dir == NORTHEAST || dir == SOUTH)
 					hardpoint_object.mech_layer = MECH_GEAR_LAYER
-			else if(hardpoint in list(HARDPOINT_BACK))
+			else if(hardpoint in list(HARDPOINT_BACK, HARDPOINT_HEAD))
 				if(dir == SOUTH)
 					hardpoint_object.mech_layer = MECH_BACK_LAYER
 				else
@@ -103,6 +104,9 @@
 
 /mob/living/exosuit/proc/update_pilots(update_overlays = TRUE)
 	//[SIERRA-ADD] - Mechs-by-Shegar
+	//Сперва мы проверяем - а нам вообще надо обновлять пилота? Если кабина закрытого типа, то, ну, зачем?
+	if(!body || (body.hide_pilot))
+		return
 	var/local_dir = dir
 	if(local_dir == NORTHEAST || local_dir == SOUTHEAST)
 		local_dir = EAST
@@ -112,32 +116,34 @@
 	if(update_overlays && LAZYLEN(pilot_overlays))
 		CutOverlays(pilot_overlays)
 	pilot_overlays = null
-	if(body && !(body.hide_pilot))
-		for(var/i = 1 to LAZYLEN(pilots))
-			var/mob/pilot = pilots[i]
-			var/image/draw_pilot = new
-			draw_pilot.appearance = pilot
-			var/rel_pos = local_dir == NORTH ? -1 : 1
-			draw_pilot.layer = MECH_PILOT_LAYER + (body ? ((LAZYLEN(body.pilot_positions)-i)*0.001 * rel_pos) : 0)
-			draw_pilot.plane = FLOAT_PLANE
-			draw_pilot.appearance_flags = KEEP_TOGETHER
-			if(body && i <= LAZYLEN(body.pilot_positions))
-				var/list/offset_values = body.pilot_positions[i]
-				var/list/directional_offset_values = offset_values["[local_dir]"]
-				draw_pilot.pixel_x = pilot.default_pixel_x + directional_offset_values["x"]
-				draw_pilot.pixel_y = pilot.default_pixel_y + directional_offset_values["y"]
-				draw_pilot.pixel_z = 0
-				draw_pilot.ClearTransform()
+	for(var/i = 1 to LAZYLEN(pilots))
+		var/mob/pilot = pilots[i]
+		var/image/draw_pilot = new
+		draw_pilot.appearance = pilot
+		var/rel_pos = local_dir == NORTH ? -1 : 1
+		draw_pilot.layer = MECH_PILOT_LAYER + (body ? ((LAZYLEN(body.pilot_positions)-i)*0.001 * rel_pos) : 0)
+		draw_pilot.plane = FLOAT_PLANE
+		draw_pilot.appearance_flags = KEEP_TOGETHER
+		if(body && i <= LAZYLEN(body.pilot_positions))
+			var/list/offset_values = body.pilot_positions[i]
+			var/list/directional_offset_values = offset_values["[local_dir]"]
+			draw_pilot.pixel_x = pilot.default_pixel_x + directional_offset_values["x"]
+			draw_pilot.pixel_y = pilot.default_pixel_y + directional_offset_values["y"]
+			draw_pilot.pixel_z = 0
+			draw_pilot.ClearTransform()
 
-			//Mask pilots!
-			//Masks are 48x48 and pilots 32x32 (in theory at least) so some math is required for centering
-			var/diff_x = 8 - draw_pilot.pixel_x
-			var/diff_y = 8 - draw_pilot.pixel_y
-			draw_pilot.filters = filter(type = "alpha", icon = icon(body.on_mech_icon, "[body.icon_state]_pilot_mask[hatch_closed ? "" : "_open"]", dir), x = diff_x, y = diff_y)
+		//Mask pilots!
+		//Masks are 48x48 and pilots 32x32 (in theory at least) so some math is required for centering
+		var/diff_x = 8 - draw_pilot.pixel_x
+		var/diff_y = 8 - draw_pilot.pixel_y
+		//[SIERRA-EDIT]
+		//draw_pilot.filters = filter(type = "alpha", icon = icon(body.on_mech_icon, "[body.icon_state]_pilot_mask[hatch_closed ? "" : "_open"]", dir), x = diff_x, y = diff_y)
+		//SIERRA-EDIT
+		draw_pilot.filters = filter(type = "alpha", icon = icon(body.on_mech_icon, "[body.icon_state]_pilot_mask[hatch_closed ? "" : "_open"]", local_dir), x = diff_x, y = diff_y)
 
-			LAZYADD(pilot_overlays, draw_pilot)
-		if(update_overlays && LAZYLEN(pilot_overlays))
-			AddOverlays(pilot_overlays)
+		LAZYADD(pilot_overlays, draw_pilot)
+	if(update_overlays && LAZYLEN(pilot_overlays))
+		AddOverlays(pilot_overlays)
 
 /mob/living/exosuit/regenerate_icons()
 	return
