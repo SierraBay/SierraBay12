@@ -27,7 +27,7 @@
 
 	new_player_panel()
 
-	CreateRenderers()
+	AddDefaultRenderers()
 
 	if(!SScharacter_setup.initialized)
 		SScharacter_setup.newplayers_requiring_init += src
