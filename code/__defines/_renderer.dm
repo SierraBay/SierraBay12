@@ -82,21 +82,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/renderer)
 * to share them globally.
 */
 
-<<<<<<< ours
-/// The list of renderers associated with this mob.
-/mob/var/list/atom/movable/renderer/renderers
-
-
-/// Creates the mob's renderers on /Login()
-/mob/proc/CreateRenderers()
-	if (!renderers)
-		renderers = list()
-	for (var/atom/movable/renderer/renderer as anything in subtypesof(/atom/movable/renderer))
-		if(ispath(renderer, /atom/movable/renderer/shared))
-			continue
-		renderer = new renderer (null, src)
-		renderers[renderer] = renderer.plane // (renderer = plane) format for visual debugging
-=======
 /// A map of (instance = plane) renderers in use by this mob.
 /mob/var/list/atom/movable/renderer/rdr_to_plane
 
@@ -120,7 +105,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/renderer)
 	for (var/atom/movable/renderer/renderer as anything in GLOB.rdr_main_shared)
 		rdr_to_plane[renderer] = renderer.plane
 		rdr_by_type[renderer.type] = renderer
->>>>>>> theirs
 		if (renderer.relay)
 			my_client.screen += renderer.relay
 		my_client.screen += renderer
@@ -131,19 +115,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/renderer)
 		my_client.screen += zrenderer
 
 /// Removes the mob's renderers on /Logout()
-<<<<<<< ours
-/mob/proc/RemoveRenderers()
-	if(my_client)
-		for(var/atom/movable/renderer/renderer as anything in renderers)
-			my_client.screen -= renderer
-			if (renderer.relay)
-				my_client.screen -= renderer.relay
-			qdel(renderer)
-		for (var/atom/movable/renderer/renderer as anything in GLOB.zmimic_renderers)
-			my_client.screen -= renderer
-	if (renderers)
-		renderers.Cut()
-=======
 /mob/proc/ClearRenderers()
 	if (my_client)
 		for (var/atom/movable/renderer/renderer as anything in rdr_to_plane)
@@ -204,8 +175,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/renderer)
 	rdr_to_plane -= renderer
 	if (~renderer.renderer_flags & RENDERER_SHARED)
 		qdel(renderer)
-
->>>>>>> theirs
 
 /* *
 * Plane Renderers
@@ -330,11 +299,7 @@ GLOBAL_LIST_EMPTY(zmimic_renderers)
 	name = "Scene Group"
 	group = RENDER_GROUP_FINAL
 	plane = RENDER_GROUP_SCENE
-<<<<<<< ours
-=======
 	renderer_flags = RENDERER_MAIN
-
->>>>>>> theirs
 
 /// Render group for stuff OUTSIDE the typical game context - UI, full screen effects, etc.
 /atom/movable/renderer/screen_group
