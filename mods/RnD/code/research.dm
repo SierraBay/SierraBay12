@@ -165,7 +165,7 @@ var/global/list/explosion_watcher_list = list()
 	var/shortname = "name"
 	var/desc = "description"   //General description of what it does and what it makes.
 	var/id = "id"              //An easily referenced ID. Must be alphanumeric, lower-case, and no symbols.
-	var/level = 1              //A simple number scale of the research level. Level 0 = Secret tech.
+	var/level = 0              //A simple number scale of the research level.
 	var/rare = 1               //How much CentCom wants to get that tech. Used in supply shuttle tech cost calculation.
 	var/maxlevel               //Calculated based on the amount of technologies
 	var/shown = TRUE           //Used to hide tech that is not supposed to be shown from the start
@@ -236,7 +236,6 @@ var/global/list/explosion_watcher_list = list()
 	shortname = "Esoteric"
 	desc = "A miscellaneous tech category filled with information on non-standard designs, personal projects and half-baked ideas."
 	id = RESEARCH_ESOTERIC
-	level = 0
 	shown = FALSE
 	item_tech_req = TECH_ESOTERIC
 
