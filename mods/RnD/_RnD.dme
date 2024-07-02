@@ -13,7 +13,5 @@
 #include "code/tech_telecom.dm"
 #include "code/tech_robotics.dm"
 
-// Далее просто включай свой код
-// #include "code/something.dm"
 
 #endif

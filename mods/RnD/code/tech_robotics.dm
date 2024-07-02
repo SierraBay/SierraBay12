@@ -70,7 +70,7 @@
 
 	required_technologies = list("basic_augments")
 	required_tech_levels = list()
-	cost = 1500
+	cost = 2500
 
 	unlocks_designs = list("augment_circuitry","augment_nanounit","augment_wolverine","augment_blade","augment_powerfist","augment_booster_reflex","augment_booster_gunnery","augment_booster_muscles")
 
@@ -85,7 +85,7 @@
 
 	required_technologies = list("basic_hardsuitmods")
 	required_tech_levels = list()
-	cost = 1500
+	cost = 2500
 
 	unlocks_designs = list("null _suit","rig_nvg","rig_plasmacutter", "rig_rcd","rig_jets","rig_decompiler","rig_powersink","rig_ai_container","rig_taser","rig_egun","rig_cooler","rig_kinetic")
 
@@ -115,7 +115,7 @@
 
 	required_technologies = list("basic_mech")
 	required_tech_levels = list()
-	cost = 1200
+	cost = 1500
 
 	unlocks_designs = list("light_legs","light_arms","light_body","light_head")
 
@@ -130,7 +130,7 @@
 
 	required_technologies = list("basic_mech")
 	required_tech_levels = list()
-	cost = 1500
+	cost = 2500
 
 	unlocks_designs = list("combat_legs","combat_arms","combat_body","combat_head","mech_armour_combat")
 

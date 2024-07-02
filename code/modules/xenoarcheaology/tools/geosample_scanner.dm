@@ -272,7 +272,7 @@
 
 	if(scanned_item)
 		//create report
-		var/obj/item/paper/P = new(src)
+		var/obj/item/paper/radiocarbon_spectrometer_report/P = new(src)
 		P.SetName("[src] report #[++report_num]: [scanned_item.name]")
 		P.stamped = list(/obj/item/stamp)
 		P.queue_icon_update()
@@ -316,6 +316,7 @@
 				anom_found = 1
 				data += " - Hyperspectral imaging reveals exotic energy wavelength detected with ID: [G.artifact_id]<br>"
 				data += " - Fourier transform analysis on anomalous energy absorption indicates energy source located inside emission radius of [G.artifact_distance]m<br>"
+				P.anomalous = TRUE
 
 		if(!anom_found)
 			data += " - No anomalous data<br>"

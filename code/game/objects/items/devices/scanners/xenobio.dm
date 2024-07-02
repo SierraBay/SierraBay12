@@ -7,6 +7,7 @@
 	scan_sound = 'sound/effects/scanbeep.ogg'
 	printout_color = "#f3e6ff"
 	origin_tech = list(TECH_MAGNET = 1, TECH_BIO = 1)
+	var/new_species = FALSE
 
 	var/list/valid_targets = list(
 		/mob/living/carbon/human,
@@ -27,14 +28,14 @@
 	scan_data = xenobio_scan_results(O)
 	user.show_message(SPAN_NOTICE(scan_data))
 
-/proc/list_gases(gases)
+/obj/item/device/scanner/xenobio/proc/list_gases(gases)
 	RETURN_TYPE(/list)
 	. = list()
 	for(var/g in gases)
 		. += "[gas_data.name[g]] ([gases[g]]%)"
 	return english_list(.)
 
-/proc/xenobio_scan_results(mob/target)
+/obj/item/device/scanner/xenobio/proc/xenobio_scan_results(mob/target)
 	. = list()
 	if(istype(target, /obj/machinery/stasis_cage))
 		var/obj/machinery/stasis_cage/cagie = target
@@ -65,6 +66,7 @@
 			if((A in P.animals) || is_type_in_list(A, P.repopulate_types))
 				GLOB.stat_fauna_scanned |= "[P.name]-[A.type]"
 				. += "New xenofauna species discovered!"
+				new_species = TRUE
 				break
 	else if(istype(target, /mob/living/carbon/slime))
 		var/mob/living/carbon/slime/T = target
@@ -105,3 +107,16 @@
 		. += "Incompatible life form, analysis failed."
 
 	. = jointext(., "<br>")
+
+
+/obj/item/device/scanner/xenobio/print_report(mob/living/user)
+	if(!scan_data)
+		to_chat(user, "There is no scan data to print.")
+		return
+	var/obj/item/paper/xenofauna_report/P = new(get_turf(src), scan_data, "paper - [scan_title]")
+	if(new_species)
+		P.new_species = TRUE
+	if(printout_color)
+		P.color = printout_color
+	user.put_in_hands(P)
+	user.visible_message("\The [src] spits out a piece of paper.")

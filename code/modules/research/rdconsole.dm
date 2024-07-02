@@ -193,6 +193,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 /obj/machinery/computer/rdconsole/proc/sync_tech()
 	for(var/obj/machinery/r_n_d/server/S in rnd_server_list)
 		var/server_processed = 0
+		if(GLOB.using_map.use_overmap && !(src.z in GetConnectedZlevels(S.z)))
+			break
 		if(S.disabled)
 			continue
 		if((id in S.id_with_upload) || istype(S, /obj/machinery/r_n_d/server/centcom))

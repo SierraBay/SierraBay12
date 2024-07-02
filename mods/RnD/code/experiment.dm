@@ -44,6 +44,8 @@ var/global/list/rnd_server_list = list()
 	var/list/saved_artifacts = list()
 	var/list/saved_plants = list()
 	var/list/saved_slimecores = list()
+	var/list/saved_spectrometers = list()
+	var/list/saved_xenofauna = list()
 
 /datum/experiment_data/proc/init_known_tech()
 	for(var/tech in tech_points_rarity)
@@ -126,23 +128,23 @@ var/global/list/rnd_server_list = list()
 				break
 
 		if(!already_scanned)
-			points += rand(5,10) * 1000 // 5000-10000 points for random artifact
+			points += rand(5,15) * 1000 // 5000-15000 points for random artifact
 			saved_artifacts += list(artifact)
 
 	for(var/effect in I.scanned_plants)
 		var/list/effects = list(
-			"It is well adapted to low pressure levels." = 2000,
-			"It is well adapted to high pressure levels." = 2000,
-			"It is well adapted to a range of temperatures." = 2000,
-			"It is very sensitive to temperature shifts." = 2000,
-			"It is well adapted to a range of light levels." = 2000,
-			"It is very sensitive to light level shifts." = 2000,
-			"It is highly sensitive to toxins." = 2000,
-			"It is remarkably resistant to toxins." = 2000,
-			"It is highly sensitive to pests." = 2000,
-			"It is remarkably resistant to pests." = 2000,
-			"It is highly sensitive to weeds." = 2000,
-			"It is remarkably resistant to weeds." = 2000,
+			"It is well adapted to low pressure levels." = 1500,
+			"It is well adapted to high pressure levels." = 1500,
+			"It is well adapted to a range of temperatures." = 1500,
+			"It is very sensitive to temperature shifts." = 1500,
+			"It is well adapted to a range of light levels." = 1500,
+			"It is very sensitive to light level shifts." = 1500,
+			"It is highly sensitive to toxins." = 1000,
+			"It is remarkably resistant to toxins." = 1000,
+			"It is highly sensitive to pests." = 1000,
+			"It is remarkably resistant to pests." = 1000,
+			"It is highly sensitive to weeds." = 1000,
+			"It is remarkably resistant to weeds." = 1000,
 			"It is able to be planted outside of a tray." = 1000,
 			"It is a robust and vigorous vine that will spread rapidly." = 2000,
 			"It is carnivorous and will eat tray pests for sustenance." = 1000,
@@ -166,6 +168,19 @@ var/global/list/rnd_server_list = list()
 					saved_plants += l
 		points = I.potency/20 * points
 
+	for(var/s in I.scanned_spectrometers)
+		if(s in saved_spectrometers)
+			continue
+		var/reward = rand(1000, 3000)
+		points += reward
+		saved_spectrometers += s
+
+	for(var/x in I.scanned_xenofauna)
+		if(x in saved_xenofauna)
+			continue
+		var/reward = rand(3000, 6000)
+		points += reward
+		saved_xenofauna += x
 
 	for(var/core in I.scanned_slimecores)
 		if(core in saved_slimecores)
@@ -175,14 +190,32 @@ var/global/list/rnd_server_list = list()
 		switch(core)
 			if(/obj/item/slime_extract/grey)
 				reward = 100
+			if(/obj/item/slime_extract/metal)
+				reward = 500
 			if(/obj/item/slime_extract/gold)
 				reward = 2000
 			if(/obj/item/slime_extract/adamantine)
+				reward = 4000
+			if(/obj/item/slime_extract/oil)
+				reward = 4000
+			if(/obj/item/slime_extract/pink)
 				reward = 3000
+			if(/obj/item/slime_extract/red)
+				reward = 3000
+			if(/obj/item/slime_extract/yellow)
+				reward = 4000
+			if(/obj/item/slime_extract/sepia)
+				reward = 4000
 			if(/obj/item/slime_extract/bluespace)
+				reward = 5000
+			if(/obj/item/slime_extract/cerulean)
+				reward = 5000
+			if(/obj/item/slime_extract/pyrite)
 				reward = 5000
 			if(/obj/item/slime_extract/rainbow)
 				reward = 10000
+			else if(subtypesof(/obj/item/slime_extract/))
+				reward = 1000
 		points += reward
 		saved_slimecores += core
 
@@ -274,6 +307,9 @@ var/global/list/rnd_server_list = list()
 /obj/item/paper/plant_report
 	var/potency
 
+/obj/item/paper/radiocarbon_spectrometer_report
+
+/obj/item/paper/xenofauna_report
 
 /obj/item/device/science_tool
 	name = "science tool"
@@ -293,6 +329,8 @@ var/global/list/rnd_server_list = list()
 	var/list/scanned_artifacts = list()
 	var/list/scanned_plants = list()
 	var/list/scanned_slimecores = list()
+	var/list/scanned_spectrometers = list()
+	var/list/scanned_xenofauna = list()
 	var/potency
 	var/datablocks = 0
 
@@ -321,6 +359,20 @@ var/global/list/rnd_server_list = list()
 			scanneddata += 1
 			scanned_plants += report.info
 			potency = report.potency
+
+	if(istype(O,/obj/item/paper/radiocarbon_spectrometer_report))
+		var/obj/item/paper/radiocarbon_spectrometer_report/report = O
+		if(!(report in scanned_spectrometers))
+			if(report.anomalous)
+				scanneddata += 1
+				scanned_spectrometers += report
+
+	if(istype(O,/obj/item/paper/xenofauna_report))
+		var/obj/item/paper/xenofauna_report/report = O
+		if(!(report in scanned_xenofauna))
+			if(report.new_species)
+				scanneddata += 1
+				scanned_xenofauna += report
 
 
 	if(istype(O, /obj/item/paper/anomaly_scan))
@@ -365,6 +417,8 @@ var/global/list/rnd_server_list = list()
 	scanned_autopsy_weapons = list()
 	scanned_artifacts = list()
 	scanned_plants = list()
+	scanned_xenofauna = list()
+	scanned_spectrometers = list()
 	scanned_slimecores = list()
 	datablocks = 0
 
