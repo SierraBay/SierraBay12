@@ -311,6 +311,12 @@ var/global/list/rnd_server_list = list()
 /obj/item/paper/plant_report
 	var/potency
 
+/obj/item/paper/plant_report/use_tool(obj/item/tool, mob/living/user, list/click_params)
+	if(istype(tool,/obj/item/pen))
+		return
+	return ..()
+
+
 /obj/item/paper/radiocarbon_spectrometer_report
 
 /obj/item/paper/xenofauna_report
