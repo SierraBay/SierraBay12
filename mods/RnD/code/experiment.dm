@@ -320,6 +320,10 @@ var/global/list/rnd_server_list = list()
 	icon = 'mods/RnD/icons/device.dmi'
 	icon_state = "science"
 	item_state = "sciencetool"
+	item_icons = list(
+		slot_r_hand_str = 'mods/RnD/icons/mob/righthand.dmi',
+		slot_l_hand_str = 'mods/RnD/icons/mob/lefthand.dmi',
+		)
 	desc = "A hand-held device capable of extracting usefull data from various sources, such as paper reports and slime cores."
 	slot_flags = SLOT_BELT
 	throwforce = 3
