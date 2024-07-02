@@ -160,17 +160,18 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			t_disk = D
 		else if (istype(D, /obj/item/disk/design_disk))
 			d_disk = D
+		else if(istype(D, /obj/item/disk/secret_project))
+			var/obj/item/disk/secret_project/disk = D
+			to_chat(user, "<span class='notice'>[name] received [disk.stored_points] research points from [disk.name]</span>")
+			files.research_points += disk.stored_points
+			user.remove_from_mob(disk)
+			qdel(disk)
+			return
 		else
 			to_chat(user, SPAN_NOTICE("Machine cannot accept disks in that format."))
 			return TRUE
 		user.drop_from_inventory(D, src)
 		to_chat(user, SPAN_NOTICE("You add \the [D] to the machine."))
-	if(istype(D, /obj/item/disk/secret_project))
-		var/obj/item/disk/secret_project/disk = D
-		to_chat(user, "<span class='notice'>[name] received [disk.stored_points] research points from [disk.name]</span>")
-		files.research_points += disk.stored_points
-		user.remove_from_mob(disk)
-		qdel(disk)
 	else if(istype(D, /obj/item/device/science_tool))
 		var/research_points = files.experiments.read_science_tool(D)
 		if(research_points > 0)

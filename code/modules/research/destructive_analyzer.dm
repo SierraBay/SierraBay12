@@ -85,6 +85,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 		loaded_item = O
 		to_chat(user, SPAN_NOTICE("You add \the [O] to \the [src]."))
 		icon_state = "d_analyzer_entry"
+		SSnano.update_uis(linked_console)
 		spawn(10)
 			on_update_icon()
 			busy = 0
@@ -104,6 +105,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 		loaded_item.forceMove(loc)
 		loaded_item = null
 		on_update_icon()
+	SSnano.update_uis(linked_console)
 
 /obj/machinery/r_n_d/destructive_analyzer/proc/ConvertReqString2List(list/source_list)
 	var/list/temp_list = params2list(source_list)

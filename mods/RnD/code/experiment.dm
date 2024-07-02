@@ -195,26 +195,26 @@ var/global/list/rnd_server_list = list()
 			if(/obj/item/slime_extract/gold)
 				reward = 2000
 			if(/obj/item/slime_extract/adamantine)
-				reward = 4000
+				reward = 3000
 			if(/obj/item/slime_extract/oil)
-				reward = 4000
+				reward = 3000
 			if(/obj/item/slime_extract/pink)
-				reward = 3000
+				reward = 2500
 			if(/obj/item/slime_extract/red)
-				reward = 3000
+				reward = 2500
 			if(/obj/item/slime_extract/yellow)
-				reward = 4000
+				reward = 3000
 			if(/obj/item/slime_extract/sepia)
-				reward = 4000
+				reward = 3000
 			if(/obj/item/slime_extract/bluespace)
-				reward = 5000
+				reward = 4000
 			if(/obj/item/slime_extract/cerulean)
-				reward = 5000
+				reward = 3000
 			if(/obj/item/slime_extract/pyrite)
-				reward = 5000
+				reward = 3000
 			if(/obj/item/slime_extract/rainbow)
 				reward = 10000
-			else if(subtypesof(/obj/item/slime_extract/))
+			else if(parent_type == /obj/item/slime_extract)
 				reward = 1000
 		points += reward
 		saved_slimecores += core
@@ -282,6 +282,8 @@ var/global/list/rnd_server_list = list()
 	return ..()
 
 /obj/item/device/beacon/explosion_watcher/proc/react_explosion(turf/epicenter, power)
+	var/atmosmod = 1
+	var/atmos = src.return_air()
 	power = round(power)
 	for(var/obj/machinery/computer/rdconsole/RD as anything in global.RDcomputer_list)
 		saved_power_level = RD.files.experiments.saved_best_explosion
@@ -289,7 +291,9 @@ var/global/list/rnd_server_list = list()
 			RD.files.experiments.saved_best_explosion = power
 	added_power = max(0, power - saved_power_level)
 	already_earned_power = min(saved_power_level, power)
-	calculated_research_points += added_power * 1000 + already_earned_power * 200
+	if(!atmos)
+		atmosmod = 1.5
+	calculated_research_points += (added_power * 1000 + already_earned_power * 200) / atmosmod
 
 
 	/*if(calculated_research_points > 0)
