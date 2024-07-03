@@ -12,6 +12,9 @@
 #include "code/tech_power.dm"
 #include "code/tech_telecom.dm"
 #include "code/tech_robotics.dm"
+#include "code/binary.dm"
+#include "code/design.dm"
+#include "code/tech.dm"
 
 
 #endif

@@ -39,6 +39,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	var/datum/research/files							//Stores all the collected research data.
 	var/obj/item/disk/tech_disk/t_disk = null	//Stores the technology disk.
 	var/obj/item/disk/design_disk/d_disk = null	//Stores the design disk.
+	var/obj/item/stock_parts/computer/hard_drive/portable/disk = null	//Stores the data disk.
 
 	var/obj/machinery/r_n_d/destructive_analyzer/linked_destroy = null	//Linked Destructive Analyzer
 	var/obj/machinery/r_n_d/protolathe/linked_lathe = null				//Linked Protolathe
@@ -158,9 +159,9 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			return TRUE
 		if(istype(D, /obj/item/disk/tech_disk))
 			t_disk = D
-		else if (istype(D, /obj/item/disk/design_disk))
+		if(istype(D, /obj/item/disk/design_disk))
 			d_disk = D
-		else if(istype(D, /obj/item/disk/secret_project))
+		if(istype(D, /obj/item/disk/secret_project))
 			var/obj/item/disk/secret_project/disk = D
 			to_chat(user, "<span class='notice'>[name] received [disk.stored_points] research points from [disk.name]</span>")
 			files.research_points += disk.stored_points
@@ -170,7 +171,14 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		else
 			to_chat(user, SPAN_NOTICE("Machine cannot accept disks in that format."))
 			return TRUE
-		user.drop_from_inventory(D, src)
+	if(istype(D, /obj/item/stock_parts/computer/hard_drive/portable))
+		if(disk)
+			to_chat(user, SPAN_NOTICE("A disk is already loaded into the machine."))
+			return
+
+		user.drop_item()
+		D.forceMove(src)
+		disk = D
 		to_chat(user, SPAN_NOTICE("You add \the [D] to the machine."))
 	else if(istype(D, /obj/item/device/science_tool))
 		var/research_points = files.experiments.read_science_tool(D)
@@ -336,6 +344,43 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		screen = where
 		if(screen == "protolathe" || screen == "circuit_imprinter")
 			search_text = ""
+	if(href_list["eject_disk"]) // User is ejecting the disk.
+		if(disk)
+			disk.forceMove(src.loc)
+			disk = null
+	if(href_list["delete_disk_file"]) // User is attempting to delete a file from the loaded disk.
+		if(disk)
+			var/datum/computer_file/file = locate(href_list["delete_disk_file"]) in disk.stored_files
+			disk.remove_file(file)
+
+	if(href_list["download_disk_design"]) // User is attempting to download (disk->rdconsole) a design from the disk.
+		if(disk)
+			var/datum/computer_file/binary/design/file = locate(href_list["download_disk_design"]) in disk.stored_files
+			if(file && !file.copy_protected)
+				files.AddDesign2Known(file.design)
+	if(href_list["upload_disk_design"]) // User is attempting to upload (rdconsole->disk) a design to the disk.
+		if(disk)
+			var/datum/design/D = locate(href_list["upload_disk_design"]) in files.known_designs
+			if(D)
+				disk.save_file(D.file.clone())
+/*	if(href_list["download_disk_node"]) // User is attempting to download (disk->rdconsole) a technology node from the disk.
+		if(disk)
+			var/datum/computer_file/binary/tech/file = locate(href_list["download_disk_node"]) in disk.stored_files
+			if(file)
+				files.UnlockTechology(file.node, TRUE)
+	if(href_list["upload_disk_node"]) // User is attempting to upload (rdconsole->disk) a technology node to the disk.
+		if(disk)
+			var/datum/technology/T = locate(href_list["upload_disk_node"]) in files.researched_nodes
+			if(T)
+				var/datum/computer_file/binary/tech/tech_file = new
+				tech_file.set_tech(T)
+				disk.save_file(tech_file)
+	if(href_list["download_disk_data"])
+		if(disk)
+			var/datum/computer_file/file = locate(href_list["download_disk_data"]) in disk.stored_files
+			if(file)
+				files.load_file(file)
+*/
 	if(href_list["toggle_settings"])
 		if(allowed(usr) || emagged)
 			show_settings = !show_settings
@@ -458,6 +503,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	var/list/data = list()
 	data["screen"] = screen
 	data["sync"] = sync
+	data["has_disk"] = !!disk
 
 	// Main screen needs info about tech levels
 	if(!screen || screen == "main")
@@ -573,6 +619,46 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				queue_list["queue"] += RNDD.name
 			data["queue_data"] = queue_list
 
+	if(screen == "disk_management_designs")
+		if(disk)
+			var/list/disk_designs = list()
+			var/list/disk_design_files = disk.find_files_by_type(/datum/computer_file/binary/design)
+			for(var/f in disk_design_files)
+				var/datum/computer_file/binary/design/d_file = f
+				disk_designs += list(list("name" = d_file.design.name, "id" = "\ref[d_file]", "can_download" = !d_file.copy_protected))
+			data["disk_designs"] = disk_designs
+			var/list/known_designs = list()
+			for(var/i in files.known_designs)
+				var/datum/design/D = i
+				known_designs += list(list("name" = D.name, "id" = "\ref[D]"))
+			data["known_designs"] = known_designs
+
+	if(screen == "disk_management_tech")
+		if(disk)
+			var/list/disk_tech_nodes = list()
+			var/list/disk_technology_files = disk.find_files_by_type(/datum/computer_file/binary/tech)
+			for(var/f in disk_technology_files)
+				var/datum/computer_file/binary/tech/tech_file = f
+				disk_tech_nodes += list(list("name" = tech_file.tech.name, "id" = "\ref[tech_file]"))
+			data["disk_tech_nodes"] = disk_tech_nodes
+			var/list/known_nodes = list()
+			for(var/i in files.researched_tech)
+				var/datum/technology/T = i
+				known_nodes += list(list("name" = T.name, "id" = "\ref[T]"))
+			data["known_nodes"] = known_nodes
+/*
+	if(screen == SCREEN_DISK_DATA)
+		if(disk)
+			var/list/disk_research_data = list()
+			var/list/disk_data_files = disk.find_files_by_type(/datum/computer_file/binary)
+			for(var/f in disk_data_files)
+				var/datum/computer_file/binary/data_file = f
+				if(!files.is_research_file_type(f))
+					continue
+
+				disk_research_data += list(list("name" = "[data_file.filename].[data_file.filetype]", "id" = "\ref[data_file]", "can_download" = files.can_load_file(data_file)))
+			data["disk_research_data"] = disk_research_data
+*/
 	// All the info needed for displaying tech trees
 	if(screen == "tech_trees")
 		var/list/line_list = list()

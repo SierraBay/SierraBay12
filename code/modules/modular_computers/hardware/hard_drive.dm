@@ -251,3 +251,30 @@
 /obj/item/stock_parts/computer/hard_drive/Destroy()
 	stored_files = null
 	return ..()
+
+
+
+/obj/item/stock_parts/computer/hard_drive/ui_data()
+	var/list/data = list(
+		"disk_name" = get_disk_name(),
+		"max_capacity" = max_capacity,
+		"used_capacity" = used_capacity
+	)
+
+	var/list/files = list()
+	for(var/datum/computer_file/F in stored_files)
+		files.Add(list(list(
+			"filename" = F.filename,
+			"filetype" = F.filetype,
+			"size" = F.size,
+			"undeletable" = F.undeletable
+		)))
+	data["files"] = files
+	return data
+
+/obj/item/stock_parts/computer/hard_drive/proc/get_disk_name()
+	var/datum/computer_file/data/D = find_file_by_name("DISK_NAME")
+	if(!istype(D))
+		return null
+
+	return sanitizeSafe(D.stored_data, max_length = MAX_LNAME_LEN)

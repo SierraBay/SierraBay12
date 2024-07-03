@@ -7,6 +7,10 @@ var/global/list/explosion_watcher_list = list()
 	for(var/D in subtypesof(/datum/design))
 		var/datum/design/d = new D(src)
 		design_by_id[d.id] = d
+		var/datum/computer_file/binary/design/design_file = new
+		design_file.design = d
+		design_file.on_design_set()
+		d.file = design_file
 
 	for(var/T in subtypesof(/datum/tech))
 		var/datum/tech/Tech_Tree = new T
@@ -85,11 +89,6 @@ var/global/list/explosion_watcher_list = list()
 		var/datum/technology/T = O.researched_tech[tech_id]
 		UnlockTechology(T, force = TRUE)
 
-		for(var/D in T.unlocks_designs)
-			if(O.design_reliabilities[D] > design_reliabilities[D]) //check, is the reliability better in the downloadable
-				design_reliabilities[D] = O.design_reliabilities[D]
-				design_created_prototypes[D] = O.design_created_prototypes[D]
-
 	experiments.merge_with(O.experiments)
 
 /datum/research/proc/forget_techology(datum/technology/T)
@@ -127,6 +126,9 @@ var/global/list/explosion_watcher_list = list()
 				known_designs -= D
 
 /datum/research/proc/AddDesign2Known(datum/design/D)
+	if(D in known_designs)
+		return
+
 	for(var/datum/design/known in known_designs)
 		if(D.id == known.id)
 			return
@@ -186,6 +188,11 @@ var/global/list/explosion_watcher_list = list()
 		cost += i*rare
 
 	return cost
+
+/datum/tech/proc/Copy()
+	var/datum/tech/new_tech = new type
+	new_tech.level = level
+	return new_tech
 
 //Trunk Technologies (don't require any other techs and you start knowning them).
 

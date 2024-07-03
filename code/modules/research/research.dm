@@ -50,8 +50,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	var/list/known_designs = list()			//List of available designs (at base reliability).
 	var/list/design_by_id = list()
 	//Increased by each created prototype with formula: reliability += reliability * (RND_RELIABILITY_EXPONENT^created_prototypes)
-	var/list/design_reliabilities = list()
-	var/list/design_created_prototypes = list()
+
 	var/list/design_categories_protolathe = list()
 	var/list/design_categories_imprinter = list()
 
@@ -60,5 +59,4 @@ The tech datums are the actual "tech trees" that you improve through researching
 	var/list/researched_tech = list()
 
 	var/datum/experiment_data/experiments
-
 	var/research_points = 0

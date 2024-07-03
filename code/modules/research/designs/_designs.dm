@@ -22,7 +22,7 @@ other types of metals and chemistry for reagents).
 	var/name = null 				//Name of the created object. If null it will be 'guessed' from build_path if possible.
 	var/desc = null					//Description of the created object. If null it will use group_desc and name where applicable.
 	var/item_name = null			//An item name before it is modified by various name-modifying procs
-	var/id = "id"					//ID of the created object for easy refernece. Alphanumeric, lower-case, no symbols.
+	var/id = null					//ID of the created object for easy refernece. Alphanumeric, lower-case, no symbols.
 	var/list/req_tech = list()		//IDs of that techs the object originated from and the minimum level requirements.
 	var/build_type = null			//Flag as to what kind machine the design is built in. See defines.
 	var/list/materials = list()		//List of materials. Format: "id" = amount.
@@ -33,6 +33,7 @@ other types of metals and chemistry for reagents).
 	var/sort_string = "ZZZZZ"		//Sorting order
 	var/starts_unlocked = FALSE     //If true does not require any technologies and unlocked from the start
 	var/shortname = null			// Used for naming in RDconsole
+	var/datum/computer_file/binary/design/file
 
 /datum/design/New()
 	..()
@@ -60,6 +61,17 @@ other types of metals and chemistry for reagents).
 	if(!desc)								//Try to make up a nice description if we don't have one
 		desc = "Allows for the construction of \a [item_name]."
 		return
+
+/datum/design/proc/AssembleFileDesignInfo(atom/temp_atom)
+	AssembleDesignName()
+	AssembleDesignDesc()
+	AssembleDesignId()
+
+/datum/design/proc/AssembleDesignId()
+	if(id)
+		return
+	id = type
+
 //Returns a new instance of the item for this design
 //This is to allow additional initialization to be performed, including possibly additional contructor arguments.
 /datum/design/proc/Fabricate(newloc, fabricator)
