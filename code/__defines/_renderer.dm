@@ -295,6 +295,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/renderer)
 	name = "Runechat"
 	group = RENDER_GROUP_SCREEN
 	plane = RUNECHAT_PLANE
+	renderer_flags = RENDERER_MAIN | RENDERER_SHARED
 
 /* *
 * Group renderers
