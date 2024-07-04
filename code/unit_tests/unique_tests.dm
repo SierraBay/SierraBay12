@@ -7,15 +7,18 @@
 
 	for(var/design_type in subtypesof(/datum/design))
 		var/datum/design/design = design_type
+//[SIERRA-ADD] - RND
 		var/datum/computer_file/binary/design/design_file = new
 		design_file.design = design_type
+//[/SIERRA-ADD] - RND
 		if(initial(design.id) == "id")
 			continue
+//[SIERRA-ADD] - RND
 		if(initial(design.id) == initial(design_file.design.id))
 			continue
 		if(initial(design.build_path) == initial(design_file.design.build_path))
 			continue
-
+//[/SIERRA-ADD] - RND
 		group_by(ids, initial(design.id), design)
 		group_by(build_paths, initial(design.build_path), design)
 

@@ -504,6 +504,9 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	data["screen"] = screen
 	data["sync"] = sync
 	data["has_disk"] = !!disk
+	if(disk)
+		data["disk_size"] = disk.max_capacity
+		data["disk_used"] = disk.used_capacity
 
 	// Main screen needs info about tech levels
 	if(!screen || screen == "main")

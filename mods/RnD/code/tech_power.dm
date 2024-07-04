@@ -128,11 +128,11 @@
 	y = 0.4
 	icon = "generator"
 
-	required_technologies = list("adv_power_gen","adv_power_storage")
+	required_technologies = list("adv_power_gen","sup_power")
 	required_tech_levels = list()
 	cost = 2000
 
-	unlocks_designs = list("adv_power_gen", "sup_power","pacmanreactor")
+	unlocks_designs = list("mrspacman","pacmanreactor")
 
 /datum/technology/power/fusion
 	name = "R-UST Generator"
