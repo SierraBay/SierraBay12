@@ -22,7 +22,7 @@ other types of metals and chemistry for reagents).
 	var/name = null 				//Name of the created object. If null it will be 'guessed' from build_path if possible.
 	var/desc = null					//Description of the created object. If null it will use group_desc and name where applicable.
 	var/item_name = null			//An item name before it is modified by various name-modifying procs
-	var/id = null					//ID of the created object for easy refernece. Alphanumeric, lower-case, no symbols.
+	var/id = "id"					//ID of the created object for easy refernece. Alphanumeric, lower-case, no symbols.
 	var/list/req_tech = list()		//IDs of that techs the object originated from and the minimum level requirements.
 	var/build_type = null			//Flag as to what kind machine the design is built in. See defines.
 	var/list/materials = list()		//List of materials. Format: "id" = amount.

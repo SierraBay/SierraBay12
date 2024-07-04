@@ -4,10 +4,16 @@
 /datum/unit_test/research_designs_shall_be_unique/start_test()
 	var/list/ids = list()
 	var/list/build_paths = list()
+	var/datum/computer_file/binary/design/file
 
 	for(var/design_type in subtypesof(/datum/design))
 		var/datum/design/design = design_type
+		file.design = design_type
 		if(initial(design.id) == "id")
+			continue
+		if(initial(design.id) == file.design.id)
+			continue
+		if(initial(design.build_path) == file.design.build_path)
 			continue
 
 		group_by(ids, initial(design.id), design)
