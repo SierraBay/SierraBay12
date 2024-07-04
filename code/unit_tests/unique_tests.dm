@@ -11,9 +11,9 @@
 		file.design = design_type
 		if(initial(design.id) == "id")
 			continue
-		if(initial(design.id) == file.design.id)
+		if(initial(design.id) == initial(file.design.id))
 			continue
-		if(initial(design.build_path) == file.design.build_path)
+		if(initial(design.build_path) == initial(file.design.build_path))
 			continue
 
 		group_by(ids, initial(design.id), design)
