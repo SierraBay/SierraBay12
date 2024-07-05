@@ -8,7 +8,7 @@ GLOBAL_LIST_EMPTY(hubs_id)
 	var/snare_id = ""
 	id_tag = ""
 	//animations
-	var/animation_icon = 'mods/utility_items/icons/bs_silk.dmi'
+	var/animation_icon = 'mods/machinery/icons/bs_silk.dmi'
 	var/back_animation = "silc_teleport_back"
 	var/onhub_animation = "silc_get_hub"
 
