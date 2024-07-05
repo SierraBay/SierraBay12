@@ -12,6 +12,6 @@
 #include "code/telesci_by_TT/gps.dm"
 #include "code/telesci_by_TT/bcrystal.dm"
 #include "code/telesci_by_TT/telesci_computer.dm"
-#include "code/tele.dm"
+#include "code/telesci_by_TT/tele.dm"
 
 #endif
