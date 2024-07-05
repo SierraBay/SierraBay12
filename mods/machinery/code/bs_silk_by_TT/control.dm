@@ -61,7 +61,7 @@ GLOBAL_LIST_EMPTY(hubs_id)
 
 /obj/machinery/computer/bs_snare_control/proc/ui_data4hubs()
 	var/list/L = hubs
-	var/list/dot LAZYLEN(L)?
+	var/list/dot [LAZYLEN(L)?]
 	if(L?.len) for(var/i = 1; i <= LAZYLEN(L?); i++)
 		dot[i] = list("myId" = L[i], "sId" = "")
 		var/obj/machinery/bs_snare_hub/h = find_hub_by_ID(L[i])
