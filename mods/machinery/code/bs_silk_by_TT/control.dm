@@ -1,7 +1,7 @@
 GLOBAL_LIST_EMPTY(hubs_id)
 /obj/machinery/bs_snare_hub
 	name = "bluespace snare hub"
-	icon = 'mods/utility_items/icons/stationobjs.dmi'
+	icon = 'mods/machinery/icons/stationobjs.dmi'
 	icon_state = "silk_hub"
 	density = FALSE
 
