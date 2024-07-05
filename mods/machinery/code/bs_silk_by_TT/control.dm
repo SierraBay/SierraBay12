@@ -48,7 +48,7 @@ GLOBAL_LIST_EMPTY(hubs_id)
 
 /obj/machinery/computer/bs_snare_control
 	name = "bluespace snare control"
-	icon = 'mods/utility_items/icons/computer.dmi'
+	icon = 'mods/machinery/icons/computer.dmi'
 	icon_state = "computer"
 
 	icon_keyboard = "tech_key"
