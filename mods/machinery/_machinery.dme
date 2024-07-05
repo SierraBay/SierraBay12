@@ -13,5 +13,8 @@
 #include "code/telesci_by_TT/bcrystal.dm"
 #include "code/telesci_by_TT/telesci_computer.dm"
 #include "code/telesci_by_TT/tele.dm"
+#include "code/bs_silk_by_TT/circuits.dm"
+#include "code/bs_silk_by_TT/accessory.dm"
+#include "code/bs_silk_by_TT/control.dm
 
 #endif
