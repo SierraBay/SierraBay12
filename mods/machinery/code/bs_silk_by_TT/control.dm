@@ -42,7 +42,7 @@ GLOBAL_LIST_EMPTY(hubs_id)
 	if(!(stat & (is_powered())))
 		var/list/mobs = get_snaring()
 		for(var/mob/living/carbon/human/M in mobs)
-			sleep
+			spawn(0)
 				animated_teleportation(M, get_turf(src))
 		return mobs
 
