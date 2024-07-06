@@ -98,6 +98,17 @@ modular computers
 	path = /obj/item/modular_computer/laptop/preset/custom_loadout/advanced
 	cost = 6
 
+
+/datum/gear/utility/usb
+	display_name = "Basic data crystal"
+	path = /obj/item/stock_parts/computer/hard_drive/portable
+	cost = 1
+
+/datum/gear/utility/usb_adv
+	display_name = "Advanced data crystal"
+	path = /obj/item/stock_parts/computer/hard_drive/portable/advanced
+	cost = 2
+
 /****************
 Pouches and kits
 ****************/

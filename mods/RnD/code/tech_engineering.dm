@@ -12,7 +12,7 @@
 	required_tech_levels = list()
 	cost = 0
 
-	unlocks_designs = list("science_tool", "micro_mani", "basic_matter_bin", "basic_micro_laser", "light_replacer", "autolathe", "arcademachine", "oriontrail","janitor_hud")
+	unlocks_designs = list("science_tool", "micro_mani", "basic_matter_bin", "basic_micro_laser", "light_replacer", "autolathe", "arcademachine", "oriontrail","janitor_hud","tech_disk")
 
 /datum/technology/engineering/gas_heat
 	name = "Gas Heating and Cooling"

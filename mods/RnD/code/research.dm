@@ -9,7 +9,7 @@ var/global/list/explosion_watcher_list = list()
 		design_by_id[d.id] = d
 		var/datum/computer_file/binary/design/design_file = new
 		design_file.design = d
-		design_file.on_design_set()
+		design_file.set_filename(d.shortname)
 		d.file = design_file
 
 	for(var/T in subtypesof(/datum/tech))
@@ -255,17 +255,6 @@ var/global/list/explosion_watcher_list = list()
 	w_class = ITEM_SIZE_SMALL
 	matter = list(MATERIAL_PLASTIC = 30, MATERIAL_STEEL = 30, MATERIAL_GLASS = 10)
 	var/datum/tech/stored
-
-
-/obj/item/disk/design_disk
-	name = "component design disk"
-	desc = "A disk for storing device design data for construction in lathes."
-	icon = 'icons/obj/datadisks.dmi'
-	icon_state = "datadisk2"
-	item_state = "card-id"
-	w_class = ITEM_SIZE_SMALL
-	matter = list(MATERIAL_PLASTIC = 30, MATERIAL_STEEL = 30, MATERIAL_GLASS = 10)
-	var/datum/design/blueprint
 
 /datum/technology
 	var/name = "name"
