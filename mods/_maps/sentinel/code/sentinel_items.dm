@@ -63,13 +63,18 @@
  * ========
  */
 
-/obj/item/clothing/under/solgov/utility/fleet/officer/pilot1/away_solpatrol
+/obj/item/clothing/under/scga/utility/away_solpatrol
+	accessories = list(
+		/obj/item/clothing/accessory/solgov/army/tempest
+	)
+
+/obj/item/clothing/under/solgov/utility/fleet/officer/pilot_away_solpatrol
 	accessories = list(
 		/obj/item/clothing/accessory/solgov/specialty/pilot,
 		/obj/item/clothing/accessory/solgov/fleet_patch/fifth
 	)
 
-/obj/item/clothing/under/solgov/utility/fleet/officer/command/commander/away_solpatrol
+/obj/item/clothing/under/solgov/utility/fleet/officer/command_away_solpatrol
 	accessories = list(
 		/obj/item/clothing/accessory/solgov/department/command/fleet,
 		/obj/item/clothing/accessory/solgov/specialty/pilot,
@@ -94,9 +99,15 @@
 		/obj/item/clothing/accessory/solgov/fleet_patch/fifth
 	)
 
+/obj/item/clothing/suit/storage/solgov/service/fleet/officer/away_solpatrol
+	accessories = list(
+		/obj/item/clothing/accessory/chameleon,
+		/obj/item/clothing/accessory/solgov/specialty/officer
+	)
+
 /obj/item/clothing/suit/storage/solgov/service/fleet/command/away_solpatrol
 	accessories = list(
-		/obj/item/clothing/accessory/solgov/rank/fleet/officer/o6,
+		/obj/item/clothing/accessory/chameleon,
 		/obj/item/clothing/accessory/solgov/specialty/officer
 	)
 
@@ -115,3 +126,15 @@
 	name = "SCG armband"
 	desc = "An armband, worn by the crew to display which country they represent. This one is blue and gold."
 	icon_state = "solblue"
+
+/obj/item/clothing/accessory/scga_rank/e4_alt
+	name = "ranks (E-4 specialist)"
+	desc = "Insignia denoting the rank of Specialist."
+
+/obj/item/clothing/accessory/solgov/army/tempest
+	name = "Tempest Squad patch"
+	desc = "A tactical shoulder patch carrying insignia of Tempest Squad, the Special Operations Force of SCG Army."
+	icon = 'mods/_maps/sentinel/icons/obj/obj_accessories_solpatrol.dmi'
+	icon_state = "army_tempest"
+	on_rolled_down = ACCESSORY_ROLLED_NONE
+	slot = ACCESSORY_SLOT_INSIGNIA

@@ -18263,7 +18263,7 @@
 "uvl" = (
 /obj/structure/table/steel_reinforced,
 /obj/machinery/photocopier/faxmachine/centcomm{
-	department = "SFV Stinger Command Departament"
+	department = "SFV Stinger Command Department"
 	},
 /obj/floor_decal/corner/blue/mono,
 /turf/unsimulated/floor/techfloor{
