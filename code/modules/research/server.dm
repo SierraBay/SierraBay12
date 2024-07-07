@@ -207,15 +207,16 @@
 		. = TOPIC_REFRESH
 
 	else if(href_list["reset_tech"])
-		var/choice = alert(usr, "Are you sure you want to reset this technology to its default data? Data lost cannot be recovered.", "Technology Data Rest", list("Continue", "Cancel"))
+		var/choice = alert("Are you sure you want to reset this technology to its default data? Data lost cannot be recovered.", "Technology Data Reset", "Continue", "Cancel")
 		if(choice == "Continue")
 			temp_server.files.forget_all(href_list["reset_tech"])
+		. = TOPIC_REFRESH
 
-	else if(href_list["reset_techology"])
-		var/choice = alert(usr, "Are you sure you want to delete this techology? Data lost cannot be recovered.", "Techology Deletion", list("Continue", "Cancel"))
-		var/techology = temp_server.files.researched_tech[href_list["reset_techology"]]
-		if(choice == "Continue" && techology)
-			temp_server.files.forget_techology(techology)
+	else if(href_list["reset_technology"])
+		var/choice = alert("Are you sure you want to delete this design? Data lost cannot be recovered.", "Techology Deletion", "Continue", "Cancel")
+		var/datum/technology/Tech = temp_server.files.all_technologies[href_list["reset_technology"]]
+		if(choice == "Continue")
+			temp_server.files.forget_techology(Tech)
 		. = TOPIC_REFRESH
 
 /obj/machinery/computer/rdservercontrol/interface_interact(mob/user)
@@ -262,15 +263,16 @@
 
 		if(2) //Data Management menu
 			dat += "[temp_server.name] Data ManagementP<BR><BR>"
-			dat += "Known Technologies<BR>"
+			dat += "Known Tech<BR>"
 			for(var/tech_tree in temp_server.files.tech_trees)
 				var/datum/tech/T = temp_server.files.tech_trees[tech_tree]
 				dat += "* [T.name] "
 				dat += "<A href='?src=\ref[src];reset_tech=[T.id]'>(Reset)</A><BR>" //FYI, these are all strings.
-			dat += "Known Designs<BR>"
-			for(var/datum/design/D in temp_server.files.known_designs)
-				dat += "* [D.name] "
-				dat += "<A href='?src=\ref[src];reset_design=[D.id]'>(Delete)</A><BR>"
+			dat += "Known Technology<BR>"
+			for(var/D in temp_server.files.researched_tech)
+				var/datum/technology/T = temp_server.files.researched_tech[D]
+				dat += "* [T] "
+				dat += "<A href='?src=\ref[src];reset_technology=[T.id]'>(Delete)</A><BR>"
 			dat += "<HR><A href='?src=\ref[src];main=1'>Main Menu</A>"
 
 		if(3) //Server Data Transfer
