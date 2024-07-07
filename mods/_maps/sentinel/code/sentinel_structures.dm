@@ -59,6 +59,9 @@
 		/obj/item/melee/telebaton,
 		/obj/item/clothing/glasses/hud/security/prot/aviators,
 		/obj/item/clothing/glasses/tacgoggles,
+		/obj/item/clothing/glasses/ballistic,
+		/obj/item/clothing/accessory/glassesmod/vision/polarized,
+		/obj/item/clothing/accessory/glassesmod/nvg,
 		/obj/item/clothing/accessory/storage/black_vest,
 		/obj/item/clothing/gloves/thick/combat,
 		/obj/item/device/flashlight/maglight,
@@ -84,8 +87,10 @@
 		/obj/item/melee/telebaton,
 		/obj/item/clothing/glasses/hud/security/prot/aviators,
 		/obj/item/clothing/glasses/tacgoggles,
+		/obj/item/clothing/glasses/ballistic,
+		/obj/item/clothing/accessory/glassesmod/vision/polarized,
+		/obj/item/clothing/accessory/glassesmod/nvg,
 		/obj/item/clothing/accessory/storage/black_vest,
-		/obj/item/clothing/gloves/thick/combat,
 		/obj/item/device/flashlight/maglight,
 		/obj/item/storage/firstaid/sleekstab,
 		/obj/item/device/megaphone,
@@ -130,6 +135,7 @@
 		/obj/item/storage/belt/utility/full,
 		/obj/item/device/multitool,
 		/obj/item/clothing/glasses/welding/superior,
+		/obj/item/clothing/glasses/ballistic/engi,
 		/obj/item/clothing/head/hardhat/orange,
 		/obj/item/clothing/suit/storage/hazardvest,
 		/obj/item/clothing/head/beret/solgov/fleet/engineering,
@@ -153,6 +159,7 @@
 		/obj/item/storage/firstaid/adv,
 		/obj/item/clothing/accessory/stethoscope,
 		/obj/item/clothing/glasses/hud/health,
+		/obj/item/clothing/glasses/ballistic/medic,
 		/obj/item/clothing/suit/storage/toggle/labcoat,
 		/obj/item/clothing/gloves/latex/nitrile,
 		/obj/item/clothing/under/rank/medical/scrubs/black,
@@ -246,7 +253,7 @@
 /obj/machinery/vending/away_solpatrol_uniform
 	name = "Fleet uniform dispenser"
 	desc = "A specialized vending machine with nice and fresh navy-blue clothing inside. For military personnel only."
-	icon = 'mods/_maps/sentinel/icons/fleet_vendomat.dmi'
+	icon = 'mods/_maps/sentinel/icons/obj/fleet_vendomat.dmi'
 	icon_state = "uniform_fleet"
 	icon_deny = "uniform_fleet-deny"
 	icon_vend = "uniform_fleet-vend"

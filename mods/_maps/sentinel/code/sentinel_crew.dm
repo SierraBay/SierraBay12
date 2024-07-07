@@ -103,8 +103,6 @@ var/global/const/access_away_cavalry_commander = "ACCESS_CAVALRY_COMMANDER"
 	title = "Army SCGSO Leader"
 	total_positions = 1
 	outfit_type = /singleton/hierarchy/outfit/job/patrol/captain
-	minimum_character_age = list(SPECIES_HUMAN = 25)
-	ideal_character_age = 27
 	allowed_branches = list(/datum/mil_branch/scga)
 	allowed_ranks = list(
 		/datum/mil_rank/scga/o2,
@@ -354,69 +352,6 @@ var/global/const/access_away_cavalry_commander = "ACCESS_CAVALRY_COMMANDER"
 	accessory = list(/obj/item/clothing/accessory/solgov/rank/fleet/flag/o8, /obj/item/clothing/accessory/solgov/specialty/officer)
 	sort_order = 18
 
-/datum/mil_branch/scga
-	name = "SCG Army"
-	name_short = "SCGA"
-	email_domain = "army.mil"
-	rank_types = list(
-		/datum/mil_rank/scga/e4,
-		/datum/mil_rank/army/e4_alt,
-		/datum/mil_rank/scga/e5,
-		/datum/mil_rank/scga/o2,
-		/datum/mil_rank/scga/o3
-	)
-	spawn_rank_types = list(
-		/datum/mil_rank/scga/e4,
-		/datum/mil_rank/army/e4_alt,
-		/datum/mil_rank/scga/e5,
-		/datum/mil_rank/scga/o2,
-		/datum/mil_rank/scga/o3
-	)
-
-/datum/mil_rank/scga/e4
-	name = "Corporal"
-	name_short = "Cpl"
-	accessory = list(
-		/obj/item/clothing/accessory/scga_rank/e4,
-		/obj/item/clothing/accessory/scga_badge/enlisted
-	)
-	sort_order = 4
-
-/datum/mil_rank/army/e4_alt
-	name = "Specialist"
-	name_short = "SPT"
-	accessory = list(
-		/obj/item/clothing/accessory/scga_rank/e4_alt,
-		/obj/item/clothing/accessory/scga_badge/enlisted)
-	sort_order = 4
-
-/datum/mil_rank/scga/e5
-	name = "Sergeant"
-	name_short = "SGT"
-	accessory = list(
-		/obj/item/clothing/accessory/scga_rank/e5,
-		/obj/item/clothing/accessory/scga_badge/enlisted
-	)
-	sort_order = 5
-
-/datum/mil_rank/scga/o2
-	name = "First Lieutenant"
-	name_short = "1Lt"
-	accessory = list(
-		/obj/item/clothing/accessory/scga_rank/o2,
-		/obj/item/clothing/accessory/scga_badge/officer
-	)
-	sort_order = 12
-
-/datum/mil_rank/scga/o3
-	name = "Captain"
-	name_short = "CAPT"
-	accessory = list(
-		/obj/item/clothing/accessory/scga_rank/o3,
-		/obj/item/clothing/accessory/scga_badge/officer
-		)
-	sort_order = 13
-
 /* OUTFITS
  * =======
  */
@@ -444,14 +379,16 @@ var/global/const/access_away_cavalry_commander = "ACCESS_CAVALRY_COMMANDER"
 	head = /obj/item/clothing/head/scga/utility
 	uniform = /obj/item/clothing/under/scga/utility/away_solpatrol
 	id_types = list(/obj/item/card/id/awaycavalry/ops)
-	gloves = /obj/item/clothing/gloves/thick/combat
+	gloves = /obj/item/clothing/gloves/scga/duty
+	shoes = /obj/item/clothing/shoes/scga/utility/tan
 
 /singleton/hierarchy/outfit/job/patrol/captain
 	name = PATROL_OUTFIT_JOB_NAME("Captain")
-	head = /obj/item/clothing/head/scga/utility
+	head = /obj/item/clothing/head/scga/beret
 	uniform = /obj/item/clothing/under/scga/utility/away_solpatrol
 	id_types = list(/obj/item/card/id/awaycavalry/ops/captain)
 	gloves = /obj/item/clothing/gloves/thick/combat
+	shoes = /obj/item/clothing/shoes/scga/utility/tan
 
 /singleton/hierarchy/outfit/job/patrol/engineer
 	name = PATROL_OUTFIT_JOB_NAME("Technician")
@@ -480,7 +417,7 @@ var/global/const/access_away_cavalry_commander = "ACCESS_CAVALRY_COMMANDER"
 	belt = /obj/item/storage/belt/holster/security/tactical/away_solpatrol
 	gloves = /obj/item/clothing/gloves/thick/duty/solgov/fleet
 
-/singleton/hierarchy/outfit/job/patrol/centcom/stinger_bridge_officer
+/singleton/hierarchy/outfit/job/patrol/centcom
 	name = PATROL_OUTFIT_JOB_NAME("SFV Stinger Bridge Officer")
 	head = /obj/item/clothing/head/beret/solgov/fleet/branch/fifth
 	r_ear = /obj/item/device/radio/headset/away_scg_patrol
@@ -494,7 +431,7 @@ var/global/const/access_away_cavalry_commander = "ACCESS_CAVALRY_COMMANDER"
 	id_types = list(/obj/item/card/id/centcom/station)
 	id_pda_assignment = "5th Fleet Bridge Officer"
 
-/singleton/hierarchy/outfit/job/patrol/centcom/comms_officer
+/singleton/hierarchy/outfit/job/patrol/centcom/senior
 	name = PATROL_OUTFIT_JOB_NAME("SFV Stinger Senior Officer")
 	head = /obj/item/clothing/head/solgov/dress/fleet/command
 	r_ear = /obj/item/device/radio/headset/away_scg_patrol

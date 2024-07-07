@@ -127,14 +127,18 @@
 	desc = "An armband, worn by the crew to display which country they represent. This one is blue and gold."
 	icon_state = "solblue"
 
-/obj/item/clothing/accessory/scga_rank/e4_alt
-	name = "ranks (E-4 specialist)"
-	desc = "Insignia denoting the rank of Specialist."
+/obj/item/clothing/accessory/scga_rank/e4/alt
+	name = "rank insignia, E4 Specialist"
+	desc = "Collar tabs denoting the SCGA E-4 rank of Specialist."
 
 /obj/item/clothing/accessory/solgov/army/tempest
 	name = "Tempest Squad patch"
 	desc = "A tactical shoulder patch carrying insignia of Tempest Squad, the Special Operations Force of SCG Army."
 	icon = 'mods/_maps/sentinel/icons/obj/obj_accessories_solpatrol.dmi'
+	accessory_icons = list(
+		slot_w_uniform_str = 'mods/_maps/sentinel/icons/mob/onmob_accessories_solpatrol.dmi',
+		slot_wear_suit_str = 'mods/_maps/sentinel/icons/mob/onmob_accessories_solpatrol.dmi'
+	)
 	icon_state = "army_tempest"
 	on_rolled_down = ACCESSORY_ROLLED_NONE
 	slot = ACCESSORY_SLOT_INSIGNIA

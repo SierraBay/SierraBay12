@@ -2071,6 +2071,10 @@
 /obj/item/clothing/accessory/storage/holster/thigh,
 /obj/item/clothing/accessory/storage/holster/thigh,
 /obj/item/clothing/accessory/storage/holster/thigh,
+/obj/item/clothing/glasses/tacgoggles,
+/obj/item/clothing/glasses/tacgoggles,
+/obj/item/clothing/glasses/tacgoggles,
+/obj/item/clothing/glasses/tacgoggles,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/patrol/crew/brig/emergency_armory)
 "eb" = (
@@ -2108,11 +2112,10 @@
 /obj/item/clothing/accessory/ubac/blue,
 /obj/item/clothing/accessory/ubac/blue,
 /obj/item/clothing/accessory/ubac/blue,
-/obj/structure/extinguisher_cabinet{
-	pixel_y = 0;
-	pixel_x = 24;
-	dir = 8
-	},
+/obj/item/clothing/accessory/helmet_cover/navy,
+/obj/item/clothing/accessory/helmet_cover/navy,
+/obj/item/clothing/accessory/helmet_cover/navy,
+/obj/item/clothing/accessory/helmet_cover/navy,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/patrol/crew/brig/emergency_armory)
 "ec" = (
@@ -4684,6 +4687,14 @@
 /obj/structure/lattice,
 /turf/simulated/floor/reinforced,
 /area/space)
+"ws" = (
+/obj/structure/extinguisher_cabinet{
+	pixel_y = 0;
+	pixel_x = 24;
+	dir = 8
+	},
+/turf/simulated/floor/tiled/dark,
+/area/ship/patrol/crew/brig/emergency_armory)
 "wv" = (
 /obj/structure/table/marble,
 /obj/floor_decal/corner/grey/diagonal{
@@ -15305,7 +15316,7 @@ TX
 df
 dA
 eb
-dA
+ws
 eQ
 TX
 rJ
