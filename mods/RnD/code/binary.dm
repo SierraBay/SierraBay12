@@ -8,7 +8,8 @@
 	input = replace_characters(input, list(" "="_", "\\" = "_", "\""="'", "/" = "_", ":" = "_", "*" = "_", "?" = "_", "|" = "_", "<" = "_", ">" = "_", "#" = "_"))
 	if(findtext(input,"_") == 1)
 		input = copytext(input, 2)
-	return input
+
+	return lowertext(input)
 
 /obj/item/stock_parts/computer/hard_drive/proc/find_files_by_type(typepath)
 	var/list/files = list()
