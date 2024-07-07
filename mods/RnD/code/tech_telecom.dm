@@ -129,7 +129,7 @@
 	y = 0.2
 	icon = "bscrystal"
 
-	required_technologies = list("telecomm_parts")
+	required_technologies = list("track_dev")
 	required_tech_levels = list()
 	cost = 1000
 
