@@ -61,8 +61,67 @@ a.linkDanger:hover {
     background: #f7d515;
 }
 
+.greenButton {
+    background: #f7d515;
+}
+
 .displayBar {
     height: 21px;
     border: none;
     border-radius: 0.16em;
+}
+
+.candystripe {
+	background-color: transparent;
+}
+.candystripe:nth-child(odd) {
+	background-color: rgba(0, 0, 0, 0.20);
+}
+
+.section {
+    width: 100%;
+    margin-bottom: 0.5em;
+    box-sizing: border-box;
+    background-color: rgba(0, 0, 0, 0.33);
+}
+
+.section-content {
+    padding: 0.66em 0.5em;
+}
+
+.section-title {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    color: white;
+    font-weight: bold;
+    padding: 0.5em;
+    border-bottom: 2px solid #4972a1;
+}
+
+.section-buttons {
+    display: flex;
+    font-size: 12px;
+}
+
+.labelList {
+    width: 100%;
+}
+
+.labelList-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2px;
+}
+
+.labelList-item-label {
+    color: #7e90a7;
+}
+
+.table-row {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
 }
