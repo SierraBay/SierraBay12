@@ -8,6 +8,11 @@
 
 /datum/preferences/var/icon/preview_icon
 
+// [SIERRA-ADD]
+/datum/preferences/var/list/man_dirs = list(SOUTH, EAST, NORTH, WEST)
+
+/datum/preferences/var/man_dir = SOUTH
+// [/SIERRA-ADD]
 
 /datum/preferences/VV_static()
 	return ..() + list(
@@ -110,8 +115,8 @@
 		// mannequin.dir = NORTH
 		// last_built_icon.Blend(getFlatIcon(mannequin, NORTH, always_use_defdir = TRUE), ICON_OVERLAY, 25, 17)
 		// CHECK_TICK
-		mannequin.dir = SOUTH
-		last_built_icon.Blend(getFlatIcon(mannequin, SOUTH, always_use_defdir = TRUE), ICON_OVERLAY, 25, 17)
+		mannequin.dir = man_dir
+		last_built_icon.Blend(getFlatIcon(mannequin, man_dir, always_use_defdir = TRUE), ICON_OVERLAY, 25, 3)
 	preview_icon = new (last_built_icon)
 	var/scale = client.get_preference_value(/datum/client_preference/preview_scale)
 	switch (scale)
@@ -153,6 +158,15 @@
 		else
 			pref.bgstate = pref.background_states[index + 1]
 		return TOPIC_REFRESH_UPDATE_PREVIEW
+	// [SIERRA-ADD]
+	else if (query["cycledir"])
+		var/index = pref.man_dirs.Find(pref.man_dir)
+		if (!index || index == length(pref.man_dirs))
+			pref.man_dir = pref.man_dirs[1]
+		else
+			pref.man_dir = pref.man_dirs[index + 1]
+		return TOPIC_REFRESH_UPDATE_PREVIEW
+	// [/SIERRA-ADD]
 	else if (query["resize"])
 		pref.client?.cycle_preference(/datum/client_preference/preview_scale)
 		return TOPIC_REFRESH_UPDATE_PREVIEW
@@ -175,6 +189,9 @@
 	var/height = pref.preview_icon.Height()
 	. = "<b>Preview:</b>"
 	. += "<br />[BTN("cyclebg", "Cycle Background")]"
+	// [SIERRA-ADD]
+	. += "<br />[BTN("cycledir", "Cycle Dir")]"
+	// [/SIERRA-ADD]
 	. += " - [BTN("previewgear", "[pref.preview_gear ? "Hide" : "Show"] Loadout")]"
 	. += " - [BTN("previewjob", "[pref.preview_job ? "Hide" : "Show"] Uniform")]"
 	. += " - [BTN("resize", "Resize")]"

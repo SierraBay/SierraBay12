@@ -57,6 +57,9 @@
 	if(joining.mind)
 		joining.mind.assigned_job = job
 		joining.mind.assigned_role = job.title
+		// [SIERRA-ADD]
+		joining.mind.role_alt_title = job.get_alt_title_for(joining.client)
+		// [/SIERRA-ADD]
 	joining.faction = name
 	job.current_positions++
 
