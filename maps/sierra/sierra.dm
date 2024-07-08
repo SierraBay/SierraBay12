@@ -173,7 +173,10 @@
 	#include "../away/mininghome/mininghome.dm"
 	#include "../away/scavver/scavver_gantry.dm"
 	#include "../away/abandoned_hotel/abandoned_hotel.dm"
-	// #include "../event/iccgn_ship/icgnv_hound.dm" // SIERRA TODO: Пофиксить или удалить
+	#include "../event/iccgn_ship/icgnv_hound.dm"
+	#include "../event/sfv_arbiter/sfv_arbiter.dm"
+	#include "../event/placeholders/placeholders.dm"
+	#include "../event/empty/empty.dm"
 
 	#include "../bluespace_interlude/bluespace_interlude.dm"
 	#include "../bluespace_interlude/bluespace_interlude.dmm"

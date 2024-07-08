@@ -1,0 +1,5 @@
+author: Teteshnik
+changes:
+  - {bugfix: Пофиксил аугментальные интегралки.}
+  - {rscadd: Вернул в игру БС силки}
+delete-after: true
