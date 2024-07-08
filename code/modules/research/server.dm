@@ -214,9 +214,9 @@
 
 	else if(href_list["reset_technology"])
 		var/choice = alert("Are you sure you want to delete this design? Data lost cannot be recovered.", "Techology Deletion", "Continue", "Cancel")
-		var/datum/technology/Tech = temp_server.files.all_technologies[href_list["reset_technology"]]
-		if(choice == "Continue")
-			temp_server.files.forget_techology(Tech)
+		var/techology = temp_server.files.researched_tech[href_list["reset_technology"]]
+		if(choice == "Continue" && techology)
+			temp_server.files.forget_techology(techology)
 		. = TOPIC_REFRESH
 
 /obj/machinery/computer/rdservercontrol/interface_interact(mob/user)
@@ -271,7 +271,7 @@
 			dat += "Known Technology<BR>"
 			for(var/D in temp_server.files.researched_tech)
 				var/datum/technology/T = temp_server.files.researched_tech[D]
-				dat += "* [T] "
+				dat += "* [T.name] "
 				dat += "<A href='?src=\ref[src];reset_technology=[T.id]'>(Delete)</A><BR>"
 			dat += "<HR><A href='?src=\ref[src];main=1'>Main Menu</A>"
 
