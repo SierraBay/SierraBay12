@@ -492,17 +492,22 @@ SIERRA_ESCAPE_POD(11)
 	name = "In transit"
 	landmark_tag = "nav_transit_blueriver"
 
-/obj/shuttle_landmark/sierra/deck1/vox_raider
+/obj/shuttle_landmark/sierra/deck4/vox_raider
 	name = "Fourth Deck Starboard Dock"
-	landmark_tag = "nav_deck1_vox_raider"
+	landmark_tag = "nav_deck4_vox_raider"
 	docking_controller = "admin_shuttle_dock"
 
-/obj/shuttle_landmark/sierra/deck3/skrellshuttle
-	name = "Third Deck Starboard Dock"
-	landmark_tag = "nav_deck3_skrellshuttle"
+/obj/shuttle_landmark/sierra/deck4/skrellshuttle
+	name = "Fourth Deck Starboard Dock"
+	landmark_tag = "nav_deck4_skrellshuttle"
 	docking_controller = "admin_shuttle_dock"
 
-/obj/shuttle_landmark/sierra/deck1/skrellscout
+/obj/shuttle_landmark/sierra/deck4/event
+	name = "Fourth Deck Starboard Dock"
+	landmark_tag = "nav_deck4_event_dock"
+	docking_controller = "admin_shuttle_dock"
+
+/obj/shuttle_landmark/sierra/deck4/skrellscout
 	name = "Fourth Deck Auxillary Dock"
-	landmark_tag = "nav_deck1_skrellscout"
+	landmark_tag = "nav_deck4_skrellscout"
 	docking_controller = "rescue_shuttle_dock_airlock"
