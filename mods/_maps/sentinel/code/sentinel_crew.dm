@@ -81,7 +81,7 @@ var/global/const/access_away_cavalry_commander = "ACCESS_CAVALRY_COMMANDER"
 		/datum/mil_rank/scga/e4_alt,
 		/datum/mil_rank/scga/e5
 		)
-	supervisors = "Army Captain"
+	supervisors = "Army Leader"
 	loadout_allowed = TRUE
 	is_semi_antagonist = TRUE
 	info = "Вы просыпаетесь и выходите из криосна, ощущая прохладный воздух на своём лице, а также лёгкую тошноту. \
