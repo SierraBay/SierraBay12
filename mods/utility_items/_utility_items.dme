@@ -12,5 +12,7 @@
 #include "code/reagents.dm"
 #include "code/cell_charger.dm"
 #include "code/vox.dm"
+#include "code/simple.dm"
+#include "code/circuit.dm"
 
 #endif
