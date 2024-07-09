@@ -1,0 +1,6 @@
+author: FeudeyTF
+changes:
+  - {rscadd: Добавил в новые интерфейс для серверов телекоммов}
+  - {rscadd: 'Добавил новые шаблоны для NanoUI: Section, Label List'}
+  - {rscdel: Удалил старый интерфейс для серверов телекоммов}
+delete-after: true
