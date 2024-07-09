@@ -28,6 +28,7 @@
 
 /datum/design/item/optical
 	materials = list(MATERIAL_STEEL = 50, MATERIAL_GLASS = 50)
+	category = list("HUD")
 
 /datum/design/item/optical/mesons
 	name = "mesons"
