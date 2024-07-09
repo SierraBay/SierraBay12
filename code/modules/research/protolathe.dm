@@ -1,3 +1,4 @@
+//[SIERRA-EDIT] - MODPACK_RND
 /datum/rnd_material
 	var/name
 	var/amount
@@ -223,3 +224,4 @@
 	if(eject > 0)
 		mat.place_sheet(loc, eject)
 		materials[material] -= eject * mat.units_per_sheet
+//[/SIERRA-EDIT] - MODPACK_RND

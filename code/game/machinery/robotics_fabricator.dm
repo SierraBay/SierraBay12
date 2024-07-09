@@ -114,6 +114,7 @@
 	if(..())
 		return
 
+	//[SIERRA-EDIT] - MODPACK_RND
 	if(href_list["build"])
 		var/datum/design/D = locate(href_list["build"]) in files.known_designs
 		if(D)
@@ -124,6 +125,7 @@
 		if(num)
 			num = clamp(num, 1,LAZYLEN(queue))
 			remove_from_queue(num)
+		//[/SIERRA-EDIT] - MODPACK_RND
 
 	if(href_list["category"])
 		if(href_list["category"] in categories)
@@ -247,6 +249,7 @@
 
 /obj/machinery/robotics_fabricator/proc/get_queue_names()
 	. = list()
+//[SIERRA-ADD] - MODPACK_RND
 	for(var/i = 2 to length(queue))
 		var/datum/design/D = queue[i]
 		. += D.name
@@ -258,6 +261,7 @@
 		if(!(D.build_type & MECHFAB))
 			continue
 		. += list(list("name" = D.name, "id" = "\ref[D]", "category" = D.category, "resourses" = get_design_resourses(D), "time" = get_design_time(D)))
+//[/SIERRA-ADD] - MODPACK_RND
 
 /obj/machinery/robotics_fabricator/proc/get_design_resourses(datum/design/D)
 	var/list/F = list()
@@ -333,5 +337,7 @@
 		if(!RDC.sync)
 			continue
 		files.download_from(RDC.files)
+//[SIERRA-EDIT] - MODPACK_RND
 	sync_message = "Sync complete."
 	update_categories()
+//[/SIERRA-EDIT] - MODPACK_RND

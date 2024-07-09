@@ -10,9 +10,11 @@
 	var/list/chemtraces = list()
 	var/target_name = null
 	var/timeofdeath = null
+//[SIERRA-ADD] - MODPACK_RND
 
 /obj/item/paper/autopsy_report
 	var/list/autopsy_data
+//[/SIERRA-ADD] - MODPACK_RND
 
 /datum/autopsy_data_scanner
 	var/weapon = null // this is the DEFINITE weapon type that was used
@@ -140,6 +142,7 @@
 
 	sleep(10)
 
+//[SIERRA-ADD] - MODPACK_RND
 	var/obj/item/paper/autopsy_report/P = new(usr.loc, "<tt>[scan_data]</tt>", "Autopsy Data ([target_name])")
 	P.name = "Autopsy Data ([target_name])"
 	P.info = "<tt>[scan_data]</tt>"
@@ -150,7 +153,7 @@
 			var/datum/autopsy_data/W = D.organs_scanned[wound_idx]
 			P.autopsy_data += W.copy()
 	P.icon_state = "paper_words"
-
+//[/SIERRA-ADD] - MODPACK_RND
 	if(istype(usr,/mob/living/carbon))
 		// place the item in the usr's hand if possible
 		usr.put_in_hands(P)

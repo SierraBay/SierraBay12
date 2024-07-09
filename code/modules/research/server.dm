@@ -20,14 +20,20 @@
 
 
 /obj/machinery/r_n_d/server/Destroy()
+	//[SIERRA-ADD] - MODPACK_RND
 	rnd_server_list += src
+	//[/SIERRA-ADD] - MODPACK_RND
+
 	QDEL_NULL(files)
 	return ..()
 
 
 /obj/machinery/r_n_d/server/Initialize()
 	. = ..()
+	//[SIERRA-ADD] - MODPACK_RND
 	rnd_server_list += src
+	//[/SIERRA-ADD] - MODPACK_RND
+
 	if(!files)
 		files = new /datum/research(src)
 	var/list/temp_list
@@ -83,7 +89,9 @@
 		if((T20C + 20) to (T0C + 70))
 			health = max(0, health - 1)
 	if(health <= 0)
+	//[SIERRA-EDIT] - MODPACK_RND
 		files.forget_random_technology()
+	//[/SIERRA-EDIT] - MODPACK_RND
 	if(delay)
 		delay--
 	else
@@ -206,6 +214,7 @@
 			temp_server.id_with_download += num
 		. = TOPIC_REFRESH
 
+//[SIERRA-EDIT] - MODPACK_RND
 	else if(href_list["reset_tech"])
 		var/choice = alert("Are you sure you want to reset this technology to its default data? Data lost cannot be recovered.", "Technology Data Reset", "Continue", "Cancel")
 		if(choice == "Continue")
@@ -218,6 +227,7 @@
 		if(choice == "Continue" && techology)
 			temp_server.files.forget_techology(techology)
 		. = TOPIC_REFRESH
+//[/SIERRA-EDIT] - MODPACK_RND
 
 /obj/machinery/computer/rdservercontrol/interface_interact(mob/user)
 	interact(user)
@@ -261,6 +271,7 @@
 					dat += " (Add)</A><BR>"
 			dat += "<HR><A href='?src=\ref[src];main=1'>Main Menu</A>"
 
+//[SIERRA-EDIT] - MODPACK_RND
 		if(2) //Data Management menu
 			dat += "[temp_server.name] Data ManagementP<BR><BR>"
 			dat += "Known Tech<BR>"
@@ -274,6 +285,7 @@
 				dat += "* [T.name] "
 				dat += "<A href='?src=\ref[src];reset_technology=[T.id]'>(Delete)</A><BR>"
 			dat += "<HR><A href='?src=\ref[src];main=1'>Main Menu</A>"
+//[/SIERRA-EDIT] - MODPACK_RND
 
 		if(3) //Server Data Transfer
 			dat += "[temp_server.name] Server to Server Transfer<BR><BR>"

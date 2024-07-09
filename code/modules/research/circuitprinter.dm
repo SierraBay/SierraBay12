@@ -23,6 +23,7 @@ using metal and glass, it uses glass and reagents (usually sulphuric acid).
 	active_power_usage = 2500
 	machine_name = "circuit imprinter"
 	machine_desc = "Creates circuit boards by etching raw sheets of material with sulphuric acid. Part of an R&D network."
+	//[SIERRA-EDIT] - MODPACK_RND
 	var/list/queue = list()
 
 /obj/machinery/r_n_d/circuit_imprinter/New()
@@ -208,3 +209,4 @@ using metal and glass, it uses glass and reagents (usually sulphuric acid).
 		playsound(src.loc, 'sound/machines/ping.ogg', 50, 1 -3)
 		visible_message("\icon[src]\The [src] pings indicating that queue is complete.")
 	return
+//[/SIERRA-EDIT] - MODPACK_RND

@@ -1,7 +1,7 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
 
 //All devices that link into the R&D console fall into thise type for easy identification and some shared procs.
-
+//[/SIERRA-EDIT] - MODPACK_RND
 var/global/list/default_material_composition = list(MATERIAL_STEEL = 0, MATERIAL_ALUMINIUM = 0, MATERIAL_PLASTIC = 0, MATERIAL_GLASS = 0, MATERIAL_GOLD = 0, MATERIAL_SILVER = 0, MATERIAL_PHORON = 0, MATERIAL_URANIUM = 0, MATERIAL_DIAMOND = 0)
 /obj/machinery/r_n_d
 	name = "R&D Device"
@@ -37,3 +37,4 @@ var/global/list/default_material_composition = list(MATERIAL_STEEL = 0, MATERIAL
 	A = A / max(1, (design.chemicals[reagent]))
 
 	return A
+//[/SIERRA-EDIT] - MODPACK_RND

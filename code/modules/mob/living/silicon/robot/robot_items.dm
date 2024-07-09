@@ -1,3 +1,4 @@
+//[SIERRA-REMOVE] - MODPACK_RND
 /*//A portable analyzer, for research borgs.  This is better then giving them a gripper which can hold anything and letting them use the normal analyzer.
 /obj/item/portable_destructive_analyzer
 	name = "Portable Destructive Analyzer"
@@ -93,7 +94,7 @@
 	icon_state = "portable_analyzer_full"
 	return TRUE
 */// В будущем стоит придумать как нормально боргам сделать дестракт анализатор, сейчас мне он не нравится.
-
+//[/SIERRA-REMOVE] - MODPACK_RND
 /obj/item/party_light
 	name = "party light"
 	desc = "An array of LEDs in tons of colors."

@@ -37,6 +37,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 			AddOverlays(emissive_appearance(icon, "d_analyzer_lights_item"))
 		else
 			AddOverlays(emissive_appearance(icon, "[icon_state]_lights"))
+			//[SIERRA-EDIT] - MODPACK_RND
 			icon_state = "d_analyzer"
 
 /obj/machinery/r_n_d/destructive_analyzer/state_transition(singleton/machine_construction/default/new_state)
@@ -168,3 +169,4 @@ Note: Must be placed within 3 tiles of the R&D Console
 /obj/machinery/r_n_d/destructive_analyzer/power_change()
 	. = ..()
 	eject_item()
+//[/SIERRA-EDIT] - MODPACK_RND

@@ -26,7 +26,7 @@ cause a ton of data to be lost, an admin can go send it back.
 it's entirety. You can then take the disk to any R&D console and upload it's data to it. This method is a lot more secure (since it
 won't update every console in existence) but it's more of a hassle to do. Also, the disks can be stolen.
 */
-
+//[/SIERRA-EDIT] - MODPACK_RND
 /obj/machinery/computer/rdconsole
 	name = "fabrication control console"
 	desc = "Console controlling the various fabrication devices. Uses self-learning matrix to hold and optimize blueprints. Prone to corrupting said matrix, so back up often."
@@ -727,6 +727,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 		ui.set_initial_data(data)
 		ui.open()
+//[/SIERRA-EDIT] - MODPACK_RND
 
 /obj/machinery/computer/rdconsole/robotics
 	name = "robotics fabrication console"

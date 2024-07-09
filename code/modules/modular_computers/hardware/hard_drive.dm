@@ -252,7 +252,7 @@
 	stored_files = null
 	return ..()
 
-
+//[SIERRA-ADD] - MODPACK_RND
 
 /obj/item/stock_parts/computer/hard_drive/ui_data()
 	var/list/data = list(
@@ -278,3 +278,4 @@
 		return null
 
 	return sanitizeSafe(D.stored_data, max_length = MAX_LNAME_LEN)
+//SIERRA-ADD] - MODPACK_RND

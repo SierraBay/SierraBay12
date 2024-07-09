@@ -98,7 +98,7 @@ modular computers
 	path = /obj/item/modular_computer/laptop/preset/custom_loadout/advanced
 	cost = 6
 
-
+//[SIERRA-ADD] - MODPACK_RND
 /datum/gear/utility/usb
 	display_name = "Basic data crystal"
 	path = /obj/item/stock_parts/computer/hard_drive/portable
@@ -108,7 +108,7 @@ modular computers
 	display_name = "Advanced data crystal"
 	path = /obj/item/stock_parts/computer/hard_drive/portable/advanced
 	cost = 2
-
+//[/SIERRA-ADD] - MODPACK_RND
 /****************
 Pouches and kits
 ****************/

@@ -17,7 +17,7 @@ other types of metals and chemistry for reagents).
 
 */
 //Note: More then one of these can be added to a design.
-
+//[SIERRA-EDIT] - MODPACK_RND
 /datum/design						//Datum for object designs, used in construction
 	var/name = null 				//Name of the created object. If null it will be 'guessed' from build_path if possible.
 	var/desc = null					//Description of the created object. If null it will use group_desc and name where applicable.
@@ -71,7 +71,7 @@ other types of metals and chemistry for reagents).
 	if(id)
 		return
 	id = type
-
+//[/SIERRA-EDIT] - MODPACK_RND
 //Returns a new instance of the item for this design
 //This is to allow additional initialization to be performed, including possibly additional contructor arguments.
 /datum/design/proc/Fabricate(newloc, fabricator)

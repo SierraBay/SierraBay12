@@ -27,7 +27,7 @@
 	scan_title = O.name
 	scan_data = xenobio_scan_results(O)
 	user.show_message(SPAN_NOTICE(scan_data))
-
+//[SIERRA-EDIT] - MODPACK_RND
 /obj/item/device/scanner/xenobio/proc/list_gases(gases)
 	RETURN_TYPE(/list)
 	. = list()
@@ -36,6 +36,7 @@
 	return english_list(.)
 
 /obj/item/device/scanner/xenobio/proc/xenobio_scan_results(mob/target)
+//[/SIERRA-EDIT] - MODPACK_RND
 	. = list()
 	if(istype(target, /obj/machinery/stasis_cage))
 		var/obj/machinery/stasis_cage/cagie = target
@@ -66,7 +67,9 @@
 			if((A in P.animals) || is_type_in_list(A, P.repopulate_types))
 				GLOB.stat_fauna_scanned |= "[P.name]-[A.type]"
 				. += "New xenofauna species discovered!"
+			//[SIERRA-ADD] - MODPACK_RND
 				new_species = TRUE
+			//[/SIERRA-ADD] - MODPACK_RND
 				break
 	else if(istype(target, /mob/living/carbon/slime))
 		var/mob/living/carbon/slime/T = target
@@ -108,7 +111,7 @@
 
 	. = jointext(., "<br>")
 
-
+//[SIERRA-ADD] - MODPACK_RND
 /obj/item/device/scanner/xenobio/print_report(mob/living/user)
 	if(!scan_data)
 		to_chat(user, "There is no scan data to print.")
@@ -120,3 +123,4 @@
 		P.color = printout_color
 	user.put_in_hands(P)
 	user.visible_message("\The [src] spits out a piece of paper.")
+//[/SIERRA-ADD] - MODPACK_RND

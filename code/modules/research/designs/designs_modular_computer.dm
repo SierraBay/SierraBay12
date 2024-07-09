@@ -314,7 +314,7 @@
 	build_path = /obj/item/stock_parts/computer/processor_unit/photonic/small
 	sort_string = "VBAFD"
 
-
+//[SIERRA-ADD] - MODPACK_RND
 //// Compuckter Frames
 ///
 
@@ -341,3 +341,5 @@
 	id = "telescreen_frame"
 	materials = list(MATERIAL_STEEL = 2000, MATERIAL_GLASS = 1500)
 	build_path = /obj/item/modular_computer/telescreen
+
+//[/SIERRA-ADD] - MODPACK_RND

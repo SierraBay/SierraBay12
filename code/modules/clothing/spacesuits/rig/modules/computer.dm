@@ -239,6 +239,7 @@
 
 	interface_name = "contact datajack"
 	interface_desc = "An induction-powered high-throughput datalink suitable for hacking encrypted networks."
+//[SIERRA-EDIT] - MODPACK_RND
 	var/datum/research/files
 
 /obj/item/rig_module/datajack/New()
@@ -293,7 +294,7 @@
 
 /obj/item/rig_module/datajack/proc/load_data(datum/research/incoming_files)
 	return files.download_from(incoming_files)
-
+//[/SIERRA-EDIT] - MODPACK_RND
 /obj/item/rig_module/electrowarfare_suite
 
 	name = "electrowarfare module"

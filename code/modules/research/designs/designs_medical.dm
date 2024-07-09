@@ -2,6 +2,7 @@
 	materials = list(MATERIAL_STEEL = 30, MATERIAL_GLASS = 20)
 	category = list("Medical")
 
+//[SIERRA-ADD] - MODPACK_RND
 /datum/design/item/medical/health_scanner
 	shortname = "Health Scanner"
 	desc = "A hand-held scanner able to diagnose human health issues."
@@ -10,6 +11,7 @@
 	materials = list(MATERIAL_STEEL = 200, MATERIAL_GLASS = 100, MATERIAL_PLASTIC = 150)
 	build_path = /obj/item/device/scanner/health
 	sort_string = "MAABA"
+//[/SIERRA-ADD] - MODPACK_RND
 
 /datum/design/item/medical/slime_scanner
 	desc = "Multipurpose organic life scanner."
@@ -92,6 +94,7 @@
 	build_path = /obj/item/bodybag/cryobag
 	sort_string = "MAGAA"
 
+//[SIERRA-ADD] - MODPACK_RND
 /datum/design/item/medical/defibrillator
 	shortname = "Defibrillator"
 	desc = "A portable device that can be used to perform a defibrillation procedure."
@@ -110,3 +113,4 @@
 	materials = list(MATERIAL_PLASTIC = 3000, MATERIAL_GLASS = 3000, MATERIAL_SILVER = 5000, MATERIAL_GOLD = 1000)
 	build_path = /obj/item/defibrillator/compact
 	sort_string = "MAGAC"
+//[/SIERRA-ADD] - MODPACK_RND

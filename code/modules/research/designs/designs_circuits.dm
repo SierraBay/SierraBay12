@@ -4,6 +4,7 @@
 	materials = list(MATERIAL_PLASTIC = 1000, MATERIAL_ALUMINIUM = 1000)
 	chemicals = list(/datum/reagent/acid = 20)
 	time = 5
+//[SIERRA-EDIT] - MODPACK_RND
 	category = list("Circuit")
 	///Кто нибудь потом распределите это по другим категориям, дохера тут плат
 /datum/design/circuit/AssembleDesignName()
@@ -19,7 +20,7 @@
 		else
 			name = "Circuit design ([item_name])"
 			category = list("Circuit")
-
+//[/SIERRA-EDIT] - MODPACK_RND
 
 /datum/design/circuit/AssembleDesignDesc()
 	if(!desc)
