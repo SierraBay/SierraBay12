@@ -123,6 +123,7 @@
 		if(client.get_preference_value(/datum/client_preference/goonchat) == GLOB.PREF_YES)
 			client.chatOutput.start()
 
+<<<<<<< ours
 	GLOB.logged_in_event.raise_event(src)
 
 	if(mind)
@@ -138,6 +139,10 @@
 	if(ability_master)
 		ability_master.update_abilities(1, src)
 		ability_master.toggle_open(1)
+=======
+	if(ability_master && ability_master.ability_objects)
+		ability_master.update_abilities(TRUE, src)
+>>>>>>> theirs
 
 	//set macro to normal incase it was overriden (like cyborg currently does)
 	// [SIERRA-REMOVE] - SSINPUT
