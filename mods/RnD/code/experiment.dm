@@ -420,6 +420,16 @@ var/global/list/rnd_server_list = list()
 	if(scanneddata > 0)
 		datablocks += scanneddata
 		to_chat(user, "<span class='notice'>[src] received [scanneddata] data block[scanneddata>1?"s":""] from scanning [O]</span>")
+
+	if(istype(O, /obj/item/disk/tech_disk))
+		var/obj/item/disk/tech_disk/T = O
+		if(T.stored)
+			var/science_value = T.stored.level * 1000
+			if(science_value > 0)
+				to_chat(user, "<span class='notice'>[T] has aproximately [science_value] research points</span>")
+		else
+			to_chat(user, "<span class='notice'>[O] has no research value</span>")
+
 	else if(istype(O, /obj/item))
 		var/science_value = experiments.get_object_research_value(O)
 		if(science_value > 0)

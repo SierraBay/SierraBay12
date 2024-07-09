@@ -11,6 +11,7 @@ var/global/list/explosion_watcher_list = list()
 		design_file.design = d
 		design_file.set_filename(d.shortname)
 		d.file = design_file
+		d.file.setsize(d)
 
 	for(var/T in subtypesof(/datum/tech))
 		var/datum/tech/Tech_Tree = new T
@@ -26,7 +27,7 @@ var/global/list/explosion_watcher_list = list()
 
 	for(var/tech_tree_id in tech_trees)
 		var/datum/tech/Tech_Tree = tech_trees[tech_tree_id]
-		Tech_Tree.maxlevel = 1 + length(all_technologies[tech_tree_id])
+		Tech_Tree.maxlevel = length(all_technologies[tech_tree_id])
 
 	for(var/design_id in design_by_id)
 		var/datum/design/D = design_by_id[design_id]

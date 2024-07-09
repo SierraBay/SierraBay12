@@ -65,6 +65,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	var/imprinter_show_tech = TRUE
 	var/imprinter_search = ""
 	var/quick_deconstruct = FALSE
+	var/list/diskstored = list()
 
 	req_access = list(access_research)	//Data and setting manipulation requires scientist access.
 
@@ -159,6 +160,20 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		user.remove_from_mob(disk)
 		qdel(disk)
 		return
+
+	if(istype(D, /obj/item/disk/tech_disk))
+		var/obj/item/disk/tech_disk/disk = D
+		if(disk.stored)
+			if(disk.stored.id in diskstored)
+				to_chat(user, "<span class='notice'>[name] has already have same data as at the [disk]</span>")
+				return
+			var/science_value = disk.stored.level * 1000
+			files.research_points += science_value
+			to_chat(user, "<span class='notice'>[name] received [science_value] research points from [disk]</span>")
+			diskstored += disk.stored.id
+			user.remove_from_mob(disk)
+			qdel(disk)
+
 	if(istype(D, /obj/item/stock_parts/computer/hard_drive/portable))
 		if(disk)
 			to_chat(user, SPAN_NOTICE("A disk is already loaded into the machine."))

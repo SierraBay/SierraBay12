@@ -160,7 +160,7 @@
 
 	required_technologies = list("pcpu_small")
 	required_tech_levels = list()
-	cost = 200
+	cost = 1200
 
 	unlocks_designs = list("pcpu_normal")
 
