@@ -204,7 +204,7 @@
 			desc_comp += "[SPAN_NOTICE("Testing potentials:")]<BR>"
 			//var/list/techlvls = params2list(origin_tech)
 			for(var/T in origin_tech)
-				desc_comp += "Tech: Level [origin_tech[T]] [CallTechName(T)] <BR>"
+				desc_comp += "Tech: Level [origin_tech[T]] [(T)] <BR>"
 		else
 			desc_comp += "No tech origins detected.<BR>"
 

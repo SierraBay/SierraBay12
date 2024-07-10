@@ -122,7 +122,7 @@
 					add_client_color(/datum/client_color/nvg)
 				add_clothing_protection(mod)
 				mod.process_hud(src)
-	if (eyewear)
+	if (istype(eyewear))
 		for(var/obj/item/clothing/accessory/glassesmod/mod in eyewear.accessories)
 			if (mod?.active)
 				equipment_darkness_modifier += mod.darkness_view

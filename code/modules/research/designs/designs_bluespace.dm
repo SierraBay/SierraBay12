@@ -1,6 +1,5 @@
-/datum/design/item/bluespace/AssembleDesignName()
-	..()
-	name = "Bluespace device ([item_name])"
+/datum/design/item/bluespace
+	category = list("Misc")
 
 /datum/design/item/bluespace/gps
 	name = "triangulating device"
@@ -37,10 +36,13 @@
 	materials = list(MATERIAL_GOLD = 3000, MATERIAL_DIAMOND = 1500, MATERIAL_URANIUM = 250, MATERIAL_PLASTIC = 250)
 	build_path = /obj/item/storage/backpack/holding
 	sort_string = "VAFAA"
+
 // SIERRA ADD
 /datum/design/item/telesci/gps
 	name = "Telescience GPS"
 	desc = "Required for calculations in the telescience field."
+	category = list("Misc")
+	id = "telesci-gps"
 	req_tech = list(TECH_ENGINEERING = 3, TECH_BLUESPACE = 4)
 	materials = list(MATERIAL_STEEL = 300, MATERIAL_PLASTIC = 250)
 	build_path = /obj/item/device/telesci/gps

@@ -1,0 +1,4 @@
+author: Lexanx
+changes:
+  - {bugfix: Возвращаем утерянные вещи в НИО}
+delete-after: true

@@ -112,7 +112,7 @@ var/global/list/worths = list(
 					/obj/item/slimepotion2 = 300,
 					/obj/item/slimesteroid = 150,
 					/obj/item/slimesteroid2 = 250,
-					/obj/item/portable_destructive_analyzer = 780,
+//					/obj/item/portable_destructive_analyzer = 780,
 					/obj/item/inflatable_dispenser = 300,
 					/obj/item/matter_decompiler = 400,
 //COMPUTER HARDWARE,

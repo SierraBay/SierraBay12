@@ -32,13 +32,14 @@ var/global/file_uid = 0
 		metadata = md.Copy()
 
 /datum/computer_file/Destroy()
-	. = ..()
-	if(!holder)
-		return
-	holder.remove_file(src)
+	if(holder)
+		holder.remove_file(src)
+		holder = null
+
+	return ..()
 
 /// Returns independent copy of this file.
-/datum/computer_file/proc/clone()
+/datum/computer_file/proc/clone(rename = 0)
 	var/datum/computer_file/temp = new type
 	temp.unsendable = unsendable
 	temp.undeletable = undeletable
@@ -47,5 +48,7 @@ var/global/file_uid = 0
 	if(metadata)
 		temp.metadata = metadata.Copy()
 	temp.filename = filename
+	if(rename)
+		temp.filename += "(Copy)"
 	temp.filetype = filetype
 	return temp

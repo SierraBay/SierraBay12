@@ -114,11 +114,18 @@
 	if(..())
 		return
 
+	//[SIERRA-EDIT] - MODPACK_RND
 	if(href_list["build"])
-		add_to_queue(text2num(href_list["build"]))
+		var/datum/design/D = locate(href_list["build"]) in files.known_designs
+		if(D)
+			add_to_queue(D)
 
 	if(href_list["remove"])
-		remove_from_queue(text2num(href_list["remove"]))
+		var/num = text2num(href_list["remove"])
+		if(num)
+			num = clamp(num, 1,LAZYLEN(queue))
+			remove_from_queue(num)
+		//[/SIERRA-EDIT] - MODPACK_RND
 
 	if(href_list["category"])
 		if(href_list["category"] in categories)
@@ -202,8 +209,7 @@
 	else
 		busy = 0
 
-/obj/machinery/robotics_fabricator/proc/add_to_queue(index)
-	var/datum/design/D = files.known_designs[index]
+/obj/machinery/robotics_fabricator/proc/add_to_queue(datum/design/D)
 	queue += D
 	update_busy()
 
@@ -243,17 +249,19 @@
 
 /obj/machinery/robotics_fabricator/proc/get_queue_names()
 	. = list()
+//[SIERRA-ADD] - MODPACK_RND
 	for(var/i = 2 to length(queue))
 		var/datum/design/D = queue[i]
 		. += D.name
 
 /obj/machinery/robotics_fabricator/proc/get_build_options()
 	. = list()
-	for(var/i = 1 to length(files.known_designs))
-		var/datum/design/D = files.known_designs[i]
-		if(!D.build_path || !(D.build_type & MECHFAB))
+	for(var/i in files.known_designs)
+		var/datum/design/D = i
+		if(!(D.build_type & MECHFAB))
 			continue
-		. += list(list("name" = D.name, "id" = i, "category" = D.category, "resourses" = get_design_resourses(D), "time" = get_design_time(D)))
+		. += list(list("name" = D.name, "id" = "\ref[D]", "category" = D.category, "resourses" = get_design_resourses(D), "time" = get_design_time(D)))
+//[/SIERRA-ADD] - MODPACK_RND
 
 /obj/machinery/robotics_fabricator/proc/get_design_resourses(datum/design/D)
 	var/list/F = list()
@@ -273,8 +281,8 @@
 		if(!D.build_path || !(D.build_type & MECHFAB))
 			continue
 		categories |= D.category
-	if(!category || !(category in categories))
-		category = categories[1]
+//	if(!category || !(category in categories))
+//		category = categories[1]
 
 /obj/machinery/robotics_fabricator/proc/get_materials()
 	. = list()
@@ -328,10 +336,8 @@
 	for(var/obj/machinery/computer/rdconsole/RDC in get_area_all_atoms(get_area(src)))
 		if(!RDC.sync)
 			continue
-		for(var/datum/tech/T in RDC.files.known_tech)
-			files.AddTech2Known(T)
-		for(var/datum/design/D in RDC.files.known_designs)
-			files.AddDesign2Known(D)
-		files.RefreshResearch()
-		sync_message = "Sync complete."
+		files.download_from(RDC.files)
+//[SIERRA-EDIT] - MODPACK_RND
+	sync_message = "Sync complete."
 	update_categories()
+//[/SIERRA-EDIT] - MODPACK_RND

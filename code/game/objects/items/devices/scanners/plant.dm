@@ -12,6 +12,10 @@
 		/obj/machinery/portable_atmospherics/hydroponics,
 		/obj/item/seeds
 	)
+//[SIERRA-ADD] - MODPACK_RND
+	var/potency
+//[/SIERRA-ADD] - MODPACK_RND
+
 
 /obj/item/device/scanner/plant/is_valid_scan_target(atom/O)
 	if(is_type_in_list(O, valid_targets))
@@ -22,8 +26,15 @@
 	scan_title = "[A] at [get_area(A)]"
 	scan_data = plant_scan_results(A)
 	show_menu(user)
+//[SIERRA-ADD] - MODPACK_RND
+	var/datum/seed/grown_seed
+	if(istype(A,/obj/item/reagent_containers/food/snacks/grown))
+		var/obj/item/reagent_containers/food/snacks/grown/G = A
+		grown_seed = SSplants.seeds[G.plantname]
+	potency = grown_seed.get_trait(TRAIT_POTENCY)
+//[/SIERRA-ADD] - MODPACK_RND
 
-/proc/plant_scan_results(obj/target)
+/obj/item/device/scanner/plant/proc/plant_scan_results(obj/target)
 	var/datum/seed/grown_seed
 	var/datum/reagents/grown_reagents
 	if(istype(target,/obj/item/reagent_containers/food/snacks/grown))
@@ -180,3 +191,16 @@
 		dat += "<br>It will remove gas from the environment."
 
 	return JOINTEXT(dat)
+//[SIERRA-ADD] - MODPACK_RND
+
+/obj/item/device/scanner/plant/print_report(mob/living/user)
+	if(!scan_data)
+		to_chat(user, "There is no scan data to print.")
+		return
+	var/obj/item/paper/plant_report/P = new(get_turf(src), scan_data, "paper - [scan_title]")
+	P.potency = potency
+	if(printout_color)
+		P.color = printout_color
+	user.put_in_hands(P)
+	user.visible_message("\The [src] spits out a piece of paper.")
+//[/SIERRA-ADD] - MODPACK_RND

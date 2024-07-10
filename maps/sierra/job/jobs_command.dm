@@ -161,7 +161,7 @@
 		access_sec_doors, access_medical, access_network,
 		access_maint_tunnels, access_eva, access_expedition_shuttle, access_expedition_shuttle_helm,
 		access_guppy, access_hangar, access_petrov, access_petrov_helm,
-		access_guppy_helm, access_explorer, access_el, access_network_admin
+		access_guppy_helm, access_explorer, access_el, access_network_admin, access_research_storage
 	)
 	software_on_spawn = list(
 		/datum/computer_file/program/comm,
