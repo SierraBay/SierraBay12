@@ -222,7 +222,7 @@
 
 /obj/machinery/robotics_fabricator/proc/can_build(datum/design/D)
 	for(var/M in D.materials)
-		if(materials[M] <= D.materials[M] * mat_efficiency)
+		if(materials[M] < D.materials[M] * mat_efficiency)
 			return 0
 	return 1
 
