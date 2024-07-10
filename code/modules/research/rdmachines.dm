@@ -27,14 +27,19 @@ var/global/list/default_material_composition = list(MATERIAL_STEEL = 0, MATERIAL
 			new /obj/item/stack/material(loc, round(materials[f] / SHEET_MATERIAL_AMOUNT), f)
 	return ..()
 
-/obj/machinery/r_n_d/proc/check_craftable_amount_by_material(datum/design/D, mat)
+/obj/machinery/r_n_d/protolathe/proc/check_craftable_amount_by_material(datum/design/D, mat)
 	var/A = materials[mat]
-	A = A / max(1 , (D.materials[mat])) // loaded material / required material
+	A = A / max(1 , (D.materials[mat]*mat_efficiency)) // loaded material / required material
+	return A
+
+/obj/machinery/r_n_d/circuit_imprinter/proc/check_craftable_amount_by_material(datum/design/D, mat)
+	var/A = materials[mat]
+	A = A / max(1 , (D.materials[mat]*mat_efficiency)) // loaded material / required material
 	return A
 
 /obj/machinery/r_n_d/circuit_imprinter/proc/check_craftable_amount_by_chemical(datum/design/design, reagent)
 	var/A = design.chemicals[reagent]
-	A = A / max(1, (design.chemicals[reagent]))
+	A = A / max(1, (design.chemicals[reagent]*mat_efficiency))
 
 	return A
 //[/SIERRA-EDIT] - MODPACK_RND
