@@ -167,10 +167,10 @@ using metal and glass, it uses glass and reagents (usually sulphuric acid).
 /obj/machinery/r_n_d/circuit_imprinter/proc/canBuild(datum/rnd_queue_design/RNDD)
 	var/datum/design/D = RNDD.design
 	for(var/M in D.materials)
-		if(materials[M] < D.materials[M]*RNDD.amount)
+		if(materials[M] < (D.materials[M] * RNDD.amount)*mat_efficiency)
 			return FALSE
 	for(var/C in D.chemicals)
-		if(!reagents.has_reagent(C, D.chemicals[C] * RNDD.amount))
+		if(!reagents.has_reagent(C, (D.chemicals[C] * RNDD.amount)*mat_efficiency))
 			return FALSE
 	return TRUE
 
