@@ -113,7 +113,7 @@
 	y = 0.5
 	icon = "telecom_part"
 
-	required_technologies = list("gps")
+	required_technologies = list("track_dev")
 	required_tech_levels = list()
 	cost = 750
 
