@@ -133,7 +133,7 @@
 	required_tech_levels = list()
 	cost = 1000
 
-	unlocks_designs = list("gps", "artificial_bluespace_crystal")
+	unlocks_designs = list("artificial_bluespace_crystal")
 
 
 /datum/technology/tcom/tele_sci
