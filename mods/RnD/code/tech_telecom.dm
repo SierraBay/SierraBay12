@@ -194,6 +194,6 @@
 
 	required_technologies = list("crystal")
 	required_tech_levels = list()
-	cost = 1000
+	cost = 1800
 
 	unlocks_designs = list("bag_holding", "blutrash")
