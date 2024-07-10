@@ -8,6 +8,12 @@
 	max_repair = 30
 	melee_damage = 30
 	repair_damage = 10
+	back_modificator_damage = 1.3
+	front_modificator_damage = 1
+	max_heat = 100
+	heat_cooling = 7.5
+	emp_heat_generation = 75
+	heat_generation = 5
 
 /obj/item/mech_component/manipulators/light
 	allow_passengers = FALSE
@@ -17,6 +23,12 @@
 	melee_damage = 30
 	repair_damage = 15
 	req_material = MATERIAL_ALUMINIUM
+	back_modificator_damage = 1.3
+	front_modificator_damage = 1
+	max_heat = 75
+	heat_cooling = 7.5
+	emp_heat_generation = 70
+	heat_generation = 10
 
 /obj/item/mech_component/manipulators/heavy
 	melee_damage = 40
@@ -25,6 +37,12 @@
 	min_damage = 300
 	repair_damage = 30
 	req_material = MATERIAL_PLASTEEL
+	back_modificator_damage = 1
+	front_modificator_damage = 0.7
+	max_heat = 300
+	heat_cooling = 3
+	emp_heat_generation = 100
+	heat_generation = 15
 
 /obj/item/mech_component/manipulators/combat
 	max_damage = 180
@@ -32,3 +50,9 @@
 	max_repair = 60
 	melee_damage = 30
 	repair_damage = 20
+	back_modificator_damage = 1.3
+	front_modificator_damage = 1
+	max_heat = 125
+	heat_cooling = 5
+	emp_heat_generation = 100
+	heat_generation = 20

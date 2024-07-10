@@ -221,8 +221,8 @@
 		var/arms_local_damage = arms.melee_damage
 		src.visible_message(SPAN_DANGER("\The [src] steps back, preparing for a strike!"), blind_message = SPAN_DANGER("You hear the loud hissing of hydraulics!"))
 		if (do_after(src, 1.2 SECONDS, get_turf(src), DO_DEFAULT | DO_USER_UNIQUE_ACT | DO_PUBLIC_PROGRESS) && user)
-
-			//[SIERRA-ADD] - Mechs_by_Shegar
+			add_heat(arms.heat_generation)
+	//[SIERRA-ADD] - Mechs_by_Shegar
 			//CHECK
 			if (get_dist(src, A) > 1.5)
 				src.visible_message(SPAN_DANGER(" [src] misses with his attack!"))
@@ -424,6 +424,11 @@
 		if (!getFireLoss())
 			USE_FEEDBACK_FAILURE("\The [src] has no electrical damage to repair.")
 			return TRUE
+		//[SIERRA-ADD] - Mechs-by-Shegar
+		if(usr in pilots)
+			USE_FEEDBACK_FAILURE("\The [src] cannot be repaired from the inside.")
+			return TRUE
+		//[SIERRA-ADD]
 		var/list/damaged_parts = list()
 		for (var/obj/item/mech_component/component in list(arms, legs, body, head))
 			if (component?.burn_damage)
@@ -594,6 +599,11 @@
 		if (!getBruteLoss())
 			USE_FEEDBACK_FAILURE("\The [src] has no physical damage to repair.")
 			return TRUE
+		//[SIERRA-ADD] - Mechs-by-Shegar
+		if(usr in pilots)
+			USE_FEEDBACK_FAILURE("\The [src] cannot be repaired from the inside.")
+			return TRUE
+		//[SIERRA-ADD]
 		var/list/damaged_parts = list()
 		for (var/obj/item/mech_component/component in list(arms, legs, body, head))
 			if (component?.brute_damage)
@@ -604,9 +614,11 @@
 		if (!input_fix.brute_damage)
 			USE_FEEDBACK_FAILURE("\The [src]'s [input_fix.name] no longer needs repair.")
 			return TRUE
-		if(input_fix.max_damage - input_fix.current_hp > input_fix.max_repair)
+		//[SIERRA-ADD] - Mechs-by-Shegar
+		if(input_fix.current_hp == input_fix.max_repair || input_fix.current_hp < input_fix.max_repair)
 			USE_FEEDBACK_FAILURE("\The [src]'s [input_fix.name] is too damaged and requires repair with material.")
 			return TRUE
+		//[SIERRA-ADD]
 		input_fix.repair_brute_generic(tool, user)
 		return TRUE
 

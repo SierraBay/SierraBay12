@@ -253,6 +253,14 @@
 		result = target_mob.bullet_act(src, def_zone)
 
 	if(result == PROJECTILE_FORCE_MISS)
+		//[SIERRA-ADD] - Mechs-by-Shegar
+		if(istype(target_mob, /mob/living/exosuit))
+			if(prob(30))
+				target_mob.visible_message(SPAN_NOTICE("\The [src] bounces off [target_mob]!"))
+				return 0
+			else
+				return 1
+		//[SIERRA-ADD]
 		if(!silenced)
 			target_mob.visible_message(SPAN_NOTICE("\The [src] misses [target_mob] narrowly!"))
 			if(LAZYLEN(miss_sounds))

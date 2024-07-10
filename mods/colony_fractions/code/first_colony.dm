@@ -27,7 +27,13 @@ GLOBAL_VAR_INIT(choose_colony_type, "СЛУЧАЙНЫЙ") //Педальки в�
 	color = COLOR_OFF_WHITE
 	detail_color = COLOR_BEIGE
 
+/datum/map_template/ruin/exoplanet/playablecolony
+	mappaths = list('mods/colony_fractions/maps/colony_base.dmm')
+
 /datum/map_template/ruin/exoplanet/playablecolony/load(turf/T, centered=FALSE)
+	if(!GLOB.choose_colony_type)
+		log_and_message_admins("ОШИБКА: пустой выбранный тип колонии!.")
+		GLOB.choose_colony_type = "СЛУЧАЙНЫЙ"
 	if(GLOB.choose_colony_type == "СЛУЧАЙНЫЙ")
 		var/number = rand(1,100)
 		if(number < 30 || number == 30)
@@ -39,7 +45,12 @@ GLOBAL_VAR_INIT(choose_colony_type, "СЛУЧАЙНЫЙ") //Педальки в�
 		else if(number < 100 || number == 100)
 			GLOB.last_colony_type = "НЕЗАВИСИМАЯ"
 	else
-		GLOB.last_colony_type = GLOB.choose_colony_type
+		if(GLOB.last_colony_type != "НЕЗАВИСИМАЯ" && GLOB.last_colony_type != "ЦПСС" && GLOB.last_colony_type != "ГКК" && GLOB.last_colony_type != "НАНОТРЕЙЗЕН")
+			log_and_message_admins("ОШИБКА: Некорректная работа кода колонии, выбран несуществующий тип: [GLOB.choose_colony_type], попытка заспавнить [GLOB.last_colony_type].")
+			log_and_message_admins("Колония выбрана стандартного типа - НАНОТРЕЙЗЕН.")
+			GLOB.last_colony_type = "НАНОТРЕЙЗЕН"
+		else
+			GLOB.last_colony_type = GLOB.choose_colony_type
 	log_and_message_admins("Начал спавн колонии следующего типа: [GLOB.last_colony_type].")
 
 	.=..()
@@ -105,7 +116,8 @@ GLOBAL_VAR_INIT(choose_colony_type, "СЛУЧАЙНЫЙ") //Педальки в�
 		return list(/obj/structure/sign/icarus_solgov)
 	else if(GLOB.last_colony_type == "НЕЗАВИСИМАЯ")
 		return list(/obj/structure/sign/colony)
-
+	//стандарт значение
+	return list(/obj/structure/sign/colony)
 
 
 //БРОНИКИ
@@ -148,7 +160,8 @@ GLOBAL_VAR_INIT(choose_colony_type, "СЛУЧАЙНЫЙ") //Педальки в�
 					/obj/item/clothing/suit/armor/laserproof,
 					/obj/item/clothing/suit/armor/pcarrier/merc
 					)
-
+	//стандарт значение
+	return list(/obj/item/clothing/suit/armor/riot)
 
 
 
@@ -197,6 +210,8 @@ GLOBAL_VAR_INIT(choose_colony_type, "СЛУЧАЙНЫЙ") //Педальки в�
 					/obj/item/clothing/head/helmet/old_commonwealth,
 					/obj/item/clothing/head/helmet/swat
 					)
+	//стандарт значение
+	return list(/obj/item/clothing/head/helmet/swat)
 //ПП
 
 /obj/random/colony_smg/spawn_choices()
@@ -212,6 +227,8 @@ GLOBAL_VAR_INIT(choose_colony_type, "СЛУЧАЙНЫЙ") //Педальки в�
 					/obj/item/gun/projectile/automatic/machine_pistol/usi,
 					/obj/item/gun/projectile/automatic
 					)
+	//стандарт значение
+	return list(/obj/item/gun/projectile/automatic/merc_smg)
 
 //АВТОМАТ
 
@@ -235,3 +252,29 @@ GLOBAL_VAR_INIT(choose_colony_type, "СЛУЧАЙНЫЙ") //Педальки в�
 					/obj/item/gun/projectile/automatic/mbr_colony,
 					/obj/item/gun/projectile/automatic/battlerifle
 					)
+	//стандарт значение
+	return list(/obj/item/gun/projectile/automatic/battlerifle)
+
+/obj/machinery/computer/rdconsole/core/colony/New()
+	. = ..()
+	QDEL_NULL(files)
+	files = new
+	//Отнимайте в каждой технологией по 1 уровню, именно такие значения будут в игре
+	files.UpdateTech("materials", 7) //Материалы
+	files.UpdateTech("engineering", 5) //Инженерка
+	files.UpdateTech("phorontech", 5) //Форон
+	files.UpdateTech("powerstorage", 7) //Повер манипулейшен
+	files.UpdateTech("bluespace", 5) //Блюспейс
+	files.UpdateTech("biotech", 7) //Биология
+	files.UpdateTech("combat", 8) // Боевые
+	files.UpdateTech("magnets", 7) //Электромагнитные
+	files.UpdateTech("programming", 5) //ДАТА
+	files.UpdateTech("esoteric", 8) //Эзотерика
+
+/area/map_template/colony/science
+	name = "\improper Colony R&D"
+	icon_state = "research"
+
+/area/map_template/colony/warehouse
+	name = "\improper Сolony warehouse"
+	icon_state = "storage"
