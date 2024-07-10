@@ -241,6 +241,7 @@ a.linkDanger:hover {
 .sciMenuButton {
     width: 300px;
     float: left;
+}
 
 .candystripe {
 	background-color: transparent;
@@ -295,5 +296,4 @@ a.linkDanger:hover {
     display: flex;
     justify-content: space-between;
     font-weight: bold;
-
 }
