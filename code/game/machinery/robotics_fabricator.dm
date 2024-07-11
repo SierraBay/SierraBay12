@@ -222,7 +222,9 @@
 
 /obj/machinery/robotics_fabricator/proc/can_build(datum/design/D)
 	for(var/M in D.materials)
+	//[SIERRA-EDIT] - MODPACK_RND
 		if(materials[M] < D.materials[M] * mat_efficiency)
+	//[/SIERRA-EDIT] - MODPACK_RND
 			return 0
 	return 1
 
