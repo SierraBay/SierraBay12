@@ -114,10 +114,12 @@
 /obj/machinery/r_n_d/protolathe/proc/canBuild(datum/rnd_queue_design/RNDD)
 	var/datum/design/D = RNDD.design
 	for(var/M in D.materials)
-		if(materials[M] < D.materials[M]*RNDD.amount)
+//[SIERRA-EDIT] - MODPACK_RND
+		if(materials[M] < (D.materials[M] * RNDD.amount)*mat_efficiency)
 			return FALSE
 	for(var/C in D.chemicals)
-		if(!reagents.has_reagent(C, D.chemicals[C] * RNDD.amount))
+		if(!reagents.has_reagent(C, (D.chemicals[C] * RNDD.amount)*mat_efficiency))
+//[/SIERRA-EDIT] - MODPACK_RND
 			return FALSE
 	return TRUE
 
