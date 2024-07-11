@@ -252,7 +252,7 @@
 	name = "stunprod"
 	desc = "An improvised stun baton."
 	icon = 'icons/obj/weapons/melee_physical.dmi'
-	icon_state = "stunprod_nocell"
+	icon_state = "stunprod"
 	item_state = "prod"
 	force = 3
 	throwforce = 5
@@ -261,3 +261,7 @@
 	hitcost = 25
 	attack_verb = list("poked")
 	slot_flags = null
+
+/obj/item/melee/baton/cattleprod/New()
+	update_icon()
+	..()

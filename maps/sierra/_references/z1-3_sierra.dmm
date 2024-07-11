@@ -67421,7 +67421,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass/security{
 	id_tag = "detdoor";
-	name = "Lont Term Checkpoint";
+	name = "Long Term Checkpoint";
 	req_access = newlist()
 	},
 /obj/floor_decal/industrial/hatch/grey,
@@ -70494,8 +70494,8 @@
 /obj/structure/table/standard,
 /obj/item/disk/tech_disk,
 /obj/item/disk/tech_disk,
-/obj/item/disk/design_disk,
-/obj/item/disk/design_disk,
+/obj/item/stock_parts/computer/hard_drive/portable,
+/obj/item/stock_parts/computer/hard_drive/portable,
 /obj/item/reagent_containers/dropper{
 	pixel_y = -4
 	},
@@ -108977,7 +108977,7 @@
 /obj/machinery/door/airlock/glass/security{
 	dir = 4;
 	id_tag = "detdoor";
-	name = "Lont Term Checkpoint";
+	name = "Long Term Checkpoint";
 	req_access = newlist()
 	},
 /obj/floor_decal/industrial/hatch/grey,

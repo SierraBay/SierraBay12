@@ -2,8 +2,16 @@
 	if(usr == src && usr != over)
 		if(istype(over, /mob/living/exosuit))
 			var/mob/living/exosuit/exosuit = over
-			if(exosuit.enter(src))
-				return
+//[SIERRA-ADD] - Mechs-by-Shegar
+			if(exosuit.body)
+				if(usr.mob_size >= exosuit.body.min_pilot_size && usr.mob_size <= exosuit.body.max_pilot_size \
+				&& !issilicon(usr))
+					if(exosuit.enter(src,FALSE,TRUE,FALSE))
+						return
+				else
+					to_chat(usr, SPAN_WARNING("You cannot pilot a exosuit of this size."))
+					return
+//[SIERRA-ADD]
 	return ..()
 
 /mob/living/exosuit/MouseDrop_T(atom/dropping, mob/user)
@@ -62,7 +70,16 @@
 
 	if(!user || incapacitated() || user.incapacitated())
 		return
-
+//[SIERRA-ADD] - Mechs-by-Shegar
+	var/arms_chosen = FALSE
+	var/body_chosen = FALSE
+	if(selected_hardpoint == HARDPOINT_LEFT_HAND || selected_hardpoint == HARDPOINT_RIGHT_HAND)
+		arms_chosen = TRUE
+		body_chosen = FALSE
+	else if(selected_hardpoint == HARDPOINT_BACK || selected_hardpoint == HARDPOINT_HEAD || selected_hardpoint == HARDPOINT_LEFT_SHOULDER || selected_hardpoint == HARDPOINT_RIGHT_SHOULDER)
+		arms_chosen = FALSE
+		body_chosen = TRUE
+//[SIERRA-ADD] - Mechs-by-Shegar
 	if(!loc) return
 	var/adj = A.Adjacent(src) // Why in the fuck isn't Adjacent() commutative.
 
@@ -78,6 +95,14 @@
 				setClickCooldown(3)
 			return
 
+	if(modifiers["alt"])
+		if(istype(A, /obj/item/mech_equipment))
+			for(var/hardpoint in hardpoints)
+				if(A == hardpoints[hardpoint])
+					A.AltClick(user)
+					setClickCooldown(3)
+					return
+
 	if(!(user in pilots) && user != src)
 		return
 
@@ -88,13 +113,18 @@
 	if(A.loc != src && !(get_dir(src, A) & dir))
 		return
 
-	if(!arms)
+	if(!arms && arms_chosen)
 		to_chat(user, SPAN_WARNING("\The [src] has no manipulators!"))
 		setClickCooldown(3)
 		return
 
-	if(!arms.motivator || !arms.motivator.is_functional())
+	if((!arms.motivator || !arms.motivator.is_functional()) && arms_chosen)
 		to_chat(user, SPAN_WARNING("Your motivators are damaged! You can't use your manipulators!"))
+		setClickCooldown(15)
+		return
+
+	if((!body || body.total_damage >= body.max_damage) && body_chosen)
+		to_chat(user, SPAN_WARNING("Your cockpit too damaged, additional hardpoints control system damaged, you can't use this module!"))
 		setClickCooldown(15)
 		return
 
@@ -184,13 +214,74 @@
 	if(A == src)
 		setClickCooldown(5)
 		return attack_self(user)
-	else if(adj && user.a_intent == I_HURT) //Prevents accidental slams.
+	//[SIERRA-ADD] - Mechs-by-Shegar
+	else if(adj && user.a_intent == I_HURT && arms.motivator) //Prevents accidental slams.
 		setClickCooldown(arms ? arms.action_delay : 7) // You've already commited to applying fist, don't turn and back out now!
 		playsound(src.loc, legs.mech_step_sound, 60, 1)
-		src.visible_message(SPAN_DANGER("\The [src] steps back, preparing for a slam!"), blind_message = SPAN_DANGER("You hear the loud hissing of hydraulics!"))
+		var/arms_local_damage = arms.melee_damage
+		src.visible_message(SPAN_DANGER("\The [src] steps back, preparing for a strike!"), blind_message = SPAN_DANGER("You hear the loud hissing of hydraulics!"))
 		if (do_after(src, 1.2 SECONDS, get_turf(src), DO_DEFAULT | DO_USER_UNIQUE_ACT | DO_PUBLIC_PROGRESS) && user)
-			A.attack_generic(src, arms.melee_damage, "slammed against", DAMAGE_BRUTE) //"Punch" would be bad since vehicles without arms could be a thing
-			var/turf/T = get_step(get_turf(src), src.dir)
+
+			//[SIERRA-ADD] - Mechs_by_Shegar
+			//CHECK
+			if (get_dist(src, A) > 1.5)
+				src.visible_message(SPAN_DANGER(" [src] misses with his attack!"))
+				setClickCooldown(arms ? arms.action_delay : 7)
+				playsound(src.loc, arms.punch_sound, 50, 1)
+				return
+			//additional actions with objects!
+
+			//emergency airlock open
+			if(istype(A, /obj/machinery/door/firedoor) )
+				var/obj/machinery/door/firedoor/FD = A
+				if(!FD.blocked)
+					setClickCooldown(arms ? arms.action_delay : 7)
+					addtimer(new Callback(FD, TYPE_PROC_REF(/obj/machinery/door/firedoor, toggle), TRUE), 0)
+					return
+			//emergency airlock open
+
+
+
+			//heavy blast open
+			else if(istype(A,/obj/machinery/door/blast/regular))
+				var/obj/machinery/door/blast/FD = A
+				if(FD.inoperable() || !FD.is_powered())
+					setClickCooldown(arms ? arms.action_delay : 7)
+					addtimer(new Callback(FD, TYPE_PROC_REF(/obj/machinery/door/blast, force_toggle), TRUE), 0)
+					return
+				to_chat(user, SPAN_NOTICE("This structure too reinforced for being damaged by [src]!"))
+				return
+			//heavy blast open
+
+
+
+			//blast open
+			else if( istype(A, /obj/machinery/door/blast) || istype(A, /obj/machinery/door/blast/shutters) )
+				var/obj/machinery/door/blast/FD = A
+				if(FD.inoperable() || !FD.is_powered())
+					setClickCooldown(arms ? arms.action_delay : 7)
+					addtimer(new Callback(FD, TYPE_PROC_REF(/obj/machinery/door/blast, force_toggle), TRUE), 0)
+					return
+				arms_local_damage = arms_local_damage * 2
+			//blast open
+
+
+
+			//door open
+			else if((istype(A, /obj/machinery/door)))
+				var/obj/machinery/door/airlock/FD = A
+				if(FD.inoperable() || !FD.is_powered())
+					setClickCooldown(arms ? arms.action_delay : 7)
+					addtimer(new Callback(FD, TYPE_PROC_REF(/obj/machinery/door, toggle), TRUE), 0)
+					return
+				arms_local_damage = arms_local_damage * 2
+			//door open
+
+
+			//Now - attack
+			A.attack_generic(src, arms_local_damage, "strikes", DAMAGE_BRUTE) //"Punch" would be bad since vehicles without arms could be a thing //No
+			var/turf/T = get_turf(A)
+			//[SIERRA-ADD]
 			if(istype(T))
 				do_attack_effect(T, "smash")
 			playsound(src.loc, arms.punch_sound, 50, 1)
@@ -214,7 +305,7 @@
 		for(var/hardpoint in hardpoints)
 			if(hardpoint != selected_hardpoint)
 				continue
-			var/obj/screen/exosuit/hardpoint/H = hardpoint_hud_elements[hardpoint]
+			var/obj/screen/movable/exosuit/hardpoint/H = hardpoint_hud_elements[hardpoint]
 			if(istype(H))
 				H.icon_state = "hardpoint"
 				break
@@ -235,10 +326,14 @@
 	if(!user.Adjacent(src))
 		return FALSE
 	if(hatch_locked)
+		if(!check_passenger(user))
+			return
 		if(!silent)
 			to_chat(user, SPAN_WARNING("The [body.hatch_descriptor] is locked."))
 		return FALSE
 	if(hatch_closed)
+		if(!check_passenger(user))
+			return
 		if(!silent)
 			to_chat(user, SPAN_WARNING("The [body.hatch_descriptor] is closed."))
 		return FALSE
@@ -287,6 +382,9 @@
 		user.dropInto(loc)
 	if (user.client)
 		user.client.screen -= hud_elements
+		//[SIERRA-ADD] - Mechs-by-Shegar
+		user.client.screen -= menu_hud_elements
+		//[SIERRA-ADD]
 		user.client.eye = user
 	LAZYREMOVE(user.additional_vision_handlers, src)
 	LAZYREMOVE(pilots, user)
@@ -340,9 +438,11 @@
 		return TRUE
 
 	// Crowbar - Force open locked cockpit
-	if (isCrowbar(tool))
+	else if (isCrowbar(tool))
 		if (!body)
 			USE_FEEDBACK_FAILURE("\The [src] has no cockpit to force.")
+			//[SIERRA-EDIT] - Mechs-by-Shegar
+			/*
 			return TRUE
 		if (!hatch_locked)
 			USE_FEEDBACK_FAILURE("\The [src]'s cockpit isn't locked. You don't need to force it.")
@@ -352,42 +452,40 @@
 			SPAN_WARNING("You start forcing \the [src]'s emergency [body.hatch_descriptor] release using \the [tool].")
 		)
 		if (!user.do_skilled((tool.toolspeed * 5) SECONDS, list(SKILL_DEVICES, SKILL_EVA), src) || !user.use_sanity_check(src, tool))
-			return TRUE
-		if (!body)
-			USE_FEEDBACK_FAILURE("\The [src] has no cockpit to force.")
-			return TRUE
+			*/
+			return FALSE
+		if(hatch_locked)
+			USE_FEEDBACK_FAILURE("\The [src]'s cockpit locked by cockpit security bolts. You need saw or welder.")
+			return FALSE
+		visible_message(SPAN_NOTICE("\The [user] starts forcing the \the [src]'s emergency [body.hatch_descriptor] release using \the [tool]."))
+		if(!do_after(user, 5 SECONDS, src, DO_DEFAULT | DO_PUBLIC_PROGRESS))
+			return
 		playsound(src, 'sound/machines/bolts_up.ogg', 25, TRUE)
-		hatch_locked = FALSE
-		hatch_closed = FALSE
-		for (var/mob/pilot in pilots)
-			eject(pilot, TRUE)
+		hatch_closed = !hatch_closed
 		hud_open.update_icon()
 		update_icon()
-		user.visible_message(
-			SPAN_WARNING("\The [user] forces \the [src]'s emergency [body.hatch_descriptor] release using \a [tool]."),
-			SPAN_WARNING("You force \the [src]'s emergency [body.hatch_descriptor] release using \the [tool].")
-		)
 		return TRUE
+		//[SIERRA-EDIT]
 
 	// Exosuit Customization Kit - Customize the exosuit
-	if (istype(tool, /obj/item/device/kit/paint))
-		var/obj/item/device/kit/paint/paint = tool
-		SetName(paint.new_name)
-		desc = paint.new_desc
+
+
+// [SIERRA-EDIT]
+	else if (istype(tool, /obj/item/device/kit/mech))
+		var/obj/item/device/kit/mech/paint = tool
 		for (var/obj/item/mech_component/component in list(arms, legs, head, body))
-			component.decal = paint.new_icon
-		if (paint.new_icon_file)
+			component.decal = paint.current_decal
+		if(paint.new_icon_file)
 			icon = paint.new_icon_file
 		update_icon()
-		paint.use(1, user)
 		user.visible_message(
 			SPAN_NOTICE("\The [user] opens \the [tool] and spends some quality time customising \the [src]."),
 			SPAN_NOTICE("You open \the [tool] and spend some quality time customising \the [src].")
 		)
 		return TRUE
-
+// [SIERRA-EDIT]
 	// Mech Equipment - Install equipment
-	if (istype(tool, /obj/item/mech_equipment))
+	else if (istype(tool, /obj/item/mech_equipment))
 		if (hardpoints_locked)
 			USE_FEEDBACK_FAILURE("\The [src]'s hardpoint system is locked.")
 			return TRUE
@@ -412,7 +510,20 @@
 		return TRUE
 
 	// Multitool - Remove component
-	if (isMultitool(tool))
+	//[SIERRA-ADD] - Mechs-by-Shegar
+	//Персонаж пытающийся взаимодействовать мультитулом может открыть доп взаимодействие?
+	else if (istype(tool, /obj/item/device/multitool/multimeter))
+		can_hack_id(tool, user)
+	else if (isMultitool(tool))
+		if(id_holder)
+			var/list/variants = list("Restore ID data", "Dismantle equipment")
+			var/bla
+			var/choose = input(usr, "What you want to do?.", name, bla) as null|anything in variants
+			if(!choose)
+				return
+			if(choose == "Restore ID data")
+				can_hack_id(tool,user)
+		//[SIERRA-ADD] - Mechs-by-Shegar
 		if (hardpoints_locked)
 			USE_FEEDBACK_FAILURE("\The [src]'s hardpoint system is locked.")
 			return TRUE
@@ -430,7 +541,7 @@
 		return TRUE
 
 	// Power Cell - Install cell
-	if (istype(tool, /obj/item/cell))
+	else if (istype(tool, /obj/item/cell))
 		if (!maintenance_protocols)
 			USE_FEEDBACK_FAILURE("\The [src]'s maintenance protocols must be enabled to install \the [tool].")
 			return TRUE
@@ -449,7 +560,7 @@
 		return TRUE
 
 	// Screwdriver - Remove cell
-	if (isScrewdriver(tool))
+	else if (isScrewdriver(tool))
 		if (!maintenance_protocols)
 			USE_FEEDBACK_FAILURE("\The [src]'s maintenance protocols must be enabled to access the power cell.")
 			return TRUE
@@ -479,7 +590,7 @@
 		return TRUE
 
 	// Welding Tool - Repair physical damage
-	if (isWelder(tool))
+	else if (isWelder(tool))
 		if (!getBruteLoss())
 			USE_FEEDBACK_FAILURE("\The [src] has no physical damage to repair.")
 			return TRUE
@@ -493,11 +604,14 @@
 		if (!input_fix.brute_damage)
 			USE_FEEDBACK_FAILURE("\The [src]'s [input_fix.name] no longer needs repair.")
 			return TRUE
+		if(input_fix.max_damage - input_fix.current_hp > input_fix.max_repair)
+			USE_FEEDBACK_FAILURE("\The [src]'s [input_fix.name] is too damaged and requires repair with material.")
+			return TRUE
 		input_fix.repair_brute_generic(tool, user)
 		return TRUE
 
 	// Wrench - Toggle securing bolts
-	if (isWrench(tool))
+	else if (isWrench(tool))
 		if (!maintenance_protocols)
 			USE_FEEDBACK_FAILURE("\The [src]'s maintenance protocols must be enabled to access the securing bolts.")
 			return TRUE
@@ -523,6 +637,11 @@
 /mob/living/exosuit/attack_hand(mob/user)
 	// Drag the pilot out if possible.
 	if(user.a_intent == I_HURT)
+	//[SIERRA-ADD] - Mechs-by-Shegar
+		if(passengers_ammount > 0 && hatch_closed)// Стянуть пассажира с меха рукой!
+			forced_leave_passenger(null,2,user)
+			return
+	//[SIERRA-ADD]
 		if(!LAZYLEN(pilots))
 			to_chat(user, SPAN_WARNING("There is nobody inside \the [src]."))
 		else if(!hatch_closed)
@@ -536,13 +655,16 @@
 				attack_generic(user, 5, "slams")
 				user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN*2)
 		return
-
+//[SIERRA-REMOVE]-Mechs-by-Shegar
+/*
 	// Otherwise toggle the hatch.
 	if(hud_open)
 		hud_open.toggled()
+*/
+//[SIERRA-REMOVE]
 	return
 
-/mob/living/exosuit/attack_generic(mob/user, damage, attack_message = "smashes into")
+/mob/living/exosuit/attack_generic(mob/user, damage, attack_message = "strikes")
 	..()
 	if(damage)
 		playsound(loc, body.damage_sound, 40, 1)

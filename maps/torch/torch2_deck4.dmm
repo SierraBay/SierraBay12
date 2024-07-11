@@ -2809,7 +2809,6 @@
 /obj/structure/noticeboard{
 	pixel_y = 32
 	},
-/obj/item/storage/pill_bottle/tacks,
 /obj/machinery/button/blast_door{
 	id_tag = "sup_office";
 	name = "Desk Shutter Control";
@@ -2977,11 +2976,11 @@
 /obj/structure/table/standard{
 	name = "plastic table frame"
 	},
-/obj/item/folder/blue,
 /obj/machinery/firealarm{
 	dir = 1;
 	pixel_y = -24
 	},
+/obj/item/folder/yellow,
 /turf/simulated/floor/lino,
 /area/tcommsat/computer)
 "ku" = (
@@ -3050,12 +3049,12 @@
 /obj/structure/table/standard{
 	name = "plastic table frame"
 	},
-/obj/item/clothing/suit/storage/hooded/wintercoat/engineering,
 /obj/machinery/power/apc/super/critical{
 	dir = 1;
 	name = "north bump";
 	pixel_y = 24
 	},
+/obj/item/clothing/suit/storage/hooded/wintercoat/solgov,
 /turf/simulated/floor/lino,
 /area/tcommsat/computer)
 "kH" = (
@@ -13427,7 +13426,6 @@
 /obj/structure/noticeboard{
 	pixel_x = 32
 	},
-/obj/item/storage/pill_bottle/tacks,
 /obj/random_multi/single_item/memo_supply,
 /turf/simulated/floor/tiled/monotile,
 /area/quartermaster/deckchief)

@@ -81,6 +81,11 @@
 	return ..()
 
 // Mechs are handled in their attackby (mech_interaction.dm).
+// [SIERRA-REMOVE] - Mechs_by_shegar - Не нужны
+	/*
+
+
+
 /obj/item/device/kit/paint
 	name = "exosuit customisation kit"
 	desc = "A kit containing all the needed tools and parts to repaint a exosuit."
@@ -93,6 +98,7 @@
 // exosuit kits.
 /obj/item/device/kit/paint/use(amt, mob/user)
 	playsound(get_turf(user), 'sound/items/Screwdriver.ogg', 50, 1)
+
 
 /obj/item/device/kit/paint/flames_red
 	name = "\"Firestarter\" exosuit customisation kit"
@@ -111,3 +117,8 @@
 	name = "\"Alpine\" exosuit customisation kit"
 	new_icon = "cammo2"
 	desc = "A muted pattern for alpine environments. Don't miss the forest for the trees!"
+
+
+
+  */
+// [/SIERRA-REMOVE]

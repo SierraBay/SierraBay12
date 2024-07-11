@@ -19,6 +19,7 @@
 	#include "sierra_submaps.dm"
 	#include "sierra_turfs.dm"
 	#include "sierra_unit_testing.dm"
+	#include "sierra_events.dm"
 
 	// --- INCLUDES FROM ANOTHER MAPS --- //
 	#include "sierra_snatch.dm"
@@ -68,11 +69,17 @@
 	#include "items/stamps.dm"
 	#include "items/pouches.dm"
 	#include "items/backpack.dm"
+	#include "items/cargo.dm"
+	#include "items/snacks.dm"
+	#include "items/recipes_microwave.dm"
+	#include "items/weapons/storage/firstaids.dm"
+	#include "items/datajack.dm"
 
 	#include "items/clothing/clothing.dm"
 	#include "items/clothing/exploration.dm"
 	#include "items/clothing/override.dm"
 	#include "items/clothing/storages.dm"
+	#include "items/clothing/security.dm"
 
 	// --- JOB SECTION --- //
 	#include "job\_job_defines.dm"
@@ -167,7 +174,10 @@
 	#include "../away/mininghome/mininghome.dm"
 	#include "../away/scavver/scavver_gantry.dm"
 	#include "../away/abandoned_hotel/abandoned_hotel.dm"
-	// #include "../event/iccgn_ship/icgnv_hound.dm" // SIERRA TODO: Пофиксить или удалить
+	#include "../event/iccgn_ship/icgnv_hound.dm"
+	#include "../event/sfv_arbiter/sfv_arbiter.dm"
+	#include "../event/placeholders/placeholders.dm"
+	#include "../event/empty/empty.dm"
 
 	#include "../bluespace_interlude/bluespace_interlude.dm"
 	#include "../bluespace_interlude/bluespace_interlude.dmm"
@@ -192,6 +202,10 @@
 	#include "../../mods/tajara/_tajara.dme"
 	#include "../../mods/sauna_props/_sauna_props.dme"
 	#include "../../mods/wyccbay_optimization/_wyccbay_optimization.dme"
+	#include "../../mods/contraband_vending/_contraband_vending.dme"
+	#include "../../mods/telecomms/_telecomms.dme"
+	#include "../../mods/modernUI/_modernUI.dme"
+	#include "../../mods/newUI/_newUI.dme"
 
 	// UNUSED MODS
 	// Keep them in ascending alphabetical order too, please

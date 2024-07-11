@@ -6,8 +6,16 @@
 		slot_l_hand_str = "helmet",
 		slot_r_hand_str = "helmet",
 		)
-	valid_accessory_slots = list(ACCESSORY_SLOT_HELM_C, ACCESSORY_SLOT_HELM_D, ACCESSORY_SLOT_VISOR)
-	restricted_accessory_slots = list(ACCESSORY_SLOT_HELM_C, ACCESSORY_SLOT_HELM_D, ACCESSORY_SLOT_VISOR)
+	valid_accessory_slots = list(
+		ACCESSORY_SLOT_HELMET_COVER,
+		ACCESSORY_SLOT_HELMET_DECOR,
+		ACCESSORY_SLOT_HELMET_VISOR
+	)
+	restricted_accessory_slots = list(
+		ACCESSORY_SLOT_HELMET_COVER,
+		ACCESSORY_SLOT_HELMET_DECOR,
+		ACCESSORY_SLOT_HELMET_VISOR
+	)
 	item_flags = ITEM_FLAG_THICKMATERIAL
 	body_parts_covered = HEAD
 	armor = list(
@@ -26,30 +34,28 @@
 	w_class = ITEM_SIZE_NORMAL
 	species_restricted = list("exclude", SPECIES_NABBER, SPECIES_ADHERENT)
 
+
 /obj/item/clothing/head/helmet/needs_vision_update()
-	for(var/obj/item/clothing/accessory/glassesmod/visor in accessories)
+	for (var/obj/item/clothing/accessory/glassesmod/visor in accessories)
 		return TRUE
-	. = ..()
+	return ..()
+
 
 /obj/item/clothing/head/helmet/verb/toggle_visor()
-
-	set name = "Toggle Helmet Attachments"
+	set name = "Toggle Helmet Visors"
 	set category = "Object"
 	set src in usr
-
-	if (!istype(loc,/mob/living))
+	if (usr.incapacitated())
 		return
-
 	var/toggled = FALSE
-	if (!usr.incapacitated())
-		for (var/obj/item/clothing/accessory/glassesmod/mod in accessories)
-			if (mod.active)
-				mod.deactivate(usr)
-			else
-				mod.activate(usr)
-			toggled = TRUE
-		if (!toggled)
-			to_chat(usr, SPAN_CLASS("danger", "You do not have a visor attached to your helmet!"))
+	for (var/obj/item/clothing/accessory/glassesmod/mod in accessories)
+		if (mod.active)
+			mod.deactivate(usr)
+		else
+			mod.activate(usr)
+		toggled = TRUE
+	if (!toggled)
+		to_chat(usr, SPAN_WARNING("Your helmet has no visors attached."))
 
 
 /obj/item/clothing/head/helmet/nt
@@ -95,7 +101,7 @@
 	name = "riot helmet"
 	desc = "It's a helmet specifically designed to protect against close range attacks."
 	icon_state = "helmet_riot"
-	valid_accessory_slots = null
+	valid_accessory_slots = list(ACCESSORY_SLOT_HELMET_VISOR)
 	body_parts_covered = HEAD|FACE|EYES //face shield
 	armor = list(
 		melee = ARMOR_MELEE_VERY_HIGH,
@@ -118,7 +124,7 @@
 	name = "ablative helmet"
 	desc = "A helmet made from advanced materials which protects against concentrated energy weapons."
 	icon_state = "helmet_reflect"
-	valid_accessory_slots = list(ACCESSORY_SLOT_VISOR)
+	valid_accessory_slots = list(ACCESSORY_SLOT_HELMET_VISOR)
 	armor = list(
 		melee = ARMOR_MELEE_SMALL,
 		bullet = ARMOR_BALLISTIC_MINOR,
@@ -131,7 +137,7 @@
 	name = "ballistic helmet"
 	desc = "A helmet with reinforced plating to protect against ballistic projectiles."
 	icon_state = "helmet_bulletproof"
-	valid_accessory_slots = list(ACCESSORY_SLOT_VISOR)
+	valid_accessory_slots = list(ACCESSORY_SLOT_HELMET_VISOR)
 	armor = list(
 		melee = ARMOR_MELEE_MINOR,
 		bullet = ARMOR_BALLISTIC_AP,
@@ -151,7 +157,7 @@
 		energy = ARMOR_ENERGY_RESISTANT,
 		bomb = ARMOR_BOMB_PADDED
 		)
-	valid_accessory_slots = list(ACCESSORY_SLOT_VISOR)
+	valid_accessory_slots = list(ACCESSORY_SLOT_HELMET_VISOR)
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELMET_MIN_COLD_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.5
@@ -204,12 +210,10 @@
 /obj/item/clothing/head/helmet/ert
 	name = "asset protection command helmet"
 	desc = "An in-atmosphere helmet worn by many corporate and private asset protection forces. Has blue highlights."
+	icon = 'icons/obj/obj_head_ERT.dmi'
+	item_icons = list(slot_head_str = 'icons/mob/onmob/onmob_head_ERT.dmi')
 	icon_state = "erthelmet_cmd"
 	valid_accessory_slots = null
-	item_state_slots = list(
-		slot_l_hand_str = "syndicate-helm-green",
-		slot_r_hand_str = "syndicate-helm-green",
-		)
 	armor = list(
 		melee = ARMOR_MELEE_MAJOR,
 		bullet = ARMOR_BALLISTIC_RIFLE,
@@ -293,8 +297,8 @@
 	name = "model helmet"
 	desc = "A lightweight helmet made of cheap plastic, sporting fiducial marking stickers on either side. You doubt it will provide much protection."
 	icon_state = "nvgmount"
-	valid_accessory_slots = list(ACCESSORY_SLOT_VISOR, ACCESSORY_SLOT_HELM_D)
-	restricted_accessory_slots = list(ACCESSORY_SLOT_VISOR, ACCESSORY_SLOT_HELM_D)
+	valid_accessory_slots = list(ACCESSORY_SLOT_HELMET_VISOR, ACCESSORY_SLOT_HELMET_DECOR)
+	restricted_accessory_slots = list(ACCESSORY_SLOT_HELMET_VISOR, ACCESSORY_SLOT_HELMET_DECOR)
 	armor = list(
 		melee = ARMOR_MELEE_MINOR,
 		)

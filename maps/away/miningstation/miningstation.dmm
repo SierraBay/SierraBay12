@@ -2554,7 +2554,6 @@
 /area/miningstation/bridge)
 "gj" = (
 /obj/structure/noticeboard,
-/obj/item/storage/pill_bottle/tacks,
 /obj/paint/black,
 /turf/simulated/wall/r_titanium,
 /area/miningstation/bridge)
@@ -6933,7 +6932,7 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/miningstation/dormhall)
 "pS" = (
-/obj/landmark/corpse/zombiescience,
+/obj/landmark/corpse/anomalist,
 /obj/gibspawner/human,
 /turf/simulated/floor/tiled/techfloor,
 /area/miningstation/vault)

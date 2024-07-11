@@ -1,0 +1,753 @@
+{{if data.screen == "working"}}
+	<h5 class='average'>The R&amp;D Console is currently busy.</h5>
+	<div class='notice'>
+		<center>Working...</center>
+	</div>
+	<p>
+		Thank you for your patience!
+	</p>
+{{/if}}
+{{if data.screen == "locked"}}
+	<h5 class='average'>The R&amp;D Console</h5>
+	<div class='notice'>
+	<center>SYSTEM LOCKED</center>
+	</div>
+	<p>
+		{{:helper.link("Unlock", 'unlocked', {'unlock' : 1})}}
+	</p>
+{{/if}}
+{{if !data.screen || data.screen == "main"}}
+
+<table style="width: 100%">
+	<tr>
+		<td valign="top">
+			<div class="section">
+				<div class="section-title">
+					R&amp;D Console Menu
+				</div>
+				<div class="section-content">
+					<div class='item'>
+						{{:helper.link("Research", 'contact', {'go_screen' : 'tech_trees', 'need_access': 1},data.can_research ? null : 'disabled')}}
+					</div>
+					<div class='item'>
+						{{:helper.link("Protolathe Construction Menu", 'image', {'go_screen' : 'protolathe'}, data.has_protolathe ? null : 'disabled')}}
+					</div>
+					<div class='item'>
+						{{:helper.link("Circuit Construction Menu", 'video', {'go_screen' : 'circuit_imprinter'}, data.has_circuit_imprinter ? null : 'disabled')}}
+					</div>
+				</div>
+			</div>
+			<div class="section">
+				<div class="section-title">
+					Destructive Analyzer
+					<div class="section-buttons">
+						{{if data.destroy_data && data.destroy_data.has_item}}
+							{{:helper.link("Deconstruct item", '', {'deconstruct' : 1})}}
+							{{:helper.link("Eject", '', {'eject_item' : 1})}}
+						{{/if}}
+					</div>
+				</div>
+				<div class="section-content">
+					{{if !data.destroy_data}}
+						No Destructive Analyzer detected
+					{{else}}
+						{{if !data.destroy_data.has_item}}
+							No item loaded inside Destructive Analyzer
+						{{else}}
+							<div class="labelList">
+								<div class="labelList-item">
+									<div class="labelList-item-label">
+										Name:
+									</div>
+									<div class="labelList-item-content">
+										{{:data.destroy_data.item_name}}
+									</div>
+								</div>
+								<div class="item">
+									Detected tech:
+								</div>
+								{{for data.destroy_data.tech_data}}
+									<div class="labelList-item">
+										<div class="labelList-item-label">
+											{{:value.name}}
+										</div>
+										<div class="labelList-item-content">
+											{{:helper.displayBar(value.level, 0, 5, 'good', value.level)}}
+										</div>
+									</div>
+								{{/for}}
+								<div class="labelList-item">
+									<div class="labelList-item-label">
+										Estimated research value:
+									</div>
+									<div class="labelList-item-content">
+										{{:data.destroy_data.item_tech_points}} points ({{:data.destroy_data.item_tech_mod}}%)
+									</div>
+								</div>
+							</div>
+						{{/if}}
+					{{/if}}
+				</div>
+			</div>
+
+			<div class="section">
+				<div class="section-title">
+					Settings
+				</div>
+				<div class="section-content">
+					<div class='item'>
+						{{:helper.link("Sync Database with Network", 'transferthick-e-w', {'sync' : 1}, data.sync ? null : 'disabled')}}
+					</div>
+					<div class='item'>
+						{{:helper.link("Connect to Research Network", 'lightbulb', {'togglesync' : 1}, data.sync ? 'disabled' : null)}}
+					</div>
+					<div class='item'>
+						{{:helper.link("Disconnect from Research Network", 'cancel', {'togglesync' : 1}, data.sync ? null : 'disabled')}}
+					</div>
+					<div class="item" style="display: flex;">
+						{{:helper.link("Lock Console", 'locked', {'lock' : 1})}}
+						{{:helper.link("Reset R&D Database", 'trash', {'reset' : 1})}}
+					</div>
+				</div>
+			</div>
+
+			{{if data.has_disk}}
+				<div class='item' style="width: 80%">
+					Disk capacity: <div style="width: 90%">{{:helper.displayBar(data.disk_used, 0, data.disk_size, 'good', data.disk_used + "GQ / " + data.disk_size + "GQ")}}</div>
+					{{:helper.link("Disk Designs Management", 'save', {'go_screen' : 'disk_management_designs'}, null, 'sciMenuButton')}}
+					{{:helper.link("Eject", 'eject', {'eject_disk' : 1}, null, 'sciMenuButton')}}
+				</div>
+			{{else}}
+				No disk detected
+			{{/if}}
+			<div class="section">
+				<div class="section-title">
+					Device Linkage Menu
+				</div>
+				<div class="section-content" style="display: block;">
+					<div class='item'>
+						{{:helper.link("Re-sync with Nearby Devices", 'link', {'find_device' : 1})}}
+					</div>
+					<div class='item'>
+						{{:helper.link("Disconnect Destructive Analyzer", 'close', {'disconnect' : "destroy"}, data.has_dest_analyzer ? null : 'disabled')}}
+					</div>
+					<div class='item'>
+						{{:helper.link("Disconnect Protolathe", 'close', {'disconnect' : "lathe"}, data.has_protolathe ? null : 'disabled')}}
+					</div>
+					<div class='item'>
+						{{:helper.link("Disconnect Circuit Imprinter", 'close', {'disconnect' : "imprinter"}, data.has_circuit_imprinter ? null : 'disabled')}}
+					</div>
+				</div>
+			</div>
+		</td>
+		<td style="width: 450px" valign="top">
+			<div class="section">
+				<div class="section-title">
+					Technology Research
+				</div>
+				<div class="section-content">
+					<div class="labelList">
+						{{for data.tech_trees}}
+							<div class="labelList-item">
+								<div class="labelList-item-label">
+									{{:value.shortname}}
+								</div>
+								{{:helper.displayBar(value.level, 0, value.maxlevel, 'good', value.level + ' / ' + value.maxlevel)}}
+							</div>
+						{{/for}}
+					</div>
+				</div>
+			</div>
+			<div class="section">
+				<div class="section-title">
+					Protolathe Material Storage
+				</div>
+				<div class="section-content">
+					{{if data.protolathe_data}}
+						<div class="labelList">
+							<div class="labelList-item">
+									<div class="labelList-item-label">
+										Total capacity
+									</div>
+									{{:helper.displayBar(data.protolathe_data.total_materials, 0, data.protolathe_data.max_material_storage, 'good', data.protolathe_data.total_materials+"/"+data.protolathe_data.max_material_storage)}}
+							</div>
+							{{for data.protolathe_data.materials}}
+								<div class="labelList-item">
+									<div class="labelList-item-label">
+										{{:value.name}}
+									</div>
+									<div class="labelList-item-content">
+										<div style="margin-right: 5px;">
+											{{:value.ammount}}
+										</div>
+										{{if value.can_eject_one}}
+											{{:helper.link("Eject", '', {'lathe_ejectsheet' : value.id, 'lathe_ejectsheet_amt' : 1})}}
+										{{/if}}
+										{{if value.can_eject_five}}
+											{{:helper.link("5x", '', {'lathe_ejectsheet' : value.id, 'lathe_ejectsheet_amt' : 5})}}
+										{{/if}}
+										{{if value.can_eject_one}}
+											{{:helper.link("All", '', {'lathe_ejectsheet' : value.id, 'lathe_ejectsheet_amt' : 50})}}
+										{{/if}}
+									</div>
+								</div>
+							{{/for}}
+						</div>
+					{{else}}
+						No protolathe detected
+					{{/if}}
+				</div>
+			</div>
+			<div class="section">
+				<div class="section-title">
+					Circuit Imprinter Material Storage
+				</div>
+				<div class="section-content">
+					{{if data.imprinter_data}}
+						<div class="labelList">
+							<div class="labelList-item">
+								<div class="labelList-item-label">
+									Material capacity
+								</div>
+								<div class="labelList-item-content">
+									{{:helper.displayBar(data.imprinter_data.total_materials, 0, data.imprinter_data.max_material_storage, 'good', data.imprinter_data.total_materials+"/"+data.imprinter_data.max_material_storage)}}
+								</div>
+							</div>
+							<div class="labelList-item">
+								<div class="labelList-item-label">
+									Reagent capacity
+								</div>
+								<div class="labelList-item-content">
+									{{:helper.displayBar(data.imprinter_data.total_volume, 0, data.imprinter_data.maximum_volume, 'good', data.imprinter_data.total_volume+"/"+data.imprinter_data.maximum_volume)}}
+									{{:helper.link("Purge", '', {'imprinter_purgeall' : 1})}}
+								</div>
+							</div>
+							{{for data.imprinter_data.reagents}}
+								<div class="labelList-item">
+									<div class="labelList-item-label">
+										{{:value.name}}
+									</div>
+									<div class="labelList-item-content">
+										<div style="margin-right: 5px;">
+											{{:value.volume}}
+										</div>
+										{{if value.volume > 0}}
+											{{:helper.link("Purge", '', {'imprinter_purge' : value.id})}}
+										{{/if}}
+									</div>
+								</div>
+							{{/for}}
+							{{for data.imprinter_data.materials}}
+								<div class="labelList-item">
+									<div class="labelList-item-label">
+										{{:value.name}}
+									</div>
+									<div class="labelList-item-content">
+										<div style="margin-right: 5px;">
+											{{:value.ammount}}
+										</div>
+										{{if value.can_eject_one}}
+											{{:helper.link("Eject", '', {'imprinter_ejectsheet' : value.id, 'imprinter_ejectsheet_amt' : 1})}}
+										{{/if}}
+										{{if value.can_eject_five}}
+											{{:helper.link("5x", '', {'imprinter_ejectsheet' : value.id, 'imprinter_ejectsheet_amt' : 5})}}
+										{{/if}}
+										{{if value.can_eject_one}}
+											{{:helper.link("All", '', {'imprinter_ejectsheet' : value.id, 'imprinter_ejectsheet_amt' : 50})}}
+										{{/if}}
+									</div>
+								</div>
+							{{/for}}
+						</div>
+					{{else}}
+						No circuit imprinter detected
+					{{/if}}
+				</div>
+			</div>
+		</td>
+	</tr>
+</table>
+
+{{/if}}
+
+{{if data.screen == "protolathe" || data.screen == "circuit_imprinter"}}
+	<div class='item'>
+		{{:helper.link("Back", 'arrowreturn-1-w', {'go_screen' : 'main'},null,'fixedLeft')}}
+	</div>
+
+	<table class="fixed" style="width: 100%">
+		<tr>
+			<td valign="top">
+				<div class="section">
+					<div class="section-title">
+						{{if data.screen == "protolathe"}}
+							Protolathe Menu:
+						{{/if}}
+						{{if data.screen == "circuit_imprinter"}}
+							Circuit Imprinter Menu:
+						{{/if}}
+						<div class="section-buttons">
+							{{:helper.link("Search", '', {'search' : 1})}}
+						</div>
+					</div>
+					<div class="section-content">
+						{{if data.search_text}}
+							Searching for '{{:data.search_text}}'
+						{{/if}}
+						<div style="display: flex;">
+							{{for data.all_categories}}
+								{{:helper.link(value, '', {'select_category' : value}, data.selected_category == value ? 'selected' : null)}}
+							{{/for}}
+						</div>
+						{{for data.possible_designs}}
+							<div style="border-bottom: 1px solid rgba(99, 99, 99, 8); margin-top: 8px;">
+								<div style="display: flex; justify-content: space-between;">
+									{{:helper.link(value.name, '', {'build' : value.id, 'amount': 1}, value.can_create >= 1 ? null : 'disabled')}}
+									<div>
+										{{if value.temp_material}}
+											{{:value.temp_material}}
+										{{/if}}
+										{{if value.temp_chemical}}
+											{{:value.temp_chemical}}
+										{{/if}}
+										{{if data.screen == "protolathe"}}
+											{{if value.can_create >= 5}}
+												{{:helper.link('x5', '', {'build' : value.id, 'amount': 5})}}
+											{{/if}}
+											{{if value.can_create >= 10}}
+												{{:helper.link('x10', '', {'build' : value.id, 'amount': 10})}}
+											{{/if}}
+										{{/if}}
+									</div>
+								</div>
+								<p style="color: #7e90a7">
+									{{:value.desc}}
+								</p>
+							</div>
+						{{/for}}
+					</div>
+				</div>
+			</td>
+			<td style="width: 430px" valign="top">
+				{{if data.protolathe_data}}
+					<div class="section">
+						<div class="section-title">
+							Protolathe Material Storage
+						</div>
+						<div class="section-content">
+							<div class="labelList">
+								<div class="labelList-item">
+										<div class="labelList-item-label">
+											Total capacity
+										</div>
+										{{:helper.displayBar(data.protolathe_data.total_materials, 0, data.protolathe_data.max_material_storage, 'good', data.protolathe_data.total_materials+"/"+data.protolathe_data.max_material_storage)}}
+								</div>
+								{{for data.protolathe_data.materials}}
+									<div class="labelList-item">
+										<div class="labelList-item-label">
+											{{:value.name}}
+										</div>
+										<div class="labelList-item-content">
+											<div style="margin-right: 5px;">
+												{{:value.ammount}}
+											</div>
+											{{if value.can_eject_one}}
+												{{:helper.link("Eject", '', {'lathe_ejectsheet' : value.id, 'lathe_ejectsheet_amt' : 1})}}
+											{{/if}}
+											{{if value.can_eject_five}}
+												{{:helper.link("5x", '', {'lathe_ejectsheet' : value.id, 'lathe_ejectsheet_amt' : 5})}}
+											{{/if}}
+											{{if value.can_eject_one}}
+												{{:helper.link("All", '', {'lathe_ejectsheet' : value.id, 'lathe_ejectsheet_amt' : 50})}}
+											{{/if}}
+										</div>
+									</div>
+								{{/for}}
+							</div>
+						</div>
+					</div>
+				{{/if}}
+				{{if data.imprinter_data}}
+					<div class="section">
+						<div class="section-title">
+							Circuit Imprinter Material Storage
+						</div>
+						<div class="section-content">
+							<div class="labelList">
+								<div class="labelList-item">
+									<div class="labelList-item-label">
+										Material capacity
+									</div>
+									<div class="labelList-item-content">
+										{{:helper.displayBar(data.imprinter_data.total_materials, 0, data.imprinter_data.max_material_storage, 'good', data.imprinter_data.total_materials+"/"+data.imprinter_data.max_material_storage)}}
+									</div>
+								</div>
+								<div class="labelList-item">
+									<div class="labelList-item-label">
+										Reagent capacity
+									</div>
+									<div class="labelList-item-content">
+										{{:helper.displayBar(data.imprinter_data.total_volume, 0, data.imprinter_data.maximum_volume, 'good', data.imprinter_data.total_volume+"/"+data.imprinter_data.maximum_volume)}}
+										{{:helper.link("Purge", '', {'imprinter_purgeall' : 1})}}
+									</div>
+								</div>
+								{{for data.imprinter_data.reagents}}
+									<div class="labelList-item">
+										<div class="labelList-item-label">
+											{{:value.name}}
+										</div>
+										<div class="labelList-item-content">
+											<div style="margin-right: 5px;">
+												{{:value.volume}}
+											</div>
+											{{if value.volume > 0}}
+												{{:helper.link("Purge", '', {'imprinter_purge' : value.id})}}
+											{{/if}}
+										</div>
+									</div>
+								{{/for}}
+								{{for data.imprinter_data.materials}}
+									<div class="labelList-item">
+										<div class="labelList-item-label">
+											{{:value.name}}
+										</div>
+										<div class="labelList-item-content">
+											<div style="margin-right: 5px;">
+												{{:value.ammount}}
+											</div>
+											{{if value.can_eject_one}}
+												{{:helper.link("Eject", '', {'imprinter_ejectsheet' : value.id, 'imprinter_ejectsheet_amt' : 1})}}
+											{{/if}}
+											{{if value.can_eject_five}}
+												{{:helper.link("5x", '', {'imprinter_ejectsheet' : value.id, 'imprinter_ejectsheet_amt' : 5})}}
+											{{/if}}
+											{{if value.can_eject_one}}
+												{{:helper.link("All", '', {'imprinter_ejectsheet' : value.id, 'imprinter_ejectsheet_amt' : 50})}}
+											{{/if}}
+										</div>
+									</div>
+								{{/for}}
+							</div>
+						</div>
+					</div>
+				{{/if}}
+				<div class="section">
+					<div class="section-title">
+						Queue information
+						<div class="section-buttons">
+							{{if (data.queue_data.queue.length > 0)}}
+								{{:helper.link("Clear", '', {'clear_queue' : 1})}}
+							{{/if}}
+						</div>
+					</div>
+					<div class="section-content">
+					{{if data.queue_data.queue.length == 0}}
+						Empty
+					{{/if}}
+					{{for data.queue_data.queue}}
+						<div class="item">
+							{{:index + 1}}) {{:value}}
+						</div>
+					{{/for}}
+					</div>
+				</div>
+			</td>
+		</tr>
+	</table>
+{{/if}}
+
+{{if data.screen == "tech_trees"}}
+	<div class='item'>
+	{{:helper.link("Back", 'arrowreturn-1-w', {'go_screen' : 'main'},null,'fixedLeft')}}
+
+	<span class="average">Research points:</span> {{:data.research_points}} <span class="average">{{:data.tech_tree_name}} level:</span> {{:data.tech_tree_level}}
+	</div>
+	<div class='item'>
+
+		{{for data.tech_trees}}
+			{{:helper.link(value.shortname, '', {'select_tech_tree' : value.id}, data.selected_tech_tree == value.id ? 'selected' : null)}}
+		{{/for}}
+	</div>
+
+	<table class="fixed" style="width: 100%">
+	  <tr>
+		<td valign="top">
+			<div id='sciTechTreeContainer'>
+				{{for data.lines}}
+					<div style="position: absolute;border-{{:value.istop?'top':'bottom'}}: 1px solid white;border-{{:value.isright?'right':'left'}}: 1px solid white;width: {{:value.width}}%;height: {{:value.height}}%;left: {{:value.line_x}}%;bottom: {{:value.line_y}}%"></div>
+				{{/for}}
+
+				{{for data.techs}}
+					<div style="position: absolute; left: {{:value.x}}%; bottom: {{:value.y}}%;margin-left: -20px;margin-bottom: -20px;">
+						{{:helper.link("<div class='sciTechTreeIcon icon-"+value.icon+"'></div>", '', {'select_technology' : value.id}, null, "link sciTechTreeIconBox "+" "+((value.canresearch==0 && value.isresearched!=1)?'sciTechCantResearch':'')+" "+((value.isresearched==1)?'sciTechResearched':'')+" "+((value.id == data.selected_technology_id)?'sciTechSelected':'') )}}
+					</div>
+				{{/for}}
+			</div>
+		</td>
+			<td style="width: 200px" valign="top">
+				{{if data.selected_technology}}
+					<b>Name</b></br>
+					{{:data.selected_technology.name}}
+					</br></br>
+					<b>Cost</b></br>
+					{{:data.selected_technology.cost}} Research Points
+					</br></br>
+					<b>Requirements</b></br>
+					{{for data.selected_technology.requirements}}
+						<span style="color: {{:value.isgood?'#00FF00':'#FF0000'}}">{{:value.text}}</span></br>
+					{{/for}}
+					</br>
+					<b>Unlocks</b></br>
+					{{for data.selected_technology.unlocks}}
+						{{:value.text}}</br>
+					{{/for}}
+					</br>
+					{{if data.selected_technology.isresearched}}
+						<span class="average">Researched</span>
+					{{else}}
+						{{:helper.link("Research", '', {'unlock_technology' : data.selected_technology.id})}}
+					{{/if}}
+				{{else}}
+					{{:data.tech_tree_desc}}
+				{{/if}}
+			</td>
+	  </tr>
+	</table>
+{{/if}}
+{{if data.screen == "disk_management_designs"}}
+	<table style="width: 30%">
+	<div class='item'>
+	<tr><td>{{:helper.link("Back", 'arrowreturn-1-w', {'go_screen' : 'main'},null,'fixedLeft')}}</td></tr>
+	<tr><td>Disk capacity:</td><td style="width: 100%"><div style="width: 50%">{{:helper.displayBar(data.disk_used, 0, data.disk_size, 'good', data.disk_used + "GQ / " + data.disk_size + "GQ")}}</div></td>
+	</div>
+	</table>
+	{{if data.has_disk}}
+		<table style="width: 100%">
+		<tr>
+			<th>Disk</th>
+			<th>Local database</th>
+		</tr>
+		<tr>
+		<td valign="top" style="width: 50%">
+		<div class="statusDisplayRecords">
+		Detected designs:
+		{{for data.disk_designs}}
+			<div class="item">
+				{{:value.name}}
+				{{:helper.link("", 'trash', {'delete_disk_file' : value.id})}}
+				{{:helper.link("", 'arrowthick-1-e', {'download_disk_design' : value.id})}}
+			</div>
+		{{empty}}
+			<div class="item">The disk has no accessible design files stored on it.</div>
+		{{/for}}
+		</div>
+		</td>
+
+		<td valign="top" style="width: 50%">
+		<div class="statusDisplayRecords">
+		Local designs:
+		{{for data.known_designs}}
+			<div class="item">{{:helper.link("", 'arrowthick-1-w', {'upload_disk_design' : value.id})}} {{:value.name}}</div>
+		{{empty}}
+			<div class="item">The local database has no design data.</div>
+		{{/for}}
+		</div>
+		</td>
+		</tr>
+		</table>
+	{{/if}}
+{{/if}}
+<!--
+<div class="section">
+	<div class="section-title">
+
+	</div>
+	<div class="section-content">
+
+	</div>
+</div>
+
+<div class="labelList">
+	<div class="labelList-item">
+		<div class="labelList-item-label">
+
+		</div>
+		<div class="labelList-item-content">
+
+		</div>
+	</div>
+</div>
+-->
+<style>
+
+#sciTechTreeContainer {
+    position: relative;
+    width: 99%;
+    height: 590px;
+    overflow: hidden;
+    border: 1px solid #40628a;
+    background: url(nanomapBackground.png);
+}
+
+.sciTechTreeIcon {
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    background-image: url(science.png);
+    background-position: -0px -0px;
+    background-repeat: no-repeat;
+    zoom: 1;
+    margin-left: 0px;
+	margin-bottom: -16px;
+    /*margin-bottom: -1px;*/
+}
+
+.sciTechTreeIconBox {
+    width: 32px;
+    height: 32px;
+}
+
+.sciTechResearched {
+	background: #2f943c;
+}
+
+.sciTechResearched:hover {
+    background: #3fB44c;
+}
+
+.sciTechCantResearch {
+	background: #942f3c;
+}
+
+.sciTechCantResearch:hover {
+    background: #B43f4c;
+}
+
+.sciTechSelected {
+	background: #3333cc;
+}
+
+.sciTechSelected:hover {
+    background: #3333cf;
+}
+
+.sciTechTreeIcon.icon-teleport { background-position: 0px 0px; }
+.sciTechTreeIcon.icon-adv_mass_spec { background-position: -32px 0px; }
+.sciTechTreeIcon.icon-cell { background-position: -64px 0px; }
+.sciTechTreeIcon.icon-wrench { background-position: -96px 0px; }
+.sciTechTreeIcon.icon-drill { background-position: -128px 0px; }
+.sciTechTreeIcon.icon-monitoring { background-position: -160px 0px; }
+.sciTechTreeIcon.icon-rd { background-position: -192px 0px; }
+.sciTechTreeIcon.icon-telecom_part { background-position: -224px 0px; }
+
+.sciTechTreeIcon.icon-spaceheater { background-position: 0px -32px; }
+.sciTechTreeIcon.icon-hypo { background-position: -32px -32px; }
+.sciTechTreeIcon.icon-smelter { background-position: -64px -32px; }
+.sciTechTreeIcon.icon-circuit { background-position: -96px -32px; }
+.sciTechTreeIcon.icon-pickaxe { background-position: -128px -32px; }
+.sciTechTreeIcon.icon-cutter { background-position: -160px -32px; }
+.sciTechTreeIcon.icon-advmatterbin { background-position: -192px -32px; }
+.sciTechTreeIcon.icon-supermatterbin { background-position: -224px -32px; }
+
+.sciTechTreeIcon.icon-anom { background-position: 0px -64px; }
+.sciTechTreeIcon.icon-rped { background-position: -32px -64px; }
+.sciTechTreeIcon.icon-jawsoflife { background-position: -64px -64px; }
+.sciTechTreeIcon.icon-healthanalyzer { background-position: -96px -64px; }
+.sciTechTreeIcon.icon-hydroponics { background-position: -128px -64px; }
+.sciTechTreeIcon.icon-microwave { background-position: -160px -64px; }
+.sciTechTreeIcon.icon-processor { background-position: -192px -64px; }
+.sciTechTreeIcon.icon-operationcomputer { background-position: -224px -64px; }
+
+.sciTechTreeIcon.icon-add_sec_eq { background-position: 0px -96px; }
+.sciTechTreeIcon.icon-sleeper { background-position: -32px -96px; }
+.sciTechTreeIcon.icon-medhud { background-position: -64px -96px; }
+.sciTechTreeIcon.icon-mechsleeper { background-position: -96px -96px; }
+.sciTechTreeIcon.icon-gps { background-position: -128px -96px; }
+.sciTechTreeIcon.icon-rapidsyringegun { background-position: -160px -96px; }
+.sciTechTreeIcon.icon-scalpelmanager { background-position: -192px -96px; }
+.sciTechTreeIcon.icon-stunbaton { background-position: -224px -96px; }
+
+.sciTechTreeIcon.icon-seccomputer { background-position: 0px -128px; }
+.sciTechTreeIcon.icon-shock { background-position: -32px -128px; }
+.sciTechTreeIcon.icon-riotgun { background-position: -64px -128px; }
+.sciTechTreeIcon.icon-laser { background-position: -96px -128px; }
+.sciTechTreeIcon.icon-bullpup { background-position: -128px -128px; }
+.sciTechTreeIcon.icon-telepad { background-position: -160px -128px; }
+.sciTechTreeIcon.icon-emiammo { background-position: -192px -128px; }
+.sciTechTreeIcon.icon-wt550 { background-position: -224px -128px; }
+
+.sciTechTreeIcon.icon-relay { background-position: 0px -160px; }
+.sciTechTreeIcon.icon-subspace { background-position: -32px -160px; }
+.sciTechTreeIcon.icon-batteryrack { background-position: -64px -160px; }
+.sciTechTreeIcon.icon-solarcontrol { background-position: -96px -160px; }
+.sciTechTreeIcon.icon-generator { background-position: -128px -160px; }
+.sciTechTreeIcon.icon-solnet_relay { background-position: -160px -160px; }
+.sciTechTreeIcon.icon-smes { background-position: -192px -160px; }
+.sciTechTreeIcon.icon-implant { background-position: -224px -160px; }
+
+.sciTechTreeIcon.icon-icupgradv { background-position: 0px -192px; }
+.sciTechTreeIcon.icon-communications { background-position: -32px -192px; }
+.sciTechTreeIcon.icon-icprinter { background-position: -64px -192px; }
+.sciTechTreeIcon.icon-rfid { background-position: -96px -192px; }
+.sciTechTreeIcon.icon-icupclo { background-position: -128px -192px; }
+.sciTechTreeIcon.icon-pcpu { background-position: -160px -192px; }
+.sciTechTreeIcon.icon-pcpu_small { background-position: -192px -192px; }
+.sciTechTreeIcon.icon-cpu_small { background-position: -224px -192px; }
+
+.sciTechTreeIcon.icon-diamond_drill { background-position: 0px -224px; }
+.sciTechTreeIcon.icon-nanoprinter { background-position: -32px -224px; }
+.sciTechTreeIcon.icon-netcard_adv { background-position: -64px -224px; }
+.sciTechTreeIcon.icon-netcard_w { background-position: -96px -224px; }
+.sciTechTreeIcon.icon-cpu { background-position: -128px -224px; }
+.sciTechTreeIcon.icon-tablet_frame { background-position: -160px -224px; }
+.sciTechTreeIcon.icon-blue_beaker { background-position: -192px -224px; }
+.sciTechTreeIcon.icon-brace { background-position: -224px -224px; }
+
+.sciTechTreeIcon.icon-tesla_link { background-position: 0px -256px; }
+.sciTechTreeIcon.icon-modular_bat_advanced { background-position: -32px -256px; }
+.sciTechTreeIcon.icon-modular_bat_super { background-position: -64px -256px; }
+.sciTechTreeIcon.icon-modular_bat_ultra { background-position: -96px -256px; }
+.sciTechTreeIcon.icon-modular_bat_micro { background-position: -128px -256px; }
+.sciTechTreeIcon.icon-smg { background-position: -160px -256px; }
+.sciTechTreeIcon.icon-adflash { background-position: -192px -256px; }
+.sciTechTreeIcon.icon-hdd512 { background-position: -224px -256px; }
+
+.sciTechTreeIcon.icon-decloner { background-position: 0px -288px; }
+.sciTechTreeIcon.icon-fusion { background-position: -32px -288px; }
+.sciTechTreeIcon.icon-chemdisp { background-position: -64px -288px; }
+.sciTechTreeIcon.icon-mechlaser { background-position: -96px -288px; }
+.sciTechTreeIcon.icon-mechclaw { background-position: -128px -288px; }
+.sciTechTreeIcon.icon-hdd2048 { background-position: -160px -288px; }
+.sciTechTreeIcon.icon-hdd256 { background-position: -192px -288px; }
+.sciTechTreeIcon.icon-hdd64 { background-position: -224px -288px; }
+
+.sciTechTreeIcon.icon-shieldgen { background-position: 0px -320px; }
+.sciTechTreeIcon.icon-mechheavy { background-position: -32px -320px; }
+.sciTechTreeIcon.icon-mechcombat { background-position: -64px -320px; }
+.sciTechTreeIcon.icon-ai { background-position: -96px -320px; }
+.sciTechTreeIcon.icon-gene { background-position: -128px -320px; }
+.sciTechTreeIcon.icon-box { background-position: -160px -320px; }
+.sciTechTreeIcon.icon-implantcase { background-position: -192px -320px; }
+.sciTechTreeIcon.icon-aicircuit { background-position: -224px -320px; }
+
+.sciTechTreeIcon.icon-multitool { background-position: 0px -352px; }
+.sciTechTreeIcon.icon-posibrain { background-position: -32px -352px; }
+.sciTechTreeIcon.icon-bug { background-position: -64px -352px; }
+.sciTechTreeIcon.icon-kit { background-position: -96px -352px; }
+.sciTechTreeIcon.icon-radiokey { background-position: -128px -352px; }
+.sciTechTreeIcon.icon-hardsuitmodule { background-position: -160px -352px; }
+.sciTechTreeIcon.icon-bluespace { background-position: -192px -352px; }
+.sciTechTreeIcon.icon-roboscanner { background-position: -224px -352px; }
+
+.sciTechTreeIcon.icon-bscrystal { background-position: 0px -384px; }
+.sciTechTreeIcon.icon-nav { background-position: -32px -384px; }
+.sciTechTreeIcon.icon-pump { background-position: -64px -384px; }
+.sciTechTreeIcon.icon-eva { background-position: -96px -384px; }
+.sciTechTreeIcon.icon-mechloader { background-position: -128px -384px; }
+.sciTechTreeIcon.icon-mechlight { background-position: -160px -384px; }
+
+.sciMenuButton {
+    width: 300px;
+    float: left;
+}
+</style>

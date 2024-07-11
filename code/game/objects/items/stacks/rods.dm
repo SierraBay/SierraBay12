@@ -38,8 +38,8 @@
 /obj/item/stack/material/rods/Initialize()
 	. = ..()
 	update_icon()
-	throwforce = round(0.25*material.get_edge_damage())
-	force = round(0.5*material.get_blunt_damage())
+	throwforce = round(0.25)
+	force = round(0.5)
 
 /obj/item/stack/material/rods/use_tool(obj/item/W, mob/living/user, list/click_params)
 	if(isWelder(W))

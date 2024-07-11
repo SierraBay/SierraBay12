@@ -180,10 +180,6 @@
 	sound_env = MEDIUM_SOFTFLOOR
 	holomap_color = HOLOMAP_AREACOLOR_CREW
 
-/area/crew_quarters/lounge/upper
-	name = "First Deck - Living - Library"
-	holomap_color = HOLOMAP_AREACOLOR_CREW
-
 /area/crew_quarters/safe_room/firstdeck
 	name = "First Deck - Citadel"
 

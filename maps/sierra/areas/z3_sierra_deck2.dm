@@ -229,9 +229,8 @@
 	name = "Second Deck - Service - Stage"
 	holomap_color = HOLOMAP_AREACOLOR_CREW
 
-/area/crew_quarters/lounge
+/area/crew_quarters/lounge/upper
 	name = "Second Deck - Living - Lounge"
-	sound_env = MEDIUM_SOFTFLOOR
 	holomap_color = HOLOMAP_AREACOLOR_CREW
 
 /area/crew_quarters/sleep/bunk

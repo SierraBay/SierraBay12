@@ -1,3 +1,29 @@
+//[SIERRA-EDIT] - MODPACK_RND
+/datum/rnd_material
+	var/name
+	var/amount
+	var/sheet_size
+	var/sheet_type
+
+/datum/rnd_material/New(Name, obj/item/stack/material/Sheet_type)
+	name = Name
+	amount = 0
+	sheet_type = Sheet_type
+	sheet_size = initial(Sheet_type.perunit)
+
+/datum/rnd_queue_design
+	var/name
+	var/datum/design/design
+	var/amount
+
+/datum/rnd_queue_design/New(datum/design/D, Amount)
+	name = D.name
+	if(Amount > 1)
+		name = "[name] x[Amount]"
+
+	design = D
+	amount = Amount
+
 /obj/machinery/r_n_d/protolathe
 	name = "protolathe"
 	desc = "Accessed by a connected core fabricator console, it produces items from various materials."
@@ -15,15 +41,21 @@
 
 	var/max_material_storage = 250000
 
-	var/list/datum/design/queue = list()
 	var/progress = 0
 
 	var/mat_efficiency = 1
 	var/speed = 1
+	var/list/queue = list()
 
 /obj/machinery/r_n_d/protolathe/New()
-	materials = default_material_composition.Copy()
 	..()
+	materials = default_material_composition.Copy()
+
+/obj/machinery/r_n_d/protolathe/proc/TotalMaterials() //returns the total of all the stored materials. Makes code neater.
+	var/t = 0
+	for(var/f in materials)
+		t += materials[f]
+	return t
 
 /obj/machinery/r_n_d/protolathe/Process()
 	..()
@@ -34,21 +66,23 @@
 		busy = 0
 		update_icon()
 		return
-	var/datum/design/D = queue[1]
-	if(canBuild(D))
+	var/datum/rnd_queue_design/RNDD = queue[1]
+	var/datum/design/D = RNDD.design
+	if(canBuild(RNDD))
 		busy = 1
 		progress += speed
-		if(progress >= D.time)
-			build(D)
+		if(progress >= D.time * RNDD.amount)
+			build(RNDD)
 			progress = 0
-			removeFromQueue(1)
+			queue -= RNDD
 			if(linked_console)
-				linked_console.updateUsrDialog()
+				SSnano.update_uis(linked_console)
 		update_icon()
 	else
 		if(busy)
-			visible_message(SPAN_NOTICE("[icon2html(src, viewers(get_turf(src)))] [src] flashes: insufficient materials: [getLackingMaterials(D)]."))
+			visible_message(SPAN_NOTICE("\icon[src]\The [src] flashes: insufficient materials."))
 			busy = 0
+			progress = 0
 			update_icon()
 
 /obj/machinery/r_n_d/protolathe/RefreshParts()
@@ -68,6 +102,38 @@
 	mat_efficiency = 1 - (T - 2) / 8
 	speed = T / 2
 	..()
+
+/obj/machinery/r_n_d/protolathe/proc/queue_design(datum/design/D, amount = 1)
+	var/datum/rnd_queue_design/RNDD = new /datum/rnd_queue_design(D, amount)
+	queue += RNDD
+
+/obj/machinery/r_n_d/protolathe/proc/clear_queue()
+	queue = list()
+	progress = 0
+
+/obj/machinery/r_n_d/protolathe/proc/canBuild(datum/rnd_queue_design/RNDD)
+	var/datum/design/D = RNDD.design
+	for(var/M in D.materials)
+		if(materials[M] < D.materials[M]*RNDD.amount)
+			return FALSE
+	for(var/C in D.chemicals)
+		if(!reagents.has_reagent(C, D.chemicals[C] * RNDD.amount))
+			return FALSE
+	return TRUE
+
+/obj/machinery/r_n_d/protolathe/proc/build(datum/rnd_queue_design/RNDD)
+	var/power = active_power_usage
+	var/datum/design/D = RNDD.design
+	for(var/M in D.materials)
+		power += round(D.materials[M] / 5, 0.01) * RNDD.amount
+	power = max(active_power_usage, power)
+	use_power_oneoff(power)
+	for(var/M in D.materials)
+		materials[M] = max(0, materials[M] - ((D.materials[M] * RNDD.amount)*mat_efficiency))
+	for(var/C in D.chemicals)
+		reagents.remove_reagent(C, ((D.chemicals[C] * RNDD.amount)*mat_efficiency))
+	for(var/i in 1 to RNDD.amount)
+		D.Fabricate(get_turf(src), 1, src)
 
 
 /obj/machinery/r_n_d/protolathe/on_update_icon()
@@ -103,7 +169,7 @@
 	if((. = ..()))
 		return
 	if(O.is_open_container())
-		return TRUE
+		return FALSE
 	if(panel_open)
 		to_chat(user, SPAN_NOTICE("You can't load \the [src] while it's opened."))
 		return TRUE
@@ -135,45 +201,27 @@
 	busy = 1
 	use_power_oneoff(max(1000, (SHEET_MATERIAL_AMOUNT * amount / 10)))
 	if(do_after(user, 1.6 SECONDS, src, DO_PUBLIC_UNIQUE))
-		if(stack.use(amount))
-			to_chat(user, SPAN_NOTICE("You add [amount] sheet\s to \the [src]."))
-			materials[stack.material.name] += amount * SHEET_MATERIAL_AMOUNT
+		if(stack.get_amount() >= amount)
+			if(stack.use(amount))
+				to_chat(user, SPAN_NOTICE("You add [amount] sheet\s to \the [src]."))
+				materials[stack.material.name] += amount * SHEET_MATERIAL_AMOUNT
+
 	busy = 0
-	updateUsrDialog()
+	SSnano.update_uis()
 	return TRUE
 
-/obj/machinery/r_n_d/protolathe/proc/addToQueue(datum/design/D)
-	queue += D
-	return
 
 /obj/machinery/r_n_d/protolathe/proc/removeFromQueue(index)
 	if(!is_valid_index(index, queue))
 		return
 	queue.Cut(index, index + 1)
 
-/obj/machinery/r_n_d/protolathe/proc/canBuild(datum/design/D)
-	for(var/M in D.materials)
-		if(materials[M] < D.materials[M] * mat_efficiency)
-			return 0
-	for(var/C in D.chemicals)
-		if(!reagents.has_reagent(C, D.chemicals[C] * mat_efficiency))
-			return 0
-	return 1
-
-/obj/machinery/r_n_d/protolathe/proc/build(datum/design/D)
-	var/power = active_power_usage
-	for(var/M in D.materials)
-		power += round(D.materials[M] / 5)
-	power = max(active_power_usage, power)
-	use_power_oneoff(power)
-	for(var/M in D.materials)
-		materials[M] = max(0, materials[M] - D.materials[M] * mat_efficiency)
-	for(var/C in D.chemicals)
-		reagents.remove_reagent(C, D.chemicals[C] * mat_efficiency)
-
-	if(D.build_path)
-		var/obj/new_item = D.Fabricate(loc, src)
-		if(mat_efficiency != 1) // No matter out of nowhere
-			if(new_item.matter && length(new_item.matter) > 0)
-				for(var/i in new_item.matter)
-					new_item.matter[i] = new_item.matter[i] * mat_efficiency
+/obj/machinery/r_n_d/protolathe/proc/eject(material, amount)
+	if(!(material in materials))
+		return
+	var/material/mat = SSmaterials.get_material_by_name(material)
+	var/eject = clamp(round(materials[material] / mat.units_per_sheet), 0, amount)
+	if(eject > 0)
+		mat.place_sheet(loc, eject)
+		materials[material] -= eject * mat.units_per_sheet
+//[/SIERRA-EDIT] - MODPACK_RND

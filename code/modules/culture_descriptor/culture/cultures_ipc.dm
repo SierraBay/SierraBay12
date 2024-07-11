@@ -1,4 +1,6 @@
+
 /singleton/cultural_info/culture/ipc
+	var/list/valid_jobs = list()
 	name = CULTURE_POSITRONICS_GEN1
 	description = "Compared to modern positronics, First Generation IPCs are simplistic, inflexible, and failure-prone. \
 	They are no longer in production, and all existing first generation positronics are quite old. They have little sense of self, \

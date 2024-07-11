@@ -83,9 +83,14 @@
 
 		if(scanned_object && istype(scanned_object, /obj/machinery/artifact))
 			var/obj/machinery/artifact/A = scanned_object
-			A.anchored = FALSE
+			//[SIERRA-ADD] - MODPACK_RND
+			P.artifact = A.name
+			if(A.my_effect)
+				P.my_effect = A.my_effect.name
+			if(A.secondary_effect)
+				P.secondary_effect = A.secondary_effect.name
+			//[/SIERRA-ADD] - MODPACK_RND
 			A.being_used = 0
-			scanned_object = null
 
 /obj/machinery/artifact_analyser/OnTopic(user, href_list)
 	if(href_list["begin_scan"])

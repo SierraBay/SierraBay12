@@ -105,7 +105,7 @@
 	pronouns = list(PRONOUNS_THEY_THEM)
 	hidden_from_codex = FALSE
 	min_age = 19
-	max_age = 90
+	max_age = 130
 
 	burn_mod = 0.9
 	oxy_mod = 1.3
@@ -147,13 +147,6 @@
 		/datum/mob_descriptor/build = 0,
 		/datum/mob_descriptor/headtail_length = 0
 	)
-
-	speech_sounds = list(
-		'sound/skrell/warble1.ogg',
-		'sound/skrell/warble2.ogg',
-		'sound/skrell/warble3.ogg'
-	)
-	speech_chance = 10
 
 	available_cultural_info = list(
 		TAG_CULTURE = list(

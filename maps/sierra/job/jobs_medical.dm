@@ -55,7 +55,7 @@
 	вкупе с предоперационным лечением пострадавших, спектр активности хирурга является несколько более широким, начиная от обычного лечения медикаментами в случае необходимости и заканчивая проведением сложных хирургических операций."
 
 /datum/job/doctor
-	title = "Doctor"
+	title = "Physician"
 	supervisors = "Главному Врачу"
 	department = "Медицинский"
 	department_flag = MED
@@ -68,7 +68,8 @@
 	skill_points = 22
 
 	alt_titles = list(
-		"Paramedic" = /singleton/hierarchy/outfit/job/sierra/crew/medical/doctor/paramedic
+		"Paramedic" = /singleton/hierarchy/outfit/job/sierra/crew/medical/doctor/paramedic,
+		"Medical Doctor" = /singleton/hierarchy/outfit/job/sierra/crew/medical/doctor
 	)
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/medical/doctor
 	allowed_branches = list(
@@ -165,6 +166,9 @@
 	total_positions = 1
 	spawn_positions = 1
 	selection_color = "#013d3b"
+	alt_titles = list(
+		"Pharmacist" = /singleton/hierarchy/outfit/job/sierra/crew/medical/doctor/chemist
+	)
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/medical/doctor/chemist
 	allowed_branches = list(/datum/mil_branch/employee, /datum/mil_branch/contractor)
 	allowed_ranks = list(/datum/mil_rank/civ/nt, /datum/mil_rank/civ/contractor)
@@ -199,7 +203,10 @@
 	total_positions = 1
 	spawn_positions = 1
 	alt_titles = list(
-		"Mentalist" = /singleton/hierarchy/outfit/job/sierra/crew/medical/counselor/mentalist
+		"Mentalist" = /singleton/hierarchy/outfit/job/sierra/crew/medical/counselor/mentalist,
+		"Psychologist" = /singleton/hierarchy/outfit/job/sierra/crew/medical/counselor/mentalist,
+		"Therapist" = /singleton/hierarchy/outfit/job/sierra/crew/medical/counselor/mentalist,
+		"Psychiatrist" = /singleton/hierarchy/outfit/job/sierra/crew/medical/counselor/mentalist
 	)
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/medical/counselor
 	allowed_branches = list(

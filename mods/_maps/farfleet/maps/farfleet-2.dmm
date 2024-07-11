@@ -1833,7 +1833,9 @@
 	dir = 4
 	},
 /obj/floor_decal/industrial/outline/grey,
-/obj/machinery/stasis_cage,
+/obj/machinery/stasis_cage{
+	req_access = list()
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/snz)
 "rS" = (
@@ -2338,7 +2340,9 @@
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/barracks)
 "wK" = (
-/obj/machinery/anomaly_container,
+/obj/machinery/anomaly_container{
+	req_access = list()
+	},
 /obj/floor_decal/industrial/outline,
 /turf/simulated/floor/tiled/techmaint,
 /area/ship/farfleet/maintenance/anomaly)
@@ -3720,7 +3724,9 @@
 	dir = 4
 	},
 /obj/floor_decal/industrial/outline/grey,
-/obj/machinery/anomaly_container,
+/obj/machinery/anomaly_container{
+	req_access = list()
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/snz)
 "Kr" = (
@@ -4479,7 +4485,9 @@
 /turf/simulated/floor/tiled/freezer,
 /area/ship/farfleet/crew/freezer)
 "Se" = (
-/obj/machinery/stasis_cage,
+/obj/machinery/stasis_cage{
+	req_access = list()
+	},
 /obj/floor_decal/industrial/outline/green,
 /turf/simulated/floor/tiled/techmaint,
 /area/ship/farfleet/maintenance/anomaly)

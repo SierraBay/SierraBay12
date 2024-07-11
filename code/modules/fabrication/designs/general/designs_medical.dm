@@ -1,5 +1,4 @@
 /datum/fabricator_recipe/medical
-	path = /obj/item/scalpel/basic
 	category = "Medical"
 
 /datum/fabricator_recipe/medical/circularsaw
@@ -43,3 +42,6 @@
 
 /datum/fabricator_recipe/medical/hypospray/autoinjector
 	path = /obj/item/reagent_containers/hypospray/autoinjector
+
+/datum/fabricator_recipe/medical/scalpel
+	path = /obj/item/scalpel/basic

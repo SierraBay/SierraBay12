@@ -3,10 +3,6 @@
 
 	// see login.dm
 	if(my_client)
-		// [SIERRA-ADD] - STATUSBAR
-		if (get_preference_value(/datum/client_preference/show_statusbar) == GLOB.PREF_SHOW)
-			winset(my_client, "mapwindow.statusbar", "is-visible=true")
-		// [/SIERRA-ADD]
 		GLOB.using_map.hide_titlescreen(my_client)
 		my_client = null
 

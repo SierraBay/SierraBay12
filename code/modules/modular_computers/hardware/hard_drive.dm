@@ -43,7 +43,7 @@
 	desc = "A large storage cluster consisting of multiple hard drives for usage in high capacity storage systems. Has capacity of 2048 GQ."
 	power_usage = 500
 	origin_tech = list(TECH_DATA = 4, TECH_ENGINEERING = 4)
-	max_capacity = 2048
+	max_capacity = 1024
 	icon_state = "hdd_cluster"
 	hardware_size = 3
 
@@ -251,3 +251,31 @@
 /obj/item/stock_parts/computer/hard_drive/Destroy()
 	stored_files = null
 	return ..()
+
+//[SIERRA-ADD] - MODPACK_RND
+
+/obj/item/stock_parts/computer/hard_drive/ui_data()
+	var/list/data = list(
+		"disk_name" = get_disk_name(),
+		"max_capacity" = max_capacity,
+		"used_capacity" = used_capacity
+	)
+
+	var/list/files = list()
+	for(var/datum/computer_file/F in stored_files)
+		files.Add(list(list(
+			"filename" = F.filename,
+			"filetype" = F.filetype,
+			"size" = F.size,
+			"undeletable" = F.undeletable
+		)))
+	data["files"] = files
+	return data
+
+/obj/item/stock_parts/computer/hard_drive/proc/get_disk_name()
+	var/datum/computer_file/data/D = find_file_by_name("DISK_NAME")
+	if(!istype(D))
+		return null
+
+	return sanitizeSafe(D.stored_data, max_length = MAX_LNAME_LEN)
+//SIERRA-ADD] - MODPACK_RND

@@ -3,6 +3,8 @@
 	w_class = ITEM_SIZE_NO_CONTAINER
 	layer = STRUCTURE_LAYER
 
+	health_flags = HEALTH_FLAG_STRUCTURE
+
 	var/fragile
 	var/parts
 	var/list/connections = list("0", "0", "0", "0")
@@ -100,7 +102,10 @@
 		if (occupied)
 			USE_FEEDBACK_GRAB_FAILURE("There's \a [occupied] blocking \the [src].")
 			return TRUE
-		if (!do_after(grab.assailant, 3 SECONDS, grab.affecting, DO_PUBLIC_UNIQUE) || !grab.use_sanity_check(src))
+		// sierra edit
+		// original: if (!do_after(grab.assailant, 3 SECONDS, grab.affecting, DO_PUBLIC_UNIQUE) || !grab.use_sanity_check(src))
+		if (!do_after(grab.assailant, grab.affecting, DO_PUBLIC_UNIQUE) || !grab.use_sanity_check(src))
+		// Edit end
 			return TRUE
 		occupied = turf_is_crowded()
 		if (occupied)

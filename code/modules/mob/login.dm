@@ -109,7 +109,7 @@
 	darksight = new()
 	client.screen += darksight
 
-	CreateRenderers()
+	AddDefaultRenderers()
 
 	refresh_client_images()
 	reload_fullscreen() // Reload any fullscreen overlays this mob has.
@@ -153,5 +153,5 @@
 	. = ..()
 	if(darksight)
 		darksight.icon_state = "ghost"
-		darksight.alpha = 127
+		darksight.alpha = 0
 		darksight.SetTransform(2) //Max darksight

@@ -72,6 +72,7 @@
 	/// Sound this gun makes when firing. Overridden by projectiles with their own sounds.
 	var/fire_sound = 'sound/weapons/gunshot/gunshot.ogg'
 	var/fire_sound_text = "gunshot"
+	var/fire_sound_vary = TRUE
 	var/fire_anim = null
 	/// The amount your screen shakes when firing. Shouldn't be greater than 2 unless zoomed.
 	var/screen_shake = 0
@@ -538,12 +539,18 @@
 
 	return launched
 
-/obj/item/gun/proc/play_fire_sound(mob/user, obj/item/projectile/P)
-	var/shot_sound = (istype(P) && P.fire_sound)? P.fire_sound : fire_sound
-	if(silenced)
-		playsound(user, shot_sound, 10, 1)
-	else
-		playsound(user, shot_sound, 50, 1)
+
+/obj/item/gun/proc/play_fire_sound(mob/user, obj/item/projectile/projectile)
+	var/sound = fire_sound
+	if (istype(projectile) && projectile.fire_sound)
+		sound = projectile.fire_sound
+	if (islist(sound))
+		sound = pick(sound)
+	var/volume = 50
+	if (silenced)
+		volume = 10
+	playsound(src, sound, volume, fire_sound_vary)
+
 
 //Suicide handling.
 /obj/item/gun/proc/handle_suicide(mob/living/user)
@@ -682,6 +689,7 @@
 
 /obj/item/gun/proc/toggle_safety(mob/user)
 	if (user?.is_physically_disabled())
+		to_chat(user, SPAN_WARNING("You can't do this right now!"))
 		return
 
 	safety_state = !safety_state
@@ -691,12 +699,22 @@
 		last_safety_check = world.time
 		playsound(src, 'sound/weapons/flipblade.ogg', 15, 1)
 
+
 /obj/item/gun/verb/toggle_safety_verb()
-	set src in usr
-	set category = "Object"
 	set name = "Toggle Gun Safety"
-	if(usr == loc)
-		toggle_safety(usr)
+	set category = "Object"
+	set src in usr
+	if (usr.incapacitated())
+		to_chat(usr, SPAN_WARNING("You're in no condition to do that."))
+		return
+	var/obj/item/gun/gun = usr.get_active_hand()
+	if (!istype(gun))
+		gun = usr.get_inactive_hand()
+		if (!istype(gun))
+			to_chat(usr, SPAN_WARNING("You need a gun in your hands to do that."))
+			return
+	gun.toggle_safety(usr)
+
 
 /obj/item/gun/CtrlClick(mob/user)
 	if(loc == user)

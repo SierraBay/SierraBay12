@@ -46,9 +46,21 @@
 
 /obj/screen/movable/proc/encode_screen_X(X, mob/viewer)
 	var/view = viewer.client ? viewer.client.view : world.view
-	if(X > view+1)
-		. = "EAST-[view*2 + 1-X]"
-	else if(X < view+1)
+	// [SIERRA-EDIT]
+	// if(X > view+1) // SIERA-EDIT - ORIGINAL
+	// 	. = "EAST-[view*2 + 1-X]" // SIERA-EDIT - ORIGINAL
+	// else if(X < view+1) // SIERA-EDIT - ORIGINAL
+	var/local_view
+	if(view == "19x15")
+		local_view = 9
+	else if(view == "17x15")
+		local_view = 8
+	else if(view == "15x15")
+		local_view = 7
+	// [/SIERRA-EDIT]
+	if(X > local_view+1)
+		. = "EAST-[local_view*2 + 1-X]"
+	else if(X < local_view+1)
 		. = "WEST+[X-1]"
 	else
 		. = "CENTER"
@@ -71,9 +83,18 @@
 
 /obj/screen/movable/proc/encode_screen_Y(Y, mob/viewer)
 	var/view = viewer.client ? viewer.client.view : world.view
-	if(Y > view+1)
-		. = "NORTH-[view*2 + 1-Y]"
-	else if(Y < viewer.client.view+1)
+	// [SIERRA-EDIT]
+	// if(Y > view+1) // SIERA-EDIT - ORIGINAL
+	// 	. = "NORTH-[view*2 + 1-Y]" // SIERA-EDIT - ORIGINAL
+	// else if(Y < viewer.client.view+1) // SIERA-EDIT - ORIGINAL
+	var/local_view
+	if(view == "19x15" || view == "17x15" || view == "15x15")
+		local_view = 7
+	// [/SIERRA-EDIT]
+	if(Y > local_view+1)
+
+		. = "NORTH-[local_view*2 + 1-Y]"
+	else if(Y < local_view+1)
 		. = "SOUTH+[Y-1]"
 	else
 		. = "CENTER"

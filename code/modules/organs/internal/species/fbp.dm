@@ -8,7 +8,7 @@
 	status = ORGAN_ROBOTIC
 	vital = 1
 	var/open
-	var/obj/item/cell/cell = /obj/item/cell/high
+	var/obj/item/cell/cell = /obj/item/cell/super
 	//at 0.26 completely depleted after 60ish minutes of constant walking or 130 minutes of standing still
 	var/servo_cost = 0.26
 
