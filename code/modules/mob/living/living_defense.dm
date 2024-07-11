@@ -22,8 +22,6 @@
 		. += get_extension(psi, /datum/extension/armor)
 
 /mob/living/bullet_act(obj/item/projectile/P, def_zone)
-	if (status_flags & GODMODE)
-		return PROJECTILE_FORCE_MISS
 
 	//Being hit while using a deadman switch
 	var/obj/item/device/assembly/signaler/signaler = get_active_hand()
