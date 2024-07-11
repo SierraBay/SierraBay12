@@ -222,15 +222,13 @@
 	if(!istype(target_mob))
 		return
 
-	var/miss_modifier
+	if(firer && firer.skill_check(SKILL_WEAPONS,SKILL_BASIC))
+		special_miss_modifier -= 5 * firer.get_skill_value(SKILL_WEAPONS)
 
 	//roll to-hit
-	if(distance >= 2)
-		miss_modifier = max(distance_falloff * (distance+1)  - hitchance_mod + special_miss_modifier, -30)
-	else
-		miss_modifier = max(0 - hitchance_mod + special_miss_modifier, -30)
+	var/miss_modifier = max(distance_falloff*(distance*2) - hitchance_mod + special_miss_modifier, -30)
 	//makes moving targets harder to hit, and stationary easier to hit
-	var/movment_mod = min(5, (world.time - target_mob.l_move_time) - 20)
+	var/movement_mod = min(5, (world.time - target_mob.l_move_time) - 20)
 
 	if (damage_falloff)
 		var/damage_mod = 1
@@ -242,11 +240,11 @@
 		armor_penetration = armor_penetration * damage_mod
 		agony = agony * damage_mod
 	//running in a straight line isnt as helpful tho
-	if(movment_mod < 0)
+	if(movement_mod < 0)
 		if(target_mob.last_move == get_dir(firer, target_mob))
-			movment_mod *= 0.25
+			movement_mod *= 0.25
 		else if(target_mob.last_move == get_dir(target_mob,firer))
-			movment_mod *= 0.5
+			movement_mod *= 0.25
 	miss_modifier -= movment_mod
 	var/hit_zone = get_zone_with_miss_chance(def_zone, target_mob, miss_modifier, ranged_attack=(distance > 1 || original != target_mob)) //if the projectile hits a target we weren't originally aiming at then retain the chance to miss
 
