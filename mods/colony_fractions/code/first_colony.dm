@@ -14,7 +14,10 @@ GLOBAL_VAR_INIT(choose_colony_type, "СЛУЧАЙНЫЙ") //Педальки в�
 
 /datum/job/submap/colonist
 	supervisors = "Colonist Leader"
-
+	max_skill = list(
+		SKILL_MEDICAL = SKILL_MAX,
+		SKILL_ANATOMY = SKILL_MAX
+	)
 
 /singleton/hierarchy/outfit/job/colonist/leader
 	name = OUTFIT_JOB_NAME("Colonist Leader")
@@ -259,7 +262,46 @@ GLOBAL_VAR_INIT(choose_colony_type, "СЛУЧАЙНЫЙ") //Педальки в�
 	. = ..()
 	QDEL_NULL(files)
 	files = new
-	//Отнимайте в каждой технологией по 1 уровню, именно такие значения будут в игре
+	//ENGI
+	files.research_points = 40250
+	files.UnlockTechology(/datum/technology/engineering)
+	files.UnlockTechology(/datum/technology/engineering/monitoring)
+	files.UnlockTechology(/datum/technology/engineering/adv_parts)
+	files.UnlockTechology(/datum/technology/engineering/res_tech)
+	files.UnlockTechology(/datum/technology/engineering/basic_mining)
+	files.UnlockTechology(/datum/technology/engineering/ship)
+	files.UnlockTechology(/datum/technology/engineering/adv_eng)
+	files.UnlockTechology(/datum/technology/engineering/super_parts)
+	//POWER
+	files.UnlockTechology(/datum/technology/power)
+	files.UnlockTechology(/datum/technology/power/adv_power)
+	files.UnlockTechology(/datum/technology/power/sup_power)
+	files.UnlockTechology(/datum/technology/power/hyp_power)
+	files.UnlockTechology(/datum/technology/power/sup_power_gen)
+	files.UnlockTechology(/datum/technology/power/adv_power_gen)
+	files.UnlockTechology(/datum/technology/power/power_storage)
+	files.UnlockTechology(/datum/technology/power/adv_power_storage)
+	//BLUESPACE
+	files.UnlockTechology(/datum/technology/tcom/rcon)
+	files.UnlockTechology(/datum/technology/tcom/monitoring)
+	files.UnlockTechology(/datum/technology/tcom)
+	files.UnlockTechology(/datum/technology/tcom/track_dev)
+	files.UnlockTechology(/datum/technology/tcom/arti_blue)
+	files.UnlockTechology(/datum/technology/tcom/tele_pad)
+	//РОБО
+	files.UnlockTechology(/datum/technology/robo)
+	files.UnlockTechology(/datum/technology/robo/loader_mech)
+	files.UnlockTechology(/datum/technology/robo/basic_hardsuitmods)
+	files.UnlockTechology(/datum/technology/robo/adv_hardsuits)
+	files.UnlockTechology(/datum/technology/robo/heavy_mech)
+	files.UnlockTechology(/datum/technology/robo/light_mech)
+	files.UnlockTechology(/datum/technology/robo/combat_mechs)
+	files.UnlockTechology(/datum/technology/robo/mech_equipment)
+	files.UnlockTechology(/datum/technology/robo/mech_weapons)
+	files.UnlockTechology(/datum/technology/robo/mech_med_tools)
+	files.UnlockTechology(/datum/technology/robo/adv_mech_tools)
+
+	/*
 	files.UpdateTech("materials", 7) //Материалы
 	files.UpdateTech("engineering", 5) //Инженерка
 	files.UpdateTech("phorontech", 5) //Форон
@@ -270,6 +312,8 @@ GLOBAL_VAR_INIT(choose_colony_type, "СЛУЧАЙНЫЙ") //Педальки в�
 	files.UpdateTech("magnets", 7) //Электромагнитные
 	files.UpdateTech("programming", 5) //ДАТА
 	files.UpdateTech("esoteric", 8) //Эзотерика
+	*/
+
 
 /area/map_template/colony/science
 	name = "\improper Colony R&D"

@@ -1577,12 +1577,12 @@
 /obj/item/clothing/suit/storage/toggle/brown_jacket,
 /obj/item/clothing/suit/storage/toggle/hoodie/nt,
 /obj/item/clothing/suit/storage/toggle/hoodie/smw,
-/obj/structure/closet,
 /obj/item/device/flashlight/upgraded,
 /obj/item/crowbar/prybar,
 /obj/item/gun/energy/gun/small,
 /obj/item/device/radio/headset/map_preset/playablecolony,
 /obj/item/device/radio/map_preset/playablecolony,
+/obj/structure/closet/cabinet,
 /turf/simulated/floor/wood/ebony,
 /area/map_template/colony/dorms)
 "dk" = (
@@ -3342,7 +3342,7 @@
 	icon_state = "4-8"
 	},
 /obj/random/colony_flag{
-	pixel_y = -32
+	pixel_y = 32
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony)
@@ -4243,6 +4243,7 @@
 /obj/item/reagent_containers/glass/beaker/bowl,
 /obj/item/reagent_containers/food/condiment/salt,
 /obj/item/reagent_containers/food/condiment/enzyme,
+/obj/structure/closet/fridge,
 /turf/simulated/floor/tiled/freezer,
 /area/map_template/colony/messhall)
 "hU" = (
@@ -8578,27 +8579,6 @@
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/atmospherics)
-"vA" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/floor_decal/spline/fancy/wood,
-/obj/floor_decal/spline/fancy/wood{
-	dir = 1
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/random/colony_flag{
-	pixel_y = 32
-	},
-/turf/simulated/floor/tiled/techfloor,
-/area/map_template/colony/dorms)
 "vJ" = (
 /obj/machinery/door/firedoor,
 /obj/wallframe_spawn/reinforced,
@@ -10561,7 +10541,7 @@ Sq
 pG
 OU
 az
-vA
+tI
 fM
 fM
 fM
@@ -11143,9 +11123,9 @@ fc
 fc
 jK
 fc
-aa
-aa
-aa
+aj
+aj
+aj
 aj
 aj
 fc
