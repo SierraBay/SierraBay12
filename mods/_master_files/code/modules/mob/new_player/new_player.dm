@@ -13,3 +13,9 @@
 				return TOPIC_NOACTION
 
 	return ..()
+
+/mob/new_player/
+
+/mob/new_player/ViewManifest()
+	var/datum/nano_module/manifest/ui = new /datum/nano_module/manifest(usr)
+	ui.ui_interact(usr)
