@@ -222,10 +222,15 @@
 	if(!istype(target_mob))
 		return
 
+	var/miss_modifier
+
 	//roll to-hit
-	var/miss_modifier = max(distance_falloff*(distance)*(distance) - hitchance_mod + special_miss_modifier, -30)
+	if(distance >= 2)
+		miss_modifier = max(distance_falloff * (distance+1)  - hitchance_mod + special_miss_modifier, -30)
+	else
+		miss_modifier = max(0 - hitchance_mod + special_miss_modifier, -30)
 	//makes moving targets harder to hit, and stationary easier to hit
-	var/movment_mod = min(5, (world.time - target_mob.l_move_time) - 5)
+	var/movment_mod = min(5, (world.time - target_mob.l_move_time) - 20)
 
 	if (damage_falloff)
 		var/damage_mod = 1
