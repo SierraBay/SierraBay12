@@ -1,7 +1,0 @@
-author: FeudeyTF
-changes:
-  - {bugfix: Пофиксил Section}
-  - {soundadd: Добавил звук печатающего принтера}
-  - {rscadd: Добавил интерфейс для принтера (photocopier)}
-  - {rscadd: Улучшил интерфейс для консоли НИО}
-delete-after: true
