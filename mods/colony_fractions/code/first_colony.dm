@@ -57,6 +57,9 @@ GLOBAL_VAR_INIT(choose_colony_type, "СЛУЧАЙНЫЙ") //Педальки в�
 	log_and_message_admins("Начал спавн колонии следующего типа: [GLOB.last_colony_type].")
 
 	.=..()
+
+/datum/map_template/ruin/exoplanet/playablecolony/after_load()
+	.=..()
 	colony_inform()
 
 /datum/map_template/ruin/exoplanet/playablecolony/proc/colony_inform()
@@ -263,7 +266,7 @@ GLOBAL_VAR_INIT(choose_colony_type, "СЛУЧАЙНЫЙ") //Педальки в�
 	QDEL_NULL(files)
 	files = new
 	//ENGI
-	files.research_points = 40250
+	files.research_points = 41250
 	files.UnlockTechology(/datum/technology/engineering)
 	files.UnlockTechology(/datum/technology/engineering/monitoring)
 	files.UnlockTechology(/datum/technology/engineering/adv_parts)

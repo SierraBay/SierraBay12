@@ -43,6 +43,9 @@
 	log_and_message_admins("Начал спавн колонии следующего типа: [GLOB.last_colony_type].")
 
 	.=..()
+
+/datum/map_template/ruin/exoplanet/playablecolony2/after_load()
+	.=..()
 	colony_inform()
 
 /datum/map_template/ruin/exoplanet/playablecolony2/proc/colony_inform()

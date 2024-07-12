@@ -238,11 +238,10 @@
 /turf/simulated/wall/r_wall,
 /area/map_template/colony/atmospherics)
 "aG" = (
-/obj/structure/table/steel_reinforced,
-/obj/item/storage/firstaid/surgery,
 /obj/floor_decal/corner/red{
 	dir = 9
 	},
+/obj/structure/iv_stand,
 /turf/simulated/floor/tiled/freezer,
 /area/map_template/colony/surgery)
 "aH" = (
@@ -644,6 +643,9 @@
 	locked = 0;
 	pixel_y = 20;
 	req_access = list()
+	},
+/obj/floor_decal/techfloor{
+	dir = 9
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/engineering)
@@ -2181,6 +2183,9 @@
 	dir = 8
 	},
 /obj/machinery/portable_atmospherics/hydroponics,
+/obj/floor_decal/techfloor{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/hydroponics)
 "eo" = (
@@ -2494,15 +2499,12 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/floor_decal/techfloor{
-	dir = 4
-	},
-/obj/floor_decal/techfloor{
-	dir = 8
-	},
 /obj/machinery/portable_atmospherics/hydroponics,
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 8
+	},
+/obj/floor_decal/techfloor{
+	dir = 4
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/hydroponics)
@@ -2562,6 +2564,9 @@
 	},
 /obj/floor_decal/corner/green{
 	dir = 6
+	},
+/obj/floor_decal/techfloor{
+	dir = 8
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony)
@@ -2917,10 +2922,11 @@
 /turf/simulated/floor/wood,
 /area/map_template/colony/messhall)
 "fI" = (
-/obj/structure/iv_stand,
 /obj/floor_decal/corner/red{
 	dir = 9
 	},
+/obj/structure/table/steel_reinforced,
+/obj/item/storage/firstaid/surgery,
 /turf/simulated/floor/tiled/freezer,
 /area/map_template/colony/surgery)
 "fJ" = (
@@ -3112,8 +3118,9 @@
 /area/map_template/colony)
 "fX" = (
 /obj/floor_decal/techfloor{
-	dir = 8
+	dir = 6
 	},
+/obj/floor_decal/industrial/hatch/yellow,
 /obj/machinery/door/firedoor{
 	req_access = list()
 	},
@@ -3137,9 +3144,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
 	},
-/obj/floor_decal/techfloor{
-	dir = 9
-	},
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
@@ -3148,6 +3152,9 @@
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 8
 	},
+/obj/floor_decal/techfloor{
+	dir = 1
+	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony)
 "ga" = (
@@ -3155,6 +3162,9 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 1
+	},
+/obj/floor_decal/techfloor{
 	dir = 1
 	},
 /turf/simulated/floor/tiled/techfloor,
@@ -3261,9 +3271,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
 	},
-/obj/floor_decal/techfloor{
-	dir = 8
-	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -3333,9 +3340,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/floor_decal/techfloor{
-	dir = 5
-	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -3343,6 +3347,9 @@
 	},
 /obj/random/colony_flag{
 	pixel_y = 32
+	},
+/obj/floor_decal/techfloor{
+	dir = 1
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony)
@@ -3369,16 +3376,13 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony)
 "gr" = (
-/obj/floor_decal/techfloor{
-	dir = 8
-	},
-/obj/floor_decal/techfloor{
-	dir = 4
-	},
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
 /obj/structure/closet/firecloset,
 /obj/item/device/flashlight/lamp/floodlamp,
 /obj/random/firstaid,
+/obj/floor_decal/techfloor{
+	dir = 1
+	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/hydroponics)
 "gs" = (
@@ -3427,16 +3431,13 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/obj/floor_decal/techfloor{
-	dir = 5
-	},
-/obj/floor_decal/techfloor/hole/right{
-	dir = 1
-	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4"
+	},
+/obj/floor_decal/techfloor{
+	dir = 1
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony)
@@ -3450,6 +3451,7 @@
 	dir = 10
 	},
 /obj/floor_decal/techfloor/hole/right,
+/obj/floor_decal/industrial/hatch/yellow,
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony)
 "gy" = (
@@ -3464,6 +3466,7 @@
 /obj/floor_decal/techfloor{
 	dir = 6
 	},
+/obj/floor_decal/industrial/hatch/yellow,
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony)
 "gz" = (
@@ -3517,9 +3520,9 @@
 	icon_state = "4-8"
 	},
 /obj/floor_decal/techfloor{
-	dir = 9
+	dir = 5
 	},
-/obj/floor_decal/corner/green,
+/obj/floor_decal/industrial/hatch/yellow,
 /obj/machinery/door/firedoor{
 	req_access = list()
 	},
@@ -3748,18 +3751,13 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/floor_decal/techfloor{
-	dir = 1
-	},
-/obj/floor_decal/corner/green{
-	dir = 10
-	},
-/obj/floor_decal/techfloor/hole/right{
-	dir = 1
-	},
 /obj/machinery/vending/wallmed1{
 	pixel_x = 7;
 	pixel_y = 32
+	},
+/obj/floor_decal/corner/green,
+/obj/floor_decal/techfloor{
+	dir = 9
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony)
@@ -3841,9 +3839,6 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/atmospherics)
 "hk" = (
-/obj/floor_decal/techfloor{
-	dir = 10
-	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
@@ -3854,6 +3849,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/floor_decal/techfloor,
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony)
 "hl" = (
@@ -3944,9 +3940,6 @@
 /turf/simulated/floor/bluegrid,
 /area/map_template/colony/tcomms)
 "hv" = (
-/obj/floor_decal/techfloor{
-	dir = 6
-	},
 /obj/machinery/power/apc{
 	locked = 0;
 	name = "south bump";
@@ -3957,6 +3950,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/floor_decal/techfloor,
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony)
 "hw" = (
@@ -3971,6 +3965,7 @@
 /obj/machinery/door/firedoor{
 	req_access = list()
 	},
+/obj/floor_decal/industrial/hatch/yellow,
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony)
 "hx" = (
@@ -4103,9 +4098,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/floor_decal/techfloor{
-	dir = 6
-	},
+/obj/floor_decal/techfloor,
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony)
 "hK" = (
@@ -4291,9 +4284,6 @@
 /area/map_template/colony)
 "hZ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/floor_decal/techfloor{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 8
 	},
@@ -4618,6 +4608,7 @@
 /obj/machinery/door/firedoor{
 	req_access = list()
 	},
+/obj/floor_decal/industrial/hatch/yellow,
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony)
 "iD" = (
@@ -4628,7 +4619,7 @@
 	dir = 1
 	},
 /obj/floor_decal/techfloor{
-	dir = 5
+	dir = 1
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony)
@@ -4650,19 +4641,14 @@
 	icon_state = "2-4"
 	},
 /obj/floor_decal/techfloor{
-	dir = 4
-	},
-/obj/floor_decal/corner/green{
-	dir = 9
+	dir = 5
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony)
 "iF" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/floor_decal/techfloor{
-	dir = 6
-	},
+/obj/floor_decal/techfloor,
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony)
 "iG" = (
@@ -5045,6 +5031,17 @@
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/structure/closet/fridge,
+/obj/item/storage/box/snack/tastybread,
+/obj/item/storage/box/snack/tastybread,
+/obj/item/storage/box/snack/noraisin,
+/obj/item/storage/box/snack/jerky,
+/obj/item/storage/box/snack/candy,
+/obj/item/storage/mre/random,
+/obj/item/storage/mre/random,
+/obj/item/storage/mre/random,
+/obj/item/storage/mre/menu9,
+/obj/item/storage/mre/menu10,
 /turf/simulated/floor/tiled/freezer,
 /area/map_template/colony/messhall)
 "jv" = (
@@ -5188,17 +5185,6 @@
 /area/map_template/colony/warehouse)
 "jG" = (
 /obj/machinery/light,
-/obj/item/storage/mre/menu10,
-/obj/item/storage/mre/menu9,
-/obj/structure/closet/fridge,
-/obj/item/storage/mre/random,
-/obj/item/storage/mre/random,
-/obj/item/storage/mre/random,
-/obj/item/storage/box/snack/candy,
-/obj/item/storage/box/snack/jerky,
-/obj/item/storage/box/snack/noraisin,
-/obj/item/storage/box/snack/tastybread,
-/obj/item/storage/box/snack/tastybread,
 /turf/simulated/floor/tiled/freezer,
 /area/map_template/colony/messhall)
 "jH" = (
@@ -5494,6 +5480,7 @@
 /obj/machinery/door/firedoor{
 	req_access = list()
 	},
+/obj/floor_decal/industrial/hatch/yellow,
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony)
 "kc" = (
@@ -5527,11 +5514,11 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/hydroponics)
 "kf" = (
+/obj/machinery/atmospherics/unary/vent_pump/on,
+/obj/machinery/vending/hydronutrients,
 /obj/floor_decal/techfloor{
 	dir = 1
 	},
-/obj/machinery/atmospherics/unary/vent_pump/on,
-/obj/machinery/vending/hydronutrients,
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/hydroponics)
 "kg" = (
@@ -5561,6 +5548,9 @@
 "kj" = (
 /obj/structure/closet/crate/hydroponics/prespawned,
 /obj/item/reagent_containers/glass/bucket,
+/obj/floor_decal/techfloor{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/hydroponics)
 "kk" = (
@@ -5577,20 +5567,17 @@
 	pixel_y = 20;
 	req_access = list()
 	},
-/obj/floor_decal/techfloor{
-	dir = 5
-	},
 /obj/machinery/biogenerator,
+/obj/floor_decal/techfloor{
+	dir = 1
+	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/hydroponics)
 "km" = (
-/obj/floor_decal/techfloor{
-	dir = 8
-	},
-/obj/floor_decal/techfloor{
-	dir = 4
-	},
 /obj/machinery/portable_atmospherics/hydroponics,
+/obj/floor_decal/techfloor{
+	dir = 6
+	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/hydroponics)
 "kn" = (
@@ -5700,13 +5687,10 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/colony/airlock)
 "kx" = (
+/obj/machinery/portable_atmospherics/hydroponics,
 /obj/floor_decal/techfloor{
 	dir = 4
 	},
-/obj/floor_decal/techfloor{
-	dir = 8
-	},
-/obj/machinery/portable_atmospherics/hydroponics,
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/hydroponics)
 "ky" = (
@@ -5777,7 +5761,7 @@
 /area/map_template/colony/atmospherics)
 "kE" = (
 /obj/floor_decal/techfloor{
-	dir = 9
+	dir = 8
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/hydroponics)
@@ -5956,9 +5940,6 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/hydroponics)
 "kW" = (
-/obj/floor_decal/techfloor{
-	dir = 8
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
 	},
@@ -6131,10 +6112,16 @@
 /area/map_template/colony/mineralprocessing)
 "lo" = (
 /obj/machinery/portable_atmospherics/hydroponics,
+/obj/floor_decal/techfloor{
+	dir = 10
+	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/hydroponics)
 "lp" = (
-/obj/structure/hygiene/drain,
+/obj/floor_decal/techfloor,
+/obj/floor_decal/corner/green{
+	dir = 5
+	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony)
 "lq" = (
@@ -6210,10 +6197,10 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/floor_decal/techfloor{
-	dir = 1
-	},
 /obj/machinery/seed_extractor,
+/obj/floor_decal/techfloor{
+	dir = 9
+	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/hydroponics)
 "ly" = (
@@ -6666,6 +6653,7 @@
 	id_tag = "colmainblast";
 	name = "Entry Blast Door"
 	},
+/obj/floor_decal/industrial/hatch/yellow,
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony)
 "mk" = (
@@ -6761,6 +6749,7 @@
 	icon_state = "pdoor0";
 	id_tag = "colmainexit"
 	},
+/obj/floor_decal/industrial/hatch/yellow,
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony)
 "mp" = (
@@ -6863,14 +6852,11 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/floor_decal/techfloor{
-	dir = 8
-	},
-/obj/floor_decal/corner/green{
-	dir = 6
-	},
 /obj/machinery/door/firedoor{
 	req_access = list()
+	},
+/obj/floor_decal/techfloor{
+	dir = 1
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony)
@@ -6913,6 +6899,7 @@
 	id_tag = "colmainblast";
 	name = "Entry Blast Door"
 	},
+/obj/floor_decal/industrial/hatch/yellow,
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony)
 "mC" = (
@@ -6950,14 +6937,14 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/floor_decal/techfloor{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
+	},
+/obj/floor_decal/techfloor{
+	dir = 8
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/hydroponics)
@@ -6966,9 +6953,6 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
-	},
-/obj/floor_decal/techfloor{
-	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -6982,9 +6966,6 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/floor_decal/techfloor{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
 	},
@@ -6994,9 +6975,6 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/hydroponics)
 "mH" = (
-/obj/floor_decal/techfloor{
-	dir = 5
-	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 4
 	},
@@ -7139,28 +7117,27 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony)
 "mT" = (
-/obj/floor_decal/techfloor{
-	dir = 10
-	},
-/obj/floor_decal/corner/green{
-	dir = 4
-	},
 /obj/machinery/door/firedoor{
 	req_access = list()
 	},
+/obj/floor_decal/techfloor,
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony)
 "mU" = (
-/obj/floor_decal/techfloor,
-/obj/floor_decal/techfloor/hole/right,
+/obj/machinery/portable_atmospherics/hydroponics,
+/obj/floor_decal/techfloor{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/techfloor,
-/area/map_template/colony)
+/area/map_template/colony/hydroponics)
 "mV" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/floor_decal/techfloor,
-/obj/floor_decal/corner/green{
-	dir = 5
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/floor_decal/techfloor{
+	dir = 6
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony)
@@ -7179,9 +7156,6 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony)
 "mX" = (
-/obj/floor_decal/techfloor{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
@@ -7223,14 +7197,11 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/floor_decal/techfloor{
-	dir = 4
-	},
-/obj/floor_decal/techfloor{
-	dir = 8
-	},
 /obj/structure/table/steel_reinforced,
 /obj/machinery/reagentgrinder/juicer,
+/obj/floor_decal/techfloor{
+	dir = 5
+	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/hydroponics)
 "nc" = (
@@ -7346,6 +7317,9 @@
 	},
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 4
+	},
+/obj/floor_decal/techfloor{
+	dir = 8
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/hydroponics)
@@ -7498,14 +7472,11 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/hydroponics)
 "nC" = (
-/obj/floor_decal/techfloor{
-	dir = 4
-	},
-/obj/floor_decal/techfloor{
-	dir = 8
-	},
 /obj/structure/table/steel_reinforced,
 /obj/item/reagent_containers/glass/beaker/large,
+/obj/floor_decal/techfloor{
+	dir = 1
+	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/hydroponics)
 "nD" = (
@@ -7599,6 +7570,7 @@
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 1
 	},
+/obj/floor_decal/techfloor,
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/hydroponics)
 "nL" = (
@@ -7675,6 +7647,7 @@
 	icon_state = "pdoor0";
 	id_tag = "colmainexit"
 	},
+/obj/floor_decal/industrial/hatch/yellow,
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony)
 "nR" = (
@@ -8296,17 +8269,17 @@
 /area/map_template/colony/science)
 "pe" = (
 /obj/structure/reagent_dispensers/watertank,
-/turf/simulated/floor/tiled/techfloor,
-/area/map_template/colony/hydroponics)
-"pq" = (
 /obj/floor_decal/techfloor{
 	dir = 8
 	},
-/obj/floor_decal/techfloor{
-	dir = 4
-	},
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/colony/hydroponics)
+"pq" = (
 /obj/structure/table/steel_reinforced,
 /obj/item/storage/box/botanydisk,
+/obj/floor_decal/techfloor{
+	dir = 1
+	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/hydroponics)
 "pB" = (
@@ -8402,15 +8375,15 @@
 /turf/simulated/floor/exoplanet/concrete,
 /area/template_noop)
 "sw" = (
-/obj/floor_decal/corner/green{
-	dir = 6
-	},
 /obj/floor_decal/techfloor{
-	dir = 8
+	dir = 10
 	},
 /obj/machinery/vending/cigarette{
 	name = "hacked Cigarette machine";
 	prices = list()
+	},
+/obj/floor_decal/corner/green{
+	dir = 4
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony)
@@ -8461,17 +8434,14 @@
 /turf/simulated/floor/tiled/white,
 /area/map_template/colony/bathroom)
 "tz" = (
-/obj/floor_decal/techfloor{
-	dir = 4
-	},
-/obj/floor_decal/techfloor{
-	dir = 8
-	},
 /obj/item/device/radio/intercom/map_preset/playablecolony{
 	dir = 8;
 	pixel_x = 22
 	},
 /obj/machinery/portable_atmospherics/hydroponics,
+/obj/floor_decal/techfloor{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/hydroponics)
 "tB" = (
@@ -8507,9 +8477,6 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/dorms)
 "uf" = (
-/obj/floor_decal/techfloor{
-	dir = 8
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/portable_atmospherics/hydroponics,
@@ -8531,6 +8498,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
 	},
+/obj/structure/hygiene/drain,
 /turf/simulated/floor/tiled/white,
 /area/map_template/colony/bathroom)
 "uR" = (
@@ -8579,6 +8547,16 @@
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/atmospherics)
+"vA" = (
+/obj/machinery/portable_atmospherics/hydroponics,
+/obj/floor_decal/techfloor{
+	dir = 8
+	},
+/obj/floor_decal/techfloor{
+	dir = 8
+	},
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/colony/hydroponics)
 "vJ" = (
 /obj/machinery/door/firedoor,
 /obj/wallframe_spawn/reinforced,
@@ -8689,6 +8667,9 @@
 /area/map_template/colony/science)
 "zH" = (
 /obj/machinery/seed_storage/garden,
+/obj/floor_decal/techfloor{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/hydroponics)
 "zK" = (
@@ -8713,13 +8694,10 @@
 /turf/template_noop,
 /area/template_noop)
 "Bc" = (
+/obj/structure/table/steel_reinforced,
 /obj/floor_decal/techfloor{
 	dir = 4
 	},
-/obj/floor_decal/techfloor{
-	dir = 8
-	},
-/obj/structure/table/steel_reinforced,
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/hydroponics)
 "BH" = (
@@ -8771,13 +8749,10 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/machinery/portable_atmospherics/hydroponics,
 /obj/floor_decal/techfloor{
 	dir = 4
 	},
-/obj/floor_decal/techfloor{
-	dir = 8
-	},
-/obj/machinery/portable_atmospherics/hydroponics,
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/hydroponics)
 "Dw" = (
@@ -8819,9 +8794,6 @@
 /turf/simulated/floor/exoplanet/concrete,
 /area/template_noop)
 "Fs" = (
-/obj/floor_decal/techfloor{
-	dir = 10
-	},
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 1
 	},
@@ -8832,6 +8804,7 @@
 	req_access = list()
 	},
 /obj/structure/cable,
+/obj/floor_decal/techfloor,
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/hydroponics)
 "Fz" = (
@@ -8915,9 +8888,6 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/dorms)
 "HM" = (
-/obj/floor_decal/techfloor{
-	dir = 8
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/portable_atmospherics/hydroponics,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
@@ -8994,6 +8964,7 @@
 /obj/machinery/door/firedoor{
 	req_access = list()
 	},
+/obj/floor_decal/industrial/hatch/yellow,
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony)
 "JX" = (
@@ -9029,28 +9000,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/map_template/colony/jail)
-"Kz" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/floor_decal/corner/green{
-	dir = 5
-	},
-/turf/simulated/floor/tiled/techfloor,
-/area/map_template/colony)
-"KK" = (
-/obj/machinery/portable_atmospherics/hydroponics,
-/obj/floor_decal/techfloor{
-	dir = 4
-	},
-/obj/floor_decal/techfloor{
-	dir = 8
-	},
-/turf/simulated/floor/tiled/techfloor,
-/area/map_template/colony/hydroponics)
 "KM" = (
 /obj/structure/table/steel_reinforced,
 /obj/machinery/atmospherics/unary/vent_pump/on,
@@ -9111,19 +9060,13 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/atmospherics)
 "LO" = (
+/mob/living/bot/farmbot,
 /obj/floor_decal/techfloor{
 	dir = 4
 	},
-/obj/floor_decal/techfloor{
-	dir = 8
-	},
-/mob/living/bot/farmbot,
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/hydroponics)
 "LQ" = (
-/obj/floor_decal/techfloor{
-	dir = 8
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/portable_atmospherics/hydroponics,
 /turf/simulated/floor/tiled/techfloor,
@@ -9275,9 +9218,7 @@
 /turf/template_noop,
 /area/template_noop)
 "Rh" = (
-/obj/floor_decal/techfloor{
-	dir = 6
-	},
+/obj/floor_decal/techfloor,
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/hydroponics)
 "Ro" = (
@@ -9333,9 +9274,6 @@
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/colony/science)
 "RR" = (
-/obj/floor_decal/techfloor{
-	dir = 5
-	},
 /obj/structure/bed/chair/comfy/brown,
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/hydroponics)
@@ -9560,9 +9498,6 @@
 /turf/simulated/floor/tiled,
 /area/map_template/colony/science)
 "Xh" = (
-/obj/floor_decal/techfloor{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
@@ -9577,11 +9512,18 @@
 /turf/simulated/floor/tiled/white,
 /area/map_template/colony/bathroom)
 "YV" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /obj/floor_decal/techfloor{
-	dir = 4
+	dir = 1
 	},
 /turf/simulated/floor/tiled/techfloor,
-/area/map_template/colony/hydroponics)
+/area/map_template/colony/engineering)
 
 (1,1,1) = {"
 aq
@@ -10249,7 +10191,7 @@ bS
 Cg
 Gm
 bm
-qc
+YV
 qc
 aL
 cD
@@ -10636,8 +10578,8 @@ jp
 kT
 lk
 sw
-Kz
-mU
+fT
+ho
 bd
 kB
 lb
@@ -10678,7 +10620,7 @@ jq
 ao
 lp
 ga
-mV
+iF
 mB
 iM
 iQ
@@ -10717,9 +10659,9 @@ hO
 hO
 jN
 yN
-hO
-iE
 mW
+iE
+mV
 mj
 kC
 kS
@@ -10790,7 +10732,7 @@ fk
 aI
 gI
 hx
-eN
+lq
 ge
 iO
 iR
@@ -10801,13 +10743,13 @@ gz
 aI
 lx
 mE
-gm
+kE
 pe
 kj
 nl
 zH
-lo
-lo
+vA
+mU
 en
 lo
 ba
@@ -10850,7 +10792,7 @@ gm
 gm
 gm
 gm
-gm
+Rh
 ba
 vk
 "}
@@ -10872,7 +10814,7 @@ fe
 aI
 gA
 hK
-hy
+eN
 jj
 jj
 je
@@ -10915,7 +10857,7 @@ jl
 hK
 hI
 gd
-lq
+hy
 gs
 aI
 aI
@@ -10925,14 +10867,14 @@ aI
 gr
 mH
 mX
-YV
+gm
 gm
 gm
 gm
 gm
 gm
 ns
-gm
+Rh
 kv
 mc
 "}
@@ -10964,7 +10906,7 @@ jv
 jj
 aI
 nC
-kE
+gm
 kW
 uf
 uf
@@ -11006,13 +10948,13 @@ jE
 aI
 pq
 RR
-YV
-YV
-YV
+gm
+gm
+gm
 Xh
-YV
-YV
-YV
+gm
+gm
+gm
 gm
 Rh
 ba
@@ -11052,7 +10994,7 @@ kx
 tz
 eT
 kx
-KK
+kx
 kx
 Dj
 km
