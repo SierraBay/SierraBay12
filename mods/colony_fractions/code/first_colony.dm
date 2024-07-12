@@ -288,7 +288,7 @@ GLOBAL_VAR_INIT(choose_colony_type, "СЛУЧАЙНЫЙ") //Педальки в�
 	files.UnlockTechology(/datum/technology/tcom/rcon)
 	files.UnlockTechology(/datum/technology/tcom/monitoring)
 	files.UnlockTechology(/datum/technology/tcom)
-	files.UnlockTechology(/datum/technology/tcom/track_dev)
+	files.UnlockTechology(/datum/technology/tcom/tcom_parts)
 	files.UnlockTechology(/datum/technology/tcom/arti_blue)
 	files.UnlockTechology(/datum/technology/tcom/tele_pad)
 	//РОБО
