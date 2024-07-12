@@ -927,15 +927,13 @@
 /obj/floor_decal/techfloor{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/visible/black{
-	dir = 4
-	},
 /obj/machinery/button/blast_door{
 	id_tag = "colthirdatmos";
 	name = "Third Deck Teleporter Access Shutter Control";
 	pixel_x = -6;
 	pixel_y = 29
 	},
+/obj/machinery/atmospherics/portables_connector,
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/atmospherics)
 "bS" = (
@@ -1202,12 +1200,14 @@
 /obj/floor_decal/techfloor{
 	dir = 9
 	},
-/obj/machinery/atmospherics/pipe/simple/visible/black{
-	dir = 4
-	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/atmospherics)
 "cu" = (
+/obj/machinery/atmospherics/pipe/simple/visible/black,
+/obj/floor_decal/industrial/outline/yellow,
+/obj/floor_decal/techfloor{
+	dir = 1
+	},
 /obj/machinery/computer/air_control{
 	input_tag = "cn2n";
 	name = "Nitrogen Supply Control";
@@ -1215,22 +1215,11 @@
 	sensor_name = "Nitrogen Tank";
 	sensor_tag = "c1"
 	},
-/obj/machinery/atmospherics/pipe/simple/visible/black,
-/obj/floor_decal/industrial/outline/yellow,
-/obj/floor_decal/techfloor{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/simple/visible/black{
-	dir = 4
-	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/atmospherics)
 "cv" = (
 /obj/machinery/atmospherics/binary/pump,
 /obj/machinery/atmospherics/pipe/simple/visible/black,
-/obj/machinery/atmospherics/pipe/simple/visible/black{
-	dir = 4
-	},
 /obj/floor_decal/techfloor{
 	dir = 1
 	},
@@ -1256,8 +1245,9 @@
 /area/map_template/colony/science)
 "cy" = (
 /obj/machinery/atmospherics/pipe/simple/visible/black,
-/obj/machinery/atmospherics/pipe/simple/visible/black{
-	dir = 4
+/obj/floor_decal/industrial/outline/yellow,
+/obj/floor_decal/techfloor{
+	dir = 1
 	},
 /obj/machinery/computer/air_control{
 	input_tag = "cco2n";
@@ -1266,18 +1256,11 @@
 	sensor_name = "Carbon Dioxide Tank";
 	sensor_tag = "c3"
 	},
-/obj/floor_decal/industrial/outline/yellow,
-/obj/floor_decal/techfloor{
-	dir = 1
-	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/atmospherics)
 "cz" = (
 /obj/floor_decal/techfloor{
 	dir = 5
-	},
-/obj/machinery/atmospherics/pipe/simple/visible/black{
-	dir = 10
 	},
 /obj/machinery/alarm{
 	locked = 0;
@@ -1966,10 +1949,12 @@
 /turf/simulated/floor/tiled/white/monotile,
 /area/map_template/colony/medbay)
 "dS" = (
-/obj/machinery/atmospherics/pipe/simple/visible/black,
 /obj/machinery/meter,
 /obj/floor_decal/techfloor{
 	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/visible/black{
+	dir = 10
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/atmospherics)
@@ -2353,6 +2338,9 @@
 /area/map_template/colony/medbay)
 "eA" = (
 /obj/floor_decal/corner_techfloor_grid,
+/obj/machinery/atmospherics/pipe/simple/visible/black{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/atmospherics)
 "eB" = (
@@ -2446,6 +2434,9 @@
 /obj/machinery/atmospherics/pipe/simple/visible,
 /obj/floor_decal/techfloor{
 	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/visible/black{
+	dir = 4
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/atmospherics)
@@ -2909,10 +2900,16 @@
 	dir = 10
 	},
 /obj/machinery/atmospherics/pipe/simple/visible,
+/obj/machinery/atmospherics/pipe/simple/visible/black{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/atmospherics)
 "fE" = (
 /obj/machinery/atmospherics/pipe/simple/visible,
+/obj/machinery/atmospherics/pipe/simple/visible/black{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/atmospherics)
 "fF" = (
@@ -2920,6 +2917,9 @@
 	dir = 10
 	},
 /obj/machinery/atmospherics/pipe/simple/visible/black,
+/obj/machinery/atmospherics/pipe/simple/visible/black{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/atmospherics)
 "fG" = (
@@ -8569,9 +8569,6 @@
 /obj/machinery/light/spot{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/visible/black{
-	dir = 4
-	},
 /obj/machinery/button/blast_door{
 	id_tag = "colfirstatmos";
 	name = "Third Deck Teleporter Access Shutter Control";
@@ -8903,9 +8900,6 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/portables_connector,
-/obj/machinery/atmospherics/pipe/simple/visible/black{
-	dir = 4
-	},
 /obj/machinery/button/blast_door{
 	id_tag = "colsecondatmos";
 	name = "Third Deck Teleporter Access Shutter Control";
@@ -9146,9 +9140,6 @@
 	output_tag = "co2o";
 	sensor_name = "Oxygen Tank";
 	sensor_tag = "c2"
-	},
-/obj/machinery/atmospherics/pipe/simple/visible/black{
-	dir = 4
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/atmospherics)
@@ -9406,9 +9397,6 @@
 /obj/floor_decal/techfloor{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/visible/black{
-	dir = 4
-	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/atmospherics)
 "Sz" = (
@@ -9478,18 +9466,11 @@
 /turf/simulated/floor/exoplanet/concrete,
 /area/template_noop)
 "Vi" = (
+/obj/machinery/atmospherics/pipe/simple/visible/black,
 /obj/machinery/atmospherics/pipe/simple/visible/black{
 	dir = 4
 	},
-/obj/wallframe_spawn/reinforced_phoron,
-/obj/machinery/door/blast/regular{
-	id_tag = "colthirdatmos"
-	},
-/obj/machinery/door/firedoor{
-	req_access = list();
-	dir = 3
-	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/atmospherics)
 "Vk" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -9536,9 +9517,6 @@
 	dir = 10
 	},
 /obj/machinery/atmospherics/binary/pump,
-/obj/machinery/atmospherics/pipe/simple/visible/black{
-	dir = 4
-	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/atmospherics)
 "Wa" = (
@@ -9608,6 +9586,20 @@
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/hydroponics)
+"XG" = (
+/obj/machinery/door/firedoor{
+	req_access = list();
+	dir = 3
+	},
+/obj/machinery/atmospherics/pipe/simple/visible/black{
+	dir = 4
+	},
+/obj/machinery/door/blast/regular{
+	id_tag = "colthirdatmos"
+	},
+/obj/wallframe_spawn/reinforced_phoron,
+/turf/simulated/floor/plating,
+/area/map_template/colony/atmospherics)
 "YD" = (
 /obj/floor_decal/borderfloorwhite,
 /obj/structure/table/steel_reinforced,
@@ -9636,8 +9628,8 @@ aa
 aa
 aa
 aa
-aH
 aa
+aH
 aF
 dz
 dz
@@ -9677,8 +9669,8 @@ al
 aF
 aF
 aF
-Vi
 aF
+XG
 aF
 dJ
 iW
@@ -9760,7 +9752,7 @@ bO
 lc
 WV
 cu
-dT
+Vi
 dT
 hm
 cE
@@ -9924,7 +9916,7 @@ eo
 cH
 eH
 LG
-dT
+Vi
 dh
 lK
 gG
@@ -10006,7 +9998,7 @@ bY
 cJ
 vt
 cy
-dT
+Vi
 dT
 lL
 bq
@@ -10088,7 +10080,7 @@ aF
 aF
 aF
 bR
-fh
+Vi
 hj
 cB
 hF

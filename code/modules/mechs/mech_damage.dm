@@ -80,8 +80,6 @@
 	//Проверяем, с какого направления прилетает атака!
 	var/local_dir = get_dir(src, get_turf(P)) // <- Узнаём направление от меха до снаряда
 
-	src.visible_message("[local_dir]")
-
 	//Попадание с фронта
 	if(local_dir == turn(dir, -45) || local_dir == turn(dir, 0) || local_dir == turn(dir, 45))
 		P.damage = ( P.damage * target.front_modificator_damage ) + target.front_additional_damage
