@@ -293,7 +293,7 @@
 	//Выполняем первую проверку ПЕРЕД началом ремонта
 	//Убедимся кто цель ремонта.
 	var/atom/target
-	if(mech == null)
+	if(!mech)
 		target = repair_part
 	else
 		target = mech
