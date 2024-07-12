@@ -1,9 +1,17 @@
 /datum/design/item/medical
 	materials = list(MATERIAL_STEEL = 30, MATERIAL_GLASS = 20)
+	category = list("Medical")
 
-/datum/design/item/medical/AssembleDesignName()
-	..()
-	name = "Biotech device prototype ([item_name])"
+//[SIERRA-ADD] - MODPACK_RND
+/datum/design/item/medical/health_scanner
+	shortname = "Health Scanner"
+	desc = "A hand-held scanner able to diagnose human health issues."
+	id = "health_scanner"
+	req_tech = list(TECH_MAGNET = 2, TECH_BIO = 3, TECH_ENGINEERING = 2)
+	materials = list(MATERIAL_STEEL = 200, MATERIAL_GLASS = 100, MATERIAL_PLASTIC = 150)
+	build_path = /obj/item/device/scanner/health
+	sort_string = "MAABA"
+//[/SIERRA-ADD] - MODPACK_RND
 
 /datum/design/item/medical/slime_scanner
 	desc = "Multipurpose organic life scanner."
@@ -22,6 +30,7 @@
 	sort_string = "MACFB"
 
 /datum/design/item/medical/mass_spectrometer
+	shortname = "Mass Spectrometer"
 	desc = "A device for analyzing chemicals in blood."
 	id = "mass_spectrometer"
 	req_tech = list(TECH_BIO = 2, TECH_MAGNET = 2)
@@ -29,6 +38,7 @@
 	sort_string = "MACAA"
 
 /datum/design/item/medical/adv_mass_spectrometer
+	shortname = "Advanced Mass Spectrometer"
 	desc = "A device for analyzing chemicals in blood and their quantities."
 	id = "adv_mass_spectrometer"
 	req_tech = list(TECH_BIO = 2, TECH_MAGNET = 4)
@@ -58,6 +68,7 @@
 	sort_string = "MADAA"
 
 /datum/design/item/medical/hypospray
+	shortname = "Hypospray"
 	desc = "A sterile, air-needle autoinjector for rapid administration of drugs."
 	id = "hypospray"
 	req_tech = list(TECH_MATERIAL = 4, TECH_BIO = 5)
@@ -82,3 +93,24 @@
 	materials = list(MATERIAL_PLASTIC = 15000, MATERIAL_GLASS = 15000, MATERIAL_SILVER = 5000, MATERIAL_GOLD = 1000)
 	build_path = /obj/item/bodybag/cryobag
 	sort_string = "MAGAA"
+
+//[SIERRA-ADD] - MODPACK_RND
+/datum/design/item/medical/defibrillator
+	shortname = "Defibrillator"
+	desc = "A portable device that can be used to perform a defibrillation procedure."
+	id = "defibrillators"
+	req_tech = list(TECH_MATERIAL = 2, TECH_BIO = 4)
+	materials = list(MATERIAL_PLASTIC = 5000, MATERIAL_GLASS = 5000, MATERIAL_SILVER = 3000, MATERIAL_GOLD = 500)
+	build_path = /obj/item/defibrillator
+	sort_string = "MAGAB"
+
+
+/datum/design/item/medical/defibrillators_compact
+	shortname = "Compact Defibrillator"
+	desc = "A portable device that can be used to perform a defibrillation procedure."
+	id = "defibrillators_compact"
+	req_tech = list(TECH_MATERIAL = 3, TECH_BIO = 4)
+	materials = list(MATERIAL_PLASTIC = 3000, MATERIAL_GLASS = 3000, MATERIAL_SILVER = 5000, MATERIAL_GOLD = 1000)
+	build_path = /obj/item/defibrillator/compact
+	sort_string = "MAGAC"
+//[/SIERRA-ADD] - MODPACK_RND

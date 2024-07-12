@@ -19,6 +19,7 @@
 	#include "sierra_submaps.dm"
 	#include "sierra_turfs.dm"
 	#include "sierra_unit_testing.dm"
+	#include "sierra_events.dm"
 
 	// --- INCLUDES FROM ANOTHER MAPS --- //
 	#include "sierra_snatch.dm"
@@ -204,6 +205,7 @@
 	#include "../../mods/contraband_vending/_contraband_vending.dme"
 	#include "../../mods/telecomms/_telecomms.dme"
 	#include "../../mods/modernUI/_modernUI.dme"
+	#include "../../mods/newUI/_newUI.dme"
 
 	// UNUSED MODS
 	// Keep them in ascending alphabetical order too, please

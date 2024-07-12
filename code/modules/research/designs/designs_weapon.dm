@@ -1,6 +1,5 @@
-/datum/design/item/weapon/AssembleDesignName()
-	..()
-	name = "Weapon prototype ([item_name])"
+/datum/design/item/weapon
+	category = list("Weapon")
 
 /datum/design/item/weapon/AssembleDesignDesc()
 	if(!desc)
@@ -10,6 +9,7 @@
 		..()
 
 /datum/design/item/weapon/chemsprayer
+	shortname = "ChemSprayer"
 	desc = "An advanced chem spraying device."
 	id = "chemsprayer"
 	req_tech = list(TECH_MATERIAL = 3, TECH_ENGINEERING = 3, TECH_BIO = 2)
@@ -18,6 +18,7 @@
 	sort_string = "TAAAA"
 
 /datum/design/item/weapon/rapidsyringe
+	shortname = "RapidSyringe"
 	id = "rapidsyringe"
 	req_tech = list(TECH_COMBAT = 3, TECH_MATERIAL = 3, TECH_ENGINEERING = 3, TECH_BIO = 2)
 	materials = list(MATERIAL_STEEL = 5000, MATERIAL_GLASS = 1000)
@@ -25,6 +26,7 @@
 	sort_string = "TAAAB"
 
 /datum/design/item/weapon/large_grenade
+	shortname = "Large Grenade"
 	id = "large_Grenade"
 	req_tech = list(TECH_COMBAT = 3, TECH_MATERIAL = 2)
 	materials = list(MATERIAL_STEEL = 3000)
@@ -144,10 +146,6 @@
 	materials = list(MATERIAL_STEEL = 10000, MATERIAL_SILVER = 5000, MATERIAL_DIAMOND = 3000)
 	build_path = /obj/item/gun/projectile/automatic/bullpup_rifle
 	sort_string = "TAPAC"
-
-/datum/design/item/weapon/ammunition/AssembleDesignName()
-	..()
-	name = "Ammunition prototype ([item_name])"
 
 /datum/design/item/weapon/ammunition/ammo_small
 	id = "ammo_small"
