@@ -205,7 +205,6 @@
 	#include "../../mods/contraband_vending/_contraband_vending.dme"
 	#include "../../mods/telecomms/_telecomms.dme"
 	#include "../../mods/modernUI/_modernUI.dme"
-	#include "../../mods/newUI/_newUI.dme"
 
 	// UNUSED MODS
 	// Keep them in ascending alphabetical order too, please
