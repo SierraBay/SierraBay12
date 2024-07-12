@@ -1,18 +1,17 @@
 /datum/technology/tcom
-	name = "Telecommuncation Parts"
-	desc = "Telecommuncation Parts"
-	id = "telecomm_parts"
+	name = "Tracking Devices"
+	desc = "Tracking Devices"
+	id = "track_dev"
 	tech_type = RESEARCH_BLUESPACE
-
 	x = 0.5
-	y = 0.5
-	icon = "telecom_part"
+	y = 0.4
+	icon = "gps"
 
 	required_technologies = list()
 	required_tech_levels = list()
-	cost = 750
+	cost = 500
 
-	unlocks_designs = list("s-ansible", "s-filter", "s-amplifier", "s-treatment", "s-analyzer", "s-crystal", "s-transmitter")
+	unlocks_designs = list("gps", "beacon_locator", "telesci-gps")
 
 /datum/technology/tcom/monitoring
 	name = "Monitoring Consoles"
@@ -105,20 +104,20 @@
 	unlocks_designs = list("tcom-processor","guestpass")
 
 
-/datum/technology/tcom/track_dev
-	name = "Tracking Devices"
-	desc = "Tracking Devices"
-	id = "track_dev"
+/datum/technology/tcom/tcom_parts
+	name = "Telecommuncation Parts"
+	desc = "Telecommuncation Parts"
+	id = "telecomm_parts"
 
 	x = 0.5
-	y = 0.4
-	icon = "gps"
+	y = 0.5
+	icon = "telecom_part"
 
-	required_technologies = list("telecomm_parts")
+	required_technologies = list("track_dev")
 	required_tech_levels = list()
-	cost = 500
+	cost = 750
 
-	unlocks_designs = list("gps", "beacon_locator", "telesci-gps")
+	unlocks_designs = list("s-ansible", "s-filter", "s-amplifier", "s-treatment", "s-analyzer", "s-crystal", "s-transmitter")
 
 /datum/technology/tcom/arti_blue
 	name = "Artificial Bluesplace"
@@ -195,6 +194,6 @@
 
 	required_technologies = list("crystal")
 	required_tech_levels = list()
-	cost = 1000
+	cost = 1800
 
 	unlocks_designs = list("bag_holding", "blutrash")
