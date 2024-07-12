@@ -1218,14 +1218,6 @@
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/atmospherics)
-"cv" = (
-/obj/machinery/atmospherics/binary/pump,
-/obj/machinery/atmospherics/pipe/simple/visible/black,
-/obj/floor_decal/techfloor{
-	dir = 1
-	},
-/turf/simulated/floor/tiled/techfloor,
-/area/map_template/colony/atmospherics)
 "cw" = (
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 4
@@ -1951,7 +1943,7 @@
 /obj/floor_decal/techfloor{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/visible/black{
+/obj/machinery/atmospherics/pipe/simple/visible/blue{
 	dir = 10
 	},
 /turf/simulated/floor/tiled/techfloor,
@@ -2335,7 +2327,7 @@
 /turf/simulated/floor/tiled/white,
 /area/map_template/colony/medbay)
 "eA" = (
-/obj/machinery/atmospherics/pipe/simple/visible/black{
+/obj/machinery/atmospherics/pipe/simple/visible/blue{
 	dir = 4
 	},
 /turf/simulated/floor/tiled/techfloor,
@@ -2421,10 +2413,10 @@
 /obj/floor_decal/techfloor{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/simple/visible/black{
+/obj/machinery/atmospherics/pipe/simple/visible,
+/obj/machinery/atmospherics/pipe/simple/visible/blue{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/visible,
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/atmospherics)
 "eJ" = (
@@ -2882,9 +2874,16 @@
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony)
-"fE" = (
+"fD" = (
 /obj/machinery/atmospherics/pipe/simple/visible,
-/obj/machinery/atmospherics/pipe/simple/visible/black{
+/obj/machinery/atmospherics/pipe/simple/visible/blue{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/colony/atmospherics)
+"fF" = (
+/obj/machinery/atmospherics/pipe/simple/visible/black,
+/obj/machinery/atmospherics/pipe/simple/visible/blue{
 	dir = 4
 	},
 /turf/simulated/floor/tiled/techfloor,
@@ -4037,9 +4036,9 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony)
 "hF" = (
-/obj/machinery/atmospherics/binary/oxyregenerator,
 /obj/floor_decal/industrial/outline/yellow,
-/turf/simulated/floor/tiled/techfloor,
+/obj/machinery/atmospherics/binary/oxyregenerator,
+/turf/simulated/floor/plating,
 /area/map_template/colony/atmospherics)
 "hG" = (
 /obj/structure/cable{
@@ -9398,13 +9397,6 @@
 	},
 /turf/simulated/floor/exoplanet/concrete,
 /area/template_noop)
-"Vi" = (
-/obj/machinery/atmospherics/pipe/simple/visible/black,
-/obj/machinery/atmospherics/pipe/simple/visible/black{
-	dir = 4
-	},
-/turf/simulated/floor/tiled/techfloor,
-/area/map_template/colony/atmospherics)
 "Vk" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -9521,13 +9513,13 @@
 	req_access = list();
 	dir = 3
 	},
-/obj/machinery/atmospherics/pipe/simple/visible/black{
+/obj/machinery/atmospherics/pipe/simple/visible/blue{
 	dir = 4
 	},
-/obj/machinery/door/blast/regular{
-	id_tag = "colthirdatmos"
-	},
 /obj/wallframe_spawn/reinforced_phoron,
+/obj/machinery/door/blast/regular{
+	id_tag = "colblast"
+	},
 /turf/simulated/floor/plating,
 /area/map_template/colony/atmospherics)
 "YD" = (
@@ -9682,7 +9674,7 @@ bO
 lc
 WV
 cu
-Vi
+fF
 dT
 hm
 cE
@@ -9723,7 +9715,7 @@ bH
 ch
 cZ
 Ss
-fE
+fD
 cm
 dP
 hi
@@ -9805,7 +9797,7 @@ aY
 cA
 hS
 VZ
-fE
+fD
 de
 dP
 eJ
@@ -9846,7 +9838,7 @@ eo
 cH
 eH
 LG
-Vi
+fF
 dh
 lK
 gG
@@ -9887,7 +9879,7 @@ bJ
 aF
 aF
 Hp
-fE
+fD
 co
 dP
 fh
@@ -9928,7 +9920,7 @@ bY
 cJ
 vt
 cy
-Vi
+fF
 dT
 lL
 bq
@@ -9968,8 +9960,8 @@ bM
 bN
 db
 WH
-cv
-Vi
+VZ
+fF
 cp
 cB
 hF
@@ -10010,7 +10002,7 @@ aF
 aF
 aF
 bR
-Vi
+fF
 hj
 cB
 hF
