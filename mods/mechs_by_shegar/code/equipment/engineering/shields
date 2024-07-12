@@ -1,2 +1,3 @@
 /obj/item/mech_equipment/atmos_shields
+    icon_state = "mech_power"
     heat_generation = 20

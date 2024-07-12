@@ -38,7 +38,7 @@
 	restricted_software = list(MECH_SOFTWARE_ENGINEERING)
 
 /obj/item/mech_equipment/atmos_shields
-	icon_state = "mech_power"
+	icon_state = "mech_atmoshield_off"
 	name = "exosuit airshield"
 	desc = "An Aether Atmospherics brand 'Zephyros' portable Atmospheric Isolation and Retention Screen. It keeps air where it should be... Most of the time. Press ctrl-click to switch modes"
 	restricted_hardpoints = list(HARDPOINT_LEFT_SHOULDER, HARDPOINT_RIGHT_SHOULDER)
