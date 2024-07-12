@@ -320,8 +320,8 @@ GLOBAL_VAR_INIT(choose_colony_type, "СЛУЧАЙНЫЙ") //Педальки в�
 
 /area/map_template/colony/science
 	name = "\improper Colony R&D"
-	icon_state = "research"
+	icon_state = "solar"
 
 /area/map_template/colony/warehouse
 	name = "\improper Сolony warehouse"
-	icon_state = "storage"
+	icon_state = "shipping"
