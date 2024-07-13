@@ -38,7 +38,7 @@
 	//air_contents
 
 /obj/item/mech_component/chassis/powerloader
-	max_damage = 150
+	max_damage = 100
 	min_damage = 75
 	max_repair = 50
 	repair_damage = 25
@@ -70,8 +70,8 @@
 	.=..()
 
 /obj/item/mech_component/chassis/light
-	max_damage = 120
-	min_damage = 60
+	max_damage = 80
+	min_damage = 50
 	max_repair = 40
 	repair_damage = 20
 	hide_pilot = TRUE
@@ -138,9 +138,9 @@
 	.=..()
 
 /obj/item/mech_component/chassis/heavy
-	max_damage = 700
-	max_repair = 200
-	min_damage = 350
+	max_damage = 500
+	max_repair = 150
+	min_damage = 300
 	repair_damage = 30
 	hide_pilot = TRUE
 	req_material = MATERIAL_PLASTEEL
@@ -173,9 +173,9 @@
 	. = ..()
 
 /obj/item/mech_component/chassis/combat
-	max_damage = 270
-	min_damage = 130
-	max_repair = 90
+	max_damage = 180
+	min_damage = 100
+	max_repair = 60
 	repair_damage = 30
 	hide_pilot = TRUE
 	have_fast_power_up = TRUE
