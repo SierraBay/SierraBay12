@@ -39,9 +39,6 @@ SUBSYSTEM_DEF(modpacks)
 /datum/controller/subsystem/modpacks/UpdateStat()
 	..("Modpacks: [length(loaded_modpacks)]")
 
-/datum/controller/subsystem/modpacks/UpdateStat()
-	..("Modpacks: [length(loaded_modpacks)]")
-
 /client/verb/modpacks_list()
 	set name = "Modpacks List"
 	set category = "OOC"
