@@ -29,5 +29,6 @@
 #include "utf8/_utf8.dme"
 #include "utility_items/_utility_items.dme"
 #include "mechs_by_shegar/_mechs_by_shegar.dme"
+#include "newUI/_newUI.dme"
 
 #include "../packs/sierra-tweaks/_pack.dm"
