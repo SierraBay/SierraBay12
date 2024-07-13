@@ -63,6 +63,7 @@ ID мода: MODPACK_NEWUI
 
 - `mods/_master_files/code/modules/mob/new_player/new_player.dm`:
   `/mob/new_player/ViewManifest()`
+  
 <!--
   Если ты добавлял новый модульный оверрайд, его нужно указать здесь.
   Здесь указываются оверрайды в твоём моде и папке `_master_files`
