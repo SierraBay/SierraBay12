@@ -102,6 +102,7 @@ a.linkDanger:hover {
 .section-buttons {
     display: flex;
     font-size: 12px;
+    font-weight: 400;
 }
 
 .labelList {
@@ -129,4 +130,8 @@ a.linkDanger:hover {
     display: flex;
     justify-content: space-between;
     font-weight: bold;
+}
+
+.bad {
+    color: #db2828;
 }
