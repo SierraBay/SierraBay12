@@ -222,10 +222,13 @@
 	if(!istype(target_mob))
 		return
 
+	if(firer && firer.skill_check(SKILL_WEAPONS,SKILL_BASIC))
+		special_miss_modifier -= 5 * firer.get_skill_value(SKILL_WEAPONS)
+
 	//roll to-hit
 	var/miss_modifier = max(distance_falloff*(distance)*(distance) - hitchance_mod + special_miss_modifier, -30)
 	//makes moving targets harder to hit, and stationary easier to hit
-	var/movment_mod = min(5, (world.time - target_mob.l_move_time) - 5)
+	var/movement_mod = min(5, (world.time - target_mob.l_move_time) - 20)
 
 	if (damage_falloff)
 		var/damage_mod = 1

@@ -76,8 +76,8 @@
 	human space."
 	economic_power = 1
 
-
-/singleton/cultural_info/culture/human/kuiper_insider
+// sierra-remove
+/*/singleton/cultural_info/culture/human/kuiper_insider
 	name = CULTURE_HUMAN_KUIPERI
 	description = "You are from one of many habitations of the Kuiper belt. The eventual economic and social decay of Pluto, and its surroundings, has resulted in much of the zone's infrastructure \
 	being unstable or outright falling apart. Coupled with rampant corruption and the growing mold of organised (and unorganised) crime across much of the region has left the people of the \
@@ -111,8 +111,8 @@
 		LANGUAGE_HUMAN_RUSSIAN,
 		LANGUAGE_SPACER,
 		LANGUAGE_GUTTER,
-		LANGUAGE_SIGN)
-
+		LANGUAGE_SIGN)*/
+// sierra-remove-end
 /singleton/cultural_info/culture/human/earthling
 	name = CULTURE_HUMAN_EARTH
 	description = "You are from Earth, home of humanity. Earth culture is much as it has been for centuries, with the old nation states, while no longer politically important, still \
