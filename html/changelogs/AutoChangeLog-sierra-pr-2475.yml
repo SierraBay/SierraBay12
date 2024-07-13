@@ -1,0 +1,4 @@
+author: FeudeyTF
+changes:
+  - {rscadd: Добавил новый интерфейс для мод-меню}
+delete-after: true
