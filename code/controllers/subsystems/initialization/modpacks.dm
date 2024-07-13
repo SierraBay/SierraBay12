@@ -9,32 +9,35 @@ SUBSYSTEM_DEF(modpacks)
 
 	// Pre-init and register all compiled modpacks.
 	for(var/package in all_modpacks)
-		var/singleton/modpack/modlist = all_modpacks[package]
-		var/fail_msg = modlist.pre_initialize()
-		if(QDELETED(modlist))
+		var/singleton/modpack/manifest = all_modpacks[package]
+		var/fail_msg = manifest.pre_initialize()
+		if(QDELETED(manifest))
 			crash_with("Modpack of type [package] is null or queued for deletion.")
 			continue
 		if(fail_msg)
-			crash_with("Modpack [modlist.name] failed to pre-initialize: [fail_msg].")
+			crash_with("Modpack [manifest.name] failed to pre-initialize: [fail_msg].")
 			continue
-		if(loaded_modpacks[modlist.name])
-			crash_with("Attempted to register duplicate modpack name [modlist.name].")
+		if(loaded_modpacks[manifest.name])
+			crash_with("Attempted to register duplicate modpack name [manifest.name].")
 			continue
-		loaded_modpacks[modlist.name] = modlist
+		loaded_modpacks[manifest.name] = manifest
 
 	// Handle init and post-init (two stages in case a modpack needs to implement behavior based on the presence of other packs).
 	for(var/package in all_modpacks)
-		var/singleton/modpack/modlist = all_modpacks[package]
-		var/fail_msg = modlist.initialize()
+		var/singleton/modpack/manifest = all_modpacks[package]
+		var/fail_msg = manifest.initialize()
 		if(fail_msg)
-			crash_with("Modpack [(istype(modlist) && modlist.name) || "Unknown"] failed to initialize: [fail_msg]")
+			crash_with("Modpack [(istype(manifest) && manifest.name) || "Unknown"] failed to initialize: [fail_msg]")
 	for(var/package in all_modpacks)
-		var/singleton/modpack/modlist = all_modpacks[package]
-		var/fail_msg = modlist.post_initialize()
+		var/singleton/modpack/manifest = all_modpacks[package]
+		var/fail_msg = manifest.post_initialize()
 		if(fail_msg)
-			crash_with("Modpack [(istype(modlist) && modlist.name) || "Unknown"] failed to post-initialize: [fail_msg]")
+			crash_with("Modpack [(istype(manifest) && manifest.name) || "Unknown"] failed to post-initialize: [fail_msg]")
 
 	. = ..()
+
+/datum/controller/subsystem/modpacks/UpdateStat()
+	..("Modpacks: [length(loaded_modpacks)]")
 
 /datum/controller/subsystem/modpacks/UpdateStat()
 	..("Modpacks: [length(loaded_modpacks)]")
