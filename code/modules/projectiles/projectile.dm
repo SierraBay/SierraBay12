@@ -221,7 +221,7 @@
 /obj/item/projectile/proc/attack_mob(mob/living/target_mob, distance, special_miss_modifier=0)
 	if(!istype(target_mob))
 		return
-
+// [SIERRA-EDIT]
 	if(firer && firer.skill_check(SKILL_WEAPONS,SKILL_BASIC))
 		special_miss_modifier -= 5 * firer.get_skill_value(SKILL_WEAPONS)
 
@@ -229,7 +229,7 @@
 	var/miss_modifier = max(distance_falloff*(distance)*(distance) - hitchance_mod + special_miss_modifier, -30)
 	//makes moving targets harder to hit, and stationary easier to hit
 	var/movement_mod = min(5, (world.time - target_mob.l_move_time) - 20)
-
+// [SIERRA-EDIT-END]
 	if (damage_falloff)
 		var/damage_mod = 1
 		for (var/list/entry as anything in damage_falloff_list)
