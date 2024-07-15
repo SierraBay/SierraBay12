@@ -1,4 +1,0 @@
-author: Lexanx
-changes:
-  - {bugfix: Возвращаем утерянные дизайны в НИО}
-delete-after: true

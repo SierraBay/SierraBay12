@@ -1,5 +1,0 @@
-author: FeudeyTF
-changes:
-  - {soundadd: 'Добавил звук карты, которую вставили в компьютер'}
-  - {rscadd: Добавил интерфейс для факса}
-delete-after: true
