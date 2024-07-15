@@ -325,3 +325,32 @@ GLOBAL_VAR_INIT(choose_colony_type, "СЛУЧАЙНЫЙ") //Педальки в�
 /area/map_template/colony/warehouse
 	name = "\improper Сolony warehouse"
 	icon_state = "shipping"
+
+/obj/machinery/vending/wallbartender/colony
+	name = "\improper Glass-o-Mat"
+	desc = "A wall-mounted glass storage."
+	product_ads = "Free glasses!;Lets try something new.;Only the finest glasses.;Natural booze!;This stuff saves no lives.;Don't you want some?"
+	icon = 'maps/sierra/icons/obj/vending.dmi'
+	icon_state = "wallbartender"
+	icon_deny = "wallbartender-deny"
+	icon_vend = "wallbartender-vend"
+	base_type = /obj/machinery/vending/wallbartender
+	density = FALSE //It is wall-mounted, and thus, not dense. --Superxpdude
+	products = list(
+		/obj/item/reagent_containers/food/drinks/glass2/square = 10,
+		/obj/item/reagent_containers/food/drinks/glass2/shot = 5,
+		/obj/item/reagent_containers/food/drinks/glass2/cocktail = 5,
+		/obj/item/reagent_containers/food/drinks/glass2/rocks = 5,
+		/obj/item/reagent_containers/food/drinks/glass2/shake = 5,
+		/obj/item/reagent_containers/food/drinks/glass2/wine = 5,
+		/obj/item/reagent_containers/food/drinks/glass2/flute = 5,
+		/obj/item/reagent_containers/food/drinks/glass2/cognac = 5,
+		/obj/item/reagent_containers/food/drinks/glass2/goblet = 5,
+		/obj/item/reagent_containers/food/drinks/glass2/mug = 5,
+		/obj/item/reagent_containers/food/drinks/glass2/pint = 5,
+	)
+	req_access = list()
+
+
+/obj/machinery/space_heater/stationary/on/colony
+	set_temperature = 273.15
