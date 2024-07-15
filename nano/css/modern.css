@@ -102,6 +102,7 @@ a.linkDanger:hover {
 .section-buttons {
     display: flex;
     font-size: 12px;
+    font-weight: 400;
 }
 
 .labelList {
@@ -111,17 +112,19 @@ a.linkDanger:hover {
 .labelList-item {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: top;
     margin-bottom: 2px;
 }
 
 .labelList-item-label {
     color: #7e90a7;
+    margin-right: 10px;
 }
 
 .labelList-item-content {
     display: flex;
-    align-items: center;
+    align-items: top;
+    justify-content: left;
 }
 
 .table-row {
@@ -129,4 +132,8 @@ a.linkDanger:hover {
     display: flex;
     justify-content: space-between;
     font-weight: bold;
+}
+
+.bad {
+    color: #db2828;
 }
