@@ -1,10 +1,15 @@
+GLOBAL_DATUM_INIT(manifest_state, /datum/topic_state/manifest, new)
+
+/datum/topic_state/manifest/can_use_topic(src_object, mob/user)
+	return STATUS_INTERACTIVE
+
 /datum/nano_module/manifest
 	var/ooc = FALSE
 
-/datum/nano_module/manifest/CanUseTopic(mob/user, datum/topic_state/state = GLOB.xeno_state)
+/datum/nano_module/manifest/CanUseTopic(mob/user, datum/topic_state/state = GLOB.manifest_state)
 	. = ..()
 
-/datum/nano_module/manifest/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1, datum/topic_state/state = GLOB.xeno_state)
+/datum/nano_module/manifest/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1, datum/topic_state/state = GLOB.manifest_state)
 	var/data[0]
 
 	var/list/dept_data = list(
@@ -81,6 +86,6 @@
 		ui.open()
 		ui.set_auto_update(1)
 
-/datum/nano_module/xenopanel/Topic(href, href_list, state)
+/datum/nano_module/manifest/Topic(href, href_list, state)
 	if(..())
 		return TRUE

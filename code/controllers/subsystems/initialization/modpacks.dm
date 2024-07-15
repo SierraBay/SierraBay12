@@ -47,20 +47,22 @@ SUBSYSTEM_DEF(modpacks)
 		return
 
 	if(length(SSmodpacks.loaded_modpacks))
-		var/datum/nano_module/modlist/modlist_panel = locate("modlist_[usr.ckey]")
-		if(!modlist_panel)
-			modlist_panel = new /datum/nano_module/modlist(usr)
-			modlist_panel.tag = "modlist_[usr.ckey]"
-		modlist_panel.ui_interact(usr)
+		var/datum/nano_module/modlist/modlist_panel = new /datum/nano_module/modlist(mob)
+		modlist_panel.ui_interact(mob)
 	else
 		to_chat(src, SPAN_WARNING("Этот сервер не использует какие-либо модификации."))
 
+GLOBAL_DATUM_INIT(modlist_state, /datum/topic_state/modlist, new)
+
+/datum/topic_state/modlist/can_use_topic(src_object, mob/user)
+	return STATUS_INTERACTIVE
+
 /datum/nano_module/modlist
 
-/datum/nano_module/modlist/CanUseTopic(mob/user, datum/topic_state/state = GLOB.xeno_state)
+/datum/nano_module/manifest/CanUseTopic(mob/user, datum/topic_state/state = GLOB.modlist_state)
 	. = ..()
 
-/datum/nano_module/modlist/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1, datum/topic_state/state = GLOB.xeno_state)
+/datum/nano_module/modlist/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1, datum/topic_state/state = GLOB.modlist_state)
 	var/data[0]
 	var/list/mods = list()
 	for(var/modpack in SSmodpacks.loaded_modpacks)
@@ -79,3 +81,4 @@ SUBSYSTEM_DEF(modpacks)
 /datum/nano_module/modlist/Topic(href, href_list, state)
 	if(..())
 		return TRUE
+	return TRUE
