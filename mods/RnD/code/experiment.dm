@@ -182,7 +182,7 @@ var/global/list/rnd_server_list = list()
 		var/species = I.species
 		if(species in typesof(/mob/living/simple_animal/hostile/hivebot,/mob/living/simple_animal/hostile/giant_spider,/mob/living/simple_animal/hostile/vagrant))
 			reward = rand(500, 1500)
-		if(species in typesof(/mob/living/simple_animal/hostile/retaliate/space_whale, /mob/living/simple_animal/hostile/retaliate/parrot, /mob/living/simple_animal/hostile/meat, /mob/living/simple_animal/hostile/meatstation))
+		if(species in typesof(/mob/living/simple_animal/hostile/retaliate/space_whale, /mob/living/simple_animal/hostile/retaliate/parrot, /mob/living/simple_animal/hostile/meat))
 			reward = rand(1000, 2000)
 		if(species in typesof(/mob/living/simple_animal/hostile/carp/shark,/mob/living/simple_animal/hostile/carp/pike))
 			reward = rand(500, 1000)
@@ -198,6 +198,9 @@ var/global/list/rnd_server_list = list()
 			reward = rand(100, 300)
 		if(species in typesof(/mob/living/simple_animal/borer))
 			reward = rand(1000, 1500)
+
+		if(species in typesof(/mob/living/simple_animal/hostile/meatstation))
+			reward = rand(1000, 2000)
 
 		if(I.new_species)
 			reward += rand(1000, 3000)
