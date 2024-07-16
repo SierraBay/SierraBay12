@@ -393,7 +393,6 @@ var/global/list/rnd_server_list = list()
 			if(!(W.weapon in scanned_autopsy_weapons))
 				scanneddata += 1
 				scanned_autopsy_weapons += W.weapon
-				return
 
 	if(istype(O,/obj/item/paper/plant_report))
 		var/obj/item/paper/plant_report/report = O
@@ -401,7 +400,10 @@ var/global/list/rnd_server_list = list()
 			scanneddata += 1
 			scanned_plants += report.info
 			potency = report.potency
+		else
+			to_chat(user, "<span class='notice'>[src] already has data about this report</span>")
 			return
+
 
 	if(istype(O,/obj/item/paper/radiocarbon_spectrometer_report))
 		var/obj/item/paper/radiocarbon_spectrometer_report/report = O
@@ -409,7 +411,9 @@ var/global/list/rnd_server_list = list()
 			if(report.anomalous)
 				scanneddata += 1
 				scanned_spectrometers += report
-				return
+		else
+			to_chat(user, "<span class='notice'>[src] already has data about this report</span>")
+			return
 
 	if(istype(O,/obj/item/paper/xenofauna_report))
 		var/obj/item/paper/xenofauna_report/report = O
@@ -421,7 +425,10 @@ var/global/list/rnd_server_list = list()
 					scanneddata += 1
 					new_species = report.new_species
 			scanned_xenofauna += report
+		else
+			to_chat(user, "<span class='notice'>[src] already has data about this report</span>")
 			return
+
 
 	if(istype(O, /obj/item/paper/anomaly_scan))
 		var/obj/item/paper/anomaly_scan/report = O
@@ -437,7 +444,20 @@ var/global/list/rnd_server_list = list()
 				"secondary_effect" = report.secondary_effect,
 			))
 			scanneddata += 1
+
+
+	if(istype(O, /obj/item/slime_extract))
+		if(!(O.type in scanned_slimecores))
+			scanned_slimecores += O.type
+			scanneddata += 1
+		else
+			to_chat(user, "<span class='notice'>[src] already has data about this report</span>")
 			return
+
+	if(scanneddata > 0)
+		datablocks += scanneddata
+		to_chat(user, "<span class='notice'>[src] received [scanneddata] data block[scanneddata>1?"s":""] from scanning [O]</span>")
+		return
 
 	if(istype(O, /obj/item/device/beacon/explosion_watcher))
 		var/obj/item/device/beacon/explosion_watcher/explosion = O
@@ -446,15 +466,6 @@ var/global/list/rnd_server_list = list()
 		else
 			to_chat(user, "<span class='notice'>[O] has no research value</span>")
 		return
-
-	if(istype(O, /obj/item/slime_extract))
-		if(!(O.type in scanned_slimecores))
-			scanned_slimecores += O.type
-			scanneddata += 1
-
-	if(scanneddata > 0)
-		datablocks += scanneddata
-		to_chat(user, "<span class='notice'>[src] received [scanneddata] data block[scanneddata>1?"s":""] from scanning [O]</span>")
 
 	if(istype(O, /obj/item/disk/tech_disk))
 		var/obj/item/disk/tech_disk/T = O
