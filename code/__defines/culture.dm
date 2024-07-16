@@ -68,8 +68,8 @@
 #define CULTURE_HUMAN_VENUSIAN "Venusian, Zoner"
 #define CULTURE_HUMAN_VENUSLOW "Venusian, Surfacer"
 #define CULTURE_HUMAN_BELTER   "Belter, Ceres"
-/*#define CULTURE_HUMAN_KUIPERI  "Kuiper, Insider"
-#define CULTURE_HUMAN_KUIPERO  "Kuiper, Outsider"*/
+#define CULTURE_HUMAN_KUIPERI  "Kuiper, Insider"
+#define CULTURE_HUMAN_KUIPERO  "Kuiper, Outsider"
 #define CULTURE_HUMAN_MAGNITKA "Magnitkan"
 #define CULTURE_HUMAN_EARTH    "Earther"
 #define CULTURE_HUMAN_CETIN    "Cetite, Northern"
