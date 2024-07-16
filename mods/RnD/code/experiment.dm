@@ -393,6 +393,7 @@ var/global/list/rnd_server_list = list()
 			if(!(W.weapon in scanned_autopsy_weapons))
 				scanneddata += 1
 				scanned_autopsy_weapons += W.weapon
+				return
 
 	if(istype(O,/obj/item/paper/plant_report))
 		var/obj/item/paper/plant_report/report = O
@@ -400,6 +401,7 @@ var/global/list/rnd_server_list = list()
 			scanneddata += 1
 			scanned_plants += report.info
 			potency = report.potency
+			return
 
 	if(istype(O,/obj/item/paper/radiocarbon_spectrometer_report))
 		var/obj/item/paper/radiocarbon_spectrometer_report/report = O
@@ -407,6 +409,7 @@ var/global/list/rnd_server_list = list()
 			if(report.anomalous)
 				scanneddata += 1
 				scanned_spectrometers += report
+				return
 
 	if(istype(O,/obj/item/paper/xenofauna_report))
 		var/obj/item/paper/xenofauna_report/report = O
@@ -418,7 +421,7 @@ var/global/list/rnd_server_list = list()
 					scanneddata += 1
 					new_species = report.new_species
 			scanned_xenofauna += report
-
+			return
 
 	if(istype(O, /obj/item/paper/anomaly_scan))
 		var/obj/item/paper/anomaly_scan/report = O
@@ -434,6 +437,7 @@ var/global/list/rnd_server_list = list()
 				"secondary_effect" = report.secondary_effect,
 			))
 			scanneddata += 1
+			return
 
 	if(istype(O, /obj/item/device/beacon/explosion_watcher))
 		var/obj/item/device/beacon/explosion_watcher/explosion = O
