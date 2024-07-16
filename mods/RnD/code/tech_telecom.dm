@@ -26,7 +26,7 @@
 	required_tech_levels = list()
 	cost = 1250
 
-	unlocks_designs = list("comm_monitor", "comm_server", "message_monitor", "shield_generator", "shield_diffuser")
+	unlocks_designs = list("comm_monitor", "comm_server", "message_monitor")
 
 /datum/technology/tcom/rcon
 	name = "RCON"
@@ -197,3 +197,18 @@
 	cost = 1800
 
 	unlocks_designs = list("bag_holding", "blutrash")
+
+/datum/technology/tcom/shields
+	name = "Shields"
+	desc = "Shields"
+	id = "shieldgen"
+
+	x = 0.7
+	y = 0.2
+	icon = "shieldgen"
+
+	required_technologies = list("crystal")
+	required_tech_levels = list()
+	cost = 1500
+
+	unlocks_designs = list("shield_generator", "shield_diffuser")

@@ -8,6 +8,7 @@
 	printout_color = "#f3e6ff"
 	origin_tech = list(TECH_MAGNET = 1, TECH_BIO = 1)
 	var/new_species = FALSE
+	var/species
 
 	var/list/valid_targets = list(
 		/mob/living/carbon/human,
@@ -62,6 +63,7 @@
 			. += "Known toxins:\t[list_gases(A.max_gas)]"
 		if(A.minbodytemp && A.maxbodytemp)
 			. += "Temperature comfort zone:\t[A.minbodytemp] K to [A.maxbodytemp] K"
+		species = A.type
 		var/area/map = locate(/area/overmap)
 		for(var/obj/overmap/visitable/sector/exoplanet/P in map)
 			if((A in P.animals) || is_type_in_list(A, P.repopulate_types))
@@ -119,6 +121,8 @@
 	var/obj/item/paper/xenofauna_report/P = new(get_turf(src), scan_data, "paper - [scan_title]")
 	if(new_species)
 		P.new_species = TRUE
+	if(species)
+		P.species = species
 	if(printout_color)
 		P.color = printout_color
 	user.put_in_hands(P)
