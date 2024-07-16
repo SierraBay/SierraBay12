@@ -3,6 +3,9 @@
     border-radius: 0.16em;
     transition: 0.2s;
     padding: 0 4px 4px 4px;
+    margin: 0 2px 2px 0;
+    min-width: 15px;
+    min-height: 16px;
 }
 
 a, .zoomLink, .linkActive {

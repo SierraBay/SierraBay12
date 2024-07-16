@@ -1,0 +1,160 @@
+{{if data.code}}
+    <div class="notice">
+        {{:data.code}}
+    </div>
+{{/if}}
+
+<div class="section-title" style="margin-bottom: 10px; color: rgba(255, 255, 255, 0.4);">
+    Shift Duration: {{:data.duration}}
+</div>
+
+<div class="jobs-wrapper">
+    <div class="jobs-column">
+    {{for data.jobs}}
+        {{if value.colBreak}}
+    </div>
+    <div class="jobs-column">
+        {{/if}}
+        <div class="section" style="background-color: {{:value.color}};">
+            <div class="section-title" style="color: rgba(0, 0, 0, 0.8); border-bottom: 2px solid rgba(0, 0, 0, 0.8);">
+                {{:value.name}}
+                <span>
+                    {{:value.open}} {{:value.open == 1 ? 'position' : 'positions'}} open!
+                </span>
+            </div>
+            <div class="section-content job-table">
+                <div style="flex: 3;">
+                    {{for value.jobs :job:jobIndex}}
+                        <div style="width: auto; font-weight: {{:job.head ? 'bold' : 'normal'}};">
+                            {{:helper.link(job.title, null, {'SelectedJob' : job.title}, job.canpick ? null : "disabled", job.canpick ? "job-button" : "job-button-disabled")}}
+                        </div>
+                    {{/for}}
+                </div>
+                <div style="flex: 2;">
+                    {{for value.jobs :job:jobIndex}}
+                        <div class="{{:job.canpick ? 'job-info' : 'job-info-disabled'}}" style="font-weight: {{:job.head ? 'bold' : 'normal'}};">
+                            <span>{{:job.positions}}/{{:job.total}} (Active: {{:job.active}})</span>
+                        </div>
+                    {{/for}}
+                </div>
+            </div>
+        </div>
+    {{/for}}
+    </div>
+</div>
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between;">
+    {{for data.otherJobs}}
+        <div class="section" style="width: 32.5%; background-color: {{:value.color}};">
+            <div class="section-title" style="color: rgba(0, 0, 0, 0.8); border-bottom: 2px solid rgba(0, 0, 0, 0.8);">
+                {{:value.name}}
+            </div>
+            <div class="section-content job-table">
+                <div style="flex: 3;">
+                    {{for value.jobs :job:jobIndex}}
+                        <div style="width: auto; font-weight: {{:job.head ? 'bold' : 'normal'}};">
+                            {{:helper.link(job.title, null, {'join_as' : job.otherthing, 'submap' : value.ref}, job.canpick ? null : "disabled", job.canpick ? "job-button" : "job-button-disabled")}}
+                        </div>
+                    {{/for}}
+                </div>
+                <div style="flex: 2;">
+                    {{for value.jobs :job:jobIndex}}
+                        <div class="{{:job.canpick ? 'job-info' : 'job-info-disabled'}}" style="font-weight: {{:job.head ? 'bold' : 'normal'}};">
+                            <span>{{:job.positions}}/{{:job.total}} (Active: {{:job.active}})</span>
+                        </div>
+                    {{/for}}
+                </div>
+            </div>
+        </div>
+    {{/for}}
+</div>
+<!--
+<div class="section">
+	<div class="section-title">
+
+	</div>
+	<div class="section-content">
+
+	</div>
+</div>
+
+<div class="labelList">
+	<div class="labelList-item">
+		<div class="labelList-item-label">
+
+		</div>
+		<div class="labelList-item-content">
+
+		</div>
+	</div>
+</div>
+-->
+
+<style>
+    a:hover, .zoomLink:hover, .linkActive:hover {
+        background-color: rgba(0, 0, 0, 0.2);
+    }
+
+    .disabled {
+        height: auto;
+    }
+
+    .job-table {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .job-column {
+        flex: 1;
+    }
+
+    .jobs-wrapper {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .jobs-column {
+        margin-right: 0.5em;
+        width: 100%;
+    }
+
+    .jobs-column:last-child {
+        margin-right: 0;
+    }
+
+    .job-button {
+        white-space:  nowrap;
+        background-color: rgba(0, 0, 0, 0.1);
+        color: black;
+        text-align: left;
+        width: 95%;
+    }
+
+    .job-button-disabled {
+        color: rgba(0, 0, 0, 0.6);
+        text-align: left;
+        width: 95%;
+    }
+
+    .job-info {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 0.16em;
+        padding: 0 4px 4px 4px;
+        background-color: rgba(0, 0, 0, 0.1);
+        color: black;
+        margin: 0 2px 2px 0;
+    }
+
+    .job-info-disabled {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 0.16em;
+        padding: 0 4px 4px 4px;
+        background-color: #999999;
+        color: rgba(0, 0, 0, 0.6);
+        margin: 0 2px 2px 0;
+    }
+</style>

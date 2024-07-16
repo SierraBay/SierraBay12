@@ -62,7 +62,8 @@ ID мода: MODPACK_NEWUI
   `/mob/observer/ghost/view_manfiest()`
 
 - `mods/_master_files/code/modules/mob/new_player/new_player.dm`:
-  `/mob/new_player/ViewManifest()`
+  `/mob/new_player/ViewManifest()`,
+  `/mob/new_player/LateChoices()`
   
 <!--
   Если ты добавлял новый модульный оверрайд, его нужно указать здесь.
