@@ -46,7 +46,6 @@ var/global/list/rnd_server_list = list()
 	var/list/saved_slimecores = list()
 	var/list/saved_spectrometers = list()
 	var/list/saved_xenofauna = list()
-	var/new_species = FALSE
 
 /datum/experiment_data/proc/init_known_tech()
 	for(var/tech in tech_points_rarity)
@@ -200,7 +199,7 @@ var/global/list/rnd_server_list = list()
 		if(species in typesof(/mob/living/simple_animal/borer))
 			reward = rand(1000, 1500)
 
-		if(new_species)
+		if(I.new_species)
 			reward += rand(1000, 3000)
 		points += reward
 		saved_xenofauna += x
