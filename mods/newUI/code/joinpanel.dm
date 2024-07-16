@@ -1,7 +1,7 @@
 GLOBAL_DATUM_INIT(joinpanel_state, /datum/topic_state/joinpanel, new)
 
 /datum/topic_state/joinpanel/can_use_topic(src_object, mob/user)
-	return istype(user, /mob/new_player/) ? STATUS_INTERACTIVE : STATUS_CLOSE
+	return istype(user, /mob/new_player) ? STATUS_INTERACTIVE : STATUS_CLOSE
 
 /datum/nano_module/joinpanel
 
