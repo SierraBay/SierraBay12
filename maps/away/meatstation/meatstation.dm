@@ -55,7 +55,116 @@
 	locked = 0
 	coverlocked = 0
 
+//mobs
 
+/mob/living/simple_animal/hostile/meatstation
+	name = "meatstation mob"
+	desc = "it's meaty!"
+	icon = 'maps/away/meatstation/meatstation_sprites.dmi'
+	response_help = "pats"
+	response_disarm = "shoves"
+	response_harm = "stomps"
+	flash_vulnerability = 0 //eyeless
+	turns_per_move = 5
+	natural_weapon = /obj/item/natural_weapon/bite/weak
+	faction = "meat"
+	min_gas = null
+	minbodytemp = 0
+	meat_type = /obj/item/reagent_containers/food/snacks/meat/meatstationmeat
+	meat_amount = 1
+	can_escape = TRUE
+
+	ai_holder = /datum/ai_holder/simple_animal/melee/meatstation
+
+/mob/living/simple_animal/hostile/meatstation/meatworm
+	name = "flesh worm"
+	desc = "A toothy little thing. It won't stop gnashing and thrashing!"
+	icon_state = "meatworm"
+	icon_living = "meatworm"
+	icon_dead = "meatworm_dead"
+	turns_per_move = 3
+	speed = -2
+	maxHealth = 20
+	health = 20
+	natural_weapon = /obj/item/natural_weapon/bite/weak
+	mob_size = MOB_SMALL
+	meat_amount = 2
+	can_escape = FALSE
+
+	say_list_type = /datum/say_list/meatstation/meatworm
+
+/mob/living/simple_animal/hostile/meatstation/meatball
+	name = "animated meat"
+	desc = "A crude creature of meat and teeth."
+	icon_state = "meatball"
+	icon_living = "meatball"
+	icon_dead = "meatball_dead"
+	speed = 2
+	maxHealth = 50
+	health = 50
+	natural_weapon = /obj/item/natural_weapon/meatball
+	meat_amount = 2
+	can_escape = FALSE
+
+	say_list_type = /datum/say_list/meatstation/meatball
+
+/obj/item/natural_weapon/meatball
+	force = 12
+	attack_verb = list("thwacked")
+
+/mob/living/simple_animal/hostile/meatstation/wormscientist
+	name = "infested scientist"
+	desc = "A scientist infested with some sort of parasitic worms."
+	icon_state = "wormscientist"
+	icon_living = "wormscientist"
+	icon_dead = "wormscientist_dead"
+	speed = 7
+	maxHealth = 90
+	health = 90
+	natural_weapon = /obj/item/natural_weapon/wormscience
+	meat_amount = 3
+
+	say_list_type = /datum/say_list/meatstation/meat_human
+
+/obj/item/natural_weapon/wormscience
+	force = 15
+	attack_verb = list("whacked")
+
+/mob/living/simple_animal/hostile/meatstation/wormguard
+	name = "infested guard"
+	desc = "An armed guard infested with some sort of parasitic worms. It looks like their hands have melded with their weapon."
+	icon_state = "wormguard"
+	icon_living = "wormguard"
+	icon_dead = "wormguard_dead"
+	speed = 7
+	maxHealth = 60
+	health = 60
+	natural_weapon = /obj/item/natural_weapon/wormguard
+	meat_amount = 3
+	projectilesound = 'sound/weapons/Laser.ogg'
+	ranged = 1
+	projectiletype = /obj/item/projectile/beam/smalllaser
+
+	say_list_type = /datum/say_list/meatstation/meat_human
+/obj/item/natural_weapon/wormguard
+	force = 17
+	attack_verb = list("slammed")
+
+/mob/living/simple_animal/hostile/meatstation/meatmound
+	name = "meat horror"
+	desc = "A gnashing mound of flesh and teeth."
+	icon_state = "meatmound"
+	icon_living = "meatmound"
+	icon_dead = "meatmound_dead"
+	flash_vulnerability = 1
+	speed = 10
+	maxHealth = 160
+	health = 160
+	natural_weapon = /obj/item/natural_weapon/meatmound
+	meat_amount = 4
+	mob_size = MOB_LARGE
+
+	say_list_type = /datum/say_list/meatstation/meatmound
 
 /obj/item/natural_weapon/meatmound
 	force = 25
