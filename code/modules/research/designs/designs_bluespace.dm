@@ -41,6 +41,7 @@
 /datum/design/item/telesci/gps
 	name = "Telescience GPS"
 	desc = "Required for calculations in the telescience field."
+	category = list("Misc")
 	id = "telesci-gps"
 	req_tech = list(TECH_ENGINEERING = 3, TECH_BLUESPACE = 4)
 	materials = list(MATERIAL_STEEL = 300, MATERIAL_PLASTIC = 250)

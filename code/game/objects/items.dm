@@ -202,9 +202,15 @@
 
 		if(origin_tech)
 			desc_comp += "[SPAN_NOTICE("Testing potentials:")]<BR>"
+	//[SIERRA-EDIT] - MODPACK_RND
+			var/list/tech_names = list(TECH_MATERIAL = "Materials", TECH_ENGINEERING = "Engineering", TECH_PHORON = "Phoron Technology", TECH_POWER = "Power Manipulation Technology", TECH_BLUESPACE = "'Blue-space' Technology", TECH_BIO = "Biological Technology", TECH_COMBAT = "Combat Systems", TECH_MAGNET = "Electromagnetic Spectrum Technology", TECH_DATA = "Data Theory", TECH_ESOTERIC = "Esoteric Technology")
 			//var/list/techlvls = params2list(origin_tech)
 			for(var/T in origin_tech)
-				desc_comp += "Tech: Level [origin_tech[T]] [(T)] <BR>"
+				var/tech_name = tech_names[T]
+				if(!tech_name)
+					tech_name = T
+				desc_comp += "Tech: Level [origin_tech[T]] [tech_name] <BR>"
+	//[/SIERRA-EDIT] - MODPACK_RND
 		else
 			desc_comp += "No tech origins detected.<BR>"
 

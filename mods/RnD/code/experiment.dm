@@ -178,7 +178,32 @@ var/global/list/rnd_server_list = list()
 	for(var/x in I.scanned_xenofauna)
 		if(x in saved_xenofauna)
 			continue
-		var/reward = rand(3000, 6000)
+		var/reward = 100
+		var/species = I.species
+		if(species in typesof(/mob/living/simple_animal/hostile/hivebot,/mob/living/simple_animal/hostile/giant_spider,/mob/living/simple_animal/hostile/vagrant))
+			reward = rand(500, 1500)
+		if(species in typesof(/mob/living/simple_animal/hostile/retaliate/space_whale, /mob/living/simple_animal/hostile/retaliate/parrot, /mob/living/simple_animal/hostile/meat))
+			reward = rand(1000, 2000)
+		if(species in typesof(/mob/living/simple_animal/hostile/carp/shark,/mob/living/simple_animal/hostile/carp/pike))
+			reward = rand(500, 1000)
+		if(species in typesof(/mob/living/simple_animal/hostile/leech, /mob/living/simple_animal/hostile/carp, /mob/living/simple_animal/hostile/creature, /mob/living/simple_animal/hostile/voxslug))
+			reward = rand(100, 600)
+		if(species in typesof(/mob/living/simple_animal/hostile/faithless,/mob/living/simple_animal/hostile/creature))
+			reward = rand(700, 1200)
+		if(species in typesof(/mob/living/simple_animal/hostile/drake))
+			reward = rand(3000, 4000)
+		if(species in typesof(/mob/living/simple_animal/hostile/bluespace, /mob/living/simple_animal/shade, /mob/living/simple_animal/construct))
+			reward = rand(2000, 3000)
+		if(species in typesof(/mob/living/simple_animal/passive))
+			reward = rand(100, 300)
+		if(species in typesof(/mob/living/simple_animal/borer))
+			reward = rand(1000, 1500)
+
+		if(species in typesof(/mob/living/simple_animal/hostile/meatstation))
+			reward = rand(1000, 2000)
+
+		if(I.new_species)
+			reward += rand(1000, 3000)
 		points += reward
 		saved_xenofauna += x
 
@@ -345,6 +370,8 @@ var/global/list/rnd_server_list = list()
 	var/list/scanned_slimecores = list()
 	var/list/scanned_spectrometers = list()
 	var/list/scanned_xenofauna = list()
+	var/species
+	var/new_species = FALSE
 	var/potency
 	var/datablocks = 0
 
@@ -373,6 +400,10 @@ var/global/list/rnd_server_list = list()
 			scanneddata += 1
 			scanned_plants += report.info
 			potency = report.potency
+		else
+			to_chat(user, "<span class='notice'>[src] already has data about this report</span>")
+			return
+
 
 	if(istype(O,/obj/item/paper/radiocarbon_spectrometer_report))
 		var/obj/item/paper/radiocarbon_spectrometer_report/report = O
@@ -380,13 +411,23 @@ var/global/list/rnd_server_list = list()
 			if(report.anomalous)
 				scanneddata += 1
 				scanned_spectrometers += report
+		else
+			to_chat(user, "<span class='notice'>[src] already has data about this report</span>")
+			return
 
 	if(istype(O,/obj/item/paper/xenofauna_report))
 		var/obj/item/paper/xenofauna_report/report = O
 		if(!(report in scanned_xenofauna))
-			if(report.new_species)
+			if(report.species)
 				scanneddata += 1
-				scanned_xenofauna += report
+				species = report.species
+				if(report.new_species)
+					scanneddata += 1
+					new_species = report.new_species
+			scanned_xenofauna += report
+		else
+			to_chat(user, "<span class='notice'>[src] already has data about this report</span>")
+			return
 
 
 	if(istype(O, /obj/item/paper/anomaly_scan))
@@ -404,6 +445,20 @@ var/global/list/rnd_server_list = list()
 			))
 			scanneddata += 1
 
+
+	if(istype(O, /obj/item/slime_extract))
+		if(!(O.type in scanned_slimecores))
+			scanned_slimecores += O.type
+			scanneddata += 1
+		else
+			to_chat(user, "<span class='notice'>[src] already has data about this report</span>")
+			return
+
+	if(scanneddata > 0)
+		datablocks += scanneddata
+		to_chat(user, "<span class='notice'>[src] received [scanneddata] data block[scanneddata>1?"s":""] from scanning [O]</span>")
+		return
+
 	if(istype(O, /obj/item/device/beacon/explosion_watcher))
 		var/obj/item/device/beacon/explosion_watcher/explosion = O
 		if(explosion.calculated_research_points > 0)
@@ -411,15 +466,6 @@ var/global/list/rnd_server_list = list()
 		else
 			to_chat(user, "<span class='notice'>[O] has no research value</span>")
 		return
-
-	if(istype(O, /obj/item/slime_extract))
-		if(!(O.type in scanned_slimecores))
-			scanned_slimecores += O.type
-			scanneddata += 1
-
-	if(scanneddata > 0)
-		datablocks += scanneddata
-		to_chat(user, "<span class='notice'>[src] received [scanneddata] data block[scanneddata>1?"s":""] from scanning [O]</span>")
 
 	if(istype(O, /obj/item/disk/tech_disk))
 		var/obj/item/disk/tech_disk/T = O
