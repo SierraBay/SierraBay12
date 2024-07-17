@@ -24,7 +24,7 @@ GLOBAL_DATUM_INIT(joinpanel_state, /datum/topic_state/joinpanel, new)
 		list(name = "Medical", jobs = list(), dep = MED, open = 0, color = "#99ffe6"),
 		list(name = "Research", jobs = list(), dep = SCI, open = 0, color = "#e6b3e6", colBreak = 1),
 		list(name = "Supply", jobs = list(), dep = SUP, open = 0, color = "#ead4ae"),
-		list(name = "Exploration", jobs = list(), dep = EXP, open = 0, color = "#ffd699")
+		list(name = "Exploration", jobs = list(), dep = EXP, open = 0, color = "#b9bd6f")
 	)
 	var/list/otherJobs = list()
 
