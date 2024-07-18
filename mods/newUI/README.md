@@ -5,6 +5,7 @@
 - https://github.com/SierraBay/SierraBay12/pull/2448
 - https://github.com/SierraBay/SierraBay12/pull/2463
 - https://github.com/SierraBay/SierraBay12/pull/2473
+- https://github.com/SierraBay/SierraBay12/pull/2485
 <!--
   Ссылки на PRы, связанные с модом:
   - Создание
@@ -62,7 +63,8 @@ ID мода: MODPACK_NEWUI
   `/mob/observer/ghost/view_manfiest()`
 
 - `mods/_master_files/code/modules/mob/new_player/new_player.dm`:
-  `/mob/new_player/ViewManifest()`
+  `/mob/new_player/ViewManifest()`,
+  `/mob/new_player/LateChoices()`
   
 <!--
   Если ты добавлял новый модульный оверрайд, его нужно указать здесь.

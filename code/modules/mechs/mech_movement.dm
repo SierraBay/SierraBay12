@@ -117,6 +117,9 @@
 						var/turf/target_loc = get_step(exosuit, direction)
 						if(target_loc && exosuit.legs && exosuit.legs.can_move_on(exosuit.loc, target_loc) && exosuit.MayEnterTurf(target_loc))
 							exosuit.Move(target_loc)
+							//[SIERRA-ADD] - Mechs-by-Shegar
+							exosuit.add_heat(exosuit.legs.heat_generation)
+							//[SIERRA-ADD]
 						return MOVEMENT_HANDLED
 //[SIERRA-ADD]
 
@@ -125,6 +128,9 @@
 		playsound(exosuit.loc, exosuit.legs.mech_turn_sound, 40,1)
 		exosuit.set_dir(moving_dir)
 		exosuit.SetMoveCooldown(exosuit.legs.turn_delay)
+		//[SIERRA-ADD] - Mechs-by-Shegar
+		exosuit.add_heat(exosuit.legs.heat_generation)
+		//[SIERRA-ADD]
 
 //TURN
 
@@ -135,6 +141,9 @@
 		if(target_loc && exosuit.legs && exosuit.legs.can_move_on(exosuit.loc, target_loc) && exosuit.MayEnterTurf(target_loc))
 			if(!exosuit.body.phazon)
 				exosuit.Move(target_loc)
+				//[SIERRA-ADD] - Mechs-by-Shegar
+				exosuit.add_heat(exosuit.legs.heat_generation)
+				//[SIERRA-ADD]
 			else
 				for(var/thing in exosuit.pilots) //Для всех пилотов внутри
 					var/mob/pilot = thing

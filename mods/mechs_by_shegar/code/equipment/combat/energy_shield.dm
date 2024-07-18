@@ -32,7 +32,7 @@
 	if(shields)
 		if(shields.charge)
 			if(severity == 1)
-				var/emp_damage = severity * 100
+				var/emp_damage = severity * 125
 				shields.stop_damage(emp_damage)
 			if(severity == 2)
 				var/emp_damage = severity * 75

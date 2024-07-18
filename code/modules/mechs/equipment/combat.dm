@@ -92,7 +92,7 @@
 		toggle()
 		playsound(owner.loc,'sound/mecha/internaldmgalarm.ogg',35,1)
 	*/
-//[SIERRA-EDIT]
+	owner.add_heat(difference)
 	if(difference >= 0)
 		toggle()
 		OVERHEAT = TRUE
@@ -103,6 +103,7 @@
 		delayed_toggle()
 		return difference
 	else return 0
+//[SIERRA-EDIT]
 
 /obj/item/mech_equipment/shields/proc/toggle()
 	//[SIERRA-ADD] - Mechs_by_Shegar -Анти-абуз место
@@ -171,7 +172,12 @@
 	var/obj/item/cell/cell = owner.get_cell()
 	var/actual_required_power = 2*clamp(max_charge - charge, 0, charging_rate)
 	if(cell)
-		charge += cell.use(actual_required_power)
+		//[SIERRA-EDIT] - Mechs-by-Shegar
+		// charge += cell.use(actual_required_power)
+		var/value = cell.use(actual_required_power)
+		charge += value
+		owner.add_heat(value)
+		//[SIERRA-EDIT]
 
 /obj/item/mech_equipment/shields/get_hardpoint_status_value()
 	return charge / max_charge
@@ -307,6 +313,9 @@
 
 /obj/item/material/hatchet/machete/mech/resolve_attackby(atom/A, mob/user, click_params)
 	//Case 1: Default, you are hitting something that isn't a mob. Just do whatever, this isn't dangerous or op.
+	//[SIERRA-ADD] - Mechs-by-Shegar
+	holder.owner.add_heat(holder.heat_generation)
+	//[SIERRA-ADD]
 	if (!istype(A, /mob/living))
 		return ..()
 
@@ -332,6 +341,9 @@
 					M.use_weapon(src, E)
 				E.spin(0.65 SECONDS, 0.125 SECONDS)
 				playsound(E, 'sound/mecha/mechstep01.ogg', 40, 1)
+				//[SIERRA-ADD] - Mechs-by-Shegar
+				holder.owner.add_heat(holder.heat_generation)
+				//[SIERRA-ADD]
 
 /obj/item/mech_equipment/mounted_system/melee/mechete
 	icon_state = "mech_blade"
@@ -381,8 +393,14 @@
 							if (!M.Adjacent(owner))
 								continue
 							M.attack_generic(owner, (owner.arms ? owner.arms.melee_damage * 0.2 : 0), "slammed")
-							M.throw_at(get_edge_target_turf(owner ,owner.dir),5, 2)
+							//[SIERRA-ADD] - Mechs-by-Shegar
+							if(owner.mob_size > M.mob_size)
+								M.throw_at(get_edge_target_turf(owner ,owner.dir),5, 2)
+							//[SIERRA-ADD]
 						do_attack_effect(T, "smash")
+					//[SIERRA-ADD] - Mechs-by-Shegar
+					owner.add_heat(heat_generation)
+					//[SIERRA-ADD]
 
 /obj/item/mech_equipment/ballistic_shield/attack_self(mob/user)
 	. = ..()
@@ -395,6 +413,9 @@
 			last_max_block = world.time
 			do_after(owner, 0.75 SECONDS, get_turf(user), DO_DEFAULT | DO_USER_UNIQUE_ACT | DO_PUBLIC_PROGRESS)
 			blocking = FALSE
+			//[SIERRA-ADD] - Mechs-by-Shegar
+			owner.add_heat(heat_generation)
+			//[SIERRA-ADD]
 		else
 			to_chat(user, SPAN_WARNING("You are not ready to block again!"))
 
@@ -516,6 +537,9 @@
 /obj/item/mech_equipment/flash/proc/area_flash()
 	playsound(src.loc, 'sound/weapons/flash.ogg', 100, 1)
 	var/flash_time = (rand(flash_min,flash_max) - 1)
+	//[SIERRA-ADD] - Mechs-by-Shegar
+	owner.add_heat(heat_generation)
+	//[SIERRA-ADD]
 
 	var/obj/item/cell/C = owner.get_cell()
 	C.use(active_power_use * CELLRATE)
@@ -561,7 +585,9 @@
 		next_use = world.time + 15
 
 		if(istype(O))
-
+			//[SIERRA-ADD] - Mechs-by-Shegar
+			owner.add_heat(heat_generation)
+			//[SIERRA-ADD]
 			playsound(src.loc, 'sound/weapons/flash.ogg', 100, 1)
 			var/flash_time = (rand(flash_min,flash_max))
 

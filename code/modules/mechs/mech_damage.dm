@@ -69,18 +69,25 @@
 /mob/living/exosuit/bullet_act(obj/item/projectile/P, def_zone, used_weapon)
 	if (status_flags & GODMODE)
 		return PROJECTILE_FORCE_MISS
-	//[SIERRA-ADD] - Mechs-by-Shegar
-	//Проверяем, с какого направления прилетает атака!
-	var/local_dir = get_dir(src, get_turf(P)) // <- Узнаём направление от меха до пули
-	if(local_dir == turn(dir, -90) || local_dir == turn(dir, -135) || local_dir == turn(dir, 180) || local_dir == turn(dir, 90) || local_dir == turn(dir, 135))
+	//[SIERRA-ADD] - Mechs-by-Shegar - Модификаторы урона в зависимости от частей
 	// U U U
 	// U M U  ↓ (Mech dir, look on SOUTH)
 	// D D D
 	// M - mech, U - unload passengers if was hit from this side, D - defense passengers(Dont unload) if was hit from this side
+
+	var/obj/item/mech_component/target = zoneToComponent(def_zone)
+
+	//Проверяем, с какого направления прилетает атака!
+	var/local_dir = get_dir(src, get_turf(P)) // <- Узнаём направление от меха до снаряда
+
+	//Попадание с фронта
+	if(local_dir == turn(dir, -45) || local_dir == turn(dir, 0) || local_dir == turn(dir, 45))
+		P.damage = ( P.damage * target.front_modificator_damage ) + target.front_additional_damage
+	//Попадание с тыла
+	else if(local_dir == turn(dir, 180) || local_dir == turn(dir, -135) || local_dir == turn(dir, 135))
 		if(passengers_ammount > 0)
 			forced_leave_passenger(null,MECH_DROP_ALL_PASSENGER,"attack")
-	if(local_dir == turn(dir,-135) || local_dir == turn(dir,135) || local_dir == turn(dir,180))
-		P.damage = P.damage * 1.3
+		P.damage = ( P.damage * target.back_modificator_damage ) + target.back_additional_damage
 	//[SIERRA-ADD]
 	switch(def_zone)
 		if(BP_HEAD , BP_CHEST, BP_MOUTH, BP_EYES)
@@ -249,19 +256,32 @@
 			thing.emp_attack(severity)
 			return
 	//[SIERRA-ADD]
+	//
 	var/ratio = get_blocked_ratio(null, DAMAGE_BURN, null, (3-severity) * 20) // HEAVY = 40; LIGHT = 20
 
 	if(ratio >= 0.5)
 		for(var/mob/living/m in pilots)
 			to_chat(m, SPAN_NOTICE("Your Faraday shielding absorbed the pulse!"))
+		//[SIERRA-ADD] - Mechs-by-Shegar
+		if(power == MECH_POWER_ON)
+			for(var/obj/item/mech_component/thing in list(arms,legs,head,body))
+				thing.emp_heat(severity, ratio, src)
+		//[SIERRA-ADD]
 		return
 	else if(ratio > 0)
 		for(var/mob/living/m in pilots)
 			to_chat(m, SPAN_NOTICE("Your Faraday shielding mitigated the pulse!"))
 
 	emp_damage += round((12 - (severity*3))*( 1 - ratio))
+	//[SIERRA-EDIT] - Mechs-by-Shegar
+	/*
 	for(var/obj/item/thing in list(arms,legs,head,body))
 		thing.emp_act(severity)
+	*/
+	for(var/obj/item/mech_component/thing in list(arms,legs,head,body))
+		thing.emp_act(severity)
+		thing.emp_heat(severity, ratio, src)
+	//[SIERRA-EDIT]
 	if(!hatch_closed || !prob(body.pilot_coverage))
 		for(var/thing in pilots)
 			var/mob/pilot = thing

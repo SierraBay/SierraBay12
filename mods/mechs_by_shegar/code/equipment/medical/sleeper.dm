@@ -1,6 +1,7 @@
 /obj/item/mech_equipment/sleeper
 	disturb_passengers = TRUE
 	var/obj/item/device/scanner/health/scanner = null
+	heat_generation = 20
 
 /obj/item/mech_equipment/sleeper/Initialize()
 	.=..()

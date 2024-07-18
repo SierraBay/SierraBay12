@@ -17,3 +17,10 @@
 /mob/new_player/ViewManifest()
 	var/datum/nano_module/manifest/ui = new /datum/nano_module/manifest(usr)
 	ui.ui_interact(usr)
+
+/mob/new_player/LateChoices()
+	var/datum/nano_module/joinpanel/ui = locate("joinui_[usr.ckey]")
+	if(!ui)
+		ui = new /datum/nano_module/joinpanel(usr)
+		ui.tag = "joinui_[usr.ckey]"
+	ui.ui_interact(usr)

@@ -70,11 +70,11 @@
 	accuracy = 3
 	bulk = GUN_BULK_RIFLE
 	w_class = ITEM_SIZE_HUGE
-	caliber = CALIBER_PISTOL_FLECHETTE
+	caliber = CALIBER_PISTOL_SMALL
 	one_hand_penalty= 0
 	load_method = SINGLE_CASING|SPEEDLOADER
 	max_shells = 100
-	ammo_type = /obj/item/ammo_casing/flechette/mech
+	ammo_type = /obj/item/ammo_casing/pistol/small/mech
 	magazine_type = /obj/item/ammo_magazine/proto_smg/mech
 	allowed_magazines = /obj/item/ammo_magazine/proto_smg/mech
 	has_safety = FALSE
@@ -90,13 +90,15 @@
 	icon_state = "666"
 	mag_type = SPEEDLOADER
 	w_class = ITEM_SIZE_HUGE
-	ammo_type = /obj/item/ammo_casing/flechette/mech
+	ammo_type = /obj/item/ammo_casing/pistol/small/mech
 
-/obj/item/ammo_casing/flechette/mech
-	projectile_type = /obj/item/projectile/bullet/flechette/mech
+/obj/item/ammo_casing/pistol/small/mech
+	projectile_type = /obj/item/projectile/bullet/pistol/holdout/mech
+	caliber = CALIBER_PISTOL_SMALL
 
-/obj/item/projectile/bullet/flechette/mech
+/obj/item/projectile/bullet/pistol/holdout/mech
 	fire_sound = 'mods/mechs_by_shegar/sounds/mech_smg.ogg'
+	penetrating = 1
 //СМГ
 
 

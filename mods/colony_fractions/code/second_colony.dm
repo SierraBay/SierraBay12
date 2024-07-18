@@ -17,8 +17,12 @@
 	id_slot = slot_wear_id
 	id_types = list(/obj/item/card/id/merchant/colony_leader)
 
+/datum/map_template/ruin/exoplanet/playablecolony2
+	mappaths = list('mods/colony_fractions/maps/colony_ship.dmm')
 
 /datum/map_template/ruin/exoplanet/playablecolony2/load(turf/T, centered=FALSE)
+	if(!GLOB.choose_colony_type)
+		GLOB.choose_colony_type = "СЛУЧАЙНЫЙ"
 	if(GLOB.choose_colony_type == "СЛУЧАЙНЫЙ")
 		var/number = rand(1,100)
 		if(number < 30 || number == 30)
@@ -30,9 +34,17 @@
 		else if(number < 100 || number == 100)
 			GLOB.last_colony_type = "НЕЗАВИСИМАЯ"
 	else
-		GLOB.last_colony_type = GLOB.choose_colony_type
+		if(GLOB.last_colony_type != "НЕЗАВИСИМАЯ" && GLOB.last_colony_type != "ЦПСС" && GLOB.last_colony_type != "ГКК" && GLOB.last_colony_type != "НАНОТРЕЙЗЕН")
+			log_and_message_admins("ОШИБКА: Некорректная работа кода колонии, выбран несуществующий тип: [GLOB.choose_colony_type], попытка заспавнить [GLOB.last_colony_type].")
+			log_and_message_admins("Колония выбрана стандартного типа - НАНОТРЕЙЗЕН.")
+			GLOB.last_colony_type = "НАНОТРЕЙЗЕН"
+		else
+			GLOB.last_colony_type = GLOB.choose_colony_type
 	log_and_message_admins("Начал спавн колонии следующего типа: [GLOB.last_colony_type].")
 
+	.=..()
+
+/datum/map_template/ruin/exoplanet/playablecolony2/after_load()
 	.=..()
 	colony_inform()
 

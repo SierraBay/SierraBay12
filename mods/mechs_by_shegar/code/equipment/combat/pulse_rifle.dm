@@ -4,6 +4,7 @@
 	desc = "Military mounted pulse-rifle, probaly stealed from military ship."
 	icon_state = "mech_pulse"
 	holding_type = /obj/item/gun/energy/lasercannon/mounted/mech/pulse
+	heat_generation = 30
 
 /obj/item/gun/energy/lasercannon/mounted/mech/pulse
 	name = "\improper CH-PS \"Immolator\" laser"
