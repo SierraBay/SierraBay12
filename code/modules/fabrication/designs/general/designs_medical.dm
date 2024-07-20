@@ -10,6 +10,9 @@
 /datum/fabricator_recipe/medical/retractor
 	path = /obj/item/retractor
 
+/datum/fabricator_recipe/medical/dropper
+	path = /obj/item/reagent_containers/dropper
+
 /datum/fabricator_recipe/medical/cautery
 	path = /obj/item/cautery
 
