@@ -180,7 +180,7 @@
 	required_tech_levels = list()
 	cost = 3000
 
-	unlocks_designs = list("teleconsole", "tele_beacon")
+	unlocks_designs = list("teleconsole", "tele_beacon","teleprojector","teleporter_pad")
 
 
 /datum/technology/tcom/bsbag
