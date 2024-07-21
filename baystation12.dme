@@ -3327,6 +3327,7 @@
 #include "interface\skin.dmf"
 #include "maps\_map_include.dm"
 #include "maps\_maps.dm"
+<<<<<<< ours
 #include "mods\_modpack.dm"
 #include "mods\global_modpacks.dm"
 #include "mods\_master_files\code\_onclick\click.dm"
@@ -3374,5 +3375,8 @@
 #include "mods\_master_files\maps\mapsystem\maps.dm"
 #include "mods\_master_files\maps\sierra\sierra_ranks.dm"
 #include "mods\_master_files\maps\sierra\items\rigs.dm"
+=======
+#include "packs\legion\_pack.dm"
+>>>>>>> theirs
 #include "~code\global_init.dm"
 // END_INCLUDE
