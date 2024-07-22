@@ -85,11 +85,11 @@
 			return
 		var/datum/computer_file/data/F = computer.get_file(open_file)
 		var/datum/computer_file/binary/photo/P = computer.get_file(open_file)
-		if(istype(F)
+		if(istype(F))
 			if(!computer.print_paper(F.generate_file_data(),F.filename,F.papertype, F.metadata))
 				error = "Hardware error: Unable to print the file."
 				return
-		if(istype(P)))
+		if(istype(P))
 			if(!computer.print_photo(P.photo, P.filename))
 				error = "Hardware error: Unable to print the file."
 				return
