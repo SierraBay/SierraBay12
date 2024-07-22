@@ -23,3 +23,22 @@
 	var/list/data = design.ui_data()
 	data["filename"] = filename
 	return data
+
+/datum/computer_file/binary/photo
+	filetype = "PNG"
+	size = 4
+	var/obj/item/photo/photo
+	var/assetname
+
+/datum/computer_file/binary/photo/clone()
+	var/datum/computer_file/binary/photo/F = ..()
+	F.photo = photo
+	F.assetname = assetname
+	return F
+
+/datum/computer_file/binary/photo/proc/set_filename(new_name)
+	filename = sanitizeFileName("photo [new_name]")
+
+/datum/computer_file/binary/photo/proc/generate_photo_data(mob/user, photo)
+	send_asset(user.client, assetname)
+	return "<img src='[assetname]' width='90%'><br>"

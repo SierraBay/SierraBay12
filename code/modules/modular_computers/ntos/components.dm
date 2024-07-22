@@ -19,6 +19,14 @@
 	if(printer)
 		return printer.print_text(content, title)
 
+/datum/extension/interactive/ntos/proc/print_photo(photo, name)
+	var/obj/item/stock_parts/computer/nano_printer/printer = get_component(PART_PRINTER)
+	if(printer)
+		var/obj/item/device/camera/c = holder
+		var/user = usr
+		c.printpicture(user, photo)
+		return printer.print_picture()
+
 /// Returns the network tag that other computers trying to reach it would see.
 /datum/extension/interactive/ntos/proc/get_network_tag_incoming()
 	var/obj/item/stock_parts/computer/network_card/network_card = get_component(PART_NETWORK)
