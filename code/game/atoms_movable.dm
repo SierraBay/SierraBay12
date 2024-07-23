@@ -208,6 +208,7 @@
 	var/old_loc = loc
 	. = ..()
 	if (.)
+		SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, old_loc, TRUE)
 		// observ
 		if(!loc)
 			GLOB.moved_event.raise_event(src, old_loc, null)
@@ -229,23 +230,25 @@
 /atom/movable/Move(...)
 	var/old_loc = loc
 	. = ..()
-	if (.)
-		if(!loc)
-			GLOB.moved_event.raise_event(src, old_loc, null)
+	if (!.)
+		return
+	SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, old_loc)
+	if(!loc)
+		GLOB.moved_event.raise_event(src, old_loc, null)
 
-		// freelook
-		if(opacity)
-			updateVisibility(src)
+	// freelook
+	if(opacity)
+		updateVisibility(src)
 
-		// lighting
-		if (light_source_solo)
-			light_source_solo.source_atom.update_light()
-		else if (light_source_multi)
-			var/datum/light_source/L
-			var/thing
-			for (thing in light_source_multi)
-				L = thing
-				L.source_atom.update_light()
+	// lighting
+	if (light_source_solo)
+		light_source_solo.source_atom.update_light()
+	else if (light_source_multi)
+		var/datum/light_source/L
+		var/thing
+		for (thing in light_source_multi)
+			L = thing
+			L.source_atom.update_light()
 
 //called when src is thrown into hit_atom
 /atom/movable/proc/throw_impact(atom/hit_atom, datum/thrownthing/TT)

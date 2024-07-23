@@ -38,7 +38,9 @@
 
 	handle_actions()
 
-	UpdateLyingBuckledAndVerbStatus()
+	if(update_icon)	//forces a full overlay update
+		update_icon = FALSE
+		regenerate_icons()
 
 	handle_regular_hud_updates()
 

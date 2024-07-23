@@ -49,6 +49,13 @@
 /proc/cmp_text_dsc(a,b)
 	return sorttext(a, b)
 
+/proc/cmp_embed_text_asc(a,b)
+	if(isdatum(a))
+		a = REF(a)
+	if(isdatum(b))
+		b = REF(b)
+	return sorttext("[b]", "[a]")
+
 /proc/cmp_ruincost_priority(datum/map_template/ruin/A, datum/map_template/ruin/B)
 	return initial(A.spawn_cost) - initial(B.spawn_cost)
 

@@ -50,6 +50,10 @@ var/global/log_end= world.system_type == UNIX ? ascii2text(13) : ""
 		if (C.get_preference_value(/datum/client_preference/staff/show_runtime_logs) == GLOB.PREF_SHOW)
 			to_chat(C, append_admin_tools(SPAN_DEBUG("<b>RUNTIME</b>: [text]"), usr, usr?.loc))
 
+/proc/log_signal(text)
+	if(config.log_signals)
+		game_log("SIGNALS", text)
+
 /proc/log_error(text)
 	error(text)
 	to_debug_listeners(text, "ERROR")

@@ -55,6 +55,9 @@
 	/// log world.log to game log
 	var/static/log_world_output = FALSE
 
+	/// log signals messages
+	var/static/log_signals = FALSE
+
 	/// Allows admins with relevant permissions to have their own ooc colour
 	var/static/allow_admin_ooccolor = FALSE
 
@@ -534,6 +537,8 @@
 				log_adminwarn = TRUE
 			if ("log_world_output")
 				log_world_output = TRUE
+			if ("log_signals")
+				log_signals = TRUE
 			if ("log_hrefs")
 				log_hrefs = TRUE
 			if ("log_runtime")
