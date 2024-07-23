@@ -91,8 +91,7 @@ var/global/datum/evacuation_controller/evacuation_controller
 	if(emergency_evacuation)
 		for(var/area/A in world)
 			if(istype(A, /area/hallway))
-				//A.readyalert()
-				A.set_emergency_lighting(1)
+				A.readyalert()
 		GLOB.using_map.emergency_shuttle_called_announcement()
 	else
 		if(!skip_announce)

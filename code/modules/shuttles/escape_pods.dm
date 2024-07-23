@@ -72,7 +72,7 @@ var/list/escape_pods_by_name = list()
 	for(temp in shuttle_area[1])
 		if(temp.buckled_mob)
 			counted += temp.buckled_mob
-			if(counted.len >= need_people)
+			if(LAZYLEN(counted) >= need_people)
 				return TRUE
 		i++
 	if(i < need_people)	// someone broke a chair
@@ -80,7 +80,7 @@ var/list/escape_pods_by_name = list()
 			if(M in counted)
 				continue
 			counted += M
-			if(counted.len >= need_people)
+			if(LAZYLEN(counted) >= need_people)
 				return TRUE
 	return FALSE
 //  [/SIERRA-ADD]
