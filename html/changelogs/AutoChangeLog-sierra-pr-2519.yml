@@ -1,0 +1,7 @@
+author: Builder13
+changes:
+  - {bugfix: 'Емкости больше не бьются как стеклянные, если они не из стекла. (Пластиковое
+      ведро)'}
+  - {bugfix: Исправлено количество цифр для подбора у abandoned crate с 8 до 4.}
+  - {bugfix: Исправлен админский верб Change View Range.}
+delete-after: true

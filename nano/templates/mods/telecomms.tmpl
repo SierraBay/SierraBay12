@@ -4,6 +4,13 @@
 </div>
 {{/if}}
 
+{{if data.overloaded}}
+<div class='notice' style="display: flex; justify-content: space-between;">
+	<span>WARNING: Ion interference detected. System will automatically recover in {{:data.overloaded}} seconds.<span>
+	{{:helper.link('Reset', null, {'resetoverload' : 1}, null, 'redButton')}}
+</div>
+{{/if}}
+
 <div class="section">
 	<div class="section-title">
 		Settings
@@ -39,7 +46,7 @@
 				<div class="labelList-item-label">
 					Change Frequency:
 				</div>
-				{{:helper.link(data.changeFrequency ? 'On' : 'Off', null, {'toggle' : 0})}}
+				{{:helper.link(data.changeFrequency ? 'On (' + data.changeFrequency + ')' : 'Off', null, {'change_freq' : 0})}}
 			</div>
 			{{/if}}
 		</div>

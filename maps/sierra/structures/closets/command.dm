@@ -64,6 +64,7 @@
 		/obj/item/device/flash,
 		/obj/item/device/megaphone,
 		/obj/item/material/clipboard,
+		/obj/item/folder/envelope/nuke,
 		/obj/item/storage/box/PDAs,
 		/obj/item/storage/box/ids,
 		/obj/item/storage/belt/holster/general,

@@ -101,9 +101,9 @@ var/global/list/rnd_server_list = list()
 	var/points = 0
 
 	for(var/weapon in I.scanned_autopsy_weapons)
-		if(!(weapon in saved_autopsy_weapons))
-			saved_autopsy_weapons += weapon
-
+		if(weapon in saved_autopsy_weapons)
+			continue
+		else
 			// These give more points because they are rare or special
 			var/list/special_weapons = list(
 				"large organic needle" = 10000,
@@ -119,6 +119,8 @@ var/global/list/rnd_server_list = list()
 				points += special_weapons[weapon]
 			else
 				points += rand(5,10) * 200 // 1000-2000 points for random weapon
+
+			saved_autopsy_weapons += weapon
 
 	for(var/list/artifact in I.scanned_artifacts)
 		var/already_scanned = FALSE
