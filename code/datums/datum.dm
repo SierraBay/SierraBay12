@@ -7,7 +7,7 @@
 
 	/// If this datum is pooled, the last configurator applied (if any).
 	var/singleton/instance_configurator/instance_configurator
-
+//[SIERRA-ADD]
 	/**
 	  * Components attached to this datum
 	  *
@@ -22,7 +22,7 @@
 	var/list/_listen_lookup
 	/// Lazy associated list in the structure of `target -> list(signal -> proctype)` that are run when the datum receives that signal
 	var/list/list/_signal_procs
-
+//[/SIERRA-ADD]
 // Default implementation of clean-up code.
 // This should be overridden to remove all references pointing to the object being destroyed.
 // Return the appropriate QDEL_HINT; in most cases this is QDEL_HINT_QUEUE.
@@ -39,6 +39,7 @@
 			else
 				qdel(extension)
 		extensions = null
+		//[SIERRA-ADD]
 	//BEGIN: ECS SHIT
 	var/list/dc = _datum_components
 	if(dc)
@@ -54,6 +55,7 @@
 
 	_clear_signal_refs()
 	//END: ECS SHIT
+	//[/SIERRA-ADD]
 	GLOB.destroyed_event && GLOB.destroyed_event.raise_event(src)
 	cleanup_events(src)
 	var/list/machines = global.state_machines["\ref[src]"]
@@ -68,6 +70,7 @@
 	weakref = null
 	return QDEL_HINT_QUEUE
 
+//[SIERRA-ADD]
 ///Only override this if you know what you're doing. You do not know what you're doing
 ///This is a threat
 /datum/proc/_clear_signal_refs()
@@ -82,6 +85,7 @@
 				var/datum/component/comp = comps
 				comp.UnregisterSignal(src, sig)
 		_listen_lookup = lookup = null
+//[/SIERRA-ADD]
 
 	for(var/target in _signal_procs)
 		UnregisterSignal(target, _signal_procs[target])

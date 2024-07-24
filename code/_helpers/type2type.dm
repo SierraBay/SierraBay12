@@ -200,7 +200,7 @@
 /world/proc/file2list(filename, seperator="\n")
 	RETURN_TYPE(/list)
 	return splittext(file2text(filename), seperator)
-
+//[SIERRA-ADD]
 /proc/type2parent(child)
 	var/string_type = "[child]"
 	var/last_slash = findlasttext(string_type, "/")
@@ -215,3 +215,4 @@
 			else
 				return /datum
 	return text2path(copytext(string_type, 1, last_slash))
+//[/SIERRA-ADD]

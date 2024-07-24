@@ -120,7 +120,7 @@ var/global/list/escape_pods_by_name = list()
 	program = /datum/computer/file/embedded_program/docking/simple/escape_pod
 	var/datum/shuttle/autodock/ferry/escape_pod/pod
 	var/tag_pump
-	frequency = EXTERNAL_AIR_FREQ	 //INF
+	frequency = EXTERNAL_AIR_FREQ	 ///[SIERRA-ADD]
 
 /obj/machinery/embedded_controller/radio/simple_docking_controller/escape_pod/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1)
 	var/data[0]
@@ -131,7 +131,9 @@ var/global/list/escape_pods_by_name = list()
 		"override_enabled" = docking_program.override_enabled,
 		"door_state" = 	docking_program.memory["door_status"]["state"],
 		"door_lock" = 	docking_program.memory["door_status"]["lock"],
+		//[SIERRA-EDIT]
 		"can_force" = pod.can_force() || pod.can_launch(),	// inf, was "can_force" = pod.can_force() || (evacuation_controller.has_evacuated() && pod.can_launch()),	//allow players to manually launch ahead of time if the shuttle leaves
+		//[/SIERRA-EDIT]
 		"is_armed" = pod.arming_controller.armed,
 	)
 
@@ -266,12 +268,12 @@ var/global/list/escape_pods_by_name = list()
 		armed = 1
 		open_door()
 
+// [SIERRA-ADD]
 /datum/computer/file/embedded_program/docking/simple/escape_pod_berth/proc/unarm()
 	if(armed)
 		armed = 0
 		close_door()
 
-// [SIERRA-ADD]
 /datum/computer/file/embedded_program/docking/simple/escape_pod_berth/proc/check_unarm(area/area, mob/living/user)
 	if(armed && isliving(user))
 		if(evacuation_controller.is_idle() || evacuation_controller.is_on_cooldown())

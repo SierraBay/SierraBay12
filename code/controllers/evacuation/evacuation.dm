@@ -92,7 +92,9 @@ var/global/datum/evacuation_controller/evacuation_controller
 		for(var/area/A in world)
 			if(istype(A, /area/hallway))
 				A.readyalert()
+			//[SIERRA-EDIT]
 		GLOB.using_map.emergency_shuttle_called_announcement()
+		//[/SIERRA-EDIT]
 	else
 		if(!skip_announce)
 			// [SIERRA-EDIT] - ERIS_ANNOUNCER

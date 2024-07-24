@@ -1,9 +1,9 @@
 #define DEBUG
-
+//[SIERRA-ADD]
 // Flags
 #define ALL (~0) //For convenience.
 #define NONE 0
-
+//[/SIERRA-ADD]
 // Turf-only flags.
 #define TURF_FLAG_NOJAUNT FLAG(0) // This is used in literally one place, turf.dm, to block ethereal jaunt.
 #define TURF_FLAG_NORUINS FLAG(1)
@@ -349,7 +349,7 @@
 
 #define Z_ALL_TURFS(Z) block(locate(1, 1, Z), locate(world.maxx, world.maxy, Z))
 
-
+//[SIERRA-ADD]
 /// Used to trigger signals and call procs registered for that signal
 /// The datum hosting the signal is automaticaly added as the first argument
 /// Returns a bitfield gathered from all registered procs
@@ -522,3 +522,4 @@
 
 ///from /datum/bank_account/pay_debt(), after a portion or all the debt has been paid.
 #define COMSIG_BANK_ACCOUNT_DEBT_PAID "bank_account_debt_paid"
+//[/SIERRA-ADD]

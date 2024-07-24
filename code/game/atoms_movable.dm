@@ -208,7 +208,9 @@
 	var/old_loc = loc
 	. = ..()
 	if (.)
+	//[SIERRA-ADD]
 		SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, old_loc, TRUE)
+		//[/SIERRA-ADD]
 		// observ
 		if(!loc)
 			GLOB.moved_event.raise_event(src, old_loc, null)
@@ -230,6 +232,7 @@
 /atom/movable/Move(...)
 	var/old_loc = loc
 	. = ..()
+	//[SIERRA-EDIT]
 	if (!.)
 		return
 	SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, old_loc)
@@ -249,6 +252,7 @@
 		for (thing in light_source_multi)
 			L = thing
 			L.source_atom.update_light()
+	//[SIERRA-EDIT]
 
 //called when src is thrown into hit_atom
 /atom/movable/proc/throw_impact(atom/hit_atom, datum/thrownthing/TT)

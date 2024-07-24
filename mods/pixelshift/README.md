@@ -1,7 +1,7 @@
 
 #### Список PRов:
 
-- https://github.com/SierraBay/SierraBay12/pull/#####
+- https://github.com/SierraBay/SierraBay12/pull/2529
 <!--
   Ссылки на PRы, связанные с модом:
   - Создание
@@ -11,7 +11,7 @@
 <!-- Название мода. Не важно на русском или на английском. -->
 ## Мод-пример
 
-ID мода: EXAMPLE
+ID мода: MODPACK_PIXELSHIFT
 <!--
   Название модпака прописными буквами, СОЕДИНЁННЫМИ_ПОДЧЁРКИВАНИЕМ,
   которое ты будешь использовать для обозначения файлов.
@@ -19,8 +19,7 @@ ID мода: EXAMPLE
 
 ### Описание мода
 
-Этот мод служит примером для разработчиков и существует лишь для того,
-чтобы его можно было легко скопировать и вставить в другое место.
+Порт https://github.com/SierraBay/SierraBay12/commit/ac40ff26be0cb05df2ce2a869c2481827d7f019f
 <!--
   Что он делает, что добавляет: что, куда, зачем и почему - всё здесь.
   А также любая полезная информация.
@@ -28,7 +27,20 @@ ID мода: EXAMPLE
 
 ### Изменения *кор кода*
 
-- `code/modules/mob/living.dm`: `proc/overriden_proc`, `var/overriden_var`
+- `code\__defines\lists.dm`
+- `code\__defines\misc.dm`
+- `code\_helpers\cmp.dm`
+- `code\_helpers\unsorted.dm`
+- `code\_helpers\logging.dm`
+- `code\_helpers\type2type.dm`
+- `code\controllers\configuration.dm`
+- `code\datums\datum.dm`
+- `code\game\atoms_movable.dm`
+- `code\datums\observation\entered.dm`
+- `code\game\turfs\turf.dm`
+- `code\modules\mob\mob.dm`
+- `code\modules\mob\mob_movement.dm`
+- `code\modules\mob\living\life.dm`
 <!--
   Если вы редактировали какие-либо процедуры или переменные в кор коде,
   они должны быть указаны здесь.
@@ -39,8 +51,7 @@ ID мода: EXAMPLE
 
 ### Оверрайды
 
-- `mods/_master_files/sound/my_cool_sound.ogg`
-- `mods/_master_files/code/my_modular_override.dm`: `proc/overriden_proc`, `var/overriden_var`
+- "Отсутствуют"
 <!--
   Если ты добавлял новый модульный оверрайд, его нужно указать здесь.
   Здесь указываются оверрайды в твоём моде и папке `_master_files`
@@ -50,7 +61,7 @@ ID мода: EXAMPLE
 
 ### Дефайны
 
-- `code/__defines/~mods/example.dm`: `EXAMPLE_SPEED_MULTIPLIER`, `EXAMPLE_SPEED_BASE`
+- `code\__defines\misc.dm`
 <!--
   Если требовалось добавить какие-либо дефайны, укажи файлы,
   в которые ты их добавил, а также перечисли имена.
@@ -61,7 +72,6 @@ ID мода: EXAMPLE
 
 ### Используемые файлы, не содержащиеся в модпаке
 
-- `mods/_master_files/icons/obj/alien.dmi`
 <!--
   Будь то немодульный файл или модульный файл, который не содержится в папке,
   принадлежащей этому конкретному моду, он должен быть упомянут здесь.
@@ -71,7 +81,7 @@ ID мода: EXAMPLE
 
 ### Авторы:
 
-Твой никнейм
+Lexanx
 <!--
   Здесь находится твой никнейм
   Если работал совместно - никнеймы тех, кто помогал.
