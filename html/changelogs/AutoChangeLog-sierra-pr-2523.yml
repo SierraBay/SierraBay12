@@ -1,0 +1,4 @@
+author: FeudeyTF
+changes:
+  - {bugfix: добавил возможность перезагрузить телекоммуникационный сервер}
+delete-after: true
