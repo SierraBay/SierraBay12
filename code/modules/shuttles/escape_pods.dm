@@ -1,10 +1,15 @@
-var/global/list/escape_pods = list()
-var/global/list/escape_pods_by_name = list()
+var/list/escape_pods = list()
+var/list/escape_pods_by_name = list()
+
+// [SIERRA-ADD]
+#define evac_chair(varName) var/obj/structure/bed/chair/shuttle/##varName
+// [/SIERRA-ADD]
 
 /datum/shuttle/autodock/ferry/escape_pod
 	var/datum/computer/file/embedded_program/docking/simple/escape_pod_berth/arming_controller
 	category = /datum/shuttle/autodock/ferry/escape_pod
 	move_time = 100
+	var/need_people	= 0// inf
 
 /datum/shuttle/autodock/ferry/escape_pod/New()
 	if(name in escape_pods_by_name)
@@ -29,6 +34,57 @@ var/global/list/escape_pods_by_name = list()
 		CRASH("Escape pod \"[name]\" could not find it's controller master!")
 
 	controller_master.pod = src
+// [SIERRA-ADD]
+	evac_chair(temp)
+	for(temp in shuttle_area[1])
+		++need_people
+
+/datum/shuttle/autodock/ferry/escape_pod/force_launch(user)
+	. = ..()
+	shuttle_docking_controller.finish_undocking()
+	var/datum/computer/file/embedded_program/docking/simple/prog = shuttle_docking_controller
+	prog.close_door()
+
+/datum/shuttle/autodock/ferry/escape_pod/proc/toggle_bds(var/CLOSE = FALSE)
+	for(var/obj/machinery/door/blast/regular/escape_pod/ES in world)
+		if(ES.id_tag == shuttle_docking_controller.id_tag)
+			if(CLOSE)
+				invoke_async(ES, /obj/machinery/door/blast/proc/force_close)
+			else
+				invoke_async(ES, /obj/machinery/door/blast/proc/force_open)
+
+/datum/shuttle/autodock/ferry/escape_pod/proc/set_self_unarm()
+	if(arming_controller.armed)
+		if(evacuation_controller.is_idle() || evacuation_controller.is_on_cooldown())
+			var/check = TRUE
+			for(var/mob/living/user in shuttle_area[1])
+				if(isliving(user))
+					check = FALSE
+					break
+			if(check)
+				arming_controller.unarm()
+				return
+		GLOB.exited_event.register(shuttle_area[1], arming_controller, /datum/computer/file/embedded_program/docking/simple/escape_pod_berth/proc/check_unarm)
+
+/datum/shuttle/autodock/ferry/escape_pod/proc/check_load()
+	var/list/counted = list()
+	var/i = 0
+	evac_chair(temp)
+	for(temp in shuttle_area[1])
+		if(temp.buckled_mob)
+			counted += temp.buckled_mob
+			if(counted.len >= need_people)
+				return TRUE
+		i++
+	if(i < need_people)	// someone broke a chair
+		for(var/mob/living/M in shuttle_area[1])
+			if(M in counted)
+				continue
+			counted += M
+			if(counted.len >= need_people)
+				return TRUE
+	return FALSE
+// [/SIERRA-ADD]
 
 /datum/shuttle/autodock/ferry/escape_pod/can_launch()
 	if(arming_controller && !arming_controller.armed)	//must be armed
@@ -38,6 +94,8 @@ var/global/list/escape_pods_by_name = list()
 	return ..()
 
 /datum/shuttle/autodock/ferry/escape_pod/can_force()
+	if (arming_controller && arming_controller.master.emagged)	// inf
+		return (next_location && next_location.is_valid(src) && !current_location.cannot_depart(src) && moving_status == SHUTTLE_IDLE && !location && arming_controller && arming_controller.armed)	// inf
 	if (arming_controller.eject_time && world.time < arming_controller.eject_time + 50)
 		return 0	//dont allow force launching until 5 seconds after the arming controller has reached it's countdown
 	return ..()
@@ -52,8 +110,9 @@ var/global/list/escape_pods_by_name = list()
 	program = /datum/computer/file/embedded_program/docking/simple/escape_pod
 	var/datum/shuttle/autodock/ferry/escape_pod/pod
 	var/tag_pump
+	frequency = EXTERNAL_AIR_FREQ	 //INF
 
-/obj/machinery/embedded_controller/radio/simple_docking_controller/escape_pod/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1)
+/obj/machinery/embedded_controller/radio/simple_docking_controller/escape_pod/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null, var/force_open = 1)
 	var/data[0]
 	var/datum/computer/file/embedded_program/docking/simple/docking_program = program
 
@@ -62,7 +121,7 @@ var/global/list/escape_pods_by_name = list()
 		"override_enabled" = docking_program.override_enabled,
 		"door_state" = 	docking_program.memory["door_status"]["state"],
 		"door_lock" = 	docking_program.memory["door_status"]["lock"],
-		"can_force" = pod.can_force() || (evacuation_controller.has_evacuated() && pod.can_launch()),	//allow players to manually launch ahead of time if the shuttle leaves
+		"can_force" = pod.can_force() || pod.can_launch(),	// inf, was "can_force" = pod.can_force() || (evacuation_controller.has_evacuated() && pod.can_launch()),	//allow players to manually launch ahead of time if the shuttle leaves
 		"is_armed" = pod.arming_controller.armed,
 	)
 
@@ -75,6 +134,8 @@ var/global/list/escape_pods_by_name = list()
 		ui.set_auto_update(1)
 
 /obj/machinery/embedded_controller/radio/simple_docking_controller/escape_pod/OnTopic(user, href_list)
+	// [SIERRA-REMOVE]
+	/*
 	if(href_list["manual_arm"])
 		pod.arming_controller.arm()
 		return TOPIC_REFRESH
@@ -85,13 +146,33 @@ var/global/list/escape_pods_by_name = list()
 		else if (evacuation_controller.has_evacuated() && pod.can_launch())	//allow players to manually launch ahead of time if the shuttle leaves
 			pod.launch(src)
 		return TOPIC_REFRESH
+	*/
+	// [/SIERRA-REMOVE]
+	// [SIERRA-ADD]
+	if(href_list["command"])
+		var/command = href_list["command"]
+		if(command == "manual_arm")
+			pod.arming_controller.arm()
+			return TOPIC_REFRESH
+
+		if(command == "force_launch")
+			if (pod.can_launch())
+				pod.toggle_bds()
+				pod.launch(src)
+			else if (pod.can_force())
+				pod.toggle_bds()
+				GLOB.global_announcer.autosay("Несанкционированный запуск капсулы <b>[pod]</b>! Возможна разгерметизация!", "Эвакуационный Контроллер",, z)
+				pod.force_launch(src)
+			return TOPIC_REFRESH
+	// [/SIERRA-ADD]
 
 //This controller is for the escape pod berth (station side)
 /obj/machinery/embedded_controller/radio/simple_docking_controller/escape_pod_berth
 	name = "escape pod berth controller"
 	program = /datum/computer/file/embedded_program/docking/simple/escape_pod_berth
+	frequency = EXTERNAL_AIR_FREQ	 //INF
 
-/obj/machinery/embedded_controller/radio/simple_docking_controller/escape_pod_berth/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1)
+/obj/machinery/embedded_controller/radio/simple_docking_controller/escape_pod_berth/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null, var/force_open = 1)
 	var/data[0]
 	var/datum/computer/file/embedded_program/docking/simple/docking_program = program
 
@@ -114,14 +195,55 @@ var/global/list/escape_pods_by_name = list()
 		ui.open()
 		ui.set_auto_update(1)
 
-/obj/machinery/embedded_controller/radio/simple_docking_controller/escape_pod_berth/emag_act(remaining_charges, mob/user)
+// [SIERRA-ADD]
+/obj/machinery/embedded_controller/radio/simple_docking_controller/escape_pod_berth/attackby(var/obj/item/T, var/mob/living/carbon/human/user)
+	if(emagged && isMultitool(T) && user.skill_check(SKILL_ELECTRICAL, SKILL_TRAINED))
+		to_chat(user, "<span class='notice'>Ты начал сбрасывать настройки [src], чтобы починить его.</span>")
+		if(do_after(user, 100, src))
+			emagged = FALSE
+			state("Сброс до заводских настроек завершен!")
+			sleep(5)
+			state("Поиск центрального контроллера...")
+			sleep(10)
+			state("Найдено!")
+			sleep(10)
+			state("Первичная настройка капсулы...")
+			sleep(20)
+			state("Успешно!")
+			if (istype(program, /datum/computer/file/embedded_program/docking/simple/escape_pod_berth))
+				var/datum/computer/file/embedded_program/docking/simple/escape_pod_berth/P = program
+				for(var/datum/shuttle/autodock/ferry/escape_pod/pod in escape_pods)
+					if(pod.arming_controller == P)
+						pod.toggle_bds(TRUE)
+						break
+				if (P.armed)
+					P.unarm()
+			return
+	. = ..()
+// [/SIERRA-ADD]
+
+/obj/machinery/embedded_controller/radio/simple_docking_controller/escape_pod_berth/emag_act(var/remaining_charges, var/mob/user)
 	if (!emagged)
-		to_chat(user, SPAN_NOTICE("You emag the [src], arming the escape pod!"))
+		to_chat(user, "<span class='notice'>You emag the [src], arming the escape pod!</span>")
 		emagged = TRUE
+		// [SIERRA-ADD]
+		GLOB.global_announcer.autosay("<b>Несанкционированный доступ</b> к контроллеру эвакуации. Потеряно управление от <b><i>[src]</i></b>. Службе безопасности рекомендуется проследовать к этой капсуле. Местоположение капсулы: [get_area(src)]", "Автоматическая Система Безопасности", "Security", z)
+		state("Ошибка центрального контроллера!")
+		sleep(5)
+		state("Обнаружена аварийная ситуация!")
+		sleep(3)
+		state("Взведение капсулы...")
+		sleep(10)
+		state("Ошибка стыковочных зажимов!")
+		sleep(5)
+		state("Отключение зажимов...")
+		sleep(20)
+		state("Примерное время подготовки: 5 минут.")
+		// [/SIERRA-ADD]
 		if (istype(program, /datum/computer/file/embedded_program/docking/simple/escape_pod_berth))
 			var/datum/computer/file/embedded_program/docking/simple/escape_pod_berth/P = program
 			if (!P.armed)
-				P.arm()
+				addtimer(CALLBACK(P, /datum/computer/file/embedded_program/docking/simple/escape_pod_berth/proc/arm), 5 MINUTES)	// inf was P.arm()
 		return 1
 
 //A docking controller program for a simple door based docking port
@@ -131,23 +253,45 @@ var/global/list/escape_pods_by_name = list()
 	var/eject_time = null
 	var/closing = 0
 
+
 /datum/computer/file/embedded_program/docking/simple/escape_pod_berth/proc/arm()
 	if(!armed)
 		armed = 1
 		open_door()
 
+/datum/computer/file/embedded_program/docking/simple/escape_pod_berth/proc/unarm()
+	if(armed)
+		armed = 0
+		close_door()
+
+// [SIERRA-ADD]
+/datum/computer/file/embedded_program/docking/simple/escape_pod_berth/proc/check_unarm(var/area/area, var/mob/living/user)
+	if(armed && isliving(user))
+		if(evacuation_controller.is_idle() || evacuation_controller.is_on_cooldown())
+			var/check = TRUE
+			for(user in area)
+				if(isliving(user))
+					check = FALSE
+					break
+			if(check)
+				unarm()
+	else if(!armed)
+		GLOB.exited_event.unregister(area, src, /datum/computer/file/embedded_program/docking/simple/escape_pod_berth/proc/check_unarm)
+// [/SIERRA-ADD]
 
 /datum/computer/file/embedded_program/docking/simple/escape_pod_berth/receive_user_command(command)
 	if (!armed)
 		return TRUE // Eat all commands.
 	return ..(command)
-
+// [SIERRA-REMOVE]
+/*
 /datum/computer/file/embedded_program/docking/simple/escape_pod_berth/process()
 	..()
 	if (eject_time && world.time >= eject_time && !closing)
 		close_door()
 		closing = 1
-
+*/
+// [/SIERRA-REMOVE]
 /datum/computer/file/embedded_program/docking/simple/escape_pod_berth/prepare_for_docking()
 	return
 
@@ -159,12 +303,25 @@ var/global/list/escape_pods_by_name = list()
 
 /datum/computer/file/embedded_program/docking/simple/escape_pod_berth/prepare_for_undocking()
 	eject_time = world.time + eject_delay*10
+	..()	// inf
 
 // The program for the escape pod controller.
 /datum/computer/file/embedded_program/docking/simple/escape_pod
 	var/tag_pump
+// [SIERRA-ADD]
+	var/undock_begin
 
-/datum/computer/file/embedded_program/docking/simple/escape_pod/New(obj/machinery/embedded_controller/M)
+// No answer recieved from vessel controller? Evacing in any case
+/datum/computer/file/embedded_program/docking/simple/escape_pod/ready_for_undocking()
+	. = ..()
+	if(!undock_begin)
+		undock_begin = world.time
+	if (. && (world.time > undock_begin + 10 SECONDS))
+		finish_undocking()
+		reset()
+// [/SIERRA-ADD]
+
+/datum/computer/file/embedded_program/docking/simple/escape_pod/New(var/obj/machinery/embedded_controller/M)
 	..(M)
 	if (istype(M, /obj/machinery/embedded_controller/radio/simple_docking_controller/escape_pod))
 		var/obj/machinery/embedded_controller/radio/simple_docking_controller/escape_pod/controller = M
@@ -172,13 +329,19 @@ var/global/list/escape_pods_by_name = list()
 
 /datum/computer/file/embedded_program/docking/simple/escape_pod/finish_undocking()
 	. = ..()
+	undock_begin = null	// inf
 	// Send a signal to the vent pumps to repressurize the pod.
 	var/datum/signal/signal = new
 	signal.data = list(
 		"tag" = tag_pump,
 		"sigtype" = "command",
-		"power" = 1,
-		"direction" = 1,
+		"set_power" = 1,	// inf, was	"power" = 1,
+		"set_direction" = "release",	// inf, was	"direction" = 1,
+		"status" = TRUE,	// inf,
 		"set_external_pressure" = ONE_ATMOSPHERE
 	)
 	post_signal(signal)
+
+// [SIERRA-ADD]
+#undef evac_chair
+// [/SIERRA-ADD]
