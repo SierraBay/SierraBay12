@@ -35,6 +35,7 @@
 		dataFreq[LIST_PRE_INC(dataFreq)] = list( "freq" = freq, "freq_format" = format_frequency(freq), "tag_rule" = tagRule, "tag_index" = tag_index)
 
 	data["frequencies"] = dataFreq
+	data["overloaded"] = overloaded_for * 2
 
 	data["buffer"] = 0
 	if(user)
@@ -45,6 +46,11 @@
 				data["buffer"] = list("device" = device.name, "id" = device.id)
 
 	return data
+
+/obj/machinery/telecomms/bus/compile_data(mob/user)
+	. = ..()
+	.["bus"] = TRUE
+	.["changeFrequency"] = change_frequency
 
 /obj/machinery/telecomms/
 
@@ -150,6 +156,24 @@
 				channel_tags.Add(list(list(freq, tag, color)))
 				temp = "New tagging rule assigned:[freq] GHz -> \"[tag]\" ([color])"
 
+	if(href_list["change_freq"])
+		if(istype(src, /obj/machinery/telecomms/bus))
+			var/obj/machinery/telecomms/bus/bus = src
+			var/newfreq = input(usr, "Specify a new frequency for new signals to change to. Enter null to turn off frequency changing. Decimals assigned automatically.", src, network) as null|num
+			if(canAccess(usr))
+				if(newfreq)
+					if(findtext(num2text(newfreq), "."))
+						newfreq *= 10 // shift the decimal one place
+					if(newfreq < 10000)
+						bus.change_frequency = newfreq
+						temp = "New frequency to change to assigned: \"[newfreq] GHz\""
+				else
+					bus.change_frequency = 0
+					temp = "Frequency changing deactivated"
+
+	if(href_list["resetoverload"])
+		overloaded_for = 0
+		temp = "Manual override accepted. \The [src] has been reset."
 	/// Multitool interactions
 
 	var/obj/item/device/multitool/multitool = get_multitool(user)

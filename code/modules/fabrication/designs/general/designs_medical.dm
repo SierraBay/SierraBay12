@@ -13,6 +13,9 @@
 /datum/fabricator_recipe/medical/dropper
 	path = /obj/item/reagent_containers/dropper
 
+/datum/fabricator_recipe/medical/pill_bottle
+	path = /obj/item/storage/pill_bottle
+
 /datum/fabricator_recipe/medical/cautery
 	path = /obj/item/cautery
 

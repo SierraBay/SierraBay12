@@ -1,0 +1,5 @@
+author: Lexanx
+changes:
+  - {bugfix: 'Пофиксил Biotech ветку, добавил пропавшие рецепты в эзотерику'}
+  - {rscadd: Добавил баночку для таблеток в автолат}
+delete-after: true
