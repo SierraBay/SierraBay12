@@ -48,7 +48,7 @@
 /datum/technology/esoteric/freedom_implant
 	name = "Silent and Dangerous"
 	desc = "Silent and Dangerous"
-	id = "freedom_implant"s
+	id = "freedom_implant"
 
 
 	x = 0.4
