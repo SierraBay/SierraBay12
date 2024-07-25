@@ -120,7 +120,6 @@
 			program_status = PROGRAM_STATUS_CRASHED
 			crashed_at = world.timeofday
 	next_event = (rand(MINIMUM_FOLDING_EVENT_INTERVAL, MAXIMUM_FOLDING_EVENT_INTERVAL) SECONDS) + world.timeofday //Sets the next crash chance 50-100 seconds from now
-	ntnet_global.add_log_with_ids_check("Warning! Possible DDOS attack - from:", computer.get_component(PART_NETWORK))
 
 
 /datum/computer_file/program/folding/on_shutdown()
