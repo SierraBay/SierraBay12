@@ -48,7 +48,7 @@
 	range = 1
 	shuttle_area = /area/map_template/transshipment/old_snz
 	fuel_consumption = 4
-	defer_initialisation = FALSE
+	defer_initialisation = TRUE
 	flags = SHUTTLE_FLAGS_PROCESS
 	skill_needed = SKILL_MIN
 	ceiling_type = /turf/simulated/floor/shuttle_ceiling
