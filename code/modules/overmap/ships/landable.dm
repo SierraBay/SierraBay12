@@ -10,6 +10,12 @@
 	icon_state = "shuttle"
 	moving_state = "shuttle_moving"
 
+
+
+/obj/overmap/visitable/ship/landable/Initialize()
+	. = ..()
+	GLOB.shuttle_moved_event.register(SSshuttle.shuttles[shuttle], src)
+
 /obj/overmap/visitable/ship/landable/Destroy()
 	GLOB.shuttle_moved_event.unregister(SSshuttle.shuttles[shuttle], src)
 	return ..()
