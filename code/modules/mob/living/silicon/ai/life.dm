@@ -39,6 +39,9 @@
 	handle_power_oxyloss()
 	handle_confused()
 	update_sight()
+	//[SIERRA-ADD] - AI-UPDATE
+	process_queued_alarms()
+	//[SIERRA-ADD]
 
 	handle_regular_hud_updates()
 	switch(src.sensor_mode)
