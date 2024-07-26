@@ -7,7 +7,7 @@
 	range = 1
 	ceiling_type = /turf/simulated/floor/shuttle_ceiling
 	flags = SHUTTLE_FLAGS_PROCESS
-	defer_initialisation = TRUE
+	defer_initialisation = FALSE
 	knockdown = FALSE
 
 /turf/simulated/floor/shuttle_ceiling/sfv_arbiter

@@ -8,7 +8,7 @@
 	fuel_consumption = 0
 	ceiling_type = /turf/simulated/floor/shuttle_ceiling
 	flags = SHUTTLE_FLAGS_PROCESS
-	defer_initialisation = TRUE
+	defer_initialisation = FALSE
 	knockdown = FALSE
 
 /turf/simulated/floor/shuttle_ceiling/iccgn

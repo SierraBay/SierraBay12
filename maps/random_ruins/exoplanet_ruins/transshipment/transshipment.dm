@@ -52,6 +52,7 @@
 	flags = SHUTTLE_FLAGS_PROCESS
 	skill_needed = SKILL_MIN
 	ceiling_type = /turf/simulated/floor/shuttle_ceiling
+	defer_initialisation = FALSE
 
 /obj/machinery/computer/shuttle_control/explore/old_snz
 	name = "SNZ-210 Shuttle control console"

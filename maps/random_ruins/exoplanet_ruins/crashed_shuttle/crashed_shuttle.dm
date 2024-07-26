@@ -27,7 +27,7 @@
 	range = 1
 	shuttle_area = /area/map_template/crashed_shuttle/graysontug
 	fuel_consumption = 4
-	defer_initialisation = TRUE
+	defer_initialisation = FALSE
 	flags = SHUTTLE_FLAGS_PROCESS
 	skill_needed = SKILL_MIN
 	ceiling_type = /turf/simulated/floor/shuttle_ceiling
