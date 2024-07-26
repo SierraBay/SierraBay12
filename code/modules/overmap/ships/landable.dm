@@ -13,6 +13,7 @@
 /obj/overmap/visitable/ship/landable/Initialize()
 	. = ..()
 	. = INITIALIZE_HINT_LATELOAD
+	//[перезапуск 1]
 
 /obj/overmap/visitable/ship/landable/Destroy()
 	GLOB.shuttle_moved_event.unregister(SSshuttle.shuttles[shuttle], src)
