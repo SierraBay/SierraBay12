@@ -1,7 +1,7 @@
-#define MINIMUM_SCIENCE_INTERVAL 80
-#define MAXIMUM_SCIENCE_INTERVAL 160
-#define MINIMUM_FOLDING_EVENT_INTERVAL 60
-#define MAXIMUM_FOLDING_EVENT_INTERVAL 120
+#define MINIMUM_SCIENCE_INTERVAL 120
+#define MAXIMUM_SCIENCE_INTERVAL 180
+#define MINIMUM_FOLDING_EVENT_INTERVAL 90
+#define MAXIMUM_FOLDING_EVENT_INTERVAL 150
 #define PROGRAM_STATUS_CRASHED 0
 #define PROGRAM_STATUS_RUNNING 1
 #define PROGRAM_STATUS_RUNNING_WARM 2
@@ -20,7 +20,6 @@
 	category = PROG_UTIL
 	requires_ntnet = TRUE
 	required_access = access_research
-	operator_skill = SKILL_TRAINED
 
 	var/started_on 			= 0 	// When the program started some science.
 	var/current_interval 	= 1		// How long the current interval will be.
@@ -47,6 +46,7 @@
 		program_status = PROGRAM_STATUS_RUNNING
 
 	if(href_list["start"] && started_on == 0)
+
 		started_on = world.timeofday
 		current_interval = ((rand(MINIMUM_SCIENCE_INTERVAL, MAXIMUM_SCIENCE_INTERVAL) * GQ) / get_speed()) SECONDS
 		next_event = ((rand(MINIMUM_FOLDING_EVENT_INTERVAL, MAXIMUM_FOLDING_EVENT_INTERVAL) * get_speed()) SECONDS) + world.timeofday
@@ -109,7 +109,7 @@
 				if(PROGRAM_STATUS_RUNNING_WARM) //50% chance on subsequent ticks to make the program able to crash.
 					to_chat(h, SPAN_WARNING("\The [host] gets scaldingly hot"))
 					if(h.type in typesof(/mob/living/carbon/human))
-						h?.take_overall_damage(0, 0.45) //It checks holder? so that it doesn't cause a runtime error if no one is holding it.
+						h.take_overall_damage(0, 0.45) //It checks holder? so that it doesn't cause a runtime error if no one is holding it.
 					if (program_status == PROGRAM_STATUS_RUNNING_WARM)
 						program_status = PROGRAM_STATUS_RUNNING_SCALDING
 				if(PROGRAM_STATUS_RUNNING_SCALDING) //1/3 chance on all following ticks for the program to crash.
@@ -169,11 +169,12 @@
 /datum/computer_file/program/folding/proc/get_speed()
 	var/skill_speed_modifier = 1 + (operator_skill - SKILL_TRAINED)/(SKILL_MAX - SKILL_MIN)
 	var/obj/item/stock_parts/computer/processor_unit/CPU = computer.get_component(PART_CPU)
-	return CPU?.processing_power * skill_speed_modifier
+	return CPU.processing_power * skill_speed_modifier
 
 /datum/nano_module/program/folding/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1)
 	var/list/data = host.initial_data()
 	var/datum/computer_file/program/folding/PRG = program
+	PRG.operator_skill = user.get_skill_value(SKILL_COMPUTER)
 	if(!PRG.computer)
 		return
 
@@ -189,7 +190,8 @@
 	var/time_left = ((PRG.started_on + PRG.current_interval) - world.timeofday)
 	if(time_left > 1)
 		data["science_string"] = pick(science_strings)
-	PRG.percentage = ((PRG.current_interval-time_left) / PRG.current_interval) * 100
+	if(PRG.current_interval > 0)
+		PRG.percentage = ((PRG.current_interval-time_left) / PRG.current_interval) * 100
 	var/list/strings[0]
 	for(var/j, j<10, j++)
 		var/string = ""
@@ -203,4 +205,5 @@
 		ui = new(user, src, ui_key, "mods-sciencefolding.tmpl", name, 550, 400)
 		ui.auto_update_layout = 1
 		ui.set_initial_data(data)
+		ui.set_auto_update(1)
 		ui.open()
