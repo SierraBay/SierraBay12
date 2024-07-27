@@ -1,3 +1,8 @@
+/mob/living/exosuit/add_pilot(mob/user)
+	. = ..()
+	to_chat(user,SPAN_NOTICE("<b><font color = green> Press Middle mouse button for fast swap current hardpoint. </font>"))
+	to_chat(user,SPAN_NOTICE("<b><font color = green> Press SPACE mouse for toggle strafe mod. </font>"))
+
 /mob/living/exosuit/proc/check_passenger(mob/user) // Выбираем желаемое место, проверяем можно ли его занять, стартуем прок занятия
 	var/local_dir = get_dir(src, user)
 	if(local_dir != turn(dir, 90) && local_dir != turn(dir, -90) && local_dir != turn(dir, -135) && local_dir != turn(dir, 135) && local_dir != turn(dir, 180))
@@ -206,6 +211,9 @@
 
 /mob/living/exosuit/use_tool(obj/item/tool, mob/user, list/click_params)
 	if(istype(tool, /obj/item/card/id))// Мы тычем ID картой в меха, словно ключами от иномарки.
+		if(inmech(user, src))
+			to_chat(user, "You cannot interacti with mech inside mech.")
+			return
 		//Если есть пилоты, мы никому ничего не откроем
 		if(LAZYLEN(pilots))
 			to_chat(user, SPAN_WARNING("There is somebody inside, ID scaner ignores you."))
@@ -248,6 +256,9 @@
 
 
 	if(istype(tool, /obj/item/stack/material))
+		if(inmech(user, src))
+			to_chat(user, "You cannot interacti with mech inside mech.")
+			return
 		var/obj/item/mech_component/choice = show_radial_menu(user, src, parts_list_images, require_near = TRUE, radius = 42, tooltips = TRUE, check_locs = list(src))
 		if(!choice)
 			return
@@ -270,6 +281,9 @@
 
 	//Saw/welder - destroy mech security bolts
 	if( ((istype(tool, /obj/item/circular_saw)) || (isWelder(tool))) && user.a_intent == I_HURT)
+		if(inmech(user, src))
+			to_chat(user, "You cannot interacti with mech inside mech.")
+			return
 		if (!body)
 			USE_FEEDBACK_FAILURE("\The [src] has no cockpit to force.")
 			return FALSE

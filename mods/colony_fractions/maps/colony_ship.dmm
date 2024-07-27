@@ -381,10 +381,6 @@
 /obj/item/stock_parts/scanning_module,
 /obj/item/stock_parts/scanning_module/adv,
 /obj/item/stock_parts/smes_coil/weak,
-/obj/item/stock_parts/smes_coil/super_capacity,
-/obj/item/stock_parts/smes_coil/super_capacity,
-/obj/item/stock_parts/smes_coil/super_io,
-/obj/item/stock_parts/smes_coil/super_io,
 /obj/item/stock_parts/smes_coil/weak,
 /obj/item/stock_parts/smes_coil/weak,
 /obj/item/stack/material/tritium/fifty,
@@ -694,7 +690,7 @@
 	pixel_y = 24
 	},
 /obj/floor_decal/corner/paleblue/mono,
-/obj/machinery/r_n_d/circuit_imprinter,
+/obj/machinery/r_n_d/circuit_imprinter/colony,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/colony2/engineering)
 "lm" = (
@@ -807,7 +803,7 @@
 	dir = 1
 	},
 /obj/floor_decal/corner/paleblue/mono,
-/obj/machinery/r_n_d/protolathe,
+/obj/machinery/r_n_d/protolathe/colony,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/colony2/engineering)
 "oQ" = (
@@ -1592,6 +1588,10 @@
 /obj/item/storage/backpack/dufflebag/med,
 /obj/item/storage/backpack/dufflebag/eng,
 /obj/item/storage/backpack/dufflebag/eng,
+/obj/item/shuttle_beacon,
+/obj/item/shuttle_beacon,
+/obj/item/shuttle_beacon,
+/obj/item/shuttle_beacon,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/colony2/storage)
 "Dw" = (
@@ -2137,7 +2137,7 @@
 /area/map_template/colony2/atmospherics)
 "Nm" = (
 /obj/floor_decal/corner/paleblue/mono,
-/obj/machinery/r_n_d/destructive_analyzer,
+/obj/machinery/r_n_d/destructive_analyzer/colony,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/colony2/engineering)
 "NX" = (
@@ -2186,7 +2186,7 @@
 /obj/item/device/radio/intercom/map_preset/playablecolony2{
 	pixel_y = 21
 	},
-/obj/machinery/computer/rdconsole/core{
+/obj/machinery/computer/rdconsole/core/colony{
 	req_access = list()
 	},
 /turf/simulated/floor/tiled/dark/monotile,
@@ -2393,8 +2393,8 @@
 /area/map_template/colony2/external)
 "Rs" = (
 /obj/structure/cable,
-/obj/machinery/power/smes/buildable/max_cap_in_out,
 /obj/floor_decal/corner/paleblue/mono,
+/obj/machinery/power/smes/buildable/preset/colony,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/colony2/engineering)
 "Rw" = (
@@ -2901,7 +2901,7 @@
 /obj/machinery/atmospherics/pipe/simple/visible/red,
 /obj/catwalk_plated/dark,
 /obj/machinery/meter,
-/obj/machinery/robotics_fabricator{
+/obj/machinery/robotics_fabricator/colony{
 	req_access = list()
 	},
 /turf/simulated/floor/plating,

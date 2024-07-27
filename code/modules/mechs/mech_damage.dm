@@ -280,7 +280,8 @@
 	*/
 	for(var/obj/item/mech_component/thing in list(arms,legs,head,body))
 		thing.emp_act(severity)
-		thing.emp_heat(severity, ratio, src)
+		if(power == MECH_POWER_ON)
+			thing.emp_heat(severity, ratio, src)
 	//[SIERRA-EDIT]
 	if(!hatch_closed || !prob(body.pilot_coverage))
 		for(var/thing in pilots)

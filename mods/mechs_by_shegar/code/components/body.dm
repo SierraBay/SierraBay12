@@ -47,6 +47,7 @@
 	max_heat = 200
 	heat_cooling = 15
 	emp_heat_generation = 100
+	weight = 300
 
 /obj/item/mech_component/chassis/powerloader/Initialize()
 	back_passengers_positions = list(
@@ -79,9 +80,10 @@
 	have_fast_power_up = TRUE
 	back_modificator_damage = 1.3
 	front_modificator_damage = 1
-	max_heat = 150
-	heat_cooling = 15
-	emp_heat_generation = 125
+	max_heat = 100
+	heat_cooling = 12
+	emp_heat_generation = 80
+	weight = 200
 
 /obj/item/mech_component/chassis/light/Initialize()
 	back_passengers_positions = list(
@@ -115,6 +117,7 @@
 	max_heat = 200
 	heat_cooling = 5
 	emp_heat_generation = 100
+	weight = 400
 
 /obj/item/mech_component/chassis/pod/Initialize()
 	back_passengers_positions = list(
@@ -147,9 +150,10 @@
 	have_fast_power_up = TRUE
 	back_modificator_damage = 1.3
 	front_modificator_damage = 0.7
-	max_heat = 500
-	heat_cooling = 3
-	emp_heat_generation = 150
+	max_heat = 300
+	heat_cooling = 4
+	emp_heat_generation = 100
+	weight = 800
 
 /obj/item/mech_component/chassis/heavy/Initialize()
 	back_passengers_positions = list(
@@ -181,9 +185,10 @@
 	have_fast_power_up = TRUE
 	back_modificator_damage = 1.3
 	front_modificator_damage = 1
-	max_heat = 250
-	heat_cooling = 5
-	emp_heat_generation = 150
+	max_heat = 200
+	heat_cooling = 8
+	emp_heat_generation = 100
+	weight = 500
 
 /obj/item/mech_component/chassis/combat/Initialize()
 	back_passengers_positions = list(

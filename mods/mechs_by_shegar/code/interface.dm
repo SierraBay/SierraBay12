@@ -31,7 +31,7 @@
 /obj/screen/movable/exosuit/heat/Click(location, control, params)
 	var/modifiers = params2list(params)
 	if(modifiers["shift"])
-		usr.show_message(SPAN_NOTICE("Текущее тепло в мехе: [owner.current_heat]/[owner.max_heat]. Статус перегрева:[owner.overheat]"), VISIBLE_MESSAGE)
+		usr.show_message(SPAN_NOTICE("Текущее тепло в мехе: [owner.current_heat]/[owner.max_heat], скорость охлаждения: [owner.total_heat_cooling] Статус перегрева:[owner.overheat]"), VISIBLE_MESSAGE)
 	return
 
 /obj/screen/movable/exosuit/toggle/air/Click(location, control, params)
