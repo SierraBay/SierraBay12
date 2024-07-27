@@ -19,6 +19,8 @@
 /obj/item/organ/internal/cell/Process()
 	..()
 	var/cost = get_power_drain()
+	if(!owner)
+		return
 	if(!checked_use(cost) && owner.isSynthetic())
 		if(owner.species.name == SPECIES_IPC)
 			owner.species.passive_temp_gain = 0

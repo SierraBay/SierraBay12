@@ -117,7 +117,7 @@
 	required_tech_levels = list()
 	cost = 1000
 
-	unlocks_designs = list("mass_spectrometer", "reagent_scanner", "health_hud", "defibrillators", "mmi")
+	unlocks_designs = list("mass_spectrometer", "reagent_scanner", "health_hud", "defibrillators", "mmi", "autopsy_scanner")
 
 /datum/technology/bio/adv_add_med_tools
 	name = "Advanced Additional Medical Tools"
