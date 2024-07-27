@@ -188,7 +188,7 @@
 	#include "../../mods/_maps/liberia/_map_liberia.dme"
 	#include "../../mods/_maps/sentinel/_map_sentinel.dme"
 	#include "../../mods/_maps/farfleet/_map_farfleet.dme"
-	#include "../../mods/_maps/hand/_map_hand.dme"
+	//#include "../../mods/_maps/hand/_map_hand.dme"
 
 	#include "../../mods/antagonists/_antagonists.dme"
 	#include "../../mods/bluespace_kitty/_bluespace_kitty.dme"
