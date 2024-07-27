@@ -46,7 +46,7 @@
 
 //Кейбинд на смену орудия
 /mob/living/exosuit/proc/swap_hardpoint(mob/living/user)
-	if(!next_move <= world.time)
+	if(next_move >= world.time)
 		return
 	if((world.time - last_keybind_use) < 0.5 SECONDS)
 		return
@@ -80,7 +80,7 @@
 
 
 /datum/keybinding/mech/toggle_back_hardpoint
-	hotkey_keys = list("C")
+	hotkey_keys = list("None")
 	name = "toggle_back"
 	full_name = "Toggle Back Hardpoint"
 	description = "Toggle equipment on mech back"
@@ -95,6 +95,19 @@
 		return
 	if((world.time - last_keybind_use) < 0.5 SECONDS)
 		return
+	last_keybind_use = world.time
 	var/obj/item/mech_equipment/back_equipment = hardpoints["back"]
 	if(back_equipment.attack_self(user))
 		playsound(src, 'mods/mechs_by_shegar/sounds/mech_swap_weapon.ogg', 50, 0)
+
+/datum/keybinding/mech/toggle_power
+	hotkey_keys = list("None")
+	name = "toggle_power"
+	full_name = "Toggle Mech Power"
+	description = "Toggle mech power"
+
+/datum/keybinding/mech/toggle_power/down(client/user)
+	var/mob/living/exosuit/mech = user.mob.loc
+	mech.toggle_power(user.mob)
+	mech.hud_power_control.update_icon()
+	return TRUE

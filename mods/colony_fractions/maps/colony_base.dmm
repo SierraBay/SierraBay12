@@ -1183,7 +1183,7 @@
 	dir = 5
 	},
 /turf/simulated/floor/tiled/white,
-/area/map_template/colony/surgery)
+/area/map_template/colony/medbay)
 "ct" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction{
 	dir = 1

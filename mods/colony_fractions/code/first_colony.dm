@@ -460,7 +460,7 @@ GLOBAL_VAR_INIT(error_colony_reaction, "Прервать спавн колони
 	req_access = list()
 	base_type = /obj/machinery/mining/drill/colony
 
-/obj/item/stock_parts/circuitboard/miningdrill
+/obj/item/stock_parts/circuitboard/miningdrill/colony
 	build_path = /obj/machinery/mining/drill/colony
 	req_components = list(
 		/obj/item/stock_parts/capacitor/super = 2,

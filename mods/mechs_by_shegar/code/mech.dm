@@ -81,6 +81,7 @@
 	overheat_heat_generation = ((head.emp_heat_generation/2) + (arms.emp_heat_generation/2) + (body.emp_heat_generation/2) + (legs.emp_heat_generation/2))
 	legs.current_speed = legs.min_speed
 	currently_use_something = FALSE
+	next_move = world.time
 
 	total_weight = head.weight + arms.weight + body.weight + legs.weight
 	//Расчитываем разгон меха. Вес будет являться модификатором
