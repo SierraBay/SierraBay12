@@ -540,6 +540,16 @@
 		{{empty}}
 			<div class="item">The disk has no accessible design files stored on it.</div>
 		{{/for}}
+		Detected SF:
+		{{for data.disk_science}}
+			<div class="item">
+				{{:value.name}}
+				{{:helper.link("", 'trash', {'delete_disk_file' : value.id})}}
+				{{:helper.link("", 'arrowthick-1-e', {'download_disk_science' : value.id})}}
+			</div>
+		{{empty}}
+			<div class="item">The disk has no accessible science files stored on it.</div>
+		{{/for}}
 		</div>
 		</td>
 
