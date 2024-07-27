@@ -91,8 +91,10 @@
 	var/list/processed_evac_options = list()
 	if(!isnull(evacuation_controller))
 		for (var/datum/evacuation_option/EO in evacuation_controller.available_evac_options())
-			if(EO.abandon_ship)
-				continue
+		//[SIERRA-REMOVE]
+			//if(EO.abandon_ship)
+			//	continue
+		//[/SIERRA-REMOVE]
 			var/list/option = list()
 			option["option_text"] = EO.option_text
 			option["option_target"] = EO.option_target
@@ -146,6 +148,9 @@
 					return
 				var/affected_zlevels = GetConnectedZlevels(get_host_z())
 				crew_announcement.Announce(input, msg_sanitized = TRUE, zlevels = affected_zlevels)
+				//[SIERRA-ADD]
+				ntnet_global.add_log("***[program.computer.get_network_tag()] make announcement.***")
+				//[/SIERRA-ADD]
 				announcment_cooldown = 1
 				spawn(600)//One minute cooldown
 					announcment_cooldown = 0
@@ -198,6 +203,9 @@
 				var/confirm = alert("Are you sure you want to [selected_evac_option.option_desc]?", name, "No", "Yes")
 				if (confirm == "Yes" && can_still_topic())
 					evacuation_controller.handle_evac_option(selected_evac_option.option_target, user)
+					//[SIERRA-ADD]
+					ntnet_global.add_log("***[program.computer.get_network_tag()] [selected_evac_option.option_desc]***")
+					//[/SIERRA-ADD]
 		if("setstatus")
 			. = TOPIC_HANDLED
 			if(is_authenticated(user) && ntn_cont)
