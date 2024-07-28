@@ -35,7 +35,7 @@
 \[falogo\] - Inserts the logo of the Frontier Alliance.<br>
 \[zhlogo\] - Inserts the logo of Zeng-Hu Pharmaceuticals.<br>
 \[sierralogo\] - Inserts the logo of NSV "SIERRA"<br>
-\[ccalogo\] - Inserts the logo of army tajara<br>
+\[ccalogo\] - Inserts the logo of Confederate Commonwealth of Ahdomai<br>
 \[saarelogo\] - Inserts the logo of SAARE<br>
 \[pcrclogo\] - Inserts the logo of PCRC<br>
 \[zpcilogo\] - Inserts the logo of ZPCI<br>
