@@ -258,7 +258,9 @@
 	//[SIERRA-ADD]
 	//
 	var/ratio = get_blocked_ratio(null, DAMAGE_BURN, null, (3-severity) * 20) // HEAVY = 40; LIGHT = 20
-
+	//[SIERRA-ADD] - Mechs-by-Shegar
+	add_glitch_effects()
+	//[SIERRA-ADD] - Mechs-by-Shegar
 	if(ratio >= 0.5)
 		for(var/mob/living/m in pilots)
 			to_chat(m, SPAN_NOTICE("Your Faraday shielding absorbed the pulse!"))

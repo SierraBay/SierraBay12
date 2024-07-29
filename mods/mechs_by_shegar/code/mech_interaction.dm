@@ -3,6 +3,11 @@
 	to_chat(user,SPAN_NOTICE("<b><font color = green> Press Middle mouse button for fast swap current hardpoint. </font></b>"))
 	to_chat(user,SPAN_NOTICE("<b><font color = green> Press SPACE mouse for toggle strafe mod. </font></b>"))
 
+/mob/living/exosuit/remove_pilot(mob/user)
+	. = ..()
+	clear_sensors_effects(user)
+
+
 /mob/living/exosuit/proc/check_passenger(mob/user) // Выбираем желаемое место, проверяем можно ли его занять, стартуем прок занятия
 	var/local_dir = get_dir(src, user)
 	if(local_dir != turn(dir, 90) && local_dir != turn(dir, -90) && local_dir != turn(dir, -135) && local_dir != turn(dir, 135) && local_dir != turn(dir, 180))
@@ -244,7 +249,8 @@
 				if(user_undertand)
 					to_chat(user, "[src] accepted your ID card.")
 				src.visible_message("Green LED's of [src] blinks.", "your ID scanner has found a suitable card", "You hear an approving chirp", 7)
-				selftoggle_mech_hatch() //Мех изменит своё состояние на обратное (Откроется, или закроется)
+				selftoggle_mech_hatch_close() //Мех изменит своё состояние на обратное (Откроется, или закроется)
+				selftoggle_mech_hatch_lock()
 				return
 			else//Доступы не совпадают
 				if(user_undertand)
@@ -351,22 +357,28 @@
 		if(repair_part.min_damage > repair_part.max_damage)
 			repair_part.max_damage = repair_part.min_damage
 
-/mob/living/exosuit/proc/selftoggle_mech_hatch()
+/mob/living/exosuit/proc/selftoggle_mech_hatch_close()
 	playsound(src.loc, 'mods/mechs_by_shegar/sounds/mech_peek.ogg', 80, 0, -6)
 	//Данный прок выполняет простейшую задачу, либо открывает, либо закрывает меха без участвия человека.
 	if(hatch_closed) // <- Кабина закрыта?
-		if(hatch_locked) // <- Замок включен
-			hatch_locked = FALSE //<- выключили замок
-			playsound(src.loc, 'sound/machines/suitstorage_lockdoor.ogg', 50, 1, -6)
 		hatch_closed = FALSE
 		playsound(src.loc, 'sound/machines/suitstorage_cycledoor.ogg', 50, 1, -6)
 	else // <- кабина открыта
 		hatch_closed = TRUE
 		playsound(src.loc, 'sound/machines/suitstorage_cycledoor.ogg', 50, 1, -6)
-		if(!hatch_locked)
-			hatch_locked = TRUE
-			playsound(src.loc, 'sound/machines/suitstorage_lockdoor.ogg', 50, 1, -6)
+	hud_open.update_icon()
 	update_icon()
+	check_sensors_blind()
+
+/mob/living/exosuit/proc/selftoggle_mech_hatch_lock()
+	if(hatch_locked) // <- Замок включен
+		hatch_locked = FALSE //<- выключили замок
+		playsound(src.loc, 'sound/machines/suitstorage_lockdoor.ogg', 50, 1, -6)
+	else
+		hatch_locked = TRUE
+		playsound(src.loc, 'sound/machines/suitstorage_lockdoor.ogg', 50, 1, -6)
+	update_icon()
+	check_sensors_blind()
 
 /mob/living/exosuit/proc/selfopen_mech_hatch()
 	playsound(src.loc, 'mods/mechs_by_shegar/sounds/mech_peek.ogg', 80, 0, -6)
@@ -378,6 +390,7 @@
 		hatch_closed = FALSE
 		playsound(src.loc, 'sound/machines/suitstorage_cycledoor.ogg', 50, 1, -6)
 	update_icon()
+	check_sensors_blind()
 
 /mob/living/exosuit/emag_act(remaining_charges, mob/user, emag_source)
 	id_holder = "EMAGED"

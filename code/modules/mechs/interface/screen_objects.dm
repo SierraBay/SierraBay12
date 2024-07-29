@@ -300,6 +300,7 @@
 	owner.update_icon()
 	playsound(src.loc, 'sound/machines/suitstorage_cycledoor.ogg', 50, 1, -6)
 
+
 /obj/screen/movable/exosuit/toggle/hatch_open/on_update_icon()
 	toggled = owner.hatch_closed
 	. = ..()

@@ -64,10 +64,17 @@
 	var/strafe_status = FALSE
 	///Последнее время когда использовали кейбинд
 	var/last_keybind_use = 0
-	//Мех что-то применяет и использует (К примеру)
+	///Мех что-то применяет и использует (К примеру)
 	var/currently_use_something = FALSE
-	//Требуется обработка кейбинда?
+	///Требуется обработка кейбинда?
 	var/process_keybind = FALSE
+	///Сенсоры не работают?
+	var/sensors_blind = FALSE
+	///Слепота сенсоров нуждается в обновлении?
+	var/sensors_blind_need_update = FALSE
+	///На экране игрока уже есть ЭМИ эффект?
+	var/have_emp_effect = FALSE
+
 /mob/living/exosuit/Initialize(mapload, obj/structure/heavy_vehicle_frame/source_frame)
 	.=..()
 	passenger_compartment = new(src)

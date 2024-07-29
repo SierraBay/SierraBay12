@@ -208,3 +208,12 @@
 
 /mob/living/exosuit/proc/get_main_data(mob/user)
 	to_chat(user, SPAN_NOTICE("Main mech integrity: <b> [health]/[maxHealth]([((health/maxHealth)*100)]%) </b>"))
+
+
+/obj/screen/movable/exosuit/toggle/hatch_open/toggled()
+	.=..()
+	owner.check_sensors_blind()
+
+/obj/screen/movable/exosuit/toggle/hatch/toggled()
+	.=..()
+	owner.check_sensors_blind()
