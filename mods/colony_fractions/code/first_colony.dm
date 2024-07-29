@@ -369,3 +369,12 @@ GLOBAL_VAR_INIT(error_colony_reaction, "Прервать спавн колони
 	_input_on = TRUE
 	_output_on = TRUE
 	_fully_charged = TRUE
+
+/obj/machinery/sleeper/survival_pod/colony
+	name = "advanced colony stasis pod"
+
+/obj/item/storage/firstaid/fire/special/colony
+	name = "colony scorch first-aid kit"
+
+/obj/machinery/vending/medical/colony
+	req_access = list()
