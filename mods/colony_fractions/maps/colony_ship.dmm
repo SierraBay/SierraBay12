@@ -690,7 +690,7 @@
 	pixel_y = 24
 	},
 /obj/floor_decal/corner/paleblue/mono,
-/obj/machinery/r_n_d/circuit_imprinter/colony,
+/obj/machinery/r_n_d/circuit_imprinter,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/colony2/engineering)
 "lm" = (
@@ -803,7 +803,9 @@
 	dir = 1
 	},
 /obj/floor_decal/corner/paleblue/mono,
-/obj/machinery/r_n_d/protolathe/colony,
+/obj/machinery/computer/rdconsole/core/colony{
+	req_access = list()
+	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/colony2/engineering)
 "oQ" = (
@@ -1426,6 +1428,32 @@
 /obj/structure/reagent_dispensers/acid{
 	pixel_y = -28
 	},
+/obj/structure/closet/crate,
+/obj/item/stock_parts/manipulator/pico,
+/obj/item/stock_parts/manipulator/pico,
+/obj/item/stock_parts/manipulator/pico,
+/obj/item/stock_parts/manipulator/pico,
+/obj/item/stock_parts/manipulator/pico,
+/obj/item/stock_parts/manipulator/pico,
+/obj/item/stock_parts/micro_laser/ultra,
+/obj/item/stock_parts/micro_laser/ultra,
+/obj/item/stock_parts/micro_laser/ultra,
+/obj/item/stock_parts/micro_laser/ultra,
+/obj/item/stock_parts/micro_laser/ultra,
+/obj/item/stock_parts/micro_laser/ultra,
+/obj/item/stock_parts/micro_laser/ultra,
+/obj/item/stock_parts/micro_laser/ultra,
+/obj/item/stock_parts/manipulator/pico,
+/obj/item/stock_parts/manipulator/pico,
+/obj/item/stock_parts/matter_bin/super,
+/obj/item/stock_parts/matter_bin/super,
+/obj/item/stock_parts/matter_bin/super,
+/obj/item/stock_parts/matter_bin/super,
+/obj/item/stock_parts/matter_bin/super,
+/obj/item/stock_parts/capacitor/super,
+/obj/item/stock_parts/capacitor/super,
+/obj/item/stock_parts/capacitor/super,
+/obj/item/stock_parts/capacitor/super,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/colony2/engineering)
 "BR" = (
@@ -2137,7 +2165,7 @@
 /area/map_template/colony2/atmospherics)
 "Nm" = (
 /obj/floor_decal/corner/paleblue/mono,
-/obj/machinery/r_n_d/destructive_analyzer/colony,
+/obj/machinery/r_n_d/destructive_analyzer,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/colony2/engineering)
 "NX" = (
@@ -2186,9 +2214,7 @@
 /obj/item/device/radio/intercom/map_preset/playablecolony2{
 	pixel_y = 21
 	},
-/obj/machinery/computer/rdconsole/core/colony{
-	req_access = list()
-	},
+/obj/machinery/r_n_d/protolathe,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/colony2/engineering)
 "OB" = (
@@ -2901,9 +2927,7 @@
 /obj/machinery/atmospherics/pipe/simple/visible/red,
 /obj/catwalk_plated/dark,
 /obj/machinery/meter,
-/obj/machinery/robotics_fabricator/colony{
-	req_access = list()
-	},
+/obj/machinery/robotics_fabricator,
 /turf/simulated/floor/plating,
 /area/map_template/colony2/engineering)
 "YI" = (
