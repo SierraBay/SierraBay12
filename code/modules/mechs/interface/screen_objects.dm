@@ -214,9 +214,6 @@
 /obj/screen/movable/exosuit/toggle/power_control/toggled()
 	. = ..()
 	owner.toggle_power(usr)
-	//[SIERRA-ADD] - Mechs-by-Shegar
-	owner.update_icon()
-	//[SIERRA-ADD]
 
 /obj/screen/movable/exosuit/toggle/power_control/on_update_icon()
 	toggled = (owner.power == MECH_POWER_ON)

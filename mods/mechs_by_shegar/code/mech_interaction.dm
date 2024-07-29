@@ -368,7 +368,7 @@
 		playsound(src.loc, 'sound/machines/suitstorage_cycledoor.ogg', 50, 1, -6)
 	hud_open.update_icon()
 	update_icon()
-	check_sensors_blind()
+	need_update_sensor_effects = TRUE
 
 /mob/living/exosuit/proc/selftoggle_mech_hatch_lock()
 	if(hatch_locked) // <- Замок включен
@@ -378,7 +378,7 @@
 		hatch_locked = TRUE
 		playsound(src.loc, 'sound/machines/suitstorage_lockdoor.ogg', 50, 1, -6)
 	update_icon()
-	check_sensors_blind()
+	need_update_sensor_effects = TRUE
 
 /mob/living/exosuit/proc/selfopen_mech_hatch()
 	playsound(src.loc, 'mods/mechs_by_shegar/sounds/mech_peek.ogg', 80, 0, -6)
@@ -390,7 +390,7 @@
 		hatch_closed = FALSE
 		playsound(src.loc, 'sound/machines/suitstorage_cycledoor.ogg', 50, 1, -6)
 	update_icon()
-	check_sensors_blind()
+	need_update_sensor_effects = TRUE
 
 /mob/living/exosuit/emag_act(remaining_charges, mob/user, emag_source)
 	id_holder = "EMAGED"

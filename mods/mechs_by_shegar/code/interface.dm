@@ -212,8 +212,13 @@
 
 /obj/screen/movable/exosuit/toggle/hatch_open/toggled()
 	.=..()
-	owner.check_sensors_blind()
+	owner.need_update_sensor_effects = TRUE
 
 /obj/screen/movable/exosuit/toggle/hatch/toggled()
 	.=..()
-	owner.check_sensors_blind()
+	owner.need_update_sensor_effects = TRUE
+
+/obj/screen/movable/exosuit/toggle/power_control/toggled()
+	. = ..()
+	owner.update_icon()
+	owner.need_update_sensor_effects = TRUE

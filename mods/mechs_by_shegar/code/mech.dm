@@ -68,12 +68,14 @@
 	var/currently_use_something = FALSE
 	///Требуется обработка кейбинда?
 	var/process_keybind = FALSE
-	///Сенсоры не работают?
-	var/sensors_blind = FALSE
+	///Сенсоры ослеплены из-за потери камеры?
+	var/have_no_sensors_effect = FALSE
 	///Слепота сенсоров нуждается в обновлении?
-	var/sensors_blind_need_update = FALSE
+	var/need_update_sensor_effects = FALSE
 	///На экране игрока уже есть ЭМИ эффект?
 	var/have_emp_effect = FALSE
+	///Ослеплён из-за эффекта "Нет энергии"?
+	var/have_no_power_effect = FALSE
 
 /mob/living/exosuit/Initialize(mapload, obj/structure/heavy_vehicle_frame/source_frame)
 	.=..()
