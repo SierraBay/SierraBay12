@@ -22,9 +22,9 @@
 /datum/extension/interactive/ntos/proc/print_photo(photo, name)
 	var/obj/item/stock_parts/computer/nano_printer/printer = get_component(PART_PRINTER)
 	if(printer)
-		var/obj/item/device/camera/c = holder
+		var/obj/item/modular_computer/c = holder
 		var/user = usr
-		c.printpicture(user, photo)
+		c.camera.printpicturecomputer(user, photo)
 		return printer.print_picture()
 
 /// Returns the network tag that other computers trying to reach it would see.

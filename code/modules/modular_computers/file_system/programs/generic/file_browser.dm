@@ -91,7 +91,7 @@
 				return
 		if(istype(P))
 			if(!computer.print_photo(P.photo, P.filename))
-				error = "Hardware error: Unable to print the file."
+				error = "Hardware error: Unable to print the photo."
 				return
 	if(.)
 		SSnano.update_uis(NM)

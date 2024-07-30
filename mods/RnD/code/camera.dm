@@ -16,26 +16,23 @@
 
 
 /obj/item/device/camera/computer/proc/captureimagecomputer(atom/target, mob/living/user, flag)
-	var/x_c = target.x - (size-1)/2
-	var/y_c = target.y + (size-1)/2
-	var/z_c	= target.z
-	var/mobs = ""
-	for(var/i = 1 to size)
-		for(var/j = 1 to size)
-			var/turf/T = locate(x_c, y_c, z_c)
-			if(user.can_capture_turf(T))
-				mobs += get_mobs(T)
-			x_c++
-		y_c--
-		x_c = x_c - size
-
-	var/obj/item/photo/p = createpicture(target, user, mobs, flag)
+	set_light(3, 3, light_color)
+	var/obj/item/photo/p = createpicture(get_turf(target), user, flag)
+	addtimer(new Callback(src, PROC_REF(finish)), 5)
 	var/datum/computer_file/binary/photo/file = new
 	file.photo = p
 	file.set_filename(++photo_num)
 	file.assetname = "[rand(0,999)][rand(0,999)][rand(0,999)].png"
 	register_asset(file.assetname, p.img)
 	return file
+
+
+/obj/item/device/camera/computer/proc/printpicturecomputer(mob/user, obj/item/photo/p)
+	var/obj/item/photo/newp = new(get_turf(src), p)
+	newp = p.copy(p.id)
+	user.put_in_hands(newp)
+
+
 
 /datum/extension/interactive/ntos/proc/camera()
 	var/obj/item/modular_computer/c = holder

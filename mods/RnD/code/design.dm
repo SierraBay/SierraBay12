@@ -25,7 +25,7 @@
 	return data
 
 /datum/computer_file/binary/photo
-	filetype = "PNG"
+	filetype = "DNG"
 	size = 4
 	var/obj/item/photo/photo
 	var/assetname
