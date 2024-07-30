@@ -163,6 +163,14 @@ var/global/list/explosion_watcher_list = list()
 				T.shown = TRUE
 				return
 
+
+/datum/research/proc/AddSciPoints(datum/computer_file/binary/sci/D)
+	if(D.uniquekey in uniquekeys)
+		return 0
+	uniquekeys += D.uniquekey
+	return (rand(500, 1000) * D.size)
+
+
 /datum/tech	//Datum of individual technologies.
 	var/name = "name"          //Name of the technology.
 	var/shortname = "name"

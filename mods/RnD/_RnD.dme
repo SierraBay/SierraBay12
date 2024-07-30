@@ -15,6 +15,7 @@
 #include "code/binary.dm"
 #include "code/design.dm"
 #include "code/camera.dm"
+#include "code/sciefolder.dm"
 
 
 #endif

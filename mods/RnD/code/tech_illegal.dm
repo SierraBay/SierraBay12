@@ -46,8 +46,8 @@
 
 
 /datum/technology/esoteric/freedom_implant
-	name = "Glass Case- 'Freedom'"
-	desc = "Glass Case- 'Freedom'"
+	name = "Silent and Dangerous"
+	desc = "Silent and Dangerous"
 	id = "freedom_implant"
 
 
@@ -59,7 +59,7 @@
 	required_tech_levels = list()
 	cost = 1500
 
-	unlocks_designs = list("implant_free", "implant_adrenaline")
+	unlocks_designs = list("implant_free", "implant_adrenaline", "augment_wristblade")
 
 /datum/technology/esoteric/borg_syndicate_module
 	name = "Borg Illegal Module"
@@ -93,8 +93,8 @@
 	unlocks_designs = list("tyrant")
 
 /datum/technology/esoteric/explosive_implant
-	name = "Explosive Implant"
-	desc = "Explosive Implant"
+	name = "Loud and Dangerous"
+	desc = "Loud and Dangerous"
 	id = "explosive_implant"
 
 	x = 0.4
@@ -105,7 +105,7 @@
 	required_tech_levels = list()
 	cost = 1250
 
-	unlocks_designs = list("implant_explosive")
+	unlocks_designs = list("implant_explosive", "augment_popout_shotgun")
 
 /datum/technology/esoteric/enet
 	name = "Energy Net"

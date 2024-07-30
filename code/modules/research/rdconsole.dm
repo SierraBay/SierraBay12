@@ -361,6 +361,14 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		if(disk)
 			var/datum/computer_file/binary/design/file = locate(href_list["download_disk_design"]) in disk.stored_files
 			files.AddDesign2Known(file.design)
+
+	if(href_list["download_disk_science"]) // User is attempting to download (disk->rdconsole) a science from the disk.
+		if(disk)
+			var/datum/computer_file/binary/sci/file = locate(href_list["download_disk_science"]) in disk.stored_files
+			var/savedpionts = files.AddSciPoints(file)
+			files.research_points += savedpionts
+			to_chat(usr, "<span class='notice'>[savedpionts] new science points downloaded from the [file.filename].</span>")
+
 	if(href_list["upload_disk_design"]) // User is attempting to upload (rdconsole->disk) a design to the disk.
 		if(disk)
 			var/datum/design/D = locate(href_list["upload_disk_design"]) in files.known_designs
@@ -620,6 +628,14 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				var/datum/design/D = i
 				known_designs += list(list("name" = D.shortname, "id" = "\ref[D]"))
 			data["known_designs"] = known_designs
+
+			var/list/disk_science = list()
+			var/list/disk_sciecne_files = disk.find_files_by_type(/datum/computer_file/binary/sci)
+			for(var/f in disk_sciecne_files)
+				var/datum/computer_file/binary/sci/s_file = f
+				disk_science += list(list("name" = s_file.filename, "id" = "\ref[s_file]"))
+			data["disk_science"] = disk_science
+
 	// All the info needed for displaying tech trees
 	if(screen == "tech_trees")
 		var/list/line_list = list()
