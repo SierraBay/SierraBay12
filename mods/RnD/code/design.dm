@@ -24,6 +24,7 @@
 	data["filename"] = filename
 	return data
 
+
 /datum/computer_file/binary/photo
 	filetype = "DNG"
 	size = 4
@@ -42,3 +43,18 @@
 /datum/computer_file/binary/photo/proc/generate_photo_data(mob/user, photo)
 	send_asset(user.client, assetname)
 	return "<img src='[assetname]' width='90%'><br>"
+
+/datum/computer_file/binary/sci
+	filetype = "SF" // Science Folded
+	size = 1
+	var/uniquekey
+
+/datum/computer_file/binary/sci/proc/set_filename(new_name)
+	filename = sanitizeFileName("folded_science [new_name]")
+
+
+/datum/computer_file/binary/sci/clone()
+	var/datum/computer_file/binary/sci/F = ..()
+	F.uniquekey = uniquekey
+	return F
+

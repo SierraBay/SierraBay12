@@ -1,4 +1,9 @@
 #define DEBUG
+//[SIERRA-ADD]
+// Flags
+#define ALL (~0) //For convenience.
+#define NONE 0
+//[/SIERRA-ADD]
 // Turf-only flags.
 #define TURF_FLAG_NOJAUNT FLAG(0) // This is used in literally one place, turf.dm, to block ethereal jaunt.
 #define TURF_FLAG_NORUINS FLAG(1)
@@ -343,3 +348,178 @@
 #define SANITY_CHECK_DEFAULT (SANITY_CHECK_TOOL_IN_HAND | SANITY_CHECK_BOTH_ADJACENT)
 
 #define Z_ALL_TURFS(Z) block(locate(1, 1, Z), locate(world.maxx, world.maxy, Z))
+
+//[SIERRA-ADD]
+/// Used to trigger signals and call procs registered for that signal
+/// The datum hosting the signal is automaticaly added as the first argument
+/// Returns a bitfield gathered from all registered procs
+/// Arguments given here are packaged in a list and given to _SendSignal
+#define SEND_SIGNAL(target, sigtype, arguments...) ( !target._listen_lookup?[sigtype] ? NONE : target._SendSignal(sigtype, list(target, ##arguments)) )
+
+#define SEND_GLOBAL_SIGNAL(sigtype, arguments...) ( SEND_SIGNAL(SSdcs, sigtype, ##arguments) )
+
+/// Signifies that this proc is used to handle signals.
+/// Every proc you pass to RegisterSignal must have this.
+#define SIGNAL_HANDLER SHOULD_NOT_SLEEP(TRUE)
+
+/// A wrapper for _AddElement that allows us to pretend we're using normal named arguments
+#define AddElement(arguments...) _AddElement(list(##arguments))
+/// A wrapper for _RemoveElement that allows us to pretend we're using normal named arguments
+#define RemoveElement(arguments...) _RemoveElement(list(##arguments))
+
+/// A wrapper for _AddComponent that allows us to pretend we're using normal named arguments
+#define AddComponent(arguments...) _AddComponent(list(##arguments))
+
+/// A wrapper for _AddComonent that passes in a source.
+/// Necessary if dupe_mode is set to COMPONENT_DUPE_SOURCES.
+#define AddComponentFrom(source, arguments...) _AddComponent(list(##arguments), source)
+
+/// A wrapper for _LoadComponent that allows us to pretend we're using normal named arguments
+#define LoadComponent(arguments...) _LoadComponent(list(##arguments))
+
+// Main atom signals. Format:
+// When the signal is called: (signal arguments)
+// All signals send the source datum of the signal as the first argument
+
+// /atom signals
+
+///from base of atom/Entered(): (atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+#define COMSIG_ATOM_ENTERED "atom_entered"
+/// Sent from the atom that just Entered src. From base of atom/Entered(): (/atom/destination, atom/old_loc, list/atom/old_locs)
+#define COMSIG_ATOM_ENTERING "atom_entering"
+// Atom movable signals. Format:
+// When the signal is called: (signal arguments)
+// All signals send the source datum of the signal as the first argument
+
+///from base of atom/movable/Moved(): (/atom)
+#define COMSIG_MOVABLE_PRE_MOVE "movable_pre_move"
+	#define COMPONENT_MOVABLE_BLOCK_PRE_MOVE FLAG(0)
+
+///from base of atom/movable/Moved(): (atom/old_loc, forced)
+#define COMSIG_MOVABLE_MOVED "movable_moved"
+
+/// From base of /client/Move(): (list/move_args)
+#define COMSIG_MOB_CLIENT_PRE_LIVING_MOVE "mob_client_pre_living_move"
+	/// Should we stop the current living movement attempt
+	#define COMSIG_MOB_CLIENT_BLOCK_PRE_LIVING_MOVE COMPONENT_MOVABLE_BLOCK_PRE_MOVE
+
+/// From base of /mob/UpdateLyingBuckledAndVerbStatus()
+#define COMSIG_MOB_UPDATE_LYING_BUCKLED_VERBSTATUS "mob_update_lying_buckled_verbstatus"
+
+/// from mob/CanPass(): (atom/movable/mover, turf/target, height, air_group)
+#define COMSIG_MOB_CAN_PASS "mob_can_pass"
+	#define COMPONENT_MOB_PASSABLE FLAG(0)
+
+///from base of mob/ranged_attack(): (/atom, modifiers)
+#define COMSIG_MOB_ATTACK_RANGED "mob_attack_ranged"
+///from base of mob/ranged_attack_secondary(): (/atom, modifiers)
+#define COMSIG_MOB_ATTACK_RANGED_SECONDARY "mob_attack_ranged_secondary"
+
+///from base of proc/examinate(): (/atom, list/examine_strings)
+#define COMSIG_MOB_EXAMINING "mob_examining"
+///from base of proc/examinate(): (/atom)
+#define COMSIG_MOB_EXAMINATE "mob_examinate"
+
+/// Return this from `/datum/component/Initialize` or `/datum/component/OnTransfer` or `/datum/component/on_source_add` to have the component be deleted if it's applied to an incorrect type.
+/// `parent` must not be modified if this is to be returned.
+/// This will be noted in the runtime logs
+#define COMPONENT_INCOMPATIBLE 1
+/// Returned in PostTransfer to prevent transfer, similar to `COMPONENT_INCOMPATIBLE`
+#define COMPONENT_NOTRANSFER 2
+
+/// Return value to cancel attaching
+#define ELEMENT_INCOMPATIBLE 1
+
+// /datum/element flags
+/// Causes the detach proc to be called when the host object is being deleted.
+/// Should only be used if you need to perform cleanup not related to the host object.
+/// You do not need this if you are only unregistering signals, for instance.
+/// You would need it if you are doing something like removing the target from a processing list.
+#define ELEMENT_DETACH_ON_HOST_DESTROY FLAG(0)
+/**
+ * Only elements created with the same arguments given after `argument_hash_start_idx` share an element instance
+ * The arguments are the same when the text and number values are the same and all other values have the same ref
+ */
+#define ELEMENT_BESPOKE FLAG(1)
+/// Causes all detach arguments to be passed to detach instead of only being used to identify the element
+/// When this is used your Detach proc should have the same signature as your Attach proc
+#define ELEMENT_COMPLEX_DETACH FLAG(2)
+/**
+ * Elements with this flag will have their datum lists arguments compared as is,
+ * without the contents being sorted alpha-numerically first.
+ * This is good for those elements where the position of the keys matter, like in the case of color matrices.
+ */
+#define ELEMENT_DONT_SORT_LIST_ARGS FLAG(3)
+/**
+ * Elements with this flag will be ignored by the dcs_check_list_arguments test.
+ * A good example is connect_loc, for which it's pratically undoable unless we force every signal proc to have a different name.
+ */
+#define ELEMENT_NO_LIST_UNIT_TEST FLAG(4)
+
+// How multiple components of the exact same type are handled in the same datum
+/// old component is deleted (default)
+#define COMPONENT_DUPE_HIGHLANDER 0
+/// duplicates allowed
+#define COMPONENT_DUPE_ALLOWED 1
+/// new component is deleted
+#define COMPONENT_DUPE_UNIQUE 2
+/**
+ * Component uses source tracking to manage adding and removal logic.
+ * Add a source/spawn to/the component by using AddComponentFrom(source, component_type, args...)
+ * Removing the last source will automatically remove the component from the parent.
+ * Arguments will be passed to on_source_add(source, args...); ensure that Initialize and on_source_add have the same signature.
+ */
+#define COMPONENT_DUPE_SOURCES 3
+/// old component is given the initialization args of the new
+#define COMPONENT_DUPE_UNIQUE_PASSARGS 4
+/// each component of the same type is consulted as to whether the duplicate should be allowed
+#define COMPONENT_DUPE_SELECTIVE 5
+
+// Datum signals. Format:
+// When the signal is called: (signal arguments)
+// All signals send the source datum of the signal as the first argument
+
+// /datum signals
+/// when a component is added to a datum: (/datum/component)
+#define COMSIG_COMPONENT_ADDED "component_added"
+/// before a component is removed from a datum because of ClearFromParent: (/datum/component)
+#define COMSIG_COMPONENT_REMOVING "component_removing"
+
+/// before a datum's Destroy() is called: (force), returning a nonzero value will cancel the qdel operation
+/// you should only be using this if you want to block deletion
+/// that's the only functional difference between it and COMSIG_QDELETING, outside setting QDELETING to detect
+#define COMSIG_PREQDELETED "parent_preqdeleted"
+/// just before a datum's Destroy() is called: (force), at this point none of the other components chose to interrupt qdel and Destroy will be called
+#define COMSIG_QDELETING "parent_qdeleting"
+/// generic topic handler (usr, href_list)
+#define COMSIG_TOPIC "handle_topic"
+/// handler for vv_do_topic (usr, href_list)
+#define COMSIG_VV_TOPIC "vv_topic"
+	#define COMPONENT_VV_HANDLED FLAG(0)
+/// from datum ui_act (usr, action)
+#define COMSIG_UI_ACT "COMSIG_UI_ACT"
+
+/// fires on the target datum when an element is attached to it (/datum/element)
+#define COMSIG_ELEMENT_ATTACH "element_attach"
+/// fires on the target datum when an element is attached to it  (/datum/element)
+#define COMSIG_ELEMENT_DETACH "element_detach"
+
+// Merger datum signals
+/// Called on the object being added to a merger group: (datum/merger/new_merger)
+#define COMSIG_MERGER_ADDING "comsig_merger_adding"
+/// Called on the object being removed from a merger group: (datum/merger/old_merger)
+#define COMSIG_MERGER_REMOVING "comsig_merger_removing"
+/// Called on the merger after finishing a refresh: (list/leaving_members, list/joining_members)
+#define COMSIG_MERGER_REFRESH_COMPLETE "comsig_merger_refresh_complete"
+
+// Gas mixture signals
+/// From /datum/gas_mixture/proc/merge: ()
+#define COMSIG_GASMIX_MERGED "comsig_gasmix_merged"
+/// From /datum/gas_mixture/proc/remove: ()
+#define COMSIG_GASMIX_REMOVED "comsig_gasmix_removed"
+/// From /datum/gas_mixture/proc/react: ()
+#define COMSIG_GASMIX_REACTED "comsig_gasmix_reacted"
+
+///from /datum/bank_account/pay_debt(), after a portion or all the debt has been paid.
+#define COMSIG_BANK_ACCOUNT_DEBT_PAID "bank_account_debt_paid"
+//[/SIERRA-ADD]
