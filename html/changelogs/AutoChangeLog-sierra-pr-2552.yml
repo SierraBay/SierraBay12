@@ -1,0 +1,5 @@
+author: Teteshnik
+changes:
+  - {bugfix: Пофиксил стоимость кранчиков в автолате}
+  - {rscadd: Добавил новые тэги в кодексе для ручки.}
+delete-after: true

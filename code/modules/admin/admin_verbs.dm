@@ -188,7 +188,7 @@ var/global/list/admin_verbs_debug = list(
 	/datum/admins/proc/map_template_load,
 	/datum/admins/proc/map_template_load_new_z,
 	//[SIERRA-ADD] - Colony-types,
-	/datum/admins/proc/map_template_choose_colony_type,
+	/datum/admins/proc/map_template_colony_spawn_settings,
 	//[SIERRA-ADD],
 	/datum/admins/proc/map_template_upload,
 	/client/proc/enable_debug_verbs,

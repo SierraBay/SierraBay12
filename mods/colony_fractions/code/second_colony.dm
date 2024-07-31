@@ -22,6 +22,7 @@
 
 /datum/map_template/ruin/exoplanet/playablecolony2/load(turf/T, centered=FALSE)
 	if(!GLOB.choose_colony_type)
+		log_and_message_admins("ОШИБКА: пустой выбранный тип колонии!.")
 		GLOB.choose_colony_type = "СЛУЧАЙНЫЙ"
 	if(GLOB.choose_colony_type == "СЛУЧАЙНЫЙ")
 		var/number = rand(1,100)
@@ -34,12 +35,14 @@
 		else if(number < 100 || number == 100)
 			GLOB.last_colony_type = "НЕЗАВИСИМАЯ"
 	else
-		if(GLOB.last_colony_type != "НЕЗАВИСИМАЯ" && GLOB.last_colony_type != "ЦПСС" && GLOB.last_colony_type != "ГКК" && GLOB.last_colony_type != "НАНОТРЕЙЗЕН")
-			log_and_message_admins("ОШИБКА: Некорректная работа кода колонии, выбран несуществующий тип: [GLOB.choose_colony_type], попытка заспавнить [GLOB.last_colony_type].")
+		GLOB.last_colony_type = GLOB.choose_colony_type
+		if(!(GLOB.last_colony_type in list("ГКК","ЦПСС","НАНОТРЕЙЗЕН","НЕЗАВИСИМАЯ")))
+			log_and_message_admins("ОШИБКА: Некорректная работа кода колонии, выбран несуществующий тип: [GLOB.choose_colony_type].")
 			log_and_message_admins("Колония выбрана стандартного типа - НАНОТРЕЙЗЕН.")
+			if(GLOB.error_colony_reaction == "Прервать спавн колонии")
+				log_and_message_admins("Спавн колонии прерван исходя из настроек спавна колонии.")
+				return
 			GLOB.last_colony_type = "НАНОТРЕЙЗЕН"
-		else
-			GLOB.last_colony_type = GLOB.choose_colony_type
 	log_and_message_admins("Начал спавн колонии следующего типа: [GLOB.last_colony_type].")
 
 	.=..()

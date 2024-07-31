@@ -52,6 +52,30 @@
 	var/overheat_heat_generation = 0
 	///Модификатор начисления тепла
 	var/overheat_heat_modificator = 1
+	///Требуется обработка скорости?
+	var/process_move_speed = FALSE
+	///Холдер, содержит время когда был сделан последний шаг
+	var/move_time_holder = 0
+	///Итоговый общий вес меха
+	var/total_weight = 0
+	///Итоговое ускорение меха.(Это число отнимается из current_speed, таким образом КД до следующего шага снижается.)
+	var/total_acceleration
+
+	var/strafe_status = FALSE
+	///Последнее время когда использовали кейбинд
+	var/last_keybind_use = 0
+	///Мех что-то применяет и использует (К примеру)
+	var/currently_use_something = FALSE
+	///Требуется обработка кейбинда?
+	var/process_keybind = FALSE
+	///Сенсоры ослеплены из-за потери камеры?
+	var/have_no_sensors_effect = FALSE
+	///Слепота сенсоров нуждается в обновлении?
+	var/need_update_sensor_effects = FALSE
+	///На экране игрока уже есть ЭМИ эффект?
+	var/have_emp_effect = FALSE
+	///Ослеплён из-за эффекта "Нет энергии"?
+	var/have_no_power_effect = FALSE
 
 /mob/living/exosuit/Initialize(mapload, obj/structure/heavy_vehicle_frame/source_frame)
 	.=..()
@@ -64,7 +88,14 @@
 	generate_icons()
 	total_heat_cooling = head.heat_cooling + body.heat_cooling + arms.heat_cooling + legs.heat_cooling
 	overheat_heat_generation = ((head.emp_heat_generation/2) + (arms.emp_heat_generation/2) + (body.emp_heat_generation/2) + (legs.emp_heat_generation/2))
+	legs.current_speed = legs.min_speed
+	currently_use_something = FALSE
+	next_move = world.time
 
+	total_weight = head.weight + arms.weight + body.weight + legs.weight
+	//Расчитываем разгон меха. Вес будет являться модификатором
+	total_acceleration = legs.acceleration / ( total_weight / 1000)
+	//Расчитываем штрафы за поворот
 
 /mob/living/exosuit/proc/refresh_menu_hud()
 	if(LAZYLEN(pilots))
