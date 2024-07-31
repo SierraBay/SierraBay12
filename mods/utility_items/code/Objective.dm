@@ -1,5 +1,5 @@
 /datum/objective/steal
-	possible_items[] = list(
+	possible_items = list(
 		"the captain's antique laser gun" = /obj/item/gun/energy/captain,
 		"a bluespace rift generator" = /obj/item/integrated_circuit/manipulation/bluespace_rift,
 		"an RCD" = /obj/item/rcd,
