@@ -212,7 +212,7 @@ var/global/photo_count = 0
 		pictures_left--
 
 	if(Flash)
-		set_light(3, 2, light_color)
+		set_light(4, 2, light_color)
 		addtimer(new Callback(src, PROC_REF(finish)), 5)
 
 	playsound(loc, pick('sound/items/polaroid1.ogg', 'sound/items/polaroid2.ogg'), 75, 1, -3)

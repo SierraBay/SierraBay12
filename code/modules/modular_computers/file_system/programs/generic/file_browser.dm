@@ -84,6 +84,7 @@
 		if(!open_file)
 			return
 		var/datum/computer_file/data/F = computer.get_file(open_file)
+//[SIERRA-EDIT]
 		var/datum/computer_file/binary/photo/P = computer.get_file(open_file)
 		if(istype(F))
 			if(!computer.print_paper(F.generate_file_data(),F.filename,F.papertype, F.metadata))
@@ -93,6 +94,7 @@
 			if(!computer.print_photo(P.photo, P.filename))
 				error = "Hardware error: Unable to print the photo."
 				return
+//[/SIERRA-EDIT]
 	if(.)
 		SSnano.update_uis(NM)
 
