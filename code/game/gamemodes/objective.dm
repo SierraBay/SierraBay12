@@ -239,7 +239,7 @@ var/global/list/all_objectives = list()
 		"the hypospray" = /obj/item/reagent_containers/hypospray,
 		"the captain's pinpointer" = /obj/item/pinpointer,
 		"an ablative armor vest" = /obj/item/clothing/suit/armor/laserproof,
-		"the head of security's kimber warrior custom" = /obj/item/gun/projectile/pistol/hos
+		"the head of security's kimber warrior custom" = /obj/item/gun/projectile/pistol/hos,
 	)
 
 	var/static/possible_items_special[] = list(
