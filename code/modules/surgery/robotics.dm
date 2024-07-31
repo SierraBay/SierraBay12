@@ -398,7 +398,7 @@
 	for(var/obj/item/organ/I in affected.internal_organs)
 		if(I && I.damage > 0)
 			if(BP_IS_ROBOTIC(I))
-				if(!((I.organ_tag == BP_BRAIN) && (I.status == ORGAN_DEAD)))
+				if(!((I.organ_tag == BP_POSIBRAIN) && (I.status == ORGAN_DEAD)))
 					user.visible_message("[user] starts mending the damage to [target]'s [I.name]'s mechanisms.", \
 					"You start mending the damage to [target]'s [I.name]'s mechanisms." )
 		playsound(target.loc, 'sound/items/bonegel.ogg', 50, TRUE)
