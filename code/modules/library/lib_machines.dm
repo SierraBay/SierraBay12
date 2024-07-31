@@ -49,14 +49,14 @@
 		return
 
 	if(href_list["scan"])
-		for(var/obj/item/book/B in contents)
-			cache = B
+		for(var/obj/item/book/O in contents)
+			cache = O
 			break
 	if(href_list["clear"])
 		cache = null
 	if(href_list["eject"])
-		for(var/obj/item/book/B in contents)
-			B.dropInto(loc)
+		for(var/obj/item/book/O in contents)
+			O.dropInto(loc)
 	src.add_fingerprint(usr)
 	src.updateUsrDialog()
 
