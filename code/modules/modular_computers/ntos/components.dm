@@ -19,6 +19,7 @@
 	if(printer)
 		return printer.print_text(content, title)
 
+//[SIERRA-ADD]
 /datum/extension/interactive/ntos/proc/print_photo(photo, name)
 	var/obj/item/stock_parts/computer/nano_printer/printer = get_component(PART_PRINTER)
 	if(printer)
@@ -26,6 +27,7 @@
 		var/user = usr
 		c.camera.printpicturecomputer(user, photo)
 		return printer.print_picture()
+//[/SIERRA-ADD]
 
 /// Returns the network tag that other computers trying to reach it would see.
 /datum/extension/interactive/ntos/proc/get_network_tag_incoming()

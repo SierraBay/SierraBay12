@@ -139,13 +139,10 @@ var/global/photo_count = 0
 	var/icon_on = "camera"
 	var/icon_off = "camera_off"
 	var/size = 3
+//[SIERRA-EDIT]
 	var/Flash = FALSE
-/*
-/obj/item/device/camera/get_examine_text(mob/user, distance, is_adjacent, infix, suffix)
-	. = ..()
-	if(is_adjacent)
-		. += SPAN_NOTICE("It has <b>[pictures_left]</b> photos left.")
-*/
+
+
 /obj/item/device/camera/verb/change_size()
 	set name = "Set Photo Focus"
 	set category = "Object"
@@ -209,18 +206,27 @@ var/global/photo_count = 0
 	return mob_detail
 
 /obj/item/device/camera/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
-	if(!on || !pictures_left || ismob(target.loc)) return
-	captureimage(target, user, flag)
+	if(!on || ismob(target.loc)) return
+	if(pictures_left > 0)
+		captureimage(target, user, flag)
+		pictures_left--
+
+	if(Flash)
+		set_light(3, 2, light_color)
+		addtimer(new Callback(src, PROC_REF(finish)), 5)
 
 	playsound(loc, pick('sound/items/polaroid1.ogg', 'sound/items/polaroid2.ogg'), 75, 1, -3)
 
-	pictures_left--
 	to_chat(user, "<span class='notice'>[pictures_left] photos left.</span>")
 	icon_state = icon_off
 	on = 0
-	spawn(64)
-		icon_state = icon_on
-		on = 1
+	addtimer(new Callback(src, PROC_REF(ready_to_use)), 2 SECONDS)
+
+
+/obj/item/device/camera/proc/ready_to_use()
+	icon_state = icon_on
+	on = 1
+
 
 //Proc for capturing check
 /mob/living/proc/can_capture_turf(turf/T)
@@ -231,9 +237,6 @@ var/global/photo_count = 0
 	return can_see
 
 /obj/item/device/camera/proc/captureimage(atom/target, mob/living/user, flag)
-	if(Flash)
-		set_light(3, 2, light_color)
-		addtimer(new Callback(src, PROC_REF(finish)), 5)
 	var/obj/item/photo/p = createpicture(get_turf(target), user, flag)
 	printpicture(user, p)
 
@@ -311,3 +314,4 @@ var/global/photo_count = 0
 		p.id = id
 
 	return p
+//[/SIERRA-EDIT]

@@ -38,7 +38,7 @@
 	spawn_flags = SPECIES_CAN_JOIN | SPECIES_IS_WHITELISTED | SPECIES_NO_FBP_CONSTRUCTION
 	appearance_flags = SPECIES_APPEARANCE_HAS_UNDERWEAR | SPECIES_APPEARANCE_HAS_EYE_COLOR //IPCs can wear undies too :(
 
-	var/in_camera_mode = 0  //special fot ECS photos
+	var/in_camera_mode = 0  //special fot ECS photos [SIERRA-ADD]
 
 	blood_color = "#1f181f"
 	flesh_color = "#575757"

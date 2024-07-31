@@ -294,8 +294,10 @@ var/global/const/NO_EMAG_ACT = -50
 
 /obj/item/card/id/proc/set_id_photo(mob/M)
 	M.ImmediateOverlayUpdate()
+//[SIERRA-EDIT]
 	front = getFlatIcon(M, SOUTH)
 	side = getFlatIcon(M, WEST)
+//[/SIERRA-EDIT]
 
 /mob/proc/set_id_info(obj/item/card/id/id_card)
 	id_card.age = 0

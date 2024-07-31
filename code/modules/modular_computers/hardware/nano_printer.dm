@@ -30,6 +30,7 @@
 		T.visible_message(SPAN_NOTICE("\The [src] prints out a paper."))
 		return TRUE
 
+//[SIERRA-ADD]
 /obj/item/stock_parts/computer/nano_printer/proc/print_picture()
 	. = FALSE
 	if(printer_ready())
@@ -40,6 +41,7 @@
 		T.visible_message(SPAN_NOTICE("\The [src] prints out a photo."))
 		//just to spend paper, real photos are printerd /datum/extension/interactive/ntos/proc/print_photo(content, title)
 		return TRUE
+//[/SIERRA-ADD]
 
 /obj/item/stock_parts/computer/nano_printer/proc/printer_ready()
 	if(!stored_paper)

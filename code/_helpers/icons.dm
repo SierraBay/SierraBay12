@@ -418,7 +418,7 @@ Get flat icon by DarkCampainger. As it says on the tin, will return an icon with
 as a single icon. Useful for when you want to manipulate an icon via the above as overlays are not normally included.
 The _flatIcons list is a cache for generated icon files.
 */
-
+//[SIERRA-EDIT]
 /proc/getFlatIcon(image/appearance, defdir, deficon, defstate, defblend, start = TRUE, no_anim = FALSE)
 	// Loop through the underlays, then overlays, sorting them into the layers list
 	#define PROCESS_OVERLAYS_OR_UNDERLAYS(flat, process, base_layer) \
@@ -579,6 +579,7 @@ The _flatIcons list is a cache for generated icon files.
 		return final_icon
 
 	#undef PROCESS_OVERLAYS_OR_UNDERLAYS
+//[/SIERRA-EDIT]
 
 /proc/getIconMask(atom/A)//By yours truly. Creates a dynamic mask for a mob/whatever. /N
 	RETURN_TYPE(/icon)
@@ -656,7 +657,7 @@ The _flatIcons list is a cache for generated icon files.
 		for(var/i = 1; gap + i <= length(result); i++)
 			var/atom/l = result[i]		//Fucking hate
 			var/atom/r = result[gap+i]	//how lists work here
-			if(l.layer > r.layer)		//no "result[i].layer" for me
+			if(l.layer > r.layer)		//no "result[i].layer" for me //[SIERRA-EDIT]
 				result.Swap(i, gap + i)
 				swapped = 1
 	return result
@@ -666,7 +667,9 @@ arguments tx, ty, tz are target coordinates (requred), range defines render dist
 cap_mode is capturing mode (optional), user is capturing mob (requred only wehen cap_mode = CAPTURE_MODE_REGULAR),
 lighting determines lighting capturing (optional), suppress_errors suppreses errors and continues to capture (optional).
 */
+//[SIERRA-EDIT]
 /proc/generate_image(tx as num, ty as num, tz as num, range as num, cap_mode = CAPTURE_MODE_PARTIAL, mob/living/user, lighting = 1, suppress_errors = 1)
+	RETURN_TYPE(/icon)
 	var/list/turfstocapture = list()
 	//Lines below determine what tiles will be rendered
 	for(var/xoff = 0 to range)
@@ -729,3 +732,5 @@ lighting determines lighting capturing (optional), suppress_errors suppreses err
 			cap.Blend(lighting_overlay_icon, ICON_MULTIPLY, lighting_overlay.pixel_x + x_offset, lighting_overlay.pixel_y + y_offset)
 
 	return cap
+
+//[/SIERRA-EDIT]
