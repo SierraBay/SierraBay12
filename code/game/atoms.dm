@@ -362,14 +362,14 @@
 			return A.loc
 		A = A.loc
 
-
+/atom/proc/AllowDrop()
+	return FALSE
 
 /atom/proc/drop_location()
 	var/atom/L = loc
 	if(!L)
 		return null
 	return L.AllowDrop() ? L : L.drop_location()
-
 
 
 /**
