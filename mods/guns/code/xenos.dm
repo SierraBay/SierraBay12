@@ -58,7 +58,7 @@
 
 /obj/item/clothing/suit/armor/vox_scrap/New()
 		..()
-		slowdown_per_slot[slot_wear_suit] = 3
+		slowdown_per_slot[slot_wear_suit] = 1.5
 
 /obj/item/clothing/head/helmet/vox_scrap
 	name = "rusted metal helmet"
@@ -81,4 +81,4 @@
 
 /obj/item/clothing/head/helmet/vox_scrap/New()
 	..()
-	slowdown_per_slot[slot_head] = 0.7
+	slowdown_per_slot[slot_head] = 0.4
