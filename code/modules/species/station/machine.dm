@@ -42,8 +42,12 @@
 	flesh_color = "#575757"
 
 	has_organ = list(
-		BP_POSIBRAIN = /obj/item/organ/internal/posibrain,
-		BP_EYES = /obj/item/organ/internal/eyes/robot
+		BP_POSIBRAIN = /obj/item/organ/internal/posibrain/ipc/second,
+		BP_EYES = /obj/item/organ/internal/eyes/robot,
+		//[SIERRA-ADD]
+		BP_EXONET = /obj/item/organ/internal/ecs/second_gen,
+		BP_COOLING = /obj/item/organ/internal/cooling_system,
+		//[/SIERRA-ADD]
 		)
 
 	heat_discomfort_level = 373.15
