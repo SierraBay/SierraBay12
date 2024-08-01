@@ -40,8 +40,5 @@
 /obj/item/projectile/energy/plasmastun/sonic/strong
 	damage = 35
 
-/obj/item/gun/launcher/alien/spikethrower
-	max_ammo = 4
-
 /obj/item/gun/launcher/alien/slugsling
 	ammo_gen_time = 200
