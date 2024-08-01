@@ -41,19 +41,14 @@
 	if(power != MECH_POWER_OFF)
 		return
 
-/mob/living/exosuit/Life()
-	.=..()
-	if(process_heat)
-		process_heat()
-
 /mob/living/exosuit/proc/process_heat()
 	if((world.time - last_heat_process) < body.heat_process_speed)
 		return
 	if(overheat)
-		sub_heat(total_heat_cooling * 1.3)
+		sub_heat(total_heat_cooling * 2.5)
 		return
 	else if(power == MECH_POWER_OFF)
-		sub_heat(total_heat_cooling * 2.5)
+		sub_heat(total_heat_cooling * 4)
 		return
 	sub_heat(total_heat_cooling)
 
