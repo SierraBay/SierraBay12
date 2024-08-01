@@ -362,15 +362,6 @@
 			return A.loc
 		A = A.loc
 
-/atom/proc/AllowDrop()
-	return FALSE
-
-/atom/proc/drop_location()
-	var/atom/L = loc
-	if(!L)
-		return null
-	return L.AllowDrop() ? L : L.drop_location()
-
 
 /**
  * Called when a user examines the atom. This proc and its overrides handle displaying the text that appears in chat
