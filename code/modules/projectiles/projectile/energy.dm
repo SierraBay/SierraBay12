@@ -215,7 +215,7 @@
 	agony = 70
 
 /obj/item/projectile/energy/plasmastun/sonic/strong
-	damage = 25
+	damage = 20
 	penetrating = 1
 
 /obj/item/projectile/energy/darkmatter
