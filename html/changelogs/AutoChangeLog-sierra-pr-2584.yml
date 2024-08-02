@@ -1,0 +1,4 @@
+author: KandJX
+changes:
+  - {maptweak: Восстановил правильный доступ к комнате Капитана.}
+delete-after: true

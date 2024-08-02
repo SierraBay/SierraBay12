@@ -70494,8 +70494,8 @@
 /obj/structure/table/standard,
 /obj/item/disk/tech_disk,
 /obj/item/disk/tech_disk,
-/obj/item/disk/design_disk,
-/obj/item/disk/design_disk,
+/obj/item/stock_parts/computer/hard_drive/portable,
+/obj/item/stock_parts/computer/hard_drive/portable,
 /obj/item/reagent_containers/dropper{
 	pixel_y = -4
 	},
