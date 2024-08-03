@@ -49,14 +49,14 @@
 		return
 
 	if(href_list["scan"])
-		for(var/obj/item/book/O in contents)
-			cache = O
+		for(var/obj/item/book/B in contents)
+			cache = B
 			break
 	if(href_list["clear"])
 		cache = null
 	if(href_list["eject"])
-		for(var/obj/item/book/O in contents)
-			O.dropInto(loc)
+		for(var/obj/item/book/B in contents)
+			B.dropInto(loc)
 	src.add_fingerprint(usr)
 	src.updateUsrDialog()
 
@@ -89,9 +89,9 @@
 		visible_message(SPAN_NOTICE("\The [src] whirs as it prints and binds a new book."))
 		binding = FALSE
 		var/obj/item/book/b = new(loc)
-		b.dat = O:info
-		b.SetName("Print Job #" + "[rand(100, 999)]")
-		b.icon_state = "book[rand(1,7)]"
+		B.dat = O:info
+		B.SetName("Print Job #" + "[rand(100, 999)]")
+		B.icon_state = "book[rand(1,7)]"
 		qdel(O)
 		return TRUE
 
