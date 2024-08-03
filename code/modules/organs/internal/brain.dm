@@ -205,8 +205,11 @@
 /obj/item/organ/internal/brain/take_internal_damage(damageTaken, silent)
 	set waitfor = 0
 	..()
-	if(damageTaken >= 20 && damage >= (max_damage * 0.5)) //This probably won't be triggered by oxyloss or mercury. Probably.
-		var/damage_secondary = damageTaken * 0.20
+	// SIERRA EDIT
+	..(damage * 2, silent)
+	if(damage / 2 >= 10) //This probably won't be triggered by oxyloss or mercury. Probably.
+		var/damage_secondary = damage / 2 * 0.20
+	// SIERRA EDIT-END
 		if (owner)
 			owner.flash_eyes()
 			owner.eye_blurry += damage_secondary

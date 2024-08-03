@@ -79,3 +79,28 @@
 	..()
 	icon_state = (ammo_magazine)? "nt41" : "nt41-e"
 
+/obj/item/gun/projectile/pistol/hos
+	name = "Kimber Warrior custom"
+	desc = "The old pistol is in good condition, it used to be in service with the armed forces for officers. You can see silver and bronze on it"
+	icon = 'mods/guns/icons/obj/M1911.dmi'
+	icon_state = "standart"
+	caliber = CALIBER_PISTOL_MAGNUM
+	magazine_type = /obj/item/ammo_magazine/pistol/hos
+	allowed_magazines = /obj/item/ammo_magazine/pistol/hos
+	accuracy = -1
+	fire_delay = 5
+	origin_tech = list(TECH_COMBAT = 3, TECH_MATERIAL = 3)
+	fire_sound = 'mods/guns/sounds/pistol_fire.ogg'
+
+/obj/item/ammo_magazine/pistol/hos
+	name = "Kimber magazine"
+	icon = 'mods/guns/icons/obj/ammo_m1911.dmi'
+	icon_state = "m1911"
+	mag_type = MAGAZINE
+	matter = list(MATERIAL_STEEL = 1200)
+	caliber = CALIBER_PISTOL_MAGNUM
+	ammo_type = /obj/item/ammo_casing/pistol/magnum
+	max_ammo = 8
+
+/obj/item/ammo_magazine/pistol/hos/empty
+	initial_ammo = 0
