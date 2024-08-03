@@ -33,18 +33,18 @@
 	var/GQ = 1
 
 /datum/ntnet
-	var/active_mines = 0
+	var/active_miners = 0
 
 /datum/computer_file/program/folding/on_startup(mob/living/user, datum/extension/interactive/ntos/new_host)
 	. = ..()
 	var/obj/item/stock_parts/computer/processor_unit/C = computer.get_component(PART_CPU)
 	processing_size = C.processing_power
-	ntnet_global.active_mines += 1
+	ntnet_global.active_miners += 1
 
 /datum/computer_file/program/folding/on_shutdown(mob/living/user, datum/extension/interactive/ntos/new_host)
 	. = ..()
 	processing_size = 1
-	ntnet_global.active_mines -= 1
+	ntnet_global.active_miners -= 1
 
 /datum/computer_file/program/folding/Topic(href, href_list)
 	. = ..()
