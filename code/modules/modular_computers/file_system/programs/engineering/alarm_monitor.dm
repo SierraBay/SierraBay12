@@ -90,6 +90,7 @@
 	for(var/datum/alarm_handler/AH in alarm_handlers)
 		all_alarms += AH.minor_alarms(get_host_z())
 
+
 	return all_alarms
 
 /datum/nano_module/alarm_monitor/Topic(ref, href_list)
@@ -109,8 +110,14 @@
 	var/categories[0]
 	for(var/datum/alarm_handler/AH in alarm_handlers)
 		categories[LIST_PRE_INC(categories)] = list("category" = AH.category, "alarms" = list())
-		for(var/datum/alarm/A in AH.major_alarms(get_host_z()))
+		//[SIERRA-EDIT] - AI-UPDATE
+	//  for(var/datum/alarm/A in AH.major_alarms(get_host_z()))
+		for(var/datum/alarm/A in AH.major_alarms(get_z(src)))
+			var/datum/alarm_source/sources_of_alarm = A.sources[1]
 
+			if(!AreConnectedZLevels(get_host_z(), get_z(sources_of_alarm.source)))
+				continue
+		//[SIERRA-EDIT]
 			var/cameras[0]
 			var/lost_sources[0]
 

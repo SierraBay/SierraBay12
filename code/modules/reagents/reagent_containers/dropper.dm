@@ -11,6 +11,8 @@
 	w_class = ITEM_SIZE_TINY
 	slot_flags = SLOT_EARS
 	volume = 5
+	matter = list(MATERIAL_PLASTIC = 200, MATERIAL_GLASS = 300)
+	origin_tech = list(TECH_MATERIAL = 1, TECH_BIO = 1)
 
 /obj/item/reagent_containers/dropper/use_after(obj/target, mob/living/user, click_parameters)
 	if(!target.reagents)

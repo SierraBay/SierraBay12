@@ -38,26 +38,14 @@
 	camera = locate() in src
 	software = locate() in src
 
-//EDIT
-// [SIERRA-EDIT] - Mechs-by-Shebar
-  /* /obj/item/mech_component/sensors/proc/get_sight(powered)
+/obj/item/mech_component/sensors/proc/get_sight(powered)
 	var/flags = 0
 	if(total_damage >= 0.8 * max_damage || !powered)
 		flags |= BLIND
 	else if(active_sensors && powered)
 		flags |= vision_flags
 	return flags
-	*/
-/obj/item/mech_component/sensors/proc/get_sight(powered)
-	var/flags = 0
-	if(!powered ||(!camera && powered)) //Камера не работает/Ничего не запитано?
-		flags |= BLIND //включается слепота
-	if(powered && camera)
-		if(active_sensors) //SENSORS active? (Button)
-			flags |= vision_flags //Мех получает спец зрение от сенсоров
 
-	return flags
-  // [SIERRA-EDIT]
 
 
 /obj/item/mech_component/sensors/proc/get_invisible(powered)

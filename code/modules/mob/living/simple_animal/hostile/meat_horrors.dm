@@ -257,3 +257,8 @@
 /datum/say_list/meat/human
 	emote_hear = list("roars!", "groans...")
 	emote_see = list("turns to the sound..", "twitches", "stops suddenly", "stops suddenly, it's intestines slowly spilling out")
+
+
+//[SIERRA-ADD] - MODPACK_RND
+/mob/living/simple_animal/hostile/meatstation //Ебаный костыль
+//[/SIERRA-ADD] - MODPACK_RND
