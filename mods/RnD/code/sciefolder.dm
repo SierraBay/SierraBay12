@@ -59,8 +59,8 @@
 	if(href_list["start"] && started_on == 0)
 		var/totalminersmodifier = 1
 		started_on = world.timeofday
-		if(ntnet_global.active_mines > 2 * LAZYLEN(ntnet_global.relays))
-			totalminersmodifier = ntnet_global.active_mines
+		if(ntnet_global.active_miners > 2 * LAZYLEN(ntnet_global.relays))
+			totalminersmodifier = ntnet_global.active_miners
 			current_interval = ((rand(MINIMUM_SCIENCE_INTERVAL, MAXIMUM_SCIENCE_INTERVAL) * GQ) / get_speed() * (totalminersmodifier/2)) SECONDS
 			next_event = ((rand(MINIMUM_FOLDING_EVENT_INTERVAL, MAXIMUM_FOLDING_EVENT_INTERVAL) * get_speed() / (totalminersmodifier/2)) SECONDS) + world.timeofday
 		else
