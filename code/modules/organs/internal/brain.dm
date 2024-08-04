@@ -133,15 +133,15 @@
 /obj/item/organ/internal/brain/proc/handle_severe_brain_damage()
 	set waitfor = FALSE
 	healed_threshold = 0
-	to_chat(owner, "<span class = 'notice' font size='10'><B>Where am I...?</B></span>")
+	to_chat(owner, SPAN_NOTICE(FONT_GIANT("<B>What's going on...?</B>")))
 	sleep(5 SECONDS)
 	if (!owner || owner.stat == DEAD || (status & ORGAN_DEAD))
 		return
-	to_chat(owner, "<span class = 'notice' font size='10'><B>What's going on...?</B></span>")
+	to_chat(owner, SPAN_NOTICE(FONT_GIANT("<B>What's going on...?</B>")))
 	sleep(10 SECONDS)
 	if (!owner || owner.stat == DEAD || (status & ORGAN_DEAD))
 		return
-	to_chat(owner, "<span class = 'notice' font size='10'><B>What happened...?</B></span>")
+	to_chat(owner, SPAN_NOTICE(FONT_GIANT("<B>What happened...?</B>")))
 	alert(owner, "You have taken massive brain damage! You will not be able to remember the events leading up to your injury.", "Brain Damaged")
 	if (owner.psi)
 		owner.psi.check_latency_trigger(20, "physical trauma")
@@ -183,7 +183,7 @@
 						damage = max(damage-1, 0)
 				if(BLOOD_VOLUME_OKAY to BLOOD_VOLUME_SAFE)
 					if(prob(1))
-						to_chat(owner, "<span class='warning'>[pick("У вас кружится голова","Вам тяжело удержать равновесие","Вы чувствуете слабость")]...</span>")
+						to_chat(owner, (owner, SPAN_WARNING[pick("У вас кружится голова","Вам тяжело удержать равновесие","Вы чувствуете слабость")]..."))
 					damprob = owner.chem_effects[CE_STABLE] ? 30 : 60
 					if(!past_damage_threshold(2) && prob(damprob))
 						take_internal_damage(0.5) //SIERRA, 0.5 was 1
@@ -194,7 +194,7 @@
 						take_internal_damage(0.5) //SIERRA, 0.5 was 1
 					if(!owner.paralysis && prob(10))
 						owner.Paralyse(rand(1,3))
-						to_chat(owner, "<span class='warning'>[pick("Вы падаете от головоружения","Вы теряете равновесие и падаете от слабости","Вы обессиленно упали")]...</span>")
+						to_chat(owner, "SPAN_WARNING[pick("Вы падаете от головоружения","Вы теряете равновесие и падаете от слабости","Вы обессиленно упали")]..."))
 				if(BLOOD_VOLUME_SURVIVE to BLOOD_VOLUME_BAD)
 					owner.eye_blurry = max(owner.eye_blurry,6)
 					damprob = owner.chem_effects[CE_STABLE] ? 60 : 100
