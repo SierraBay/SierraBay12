@@ -176,6 +176,7 @@
 			var/can_heal = damage && damage < max_damage && (damage % damage_threshold_value || owner.chem_effects[CE_BRAIN_REGEN] || (!past_damage_threshold(3) && owner.chem_effects[CE_STABLE]))
 			var/damprob
 			//Effects of bloodloss
+			var/phrase
 			switch(blood_volume)
 
 				if(BLOOD_VOLUME_SAFE to INFINITY)
@@ -183,7 +184,7 @@
 						damage = max(damage-1, 0)
 				if(BLOOD_VOLUME_OKAY to BLOOD_VOLUME_SAFE)
 					if(prob(1))
-						to_chat(owner, (owner, SPAN_WARNING[pick("У вас кружится голова","Вам тяжело удержать равновесие","Вы чувствуете слабость")]..."))
+						phrase = pick("У вас кружится голова...","Вам тяжело удержать равновесие...","Вы чувствуете слабость...")
 					damprob = owner.chem_effects[CE_STABLE] ? 30 : 60
 					if(!past_damage_threshold(2) && prob(damprob))
 						take_internal_damage(0.5) //SIERRA, 0.5 was 1
@@ -194,7 +195,7 @@
 						take_internal_damage(0.5) //SIERRA, 0.5 was 1
 					if(!owner.paralysis && prob(10))
 						owner.Paralyse(rand(1,3))
-						to_chat(owner, "SPAN_WARNING[pick("Вы падаете от головоружения","Вы теряете равновесие и падаете от слабости","Вы обессиленно упали")]..."))
+						phrase = pick("У вас кружится голова...","Вам тяжело удержать равновесие...","Вы чувствуете слабость...")
 				if(BLOOD_VOLUME_SURVIVE to BLOOD_VOLUME_BAD)
 					owner.eye_blurry = max(owner.eye_blurry,6)
 					damprob = owner.chem_effects[CE_STABLE] ? 60 : 100
@@ -202,7 +203,7 @@
 						take_internal_damage(0.5) //SIERRA, 0.5 was 1
 					if(!owner.paralysis && prob(15))
 						owner.Paralyse(3,5)
-						to_chat(owner, "<span class='warning'>[pick("Вы падаете от головоружения","Вы теряете равновесие и падаете от слабости","Вы обессиленно упали")]...</span>")
+						phrase = pick("У вас кружится голова...","Вам тяжело удержать равновесие...","Вы чувствуете слабость...")
 				if(-(INFINITY) to BLOOD_VOLUME_SURVIVE) // Also see heart.dm, being below this point puts you into cardiac arrest.
 					owner.eye_blurry = max(owner.eye_blurry,6)
 					damprob = owner.chem_effects[CE_STABLE] ? 80 : 100
@@ -242,8 +243,8 @@
 		switch(rand(1, 3))
 			if(1)
 				owner.emote("twitch")
-			if(2 to 3)
-				owner.say("[prob(50) ? ";" : ""][pick("SHIT", "PISS", "FUCK", "CUNT", "COCKSUCKER", "MOTHERFUCKER", "TITS")]")
+			//if(2 to 3)
+				//owner.say("[prob(50) ? ";" : ""][pick("SHIT", "PISS", "FUCK", "CUNT", "COCKSUCKER", "MOTHERFUCKER", "TITS")]")
 		owner.make_jittery(100)
 	else if((owner.disabilities & NERVOUS) && prob(10))
 		owner.stuttering = max(10, owner.stuttering)
