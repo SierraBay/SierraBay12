@@ -231,7 +231,7 @@
 	if (!owner || owner.stat == DEAD || (status & ORGAN_DEAD))
 		return
 
-	tto_chat(owner, SPAN_NOTICE(SPAN_STYLE("font-size: 10", "<B>I can't remember which way is forward...</B>")))
+	to_chat(owner, SPAN_NOTICE(SPAN_STYLE("font-size: 10", "<B>I can't remember which way is forward...</B>")))
 
 /obj/item/organ/internal/brain/proc/handle_disabilities()
 	if(owner.stat)
