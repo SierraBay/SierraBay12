@@ -185,6 +185,7 @@
 				if(BLOOD_VOLUME_OKAY to BLOOD_VOLUME_SAFE)
 					if(prob(1))
 						phrase = pick("У вас кружится голова...","Вам тяжело удержать равновесие...","Вы чувствуете слабость...")
+						to_chat(owner, SPAN_WARNING(phrase))
 					damprob = owner.chem_effects[CE_STABLE] ? 30 : 60
 					if(!past_damage_threshold(2) && prob(damprob))
 						take_internal_damage(0.5) //SIERRA, 0.5 was 1
@@ -196,6 +197,7 @@
 					if(!owner.paralysis && prob(10))
 						owner.Paralyse(rand(1,3))
 						phrase = pick("У вас кружится голова...","Вам тяжело удержать равновесие...","Вы чувствуете слабость...")
+						to_chat(owner, SPAN_WARNING(phrase))
 				if(BLOOD_VOLUME_SURVIVE to BLOOD_VOLUME_BAD)
 					owner.eye_blurry = max(owner.eye_blurry,6)
 					damprob = owner.chem_effects[CE_STABLE] ? 60 : 100
@@ -204,6 +206,7 @@
 					if(!owner.paralysis && prob(15))
 						owner.Paralyse(3,5)
 						phrase = pick("У вас кружится голова...","Вам тяжело удержать равновесие...","Вы чувствуете слабость...")
+						to_chat(owner, SPAN_WARNING(phrase))
 				if(-(INFINITY) to BLOOD_VOLUME_SURVIVE) // Also see heart.dm, being below this point puts you into cardiac arrest.
 					owner.eye_blurry = max(owner.eye_blurry,6)
 					damprob = owner.chem_effects[CE_STABLE] ? 80 : 100
