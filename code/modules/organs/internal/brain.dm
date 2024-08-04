@@ -53,7 +53,7 @@
 
 	spawn(5)
 		if(brainmob && brainmob.client)
-			LAZYCLEARLIST(brainmob.client.screen)
+			brainmob.client.screen.len = null //clear the hud
 
 /obj/item/organ/internal/brain/set_max_damage(ndamage)
 	..()
