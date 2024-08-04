@@ -214,18 +214,9 @@
 
 /obj/item/organ/internal/brain/take_internal_damage(damage, silent)
 	set waitfor = 0
-<<<<<<< Updated upstream
-	..()
-	// SIERRA EDIT
-	..(damage * 2, silent)
-	if(damage / 2 >= 10) //This probably won't be triggered by oxyloss or mercury. Probably.
-		var/damage_secondary = damage / 2 * 0.20
-	// SIERRA EDIT-END
-=======
 	..(damage * 2, silent) //SIERRA Was ..()
 	if(damage / 2 >= 10) //This probably won't be triggered by oxyloss or mercury. Probably. //SIERRA. Was (damage >= 20)
 		var/damage_secondary = damage / 2 * 0.20 // SIERRA. Was (damage * 0.20)
->>>>>>> Stashed changes
 		if (owner)
 			owner.flash_eyes()
 			owner.eye_blurry += damage_secondary
@@ -239,7 +230,7 @@
 	if (!owner || owner.stat == DEAD || (status & ORGAN_DEAD))
 		return
 
-	to_chat(owner, "<span class = 'notice' font size='10'><B>I can't remember which way is forward...</B></span>")
+	tto_chat(owner, SPAN_NOTICE(SPAN_STYLE("font-size: 10", "<B>I can't remember which way is forward...</B>")))
 
 /obj/item/organ/internal/brain/proc/handle_disabilities()
 	if(owner.stat)
@@ -263,22 +254,22 @@
 	if(damage > 0 && prob(1))
 		owner.custom_pain("Your head feels numb and painful.",10)
 	if(is_bruised() && prob(1) && owner.eye_blurry <= 0)
-		to_chat(owner, "<span class='warning'>It becomes hard to see for some reason.</span>")
+		to_chat(owner, SPAN_WARNING("It becomes hard to see for some reason."))
 		owner.eye_blurry = 10
 	if(damage >= 0.5*max_damage && prob(1) && owner.get_active_hand())
-		to_chat(owner, "<span class='danger'>Your hand won't respond properly, and you drop what you are holding!</span>")
+		to_chat(owner, SPAN_DANGER("Your hand won't respond properly, and you drop what you are holding!"))
 		owner.unequip_item()
 	if(damage >= 0.6*max_damage)
 		owner.slurring = max(owner.slurring, 2)
 	if(is_broken())
 		if(!owner.lying)
-			to_chat(owner, "<span class='danger'>You black out!</span>")
+			to_chat(owner, SPAN_DANGER("You black out!"))
 		owner.Paralyse(10)
 
 /obj/item/organ/internal/brain/surgical_fix(mob/user)
 	var/blood_volume = owner.get_blood_oxygenation()
 	if(blood_volume < BLOOD_VOLUME_SURVIVE)
-		to_chat(user, "<span class='danger'>Parts of [src] didn't survive the procedure due to lack of air supply!</span>")
+		to_chat(user, SPAN_DANGER("Parts of [src] didn't survive the procedure due to lack of air supply!"))
 		set_max_damage(floor(max_damage - 0.25*damage))
 	heal_damage(damage)
 
