@@ -1,7 +1,0 @@
-author: Lexanx
-changes:
-  - {bugfix: Пофикшены многочисленные баги с фотографиями.}
-  - {rscadd: Новый тип файлов DNG - DAIS Portable Grafics.}
-  - {rscadd: Вспышка на фотоаппараты}
-  - {rscadd: Возможность делать фото с модульных компьютеров.}
-delete-after: true
