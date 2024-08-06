@@ -110,7 +110,7 @@
 	icon = 'mods/guns/icons/obj/ammo_m1911.dmi'
 	icon_state = "exte_m1911"
 	mag_type = MAGAZINE
-	matter = list(MATERIAL_STEEL = 1200)
+	matter = list(MATERIAL_STEEL = 2400)
 	caliber = CALIBER_PISTOL_MAGNUM
 	ammo_type = /obj/item/ammo_casing/pistol/magnum
 	max_ammo = 12
