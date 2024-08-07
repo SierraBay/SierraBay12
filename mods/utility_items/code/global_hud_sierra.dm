@@ -9,6 +9,7 @@
 	return screen
 
 /datum/global_hud/New()
+	.=..()
 	nvg = setup_overlay("scanline", "#06ff00")
 	thermal = setup_overlay("scanline", "#ff0000")
 	meson = setup_overlay("scanline", "#9fd800")
