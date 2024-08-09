@@ -34,9 +34,12 @@
 			addtimer(new Callback(src, PROC_REF(clear_sonar_effect), src.client, ping_image), 8)
 			var/feedback = list("There are noises of movement ")
 			var/direction = get_dir(src, L)
+			var/client_view_sonar = client.view
+			if(istext(client_view_sonar) && findtext(client_view_sonar, "x"))
+				client_view_sonar = text2num(splittext(client_view_sonar, "x")[1])
 			if(direction)
 				feedback += "towards the [dir2text(direction)], "
-				switch(get_dist(src, L) / client.view)
+				switch(get_dist(src, L) / client_view_sonar)
 					if(0 to 0.2)
 						feedback += "very close by."
 					if(0.2 to 0.4)

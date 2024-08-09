@@ -20,9 +20,9 @@
 
 /singleton/surgery_step/robotics/success_chance(mob/living/user, mob/living/carbon/human/target, obj/item/tool)
 	. = ..()
-	if(!user.skill_check(SKILL_DEVICES, SKILL_TRAINED))
+	if(!user.skill_check(SKILL_DEVICES, SKILL_BASIC))
 		. -= 30
-	if(!user.skill_check(SKILL_DEVICES, SKILL_EXPERIENCED))
+	if(!user.skill_check(SKILL_DEVICES, SKILL_TRAINED))
 		. -= 20
 	if(user.skill_check(SKILL_DEVICES, SKILL_EXPERIENCED))
 		. += 35
@@ -398,16 +398,21 @@
 	for(var/obj/item/organ/I in affected.internal_organs)
 		if(I && I.damage > 0)
 			if(BP_IS_ROBOTIC(I))
+				if(((I.organ_tag == BP_POSIBRAIN) && (I.damage >= I.min_broken_damage)))
+					to_chat(user, SPAN_WARNING("Can't mend the damage to [target]'s [I.name]'s internally, you need to remove it first."))
+					return
 				user.visible_message("[user] starts mending the damage to [target]'s [I.name]'s mechanisms.", \
 				"You start mending the damage to [target]'s [I.name]'s mechanisms." )
-	playsound(target.loc, 'sound/items/bonegel.ogg', 50, TRUE)
-	..()
+		playsound(target.loc, 'sound/items/bonegel.ogg', 50, TRUE)
+		..()
 
 /singleton/surgery_step/robotics/fix_organ_robotic/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/affected = target.get_organ(target_zone)
 	for(var/obj/item/organ/I in affected.internal_organs)
 		if(I && I.damage > 0)
 			if(BP_IS_ROBOTIC(I))
+				if(((I.organ_tag == BP_POSIBRAIN) && (I.damage >= I.min_broken_damage)))
+					return
 				user.visible_message(SPAN_NOTICE("[user] repairs [target]'s [I.name] with [tool]."), \
 				SPAN_NOTICE("You repair [target]'s [I.name] with [tool].") )
 				I.damage = 0

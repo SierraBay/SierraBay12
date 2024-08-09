@@ -48,6 +48,7 @@ GLOBAL_LIST_INIT(mech_weapon_overlays, icon_states('mods/mechs_by_shegar/icons/m
 #define MECH_POWER_TRANSITION 1
 #define MECH_POWER_ON 2
 
+//[SIERRA-ADD] - Mechs-by-Shegar
 //Passengers
 #define MECH_DROP_ALL_PASSENGER 1 // Скинуть всех пассажиров
 #define MECH_DROP_ANY_PASSENGER 2 // Скинуть первого попавшегося пассажира
