@@ -30,6 +30,19 @@
 		T.visible_message(SPAN_NOTICE("\The [src] prints out a paper."))
 		return TRUE
 
+//[SIERRA-ADD]
+/obj/item/stock_parts/computer/nano_printer/proc/print_picture()
+	. = FALSE
+	if(printer_ready())
+		last_print = world.time
+		var/turf/T = get_turf(src)
+		stored_paper -= 5
+		playsound(T, "sound/machines/dotprinter.ogg", 30)
+		T.visible_message(SPAN_NOTICE("\The [src] prints out a photo."))
+		//just to spend paper, real photos are printerd /datum/extension/interactive/ntos/proc/print_photo(content, title)
+		return TRUE
+//[/SIERRA-ADD]
+
 /obj/item/stock_parts/computer/nano_printer/proc/printer_ready()
 	if(!stored_paper)
 		return FALSE

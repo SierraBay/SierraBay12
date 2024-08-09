@@ -14,7 +14,9 @@
 #include "code/tech_robotics.dm"
 #include "code/binary.dm"
 #include "code/design.dm"
+#include "code/camera.dm"
 #include "code/sciefolder.dm"
+#include "code/misc.dm"
 
 
 #endif
