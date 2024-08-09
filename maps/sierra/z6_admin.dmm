@@ -15775,7 +15775,7 @@
 /obj/item/stock_parts/micro_laser,
 /obj/item/stock_parts/console_screen,
 /obj/item/device/paicard,
-/obj/item/disk/design_disk,
+/obj/item/stock_parts/computer/hard_drive/portable,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/flooring/tiles.dmi';
 	icon_state = "white"
@@ -18263,7 +18263,7 @@
 "uvl" = (
 /obj/structure/table/steel_reinforced,
 /obj/machinery/photocopier/faxmachine/centcomm{
-	department = "SFV Stinger Command Departament"
+	department = "SFV Stinger Command Department"
 	},
 /obj/floor_decal/corner/blue/mono,
 /turf/unsimulated/floor/techfloor{

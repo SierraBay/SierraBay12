@@ -1,6 +1,5 @@
-/datum/design/item/synthstorage/AssembleDesignName()
-	..()
-	name = "Synthetic intelligence storage ([item_name])"
+/datum/design/item/synthstorage
+	category = list("AI")
 
 /datum/design/item/synthstorage/paicard
 	name = "pAI"

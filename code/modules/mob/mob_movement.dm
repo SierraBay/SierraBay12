@@ -9,6 +9,10 @@
 	if(air_group || (height==0)) return 1
 
 	if(ismob(mover))
+	//[SIERRA-ADD]
+		if(SEND_SIGNAL(src, COMSIG_MOB_CAN_PASS, mover, target, height, air_group) & COMPONENT_MOB_PASSABLE)
+			return TRUE
+	//[SIERRA-ADD]
 		var/mob/moving_mob = mover
 		if ((other_mobs && moving_mob.other_mobs))
 			return 1
@@ -171,6 +175,10 @@
 		return
 	if(!mob)
 		return // Moved here to avoid nullrefs below
+		//[SIERRA-ADD]
+	if(SEND_SIGNAL(mob, COMSIG_MOB_CLIENT_PRE_LIVING_MOVE, n, direction))
+		return
+		//[/SIERRA-ADD]
 	return mob.SelfMove(direction)
 
 

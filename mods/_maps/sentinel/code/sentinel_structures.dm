@@ -16,19 +16,17 @@
 
 /obj/structure/closet/secure_closet/guncabinet/patrol/assault/WillContain()
 	return list(
-		/obj/item/ammo_magazine/mil_rifle/light = 15,
-		/obj/item/gun/projectile/automatic/bullpup_rifle/light = 3,
+		/obj/item/gun/projectile/pistol/m22f = 3,
 		/obj/item/ammo_magazine/machine_pistol = 5,
 		/obj/item/gun/projectile/automatic/machine_pistol = 1
 	)
 
 /obj/structure/closet/secure_closet/guncabinet/patrol/carabine/WillContain()
 	return list(
-		/obj/item/ammo_magazine/mil_rifle/heavy = 5,
-		/obj/item/gun/projectile/automatic/bullpup_rifle = 1,
+		/obj/item/ammo_magazine/mil_rifle/heavy = 8,
+		/obj/item/gun/projectile/automatic/bullpup_rifle = 2,
 		/obj/item/clothing/accessory/storage/bandolier = 1,
 		/obj/item/gun/projectile/shotgun/pump/combat = 1,
-		/obj/item/gun/projectile/pistol/m22f = 3
 	)
 
 /obj/structure/closet/secure_closet/guncabinet/patrol/utility/WillContain()
@@ -59,6 +57,9 @@
 		/obj/item/melee/telebaton,
 		/obj/item/clothing/glasses/hud/security/prot/aviators,
 		/obj/item/clothing/glasses/tacgoggles,
+		/obj/item/clothing/glasses/ballistic,
+		/obj/item/clothing/accessory/glassesmod/vision/polarized,
+		/obj/item/clothing/accessory/glassesmod/nvg,
 		/obj/item/clothing/accessory/storage/black_vest,
 		/obj/item/clothing/gloves/thick/combat,
 		/obj/item/device/flashlight/maglight,
@@ -84,13 +85,15 @@
 		/obj/item/melee/telebaton,
 		/obj/item/clothing/glasses/hud/security/prot/aviators,
 		/obj/item/clothing/glasses/tacgoggles,
+		/obj/item/clothing/glasses/ballistic,
+		/obj/item/clothing/accessory/glassesmod/vision/polarized,
+		/obj/item/clothing/accessory/glassesmod/nvg,
 		/obj/item/clothing/accessory/storage/black_vest,
-		/obj/item/clothing/gloves/thick/combat,
 		/obj/item/device/flashlight/maglight,
 		/obj/item/storage/firstaid/sleekstab,
 		/obj/item/device/megaphone,
 		/obj/item/clothing/mask/balaclava,
-		//obj/item/clothing/accessory/armor/tag/solgov/com,
+		/obj/item/clothing/accessory/armor_tag/solgov/com,
 		/obj/item/storage/fancy/smokable/cigar,
 		/obj/item/flame/lighter/zippo/gunmetal,
 		/obj/item/clothing/mask/gas/swat,
@@ -130,6 +133,7 @@
 		/obj/item/storage/belt/utility/full,
 		/obj/item/device/multitool,
 		/obj/item/clothing/glasses/welding/superior,
+		/obj/item/clothing/glasses/ballistic/engi,
 		/obj/item/clothing/head/hardhat/orange,
 		/obj/item/clothing/suit/storage/hazardvest,
 		/obj/item/clothing/head/beret/solgov/fleet/engineering,
@@ -153,6 +157,7 @@
 		/obj/item/storage/firstaid/adv,
 		/obj/item/clothing/accessory/stethoscope,
 		/obj/item/clothing/glasses/hud/health,
+		/obj/item/clothing/glasses/ballistic/medic,
 		/obj/item/clothing/suit/storage/toggle/labcoat,
 		/obj/item/clothing/gloves/latex/nitrile,
 		/obj/item/clothing/under/rank/medical/scrubs/black,
@@ -174,7 +179,7 @@
 		/obj/item/melee/telebaton,
 		/obj/item/gun/projectile/pistol/m22f,
 		/obj/item/device/megaphone,
-		//obj/item/clothing/accessory/armor/tag/solgov/com,
+		/obj/item/clothing/accessory/armor_tag/solgov/com,
 		/obj/item/clothing/mask/gas,
 		/obj/item/storage/chewables/rollable/rollingkit,
 		/obj/item/storage/fancy/smokable/cigar,
@@ -246,7 +251,7 @@
 /obj/machinery/vending/away_solpatrol_uniform
 	name = "Fleet uniform dispenser"
 	desc = "A specialized vending machine with nice and fresh navy-blue clothing inside. For military personnel only."
-	icon = 'mods/_maps/sentinel/icons/fleet_vendomat.dmi'
+	icon = 'mods/_maps/sentinel/icons/obj/fleet_vendomat.dmi'
 	icon_state = "uniform_fleet"
 	icon_deny = "uniform_fleet-deny"
 	icon_vend = "uniform_fleet-vend"

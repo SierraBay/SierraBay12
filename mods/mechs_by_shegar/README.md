@@ -2,6 +2,11 @@
 #### Список PRов:
 
 https://github.com/SierraBay/SierraBay12/pull/2277
+https://github.com/SierraBay/SierraBay12/pull/2317
+https://github.com/SierraBay/SierraBay12/pull/2380
+https://github.com/SierraBay/SierraBay12/pull/2386
+https://github.com/SierraBay/SierraBay12/pull/2456
+https://github.com/SierraBay/SierraBay12/pull/2562
 
 <!--
   Ссылки на PRы, связанные с модом:
@@ -31,8 +36,26 @@ ID мода: MECHS_BY_SHEGAR
 -->
 
 ### Изменения *кор кода*
+Указывать триллион изменений - глупо и бесполезно. Ниже указаны файлы, в которых есть изменения. Вы всегда можете найти в коде изменения с помощью Mechs-by-Shegar
+code\game\machinery\robotics_fabricator.dm
+code\modules\mechs\_mech_setup.dm
+code\modules\mechs\mech_damage.dm
+code\modules\mechs\mech_icon.dm
+code\modules\mechs\mech_interaction.dm
+code\modules\mechs\mech_life.dm
+code\modules\mechs\mech_movement.dm
+code\modules\mechs\mech.dm
+code\modules\mechs\equipment\combat.dm
+code\modules\mechs\equipment\engineering.dm
+code\modules\mechs\equipment\medical.dm
+code\modules\mechs\equipment\utility.dm
+code\modules\mechs\interface\_interface.dm
+code\modules\mechs\interface\screen_objects.dm
+code\modules\mechs\premade\powerloader.dm
+code\modules\mob\living\living.dm
+code\modules\projectiles\projectile.dm
+code\modules\research\designs\designs_mechfab.dm
 
-Отсутствуют
 <!--
   Если вы редактировали какие-либо процедуры или переменные в кор коде,
   они должны быть указаны здесь.
@@ -54,7 +77,14 @@ ID мода: MECHS_BY_SHEGAR
 
 ### Дефайны
 
-Отсутсвуют
+MECH_DROP_ALL_PASSENGER 
+MECH_DROP_ANY_PASSENGER
+BOLTS_NOMITAL
+BOLTS_DESTROYED
+BASIC_BUMP 
+MEDIUM_BUMP
+HARD_BUMP
+MECH_BACK_LAYER
 <!--
   Если требовалось добавить какие-либо дефайны, укажи файлы,
   в которые ты их добавил, а также перечисли имена.
@@ -75,7 +105,8 @@ ID мода: MECHS_BY_SHEGAR
 
 ### Авторы:
 
-Shegar
+Shegar - Всё
+AK200 - задники для ослепления и эми удара
 <!--
   Здесь находится твой никнейм
   Если работал совместно - никнеймы тех, кто помогал.

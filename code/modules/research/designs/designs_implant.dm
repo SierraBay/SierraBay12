@@ -1,9 +1,6 @@
 /datum/design/item/implant
 	materials = list(MATERIAL_ALUMINIUM = 50, MATERIAL_GLASS = 50)
-
-/datum/design/item/implant/AssembleDesignName()
-	..()
-	name = "Implantable biocircuit design ([item_name])"
+	category = list("Implant")
 
 /datum/design/item/implant/chemical
 	name = "chemical"

@@ -47,24 +47,38 @@ SUBSYSTEM_DEF(modpacks)
 		return
 
 	if(length(SSmodpacks.loaded_modpacks))
-		. = "<hr><br><center><b><font size = 3>Список модификаций</font></b></center><br><hr><br>"
-		for(var/modpack in SSmodpacks.loaded_modpacks)
-			var/singleton/modpack/M = SSmodpacks.loaded_modpacks[modpack]
-
-			if(M.name)
-				. += "<div class = 'statusDisplay'>"
-				. += "<center><b>[M.name]</b></center>"
-
-				if(M.desc || M.author)
-					. += "<br>"
-					if(M.desc)
-						. += "<br>Описание: [M.desc]"
-					if(M.author)
-						. += "<br><i>Автор: [M.author]</i>"
-				. += "</div><br>"
-
-		var/datum/browser/popup = new(mob, "modpacks_list", "Список Модификаций", 480, 580)
-		popup.set_content(.)
-		popup.open()
+		var/datum/nano_module/modlist/modlist_panel = new /datum/nano_module/modlist(mob)
+		modlist_panel.ui_interact(mob)
 	else
 		to_chat(src, SPAN_WARNING("Этот сервер не использует какие-либо модификации."))
+
+GLOBAL_DATUM_INIT(modlist_state, /datum/topic_state/modlist, new)
+
+/datum/topic_state/modlist/can_use_topic(src_object, mob/user)
+	return STATUS_INTERACTIVE
+
+/datum/nano_module/modlist
+
+/datum/nano_module/manifest/CanUseTopic(mob/user, datum/topic_state/state = GLOB.modlist_state)
+	. = ..()
+
+/datum/nano_module/modlist/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1, datum/topic_state/state = GLOB.modlist_state)
+	var/data[0]
+	var/list/mods = list()
+	for(var/modpack in SSmodpacks.loaded_modpacks)
+		var/singleton/modpack/mod = SSmodpacks.loaded_modpacks[modpack]
+		if(mod.name)
+			mods[LIST_PRE_INC(mods)] = list("name" = mod.name, "description" = mod.desc ? mod.desc : "Нет описания", "author" = mod.author ? mod.author : "Нет автора")
+
+	data["mods"] = mods
+	ui = SSnano.try_update_ui(user, src, ui_key, ui, data, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "mods-modlist.tmpl", "Список модификаций", 350, 500, state = state)
+		ui.set_initial_data(data)
+		ui.open()
+		ui.set_auto_update(1)
+
+/datum/nano_module/modlist/Topic(href, href_list, state)
+	if(..())
+		return TRUE
+	return TRUE
