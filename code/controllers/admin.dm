@@ -35,7 +35,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/clickable_stat)
 	set category = "Debug"
 	set name = "Restart Controller"
 	var/client/client = usr?.client
-	if (!check_rights(R_ADMIN, TRUE, client))
+	if (!check_rights(R_ADMIN|R_DEBUG, TRUE, client))
 		return
 	if (controller == "Master")
 		Recreate_MC()

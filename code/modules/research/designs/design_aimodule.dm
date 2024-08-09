@@ -1,9 +1,7 @@
 /datum/design/aimodule
 	build_type = IMPRINTER
 	materials = list(MATERIAL_GLASS = 2000, MATERIAL_GOLD = 100)
-
-/datum/design/aimodule/AssembleDesignName()
-	name = "AI module design ([name])"
+	category = list("AI Module")
 
 /datum/design/aimodule/AssembleDesignDesc()
 	desc = "Allows for the construction of \a '[name]' AI module."
@@ -74,9 +72,6 @@
 // Core modules
 /datum/design/aimodule/core
 	req_tech = list(TECH_DATA = 4, TECH_MATERIAL = 6)
-
-/datum/design/aimodule/core/AssembleDesignName()
-	name = "AI core module design ([name])"
 
 /datum/design/aimodule/core/AssembleDesignDesc()
 	desc = "Allows for the construction of \a '[name]' AI core module."

@@ -22,6 +22,7 @@
 	var/damage_threshold_value
 	var/healed_threshold = 1
 	var/oxygen_reserve = 6
+	var/fake_brain = 0
 
 /obj/item/organ/internal/brain/robotize()
 	replace_self_with(/obj/item/organ/internal/posibrain)
@@ -63,18 +64,19 @@
 	. = ..()
 
 /obj/item/organ/internal/brain/proc/transfer_identity(mob/living/carbon/H)
-
+	if(fake_brain) return
 	if(!brainmob)
 		brainmob = new(src)
 		brainmob.SetName(H.real_name)
 		brainmob.real_name = H.real_name
 		brainmob.dna = H.dna.Clone()
 		brainmob.timeofhostdeath = H.timeofdeath
+		brainmob.languages = H.languages
 
 	if(H.mind)
 		H.mind.transfer_to(brainmob)
 
-	to_chat(brainmob, SPAN_NOTICE("You feel slightly disoriented. That's normal when you're just \a [initial(src.name)]."))
+	to_chat(brainmob, "<span class='notice'>You feel slightly disoriented. That's normal when you're just \a [initial(src.name)].</span>")
 	callHook("debrain", list(brainmob))
 
 /obj/item/organ/internal/brain/examine(mob/user)
@@ -82,7 +84,10 @@
 	if(brainmob && brainmob.client)//if thar be a brain inside... the brain.
 		to_chat(user, "You can feel the small spark of life still left in this one.")
 	else
-		to_chat(user, "This one seems particularly lifeless. Perhaps it will regain some of its luster later..")
+		if(fake_brain)
+			to_chat(user, "This one seems particularly lifeless. Perhaps it will regain some of its luster later...")
+		else
+			to_chat(user, "This one is completely devoid of life.")
 
 /obj/item/organ/internal/brain/removed(mob/living/user)
 	if(!istype(owner))
@@ -96,7 +101,8 @@
 	if(borer)
 		borer.detatch() //Should remove borer if the brain is removed - RR
 
-	transfer_identity(owner)
+	if(!fake_brain)
+		transfer_identity(owner)
 
 	..()
 
@@ -107,7 +113,7 @@
 	if(target.key)
 		target.ghostize()
 
-	if(brainmob)
+	if(brainmob && !fake_brain)
 		if(brainmob.mind)
 			brainmob.mind.transfer_to(target)
 		else
@@ -127,7 +133,7 @@
 /obj/item/organ/internal/brain/proc/handle_severe_brain_damage()
 	set waitfor = FALSE
 	healed_threshold = 0
-	to_chat(owner, SPAN_NOTICE(FONT_GIANT("<B>Where am I...?</B>")))
+	to_chat(owner, SPAN_NOTICE(FONT_GIANT("<B>What's going on...?</B>")))
 	sleep(5 SECONDS)
 	if (!owner || owner.stat == DEAD || (status & ORGAN_DEAD))
 		return
@@ -136,14 +142,18 @@
 	if (!owner || owner.stat == DEAD || (status & ORGAN_DEAD))
 		return
 	to_chat(owner, SPAN_NOTICE(FONT_GIANT("<B>What happened...?</B>")))
-	alert(owner, "You have taken massive brain damage! This could affect speech, memory, or any other skill, but provided you've been treated, it shouldn't be permanent.", "Brain Damaged")
-	if (owner?.psi)
+	alert(owner, "You have taken massive brain damage! You will not be able to remember the events leading up to your injury.", "Brain Damaged")
+	if (owner.psi)
 		owner.psi.check_latency_trigger(20, "physical trauma")
 
 /obj/item/organ/internal/brain/Process()
 	if(owner)
 		if(damage > max_damage / 2 && healed_threshold)
-			handle_severe_brain_damage()
+			if(fake_brain)
+				to_chat(owner, "<span class='warning'>Your brain has taken massive damage. Not like you care, but it might be good for acting.</span>")
+				healed_threshold = 0
+			else
+				handle_severe_brain_damage()
 
 		if(damage < (max_damage / 4))
 			healed_threshold = 1
@@ -166,6 +176,7 @@
 			var/can_heal = damage && damage < max_damage && (damage % damage_threshold_value || owner.chem_effects[CE_BRAIN_REGEN] || (!past_damage_threshold(3) && owner.chem_effects[CE_STABLE]))
 			var/damprob
 			//Effects of bloodloss
+			var/phrase
 			switch(blood_volume)
 
 				if(BLOOD_VOLUME_SAFE to INFINITY)
@@ -173,61 +184,70 @@
 						damage = max(damage-1, 0)
 				if(BLOOD_VOLUME_OKAY to BLOOD_VOLUME_SAFE)
 					if(prob(1))
-						to_chat(owner, SPAN_WARNING("You feel [pick("dizzy","woozy","faint")]..."))
+						phrase = pick("У вас кружится голова...","Вам тяжело удержать равновесие...","Вы чувствуете слабость...")
+						to_chat(owner, SPAN_WARNING(phrase))
 					damprob = owner.chem_effects[CE_STABLE] ? 30 : 60
 					if(!past_damage_threshold(2) && prob(damprob))
-						take_internal_damage(1)
+						take_internal_damage(0.5) //SIERRA, 0.5 was 1
 				if(BLOOD_VOLUME_BAD to BLOOD_VOLUME_OKAY)
 					owner.eye_blurry = max(owner.eye_blurry,6)
 					damprob = owner.chem_effects[CE_STABLE] ? 40 : 80
 					if(!past_damage_threshold(4) && prob(damprob))
-						take_internal_damage(1)
+						take_internal_damage(0.5) //SIERRA, 0.5 was 1
 					if(!owner.paralysis && prob(10))
 						owner.Paralyse(rand(1,3))
-						to_chat(owner, SPAN_WARNING("You feel extremely [pick("dizzy","woozy","faint")]..."))
+						phrase = pick("У вас кружится голова...","Вам тяжело удержать равновесие...","Вы чувствуете слабость...")
+						to_chat(owner, SPAN_WARNING(phrase))
 				if(BLOOD_VOLUME_SURVIVE to BLOOD_VOLUME_BAD)
 					owner.eye_blurry = max(owner.eye_blurry,6)
 					damprob = owner.chem_effects[CE_STABLE] ? 60 : 100
 					if(!past_damage_threshold(6) && prob(damprob))
-						take_internal_damage(1)
+						take_internal_damage(0.5) //SIERRA, 0.5 was 1
 					if(!owner.paralysis && prob(15))
 						owner.Paralyse(3,5)
-						to_chat(owner, SPAN_WARNING("You feel extremely [pick("dizzy","woozy","faint")]..."))
+						phrase = pick("У вас кружится голова...","Вам тяжело удержать равновесие...","Вы чувствуете слабость...")
+						to_chat(owner, SPAN_WARNING(phrase))
 				if(-(INFINITY) to BLOOD_VOLUME_SURVIVE) // Also see heart.dm, being below this point puts you into cardiac arrest.
 					owner.eye_blurry = max(owner.eye_blurry,6)
 					damprob = owner.chem_effects[CE_STABLE] ? 80 : 100
 					if(prob(damprob))
-						take_internal_damage(1)
+						take_internal_damage(0.5) //SIERRA, 0.5 was 1
 					if(prob(damprob))
-						take_internal_damage(1)
+						take_internal_damage(0.5) //SIERRA, 0.5 was 1
 	..()
 
-/obj/item/organ/internal/brain/take_internal_damage(damageTaken, silent)
+/obj/item/organ/internal/brain/take_internal_damage(damage, silent)
 	set waitfor = 0
-	..()
-	if(damageTaken >= 20 && damage >= (max_damage * 0.5)) //This probably won't be triggered by oxyloss or mercury. Probably.
-		var/damage_secondary = damageTaken * 0.20
+	..(damage * 2, silent) //SIERRA Was ..()
+	if(damage / 2 >= 10) //This probably won't be triggered by oxyloss or mercury. Probably. //SIERRA. Was (damage >= 20)
+		var/damage_secondary = damage / 2 * 0.20 // SIERRA. Was (damage * 0.20)
 		if (owner)
 			owner.flash_eyes()
 			owner.eye_blurry += damage_secondary
-			owner.mod_confused(damage_secondary * 2)
-			owner.Paralyse(damage_secondary)
-			owner.Weaken(round(damageTaken, 1))
-			if (prob(30))
-				addtimer(new Callback(src, PROC_REF(brain_damage_callback), damage), rand(6, 20) SECONDS, TIMER_UNIQUE)
+//SIERRA			owner.confused += damage_secondary * 2
+//SIERRA			owner.Paralyse(damage_secondary)
+//SIERRA			owner.Weaken(round(damage, 1))
+//SIERRA			if (prob(30))
+//SIERRA				addtimer(CALLBACK(src, .proc/brain_damage_callback, damage), rand(6, 20) SECONDS, TIMER_UNIQUE)
 
 /obj/item/organ/internal/brain/proc/brain_damage_callback(damage) //Confuse them as a somewhat uncommon aftershock. Side note: Only here so a spawn isn't used. Also, for the sake of a unique timer.
 	if (!owner || owner.stat == DEAD || (status & ORGAN_DEAD))
 		return
 
 	to_chat(owner, SPAN_NOTICE(SPAN_STYLE("font-size: 10", "<B>I can't remember which way is forward...</B>")))
-	owner.mod_confused(damage)
 
 /obj/item/organ/internal/brain/proc/handle_disabilities()
 	if(owner.stat)
 		return
 	if((owner.disabilities & EPILEPSY) && prob(1))
 		owner.seizure()
+	else if((owner.disabilities) && prob(10))
+		owner.Stun(10)
+		if(rand(1, 3) == 1)
+			owner.emote("twitch")
+			//if(2 to 3)
+				//owner.say("[prob(50) ? ";" : ""][pick("SHIT", "PISS", "FUCK", "CUNT", "COCKSUCKER", "MOTHERFUCKER", "TITS")]")
+		owner.make_jittery(100)
 	else if((owner.disabilities & NERVOUS) && prob(10))
 		owner.stuttering = max(10, owner.stuttering)
 
@@ -251,7 +271,7 @@
 
 /obj/item/organ/internal/brain/surgical_fix(mob/user)
 	var/blood_volume = owner.get_blood_oxygenation()
-	if(blood_volume < BLOOD_VOLUME_BAD)
+	if(blood_volume < BLOOD_VOLUME_SURVIVE)
 		to_chat(user, SPAN_DANGER("Parts of [src] didn't survive the procedure due to lack of air supply!"))
 		set_max_damage(floor(max_damage - 0.25*damage))
 	heal_damage(damage)

@@ -2050,7 +2050,7 @@
 	},
 /obj/machinery/mech_recharger,
 /obj/floor_decal/industrial/outline/yellow,
-/mob/living/exosuit/premade/heavy/merc,
+/mob/living/exosuit/premade/light,
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/merc_shuttle)
 "ys" = (

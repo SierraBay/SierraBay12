@@ -4,19 +4,23 @@
 // Ремонт позитронного мозга
 /obj/item/organ/internal/posibrain/use_tool(obj/item/stack/nanopaste, mob/living/user, list/click_params)
 	. = ..()
-	if(src.damage > src.max_damage)
-		to_chat(user, SPAN_WARNING("[src] is completely ruined."))
-		return
-	if(src.damage > 0)
-		if(do_after(user, 40, src))
-			src.damage -= (30)
-			if(src.damage < 0)
-				src.damage = 0
-			nanopaste.use(1)
-			user.visible_message(SPAN_NOTICE("\The [user] applied some nanopaste on [src]'s damaged areas."),\
-				SPAN_NOTICE("You apply some nanopaste at [src]'s damaged areas."))
-	else
-		to_chat(user, SPAN_NOTICE("All [src]'s systems are nominal."))
+	if(istype(nanopaste, /obj/item/stack/nanopaste))
+		if(user.skill_check(SKILL_DEVICES, SKILL_TRAINED))
+			if(src.damage >= src.max_damage)
+				to_chat(user, SPAN_WARNING("[src] is completely ruined."))
+				return
+			if(src.damage > 0)
+				if(do_after(user, 40, src))
+					src.damage -= (30)
+					if(src.damage < 0)
+						src.damage = 0
+					nanopaste.use(1)
+					user.visible_message(SPAN_NOTICE("\The [user] applied some nanopaste on [src]'s damaged areas."),\
+						SPAN_NOTICE("You apply some nanopaste at [src]'s damaged areas."))
+			else
+				to_chat(user, SPAN_NOTICE("All [src]'s systems are nominal."))
+		else
+			to_chat(user, SPAN_WARNING("You have no idea how to do that!"))
 
 /obj/item/organ/internal/posibrain/ipc
 	name = "Positronic brain"

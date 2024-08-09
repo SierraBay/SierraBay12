@@ -73,6 +73,9 @@
 			if(!do_after(user, 2 SECONDS, owner, DO_PUBLIC_UNIQUE)) return
 			if(owner.hatch_closed || !chosen_obj) return
 			if(user.put_in_active_hand(chosen_obj))
+				//[SIERRA-ADD]
+				owner.add_heat(heat_generation)
+				//[SIERRA-ADD]
 				owner.visible_message(SPAN_NOTICE("\The [user] carefully grabs \the [chosen_obj] from \the [src]."))
 				playsound(src, 'sound/mecha/hydraulic.ogg', 50, 1)
 				carrying -= chosen_obj
@@ -113,6 +116,9 @@
 							else
 								FD.visible_message(SPAN_WARNING("\The [owner] forces \the [FD] closed!"))
 								addtimer(new Callback(FD, TYPE_PROC_REF(/obj/machinery/door/firedoor, close), TRUE), 0)
+					//[SIERRA-ADD]
+					owner.add_heat(heat_generation)
+					//[SIERRA-ADD]
 					return
 				else if(istype(O, /obj/machinery/door/airlock))
 					var/obj/machinery/door/airlock/AD = O
@@ -178,6 +184,9 @@
 				M.throw_at(get_edge_target_turf(owner ,owner.dir),5, 2)
 				to_chat(user, SPAN_WARNING("You slam [target] with [src.name]."))
 				owner.visible_message(SPAN_DANGER("[owner] slams [target] with the hydraulic clamp."))
+				//[SIERRA-ADD]
+				owner.add_heat(heat_generation)
+				//[SIERRA-ADD]
 			else
 				step_away(M, owner)
 				to_chat(user, "You push [target] out of the way.")
@@ -416,6 +425,9 @@
 					if(locked in view(owner))
 						log_and_message_admins("used [src] to throw [locked] at [target].", user, owner.loc)
 						endanimation() //End animation without waiting for delete, so throw won't be affected
+						//[SIERRA-ADD]
+						owner.add_heat(heat_generation)
+						//[SIERRA-ADD]
 						locked.throw_at(target, 14, 1.5, owner)
 						locked = null
 						deactivate()
@@ -442,7 +454,9 @@
 				)
 				addtimer(new Callback(warpeffect, TYPE_PROC_REF(/atom/movable, forceMove), null), 1.25 SECONDS)
 				playsound(warpeffect, 'sound/effects/heavy_cannon_blast.ogg', 50, 1)
-
+				//[SIERRA-ADD] - Mechs-by-Shegar
+				owner.add_heat(heat_generation)
+				//[SIERRA-ADD]
 				var/list/atoms = list()
 				if(isturf(target))
 					atoms = range(target,3)
@@ -697,6 +711,7 @@
 /obj/item/gun/energy/plasmacutter/mounted/mech
 	use_external_power = TRUE
 	has_safety = FALSE
+	max_shots = 10
 
 
 /obj/item/mech_equipment/mounted_system/taser/plasma
@@ -781,6 +796,9 @@
 	passive_power_use = activated_passive_power
 	ion_trail.start()
 	active = TRUE
+	//[SIERRA-ADD]
+	owner.add_heat(heat_generation/2)
+	//[SIERRA-ADD]
 	update_icon()
 
 /obj/item/mech_equipment/ionjets/deactivate()
@@ -790,7 +808,6 @@
 	update_icon()
 
 /obj/item/mech_equipment/ionjets/on_update_icon()
-	. = ..()
 	if (active)
 		icon_state = "mech_jet_on"
 		set_light(1, 1, l_color = COLOR_LIGHT_CYAN)
@@ -827,6 +844,9 @@
 			new /obj/temporary(get_step(owner.loc, reverse_direction(owner.dir)), 2 SECONDS, 'icons/effects/effects.dmi',"cyan_sparkles")
 			owner.setClickCooldown(2 SECONDS)
 			if (do_after(owner, 2 SECONDS, target, (DO_DEFAULT | DO_PUBLIC_PROGRESS | DO_USER_UNIQUE_ACT) & ~DO_USER_CAN_TURN) && slideCheck(TT))
+				//[SIERRA-ADD]
+				owner.add_heat(heat_generation)
+				//[SIERRA-ADD]
 				owner.visible_message(SPAN_DANGER("Burning hard, \the [owner] thrusts forward!"))
 				owner.throw_at(get_ranged_target_turf(owner, owner.dir, slide_distance), slide_distance, 1, owner, FALSE)
 			else

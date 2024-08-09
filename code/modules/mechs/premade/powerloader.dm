@@ -81,11 +81,6 @@
 	install_system(new /obj/item/mech_equipment/mounted_system/extinguisher(src), HARDPOINT_RIGHT_HAND)
 	install_system(new /obj/item/mech_equipment/atmos_shields(src), HARDPOINT_BACK)
 
-/obj/item/mech_component/sensors/firefighter/prebuild()
-	..()
-	software = new(src)
-	software.installed_software = list(MECH_SOFTWARE_UTILITY, MECH_SOFTWARE_ENGINEERING)
-
 /mob/living/exosuit/premade/powerloader/old
 	name = "weathered power loader"
 	desc = "An ancient, but well-liked cargo handling exosuit. The paint is starting to flake. Perhaps some maintenance is in order?"
@@ -98,11 +93,20 @@
 			MC.color = rgb(255,rand(188, 225),rand(55, 136))
 	//Damage it
 	var/obj/item/mech_component/damaged = pick(parts)
+	//[SIERRA-EDIT] - Mechs-by-Shegar
+	/*
+	damaged.take_brute_damage((damaged.max_damage/ 4 ) * MECH_COMPONENT_DAMAGE_DAMAGED)
+	if(prob(33))
+		parts -= damaged
+		damaged = pick(parts)
+		damaged.take_brute_damage((damaged.max_damage / 4 ) * MECH_COMPONENT_DAMAGE_DAMAGED)
+	*/
 	damaged.take_brute_damage((damaged.max_damage / 4 ) * MECH_COMPONENT_DAMAGE_DAMAGED)
 	if(prob(33))
 		parts -= damaged
 		damaged = pick(parts)
 		damaged.take_brute_damage((damaged.max_damage / 4 ) * MECH_COMPONENT_DAMAGE_DAMAGED)
+	//[SIERRA-EDIT] - Mechs-by-Shegar
 
 /mob/living/exosuit/premade/powerloader/old/spawn_mech_equipment()
 	install_system(new /obj/item/mech_equipment/light(src), HARDPOINT_HEAD)
