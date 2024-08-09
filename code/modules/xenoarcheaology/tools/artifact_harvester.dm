@@ -298,7 +298,9 @@
 				anomaly_tech.level = 8
 				src.inserted_disk.stored = anomaly_tech
 			else if(effect_type == EFFECT_PARTICLE)
-				var/datum/tech/anomaly_tech = new /datum/tech/materials
+			//[SIERRA-ADD] - MODPACK_RND
+				var/datum/tech/anomaly_tech = new /datum/tech/engineering
+			//[/SIERRA-ADD] - MODPACK_RND
 				anomaly_tech.level = 8
 				src.inserted_disk.stored = anomaly_tech
 			. = TOPIC_REFRESH

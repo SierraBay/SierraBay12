@@ -6,7 +6,14 @@
 
 #include "code/colony_random.dm"
 #include "code/multimeter.dm"
+#include "code/living_adv.dm"
 #include "code/noose.dm"
 #include "code/wires.dm"
+#include "code/reagents.dm"
+#include "code/cell_charger.dm"
+#include "code/vox.dm"
+#include "code/simple.dm"
+#include "code/circuit.dm"
+#include "code/global_hud_sierra.dm"
 
 #endif

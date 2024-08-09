@@ -44,6 +44,6 @@
 	landmark_tag = "nav_hangar_reaperalt"
 
 /obj/shuttle_landmark/reaper/dock
-	name = "NSV Sierra Dock"
+	name = "Fourth Deck Fore Dock"
 	landmark_tag = "nav_reaper_dock"
 	docking_controller = "nuke_shuttle_dock_airlock"

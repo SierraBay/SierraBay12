@@ -375,6 +375,10 @@
 	dir = 2;
 	pixel_y = 22
 	},
+/obj/structure/table/rack,
+/obj/item/ammo_magazine/proto_smg/mech,
+/obj/item/ammo_magazine/proto_smg/mech,
+/obj/item/ammo_magazine/proto_smg/mech,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -636,12 +640,7 @@
 /turf/unsimulated/floor/techfloor,
 /area/map_template/rescue_base/base)
 "bF" = (
-/obj/machinery/door/blast/regular{
-	id_tag = "heavyrescue";
-	name = "Combat Exosuit";
-	dir = 4;
-	health_max = 100000
-	},
+/obj/structure/table/reinforced,
 /turf/unsimulated/floor/techfloor{
 	icon_state = "techfloor_grid"
 	},
@@ -1756,6 +1755,8 @@
 /area/map_template/rescue_base/start)
 "dU" = (
 /obj/structure/table/rack,
+/obj/item/mech_equipment/ballistic_shield,
+/obj/item/mech_equipment/mounted_system/melee/mechete,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -2209,8 +2210,10 @@
 	},
 /area/map_template/rescue_base/base)
 "eK" = (
-/mob/living/exosuit/premade/heavy,
-/obj/machinery/mech_recharger,
+/obj/structure/table/reinforced,
+/obj/item/ammo_magazine/shotgunmag/mech,
+/obj/item/ammo_magazine/shotgunmag/mech,
+/obj/item/ammo_magazine/shotgunmag/mech,
 /turf/unsimulated/floor/techfloor{
 	icon_state = "techfloor_grid"
 	},
@@ -3176,6 +3179,13 @@
 	icon_state = "dark"
 	},
 /area/map_template/rescue_base/base)
+"lg" = (
+/obj/machinery/mech_recharger,
+/mob/living/exosuit/premade/heavy,
+/turf/unsimulated/floor/techfloor{
+	icon_state = "techfloor_grid"
+	},
+/area/map_template/rescue_base/base)
 "lE" = (
 /obj/structure/shuttle/engine/propulsion,
 /turf/space,
@@ -3193,6 +3203,13 @@
 /obj/item/ammo_magazine/mil_rifle/heavy,
 /obj/item/ammo_magazine/mil_rifle/heavy,
 /obj/item/ammo_magazine/mil_rifle/heavy,
+/turf/unsimulated/floor/techfloor{
+	icon_state = "techfloor_grid"
+	},
+/area/map_template/rescue_base/base)
+"pt" = (
+/obj/structure/table/reinforced,
+/obj/item/robot_parts/robot_component/armour/exosuit/combat,
 /turf/unsimulated/floor/techfloor{
 	icon_state = "techfloor_grid"
 	},
@@ -3233,6 +3250,15 @@
 /obj/item/rig/ert/engineer,
 /turf/unsimulated/floor/techfloor,
 /area/map_template/rescue_base/base)
+"xd" = (
+/obj/structure/table/rack,
+/obj/item/ammo_magazine/shotgunmag/mech,
+/obj/item/ammo_magazine/shotgunmag/mech,
+/obj/item/ammo_magazine/shotgunmag/mech,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/map_template/rescue_base/base)
 "xK" = (
 /obj/structure/table/rack,
 /obj/item/clothing/suit/armor/vest/ert/medical,
@@ -3267,6 +3293,13 @@
 	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
+	},
+/area/map_template/rescue_base/base)
+"Al" = (
+/obj/structure/table/rack,
+/obj/item/robot_parts/robot_component/armour/exosuit/combat,
+/turf/unsimulated/floor/techfloor{
+	icon_state = "techfloor_grid"
 	},
 /area/map_template/rescue_base/base)
 "Bh" = (
@@ -3340,6 +3373,13 @@
 	icon_state = "dark"
 	},
 /area/map_template/rescue_base/base)
+"DZ" = (
+/obj/machinery/mech_recharger,
+/mob/living/exosuit/premade/ert,
+/turf/unsimulated/floor/techfloor{
+	icon_state = "techfloor_grid"
+	},
+/area/map_template/rescue_base/base)
 "Es" = (
 /obj/machinery/telecomms/allinone/ert,
 /turf/simulated/floor/plating,
@@ -3363,6 +3403,30 @@
 	icon_state = "dark"
 	},
 /area/map_template/rescue_base/base)
+"Kd" = (
+/obj/structure/table/rack,
+/obj/item/robot_parts/robot_component/armour/exosuit/em,
+/turf/unsimulated/floor/techfloor{
+	icon_state = "techfloor_grid"
+	},
+/area/map_template/rescue_base/base)
+"Kx" = (
+/obj/structure/table/rack,
+/obj/item/robot_parts/robot_component/actuator,
+/obj/item/robot_parts/robot_component/actuator,
+/obj/item/robot_parts/robot_component/actuator,
+/obj/item/robot_parts/robot_component/actuator,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/map_template/rescue_base/base)
+"Mx" = (
+/obj/structure/table/rack,
+/obj/item/mech_equipment/mounted_system/taser/ballistic/smg,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/map_template/rescue_base/base)
 "Wi" = (
 /obj/structure/table/rack,
 /obj/item/storage/box/smokes,
@@ -3372,6 +3436,22 @@
 /obj/item/storage/box/emps,
 /obj/item/gun/launcher/grenade,
 /turf/unsimulated/floor/techfloor,
+/area/map_template/rescue_base/base)
+"XB" = (
+/obj/machinery/door/blast/regular{
+	id_tag = "heavyrescue";
+	name = "Combat Exosuit";
+	dir = 4;
+	health_max = 100000
+	},
+/turf/unsimulated/floor/plating,
+/area/map_template/rescue_base/base)
+"Zn" = (
+/obj/structure/table/reinforced,
+/obj/item/robot_parts/robot_component/armour/exosuit/em,
+/turf/unsimulated/floor/techfloor{
+	icon_state = "techfloor_grid"
+	},
 /area/map_template/rescue_base/base)
 "ZT" = (
 /obj/machinery/atmospherics/unary/tank/air{
@@ -5010,8 +5090,8 @@ ao
 ao
 ao
 ao
-ar
-ar
+ba
+eO
 ar
 ar
 ad
@@ -5261,15 +5341,15 @@ bB
 bB
 bP
 ad
+xd
 ar
+Kx
+Mx
+dU
 ar
-ar
-ba
-eO
-aG
 aV
 co
-dU
+aG
 ad
 ar
 ar
@@ -5326,11 +5406,11 @@ bB
 bB
 ad
 ad
-ad
-bF
-ad
+XB
 ad
 ad
+ad
+XB
 ad
 ad
 ad
@@ -5391,12 +5471,12 @@ cp
 ad
 eK
 nZ
-nZ
-nZ
+pt
 ad
-ew
-ew
-ew
+Zn
+nZ
+bF
+ad
 ew
 ad
 ar
@@ -5454,13 +5534,13 @@ ad
 ad
 ad
 gZ
-nZ
-nZ
-nZ
+DZ
+Kd
 ad
-ew
-ew
-ew
+Al
+lg
+gZ
+ad
 ew
 ad
 ar
@@ -5522,9 +5602,9 @@ ad
 ad
 ad
 ad
-ew
-ew
-ew
+ad
+ad
+ad
 ew
 ad
 ad

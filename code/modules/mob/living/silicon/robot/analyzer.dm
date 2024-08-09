@@ -81,9 +81,12 @@
 			to_chat(user, "<hr>")
 
 			to_chat(user, SPAN_NOTICE("Internal brain activity:"))
-			var/obj/item/organ/internal/B = H.internal_organs_by_name[BP_BRAIN]
-			if(B)
-				to_chat(user, "[B.name]: [SPAN_COLOR("red", (B.status & ORGAN_DEAD) ? "NO ACTIVITY DETECTED - DAMAGED PAST POINT OF NO RETURN" : B.damage)]")
+			var/obj/item/organ/internal/mmi = H.internal_organs_by_name[BP_BRAIN]
+			var/obj/item/organ/internal/posibrain/posi = H.internal_organs_by_name[BP_POSIBRAIN]
+			if(mmi)
+				to_chat(user, "[mmi.name]: [SPAN_COLOR("red", (mmi.status & ORGAN_DEAD) ? "NO ACTIVITY DETECTED - DAMAGED PAST POINT OF NO RETURN" : mmi.damage)]")
+			else if(posi)
+				to_chat(user, "[posi.name]: [SPAN_COLOR("red", (posi.status & ORGAN_DEAD) ? "NO ACTIVITY DETECTED - DAMAGED PAST POINT OF NO RETURN" : posi.damage)]")
 			else
 				to_chat(user, SPAN_COLOR("red", "ERROR - Brain not present"))
 

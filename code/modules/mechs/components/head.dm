@@ -12,6 +12,8 @@
 	var/active_sensors = 0
 	power_use = 15
 	w_class = ITEM_SIZE_NORMAL
+	var/obj/mob/exosuit/owner
+
 
 /obj/item/mech_component/sensors/Destroy()
 	QDEL_NULL(camera)
@@ -36,22 +38,14 @@
 	camera = locate() in src
 	software = locate() in src
 
-//EDIT
-// [SIERRA-EDIT] - SHUTTLE_TOGGLE - (Optional Reason/comment)
-  /* /obj/item/mech_component/sensors/proc/get_sight(powered)
+/obj/item/mech_component/sensors/proc/get_sight(powered)
 	var/flags = 0
 	if(total_damage >= 0.8 * max_damage || !powered)
 		flags |= BLIND
 	else if(active_sensors && powered)
 		flags |= vision_flags
-	*/
-/obj/item/mech_component/sensors/proc/get_sight(powered)
-	var/flags = 0
-	if(!camera || !powered)
-		flags |= BLIND
-	else if(active_sensors && powered)
-		flags |= vision_flags
-  // [SIERRA-EDIT]
+	return flags
+
 
 
 /obj/item/mech_component/sensors/proc/get_invisible(powered)
