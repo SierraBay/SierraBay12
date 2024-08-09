@@ -534,7 +534,7 @@
 /area/map_template/sfv_arbiter)
 "qt" = (
 /obj/paint/black,
-/obj/machinery/vending/medical,
+/obj/machinery/vending/medical/torch,
 /turf/simulated/wall/titanium,
 /area/map_template/sfv_arbiter)
 "qv" = (
