@@ -81,7 +81,7 @@
 	return ..()
 
 // Mechs are handled in their attackby (mech_interaction.dm).
-// [SIERRA-REMOVE] - MECHS_BY_SHEGAR - Не нужны
+// [SIERRA-REMOVE] - Mechs_by_shegar - Не нужны
 	/*
 
 
