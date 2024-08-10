@@ -13,7 +13,12 @@
 
 /obj/item/organ/internal/appendix/Process()
 	..()
-	if(inflamed && owner)
+//[SIERRA-EDIT]
+	if(!owner)
+		return
+	owner.immunity = min(owner.immunity + 0.025, owner.immunity_norm)
+	if(inflamed)
+//[SIERRA-EDIT]
 		inflamed++
 		if(prob(5))
 			if(owner.can_feel_pain())

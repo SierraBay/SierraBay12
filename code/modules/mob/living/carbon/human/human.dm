@@ -943,6 +943,11 @@
 					if(H.brainmob.mind)
 						H.brainmob.mind.transfer_to(src)
 						qdel(H)
+	//[SIERRA-ADD] VIRUSOLOGY
+	for (var/ID in virus2)
+		var/datum/disease2/disease/V = virus2[ID]
+		V.cure(src)
+	//[/SIERRA-ADD]
 
 	losebreath = 0
 

@@ -28,7 +28,12 @@
 				"blood_DNA" = dna.unique_enzymes,
 				"blood_colour" = species.get_blood_colour(src),
 				"blood_type" = dna.b_type,
-				"trace_chem" = null
+				"trace_chem" = null,
+//SIERRA-ADD VIRUSOLOGY
+				"virus2" = list(),
+				"antibodies" = list()
+//SIERRA-ADD
+
 			)
 			B.color = B.data["blood_colour"]
 
@@ -208,6 +213,12 @@
 	data["trace_chem"] = temp_chem
 	data["dose_chem"] = chem_doses.Copy()
 	data["blood_colour"] = species.get_blood_colour(src)
+//SIERRA-ADD VIRUSOLOGY
+	if (!data["virus2"])
+		data["virus2"] = list()
+	data["virus2"] |= virus_copylist(virus2)
+	data["antibodies"] = antibodies
+//SIERRA-ADD
 	return data
 
 /proc/blood_splatter(target,datum/reagent/blood/source,large,spray_dir)
@@ -264,6 +275,11 @@
 			B.blood_DNA[source.data["blood_DNA"]] = source.data["blood_type"]
 		else
 			B.blood_DNA[source.data["blood_DNA"]] = "O+"
+//SIERRA-ADD VIRUSOLOGY
+	// Update virus information.
+	if(source.data["virus2"])
+		B.virus2 = virus_copylist(source.data["virus2"])
+//SIERRA-ADD
 
 	B.fluorescent  = ATOM_FLOURESCENCE_NONE
 	B.set_invisibility(0)
