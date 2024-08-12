@@ -261,7 +261,7 @@ SUBSYSTEM_DEF(explosives)
 	var/search_direction
 	var/current_power
 	var/index = 1
-	while (index <= turf_queue.len)
+	while (index <= LAZYLEN(turf_queue))
 		current_turf = turf_queue[index]
 		origin_direction = dir_queue[index]
 		current_power = power_queue[index]
@@ -279,7 +279,7 @@ SUBSYSTEM_DEF(explosives)
 		current_power -= current_turf.explosion_resistance
 
 		// Attempt to shortcut on empty tiles: if a turf only has a LO on it, we don't need to check object resistance. Some turfs might not have LOs, so we need to check it actually has one.
-		if (current_turf.contents.len > !!current_turf.lighting_overlay)
+		if (LAZYLEN(current_turf.contents) > !!current_turf.lighting_overlay)
 			for (var/thing in current_turf)
 				var/atom/movable/AM = thing
 				if (AM.simulated && AM.explosion_resistance)
@@ -365,7 +365,7 @@ SUBSYSTEM_DEF(explosives)
 
 		if (T.simulated)
 			T.ex_act(severity)
-		if (T.contents.len > !!T.lighting_overlay)
+		if (LAZYLEN(T.contents) > !!T.lighting_overlay)
 			for (var/subthing in T)
 				var/atom/movable/AM = subthing
 				if (AM.simulated)

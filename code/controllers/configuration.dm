@@ -451,9 +451,9 @@
 	var/static/shutdown_on_reboot = FALSE
 	var/static/use_spreading_explosions = TRUE //Defines whether the server uses iterative or circular explosions.
 
-	var/static/iterative_explosives_z_threshold = 15
-	var/static/iterative_explosives_z_multiplier = 0.25
-	var/static/iterative_explosives_z_subtraction = 4
+	var/static/iterative_explosives_z_threshold = 10
+	var/static/iterative_explosives_z_multiplier = 0.5
+	var/static/iterative_explosives_z_subtraction = 2
 	// [/SIERRA-ADD]
 
 
