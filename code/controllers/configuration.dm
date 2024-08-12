@@ -449,6 +449,11 @@
 
 	// [SIERRA-ADD]
 	var/static/shutdown_on_reboot = FALSE
+	var/static/use_spreading_explosions = TRUE //Defines whether the server uses iterative or circular explosions.
+
+	var/static/iterative_explosives_z_threshold = 15
+	var/static/iterative_explosives_z_multiplier = 0.25
+	var/static/iterative_explosives_z_subtraction = 4
 	// [/SIERRA-ADD]
 
 
@@ -898,6 +903,18 @@
 			// [SIERRA-ADD]
 			if ("shutdown_on_reboot")
 				shutdown_on_reboot = TRUE
+
+			if ("explosion_z_threshold")
+				iterative_explosives_z_threshold = text2num(value)
+
+			if ("explosion_z_mult")
+				iterative_explosives_z_multiplier = text2num(value)
+
+			if ("explosion_z_sub")
+				iterative_explosives_z_subtraction = text2num(value)
+
+			if ("use_spreading_explosions")
+				use_spreading_explosions = TRUE
 			// [/SIERRA-ADD]
 			// [SIERRA-ADD] - EX666_ECOSYSTEM
 			if ("overflow_server_url")
