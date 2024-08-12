@@ -212,3 +212,13 @@ SUBSYSTEM_DEF(lighting)
 	if (oq_idex > 1)
 		overlay_queue.Cut(1, oq_idex)
 		oq_idex = 1
+
+
+/datum/controller/subsystem/lighting/ExplosionStart()
+	force_queued = TRUE
+	can_fire = FALSE
+
+/datum/controller/subsystem/lighting/ExplosionEnd()
+	can_fire = TRUE
+	if (!force_override)
+		force_queued = FALSE

@@ -69,3 +69,9 @@ SUBSYSTEM_DEF(processing)
 		crash_with("[log_info_line(subsystem.debug_last_thing)] slept during processing. Spent [tick_time] tick\s.")
 	if(tick_use_limit > 0)
 		crash_with("[log_info_line(subsystem.debug_last_thing)] took longer than a tick to process. Exceeded with [tick_use_limit]%")
+
+/datum/controller/subsystem/processing/ExplosionStart()
+	can_fire = FALSE
+
+/datum/controller/subsystem/processing/ExplosionEnd()
+	can_fire = TRUE

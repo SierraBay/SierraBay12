@@ -432,3 +432,9 @@ Geometry processing completed in [(Uptime() - start_uptime)/10] seconds!
 		active_edges -= E
 	if(processing_edges)
 		processing_edges -= E
+
+/datum/controller/subsystem/air/ExplosionStart()
+	can_fire = FALSE
+
+/datum/controller/subsystem/air/ExplosionEnd()
+	can_fire = TRUE
