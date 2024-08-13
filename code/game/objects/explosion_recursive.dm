@@ -2,6 +2,7 @@
 #define EXPLFX_SOUND 2
 #define EXPLFX_SHAKE 1
 #define EXPLFX_NONE 0
+GLOBAL_VAR_INIT(explosion_in_process, FALSE)
 
 SUBSYSTEM_DEF(explosives)
 	name = "Explosives"
@@ -15,13 +16,11 @@ SUBSYSTEM_DEF(explosives)
 	var/list/work_queue = list()
 	var/ticks_without_work = 0
 	var/list/explosion_turfs
-	var/explosion_in_progress
 
 	var/mc_notified = FALSE
 
 /datum/controller/subsystem/explosives/Recover()
 	work_queue = SSexplosives.work_queue
-	explosion_in_progress = SSexplosives.explosion_in_progress
 	explosion_turfs = SSexplosives.explosion_turfs
 
 /datum/controller/subsystem/explosives/fire(resumed = FALSE)
@@ -224,7 +223,7 @@ SUBSYSTEM_DEF(explosives)
 	log_debug("iexpl: Beginning discovery phase.")
 	var/time = world.time
 
-	explosion_in_progress = TRUE
+	GLOB.explosion_in_process = TRUE
 	var/list/act_turfs = list()
 	act_turfs[epicenter] = power
 
@@ -380,7 +379,7 @@ SUBSYSTEM_DEF(explosives)
 
 		turf_tally++
 
-	explosion_in_progress = FALSE
+	GLOB.explosion_in_process = FALSE
 	log_debug("iexpl: Application completed in [(world.time-time)/10] seconds; processed [turf_tally] turfs and [movable_tally] movables.")
 
 #undef SEARCH_DIR
