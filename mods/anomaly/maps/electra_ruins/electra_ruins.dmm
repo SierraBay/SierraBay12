@@ -3,107 +3,8 @@
 /obj/anomaly_spawner/electra,
 /turf/template_noop,
 /area/template_noop)
-"b" = (
-/obj/structure/cable/yellow{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4";
-	dir = 1
-	},
-/turf/template_noop,
-/area/template_noop)
-"c" = (
-/obj/structure/cable/yellow{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/obj/anomaly_spawner/electra,
-/turf/template_noop,
-/area/template_noop)
-"d" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/template_noop,
-/area/template_noop)
-"e" = (
-/obj/structure/cable/yellow{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/obj/structure/cable/yellow,
-/obj/anomaly_spawner/electra,
-/turf/template_noop,
-/area/template_noop)
-"o" = (
-/obj/structure/cable/yellow{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/obj/structure/cable/yellow{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4";
-	dir = 1
-	},
-/obj/item/rig_module/electrowarfare_suite,
-/turf/template_noop,
-/area/template_noop)
 "u" = (
 /obj/anomaly_spawner/commander,
-/turf/template_noop,
-/area/template_noop)
-"v" = (
-/obj/structure/cable/yellow{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/turf/template_noop,
-/area/template_noop)
-"y" = (
-/obj/structure/cable/yellow{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4";
-	dir = 1
-	},
-/obj/structure/cable/yellow{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/obj/structure/cable/yellow{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/turf/template_noop,
-/area/template_noop)
-"K" = (
-/turf/template_noop,
-/area/template_noop)
-"V" = (
-/obj/structure/cable/yellow,
-/obj/anomaly_spawner/electra,
 /turf/template_noop,
 /area/template_noop)
 
@@ -159,10 +60,10 @@ a
 a
 a
 a
-V
-y
-v
-K
+a
+a
+a
+a
 a
 a
 a
@@ -171,10 +72,10 @@ a
 a
 a
 a
-c
-d
-o
-K
+a
+a
+a
+a
 a
 a
 a
@@ -183,10 +84,10 @@ a
 a
 a
 a
-e
-b
-K
-K
+a
+a
+a
+a
 a
 a
 a
