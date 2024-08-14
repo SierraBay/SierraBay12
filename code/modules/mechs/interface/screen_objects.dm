@@ -214,9 +214,6 @@
 /obj/screen/movable/exosuit/toggle/power_control/toggled()
 	. = ..()
 	owner.toggle_power(usr)
-	//[SIERRA-ADD] - Mechs-by-Shegar
-	owner.update_icon()
-	//[SIERRA-ADD]
 
 /obj/screen/movable/exosuit/toggle/power_control/on_update_icon()
 	toggled = (owner.power == MECH_POWER_ON)
@@ -299,6 +296,7 @@
 	to_chat(usr, SPAN_NOTICE("The [owner.body.hatch_descriptor] is now [owner.hatch_closed ? "closed" : "open" ]."))
 	owner.update_icon()
 	playsound(src.loc, 'sound/machines/suitstorage_cycledoor.ogg', 50, 1, -6)
+
 
 /obj/screen/movable/exosuit/toggle/hatch_open/on_update_icon()
 	toggled = owner.hatch_closed
