@@ -60,7 +60,7 @@
 	closed = FALSE
 	update_icon()
 
-/obj/item/collector/update_icon()
+/obj/item/collector/on_update_icon()
 	. = ..()
 	if(closed)
 		icon_state = "collector_closed"
