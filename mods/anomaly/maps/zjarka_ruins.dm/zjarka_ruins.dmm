@@ -1,0 +1,135 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"c" = (
+/obj/anomaly_spawner/zjarka,
+/turf/unsimulated/floor/lava/cold,
+/area/template_noop)
+"u" = (
+/obj/anomaly_spawner/commander{
+	max_anomaly_size = 1
+	},
+/turf/unsimulated/floor/lava/cold,
+/area/template_noop)
+"K" = (
+/turf/template_noop,
+/area/template_noop)
+
+(1,1,1) = {"
+K
+c
+c
+K
+K
+K
+c
+K
+c
+K
+"}
+(2,1,1) = {"
+c
+c
+c
+c
+K
+c
+c
+c
+c
+c
+"}
+(3,1,1) = {"
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+"}
+(4,1,1) = {"
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+"}
+(5,1,1) = {"
+c
+c
+c
+c
+c
+c
+c
+c
+c
+K
+"}
+(6,1,1) = {"
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+"}
+(7,1,1) = {"
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+"}
+(8,1,1) = {"
+c
+c
+c
+c
+c
+c
+c
+c
+c
+K
+"}
+(9,1,1) = {"
+c
+c
+c
+c
+K
+c
+c
+c
+c
+c
+"}
+(10,1,1) = {"
+u
+K
+c
+c
+c
+K
+c
+c
+c
+K
+"}
