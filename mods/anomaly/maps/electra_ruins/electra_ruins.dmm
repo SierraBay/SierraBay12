@@ -3,10 +3,13 @@
 /obj/anomaly_spawner/electra,
 /turf/template_noop,
 /area/template_noop)
-"u" = (
+"c" = (
+/turf/template_noop,
+/area/space)
+"e" = (
 /obj/anomaly_spawner/commander,
 /turf/template_noop,
-/area/template_noop)
+/area/space)
 
 (1,1,1) = {"
 a
@@ -117,7 +120,6 @@ a
 a
 "}
 (10,1,1) = {"
-u
 a
 a
 a
@@ -127,4 +129,17 @@ a
 a
 a
 a
+a
+"}
+(11,1,1) = {"
+e
+c
+c
+c
+c
+c
+c
+c
+c
+c
 "}

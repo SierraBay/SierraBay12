@@ -4,14 +4,23 @@
 /turf/unsimulated/floor/lava/cold,
 /area/template_noop)
 "u" = (
+/turf/unsimulated/floor/lava/cold,
+/area/space)
+"A" = (
 /obj/anomaly_spawner/commander{
 	max_anomaly_size = 1
 	},
-/turf/unsimulated/floor/lava/cold,
-/area/template_noop)
+/turf/template_noop,
+/area/space)
 "K" = (
 /turf/template_noop,
 /area/template_noop)
+"Q" = (
+/turf/unsimulated/floor/lava/cold,
+/area/template_noop)
+"W" = (
+/turf/template_noop,
+/area/space)
 
 (1,1,1) = {"
 K
@@ -122,14 +131,26 @@ c
 c
 "}
 (10,1,1) = {"
+c
+K
+c
+c
+c
+Q
+c
+c
+c
+K
+"}
+(11,1,1) = {"
+A
 u
-K
-c
-c
-c
-K
-c
-c
-c
-K
+W
+u
+W
+u
+W
+u
+W
+W
 "}
