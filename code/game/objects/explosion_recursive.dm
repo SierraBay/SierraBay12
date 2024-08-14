@@ -68,7 +68,11 @@ SUBSYSTEM_DEF(explosives)
 	epicenter = get_turf(epicenter)
 	if(!epicenter)
 		return
-
+//[SIERRA-ADD] - MODPACK_RND
+	for(var/obj/item/device/beacon/explosion_watcher/W in explosion_watcher_list)
+		if(get_dist(W, epicenter) < 10)
+			W.react_explosion(epicenter, power)
+//[/SIERRA-ADD] - MODPACK_RND
 	// Handles recursive propagation of explosions.
 	if(devastation_range > 2 || heavy_impact_range > 2)
 		if(HasAbove(epicenter.z) && z_transfer & UP)

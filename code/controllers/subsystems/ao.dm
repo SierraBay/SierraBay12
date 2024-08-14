@@ -34,9 +34,10 @@ SUBSYSTEM_DEF(ao)
 			queue.Cut(1, cut_until)
 			return
 	queue.Cut()
-
+//[SIERRA-ADD]
 /datum/controller/subsystem/ao/ExplosionStart()
 	can_fire = FALSE
 
 /datum/controller/subsystem/ao/ExplosionEnd()
 	can_fire = TRUE
+//[/SIERRA-ADD]

@@ -14,6 +14,7 @@
 #define SS_PRIORITY_TICKER         100 // Gameticker.
 // [SIERRA-ADD] - SSINPUT
 #define SS_PRIORITY_INPUT          99 // Input things.
+#define SS_PRIORITY_EXPLOSIVES    40   // Explosion processing.
 // [/SIERRA-ADD]
 #define SS_PRIORITY_MOB            95  // Mob Life().
 #define SS_PRIORITY_MACHINERY      95  // Machinery + powernet ticks.
@@ -44,7 +45,6 @@
 #define SS_PRIORITY_PROCESSING    95   // Generic datum processor. Replaces objects processor.
 #define SS_PRIORITY_PLANTS        90   // Plant processing, slow ticks.
 #define SS_PRIORITY_VINES         50   // Spreading vine effects.
-#define SS_PRIORITY_EXPLOSIVES    40   // Explosion processing.
 #define SS_PRIORITY_PSYCHICS      45   // Psychic complexus processing.
 #define SS_PRIORITY_NANO          40   // Updates to nanoui uis.
 #define SS_PRIORITY_TURF          30   // Radioactive walls/blob.

@@ -21,7 +21,7 @@
 
 #define RANGE_TURFS(CENTER, RADIUS) block(locate(max(CENTER.x-(RADIUS), 1), max(CENTER.y-(RADIUS),1), CENTER.z), locate(min(CENTER.x+(RADIUS), world.maxx), min(CENTER.y+(RADIUS), world.maxy), CENTER.z))
 
-
+//[SIERRA-ADD]
 #define RANGED_TURFS(RADIUS, CENTER) \
 	RECT_TURFS(RADIUS, RADIUS, CENTER)
 
@@ -30,3 +30,4 @@
 	locate(max((CENTER).x-(H_RADIUS),1), max((CENTER).y-(V_RADIUS),1), (CENTER).z), \
 	locate(min((CENTER).x+(H_RADIUS),world.maxx), min((CENTER).y+(V_RADIUS),world.maxy), (CENTER).z) \
 	)
+//[/SIERRA-ADD]

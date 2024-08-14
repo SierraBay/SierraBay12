@@ -900,10 +900,9 @@
 				enable_cold_mist = TRUE
 			if ("disable_runechat")
 				runechat_enabled = FALSE
-			// [SIERRA-ADD]
 			if ("shutdown_on_reboot")
 				shutdown_on_reboot = TRUE
-
+			// [SIERRA-ADD]
 			if ("explosion_z_threshold")
 				iterative_explosives_z_threshold = text2num(value)
 

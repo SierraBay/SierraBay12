@@ -213,7 +213,7 @@ SUBSYSTEM_DEF(lighting)
 		overlay_queue.Cut(1, oq_idex)
 		oq_idex = 1
 
-
+//[SIERRA-ADD]
 /datum/controller/subsystem/lighting/ExplosionStart()
 	force_queued = TRUE
 	can_fire = FALSE
@@ -222,3 +222,4 @@ SUBSYSTEM_DEF(lighting)
 	can_fire = TRUE
 	if (!force_override)
 		force_queued = FALSE
+//[/SIERRA-ADD]

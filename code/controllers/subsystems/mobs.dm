@@ -63,9 +63,3 @@ if(MOB.is_processing == SSmobs) {\
 else if (MOB.is_processing) {\
 	crash_with("Failed to stop processing mob. Being processed by [MOB.is_processing] instead.")\
 }
-
-/datum/controller/subsystem/mobs/ExplosionStart()
-	can_fire = FALSE
-
-/datum/controller/subsystem/mobs/ExplosionEnd()
-	can_fire = TRUE
