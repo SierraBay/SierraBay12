@@ -8,7 +8,7 @@
 #include "code\anomaly_graphic.dm" //Графика и внешний вид
 #include "code\anomaly_light.dm" //Освещение, вспышки и тому подобное
 #include "code\anomaly_parts.dm" //Код, отвечающий за многотайтловость аномалий
-#include "code\interacti_with_items.dm" //Взаимодействие аномалий с предметами и обьектами
+#include "code\interact_with_items.dm" //Взаимодействие аномалий с предметами и обьектами
 #include "code\anomaly_loop.dm" //Код, отвечающий за длительную обработку аномалии
 #include "code\anomaly_deleting.dm" //Удаление аномалий, артефактов и вспомогательных частей
 #include "code\anomaly_preload.dm" //Предзарядка аномалии
