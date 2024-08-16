@@ -48,6 +48,6 @@
 
 //Карты, диреликты и прочее
 #include "maps\electra_ruins\electra_ruins.dm"
-#include "maps\zjarka_ruins.dm\zjarka_ruins.dm"
+#include "maps\zjarka_ruins\zjarka_ruins.dm"
 
 #endif
