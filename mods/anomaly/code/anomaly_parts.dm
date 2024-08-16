@@ -41,6 +41,9 @@
 
 ///Если какой-либо атом пересекает вспомогательную часть - передаём сигнал ядру
 /obj/anomaly/part/Crossed(atom/movable/O)
+	if(!core || !core.loc) //Ядра нет у аномалии
+		qdel(src)
+		return
 	core.Crossed(O)
 
 ///Вспомогательная часть аномалии сама по себе НЕ может взводится
@@ -49,6 +52,9 @@
 
 ///Ядро запросил проверить свой тайтл на момент возбудителей
 /obj/anomaly/part/proc/part_check_title()
+	if(!core || !core.loc) //Ядра нет у аномалии
+		qdel(src)
+		return
 	for(var/atom/movable/target in src.loc)
 		if(core.can_be_activated(target))
 			return TRUE
