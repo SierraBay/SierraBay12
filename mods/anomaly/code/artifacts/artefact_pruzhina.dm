@@ -1,6 +1,6 @@
 //Пружина
 /obj/item/artefact/pruzhina
-	name = "Что-то."
+	name = "Something"
 	desc = "При подборе этого предмета вы ощущаете словно все мышцы ваших рук напрягаются, словно от лёгкого удара тока. Вы чувствуете, как ваши волосы подымаются дыбом."
 	icon_state = "pruzhina"
 	rect_to_interactions = list(

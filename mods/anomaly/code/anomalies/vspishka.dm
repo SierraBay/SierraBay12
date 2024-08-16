@@ -1,5 +1,5 @@
 /obj/anomaly/vspishka
-	name = "ярчайшая вспышка"
+	name = "Brightest flash"
 	with_sound = TRUE
 	sound_type = 'mods/anomaly/sounds/vspishka_activated.ogg'
 	idle_effect_type = "vspishka_idle"

@@ -1,5 +1,5 @@
 /obj/item/artefact
-	name = "Ебаная погремушка."
+	name = "Что-то."
 	desc = "Какой-то камень."
 	icon = 'mods/anomaly/icons/artifacts.dmi'
 	///Текущее количество энергии, которое хранит артефакт
@@ -11,18 +11,18 @@
 
 //Жар
 /obj/item/artefact/zjar
-	name = "Что-то."
+	name = "Something"
 	desc = "При поднятии вы чувствуете, словно по вашему телу распростаняется приятное тепло."
 	icon_state = "fire_ball"
 
 //Грави
 /obj/item/artefact/gravi
-	name = "Что-то."
+	name = "Something"
 	desc = "При поднятии вы чувствуете, словно сам воздух вокруг вас становится плотнее."
 	icon_state = "gravi"
 
 //Светлячок
 /obj/item/artefact/svetlyak
-	name = "Что-то."
+	name = "Something"
 	desc = "Невероятно яркий, вы с трудом смотрите на него даже с зажмуренными глазами."
 	icon_state = "svetlyak"

@@ -1,5 +1,5 @@
 /obj/anomaly/thamplin
-	name = "Преломления света"
+	name = "Refractions of light"
 	with_sound = TRUE
 	sound_type = 'mods/anomaly/sounds/tramplin.ogg'
 	idle_effect_type = "trampline_idle"

@@ -1,5 +1,5 @@
 /obj/anomaly/zjarka
-	name = "Струя пламени"
+	name = "Jet of flame"
 	with_sound = TRUE
 	sound_type = 'mods/anomaly/sounds/zjarka.ogg'
 	idle_effect_type = "zjarka_idle"

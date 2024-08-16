@@ -1,5 +1,5 @@
 /obj/anomaly/electra
-	name = "Разряды молний"
+	name = "Lightning strikes"
 	with_sound = TRUE
 	sound_type = 'mods/anomaly/sounds/electra_blast.ogg'
 	activation_effect_type = "electra_activation"

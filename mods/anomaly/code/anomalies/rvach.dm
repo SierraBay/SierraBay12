@@ -4,7 +4,7 @@
 #define RVACH_DESTROY_EFFECT 3
 
 /obj/anomaly/rvach
-	name = "Преломления света"
+	name = "Refractions of light"
 	with_sound = TRUE
 	sound_type = 'mods/anomaly/sounds/rvach_activation.ogg'
 	idle_effect_type = "rvach_idle"
