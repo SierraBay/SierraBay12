@@ -68,7 +68,7 @@
 	var/result_anomalies_ammout
 	var/list/turfs_for_spawn = list()
 	//Собираем все турфы в определённом радиусе
-	//У нас нет турфа? (чего)
+	//У нас нет турфа?
 	if(!src.loc)
 		return
 	for(var/turf/turfs in RANGE_TURFS(src.loc, range_spawn))
