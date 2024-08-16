@@ -69,6 +69,9 @@
 	var/result_anomalies_ammout
 	var/list/turfs_for_spawn = list()
 	//Собираем все турфы в определённом радиусе
+	//У нас нет турфа? (чего)
+	if(!src.loc)
+		return
 	for(var/turf/turfs in RANGE_TURFS(src.loc, range_spawn))
 		LAZYADD(turfs_for_spawn, turfs)
 	var/blocks_ammount = LAZYLEN(turfs_for_spawn)
