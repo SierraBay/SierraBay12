@@ -61,7 +61,7 @@
 		//[SIERRA-ADD] - AI-UPDATE
 		if(ai_control_disabled != 2)
 			if(src.canAIHack(user))
-				src.hack(user)
+				src.start_hack(user)
 		if(ai_control_disabled == 2)
 			return TRUE
 		//[SIERRA-ADD]
