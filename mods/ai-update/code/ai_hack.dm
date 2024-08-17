@@ -10,7 +10,7 @@
 	if(!src.aiHacking)
 		src.aiHacking = TRUE
 		to_chat(user, "Airlock AI control has been blocked, airlock control wire disabled or cut. Attempting to hack into airlock. This may take some time.")
-		addtimer(new Callback(src, PROC_REF(result_hack(user))), 40 SECONDS)
+		addtimer(new Callback(src, PROC_REF(result_hack), user), 40 SECONDS)
 
 /obj/machinery/door/airlock/proc/result_hack(mob/user)
 	if(src.canAIControl())
