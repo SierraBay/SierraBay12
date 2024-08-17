@@ -414,7 +414,7 @@ var/global/list/turret_icons
 	if(!tryToShootAt(targets))
 		if(!tryToShootAt(secondarytargets)) // if no valid targets, go for secondary targets
 			//[SIERRA-ADD] - AI_UPDATE - Туррели будут стоять развёрнутыми
-			if(!hold_deployed)
+			if(!hold_deployed && !AiHolder.client)
 			//[SIERRA-ADD]
 				popDown() // no valid targets, close the cover
 

@@ -3,12 +3,15 @@
 	if(!istype(ai)) return
 	if(!AiHolder) return
 	if(!AiHolder.MyAI) switch(alert(ai, "Are you sure that you want to put yourself in turret?", "Ai Control", "Yes", "No"))
-		if("Yes") assume_AI_control(ai)
-	else to_chat(ai, "[src] already occupied by another AI.")
+		if("Yes")
+			assume_AI_control(ai)
+	else
+		to_chat(ai, "[src] already occupied by another AI.")
 
 /atom/proc/assume_AI_control(mob/living/silicon/ai/ai)
 	if(!AiHolder)
 		AIHOLDERINIT
+	to_chat(ai, SPAN_GOOD("User MIDLE MOUSE BUTTON to popdown/popup turret"))
 	ai.mind?.transfer_to(AiHolder)
 	AiHolder.MyAI = ai
 	ai.Controlling = src

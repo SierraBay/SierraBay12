@@ -22,10 +22,14 @@ AIHOLDER_INITIALIZE(/obj/machinery/porta_turret)
 	. = ..()
 	var/list/modifiers = params2list(params)
 	if(modifiers["middle"])
-		if(raised) popDown()
-		else popUp()
-		spawn(1 SECOND) to_chat(AiHolder, "Your turret's cover now [raised ? "open" : "closed"]")
+		if(raised)
+			popDown()
+		else
+			popUp()
+		sleep(1 SECOND)
+		to_chat(AiHolder, "Your turret's cover now [raised ? "open" : "closed"]")
 
-	else if(A != src) target(A)
+	else if(A != src)
+		target(A)
 
 	onAiHolderLife()
