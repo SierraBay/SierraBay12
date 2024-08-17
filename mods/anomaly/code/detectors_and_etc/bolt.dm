@@ -32,3 +32,8 @@
 		/obj/item/bolt,
 		/obj/item/bolt
 	)
+
+
+//Ниже будут изменяться matter у разных предметов, чтоб те имели в составе железо и подобное
+/obj/item/ammo_casing
+	matter = list(MATERIAL_STEEL = 10) //Чистые копейки
