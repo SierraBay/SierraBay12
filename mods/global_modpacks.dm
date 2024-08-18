@@ -10,6 +10,7 @@
 #include "ex666_ecosystem/_ex666_ecosystem.dme"
 #include "escpodinf/_escpodinf.dme"
 #include "expanded_culture_descriptor/_expanded_culture_descriptor.dme"
+#include "explosions/_explosions.dme"
 #include "gliding/_gliding.dme"
 #include "machinery/_machinery.dme"
 #include "hairs_ports/_hairs_ports.dme"

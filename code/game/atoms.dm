@@ -715,11 +715,7 @@
  */
 /atom/proc/visible_message(message, blind_message, range = world.view, checkghosts = null, list/exclude_objs = null, list/exclude_mobs = null)
 	set waitfor = FALSE
-
 	var/turf/T = get_turf(src)
-	if(GLOB.explosion_in_process)
-		if(T)
-			return
 	var/list/mobs = list()
 	var/list/objs = list()
 	get_mobs_and_objs_in_view_fast(T,range, mobs, objs, checkghosts)
