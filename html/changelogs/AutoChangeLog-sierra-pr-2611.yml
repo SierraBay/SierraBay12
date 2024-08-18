@@ -1,0 +1,4 @@
+author: Builder13
+changes:
+  - {bugfix: Фикс бесконечной тряски персонажа}
+delete-after: true

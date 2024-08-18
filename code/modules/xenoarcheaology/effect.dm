@@ -11,6 +11,7 @@
 	var/toggled = FALSE
 	var/on_time //time artifact should stay on for when toggled
 
+
 	var/datum/artifact_trigger/trigger
 
 /datum/artifact_effect/New(atom/location)

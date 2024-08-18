@@ -159,6 +159,9 @@
 	item_state = "card-id"
 	origin_tech = list(TECH_MAGNET = 2, TECH_ESOTERIC = 2)
 	var/uses = 10
+	//[SIERRA-ADD]
+	var/list/emag_sounds = list('mods/utility_items/sounds/emag_act.ogg')
+	//[SIERRA-ADD]
 
 var/global/const/NO_EMAG_ACT = -50
 
@@ -171,6 +174,9 @@ var/global/const/NO_EMAG_ACT = -50
 	A.add_fingerprint(user)
 	if(used_uses)
 		log_and_message_admins("emagged \an [A].")
+		//[SIERRA-ADD]
+		playsound(get_turf(A), pick(emag_sounds), 40, extrarange = -3)
+		//[SIERRA-ADD]
 
 	if(uses<1)
 		user.visible_message(SPAN_WARNING("\The [src] fizzles and sparks - it seems it's been used once too often, and is now spent."))
@@ -288,8 +294,10 @@ var/global/const/NO_EMAG_ACT = -50
 
 /obj/item/card/id/proc/set_id_photo(mob/M)
 	M.ImmediateOverlayUpdate()
-	front = getFlatIcon(M, SOUTH, always_use_defdir = 1)
-	side = getFlatIcon(M, WEST, always_use_defdir = 1)
+//[SIERRA-EDIT]
+	front = getFlatIcon(M, SOUTH)
+	side = getFlatIcon(M, WEST)
+//[/SIERRA-EDIT]
 
 /mob/proc/set_id_info(obj/item/card/id/id_card)
 	id_card.age = 0
