@@ -17,7 +17,7 @@
 
 /datum/sprite_accessory/facial_hair/ipc/scg/check
   name = "Check Mark"
-  icon_state = "ipc_check"
+  icon_state = "ipc_cheсk"
 
 /datum/sprite_accessory/facial_hair/ipc/scg/affir
   name = "Affirmative"
