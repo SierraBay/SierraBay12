@@ -30,6 +30,12 @@
 /datum/controller/subsystem/air/ExplosionEnd()
 	can_fire = TRUE
 
+/datum/controller/subsystem/airflow/ExplosionStart()
+	can_fire = FALSE
+
+/datum/controller/subsystem/airflow/ExplosionEnd()
+	can_fire = TRUE
+
 /datum/controller/subsystem/ao/ExplosionStart()
 	can_fire = FALSE
 
@@ -45,6 +51,23 @@
 	if (!force_override)
 		force_queued = FALSE
 
+/datum/controller/subsystem/disposals/ExplosionStart()
+	can_fire = FALSE
+
+/datum/controller/subsystem/disposals/ExplosionEnd()
+	can_fire = TRUE
+
+/datum/controller/subsystem/fluids/ExplosionStart()
+	can_fire = FALSE
+
+/datum/controller/subsystem/fluids/ExplosionEnd()
+	can_fire = TRUE
+
+/datum/controller/subsystem/ambient_lighting/ExplosionStart()
+	can_fire = FALSE
+
+/datum/controller/subsystem/ambient_lighting/ExplosionEnd()
+	can_fire = TRUE
 
 /datum/station_holomap/Destroy()
 	QDEL_NULL(station_map)
