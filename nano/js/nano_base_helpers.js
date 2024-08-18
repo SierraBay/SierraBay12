@@ -10,7 +10,16 @@ NanoBaseHelpers = function () {
       $('#uiTitleFluff').css("background-repeat", "no-repeat")
       return ''
     },
-
+    ntscieMode: function () {
+      $('body').css("background-color","#502a42")
+      $('body').css("background-image","url('uiBackground-NTsci.png')")
+      $('body').css("background-position","50% 0")
+      $('body').css("background-repeat","repeat-x")
+      $('#uiTitleFluff').css("background-image","url('uiTitleFluff.png')")
+      $('#uiTitleFluff').css("background-position","50% 50%")
+      $('#uiTitleFluff').css("background-repeat", "no-repeat")
+      return ''
+    },
     link: function (text, icon, parameters, status, elementClass, elementId) {
       var iconHtml = ''
       var iconClass = 'noIcon'

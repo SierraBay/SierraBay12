@@ -17,6 +17,9 @@
 		update_items()
 	if (src.stat != DEAD) //still using power
 		use_power()
+		//[SIERRA-ADD] - AI-UPDATE
+		process_queued_alarms()
+		//[SIERRA-ADD]
 	UpdateLyingBuckledAndVerbStatus()
 
 /mob/living/silicon/robot/proc/clamp_values()

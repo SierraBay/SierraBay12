@@ -28,6 +28,22 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	flags_inv = 0
 
+// [SIERRA-ADD]
+/obj/item/clothing/suit/storage/toggle/captain_parade
+	name = "captain parade jacket"
+	desc = "Fancy parade jacket issued to NanoTrasen captains for special occasions."
+	icon = 'maps/sierra/icons/obj/clothing/obj_suit.dmi'
+	item_icons = list(slot_wear_suit_str = 'maps/sierra/icons/mob/onmob/onmob_suit.dmi')
+	icon_state = "cap_parade_jacket"
+
+/obj/item/clothing/suit/storage/toggle/captain_parade/female
+	name = "female captain parade jacket"
+	desc = "Fancy parade jacket issued to NanoTrasen captains for special occasions. This one is purposed for wearing with a skirt."
+	icon = 'maps/sierra/icons/obj/clothing/obj_suit.dmi'
+	item_icons = list(slot_wear_suit_str = 'maps/sierra/icons/mob/onmob/onmob_suit.dmi')
+	icon_state = "cap_parade_jacket_f"
+// [/SIERRA-ADD]
+
 //Chaplain
 /obj/item/clothing/suit/chaplain_hoodie
 	name = "chaplain hoodie"

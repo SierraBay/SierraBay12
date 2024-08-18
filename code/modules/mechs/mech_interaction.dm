@@ -84,6 +84,11 @@
 	var/adj = A.Adjacent(src) // Why in the fuck isn't Adjacent() commutative.
 
 	var/modifiers = params2list(params)
+	//[SIERRA-ADD] - Mechs-by-Shegar
+	if(modifiers["middle"])
+		swap_hardpoint(user)
+		return
+	//[SIERRA-ADD]
 	if(modifiers["shift"])
 		examinate(user, A)
 		return
@@ -221,6 +226,14 @@
 		var/arms_local_damage = arms.melee_damage
 		src.visible_message(SPAN_DANGER("\The [src] steps back, preparing for a strike!"), blind_message = SPAN_DANGER("You hear the loud hissing of hydraulics!"))
 		if (do_after(src, 1.2 SECONDS, get_turf(src), DO_DEFAULT | DO_USER_UNIQUE_ACT | DO_PUBLIC_PROGRESS) && user)
+			add_heat(arms.heat_generation)
+	//[SIERRA-ADD] - Mechs_by_Shegar
+			//CHECK
+			if (get_dist(src, A) > 1.5)
+				src.visible_message(SPAN_DANGER(" [src] misses with his attack!"))
+				setClickCooldown(arms ? arms.action_delay : 7)
+				playsound(src.loc, arms.punch_sound, 50, 1)
+				return
 			//additional actions with objects!
 
 			//emergency airlock open
@@ -413,9 +426,19 @@
 /mob/living/exosuit/use_tool(obj/item/tool, mob/user, list/click_params)
 	// Cable Coil - Repair burn damage
 	if (isCoil(tool))
+		//[SIERRA-ADD] - Mechs-by-Shegar
+		if(inmech(user, src))
+			to_chat(user, "You cannot interacti with mech inside mech.")
+			return
+		//[SIERRA-ADD]
 		if (!getFireLoss())
 			USE_FEEDBACK_FAILURE("\The [src] has no electrical damage to repair.")
 			return TRUE
+		//[SIERRA-ADD] - Mechs-by-Shegar
+		if(usr in pilots)
+			USE_FEEDBACK_FAILURE("\The [src] cannot be repaired from the inside.")
+			return TRUE
+		//[SIERRA-ADD]
 		var/list/damaged_parts = list()
 		for (var/obj/item/mech_component/component in list(arms, legs, body, head))
 			if (component?.burn_damage)
@@ -430,7 +453,7 @@
 		return TRUE
 
 	// Crowbar - Force open locked cockpit
-	if (isCrowbar(tool))
+	else if (isCrowbar(tool))
 		if (!body)
 			USE_FEEDBACK_FAILURE("\The [src] has no cockpit to force.")
 			//[SIERRA-EDIT] - Mechs-by-Shegar
@@ -449,9 +472,8 @@
 		if(hatch_locked)
 			USE_FEEDBACK_FAILURE("\The [src]'s cockpit locked by cockpit security bolts. You need saw or welder.")
 			return FALSE
-		var/delay = min(50 * user.skill_delay_mult(SKILL_DEVICES), 50 * user.skill_delay_mult(SKILL_EVA))
 		visible_message(SPAN_NOTICE("\The [user] starts forcing the \the [src]'s emergency [body.hatch_descriptor] release using \the [tool]."))
-		if(!do_after(user, delay, src, DO_DEFAULT | DO_PUBLIC_PROGRESS))
+		if(!do_after(user, 5 SECONDS, src, DO_DEFAULT | DO_PUBLIC_PROGRESS))
 			return
 		playsound(src, 'sound/machines/bolts_up.ogg', 25, TRUE)
 		hatch_closed = !hatch_closed
@@ -478,7 +500,7 @@
 		return TRUE
 // [SIERRA-EDIT]
 	// Mech Equipment - Install equipment
-	if (istype(tool, /obj/item/mech_equipment))
+	else if (istype(tool, /obj/item/mech_equipment))
 		if (hardpoints_locked)
 			USE_FEEDBACK_FAILURE("\The [src]'s hardpoint system is locked.")
 			return TRUE
@@ -503,7 +525,25 @@
 		return TRUE
 
 	// Multitool - Remove component
-	if (isMultitool(tool))
+	//[SIERRA-ADD] - Mechs-by-Shegar
+	//Персонаж пытающийся взаимодействовать мультитулом может открыть доп взаимодействие?
+	else if (istype(tool, /obj/item/device/multitool/multimeter))
+		can_hack_id(tool, user)
+	else if (isMultitool(tool))
+		//[SIERRA-ADD] - Mechs-by-Shegar
+		if(inmech(user, src))
+			to_chat(user, "You cannot interacti with mech inside mech.")
+			return
+		//[SIERRA-ADD]
+		if(id_holder)
+			var/list/variants = list("Restore ID data", "Dismantle equipment")
+			var/bla
+			var/choose = input(usr, "What you want to do?.", name, bla) as null|anything in variants
+			if(!choose)
+				return
+			if(choose == "Restore ID data")
+				can_hack_id(tool,user)
+		//[SIERRA-ADD] - Mechs-by-Shegar
 		if (hardpoints_locked)
 			USE_FEEDBACK_FAILURE("\The [src]'s hardpoint system is locked.")
 			return TRUE
@@ -521,7 +561,7 @@
 		return TRUE
 
 	// Power Cell - Install cell
-	if (istype(tool, /obj/item/cell))
+	else if (istype(tool, /obj/item/cell))
 		if (!maintenance_protocols)
 			USE_FEEDBACK_FAILURE("\The [src]'s maintenance protocols must be enabled to install \the [tool].")
 			return TRUE
@@ -540,7 +580,12 @@
 		return TRUE
 
 	// Screwdriver - Remove cell
-	if (isScrewdriver(tool))
+	else if (isScrewdriver(tool))
+		//[SIERRA-ADD] - Mechs-by-Shegar
+		if(inmech(user, src))
+			to_chat(user, "You cannot interacti with mech inside mech.")
+			return
+		//[SIERRA-ADD]
 		if (!maintenance_protocols)
 			USE_FEEDBACK_FAILURE("\The [src]'s maintenance protocols must be enabled to access the power cell.")
 			return TRUE
@@ -570,10 +615,20 @@
 		return TRUE
 
 	// Welding Tool - Repair physical damage
-	if (isWelder(tool))
+	else if (isWelder(tool))
+		//[SIERRA-ADD] - Mechs-by-Shegar
+		if(inmech(user, src))
+			to_chat(user, "You cannot interacti with mech inside mech.")
+			return
+		//[SIERRA-ADD]
 		if (!getBruteLoss())
 			USE_FEEDBACK_FAILURE("\The [src] has no physical damage to repair.")
 			return TRUE
+		//[SIERRA-ADD] - Mechs-by-Shegar
+		if(usr in pilots)
+			USE_FEEDBACK_FAILURE("\The [src] cannot be repaired from the inside.")
+			return TRUE
+		//[SIERRA-ADD]
 		var/list/damaged_parts = list()
 		for (var/obj/item/mech_component/component in list(arms, legs, body, head))
 			if (component?.brute_damage)
@@ -584,11 +639,16 @@
 		if (!input_fix.brute_damage)
 			USE_FEEDBACK_FAILURE("\The [src]'s [input_fix.name] no longer needs repair.")
 			return TRUE
+		//[SIERRA-ADD] - Mechs-by-Shegar
+		if(input_fix.current_hp == input_fix.max_repair || input_fix.current_hp < input_fix.max_repair)
+			USE_FEEDBACK_FAILURE("\The [src]'s [input_fix.name] is too damaged and requires repair with material.")
+			return TRUE
+		//[SIERRA-ADD]
 		input_fix.repair_brute_generic(tool, user)
 		return TRUE
 
 	// Wrench - Toggle securing bolts
-	if (isWrench(tool))
+	else if (isWrench(tool))
 		if (!maintenance_protocols)
 			USE_FEEDBACK_FAILURE("\The [src]'s maintenance protocols must be enabled to access the securing bolts.")
 			return TRUE

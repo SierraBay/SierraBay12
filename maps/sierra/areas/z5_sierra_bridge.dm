@@ -55,8 +55,6 @@
 /area/crew_quarters/heads/captain/beach
 	name = "Bridge - Command - Captain's Recreation Facility"
 	icon_state = "heads_cap"
-	sound_env = PLAIN
-	req_access = list("ACCESS_BRIDGE")
 	holomap_color = HOLOMAP_AREACOLOR_COMMAND
 
 /area/bridge

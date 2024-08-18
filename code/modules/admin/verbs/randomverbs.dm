@@ -796,10 +796,16 @@ Ccomp's first proc.
 	set name = "Change View Range"
 	set desc = "switches between 1x and custom views"
 
-	if(view == world.view)
+	// [SIERRA-EDIT]
+	// if(view == world.view) // SIERRA-EDIT - Original
+	if(view == get_preference_value(/datum/client_preference/client_view))
+	// [/SIERRA-EDIT]
 		view = input("Select view range:", "FUCK YE", 7) in list(1,2,3,4,5,6,7,8,9,10,11,12,13,14,128)
 	else
+		// [SIERRA-EDIT]
+		// view = world.view // SIERRA-EDIT - Original
 		view = get_preference_value(/datum/client_preference/client_view)
+		// [/SIERRA-EDIT]
 
 	log_and_message_admins("changed their view range to [view].")
 

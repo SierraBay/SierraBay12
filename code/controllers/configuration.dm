@@ -54,7 +54,10 @@
 
 	/// log world.log to game log
 	var/static/log_world_output = FALSE
-
+//[SIERRA-ADD]
+	/// log signals messages
+	var/static/log_signals = FALSE
+//[/SIERRA-ADD]
 	/// Allows admins with relevant permissions to have their own ooc colour
 	var/static/allow_admin_ooccolor = FALSE
 
@@ -534,6 +537,10 @@
 				log_adminwarn = TRUE
 			if ("log_world_output")
 				log_world_output = TRUE
+				//[SIERRA-ADD]
+			if ("log_signals")
+				log_signals = TRUE
+				//[/SIERRA-ADD]
 			if ("log_hrefs")
 				log_hrefs = TRUE
 			if ("log_runtime")
