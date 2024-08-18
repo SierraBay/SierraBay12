@@ -15,6 +15,17 @@
 	var/icon_state_charging = "recharger1"
 	var/icon_state_idle = "recharger0" //also when unpowered
 	var/portable = 1
+	construct_state = /singleton/machine_construction/default/panel_closed
+	uncreated_component_parts = null
+
+/obj/machinery/recharger/Initialize()
+	. = ..()
+	RefreshParts()
+
+/obj/machinery/recharger/RefreshParts()
+	for(var/obj/item/stock_parts/SP in component_parts)
+		if(istype(SP, /obj/item/stock_parts/capacitor))
+			active_power_usage *= SP.rating
 
 /obj/machinery/recharger/use_tool(obj/item/G, mob/living/user, list/click_params)
 	var/allowed = 0

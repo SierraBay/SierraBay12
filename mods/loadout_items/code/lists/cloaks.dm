@@ -40,7 +40,7 @@
 	path = /obj/item/clothing/accessory/cloak/qm
 	allowed_roles = list(/datum/job/qm)
 
-// departaments cloaks
+// departments cloaks
 
 /datum/gear/clothing/cloak_cargo
 	display_name = "cloak, cargo"
