@@ -51,22 +51,22 @@
 	if (!force_override)
 		force_queued = FALSE
 
-/datum/controller/subsystem/disposals/ExplosionStart()
-	can_fire = FALSE
-
-/datum/controller/subsystem/disposals/ExplosionEnd()
-	can_fire = TRUE
-
 /datum/controller/subsystem/fluids/ExplosionStart()
 	can_fire = FALSE
 
 /datum/controller/subsystem/fluids/ExplosionEnd()
 	can_fire = TRUE
 
-/datum/controller/subsystem/ambient_lighting/ExplosionStart()
+/datum/controller/subsystem/atoms/ExplosionStart()
 	can_fire = FALSE
 
-/datum/controller/subsystem/ambient_lighting/ExplosionEnd()
+/datum/controller/subsystem/atoms/ExplosionEnd()
+	can_fire = TRUE
+
+/datum/controller/subsystem/overlays/ExplosionStart()
+	can_fire = FALSE
+
+/datum/controller/subsystem/overlays/ExplosionEnd()
 	can_fire = TRUE
 
 /datum/station_holomap/Destroy()
