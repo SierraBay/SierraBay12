@@ -1,5 +1,10 @@
-//Здесь самая-самая база аномалий.
-///Предмет должен иметь в matter металл
+/*В данном файле располагается ЯДРО аномалий.
+В данном файле вы найдёте:
+-Реагирование аномалий на различные события
+-Активация аномалий из-за каких либо событий и условий
+-Обработка перезарядки, КД аномалии
+-Инициализация аномалии в мире
+*/
 #define LONG_ANOMALY_EFFECT 1
 #define MOMENTUM_ANOMALY_EFFECT 2
 #define DEFAULT_ANOMALY_EFFECT 0
@@ -7,7 +12,7 @@
 
 /obj/anomaly
 	name = "Аномалия. Вы не должны это видеть."
-	anchored = TRUE
+	anchored = TRUE //Чтоб аномалию не двигало в случае чего
 	//COULDOWN AND SMTH
 	///Аномалия уходит на КД после срабатывания?
 	var/can_be_discharged = FALSE
@@ -69,7 +74,7 @@
 
 
 
-///Пост-обработка удара аномалии
+///Пост-обработка действия аномалии.
 /obj/anomaly/proc/handle_after_activation()
 	last_activation_time = world.time
 	if(with_sound)

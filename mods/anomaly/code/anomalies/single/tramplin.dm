@@ -15,6 +15,7 @@
 	)
 	//Рандомизация
 	ranzomize_with_initialize = TRUE
+	can_born_artifacts = FALSE
 	min_coldown_time = 3 SECONDS
 	max_coldown_time = 8 SECONDS
 	can_be_preloaded = TRUE

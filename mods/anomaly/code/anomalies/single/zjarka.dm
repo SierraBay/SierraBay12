@@ -30,6 +30,8 @@
 	ranzomize_with_initialize = TRUE
 	min_coldown_time = 8 SECONDS
 	max_coldown_time = 20 SECONDS
+	min_spawn_chance = 20
+	max_spawn_chance = 40
 	can_be_preloaded = FALSE
 	being_preload_chance = 20
 

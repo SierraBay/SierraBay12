@@ -34,6 +34,8 @@
 	max_coldown_time = 15 SECONDS
 	min_preload_time = 4
 	max_preload_time = 8
+	min_spawn_chance = 15
+	max_spawn_chance = 45
 	can_be_preloaded = TRUE
 	being_preload_chance = 30
 
