@@ -57,6 +57,7 @@
 /obj/item/device/ano_scanner/examine(mob/user, distance, is_adjacent)
 	. = ..()
 	to_chat(user, SPAN_GOOD("Use alt+LBM to switch scan mode."))
+	to_chat(user, SPAN_GOOD("Use LBM in anomaly scan mode for search anomalies."))
 
 ///Пользователь проводит поиск при помощи сканера
 /obj/item/device/ano_scanner/proc/try_found_anomalies(mob/living/user)
