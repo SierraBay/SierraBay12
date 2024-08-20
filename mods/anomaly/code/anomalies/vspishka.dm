@@ -22,6 +22,7 @@
 	max_preload_time = 12
 	can_be_preloaded = TRUE
 	being_preload_chance = 80
+	chance_to_be_detected = 50
 
 /obj/anomaly/vspishka/activate_anomaly()
 	last_activation_time = world.time

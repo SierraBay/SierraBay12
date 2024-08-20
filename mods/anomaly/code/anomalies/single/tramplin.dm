@@ -20,6 +20,7 @@
 	max_coldown_time = 8 SECONDS
 	can_be_preloaded = TRUE
 	being_preload_chance = 10
+	chance_to_be_detected = 75
 
 /obj/anomaly/thamplin/activate_anomaly()
 	for(var/obj/item/target in src.loc)
