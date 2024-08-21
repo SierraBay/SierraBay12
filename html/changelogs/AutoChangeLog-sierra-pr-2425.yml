@@ -1,0 +1,8 @@
+author: BurpleBineapple
+changes:
+  - {imageadd: 'Sprites for the Garand, M2 Carbine, and Mosin when equipped in the
+      back slot.'}
+  - {imageadd: New sprite for the battle rifle. Loosely inspired by an FAL. Includes
+      a back slot sprite.}
+  - {imageadd: Updates the sprites for the ~10mm pistols.}
+delete-after: true

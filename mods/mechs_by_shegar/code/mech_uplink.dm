@@ -9,7 +9,7 @@ GLOBAL_VAR_INIT(war_declared, FALSE)
 	antag_roles = list(MODE_MERCENARY)
 
 /datum/uplink_item/item/services/assault_declaration/get_goods(obj/item/device/uplink/U, loc)
-	if(world.time > 10 MINUTES || GLOB.war_declared)
+	if(world.time > 15 MINUTES || GLOB.war_declared)
 		U.visible_message("[U.loc] buzzez and declares, \"Unable to teleport telecrystals.\"")
 		return 0
 	command_announcement.Announce("В секторе была замечена телепортация большого объема телекристаллов, использующихся Горлекскими Мародерами. Рекомендуется вызвать поддержку с ЦК для урегулирования ситуации.", "Показания датчиков [station_name()]" , msg_sanitized = 1, zlevels = GLOB.using_map.station_levels)
@@ -21,14 +21,21 @@ GLOBAL_VAR_INIT(war_declared, FALSE)
 
 
 //Вызов боевого меха
-/datum/uplink_item/item/structures_and_vehicles/mech
+/datum/uplink_item/item/structures_and_vehicles/combat_mech
 	name = "Combat Mech"
 	var/static/BOUGHT_MECH = 0
 	desc = "A terrible and at the same time beautiful combat mech to destroy all living things in your way. Comes with special plasma rifle, machinegun and shielding drone. Also, it is almoust EMP-proof!"
 	item_cost = 400
 	antag_roles = list(MODE_MERCENARY)
 
-/datum/uplink_item/item/structures_and_vehicles/mech/get_goods(obj/item/device/uplink/U, loc)
+
+/datum/uplink_item/item/structures_and_vehicles/heavy_mech
+	name = "Heavy mech"
+	desc = "Heavy variation of mercenary combat mech. This one equiped with electrolaser, heavy laser, energy shield drone and combat drone.  "
+	item_cost = 300
+	antag_roles = list(MODE_MERCENARY)
+
+/datum/uplink_item/item/structures_and_vehicles/combat_mech/get_goods(obj/item/device/uplink/U, loc)
 	if(!GLOB.war_declared)
 		U.visible_message("[U.loc] Война не обьявлена, бронетехника не может быть вызвана. Обьявите войну для получения доступа к бронетехнике.\"")
 		return new /obj/item/stack/telecrystal(loc, 400)
@@ -39,6 +46,18 @@ GLOBAL_VAR_INIT(war_declared, FALSE)
 	U.visible_message("[U.loc] Запрос на бронетехнику Горлекса обработан, единица телепортирована на ваше местоположение.\"")
 	command_announcement.Announce("В секторе была замечена телепортация бронетехники Мародёров Горлекса.", "Показания датчиков [station_name()]" , msg_sanitized = 1, zlevels = GLOB.using_map.station_levels)
 	return new /mob/living/exosuit/premade/merc(loc)
+
+/datum/uplink_item/item/structures_and_vehicles/heavy_mech/get_goods(obj/item/device/uplink/U, loc)
+	if(!GLOB.war_declared)
+		U.visible_message("[U.loc] Запрос не выполнен, бронетехника не может быть вызвана. Запросите дополнительные ресурсы для получения доступа к бронетехнике.\"")
+		return new /obj/item/stack/telecrystal(loc, 300)
+	if(GLOB.max_mech <= 0)
+		U.visible_message("[U.loc] Превышен лимит бронетехники для данной миссии.\"")
+		return new /obj/item/stack/telecrystal(loc, 300)
+	GLOB.max_mech--
+	U.visible_message("[U.loc] Запрос на бронетехнику Горлекса обработан, единица телепортирована на ваше местоположение.\"")
+	command_announcement.Announce("В секторе была замечена телепортация бронетехники Мародёров Горлекса.", "Показания датчиков [station_name()]" , msg_sanitized = 1, zlevels = GLOB.using_map.station_levels)
+	return new /mob/living/exosuit/premade/heavy/merc(loc)
 //Вызов боевого меха
 
 

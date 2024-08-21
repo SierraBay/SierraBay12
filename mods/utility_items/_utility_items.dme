@@ -12,5 +12,8 @@
 #include "code/reagents.dm"
 #include "code/cell_charger.dm"
 #include "code/vox.dm"
+#include "code/simple.dm"
+#include "code/circuit.dm"
+#include "code/global_hud_sierra.dm"
 
 #endif
