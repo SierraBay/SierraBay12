@@ -1,4 +1,4 @@
-/datum/reagent/toxin/yeosvenom
+/singleton/reagent/toxin/yeosvenom
 	name = "Esh Hashaar Haashane"
 	description = "A non-lethal toxin produced by Yeosa'Unathi"
 	taste_description = "absolutely vile"
@@ -6,7 +6,7 @@
 	target_organ = BP_LIVER
 	strength = 1
 
-/datum/reagent/toxin/yeosvenom/affect_blood(mob/living/carbon/M, removed)
+/singleton/reagent/toxin/yeosvenom/affect_blood(mob/living/carbon/M, removed)
 	if(M.is_species(SPECIES_YEOSA))
 		return // Yeosa are immune to their own venom
 
@@ -15,7 +15,7 @@
 	..()
 
 //Medicine
-/datum/reagent/paashe
+/singleton/reagent/paashe
 	name = "Paashe Meish Sunn"
 	description = "An effective natural painkiller, produced from Yeosa'Unathi innate venom. Has similar effect to a mixture of Tramadol and Synaptizine, but doesn't feature any significant side effects."
 	taste_description = "way too much sweetness"
@@ -30,7 +30,7 @@
 	var/pain_power = 80 //magnitide of painkilling effect
 	var/effective_dose = 0.5 //how many units it need to process to reach max power
 
-/datum/reagent/paashe/affect_blood(mob/living/carbon/M, removed)
+/singleton/reagent/paashe/affect_blood(mob/living/carbon/M, removed)
 	var/effectiveness = 1
 	if(M.chem_doses[type] < effective_dose) //some ease-in ease-out for the effect
 		effectiveness = M.chem_doses[type]/effective_dose
@@ -57,12 +57,12 @@
 	M.drowsyness = max(M.drowsyness - 2, 0)
 	M.AdjustParalysis(-1)
 	M.AdjustStunned(-1)
-	holder.remove_reagent(/datum/reagent/drugs/mindbreaker, 2)
+	holder.remove_reagent(/singleton/reagent/drugs/mindbreaker, 2)
 	M.adjust_hallucination(-5)
 	M.add_chemical_effect(CE_MIND, 1)
 	M.add_chemical_effect(CE_STIMULANT, 5)
 
-/datum/reagent/arhishaap
+/singleton/reagent/arhishaap
 	name = "Arhishaap"
 	description = "An advanced Yeosa'Unathi anti-toxin, significantly more effective than synthetic alternatives."
 	taste_description = "way too much sweetness"
@@ -73,10 +73,10 @@
 	value = 2.1
 	var/remove_generic = 1
 	var/list/remove_toxins = list(
-		/datum/reagent/toxin/zombiepowder
+		/singleton/reagent/toxin/zombiepowder
 	)
 
-/datum/reagent/arhishaap/affect_blood(mob/living/carbon/M, removed)
+/singleton/reagent/arhishaap/affect_blood(mob/living/carbon/M, removed)
 	M.radiation = max(M.radiation - 30 * removed, 0)
 
 	if(remove_generic)
@@ -85,12 +85,12 @@
 		M.add_up_to_chemical_effect(CE_ANTITOX, 1)
 
 	var/removing = (8 * removed)
-	var/datum/reagents/ingested = M.get_ingested_reagents()
-	for(var/datum/reagent/R in ingested.reagent_list)
-		if((remove_generic && istype(R, /datum/reagent/toxin)) || (R.type in remove_toxins))
+	var/singleton/reagents/ingested = M.get_ingested_reagents()
+	for(var/singleton/reagent/R in ingested.reagent_list)
+		if((remove_generic && istype(R, /singleton/reagent/toxin)) || (R.type in remove_toxins))
 			ingested.remove_reagent(R.type, removing)
 			return
-	for(var/datum/reagent/R in M.reagents.reagent_list)
-		if((remove_generic && istype(R, /datum/reagent/toxin)) || (R.type in remove_toxins))
+	for(var/singleton/reagent/R in M.reagents.reagent_list)
+		if((remove_generic && istype(R, /singleton/reagent/toxin)) || (R.type in remove_toxins))
 			M.reagents.remove_reagent(R.type, removing)
 			return
