@@ -82,7 +82,10 @@
 		hud_power_control = locate(/obj/screen/movable/exosuit/toggle/power_control) in hud_elements
 		hud_camera = locate(/obj/screen/movable/exosuit/toggle/camera) in menu_hud_elements
 		hud_heat = new /obj/screen/movable/exosuit/heat(src)
-		hud_heat.screen_loc = "EAST-1:28,CENTER-4"
+		//[SIERRA-EDIT] - Mechs-by-Shegar
+		//hud_heat.screen_loc = "EAST-6:-4,SOUTH+6:16"
+		hud_heat.screen_loc = "EAST-1:-6,SOUTH+5:12"
+		//[SIERRA-EDIT]
 		hud_elements |= hud_heat
 
 	refresh_hud()

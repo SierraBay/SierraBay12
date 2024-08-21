@@ -1,6 +1,6 @@
 GLOBAL_VAR_INIT(last_colony_type, "СЛУЧАЙНЫЙ")
 GLOBAL_VAR_INIT(choose_colony_type, "СЛУЧАЙНЫЙ") //Педальки выбирают, какой тип колонии будет заспавнен
-
+GLOBAL_VAR_INIT(error_colony_reaction, "Прервать спавн колонии")
 
 /singleton/submap_archetype/playablecolony
 	crew_jobs = list(/datum/job/submap/colonist, /datum/job/submap/colonist_leader)
@@ -14,7 +14,10 @@ GLOBAL_VAR_INIT(choose_colony_type, "СЛУЧАЙНЫЙ") //Педальки в�
 
 /datum/job/submap/colonist
 	supervisors = "Colonist Leader"
-
+	max_skill = list(
+		SKILL_MEDICAL = SKILL_MAX,
+		SKILL_ANATOMY = SKILL_MAX
+	)
 
 /singleton/hierarchy/outfit/job/colonist/leader
 	name = OUTFIT_JOB_NAME("Colonist Leader")
@@ -27,7 +30,13 @@ GLOBAL_VAR_INIT(choose_colony_type, "СЛУЧАЙНЫЙ") //Педальки в�
 	color = COLOR_OFF_WHITE
 	detail_color = COLOR_BEIGE
 
+/datum/map_template/ruin/exoplanet/playablecolony
+	mappaths = list('mods/colony_fractions/maps/colony_base.dmm')
+
 /datum/map_template/ruin/exoplanet/playablecolony/load(turf/T, centered=FALSE)
+	if(!GLOB.choose_colony_type)
+		log_and_message_admins("ОШИБКА: пустой выбранный тип колонии!.")
+		GLOB.choose_colony_type = "СЛУЧАЙНЫЙ"
 	if(GLOB.choose_colony_type == "СЛУЧАЙНЫЙ")
 		var/number = rand(1,100)
 		if(number < 30 || number == 30)
@@ -40,8 +49,18 @@ GLOBAL_VAR_INIT(choose_colony_type, "СЛУЧАЙНЫЙ") //Педальки в�
 			GLOB.last_colony_type = "НЕЗАВИСИМАЯ"
 	else
 		GLOB.last_colony_type = GLOB.choose_colony_type
+		if(!(GLOB.last_colony_type in list("ГКК","ЦПСС","НАНОТРЕЙЗЕН","НЕЗАВИСИМАЯ")))
+			log_and_message_admins("ОШИБКА: Некорректная работа кода колонии, выбран несуществующий тип: [GLOB.choose_colony_type].")
+			log_and_message_admins("Колония выбрана стандартного типа - НАНОТРЕЙЗЕН.")
+			if(GLOB.error_colony_reaction == "Прервать спавн колонии")
+				log_and_message_admins("Спавн колонии прерван исходя из настроек спавна колонии.")
+				return
+			GLOB.last_colony_type = "НАНОТРЕЙЗЕН"
 	log_and_message_admins("Начал спавн колонии следующего типа: [GLOB.last_colony_type].")
 
+	.=..()
+
+/datum/map_template/ruin/exoplanet/playablecolony/after_load()
 	.=..()
 	colony_inform()
 
@@ -105,7 +124,8 @@ GLOBAL_VAR_INIT(choose_colony_type, "СЛУЧАЙНЫЙ") //Педальки в�
 		return list(/obj/structure/sign/icarus_solgov)
 	else if(GLOB.last_colony_type == "НЕЗАВИСИМАЯ")
 		return list(/obj/structure/sign/colony)
-
+	//стандарт значение
+	return list(/obj/structure/sign/colony)
 
 
 //БРОНИКИ
@@ -148,7 +168,8 @@ GLOBAL_VAR_INIT(choose_colony_type, "СЛУЧАЙНЫЙ") //Педальки в�
 					/obj/item/clothing/suit/armor/laserproof,
 					/obj/item/clothing/suit/armor/pcarrier/merc
 					)
-
+	//стандарт значение
+	return list(/obj/item/clothing/suit/armor/riot)
 
 
 
@@ -197,6 +218,8 @@ GLOBAL_VAR_INIT(choose_colony_type, "СЛУЧАЙНЫЙ") //Педальки в�
 					/obj/item/clothing/head/helmet/old_commonwealth,
 					/obj/item/clothing/head/helmet/swat
 					)
+	//стандарт значение
+	return list(/obj/item/clothing/head/helmet/swat)
 //ПП
 
 /obj/random/colony_smg/spawn_choices()
@@ -212,6 +235,8 @@ GLOBAL_VAR_INIT(choose_colony_type, "СЛУЧАЙНЫЙ") //Педальки в�
 					/obj/item/gun/projectile/automatic/machine_pistol/usi,
 					/obj/item/gun/projectile/automatic
 					)
+	//стандарт значение
+	return list(/obj/item/gun/projectile/automatic/merc_smg)
 
 //АВТОМАТ
 
@@ -235,3 +260,121 @@ GLOBAL_VAR_INIT(choose_colony_type, "СЛУЧАЙНЫЙ") //Педальки в�
 					/obj/item/gun/projectile/automatic/mbr_colony,
 					/obj/item/gun/projectile/automatic/battlerifle
 					)
+	//стандарт значение
+	return list(/obj/item/gun/projectile/automatic/battlerifle)
+
+/obj/machinery/computer/rdconsole/core/colony/New()
+	. = ..()
+	files.research_points = 41250
+
+	/*
+	files.UnlockTechology(/datum/technology/engineering)
+	files.UnlockTechology(/datum/technology/engineering/monitoring)
+	files.UnlockTechology(/datum/technology/engineering/adv_parts)
+	files.UnlockTechology(/datum/technology/engineering/res_tech)
+	files.UnlockTechology(/datum/technology/engineering/basic_mining)
+	files.UnlockTechology(/datum/technology/engineering/ship)
+	files.UnlockTechology(/datum/technology/engineering/adv_eng)
+	files.UnlockTechology(/datum/technology/engineering/super_parts)
+	//POWER
+	files.UnlockTechology(/datum/technology/power)
+	files.UnlockTechology(/datum/technology/power/adv_power)
+	files.UnlockTechology(/datum/technology/power/sup_power)
+	files.UnlockTechology(/datum/technology/power/hyp_power)
+	files.UnlockTechology(/datum/technology/power/sup_power_gen)
+	files.UnlockTechology(/datum/technology/power/adv_power_gen)
+	files.UnlockTechology(/datum/technology/power/power_storage)
+	files.UnlockTechology(/datum/technology/power/adv_power_storage)
+	//BLUESPACE
+	files.UnlockTechology(/datum/technology/tcom/rcon)
+	files.UnlockTechology(/datum/technology/tcom/monitoring)
+	files.UnlockTechology(/datum/technology/tcom)
+	files.UnlockTechology(/datum/technology/tcom/tcom_parts)
+	files.UnlockTechology(/datum/technology/tcom/arti_blue)
+	files.UnlockTechology(/datum/technology/tcom/tele_pad)
+	//РОБО
+	files.UnlockTechology(/datum/technology/robo)
+	files.UnlockTechology(/datum/technology/robo/loader_mech)
+	files.UnlockTechology(/datum/technology/robo/basic_hardsuitmods)
+	files.UnlockTechology(/datum/technology/robo/adv_hardsuits)
+	files.UnlockTechology(/datum/technology/robo/heavy_mech)
+	files.UnlockTechology(/datum/technology/robo/light_mech)
+	files.UnlockTechology(/datum/technology/robo/combat_mechs)
+	files.UnlockTechology(/datum/technology/robo/mech_equipment)
+	files.UnlockTechology(/datum/technology/robo/mech_weapons)
+	files.UnlockTechology(/datum/technology/robo/mech_med_tools)
+	files.UnlockTechology(/datum/technology/robo/adv_mech_tools)
+	*/
+
+	/*
+	files.UpdateTech("materials", 7) //Материалы
+	files.UpdateTech("engineering", 5) //Инженерка
+	files.UpdateTech("phorontech", 5) //Форон
+	files.UpdateTech("powerstorage", 7) //Повер манипулейшен
+	files.UpdateTech("bluespace", 5) //Блюспейс
+	files.UpdateTech("biotech", 7) //Биология
+	files.UpdateTech("combat", 8) // Боевые
+	files.UpdateTech("magnets", 7) //Электромагнитные
+	files.UpdateTech("programming", 5) //ДАТА
+	files.UpdateTech("esoteric", 8) //Эзотерика
+	*/
+
+
+/area/map_template/colony/science
+	name = "\improper Colony R&D"
+	icon_state = "solar"
+
+/area/map_template/colony/warehouse
+	name = "\improper Сolony warehouse"
+	icon_state = "shipping"
+
+/obj/machinery/vending/wallbartender/colony
+	name = "\improper Glass-o-Mat"
+	desc = "A wall-mounted glass storage."
+	product_ads = "Free glasses!;Lets try something new.;Only the finest glasses.;Natural booze!;This stuff saves no lives.;Don't you want some?"
+	icon = 'maps/sierra/icons/obj/vending.dmi'
+	icon_state = "wallbartender"
+	icon_deny = "wallbartender-deny"
+	icon_vend = "wallbartender-vend"
+	base_type = /obj/machinery/vending/wallbartender
+	density = FALSE //It is wall-mounted, and thus, not dense. --Superxpdude
+	products = list(
+		/obj/item/reagent_containers/food/drinks/glass2/square = 10,
+		/obj/item/reagent_containers/food/drinks/glass2/shot = 5,
+		/obj/item/reagent_containers/food/drinks/glass2/cocktail = 5,
+		/obj/item/reagent_containers/food/drinks/glass2/rocks = 5,
+		/obj/item/reagent_containers/food/drinks/glass2/shake = 5,
+		/obj/item/reagent_containers/food/drinks/glass2/wine = 5,
+		/obj/item/reagent_containers/food/drinks/glass2/flute = 5,
+		/obj/item/reagent_containers/food/drinks/glass2/cognac = 5,
+		/obj/item/reagent_containers/food/drinks/glass2/goblet = 5,
+		/obj/item/reagent_containers/food/drinks/glass2/mug = 5,
+		/obj/item/reagent_containers/food/drinks/glass2/pint = 5,
+	)
+	req_access = list()
+
+//Пресетовая машинерия
+
+/obj/machinery/space_heater/stationary/on/colony
+	set_temperature = 273.15
+	heating_power = 360000
+
+
+
+/obj/machinery/power/smes/buildable/preset/colony
+	uncreated_component_parts = list(/obj/item/stock_parts/smes_coil/super_capacity = 1,
+									/obj/item/stock_parts/smes_coil/super_io = 1)
+	_input_maxed = TRUE
+	_output_maxed = TRUE
+	_input_on = TRUE
+	_output_on = TRUE
+	_fully_charged = TRUE
+
+/obj/machinery/sleeper/survival_pod/colony
+	name = "advanced colony stasis pod"
+
+/obj/item/storage/firstaid/fire/special/colony
+	name = "colony scorch first-aid kit"
+
+/obj/machinery/vending/medical/colony
+	req_access = list()

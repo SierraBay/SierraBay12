@@ -129,6 +129,10 @@
 		settings[LIST_PRE_INC(settings)] = list("category" = "Check Arrest Status", "setting" = "check_arrest", "value" = check_arrest)
 		settings[LIST_PRE_INC(settings)] = list("category" = "Check Access Authorization", "setting" = "check_access", "value" = check_access)
 		settings[LIST_PRE_INC(settings)] = list("category" = "Check misc. Lifeforms", "setting" = "check_anomalies", "value" = check_anomalies)
+		//[SIERRA-ADD] - AI_UPDATE
+		settings[LIST_PRE_INC(settings)] = list("category" = "Attack any robots and drones", "setting" = "attack_robots", "value" = attack_robots)
+		settings[LIST_PRE_INC(settings)] = list("category" = "Hold deployed", "setting" = "hold_deployed", "value" = hold_deployed)
+		//[SIERRA-ADD]
 		data["settings"] = settings
 
 	ui = SSnano.try_update_ui(user, src, ui_key, ui, data, force_open)
@@ -167,6 +171,12 @@
 			check_access = value
 		else if(href_list["command"] == "check_anomalies")
 			check_anomalies = value
+		//[SIERRA-ADD] - AI_UPDATE
+		else if(href_list["command"] == "attack_robots")
+			attack_robots = value
+		else if(href_list["command"] == "hold_deployed")
+			hold_deployed = value
+		//[SIERRA-ADD]
 
 		if(!isnull(log_action))
 			log_and_message_admins("has [log_action]", usr, loc)
@@ -184,6 +194,10 @@
 	TC.check_arrest = check_arrest
 	TC.check_weapons = check_weapons
 	TC.check_anomalies = check_anomalies
+	//[SIERRA-ADD] - AI_UPDATE
+	TC.attack_robots = attack_robots
+	TC.hold_deployed = hold_deployed
+	//[SIERRA-ADD]
 	TC.ailock = ailock
 
 	if(istype(control_area))
@@ -218,6 +232,10 @@
 		check_weapons = pick(0, 1)
 		check_access = pick(0, 0, 0, 0, 1)	// check_access is a pretty big deal, so it's least likely to get turned on
 		check_anomalies = pick(0, 1)
+		//[SIERRA-ADD] - AI_UPDATE
+		attack_robots = pick(0,1)
+		hold_deployed = pick(0,1)
+		//[SIERRA-ADD]
 		locked = pick(0, 1)
 		ailock = pick(0, 1)
 

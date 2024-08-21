@@ -158,7 +158,16 @@ nanoui is used to open and update nano browser uis
 	var/new_status = host.CanUseTopic(user, state)
 	if(master_ui)
 		new_status = min(new_status, master_ui.status)
-
+	//[SIERRA-ADD] - AI-UPDATE
+	//Здесь мы будем овверрайдить решение кода свыше. Давайте проверим, есть ли у нас доступ проводом?
+	//(Технически это костыль, вместо того чтоб вмешиваться в CanUseTopic и глубже в код, мы перебьём)
+	//Значение на нужное нам. ИИ сможет взаимодействовать с обьектами, если они вне доступа камер
+	if(isAI(user))
+		if(istype(host, /obj/machinery/door/airlock))
+			var/obj/machinery/door/airlock/door = host
+			if(door.CanAIUseTopic(user))
+				new_status = 2
+	//[SIERRA-ADD]
 	if(new_status == STATUS_CLOSE)
 		close()
 		return 1

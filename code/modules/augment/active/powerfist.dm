@@ -208,11 +208,14 @@
 		if (istype(target, /mob/living))
 			if (pressure_setting == 50 && tank.air_contents.return_pressure() > 210)
 				var/mob/living/A = target
-				A.throw_at(get_edge_target_turf(user, user.dir), pressure_setting/10, pressure_setting/10) //penultimate/ultimate settings yeets people
-				user.visible_message(
-					SPAN_DANGER("\The [user] batters \the [A] with \a [src], sending them flying!"),
-					SPAN_WARNING("You batter \the [A] with \the [src], sending them flying!")
-				)
+				//[SIERRA-ADD]
+				if(user.mob_size > A.mob_size || user.mob_size == A.mob_size)
+				//[SIERRA-ADD]
+					A.throw_at(get_edge_target_turf(user, user.dir), pressure_setting/10, pressure_setting/10) //penultimate/ultimate settings yeets people
+					user.visible_message(
+						SPAN_DANGER("\The [user] batters \the [A] with \a [src], sending them flying!"),
+						SPAN_WARNING("You batter \the [A] with \the [src], sending them flying!")
+					)
 	return ..()
 
 /obj/item/powerfist/prepared
