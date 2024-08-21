@@ -98,32 +98,32 @@
 
 
 
-/singleton/chemical_reaction/rsh2
+/singleton/reaction/rsh2
 	result = /singleton/reagent/rsh2
 	required_reagents = list(/singleton/reagent/experimental = 1)
 	result_amount = 1
 
-/singleton/chemical_reaction/rsh2/New()
+/singleton/reaction/rsh2/New()
 	var/random_amount = pick(1,3)
 	required_reagents |= list(pick(RANDOM_REAGENT) = random_amount)
 	result_amount += random_amount
 
-/singleton/chemical_reaction/rsh3
+/singleton/reaction/rsh3
 	result = /singleton/reagent/rsh3
 	required_reagents = list(/singleton/reagent/experimental = 1, /singleton/reagent/peridaxon = 1)
 	result_amount = 2
 
-/singleton/chemical_reaction/rsh3/New()
+/singleton/reaction/rsh3/New()
 	var/random_amount = pick(1,3)
 	required_reagents |= list(pick(RANDOM_REAGENT) = random_amount)
 	result_amount += random_amount
 
-/singleton/chemical_reaction/rsh4
+/singleton/reaction/rsh4
 	result = /singleton/reagent/rsh4
 	required_reagents = list(/singleton/reagent/experimental = 1, /singleton/reagent/paracetamol = 1)
 	result_amount = 2
 
-/singleton/chemical_reaction/rsh4/New()
+/singleton/reaction/rsh4/New()
 	var/random_amount = pick(1,3)
 	required_reagents |= list(pick(RANDOM_REAGENT) = random_amount)
 	result_amount += random_amount
