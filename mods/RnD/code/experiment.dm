@@ -42,6 +42,7 @@ var/global/list/rnd_server_list = list()
 	var/list/saved_tech_levels = list() // list("materials" = list(1, 4, ...), ...)
 	var/list/saved_autopsy_weapons = list()
 	var/list/saved_artifacts = list()
+	var/list/saved_small_artefacts = list()
 	var/list/saved_plants = list()
 	var/list/saved_slimecores = list()
 	var/list/saved_spectrometers = list()
@@ -246,6 +247,22 @@ var/global/list/rnd_server_list = list()
 		points += reward
 		saved_slimecores += core
 
+	for(var/artefacts in I.scanned_small_artefacts)
+		if(artefacts in saved_small_artefacts)
+			continue
+		var/reward = 1000
+		switch(artefacts)
+			if(/obj/item/artefact/pruzhina)
+				reward = 2000
+			if(/obj/item/artefact/zjar)
+				reward = 3500
+			if(/obj/item/artefact/gravi)
+				reward = 2500
+			if(/obj/item/artefact/svetlyak)
+				reward = 5000
+		points += reward
+		saved_small_artefacts += artefacts
+
 	I.clear_data()
 	return round(points)
 
@@ -372,6 +389,7 @@ var/global/list/rnd_server_list = list()
 	var/list/scanned_slimecores = list()
 	var/list/scanned_spectrometers = list()
 	var/list/scanned_xenofauna = list()
+	var/list/scanned_small_artefacts = list()
 	var/species
 	var/new_species = FALSE
 	var/potency
@@ -389,14 +407,14 @@ var/global/list/rnd_server_list = list()
 		to_chat(user, "<span class='notice'>[disk] stores approximately [disk.stored_points] research points</span>")
 		return
 
-	if(istype(O,/obj/item/paper/autopsy_report))
+	else if(istype(O,/obj/item/paper/autopsy_report))
 		var/obj/item/paper/autopsy_report/report = O
 		for(var/datum/autopsy_data/W in report.autopsy_data)
 			if(!(W.weapon in scanned_autopsy_weapons))
 				scanneddata += 1
 				scanned_autopsy_weapons += W.weapon
 
-	if(istype(O,/obj/item/paper/plant_report))
+	else if(istype(O,/obj/item/paper/plant_report))
 		var/obj/item/paper/plant_report/report = O
 		if(!(report.info in scanned_plants))
 			scanneddata += 1
@@ -407,7 +425,7 @@ var/global/list/rnd_server_list = list()
 			return
 
 
-	if(istype(O,/obj/item/paper/radiocarbon_spectrometer_report))
+	else if(istype(O,/obj/item/paper/radiocarbon_spectrometer_report))
 		var/obj/item/paper/radiocarbon_spectrometer_report/report = O
 		if(!(report in scanned_spectrometers))
 			if(report.anomalous)
@@ -417,7 +435,7 @@ var/global/list/rnd_server_list = list()
 			to_chat(user, "<span class='notice'>[src] already has data about this report</span>")
 			return
 
-	if(istype(O,/obj/item/paper/xenofauna_report))
+	else if(istype(O,/obj/item/paper/xenofauna_report))
 		var/obj/item/paper/xenofauna_report/report = O
 		if(!(report in scanned_xenofauna))
 			if(report.species)
@@ -432,7 +450,7 @@ var/global/list/rnd_server_list = list()
 			return
 
 
-	if(istype(O, /obj/item/paper/anomaly_scan))
+	else if(istype(O, /obj/item/paper/anomaly_scan))
 		var/obj/item/paper/anomaly_scan/report = O
 		if(report.artifact)
 			for(var/list/artifact in scanned_artifacts)
@@ -448,7 +466,7 @@ var/global/list/rnd_server_list = list()
 			scanneddata += 1
 
 
-	if(istype(O, /obj/item/slime_extract))
+	else if(istype(O, /obj/item/slime_extract))
 		if(!(O.type in scanned_slimecores))
 			scanned_slimecores += O.type
 			scanneddata += 1
@@ -461,7 +479,7 @@ var/global/list/rnd_server_list = list()
 		to_chat(user, "<span class='notice'>[src] received [scanneddata] data block[scanneddata>1?"s":""] from scanning [O]</span>")
 		return
 
-	if(istype(O, /obj/item/device/beacon/explosion_watcher))
+	else if(istype(O, /obj/item/device/beacon/explosion_watcher))
 		var/obj/item/device/beacon/explosion_watcher/explosion = O
 		if(explosion.calculated_research_points > 0)
 			to_chat(user, "<span class='notice'>Estimated research value of [O.name] is [explosion.calculated_research_points]</span>")
@@ -469,7 +487,7 @@ var/global/list/rnd_server_list = list()
 			to_chat(user, "<span class='notice'>[O] has no research value</span>")
 		return
 
-	if(istype(O, /obj/item/disk/tech_disk))
+	else if(istype(O, /obj/item/disk/tech_disk))
 		var/obj/item/disk/tech_disk/T = O
 		if(T.stored)
 			var/science_value = T.stored.level * 1000
@@ -477,6 +495,14 @@ var/global/list/rnd_server_list = list()
 				to_chat(user, "<span class='notice'>[T] has aproximately [science_value] research points</span>")
 		else
 			to_chat(user, "<span class='notice'>[O] has no research value</span>")
+
+	else if(istype(O, /obj/item/artefact))
+		if(!(O.type in scanned_small_artefacts))
+			var/obj/item/artefact/art = O
+			scanned_small_artefacts += art.type
+			scanneddata += 1
+		else
+			to_chat(user, "<span class='notice'>[src] already has data about this report</span>")
 
 	else if(istype(O, /obj/item))
 		var/science_value = experiments.get_object_research_value(O)
