@@ -202,9 +202,15 @@
 
 		if(origin_tech)
 			desc_comp += "[SPAN_NOTICE("Testing potentials:")]<BR>"
+	//[SIERRA-EDIT] - MODPACK_RND
+			var/list/tech_names = list(TECH_MATERIAL = "Materials", TECH_ENGINEERING = "Engineering", TECH_PHORON = "Phoron Technology", TECH_POWER = "Power Manipulation Technology", TECH_BLUESPACE = "'Blue-space' Technology", TECH_BIO = "Biological Technology", TECH_COMBAT = "Combat Systems", TECH_MAGNET = "Electromagnetic Spectrum Technology", TECH_DATA = "Data Theory", TECH_ESOTERIC = "Esoteric Technology")
 			//var/list/techlvls = params2list(origin_tech)
 			for(var/T in origin_tech)
-				desc_comp += "Tech: Level [origin_tech[T]] [CallTechName(T)] <BR>"
+				var/tech_name = tech_names[T]
+				if(!tech_name)
+					tech_name = T
+				desc_comp += "Tech: Level [origin_tech[T]] [tech_name] <BR>"
+	//[/SIERRA-EDIT] - MODPACK_RND
 		else
 			desc_comp += "No tech origins detected.<BR>"
 
@@ -694,19 +700,22 @@ var/global/list/slot_flags_enumeration = list(
 	return 1 //we applied blood to the item
 
 GLOBAL_LIST_EMPTY(blood_overlay_cache)
+#define BLOOD_OVERLAY_CACHE_INDEX "[icon]" + icon_state + blood_color
 
 /obj/item/proc/generate_blood_overlay(force = FALSE)
 	if(blood_overlay && !force)
 		return
-	if(GLOB.blood_overlay_cache["[icon]" + icon_state])
-		blood_overlay = GLOB.blood_overlay_cache["[icon]" + icon_state]
+	if(GLOB.blood_overlay_cache[BLOOD_OVERLAY_CACHE_INDEX])
+		blood_overlay = GLOB.blood_overlay_cache[BLOOD_OVERLAY_CACHE_INDEX]
 		return
 	var/icon/I = new /icon(icon, icon_state)
 	I.Blend(new /icon('icons/effects/blood.dmi', rgb(255,255,255)),ICON_ADD) //fills the icon_state with white (except where it's transparent)
 	I.Blend(new /icon('icons/effects/blood.dmi', "itemblood"),ICON_MULTIPLY) //adds blood and the remaining white areas become transparant
 	blood_overlay = image(I)
 	blood_overlay.appearance_flags |= NO_CLIENT_COLOR
-	GLOB.blood_overlay_cache["[icon]" + icon_state] = blood_overlay
+	GLOB.blood_overlay_cache[BLOOD_OVERLAY_CACHE_INDEX] = blood_overlay
+
+#undef BLOOD_OVERLAY_CACHE_INDEX
 
 /obj/item/proc/showoff(mob/user)
 	for (var/mob/M in view(user))

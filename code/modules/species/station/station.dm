@@ -31,8 +31,7 @@
 			CULTURE_HUMAN_VENUSIAN,
 			CULTURE_HUMAN_VENUSLOW,
 			CULTURE_HUMAN_BELTER,
-			CULTURE_HUMAN_KUIPERI,
-			CULTURE_HUMAN_KUIPERO,
+			CULTURE_HUMAN_PLUTO,
 			CULTURE_HUMAN_MAGNITKA,
 			CULTURE_HUMAN_EARTH,
 			CULTURE_HUMAN_CETIN,
@@ -147,13 +146,6 @@
 		/datum/mob_descriptor/build = 0,
 		/datum/mob_descriptor/headtail_length = 0
 	)
-
-	speech_sounds = list(
-		'sound/skrell/warble1.ogg',
-		'sound/skrell/warble2.ogg',
-		'sound/skrell/warble3.ogg'
-	)
-	speech_chance = 10
 
 	available_cultural_info = list(
 		TAG_CULTURE = list(

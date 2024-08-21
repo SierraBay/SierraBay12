@@ -25,8 +25,12 @@
 
 /obj/item/mech_component/emp_act(severity)
 	take_burn_damage(rand((10 - (severity*3)),15-(severity*4)))
+	//[SIERRA-DELETE]
+	/*
 	for(var/obj/item/thing in contents)
 		thing.emp_act(severity)
+	*/
+	//[SIERRA-DELETE]
 	..()
 
 /obj/item/mech_component/examine(mob/user)

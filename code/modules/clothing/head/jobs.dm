@@ -25,7 +25,13 @@
 /obj/item/clothing/head/caphat/formal
 	name = "parade hat"
 	desc = "No one in a commanding position should be without a perfect, white hat of ultimate authority."
-	icon_state = "officercap"
+	// [SIERRA-EDIT]
+	// icon_state = "officercap" - ORIGINAL
+	icon = 'maps/sierra/icons/obj/clothing/obj_head.dmi'
+	item_icons = list(slot_head_str = 'maps/sierra/icons/mob/onmob/onmob_head.dmi')
+	icon_state = "cap_parade_cap"
+	item_state = "cap_parade_cap"
+	// [/SIERRA-EDIT]
 
 //HOP
 /obj/item/clothing/head/caphat/hop

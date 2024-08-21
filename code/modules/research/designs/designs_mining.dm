@@ -1,6 +1,6 @@
-/datum/design/item/mining/AssembleDesignName()
-	..()
-	name = "Mining equipment design ([item_name])"
+
+/datum/design/item/mining
+	category = list("Mining")
 
 /datum/design/item/mining/jackhammer
 	id = "jackhammer"
