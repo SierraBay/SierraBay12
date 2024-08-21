@@ -336,12 +336,8 @@
 		if (blocked)
 			to_chat(H, SPAN_WARNING("\The [blocked] is in the way!"))
 			return TRUE
-<<<<<<< ours
-		to_chat(H, SPAN_NOTICE("You take a drag on your [name]."))
 		playsound(H, "sound/effects/inhale.ogg", 50, 0, -1)
-=======
 		user.visible_message(SPAN_NOTICE("\The [user] takes a drag from their [name]."))
->>>>>>> theirs
 		smoke(5)
 		add_trace_DNA(H)
 		return TRUE
