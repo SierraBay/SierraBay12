@@ -193,7 +193,7 @@
 		T2 = T
 		var/obj/machinery/shieldwall/CF = new(T, src, G) //(ref to this gen, ref to connected gen)
 		CF.set_dir(field_dir)
-
+// [SIERRA EDIT]
 /obj/machinery/shieldwallgen/use_tool(obj/item/W, mob/living/user)
 	if(isWrench(W))
 		if(active)
@@ -223,7 +223,7 @@
 	else
 		src.add_fingerprint(user)
 		..()
-
+// [SIERRA-EDIT-END]
 /obj/machinery/shieldwallgen/proc/cleanup(NSEW)
 	var/obj/machinery/shieldwall/F
 	var/obj/machinery/shieldwallgen/G
