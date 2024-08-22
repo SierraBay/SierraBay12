@@ -14,7 +14,7 @@
 #define SS_PRIORITY_TICKER         100 // Gameticker.
 // [SIERRA-ADD] - SSINPUT
 #define SS_PRIORITY_INPUT          99 // Input things.
-#define SS_PRIORITY_EXPLOSIVES    40   // Explosion processing.
+#define SS_PRIORITY_EXPLOSIVES     80   // Explosion processing.
 // [/SIERRA-ADD]
 #define SS_PRIORITY_MOB            95  // Mob Life().
 #define SS_PRIORITY_MACHINERY      95  // Machinery + powernet ticks.

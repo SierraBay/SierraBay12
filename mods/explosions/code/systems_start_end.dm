@@ -57,16 +57,10 @@
 /datum/controller/subsystem/fluids/ExplosionEnd()
 	can_fire = TRUE
 
-/datum/controller/subsystem/atoms/ExplosionStart()
+/datum/controller/subsystem/processing/obj/ExplosionStart()
 	can_fire = FALSE
 
-/datum/controller/subsystem/atoms/ExplosionEnd()
-	can_fire = TRUE
-
-/datum/controller/subsystem/overlays/ExplosionStart()
-	can_fire = FALSE
-
-/datum/controller/subsystem/overlays/ExplosionEnd()
+/datum/controller/subsystem/processing/obj/ExplosionEnd()
 	can_fire = TRUE
 
 /datum/station_holomap/Destroy()
