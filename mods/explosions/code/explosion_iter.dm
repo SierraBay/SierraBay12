@@ -38,6 +38,9 @@ SUBSYSTEM_DEF(explosives)
 			SSair.ExplosionEnd()
 			SSao.ExplosionEnd()
 			SSalarm.ExplosionEnd()
+			SSfluids.ExplosionEnd()
+			SSobj.ExplosionEnd()
+			SSairflow.ExplosionEnd()
 		return
 
 	ticks_without_work = 0
@@ -49,6 +52,9 @@ SUBSYSTEM_DEF(explosives)
 		SSair.ExplosionStart()
 		SSao.ExplosionStart()
 		SSalarm.ExplosionStart()
+		SSfluids.ExplosionStart()
+		SSobj.ExplosionStart()
+		SSairflow.ExplosionStart()
 		mc_notified = TRUE
 
 	for (var/A in work_queue)
@@ -115,7 +121,7 @@ SUBSYSTEM_DEF(explosives)
 	var/vibration = 1
 	if(istype(epicenter, /turf/space))
 		vibration = 0
-		for(var/thing in RANGED_TURFS(max_range, epicenter))
+		for(var/thing in RANGE_TURFS(epicenter, max_range))
 			var/turf/T = thing
 			if (!istype(T, /turf/space))
 		//If there is a nonspace tile within the explosion radius
@@ -139,7 +145,7 @@ SUBSYSTEM_DEF(explosives)
 					//If the person is standing in space, they wont hear
 						//But they may still feel the shaking
 						reception = 0
-						for(var/t_thing in RANGED_TURFS(1, M))
+						for(var/t_thing in RANGE_TURFS(M, 1))
 							var/turf/T = t_thing
 							if(!istype(T, /turf/space))
 							//If theyre touching the hull or on some extruding part of the station
@@ -182,7 +188,7 @@ SUBSYSTEM_DEF(explosives)
 	var/x0 = epicenter.x
 	var/y0 = epicenter.y
 
-	for(var/thing in RANGED_TURFS(max_range, epicenter))
+	for(var/thing in RANGE_TURFS(epicenter, max_range))
 		var/turf/T = thing
 		if (!T)
 			CHECK_TICK
@@ -336,7 +342,7 @@ SUBSYSTEM_DEF(explosives)
 		if (T.type == /turf/space)	// Equality is faster than istype.
 			reception = EXPLFX_NONE
 
-			for (var/turf/simulated/THING in RANGED_TURFS(1, M))
+			for (var/turf/simulated/THING in RANGE_TURFS(M, 1))
 				reception |= EXPLFX_SHAKE
 				break
 
@@ -363,8 +369,6 @@ SUBSYSTEM_DEF(explosives)
 	log_debug("iexpl: Beginning application phase.")
 	time = world.time
 
-	var/turf_tally = 0
-	var/movable_tally = 0
 	for (var/thing in act_turfs)
 		var/turf/T = thing
 		if (act_turfs[T] <= 0)
@@ -379,23 +383,18 @@ SUBSYSTEM_DEF(explosives)
 
 		if (T.simulated)
 			T.ex_act(severity)
-		if (LAZYLEN(T.contents) > !!T.lighting_overlay)
-			for (var/subthing in T)
-				var/atom/movable/AM = subthing
-				if (AM.simulated)
-					var/obj/O = AM
-					if(istype(O) && O.hides_under_flooring() && !T.is_plating())
-						continue
-					AM.ex_act(severity)
-					movable_tally++
+		var/throw_target = get_edge_target_turf(T, get_dir(epicenter,T))
+		for(var/atom_movable in T.contents)
+			var/atom/movable/AM = atom_movable
+			if(AM && AM.simulated && !T.protects_atom(AM))
+				AM.ex_act(severity)
+				if(!QDELETED(AM) && !AM.anchored)
+					addtimer(new Callback(AM, TYPE_PROC_REF(/atom/movable, throw_at), throw_target, 9/severity, 9/severity), 0)
 				CHECK_TICK
-		else
-			CHECK_TICK
-
-		turf_tally++
+			else
+				CHECK_TICK
 
 	explosion_in_progress = FALSE
-	log_debug("iexpl: Application completed in [(world.time-time)/10] seconds; processed [turf_tally] turfs and [movable_tally] movables.")
 
 #undef SEARCH_DIR
 
