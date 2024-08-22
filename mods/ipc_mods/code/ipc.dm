@@ -26,8 +26,7 @@
 	name = "Positronic brain"
 	desc = "A cube of shining metal, four inches to a side and covered in shallow grooves."
 
-/obj/item/organ/internal/posibrain/ipc/attack_self(mob/user)
-	return
+
 /obj/item/organ/internal/posibrain/ipc/attack_ghost(mob/observer/ghost/user)
 	return
 
