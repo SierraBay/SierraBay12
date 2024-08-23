@@ -191,7 +191,6 @@ SUBSYSTEM_DEF(explosives)
 	for(var/thing in RANGE_TURFS(epicenter, max_range))
 		var/turf/T = thing
 		if (!T)
-			CHECK_TICK
 			continue
 
 		var/dist = sqrt((T.x - x0)**2 + (T.y - y0)**2)
@@ -203,7 +202,6 @@ SUBSYSTEM_DEF(explosives)
 		else if (dist < light_impact_range)
 			dist = 3
 		else
-			CHECK_TICK
 			continue
 
 		T.ex_act(dist)
@@ -216,8 +214,6 @@ SUBSYSTEM_DEF(explosives)
 					if(istype(O) && O.hides_under_flooring() && !T.is_plating())
 						continue
 					AM.ex_act(dist)
-
-				CHECK_TICK
 
 // All the vars used on the turf should be on unsimulated turfs too, we just don't care about those generally.
 #define SEARCH_DIR(dir) \
@@ -286,13 +282,10 @@ SUBSYSTEM_DEF(explosives)
 		origin_direction = dir_queue[index]
 		current_power = power_queue[index]
 		++index
-
 		if (!istype(current_turf) || current_power <= 0)
-			CHECK_TICK
 			continue
 
 		if (act_turfs[current_turf] >= current_power && current_turf != epicenter)
-			CHECK_TICK
 			continue
 
 		act_turfs[current_turf] = current_power
@@ -306,14 +299,11 @@ SUBSYSTEM_DEF(explosives)
 					current_power -= AM.explosion_resistance
 
 		if (current_power <= 0)
-			CHECK_TICK
 			continue
 
 		SEARCH_DIR(origin_direction)
 		SEARCH_DIR(turn(origin_direction, 90))
 		SEARCH_DIR(turn(origin_direction, -90))
-
-		CHECK_TICK
 
 	log_debug("iexpl: Discovery completed in [(world.time-time)/10] seconds.")
 	log_debug("iexpl: Beginning SFX phase.")
@@ -332,11 +322,9 @@ SUBSYSTEM_DEF(explosives)
 		var/turf/T = isturf(M.loc) ? M.loc : get_turf(M)
 
 		if (!T)
-			CHECK_TICK
 			continue
 
 		if (!AreConnectedZLevels(T.z, epicenter.z))
-			CHECK_TICK
 			continue
 
 		if (T.type == /turf/space)	// Equality is faster than istype.
@@ -347,7 +335,6 @@ SUBSYSTEM_DEF(explosives)
 				break
 
 			if (!reception)
-				CHECK_TICK
 				continue
 
 		var/dist = get_dist(M, epicenter) || 1
@@ -363,8 +350,6 @@ SUBSYSTEM_DEF(explosives)
 			//Maximum duration is 3 seconds, and max strength is 3.5
 			//Becuse values higher than those just get really silly
 
-		CHECK_TICK
-
 	log_debug("iexpl: SFX phase completed in [(world.time-time)/10] seconds.")
 	log_debug("iexpl: Beginning application phase.")
 	time = world.time
@@ -372,8 +357,10 @@ SUBSYSTEM_DEF(explosives)
 	for (var/thing in act_turfs)
 		var/turf/T = thing
 		if (act_turfs[T] <= 0)
-			CHECK_TICK
 			continue
+
+		if ((act_turfs[T] % 10) == 0)
+			CHECK_TICK
 
 		//Wow severity looks confusing to calculate... Fret not, I didn't leave you with any additional instructions or help. (just kidding, see the line under the calculation)
 		var/severity = 4 - round(max(min( 3, ((act_turfs[T] - T.explosion_resistance) / (max(3,(power/3)))) ) ,1), 1)
@@ -390,9 +377,6 @@ SUBSYSTEM_DEF(explosives)
 				AM.ex_act(severity)
 				if(!QDELETED(AM) && !AM.anchored)
 					addtimer(new Callback(AM, TYPE_PROC_REF(/atom/movable, throw_at), throw_target, 9/severity, 9/severity), 0)
-				CHECK_TICK
-			else
-				CHECK_TICK
 
 	explosion_in_progress = FALSE
 
