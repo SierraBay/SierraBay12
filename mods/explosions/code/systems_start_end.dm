@@ -57,12 +57,6 @@
 /datum/controller/subsystem/fluids/ExplosionEnd()
 	can_fire = TRUE
 
-/datum/controller/subsystem/processing/obj/ExplosionStart()
-	can_fire = FALSE
-
-/datum/controller/subsystem/processing/obj/ExplosionEnd()
-	can_fire = TRUE
-
 /datum/station_holomap/Destroy()
 	QDEL_NULL(station_map)
 	QDEL_NULL(cursor)

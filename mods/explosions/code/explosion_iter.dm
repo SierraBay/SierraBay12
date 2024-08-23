@@ -181,7 +181,7 @@ SUBSYSTEM_DEF(explosives)
 		log_game("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range]) in area [epicenter.loc.name] ")
 
 	if(heavy_impact_range > 1)
-		var/datum/effect/explosion/E = new/datum/effect/explosion()
+		var/datum/effect/explosion/E = new
 		E.set_up(epicenter)
 		E.start()
 
@@ -243,6 +243,11 @@ SUBSYSTEM_DEF(explosives)
 	explosion_in_progress = TRUE
 	var/list/act_turfs = list()
 	act_turfs[epicenter] = power
+
+	if(power > 10)
+		var/datum/effect/explosion/E = new
+		E.set_up(epicenter)
+		E.start()
 
 	power -= epicenter.explosion_resistance
 	for (var/obj/O in epicenter)
@@ -359,9 +364,6 @@ SUBSYSTEM_DEF(explosives)
 		if (act_turfs[T] <= 0)
 			continue
 
-		if ((act_turfs[T] % 10) == 0)
-			CHECK_TICK
-
 		//Wow severity looks confusing to calculate... Fret not, I didn't leave you with any additional instructions or help. (just kidding, see the line under the calculation)
 		var/severity = 4 - round(max(min( 3, ((act_turfs[T] - T.explosion_resistance) / (max(3,(power/3)))) ) ,1), 1)
 		//sanity			effective power on tile				divided by either 3 or one third the total explosion power
@@ -377,6 +379,9 @@ SUBSYSTEM_DEF(explosives)
 				AM.ex_act(severity)
 				if(!QDELETED(AM) && !AM.anchored)
 					addtimer(new Callback(AM, TYPE_PROC_REF(/atom/movable, throw_at), throw_target, 9/severity, 9/severity), 0)
+
+		if ((act_turfs[T] % 8) == 0)
+			CHECK_TICK
 
 	explosion_in_progress = FALSE
 
