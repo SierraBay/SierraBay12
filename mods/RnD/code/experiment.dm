@@ -9,12 +9,12 @@ var/global/list/rnd_server_list = list()
 		TECH_ENGINEERING = 250,
 		TECH_PHORON = 500,
 		TECH_POWER = 300,
-		TECH_BLUESPACE = 1000,
+		TECH_BLUESPACE = 850,
 		TECH_BIO = 300,
 		TECH_COMBAT = 500,
 		TECH_MAGNET = 350,
 		TECH_DATA = 400,
-		TECH_ESOTERIC = 5000,
+		TECH_ESOTERIC = 1500,
 	)
 
 	var/list/tech_points_rarity = list(
