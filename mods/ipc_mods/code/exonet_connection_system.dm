@@ -44,6 +44,7 @@
 /obj/item/organ/internal/ecs/attack_self(mob/user)
 	if(action_button_name == EXONET_ACTION_NAME && owner)
 		owner.enter_exonet()
+		owner.update_ipc_verbs()
 		refresh_action_button()
 
 /obj/item/organ/internal/ecs/Process()
