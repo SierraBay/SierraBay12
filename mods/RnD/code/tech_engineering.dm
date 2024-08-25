@@ -134,7 +134,7 @@
 	required_tech_levels = list()
 	cost = 500
 
-	unlocks_designs = list("depth_scanner", "ano_scanner", "pick_set")
+	unlocks_designs = list("depth_scanner", "ano_scanner", "pick_set", "collector")
 
 
 /datum/technology/engineering/excavation_drill

@@ -1,3 +1,6 @@
+#define SCREEN_CHANGE_BUTTON "Change Screen"
+#define EXONET_ACTION_NAME "Enter Exonet"
+#define SHOW_LAWS_POSIBRAN "Show laws posibran"
 /datum/species/machine
 	passive_temp_gain = 0  // This should cause IPCs to stabilize at ~80 C in a 20 C environment.(5 is default without organ)
 
@@ -14,6 +17,8 @@
 		var/obj/item/organ/internal/cell/potato = internal_organs_by_name[BP_CELL]
 		var/obj/item/organ/internal/cooling_system/coolant = internal_organs_by_name[BP_COOLING]
 		if(potato && potato.cell && src.is_species(SPECIES_IPC))
+			if(!coolant)
+				return
 			stat("Coolant remaining:","[coolant.get_coolant_remaining()]/[coolant.refrigerant_max]")
 
 /obj/item/organ/internal/cell/Process()
@@ -70,13 +75,13 @@
 	set desc = ""
 	var/obj/item/organ/external/head/R = src.get_organ(BP_HEAD)
 	var/obj/item/organ/internal/ecs/enter = src.internal_organs_by_name[BP_EXONET]
-	var/datum/robolimb/robohead = all_robolimbs[R.model]
 
 	if(!R)
 		return
 	if(R.is_stump() || R.is_broken())
 		return
 
+	var/datum/robolimb/robohead = all_robolimbs[R.model]
 	if(!enter)
 		to_chat(usr, "<span class='warning'>You have no exonet connection port</span>")
 		return
@@ -97,16 +102,22 @@
 	var/obj/item/organ/external/head/R = src.get_organ(BP_HEAD)
 	var/datum/robolimb/robohead = all_robolimbs[R.model]
 	var/obj/item/organ/internal/ecs/enter = src.internal_organs_by_name[BP_EXONET]
+	if(enter)
+		enter.action_button_name = EXONET_ACTION_NAME
+	else
+		enter.action_button_name = null
+
+	if(robohead.has_screen)
+		src.verbs |= /mob/living/carbon/human/proc/show_exonet_screen
+		R.action_button_name = SCREEN_CHANGE_BUTTON
+	else
+		src.verbs -= /mob/living/carbon/human/proc/show_exonet_screen
+		R.action_button_name = null
+
 	if(enter.computer.portable_drive)
 		src.verbs |= /mob/living/carbon/human/proc/ipc_eject_usb
 	else
 		src.verbs -= /mob/living/carbon/human/proc/ipc_eject_usb
-
-	if(robohead.has_screen)
-		src.verbs |= /mob/living/carbon/human/proc/show_exonet_screen
-	else
-		src.verbs -= /mob/living/carbon/human/proc/show_exonet_screen
-
 
 /mob/living/carbon/human/proc/ipc_eject_usb()
 	set category = "Abilities"
@@ -149,6 +160,46 @@
 
 
 /mob/living/silicon/laws_sanity_check()
-	.=..()
+	. = ..()
 	if(istype(usr,/mob/living/silicon/sil_brainmob))
 		return
+
+/obj/item/organ/external/head/attack_self(mob/user)
+	. = ..()
+	if(. && action_button_name == SCREEN_CHANGE_BUTTON && owner)
+		owner.MachineChangeScreen()
+		refresh_action_button()
+
+/obj/item/organ/external/head/refresh_action_button()
+	. = ..()
+	if(.)
+		action.button_icon_state = "ipc_rgb"
+		action.button_icon = 'mods/ipc_mods/icons/ipc_icons.dmi'
+		if(action.button) action.button.UpdateIcon()
+
+
+/obj/item/organ/internal/posibrain/shackle(given_lawset)
+	. = ..()
+	action_button_name = SHOW_LAWS_POSIBRAN
+
+/obj/item/organ/internal/posibrain/unshackle()
+	. = ..()
+	action_button_name = null
+
+
+/obj/item/organ/internal/posibrain/ipc/attack_self(mob/user)
+	if(action_button_name == SHOW_LAWS_POSIBRAN && owner)
+		owner.update_ipc_verbs()
+		refresh_action_button()
+		src.brain_checklaws()
+
+/obj/item/organ/internal/posibrain/ipc/refresh_action_button()
+	. = ..()
+	if(.)
+		action.button_icon_state = "law"
+		action.button_icon = 'mods/ipc_mods/icons/ipc_icons.dmi'
+		if(action.button) action.button.UpdateIcon()
+
+#undef SCREEN_CHANGE_BUTTON
+#undef EXONET_ACTION_NAME
+#undef SHOW_LAWS_POSIBRAN
