@@ -56,7 +56,7 @@
 
 
 
-/datum/chemical_reaction/virus_food
+/singleton/reaction/virus_food
 	name = "Virus Food"
 	result = /datum/reagent/nutriment/virus_food
 	required_reagents = list(/datum/reagent/water = 1, /datum/reagent/drink/milk = 1)
@@ -143,7 +143,7 @@
 	density = FALSE
 	anchored = TRUE
 	layer = 2
-	icon = 'mods/virusology/icons/virology.dmi'
+	icon = 'icons/effects/blood.dmi'
 	icon_state = "mucus"
 	var/list/datum/disease2/disease/virus2 = list()
 
