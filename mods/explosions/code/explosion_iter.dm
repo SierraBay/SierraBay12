@@ -380,7 +380,7 @@ SUBSYSTEM_DEF(explosives)
 				if(!QDELETED(AM) && !AM.anchored)
 					addtimer(new Callback(AM, TYPE_PROC_REF(/atom/movable, throw_at), throw_target, 9/severity, 9/severity), 0)
 
-		if ((act_turfs[T] % 8) == 0)
+		if ((act_turfs[T] % 10) == 0)
 			CHECK_TICK
 
 	explosion_in_progress = FALSE
