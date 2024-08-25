@@ -49,7 +49,7 @@
 		immunity = min(immunity + 0.25, immunity_norm)
 //[SIERRA-ADD] VIRUSOLOGY
 	if(life_tick % 5 && immunity < 15 && chem_effects[CE_ANTIVIRAL] < VIRUS_COMMON && !virus2.len)
-		var/infection_prob = 15 - immunity
+		var/infection_prob = 5 - immunity
 		var/turf/simulated/T = loc
 		if(istype(T))
 			infection_prob += T.dirt
