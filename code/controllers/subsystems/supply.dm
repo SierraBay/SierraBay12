@@ -31,6 +31,9 @@ SUBSYSTEM_DEF(supply)
 		"virology_antibodies" = "From uploaded antibody data",
 		"virology_dishes" = "From exported virus dishes",
 //SIERRA-ADD
+		//[SIERRA-ADD] - ANOMALY - Добавляем категорию "Артефакты"
+		"artefacts" = "From artefacts",
+		//[SIERRA-ADD]
 		"total" = "Total" // If you're adding additional point sources, add it here in a new line. Don't forget to put a comma after the old last line.
 	)
 
@@ -131,6 +134,14 @@ SUBSYSTEM_DEF(supply)
 								add_points_from_source(5, "virology_dishes")
 								sold_virus_strains += dish.virus2.uniqueID
 //SIERRA-ADD
+					//[SIERRA-ADD] - ANOMALY - Продажа артефактов
+					if(istype(A, /obj/item/artefact))
+						var/obj/item/artefact/D = A
+						add_points_from_source(D.cargo_price, "artefacts")
+					if(istype(A, /obj/item/collector))
+						var/obj/item/collector/D = A
+						add_points_from_source(D.stored_artefact.cargo_price, "artefacts")
+					//[SIERRA-ADD]
 
 			// Sell artefacts (in anomaly cages)
 			if (istype(AM, /obj/machinery/anomaly_container))
