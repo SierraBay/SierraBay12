@@ -69,7 +69,7 @@
 					var/datum/disease2/disease/V = virus[ID]
 					pathogens.Add(list(list("name" = V.name(), "spread_type" = V.spreadtype, "reference" = "\ref[V]")))
 
-				if (pathogens.len > 0)
+				if (LAZYLEN(pathogens) > 0)
 					data["pathogens"] = pathogens
 
 			else
@@ -200,7 +200,7 @@
 
 		var/list/virus = B.data["virus2"]
 		P.info += "<u>Pathogens:</u> <br>"
-		if (virus.len > 0)
+		if (LAZYLEN(virus) > 0)
 			for (var/ID in virus)
 				var/datum/disease2/disease/V = virus[ID]
 				P.info += "[V.name()]<br>"

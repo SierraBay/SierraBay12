@@ -42,7 +42,7 @@
 				var/list/common_antibodies = known_antibodies & given_antibodies
 				var/list/unknown_antibodies = common_antibodies ^ given_antibodies
 				if(LAZYLEN(unknown_antibodies))
-					var/payout = unknown_antibodies.len * 45
+					var/payout = LAZYLEN(unknown_antibodies) * 45
 					SSsupply.add_points_from_source(payout, "virology_antibodies")
 					ping("\The [src] pings, \"Successfully uploaded new antibodies to the ExoNet.\"")
 					known_antibodies |= unknown_antibodies //Add the new antibodies to list

@@ -225,7 +225,7 @@
 /mob/living/carbon/human/handle_post_breath(datum/gas_mixture/breath)
 	.=..()
 	//spread some viruses while we are at it
-	if(breath && !internal && virus2.len > 0 && prob(10))
+	if(breath && !internal && LAZYLEN(virus2) > 0 && prob(10))
 		for(var/mob/living/carbon/M in view(1,src))
 			src.spread_disease_to(M)
 /datum/sprite_accessory/facial_hair/ipc/scg

@@ -78,7 +78,7 @@
 							"is_in_database" = !!R, \
 							"record" = "\ref[R]")))
 
-				if (pathogen_pool.len > 0)
+				if (LAZYLEN(pathogen_pool) > 0)
 					data["pathogen_pool"] = pathogen_pool
 
 		if (LIST)
@@ -87,7 +87,7 @@
 				var/datum/computer_file/data/virus_record/r = virusDB[ID]
 				db.Add(list(list("name" = r.fields["name"], "record" = "\ref[r]")))
 
-			if (db.len > 0)
+			if (LAZYLEN(db) > 0)
 				data["database"] = db
 
 		if (ENTRY)
@@ -184,7 +184,7 @@
 
 				var/list/virus = B.data["virus2"]
 				P.info += "<u>Pathogens:</u> <br>"
-				if (virus.len > 0)
+				if (LAZYLEN(virus) > 0)
 					for (var/ID in virus)
 						var/datum/disease2/disease/V = virus[ID]
 						P.info += "[V.name()]<br>"

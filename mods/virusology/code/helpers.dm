@@ -88,7 +88,7 @@
 		return
 	if ("[disease.uniqueID]" in M.virus2)
 		return
-	if(M.virus2.len >= 3) // cap the number of viruses a mob can have to 3
+	if(LAZYLEN(M.virus2) >= 3) // cap the number of viruses a mob can have to 3
 		return
 	// if one of the antibodies in the mob's body matches one of the disease's antigens, don't infect
 	var/list/antibodies_in_common = M.antibodies & disease.antigen
@@ -140,7 +140,7 @@
 		return "retardation"
 
 //	log_debug("Spreading [vector] diseases from [src] to [victim]")
-	if (virus2.len > 0)
+	if (LAZYLEN(virus2) > 0)
 		for (var/ID in virus2)
 //			log_debug("Attempting virus [ID]")
 			var/datum/disease2/disease/V = virus2[ID]
@@ -162,7 +162,7 @@
 					infect_virus2(victim,V)
 
 	//contact goes both ways
-	if (victim.virus2.len > 0 && vector == "Contact" && Adjacent(victim))
+	if (LAZYLEN(victim.virus2) > 0 && vector == "Contact" && Adjacent(victim))
 //		log_debug("Spreading [vector] diseases from [victim] to [src]")
 		var/nudity = 1
 

@@ -90,11 +90,7 @@
 	req_access = list(access_virology)
 	icon_contents = "chem"
 	accepted_types = list(
-		/obj/item/reagent_containers/glass/beaker/vial,
-//SIERRA-ADDED VIRUSOLOGY
-		/obj/item/virusdish,
-//SIERRA-ADDED
-	)
+		/obj/item/reagent_containers/glass/beaker/vial, /obj/item/virusdish) //SIERRA-ADDED VIRUSOLOGY
 
 /obj/machinery/smartfridge/chemistry
 	name = "\improper Smart Chemical Storage"

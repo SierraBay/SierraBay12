@@ -47,7 +47,7 @@
 			if (L == mob)
 				continue
 			mobs_to_bite += L
-		if (mobs_to_bite.len < 1)//nobody to bite
+		if (LAZYLEN(mobs_to_bite) < 1)//nobody to bite
 			return
 		var/mob/living/carbon/human/Target = pick(mobs_to_bite)
 		mob.visible_message("<span class='warning'>[mob] violently bites [Target]!</span>")
