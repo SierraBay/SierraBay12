@@ -1,7 +1,5 @@
 /obj/machinery/disease2/incubator/
 	name = "pathogenic incubator"
-	density = 1
-	anchored = 1
 	icon = 'mods/virusology/icons/virology.dmi'
 	icon_state = "incubator"
 	var/obj/item/virusdish/dish

@@ -61,12 +61,14 @@
 			icon_state = "analyser_processing"
 		else
 			pause = 1
-			addtimer(new Callback(dish, TYPE_PROC_REF(/obj/machinery/disease2/diseaseanalyser, Process), TRUE), 25)
-				dish.forceMove(loc)
-				dish = null
+			addtimer(new Callback(src, PROC_REF(dishmove)), 25)
 
-				src.state("\The [src] buzzes, \"Insufficient growth density to complete analysis.\"")
-				pause = 0
+/obj/machinery/disease2/diseaseanalyser/proc/dishmove()
+	dish.forceMove(loc)
+	dish = null
+
+	src.state("\The [src] buzzes, \"Insufficient growth density to complete analysis.\"")
+	pause = 0
 
 /obj/machinery/disease2/diseaseanalyser/proc/get_fake_effects()
 	. = list()
