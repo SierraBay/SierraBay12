@@ -113,8 +113,6 @@
 	<a href="?src=\ref[src];what=go" style="color:#ff0000">RELEASE</a>
 	"}
 
-	user << browse(H, "window=virus2edit")
-
 /datum/virus2_editor/Topic(href, href_list)
 	switch(href_list["what"])
 		if("effect")
