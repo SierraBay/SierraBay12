@@ -42,14 +42,14 @@
 				var/list/given_antibodies = data["antibodies"] //now check what specific antibodies it's holding
 				var/list/common_antibodies = known_antibodies & given_antibodies
 				var/list/unknown_antibodies = common_antibodies ^ given_antibodies
-				if(unknown_antibodies.len)
+				if(LAZYLEN(unknown_antibodies))
 					var/payout = unknown_antibodies.len * 45
 					SSsupply.add_points_from_source(payout, "virology_antibodies")
 					ping("\The [src] pings, \"Successfully uploaded new antibodies to the ExoNet.\"")
 					known_antibodies |= unknown_antibodies //Add the new antibodies to list
 				else
 					src.state("\The [src] buzzes, \"Failed to identify any new antibodies.\"")
-				if(!given_antibodies.len) //return if no antibodies
+				if(!LAZYLEN(given_antibodies))//return if no antibodies
 					return 0
 
 			container.dropInto(loc)

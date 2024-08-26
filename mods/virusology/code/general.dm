@@ -30,7 +30,7 @@
 
 /datum/reagent/radium/affect_blood(mob/living/carbon/M, alien, removed)
 	.=..()
-	if(M.virus2.len)
+	if(LAZYLEN(M.virus2))
 		for(var/ID in M.virus2)
 			var/datum/disease2/disease/V = M.virus2[ID]
 			if(prob(5))
@@ -70,7 +70,6 @@
 	icon = 'mods/virusology/icons/virology.dmi'
 	icon_state = "virusfoodtank"
 	amount_per_transfer_from_this = 10
-	anchored = 1
 	initial_reagent_types = list(/datum/reagent/nutriment/virus_food = 1)
 
 
@@ -177,7 +176,7 @@
 	.=..()
 	if(data && data["virus2"])
 		var/list/vlist = data["virus2"]
-		if(vlist.len)
+		if(LAZYLEN(vlist))
 			for(var/ID in vlist)
 				var/datum/disease2/disease/V = vlist[ID]
 				if(V.spreadtype == "Contact")
@@ -189,7 +188,7 @@
 	.=..()
 	if(data && data["virus2"])
 		var/list/vlist = data["virus2"]
-		if(vlist.len)
+		if(LAZYLEN(vlist))
 			for(var/ID in vlist)
 				var/datum/disease2/disease/V = vlist[ID]
 				if(V && V.spreadtype == "Contact")

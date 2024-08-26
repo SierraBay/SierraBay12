@@ -92,12 +92,12 @@
 		return
 	// if one of the antibodies in the mob's body matches one of the disease's antigens, don't infect
 	var/list/antibodies_in_common = M.antibodies & disease.antigen
-	if(antibodies_in_common.len)
+	if(LAZYLEN(antibodies_in_common))
 		return
 	if(prob(100 * M.reagents.get_reagent_amount(/datum/reagent/spaceacillin) / (REAGENTS_OVERDOSE/2)))
 		return
 
-	if(!disease.affected_species.len)
+	if(!LAZYLEN(disease.affected_species))
 		return
 
 	if (!(M.species.get_bodytype(M) in disease.affected_species))

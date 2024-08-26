@@ -52,7 +52,7 @@
 	scan["immune_system"] = H.virus_immunity()
 	scan["worms"] = H.has_brain_worms()
 //SEIRAA-ADD [VIRUSOLOGY]
-	if (H.virus2.len)
+	if (LAZYLEN(H.virus2))
 		scan["virus"] = TRUE
 //SEIRAA-ADD
 	scan["reagents"] = list()

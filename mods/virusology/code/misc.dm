@@ -6,7 +6,7 @@
 /datum/goal/sickness/check_success()
 	return !got_sick
 
-/datum/goal/sickness/update_progress(var/progress)
+/datum/goal/sickness/update_progress(progress)
 	if(!got_sick)
 		got_sick = progress
 		if(got_sick)

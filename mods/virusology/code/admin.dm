@@ -129,12 +129,12 @@
 			else if(href_list["chance"])
 				var/datum/disease2/effect/Eff = s[stage]
 				var/I = input("Chance, per tick, of this effect happening (min 0, max [initial(Eff.chance_max)])", "Effect Chance", s_chance[stage]) as null|num
-				if(I == null || I < 0 || I > initial(Eff.chance_max)) return
+				if(!I || I < 0 || I > initial(Eff.chance_max)) return
 				s_chance[stage] = I
 			else if(href_list["multiplier"])
 				var/datum/disease2/effect/Eff = s[stage]
 				var/I = input("Multiplier for this effect (min 1, max [initial(Eff.multiplier_max)])", "Effect Multiplier", s_multiplier[stage]) as null|num
-				if(I == null || I < 1 || I > initial(Eff.multiplier_max)) return
+				if(!I || I < 1 || I > initial(Eff.multiplier_max)) return
 				s_multiplier[stage] = I
 		if("species")
 			if(href_list["toggle"])
@@ -178,14 +178,14 @@
 						candidates["[G.name][G.client ? "" : " (no client)"]"] = G
 					else
 						candidates["[G.name] ([G.species.get_bodytype(G)])[G.client ? "" : " (no client)"]"] = G
-			if(!candidates.len) to_chat(usr, "No possible candidates found!")
+			if(!LAZYLEN(candidates)) to_chat(usr, "No possible candidates found!")
 
 			var/I = input("Choose initial infectee", "Infectee", infectee) as null|anything in candidates
 			if(!I || !candidates[I]) return
 			infectee = candidates[I]
 			species |= infectee.species.get_bodytype(infectee)
 		if("go")
-			if(!antigens.len)
+			if(!LAZYLEN(antigens))
 				var/a = alert("This disease has no antigens; it will be impossible to permanently immunise anyone without them.\
 								It is strongly recommended to set at least one antigen. Do you want to go back and edit your virus?", "Antigens", "Yes", "Yes", "No")
 				if(a == "Yes") return

@@ -16,7 +16,7 @@
 				var/obj/decal/cleanable/blood/B = O
 				if(isnull(B.virus2))
 					B.virus2 = list()
-				if(B.virus2.len)
+				if(LAZYLEN(B.virus2))
 					for (var/ID in B.virus2)
 						var/datum/disease2/disease/V = B.virus2[ID]
 						infect_virus2(src,V)
@@ -25,12 +25,12 @@
 				var/obj/decal/cleanable/mucus/M = O
 				if(isnull(M.virus2))
 					M.virus2 = list()
-				if(M.virus2.len)
+				if(LAZYLEN(M.virus2))
 					for (var/ID in M.virus2)
 						var/datum/disease2/disease/V = M.virus2[ID]
 						infect_virus2(src,V)
 
-	if(virus2.len)
+	if(LAZYLEN(virus2))
 		for (var/ID in virus2)
 			var/datum/disease2/disease/V = virus2[ID]
 			if(isnull(V)) // Trying to figure out a runtime error that keeps repeating
@@ -42,13 +42,13 @@
 
 			// check if we're immune
 			var/list/common_antibodies = V.antigen & src.antibodies
-			if(common_antibodies.len)
+			if(LAZYLEN(common_antibodies))
 				V.dead = 1
 //[/SIERRA-ADD] VIRUSOLOGY
 	if(immunity > 0.2 * immunity_norm && immunity < immunity_norm)
 		immunity = min(immunity + 0.25, immunity_norm)
 //[SIERRA-ADD] VIRUSOLOGY
-	if(life_tick % 5 && immunity < 15 && chem_effects[CE_ANTIVIRAL] < VIRUS_COMMON && !virus2.len)
+	if(life_tick % 5 && immunity < 15 && chem_effects[CE_ANTIVIRAL] < VIRUS_COMMON && !LAZYLEN(virus2))
 		var/infection_prob = 5 - immunity
 		var/turf/simulated/T = loc
 		if(istype(T))

@@ -2,8 +2,6 @@
 	name = "disease analyser"
 	icon = 'mods/virusology/icons/virology.dmi'
 	icon_state = "analyser"
-	anchored = 1
-	density = 1
 
 	var/scanning = 0
 	var/pause = 0
@@ -63,7 +61,7 @@
 			icon_state = "analyser_processing"
 		else
 			pause = 1
-			spawn(25)
+			addtimer(new Callback(dish, TYPE_PROC_REF(/obj/machinery/disease2/diseaseanalyser, Process), TRUE), 25)
 				dish.forceMove(loc)
 				dish = null
 

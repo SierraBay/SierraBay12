@@ -288,7 +288,7 @@
 		if(length(chemtraces))
 			. += SPAN_CLASS("scan_notice", "Metabolism products of [english_list(chemtraces)] found in subject's system.")
 //SIERRA-ADD VIRUSOLOGY
-	if(H.virus2.len)
+	if(LAZYLEN(H.virus2))
 		for (var/ID in H.virus2)
 			if (ID in virusDB)
 				print_reagent_default_message = FALSE

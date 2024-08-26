@@ -1014,7 +1014,7 @@
 		else if(has_brain_worms())
 			holder2.icon_state = "hudbrainworm"
 //SIERRA-ADD VIRUSOLOGY
-		else if(virus2.len)
+		else if(LAZYLEN(virus2))
 			holder2.icon_state = "hudill"
 //SIERRA-ADD
 		else

@@ -12,18 +12,18 @@
 
 /obj/item/device/scanner/antibody_scanner/use_before(mob/living/M, mob/living/user)
 	. = FALSE
-	if(!istype(M,/mob/living/carbon/))
+	if(!istype(M,/mob/living/carbon))
 		report("Scan aborted: Incompatible target.", user)
 		return
 
 	var/mob/living/carbon/C = M
-	if (istype(C,/mob/living/carbon/human/))
+	if (istype(C,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = C
 		if(!H.should_have_organ(BP_HEART))
 			report("Scan aborted: The target does not have blood.", user)
 			return
 
-	if(!C.antibodies.len)
+	if(!LAZYLEN(C.antibodies))
 		report("Scan Complete: No antibodies detected.", user)
 		return
 
