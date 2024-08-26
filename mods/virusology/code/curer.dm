@@ -31,7 +31,7 @@
 		dat = "Antibody production in progress"
 	else if(container)
 		// check to see if we have the required reagents
-		if(container.reagents.get_reagent_amount(/datum/reagent/blood) >= 15 && container.reagents.get_reagent_amount(/datum/reagent/radium) >= 15 && container.reagents.get_reagent_amount(/datum/reagent/spaceacillin) >= 15)
+		if(container.reagents.get_reagent_amount(/datum/reagent/blood) >= 5 && container.reagents.get_reagent_amount(/datum/reagent/radium) >= 15 && container.reagents.get_reagent_amount(/datum/reagent/spaceacillin) >= 10)
 
 			dat = "Blood sample inserted."
 			dat += "<BR><A href='?src=\ref[src];antibody=1'>Begin antibody production</a>"

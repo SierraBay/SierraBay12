@@ -53,8 +53,12 @@
 		var/turf/simulated/T = loc
 		if(istype(T))
 			infection_prob += T.dirt
-		if(prob(infection_prob))
-			infect_mob_random_lesser(src)
+		if(T.dirt >= 50)
+			if(prob(infection_prob))
+				infect_mob_random_greater(src)
+		else
+			if(prob(infection_prob))
+				infect_mob_random_lesser(src)
 //[/SIERRA-ADD] VIRUSOLOGY
 
 /mob/living/carbon/proc/virus_immunity()
