@@ -34,10 +34,11 @@
 	max_coldown_time = 15 SECONDS
 	min_preload_time = 4
 	max_preload_time = 8
-	min_spawn_chance = 15
-	max_spawn_chance = 45
+	min_spawn_chance = 5
+	max_spawn_chance = 25
 	can_be_preloaded = TRUE
 	being_preload_chance = 30
+	detectable_effect_range = TRUE
 
 /obj/anomaly/electra/activate_anomaly()
 	last_activation_time = world.time//Без этой строчки некоторые электры входят в вечный цикл зарядки и удара, костыль? Возможно
@@ -61,29 +62,26 @@
 		get_mobs_and_objs_in_view_fast(T, effect_range * 6, victims_not_used, objs_second)
 		for(var/obj/anomaly/electra/electra_anomalies in objs_second)
 			if(electra_anomalies.isready() && electra_anomalies.subtype_tesla)
-				electra_anomalies.last_activation_time = world.time
-				electra_anomalies.activate_anomaly()
+				unwait_activate_anomaly(electra_anomalies)
 		for(var/obj/anomaly/part/anomaly_parts in objs_second)
 			if(istype(anomaly_parts.core, /obj/anomaly/electra))
 				var/obj/anomaly/electra/electra_anomalies = anomaly_parts.core
 				if(electra_anomalies.isready() && electra_anomalies.subtype_tesla)
-					electra_anomalies.last_activation_time = world.time
-					electra_anomalies.activate_anomaly()
-	if(activation_ammount > 1)
-		if(activation_ammount != activated_ammount)
-			activated_ammount++
-			activate_anomaly()
-			return
-		else
-			activated_ammount = 0
-
+					unwait_activate_anomaly(electra_anomalies)
 	.=..()
 
-/obj/anomaly/electra/get_effect_by_anomaly(target)
+/obj/anomaly/electra/proc/unwait_activate_anomaly(obj/anomaly/electra/anomaly)
+	set waitfor = FALSE
+	last_activation_time = world.time
+	anomaly.activate_anomaly()
+
+/obj/anomaly/electra/get_effect_by_anomaly(atom/movable/target)
+	//Понадобится нам, если обьект по какой-либо причине будет удалён из-за удара, дабы "лучу" было куда идти
+	var/target_turf = get_turf(target)
+	if(!isturf(target.loc))
+		return
 	if(isanomaly(target))
 		return
-	//Понадобится нам, если обьект по какой-либо причине будет удалён из-за удара, дабы "лучу" было куда идти
-	var/target_turf = target
 	//Если цель подходит под критерии удара, мы рисуем молнию
 	var/create_line = FALSE
 	//Если целью является адхерант, мы лишь заряжаем его батарею
@@ -131,13 +129,11 @@
 		var/obj/item/cell/pruzhina/victim = target
 		victim.charge = victim.maxcharge
 		create_line = TRUE
-		target_turf = get_turf(target)
 
 
 	else if(istype(target, /obj/item))
 		if(!istype(target, /obj/item/artefact))
 			create_line = TRUE
-			target_turf = get_turf(target)
 			anything_in_ashes(target)
 
 	//Этот код и создаст саму молнию от центра аномалии до жертвы

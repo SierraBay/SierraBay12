@@ -3,6 +3,7 @@
 #define SCAN_ARTEFACTS_AND_RADIATION 2
 
 /turf
+	///Турф под ударом электроаномалии?
 	var/in_anomaly_effect_range = FALSE
 
 /obj/anomaly
@@ -14,7 +15,6 @@
 	var/last_peek_time = 0
 	var/peek_delay = 0.2 SECONDS
 	var/show_anomalies_delay = 10 SECONDS
-	var/last_anomaly_search = 0
 
 
 ///Альт клик по детектору
@@ -57,13 +57,10 @@
 /obj/item/device/ano_scanner/examine(mob/user, distance, is_adjacent)
 	. = ..()
 	to_chat(user, SPAN_GOOD("Use alt+LBM to switch scan mode."))
+	to_chat(user, SPAN_GOOD("Use LBM in anomaly scan mode for search anomalies."))
 
 ///Пользователь проводит поиск при помощи сканера
 /obj/item/device/ano_scanner/proc/try_found_anomalies(mob/living/user)
-	if((world.time - last_anomaly_search) < show_anomalies_delay )
-		to_chat(user, SPAN_BAD("Device is stil cooling."))
-		return
-	last_anomaly_search = world.time
 	if(!user.skill_check(SKILL_SCIENCE, SKILL_BASIC))
 		to_chat(user, SPAN_BAD("I dont know how use this function of this device."))
 		return
@@ -86,13 +83,12 @@
 			if(prob(chance_to_find))
 				LAZYADD(allowed_anomalies, choosed_anomaly)
 		var/flick_time = (1 + (user_science_lvl * 2))SECONDS
-		last_anomaly_search = world.time
 		show_anomalies(user, flick_time, allowed_anomalies)
 
 
 /obj/item/paper/sierra/exploration
 	name = "new dangers"
-	info = "<tt><center><b><large>NSV Sierra</large></b></center><center>Новые опасности</center><li><b>Одна из последних экспедиций вернулась с новой информацией, и ранениями. Согласно последнему отчёту, экспедиционный отряд наткнулся на некую аномальную активность на одной из планет. Научно исследовательский отдел выделил вашему корпусу дополнительное снаряжение и модифицировал сканеры Сарасповой, добавив им АЛЬТЕРНАТИВНЫЙ режим. Советуем проявлять огромную осторожность при работе на планетах. Удачи.</b><hr></tt><br><i>This paper has been stamped by the Research&Development department.</i>"
+	info = "<tt><center><b><large>NSV Sierra</large></b></center><center>Новые опасности</center><li><b>Одна из последних экспедиций вернулась с новой информацией, и ранениями. Согласно последнему отчёту, экспедиционный отряд наткнулся на некую аномальную активность на одной из планет. Научно исследовательский отдел выделил вашему отряду дополнительное снаряжение и модифицировал сканеры Саcпаровой, добавив им АЛЬТЕРНАТИВНЫЙ режим. Советуем проявлять огромную осторожность при работе на планетах. Удачи.</b><hr></tt><br><i>This paper has been stamped by the Research&Development department.</i>"
 	icon = 'maps/sierra/icons/obj/uniques.dmi'
 	icon_state = "paper_words"
 

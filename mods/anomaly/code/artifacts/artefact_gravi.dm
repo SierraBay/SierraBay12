@@ -1,5 +1,5 @@
 /obj/item/artefact/gravi
-	name = "Что-то."
+	name = "Something"
 	desc = "Вы чувствуете лёгкость."
 	icon_state = "gravi"
 	rect_to_interactions = list(
