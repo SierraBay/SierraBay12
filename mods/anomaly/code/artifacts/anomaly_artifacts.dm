@@ -9,6 +9,10 @@
 	var/cargo_price = 100
 	var/rnd_points = 2000
 
+/obj/item/artefact/ex_act(severity)
+	return
+
+
 //Жар
 /obj/item/artefact/zjar
 	name = "Something"

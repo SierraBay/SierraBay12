@@ -9,8 +9,6 @@ SUBSYSTEM_DEF(mapping)
 	var/list/away_sites_templates = list()
 	var/list/submaps = list()
 	var/list/submap_archetypes = list()
-	/// The largest plane offset we've generated so far
-	var/max_plane_offset = 0
 
 
 /datum/controller/subsystem/mapping/UpdateStat(time)

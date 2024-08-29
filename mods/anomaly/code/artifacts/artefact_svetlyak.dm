@@ -1,5 +1,5 @@
 /obj/item/artefact/svetlyak
-	name = "Что-то."
+	name = "Something"
 	desc = "Безумно яркий, даже думать о том чтоб посмотреть на него подольше вызываем неприятное чувство."
 	icon_state = "svetlyak"
 	rect_to_interactions = list(

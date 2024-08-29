@@ -30,8 +30,8 @@
 	ranzomize_with_initialize = TRUE
 	min_coldown_time = 8 SECONDS
 	max_coldown_time = 20 SECONDS
-	min_spawn_chance = 20
-	max_spawn_chance = 40
+	min_spawn_chance = 5
+	max_spawn_chance = 10
 	can_be_preloaded = FALSE
 	being_preload_chance = 20
 
@@ -49,7 +49,9 @@
 			anything_in_ashes(I)
 	.=..()
 
-/obj/anomaly/zjarka/get_effect_by_anomaly(target)
+/obj/anomaly/zjarka/get_effect_by_anomaly(atom/movable/target)
+	if(!isturf(target.loc))
+		return
 	if(isanomaly(target))
 		return
 	//Поджечь человека

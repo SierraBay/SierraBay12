@@ -7,8 +7,9 @@
 
 /proc/inmech(mob/living/A, mob/living/exosuit/B)
 	if(istype(B, /mob/living/exosuit))
-		if(B.pilots.Find(A))
-			return TRUE
+		if(B.pilots)
+			if(B.pilots.Find(A))
+				return TRUE
 	return FALSE
 
 /datum/keybinding/mech

@@ -22,8 +22,8 @@
 	artefacts = list(
 		/obj/item/artefact/gravi
 	)
-	min_spawn_chance = 25
-	max_spawn_chance = 50
+	min_spawn_chance = 15
+	max_spawn_chance = 25
 
 //Аномалия выполняет своё финальное воздействие на все обьекты что оказались в её центре
 /obj/anomaly/rvach/proc/get_end_effect_by_anomaly(target)

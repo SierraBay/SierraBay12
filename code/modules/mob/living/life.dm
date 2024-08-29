@@ -39,6 +39,7 @@
 	handle_actions()
 
 //[SIERRA-EDIT]
+	UpdateLyingBuckledAndVerbStatus()
 	if(update_icon)	//forces a full overlay update
 		update_icon = FALSE
 		regenerate_icons()

@@ -1,5 +1,5 @@
 /obj/item/artefact/zjar
-	name = "Что-то."
+	name = "Something"
 	desc = "Тепло растекается по вашим рукам, от одного лишь вида вам становится теплее."
 	rect_to_interactions = list(
 		"Lick",

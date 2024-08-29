@@ -1,10 +1,6 @@
 /obj/anomaly
 	///Аномалия может "Рожать" артефакты?
 	var/can_born_artifacts = FALSE
-	///Время, спустя которое аномалия опять попытается родить артефакт
-	var/time_to_bort_artifact = 15 MINUTES
-	///Время, когда в последний раз аномалия родила артефакт
-	var/last_time_artefact_borned = 0
 	//ANOTHER
 	///Какие артефакты порождает аномалия. Справа пишем шанс выбора этого артефакта в процентах. (Сумма не должна быть больше 100)
 	var/list/artefacts = list()
@@ -42,23 +38,18 @@
 	pickweight(artefacts)
 
 /obj/anomaly/proc/try_born_artifact()
-	if(can_born_artifacts)
+	//Может ли аномалия спавнить артефакты
+	if(can_born_artifacts && !check_artifacts_in_anomaly())
 		born_artifact()
-
-///Кидаем кости, спавнит ли аномалия артефакт?
-/obj/anomaly/proc/roll_artefact_spawn_chance()
-	if(prob(result_spawn_chance))
 		return TRUE
 	else
 		return FALSE
 
+
 ///Функция спавнит артефакт на территории аномалии
 /obj/anomaly/proc/born_artifact()
-	if(!check_artifacts_in_anomaly())
-		if(roll_artefact_spawn_chance())
-			choose_artifact_to_spawn()
-			born_artifact_in_random_title()
-	do_coldown_to_next_born()
+	choose_artifact_to_spawn()
+	born_artifact_in_random_title()
 
 ///Функция проверяет, есть ли на территории аномалии артефакты
 /obj/anomaly/proc/check_artifacts_in_anomaly()
@@ -96,8 +87,6 @@
 			for(var/obj/anomaly/part/part in list_of_parts)
 				LAZYADD(possible_places, part.loc)
 	var/result = pick(possible_places)
-	var/artifact = pick(artefacts)
-	new artifact(result)
-
-/obj/anomaly/proc/do_coldown_to_next_born()
-	addtimer(new Callback(src, PROC_REF(born_artifact)), time_to_bort_artifact)
+	if(LAZYLEN(artefacts))
+		var/artifact = pick(artefacts)
+		new artifact(result)

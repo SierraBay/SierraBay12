@@ -44,6 +44,9 @@
 	var/activation_ammount = 1
 	///Аномке требуется предзарядка перед ударом
 	var/need_preload = FALSE
+	///Детектор запищит, если он появится в зоне поражения этой аномалии
+	var/detectable_effect_range = FALSE
+
 
 ///Аномалия по причине пересечения или ещё какой причине проверяет, может ли она "Взвестить от этого инициатора"
 /obj/anomaly/proc/can_be_activated(atom/movable/target)
@@ -96,6 +99,7 @@
 	if(currently_charging_after_activation)
 		return FALSE
 	currently_charging_after_activation = TRUE
+	currently_active = FALSE
 	addtimer(new Callback(src, PROC_REF(continue_recharge)), cooldown_time)
 
 ///Аномалия перезаряжается и после ищет возбудителя в зоне поражения. Это конец.
@@ -135,11 +139,14 @@
 	if(!isready())
 		return
 	if(can_be_activated(O))
+		currently_active = TRUE
 		activate_anomaly()
 	return
 
 ///Аномалия подготовлена к следующему удару?
 /obj/anomaly/proc/isready()
+	if(currently_active)
+		return
 	if(currently_charging_after_activation)
 		return FALSE
 	if(have_cooldown)
@@ -156,14 +163,5 @@
 	icon_state = idle_effect_type
 	if(have_static_sound)
 		GLOB.sound_player.PlayLoopingSound(src, "\ref[src]", static_sound_type, 10, 6)
-	//Теперь расчитаем турфы, находящиеся в зоне поражения аномалии
-	if(effect_range > 0)
-		for(var/turf/Turf in trange(effect_range, src))
-			LAZYADD(effected_turfs, Turf)
-	else
-		effected_turfs = get_turf(src)
-	//Пометим "флаг" у всех найденных турфов
-	for(var/turf/turfs in effected_turfs)
-		turfs.in_anomaly_effect_range = TRUE
 	calculate_artifact_spawn_chance()
 	calculate_artifact_spawn_time()
