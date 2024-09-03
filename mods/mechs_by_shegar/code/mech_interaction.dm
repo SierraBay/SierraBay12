@@ -1,3 +1,13 @@
+/mob/living/exosuit/add_pilot(mob/user)
+	. = ..()
+	to_chat(user,SPAN_NOTICE("<b><font color = green> Press Middle mouse button for fast swap current hardpoint. </font></b>"))
+	to_chat(user,SPAN_NOTICE("<b><font color = green> Press SPACE mouse for toggle strafe mod. </font></b>"))
+
+/mob/living/exosuit/remove_pilot(mob/user)
+	. = ..()
+	clear_sensors_effects(user)
+
+
 /mob/living/exosuit/proc/check_passenger(mob/user) // Выбираем желаемое место, проверяем можно ли его занять, стартуем прок занятия
 	var/local_dir = get_dir(src, user)
 	if(local_dir != turn(dir, 90) && local_dir != turn(dir, -90) && local_dir != turn(dir, -135) && local_dir != turn(dir, 135) && local_dir != turn(dir, 180))
@@ -74,14 +84,17 @@
 		if(place == "Back" && LAZYLEN(passenger_compartment.back_passengers) == 0)
 			user.forceMove(passenger_compartment)
 			LAZYDISTINCTADD(passenger_compartment.back_passengers,user)
+			have_back_passenger = TRUE
 			user.pinned += src
 		else if(place == "Left back" && LAZYLEN(passenger_compartment.left_back_passengers) == 0)
 			user.forceMove(passenger_compartment)
 			LAZYDISTINCTADD(passenger_compartment.left_back_passengers,user)
+			have_left_passenger = TRUE
 			user.pinned += src
 		else if(place == "Right back" && LAZYLEN(passenger_compartment.right_back_passengers) == 0)
 			user.forceMove(passenger_compartment)
 			LAZYDISTINCTADD(passenger_compartment.right_back_passengers,user)
+			have_right_passenger = TRUE
 			user.pinned += src
 		else
 			to_chat(user,SPAN_NOTICE("Looks like [place] is busy!"))
@@ -98,10 +111,13 @@
 	user.Life()
 	if(user in passenger_compartment.back_passengers)
 		LAZYREMOVE(passenger_compartment.back_passengers,user)
+		have_back_passenger = FALSE
 	else if(user in passenger_compartment.left_back_passengers)
 		LAZYREMOVE(passenger_compartment.left_back_passengers,user)
+		have_left_passenger = FALSE
 	else if(user in passenger_compartment.right_back_passengers)
 		LAZYREMOVE(passenger_compartment.right_back_passengers,user)
+		have_right_passenger = FALSE
 	passenger_compartment.count_passengers()
 	update_passengers()
 
@@ -111,6 +127,7 @@
 		if(LAZYLEN(passenger_compartment.back_passengers)>0)
 			for(var/mob/i in passenger_compartment.back_passengers)
 				LAZYREMOVE(passenger_compartment.back_passengers,i)
+				have_back_passenger = FALSE
 				i.dropInto(loc)
 				i.pinned -= src
 				i.Life()
@@ -119,6 +136,7 @@
 		if(LAZYLEN(passenger_compartment.left_back_passengers)>0)
 			for(var/mob/i in passenger_compartment.left_back_passengers)
 				LAZYREMOVE(passenger_compartment.left_back_passengers,i)
+				have_left_passenger = FALSE
 				i.dropInto(loc)
 				i.pinned -= src
 				i.Life()
@@ -127,6 +145,7 @@
 		if(LAZYLEN(passenger_compartment.right_back_passengers) > 0)
 			for(var/mob/i in passenger_compartment.right_back_passengers)
 				LAZYREMOVE(passenger_compartment.right_back_passengers,i)
+				have_right_passenger = FALSE
 				i.dropInto(loc)
 				i.pinned -= src
 				i.Life()
@@ -138,6 +157,7 @@
 		if(LAZYLEN(passenger_compartment.back_passengers) > 0)
 			for(var/mob/i in passenger_compartment.back_passengers)
 				LAZYREMOVE(passenger_compartment.back_passengers,i)
+				have_back_passenger = FALSE
 				i.dropInto(loc)
 				i.pinned -= src
 				i.Life()
@@ -148,6 +168,7 @@
 		else if(LAZYLEN(passenger_compartment.left_back_passengers)>0)
 			for(var/mob/i in passenger_compartment.left_back_passengers)
 				LAZYREMOVE(passenger_compartment.left_back_passengers,i)
+				have_left_passenger = FALSE
 				i.dropInto(loc)
 				i.pinned -= src
 				i.Life()
@@ -158,6 +179,7 @@
 		else if(LAZYLEN(passenger_compartment.right_back_passengers)>0)
 			for(var/mob/i in passenger_compartment.right_back_passengers)
 				LAZYREMOVE(passenger_compartment.right_back_passengers,i)
+				have_right_passenger = FALSE
 				i.dropInto(loc)
 				i.pinned -= src
 				i.Life()
@@ -170,18 +192,21 @@
 	else // <- Опустошается определённое место
 		if(place == "Back")
 			for(var/mob/i in passenger_compartment.back_passengers)
+				have_back_passenger = FALSE
 				src.visible_message(SPAN_WARNING("[i] was forcelly removed from [src] by [author]"))
 				i.dropInto(loc)
 				i.pinned -= src
 				LAZYREMOVE(passenger_compartment.back_passengers,i)
 		else if(place == "Left back")
 			for(var/mob/i in passenger_compartment.left_back_passengers)
+				have_left_passenger = FALSE
 				src.visible_message(SPAN_WARNING("[i] was forcelly removed from [src] by [author]!"))
 				i.dropInto(loc)
 				i.pinned -= src
 				LAZYREMOVE(passenger_compartment.left_back_passengers,i)
 		else if(place == "Right back")
 			for(var/mob/i in passenger_compartment.right_back_passengers)
+				have_right_passenger = FALSE
 				src.visible_message(SPAN_WARNING("[i] was forcelly removed from [src] by [author]!"))
 				i.dropInto(loc)
 				i.pinned -= src
@@ -191,6 +216,9 @@
 
 /mob/living/exosuit/use_tool(obj/item/tool, mob/user, list/click_params)
 	if(istype(tool, /obj/item/card/id))// Мы тычем ID картой в меха, словно ключами от иномарки.
+		if(inmech(user, src))
+			to_chat(user, "You cannot interacti with mech inside mech.")
+			return
 		//Если есть пилоты, мы никому ничего не откроем
 		if(LAZYLEN(pilots))
 			to_chat(user, SPAN_WARNING("There is somebody inside, ID scaner ignores you."))
@@ -221,7 +249,8 @@
 				if(user_undertand)
 					to_chat(user, "[src] accepted your ID card.")
 				src.visible_message("Green LED's of [src] blinks.", "your ID scanner has found a suitable card", "You hear an approving chirp", 7)
-				selftoggle_mech_hatch() //Мех изменит своё состояние на обратное (Откроется, или закроется)
+				selftoggle_mech_hatch_close() //Мех изменит своё состояние на обратное (Откроется, или закроется)
+				selftoggle_mech_hatch_lock()
 				return
 			else//Доступы не совпадают
 				if(user_undertand)
@@ -233,10 +262,13 @@
 
 
 	if(istype(tool, /obj/item/stack/material))
+		if(inmech(user, src))
+			to_chat(user, "You cannot interacti with mech inside mech.")
+			return
 		var/obj/item/mech_component/choice = show_radial_menu(user, src, parts_list_images, require_near = TRUE, radius = 42, tooltips = TRUE, check_locs = list(src))
 		if(!choice)
 			return
-		if((choice.brute_damage) < choice.max_repair)
+		if(choice.current_hp > choice.max_repair)
 			to_chat(user, "This part does not require repair.")
 			return
 		var/obj/item/stack/material/material_sheet = tool
@@ -250,11 +282,14 @@
 			else
 				to_chat(user, "I don’t know anything about bellows repair, I stand there and look at him like an idiot.")
 				return
-		material_repair(material_sheet, user, user_undertand, choice)
+		material_repair(src, material_sheet, user, user_undertand, choice)
 
 
 	//Saw/welder - destroy mech security bolts
 	if( ((istype(tool, /obj/item/circular_saw)) || (isWelder(tool))) && user.a_intent == I_HURT)
+		if(inmech(user, src))
+			to_chat(user, "You cannot interacti with mech inside mech.")
+			return
 		if (!body)
 			USE_FEEDBACK_FAILURE("\The [src] has no cockpit to force.")
 			return FALSE
@@ -274,9 +309,15 @@
 	.=..()
 
 
-/mob/living/exosuit/proc/material_repair(obj/item/stack/material/material_sheet, mob/user, user_understand, obj/item/mech_component/repair_part)
+/proc/material_repair( mob/living/exosuit/mech , obj/item/stack/material/material_sheet, mob/user, user_understand, obj/item/mech_component/repair_part)
 	//Выполняем первую проверку ПЕРЕД началом ремонта
-	if(!user.Adjacent(src)) // <- Мех рядом?
+	//Убедимся кто цель ремонта.
+	var/atom/target
+	if(!mech)
+		target = repair_part
+	else
+		target = mech
+	if(!user.Adjacent(target)) // <- Мех рядом?
 		return FALSE
 	//Определим в какой руке материал
 	var/obj/item/stack/material/sheet_hand
@@ -300,9 +341,8 @@
 		return
 	//Мы узнали в какой руке лежит материал, в какой сварка и готова ли она к работе. Теперь мы переходим к самому ремонту.
 	var/delay = 20 SECONDS - (user.get_skill_value(SKILL_DEVICES)*3 + user.get_skill_value(SKILL_CONSTRUCTION))
-	if(do_after(user, delay, src, DO_REPAIR_CONSTRUCT))
+	if(do_after(user, delay, target, DO_REPAIR_CONSTRUCT))
 		if(!welder_hand.remove_fuel(1, user))
-			to_chat(user, "Сварка то где.")
 			return
 		sheet_hand.use(1)
 		if(!user_understand)
@@ -310,29 +350,35 @@
 			if(num < 90)
 				USE_FEEDBACK_FAILURE("Nothing worked for me, I just wasted the material, after my repair attempt, a sheet of material fell off part of it..")
 				return
-		var/repair_ammount = 20 +  ((user.get_skill_value(SKILL_DEVICES) +  user.get_skill_value(SKILL_CONSTRUCTION)) * 2)
+		var/repair_ammount = 50 +  ((user.get_skill_value(SKILL_DEVICES) +  user.get_skill_value(SKILL_CONSTRUCTION)) * 7)
 		repair_part.repair_brute_damage(repair_ammount)
 		repair_part.max_damage = repair_part.max_damage - repair_part.repair_damage
 		repair_part.unrepairable_damage += repair_part.repair_damage
 		if(repair_part.min_damage > repair_part.max_damage)
 			repair_part.max_damage = repair_part.min_damage
 
-/mob/living/exosuit/proc/selftoggle_mech_hatch()
+/mob/living/exosuit/proc/selftoggle_mech_hatch_close()
 	playsound(src.loc, 'mods/mechs_by_shegar/sounds/mech_peek.ogg', 80, 0, -6)
 	//Данный прок выполняет простейшую задачу, либо открывает, либо закрывает меха без участвия человека.
 	if(hatch_closed) // <- Кабина закрыта?
-		if(hatch_locked) // <- Замок включен
-			hatch_locked = FALSE //<- выключили замок
-			playsound(src.loc, 'sound/machines/suitstorage_lockdoor.ogg', 50, 1, -6)
 		hatch_closed = FALSE
 		playsound(src.loc, 'sound/machines/suitstorage_cycledoor.ogg', 50, 1, -6)
 	else // <- кабина открыта
 		hatch_closed = TRUE
 		playsound(src.loc, 'sound/machines/suitstorage_cycledoor.ogg', 50, 1, -6)
-		if(!hatch_locked)
-			hatch_locked = TRUE
-			playsound(src.loc, 'sound/machines/suitstorage_lockdoor.ogg', 50, 1, -6)
+	hud_open.update_icon()
 	update_icon()
+	need_update_sensor_effects = TRUE
+
+/mob/living/exosuit/proc/selftoggle_mech_hatch_lock()
+	if(hatch_locked) // <- Замок включен
+		hatch_locked = FALSE //<- выключили замок
+		playsound(src.loc, 'sound/machines/suitstorage_lockdoor.ogg', 50, 1, -6)
+	else
+		hatch_locked = TRUE
+		playsound(src.loc, 'sound/machines/suitstorage_lockdoor.ogg', 50, 1, -6)
+	update_icon()
+	need_update_sensor_effects = TRUE
 
 /mob/living/exosuit/proc/selfopen_mech_hatch()
 	playsound(src.loc, 'mods/mechs_by_shegar/sounds/mech_peek.ogg', 80, 0, -6)
@@ -344,6 +390,7 @@
 		hatch_closed = FALSE
 		playsound(src.loc, 'sound/machines/suitstorage_cycledoor.ogg', 50, 1, -6)
 	update_icon()
+	need_update_sensor_effects = TRUE
 
 /mob/living/exosuit/emag_act(remaining_charges, mob/user, emag_source)
 	id_holder = "EMAGED"

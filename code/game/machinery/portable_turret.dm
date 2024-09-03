@@ -211,6 +211,10 @@ var/global/list/turret_icons
 		settings[LIST_PRE_INC(settings)] = list("category" = "Check Arrest Status", "setting" = "check_arrest", "value" = check_arrest)
 		settings[LIST_PRE_INC(settings)] = list("category" = "Check Access Authorization", "setting" = "check_access", "value" = check_access)
 		settings[LIST_PRE_INC(settings)] = list("category" = "Check misc. Lifeforms", "setting" = "check_anomalies", "value" = check_anomalies)
+		//[SIERRA-ADD] - AI_UPDATE
+		settings[LIST_PRE_INC(settings)] = list("category" = "Attack any robots and drones", "setting" = "attack_robots", "value" = attack_robots)
+		settings[LIST_PRE_INC(settings)] = list("category" = "Hold deployed", "setting" = "hold_deployed", "value" = hold_deployed)
+		//[SIERRA-ADD]
 		data["settings"] = settings
 
 	ui = SSnano.try_update_ui(user, src, ui_key, ui, data, force_open)
@@ -261,6 +265,12 @@ var/global/list/turret_icons
 			check_access = value
 		else if(href_list["command"] == "check_anomalies")
 			check_anomalies = value
+		//[SIERRA-ADD] - AI_UPDATE
+		else if(href_list["command"] == "attack_robots")
+			attack_robots = value
+		else if(href_list["command"] == "hold_deployed")
+			hold_deployed = value
+		//[SIERRA-ADD]
 
 		return 1
 
@@ -362,6 +372,10 @@ var/global/list/turret_icons
 		check_weapons = prob(50)
 		check_access = prob(20)	// check_access is a pretty big deal, so it's least likely to get turned on
 		check_anomalies = prob(50)
+		//[SIERRA-ADD] - AI_UPDATE
+		attack_robots = prob(50)
+		hold_deployed = prob(50)
+		//[SIERRA-ADD]
 		if(prob(5))
 			emagged = TRUE
 
@@ -399,7 +413,10 @@ var/global/list/turret_icons
 
 	if(!tryToShootAt(targets))
 		if(!tryToShootAt(secondarytargets)) // if no valid targets, go for secondary targets
-			popDown() // no valid targets, close the cover
+			//[SIERRA-ADD] - AI_UPDATE - Туррели будут стоять развёрнутыми
+			if(!hold_deployed && !AiHolder.client)
+			//[SIERRA-ADD]
+				popDown() // no valid targets, close the cover
 
 	if(auto_repair && health_damaged())
 		use_power_oneoff(20000)
@@ -421,8 +438,12 @@ var/global/list/turret_icons
 
 	if(!L)
 		return TURRET_NOT_TARGET
-
+	//[SIERRA-EDIT] - AI_UPDATE
+	/*
 	if(!emagged && issilicon(L))	// Don't target silica
+		return TURRET_NOT_TARGET
+	*/
+	if(!emagged && issilicon(L) && !attack_robots)	// Don't target silica
 		return TURRET_NOT_TARGET
 
 	if(L.stat && !emagged)		//if the perp is dead/dying, no need to bother really
@@ -599,6 +620,10 @@ var/global/list/turret_icons
 	check_arrest = TC.check_arrest
 	check_weapons = TC.check_weapons
 	check_anomalies = TC.check_anomalies
+	//[SIERRA-ADD] - AI-UPDATE
+	attack_robots = TC.attack_robots
+	hold_deployed = TC.hold_deployed
+	//[SIERRA-ADD]
 	ailock = TC.ailock
 
 	src.power_change()

@@ -5640,7 +5640,7 @@
 /obj/random/loot,
 /obj/item/disk/tech_disk,
 /obj/item/disk/tech_disk,
-/obj/item/disk/design_disk,
+/obj/item/stock_parts/computer/hard_drive/portable,
 /obj/item/cell/high,
 /obj/machinery/alarm{
 	dir = 4;

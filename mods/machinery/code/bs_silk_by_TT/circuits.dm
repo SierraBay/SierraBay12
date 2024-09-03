@@ -36,7 +36,8 @@
 /datum/design/item/clothing/accessory/bs_silk
 	name = "bluespace snare control"
 	id = "bs_silk"
-	req_tech = list(TECH_BLUESPACE = 6)
+	category = list("Misc")
+	req_tech = list(TECH_BLUESPACE = 2)
 	materials = list(MATERIAL_STEEL = 1000)
 	build_path = /obj/item/clothing/accessory/bs_silk
 	sort_string = "BSSIL"

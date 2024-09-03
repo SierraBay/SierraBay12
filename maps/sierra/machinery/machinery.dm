@@ -182,7 +182,7 @@
 
 	if(href_list["secsend"])	//May cause some bad situations...
 		if (!destination)
-			visible_message("[src] beeps, \"No departament selected.\"")
+			visible_message("[src] beeps, \"No department selected.\"")
 			return
 		var/kek = user.client.holder
 		if (!istype(kek,/datum/admins))

@@ -4,7 +4,7 @@
 	icon = 'icons/obj/rig_modules.dmi'
 	icon_state = "teleporter"
 	w_class = ITEM_SIZE_SMALL
-	origin_tech = list(TECH_BLUESPACE = 6)
+	origin_tech = list(TECH_BLUESPACE = 2)
 	var/id_tag = ""
 
 /obj/item/clothing/accessory/bs_silk/New()

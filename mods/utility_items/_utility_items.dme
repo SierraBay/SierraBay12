@@ -14,5 +14,6 @@
 #include "code/vox.dm"
 #include "code/simple.dm"
 #include "code/circuit.dm"
+#include "code/global_hud_sierra.dm"
 
 #endif

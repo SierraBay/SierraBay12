@@ -362,6 +362,7 @@
 			return A.loc
 		A = A.loc
 
+
 /**
  * Called when a user examines the atom. This proc and its overrides handle displaying the text that appears in chat
  * during examines.

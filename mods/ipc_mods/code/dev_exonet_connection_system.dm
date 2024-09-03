@@ -50,7 +50,7 @@
 	light_strength = 0
 	broken_damage = 60
 	max_hardware_size = 2
-	hardware_flag = PROGRAM_LAPTOP
+	hardware_flag = PROGRAM_TABLET
 	exonets_ipc_computer = TRUE
 
 /obj/item/modular_computer/ecs/first
@@ -65,7 +65,7 @@
 
 /obj/item/modular_computer/ecs/third
 	name = "exonet connection system."
-	hardware_flag = PROGRAM_LAPTOP
+	hardware_flag = PROGRAM_TABLET
 	desc = "An extremely complex circuit with some ports and wires."
 
 /obj/item/modular_computer/ecs/first/install_default_hardware()

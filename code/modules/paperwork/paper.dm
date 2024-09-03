@@ -593,11 +593,25 @@
 /obj/item/paper/manifest
 	name = "supply manifest"
 
-
+//[SIERRA-ADD] - MODPACK_RND
 //For anomalies.
 /obj/item/paper/anomaly_scan
 	name = "anomaly scan result"
 
+
+/obj/item/paper/plant_report/
+	name = "plant report"
+	var/scan_data
+
+/obj/item/paper/radiocarbon_spectrometer_report/
+	name = "RadioCarbon spectrometer report"
+	var/anomalous = FALSE
+
+/obj/item/paper/xenofauna_report/
+	name = "xenofauna report"
+	var/new_species = FALSE
+	var/species
+//[/SIERRA-ADD] - MODPACK_RND
 /*
  * Premade paper
  */

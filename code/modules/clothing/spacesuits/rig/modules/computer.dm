@@ -239,11 +239,12 @@
 
 	interface_name = "contact datajack"
 	interface_desc = "An induction-powered high-throughput datalink suitable for hacking encrypted networks."
-	var/list/stored_research
+//[SIERRA-EDIT] - MODPACK_RND
+	var/datum/research/files
 
-/obj/item/rig_module/datajack/Initialize()
-	. =..()
-	stored_research = list()
+/obj/item/rig_module/datajack/New()
+	..()
+	files = new(src)
 
 /obj/item/rig_module/datajack/engage(atom/target)
 
@@ -258,20 +259,19 @@
 
 /obj/item/rig_module/datajack/accepts_item(obj/item/input_device, mob/living/user)
 
-	if(istype(input_device,/obj/item/disk/tech_disk))
-		to_chat(user, "You slot the disk into [src].")
-		var/obj/item/disk/tech_disk/disk = input_device
-		if(disk.stored)
-			if(load_data(disk.stored))
-				to_chat(user, SPAN_INFO("Download successful; disk erased."))
-				disk.stored = null
+	if(istype(input_device, /obj/item/stock_parts/computer/hard_drive))
+		to_chat(user, "You connect the disk to [src].")
+		var/obj/item/stock_parts/computer/hard_drive/disk = input_device
+		if(disk.used_capacity)
+			if(load_data(disk))
+				to_chat(user, SPAN_NOTICE("Download successful."))
 			else
-				to_chat(user, SPAN_WARNING("The disk is corrupt. It is useless to you."))
+				to_chat(user, SPAN_WARNING("The disk does not contain any new research data. It is useless to you."))
 		else
 			to_chat(user, SPAN_WARNING("The disk is blank. It is useless to you."))
 		return 1
 
-	// I fucking hate R&D code. This typecheck spam would be totally unnecessary in a sane setup.
+	//This typecheck spam would be totally unnecessary in a sane setup.
 	else if(istype(input_device,/obj/machinery))
 		var/datum/research/incoming_files
 		if(istype(input_device,/obj/machinery/computer/rdconsole))
@@ -281,38 +281,20 @@
 			var/obj/machinery/r_n_d/server/input_machine = input_device
 			incoming_files = input_machine.files
 
-		if(!incoming_files || !incoming_files.known_tech || !length(incoming_files.known_tech))
+		if(!incoming_files || !incoming_files.known_designs || !length(incoming_files.known_designs))
 			to_chat(user, SPAN_WARNING("Memory failure. There is nothing accessible stored on this terminal."))
 		else
 			// Maybe consider a way to drop all your data into a target repo in the future.
-			if(load_data(incoming_files.known_tech))
+			if(load_data(incoming_files.known_designs))
 				to_chat(user, SPAN_INFO("Download successful; local and remote repositories synchronized."))
 			else
 				to_chat(user, SPAN_WARNING("Scan complete. There is nothing useful stored on this terminal."))
 		return 1
 	return 0
 
-/obj/item/rig_module/datajack/proc/load_data(incoming_data)
-
-	if(islist(incoming_data))
-		for(var/entry in incoming_data)
-			load_data(entry)
-		return 1
-
-	if(istype(incoming_data, /datum/tech))
-		var/data_found
-		var/datum/tech/new_data = incoming_data
-		for(var/datum/tech/current_data in stored_research)
-			if(current_data.id == new_data.id)
-				data_found = 1
-				if(current_data.level < new_data.level)
-					current_data.level = new_data.level
-				break
-		if(!data_found)
-			stored_research += incoming_data
-		return 1
-	return 0
-
+/obj/item/rig_module/datajack/proc/load_data(datum/research/incoming_files)
+	return files.download_from(incoming_files)
+//[/SIERRA-EDIT] - MODPACK_RND
 /obj/item/rig_module/electrowarfare_suite
 
 	name = "electrowarfare module"

@@ -19,6 +19,7 @@
 	#include "sierra_submaps.dm"
 	#include "sierra_turfs.dm"
 	#include "sierra_unit_testing.dm"
+	#include "sierra_events.dm"
 
 	// --- INCLUDES FROM ANOTHER MAPS --- //
 	#include "sierra_snatch.dm"

@@ -4,5 +4,4 @@
 	if(level == SKILL_MASTER)
 		if(ishuman(mob))
 			var/mob/living/carbon/human/H = mob
-			if(istype(H.species, /datum/species/human))
-				H.add_language(LANGUAGE_LEGALESE)
+			H.add_language(LANGUAGE_LEGALESE)
