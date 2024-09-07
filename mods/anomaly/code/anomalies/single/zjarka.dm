@@ -30,10 +30,13 @@
 	ranzomize_with_initialize = TRUE
 	min_coldown_time = 8 SECONDS
 	max_coldown_time = 20 SECONDS
-	min_spawn_chance = 5
-	max_spawn_chance = 10
+	artefact_spawn_chance = 10
 	can_be_preloaded = FALSE
 	being_preload_chance = 20
+	can_walking = TRUE
+	chance_spawn_walking = 1
+	walking_activity = 2
+
 
 /obj/anomaly/zjarka/activate_anomaly()
 	last_activation_time = world.time

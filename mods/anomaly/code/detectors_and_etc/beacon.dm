@@ -27,7 +27,7 @@
 /obj/item/advanced_bolt/on_update_icon()
 	. = ..()
 	var/turf/current_turf = get_turf(src)
-	if(current_turf.in_anomaly_effect_range)
+	if(LAZYLEN(current_turf.list_of_in_range_anomalies))
 		icon_state = "beacon_red"
 	else
 		icon_state = "beacon_green"

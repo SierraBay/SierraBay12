@@ -102,7 +102,7 @@
 	required_tech_levels = list()
 	cost = 750
 
-	unlocks_designs = list("destructive_analyzer", "protolathe", "circuit_imprinter", "rdservercontrol", "rdserver", "rdconsole","robocontrol")
+	unlocks_designs = list("destructive_analyzer", "protolathe", "circuit_imprinter", "rdservercontrol", "rdserver", "rdconsole","robocontrol", "urm")
 
 
 /datum/technology/engineering/basic_mining

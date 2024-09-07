@@ -32,6 +32,7 @@
 						if(anomka.isready())
 							anomka.activate_anomaly()
 					return
+	react_to_touched(user)
 
 	.=..()
 
@@ -93,6 +94,7 @@
 
 	to_chat(user, SPAN_NOTICE("Ничего не произошло."))
 
+///ВЗАИМОДЕЙСТВИЯ ОТ ЛЮДЕЙ НАПРЯМУЮ
 /obj/item/artefact/proc/lick_interaction(mob/living/user)
 	return
 
@@ -112,7 +114,24 @@
 	return
 
 
+///ВЗАИМОДЕЙСТВИЯ ОТ МАШИНЫ ДЛЯ ИЗУЧЕНИЙ И АНАЛИЗА
+/obj/item/artefact/proc/urm_radiation(mob/living/user)
+	return
 
+/obj/item/artefact/proc/urm_laser(mob/living/user)
+	return
+
+/obj/item/artefact/proc/urm_electro(mob/living/user)
+	return
+
+/obj/item/artefact/proc/urm_plasma(mob/living/user)
+	return
+
+/obj/item/artefact/proc/urm_phoron(mob/living/user)
+	return
+
+/obj/item/artefact/proc/urm_microscope(mob/living/user)
+	return
 
 /obj/item/artefact/proc/angry_activity(mob/living/user)
 	return

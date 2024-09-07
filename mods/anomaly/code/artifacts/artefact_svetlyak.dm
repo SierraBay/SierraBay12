@@ -57,6 +57,30 @@
 		visible_message(SPAN_BAD("...[src] растворяется на ваших глазах, испустив последнюю, приятную для глаз вспышку."), null, 5)
 		qdel(src)
 
+/obj/item/artefact/svetlyak/urm_radiation(mob/living/user)
+	stored_in_urm.last_interaction_id = "svetlyak_radiation"
+	stored_in_urm.last_interaction_reward = 1000
+	return "Все альфа, бетта и гамма частицы прошли сквозь обьект, зафиксировано столько же альфа, бетта и гамма частик, сколько и излучено."
+
+/obj/item/artefact/svetlyak/urm_laser(mob/living/user)
+	stored_in_urm.last_interaction_id = "svetlyak_laser"
+	stored_in_urm.last_interaction_reward = 1000
+	return "Зафиксировано как луч продит сквозь обьект с усиленной мощностью."
+
+/obj/item/artefact/svetlyak/urm_electro(mob/living/user)
+	stored_in_urm.last_interaction_id = "svetlyak_electra"
+	stored_in_urm.last_interaction_reward = 1000
+	return "Электрический разряд проходит сквозь обьект словно сквозь воздух."
+
+/obj/item/artefact/svetlyak/urm_plasma(mob/living/user)
+	return "Обьект не реагирует"
+
+/obj/item/artefact/svetlyak/urm_phoron(mob/living/user)
+	return "Обьект не реагирует"
+
+
+
+
 /obj/item/artefact/svetlyak/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(istype(mover, /obj/item/projectile/beam))
 		var/obj/item/projectile/beam/B = mover

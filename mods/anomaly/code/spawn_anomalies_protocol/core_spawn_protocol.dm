@@ -1,4 +1,7 @@
 
+/obj/anomaly
+	///Шанс, что при протоколе генерации, будет размещена именно эта аномалия
+	var/anomaly_spawn_chance = 1
 /*Функция попытается заспавнить аномалию без коллизии с другими обьектами или аномалиями.
 Применяется мультитайтловыми аномалиями
 all_turfs_for_spawn - Внешний список, из которого мы будем удалять турфы в случае удачного/неудачного
@@ -20,6 +23,8 @@ path_to_spawn - Путь аномалии, которую мы хотим зас
 	if(need_to_delete)
 		for(var/obj/anomaly/part/checked_part in spawned_anomaly.list_of_parts)
 			qdel(checked_part)
+			checked_part.delete_anomaly()
+		spawned_anomaly.delete_anomaly()
 		qdel(spawned_anomaly)
 		return
 	//значит нам НЕ нужно удалять, передадим ссылку на самого себя
@@ -79,8 +84,9 @@ garanted_artefacts_ammount - Если нам нужно чёткое колич�
 max_anomaly_size - Максимальный размер аномалий (anomalies_types)
 source - Источник(Причина) генерации аномалий на турфах. Используется для отчёта
 */
-/proc/generate_anomalies_in_turfs(list/anomalies_types, list/all_turfs_for_spawn, min_anomalies_ammout, max_anomalies_ammout, min_artefacts_ammount, max_artefacts_ammount, min_anomaly_size, max_anomaly_size, source)
-	var/spended_time = world.time
+/proc/generate_anomalies_in_turfs(list/anomalies_types, list/all_turfs_for_spawn, min_anomalies_ammout, max_anomalies_ammout, min_artefacts_ammount, max_artefacts_ammount, min_anomaly_size, max_anomaly_size, source, started_in)
+	//Генерация аномалий - это ОЧЕНЬ тяжёлый прок, который без проблем вешает юнит тесты.
+	set background = 1
 	//Расчитываем мин и макс количество аномалий
 	var/result_anomalies_ammout = 1
 	if((!min_anomalies_ammout) || (min_anomalies_ammout * min_anomaly_size > LAZYLEN(all_turfs_for_spawn)))
@@ -89,26 +95,24 @@ source - Источник(Причина) генерации аномалий н
 		max_anomalies_ammout = (LAZYLEN(all_turfs_for_spawn))
 		max_anomalies_ammout /= max_anomaly_size
 
-
-	var/status = FALSE
-	while(!status)
-		result_anomalies_ammout = rand(min_anomalies_ammout, max_anomalies_ammout)
-		if(result_anomalies_ammout * max_anomaly_size > LAZYLEN(all_turfs_for_spawn))
-			status = FALSE
-		else
-			status = TRUE
+	result_anomalies_ammout = rand(min_anomalies_ammout, max_anomalies_ammout)
+	if(result_anomalies_ammout * max_anomaly_size > LAZYLEN(all_turfs_for_spawn))
+		result_anomalies_ammout = LAZYLEN(all_turfs_for_spawn)
+		result_anomalies_ammout /= max_anomaly_size
+	result_anomalies_ammout = Round(result_anomalies_ammout)
 
 
 	//Собрав все турфы и определившись с числом аномалий, давайте начинать
 	var/failures = 0
 	//Список успешно размещённых в игре аномалий
 	var/list/spawned_anomalies = list()
-	var/spawned_ammount = 0
-	for(var/i, i <= result_anomalies_ammout)
+	var/critical_errors_ammount = 0
+	for(var/i = 0, i <= result_anomalies_ammout)
 		//Перед началом проверим, что наш список просто не опустошил себя до установки всех аномалий
 		if(!LAZYLEN(all_turfs_for_spawn))
 			//Список пуст, сообщаем коду о завершении работы.
 			i = result_anomalies_ammout + 1
+			break
 		var/add = FALSE
 		//Переменная обозначает что в обработке именно этого турфа используется спавнер.
 		var/ruin_protocol = FALSE
@@ -120,12 +124,24 @@ source - Источник(Причина) генерации аномалий н
 		if(istype(picked, /obj/anomaly_spawner))
 			spawner_turf = get_turf(picked)
 			var/obj/anomaly_spawner/spawner = picked
-			anomaly_to_spawn = pick(spawner.possible_anomalies)
+			anomaly_to_spawn = pickweight(spawner.possible_anomalies)
 			ruin_protocol = TRUE
 		else if(isturf(picked))
 			spawner_turf = picked
-			anomaly_to_spawn = pick(anomalies_types)
-
+			anomaly_to_spawn = pickweight(anomalies_types)
+		//В случае если код сделал фокус и выдал чудо - выходим из цикла генерации, сообщив администрации
+		if(!spawner_turf)
+			log_and_message_admins("Ошибка работы генератора: при выборе получось spawner_turf == null")
+			critical_errors_ammount++
+			continue
+		else if(!anomaly_to_spawn)
+			log_and_message_admins("Ошибка работы генератора: при выборе получось anomaly_to_spawn == null")
+			critical_errors_ammount++
+			continue
+		if(critical_errors_ammount > 2)
+			i = result_anomalies_ammout + 1
+			log_and_message_admins("Генератор аномалий вышел из цикла с критической ошибкой. ")
+			break
 		//Если каким-то образом спавнер/турф оказался в стене или на этом тайтле уже есть аномалия/её часть
 		if(TurfBlocked(spawner_turf) || TurfBlockedByAnomaly(spawner_turf))
 			failures++
@@ -141,7 +157,6 @@ source - Источник(Причина) генерации аномалий н
 				//Мы вызываем функцию, которая выдаст либо null (аномалия не заспавнена, либо ссылку на обьект)
 				var/obj/anomaly/spawned_anomaly = try_spawn_anomaly_without_collision(all_turfs_for_spawn, spawner_turf, anomaly_to_spawn, TRUE, FALSE)
 				if(spawned_anomaly)
-					calculate_effected_turfs(spawned_anomaly)
 					LAZYADD(spawned_anomalies, spawned_anomaly)
 					if(!ruin_protocol)
 						LAZYREMOVE(all_turfs_for_spawn, spawner_turf)
@@ -153,7 +168,6 @@ source - Источник(Причина) генерации аномалий н
 					failures++
 			else
 				var/obj/anomaly/spawned_anomaly = new anomaly_to_spawn(spawner_turf)
-				calculate_effected_turfs(spawned_anomaly)
 				LAZYADD(spawned_anomalies, spawned_anomaly)
 				if(!ruin_protocol)
 					LAZYREMOVE(all_turfs_for_spawn, spawner_turf)
@@ -162,7 +176,6 @@ source - Источник(Причина) генерации аномалий н
 					qdel(picked)
 		if(add)
 			i++
-			spawned_ammount++
 			failures = 0
 		else if(failures > 100)
 			//У нас слишком много неуспешных размещений аномалий, хватит пытаться, нужно выйти из цикла
@@ -171,25 +184,29 @@ source - Источник(Причина) генерации аномалий н
 
 	//Выбрав количество артов которые мы хотим заспавнить, мы начинаем спавн
 	var/spawned_anomalies_ammount = LAZYLEN(spawned_anomalies)
+	var/list/output_list = spawned_anomalies
 	var/spawned_artifacts_ammount = generate_artefacts_in_anomalies(spawned_anomalies, min_artefacts_ammount, max_artefacts_ammount)
 
-	spended_time = world.time - spended_time
+	var/spended_time = world.time - started_in
 	//Отчитаемся
 	if(spawned_anomalies_ammount > 0)
-		report_progress("Spawned [spawned_ammount] anomalies with [spawned_artifacts_ammount] artefacts by: [source], spended [spended_time] ticks ")
-
-
+		report_progress("Spawned [spawned_anomalies_ammount] anomalies with [spawned_artifacts_ammount] artefacts by: [source], spended [spended_time] ticks ")
+	return output_list
 
 ///Функция генерация артефактов в аномалиях. Спавнит количество артефактов, находящиеся в диапазоне между min_artefacts_ammoun и max_artefacts_ammount
 /proc/generate_artefacts_in_anomalies(list/list_of_anomalies, min_artefacts_ammount, max_artefacts_ammount)
 	var/artefacts_ammount = rand(min_artefacts_ammount, max_artefacts_ammount)
+	//Санитайз, чтоб не требовали рождение артефактов от тех, кто их рожать не может физически
+	for(var/obj/anomaly/picked_anomaly in list_of_anomalies)
+		if(!picked_anomaly.can_born_artifacts || !LAZYLEN(picked_anomaly.artefacts))
+			LAZYREMOVE(list_of_anomalies, picked_anomaly)
 	//Санитайз, чтоб артефактов было не слишком много
 	if(artefacts_ammount > LAZYLEN(list_of_anomalies))
 		artefacts_ammount = LAZYLEN(list_of_anomalies)
 	var/spawned_artefacts = 0
 	//Пока игра не заспавнит все треуемые артефакты
 	while(artefacts_ammount > spawned_artefacts)
-		var/obj/anomaly/choosed_anomaly = pick_anomaly_by_chance(list_of_anomalies)
+		var/obj/anomaly/choosed_anomaly = pick(list_of_anomalies)
 		if(!choosed_anomaly)
 			return spawned_artefacts
 		if(choosed_anomaly.try_born_artifact())
@@ -197,26 +214,3 @@ source - Источник(Причина) генерации аномалий н
 		else
 			LAZYREMOVE(list_of_anomalies, choosed_anomaly)
 	return spawned_artefacts
-
-//Выбирает аномалию из введёного списка, основываясь на их переменной result_spawn_chance
-/proc/pick_anomaly_by_chance(list/list_of_anomaly)
-	//У нас есть список аномалий. Соберём сумму их шансов на спавн артефакта
-	if(!LAZYLEN(list_of_anomaly))
-		return FALSE
-	var/summary = 0
-	for(var/obj/anomaly/picked_anomaly in list_of_anomaly)
-		summary += picked_anomaly.result_spawn_chance
-	var/picked_number = rand(0, summary)
-	for(var/obj/anomaly/picked_anomaly in list_of_anomaly)
-		picked_number -= picked_anomaly.result_spawn_chance
-		if(picked_number <= 0)
-			return picked_anomaly
-
-/proc/calculate_effected_turfs(obj/anomaly/spawned_anomaly)
-	//Теперь расчитаем турфы, находящиеся в зоне поражения аномалии
-	if(spawned_anomaly.detectable_effect_range)
-		for(var/turf/Turf in trange(spawned_anomaly.effect_range, spawned_anomaly))
-			LAZYADD(spawned_anomaly.effected_turfs, Turf)
-	//Пометим "флаг" у всех найденных турфов
-	for(var/turf/turfs in spawned_anomaly.effected_turfs)
-		turfs.in_anomaly_effect_range = TRUE

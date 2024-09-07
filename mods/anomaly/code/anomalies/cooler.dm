@@ -10,8 +10,10 @@
 		/mob/living
 	)
 	artefacts = list()
-	min_spawn_chance = 1
+	/*
+	min_artefact_spawn_chance = 1
 	max_spawn_chance = 5
+	*/
 	chance_to_be_detected = 120
 	time_between_effects = 0.5 SECOND
 

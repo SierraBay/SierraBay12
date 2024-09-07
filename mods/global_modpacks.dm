@@ -34,5 +34,6 @@
 #include "newUI/_newUI.dme"
 #include "ai-update/_ai-update.dme"
 #include "anomaly/_anomaly.dme"
+#include "playable_away_yacht/_yacht.dme"
 
 #include "../packs/sierra-tweaks/_pack.dm"

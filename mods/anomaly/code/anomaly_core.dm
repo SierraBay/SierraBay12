@@ -136,12 +136,20 @@
 
 ///Кто-то или что-то пересекло расположение аномалии
 /obj/anomaly/Crossed(atom/movable/O)
+	anomaly_been_crossed(O)
+
+/obj/anomaly/proc/anomaly_been_crossed(atom/movable/O)
 	if(!isready())
 		return
 	if(can_be_activated(O))
 		currently_active = TRUE
 		activate_anomaly()
 	return
+
+/obj/anomaly/Move()
+	. = ..()
+	for(var/atom/atoms in loc)
+		src.anomaly_been_crossed(atoms)
 
 ///Аномалия подготовлена к следующему удару?
 /obj/anomaly/proc/isready()
@@ -157,11 +165,14 @@
 //Спавн аномалии, её размещение и т.д
 /obj/anomaly/Initialize()
 	. = ..()
+	SSanom.add_anomaly_in_list(src)
 	preload_time = cooldown_time
 	if(ranzomize_with_initialize)
 		ranzomize_parameters()
 	icon_state = idle_effect_type
 	if(have_static_sound)
 		GLOB.sound_player.PlayLoopingSound(src, "\ref[src]", static_sound_type, 10, 6)
-	calculate_artifact_spawn_chance()
-	calculate_artifact_spawn_time()
+	if(detectable_effect_range)
+		calculate_effected_turfs_from_new_anomaly(src)
+	if(can_walking && prob(chance_spawn_walking))
+		check_anomaly_ai()

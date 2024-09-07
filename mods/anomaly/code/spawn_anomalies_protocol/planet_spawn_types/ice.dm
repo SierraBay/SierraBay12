@@ -5,11 +5,11 @@
 	rock_colors = list(COLOR_WHITE)
 	can_spawn_anomalies = TRUE
 	anomalies_type = list(
-		/obj/anomaly/electra/three_and_three,
-		/obj/anomaly/electra/three_and_three/tesla,
-		/obj/anomaly/electra/three_and_three/tesla_second,
-		/obj/anomaly/cooler/two_and_two,
-		/obj/anomaly/cooler/three_and_three
+		/obj/anomaly/electra/three_and_three = 5,
+		/obj/anomaly/electra/three_and_three/tesla = 2,
+		/obj/anomaly/electra/three_and_three/tesla_second = 1,
+		/obj/anomaly/cooler/two_and_two = 3,
+		/obj/anomaly/cooler/three_and_three = 3
 		)
 	min_anomaly_size = 4
 	max_anomaly_size = 9

@@ -3,11 +3,11 @@
 	///Спавнятся ли на подобном типе планет аномалии
 	can_spawn_anomalies = TRUE
 	anomalies_type = list(
-		/obj/anomaly/zjarka,
-		/obj/anomaly/zjarka/short_effect,
-		/obj/anomaly/zjarka/long_effect,
-		/obj/anomaly/heater/three_and_three,
-		/obj/anomaly/heater/two_and_two
+		/obj/anomaly/zjarka = 4,
+		/obj/anomaly/zjarka/short_effect = 2,
+		/obj/anomaly/zjarka/long_effect = 1,
+		/obj/anomaly/heater/three_and_three = 3,
+		/obj/anomaly/heater/two_and_two = 3
 		)
 	min_anomalies_ammout = 250
 	max_anomalies_ammout = 400

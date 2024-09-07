@@ -2,40 +2,12 @@
 	///Аномалия может "Рожать" артефакты?
 	var/can_born_artifacts = FALSE
 	//ANOTHER
-	///Какие артефакты порождает аномалия. Справа пишем шанс выбора этого артефакта в процентах. (Сумма не должна быть больше 100)
+	///Какие артефакты порождает аномалия. Справа пишем шанс выбора этого артефакта.
 	var/list/artefacts = list()
-	///Аномалия выбрала, какой артефакт она в итоге выбрала
-	var/choosed_artefact_type
 
-	//Шансы спавна артефактов
-	///Минимальный шанс
-	var/min_spawn_chance = 25
-	///Максимальный шанс
-	var/max_spawn_chance = 75
-	///Текущий шанс
-	var/result_spawn_chance
+	//Шанс спавна в аномалии артефакта
+	var/artefact_spawn_chance = 25
 
-	//Время спавна артефактов
-	///Минимальное время
-	var/min_spawn_time = 15 MINUTES
-	///Максимальное  время
-	var/max_spawn_time = 60 MINUTES
-	///Текущий шанс
-	var/result_spawn_time
-
-///Выберем шанс спавна артефакта в следующий временной промежуток
-/obj/anomaly/proc/calculate_artifact_spawn_chance()
-	if(!result_spawn_chance)
-		result_spawn_chance = rand(min_spawn_chance, max_spawn_chance)
-
-///Выберем время до следующего спавна артефакта
-/obj/anomaly/proc/calculate_artifact_spawn_time()
-	if(!result_spawn_time)
-		result_spawn_time = rand(min_spawn_time, max_spawn_time)
-
-///Выберем, какой артефакт мы заспавним
-/obj/anomaly/proc/choose_artifact_to_spawn()
-	pickweight(artefacts)
 
 /obj/anomaly/proc/try_born_artifact()
 	//Может ли аномалия спавнить артефакты
@@ -48,8 +20,9 @@
 
 ///Функция спавнит артефакт на территории аномалии
 /obj/anomaly/proc/born_artifact()
-	choose_artifact_to_spawn()
-	born_artifact_in_random_title()
+	var/obj/artefact = pickweight(artefacts)
+	if(artefact)
+		born_artifact_in_random_title(artefact)
 
 ///Функция проверяет, есть ли на территории аномалии артефакты
 /obj/anomaly/proc/check_artifacts_in_anomaly()

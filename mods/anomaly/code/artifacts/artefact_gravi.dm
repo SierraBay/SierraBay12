@@ -42,7 +42,20 @@
 	else
 		to_chat(user,SPAN_NOTICE("При попытке погладить ощущается текстура камня."))
 
+/obj/item/artefact/gravi/urm_radiation(mob/living/user)
+	return "Обьект не реагирует"
 
+/obj/item/artefact/gravi/urm_laser(mob/living/user)
+	return "Обьект не реагирует"
+
+/obj/item/artefact/gravi/urm_electro(mob/living/user)
+	return "Обьект не реагирует"
+
+/obj/item/artefact/gravi/urm_plasma(mob/living/user)
+	return "Обьект не реагирует"
+
+/obj/item/artefact/gravi/urm_phoron(mob/living/user)
+	return "Обьект не реагирует"
 
 
 

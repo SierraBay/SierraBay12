@@ -2,6 +2,15 @@
 	name = "Anomaly spawner and editor"
 	icon_state = "buildmode10"
 	var/anomaly_type
+	var/choosed_cooldown_time
+	var/choosed_effect_time
+	var/choosed_need_preload
+	var/choosed_effect_range
+	var/choosed_effect_type
+
+
+
+
 	var/list/possible_anomalies = list(
 		/obj/anomaly/zjarka = "Жарка - аномалия накладывающая BURN урон и поджигающая всех в зоне поражения. Взводится от болта и мобов.",
 		/obj/anomaly/zjarka/short_effect = "Жарка - аномалия накладывающая BURN урон и поджигающая всех в зоне поражения. Взводится от болта и мобов.",
@@ -51,9 +60,9 @@ Cntrl + Left Click - Configurate anomaly
 	//Тонкая настройка именно этой аномалии
 	else if(parameters["ctrl"])
 		if(istype(A, /obj/anomaly))
-			configurate_anomaly(A)
+			configurate_clicked_anomaly(A)
 		else
-			to_chat(user, SPAN_BAD("This is not anomaly"))
+			configurate_choosed_anomaly()
 		return
 	//Выбираем какую аномалию хотим заспавнить
 	else if(parameters["middle"])
@@ -68,8 +77,16 @@ Cntrl + Left Click - Configurate anomaly
 		return
 	var/location = get_turf(A)
 	var/obj/anomaly/spawned_anomaly = new anomaly_type (location)
-	if(spawned_anomaly.multitile)
-		calculate_effected_turfs(spawned_anomaly)
+	if(choosed_cooldown_time)
+		spawned_anomaly.cooldown_time = choosed_cooldown_time
+	if(choosed_effect_time)
+		spawned_anomaly.effect_time = choosed_effect_time
+	if(choosed_need_preload)
+		spawned_anomaly.need_preload = choosed_need_preload
+	if(choosed_effect_range)
+		spawned_anomaly.effect_range = choosed_effect_range
+	if(choosed_effect_type)
+		spawned_anomaly.effect_type = choosed_effect_type
 
 
 /datum/build_mode/anomalies/Configurate()
@@ -83,8 +100,61 @@ Cntrl + Left Click - Configurate anomaly
 	anomaly_type = A
 	GLOB.destroyed_event.register(anomaly_type, src, PROC_REF(UnselectAnomaly))
 
-/datum/build_mode/anomalies/proc/configurate_anomaly(atom/A)
-	return
+/datum/build_mode/anomalies/proc/configurate_clicked_anomaly(obj/anomaly/input_anomaly)
+	var/list/options = list("Время отката", "Время действия", "Предзарядка", "Радиус воздействия","Моментальное/Продолжительное воздействие")
+	var/choosed_configuration = input(usr, "Выберите параметр для настройки","Configurate") as null|anything in options
+	if(choosed_configuration == "Время отката")
+		input_anomaly.cooldown_time = input("Каково будет время отката?") as num|null
+	else if(choosed_configuration == "Время действия")
+		input_anomaly.effect_time = input("Как долго аномалия будет воздействовать(Работает, если аномалия типа воздействия ПРОДОЛЖИТЕЛЬНОЕ.)") as num|null
+	else if(choosed_configuration == "Предзарядка")
+		input_anomaly.need_preload = input("Аномалии потребуется предзарядка перед воздействием?") as num|null
+	else if(choosed_configuration == "Радиус воздействия")
+		input_anomaly.effect_range = input("Радиус воздействия аномалии(целое число)?") as num|null
+		calculate_effected_turfs_from_moving_anomaly(input_anomaly)
+	else if(choosed_configuration == "Моментальное/Продолжительное воздействие")
+		var/list/variations = list("Моментальное", "Продолжительное")
+		var/choose = input("Время воздействия аномалии?") as null|anything in variations
+		if(choose == "Моментальное")
+			input_anomaly.effect_type = 2
+		else if(choose == "Продолжительное")
+			input_anomaly.effect_type =  1
+
+
+/datum/build_mode/anomalies/proc/configurate_choosed_anomaly()
+
+	var/list/options = list("Время отката", "Время действия", "Предзарядка", "Радиус воздействия","Моментальное/Продолжительное воздействие", "Очистить все настройки", "Вывести текущие настройки")
+	var/choosed_configuration = input(usr, "Выберите параметр для настройки","Configurate") as null|anything in options
+	if(choosed_configuration == "Время отката")
+		choosed_cooldown_time = input("Каково будет время отката?") as num|null
+	else if(choosed_configuration == "Время действия")
+		choosed_effect_time = input("Как долго аномалия будет воздействовать(Работает, если аномалия типа воздействия ПРОДОЛЖИТЕЛЬНОЕ.)") as num|null
+	else if(choosed_configuration == "Предзарядка")
+		choosed_need_preload = input("Аномалии потребуется предзарядка перед воздействием?") as num|null
+	else if(choosed_configuration == "Радиус воздействия")
+		choosed_effect_range = input("Радиус воздействия аномалии(целое число)?") as num|null
+	else if(choosed_configuration == "Моментальное/Продолжительное воздействие")
+		var/list/variations = list("Моментальное", "Продолжительное")
+		var/choose = input("Время воздействия аномалии?") as null|anything in variations
+		if(choose == "Моментальное")
+			choosed_effect_type = 2
+		else if(choose == "Продолжительное")
+			choosed_effect_type =  1
+	else if(choosed_configuration == "Очистить все настройки")
+		choosed_cooldown_time = null
+		choosed_effect_time = null
+		choosed_need_preload = null
+		choosed_effect_range = null
+		choosed_effect_type	 = null
+
+	else if(choosed_configuration == "Вывести текущие настройки")
+		to_chat(user, SPAN_NOTICE("[choosed_cooldown_time]"))
+		to_chat(user, SPAN_NOTICE("[choosed_effect_time]"))
+		to_chat(user, SPAN_NOTICE("[choosed_need_preload]"))
+		to_chat(user, SPAN_NOTICE("[choosed_effect_range]"))
+		to_chat(user, SPAN_NOTICE("[choosed_effect_type]"))
+
+
 
 /datum/build_mode/anomalies/proc/UnselectAnomaly()
 	if(!anomaly_type)

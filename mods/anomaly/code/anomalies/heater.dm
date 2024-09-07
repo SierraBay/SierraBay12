@@ -10,10 +10,9 @@
 		/mob/living
 	)
 	artefacts = list(
-		/obj/item/artefact/zjar
+		/obj/item/artefact/zjar = 1
 	)
-	min_spawn_chance = 1
-	max_spawn_chance = 5
+	artefact_spawn_chance = 5
 	chance_to_be_detected = 140
 	time_between_effects = 0.5 SECOND
 

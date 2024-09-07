@@ -23,6 +23,15 @@
 /obj/anomaly/thamplin/random
 	random_throw_dir = TRUE
 
+/obj/anomaly/thamplin/random/always_powerfull_walking
+	can_walking = TRUE
+	walking_activity = 20
+	walk_time = 2 SECONDS
+	chance_spawn_walking = 100
+
+/obj/anomaly/zjarka/walking
+	chance_spawn_walking = 100
+
 /obj/anomaly/zjarka/short_effect
 	effect_range = 0
 

@@ -6,6 +6,11 @@
 	var/obj/item/artefact/stored_artefact
 
 
+/obj/item/collector/examine(mob/user, distance, is_adjacent)
+	. = ..()
+	to_chat(user, SPAN_GOOD("Click with collector on object to capture."))
+
+
 /obj/item/collector/attack_hand(mob/user)
 	if (stored_artefact && user.get_inactive_hand() == src && !closed)
 		user.visible_message("[user] removes [stored_artefact] from \the [src].")
@@ -33,6 +38,7 @@
 	if(!user.unEquip(item))
 		return
 	stored_artefact = item
+	stored_artefact.react_to_insert_in_collector()
 	item.forceMove(src)
 	update_icon()
 
@@ -46,6 +52,7 @@
 /obj/item/collector/proc/pop_out_artefact(mob/living/user)
 	stored_artefact.forceMove(get_turf(src))
 	user.put_in_hands(stored_artefact)
+	stored_artefact.react_to_remove_from_collector()
 	stored_artefact = null
 	update_icon()
 

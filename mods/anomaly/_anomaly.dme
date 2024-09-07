@@ -15,13 +15,16 @@
 #include "code\anomaly_preload.dm" //Предзарядка аномалии
 #include "code\anomaly_sound.dm" //Звуки у аномалий
 #include "code\anomaly_randomize.dm" //Рандомизация параметров аномалии
-
+#include "code\anomaly_controller.dm" //Контроллер аномалий
+#include "code\anomaly_walking.dm" //Бродячие аномалии
+#include "code\anomaly_electrostatic.dm" //Электростатический расчёт
 
 //Детекторы и прочее оборудование
 #include "code\detectors_and_etc\bolt.dm"
 #include "code\detectors_and_etc\detector.dm"
 #include "code\detectors_and_etc\collector.dm"
 #include "code\detectors_and_etc\beacon.dm"
+#include "code\detectors_and_etc\research_machine.dm"
 
 
 //Код артефактов и всё с ними связанное
@@ -60,6 +63,7 @@
 #include "code\spawn_anomalies_protocol\core_spawn_protocol.dm"
 #include "code\spawn_anomalies_protocol\spawn_anomaly_with_big_artefact.dm" //Код, отвечающий за спавн аномалий вокруг больших артефактов
 #include "code\spawn_anomalies_protocol\spawn_with_ruins.dm"
+#include "code\spawn_anomalies_protocol\bsd_event_protocol.dm"
 #include "code\spawn_anomalies_protocol\planet_spawn_types\vulcanic.dm" //Вулканическая планета
 #include "code\spawn_anomalies_protocol\planet_spawn_types\ice.dm" //Ледяная планета
 // #include "code\spawn_anomalies_protocol\planet_spawn_types\flying.dm" //Летающие острова

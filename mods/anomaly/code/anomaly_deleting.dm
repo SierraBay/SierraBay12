@@ -5,18 +5,16 @@
 	delete_anomaly()
 
 /obj/anomaly/proc/delete_anomaly()
-	if(!detectable_effect_range)
-		return
+	SSanom.remove_anomaly_from_list(src)
+	calculate_effected_turfs_from_deleting_anomaly(src)
 	if(multitile)
 		for(var/obj/anomaly/part in list_of_parts)
-			if(AnomaliesAmmountInTurf(part.loc) == 1)
-				var/turf/part_turf = get_turf(part)
-				part_turf.in_anomaly_effect_range = FALSE
-			qdel(part)
-	if(AnomaliesAmmountInTurf(src.loc) == 1)
-		var/turf/part_turf = get_turf(src)
-		part_turf.in_anomaly_effect_range = FALSE
+			part.delete_anomaly()
 	qdel(src)
+
+/obj/anomaly/part/delete_anomaly()
+	qdel(src)
+
 
 /obj/anomaly/part/shuttle_land_on()
 	core.delete_anomaly()

@@ -766,7 +766,6 @@
 	//I'm fixing stuff incrementally so this will likely find a better home.
 	//It just makes sense for now. ~Carn
 	//[SIERRA-ADD]
-	UpdateLyingBuckledAndVerbStatus()
 	if(update_icon)	//forces a full overlay update
 		update_icon = FALSE
 	////[SIERRA-ADD]

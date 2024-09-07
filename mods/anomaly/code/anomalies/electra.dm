@@ -34,8 +34,7 @@
 	max_coldown_time = 15 SECONDS
 	min_preload_time = 4
 	max_preload_time = 8
-	min_spawn_chance = 5
-	max_spawn_chance = 25
+	artefact_spawn_chance = 25
 	can_be_preloaded = TRUE
 	being_preload_chance = 30
 	detectable_effect_range = TRUE
@@ -96,6 +95,23 @@
 			power_cell.charge = power_cell.maxcharge
 			to_chat(target, SPAN_NOTICE("<b>Your [power_cell] has been charged to capacity.</b>"))
 
+	//Цель удара - человек
+	else if(istype(target, /mob/living/carbon/human))
+		for(var/obj/item/artefact/zjar/defense_artefact in target)
+			if(defense_artefact.current_integrity > 1)
+				defense_artefact.current_integrity--
+				to_chat(target, SPAN_GOOD("[defense_artefact] вспыхивает красной вспышкой"))
+			else
+				qdel(defense_artefact)
+				to_chat(target, SPAN_BAD("[defense_artefact] вспыхивает ярчайшей красной вспышкой и пропадает."))
+			to_chat(target, SPAN_GOOD("Вы чувствуете сильный, но приятный ЖАР в месте удара. Но не боль."))
+			return
+		var/mob/living/carbon/human/victim = target
+		var/list/organs = victim.list_organs_to_earth()
+		var/damage = 50
+		damage /= LAZYLEN(organs)
+		for(var/picked_organ in organs)
+			victim.electoanomaly_act(damage, src, picked_organ)
 	//Если целью является борг, мы так же наносим ему электроудар
 	else if(istype(target, /mob/living/silicon/robot ))
 		create_line = TRUE
@@ -107,7 +123,7 @@
 	else if(istype(target, /mob/living/exosuit))
 		create_line = TRUE
 		var/mob/living/exosuit/mech = target
-		mech.apply_damage(50, DAMAGE_BURN)
+		mech.apply_damage(100, DAMAGE_BURN)
 		mech.emp_act(1)
 	else if(istype(target, /obj/structure/mech_wreckage ))
 		qdel(target)
@@ -118,7 +134,7 @@
 		if(victim.health == 0)
 			anything_in_remains(victim)
 			return
-		victim.electoanomaly_act(50, src)
+		victim.electoanomaly_act(100, src)
 
 	//Если целью является пепел - мы его удаляем, чтоб не засорять аномалию
 	else if(istype(target, /obj/decal/cleanable/ash))
@@ -163,3 +179,48 @@
 	Weaken(1)
 	make_jittery(min(shock_damage*5, 200))
 	return shock_damage
+
+//Выдаёт список конечностей от введёной конечности до земли
+/mob/living/carbon/human/proc/list_organs_to_earth(input_organ)
+	var/list/result_damaged_zones = list()
+	var/attack_zone
+	if(!input_organ)
+		attack_zone = get_exposed_defense_zone()
+	else
+		attack_zone = input_organ
+	LAZYADD(result_damaged_zones, attack_zone)
+	if(attack_zone == BP_HEAD || attack_zone == BP_R_ARM || attack_zone == BP_R_HAND || attack_zone == BP_L_ARM || attack_zone == BP_L_HAND)
+		if(attack_zone == BP_R_HAND)
+			LAZYADD(result_damaged_zones, BP_R_ARM)
+		else if(attack_zone == BP_L_HAND)
+			LAZYADD(result_damaged_zones, BP_L_ARM)
+		LAZYADD(result_damaged_zones, BP_CHEST)
+		LAZYADD(result_damaged_zones, BP_GROIN)
+		var/attacked_leg = pick(BP_L_LEG, BP_R_LEG)
+		LAZYADD(result_damaged_zones, attacked_leg)
+		if(attacked_leg == BP_L_LEG)
+			LAZYADD(result_damaged_zones, BP_L_FOOT)
+		else if(attacked_leg == BP_R_LEG)
+			LAZYADD(result_damaged_zones, BP_R_FOOT)
+
+	else if(attack_zone == BP_CHEST)
+		LAZYADD(result_damaged_zones, BP_GROIN)
+		var/attacked_leg = pick(BP_L_LEG, BP_R_LEG)
+		LAZYADD(result_damaged_zones, attacked_leg)
+		if(attacked_leg == BP_L_LEG)
+			LAZYADD(result_damaged_zones, BP_L_FOOT)
+		else if(attacked_leg == BP_R_LEG)
+			LAZYADD(result_damaged_zones, BP_R_FOOT)
+
+	else if(attack_zone == BP_GROIN)
+		var/attacked_leg = pick(BP_L_LEG, BP_R_LEG)
+		LAZYADD(result_damaged_zones, attacked_leg)
+		if(attacked_leg == BP_L_LEG)
+			LAZYADD(result_damaged_zones, BP_L_FOOT)
+		else if(attacked_leg == BP_R_LEG)
+			LAZYADD(result_damaged_zones, BP_R_FOOT)
+	else if(attack_zone == BP_L_LEG)
+		LAZYADD(result_damaged_zones, BP_L_FOOT)
+	else if(attack_zone == BP_R_LEG)
+		LAZYADD(result_damaged_zones, BP_R_FOOT)
+	return result_damaged_zones
