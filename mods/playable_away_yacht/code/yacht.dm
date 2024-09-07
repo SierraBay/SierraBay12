@@ -24,7 +24,7 @@
 	spawn_cost = 0.5
 	player_cost = 2
 	spawn_weight = 0.67
-	area_usage_test_exempted_root_areas = list(/area/yacht)
+	area_usage_test_exempted_root_areas = list(/area/playable_yacht)
 
 
 /singleton/submap_archetype/yacht

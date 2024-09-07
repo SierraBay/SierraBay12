@@ -131,11 +131,11 @@ source - Источник(Причина) генерации аномалий н
 			anomaly_to_spawn = pickweight(anomalies_types)
 		//В случае если код сделал фокус и выдал чудо - выходим из цикла генерации, сообщив администрации
 		if(!spawner_turf)
-			log_and_message_admins("Ошибка работы генератора: при выборе получось spawner_turf == null")
+			log_and_message_admins("Ошибка работы генератора: при выборе получилось spawner_turf оказалось null")
 			critical_errors_ammount++
 			continue
 		else if(!anomaly_to_spawn)
-			log_and_message_admins("Ошибка работы генератора: при выборе получось anomaly_to_spawn == null")
+			log_and_message_admins("Ошибка работы генератора: при выборе получилось anomaly_to_spawn оказалось null")
 			critical_errors_ammount++
 			continue
 		if(critical_errors_ammount > 2)
