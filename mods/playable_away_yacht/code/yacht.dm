@@ -110,3 +110,17 @@
 /obj/shuttle_landmark/nav_playable_yacht/nav4
 	name = "Playable Yacht Navpoint #4"
 	landmark_tag = "nav_playable_yacht_antag"
+
+
+
+//Затычки, дабы не ругались юнит тесты
+/obj/paint/nt_white/playable_yacht
+
+/obj/item/clothing/gloves/wristwatch/gold/yacht
+	desc = "There is a huge expensive yacht in the background of the clock."
+
+/obj/structure/bed/sofa/l/black/yacht
+
+/obj/structure/bed/sofa/r/black/yacht
+
+/obj/structure/bed/sofa/m/light/yacht

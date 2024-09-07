@@ -101,7 +101,7 @@
 /turf/simulated/floor/tiled/freezer,
 /area/playable_yacht/relax_zone)
 "av" = (
-/obj/structure/bed/sofa/m/light{
+/obj/structure/bed/sofa/m/light/yacht{
 	dir = 5
 	},
 /turf/simulated/floor/wood,
@@ -159,7 +159,7 @@
 /turf/simulated/floor/wood,
 /area/playable_yacht/relax_zone)
 "aH" = (
-/obj/structure/bed/sofa/r,
+/obj/structure/bed/sofa/m/light/yacht,
 /turf/simulated/floor/wood,
 /area/playable_yacht/relax_zone)
 "aJ" = (
@@ -216,7 +216,7 @@
 /turf/simulated/floor/wood,
 /area/playable_yacht/relax_zone)
 "aR" = (
-/obj/overmap/visitable/ship/yacht,
+/obj/overmap/visitable/ship/playable_yacht,
 /turf/space,
 /area/space)
 "aS" = (
@@ -246,7 +246,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 1
 	},
-/obj/structure/bed/sofa/l/light{
+/obj/structure/bed/sofa/m/light/yacht{
 	dir = 1
 	},
 /turf/simulated/floor/wood,
@@ -399,7 +399,7 @@
 /turf/simulated/floor/wood,
 /area/playable_yacht/relax_zone)
 "bB" = (
-/obj/structure/bed/sofa/r/black{
+/obj/structure/bed/sofa/r/black/yacht{
 	dir = 4
 	},
 /turf/simulated/floor/wood/walnut,
@@ -521,7 +521,6 @@
 /turf/simulated/floor/wood/walnut,
 /area/playable_yacht/main_corridor)
 "bR" = (
-/obj/item/clothing/gloves/wristwatch/gold,
 /obj/structure/table/reinforced,
 /obj/machinery/light{
 	dir = 8
@@ -530,6 +529,7 @@
 	dir = 4;
 	pressure_checks = 0
 	},
+/obj/item/clothing/gloves/wristwatch/gold/yacht,
 /turf/simulated/floor/wood/walnut,
 /area/playable_yacht/bridge)
 "bS" = (
@@ -881,14 +881,14 @@
 /turf/simulated/floor/tiled/dark,
 /area/playable_yacht/main_corridor)
 "dd" = (
-/obj/structure/bed/sofa/l/black{
-	dir = 4
-	},
 /obj/machinery/alarm{
 	dir = 4;
 	pixel_x = -24;
 	req_access = list();
 	locked = 0
+	},
+/obj/structure/bed/sofa/l/black/yacht{
+	dir = 4
 	},
 /turf/simulated/floor/wood/walnut,
 /area/playable_yacht/living)
@@ -903,7 +903,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
 	},
-/obj/structure/bed/sofa/m/light{
+/obj/structure/bed/sofa/m/light/yacht{
 	dir = 1
 	},
 /turf/simulated/floor/wood,
@@ -1119,11 +1119,11 @@
 /turf/simulated/floor/tiled/monotile,
 /area/playable_yacht/right_engine)
 "dW" = (
-/obj/structure/bed/sofa,
 /obj/machinery/computer/ship/navigation/telescreen{
 	dir = 3;
 	pixel_y = 32
 	},
+/obj/structure/bed/sofa/m/light/yacht,
 /turf/simulated/floor/wood,
 /area/playable_yacht/relax_zone)
 "dY" = (
@@ -1391,7 +1391,7 @@
 /turf/simulated/floor/wood,
 /area/playable_yacht/relax_zone)
 "gc" = (
-/obj/structure/bed/sofa/m/light{
+/obj/structure/bed/sofa/m/light/yacht{
 	dir = 6
 	},
 /turf/simulated/floor/wood,
@@ -1608,9 +1608,13 @@
 /turf/simulated/floor/wood/walnut,
 /area/playable_yacht/main_corridor)
 "pM" = (
-/obj/machinery/portable_atmospherics/powered/scrubber,
-/turf/simulated/floor/tiled/monotile,
-/area/playable_yacht/right_engine)
+/obj/machinery/power/apc{
+	name = "south bump";
+	pixel_y = -24
+	},
+/obj/structure/cable,
+/turf/simulated/floor/wood/walnut,
+/area/playable_yacht/main_corridor)
 "ro" = (
 /obj/machinery/cryopod{
 	dir = 2
@@ -2037,7 +2041,7 @@
 /turf/simulated/floor/tiled/white,
 /area/playable_yacht/kitchen)
 "Lb" = (
-/obj/structure/bed/sofa/m/light{
+/obj/structure/bed/sofa/m/light/yacht{
 	dir = 4
 	},
 /turf/simulated/floor/wood,
@@ -2050,11 +2054,15 @@
 /turf/simulated/wall/r_titanium,
 /area/playable_yacht/right_engine)
 "Lq" = (
-/obj/machinery/power/apc{
-	name = "south bump";
-	pixel_y = -24
+/obj/machinery/light{
+	dir = 8
 	},
-/obj/structure/cable,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
 /turf/simulated/floor/wood/walnut,
 /area/playable_yacht/main_corridor)
 "LB" = (
@@ -2162,17 +2170,9 @@
 /turf/simulated/floor/tiled/dark,
 /area/playable_yacht/main_corridor)
 "Pe" = (
-/obj/machinery/light{
-	dir = 8
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
-	},
-/turf/simulated/floor/wood/walnut,
-/area/playable_yacht/main_corridor)
+/obj/machinery/portable_atmospherics/powered/scrubber,
+/turf/simulated/floor/tiled/monotile,
+/area/playable_yacht/right_engine)
 "Pj" = (
 /obj/structure/closet/hydrant{
 	pixel_x = 24
@@ -7351,8 +7351,8 @@ kV
 dN
 bY
 pk
-Pe
 Lq
+pM
 cn
 ec
 bY
@@ -7767,7 +7767,7 @@ dV
 ev
 wU
 Dm
-pM
+Pe
 dD
 eN
 RY
