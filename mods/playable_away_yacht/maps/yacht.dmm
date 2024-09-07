@@ -903,7 +903,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
 	},
-/obj/structure/bed/sofa{
+/obj/structure/bed/sofa/m/light{
 	dir = 1
 	},
 /turf/simulated/floor/wood,
@@ -1608,19 +1608,18 @@
 /turf/simulated/floor/wood/walnut,
 /area/playable_yacht/main_corridor)
 "pM" = (
-/obj/machinery/power/apc{
-	name = "south bump";
-	pixel_y = -24
-	},
-/obj/structure/cable,
-/turf/simulated/floor/wood/walnut,
-/area/playable_yacht/main_corridor)
+/obj/machinery/portable_atmospherics/powered/scrubber,
+/turf/simulated/floor/tiled/monotile,
+/area/playable_yacht/right_engine)
 "ro" = (
 /obj/machinery/cryopod{
 	dir = 2
 	},
 /obj/structure/curtain/open/shower,
 /obj/submap_landmark/spawnpoint/yachtman_spawn,
+/obj/machinery/computer/cryopod{
+	pixel_y = 25
+	},
 /turf/simulated/floor/wood/walnut,
 /area/playable_yacht/living)
 "tf" = (
@@ -2051,9 +2050,13 @@
 /turf/simulated/wall/r_titanium,
 /area/playable_yacht/right_engine)
 "Lq" = (
-/obj/machinery/portable_atmospherics/powered/scrubber,
-/turf/simulated/floor/tiled/monotile,
-/area/playable_yacht/right_engine)
+/obj/machinery/power/apc{
+	name = "south bump";
+	pixel_y = -24
+	},
+/obj/structure/cable,
+/turf/simulated/floor/wood/walnut,
+/area/playable_yacht/main_corridor)
 "LB" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
@@ -7349,7 +7352,7 @@ dN
 bY
 pk
 Pe
-pM
+Lq
 cn
 ec
 bY
@@ -7764,7 +7767,7 @@ dV
 ev
 wU
 Dm
-Lq
+pM
 dD
 eN
 RY
