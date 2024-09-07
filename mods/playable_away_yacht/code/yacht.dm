@@ -113,7 +113,7 @@
 
 
 
-//Затычки, дабы не ругались юнит тесты
+//Затычки, дабы не ругались юнит тесты.
 /obj/paint/nt_white/playable_yacht
 
 /obj/item/clothing/gloves/wristwatch/gold/yacht
