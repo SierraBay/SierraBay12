@@ -160,11 +160,11 @@
 
 
 /datum/design/circuit/urm
-    name = "Universal research machine"
-    id = "urm"
-    req_tech = list(TECH_DATA = 4, TECH_ENGINEERING = 4, TECH_BLUESPACE = 4)
-    build_path = /obj/item/stock_parts/circuitboard/urm
-    sort_string = "HABAM"
+	name = "Universal research machine"
+	id = "urm"
+	req_tech = list(TECH_DATA = 4, TECH_ENGINEERING = 4, TECH_BLUESPACE = 4)
+	build_path = /obj/item/stock_parts/circuitboard/urm
+	sort_string = "HABAM"
 
 /obj/item/stock_parts/circuitboard/urm
 	name = "circuit board (universal research machine)"

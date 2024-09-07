@@ -40,7 +40,7 @@
 
 
 /singleton/hierarchy/outfit/job/yachtman
-	name = OUTFIT_JOB_NAME("Colonist Leader")
+	name = OUTFIT_JOB_NAME("Yachtman")
 	id_types = null
 
 /obj/submap_landmark/spawnpoint/yachtman_spawn
@@ -83,25 +83,11 @@
 	icon = 'icons/turf/areas.dmi'
 	icon_state = "storage"
 
-/area/playable_yacht/batchroom
-	name = "\improper Yacht batchroom"
-	icon = 'icons/turf/areas.dmi'
-	icon_state = "toilet"
-
-/area/playable_yacht/play_zone
-	name = "\improper Yacht playzone"
-	icon = 'icons/turf/areas.dmi'
-	icon_state = "crew_quarters"
 
 /area/playable_yacht/relax_zone
 	name = "\improper Yacht relax zone"
 	icon = 'icons/turf/areas.dmi'
 	icon_state = "restrooms"
-
-/area/playable_yacht/beach
-	name = "\improper Yacht beach"
-	icon = 'icons/turf/areas.dmi'
-	icon_state = "sauna"
 
 /area/playable_yacht/main_corridor
 	name = "\improper Yacht corridor"
