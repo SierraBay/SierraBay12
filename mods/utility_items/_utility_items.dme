@@ -16,5 +16,7 @@
 #include "code/circuit.dm"
 #include "code/global_hud_sierra.dm"
 #include "code/labcoat.dm"
+#include "code\ninja-map.dm"
+
 
 #endif
