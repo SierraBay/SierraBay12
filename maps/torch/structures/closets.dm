@@ -127,3 +127,13 @@
 		/obj/item/clothing/shoes/swat,
 		/obj/item/clothing/mask/gas/syndicate
 	)
+// Необходимое добавление, для адекватной работы рантеста.
+/obj/structure/closet/crate/ninja/reborn
+	name = "ninja equipment crate"
+	desc = "An ominous equipment crate."
+
+/obj/structure/closet/crate/ninja/reborn/New()
+	..()
+	new /obj/item/rig/light/ninja(src)
+	new /obj/item/material/sword/katana(src)
+	new /obj/item/storage/box/syndie_kit/silenced(src)
