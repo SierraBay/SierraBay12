@@ -1563,16 +1563,6 @@
 	},
 /turf/simulated/floor/pool,
 /area/map_template/ninja_dojo/dojo)
-"tu" = (
-/obj/floor_decal/corner/black/border{
-	dir = 7
-	},
-/obj/machinery/light,
-/obj/structure/closet/crate/ninja/merc,
-/turf/unsimulated/floor{
-	icon_state = "dark"
-	},
-/area/map_template/ninja_dojo/dojo)
 "uj" = (
 /obj/machinery/door/unpowered/simple/wood,
 /turf/simulated/floor/pool,
@@ -1773,24 +1763,6 @@
 	},
 /turf/simulated/floor/pool,
 /area/map_template/ninja_dojo/dojo)
-"Ix" = (
-/obj/floor_decal/corner/black/border{
-	dir = 7
-	},
-/obj/structure/closet/crate/ninja/gcc,
-/turf/unsimulated/floor{
-	icon_state = "dark"
-	},
-/area/map_template/ninja_dojo/dojo)
-"Jz" = (
-/obj/floor_decal/corner/black/border{
-	dir = 7
-	},
-/obj/structure/closet/crate/ninja,
-/turf/unsimulated/floor{
-	icon_state = "dark"
-	},
-/area/map_template/ninja_dojo/dojo)
 "JH" = (
 /obj/structure/table/rack,
 /obj/item/clothing/mask/gas/swat,
@@ -1891,15 +1863,6 @@
 	icon_state = "dark"
 	},
 /area/map_template/ninja_dojo/dojo)
-"Ot" = (
-/obj/floor_decal/corner/black/border{
-	dir = 7
-	},
-/obj/structure/closet/crate/ninja/corpo,
-/turf/unsimulated/floor{
-	icon_state = "dark"
-	},
-/area/map_template/ninja_dojo/dojo)
 "OL" = (
 /obj/floor_decal/corner/black/border{
 	dir = 7
@@ -1986,15 +1949,6 @@
 	},
 /turf/unsimulated/floor{
 	icon_state = "white"
-	},
-/area/map_template/ninja_dojo/dojo)
-"TR" = (
-/obj/floor_decal/corner/black/border{
-	dir = 6
-	},
-/obj/structure/closet/crate/ninja/sol,
-/turf/unsimulated/floor{
-	icon_state = "dark"
 	},
 /area/map_template/ninja_dojo/dojo)
 "Ui" = (
@@ -3083,7 +3037,7 @@ bA
 cF
 bP
 cp
-Jz
+aN
 cF
 vP
 aN
@@ -3126,7 +3080,7 @@ cp
 cF
 bP
 cp
-Ot
+aN
 cF
 cp
 aN
@@ -3169,7 +3123,7 @@ cy
 cF
 bP
 cp
-Ix
+aN
 cF
 cy
 aZ
@@ -3212,7 +3166,7 @@ bd
 bd
 bD
 cp
-tu
+OL
 bd
 bd
 bd
@@ -3255,7 +3209,7 @@ cq
 bd
 bQ
 aA
-TR
+bc
 bd
 cp
 cp
