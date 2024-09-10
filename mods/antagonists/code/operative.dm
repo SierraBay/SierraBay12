@@ -62,13 +62,3 @@
 	new /obj/item/storage/box/anti_photons(src)
 	new /obj/item/device/encryptionkey/syndie_full(src)
 	new /obj/item/card/emag(src)
-
-/obj/structure/closet/crate/ninja/reborn
-	name = "ninja equipment crate"
-	desc = "An ominous equipment crate."
-
-/obj/structure/closet/crate/ninja/reborn/New()
-	..()
-	new /obj/item/rig/light/ninja(src)
-	new /obj/item/material/sword/katana(src)
-	new /obj/item/storage/box/syndie_kit/silenced(src)
