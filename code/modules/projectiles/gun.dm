@@ -231,12 +231,21 @@
 			else
 				Fire(atom, user, pointblank = TRUE)
 		return TRUE
+<<<<<<< ours
 	if (user.a_intent == I_HURT && !user.isEquipped(atom)) //point blank shooting
 		if (safety())
 			return ..()
 		else
 			Fire(atom, user, pointblank = TRUE)
 			return TRUE
+=======
+
+	// Point blank shooting
+	if (user.a_intent == I_HURT && !user.isEquipped(target))
+		Fire(target, user, pointblank = TRUE)
+		return TRUE
+
+>>>>>>> theirs
 	return ..()
 
 
