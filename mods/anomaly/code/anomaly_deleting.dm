@@ -5,10 +5,16 @@
 	delete_anomaly()
 
 /obj/anomaly/proc/delete_anomaly()
+	SSanom.remove_anomaly_from_list(src)
+	calculate_effected_turfs_from_deleting_anomaly(src)
 	if(multitile)
 		for(var/obj/anomaly/part in list_of_parts)
-			qdel(part)
+			part.delete_anomaly()
 	qdel(src)
+
+/obj/anomaly/part/delete_anomaly()
+	qdel(src)
+
 
 /obj/anomaly/part/shuttle_land_on()
 	core.delete_anomaly()
