@@ -108,10 +108,8 @@
 			return
 		var/mob/living/carbon/human/victim = target
 		var/list/organs = victim.list_organs_to_earth()
-		var/damage = 50
-		damage /= LAZYLEN(organs)
 		for(var/picked_organ in organs)
-			victim.electoanomaly_act(damage, src, picked_organ)
+			victim.electoanomaly_act(50, src, picked_organ)
 	//Если целью является борг, мы так же наносим ему электроудар
 	else if(istype(target, /mob/living/silicon/robot ))
 		create_line = TRUE
