@@ -19,6 +19,5 @@
 #include "code\ai-stuff.dm" //Дополнительные действия и фичи у ИИ
 #include "code\ai_machine_interaction.dm" //Взаимодействие ИИ с машинами
 
-#include "code\projectile.dm" //пиу пиу
 
 #endif
