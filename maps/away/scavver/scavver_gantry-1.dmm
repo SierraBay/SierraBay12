@@ -2486,6 +2486,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/blue{
 	dir = 6
 	},
+/obj/item/storage/bolt_bag/full_of_bolts,
+/obj/item/storage/bolt_bag/full_of_bolts,
+/obj/item/device/ano_scanner,
 /turf/simulated/floor/tiled/monotile,
 /area/scavver/calypso)
 "Sj" = (

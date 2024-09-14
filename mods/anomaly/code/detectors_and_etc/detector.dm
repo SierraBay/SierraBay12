@@ -1,69 +1,82 @@
-//Детектор Сарасповой получил дополнительную функцию - проверять, находится ли детектор в зоне поражения аномалии.
-#define SCAN_ANOMALIES 1
-#define SCAN_ARTEFACTS_AND_RADIATION 2
-
-/turf
-	var/in_anomaly_effect_range = FALSE
-
 /obj/anomaly
 	///Шанс, что аномалию найдут детектором при условии что у пользователя максимальный навык науки
 	var/chance_to_be_detected = 100
 
-/obj/item/device/ano_scanner
-	var/current_mode = SCAN_ARTEFACTS_AND_RADIATION
+
+/obj/item/clothing/gloves/anomaly_detector
+	name = "anomaly detection device"
+	desc = "TEST."
+	icon = 'mods/anomaly/icons/detector.dmi'
+	icon_state = "detector_idle"
+	action_button_name = "Scan anomalies"
 	var/last_peek_time = 0
 	var/peek_delay = 0.2 SECONDS
 	var/show_anomalies_delay = 10 SECONDS
-	var/last_anomaly_search = 0
+	var/in_tesla_range = FALSE
+	var/in_scanning = FALSE
+	var/last_scan_time = 0
+	var/result_tesla = FALSE
 
+/obj/item/clothing/gloves/anomaly_detector/Initialize()
+	. = ..()
+	START_PROCESSING(SSanom, src)
 
-///Альт клик по детектору
-/obj/item/device/ano_scanner/AltClick(mob/living/user)
-	changemode(user)
+/obj/item/clothing/gloves/anomaly_detector/attack_self(mob/living/user)
+	. = ..()
+	try_found_anomalies(user)
 
-///Смена режима работы детектора
-/obj/item/device/ano_scanner/proc/changemode(mob/living/user)
-	if(current_mode == SCAN_ARTEFACTS_AND_RADIATION)
-		current_mode = SCAN_ANOMALIES
-		START_PROCESSING(SSobj, src)
-		to_chat(user, SPAN_NOTICE("Current mode: Scan anomalies"))
-	else if(current_mode == SCAN_ANOMALIES)
-		current_mode = SCAN_ARTEFACTS_AND_RADIATION
-		STOP_PROCESSING(SSobj, src)
-		to_chat(user, SPAN_NOTICE("Current mode: Scan artifacts and radiation"))
-	playsound(loc, 'sound/weapons/guns/selector.ogg', 40)
+/obj/item/clothing/gloves/anomaly_detector/Process()
+	check_electrostatic()
+	update_icon()
 
-/obj/item/device/ano_scanner/interact(mob/living/user)
-	if(current_mode == SCAN_ANOMALIES)
-		scan_anomalies(user) //Пищит если мы в зоне поражения
-		try_found_anomalies(user)
-		return
+/obj/item/clothing/gloves/anomaly_detector/on_update_icon()
 	.=..()
+	if(!in_tesla_range && !in_scanning)
+		icon_state = "detector_idle"
+	else if(in_tesla_range && !in_scanning)
+		icon_state = "detector_idle_and_peak"
+	else if(!in_tesla_range && in_scanning)
+		icon_state = "detector_scanning"
+	else if(in_tesla_range && in_scanning)
+		icon_state = "detector_scanning_and_peak"
 
 
-/obj/item/device/ano_scanner/proc/scan_anomalies()
+/obj/item/clothing/gloves/anomaly_detector/verb/scan()
+	set category = "Object"
+	set name = "Scan anomalies with detector"
+	set src in usr
+
+	if(!usr.incapacitated())
+		try_found_anomalies(usr)
+		usr.update_action_buttons()
+
+
+/obj/item/clothing/gloves/anomaly_detector/proc/check_electrostatic()
 	if(world.time - last_scan_time >= peek_delay )
 		last_peek_time = world.time
 	var/turf/cur_turf = get_turf(src)
 	//Проверяем, турф на котором мы находимся находится в зоне поражения?
-	if(cur_turf.in_anomaly_effect_range)
+	if(LAZYLEN(cur_turf.list_of_in_range_anomalies))
 		playsound(loc, 'mods/anomaly/sounds/detector_peek.ogg', 40)
+		result_tesla = TRUE
+	else
+		result_tesla = FALSE
+	if(result_tesla != in_tesla_range)
+		in_tesla_range = result_tesla
+		update_icon()
+		if(wearer)
+			wearer.update_action_buttons()
 
-/obj/item/device/ano_scanner/Process()
-	if(current_mode != SCAN_ANOMALIES)
-		return
-	scan_anomalies()
 
-/obj/item/device/ano_scanner/examine(mob/user, distance, is_adjacent)
+/obj/item/clothing/gloves/anomaly_detector/examine(mob/user, distance, is_adjacent)
 	. = ..()
-	to_chat(user, SPAN_GOOD("Use alt+LBM to switch scan mode."))
+	to_chat(user, SPAN_GOOD("Use LBM in anomaly scan mode for search anomalies, or use action button."))
 
 ///Пользователь проводит поиск при помощи сканера
-/obj/item/device/ano_scanner/proc/try_found_anomalies(mob/living/user)
-	if((world.time - last_anomaly_search) < show_anomalies_delay )
-		to_chat(user, SPAN_BAD("Device is stil cooling."))
+/obj/item/clothing/gloves/anomaly_detector/proc/try_found_anomalies(mob/living/user)
+	if((user.r_hand != src && user.l_hand !=src) && (wearer && wearer.gloves != src) )
+		to_chat(user, SPAN_BAD("You cant reach device."))
 		return
-	last_anomaly_search = world.time
 	if(!user.skill_check(SKILL_SCIENCE, SKILL_BASIC))
 		to_chat(user, SPAN_BAD("I dont know how use this function of this device."))
 		return
@@ -72,7 +85,13 @@
 	var/user_science_lvl = user.get_skill_value(SKILL_SCIENCE)
 	var/time_to_scan = (10 - (1.2 * user_science_lvl)) SECONDS
 	var/scan_radius = (4 + user_science_lvl) //макс радиус - 9 "квадратов"
+	in_scanning = TRUE
+	update_icon()
+	usr.update_action_buttons()
 	if (do_after(user, time_to_scan, src, DO_DEFAULT | DO_USER_UNIQUE_ACT) && user)
+		in_scanning = FALSE
+		update_icon()
+		usr.update_action_buttons()
 		//Время прошло, пользователь простоял нужное нам время.
 		var/list/victims = list()
 		var/list/objs = list()
@@ -86,15 +105,14 @@
 			if(prob(chance_to_find))
 				LAZYADD(allowed_anomalies, choosed_anomaly)
 		var/flick_time = (1 + (user_science_lvl * 2))SECONDS
-		last_anomaly_search = world.time
 		show_anomalies(user, flick_time, allowed_anomalies)
-
-
-/obj/item/paper/sierra/exploration
-	name = "new dangers"
-	info = "<tt><center><b><large>NSV Sierra</large></b></center><center>Новые опасности</center><li><b>Одна из последних экспедиций вернулась с новой информацией, и ранениями. Согласно последнему отчёту, экспедиционный отряд наткнулся на некую аномальную активность на одной из планет. Научно исследовательский отдел выделил вашему корпусу дополнительное снаряжение и модифицировал сканеры Сарасповой, добавив им АЛЬТЕРНАТИВНЫЙ режим. Советуем проявлять огромную осторожность при работе на планетах. Удачи.</b><hr></tt><br><i>This paper has been stamped by the Research&Development department.</i>"
-	icon = 'maps/sierra/icons/obj/uniques.dmi'
-	icon_state = "paper_words"
+		if(LAZYLEN(allowed_anomalies))
+			flick("detector_detected_anomalies", src)
+			usr.update_action_buttons()
+	else
+		in_scanning = FALSE
+		update_icon()
+		usr.update_action_buttons()
 
 
 /proc/show_anomalies(mob/viewer, flick_time, allowed_anomalies)
@@ -116,3 +134,10 @@
 		choosed_image.icon_state = "none"
 	if(length(t_ray_images))
 		flick_overlay(t_ray_images, list(viewer.client), flick_time)
+
+
+/obj/item/paper/sierra/exploration
+	name = "new dangers"
+	info = "<tt><center><b><large>NSV Sierra</large></b></center><center>Новые опасности</center><li><b>Одна из последних экспедиций вернулась с новой информацией, и ранениями. Согласно последнему отчёту, экспедиционный отряд наткнулся на некую аномальную активность на одной из планет. Научно исследовательский отдел выделил вашему отряду дополнительное снаряжение и модифицировал сканеры Саcпаровой, добавив им АЛЬТЕРНАТИВНЫЙ режим. Советуем проявлять огромную осторожность при работе на планетах. Удачи.</b><hr></tt><br><i>This paper has been stamped by the Research&Development department.</i>"
+	icon = 'maps/sierra/icons/obj/uniques.dmi'
+	icon_state = "paper_words"

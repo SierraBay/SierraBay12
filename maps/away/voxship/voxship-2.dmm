@@ -653,6 +653,7 @@
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 8
 	},
+/obj/item/storage/bolt_bag/full_of_bolts,
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/fore)
 "bJ" = (
