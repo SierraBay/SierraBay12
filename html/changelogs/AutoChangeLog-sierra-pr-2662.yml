@@ -1,0 +1,4 @@
+author: ВашНикнейм
+changes:
+  - {bugfix: Выдал детекторы для ЭК}
+delete-after: true

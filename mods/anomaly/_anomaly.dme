@@ -4,6 +4,7 @@
 #include "_anomaly.dm"
 // Далее просто включай свой код
 // #include "code/something.dm"
+#include "code\anomaly_admin.dm" //Админские кнопочки
 #include "code\anomaly_core.dm" //Ядро и основа аномалий
 #include "code\anomaly_graphic.dm" //Графика и внешний вид
 #include "code\anomaly_light.dm" //Освещение, вспышки и тому подобное
@@ -14,11 +15,17 @@
 #include "code\anomaly_preload.dm" //Предзарядка аномалии
 #include "code\anomaly_sound.dm" //Звуки у аномалий
 #include "code\anomaly_randomize.dm" //Рандомизация параметров аномалии
+#include "code\anomaly_controller.dm" //Контроллер аномалий
+#include "code\anomaly_walking.dm" //Бродячие аномалии
+#include "code\anomaly_electrostatic.dm" //Электростатический расчёт
 
 //Детекторы и прочее оборудование
 #include "code\detectors_and_etc\bolt.dm"
 #include "code\detectors_and_etc\detector.dm"
 #include "code\detectors_and_etc\collector.dm"
+#include "code\detectors_and_etc\beacon.dm"
+#include "code\detectors_and_etc\research_machine.dm"
+
 
 //Код артефактов и всё с ними связанное
 #include "code\artifacts\anomaly_artifact_spawn.dm"
@@ -29,20 +36,38 @@
 #include "code\artifacts\artefact_svetlyak.dm"
 #include "code\artifacts\artefact_gravi.dm"
 
+
 //Все типы аномалий
 #include "code\anomalies\electra.dm"
 #include "code\anomalies\rvach.dm"
 #include "code\anomalies\vspishka.dm"
 #include "code\anomalies\single\tramplin.dm"
 #include "code\anomalies\single\zjarka.dm"
+#include "code\anomalies\heater.dm"
+#include "code\anomalies\cooler.dm"
+// #include "code\anomalies\ventilyator.dm"
+
+//Аномалия 2 на 2
+#include "code\anomalies\twoandtwo\heater2x2.dm"
+#include "code\anomalies\twoandtwo\cooler2x2.dm"
+
+
 //Аномалия 3 на 3
 #include "code\anomalies\threeandthree\electra_3x3.dm"
 #include "code\anomalies\threeandthree\rvach_3x3.dm"
+#include "code\anomalies\threeandthree\heater_3x3.dm"
+#include "code\anomalies\threeandthree\cooler_3x3.dm"
+
 
 //Размещение аномалий в игре
 #include "code\spawn_anomalies_protocol\core_spawn_protocol.dm"
 #include "code\spawn_anomalies_protocol\spawn_anomaly_with_big_artefact.dm" //Код, отвечающий за спавн аномалий вокруг больших артефактов
 #include "code\spawn_anomalies_protocol\spawn_with_ruins.dm"
+#include "code\spawn_anomalies_protocol\bsd_event_protocol.dm"
+#include "code\spawn_anomalies_protocol\planet_spawn_types\vulcanic.dm" //Вулканическая планета
+#include "code\spawn_anomalies_protocol\planet_spawn_types\ice.dm" //Ледяная планета
+// #include "code\spawn_anomalies_protocol\planet_spawn_types\flying.dm" //Летающие острова
+#include "code\spawn_anomalies_protocol\spawn_on_planet.dm" //Спавн на планетах
 #include "code\anomalies\threeandthree\anomalies_premades.dm" //"Заготовки" аномалий
 
 
