@@ -194,10 +194,6 @@
 	TC.check_arrest = check_arrest
 	TC.check_weapons = check_weapons
 	TC.check_anomalies = check_anomalies
-	//[SIERRA-ADD] - AI_UPDATE
-	TC.attack_robots = attack_robots
-	TC.hold_deployed = hold_deployed
-	//[SIERRA-ADD]
 	TC.ailock = ailock
 
 	if(istype(control_area))
