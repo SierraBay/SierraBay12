@@ -193,24 +193,37 @@
 		T2 = T
 		var/obj/machinery/shieldwall/CF = new(T, src, G) //(ref to this gen, ref to connected gen)
 		CF.set_dir(field_dir)
+// [SIERRA EDIT]
+/obj/machinery/shieldwallgen/use_tool(obj/item/W, mob/living/user)
+	if(isWrench(W))
+		if(active)
+			to_chat(user, SPAN_WARNING("Turn off \the [src] first.."))
+			return
 
-/obj/machinery/shieldwallgen/can_anchor(obj/item/tool, mob/user, silent)
-	if (active)
-		to_chat(user, SPAN_WARNING("Turn off \the [src] first."))
-		return FALSE
-	..()
+		else if(!anchored)
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+			to_chat(user, "You secure the external reinforcing bolts to the floor.")
+			src.anchored = TRUE
+			return
 
-/obj/machinery/shieldwallgen/use_tool(obj/item/W, mob/living/user, list/click_params)
+		else if(anchored)
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+			to_chat(user, "You undo the external reinforcing bolts.")
+			src.anchored = FALSE
+			return
+
 	if(istype(W, /obj/item/card/id)||istype(W, /obj/item/modular_computer))
-		if (allowed(user))
-			locked = !locked
+		if (src.allowed(user))
+			src.locked = !src.locked
 			to_chat(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
 		else
 			to_chat(user, SPAN_WARNING("Access denied."))
-		return TRUE
+		return
 
-	return ..()
-
+	else
+		src.add_fingerprint(user)
+		..()
+// [SIERRA-EDIT-END]
 /obj/machinery/shieldwallgen/proc/cleanup(NSEW)
 	var/obj/machinery/shieldwall/F
 	var/obj/machinery/shieldwallgen/G

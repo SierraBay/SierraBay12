@@ -32,5 +32,9 @@
 #include "utility_items/_utility_items.dme"
 #include "mechs_by_shegar/_mechs_by_shegar.dme"
 #include "newUI/_newUI.dme"
+#include "ai-update/_ai-update.dme"
+#include "anomaly/_anomaly.dme"
+#include "integrated_circuits/_integrated_circuits.dme"
+#include "playable_away_yacht/_yacht.dme"
 
 #include "../packs/sierra-tweaks/_pack.dm"
