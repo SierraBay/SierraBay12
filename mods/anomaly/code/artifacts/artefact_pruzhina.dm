@@ -17,6 +17,8 @@
 	stored_energy = 10000
 	max_stored_energy = 10000
 	var/datum/beam = null
+	//Артефакт скопирован с помощью URM
+	var/copy = FALSE
 
 /obj/item/artefact/pruzhina/lick_interaction(mob/living/user)
 	to_chat(user,SPAN_NOTICE("Как только вы подносите язык чуть ближе, вы чувствуете острую боль в нём, словно от проводов."))
@@ -53,9 +55,51 @@
 	else
 		to_chat(user,SPAN_NOTICE("Обьект не реагирует."))
 
+/obj/item/artefact/pruzhina/urm_radiation(mob/living/user)
+	return "Обьект не реагирует"
 
+/obj/item/artefact/pruzhina/urm_laser(mob/living/user)
+	return "Обьект не реагирует"
 
+/obj/item/artefact/pruzhina/urm_electro(mob/living/user)
+	stored_in_urm.last_interaction_id = "pruzhina_eated_electro"
+	stored_in_urm.last_interaction_reward = 1000
+	return "Зафиксировано как обьект поглотил в себя весь переданный электрический потенциал."
 
+/obj/item/artefact/pruzhina/urm_plasma(mob/living/user)
+	if(!copy)
+		copy = TRUE
+		var/obj/item/artefact/pruzhina/borned_pruzhina = new /obj/item/artefact/pruzhina(get_turf(src))
+		borned_pruzhina.copy = TRUE
+		stored_in_urm.last_interaction_id = "pruzhina_duped"
+		stored_in_urm.last_interaction_reward = 2000
+		return "При определённой концентрации потока плазмы Обьект начинает бурно реагировать. Он расширяется в обьёмах, пульсирует, и из одного выходит второй, точно такой же."
+	else
+		var/obj/anomaly/electra/three_and_three/spawned = new /obj/anomaly/electra/three_and_three/tesla(get_turf(src))
+		spawned.kill_later(120 SECONDS)
+		delete_artefact()
+		stored_in_urm.artefact_inside =  null
+		stored_in_urm.last_interaction_id = "pruzhina_was_overpowered"
+		stored_in_urm.last_interaction_reward = 5000
+		return "При попытке получить ещё один такой обьект при помощи облучение плазмой что-то идёт не так. Обьект расширяется уже куда сильнее и быстрее, после растворяясь на ваших глазах. Вы слышите писк аварийной системы безопасности УИМ."
+
+/obj/item/artefact/pruzhina/urm_phoron(mob/living/user)
+	return "Обьект не реагирует"
+
+/obj/item/artefact/pruzhina/react_to_touched(mob/living/user)
+	if(!ishuman(user))
+		return
+	else
+		var/mob/living/carbon/human/victim = user
+		if(!victim.gloves || victim.gloves.siemens_coefficient != 0)
+			to_chat(user, SPAN_BAD("Вы чувствуете в кисти сильный удар тока."))
+			victim.electoanomaly_act(10, src, victim.get_active_hand())
+
+/obj/item/artefact/pruzhina/react_at_throw(atom/target, range, speed, mob/thrower, spin, datum/callback/callback)
+	create_anomaly_pruzhina(30 SECONDS)
+
+/obj/item/artefact/react_to_emp()
+	angry_activity()
 
 /obj/item/artefact/pruzhina/proc/add_charge(mob/living/user)
 	if(charges >= max_charges)
@@ -93,19 +137,15 @@
 	for(var/obj/item/cell/cells in range(3))
 		cells.give(500)
 
-/obj/item/artefact/pruzhina/proc/create_anomaly_pruzhina(mob/living/user)
+/obj/item/artefact/pruzhina/proc/create_anomaly_pruzhina(time_to_kill)
+	if(!time_to_kill)
+		time_to_kill = 60 SECONDS
 	var/obj/anomaly/electra/three_and_three/spawned = new /obj/anomaly/electra/three_and_three(get_turf(src))
-	spawned.kill_later(60 SECONDS)
-	qdel(src)
+	spawned.kill_later(time_to_kill)
+	delete_artefact()
 
 
 /obj/item/artefact/pruzhina/angry_activity(mob/living/user)
-	/*
-	if(charges = 0)
-		to_chat(user,SPAN_WARNING("Обьект растворяется в ваших руках."))
-		qdel(src)
-	*/
-//else
 	to_chat(user,SPAN_WARNING("Вас озарила вспышка."))
 	var/list/victims = list()
 	var/list/objs_not_used = list()
@@ -116,13 +156,10 @@
 		beam = src.Beam(BeamTarget = get_turf(target), icon_state = "electra_long",icon='mods/anomaly/icons/effects.dmi',time = 0.3 SECONDS)
 
 
-// new /obj/item/cell/pruzhina(get_turf(src))
-
-
 ///батарейка, созданная из артефакта Пружина
 /obj/item/cell/pruzhina
 	name = "powered artefact"
-	desc = "dam."
+	desc = "Collector with something inside, switched in alternative mode."
 	icon = 'mods/anomaly/icons/collectors.dmi'
 	icon_state = "collector_closed"
 	origin_tech =  null
