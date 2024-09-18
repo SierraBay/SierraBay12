@@ -19,9 +19,23 @@
 	if(!LAZYLEN(contents))
 		to_chat(user, SPAN_BAD("No ships close to our ship."))
 		return
+
+
+	//SKILL расчёт и КД
 	var/iniciator_pilot_skill = user.get_skill_value(SKILL_PILOT)
-	throw_off_cooldown = (60 - (iniciator_pilot_skill * 6)) SECONDS
-	if(world.time - last_throw_off  <= 10)
+	if(iniciator_pilot_skill == 1)
+		throw_off_cooldown = 120 SECONDS
+	else if(iniciator_pilot_skill == 2)
+		throw_off_cooldown = 90 SECONDS
+	else if(iniciator_pilot_skill == 3)
+		throw_off_cooldown = 60 SECONDS
+	else if(iniciator_pilot_skill == 4)
+		throw_off_cooldown = 45 SECONDS
+	else if(iniciator_pilot_skill == 5)
+		throw_off_cooldown = 30 SECONDS
+
+
+	if(world.time - last_throw_off  <= throw_off_cooldown)
 		to_chat(user, SPAN_BAD("Ship still not ready for throw-off maneuver"))
 		return
 	last_throw_off = world.time
@@ -35,14 +49,23 @@
 		if(!oponent_pilot) //Если у судна противника нет пилота, попросту некому сопротивляться увороту
 			success = TRUE
 		else
+			var/need_calculate_chance = TRUE
 			var/oponent_skill = oponent_pilot.get_skill_value(SKILL_PILOT)
-			if(oponent_skill < iniciator_pilot_skill)
+			if((iniciator_pilot_skill - oponent_skill) > 2) //Автоуспех
 				success = TRUE
-			else if(prob(iniciator_pilot_skill * 10)) // prob(скилл_пилота * 10)
-				success = TRUE
+				need_calculate_chance = FALSE
+			else if((oponent_skill - iniciator_pilot_skill) > 2) //Автопровал
+				success = FALSE
+				need_calculate_chance = FALSE
+			if(need_calculate_chance)
+				if(prob(50 + (iniciator_pilot_skill - oponent_skill * 25) )) //у нас возможна разница в 1 число, т.е либо 25 процентов успеха, либо 75 процентов успеха, либо 50 процентов успеха если навыки равны
+					success = FALSE
+
+
+
 		if(success)
 			if(oponent_pilot)
-				to_chat(oponent_pilot, SPAN_BAD("Вас сбросили с хвоста!."))
+				to_chat(oponent_pilot, SPAN_BAD("Вас сбросили с хвоста!"))
 			to_chat(user, SPAN_GOOD("Вы успешно сбросили с хвоста судно [picked_shuttle.shuttle]."))
 			linked.burn()
 			var/datum/shuttle/shuttle_datum = SSshuttle.shuttles[picked_shuttle.shuttle]
