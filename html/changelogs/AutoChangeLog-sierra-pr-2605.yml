@@ -1,0 +1,4 @@
+author: Lexanx
+changes:
+  - {bugfix: Пофиксил взрывы}
+delete-after: true

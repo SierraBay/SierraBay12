@@ -18,6 +18,7 @@
 #include "code/labcoat.dm"
 #include "code\ninja-map.dm"
 #include "code\shuttle_feature.dm"
+#include "code\craft_drugs.dm"
 
 
 #endif

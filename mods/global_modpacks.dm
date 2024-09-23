@@ -10,6 +10,7 @@
 #include "ex666_ecosystem/_ex666_ecosystem.dme"
 #include "escpodinf/_escpodinf.dme"
 #include "expanded_culture_descriptor/_expanded_culture_descriptor.dme"
+#include "explosions/_explosions.dme"
 #include "gliding/_gliding.dme"
 #include "machinery/_machinery.dme"
 #include "hairs_ports/_hairs_ports.dme"
@@ -33,7 +34,9 @@
 #include "mechs_by_shegar/_mechs_by_shegar.dme"
 #include "newUI/_newUI.dme"
 #include "anomaly/_anomaly.dme"
+#include "bouquet_by_hakso/_bouquet_by_hakso.dme"
 #include "integrated_circuits/_integrated_circuits.dme"
 #include "playable_away_yacht/_yacht.dme"
+#include "overmap/_overmap.dme"
 
 #include "../packs/sierra-tweaks/_pack.dm"

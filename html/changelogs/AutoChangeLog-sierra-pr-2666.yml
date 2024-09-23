@@ -1,0 +1,5 @@
+author: Shegar
+changes:
+  - {rscadd: Добавил реакцию по крафту самопального стимулятора. Сахар + Литий + 5
+      Кофе}
+delete-after: true
