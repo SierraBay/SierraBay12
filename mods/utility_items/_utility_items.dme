@@ -19,6 +19,7 @@
 #include "code\ninja-map.dm"
 #include "code\shuttle_feature.dm"
 #include "code\craft_drugs.dm"
-
+#include "code/hair_corsair.dm"
+#include "code/ert_maint_helmet.dm"
 
 #endif
