@@ -3373,6 +3373,7 @@
 #include "mods\_master_files\code\modules\projectiles\projectile\bullets.dm"
 #include "mods\_master_files\code\modules\species\species.dm"
 #include "mods\_master_files\code\modules\species\station\adherent.dm"
+#include "mods\_master_files\code\modules\species\station\human_subspecies.dm"
 #include "mods\_master_files\code\modules\species\station\machine.dm"
 #include "mods\_master_files\maps\mapsystem\maps.dm"
 #include "mods\_master_files\maps\sierra\sierra_ranks.dm"
