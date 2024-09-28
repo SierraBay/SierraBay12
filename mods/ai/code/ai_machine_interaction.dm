@@ -1,3 +1,4 @@
+/*
 ///АПЦ ИНТЕРАКТ
 /obj/machinery/power/apc/CanUseTopic(mob/user, datum/topic_state/state)
 	if(user.lying)
@@ -21,7 +22,7 @@
 	if(user.restrained())
 		to_chat(user, SPAN_WARNING("You must have free hands to use [src]."))
 		. = min(., STATUS_UPDATE)
-
+*/
 
 
 ///ИНТЕРАКТ С ШЛЮЗОМ
@@ -44,6 +45,7 @@
 
 	return ..()
 
+/*
 /obj/machinery/CanUseTopic(mob/user)
 	if(MACHINE_IS_BROKEN(src))
 		return STATUS_CLOSE
@@ -67,7 +69,7 @@
 	if(GET_FLAGS(stat, MACHINE_STAT_NOINPUT))
 		return min(..(), STATUS_UPDATE)
 	return ..()
-
+*/
 /obj/machinery/door/airlock/proc/CanAIUseTopic(mob/user)
 	if (operating == DOOR_OPERATING_BROKEN) //emagged
 		to_chat(user, SPAN_WARNING("Unable to interface: Internal error."))
