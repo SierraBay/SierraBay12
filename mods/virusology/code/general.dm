@@ -92,7 +92,7 @@
 	name = "cure fabricator"
 	id = "curefab"
 	req_tech = list(TECH_DATA = 4, TECH_ENGINEERING = 5)
-	build_path = /obj/item/stock_parts/circuitboard/circuit_imprinter
+	build_path = /obj/item/stock_parts/circuitboard/curefab
 	sort_string = "FACAI"
 
 /datum/design/circuit/centrifuge
