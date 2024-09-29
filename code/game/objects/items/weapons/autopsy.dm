@@ -184,8 +184,10 @@
 	return 1
 
 /obj/item/autopsy_scanner/proc/set_target(atom/new_target, user)
+//[SIERRA-ADD]
 	if(target != new_target)
 		target = new_target
+//[/SIERRA-ADD]
 		if(target_name != new_target.name)
 			target_name = new_target.name
 			wdata.Cut()
