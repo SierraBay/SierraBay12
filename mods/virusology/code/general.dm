@@ -228,35 +228,3 @@
 	if(breath && !internal && LAZYLEN(virus2) > 0 && prob(10))
 		for(var/mob/living/carbon/M in view(1,src))
 			src.spread_disease_to(M)
-/datum/sprite_accessory/facial_hair/ipc/scg
-  name = "SCG"
-  icon = "ipc_monitor_pics/icons/ipc_pics.dmi"
-  icon_state = "ipc_scg"
-
-/datum/sprite_accessory/facial_hair/ipc/scg/iccg
-  name = "ICCG"
-  icon_state = "ipc_iccg"
-
-/datum/sprite_accessory/facial_hair/ipc/scg/minion
-  name = "Minion"
-  icon_state = "ipc_minion"
-
-/datum/sprite_accessory/facial_hair/ipc/scg/loading
-  name = "Loading"
-  icon_state = "ipc_loading"
-
-/datum/sprite_accessory/facial_hair/ipc/scg/check
-  name = "Check Mark"
-  icon_state = "ipc_check"
-
-/datum/sprite_accessory/facial_hair/ipc/scg/affir
-  name = "Affirmative"
-  icon_state = "ipc_affir"
-
-/datum/sprite_accessory/facial_hair/ipc/scg/earth
-  name = "Earth"
-  icon_state = "ipc_earth"
-
-/datum/sprite_accessory/facial_hair/ipc/scg/calend
-  name = "Calendar"
-  icon_state = "ipc_calend"
