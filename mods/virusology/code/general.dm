@@ -88,6 +88,12 @@
 	build_path = /obj/machinery/computer/centrifuge
 	origin_tech = list(TECH_DATA = 2, TECH_BIO = 3)
 
+/datum/design/circuit/curefab
+	name = "cure fabricator"
+	id = "curefab"
+	req_tech = list(TECH_DATA = 4, TECH_ENGINEERING = 5)
+	build_path = /obj/item/stock_parts/circuitboard/circuit_imprinter
+	sort_string = "FACAI"
 
 /datum/design/circuit/centrifuge
 	name = "isolation centrifuge console"
