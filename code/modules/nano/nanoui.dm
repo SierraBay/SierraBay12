@@ -165,8 +165,10 @@ nanoui is used to open and update nano browser uis
 	if(isAI(user))
 		if(istype(host, /obj/machinery/door/airlock))
 			var/obj/machinery/door/airlock/door = host
-			if(door.CanAIUseTopic(user))
+			if(door.CanUseTopic(user))
 				new_status = 2
+		else
+			new_status = 2
 	//[SIERRA-ADD]
 	if(new_status == STATUS_CLOSE)
 		close()

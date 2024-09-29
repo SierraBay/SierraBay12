@@ -7,14 +7,14 @@ var/global/list/rnd_server_list = list()
 	var/list/tech_points = list(
 		TECH_MATERIAL = 200,
 		TECH_ENGINEERING = 250,
-		TECH_PHORON = 500,
+		TECH_PHORON = 600,
 		TECH_POWER = 300,
-		TECH_BLUESPACE = 1000,
+		TECH_BLUESPACE = 700,
 		TECH_BIO = 300,
 		TECH_COMBAT = 500,
 		TECH_MAGNET = 350,
 		TECH_DATA = 400,
-		TECH_ESOTERIC = 5000,
+		TECH_ESOTERIC = 1000,
 	)
 
 	var/list/tech_points_rarity = list(
@@ -43,6 +43,7 @@ var/global/list/rnd_server_list = list()
 	var/list/saved_autopsy_weapons = list()
 	var/list/saved_artifacts = list()
 	var/list/saved_small_artefacts = list()
+	var/list/saved_urm_interactions = list()
 	var/list/saved_plants = list()
 	var/list/saved_slimecores = list()
 	var/list/saved_spectrometers = list()
@@ -247,21 +248,20 @@ var/global/list/rnd_server_list = list()
 		points += reward
 		saved_slimecores += core
 
-	for(var/artefacts in I.scanned_small_artefacts)
+	for(var/obj/item/artefact/artefacts in I.scanned_small_artefacts)
 		if(artefacts in saved_small_artefacts)
 			continue
 		var/reward = 1000
-		switch(artefacts)
-			if(/obj/item/artefact/pruzhina)
-				reward = 2000
-			if(/obj/item/artefact/zjar)
-				reward = 3500
-			if(/obj/item/artefact/gravi)
-				reward = 2500
-			if(/obj/item/artefact/svetlyak)
-				reward = 5000
+		reward = artefacts.rnd_points
 		points += reward
 		saved_small_artefacts += artefacts
+	for(var/obj/item/small_artefact_scan_disk/input_disk in I.scanned_urm_interactions)
+		if(input_disk.interaction_id in saved_urm_interactions)
+			continue
+		var/reward = input_disk.rnd_points_reward
+		points += reward
+		saved_urm_interactions += input_disk.interaction_id
+
 
 	I.clear_data()
 	return round(points)
@@ -390,6 +390,7 @@ var/global/list/rnd_server_list = list()
 	var/list/scanned_spectrometers = list()
 	var/list/scanned_xenofauna = list()
 	var/list/scanned_small_artefacts = list()
+	var/list/scanned_urm_interactions = list()
 	var/species
 	var/new_species = FALSE
 	var/potency
@@ -503,6 +504,15 @@ var/global/list/rnd_server_list = list()
 			scanneddata += 1
 		else
 			to_chat(user, "<span class='notice'>[src] already has data about this report</span>")
+
+	else if(istype(O, /obj/item/small_artefact_scan_disk))
+		var/obj/item/small_artefact_scan_disk/disk = O
+		if(!(disk in scanned_urm_interactions))
+			to_chat(user, "<span class='notice'> Collected usefull data from URM disk.</span>")
+			scanned_urm_interactions += disk
+			scanneddata += 1
+		else
+			to_chat(user, "<span class='notice'>[O] has no new usefull data</span>")
 
 	else if(istype(O, /obj/item))
 		var/science_value = experiments.get_object_research_value(O)

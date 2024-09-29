@@ -831,18 +831,10 @@ About the new airlock wires panel:
 		to_chat(user, SPAN_WARNING("Unable to interface: Internal error."))
 		return STATUS_CLOSE
 	if(issilicon(user) && !src.canAIControl())
-		//[SIERRA-ADD] - AI-UPDATE
-		if(ai_control_disabled != 2)
-			if(src.canAIHack(user))
-				src.start_hack(user)
-		if(ai_control_disabled == 2)
-			return ..()
-		//[SIERRA-ADD]
+		if (src.isAllPowerLoss()) //don't really like how this gets checked a second time, but not sure how else to do it.
+			to_chat(user, "<span class='warning'>Unable to interface: Connection timed out.</span>")
 		else
-			if (src.isAllPowerLoss()) //don't really like how this gets checked a second time, but not sure how else to do it.
-				to_chat(user, "<span class='warning'>Unable to interface: Connection timed out.</span>")
-			else
-				to_chat(user, "<span class='warning'>Unable to interface: Connection refused.</span>")
+			to_chat(user, "<span class='warning'>Unable to interface: Connection refused.</span>")
 		return STATUS_CLOSE
 
 	return ..()

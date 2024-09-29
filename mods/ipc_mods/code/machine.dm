@@ -172,7 +172,7 @@
 
 /obj/item/organ/external/head/refresh_action_button()
 	. = ..()
-	if(.)
+	if(. && istype(species, /datum/species/machine))
 		action.button_icon_state = "ipc_rgb"
 		action.button_icon = 'mods/ipc_mods/icons/ipc_icons.dmi'
 		if(action.button) action.button.UpdateIcon()
