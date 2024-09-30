@@ -168,7 +168,8 @@
 	spawn_positions = 1
 	selection_color = "#013d3b"
 	alt_titles = list(
-		"Pharmacist" = /singleton/hierarchy/outfit/job/sierra/crew/medical/doctor/chemist
+		"Pharmacist" = /singleton/hierarchy/outfit/job/sierra/crew/medical/doctor/chemist,
+		"Virologist" = /singleton/hierarchy/outfit/job/sierra/crew/medical/doctor/chemist/virologist
 	)
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/medical/doctor/chemist
 	allowed_branches = list(/datum/mil_branch/employee, /datum/mil_branch/contractor)
@@ -183,7 +184,7 @@
 	)
 	access = list(
 		access_medical, access_maint_tunnels, access_emergency_storage,
-		access_medical_equip, access_chemistry
+		access_medical_equip, access_chemistry, access_virology
 	)
 
 

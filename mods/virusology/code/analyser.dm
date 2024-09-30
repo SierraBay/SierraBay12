@@ -2,6 +2,7 @@
 	name = "disease analyser"
 	icon = 'mods/virusology/icons/virology.dmi'
 	icon_state = "analyser"
+	density = TRUE
 
 	var/scanning = 0
 	var/pause = 0

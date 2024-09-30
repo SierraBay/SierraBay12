@@ -5,7 +5,7 @@
 	var/obj/item/virusdish/dish
 	var/obj/item/reagent_containers/glass/beaker = null
 	var/radiation = 0
-
+	density = TRUE
 	var/on = 0
 	var/power = 0
 

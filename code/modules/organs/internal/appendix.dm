@@ -47,3 +47,19 @@
 				owner.adjustToxLoss(25)
 				removed()
 				qdel(src)
+
+//[SIERRA-ADD]
+/obj/item/organ/internal/appendix/removed(mob/living/user, drop_organ=1, detach=1)
+	if(owner)
+		owner.immunity_norm -= 10
+	..()
+
+/obj/item/organ/internal/appendix/replaced(mob/living/carbon/human/target, obj/item/organ/external/affected)
+	..()
+	if(owner)
+		owner.immunity_norm += 10
+
+/obj/item/organ/internal/appendix/New(mob/living/carbon/holder)
+	..()
+	if(owner)
+		owner.immunity_norm += 10

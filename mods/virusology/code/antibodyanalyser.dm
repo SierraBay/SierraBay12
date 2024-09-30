@@ -3,7 +3,7 @@
 	desc = "An advanced machine that analyses pure antibody samples and stores the structure of them on the ExoNet in exchange for cargo points."
 	icon = 'mods/virusology/icons/virology.dmi'
 	icon_state = "analyser"
-
+	density = TRUE
 
 	var/scanning = 0
 	var/pause = 0
@@ -48,8 +48,6 @@
 					known_antibodies |= unknown_antibodies //Add the new antibodies to list
 				else
 					src.state("\The [src] buzzes, \"Failed to identify any new antibodies.\"")
-				if(!LAZYLEN(given_antibodies))//return if no antibodies
-					return 0
 
 			container.dropInto(loc)
 			container = null

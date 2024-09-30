@@ -12,6 +12,7 @@
 	var/datum/disease2/disease/virus2 = null
 	var/datum/computer_file/data/virus_record/entry = null
 	var/obj/item/reagent_containers/syringe/sample = null
+	density = TRUE
 
 /obj/machinery/disease2/isolator/on_update_icon()
 	if(stat & (MACHINE_STAT_NOPOWER|MACHINE_IS_BROKEN(src)))

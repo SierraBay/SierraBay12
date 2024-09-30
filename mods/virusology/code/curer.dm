@@ -78,5 +78,3 @@
 	data["antibodies"] = B.data["antibodies"]
 	C.reagents.clear_reagents()
 	C.reagents.add_reagent(/datum/reagent/antibodies, 10, data)
-
-	state("\The [src.name] buzzes", "blue")
