@@ -17,5 +17,5 @@
 #include "code\items_devices.dm"
 #include "code\general.dm"
 #include "code\lar_maria.dm"
-
+#include "code\pre_made_viruses.dm"
 #endif

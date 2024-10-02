@@ -2,6 +2,7 @@
 	infectionchance = 90//very aggressive
 	speed = 10
 	spreadtype = "Airborne"
+	affected_species = list(HUMAN_SPECIES,SPECIES_UNATHI,SPECIES_SKRELL,SPECIES_UNATHI,SPECIES_YEOSA,SPECIES_TRITONIAN,SPECIES_NABBER,SPECIES_MONKEY)
 
 /datum/disease2/disease/lar_maria/New()
 	..()
