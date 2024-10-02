@@ -164,8 +164,8 @@
 	economic_power = 5
 	skill_points = 18
 
-	total_positions = 1
-	spawn_positions = 1
+	total_positions = 2 //[было 1]
+	spawn_positions = 2 //[было 1]
 	selection_color = "#013d3b"
 	alt_titles = list(
 		"Pharmacist" = /singleton/hierarchy/outfit/job/sierra/crew/medical/doctor/chemist,

@@ -70,11 +70,21 @@
 
 /obj/machinery/computer/curer/proc/createcure(obj/item/reagent_containers/container)
 	var/obj/item/reagent_containers/C = container
+	var/antibodies
 	C.dropInto(loc)
-
+	var/mob/living/carbon/M = new /mob/living/carbon
 	var/datum/reagent/blood/B = locate() in container.reagents.reagent_list
+	var/data
+	if(B.data && B.data["virus2"])
+		var/list/vlist = B.data["virus2"]
+		if(LAZYLEN(vlist))
+			for(var/ID in vlist)
+				var/datum/disease2/disease/V = vlist[ID]
+				data = V.getcopy()
 
-	var/list/data = list()
-	data["antibodies"] = B.data["antibodies"]
+	for(var/ID in data)
+		var/datum/disease2/disease/V = data[ID]
+		antibodies |= V.antigen
 	C.reagents.clear_reagents()
-	C.reagents.add_reagent(/datum/reagent/antibodies, 10, data)
+	C.reagents.add_reagent(/datum/reagent/antibodies, 10, antibodies)
+	qdel(M)

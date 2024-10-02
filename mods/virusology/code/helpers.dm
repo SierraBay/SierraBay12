@@ -5,7 +5,13 @@
 	if(istype(disease) && operator_skill <= HAS_PERK)
 		for(var/mob/living/carbon/victim in range(dist, src))
 			if(prob(base_chance))
-				infect_virus2(victim, disease)
+				if(victim.skill_check(SKILL_VIROLOGY, HAS_PERK))
+					if(prob(50))
+						infect_virus2(victim, disease)
+					else
+						return
+				else
+					infect_virus2(victim, disease)
 
 //Returns 1 if mob can be infected, 0 otherwise.
 /proc/infection_chance(mob/living/carbon/M, vector = "Airborne")
