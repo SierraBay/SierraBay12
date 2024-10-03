@@ -28,13 +28,16 @@
 /datum/disease2/disease/spider/New()
 	..()
 	var/datum/disease2/effect/headache/E1 = new()
+	E1.chance = 2
 	E1.stage = 1
 	effects += E1
 	var/datum/disease2/effect/blind/E2 = new()
+	E2.chance = 2
 	E2.stage = 2
 	effects += E2
 	var/datum/disease2/effect/confusion/E3 = new()
 	E3.stage = 3
+	E3.chance = 2
 	effects += E3
 
 
@@ -77,10 +80,13 @@
 	..()
 	var/datum/disease2/effect/stomach/E1 = new()
 	E1.stage = 1
+	E1.chance = 2
 	effects += E1
 	var/datum/disease2/effect/hungry/E2 = new()
 	E2.stage = 2
+	E1.chance = 2
 	effects += E2
 	var/datum/disease2/effect/mutation/E3 = new()
 	E3.stage = 3
+	E1.chance = 2
 	effects += E3

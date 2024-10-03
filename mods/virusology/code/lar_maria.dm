@@ -8,15 +8,19 @@
 	..()
 	var/datum/disease2/effect/sneeze/E1 = new()
 	E1.stage = 1
+	E1.chance = 3
 	effects += E1
 	var/datum/disease2/effect/stimulant/E2 = new()
 	E2.stage = 2
+	E2.chance = 3
 	effects += E2
 	var/datum/disease2/effect/stimulant/E3 = new()
 	E3.stage = 3
+	E3.chance = 3
 	effects += E3
 	var/datum/disease2/effect/rage/E4 = new()
 	E4.stage = 4
+	E4.chance = 3
 	effects += E4
 
 /datum/disease2/effect/rage //custom effect, fills PC with uncontrollable rage

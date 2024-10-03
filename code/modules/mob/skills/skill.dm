@@ -340,9 +340,9 @@ GLOBAL_LIST_EMPTY(skills)
 /singleton/hierarchy/skill/medical/chemistry/virology
 	ID = "virology"
 	name = "Virology"
-	desc = "Experience with mixing chemicals, and an understanding of what the effect will be. This doesn't cover an understanding of the effect of chemicals on the human body, as such the medical skill is also required for medical chemists."
-	levels = list( "Unskilled"			= "You know that chemists work with chemicals; you know that they can make medicine or poison or useful chemicals. You probably know what an element is and have a vague idea of what a chemical reaction is from some chemistry class in your high school days.",
-						"Trained"				= "You can make basic chemicals or medication--things like space cleaner or anti-toxin. You have some training in safety and you won't blow up the lab... probably.<br>- You can safely use the industrial grinder but lose some ingredients. Its amount decreases with skill level.")
+	desc = "Virology requires a specialist to have not only a deep knowledge of viruses, but also the ability to work with them, similar to how a chemist works with chemicals. This means not only understanding chemical reactions and their effects, but also knowing how these reactions will affect the human body. Thus, a virologist must have not only knowledge of virology, but also medical skills. An analogy can be drawn with a medical chemist, who must have experience working with chemicals and understand what effect they will have in order to use them safely in medicine."
+	levels = list( "Unskilled"			= "You know that virologist work with viruses; you know that they can be very dangerous. You probably know basic defence against viruses..",
+						"Trained"				= "You can engeener viruses. You have some training in safety and you won't infect yourself while work... probably. You can almost safely use the virologist equipment.")
 	prerequisites = list(SKILL_CHEMISTRY = SKILL_TRAINED)
 	default_max = SKILL_BASIC
 	difficulty = SKILL_AVERAGE
