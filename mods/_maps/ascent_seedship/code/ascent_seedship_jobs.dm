@@ -142,7 +142,7 @@
 	total_positions = 3
 	supervisors = "your Gyne"
 	info = "You are an Alate of an independent Ascent vessel. Your Gyne has directed you to this remote sector full of crawling primitives. Follow her instructions and bring prosperity to your nest-lineage."
-	outfit_type = /singleton/hierarchy/outfit/job/ascent/tech
+	outfit_type = /singleton/hierarchy/outfit/job/ascent/attendant
 	whitelisted_species = list(SPECIES_MANTID_ALATE)
 	loadout_allowed = FALSE
 	is_semi_antagonist = TRUE
@@ -172,7 +172,7 @@
 	total_positions = 3
 	info = "You are a Monarch Serpentid Worker serving as an attendant to your Queen on this vessel. Serve her however she requires."
 	whitelisted_species = list(SPECIES_MONARCH_WORKER)
-	outfit_type = /singleton/hierarchy/outfit/job/ascent/soldier
+	outfit_type = /singleton/hierarchy/outfit/job/ascent/worker
 	min_skill = list(SKILL_EVA = SKILL_TRAINED,
 					SKILL_HAULING = SKILL_TRAINED,
 					SKILL_COMBAT = SKILL_TRAINED,
@@ -183,7 +183,7 @@
 /datum/job/submap/ascent_inf/monarch_queen
 	title = "Serpentid Queen"
 	supervisors = "другими Королевами и Гииной"
-	total_positions = 2
+	total_positions = 1
 	info = "You are a Monarch Serpentid Queen living on an independant Ascent vessel. Assist the Gyne in her duties and tend to your Workers."
 	whitelisted_species = list(SPECIES_MONARCH_QUEEN)
 	min_skill = list(SKILL_EVA = SKILL_TRAINED,

@@ -460,6 +460,7 @@
 "Nc" = (/obj/machinery/atmospherics/portables_connector{dir = 1},/obj/machinery/portable_atmospherics/canister/oxygen,/turf/simulated/floor/ascent,/area/ship/ascent_inf/hydroponics_starboard)
 "Nl" = (/obj/machinery/door/airlock/external/bolted/ascent{frequency = 1331; id_tag = "ascent_inf_port_dock_inner"},/turf/simulated/floor/ascent,/area/ship/ascent_inf/fore_port_prow)
 "Nm" = (/obj/machinery/atmospherics/portables_connector{dir = 1},/obj/machinery/portable_atmospherics/canister/methyl_bromide,/turf/simulated/floor/ascent,/area/ship/ascent_inf/engineering)
+"Nx" = (/obj/structure/table/rack/ascent,/obj/item/gun/energy/particle,/obj/item/gun/energy/particle,/obj/item/rig/mantid,/obj/item/rig/mantid/nabber,/turf/simulated/floor/ascent,/area/ship/ascent_inf/bridge)
 "Nz" = (/obj/structure/cable/cyan{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden{dir = 4},/obj/machinery/light/ascent,/turf/simulated/floor/ascent,/area/ship/ascent_inf/bridge)
 "ND" = (/obj/machinery/computer/ship/sensors/ascent{dir = 1},/turf/simulated/floor/ascent/tiled,/area/ship/ascent_inf/shuttle_port)
 "NF" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/structure/bed/chair/padded/purple/ascent{dir = 4},/turf/simulated/floor/ascent,/area/ship/ascent_inf/shuttle_port)
@@ -548,7 +549,7 @@
 "WN" = (/obj/machinery/alarm/ascent{dir = 1; pixel_y = -24},/obj/structure/table/steel_reinforced/ascent,/turf/simulated/floor/ascent,/area/ship/ascent_inf/habitation)
 "WP" = (/obj/machinery/atmospherics/pipe/simple/hidden{dir = 10},/obj/machinery/light/ascent{dir = 1},/turf/simulated/floor/ascent,/area/ship/ascent_inf/hydroponics_port)
 "WV" = (/obj/machinery/door/airlock/external/bolted/ascent{frequency = 1331; id_tag = "ascent_inf_starboard_outer"},/obj/machinery/atmospherics/pipe/manifold/hidden/black,/obj/machinery/access_button{command = "cycle_exterior"; frequency = 1331; master_tag = "ascent_inf_starboard"; pixel_x = -24; pixel_y = 0},/turf/simulated/floor/ascent,/area/ship/ascent_inf/shuttle_starboard)
-"Xb" = (/obj/structure/table/rack/ascent,/obj/item/rig/mantid/gyne,/obj/item/gun/energy/particle/small,/turf/simulated/floor/ascent,/area/ship/ascent_inf/bridge)
+"Xb" = (/obj/structure/table/rack/ascent,/obj/item/gun/energy/particle,/obj/item/rig/mantid/gyne,/turf/simulated/floor/ascent,/area/ship/ascent_inf/bridge)
 "Xc" = (/obj/structure/cable/cyan{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden{dir = 4},/obj/machinery/door/airlock/ascent{dir = 4},/turf/simulated/floor/ascent,/area/ship/ascent_inf/wing_port)
 "Xf" = (/turf/simulated/wall/r_wall/ascent,/area/ship/ascent_inf/habitation)
 "Xl" = (/obj/wallframe_spawn/reinforced_phoron/titanium/ascent,/turf/simulated/floor/ascent,/area/ship/ascent_inf/wing_port)
@@ -585,7 +586,7 @@
 "ZS" = (/obj/machinery/atmospherics/pipe/simple/hidden{dir = 10},/turf/simulated/floor/ascent,/area/ship/ascent_inf/hydroponics_starboard)
 "ZU" = (/obj/machinery/conveyor{dir = 1; id = "ascent"},/turf/simulated/floor/ascent/airless,/area/ship/ascent_inf/fore_starboard_prow)
 "ZW" = (/obj/machinery/atmospherics/portables_connector,/obj/machinery/portable_atmospherics/canister/methyl_bromide,/turf/simulated/floor/ascent,/area/ship/ascent_inf/hydroponics_starboard)
-"ZX" = (/obj/structure/table/rack/ascent,/obj/item/gun/energy/particle,/obj/item/rig/mantid,/turf/simulated/floor/ascent,/area/ship/ascent_inf/bridge)
+"ZX" = (/obj/structure/table/rack/ascent,/obj/item/rig/mantid/nabber/seed,/obj/item/rig/mantid/seed,/obj/item/gun/energy/particle/small,/obj/item/gun/energy/particle/small,/turf/simulated/floor/ascent,/area/ship/ascent_inf/bridge)
 
 (1,1,1) = {"
 SXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSX
@@ -651,7 +652,7 @@ SXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXCSZzZzZzJeZzZzZzZzZzZzwzkGahxubY
 SXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXndndndndndndndndndbRbRndndndPSwUsAbYrOrOrOrOXJqAhnCNrOrOXJrOrOPSPSPSPSPSsocVcVcVUEMslkMsUEcVcVcVJRHCCJzihOCrIEzFInCeGpxvjKwPNcNcNcAUbPMJMJCZSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSX
 SXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXPSPSPSzjDvrOrOrOPSRaxytDxYPSXflYXfXfFeaxFesosocVSppqCppGlkpGCppqSpcVpPziCJziSaemACACFdFdFdFdACACMJMJMJMJMJMJMJMJCZSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSX
 SXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXlWtvxpoAKwsAQNPSPSlgPSPSPSaJQIKCcBsosososocVcVYtAOljpGlkpGYtAOljcVcVIzCJlxemACznznzneQfNYvwTACACYSSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSX
-SXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXQfQfPSPSPSPSPSlgPSwJGiwJXfsoHjVeVeZuVeVedPxRcVpGpGpGpGpGlkpGpGpGpGZXcVemRHememACVykJnBLLLLLLLLPmMrACYSSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSX
+SXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXQfQfPSPSPSPSPSlgPSwJGiwJXfsoHjVeVeZuVeVedPxRcVpGpGpGpGpGlkpGpGpGpGNxcVemRHememACVykJnBLLLLLLLLPmMrACYSSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSX
 SXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXQfLjAVIWQfwLSjGiWwDFGiOPXfsotTsoLuVqLusokBVeGgAsNzZEaIpGlkKYsxpqpGxcPYkSZmmGCMACKTKflQpjYTEZEZtNKfzrACYSSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSX
 SXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXXTMfAnAnLFugbxlXrHrHhDrHenVeweVzDjDjDjrnsosocVcVcVxcGOZEikVBxcVgpGXbPYxxLYcgcgbllIsHmbtRFiLLgKhAKfKfACBBSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSX
 SXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXQfgwdUgwQfBFsuGiksDFGiOPXfsotTsohqlehqsoHjVeGgZEJlZEkepGlkBbSylrpGxcPYcHZmZlEOACKTKfIoivfQJWJWSHKfzrACYSSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSX

@@ -11,26 +11,12 @@
 
 /singleton/hierarchy/outfit/job/ascent/attendant
 	name = "Ascent - Attendant"
-	back = /obj/item/rig/mantid
-
-/singleton/hierarchy/outfit/job/ascent/pilot
-	name = "Ascent - Pilot"
-	back = /obj/item/rig/mantid
-	uniform =  /obj/item/clothing/under/harness
-	belt = /obj/item/clothing/suit/storage/ascent
-
-/singleton/hierarchy/outfit/job/ascent/tech
-	name = "Ascent - Technician"
 	belt = /obj/item/clothing/suit/storage/ascent
 
 /singleton/hierarchy/outfit/job/ascent/worker
 	name = "Ascent - Serpentid Adjunct"
 	uniform =  /obj/item/clothing/under/harness
 	belt = /obj/item/clothing/suit/storage/ascent
-
-/singleton/hierarchy/outfit/job/ascent/soldier
-	name = "Ascent - Serpentid Soldier"
-	uniform = /obj/item/clothing/under/harness
 
 /singleton/hierarchy/outfit/job/ascent/queen
 	name = "Ascent - Serpentid Queen"
