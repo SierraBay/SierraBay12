@@ -8,11 +8,11 @@
 	new frontiers and new planets to exploit. They were largely not expecting to have entire expeditions lost \
 	amid reports of highly advanced, astonishingly violent mantid-cephlapodean sentients with particle cannons."
 
-	icobase =                 'mods/ascent/icons/alate/body.dmi'
-	deform =                  'mods/ascent/icons/alate/body.dmi'
-	damage_overlays =         'mods/ascent/icons/alate/damage_mask.dmi'
-	blood_mask =              'mods/ascent/icons/alate/blood_mask.dmi'
-	organs_icon =             'mods/ascent/icons/organs.dmi'
+	icobase =                 'mods/ascent/icons/mob/alate/body.dmi'
+	deform =                  'mods/ascent/icons/mob/alate/body.dmi'
+	damage_overlays =         'mods/ascent/icons/mob/alate/damage_mask.dmi'
+	blood_mask =              'mods/ascent/icons/mob/alate/blood_mask.dmi'
+	organs_icon =             'mods/ascent/icons/items/organs.dmi'
 
 	blood_color =             "#660066"
 	flesh_color =             "#009999"
@@ -21,12 +21,12 @@
 
 	speech_chance = 100
 	speech_sounds = list(
-		'sound/voice/ascent1.ogg',
-		'sound/voice/ascent2.ogg',
-		'sound/voice/ascent3.ogg',
-		'sound/voice/ascent4.ogg',
-		'sound/voice/ascent5.ogg',
-		'sound/voice/ascent6.ogg'
+		'mods/ascent/sound/ascent1.ogg',
+		'mods/ascent/sound/ascent2.ogg',
+		'mods/ascent/sound/ascent3.ogg',
+		'mods/ascent/sound/ascent4.ogg',
+		'mods/ascent/sound/ascent5.ogg',
+		'mods/ascent/sound/ascent6.ogg'
 	)
 
 	siemens_coefficient =   0.2 // Crystalline body.
@@ -50,7 +50,7 @@
 
 	appearance_flags =        0
 	species_flags =           SPECIES_FLAG_NO_SCAN  | SPECIES_FLAG_NO_SLIP        | SPECIES_FLAG_NO_MINOR_CUT
-	spawn_flags =             SPECIES_IS_RESTRICTED | SPECIES_NO_FBP_CONSTRUCTION | SPECIES_NO_FBP_CHARGEN | SPECIES_IS_WHITELISTED
+	spawn_flags =             SPECIES_CAN_JOIN | SPECIES_NO_FBP_CONSTRUCTION | SPECIES_NO_FBP_CHARGEN | SPECIES_IS_WHITELISTED
 
 	heat_discomfort_strings = list(
 		"You feel brittle and overheated.",
@@ -143,11 +143,11 @@
 	name_plural =             "Kharmaan Gynes"
 
 	genders =                 list(FEMALE)
-	icobase =                 'mods/ascent/icons/gyne/body.dmi'
-	deform =                  'mods/ascent/icons/gyne/body.dmi'
-	icon_template =           'mods/ascent/icons/gyne/template.dmi'
-	damage_overlays =         'mods/ascent/icons/gyne/damage_mask.dmi'
-	blood_mask =              'mods/ascent/icons/gyne/blood_mask.dmi'
+	icobase =                 'mods/ascent/icons/mob/gyne/body.dmi'
+	deform =                  'mods/ascent/icons/mob/gyne/body.dmi'
+	icon_template =           'mods/ascent/icons/mob/gyne/template.dmi'
+	damage_overlays =         'mods/ascent/icons/mob/gyne/damage_mask.dmi'
+	blood_mask =              'mods/ascent/icons/mob/gyne/blood_mask.dmi'
 
 	gluttonous =              3
 	slowdown =                2
@@ -157,7 +157,7 @@
 	blood_volume =         1200
 	spawns_with_stack =       0
 
-	spawn_flags =             SPECIES_IS_RESTRICTED | SPECIES_NO_FBP_CONSTRUCTION | SPECIES_NO_FBP_CHARGEN | SPECIES_IS_WHITELISTED//INF
+	spawn_flags =             SPECIES_CAN_JOIN | SPECIES_NO_FBP_CONSTRUCTION | SPECIES_NO_FBP_CHARGEN | SPECIES_IS_WHITELISTED//INF
 
 	pixel_offset_x =        -4
 	antaghud_offset_y =      18
@@ -234,12 +234,12 @@
 	years ago and now allies and peers within the Ascent."
 	icobase = 'icons/mob/human_races/species/nabber/body_msw.dmi'
 	deform = 'icons/mob/human_races/species/nabber/body_msw.dmi'
-	spawn_flags = SPECIES_IS_RESTRICTED | SPECIES_NO_FBP_CONSTRUCTION | SPECIES_NO_FBP_CHARGEN | SPECIES_IS_WHITELISTED
+	spawn_flags = SPECIES_CAN_JOIN | SPECIES_NO_FBP_CONSTRUCTION | SPECIES_NO_FBP_CHARGEN | SPECIES_IS_WHITELISTED
 	appearance_flags = 0
 	base_skin_colours = null
 	has_organ = list(
 		BP_BRAIN =             /obj/item/organ/internal/brain/insectoid/nabber,
-		BP_EYES =              /obj/item/organ/internal/eyes/insectoid/nabber,
+		BP_EYES =              /obj/item/organ/internal/eyes/insectoid/nabber/ascent,
 		BP_TRACH =             /obj/item/organ/internal/lungs/insectoid/nabber,
 		BP_HEART =             /obj/item/organ/internal/heart/open,
 		BP_LIVER =             /obj/item/organ/internal/liver/insectoid/nabber,
@@ -291,7 +291,7 @@
 
 	appearance_flags = 0
 	base_skin_colours = null
-	spawn_flags = SPECIES_IS_RESTRICTED | SPECIES_NO_FBP_CONSTRUCTION | SPECIES_NO_FBP_CHARGEN | SPECIES_IS_WHITELISTED
+	spawn_flags = SPECIES_CAN_JOIN | SPECIES_NO_FBP_CONSTRUCTION | SPECIES_NO_FBP_CHARGEN | SPECIES_IS_WHITELISTED
 
 	has_organ = list(
 		BP_BRAIN =             /obj/item/organ/internal/brain/insectoid/nabber,

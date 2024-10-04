@@ -18,7 +18,6 @@
 	back = /obj/item/rig/mantid
 	uniform =  /obj/item/clothing/under/harness
 	belt = /obj/item/clothing/suit/storage/ascent
-	shoes = null
 
 /singleton/hierarchy/outfit/job/ascent/tech
 	name = "Ascent - Technician"
@@ -28,39 +27,36 @@
 	name = "Ascent - Serpentid Adjunct"
 	uniform =  /obj/item/clothing/under/harness
 	belt = /obj/item/clothing/suit/storage/ascent
-	shoes = null
 
 /singleton/hierarchy/outfit/job/ascent/soldier
 	name = "Ascent - Serpentid Soldier"
 	uniform = /obj/item/clothing/under/harness
-	shoes = null
 
 /singleton/hierarchy/outfit/job/ascent/queen
 	name = "Ascent - Serpentid Queen"
 	uniform = /obj/item/clothing/under/harness
-	shoes = null
 
 /obj/item/clothing/mask/gas/ascent
 	name = "mantid facemask"
 	desc = "An alien facemask with chunky gas filters and a breathing valve."
-	icon = 'mods/ascent/icons/clothing/obj_mask.dmi'
+	icon = 'mods/ascent/icons/obj/clothing/obj_mask.dmi'
 	filter_water = TRUE
 	icon_state = "ascent_mask"
 	item_state = "ascent_mask"
 	sprite_sheets = list(
 		SPECIES_NABBER =       'icons/mob/species/nabber/onmob_mask_gas.dmi',
-		SPECIES_MANTID_GYNE =  'mods/ascent/icons/gyne/onmob/onmob_mask_gyne.dmi',
-		SPECIES_MANTID_ALATE = 'mods/ascent/icons/alate/onmob/onmob_mask_alate.dmi'
+		SPECIES_MANTID_GYNE =  'mods/ascent/icons/mob/gyne/onmob/onmob_mask_gyne.dmi',
+		SPECIES_MANTID_ALATE = 'mods/ascent/icons/mob/alate/onmob/onmob_mask_alate.dmi'
 	)
 	species_restricted = list(SPECIES_MANTID_ALATE, SPECIES_MANTID_GYNE)
-	filtered_gases = list(GAS_PHORON,GAS_N2O,GAS_CHLORINE,GAS_AMMONIA,GAS_CO,GAS_METHANE)
+	filtered_gases = list(GAS_PHORON, GAS_N2O, GAS_CHLORINE, GAS_AMMONIA, GAS_CO, GAS_METHANE)
 	flags_inv = 0
 	tint = 0 //INF, WAS NOTHING (0)
 
 /obj/item/clothing/mask/gas/ascent/monarch
 	name = "serpentid facemask"
 	desc = "An alien facemask with chunky gas filters and a breathing valve."
-	filtered_gases = list(GAS_PHORON,GAS_N2O,GAS_CHLORINE,GAS_AMMONIA,GAS_CO,GAS_METHYL_BROMIDE,GAS_METHANE)
+	filtered_gases = list(GAS_PHORON, GAS_N2O, GAS_CHLORINE, GAS_AMMONIA, GAS_CO, GAS_METHYL_BROMIDE, GAS_METHANE)
 	species_restricted = list(SPECIES_NABBER, SPECIES_MONARCH_QUEEN)
 
 /obj/item/clothing/mask/gas/ascent_captive
@@ -75,26 +71,26 @@
 /obj/item/clothing/shoes/magboots/ascent
 	name = "mantid mag-claws"
 	desc = "A set of powerful gripping claws."
-	icon = 'mods/ascent/icons/ascent_doodads.dmi'
+	icon = 'mods/ascent/icons/misc/ascent_doodads.dmi'
 	icon_state = "ascent_boots0"
 	icon_base = "ascent_boots"
 	species_restricted = list(SPECIES_MANTID_ALATE, SPECIES_MANTID_GYNE)
 	sprite_sheets = list(
-		SPECIES_MANTID_GYNE =  'mods/ascent/icons/gyne/onmob/onmob_shoes_gyne.dmi',
-		SPECIES_MANTID_ALATE = 'mods/ascent/icons/alate/onmob/onmob_shoes_alate.dmi'
+		SPECIES_MANTID_GYNE =  'mods/ascent/icons/mob/gyne/onmob/onmob_shoes_gyne.dmi',
+		SPECIES_MANTID_ALATE = 'mods/ascent/icons/mob/alate/onmob/onmob_shoes_alate.dmi'
 	)
 
 /obj/item/clothing/under/ascent
 	name = "mantid undersuit"
 	desc = "A ribbed, spongy undersuit of some sort. It has a big sleeve for a tail, so it probably isn't for humans."
 	species_restricted = list(SPECIES_MANTID_ALATE, SPECIES_MANTID_GYNE)
-	icon = 'mods/ascent/icons/clothing/obj_under.dmi'
+	icon = 'mods/ascent/icons/obj/clothing/obj_under.dmi'
 	icon_state = "ascent"
 	worn_state = "ascent"
 	color = COLOR_DARK_GUNMETAL
 	sprite_sheets = list(
-		SPECIES_MANTID_GYNE =  'mods/ascent/icons/gyne/onmob/onmob_under_gyne.dmi',
-		SPECIES_MANTID_ALATE = 'mods/ascent/icons/alate/onmob/onmob_under_alate.dmi'
+		SPECIES_MANTID_GYNE =  'mods/ascent/icons/mob/gyne/onmob/onmob_under_gyne.dmi',
+		SPECIES_MANTID_ALATE = 'mods/ascent/icons/mob/alate/onmob/onmob_under_alate.dmi'
 	)
 
 /obj/item/clothing/suit/storage/ascent
@@ -105,10 +101,10 @@
 	body_parts_covered = 0
 	slot_flags = SLOT_OCLOTHING | SLOT_BELT
 	sprite_sheets = list(
-		SPECIES_MANTID_GYNE =    'mods/ascent/icons/gyne/onmob/onmob_belt_gyne.dmi',
-		SPECIES_MANTID_ALATE =   'mods/ascent/icons/alate/onmob/onmob_belt_alate.dmi',
+		SPECIES_MANTID_GYNE =    'mods/ascent/icons/mob/gyne/onmob/onmob_belt_gyne.dmi',
+		SPECIES_MANTID_ALATE =   'mods/ascent/icons/mob/alate/onmob/onmob_belt_alate.dmi',
 		SPECIES_NABBER =         'icons/mob/species/nabber/onmob_belt_gas.dmi',
-		SPECIES_MONARCH_QUEEN = 'icons/mob/species/nabber/msq/onmob_belt_msq.dmi'
+		SPECIES_MONARCH_QUEEN =  'icons/mob/species/nabber/msq/onmob_belt_msq.dmi'
 	)
 
 	allowed = list(
