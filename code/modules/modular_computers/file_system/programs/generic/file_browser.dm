@@ -86,7 +86,12 @@
 		var/datum/computer_file/data/F = computer.get_file(open_file)
 //[SIERRA-EDIT]
 		var/datum/computer_file/binary/photo/P = computer.get_file(open_file)
-		if(istype(F))
+		var/datum/computer_file/data/bodyscan/B = computer.get_file(open_file)
+		if(istype(B))
+			if(!computer.print_bodyscan(B.generate_print_data(),B.filename,B.papertype, B.metadata))
+				error = "Hardware error: Unable to print the file."
+				return
+		else if(istype(F))
 			if(!computer.print_paper(F.generate_file_data(),F.filename,F.papertype, F.metadata))
 				error = "Hardware error: Unable to print the file."
 				return
@@ -115,7 +120,11 @@
 			var/datum/computer_file/data/F = PRG.computer.get_file(PRG.open_file)
 			//[SIERRA-ADD] - MODPACK RND
 			var/datum/computer_file/binary/photo/P = PRG.computer.get_file(PRG.open_file)
-			if(istype(P))
+			var/datum/computer_file/data/bodyscan/B = PRG.computer.get_file(PRG.open_file)
+			if(istype(B))
+				data["filename"] = "[B.filename].[B.filetype]"
+				data["filedata"] = B.generate_file_data(user, B.stored_data)
+			else if(istype(P))
 				data["filename"] = "[P.filename].[P.filetype]"
 				data["photodata"] = P.generate_photo_data(user, P.photo)
 			//[/SIERRA-ADD] - MODPACK RND
