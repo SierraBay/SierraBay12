@@ -2,26 +2,33 @@
 	infectionchance = 90//very aggressive
 	speed = 10
 	spreadtype = "Airborne"
+
 	affected_species = list(HUMAN_SPECIES,SPECIES_UNATHI,SPECIES_SKRELL,SPECIES_UNATHI,SPECIES_YEOSA,SPECIES_TRITONIAN,SPECIES_NABBER,SPECIES_MONKEY)
 
 /datum/disease2/disease/lar_maria/New()
 	..()
+	antigen = list(pick(ALL_ANTIGENS))
+	antigen |= pick(ALL_ANTIGENS)
 	var/datum/disease2/effect/sneeze/E1 = new()
 	E1.stage = 1
 	E1.chance = 3
 	effects += E1
+	E1.multiplier = rand(1,E1.multiplier_max)
 	var/datum/disease2/effect/stimulant/E2 = new()
 	E2.stage = 2
 	E2.chance = 3
 	effects += E2
+	E2.multiplier = rand(1,E2.multiplier_max)
 	var/datum/disease2/effect/stimulant/E3 = new()
 	E3.stage = 3
 	E3.chance = 3
 	effects += E3
+	E3.multiplier = rand(1,E3.multiplier_max)
 	var/datum/disease2/effect/rage/E4 = new()
 	E4.stage = 4
 	E4.chance = 3
 	effects += E4
+	E4.multiplier = rand(1,E4.multiplier_max)
 
 /datum/disease2/effect/rage //custom effect, fills PC with uncontrollable rage
 	name = "Rampage Syndrome"

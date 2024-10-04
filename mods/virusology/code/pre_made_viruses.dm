@@ -8,15 +8,20 @@
 
 /datum/disease2/disease/cold/New()
 	..()
+	antigen = list(pick(ALL_ANTIGENS))
+	antigen |= pick(ALL_ANTIGENS)
 	var/datum/disease2/effect/sneeze/E1 = new()
 	E1.stage = 1
 	effects += E1
+	E1.multiplier = rand(1,E1.multiplier_max)
 	var/datum/disease2/effect/fridge/E2 = new()
 	E2.stage = 2
 	effects += E2
+	E2.multiplier = rand(1,E2.multiplier_max)
 	var/datum/disease2/effect/shakey/E3 = new()
 	E3.stage = 3
 	effects += E3
+	E3.multiplier = rand(1,E3.multiplier_max)
 
 /datum/disease2/disease/spider
 	infectionchance = 60
@@ -27,18 +32,23 @@
 
 /datum/disease2/disease/spider/New()
 	..()
+	antigen = list(pick(ALL_ANTIGENS))
+	antigen |= pick(ALL_ANTIGENS)
 	var/datum/disease2/effect/headache/E1 = new()
 	E1.chance = 2
 	E1.stage = 1
 	effects += E1
+	E1.multiplier = rand(1,E1.multiplier_max)
 	var/datum/disease2/effect/blind/E2 = new()
 	E2.chance = 2
 	E2.stage = 2
 	effects += E2
+	E2.multiplier = rand(1,E2.multiplier_max)
 	var/datum/disease2/effect/confusion/E3 = new()
 	E3.stage = 3
 	E3.chance = 2
 	effects += E3
+	E3.multiplier = rand(1,E3.multiplier_max)
 
 
 /mob/living/simple_animal/hostile/giant_spider
@@ -78,15 +88,20 @@
 
 /datum/disease2/disease/livingmeat/New()
 	..()
+	antigen = list(pick(ALL_ANTIGENS))
+	antigen |= pick(ALL_ANTIGENS)
 	var/datum/disease2/effect/stomach/E1 = new()
 	E1.stage = 1
 	E1.chance = 2
 	effects += E1
+	E1.multiplier = rand(1,E1.multiplier_max)
 	var/datum/disease2/effect/hungry/E2 = new()
 	E2.stage = 2
 	E1.chance = 2
 	effects += E2
+	E2.multiplier = rand(1,E2.multiplier_max)
 	var/datum/disease2/effect/mutation/E3 = new()
 	E3.stage = 3
 	E1.chance = 2
 	effects += E3
+	E3.multiplier = rand(1,E3.multiplier_max)
