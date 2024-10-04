@@ -61,7 +61,7 @@
 /mob/living/simple_animal/hostile/giant_spider/apply_melee_effects(mob/living/carbon/human/M)
 	. = ..()
 	if(Adjacent(M))//if it's human who can be infected standing nearby
-		if (prob(10))
+		if (prob(3))
 			infect_virus2(M, spider, 1)
 
 
@@ -83,7 +83,7 @@
 /mob/living/simple_animal/hostile/meatstation/apply_melee_effects(mob/living/carbon/human/M)
 	. = ..()
 	if(Adjacent(M))//if it's human who can be infected standing nearby
-		if (prob(25))
+		if (prob(10))
 			infect_virus2(M, livingmeat, 1)
 
 /datum/disease2/disease/livingmeat/New()
