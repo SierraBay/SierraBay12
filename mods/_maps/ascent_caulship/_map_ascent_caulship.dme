@@ -2,11 +2,6 @@
 #define MODPACK_MAP_ASCENT_CAULSHIP
 
 #include "_map_ascent_caulship.dm"
-
 #include "code/ascent_caulship.dm"
-#include "code/ascent_caulship_areas.dm"
-#include "code/ascent_caulship_props.dm"
-#include "code/ascent_caulship_jobs.dm"
-#include "code/ascent_caulship_shuttles.dm"
 
 #endif

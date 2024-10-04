@@ -2,10 +2,6 @@
 #define MODPACK_MAP_ASCENT_SEEDSHIP
 
 #include "_map_ascent_seedship.dm"
-
 #include "code/ascent_seedship.dm"
-#include "code/ascent_seedship_areas.dm"
-#include "code/ascent_seedship_jobs.dm"
-#include "code/ascent_seedship_shuttles.dm"
 
 #endif
