@@ -99,7 +99,7 @@ var/global/list/all_objectives = list()
 /datum/objective/anti_revolution/demote/find_target()
 	..()
 	if(target && target.current)
-		explanation_text = "[target.current.real_name], [target.assigned_role] был классифицирован как вредный для выполнения целей [GLOB_ using_map.company_name]. Понизьте его до ассистента"
+		explanation_text = "[target.current.real_name], [target.assigned_role] был классифицирован как вредный для выполнения целей [GLOB.using_map.company_name]. Понизьте его до низшей должности"
 	else
 		explanation_text = "Free Objective"
 	return target
@@ -107,7 +107,7 @@ var/global/list/all_objectives = list()
 /datum/objective/anti_revolution/demote/find_target_by_role(role, role_type = 0)
 	..(role, role_type)
 	if(target && target.current)
-		explanation_text = "[target.current.real_name], [!role_type ? target.assigned_role : target.special_role] был классифицирован как вредный для выполнения целей [GLOB.using_map.company_name] Понизьте его до ассистента"
+		explanation_text = "[target.current.real_name], [!role_type ? target.assigned_role : target.special_role] был классифицирован как вредный для выполнения целей [GLOB.using_map.company_name] Понизьте его до низшей должномти"
 	else
 		explanation_text = "Free Objective"
 	return target
@@ -209,7 +209,7 @@ var/global/list/all_objectives = list()
 // Nuclear Explosion //
 
 /datum/objective/nuclear
-	explanation_text = "Вызовите массовое уничтожение с помощью ядерного устройства."
+	explanation_text = "Уничтожьте судно с помощью устройства самоуничтожения"
 
 
 // Steal //
