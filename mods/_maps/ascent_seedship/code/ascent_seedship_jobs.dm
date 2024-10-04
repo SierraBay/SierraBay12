@@ -1,5 +1,5 @@
-/*/datum/submap/ascent_inf
-	var/gyne_name*/
+/datum/submap/ascent_inf
+	var/gyne_name
 
 /datum/submap/ascent_inf/sync_cell(obj/overmap/visitable/cell)
 	return
@@ -108,10 +108,7 @@
 	/*if(ispath(set_species_on_join, /mob/living/silicon/ai))
 		return H.AIize(set_species_on_join, move = FALSE)*/
 
-	var/datum/submap/ascent/cutter = owner
-	if(!istype(cutter))
-		crash_with("Ascent submap job is being used by a non-Ascent submap, aborting variant join.")
-		return
+	var/datum/submap/ascent_inf/cutter = owner
 
 	if(!cutter.gyne_name)
 		cutter.gyne_name = TYPE_PROC_REF(/singleton/cultural_info/culture/ascent, create_gyne_name)
@@ -167,7 +164,7 @@
 
 
 /datum/job/submap/ascent_inf/monarch_worker
-	title = "Serpentid Adjunct"
+	title = "Serpentid adjunct"
 	supervisors = "вашей Королевой"
 	total_positions = 3
 	info = "You are a Monarch Serpentid Worker serving as an attendant to your Queen on this vessel. Serve her however she requires."
@@ -181,7 +178,7 @@
 					SKILL_MEDICAL = SKILL_BASIC)
 
 /datum/job/submap/ascent_inf/monarch_queen
-	title = "Serpentid Queen"
+	title = "Serpentid queen"
 	supervisors = "другими Королевами и Гииной"
 	total_positions = 1
 	info = "You are a Monarch Serpentid Queen living on an independant Ascent vessel. Assist the Gyne in her duties and tend to your Workers."

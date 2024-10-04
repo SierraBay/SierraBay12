@@ -115,9 +115,6 @@
 		return H.AIize(set_species_on_join, move = FALSE)*/
 
 	var/datum/submap/ascent/cutter = owner
-	if(!istype(cutter))
-		crash_with("Ascent submap job is being used by a non-Ascent submap, aborting variant join.")
-		return
 
 	if(!cutter.gyne_name)
 		cutter.gyne_name = TYPE_PROC_REF(/singleton/cultural_info/culture/ascent, create_gyne_name)
