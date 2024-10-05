@@ -1,0 +1,4 @@
+author: Builder13
+changes:
+  - {bugfix: Фикс вставки кристаллов в консоль телесайнса}
+delete-after: true
