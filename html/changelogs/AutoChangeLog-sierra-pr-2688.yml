@@ -1,0 +1,4 @@
+author: Builder13
+changes:
+  - {maptweak: Паник кнопка добавлена на корабли}
+delete-after: true
