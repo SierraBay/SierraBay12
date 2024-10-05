@@ -195,6 +195,8 @@
 		SSnano.update_uis(src)
 
 /obj/machinery/body_scanconsole/proc/savescan()
+	if(!disk)
+		return
 	var/datum/computer_file/data/bodyscan/file = new /datum/computer_file/data/bodyscan
 	var/list/filedata = data["scan"]
 	var/name = file.set_filename("[connected.occupant]-[stationtime2text()]")
