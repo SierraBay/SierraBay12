@@ -5,3 +5,14 @@
 #include "code/body_markings.dm"
 
 #endif
+// BEGIN_INTERNALS
+// END_INTERNALS
+// BEGIN_FILE_DIR
+#define FILE_DIR .
+// END_FILE_DIR
+// BEGIN_PREFERENCES
+// END_PREFERENCES
+// BEGIN_INCLUDE
+#include "_body_markings.dm"
+#include "code\body_markings.dm"
+// END_INCLUDE
