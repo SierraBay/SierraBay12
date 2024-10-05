@@ -1,0 +1,4 @@
+author: Builder13
+changes:
+  - {tweak: Возврат старой скорости перемещения для Адхерантов}
+delete-after: true
