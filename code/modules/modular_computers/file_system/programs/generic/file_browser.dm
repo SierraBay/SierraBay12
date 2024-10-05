@@ -88,9 +88,12 @@
 		var/datum/computer_file/binary/photo/P = computer.get_file(open_file)
 		var/datum/computer_file/data/bodyscan/B = computer.get_file(open_file)
 		if(istype(B))
-			if(!computer.print_bodyscan(B.generate_print_data(),B.filename,B.papertype, B.metadata))
+			if(!computer.print_bodyscan())
 				error = "Hardware error: Unable to print the file."
 				return
+			else
+				var/obj/item/paper/bodyscan/paper =	new /obj/item/paper/bodyscan(usr.loc, "Printout error.", "Body scan report - [B.filename]", B.generate_print_data())
+				paper.metadata = B.stored_data
 		else if(istype(F))
 			if(!computer.print_paper(F.generate_file_data(),F.filename,F.papertype, F.metadata))
 				error = "Hardware error: Unable to print the file."
