@@ -1,4 +1,0 @@
-author: awkardlyconfusedneuralnetwork, out-of-phaze
-changes:
-  - {tweak: Makes observ cleanup tracking use datum vars instead of a list}
-delete-after: true

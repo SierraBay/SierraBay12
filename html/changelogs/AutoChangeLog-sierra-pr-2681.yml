@@ -1,4 +1,0 @@
-author: Builder13
-changes:
-  - {rscadd: Возвращена вкладка size converter для принтера интегральных плат}
-delete-after: true
