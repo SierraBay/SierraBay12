@@ -13,6 +13,39 @@
 	var/ui_template = "shuttle_control_console.tmpl"
 
 
+<<<<<<< ours
+=======
+/obj/machinery/computer/shuttle_control/Initialize(mapload)
+	. = ..()
+	if (!shuttle_tag)
+		sync_shuttle()
+
+
+/obj/machinery/computer/shuttle_control/on_update_icon()
+	icon_screen = shuttle_tag ? initial(icon_screen) : "shuttle_error"
+	..()
+
+
+/// Sets `shuttle_tag` to a new value based on the computer's current area, or to `null` if the area is not a valid shuttle.
+/obj/machinery/computer/shuttle_control/proc/sync_shuttle()
+	shuttle_tag = null
+	var/area/current_area = get_area(src)
+	for (var/shuttle_name in SSshuttle.shuttles)
+		var/datum/shuttle/shuttle = SSshuttle.shuttles[shuttle_name]
+		if (!(current_area in shuttle.shuttle_area))
+			continue
+		if (!is_valid_shuttle(SSshuttle.shuttles[shuttle_name]))
+			break
+		shuttle_tag = shuttle_name
+		break
+
+
+/// Determines whether the given shuttle datum is valid for this computer.
+/obj/machinery/computer/shuttle_control/proc/is_valid_shuttle(datum/shuttle/shuttle)
+	return !istype(shuttle, /datum/shuttle/autodock/overmap)
+
+
+>>>>>>> theirs
 /obj/machinery/computer/shuttle_control/interface_interact(mob/user)
 	ui_interact(user)
 	return TRUE
