@@ -38,5 +38,6 @@
 #include "integrated_circuits/_integrated_circuits.dme"
 #include "playable_away_yacht/_yacht.dme"
 #include "overmap/_overmap.dme"
+#include "ooc_notes/_ooc_notes.dme"
 
 #include "../packs/sierra-tweaks/_pack.dm"
