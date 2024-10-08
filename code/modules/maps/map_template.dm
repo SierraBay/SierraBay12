@@ -131,11 +131,13 @@
 		GLOB.using_map.player_levels |= z_index
 
 	//initialize things that are normally initialized after map load
+	Master.StartLoadingMap()
 	init_atoms(atoms_to_initialise)
 	init_shuttles(shuttle_state)
 	after_load(initial_z)
 	for(var/light_z = initial_z to world.maxz)
 		create_lighting_overlays_zlevel(light_z)
+	Master.StopLoadingMap()
 	log_game("Z-level [name] loaded at [x],[y],[world.maxz]")
 	loaded++
 
@@ -167,10 +169,13 @@
 			return FALSE
 
 	//initialize things that are normally initialized after map load
+	Master.StartLoadingMap()
 	init_atoms(atoms_to_initialise)
 	init_shuttles(shuttle_state)
 	after_load(T.z)
 	SSlighting.InitializeTurfs(atoms_to_initialise)	// Hopefully no turfs get placed on new coords by SSatoms.
+	Master.StopLoadingMap()
+
 	log_game("[name] loaded at at [T.x],[T.y],[T.z]")
 	loaded++
 
