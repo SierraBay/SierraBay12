@@ -4,8 +4,8 @@
 /datum/submap/ascent_inf/sync_cell(obj/overmap/visitable/cell)
 	return
 
-/* Rename procs are already implemented in Ascent Caulship
-/mob/living/carbon/human/proc/gyne_rename_lineage_inf()
+// Rename procs are already implemented in Ascent Caulship
+/* /mob/living/carbon/human/proc/gyne_rename_lineage_inf()
 	set name = "Name Nest-Lineage"
 	set category = "IC"
 	set desc = "Rename yourself and your alates."
@@ -85,7 +85,6 @@
 	Your radars picked up a large ship equipped with a bluespace engine, until you find out who owns it, it's better not to give yourself away with vigorous activity. \
 	Your ship was damaged during the bluespace jump, you need to restore it to fully function."
 	outfit_type = /singleton/hierarchy/outfit/job/ascent
-	minimal_player_age = 21
 	blacklisted_species = null
 	whitelisted_species = list(SPECIES_MANTID_GYNE)
 	loadout_allowed = FALSE
@@ -141,15 +140,12 @@
 	info = "You are an Alate of an independent Ascent vessel. Your Gyne has directed you to this remote sector full of crawling primitives. Follow her instructions and bring prosperity to your nest-lineage."
 	outfit_type = /singleton/hierarchy/outfit/job/ascent/attendant
 	whitelisted_species = list(SPECIES_MANTID_ALATE)
-	loadout_allowed = FALSE
-	is_semi_antagonist = TRUE
 	requires_supervisor = "Ascent gyne"
 	min_skill = list(SKILL_EVA = SKILL_EXPERIENCED,
 					SKILL_HAULING = SKILL_MASTER,
 					SKILL_COMBAT = SKILL_MASTER,
 					SKILL_WEAPONS = SKILL_MASTER,
 					SKILL_MEDICAL = SKILL_TRAINED)
-
 
 /datum/job/submap/ascent_inf/drone
 	title = "Ascent drone"
@@ -158,10 +154,7 @@
 	info = "You are a Machine Intelligence of an independent Ascent vessel. The Gyne you assist, and her children, have wandered into this sector full of primitive bioforms. Try to keep them alive, and assist where you can."
 	set_species_on_join = /mob/living/silicon/robot/flying/ascent
 	requires_supervisor = "Ascent gyne"
-	loadout_allowed = FALSE
-	is_semi_antagonist = TRUE
 	whitelisted_species = list(SPECIES_MANTID_ALATE)
-
 
 /datum/job/submap/ascent_inf/monarch_worker
 	title = "Serpentid adjunct"

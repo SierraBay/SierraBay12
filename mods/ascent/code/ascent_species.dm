@@ -227,6 +227,23 @@
 
 /// ----- MONARCH GAS ----- ///
 
+/* /datum/hud_data/nabber/monarch
+	gear = list(
+		"i_clothing" =   list("loc" = ui_iclothing, "name" = "Uniform",      "slot" = slot_w_uniform, "state" = "center", "toggle" = 1),
+		"o_clothing" =   list("loc" = ui_shoes,     "name" = "Suit",         "slot" = slot_wear_suit, "state" = "suit",   "toggle" = 1),
+		"mask" =         list("loc" = ui_mask,      "name" = "Mask",         "slot" = slot_wear_mask, "state" = "mask",   "toggle" = 1),
+		"l_ear" =        list("loc" = ui_oclothing, "name" = "Ear",          "slot" = slot_l_ear,     "state" = "ears",   "toggle" = 1),
+		"gloves" =       list("loc" = ui_gloves,    "name" = "Gloves",       "slot" = slot_gloves,    "state" = "gloves", "toggle" = 1),
+		"head" =         list("loc" = ui_mask,      "name" = "Hat",          "slot" = slot_head,      "state" = "hair",   "toggle" = 1),
+		"eyes" =         list("loc" = ui_glasses,   "name" = "Glasses",      "slot" = slot_glasses,   "state" = "glasses","toggle" = 1),
+		"suit storage" = list("loc" = ui_sstore1,   "name" = "Suit Storage", "slot" = slot_s_store,   "state" = "suitstore"),
+		"back" =         list("loc" = ui_back,      "name" = "Back",         "slot" = slot_back,      "state" = "back"),
+		"id" =           list("loc" = ui_id,        "name" = "ID",           "slot" = slot_wear_id,   "state" = "id"),
+		"storage1" =     list("loc" = ui_storage1,  "name" = "Left Pocket",  "slot" = slot_l_store,   "state" = "pocket"),
+		"storage2" =     list("loc" = ui_storage2,  "name" = "Right Pocket", "slot" = slot_r_store,   "state" = "pocket"),
+		"belt" =         list("loc" = ui_belt,      "name" = "Belt",         "slot" = slot_belt,      "state" = "belt")
+		)*/
+
 /datum/species/nabber/monarch_worker
 	name = SPECIES_MONARCH_WORKER
 	name_plural = "Monarch Serpentid Workers"
@@ -237,6 +254,7 @@
 	spawn_flags = SPECIES_CAN_JOIN | SPECIES_NO_FBP_CONSTRUCTION | SPECIES_NO_FBP_CHARGEN | SPECIES_IS_WHITELISTED
 	appearance_flags = 0
 	base_skin_colours = null
+	hud_type = /datum/hud_data/mantid
 	has_organ = list(
 		BP_BRAIN =             /obj/item/organ/internal/brain/insectoid/nabber,
 		BP_EYES =              /obj/item/organ/internal/eyes/insectoid/nabber/ascent,
@@ -273,26 +291,20 @@
 	and eventually promoted from 'entertaining pets' to the middle men that keep Ascent society functioning smoothly. \
 	Gynes have tremendous difficulties in communicating with each other politely, so the queens act as intermediaries, \
 	smoothing over the fractious and unproductive squabbling."
-
 	silent_steps = TRUE
-
 	icobase = 'icons/mob/human_races/species/nabber/msq/body.dmi'
 	deform = 'icons/mob/human_races/species/nabber/msq/body.dmi'
 	blood_mask = 'icons/mob/human_races/species/nabber/msq/blood_mask.dmi'
 	damage_mask = 'icons/mob/human_races/species/nabber/msq/damage_mask.dmi'
-
 	genders = list(FEMALE)
-
 	total_health = 150
-
 	mob_size = MOB_MEDIUM
 	breath_pressure = 21
 	blood_volume = 600
-
+	hud_type = /datum/hud_data/mantid
 	appearance_flags = 0
 	base_skin_colours = null
 	spawn_flags = SPECIES_CAN_JOIN | SPECIES_NO_FBP_CONSTRUCTION | SPECIES_NO_FBP_CHARGEN | SPECIES_IS_WHITELISTED
-
 	has_organ = list(
 		BP_BRAIN =             /obj/item/organ/internal/brain/insectoid/nabber,
 		BP_EYES =              /obj/item/organ/internal/eyes/insectoid/msq,
@@ -323,7 +335,6 @@
 		/datum/mob_descriptor/body_length = -1
 		)
 
-
 	force_cultural_info = list(
 		TAG_CULTURE =   CULTURE_ASCENT,
 		TAG_HOMEWORLD = HOME_SYSTEM_KHARMAANI,
@@ -338,6 +349,12 @@
 			"[EAST]" = list("x" = 8, "y" = 0),
 			"[SOUTH]" = list("x" = 0, "y" = 0),
 			"[WEST]" = list("x" = -8, "y" = 0)
+		),
+		slot_w_uniform_str = list(
+			"[NORTH]" = list("x" = 0, "y" = 0),
+			"[EAST]" = list("x" = 0, "y" = 0),
+			"[SOUTH]" = list("x" = 1, "y" = -5),
+			"[WEST]" = list("x" = 0, "y" = 0)
 		)
 	)
 	..()

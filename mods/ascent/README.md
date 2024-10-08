@@ -33,7 +33,8 @@ ID мода: ASCENT
   - `/datum/reagent/toxin/bromide/affect_ingest()`
   - `/datum/reagent/toxin/methyl_bromide/affect_touch()`
   - `/datum/reagent/toxin/methyl_bromide/affect_ingest()`
-
+  - `/datum/reagent/toxin/methyl_bromide/affect_ingest()`
+  - `/obj/item/clothing/under/harness`
 <!--
   Если вы редактировали какие-либо процедуры или переменные в кор коде,
   они должны быть указаны здесь.
@@ -97,7 +98,7 @@ ID мода: ASCENT
 Оригинальный порт выполнен командой Final Destination (https://github.com/RepoStash/FD-NewBay/tree/dev-sierra)
 Код адаптирован и доработан UEDHighCommand
 Карты доработаны RocheHendson
-Фикс и адаптация карт Neonvolt
+Различные фиксы и адаптация карт от Neonvolt
 <!--
   Здесь находится твой никнейм
   Если работал совместно - никнеймы тех, кто помогал.

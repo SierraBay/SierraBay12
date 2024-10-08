@@ -96,17 +96,6 @@
 	var/requires_supervisor = FALSE
 	var/set_species_on_join = null
 
-/* /datum/job/submap/ascent/is_position_available()
-	. = ..()
-	if(. && requires_supervisor)
-		for(var/mob/M in GLOB.player_list)
-			if(!M.client || !M.mind || !M.mind.assigned_job || M.mind.assigned_job.title != requires_supervisor)
-				continue
-			var/datum/job/submap/ascent/ascent_job = M.mind.assigned_job
-			if(istype(ascent_job) && ascent_job.owner == owner)
-				return TRUE
-		return FALSE */
-
 /datum/job/submap/ascent/handle_variant_join(mob/living/carbon/human/H, alt_title)
 
 	if(ispath(set_species_on_join, /mob/living/silicon/robot))

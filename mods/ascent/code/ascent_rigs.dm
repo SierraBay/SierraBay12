@@ -44,7 +44,7 @@
 		/obj/item/rig_module/device/clustertool,
 		/obj/item/rig_module/mounted/energy/plasmacutter,
 		/obj/item/rig_module/maneuvering_jets,
-		/obj/item/rig_module/device/anomaly_scanner
+		/obj/item/rig_module/device/mantid_anomaly_detector
 		)
 	req_access = list(access_ascent)
 	var/mantid_caste = SPECIES_MANTID_ALATE
@@ -230,6 +230,19 @@
 		list("glucose",             "glucose",             /datum/reagent/nutriment/glucose,  30)
 	)
 
+/obj/item/rig_module/device/mantid_anomaly_detector
+	name = "mantid anomaly detector module"
+	desc = "Anomaly detection device of mantid design."
+	icon_state = "eldersasparilla"
+	interface_name = "Mantid anomaly detector module"
+	interface_desc = "A special anomalous zone detector of mantid design."
+	engage_string = "Begin Scan"
+	use_power_cost = 200
+	usable = 1
+	selectable = 0
+	device = /obj/item/clothing/gloves/anomaly_detector/mantid
+	origin_tech = list(TECH_BLUESPACE = 5, TECH_MAGNET = 6, TECH_ENGINEERING = 7)
+
 // Rig definitions.
 /obj/item/rig/mantid/gyne
 	name = "gyne combat exosuit"
@@ -267,7 +280,7 @@
 		/obj/item/rig_module/mounted/energy/plasmacutter,
 		/obj/item/rig_module/actuators,
 		/obj/item/rig_module/maneuvering_jets,
-		/obj/item/rig_module/device/anomaly_scanner
+		/obj/item/rig_module/device/mantid_anomaly_detector
 	)
 
 /obj/item/rig/mantid/nabber
@@ -296,7 +309,7 @@
 		/obj/item/rig_module/device/clustertool,
 		/obj/item/rig_module/mounted/energy/plasmacutter,
 		/obj/item/rig_module/maneuvering_jets,
-		/obj/item/rig_module/device/anomaly_scanner
+		/obj/item/rig_module/device/mantid_anomaly_detector
 		)
 
 /obj/item/clothing/suit/space/rig/mantid/serpentid
@@ -321,7 +334,7 @@
 		/obj/item/rig_module/device/clustertool,
 		/obj/item/rig_module/mounted/energy/plasmacutter,
 		/obj/item/rig_module/maneuvering_jets,
-		/obj/item/rig_module/device/anomaly_scanner
+		/obj/item/rig_module/device/mantid_anomaly_detector
 	)
 	allowed = list(
 		/obj/item/clustertool,
@@ -420,7 +433,7 @@
 		/obj/item/rig_module/mounted/energy/plasmacutter,
 		/obj/item/rig_module/actuators,
 		/obj/item/rig_module/maneuvering_jets,
-		/obj/item/rig_module/device/anomaly_scanner
+		/obj/item/rig_module/device/mantid_anomaly_detector
 		)
 
 /obj/item/rig/mantid/gyne/seed
@@ -444,7 +457,7 @@
 		/obj/item/rig_module/device/clustertool,
 		/obj/item/rig_module/mounted/energy/plasmacutter,
 		/obj/item/rig_module/maneuvering_jets,
-		/obj/item/rig_module/device/anomaly_scanner
+		/obj/item/rig_module/device/mantid_anomaly_detector
 	)
 
 /obj/item/rig/mantid/nabber/queen/seed
@@ -469,7 +482,7 @@
 		/obj/item/rig_module/device/clustertool,
 		/obj/item/rig_module/mounted/energy/plasmacutter,
 		/obj/item/rig_module/maneuvering_jets,
-		/obj/item/rig_module/device/anomaly_scanner
+		/obj/item/rig_module/device/mantid_anomaly_detector
 	)
 
 /obj/item/rig/mantid/nabber/seed
@@ -494,5 +507,5 @@
 		/obj/item/rig_module/device/clustertool,
 		/obj/item/rig_module/mounted/energy/plasmacutter,
 		/obj/item/rig_module/maneuvering_jets,
-		/obj/item/rig_module/device/anomaly_scanner
+		/obj/item/rig_module/device/mantid_anomaly_detector
 		)

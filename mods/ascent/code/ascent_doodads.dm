@@ -93,3 +93,6 @@
 
 /obj/structure/reagent_dispensers/water_cooler/ascent/RejectionMessage(mob/user)
 	return "\The [src]'s orb supply is empty. Notify a control mind."
+
+MANTIDIFY(/obj/item/device/scanner/health, "healthorrebator", "medicine")
+MANTIDIFY(/obj/item/reagent_containers/spray/sterilizine, "cleaning agent sprayer", "sterilizing")

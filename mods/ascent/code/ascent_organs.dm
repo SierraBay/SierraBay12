@@ -94,4 +94,4 @@
 	refresh_action_button()
 
 /obj/item/organ/internal/eyes/insectoid/nabber/ascent
-	eye_icon = null
+	eye_icon = null // eye overlays mess with helmets, eyes are visible over everything. Some dumb workaround

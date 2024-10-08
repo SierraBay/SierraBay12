@@ -41,7 +41,7 @@
 	id = WEBHOOK_SUBMAP_LOADED_ASCENT_INF
 
 /singleton/submap_archetype/ascent_seedship_inf
-	descriptor = "Ascent's Colony Ship"
+	descriptor = "Ascent Colony Ship"
 	map = "Ascent Seedship"
 	blacklisted_species = null
 	whitelisted_species = null
@@ -54,26 +54,5 @@
 		//datum/job/submap/ascent_inf/control_mind
 	)
 	call_webhook = WEBHOOK_SUBMAP_LOADED_ASCENT_INF
-
-/obj/submap_landmark/joinable_submap/ascent_seedship_inf/Initialize(mapload)
-	var/list/all_elements = list(
-		"Hydrogen",      "Helium",     "Lithium",     "Beryllium",    "Carbon",       "Nitrogen",      "Oxygen",
-		"Fluorine",      "Neon",       "Sodium",      "Magnesium",    "Silicon",      "Phosphorus",    "Sulfur",
-		"Chlorine",      "Argon",      "Potassium",   "Calcium",      "Scandium",     "Titanium",      "Chromium",
-		"Manganese",     "Iron",       "Cobalt",      "Nickel",       "Zinc",         "Gallium",       "Germanium",
-		"Arsenic",       "Selenium",   "Bromine",     "Krypton",      "Rubidium",     "Strontium",     "Zirconium",
-		"Molybdenum",    "Technetium", "Ruthenium",   "Rhodium",      "Palladium",    "Silver",        "Cadmium",
-		"Indium",        "Tin",        "Antimony",    "Tellurium",    "Iodine",       "Xenon",         "Caesium",
-		"Barium",        "Lanthanum",  "Cerium",      "Praseodymium", "Neodymium",    "Promethium",    "Samarium",
-		"Gadolinium",    "Dysprosium", "Holmium",     "Erbium",       "Ytterbium",    "Hafnium",       "Tantalum",
-		"Tungsten",      "Rhenium",    "Osmium",      "Iridium",      "Gold",         "Mercury",       "Lead",
-		"Bismuth",       "Polonium",   "Astatine",    "Radon",        "Francium",     "Radium",        "Actinium",
-		"Thorium",       "Uranium",    "Plutonium",   "Americium",    "Curium",       "Berkelium",     "Californium",
-		"Einsteinium",   "Fermium",    "Mendelevium", "Nobelium",     "Lawrencium",   "Rutherfordium", "Dubnium",
-		"Seaborgium",    "Bohrium",    "Hassium",     "Meitnerium",   "Darmstadtium", "Roentgenium",   "Copernicium",
-		"Nihonium",      "Flerovium",  "Moscovium",   "Livermorium",  "Tennessine",   "Oganesson"
-	)
-	name = "[pick(all_elements)]-[rand(10,99)]-[rand(10,99)]"
-	. = ..()
 
 #undef WEBHOOK_SUBMAP_LOADED_ASCENT_INF

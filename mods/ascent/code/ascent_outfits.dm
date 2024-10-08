@@ -17,10 +17,12 @@
 	name = "Ascent - Serpentid Adjunct"
 	uniform =  /obj/item/clothing/under/harness
 	belt = /obj/item/clothing/suit/storage/ascent
+	mask = /obj/item/clothing/mask/gas/ascent/monarch
 
 /singleton/hierarchy/outfit/job/ascent/queen
 	name = "Ascent - Serpentid Queen"
 	uniform = /obj/item/clothing/under/harness
+	mask = /obj/item/clothing/mask/gas/ascent/monarch
 
 /obj/item/clothing/mask/gas/ascent
 	name = "mantid facemask"
@@ -43,7 +45,12 @@
 	name = "serpentid facemask"
 	desc = "An alien facemask with chunky gas filters and a breathing valve."
 	filtered_gases = list(GAS_PHORON, GAS_N2O, GAS_CHLORINE, GAS_AMMONIA, GAS_CO, GAS_METHYL_BROMIDE, GAS_METHANE)
-	species_restricted = list(SPECIES_NABBER, SPECIES_MONARCH_QUEEN)
+	species_restricted = list(SPECIES_NABBER, SPECIES_MONARCH_QUEEN, SPECIES_MONARCH_WORKER)
+	sprite_sheets = list(
+		SPECIES_NABBER =  'icons/mob/species/nabber/onmob_mask_gas.dmi',
+		SPECIES_MONARCH_WORKER =  'icons/mob/species/nabber/onmob_mask_gas.dmi',
+		SPECIES_MONARCH_QUEEN =  'icons/mob/species/nabber/msq/onmob_mask_msq.dmi'
+	)
 
 /obj/item/clothing/mask/gas/ascent_captive
 	name = "humanoid filter mask"
@@ -79,11 +86,16 @@
 		SPECIES_MANTID_ALATE = 'mods/ascent/icons/mob/alate/onmob/onmob_under_alate.dmi'
 	)
 
+/*/obj/item/clothing/under/harness/msq
+	name = "small gear harness"
+	desc = "A tangle of straps for someone really tiny."
+	icon = 'icons/mob/species/nabber/onmob_belt_gas.dmi'*/
+
 /obj/item/clothing/suit/storage/ascent
 	name = "mantid gear harness"
 	desc = "A complex tangle of articulated cables and straps."
 	species_restricted = ALL_ASCENT_SPECIES
-	icon_state = "gear_harness"
+	icon_state = "ascent_harness"
 	body_parts_covered = 0
 	slot_flags = SLOT_OCLOTHING | SLOT_BELT
 	sprite_sheets = list(
