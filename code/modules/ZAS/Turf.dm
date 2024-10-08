@@ -243,12 +243,21 @@
 /turf/proc/assume_gas(gasid, moles, temp = 0)
 	return 0
 
+var/global/list/STANDARD_AIRMIX = list(
+	GAS_OXYGEN = MOLES_O2STANDARD,
+	GAS_NITROGEN = MOLES_N2STANDARD
+)
+
 /turf/return_air()
 	//Create gas mixture to hold data for passing
 	var/datum/gas_mixture/GM = new
 
 	if(initial_gas)
-		GM.gas = initial_gas.Copy()
+		if(initial_gas == GAS_STANDARD_AIRMIX)
+			GM.gas = global.STANDARD_AIRMIX.Copy()
+		else
+			GM.gas = initial_gas.Copy()
+
 	GM.temperature = temperature
 	GM.update_values()
 
@@ -291,7 +300,10 @@
 	air = new/datum/gas_mixture
 	air.temperature = temperature
 	if(initial_gas)
-		air.gas = initial_gas.Copy()
+		if(initial_gas == GAS_STANDARD_AIRMIX)
+			air.gas = global.STANDARD_AIRMIX.Copy()
+		else
+			air.gas = initial_gas.Copy()
 	air.update_values()
 
 /turf/simulated/proc/c_copy_air()
