@@ -124,7 +124,7 @@
 	clear_bulletholes()
 	. = ..(newtype, tell_universe, force_lighting_update, keep_air)
 	var/turf/new_turf = .
-	for (var/turf/simulated/wall/W as anything in RANGE_TURFS(new_turf, 1))
+	for (var/turf/simulated/wall/W in RANGE_TURFS(new_turf, 1))
 		if (W == src)
 			continue
 		W.update_connections()
