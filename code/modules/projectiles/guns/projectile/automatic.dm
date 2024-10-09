@@ -246,7 +246,7 @@
 /obj/item/gun/projectile/automatic/bullpup_rifle/on_update_icon()
 	..()
 	if(ammo_magazine)
-		if(length(ammo_magazine.stored_ammo))
+		if(length(ammo_magazine.get_stored_ammo_count()))
 			icon_state = "carbine-loaded"
 		else
 			icon_state = "carbine-empty"
@@ -351,7 +351,7 @@
 /obj/item/gun/projectile/automatic/l6_saw/on_update_icon()
 	..()
 	if(istype(ammo_magazine, /obj/item/ammo_magazine/box))
-		icon_state = "l6[cover_open ? "open" : "closed"][round(length(ammo_magazine.stored_ammo), 10)]"
+		icon_state = "l6[cover_open ? "open" : "closed"][round(length(ammo_magazine.get_stored_ammo_count()), 10)]"
 		item_state = "l6[cover_open ? "open" : "closed"]"
 		wielded_item_state = "l6[cover_open ? "open" : "closed"]-wielded"
 	else if(ammo_magazine)
