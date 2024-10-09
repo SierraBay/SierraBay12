@@ -24,7 +24,7 @@
 	var/list/list/_signal_procs
 
 	/// Used to avoid unnecessary refstring creation in Destroy().
-	var/tmp/has_state_machine = FALSE
+	var/has_state_machine = FALSE
 
 //[/SIERRA-ADD]
 // Default implementation of clean-up code.
