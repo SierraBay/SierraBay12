@@ -22,10 +22,16 @@
 	var/list/_listen_lookup
 	/// Lazy associated list in the structure of `target -> list(signal -> proctype)` that are run when the datum receives that signal
 	var/list/list/_signal_procs
+
+	/// Used to avoid unnecessary refstring creation in Destroy().
+	var/tmp/has_state_machine = FALSE
+
 //[/SIERRA-ADD]
 // Default implementation of clean-up code.
 // This should be overridden to remove all references pointing to the object being destroyed.
 // Return the appropriate QDEL_HINT; in most cases this is QDEL_HINT_QUEUE.
+
+
 /datum/proc/Destroy()
 	SHOULD_CALL_PARENT(TRUE)
 	SHOULD_NOT_SLEEP(TRUE)
@@ -58,11 +64,12 @@
 	//[/SIERRA-ADD]
 	GLOB.destroyed_event && GLOB.destroyed_event.raise_event(src)
 	cleanup_events(src)
-	var/list/machines = global.state_machines["\ref[src]"]
-	if (length(machines))
-		for (var/base_type in machines)
-			qdel(machines[base_type])
-		global.state_machines -= "\ref[src]"
+	if(has_state_machine)
+		var/list/machines = global.state_machines["\ref[src]"]
+		if(length(machines))
+			for(var/base_type in machines)
+				qdel(machines[base_type])
+			global.state_machines -= "\ref[src]"
 	if (instance_pool?.ReturnInstance(src))
 		return QDEL_HINT_IWILLGC
 	instance_configurator = null
