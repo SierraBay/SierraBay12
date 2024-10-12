@@ -21,5 +21,6 @@
 #include "code\craft_drugs.dm"
 #include "code/hair_olivka.dm"
 #include "code/ert_maint_helmet.dm"
+#include "code/tag_recipe.dm"
 
 #endif
