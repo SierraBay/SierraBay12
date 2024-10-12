@@ -126,7 +126,7 @@
 			SPAN_ITALIC("You hear a series of beeps, followed by a deep humming sound.")
 		)
 		playsound(connected.loc, 'sound/machines/medbayscanner.ogg', 50)
-		savescan()
+		savescan() // SIERRA-ADD
 		return TOPIC_REFRESH
 
 	if (href_list["print"])
@@ -159,11 +159,12 @@
 		data["pushEnabled"] = FALSE
 		return TOPIC_REFRESH
 
+// SIERRA-ADD
 	if(href_list["eject"])
 		if(disk)
 			disk.forceMove(get_turf(src))
 			disk = null
-
+// /SIERRA-ADD
 		return TOPIC_REFRESH
 
 /obj/machinery/body_scanconsole/state_transition(singleton/machine_construction/default/new_state)
@@ -181,6 +182,7 @@
 		remove_display(D)
 	unlink_scanner(connected)
 
+// SIERRA-ADD
 /obj/machinery/body_scanconsole/use_tool(obj/item/D, mob/living/user, list/click_params)
 	. = ..()
 	if(istype(D, /obj/item/stock_parts/computer/hard_drive/portable))
@@ -201,3 +203,4 @@
 	var/list/filedata = data["scan"]
 	var/name = file.set_filename("[connected.occupant]-[stationtime2text()]")
 	disk.save_data_file(name, filedata.Copy(), file_type = /datum/computer_file/data/bodyscan)
+// /SIERRA-ADD
