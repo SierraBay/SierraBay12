@@ -56,8 +56,8 @@
 		LANGUAGE_MANTID_BROADCAST = TRUE,
 		LANGUAGE_SKRELLIAN        = TRUE,
 		LANGUAGE_NABBER           = TRUE,
-		LANGUAGE_HUMAN_EURO	      = TRUE,
-		LANGUAGE_SPACER           = TRUE
+		/*LANGUAGE_HUMAN_EURO	      = TRUE,
+		LANGUAGE_SPACER           = TRUE*/
 	)
 
 	skills = list(
@@ -85,6 +85,13 @@
 		SKILL_VIROLOGY      = HAS_PERK,
 		SKILL_CHEMISTRY		= SKILL_EXPERIENCED
 	)
+
+	var/id
+	access = list(
+		access_ascent
+	)
+	use_map_synth_access = FALSE
+	use_all_station_access = FALSE
 
 // Copypasted from repair bot - todo generalize this step.
 /obj/item/robot_module/flying/ascent/finalize_synths()
@@ -135,7 +142,6 @@
 	var/obj/item/stack/nanopaste/N = locate() in equipment
 	N.uses_charge = 1
 	N.charge_costs = list(1000)
-
 
 /************ Ascent Lawset ******************/
 /datum/ai_laws/ascent

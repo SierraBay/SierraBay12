@@ -26,10 +26,10 @@
 	boot_type =  /obj/item/clothing/shoes/magboots/rig/mantid
 	glove_type = /obj/item/clothing/gloves/rig/mantid
 	update_visible_name = TRUE
-	icon_override = 'mods/ascent/icons/alate/onmob/onmob_back_alate.dmi'
+	icon_override = 'mods/ascent/icons/mob/alate/onmob/onmob_back_alate.dmi'
 	sprite_sheets = list(
-		SPECIES_MANTID_GYNE =    'mods/ascent/icons/gyne/onmob/onmob_back_gyne.dmi',
-		SPECIES_MANTID_ALATE =   'mods/ascent/icons/alate/onmob/onmob_back_alate.dmi',
+		SPECIES_MANTID_GYNE =    'mods/ascent/icons/mob/gyne/onmob/onmob_back_gyne.dmi',
+		SPECIES_MANTID_ALATE =   'mods/ascent/icons/mob/alate/onmob/onmob_back_alate.dmi',
 		SPECIES_NABBER =         'icons/mob/species/nabber/onmob_back_gas.dmi',
 		SPECIES_MONARCH_QUEEN =  'icons/mob/species/nabber/msq/onmob_back_msq.dmi'
 		)
@@ -43,7 +43,8 @@
 		/obj/item/rig_module/device/welder,
 		/obj/item/rig_module/device/clustertool,
 		/obj/item/rig_module/mounted/energy/plasmacutter,
-		/obj/item/rig_module/maneuvering_jets
+		/obj/item/rig_module/maneuvering_jets,
+		/obj/item/rig_module/device/mantid_anomaly_detector
 		)
 	req_access = list(access_ascent)
 	var/mantid_caste = SPECIES_MANTID_ALATE
@@ -63,7 +64,7 @@
 	desc = "A flechette nanofabricator and launch system of Ascent design."
 	interface_name = "flechette rifle"
 	interface_desc = "A flechette nanofabricator and launch system of Ascent design."
-	icon = 'mods/ascent/icons/ascent.dmi'
+	icon = 'mods/ascent/icons/items/ascent.dmi'
 	icon_state = "rifle"
 	laser = /obj/item/gun/energy/particle/flechette
 
@@ -72,7 +73,7 @@
 	desc = "A mounted particle rifle of Ascent design."
 	interface_name = "particle rifle"
 	interface_desc = "A mounted particle rifle of Ascent design."
-	icon = 'mods/ascent/icons/ascent.dmi'
+	icon = 'mods/ascent/icons/items/ascent.dmi'
 	icon_state = "rifle"
 	laser = /obj/item/gun/energy/particle
 
@@ -82,7 +83,7 @@
 	interface_name = "multitool"
 	interface_desc = "A limited-sentience integrated multitool capable of interfacing with any number of systems."
 	device = /obj/item/device/multitool/mantid
-	icon = 'mods/ascent/icons/ascent.dmi'
+	icon = 'mods/ascent/icons/items/ascent.dmi'
 	icon_state = "multitool"
 	usable = FALSE
 	selectable = TRUE
@@ -97,7 +98,7 @@
 	interface_name = "cable fabricator"
 	interface_desc = "A cable nanofabricator of Ascent design."
 	device = /obj/item/stack/cable_coil/fabricator
-	icon = 'mods/ascent/icons/ascent.dmi'
+	icon = 'mods/ascent/icons/items/ascent.dmi'
 	icon_state = "cablecoil"
 	usable = FALSE
 	selectable = TRUE
@@ -107,7 +108,7 @@
 	desc = "An electrical cutting torch of Ascent design."
 	interface_name = "welding arm"
 	interface_desc = "An electrical cutting torch of Ascent design."
-	icon = 'mods/ascent/icons/ascent.dmi'
+	icon = 'mods/ascent/icons/items/ascent.dmi'
 	icon_state = "welder1"
 	engage_string = "Toggle Welder"
 	device = /obj/item/weldingtool/electric/mantid
@@ -119,7 +120,7 @@
 	desc = "A complex assembly of self-guiding, modular heads capable of performing most manual tasks."
 	interface_name = "modular clustertool"
 	interface_desc = "A complex assembly of self-guiding, modular heads capable of performing most manual tasks."
-	icon = 'mods/ascent/icons/ascent.dmi'
+	icon = 'mods/ascent/icons/items/ascent.dmi'
 	icon_state = "clustertool"
 	engage_string = "Select Mode"
 	device = /obj/item/clustertool
@@ -157,8 +158,8 @@
 	name = "catalytic maneuvering pack"
 	desc = "An integrated Ascent gas processing plant and maneuvering pack that continuously synthesises 'breathable' atmosphere and propellant."
 	sprite_sheets = list(
-		SPECIES_MANTID_GYNE =  'mods/ascent/icons/gyne/onmob/onmob_back_gyne.dmi',
-		SPECIES_MANTID_ALATE = 'mods/ascent/icons/alate/onmob/onmob_back_alate.dmi',
+		SPECIES_MANTID_GYNE =  'mods/ascent/icons/mob/gyne/onmob/onmob_back_gyne.dmi',
+		SPECIES_MANTID_ALATE = 'mods/ascent/icons/mob/alate/onmob/onmob_back_alate.dmi',
 		SPECIES_NABBER = 	   'icons/mob/species/nabber/onmob_back_gas.dmi'
 	)
 	icon_state = "maneuvering_pack"
@@ -204,7 +205,7 @@
 	desc = "A compact chemical dispenser of mantid design."
 	interface_name = "mantid chemical injector"
 	interface_desc = "A compact chemical dispenser of mantid design."
-	icon = 'mods/ascent/icons/ascent.dmi'
+	icon = 'mods/ascent/icons/items/ascent.dmi'
 	icon_state = "injector"
 	charges = list(
 		list("bromide",				"bromide",				/datum/reagent/toxin/bromide, 30),
@@ -218,7 +219,7 @@
 	desc = "A compact chemical dispenser of mantid design."
 	interface_name = "serpentid chemical injector"
 	interface_desc = "A compact chemical dispenser of mantid design."
-	icon = 'mods/ascent/icons/ascent.dmi'
+	icon = 'mods/ascent/icons/items/ascent.dmi'
 	icon_state = "injector"
 	charges = list(
 		list("tramadol",            "tramadol",            /datum/reagent/tramadol,     	  30),
@@ -228,6 +229,19 @@
 		list("dylovene",        	"dylovene",      	   /datum/reagent/dylovene,   		  30),
 		list("glucose",             "glucose",             /datum/reagent/nutriment/glucose,  30)
 	)
+
+/obj/item/rig_module/device/mantid_anomaly_detector
+	name = "mantid anomaly detector module"
+	desc = "Anomaly detection device of mantid design."
+	icon_state = "eldersasparilla"
+	interface_name = "Mantid anomaly detector module"
+	interface_desc = "A special anomalous zone detector of mantid design."
+	engage_string = "Begin Scan"
+	use_power_cost = 200
+	usable = 1
+	selectable = 0
+	device = /obj/item/clothing/gloves/anomaly_detector/mantid
+	origin_tech = list(TECH_BLUESPACE = 5, TECH_MAGNET = 6, TECH_ENGINEERING = 7)
 
 // Rig definitions.
 /obj/item/rig/mantid/gyne
@@ -249,7 +263,7 @@
 		/obj/item/stack/medical/resin,
 		/obj/item/reagent_containers/food/drinks/cans/waterbottle/ascent
 	)
-	icon_override = 'mods/ascent/icons/gyne/onmob/onmob_back_gyne.dmi'
+	icon_override = 'mods/ascent/icons/mob/gyne/onmob/onmob_back_gyne.dmi'
 	mantid_caste = SPECIES_MANTID_GYNE
 	initial_modules = list(
 		/obj/item/rig_module/vision/thermal,
@@ -265,7 +279,8 @@
 		/obj/item/rig_module/device/clustertool,
 		/obj/item/rig_module/mounted/energy/plasmacutter,
 		/obj/item/rig_module/actuators,
-		/obj/item/rig_module/maneuvering_jets
+		/obj/item/rig_module/maneuvering_jets,
+		/obj/item/rig_module/device/mantid_anomaly_detector
 	)
 
 /obj/item/rig/mantid/nabber
@@ -293,7 +308,8 @@
 		/obj/item/rig_module/device/welder,
 		/obj/item/rig_module/device/clustertool,
 		/obj/item/rig_module/mounted/energy/plasmacutter,
-		/obj/item/rig_module/maneuvering_jets
+		/obj/item/rig_module/maneuvering_jets,
+		/obj/item/rig_module/device/mantid_anomaly_detector
 		)
 
 /obj/item/clothing/suit/space/rig/mantid/serpentid
@@ -317,7 +333,8 @@
 		/obj/item/rig_module/device/welder,
 		/obj/item/rig_module/device/clustertool,
 		/obj/item/rig_module/mounted/energy/plasmacutter,
-		/obj/item/rig_module/maneuvering_jets
+		/obj/item/rig_module/maneuvering_jets,
+		/obj/item/rig_module/device/mantid_anomaly_detector
 	)
 	allowed = list(
 		/obj/item/clustertool,
@@ -338,12 +355,12 @@
 
 /obj/item/clothing/head/helmet/space/rig/mantid
 	light_color = "#00ffff"
-	icon = 'mods/ascent/icons/clothing/obj_head.dmi'
+	icon = 'mods/ascent/icons/obj/clothing/obj_head.dmi'
 	desc = "More like a torpedo casing than a helmet."
 	species_restricted = list(SPECIES_MANTID_GYNE, SPECIES_MANTID_ALATE, SPECIES_NABBER, SPECIES_MONARCH_QUEEN)
 	sprite_sheets = list(
-		SPECIES_MANTID_GYNE =    'mods/ascent/icons/gyne/onmob/onmob_head_gyne.dmi',
-		SPECIES_MANTID_ALATE =   'mods/ascent/icons/alate/onmob/onmob_head_alate.dmi',
+		SPECIES_MANTID_GYNE =    'mods/ascent/icons/mob/gyne/onmob/onmob_head_gyne.dmi',
+		SPECIES_MANTID_ALATE =   'mods/ascent/icons/mob/alate/onmob/onmob_head_alate.dmi',
 		SPECIES_NABBER =         'icons/mob/species/nabber/onmob_head_gas.dmi',
 		SPECIES_MONARCH_QUEEN =  'icons/mob/species/nabber/msq/onmob_head_msq.dmi'
 		)
@@ -351,11 +368,11 @@
 
 /obj/item/clothing/suit/space/rig/mantid
 	desc = "It's closer to a mech than a suit."
-	icon = 'mods/ascent/icons/clothing/obj_suit.dmi'
+	icon = 'mods/ascent/icons/obj/clothing/obj_suit.dmi'
 	species_restricted = list(SPECIES_MANTID_GYNE, SPECIES_MANTID_ALATE)
 	sprite_sheets = list(
-		SPECIES_MANTID_GYNE =    'mods/ascent/icons/gyne/onmob/onmob_suit_gyne.dmi',
-		SPECIES_MANTID_ALATE =   'mods/ascent/icons/alate/onmob/onmob_suit_alate.dmi',
+		SPECIES_MANTID_GYNE =    'mods/ascent/icons/mob/gyne/onmob/onmob_suit_gyne.dmi',
+		SPECIES_MANTID_ALATE =   'mods/ascent/icons/mob/alate/onmob/onmob_suit_alate.dmi',
 		SPECIES_NABBER =         'icons/mob/species/nabber/onmob_suit_gas.dmi',
 		SPECIES_MONARCH_QUEEN =  'icons/mob/species/nabber/msq/onmob_suit_msq.dmi'
 		)
@@ -370,21 +387,21 @@
 
 /obj/item/clothing/shoes/magboots/rig/mantid
 	desc = "It's like a highly advanced forklift."
-	icon = 'mods/ascent/icons/clothing/obj_feet.dmi'
+	icon = 'mods/ascent/icons/obj/clothing/obj_feet.dmi'
 	species_restricted = list(SPECIES_MANTID_GYNE, SPECIES_MANTID_ALATE)
 	sprite_sheets = list(
-		SPECIES_MANTID_GYNE =  'mods/ascent/icons/gyne/onmob/onmob_shoes_gyne.dmi',
-		SPECIES_MANTID_ALATE = 'mods/ascent/icons/alate/onmob/onmob_shoes_alate.dmi'
+		SPECIES_MANTID_GYNE =  'mods/ascent/icons/mob/gyne/onmob/onmob_shoes_gyne.dmi',
+		SPECIES_MANTID_ALATE = 'mods/ascent/icons/mob/alate/onmob/onmob_shoes_alate.dmi'
 		)
 
 /obj/item/clothing/gloves/rig/mantid
 	desc = "They look like a cross between a can opener and a Swiss army knife the size of a shoebox."
-	icon = 'mods/ascent/icons/alate/onmob/onmob_gloves_alate.dmi'
+	icon = 'mods/ascent/icons/mob/alate/onmob/onmob_gloves_alate.dmi'
 	siemens_coefficient = 0
 	species_restricted = list(SPECIES_MANTID_GYNE, SPECIES_MANTID_ALATE, SPECIES_NABBER, SPECIES_MONARCH_QUEEN)
 	sprite_sheets = list(
-		SPECIES_MANTID_GYNE =            'mods/ascent/icons/gyne/onmob/onmob_gloves_gyne.dmi',
-		SPECIES_MANTID_ALATE =           'mods/ascent/icons/alate/onmob/onmob_gloves_alate.dmi',
+		SPECIES_MANTID_GYNE =            'mods/ascent/icons/mob/gyne/onmob/onmob_gloves_gyne.dmi',
+		SPECIES_MANTID_ALATE =           'mods/ascent/icons/mob/alate/onmob/onmob_gloves_alate.dmi',
 		SPECIES_NABBER =                 'icons/mob/species/nabber/onmob_hands_gas.dmi',
 		SPECIES_MONARCH_QUEEN =          'icons/mob/species/nabber/msq/onmob_hands_msq.dmi'
 		)
@@ -415,7 +432,8 @@
 		/obj/item/rig_module/device/clustertool,
 		/obj/item/rig_module/mounted/energy/plasmacutter,
 		/obj/item/rig_module/actuators,
-		/obj/item/rig_module/maneuvering_jets
+		/obj/item/rig_module/maneuvering_jets,
+		/obj/item/rig_module/device/mantid_anomaly_detector
 		)
 
 /obj/item/rig/mantid/gyne/seed
@@ -438,7 +456,8 @@
 		/obj/item/rig_module/device/welder,
 		/obj/item/rig_module/device/clustertool,
 		/obj/item/rig_module/mounted/energy/plasmacutter,
-		/obj/item/rig_module/maneuvering_jets
+		/obj/item/rig_module/maneuvering_jets,
+		/obj/item/rig_module/device/mantid_anomaly_detector
 	)
 
 /obj/item/rig/mantid/nabber/queen/seed
@@ -462,7 +481,8 @@
 		/obj/item/rig_module/device/welder,
 		/obj/item/rig_module/device/clustertool,
 		/obj/item/rig_module/mounted/energy/plasmacutter,
-		/obj/item/rig_module/maneuvering_jets
+		/obj/item/rig_module/maneuvering_jets,
+		/obj/item/rig_module/device/mantid_anomaly_detector
 	)
 
 /obj/item/rig/mantid/nabber/seed
@@ -486,5 +506,6 @@
 		/obj/item/rig_module/device/welder,
 		/obj/item/rig_module/device/clustertool,
 		/obj/item/rig_module/mounted/energy/plasmacutter,
-		/obj/item/rig_module/maneuvering_jets
+		/obj/item/rig_module/maneuvering_jets,
+		/obj/item/rig_module/device/mantid_anomaly_detector
 		)

@@ -1,0 +1,5 @@
+author: Lexanx
+changes:
+  - {rscadd: Добавлена возможность сохранять сканы с бодисканнера.}
+  - {rscadd: Добавлен новый тип файлов. BSC - bodyscan}
+delete-after: true
