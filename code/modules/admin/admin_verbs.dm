@@ -146,6 +146,7 @@ var/global/list/admin_verbs_spawn = list(
 	/client/proc/spawn_chemdisp_cartridge,
 	// [SIERRA-ADD] - CLIENT_VERBS - ,
 	/client/proc/respawn_as_self,
+	/client/proc/virus2_editor,
 	// [/SIERRA-ADD] - CLIENT_VERBS ,
 	/datum/admins/proc/mass_debug_closet_icons
 	)

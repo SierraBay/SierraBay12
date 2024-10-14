@@ -51,7 +51,10 @@
 	scan["paralysis"] = H.paralysis
 	scan["immune_system"] = H.virus_immunity()
 	scan["worms"] = H.has_brain_worms()
-
+//SEIRAA-ADD [VIRUSOLOGY]
+	if (LAZYLEN(H.virus2))
+		scan["virus"] = TRUE
+//SEIRAA-ADD
 	scan["reagents"] = list()
 
 	if(H.reagents.total_volume)
@@ -252,7 +255,13 @@
 			<tr><td colspan='2'>[SPAN_BAD("<center>Large growth detected in frontal lobe, possibly cancerous.</center>")]</td></tr>
 		*/
 		dat += "<tr><td colspan = '2'>Antibody levels and immune system perfomance are at [scan["immune_system"]*100]% of baseline.</td></tr>"
-
+//SIERRA ADD [VIRUSOLOGY]
+		if (scan["virus"])
+			if(skill_level >= SKILL_TRAINED)
+				dat += "<tr><td colspan='2'><span class='bad'><center>Viral pathogen detected in blood stream.</center></span></td></tr>"
+			else
+				dat += "<tr><td colspan='2'><center>Viral pathogen detected in blood stream.</center></td></tr>"
+//SIERRA ADD
 		if(scan["worms"])
 			dat += "<tr><td colspan='2'>[SPAN_BAD("<center>Large growth detected in frontal lobe, possibly cancerous.</center>")]</td></tr>"
 

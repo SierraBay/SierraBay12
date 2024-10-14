@@ -9,6 +9,7 @@
 	var/fleshcolor //Used for gibbed humans.
 	var/bloodcolor //Used for gibbed humans.
 	var/datum/dna/MobDNA
+	var/virusProb = 20 //the chance for viruses to spread on the gibs [SIERRA-ADD] VIRUSOLOGY
 
 
 /obj/gibspawner/New(location, datum/dna/_MobDNA, _fleshcolor, _bloodcolor)

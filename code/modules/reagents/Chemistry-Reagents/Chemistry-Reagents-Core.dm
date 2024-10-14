@@ -7,6 +7,10 @@
 		"blood_colour" = COLOR_BLOOD_HUMAN,
 		"trace_chem" = null,
 		"dose_chem" = null,
+	//[SIERRA-ADD] VIRUSOLOGY
+		"virus2" = list(),
+		"antibodies" = list(),
+	//[/SIERRA-ADD] VIRUSOLOGY
 		"has_oxy" = 1
 	)
 	name = "Blood"
@@ -41,6 +45,15 @@
 
 /datum/reagent/blood/get_data() // Just in case you have a reagent that handles data differently.
 	var/t = data.Copy()
+//SIERRA ADD VIRUSOLOGY
+	if(t["virus2"])
+		var/list/v = t["virus2"]
+		t["virus2"] = v.Copy()
+
+	if(t["antibodies"])//... and curing
+		var/list/v = t["antibodies"]
+		t["antibodies"] |= v.Copy()
+//SIERRA ADD
 	return t
 
 /datum/reagent/blood/touch_turf(turf/simulated/T)
