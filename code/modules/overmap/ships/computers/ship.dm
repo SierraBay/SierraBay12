@@ -126,5 +126,5 @@ somewhere on that shuttle. Subtypes of these can be then used to perform ship ov
 		for(var/weakref/W in viewers)
 			var/M = W.resolve()
 			if (M)
-				unlook(M)
+				invoke_async(PROC_REF(unlook), M)
 	. = ..()

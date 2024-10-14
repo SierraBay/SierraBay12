@@ -139,7 +139,7 @@
 	return istype(S, src)
 
 /obj/structure/proc/refresh_neighbors()
-	for(var/thing in RANGE_TURFS(src, 1))
+	for(var/thing as anything in RANGE_TURFS(src, 1))
 		var/turf/T = thing
 		T.update_icon()
 

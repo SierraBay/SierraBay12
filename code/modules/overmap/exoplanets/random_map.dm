@@ -93,7 +93,7 @@
 /datum/random_map/noise/exoplanet/proc/spawn_flora(turf/T, big)
 	if (big)
 		new /obj/landmark/exoplanet_spawn/large_plant(T)
-		for(var/turf/neighbor in RANGE_TURFS(T, 1))
+		for(var/turf/neighbor as anything in RANGE_TURFS(T, 1))
 			spawn_grass(neighbor)
 	else
 		new /obj/landmark/exoplanet_spawn/plant(T)
