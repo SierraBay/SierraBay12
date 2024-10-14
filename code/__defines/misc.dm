@@ -523,3 +523,7 @@
 ///from /datum/bank_account/pay_debt(), after a portion or all the debt has been paid.
 #define COMSIG_BANK_ACCOUNT_DEBT_PAID "bank_account_debt_paid"
 //[/SIERRA-ADD]
+
+/// A null statement to guard against EmptyBlock lint without necessitating the use of pass()
+/// Used to avoid proc-call overhead. But use sparingly. Probably pointless in most places.
+#define EMPTY_BLOCK_GUARD ;
