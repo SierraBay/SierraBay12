@@ -383,6 +383,11 @@ SUBSYSTEM_DEF(explosives)
 		if ((act_turfs[T] % 10) == 0)
 			CHECK_TICK
 
+	if(epicenter)
+		for(var/obj/item/device/beacon/explosion_watcher/W in explosion_watcher_list)
+			if(get_dist(W, epicenter) < 10)
+				W.react_explosion(epicenter, power)
+
 	explosion_in_progress = FALSE
 
 #undef SEARCH_DIR
