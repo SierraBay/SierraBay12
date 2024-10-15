@@ -220,10 +220,12 @@
 	update_icon()
 
 	// find any switches with same id as this one, and set their positions to match us
-	for(var/obj/machinery/conveyor_switch/S in world)
-		if(S.id == src.id)
-			S.position = position
-			S.update_icon()
+	for(var/obj/machinery/conveyor_switch/other_switch as anything in SSmachines.get_machinery_of_type(/obj/machinery/conveyor_switch))
+		if(other_switch.id != id)
+			continue
+
+		other_switch.position = position
+		other_switch.update_icon()
 	return TRUE
 
 /obj/machinery/conveyor_switch/proc/do_switch(mob/user)
