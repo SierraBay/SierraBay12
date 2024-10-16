@@ -423,8 +423,9 @@ var/global/const/MAP_HAS_RANK = 2		//Rank system, also togglable
 	if(!use_overmap)
 		return
 
+	var/static/list/exoplanet_types = subtypesof(/obj/overmap/visitable/sector/exoplanet)
 	for(var/i = 0, i < num_exoplanets, i++)
-		var/exoplanet_type = pick(subtypesof(/obj/overmap/visitable/sector/exoplanet))
+		var/exoplanet_type = pick(exoplanet_types)
 		var/obj/overmap/visitable/sector/exoplanet/new_planet = new exoplanet_type(null, planet_size[1], planet_size[2])
 		new_planet.build_level()
 
