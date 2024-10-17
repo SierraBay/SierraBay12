@@ -30,6 +30,11 @@
 	job_access_type = /datum/job/assistant
 	color = "#ccecff"
 
+/obj/item/card/id/sierra/vagabond
+	desc = "An identification card issued to NanoTrasen crewmembers aboard the NSV Sierra."
+	job_access_type = /datum/job/vagabond
+	color = "#ccecff"
+
 /obj/item/card/id/sierra/crew/medical
 	desc = "An identification card issued to medical crewmembers aboard the NSV Sierra."
 	job_access_type = /datum/job/doctor
