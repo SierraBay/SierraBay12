@@ -122,7 +122,7 @@
 		W.rebuild_zbleed()
 	// end of lighting stuff
 
-	for(var/turf/T in RANGE_TURFS(src, 1))
+	for(var/turf/T as anything in RANGE_TURFS(src, 1))
 		T.update_icon()
 
 	if(density != old_density)

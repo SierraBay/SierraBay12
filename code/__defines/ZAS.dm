@@ -139,3 +139,5 @@ GLOBAL_LIST_INIT(gzn_check, list(
 	}
 
 #endif
+
+#define GAS_STANDARD_AIRMIX "STANDARD_AIRMIX"

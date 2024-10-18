@@ -11,7 +11,7 @@
 	icon = 'icons/turf/space.dmi'
 	icon_state = "bluespace"
 	dynamic_lighting = FALSE
-	initial_gas = list(GAS_OXYGEN = MOLES_O2STANDARD, GAS_NITROGEN = MOLES_N2STANDARD)
+	initial_gas = GAS_STANDARD_AIRMIX
 	var/list/victims
 
 /turf/simulated/floor/bluespace/interlude/Initialize(mapload, ...)

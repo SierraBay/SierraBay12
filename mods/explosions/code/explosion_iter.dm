@@ -121,7 +121,7 @@ SUBSYSTEM_DEF(explosives)
 	var/vibration = 1
 	if(istype(epicenter, /turf/space))
 		vibration = 0
-		for(var/thing in RANGE_TURFS(epicenter, max_range))
+		for(var/thing as anything in RANGE_TURFS(epicenter, max_range))
 			var/turf/T = thing
 			if (!istype(T, /turf/space))
 		//If there is a nonspace tile within the explosion radius
@@ -145,7 +145,7 @@ SUBSYSTEM_DEF(explosives)
 					//If the person is standing in space, they wont hear
 						//But they may still feel the shaking
 						reception = 0
-						for(var/t_thing in RANGE_TURFS(M, 1))
+						for(var/t_thing as anything in RANGE_TURFS(M, 1))
 							var/turf/T = t_thing
 							if(!istype(T, /turf/space))
 							//If theyre touching the hull or on some extruding part of the station
@@ -188,7 +188,7 @@ SUBSYSTEM_DEF(explosives)
 	var/x0 = epicenter.x
 	var/y0 = epicenter.y
 
-	for(var/thing in RANGE_TURFS(epicenter, max_range))
+	for(var/thing as anything in RANGE_TURFS(epicenter, max_range))
 		var/turf/T = thing
 		if (!T)
 			continue
@@ -335,7 +335,7 @@ SUBSYSTEM_DEF(explosives)
 		if (T.type == /turf/space)	// Equality is faster than istype.
 			reception = EXPLFX_NONE
 
-			for (var/turf/simulated/THING in RANGE_TURFS(M, 1))
+			for (var/turf/simulated/THING as anything in RANGE_TURFS(M, 1))
 				reception |= EXPLFX_SHAKE
 				break
 

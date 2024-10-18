@@ -2,7 +2,7 @@
 var/global/list/state_machines = list()
 
 /proc/get_state_machine(datum/holder, base_type)
-	if(istype(holder) && base_type)
+	if(istype(holder) && base_type && holder.has_state_machine)
 		var/list/machines = global.state_machines["\ref[holder]"]
 		return islist(machines) && machines[base_type]
 
@@ -19,16 +19,18 @@ var/global/list/state_machines = list()
 				fsm_type = base_type
 			var/datum/state_machine/machine = new fsm_type(holder)
 			machines[base_type] = machine
+			holder.has_state_machine = TRUE
 			return machine
 
 /proc/remove_state_machine(datum/holder, base_type)
-	if(istype(holder) && base_type)
+	if(istype(holder) && base_type && holder.has_state_machine)
 		var/holder_ref = "\ref[holder]"
 		var/list/machines = global.state_machines[holder_ref]
 		if(length(machines))
 			machines -= base_type
 			if(!length(machines))
 				global.state_machines -= holder_ref
+				holder.has_state_machine = FALSE
 			return TRUE
 	return FALSE
 
@@ -43,8 +45,8 @@ var/global/list/state_machines = list()
 
 /datum/state_machine/New(datum/_holder)
 	..()
-	if(!istype(_holder))
-		stack_trace("Non-datum holder supplied to [type] New().")
+	if(!istype(_holder, expected_type))
+		stack_trace("Non-[expected_type] holder supplied to [type] New().")
 	else
 		holder_ref = weakref(_holder)
 	set_state(current_state)
