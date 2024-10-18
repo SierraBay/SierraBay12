@@ -229,6 +229,10 @@
 
 /mob/new_player/proc/AttemptLateSpawn(datum/job/job, spawning_at)
 
+	if(GAME_STATE == RUNLEVEL_GAME)
+		if(job.late_joinable == FALSE)
+			to_chat(usr, SPAN_WARNING("Вы не можете зайти во время раунда за эту роль."))
+			return 0
 	if(src != usr)
 		return 0
 	if(GAME_STATE != RUNLEVEL_GAME)
