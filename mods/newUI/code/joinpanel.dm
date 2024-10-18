@@ -93,9 +93,6 @@ GLOBAL_DATUM_INIT(joinpanel_state, /datum/topic_state/joinpanel, new)
 					to_chat(usr, "Нельзя зайти за ППТ без вайтлиста.")
 					return FALSE
 			//[/SIERRA-ADD]
-			if(GAME_STATE == RUNLEVEL_GAME)
-				if(job.late_joinable == FALSE)
-					return 0
 
 			player.AttemptLateSpawn(job, player.client.prefs.spawnpoint)
 			return TRUE

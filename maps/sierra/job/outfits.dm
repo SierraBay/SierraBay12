@@ -542,4 +542,5 @@ Keeping them simple for now, just spawning with basic EC uniforms, and pretty mu
 	uniform = /obj/item/clothing/under/color/grey
 	l_ear = /obj/item/device/radio/headset
 	shoes = /obj/item/clothing/shoes/black
+	r_hand = /obj/item/crowbar/red
 	id_types = list(/obj/item/card/id/sierra/vagabond)

@@ -31,9 +31,9 @@
 	color = "#ccecff"
 
 /obj/item/card/id/sierra/vagabond
-	desc = "An identification card issued to NanoTrasen crewmembers aboard the NSV Sierra."
+	desc = "An old identification card issued to NanoTrasen crewmembers aboard the NCV Sierra."
 	job_access_type = /datum/job/vagabond
-	color = "#ccecff"
+	color = "#232525"
 
 /obj/item/card/id/sierra/crew/medical
 	desc = "An identification card issued to medical crewmembers aboard the NSV Sierra."
