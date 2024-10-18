@@ -55,10 +55,15 @@
 	supervisors = "Вашему разуму"
 	selection_color = "#515151"
 	department_flag = CIV
+	account_allowed = FALSE
+	create_record = FALSE
 	announced = FALSE
+	late_joinable = FALSE
 	min_goals = 2
 	max_goals = 7
 	access = list(access_maint_tunnels)
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/passenger/vagabond
-	allowed_branches = /datum/mil_branch/civilian
-	allowed_ranks = list(/datum/mil_rank/civ/civ)
+	allowed_branches = list(/datum/mil_branch/civilian)
+	allowed_ranks = list(
+		/datum/mil_rank/civ/civ
+	)
