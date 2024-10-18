@@ -8,7 +8,7 @@ MANTIDIFY(/obj/item/tank/jetpack/carbondioxide,  "maneuvering pack",          "p
 /obj/structure/bed/chair/padded/purple/ascent
 	icon_state = "nest_chair"
 	base_icon = "nest_chair"
-	icon = 'mods/ascent/icons/ascent_doodads.dmi'
+	icon = 'mods/ascent/icons/misc/ascent_doodads.dmi'
 	buckle_pixel_shift = list(0,5,0)
 	pixel_z = 0
 
@@ -37,7 +37,7 @@ MANTIDIFY(/obj/item/tank/jetpack/carbondioxide,  "maneuvering pack",          "p
 /obj/item/cell/mantid
 	name = "mantid microfusion plant"
 	desc = "An impossibly tiny fusion reactor of mantid design."
-	icon = 'mods/ascent/icons/ascent.dmi'
+	icon = 'mods/ascent/icons/items/ascent.dmi'
 	icon_state = "plant"
 	maxcharge = 1500
 	w_class = ITEM_SIZE_NORMAL
@@ -63,7 +63,7 @@ MANTIDIFY(/obj/item/tank/jetpack/carbondioxide,  "maneuvering pack",          "p
 	lawupdate =      FALSE
 	scrambledcodes = TRUE
 	icon_state = "drone-ascent"
-	spawn_sound = 'sound/voice/ascent1.ogg'
+	spawn_sound = 'mods/ascent/sound/ascent1.ogg'
 	cell =   /obj/item/cell/mantid
 	laws =   /datum/ai_laws/ascent
 	idcard = /obj/item/card/id/ascent
