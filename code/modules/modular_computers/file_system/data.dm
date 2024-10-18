@@ -32,8 +32,18 @@
 	read_only = TRUE
 	papertype = /obj/item/paper/bodyscan
 
+//[SIERRA-EDIT]
 /datum/computer_file/data/bodyscan/generate_file_data(mob/user)
-	return display_medical_data(metadata, user.get_skill_value(SKILL_MEDICAL), TRUE)
+	return display_medical_data(stored_data, user.get_skill_value(SKILL_MEDICAL), TRUE)
+//[/SIERRA-EDIT]
+//[SIERRA-ADD]
+/datum/computer_file/data/bodyscan/proc/generate_print_data(mob/user)
+	return digitalPencode2html(stored_data)
+
+/datum/computer_file/data/bodyscan/proc/set_filename(new_name)
+	var/list/replacechars = list(":" = ""," " = "")
+	return replace_characters(new_name, replacechars)
+//[/SIERRA-ADD]
 
 /// Mapping tool - creates a named modular computer file in a computer's storage on late initialize.
 /// Use this to do things like automatic records and blackboxes. Alternative for paper records.
