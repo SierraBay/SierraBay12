@@ -1,0 +1,22 @@
+#ifndef MODPACK_FAILU_SKRELL_CLOTHES
+#define MODPACK_FAILU_SKRELL_CLOTHES
+
+#include "_failu_skrell_clothes.dm"
+#include "code/suits.dm"
+#include "code/uniforms.dm"
+#include "code/lists/xenowear.dm"
+
+#endif
+// BEGIN_INTERNALS
+// END_INTERNALS
+// BEGIN_FILE_DIR
+#define FILE_DIR .
+// END_FILE_DIR
+// BEGIN_PREFERENCES
+// END_PREFERENCES
+// BEGIN_INCLUDE
+#include "_failu_skrell_clothes.dm"
+#include "code\suits.dm"
+#include "code\uniforms.dm"
+#include "code\lists\xenowear.dm"
+// END_INCLUDE
