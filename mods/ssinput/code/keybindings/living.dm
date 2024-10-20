@@ -18,16 +18,6 @@
 	L.lay_down()
 	return TRUE
 
-/datum/keybinding/mob/face_direction
-	hotkey_keys = list("]")
-	name = "face_direction"
-	full_name = "Face Direction"
-	description = "Block dir"
-
-/datum/keybinding/mob/face_direction/down(client/user)
-	var/mob/living/L = user.mob
-	L.set_face_dir()
-	return TRUE
 
 /datum/keybinding/living/resist
 	hotkey_keys = list("B")
