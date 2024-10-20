@@ -54,10 +54,17 @@
 
 	/// log world.log to game log
 	var/static/log_world_output = FALSE
+<<<<<<< ours
 //[SIERRA-ADD]
 	/// log signals messages
 	var/static/log_signals = FALSE
 //[/SIERRA-ADD]
+=======
+
+	/// log computer commands
+	var/static/log_computer_commands = FALSE
+
+>>>>>>> theirs
 	/// Allows admins with relevant permissions to have their own ooc colour
 	var/static/allow_admin_ooccolor = FALSE
 
@@ -550,6 +557,8 @@
 				log_hrefs = TRUE
 			if ("log_runtime")
 				log_runtime = TRUE
+			if ("log_computer_commands")
+				log_computer_commands = TRUE
 			if ("generate_asteroid")
 				generate_map = TRUE
 			if ("no_click_cooldown")
