@@ -1,0 +1,6 @@
+author: Builder13
+changes:
+  - {rscadd: Возвращены OOC заметки персонажа. Их можно настроить через кнопку Set
+      OOC notes рядом с кнопками флавора. Заполненные OOC заметки можно смотреть через
+      examine персонажа}
+delete-after: true
