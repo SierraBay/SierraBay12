@@ -4,15 +4,15 @@
 		/datum/species/adherent = list(ADHERENT_JOBS),
 		/datum/species/nabber = list(NABBER_JOBS),
 		/datum/species/vox = list(SILICON_JOBS, VAGABONDS_JOBS),
-		/datum/species/human/mule = list(SILICON_JOBS)
+		/datum/species/human/mule = list(SILICON_JOBS, VAGABONDS_JOBS)
 	)
 
 	species_to_job_blacklist = list(
-		/datum/species/unathi = list(HUMAN_ONLY_JOBS),
-		/datum/species/unathi/yeosa = list(HUMAN_ONLY_JOBS),
-		/datum/species/tajaran = list(HUMAN_ONLY_JOBS),
-		/datum/species/skrell = list(SKRELL_BLACKLISTED_JOBS),
-		/datum/species/machine = list(MACHINE_BLACKLISTED_JOBS),
+		/datum/species/unathi = list(HUMAN_ONLY_JOBS, VAGABONDS_JOBS),
+		/datum/species/unathi/yeosa = list(HUMAN_ONLY_JOBS, VAGABONDS_JOBS),
+		/datum/species/tajaran = list(HUMAN_ONLY_JOBS, VAGABONDS_JOBS),
+		/datum/species/skrell = list(SKRELL_BLACKLISTED_JOBS, VAGABONDS_JOBS),
+		/datum/species/machine = list(MACHINE_BLACKLISTED_JOBS, VAGABONDS_JOBS),
 		/datum/species/diona = list(
 			HUMAN_ONLY_JOBS, /datum/job/exploration_leader, /datum/job/explorer_pilot,
 			/datum/job/officer, /datum/job/warden, /datum/job/detective,
