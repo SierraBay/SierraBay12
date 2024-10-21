@@ -311,7 +311,6 @@
 		if (target.mob_size < user.mob_size) //Damaging attacks overwhelm smaller mobs
 			target.throw_at(get_edge_target_turf(target,get_dir(user, target)),1, 1)
 
-<<<<<<< ours
 /obj/item/material/hatchet/machete/mech/resolve_attackby(atom/A, mob/user, click_params)
 	//Case 1: Default, you are hitting something that isn't a mob. Just do whatever, this isn't dangerous or op.
 	//[SIERRA-ADD] - Mechs-by-Shegar
@@ -325,8 +324,6 @@
 		playsound(user, 'sound/mecha/mechmove03.ogg', 35, 1)
 		return ..()
 
-=======
->>>>>>> theirs
 /obj/item/material/hatchet/machete/mech/attack_self(mob/living/user)
 	. = ..()
 	if (user.a_intent != I_HURT)
