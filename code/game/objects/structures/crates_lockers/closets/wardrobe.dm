@@ -221,8 +221,8 @@
 /obj/structure/closet/wardrobe/robotics_black
 	name = "robotics wardrobe"
 	closet_appearance = /singleton/closet_appearance/wardrobe/black
-
-/obj/structure/closet/wardrobe/robotics_black/New()
+// [SIERRA-EDIT]
+/*/obj/structure/closet/wardrobe/robotics_black/New()
 	..()
 	new /obj/item/clothing/under/rank/roboticist(src)
 	new /obj/item/clothing/under/rank/roboticist(src)
@@ -231,8 +231,8 @@
 	new /obj/item/clothing/shoes/black(src)
 	new /obj/item/clothing/shoes/black(src)
 	new /obj/item/clothing/gloves/thick(src)
-	new /obj/item/clothing/gloves/thick(src)
-
+	new /obj/item/clothing/gloves/thick(src)*/
+// [SIERRA-EDIT-END]
 /obj/structure/closet/wardrobe/chemistry_white
 	name = "chemistry wardrobe"
 	closet_appearance = /singleton/closet_appearance/wardrobe/white

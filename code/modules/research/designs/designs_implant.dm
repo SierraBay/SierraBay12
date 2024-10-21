@@ -1,5 +1,5 @@
 /datum/design/item/implant
-	materials = list(MATERIAL_ALUMINIUM = 50, MATERIAL_GLASS = 50)
+	materials = list(MATERIAL_ALUMINIUM = 500, MATERIAL_GLASS = 500, MATERIAL_PLASTIC = 500)
 	category = list("Implant")
 
 /datum/design/item/implant/chemical
@@ -50,3 +50,19 @@
 	req_tech = list(TECH_MATERIAL = 2, TECH_BIO = 3, TECH_ESOTERIC = 4)
 	build_path = /obj/item/implantcase/explosive
 	sort_string = "MFAAG"
+
+/datum/design/item/implant/implanter
+	name = "implanter"
+	id = "implanter"
+	req_tech = list(TECH_MATERIAL = 1, TECH_BIO = 2)
+	materials = list(MATERIAL_ALUMINIUM = 2000, MATERIAL_GLASS = 2000, MATERIAL_PLASTIC = 2000)
+	build_path = /obj/item/implanter
+	sort_string = "MFBAG"
+
+/datum/design/item/implant/implant_pad
+	name = "implant pad"
+	id = "implant_pad"
+	req_tech = list(TECH_MATERIAL = 2, TECH_BIO = 2)
+	materials = list(MATERIAL_ALUMINIUM = 4000, MATERIAL_GLASS = 2000, MATERIAL_PLASTIC = 4000)
+	build_path = /obj/item/implantpad
+	sort_string = "MFBBG"

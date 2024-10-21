@@ -49,7 +49,7 @@
 
 /singleton/hierarchy/supply_pack/nonessent/mech_kit
 	num_contained = 1
-	name = "mech_castomizator"
+	name = "Mech castomisation kit"
 	contains = list(/obj/item/device/kit/mech)
 	cost = 50
 	containername = "heavy exosuit modkit crate"
