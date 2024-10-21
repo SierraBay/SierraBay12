@@ -29,11 +29,22 @@
 	var/message = ""
 	var/saved_file_num = 0
 	var/percentage
+	processing_size = 1
 	var/GQ = 1
 
-/datum/proc/get_recursive(mob/living/user)
-	SHOULD_CALL_PARENT(FALSE)
-	return user
+/datum/ntnet
+	var/active_miners = 0
+
+/datum/computer_file/program/folding/on_startup(mob/living/user, datum/extension/interactive/ntos/new_host)
+	. = ..()
+	var/obj/item/stock_parts/computer/processor_unit/C = computer.get_component(PART_CPU)
+	processing_size = C.processing_power
+	ntnet_global.active_miners += 1
+
+/datum/computer_file/program/folding/on_shutdown(mob/living/user, datum/extension/interactive/ntos/new_host)
+	. = ..()
+	processing_size = 1
+	ntnet_global.active_miners -= 1
 
 /datum/computer_file/program/folding/Topic(href, href_list)
 	. = ..()
@@ -46,10 +57,15 @@
 		program_status = PROGRAM_STATUS_RUNNING
 
 	if(href_list["start"] && started_on == 0)
-
+		var/totalminersmodifier = 1
 		started_on = world.timeofday
-		current_interval = ((rand(MINIMUM_SCIENCE_INTERVAL, MAXIMUM_SCIENCE_INTERVAL) * GQ) / get_speed()) SECONDS
-		next_event = ((rand(MINIMUM_FOLDING_EVENT_INTERVAL, MAXIMUM_FOLDING_EVENT_INTERVAL) * get_speed()) SECONDS) + world.timeofday
+		if(ntnet_global.active_miners > 2 * LAZYLEN(ntnet_global.relays))
+			totalminersmodifier = ntnet_global.active_miners
+			current_interval = ((rand(MINIMUM_SCIENCE_INTERVAL, MAXIMUM_SCIENCE_INTERVAL) * GQ) / get_speed() * (totalminersmodifier/2)) SECONDS
+			next_event = ((rand(MINIMUM_FOLDING_EVENT_INTERVAL, MAXIMUM_FOLDING_EVENT_INTERVAL) * get_speed() / (totalminersmodifier/2)) SECONDS) + world.timeofday
+		else
+			current_interval = ((rand(MINIMUM_SCIENCE_INTERVAL, MAXIMUM_SCIENCE_INTERVAL) * GQ) / get_speed()) SECONDS
+			next_event = ((rand(MINIMUM_FOLDING_EVENT_INTERVAL, MAXIMUM_FOLDING_EVENT_INTERVAL) * get_speed()) SECONDS) + world.timeofday
 
 	if(href_list["save"] && started_on > 0 && program_status != PROGRAM_STATUS_CRASHED)
 		if(started_on + current_interval > world.timeofday)
@@ -115,6 +131,8 @@
 				if(PROGRAM_STATUS_RUNNING_SCALDING) //1/3 chance on all following ticks for the program to crash.
 					to_chat(h, SPAN_WARNING("\The [host] pings an error chime."))
 					program_status = PROGRAM_STATUS_CRASHED
+					HDD.damage_health(rand (5, 15))
+					CPU.damage_health(rand (10, 25))
 					crashed_at = world.timeofday
 		else
 			program_status = PROGRAM_STATUS_CRASHED
