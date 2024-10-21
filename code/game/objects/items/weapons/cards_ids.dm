@@ -165,26 +165,17 @@
 
 var/global/const/NO_EMAG_ACT = -50
 
-
-<<<<<<< ours
-	uses -= used_uses
-	A.add_fingerprint(user)
-	if(used_uses)
-		log_and_message_admins("emagged \an [A].")
-		//[SIERRA-ADD]
-		playsound(get_turf(A), pick(emag_sounds), 40, extrarange = -3)
-		//[SIERRA-ADD]
-=======
 /obj/item/card/emag/use_before(atom/target, mob/living/user, click_parameters)
 	var/used_uses = target.emag_act(uses, user, src)
 	if (used_uses == NO_EMAG_ACT)
 		return ..()
->>>>>>> theirs
-
 	uses -= used_uses
 	target.add_fingerprint(user, tool = src)
 	if (used_uses)
 		log_and_message_admins("emagged \a [target].")
+		//[SIERRA-ADD]
+		playsound(get_turf(A), pick(emag_sounds), 40, extrarange = -3)
+		//[SIERRA-ADD]
 
 	if (uses < 1)
 		user.visible_message(
