@@ -38,12 +38,18 @@
 	spawn_flags = SPECIES_CAN_JOIN | SPECIES_IS_WHITELISTED | SPECIES_NO_FBP_CONSTRUCTION
 	appearance_flags = SPECIES_APPEARANCE_HAS_UNDERWEAR | SPECIES_APPEARANCE_HAS_EYE_COLOR //IPCs can wear undies too :(
 
+	var/in_camera_mode = 0  //special fot ECS photos [SIERRA-ADD]
+
 	blood_color = "#1f181f"
 	flesh_color = "#575757"
 
 	has_organ = list(
-		BP_POSIBRAIN = /obj/item/organ/internal/posibrain,
-		BP_EYES = /obj/item/organ/internal/eyes/robot
+		BP_POSIBRAIN = /obj/item/organ/internal/posibrain/ipc/second,
+		BP_EYES = /obj/item/organ/internal/eyes/robot,
+		//[SIERRA-ADD]
+		BP_EXONET = /obj/item/organ/internal/ecs/second_gen,
+		BP_COOLING = /obj/item/organ/internal/cooling_system,
+		//[/SIERRA-ADD]
 		)
 
 	heat_discomfort_level = 373.15

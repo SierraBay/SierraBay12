@@ -1,0 +1,37 @@
+{{:helper.ntscieMode()}}
+{{if data.crashed}}
+	<div class="block">
+		FOLDING@SCIENCE has stopped responding. The application may respond again if you wait.<br>
+		<i>Do you want to try and resume this process?</i>
+		<div class="item">
+			{{:helper.link('Restart Program', null, { "fix_crash": 1 })}}
+		</div>
+	</div>
+{{else data.computing}}
+	<div class="block">
+		<center><h2>{{:data.science_string}}</h2></center>
+	</div>
+	{{for data.dos_strings}}
+		<center>{{:value}}</center>
+	{{/for}}
+	{{if data.completed}}
+		Computation complete!<br>
+		<div class="item">
+			{{:helper.link('Save', null, { "save": 1 })}}
+		</div>
+	{{else}}
+		<center>Time Remaining: {{:data.time_remaining}} seconds<br></center>
+	{{/if}}
+{{else}}
+	<div class="block">
+		Science going ain't like you planned? Not using that dusty old computer? Donate your processor cycles to SCIENCE!
+	</div>
+	<div class="item">
+		{{:helper.link('GQ', null, { 'gq' : value })}}
+		[{{:data.gq}}]
+		<right>   Possible amount of scientific research equals [{{:data.paspmin}} - {{:data.paspmax}}]</right>
+	</div>
+	<div class="item">
+		{{:helper.link('Fold Some Space Science', null, { "start": 1 })}}
+	</div>
+{{/if}}

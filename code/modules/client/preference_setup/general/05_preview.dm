@@ -116,7 +116,7 @@
 		// last_built_icon.Blend(getFlatIcon(mannequin, NORTH, always_use_defdir = TRUE), ICON_OVERLAY, 25, 17)
 		// CHECK_TICK
 		mannequin.dir = man_dir
-		last_built_icon.Blend(getFlatIcon(mannequin, man_dir, always_use_defdir = TRUE), ICON_OVERLAY, 25, 3)
+		last_built_icon.Blend(getFlatIcon(mannequin, man_dir), ICON_OVERLAY, 25, 3) //[SIERRA-EDIT]
 	preview_icon = new (last_built_icon)
 	var/scale = client.get_preference_value(/datum/client_preference/preview_scale)
 	switch (scale)
