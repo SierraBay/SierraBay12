@@ -254,6 +254,14 @@
 		if(!target_mob.aura_check(AURA_TYPE_BULLET, src,def_zone))
 			return 1
 		result = target_mob.bullet_act(src, def_zone)
+	//[SIERRA-ADD] - Mechs-by-Shegar - В меха нельзя просто так промахнуться!
+	if(result == PROJECTILE_FORCE_MISS && istype(target_mob, /mob/living/exosuit) )
+		if(prob(20))
+			target_mob.visible_message(SPAN_NOTICE("\The [src] rebounds from  [target_mob]!"))
+			return
+		else
+			result = null
+	//[SIERRA-ADD] - Mechs-by-Shegar
 
 	if(result == PROJECTILE_FORCE_MISS)
 		if(!silenced)

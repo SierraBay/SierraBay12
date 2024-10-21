@@ -16,6 +16,8 @@
 	power_channel = ENVIRON
 	interact_offline = FALSE
 
+	health_flags = HEALTH_FLAG_BREAKABLE
+
 	explosion_resistance = 10
 	/// Boolean. Whether or not the AI control mechanism is disabled.
 	var/ai_control_disabled = FALSE
@@ -646,6 +648,29 @@ About the new airlock wires panel:
 	set_airlock_overlays(state)
 
 
+/obj/machinery/door/airlock/on_broken()
+	if (health_dead())
+		return // Anything here is redundant since it's going to qdel anyway
+	set_broken(TRUE, MACHINE_BROKEN_HEALTH)
+	health_min_damage = floor(initial(health_min_damage) * 3.5) // The frame is beefier than the control panel.
+	update_icon()
+
+
+/obj/machinery/door/airlock/on_unbroken()
+	set_broken(FALSE, MACHINE_BROKEN_HEALTH)
+	health_min_damage = initial(health_min_damage)
+	update_icon()
+
+
+/obj/machinery/door/airlock/on_death()
+	visible_message(SPAN_DANGER("\The [src] completely breaks apart!"))
+	var/obj/structure/broken_door/broken_door = new(loc)
+	transfer_fingerprints_to(broken_door)
+	broken_door.icon = icon
+	broken_door.dir = dir
+	qdel_self()
+
+
 /obj/machinery/door/airlock/proc/set_airlock_overlays(state)
 	set_light(0)
 	var/list/new_overlays = list()
@@ -832,9 +857,9 @@ About the new airlock wires panel:
 		return STATUS_CLOSE
 	if(issilicon(user) && !src.canAIControl())
 		if (src.isAllPowerLoss()) //don't really like how this gets checked a second time, but not sure how else to do it.
-			to_chat(user, SPAN_WARNING("Unable to interface: Connection timed out."))
+			to_chat(user, "<span class='warning'>Unable to interface: Connection timed out.</span>")
 		else
-			to_chat(user, SPAN_WARNING("Unable to interface: Connection refused."))
+			to_chat(user, "<span class='warning'>Unable to interface: Connection refused.</span>")
 		return STATUS_CLOSE
 
 	return ..()
@@ -1367,6 +1392,8 @@ About the new airlock wires panel:
 		to_chat(user, "The bolt cover has been cut open.")
 	if (lock_cut_state == BOLTS_CUT)
 		to_chat(user, "The door bolts have been cut.")
+	if (health_broken())
+		to_chat(user, SPAN_WARNING("The control panel is broken open."))
 	if(brace)
 		to_chat(user, "\The [brace] is installed on \the [src], preventing it from opening.")
 		brace.examine_damage_state(user)

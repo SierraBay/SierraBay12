@@ -5556,6 +5556,9 @@
 	},
 /obj/structure/cable/blue,
 /obj/floor_decal/corner/blue/three_quarters,
+/obj/structure/panic_button{
+	pixel_y = -32
+	},
 /turf/simulated/floor/tiled/dark,
 /area/liberia/bridge)
 "jU" = (

@@ -13,8 +13,8 @@
 	name = "smart stun revolver"
 	desc = "This A&M X6 is fitted with an NT1019 chip which allows remote authorization of weapon functionality. It has an SCG emblem on the grip."
 	icon = 'icons/obj/guns/stunrevolver_secure.dmi'
-	icon_state = "revolverstun100"
-	modifystate= "revolverstun"
+	icon_state = "energyrevolverstun100"
+	modifystate= "energyrevolverstun"
 	item_icons = list(
 		slot_l_hand_str = 'icons/mob/onmob/items/lefthand_guns_secure.dmi',
 		slot_r_hand_str = 'icons/mob/onmob/items/righthand_guns_secure.dmi'

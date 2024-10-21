@@ -37,7 +37,12 @@
 	data["updating"] = updating
 	data["update_progress"] = update_progress
 	data["updates"] = updates
-
+//[SIERRA-ADD]
+	var/obj/item/modular_computer/c = holder
+	if(istype(c))
+		if(c.in_camera_mode)
+			data["in_camera_mode"] = 1
+//[/SIERRA-ADD]
 	ui = SSnano.try_update_ui(user, src, ui_key, ui, data, force_open)
 	if (!ui)
 		ui = new(user, src, ui_key, "laptop_mainscreen.tmpl", "NTOS Main Menu ", 400, 500)
@@ -87,6 +92,13 @@
 	if( href_list["PC_minimize"] )
 		minimize_program(usr)
 		return TOPIC_HANDLED
+//[SIERRA-ADD]
+	var/obj/item/modular_computer/c = holder
+	if(istype(c))
+		if( href_list["PC_camera"] )
+			camera()
+			return TOPIC_HANDLED
+//[/SIERRA-ADD]
 
 	if( href_list["PC_killprogram"] )
 		var/datum/computer_file/program/P = get_file(href_list["PC_killprogram"])

@@ -3,6 +3,3 @@
 
 /obj/item/flamethrower/full/mech
 	var/mob/living/exosuit/owner
-
-/obj/item/mech_equipment/mounted_system/flamethrower/installed()
-	//holding.owner = owner
