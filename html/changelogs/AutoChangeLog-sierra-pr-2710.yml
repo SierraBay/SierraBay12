@@ -1,0 +1,4 @@
+author: Builer13
+changes:
+  - {bugfix: Через кейбинд больше нельзя дропнуть недропаемые вещи (аугменты)}
+delete-after: true
