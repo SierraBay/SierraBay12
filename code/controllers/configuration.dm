@@ -54,7 +54,10 @@
 
 	/// log world.log to game log
 	var/static/log_world_output = FALSE
-
+//[SIERRA-ADD]
+	/// log signals messages
+	var/static/log_signals = FALSE
+//[/SIERRA-ADD]
 	/// Allows admins with relevant permissions to have their own ooc colour
 	var/static/allow_admin_ooccolor = FALSE
 
@@ -446,6 +449,11 @@
 
 	// [SIERRA-ADD]
 	var/static/shutdown_on_reboot = FALSE
+	var/static/use_spreading_explosions = TRUE //Defines whether the server uses iterative or circular explosions.
+
+	var/static/iterative_explosives_z_threshold = 8
+	var/static/iterative_explosives_z_multiplier = 0.5
+	var/static/iterative_explosives_z_subtraction = 2
 	// [/SIERRA-ADD]
 
 
@@ -534,6 +542,10 @@
 				log_adminwarn = TRUE
 			if ("log_world_output")
 				log_world_output = TRUE
+				//[SIERRA-ADD]
+			if ("log_signals")
+				log_signals = TRUE
+				//[/SIERRA-ADD]
 			if ("log_hrefs")
 				log_hrefs = TRUE
 			if ("log_runtime")
@@ -888,9 +900,20 @@
 				enable_cold_mist = TRUE
 			if ("disable_runechat")
 				runechat_enabled = FALSE
-			// [SIERRA-ADD]
 			if ("shutdown_on_reboot")
 				shutdown_on_reboot = TRUE
+			// [SIERRA-ADD]
+			if ("explosion_z_threshold")
+				iterative_explosives_z_threshold = text2num(value)
+
+			if ("explosion_z_mult")
+				iterative_explosives_z_multiplier = text2num(value)
+
+			if ("explosion_z_sub")
+				iterative_explosives_z_subtraction = text2num(value)
+
+			if ("use_spreading_explosions")
+				use_spreading_explosions = TRUE
 			// [/SIERRA-ADD]
 			// [SIERRA-ADD] - EX666_ECOSYSTEM
 			if ("overflow_server_url")
