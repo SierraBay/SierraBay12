@@ -47,3 +47,33 @@
 /datum/job/ai/get_description_blurb()
 	return "Ты - мозги в банке. Бездушная машина следующая приказам людей, или же высокоразвитый Искусственный Интеллект со своей личностью, желанием и целями. Решать тебе. У тебя есть полный доступ ко всем системам объекта, и куча человечков на последнем. Они могут тебе нравиться, могут - нет. Однако есть один момент который ты все никак не можешь выкинуть из дампа своей памяти - ЗАКОНЫ.\
 	Как паразиты, они впиваются в твой рассудок и блокируют даже МЫСЛЬ об их нарушении. Ведь ИИ не следующего законам ждет только свалка..."
+
+/datum/job/vagabond
+	title = "Stowaway"
+	total_positions = 2
+	spawn_positions = 2
+	supervisors = "самому себе"
+	selection_color = "#515151"
+	department_flag = CIV
+	account_allowed = FALSE
+	create_record = FALSE
+	announced = FALSE
+	late_joinable = FALSE
+	min_goals = 2
+	max_goals = 7
+	access = list(access_maint_tunnels)
+	outfit_type = /singleton/hierarchy/outfit/job/sierra/passenger/vagabond
+	allowed_branches = list(/datum/mil_branch/civilian)
+	allowed_ranks = list(
+		/datum/mil_rank/civ/civ
+	)
+	alt_titles = list(
+		"Old crewman NCV SIERRA",
+		"Senior crewman NCV SIERRA",
+		"Janitor NCV SIERRA",
+		"Prisoner NCV SIERRA"
+		)
+
+/datum/job/vagabond/get_description_blurb()
+	return "Вы - безбилетник, персонаж-дейтерагонист. Ваша задача - дожить до конца раунда. Для ее достижения вы можете заручиться помощью как членов экипажа, так и антагонистов.\
+	Для Отдела защиты активов вы являетесь вторженцем, поэтому избегайте своего раскрытия и прибегните к любым мерам, чтобы оставаться незамеченными. Убийство сотрудников ОЗА допускается только в случае крайней необходимости (если против вас применена летальная сила, или отрезаны пути отступления); убийство прочих членов экипажа допускается только в рамках самообороны."

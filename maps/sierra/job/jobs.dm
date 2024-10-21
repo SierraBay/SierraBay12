@@ -1,28 +1,29 @@
+#define VAGABONDS_JOBS /datum/job/vagabond
 /datum/map/sierra
 	species_to_job_whitelist = list(
 		/datum/species/adherent = list(ADHERENT_JOBS),
 		/datum/species/nabber = list(NABBER_JOBS),
-		/datum/species/vox = list(SILICON_JOBS),
-		/datum/species/human/mule = list(SILICON_JOBS)
+		/datum/species/vox = list(SILICON_JOBS, VAGABONDS_JOBS),
+		/datum/species/human/mule = list(SILICON_JOBS, VAGABONDS_JOBS)
 	)
 
 	species_to_job_blacklist = list(
-		/datum/species/unathi = list(HUMAN_ONLY_JOBS),
-		/datum/species/unathi/yeosa = list(HUMAN_ONLY_JOBS),
-		/datum/species/tajaran = list(HUMAN_ONLY_JOBS),
-		/datum/species/skrell = list(SKRELL_BLACKLISTED_JOBS),
-		/datum/species/machine = list(MACHINE_BLACKLISTED_JOBS),
+		/datum/species/unathi = list(HUMAN_ONLY_JOBS, VAGABONDS_JOBS),
+		/datum/species/unathi/yeosa = list(HUMAN_ONLY_JOBS, VAGABONDS_JOBS),
+		/datum/species/tajaran = list(HUMAN_ONLY_JOBS, VAGABONDS_JOBS),
+		/datum/species/skrell = list(SKRELL_BLACKLISTED_JOBS, VAGABONDS_JOBS),
+		/datum/species/machine = list(MACHINE_BLACKLISTED_JOBS, VAGABONDS_JOBS),
 		/datum/species/diona = list(
 			HUMAN_ONLY_JOBS, /datum/job/exploration_leader, /datum/job/explorer_pilot,
 			/datum/job/officer, /datum/job/warden, /datum/job/detective,
 			/datum/job/qm,
 			/datum/job/senior_engineer, /datum/job/senior_doctor,
-			/datum/job/senior_scientist, /datum/job/security_assistant
+			/datum/job/senior_scientist, /datum/job/security_assistant, VAGABONDS_JOBS
 		),
 		/datum/species/resomi = list(
 	 		HUMAN_ONLY_JOBS, /datum/job/officer, /datum/job/exploration_leader,
 	 		/datum/job/warden, /datum/job/chief_engineer, /datum/job/rd,
-	 		/datum/job/iaa, /datum/job/security_assistant
+	 		/datum/job/iaa, /datum/job/security_assistant, VAGABONDS_JOBS
  		)
 	)
 
@@ -37,7 +38,7 @@
 		/datum/job/chief_steward, /datum/job/janitor, /datum/job/cook, /datum/job/bartender, /datum/job/steward, /datum/job/chaplain, /datum/job/actor,
 		/datum/job/senior_scientist, /datum/job/scientist, /datum/job/roboticist, /datum/job/scientist_assistant,
 		/datum/job/ai, /datum/job/cyborg,
-		/datum/job/assistant
+		/datum/job/assistant, /datum/job/vagabond
 	)
 
 	access_modify_region = list(
@@ -160,3 +161,4 @@
 #undef NABBER_JOBS
 #undef SKRELL_BLACKLISTED_JOBS
 #undef MACHINE_BLACKLISTED_JOBS
+#undef VAGABONDS_JOBS
