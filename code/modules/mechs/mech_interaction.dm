@@ -85,6 +85,11 @@
 	var/adj = A.Adjacent(src) // Why in the fuck isn't Adjacent() commutative.
 
 	var/modifiers = params2list(params)
+	//[SIERRA-ADD] - Mechs-by-Shegar
+	if(modifiers["middle"])
+		swap_hardpoint(user)
+		return
+	//[SIERRA-ADD]
 	if(modifiers["shift"])
 		examinate(user, A)
 		return
@@ -422,6 +427,11 @@
 /mob/living/exosuit/use_tool(obj/item/tool, mob/user, list/click_params)
 	// Cable Coil - Repair burn damage
 	if (isCoil(tool))
+		//[SIERRA-ADD] - Mechs-by-Shegar
+		if(inmech(user, src))
+			to_chat(user, "You cannot interacti with mech inside mech.")
+			return
+		//[SIERRA-ADD]
 		if (!getFireLoss())
 			USE_FEEDBACK_FAILURE("\The [src] has no electrical damage to repair.")
 			return TRUE
@@ -521,6 +531,11 @@
 	else if (istype(tool, /obj/item/device/multitool/multimeter))
 		can_hack_id(tool, user)
 	else if (isMultitool(tool))
+		//[SIERRA-ADD] - Mechs-by-Shegar
+		if(inmech(user, src))
+			to_chat(user, "You cannot interacti with mech inside mech.")
+			return
+		//[SIERRA-ADD]
 		if(id_holder)
 			var/list/variants = list("Restore ID data", "Dismantle equipment")
 			var/bla
@@ -567,6 +582,11 @@
 
 	// Screwdriver - Remove cell
 	else if (isScrewdriver(tool))
+		//[SIERRA-ADD] - Mechs-by-Shegar
+		if(inmech(user, src))
+			to_chat(user, "You cannot interacti with mech inside mech.")
+			return
+		//[SIERRA-ADD]
 		if (!maintenance_protocols)
 			USE_FEEDBACK_FAILURE("\The [src]'s maintenance protocols must be enabled to access the power cell.")
 			return TRUE
@@ -597,6 +617,11 @@
 
 	// Welding Tool - Repair physical damage
 	else if (isWelder(tool))
+		//[SIERRA-ADD] - Mechs-by-Shegar
+		if(inmech(user, src))
+			to_chat(user, "You cannot interacti with mech inside mech.")
+			return
+		//[SIERRA-ADD]
 		if (!getBruteLoss())
 			USE_FEEDBACK_FAILURE("\The [src] has no physical damage to repair.")
 			return TRUE

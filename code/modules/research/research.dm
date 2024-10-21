@@ -62,4 +62,5 @@ The tech datums are the actual "tech trees" that you improve through researching
 
 	var/datum/experiment_data/experiments
 	var/research_points = 0
+	var/list/uniquekeys = list()
 //[/SIERRA-EDIT] - MODPACK_RND

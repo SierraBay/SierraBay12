@@ -1993,6 +1993,7 @@ GLOBAL_LIST_INIT(dream_tokens, list(
 ))
 
 /mob/living/carbon/human/Topic(href, href_list)
+	. = ..()
 	///////Interactions!!///////
 	if(href_list["interaction"])
 		if (usr.stat == DEAD || usr.stat == UNCONSCIOUS || usr.restrained())
