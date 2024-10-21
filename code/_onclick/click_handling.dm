@@ -41,21 +41,12 @@ var/global/const/CLICK_HANDLER_REMOVE_IF_NOT_TOP    = FLAG(1)
 /datum/click_handler/New(mob/user)
 	..()
 	src.user = user
-<<<<<<< ours
-	if(flags & (CLICK_HANDLER_REMOVE_ON_MOB_LOGOUT))
+	if (HAS_FLAGS(flags, CLICK_HANDLER_REMOVE_ON_MOB_LOGOUT))
 		GLOB.logged_out_event.register(user, src, TYPE_PROC_REF(/datum/click_handler, OnMobLogout))
 
 /datum/click_handler/Destroy()
-	if(flags & (CLICK_HANDLER_REMOVE_ON_MOB_LOGOUT))
+	if (HAS_FLAGS(flags, CLICK_HANDLER_REMOVE_ON_MOB_LOGOUT))
 		GLOB.logged_out_event.unregister(user, src, TYPE_PROC_REF(/datum/click_handler, OnMobLogout))
-=======
-	if (HAS_FLAGS(flags, CLICK_HANDLER_REMOVE_ON_MOB_LOGOUT))
-		GLOB.logged_out_event.register(user, src, /datum/click_handler/proc/OnMobLogout)
-
-/datum/click_handler/Destroy()
-	if (HAS_FLAGS(flags, CLICK_HANDLER_REMOVE_ON_MOB_LOGOUT))
-		GLOB.logged_out_event.unregister(user, src, /datum/click_handler/proc/OnMobLogout)
->>>>>>> theirs
 	user = null
 	. = ..()
 
