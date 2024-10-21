@@ -11,6 +11,10 @@
 #define LAZYREMOVE(L, I) if(L) { L -= I; if(!length(L)) { L = null; } }
 // Adds I to L, initalizing L if necessary
 #define LAZYADD(L, I) if(!L) { L = list(); } L += I;
+//[SIERRA-ADD]
+///Add an item to the list if not already present, if the list is null it will initialize it
+#define LAZYOR(L, I) if(!L) { L = list(); } L |= I;
+////[/SIERRA-ADD]
 // Insert I into L at position X, initalizing L if necessary
 #define LAZYINSERT(L, I, X) if(!L) { L = list(); } L.Insert(X, I);
 // Adds I to L, initalizing L if necessary, if I is not already in L
