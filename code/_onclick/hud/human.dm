@@ -382,4 +382,19 @@
 
 /obj/screen/movement/Click(location, control, params)
 	if(istype(usr))
+		var/list/modifiers = params2list(params)
+		if(modifiers["ctrl"])
+			usr?.face_direction()
+			update_icon()
+			return
+
 		usr.set_next_usable_move_intent()
+
+/obj/screen/movement/on_update_icon()
+	. = ..()
+	var/image/chached_fixeye = image('packs/infinity/icons/mob/screen/facedir.dmi', icon_state = "facedir1")
+	if(!isnull(usr?.facing_dir))
+		src.dir = usr?.facing_dir
+		AddOverlays(chached_fixeye)
+	else
+		ClearOverlays()
