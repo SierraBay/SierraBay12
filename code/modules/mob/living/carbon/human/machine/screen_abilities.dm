@@ -16,14 +16,30 @@
 		to_chat(src, SPAN_WARNING("Your head has no screen!"))
 		return
 	var/list/options = list()
+	var/list/names = list()
 	for (var/datum/sprite_accessory/facial_hair/ipc/entry as anything in subtypesof(/datum/sprite_accessory/facial_hair/ipc))
+	//[SIERRA-REMOVE]
+	/*
 		options += initial(entry.name)
 	var/choice = input(src, null, "Select Screen") as null | anything in options
 	if (!choice || !(choice in options))
 		return
 	facial_hair_style = choice
+	*/
+	//[/SIERRA-REMOVE]
+	//[SIERRA-ADD]
+		var/image/radial_button = image(icon = entry.icon, icon_state = "[entry.icon_state]_s")
+		radial_button.SetTransform(offset_x = 1, offset_y = -19, scale = 2)
+		radial_button.name = entry.name
+		names += entry
+		options[entry] = radial_button
+	var/choice = show_radial_menu(usr, usr, options, require_near = TRUE, radius = 42, tooltips = TRUE, check_locs = list(src))
+	for(var/datum/sprite_accessory/facial_hair/ipc/entry as anything in names)
+		if(choice == entry.type)
+			facial_hair_style = entry.name
+			break
+	//[/SIERRA-ADD]
 	update_hair()
-
 
 /mob/living/carbon/human/proc/MachineDisableScreen()
 	set category = "Abilities"

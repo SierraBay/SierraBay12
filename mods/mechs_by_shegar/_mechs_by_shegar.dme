@@ -52,9 +52,11 @@
 //Основной код мехов
 #include "code/heat_control.dm"
 #include "code/interface.dm"
+#include "code/keybinds.dm"
 #include "code/mech_damage.dm"
 #include "code/mech_icon.dm"
 #include "code/mech_interaction.dm"
+#include "code/mech_life.dm"
 #include "code/mech_move.dm"
 #include "code/mech_uplink.dm"
 #include "code/mech.dm"

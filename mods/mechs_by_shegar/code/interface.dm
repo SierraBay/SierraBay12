@@ -31,7 +31,7 @@
 /obj/screen/movable/exosuit/heat/Click(location, control, params)
 	var/modifiers = params2list(params)
 	if(modifiers["shift"])
-		usr.show_message(SPAN_NOTICE("Текущее тепло в мехе: [owner.current_heat]/[owner.max_heat]. Статус перегрева:[owner.overheat]"), VISIBLE_MESSAGE)
+		usr.show_message(SPAN_NOTICE("Текущее тепло в мехе: [owner.current_heat]/[owner.max_heat], скорость охлаждения: [owner.total_heat_cooling] Статус перегрева:[owner.overheat]"), VISIBLE_MESSAGE)
 	return
 
 /obj/screen/movable/exosuit/toggle/air/Click(location, control, params)
@@ -208,3 +208,17 @@
 
 /mob/living/exosuit/proc/get_main_data(mob/user)
 	to_chat(user, SPAN_NOTICE("Main mech integrity: <b> [health]/[maxHealth]([((health/maxHealth)*100)]%) </b>"))
+
+
+/obj/screen/movable/exosuit/toggle/hatch_open/toggled()
+	.=..()
+	owner.need_update_sensor_effects = TRUE
+
+/obj/screen/movable/exosuit/toggle/hatch/toggled()
+	.=..()
+	owner.need_update_sensor_effects = TRUE
+
+/obj/screen/movable/exosuit/toggle/power_control/toggled()
+	. = ..()
+	owner.update_icon()
+	owner.need_update_sensor_effects = TRUE

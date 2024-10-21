@@ -84,11 +84,25 @@
 		if(!open_file)
 			return
 		var/datum/computer_file/data/F = computer.get_file(open_file)
-		if(!istype(F))
-			return
-		if(!computer.print_paper(F.generate_file_data(),F.filename,F.papertype, F.metadata))
-			error = "Hardware error: Unable to print the file."
-			return
+//[SIERRA-EDIT]
+		var/datum/computer_file/binary/photo/P = computer.get_file(open_file)
+		var/datum/computer_file/data/bodyscan/B = computer.get_file(open_file)
+		if(istype(B))
+			if(!computer.print_bodyscan())
+				error = "Hardware error: Unable to print the file."
+				return
+			else
+				var/obj/item/paper/bodyscan/paper =	new /obj/item/paper/bodyscan(usr.loc, "Printout error.", "Body scan report - [B.filename]", B.generate_print_data())
+				paper.metadata = B.stored_data
+		else if(istype(F))
+			if(!computer.print_paper(F.generate_file_data(),F.filename,F.papertype, F.metadata))
+				error = "Hardware error: Unable to print the file."
+				return
+		if(istype(P))
+			if(!computer.print_photo(P.photo, P.filename))
+				error = "Hardware error: Unable to print the photo."
+				return
+//[/SIERRA-EDIT]
 	if(.)
 		SSnano.update_uis(NM)
 
@@ -107,7 +121,17 @@
 			data["error"] = "I/O ERROR: Unable to access hard drive."
 		else
 			var/datum/computer_file/data/F = PRG.computer.get_file(PRG.open_file)
-			if(!istype(F))
+			//[SIERRA-ADD] - MODPACK RND
+			var/datum/computer_file/binary/photo/P = PRG.computer.get_file(PRG.open_file)
+			var/datum/computer_file/data/bodyscan/B = PRG.computer.get_file(PRG.open_file)
+			if(istype(B))
+				data["filename"] = "[B.filename].[B.filetype]"
+				data["filedata"] = B.generate_file_data(user, B.stored_data)
+			else if(istype(P))
+				data["filename"] = "[P.filename].[P.filetype]"
+				data["photodata"] = P.generate_photo_data(user, P.photo)
+			//[/SIERRA-ADD] - MODPACK RND
+			else if(!istype(F))
 				data["error"] = "I/O ERROR: Unable to open file."
 			else
 				data["filedata"] = F.generate_file_data(user)

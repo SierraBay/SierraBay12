@@ -188,7 +188,7 @@ var/global/list/admin_verbs_debug = list(
 	/datum/admins/proc/map_template_load,
 	/datum/admins/proc/map_template_load_new_z,
 	//[SIERRA-ADD] - Colony-types,
-	/datum/admins/proc/map_template_choose_colony_type,
+	/datum/admins/proc/map_template_colony_spawn_settings,
 	//[SIERRA-ADD],
 	/datum/admins/proc/map_template_upload,
 	/client/proc/enable_debug_verbs,
@@ -541,11 +541,11 @@ var/global/list/admin_verbs_mod = list(
 		if (null)
 			return
 		if("Small Bomb")
-			explosion(epicenter, 6)
+			explosion(epicenter, 1, 2, 3, 3)
 		if("Medium Bomb")
-			explosion(epicenter, 9)
+			explosion(epicenter, 2, 3, 4, 4)
 		if("Big Bomb")
-			explosion(epicenter, 15)
+			explosion(epicenter, 3, 5, 7, 5)
 		if("Custom Bomb")
 			var/range = input("Explosion radius (in tiles):") as num|null
 			if (isnull(range) || range <= 0)

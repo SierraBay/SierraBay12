@@ -87,7 +87,7 @@
 	required_tech_levels = list()
 	cost = 1500
 
-	unlocks_designs = list("implant_chem", "implant_death", "implant_tracking","implant_imprinting")
+	unlocks_designs = list("implanter", "implant_pad", "implant_chem", "implant_death", "implant_tracking","implant_imprinting")
 
 /datum/technology/bio/adv_med_machines
 	name = "Advanced Medical Machines"
@@ -117,7 +117,7 @@
 	required_tech_levels = list()
 	cost = 1000
 
-	unlocks_designs = list("mass_spectrometer", "reagent_scanner", "health_hud", "defibrillators", "mmi")
+	unlocks_designs = list("mass_spectrometer", "reagent_scanner", "health_hud", "defibrillators", "mmi", "autopsy_scanner")
 
 /datum/technology/bio/adv_add_med_tools
 	name = "Advanced Additional Medical Tools"
