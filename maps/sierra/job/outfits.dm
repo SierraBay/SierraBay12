@@ -252,6 +252,10 @@ Keeping them simple for now, just spawning with basic EC uniforms, and pretty mu
 	name = OUTFIT_JOB_NAME("Xenosurgeon")
 	uniform = /obj/item/clothing/under/rank/medical/scrubs/purple
 
+/singleton/hierarchy/outfit/job/sierra/crew/medical/senior/surgicalresident
+	name = OUTFIT_JOB_NAME("Surgical Resident")
+	uniform = /obj/item/clothing/under/rank/medical/scrubs
+
 /singleton/hierarchy/outfit/job/sierra/crew/medical/doctor
 	name = OUTFIT_JOB_NAME("Doctor")
 	uniform = /obj/item/clothing/under/rank/medical

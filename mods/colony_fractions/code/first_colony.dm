@@ -1,6 +1,6 @@
 GLOBAL_VAR_INIT(last_colony_type, "СЛУЧАЙНЫЙ")
 GLOBAL_VAR_INIT(choose_colony_type, "СЛУЧАЙНЫЙ") //Педальки выбирают, какой тип колонии будет заспавнен
-
+GLOBAL_VAR_INIT(error_colony_reaction, "Прервать спавн колонии")
 
 /singleton/submap_archetype/playablecolony
 	crew_jobs = list(/datum/job/submap/colonist, /datum/job/submap/colonist_leader)
@@ -48,12 +48,14 @@ GLOBAL_VAR_INIT(choose_colony_type, "СЛУЧАЙНЫЙ") //Педальки в�
 		else if(number < 100 || number == 100)
 			GLOB.last_colony_type = "НЕЗАВИСИМАЯ"
 	else
-		if(GLOB.last_colony_type != "НЕЗАВИСИМАЯ" && GLOB.last_colony_type != "ЦПСС" && GLOB.last_colony_type != "ГКК" && GLOB.last_colony_type != "НАНОТРЕЙЗЕН")
-			log_and_message_admins("ОШИБКА: Некорректная работа кода колонии, выбран несуществующий тип: [GLOB.choose_colony_type], попытка заспавнить [GLOB.last_colony_type].")
+		GLOB.last_colony_type = GLOB.choose_colony_type
+		if(!(GLOB.last_colony_type in list("ГКК","ЦПСС","НАНОТРЕЙЗЕН","НЕЗАВИСИМАЯ")))
+			log_and_message_admins("ОШИБКА: Некорректная работа кода колонии, выбран несуществующий тип: [GLOB.choose_colony_type].")
 			log_and_message_admins("Колония выбрана стандартного типа - НАНОТРЕЙЗЕН.")
+			if(GLOB.error_colony_reaction == "Прервать спавн колонии")
+				log_and_message_admins("Спавн колонии прерван исходя из настроек спавна колонии.")
+				return
 			GLOB.last_colony_type = "НАНОТРЕЙЗЕН"
-		else
-			GLOB.last_colony_type = GLOB.choose_colony_type
 	log_and_message_admins("Начал спавн колонии следующего типа: [GLOB.last_colony_type].")
 
 	.=..()
@@ -263,10 +265,9 @@ GLOBAL_VAR_INIT(choose_colony_type, "СЛУЧАЙНЫЙ") //Педальки в�
 
 /obj/machinery/computer/rdconsole/core/colony/New()
 	. = ..()
-	QDEL_NULL(files)
-	files = new
-	//ENGI
 	files.research_points = 41250
+
+	/*
 	files.UnlockTechology(/datum/technology/engineering)
 	files.UnlockTechology(/datum/technology/engineering/monitoring)
 	files.UnlockTechology(/datum/technology/engineering/adv_parts)
@@ -303,6 +304,7 @@ GLOBAL_VAR_INIT(choose_colony_type, "СЛУЧАЙНЫЙ") //Педальки в�
 	files.UnlockTechology(/datum/technology/robo/mech_weapons)
 	files.UnlockTechology(/datum/technology/robo/mech_med_tools)
 	files.UnlockTechology(/datum/technology/robo/adv_mech_tools)
+	*/
 
 	/*
 	files.UpdateTech("materials", 7) //Материалы
@@ -351,6 +353,28 @@ GLOBAL_VAR_INIT(choose_colony_type, "СЛУЧАЙНЫЙ") //Педальки в�
 	)
 	req_access = list()
 
+//Пресетовая машинерия
 
 /obj/machinery/space_heater/stationary/on/colony
 	set_temperature = 273.15
+	heating_power = 360000
+
+
+
+/obj/machinery/power/smes/buildable/preset/colony
+	uncreated_component_parts = list(/obj/item/stock_parts/smes_coil/super_capacity = 1,
+									/obj/item/stock_parts/smes_coil/super_io = 1)
+	_input_maxed = TRUE
+	_output_maxed = TRUE
+	_input_on = TRUE
+	_output_on = TRUE
+	_fully_charged = TRUE
+
+/obj/machinery/sleeper/survival_pod/colony
+	name = "advanced colony stasis pod"
+
+/obj/item/storage/firstaid/fire/special/colony
+	name = "colony scorch first-aid kit"
+
+/obj/machinery/vending/medical/colony
+	req_access = list()

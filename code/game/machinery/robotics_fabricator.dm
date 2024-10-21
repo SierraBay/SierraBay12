@@ -338,8 +338,8 @@
 	for(var/obj/machinery/computer/rdconsole/RDC in get_area_all_atoms(get_area(src)))
 		if(!RDC.sync)
 			continue
-		files.download_from(RDC.files)
 //[SIERRA-EDIT] - MODPACK_RND
+		files = RDC.files
 	sync_message = "Sync complete."
 	update_categories()
 //[/SIERRA-EDIT] - MODPACK_RND

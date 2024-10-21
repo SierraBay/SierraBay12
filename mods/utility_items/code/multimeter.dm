@@ -135,7 +135,8 @@
 	return mapload ? INITIALIZE_HINT_LATELOAD : INITIALIZE_HINT_NORMAL
 
 // Overrides this because otherwise this leads us to unit tests failing
-/obj/structure/closet/crate/secure/loot
+/obj/structure/closet/crate/secure/loot/Initialize(mapload, need_fill)
+	. = ..()
 	codelen = 4
 
 // Proceeding to do stuff

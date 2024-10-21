@@ -127,6 +127,7 @@
 			"warning",
 			"danger",
 			"occult",
+			"legion",
 			"unsafe"
 		)
 	if (!style)
@@ -166,6 +167,7 @@
 			if ("warning") result = SPAN_WARNING(result)
 			if ("danger")  result = SPAN_DANGER(result)
 			if ("occult")  result = SPAN_OCCULT(result)
+			if ("legion")  result = SPAN_LEGION(result)
 		switch (size)
 			if ("small")  result = FONT_SMALL(result)
 			if ("large")  result = FONT_LARGE(result)
@@ -682,15 +684,19 @@ Ccomp's first proc.
 			max_power = EX_ACT_HEAVY
 		if ("Light")
 			max_power = EX_ACT_LIGHT
+//[SIERRA-REMOVE] MODPACK_EXPLOSION
+/*
 	var/shaped = 0
 	if(alert(src, "Shaped explosion?", "Shape", "Yes", "No") == "Yes")
 		shaped = input("Shaped where to?", "Input")  as anything in list("NORTH","SOUTH","EAST","WEST")
 		shaped = text2dir(shaped)
+*/
+//[/SIERRA-REMOVE]
 	if (range > 20)
 		if (alert(src, "Are you sure you want to do this? It may lag.", "Confirmation", "Yes", "No") == "No")
 			return
 
-	explosion(O, range, max_power, shaped=shaped)
+	explosion(O, range, max_power)// [SIERRA-EDIT] MODPACK_EXPLOSION explosion(O, range, max_power, shaped=shaped)
 	log_admin("[key_name(usr)] created an explosion ([range], [max_power_input]) at ([O.x],[O.y],[O.z])")
 	message_admins("[key_name_admin(usr)] created an explosion ([range], [max_power_input]) at ([O.x],[O.y],[O.z])", 1)
 
@@ -796,10 +802,16 @@ Ccomp's first proc.
 	set name = "Change View Range"
 	set desc = "switches between 1x and custom views"
 
-	if(view == world.view)
+	// [SIERRA-EDIT]
+	// if(view == world.view) // SIERRA-EDIT - Original
+	if(view == get_preference_value(/datum/client_preference/client_view))
+	// [/SIERRA-EDIT]
 		view = input("Select view range:", "FUCK YE", 7) in list(1,2,3,4,5,6,7,8,9,10,11,12,13,14,128)
 	else
+		// [SIERRA-EDIT]
+		// view = world.view // SIERRA-EDIT - Original
 		view = get_preference_value(/datum/client_preference/client_view)
+		// [/SIERRA-EDIT]
 
 	log_and_message_admins("changed their view range to [view].")
 

@@ -12,6 +12,7 @@
 	build_path = /obj/item/device/scanner/health
 	sort_string = "MAABA"
 
+/datum/design/item/medical/autopsy_scanner
 	shortname = "Autopsy Scanner"
 	desc = "Used to gather information on wounds."
 	id = "autopsy_scanner"
