@@ -14,16 +14,32 @@
 
 	unlocks_designs = list("binaryencrypt")
 
-/datum/technology/esoteric/chameleon_kit
-	name = "Chameleon Kit"
-	desc = "Chameleon Kit"
-	id = "chameleon_kit"
+/datum/technology/esoteric/bomb
+	name = "large chem grenade"
+	desc = "large chem grenade"
+	id = "large_grenade"
+	tech_type = RESEARCH_ESOTERIC
 
 	x = 0.5
 	y = 0.6
 	icon = "kit"
 
 	required_technologies = list("radiokey")
+	required_tech_levels = list()
+	cost = 1000
+
+	unlocks_designs = list("large_Grenade")
+
+/datum/technology/esoteric/chameleon_kit
+	name = "Chameleon Kit"
+	desc = "Chameleon Kit"
+	id = "chameleon_kit"
+
+	x = 0.5
+	y = 0.7
+	icon = "kit"
+
+	required_technologies = list("large_grenade")
 	required_tech_levels = list()
 	cost = 1500
 

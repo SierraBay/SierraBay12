@@ -24,7 +24,8 @@
 /obj/vehicle/train/Initialize()
 	. = ..()
 	for(var/obj/vehicle/train/T in orange(1, src))
-		latch(T)
+		if(!T.powered)
+			latch(T)
 
 /obj/vehicle/train/examine(mob/user)
 	. = ..()
