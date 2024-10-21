@@ -110,7 +110,7 @@
 	var/categories[0]
 	for(var/datum/alarm_handler/AH in alarm_handlers)
 		categories[LIST_PRE_INC(categories)] = list("category" = AH.category, "alarms" = list())
-		//[SIERRA-EDIT] - AI-UPDATE
+		//[SIERRA-EDIT] - AI_UPDATE
 	//  for(var/datum/alarm/A in AH.major_alarms(get_host_z()))
 		for(var/datum/alarm/A in AH.major_alarms(get_z(src)))
 			var/datum/alarm_source/sources_of_alarm = A.sources[1]

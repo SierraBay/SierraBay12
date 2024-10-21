@@ -38,11 +38,7 @@
 
 	handle_actions()
 
-//[SIERRA-EDIT]
-	if(update_icon)	//forces a full overlay update
-		update_icon = FALSE
-		regenerate_icons()
-//[/SIERRA-EDIT]
+	UpdateLyingBuckledAndVerbStatus()
 
 	handle_regular_hud_updates()
 

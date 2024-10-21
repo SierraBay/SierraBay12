@@ -13,9 +13,6 @@
 /datum/fabricator_recipe/medical/dropper
 	path = /obj/item/reagent_containers/dropper
 
-/datum/fabricator_recipe/medical/pill_bottle
-	path = /obj/item/storage/pill_bottle
-
 /datum/fabricator_recipe/medical/cautery
 	path = /obj/item/cautery
 
@@ -40,9 +37,10 @@
 /datum/fabricator_recipe/medical/syringe
 	path = /obj/item/reagent_containers/syringe
 
+/* [SIERRA-REMOVE] Имплантер теперь в протолате
 /datum/fabricator_recipe/medical/implanter
 	path = /obj/item/implanter
-
+*/
 /datum/fabricator_recipe/medical/pill_bottle
 	path = /obj/item/storage/pill_bottle
 
