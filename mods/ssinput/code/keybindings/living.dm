@@ -40,8 +40,7 @@
 
 
 /datum/keybinding/living/drop_item/down(client/user)
-	var/mob/living/L = user.mob
-	L.drop_item()
+	user.drop_item()
 	return TRUE
 
 /datum/keybinding/living/pixel_shift

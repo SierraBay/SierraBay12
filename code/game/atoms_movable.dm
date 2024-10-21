@@ -210,6 +210,8 @@
 	if (.)
 	//[SIERRA-ADD]
 		SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, old_loc, TRUE)
+		for(var/atom/atom in contents)
+			SEND_SIGNAL(atom, COMSIG_MOVABLE_MOVED, old_loc)
 		//[/SIERRA-ADD]
 		// observ
 		if(!loc)
@@ -236,6 +238,8 @@
 	if (!.)
 		return
 	SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, old_loc)
+	for(var/atom/atom in contents)
+		SEND_SIGNAL(atom, COMSIG_MOVABLE_MOVED, old_loc)
 	if(!loc)
 		GLOB.moved_event.raise_event(src, old_loc, null)
 

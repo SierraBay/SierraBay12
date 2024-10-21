@@ -1,0 +1,4 @@
+author: Neonvolt
+changes:
+  - {maptweak: Изменен атмос Воксшипа для предотвращения утечек при спавне}
+delete-after: true
