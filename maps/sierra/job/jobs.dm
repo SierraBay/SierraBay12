@@ -113,7 +113,7 @@
 
 /singleton/cultural_info/culture/ipc
 	valid_jobs = list(/datum/job/engineer_trainee, /datum/job/doctor_trainee, /datum/job/cargo_tech, /datum/job/cargo_assistant, /datum/job/mining,
-	/datum/job/janitor, /datum/job/chef, /datum/job/scientist_assistant, /datum/job/assistant, /datum/job/steward, /datum/job/ai, /datum/job/cyborg)
+	/datum/job/janitor, /datum/job/cook, /datum/job/scientist_assistant, /datum/job/assistant, /datum/job/steward, /datum/job/ai, /datum/job/cyborg)
 
 /singleton/cultural_info/culture/ipc/gen2
 	valid_jobs = list(/datum/job/adjutant,
@@ -121,7 +121,7 @@
 		/datum/job/senior_engineer, /datum/job/engineer, /datum/job/infsys, /datum/job/engineer_trainee,
 		/datum/job/senior_doctor, /datum/job/doctor, /datum/job/doctor_trainee, /datum/job/chemist, /datum/job/chaplain,
 		/datum/job/qm, /datum/job/cargo_tech,  /datum/job/cargo_assistant, /datum/job/mining,
-		/datum/job/janitor, /datum/job/chef, /datum/job/bartender, /datum/job/steward, /datum/job/chief_steward,
+		/datum/job/janitor, /datum/job/cook, /datum/job/bartender, /datum/job/steward, /datum/job/chief_steward,
 		/datum/job/senior_scientist, /datum/job/scientist, /datum/job/roboticist, /datum/job/scientist_assistant,
 		/datum/job/ai, /datum/job/cyborg, /datum/job/assistant,
 		/datum/job/submap/bearcat_captain, /datum/job/submap/bearcat_crewman,
@@ -136,7 +136,7 @@
 		/datum/job/warden, /datum/job/detective, /datum/job/officer,
 		/datum/job/senior_doctor, /datum/job/doctor, /datum/job/doctor_trainee, /datum/job/chemist,
 		/datum/job/qm, /datum/job/cargo_tech,  /datum/job/cargo_assistant, /datum/job/mining,
-		/datum/job/janitor, /datum/job/chef, /datum/job/bartender, /datum/job/steward, /datum/job/chief_steward,
+		/datum/job/janitor, /datum/job/cook, /datum/job/bartender, /datum/job/steward, /datum/job/chief_steward,
 		/datum/job/senior_scientist, /datum/job/scientist, /datum/job/roboticist, /datum/job/scientist_assistant,
 		/datum/job/ai, /datum/job/cyborg, /datum/job/assistant
 )

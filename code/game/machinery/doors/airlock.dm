@@ -832,9 +832,9 @@ About the new airlock wires panel:
 		return STATUS_CLOSE
 	if(issilicon(user) && !src.canAIControl())
 		if (src.isAllPowerLoss()) //don't really like how this gets checked a second time, but not sure how else to do it.
-			to_chat(user, SPAN_WARNING("Unable to interface: Connection timed out."))
+			to_chat(user, "<span class='warning'>Unable to interface: Connection timed out.</span>")
 		else
-			to_chat(user, SPAN_WARNING("Unable to interface: Connection refused."))
+			to_chat(user, "<span class='warning'>Unable to interface: Connection refused.</span>")
 		return STATUS_CLOSE
 
 	return ..()
