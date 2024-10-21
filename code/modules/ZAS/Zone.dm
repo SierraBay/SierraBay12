@@ -58,33 +58,35 @@ Class Procs:
 	air.group_multiplier = 1
 	air.volume = CELL_VOLUME
 
-/zone/proc/add(turf/simulated/T)
+/zone/proc/add(turf/simulated/turf_to_add)
 #ifdef ZASDBG
 	ASSERT(!invalid)
-	ASSERT(istype(T))
-	ASSERT(!SSair.has_valid_zone(T))
+	ASSERT(istype(turf_to_add))
+	ASSERT(!SSair.has_valid_zone(turf_to_add))
 #endif
 
-	var/datum/gas_mixture/turf_air = T.return_air()
+	var/datum/gas_mixture/turf_air = turf_to_add.return_air()
 	add_tile_air(turf_air)
-	T.zone = src
-	contents.Add(T)
-	if(T.hotspot)
-		fire_tiles.Add(T)
-		SSair.active_fire_zones |= src
-	T.update_graphic(air.graphic)
+	turf_to_add.zone = src
+	contents += turf_to_add
 
-/zone/proc/remove(turf/simulated/T)
+	if(turf_to_add.hotspot)
+		fire_tiles += turf_to_add
+		SSair.active_fire_zones |= src
+
+	turf_to_add.update_graphic(air.graphic)
+
+/zone/proc/remove(turf/simulated/turf_to_remove)
 #ifdef ZASDBG
 	ASSERT(!invalid)
-	ASSERT(istype(T))
-	ASSERT(T.zone == src)
-	soft_assert(T in contents, "Lists are weird broseph")
+	ASSERT(istype(turf_to_remove))
+	ASSERT(turf_to_remove.zone == src)
+	soft_assert(turf_to_remove in contents, "Lists are weird broseph")
 #endif
-	contents.Remove(T)
-	fire_tiles.Remove(T)
-	T.zone = null
-	T.update_graphic(graphic_remove = air.graphic)
+	contents -= turf_to_remove
+	fire_tiles -= turf_to_remove
+	turf_to_remove.zone = null
+	turf_to_remove.update_graphic(graphic_remove = air.graphic)
 	if(length(contents))
 		air.group_multiplier = length(contents)
 	else
@@ -98,45 +100,45 @@ Class Procs:
 	ASSERT(!into.invalid)
 #endif
 	c_invalidate()
-	for(var/turf/simulated/T in contents)
-		into.add(T)
-		T.update_graphic(graphic_remove = air.graphic)
+	for(var/turf/simulated/inner_turf in contents)
+		into.add(inner_turf)
+		inner_turf.update_graphic(graphic_remove = air.graphic)
 		#ifdef ZASDBG
-		T.dbg(merged)
-		#endif
+		inner_turf.dbg(merged)
 		CHECK_TICK
+		#endif
 
 	//rebuild the old zone's edges so that they will be possessed by the new zone
-	for(var/connection_edge/E in edges)
-		if(E.contains_zone(into))
+	for(var/connection_edge/edge in edges)
+		if(edge.contains_zone(into))
 			continue //don't need to rebuild this edge
-		for(var/turf/T in E.connecting_turfs)
-			SSair.mark_for_update(T)
+
+		for(var/turf/connecting_turf in edge.connecting_turfs)
+			SSair.mark_for_update(connecting_turf)
 
 /zone/proc/c_invalidate()
-	invalid = 1
+	invalid = TRUE
 	SSair.remove_zone(src)
 	#ifdef ZASDBG
-	for(var/turf/simulated/T in contents)
-		T.dbg(invalid_zone)
+	for(var/turf/simulated/inner_turf in contents)
+		inner_turf.dbg(invalid_zone)
 	#endif
 
 /zone/proc/rebuild()
 	if(invalid) return //Short circuit for explosions where rebuild is called many times over.
 	c_invalidate()
-	for(var/turf/simulated/T in contents)
-		T.update_graphic(graphic_remove = air.graphic) //we need to remove the overlays so they're not doubled when the zone is rebuilt
-		//T.dbg(invalid_zone)
-		T.needs_air_update = 0 //Reset the marker so that it will be added to the list.
-		SSair.mark_for_update(T)
+	for(var/turf/simulated/inner_turf in contents)
+		inner_turf.update_graphic(graphic_remove = air.graphic) //we need to remove the overlays so they're not doubled when the zone is rebuilt
+		inner_turf.needs_air_update = FALSE //Reset the marker so that it will be added to the list.
+		SSair.mark_for_update(inner_turf)
 
 /zone/proc/add_tile_air(datum/gas_mixture/tile_air)
 	//air.volume += CELL_VOLUME
 	air.group_multiplier = 1
 	air.multiply(length(contents))
 	air.merge(tile_air)
-	air.divide(length(contents)+1)
-	air.group_multiplier = length(contents)+1
+	air.divide(length(contents) + 1)
+	air.group_multiplier = length(contents) + 1
 
 /zone/proc/tick()
 
