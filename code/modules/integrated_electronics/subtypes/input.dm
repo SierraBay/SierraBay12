@@ -869,7 +869,7 @@
 	power_draw_per_use = 5
 
 	var/language_preferred = LANGUAGE_HUMAN_EURO
-	var/languages_understood = list(LANGUAGE_HUMAN_EURO, LANGUAGE_HUMAN_CHINESE, LANGUAGE_HUMAN_ARABIC, LANGUAGE_HUMAN_INDIAN, LANGUAGE_HUMAN_IBERIAN, LANGUAGE_HUMAN_RUSSIAN, LANGUAGE_HUMAN_SELENIAN, LANGUAGE_SPACER)
+	var/languages_understood = list(LANGUAGE_HUMAN_EURO, LANGUAGE_HUMAN_CHINESE, LANGUAGE_HUMAN_ARABIC, LANGUAGE_HUMAN_INDIAN, LANGUAGE_HUMAN_IBERIAN, LANGUAGE_HUMAN_RUSSIAN, LANGUAGE_HUMAN_SELENIAN, LANGUAGE_SPACER,  LANGUAGE_EAL, LANGUAGE_UNATHI_SINTA, LANGUAGE_UNATHI_YEOSA,  LANGUAGE_SKRELLIAN,  LANGUAGE_ROBOT_GLOBAL, LANGUAGE_DRONE_GLOBAL, LANGUAGE_GUTTER, LANGUAGE_ROOTLOCAL, LANGUAGE_PRIMITIVE, LANGUAGE_HUMAN_AVALON, LANGUAGE_HUMAN_LORRIMAN, LANGUAGE_HUMAN_MIRANIAN, LANGUAGE_LEGALESE, LANGUAGE_RESOMI, LANGUAGE_SIIK_MAAS, LANGUAGE_SIIK_TAJR)
 	var/invalid_flags = NONVERBAL | SIGNLANG | HIVEMIND | ALT_TRANSMIT
 
 /obj/item/integrated_circuit/input/microphone/Initialize()
@@ -897,8 +897,8 @@
 			if(translated && !(speaking.name == language_preferred))
 				activate_pin(2)
 
-
-/obj/item/integrated_circuit/input/microphone/modem
+// [SIERRA DELETE]
+/*/obj/item/integrated_circuit/input/microphone/modem
 	name = "machine modulating microphone"
 	languages_understood = list(LANGUAGE_HUMAN_EURO, LANGUAGE_EAL)
 	spawn_flags = IC_SPAWN_RESEARCH
@@ -916,8 +916,8 @@
 	languages_understood = list(LANGUAGE_SPACER, LANGUAGE_GUTTER, LANGUAGE_HUMAN_CHINESE, LANGUAGE_HUMAN_ARABIC, LANGUAGE_HUMAN_INDIAN, LANGUAGE_HUMAN_IBERIAN, LANGUAGE_HUMAN_RUSSIAN)
 	language_preferred = LANGUAGE_HUMAN_RUSSIAN
 	spawn_flags = 0
-	extended_desc = "This microphone did not come with any documentation."
-
+	extended_desc = "This microphone did not come with any documentation."*/
+// [SIERRA-DELETE-END]
 
 /obj/item/integrated_circuit/input/sensor
 	name = "sensor"

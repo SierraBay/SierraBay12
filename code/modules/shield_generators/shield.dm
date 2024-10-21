@@ -274,9 +274,12 @@
 	else
 		explosion_resistance = 0
 
+//[SIERRA-REMOVE]
+/*
 /obj/shield/get_explosion_resistance()
 	return explosion_resistance
-
+*/
+//[SIERRA-REMOVE]
 // Shield collision checks below
 
 /atom/movable/proc/can_pass_shield(obj/machinery/power/shield_generator/gen)
