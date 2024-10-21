@@ -82,7 +82,6 @@
 		P.queue_icon_update()
 		P.is_copy = FALSE
 
-<<<<<<< ours
 		if(scanned_object && istype(scanned_object, /obj/machinery/artifact))
 			var/obj/machinery/artifact/A = scanned_object
 			//[SIERRA-ADD] - MODPACK_RND
@@ -93,7 +92,6 @@
 				P.secondary_effect = A.secondary_effect.name
 			//[/SIERRA-ADD] - MODPACK_RND
 			A.being_used = 0
-=======
 		stop_scanning()
 		updateDialog()
 
@@ -106,7 +104,6 @@
 		artifact.anchored = FALSE
 		artifact.being_used = FALSE
 	scanned_object = null
->>>>>>> theirs
 
 /obj/machinery/artifact_analyser/OnTopic(user, href_list)
 	if(href_list["begin_scan"])
