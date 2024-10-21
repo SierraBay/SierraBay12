@@ -8,6 +8,8 @@
 	var/obj/item/robot_parts/robot_component/radio/radio
 	var/obj/item/robot_parts/robot_component/camera/camera
 	var/obj/item/mech_component/control_module/software
+	/// Takes /obj/item/circuitboard/exosystem type paths for what boards get put in for prefabs
+	var/list/prebuilt_software = list()
 	has_hardpoints = list(HARDPOINT_HEAD)
 	var/active_sensors = 0
 	power_use = 15
@@ -32,32 +34,23 @@
 /obj/item/mech_component/sensors/prebuild()
 	radio = new(src)
 	camera = new(src)
+	software = new(src)
+	for(var/board in prebuilt_software)
+		software.install_software(new board)
 
 /obj/item/mech_component/sensors/update_components()
 	radio = locate() in src
 	camera = locate() in src
 	software = locate() in src
 
-//EDIT
-// [SIERRA-EDIT] - Mechs-by-Shebar
-  /* /obj/item/mech_component/sensors/proc/get_sight(powered)
+/obj/item/mech_component/sensors/proc/get_sight(powered)
 	var/flags = 0
 	if(total_damage >= 0.8 * max_damage || !powered)
 		flags |= BLIND
 	else if(active_sensors && powered)
 		flags |= vision_flags
 	return flags
-	*/
-/obj/item/mech_component/sensors/proc/get_sight(powered)
-	var/flags = 0
-	if(!powered ||(!camera && powered)) //Камера не работает/Ничего не запитано?
-		flags |= BLIND //включается слепота
-	if(powered && camera)
-		if(active_sensors) //SENSORS active? (Button)
-			flags |= vision_flags //Мех получает спец зрение от сенсоров
 
-	return flags
-  // [SIERRA-EDIT]
 
 
 /obj/item/mech_component/sensors/proc/get_invisible(powered)
@@ -174,11 +167,7 @@
 	desc = "A primitive set of sensors designed to work in tandem with most MKI Eyeball platforms."
 	max_damage = 100
 	power_use = 0
-
-/obj/item/mech_component/sensors/powerloader/prebuild()
-	..()
-	software = new(src)
-	software.installed_software = list(MECH_SOFTWARE_UTILITY, MECH_SOFTWARE_ENGINEERING)
+	prebuilt_software = list(/obj/item/circuitboard/exosystem/utility, /obj/item/circuitboard/exosystem/engineering)
 
 /obj/item/mech_component/sensors/light
 	name = "light sensors"
@@ -190,11 +179,7 @@
 	see_invisible = SEE_INVISIBLE_NOLIGHTING
 	power_use = 50
 	desc = "A series of high resolution optical sensors. They can overlay several images to give the pilot a sense of location even in total darkness. "
-
-/obj/item/mech_component/sensors/light/prebuild()
-	..()
-	software = new(src)
-	software.installed_software = list(MECH_SOFTWARE_UTILITY, MECH_SOFTWARE_MEDICAL)
+	prebuilt_software = list(/obj/item/circuitboard/exosystem/medical, /obj/item/circuitboard/exosystem/utility)
 
 /obj/item/mech_component/sensors/heavy
 	name = "heavy sensors"
@@ -203,11 +188,7 @@
 	icon_state = "heavy_head"
 	max_damage = 120
 	power_use = 0
-
-/obj/item/mech_component/sensors/heavy/prebuild()
-	..()
-	software = new(src)
-	software.installed_software = list(MECH_SOFTWARE_WEAPONS)
+	prebuilt_software = list(/obj/item/circuitboard/exosystem/weapons)
 
 /obj/item/mech_component/sensors/combat
 	name = "combat sensors"
@@ -217,8 +198,4 @@
 	vision_flags = SEE_MOBS
 	see_invisible = SEE_INVISIBLE_NOLIGHTING
 	power_use = 200
-
-/obj/item/mech_component/sensors/combat/prebuild()
-	..()
-	software = new(src)
-	software.installed_software = list(MECH_SOFTWARE_WEAPONS)
+	prebuilt_software = list(/obj/item/circuitboard/exosystem/weapons)
