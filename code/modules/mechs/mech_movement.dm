@@ -101,48 +101,57 @@
 		exosuit.visible_message(SPAN_NOTICE("\The [exosuit] moves [txt_dir]."))
 //[SIERRA-ADD] - Mechs-by-Shegar - STRAFE
 	if(exosuit.legs.can_strafe)
-		for(var/thing in exosuit.pilots) //Для всех пилотов внутри
-			var/mob/pilot = thing
-			if(pilot && pilot.client)
-				for(var/key in pilot.client.keys_held)
-					if (key == "Space")
-						var/move_speed = exosuit.legs.move_delay
-						if(!exosuit.legs.good_in_strafe)
-							move_speed = move_speed * 2.5
-						if(direction == NORTHWEST || direction == NORTHEAST || direction == SOUTHWEST || direction == SOUTHEAST)
-							move_speed = sqrt((move_speed*move_speed) + (move_speed * move_speed))
-						if(move_speed > 12)
-							move_speed = 12
-						exosuit.SetMoveCooldown(exosuit.legs ? move_speed : 3)
-						var/turf/target_loc = get_step(exosuit, direction)
-						if(target_loc && exosuit.legs && exosuit.legs.can_move_on(exosuit.loc, target_loc) && exosuit.MayEnterTurf(target_loc))
-							exosuit.Move(target_loc)
-							//[SIERRA-ADD] - Mechs-by-Shegar
-							exosuit.add_heat(exosuit.legs.heat_generation)
-							//[SIERRA-ADD]
-						return MOVEMENT_HANDLED
+		if(exosuit.strafe_status)
+			var/move_speed = exosuit.legs.move_delay
+			if(!exosuit.legs.good_in_strafe)
+				move_speed = move_speed * 2.5
+			if(direction == NORTHWEST || direction == NORTHEAST || direction == SOUTHWEST || direction == SOUTHEAST)
+				move_speed = sqrt((move_speed*move_speed) + (move_speed * move_speed))
+			if(move_speed > 12)
+				move_speed = 12
+			exosuit.SetMoveCooldown(exosuit.legs ? move_speed : 3)
+			var/turf/target_loc = get_step(exosuit, direction)
+			if(target_loc && exosuit.legs && exosuit.legs.can_move_on(exosuit.loc, target_loc) && exosuit.MayEnterTurf(target_loc))
+				exosuit.Move(target_loc)
+				//[SIERRA-ADD] - Mechs-by-Shegar
+				exosuit.add_heat(exosuit.legs.heat_generation)
+				//[SIERRA-ADD]
+			return MOVEMENT_HANDLED
 //[SIERRA-ADD]
 
 //TURN
 	if(exosuit.dir != moving_dir && !(direction & (UP|DOWN)))
 		playsound(exosuit.loc, exosuit.legs.mech_turn_sound, 40,1)
-		exosuit.set_dir(moving_dir)
-		exosuit.SetMoveCooldown(exosuit.legs.turn_delay)
-		//[SIERRA-ADD] - Mechs-by-Shegar
+		////[SIERRA-ADD] - Mechs-by-Shegar
+		//Первым делом мы найдём угол между текущим диром и тот на который мы хотим перейти
+		if(exosuit.dir == turn(direction, 45) || exosuit.dir == turn(direction, -45))
+			exosuit.sub_speed( exosuit.legs.turn_diogonal_slowdown)
+		else if(exosuit.dir == turn(direction, 90) || exosuit.dir == turn(direction, -90))
+			exosuit.sub_speed( exosuit.legs.turn_slowdown )
+		else if(exosuit.dir == turn(direction, 135) || exosuit.dir == turn(direction, -135))
+			exosuit.sub_speed( (exosuit.legs.turn_slowdown + exosuit.legs.turn_diogonal_slowdown)  )
+		else if(exosuit.dir == turn(direction, 180) || exosuit.dir == turn(direction, -180))
+			exosuit.legs.current_speed = exosuit.legs.min_speed
 		exosuit.add_heat(exosuit.legs.heat_generation)
 		//[SIERRA-ADD]
+		exosuit.set_dir(moving_dir)
+		exosuit.SetMoveCooldown(exosuit.legs.turn_delay)
 
 //TURN
 
 //MOVE
 	else
-		exosuit.SetMoveCooldown(exosuit.legs ? exosuit.legs.move_delay : 3)
+		//[SIERRA-EDIT] - Mechs-by-Shegar
+		//exosuit.SetMoveCooldown(exosuit.legs ? exosuit.legs.move_delay : 3)
+		exosuit.SetMoveCooldown(exosuit.legs ? exosuit.legs.current_speed : 3)
+		//[SIERRA-EDIT]
 		var/turf/target_loc = get_step(exosuit, direction)
 		if(target_loc && exosuit.legs && exosuit.legs.can_move_on(exosuit.loc, target_loc) && exosuit.MayEnterTurf(target_loc))
 			if(!exosuit.body.phazon)
 				exosuit.Move(target_loc)
 				//[SIERRA-ADD] - Mechs-by-Shegar
 				exosuit.add_heat(exosuit.legs.heat_generation)
+				exosuit.add_speed()
 				//[SIERRA-ADD]
 			else
 				for(var/thing in exosuit.pilots) //Для всех пилотов внутри

@@ -6,6 +6,7 @@ https://github.com/SierraBay/SierraBay12/pull/2317
 https://github.com/SierraBay/SierraBay12/pull/2380
 https://github.com/SierraBay/SierraBay12/pull/2386
 https://github.com/SierraBay/SierraBay12/pull/2456
+https://github.com/SierraBay/SierraBay12/pull/2562
 
 <!--
   Ссылки на PRы, связанные с модом:
@@ -104,7 +105,8 @@ MECH_BACK_LAYER
 
 ### Авторы:
 
-Shegar
+Shegar - Всё
+AK200 - задники для ослепления и эми удара
 <!--
   Здесь находится твой никнейм
   Если работал совместно - никнеймы тех, кто помогал.

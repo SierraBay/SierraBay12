@@ -449,6 +449,11 @@
 
 	// [SIERRA-ADD]
 	var/static/shutdown_on_reboot = FALSE
+	var/static/use_spreading_explosions = TRUE //Defines whether the server uses iterative or circular explosions.
+
+	var/static/iterative_explosives_z_threshold = 8
+	var/static/iterative_explosives_z_multiplier = 0.5
+	var/static/iterative_explosives_z_subtraction = 2
 	// [/SIERRA-ADD]
 
 
@@ -895,9 +900,20 @@
 				enable_cold_mist = TRUE
 			if ("disable_runechat")
 				runechat_enabled = FALSE
-			// [SIERRA-ADD]
 			if ("shutdown_on_reboot")
 				shutdown_on_reboot = TRUE
+			// [SIERRA-ADD]
+			if ("explosion_z_threshold")
+				iterative_explosives_z_threshold = text2num(value)
+
+			if ("explosion_z_mult")
+				iterative_explosives_z_multiplier = text2num(value)
+
+			if ("explosion_z_sub")
+				iterative_explosives_z_subtraction = text2num(value)
+
+			if ("use_spreading_explosions")
+				use_spreading_explosions = TRUE
 			// [/SIERRA-ADD]
 			// [SIERRA-ADD] - EX666_ECOSYSTEM
 			if ("overflow_server_url")
