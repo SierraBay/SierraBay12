@@ -31,7 +31,7 @@
 	if(istype(A,/obj/item/reagent_containers/food/snacks/grown))
 		var/obj/item/reagent_containers/food/snacks/grown/G = A
 		grown_seed = SSplants.seeds[G.plantname]
-	potency = grown_seed.get_trait(TRAIT_POTENCY)
+		potency = grown_seed.get_trait(TRAIT_POTENCY)
 //[/SIERRA-ADD] - MODPACK_RND
 
 /obj/item/device/scanner/plant/proc/plant_scan_results(obj/target)

@@ -7,14 +7,14 @@ var/global/list/rnd_server_list = list()
 	var/list/tech_points = list(
 		TECH_MATERIAL = 200,
 		TECH_ENGINEERING = 250,
-		TECH_PHORON = 500,
+		TECH_PHORON = 600,
 		TECH_POWER = 300,
-		TECH_BLUESPACE = 1000,
+		TECH_BLUESPACE = 700,
 		TECH_BIO = 300,
 		TECH_COMBAT = 500,
 		TECH_MAGNET = 350,
 		TECH_DATA = 400,
-		TECH_ESOTERIC = 5000,
+		TECH_ESOTERIC = 1000,
 	)
 
 	var/list/tech_points_rarity = list(
@@ -42,6 +42,8 @@ var/global/list/rnd_server_list = list()
 	var/list/saved_tech_levels = list() // list("materials" = list(1, 4, ...), ...)
 	var/list/saved_autopsy_weapons = list()
 	var/list/saved_artifacts = list()
+	var/list/saved_small_artefacts = list()
+	var/list/saved_urm_interactions = list()
 	var/list/saved_plants = list()
 	var/list/saved_slimecores = list()
 	var/list/saved_spectrometers = list()
@@ -101,9 +103,9 @@ var/global/list/rnd_server_list = list()
 	var/points = 0
 
 	for(var/weapon in I.scanned_autopsy_weapons)
-		if(!(weapon in saved_autopsy_weapons))
-			saved_autopsy_weapons += weapon
-
+		if(weapon in saved_autopsy_weapons)
+			continue
+		else
 			// These give more points because they are rare or special
 			var/list/special_weapons = list(
 				"large organic needle" = 10000,
@@ -119,6 +121,8 @@ var/global/list/rnd_server_list = list()
 				points += special_weapons[weapon]
 			else
 				points += rand(5,10) * 200 // 1000-2000 points for random weapon
+
+			saved_autopsy_weapons += weapon
 
 	for(var/list/artifact in I.scanned_artifacts)
 		var/already_scanned = FALSE
@@ -178,7 +182,32 @@ var/global/list/rnd_server_list = list()
 	for(var/x in I.scanned_xenofauna)
 		if(x in saved_xenofauna)
 			continue
-		var/reward = rand(3000, 6000)
+		var/reward = 100
+		var/species = I.species
+		if(species in typesof(/mob/living/simple_animal/hostile/hivebot,/mob/living/simple_animal/hostile/giant_spider,/mob/living/simple_animal/hostile/vagrant))
+			reward = rand(500, 1500)
+		if(species in typesof(/mob/living/simple_animal/hostile/retaliate/space_whale, /mob/living/simple_animal/hostile/retaliate/parrot, /mob/living/simple_animal/hostile/meat))
+			reward = rand(1000, 2000)
+		if(species in typesof(/mob/living/simple_animal/hostile/carp/shark,/mob/living/simple_animal/hostile/carp/pike))
+			reward = rand(500, 1000)
+		if(species in typesof(/mob/living/simple_animal/hostile/leech, /mob/living/simple_animal/hostile/carp, /mob/living/simple_animal/hostile/creature, /mob/living/simple_animal/hostile/voxslug))
+			reward = rand(100, 600)
+		if(species in typesof(/mob/living/simple_animal/hostile/faithless,/mob/living/simple_animal/hostile/creature))
+			reward = rand(700, 1200)
+		if(species in typesof(/mob/living/simple_animal/hostile/drake))
+			reward = rand(3000, 4000)
+		if(species in typesof(/mob/living/simple_animal/hostile/bluespace, /mob/living/simple_animal/shade, /mob/living/simple_animal/construct))
+			reward = rand(2000, 3000)
+		if(species in typesof(/mob/living/simple_animal/passive))
+			reward = rand(100, 300)
+		if(species in typesof(/mob/living/simple_animal/borer))
+			reward = rand(1000, 1500)
+
+		if(species in typesof(/mob/living/simple_animal/hostile/meatstation))
+			reward = rand(1000, 2000)
+
+		if(I.new_species)
+			reward += rand(1000, 3000)
 		points += reward
 		saved_xenofauna += x
 
@@ -218,6 +247,21 @@ var/global/list/rnd_server_list = list()
 				reward = 1000
 		points += reward
 		saved_slimecores += core
+
+	for(var/obj/item/artefact/artefacts in I.scanned_small_artefacts)
+		if(artefacts in saved_small_artefacts)
+			continue
+		var/reward = 1000
+		reward = artefacts.rnd_points
+		points += reward
+		saved_small_artefacts += artefacts
+	for(var/obj/item/small_artefact_scan_disk/input_disk in I.scanned_urm_interactions)
+		if(input_disk.interaction_id in saved_urm_interactions)
+			continue
+		var/reward = input_disk.rnd_points_reward
+		points += reward
+		saved_urm_interactions += input_disk.interaction_id
+
 
 	I.clear_data()
 	return round(points)
@@ -345,6 +389,10 @@ var/global/list/rnd_server_list = list()
 	var/list/scanned_slimecores = list()
 	var/list/scanned_spectrometers = list()
 	var/list/scanned_xenofauna = list()
+	var/list/scanned_small_artefacts = list()
+	var/list/scanned_urm_interactions = list()
+	var/species
+	var/new_species = FALSE
 	var/potency
 	var/datablocks = 0
 
@@ -360,36 +408,50 @@ var/global/list/rnd_server_list = list()
 		to_chat(user, "<span class='notice'>[disk] stores approximately [disk.stored_points] research points</span>")
 		return
 
-	if(istype(O,/obj/item/paper/autopsy_report))
+	else if(istype(O,/obj/item/paper/autopsy_report))
 		var/obj/item/paper/autopsy_report/report = O
 		for(var/datum/autopsy_data/W in report.autopsy_data)
 			if(!(W.weapon in scanned_autopsy_weapons))
 				scanneddata += 1
 				scanned_autopsy_weapons += W.weapon
 
-	if(istype(O,/obj/item/paper/plant_report))
+	else if(istype(O,/obj/item/paper/plant_report))
 		var/obj/item/paper/plant_report/report = O
 		if(!(report.info in scanned_plants))
 			scanneddata += 1
 			scanned_plants += report.info
 			potency = report.potency
+		else
+			to_chat(user, "<span class='notice'>[src] already has data about this report</span>")
+			return
 
-	if(istype(O,/obj/item/paper/radiocarbon_spectrometer_report))
+
+	else if(istype(O,/obj/item/paper/radiocarbon_spectrometer_report))
 		var/obj/item/paper/radiocarbon_spectrometer_report/report = O
 		if(!(report in scanned_spectrometers))
 			if(report.anomalous)
 				scanneddata += 1
 				scanned_spectrometers += report
+		else
+			to_chat(user, "<span class='notice'>[src] already has data about this report</span>")
+			return
 
-	if(istype(O,/obj/item/paper/xenofauna_report))
+	else if(istype(O,/obj/item/paper/xenofauna_report))
 		var/obj/item/paper/xenofauna_report/report = O
 		if(!(report in scanned_xenofauna))
-			if(report.new_species)
+			if(report.species)
 				scanneddata += 1
-				scanned_xenofauna += report
+				species = report.species
+				if(report.new_species)
+					scanneddata += 1
+					new_species = report.new_species
+			scanned_xenofauna += report
+		else
+			to_chat(user, "<span class='notice'>[src] already has data about this report</span>")
+			return
 
 
-	if(istype(O, /obj/item/paper/anomaly_scan))
+	else if(istype(O, /obj/item/paper/anomaly_scan))
 		var/obj/item/paper/anomaly_scan/report = O
 		if(report.artifact)
 			for(var/list/artifact in scanned_artifacts)
@@ -404,7 +466,21 @@ var/global/list/rnd_server_list = list()
 			))
 			scanneddata += 1
 
-	if(istype(O, /obj/item/device/beacon/explosion_watcher))
+
+	else if(istype(O, /obj/item/slime_extract))
+		if(!(O.type in scanned_slimecores))
+			scanned_slimecores += O.type
+			scanneddata += 1
+		else
+			to_chat(user, "<span class='notice'>[src] already has data about this report</span>")
+			return
+
+	if(scanneddata > 0)
+		datablocks += scanneddata
+		to_chat(user, "<span class='notice'>[src] received [scanneddata] data block[scanneddata>1?"s":""] from scanning [O]</span>")
+		return
+
+	else if(istype(O, /obj/item/device/beacon/explosion_watcher))
 		var/obj/item/device/beacon/explosion_watcher/explosion = O
 		if(explosion.calculated_research_points > 0)
 			to_chat(user, "<span class='notice'>Estimated research value of [O.name] is [explosion.calculated_research_points]</span>")
@@ -412,16 +488,7 @@ var/global/list/rnd_server_list = list()
 			to_chat(user, "<span class='notice'>[O] has no research value</span>")
 		return
 
-	if(istype(O, /obj/item/slime_extract))
-		if(!(O.type in scanned_slimecores))
-			scanned_slimecores += O.type
-			scanneddata += 1
-
-	if(scanneddata > 0)
-		datablocks += scanneddata
-		to_chat(user, "<span class='notice'>[src] received [scanneddata] data block[scanneddata>1?"s":""] from scanning [O]</span>")
-
-	if(istype(O, /obj/item/disk/tech_disk))
+	else if(istype(O, /obj/item/disk/tech_disk))
 		var/obj/item/disk/tech_disk/T = O
 		if(T.stored)
 			var/science_value = T.stored.level * 1000
@@ -429,6 +496,23 @@ var/global/list/rnd_server_list = list()
 				to_chat(user, "<span class='notice'>[T] has aproximately [science_value] research points</span>")
 		else
 			to_chat(user, "<span class='notice'>[O] has no research value</span>")
+
+	else if(istype(O, /obj/item/artefact))
+		if(!(O.type in scanned_small_artefacts))
+			var/obj/item/artefact/art = O
+			scanned_small_artefacts += art.type
+			scanneddata += 1
+		else
+			to_chat(user, "<span class='notice'>[src] already has data about this report</span>")
+
+	else if(istype(O, /obj/item/small_artefact_scan_disk))
+		var/obj/item/small_artefact_scan_disk/disk = O
+		if(!(disk in scanned_urm_interactions))
+			to_chat(user, "<span class='notice'> Collected usefull data from URM disk.</span>")
+			scanned_urm_interactions += disk
+			scanneddata += 1
+		else
+			to_chat(user, "<span class='notice'>[O] has no new usefull data</span>")
 
 	else if(istype(O, /obj/item))
 		var/science_value = experiments.get_object_research_value(O)

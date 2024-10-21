@@ -189,9 +189,11 @@
 	#include "../../mods/_maps/sentinel/_map_sentinel.dme"
 	#include "../../mods/_maps/farfleet/_map_farfleet.dme"
 	#include "../../mods/_maps/hand/_map_hand.dme"
+	#include "../../mods/_maps/ascent_seedship/_map_ascent_seedship.dme"
+	#include "../../mods/_maps/ascent_caulship/_map_ascent_caulship.dme"
 
 	#include "../../mods/antagonists/_antagonists.dme"
-	#include "../../mods/bluespace_kitty/_bluespace_kitty.dme"
+	#include "../../mods/ascent/_ascent.dme"
 	#include "../../mods/fancy_sofas/_fancy_sofas.dme"
 	#include "../../mods/guns/_guns.dme"
 	#include "../../mods/jukebox_tapes/_jukebox_tapes.dme"
@@ -205,12 +207,12 @@
 	#include "../../mods/contraband_vending/_contraband_vending.dme"
 	#include "../../mods/telecomms/_telecomms.dme"
 	#include "../../mods/modernUI/_modernUI.dme"
-	#include "../../mods/newUI/_newUI.dme"
 
 	// UNUSED MODS
 	// Keep them in ascending alphabetical order too, please
 
 	// #include "../../mods/atmos_ret_field/_atm_ret_field.dme"
+	// #include "../../mods/bluespace_kitty/_bluespace_kitty.dme"
 
 	// Почему UNUSED MODS стоит хранить?
 	// Потому что никто не проверяет использование тех или иных файлов

@@ -1,0 +1,38 @@
+{{for data.manifest}}
+    {{if value.names.length}}
+        <div class="section">
+            <div class="section-title" style="color: {{:value.color}}; border-bottom: 2px solid {{:value.color}}">
+                {{:value.header}}
+            </div>
+            <div class="section-content">
+            {{for value.names :worker:workerIndex}}
+                    <div class="manifest-row">
+                        <div class="manifest-row-name">
+                            {{:worker.name}}
+                        </div>
+                        <div class="manifest-row-rank">
+                            {{:worker.rank}}
+                            {{if data.ooc}}
+                                {{:worker.active?' (Active)':' (Inactive)'}}
+                            {{/if}}
+                        </div>
+                    </div>
+                {{empty}}
+                    None
+                {{/for}}
+            </div>
+        </div>
+    {{/if}}
+{{/for}}
+
+<style>
+    .manifest-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .manifest-row-rank {
+        color: #7e90a7;
+    }
+</style>
