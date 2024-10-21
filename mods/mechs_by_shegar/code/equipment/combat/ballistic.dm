@@ -89,6 +89,7 @@
 	max_ammo = 100
 	icon_state = "666"
 	mag_type = SPEEDLOADER
+	caliber = CALIBER_PISTOL_SMALL
 	w_class = ITEM_SIZE_HUGE
 	ammo_type = /obj/item/ammo_casing/pistol/small/mech
 
@@ -97,6 +98,7 @@
 	caliber = CALIBER_PISTOL_SMALL
 
 /obj/item/projectile/bullet/pistol/holdout/mech
+	damage = 30
 	fire_sound = 'mods/mechs_by_shegar/sounds/mech_smg.ogg'
 	penetrating = 1
 //СМГ

@@ -350,7 +350,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			search_text = ""
 	if(href_list["eject_disk"]) // User is ejecting the disk.
 		if(disk)
-			disk.forceMove(src.loc)
+			disk.forceMove(get_turf(src))
 			disk = null
 	if(href_list["delete_disk_file"]) // User is attempting to delete a file from the loaded disk.
 		if(disk)
