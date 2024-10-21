@@ -80,6 +80,7 @@
 
 /obj/item/ammo_magazine/shotholder/attack_hand(mob/user)
 	if((user.a_intent == I_HURT) && (length(stored_ammo)))
+		create_initial_contents()
 		var/obj/item/ammo_casing/C = stored_ammo[length(stored_ammo)]
 		stored_ammo-=C
 		user.put_in_hands(C)
