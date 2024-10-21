@@ -381,10 +381,6 @@
 /obj/item/stock_parts/scanning_module,
 /obj/item/stock_parts/scanning_module/adv,
 /obj/item/stock_parts/smes_coil/weak,
-/obj/item/stock_parts/smes_coil/super_capacity,
-/obj/item/stock_parts/smes_coil/super_capacity,
-/obj/item/stock_parts/smes_coil/super_io,
-/obj/item/stock_parts/smes_coil/super_io,
 /obj/item/stock_parts/smes_coil/weak,
 /obj/item/stock_parts/smes_coil/weak,
 /obj/item/stack/material/tritium/fifty,
@@ -807,7 +803,9 @@
 	dir = 1
 	},
 /obj/floor_decal/corner/paleblue/mono,
-/obj/machinery/r_n_d/protolathe,
+/obj/machinery/computer/rdconsole/core/colony{
+	req_access = list()
+	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/colony2/engineering)
 "oQ" = (
@@ -1430,6 +1428,32 @@
 /obj/structure/reagent_dispensers/acid{
 	pixel_y = -28
 	},
+/obj/structure/closet/crate,
+/obj/item/stock_parts/manipulator/pico,
+/obj/item/stock_parts/manipulator/pico,
+/obj/item/stock_parts/manipulator/pico,
+/obj/item/stock_parts/manipulator/pico,
+/obj/item/stock_parts/manipulator/pico,
+/obj/item/stock_parts/manipulator/pico,
+/obj/item/stock_parts/micro_laser/ultra,
+/obj/item/stock_parts/micro_laser/ultra,
+/obj/item/stock_parts/micro_laser/ultra,
+/obj/item/stock_parts/micro_laser/ultra,
+/obj/item/stock_parts/micro_laser/ultra,
+/obj/item/stock_parts/micro_laser/ultra,
+/obj/item/stock_parts/micro_laser/ultra,
+/obj/item/stock_parts/micro_laser/ultra,
+/obj/item/stock_parts/manipulator/pico,
+/obj/item/stock_parts/manipulator/pico,
+/obj/item/stock_parts/matter_bin/super,
+/obj/item/stock_parts/matter_bin/super,
+/obj/item/stock_parts/matter_bin/super,
+/obj/item/stock_parts/matter_bin/super,
+/obj/item/stock_parts/matter_bin/super,
+/obj/item/stock_parts/capacitor/super,
+/obj/item/stock_parts/capacitor/super,
+/obj/item/stock_parts/capacitor/super,
+/obj/item/stock_parts/capacitor/super,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/colony2/engineering)
 "BR" = (
@@ -1592,6 +1616,10 @@
 /obj/item/storage/backpack/dufflebag/med,
 /obj/item/storage/backpack/dufflebag/eng,
 /obj/item/storage/backpack/dufflebag/eng,
+/obj/item/shuttle_beacon,
+/obj/item/shuttle_beacon,
+/obj/item/shuttle_beacon,
+/obj/item/shuttle_beacon,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/colony2/storage)
 "Dw" = (
@@ -2186,9 +2214,7 @@
 /obj/item/device/radio/intercom/map_preset/playablecolony2{
 	pixel_y = 21
 	},
-/obj/machinery/computer/rdconsole/core{
-	req_access = list()
-	},
+/obj/machinery/r_n_d/protolathe,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/colony2/engineering)
 "OB" = (
@@ -2393,8 +2419,8 @@
 /area/map_template/colony2/external)
 "Rs" = (
 /obj/structure/cable,
-/obj/machinery/power/smes/buildable/max_cap_in_out,
 /obj/floor_decal/corner/paleblue/mono,
+/obj/machinery/power/smes/buildable/preset/colony,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/colony2/engineering)
 "Rw" = (
@@ -2901,9 +2927,7 @@
 /obj/machinery/atmospherics/pipe/simple/visible/red,
 /obj/catwalk_plated/dark,
 /obj/machinery/meter,
-/obj/machinery/robotics_fabricator{
-	req_access = list()
-	},
+/obj/machinery/robotics_fabricator,
 /turf/simulated/floor/plating,
 /area/map_template/colony2/engineering)
 "YI" = (

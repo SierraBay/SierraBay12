@@ -1,3 +1,13 @@
+/mob/living/exosuit/add_pilot(mob/user)
+	. = ..()
+	to_chat(user,SPAN_NOTICE("<b><font color = green> Press Middle mouse button for fast swap current hardpoint. </font></b>"))
+	to_chat(user,SPAN_NOTICE("<b><font color = green> Press SPACE mouse for toggle strafe mod. </font></b>"))
+
+/mob/living/exosuit/remove_pilot(mob/user)
+	. = ..()
+	clear_sensors_effects(user)
+
+
 /mob/living/exosuit/proc/check_passenger(mob/user) // Выбираем желаемое место, проверяем можно ли его занять, стартуем прок занятия
 	var/local_dir = get_dir(src, user)
 	if(local_dir != turn(dir, 90) && local_dir != turn(dir, -90) && local_dir != turn(dir, -135) && local_dir != turn(dir, 135) && local_dir != turn(dir, 180))
@@ -206,6 +216,9 @@
 
 /mob/living/exosuit/use_tool(obj/item/tool, mob/user, list/click_params)
 	if(istype(tool, /obj/item/card/id))// Мы тычем ID картой в меха, словно ключами от иномарки.
+		if(inmech(user, src))
+			to_chat(user, "You cannot interacti with mech inside mech.")
+			return
 		//Если есть пилоты, мы никому ничего не откроем
 		if(LAZYLEN(pilots))
 			to_chat(user, SPAN_WARNING("There is somebody inside, ID scaner ignores you."))
@@ -236,7 +249,8 @@
 				if(user_undertand)
 					to_chat(user, "[src] accepted your ID card.")
 				src.visible_message("Green LED's of [src] blinks.", "your ID scanner has found a suitable card", "You hear an approving chirp", 7)
-				selftoggle_mech_hatch() //Мех изменит своё состояние на обратное (Откроется, или закроется)
+				selftoggle_mech_hatch_close() //Мех изменит своё состояние на обратное (Откроется, или закроется)
+				selftoggle_mech_hatch_lock()
 				return
 			else//Доступы не совпадают
 				if(user_undertand)
@@ -248,6 +262,9 @@
 
 
 	if(istype(tool, /obj/item/stack/material))
+		if(inmech(user, src))
+			to_chat(user, "You cannot interacti with mech inside mech.")
+			return
 		var/obj/item/mech_component/choice = show_radial_menu(user, src, parts_list_images, require_near = TRUE, radius = 42, tooltips = TRUE, check_locs = list(src))
 		if(!choice)
 			return
@@ -270,6 +287,9 @@
 
 	//Saw/welder - destroy mech security bolts
 	if( ((istype(tool, /obj/item/circular_saw)) || (isWelder(tool))) && user.a_intent == I_HURT)
+		if(inmech(user, src))
+			to_chat(user, "You cannot interacti with mech inside mech.")
+			return
 		if (!body)
 			USE_FEEDBACK_FAILURE("\The [src] has no cockpit to force.")
 			return FALSE
@@ -337,22 +357,28 @@
 		if(repair_part.min_damage > repair_part.max_damage)
 			repair_part.max_damage = repair_part.min_damage
 
-/mob/living/exosuit/proc/selftoggle_mech_hatch()
+/mob/living/exosuit/proc/selftoggle_mech_hatch_close()
 	playsound(src.loc, 'mods/mechs_by_shegar/sounds/mech_peek.ogg', 80, 0, -6)
 	//Данный прок выполняет простейшую задачу, либо открывает, либо закрывает меха без участвия человека.
 	if(hatch_closed) // <- Кабина закрыта?
-		if(hatch_locked) // <- Замок включен
-			hatch_locked = FALSE //<- выключили замок
-			playsound(src.loc, 'sound/machines/suitstorage_lockdoor.ogg', 50, 1, -6)
 		hatch_closed = FALSE
 		playsound(src.loc, 'sound/machines/suitstorage_cycledoor.ogg', 50, 1, -6)
 	else // <- кабина открыта
 		hatch_closed = TRUE
 		playsound(src.loc, 'sound/machines/suitstorage_cycledoor.ogg', 50, 1, -6)
-		if(!hatch_locked)
-			hatch_locked = TRUE
-			playsound(src.loc, 'sound/machines/suitstorage_lockdoor.ogg', 50, 1, -6)
+	hud_open.update_icon()
 	update_icon()
+	need_update_sensor_effects = TRUE
+
+/mob/living/exosuit/proc/selftoggle_mech_hatch_lock()
+	if(hatch_locked) // <- Замок включен
+		hatch_locked = FALSE //<- выключили замок
+		playsound(src.loc, 'sound/machines/suitstorage_lockdoor.ogg', 50, 1, -6)
+	else
+		hatch_locked = TRUE
+		playsound(src.loc, 'sound/machines/suitstorage_lockdoor.ogg', 50, 1, -6)
+	update_icon()
+	need_update_sensor_effects = TRUE
 
 /mob/living/exosuit/proc/selfopen_mech_hatch()
 	playsound(src.loc, 'mods/mechs_by_shegar/sounds/mech_peek.ogg', 80, 0, -6)
@@ -364,6 +390,7 @@
 		hatch_closed = FALSE
 		playsound(src.loc, 'sound/machines/suitstorage_cycledoor.ogg', 50, 1, -6)
 	update_icon()
+	need_update_sensor_effects = TRUE
 
 /mob/living/exosuit/emag_act(remaining_charges, mob/user, emag_source)
 	id_holder = "EMAGED"

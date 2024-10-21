@@ -119,7 +119,11 @@
 	if(touch_met && (location == CHEM_TOUCH))
 		removed = touch_met
 	removed = M.get_adjusted_metabolism(removed)
-	removed = min(removed, volume)
+	// [SIERRA-REMOVE]
+/*
+removed = min(removed, volume)
+*/
+// [/SIERRA-REMOVE]
 
 	//adjust effective amounts - removed, dose, and max_dose - for mob size
 	var/effective = removed
