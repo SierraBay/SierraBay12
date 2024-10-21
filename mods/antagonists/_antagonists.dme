@@ -10,5 +10,6 @@
 #include "code/operative.dm"
 #include "code/traitor.dm"
 #include "code/uplink.dm"
+#include "code/maint_ninja.dm"
 
 #endif

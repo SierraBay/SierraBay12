@@ -177,15 +177,16 @@ The answer was five and a half years -ZeroBits
 		error_message = "Network Error: Connection to the Archive has been severed."
 		return 1
 
-	var/DBQuery/query = dbcon_old.NewQuery("SELECT * FROM library WHERE id=[sqlid]")
+	var/DBQuery/query = dbcon_old.NewQuery("SELECT id, category, title, author, content FROM library WHERE id=[sqlid]") // please work ;-; ~Vipo24
 	query.Execute()
 
 	while(query.NextRow())
 		current_book = list(
 			"id" = query.item[1],
-			"author" = query.item[2],
+			"category" = query.item[2],
 			"title" = query.item[3],
-			"content" = query.item[4]
+			"author" = query.item[4],
+			"content" = query.item[5]
 			)
 		break
 	return 1

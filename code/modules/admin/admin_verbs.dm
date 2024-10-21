@@ -47,6 +47,7 @@ var/global/list/admin_verbs_admin = list(
 	/client/proc/cmd_admin_visible_narrate,
 	/client/proc/cmd_admin_audible_narrate,
 	/client/proc/cmd_admin_local_narrate,
+	/client/proc/cmd_admin_legion_narrate,
 	/client/proc/cmd_admin_world_narrate,	//sends text to all players with no padding,
 	/client/proc/cmd_admin_create_centcom_report,
 	/client/proc/check_ai_laws,			//shows AI and borg laws,
@@ -252,6 +253,7 @@ var/global/list/admin_verbs_hideable = list(
 	/client/proc/cmd_admin_visible_narrate,
 	/client/proc/cmd_admin_audible_narrate,
 	/client/proc/cmd_admin_local_narrate,
+	/client/proc/cmd_admin_legion_narrate,
 	/client/proc/cmd_admin_world_narrate,
 	/client/proc/play_local_sound,
 	/client/proc/play_sound,
@@ -541,11 +543,11 @@ var/global/list/admin_verbs_mod = list(
 		if (null)
 			return
 		if("Small Bomb")
-			explosion(epicenter, 6)
+			explosion(epicenter, 1, 2, 3, 3)
 		if("Medium Bomb")
-			explosion(epicenter, 9)
+			explosion(epicenter, 2, 3, 4, 4)
 		if("Big Bomb")
-			explosion(epicenter, 15)
+			explosion(epicenter, 3, 5, 7, 5)
 		if("Custom Bomb")
 			var/range = input("Explosion radius (in tiles):") as num|null
 			if (isnull(range) || range <= 0)
