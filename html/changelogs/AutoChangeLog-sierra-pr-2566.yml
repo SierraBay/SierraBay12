@@ -1,0 +1,5 @@
+author: Mucker
+changes:
+  - {balance: 'Increased traitor scaling coefficient to 7, meaning fewer traitors
+      will be selected with smaller in-game player counts.'}
+delete-after: true

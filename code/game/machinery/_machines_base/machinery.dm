@@ -216,6 +216,17 @@
 			return TOPIC_HANDLED
 
 	. = ..()
+	//[SIERRA-ADD] - AI-UPDATE
+	if(isAI(usr)) //Оверрайд для ИИ, ему всегда обновляет УИ
+		if(istype(src, /obj/machinery/door/airlock))
+			var/obj/machinery/door/airlock/door = src
+			if(door.CanAIUseTopic(usr))
+				updateUsrDialog()
+				return FALSE
+		else
+			updateUsrDialog()
+			return FALSE
+	//[SIERRA-ADD]
 	if(. == TOPIC_REFRESH)
 		updateUsrDialog() // Update legacy UIs to the extent possible.
 

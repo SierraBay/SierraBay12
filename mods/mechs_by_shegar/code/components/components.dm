@@ -43,6 +43,8 @@
 	///Содержит в себе значение НЕЧИНИБЕЛЬНОГО урона что скопился в части.
 	var/unrepairable_damage = 0
 
+	///Обозначает вес компонента в КИЛОГРАММАХ
+	var/weight = 100
 
 													///КОНЕЦ///
 
@@ -109,8 +111,8 @@
 	. = ..()
 
 /obj/item/mech_component/proc/emp_heat(severity, emp_armor, mob/living/exosuit/mech) //Накидываем тепло учитывая армор меха
-	if(emp_armor > 0.7)
-		emp_armor = 0.7
+	if(emp_armor > 0.8)
+		emp_armor = 0.8
 	mech.add_heat(emp_heat_generation * (1 - emp_armor))
 
 /obj/item/mech_component/use_tool(obj/item/tool, mob/user, list/click_params)

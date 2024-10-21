@@ -89,6 +89,11 @@
 	if(trait == TRAIT_PLANT_ICON)
 		update_growth_stages()
 
+/// Returns between 0 and 1 along an approximate log curve for potency up to 200
+/datum/seed/proc/get_potency_curve()
+	var/scale = clamp(get_trait(TRAIT_POTENCY), 1, 200) / 200
+	return (1.2 * scale) / (0.2 + scale)
+
 /datum/seed/proc/create_spores(turf/T)
 	if(!T)
 		return
@@ -202,9 +207,10 @@
 			splat.SetName("[thrown.name] [pick("smear","smudge","splatter")]")
 			if(get_trait(TRAIT_BIOLUM))
 				var/clr
+				var/biolum_power = get_potency_curve()
 				if(get_trait(TRAIT_BIOLUM_COLOUR))
 					clr = get_trait(TRAIT_BIOLUM_COLOUR)
-				splat.set_light(3, 0.5, l_color = clr)
+				splat.set_light(6 * biolum_power, biolum_power, l_color = clr)
 			var/flesh_colour = get_trait(TRAIT_FLESH_COLOUR)
 			if(!flesh_colour) flesh_colour = get_trait(TRAIT_PRODUCT_COLOUR)
 			if(flesh_colour) splat.color = get_trait(TRAIT_PRODUCT_COLOUR)
@@ -576,7 +582,7 @@
 				set_trait(TRAIT_ENDURANCE,get_trait(TRAIT_ENDURANCE)-rand(10,20),null,0)
 				source_turf.visible_message(SPAN_DANGER("\The [display_name] withers rapidly!"))
 			if(1)
-				set_trait(TRAIT_NUTRIENT_CONSUMPTION,get_trait(TRAIT_NUTRIENT_CONSUMPTION)+rand(-(degree*0.1),(degree*0.1)),5,0)
+				set_trait(TRAIT_NUTRIENT_CONSUMPTION,get_trait(TRAIT_NUTRIENT_CONSUMPTION)+Frand(-(degree*0.1),(degree*0.1)),5,0)
 				set_trait(TRAIT_WATER_CONSUMPTION,   get_trait(TRAIT_WATER_CONSUMPTION)   +rand(-degree,degree),50,0)
 				set_trait(TRAIT_JUICY,              !get_trait(TRAIT_JUICY))
 				set_trait(TRAIT_STINGS,             !get_trait(TRAIT_STINGS))
@@ -785,9 +791,10 @@
 
 			if(get_trait(TRAIT_BIOLUM))
 				var/clr
+				var/biolum_power = get_potency_curve()
 				if(get_trait(TRAIT_BIOLUM_COLOUR))
 					clr = get_trait(TRAIT_BIOLUM_COLOUR)
-				product.set_light(3, 0.5, l_color = clr)
+				product.set_light(6 * biolum_power, biolum_power, l_color = clr)
 
 			//Handle spawning in living, mobile products (like dionaea).
 			if(istype(product,/mob/living))
