@@ -174,7 +174,7 @@ var/global/const/NO_EMAG_ACT = -50
 	if (used_uses)
 		log_and_message_admins("emagged \a [target].")
 		//[SIERRA-ADD]
-		playsound(get_turf(A), pick(emag_sounds), 40, extrarange = -3)
+		playsound(get_turf(target), pick(emag_sounds), 40, extrarange = -3)
 		//[SIERRA-ADD]
 
 	if (uses < 1)
