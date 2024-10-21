@@ -72,7 +72,7 @@
 	required_tech_levels = list()
 	cost = 2500
 
-	unlocks_designs = list("augment_circuitry","augment_nanounit","augment_wolverine","augment_blade","augment_powerfist","augment_booster_reflex","augment_booster_gunnery","augment_booster_muscles")
+	unlocks_designs = list("augment_circuitry","augment_nanounit","augment_wolverine","augment_blade","augment_powerfist","augment_booster_reflex","augment_booster_gunnery","augment_booster_muscles","augment_armor")
 
 /datum/technology/robo/adv_hardsuits
 	name = "Advanced Hardsuits Mods"
@@ -148,7 +148,7 @@
 	required_tech_levels = list()
 	cost = 500
 
-	unlocks_designs = list("mech_recharger","hydraulic_clamp","gravity_catapult","mech_drill","mech_machete", "mech_floodlight","mech_camera","mech_flash", "mech_plasma")
+	unlocks_designs = list("mech_recharger","hydraulic_clamp","gravity_catapult","mech_drill","mech_machete", "mech_floodlight","mech_camera","mech_flash", "mech_plasma","mech_shield_ballistic",)
 
 /datum/technology/robo/adv_mech_tools
 	name = "Advanced Mech Tools"
@@ -163,7 +163,7 @@
 	required_tech_levels = list()
 	cost = 1500
 
-	unlocks_designs = list("mech_shield","mech_rcd", "mech_shield_ballistic","mech_ionjets","mech_atmoshields","mech_plasma_auto")
+	unlocks_designs = list("mech_rcd","mech_ionjets","mech_atmoshields","mech_plasma_auto","exosuit_circuit")
 
 /datum/technology/robo/mech_weapons
 	name = "Mech Weapons"
@@ -178,7 +178,7 @@
 	required_tech_levels = list()
 	cost = 1500
 
-	unlocks_designs = list("mech_ion","mech_laser","mech_flamer","mech_taser","mech_software_weapons")
+	unlocks_designs = list("mech_ion","mech_laser","mech_flamer","mech_taser","mech_software_weapons","mech_SMG","SMG_ammo","mech_shield")
 
 /datum/technology/robo/mech_med_tools
 	name = "Mech Medical Tools"

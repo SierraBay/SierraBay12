@@ -4,6 +4,9 @@
 - https://github.com/SierraBay/SierraBay12/pull/2437
 - https://github.com/SierraBay/SierraBay12/pull/2448
 - https://github.com/SierraBay/SierraBay12/pull/2463
+- https://github.com/SierraBay/SierraBay12/pull/2473
+- https://github.com/SierraBay/SierraBay12/pull/2485
+- https://github.com/SierraBay/SierraBay12/pull/2523
 <!--
   Ссылки на PRы, связанные с модом:
   - Создание
@@ -52,12 +55,18 @@ ID мода: MODPACK_NEWUI
   `/obj/machinery/photocopier/interface_interact()`,
   `/obj/machinery/photocopier/ui_interact()`,
   `/obj/machinery/photocopier/Topic()`,
-  
+
+  - `mods/_master_files/code/modules/paperwork/faxmachine.dm`:
+  `/obj/machinery/photocopier/faxmachine/interact()`,
+  `/obj/machinery/photocopier/faxmachine/Topic()`,
+
 - `mods/_master_files/code/modules/mob/observer/ghost.dm`:
   `/mob/observer/ghost/view_manfiest()`
 
 - `mods/_master_files/code/modules/mob/new_player/new_player.dm`:
-  `/mob/new_player/ViewManifest()`
+  `/mob/new_player/ViewManifest()`,
+  `/mob/new_player/LateChoices()`
+  
 <!--
   Если ты добавлял новый модульный оверрайд, его нужно указать здесь.
   Здесь указываются оверрайды в твоём моде и папке `_master_files`
@@ -80,6 +89,7 @@ ID мода: MODPACK_NEWUI
 
 - `mods/_master_files/code/game/machinery/telecomms/machine_interactions.dm`
 - `mods/_master_files/code/modules/paperwork/photocopier.dm`
+- `mods/_master_files/code/modules/paperwork/faxmachine.dm`
 - `mods/_master_files/code/modules/mob/observer/ghost.dm`
 - `mods/_master_files/code/modules/mob/new_player/new_player.dm`
 <!--

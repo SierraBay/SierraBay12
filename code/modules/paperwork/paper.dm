@@ -610,6 +610,7 @@
 /obj/item/paper/xenofauna_report/
 	name = "xenofauna report"
 	var/new_species = FALSE
+	var/species
 //[/SIERRA-ADD] - MODPACK_RND
 /*
  * Premade paper

@@ -14,16 +14,32 @@
 
 	unlocks_designs = list("binaryencrypt")
 
-/datum/technology/esoteric/chameleon_kit
-	name = "Chameleon Kit"
-	desc = "Chameleon Kit"
-	id = "chameleon_kit"
+/datum/technology/esoteric/bomb
+	name = "large chem grenade"
+	desc = "large chem grenade"
+	id = "large_grenade"
+	tech_type = RESEARCH_ESOTERIC
 
 	x = 0.5
 	y = 0.6
 	icon = "kit"
 
 	required_technologies = list("radiokey")
+	required_tech_levels = list()
+	cost = 1000
+
+	unlocks_designs = list("large_Grenade")
+
+/datum/technology/esoteric/chameleon_kit
+	name = "Chameleon Kit"
+	desc = "Chameleon Kit"
+	id = "chameleon_kit"
+
+	x = 0.5
+	y = 0.7
+	icon = "kit"
+
+	required_technologies = list("large_grenade")
 	required_tech_levels = list()
 	cost = 1500
 
@@ -46,8 +62,8 @@
 
 
 /datum/technology/esoteric/freedom_implant
-	name = "Glass Case- 'Freedom'"
-	desc = "Glass Case- 'Freedom'"
+	name = "Silent and Dangerous"
+	desc = "Silent and Dangerous"
 	id = "freedom_implant"
 
 
@@ -59,7 +75,7 @@
 	required_tech_levels = list()
 	cost = 1500
 
-	unlocks_designs = list("implant_free", "implant_adrenaline")
+	unlocks_designs = list("implant_free", "implant_adrenaline", "augment_wristblade")
 
 /datum/technology/esoteric/borg_syndicate_module
 	name = "Borg Illegal Module"
@@ -93,8 +109,8 @@
 	unlocks_designs = list("tyrant")
 
 /datum/technology/esoteric/explosive_implant
-	name = "Explosive Implant"
-	desc = "Explosive Implant"
+	name = "Loud and Dangerous"
+	desc = "Loud and Dangerous"
 	id = "explosive_implant"
 
 	x = 0.4
@@ -105,7 +121,7 @@
 	required_tech_levels = list()
 	cost = 1250
 
-	unlocks_designs = list("implant_explosive")
+	unlocks_designs = list("implant_explosive", "augment_popout_shotgun")
 
 /datum/technology/esoteric/enet
 	name = "Energy Net"
