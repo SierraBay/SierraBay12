@@ -64,6 +64,7 @@
 		/obj/item/device/flash,
 		/obj/item/device/megaphone,
 		/obj/item/material/clipboard,
+		/obj/item/folder/envelope/nuke,
 		/obj/item/storage/box/PDAs,
 		/obj/item/storage/box/ids,
 		/obj/item/storage/belt/holster/general,
@@ -72,7 +73,7 @@
 
 /obj/structure/closet/secure_closet/adjutant
 	name = "adjutant's locker"
-	req_access = list(access_bridge)
+	req_access = list(access_adjutants)
 	closet_appearance = /singleton/closet_appearance/secure_closet/sierra/command/adjutant
 
 /obj/structure/closet/secure_closet/adjutant/WillContain()

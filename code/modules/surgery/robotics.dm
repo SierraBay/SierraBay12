@@ -20,9 +20,9 @@
 
 /singleton/surgery_step/robotics/success_chance(mob/living/user, mob/living/carbon/human/target, obj/item/tool)
 	. = ..()
-	if(!user.skill_check(SKILL_DEVICES, SKILL_TRAINED))
+	if(!user.skill_check(SKILL_DEVICES, SKILL_BASIC))
 		. -= 30
-	if(!user.skill_check(SKILL_DEVICES, SKILL_EXPERIENCED))
+	if(!user.skill_check(SKILL_DEVICES, SKILL_TRAINED))
 		. -= 20
 	if(user.skill_check(SKILL_DEVICES, SKILL_EXPERIENCED))
 		. += 35
@@ -398,16 +398,21 @@
 	for(var/obj/item/organ/I in affected.internal_organs)
 		if(I && I.damage > 0)
 			if(BP_IS_ROBOTIC(I))
+				if(((I.organ_tag == BP_POSIBRAIN) && (I.damage >= I.min_broken_damage)))
+					to_chat(user, SPAN_WARNING("Can't mend the damage to [target]'s [I.name]'s internally, you need to remove it first."))
+					return
 				user.visible_message("[user] starts mending the damage to [target]'s [I.name]'s mechanisms.", \
 				"You start mending the damage to [target]'s [I.name]'s mechanisms." )
-	playsound(target.loc, 'sound/items/bonegel.ogg', 50, TRUE)
-	..()
+		playsound(target.loc, 'sound/items/bonegel.ogg', 50, TRUE)
+		..()
 
 /singleton/surgery_step/robotics/fix_organ_robotic/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/affected = target.get_organ(target_zone)
 	for(var/obj/item/organ/I in affected.internal_organs)
 		if(I && I.damage > 0)
 			if(BP_IS_ROBOTIC(I))
+				if(((I.organ_tag == BP_POSIBRAIN) && (I.damage >= I.min_broken_damage)))
+					return
 				user.visible_message(SPAN_NOTICE("[user] repairs [target]'s [I.name] with [tool]."), \
 				SPAN_NOTICE("You repair [target]'s [I.name] with [tool].") )
 				I.damage = 0
@@ -463,7 +468,7 @@
 
 /singleton/surgery_step/robotics/detatch_organ_robotic/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/affected = target.get_organ(target_zone)
-	var/obj/removing = target.internal_organs_by_name[LAZYACCESS(target.surgeries_in_progress, target_zone)]
+	var/obj/removing = LAZYACCESS(target.surgeries_in_progress, target_zone)
 	user.visible_message(SPAN_NOTICE("[user] has decoupled \the [removing] from \the [target]'s [affected.name] with \the [tool].") , \
 	SPAN_NOTICE("You have decoupled \the [removing] from \the [target]'s [affected.name] with \the [tool]."))
 
@@ -479,7 +484,7 @@
 //	robotic organ transplant finalization surgery step
 //////////////////////////////////////////////////////////////////
 /singleton/surgery_step/robotics/attach_organ_robotic
-	name = "Reattach prosthetic organ"
+	name = "Attach prosthetic organ"
 	allowed_tools = list(
 		/obj/item/screwdriver = 50,
 		/obj/item/swapper/power_drill = 70,
@@ -504,7 +509,7 @@
 		if (organ.organ_tag in target.internal_organs_by_name)
 			continue
 		var/image/radial_button = image(icon = organ.icon, icon_state = organ.icon_state)
-		radial_button.name = "Reattach \the [organ.name]"
+		radial_button.name = "Attach \the [organ.name]"
 		LAZYSET(candidates, organ, radial_button)
 	if (length(candidates) == 1 && user.get_preference_value(/datum/client_preference/surgery_skip_radial))
 		return candidates[1]
@@ -521,9 +526,9 @@
 
 /singleton/surgery_step/robotics/attach_organ_robotic/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/affected = target.get_organ(target_zone)
-	var/obj/attaching = target.internal_organs_by_name[LAZYACCESS(target.surgeries_in_progress, target_zone)]
-	user.visible_message("[user] begins reattaching \the [attaching] from \the [target]'s [affected.name] with \the [tool].", \
-	"You start reattaching \the [attaching] from \the [target]'s [affected.name] with \the [tool].")
+	var/obj/attaching = LAZYACCESS(target.surgeries_in_progress, target_zone)
+	user.visible_message("[user] begins attaching \the [attaching] to \the [target]'s [affected.name] with \the [tool].", \
+	"You start attaching \the [attaching] to \the [target]'s [affected.name] with \the [tool].")
 	playsound(target.loc, 'sound/items/Screwdriver.ogg', 15, 1)
 	..()
 
@@ -534,8 +539,8 @@
 	attaching.status &= ~ORGAN_CUT_AWAY
 	attaching.replaced(target, affected)
 	user.visible_message(
-		SPAN_NOTICE("\The [user] has reattached \a [target]'s [attaching] with \a [tool]."),
-		SPAN_NOTICE("You have reattached \the [target]'s [attaching] with \the [tool].")
+		SPAN_NOTICE("\The [user] has attached \the [target]'s [attaching.name] with \the [tool]."),
+		SPAN_NOTICE("You have attached \the [target]'s [attaching.name] with \the [tool].")
 	)
 
 

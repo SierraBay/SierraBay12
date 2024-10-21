@@ -11,6 +11,15 @@
 	materials = list(MATERIAL_STEEL = 200, MATERIAL_GLASS = 100, MATERIAL_PLASTIC = 150)
 	build_path = /obj/item/device/scanner/health
 	sort_string = "MAABA"
+
+/datum/design/item/medical/autopsy_scanner
+	shortname = "Autopsy Scanner"
+	desc = "Used to gather information on wounds."
+	id = "autopsy_scanner"
+	req_tech = list(TECH_MAGNET = 3, TECH_BIO = 4, TECH_ENGINEERING = 2)
+	materials = list(MATERIAL_STEEL = 200, MATERIAL_GLASS = 200, MATERIAL_PLASTIC = 250)
+	build_path = /obj/item/autopsy_scanner
+	sort_string = "MAABB"
 //[/SIERRA-ADD] - MODPACK_RND
 
 /datum/design/item/medical/slime_scanner

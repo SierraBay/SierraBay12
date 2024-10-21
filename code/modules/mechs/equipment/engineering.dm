@@ -38,7 +38,7 @@
 	restricted_software = list(MECH_SOFTWARE_ENGINEERING)
 
 /obj/item/mech_equipment/atmos_shields
-	icon_state = "mech_power"
+	icon_state = "mech_atmoshield_off"
 	name = "exosuit airshield"
 	desc = "An Aether Atmospherics brand 'Zephyros' portable Atmospheric Isolation and Retention Screen. It keeps air where it should be... Most of the time. Press ctrl-click to switch modes"
 	restricted_hardpoints = list(HARDPOINT_LEFT_SHOULDER, HARDPOINT_RIGHT_SHOULDER)
@@ -54,6 +54,9 @@
 			to_chat(user, SPAN_WARNING("You cannot modify the projection mode while the shield is active."))
 		else
 			current_mode = !current_mode
+			//[SIERRA-ADD] - Mechs-by-Shegar
+			owner.add_heat(heat_generation)
+			//[SIERRA-ADD]
 			to_chat(user, SPAN_NOTICE("You set the shields to [current_mode ? "bubble" : "barrier"] mode."))
 		return TRUE
 	return ..()
@@ -101,6 +104,9 @@
 	owner.visible_message(SPAN_WARNING("\The [src] starts glowing as it becomes energized!"), blind_message = SPAN_WARNING("You hear the crackle of electricity"))
 	owner.setClickCooldown(2.5 SECONDS)
 	if (do_after(owner, 0.5 SECONDS, get_turf(owner), DO_DEFAULT | DO_USER_UNIQUE_ACT | DO_PUBLIC_PROGRESS) && owner)
+		//[SIERRA-ADD]
+		owner.add_heat(heat_generation)
+		//[SIERRA-ADD]
 		owner.visible_message(SPAN_WARNING("The air shimmers as energy shields form in front of \the [owner]!"))
 		playsound(src ,'sound/effects/phasein.ogg',35,1)
 		active = TRUE
