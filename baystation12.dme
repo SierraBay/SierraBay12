@@ -3375,6 +3375,7 @@
 #include "mods\_master_files\code\modules\overmap\panicbutton.dm"
 #include "mods\_master_files\code\modules\power\gravitygenerator.dm"
 #include "mods\_master_files\code\modules\projectiles\projectile\bullets.dm"
+#include "mods\_master_files\code\modules\psionics\events\mini_spasm.dm"
 #include "mods\_master_files\code\modules\species\species.dm"
 #include "mods\_master_files\code\modules\species\station\adherent.dm"
 #include "mods\_master_files\code\modules\species\station\human_subspecies.dm"
