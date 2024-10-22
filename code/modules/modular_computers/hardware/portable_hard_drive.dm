@@ -10,7 +10,7 @@
 
 /obj/item/stock_parts/computer/hard_drive/portable/advanced
 	name = "advanced data crystal"
-	desc = "Small crystal with imprinted high-density photonic circuits that can be used to store data. Its capacity is 64 GQ."
+	desc = "Small crystal with imprinted high-density photonic circuits that can be used to store data. Its capacity is 32 GQ."
 	power_usage = 20
 	icon_state = "flashdrive_advanced"
 	hardware_size = 1
@@ -19,7 +19,7 @@
 
 /obj/item/stock_parts/computer/hard_drive/portable/super
 	name = "super data crystal"
-	desc = "Small crystal with imprinted ultra-density photonic circuits that can be used to store data. Its capacity is 256 GQ."
+	desc = "Small crystal with imprinted ultra-density photonic circuits that can be used to store data. Its capacity is 64 GQ."
 	power_usage = 40
 	icon_state = "flashdrive_super"
 	hardware_size = 1

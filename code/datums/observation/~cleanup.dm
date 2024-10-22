@@ -1,31 +1,31 @@
 GLOBAL_LIST_EMPTY(global_listen_count)
-GLOBAL_LIST_EMPTY(event_sources_count)
-GLOBAL_LIST_EMPTY(event_listen_count)
 
-/proc/cleanup_events(source)
+/datum
+	/// Tracks how many event registrations are listening to us. Used in cleanup to prevent dangling references.
+	var/event_source_count = 0
+	/// Tracks how many event registrations we are listening to. Used in cleanup to prevent dangling references.
+	var/event_listen_count = 0
+
+
+/proc/cleanup_events(datum/source)
 	if(GLOB.global_listen_count && GLOB.global_listen_count[source])
 		cleanup_global_listener(source, GLOB.global_listen_count[source])
-	if(GLOB.event_sources_count && GLOB.event_sources_count[source])
-		cleanup_source_listeners(source, GLOB.event_sources_count[source])
-	if(GLOB.event_listen_count && GLOB.event_listen_count[source])
-		cleanup_event_listener(source, GLOB.event_listen_count[source])
+	if(source?.event_source_count > 0)
+		cleanup_source_listeners(source, source?.event_source_count)
+	if(source?.event_listen_count > 0)
+		cleanup_event_listener(source, source?.event_listen_count)
 
 /singleton/observ/register(datum/event_source, datum/listener, proc_call)
 	. = ..()
 	if(.)
-		GLOB.event_sources_count[event_source] += 1
-		GLOB.event_listen_count[listener] += 1
+		event_source.event_source_count++
+		listener.event_listen_count++
 
 /singleton/observ/unregister(datum/event_source, datum/listener, proc_call)
 	. = ..()
 	if(.)
-		GLOB.event_sources_count[event_source] -= 1
-		GLOB.event_listen_count[listener] -= 1
-
-		if(GLOB.event_sources_count[event_source] <= 0)
-			GLOB.event_sources_count -= event_source
-		if(GLOB.event_listen_count[listener] <= 0)
-			GLOB.event_listen_count -= listener
+		event_source.event_source_count -= .
+		listener.event_listen_count -= .
 
 /singleton/observ/register_global(datum/listener, proc_call)
 	. = ..()
@@ -47,9 +47,8 @@ GLOBAL_LIST_EMPTY(event_listen_count)
 			log_debug("[event] - [listener] was deleted while still registered to global events.")
 			if(!(--listen_count))
 				return
-
-/proc/cleanup_source_listeners(event_source, source_listener_count)
-	GLOB.event_sources_count -= event_source
+/proc/cleanup_source_listeners(datum/event_source, source_listener_count)
+	event_source.event_source_count = 0
 	for(var/entry in GLOB.all_observable_events)
 		var/singleton/observ/event = entry
 		var/proc_owners = event.event_sources[event_source]
@@ -60,8 +59,8 @@ GLOBAL_LIST_EMPTY(event_listen_count)
 					if(!(--source_listener_count))
 						return
 
-/proc/cleanup_event_listener(listener, listener_count)
-	GLOB.event_listen_count -= listener
+/proc/cleanup_event_listener(datum/listener, listener_count)
+	listener.event_listen_count = 0
 	for(var/entry in GLOB.all_observable_events)
 		var/singleton/observ/event = entry
 		for(var/event_source in event.event_sources)

@@ -31,6 +31,7 @@ var/global/list/ai_verbs_default = list(
 	/mob/living/silicon/ai/proc/show_crew_monitor,
 	/mob/living/silicon/ai/proc/show_crew_records,
 	/mob/living/silicon/ai/proc/show_crew_manifest,
+	/mob/living/silicon/ai/verb/interact_with_machine,
 	// [/SIERRA-ADD] ,
 	/mob/living/silicon/ai/proc/ai_power_override,
 	/mob/living/silicon/ai/proc/ai_shutdown,
@@ -63,7 +64,7 @@ var/global/list/ai_verbs_default = list(
 	var/list/connected_robots = list()
 	var/aiRestorePowerRoutine = 0
 	var/viewalerts = FALSE
-	var/icon/holo_icon//Blue hologram. Face is assigned when AI is created.
+	var/icon/holo_icon //Blue hologram. Face is assigned when AI is created.
 	var/icon/holo_icon_longrange //Yellow hologram.
 	var/holo_icon_malf = FALSE // for new hologram system
 	var/obj/item/device/multitool/aiMulti = null
