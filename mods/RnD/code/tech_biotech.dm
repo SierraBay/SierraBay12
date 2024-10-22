@@ -87,7 +87,7 @@
 	required_tech_levels = list()
 	cost = 1500
 
-	unlocks_designs = list("implant_chem", "implant_death", "implant_tracking","implant_imprinting")
+	unlocks_designs = list("implanter", "implant_pad", "implant_chem", "implant_death", "implant_tracking","implant_imprinting")
 
 /datum/technology/bio/adv_med_machines
 	name = "Advanced Medical Machines"

@@ -72,7 +72,7 @@
 	usable = 1
 	selectable = 0
 	device = /obj/item/device/ano_scanner
-	origin_tech = list(TECH_BLUESPACE = 4, TECH_MAGNET = 4, TECH_ENGINEERING = 6)
+	origin_tech = list(TECH_BLUESPACE = 6, TECH_MAGNET = 4, TECH_ENGINEERING = 7)
 
 /obj/item/rig_module/device/orescanner
 	name = "ore scanner module"

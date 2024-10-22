@@ -73,7 +73,7 @@
 
 /obj/structure/closet/secure_closet/adjutant
 	name = "adjutant's locker"
-	req_access = list(access_bridge)
+	req_access = list(access_adjutants)
 	closet_appearance = /singleton/closet_appearance/secure_closet/sierra/command/adjutant
 
 /obj/structure/closet/secure_closet/adjutant/WillContain()
