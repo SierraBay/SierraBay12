@@ -2287,7 +2287,9 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/cyan,
+/obj/machinery/atmospherics/binary/pump/on{
+	dir = 1
+	},
 /turf/simulated/floor/tiled/monotile,
 /area/playable_yacht/left_engine)
 "To" = (

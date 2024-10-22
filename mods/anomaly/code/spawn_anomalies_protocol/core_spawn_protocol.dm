@@ -35,7 +35,7 @@ path_to_spawn - Путь аномалии, которую мы хотим зас
 	if(loc.density)
 		return 1
 	for(var/obj/O in loc)
-		if(O.density)
+		if(O.density && !istype(O, /obj/structure/railing))
 			return 1
 	return 0
 
@@ -85,21 +85,12 @@ max_anomaly_size - Максимальный размер аномалий (anoma
 source - Источник(Причина) генерации аномалий на турфах. Используется для отчёта
 */
 /proc/generate_anomalies_in_turfs(list/anomalies_types, list/all_turfs_for_spawn, min_anomalies_ammout, max_anomalies_ammout, min_artefacts_ammount, max_artefacts_ammount, min_anomaly_size, max_anomaly_size, source, started_in)
-	//Генерация аномалий - это ОЧЕНЬ тяжёлый прок, который без проблем вешает юнит тесты.
 	set background = 1
 	//Расчитываем мин и макс количество аномалий
 	var/result_anomalies_ammout = 1
-	if((!min_anomalies_ammout) || (min_anomalies_ammout * min_anomaly_size > LAZYLEN(all_turfs_for_spawn)))
-		min_anomalies_ammout = 1
-	if(!max_anomalies_ammout)
-		max_anomalies_ammout = (LAZYLEN(all_turfs_for_spawn))
-		max_anomalies_ammout /= max_anomaly_size
-
-	result_anomalies_ammout = rand(min_anomalies_ammout, max_anomalies_ammout)
-	if(result_anomalies_ammout * max_anomaly_size > LAZYLEN(all_turfs_for_spawn))
-		result_anomalies_ammout = LAZYLEN(all_turfs_for_spawn)
-		result_anomalies_ammout /= max_anomaly_size
-	result_anomalies_ammout = Round(result_anomalies_ammout)
+	min_anomalies_ammout = calculate_min_anomalies_ammout(min_anomaly_size, max_anomaly_size, min_anomalies_ammout, LAZYLEN(all_turfs_for_spawn))
+	max_anomalies_ammout = calculate_max_anomalies_ammout(min_anomaly_size, max_anomaly_size, max_anomalies_ammout, LAZYLEN(all_turfs_for_spawn))
+	result_anomalies_ammout = calculate_result_anomalies_ammout(min_anomaly_size, max_anomaly_size, min_anomalies_ammout, max_anomalies_ammout, result_anomalies_ammout, LAZYLEN(all_turfs_for_spawn))
 
 
 	//Собрав все турфы и определившись с числом аномалий, давайте начинать
@@ -185,12 +176,13 @@ source - Источник(Причина) генерации аномалий н
 	//Выбрав количество артов которые мы хотим заспавнить, мы начинаем спавн
 	var/spawned_anomalies_ammount = LAZYLEN(spawned_anomalies)
 	var/list/output_list = spawned_anomalies
-	var/spawned_artifacts_ammount = generate_artefacts_in_anomalies(spawned_anomalies, min_artefacts_ammount, max_artefacts_ammount)
+	var/spawned_artefacts_ammount = generate_artefacts_in_anomalies(spawned_anomalies, min_artefacts_ammount, max_artefacts_ammount)
 
 	var/spended_time = world.time - started_in
 	//Отчитаемся
 	if(spawned_anomalies_ammount > 0)
-		report_progress("Spawned [spawned_anomalies_ammount] anomalies with [spawned_artifacts_ammount] artefacts by: [source], spended [spended_time] ticks ")
+		report_progress("Spawned [spawned_anomalies_ammount] anomalies with [spawned_artefacts_ammount] artefacts by: [source], spended [spended_time] ticks ")
+		LAZYADD(SSanom.important_logs, "Spawned [spawned_anomalies_ammount] anomalies with [spawned_artefacts_ammount] artefacts by: [source], spended [spended_time] ticks ")
 	return output_list
 
 ///Функция генерация артефактов в аномалиях. Спавнит количество артефактов, находящиеся в диапазоне между min_artefacts_ammoun и max_artefacts_ammount
@@ -198,7 +190,7 @@ source - Источник(Причина) генерации аномалий н
 	var/artefacts_ammount = rand(min_artefacts_ammount, max_artefacts_ammount)
 	//Санитайз, чтоб не требовали рождение артефактов от тех, кто их рожать не может физически
 	for(var/obj/anomaly/picked_anomaly in list_of_anomalies)
-		if(!picked_anomaly.can_born_artifacts || !LAZYLEN(picked_anomaly.artefacts))
+		if(!picked_anomaly.can_born_artefacts || !LAZYLEN(picked_anomaly.artefacts))
 			LAZYREMOVE(list_of_anomalies, picked_anomaly)
 	//Санитайз, чтоб артефактов было не слишком много
 	if(artefacts_ammount > LAZYLEN(list_of_anomalies))
@@ -209,8 +201,41 @@ source - Источник(Причина) генерации аномалий н
 		var/obj/anomaly/choosed_anomaly = pick(list_of_anomalies)
 		if(!choosed_anomaly)
 			return spawned_artefacts
-		if(choosed_anomaly.try_born_artifact())
+		if(choosed_anomaly.try_born_artefact())
 			spawned_artefacts++
 		else
 			LAZYREMOVE(list_of_anomalies, choosed_anomaly)
 	return spawned_artefacts
+
+
+
+
+
+
+
+
+
+
+
+
+
+/proc/calculate_min_anomalies_ammout(min_anomaly_size, max_anomaly_size, min_anomalies_ammout, all_turfs_for_spawn_len)
+	if((!min_anomalies_ammout) || (min_anomalies_ammout * min_anomaly_size > all_turfs_for_spawn_len))
+		min_anomalies_ammout = 1
+	return min_anomalies_ammout
+
+
+
+/proc/calculate_max_anomalies_ammout(min_anomaly_size, max_anomaly_size, max_anomalies_ammout, all_turfs_for_spawn_len)
+	if(!max_anomalies_ammout)
+		max_anomalies_ammout = all_turfs_for_spawn_len
+		max_anomalies_ammout /= max_anomaly_size
+	return max_anomalies_ammout
+
+/proc/calculate_result_anomalies_ammout(min_anomaly_size, max_anomaly_size, min_anomalies_ammout, max_anomalies_ammout, result_anomalies_ammout, all_turfs_for_spawn_len)
+	result_anomalies_ammout = rand(min_anomalies_ammout, max_anomalies_ammout)
+	if(result_anomalies_ammout * max_anomaly_size > all_turfs_for_spawn_len)
+		result_anomalies_ammout = all_turfs_for_spawn_len
+		result_anomalies_ammout /= max_anomaly_size
+	result_anomalies_ammout = Round(result_anomalies_ammout)
+	return result_anomalies_ammout

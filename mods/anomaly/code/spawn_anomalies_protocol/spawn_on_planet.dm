@@ -4,6 +4,7 @@
 	var/can_spawn_anomalies = FALSE
 	var/list/anomalies_type = list(
 		)
+	var/obj/monitor_effect_triger/monitor_effect_type
 	var/min_anomaly_size = 1
 	var/max_anomaly_size = 3
 	///Минимальное количество заспавненных артов
@@ -53,3 +54,8 @@
 	else if(inputed_turf.y > y_limit)
 		return FALSE
 	return TRUE
+
+/obj/overmap/visitable/sector/exoplanet/proc/generate_monitor_effects()
+	set background = 1
+	for(var/turf/choosed_turf in planetary_area)
+		new monitor_effect_type(choosed_turf)
