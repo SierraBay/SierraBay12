@@ -1,3 +1,7 @@
+#define ismech(A) istype(A, /mob/living/exosuit)
+
+#define inmech_sec(A) istype(A.loc, /mob/living/exosuit)
+
 /mob/living/exosuit
 	var/obj/item/device/gps/GPS
 	var/obj/item/device/scanner/health/medscan

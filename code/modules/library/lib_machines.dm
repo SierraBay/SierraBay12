@@ -88,10 +88,10 @@
 		sleep(rand(200,400))
 		visible_message(SPAN_NOTICE("\The [src] whirs as it prints and binds a new book."))
 		binding = FALSE
-		var/obj/item/book/b = new(loc)
-		b.dat = O:info
-		b.SetName("Print Job #" + "[rand(100, 999)]")
-		b.icon_state = "book[rand(1,7)]"
+		var/obj/item/book/B = new(loc)
+		B.dat = O:info
+		B.SetName("Print Job #" + "[rand(100, 999)]")
+		B.icon_state = "book[rand(1,7)]"
 		qdel(O)
 		return TRUE
 

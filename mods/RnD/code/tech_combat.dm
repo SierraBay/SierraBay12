@@ -42,7 +42,7 @@
 	required_tech_levels = list()
 	cost = 500
 
-	unlocks_designs = list("security_hud", "confuseray")
+	unlocks_designs = list("security_hud")
 
 /datum/technology/combat/nleth_eq
 	name = "Non-lethal Eqiupment"
