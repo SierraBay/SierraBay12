@@ -17,24 +17,24 @@
 /obj/item/mop/advanced/ascent
 	name = "deck detritus delaminator"
 	desc = "An alien staff with spongy filaments on one end."
-	icon = 'mods/ascent/icons/ascent_doodads.dmi'
+	icon = 'mods/ascent/icons/misc/ascent_doodads.dmi'
 	item_state = "advmop"
 
 /obj/item/reagent_containers/glass/bucket/ascent
 	name = "portable liquid cleaning agent carrier"
 	desc = "An alien container of some sort."
-	icon = 'mods/ascent/icons/ascent_doodads.dmi'
+	icon = 'mods/ascent/icons/misc/ascent_doodads.dmi'
 	item_state = "bucket"
 
 /obj/structure/mopbucket/ascent
 	name = "portable liquid cleaning agent holder"
 	desc = "An alien container of some sort."
-	icon = 'mods/ascent/icons/ascent_doodads.dmi'
+	icon = 'mods/ascent/icons/misc/ascent_doodads.dmi'
 
 /obj/item/material/knife/kitchen/cleaver/ascent
 	name = "xenobiological flenser"
 	desc = "A mindboggingly alien tool for flensing flesh."
-	icon = 'mods/ascent/icons/ascent_doodads.dmi'
+	icon = 'mods/ascent/icons/misc/ascent_doodads.dmi'
 	icon_state = "xenobutch"
 
 	slot_flags = SLOT_DENYPOCKET | SLOT_HOLSTER | SLOT_BELT
@@ -42,22 +42,22 @@
 /obj/structure/closet/crate/freezer/meat/ascent
 	name = "cryogenic stasis unit"
 	desc = "A bizarre alien stasis unit."
-	icon = 'mods/ascent/icons/ascent_doodads.dmi'
+	icon = 'mods/ascent/icons/misc/ascent_doodads.dmi'
 	closet_appearance = /singleton/closet_appearance/crate/freezer/ascent
 
 /singleton/closet_appearance/crate/freezer/ascent
 	color = COLOR_PURPLE
-	base_icon = 'mods/ascent/icons/ascent_doodads.dmi'
+	base_icon = 'mods/ascent/icons/misc/ascent_doodads.dmi'
 
 /obj/item/reagent_containers/food/drinks/cans/waterbottle/ascent
 	name = "hydration cylinder"
 	desc = "An alien portable long term storage device for potable water."
-	icon = 'mods/ascent/icons/ascent_doodads.dmi'
+	icon = 'mods/ascent/icons/misc/ascent_doodads.dmi'
 
 /obj/item/reagent_containers/food/snacks/hydration
 	name = "hydration ration"
 	desc = "Approximately ten units of liquid hydration in a edible membrane. Unflavored."
-	icon = 'mods/ascent/icons/ascent_doodads.dmi'
+	icon = 'mods/ascent/icons/misc/ascent_doodads.dmi'
 	icon_state = "h2o_ration"
 	bitesize = 10
 /obj/item/reagent_containers/food/snacks/hydration/Initialize()
@@ -67,24 +67,24 @@
 /obj/item/storage/box/water/ascent
 	name = "box of hydration cylinders"
 	desc = "A box full of bottled water."
-	icon = 'mods/ascent/icons/ascent_doodads.dmi'
+	icon = 'mods/ascent/icons/misc/ascent_doodads.dmi'
 	icon_state = "box"
 	startswith = list(/obj/item/reagent_containers/food/drinks/cans/waterbottle/ascent = 7)
 
 /obj/structure/hygiene/shower/ascent
 	name = "hydrating decontamination armature"
 	desc = "An alien vertical squirt bath."
-	icon = 'mods/ascent/icons/ascent_doodads.dmi'
+	icon = 'mods/ascent/icons/misc/ascent_doodads.dmi'
 
 /obj/structure/hygiene/sink/ascent
 	name = "hydration outlet"
 	desc = "An alien wall mounted basin with mysterious protrusions."
-	icon = 'mods/ascent/icons/ascent_doodads.dmi'
+	icon = 'mods/ascent/icons/misc/ascent_doodads.dmi'
 
 /obj/structure/reagent_dispensers/water_cooler/ascent
 	name = "hydration dispensator"
 	desc = "An alien device housing liquid for alien purposes."
-	icon = 'mods/ascent/icons/ascent_doodads.dmi'
+	icon = 'mods/ascent/icons/misc/ascent_doodads.dmi'
 	cups = 50
 	cup_type = /obj/item/reagent_containers/food/snacks/hydration
 
@@ -93,3 +93,6 @@
 
 /obj/structure/reagent_dispensers/water_cooler/ascent/RejectionMessage(mob/user)
 	return "\The [src]'s orb supply is empty. Notify a control mind."
+
+MANTIDIFY(/obj/item/device/scanner/health, "healthorrebator", "medicine")
+MANTIDIFY(/obj/item/reagent_containers/spray/sterilizine, "cleaning agent sprayer", "sterilizing")

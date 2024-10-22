@@ -1,0 +1,4 @@
+author: Builder13
+changes:
+  - {bugfix: Фикс изменения названия и описания для предметов лоадаута}
+delete-after: true
