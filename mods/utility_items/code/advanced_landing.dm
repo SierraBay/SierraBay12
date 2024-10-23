@@ -137,16 +137,19 @@
 	var/obj/shuttle_landmark/shuttle_landmark = locate(/obj/shuttle_landmark) in area_oko
 	var/turf/origin = locate(shuttle_landmark.x + x_offset, shuttle_landmark.y + y_offset, shuttle_landmark.z)
 	var/turf/turf = get_subarea_turfs(area_oko.parent_type)
+	var/console_area = get_area(src)
 
-	for(var/area in list(/area/shuttle, /area/exploration_shuttle, /area/guppy_hangar, /area/crucian_hangar))
-		if(ispath(area_oko.type, area))
-			for(var/turf/simulated/T in turf)
-				var/image/I = image('icons/effects/alphacolors.dmi', origin, "red")
-				var/x_off = T.x - origin.x
-				var/y_off = T.y - origin.y
-				I.loc = locate(origin.x + x_off, origin.y + y_off, origin.z) //we have to set this after creating the image because it might be null, and images created in nullspace are immutable.
-				I.layer = TURF_LAYER
-				oko.placement_images[I] = list(x_off, y_off)
+	if(console_area in SSshuttle.shuttle_areas)
+		for(var/shuttle_name in SSshuttle.shuttles)
+			var/datum/shuttle/shuttle_datum = SSshuttle.shuttles[shuttle_name]
+			if(console_area in shuttle_datum.shuttle_area)
+				for(var/turf/simulated/T in turf)
+					var/image/I = image('icons/effects/alphacolors.dmi', origin, "red")
+					var/x_off = T.x - origin.x
+					var/y_off = T.y - origin.y
+					I.loc = locate(origin.x + x_off, origin.y + y_off, origin.z) //we have to set this after creating the image because it might be null, and images created in nullspace are immutable.
+					I.layer = TURF_LAYER
+					oko.placement_images[I] = list(x_off, y_off)
 
 /obj/machinery/computer/shuttle_control/explore/proc/check_zone()
 	var/turf/eyeturf = get_turf(oko)
@@ -211,8 +214,10 @@
 		return
 
 	var/area/temp = get_area(eyeobj.owner)
-	for(var/area in list(/area/shuttle, /area/exploration_shuttle, /area/guppy_hangar, /area/crucian_hangar))
-		if(ispath(temp.type, area))
-			for(var/obj/machinery/computer/shuttle_control/explore/c in temp)
-				c.shuttle_type.set_destination(landmark)
-				c.check_zone()
+	if(temp in SSshuttle.shuttle_areas)
+		for(var/shuttle_name in SSshuttle.shuttles)
+			var/datum/shuttle/shuttle_datum = SSshuttle.shuttles[shuttle_name]
+			if(temp in shuttle_datum.shuttle_area)
+				for(var/obj/machinery/computer/shuttle_control/explore/c in temp)
+					c.shuttle_type.set_destination(landmark)
+					c.check_zone()
