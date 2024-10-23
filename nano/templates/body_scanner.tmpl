@@ -13,6 +13,10 @@
     <td>{{:helper.link('Print Scan', null, {"print" : 1}, data.printEnabled ? null : 'disabled')}}</td>
     <td>{{:helper.link('Erase Scan', null, {"erase" : 1}, data.eraseEnabled ? null : 'disabled')}}</td>
     <td>{{:helper.link('Push  Scan to Displays', null, {"push" : 1}, data.pushEnabled ? null : 'disabled' )}}</td></tr>
+	{{if data.has_disk}}
+        <td>{{:helper.link("Eject Data", '', {'eject' : 1}, null, 'null')}}</td>
+    {{/if}}
+    </tr>
 </table>
 {{:data.html_scan_header}}
 {{:data.html_scan_health}}
