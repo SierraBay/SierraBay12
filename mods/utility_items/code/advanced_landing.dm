@@ -207,7 +207,7 @@
 	var/obj/shuttle_landmark/ship/advancedlandmark/landmark
 	if(landmark)
 		qdel(landmark)
-	if(isspace(areaalloved))
+	if((istype(areaalloved, /area/space)) || (istype(areaalloved, /area/exoplanet)))
 		landmark = new (T, src)
 	else
 		to_chat(usr, "Cannot land at this location.")
