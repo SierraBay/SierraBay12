@@ -2,24 +2,27 @@
 	. = ..()
 	if(href_list["advancedpick"])
 		var/list/possible_d = shuttle.get_possible_waypoints()
-		var/D
+		var/obj/overmap/visitable/D
 		if(length(possible_d))
 			D = input("Choose shuttle destination", "Shuttle Destination") as null|anything in possible_d
 		else
 			to_chat(usr,SPAN_WARNING("No valid landing sites in range."))
 		possible_d = shuttle.get_possible_waypoints()
 		if(CanInteract(usr, GLOB.default_state) && (D in possible_d))
-			landloc = get_turf(possible_d[D])
+			landloc = locate(usr.x, usr.y, pick(D.map_z))
 			oko_enter(landloc)
 			shuttle_type = shuttle
 		return TOPIC_REFRESH
 
 /datum/shuttle/autodock/overmap/proc/get_possible_waypoints()
-	var/list/wp = list()
-	for (var/obj/overmap/visitable/S in range(get_turf(waypoint_sector(current_location)), range))
-		wp += S
-		return S
-
+	var/list/waypoints = list()
+	var/z_co = usr.z
+	var/obj/overmap/visitable/we = map_sectors["[z_co]"]
+	var/turf/T = get_turf(we)
+	for(var/obj/overmap/visitable/candidate in T)
+		if(candidate.map_z)
+			waypoints += candidate
+	return waypoints
 
 /obj/machinery/computer/shuttle_control
 	var/mob/observer/eye/landeye/oko
