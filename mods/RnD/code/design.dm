@@ -58,3 +58,13 @@
 	F.uniquekey = uniquekey
 	return F
 
+
+/datum/design/item/tool/jetpack
+	shortname = "Jetpack"
+	name = "Jetpack"
+	desc = "The O'Neill Manufacturing VMU-11-C is a tank-based propulsion unit that utilizes compressed carbon dioxide for moving in zero-gravity areas. <span class='danger'>The label on the side indicates it should not be used as a source for internals.</span>."
+	id = "jetpack"
+	req_tech = list(TECH_ENGINEERING = 5, TECH_MATERIAL = 5)
+	materials = list(MATERIAL_STEEL = 12000, MATERIAL_GLASS = 10000, MATERIAL_SILVER = 2000)
+	build_path = /obj/item/tank/jetpack/carbondioxide
+	sort_string = "VAGAM"
