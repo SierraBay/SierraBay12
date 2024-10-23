@@ -54,9 +54,5 @@
 		/obj/item/advanced_bolt,
 		/obj/item/advanced_bolt,
 		/obj/item/advanced_bolt,
-		/obj/item/advanced_bolt,
-		/obj/item/advanced_bolt,
-		/obj/item/advanced_bolt,
-		/obj/item/advanced_bolt,
 		/obj/item/advanced_bolt
 	)

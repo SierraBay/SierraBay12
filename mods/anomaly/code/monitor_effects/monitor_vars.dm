@@ -5,7 +5,7 @@
 /obj/monitor_effect_triger
 	//Путь до эффекта накладываемого на экран
 	var/effect_icon_type
-	var/statis_sound_here
+	var/sound_type = list()
 	///Должнен ли монитор эффект реагировать на пересечение с кем-либо или чем-либо
 	var/must_react_at_enter = FALSE
 	anchored = TRUE
@@ -16,7 +16,3 @@
 	var/list/trigger_messages_list = list()
 	var/trigger_message_cooldown = 10 MINUTES
 	mouse_opacity = FALSE //Погода должна быть непрокликиваемой
-/*
-var/sound = sound('sound/ambience/shipambience.ogg', repeat = TRUE, wait = 0, volume = 10, channel = GLOB.ambience_channel_vents)
-living.playsound_local(turf, sound)
-*/

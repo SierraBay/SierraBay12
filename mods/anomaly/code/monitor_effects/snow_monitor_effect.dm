@@ -3,6 +3,9 @@
 	icon_state = "snow_storm"
 	icon = 'mods/anomaly/icons/weather_effects.dmi'
 	must_react_at_enter = TRUE
+	sound_type = list(
+		'mods/anomaly/sounds/snowstorm.ogg'
+	)
 
 /obj/monitor_effect_triger/snow
 	trigger_messages_list = list(

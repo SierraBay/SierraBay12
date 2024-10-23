@@ -23,7 +23,7 @@
 	allow_quick_empty  = TRUE
 	w_class = ITEM_SIZE_SMALL
 	max_w_class = ITEM_SIZE_TINY
-	max_storage_space = BASE_STORAGE_CAPACITY(2)
+	max_storage_space = 10
 	var/autocollect = FALSE
 
 /obj/item/storage/bolt_bag/examine(mob/user, distance, is_adjacent)
@@ -43,10 +43,6 @@
 
 /obj/item/storage/bolt_bag/full_of_bolts
 	startswith = list(
-		/obj/item/bolt,
-		/obj/item/bolt,
-		/obj/item/bolt,
-		/obj/item/bolt,
 		/obj/item/bolt,
 		/obj/item/bolt,
 		/obj/item/bolt,

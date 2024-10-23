@@ -3,7 +3,6 @@
 	with_sound = TRUE
 	sound_type = 'mods/anomaly/sounds/tramplin.ogg'
 	idle_effect_type = "trampline_idle"
-	activation_effect_type = "gravy_anomaly_up"
 	layer = ABOVE_HUMAN_LAYER
 	effect_range = 0
 	var/random_throw_dir = FALSE
