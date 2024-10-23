@@ -29,6 +29,10 @@
 	. = ..()
 	try_found_anomalies(user)
 
+/obj/item/clothing/gloves/anomaly_detector/AltClick()
+	scan_z_level_for_anomalies(usr)
+	return TRUE
+
 /obj/item/clothing/gloves/anomaly_detector/Process()
 	check_electrostatic()
 	update_icon()
@@ -45,13 +49,13 @@
 		icon_state = "detector_scanning_and_peak"
 
 
-/obj/item/clothing/gloves/anomaly_detector/verb/global_z_scan()
+/obj/item/clothing/gloves/anomaly_detector/verb/scan_anomalies()
 	set category = "Object"
-	set name = "Check all sector"
+	set name = "Scan anomalies"
 	set src in usr
 
 	if(!usr.incapacitated())
-		scan_z_level_for_anomalies(usr)
+		try_found_anomalies(usr)
 		usr.update_action_buttons()
 
 /obj/item/clothing/gloves/anomaly_detector/proc/check_electrostatic()
@@ -120,8 +124,10 @@
 
 
 /obj/item/clothing/gloves/anomaly_detector/proc/scan_z_level_for_anomalies(mob/living/user)
+	if(in_scanning)
+		return
 	if((world.time - last_global_scan) < global_scan_cooldown)
-		to_chat(user, SPAN_BAD("Детектор ещё не готов."))
+		to_chat(user, SPAN_BAD("Detector still isn't ready."))
 		return
 	last_global_scan = world.time
 	var/user_science_lvl = user.get_skill_value(SKILL_SCIENCE)
