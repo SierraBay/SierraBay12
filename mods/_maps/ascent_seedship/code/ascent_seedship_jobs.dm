@@ -112,8 +112,8 @@
 	if(!cutter.gyne_name)
 		cutter.gyne_name = TYPE_PROC_REF(/singleton/cultural_info/culture/ascent, create_gyne_name)
 	
-/*	if(set_species_on_join)
-		H.set_species(set_species_on_join)*/
+	if(set_species_on_join)
+		H.set_species(set_species_on_join)
 
 	switch(H.species.name)
 		if(SPECIES_MANTID_GYNE)
@@ -132,6 +132,17 @@
 	if(H.mind)
 		H.mind.name = H.real_name
 	return H
+
+/datum/job/submap/ascent_inf/is_position_available()
+	. = ..()
+	if(. && requires_supervisor)
+		for(var/mob/M in GLOB.player_list)
+			if(!M.client || !M.mind || !M.mind.assigned_job || M.mind.assigned_job.title != requires_supervisor)
+				continue
+			var/datum/job/submap/ascent_inf/ascent_job = M.mind.assigned_job
+			if(istype(ascent_job) && ascent_job.owner == owner)
+				return TRUE
+		return FALSE
 
 /datum/job/submap/ascent_inf/alate
 	title = "Ascent alate"
@@ -161,7 +172,8 @@
 	supervisors = "вашей Королевой"
 	total_positions = 3
 	info = "You are a Monarch Serpentid Worker serving as an attendant to your Queen on this vessel. Serve her however she requires."
-	whitelisted_species = list(SPECIES_MONARCH_WORKER)
+	whitelisted_species = list(SPECIES_NABBER, SPECIES_MANTID_ALATE)
+	set_species_on_join = SPECIES_MONARCH_WORKER
 	outfit_type = /singleton/hierarchy/outfit/job/ascent/worker
 	min_skill = list(SKILL_EVA = SKILL_TRAINED,
 					SKILL_HAULING = SKILL_TRAINED,
@@ -175,7 +187,8 @@
 	supervisors = "другими Королевами и Гииной"
 	total_positions = 1
 	info = "You are a Monarch Serpentid Queen living on an independant Ascent vessel. Assist the Gyne in her duties and tend to your Workers."
-	whitelisted_species = list(SPECIES_MONARCH_QUEEN)
+	whitelisted_species = list(SPECIES_NABBER, SPECIES_MANTID_GYNE)
+	set_species_on_join = SPECIES_MONARCH_QUEEN
 	min_skill = list(SKILL_EVA = SKILL_TRAINED,
 					SKILL_HAULING = SKILL_TRAINED,
 					SKILL_COMBAT = SKILL_TRAINED,

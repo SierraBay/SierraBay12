@@ -4,11 +4,15 @@ MANTIDIFY(/obj/item/storage/bag/trash/purple,    "sample collection carrier", "m
 MANTIDIFY(/obj/structure/bed/chair/padded/purple,"mantid nest",               "resting place")
 MANTIDIFY(/obj/item/pickaxe/diamonddrill,        "lithobliterator",           "drilling")
 MANTIDIFY(/obj/item/tank/jetpack/carbondioxide,  "maneuvering pack",          "propulsion")
+MANTIDIFY(/obj/item/device/scanner/plant, "gazefloranotator", 				  "plant scanning")
+MANTIDIFY(/obj/item/device/scanner/xenobio, "xenonascerator", 				  "xenolife scanning")
+MANTIDIFY(/obj/item/device/scanner/health, "healthoseefer", 				  "medicine")
+MANTIDIFY(/obj/item/reagent_containers/spray/sterilizine, "cleaning agent sprayer", "sterilizing")
 
 /obj/structure/bed/chair/padded/purple/ascent
 	icon_state = "nest_chair"
 	base_icon = "nest_chair"
-	icon = 'mods/ascent/icons/misc/ascent_doodads.dmi'
+	icon = 'mods/ascent/icons/obj/ascent_doodads.dmi'
 	buckle_pixel_shift = list(0,5,0)
 	pixel_z = 0
 
@@ -37,7 +41,7 @@ MANTIDIFY(/obj/item/tank/jetpack/carbondioxide,  "maneuvering pack",          "p
 /obj/item/cell/mantid
 	name = "mantid microfusion plant"
 	desc = "An impossibly tiny fusion reactor of mantid design."
-	icon = 'mods/ascent/icons/items/ascent.dmi'
+	icon = 'mods/ascent/icons/obj/items/ascent.dmi'
 	icon_state = "plant"
 	maxcharge = 1500
 	w_class = ITEM_SIZE_NORMAL
