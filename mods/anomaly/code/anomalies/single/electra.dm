@@ -94,11 +94,22 @@
 		var/mob/living/victim_target = target
 		SSanom.add_last_attack(target, "Электра")
 		create_line = TRUE
-		victim_target.inform_about_electroanomaly_act("thunderbolt")
 		var/list/result_effects = calculate_artefact_reaction(target, "Электра")
 		if(result_effects)
 			if(result_effects.Find("Впитывает электроудар"))
 				return
+			if(result_effects.Find("Уворачивается от молнии, молния идёт дальше"))
+				var/anomaly_to_victim_dir = get_dir(src, victim_target)
+				var/new_turf = get_ranged_target_turf(victim_target, anomaly_to_victim_dir, 1)
+				target_turf = new_turf
+				for(var/atom/movable/atom in new_turf)
+					get_effect_by_anomaly(atom)
+				beam = src.Beam(BeamTarget = target_turf, icon_state = "electra_long",icon='mods/anomaly/icons/effects.dmi',time = 0.3 SECONDS)
+				victim_target.dodge_animation()
+				to_chat(victim_target, SPAN_GOOD("Видя удар молнии словно в замедлении, вы умудряетесь увернуться от него")
+				)
+				return
+		victim_target.inform_about_electroanomaly_act("thunderbolt")
 		//Если целью является адхерант, мы лишь заряжаем его батарею
 		if(istype(target, /mob/living/carbon/human/adherent))
 			var/mob/living/carbon/human/adherent/adherent = target
@@ -169,6 +180,7 @@
 		if(!istype(target, /obj/item/artefact))
 			create_line = TRUE
 			anything_in_ashes(target)
+
 
 
 	//Этот код и создаст саму молнию от центра аномалии до жертвы

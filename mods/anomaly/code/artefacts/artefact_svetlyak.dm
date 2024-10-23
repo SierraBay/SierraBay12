@@ -99,7 +99,11 @@
 
 //Он должен передавать удар другому, по цепочке
 /obj/item/artefact/svetlyak/react_at_electra(mob/living/user)
-	return
+	if(stored_energy > 250)
+		sub_energy(250)
+		return "Уворачивается от молнии, молния идёт дальше"
+	else
+		return "Ничего"
 
 /obj/item/artefact/svetlyak/react_at_vspishka(mob/living/user)
 	return "Защищает от ослепления"

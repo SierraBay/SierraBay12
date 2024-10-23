@@ -555,6 +555,7 @@ var/global/list/slot_flags_enumeration = list(
 	var/parry_chance = get_parry_chance(user, attacker)
 	if(parry_chance)
 		if(default_parry_check(user, attacker, damage_source) && prob(parry_chance))
+			user.dodge_animation(attacker = attacker)
 			user.visible_message(SPAN_DANGER("\The [user] parries [attack_text] with \the [src]!"))
 			admin_attack_log(attacker, user, "Attempted to attack with \a [damage_source] but was parried", "Was targeted with \a [damage_source] but parried the attack", "attmpted to use \a [damage_source] to attack but was parried by")
 			playsound(user.loc, 'sound/weapons/punchmiss.ogg', 50, 1)
