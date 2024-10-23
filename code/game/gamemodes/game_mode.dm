@@ -329,15 +329,18 @@ var/global/list/additional_antag_types = list()
 		if(client.mob && client.mob.mind)
 			client.mob.mind.show_roundend_summary(departmental_goal_summary)
 
+	//[SIERRA-ADD] - ANOMALY
+	//Данный отрезок кода выведет информацию об моде АНОМАЛИИ в раунде
+	var/anomaly_output = SSanom.give_gameover_text()
+	if(anomaly_output)
+		text += anomaly_output
+	//[SIERRA-ADD]
+
 	to_world(text)
 
 	send2mainirc("A round of [src.name] has ended - [data["surviving_total"]] survivor\s, [data["ghosts"]] ghost\s.")
 	SSwebhooks.send(WEBHOOK_ROUNDEND, data)
 
-	//[SIERRA-ADD] - ANOMALY
-	//Данный отрезок кода выведет информацию об АНОМАЛИЯХ в раунде
-	to_world(SSanom.give_gameover_text())
-	//[SIERRA-ADD]
 	return 0
 
 /datum/game_mode/proc/check_win() //universal trigger to be called at mob death, nuke explosion, etc. To be called from everywhere.
