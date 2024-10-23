@@ -28,6 +28,7 @@ GLOBAL_VAR_INIT(ambience_channel_weather, GLOB.sound_channels.RequestChannel("AM
 				var/sound = sound(pick(sound_type), repeat = TRUE, wait = 0, volume = 50, channel = GLOB.ambience_channel_weather)
 				detected_mob.playsound_local(get_turf(detected_mob), sound)
 			add_monitor_effect(detected_mob)
+			LAZYADD(GLOB.effected_by_weather, atom)
 			//Если прошло достаточно времени с предыдущего пука в чат игроку - пукнем.
 			if(detected_mob.last_monitor_message < world.time)
 				to_chat(detected_mob, SPAN_BAD(pick(trigger_messages_list)))
@@ -39,9 +40,11 @@ GLOBAL_VAR_INIT(ambience_channel_weather, GLOB.sound_channels.RequestChannel("AM
 		return
 	var/mob/detected_mob = atom
 	if(!IsMonitorHere(get_turf(atom)))
-		remove_monitor_effect(detected_mob)
-		if(LAZYLEN(sound_type))
-			sound_to(detected_mob, sound(null, channel = GLOB.ambience_channel_weather))
+		if(atom in GLOB.effected_by_weather)
+			LAZYREMOVE(GLOB.effected_by_weather, atom)
+			remove_monitor_effect(detected_mob)
+			if(LAZYLEN(sound_type))
+				sound_to(detected_mob, sound(null, channel = GLOB.ambience_channel_weather))
 
 /proc/IsMonitorHere(turf/input_turf)
 	if(locate(/obj/monitor_effect_triger) in input_turf)
