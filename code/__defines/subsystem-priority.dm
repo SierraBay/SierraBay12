@@ -3,6 +3,10 @@
 // SS_BACKGROUND handles high server load differently than Normal and SS_TICKER do.
 // Higher priority also means a larger share of a given tick before sleep checks.
 
+
+// [SIERRA-ADD] - SSINPUT
+#define SS_PRIORITY_INPUT          1000 // Input MUST ALWAYS BE HIGHEST PRIORITY!!!
+
 #define SS_PRIORITY_DEFAULT 50          // Default priority for all processes levels
 
 // SS_TICKER
@@ -12,10 +16,7 @@
 
 // Normal
 #define SS_PRIORITY_TICKER         100 // Gameticker.
-// [SIERRA-ADD] - SSINPUT
-#define SS_PRIORITY_INPUT          99 // Input things.
-#define SS_PRIORITY_EXPLOSIVES     90 // Explosion processing.
-// [/SIERRA-ADD]
+#define SS_PRIORITY_EXPLOSIVES     90 // Explosion processing. // [/SIERRA-ADD]
 #define SS_PRIORITY_MOB            95  // Mob Life().
 #define SS_PRIORITY_MACHINERY      95  // Machinery + powernet ticks.
 #define SS_PRIORITY_AIR            80  // ZAS processing.
