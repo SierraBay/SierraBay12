@@ -49,10 +49,10 @@
 	var/list/placement_images = list()
 	var/obj/machinery/computer/shuttle_control/explore/console_link
 	var/list/to_add = list()
-
+/*
 /mob/living/carbon/human/
 	var/list/obscured_turfs = list()
-
+*/
 /mob/living/carbon/human/update_dead_sight()
 	. = ..()
 	/*
