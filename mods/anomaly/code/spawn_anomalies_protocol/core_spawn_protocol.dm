@@ -31,22 +31,26 @@ path_to_spawn - Путь аномалии, которую мы хотим зас
 	else
 		return spawned_anomaly
 
-/proc/TurfBlocked(turf/loc)
+/proc/TurfBlocked(turf/loc, space_allowed = TRUE)
+	if(!loc) //Если входного турфа нет - автоматом сообщаем о заблокированном турфе
+		return TRUE
+	if(!space_allowed && (isspaceturf(loc) || isspace(get_area(loc))))
+		return TRUE
 	if(loc.density)
-		return 1
+		return TRUE
 	for(var/obj/O in loc)
 		if(O.density && !istype(O, /obj/structure/railing))
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /proc/TurfBlockedByAnomaly(turf/loc)
 	for(var/obj/O in loc)
 		if(istype(O, /obj/anomaly))
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /proc/AnomaliesAmmountInTurf(turf/loc)
-	var/output = 0
+	var/output = FALSE
 	for(var/obj/O in loc)
 		if(istype(O, /obj/anomaly))
 			output++
@@ -175,36 +179,36 @@ source - Источник(Причина) генерации аномалий н
 
 	//Выбрав количество артов которые мы хотим заспавнить, мы начинаем спавн
 	var/spawned_anomalies_ammount = LAZYLEN(spawned_anomalies)
-	var/list/output_list = spawned_anomalies
-	var/spawned_artefacts_ammount = generate_artefacts_in_anomalies(spawned_anomalies, min_artefacts_ammount, max_artefacts_ammount)
+	var/spawned_artefacts_ammount = generate_artefacts_in_anomalies(spawned_anomalies.Copy(), min_artefacts_ammount, max_artefacts_ammount)
 
 	var/spended_time = world.time - started_in
 	//Отчитаемся
 	if(spawned_anomalies_ammount > 0)
 		report_progress("Spawned [spawned_anomalies_ammount] anomalies with [spawned_artefacts_ammount] artefacts by: [source], spended [spended_time] ticks ")
 		LAZYADD(SSanom.important_logs, "Spawned [spawned_anomalies_ammount] anomalies with [spawned_artefacts_ammount] artefacts by: [source], spended [spended_time] ticks ")
-	return output_list
+	return spawned_anomalies
 
 ///Функция генерация артефактов в аномалиях. Спавнит количество артефактов, находящиеся в диапазоне между min_artefacts_ammoun и max_artefacts_ammount
 /proc/generate_artefacts_in_anomalies(list/list_of_anomalies, min_artefacts_ammount, max_artefacts_ammount)
 	var/artefacts_ammount = rand(min_artefacts_ammount, max_artefacts_ammount)
+	var/list/input_list = list_of_anomalies
 	//Санитайз, чтоб не требовали рождение артефактов от тех, кто их рожать не может физически
-	for(var/obj/anomaly/picked_anomaly in list_of_anomalies)
+	for(var/obj/anomaly/picked_anomaly in input_list)
 		if(!picked_anomaly.can_born_artefacts || !LAZYLEN(picked_anomaly.artefacts))
-			LAZYREMOVE(list_of_anomalies, picked_anomaly)
+			LAZYREMOVE(input_list, picked_anomaly)
 	//Санитайз, чтоб артефактов было не слишком много
-	if(artefacts_ammount > LAZYLEN(list_of_anomalies))
-		artefacts_ammount = LAZYLEN(list_of_anomalies)
+	if(artefacts_ammount > LAZYLEN(input_list))
+		artefacts_ammount = LAZYLEN(input_list)
 	var/spawned_artefacts = 0
 	//Пока игра не заспавнит все треуемые артефакты
 	while(artefacts_ammount > spawned_artefacts)
-		var/obj/anomaly/choosed_anomaly = pick(list_of_anomalies)
+		var/obj/anomaly/choosed_anomaly = pick(input_list)
 		if(!choosed_anomaly)
 			return spawned_artefacts
 		if(choosed_anomaly.try_born_artefact())
 			spawned_artefacts++
 		else
-			LAZYREMOVE(list_of_anomalies, choosed_anomaly)
+			LAZYREMOVE(input_list, choosed_anomaly)
 	return spawned_artefacts
 
 
