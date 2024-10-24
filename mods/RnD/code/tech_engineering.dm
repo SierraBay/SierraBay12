@@ -44,6 +44,21 @@
 
 	unlocks_designs = list("portascrubberstat", "portascrubberhuge", "portapump", "portascrubber", "oxyregen", "cracer","rpd")
 
+/datum/technology/engineering/jetpack
+	name = "Jetpacks"
+	desc = "Jetpacks"
+	id = "jetpack"
+
+	x = 0.3
+	y = 0.7
+	icon = "jetpack"
+
+	required_technologies = list("gas_heat")
+	required_tech_levels = list()
+	cost = 1500
+
+	unlocks_designs = list("jetpack")
+
 /datum/technology/engineering/adv_parts
 	name = "Advanced Parts"
 	desc = "Advanced Parts"
