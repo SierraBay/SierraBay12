@@ -6,6 +6,12 @@
 	w_class = ITEM_SIZE_TINY
 	matter = list(MATERIAL_STEEL = 200)
 
+/obj/item/advanced_bolt/Crossed(O)
+	. = ..()
+	if(ishuman(usr))
+		for(var/obj/item/storage/bolt_bag/bag in usr)
+			if(bag.autocollect)
+				bag.can_be_inserted(src, usr, 0)
 
 /obj/item/advanced_bolt/Move()
 	. = ..()
@@ -27,6 +33,8 @@
 /obj/item/advanced_bolt/on_update_icon()
 	. = ..()
 	var/turf/current_turf = get_turf(src)
+	if(!current_turf)
+		return
 	if(LAZYLEN(current_turf.list_of_in_range_anomalies))
 		icon_state = "beacon_red"
 	else
@@ -37,10 +45,6 @@
 	name = "Bag with beacons"
 	desc = "Sturdy beacon storage bag."
 	startswith = list(
-		/obj/item/advanced_bolt,
-		/obj/item/advanced_bolt,
-		/obj/item/advanced_bolt,
-		/obj/item/advanced_bolt,
 		/obj/item/advanced_bolt,
 		/obj/item/advanced_bolt,
 		/obj/item/advanced_bolt,

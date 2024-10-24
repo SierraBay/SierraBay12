@@ -255,6 +255,7 @@ var/global/list/rnd_server_list = list()
 		reward = artefacts.rnd_points
 		points += reward
 		saved_small_artefacts += artefacts
+		SSanom.earned_rnd_points += reward
 	for(var/obj/item/small_artefact_scan_disk/input_disk in I.scanned_urm_interactions)
 		if(input_disk.interaction_id in saved_urm_interactions)
 			continue

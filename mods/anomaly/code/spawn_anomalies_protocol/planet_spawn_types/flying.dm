@@ -1,5 +1,5 @@
 /*
-Вне ротации
+Не доделано
 /obj/overmap/visitable/sector/exoplanet/flying
 	name = "flying exoplanet"
 	desc = "Flying around a certain center of the island."

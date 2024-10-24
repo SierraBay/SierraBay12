@@ -5,58 +5,74 @@
 // Далее просто включай свой код
 // #include "code/something.dm"
 #include "code\anomaly_admin.dm" //Админские кнопочки
-#include "code\anomaly_core.dm" //Ядро и основа аномалий
-#include "code\anomaly_graphic.dm" //Графика и внешний вид
-#include "code\anomaly_light.dm" //Освещение, вспышки и тому подобное
-#include "code\anomaly_parts.dm" //Код, отвечающий за многотайтловость аномалий
-#include "code\interact_with_items.dm" //Взаимодействие аномалий с предметами и обьектами
-#include "code\anomaly_loop.dm" //Код, отвечающий за длительную обработку аномалии
-#include "code\anomaly_deleting.dm" //Удаление аномалий, артефактов и вспомогательных частей
-#include "code\anomaly_preload.dm" //Предзарядка аномалии
-#include "code\anomaly_sound.dm" //Звуки у аномалий
-#include "code\anomaly_randomize.dm" //Рандомизация параметров аномалии
 #include "code\anomaly_controller.dm" //Контроллер аномалий
-#include "code\anomaly_walking.dm" //Бродячие аномалии
-#include "code\anomaly_electrostatic.dm" //Электростатический расчёт
+#include "code\anomaly_defines.dm"
+
+
+//Аномалии
+//Типы аномалий
+#include "code\anomalies\single\cooler.dm"
+#include "code\anomalies\single\electra.dm"
+#include "code\anomalies\single\heater.dm"
+#include "code\anomalies\single\rvach.dm"
+#include "code\anomalies\single\tramplin.dm"
+#include "code\anomalies\single\ventilyator.dm"
+#include "code\anomalies\single\vspishka.dm"
+#include "code\anomalies\single\zjarka.dm"
+//аномалии 3 на 3
+#include "code\anomalies\threeandthree\cooler_3x3.dm"
+#include "code\anomalies\threeandthree\electra_3x3.dm"
+#include "code\anomalies\threeandthree\heater_3x3.dm"
+#include "code\anomalies\threeandthree\rvach_3x3.dm"
+//аномалии 2 на 2
+#include "code\anomalies\twoandtwo\cooler2x2.dm"
+#include "code\anomalies\twoandtwo\heater2x2.dm"
+//Сам код аномалий
+#include "code\anomalies\anomalies_premades.dm" //Премейды аномалий
+#include "code\anomalies\anomaly_core.dm"//Ядро аномок
+#include "code\anomalies\anomaly_deleting.dm" //Код отвечающий за удаление аномалий
+#include "code\anomalies\anomaly_electrostatic.dm" //Код отвечающий за просчёт подверженности турфа аномалией.
+#include "code\anomalies\anomaly_graphic.dm" //Графика, спрайты - всё тут
+#include "code\anomalies\anomaly_loop.dm" //Аномалии с длительной работой/воздействием
+#include "code\anomalies\anomaly_parts.dm" //Мультитайтловость аномалий
+#include "code\anomalies\anomaly_preload.dm" //Код, отвечающий за предзарядку аномалий перед ударом
+#include "code\anomalies\anomaly_randomize.dm" //Рандомизация параметров и типа аномалий
+#include "code\anomalies\anomaly_sound.dm" // Звуки, опять звуки - всё тут
+#include "code\anomalies\anomaly_walking.dm" // [Work In Progress] - Блуждающие аномалии
+#include "code\anomalies\interact_with_items.dm" // Влияние артефактов на предметы. TODO - варка артефактов и прочее
+
+
+
+//Код артефактов и всё с ними связанное
+#include "code\artefacts\anomaly_artefacts.dm" //Ядро артефактов
+#include "code\artefacts\artefact_external_interact.dm" //реакции на внешние события на артефакт/носителя
+#include "code\artefacts\artefact_gravi.dm"
+#include "code\artefacts\artefact_processing.dm" //Процессинг/постоянная обработка артефакта
+#include "code\artefacts\artefact_pruzhina.dm"
+#include "code\artefacts\artefact_spawn.dm"
+#include "code\artefacts\artefact_svetlyak.dm"
+#include "code\artefacts\artefact_zjar.dm"
+//#include "code\artefacts\artefact_zjemchug.dm"
+#include "code\artefacts\interact_with_artefacts.dm" //Интеракции с артефактом (Персонаж/URM)
+
+
 
 //Детекторы и прочее оборудование
 #include "code\detectors_and_etc\bolt.dm"
 #include "code\detectors_and_etc\detector.dm"
 #include "code\detectors_and_etc\collector.dm"
+#include "code\detectors_and_etc\deployer.dm"
 #include "code\detectors_and_etc\beacon.dm"
 #include "code\detectors_and_etc\research_machine.dm"
 
 
-//Код артефактов и всё с ними связанное
-#include "code\artifacts\anomaly_artifact_spawn.dm"
-#include "code\artifacts\anomaly_artifacts.dm"
-#include "code\artifacts\interact_with_artefacts.dm"
-#include "code\artifacts\artefact_pruzhina.dm"
-#include "code\artifacts\artefact_zjar.dm"
-#include "code\artifacts\artefact_svetlyak.dm"
-#include "code\artifacts\artefact_gravi.dm"
 
-
-//Все типы аномалий
-#include "code\anomalies\electra.dm"
-#include "code\anomalies\rvach.dm"
-#include "code\anomalies\vspishka.dm"
-#include "code\anomalies\single\tramplin.dm"
-#include "code\anomalies\single\zjarka.dm"
-#include "code\anomalies\heater.dm"
-#include "code\anomalies\cooler.dm"
-// #include "code\anomalies\ventilyator.dm"
-
-//Аномалия 2 на 2
-#include "code\anomalies\twoandtwo\heater2x2.dm"
-#include "code\anomalies\twoandtwo\cooler2x2.dm"
-
-
-//Аномалия 3 на 3
-#include "code\anomalies\threeandthree\electra_3x3.dm"
-#include "code\anomalies\threeandthree\rvach_3x3.dm"
-#include "code\anomalies\threeandthree\heater_3x3.dm"
-#include "code\anomalies\threeandthree\cooler_3x3.dm"
+//Погода и эффекты на мониторе
+#include "code\monitor_effects\monitor_core.dm"
+#include "code\monitor_effects\monitor_vars.dm"
+#include "code\monitor_effects\snow_monitor_effect.dm"
+#include "code\monitor_effects\swamp_monitor_effect.dm"
+#include "code\monitor_effects\vulcan_monitor_effect.dm"
 
 
 //Размещение аномалий в игре
@@ -65,10 +81,11 @@
 #include "code\spawn_anomalies_protocol\spawn_with_ruins.dm"
 #include "code\spawn_anomalies_protocol\bsd_event_protocol.dm"
 #include "code\spawn_anomalies_protocol\planet_spawn_types\vulcanic.dm" //Вулканическая планета
-#include "code\spawn_anomalies_protocol\planet_spawn_types\ice.dm" //Ледяная планета
-// #include "code\spawn_anomalies_protocol\planet_spawn_types\flying.dm" //Летающие острова
+#include "code\spawn_anomalies_protocol\planet_spawn_types\ice.dm" //[WIP] Ледяная планета
+// #include "code\spawn_anomalies_protocol\planet_spawn_types\flying.dm" //[WIP] Летающие острова
+// #include "code\spawn_anomalies_protocol\planet_spawn_types\sargas.dm" // [WIP] Саргасово болото
 #include "code\spawn_anomalies_protocol\spawn_on_planet.dm" //Спавн на планетах
-#include "code\anomalies\threeandthree\anomalies_premades.dm" //"Заготовки" аномалий
+
 
 
 //Карты, диреликты и прочее
@@ -76,3 +93,12 @@
 #include "maps\zjarka_ruins\zjarka_ruins.dm"
 
 #endif
+// BEGIN_INTERNALS
+// END_INTERNALS
+// BEGIN_FILE_DIR
+#define FILE_DIR .
+// END_FILE_DIR
+// BEGIN_PREFERENCES
+// END_PREFERENCES
+// BEGIN_INCLUDE
+// END_INCLUDE

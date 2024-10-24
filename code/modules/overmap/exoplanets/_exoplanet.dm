@@ -137,6 +137,8 @@ GLOBAL_VAR(planet_repopulation_disabled)
 	//[SIERRA-ADD] - ANOMALIES
 	if(can_spawn_anomalies)
 		generate_anomalies()
+	if(monitor_effect_type)
+		generate_monitor_effects()
 	//[SIERRA-ADD]
 	generate_landing(2)
 	update_biome()
