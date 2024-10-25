@@ -18,12 +18,8 @@
 	can_born_artefacts = FALSE
 	min_coldown_time = 3 SECONDS
 	max_coldown_time = 8 SECONDS
-	can_be_preloaded = TRUE
 	being_preload_chance = 10
 	chance_to_be_detected = 75
-	can_walking = TRUE
-	chance_spawn_walking = 5
-	walking_activity = 5
 
 /obj/anomaly/tramplin/Initialize()
 	. = ..()
@@ -53,7 +49,7 @@
 			if(victim.skill_check(SKILL_HAULING, SKILL_EXPERIENCED))
 				if(prob(10 * victim.get_skill_value(SKILL_HAULING)))
 					victim.Weaken(1)
-					to_chat(victim, SPAN_WARNING("Земля пропадает под ногами, но вы успеваете вцепиться в землю словно зубами."))
+					to_chat(victim, SPAN_GOOD("Земля пропадает под ногами, но вы успеваете вцепиться в землю словно зубами."))
 					return
 
 	var/turf/own_turf = get_turf(src)
@@ -61,6 +57,9 @@
 	if(!random_throw_dir)
 		target_turf = get_ranged_target_turf(target, throw_dir, range_of_throw)
 	var/atom/movable/victim = target
+	if(isliving(victim))
+		var/mob/victim_mob = victim
+		victim_mob.Weaken(1)
 	if(random_throw_dir)
 		victim.throw_at_random(own_turf, range_of_throw, speed_of_throw )
 	else
