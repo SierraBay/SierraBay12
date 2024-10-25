@@ -32,6 +32,24 @@
 	/// Vertical offset from the console of the origin tile when using it
 	var/y_offset = 0
 	var/landloc
+	var/skilled_enough = FALSE
+
+/obj/machinery/computer/shuttle_control/proc/update_operator_skill()
+	if (isobserver(usr))
+		return
+	operator_skill = usr.get_skill_value(SKILL_PILOT)
+	if (operator_skill >= SKILL_EXPERIENCED)
+		skilled_enough = TRUE
+	else
+		skilled_enough = FALSE
+
+/obj/machinery/computer/shuttle_control/explore/get_ui_data(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1)
+	. = ..()
+	update_operator_skill()
+
+	. += list(
+	"skilled_enough" = skilled_enough
+	)
 
 /mob/observer/eye/landeye
 	see_in_dark = 7
