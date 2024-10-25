@@ -19,18 +19,35 @@
 	var/global_scan_cooldown = 300 SECONDS
 	var/last_global_scan = 0
 
-/obj/item/clothing/gloves/anomaly_detector/Initialize()
-	. = ..()
-	START_PROCESSING(SSanom, src)
-	SSanom.processing_ammount++
+/obj/item/clothing/gloves/anomaly_detector/proc/switch_toggle()
+	if(!is_processing)
+		to_chat(usr, SPAN_NOTICE("You turn on detector"))
+		START_PROCESSING(SSanom, src)
+		SSanom.processing_ammount++
+	else
+		to_chat(usr, SPAN_NOTICE("You turn off detector"))
+		STOP_PROCESSING(SSanom, src)
+		SSanom.processing_ammount--
 
 
 /obj/item/clothing/gloves/anomaly_detector/attack_self(mob/living/user)
 	. = ..()
+	if(!is_processing)
+		to_chat(usr, SPAN_BAD("Device turned off"))
+		return
 	try_found_anomalies(user)
 
+
 /obj/item/clothing/gloves/anomaly_detector/AltClick()
+	if(!is_processing)
+		to_chat(usr, SPAN_BAD("Device turned off"))
+		return
 	scan_z_level_for_anomalies(usr)
+	return TRUE
+
+/obj/item/clothing/gloves/anomaly_detector/CtrlClick(mob/user)
+	. = ..()
+	switch_toggle()
 	return TRUE
 
 /obj/item/clothing/gloves/anomaly_detector/Process()
@@ -80,6 +97,7 @@
 	. = ..()
 	to_chat(user, SPAN_GOOD("Use LBM in anomaly scan mode for search anomalies, or use action button."))
 	to_chat(user, SPAN_GOOD("Use Alt + LBM to use more powerfull mode."))
+	to_chat(user, SPAN_GOOD("Use Cntrl + LBM to turn on/turn off device."))
 
 ///Пользователь проводит поиск при помощи сканера
 /obj/item/clothing/gloves/anomaly_detector/proc/try_found_anomalies(mob/living/user)
