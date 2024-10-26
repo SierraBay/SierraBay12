@@ -41,7 +41,7 @@
 	required_tech_levels = list()
 	cost = 1550
 
-	unlocks_designs = list("rcon_console", "teletraffic")
+	unlocks_designs = list("rcon_console", "traffic_server")
 
 /datum/technology/tcom/mainframes
 	name = "Mainframes"

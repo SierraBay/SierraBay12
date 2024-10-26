@@ -115,10 +115,3 @@
 	additional_spawn_components = list(
 		/obj/item/stock_parts/power/apc/buildable = 1
 	)
-
-/datum/design/circuit/traffic_console
-	name = "telecommunications traffic control console"
-	id = "teletraffic"
-	req_tech = list(TECH_DATA = 3)
-	build_path = /obj/item/stock_parts/circuitboard/comm_traffic
-	sort_string = "KCAST"
