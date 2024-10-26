@@ -27,7 +27,7 @@
 	required_tech_levels = list()
 	cost = 500
 
-	unlocks_designs = list("high_cell", "device_cell_high", "adv_capacitor","emitter")
+	unlocks_designs = list("high_cell", "device_cell_high", "adv_capacitor")
 
 /datum/technology/power/sup_power
 	name = "Super Power"
@@ -42,7 +42,7 @@
 	required_tech_levels = list()
 	cost = 1000
 
-	unlocks_designs = list("super_cell", "super_capacitor","inducer","radiation_collector")
+	unlocks_designs = list("super_cell", "super_capacitor","inducer")
 
 /datum/technology/power/hyp_power
 	name = "Hyper Power"
