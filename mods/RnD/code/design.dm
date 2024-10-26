@@ -69,27 +69,6 @@
 	build_path = /obj/item/tank/jetpack/carbondioxide
 	sort_string = "VAGAM"
 
-/datum/design/circuit/scrap_crusher
-	name = "crusher"
-	id = "crusher"
-	req_tech = list(TECH_ENGINEERING = 3, TECH_MATERIAL = 3, TECH_DATA = 3)
-	build_path = /obj/item/stock_parts/circuitboard/crusher
-	sort_string = "KCASA"
-
-/datum/design/circuit/scrap_ripper
-	name = "pile ripper"
-	id = "pile_ripper"
-	req_tech = list(TECH_ENGINEERING = 3, TECH_DATA = 2)
-	build_path = /obj/item/stock_parts/circuitboard/pile_ripper
-	sort_string = "KCASB"
-
-/datum/design/circuit/srcap_recycler
-	name = "recycler"
-	id = "recycler"
-	req_tech = list(TECH_ENGINEERING = 3, TECH_DATA = 2)
-	build_path = /obj/item/stock_parts/circuitboard/recycler
-	sort_string = "KCASC"
-
 /datum/design/circuit/area_atmos
 	name = "area atmos"
 	id = "area_atmos"
@@ -143,8 +122,3 @@
 	req_tech = list(TECH_DATA = 3)
 	build_path = /obj/item/stock_parts/circuitboard/comm_traffic
 	sort_string = "KCAST"
-
-/obj/item/stock_parts/circuitboard/comm_traffic
-	name = "circuit board (telecommunications traffic control console)"
-	build_path = /obj/machinery/computer/telecomms/traffic
-	origin_tech = list(TECH_DATA = 3)
