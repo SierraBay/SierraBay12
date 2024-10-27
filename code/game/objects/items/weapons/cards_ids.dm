@@ -165,26 +165,29 @@
 
 var/global/const/NO_EMAG_ACT = -50
 
-/obj/item/card/emag/resolve_attackby(atom/A, mob/user)
-	var/used_uses = A.emag_act(uses, user, src)
-	if(used_uses == NO_EMAG_ACT)
-		return ..(A, user)
-
+/obj/item/card/emag/use_before(atom/target, mob/living/user, click_parameters)
+	var/used_uses = target.emag_act(uses, user, src)
+	if (used_uses == NO_EMAG_ACT)
+		return ..()
 	uses -= used_uses
-	A.add_fingerprint(user)
-	if(used_uses)
-		log_and_message_admins("emagged \an [A].")
+	target.add_fingerprint(user, tool = src)
+	if (used_uses)
+		log_and_message_admins("emagged \a [target].")
 		//[SIERRA-ADD]
-		playsound(get_turf(A), pick(emag_sounds), 40, extrarange = -3)
+		playsound(get_turf(target), pick(emag_sounds), 40, extrarange = -3)
 		//[SIERRA-ADD]
 
-	if(uses<1)
-		user.visible_message(SPAN_WARNING("\The [src] fizzles and sparks - it seems it's been used once too often, and is now spent."))
+	if (uses < 1)
+		user.visible_message(
+			SPAN_WARNING("\The [user]'s [name] fizzles and sparks."),
+			SPAN_WARNING("\The [name] fizzles and sparks - it seems it's been used once too often, and is now spent.")
+		)
 		var/obj/item/card/emag_broken/junk = new(user.loc)
-		junk.add_fingerprint(user)
+		transfer_fingerprints_to(junk)
 		qdel(src)
+		user.put_in_active_hand(junk)
+	return TRUE
 
-	return 1
 
 /obj/item/card/emag/Initialize()
 	. = ..()

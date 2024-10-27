@@ -39,5 +39,5 @@
 #include "playable_away_yacht/_yacht.dme"
 #include "overmap/_overmap.dme"
 #include "failu_skrell_clothes/_failu_skrell_clothes.dme"
-
+#include "ooc_notes/_ooc_notes.dme"
 #include "../packs/sierra-tweaks/_pack.dm"
