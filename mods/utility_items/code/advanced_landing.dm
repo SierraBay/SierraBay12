@@ -9,7 +9,10 @@
 			to_chat(usr,SPAN_WARNING("No valid landing sites in range."))
 		possible_d = shuttle.get_possible_waypoints()
 		if(CanInteract(usr, GLOB.default_state) && (D in possible_d))
-			landloc = locate(usr.x, usr.y, pick(D.map_z))
+			var/area/area_oko = get_area(src)
+			var/obj/machinery/computer/shuttle_control/explore/console = locate(/obj/machinery/computer/shuttle_control/explore) in area_oko
+			var/turf/origin = locate(console.x + x_offset, console.y + y_offset, console.z)
+			landloc = locate(origin.x, origin.y, pick(D.map_z))
 			oko_enter(landloc)
 			shuttle_type = shuttle
 		return TOPIC_REFRESH
@@ -151,16 +154,15 @@
 	oko.forceMove(landloc)
 
 /obj/machinery/computer/shuttle_control/explore/proc/create_zone()
-	var/area/area_oko = get_area(oko.owner)
+	var/area/area_oko = get_area(src)
 	var/obj/shuttle_landmark/shuttle_landmark = locate(/obj/shuttle_landmark) in area_oko
 	var/turf/origin = locate(shuttle_landmark.x + x_offset, shuttle_landmark.y + y_offset, shuttle_landmark.z)
 	var/turf/turf = get_subarea_turfs(area_oko.parent_type)
-	var/console_area = get_area(src)
 
-	if(console_area in SSshuttle.shuttle_areas)
+	if(area_oko in SSshuttle.shuttle_areas)
 		for(var/shuttle_name in SSshuttle.shuttles)
 			var/datum/shuttle/shuttle_datum = SSshuttle.shuttles[shuttle_name]
-			if(console_area in shuttle_datum.shuttle_area)
+			if(area_oko in shuttle_datum.shuttle_area)
 				for(var/turf/simulated/T in turf)
 					var/image/I = image('icons/effects/alphacolors.dmi', origin, "red")
 					var/x_off = T.x - origin.x
@@ -172,15 +174,20 @@
 /obj/machinery/computer/shuttle_control/explore/proc/check_zone()
 	var/turf/eyeturf = get_turf(oko)
 	var/list/image_cache = oko.placement_images
+	var/landable = TRUE
 	for(var/i in 1 to LAZYLEN(image_cache))
 		var/image/I = image_cache[i]
 		var/list/coords = image_cache[I]
 		var/turf/T = locate(eyeturf.x + coords[1], eyeturf.y + coords[2], eyeturf.z)
+		var/A = get_area(T)
 		I.loc = T
-		if(T.density)
-			I.icon_state = "red"
-		else
+		if(!(T.density) && ((istype(A, /area/space)) || (istype(A, /area/exoplanet))))
 			I.icon_state = "blue"
+		else
+			I.icon_state = "red"
+			landable = FALSE
+	if(landable)
+		return landable
 
 /mob/cancel_camera()
 	. = ..()
@@ -221,15 +228,7 @@
 	set category = "Ships Control"
 
 	var/T = get_turf(src.eyeobj)
-	var/areaalloved = get_area(src.eyeobj)
 	var/obj/shuttle_landmark/ship/advancedlandmark/landmark
-	if(landmark)
-		qdel(landmark)
-	if((istype(areaalloved, /area/space)) || (istype(areaalloved, /area/exoplanet)))
-		landmark = new (T, src)
-	else
-		to_chat(usr, "Cannot land at this location.")
-		return
 
 	var/area/temp = get_area(eyeobj.owner)
 	if(temp in SSshuttle.shuttle_areas)
@@ -237,5 +236,6 @@
 			var/datum/shuttle/shuttle_datum = SSshuttle.shuttles[shuttle_name]
 			if(temp in shuttle_datum.shuttle_area)
 				for(var/obj/machinery/computer/shuttle_control/explore/c in temp)
-					c.shuttle_type.set_destination(landmark)
-					c.check_zone()
+					if(c.check_zone())
+						landmark = new (T, src)
+						c.shuttle_type.set_destination(landmark)
