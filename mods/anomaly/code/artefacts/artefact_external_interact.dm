@@ -3,10 +3,10 @@
 
 Пример применения в коде:
 
-var/list/result_effects = calculate_artefact_reaction(src, "ЭМИ") <- здесь, мы получаем весь список реакций артефактов в инвентаре персонажа на событие (ЭМИ/Взрыв/Падение и прочие, вы всегда можете добавить своё!)
-if(result_effects) <- Всегда проверяйте, что вам не выдало null
-	if(result_effects.Find("Защищает от ЭМИ")) <- Теперь, ищем нужную нам реакцию на событие.
-		return <-
+	var/list/result_effects = calculate_artefact_reaction(src, "ЭМИ") <- здесь, мы получаем весь список реакций артефактов в инвентаре персонажа на событие (ЭМИ/Взрыв/Падение и прочие, вы всегда можете добавить своё!)
+	if(result_effects) <- Всегда проверяйте, что вам не выдало null
+		if(result_effects.Find("Защищает от ЭМИ")) <- Теперь, ищем нужную нам реакцию на событие.
+			return <-
 
 
 
@@ -103,7 +103,7 @@ if(result_effects) <- Всегда проверяйте, что вам не вы
 	. = ..()
 	react_at_emp()
 
-/obj/item/artefact/proc/react_at_emp()
+/obj/item/artefact/react_at_emp()
 	return
 
 /obj/item/artefact/proc/react_to_remove_from_collector()
