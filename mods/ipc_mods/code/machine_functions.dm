@@ -118,7 +118,7 @@
 	alpha = 80
 
 /obj/screen/fullscreen/glitch_bw/alpha
-	alpha = 180
+	alpha = 160
 
 
 /datum/species/machine/handle_vision(mob/living/carbon/human/H)
