@@ -118,7 +118,7 @@
 	alpha = 80
 
 /obj/screen/fullscreen/glitch_bw/alpha
-	alpha = 200
+	alpha = 180
 
 
 /datum/species/machine/handle_vision(mob/living/carbon/human/H)
@@ -141,7 +141,8 @@
 	if(!H.client)//no client, no screen to update
 		return 1
 
-	H.set_fullscreen(H.eye_blind && !H.equipment_prescription, "glitch_monitor", /obj/screen/fullscreen/glitch_bw/alpha)
+	if(H.stat == !UNCONSCIOUS)
+		H.set_fullscreen(H.eye_blind && !H.equipment_prescription, "glitch_monitor", /obj/screen/fullscreen/glitch_bw/alpha)
 	H.set_fullscreen(H.stat == UNCONSCIOUS, "no_power", /obj/screen/fullscreen/no_power)
 
 	if(config.welder_vision)
@@ -158,9 +159,9 @@
 
 /mob/living/carbon/human/emp_act(severity)
 	. = ..()
-	if(is_species(SPECIES_IPC))
+	if(is_species(SPECIES_IPC) || is_species(SPECIES_ADHERENT))
 		overlay_fullscreen("sensoremp", /obj/screen/fullscreen/glitchs)
-		addtimer(new Callback(src, PROC_REF(clear_emp_act)), 2 SECONDS)
+		addtimer(new Callback(src, PROC_REF(clear_emp_act)), 1.5 SECONDS)
 
 /mob/living/carbon/human/proc/clear_emp_act()
 	clear_fullscreen("sensoremp")
