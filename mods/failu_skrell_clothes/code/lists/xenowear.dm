@@ -5,7 +5,7 @@
 // Коммент от Колеса: если по какой-то причине у вас не отображается вещь в нужной вкладке лодаута, почекайте
 // её в других вкладках. Если отображается не там, где нужно, поищите в коркоде определенные флаги сортировки.
 // У меня например пришлось брать из коркода sort_category = "Xenowear"
-/datum/gear/suit/skrell/skrell_robe
+/datum/gear/suit/skrell_robe
 	display_name = "(Skrell) Skrellian robe"
 	path = /obj/item/clothing/suit/skrell_robe
 	sort_category = "Xenowear"
