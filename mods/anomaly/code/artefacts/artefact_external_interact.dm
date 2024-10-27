@@ -103,7 +103,7 @@
 	. = ..()
 	react_at_emp()
 
-/obj/item/artefact/react_at_emp()
+/obj/item/artefact/proc/react_at_emp()
 	return
 
 /obj/item/artefact/proc/react_to_remove_from_collector()
