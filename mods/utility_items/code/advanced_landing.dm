@@ -144,27 +144,6 @@
 /obj/machinery/computer/shuttle_control/explore/
 	var/landmarkx_off
 	var/landmarky_off
-	//Лучше способа не придумал, поэтому если check_zone шаттла захватывает территории, больше чем надо, то пихаем консоль этого шаттла, в список
-	var/list/awayshuttles = list(
-	/obj/machinery/computer/shuttle_control/explore/away_scg_patrol/reaper,
-	/obj/machinery/computer/shuttle_control/explore/vox_lander,
-	/obj/machinery/computer/shuttle_control/explore/skrellscoutshuttle,
-	/obj/machinery/computer/shuttle_control/explore/away_farfleet/snz,
-	/obj/machinery/computer/shuttle_control/explore/mule,
-	/obj/machinery/computer/shuttle_control/explore/graysontug/hand_one,
-	/obj/machinery/computer/shuttle_control/explore/pod_hand_one,
-	/obj/machinery/computer/shuttle_control/explore/pod_hand_two,
-	/obj/machinery/computer/shuttle_control/explore/graysontug/hand_two
-	 )
-
-	//Списки куда разрешена посадка
-	var/list/accesible_areas = list(
-	/area/mine,
-	/area/space,
-	/area/exoplanet,
-	/area/bluespaceriver,
-	/area/map_template
-	)
 
 /obj/machinery/computer/shuttle_control/explore/proc/oko_enter()
 	oko = new /mob/observer/eye/landeye
@@ -180,6 +159,19 @@
 	oko.forceMove(landloc)
 
 /obj/machinery/computer/shuttle_control/explore/proc/create_zone()
+	//Лучше способа не придумал, поэтому если check_zone шаттла захватывает территории, больше чем надо, то пихаем консоль этого шаттла, в список
+	var/list/awayshuttles = list(
+	/obj/machinery/computer/shuttle_control/explore/away_scg_patrol/reaper,
+	/obj/machinery/computer/shuttle_control/explore/vox_lander,
+	/obj/machinery/computer/shuttle_control/explore/skrellscoutshuttle,
+	/obj/machinery/computer/shuttle_control/explore/away_farfleet/snz,
+	/obj/machinery/computer/shuttle_control/explore/mule,
+	/obj/machinery/computer/shuttle_control/explore/graysontug/hand_one,
+	/obj/machinery/computer/shuttle_control/explore/pod_hand_one,
+	/obj/machinery/computer/shuttle_control/explore/pod_hand_two,
+	/obj/machinery/computer/shuttle_control/explore/graysontug/hand_two
+	)
+
 	var/area/area_oko = get_area(src)
 	//var/obj/overmap/visitable/ship/landable/shuttle_landmark = locate(/obj/overmap/visitable/ship/landable) in area_oko
 	var/turf/origin = locate(src.x + x_offset, src.y + y_offset, src.z)
@@ -207,6 +199,14 @@
 		landmarky_off = shuttle_landmark.y - origin.y
 
 /obj/machinery/computer/shuttle_control/explore/proc/check_zone()
+	//Списки куда разрешена посадка
+	var/list/accesible_areas = list(
+	/area/mine,
+	/area/space,
+	/area/exoplanet,
+	/area/bluespaceriver,
+	/area/map_template
+	)
 	var/turf/eyeturf = get_turf(oko)
 	var/list/image_cache = oko.placement_images
 	var/landable = TRUE
