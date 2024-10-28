@@ -40,6 +40,8 @@
 /obj/machinery/computer/shuttle_control/proc/update_operator_skill()
 	if (isobserver(usr))
 		return
+	if(!usr)
+		return
 	operator_skill = usr.get_skill_value(SKILL_PILOT)
 	if (operator_skill >= SKILL_EXPERIENCED)
 		skilled_enough = TRUE
@@ -139,6 +141,11 @@
 		if("Big")
 			return user.client.view = world.view + extra_view
 
+/obj/machinery/computer/shuttle_control/explore/
+	var/landmarkx_off
+	var/landmarky_off
+	var/list/awayshuttles = list(/obj/machinery/computer/shuttle_control/explore/away_scg_patrol/reaper, /obj/machinery/computer/shuttle_control/explore/vox_lander, /obj/machinery/computer/shuttle_control/explore/skrellscoutshuttle, /obj/machinery/computer/shuttle_control/explore/away_farfleet/snz)
+
 
 /obj/machinery/computer/shuttle_control/explore/proc/oko_enter()
 	oko = new /mob/observer/eye/landeye
@@ -155,9 +162,13 @@
 
 /obj/machinery/computer/shuttle_control/explore/proc/create_zone()
 	var/area/area_oko = get_area(src)
-	var/obj/shuttle_landmark/shuttle_landmark = locate(/obj/shuttle_landmark) in area_oko
-	var/turf/origin = locate(shuttle_landmark.x + x_offset, shuttle_landmark.y + y_offset, shuttle_landmark.z)
-	var/turf/turf = get_subarea_turfs(area_oko.parent_type)
+	//var/obj/overmap/visitable/ship/landable/shuttle_landmark = locate(/obj/overmap/visitable/ship/landable) in area_oko
+	var/turf/origin = locate(src.x + x_offset, src.y + y_offset, src.z)
+	var/turf/turf
+	if(src.type in awayshuttles)
+		turf = get_subarea_turfs(area_oko.type)
+	else
+		turf = get_subarea_turfs(area_oko.parent_type)
 
 	if(area_oko in SSshuttle.shuttle_areas)
 		for(var/shuttle_name in SSshuttle.shuttles)
@@ -170,6 +181,10 @@
 					I.loc = locate(origin.x + x_off, origin.y + y_off, origin.z) //we have to set this after creating the image because it might be null, and images created in nullspace are immutable.
 					I.layer = TURF_LAYER
 					oko.placement_images[I] = list(x_off, y_off)
+	var/obj/shuttle_landmark/shuttle_landmark = locate(/obj/shuttle_landmark) in area_oko
+	if(shuttle_landmark)
+		landmarkx_off = shuttle_landmark.x - origin.x
+		landmarky_off = shuttle_landmark.y - origin.y
 
 /obj/machinery/computer/shuttle_control/explore/proc/check_zone()
 	var/turf/eyeturf = get_turf(oko)
@@ -215,6 +230,7 @@
 	owner.verbs -= /mob/living/proc/extra_view
 	owner.verbs -= /mob/living/proc/cancel_landeye_view
 	owner = null
+	src.Destroy()
 	SetName(initial(name))
 
 
@@ -226,10 +242,7 @@
 /mob/living/proc/spawn_landmark()
 	set name = "Landing Spot"
 	set category = "Ships Control"
-
-	var/T = get_turf(src.eyeobj)
 	var/obj/shuttle_landmark/ship/advancedlandmark/landmark
-
 	var/area/temp = get_area(eyeobj.owner)
 	if(temp in SSshuttle.shuttle_areas)
 		for(var/shuttle_name in SSshuttle.shuttles)
@@ -237,5 +250,7 @@
 			if(temp in shuttle_datum.shuttle_area)
 				for(var/obj/machinery/computer/shuttle_control/explore/c in temp)
 					if(c.check_zone())
+						var/turf/eyeturf = get_turf(c.oko)
+						var/turf/T = locate(eyeturf.x + c.landmarkx_off, eyeturf.y + c.landmarky_off , eyeturf.z)
 						landmark = new (T, src)
 						c.shuttle_type.set_destination(landmark)
