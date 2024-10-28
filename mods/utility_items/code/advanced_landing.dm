@@ -154,12 +154,11 @@
 /obj/machinery/computer/shuttle_control/explore/pod_hand_two
 /obj/machinery/computer/shuttle_control/explore/graysontug/hand_two
 
-/area/mine/explored
-/area/mine/unexplored
-/area/space
-/area/exoplanet
-/area/bluespaceriver/ground
-/area/map_template
+/area/mine
+	name = "Mine"
+
+/area/bluespaceriver
+	name = "\improper Arctic Planet Surface"
 
 // ______________________________________________________________
 
