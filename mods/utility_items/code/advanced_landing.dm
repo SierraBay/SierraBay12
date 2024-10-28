@@ -141,8 +141,15 @@
 		if("Big")
 			return user.client.view = world.view + extra_view
 
+/obj/machinery/computer/shuttle_control/explore/
+	var/landmarkx_off
+	var/landmarky_off
+	var/list/awayshuttles = list()
+	var/list/accesible_areas = list()
+
+/obj/machinery/computer/shuttle_control/explore/LateInitialize()
 	//Лучше способа не придумал, поэтому если check_zone шаттла захватывает территории, больше чем надо, то пихаем консоль этого шаттла, в список
-var/global/list/zones_awayshuttles = list(
+	awayshuttles = list(
 	/obj/machinery/computer/shuttle_control/explore/away_scg_patrol/reaper,
 	/obj/machinery/computer/shuttle_control/explore/vox_lander,
 	/obj/machinery/computer/shuttle_control/explore/skrellscoutshuttle,
@@ -155,19 +162,13 @@ var/global/list/zones_awayshuttles = list(
 	)
 
 	//Списки куда разрешена посадка
-var/global/list/accesible_areas = list(
+	accesible_areas = list(
 	/area/mine,
 	/area/space,
 	/area/exoplanet,
 	/area/bluespaceriver,
 	/area/map_template
 	)
-
-
-
-/obj/machinery/computer/shuttle_control/explore/
-	var/landmarkx_off
-	var/landmarky_off
 
 /obj/machinery/computer/shuttle_control/explore/proc/oko_enter()
 	oko = new /mob/observer/eye/landeye
@@ -188,7 +189,7 @@ var/global/list/accesible_areas = list(
 	var/turf/origin = locate(src.x + x_offset, src.y + y_offset, src.z)
 	var/turf/turf
 	var/obj/shuttle_landmark/shuttle_landmark
-	if(src.type in zones_awayshuttles)
+	if(src.type in awayshuttles)
 		turf = get_subarea_turfs(area_oko.type)
 	else
 		turf = get_subarea_turfs(area_oko.parent_type)
