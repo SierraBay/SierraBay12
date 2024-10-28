@@ -141,15 +141,33 @@
 		if("Big")
 			return user.client.view = world.view + extra_view
 
+
+//______________________________________________________________
+//Ради Модульности, дублируем сюда все что идет в awayshuttle и accessible_areas
+/obj/machinery/computer/shuttle_control/explore/away_scg_patrol/reaper
+/obj/machinery/computer/shuttle_control/explore/vox_lander
+/obj/machinery/computer/shuttle_control/explore/skrellscoutshuttle
+/obj/machinery/computer/shuttle_control/explore/away_farfleet/snz
+/obj/machinery/computer/shuttle_control/explore/mule
+/obj/machinery/computer/shuttle_control/explore/graysontug/hand_one
+/obj/machinery/computer/shuttle_control/explore/pod_hand_one
+/obj/machinery/computer/shuttle_control/explore/pod_hand_two
+/obj/machinery/computer/shuttle_control/explore/graysontug/hand_two
+
+/area/mine
+/area/space
+/area/exoplanet
+/area/bluespaceriver
+/area/map_template
+
+// ______________________________________________________________
+
+
 /obj/machinery/computer/shuttle_control/explore/
 	var/landmarkx_off
 	var/landmarky_off
-	var/list/awayshuttles = list()
-	var/list/accesible_areas = list()
-
-/obj/machinery/computer/shuttle_control/explore/LateInitialize()
 	//Лучше способа не придумал, поэтому если check_zone шаттла захватывает территории, больше чем надо, то пихаем консоль этого шаттла, в список
-	awayshuttles = list(
+	var/list/awayshuttles = list(
 	/obj/machinery/computer/shuttle_control/explore/away_scg_patrol/reaper,
 	/obj/machinery/computer/shuttle_control/explore/vox_lander,
 	/obj/machinery/computer/shuttle_control/explore/skrellscoutshuttle,
@@ -162,14 +180,13 @@
 	)
 
 	//Списки куда разрешена посадка
-	accesible_areas = list(
+	var/list/accesible_areas = list(
 	/area/mine,
 	/area/space,
 	/area/exoplanet,
 	/area/bluespaceriver,
 	/area/map_template
 	)
-
 /obj/machinery/computer/shuttle_control/explore/proc/oko_enter()
 	oko = new /mob/observer/eye/landeye
 	oko.name_sufix = "Landing Eye"
