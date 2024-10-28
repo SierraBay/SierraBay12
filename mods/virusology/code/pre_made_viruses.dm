@@ -34,6 +34,7 @@
 	..()
 	antigen = list(pick(ALL_ANTIGENS))
 	antigen |= pick(ALL_ANTIGENS)
+	infectionchance = rand(10,20)
 	var/datum/disease2/effect/headache/E1 = new()
 	E1.chance = 2
 	E1.stage = 1
@@ -54,6 +55,7 @@
 /mob/living/simple_animal/hostile/giant_spider
 	var/datum/disease2/disease/spider/spider = new()
 
+
 /mob/living/simple_animal/hostile/giant_spider/Destroy()
 	. = ..()
 	QDEL_NULL(spider)
@@ -62,7 +64,7 @@
 	. = ..()
 	if(Adjacent(M))//if it's human who can be infected standing nearby
 		if (prob(3))
-			infect_virus2(M, spider, 1)
+			infect_virus2(M, spider, 0)
 
 
 /datum/disease2/disease/livingmeat
@@ -84,12 +86,13 @@
 	. = ..()
 	if(Adjacent(M))//if it's human who can be infected standing nearby
 		if (prob(10))
-			infect_virus2(M, livingmeat, 1)
+			infect_virus2(M, livingmeat, 0)
 
 /datum/disease2/disease/livingmeat/New()
 	..()
 	antigen = list(pick(ALL_ANTIGENS))
 	antigen |= pick(ALL_ANTIGENS)
+	infectionchance = rand(10,20)
 	var/datum/disease2/effect/stomach/E1 = new()
 	E1.stage = 1
 	E1.chance = 2
