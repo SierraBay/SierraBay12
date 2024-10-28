@@ -154,10 +154,11 @@
 /obj/machinery/computer/shuttle_control/explore/pod_hand_two
 /obj/machinery/computer/shuttle_control/explore/graysontug/hand_two
 
-/area/mine
+/area/mine/explored
+/area/mine/unexplored
 /area/space
 /area/exoplanet
-/area/bluespaceriver
+/area/bluespaceriver/ground
 /area/map_template
 
 // ______________________________________________________________
@@ -181,12 +182,14 @@
 
 	//Списки куда разрешена посадка
 	var/list/accesible_areas = list(
-	/area/mine,
+	/area/mine/explored,
+	/area/mine/unexplored,
 	/area/space,
 	/area/exoplanet,
-	/area/bluespaceriver,
+	/area/bluespaceriver/ground,
 	/area/map_template
 	)
+
 /obj/machinery/computer/shuttle_control/explore/proc/oko_enter()
 	oko = new /mob/observer/eye/landeye
 	oko.name_sufix = "Landing Eye"
