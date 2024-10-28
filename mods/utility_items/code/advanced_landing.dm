@@ -165,6 +165,7 @@
 	//var/obj/overmap/visitable/ship/landable/shuttle_landmark = locate(/obj/overmap/visitable/ship/landable) in area_oko
 	var/turf/origin = locate(src.x + x_offset, src.y + y_offset, src.z)
 	var/turf/turf
+	var/obj/shuttle_landmark/shuttle_landmark
 	if(src.type in awayshuttles)
 		turf = get_subarea_turfs(area_oko.type)
 	else
@@ -181,7 +182,7 @@
 					I.loc = locate(origin.x + x_off, origin.y + y_off, origin.z) //we have to set this after creating the image because it might be null, and images created in nullspace are immutable.
 					I.layer = TURF_LAYER
 					oko.placement_images[I] = list(x_off, y_off)
-	var/obj/shuttle_landmark/shuttle_landmark = locate(/obj/shuttle_landmark) in area_oko
+				shuttle_landmark = shuttle_datum.current_location
 	if(shuttle_landmark)
 		landmarkx_off = shuttle_landmark.x - origin.x
 		landmarky_off = shuttle_landmark.y - origin.y
