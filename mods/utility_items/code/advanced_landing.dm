@@ -144,8 +144,27 @@
 /obj/machinery/computer/shuttle_control/explore/
 	var/landmarkx_off
 	var/landmarky_off
-	var/list/awayshuttles = list(/obj/machinery/computer/shuttle_control/explore/away_scg_patrol/reaper, /obj/machinery/computer/shuttle_control/explore/vox_lander, /obj/machinery/computer/shuttle_control/explore/skrellscoutshuttle, /obj/machinery/computer/shuttle_control/explore/away_farfleet/snz)
+	//Лучше способа не придумал, поэтому если check_zone шаттла захватывает территории, больше чем надо, то пихаем консоль этого шаттла, в список
+	var/list/awayshuttles = list(
+	/obj/machinery/computer/shuttle_control/explore/away_scg_patrol/reaper,
+	/obj/machinery/computer/shuttle_control/explore/vox_lander,
+	/obj/machinery/computer/shuttle_control/explore/skrellscoutshuttle,
+	/obj/machinery/computer/shuttle_control/explore/away_farfleet/snz,
+	/obj/machinery/computer/shuttle_control/explore/mule,
+	/obj/machinery/computer/shuttle_control/explore/graysontug/hand_one,
+	/obj/machinery/computer/shuttle_control/explore/pod_hand_one,
+	/obj/machinery/computer/shuttle_control/explore/pod_hand_two,
+	/obj/machinery/computer/shuttle_control/explore/graysontug/hand_two
+	 )
 
+	//Списки куда разрешена посадка
+	var/list/accesible_areas = list(
+	/area/mine,
+	/area/space,
+	/area/exoplanet,
+	/area/bluespaceriver,
+	/area/map_template
+	)
 
 /obj/machinery/computer/shuttle_control/explore/proc/oko_enter()
 	oko = new /mob/observer/eye/landeye
@@ -176,7 +195,7 @@
 			var/datum/shuttle/shuttle_datum = SSshuttle.shuttles[shuttle_name]
 			if(area_oko in shuttle_datum.shuttle_area)
 				for(var/turf/simulated/T in turf)
-					var/image/I = image('icons/effects/alphacolors.dmi', origin, "red")
+					var/image/I = image('mods/utility_items/icons/alphacolors.dmi', origin, "red")
 					var/x_off = T.x - origin.x
 					var/y_off = T.y - origin.y
 					I.loc = locate(origin.x + x_off, origin.y + y_off, origin.z) //we have to set this after creating the image because it might be null, and images created in nullspace are immutable.
@@ -195,9 +214,9 @@
 		var/image/I = image_cache[i]
 		var/list/coords = image_cache[I]
 		var/turf/T = locate(eyeturf.x + coords[1], eyeturf.y + coords[2], eyeturf.z)
-		var/A = get_area(T)
+		var/area/A = get_area(T)
 		I.loc = T
-		if(!(T.density) && ((istype(A, /area/space)) || (istype(A, /area/exoplanet))))
+		if(!(T.density) && ((A.type in accesible_areas)))
 			I.icon_state = "blue"
 		else
 			I.icon_state = "red"
