@@ -53,9 +53,9 @@
 		/area/map_template,
 		/area/exoplanet,
 		/area/ship,
-		/area/mine, //[SIERRA-ADD]
-		/area/bluespaceriver //[SIERRA-ADD]
-	)
+		/area/mine,
+		/area/bluespaceriver)
+		// /area/mine, /area/bluespaceriver //[SIERRA-ADD]
 
 	var/list/area_purity_test_exempt_areas = list()
 
