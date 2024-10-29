@@ -159,7 +159,7 @@
 
 /mob/living/carbon/human/emp_act(severity)
 	. = ..()
-	if(is_species(SPECIES_IPC) || is_species(SPECIES_ADHERENT))
+	if(isSynthetic())
 		overlay_fullscreen("sensoremp", /obj/screen/fullscreen/glitchs)
 		addtimer(new Callback(src, PROC_REF(clear_emp_act)), 1.5 SECONDS)
 
