@@ -8,11 +8,11 @@
 	new frontiers and new planets to exploit. They were largely not expecting to have entire expeditions lost \
 	amid reports of highly advanced, astonishingly violent mantid-cephlapodean sentients with particle cannons."
 
-	icobase =                 'mods/ascent/icons/alate/body.dmi'
-	deform =                  'mods/ascent/icons/alate/body.dmi'
-	damage_overlays =         'mods/ascent/icons/alate/damage_mask.dmi'
-	blood_mask =              'mods/ascent/icons/alate/blood_mask.dmi'
-	organs_icon =             'mods/ascent/icons/organs.dmi'
+	icobase =                 'mods/ascent/icons/mob/alate/body.dmi'
+	deform =                  'mods/ascent/icons/mob/alate/body.dmi'
+	damage_overlays =         'mods/ascent/icons/mob/alate/damage_mask.dmi'
+	blood_mask =              'mods/ascent/icons/mob/alate/blood_mask.dmi'
+	organs_icon =             'mods/ascent/icons/items/organs.dmi'
 
 	blood_color =             "#660066"
 	flesh_color =             "#009999"
@@ -21,12 +21,12 @@
 
 	speech_chance = 100
 	speech_sounds = list(
-		'sound/voice/ascent1.ogg',
-		'sound/voice/ascent2.ogg',
-		'sound/voice/ascent3.ogg',
-		'sound/voice/ascent4.ogg',
-		'sound/voice/ascent5.ogg',
-		'sound/voice/ascent6.ogg'
+		'mods/ascent/sound/ascent1.ogg',
+		'mods/ascent/sound/ascent2.ogg',
+		'mods/ascent/sound/ascent3.ogg',
+		'mods/ascent/sound/ascent4.ogg',
+		'mods/ascent/sound/ascent5.ogg',
+		'mods/ascent/sound/ascent6.ogg'
 	)
 
 	siemens_coefficient =   0.2 // Crystalline body.
@@ -50,7 +50,7 @@
 
 	appearance_flags =        0
 	species_flags =           SPECIES_FLAG_NO_SCAN  | SPECIES_FLAG_NO_SLIP        | SPECIES_FLAG_NO_MINOR_CUT
-	spawn_flags =             SPECIES_IS_RESTRICTED | SPECIES_NO_FBP_CONSTRUCTION | SPECIES_NO_FBP_CHARGEN | SPECIES_IS_WHITELISTED
+	spawn_flags =             SPECIES_CAN_JOIN | SPECIES_NO_FBP_CONSTRUCTION | SPECIES_NO_FBP_CHARGEN | SPECIES_IS_WHITELISTED
 
 	heat_discomfort_strings = list(
 		"You feel brittle and overheated.",
@@ -143,11 +143,11 @@
 	name_plural =             "Kharmaan Gynes"
 
 	genders =                 list(FEMALE)
-	icobase =                 'mods/ascent/icons/gyne/body.dmi'
-	deform =                  'mods/ascent/icons/gyne/body.dmi'
-	icon_template =           'mods/ascent/icons/gyne/template.dmi'
-	damage_overlays =         'mods/ascent/icons/gyne/damage_mask.dmi'
-	blood_mask =              'mods/ascent/icons/gyne/blood_mask.dmi'
+	icobase =                 'mods/ascent/icons/mob/gyne/body.dmi'
+	deform =                  'mods/ascent/icons/mob/gyne/body.dmi'
+	icon_template =           'mods/ascent/icons/mob/gyne/template.dmi'
+	damage_overlays =         'mods/ascent/icons/mob/gyne/damage_mask.dmi'
+	blood_mask =              'mods/ascent/icons/mob/gyne/blood_mask.dmi'
 
 	gluttonous =              3
 	slowdown =                2
@@ -157,7 +157,7 @@
 	blood_volume =         1200
 	spawns_with_stack =       0
 
-	spawn_flags =             SPECIES_IS_RESTRICTED | SPECIES_NO_FBP_CONSTRUCTION | SPECIES_NO_FBP_CHARGEN | SPECIES_IS_WHITELISTED//INF
+	spawn_flags =             SPECIES_CAN_JOIN | SPECIES_NO_FBP_CONSTRUCTION | SPECIES_NO_FBP_CHARGEN | SPECIES_IS_WHITELISTED//INF
 
 	pixel_offset_x =        -4
 	antaghud_offset_y =      18
@@ -227,6 +227,23 @@
 
 /// ----- MONARCH GAS ----- ///
 
+/* /datum/hud_data/nabber/monarch
+	gear = list(
+		"i_clothing" =   list("loc" = ui_iclothing, "name" = "Uniform",      "slot" = slot_w_uniform, "state" = "center", "toggle" = 1),
+		"o_clothing" =   list("loc" = ui_shoes,     "name" = "Suit",         "slot" = slot_wear_suit, "state" = "suit",   "toggle" = 1),
+		"mask" =         list("loc" = ui_mask,      "name" = "Mask",         "slot" = slot_wear_mask, "state" = "mask",   "toggle" = 1),
+		"l_ear" =        list("loc" = ui_oclothing, "name" = "Ear",          "slot" = slot_l_ear,     "state" = "ears",   "toggle" = 1),
+		"gloves" =       list("loc" = ui_gloves,    "name" = "Gloves",       "slot" = slot_gloves,    "state" = "gloves", "toggle" = 1),
+		"head" =         list("loc" = ui_mask,      "name" = "Hat",          "slot" = slot_head,      "state" = "hair",   "toggle" = 1),
+		"eyes" =         list("loc" = ui_glasses,   "name" = "Glasses",      "slot" = slot_glasses,   "state" = "glasses","toggle" = 1),
+		"suit storage" = list("loc" = ui_sstore1,   "name" = "Suit Storage", "slot" = slot_s_store,   "state" = "suitstore"),
+		"back" =         list("loc" = ui_back,      "name" = "Back",         "slot" = slot_back,      "state" = "back"),
+		"id" =           list("loc" = ui_id,        "name" = "ID",           "slot" = slot_wear_id,   "state" = "id"),
+		"storage1" =     list("loc" = ui_storage1,  "name" = "Left Pocket",  "slot" = slot_l_store,   "state" = "pocket"),
+		"storage2" =     list("loc" = ui_storage2,  "name" = "Right Pocket", "slot" = slot_r_store,   "state" = "pocket"),
+		"belt" =         list("loc" = ui_belt,      "name" = "Belt",         "slot" = slot_belt,      "state" = "belt")
+		)*/
+
 /datum/species/nabber/monarch_worker
 	name = SPECIES_MONARCH_WORKER
 	name_plural = "Monarch Serpentid Workers"
@@ -234,12 +251,13 @@
 	years ago and now allies and peers within the Ascent."
 	icobase = 'icons/mob/human_races/species/nabber/body_msw.dmi'
 	deform = 'icons/mob/human_races/species/nabber/body_msw.dmi'
-	spawn_flags = SPECIES_IS_RESTRICTED | SPECIES_NO_FBP_CONSTRUCTION | SPECIES_NO_FBP_CHARGEN | SPECIES_IS_WHITELISTED
+	spawn_flags = SPECIES_CAN_JOIN | SPECIES_NO_FBP_CONSTRUCTION | SPECIES_NO_FBP_CHARGEN | SPECIES_IS_WHITELISTED
 	appearance_flags = 0
 	base_skin_colours = null
+	hud_type = /datum/hud_data/mantid
 	has_organ = list(
 		BP_BRAIN =             /obj/item/organ/internal/brain/insectoid/nabber,
-		BP_EYES =              /obj/item/organ/internal/eyes/insectoid/nabber,
+		BP_EYES =              /obj/item/organ/internal/eyes/insectoid/nabber/ascent,
 		BP_TRACH =             /obj/item/organ/internal/lungs/insectoid/nabber,
 		BP_HEART =             /obj/item/organ/internal/heart/open,
 		BP_LIVER =             /obj/item/organ/internal/liver/insectoid/nabber,
@@ -273,26 +291,20 @@
 	and eventually promoted from 'entertaining pets' to the middle men that keep Ascent society functioning smoothly. \
 	Gynes have tremendous difficulties in communicating with each other politely, so the queens act as intermediaries, \
 	smoothing over the fractious and unproductive squabbling."
-
 	silent_steps = TRUE
-
 	icobase = 'icons/mob/human_races/species/nabber/msq/body.dmi'
 	deform = 'icons/mob/human_races/species/nabber/msq/body.dmi'
 	blood_mask = 'icons/mob/human_races/species/nabber/msq/blood_mask.dmi'
 	damage_mask = 'icons/mob/human_races/species/nabber/msq/damage_mask.dmi'
-
 	genders = list(FEMALE)
-
 	total_health = 150
-
 	mob_size = MOB_MEDIUM
 	breath_pressure = 21
 	blood_volume = 600
-
+	hud_type = /datum/hud_data/mantid
 	appearance_flags = 0
 	base_skin_colours = null
-	spawn_flags = SPECIES_IS_RESTRICTED | SPECIES_NO_FBP_CONSTRUCTION | SPECIES_NO_FBP_CHARGEN | SPECIES_IS_WHITELISTED
-
+	spawn_flags = SPECIES_CAN_JOIN | SPECIES_NO_FBP_CONSTRUCTION | SPECIES_NO_FBP_CHARGEN | SPECIES_IS_WHITELISTED
 	has_organ = list(
 		BP_BRAIN =             /obj/item/organ/internal/brain/insectoid/nabber,
 		BP_EYES =              /obj/item/organ/internal/eyes/insectoid/msq,
@@ -323,7 +335,6 @@
 		/datum/mob_descriptor/body_length = -1
 		)
 
-
 	force_cultural_info = list(
 		TAG_CULTURE =   CULTURE_ASCENT,
 		TAG_HOMEWORLD = HOME_SYSTEM_KHARMAANI,
@@ -338,6 +349,12 @@
 			"[EAST]" = list("x" = 8, "y" = 0),
 			"[SOUTH]" = list("x" = 0, "y" = 0),
 			"[WEST]" = list("x" = -8, "y" = 0)
+		),
+		slot_w_uniform_str = list(
+			"[NORTH]" = list("x" = 0, "y" = 0),
+			"[EAST]" = list("x" = 0, "y" = 0),
+			"[SOUTH]" = list("x" = 1, "y" = -5),
+			"[WEST]" = list("x" = 0, "y" = 0)
 		)
 	)
 	..()

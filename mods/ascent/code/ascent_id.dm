@@ -7,7 +7,7 @@ var/global/const/access_ascent = "ACCESS_ASCENT"
 // ID 'card'
 /obj/item/card/id/ascent
 	name = "alien chip"
-	icon = 'mods/ascent/icons/ascent.dmi'
+	icon = 'mods/ascent/icons/items/ascent.dmi'
 	icon_state = "access_card"
 	desc = "A slender, complex chip of alien circuitry."
 	access = list(access_ascent)
@@ -35,7 +35,7 @@ var/global/const/access_ascent = "ACCESS_ASCENT"
 /obj/item/organ/internal/controller
 	name = "system controller"
 	desc = "A fist-sized lump of complex circuitry."
-	icon = 'mods/ascent/icons/ascent.dmi'
+	icon = 'mods/ascent/icons/items/ascent.dmi'
 	icon_state = "plant"
 	parent_organ = BP_CHEST
 	organ_tag = BP_SYSTEM_CONTROLLER

@@ -2,6 +2,7 @@
 #### Список PRов:
 
 - https://github.com/SierraBay/SierraBay12/pull/2655
+- https://github.com/SierraBay/SierraBay12/pull/2681
 <!--
   Ссылки на PRы, связанные с модом:
   - Создание
@@ -70,6 +71,8 @@ ID мода: INTEGRATED_CIRCUITS
 ### Авторы:
 
 Builder13
+
+Size converter - https://github.com/ss220-space/Baystation12/pull/18 (Predeiter)
 <!--
   Здесь находится твой никнейм
   Если работал совместно - никнеймы тех, кто помогал.
