@@ -161,9 +161,6 @@
 	name = "\improper Arctic Planet Surface"
 
 // ______________________________________________________________
-/datum/map
-	.=..()
-	area_usage_test_exempted_root_areas += list(/area/mine, /area/bluespaceriver)
 
 /obj/machinery/computer/shuttle_control/explore/
 	var/landmarkx_off

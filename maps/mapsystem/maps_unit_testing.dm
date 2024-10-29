@@ -52,7 +52,9 @@
 	var/list/area_usage_test_exempted_root_areas = list(
 		/area/map_template,
 		/area/exoplanet,
-		/area/ship
+		/area/ship,
+		/area/mine, //[SIERRA-ADD]
+		/area/bluespaceriver //[SIERRA-ADD]
 	)
 
 	var/list/area_purity_test_exempt_areas = list()
