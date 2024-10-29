@@ -181,11 +181,10 @@
 
 	//Списки куда разрешена посадка
 	var/list/accesible_areas = list(
-	/area/mine/explored,
-	/area/mine/unexplored,
+	/area/mine,
 	/area/space,
 	/area/exoplanet,
-	/area/bluespaceriver/ground,
+	/area/bluespaceriver,
 	/area/map_template
 	)
 
