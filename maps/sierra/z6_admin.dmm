@@ -9164,6 +9164,9 @@
 	icon_state = "steel"
 	},
 /area/centcom)
+"edh" = (
+/turf/space,
+/area/mine)
 "edQ" = (
 /obj/structure/railing/mapped{
 	dir = 8
@@ -17572,6 +17575,9 @@
 	icon_state = "dark"
 	},
 /area/centcom)
+"tsA" = (
+/turf/space,
+/area/bluespaceriver)
 "tsZ" = (
 /obj/structure/flora/ausbushes/pointybush,
 /turf/unsimulated/floor/grass{
@@ -60291,8 +60297,8 @@ aab
 aab
 "}
 (200,1,1) = {"
-aab
-aab
+edh
+tsA
 aab
 aab
 aab
