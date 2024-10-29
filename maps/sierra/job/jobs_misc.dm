@@ -68,10 +68,10 @@
 		/datum/mil_rank/civ/civ
 	)
 	alt_titles = list(
-		"Old crewman NCV SIERRA",
-		"Senior crewman NCV SIERRA",
-		"Janitor NCV SIERRA",
-		"Prisoner NCV SIERRA"
+		"NCV SIERRA Old crewman",
+		"NCV SIERRA Senior crewman",
+		"NCV SIERRA Janitor",
+		"NCV SIERRA Prisoner"
 		)
 
 /datum/job/vagabond/get_description_blurb()
