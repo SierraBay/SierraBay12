@@ -17215,6 +17215,9 @@
 	pixel_y = 1;
 	pixel_x = -2
 	},
+/obj/structure/panic_button{
+	pixel_x = 32
+	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/guppy_hangar/start)
 "cCD" = (
@@ -19783,6 +19786,7 @@
 	name = "Docking Port Airlock"
 	},
 /obj/floor_decal/industrial/hatch/yellow,
+/obj/shuttle_landmark/ascent_seedship_inf/sierra/two,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/crew_quarters/docking)
 "cUR" = (
@@ -69814,6 +69818,9 @@
 	dir = 8
 	},
 /obj/structure/table/steel,
+/obj/structure/panic_button{
+	pixel_x = -32
+	},
 /turf/simulated/floor/tiled/monotile,
 /area/exploration_shuttle/cockpit)
 "kpk" = (
@@ -128777,6 +128784,12 @@
 "sSX" = (
 /turf/simulated/wall/r_wall/hull,
 /area/crew_quarters/lounge/upper)
+"sTa" = (
+/obj/machinery/door/firedoor,
+/obj/wallframe_spawn/reinforced/hull,
+/obj/shuttle_landmark/ascent_seedship_inf/sierra,
+/turf/simulated/floor/plating,
+/area/hallway/primary/fourthdeck/center)
 "sTh" = (
 /obj/structure/cable/green{
 	d1 = 1;
@@ -160301,6 +160314,7 @@
 /obj/machinery/shield_diffuser,
 /obj/floor_decal/industrial/hatch/yellow,
 /obj/shuttle_landmark/sierra/deck4/skrellshuttle,
+/obj/shuttle_landmark/ascent_caulship/sierra,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/hallway/primary/fourthdeck/center)
 "xIl" = (
@@ -179824,7 +179838,7 @@ nrC
 eoT
 efZ
 cBk
-eoT
+sTa
 wJN
 wJN
 wJN

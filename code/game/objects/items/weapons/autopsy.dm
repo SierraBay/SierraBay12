@@ -10,6 +10,7 @@
 	var/list/chemtraces = list()
 	var/target_name = null
 	var/timeofdeath = null
+	var/target = null
 //[SIERRA-ADD] - MODPACK_RND
 
 /obj/item/paper/autopsy_report
@@ -183,12 +184,16 @@
 	return 1
 
 /obj/item/autopsy_scanner/proc/set_target(atom/new_target, user)
-	if(target_name != new_target.name)
-		target_name = new_target.name
-		wdata.Cut()
-		chemtraces.Cut()
-		timeofdeath = null
-		to_chat(user, SPAN_NOTICE("A new patient has been registered. Purging data for previous patient."))
+//[SIERRA-ADD]
+	if(target != new_target)
+		target = new_target
+//[/SIERRA-ADD]
+		if(target_name != new_target.name)
+			target_name = new_target.name
+			wdata.Cut()
+			chemtraces.Cut()
+			timeofdeath = null
+			to_chat(user, SPAN_NOTICE("A new patient has been registered. Purging data for previous patient."))
 
 /obj/item/autopsy_scanner/use_after(obj/item/organ/external/target, mob/living/user, click_parameters)
 	if(!istype(target))

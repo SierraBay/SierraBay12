@@ -33,7 +33,8 @@ ID мода: ASCENT
   - `/datum/reagent/toxin/bromide/affect_ingest()`
   - `/datum/reagent/toxin/methyl_bromide/affect_touch()`
   - `/datum/reagent/toxin/methyl_bromide/affect_ingest()`
-
+  - `/datum/reagent/toxin/methyl_bromide/affect_ingest()`
+  - `/obj/item/clothing/under/harness`
 <!--
   Если вы редактировали какие-либо процедуры или переменные в кор коде,
   они должны быть указаны здесь.
@@ -58,6 +59,19 @@ ID мода: ASCENT
 - `SPECIES_MANTID_GYNE`
 - `SPECIES_MONARCH_WORKER`
 - `SPECIES_MONARCH_QUEEN`
+- `ALL_ASCENT_SPECIES`
+- `COLOR_ASCENT_PURPLE`
+- `MANTIDIFY`
+- `COLOR_ASCENT_PURPLE`
+- `CULTURE_ASCENT`
+- `HOME_SYSTEM_KHARMAANI`
+- `FACTION_ASCENT_GYNE`
+- `FACTION_ASCENT_ALATE`
+- `FACTION_ASCENT_SERPENTID`
+- `RELIGION_KHARMAANI`
+- `LANGUAGE_MANTID_NONVOCAL`
+- `LANGUAGE_MANTID_VOCAL`
+- `LANGUAGE_MANTID_BROADCAST`
 <!--
   Если требовалось добавить какие-либо дефайны, укажи файлы,
   в которые ты их добавил, а также перечисли имена.
@@ -68,7 +82,6 @@ ID мода: ASCENT
 
 ### Используемые файлы, не содержащиеся в модпаке
 
-- `sound/voice/ascent/`
 - `icons/mob/species/nabber/onmob/`
 - `icons/mob/species/nabber/msq/onmob/`
 - `icons/obj/machines/fabricators/nanofabricator.dmi`
@@ -84,7 +97,8 @@ ID мода: ASCENT
 
 Оригинальный порт выполнен командой Final Destination (https://github.com/RepoStash/FD-NewBay/tree/dev-sierra)
 Код адаптирован и доработан UEDHighCommand
-Карты адаптированы и доработаны RocheHendson
+Карты доработаны RocheHendson
+Различные фиксы и адаптация карт от Neonvolt
 <!--
   Здесь находится твой никнейм
   Если работал совместно - никнеймы тех, кто помогал.
