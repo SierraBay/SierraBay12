@@ -70,6 +70,9 @@
 
 /mob/living/simple_animal/hostile/lar_maria
 	var/datum/disease2/disease/lar_maria/LMD = new()
+	special_attack_min_range = 0
+	special_attack_max_range = 1
+	special_attack_cooldown = 1 SECONDS
 
 /mob/living/simple_animal/hostile/lar_maria/Destroy()
 	. = ..()
@@ -77,18 +80,20 @@
 
 
 /mob/living/simple_animal/hostile/lar_maria/death(gibbed, deathmessage, show_dead_message)
+	var/list/victims = list()
+	var/list/objs = list()
+	var/turf/T = get_turf(src)
+	get_mobs_and_objs_in_view_fast(T, 3, victims, objs)
+	for(var/mob/living/M in victims)
+		if(ishuman(M))
+			if(prob(infection_chance(M, "Airborne")))
+				infect_virus2(M, LMD, 1)
 	.=..()
-	for (var/mob/living/carbon/human/L in orange(3))//infect those who are around
-		if (prob(infection_chance(L, "Airborne")))
-			infect_virus2(L, LMD, 1)
 	qdel(src)
 
-/mob/living/simple_animal/hostile/lar_maria/do_special_attack()
-	. = ..()
-	if (!.)
-		return
-	if(ishuman(target_mob) && Adjacent(target_mob))//if it's human who can be infected standing nearby
-		var/mob/living/L = target_mob
-		if (prob(50))
+/mob/living/simple_animal/hostile/lar_maria/do_special_attack(atom/A)
+	if(ishuman(A))//if it's human who can be infected standing nearby
+		var/mob/living/L = A
+		if (prob(12))
 			visible_message("<span class='alert'>[src] violently bites [L]!</span>")
 			infect_virus2(L, LMD, 1)
