@@ -25,16 +25,16 @@
 
 /datum/disease2/disease/spider
 	infectionchance = 60
-	speed = 1
+	speed = 5
 	spreadtype = "Contact"
 	max_stage = 3
-	affected_species = list(HUMAN_SPECIES,SPECIES_UNATHI,SPECIES_SKRELL,SPECIES_UNATHI,SPECIES_YEOSA,SPECIES_TRITONIAN,SPECIES_NABBER,SPECIES_MONKEY)
+	affected_species = list(HUMAN_SPECIES,SPECIES_UNATHI,SPECIES_SKRELL,SPECIES_UNATHI,SPECIES_YEOSA,SPECIES_TRITONIAN,SPECIES_RESOMI,SPECIES_NABBER,SPECIES_MONKEY)
 
 /datum/disease2/disease/spider/New()
 	..()
 	antigen = list(pick(ALL_ANTIGENS))
 	antigen |= pick(ALL_ANTIGENS)
-	infectionchance = rand(10,20)
+	infectionchance = rand(10,50)
 	var/datum/disease2/effect/headache/E1 = new()
 	E1.chance = 2
 	E1.stage = 1
@@ -73,7 +73,7 @@
 	speed = 3
 	spreadtype = "Contact"
 	max_stage = 3
-	affected_species = list(HUMAN_SPECIES,SPECIES_UNATHI,SPECIES_SKRELL,SPECIES_UNATHI,SPECIES_YEOSA,SPECIES_TRITONIAN,SPECIES_NABBER,SPECIES_MONKEY)
+	affected_species = list(HUMAN_SPECIES,SPECIES_UNATHI,SPECIES_SKRELL,SPECIES_UNATHI,SPECIES_YEOSA,SPECIES_TRITONIAN,SPECIES_RESOMI,SPECIES_NABBER,SPECIES_MONKEY)
 
 /mob/living/simple_animal/hostile/meatstation
 	var/datum/disease2/disease/livingmeat/livingmeat = new()
@@ -92,7 +92,7 @@
 	..()
 	antigen = list(pick(ALL_ANTIGENS))
 	antigen |= pick(ALL_ANTIGENS)
-	infectionchance = rand(10,20)
+	infectionchance = rand(10,50)
 	var/datum/disease2/effect/stomach/E1 = new()
 	E1.stage = 1
 	E1.chance = 2

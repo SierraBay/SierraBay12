@@ -116,7 +116,7 @@
 	var/mob_infection_prob = infection_chance(M, disease.spreadtype) * M.immunity_weakness()
 	if(forced || (prob(disease.infectionchance) && prob(mob_infection_prob)))
 		var/datum/disease2/disease/D = disease.getcopy()
-		if(rand(1, 100) == 1)
+		if(rand(1, 50) == 1)
 			D.minormutate()
 //		log_debug("Adding virus")
 		M.virus2["[D.uniqueID]"] = D
