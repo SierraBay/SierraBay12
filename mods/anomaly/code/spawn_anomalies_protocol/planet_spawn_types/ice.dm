@@ -20,8 +20,8 @@
 		)
 	min_anomaly_size = 4
 	max_anomaly_size = 9
-	min_anomalies_ammout = 400
-	max_anomalies_ammout = 600
+	min_anomalies_ammout = 600
+	max_anomalies_ammout = 800
 	planetary_area = /area/exoplanet/ice
 	map_generators = list(/datum/random_map/automata/cave_system/mountains/ice, /datum/random_map/noise/exoplanet/ice)
 	ruin_tags_blacklist = RUIN_HABITAT|RUIN_WATER|RUIN_HOT_ANOMALIES
