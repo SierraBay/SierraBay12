@@ -92,7 +92,7 @@
 /obj/screen/movable/proc/decode_screen_Y(Y, mob/viewer)
 	// [SIERRA-EDIT]
 	var/view = viewer.client ? get_view_size_y(viewer.client.view) : get_view_size_y(world.view)
-	var/y_center = ceil(view / 2) + 1 // finding our y center of view
+	var/y_center = floor(view / 2) + 1 // finding our y center of view
 
 	if(findtext(Y,"NORTH-"))
 		var/num = text2num(copytext(Y,7)) //Trim NORTH-
