@@ -61,8 +61,6 @@
 	for(var/turf/picked_turf in planetary_area)
 		LAZYADD(list_of_turfs, picked_turf)
 	var/islands_spawn_ammount = rand(25,45)
-	to_world_log("Будем спавнить [islands_spawn_ammount] островов.")
-	admin_notice(SPAN_CLASS("boldannounce", "Будем спавнить [islands_spawn_ammount] островов."), R_DEBUG)
 	//После того как мы определились с количеством островов, приступаем к спавну
 	var/failures_ammount = 0
 	for(var/i = 0, i < islands_spawn_ammount)
