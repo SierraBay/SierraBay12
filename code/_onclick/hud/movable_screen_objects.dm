@@ -60,7 +60,7 @@
 /obj/screen/movable/proc/decode_screen_X(X, mob/viewer)
 	// [SIERRA-EDIT]
 	var/view = viewer.client ? get_view_size_x(viewer.client.view) : get_view_size_x(world.view)
-	var/x_center = ceil(view / 2) + 1 // finding our x center of view
+	var/x_center = floor(view / 2) + 1 // finding our x center of view
 	//Find EAST/WEST implementations
 	if(findtext(X,"EAST-"))
 		var/num = text2num(copytext(X,6)) //Trim EAST-
