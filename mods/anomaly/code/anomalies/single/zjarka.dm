@@ -34,9 +34,6 @@
 	artefact_spawn_chance = 10
 	can_be_preloaded = FALSE
 	being_preload_chance = 20
-	can_walking = TRUE
-	chance_spawn_walking = 1
-	walking_activity = 2
 
 
 /obj/anomaly/zjarka/activate_anomaly()
