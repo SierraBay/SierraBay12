@@ -47,7 +47,7 @@
 /obj/screen/movable/proc/encode_screen_X(X, mob/viewer)
 	// [SIERRA-EDIT]
 	var/view = viewer.client ? get_view_size_x(viewer.client.view) : get_view_size_x(world.view)
-	var/x_center = ceil(view / 2) + 1 // finding our x center of view
+	var/x_center = floor(view / 2) + 1 // finding our x center of view
 
 	if(X > x_center)      // we are on the right side of the view
 		. = "EAST-[view - X]"
