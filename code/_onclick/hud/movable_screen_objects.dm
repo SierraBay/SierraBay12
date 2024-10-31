@@ -100,7 +100,7 @@
 		. = "CENTER"
 
 /obj/screen/movable/proc/decode_screen_Y(Y, mob/viewer)
-	var/view = viewer.client ? get_view_size_y(viewer.client.view) : world.view
+	var/view = viewer.client ? viewer.client.view : world.view
 	// [SIERRA-ADD]
 	if(view == "19x15" || view == "17x15" || view == "15x15")
 		view = 7
