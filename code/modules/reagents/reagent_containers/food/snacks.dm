@@ -3167,7 +3167,7 @@
 
 	else if(istype(W, /obj/item/reagent_containers/food/snacks))
 		var/obj/item/reagent_containers/food/snacks/F = W
-		var /obj/item/reagent_containers/food/snacks/customburger/C = new(src)
+		var/obj/item/reagent_containers/food/snacks/customburger/C = new(src)
 		C.SetName("[F.name]-burger")
 		C.filling_color = F.filling_color
 		var/image/I = image(C.icon, "customburger_filling")
@@ -4228,7 +4228,7 @@
 	bitesize = 2
 /obj/item/reagent_containers/food/snacks/venus/Initialize()
 	.=..()
-	reagents.add_reagent(/datum/reagent/capsaicin = 5)
+	reagents.add_reagent(/datum/reagent/capsaicin, 5)
 
 /obj/item/reagent_containers/food/snacks/oort
 	name = "oort cloud rocks"
@@ -4242,7 +4242,7 @@
 	bitesize = 2
 /obj/item/reagent_containers/food/snacks/oort/Initialize()
 	.=..()
-	reagents.add_reagent(/datum/reagent/frostoil = 5)
+	reagents.add_reagent(/datum/reagent/frostoil, 5)
 
 //weebo vend! So japanese it hurts
 
@@ -4272,7 +4272,7 @@
 	bitesize = 2
 /obj/item/reagent_containers/food/snacks/weebonuts/Initialize()
 	.=..()
-	reagents.add_reagent(/datum/reagent/capsaicin = 1)
+	reagents.add_reagent(/datum/reagent/capsaicin, 1)
 	reagents.add_reagent(/datum/reagent/nutriment/groundpeanuts, 4)
 
 /obj/item/reagent_containers/food/snacks/chocobanana
