@@ -82,7 +82,7 @@
 #include "code\spawn_anomalies_protocol\bsd_event_protocol.dm"
 #include "code\spawn_anomalies_protocol\planet_spawn_types\vulcanic.dm" //Вулканическая планета
 #include "code\spawn_anomalies_protocol\planet_spawn_types\ice.dm" //[WIP] Ледяная планета
-// #include "code\spawn_anomalies_protocol\planet_spawn_types\flying.dm" //[WIP] Летающие острова
+#include "code\spawn_anomalies_protocol\planet_spawn_types\flying.dm" //[WIP] Летающие острова
 // #include "code\spawn_anomalies_protocol\planet_spawn_types\sargas.dm" // [WIP] Саргасово болото
 #include "code\spawn_anomalies_protocol\spawn_on_planet.dm" //Спавн на планетах
 
@@ -91,6 +91,14 @@
 //Карты, диреликты и прочее
 #include "maps\electra_ruins\electra_ruins.dm"
 #include "maps\zjarka_ruins\zjarka_ruins.dm"
+//Код островов
+#include "maps\flying_islands\flying_island.dm"
+#include "maps\flying_islands\flying_island_ball.dm"
+#include "maps\flying_islands\flying_island_2.dm"
+#include "maps\flying_islands\flying_island_3.dm"
+#include "maps\flying_islands\flying_island_4.dm"
+#include "maps\flying_islands\flying_island_5.dm"
+
 
 #endif
 // BEGIN_INTERNALS
