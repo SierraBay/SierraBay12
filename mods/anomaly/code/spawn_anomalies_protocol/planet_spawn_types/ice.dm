@@ -12,6 +12,12 @@
 		/obj/anomaly/cooler/two_and_two = 3,
 		/obj/anomaly/cooler/three_and_three = 3
 		)
+	possible_themes = list(
+		/datum/exoplanet_theme = 45,
+		/datum/exoplanet_theme/radiation_bombing = 10,
+		/datum/exoplanet_theme/ruined_city = 5,
+		/datum/exoplanet_theme/robotic_guardians = 10
+		)
 	min_anomaly_size = 4
 	max_anomaly_size = 9
 	min_anomalies_ammout = 400
@@ -51,10 +57,30 @@
 	icon = 'mods/anomaly/icons/planets.dmi'
 	color = COLOR_WHITE
 
+/obj/overmap/visitable/sector/exoplanet/ice/generate_map()
+	.=..()
+	//После создания карты, разместим камушки
+	var/list/list_of_turfs =  get_area_turfs(planetary_area)
+	//Соберём все подходящие для нас турфы льда
+	for(var/turf/picked_turf in list_of_turfs)
+		if(density)
+			LAZYREMOVE(list_of_turfs, picked_turf)
+		else if(!istype(picked_turf, /turf/simulated/floor/exoplanet/ice))
+			LAZYREMOVE(list_of_turfs, picked_turf)
+	var/ice_block_ammout = rand(500, 1000)
+	//Спавним камушки на льду
+	while(ice_block_ammout > 0)
+		var/turf/current_turf = pick(list_of_turfs)
+		new /obj/structure/ice_rock(current_turf)
+		LAZYREMOVE(list_of_turfs, current_turf)
+		if(!LAZYLEN(list_of_turfs))
+			ice_block_ammout = 0
+		ice_block_ammout--
+
+
 /obj/overmap/visitable/sector/exoplanet/ice/generate_atmosphere()
 	..()
-	var/datum/species/H = all_species[SPECIES_HUMAN]
-	var/generator/new_temp = generator("num", H.cold_level_1 - 50, H.cold_level_3, NORMAL_RAND)
+	var/generator/new_temp = generator("num", 273, 300, NORMAL_RAND)
 	atmosphere.temperature = new_temp.Rand()
 	atmosphere.update_values()
 
@@ -213,3 +239,16 @@
 
 /turf/simulated/mineral/ice/Bumped(AM)
 	return
+
+//Большие ледяные камни, красиво
+/obj/structure/ice_rock
+	name = "ice rock"
+	desc = "A large block of ice, the edges of which can easily cut you. "
+	icon = 'mods/anomaly/icons/icerocks.dmi'
+	icon_state = "rock_1"
+	anchored = TRUE
+	var/icon_state_list = list("rock_1", "rock_2", "rock_3")
+
+/obj/structure/ice_rock/Initialize()
+	.=..()
+	icon_state = pick(icon_state_list)
