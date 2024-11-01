@@ -14,6 +14,7 @@
 		see_invisible = head.get_invisible(powered)
 	if(sight & BLIND && !was_blind)
 		for(var/mob/pilot in pilots)
+			need_update_sensor_effects = TRUE
 			to_chat(pilot, SPAN_WARNING("The sensors are not operational and you cannot see a thing!"))
 	if(need_update_sensor_effects)
 		check_sensors_blind()
