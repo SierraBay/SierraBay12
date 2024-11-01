@@ -25,6 +25,7 @@
 		/obj/item/artefact/gravi = 1
 	)
 	artefact_spawn_chance = 20
+	detection_skill_req = SKILL_EXPERIENCED
 
 //Аномалия выполняет своё финальное воздействие на все обьекты что оказались в её центре
 /obj/anomaly/rvach/proc/get_end_effect_by_anomaly(target)
@@ -172,3 +173,6 @@
 				jumper.Weaken(5)
 				helper.Weaken(5)
 		return TRUE
+
+/obj/anomaly/rvach/get_detection_icon()
+	return "rvach_detection"

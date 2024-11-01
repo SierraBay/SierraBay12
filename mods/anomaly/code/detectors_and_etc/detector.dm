@@ -1,6 +1,10 @@
 /obj/anomaly
 	///Шанс, что аномалию найдут детектором при условии что у пользователя максимальный навык науки
 	var/chance_to_be_detected = 100
+	//Спрайт обнаруженной аномалии. Смотри прок get_detection_icon(). Этот спрайт - стандартный для любых аномок.
+	var/detection_icon_state = "any_anomaly"
+	///Уровень навыка в науке, требуемый, чтоб персонаж смог понять тип аномалии
+	var/detection_skill_req = SKILL_TRAINED
 
 
 /obj/item/clothing/gloves/anomaly_detector
@@ -164,14 +168,19 @@
 		to_chat(user, SPAN_GOOD("Аномалий не обнаружено."))
 		return FALSE
 
-/proc/show_anomalies(mob/viewer, flick_time, allowed_anomalies)
+///Показывает игроку аномалии, которые он обнаружил детектером
+/proc/show_anomalies(mob/living/viewer, flick_time, allowed_anomalies)
 	if(!ismob(viewer) || !viewer.client)
 		return
+	var/user_science_lvl = viewer.get_skill_value(SKILL_SCIENCE)
 	var/list/list_of_showed_anomalies = list()
 	for(var/obj/anomaly/in_turf_atom in allowed_anomalies)
 		var/turf/T = get_turf(in_turf_atom)
-		//var/image/I = image(icon = 'mods/anomaly/icons/detection_icon.dmi',loc = T, icon_state = in_turf_atom.detection_icon_state)
-		var/image/I = image(icon = 'mods/anomaly/icons/effects.dmi',loc = T, icon_state = "none")
+		var/image/I
+		if(user_science_lvl >= in_turf_atom.detection_skill_req)
+			I = image(icon = 'mods/anomaly/icons/detection_icon.dmi',loc = T, icon_state = in_turf_atom.get_detection_icon())
+		else
+			I = image(icon = 'mods/anomaly/icons/detection_icon.dmi',loc = T, icon_state = in_turf_atom.detection_icon_state)
 		I.layer = EFFECTS_ABOVE_LIGHTING_PLANE
 		list_of_showed_anomalies += I
 

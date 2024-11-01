@@ -73,3 +73,7 @@
 			return TRUE
 
 	return FALSE
+
+/obj/anomaly/part/get_detection_icon()
+	if(core)
+		return core.get_detection_icon()

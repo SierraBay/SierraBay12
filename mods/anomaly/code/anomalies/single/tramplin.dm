@@ -20,6 +20,7 @@
 	max_coldown_time = 8 SECONDS
 	being_preload_chance = 10
 	chance_to_be_detected = 75
+	detection_skill_req = SKILL_BASIC
 
 /obj/anomaly/tramplin/Initialize()
 	. = ..()
@@ -64,3 +65,6 @@
 		victim.throw_at_random(own_turf, range_of_throw, speed_of_throw )
 	else
 		victim.throw_at(target_turf, range_of_throw, speed_of_throw)
+
+/obj/anomaly/tramplin/get_detection_icon()
+	return "trampline_detection"

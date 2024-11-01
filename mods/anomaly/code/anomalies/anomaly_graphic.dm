@@ -8,7 +8,6 @@
 	///Эффект в идле
 	var/idle_effect_type = "none"
 	///Как видят аномалию при обнаружении
-	var/detection_icon_state = "any_anomaly"
 	plane = OBSERVER_PLANE
 	///Здесь вам потребуется вручную указать длинну анимации, для того чтоб игра вновь сделала её невидимой и некликабельной для игрока
 	//Костыль, но лучше решения ещё не придумал
@@ -61,3 +60,6 @@
 ///Убираем свет/вспышку
 /obj/anomaly/proc/stop_light()
 	set_light(0)
+
+/obj/anomaly/proc/get_detection_icon()
+	return detection_icon_state

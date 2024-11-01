@@ -34,6 +34,7 @@
 	artefact_spawn_chance = 10
 	can_be_preloaded = FALSE
 	being_preload_chance = 20
+	detection_skill_req = SKILL_BASIC
 
 
 /obj/anomaly/zjarka/activate_anomaly()
@@ -95,3 +96,12 @@
 	if(can_be_activated(O))
 		activate_anomaly()
 	return
+
+
+/obj/anomaly/zjarka/get_detection_icon()
+	if(effect_range == 1 || effect_range == 0)
+		return "zjarka_detection"
+	else if(effect_range == 2)
+		return "zjarka_first_detection"
+	else if(effect_range > 2)
+		return "zjarka_second_detection"

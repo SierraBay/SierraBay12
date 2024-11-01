@@ -1,3 +1,4 @@
+/* Не доделано
 /proc/random_dir()
 	return pick(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST)
 
@@ -26,6 +27,7 @@
 	time_between_effects = 0.25 SECONDS
 	being_preload_chance = 10
 	chance_to_be_detected = 75
+	detection_skill_req = SKILL_EXPERIENCED
 
 /obj/anomaly/ventilyator/Initialize()
 	. = ..()
@@ -57,3 +59,4 @@
 	for(var/atom/atoms in list_of_effected_turfs)
 		get_effect_by_anomaly(atoms)
 	start_processing_long_effect()
+*/

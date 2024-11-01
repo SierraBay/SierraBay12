@@ -39,6 +39,7 @@
 	can_be_preloaded = TRUE
 	being_preload_chance = 30
 	detectable_effect_range = TRUE
+	detection_skill_req = SKILL_EXPERIENCED
 
 /obj/anomaly/electra/activate_anomaly(activate_friends = TRUE)
 	last_activation_time = world.time//Без этой строчки некоторые электры входят в вечный цикл зарядки и удара, костыль? Возможно
@@ -263,3 +264,12 @@
 	else if(attack_zone == BP_R_LEG)
 		LAZYADD(result_damaged_zones, BP_R_FOOT)
 	return result_damaged_zones
+
+
+/obj/anomaly/electra/get_detection_icon()
+	if(effect_range == 1)
+		return "electra_detection"
+	else if(effect_range == 2)
+		return "tesla_first_detection"
+	else if(effect_range > 2)
+		return "tesla_second_detection"
