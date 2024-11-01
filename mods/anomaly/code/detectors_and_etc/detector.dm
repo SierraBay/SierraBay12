@@ -132,9 +132,14 @@
 		//Список разрешённых для показа игроку аномалий
 		var/list/allowed_anomalies = list()
 		for(var/obj/anomaly/choosed_anomaly in objs)
-			var/chance_to_find = (user_science_lvl * 20) - (100 - choosed_anomaly.chance_to_be_detected)
-			if(prob(chance_to_find))
-				LAZYADD(allowed_anomalies, choosed_anomaly)
+			if(!choosed_anomaly.is_helper) //Вспомогательные части аномалий нас не интересуют
+				var/chance_to_find = (user_science_lvl * 20) - (100 - choosed_anomaly.chance_to_be_detected)
+				if(prob(chance_to_find))
+					LAZYADD(allowed_anomalies, choosed_anomaly) //Добавляем саму аномалию
+					//Если у неё есть вспомогательные части - добавляем её вспомогательные части
+					if(choosed_anomaly.multitile)
+						for(var/obj/anomaly/choosed_part in choosed_anomaly.list_of_parts)
+							LAZYADD(allowed_anomalies, choosed_part)
 		show_anomalies(user, time_to_scan, allowed_anomalies)
 		if(LAZYLEN(allowed_anomalies))
 			flick("detector_detected_anomalies", src)
