@@ -147,4 +147,4 @@
 	required_tech_levels = list()
 	cost = 2500
 
-	unlocks_designs = list("fusion_core_control", "fusion_fuel_compressor", "fusion_fuel_control", "gyrotron_control", "fusion_core", "fusion_injector")
+	unlocks_designs = list("fusion_core_control", "fusion_fuel_compressor", "fusion_fuel_control", "gyrotron_control", "fusion_core", "fusion_injector", "fusion_kinetic_harvester")

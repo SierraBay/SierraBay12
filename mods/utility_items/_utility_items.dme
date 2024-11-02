@@ -23,6 +23,7 @@
 #include "code/ert_maint_helmet.dm"
 #include "code/tag_recipe.dm"
 #include "code/advanced_landing.dm"
+#include "code/chemistry.dm"
 #include "code/jobs.dm"
 
 
