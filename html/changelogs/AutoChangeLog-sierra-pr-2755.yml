@@ -1,0 +1,5 @@
+author: Builder13
+changes:
+  - {admin: 'Возвращена переменная stop_sight_update для мобов, чтобы исключить обновление
+      зрения при ее включении'}
+delete-after: true

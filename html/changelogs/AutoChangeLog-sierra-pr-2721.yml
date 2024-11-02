@@ -1,0 +1,5 @@
+author: awkardlyconfusedneuralnetwork
+changes:
+  - {tweak: 'Инпут теперь обрабатывается раньше других сабсистем, должно повысить
+      плавность игры.'}
+delete-after: true

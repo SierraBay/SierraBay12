@@ -1,0 +1,4 @@
+author: awkardlyconfusedneuralnetwork
+changes:
+  - {experiment: 'Ускорил инит, да.'}
+delete-after: true
