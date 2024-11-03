@@ -1,0 +1,4 @@
+author: NinjaPikachushka
+changes:
+  - {bugfix: Худ-Кнопки мага перестали сбегать.}
+delete-after: true
