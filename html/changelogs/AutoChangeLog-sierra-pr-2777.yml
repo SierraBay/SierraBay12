@@ -1,0 +1,5 @@
+author: Builder13
+changes:
+  - {rscadd: Добавлена кнопка add trait в создание персонажа. Сейчас там есть опции
+      только для регенерации Унати.}
+delete-after: true
