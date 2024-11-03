@@ -81,12 +81,12 @@
 		icon_state = "dartgun-empty"
 		return 1
 
-	if(!ammo_magazine.stored_ammo || length(ammo_magazine.stored_ammo))
+	if(!ammo_magazine.get_stored_ammo_count() || length(ammo_magazine.get_stored_ammo_count()))
 		icon_state = "dartgun-0"
-	else if(length(ammo_magazine.stored_ammo) > 5)
+	else if(length(ammo_magazine.get_stored_ammo_count()) > 5)
 		icon_state = "dartgun-5"
 	else
-		icon_state = "dartgun-[length(ammo_magazine.stored_ammo)]"
+		icon_state = "dartgun-[length(ammo_magazine.get_stored_ammo_count())]"
 	return 1
 
 /obj/item/gun/projectile/dartgun/consume_next_projectile()
@@ -166,8 +166,8 @@
 			dat += " \[<A href='?src=\ref[src];eject=[i]'>Eject</A>\]<br>"
 
 	if(ammo_magazine)
-		if(ammo_magazine.stored_ammo && length(ammo_magazine.stored_ammo))
-			dat += "The dart cartridge has [length(ammo_magazine.stored_ammo)] shots remaining."
+		if(ammo_magazine.stored_ammo && length(ammo_magazine.get_stored_ammo_count()))
+			dat += "The dart cartridge has [length(ammo_magazine.get_stored_ammo_count())] shots remaining."
 		else
 			dat += SPAN_COLOR("red", "The dart cartridge is empty!")
 		dat += " \[<A href='?src=\ref[src];eject_cart=1'>Eject</A>\]<br>"
