@@ -40,5 +40,6 @@
 #include "overmap/_overmap.dme"
 #include "ooc_notes/_ooc_notes.dme"
 #include "character_traits/_character_traits.dme"
+#include "failu_skrell_clothes/_failu_skrell_clothes.dme"
 
 #include "../packs/sierra-tweaks/_pack.dm"

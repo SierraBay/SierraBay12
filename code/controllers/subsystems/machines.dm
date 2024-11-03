@@ -36,6 +36,7 @@ if(Datum.is_processing) {\
 
 SUBSYSTEM_DEF(machines)
 	name = "Machines"
+	wait = 3 SECONDS
 	init_order = SS_INIT_MACHINES
 	priority = SS_PRIORITY_MACHINERY
 	flags = SS_KEEP_TIMING
@@ -45,13 +46,12 @@ SUBSYSTEM_DEF(machines)
 	var/static/cost_powernets = 0
 	var/static/cost_power_objects = 0
 	var/static/list/pipenets = list()
-	var/static/list/machinery = list()
-	var/static/list/machinery_by_type = list()
 	var/static/list/powernets = list()
 	var/static/list/power_objects = list()
 	var/static/list/processing = list()
 	var/static/list/queue = list()
-
+	var/static/list/machinery = list()
+	var/static/list/machinery_by_type = list()
 
 /datum/controller/subsystem/machines/Recover()
 	current_step = SSMACHINES_PIPENETS
