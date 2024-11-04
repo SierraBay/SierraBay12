@@ -1,0 +1,9 @@
+#ifndef MODPACK_SKILLTWEAK
+#define MODPACK_SKILLTWEAK
+
+#include "_skilltweak.dm"
+
+#include "code/skill.dm"
+#include "code/jobs_research.dm"
+
+#endif
