@@ -1,4 +1,4 @@
 author: awkardlyconfusedneuralnetwork
 changes:
-  - {experiment: 'Ускорил инит, да.'}
+  - {bugfix: Убрался за собой}
 delete-after: true
