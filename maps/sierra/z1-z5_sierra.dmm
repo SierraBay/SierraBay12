@@ -42648,6 +42648,24 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/bridge)
+"gkh" = (
+/obj/structure/catwalk,
+/obj/floor_decal/borderfloor{
+	dir = 4
+	},
+/obj/floor_decal/industrial/danger{
+	dir = 4
+	},
+/obj/structure/cable/green{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/landmark/start{
+	name = "Stowaway"
+	},
+/turf/simulated/floor/plating,
+/area/maintenance/seconddeck/hangar)
 "gki" = (
 /obj/floor_decal/industrial/hatch/yellow,
 /obj/structure/cable/green{
@@ -50205,6 +50223,9 @@
 /area/quartermaster/expedition/storage)
 "hsY" = (
 /obj/decal/cleanable/dirt,
+/obj/landmark/start{
+	name = "Stowaway"
+	},
 /turf/simulated/floor/tiled/monotile,
 /area/maintenance/abandoned_hydroponics)
 "hsZ" = (
@@ -59518,6 +59539,9 @@
 	dir = 6
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/landmark/start{
+	name = "Stowaway"
+	},
 /turf/simulated/floor/tiled,
 /area/maintenance/seconddeck/aftstarboard)
 "iNN" = (
@@ -91440,6 +91464,9 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/security/sierra/armory/lobby)
 "nwZ" = (
+/obj/landmark/start{
+	name = "Stowaway"
+	},
 /turf/simulated/floor/wood/walnut,
 /area/maintenance/firstdeck/aftstarboard)
 "nxq" = (
@@ -271523,7 +271550,7 @@ nab
 oGD
 tOw
 mRk
-mRk
+gkh
 tqL
 wek
 xno
