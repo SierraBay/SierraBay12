@@ -8,22 +8,22 @@
 	)
 
 	species_to_job_blacklist = list(
-		/datum/species/unathi = list(HUMAN_ONLY_JOBS, VAGABONDS_JOBS),
-		/datum/species/unathi/yeosa = list(HUMAN_ONLY_JOBS, VAGABONDS_JOBS),
-		/datum/species/tajaran = list(HUMAN_ONLY_JOBS, VAGABONDS_JOBS),
-		/datum/species/skrell = list(SKRELL_BLACKLISTED_JOBS, VAGABONDS_JOBS),
-		/datum/species/machine = list(MACHINE_BLACKLISTED_JOBS, VAGABONDS_JOBS),
+		/datum/species/unathi = list(HUMAN_ONLY_JOBS),
+		/datum/species/unathi/yeosa = list(HUMAN_ONLY_JOBS),
+		/datum/species/tajaran = list(HUMAN_ONLY_JOBS),
+		/datum/species/skrell = list(SKRELL_BLACKLISTED_JOBS),
+		/datum/species/machine = list(MACHINE_BLACKLISTED_JOBS),
 		/datum/species/diona = list(
 			HUMAN_ONLY_JOBS, /datum/job/exploration_leader, /datum/job/explorer_pilot,
 			/datum/job/officer, /datum/job/warden, /datum/job/detective,
 			/datum/job/qm,
 			/datum/job/senior_engineer, /datum/job/senior_doctor,
-			/datum/job/senior_scientist, /datum/job/security_assistant, VAGABONDS_JOBS
+			/datum/job/senior_scientist, /datum/job/security_assistant
 		),
 		/datum/species/resomi = list(
 	 		HUMAN_ONLY_JOBS, /datum/job/officer, /datum/job/exploration_leader,
 	 		/datum/job/warden, /datum/job/chief_engineer, /datum/job/rd,
-	 		/datum/job/iaa, /datum/job/security_assistant, VAGABONDS_JOBS
+	 		/datum/job/iaa, /datum/job/security_assistant
  		)
 	)
 
