@@ -15,6 +15,7 @@
 	throw_range = 5
 
 	health_resistances = DAMAGE_RESIST_ELECTRICAL
+	health_flags = HEALTH_FLAG_STRUCTURE
 
 	/// Boolean. Whether or not the machine has been emagged.
 	var/emagged = FALSE
@@ -82,17 +83,29 @@
 		set_dir(d)
 	if (init_flags & INIT_MACHINERY_START_PROCESSING)
 		START_PROCESSING_MACHINE(src, INIT_MACHINERY_START_PROCESSING)
-	SSmachines.machinery += src // All machines should remain in this list, always.
+
+	SSmachines.register_machinery(src) // All machines should be registered this way, always.
 	if(ispath(wires))
 		wires = new wires(src)
 	populate_parts(populate_parts)
 	RefreshParts()
 	power_change()
 
+/obj/machinery/post_health_change(health_mod, prior_health, damage_type)
+	if (health_mod < 0 && !health_dead())
+		var/initial_damage_percentage = Percent(get_max_health() - prior_health, get_max_health(), 0)
+		var/damage_percentage = get_damage_percentage()
+		if (damage_percentage >= 75 && initial_damage_percentage < 75)
+			visible_message(SPAN_DANGER("\The [src] looks like it's about to break!"))
+		else if (damage_percentage >= 50 && initial_damage_percentage < 50)
+			visible_message(SPAN_DANGER("\The [src] looks seriously damaged!" ))
+		else if (damage_percentage >= 25 && initial_damage_percentage < 25)
+			visible_message(SPAN_DANGER("\The [src] shows signs of damage!" ))
+
 /obj/machinery/Destroy()
 	if(istype(wires))
 		QDEL_NULL(wires)
-	SSmachines.machinery -= src
+	SSmachines.unregister_machinery(src)
 	QDEL_NULL_LIST(component_parts) // Further handling is done via destroyed events.
 	STOP_PROCESSING_MACHINE(src, MACHINERY_PROCESS_ALL)
 	. = ..()
@@ -114,7 +127,7 @@
 	if(use_power && operable())
 		use_power_oneoff(7500/severity)
 
-		var/obj/effect/overlay/pulse2 = new /obj/effect/overlay(loc)
+		var/obj/overlay/pulse2 = new /obj/overlay(loc)
 		pulse2.icon = 'icons/effects/effects.dmi'
 		pulse2.icon_state = "empdisable"
 		pulse2.SetName("emp sparks")
@@ -131,7 +144,7 @@
 			else
 				wires.RandomPulse()
 				visible_message(SPAN_WARNING("Something sparks inside \the [src]'s wiring panel!"))
-				new /obj/effect/sparks(get_turf(src))
+				new /obj/sparks(get_turf(src))
 
 		..()
 
@@ -203,6 +216,17 @@
 			return TOPIC_HANDLED
 
 	. = ..()
+	//[SIERRA-ADD] - AI-UPDATE
+	if(isAI(usr)) //Оверрайд для ИИ, ему всегда обновляет УИ
+		if(istype(src, /obj/machinery/door/airlock))
+			var/obj/machinery/door/airlock/door = src
+			if(door.CanAIUseTopic(usr))
+				updateUsrDialog()
+				return FALSE
+		else
+			updateUsrDialog()
+			return FALSE
+	//[SIERRA-ADD]
 	if(. == TOPIC_REFRESH)
 		updateUsrDialog() // Update legacy UIs to the extent possible.
 
@@ -225,16 +249,11 @@
 // If you don't call parent in this proc, you must make all appropriate checks yourself.
 // If you do, you must respect the return value.
 /obj/machinery/attack_hand(mob/user)
-	if((. = ..())) // Buckling, climbers; unlikely to return true.
+	if((. = ..())) // Buckling, climbers; unlikely to return true unless on harm intent and damage is dealt.
 		return
-	if(MUTATION_FERAL in user.mutations)
-		user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN*2)
-		attack_generic(user, 10, "smashes")
-		return TRUE
 	if(!CanPhysicallyInteract(user))
 		return FALSE // The interactions below all assume physical access to the machine. If this is not the case, we let the machine take further action.
 	if(!user.IsAdvancedToolUser())
-		to_chat(user, SPAN_WARNING("You don't have the dexterity to do this!"))
 		return TRUE
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
@@ -242,18 +261,19 @@
 			visible_message(SPAN_WARNING("\The [H] stares cluelessly at \the [src]."))
 			return TRUE
 	if((. = component_attack_hand(user)))
-		return
+		return TRUE
 	if(wires && (. = wires.Interact(user)))
-		return
+		return TRUE
 	if((. = physical_attack_hand(user)))
-		return
+		return TRUE
 	if(CanUseTopic(user, DefaultTopicState()) > STATUS_CLOSE)
 		return interface_interact(user)
 
 
 /obj/machinery/post_anchor_change()
-	..()
+	update_use_power(anchored)
 	power_change()
+	..()
 
 /**
  * Called by machines that can hold a mob (sleeper, suit cycler, etc.), checking if mob can be moved before doing so.
@@ -341,16 +361,15 @@
 		return FALSE
 	if(!prob(prb))
 		return FALSE
-	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	var/datum/effect/spark_spread/s = new /datum/effect/spark_spread
 	s.set_up(5, 1, src)
 	s.start()
 	if(electrocute_mob(user, get_area(src), src, 0.7))
 		var/area/temp_area = get_area(src)
 		if(temp_area)
-			var/obj/machinery/power/apc/temp_apc = temp_area.get_apc()
-			var/obj/machinery/power/terminal/terminal = temp_apc && temp_apc.terminal()
-
-			if(terminal && terminal.powernet)
+			var/obj/machinery/power/apc/temp_apc = temp_area.apc
+			var/obj/machinery/power/terminal/terminal = temp_apc?.terminal()
+			if(terminal?.powernet)
 				terminal.powernet.trigger_warning()
 		if(user.stunned)
 			return TRUE

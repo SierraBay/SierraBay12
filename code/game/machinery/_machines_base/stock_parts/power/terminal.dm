@@ -74,15 +74,15 @@
 		unset_terminal(machine, terminal)
 	terminal = new_terminal
 	terminal.master = src
-	GLOB.destroyed_event.register(terminal, src, .proc/unset_terminal)
+	GLOB.destroyed_event.register(terminal, src, PROC_REF(unset_terminal))
 
-	set_extension(src, /datum/extension/event_registration/shuttle_stationary, GLOB.moved_event, machine, .proc/machine_moved, get_area(src))
+	set_extension(src, /datum/extension/event_registration/shuttle_stationary, GLOB.moved_event, machine, PROC_REF(machine_moved), get_area(src))
 	set_status(machine, PART_STAT_CONNECTED)
 	start_processing(machine)
 
 /obj/item/stock_parts/power/terminal/proc/machine_moved(obj/machinery/machine, turf/old_loc, turf/new_loc)
 	if(!terminal)
-		GLOB.moved_event.unregister(machine, src, .proc/machine_moved)
+		GLOB.moved_event.unregister(machine, src, PROC_REF(machine_moved))
 		return
 	if(istype(new_loc) && (terminal.loc == get_step(new_loc, terminal_dir)))
 		return     // This location is fine
@@ -115,7 +115,7 @@
 			to_chat(user, SPAN_NOTICE("There is already a terminal here."))
 			return TRUE
 
-/obj/item/stock_parts/power/terminal/attackby(obj/item/I, mob/user)
+/obj/item/stock_parts/power/terminal/use_tool(obj/item/I, mob/living/user, list/click_params)
 	var/obj/machinery/machine = loc
 	if(!istype(machine))
 		return ..()
@@ -142,7 +142,7 @@
 			if(C.can_use(10) && !terminal && (machine == loc) && machine.components_are_accessible(type) && !blocking_terminal_at_loc(machine, T, user))
 				var/obj/structure/cable/N = T.get_cable_node()
 				if (prob(50) && electrocute_mob(user, N, N))
-					var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+					var/datum/effect/spark_spread/s = new /datum/effect/spark_spread
 					s.set_up(5, 1, machine)
 					s.start()
 					if(user.stunned)
@@ -167,7 +167,7 @@
 		if(do_after(user, (I.toolspeed * 5) SECONDS, machine, DO_REPAIR_CONSTRUCT))
 			if(terminal && (machine == loc) && machine.components_are_accessible(type))
 				if (prob(50) && electrocute_mob(user, terminal.powernet, terminal))
-					var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+					var/datum/effect/spark_spread/s = new /datum/effect/spark_spread
 					s.set_up(5, 1, machine)
 					s.start()
 					if(user.stunned)
@@ -176,6 +176,7 @@
 				to_chat(user, SPAN_NOTICE("You cut the cables and dismantle the power terminal."))
 				qdel(terminal)
 		return TRUE
+	return ..()
 
 /obj/item/stock_parts/power/terminal/buildable
 	part_flags = PART_FLAG_HAND_REMOVE

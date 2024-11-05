@@ -1,9 +1,6 @@
 /datum/design/item/hud
 	materials = list(MATERIAL_ALUMINIUM = 50, MATERIAL_GLASS = 50)
-
-/datum/design/item/hud/AssembleDesignName()
-	..()
-	name = "HUD glasses design ([item_name])"
+	category = list("HUD")
 
 /datum/design/item/hud/AssembleDesignDesc()
 	desc = "Allows for the construction of \a [item_name] HUD glasses."
@@ -16,7 +13,7 @@
 	sort_string = "GAAAA"
 
 /datum/design/item/hud/security
-	name = "security records"
+	name = "security HUD"		//[SIERRA-EDIT]
 	id = "security_hud"
 	req_tech = list(TECH_MAGNET = 3, TECH_COMBAT = 2)
 	build_path = /obj/item/clothing/glasses/hud/security
@@ -29,10 +26,9 @@
 	build_path = /obj/item/clothing/glasses/hud/janitor
 	sort_string = "GAAAC"
 
-/datum/design/item/optical/AssembleDesignName()
-	..()
-	name = "Optical glasses design ([item_name])"
+/datum/design/item/optical
 	materials = list(MATERIAL_STEEL = 50, MATERIAL_GLASS = 50)
+	category = list("HUD")
 
 /datum/design/item/optical/mesons
 	name = "mesons"

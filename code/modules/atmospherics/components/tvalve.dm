@@ -264,24 +264,26 @@
 
 	return null
 
-/obj/machinery/atmospherics/tvalve/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/atmospherics/tvalve/use_tool(obj/item/W, mob/living/user, list/click_params)
 	if(!isWrench(W))
 		return ..()
+
 	var/datum/gas_mixture/int_air = return_air()
 	var/datum/gas_mixture/env_air = loc.return_air()
 	if ((int_air.return_pressure()-env_air.return_pressure()) > 2*ONE_ATMOSPHERE)
-		to_chat(user, SPAN_CLASS("warnng", "You cannot unwrench \the [src], it too exerted due to internal pressure."))
-		add_fingerprint(user)
-		return 1
+		to_chat(user, SPAN_WARNING("You cannot unwrench \the [src], it too exerted due to internal pressure."))
+		return TRUE
 	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 	to_chat(user, SPAN_NOTICE("You begin to unfasten \the [src]..."))
-	if (do_after(user, (W.toolspeed * 4) SECONDS, src, DO_REPAIR_CONSTRUCT))
-		user.visible_message( \
-			SPAN_NOTICE("\The [user] unfastens \the [src]."), \
-			SPAN_NOTICE("You have unfastened \the [src]."), \
-			"You hear a ratchet.")
-		new /obj/item/pipe(loc, src)
-		qdel(src)
+	if (!do_after(user, (W.toolspeed * 4) SECONDS, src, DO_REPAIR_CONSTRUCT))
+		return TRUE
+	user.visible_message( \
+		SPAN_NOTICE("\The [user] unfastens \the [src]."), \
+		SPAN_NOTICE("You have unfastened \the [src]."), \
+		"You hear a ratchet.")
+	new /obj/item/pipe(loc, src)
+	qdel(src)
+	return TRUE
 
 /singleton/public_access/public_variable/tvalve_state
 	expected_type = /obj/machinery/atmospherics/tvalve
@@ -296,17 +298,17 @@
 /singleton/public_access/public_method/tvalve_go_straight
 	name = "valve go straight"
 	desc = "Sets the valve to send output straight."
-	call_proc = /obj/machinery/atmospherics/tvalve/proc/go_straight
+	call_proc = TYPE_PROC_REF(/obj/machinery/atmospherics/tvalve, go_straight)
 
 /singleton/public_access/public_method/tvalve_go_side
 	name = "valve go side"
 	desc = "Redirects output to the side."
-	call_proc = /obj/machinery/atmospherics/tvalve/proc/go_to_side
+	call_proc = TYPE_PROC_REF(/obj/machinery/atmospherics/tvalve, go_to_side)
 
 /singleton/public_access/public_method/tvalve_toggle
 	name = "valve toggle"
 	desc = "Toggles the output direction."
-	call_proc = /obj/machinery/atmospherics/tvalve/proc/toggle
+	call_proc = TYPE_PROC_REF(/obj/machinery/atmospherics/tvalve, toggle)
 
 /singleton/stock_part_preset/radio/receiver/tvalve
 	frequency = FUEL_FREQ

@@ -57,6 +57,9 @@
 	if(joining.mind)
 		joining.mind.assigned_job = job
 		joining.mind.assigned_role = job.title
+		// [SIERRA-ADD]
+		joining.mind.role_alt_title = job.get_alt_title_for(joining.client)
+		// [/SIERRA-ADD]
 	joining.faction = name
 	job.current_positions++
 
@@ -70,9 +73,14 @@
 		var/mob/living/carbon/human/user_human
 		if(ishuman(character))
 			user_human = character
-			if(job.branch && GLOB.mil_branches)
+			// [SIERRA-EDIT]
+			if(user_human.client.prefs.branches[job.title])
+				user_human.char_branch = GLOB.mil_branches.get_branch(user_human.client.prefs.branches[job.title])
+				user_human.char_rank = GLOB.mil_branches.get_rank(user_human.client.prefs.branches[job.title], user_human.client.prefs.ranks[job.title])
+			else if (job.branch && GLOB.mil_branches)
 				user_human.char_branch = GLOB.mil_branches.get_branch(job.branch)
 				user_human.char_rank =   GLOB.mil_branches.get_rank(job.branch, job.rank)
+			// [/SIERRA-EDIT]
 
 			// We need to make sure to use the abstract instance here; it's not the same as the one we were passed.
 			character.skillset.obtain_from_client(SSjobs.get_by_path(job.type), character.client)

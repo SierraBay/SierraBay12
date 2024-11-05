@@ -25,8 +25,12 @@
 
 /obj/item/mech_component/emp_act(severity)
 	take_burn_damage(rand((10 - (severity*3)),15-(severity*4)))
+	//[SIERRA-DELETE]
+	/*
 	for(var/obj/item/thing in contents)
 		thing.emp_act(severity)
+	*/
+	//[SIERRA-DELETE]
 	..()
 
 /obj/item/mech_component/examine(mob/user)
@@ -54,6 +58,7 @@
 /obj/item/mech_component/proc/update_health()
 	total_damage = brute_damage + burn_damage
 	if(total_damage > max_damage) total_damage = max_damage
+	current_hp = max_damage - total_damage
 	var/prev_state = damage_state
 	damage_state = clamp(round((total_damage/max_damage) * 4), MECH_COMPONENT_DAMAGE_UNDAMAGED, MECH_COMPONENT_DAMAGE_DAMAGED_TOTAL)
 	if(damage_state > prev_state)
@@ -93,8 +98,8 @@
 		qdel(RC)
 		update_components()
 
-/obj/item/mech_component/attackby(obj/item/thing, mob/user)
-	if(isScrewdriver(thing))
+/obj/item/mech_component/use_tool(obj/item/thing, mob/living/user, list/click_params)
+	if (isScrewdriver(thing))
 		if(length(contents))
 			//Filter non movables
 			var/list/valid_contents = list()
@@ -102,27 +107,30 @@
 				if(!A.anchored)
 					valid_contents += A
 			if(!length(valid_contents))
-				return
+				return TRUE
 			var/obj/item/removed = pick(valid_contents)
 			if(!(removed in contents))
-				return
+				return TRUE
 			user.visible_message(SPAN_NOTICE("\The [user] removes \the [removed] from \the [src]."))
 			removed.forceMove(user.loc)
 			playsound(user.loc, 'sound/effects/pop.ogg', 50, 0)
 			update_components()
 		else
 			to_chat(user, SPAN_WARNING("There is nothing to remove."))
-		return
-	if(isWelder(thing))
+		return TRUE
+
+	if (isWelder(thing))
 		repair_brute_generic(thing, user)
-		return
-	if(isCoil(thing))
+		return TRUE
+
+	if (isCoil(thing))
 		repair_burn_generic(thing, user)
-		return
-	if(istype(thing, /obj/item/device/robotanalyzer))
+		return TRUE
+
+	if (istype(thing, /obj/item/device/robotanalyzer))
 		to_chat(user, SPAN_NOTICE("Diagnostic Report for \the [src]:"))
 		return_diagnostics(user)
-		return
+		return TRUE
 
 	return ..()
 
@@ -138,13 +146,13 @@
 	if(!WT.isOn())
 		to_chat(user, SPAN_WARNING("Turn \the [WT] on, first."))
 		return
-	if(WT.remove_fuel((SKILL_MAX + 1) - user.get_skill_value(SKILL_CONSTRUCTION), user))
+	if(WT.can_use((SKILL_MAX + 1) - user.get_skill_value(SKILL_CONSTRUCTION), user))
 		user.visible_message(
 			SPAN_NOTICE("\The [user] begins welding the damage on \the [src]..."),
 			SPAN_NOTICE("You begin welding the damage on \the [src]...")
 		)
 		var/repair_value = 10 * max(user.get_skill_value(SKILL_CONSTRUCTION), user.get_skill_value(SKILL_DEVICES))
-		if(user.do_skilled(1 SECOND, SKILL_DEVICES , src, 0.6) && brute_damage)
+		if(user.do_skilled(1 SECOND, SKILL_DEVICES , src, 0.6) && brute_damage && WT.remove_fuel((SKILL_MAX + 1) - user.get_skill_value(SKILL_CONSTRUCTION), user))
 			repair_brute_damage(repair_value)
 			to_chat(user, SPAN_NOTICE("You mend the damage to \the [src]."))
 			playsound(user.loc, 'sound/items/Welder.ogg', 25, 1)
@@ -186,4 +194,7 @@
 
 /obj/item/mech_component/proc/return_diagnostics(mob/user)
 	to_chat(user, SPAN_NOTICE("[capitalize(src.name)]:"))
-	to_chat(user, SPAN_NOTICE(" - Integrity: <b>[round((((max_damage - total_damage) / max_damage)) * 100)]%</b>" ))
+	// [SIERRA-EDIT] - Mechs_by_shegar
+	//to_chat(user, SPAN_NOTICE(" - Integrity: <b>[round((((max_damage - total_damage) / max_damage)) * 100)]%</b>" ))
+	to_chat(user, SPAN_NOTICE(" - Integrity: <b> [current_hp]/[max_damage]([round(((current_hp / max_damage)) * 100)]%)</b> Unrepairable damage: <b><font color = red>[unrepairable_damage]</font></b>" ))
+	// [SIERRA-EDIT]

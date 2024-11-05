@@ -44,31 +44,32 @@
 	create_reagents(10)
 	..()
 
-/obj/item/toy/water_balloon/afterattack(atom/A as mob|obj, mob/user as mob, proximity)
-	if(!proximity) return
+/obj/item/toy/water_balloon/use_after(atom/A, mob/living/user, click_parameters)
 	if (istype(A, /obj/structure/reagent_dispensers/watertank) && get_dist(src,A) <= 1)
 		A.reagents.trans_to_obj(src, 10)
 		to_chat(user, SPAN_NOTICE("You fill the balloon with the contents of [A]."))
-		src.desc = "A translucent balloon with some form of liquid sloshing around in it."
-		src.update_icon()
-	return
+		desc = "A translucent balloon with some form of liquid sloshing around in it."
+		update_icon()
+		return TRUE
 
-/obj/item/toy/water_balloon/attackby(obj/O as obj, mob/user as mob)
+/obj/item/toy/water_balloon/use_tool(obj/item/O, mob/living/user, list/click_params)
 	if(istype(O, /obj/item/reagent_containers/glass))
 		if(O.reagents)
 			if(O.reagents.total_volume < 1)
-				to_chat(user, "The [O] is empty.")
-			else if(O.reagents.total_volume >= 1)
-				if(O.reagents.has_reagent(/datum/reagent/acid/polyacid, 1))
-					to_chat(user, "The acid chews through the balloon!")
-					O.reagents.splash(user, reagents.total_volume)
-					qdel(src)
-				else
-					src.desc = "A translucent balloon with some form of liquid sloshing around in it."
-					to_chat(user, SPAN_NOTICE("You fill the balloon with the contents of [O]."))
-					O.reagents.trans_to_obj(src, 10)
-	src.update_icon()
-	return
+				to_chat(user, SPAN_WARNING("\The [O] is empty."))
+				return TRUE
+
+			if (O.reagents.has_reagent(/datum/reagent/acid/polyacid, 1))
+				to_chat(user, "The acid chews through the balloon!")
+				O.reagents.splash(user, reagents.total_volume)
+				qdel(src)
+			else
+				desc = "A translucent balloon with some form of liquid sloshing around in it."
+				to_chat(user, SPAN_NOTICE("You fill the balloon with the contents of [O]."))
+				O.reagents.trans_to_obj(src, 10)
+			update_icon()
+			return TRUE
+	return ..()
 
 /obj/item/toy/water_balloon/throw_impact(atom/hit_atom)
 	if(reagents && reagents.total_volume >= 1)
@@ -146,31 +147,34 @@
 		icon_r_hand = 'icons/mob/onmob/items/righthand_guns.dmi',
 		)
 	w_class = ITEM_SIZE_SMALL
-	item_flags = ITEM_FLAG_TRY_ATTACK
 	attack_verb = list("attacked", "struck", "hit")
 	var/bullets = 5
 
-/obj/item/toy/crossbow/attackby(obj/item/I as obj, mob/user as mob)
+/obj/item/toy/crossbow/use_tool(obj/item/I, mob/living/user, list/click_params)
 	if(istype(I, /obj/item/toy/ammo/crossbow))
 		if(bullets <= 4)
 			if(!user.unEquip(I))
-				return
+				FEEDBACK_UNEQUIP_FAILURE(user, I)
+				return TRUE
 			qdel(I)
 			bullets++
 			to_chat(user, SPAN_NOTICE("You load the foam dart into the crossbow."))
 		else
 			to_chat(usr, SPAN_WARNING("It's already fully loaded."))
+		return TRUE
+
+	return ..()
 
 
-/obj/item/toy/crossbow/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
-	if(!isturf(target.loc) || target == user) return
-	if(flag) return
+/obj/item/toy/crossbow/use_after(atom/target, mob/living/user, click_parameters)
+	if(!isturf(target.loc) || target == user) return FALSE
 
-	if (locate (/obj/structure/table, src.loc))
-		return
-	else if (bullets)
+	if (locate (/obj/structure/table, loc))
+		return FALSE
+
+	if (bullets)
 		var/turf/trg = get_turf(target)
-		var/obj/effect/foam_dart_dummy/D = new/obj/effect/foam_dart_dummy(get_turf(src))
+		var/obj/foam_dart_dummy/D = new/obj/foam_dart_dummy(get_turf(src))
 		bullets--
 		D.icon_state = "foamdart"
 		D.SetName("foam dart")
@@ -188,7 +192,7 @@
 						O.show_message(SPAN_WARNING("\The [M] was hit by the foam dart!"), 1)
 					new /obj/item/toy/ammo/crossbow(M.loc)
 					qdel(D)
-					return
+					return TRUE
 
 				for(var/atom/A in D.loc)
 					if(A == user) continue
@@ -202,15 +206,16 @@
 			if(D)
 				new /obj/item/toy/ammo/crossbow(D.loc)
 				qdel(D)
+		return TRUE
 
-		return
 	else if (bullets == 0)
 		user.Weaken(5)
 		for(var/mob/O in viewers(world.view, user))
 			O.show_message(SPAN_WARNING("\The [user] realized they were out of ammo and starting scrounging for some!"), 1)
+		return TRUE
 
 
-/obj/item/toy/crossbow/attack(mob/M as mob, mob/user as mob)
+/obj/item/toy/crossbow/use_before(mob/M as mob, mob/user as mob)
 	. = FALSE
 	if (istype(M) && M.lying)
 		if (bullets > 0)
@@ -242,7 +247,7 @@
 	w_class = ITEM_SIZE_TINY
 	slot_flags = SLOT_EARS
 
-/obj/effect/foam_dart_dummy
+/obj/foam_dart_dummy
 	name = ""
 	desc = ""
 	icon = 'icons/obj/toy.dmi'
@@ -309,10 +314,10 @@
 
 /obj/item/toy/snappop/throw_impact(atom/hit_atom)
 	..()
-	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	var/datum/effect/spark_spread/s = new /datum/effect/spark_spread
 	s.set_up(3, 1, src)
 	s.start()
-	new /obj/effect/decal/cleanable/ash(src.loc)
+	new /obj/decal/cleanable/ash(src.loc)
 	src.visible_message(SPAN_WARNING("The [src.name] explodes!"),SPAN_WARNING("You hear a snap!"))
 	playsound(src, 'sound/effects/snap.ogg', 50, 1)
 	qdel(src)
@@ -323,10 +328,10 @@
 		if(!MOVING_DELIBERATELY(M))
 			to_chat(M, SPAN_WARNING("You step on the snap pop!"))
 
-			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+			var/datum/effect/spark_spread/s = new /datum/effect/spark_spread
 			s.set_up(2, 0, src)
 			s.start()
-			new /obj/effect/decal/cleanable/ash(src.loc)
+			new /obj/decal/cleanable/ash(src.loc)
 			src.visible_message(SPAN_WARNING("The [src.name] explodes!"),SPAN_WARNING("You hear a snap!"))
 			playsound(src, 'sound/effects/snap.ogg', 50, 1)
 			qdel(src)
@@ -889,7 +894,7 @@
 	attack_verb = list("attacked", "whacked", "jabbed", "poked", "marshalled")
 
 /obj/item/marshalling_wand/Initialize()
-	set_light(0.6, 0.5, 2, 2, "#ff0000")
+	set_light(1.5, 1.5, "#ff0000")
 	return ..()
 
 /obj/item/marshalling_wand/attack_self(mob/living/user as mob)
@@ -1010,7 +1015,7 @@
 /obj/item/toy/eightball/attack_self(mob/user)
 	user.visible_message(SPAN_NOTICE("\The [user] shakes \the [src] for a moment, and it says, \"[pick(possible_answers) ].\""))
 
-/obj/item/toy/eightball/afterattack(obj/O, mob/user, proximity)
-	. = ..()
-	if (proximity)
+/obj/item/toy/eightball/use_after(atom/O, mob/living/user, click_parameters)
+	if (isobj(O))
 		visible_message(SPAN_WARNING("\The [src] says, \"[pick(possible_answers) ]\" as it hits \the [O]!"))
+		return TRUE

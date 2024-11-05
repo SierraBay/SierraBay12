@@ -168,28 +168,24 @@
 /obj/machinery/door/window/holowindoor/Destroy()
 	..()
 
-/obj/machinery/door/window/holowindoor/attackby(obj/item/I as obj, mob/user as mob)
-
+/obj/machinery/door/window/holowindoor/use_tool(obj/item/I, mob/living/user, list/click_params)
 	if (operating == DOOR_OPERATING_YES)
-		return
-
-	if (user.a_intent == I_HURT)
 		return ..()
 
-	src.add_fingerprint(user)
-	if (!src.requiresID())
+	if (!requiresID())
 		user = null
 
-	if (src.allowed(user))
-		if (src.density)
+	if (allowed(user))
+		if (density)
 			open()
 		else
 			close()
 
-	else if (src.density)
-		flick(text("[]deny", src.base_state), src)
+	else if (density)
+		flick(text("[]deny", base_state), src)
+		return TRUE
 
-	return
+	return ..()
 
 /obj/machinery/door/window/holowindoor/shatter(display_message = 1)
 	src.set_density(0)
@@ -232,7 +228,7 @@
 /obj/item/holo/esword/handle_shield(mob/user, damage, atom/damage_source = null, mob/attacker = null, def_zone = null, attack_text = "the attack")
 	. = ..()
 	if(.)
-		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
+		var/datum/effect/spark_spread/spark_system = new /datum/effect/spark_spread()
 		spark_system.set_up(5, 0, user.loc)
 		spark_system.start()
 		playsound(user.loc, 'sound/weapons/blade1.ogg', 50, 1)
@@ -356,10 +352,6 @@
 /obj/machinery/readybutton/New()
 	..()
 
-
-/obj/machinery/readybutton/attackby(obj/item/W as obj, mob/user as mob)
-	to_chat(user, "The device is a solid button, there's nothing you can do with it!")
-
 /obj/machinery/readybutton/physical_attack_hand(mob/user)
 	currentarea = get_area(src)
 	if(!currentarea)
@@ -419,10 +411,9 @@
 /mob/living/simple_animal/hostile/carp/holodeck/on_update_icon()
 	return
 
-
 /mob/living/simple_animal/hostile/carp/holodeck/Initialize(mapload, ...)
 	. = ..()
-	set_light(0.5, 0.1, 2) //hologram lighting
+	set_light(2, 0.5) //hologram lighting
 
 
 /mob/living/simple_animal/hostile/carp/holodeck/proc/set_safety(safe)

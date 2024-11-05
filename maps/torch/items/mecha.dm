@@ -13,7 +13,7 @@
 	if(!arms)
 		arms = new /obj/item/mech_component/manipulators/powerloader(src)
 		arms.color = COLOR_PURPLE
-
+	material = material = SSmaterials.get_material_by_name(MATERIAL_OSMIUM_CARBIDE_PLASTEEL)
 	. = ..()
 
 	//Damage it
@@ -30,4 +30,3 @@
 	install_system(new /obj/item/mech_equipment/clamp(src), HARDPOINT_RIGHT_HAND)
 	install_system(new /obj/item/mech_equipment/mounted_system/taser/plasma(src), HARDPOINT_LEFT_HAND)
 	install_system(new /obj/item/mech_equipment/ionjets(src), HARDPOINT_BACK)
-	

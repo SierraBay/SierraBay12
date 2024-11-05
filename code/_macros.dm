@@ -42,6 +42,8 @@
 
 #define isbeam(A) istype(A, /obj/item/projectile/beam)
 
+#define ismagazine(A) istype(A, /obj/item/ammo_magazine)
+
 #define isbrain(A) istype(A, /mob/living/carbon/brain)
 
 #define iscarbon(A) istype(A, /mob/living/carbon)
@@ -121,7 +123,10 @@
 /// Common use
 #define legacy_chat(target, message)          to_target(target, message)
 #define to_world(message)                     to_chat(world, message)
-#define to_world_log(message)                 to_target(world.log, message)
+// [SIERRA-EDIT] - RUST_G
+// #define to_world_log(message)                 to_target(world.log, message) // SIERRA-EDIT - ORIGINAL
+#define to_world_log(message) if (istext(world.log)) { rustg_log_write_formatted(world.log, message) } else { to_target(world.log, message) }
+// [/SIERRA-EDIT]
 #define sound_to(target, sound)               to_target(target, sound)
 #define image_to(target, image)               to_target(target, image)
 #define show_browser(target, content, title)  to_target(target, browse(content, title))
@@ -155,7 +160,7 @@
 
 #define QDEL_NULL(x) if(x) { qdel(x) ; x = null }
 
-#define QDEL_IN(item, time) addtimer(new Callback(item, /datum/proc/qdel_self), time, TIMER_STOPPABLE)
+#define QDEL_IN(item, time) addtimer(new Callback(item, TYPE_PROC_REF(/datum, qdel_self)), time, TIMER_STOPPABLE)
 
 #define DROP_NULL(x) if(x) { x.dropInto(loc); x = null; }
 
@@ -190,6 +195,8 @@
 #define SPAN_DANGER(X) SPAN_CLASS("danger", "[X]")
 
 #define SPAN_OCCULT(X) SPAN_CLASS("cult", "[X]")
+
+#define SPAN_LEGION(X) SPAN_CLASS("legion", "[X]")
 
 #define SPAN_MFAUNA(X) SPAN_CLASS("mfauna", "[X]")
 

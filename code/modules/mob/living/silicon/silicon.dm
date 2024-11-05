@@ -10,6 +10,8 @@
 	bone_material = null
 	bone_amount = 0
 
+	ignore_hazard_flags = HAZARD_FLAG_SHARD
+
 	var/syndicate = 0
 	var/const/MAIN_CHANNEL = "Main Frequency"
 	var/lawchannel = MAIN_CHANNEL // Default channel on which to state laws
@@ -36,6 +38,7 @@
 
 	#define SEC_HUD 1 //Security HUD mode
 	#define MED_HUD 2 //Medical HUD mode
+
 
 /mob/living/silicon/Initialize()
 	GLOB.silicon_mobs += src
@@ -83,10 +86,11 @@
 		if(EMP_ACT_HEAVY)
 			take_organ_damage(0, 16, ORGAN_DAMAGE_SILICON_EMP)
 			if(prob(50)) Stun(rand(5,10))
-			else confused = (min(confused + 2, 40))
+			else
+				mod_confused(2, 40)
 		if(EMP_ACT_LIGHT)
 			take_organ_damage(0, 7, ORGAN_DAMAGE_SILICON_EMP)
-			confused = (min(confused + 2, 30))
+			mod_confused(2, 30)
 	flash_eyes(affect_silicon = 1)
 	to_chat(src, SPAN_DANGER("<B>*BZZZT*</B>"))
 	to_chat(src, SPAN_DANGER("Warning: Electromagnetic pulse detected."))
@@ -98,7 +102,7 @@
 /mob/living/silicon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1.0, def_zone = null)
 
 	if (istype(source, /obj/machinery/containment_field))
-		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+		var/datum/effect/spark_spread/s = new /datum/effect/spark_spread
 		s.set_up(5, 1, loc)
 		s.start()
 
@@ -274,6 +278,7 @@
 
 	apply_damage(brute, DAMAGE_BRUTE, damage_flags = DAMAGE_FLAG_EXPLODE)
 	apply_damage(burn, DAMAGE_BURN, damage_flags = DAMAGE_FLAG_EXPLODE)
+
 
 /mob/living/silicon/proc/raised_alarm(datum/alarm/A)
 	to_chat(src, "[A.alarm_name()]!")

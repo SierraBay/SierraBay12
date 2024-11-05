@@ -1,6 +1,5 @@
 //Dionaea regenerate health and nutrition in light.
 /mob/living/carbon/alien/diona/handle_environment(datum/gas_mixture/environment)
-
 	if(health <= 0 || stat == DEAD)
 		return
 
@@ -17,7 +16,7 @@
 	else
 		var/mult = clamp(radiation/200, 0.5, 1)
 		if(last_glow != mult)
-			set_light(mult, 0.5, (5*mult), 2, "#55ff55")
+			set_light((5*mult), mult, "#55ff55")
 			last_glow = mult
 
 	set_nutrition(clamp(nutrition + floor(radiation/100) + light_amount, 0, 500))
@@ -27,6 +26,3 @@
 		adjustFireLoss(-1)
 		adjustToxLoss(-1)
 		adjustOxyLoss(-1)
-
-	if(!client)
-		handle_npc(src)

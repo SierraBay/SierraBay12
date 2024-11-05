@@ -115,6 +115,13 @@
 			While in hacking mode, this device will grant full access to any airlock in 20 to 40 seconds. \
 			This device will be able to continuously reaccess the last 6 to 8  airlocks it was used on."
 
+/datum/uplink_item/item/tools/radio_jammer
+	name = "Portable Radio Jammer"
+	item_cost = 24
+	path = /obj/item/device/radio_jammer
+	desc = "A pocket sized portable radio jammer that can intercept outgoing radio signals in a given distance. \
+			However, radios attempting to send outgoing transmissions will emit a faint buzzing noise. \
+			The jammer can be signaled remotely using assembly signalers."
 
 /datum/uplink_item/item/tools/space_suit
 	name = "Voidsuit and Tactical Mask"
@@ -132,12 +139,32 @@
 
 
 /datum/uplink_item/item/tools/thermal
-	name = "Thermal Imaging Glasses"
+	name = "Thermal Imaging Glasses (Goggles)"
 	desc = "A pair of meson goggles that have been modified to instead show synthetics or living creatures, through thermal imaging."
 	item_cost = 24
 	path = /obj/item/clothing/glasses/thermal/syndi
 	antag_roles = list(MODE_TRAITOR)
 
+/datum/uplink_item/item/tools/thermal_avi
+	name = "Thermal Imaging Glasses (Aviators)"
+	desc = "A pair of aviator sunglasses that have been modified to instead show synthetics or living creatures, through thermal imaging."
+	item_cost = 24
+	path = /obj/item/clothing/glasses/thermal/syndi/aviators
+	antag_roles = list(MODE_TRAITOR)
+
+/datum/uplink_item/item/tools/thermal_goggles
+	name = "Helmet-Attached Thermal Sights"
+	desc = "A set of thermal sights that can attach to combat or voidsuit helmets. Range is limited, along with the color palette, and it will be obvious what you are wearing."
+	item_cost = 14
+	path = /obj/item/clothing/head/helmet/nvgmount/thermal
+	antag_roles = list(MODE_TRAITOR)
+
+/datum/uplink_item/item/tools/night_goggles
+	name = "Helmet-Attached Light-Enhancing Sights"
+	desc = "A set of light-enhancing sights for seeing in the dark. They can attach to combat or voidsuit helmets. Range is slightly limited, along with your perceptible range of colors. It will be obvious what you are wearing."
+	item_cost = 12
+	path = /obj/item/clothing/head/helmet/nvgmount/nvg
+	antag_roles = list(MODE_MERCENARY, MODE_TRAITOR) //don't give mercs extra thermals but NVGs are okay
 
 /datum/uplink_item/item/tools/flashdark
 	name = "Flashdark"
@@ -190,7 +217,7 @@
 /datum/uplink_item/item/tools/ttv
 	name = "Binary Gas Bomb"
 	item_cost = 30
-	path = /obj/effect/spawner/newbomb/traitor
+	path = /obj/spawner/newbomb/traitor
 	desc = "A remote-activated phoron-oxygen bomb assembly with an included signaler. \
 			A flashing disclaimer begins with the warning 'SOME DISASSEMBLY/REASSEMBLY REQUIRED.'"
 

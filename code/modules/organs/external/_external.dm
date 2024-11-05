@@ -87,9 +87,8 @@
 		if(print)
 			return print
 
-/obj/item/organ/external/afterattack(atom/A, mob/user, proximity)
-	..()
-	if(proximity && get_fingerprint())
+/obj/item/organ/external/use_after(atom/A, mob/living/user, click_parameters)
+	if(get_fingerprint())
 		A.add_partial_print(get_fingerprint())
 
 /obj/item/organ/external/New(mob/living/carbon/holder)
@@ -151,15 +150,20 @@
 
 	if(owner && BP_IS_CRYSTAL(src)) // Crystalline robotics == piezoelectrics.
 		owner.Weaken(4 - severity)
-		owner.confused = max(owner.confused, 6 - (severity * 2))
+		owner.set_confused(6 - (severity * 2))
 		return
 
 	var/burn_damage = 0
+	var/rand_modifier = rand(1,3)
 	switch (severity)
 		if (EMP_ACT_HEAVY)
-			burn_damage = 30
+			burn_damage = 10 * rand_modifier
 		if (EMP_ACT_LIGHT)
-			burn_damage = 15
+			burn_damage = 4 * rand_modifier
+
+	/// Ions can't be aimed like conventional weaponry. This way damage is more even between center mass and limbs based on their total health relative to each other.
+	if(!(src.body_part & FULL_TORSO))
+		burn_damage *= 0.5
 
 	var/mult = 1 + !!(BP_IS_ASSISTED(src)) // This macro returns (large) bitflags.
 	burn_damage *= mult/species.get_burn_mod(owner) //ignore burn mod for EMP damage
@@ -175,9 +179,6 @@
 
 	if(owner && limb_flags & ORGAN_FLAG_CAN_GRASP)
 		owner.grasp_damage_disarm(src)
-
-	if(owner && limb_flags & ORGAN_FLAG_CAN_STAND)
-		owner.stance_damage_prone(src)
 
 	..()
 
@@ -220,18 +221,18 @@
 	for(var/obj/item/organ/external/child in children)
 		child.show_decay_status(user)
 
-/obj/item/organ/external/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/organ/external/use_tool(obj/item/W, mob/living/user, list/click_params)
 	switch(stage)
 		if(0)
 			if(W.sharp)
 				user.visible_message(SPAN_DANGER("<b>[user]</b> cuts [src] open with [W]!"))
 				stage++
-				return
+				return TRUE
 		if(1)
 			if(istype(W))
 				user.visible_message(SPAN_DANGER("<b>[user]</b> cracks [src] open like an egg with [W]!"))
 				stage++
-				return
+				return TRUE
 		if(2)
 			if(W.sharp || istype(W,/obj/item/hemostat) || isWirecutter(W))
 				var/list/organs = get_contents_recursive()
@@ -239,8 +240,9 @@
 					var/obj/item/removing = pick(organs)
 					var/obj/item/organ/external/current_child = removing.loc
 
-					current_child.implants.Remove(removing)
-					current_child.internal_organs.Remove(removing)
+					if (istype(current_child))
+						current_child.implants.Remove(removing)
+						current_child.internal_organs.Remove(removing)
 
 					status |= ORGAN_CUT_AWAY
 					if(istype(removing, /obj/item/organ/internal/mmi_holder))
@@ -254,8 +256,8 @@
 					user.visible_message(SPAN_DANGER("<b>[user]</b> extracts [removing] from [src] with [W]!"))
 				else
 					user.visible_message(SPAN_DANGER("<b>[user]</b> fishes around fruitlessly in [src] with [W]."))
-				return
-	..()
+				return TRUE
+	return ..()
 
 
 /**
@@ -397,7 +399,8 @@
 			heal_damage(0, repair_amount, 0, 1)
 	owner.regenerate_icons()
 	if(user == src.owner)
-		user.visible_message(SPAN_NOTICE("\The [user] patches [damage_desc] on \his [src.name] with [tool]."))
+		var/datum/pronouns/pronouns = user.choose_from_pronouns()
+		user.visible_message(SPAN_NOTICE("\The [user] patches [damage_desc] on [pronouns.his] [src.name] with [tool]."))
 	else
 		user.visible_message(SPAN_NOTICE("\The [user] patches [damage_desc] on [owner]'s [src.name] with [tool]."))
 
@@ -831,7 +834,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 					"You hear a crackling sound[gore]."
 					)
 			if(DROPLIMB_BLUNT)
-				var/gore = "[BP_IS_ROBOTIC(src) ? "": " in shower of gore"]"
+				var/gore = "[BP_IS_ROBOTIC(src) ? "": " in a shower of gore"]"
 				var/gore_sound = "[BP_IS_ROBOTIC(src) ? "rending sound of tortured metal" : "sickening splatter of gore"]"
 				return list(
 					"\The [owner]'s [src.name] explodes[gore]!",
@@ -870,6 +873,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 			I.removed()
 			if(!QDELETED(I) && isturf(I.loc))
 				I.throw_at(get_edge_target_turf(src,pick(GLOB.alldirs)),rand(1,3),5)
+			I.take_general_damage(I.max_damage * Frand(0.5, 1.0))
 
 	removed(null, ignore_children)
 	if(QDELETED(src))
@@ -906,7 +910,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 					throw_at(get_edge_target_turf(src,pick(GLOB.alldirs)),rand(1,3),5)
 				dir = 2
 		if(DROPLIMB_BURN)
-			new /obj/effect/decal/cleanable/ash(get_turf(victim))
+			new /obj/decal/cleanable/ash(get_turf(victim))
 			for(var/obj/item/I in src)
 				if(I.w_class > ITEM_SIZE_SMALL && !istype(I,/obj/item/organ))
 					I.dropInto(loc)
@@ -916,11 +920,11 @@ Note that amputating the affected organ does in fact remove the infection from t
 			if(BP_IS_CRYSTAL(src))
 				gore = new /obj/item/material/shard(get_turf(victim), MATERIAL_CRYSTAL)
 			else if(BP_IS_ROBOTIC(src))
-				gore = new /obj/effect/decal/cleanable/blood/gibs/robot(get_turf(victim))
+				gore = new /obj/decal/cleanable/blood/gibs/robot(get_turf(victim))
 			else
-				gore = new /obj/effect/decal/cleanable/blood/gibs(get_turf(victim))
+				gore = new /obj/decal/cleanable/blood/gibs(get_turf(victim))
 				if(species)
-					var/obj/effect/decal/cleanable/blood/gibs/G = gore
+					var/obj/decal/cleanable/blood/gibs/G = gore
 					G.fleshcolor = use_flesh_colour
 					G.basecolor =  use_blood_colour
 					G.update_icon()
@@ -1271,7 +1275,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 			SPAN_DANGER("Your [src.name] explodes!"),\
 			SPAN_DANGER("You hear an explosion!"))
 		explosion(get_turf(owner), 2, EX_ACT_LIGHT)
-		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
+		var/datum/effect/spark_spread/spark_system = new /datum/effect/spark_spread()
 		spark_system.set_up(5, 0, victim)
 		spark_system.attach(owner)
 		spark_system.start()
@@ -1364,11 +1368,19 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 //Adds autopsy data for used_weapon.
 /obj/item/organ/external/proc/add_autopsy_data(used_weapon, damage)
-	var/datum/autopsy_data/W = autopsy_data[used_weapon]
+	var/weapon_name
+
+	if(isatom(used_weapon))
+		var/atom/weapon = used_weapon
+		weapon_name = initial(weapon.name)
+	else
+		weapon_name = used_weapon
+
+	var/datum/autopsy_data/W = autopsy_data[weapon_name]
 	if(!W)
 		W = new()
-		W.weapon = used_weapon
-		autopsy_data[used_weapon] = W
+		W.weapon = weapon_name
+		autopsy_data[weapon_name] = W
 
 	W.hits += 1
 	W.damage += damage

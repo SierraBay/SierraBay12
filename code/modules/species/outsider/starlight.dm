@@ -1,5 +1,6 @@
 /datum/species/starlight
 	name = "Starlight Base"
+	preview_icon = null
 
 	meat_type = null
 	bone_material = null
@@ -33,7 +34,7 @@
 	return FALSE
 
 /datum/species/starlight/handle_death(mob/living/carbon/human/H)
-	addtimer(new Callback(H,/mob/proc/dust),0)
+	addtimer(new Callback(H, TYPE_PROC_REF(/mob, dust)),0)
 
 /datum/species/starlight/starborn
 	name = "Starborn"
@@ -83,7 +84,7 @@
 /datum/species/starlight/starborn/handle_death(mob/living/carbon/human/H)
 	..()
 	var/turf/T = get_turf(H)
-	new/obj/effect/decal/cleanable/liquid_fuel(T, 20, TRUE)
+	new/obj/decal/cleanable/liquid_fuel(T, 20, TRUE)
 	T.hotspot_expose(PHORON_MINIMUM_BURN_TEMPERATURE)
 
 /datum/species/starlight/blueforged
@@ -112,4 +113,4 @@
 
 /datum/species/starlight/blueforged/handle_death(mob/living/carbon/human/H)
 	..()
-	new /obj/effect/temporary(get_turf(H),11, 'icons/mob/mob.dmi', "liquify")
+	new /obj/temporary(get_turf(H),11, 'icons/mob/mob.dmi', "liquify")

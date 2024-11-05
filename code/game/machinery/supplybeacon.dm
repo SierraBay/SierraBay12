@@ -43,15 +43,15 @@
 	name = "supermatter supply beacon"
 	drop_type = "supermatter"
 
-/obj/machinery/power/supply_beacon/attackby(obj/item/W, mob/user)
+/obj/machinery/power/supply_beacon/use_tool(obj/item/W, mob/living/user, list/click_params)
 	if(!use_power && isWrench(W))
 		if(!anchored && !connect_to_network())
 			to_chat(user, SPAN_WARNING("This device must be placed over an exposed cable."))
-			return
+			return TRUE
 		anchored = !anchored
 		user.visible_message(SPAN_NOTICE("\The [user] [anchored ? "secures" : "unsecures"] \the [src]."))
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-		return
+		return TRUE
 	return ..()
 
 /obj/machinery/power/supply_beacon/physical_attack_hand(mob/user)
@@ -76,7 +76,7 @@
 	if(surplus() < 500)
 		if(user) to_chat(user, SPAN_NOTICE("The connected wire doesn't have enough current."))
 		return
-	set_light(1, 0.5, 2, 2, "#00ccaa")
+	set_light(3, 3, "#00ccaa")
 	icon_state = "beacon_active"
 	update_use_power(POWER_USE_IDLE)
 	admin_attacker_log(user, "has activated \a [src] at [get_area(src)]")

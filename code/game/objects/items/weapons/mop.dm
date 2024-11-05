@@ -13,8 +13,8 @@
 	var/mopcount = 0
 	var/mopspeed = 40
 	var/list/moppable_types = list(
-		/obj/effect/decal/cleanable,
-		/obj/effect/rune,
+		/obj/decal/cleanable,
+		/obj/rune,
 		/obj/structure/catwalk
 		)
 
@@ -22,14 +22,11 @@
 	. = ..()
 	create_reagents(30)
 
-/obj/item/mop/afterattack(atom/A, mob/user, proximity)
-	if(!proximity)
-		return
-
+/obj/item/mop/use_after(atom/A, mob/living/user, click_parameters)
 	var/moppable
 	if(istype(A, /turf))
 		var/turf/T = A
-		var/obj/effect/fluid/F = locate() in T
+		var/obj/fluid/F = locate() in T
 		if(F && F.fluid_amount > 0)
 			if(F.fluid_amount > FLUID_SHALLOW)
 				to_chat(user, SPAN_WARNING("There is too much water here to be mopped up."))
@@ -41,7 +38,7 @@
 					else
 						qdel(F)
 						to_chat(user, SPAN_NOTICE("You have finished mopping!"))
-			return
+			return TRUE
 		moppable = TRUE
 
 	else if(is_type_in_list(A,moppable_types))
@@ -50,10 +47,10 @@
 	if(moppable)
 		if(reagents.total_volume < 1)
 			to_chat(user, SPAN_NOTICE("Your mop is dry!"))
-			return
+			return TRUE
 		var/turf/T = get_turf(A)
 		if(!T)
-			return
+			return TRUE
 
 		user.visible_message(SPAN_WARNING("\The [user] begins to clean \the [T]."))
 
@@ -61,6 +58,7 @@
 			if(T)
 				T.clean(src, user)
 			to_chat(user, SPAN_NOTICE("You have finished mopping!"))
+		return TRUE
 
 
 /obj/item/mop/advanced

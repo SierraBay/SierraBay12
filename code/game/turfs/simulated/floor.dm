@@ -51,7 +51,7 @@
 /turf/simulated/floor/proc/set_flooring(singleton/flooring/newflooring)
 	make_plating(defer_icon_update = 1)
 	flooring = newflooring
-	update_icon(1)
+	queue_icon_update(SSatoms.initialized) // only update neighbors if we're setting flooring after SSatoms has finished
 	levelupdate()
 
 //This proc will set floor_type to null and the update_icon() proc will then change the icon_state of the turf
@@ -60,7 +60,7 @@
 
 	ClearOverlays()
 
-	for(var/obj/effect/decal/writing/W in src)
+	for(var/obj/decal/writing/W in src)
 		qdel(W)
 
 	SetName(base_name)
@@ -106,7 +106,7 @@
 	initial_gas = null
 
 /turf/simulated/floor/shuttle_ceiling/air
-	initial_gas = list(GAS_OXYGEN = MOLES_O2STANDARD, GAS_NITROGEN = MOLES_N2STANDARD)
+	initial_gas = GAS_STANDARD_AIRMIX
 
 /turf/simulated/floor/is_floor()
 	return TRUE
@@ -115,4 +115,4 @@
 	if(turf_fire)
 		turf_fire.AddPower(power)
 		return
-	new /obj/effect/turf_fire(src, power, fire_colour)
+	new /obj/turf_fire(src, power, fire_colour)

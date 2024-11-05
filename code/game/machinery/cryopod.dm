@@ -11,10 +11,11 @@
 /obj/machinery/computer/cryopod
 	name = "cryogenic oversight console"
 	desc = "An interface between crew and the cryogenic storage oversight systems."
-	icon = 'icons/obj/machines/medical/bodyscanner.dmi'
+	icon = 'icons/obj/machines/medical/cryopod.dmi'
 	icon_state = "cellconsole"
 	density = FALSE
 	interact_offline = 1
+	stat_immune = MACHINE_STAT_NOSCREEN | MACHINE_STAT_NOINPUT | MACHINE_STAT_NOPOWER
 	var/mode = null
 
 	//Used for logging people entering cryosleep and important items they are carrying.
@@ -36,7 +37,7 @@
 	storage_name = "Robotic Storage Control"
 	allow_items = 0
 
-/obj/machinery/computer/cryopod/robot/on_update_icon()
+/obj/machinery/computer/cryopod/on_update_icon()
 	return
 
 /obj/machinery/computer/cryopod/interface_interact(mob/user)
@@ -138,14 +139,14 @@
 /obj/machinery/cryopod
 	name = "cryogenic freezer"
 	desc = "A man-sized pod for entering suspended animation."
-	icon = 'icons/obj/machines/medical/bodyscanner.dmi'
-	icon_state = "body_scanner_0"
+	icon = 'icons/obj/machines/medical/cryopod.dmi'
+	icon_state = "cryopod"
 	density = TRUE
 	anchored = TRUE
 	dir = WEST
 
-	var/base_icon_state = "body_scanner_0"
-	var/occupied_icon_state = "body_scanner_1"
+	var/base_icon_state = "cryopod"
+	var/occupied_icon_state = "cryopod_closed"
 	var/on_store_message = "has entered long-term storage."
 	var/on_store_visible_message = "hums and hisses as it moves $occupant$ into storage." // $occupant$ is automatically converted to the occupant's name
 	var/on_store_name = "Cryogenic Oversight"
@@ -199,9 +200,9 @@
 	desc = "A man-sized pod for entering suspended animation. Dubbed 'cryocoffin' by more cynical spacers, it is pretty barebone, counting on stasis system to keep the victim alive rather than packing extended supply of food or air. Can be ordered with symbols of common religious denominations to be used in space funerals too."
 	on_store_name = "Life Pod Oversight"
 	time_till_despawn = 20 MINUTES
-	icon_state = "lifepod_0"
-	base_icon_state = "lifepod_0"
-	occupied_icon_state = "lifepod_1"
+	icon_state = "redpod0"
+	base_icon_state = "redpod0"
+	occupied_icon_state = "redpod1"
 	var/launched = 0
 	var/datum/gas_mixture/airtank
 
@@ -226,9 +227,9 @@
 
 	var/list/possible_locations = list()
 	if(GLOB.using_map.use_overmap)
-		var/obj/effect/overmap/visitable/O = map_sectors["[z]"]
-		for(var/obj/effect/overmap/visitable/OO in range(O,2))
-			if(HAS_FLAGS(OO.sector_flags, OVERMAP_SECTOR_IN_SPACE) || istype(OO,/obj/effect/overmap/visitable/sector/exoplanet))
+		var/obj/overmap/visitable/O = map_sectors["[z]"]
+		for(var/obj/overmap/visitable/OO in range(O,2))
+			if(HAS_FLAGS(OO.sector_flags, OVERMAP_SECTOR_IN_SPACE) || istype(OO,/obj/overmap/visitable/sector/exoplanet))
 				possible_locations |= text2num(level)
 
 	var/newz = GLOB.using_map.get_empty_zlevel()
@@ -407,7 +408,7 @@
 	log_and_message_admins("[key_name(occupant)] ([role_alt_title]) entered cryostorage.")
 
 	if(announce_despawn)
-		invoke_async(announce, /obj/item/device/radio/proc/autosay, "[occupant.real_name], [role_alt_title], [on_store_message]", "[on_store_name]")
+		invoke_async(announce, TYPE_PROC_REF(/obj/item/device/radio, autosay), "[occupant.real_name], [role_alt_title], [on_store_message]", "[on_store_name]")
 
 	var/despawnmessage = replacetext(on_store_visible_message, "$occupant$", occupant.real_name)
 	visible_message(SPAN_NOTICE("\The [initial(name)] " + despawnmessage), range = 3)
@@ -575,7 +576,7 @@
 /obj/structure/broken_cryo
 	name = "broken cryo sleeper"
 	desc = "Whoever was inside isn't going to wake up now. It looks like you could pry it open with a crowbar."
-	icon = 'icons/obj/machines/medical/bodyscanner.dmi'
+	icon = 'icons/obj/machines/medical/cryopod.dmi'
 	icon_state = "broken_cryo"
 	anchored = TRUE
 	density = TRUE

@@ -78,7 +78,7 @@
 	if(state != AWAITING_ACTIVATION)
 		to_chat(user, SPAN_WARNING("\The [src] won't activate again."))
 		return
-	var/obj/effect/overmap/visitable/O = map_sectors["[get_z(src)]"]
+	var/obj/overmap/visitable/O = map_sectors["[get_z(src)]"]
 	var/choice = alert(user, "This will only affect your current location[istype(O) ? " ([O])" : ""]. Proceed?","Confirmation", "Yes", "No")
 	if(choice != "Yes")
 		return
@@ -90,7 +90,7 @@
 	log_and_message_admins("has activated the service '[service_label]'", user)
 
 	if(service_duration)
-		addtimer(new Callback(src,/obj/item/device/uplink_service/proc/deactivate), service_duration)
+		addtimer(new Callback(src, TYPE_PROC_REF(/obj/item/device/uplink_service, deactivate)), service_duration)
 	else
 		deactivate()
 

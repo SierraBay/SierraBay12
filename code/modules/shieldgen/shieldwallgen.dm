@@ -12,7 +12,7 @@
 	var/locked = 1
 	var/max_range = 8
 	var/storedpower = 0
-	obj_flags = OBJ_FLAG_CONDUCTIBLE
+	obj_flags = OBJ_FLAG_CONDUCTIBLE | OBJ_FLAG_ANCHORABLE
 	//There have to be at least two posts, so these are effectively doubled
 	var/power_draw = 30 KILOWATTS //30 kW. How much power is drawn from powernet. Increase this to allow the generator to sustain longer shields, at the cost of more power draw.
 	var/max_stored_power = 50 KILOWATTS //50 kW
@@ -193,12 +193,11 @@
 		T2 = T
 		var/obj/machinery/shieldwall/CF = new(T, src, G) //(ref to this gen, ref to connected gen)
 		CF.set_dir(field_dir)
-
-
-/obj/machinery/shieldwallgen/attackby(obj/item/W, mob/user)
+// [SIERRA EDIT]
+/obj/machinery/shieldwallgen/use_tool(obj/item/W, mob/living/user)
 	if(isWrench(W))
 		if(active)
-			to_chat(user, "Turn off the field generator first.")
+			to_chat(user, SPAN_WARNING("Turn off \the [src] first.."))
 			return
 
 		else if(!anchored)
@@ -224,8 +223,7 @@
 	else
 		src.add_fingerprint(user)
 		..()
-
-
+// [SIERRA-EDIT-END]
 /obj/machinery/shieldwallgen/proc/cleanup(NSEW)
 	var/obj/machinery/shieldwall/F
 	var/obj/machinery/shieldwallgen/G
@@ -261,7 +259,7 @@
 	anchored = TRUE
 	density = TRUE
 	unacidable = TRUE
-	light_outer_range = 3
+	light_range = 3
 	var/needs_power = 0
 	var/active = 1
 	var/delay = 5
@@ -290,13 +288,14 @@
 	update_nearby_tiles()
 	..()
 
-/obj/machinery/shieldwall/attackby(obj/item/I, mob/user)
+/obj/machinery/shieldwall/use_weapon(obj/item/I, mob/living/user, list/click_params)
 	var/obj/machinery/shieldwallgen/G = prob(50) ? gen_primary : gen_secondary
 	G.storedpower -= I.force*2500
 	user.visible_message(SPAN_DANGER("\The [user] hits \the [src] with \the [I]!"))
-	user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
+	user.setClickCooldown(user.get_attack_speed(I))
 	user.do_attack_animation(src)
 	playsound(loc, 'sound/weapons/smash.ogg', 75, 1)
+	return TRUE || ..()
 
 /obj/machinery/shieldwall/Process()
 	if(needs_power)

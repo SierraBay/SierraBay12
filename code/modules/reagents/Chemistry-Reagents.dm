@@ -20,6 +20,9 @@
 	/// What *percentage* of this is made of sugar
 	var/sugar_amount
 
+	var/filter_mod = 1.0	// How effectively the chem can be filtered (i.e. through sleeper dialysis)
+							// 1.0 is as fast as the filtration mechanism can handle, 0.0 is unfilterable
+
 	// If TRUE, this reagent transfers changes to its 'color' var when moving to other containers
 	// Of note: Mixing two reagents of the same type with this var that have different colors
 	// will cause them both to take on the color of the form being added into the holder.
@@ -34,6 +37,10 @@
 	var/glass_name = "something"
 	var/glass_desc = "It's a glass of... what, exactly?"
 	var/list/glass_special = null // null equivalent to list()
+
+	var/condiment_icon_state
+	var/condiment_name
+	var/condiment_desc
 
 	// GAS DATA, generic values copied from base XGM datum type.
 	var/gas_specific_heat = 20
@@ -112,7 +119,11 @@
 	if(touch_met && (location == CHEM_TOUCH))
 		removed = touch_met
 	removed = M.get_adjusted_metabolism(removed)
-	removed = min(removed, volume)
+	// [SIERRA-REMOVE]
+/*
+removed = min(removed, volume)
+*/
+// [/SIERRA-REMOVE]
 
 	//adjust effective amounts - removed, dose, and max_dose - for mob size
 	var/effective = removed

@@ -74,16 +74,18 @@
 		return SPAN_NOTICE("You must wait for \the [src] to finish operating first!")
 	return ..()
 
-/obj/machinery/gibber/attackby(obj/item/W, mob/user)
+/obj/machinery/gibber/use_tool(obj/item/W, mob/living/user, list/click_params)
 	if(!operating)
-		return
-	else if(istype(W, /obj/item/organ))
+		return TRUE
+
+	if (istype(W, /obj/item/organ))
 		if(!user.unEquip(W))
-			return
+			return TRUE
 		qdel(W)
 		user.visible_message(SPAN_DANGER("\The [user] feeds \the [W] into \the [src], obliterating it."))
-	else
-		return ..()
+		return TRUE
+
+	return ..()
 
 /obj/machinery/gibber/user_can_move_target_inside(mob/target, mob/user)
 	if (occupant)
@@ -132,14 +134,14 @@
 		occupant = victim
 		if (user != victim)
 			add_fingerprint(victim)
-		GLOB.destroyed_event.register(occupant, src, .proc/occupant_destroyed)
+		GLOB.destroyed_event.register(occupant, src, PROC_REF(occupant_destroyed))
 		update_icon()
 
 /obj/machinery/gibber/proc/occupant_destroyed(mob/_occupant)
 	if (occupant == _occupant)
 		occupant = null
 		update_icon()
-	GLOB.destroyed_event.unregister(_occupant, src, .proc/occupant_destroyed)
+	GLOB.destroyed_event.unregister(_occupant, src, PROC_REF(occupant_destroyed))
 
 /obj/machinery/gibber/verb/eject()
 	set category = "Object"
@@ -160,7 +162,7 @@
 	if (src.occupant.client)
 		src.occupant.client.eye = src.occupant.client.mob
 		src.occupant.client.perspective = MOB_PERSPECTIVE
-	GLOB.destroyed_event.unregister(occupant, src, .proc/occupant_destroyed)
+	GLOB.destroyed_event.unregister(occupant, src, PROC_REF(occupant_destroyed))
 	src.occupant.dropInto(loc)
 	src.occupant = null
 	update_icon()
@@ -180,7 +182,7 @@
 
 	admin_attack_log(user, occupant, "Gibbed the victim", "Was gibbed", "gibbed")
 	src.occupant.ghostize()
-	addtimer(new Callback(src, .proc/finish_gibbing), gib_time)
+	addtimer(new Callback(src, PROC_REF(finish_gibbing)), gib_time)
 
 	var/list/gib_products = shuffle(occupant.harvest_meat() | occupant.harvest_skin() | occupant.harvest_bones())
 	if(length(gib_products) <= 0)

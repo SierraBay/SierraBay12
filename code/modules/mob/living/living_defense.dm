@@ -139,6 +139,10 @@
 	var/damage_flags = I.damage_flags()
 	return apply_damage(effective_force, I.damtype, hit_zone, damage_flags, used_weapon=I, armor_pen=I.armor_penetration)
 
+/mob/living/post_use_item(obj/item/tool, mob/living/user, interaction_handled, use_call)
+	if (interaction_handled && ai_holder && (use_call == "use" || use_call == "weapon"))
+		ai_holder.react_to_attack(user)
+	..()
 
 //this proc handles being hit by a thrown atom
 /mob/living/hitby(atom/movable/AM, datum/thrownthing/TT)
@@ -193,7 +197,7 @@
 /mob/living/momentum_do(power, datum/thrownthing/TT, atom/movable/AM)
 	if(power >= 0.75)		//snowflake to enable being pinned to walls
 		var/direction = TT.init_dir
-		throw_at(get_edge_target_turf(src, direction), min((TT.maxrange - TT.dist_travelled) * power, 10), throw_speed * min(power, 1.5), callback = new Callback(src,/mob/living/proc/pin_to_wall,AM,direction))
+		throw_at(get_edge_target_turf(src, direction), min((TT.maxrange - TT.dist_travelled) * power, 10), throw_speed * min(power, 1.5), callback = new Callback(src, TYPE_PROC_REF(/mob/living, pin_to_wall), AM,direction))
 		visible_message(SPAN_DANGER("\The [src] staggers under the impact!"),SPAN_DANGER("You stagger under the impact!"))
 		return
 
@@ -256,7 +260,7 @@
 /mob/living/proc/IgniteMob()
 	if(fire_stacks > 0 && !on_fire)
 		on_fire = 1
-		set_light(0.6, 0.1, 4, l_color = COLOR_ORANGE)
+		set_light(4, 0.6, l_color = COLOR_ORANGE)
 		update_fire()
 
 /mob/living/proc/ExtinguishMob()
@@ -360,7 +364,7 @@
 	var/button_number = 0
 	for(var/datum/action/A in actions)
 		button_number++
-		if(A.button == null)
+		if(isnull(A.button))
 			var/obj/screen/movable/action_button/N = new(hud_used, A)
 			A.button = N
 

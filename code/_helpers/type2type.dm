@@ -109,6 +109,7 @@
 	if (rights & R_SOUNDS)      . += "[seperator]+SOUND"
 	if (rights & R_SPAWN)       . += "[seperator]+SPAWN"
 	if (rights & R_MOD)         . += "[seperator]+MODERATOR"
+	if (rights & R_XENO)        . += "[seperator]+XENOMODERATOR" //SIERRA-ADD XENO WHITELIST
 	return .
 
 // heat2color functions. Adapted from: http://www.tannerhelland.com/4435/convert-temperature-rgb-algorithm-code
@@ -199,3 +200,19 @@
 /world/proc/file2list(filename, seperator="\n")
 	RETURN_TYPE(/list)
 	return splittext(file2text(filename), seperator)
+//[SIERRA-ADD]
+/proc/type2parent(child)
+	var/string_type = "[child]"
+	var/last_slash = findlasttext(string_type, "/")
+	if(last_slash == 1)
+		switch(child)
+			if(/datum)
+				return null
+			if(/obj, /mob)
+				return /atom/movable
+			if(/area, /turf)
+				return /atom
+			else
+				return /datum
+	return text2path(copytext(string_type, 1, last_slash))
+//[/SIERRA-ADD]

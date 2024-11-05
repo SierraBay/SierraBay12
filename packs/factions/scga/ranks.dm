@@ -14,6 +14,9 @@
 	slot = ACCESSORY_SLOT_RANK
 	accessory_flags = ACCESSORY_REMOVABLE | ACCESSORY_HIGH_VISIBILITY
 	gender = PLURAL
+	sprite_sheets = list(
+		SPECIES_UNATHI = 'packs/factions/scga/species/ranks_unathi.dmi'
+	)
 
 
 /obj/item/clothing/accessory/scga_rank/get_fibers()
@@ -45,6 +48,13 @@
 	icon_state = "e"
 	overlay_state = "e_worn"
 
+// [SIERRA-ADD]
+/obj/item/clothing/accessory/scga_rank/e4_alt
+	name = "rank insignia, E4 Specialist"
+	desc = "Collar tabs denoting the SCGA E-4 rank of Specialist."
+	icon_state = "e"
+	overlay_state = "e_worn"
+// [/SIERRA-ADD]
 
 /obj/item/clothing/accessory/scga_rank/e5
 	name = "rank insignia, E5 Sergeant"

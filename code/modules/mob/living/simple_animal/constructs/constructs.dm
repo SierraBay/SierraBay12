@@ -203,9 +203,8 @@
 	name = "heavy arms"
 	attack_verb = list("rammed")
 	force = 5
-	item_flags = ITEM_FLAG_TRY_ATTACK
 
-/obj/item/natural_weapon/cult_builder/attack(mob/living/M, mob/living/user)
+/obj/item/natural_weapon/cult_builder/use_before(mob/living/M, mob/living/user)
 	. = FALSE
 	if (istype(M, /mob/living/simple_animal/construct))
 		if (M.health < M.maxHealth)
@@ -280,7 +279,7 @@
 	eye_glow.plane = EFFECTS_ABOVE_LIGHTING_PLANE
 	eye_glow.layer = EYE_GLOW_LAYER
 	AddOverlays(eye_glow)
-	set_light(-2, 0.1, 1.5, l_color = "#ffffff")
+	set_light(1.5, -2, l_color = "#ffffff")
 
 	z_flags |= ZMM_MANGLE_PLANES
 ////////////////HUD//////////////////////

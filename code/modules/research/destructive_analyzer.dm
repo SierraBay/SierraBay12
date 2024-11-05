@@ -37,6 +37,8 @@ Note: Must be placed within 3 tiles of the R&D Console
 			AddOverlays(emissive_appearance(icon, "d_analyzer_lights_item"))
 		else
 			AddOverlays(emissive_appearance(icon, "[icon_state]_lights"))
+			//[SIERRA-EDIT] - MODPACK_RND
+			icon_state = "d_analyzer"
 
 /obj/machinery/r_n_d/destructive_analyzer/state_transition(singleton/machine_construction/default/new_state)
 	. = ..()
@@ -54,42 +56,117 @@ Note: Must be placed within 3 tiles of the R&D Console
 		return SPAN_NOTICE("There is something already loaded into \the [src]. You must remove it first.")
 	return ..()
 
-/obj/machinery/r_n_d/destructive_analyzer/attackby(obj/item/O as obj, mob/user as mob)
+/obj/machinery/r_n_d/destructive_analyzer/use_tool(obj/item/O, mob/living/user, list/click_params)
 	if(busy)
 		to_chat(user, SPAN_NOTICE("\The [src] is busy right now."))
-		return
-	if(component_attackby(O, user))
 		return TRUE
+	if((. = ..()))
+		return
 	if(loaded_item)
 		to_chat(user, SPAN_NOTICE("There is something already loaded into \the [src]."))
-		return 1
+		return TRUE
 	if(panel_open)
 		to_chat(user, SPAN_NOTICE("You can't load \the [src] while it's opened."))
-		return 1
+		return TRUE
 	if(!linked_console)
 		to_chat(user, SPAN_NOTICE("\The [src] must be linked to an R&D console first."))
-		return
+		return TRUE
 	if(!loaded_item)
 		if(isrobot(user)) //Don't put your module items in there!
-			return
+			return FALSE
 		if(!O.origin_tech)
 			to_chat(user, SPAN_NOTICE("This doesn't seem to have a tech origin."))
-			return
+			return TRUE
 		if(length(O.origin_tech) == 0 || O.holographic)
 			to_chat(user, SPAN_NOTICE("You cannot deconstruct this item."))
-			return
+			return TRUE
 		if(!user.unEquip(O, src))
-			return
+			return TRUE
 		busy = 1
 		loaded_item = O
 		to_chat(user, SPAN_NOTICE("You add \the [O] to \the [src]."))
 		icon_state = "d_analyzer_entry"
+		SSnano.update_uis(linked_console)
 		spawn(10)
-			update_icon()
+			on_update_icon()
 			busy = 0
 
 			if (linked_console.quick_deconstruct)
-				linked_console.deconstruct(weakref(user))
+				deconstruct_item(weakref(user))
 
-		return 1
-	return
+		return TRUE
+
+
+/obj/machinery/r_n_d/destructive_analyzer/proc/eject_item()
+	if(busy)
+		to_chat(usr, "<span class='warning'>The destructive analyzer is busy at the moment.</span>")
+		return
+
+	if(loaded_item)
+		loaded_item.forceMove(loc)
+		loaded_item = null
+		on_update_icon()
+	SSnano.update_uis(linked_console)
+
+/obj/machinery/r_n_d/destructive_analyzer/proc/ConvertReqString2List(list/source_list)
+	var/list/temp_list = params2list(source_list)
+	for(var/O in temp_list)
+		temp_list[O] = text2num(temp_list[O])
+	return temp_list
+
+
+/obj/machinery/r_n_d/destructive_analyzer/proc/deconstruct_item()
+	if(busy)
+		to_chat(usr, "<span class='warning'>The destructive analyzer is busy at the moment.</span>")
+		return
+	if(!loaded_item)
+		return
+
+	busy = TRUE
+	flick("d_analyzer_process", src)
+	if(linked_console)
+		linked_console.screen = "working"
+	addtimer(new Callback(src, PROC_REF(finish_deconstructing)), 15)
+
+/obj/machinery/r_n_d/destructive_analyzer/proc/finish_deconstructing()
+	busy = FALSE
+	if(hacked)
+		return
+
+	if(linked_console)
+		linked_console.files.check_item_for_tech(loaded_item)
+		linked_console.files.research_points += linked_console.files.experiments.get_object_research_value(loaded_item)
+		linked_console.files.experiments.do_research_object(loaded_item)
+
+//		if(linked_console.linked_lathe)//Придумать как он будет возвращать ресурсы с предметов
+//			linked_console.linked_lathe.loaded_materials[MAT_METAL].amount += round(min((linked_console.linked_lathe.max_material_storage - linked_console.linked_lathe.TotalMaterials()), (loaded_item.m_amt*(decon_mod/10))))
+//			linked_console.linked_lathe.loaded_materials[MAT_GLASS].amount += round(min((linked_console.linked_lathe.max_material_storage - linked_console.linked_lathe.TotalMaterials()), (loaded_item.g_amt*(decon_mod/10))))
+
+	if(istype(loaded_item,/obj/item/stack/material))
+		var/obj/item/stack/material/S = loaded_item
+		if(S.amount == 1)
+			qdel(S)
+			on_update_icon()
+			loaded_item = null
+		else
+			S.use(1)
+	else
+		qdel(loaded_item)
+		on_update_icon()
+		loaded_item = null
+
+	use_power_oneoff(250)
+	if(linked_console)
+		linked_console.screen = "main"
+		SSnano.update_uis(linked_console)
+
+
+	if(loaded_item)
+		loaded_item.forceMove(loc)
+		loaded_item = null
+	on_update_icon()
+
+/obj/machinery/r_n_d/destructive_analyzer/power_change()
+	. = ..()
+	eject_item()
+//[/SIERRA-EDIT] - MODPACK_RND

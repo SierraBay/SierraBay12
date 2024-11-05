@@ -39,23 +39,21 @@
 /obj/item/reagent_containers/attack_self(mob/user as mob)
 	return
 
-/obj/item/reagent_containers/afterattack(obj/target, mob/user, flag)
-	return
-
 /obj/item/reagent_containers/proc/reagentlist() // For attack logs
 	if(reagents)
 		return reagents.get_reagents()
 	return "No reagent holder"
 
-/obj/item/reagent_containers/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/reagent_containers/use_tool(obj/item/W, mob/living/user, list/click_params)
 	if(istype(W, /obj/item/pen) || istype(W, /obj/item/device/flashlight/pen))
 		var/tmp_label = sanitizeSafe(input(user, "Enter a label for [name]", "Label", label_text), MAX_NAME_LEN)
-		if(length(tmp_label) > 10)
+		if(length_char(tmp_label) > 10)
 			to_chat(user, SPAN_NOTICE("The label can be at most 10 characters long."))
 		else
 			to_chat(user, SPAN_NOTICE("You set the label to \"[tmp_label]\"."))
 			label_text = tmp_label
 			update_name_label()
+		return TRUE
 	else
 		return ..()
 
@@ -65,7 +63,7 @@
 	else
 		SetName("[initial(name)] ([label_text])")
 
-/obj/item/reagent_containers/proc/standard_dispenser_refill(mob/user, obj/structure/reagent_dispensers/target) // This goes into afterattack
+/obj/item/reagent_containers/proc/standard_dispenser_refill(mob/user, obj/structure/reagent_dispensers/target) // This goes into use_after()
 	if(!istype(target))
 		return 0
 
@@ -81,7 +79,7 @@
 	to_chat(user, SPAN_NOTICE("You fill [src] with [trans] units of the contents of [target]."))
 	return 1
 
-/obj/item/reagent_containers/proc/standard_splash_mob(mob/user, mob/target) // This goes into afterattack
+/obj/item/reagent_containers/proc/standard_splash_mob(mob/user, mob/target) // This goes into use_after()
 	if(!istype(target))
 		return
 
@@ -172,7 +170,7 @@
 	return TRUE
 
 
-/obj/item/reagent_containers/proc/standard_pour_into(mob/user, atom/target) // This goes into afterattack and yes, it's atom-level
+/obj/item/reagent_containers/proc/standard_pour_into(mob/user, atom/target) // This goes into use_after() and yes, it's atom-level
 	if(!target.reagents)
 		return 0
 

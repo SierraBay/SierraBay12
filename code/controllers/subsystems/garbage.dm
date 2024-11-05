@@ -23,7 +23,7 @@ SUBSYSTEM_DEF(garbage)
 	priority = SS_PRIORITY_GARBAGE
 	wait = 10 SECONDS
 	flags = SS_POST_FIRE_TIMING | SS_BACKGROUND | SS_NEEDS_SHUTDOWN
-	runlevels = RUNLEVELS_DEFAULT | RUNLEVEL_LOBBY
+	runlevels = RUNLEVELS_PREGAME | RUNLEVELS_GAME
 	init_order = SS_INIT_GARBAGE
 
 	var/static/last_tick_enqueues = 0
@@ -48,7 +48,7 @@ SUBSYSTEM_DEF(garbage)
 
 /datum/controller/subsystem/garbage/Shutdown()
 	var/list/qdel_log = list()
-	sortTim(details_by_path, cmp = /proc/cmp_qdel_details_time, associative = TRUE)
+	sortTim(details_by_path, cmp = GLOBAL_PROC_REF(cmp_qdel_details_time), associative = TRUE)
 	for (var/path in details_by_path)
 		var/datum/qdel_details/details = details_by_path[path]
 		qdel_log += "Path: [path]"
@@ -65,8 +65,11 @@ SUBSYSTEM_DEF(garbage)
 			qdel_log += "\tSleeps: [details.slept_destroy]"
 		if (details.no_hint)
 			qdel_log += "\tNo hint: [details.no_hint] times"
-	var/log_file = file("[GLOB.log_directory]/qdel.log")
-	to_file(log_file, jointext(qdel_log, "\n"))
+	// [SIERRA-EDIT] - RUST_G
+	// var/log_file = file("[GLOB.log_directory]/qdel.log") // SIERRA-EDIT - ORIGINAL
+	// to_file(log_file, jointext(qdel_log, "\n")) // SIERRA-EDIT - ORIGINAL
+	rustg_log_write_formatted("[GLOB.log_directory]/qdel.log", jointext(qdel_log, "\n"))
+	// [/SIERRA-EDIT]
 
 
 /datum/controller/subsystem/garbage/Initialize(start_uptime)

@@ -22,14 +22,14 @@ var/global/list/artefact_feedback = list(/obj/structure/closet/wizard/armor = 		
 	name = "master spell book"
 	desc = "The legendary book of spells of the wizard."
 	icon = 'icons/obj/library.dmi'
-	icon_state = "spellbook"
+	icon_state = "book"
 	throw_speed = 1
 	throw_range = 5
 	w_class = ITEM_SIZE_NORMAL
 	var/uses = 1
 	var/temp = null
 	var/datum/spellbook/spellbook
-	var/spellbook_type = /datum/spellbook/ //for spawning specific spellbooks.
+	var/spellbook_type = /datum/spellbook //for spawning specific spellbooks.
 	var/investing_time = 0 //what time we target forr a return on our spell investment.
 	var/has_sacrificed = 0 //whether we have already got our sacrifice bonus for the current investment.
 
@@ -78,14 +78,14 @@ var/global/list/artefact_feedback = list(/obj/structure/closet/wizard/armor = 		
 	investing_time = max(investing_time - 6000,1) //subtract 10 minutes. Make sure it doesn't act funky at the beginning of the game.
 
 
-/obj/item/spellbook/attackby(obj/item/I as obj, mob/user as mob)
+/obj/item/spellbook/use_tool(obj/item/I, mob/living/user, list/click_params)
 	if(investing_time)
 		var/list/objects = spellbook.sacrifice_objects
 		if(objects && length(objects))
 			for(var/type in objects)
 				if(istype(I,type))
 					make_sacrifice(I,user)
-					return
+					return TRUE
 		if(I.reagents)
 			var/datum/reagents/R = I.reagents
 			var/list/reagent_list = spellbook.sacrifice_reagents
@@ -93,8 +93,8 @@ var/global/list/artefact_feedback = list(/obj/structure/closet/wizard/armor = 		
 				for(var/id in reagent_list)
 					if(R.has_reagent(id,5))
 						make_sacrifice(I,user, id)
-						return 1
-	..()
+						return TRUE
+	return ..()
 
 /obj/item/spellbook/interact(mob/user as mob)
 	var/dat = null

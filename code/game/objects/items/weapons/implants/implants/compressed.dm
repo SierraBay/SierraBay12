@@ -8,7 +8,7 @@
 	var/obj/item/scanned
 
 /obj/item/implant/compressed/trigger(emote, mob/source)
-	if (src.scanned == null)
+	if (isnull(src.scanned))
 		return 0
 
 	if (emote == src.activation_emote)
@@ -49,32 +49,31 @@
 		icon_state = "cimplanter0"
 	return
 
-/obj/item/implanter/compressed/attack(mob/M as mob, mob/user as mob)
+/obj/item/implanter/compressed/use_before(mob/M as mob, mob/user as mob)
 	var/obj/item/implant/compressed/c = imp
 	if (!c || !istype(M, /mob/living/carbon))
 		return FALSE
-	if (c.scanned == null)
+	if (isnull(c.scanned))
 		to_chat(user, "Please compress an object with the implanter first.")
 		return TRUE
-	else return ..()
+	return ..()
 
-/obj/item/implanter/compressed/afterattack(obj/item/A, mob/user as mob, proximity)
-	if(!proximity)
-		return
+/obj/item/implanter/compressed/use_after(obj/item/A, mob/living/user, click_parameters)
 	if(istype(A) && imp)
 		var/obj/item/implant/compressed/c = imp
 		if (c.scanned)
 			if (!istype(A,/obj/item/storage))
 				to_chat(user, SPAN_WARNING("Something is already compressed inside the implant!"))
-			return
+			return TRUE
 		else if(safe)
 			if (!istype(A,/obj/item/storage))
 				to_chat(user, SPAN_WARNING("The matter compressor safeties prevent you from doing that."))
-			return
+			return TRUE
 		if(istype(A.loc,/mob/living/carbon/human))
 			var/mob/living/carbon/human/H = A.loc
 			if(!H.unEquip(A))
-				return
+				FEEDBACK_UNEQUIP_FAILURE(user, A)
+				return TRUE
 		else if(istype(A.loc,/obj/item/storage))
 			var/obj/item/storage/S = A.loc
 			S.remove_from_storage(A)
@@ -83,6 +82,7 @@
 		safe = 2
 		desc = "It currently contains some matter."
 		update_icon()
+		return TRUE
 
 /obj/item/implanter/compressed/attack_self(mob/user)
 	if(!imp || safe == 2)

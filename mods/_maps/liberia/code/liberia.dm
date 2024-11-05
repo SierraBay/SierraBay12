@@ -5,7 +5,7 @@
 	name = "Liberia"
 	id = "awaysite_liberia"
 	description = "A Merchant ship."
-	prefix = "mods/_maps/liberia/maps"
+	prefix = "mods/_maps/liberia/maps/"
 	suffixes = list("liberia.dmm")
 	spawn_cost = 0
 	player_cost = 0
@@ -21,7 +21,7 @@
 	area_usage_test_exempted_root_areas = list(/area/liberia)
 
 // Overmap objects
-/obj/effect/overmap/visitable/ship/liberia
+/obj/overmap/visitable/ship/liberia
 	name = "Liberia"
 	desc = "Vessel with Free Trade Union registration"
 	color = "#8a6642"
@@ -38,7 +38,7 @@
 		"nav_liberia_west"
 	)
 
-/obj/effect/submap_landmark/joinable_submap/liberia
+/obj/submap_landmark/joinable_submap/liberia
 	name = "Liberia"
 	archetype = /singleton/submap_archetype/liberia
 
@@ -59,7 +59,7 @@
 /decl/submap_archetype/liberia/New()
 	. = ..()
 	GLOB.using_map.map_admin_faxes.Add("FTU Agency")
-	for(var/obj/machinery/photocopier/faxmachine/fax in SSmachines.machinery)
+	for(var/obj/machinery/photocopier/faxmachine/fax as anything in SSmachines.get_machinery_of_type(/obj/machinery/photocopier/faxmachine))
 		GLOB.admin_departments += "FTU Agency"
 
 /obj/machinery/power/apc/liberia

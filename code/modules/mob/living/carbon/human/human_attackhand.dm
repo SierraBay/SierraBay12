@@ -29,7 +29,7 @@
 	var/obj/item/organ/external/temp = H.organs_by_name[BP_R_HAND]
 	if (H.hand)
 		temp = H.organs_by_name[BP_L_HAND]
-	if (!temp || !temp.is_usable())
+	if (H.a_intent != I_HURT && (!temp || !temp.is_usable())) //Usability for harm is handled at the level of the attack datum's proc on get_attack_hand.
 		to_chat(H, SPAN_WARNING("You can't use your hand."))
 		return
 
@@ -46,9 +46,6 @@
 			return
 
 		var/obj/item/organ/external/affecting = get_organ(hit_zone)
-
-		if (MUTATION_HULK in H.mutations)
-			damage += 5
 
 		playsound(loc, "punch", 25, 1, -1)
 
@@ -98,7 +95,7 @@
 
 					var/obj/item/organ/internal/heart/heart = internal_organs_by_name[BP_HEART]
 					if (heart)
-						heart.external_pump = list(world.time, 0.4 + 0.1*pumping_skill + rand(-0.1,0.1))
+						heart.external_pump = list(world.time, 0.4 + 0.1*pumping_skill + Frand(-0.1,0.1))
 
 					if (stat != DEAD && prob(2 * pumping_skill))
 						resuscitate()
@@ -167,7 +164,8 @@
 
 			if (hit_zone != H.zone_sel.selecting) //If resolve_hand_attack returned a different zone, that means you're not as accurate.
 				if (prob(15) && hit_zone != BP_CHEST && lying)
-					H.visible_message(SPAN_DANGER("\The [H] attempted to strike \the [src], but \he rolled out of the way!"))
+					var/datum/pronouns/pronouns = choose_from_pronouns()
+					H.visible_message(SPAN_DANGER("\The [H] attempted to strike \the [src], but [pronouns.he] rolled out of the way!"))
 					set_dir(pick(GLOB.cardinal))
 					playsound(loc, attack.miss_sound, 25, 1, -1)
 					return
@@ -180,8 +178,6 @@
 
 			var/real_damage = rand_damage
 			real_damage += attack.get_unarmed_damage(H)
-			if (MUTATION_HULK in H.mutations)
-				real_damage *= 2
 			real_damage = max(1, real_damage)
 
 			attack.show_attack(H, src, hit_zone, real_damage)
@@ -189,7 +185,10 @@
 			attack.apply_effects(H, src, real_damage, hit_zone)
 			apply_damage(real_damage, attack.get_damage_type(), hit_zone, damage_flags=attack.damage_flags())
 			if (attack.should_attack_log)
-				admin_attack_log(H, src, "Has [pick(attack.attack_verb)] their victim.", "was [pick(attack.attack_verb)]] by their attacker", "has [pick(attack.attack_verb)]")
+				admin_attack_log(H, src, "Has [pick(attack.attack_verb)] their victim.", "was [pick(attack.attack_verb)] by their attacker", "has [pick(attack.attack_verb)]")
+
+			if (ai_holder)
+				ai_holder.react_to_attack(H)
 
 		if (I_DISARM)
 			if (H.species)
@@ -239,6 +238,7 @@
 */
 /mob/living/carbon/human/proc/apply_pressure(mob/living/user, target_zone)
 	var/obj/item/organ/external/organ = get_organ(target_zone)
+	var/datum/pronouns/pronouns = user.choose_from_pronouns()
 	if(!organ || !(organ.status & ORGAN_BLEEDING) || BP_IS_ROBOTIC(organ))
 		return 0
 
@@ -248,7 +248,7 @@
 		return 0
 
 	if(user == src)
-		user.visible_message("\The [user] starts applying pressure to \his [organ.name]!", "You start applying pressure to your [organ.name]!")
+		user.visible_message("\The [user] starts applying pressure to [pronouns.his] [organ.name]!", "You start applying pressure to your [organ.name]!")
 	else
 		user.visible_message("\The [user] starts applying pressure to [src]'s [organ.name]!", "You start applying pressure to [src]'s [organ.name]!")
 	spawn(0)
@@ -260,7 +260,7 @@
 		organ.applied_pressure = null
 
 		if(user == src)
-			user.visible_message("\The [user] stops applying pressure to \his [organ.name]!", "You stop applying pressure to your [organ.name]!")
+			user.visible_message("\The [user] stops applying pressure to [pronouns.his] [organ.name]!", "You stop applying pressure to your [organ.name]!")
 		else
 			user.visible_message("\The [user] stops applying pressure to [src]'s [organ.name]!", "You stop applying pressure to [src]'s [organ.name]!")
 

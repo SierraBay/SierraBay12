@@ -1,7 +1,6 @@
 // Drives
-/datum/design/item/modularcomponent/disk/AssembleDesignName()
-	..()
-	name = "Hard drive design ([item_name])"
+/datum/design/item/modularcomponent/
+	category = list("Computer Parts")
 
 /datum/design/item/modularcomponent/disk/normal
 	name = "basic hard drive"
@@ -58,9 +57,6 @@
 	sort_string = "VBAAF"
 
 // Network cards
-/datum/design/item/modularcomponent/netcard/AssembleDesignName()
-	..()
-	name = "Network card design ([item_name])"
 
 /datum/design/item/modularcomponent/netcard/basic
 	name = "basic network card"
@@ -93,9 +89,6 @@
 	sort_string = "VBABC"
 
 // Data crystals (USB flash drives)
-/datum/design/item/modularcomponent/portabledrive/AssembleDesignName()
-	..()
-	name = "Portable drive design ([item_name])"
 
 /datum/design/item/modularcomponent/portabledrive/basic
 	name = "basic data crystal"
@@ -128,9 +121,6 @@
 	sort_string = "VBACC"
 
 // Card slot
-/datum/design/item/modularcomponent/accessory/AssembleDesignName()
-	..()
-	name = "Computer accessory ([item_name])"
 
 /datum/design/item/modularcomponent/accessory/cardslot
 	name = "RFID card slot"
@@ -229,10 +219,6 @@
 	sort_string = "VBADJ"
 
 // Batteries
-/datum/design/item/modularcomponent/battery/AssembleDesignName()
-	..()
-	name = "Battery design ([item_name])"
-
 /datum/design/item/modularcomponent/battery/normal
 	name = "standard battery module"
 	id = "bat_normal"
@@ -288,10 +274,6 @@
 	sort_string = "VBAEF"
 
 // Processor unit
-/datum/design/item/modularcomponent/cpu/AssembleDesignName()
-	..()
-	name = "CPU design ([item_name])"
-
 /datum/design/item/modularcomponent/cpu
 	name = "computer processor unit"
 	id = "cpu_normal"
@@ -331,3 +313,33 @@
 	chemicals = list(/datum/reagent/acid = 20)
 	build_path = /obj/item/stock_parts/computer/processor_unit/photonic/small
 	sort_string = "VBAFD"
+
+//[SIERRA-ADD] - MODPACK_RND
+//// Compuckter Frames
+///
+
+/datum/design/item/modularcomponent/pda_frame
+	name = "PDA Frame"
+	id = "pda_frame"
+	materials = list(MATERIAL_STEEL = 750, MATERIAL_GLASS = 250)
+	build_path = /obj/item/modular_computer/pda
+
+/datum/design/item/modularcomponent/tablet_frame
+	name = "Tablet Frame"
+	id = "tablet_frame"
+	materials = list(MATERIAL_STEEL = 1500, MATERIAL_GLASS = 500)
+	build_path = /obj/item/modular_computer/tablet
+
+/datum/design/item/modularcomponent/laptop_frame
+	name = "Laptop Frame"
+	id = "laptop_frame"
+	materials = list(MATERIAL_STEEL = 3000, MATERIAL_GLASS = 1000)
+	build_path = /obj/item/modular_computer/laptop
+
+/datum/design/item/modularcomponent/telescreen_frame
+	name = "Telescreen Frame"
+	id = "telescreen_frame"
+	materials = list(MATERIAL_STEEL = 2000, MATERIAL_GLASS = 1500)
+	build_path = /obj/item/modular_computer/telescreen
+
+//[/SIERRA-ADD] - MODPACK_RND

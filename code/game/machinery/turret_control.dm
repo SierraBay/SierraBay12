@@ -85,18 +85,19 @@
 
 	return ..()
 
-/obj/machinery/turretid/attackby(obj/item/W, mob/user)
+/obj/machinery/turretid/use_tool(obj/item/W, mob/living/user, list/click_params)
 	if(MACHINE_IS_BROKEN(src))
-		return
+		return FALSE
 
 	if(istype(W, /obj/item/card/id)||istype(W, /obj/item/modular_computer))
-		if(src.allowed(usr))
+		if(allowed(usr))
 			if(emagged)
 				to_chat(user, SPAN_NOTICE("The turret control is unresponsive."))
 			else
 				locked = !locked
 				to_chat(user, SPAN_NOTICE("You [ locked ? "lock" : "unlock"] the panel."))
-		return
+		return TRUE
+
 	return ..()
 
 /obj/machinery/turretid/emag_act(remaining_charges, mob/user)
@@ -128,6 +129,10 @@
 		settings[LIST_PRE_INC(settings)] = list("category" = "Check Arrest Status", "setting" = "check_arrest", "value" = check_arrest)
 		settings[LIST_PRE_INC(settings)] = list("category" = "Check Access Authorization", "setting" = "check_access", "value" = check_access)
 		settings[LIST_PRE_INC(settings)] = list("category" = "Check misc. Lifeforms", "setting" = "check_anomalies", "value" = check_anomalies)
+		//[SIERRA-ADD] - AI_UPDATE
+		settings[LIST_PRE_INC(settings)] = list("category" = "Attack any robots and drones", "setting" = "attack_robots", "value" = attack_robots)
+		settings[LIST_PRE_INC(settings)] = list("category" = "Hold deployed", "setting" = "hold_deployed", "value" = hold_deployed)
+		//[SIERRA-ADD]
 		data["settings"] = settings
 
 	ui = SSnano.try_update_ui(user, src, ui_key, ui, data, force_open)
@@ -166,6 +171,12 @@
 			check_access = value
 		else if(href_list["command"] == "check_anomalies")
 			check_anomalies = value
+		//[SIERRA-ADD] - AI_UPDATE
+		else if(href_list["command"] == "attack_robots")
+			attack_robots = value
+		else if(href_list["command"] == "hold_deployed")
+			hold_deployed = value
+		//[SIERRA-ADD]
 
 		if(!isnull(log_action))
 			log_and_message_admins("has [log_action]", usr, loc)
@@ -199,13 +210,13 @@
 	else if (enabled)
 		if (lethal)
 			icon_state = "control_kill"
-			set_light(1, 0.5, 2, 2, "#990000")
+			set_light(1.5, 1,"#990000")
 		else
 			icon_state = "control_stun"
-			set_light(1, 0.5, 2, 2, "#ff9900")
+			set_light(1.5, 1,"#ff9900")
 	else
 		icon_state = "control_standby"
-		set_light(1, 0.5, 2, 2, "#003300")
+		set_light(1.5, 1,"#003300")
 
 /obj/machinery/turretid/emp_act(severity)
 	if(enabled)
@@ -217,6 +228,10 @@
 		check_weapons = pick(0, 1)
 		check_access = pick(0, 0, 0, 0, 1)	// check_access is a pretty big deal, so it's least likely to get turned on
 		check_anomalies = pick(0, 1)
+		//[SIERRA-ADD] - AI_UPDATE
+		attack_robots = pick(0,1)
+		hold_deployed = pick(0,1)
+		//[SIERRA-ADD]
 		locked = pick(0, 1)
 		ailock = pick(0, 1)
 

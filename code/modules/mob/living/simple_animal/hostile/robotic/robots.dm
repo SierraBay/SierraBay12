@@ -54,7 +54,7 @@
 	explosion(loc, explosion_radius, explosion_max_power)
 	var/turf/origin = get_turf(src)
 	if (origin)
-		var/datum/effect/effect/system/spark_spread/sparks = new
+		var/datum/effect/spark_spread/sparks = new
 		sparks.set_up(3, 1, origin)
 		sparks.start()
 		var/list/loot = list()
@@ -103,7 +103,7 @@
 	icon_state = "u_laser"
 	fire_sound = 'sound/weapons/marauder.ogg'
 	damage = 90
-	penetrating = 3
+	penetrating = 6
 	armor_penetration = 50
 	distance_falloff = 0
 	damage_falloff_list = list(
@@ -112,9 +112,24 @@
 		list(11, 0.9),
 	)
 
-	muzzle_type = /obj/effect/projectile/laser/pulse/muzzle
-	tracer_type = /obj/effect/projectile/laser/pulse/tracer
-	impact_type = /obj/effect/projectile/laser/pulse/impact
+	muzzle_type = /obj/projectile/laser/pulse/muzzle
+	tracer_type = /obj/projectile/laser/pulse/tracer
+	impact_type = /obj/projectile/laser/pulse/impact
+	penetration_modifier = 1.5
+
+/obj/item/projectile/beam/bunkerbuster/check_penetrate(atom/A)
+	..()
+
+	var/chance = damage
+	var/datum/extension/penetration/P = get_extension(A, /datum/extension/penetration)
+	if(P)
+		chance = min(100, P.PenetrationProbability(chance, damage, damage_type) * penetration_modifier)
+
+	if(prob(chance))
+		if(A.opacity)
+			A.visible_message(SPAN_WARNING("\The [src] pierces through \the [A]!"))
+		return TRUE
+	return FALSE
 
 /mob/living/simple_animal/hostile/fleet_heavy
 	name = "\improper hullbreaker monitor"
@@ -160,17 +175,17 @@
 		)
 
 	var/exploded = FALSE
-	var/explosion_radius = 7
+	var/explosion_radius = 5
 	var/explosion_max_power = EX_ACT_DEVASTATING
 
 	/// Lower bound for explosion delay.
-	var/explosion_delay_lower	= 3 SECONDS
+	var/explosion_delay_lower	= 4 SECONDS
 	/// Upper bound for explosion delay.
-	var/explosion_delay_upper	= 5 SECONDS
+	var/explosion_delay_upper	= 6 SECONDS
 
 	ai_holder = /datum/ai_holder/simple_animal/ranged/kiting/threatening/fleet_heavy
 
-	ranged_attack_delay = 1 SECOND //How much time we wait before really shooting
+	ranged_attack_delay = 2 SECOND //How much time we wait before really shooting
 
 /datum/ai_holder/simple_animal/ranged/kiting/threatening/fleet_heavy
 	firing_lanes = FALSE        // Lets you use others as shields
@@ -232,7 +247,7 @@
 	visible_message(SPAN_DANGER("\The [src]'s back begins to crack and hum!"))
 	playsound(src,'sound/effects/cascade.ogg', 50, 1, -6)
 	var/delay = rand(explosion_delay_lower, explosion_delay_upper)
-	addtimer(new Callback(src, .proc/flash, delay), 0)
+	addtimer(new Callback(src, PROC_REF(flash), delay), 0)
 
 	return ..()
 
@@ -272,14 +287,14 @@
 	target.vis_contents += src
 	flick("shield_raise", src) //Animation on add / spawn
 	set_dir() //the whole dir bit is for rendering, if you dont use this just remove this and the GLOB.dir_set_event stuff
-	GLOB.dir_set_event.register(user, src, /obj/aura/mobshield/proc/update_dir)
+	GLOB.dir_set_event.register(user, src, TYPE_PROC_REF(/obj/aura/mobshield, update_dir))
 
 /obj/aura/mobshield/proc/update_dir(user, old_dir, dir)
 	set_dir(dir) //Theres ways to make vis contents inherit dir but eh
 
 /obj/aura/mobshield/Destroy()
 	if(user)
-		GLOB.dir_set_event.unregister(user, src, /obj/aura/mechshield/proc/update_dir)
+		GLOB.dir_set_event.unregister(user, src, TYPE_PROC_REF(/obj/aura/mechshield, update_dir))
 		user.vis_contents -= src
 	. = ..()
 
@@ -303,7 +318,7 @@
 		user.visible_message(SPAN_WARNING("\The [user]'s shields flash and crackle."))
 		flick("shield_drop", src)
 		playsound(user,'sound/effects/basscannon.ogg',35,1)
-		new /obj/effect/effect/smoke/illumination(user.loc, 5, 4, 1, "#ffffff")
+		new /obj/effect/smoke/illumination(user.loc, 5, 4, 1, "#ffffff")
 		return AURA_FALSE|AURA_CANCEL
 	visible_message(SPAN_DANGER("\The [src]'s exposed back dents and buckles!"))
 	playsound(user,'sound/items/Welder2.ogg',35,1)

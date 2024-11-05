@@ -1,7 +1,5 @@
-/datum/design/item/surgery/AssembleDesignName()
-	..()
-	name = "Surgical tool design ([item_name])"
-
+/datum/design/item/surgery
+	category = list("Medical")
 
 /datum/design/item/surgery/scalpel_laser
 	name = "Laser Scalpel"

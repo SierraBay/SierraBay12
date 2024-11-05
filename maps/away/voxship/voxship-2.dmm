@@ -53,15 +53,7 @@
 /turf/simulated/wall/r_wall/hull/vox,
 /area/voxship/thrusters)
 "ak" = (
-/obj/effect/wallframe_spawn/reinforced/hull/vox,
-/obj/machinery/door/blast/shutters{
-	density = 0;
-	dir = 2;
-	icon_state = "shutter0";
-	id_tag = "vox_hydro";
-	name = "Window Shutters";
-	opacity = 0
-	},
+/obj/wallframe_spawn/reinforced/hull/vox,
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
 	d2 = 2;
@@ -72,18 +64,14 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
+/obj/machinery/door/blast/shutters{
+	name = "Window Shutters";
+	id_tag = "vox_hydro"
+	},
 /turf/simulated/floor/plating/vox,
 /area/voxship/scavship)
 "al" = (
-/obj/effect/wallframe_spawn/reinforced/hull/vox,
-/obj/machinery/door/blast/shutters{
-	density = 0;
-	dir = 2;
-	icon_state = "shutter0";
-	id_tag = "vox_hydro";
-	name = "Window Shutters";
-	opacity = 0
-	},
+/obj/wallframe_spawn/reinforced/hull/vox,
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
 	d2 = 8;
@@ -93,22 +81,22 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/obj/machinery/door/blast/shutters{
+	name = "Window Shutters";
+	id_tag = "vox_hydro"
+	},
 /turf/simulated/floor/plating/vox,
 /area/voxship/scavship)
 "am" = (
-/obj/effect/wallframe_spawn/reinforced/hull/vox,
-/obj/machinery/door/blast/shutters{
-	density = 0;
-	dir = 2;
-	icon_state = "shutter0";
-	id_tag = "vox_hydro";
-	name = "Window Shutters";
-	opacity = 0
-	},
+/obj/wallframe_spawn/reinforced/hull/vox,
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
+	},
+/obj/machinery/door/blast/shutters{
+	name = "Window Shutters";
+	id_tag = "vox_hydro"
 	},
 /turf/simulated/floor/plating/vox,
 /area/voxship/scavship)
@@ -121,7 +109,7 @@
 /turf/simulated/floor/plating/vox,
 /area/voxship/thrusters)
 "ap" = (
-/obj/effect/decal/cleanable/filth,
+/obj/decal/cleanable/filth,
 /turf/simulated/floor/plating/vox,
 /area/voxship/thrusters)
 "aq" = (
@@ -156,7 +144,7 @@
 /area/voxship/scavship)
 "aw" = (
 /obj/machinery/portable_atmospherics/hydroponics,
-/obj/effect/decal/cleanable/filth,
+/obj/decal/cleanable/filth,
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/scavship)
 "ax" = (
@@ -208,7 +196,7 @@
 /turf/simulated/floor/plating/vox,
 /area/voxship/thrusters)
 "aG" = (
-/obj/effect/decal/cleanable/cobweb2,
+/obj/decal/cleanable/cobweb2,
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -237,6 +225,7 @@
 /obj/item/gun/energy/sonic,
 /obj/item/gun/launcher/alien/spikethrower,
 /obj/item/gun/launcher/alien/slugsling,
+/obj/item/gun/launcher/alien/spikethrower,
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/fore)
 "aK" = (
@@ -258,7 +247,7 @@
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/scavship)
 "aM" = (
-/obj/effect/decal/cleanable/filth,
+/obj/decal/cleanable/filth,
 /obj/random/snack,
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/scavship)
@@ -267,29 +256,21 @@
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/scavship)
 "aO" = (
-/turf/simulated/floor/reinforced/nitrogen,
+/obj/machinery/atmospherics/pipe/simple/hidden/blue{
+	dir = 6
+	},
+/turf/simulated/floor/plating/vox,
 /area/voxship/engineering)
 "aP" = (
-/obj/machinery/atmospherics/unary/vent_pump/tank{
-	dir = 4;
-	external_pressure_bound = 0;
-	external_pressure_bound_default = 0;
-	icon_state = "map_vent_in";
-	id_tag = "o2_out";
-	initialize_directions = 1;
-	internal_pressure_bound = 4000;
-	internal_pressure_bound_default = 4000;
-	pressure_checks = 2;
-	pressure_checks_default = 2;
-	pump_direction = 0;
-	use_power = 1
+/obj/machinery/atmospherics/pipe/manifold/hidden/blue{
+	dir = 1
 	},
-/turf/simulated/floor/reinforced/nitrogen,
+/turf/simulated/floor/plating/vox,
 /area/voxship/engineering)
 "aQ" = (
-/obj/effect/wallframe_spawn/reinforced_phoron/hull,
-/obj/machinery/atmospherics/pipe/simple/hidden/blue{
-	dir = 4
+/obj/machinery/atmospherics/unary/tank/carbon_dioxide{
+	dir = 8;
+	start_pressure = 7000
 	},
 /turf/simulated/floor/plating/vox,
 /area/voxship/engineering)
@@ -312,10 +293,14 @@
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/engineering)
 "aU" = (
-/turf/simulated/floor/reinforced/carbon_dioxide,
+/obj/machinery/atmospherics/unary/tank/carbon_dioxide{
+	dir = 4;
+	start_pressure = 7000
+	},
+/turf/simulated/floor/plating/vox,
 /area/voxship/engineering)
 "aV" = (
-/obj/effect/decal/cleanable/filth,
+/obj/decal/cleanable/filth,
 /turf/simulated/floor/plating/vox,
 /area/voxship/engineering)
 "aW" = (
@@ -374,7 +359,7 @@
 	dir = 8
 	},
 /obj/machinery/meter,
-/obj/effect/decal/cleanable/filth,
+/obj/decal/cleanable/filth,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -386,7 +371,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/fuel{
 	dir = 4
 	},
-/obj/effect/decal/cleanable/filth,
+/obj/decal/cleanable/filth,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -440,7 +425,7 @@
 /obj/random/hat,
 /obj/random/loot,
 /obj/random/clothing,
-/obj/effect/decal/cleanable/filth,
+/obj/decal/cleanable/filth,
 /obj/random/energy,
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/fore)
@@ -479,12 +464,12 @@
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/scavship)
 "bm" = (
-/obj/effect/decal/cleanable/filth,
+/obj/decal/cleanable/filth,
 /obj/item/seeds/breather,
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/scavship)
 "bn" = (
-/obj/effect/decal/cleanable/filth,
+/obj/decal/cleanable/filth,
 /obj/machinery/button/blast_door{
 	id_tag = "vox_hydro";
 	name = "shutter control";
@@ -500,7 +485,10 @@
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/scavship)
 "bp" = (
-/obj/effect/wallframe_spawn/reinforced_phoron/hull,
+/obj/machinery/atmospherics/unary/tank/nitrogen{
+	dir = 1;
+	start_pressure = 4000
+	},
 /turf/simulated/floor/plating/vox,
 /area/voxship/engineering)
 "bq" = (
@@ -511,52 +499,43 @@
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/engineering)
 "br" = (
-/obj/machinery/atmospherics/pipe/manifold4w/hidden/blue,
 /obj/machinery/meter,
+/obj/machinery/atmospherics/pipe/manifold/hidden/blue{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/engineering)
 "bs" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 1
 	},
-/obj/effect/decal/cleanable/cobweb2,
+/obj/decal/cleanable/cobweb2,
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/engineering)
 "bt" = (
-/obj/machinery/atmospherics/unary/vent_pump/tank{
-	dir = 4;
-	external_pressure_bound = 0;
-	external_pressure_bound_default = 0;
-	icon_state = "map_vent_in";
-	id_tag = "o2_out";
-	initialize_directions = 1;
-	internal_pressure_bound = 4000;
-	internal_pressure_bound_default = 4000;
-	pressure_checks = 2;
-	pressure_checks_default = 2;
-	pump_direction = 0;
-	use_power = 1
-	},
-/turf/simulated/floor/reinforced/carbon_dioxide,
+/obj/machinery/atmospherics/pipe/manifold4w/hidden/black,
+/obj/machinery/meter,
+/turf/simulated/floor/plating/vox,
 /area/voxship/engineering)
 "bu" = (
-/obj/effect/wallframe_spawn/reinforced_phoron/hull,
-/obj/machinery/atmospherics/pipe/simple/hidden/black{
-	dir = 4
+/obj/machinery/atmospherics/binary/pump/high_power{
+	dir = 4;
+	icon_state = "map_off"
 	},
 /turf/simulated/floor/plating/vox,
 /area/voxship/engineering)
 "bv" = (
-/obj/machinery/atmospherics/binary/pump/high_power{
-	dir = 4
+/obj/machinery/atmospherics/pipe/manifold/hidden/black{
+	dir = 1
 	},
 /turf/simulated/floor/plating/vox,
 /area/voxship/engineering)
 "bw" = (
-/obj/machinery/atmospherics/pipe/manifold/hidden/black{
-	dir = 1
-	},
 /obj/machinery/meter,
+/obj/machinery/atmospherics/pipe/simple/hidden/black{
+	dir = 4;
+	icon_state = "intact"
+	},
 /turf/simulated/floor/plating/vox,
 /area/voxship/engineering)
 "bx" = (
@@ -573,7 +552,7 @@
 /turf/simulated/floor/plating/vox,
 /area/voxship/thrusters)
 "by" = (
-/obj/effect/decal/cleanable/blood/oil,
+/obj/decal/cleanable/blood/oil,
 /obj/machinery/atmospherics/pipe/simple/hidden/universal{
 	dir = 4
 	},
@@ -602,7 +581,7 @@
 /turf/simulated/floor/plating/vox,
 /area/voxship/thrusters)
 "bC" = (
-/obj/effect/decal/cleanable/filth,
+/obj/decal/cleanable/filth,
 /obj/machinery/portable_atmospherics/canister/empty,
 /turf/simulated/floor/plating/vox,
 /area/voxship/thrusters)
@@ -638,7 +617,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/random/hat,
 /obj/random/loot,
-/obj/effect/decal/cleanable/filth,
+/obj/decal/cleanable/filth,
 /obj/random/snack,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
@@ -652,6 +631,7 @@
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 8
 	},
+/obj/item/storage/bolt_bag/full_of_bolts,
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/fore)
 "bJ" = (
@@ -666,7 +646,7 @@
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/fore)
 "bK" = (
-/obj/effect/decal/cleanable/filth,
+/obj/decal/cleanable/filth,
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/fore)
 "bL" = (
@@ -696,27 +676,23 @@
 /area/voxship/scavship)
 "bP" = (
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/blue,
-/obj/effect/decal/cleanable/filth,
+/obj/decal/cleanable/filth,
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/engineering)
 "bQ" = (
-/obj/machinery/atmospherics/unary/tank/nitrogen,
-/obj/effect/floor_decal/borderfloorblack{
-	dir = 4
+/obj/machinery/atmospherics/unary/tank/nitrogen{
+	dir = 8
 	},
-/turf/simulated/floor/tiled/techmaint/vox,
+/turf/simulated/floor/plating/vox,
 /area/voxship/engineering)
 "bR" = (
 /obj/machinery/atmospherics/portables_connector{
-	dir = 4
+	dir = 1
 	},
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /turf/simulated/floor/plating/vox,
 /area/voxship/engineering)
 "bS" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/black{
-	dir = 9
-	},
 /obj/random/junk,
 /turf/simulated/floor/plating/vox,
 /area/voxship/engineering)
@@ -755,7 +731,7 @@
 /area/voxship/fore)
 "bY" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/effect/decal/cleanable/filth,
+/obj/decal/cleanable/filth,
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/fore)
 "bZ" = (
@@ -776,6 +752,11 @@
 /obj/item/clothing/suit/armor/vox_scrap,
 /obj/item/clothing/suit/armor/vox_scrap,
 /obj/item/clothing/suit/armor/vox_scrap,
+/obj/item/clothing/head/helmet/vox_scrap,
+/obj/item/clothing/head/helmet/vox_scrap,
+/obj/item/clothing/head/helmet/vox_scrap,
+/obj/item/clothing/head/helmet/vox_scrap,
+/obj/item/clothing/head/helmet/vox_scrap,
 /obj/item/clothing/under/vox/vox_casual,
 /obj/item/clothing/under/vox/vox_casual,
 /obj/item/clothing/under/vox/vox_casual,
@@ -789,7 +770,7 @@
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/fore)
 "ca" = (
-/obj/effect/overmap/visitable/sector/vox_scav_ship,
+/obj/overmap/visitable/sector/vox_scav_ship,
 /turf/space,
 /area/space)
 "cb" = (
@@ -811,7 +792,7 @@
 /obj/item/screwdriver,
 /obj/item/crowbar,
 /obj/machinery/recharger,
-/obj/effect/decal/cleanable/cobweb,
+/obj/decal/cleanable/cobweb,
 /turf/simulated/floor/plating/vox,
 /area/voxship/scavship)
 "ce" = (
@@ -841,11 +822,15 @@
 /obj/structure/table/reinforced,
 /obj/item/inflatable_dispenser,
 /obj/machinery/atmospherics/unary/vent_pump/on,
-/obj/effect/floor_decal/borderfloorblack,
+/obj/floor_decal/borderfloorblack,
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/engineering)
 "ci" = (
-/obj/effect/floor_decal/borderfloorblack,
+/obj/floor_decal/borderfloorblack,
+/obj/machinery/atmospherics/unary/vent_pump/on{
+	dir = 1;
+	level = 2
+	},
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/engineering)
 "cj" = (
@@ -853,14 +838,12 @@
 	name = "nitrogen supply";
 	target_pressure = 280
 	},
-/obj/effect/floor_decal/borderfloorblack,
+/obj/floor_decal/borderfloorblack,
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/engineering)
 "ck" = (
 /obj/random/junk,
-/obj/effect/floor_decal/borderfloorblack{
-	dir = 6
-	},
+/obj/floor_decal/borderfloorblack,
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/engineering)
 "cl" = (
@@ -886,7 +869,7 @@
 /turf/simulated/floor/plating/vox,
 /area/voxship/thrusters)
 "co" = (
-/obj/effect/submap_landmark/joinable_submap/voxship/scavship,
+/obj/submap_landmark/joinable_submap/voxship/scavship,
 /turf/space,
 /area/space)
 "cp" = (
@@ -924,7 +907,7 @@
 /area/voxship/fore)
 "cu" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/effect/decal/cleanable/filth,
+/obj/decal/cleanable/filth,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/fore)
@@ -1142,7 +1125,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/effect/decal/cleanable/filth,
+/obj/decal/cleanable/filth,
 /obj/structure/catwalk,
 /obj/machinery/light/small{
 	dir = 1
@@ -1230,21 +1213,18 @@
 	},
 /area/voxship/fore)
 "cT" = (
-/obj/effect/wallframe_spawn/reinforced/hull/vox,
-/obj/machinery/door/blast/shutters{
-	density = 0;
-	dir = 2;
-	icon_state = "shutter0";
-	id_tag = "vox_bridge";
-	name = "Window Shutters";
-	opacity = 0
-	},
+/obj/wallframe_spawn/reinforced/hull/vox,
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/universal{
+	dir = 4
+	},
+/obj/machinery/door/blast/shutters{
+	name = "Window Shutters";
+	id_tag = "vox_bridge";
 	dir = 4
 	},
 /turf/simulated/floor/plating/vox,
@@ -1298,7 +1278,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/scrubbers,
-/obj/effect/shuttle_landmark/vox_base/hangar/vox_ship,
+/obj/shuttle_landmark/vox_base/hangar/vox_ship,
 /obj/machinery/hologram/holopad/longrange,
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
 /turf/simulated/floor/tiled/techmaint/vox,
@@ -1408,26 +1388,26 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/effect/floor_decal/borderfloorblack{
+/obj/floor_decal/borderfloorblack{
 	dir = 9
 	},
-/obj/effect/floor_decal/corner_techfloor_gray,
+/obj/floor_decal/corner_techfloor_gray,
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/scavship)
 "dg" = (
 /obj/machinery/fabricator,
-/obj/effect/floor_decal/borderfloorblack{
+/obj/floor_decal/borderfloorblack{
 	dir = 1
 	},
-/obj/effect/floor_decal/corner_techfloor_gray,
+/obj/floor_decal/corner_techfloor_gray,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/scavship)
 "dh" = (
-/obj/effect/floor_decal/borderfloorblack{
+/obj/floor_decal/borderfloorblack{
 	dir = 1
 	},
-/obj/effect/floor_decal/corner_techfloor_gray,
+/obj/floor_decal/corner_techfloor_gray,
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/scavship)
 "di" = (
@@ -1435,8 +1415,8 @@
 /obj/structure/bed/chair{
 	dir = 8
 	},
-/obj/effect/decal/cleanable/blood/oil,
-/obj/effect/floor_decal/borderfloorblack{
+/obj/decal/cleanable/blood/oil,
+/obj/floor_decal/borderfloorblack{
 	dir = 5
 	},
 /turf/simulated/floor/tiled/techmaint/vox,
@@ -1447,7 +1427,7 @@
 /turf/simulated/wall/prepainted,
 /area/voxship/scavship)
 "dk" = (
-/obj/effect/floor_decal/industrial/hatch/yellow,
+/obj/floor_decal/industrial/hatch/yellow,
 /obj/machinery/door/airlock/hatch/voxship,
 /obj/structure/cable{
 	d1 = 1;
@@ -1562,20 +1542,20 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/effect/floor_decal/borderfloorblack{
+/obj/floor_decal/borderfloorblack{
 	dir = 8
 	},
-/obj/effect/floor_decal/corner_techfloor_gray,
+/obj/floor_decal/corner_techfloor_gray,
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/scavship)
 "dw" = (
 /obj/machinery/vending/tool,
-/obj/effect/floor_decal/corner_techfloor_gray/diagonal,
+/obj/floor_decal/corner_techfloor_gray/diagonal,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/scavship)
 "dx" = (
-/obj/effect/floor_decal/corner_techfloor_gray/diagonal,
+/obj/floor_decal/corner_techfloor_gray/diagonal,
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/scavship)
 "dy" = (
@@ -1583,10 +1563,10 @@
 	dir = 1;
 	level = 2
 	},
-/obj/effect/floor_decal/borderfloorblack{
+/obj/floor_decal/borderfloorblack{
 	dir = 4
 	},
-/obj/effect/floor_decal/corner_techfloor_gray{
+/obj/floor_decal/corner_techfloor_gray{
 	dir = 1
 	},
 /obj/machinery/light/small{
@@ -1664,7 +1644,7 @@
 /area/voxship/scavship)
 "dK" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/black,
-/obj/effect/wallframe_spawn/reinforced_phoron/hull,
+/obj/wallframe_spawn/reinforced_phoron/hull,
 /obj/machinery/door/blast/regular{
 	density = 0;
 	dir = 4;
@@ -1708,13 +1688,13 @@
 /area/voxship/thrusters)
 "dQ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/effect/decal/cleanable/filth,
-/obj/effect/floor_decal/corner_steel_grid/diagonal,
+/obj/decal/cleanable/filth,
+/obj/floor_decal/corner_steel_grid/diagonal,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/fore)
 "dR" = (
-/obj/effect/floor_decal/corner_steel_grid/diagonal,
+/obj/floor_decal/corner_steel_grid/diagonal,
 /obj/item/tank/nitrogen,
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/fore)
@@ -1723,28 +1703,28 @@
 /obj/item/bedsheet/mime,
 /obj/structure/curtain/open/bed,
 /obj/item/clothing/suit/pirate,
-/obj/effect/floor_decal/corner_steel_grid/diagonal,
-/obj/effect/submap_landmark/spawnpoint/voxship_crew/engineer,
+/obj/floor_decal/corner_steel_grid/diagonal,
+/obj/submap_landmark/spawnpoint/voxship_crew/engineer,
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/fore)
 "dT" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/random/junk,
-/obj/effect/decal/cleanable/filth,
-/obj/effect/floor_decal/borderfloorblack{
+/obj/decal/cleanable/filth,
+/obj/floor_decal/borderfloorblack{
 	dir = 1
 	},
-/obj/effect/floor_decal/corner_techfloor_gray,
+/obj/floor_decal/corner_techfloor_gray,
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/scavship)
 "dU" = (
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/effect/floor_decal/borderfloorblack/corner{
+/obj/floor_decal/borderfloorblack/corner{
 	dir = 1
 	},
-/obj/effect/floor_decal/corner_techfloor_gray,
+/obj/floor_decal/corner_techfloor_gray,
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/scavship)
 "dV" = (
@@ -1759,21 +1739,21 @@
 /obj/machinery/vending/engivend{
 	req_access = list()
 	},
-/obj/effect/floor_decal/corner_techfloor_gray/diagonal,
+/obj/floor_decal/corner_techfloor_gray/diagonal,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/scavship)
 "dX" = (
 /obj/item/storage/toolbox,
-/obj/effect/floor_decal/corner_techfloor_gray/diagonal,
+/obj/floor_decal/corner_techfloor_gray/diagonal,
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/scavship)
 "dY" = (
-/obj/effect/decal/cleanable/filth,
-/obj/effect/floor_decal/borderfloorblack{
+/obj/decal/cleanable/filth,
+/obj/floor_decal/borderfloorblack{
 	dir = 4
 	},
-/obj/effect/floor_decal/corner_techfloor_gray{
+/obj/floor_decal/corner_techfloor_gray{
 	dir = 1
 	},
 /turf/simulated/floor/tiled/techmaint/vox,
@@ -1799,7 +1779,7 @@
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/scavship)
 "eb" = (
-/obj/effect/decal/cleanable/filth,
+/obj/decal/cleanable/filth,
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 8
 	},
@@ -1832,7 +1812,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/effect/decal/cleanable/filth,
+/obj/decal/cleanable/filth,
 /obj/structure/catwalk,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/alarm/vox{
@@ -1892,8 +1872,8 @@
 /obj/structure/bed,
 /obj/item/bedsheet/hos,
 /obj/structure/curtain/open/bed,
-/obj/effect/floor_decal/corner_steel_grid/diagonal,
-/obj/effect/submap_landmark/spawnpoint/voxship_crew/quill,
+/obj/floor_decal/corner_steel_grid/diagonal,
+/obj/submap_landmark/spawnpoint/voxship_crew/quill,
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/fore)
 "em" = (
@@ -1903,20 +1883,20 @@
 	},
 /obj/item/storage/box/vox,
 /obj/item/storage/box/vox,
-/obj/effect/floor_decal/corner_steel_grid/diagonal,
+/obj/floor_decal/corner_steel_grid/diagonal,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/fore)
 "en" = (
 /obj/item/inflatable_duck,
-/obj/effect/floor_decal/corner_steel_grid/diagonal,
+/obj/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/fore)
 "eo" = (
-/obj/effect/decal/cleanable/cobweb,
+/obj/decal/cleanable/cobweb,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/kitchenspike,
-/obj/effect/decal/cleanable/blood,
+/obj/decal/cleanable/blood,
 /turf/simulated/floor/tiled/freezer{
 	initial_gas = list("nitrogen"=101.383)
 	},
@@ -1929,7 +1909,7 @@
 /area/voxship/fore)
 "eq" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/effect/floor_decal/corner_techfloor_gray/diagonal,
+/obj/floor_decal/corner_techfloor_gray/diagonal,
 /obj/machinery/alarm/vox{
 	dir = 4;
 	pixel_x = -16
@@ -1948,12 +1928,12 @@
 /area/voxship/fore)
 "es" = (
 /obj/random/junk,
-/obj/effect/decal/cleanable/blood/oil,
-/obj/effect/floor_decal/corner_techfloor_gray/diagonal,
+/obj/decal/cleanable/blood/oil,
+/obj/floor_decal/corner_techfloor_gray/diagonal,
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/scavship)
 "et" = (
-/obj/effect/floor_decal/corner_techfloor_gray/diagonal,
+/obj/floor_decal/corner_techfloor_gray/diagonal,
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 1
 	},
@@ -1961,10 +1941,10 @@
 /area/voxship/scavship)
 "eu" = (
 /obj/random/junk,
-/obj/effect/floor_decal/borderfloorblack{
+/obj/floor_decal/borderfloorblack{
 	dir = 4
 	},
-/obj/effect/floor_decal/corner_techfloor_gray{
+/obj/floor_decal/corner_techfloor_gray{
 	dir = 1
 	},
 /obj/machinery/light/small{
@@ -2000,7 +1980,7 @@
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/scavship)
 "ez" = (
-/obj/effect/decal/cleanable/filth,
+/obj/decal/cleanable/filth,
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/scavship)
@@ -2012,7 +1992,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/effect/floor_decal/corner_techfloor_gray/diagonal,
+/obj/floor_decal/corner_techfloor_gray/diagonal,
 /obj/structure/bed/chair{
 	dir = 4
 	},
@@ -2136,7 +2116,7 @@
 /area/voxship/fore)
 "eO" = (
 /obj/item/pizzabox/meat,
-/obj/effect/floor_decal/corner_steel_grid/diagonal,
+/obj/floor_decal/corner_steel_grid/diagonal,
 /obj/item/tank/nitrogen,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
@@ -2144,8 +2124,8 @@
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/fore)
 "eP" = (
-/obj/effect/decal/cleanable/filth,
-/obj/effect/floor_decal/corner_steel_grid/diagonal,
+/obj/decal/cleanable/filth,
+/obj/floor_decal/corner_steel_grid/diagonal,
 /obj/random/snack,
 /obj/machinery/light/small{
 	dir = 4;
@@ -2167,7 +2147,7 @@
 	},
 /area/voxship/fore)
 "eR" = (
-/obj/effect/decal/cleanable/filth,
+/obj/decal/cleanable/filth,
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 1
 	},
@@ -2191,22 +2171,22 @@
 	},
 /area/voxship/fore)
 "eU" = (
-/obj/effect/floor_decal/corner_techfloor_gray/diagonal,
+/obj/floor_decal/corner_techfloor_gray/diagonal,
 /obj/structure/table/steel,
 /obj/random/junk,
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/scavship)
 "eV" = (
-/obj/effect/decal/cleanable/filth,
-/obj/effect/floor_decal/corner_techfloor_gray/diagonal,
+/obj/decal/cleanable/filth,
+/obj/floor_decal/corner_techfloor_gray/diagonal,
 /obj/structure/table/steel,
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/scavship)
 "eW" = (
-/obj/effect/floor_decal/corner_techfloor_gray{
+/obj/floor_decal/corner_techfloor_gray{
 	dir = 1
 	},
-/obj/effect/floor_decal/borderfloorblack{
+/obj/floor_decal/borderfloorblack{
 	dir = 4
 	},
 /obj/structure/bed/chair{
@@ -2220,10 +2200,10 @@
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/scavship)
 "eY" = (
-/obj/effect/floor_decal/corner_techfloor_gray{
+/obj/floor_decal/corner_techfloor_gray{
 	dir = 1
 	},
-/obj/effect/floor_decal/borderfloorblack,
+/obj/floor_decal/borderfloorblack,
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/scavship)
 "eZ" = (
@@ -2280,10 +2260,10 @@
 /turf/simulated/floor/plating/vox,
 /area/voxship/engineering)
 "fe" = (
-/obj/effect/floor_decal/corner_techfloor_gray{
+/obj/floor_decal/corner_techfloor_gray{
 	dir = 1
 	},
-/obj/effect/floor_decal/borderfloorblack,
+/obj/floor_decal/borderfloorblack,
 /obj/structure/bed/chair{
 	dir = 1
 	},
@@ -2293,7 +2273,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/fuel{
 	dir = 8
 	},
-/obj/effect/decal/cleanable/blood/oil,
+/obj/decal/cleanable/blood/oil,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/thrusters)
@@ -2307,18 +2287,18 @@
 /obj/structure/bed,
 /obj/item/bedsheet/rd,
 /obj/structure/curtain/open/bed,
-/obj/effect/floor_decal/corner_steel_grid/diagonal,
-/obj/effect/submap_landmark/spawnpoint/voxship_crew,
+/obj/floor_decal/corner_steel_grid/diagonal,
+/obj/submap_landmark/spawnpoint/voxship_crew,
 /obj/item/bikehorn/rubberducky,
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/fore)
 "fi" = (
-/obj/effect/floor_decal/corner_steel_grid/diagonal,
+/obj/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/fore)
 "fj" = (
-/obj/effect/floor_decal/corner_steel_grid/diagonal,
-/obj/effect/decal/cleanable/filth,
+/obj/floor_decal/corner_steel_grid/diagonal,
+/obj/decal/cleanable/filth,
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/fore)
 "fk" = (
@@ -2358,10 +2338,10 @@
 	},
 /area/voxship/fore)
 "fo" = (
-/obj/effect/floor_decal/borderfloorblack{
+/obj/floor_decal/borderfloorblack{
 	dir = 6
 	},
-/obj/effect/floor_decal/corner_techfloor_gray{
+/obj/floor_decal/corner_techfloor_gray{
 	dir = 1
 	},
 /turf/simulated/floor/tiled/techmaint/vox,
@@ -2454,8 +2434,8 @@
 /obj/structure/bed,
 /obj/item/bedsheet/rd,
 /obj/structure/curtain/open/bed,
-/obj/effect/floor_decal/corner_steel_grid/diagonal,
-/obj/effect/submap_landmark/spawnpoint/voxship_crew/doc,
+/obj/floor_decal/corner_steel_grid/diagonal,
+/obj/submap_landmark/spawnpoint/voxship_crew/doc,
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/fore)
 "fy" = (
@@ -2474,7 +2454,7 @@
 	},
 /area/voxship/fore)
 "fA" = (
-/obj/effect/decal/cleanable/filth,
+/obj/decal/cleanable/filth,
 /turf/simulated/floor/tiled/freezer{
 	initial_gas = list("nitrogen"=101.383)
 	},
@@ -2496,7 +2476,7 @@
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/engineering)
 "fD" = (
-/obj/effect/wallframe_spawn/reinforced/hull/vox,
+/obj/wallframe_spawn/reinforced/hull/vox,
 /turf/simulated/floor,
 /area/voxship/scavship)
 "fE" = (
@@ -2655,7 +2635,7 @@
 /turf/simulated/floor/plating/vox,
 /area/voxship/engineering)
 "gd" = (
-/obj/effect/overmap/visitable/ship/landable/vox_ship,
+/obj/overmap/visitable/ship/landable/vox_ship,
 /turf/space,
 /area/space)
 "ge" = (
@@ -2700,7 +2680,7 @@
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/scavship)
 "gj" = (
-/obj/effect/floor_decal/industrial/hatch/yellow,
+/obj/floor_decal/industrial/hatch/yellow,
 /obj/machinery/door/airlock/hatch/voxship,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable{
@@ -2744,14 +2724,10 @@
 /area/voxship/engineering)
 "gn" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/universal,
-/obj/effect/wallframe_spawn/reinforced/hull/vox,
+/obj/wallframe_spawn/reinforced/hull/vox,
 /obj/machinery/door/blast/shutters{
-	density = 0;
-	dir = 2;
-	icon_state = "shutter0";
-	id_tag = "vox_bridge";
 	name = "Window Shutters";
-	opacity = 0
+	id_tag = "vox_bridge"
 	},
 /turf/simulated/floor,
 /area/voxship/engineering)
@@ -2762,7 +2738,7 @@
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/engineering)
 "gp" = (
-/obj/effect/wallframe_spawn/reinforced/hull/vox,
+/obj/wallframe_spawn/reinforced/hull/vox,
 /obj/machinery/atmospherics/pipe/simple/hidden/universal{
 	dir = 4
 	},
@@ -2789,7 +2765,7 @@
 /area/voxship/fore)
 "gu" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/effect/decal/cleanable/filth,
+/obj/decal/cleanable/filth,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -2832,7 +2808,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/effect/shuttle_landmark/vox_base/hangar/vox_scavshuttle,
+/obj/shuttle_landmark/vox_base/hangar/vox_scavshuttle,
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/scavship)
 "gC" = (
@@ -2853,7 +2829,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/effect/decal/cleanable/filth,
+/obj/decal/cleanable/filth,
 /obj/machinery/power/apc/debug/vox{
 	dir = 1;
 	pixel_y = 24
@@ -2974,7 +2950,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/effect/decal/cleanable/filth,
+/obj/decal/cleanable/filth,
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/shuttle)
 "gR" = (
@@ -2998,7 +2974,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/effect/decal/cleanable/filth,
+/obj/decal/cleanable/filth,
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/shuttle)
 "gU" = (
@@ -3009,11 +2985,11 @@
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/shuttle)
 "gV" = (
-/obj/effect/decal/cleanable/filth,
+/obj/decal/cleanable/filth,
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/shuttle)
 "gW" = (
-/obj/effect/overmap/visitable/ship/landable/vox_scavshuttle,
+/obj/overmap/visitable/ship/landable/vox_scavshuttle,
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 4;
 	level = 2
@@ -3107,6 +3083,16 @@
 /obj/random/snack,
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/shuttle)
+"lu" = (
+/obj/machinery/atmospherics/unary/tank/carbon_dioxide{
+	dir = 4;
+	start_pressure = 7000
+	},
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/simulated/floor/plating/vox,
+/area/voxship/engineering)
 "pB" = (
 /obj/structure/table/reinforced,
 /obj/machinery/reagent_temperature,
@@ -3144,6 +3130,12 @@
 "Lj" = (
 /turf/simulated/wall/r_titanium,
 /area/space)
+"Ni" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/blue{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/techmaint/vox,
+/area/voxship/engineering)
 "PN" = (
 /obj/machinery/telecomms/receiver/map_preset/voxship,
 /turf/simulated/floor/plating/vox,
@@ -3154,6 +3146,14 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/turf/simulated/floor/plating/vox,
+/area/voxship/engineering)
+"VK" = (
+/obj/item/clothing/accessory/pride_pin/gay,
+/turf/space,
+/area/space)
+"VN" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/black,
 /turf/simulated/floor/plating/vox,
 /area/voxship/engineering)
 
@@ -6743,7 +6743,7 @@ fX
 fX
 fX
 fX
-fX
+VK
 fG
 fG
 fG
@@ -8197,7 +8197,7 @@ fX
 ac
 ac
 aO
-aO
+bp
 ac
 cf
 cC
@@ -8299,7 +8299,7 @@ ag
 ac
 ac
 aP
-aO
+bp
 ac
 cg
 cE
@@ -8400,9 +8400,9 @@ ac
 gm
 ac
 ac
-aQ
+aP
 bp
-ac
+bq
 ch
 cF
 dj
@@ -8503,8 +8503,8 @@ go
 aT
 fq
 aR
-bq
-eC
+ay
+Ni
 ci
 cG
 dk
@@ -8911,7 +8911,7 @@ fX
 ac
 ac
 aU
-aU
+lu
 aU
 ac
 cK
@@ -9012,9 +9012,9 @@ fX
 fX
 ac
 ac
-aU
+bv
 bt
-aU
+VN
 ac
 cL
 cg
@@ -9114,9 +9114,9 @@ fX
 fX
 ac
 ge
-ac
+aQ
 bu
-ac
+aQ
 ac
 cJ
 cg

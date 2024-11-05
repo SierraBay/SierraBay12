@@ -67,16 +67,16 @@
 	..()
 	uid = "[random_id("guestpass_serial_number",100,999)]-G[rand(10,99)]"
 
-/obj/machinery/computer/guestpass/attackby(obj/O, mob/user)
-	if(istype(O, /obj/item/card/id))
+/obj/machinery/computer/guestpass/use_tool(obj/item/O, mob/living/user, list/click_params)
+	if (isid(O))
 		if(!giver && user.unEquip(O))
 			O.forceMove(src)
 			giver = O
 			updateUsrDialog()
 		else if(giver)
 			to_chat(user, SPAN_WARNING("There is already ID card inside."))
-		return
-	..()
+		return TRUE
+	return ..()
 
 /obj/machinery/computer/guestpass/interface_interact(mob/user)
 	ui_interact(user)
@@ -186,7 +186,7 @@
 			pass.reason = reason
 			pass.SetName("guest pass #[number]")
 			pass.assignment = "Guest"
-			addtimer(new Callback(pass, /obj/item/card/id/guest/proc/expire), duration MINUTES, TIMER_UNIQUE)
+			addtimer(new Callback(pass, TYPE_PROC_REF(/obj/item/card/id/guest, expire)), duration MINUTES, TIMER_UNIQUE)
 			playsound(src.loc, 'sound/machines/ping.ogg', 25, 0)
 			. = TOPIC_REFRESH
 		else if(!giver)

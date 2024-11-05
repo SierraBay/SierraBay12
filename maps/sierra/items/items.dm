@@ -2,6 +2,12 @@
 sierra specific items
 *******************/
 
+/obj/item/toy/sierramodel
+	name = "table-top NSV Sierra model"
+	desc = "This is a replica of the NSV Sierra, in 1:250th scale, on a handsome wooden stand. Small lights blink on the hull and at the engine exhaust."
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "torch_model_figure"
+
 /obj/item/storage/backpack/explorer
 	name = "explorer backpack"
 	desc = "A rugged backpack."
@@ -17,6 +23,49 @@ sierra specific items
 	name = "explorer messenger bag"
 	desc = "A rugged backpack worn over one shoulder."
 	icon_state = "courierbagsci"
+
+/obj/item/storage/firstaid/security
+	name = "Tactical first-aid kit"
+	desc = "It's a small emergency medical kit. Dark and lightweight."
+	use_sound = 'sound/effects/storage/pillbottle.ogg'
+	icon = 'maps/sierra/icons/obj/medical.dmi'
+	icon_state = "fak-sec"
+	matter = list(MATERIAL_PLASTIC = 600)
+	storage_slots = 7
+	w_class = ITEM_SIZE_SMALL
+	max_w_class = ITEM_SIZE_SMALL
+	startswith = list(
+		/obj/item/reagent_containers/hypospray/autoinjector/inaprovaline,
+		/obj/item/reagent_containers/hypospray/autoinjector/antirad,
+		/obj/item/reagent_containers/hypospray/autoinjector/detox,
+		/obj/item/reagent_containers/hypospray/autoinjector/dexalin,
+		/obj/item/reagent_containers/hypospray/autoinjector/kelotane,
+		/obj/item/reagent_containers/hypospray/autoinjector/pain,
+		/obj/item/stack/medical/bruise_pack
+	)
+	contents_allowed = list(
+		/obj/item/reagent_containers/hypospray/autoinjector,
+		/obj/item/stack/medical/bruise_pack
+	)
+
+/obj/item/reagent_containers/hypospray/autoinjector/dexalin
+	name ="autoinjector (dexalin plus)"
+	starts_with = list(/datum/reagent/dexalin = 5)
+
+/obj/item/reagent_containers/hypospray/autoinjector/kelotane
+	name = "autoinjector (antiburn)"
+	starts_with = list(/datum/reagent/kelotane = 5)
+
+/obj/item/reagent_containers/hypospray/autoinjector/kelotane
+	name = "autoinjector (antiburn)"
+	starts_with = list(/datum/reagent/kelotane = 5)
+
+// Containers
+
+/obj/item/storage/backpack/dufflebag/syndie_kit/plastique
+	startswith = list(
+		/obj/item/plastique = 6
+		)
 
 /***********
 Unique items
@@ -56,19 +105,35 @@ Unique items
 			/obj/item/paper/sierrau/liason_note
 	)
 
-/obj/effect/paint/hull
+/obj/item/storage/belt/utility/chief/New()
+	..()
+	new /obj/item/swapper/power_drill(src)
+	new /obj/item/weldingtool/largetank(src)
+	new /obj/item/swapper/jaws_of_life(src)
+	new /obj/random/single/color/cable_coil(src, 30)
+	new /obj/item/device/multitool/multimeter(src)
+	update_icon()
+
+/obj/item/storage/secure/safe/captain_sierra
+	startswith = list(
+		/obj/item/paper = 1,
+		/obj/item/pen = 1,
+		/obj/item/card/id/captains_spare = 1
+	)
+
+/obj/paint/hull
 	color = "#436b8e"
 
-/obj/effect/paint/dark_gunmetal
+/obj/paint/dark_gunmetal
 	color = COLOR_DARK_GUNMETAL
 
-/obj/effect/paint/nt_white
+/obj/paint/nt_white
 	color = "#eeeeee"
 
-/obj/effect/paint_stripe/nt_red
+/obj/paint_stripe/nt_red
 	color = "#9d2300"
 
-/obj/effect/paint_stripe/turquoise
+/obj/paint_stripe/turquoise
 	color = "#03ffc6"
 
 /obj/item/device/boombox/anchored //for bar's private rooms
@@ -410,6 +475,71 @@ Passports
 	icon_state = "gangtool-white"
 	region_access = ACCESS_REGION_GENERAL
 
+// Overrides
+
+/obj/item/melee/baton
+	icon = 'maps/sierra/icons/obj/baton.dmi'
+	icon_state = "stunbaton"
+	item_state = "baton"
+	item_icons = list(
+		slot_r_hand_str = 'maps/sierra/icons/mob/onmob/item/righthand.dmi',
+		slot_l_hand_str = 'maps/sierra/icons/mob/onmob/item/lefthand.dmi',
+		)
+
+/obj/item/melee/baton/on_update_icon()
+	if(status)
+		icon_state = "[initial(icon_state)]_active"
+		item_state = "[initial(item_state)]_active"
+	else if(!bcell)
+		icon_state = "[initial(icon_state)]_nocell"
+		item_state = "[initial(item_state)]"
+	else
+		icon_state = "[initial(icon_state)]"
+		item_state = "[initial(item_state)]"
+
+	if(icon_state == "[initial(item_state)]_active")
+		set_light(1.5, 2, "#75acff")
+	else
+		set_light(0)
+	loc.update_icon()
+
 #undef REMOTE_OPEN
 #undef REMOTE_BOLT
 #undef REMOTE_ELECT
+
+/obj/item/storage/belt/utility
+	contents_allowed = list(
+		/obj/item/crowbar,
+		/obj/item/screwdriver,
+		/obj/item/weldingtool,
+		/obj/item/wirecutters,
+		/obj/item/wrench,
+		/obj/item/device/multitool,
+		/obj/item/device/flashlight,
+		/obj/item/stack/cable_coil,
+		/obj/item/device/t_scanner,
+		/obj/item/device/scanner/gas,
+		/obj/item/taperoll/engineering,
+		/obj/item/inducer,
+		/obj/item/device/robotanalyzer,
+		/obj/item/material/minihoe,
+		/obj/item/material/hatchet,
+		/obj/item/device/scanner/plant,
+		/obj/item/taperoll,
+		/obj/item/extinguisher/mini,
+		/obj/item/marshalling_wand,
+		/obj/item/device/geiger,
+		/obj/item/hand_labeler,
+		/obj/item/clothing/gloves,
+		/obj/item/tape_roll,
+		/obj/item/clothing/head/beret,
+		/obj/item/material/knife/folding,
+		/obj/item/swapper,
+		/obj/item/device/drone_designator,
+		/obj/item/modular_computer/tablet,
+		/obj/item/modular_computer/pda,
+		/obj/item/welder_tank,
+		/obj/item/device/paint_sprayer,
+		/obj/item/rcd,
+		/obj/item/rcd_ammo
+	)

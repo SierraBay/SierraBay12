@@ -22,7 +22,7 @@
 //	causeerrorheresoifixthis
 	var/obj/item/master = null
 	var/list/origin_tech = null	//Used by R&D to determine what research bonuses it grants.
-	///Used in use_weapon() and attackby() to say how something was attacked "[x] has been [z.attack_verb] by [y] with [z]"
+	///Used in use_weapon() to say how something was attacked "[x] has been [z.attack_verb] by [y] with [z]"
 	var/list/attack_verb = list("attacked")
 	var/lock_picking_level = 0 //used to determine whether something can pick a lock, and how well.
 	var/force = 0
@@ -114,6 +114,8 @@
 			if(armor[type]) // Don't set it if it gives no armor anyway, which is many items.
 				set_extension(src, armor_type, armor, armor_degradation_speed)
 				break
+	if (item_flags & ITEM_FLAG_IS_CHAMELEON_ITEM)
+		SetupChameleonExtension(CHAMELEON_FLEXIBLE_OPTIONS_EXTENSION, FALSE, TRUE)
 
 /obj/item/Destroy()
 	QDEL_NULL(hidden_uplink)
@@ -200,9 +202,15 @@
 
 		if(origin_tech)
 			desc_comp += "[SPAN_NOTICE("Testing potentials:")]<BR>"
+	//[SIERRA-EDIT] - MODPACK_RND
+			var/list/tech_names = list(TECH_MATERIAL = "Materials", TECH_ENGINEERING = "Engineering", TECH_PHORON = "Phoron Technology", TECH_POWER = "Power Manipulation Technology", TECH_BLUESPACE = "'Blue-space' Technology", TECH_BIO = "Biological Technology", TECH_COMBAT = "Combat Systems", TECH_MAGNET = "Electromagnetic Spectrum Technology", TECH_DATA = "Data Theory", TECH_ESOTERIC = "Esoteric Technology")
 			//var/list/techlvls = params2list(origin_tech)
 			for(var/T in origin_tech)
-				desc_comp += "Tech: Level [origin_tech[T]] [CallTechName(T)] <BR>"
+				var/tech_name = tech_names[T]
+				if(!tech_name)
+					tech_name = T
+				desc_comp += "Tech: Level [origin_tech[T]] [tech_name] <BR>"
+	//[/SIERRA-EDIT] - MODPACK_RND
 		else
 			desc_comp += "No tech origins detected.<BR>"
 
@@ -225,14 +233,15 @@
 		var/obj/item/organ/external/temp = H.organs_by_name[BP_R_HAND]
 		if (user.hand)
 			temp = H.organs_by_name[BP_L_HAND]
-		if(MUTATION_FERAL in user.mutations)
-			return
+		if((MUTATION_FERAL in user.mutations) && (MUTATION_CLUMSY in user.mutations))
+			to_chat(user, SPAN_WARNING("You don't have the dexterity to pick up \the [src]!"))
+			return TRUE
 		if(temp && !temp.is_usable())
 			to_chat(user, SPAN_NOTICE("You try to move your [temp.name], but cannot!"))
-			return
+			return TRUE
 		if(!temp)
 			to_chat(user, SPAN_NOTICE("You try to use your hand, but realize it is no longer attached!"))
-			return
+			return TRUE
 
 	var/old_loc = loc
 
@@ -256,7 +265,7 @@
 
 	if(user.put_in_active_hand(src))
 		if (isturf(old_loc))
-			var/obj/effect/temporary/item_pickup_ghost/ghost = new(old_loc, src)
+			var/obj/temporary/item_pickup_ghost/ghost = new(old_loc, src)
 			ghost.animate_towards(user)
 		if(randpixel)
 			pixel_x = rand(-randpixel, randpixel)
@@ -275,24 +284,19 @@
 		R.activate_module(src)
 		R.hud_used.update_robot_modules_display()
 
-/obj/item/attackby(obj/item/W, mob/user)
-	if((. = SSfabrication.try_craft_with(src, W, user)))
-		return
 
-	if(istype(W, /obj/item/storage))
-		var/obj/item/storage/S = W
-		if(S.use_to_pickup)
-			if(S.collection_mode) //Mode is set to collect all items
-				if(isturf(src.loc))
-					S.gather_all(src.loc, user)
-			else if (S.can_be_inserted(src, user))
-				S.handle_item_insertion(src)
-
-/obj/item/use_on(obj/target, mob/user)
-	if (istype(target, /obj/item/clothing))
-		var/obj/item/clothing/clothes = target
-		if (clothes.attempt_store_item(src, user))
-			return TRUE
+/obj/item/use_tool(obj/item/item, mob/living/user, list/click_params)
+	if (SSfabrication.try_craft_with(src, item, user))
+		return TRUE
+	if (istype(item, /obj/item/storage) && isturf(loc))
+		var/obj/item/storage/storage = item
+		if (!storage.allow_quick_gather)
+			return ..()
+		if (!storage.quick_gather_single)
+			storage.gather_all(loc, user)
+		else if (storage.can_be_inserted(src, user))
+			storage.handle_item_insertion(src)
+		return TRUE
 	return ..()
 
 /obj/item/can_embed()
@@ -319,7 +323,7 @@
 	GLOB.item_unequipped_event.raise_event(src, user)
 
 	if(user && (z_flags & ZMM_MANGLE_PLANES))
-		addtimer(new Callback(user, /mob/proc/check_emissive_equipment), 0, TIMER_UNIQUE)
+		addtimer(new Callback(user, TYPE_PROC_REF(/mob, check_emissive_equipment)), 0, TIMER_UNIQUE)
 
 
 // called just as an item is picked up (loc is not yet changed)
@@ -360,7 +364,7 @@ note this isn't called during the initial dressing of a player
 	GLOB.item_equipped_event.raise_event(src, user, slot)
 
 	if(user && (z_flags & ZMM_MANGLE_PLANES))
-		addtimer(new Callback(user, /mob/proc/check_emissive_equipment), 0, TIMER_UNIQUE)
+		addtimer(new Callback(user, TYPE_PROC_REF(/mob, check_emissive_equipment)), 0, TIMER_UNIQUE)
 
 
 /obj/item/proc/equipped_robot(mob/user)
@@ -577,7 +581,8 @@ var/global/list/slot_flags_enumeration = list(
 	if(!istype(attacker))
 		return 0
 	attacker.apply_damage(force, damtype, attacker.hand ? BP_L_HAND : BP_R_HAND, used_weapon = src)
-	attacker.visible_message(SPAN_DANGER("[attacker] hurts \his hand on [src]!"))
+	var/datum/pronouns/pronouns = attacker.choose_from_pronouns()
+	attacker.visible_message(SPAN_DANGER("[attacker] hurts [pronouns.his] hand on \the [src]!"))
 	admin_attack_log(attacker, target, "Attempted to disarm but was blocked", "Was targeted with a disarm but blocked the attack", "attmpted to disarm but was blocked by")
 	playsound(target, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 	playsound(target, hitsound, 50, 1, -1)
@@ -695,19 +700,22 @@ var/global/list/slot_flags_enumeration = list(
 	return 1 //we applied blood to the item
 
 GLOBAL_LIST_EMPTY(blood_overlay_cache)
+#define BLOOD_OVERLAY_CACHE_INDEX "[icon]" + icon_state + blood_color
 
 /obj/item/proc/generate_blood_overlay(force = FALSE)
 	if(blood_overlay && !force)
 		return
-	if(GLOB.blood_overlay_cache["[icon]" + icon_state])
-		blood_overlay = GLOB.blood_overlay_cache["[icon]" + icon_state]
+	if(GLOB.blood_overlay_cache[BLOOD_OVERLAY_CACHE_INDEX])
+		blood_overlay = GLOB.blood_overlay_cache[BLOOD_OVERLAY_CACHE_INDEX]
 		return
 	var/icon/I = new /icon(icon, icon_state)
 	I.Blend(new /icon('icons/effects/blood.dmi', rgb(255,255,255)),ICON_ADD) //fills the icon_state with white (except where it's transparent)
 	I.Blend(new /icon('icons/effects/blood.dmi', "itemblood"),ICON_MULTIPLY) //adds blood and the remaining white areas become transparant
 	blood_overlay = image(I)
 	blood_overlay.appearance_flags |= NO_CLIENT_COLOR
-	GLOB.blood_overlay_cache["[icon]" + icon_state] = blood_overlay
+	GLOB.blood_overlay_cache[BLOOD_OVERLAY_CACHE_INDEX] = blood_overlay
+
+#undef BLOOD_OVERLAY_CACHE_INDEX
 
 /obj/item/proc/showoff(mob/user)
 	for (var/mob/M in view(user))
@@ -777,12 +785,12 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 	user.client.view = viewsize
 	zoom = 1
 
-	GLOB.destroyed_event.register(src, src, /obj/item/proc/unzoom)
-	GLOB.moved_event.register(user, src, /obj/item/proc/unzoom)
-	GLOB.dir_set_event.register(user, src, /obj/item/proc/unzoom)
-	GLOB.item_unequipped_event.register(src, user, /mob/living/proc/unzoom)
+	GLOB.destroyed_event.register(src, src, TYPE_PROC_REF(/obj/item, unzoom))
+	GLOB.moved_event.register(user, src, TYPE_PROC_REF(/obj/item, unzoom))
+	GLOB.dir_set_event.register(user, src, TYPE_PROC_REF(/obj/item, unzoom))
+	GLOB.item_unequipped_event.register(src, user, TYPE_PROC_REF(/mob/living, unzoom))
 
-	GLOB.stat_set_event.register(user, src, /obj/item/proc/unzoom)
+	GLOB.stat_set_event.register(user, src, TYPE_PROC_REF(/obj/item, unzoom))
 
 	user.visible_message("\The [user] peers through [zoomdevicename ? "the [zoomdevicename] of [src]" : "[src]"].")
 
@@ -795,22 +803,22 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 		return
 	zoom = 0
 
-	GLOB.destroyed_event.unregister(src, src, /obj/item/proc/unzoom)
-	GLOB.moved_event.unregister(user, src, /obj/item/proc/unzoom)
-	GLOB.dir_set_event.unregister(user, src, /obj/item/proc/unzoom)
-	GLOB.item_unequipped_event.unregister(src, user, /mob/living/proc/unzoom)
+	GLOB.destroyed_event.unregister(src, src, TYPE_PROC_REF(/obj/item, unzoom))
+	GLOB.moved_event.unregister(user, src, TYPE_PROC_REF(/obj/item, unzoom))
+	GLOB.dir_set_event.unregister(user, src, TYPE_PROC_REF(/obj/item, unzoom))
+	GLOB.item_unequipped_event.unregister(src, user, TYPE_PROC_REF(/mob/living, unzoom))
 
 	user = user == src ? loc : (user || loc)
 	if(!istype(user))
 		crash_with("[log_info_line(src)]: Zoom user lost]")
 		return
 
-	GLOB.stat_set_event.unregister(user, src, /obj/item/proc/unzoom)
+	GLOB.stat_set_event.unregister(user, src, TYPE_PROC_REF(/obj/item, unzoom))
 
 	if(!user.client)
 		return
 
-	user.client.view = world.view
+	user.client.view = user.get_preference_value(/datum/client_preference/client_view)
 	if(!user.hud_used.hud_shown)
 		user.toggle_zoom_hud()
 

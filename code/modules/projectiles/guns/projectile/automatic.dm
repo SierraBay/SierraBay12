@@ -17,6 +17,7 @@
 	burst_delay = 2
 	mag_insert_sound = 'sound/weapons/guns/interaction/smg_magin.ogg'
 	mag_remove_sound = 'sound/weapons/guns/interaction/smg_magout.ogg'
+	fire_sound = 'sound/weapons/gunshot/gunshot_4mm.ogg'
 
 	//machine pistol, easier to one-hand with
 	firemodes = list(
@@ -37,6 +38,7 @@
 	ammo_type = /obj/item/ammo_casing/pistol
 	magazine_type = /obj/item/ammo_magazine/machine_pistol
 	allowed_magazines = /obj/item/ammo_magazine/machine_pistol //more damage compared to the wt550, smaller mag size
+	fire_sound = 'sound/weapons/gunshot/gunshot_pistol.ogg'
 	one_hand_penalty = 2
 
 	firemodes = list(
@@ -115,6 +117,7 @@
 	wielded_item_state = "arifle-wielded"
 	mag_insert_sound = 'sound/weapons/guns/interaction/ltrifle_magin.ogg'
 	mag_remove_sound = 'sound/weapons/guns/interaction/ltrifle_magout.ogg'
+	fire_sound = 'sound/weapons/gunshot/gunshot3.ogg'
 
 	//Assault rifle, burst fire degrades quicker than SMG, worse one-handing penalty, slightly increased move delay
 	firemodes = list(
@@ -149,6 +152,7 @@
 	allowed_magazines = /obj/item/ammo_magazine/smg_top
 	accuracy_power = 7
 	one_hand_penalty = 3
+	fire_sound = 'sound/weapons/gunshot/gunshot_smg.ogg'
 
 	//machine pistol, like SMG but easier to one-hand with
 	firemodes = list(
@@ -193,6 +197,7 @@
 	wielded_item_state = "z8carbine-wielded"
 	mag_insert_sound = 'sound/weapons/guns/interaction/batrifle_magin.ogg'
 	mag_remove_sound = 'sound/weapons/guns/interaction/batrifle_magout.ogg'
+	fire_sound = 'sound/weapons/gunshot/gunshot2.ogg'
 	firemodes = list(
 		list(mode_name="semi auto",       burst=1,    fire_delay=null,    move_delay=null, use_launcher=null, one_hand_penalty=8, burst_accuracy=null, dispersion=null),
 		list(mode_name="3-round bursts", burst=3,    fire_delay=null, move_delay=6,    use_launcher=null, one_hand_penalty=9, burst_accuracy=list(0,-1,-1), dispersion=list(0.0, 0.6, 1.0)),
@@ -294,6 +299,7 @@
 	one_hand_penalty = 10
 	mag_insert_sound = 'sound/weapons/guns/interaction/lmg_magin.ogg'
 	mag_remove_sound = 'sound/weapons/guns/interaction/lmg_magout.ogg'
+	fire_sound = 'sound/weapons/gunshot/gunshot3.ogg'
 	can_special_reload = FALSE
 
 	//LMG, better sustained fire accuracy than assault rifles (comparable to SMG), higer move delay and one-handing penalty
@@ -390,6 +396,7 @@
 	wielded_item_state = "battlerifle-wielded"
 	mag_insert_sound = 'sound/weapons/guns/interaction/ltrifle_magin.ogg'
 	mag_remove_sound = 'sound/weapons/guns/interaction/ltrifle_magout.ogg'
+	fire_sound = 'sound/weapons/gunshot/gunshot3.ogg'
 
 	//Battle Rifle is only accurate in semi-automatic fire.
 	firemodes = list(
@@ -405,3 +412,64 @@
 	else
 		icon_state = "battlerifle-empty"
 		wielded_item_state = "battlerifle-wielded-empty"
+
+/obj/item/gun/projectile/automatic/minigun
+	name = "minigun"
+	desc = "A man-portable minigun lacking any branding on it. It fires small 7mm projectiles at an obscene rate of fire. Six barrels of fun."
+	icon = 'icons/obj/guns/minigun.dmi'
+	icon_state = "minigun"
+	item_state = "l6closedmag" /// Onmob is WIP sprite
+	w_class = ITEM_SIZE_HUGE
+	force = 15
+	caliber = CALIBER_PISTOL_SMALL
+	origin_tech = list(TECH_COMBAT = 8, TECH_MATERIAL = 4, TECH_ESOTERIC = 8)
+	slot_flags = 0
+	load_method = MAGAZINE
+	magazine_type = /obj/item/ammo_magazine/box/minigun
+	allowed_magazines = /obj/item/ammo_magazine/box/minigun
+	accuracy = 1
+	one_hand_penalty = 20
+	mag_insert_sound = 'sound/weapons/guns/interaction/lmg_magin.ogg'
+	mag_remove_sound = 'sound/weapons/guns/interaction/lmg_magout.ogg'
+	fire_sound = 'sound/weapons/gunshot/minigun.ogg'
+	can_special_reload = FALSE
+
+	firemodes = list(
+		list(mode_name="full auto",		can_autofire=1, burst=1, fire_delay=0.4, move_delay=1, burst_accuracy = list(0,-1,-2,-3,-4,-4,-4,-4,-4), dispersion = list(1.0, 1.0, 2.0, 2.0, 2.5), burst_delay = 1),
+		list(mode_name="long bursts",	can_autofire=0, burst=10, fire_delay=0.2, burst_accuracy = list(0,-1,-2,-3,-4,-8,-8,-16,-16), dispersion = list(1.0, 2.0, 3.0, 3.0, 4.0), burst_delay = 1)
+		)
+
+/obj/item/gun/projectile/automatic/minigun/mounted
+	name = "mounted minigun"
+	accuracy = 0 /// Less accurate than a full-sized minigun and only fires in bursts, but has no one-hand penalty.
+	one_hand_penalty = 0
+	has_safety = FALSE
+	auto_eject = TRUE
+	auto_eject_sound = 'sound/weapons/smg_empty_alarm.ogg'
+
+	firemodes = list(
+		list(mode_name="long bursts",			can_autofire=0, burst=5, fire_delay=0.2, burst_accuracy = list(0,-1,-2,-3,-4,-4,-4,-4,-4), dispersion = list(1.0, 1.0, 2.0, 2.0, 2.5), burst_delay = 1),
+		list(mode_name="longer bursts",		can_autofire=0, burst=10, fire_delay=0.2, burst_accuracy = list(0,-1,-2,-3,-4,-8,-8,-16,-16), dispersion = list(1.0, 2.0, 3.0, 3.0, 4.0), burst_delay = 1)
+		)
+
+/obj/item/gun/projectile/automatic/minigun/mounted/load_ammo(obj/item/A, mob/user)
+	var/obj/item/rig/rig = get_rig()
+	if (istype(rig))
+		if (!rig.offline && rig.suit_is_deployed())
+			user.visible_message(SPAN_NOTICE("\The [user] begins the slow process of re-arming \The [src]."), range = 4)
+			do_after(user, 10 SECONDS, src, DO_PUBLIC_UNIQUE | DO_BAR_OVER_USER)
+			..()
+		else
+			to_chat(user, SPAN_DANGER("You can't reload your minigun without deploying your hardsuit!"))
+			return
+
+/obj/item/gun/projectile/automatic/minigun/mounted/unload_ammo(mob/user, allow_dump=0)
+	var/obj/item/rig/rig = get_rig()
+	if (istype(rig))
+		if (!rig.offline && rig.suit_is_deployed())
+			user.visible_message(SPAN_NOTICE("\The [user] begins ejecting the magazine from \The [src]."), range = 4)
+			do_after(user, 2 SECONDS, src, DO_PUBLIC_UNIQUE | DO_BAR_OVER_USER)
+			..()
+		else
+			to_chat(user, SPAN_DANGER("You can't unload your minigun without deploying your hardsuit!"))
+			return

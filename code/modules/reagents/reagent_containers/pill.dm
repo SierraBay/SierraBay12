@@ -10,7 +10,6 @@
 	randpixel = 7
 	possible_transfer_amounts = null
 	w_class = ITEM_SIZE_TINY
-	item_flags = ITEM_FLAG_TRY_ATTACK
 	slot_flags = SLOT_EARS
 	volume = 30
 
@@ -19,7 +18,7 @@
 	if(!icon_state)
 		icon_state = "pill[rand(1, 5)]" //preset pills only use colour changing or unique icons
 
-/obj/item/reagent_containers/pill/attack(mob/M as mob, mob/user as mob)
+/obj/item/reagent_containers/pill/use_before(mob/M as mob, mob/user as mob)
 	. = FALSE
 	if (!istype(M))
 		return FALSE
@@ -55,22 +54,22 @@
 		qdel(src)
 		return TRUE
 
-/obj/item/reagent_containers/pill/afterattack(obj/target, mob/user, proximity)
-	if(!proximity) return
+/obj/item/reagent_containers/pill/use_after(atom/target, mob/living/user, click_parameters)
+	if (target.is_open_container() && target.reagents)
+		if (!target.reagents.total_volume)
+			to_chat(user, SPAN_NOTICE("\The [target] is empty. Can't dissolve \the [src]."))
+			return TRUE
 
-	if(target.is_open_container() && target.reagents)
-		if(!target.reagents.total_volume)
-			to_chat(user, SPAN_NOTICE("[target] is empty. Can't dissolve \the [src]."))
-			return
-		to_chat(user, SPAN_NOTICE("You dissolve \the [src] in [target]."))
+		to_chat(user, SPAN_NOTICE("You dissolve \the [src] in \the [target]."))
 
 		if (reagents.should_admin_log())
 			admin_attacker_log(user, "spiked \a [target] with a pill. Reagents: [reagentlist()]")
 		reagents.trans_to(target, reagents.total_volume)
 		for(var/mob/O in viewers(2, user))
-			O.show_message(SPAN_WARNING("[user] puts something in \the [target]."), 1)
+			O.show_message(SPAN_WARNING("\The [user] puts something in \the [target]."), 1)
 		qdel(src)
-	return
+		return TRUE
+	else return FALSE
 
 ////////////////////////////////////////////////////////////////////////////////
 /// Pills. END
@@ -399,7 +398,7 @@
 
 // Chopping up pills
 
-/obj/item/reagent_containers/pill/attackby(obj/item/W, mob/user)
+/obj/item/reagent_containers/pill/use_tool(obj/item/W, mob/living/user, list/click_params)
 	if(is_sharp(W) || istype(W, /obj/item/card/id))
 		user.visible_message(
 			SPAN_WARNING("\The [user] starts to gently cut up \the [src] with \a [W]!"),
@@ -421,5 +420,6 @@
 			reagents.trans_to_obj(J, reagents.total_volume)
 		J.get_appearance()
 		qdel(src)
+		return TRUE
 
 	return ..()

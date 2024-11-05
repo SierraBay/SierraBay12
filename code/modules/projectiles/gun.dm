@@ -62,46 +62,66 @@
 	waterproof = FALSE
 
 	var/burst = 1
-	var/can_autofire = FALSE /// checks if the gun will continue firing if the mouse button is held down
-	var/fire_delay = 6 	//delay after shooting before the gun can be used again. Cannot be less than [burst_delay+1]
-	var/burst_delay = 2	//delay between shots, if firing in bursts
+	/// Checks if the gun will continue firing if the mouse button is held down.
+	var/can_autofire = FALSE
+	/// Delay after shooting before the gun can be used again. Cannot be less than [burst_delay+1].
+	var/fire_delay = 6
+	/// Delay between shots, if firing in bursts.
+	var/burst_delay = 2
 	var/move_delay = 1
+	/// Sound this gun makes when firing. Overridden by projectiles with their own sounds.
 	var/fire_sound = 'sound/weapons/gunshot/gunshot.ogg'
 	var/fire_sound_text = "gunshot"
+	var/fire_sound_vary = TRUE
 	var/fire_anim = null
-	var/screen_shake = 0 //shouldn't be greater than 2 unless zoomed
-	var/space_recoil = 0 //knocks back in space
+	/// The amount your screen shakes when firing. Shouldn't be greater than 2 unless zoomed.
+	var/screen_shake = 0
+	/// Whether or not this weapon moves the shooter backwards when fired in space.
+	var/space_recoil = 0
 	var/silenced = FALSE
-	var/accuracy = 0   //accuracy is measured in tiles. +1 accuracy means that everything is effectively one tile closer for the purpose of miss chance, -1 means the opposite. launchers are not supported, at the moment.
-	var/accuracy_power = 5  //increase of to-hit chance per 1 point of accuracy
-	var/bulk = 0			//how unwieldy this weapon for its size, affects accuracy when fired without aiming
-	var/last_handled		//time when hand gun's in became active, for purposes of aiming bonuses
-	var/scoped_accuracy = null  //accuracy used when zoomed in a scope
+	/// Accuracy is measured in tiles. +1 accuracy means that everything is effectively one tile closer for the purpose of miss chance, -1 means the opposite. launchers are not supported, at the moment.
+	var/accuracy = 0
+	/// Increase of to-hit chance per 1 point of accuracy.
+	var/accuracy_power = 5
+	/// How unwieldy this weapon for its size, affects accuracy when fired without aiming.
+	var/bulk = 0
+	/// Time when hand gun's in became active, for purposes of aiming bonuses.
+	var/last_handled
+	/// Accuracy used when zoomed in a scope. Not additive.
+	var/scoped_accuracy = null
+	/// How far this weapon's scope can see.
 	var/scope_zoom = 0
-	var/list/burst_accuracy = list(0) //allows for different accuracies for each shot in a burst. Applied on top of accuracy
+	/// Allows for different accuracies for each shot in a burst. Applied on top of accuracy.
+	var/list/burst_accuracy = list(0)
 	var/list/dispersion = list(0)
 	var/one_hand_penalty
 	var/wielded_item_state
-	var/combustion	//whether it creates hotspot when fired
-
+	/// Whether it creates hotspot when fired.
+	var/combustion
 	var/next_fire_time = 0
 
-	var/sel_mode = 1 //index of the currently selected mode
+	/// Index of the currently selected mode.
+	var/sel_mode = 1
 	var/list/firemodes = list()
 	var/selector_sound = 'sound/weapons/guns/selector.ogg'
 
-	//aiming system stuff
-	var/keep_aim = 1 	//1 for keep shooting until aim is lowered
-						//0 for one bullet after tarrget moves and aim is lowered
-	var/multi_aim = 0 //Used to determine if you can target multiple people.
-	var/list/mob/living/aim_targets //List of who yer targeting.
-	var/mob/living/last_moved_mob //Used to fire faster at more than one person.
-	var/told_cant_shoot = 0 //So that it doesn't spam them with the fact they cannot hit them.
+	//Aiming system stuff
+	/// 1 for "keep shooting until aim is lowered", 0 for "one bullet after target moves and aim is lowered".
+	var/keep_aim = 1
+	/// Used to determine if you can target multiple people.
+	var/multi_aim = 0
+	/// List of who you are targeting.
+	var/list/mob/living/aim_targets
+	/// Used to fire faster at more than one person.
+	var/mob/living/last_moved_mob
+	/// So that it doesn't spam them with the fact they cannot hit them.
+	var/told_cant_shoot = 0
 	var/lock_time = -100
 	var/last_safety_check = -INFINITY
 	var/safety_state = 1
 	var/has_safety = TRUE
-	var/safety_icon 	   //overlay to apply to gun based on safety state, if any
+	/// Overlay to apply to gun based on safety state, if any.
+	var/safety_icon
 
 	/// What skill governs safe handling of this gun. Basic skill level and higher will also show the safety overlay to the player.
 	var/gun_skill = SKILL_WEAPONS
@@ -155,16 +175,14 @@
 		if(prob(30))
 			toggle_safety()
 			return 1
-	if(MUTATION_HULK in M.mutations)
-		to_chat(M, SPAN_DANGER("Your fingers are much too large for the trigger guard!"))
-		return 0
 	if((MUTATION_CLUMSY in M.mutations) && prob(40)) //Clumsy handling
 		var/obj/P = consume_next_projectile()
 		if(P)
 			if(process_projectile(P, user, user, pick(BP_L_FOOT, BP_R_FOOT)))
 				handle_post_fire(user, user)
+				var/datum/pronouns/pronouns = user.choose_from_pronouns()
 				user.visible_message(
-					SPAN_DANGER("\The [user] shoots \himself in the foot with \the [src]!"),
+					SPAN_DANGER("\The [user] shoots [pronouns.self] in the foot with \the [src]!"),
 					SPAN_DANGER("You shoot yourself in the foot with \the [src]!")
 					)
 				M.unequip_item()
@@ -191,31 +209,39 @@
 	Fire(A,user,params) //Otherwise, fire normally.
 
 
-/obj/item/gun/resolve_attackby(atom/atom, mob/living/user, click_params)
+/obj/item/gun/use_before(atom/target, mob/living/user, click_parameters)
+	// Suicide check
 	var/suicide = FALSE
-	if (user == atom)
+	if (user == target)
 		suicide = TRUE
 		if (user.zone_sel.selecting == BP_MOUTH && (!user.aiming?.active))
 			user.toggle_gun_mode()
-	if (user.aiming?.active) //if aim mode, don't pistol whip - even on harm intent
-		if (user.aiming.aiming_at != atom)
+
+	// Aim mode override
+	if (user.aiming?.active)
+		if (user.aiming.aiming_at != target)
 			var/checkperm
 			if (suicide)
 				if (!GET_FLAGS(user.aiming.target_permissions, TARGET_CAN_CLICK))
 					user.aiming.toggle_permission(TARGET_CAN_CLICK, TRUE)
 					checkperm = TRUE
-			PreFire(atom, user)
+			PreFire(target, user)
 			if (checkperm)
-				addtimer(new Callback(user.aiming, /obj/aiming_overlay/proc/toggle_permission, TARGET_CAN_CLICK, TRUE), 1)
+				addtimer(new Callback(user.aiming, TYPE_PROC_REF(/obj/aiming_overlay, toggle_permission), TARGET_CAN_CLICK, TRUE), 1)
 		else
 			if (suicide && user.zone_sel.selecting == BP_MOUTH && istype(user, /mob/living/carbon/human))
 				handle_suicide(user)
 			else
-				Fire(atom, user, pointblank = TRUE)
+				Fire(target, user, pointblank = TRUE)
 		return TRUE
-	if (user.a_intent == I_HURT && !user.isEquipped(atom)) //point blank shooting
-		Fire(atom, user, pointblank = TRUE)
+
+	// Point blank shooting
+	if (user.a_intent == I_HURT && !user.isEquipped(target))
+		if (safety()) // Pistol whip instead of unsafety+fire
+			return ..()
+		Fire(target, user, pointblank = TRUE)
 		return TRUE
+
 	return ..()
 
 
@@ -293,7 +319,7 @@
 		return 2
 	//just assume we can shoot through glass and stuff. No big deal, the player can just choose to not target someone
 	//on the other side of a window if it makes a difference. Or if they run behind a window, too bad.
-	return check_trajectory(target, user)
+	return check_trajectory(target, user) == target
 
 //called if there was no projectile to shoot
 /obj/item/gun/proc/handle_click_empty(mob/user)
@@ -402,6 +428,8 @@
 
 	var/acc_mod = burst_accuracy[min(burst, length(burst_accuracy))]
 	var/disp_mod = dispersion[min(burst, length(dispersion))]
+	// [SIERRA-REMOVE]
+	/*
 	var/stood_still = last_handled
 	//Not keeping gun active will throw off aim (for non-Masters)
 	if(user.skill_check(SKILL_WEAPONS, SKILL_MASTER))
@@ -415,7 +443,59 @@
 	else
 		acc_mod -= w_class - ITEM_SIZE_NORMAL
 		acc_mod -= bulk
-
+	*/
+	// [/SIERRA-REMOVE]
+	// [SIERRA-ADD]
+	acc_mod -= bulk
+	switch(bulk)
+		if(1) //pistols
+			if(user.skill_check(SKILL_WEAPONS, SKILL_BASIC))
+				acc_mod += bulk
+				acc_mod += accuracy
+		if(2) //revolvers
+			if(user.skill_check(SKILL_WEAPONS, SKILL_TRAINED) && user.skill_check(SKILL_WEAPONS, SKILL_BASIC))
+				acc_mod += bulk
+				acc_mod += accuracy
+		if(3) //SMGs
+			if(user.skill_check(SKILL_HAULING, SKILL_BASIC) && user.skill_check(SKILL_WEAPONS, SKILL_TRAINED))
+				if(user.skill_check(SKILL_HAULING, SKILL_BASIC) && user.skill_check(SKILL_WEAPONS, SKILL_TRAINED))
+					acc_mod += bulk
+					acc_mod += accuracy
+				else
+					acc_mod += bulk / 2
+					acc_mod += accuracy * 0.75
+		if(4 to 5) //carabines and assault rifles
+			if(user.skill_check(SKILL_HAULING, SKILL_BASIC) && user.skill_check(SKILL_WEAPONS, SKILL_TRAINED))
+				if(user.skill_check(SKILL_HAULING, SKILL_TRAINED) && user.skill_check(SKILL_WEAPONS, SKILL_TRAINED))
+					acc_mod += bulk
+					acc_mod += accuracy
+				else
+					acc_mod += bulk / 2
+					acc_mod += accuracy * 0.75
+		if(6) //sniper rifles
+			if (user.skill_check(SKILL_HAULING, SKILL_BASIC) && user.skill_check(SKILL_WEAPONS, SKILL_BASIC))
+				if(user.skill_check(SKILL_HAULING, SKILL_TRAINED) && user.skill_check(SKILL_WEAPONS, SKILL_TRAINED))
+					if(user.skill_check(SKILL_HAULING, SKILL_TRAINED) && user.skill_check(SKILL_WEAPONS, SKILL_EXPERIENCED))
+						acc_mod += bulk
+						acc_mod += accuracy
+					else
+						acc_mod += bulk / 2
+						acc_mod += accuracy * 0.75
+				else
+					acc_mod += bulk / 5
+					acc_mod += accuracy * 0.25
+		if(7) //machine gun, RPG
+			if (user.skill_check(SKILL_HAULING, SKILL_TRAINED) && user.skill_check(SKILL_WEAPONS, SKILL_BASIC))
+				if(user.skill_check(SKILL_HAULING, SKILL_TRAINED) && user.skill_check(SKILL_WEAPONS, SKILL_TRAINED))
+					if(user.skill_check(SKILL_HAULING, SKILL_EXPERIENCED) && user.skill_check(SKILL_WEAPONS, SKILL_EXPERIENCED))
+						acc_mod += bulk
+						acc_mod += accuracy
+					else
+						acc_mod += bulk / 2 //-25%, not 35%
+						acc_mod += accuracy / 2
+				else
+					acc_mod += bulk / 5
+	// [/SIERRA-ADD]
 	if(one_hand_penalty >= 4 && !held_twohanded)
 		acc_mod -= one_hand_penalty/2
 		disp_mod += one_hand_penalty*0.5 //dispersion per point of two-handedness
@@ -464,12 +544,18 @@
 
 	return launched
 
-/obj/item/gun/proc/play_fire_sound(mob/user, obj/item/projectile/P)
-	var/shot_sound = (istype(P) && P.fire_sound)? P.fire_sound : fire_sound
-	if(silenced)
-		playsound(user, shot_sound, 10, 1)
-	else
-		playsound(user, shot_sound, 50, 1)
+
+/obj/item/gun/proc/play_fire_sound(mob/user, obj/item/projectile/projectile)
+	var/sound = fire_sound
+	if (istype(projectile) && projectile.fire_sound)
+		sound = projectile.fire_sound
+	if (islist(sound))
+		sound = pick(sound)
+	var/volume = 50
+	if (silenced)
+		volume = 10
+	playsound(src, sound, volume, fire_sound_vary)
+
 
 //Suicide handling.
 /obj/item/gun/proc/handle_suicide(mob/living/user)
@@ -608,6 +694,7 @@
 
 /obj/item/gun/proc/toggle_safety(mob/user)
 	if (user?.is_physically_disabled())
+		to_chat(user, SPAN_WARNING("You can't do this right now!"))
 		return
 
 	safety_state = !safety_state
@@ -617,12 +704,22 @@
 		last_safety_check = world.time
 		playsound(src, 'sound/weapons/flipblade.ogg', 15, 1)
 
+
 /obj/item/gun/verb/toggle_safety_verb()
-	set src in usr
-	set category = "Object"
 	set name = "Toggle Gun Safety"
-	if(usr == loc)
-		toggle_safety(usr)
+	set category = "Object"
+	set src in usr
+	if (usr.incapacitated())
+		to_chat(usr, SPAN_WARNING("You're in no condition to do that."))
+		return
+	var/obj/item/gun/gun = usr.get_active_hand()
+	if (!istype(gun))
+		gun = usr.get_inactive_hand()
+		if (!istype(gun))
+			to_chat(usr, SPAN_WARNING("You need a gun in your hands to do that."))
+			return
+	gun.toggle_safety(usr)
+
 
 /obj/item/gun/CtrlClick(mob/user)
 	if(loc == user)

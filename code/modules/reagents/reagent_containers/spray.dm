@@ -59,7 +59,7 @@
 			A.visible_message(SPAN_NOTICE("\The [user] sprays \the [A] with \the [src]."))
 	else
 		spawn(0)
-			var/obj/effect/effect/water/chempuff/D = new/obj/effect/effect/water/chempuff(get_turf(src))
+			var/obj/effect/water/chempuff/D = new/obj/effect/water/chempuff(get_turf(src))
 			var/turf/my_target = get_turf(A)
 			D.create_reagents(amount_per_transfer_from_this)
 			if(!src)
@@ -168,10 +168,14 @@
 	reagents.add_reagent(/datum/reagent/water, 10)
 
 /obj/item/reagent_containers/spray/chemsprayer
-	name = "chem sprayer"
+	name = "industrial chemical sprayer"
 	desc = "A utility used to spray large amounts of reagent in a given area."
 	icon = 'icons/obj/weapons/other.dmi'
 	icon_state = "chemsprayer"
+	item_icons = list(
+		slot_r_hand_str = 'icons/mob/onmob/items/righthand.dmi',
+		slot_l_hand_str = 'icons/mob/onmob/items/lefthand.dmi'
+	)
 	item_state = "chemsprayer"
 	throwforce = 3
 	w_class = ITEM_SIZE_LARGE
@@ -181,6 +185,7 @@
 	step_delay = 8
 
 /obj/item/reagent_containers/spray/chemsprayer/Spray_at(atom/A, mob/user, proximity)
+	playsound(src.loc, 'sound/effects/spray.ogg', 50, 1, -6)
 	var/direction = get_dir(src, A)
 	var/turf/T = get_turf(A)
 	var/turf/T1 = get_step(T,turn(direction, 90))
@@ -197,7 +202,7 @@
 	for(var/a = 1 to 3)
 		spawn(0)
 			if(reagents.total_volume < 1) break
-			var/obj/effect/effect/water/chempuff/D = new/obj/effect/effect/water/chempuff(get_turf(src))
+			var/obj/effect/water/chempuff/D = new/obj/effect/water/chempuff(get_turf(src))
 			var/turf/my_target = the_targets[a]
 			D.create_reagents(amount_per_transfer_from_this)
 			if(!src)
@@ -222,7 +227,7 @@
 /obj/item/reagent_containers/spray/plantbgone/afterattack(atom/A as mob|obj, mob/user as mob, proximity)
 	if(!proximity) return
 
-	if(istype(A, /obj/effect/blob)) // blob damage in blob code
+	if(istype(A, /obj/blob)) // blob damage in blob code
 		return
 
 	..()

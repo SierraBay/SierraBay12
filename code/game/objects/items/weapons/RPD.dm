@@ -75,14 +75,14 @@ GLOBAL_LIST_INIT(rpd_pipe_selection_skilled, list(
 	w_class = ITEM_SIZE_NORMAL
 	origin_tech = list(TECH_ENGINEERING = 5, TECH_MATERIAL = 4)
 
-	var/datum/effect/effect/system/spark_spread/spark_system
+	var/datum/effect/spark_spread/spark_system
 	var/datum/pipe/P
 	var/pipe_color = "white"
 	var/datum/browser/popup
 
 /obj/item/rpd/Initialize()
 	. = ..()
-	spark_system = new /datum/effect/effect/system/spark_spread
+	spark_system = new /datum/effect/spark_spread
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 	var/list/L = GLOB.rpd_pipe_selection[GLOB.rpd_pipe_selection[1]]
@@ -131,11 +131,10 @@ GLOBAL_LIST_INIT(rpd_pipe_selection_skilled, list(
 	if(popup)
 		popup.close()
 
-/obj/item/rpd/afterattack(atom/A, mob/user, proximity)
-	if (!proximity || istype(A, /obj/item/storage))
-		return
+/obj/item/rpd/use_after(atom/A, mob/living/user, click_parameters)
 	if (istype(A, /obj/item/pipe))
 		recycle(A,user)
+		return TRUE
 	else
 		if (user.skill_fail_prob(SKILL_ATMOS, 80, SKILL_TRAINED))
 			var/C = pick(GLOB.rpd_pipe_selection)
@@ -143,17 +142,18 @@ GLOBAL_LIST_INIT(rpd_pipe_selection_skilled, list(
 			user.visible_message(SPAN_WARNING("\The [user] cluelessly fumbles with \the [src]."))
 		var/turf/T = get_turf(A)
 		if (!T.Adjacent(loc))
-			return
+			return TRUE
 
 		playsound(get_turf(user), 'sound/machines/click.ogg', 50, 1)
 		if (T.is_wall())
 			if (!do_after(user, 3 SECONDS, T, DO_PUBLIC_UNIQUE))
-				return
+				return TRUE
 			playsound (get_turf(user), 'sound/items/Deconstruct.ogg', 50, 1)
 
 		P.Build(P, T, pipe_colors[pipe_color])
 		if (prob(20))
 			spark_system.start()
+		return TRUE
 
 /obj/item/rpd/examine(mob/user, distance)
 	. = ..()
@@ -167,13 +167,14 @@ GLOBAL_LIST_INIT(rpd_pipe_selection_skilled, list(
 	interact(user)
 	add_fingerprint(user)
 
-/obj/item/rpd/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/pipe))
-		if(!user.unEquip(W))
-			return
-		recycle(W,user)
-		return
-	..()
+/obj/item/rpd/use_tool(obj/item/item, mob/living/user, list/click_params)
+	if(istype(item, /obj/item/pipe))
+		if(!user.unEquip(item))
+			FEEDBACK_UNEQUIP_FAILURE(user, item)
+			return TRUE
+		recycle(item,user)
+		return TRUE
+	return ..()
 
 /obj/item/rpd/proc/recycle(obj/item/W,mob/user)
 	if(!user.skill_check(SKILL_ATMOS,SKILL_BASIC))

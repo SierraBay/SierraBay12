@@ -369,6 +369,20 @@
 	max_ammo = 8
 	multiple_sprites = TRUE
 
+/obj/item/ammo_magazine/box/minigun
+	name = "minigun box"
+	icon_state = "minigun"
+	origin_tech = list(TECH_COMBAT = 4)
+	mag_type = MAGAZINE
+	caliber = CALIBER_PISTOL_SMALL
+	matter = list(MATERIAL_STEEL = 10000)
+	ammo_type = /obj/item/ammo_casing/pistol/small
+	max_ammo = 200
+	multiple_sprites = TRUE
+
+/obj/item/ammo_magazine/box/minigun/empty
+	initial_ammo = 0
+
 /obj/item/ammo_magazine/shotgunmag
 	name = "shotgun magazine"
 	desc = "A magazine for semi-automatic shotguns."
@@ -391,3 +405,14 @@
 /obj/item/ammo_magazine/shotgunmag/beanbag
 	labels = list("beanbag")
 	ammo_type = /obj/item/ammo_casing/shotgun/beanbag
+
+/obj/item/ammo_magazine/n10mm
+	name = "NT41 magazine (5.7x28mm)"
+	icon = 'packs/infinity/icons/obj/ammo.dmi'
+	icon_state = "10mm"
+	mag_type = MAGAZINE
+	ammo_type = /obj/item/ammo_casing/nt28mm
+	matter = list(MATERIAL_STEEL = 1500)
+	caliber = CALIBER_PISTOL_FAST
+	max_ammo = 20
+	multiple_sprites = 1

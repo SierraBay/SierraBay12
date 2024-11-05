@@ -30,7 +30,7 @@
 	var/obj/item/modular_computer/pda/item = spawn_item(H, H, metadata)
 	var/obj/item/card/id = H.GetIdCard()
 	if(id)
-		item.attackby(id, H)
+		item.use_tool(id, H)
 	if(item.tesla_link && !istype(H, /mob/living/carbon/human/dummy))	//PDA in loadout shouldn't work
 		var/datum/extension/interactive/ntos/os = get_extension(item, /datum/extension/interactive/ntos)
 		if(os && os.active_program && os.active_program.NM && istype(os.active_program, /datum/computer_file/program/email_client))
@@ -41,7 +41,6 @@
 		. = item
 
 
-/* SIERRA TODO:
 /datum/gear/utility/wrist_computer
 	display_name = "Wrist computer selection"
 	path = /obj/item/modular_computer/pda/wrist
@@ -51,7 +50,7 @@
 	..()
 	var/wcomp = list()
 	slot = slot_wear_id
-	wcomp["black"]                   = /obj/item/modular_computer/pda/wrist/
+	wcomp["black"]                   = /obj/item/modular_computer/pda/wrist
 	wcomp["lightgrey"]               = /obj/item/modular_computer/pda/wrist/grey
 	wcomp["black-red (sec)"]         = /obj/item/modular_computer/pda/wrist/security
 	wcomp["brown (sup)"]             = /obj/item/modular_computer/pda/wrist/cargo
@@ -76,12 +75,28 @@
 	var/obj/item/modular_computer/pda/wrist/item = spawn_item(H, H, metadata)
 	var/obj/item/card/id = H.GetIdCard()
 	if(id)
-		item.attackby(id, H)
+		item.use_tool(id, H)
 	if(item.tesla_link && !istype(H, /mob/living/carbon/human/dummy))	//PDA in loadout shouldn't work
 		var/datum/extension/interactive/ntos/os = get_extension(item, /datum/extension/interactive/ntos)
 		if(os && os.active_program && os.active_program.NM && istype(os.active_program, /datum/computer_file/program/email_client))
 			var/datum/nano_module/email_client/NME = os.active_program.NM
 			NME.log_in()
-	if(H.equip_to_slot_if_possible(item, slot, del_on_fail = 1))
+	if(H.equip_to_slot_if_possible(item, slot, equip_flags = TRYEQUIP_REDRAW))
 		. = item
-		*/
+
+/datum/gear/utility/modular_scanner
+	display_name = "Scanner module, paper"
+	cost = 1
+	path = /obj/item/stock_parts/computer/scanner/paper
+
+/datum/gear/utility/modular_scanner/chemical
+	display_name = "Scanner module, reagents"
+	path = /obj/item/stock_parts/computer/scanner/reagent
+
+/datum/gear/utility/modular_scanner/atmos
+	display_name = "Scanner module, atmos"
+	path = /obj/item/stock_parts/computer/scanner/atmos
+
+/datum/gear/utility/modular_scanner/medical
+	display_name = "Scanner module, medical"
+	path = /obj/item/stock_parts/computer/scanner/medical

@@ -86,9 +86,9 @@
 
 /datum/reagent/carbon/touch_turf(turf/T)
 	if(!istype(T, /turf/space))
-		var/obj/effect/decal/cleanable/dirt/dirtoverlay = locate(/obj/effect/decal/cleanable/dirt, T)
+		var/obj/decal/cleanable/dirt/dirtoverlay = locate(/obj/decal/cleanable/dirt, T)
 		if (!dirtoverlay)
-			dirtoverlay = new/obj/effect/decal/cleanable/dirt(T)
+			dirtoverlay = new/obj/decal/cleanable/dirt(T)
 			dirtoverlay.alpha = volume * 30
 		else
 			dirtoverlay.alpha = min(dirtoverlay.alpha + volume * 30, 255)
@@ -148,7 +148,7 @@
 		M.slurring = max(M.slurring, 30)
 	if(effective_dose >= strength * 3) // Confusion - walking in random directions
 		M.add_chemical_effect(CE_PAINKILLER, 150/strength)
-		M.confused = max(M.confused, 20)
+		M.set_confused(20)
 	if(effective_dose >= strength * 4) // Blurry vision
 		M.add_chemical_effect(CE_PAINKILLER, 150/strength)
 		M.eye_blurry = max(M.eye_blurry, 10)
@@ -207,7 +207,7 @@
 	M.adjustToxLoss(0.2 * removed)
 
 /datum/reagent/hydrazine/touch_turf(turf/T)
-	new /obj/effect/decal/cleanable/liquid_fuel(T, volume)
+	new /obj/decal/cleanable/liquid_fuel(T, volume)
 	remove_self(volume)
 	return
 
@@ -292,9 +292,9 @@
 /datum/reagent/radium/touch_turf(turf/T)
 	if(volume >= 3)
 		if(!istype(T, /turf/space))
-			var/obj/effect/decal/cleanable/greenglow/glow = locate(/obj/effect/decal/cleanable/greenglow, T)
+			var/obj/decal/cleanable/greenglow/glow = locate(/obj/decal/cleanable/greenglow, T)
 			if(!glow)
-				new /obj/effect/decal/cleanable/greenglow(T)
+				new /obj/decal/cleanable/greenglow(T)
 			return
 
 /datum/reagent/acid
@@ -382,8 +382,8 @@
 /datum/reagent/acid/touch_obj(obj/O)
 	if(O.unacidable)
 		return
-	if((istype(O, /obj/item) || istype(O, /obj/effect/vine)) && (volume > meltdose))
-		var/obj/effect/decal/cleanable/molten_item/I = new/obj/effect/decal/cleanable/molten_item(O.loc)
+	if((istype(O, /obj/item) || istype(O, /obj/vine)) && (volume > meltdose))
+		var/obj/decal/cleanable/molten_item/I = new/obj/decal/cleanable/molten_item(O.loc)
 		I.desc = "Looks like this was \an [O] some time ago."
 		for(var/mob/M in viewers(5, O))
 			to_chat(M, SPAN_WARNING("\The [O] melts."))
@@ -430,6 +430,10 @@
 	glass_desc = "The organic compound commonly known as table sugar and sometimes called saccharose. This white, odorless, crystalline powder has a pleasing, sweet taste."
 	glass_icon = DRINK_ICON_NOISY
 	value = DISPENSER_REAGENT_VALUE
+
+	condiment_name = "sugar sack"
+	condiment_desc = "Cavities in a bag."
+	condiment_icon_state = "sugar"
 
 /datum/reagent/sugar/affect_blood(mob/living/carbon/human/M, removed)
 	handle_sugar(M, src)

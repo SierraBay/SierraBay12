@@ -20,7 +20,7 @@
 
 
 
-/obj/effect/landmark/corpse/zombiescience
+/obj/landmark/corpse/zombiescience
 	name = "Dead Scientist"
 	corpse_outfits = list(/singleton/hierarchy/outfit/zombie_science)
 
@@ -42,8 +42,13 @@
 /obj/item/reagent_containers/glass/beaker/vial/random_podchem/Initialize()
 	. = ..()
 	desc += "Label is smudged, and there's crusted blood fingerprints on it."
-	var/reagent_type = pick(/datum/reagent/random, /datum/reagent/rezadone, /datum/reagent/drugs/three_eye)
-	reagents.add_reagent(pick(reagent_type), 5)
+	var/reagent_type = pickweight(list(
+		/datum/reagent/random = 50,
+		/datum/reagent/rezadone = 25,
+		/datum/reagent/drugs/three_eye = 20,
+		/datum/reagent/zombie/science = 5
+	))
+	reagents.add_reagent(reagent_type, 5)
 
 /obj/structure/backup_server
 	name = "backup server"
@@ -79,7 +84,7 @@
 	return ..()
 
 
-/obj/effect/landmark/map_load_mark/ejected_datapod
+/obj/landmark/map_load_mark/ejected_datapod
 	name = "random datapod contents"
 	templates = list(/datum/map_template/ejected_datapod_contents, /datum/map_template/ejected_datapod_contents/type2, /datum/map_template/ejected_datapod_contents/type3)
 

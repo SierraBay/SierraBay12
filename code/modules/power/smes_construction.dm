@@ -110,7 +110,7 @@
 // This also causes the SMES to quickly discharge, and has small chance of damaging output APCs.
 /obj/machinery/power/smes/buildable/Process()
 	if(!grounding && (Percentage() > 5))
-		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+		var/datum/effect/spark_spread/s = new /datum/effect/spark_spread
 		s.set_up(5, 1, src)
 		s.start()
 		charge -= (output_level_max * CELLRATE)
@@ -171,7 +171,7 @@
 
 
 	// Preparations
-	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	var/datum/effect/spark_spread/s = new /datum/effect/spark_spread
 	// Check if user has protected gloves.
 	var/user_protected = 0
 	if(h_user.gloves)
@@ -330,23 +330,21 @@
 			return
 	..()
 
-// Proc: attackby()
-// Parameters: 2 (W - object that was used on this machine, user - person which used the object)
-// Description: Handles tool interaction. Allows deconstruction/upgrading/fixing.
-/obj/machinery/power/smes/buildable/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/power/smes/buildable/use_tool(obj/item/W, mob/living/user, list/click_params)
 	// No more disassembling of overloaded SMESs. You broke it, now enjoy the consequences.
 	if (failing)
 		to_chat(user, SPAN_WARNING("\The [src]'s screen is flashing with alerts. It seems to be overloaded! Touching it now is probably not a good idea."))
-		return
+		return TRUE
 
-	if (!..())
+	// Multitool - change RCON tag
+	if(isMultitool(W))
+		var/newtag = input(user, "Enter new RCON tag. Use \"NO_TAG\" to disable RCON or leave empty to cancel.", "SMES RCON system") as text
+		if(newtag)
+			RCon_tag = newtag
+			to_chat(user, SPAN_NOTICE("You changed the RCON tag to: [newtag]"))
+		return TRUE
 
-		// Multitool - change RCON tag
-		if(isMultitool(W))
-			var/newtag = input(user, "Enter new RCON tag. Use \"NO_TAG\" to disable RCON or leave empty to cancel.", "SMES RCON system") as text
-			if(newtag)
-				RCon_tag = newtag
-				to_chat(user, SPAN_NOTICE("You changed the RCON tag to: [newtag]"))
+	return ..()
 
 // Proc: toggle_input()
 // Parameters: None

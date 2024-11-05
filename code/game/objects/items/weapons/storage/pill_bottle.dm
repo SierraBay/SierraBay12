@@ -7,47 +7,51 @@
 	w_class = ITEM_SIZE_SMALL
 	max_w_class = ITEM_SIZE_TINY
 	max_storage_space = 21
-	can_hold = list(/obj/item/reagent_containers/pill,/obj/item/dice,/obj/item/paper)
-	allow_quick_gather = 1
-	use_to_pickup = 1
+	contents_allowed = list(
+		/obj/item/reagent_containers/pill,
+		/obj/item/dice,
+		/obj/item/paper,
+		/obj/item/material/shard/caltrop/tack
+	)
+	allow_quick_gather = TRUE
+	allow_quick_empty = TRUE
 	use_sound = 'sound/effects/storage/pillbottle.ogg'
 	matter = list(MATERIAL_PLASTIC = 250)
 	var/wrapper_color
 	var/label
 
 
-/obj/item/storage/pill_bottle/afterattack(mob/living/target, mob/living/user, proximity_flag)
-	if(!proximity_flag || !istype(target) || target != user)
-		return 1
-	if(!length(contents))
-		to_chat(user, SPAN_WARNING("It's empty!"))
-		return 1
-	var/zone = user.zone_sel.selecting
-	if(zone == BP_MOUTH && target.can_eat())
+/obj/item/storage/pill_bottle/use_before(atom/target, mob/living/user)
+	if (istype(user) && target == user && user.can_eat())
+		if (!length(contents))
+			to_chat(user, SPAN_WARNING("\The [src] is empty!"))
+			return TRUE
+
 		user.visible_message(SPAN_NOTICE("[user] pops a pill from \the [src]."))
 		playsound(get_turf(src), 'sound/effects/peelz.ogg', 50)
 		var/list/peelz = filter_list(contents,/obj/item/reagent_containers/pill)
-		if(length(peelz))
+		if (length(peelz))
 			var/obj/item/reagent_containers/pill/P = pick(peelz)
 			remove_from_storage(P)
-			P.attack(target,user)
-			return 1
+			P.resolve_attackby(target ,user)
+			return TRUE
 
-
-/obj/item/storage/pill_bottle/afterattack(obj/target, mob/living/user, proximity)
-	if(!proximity)
-		return
-	if(target.is_open_container() && target.reagents)
-		if(!target.reagents.total_volume)
+	if (isobj(target) && target.is_open_container() && target.reagents)
+		if (!length(contents))
+			to_chat(user, SPAN_WARNING("\The [src] is empty!"))
+			return TRUE
+		if (!target.reagents.total_volume)
 			to_chat(user, SPAN_NOTICE("[target] is empty. Can't dissolve a pill."))
-			return
+			return TRUE
 
 		var/list/peelz = filter_list(contents,/obj/item/reagent_containers/pill)
-		if(length(peelz))
+		if (length(peelz))
 			var/obj/item/reagent_containers/pill/P = pick(peelz)
 			remove_from_storage(P)
-			P.afterattack(target, user, proximity)
-	return
+			P.use_after(target, user)
+			return TRUE
+
+	else return FALSE
 
 
 /obj/item/storage/pill_bottle/attack_self(mob/living/user)
@@ -185,8 +189,19 @@
 	name = "pill bottle (Paracetamol)"
 	desc = "Mild painkiller, also known as Tylenol. Won't fix the cause of your headache (unlike cyanide), but might make it bearable."
 	startswith = list(/obj/item/reagent_containers/pill/paracetamol = 21)
-	wrapper_color = "#a2819e"
+	wrapper_color = "#c8a5dc"
 
+/obj/item/storage/pill_bottle/hyronalin
+	name = "pill bottle (Hyronalin)"
+	desc = "Moderate-strength anti-radiation pills. Take one and see if your hair falls out in the morning."
+	startswith = list(/obj/item/reagent_containers/pill/hyronalin = 14)
+	wrapper_color = COLOR_GREEN_GRAY
+
+/obj/item/storage/pill_bottle/sugariron
+	name = "pill bottle (Sugar-Iron)"
+	desc = "A fifty-fifty mix of iron and sugar, used for encouraging the body's natural blood regeneration."
+	startswith = list(/obj/item/reagent_containers/pill/sugariron = 14)
+	wrapper_color = COLOR_RED_GRAY
 
 /obj/item/storage/pill_bottle/assorted
 	name = "pill bottle (assorted)"

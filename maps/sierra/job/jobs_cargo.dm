@@ -7,7 +7,8 @@
 	supervisors = "Главе Персонала"
 	economic_power = 8
 	minimal_player_age = 7
-	ideal_character_age = 35
+	minimum_character_age = list(SPECIES_HUMAN = 23)
+	ideal_character_age = 25
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/supply/quartermaster
 	allowed_branches = list(/datum/mil_branch/employee)
 	allowed_ranks = list(/datum/mil_rank/civ/nt)
@@ -20,7 +21,7 @@
 
 	skill_points = 14
 
-	access = list(		access_maint_tunnels, access_emergency_storage, access_tech_storage,  access_cargo, access_guppy_helm,
+	access = list(		access_maint_tunnels, access_emergency_storage, access_bridge, access_tech_storage,  access_cargo, access_guppy_helm,
 						access_cargo_bot, access_qm, access_mailsorting, access_expedition_shuttle, access_guppy, access_hangar,
 						access_mining, access_mining_office, access_mining_station, access_commissary, access_external_airlocks)
 
@@ -43,6 +44,7 @@
 	total_positions = 2
 	spawn_positions = 2
 	supervisors = "Квартирмейстеру и Главе Персонала"
+	minimum_character_age = list(SPECIES_HUMAN = 22)
 	ideal_character_age = 24
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/supply/tech
 	allowed_branches = list(/datum/mil_branch/employee, /datum/mil_branch/contractor)
@@ -77,7 +79,8 @@
 	supervisors = "Квартирмейстеру и Главе Персонала"
 	selection_color = "#515151"
 	economic_power = 7
-	ideal_character_age = 25
+	minimum_character_age = list(SPECIES_HUMAN = 22)
+	ideal_character_age = 24
 	alt_titles = list(
 		"Drill Technician",
 		"Shaft Miner",
@@ -95,7 +98,7 @@
 	allowed_ranks = list(/datum/mil_rank/civ/nt, /datum/mil_rank/civ/contractor)
 
 	access = list(access_mining, access_mining_office, access_mining_station,
-						access_expedition_shuttle, access_guppy, access_hangar, access_guppy_helm)
+						access_expedition_shuttle, access_guppy, access_hangar, access_guppy_helm, access_cargo)
 
 
 
@@ -110,6 +113,7 @@
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = "Квартирмейстеру и Главе Персонала"
+	minimum_character_age = list(SPECIES_HUMAN = 18)
 	ideal_character_age = 20
 	selection_color = "#515151"
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/supply/assistant

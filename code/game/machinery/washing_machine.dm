@@ -68,7 +68,7 @@
 
 	update_use_power(POWER_USE_ACTIVE)
 	update_icon()
-	addtimer(new Callback(src, /obj/machinery/washing_machine/proc/wash), 20 SECONDS)
+	addtimer(new Callback(src, TYPE_PROC_REF(/obj/machinery/washing_machine, wash)), 20 SECONDS)
 
 /obj/machinery/washing_machine/proc/wash()
 	for(var/atom/A in (contents - component_parts))
@@ -86,7 +86,7 @@
 				C.ironed_state = WRINKLES_WRINKLY
 				if(detergent)
 					C.change_smell(SMELL_CLEAN)
-					addtimer(new Callback(C, /obj/item/clothing/proc/change_smell), detergent.smell_clean_time, TIMER_UNIQUE | TIMER_OVERRIDE)
+					addtimer(new Callback(C, TYPE_PROC_REF(/obj/item/clothing, change_smell)), detergent.smell_clean_time, TIMER_UNIQUE | TIMER_OVERRIDE)
 	QDEL_NULL(detergent)
 
 	//Tanning!
@@ -127,7 +127,10 @@
 /obj/machinery/washing_machine/components_are_accessible(path)
 	return !(state & WASHER_STATE_RUNNING) && ..()
 
-/obj/machinery/washing_machine/attackby(obj/item/W, mob/user)
+/obj/machinery/washing_machine/use_tool(obj/item/W, mob/living/user, list/click_params)
+	if ((. = ..()))
+		return
+
 	if(!(state & WASHER_STATE_CLOSED))
 		if(!crayon && istype(W,/obj/item/pen/crayon))
 			if(!user.unEquip(W, src))
@@ -139,6 +142,7 @@
 				return
 			detergent = W
 			return TRUE
+
 	if(istype(W, /obj/item/holder)) // Mob holder
 		for(var/mob/living/doggy in W)
 			doggy.forceMove(src)
@@ -151,24 +155,21 @@
 		to_chat(user, SPAN_WARNING("\The [src] is currently running."))
 		return TRUE
 
-	else if (!(W.item_flags & ITEM_FLAG_WASHER_ALLOWED))
-		if (isScrewdriver(W) || isCrowbar(W) || isWrench(W) || can_add_component(W))
-			return ..()
-
+	if (!(W.item_flags & ITEM_FLAG_WASHER_ALLOWED))
 		to_chat(user, SPAN_WARNING("\The [W] can't be washed in \the [src]!"))
-		return
+		return TRUE
 
-	else
-		if (length(contents) < 5)
-			if (!(state & WASHER_STATE_CLOSED))
-				if (!user.unEquip(W, src))
-					return
-				state |= WASHER_STATE_FULL
-				update_icon()
-			else
-				to_chat(user, SPAN_NOTICE("You can't put the item in right now."))
+	if (length(contents) < 5)
+		if (!(state & WASHER_STATE_CLOSED))
+			if (!user.unEquip(W, src))
+				return
+			state |= WASHER_STATE_FULL
+			update_icon()
 		else
-			to_chat(user, SPAN_NOTICE("\The [src] is full."))
+			to_chat(user, SPAN_NOTICE("You can't put the item in right now."))
+	else
+		to_chat(user, SPAN_NOTICE("\The [src] is full."))
+	return TRUE
 
 
 /obj/machinery/washing_machine/physical_attack_hand(mob/user)

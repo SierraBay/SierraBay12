@@ -73,12 +73,13 @@
 	var/mob/living/M = target
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = M
+		var/datum/pronouns/pronouns = M.choose_from_pronouns()
 		if((H.species.species_flags & SPECIES_FLAG_IS_PLANT) && (H.nutrition < 500))
 			if(prob(15))
 				H.apply_damage((rand(30,80)), DAMAGE_RADIATION, damage_flags = DAMAGE_FLAG_DISPERSED)
 				H.Weaken(5)
 				for (var/mob/V in viewers(src))
-					V.show_message(SPAN_WARNING("[M] writhes in pain as \his vacuoles boil."), 3, SPAN_WARNING("You hear the crunching of leaves."), 2)
+					V.show_message(SPAN_WARNING("\The [M] writhes in pain as [pronouns.his] vacuoles boil."), 3, SPAN_WARNING("You hear the crunching of leaves."), 2)
 			if(prob(35))
 				if(prob(80))
 					randmutb(M)
@@ -129,7 +130,7 @@
 /obj/item/projectile/beam/mindflayer/on_hit(atom/target, blocked = 0)
 	if(ishuman(target))
 		var/mob/living/carbon/human/M = target
-		M.confused += rand(5,8)
+		M.mod_confused(rand(5, 8))
 
 /obj/item/projectile/chameleon
 	name = "bullet"
@@ -139,7 +140,7 @@
 	nodamage = TRUE
 	damage_type = DAMAGE_PAIN
 	damage_flags = 0
-	muzzle_type = /obj/effect/projectile/bullet/muzzle
+	muzzle_type = /obj/projectile/bullet
 
 /obj/item/projectile/bola
 	name = "bola"
@@ -170,10 +171,10 @@
 
 /obj/item/projectile/webball/on_hit(atom/target, blocked = 0)
 	if (isturf(target.loc))
-		var/obj/effect/spider/stickyweb/W = locate() in get_turf(target)
+		var/obj/spider/stickyweb/W = locate() in get_turf(target)
 		if (!W && prob(75))
 			visible_message(SPAN_DANGER("\The [src] splatters a layer of web on \the [target]!"))
-			new /obj/effect/spider/stickyweb(target.loc)
+			new /obj/spider/stickyweb(target.loc)
 
 			if (isliving(target))
 				var/mob/living/M = target

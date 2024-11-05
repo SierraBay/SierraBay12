@@ -63,6 +63,7 @@
 	//
 /obj/structure/disposalpipe/proc/transfer(obj/structure/disposalholder/H)
 	var/nextdir = nextdir(H.dir)
+
 	H.set_dir(nextdir)
 	var/turf/T = H.nextloc()
 	var/obj/structure/disposalpipe/P = H.findpipe(T)
@@ -139,7 +140,7 @@
 				visible_message(SPAN_DANGER("Vomit spews out of the disposal pipe!"))
 				playsound(loc, 'sound/effects/splat.ogg', 50, 1)
 				if(istype(src.loc, /turf/simulated))
-					var/obj/effect/decal/cleanable/vomit/splat = new /obj/effect/decal/cleanable/vomit(src.loc)
+					var/obj/decal/cleanable/vomit/splat = new /obj/decal/cleanable/vomit(src.loc)
 					H.reagents.trans_to_obj(splat, min(15, H.reagents.total_volume))
 					splat.update_icon()
 
@@ -777,6 +778,16 @@
 
 	update()
 	return
+
+/obj/structure/disposalpipe/trunk/Destroy()
+	if (linked)
+		if (istype(linked, /obj/machinery/disposal))
+			var/obj/machinery/disposal/linked_disposal = linked
+			if (linked_disposal.trunk == src)
+				linked_disposal.trunk = null
+		linked = null
+
+	. = ..()
 
 /obj/structure/disposalpipe/trunk/proc/getlinked()
 	linked = null

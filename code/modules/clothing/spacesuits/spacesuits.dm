@@ -33,7 +33,7 @@
 
 	action_button_name = "Toggle Helmet Light"
 	light_overlay = "helmet_light"
-	brightness_on = 0.5
+	brightness_on = 1
 	on = 0
 
 	var/tinted = null	//Set to non-null for toggleable tint helmets
@@ -140,7 +140,7 @@
 	siemens_coefficient = 0.9
 	randpixel = 0
 	species_restricted = list("exclude", SPECIES_NABBER, SPECIES_DIONA)
-	valid_accessory_slots = list(ACCESSORY_SLOT_INSIGNIA)
+	valid_accessory_slots = list(ACCESSORY_SLOT_INSIGNIA, ACCESSORY_SLOT_INSIGNIA_EVA)
 	equip_delay = 5 SECONDS
 
 

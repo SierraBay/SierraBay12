@@ -12,7 +12,7 @@
 	var/obj/item/holding = null
 	var/obj/item/device/bot_controller/controller = null
 
-/mob/living/bot/remotebot/movement_delay()
+/mob/living/bot/remotebot/movement_delay(singleton/move_intent/using_intent = move_intent)
 	var/tally = ..()
 	tally += speed
 	if(holding)
@@ -26,7 +26,7 @@
 
 /mob/living/bot/remotebot/explode()
 	on = 0
-	new /obj/effect/decal/cleanable/blood/oil(get_turf(src.loc))
+	new /obj/decal/cleanable/blood/oil(get_turf(src.loc))
 	visible_message(SPAN_DANGER("[src] blows apart!"))
 	if(controller)
 		controller.bot = null
@@ -36,7 +36,7 @@
 		if(prob(50))
 			C.forceMove(get_step(src, pick(GLOB.alldirs)))
 
-	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	var/datum/effect/spark_spread/s = new /datum/effect/spark_spread
 	s.set_up(3, 1, src)
 	s.start()
 	qdel(src)
@@ -56,7 +56,7 @@
 		var/obj/item/device/bot_controller/bot_controller = tool
 		bot_controller.bot = src
 		controller = bot_controller
-		GLOB.destroyed_event.register(bot_controller, src, .proc/controller_deleted)
+		GLOB.destroyed_event.register(bot_controller, src, PROC_REF(controller_deleted))
 		user.visible_message(
 			SPAN_NOTICE("\The [user] syncs \a [tool] to \the [src]."),
 			SPAN_NOTICE("You sync \the [tool] to \the [src].")
@@ -69,7 +69,7 @@
 /mob/living/bot/remotebot/proc/controller_deleted(obj/item/device/bot_controller/bot_controller)
 	if (controller == bot_controller)
 		controller = null
-	GLOB.destroyed_event.unregister(bot_controller, src, .proc/controller_deleted)
+	GLOB.destroyed_event.unregister(bot_controller, src, PROC_REF(controller_deleted))
 
 
 /mob/living/bot/remotebot/update_icons()

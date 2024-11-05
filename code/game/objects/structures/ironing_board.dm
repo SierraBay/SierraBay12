@@ -105,11 +105,11 @@
 	..()
 	if (buckled_mob)
 		set_density(TRUE)
-		mouse_opacity = XMOUSE_OPACITY_ALWAYS
+		mouse_opacity = MOUSE_OPACITY_PRIORITY
 		deployed = TRUE
 	else
 		set_density(FALSE)
-		mouse_opacity = XMOUSE_OPACITY_DEFAULT
+		mouse_opacity = MOUSE_OPACITY_NORMAL
 		deployed = FALSE
 	update_icon()
 
@@ -186,8 +186,9 @@
 			)
 			if (!do_after(user, 5 SECONDS, src, DO_PUBLIC_UNIQUE) || !user.use_sanity_check(src, tool))
 				return TRUE
-			if (!iron.iron_enabled)
-				USE_FEEDBACK_FAILURE("\The [src] wasn't turned on!")
+			var/obj/item/ironing_iron/used_iron = tool
+			if (!used_iron.iron_enabled)
+				USE_FEEDBACK_FAILURE("\The [used_iron] wasn't turned on!")
 				return TRUE
 			clothing.ironed_state = WRINKLES_NONE
 			user.visible_message(
@@ -261,7 +262,6 @@
 	icon_state = "iron"
 	item_state = "ironingiron"
 	slot_flags = SLOT_BELT
-	item_flags = ITEM_FLAG_TRY_ATTACK
 	throwforce = 10
 	throw_range = 6
 	force = 8
@@ -277,7 +277,7 @@
 		range = 3
 	)
 
-/obj/item/ironing_iron/attack(mob/living/subject, mob/living/user, click_parameters)
+/obj/item/ironing_iron/use_before(mob/living/subject, mob/living/user, click_parameters)
 	if (!istype(subject) || !istype(user))
 		return
 	if (iron_enabled && subject.incapacitated())

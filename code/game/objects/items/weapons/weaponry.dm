@@ -5,7 +5,6 @@
 	icon_state = "nullrod"
 	item_state = "nullrod"
 	slot_flags = SLOT_BELT
-	item_flags = ITEM_FLAG_TRY_ATTACK
 	force = 10
 	throw_speed = 1
 	throw_range = 4
@@ -15,7 +14,7 @@
 /obj/item/nullrod/disrupts_psionics()
 	return src
 
-/obj/item/nullrod/attack(mob/M as mob, mob/living/user as mob) //Paste from old-code to decult with a null rod.
+/obj/item/nullrod/use_before(mob/M as mob, mob/living/user as mob) //Paste from old-code to decult with a null rod.
 	. = FALSE
 	if (!istype(M) || user.a_intent == I_HELP)
 		return FALSE
@@ -52,12 +51,12 @@
 	icon_state = "energynet"
 	throwforce = 0
 	force = 0
-	var/net_type = /obj/effect/energy_net
+	var/net_type = /obj/energy_net
 
 /obj/item/energy_net/safari
 	name = "animal net"
 	desc = "An energized net meant to subdue animals."
-	net_type = /obj/effect/energy_net/safari
+	net_type = /obj/energy_net/safari
 
 /obj/item/energy_net/dropped()
 	..()
@@ -71,13 +70,13 @@
 // This will validate the hit_atom, then spawn an energy_net effect and qdel itself
 /obj/item/energy_net/proc/try_capture_mob(mob/living/M)
 
-	if(!istype(M) || locate(/obj/effect/energy_net) in M.loc)
+	if(!istype(M) || locate(/obj/energy_net) in M.loc)
 		qdel(src)
 		return FALSE
 
 	var/turf/T = get_turf(M)
 	if(T)
-		var/obj/effect/energy_net/net_effect = new net_type(T)
+		var/obj/energy_net/net_effect = new net_type(T)
 		net_effect.capture_mob(M)
 		qdel(src)
 
@@ -85,7 +84,7 @@
 	spawn(10)
 		if(src) qdel(src)
 
-/obj/effect/energy_net
+/obj/energy_net
 	name = "energy net"
 	desc = "It's a net made of green energy."
 	icon = 'icons/effects/effects.dmi'
@@ -103,7 +102,7 @@
 	var/min_free_time = 50
 	var/max_free_time = 85
 
-/obj/effect/energy_net/safari
+/obj/energy_net/safari
 	name = "animal net"
 	desc = "An energized net meant to subdue animals."
 
@@ -113,14 +112,14 @@
 	min_free_time = 5
 	max_free_time = 10
 
-/obj/effect/energy_net/teleport
+/obj/energy_net/teleport
 	countdown = 60
 
-/obj/effect/energy_net/Initialize()
+/obj/energy_net/Initialize()
 	. = ..()
 	START_PROCESSING(SSobj, src)
 
-/obj/effect/energy_net/Destroy()
+/obj/energy_net/Destroy()
 	if(istype(captured, /mob/living/carbon))
 		if(captured.handcuffed == src)
 			captured.handcuffed = null
@@ -130,7 +129,7 @@
 	captured = null
 	return ..()
 
-/obj/effect/energy_net/Process()
+/obj/energy_net/Process()
 	if(temporary)
 		countdown--
 	if(!captured || captured.buckled != src)
@@ -141,7 +140,7 @@
 		visible_message(SPAN_WARNING("\The [src] fades away!"))
 		qdel(src)
 
-/obj/effect/energy_net/Move()
+/obj/energy_net/Move()
 	..()
 
 	if(buckled_mob)
@@ -150,7 +149,7 @@
 		countdown = 0
 
 
-/obj/effect/energy_net/proc/capture_mob(mob/living/M)
+/obj/energy_net/proc/capture_mob(mob/living/M)
 	captured = M
 	if(M.buckled)
 		M.buckled.unbuckle_mob()
@@ -161,7 +160,7 @@
 			C.handcuffed = src
 	return 1
 
-/obj/effect/energy_net/post_buckle_mob(mob/living/M)
+/obj/energy_net/post_buckle_mob(mob/living/M)
 	if(buckled_mob)
 		layer = ABOVE_HUMAN_LAYER
 		visible_message("\The [M] was caught in [src]!")
@@ -169,13 +168,13 @@
 		to_chat(M,SPAN_WARNING("You are free of the net!"))
 		reset_plane_and_layer()
 
-/obj/effect/energy_net/on_death()
+/obj/energy_net/on_death()
 	visible_message(SPAN_DANGER("\The [src] is torn apart!"))
 	qdel(src)
 
-/obj/effect/energy_net/attack_hand(mob/user)
+/obj/energy_net/attack_hand(mob/user)
 	if (user.a_intent != I_HURT)
-		return
+		return ..()
 
 	user.visible_message(
 		SPAN_WARNING("\The [user] claws at \the [src]!"),
@@ -183,22 +182,19 @@
 	)
 	var/mob/living/carbon/human/H = user
 	if(istype(H))
-		if(H.species.can_shred(H))
+		if(MUTATION_FERAL in H.mutations || H.species.can_shred(H))
 			playsound(src.loc, 'sound/weapons/slash.ogg', 80, 1)
 			damage_health(rand(10, 20))
 		else
 			damage_health(rand(1, 3))
-
-	else if (MUTATION_HULK in user.mutations)
-		kill_health()
 	else
 		damage_health(rand(5, 8))
 
-/obj/effect/energy_net/user_unbuckle_mob(mob/user)
+/obj/energy_net/user_unbuckle_mob(mob/user)
 	return escape_net(user)
 
 
-/obj/effect/energy_net/proc/escape_net(mob/user as mob)
+/obj/energy_net/proc/escape_net(mob/user as mob)
 	visible_message(
 		SPAN_WARNING("\The [user] attempts to free themselves from \the [src]!"),
 		SPAN_WARNING("You attempt to free yourself from \the [src]!")

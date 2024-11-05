@@ -14,6 +14,9 @@
 		/area/shuttle/escape_pod/escape_pod6/station,
 		/area/shuttle/escape_pod/escape_pod7/station,
 		/area/shuttle/escape_pod/escape_pod8/station,
+		/area/shuttle/escape_pod/escape_pod9/station,
+		/area/shuttle/escape_pod/escape_pod10/station,
+		/area/shuttle/escape_pod/escape_pod11/station,
 		/area/shuttle/transport1/centcom,
 		/area/shuttle/administration/centcom,
 		/area/shuttle/specops/centcom,
@@ -62,9 +65,14 @@
 	icon_state = "thruster"
 	req_access = list(access_engine)
 
-#include "areas/multideck.dm"
+/area/crew_quarters/safe_room
+	area_flags = AREA_FLAG_RAD_SHIELDED | AREA_FLAG_ION_SHIELDED
+	holomap_color = HOLOMAP_AREACOLOR_ESCAPE
+
 #include "areas/shuttles.dm"
-#include "areas/z1_sierra_deck3.dm"
-#include "areas/z2_sierra_deck2.dm"
-#include "areas/z3_sierra_deck1.dm"
-#include "areas/z4_admin.dm"
+#include "areas/z1_sierra_deck4.dm"
+#include "areas/z2_sierra_deck3.dm"
+#include "areas/z3_sierra_deck2.dm"
+#include "areas/z4_sierra_deck1.dm"
+#include "areas/z5_sierra_bridge.dm"
+#include "areas/z6_admin.dm"

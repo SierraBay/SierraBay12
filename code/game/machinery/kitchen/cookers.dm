@@ -32,7 +32,7 @@
 	var/threshold //Whether (world.time - started) has passed cook_time or burn_time
 	var/started //The world.time when cooking started
 	var/default_color //The fallback color to assign to cooked things if the mode does not supply one
-	var/datum/effect/effect/system/smoke_spread/bad/smoke
+	var/datum/effect/smoke_spread/bad/smoke
 
 
 /obj/machinery/cooker/Initialize()
@@ -134,31 +134,31 @@
 			to_chat(user, "The contents of \the [src] will now be [cook_modes[mode]["desc"]].")
 
 
-/obj/machinery/cooker/attackby(obj/item/I, mob/user)
+/obj/machinery/cooker/use_tool(obj/item/I, mob/living/user, list/click_params)
 	if (is_processing)
 		to_chat(user, SPAN_WARNING("Turn off \the [src] first."))
-		return
-	. = component_attackby(I, user)
-	if (.)
+		return TRUE
+	if ((. = ..()))
 		return
 	if (stat)
 		to_chat(user, SPAN_WARNING("\The [src] is in no condition to operate."))
-		return
+		return TRUE
 	if (!istype(I, /obj/item/reagent_containers/food/snacks))
 		to_chat(user, SPAN_WARNING("Cooking \a [I] wouldn't be very tasty."))
-		return
+		return TRUE
 	var/obj/item/reagent_containers/food/snacks/F = I
 	if (!F.can_use_cooker)
 		to_chat(user, SPAN_WARNING("Cooking \a [I] wouldn't be very tasty."))
-		return
+		return TRUE
 	if (length(cooking) >= capacity)
 		to_chat(user, SPAN_WARNING("\The [src] is already full up."))
-		return
+		return TRUE
 	if (!user.unEquip(I))
-		return
+		return TRUE
 	user.visible_message("\The [user] puts \the [I] into \the [src].")
 	I.forceMove(src)
 	cooking += I
+	return TRUE
 
 
 /obj/machinery/cooker/Process()
@@ -702,12 +702,13 @@
 /obj/item/material/chopping_board/bamboo/default_material = MATERIAL_BAMBOO
 
 
-/obj/item/material/chopping_board/attackby(obj/item/item, mob/living/user)
+/obj/item/material/chopping_board/use_tool(obj/item/item, mob/living/user, list/click_params)
 	if (istype(item, /obj/item/reagent_containers/food/snacks))
 		if (istype(item, /obj/item/reagent_containers/food/snacks/variable))
 			to_chat(user, SPAN_WARNING("\The [item] is already combinable."))
 			return TRUE
 		if (!user.unEquip(item, src))
+			FEEDBACK_UNEQUIP_FAILURE(user, item)
 			return TRUE
 		var/obj/item/reagent_containers/food/snacks/source = item
 		var/obj/item/reagent_containers/food/snacks/variable/result = new (get_turf(src))
@@ -725,10 +726,11 @@
 		result.desc = source.desc
 		qdel(source)
 		return TRUE
+
 	return ..()
 
 
-/obj/item/reagent_containers/food/snacks/variable/attackby(obj/item/I, mob/living/user)
+/obj/item/reagent_containers/food/snacks/variable/use_tool(obj/item/I, mob/living/user, list/click_params)
 	if (istype(I, /obj/item/reagent_containers/food/snacks))
 		combine(I, user)
 		return TRUE

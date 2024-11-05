@@ -22,9 +22,12 @@
 		/obj/item/device/flash,
 		/obj/item/device/megaphone,
 		/obj/item/melee/baton/loaded,
-		/obj/item/gun/energy/gun/secure,
+		/obj/item/gun/projectile/pistol/hos,
+		/obj/item/ammo_magazine/pistol/hos,
+		/obj/item/ammo_magazine/pistol/hos/extend,
 		/obj/item/melee/telebaton,
 		/obj/item/device/taperecorder,
+		/obj/item/folder/envelope/nuke,
 		/obj/item/reagent_containers/spray/pepper,
 		/obj/item/clothing/accessory/storage/black_vest,
 		/obj/item/device/remote_device/head_of_security,
@@ -35,7 +38,7 @@
 		/obj/item/crowbar/prybar,
 		/obj/item/device/radio/off,
 		/obj/item/clothing/mask/gas/half,
-		/obj/item/storage/firstaid/combat
+		/obj/item/storage/firstaid/security
 	)
 
 /obj/structure/closet/secure_closet/warden/sierra
@@ -47,11 +50,11 @@
 	return list(
 		/obj/item/clothing/suit/armor/pcarrier/medium/nt,
 		/obj/item/clothing/head/helmet/nt,
-		/obj/item/clothing/head/beret/sec/corporate/warden,
-		/obj/item/clothing/head/beret/sec/navy/warden,
-		/obj/item/clothing/under/rank/warden/corp/alt,
-		/obj/item/clothing/under/rank/warden/navyblue,
-		/obj/item/clothing/under/rank/warden/navyblue/alt,
+		/obj/item/clothing/head/beret/sec/corporate/warden/sierra1,
+		/obj/item/clothing/head/beret/sec/navy/warden/sierra1,
+		/obj/item/clothing/under/rank/warden/corp/alt/sierra1,
+		/obj/item/clothing/under/rank/warden/navyblue/sierra1,
+		/obj/item/clothing/under/rank/warden/navyblue/alt/sierra1,
 		/obj/item/device/radio/headset/headset_sec,
 		/obj/item/device/radio/headset/headset_sec/alt,
 		/obj/item/clothing/glasses/hud/security/prot/aviators,
@@ -59,7 +62,9 @@
 		/obj/item/storage/belt/holster/security,
 		/obj/item/reagent_containers/spray/pepper,
 		/obj/item/melee/baton/loaded,
-		/obj/item/gun/energy/gun/secure,
+		/obj/item/gun/projectile/pistol/sec,
+		/obj/item/ammo_magazine/pistol/rubber,
+		/obj/item/ammo_magazine/pistol,
 		/obj/item/clothing/accessory/storage/black_vest,
 		/obj/item/gun/energy/taser,
 		/obj/item/handcuffs,
@@ -73,7 +78,7 @@
 		/obj/item/crowbar/prybar,
 		/obj/item/device/radio/off,
 		/obj/item/clothing/mask/gas/half,
-		/obj/item/storage/firstaid/regular
+		/obj/item/storage/firstaid/security
 	)
 
 /obj/structure/closet/secure_closet/cabinet/forensics
@@ -92,7 +97,8 @@
 		/obj/item/device/radio/headset/headset_sec,
 		/obj/item/device/radio/headset/headset_sec/alt,
 		/obj/item/clothing/suit/armor/pcarrier/medium/nt,
-		/obj/item/gun/energy/gun/small/secure,
+		/obj/item/gun/projectile/pistol/sec,
+		/obj/item/ammo_magazine/pistol/rubber,
 		/obj/item/device/flash,
 		/obj/item/melee/baton/loaded,
 		/obj/item/reagent_containers/spray/pepper,
@@ -107,7 +113,7 @@
 		/obj/item/crowbar/prybar,
 		/obj/item/device/radio/off,
 		/obj/item/clothing/mask/gas/half,
-		/obj/item/storage/firstaid/regular
+		/obj/item/storage/firstaid/security
 	)
 
 /obj/structure/closet/secure_closet/security/sierra
@@ -130,7 +136,10 @@
 		/obj/item/taperoll/police,
 		/obj/item/device/hailer,
 		/obj/item/clothing/accessory/storage/black_vest,
-		/obj/item/gun/energy/gun/secure,
+		/obj/item/gun/projectile/pistol/sec,
+		/obj/item/ammo_magazine/pistol/rubber,
+		/obj/item/ammo_magazine/pistol,
+		/obj/item/gun/energy/taser,
 		/obj/item/device/megaphone,
 		/obj/item/clothing/gloves/thick,
 		/obj/item/device/holowarrant,
@@ -138,7 +147,7 @@
 		/obj/item/crowbar/prybar,
 		/obj/item/device/radio/off,
 		/obj/item/clothing/mask/gas/half,
-		/obj/item/storage/firstaid/regular
+		/obj/item/storage/firstaid/security
 	)
 
 /obj/structure/closet/secure_closet/security/sierra/cadet
@@ -159,9 +168,38 @@
 		/obj/item/storage/belt/holster/security,
 		/obj/item/reagent_containers/spray/pepper,
 		/obj/item/crowbar/prybar,
-		/obj/item/gun/energy/confuseray,
+		/obj/item/gun/energy/confuseray/secure,
 		/obj/item/clothing/glasses/hud/security
 	)
+
+/obj/structure/closet/secure_closet/security/sierra/science
+	name = "research guard locker"
+	req_access = list(access_security)
+	closet_appearance = /singleton/closet_appearance/secure_closet/security
+
+/obj/structure/closet/secure_closet/security/sierra/science/WillContain()
+	return list(
+		new/datum/atom_creator/weighted(list(/obj/item/storage/backpack, /obj/item/storage/backpack/satchel)),
+		new/datum/atom_creator/simple(/obj/item/storage/backpack/dufflebag, 50),
+		/obj/item/clothing/suit/armor/vest/blueshift,
+		/obj/item/clothing/head/helmet/nt/blueshift,
+		/obj/item/device/radio/headset/headset_sec,
+		/obj/item/storage/belt/holster/security,
+		/obj/item/device/flash,
+		/obj/item/reagent_containers/spray/pepper,
+		/obj/item/grenade/chem_grenade/teargas,
+		/obj/item/melee/baton/loaded,
+		/obj/item/clothing/glasses/hud/security/prot/sunglasses,
+		/obj/item/taperoll/police,
+		/obj/item/device/hailer,
+		/obj/item/clothing/accessory/storage/black_vest,
+		/obj/item/clothing/under/blueshift_uniform,
+		/obj/item/gun/energy/taser,
+		/obj/item/device/holowarrant,
+	)
+
+/obj/structure/closet/secure_closet/security/sierra/science/WillContain()
+	return MERGE_ASSOCS_WITH_NUM_VALUES(..(), list(/obj/item/device/encryptionkey/headset_sci))
 
 /obj/structure/closet/secure_closet/brig/WillContain()
 	return list(

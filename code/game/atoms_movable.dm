@@ -168,7 +168,7 @@
 
 	if (A && yes)
 		A.last_bumped = world.time
-		invoke_async(A, /atom/proc/Bumped, src) // Avoids bad actors sleeping or unexpected side effects, as the legacy behavior was to spawn here
+		invoke_async(A, TYPE_PROC_REF(/atom, Bumped), src) // Avoids bad actors sleeping or unexpected side effects, as the legacy behavior was to spawn here
 	..()
 
 /atom/movable/proc/forceMove(atom/destination)
@@ -208,40 +208,75 @@
 	var/old_loc = loc
 	. = ..()
 	if (.)
+	//[SIERRA-ADD]
+		SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, old_loc, TRUE)
+		for(var/atom/atom in contents)
+			SEND_SIGNAL(atom, COMSIG_MOVABLE_MOVED, old_loc)
+		//[/SIERRA-ADD]
 		// observ
 		if(!loc)
 			GLOB.moved_event.raise_event(src, old_loc, null)
 
 		// freelook
-		if(opacity)
+		if(simulated && opacity)
 			updateVisibility(src)
 
 		// lighting
-		if (light_sources)	// Yes, I know you can for-null safely, but this is slightly faster. Hell knows why.
-			for (var/datum/light_source/L in light_sources)
+		if (light_source_solo)
+			light_source_solo.source_atom.update_light()
+		else if (light_source_multi)
+			var/datum/light_source/L
+			var/thing
+			for (thing in light_source_multi)
+				L = thing
 				L.source_atom.update_light()
 
 /atom/movable/Move(...)
 	var/old_loc = loc
 	. = ..()
-	if (.)
-		if(!loc)
-			GLOB.moved_event.raise_event(src, old_loc, null)
+	//[SIERRA-EDIT]
+	if (!.)
+		return
+	SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, old_loc)
+	for(var/atom/atom in contents)
+		SEND_SIGNAL(atom, COMSIG_MOVABLE_MOVED, old_loc)
+	if(!loc)
+		GLOB.moved_event.raise_event(src, old_loc, null)
 
-		// freelook
-		if(opacity)
-			updateVisibility(src)
+	// freelook
+	if(simulated && opacity)
+		updateVisibility(src)
 
-		// lighting
-		if (light_sources)	// Yes, I know you can for-null safely, this is slightly faster. Hell knows why.
-			for (var/datum/light_source/L in light_sources)
-				L.source_atom.update_light()
+	// lighting
+	if (light_source_solo)
+		light_source_solo.source_atom.update_light()
+	else if (light_source_multi)
+		var/datum/light_source/L
+		var/thing
+		for (thing in light_source_multi)
+			L = thing
+			L.source_atom.update_light()
+	//[SIERRA-EDIT]
 
 //called when src is thrown into hit_atom
 /atom/movable/proc/throw_impact(atom/hit_atom, datum/thrownthing/TT)
 	if(istype(hit_atom,/mob/living))
 		var/mob/living/M = hit_atom
 		M.hitby(src,TT)
+		var/obj/item/rig/rig = get_rig()
+		var/mob/living/carbon/human/lunger = src
+		var/mob/living/carbon/human/victim = M
+		if (istype(lunger) && istype(victim) && istype(rig)) ///Post-collision combat grab check. Independent of jumping.
+			for (var/obj/item/rig_module/actuators/R in rig.installed_modules)
+				if (R.active && R.combatType)
+					visible_message(
+						SPAN_WARNING("\The [lunger] latches onto \the [victim]!"),
+						SPAN_WARNING("You latch onto \the [victim] at the end of your lunge!")
+					)
+					lunger.species.attempt_grab(lunger, victim)
+					if(istype(lunger.get_active_hand(), /obj/item/grab/normal))
+						var/obj/item/grab/normal/G = lunger.get_active_hand()
+						G.upgrade()
 
 	else if(isobj(hit_atom))
 		var/obj/O = hit_atom
@@ -299,7 +334,7 @@
 //Overlays
 /atom/movable/fake_overlay
 	var/atom/master = null
-	var/follow_proc = /atom/movable/proc/move_to_loc_or_null
+	var/follow_proc = TYPE_PROC_REF(/atom/movable, move_to_loc_or_null)
 	anchored = TRUE
 	simulated = FALSE
 
@@ -315,8 +350,8 @@
 		GLOB.moved_event.register(master, src, follow_proc)
 		SetInitLoc()
 
-	GLOB.destroyed_event.register(master, src, /datum/proc/qdel_self)
-	GLOB.dir_set_event.register(master, src, /atom/proc/recursive_dir_set)
+	GLOB.destroyed_event.register(master, src, TYPE_PROC_REF(/datum, qdel_self))
+	GLOB.dir_set_event.register(master, src, TYPE_PROC_REF(/atom, recursive_dir_set))
 
 	. = ..()
 
@@ -348,9 +383,10 @@
 		return master.use_tool(tool, user, click_params)
 	return FALSE
 
-/atom/movable/fake_overlay/attackby(obj/item/I, mob/user)
+/atom/movable/fake_overlay/use_tool(obj/item/tool, mob/user, list/click_params)
 	if (master)
-		return master.attackby(I, user)
+		return master.use_tool(tool, user)
+	return ..()
 
 /atom/movable/fake_overlay/attack_hand(mob/user)
 	if (master)

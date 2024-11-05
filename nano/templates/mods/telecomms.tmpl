@@ -1,0 +1,137 @@
+{{if data.temp}}
+<div class='notice'>
+	{{:data.temp}}
+</div>
+{{/if}}
+
+{{if data.overloaded}}
+<div class='notice' style="display: flex; justify-content: space-between;">
+	<span>WARNING: Ion interference detected. System will automatically recover in {{:data.overloaded}} seconds.<span>
+	{{:helper.link('Reset', null, {'resetoverload' : 1}, null, 'redButton')}}
+</div>
+{{/if}}
+
+<div class="section">
+	<div class="section-title">
+		Settings
+	</div>
+	<div class="section-content">
+		<div class="labelList">
+			<div class="labelList-item">
+				<div class="labelList-item-label">
+					Power:
+				</div>
+				{{:helper.link(data.toggled ? 'On' : 'Off', 'power', {'toggle' : 0}, null, data.toggled ? 'selected' : 'redButton')}}
+			</div>
+			<div class="labelList-item">
+				<div class="labelList-item-label">
+					Identification String:
+				</div>
+				{{:helper.link(data.id, null, {'id' : 0})}}
+			</div>
+			<div class="labelList-item">
+				<div class="labelList-item-label">
+					Network:
+				</div>
+				{{:helper.link(data.network, null, {'network' : 0})}}
+			</div>
+			<div class="labelList-item">
+				<div class="labelList-item-label">
+					Prefabrication:
+				</div>
+				{{:helper.link(data.prefabrication ? 'On' : 'Off', 'check', {'toggle' : 0}, 'disabled')}}
+			</div>
+			{{if data.bus}}
+			<div class="labelList-item">
+				<div class="labelList-item-label">
+					Change Frequency:
+				</div>
+				{{:helper.link(data.changeFrequency ? 'On (' + data.changeFrequency + ')' : 'Off', null, {'change_freq' : 0})}}
+			</div>
+			{{/if}}
+		</div>
+	</div>
+</div>
+
+<div class="section">
+	<div class="section-title">
+		Linked Network Entities
+	</div>
+	<div class="section-content">
+		<table style="width:100%">
+		{{if data.links.length}}
+			{{for data.links}}
+				<tr class="candystripe">
+					<td class="table-row">
+						{{:value.index}}. {{:value.name}}  ({{:value.id}})
+						{{:helper.link('', 'closethick', {'unlink' : value.index}, null, 'redButton')}}
+					</td>
+			{{/for}}
+		{{else}}
+			<b>None</b>
+		{{/if}}
+		</table>
+
+	</div>
+</div>
+
+<div class="section">
+	<div class="section-title">
+		Filtered Frequencies
+		<div class="section-buttons">
+			{{:helper.link('Frequency', 'plus', {'add_freq' : 1})}}
+			{{:helper.link('Tag', 'plus', {'tagrule' : 1})}}
+		</div>
+	</div>
+	<div class="section-content">
+		<table style="width:100%">
+		{{if data.frequencies.length}}
+			{{for data.frequencies}}
+				<tr class="candystripe">
+					<td class="table-row">
+						{{:value.freq_format}} GHz
+
+						{{if value.tag_rule}}
+							{{:'<div style="color: ' + value.tag_rule.color + ';">' + '[' + value.tag_rule.name + ']' + '</div>'}}
+						{{/if}}
+
+						{{:helper.link('', 'closethick', {'delete' : value.freq}, null, 'redButton')}}
+					</td>
+				</tr>
+			{{/for}}
+		{{else}}
+			<b>None</b>
+		{{/if}}
+		</table>
+	</div>
+</div>
+
+<div class="section">
+	<div class="section-title">
+		Multitool
+		{{if data.buffer}}
+			{{:' (' + data.buffer.id + ')'}}
+		{{/if}}
+	</div>
+	<div class="section-content">
+		<div class="multitool-settings">
+		{{if data.buffer}}
+			{{:helper.link('Add Machine', 'plus', {'buffer' : 1}, 'disabled')}}
+			{{:helper.link('Link', 'link', {'link' : 1})}}
+			{{:helper.link('Flush', 'closethick', {'flush_buffer' : 1}, null, 'redButton')}}
+		{{else}}
+			{{:helper.link('Add Machine', 'plus', {'buffer' : 1})}}
+			{{:helper.link('Link', 'link', {'link' : 1}, 'disabled')}}
+			{{:helper.link('Flush', 'closethick', {'flush_buffer' : 1}, 'disabled')}}
+		{{/if}}
+		</div>
+	</div>
+</div>
+
+<style>
+	.multitool-settings {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+</style>

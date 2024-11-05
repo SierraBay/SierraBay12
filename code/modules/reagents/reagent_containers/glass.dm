@@ -14,7 +14,6 @@
 	volume = 60
 	w_class = ITEM_SIZE_SMALL
 	atom_flags = ATOM_FLAG_OPEN_CONTAINER
-	item_flags = ITEM_FLAG_TRY_ATTACK
 	unacidable = TRUE
 
 
@@ -67,7 +66,7 @@
 		atom_flags |= ATOM_FLAG_OPEN_CONTAINER
 	update_icon()
 
-/obj/item/reagent_containers/glass/attack(mob/M as mob, mob/user as mob)
+/obj/item/reagent_containers/glass/use_before(mob/M as mob, mob/user as mob)
 	. = FALSE
 	if (!istype(M))
 		return FALSE
@@ -91,9 +90,15 @@
 /obj/item/reagent_containers/glass/throw_impact(atom/hit_atom)
 	if (QDELETED(src))
 		return
-	if (!LAZYISIN(matter, MATERIAL_GLASS))
+	if (!LAZYISIN(matter, MATERIAL_GLASS)) // Не стеклянные предметы просто проливают содержимое на пол/моба, если содержимое есть
+		// [SIERRA-ADD]
+		if (length(reagents.reagent_list) > 0)
+			visible_message(
+				SPAN_DANGER("\The [src] bounces and spills all its contents!")
+			)
+			reagents.splash(hit_atom, reagents.total_volume)
+		// [/SIERRA-ADD]
 		return
-
 	if (prob(80))
 		if (length(reagents.reagent_list) > 0)
 			visible_message(
@@ -110,7 +115,7 @@
 		new /obj/item/material/shard(src.loc)
 		qdel(src)
 	else
-		if (length(reagents.reagent_list) > 0)
+		if ((length(reagents.reagent_list) > 0) && (is_open_container() || isnull(is_open_container())))
 			visible_message(
 				SPAN_DANGER("\The [src] bounces and spills all its contents!"),
 				SPAN_WARNING("You hear the sound of glass hitting something.")
@@ -123,10 +128,11 @@
 			)
 		playsound(src.loc, "sound/effects/Glasshit.ogg", 50)
 
-/obj/item/reagent_containers/glass/afterattack(obj/target, mob/user, proximity)
-	if (!proximity || (target.type in can_be_placed_into) || standard_dispenser_refill(user, target) || standard_pour_into(user, target))
+/obj/item/reagent_containers/glass/use_after(obj/target, mob/living/user, click_parameters)
+	if ((target.type in can_be_placed_into) || standard_dispenser_refill(user, target) || standard_pour_into(user, target))
 		return TRUE
 	splashtarget(target, user)
+	return TRUE
 
 
 /obj/item/reagent_containers/glass/beaker
@@ -299,7 +305,7 @@
 	matter = list(MATERIAL_WOOD = 280)
 	volume = 200
 
-/obj/item/reagent_containers/glass/bucket/attackby(obj/D, mob/user as mob)
+/obj/item/reagent_containers/glass/bucket/use_tool(obj/item/D, mob/living/user, list/click_params)
 	if(istype(D, /obj/item/mop))
 		if(reagents.total_volume < 1)
 			to_chat(user, SPAN_WARNING("\The [src] is empty!"))
@@ -307,7 +313,7 @@
 			reagents.trans_to_obj(D, 5)
 			to_chat(user, SPAN_NOTICE("You wet \the [D] in \the [src]."))
 			playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
-		return
+		return TRUE
 	else
 		return ..()
 

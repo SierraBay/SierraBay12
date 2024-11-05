@@ -4,7 +4,10 @@
 	name = "established colony"
 	id = "playablecolony"
 	description = "a fully functional colony on the frontier of settled space"
-	suffixes = list("playablecolony/colony.dmm")
+	//[SIERRA-EDIT] - Colony-types
+	//suffixes = list("playablecolony/colony.dmm")
+	suffixes = null
+	//[SIERRA-EDIT]
 	spawn_cost = 3
 	player_cost = 4
 	template_flags = TEMPLATE_FLAG_CLEAR_CONTENTS | TEMPLATE_FLAG_NO_RUINS | TEMPLATE_FLAG_NO_RADS
@@ -31,10 +34,10 @@
 	pda_type = null
 	l_ear = /obj/item/device/radio/headset/map_preset/playablecolony
 
-/obj/effect/submap_landmark/spawnpoint/colonist_spawn
+/obj/submap_landmark/spawnpoint/colonist_spawn
 	name = "Colonist"
 
-/obj/effect/submap_landmark/joinable_submap/colony
+/obj/submap_landmark/joinable_submap/colony
 	name = "Established Colony"
 	archetype = /singleton/submap_archetype/playablecolony
 

@@ -59,7 +59,7 @@
 			continue
 		var/mob/spawned_mob = new mob_to_spawn()
 		if (delete_on_end)
-			GLOB.destroyed_event.register(spawned_mob, src, .proc/mob_destroyed)
+			GLOB.destroyed_event.register(spawned_mob, src, PROC_REF(mob_destroyed))
 			LAZYADD(mobs, spawned_mob)
 		remaining_to_spawn--
 		total_spawned++
@@ -68,7 +68,7 @@
 			if (MOB_SPAWNING_EVENT_SPACE)
 				var/turf/T = get_random_edge_turf(dir, TRANSITIONEDGE + 2, Z)
 				spawned_mob.forceMove(T)
-				spawned_mob.throw_at(get_random_edge_turf(GLOB.reverse_dir[dir], TRANSITIONEDGE + 2, Z), 5, speed)
+				spawned_mob.throw_at(get_random_edge_turf(GLOB.reverse_dir[dir], TRANSITIONEDGE + 2, Z), 65, speed)
 
 
 /**
@@ -76,7 +76,7 @@
  */
 /datum/event/mob_spawning/proc/mob_destroyed(mob/destroyed_mob)
 	LAZYREMOVE(mobs, destroyed_mob)
-	GLOB.destroyed_event.unregister(destroyed_mob, src, .proc/mob_destroyed)
+	GLOB.destroyed_event.unregister(destroyed_mob, src, PROC_REF(mob_destroyed))
 
 
 /**

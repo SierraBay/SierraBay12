@@ -100,19 +100,19 @@
 
 /mob/living/carbon/human/Stun(amount)
 	amount *= species.stun_mod
-	if(amount <= 0 || (MUTATION_HULK in mutations)) return
+	if(amount <= 0) return
 	..()
 
 /mob/living/carbon/human/Weaken(amount)
 	amount *= species.weaken_mod
-	if(amount <= 0 || (MUTATION_HULK in mutations)) return
+	if(amount <= 0) return
 	if (!lying && species?.bodyfall_sound)
 		playsound(loc, species.bodyfall_sound, 50, TRUE, -1)
 	..(amount)
 
 /mob/living/carbon/human/Paralyse(amount)
 	amount *= species.paralysis_mod
-	if(amount <= 0 || (MUTATION_HULK in mutations)) return
+	if(amount <= 0) return
 	// Notify our AI if they can now control the suit.
 	if(wearing_rig && !stat && paralysis < amount) //We are passing out right this second.
 		wearing_rig.notify_ai(SPAN_DANGER("Warning: user consciousness failure. Mobility control passed to integrated intelligence system."))
@@ -143,19 +143,18 @@
 
 // Defined here solely to take species flags into account without having to recast at mob/living level.
 /mob/living/carbon/human/getOxyLoss()
-	if(!need_breathe())
+	if (!need_breathe())
 		return 0
-	else
-		var/obj/item/organ/internal/lungs/breathe_organ = internal_organs_by_name[species.breathing_organ]
-		if(!breathe_organ)
-			return maxHealth/2
-		return breathe_organ.get_oxygen_deprivation()
+	var/obj/item/organ/internal/lungs/lungs = internal_organs_by_name[species.breathing_organ]
+	if (!lungs)
+		return 100
+	return lungs.get_oxygen_deprivation()
 
 /mob/living/carbon/human/setOxyLoss(amount)
-	if(!need_breathe())
-		return 0
-	else
-		adjustOxyLoss(getOxyLoss()-amount)
+	if (!need_breathe())
+		return
+	amount = (clamp(amount, 0, 100) - getOxyLoss()) / 100
+	adjustOxyLoss(amount * species.total_health)
 
 /mob/living/carbon/human/adjustOxyLoss(amount)
 	if(!need_breathe())

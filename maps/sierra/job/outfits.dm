@@ -102,15 +102,16 @@ Keeping them simple for now, just spawning with basic EC uniforms, and pretty mu
 //	pda_type = /obj/item/modular_computer/pda/heads/ce
 	pda_slot = slot_l_store
 	flags = OUTFIT_FLAGS_JOB_DEFAULT | OUTFIT_EXTENDED_SURVIVAL
+	belt = /obj/item/storage/belt/utility/chief
 
 /singleton/hierarchy/outfit/job/sierra/crew/command/chief_engineer/New()
 	..()
 	BACKPACK_OVERRIDE_ENGINEERING
 
-/singleton/hierarchy/outfit/job/sierra/crew/command/hos
+/singleton/hierarchy/outfit/job/sierra/crew/command/hos/
 	name = OUTFIT_JOB_NAME("Head of Security - Sierra")
 	l_ear = /obj/item/device/radio/headset/heads/hos
-	uniform = /obj/item/clothing/under/rank/head_of_security/corp
+	uniform = /obj/item/clothing/under/rank/head_of_security/corp/sierra1
 	shoes = /obj/item/clothing/shoes/jackboots
 	id_types = list(/obj/item/card/id/sierra/silver/security)
 //	pda_type = /obj/item/modular_computer/pda/heads/hos
@@ -119,7 +120,7 @@ Keeping them simple for now, just spawning with basic EC uniforms, and pretty mu
 	..()
 	BACKPACK_OVERRIDE_SECURITY
 
-/singleton/hierarchy/outfit/job/sierra/crew/research/iaa
+/singleton/hierarchy/outfit/job/sierra/crew/command/iaa
 	name = OUTFIT_JOB_NAME("Internal Affairs Agent - Sierra")
 	l_ear = /obj/item/device/radio/headset/ia
 	uniform = /obj/item/clothing/under/rank/internalaffairs/plain/nt
@@ -198,7 +199,7 @@ Keeping them simple for now, just spawning with basic EC uniforms, and pretty mu
 
 /singleton/hierarchy/outfit/job/sierra/crew/security/warden
 	name = OUTFIT_JOB_NAME("Warden - Sierra")
-	uniform = /obj/item/clothing/under/rank/warden/corp
+	uniform = /obj/item/clothing/under/rank/warden/corp/sierra1
 	shoes = /obj/item/clothing/shoes/jackboots
 	id_types = list(/obj/item/card/id/sierra/crew/security/warden)
 
@@ -213,13 +214,13 @@ Keeping them simple for now, just spawning with basic EC uniforms, and pretty mu
 
 /singleton/hierarchy/outfit/job/sierra/crew/security/officer
 	name = OUTFIT_JOB_NAME("Security Officer - Sierra")
-	uniform = /obj/item/clothing/under/rank/security/corp
+	uniform = /obj/item/clothing/under/rank/security/corp/sierra1
 	shoes = /obj/item/clothing/shoes/jackboots
 	id_types = list(/obj/item/card/id/sierra/crew/security)
 
 /singleton/hierarchy/outfit/job/sierra/crew/security/assist
 	name = OUTFIT_JOB_NAME("Cadet - Sierra")
-	uniform = /obj/item/clothing/under/rank/security
+	uniform = /obj/item/clothing/under/rank/security/cadet
 	shoes = /obj/item/clothing/shoes/jackboots
 	id_types = list(/obj/item/card/id/sierra/crew/security/cadet)
 
@@ -250,6 +251,10 @@ Keeping them simple for now, just spawning with basic EC uniforms, and pretty mu
 /singleton/hierarchy/outfit/job/sierra/crew/medical/senior/xenosurgeon
 	name = OUTFIT_JOB_NAME("Xenosurgeon")
 	uniform = /obj/item/clothing/under/rank/medical/scrubs/purple
+
+/singleton/hierarchy/outfit/job/sierra/crew/medical/senior/surgicalresident
+	name = OUTFIT_JOB_NAME("Surgical Resident")
+	uniform = /obj/item/clothing/under/rank/medical/scrubs
 
 /singleton/hierarchy/outfit/job/sierra/crew/medical/doctor
 	name = OUTFIT_JOB_NAME("Doctor")
@@ -368,15 +373,27 @@ Keeping them simple for now, just spawning with basic EC uniforms, and pretty mu
 //	pda_type = /obj/item/modular_computer/pda
 	hierarchy_type = /singleton/hierarchy/outfit/job/sierra/crew/service
 
+/singleton/hierarchy/outfit/job/sierra/crew/service/chief_steward
+	name = OUTFIT_JOB_NAME("Chief Steward - Sierra")
+	l_ear = /obj/item/device/radio/headset/sierra_chief_steward
+	uniform = /obj/item/clothing/under/rank/chef
+	id_types = list(/obj/item/card/id/sierra/crew/service/chief_steward)
+	backpack_contents = list(/obj/item/music_tape/custom = 1)
+
 /singleton/hierarchy/outfit/job/sierra/crew/service/janitor
 	name = OUTFIT_JOB_NAME("Janitor - Sierra")
 	uniform = /obj/item/clothing/under/rank/janitor
 	id_types = list(/obj/item/card/id/sierra/crew/service/janitor)
 
 /singleton/hierarchy/outfit/job/sierra/crew/service/cook
-	name = OUTFIT_JOB_NAME("Chef - Sierra")
+	name = OUTFIT_JOB_NAME("Cook - Sierra")
 	uniform = /obj/item/clothing/under/rank/chef
-	id_types = list(/obj/item/card/id/sierra/crew/service/chef)
+	id_types = list(/obj/item/card/id/sierra/crew/service/cook)
+
+/singleton/hierarchy/outfit/job/sierra/crew/service/steward
+	name = OUTFIT_JOB_NAME("Steward - Sierra")
+	uniform = /obj/item/clothing/under/waiter
+	id_types = list(/obj/item/card/id/sierra/crew/service/steward)
 
 /singleton/hierarchy/outfit/job/sierra/crew/service/bartender
 	name = OUTFIT_JOB_NAME("Bartender - Sierra")
@@ -519,3 +536,11 @@ Keeping them simple for now, just spawning with basic EC uniforms, and pretty mu
 /singleton/hierarchy/outfit/job/sierra/ert/leader
 	name = OUTFIT_JOB_NAME("ERT Leader - Sierra")
 	head = /obj/item/clothing/head/beret/centcom/captain
+
+/singleton/hierarchy/outfit/job/sierra/passenger/vagabond
+	name = OUTFIT_JOB_NAME("Vagabond - Sierra")
+	uniform = /obj/item/clothing/under/color/grey
+	l_ear = /obj/item/device/radio/headset
+	shoes = /obj/item/clothing/shoes/black
+	r_hand = /obj/item/crowbar/red
+	id_types = list(/obj/item/card/id/sierra/vagabond)

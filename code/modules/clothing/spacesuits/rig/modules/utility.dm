@@ -72,7 +72,7 @@
 	usable = 1
 	selectable = 0
 	device = /obj/item/device/ano_scanner
-	origin_tech = list(TECH_BLUESPACE = 4, TECH_MAGNET = 4, TECH_ENGINEERING = 6)
+	origin_tech = list(TECH_BLUESPACE = 6, TECH_MAGNET = 4, TECH_ENGINEERING = 7)
 
 /obj/item/rig_module/device/orescanner
 	name = "ore scanner module"
@@ -124,9 +124,8 @@
 	if(!target.Adjacent(holder.wearer))
 		return 0
 
-	var/resolved = target.attackby(device,holder.wearer)
-	if(!resolved && device && target)
-		device.afterattack(target,holder.wearer,1)
+	var/mob/user = holder.wearer
+	device.resolve_attackby(target, user)
 	return 1
 
 
@@ -166,8 +165,10 @@
 		list("dylovene",      "dylovene",      /datum/reagent/dylovene,          20),
 		list("glucose",       "glucose",       /datum/reagent/nutriment/glucose, 80),
 		list("hyronalin",     "hyronalin",     /datum/reagent/hyronalin,         20),
+		list("bicaridine",    "bicaridine",    /datum/reagent/bicaridine,        20),
 		list("dermaline",     "dermaline",     /datum/reagent/dermaline,         20),
 		list("spaceacillin",  "spaceacillin",  /datum/reagent/spaceacillin,      20),
+		list("coagulant",     "coagulant",     /datum/reagent/coagulant,         20),
 		list("tramadol",      "tramadol",      /datum/reagent/tramadol,          20)
 		)
 
@@ -475,6 +476,7 @@
 
 /obj/item/rig_module/cooling_unit
 	name = "mounted cooling unit"
+	icon_state = "cooling"
 	toggleable = 1
 	origin_tech = list(TECH_MAGNET = 2, TECH_MATERIAL = 2, TECH_ENGINEERING = 5)
 	interface_name = "mounted cooling unit"
@@ -513,11 +515,11 @@
 	var/atom/movable/locked
 	var/datum/beam = null
 	var/max_dist = 4
-	var/obj/effect/effect/warp/small/warpeffect = null
+	var/obj/effect/warp/small/warpeffect = null
 
 /obj/item/rig_module/kinetic_module/proc/beamdestroyed()
 	if(beam)
-		GLOB.destroyed_event.unregister(beam, src, .proc/beamdestroyed)
+		GLOB.destroyed_event.unregister(beam, src, PROC_REF(beamdestroyed))
 		beam = null
 	if(locked)
 		if(holder.wearer)
@@ -546,8 +548,8 @@
 				to_chat(user, SPAN_NOTICE("Unable to lock on [target]."))
 				return
 			locked = AM
-			beam = holder.wearer.Beam(BeamTarget = target, icon_state = "r_beam", maxdistance = max_dist, beam_type = /obj/effect/ebeam/warp)
-			GLOB.destroyed_event.register(beam, src, .proc/beamdestroyed)
+			beam = holder.wearer.Beam(BeamTarget = target, icon_state = "r_beam", maxdistance = max_dist, beam_type = /obj/ebeam/warp)
+			GLOB.destroyed_event.register(beam, src, PROC_REF(beamdestroyed))
 
 			animate(target,pixel_y= initial(target.pixel_y) - 2,time=1 SECOND, easing = SINE_EASING, flags = ANIMATION_PARALLEL, loop = -1)
 			animate(pixel_y= initial(target.pixel_y) + 2,time=1 SECOND)
@@ -558,7 +560,6 @@
 			return
 		else if(target != locked)
 			if(locked in view(holder.wearer))
-				admin_attack_log(holder.wearer, holder.loc, "used [src] to throw their target at [target].")
 				endanimation() //End animation without waiting for delete, so throw won't be affected
 				locked.throw_at(target, 14, 1.5, holder.wearer)
 				locked = null

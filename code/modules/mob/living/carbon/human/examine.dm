@@ -107,7 +107,7 @@
 	//shoes
 	if(shoes && !skipshoes)
 		msg += "[P.He] [P.is] wearing [shoes.get_examine_line()] on [P.his] feet.\n"
-	else if(feet_blood_DNA)
+	else if(feet_blood_color)
 		msg += "[SPAN_WARNING("[P.He] [P.has] [(feet_blood_color != SYNTH_BLOOD_COLOUR) ? "blood" : "oil"]-stained feet!")]\n"
 
 	//mask
@@ -158,6 +158,9 @@
 				msg += E.species.disfigure_msg(src)
 			else //Just in case they lack a species for whatever reason.
 				msg += "[SPAN_WARNING("[P.His] face is horribly mangled!")]\n"
+		var/datum/robolimb/robohead = all_robolimbs[E.model]
+		if(length(robohead?.display_text) && facial_hair_style == "Text")
+			msg += "The message \"[robohead.display_text]\" is displayed on its screen.\n"
 
 	//splints
 	for(var/organ in list(BP_L_LEG, BP_R_LEG, BP_L_ARM, BP_R_ARM))
@@ -331,6 +334,11 @@
 
 	if(print_flavor_text()) msg += "[print_flavor_text()]\n"
 
+	//[SIERRA-ADD] - OOC_NOTES
+	if(ooc_notes && !skipface)
+		msg += "<span class = 'deptradio'>OOC Notes:</span> <a href='?src=\ref[src];ooc_notes=1'>\[View\]</a>\n"
+	//[/SIERRA-ADD]
+
 	msg += "*---------*<br>"
 	msg += applying_pressure
 
@@ -351,12 +359,21 @@
 		var/obj/item/clothing/glasses/G = H.glasses
 		var/obj/item/card/id/ID = M.GetIdCard()
 		var/obj/item/organ/internal/augment/active/hud/AUG
+		var/obj/item/clothing/accessory/glassesmod/hud/ACC
 		for (var/obj/item/organ/internal/augment/active/hud/A in H.internal_organs) // Check for installed and active HUD implants
 			if (A.hud_type & hudtype)
 				AUG = A
 				break
+		if (G)
+			for (var/obj/item/clothing/accessory/glassesmod/hud/C in G.accessories) // Check for HUD accessories on worn eyewear
+				if (C.hud_type & hudtype)
+					ACC = C
+					break
 
-		return ((istype(G) && ((G.hud_type & hudtype) || (G.hud && (G.hud.hud_type & hudtype)))) && G.check_access(ID)) || AUG?.active && AUG.check_access(ID)
+		// [SIERRA-EDIT] - NTNET
+		// return ((istype(G) && ((G.hud_type & hudtype) || (G.hud && (G.hud.hud_type & hudtype)))) && G.check_access(ID)) || AUG?.active && AUG.check_access(ID) || ACC?.active // SIERRA-EDIT - ORIGINAL
+		return ((istype(G) && ((G.hud_type & hudtype) || (G.hud && (G.hud.hud_type & hudtype)))) && G.check_access(ID) && (G.toggleable ? G.active : TRUE)) || AUG?.active && AUG.check_access(ID) || ACC?.active
+		// [/SIERRA-EDIT]
 	else if(istype(M, /mob/living/silicon/robot))
 		for (var/obj/item/borg/sight/sight as anything in M.GetAllHeld(/obj/item/borg/sight))
 			if (sight.hud_type & hudtype)

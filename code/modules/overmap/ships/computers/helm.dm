@@ -24,14 +24,14 @@ GLOBAL_LIST_EMPTY(overmap_helm_computers)
 /obj/machinery/computer/ship/helm/Initialize()
 	. = ..()
 	LAZYADD(GLOB.overmap_helm_computers, src)
-	for(var/obj/effect/overmap/visitable/sector as anything in GLOB.known_overmap_sectors)
+	for(var/obj/overmap/visitable/sector as anything in GLOB.known_overmap_sectors)
 		add_known_sector(sector)
 
 /obj/machinery/computer/ship/helm/Destroy()
 	. = ..()
 	LAZYREMOVE(GLOB.overmap_helm_computers, src)
 
-/obj/machinery/computer/ship/helm/proc/add_known_sector(obj/effect/overmap/visitable/sector/S, notify = FALSE)
+/obj/machinery/computer/ship/helm/proc/add_known_sector(obj/overmap/visitable/sector/S, notify = FALSE)
 	var/datum/computer_file/data/waypoint/R = new()
 	R.fields["name"] = S.name
 	R.fields["x"] = S.x
@@ -96,7 +96,7 @@ GLOBAL_LIST_EMPTY(overmap_helm_computers)
 		display_reconnect_dialog(user, "helm")
 	else
 		var/turf/T = get_turf(linked)
-		var/obj/effect/overmap/visitable/sector/current_sector = locate() in T
+		var/obj/overmap/visitable/sector/current_sector = locate() in T
 
 		var/mob/living/silicon/silicon = user
 		data["viewing_silicon"] = ismachinerestricted(silicon)
@@ -237,7 +237,10 @@ GLOBAL_LIST_EMPTY(overmap_helm_computers)
 
 	if (href_list["manual"])
 		viewing_overmap(user) ? unlook(user) : look(user)
-
+	//[SIERRA-ADD]
+	if(href_list["Throw off"])
+		Throw_off_the_pursuers(user)
+	//[SIERRA-ADD]
 	add_fingerprint(user)
 	updateUsrDialog()
 
@@ -342,7 +345,7 @@ GLOBAL_LIST_EMPTY(overmap_helm_computers)
 
 
 	var/turf/T = get_turf(linked)
-	var/obj/effect/overmap/visitable/sector/current_sector = locate() in T
+	var/obj/overmap/visitable/sector/current_sector = locate() in T
 
 	var/mob/living/silicon/silicon = user
 	data["viewing_silicon"] = ismachinerestricted(silicon)
@@ -391,4 +394,4 @@ GLOBAL_LIST_EMPTY(overmap_helm_computers)
 		set_light(0)
 	else
 		icon_state = "tele_nav"
-		set_light(light_max_bright_on, light_inner_range_on, light_outer_range_on, 2, light_color)
+		set_light(light_range_on, light_power_on, light_color)

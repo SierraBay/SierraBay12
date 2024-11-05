@@ -52,7 +52,9 @@
 /mob/living/silicon/sil_brainmob/show_laws(mob/M)
 	if(M)
 		to_chat(M, "<b>Obey these laws [M]:</b>")
-		src.laws_sanity_check()
+// [SIERRA-REMOVE] - IPC_MODS
+//		src.laws_sanity_check()
+// [/SIERRA-REMOVE]
 		src.laws.show_laws(M)
 
 /mob/living/silicon/sil_brainmob/open_subsystem(subsystem_type, mob/given = src)

@@ -18,6 +18,16 @@
 	L.lay_down()
 	return TRUE
 
+/datum/keybinding/mob/face_direction
+	hotkey_keys = list("]")
+	name = "face_direction"
+	full_name = "Face Direction"
+	description = "Block dir"
+
+/datum/keybinding/mob/face_direction/down(client/user)
+	var/mob/living/L = user.mob
+	L.set_face_dir()
+	return TRUE
 
 /datum/keybinding/living/resist
 	hotkey_keys = list("B")
@@ -40,6 +50,18 @@
 
 
 /datum/keybinding/living/drop_item/down(client/user)
-	var/mob/living/L = user.mob
-	L.drop_item()
+	user.drop_item()
 	return TRUE
+
+/datum/keybinding/living/pixel_shift
+	hotkey_keys = list("V")
+	name = "pixel_shift"
+	full_name = "Pixel Shift"
+	description = "Hold to pixel shift with movement keys"
+
+/datum/keybinding/living/pixel_shift/down(client/user)
+	if(!(SEND_SIGNAL(user.mob, COMSIG_KB_MOB_PIXEL_SHIFT_DOWN) & COMSIG_KB_ACTIVATED))
+		user.mob.AddComponent(/datum/component/pixel_shift)
+
+/datum/keybinding/living/pixel_shift/up(client/user)
+	SEND_SIGNAL(user.mob, COMSIG_KB_MOB_PIXEL_SHIFT_UP)

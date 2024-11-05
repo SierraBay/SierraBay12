@@ -36,27 +36,29 @@
 	augment_flags = AUGMENT_MECHANICAL | AUGMENT_SCANNABLE
 
 
-/obj/item/powerfist/attackby(obj/item/item, mob/user)
+/obj/item/powerfist/use_tool(obj/item/item, mob/living/user, list/click_params)
+	var/datum/pronouns/pronouns = user.choose_from_pronouns()
 	if (!istype(item, /obj/item/tank))
-		return
+		return ..()
 	var/obj/item/tank/other = item
 	if (other.tank_size > TANK_SIZE_SMALL)
 		to_chat(user, SPAN_WARNING("\The [other] is too big. Find a smaller tank."))
-		return
+		return TRUE
 	if (tank)
 		to_chat(user, SPAN_WARNING("\The [src] already has \a [tank] installed."))
-		return
+		return TRUE
 	user.visible_message(
-		SPAN_ITALIC("\The [user] starts connecting \a [item] to \his [src]."),
+		SPAN_ITALIC("\The [user] starts connecting \a [item] to [pronouns.his] [src]."),
 		SPAN_ITALIC("You start connecting \the [item] to \the [src]."),
 		range = 5
 	)
 	if (!do_after(user, 3 SECONDS, item, DO_PUBLIC_UNIQUE))
-		return
+		return TRUE
 	if (!user.unEquip(item, src))
-		return
+		FEEDBACK_UNEQUIP_FAILURE(user, item)
+		return TRUE
 	user.visible_message(
-		SPAN_ITALIC("\The [user] finishes connecting \a [item] to \his [src]."),
+		SPAN_ITALIC("\The [user] finishes connecting \a [item] to [pronouns.his] [src]."),
 		SPAN_NOTICE("You finish connecting \the [item] to \the [src]."),
 		range = 5
 	)
@@ -64,6 +66,7 @@
 	tank = item
 	update_force()
 	update_icon()
+	return TRUE
 
 
 /obj/item/powerfist/proc/update_force()
@@ -96,18 +99,19 @@
 
 
 /obj/item/powerfist/attack_hand(mob/living/user)
+	var/datum/pronouns/pronouns = user.choose_from_pronouns()
 	if (!tank)
 		to_chat(user, SPAN_WARNING("There's no tank in \the [src]."))
 		return
 	user.visible_message(
-		SPAN_ITALIC("\The [user] starts disconnecting \a [tank] from \his [src]."),
+		SPAN_ITALIC("\The [user] starts disconnecting \a [tank] from [pronouns.his] [src]."),
 		SPAN_ITALIC("You start disconnecting \the [tank] from \the [src]."),
 		range = 5
 	)
 	if (!do_after(user, 3 SECONDS, src, DO_PUBLIC_UNIQUE))
 		return
 	user.visible_message(
-		SPAN_ITALIC("\The [user] finishes disconnecting \a [tank] from \his [src]."),
+		SPAN_ITALIC("\The [user] finishes disconnecting \a [tank] from [pronouns.his] [src]."),
 		SPAN_NOTICE("You finish disconnecting \the [tank] from \the [src]."),
 		range = 5
 	)
@@ -151,43 +155,50 @@
 		update_force()
 
 
-/obj/item/powerfist/afterattack(atom/target, mob/living/user, inrange, params)
-	if (!inrange || user.a_intent == I_HELP)
-		return
-	if (tank && tank.air_contents.return_pressure() > 210 && pressure_setting > 20 && inrange)
+/obj/item/powerfist/use_before(atom/target, mob/living/user, click_parameters)
+	if (user.a_intent == I_HELP || !istype(target, /obj/machinery/door/airlock))
+		return FALSE
+
+	var/obj/machinery/door/airlock/A = target
+
+	if (A.operating)
+		return FALSE
+
+	if (A.locked)
+		to_chat(user, SPAN_WARNING("The airlock's bolts prevent it from being forced."))
+		return TRUE
+
+	if (tank && tank.air_contents.return_pressure() > 210 && pressure_setting > 20)
 		playsound(user, 'sound/effects/bamf.ogg', pressure_setting*2, 1) //louder the more pressure is used
 		gas_loss()
 		no_pressure()
-		if (istype(target, /obj/machinery/door/airlock) && pressure_setting > 30) //tearing open airlocks
-			var/obj/machinery/door/airlock/A = target
-			if (!A.operating && !A.locked)
-				if (A.welded)
-					A.visible_message(SPAN_DANGER("\The [user] forces the fingers of \the [src] in through the welded metal, beginning to pry \the [A] open!"))
-					if (do_after(user, 13 SECONDS, A, DO_DEFAULT | DO_USER_UNIQUE_ACT | DO_PUBLIC_PROGRESS) && !A.locked)
-						A.welded = FALSE
-						A.update_icon()
-						playsound(A, 'sound/effects/meteorimpact.ogg', 100, 1)
-						playsound(A, 'sound/machines/airlock_creaking.ogg', 100, 1)
-						A.visible_message(SPAN_DANGER("\The [user] tears \the [A] open with \a [src]!"))
-						addtimer(new Callback(A, /obj/machinery/door/airlock/.proc/open, TRUE), 0)
-						A.set_broken(TRUE)
-						return
-				else
-					A.visible_message(SPAN_DANGER("\The [user] pries the fingers of \a [src] in, beginning to force \the [A]!"))
-					if ((MACHINE_IS_BROKEN(A) || !A.is_powered() || do_after(user, 10 SECONDS, A, DO_DEFAULT | DO_USER_UNIQUE_ACT | DO_PUBLIC_PROGRESS)) && !(A.operating || A.welded || A.locked))
-						playsound(A, 'sound/machines/airlock_creaking.ogg', 100, 1)
-						if (A.density)
-							addtimer(new Callback(A, /obj/machinery/door/airlock/.proc/open, TRUE), 0)
-							if(!MACHINE_IS_BROKEN(A) && A.is_powered())
-								A.set_broken(TRUE)
-							A.visible_message(SPAN_DANGER("\The [user] forces \the [A] open with \a [src]!"))
-						else
-							addtimer(new Callback(A, /obj/machinery/door/airlock/.proc/close, TRUE), 0)
-							if (!MACHINE_IS_BROKEN(A) && A.is_powered())
-								A.set_broken(TRUE)
-							A.visible_message(SPAN_DANGER("\The [user] forces \the [A] closed with \a [src]!"))
-			if (A.locked)
-				to_chat(user, SPAN_WARNING("The airlock's bolts prevent it from being forced."))
+		if (pressure_setting > 30) //tearing open airlocks
+			if (A.welded)
+				A.visible_message(SPAN_DANGER("\The [user] forces the fingers of \the [src] in through the welded metal, beginning to pry \the [A] open!"))
+				if (do_after(user, 13 SECONDS, A, DO_DEFAULT | DO_USER_UNIQUE_ACT | DO_PUBLIC_PROGRESS) && !A.locked)
+					A.welded = FALSE
+					A.update_icon()
+					playsound(A, 'sound/effects/meteorimpact.ogg', 100, 1)
+					playsound(A, 'sound/machines/airlock_creaking.ogg', 100, 1)
+					A.visible_message(SPAN_DANGER("\The [user] tears \the [A] open with \a [src]!"))
+					addtimer(new Callback(A, TYPE_PROC_REF(/obj/machinery/door/airlock, open), TRUE), 0)
+					A.set_broken(TRUE)
+				return TRUE
+			else
+				A.visible_message(SPAN_DANGER("\The [user] pries the fingers of \a [src] in, beginning to force \the [A]!"))
+				if ((MACHINE_IS_BROKEN(A) || !A.is_powered() || do_after(user, 10 SECONDS, A, DO_DEFAULT | DO_USER_UNIQUE_ACT | DO_PUBLIC_PROGRESS)) && !(A.operating || A.welded || A.locked))
+					playsound(A, 'sound/machines/airlock_creaking.ogg', 100, 1)
+					if (A.density)
+						addtimer(new Callback(A, TYPE_PROC_REF(/obj/machinery/door/airlock, open), TRUE), 0)
+						if(!MACHINE_IS_BROKEN(A) && A.is_powered())
+							A.set_broken(TRUE)
+						A.visible_message(SPAN_DANGER("\The [user] forces \the [A] open with \a [src]!"))
+					else
+						addtimer(new Callback(A, TYPE_PROC_REF(/obj/machinery/door/airlock, close), TRUE), 0)
+						if (!MACHINE_IS_BROKEN(A) && A.is_powered())
+							A.set_broken(TRUE)
+						A.visible_message(SPAN_DANGER("\The [user] forces \the [A] closed with \a [src]!"))
+				return TRUE
 
 
 /obj/item/powerfist/apply_hit_effect(atom/target, mob/living/user)
@@ -197,11 +208,14 @@
 		if (istype(target, /mob/living))
 			if (pressure_setting == 50 && tank.air_contents.return_pressure() > 210)
 				var/mob/living/A = target
-				A.throw_at(get_edge_target_turf(user, user.dir), pressure_setting/10, pressure_setting/10) //penultimate/ultimate settings yeets people
-				user.visible_message(
-					SPAN_DANGER("\The [user] batters \the [A] with \a [src], sending them flying!"),
-					SPAN_WARNING("You batter \the [A] with \the [src], sending them flying!")
-				)
+				//[SIERRA-ADD]
+				if(user.mob_size > A.mob_size || user.mob_size == A.mob_size)
+				//[SIERRA-ADD]
+					A.throw_at(get_edge_target_turf(user, user.dir), pressure_setting/10, pressure_setting/10) //penultimate/ultimate settings yeets people
+					user.visible_message(
+						SPAN_DANGER("\The [user] batters \the [A] with \a [src], sending them flying!"),
+						SPAN_WARNING("You batter \the [A] with \the [src], sending them flying!")
+					)
 	return ..()
 
 /obj/item/powerfist/prepared

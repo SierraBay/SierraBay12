@@ -19,6 +19,21 @@
 	if(printer)
 		return printer.print_text(content, title)
 
+//[SIERRA-ADD]
+/datum/extension/interactive/ntos/proc/print_bodyscan(text_to_print, paper_title, bodyscan, md)
+	var/obj/item/stock_parts/computer/nano_printer/printer = get_component(PART_PRINTER)
+	if(printer)
+		return printer.print_picture() // just to spend paper
+
+/datum/extension/interactive/ntos/proc/print_photo(photo, name)
+	var/obj/item/stock_parts/computer/nano_printer/printer = get_component(PART_PRINTER)
+	if(printer)
+		var/obj/item/modular_computer/c = holder
+		var/user = usr
+		c.camera.printpicturecomputer(user, photo)
+		return printer.print_picture()
+//[/SIERRA-ADD]
+
 /// Returns the network tag that other computers trying to reach it would see.
 /datum/extension/interactive/ntos/proc/get_network_tag_incoming()
 	var/obj/item/stock_parts/computer/network_card/network_card = get_component(PART_NETWORK)
@@ -105,7 +120,7 @@
 /datum/extension/interactive/ntos/proc/voltage_overload()
 	var/atom/A = holder
 	if(istype(A))
-		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+		var/datum/effect/spark_spread/s = new /datum/effect/spark_spread
 		s.set_up(10, 1, A.loc)
 		s.start()
 

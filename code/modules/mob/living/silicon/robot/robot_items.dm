@@ -1,4 +1,5 @@
-//A portable analyzer, for research borgs.  This is better then giving them a gripper which can hold anything and letting them use the normal analyzer.
+//[SIERRA-REMOVE] - MODPACK_RND
+/*//A portable analyzer, for research borgs.  This is better then giving them a gripper which can hold anything and letting them use the normal analyzer.
 /obj/item/portable_destructive_analyzer
 	name = "Portable Destructive Analyzer"
 	icon = 'icons/obj/tools/portable_analyzer.dmi'
@@ -7,14 +8,11 @@
 
 	var/min_reliability = 90 //Can't upgrade, call it laziness or a drawback
 
-	var/datum/research/techonly/files 	//The device uses the same datum structure as the R&D computer/server.
+	var/datum/research/files 	//The device uses the same datum structure as the R&D computer/server.
 										//This analyzer can only store tech levels, however.
 
 	var/obj/item/loaded_item	//What is currently inside the analyzer.
 
-/obj/item/portable_destructive_analyzer/New()
-	..()
-	files = new /datum/research/techonly(src) //Setup the research data holder.
 
 /obj/item/portable_destructive_analyzer/attack_self(user as mob)
 	var/response = alert(user, 	"Analyzing the item inside will *DESTROY* the item for good.\n\
@@ -24,20 +22,24 @@
 	if(response == "Analyze")
 		if(loaded_item)
 			var/confirm = alert(user, "This will destroy the item inside forever.  Are you sure?","Confirm Analyze","Yes","No")
-			if(confirm == "Yes" && !QDELETED(loaded_item)) //This is pretty copypasta-y
+			if(confirm == "Yes") //This is pretty copypasta-y
 				to_chat(user, "You activate the analyzer's microlaser, analyzing \the [loaded_item] and breaking it down.")
 				flick("portable_analyzer_scan", src)
 				playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
 				for(var/T in loaded_item.origin_tech)
-					files.UpdateTech(T, loaded_item.origin_tech[T])
-					to_chat(user, "\The [loaded_item] had level [loaded_item.origin_tech[T]] in [CallTechName(T)].")
+					files.check_item_for_tech(loaded_item)
+					var/object_research_value = files.experiments.get_object_research_value(loaded_item)
+					files.research_points += object_research_value
+					files.experiments.do_research_object(loaded_item)
+					to_chat(user, "\The [loaded_item] incremented the research points by [object_research_value].")
 				loaded_item = null
 				for(var/obj/I in contents)
 					for(var/mob/M in I.contents)
 						M.death()
 					if(istype(I,/obj/item/stack/material))//Only deconstructs one sheet at a time instead of the entire stack
 						var/obj/item/stack/material/S = I
-						if(S.use(1))
+						if(S.get_amount() > 1)
+							S.use(1)
 							loaded_item = S
 						else
 							qdel(S)
@@ -53,13 +55,10 @@
 			to_chat(user, "The [src] is empty.  Put something inside it first.")
 	if(response == "Sync")
 		var/success = 0
-		for(var/obj/machinery/r_n_d/server/S in SSmachines.machinery)
-			for(var/datum/tech/T in files.known_tech) //Uploading
-				S.files.AddTech2Known(T)
-			for(var/datum/tech/T in S.files.known_tech) //Downloading
-				files.AddTech2Known(T)
-			success = 1
-			files.RefreshResearch()
+		for(var/obj/machinery/r_n_d/server/S in rnd_server_list)
+			S.files.download_from(files)
+			files.download_from(S.files)
+			success = TRUE
 		if(success)
 			to_chat(user, "You connect to the research server, push your data upstream to it, then pull the resulting merged data from the master branch.")
 			playsound(src.loc, 'sound/machines/twobeep.ogg', 50, 1)
@@ -68,7 +67,7 @@
 			playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 1)
 	if(response == "Eject")
 		if(loaded_item)
-			loaded_item.dropInto(loc)
+			loaded_item.loc = get_turf(src)
 			desc = initial(desc)
 			icon_state = initial(icon_state)
 			loaded_item = null
@@ -76,26 +75,26 @@
 			to_chat(user, "The [src] is already empty.")
 
 
-/obj/item/portable_destructive_analyzer/afterattack(atom/target, mob/living/user, proximity)
-	if(!target)
-		return
-	if(!proximity)
-		return
+/obj/item/portable_destructive_analyzer/use_after(atom/target, mob/living/user, click_parameters)
+	if(!isitem(target))
+		return FALSE
 	if(!isturf(target.loc)) // Don't load up stuff if it's inside a container or mob!
-		return
-	if(istype(target,/obj/item))
-		if(loaded_item)
-			to_chat(user, "Your [src] already has something inside.  Analyze or eject it first.")
-			return
-		var/obj/item/I = target
-		I.forceMove(src)
-		loaded_item = I
-		for(var/mob/M in viewers())
-			M.show_message(text(SPAN_NOTICE("[user] adds the [I] to the [src].")), 1)
-		desc = initial(desc) + "<br>It is holding \the [loaded_item]."
-		flick("portable_analyzer_load", src)
-		icon_state = "portable_analyzer_full"
+		return FALSE
+	if(loaded_item)
+		to_chat(user, SPAN_WARNING("\The [src] already has something inside.  Analyze or eject it first."))
+		return TRUE
 
+	var/obj/item/I = target
+	I.forceMove(src)
+	loaded_item = I
+	for(var/mob/M in viewers())
+		M.show_message(text(SPAN_NOTICE("[user] adds the [I] to the [src].")), 1)
+	desc = initial(desc) + "<br>It is holding \the [loaded_item]."
+	flick("portable_analyzer_load", src)
+	icon_state = "portable_analyzer_full"
+	return TRUE
+*/// В будущем стоит придумать как нормально боргам сделать дестракт анализатор, сейчас мне он не нравится.
+//[/SIERRA-REMOVE] - MODPACK_RND
 /obj/item/party_light
 	name = "party light"
 	desc = "An array of LEDs in tons of colors."
@@ -114,7 +113,7 @@
 /obj/item/party_light/on_update_icon()
 	if (activated)
 		icon_state = "partylight-on"
-		set_light(1, 1, 7)
+		set_light(7, 1)
 	else
 		icon_state = "partylight_off"
 		set_light(0)
@@ -124,11 +123,11 @@
 
 	// Create the party light effect and place it on the turf of who/whatever has it.
 	var/turf/T = get_turf(src)
-	var/obj/effect/party_light/L = new(T)
+	var/obj/party_light/L = new(T)
 	strobe_effect = L
 
 	// Make the light effect follow this party light object.
-	GLOB.moved_event.register(src, L, /atom/movable/proc/move_to_turf_or_null)
+	GLOB.moved_event.register(src, L, TYPE_PROC_REF(/atom/movable, move_to_turf_or_null))
 
 	update_icon()
 
@@ -136,7 +135,7 @@
 	activated = 0
 
 	// Cause the party light effect to stop following this object, and then delete it.
-	GLOB.moved_event.unregister(src, strobe_effect, /atom/movable/proc/move_to_turf_or_null)
+	GLOB.moved_event.unregister(src, strobe_effect, TYPE_PROC_REF(/atom/movable, move_to_turf_or_null))
 	QDEL_NULL(strobe_effect)
 
 	update_icon()
@@ -145,7 +144,7 @@
 	deactivate_strobe()
 	. = .. ()
 
-/obj/effect/party_light
+/obj/party_light
 	name = "party light"
 	desc = "This is probably bad for your eyes."
 	icon = 'icons/effects/lens_flare.dmi'
@@ -155,7 +154,7 @@
 	pixel_x = -30
 	pixel_y = -4
 
-/obj/effect/party_light/Initialize()
+/obj/party_light/Initialize()
 	update_icon()
 	. = ..()
 
@@ -173,19 +172,17 @@
 	icon = 'icons/obj/weapons/other.dmi'
 	icon_state = "autoharvester"
 
-/obj/item/robot_harvester/afterattack(atom/target, mob/living/user, proximity)
-	if(!target)
-		return
-	if(!proximity)
-		return
-	if(istype(target,/obj/machinery/portable_atmospherics/hydroponics))
-		var/obj/machinery/portable_atmospherics/hydroponics/T = target
-		if(T.harvest) //Try to harvest, assuming it's alive.
-			T.harvest(user)
-		else if(T.dead) //It's probably dead otherwise.
-			T.remove_dead(user)
-	else
-		to_chat(user, "Harvesting \a [target] is not the purpose of this tool. \The [src] is for plants being grown.")
+/obj/item/robot_harvester/use_after(atom/target, mob/living/user, click_parameters)
+	if(!istype(target,/obj/machinery/portable_atmospherics/hydroponics))
+		to_chat(user, SPAN_WARNING("Harvesting \a [target] is not the purpose of this tool. \The [src] is for plants being grown."))
+		return TRUE
+
+	var/obj/machinery/portable_atmospherics/hydroponics/T = target
+	if(T.harvest) //Try to harvest, assuming it's alive.
+		T.harvest(user)
+	else if(T.dead) //It's probably dead otherwise.
+		T.remove_dead(user)
+	return TRUE
 
 // A special tray for the service droid. Allow droid to pick up and drop items as if they were using the tray normally
 // Click on table to unload, click on item to load. Otherwise works identically to a tray.
@@ -256,13 +253,10 @@
 	icon_state = "paper_bin1"
 	item_state = "sheet-metal"
 
-/obj/item/form_printer/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag, params)
-
-	if(!target || !flag)
-		return
-
+/obj/item/form_printer/use_after(atom/target, mob/living/user, click_parameters)
 	if(istype(target,/obj/structure/table))
 		deploy_paper(get_turf(target))
+		return TRUE
 
 /obj/item/form_printer/attack_self(mob/user as mob)
 	deploy_paper(get_turf(src))
@@ -325,9 +319,7 @@
 	mode = !mode
 	to_chat(usr, "You set \the [src] to deploy [mode ? "doors" : "walls"].")
 
-/obj/item/inflatable_dispenser/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	if (!user)
-		return
+/obj/item/inflatable_dispenser/use_after(atom/target, mob/living/user, click_parameters)
 	if (loc != user)
 		return
 	var/turf/T = get_turf(target)
@@ -336,7 +328,7 @@
 
 	if (istype(target, /obj/structure/inflatable))
 		if (!do_after(user, 0.5 SECONDS, target, DO_PUBLIC_UNIQUE))
-			return
+			return TRUE
 		playsound(loc, 'sound/machines/hiss.ogg', 75, 1)
 		var/obj/item/inflatable/I
 		if (istype(target, /obj/structure/inflatable/door))
@@ -359,6 +351,7 @@
 			var/obj/structure/inflatable/S = target
 			copy_health(S, I)
 		qdel(target)
+		return TRUE
 
 	else if (istype(target, /obj/item/inflatable))
 		var/collected = FALSE
@@ -379,22 +372,23 @@
 			qdel(target)
 		else
 			to_chat(user, SPAN_WARNING("\The [src] is already full of those."))
+		return TRUE
 
 	else
 		var/active_mode = mode
 		if (active_mode ? (!stored_doors) : (!stored_walls))
 			to_chat(user, SPAN_WARNING("\The [src] is out of [active_mode ? "doors" : "walls"]."))
-			return
+			return TRUE
 		var/obstruction = T.get_obstruction()
 		if (obstruction)
 			to_chat(user, SPAN_WARNING("\The [english_list(obstruction)] is blocking that spot."))
-			return
+			return TRUE
 		if (!do_after(user, 0.5 SECONDS, T, DO_PUBLIC_UNIQUE))
-			return
+			return TRUE
 		obstruction = T.get_obstruction()
 		if (obstruction)
 			to_chat(user, SPAN_WARNING("\The [english_list(obstruction)] is blocking that spot."))
-			return
+			return TRUE
 		var/placed
 		if (active_mode)
 			placed = new /obj/structure/inflatable/door(T)
@@ -408,7 +402,7 @@
 			range = 5
 		)
 		playsound(loc, 'sound/items/zip.ogg', 75, 1)
-
+		return TRUE
 /obj/item/reagent_containers/spray/cleaner/drone
 	name = "space cleaner"
 	desc = "BLAM!-brand non-foaming space cleaner!"
@@ -445,19 +439,27 @@
 	to_chat(user, SPAN_NOTICE("You deploy \a [R]."))
 	R.add_fingerprint(user)
 
-/obj/item/robot_rack/resolve_attackby(obj/O, mob/user, click_params)
-	if(istype(O, object_type))
-		if(length(held) < capacity)
-			to_chat(user, SPAN_NOTICE("You collect \the [O]."))
-			O.forceMove(src)
-			held += O
-			return
-		to_chat(user, SPAN_WARNING("\The [src] is full and can't store any more items."))
-		return
-	if(istype(O, interact_type))
-		O.attack_hand(user)
-		return
-	. = ..()
+
+/obj/item/robot_rack/use_before(atom/target, mob/living/user, click_parameters)
+	// Pick up thing
+	if (istype(target, object_type))
+		if (length(held) >= capacity)
+			USE_FEEDBACK_FAILURE("\The [src] is full and can't store any more items.")
+			return TRUE
+		var/obj/target_obj = target
+		target_obj.forceMove(src)
+		held += target
+		to_chat(user, SPAN_NOTICE("You collect \the [target] with \the [src]."))
+		return TRUE
+
+	// Use the thing
+	if (istype(target, interact_type))
+		var/obj/target_obj = target
+		if (target_obj.attack_hand(user))
+			return TRUE
+
+	return ..()
+
 
 /obj/item/robot_rack/verb/empty_rack()
 	set name = "Empty Rack"
@@ -490,22 +492,23 @@
 	else
 		to_chat(user, SPAN_WARNING("There is nothing loaded into \the [src]."))
 
-/obj/item/bioreactor/afterattack(atom/movable/target, mob/user, proximity_flag, click_parameters)
-	if(!proximity_flag || !istype(target))
-		return
+/obj/item/bioreactor/use_after(atom/movable/target, mob/living/user, click_parameters)
+	if(!istype(target))
+		return FALSE
 
 	var/is_fuel = istype(target, /obj/item/reagent_containers/food/snacks/grown)
 	is_fuel = is_fuel || is_type_in_list(target, fuel_types)
 
 	if(!is_fuel)
 		to_chat(user, SPAN_WARNING("\The [target] cannot be used as fuel by \the [src]."))
-		return
-
+		return TRUE
 	if(length(contents) >= max_fuel_items)
 		to_chat(user, SPAN_WARNING("\The [src] can fit no more fuel inside."))
-		return
+		return TRUE
+
 	target.forceMove(src)
 	to_chat(user, SPAN_NOTICE("You load \the [target] into \the [src]."))
+	return TRUE
 
 /obj/item/bioreactor/Initialize()
 	. = ..()

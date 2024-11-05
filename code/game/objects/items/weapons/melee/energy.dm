@@ -27,7 +27,6 @@
 
 
 /obj/item/melee/energy/on_update_icon()
-	. = ..()
 	if(active)
 		icon_state = active_icon
 	else
@@ -56,7 +55,7 @@
 	if (user)
 		playsound(user, 'sound/weapons/saberon.ogg', 50, 1)
 		to_chat(user, SPAN_NOTICE("\The [src] is now energised."))
-	set_light(0.8, 1, 2, 4, lighting_color)
+	set_light(2, 0.8, lighting_color)
 
 	if (istype(user,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = user
@@ -93,7 +92,8 @@
 /obj/item/melee/energy/attack_self(mob/living/user as mob)
 	if (active)
 		if ((MUTATION_CLUMSY in user.mutations) && prob(50))
-			user.visible_message(SPAN_DANGER("\The [user] accidentally cuts \himself with \the [src]."),\
+			var/datum/pronouns/pronouns = user.choose_from_pronouns()
+			user.visible_message(SPAN_DANGER("\The [user] accidentally cuts [pronouns.self] with \the [src]."),\
 			SPAN_DANGER("You accidentally cut yourself with \the [src]."))
 			user.take_organ_damage(5,5)
 		deactivate(user)
@@ -105,6 +105,7 @@
 
 
 /obj/item/melee/energy/emp_act(severity)
+	SHOULD_CALL_PARENT(FALSE)
 	if (!active)
 		return
 	if (damaged)
@@ -114,7 +115,7 @@
 		disabletime = 1.5 MINUTES
 
 	visible_message(SPAN_DANGER("\The [src] violently shudders!"))
-	new /obj/effect/overlay/self_deleting/emppulse(get_turf(src))
+	new /obj/overlay/self_deleting/emppulse(get_turf(src))
 
 	disabled = world.time + disabletime
 	var/mob/living/carbon/M = loc
@@ -124,6 +125,7 @@
 		deactivate()
 	update_icon()
 	damaged = TRUE
+	GLOB.empd_event.raise_event(src, severity)
 
 
 /obj/item/melee/energy/get_storage_cost()
@@ -233,7 +235,7 @@
 /obj/item/melee/energy/sword/handle_shield(mob/user, damage, atom/damage_source = null, mob/attacker = null, def_zone = null, attack_text = "the attack")
 	. = ..()
 	if(.)
-		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
+		var/datum/effect/spark_spread/spark_system = new /datum/effect/spark_spread()
 		spark_system.set_up(5, 0, user.loc)
 		spark_system.start()
 		playsound(user.loc, 'sound/weapons/blade1.ogg', 50, 1)
@@ -280,12 +282,12 @@
 	active_attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	hitsound = 'sound/weapons/blade1.ogg'
 	var/mob/living/creator
-	var/datum/effect/effect/system/spark_spread/spark_system
+	var/datum/effect/spark_spread/spark_system
 
 
 /obj/item/melee/energy/blade/New()
 	..()
-	spark_system = new /datum/effect/effect/system/spark_spread()
+	spark_system = new /datum/effect/spark_spread()
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 

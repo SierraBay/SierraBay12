@@ -36,8 +36,10 @@
 	//How we smooth with other flooring
 	var/decal_layer = DECAL_LAYER
 	var/floor_smooth = SMOOTH_ALL
-	var/list/flooring_whitelist = list() //Smooth with nothing except the contents of this list
-	var/list/flooring_blacklist = list() //Smooth with everything except the contents of this list
+	/// Smooth with nothing except the types in this list. Turned into a typecache for performance reasons.
+	var/list/flooring_whitelist = list()
+	/// Smooth with everything except the types in this list. Turned into a typecache for performance reasons.
+	var/list/flooring_blacklist = list()
 
 	//How we smooth with walls
 	var/wall_smooth = SMOOTH_ALL
@@ -48,6 +50,12 @@
 	//There are no lists for spaces
 
 	var/height = 0
+
+/singleton/flooring/Initialize()
+	. = ..()
+	flooring_whitelist = typecacheof(flooring_whitelist)
+	flooring_blacklist = typecacheof(flooring_blacklist)
+
 
 /singleton/flooring/proc/on_remove()
 	return
@@ -65,6 +73,9 @@
 	floor_smooth = SMOOTH_NONE
 	wall_smooth = SMOOTH_ALL
 	space_smooth = SMOOTH_NONE
+
+/singleton/flooring/grass/cut
+	floor_smooth = SMOOTH_ALL
 
 /singleton/flooring/dirt
 	name = "dirt"
@@ -137,6 +148,11 @@
 	name = "red carpet"
 	icon_base = "red"
 	build_type = /obj/item/stack/tile/carpetred
+
+/singleton/flooring/carpet/black
+	name = "black carpet"
+	icon_base = "black"
+	build_type = /obj/item/stack/tile/carpetblack
 
 /singleton/flooring/linoleum
 	name = "linoleum"

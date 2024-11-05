@@ -1,15 +1,3 @@
-/*
- * A large number of misc global procs.
- */
-
-/proc/subtypesof(datum/thing)
-	RETURN_TYPE(/list)
-	if (ispath(thing))
-		return typesof(thing) - thing
-	if (istype(thing))
-		return typesof(thing) - thing.type
-	return list()
-
 //Checks if all high bits in req_mask are set in bitfield
 #define BIT_TEST_ALL(bitfield, req_mask) ((~(bitfield) & (req_mask)) == 0)
 
@@ -160,7 +148,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 
 /proc/LinkBlocked(turf/A, turf/B)
-	if(A == null || B == null) return 1
+	if(isnull(A) || isnull(B)) return 1
 	var/adir = get_dir(A,B)
 	var/rdir = get_dir(B,A)
 	if((adir & (NORTH|SOUTH)) && (adir & (EAST|WEST)))	//	diagonal
@@ -631,7 +619,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		var/area/areatemp = areatype
 		areatype = areatemp.type
 
-	var/list/areas = new/list()
+	var/list/areas = list()
 	for(var/area/N in world)
 		if(istype(N, areatype)) areas += N
 	return areas
@@ -648,7 +636,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	if(!ispath(areatype, /area))
 		return null
 
-	var/list/atoms = new/list()
+	var/list/atoms = list()
 	for(var/area/N in world)
 		if(istype(N, areatype))
 			for(var/atom/A in N)
@@ -689,7 +677,8 @@ GLOBAL_LIST_INIT(duplicate_object_disallowed_vars, list(
 	"key",
 	"group",
 	"ai_holder",
-	"natural_weapon"
+	"natural_weapon",
+	"extensions"
 ))
 
 
@@ -926,7 +915,7 @@ GLOBAL_LIST_INIT(duplicate_object_disallowed_vars, list(
 		. = TRUE
 	if(locate(/obj/structure/table, T))
 		. = TRUE
-	if(locate(/obj/effect/rune, T))
+	if(locate(/obj/rune, T))
 		. = TRUE
 
 	if(M == user)
@@ -1036,17 +1025,6 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	. = view(range, GLOB.dview_mob)
 	GLOB.dview_mob.loc = null
 
-/mob/dview
-	invisibility = INVISIBILITY_ABSTRACT
-	density = FALSE
-
-	anchored = TRUE
-	simulated = FALSE
-
-	see_in_dark = 1e6
-
-	virtual_mob = null
-
 /mob/dview/Destroy()
 	SHOULD_CALL_PARENT(FALSE)
 	return QDEL_HINT_LETMELIVE
@@ -1062,7 +1040,7 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 /atom/proc/get_light_and_color(atom/origin)
 	if(origin)
 		color = origin.color
-		set_light(origin.light_max_bright, origin.light_inner_range, origin.light_outer_range, origin.light_falloff_curve)
+		set_light(origin.light_range, origin.light_power)
 
 
 // call to generate a stack trace and print to runtime logs
@@ -1101,3 +1079,7 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 		return matches[1]
 	else
 		return (input("Select a type", "Select Type", matches[1]) as null|anything in matches)
+//[SIERRA-ADD]
+/proc/REF(input)
+	return "\ref[input]"
+//[/SIERRA-ADD]

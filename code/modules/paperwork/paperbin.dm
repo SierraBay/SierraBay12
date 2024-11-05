@@ -10,7 +10,7 @@
 	throw_range = 7
 	layer = BELOW_OBJ_LAYER
 	var/amount = 30					//How much paper is in the bin.
-	var/list/papers = new/list()	//List of papers put in the bin for reference.
+	var/list/papers = list()	//List of papers put in the bin for reference.
 
 
 /obj/item/paper_bin/MouseDrop(mob/user as mob)
@@ -69,15 +69,18 @@
 	return
 
 
-/obj/item/paper_bin/attackby(obj/item/i as obj, mob/user as mob)
+/obj/item/paper_bin/use_tool(obj/item/i, mob/living/user, list/click_params)
 	if(istype(i, /obj/item/paper))
 		if(!user.unEquip(i, src))
-			return
-		to_chat(user, SPAN_NOTICE("You put [i] in [src]."))
+			FEEDBACK_UNEQUIP_FAILURE(user, i)
+			return TRUE
+		to_chat(user, SPAN_NOTICE("You put \the [i] in \the [src]."))
 		papers.Add(i)
 		update_icon()
 		amount++
-	else if(istype(i, /obj/item/paper_bundle))
+		return TRUE
+
+	if (istype(i, /obj/item/paper_bundle))
 		to_chat(user, SPAN_NOTICE("You loosen \the [i] and add its papers into \the [src]."))
 		var/was_there_a_photo = 0
 		for(var/obj/item/bundleitem in i) //loop through items in bundle
@@ -92,6 +95,9 @@
 		qdel(i)
 		if(was_there_a_photo)
 			to_chat(user, SPAN_NOTICE("The photo cannot go into \the [src]."))
+		return TRUE
+
+	return ..()
 
 
 /obj/item/paper_bin/examine(mob/user, distance)

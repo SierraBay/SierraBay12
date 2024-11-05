@@ -4,7 +4,7 @@
 	icon_state = "brown"
 	item_state = "brown"
 	permeability_coefficient = 0.05
-	item_flags = ITEM_FLAG_NOSLIP
+	item_flags = ITEM_FLAG_NOSLIP | ITEM_FLAG_THICKMATERIAL
 	origin_tech = list(TECH_ESOTERIC = 3)
 	var/list/clothing_choices = list()
 	siemens_coefficient = 0.8
@@ -31,10 +31,10 @@
 	item_flags = ITEM_FLAG_NOSLIP | ITEM_FLAG_WASHER_ALLOWED
 	siemens_coefficient = 0.6
 
-/obj/item/clothing/shoes/combat //Basically SWAT shoes combined with galoshes.
+/obj/item/clothing/shoes/combat
 	name = "combat boots"
 	desc = "When you REALLY want to turn up the heat."
-	icon_state = "jungle"
+	icon_state = "swat"
 	force = 5
 	armor = list(
 		melee = ARMOR_MELEE_VERY_HIGH,
@@ -44,7 +44,7 @@
 		bomb = ARMOR_BOMB_RESISTANT,
 		bio = ARMOR_BIO_MINOR
 		)
-	item_flags = ITEM_FLAG_NOSLIP | ITEM_FLAG_WASHER_ALLOWED
+	item_flags = ITEM_FLAG_NOSLIP | ITEM_FLAG_WASHER_ALLOWED | ITEM_FLAG_THICKMATERIAL
 	siemens_coefficient = 0.6
 
 	cold_protection = FEET
@@ -201,7 +201,7 @@
 /obj/item/clothing/shoes/laceup/sneakies
 	desc = "The height of fashion, and they're pre-polished. Upon further inspection, the soles appear to be on backwards. They look uncomfortable."
 	species_restricted = list(SPECIES_HUMAN, SPECIES_IPC)
-	move_trail = /obj/effect/decal/cleanable/blood/tracks/footprints/reversed
+	move_trail = /obj/decal/cleanable/blood/tracks/footprints/reversed
 	item_flags = ITEM_FLAG_SILENT
 
 /obj/item/clothing/shoes/heels
@@ -230,15 +230,18 @@
 	var/icon_state_modified = "foamclog-toeless"
 
 /obj/item/clothing/shoes/foamclog/use_tool(obj/item/W, mob/user)
-	if (isWirecutter(W) || istype(W, /obj/item/scalpel))
-		if (clipped)
-			to_chat(user, SPAN_NOTICE("\The [src] have already been modified!"))
-			update_icon()
-			return TRUE
-		playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
-		user.visible_message(SPAN_WARNING("\The [user] modifies \the [src] with \the [W]."),SPAN_WARNING("You modify \the [src] with \the [W]."))
-		cut_clogs()
+	if (!is_sharp(W))
+		return ..()
+
+	if (clipped)
+		to_chat(user, SPAN_NOTICE("\The [src] have already been modified!"))
+		update_icon()
 		return TRUE
+
+	playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
+	user.visible_message(SPAN_WARNING("\The [user] modifies \the [src] with \the [W]."),SPAN_WARNING("You modify \the [src] with \the [W]."))
+	cut_clogs()
+	return TRUE
 
 /obj/item/clothing/shoes/foamclog/proc/cut_clogs()
 	clipped = TRUE

@@ -19,6 +19,7 @@
 	#include "sierra_submaps.dm"
 	#include "sierra_turfs.dm"
 	#include "sierra_unit_testing.dm"
+	#include "sierra_events.dm"
 
 	// --- INCLUDES FROM ANOTHER MAPS --- //
 	#include "sierra_snatch.dm"
@@ -44,10 +45,13 @@
 	#include "datums/supplypacks/security.dm"
 	#include "datums/supplypacks/science.dm"
 
+	#include "datums/species/species_overrides.dm"
+
 	#include "game/languages.dm"
 	#include "game/lockdown.dm"
 
 	// --- ITEMS --- //
+	#include "items/ammo.dm"
 	#include "items/cards_ids.dm"
 	#include "items/documents.dm"
 	#include "items/encryption_keys.dm"
@@ -57,16 +61,25 @@
 	#include "items/items.dm"
 	#include "items/lighting.dm"
 	#include "items/machinery.dm"
+	#include "items/modular_computer.dm"
 	#include "items/manuals.dm"
 	#include "items/mech.dm"
 	#include "items/papers.dm"
 	#include "items/rigs.dm"
 	#include "items/stamps.dm"
+	#include "items/pouches.dm"
+	#include "items/backpack.dm"
+	#include "items/cargo.dm"
+	#include "items/snacks.dm"
+	#include "items/recipes_microwave.dm"
+	#include "items/weapons/storage/firstaids.dm"
+	#include "items/datajack.dm"
 
 	#include "items/clothing/clothing.dm"
 	#include "items/clothing/exploration.dm"
 	#include "items/clothing/override.dm"
 	#include "items/clothing/storages.dm"
+	#include "items/clothing/security.dm"
 
 	// --- JOB SECTION --- //
 	#include "job\_job_defines.dm"
@@ -93,6 +106,7 @@
 	#include "machinery/navbeacons.dm"
 	#include "machinery/power.dm"
 	#include "machinery/random.dm"
+	#include "machinery/suit_storage.dm"
 	#include "machinery/tcomms.dm"
 	#include "machinery/thrusters.dm"
 	#include "machinery/uniform_vendor.dm"
@@ -134,9 +148,9 @@
 	// --- MAP FILES --- //
 
 		// ~SIERRA~ //
-	#include "z1-3_sierra.dmm"
-	#include "z4_admin.dmm"
-	#include "z5_transit.dmm"
+	#include "z1-z5_sierra.dmm"
+	#include "z6_admin.dmm"
+	#include "z7_transit.dmm"
 	#include "../away/empty.dmm"
 
 		// ~AWAY SITES~ //
@@ -160,7 +174,13 @@
 	#include "../away/mininghome/mininghome.dm"
 	#include "../away/scavver/scavver_gantry.dm"
 	#include "../away/abandoned_hotel/abandoned_hotel.dm"
-	// #include "../event/iccgn_ship/icgnv_hound.dm" // SIERRA TODO: Пофиксить или удалить
+	#include "../event/iccgn_ship/icgnv_hound.dm"
+	#include "../event/sfv_arbiter/sfv_arbiter.dm"
+	#include "../event/placeholders/placeholders.dm"
+	#include "../event/empty/empty.dm"
+
+	#include "../bluespace_interlude/bluespace_interlude.dm"
+	#include "../bluespace_interlude/bluespace_interlude.dmm"
 
 	// USED MODS
 	// Keep them in ascending alphabetical order, please
@@ -168,20 +188,31 @@
 	#include "../../mods/_maps/liberia/_map_liberia.dme"
 	#include "../../mods/_maps/sentinel/_map_sentinel.dme"
 	#include "../../mods/_maps/farfleet/_map_farfleet.dme"
-	#include "../../mods/bluespace_kitty/_bluespace_kitty.dme"
+	#include "../../mods/_maps/hand/_map_hand.dme"
+	#include "../../mods/_maps/ascent_seedship/_map_ascent_seedship.dme"
+	#include "../../mods/_maps/ascent_caulship/_map_ascent_caulship.dme"
+
+	#include "../../mods/antagonists/_antagonists.dme"
+	#include "../../mods/ascent/_ascent.dme"
 	#include "../../mods/fancy_sofas/_fancy_sofas.dme"
+	#include "../../mods/guns/_guns.dme"
 	#include "../../mods/jukebox_tapes/_jukebox_tapes.dme"
 	#include "../../mods/legalese_language/_legalese.dme"
-	#include "../../mods/nyc_posters/_nyc_posters.dme"
-	#include "../../mods/leroy_beasts/_leroy_beasts.dme"
+	#include "../../mods/petting_zoo/_petting_zoo.dme"
+	#include "../../mods/resomi/_resomi.dme"
 	#include "../../mods/screentips/_screentips.dme"
 	#include "../../mods/tajara/_tajara.dme"
+	#include "../../mods/sauna_props/_sauna_props.dme"
+	#include "../../mods/wyccbay_optimization/_wyccbay_optimization.dme"
+	#include "../../mods/contraband_vending/_contraband_vending.dme"
+	#include "../../mods/telecomms/_telecomms.dme"
+	#include "../../mods/modernUI/_modernUI.dme"
 
 	// UNUSED MODS
 	// Keep them in ascending alphabetical order too, please
 
 	// #include "../../mods/atmos_ret_field/_atm_ret_field.dme"
-	// #include "../../mods/resomi/_resomi.dme"
+	// #include "../../mods/bluespace_kitty/_bluespace_kitty.dme"
 
 	// Почему UNUSED MODS стоит хранить?
 	// Потому что никто не проверяет использование тех или иных файлов
@@ -191,6 +222,7 @@
 
 	#include "../../packs/factions/iccgn/_pack.dm"
 	#include "../../packs/factions/scga/_pack.dm"
+	#include "../../packs/factions/fa/_pack.dm"
 	#include "../../packs/infinity/_pack.dm"
 	#include "../../packs/deepmaint/_pack.dm"
 

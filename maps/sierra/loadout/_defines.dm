@@ -2,13 +2,12 @@
 /datum/map/sierra
 	loadout_blacklist = list(
 		/datum/gear/union_card,
-		/datum/gear/eyes/security,
 		/datum/gear/suit/labcoat_corp,
+		/datum/gear/suit/medcoat,
 		/datum/gear/uniform/corp_exec,
 		/datum/gear/uniform/corp_overalls,
 		/datum/gear/uniform/corp_flight,
 		/datum/gear/uniform/corp_exec_jacket,
-		/datum/gear/uniform/corporate
 	)
 
 //For all exploration crew
@@ -71,7 +70,7 @@
 	/datum/job/senior_doctor, /datum/job/doctor, /datum/job/doctor_trainee,/datum/job/chemist, \
 	/datum/job/psychiatrist, \
 	/datum/job/qm, /datum/job/cargo_tech, /datum/job/cargo_assistant,\
-	/datum/job/janitor, /datum/job/chef, /datum/job/bartender,\
+	/datum/job/chief_steward, /datum/job/janitor, /datum/job/cook, /datum/job/bartender, /datum/job/steward, \
 	/datum/job/senior_scientist, /datum/job/scientist, /datum/job/mining,\
 	/datum/job/scientist_assistant \
 )
@@ -140,9 +139,11 @@
 
 //For members of the service department
 #define SERVICE_ROLES list(\
+	/datum/job/chief_steward, \
 	/datum/job/janitor, \
-	/datum/job/chef, \
-	/datum/job/bartender \
+	/datum/job/cook, \
+	/datum/job/bartender, \
+	/datum/job/steward \
 )
 
 //For members of the research department and jobs that are scientific
@@ -171,7 +172,7 @@
 	/datum/job/officer, /datum/job/detective, \
 	/datum/job/senior_doctor, /datum/job/doctor, /datum/job/doctor_trainee,/datum/job/chemist, /datum/job/psychiatrist, \
 	/datum/job/cargo_tech,  /datum/job/cargo_assistant, /datum/job/mining, \
-	/datum/job/janitor, /datum/job/chef, /datum/job/bartender, /datum/job/infsys,\
+	/datum/job/janitor, /datum/job/cook, /datum/job/bartender, /datum/job/steward, /datum/job/infsys,\
 	/datum/job/scientist, /datum/job/roboticist, /datum/job/scientist_assistant \
 )
 
@@ -180,7 +181,8 @@
 	/datum/job/psychiatrist, \
 	/datum/job/cargo_assistant, \
 	/datum/job/janitor, \
-	/datum/job/chef, \
+	/datum/job/cook, \
 	/datum/job/bartender,\
+	/datum/job/steward,\
 	/datum/job/assistant\
 )

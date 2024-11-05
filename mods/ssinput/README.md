@@ -2,6 +2,7 @@
 #### Список PRов:
 
 - https://github.com/SierraBay/SierraBay12/pull/908
+-https://github.com/SierraBay/SierraBay12/pull/1824
 <!--
   Ссылки на PRы, связанные с модом:
   - Создание
@@ -29,16 +30,21 @@ ID мода: SSINPUT
 
 - `code/__defines/subsystem-priority.dm`: `#define SS_PRIORITY_INPUT`
 - `code/__defines/subsystems.dm`: `#define SS_INIT_INPUT`
-- `code/_onclick/click.dm`: `/mob/proc/ClickOn()`, `/mob/proc/AltMiddleClickOn()`
+- `code/_onclick/click.dm`: `/mob/proc/MiddleClickOn()`
+- `code/datums/movement/mob.dm`: `/datum/movement_handler/mob/movement/DoMove()`
+- `code/game/objects/buckling.dm`: `/obj/Move()`, `/obj/forceMove()`
 - `code/game/verbs/ooc.dm`: `/client/verb/ooc()`, `/client/verb/looc()`
 - `code/modules/admin/callproc/callproc.dm`: `/client/Click()`
-- `code/modules/client/client_procs.dm`: `/client/New()`
+- `code/modules/client/client_procs.dm`: `/client/New()`, `/client/verb/toggle_fullscreen()`
 - `code/modules/goonchat/browserOutput.dm`: `/datum/chatOutput/Topic()`
+- `code/modules/mob/grab/grab_datum.dm`: `/datum/grab/proc/adjust_position()`
 - `code/modules/mob/living/silicon/robot/login.dm`: `/mob/living/silicon/robot/Login()`
 - `code/modules/mob/observer/ghost/ghost.dm`: `/mob/observer/ghost/appearance_flags`
 - `code/modules/mob/login.dm`: `/mob/Login()`
 - `code/modules/mob/mob_defines.dm`: `/mob/appearance_flags`
 - `code/modules/mob/mob_helpers.dm`: `/mob/verb/a_intent_change()`
+- `code/modules/mob/living/carbon/human/inventory.dm`: `/mob/living/carbon/human/verb/quick_equip()`
+- `code/modules/ventcrawl/ventcrawl_atmospherics.dm`: `/obj/machinery/atmospherics/relaymove()`
 
 <!--
   Если вы редактировали какие-либо процедуры или переменные в кор коде,

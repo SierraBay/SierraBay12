@@ -1,7 +1,4 @@
-
-
-
-
+/*
 var/global/list/explosion_turfs = list()
 
 var/global/explosion_in_progress = 0
@@ -16,7 +13,12 @@ var/global/explosion_in_progress = 0
 
 	if(power <= 0) return
 	epicenter = get_turf(epicenter)
+//[SIERRA-ADD] - MODPACK_RND
 	if(!epicenter) return
+	for(var/obj/item/device/beacon/explosion_watcher/W in explosion_watcher_list)
+		if(get_dist(W, epicenter) < 10)
+			W.react_explosion(epicenter, power)
+//[/SIERRA-ADD] - MODPACK_RND
 
 	explosion_in_progress = 1
 	explosion_turfs = list()
@@ -64,7 +66,7 @@ var/global/explosion_in_progress = 0
 			if(AM && AM.simulated && !T.protects_atom(AM))
 				AM.ex_act(severity)
 				if(!QDELETED(AM) && !AM.anchored)
-					addtimer(new Callback(AM, /atom/movable/.proc/throw_at, throw_target, 9/severity, 9/severity), 0)
+					addtimer(new Callback(AM, TYPE_PROC_REF(/atom/movable, throw_at), throw_target, 9/severity, 9/severity), 0)
 
 	explosion_turfs.Cut()
 	explosion_in_progress = 0
@@ -79,7 +81,7 @@ var/global/explosion_in_progress = 0
 	explosion_turfs[src] = power
 /*
 	sleep(2)
-	var/obj/effect/debugging/M = locate() in src
+	var/obj/debugging/M = locate() in src
 	if (!M)
 		M = new(src, power, direction)
 	M.maptext = "[power] vs [src.get_explosion_resistance()]"
@@ -143,3 +145,4 @@ var/global/explosion_in_progress = 0
 		return 0
 	else
 		return ..()
+*/

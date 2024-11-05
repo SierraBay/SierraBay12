@@ -17,37 +17,39 @@
 		/obj/item/newspaper = 3,
 		/obj/item/card/id = 3,
 		/obj/item/paper_bundle = 3,
-		/obj/item/sample/print = 1
+		/obj/item/sample/print = 1,
+		/obj/item/folder = 2
 		)
 
-/obj/machinery/papershredder/attackby(obj/item/W, mob/user)
-
+/obj/machinery/papershredder/use_tool(obj/item/W, mob/living/user, list/click_params)
 	if(istype(W, /obj/item/storage))
 		empty_bin(user, W)
-		return
+		return TRUE
+
+	var/paper_result
+	for(var/shred_type in shred_amounts)
+		if(istype(W, shred_type))
+			paper_result = shred_amounts[shred_type]
+
+	if(paper_result)
+		if(paperamount == max_paper)
+			to_chat(user, SPAN_WARNING("\The [src] is full; please empty it before you continue."))
+			return TRUE
+		paperamount += paper_result
+		qdel(W)
+		playsound(src.loc, 'sound/items/pshred.ogg', 75, 1)
+		if(paperamount > max_paper)
+			to_chat(user, SPAN_DANGER("\The [src] was too full, and shredded paper goes everywhere!"))
+			for(var/i=(paperamount-max_paper);i>0;i--)
+				var/obj/item/shreddedp/SP = get_shredded_paper()
+				SP.dropInto(loc)
+				SP.throw_at(get_edge_target_turf(src,pick(GLOB.alldirs)),1,5)
+			paperamount = max_paper
+		update_icon()
+		return TRUE
 	else
-		var/paper_result
-		for(var/shred_type in shred_amounts)
-			if(istype(W, shred_type))
-				paper_result = shred_amounts[shred_type]
-		if(paper_result)
-			if(paperamount == max_paper)
-				to_chat(user, SPAN_WARNING("\The [src] is full; please empty it before you continue."))
-				return
-			paperamount += paper_result
-			qdel(W)
-			playsound(src.loc, 'sound/items/pshred.ogg', 75, 1)
-			if(paperamount > max_paper)
-				to_chat(user, SPAN_DANGER("\The [src] was too full, and shredded paper goes everywhere!"))
-				for(var/i=(paperamount-max_paper);i>0;i--)
-					var/obj/item/shreddedp/SP = get_shredded_paper()
-					SP.dropInto(loc)
-					SP.throw_at(get_edge_target_turf(src,pick(GLOB.alldirs)),1,5)
-				paperamount = max_paper
-			update_icon()
-			return
-	..()
-	return
+		return ..()
+
 
 /obj/machinery/papershredder/verb/empty_contents()
 	set name = "Empty bin"
@@ -107,11 +109,12 @@
 /obj/machinery/papershredder/on_update_icon()
 	icon_state = "papershredder[max(0,min(5,floor(paperamount/2)))]"
 
-/obj/item/shreddedp/attackby(obj/item/W as obj, mob/user)
+/obj/item/shreddedp/use_tool(obj/item/W, mob/living/user, list/click_params)
 	if(istype(W, /obj/item/flame/lighter))
 		burnpaper(W, user)
+		return TRUE
 	else
-		..()
+		return ..()
 
 /obj/item/shreddedp/proc/burnpaper(obj/item/flame/lighter/P, mob/user)
 	if(user.restrained())
@@ -119,7 +122,7 @@
 	if(!P.lit)
 		to_chat(user, SPAN_WARNING("\The [P] is not lit."))
 		return
-	user.visible_message(SPAN_WARNING("\The [user] holds \the [P] up to \the [src]. It looks like \he's trying to burn it!"), \
+	user.visible_message(SPAN_WARNING("\The [user] holds \the [P] up to \the [src], trying to burn it!"), \
 		SPAN_WARNING("You hold \the [P] up to \the [src], burning it slowly."))
 	if(!do_after(user, 2 SECONDS, src, DO_PUBLIC_UNIQUE))
 		return
@@ -128,7 +131,7 @@
 	FireBurn()
 
 /obj/item/shreddedp/proc/FireBurn()
-	new /obj/effect/decal/cleanable/ash(get_turf(src))
+	new /obj/decal/cleanable/ash(get_turf(src))
 	qdel(src)
 
 /obj/item/shreddedp

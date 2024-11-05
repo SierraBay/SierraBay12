@@ -5,6 +5,7 @@
 	department_flag = MED
 
 	minimal_player_age = 14
+	minimum_character_age = list(SPECIES_HUMAN = 28)
 	ideal_character_age = 45
 	economic_power = 8
 	skill_points = 26
@@ -13,6 +14,7 @@
 	spawn_positions = 2
 	selection_color = "#013d3b"
 	alt_titles = list(
+		"Surgical Resident" = /singleton/hierarchy/outfit/job/sierra/crew/medical/senior/surgicalresident,
 		"Xenosurgeon" = /singleton/hierarchy/outfit/job/sierra/crew/medical/senior/xenosurgeon,
 		"Trauma Surgeon" = /singleton/hierarchy/outfit/job/sierra/crew/medical/senior/traumasurgeon
 	)
@@ -54,19 +56,21 @@
 	вкупе с предоперационным лечением пострадавших, спектр активности хирурга является несколько более широким, начиная от обычного лечения медикаментами в случае необходимости и заканчивая проведением сложных хирургических операций."
 
 /datum/job/doctor
-	title = "Doctor"
+	title = "Physician"
 	supervisors = "Главному Врачу"
 	department = "Медицинский"
 	department_flag = MED
 	total_positions = 3
 	spawn_positions = 3
 
-	ideal_character_age = 40
+	minimum_character_age = list(SPECIES_HUMAN = 24)
+	ideal_character_age = 26
 	economic_power = 7
 	skill_points = 22
 
 	alt_titles = list(
-		"Paramedic" = /singleton/hierarchy/outfit/job/sierra/crew/medical/doctor/paramedic
+		"Paramedic" = /singleton/hierarchy/outfit/job/sierra/crew/medical/doctor/paramedic,
+		"Medical Doctor" = /singleton/hierarchy/outfit/job/sierra/crew/medical/doctor
 	)
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/medical/doctor
 	allowed_branches = list(
@@ -107,7 +111,8 @@
 	department = "Медицинский"
 	department_flag = MED
 
-	ideal_character_age = 30
+	minimum_character_age = list(SPECIES_HUMAN = 20)
+	ideal_character_age = 21
 	economic_power = 3
 	skill_points = 18
 
@@ -154,13 +159,17 @@
 	department = "Медицинский"
 	department_flag = MED
 
-	ideal_character_age = 30
+	minimum_character_age = list(SPECIES_HUMAN = 24)
+	ideal_character_age = 26
 	economic_power = 5
 	skill_points = 18
 
 	total_positions = 1
 	spawn_positions = 1
 	selection_color = "#013d3b"
+	alt_titles = list(
+		"Pharmacist" = /singleton/hierarchy/outfit/job/sierra/crew/medical/doctor/chemist
+	)
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/medical/doctor/chemist
 	allowed_branches = list(/datum/mil_branch/employee, /datum/mil_branch/contractor)
 	allowed_ranks = list(/datum/mil_rank/civ/nt, /datum/mil_rank/civ/contractor)
@@ -188,13 +197,17 @@
 	department = "Медицинский"
 	department_flag = MED
 
-	ideal_character_age = 40
+	minimum_character_age = list(SPECIES_HUMAN = 24)
+	ideal_character_age = 30
 	economic_power = 8
 
 	total_positions = 1
 	spawn_positions = 1
 	alt_titles = list(
-		"Mentalist" = /singleton/hierarchy/outfit/job/sierra/crew/medical/counselor/mentalist
+		"Mentalist" = /singleton/hierarchy/outfit/job/sierra/crew/medical/counselor/mentalist,
+		"Psychologist" = /singleton/hierarchy/outfit/job/sierra/crew/medical/counselor/mentalist,
+		"Therapist" = /singleton/hierarchy/outfit/job/sierra/crew/medical/counselor/mentalist,
+		"Psychiatrist" = /singleton/hierarchy/outfit/job/sierra/crew/medical/counselor/mentalist
 	)
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/medical/counselor
 	allowed_branches = list(

@@ -185,7 +185,7 @@
 		var/datum/gas_mixture/air_sample = return_air()
 		var/pressure = round(air_sample.return_pressure(),0.1)
 
-		if(abs(pressure - previousPressure) > 0.001 || previousPressure == null)
+		if(abs(pressure - previousPressure) > 0.001 || isnull(previousPressure))
 			var/datum/signal/signal = new
 			signal.transmission_method = 1 //radio signal
 			signal.data["tag"] = id_tag
@@ -249,12 +249,11 @@
 	else
 		icon_state = "access_button_off"
 
-/obj/machinery/access_button/attackby(obj/item/I as obj, mob/user as mob)
-	//Swiping ID on the access button
+/obj/machinery/access_button/use_tool(obj/item/I, mob/living/user, list/click_params)
 	if (istype(I, /obj/item/card/id) || istype(I, /obj/item/modular_computer))
 		attack_hand(user)
-		return
-	..()
+		return TRUE
+	return ..()
 
 /obj/machinery/access_button/interface_interact(mob/user)
 	if(!CanInteract(user, DefaultTopicState()))

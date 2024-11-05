@@ -15,7 +15,6 @@
 	origin_tech = list(TECH_BIO = 4, TECH_POWER = 2)
 	matter = list(MATERIAL_STEEL = 5000, MATERIAL_PLASTIC = 2000, MATERIAL_GLASS = 1500, MATERIAL_ALUMINIUM = 1000)
 	action_button_name = "Remove/Replace Paddles"
-
 	var/obj/item/shockpaddles/linked/paddles
 	var/obj/item/cell/bcell = null
 
@@ -85,19 +84,23 @@
 		M.put_in_any_hand_if_possible(src)
 
 
-/obj/item/defibrillator/attackby(obj/item/W, mob/user, params)
+/obj/item/defibrillator/use_tool(obj/item/W, mob/living/user, list/click_params)
 	if(W == paddles)
 		reattach_paddles(user)
-	else if(istype(W, /obj/item/cell))
+		return TRUE
+
+	else if (istype(W, /obj/item/cell))
 		if(bcell)
-			to_chat(user, SPAN_NOTICE("\the [src] already has a cell."))
-		else
-			if(!user.unEquip(W))
-				return
-			W.forceMove(src)
-			bcell = W
-			to_chat(user, SPAN_NOTICE("You install a cell in \the [src]."))
-			update_icon()
+			to_chat(user, SPAN_WARNING("\The [src] already has a cell."))
+			return TRUE
+		if (!user.unEquip(W))
+			FEEDBACK_UNEQUIP_FAILURE(user, W)
+			return TRUE
+		W.forceMove(src)
+		bcell = W
+		to_chat(user, SPAN_NOTICE("You install a cell in \the [src]."))
+		update_icon()
+		return TRUE
 
 	else if(isScrewdriver(W))
 		if(bcell)
@@ -106,8 +109,9 @@
 			bcell = null
 			to_chat(user, SPAN_NOTICE("You remove the cell from \the [src]."))
 			update_icon()
-	else
-		return ..()
+			return TRUE
+
+	return ..()
 
 /obj/item/defibrillator/emag_act(uses, mob/user)
 	if(paddles)
@@ -208,7 +212,7 @@
 	force = 2
 	throwforce = 6
 	w_class = ITEM_SIZE_LARGE
-	item_flags = ITEM_FLAG_TRY_ATTACK
+
 
 	var/safety = 1 //if you can zap people with the paddles on harm mode
 	var/combat = 0 //If it can be used to revive people wearing thick clothing (e.g. spacesuits)
@@ -297,7 +301,7 @@
 /obj/item/shockpaddles/proc/checked_use(charge_amt)
 	return 0
 
-/obj/item/shockpaddles/attack(mob/living/M, mob/living/user)
+/obj/item/shockpaddles/use_before(mob/living/M, mob/living/user)
 	. = FALSE
 	var/mob/living/carbon/human/H = M
 	if (!istype(H) || user.a_intent != I_HELP)

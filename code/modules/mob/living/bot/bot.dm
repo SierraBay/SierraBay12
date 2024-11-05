@@ -13,6 +13,8 @@
 	bone_material = null
 	bone_amount = 0
 
+	ignore_hazard_flags = HAZARD_FLAG_SHARD
+
 	var/obj/item/card/id/botcard = null
 	var/list/botcard_access = list()
 	var/on = 1
@@ -314,7 +316,7 @@
 /mob/living/bot/proc/startPatrol()
 	var/turf/T = getPatrolTurf()
 	if(T)
-		patrol_path = AStar(get_turf(loc), T, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance, 0, max_patrol_dist, id = botcard, exclude = obstacle)
+		patrol_path = AStar(get_turf(loc), T, TYPE_PROC_REF(/turf, CardinalTurfsWithAccess), TYPE_PROC_REF(/turf, Distance), 0, max_patrol_dist, id = botcard, exclude = obstacle)
 		if(!patrol_path)
 			patrol_path = list()
 		obstacle = null
@@ -346,7 +348,7 @@
 	return
 
 /mob/living/bot/proc/calcTargetPath()
-	target_path = AStar(get_turf(loc), get_turf(target), /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance, 0, max_target_dist, id = botcard, exclude = obstacle)
+	target_path = AStar(get_turf(loc), get_turf(target), TYPE_PROC_REF(/turf, CardinalTurfsWithAccess), TYPE_PROC_REF(/turf, Distance), 0, max_target_dist, id = botcard, exclude = obstacle)
 	if(!target_path)
 		if(target && target.loc)
 			ignore_list |= target
@@ -374,7 +376,7 @@
 	if(stat)
 		return 0
 	on = 1
-	set_light(0.5, 0.1, light_strength)
+	set_light(light_strength, 0.5)
 	update_icons()
 	resetTarget()
 	patrol_path = list()
@@ -413,7 +415,7 @@
 // Movement through doors allowed if ID has access
 /proc/LinkBlockedWithAccess(turf/A, turf/B, obj/item/card/id/ID)
 
-	if(A == null || B == null) return 1
+	if(isnull(A) || isnull(B)) return 1
 	var/adir = get_dir(A,B)
 	var/rdir = get_dir(B,A)
 	if((adir & (NORTH|SOUTH)) && (adir & (EAST|WEST)))	//	diagonal

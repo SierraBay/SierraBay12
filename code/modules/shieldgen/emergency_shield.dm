@@ -41,7 +41,7 @@
 		return
 	if (health_mod < -1) // To prevent slow degradation proccing this constantly
 		set_opacity(TRUE)
-		addtimer(new Callback(src, /atom/proc/set_opacity, FALSE), 2 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
+		addtimer(new Callback(src, TYPE_PROC_REF(/atom, set_opacity), FALSE), 2 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
 
 /obj/machinery/shield/on_death()
 	visible_message(SPAN_NOTICE("\The [src] dissipates!"))
@@ -66,6 +66,7 @@
 	var/check_delay = 60	//periodically recheck if we need to rebuild a shield
 	use_power = POWER_USE_OFF
 	idle_power_usage = 0
+	obj_flags = OBJ_FLAG_ANCHORABLE
 
 /obj/machinery/shieldgen/Destroy()
 	collapse_shields()
@@ -195,7 +196,7 @@
 		update_icon()
 		return 1
 
-/obj/machinery/shieldgen/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/shieldgen/use_tool(obj/item/W, mob/living/user, list/click_params)
 	if(isScrewdriver(W))
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 		if(is_open)
@@ -217,27 +218,9 @@
 				to_chat(user, SPAN_NOTICE("You repair the [src]!"))
 		return TRUE
 
-	else if(istype(W, /obj/item/wrench))
-		if(locked)
-			to_chat(user, "The bolts are covered, unlocking this would retract the covers.")
-			return TRUE
-		if(anchored)
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
-			to_chat(user, SPAN_NOTICE("'You unsecure the [src] from the floor!"))
-			if(active)
-				to_chat(user, SPAN_NOTICE("The [src] shuts off!"))
-				src.shields_down()
-			anchored = FALSE
-		else
-			if(istype(get_turf(src), /turf/space)) return //No wrenching these in space!
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
-			to_chat(user, SPAN_NOTICE("You secure the [src] to the floor!"))
-			anchored = TRUE
-		return TRUE
-
-	else if(istype(W, /obj/item/card/id) || istype(W, /obj/item/modular_computer/pda))
-		if(src.allowed(user))
-			src.locked = !src.locked
+	if (istype(W, /obj/item/card/id) || istype(W, /obj/item/modular_computer/pda))
+		if(allowed(user))
+			locked = !locked
 			to_chat(user, "The controls are now [src.locked ? "locked." : "unlocked."]")
 		else
 			to_chat(user, SPAN_WARNING("Access denied."))
@@ -245,6 +228,16 @@
 
 	return ..()
 
+/obj/machinery/shieldgen/can_anchor(obj/item/tool, mob/user, silent)
+	if(locked)
+		to_chat(user, "The bolts are covered, unlocking this would retract the covers.")
+		return FALSE
+	return ..()
+
+/obj/machinery/shieldgen/post_anchor_change()
+	if (!anchored && active)
+		shields_down()
+	..()
 
 /obj/machinery/shieldgen/on_update_icon()
 	if(active && is_powered())

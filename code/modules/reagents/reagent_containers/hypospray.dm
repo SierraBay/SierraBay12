@@ -16,7 +16,6 @@
 	possible_transfer_amounts = null
 	atom_flags = ATOM_FLAG_OPEN_CONTAINER
 	slot_flags = SLOT_BELT
-	item_flags = ITEM_FLAG_TRY_ATTACK
 
 	// autoinjectors takes less time than a normal syringe (overriden for hypospray).
 	// This delay is only applied when injecting concious mobs, and is not applied for self-injection
@@ -29,7 +28,7 @@
 	var/time = (1 SECONDS) / 1.9
 	var/single_use = TRUE // autoinjectors are not refillable (overriden for hypospray)
 
-/obj/item/reagent_containers/hypospray/attack(mob/living/M, mob/user)
+/obj/item/reagent_containers/hypospray/use_before(mob/living/M, mob/user)
 	. = FALSE
 	if (!istype(M))
 		return FALSE
@@ -118,13 +117,14 @@
 		return
 	return ..()
 
-/obj/item/reagent_containers/hypospray/vial/attackby(obj/item/W, mob/user)
+/obj/item/reagent_containers/hypospray/vial/use_tool(obj/item/W, mob/living/user, list/click_params)
 	var/usermessage = ""
 	if(istype(W, /obj/item/reagent_containers/glass/beaker/vial))
 		if(!do_after(user, 1 SECOND, src, DO_PUBLIC_UNIQUE) || !(W in user))
-			return 0
+			return TRUE
 		if(!user.unEquip(W, src))
-			return
+			FEEDBACK_UNEQUIP_FAILURE(user, W)
+			return TRUE
 		if(loaded_vial)
 			remove_vial(user, "swap")
 			usermessage = "You load \the [W] into \the [src] as you remove the old one."
@@ -139,12 +139,10 @@
 		user.visible_message(SPAN_NOTICE("[user] has loaded [W] into \the [src]."),SPAN_NOTICE("[usermessage]"))
 		update_icon()
 		playsound(src.loc, 'sound/weapons/empty.ogg', 50, 1)
-		return
-	..()
+		return TRUE
+	return ..()
 
-/obj/item/reagent_containers/hypospray/vial/afterattack(obj/target, mob/user, proximity) // hyposprays can be dumped into, why not out? uses standard_pour_into helper checks.
-	if(!proximity)
-		return
+/obj/item/reagent_containers/hypospray/vial/use_after(obj/target, mob/living/user, click_parameters) // hyposprays can be dumped into, why not out? uses standard_pour_into helper checks.
 	if (!reagents.total_volume && istype(target, /obj/item/reagent_containers/glass))
 		var/good_target = is_type_in_list(target, list(
 			/obj/item/reagent_containers/glass/beaker,
@@ -154,14 +152,16 @@
 			return
 		if (!target.is_open_container())
 			to_chat(user, SPAN_ITALIC("\The [target] is closed."))
-			return
+			return TRUE
 		if (!target.reagents?.total_volume)
 			to_chat(user, SPAN_ITALIC("\The [target] is empty."))
-			return
+			return TRUE
 		var/trans = target.reagents.trans_to_obj(src, amount_per_transfer_from_this)
 		to_chat(user, SPAN_NOTICE("You fill \the [src] with [trans] units of the solution."))
-		return
-	standard_pour_into(user, target)
+		return TRUE
+	else
+		standard_pour_into(user, target)
+		return TRUE
 
 /obj/item/reagent_containers/hypospray/autoinjector
 	name = "autoinjector"

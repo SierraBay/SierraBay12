@@ -262,7 +262,7 @@
 	..()
 
 	// React to being hit
-	if ((use_call == "weapon" || use_call == "attackby") && !stat && !client)
+	if ((use_call == "weapon" || use_call == "use") && !stat && !client)
 		if (parrot_state == PARROT_PERCH)
 			parrot_sleep_dur = parrot_sleep_max //Reset it's sleep timer if it was perched
 
@@ -529,7 +529,7 @@
  * Procs
  */
 
-/mob/living/simple_animal/hostile/retaliate/parrot/movement_delay()
+/mob/living/simple_animal/hostile/retaliate/parrot/movement_delay(singleton/move_intent/using_intent = move_intent)
 	if(client && stat == CONSCIOUS && parrot_state != "parrot_fly")
 		icon_state = "[icon_set]_fly"
 	..()
@@ -664,7 +664,7 @@
 		return -1
 
 	if(!held_item)
-		to_chat(usr, SPAN_WARNING("You have nothing to drop!"))
+		to_chat(src, SPAN_WARNING("You have nothing to drop!"))
 		return 0
 
 	if(!drop_gently)

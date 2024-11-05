@@ -32,7 +32,7 @@
 /datum/event/meteor_wave/tick()
 	// Begin sending the alarm signals to shield diffusers so the field is already regenerated (if it exists) by the time actual meteors start flying around.
 	if(alarmWhen < activeFor)
-		for(var/obj/machinery/shield_diffuser/SD in SSmachines.machinery)
+		for(var/obj/machinery/shield_diffuser/SD as anything in SSmachines.get_machinery_of_type(/obj/machinery/shield_diffuser))
 			if(isStationLevel(SD.z))
 				SD.meteor_alarm(10)
 
@@ -69,43 +69,43 @@
 			return meteors_minor
 
 var/global/list/meteors_minor = list(
-	/obj/effect/meteor/medium     = 80,
-	/obj/effect/meteor/dust       = 30,
-	/obj/effect/meteor/irradiated = 30,
-	/obj/effect/meteor/big        = 30,
-	/obj/effect/meteor/flaming    = 10,
-	/obj/effect/meteor/golden     = 10,
-	/obj/effect/meteor/silver     = 10,
+	/obj/meteor/medium     = 80,
+	/obj/meteor/dust       = 30,
+	/obj/meteor/irradiated = 30,
+	/obj/meteor/big        = 30,
+	/obj/meteor/flaming    = 10,
+	/obj/meteor/golden     = 10,
+	/obj/meteor/silver     = 10,
 )
 
 var/global/list/meteors_moderate = list(
-	/obj/effect/meteor/medium     = 80,
-	/obj/effect/meteor/big        = 30,
-	/obj/effect/meteor/dust       = 30,
-	/obj/effect/meteor/irradiated = 30,
-	/obj/effect/meteor/flaming    = 10,
-	/obj/effect/meteor/golden     = 10,
-	/obj/effect/meteor/silver     = 10,
-	/obj/effect/meteor/emp        = 10,
+	/obj/meteor/medium     = 80,
+	/obj/meteor/big        = 30,
+	/obj/meteor/dust       = 30,
+	/obj/meteor/irradiated = 30,
+	/obj/meteor/flaming    = 10,
+	/obj/meteor/golden     = 10,
+	/obj/meteor/silver     = 10,
+	/obj/meteor/emp        = 10,
 )
 
 var/global/list/meteors_major = list(
-	/obj/effect/meteor/medium     = 80,
-	/obj/effect/meteor/big        = 30,
-	/obj/effect/meteor/dust       = 30,
-	/obj/effect/meteor/irradiated = 30,
-	/obj/effect/meteor/emp        = 30,
-	/obj/effect/meteor/flaming    = 10,
-	/obj/effect/meteor/golden     = 10,
-	/obj/effect/meteor/silver     = 10,
-	/obj/effect/meteor/tunguska   = 1,
+	/obj/meteor/medium     = 80,
+	/obj/meteor/big        = 30,
+	/obj/meteor/dust       = 30,
+	/obj/meteor/irradiated = 30,
+	/obj/meteor/emp        = 30,
+	/obj/meteor/flaming    = 10,
+	/obj/meteor/golden     = 10,
+	/obj/meteor/silver     = 10,
+	/obj/meteor/tunguska   = 1,
 )
 
 /datum/event/meteor_wave/overmap
 	next_meteor_lower = 5
 	next_meteor_upper = 10
 	next_meteor = 0
-	var/obj/effect/overmap/visitable/ship/victim
+	var/obj/overmap/visitable/ship/victim
 
 /datum/event/meteor_wave/overmap/Destroy()
 	victim = null

@@ -28,7 +28,7 @@
 	var/movement_delay
 
 	var/fluid_can_pass
-	var/obj/effect/flood/flood_object
+	var/obj/flood/flood_object
 	var/fluid_blocked_dirs = 0
 	var/flooded // Whether or not this turf is absolutely flooded ie. a water source.
 	var/height = 0 // Determines if fluids can overflow onto next turf
@@ -43,7 +43,7 @@
 	var/has_opaque_atom
 
 	/// Reference to the turf fire on the turf
-	var/obj/effect/turf_fire/turf_fire
+	var/obj/turf_fire/turf_fire
 
 /turf/Initialize(mapload, ...)
 	. = ..()
@@ -52,7 +52,14 @@
 	else
 		luminosity = 1
 
-	RecalculateOpacity()
+	if (light_power && light_range)
+		update_light()
+
+	if (!mapload || (!istype(src, /turf/space) && is_outside()))
+		SSambient_lighting.queued += src
+
+	if (opacity)
+		has_opaque_atom = TRUE
 
 	if (mapload && permit_ao)
 		queue_ao()
@@ -94,6 +101,15 @@
 	..()
 	return QDEL_HINT_LETMELIVE
 
+//[SIERRA-ADD]
+/// WARNING WARNING
+/// Turfs DO NOT lose their signals when they get replaced, REMEMBER THIS
+/// It's possible because turfs are fucked, and if you have one in a list and it's replaced with another one, the list ref points to the new turf
+/// We do it because moving signals over was needlessly expensive, and bloated a very commonly used bit of code
+/turf/_clear_signal_refs()
+	return
+//[/SIERRA-ADD]
+
 /turf/proc/is_solid_structure()
 	return 1
 
@@ -127,12 +143,15 @@
 	if(Adjacent(user))
 		attack_hand(user)
 
-/turf/attackby(obj/item/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/storage))
-		var/obj/item/storage/S = W
-		if(S.use_to_pickup && S.collection_mode)
-			S.gather_all(src, user)
+
+/turf/use_tool(obj/item/item, mob/living/user, list/click_params)
+	if (istype(item, /obj/item/storage))
+		var/obj/item/storage/storage = item
+		if (storage.allow_quick_gather && !storage.quick_gather_single)
+			storage.gather_all(src, user)
+			return TRUE
 	return ..()
+
 
 /turf/Enter(atom/movable/mover as mob|obj, atom/forget as mob|obj|turf|area)
 
@@ -271,8 +290,8 @@ var/global/const/enterloopsanity = 100
 	source.reagents.trans_to_turf(src, 1, 10)	//10 is the multiplier for the reaction effect. probably needed to wet the floor properly.
 
 /turf/proc/remove_cleanables(skip_blood = TRUE)
-	for(var/obj/effect/O in src)
-		if(istype(O,/obj/effect/rune) || (istype(O,/obj/effect/decal/cleanable) && (!skip_blood || !istype(O, /obj/effect/decal/cleanable/blood))))
+	for(var/obj/O in src)
+		if(istype(O,/obj/rune) || (istype(O,/obj/decal/cleanable) && (!skip_blood || !istype(O, /obj/decal/cleanable/blood))))
 			qdel(O)
 
 /turf/proc/update_blood_overlays()
@@ -294,7 +313,7 @@ var/global/const/enterloopsanity = 100
 
 			if(M.pinned)
 				return
-		addtimer(new Callback(src, /turf/proc/bounce_off, AM, TT.init_dir), 2)
+		addtimer(new Callback(src, TYPE_PROC_REF(/turf, bounce_off), AM, TT.init_dir), 2)
 
 	..()
 
@@ -314,7 +333,7 @@ var/global/const/enterloopsanity = 100
 		return
 
 	var/too_much_graffiti = 0
-	for(var/obj/effect/decal/writing/W in src)
+	for(var/obj/decal/writing/W in src)
 		too_much_graffiti++
 	if(too_much_graffiti >= 5)
 		to_chat(vandal, SPAN_WARNING("There's too much graffiti here to add more."))
@@ -333,7 +352,7 @@ var/global/const/enterloopsanity = 100
 		return FALSE
 
 	vandal.visible_message(SPAN_DANGER("\The [vandal] carves some graffiti into \the [src]."))
-	var/obj/effect/decal/writing/graffiti = new(src)
+	var/obj/decal/writing/graffiti = new(src)
 	graffiti.message = message
 	graffiti.author = vandal.ckey
 	vandal.update_personal_goal(/datum/goal/achievement/graffiti, TRUE)
@@ -431,3 +450,16 @@ var/global/const/enterloopsanity = 100
 
 /turf/proc/IgniteTurf(power, fire_colour)
 	return
+
+//Maybe we want to make this stateful at some point
+/turf/proc/is_outside()
+
+	//For the purposes of light, dense turfs should not be considered to be outside
+	if(density)
+		return FALSE
+
+	var/area/A = get_area(src)
+	if(A.area_flags & AREA_FLAG_EXTERNAL)
+		return TRUE
+
+	//TODO: CitRP has some concept of outside based on turfs above. We don't really have any use cases right now, revisit this function if this changes

@@ -21,6 +21,8 @@
 	var/list/product_types = list()
 	var/dispense_flavour = ICECREAM_VANILLA
 	var/flavour_name = "vanilla"
+	/// `world.time` the next usage can occur. Used to prevent spamming.
+	var/next_use_time = 0
 
 /obj/machinery/icecream_vat/proc/get_ingredient_list(type)
 	switch(type)
@@ -99,7 +101,7 @@
 	popup.set_content(dat)
 	popup.open()
 
-/obj/machinery/icecream_vat/attackby(obj/item/O as obj, mob/user as mob)
+/obj/machinery/icecream_vat/use_tool(obj/item/O, mob/living/user, list/click_params)
 	if(istype(O, /obj/item/reagent_containers/food/snacks/icecream))
 		var/obj/item/reagent_containers/food/snacks/icecream/I = O
 		if(!I.ice_creamed)
@@ -115,13 +117,18 @@
 				to_chat(user, SPAN_WARNING("There is not enough icecream left!"))
 		else
 			to_chat(user, SPAN_NOTICE("[O] already has icecream in it."))
-		return 1
-	else if(O.is_open_container())
+		return TRUE
+
+	if(O.is_open_container())
 		return
-	else
-		..()
+
+	return ..()
 
 /obj/machinery/icecream_vat/proc/make(mob/user, make_type, amount)
+	amount = clamp(amount, 1, 5)
+	if (world.time < next_use_time)
+		USE_FEEDBACK_FAILURE("\The [src] isn't ready yet.")
+		return
 	for(var/R in get_ingredient_list(make_type))
 		if(reagents.has_reagent(R, amount))
 			continue
@@ -136,6 +143,7 @@
 			src.visible_message(SPAN_INFO("[user] cooks up some [flavour] cones."))
 		else
 			src.visible_message(SPAN_INFO("[user] whips up some [flavour] icecream."))
+		next_use_time = world.time + 5 SECONDS
 	else
 		to_chat(user, SPAN_WARNING("You don't have the ingredients to make this."))
 

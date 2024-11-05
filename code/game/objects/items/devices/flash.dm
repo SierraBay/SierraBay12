@@ -9,7 +9,6 @@
 	throw_speed = 4
 	throw_range = 10
 	obj_flags = OBJ_FLAG_CONDUCTIBLE
-	item_flags = ITEM_FLAG_TRY_ATTACK
 	origin_tech = list(TECH_MAGNET = 2, TECH_COMBAT = 1)
 
 	var/times_used = 0 //Number of times it's been used.
@@ -36,7 +35,7 @@
 	times_used = max(0,round(times_used)) //sanity
 
 //attack_as_weapon
-/obj/item/device/flash/attack(mob/living/M, mob/living/user)
+/obj/item/device/flash/use_before(mob/living/M, mob/living/user)
 	. = FALSE
 	if (!istype(M))
 		return FALSE
@@ -117,7 +116,7 @@
 					M.flash_eyes(FLASH_PROTECTION_MODERATE - safety)
 					M.Stun(flash_strength / 2)
 					M.eye_blurry = max(M.eye_blurry, flash_strength)
-					M.confused = max(M.confused, (flash_strength + 2))
+					M.set_confused(flash_strength + 2)
 					if(flash_strength > 3)
 						M.drop_l_hand()
 						M.drop_r_hand()
@@ -130,11 +129,11 @@
 		var/mob/living/simple_animal/SA = M
 		var/safety = SA.eyecheck()
 		if(safety < FLASH_PROTECTION_MAJOR)
-			SA.confused = max(SA.confused, (flash_strength * 0.5))
+			SA.set_confused(flash_strength * 0.5)
 			if(safety < FLASH_PROTECTION_MODERATE)
 				SA.flash_eyes(2)
 				SA.eye_blurry = max(SA.eye_blurry, flash_strength)
-				SA.confused = max(SA.confused, (flash_strength))
+				SA.set_confused(flash_strength)
 		else
 			return TRUE
 

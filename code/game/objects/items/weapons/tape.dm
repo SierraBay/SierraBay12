@@ -3,10 +3,10 @@
 	desc = "A roll of sticky tape. Possibly for taping ducks... or was that ducts?"
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "taperoll"
+	matter = list(MATERIAL_PLASTIC = 100)
 	w_class = ITEM_SIZE_SMALL
-	item_flags = ITEM_FLAG_TRY_ATTACK
 
-/obj/item/tape_roll/attack(mob/living/carbon/human/H, mob/user)
+/obj/item/tape_roll/use_before(mob/living/carbon/human/H, mob/user)
 	. = FALSE
 	if (istype(H))
 		if (user.zone_sel.selecting == BP_EYES)
@@ -72,7 +72,7 @@
 
 		else if (user.zone_sel.selecting == BP_CHEST)
 			if (H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit/space))
-				H.wear_suit.attackby(src, user)//everything is handled by attackby
+				H.wear_suit.use_tool(src, user)
 			else
 				to_chat(user, SPAN_WARNING("\The [H] isn't wearing a spacesuit for you to reseal."))
 			return TRUE
@@ -107,7 +107,6 @@
 
 /obj/item/ducttape/proc/attach(obj/item/W)
 	stuck = W
-	anchored = TRUE
 	W.forceMove(src)
 	icon_state = W.icon_state + "_taped"
 	name = W.name + " (taped)"
@@ -122,10 +121,9 @@
 	stuck = null
 	qdel(src)
 
-/obj/item/ducttape/afterattack(A, mob/user, flag, params)
-
+/obj/item/ducttape/use_after(atom/A, mob/living/user, click_parameters)
 	if(!in_range(user, A) || istype(A, /obj/machinery/door) || !stuck)
-		return
+		return FALSE
 
 	var/turf/target_turf = get_turf(A)
 	var/turf/source_turf = get_turf(user)
@@ -134,26 +132,28 @@
 	if(target_turf != source_turf)
 		dir_offset = get_dir(source_turf, target_turf)
 		if(!(dir_offset in GLOB.cardinal))
-			to_chat(user, "You cannot reach that from here.")// can only place stuck papers in cardinal directions, to
-			return											// reduce papers around corners issue.
+			to_chat(user, "You cannot reach that from here.")
+			return TRUE
 
 	if(!user.unEquip(src, source_turf))
-		return
+		FEEDBACK_UNEQUIP_FAILURE(user, src)
+		return TRUE
+
 	playsound(src, 'sound/effects/tape.ogg',25)
-
 	layer = ABOVE_WINDOW_LAYER
+	anchored = TRUE
 
-	if(params)
-		var/list/mouse_control = params2list(params)
-		if(mouse_control["icon-x"])
-			pixel_x = text2num(mouse_control["icon-x"]) - 16
+	if(click_parameters)
+		if(click_parameters["icon-x"])
+			pixel_x = text2num(click_parameters["icon-x"]) - 16
 			if(dir_offset & EAST)
 				pixel_x += 32
 			else if(dir_offset & WEST)
 				pixel_x -= 32
-		if(mouse_control["icon-y"])
-			pixel_y = text2num(mouse_control["icon-y"]) - 16
+		if(click_parameters["icon-y"])
+			pixel_y = text2num(click_parameters["icon-y"]) - 16
 			if(dir_offset & NORTH)
 				pixel_y += 32
 			else if(dir_offset & SOUTH)
 				pixel_y -= 32
+	return TRUE

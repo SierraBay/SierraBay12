@@ -24,7 +24,7 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define ATOM_AWAITING_OVERLAY_UPDATE     FLAG(10)
 
 #define MOVABLE_FLAG_PROXMOVE       FLAG(0)  // Does this object require proximity checking in Enter()?
-#define MOVABLE_FLAG_Z_INTERACT     FLAG(1)  // Should attackby and attack_hand be relayed through ladders and open spaces?
+#define MOVABLE_FLAG_Z_INTERACT     FLAG(1)  // Should use_tool and attack_hand be relayed through ladders and open spaces?
 #define MOVABLE_FLAG_EFFECTMOVE     FLAG(2)  // Is this an effect that should move?
 
 #define OBJ_FLAG_ANCHORABLE     FLAG(0)  // This object can be stuck in place with a tool
@@ -52,7 +52,7 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define ITEM_FLAG_NOCUFFS                   FLAG(13) // Gloves that have this flag prevent cuffs being applied
 #define ITEM_FLAG_CAN_HIDE_IN_SHOES         FLAG(14) // Items that can be hidden in shoes that permit it
 #define ITEM_FLAG_WASHER_ALLOWED            FLAG(15) // Items that can be washed in washing machines
-#define ITEM_FLAG_TRY_ATTACK                FLAG(16) // Use the item's attack() when set before trying the receiver's resolve_attackby()
+#define ITEM_FLAG_IS_CHAMELEON_ITEM         FLAG(16) // Setups the chameleon extension on init. Throws an exception if there is no compatible extension subtype.
 
 // Flags for pass_flags.
 #define PASS_FLAG_TABLE     FLAG(0)
@@ -81,3 +81,7 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define OVERMAP_SECTOR_IN_SPACE     FLAG(2)
 /// If the sector is untargetable by missiles.
 #define OVERMAP_SECTOR_UNTARGETABLE FLAG(3)
+
+
+/// For mob/living/ignore_hazard_flags. When set, shards do not damage the mob.
+var/global/const/HAZARD_FLAG_SHARD = FLAG(0)

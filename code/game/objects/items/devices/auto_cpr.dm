@@ -4,7 +4,6 @@
 	icon = 'icons/obj/auto_cpr.dmi'
 	icon_state = "pumper"
 	w_class = ITEM_SIZE_NORMAL
-	item_flags = ITEM_FLAG_TRY_ATTACK
 	origin_tech = list(TECH_MAGNET = 2, TECH_BIO = 2)
 	slot_flags = SLOT_OCLOTHING
 	var/last_pump
@@ -19,7 +18,7 @@
 	else
 		return FALSE
 
-/obj/item/auto_cpr/attack(mob/living/carbon/human/M, mob/living/user)
+/obj/item/auto_cpr/use_before(mob/living/carbon/human/M, mob/living/user)
 	. = FALSE
 	if (istype(M) && user.a_intent == I_HELP)
 		if (M.wear_suit)
@@ -55,7 +54,7 @@
 	if(H.get_inventory_slot(src) != slot_wear_suit)
 		return PROCESS_KILL
 
-	if(world.time > last_pump + 15 SECONDS)
+	if(world.time > last_pump + 10 SECONDS)
 		last_pump = world.time
 		playsound(src, 'sound/machines/pump.ogg', 25)
 		if(!skilled_setup && prob(20))
@@ -67,4 +66,4 @@
 		else
 			var/obj/item/organ/internal/heart/heart = H.internal_organs_by_name[BP_HEART]
 			if(heart)
-				heart.external_pump = list(world.time, 0.6)
+				heart.external_pump = list(world.time, 0.5)

@@ -497,6 +497,15 @@
 	glass_name = "hot chocolate"
 	glass_desc = "Made with love! And cocoa beans."
 
+/datum/reagent/drink/hot_coco/ntella
+	name = "NTella Hot Chocolate"
+	description = "It's like a cup of hot chocolate except... More everything."
+	color = "#63432e"
+	taste_description = "hazelnutty, creamy chocolate"
+
+	glass_name = "NTella hot chocolate"
+	glass_desc = "A very chocolatey drink for the days so rough, so cold, or so celebratory that a regular hot chocolate just won't cut it. It has marshmallows!"
+
 /datum/reagent/drink/sodawater
 	name = "Soda Water"
 	description = "A can of club soda. Why not make a scotch and soda?"
@@ -533,6 +542,7 @@
 
 	glass_name = "tonic water"
 	glass_desc = "Quinine tastes funny, but at least it'll keep that Space Malaria away."
+	glass_special = list(DRINK_FIZZ)
 
 /datum/reagent/drink/lemonade
 	name = "Lemonade"
@@ -634,6 +644,15 @@
 	glass_name = "milkshake"
 	glass_desc = "Glorious brainfreezing mixture."
 
+/datum/reagent/drink/milkshake/ntella
+	name = "NTella Milkshake"
+	description = "An intensely sweet chocolatey concoction with whipped cream on top."
+	color = "#6d4124"
+	taste_description = "overwhelmingly sweet chocolate"
+
+	glass_name = "NTella milkshake"
+	glass_desc = "Oh look, it's that thing you actually want to get but probably shouldn't."
+
 /datum/reagent/drink/rewriter
 	name = "Rewriter"
 	description = "The secret of the sanctuary of the Libarian..."
@@ -704,7 +723,7 @@
 	name = "Mountain Wind"
 	description = "Blows right through you like a space wind."
 	taste_description = "sweet citrus soda"
-	color = "#102000"
+	color = "#94c93d"
 	adj_drowsy = -7
 	adj_sleepy = -1
 	adj_temp = -5
@@ -723,6 +742,7 @@
 
 	glass_name = "Dr. Gibb"
 	glass_desc = "Dr. Gibb. Not as dangerous as the name might imply."
+	glass_special = list(DRINK_FIZZ)
 
 /datum/reagent/drink/space_up
 	name = "Space-Up"
@@ -766,8 +786,7 @@
 	M.adjustToxLoss(-2 * removed)
 	if(M.dizziness)
 		M.dizziness = max(0, M.dizziness - 15)
-	if(M.confused)
-		M.confused = max(0, M.confused - 5)
+	M.mod_confused(-5)
 
 /datum/reagent/drink/dry_ramen
 	name = "Dry Ramen"
@@ -775,14 +794,14 @@
 	taste_description = "dry and cheap noodles"
 	reagent_state = SOLID
 	nutrition = 1
-	color = "#302000"
+	color = "#dec85d"
 
 /datum/reagent/drink/hot_ramen
 	name = "Hot Ramen"
 	description = "The noodles are boiled, the flavors are artificial, just like being back in school."
 	taste_description = "wet and cheap noodles"
 	reagent_state = LIQUID
-	color = "#302000"
+	color = "#c28f19"
 	nutrition = 5
 	adj_temp = 5
 
@@ -791,7 +810,7 @@
 	description = "The noodles are boiled, the flavors are artificial, just like being back in school."
 	taste_description = "wet and cheap noodles on fire"
 	reagent_state = LIQUID
-	color = "#302000"
+	color = "#c93f04"
 	nutrition = 5
 
 /datum/reagent/drink/hell_ramen/affect_ingest(mob/living/carbon/M, removed)
@@ -837,9 +856,11 @@
 	name = "Ginger Beer"
 	description = "A hearty, non-alcoholic beverage extremely popular around the SCG."
 	taste_description = "carbonated ginger"
-	color = "#44371f"
+	color = "#f5f3c6"
+
 	glass_name = "ginger beer"
 	glass_desc = "A hearty, non-alcoholic beverage extremely popular around the SCG."
+	glass_special = list(DRINK_FIZZ)
 
 /datum/reagent/drink/beastenergy
 	name = "Beast Energy"
@@ -920,7 +941,7 @@
 
 /datum/reagent/cinnamon
 	name = "Cinnamon"
-	description = "Delicious ground cinnamon spice. "
+	description = "Delicious ground cinnamon spice."
 	taste_description = "cinnamon"
 	reagent_state = SOLID
 	color = "#cd6139"
@@ -928,6 +949,9 @@
 
 	glass_name = "cinnamon"
 	glass_desc = "Delicious ground cinnamon spice, why would you drink this?"
+
+	condiment_icon_state = "cinnamonbottle"
+	condiment_name = "bottle of cinnamon"
 
 /datum/reagent/oliveoil
 	name = "Olive Oil"
@@ -937,6 +961,10 @@
 
 	glass_name = "olive oil"
 	glass_desc = "Oily."
+
+	condiment_icon_state = "oliveoil"
+	condiment_name = "olive oil"
+	condiment_desc = "Used in food preparation and flavoring."
 
 /datum/reagent/drink/affelerin
 	name = "Affelerin Nectar"
@@ -1054,13 +1082,14 @@
 /datum/reagent/drink/dandelionburdock
 	name = "Dandelion and Burdock"
 	description = "Does not contain any Taraxacum officinale, or Arctium lappa."
-	taste_description = "sassafras"
+	taste_description = "fruit and aniseed"
 	reagent_state = LIQUID
 	color = "#ff8cff"
 	nutrition = 1
 
 	glass_name = "Dandelion and Burdock"
 	glass_desc = "A tall glass of DnB"
+	glass_special = list(DRINK_FIZZ)
 
 /datum/reagent/drink/doogh
 	name = "Doogh"
@@ -1185,7 +1214,7 @@
 	name = "Green Tea"
 	description = "Subtle green tea, it has antioxidants, it's good for you!"
 	taste_description = "subtle green tea"
-	color = "#b4cd94"
+	color = "#8bbf49"
 
 	glass_name = "green tea"
 	glass_desc = "Subtle green tea, it has antioxidants, it's good for you!"
@@ -1194,7 +1223,7 @@
 	name = "Iced Green Tea"
 	description = "It's the green tea you know and love, but now it's cold."
 	taste_description = "cold green tea"
-	color = "#b4cd94"
+	color = "#8bbf49"
 
 	glass_name = "iced green tea"
 	glass_desc = "It's the green tea you know and love, but now it's cold."
@@ -1203,7 +1232,7 @@
 	name = "Sweet Green Tea"
 	description = "It's the green tea you know and love, but now it's cold. And sweet."
 	taste_description = "sweet green tea"
-	color = "#b4cd94"
+	color = "#8bbf49"
 
 	glass_name = "sweet green tea"
 	glass_desc = "It's the green tea you know and love, but now it's cold. And sweet."
@@ -1407,7 +1436,7 @@
 
 // Alien Drinks
 
-/datum/reagent/drink/alien/unathijuice
+/datum/reagent/drink/unathijuice
 	name = "Hrukhza Leaf Extract"
 	description = "A bitter liquid used in most recipes on Moghes."
 	taste_description = "bland, disgusting bitterness"
@@ -1415,7 +1444,7 @@
 	glass_name = "hrukhza leaf extract"
 	glass_desc = "A bitter extract from the hrukhza."
 
-/datum/reagent/drink/alien/kzkzaa
+/datum/reagent/drink/kzkzaa
 	name = "Kzkzaa"
 	description = "Fish extract from Moghes."
 	taste_description = "fishy fish"
@@ -1423,7 +1452,7 @@
 	glass_name = "kzkzaa"
 	glass_desc = "A glass of Kzkzaa, fish extract, commonly drank on Moghes."
 
-/datum/reagent/drink/alien/mumbaksting
+/datum/reagent/drink/mumbaksting
 	name = "Mumbak Sting"
 	description = "A drink made from the venom of the Yuum."
 	taste_description = "harsh and stinging sweetness"
@@ -1431,7 +1460,7 @@
 	glass_name = "Mumbak sting"
 	glass_desc = "A drink made from the venom of the Yuum."
 
-/datum/reagent/ethanol/alien/wasgaelhi
+/datum/reagent/ethanol/wasgaelhi
 	name = "Wasgaelhi"
 	description = "Wine made from various fruits from the swamps of Moghes."
 	taste_description = "swampy fruit"
@@ -1440,10 +1469,11 @@
 	glass_name = "wasgaelhi"
 	glass_desc = "Wine made from various fruits from the swamps of Moghes."
 
-/datum/reagent/drink/alien/skrianhi
+/datum/reagent/drink/skrianhi
 	name = "Skrianhi Tea"
 	description = "A blend of teas from Moghes, commonly drank by Unathi."
 	taste_description = "bitter energising tea"
 	color = "#0e0900"
 	glass_name = "skrianhi tea"
 	glass_desc = "A blend of teas from Moghes, commonly drank by Unathi."
+	adj_temp = 20

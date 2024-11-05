@@ -28,9 +28,9 @@
 	/// Can this backpack be opened while worn on the back?
 	var/worn_access = TRUE
 
-/obj/item/storage/backpack/attackby(obj/item/W as obj, mob/user as mob)
-	if (src.use_sound)
-		playsound(src.loc, src.use_sound, 50, 1, -5)
+/obj/item/storage/backpack/use_tool(obj/item/tool, mob/living/user, list/click_params)
+	if (use_sound)
+		playsound(loc, use_sound, 50, 1, -5)
 	return ..()
 
 /obj/item/storage/backpack/equipped(mob/user, slot)
@@ -46,7 +46,7 @@
 	if (!worn_access && usr?.isEquipped(src, slot_back))
 		to_chat(usr, SPAN_WARNING("You can't insert \the [W] while \the [src] is on your back."))
 		return
-	..()
+	return ..()
 
 /obj/item/storage/backpack/open(mob/user)
 	if (!worn_access && user.isEquipped(src, slot_back))
@@ -73,11 +73,11 @@
 	..()
 	return
 
-/obj/item/storage/backpack/holding/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/storage/backpack/holding/use_tool(obj/item/W, mob/living/user, list/click_params)
 	if(istype(W, /obj/item/storage/backpack/holding) || istype(W, /obj/item/storage/bag/trash/bluespace))
 		to_chat(user, SPAN_WARNING("The Bluespace interfaces of the two devices conflict and malfunction."))
 		qdel(W)
-		return 1
+		return TRUE
 	return ..()
 
 	//Please don't clutter the parent storage item with stupid hacks.
@@ -459,7 +459,7 @@
 	storage_slots = 5
 	max_w_class = ITEM_SIZE_NORMAL
 	max_storage_space = 15
-	cant_hold = list(/obj/item/storage/backpack/satchel/flat) //muh recursive backpacks
+	contents_banned = list(/obj/item/storage/backpack/satchel/flat)
 	startswith = list(
 		/obj/item/stack/tile/floor,
 		/obj/item/crowbar
@@ -476,11 +476,11 @@
 	anchored = i ? TRUE : FALSE
 	alpha = i ? 128 : initial(alpha)
 
-/obj/item/storage/backpack/satchel/flat/attackby(obj/item/W, mob/user)
+/obj/item/storage/backpack/satchel/flat/use_tool(obj/item/tool, mob/living/user, list/click_params)
 	var/turf/T = get_turf(src)
 	if(hides_under_flooring() && isturf(T) && !T.is_plating())
 		to_chat(user, SPAN_WARNING("You must remove the plating first."))
-		return 1
+		return TRUE
 	return ..()
 
 //ERT backpacks.

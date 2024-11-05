@@ -127,5 +127,17 @@ var/global/const/access_bar = "ACCESS_BAR"
 	desc = "Bar"
 	region = ACCESS_REGION_GENERAL
 
+var/global/const/access_chief_steward = "ACCESS_SIERRA_CHIEF_STEWARD"
+/datum/access/chief_steward
+	id = access_chief_steward
+	desc = "Chief Steward"
+	region = ACCESS_REGION_GENERAL
+
+var/global/const/access_adjutants = "ACCESS_ADJUTANTS"
+/datum/access/adjutants
+	id = access_adjutants
+	desc = "adjutants"
+	region = ACCESS_REGION_COMMAND
+
 /datum/access/network
 	region = ACCESS_REGION_COMMAND

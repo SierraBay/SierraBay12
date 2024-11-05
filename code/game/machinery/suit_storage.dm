@@ -101,7 +101,10 @@
 				dump_everything()
 				qdel(src)
 
-/obj/machinery/suit_storage_unit/attackby(obj/item/I, mob/user)
+/obj/machinery/suit_storage_unit/use_tool(obj/item/I, mob/living/user, list/click_params)
+	if ((. = ..()))
+		return
+
 	if(isScrewdriver(I))
 		if(do_after(user, (I.toolspeed * 5) SECONDS, src, DO_REPAIR_CONSTRUCT))
 			panelopen = !panelopen
@@ -109,7 +112,8 @@
 			to_chat(user, SPAN_NOTICE("You [panelopen ? "open" : "close"] the unit's maintenance panel."))
 			SSnano.update_uis(src)
 			update_icon()
-		 return
+		 return TRUE
+
 	if(isCrowbar(I))
 		if(inoperable() && !islocked && !isopen)
 			to_chat(user, SPAN_NOTICE("You begin prying the unit open."))
@@ -120,7 +124,8 @@
 				update_icon()
 		else if(islocked)
 			to_chat(user, SPAN_WARNING("You can't pry the unit open, it's locked!"))
-		return
+		return TRUE
+
 	TRY_INSERT_SUIT_PIECE(suit, clothing/suit/space)
 	TRY_INSERT_SUIT_PIECE(helmet, clothing/head/helmet/space)
 	TRY_INSERT_SUIT_PIECE(boots, clothing/shoes/magboots)
@@ -128,8 +133,11 @@
 	TRY_INSERT_SUIT_PIECE(mask, clothing/mask)
 	update_icon()
 	SSnano.update_uis(src)
+	return TRUE
 
 /obj/machinery/suit_storage_unit/proc/move_target_inside(mob/target, mob/user)
+	if (!user_can_move_target_inside(target, user))
+		return
 	visible_message(SPAN_WARNING("\The [user] starts putting \the [target] into \the [src]."))
 	add_fingerprint(user)
 	if(do_after(user, 2 SECONDS, src, DO_PUBLIC_UNIQUE))
@@ -335,11 +343,11 @@
 	update_icon()
 	SSnano.update_uis(src)
 
-	var/datum/callback/uvburn = new Callback(src, .proc/uv_burn)
+	var/datum/callback/uvburn = new Callback(src, PROC_REF(uv_burn))
 	addtimer(uvburn, 5 SECONDS)
 	addtimer(uvburn, 10 SECONDS)
 	addtimer(uvburn, 15 SECONDS)
-	addtimer(new Callback(src, .proc/uv_finish), 20 SECONDS)
+	addtimer(new Callback(src, PROC_REF(uv_finish)), 20 SECONDS)
 
 /obj/machinery/suit_storage_unit/proc/uv_burn()
 	if(occupant)

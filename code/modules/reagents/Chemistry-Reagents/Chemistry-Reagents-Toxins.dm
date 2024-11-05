@@ -75,39 +75,60 @@
 
 /datum/reagent/toxin/amaspores
 	name = "Amaspores"
-	description = "The secondary component to amatoxin poisoning, remaining dormant for a time before causing rapid organ and tissue decay."
+	description = "The secondary component to amatoxin poisoning, remaining dormant for a time before causing the victim to rapidly vomit blood from the mouth, causing massive blood loss."
 	taste_description = "dusty dirt"
 	reagent_state = LIQUID
-	metabolism = REM * 4 // Extremely quick to act once the amatoxin has left the body
+	var/next_symptom = 10
+	metabolism = REM
 	color = "#330e00"
 	strength = 30
 
 /datum/reagent/toxin/amaspores/affect_blood(mob/living/carbon/M, removed)
+	var/mob/living/carbon/human/target = M
 	if (IS_METABOLICALLY_INERT(M))
 		return
 
 	if(M.chem_doses[/datum/reagent/toxin/amatoxin] > 0)
 		M.reagents.add_reagent(/datum/reagent/toxin/amaspores, metabolism) // The spores lay dormant for as long as any traces of amatoxin remain
-		if (prob(5))
-			to_chat(M, SPAN_DANGER("Everything itches, how uncomfortable!"))
-		if (prob(10))
-			to_chat(M, SPAN_WARNING("Your eyes are watering, it's hard to see!"))
-			M.eye_blurry = max(M.eye_blurry, 10)
-		if (prob(10))
-			to_chat(M, SPAN_DANGER("Your throat itches uncomfortably!"))
-			M.custom_emote(2, "coughs!")
+		next_symptom -= 1
+		//completely reworks symptoms to be much less obvious and in your face, and not happen every single second.
+		if(next_symptom == 0)
+			//mimics symptoms of high exertion.
+			if(prob(25))
+				M.add_chemical_effect(CE_PULSE, 3)
+			//mimics random pains that can easily be brushed off.
+			if(prob(20))
+				var/obj/item/organ/external/pained_limb = target.get_organ(pick(BP_CHEST))
+				pained_limb.add_pain(10)
+			//mimics symptoms of smoking.
+			if(prob(25))
+				to_chat(M, SPAN_NOTICE("You feel faintly sore in the throat."))
+			next_symptom = 10
 		return
-
+	//this is the stage that kicks in faster, victim starts to rapidly vomit blood and the spores tear their chest open from the inside.
 	M.add_chemical_effect(CE_SLOWDOWN, 1)
-
+	next_symptom -= 1
+	if(next_symptom < 1)
+		var/obj/item/organ/external/organ = target.get_organ(BP_CHEST)
+		organ.take_external_damage(rand(5,10), 0, EMPTY_BITFIELD, "Amaspore Growth")
+		if(target.get_blood_volume() == 0)
+			return
+		target.remove_blood(rand(20,30))
+		to_chat(M, SPAN_DANGER("You can taste blood in your mouth."))
+		M.Stun(1)
+		M.visible_message(SPAN_DANGER("\The [M] violently vomits blood!"))
+		playsound(M.loc, 'sound/effects/splat.ogg', 50, 1)
+		if(istype(M.loc, /turf/simulated))
+			var/obj/decal/cleanable/blood/blood_vomit = new /obj/decal/cleanable/blood(M.loc)
+			blood_vomit.update_icon()
+		next_symptom = 5
 	if (prob(15))
 		M.Weaken(5)
 		M.add_chemical_effect(CE_VOICELOSS, 5)
 	if (prob(30))
 		M.eye_blurry = max(M.eye_blurry, 10)
 
-	M.take_organ_damage(3 * removed, 0, ORGAN_DAMAGE_FLESH_ONLY)
-	M.adjustToxLoss(5 * removed, 0, ORGAN_DAMAGE_FLESH_ONLY)
+
 
 /datum/reagent/toxin/carpotoxin
 	name = "Carpotoxin"
@@ -142,7 +163,7 @@
 
 /datum/reagent/toxin/venom/affect_blood(mob/living/carbon/M, removed)
 	if(prob(volume*2))
-		M.confused = max(M.confused, 3)
+		M.set_confused(3)
 	..()
 
 /datum/reagent/toxin/cryotoxin
@@ -341,7 +362,7 @@
 
 /datum/reagent/toxin/taxine/affect_blood(mob/living/carbon/M, removed)
 	..()
-	M.confused += 1.5
+	M.mod_confused(2)
 
 /datum/reagent/toxin/taxine/overdose(mob/living/carbon/M)
 	..()
@@ -447,6 +468,14 @@
 /datum/reagent/toxin/fertilizer/robustharvest
 	name = "Robust Harvest"
 
+/datum/reagent/toxin/fertilizer/potash
+	name = "Potassium Nitrate"
+	description = "Also known as Saltpetre. Useful as a fertilizer."
+	taste_description = "sharp salt"
+	reagent_state = SOLID
+	color = "#c7beb9"
+	value = 0.9
+
 /datum/reagent/toxin/plantbgone
 	name = "Plant-B-Gone"
 	description = "A harmful toxic mixture to kill plantlife. Do not ingest!"
@@ -459,13 +488,13 @@
 /datum/reagent/toxin/plantbgone/touch_turf(turf/T)
 	if(istype(T, /turf/simulated/wall))
 		var/turf/simulated/wall/W = T
-		if(locate(/obj/effect/overlay/wallrot) in W)
-			for(var/obj/effect/overlay/wallrot/E in W)
+		if(locate(/obj/overlay/wallrot) in W)
+			for(var/obj/overlay/wallrot/E in W)
 				qdel(E)
 			W.visible_message(SPAN_NOTICE("The fungi are completely dissolved by the solution!"))
 
 /datum/reagent/toxin/plantbgone/touch_obj(obj/O, volume)
-	if(istype(O, /obj/effect/vine))
+	if(istype(O, /obj/vine))
 		qdel(O)
 
 /datum/reagent/toxin/plantbgone/affect_blood(mob/living/carbon/M, removed)
@@ -643,7 +672,7 @@
 	M.add_chemical_effect(CE_SEDATE, 1)
 
 	if(M.chem_doses[type] <= metabolism * threshold)
-		M.confused += 2
+		M.mod_confused(2)
 		M.drowsyness += 2
 
 	if(M.chem_doses[type] < 2 * threshold)
@@ -683,7 +712,7 @@
 	var/threshold = 2 + (0.4 * GET_TRAIT_LEVEL(M, /singleton/trait/boon/clear_mind))
 
 	if(M.chem_doses[type] >= metabolism * threshold * 0.5)
-		M.confused = max(M.confused, 2)
+		M.set_confused(2)
 		M.add_chemical_effect(CE_VOICELOSS, 1)
 	if(M.chem_doses[type] > threshold * 0.5)
 		M.make_dizzy(3)
@@ -714,7 +743,7 @@
 	M.add_chemical_effect(M.add_chemical_effect(CE_SLOWDOWN, 1))
 
 	if(prob(80))
-		M.confused = max(M.confused, 10)
+		M.set_confused(10)
 	if(prob(50))
 		M.drowsyness = max(M.drowsyness, 3)
 	if(prob(10))
@@ -848,7 +877,7 @@
 	var/drug_strength = 4 - (0.8 * GET_TRAIT_LEVEL(M, /singleton/trait/boon/clear_mind))
 
 	M.make_dizzy(drug_strength)
-	M.confused = max(M.confused, drug_strength * 5)
+	M.set_confused(drug_strength * 5)
 	..()
 
 /datum/reagent/drugs/mindbreaker
@@ -1154,7 +1183,7 @@
 	if(istype(M))
 		for(var/obj/item/organ/external/E in M.organs)
 			if(LAZYLEN(E.implants))
-				for(var/obj/effect/spider/spider in E.implants)
+				for(var/obj/spider/spider in E.implants)
 					if(prob(25))
 						E.implants -= spider
 						M.visible_message(SPAN_NOTICE("The dying form of \a [spider] emerges from inside \the [M]'s [E.name]."))

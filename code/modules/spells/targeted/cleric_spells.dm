@@ -166,19 +166,19 @@
 	amt_dam_tox = -100
 	amt_dam_robo = -1000
 	hud_state = "trance"
-	var/obj/effect/effect
+	var/obj/effect
 
 /spell/targeted/heal_target/trance/cast(list/targets, mob/user)
 	for(var/t in targets)
 		var/mob/living/L = t
 		var/turf/T = get_turf(L)
-		effect = new /obj/effect/rift(T)
+		effect = new /obj/rift(T)
 		effect.color = "f0e68c"
 		L.forceMove(effect)
 		var/time = (L.getBruteLoss() + L.getFireLoss()) * 20
 		L.status_flags &= GODMODE
 		to_chat(L,SPAN_NOTICE("You will be in stasis for [time/10] second\s."))
-		addtimer(new Callback(src,.proc/cancel_rift),time)
+		addtimer(new Callback(src,PROC_REF(cancel_rift)),time)
 
 /spell/targeted/heal_target/trance/Destroy()
 	cancel_rift()
@@ -193,7 +193,7 @@
 		charge_max += 300
 		QDEL_NULL(effect)
 
-/obj/effect/rift
+/obj/rift
 	name = "rift"
 	desc = "a tear in space and time."
 	icon = 'icons/obj/cult.dmi'
@@ -202,7 +202,7 @@
 	anchored = TRUE
 	density = FALSE
 
-/obj/effect/rift/Destroy()
+/obj/rift/Destroy()
 	for(var/o in contents)
 		var/atom/movable/M = o
 		M.dropInto(loc)
@@ -232,7 +232,7 @@
 				should_wait = 0
 				break //Don't need to check anymore.
 		if(should_wait)
-			addtimer(new Callback(src,.proc/check_for_revoke,targets), 30 SECONDS)
+			addtimer(new Callback(src,PROC_REF(check_for_revoke),targets), 30 SECONDS)
 		else
 			revoke_spells()
 

@@ -177,6 +177,9 @@
 	var/adir = get_dir(assailant, affecting)
 
 	if(same_tile)
+		// [SIERRA-ADD] - SSINPUT
+		affecting.set_glide_size(assailant.glide_size)
+		// [/SIERRA-ADD]
 		affecting.forceMove(assailant.loc)
 		adir = assailant.dir
 		affecting.set_dir(assailant.dir)
@@ -290,7 +293,7 @@
 
 	if(affecting.incapacitated(INCAPACITATION_ALL))
 		break_strength--
-	if(affecting.confused)
+	if(affecting.is_confused())
 		break_strength--
 	if(affecting.eye_blind)
 		break_strength--
@@ -303,7 +306,9 @@
 	if(shock >= 50)
 		break_strength--
 
-	if(assailant.confused)
+	if((MUTATION_FERAL in affecting.mutations))
+		break_strength++
+	if(assailant.is_confused())
 		break_strength++
 	if(assailant.eye_blind)
 		break_strength++

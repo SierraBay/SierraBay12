@@ -29,7 +29,7 @@
 	)
 	spawn_weight = 0.67
 
-/obj/effect/submap_landmark/joinable_submap/scavver_gantry
+/obj/submap_landmark/joinable_submap/scavver_gantry
 	name =  "Salvage Gantry"
 	archetype = /singleton/submap_archetype/derelict/scavver_gantry
 
@@ -42,7 +42,7 @@
 		/datum/job/submap/scavver_engineer
 	)
 
-/obj/effect/overmap/visitable/ship/scavver_gantry
+/obj/overmap/visitable/ship/scavver_gantry
 	name = "Unknown Vessel"
 	desc = "Sensor array detects a medium-sized vessel of irregular shape. Vessel origin is unidentifiable."
 	vessel_mass = 3600
@@ -67,9 +67,8 @@
 		"Desperado" = list("nav_gantry_desperado")
 	)
 
-/obj/item/mech_component/sensors/light/salvage/prebuild()
-  ..()
-  software.installed_software = list(MECH_SOFTWARE_UTILITY, MECH_SOFTWARE_ENGINEERING)
+/obj/item/mech_component/sensors/light/salvage
+	prebuilt_software = list(/obj/item/circuitboard/exosystem/utility, /obj/item/circuitboard/exosystem/engineering)
 
 /mob/living/exosuit/premade/salvage_gantry
 	name = "\improper Carrion Crawler"

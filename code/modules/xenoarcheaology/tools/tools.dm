@@ -17,7 +17,7 @@
 	storage_slots = 50
 	max_storage_space = 200
 	max_w_class = ITEM_SIZE_NORMAL
-	can_hold = list(/obj/item/fossil)
+	contents_allowed = list(/obj/item/fossil)
 
 /obj/item/storage/box/samplebags
 	name = "sample bag box"
@@ -57,7 +57,7 @@
 		var/nearestSimpleTargetDist = -1
 		var/turf/cur_turf = get_turf(src)
 
-		for (var/turf/simulated/mineral/T as anything in GLOB.xeno_artifact_turfs)
+		for (var/turf/simulated/mineral/T as anything in SSxenoarch.xeno_artifact_turfs)
 			if(T.density && T.artifact_find)
 				if(T.z == cur_turf.z)
 					var/cur_dist = get_dist(cur_turf, T) * 2
@@ -65,16 +65,16 @@
 						nearestTargetDist = cur_dist + rand() * 2 - 1
 						nearestTargetId = T.artifact_find.artifact_id
 			else
-				GLOB.xeno_artifact_turfs -= T
+				SSxenoarch.xeno_artifact_turfs -= T
 
-		for(var/turf/simulated/mineral/T as anything in GLOB.xeno_digsite_turfs)
+		for(var/turf/simulated/mineral/T as anything in SSxenoarch.xeno_artifact_turfs)
 			if(T.density && T.finds && length(T.finds))
 				if(T.z == cur_turf.z)
 					var/cur_dist = get_dist(cur_turf, T) * 2
 					if(nearestSimpleTargetDist < 0 || cur_dist < nearestSimpleTargetDist)
 						nearestSimpleTargetDist = cur_dist + rand() * 2 - 1
 			else
-				GLOB.xeno_digsite_turfs -= T
+				SSxenoarch.xeno_digsite_turfs -= T
 
 		if(nearestTargetDist >= 0)
 			to_chat(user, SPAN_NOTICE("Exotic energy detected on wavelength '[nearestTargetId]' in a radius of [nearestTargetDist]m[nearestSimpleTargetDist > 0 ? "; small anomaly detected in a radius of [nearestSimpleTargetDist]m" : ""]"))

@@ -8,8 +8,10 @@
 	supervisors = "Директору Исследований"
 	selection_color = "#633d63"
 	economic_power = 12
+
 	minimal_player_age = 10
-	ideal_character_age = 50
+	minimum_character_age = list(SPECIES_HUMAN = 27)
+	ideal_character_age = 30
 	alt_titles = list(
 			"Research Supervisor"
 		)
@@ -20,7 +22,8 @@
 	access = list(
 			access_tox,					access_tox_storage,	access_research,	access_mining,		access_mining_office,
 			access_mining_station,		access_xenobiology,	access_xenoarch,	access_robotics,	access_guppy_helm,
-			access_expedition_shuttle,	access_guppy,		access_hangar,		access_petrov,		access_petrov_helm
+			access_expedition_shuttle,	access_guppy,		access_hangar,		access_petrov,		access_petrov_helm,
+			access_research_storage
 		)
 
 
@@ -58,7 +61,8 @@
 	spawn_positions = 6
 	supervisors = "Директору Исследований и Старшему Исследователю"
 	economic_power = 10
-	ideal_character_age = 45
+	minimum_character_age = list(SPECIES_HUMAN = 25)
+	ideal_character_age = 27
 	alt_titles = list(
 			"Xenoarcheologist",
 			"Anomalist",
@@ -92,7 +96,7 @@
 	access = list(
 			access_tox,				access_tox_storage,			access_research,	access_petrov,		access_petrov_helm,
 			access_mining_office,	access_mining_station,		access_xenobiology,	access_guppy_helm, 	access_hangar,
-			access_xenoarch,		access_expedition_shuttle,	access_guppy
+			access_xenoarch,		access_expedition_shuttle,	access_guppy, access_research_storage
 		)
 
 
@@ -114,6 +118,8 @@
 	supervisors = "Директору Исследований и Старшему Исследователю"
 	selection_color = "#633d63"
 	economic_power = 6
+	minimum_character_age = list(SPECIES_HUMAN = 25)
+	ideal_character_age = 27
 	alt_titles = list(
 			"Biomechanical Engineer",
 			"Exosuit Technician",
@@ -152,7 +158,8 @@
 	access = list(
 			access_robotics,
 			access_research,
-			access_tech_storage
+			access_tech_storage,
+			access_research_storage
 		)
 
 
@@ -170,6 +177,8 @@
 	supervisors = "Директору Исследований и остальному научному персоналу"
 	selection_color = "#633d63"
 	economic_power = 3
+	minimum_character_age = list(SPECIES_HUMAN = 18)
+	ideal_character_age = 24
 	ideal_character_age = 30
 	alt_titles = list(
 			"Testing Assistant" = /singleton/hierarchy/outfit/job/sierra/crew/research/assist/testsubject,
@@ -198,7 +207,8 @@
 	access = list(
 			access_research,	access_mining_office,
 			access_petrov,		access_expedition_shuttle,
-			access_guppy,		access_hangar
+			access_guppy,		access_hangar,
+			access_research_storage
 		)
 
 

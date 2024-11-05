@@ -3,7 +3,9 @@
 	w_class = ITEM_SIZE_NO_CONTAINER
 	layer = STRUCTURE_LAYER
 
-	var/breakable
+	health_flags = HEALTH_FLAG_STRUCTURE
+
+	var/fragile
 	var/parts
 	var/list/connections = list("0", "0", "0", "0")
 	var/list/other_connections = list("0", "0", "0", "0")
@@ -12,10 +14,11 @@
 	var/material/material = null
 	var/footstep_type
 	var/mob_offset = 0 //used for on_structure_offset mob animation
+	var/breakout //if someone is currently breaking out
 
 /obj/structure/damage_health(damage, damage_type, damage_flags, severity, skip_can_damage_check)
 	if (damage && HAS_FLAGS(damage_flags, DAMAGE_FLAG_TURF_BREAKER))
-		if (breakable)
+		if (fragile)
 			return kill_health()
 		damage = max(damage, 10)
 	..()
@@ -61,25 +64,6 @@
 
 	return ..()
 
-
-/obj/structure/attack_hand(mob/user)
-	..()
-	if(MUTATION_FERAL in user.mutations)
-		attack_generic(user,10,"smashes")
-		user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN*2)
-		attack_animation(user)
-		playsound(loc, 'sound/weapons/tablehit1.ogg', 40, 1)
-	if(breakable)
-		if(MUTATION_HULK in user.mutations)
-			user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
-			attack_generic(user,1,"smashes")
-		else if(istype(user,/mob/living/carbon/human))
-			var/mob/living/carbon/human/H = user
-			if(H.species.can_shred(user))
-				attack_generic(user,1,"slices")
-	return ..()
-
-
 /obj/structure/get_interactions_info()
 	. = ..()
 	.[CODEX_INTERACTION_GRAB_AGGRESSIVE] = "<p>On harm intent, slams the victim against \the [initial(name)], causing damage to both the victim and object.</p>"
@@ -118,7 +102,10 @@
 		if (occupied)
 			USE_FEEDBACK_GRAB_FAILURE("There's \a [occupied] blocking \the [src].")
 			return TRUE
-		if (!do_after(grab.assailant, 3 SECONDS, grab.affecting, DO_PUBLIC_UNIQUE) || !grab.use_sanity_check(src))
+		// sierra edit
+		// original: if (!do_after(grab.assailant, 3 SECONDS, grab.affecting, DO_PUBLIC_UNIQUE) || !grab.use_sanity_check(src))
+		if (!do_after(grab.assailant, grab.affecting, DO_PUBLIC_UNIQUE) || !grab.use_sanity_check(src))
+		// Edit end
 			return TRUE
 		occupied = turf_is_crowded()
 		if (occupied)
@@ -135,6 +122,15 @@
 
 	return ..()
 
+/obj/structure/proc/dump_contents()
+	for(var/mob/M in src)
+		M.dropInto(loc)
+		if(M.client)
+			M.client.eye = M.client.mob
+			M.client.perspective = MOB_PERSPECTIVE
+
+	for(var/atom/movable/AM in src)
+		AM.dropInto(loc)
 
 /obj/structure/proc/can_visually_connect()
 	return anchored
@@ -143,7 +139,7 @@
 	return istype(S, src)
 
 /obj/structure/proc/refresh_neighbors()
-	for(var/thing in RANGE_TURFS(src, 1))
+	for(var/thing as anything in RANGE_TURFS(src, 1))
 		var/turf/T = thing
 		T.update_icon()
 

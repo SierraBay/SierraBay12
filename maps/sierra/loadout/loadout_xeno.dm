@@ -6,7 +6,7 @@
 	sort_category = "Xenowear"
 	flags = 0
 	whitelisted = list(SPECIES_UNATHI)
-	custom_setup_proc = /obj/item/passport/proc/set_info
+	custom_setup_proc = TYPE_PROC_REF(/obj/item/passport, set_info)
 	cost = 0
 
 // Skrell clothing
@@ -27,3 +27,10 @@
 
 /datum/gear/suit/lab_xyn_machine
 	allowed_branches = list(/datum/mil_branch/contractor)
+
+/datum/gear/gloves/nabber
+	display_name = "(GAS) Three-fingered insulated gloves"
+	path = /obj/item/clothing/gloves/nabber
+	sort_category = "Xenowear"
+	whitelisted = list(SPECIES_NABBER)
+	cost = 3

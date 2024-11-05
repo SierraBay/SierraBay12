@@ -23,12 +23,12 @@
 	else
 		to_chat(user, (distance == 0 ? "It has [get_fuel()] [welding_resource] remaining. " : "") + "[cell] is attached.")
 
-/obj/item/weldingtool/electric/afterattack(obj/O, mob/user, proximity)
-	if(proximity && istype(O, /obj/structure/reagent_dispensers/fueltank))
+/obj/item/weldingtool/electric/use_after(obj/O, mob/living/user)
+	if(istype(O, /obj/structure/reagent_dispensers/fueltank))
 		if(!welding)
 			to_chat(user, SPAN_WARNING("\The [src] runs on an internal charge and does not need to be refuelled."))
-		return
-	. = ..()
+		return TRUE
+	return ..()
 
 /obj/item/weldingtool/electric/get_cell()
 	if(cell)
@@ -45,9 +45,9 @@
 	var/obj/item/cell/cell = get_cell()
 	return cell ? cell.charge : 0
 
-/obj/item/weldingtool/electric/attackby(obj/item/W, mob/user)
+/obj/item/weldingtool/electric/use_tool(obj/item/W, mob/living/user, list/click_params)
 	if(istype(W,/obj/item/stack/material/rods) || istype(W, /obj/item/welder_tank))
-		return
+		return ..()
 	if(isScrewdriver(W))
 		if(cell)
 			cell.dropInto(get_turf(src))
@@ -58,8 +58,8 @@
 			update_icon()
 		else
 			to_chat(user, SPAN_WARNING("\The [src] has no cell installed."))
-		return
-	else if(istype(W, /obj/item/cell))
+		return TRUE
+	if(istype(W, /obj/item/cell))
 		if(cell)
 			to_chat(user, SPAN_WARNING("\The [src] already has a cell installed."))
 		else if(user.unEquip(W))
@@ -67,8 +67,8 @@
 			cell.forceMove(src)
 			to_chat(user, SPAN_NOTICE("You slot \the [cell] into \the [src]."))
 			update_icon()
-		return
-	. = ..()
+		return TRUE
+	return ..()
 
 /obj/item/weldingtool/electric/burn_fuel(amount)
 	spend_charge(amount * fuel_cost_multiplier)

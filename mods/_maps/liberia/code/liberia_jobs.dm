@@ -14,7 +14,7 @@
 	create_record = FALSE
 	outfit_type = /singleton/hierarchy/outfit/job/liberia/merchant/leader
 	whitelisted_species = null
-	blacklisted_species = list(SPECIES_VOX, SPECIES_ALIEN, SPECIES_GOLEM, ) // SPECIES_MANTID_GYNE, SPECIES_MANTID_ALATE, SPECIES_MONARCH_WORKER, SPECIES_MONARCH_QUEEN Not yet... not yet...
+	blacklisted_species = list(SPECIES_VOX, SPECIES_ALIEN, SPECIES_GOLEM, SPECIES_ADHERENT, SPECIES_NABBER) // SPECIES_MANTID_GYNE, SPECIES_MANTID_ALATE, SPECIES_MONARCH_WORKER, SPECIES_MONARCH_QUEEN Not yet... not yet...
 
 	latejoin_at_spawnpoints = TRUE
 
@@ -78,8 +78,6 @@
 		SKILL_COMBAT  = SKILL_MAX,
 	    SKILL_WEAPONS = SKILL_MAX
 	)
-	// SIERRA TODO: required_role
-	// required_role = list("Merchant")
 
 	give_psionic_implant_on_join = FALSE
 
@@ -91,19 +89,19 @@
 	. = ..()
 
 // Spawn points.
-/obj/effect/submap_landmark/spawnpoint/liberia
+/obj/submap_landmark/spawnpoint/liberia
 	name = "Merchant"
 
-/obj/effect/submap_landmark/spawnpoint/liberia/trainee
+/obj/submap_landmark/spawnpoint/liberia/trainee
 	name = "Merchant Assistant"
 
-/obj/effect/submap_landmark/spawnpoint/liberia/security
+/obj/submap_landmark/spawnpoint/liberia/security
  	name = "Merchant Security"
 
-/obj/effect/submap_landmark/spawnpoint/liberia/engineer
+/obj/submap_landmark/spawnpoint/liberia/engineer
  	name = "Merchant Engineer"
 
-/obj/effect/submap_landmark/spawnpoint/liberia/doctor
+/obj/submap_landmark/spawnpoint/liberia/doctor
  	name = "Merchant Medical"
 
 /singleton/hierarchy/outfit/job/liberia/merchant

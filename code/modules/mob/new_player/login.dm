@@ -4,7 +4,7 @@
 	if(config.usewhitelist_database && config.overflow_server_url && !whitelist_check())
 		to_target(src, link(config.overflow_server_url))
 	// [/SIERRA-ADD]
-	// [SIERRA-ADD] - Statusbar
+	// [SIERRA-ADD] - STATUSBAR
 	winset(client, "mapwindow.statusbar", "is-visible=false")
 	// [/SIERRA-ADD]
 	if (config.motd)
@@ -23,11 +23,11 @@
 
 	// Add to player list if missing
 	if (!GLOB.player_list.Find(src))
-		ADD_SORTED(GLOB.player_list, src, /proc/cmp_mob_key)
+		ADD_SORTED(GLOB.player_list, src, GLOBAL_PROC_REF(cmp_mob_key))
 
 	new_player_panel()
 
-	CreateRenderers()
+	AddDefaultRenderers()
 
 	if(!SScharacter_setup.initialized)
 		SScharacter_setup.newplayers_requiring_init += src

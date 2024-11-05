@@ -22,20 +22,19 @@
 	if(written_text)
 		icon_state = "[icon_state]_writing"
 
-/obj/item/sticky_pad/attackby(obj/item/thing, mob/user)
+/obj/item/sticky_pad/use_tool(obj/item/thing, mob/living/user, list/click_params)
 	if(istype(thing, /obj/item/pen))
-
 		if(jobban_isbanned(user, "Graffiti"))
 			to_chat(user, SPAN_WARNING("You are banned from leaving persistent information across rounds."))
-			return
+			return TRUE
 
 		var/writing_space = MAX_MESSAGE_LEN - length(written_text)
 		if(writing_space <= 0)
 			to_chat(user, SPAN_WARNING("There is no room left on \the [src]."))
-			return
+			return TRUE
 		var/text = sanitizeSafe(input("What would you like to write?") as text, writing_space)
 		if(!text || thing.loc != user || (!Adjacent(user) && loc != user) || user.incapacitated())
-			return
+			return TRUE
 		user.visible_message(SPAN_NOTICE("\The [user] jots a note down on \the [src]."))
 		written_by = user.ckey
 		if(written_text)
@@ -43,8 +42,8 @@
 		else
 			written_text = text
 		update_icon()
-		return
-	..()
+		return TRUE
+	return ..()
 
 /obj/item/sticky_pad/examine(mob/user)
 	. = ..()
@@ -81,7 +80,7 @@
 
 /obj/item/paper/sticky/Initialize()
 	. = ..()
-	GLOB.moved_event.register(src, src, /obj/item/paper/sticky/proc/reset_persistence_tracking)
+	GLOB.moved_event.register(src, src, TYPE_PROC_REF(/obj/item/paper/sticky, reset_persistence_tracking))
 
 /obj/item/paper/sticky/proc/reset_persistence_tracking()
 	SSpersistence.forget_value(src, /datum/persistent/paper/sticky)
@@ -106,10 +105,9 @@
 /obj/item/paper/sticky/can_bundle()
 	return FALSE // Would otherwise lead to buggy interaction
 
-/obj/item/paper/sticky/afterattack(A, mob/user, flag, params)
-
-	if(!in_range(user, A) || istype(A, /obj/machinery/door) || istype(A, /obj/item/storage) || icon_state == "scrap")
-		return
+/obj/item/paper/sticky/use_after(atom/A, mob/living/user, click_parameters)
+	if(!in_range(user, A) || istype(A, /obj/machinery/door) || icon_state == "scrap")
+		return FALSE
 
 	var/turf/target_turf = get_turf(A)
 	var/turf/source_turf = get_turf(user)
@@ -119,21 +117,21 @@
 		dir_offset = get_dir(source_turf, target_turf)
 		if(!(dir_offset in GLOB.cardinal))
 			to_chat(user, SPAN_WARNING("You cannot reach that from here."))
-			return
+			return TRUE
 
 	if(user.unEquip(src, source_turf))
 		SSpersistence.track_value(src, /datum/persistent/paper/sticky)
-		if(params)
-			var/list/mouse_control = params2list(params)
-			if(mouse_control["icon-x"])
-				pixel_x = text2num(mouse_control["icon-x"]) - 16
+		if(click_parameters)
+			if(click_parameters["icon-x"])
+				pixel_x = text2num(click_parameters["icon-x"]) - 16
 				if(dir_offset & EAST)
 					pixel_x += 32
 				else if(dir_offset & WEST)
 					pixel_x -= 32
-			if(mouse_control["icon-y"])
-				pixel_y = text2num(mouse_control["icon-y"]) - 16
+			if(click_parameters["icon-y"])
+				pixel_y = text2num(click_parameters["icon-y"]) - 16
 				if(dir_offset & NORTH)
 					pixel_y += 32
 				else if(dir_offset & SOUTH)
 					pixel_y -= 32
+		return TRUE

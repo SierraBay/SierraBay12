@@ -129,7 +129,7 @@
 
 	// Energy Blade, Psiblade
 	if (istype(weapon, /obj/item/melee/energy/blade) || istype(weapon, /obj/item/psychic_power/psiblade/master/grand/paramount))
-		var/datum/effect/effect/system/spark_spread/spark_system = new(src)
+		var/datum/effect/spark_spread/spark_system = new(src)
 		spark_system.set_up(5, EMPTY_BITFIELD, loc)
 		spark_system.start()
 		playsound(loc, 'sound/weapons/blade1.ogg', 50, TRUE)
@@ -241,7 +241,7 @@
 
 /obj/structure/table/MouseDrop_T(atom/dropped, mob/user)
 	// Place held objects on table
-	if (user.IsHolding(dropped))
+	if (isitem(dropped) && user.IsHolding(dropped))
 		if (!user.use_sanity_check(src, dropped, SANITY_CHECK_DEFAULT | SANITY_CHECK_TOOL_UNEQUIP))
 			return TRUE
 		user.unEquip(dropped, get_turf(src))

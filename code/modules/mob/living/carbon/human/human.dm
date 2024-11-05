@@ -173,8 +173,7 @@
 	if(user.incapacitated()  || !user.Adjacent(src) || !user.IsAdvancedToolUser())
 		return
 
-	user.set_machine(src)
-	var/dat = "<B><HR>[FONT_LARGE(name)]</B><BR><HR>"
+	var/dat = ""
 
 	for(var/entry in species.hud.gear)
 		var/list/slot_ref = species.hud.gear[entry]
@@ -217,10 +216,10 @@
 		dat += "<BR><a href='?src=\ref[src];item=\ref[UW]'>Remove \the [UW]</a>"
 
 	dat += "<BR><A href='?src=\ref[src];refresh=1'>Refresh</A>"
-	dat += "<BR><A href='?src=\ref[user];mach_close=mob[name]'>Close</A>"
 
-	show_browser(user, dat, text("window=mob[name];size=340x540"))
-	onclose(user, "mob[name]")
+	var/datum/browser/popup = new(user, "mob[name]", name, 340, 540)
+	popup.set_content(dat)
+	popup.open()
 	return
 
 // called when something steps onto a human
@@ -228,6 +227,9 @@
 /mob/living/carbon/human/Crossed(atom/movable/AM)
 	if(istype(AM, /mob/living/bot/mulebot))
 		var/mob/living/bot/mulebot/MB = AM
+		MB.runOver(src)
+	if(istype(AM, /mob/living/exosuit))
+		var/mob/living/exosuit/MB = AM
 		MB.runOver(src)
 
 // Get rank from ID, ID inside PDA, PDA, ID in wallet, etc.
@@ -614,6 +616,7 @@
 	var/obj/item/organ/internal/cell/potato = internal_organs_by_name[BP_CELL]
 	if(potato && potato.cell)
 		stat("Battery charge:", "[potato.get_charge()]/[potato.cell.maxcharge]")
+		stat("Operating temperature:", "[round(bodytemperature-T0C)]&deg;C")
 
 	if(back && istype(back,/obj/item/rig))
 		var/obj/item/rig/suit = back
@@ -649,8 +652,9 @@
 	return species.name
 
 /mob/living/carbon/human/proc/play_xylophone()
+	var/datum/pronouns/pronouns = choose_from_pronouns()
 	if(!src.xylophone)
-		visible_message(SPAN_WARNING("\The [src] begins playing \his ribcage like a xylophone. It's quite spooky."),SPAN_NOTICE("You begin to play a spooky refrain on your ribcage."),SPAN_WARNING("You hear a spooky xylophone melody."))
+		visible_message(SPAN_WARNING("\The [src] begins playing [pronouns.his] ribcage like a xylophone. It's quite spooky."),SPAN_NOTICE("You begin to play a spooky refrain on your ribcage."),SPAN_WARNING("You hear a spooky xylophone melody."))
 		var/song = pick('sound/effects/xylophone1.ogg','sound/effects/xylophone2.ogg','sound/effects/xylophone3.ogg')
 		playsound(loc, song, 50, 1, -1)
 		xylophone = 1
@@ -722,7 +726,7 @@
 	visible_message(SPAN_DANGER("\The [src] throws up!"),SPAN_DANGER("You throw up!"))
 	playsound(loc, 'sound/effects/splat.ogg', 50, 1)
 	if(istype(location, /turf/simulated))
-		var/obj/effect/decal/cleanable/vomit/splat = new /obj/effect/decal/cleanable/vomit(location)
+		var/obj/decal/cleanable/vomit/splat = new /obj/decal/cleanable/vomit(location)
 		if(stomach.ingested.total_volume)
 			stomach.ingested.trans_to_obj(splat, min(15, stomach.ingested.total_volume))
 		handle_additional_vomit_reagents(splat)
@@ -982,6 +986,7 @@
 			organ.gunshot_residue = null
 
 	if(clean_feet && !shoes)
+		track_blood = 0
 		feet_blood_color = null
 		feet_blood_DNA = null
 		update_inv_shoes(1)
@@ -1072,27 +1077,28 @@
 	set desc = "Approximately count somebody's pulse. Requires you to stand still at least 6 seconds."
 	set src in view(1)
 	var/self = 0
+	var/datum/pronouns/pronouns = usr.choose_from_pronouns()
 
 	if(usr.stat || usr.restrained() || !isliving(usr)) return
 
 	if(usr == src)
 		self = 1
 	if(!self)
-		usr.visible_message(SPAN_NOTICE("[usr] kneels down, puts \his hand on [src]'s wrist and begins counting their pulse."),\
-		"You begin counting [src]'s pulse")
+		usr.visible_message(SPAN_NOTICE("\The [usr] kneels down, puts [pronouns.his] hand on \the [src]'s wrist and begins counting their pulse."),\
+		"You begin counting \the [src]'s pulse")
 	else
-		usr.visible_message(SPAN_NOTICE("[usr] begins counting their pulse."),\
+		usr.visible_message(SPAN_NOTICE("\The [usr] begins counting [pronouns.his] pulse."),\
 		"You begin counting your pulse.")
 
 	if (!pulse() || status_flags & FAKEDEATH)
-		to_chat(usr, SPAN_DANGER("[src] has no pulse!"))
+		to_chat(usr, SPAN_DANGER("\The [src] has no pulse!"))
 		return
 	else
-		to_chat(usr, SPAN_NOTICE("[self ? "You have a" : "[src] has a"] pulse! Counting..."))
+		to_chat(usr, SPAN_NOTICE("[self ? "You have a" : "\The [src] has a"] pulse! Counting..."))
 
 	to_chat(usr, "You must[self ? "" : " both"] remain still until counting is finished.")
 	if(do_after(usr, 6 SECONDS, src, DO_DEFAULT | DO_USER_UNIQUE_ACT | DO_PUBLIC_PROGRESS))
-		var/message = SPAN_NOTICE("[self ? "Your" : "[src]'s"] pulse is [src.get_pulse(GETPULSE_HAND)].")
+		var/message = SPAN_NOTICE("[self ? "Your" : "\The [src]'s"] pulse is [src.get_pulse(GETPULSE_HAND)].")
 		to_chat(usr, message)
 	else
 		to_chat(usr, SPAN_WARNING("You failed to check the pulse. Try again."))
@@ -1114,6 +1120,40 @@
 			to_chat(src, SPAN_NOTICE("You look up."))
 			reset_view(z_eye)
 			return
+
+		var/turf/T= get_turf(src)
+
+		if(T.is_outside())// They're outside and hopefully on a planet.
+			var/obj/overmap/visitable/sector/exoplanet/E = map_sectors["[T.z]"]
+			if (!istype(E))
+				to_chat(usr, SPAN_NOTICE("You see... things, it's hard to put into words what you're seeing specifically."))
+				return
+
+			//Weather hook here when it is a thing
+
+			// Sun-related output.
+			//Calculate time of day
+			var/time_of_day = E.sun_last_process % E.daycycle
+			var/afternoon = time_of_day > (E.daycycle / 2)
+			var/star_name = GLOB.using_map.system_name
+
+			var/sun_message = null
+			switch(E.sun_position)
+				if(0 to 0.4) // Night
+					sun_message = "It is night time, [star_name] is not visible."
+				if(0.4 to 0.5) // Twilight
+					sun_message = "The sky is in twilight, however [star_name] is not visible."
+				if(0.5 to 0.7) // Sunrise/set.
+					sun_message = "[star_name] is slowly [!afternoon ? "rising from" : "setting on"] the horizon."
+				if(0.7 to 0.9) // Morning/evening
+					sun_message = "[star_name]'s position implies it is currently [!afternoon ? "early" : "late"] in the day."
+				if(0.9 to 1.0) // Noon
+					sun_message = "It's high noon. [star_name] hangs directly above you."
+
+			to_chat(usr, SPAN_NOTICE(sun_message))
+			return
+
+
 		to_chat(src, SPAN_NOTICE("You can see \the [above ? above : "ceiling"]."))
 	else
 		to_chat(src, SPAN_NOTICE("You can't look up right now."))
@@ -1338,7 +1378,7 @@
 		return
 
 	var/num_doodles = 0
-	for (var/obj/effect/decal/cleanable/blood/writing/W in T)
+	for (var/obj/decal/cleanable/blood/writing/W in T)
 		num_doodles++
 	if (num_doodles > 4)
 		to_chat(src, SPAN_WARNING("There is no space to write on!"))
@@ -1355,7 +1395,7 @@
 		if (length(message) > max_length)
 			message += "-"
 			to_chat(src, SPAN_WARNING("You ran out of blood to write with!"))
-		var/obj/effect/decal/cleanable/blood/writing/W = new(T)
+		var/obj/decal/cleanable/blood/writing/W = new(T)
 		W.basecolor = (hand_blood_color) ? hand_blood_color : COLOR_BLOOD_HUMAN
 		W.update_icon()
 		W.message = message
@@ -1541,26 +1581,67 @@
 	set category = "IC"
 	species.toggle_stance(src)
 
+// [SIERRA-ADD] - RESOMI
+#define PULSE_NUMBER_NONE 0
+#define PULSE_NUMBER_SLOW 50
+#define PULSE_NUMBER_NORM 75
+#define PULSE_NUMBER_FAST 105
+#define PULSE_NUMBER_2FAST 140
+#define PULSE_NUMBER_THREADY PULSE_MAX_BPM
+// [/SIERRA-ADD]
+
 // Similar to get_pulse, but returns only integer numbers instead of text.
 /mob/living/carbon/human/proc/get_pulse_as_number()
 	var/obj/item/organ/internal/heart/heart_organ = internal_organs_by_name[BP_HEART]
-	if(!heart_organ)
-		return 0
 
+	// [SIERRA-EDIT] - RESOMI
+
+	//if(!heart_organ) // SIERRA-EDIT - ORIGINAL
+	//	return 0 // SIERRA-EDIT - ORIGINAL
+	//switch(pulse()) // SIERRA-EDIT - ORIGINAL
+	//	if(PULSE_NONE) // SIERRA-EDIT - ORIGINAL
+	//		return 0 // SIERRA-EDIT - ORIGINAL
+	//	if(PULSE_SLOW) // SIERRA-EDIT - ORIGINAL
+	//		return rand(40, 60) // SIERRA-EDIT - ORIGINAL
+	//	if(PULSE_NORM) // SIERRA-EDIT - ORIGINAL
+	//		return rand(60, 90) // SIERRA-EDIT - ORIGINAL
+	//	if(PULSE_FAST) // SIERRA-EDIT - ORIGINAL
+	//		return rand(90, 120) // SIERRA-EDIT - ORIGINAL
+	//	if(PULSE_2FAST) // SIERRA-EDIT - ORIGINAL
+	//		return rand(120, 160) // SIERRA-EDIT - ORIGINAL
+	//	if(PULSE_THREADY) // SIERRA-EDIT - ORIGINAL
+	//		return PULSE_MAX_BPM // SIERRA-EDIT - ORIGINAL
+	//return 0 // SIERRA-EDIT - ORIGINAL
+
+	if(!heart_organ)
+		return PULSE_NUMBER_NONE
+
+	var/raw_pulse_number
 	switch(pulse())
 		if(PULSE_NONE)
-			return 0
+			return PULSE_NUMBER_NONE
 		if(PULSE_SLOW)
-			return rand(40, 60)
+			raw_pulse_number = PULSE_NUMBER_SLOW
 		if(PULSE_NORM)
-			return rand(60, 90)
+			raw_pulse_number = PULSE_NUMBER_NORM
 		if(PULSE_FAST)
-			return rand(90, 120)
+			raw_pulse_number = PULSE_NUMBER_FAST
 		if(PULSE_2FAST)
-			return rand(120, 160)
+			raw_pulse_number = PULSE_NUMBER_2FAST
 		if(PULSE_THREADY)
-			return PULSE_MAX_BPM
-	return 0
+			return PULSE_NUMBER_THREADY
+	return ((raw_pulse_number * (2 - species.blood_volume / SPECIES_BLOOD_DEFAULT)) + (raw_pulse_number * rand(-0.2, 0.2)))
+
+	// [/SIERRA-EDIT]
+
+// [SIERRA-ADD] - RESOMI
+#undef PULSE_NUMBER_NONE
+#undef PULSE_NUMBER_SLOW
+#undef PULSE_NUMBER_NORM
+#undef PULSE_NUMBER_FAST
+#undef PULSE_NUMBER_2FAST
+#undef PULSE_NUMBER_THREADY
+// [/SIERRA-ADD]
 
 //generates realistic-ish pulse output based on preset levels as text
 /mob/living/carbon/human/proc/get_pulse(method)	//method 0 is for hands, 1 is for machines, more accurate
@@ -1622,17 +1703,19 @@
 		affecting = organs_by_name[BP_GROIN]
 
 	if(affecting && BP_IS_ROBOTIC(affecting))
-		return 0
+		return FALSE
 	return (species && species.has_organ[organ_check])
 
 /mob/living/carbon/human/can_feel_pain(obj/item/organ/check_organ)
 	if(isSynthetic())
-		return 0
+		return FALSE
+	if (species.species_flags & SPECIES_FLAG_NO_PAIN)
+		return FALSE
 	if(check_organ)
 		if(!istype(check_organ))
-			return 0
+			return FALSE
 		return check_organ.can_feel_pain()
-	return !(species.species_flags & SPECIES_FLAG_NO_PAIN)
+	return TRUE
 
 /mob/living/carbon/human/get_breath_volume()
 	. = ..()
@@ -1719,7 +1802,8 @@
 		if(!nervous_system_failure() && active_breaths)
 			visible_message("\The [src] jerks and gasps for breath!")
 		else
-			visible_message("\The [src] twitches a bit as \his heart restarts!")
+			var/datum/pronouns/pronouns = choose_from_pronouns()
+			visible_message("\The [src] twitches a bit as [pronouns.his] heart restarts!")
 		shock_stage = min(shock_stage, 100) // 120 is the point at which the heart stops.
 		if(getOxyLoss() >= 75)
 			setOxyLoss(75)
@@ -1823,7 +1907,7 @@
 	return species.get_digestion_product(src)
 
 // A damaged stomach can put blood in your vomit.
-/mob/living/carbon/human/handle_additional_vomit_reagents(obj/effect/decal/cleanable/vomit/vomit)
+/mob/living/carbon/human/handle_additional_vomit_reagents(obj/decal/cleanable/vomit/vomit)
 	..()
 	if(should_have_organ(BP_STOMACH))
 		var/obj/item/organ/internal/stomach/stomach = internal_organs_by_name[BP_STOMACH]
@@ -1860,10 +1944,10 @@
 		if(BULLET_IMPACT_MEAT)
 			if (damage && P.damtype == DAMAGE_BRUTE)
 				var/hit_dir = get_dir(P.starting, src)
-				var/obj/effect/decal/cleanable/blood/B = blood_splatter(get_step(src, hit_dir), src, 1, hit_dir)
+				var/obj/decal/cleanable/blood/B = blood_splatter(get_step(src, hit_dir), src, 1, hit_dir)
 				B.icon_state = pick("dir_splatter_1","dir_splatter_2")
 				B.SetTransform(scale = min(1, round(P.damage / 50, 0.2)))
-				new /obj/effect/temp_visual/bloodsplatter(loc, hit_dir, species.blood_color)
+				new /obj/temp_visual/bloodsplatter(loc, hit_dir, species.blood_color)
 
 /mob/living/carbon/human/proc/dream()
 	dream_timer = null
@@ -1907,3 +1991,198 @@ GLOBAL_LIST_INIT(dream_tokens, list(
 	"a blade", "an ocean", "right behind you", "standing above you",
 	"someone near by", "a place forgotten"
 ))
+
+/mob/living/carbon/human/Topic(href, href_list)
+	. = ..()
+	///////Interactions!!///////
+	if(href_list["interaction"])
+		if (usr.stat == DEAD || usr.stat == UNCONSCIOUS || usr.restrained())
+			return
+
+		//CONDITIONS
+		var/mob/living/carbon/human/H = usr
+		var/mob/living/carbon/human/P = H.partner
+		if (!(P in view(H.loc)))
+			return
+		var/obj/item/organ/external/temp = H.organs_by_name["r_hand"]
+		var/hashands = (temp?.is_usable())
+		if (!hashands)
+			temp = H.organs_by_name["l_hand"]
+			hashands = (temp?.is_usable())
+		temp = P.organs_by_name["r_hand"]
+		var/hashands_p = (temp?.is_usable())
+		if (!hashands_p)
+			temp = P.organs_by_name["l_hand"]
+			hashands = (temp?.is_usable())
+		var/mouthfree = !((H.head && (H.check_mouth_coverage())) || (H.wear_mask && (H.check_mouth_coverage())))
+		var/mouthfree_p = !((P.head && (P.check_mouth_coverage())) || (P.wear_mask && (P.check_mouth_coverage())))
+		var/ya = "я"
+
+		if(world.time <= H.last_attack + 1 SECONDS)
+			return
+		else
+			H.last_attack = world.time
+
+		if (href_list["interaction"] == "bow")
+			H.visible_message("<B>[H]</B> клан[ya]етс[ya] <B>[P]</B>.")
+			if (istype(P.loc, /obj/structure/closet) && P.loc == H.loc)
+				P.visible_message("<B>[H]</B> клан[ya]етс[ya] <B>[P]</B>.")
+
+		else if (href_list["interaction"] == "pet")
+			if(((!istype(P.loc, /obj/structure/closet)) || (H.loc == P.loc)) && hashands && H.Adjacent(P))
+				H.visible_message("<B>[H]</B> [pick("гладит", "поглаживает")] <B>[P]</B>.")
+				if (istype(P.loc, /obj/structure/closet))
+					P.visible_message("<B>[H]</B> [pick("гладит", "поглаживает")] <B>[P]</B>.")
+
+		else if (href_list["interaction"] == "scratch")
+			if(((!istype(P.loc, /obj/structure/closet)) || (H.loc == P.loc)) && hashands && H.Adjacent(P))
+				if(H.zone_sel.selecting == BP_HEAD && !((P.species.name == SPECIES_YEOSA) || (P.species.name == SPECIES_UNATHI)))
+					H.visible_message("<B>[H]</B> [pick("чешет за ухом", "чешет голову")] <B>[P]</B>.")
+					if (istype(P.loc, /obj/structure/closet))
+						P.visible_message("<B>[H]</B> [pick("чешет за ухом", "чешет голову")] <B>[P]</B>.")
+				else
+					H.visible_message("<B>[H]</B> [pick("чешет")] <B>[P]</B>.")
+					if (istype(P.loc, /obj/structure/closet))
+						P.visible_message("<B>[H]</B> [pick("чешет")] <B>[P]</B>.")
+
+		else if (href_list["interaction"] == "give")
+			if(H.Adjacent(P))
+				if (((!istype(P.loc, /obj/structure/closet)) || (H.loc == P.loc)) && hashands)
+					H.give(P)
+
+		else if (href_list["interaction"] == "kiss")
+			if( ((H.Adjacent(P) && !istype(P.loc, /obj/structure/closet)) || (H.loc == P.loc)))
+				H.visible_message("<B>[H]</B> целует <B>[P]</B>.")
+				if (istype(P.loc, /obj/structure/closet))
+					P.visible_message("<B>[H]</B> целует <B>[P]</B>.")
+			else if (mouthfree)
+				H.visible_message("<B>[H]</B> посылает <B>[P]</B> воздушный поцелуй.")
+
+		else if (href_list["interaction"] == "lick")
+			if( ((H.Adjacent(P) && !istype(P.loc, /obj/structure/closet)) || (H.loc == P.loc)) && mouthfree && mouthfree_p)
+				if (prob(90))
+					H.visible_message("<B>[H]</B> [H.gender == FEMALE ? "лизнула" : "лизнул"] <B>[P]</B> в щеку.")
+					if (istype(P.loc, /obj/structure/closet))
+						P.visible_message("<B>[H]</B> [H.gender == FEMALE ? "лизнула" : "лизнул"] <B>[P]</B> в щеку.")
+				else
+					H.visible_message("<B>[H]</B> особо тщательно [H.gender == FEMALE ? "лизнула" : "лизнул"] <B>[P]</B>.")
+					if (istype(P.loc, /obj/structure/closet))
+						P.visible_message("<B>[H]</B> особо тщательно [H.gender == FEMALE ? "лизнула" : "лизнул"] <B>[P]</B>.")
+
+		else if (href_list["interaction"] == "hug")
+			if(((H.Adjacent(P) && !istype(P.loc, /obj/structure/closet)) || (H.loc == P.loc)) && hashands)
+				H.visible_message("<B>[H]</B> обнимает <B>[P]</B>.")
+				if (istype(P.loc, /obj/structure/closet))
+					P.visible_message("<B>[H]</B> обнимает <B>[P]</B>.")
+				playsound(loc, 'sound/interactions/hug.ogg', 50, 1, -1)
+
+		else if (href_list["interaction"] == "cheer")
+			if(((H.Adjacent(P) && !istype(P.loc, /obj/structure/closet)) || (H.loc == P.loc)) && hashands)
+				H.visible_message("<B>[H]</B> похлопывает <B>[P]</B> по плечу.")
+				if (istype(P.loc, /obj/structure/closet))
+					P.visible_message("<B>[H]</B> похлопывает <B>[P]</B> по плечу.")
+
+		else if (href_list["interaction"] == "five")
+			if(((H.Adjacent(P) && !istype(P.loc, /obj/structure/closet)) || (H.loc == P.loc)) && hashands)
+				H.visible_message("<B>[H]</B> даёт <B>[P]</B> п[ya]ть.")
+				if (istype(P.loc, /obj/structure/closet))
+					P.visible_message("<B>[H]</B> даёт <B>[P]</B> п[ya]ть.")
+				playsound(loc, 'sound/interactions/slap.ogg', 50, 1, -1)
+
+		else if (href_list["interaction"] == "handshake")
+			if(((H.Adjacent(P) && !istype(P.loc, /obj/structure/closet)) || (H.loc == P.loc)) && hashands && hashands_p)
+				H.visible_message("<B>[H]</B> жмёт руку <B>[P]</B>.")
+				if (istype(P.loc, /obj/structure/closet))
+					P.visible_message("<B>[H]</B> жмёт руку <B>[P]</B>.")
+
+		else if (href_list["interaction"] == "bow_affably")
+			H.visible_message("<B>[H]</B> приветливо кивнул[H.gender == FEMALE ? "а" : ""] в сторону <B>[P]</B>.")
+			if (istype(P.loc, /obj/structure/closet))
+				P.visible_message("<B>[H]</B> приветливо кивнул[H.gender == FEMALE ? "а" : ""] в сторону <B>[P]</B>.")
+
+		else if (href_list["interaction"] == "wave")
+			if (!(H.Adjacent(P)) && hashands)
+				H.visible_message("<B>[H]</B> приветливо машет <B>[P]</B>.")
+			else
+				H.visible_message("<B>[H]</B> приветливо кивнул[H.gender == FEMALE ? "а" : ""] в сторону <B>[P]</B>.")
+
+
+		else if (href_list["interaction"] == "slap")
+			if(((H.Adjacent(P) && !istype(P.loc, /obj/structure/closet)) || (H.loc == P.loc)) && hashands)
+				switch(H.zone_sel.selecting)
+					if(BP_HEAD)
+						H.visible_message("<span class='danger'>[H] дает [P] пощечину!</span>")
+						if (istype(P.loc, /obj/structure/closet))
+							P.visible_message("<span class='danger'>[H] дает [P] пощечину!</span>")
+						playsound(loc, 'sound/interactions/slap.ogg', 50, 1, -1)
+						var/obj/item/organ/external/head/O = P.get_organ(BP_HEAD)
+						if(O.pain <= 2)
+							O.add_pain(10)
+						H.do_attack_animation(P)
+
+					if(BP_MOUTH)
+						H.visible_message("<span class='danger'>[H] дает [P] по губе!</span>")
+						if (istype(P.loc, /obj/structure/closet))
+							P.visible_message("<span class='danger'>[H] дает [P] по губе!</span>")
+						playsound(loc, 'sound/interactions/slap.ogg', 50, 1, -1)
+						H.do_attack_animation(P)
+
+		else if (href_list["interaction"] == "slapass")
+			if(((H.Adjacent(P) && !istype(P.loc, /obj/structure/closet)) || (H.loc == P.loc)) && hashands)
+				H.visible_message("<span class='danger'>[H] шлёпает [P] по заднице!</span>")
+				if (istype(P.loc, /obj/structure/closet))
+					P.visible_message("<span class='danger'>[H] шлёпает [P] по заднице!</span>")
+				playsound(loc, 'sound/interactions/slap.ogg', 50, 1, -1)
+				var/obj/item/organ/external/groin/G = P.get_organ(BP_GROIN)
+				if(G.pain <= 2)
+					G.add_pain(5)
+				H.do_attack_animation(P)
+
+		else if (href_list["interaction"] == "fuckyou")
+			if(hashands)
+				H.visible_message("<span class='danger'>[H] показывает [P] средний палец!</span>")
+				if (istype(P.loc, /obj/structure/closet) && P.loc == H.loc)
+					P.visible_message("<span class='danger'>[H] показывает [P] средний палец!</span>")
+
+		else if (href_list["interaction"] == "knock")
+			if(((H.Adjacent(P) && !istype(P.loc, /obj/structure/closet)) || (H.loc == P.loc)) && hashands)
+				H.visible_message("<span class='danger'>[H] дает [P] подзатыльник!</span>")
+				if (istype(P.loc, /obj/structure/closet))
+					P.visible_message("<span class='danger'>[H] дает [P] подзатыльник!</span>")
+				playsound(loc, 'sound/weapons/throwtap.ogg', 50, 1, -1)
+				var/obj/item/organ/external/head/O = P.get_organ(BP_HEAD)
+				if(O.pain <= 2)
+					O.add_pain(5)
+				H.do_attack_animation(P)
+
+		else if (href_list["interaction"] == "spit")
+			if(((H.Adjacent(P) && !istype(P.loc, /obj/structure/closet)) || (H.loc == P.loc)) && mouthfree)
+				H.visible_message("<span class='danger'>[H] плюёт в [P]!</span>")
+				if (istype(P.loc, /obj/structure/closet))
+					P.visible_message("<span class='danger'>[H] плюёт в [P]!</span>")
+
+		else if (href_list["interaction"] == "threaten")
+			if(hashands)
+				H.visible_message("<span class='danger'>[H] грозит [P] кулаком!</span>")
+				if (istype(P.loc, /obj/structure/closet) && H.loc == P.loc)
+					P.visible_message("<span class='danger'>[H] грозит [P] кулаком!</span>")
+
+		else if (href_list["interaction"] == "tongue")
+			if(mouthfree)
+				H.visible_message("<span class='danger'>[H] показывает [P] [ya]зык!</span>")
+				if (istype(P.loc, /obj/structure/closet) && H.loc == P.loc)
+					P.visible_message("<span class='danger'>[H] показывает [P] [ya]зык!</span>")
+
+		else if (href_list["interaction"] == "pull")
+			if(((H.Adjacent(P) && !istype(P.loc, /obj/structure/closet)) || (H.loc == P.loc)) && hashands && !H.restrained())
+				if (prob(30))
+					H.visible_message("<span class='danger'>[H] дёргает [P] за хвост!</span>")
+					var/obj/item/organ/external/groin/O = P.get_organ(BP_GROIN)
+					if(O.pain <= 3)
+						O.add_pain(4)
+					if (istype(P.loc, /obj/structure/closet))
+						P.visible_message("<span class='danger'>[H] дёргает [P] за хвост!</span>")
+				else
+					H.visible_message("<B>[H]</B> пытаетс[ya] поймать <B>[P]</B> за хвост!")
+					if (istype(P.loc, /obj/structure/closet))
+						P.visible_message("<B>[H]</B> пытаетс[ya] поймать <B>[P]</B> за хвост!")

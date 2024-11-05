@@ -38,6 +38,10 @@ GLOBAL_LIST_INIT(machine_path_to_circuit_type, cache_circuits_by_build_path())
 	for(var/component_path in uncreated_component_parts)
 		var/number = uncreated_component_parts[component_path] || 1
 		LAZYREMOVE(uncreated_component_parts, component_path)
+		// Stacks are created differently to avoid qdel churn.
+		if(ispath(component_path, /obj/item/stack))
+			install_component(new component_path(src, number), refresh_parts = FALSE)
+			continue
 		for(var/i in 1 to number)
 			install_component(component_path, refresh_parts = FALSE)
 
@@ -135,7 +139,7 @@ GLOBAL_LIST_INIT(machine_path_to_circuit_type, cache_circuits_by_build_path())
 	if(istype(part))
 		LAZYADD(component_parts, part)
 		part.on_install(src)
-		GLOB.destroyed_event.register(part, src, .proc/component_destroyed)
+		GLOB.destroyed_event.register(part, src, PROC_REF(component_destroyed))
 	else if(ispath(part))
 		LAZYINITLIST(uncreated_component_parts)
 		uncreated_component_parts[part] += 1
@@ -236,21 +240,30 @@ GLOBAL_LIST_INIT(machine_path_to_circuit_type, cache_circuits_by_build_path())
 /// Called whenever an attached component updates it's status. Override to handle updates to the machine.
 /obj/machinery/proc/component_stat_change(obj/item/stock_parts/part, old_stat, flag)
 
-/obj/machinery/attackby(obj/item/I, mob/user)
-	if(component_attackby(I, user))
+/obj/machinery/use_tool(obj/item/tool, mob/living/user, list/click_params)
+	if (component_attackby(tool, user))
 		return TRUE
 	return ..()
 
-/obj/machinery/post_anchor_change()
-	power_change()
+/obj/machinery/can_anchor(obj/item/tool, mob/user, silent)
+	if (use_power == POWER_USE_ACTIVE)
+		if (!silent)
+			to_chat(user, SPAN_WARNING("Turn \the [src] off first!"))
+		return FALSE
 	return ..()
 
-/// Passes `attackby()` calls through to components within the machine, if they are accessible.
+
+/obj/machinery/post_anchor_change()
+	update_use_power(anchored)
+	power_change()
+	..()
+
+/// Passes `use_tool()` calls through to components within the machine, if they are accessible.
 /obj/machinery/proc/component_attackby(obj/item/I, mob/user)
 	for(var/obj/item/stock_parts/part in component_parts)
 		if(!components_are_accessible(part.type))
 			continue
-		if((. = part.attackby(I, user)))
+		if((. = part.use_tool(I, user)))
 			return
 	return construct_state && construct_state.attackby(I, user, src)
 

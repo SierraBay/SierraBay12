@@ -215,24 +215,25 @@
 
 	return null
 
-/obj/machinery/atmospherics/valve/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/atmospherics/valve/use_tool(obj/item/W, mob/living/user, list/click_params)
 	if (!isWrench(W))
 		return ..()
 	var/datum/gas_mixture/int_air = return_air()
 	var/datum/gas_mixture/env_air = loc.return_air()
 	if ((int_air.return_pressure()-env_air.return_pressure()) > 2*ONE_ATMOSPHERE)
 		to_chat(user, SPAN_WARNING("You cannot unwrench \the [src], it is too exerted due to internal pressure."))
-		add_fingerprint(user)
-		return 1
+		return TRUE
 	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 	to_chat(user, SPAN_NOTICE("You begin to unfasten \the [src]..."))
-	if (do_after(user, (W.toolspeed * 4) SECONDS, src, DO_REPAIR_CONSTRUCT))
-		user.visible_message( \
-			SPAN_NOTICE("\The [user] unfastens \the [src]."), \
-			SPAN_NOTICE("You have unfastened \the [src]."), \
-			"You hear a ratchet.")
-		new /obj/item/pipe(loc, src)
-		qdel(src)
+	if (!do_after(user, (W.toolspeed * 4) SECONDS, src, DO_REPAIR_CONSTRUCT))
+		return TRUE
+	user.visible_message( \
+		SPAN_NOTICE("\The [user] unfastens \the [src]."), \
+		SPAN_NOTICE("You have unfastened \the [src]."), \
+		"You hear a ratchet.")
+	new /obj/item/pipe(loc, src)
+	qdel(src)
+	return TRUE
 
 /obj/machinery/atmospherics/valve/examine(mob/user)
 	. = ..()
@@ -251,17 +252,17 @@
 /singleton/public_access/public_method/open_valve
 	name = "open valve"
 	desc = "Sets the valve to open."
-	call_proc = /obj/machinery/atmospherics/valve/proc/open
+	call_proc = TYPE_PROC_REF(/obj/machinery/atmospherics/valve, open)
 
 /singleton/public_access/public_method/close_valve
 	name = "open valve"
 	desc = "Sets the valve to open."
-	call_proc = /obj/machinery/atmospherics/valve/proc/close
+	call_proc = TYPE_PROC_REF(/obj/machinery/atmospherics/valve, close)
 
 /singleton/public_access/public_method/toggle_valve
 	name = "toggle valve"
 	desc = "Toggles whether the valve is open or closed."
-	call_proc = /obj/machinery/atmospherics/valve/proc/toggle
+	call_proc = TYPE_PROC_REF(/obj/machinery/atmospherics/valve, toggle)
 
 /obj/machinery/atmospherics/valve/digital		// can be controlled by AI
 	name = "digital valve"

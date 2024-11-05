@@ -127,6 +127,7 @@
 			"warning",
 			"danger",
 			"occult",
+			"legion",
 			"unsafe"
 		)
 	if (!style)
@@ -166,6 +167,7 @@
 			if ("warning") result = SPAN_WARNING(result)
 			if ("danger")  result = SPAN_DANGER(result)
 			if ("occult")  result = SPAN_OCCULT(result)
+			if ("legion")  result = SPAN_LEGION(result)
 		switch (size)
 			if ("small")  result = FONT_SMALL(result)
 			if ("large")  result = FONT_LARGE(result)
@@ -682,15 +684,19 @@ Ccomp's first proc.
 			max_power = EX_ACT_HEAVY
 		if ("Light")
 			max_power = EX_ACT_LIGHT
+//[SIERRA-REMOVE] MODPACK_EXPLOSION
+/*
 	var/shaped = 0
 	if(alert(src, "Shaped explosion?", "Shape", "Yes", "No") == "Yes")
 		shaped = input("Shaped where to?", "Input")  as anything in list("NORTH","SOUTH","EAST","WEST")
 		shaped = text2dir(shaped)
+*/
+//[/SIERRA-REMOVE]
 	if (range > 20)
 		if (alert(src, "Are you sure you want to do this? It may lag.", "Confirmation", "Yes", "No") == "No")
 			return
 
-	explosion(O, range, max_power, shaped=shaped)
+	explosion(O, range, max_power)// [SIERRA-EDIT] MODPACK_EXPLOSION explosion(O, range, max_power, shaped=shaped)
 	log_admin("[key_name(usr)] created an explosion ([range], [max_power_input]) at ([O.x],[O.y],[O.z])")
 	message_admins("[key_name_admin(usr)] created an explosion ([range], [max_power_input]) at ([O.x],[O.y],[O.z])", 1)
 
@@ -701,9 +707,9 @@ Ccomp's first proc.
 	if(!check_rights(R_DEBUG|R_FUN))	return
 
 	var/heavy = input("Range of heavy pulse.", text("Input"))  as num|null
-	if(heavy == null) return
+	if(isnull(heavy)) return
 	var/light = input("Range of light pulse.", text("Input"))  as num|null
-	if(light == null) return
+	if(isnull(light)) return
 
 	if (heavy || light)
 
@@ -796,10 +802,16 @@ Ccomp's first proc.
 	set name = "Change View Range"
 	set desc = "switches between 1x and custom views"
 
-	if(view == world.view)
+	// [SIERRA-EDIT]
+	// if(view == world.view) // SIERRA-EDIT - Original
+	if(view == get_preference_value(/datum/client_preference/client_view))
+	// [/SIERRA-EDIT]
 		view = input("Select view range:", "FUCK YE", 7) in list(1,2,3,4,5,6,7,8,9,10,11,12,13,14,128)
 	else
-		view = world.view
+		// [SIERRA-EDIT]
+		// view = world.view // SIERRA-EDIT - Original
+		view = get_preference_value(/datum/client_preference/client_view)
+		// [/SIERRA-EDIT]
 
 	log_and_message_admins("changed their view range to [view].")
 
@@ -980,9 +992,9 @@ Ccomp's first proc.
 		range = rand(8, 13)
 		var/turf/T
 		if (connected == "Yes")
-			T = pick_area_turf_in_connected_z_levels(list(/proc/is_not_space_area), z_level = zlevel)
+			T = pick_area_turf_in_connected_z_levels(list(GLOBAL_PROC_REF(is_not_space_area)), z_level = zlevel)
 		else
-			T = pick_area_turf_in_single_z_level(list(/proc/is_not_space_area), z_level = zlevel)
+			T = pick_area_turf_in_single_z_level(list(GLOBAL_PROC_REF(is_not_space_area)), z_level = zlevel)
 		explosion(T, range, max_power, turf_breaker = break_turfs)
 		booms = booms - 1
 		sleep(delay SECONDS)
@@ -992,7 +1004,7 @@ Ccomp's first proc.
 	set name = "Rename Ship"
 	set desc = "Rename a ship (Does not rename areas on the ship)"
 
-	var/obj/effect/overmap/visitable/ship/ship = input("What ship?", "Rename Ship") as null | anything in SSshuttle.ships
+	var/obj/overmap/visitable/ship/ship = input("What ship?", "Rename Ship") as null | anything in SSshuttle.ships
 	if (!ship)
 		return
 
@@ -1012,26 +1024,26 @@ Ccomp's first proc.
 			shuttle.name = name
 			break
 
-	for (var/obj/effect/shuttle_landmark/ship/S in landmarks_list)
+	for (var/obj/shuttle_landmark/ship/S in landmarks_list)
 		if (S.name == original_name)
 			S.shuttle_name = name
-		if (istype(S, /obj/effect/overmap/visitable/ship/landable))
-			var/obj/effect/overmap/visitable/ship/landable/SL = S
+		if (istype(S, /obj/overmap/visitable/ship/landable))
+			var/obj/overmap/visitable/ship/landable/SL = S
 			SL.landmark.landmark_tag = "ship_[name]"
 			SL.landmark.shuttle_name = name
 	//rename waypoints based on the origin ship name
-	for (var/obj/effect/overmap/visitable/ship/S in SSshuttle.ships)
+	for (var/obj/overmap/visitable/ship/S in SSshuttle.ships)
 		for (var/key in S.restricted_waypoints)
 			if (key == original_name)
 				S.add_landmark(S.restricted_waypoints[key][1], name)
 				S.remove_landmark(S.restricted_waypoints[key][1], original_name)
-				if (istype(S, /obj/effect/overmap/visitable/ship/landable))
-					var/obj/effect/overmap/visitable/ship/landable/SL = S
+				if (istype(S, /obj/overmap/visitable/ship/landable))
+					var/obj/overmap/visitable/ship/landable/SL = S
 					SL.landmark.landmark_tag = "ship_[name]"
 					SL.landmark.shuttle_name = name
 					SL.shuttle = name
 
-	for (var/obj/machinery/computer/shuttle_control/S in SSmachines.machinery)
+	for (var/obj/machinery/computer/shuttle_control/S as anything in SSmachines.get_machinery_of_type(/obj/machinery/computer/shuttle_control))
 		if (S.shuttle_tag == original_name)
 			S.shuttle_tag = name
 			S.name = "[name] Control Console"

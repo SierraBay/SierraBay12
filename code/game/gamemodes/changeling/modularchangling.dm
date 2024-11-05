@@ -441,7 +441,7 @@ var/global/list/datum/power/changeling/powerinstances = list()
 		if(!istype(M))
 			return
 		purchasePower(M, href_list["P"])
-		call(/datum/changeling/proc/EvolutionMenu)()
+		call(TYPE_PROC_REF(/datum/changeling, EvolutionMenu))()
 
 
 
@@ -460,7 +460,7 @@ var/global/list/datum/power/changeling/powerinstances = list()
 			break
 
 
-	if(Thepower == null)
+	if(isnull(Thepower))
 		to_chat(M.current, "This is awkward.  Changeling power purchase failed, please report this bug to a coder!")
 		return
 

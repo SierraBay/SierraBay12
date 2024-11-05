@@ -269,8 +269,10 @@
 		ui.set_auto_update(1)
 
 
-/obj/machinery/lapvend/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/lapvend/use_tool(obj/item/W, mob/living/user, list/click_params)
 	var/obj/item/card/id/I = W.GetIdCard()
+	if (!I)
+		return ..()
 	// Awaiting payment state
 	if(state == 2)
 		if(process_payment(I,W))
@@ -293,14 +295,14 @@
 				fabricated_tablet = null
 			ping("Enjoy your new product!")
 			state = 3
-			return 1
-		return 0
+			return TRUE
+
 	return ..()
 
 
 // Simplified payment processing, returns 1 on success.
 /obj/machinery/lapvend/proc/process_payment(obj/item/card/id/I, obj/item/ID_container)
-	if(I==ID_container || ID_container == null)
+	if(I==ID_container || isnull(ID_container))
 		visible_message(SPAN_INFO("\The [usr] swipes \the [I] through \the [src]."))
 	else
 		visible_message(SPAN_INFO("\The [usr] swipes \the [ID_container] through \the [src]."))

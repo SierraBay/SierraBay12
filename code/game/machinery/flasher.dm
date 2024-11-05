@@ -33,16 +33,16 @@
 //		src.sd_SetLuminosity(0)
 
 //Don't want to render prison breaks impossible
-/obj/machinery/flasher/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/flasher/use_tool(obj/item/W, mob/living/user, list/click_params)
 	if(isWirecutter(W))
-		add_fingerprint(user, 0, W)
-		src.disable = !src.disable
-		if (src.disable)
-			user.visible_message(SPAN_WARNING("[user] has disconnected the [src]'s flashbulb!"), SPAN_WARNING("You disconnect the [src]'s flashbulb!"))
-		if (!src.disable)
-			user.visible_message(SPAN_WARNING("[user] has connected the [src]'s flashbulb!"), SPAN_WARNING("You connect the [src]'s flashbulb!"))
-	else
-		..()
+		disable = !disable
+		user.visible_message(
+			SPAN_WARNING("\The [user] has [disable ? "dis" : ""]connected \the [src]'s flashbulb!"),
+			SPAN_WARNING("You [disable? "dis" : ""]connect \the [src]'s flashbulb!")
+		)
+		return TRUE
+
+	return ..()
 
 //Let the AI trigger them directly.
 /obj/machinery/flasher/attack_ai()
@@ -89,7 +89,7 @@
 /obj/machinery/flasher/proc/do_flash(mob/living/victim, flash_time)
 	victim.flash_eyes()
 	victim.eye_blurry += flash_time
-	victim.confused += (flash_time + 2)
+	victim.mod_confused(flash_time + 2)
 	victim.Stun(flash_time / 2)
 	victim.Weaken(3)
 
@@ -107,6 +107,7 @@
 	anchored = FALSE
 	base_state = "pflash"
 	density = TRUE
+	obj_flags = OBJ_FLAG_ANCHORABLE
 
 /obj/machinery/flasher/portable/HasProximity(atom/movable/AM as mob|obj)
 	if(!anchored || disable || last_flash && world.time < last_flash + 150)
@@ -120,18 +121,12 @@
 	if(isanimal(AM))
 		flash()
 
-/obj/machinery/flasher/portable/attackby(obj/item/W as obj, mob/user as mob)
-	if(isWrench(W))
-		add_fingerprint(user)
-		src.anchored = !src.anchored
-
-		if (!src.anchored)
-			user.show_message(text(SPAN_WARNING("[src] can now be moved.")))
-			ClearOverlays()
-
-		else if (src.anchored)
-			user.show_message(text(SPAN_WARNING("[src] is now secured.")))
-			AddOverlays("[base_state]-s")
+/obj/machinery/flasher/portable/post_anchor_change()
+	if (anchored)
+		AddOverlays("[base_state]-s")
+	else
+		ClearOverlays()
+	..()
 
 /obj/machinery/button/flasher
 	name = "flasher button"
@@ -141,7 +136,7 @@
 /singleton/public_access/public_method/flasher_flash
 	name = "flash"
 	desc = "Performs a flash, if possible."
-	call_proc = /obj/machinery/flasher/proc/flash
+	call_proc = TYPE_PROC_REF(/obj/machinery/flasher, flash)
 
 /singleton/stock_part_preset/radio/receiver/flasher
 	frequency = BUTTON_FREQ

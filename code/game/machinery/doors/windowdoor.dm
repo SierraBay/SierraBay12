@@ -76,7 +76,7 @@
 		if(istype(bot))
 			if(density && src.check_access(bot.botcard))
 				open()
-				addtimer(new Callback(src, .proc/close), 5 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
+				addtimer(new Callback(src, PROC_REF(close)), 5 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
 		return
 	var/mob/M = AM // we've returned by here if M is not a mob
 	if (src.operating)
@@ -88,7 +88,7 @@
 			open_timer = 5 SECONDS
 		else //secure doors close faster
 			open_timer = 2 SECONDS
-		addtimer(new Callback(src, .proc/close), open_timer, TIMER_UNIQUE | TIMER_OVERRIDE)
+		addtimer(new Callback(src, PROC_REF(close)), open_timer, TIMER_UNIQUE | TIMER_OVERRIDE)
 	return
 
 /obj/machinery/door/window/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
@@ -117,7 +117,7 @@
 	icon_state = "[src.base_state]open";
 	flick("[src.base_state]opening", src)
 	playsound(src.loc, 'sound/machines/windowdoor.ogg', 100, 1)
-	addtimer(new Callback(src, .proc/open_final), 1 SECOND, TIMER_UNIQUE | TIMER_OVERRIDE)
+	addtimer(new Callback(src, PROC_REF(open_final)), 1 SECOND, TIMER_UNIQUE | TIMER_OVERRIDE)
 
 	return 1
 
@@ -141,7 +141,7 @@
 	explosion_resistance = initial(explosion_resistance)
 	update_nearby_tiles()
 
-	addtimer(new Callback(src, .proc/close_final), 1 SECOND, TIMER_UNIQUE | TIMER_OVERRIDE)
+	addtimer(new Callback(src, PROC_REF(close_final)), 1 SECOND, TIMER_UNIQUE | TIMER_OVERRIDE)
 	return TRUE
 
 /obj/machinery/door/window/proc/close_final()
@@ -172,7 +172,7 @@
 	to_chat(user, SPAN_NOTICE("You short out \the [src]'s internal circuitry, locking it open!"))
 	if (density)
 		flick("[base_state]spark", src)
-		addtimer(new Callback(src, .proc/open), 6, TIMER_UNIQUE | TIMER_OVERRIDE)
+		addtimer(new Callback(src, PROC_REF(open)), 6, TIMER_UNIQUE | TIMER_OVERRIDE)
 	return TRUE
 
 /obj/machinery/door/window/emp_act(severity)
@@ -184,27 +184,25 @@
 /obj/machinery/door/window/CanFluidPass(coming_from)
 	return !density || ((dir in GLOB.cardinal) && coming_from != dir)
 
-/obj/machinery/door/window/attackby(obj/item/I as obj, mob/user as mob)
-
-	//If it's in the process of opening/closing, ignore the click
+/obj/machinery/door/window/use_tool(obj/item/I, mob/living/user, list/click_params)
 	if (operating == DOOR_OPERATING_YES)
-		return
+		return ..()
 
 	//Emags and ninja swords? You may pass.
 	if (istype(I, /obj/item/melee/energy/blade))
 		if(emag_act(10, user))
-			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
+			var/datum/effect/spark_spread/spark_system = new /datum/effect/spark_spread()
 			spark_system.set_up(5, 0, src.loc)
 			spark_system.start()
 			playsound(src.loc, "sparks", 50, 1)
 			playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
 			visible_message(SPAN_WARNING("The glass door was sliced open by [user]!"))
-		return 1
+		return TRUE
 
 	//If it's emagged, crowbar can pry electronics out.
 	if (operating == DOOR_OPERATING_BROKEN && isCrowbar(I))
 		playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
-		user.visible_message("[user] removes the electronics from the windoor.", "You start to remove electronics from the windoor.")
+		user.visible_message("\The [user] starts removing the electronics from the windoor.", "You start to remove electronics from the windoor.")
 		if (do_after(user, 4 SECONDS, src, DO_REPAIR_CONSTRUCT))
 			to_chat(user, SPAN_NOTICE("You removed the windoor electronics!"))
 
@@ -222,24 +220,21 @@
 
 			shatter(src)
 			operating = DOOR_OPERATING_NO
-			return
+		return TRUE
 
-	if (user.a_intent == I_HURT)
-		return ..()
-
-	src.add_fingerprint(user, 0, I)
-
-	if (src.allowed(user))
-		if (src.density)
+	if (allowed(user))
+		if (density)
 			open()
 		else
 			if (emagged)
 				to_chat(user, SPAN_WARNING("\The [src] seems to be stuck and refuses to close!"))
-				return
+				return TRUE
 			close()
+		return TRUE
 
-	else if (src.density)
+	else if (density)
 		flick(text("[]deny", src.base_state), src)
+		return TRUE
 
 /obj/machinery/door/window/create_electronics(electronics_type = /obj/item/airlock_electronics)
 	electronics = ..()

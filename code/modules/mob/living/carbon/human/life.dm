@@ -81,10 +81,6 @@
 
 		handle_medical_side_effects()
 
-		if(!client && !mind)
-			species.handle_npc(src)
-
-
 	if(!handle_some_updates())
 		return											//We go ahead and process them 5 times for HUD images and other stuff though.
 
@@ -217,7 +213,6 @@
 			heal_organ_damage(0,1)
 
 	// DNA2 - Gene processing.
-	// The HULK stuff that was here is now in the hulk gene.
 	for(var/datum/dna/gene/gene in dna_genes)
 		if(!gene.block)
 			continue
@@ -231,7 +226,7 @@
 			set_light(0)
 	else
 		if(species.appearance_flags & SPECIES_APPEARANCE_RADIATION_GLOWS)
-			set_light(0.3, 0.1, max(1,min(20,radiation/20)), 2, species.get_flesh_colour(src))
+			set_light(max(1,min(20,radiation/20)), 0.3, species.get_flesh_colour(src))
 		// END DOGSHIT SNOWFLAKE
 
 		var/obj/item/organ/internal/diona/nutrients/rad_organ = locate() in internal_organs
@@ -449,7 +444,7 @@
 	if(robolimb_count)
 		bodytemperature += round(robolimb_count/2)
 
-	if (species.body_temperature == null || isSynthetic())
+	if (isnull(species.body_temperature) || isSynthetic())
 		return //this species doesn't have metabolic thermoregulation
 
 	var/body_temperature_difference = species.body_temperature - bodytemperature
@@ -615,7 +610,7 @@
 			adjustHalLoss(-3)
 			if(sleeping)
 				if (!dream_timer && client)
-					dream_timer = addtimer(new Callback(src, .proc/dream), 10 SECONDS, TIMER_STOPPABLE)
+					dream_timer = addtimer(new Callback(src, PROC_REF(dream)), 10 SECONDS, TIMER_STOPPABLE)
 				if (mind || ai_holder)
 					//Are they SSD? If so we'll keep them asleep but work off some of that sleep var in case of stoxin or similar.
 					if (client || ai_holder || sleeping > 3)
@@ -732,7 +727,7 @@
 				if(55 to 70)		severity = 4
 				if(70 to 85)		severity = 5
 				if(85 to INFINITY)	severity = 6
-			overlay_fullscreen("brute", /obj/screen/fullscreen/brute, severity)
+			overlay_fullscreen("brute", /obj/screen/fullscreen/brute, severity, TRUE)
 		else
 			clear_fullscreen("brute")
 
@@ -831,7 +826,7 @@
 			else
 				//TODO: precalculate all of this stuff when the species datum is created
 				var/base_temperature = species.body_temperature
-				if(base_temperature == null) //some species don't have a set metabolic temperature
+				if(isnull(base_temperature)) //some species don't have a set metabolic temperature
 					base_temperature = (getSpeciesOrSynthTemp(HEAT_LEVEL_1) + getSpeciesOrSynthTemp(COLD_LEVEL_1))/2
 
 				var/temp_step
@@ -885,7 +880,7 @@
 	//0.1% chance of playing a scary sound to someone who's in complete darkness
 	if(isturf(loc) && rand(1,1000) == 1)
 		var/turf/T = loc
-		if(T.get_lumcount() <= LIGHTING_SOFT_THRESHOLD)
+		if(T.get_lumcount() <= 0)
 			playsound_local(src,pick(GLOB.scarySounds),50, 1, -1)
 
 	var/area/A = get_area(src)
@@ -930,7 +925,8 @@
 		custom_pain("[pick("It hurts so much", "You really need some painkillers", "Dear god, the pain")]!", 10, nohalloss = TRUE)
 
 	if(shock_stage >= 30)
-		if(shock_stage == 30) visible_message("<b>[src]</b> is having trouble keeping \his eyes open.")
+		var/datum/pronouns/pronouns = choose_from_pronouns()
+		if(shock_stage == 30) visible_message("<b>[src]</b> is having trouble keeping [pronouns.his] eyes open.")
 		if(prob(30))
 			eye_blurry = max(2, eye_blurry)
 			stuttering = max(stuttering, 5)
@@ -1150,7 +1146,7 @@
 		else if((mRemote in mutations) && remoteview_target)
 			if(remoteview_target.stat == CONSCIOUS)
 				isRemoteObserve = 1
-		if(!isRemoteObserve && client && !client.adminobs)
+		if(!isRemoteObserve && client)
 			remoteview_target = null
 			reset_view(null, 0)
 

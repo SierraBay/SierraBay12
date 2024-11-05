@@ -8,10 +8,14 @@
 	var/obj/item/robot_parts/robot_component/radio/radio
 	var/obj/item/robot_parts/robot_component/camera/camera
 	var/obj/item/mech_component/control_module/software
+	/// Takes /obj/item/circuitboard/exosystem type paths for what boards get put in for prefabs
+	var/list/prebuilt_software = list()
 	has_hardpoints = list(HARDPOINT_HEAD)
 	var/active_sensors = 0
 	power_use = 15
 	w_class = ITEM_SIZE_NORMAL
+	var/obj/mob/exosuit/owner
+
 
 /obj/item/mech_component/sensors/Destroy()
 	QDEL_NULL(camera)
@@ -30,6 +34,9 @@
 /obj/item/mech_component/sensors/prebuild()
 	radio = new(src)
 	camera = new(src)
+	software = new(src)
+	for(var/board in prebuilt_software)
+		software.install_software(new board)
 
 /obj/item/mech_component/sensors/update_components()
 	radio = locate() in src
@@ -42,12 +49,18 @@
 		flags |= BLIND
 	else if(active_sensors && powered)
 		flags |= vision_flags
-
 	return flags
+
+
 
 /obj/item/mech_component/sensors/proc/get_invisible(powered)
 	var/invisible = 0
+	// [SIERRA-EDIT]
+	/*
 	if((total_damage <= 0.8 * max_damage) && active_sensors && powered)
+	*/
+	if((camera) && active_sensors && powered)
+	// [SIERRA-EDIT]
 		invisible = see_invisible
 	return invisible
 
@@ -56,22 +69,30 @@
 /obj/item/mech_component/sensors/ready_to_install()
 	return (radio && camera)
 
-/obj/item/mech_component/sensors/attackby(obj/item/thing, mob/user)
+/obj/item/mech_component/sensors/use_tool(obj/item/thing, mob/living/user, list/click_params)
 	if(istype(thing, /obj/item/mech_component/control_module))
 		if(software)
 			to_chat(user, SPAN_WARNING("\The [src] already has a control modules installed."))
-			return
-		if(install_component(thing, user)) software = thing
+			return TRUE
+		if(install_component(thing, user))
+			software = thing
+			return TRUE
+
 	else if(istype(thing,/obj/item/robot_parts/robot_component/radio))
 		if(radio)
 			to_chat(user, SPAN_WARNING("\The [src] already has a radio installed."))
-			return
-		if(install_component(thing, user)) radio = thing
+			return TRUE
+		if(install_component(thing, user))
+			radio = thing
+			return TRUE
+
 	else if(istype(thing,/obj/item/robot_parts/robot_component/camera))
 		if(camera)
 			to_chat(user, SPAN_WARNING("\The [src] already has a camera installed."))
-			return
-		if(install_component(thing, user)) camera = thing
+			return TRUE
+		if(install_component(thing, user))
+			camera = thing
+			return TRUE
 	else
 		return ..()
 
@@ -107,11 +128,10 @@
 	. = ..()
 	to_chat(user, SPAN_NOTICE("It has [max_installed_software - LAZYLEN(installed_software)] empty slot\s remaining out of [max_installed_software]."))
 
-/obj/item/mech_component/control_module/attackby(obj/item/thing, mob/user)
-
+/obj/item/mech_component/control_module/use_tool(obj/item/thing, mob/living/user, list/click_params)
 	if(istype(thing, /obj/item/circuitboard/exosystem))
 		install_software(thing, user)
-		return
+		return TRUE
 
 	if(isScrewdriver(thing))
 		var/result = ..()
@@ -147,11 +167,7 @@
 	desc = "A primitive set of sensors designed to work in tandem with most MKI Eyeball platforms."
 	max_damage = 100
 	power_use = 0
-
-/obj/item/mech_component/sensors/powerloader/prebuild()
-	..()
-	software = new(src)
-	software.installed_software = list(MECH_SOFTWARE_UTILITY, MECH_SOFTWARE_ENGINEERING)
+	prebuilt_software = list(/obj/item/circuitboard/exosystem/utility, /obj/item/circuitboard/exosystem/engineering)
 
 /obj/item/mech_component/sensors/light
 	name = "light sensors"
@@ -163,11 +179,7 @@
 	see_invisible = SEE_INVISIBLE_NOLIGHTING
 	power_use = 50
 	desc = "A series of high resolution optical sensors. They can overlay several images to give the pilot a sense of location even in total darkness. "
-
-/obj/item/mech_component/sensors/light/prebuild()
-	..()
-	software = new(src)
-	software.installed_software = list(MECH_SOFTWARE_UTILITY, MECH_SOFTWARE_MEDICAL)
+	prebuilt_software = list(/obj/item/circuitboard/exosystem/medical, /obj/item/circuitboard/exosystem/utility)
 
 /obj/item/mech_component/sensors/heavy
 	name = "heavy sensors"
@@ -176,11 +188,7 @@
 	icon_state = "heavy_head"
 	max_damage = 120
 	power_use = 0
-
-/obj/item/mech_component/sensors/heavy/prebuild()
-	..()
-	software = new(src)
-	software.installed_software = list(MECH_SOFTWARE_WEAPONS)
+	prebuilt_software = list(/obj/item/circuitboard/exosystem/weapons)
 
 /obj/item/mech_component/sensors/combat
 	name = "combat sensors"
@@ -190,8 +198,4 @@
 	vision_flags = SEE_MOBS
 	see_invisible = SEE_INVISIBLE_NOLIGHTING
 	power_use = 200
-
-/obj/item/mech_component/sensors/combat/prebuild()
-	..()
-	software = new(src)
-	software.installed_software = list(MECH_SOFTWARE_WEAPONS)
+	prebuilt_software = list(/obj/item/circuitboard/exosystem/weapons)

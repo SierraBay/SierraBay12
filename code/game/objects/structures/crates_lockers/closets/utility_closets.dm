@@ -208,7 +208,7 @@
 		/obj/item/pickaxe/xeno/hand,
 		/obj/item/storage/bag/fossils,
 		/obj/item/hand_labeler,
-		/obj/item/device/spaceflare
+		/obj/item/shuttle_beacon
 	)
 
 /obj/structure/closet/shipping_wall
@@ -225,4 +225,4 @@
 	return list(
 		/obj/item/stack/material/cardboard/ten,
 		/obj/item/device/destTagger,
-		/obj/item/stack/package_wrap/twenty_five)
+		/obj/item/stack/package_wrap/cargo_wrap)

@@ -140,9 +140,13 @@
 /datum/movement_handler/mob/delay/DoMove(direction, mover, is_external)
 	if(is_external)
 		return
-	next_move = world.time + max(1, mob.movement_delay())
-	// [SIERRA-ADD] - GLIDING
+	// [SIERRA-EDIT] - SSINPUT
+	// next_move = world.time + max(1, mob.movement_delay()) // SIERRA-EDIT - ORIGINAL
 	delay = max(1, mob.movement_delay())
+	if((direction & (direction - 1))) // moved diagonally
+		delay *= sqrt(2)
+
+	next_move = world.time + delay
 	UpdateGlideSize()
 	// [/SIERRA-ADD]
 
@@ -175,7 +179,7 @@
 		return MOVEMENT_HANDLED
 
 /datum/movement_handler/mob/stop_effect/MayMove()
-	for(var/obj/effect/stop/S in mob.loc)
+	for(var/obj/stop/S in mob.loc)
 		if(S.victim == mob)
 			return MOVEMENT_STOP
 	return MOVEMENT_PROCEED
@@ -267,8 +271,18 @@
 		return
 
 	// Something with pulling things
-	var/extra_delay = HandleGrabs(direction, old_turf)
+	// [SIERRA-EDIT] - SSINPUT
+	// var/extra_delay = HandleGrabs(direction, old_turf) // SIERRA-EDIT - ORIGINAL
+	// mob.ExtraMoveCooldown(extra_delay) // SIERRA-EDIT - ORIGINAL
+	var/extra_delay = 0
+	for (var/obj/item/grab/G in mob)
+		if(G.assailant == G.affecting)
+			continue
+		extra_delay = max(extra_delay, G.grab_slowdown())
+
 	mob.ExtraMoveCooldown(extra_delay)
+	HandleGrabs(direction, old_turf)
+	// [/SIERRA-EDIT]
 
 	for (var/obj/item/grab/G in mob)
 		if (G.assailant_reverse_facing())
@@ -343,7 +357,7 @@
 
 /mob/proc/AdjustMovementDirection(direction)
 	. = direction
-	if(!confused)
+	if(!is_confused())
 		return
 
 	var/stability = MOVING_DELIBERATELY(src) ? 75 : 25

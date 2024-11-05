@@ -112,8 +112,8 @@
 			user.client.images |= holomap_datum.station_map
 
 			watching_mob = user
-			GLOB.moved_event.register(watching_mob, src, /obj/machinery/ship_map/proc/checkPosition)
-			GLOB.destroyed_event.register(watching_mob, src, /obj/machinery/ship_map/proc/stopWatching)
+			GLOB.moved_event.register(watching_mob, src, TYPE_PROC_REF(/obj/machinery/ship_map, checkPosition))
+			GLOB.destroyed_event.register(watching_mob, src, TYPE_PROC_REF(/obj/machinery/ship_map, stopWatching))
 			update_use_power(POWER_USE_ACTIVE)
 
 			if(bogus)
@@ -137,7 +137,7 @@
 		if(watching_mob.client)
 			animate(holomap_datum.station_map, alpha = 0, time = 5, easing = LINEAR_EASING)
 			var/mob/M = watching_mob
-			addtimer(new Callback(src, .proc/clear_image, M, holomap_datum.station_map),  0.5 SECONDS)//we give it time to fade out
+			addtimer(new Callback(src, PROC_REF(clear_image), M, holomap_datum.station_map),  0.5 SECONDS)//we give it time to fade out
 		GLOB.moved_event.unregister(watching_mob, src)
 		GLOB.destroyed_event.unregister(watching_mob, src)
 	watching_mob = null
@@ -150,7 +150,6 @@
 		M.client.images -= I
 
 /obj/machinery/ship_map/on_update_icon()
-	. = ..()
 	ClearOverlays()
 	if(MACHINE_IS_BROKEN(src))
 		icon_state = "station_mapb"
@@ -160,7 +159,7 @@
 		set_light(0)
 	else
 		icon_state = "station_map"
-		set_light(0.8, 0.1, 2, 2, "#1dbe17")
+		set_light(2, 0.8, "#1dbe17")
 
 		// Put the little "map" overlay down where it looks nice
 		if(small_station_map)
@@ -331,7 +330,7 @@
 
 	//This is where the fun begins
 	if(GLOB.using_map.use_overmap)
-		var/obj/effect/overmap/visitable/O = map_sectors["[z]"]
+		var/obj/overmap/visitable/O = map_sectors["[z]"]
 
 		var/current_z_offset_x = (HOLOMAP_ICON_SIZE / 2) - world.maxx / 2
 		var/current_z_offset_y = (HOLOMAP_ICON_SIZE / 2) - world.maxy / 2

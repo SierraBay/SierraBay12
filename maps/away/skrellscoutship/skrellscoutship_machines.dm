@@ -29,8 +29,6 @@
 	update_icon()
 
 /obj/machinery/power/skrell_reactor/on_update_icon()
-	. = ..()
-
 	if(!field_image)
 		field_image = image(icon = 'icons/obj/machines/power/fusion_core.dmi', icon_state = "emfield_s1")
 		field_image.color = COLOR_CYAN
@@ -41,7 +39,7 @@
 
 	if(on)
 		AddOverlays(field_image)
-		set_light(0.8, 1, 6, l_color = COLOR_CYAN)
+		set_light(6, 0.8, l_color = COLOR_CYAN)
 		icon_state = "core1"
 	else
 		CutOverlays(field_image)

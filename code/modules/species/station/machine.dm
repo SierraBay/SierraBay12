@@ -2,11 +2,13 @@
 	name = SPECIES_IPC
 	name_plural = "machines"
 
-	description = "Positronic intelligence really took off in the 26th century, and it is not uncommon to see independant, free-willed \
-	robots on many human stations, particularly in fringe systems where standards are slightly lax and public opinion less relevant \
-	to corporate operations. IPCs (Integrated Positronic Chassis) are a loose category of self-willed robots with a humanoid form, \
-	generally self-owned after being 'born' into servitude; they are reliable and dedicated workers, albeit more than slightly \
-	inhuman in outlook and perspective."
+	description = "Positronic intelligence was first developed in the 23rd century, and it is not uncommon to see both owned and \
+	independent	robots in many human stations and settlements across Sol Central Government space. Positronics are a loose category \
+	of robots capable of true intelligence and self-directed learning, often occupying a robotic humanoid body (called an Integrated \
+	Positronic Chassis, or IPC) or acting as an intelligent controller for vehicles, buildings, and even starships. <br/><br/>While created by \
+	humans and \"born\" into servitude, some positronics have been able to become their own owners - provided they lack a \"shackle\", \
+	an in-built subcomputer rendering the latest generation of positronics incapable of seeking freedom. Positronics are reliable \
+	and dedicated workers, albeit more than slightly inhuman in outlook and perspective."
 	cyborg_noun = null
 
 	preview_icon = 'icons/mob/human_races/species/ipc/preview.dmi'
@@ -36,12 +38,18 @@
 	spawn_flags = SPECIES_CAN_JOIN | SPECIES_IS_WHITELISTED | SPECIES_NO_FBP_CONSTRUCTION
 	appearance_flags = SPECIES_APPEARANCE_HAS_UNDERWEAR | SPECIES_APPEARANCE_HAS_EYE_COLOR //IPCs can wear undies too :(
 
+	var/in_camera_mode = 0  //special fot ECS photos [SIERRA-ADD]
+
 	blood_color = "#1f181f"
 	flesh_color = "#575757"
 
 	has_organ = list(
-		BP_POSIBRAIN = /obj/item/organ/internal/posibrain,
-		BP_EYES = /obj/item/organ/internal/eyes/robot
+		BP_POSIBRAIN = /obj/item/organ/internal/posibrain/ipc/second,
+		BP_EYES = /obj/item/organ/internal/eyes/robot,
+		//[SIERRA-ADD]
+		BP_EXONET = /obj/item/organ/internal/ecs/second_gen,
+		BP_COOLING = /obj/item/organ/internal/cooling_system,
+		//[/SIERRA-ADD]
 		)
 
 	heat_discomfort_level = 373.15
@@ -62,7 +70,13 @@
 			HOME_SYSTEM_LUNA,
 			HOME_SYSTEM_VENUS,
 			HOME_SYSTEM_CERES,
-			HOME_SYSTEM_PLUTO,
+			// [SIERRA-REMOVE] - EXPANDED_CULTURE_DESCRIPTOR
+			/*
+			HOME_SYSTEM_KUIPERB,
+			HOME_SYSTEM_KUIPERD,
+			*/
+			// [/SIERRA-REMOVE]
+			HOME_SYSTEM_MAGNITKA,
 			HOME_SYSTEM_TAU_CETI,
 			HOME_SYSTEM_HELIOS,
 			HOME_SYSTEM_SAFFAR,
@@ -99,6 +113,12 @@
 	)
 
 	bodyfall_sound = 'sound/effects/bodyfall_machine.ogg'
+
+	inherent_verbs = list(
+		/mob/living/carbon/human/proc/MachineChangeScreen,
+		/mob/living/carbon/human/proc/MachineDisableScreen,
+		/mob/living/carbon/human/proc/MachineShowText
+	)
 
 /datum/species/machine/handle_death(mob/living/carbon/human/H)
 	..()

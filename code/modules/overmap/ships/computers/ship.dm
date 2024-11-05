@@ -1,16 +1,16 @@
 /*
 While these computers can be placed anywhere, they will only function if placed on either a non-space, non-shuttle turf
-with an /obj/effect/overmap/visitable/ship present elsewhere on that z level, or else placed in a shuttle area with an /obj/effect/overmap/visitable/ship
+with an /obj/overmap/visitable/ship present elsewhere on that z level, or else placed in a shuttle area with an /obj/overmap/visitable/ship
 somewhere on that shuttle. Subtypes of these can be then used to perform ship overmap movement functions.
 */
 /obj/machinery/computer/ship
 	var/datum/browser/reconnect_popup
-	var/obj/effect/overmap/visitable/ship/linked
+	var/obj/overmap/visitable/ship/linked
 	var/list/viewers // Weakrefs to mobs in direct-view mode.
 	var/extra_view = 0 // how much the view is increased by when the mob is in overmap mode.
 
 // A late init operation called in SSshuttle, used to attach the thing to the right ship.
-/obj/machinery/computer/ship/proc/attempt_hook_up(obj/effect/overmap/visitable/ship/sector)
+/obj/machinery/computer/ship/proc/attempt_hook_up(obj/overmap/visitable/ship/sector)
 	if(!istype(sector))
 		return
 	if(sector.check_ownership(src))
@@ -24,15 +24,15 @@ somewhere on that shuttle. Subtypes of these can be then used to perform ship ov
 	. = ..()
 
 /obj/machinery/computer/ship/proc/sync_linked()
-	var/obj/effect/overmap/visitable/ship/sector = map_sectors["[z]"]
+	var/obj/overmap/visitable/ship/sector = map_sectors["[z]"]
 	if(!sector)
 		return
 	return attempt_hook_up_recursive(sector)
 
-/obj/machinery/computer/ship/proc/attempt_hook_up_recursive(obj/effect/overmap/visitable/ship/sector)
+/obj/machinery/computer/ship/proc/attempt_hook_up_recursive(obj/overmap/visitable/ship/sector)
 	if(attempt_hook_up(sector))
 		return sector
-	for(var/obj/effect/overmap/visitable/ship/candidate in sector)
+	for(var/obj/overmap/visitable/ship/candidate in sector)
 		if((. = .(candidate)))
 			return
 
@@ -72,9 +72,9 @@ somewhere on that shuttle. Subtypes of these can be then used to perform ship ov
 	if(linked)
 		for(var/obj/machinery/shipsensors/sensor in linked.sensors)
 			sensor.reveal_contacts(user)
-	GLOB.moved_event.register(user, src, /obj/machinery/computer/ship/proc/unlook)
+	GLOB.moved_event.register(user, src, TYPE_PROC_REF(/obj/machinery/computer/ship, unlook))
 	if (!isghost(user))
-		GLOB.stat_set_event.register(user, src, /obj/machinery/computer/ship/proc/unlook)
+		GLOB.stat_set_event.register(user, src, TYPE_PROC_REF(/obj/machinery/computer/ship, unlook))
 	LAZYDISTINCTADD(viewers, weakref(user))
 	if(linked)
 		LAZYDISTINCTADD(linked.navigation_viewers, weakref(user))
@@ -82,12 +82,12 @@ somewhere on that shuttle. Subtypes of these can be then used to perform ship ov
 /obj/machinery/computer/ship/proc/unlook(mob/user)
 	user.reset_view(null, FALSE)
 	if(user.client)
-		user.client.view = world.view
+		user.client.view = user.get_preference_value(/datum/client_preference/client_view)
 	if(linked)
 		for(var/obj/machinery/shipsensors/sensor in linked.sensors)
 			sensor.hide_contacts(user)
-	GLOB.moved_event.unregister(user, src, /obj/machinery/computer/ship/proc/unlook)
-	GLOB.stat_set_event.unregister(user, src, /obj/machinery/computer/ship/proc/unlook)
+	GLOB.moved_event.unregister(user, src, TYPE_PROC_REF(/obj/machinery/computer/ship, unlook))
+	GLOB.stat_set_event.unregister(user, src, TYPE_PROC_REF(/obj/machinery/computer/ship, unlook))
 	LAZYREMOVE(viewers, weakref(user))
 	if(linked)
 		LAZYREMOVE(linked.navigation_viewers, weakref(user))
@@ -112,16 +112,19 @@ somewhere on that shuttle. Subtypes of these can be then used to perform ship ov
 		return 0
 
 /obj/machinery/computer/ship/Destroy()
-	linked.consoles -= src
+	if (linked)
+		linked.consoles -= src
 	. = ..()
 
 /obj/machinery/computer/ship/sensors/Destroy()
-	var/obj/machinery/shipsensors/sensor = sensor_ref.resolve()
-	LAZYREMOVE(sensor.linked_consoles, src)
-	sensor_ref = null
-	if(LAZYLEN(viewers))
+	if (sensor_ref)
+		var/obj/machinery/shipsensors/sensor = sensor_ref.resolve()
+		LAZYREMOVE(sensor.linked_consoles, src)
+		sensor_ref = null
+
+	if (LAZYLEN(viewers))
 		for(var/weakref/W in viewers)
 			var/M = W.resolve()
-			if(M)
-				unlook(M)
+			if (M)
+				invoke_async(PROC_REF(unlook), M)
 	. = ..()

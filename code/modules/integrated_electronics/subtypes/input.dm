@@ -41,8 +41,10 @@
 	activators = list("on toggle" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 
-/obj/item/integrated_circuit/input/toggle_button/emp_act()
-	return // This is a mainly physical thing, not affected by electricity
+// This is a mainly physical thing, not affected by electricity
+/obj/item/integrated_circuit/input/toggle_button/emp_act(severity)
+	SHOULD_CALL_PARENT(FALSE)
+	return
 
 /obj/item/integrated_circuit/input/toggle_button/get_topic_data(mob/user)
 	return list("Toggle [get_pin_data(IC_OUTPUT, 1) ? "Off" : "On"]" = "toggle=1")
@@ -474,7 +476,7 @@
 		set_pin_data(IC_OUTPUT, 1, turf_contents)
 		set_pin_data(IC_OUTPUT, 3, area_name)
 		var/list/St = new()
-		for(var/obj/effect/decal/cleanable/crayon/I in scanned_turf)
+		for(var/obj/decal/cleanable/crayon/I in scanned_turf)
 			St.Add(I.icon_state)
 		if(length(St))
 			set_pin_data(IC_OUTPUT, 2, jointext(St, ",", 1, 0))
@@ -806,7 +808,7 @@
 	. = list()
 	. += "Current selection: [(current_console && current_console.id) || "None"]"
 	. += "Please select a teleporter to lock in on:"
-	for (var/obj/machinery/computer/teleporter/computer in SSmachines.machinery)
+	for (var/obj/machinery/computer/teleporter/computer as anything in SSmachines.get_machinery_of_type(/obj/machinery/computer/teleporter))
 		if (computer.target && computer.operable() && AreConnectedZLevels(get_z(src), get_z(computer)))
 			.["[computer.id] ([computer.active ? "Active" : "Inactive"])"] = "tport=[any2ref(computer)]"
 	.["None (Dangerous)"] = "tport=random"
@@ -867,7 +869,7 @@
 	power_draw_per_use = 5
 
 	var/language_preferred = LANGUAGE_HUMAN_EURO
-	var/languages_understood = list(LANGUAGE_HUMAN_EURO, LANGUAGE_HUMAN_CHINESE, LANGUAGE_HUMAN_ARABIC, LANGUAGE_HUMAN_INDIAN, LANGUAGE_HUMAN_IBERIAN, LANGUAGE_HUMAN_RUSSIAN, LANGUAGE_HUMAN_SELENIAN, LANGUAGE_SPACER)
+	var/languages_understood = list(LANGUAGE_HUMAN_EURO, LANGUAGE_HUMAN_CHINESE, LANGUAGE_HUMAN_ARABIC, LANGUAGE_HUMAN_INDIAN, LANGUAGE_HUMAN_IBERIAN, LANGUAGE_HUMAN_RUSSIAN, LANGUAGE_HUMAN_SELENIAN, LANGUAGE_SPACER,  LANGUAGE_EAL, LANGUAGE_UNATHI_SINTA, LANGUAGE_UNATHI_YEOSA,  LANGUAGE_SKRELLIAN,  LANGUAGE_ROBOT_GLOBAL, LANGUAGE_DRONE_GLOBAL, LANGUAGE_GUTTER, LANGUAGE_ROOTLOCAL, LANGUAGE_PRIMITIVE, LANGUAGE_HUMAN_AVALON, LANGUAGE_HUMAN_LORRIMAN, LANGUAGE_HUMAN_MIRANIAN, LANGUAGE_LEGALESE, LANGUAGE_RESOMI, LANGUAGE_SIIK_MAAS, LANGUAGE_SIIK_TAJR)
 	var/invalid_flags = NONVERBAL | SIGNLANG | HIVEMIND | ALT_TRANSMIT
 
 /obj/item/integrated_circuit/input/microphone/Initialize()
@@ -895,8 +897,8 @@
 			if(translated && !(speaking.name == language_preferred))
 				activate_pin(2)
 
-
-/obj/item/integrated_circuit/input/microphone/modem
+// [SIERRA DELETE]
+/*/obj/item/integrated_circuit/input/microphone/modem
 	name = "machine modulating microphone"
 	languages_understood = list(LANGUAGE_HUMAN_EURO, LANGUAGE_EAL)
 	spawn_flags = IC_SPAWN_RESEARCH
@@ -914,8 +916,8 @@
 	languages_understood = list(LANGUAGE_SPACER, LANGUAGE_GUTTER, LANGUAGE_HUMAN_CHINESE, LANGUAGE_HUMAN_ARABIC, LANGUAGE_HUMAN_INDIAN, LANGUAGE_HUMAN_IBERIAN, LANGUAGE_HUMAN_RUSSIAN)
 	language_preferred = LANGUAGE_HUMAN_RUSSIAN
 	spawn_flags = 0
-	extended_desc = "This microphone did not come with any documentation."
-
+	extended_desc = "This microphone did not come with any documentation."*/
+// [SIERRA-DELETE-END]
 
 /obj/item/integrated_circuit/input/sensor
 	name = "sensor"

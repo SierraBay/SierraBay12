@@ -3,12 +3,20 @@
 #define TAG_FACTION   "faction"
 #define TAG_RELIGION  "religion"
 
+// [SIERRA-EDIT] - EXPANDED_CULTURE_DESCRIPTOR - Перевод дефайнов
+//#define ALL_CULTURAL_TAGS list( \ // SIERRA-EDIT - ORIGINAL
+//	TAG_CULTURE =   "Culture", \ // SIERRA-EDIT - ORIGINAL
+//	TAG_HOMEWORLD = "Residence", \ // SIERRA-EDIT - ORIGINAL
+//	TAG_FACTION =   "Faction", \ // SIERRA-EDIT - ORIGINAL
+//	TAG_RELIGION =  "Beliefs" \ // SIERRA-EDIT - ORIGINAL
+//	) // SIERRA-EDIT - ORIGINAL
 #define ALL_CULTURAL_TAGS list( \
-	TAG_CULTURE =   "Culture", \
-	TAG_HOMEWORLD = "Residence", \
-	TAG_FACTION =   "Faction", \
-	TAG_RELIGION =  "Beliefs" \
+	TAG_CULTURE =   "Культура", \
+	TAG_HOMEWORLD = "Место жительства", \
+	TAG_FACTION =   "Фракция", \
+	TAG_RELIGION =  "Вера" \
 	)
+// [SIERRA-EDIT]
 
 // Cultural IDs.
 #define FACTION_SOL_CENTRAL    "Sol Central Government"
@@ -32,7 +40,8 @@
 #define HOME_SYSTEM_MARS       "Mars"
 #define HOME_SYSTEM_VENUS      "Venus"
 #define HOME_SYSTEM_CERES      "Ceres"
-#define HOME_SYSTEM_PLUTO      "Pluto"
+#define HOME_SYSTEM_KUIPERB      "Kuiper, Belt"
+#define HOME_SYSTEM_KUIPERD    "Kuiper, Interdust"
 #define HOME_SYSTEM_TAU_CETI   "Ceti Epsilon"
 #define HOME_SYSTEM_HELIOS	   "Eos"
 #define HOME_SYSTEM_TERRA 	   "Terra"
@@ -59,12 +68,26 @@
 #define CULTURE_HUMAN_VENUSIAN "Venusian, Zoner"
 #define CULTURE_HUMAN_VENUSLOW "Venusian, Surfacer"
 #define CULTURE_HUMAN_BELTER   "Belter, Ceres"
-#define CULTURE_HUMAN_PLUTO    "Plutonian"
+#define CULTURE_HUMAN_KUIPERI  "Kuiper, Insider"
+#define CULTURE_HUMAN_KUIPERO  "Kuiper, Outsider"
+#define CULTURE_HUMAN_MAGNITKA "Magnitkan"
 #define CULTURE_HUMAN_EARTH    "Earther"
-#define CULTURE_HUMAN_CETI     "Cetite"
-#define CULTURE_HUMAN_SPACER   "Spacer, Core Systems"
-#define CULTURE_HUMAN_SPAFRO   "Spacer, Frontier Systems"
-#define CULTURE_HUMAN_CONFED   "Terran"
+#define CULTURE_HUMAN_CETIN    "Cetite, Northern"
+#define CULTURE_HUMAN_CETIS    "Cetite, Southern"
+#define CULTURE_HUMAN_CETII    "Cetite, Interstate"
+#define CULTURE_HUMAN_FOSTER   "Fostersman"
+#define CULTURE_HUMAN_PIRXL    "Pirxish, High"
+#define CULTURE_HUMAN_PIRXB    "Pirxish, Bugeater"
+#define CULTURE_HUMAN_PIRXF    "Pirxish, Frontier"
+#define CULTURE_HUMAN_TADMOR   "Tadmorian"
+#define CULTURE_HUMAN_IOLAUS   "Iolan"
+#define CULTURE_HUMAN_BRAHE    "Brahite"
+#define CULTURE_HUMAN_EOS      "Eosic"
+#define CULTURE_HUMAN_SPACER   "Spacer"
+#define CULTURE_HUMAN_OFFWORLD "Offworlder"
+#define CULTURE_HUMAN_SOLCOL   "Solar-Colonial"
+#define CULTURE_HUMAN_CONFEDC  "Confederate, Core Systems"
+#define CULTURE_HUMAN_CONFEDO  "Confederate, Outer Systems"
 #define CULTURE_HUMAN_GAIAN    "Gaian"
 #define CULTURE_HUMAN_OTHER    "Other, Humanity"
 #define CULTURE_STARLIGHT      "Starlit Realms"

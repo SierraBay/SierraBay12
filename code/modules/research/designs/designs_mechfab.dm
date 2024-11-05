@@ -1,10 +1,9 @@
 /datum/design/item/mechfab
 	build_type = MECHFAB
-	category = "Misc"
 	req_tech = list(TECH_MATERIAL = 1)
 
 /datum/design/item/mechfab/robot
-	category = "Robot"
+	category = list("Robot")
 
 //if the fabricator is a exosuit fab pass the manufacturer info over to the robot part constructor
 /datum/design/item/mechfab/robot/Fabricate(newloc, fabricator)
@@ -117,7 +116,7 @@
 	build_path = /obj/structure/heavy_vehicle_frame
 	time = 70
 	materials = list(MATERIAL_STEEL = 20000)
-	category = "Exosuits"
+	category = list("Exosuit")
 
 /datum/design/item/mechfab/exosuit/basic_armour
 	name = "basic exosuit armour"
@@ -297,7 +296,7 @@
 	build_type = MECHFAB
 	time = 12
 	materials = list(MATERIAL_STEEL = 10000)
-	category = "Cyborg Upgrade Modules"
+	category = list("Robot Upgrade")
 
 /datum/design/item/robot_upgrade/rename
 	name = "Rename module"
@@ -369,7 +368,7 @@
 
 /datum/design/item/exosuit
 	build_type = MECHFAB
-	category = "Exosuit Equipment"
+	category = list("Exosuit Equipment")
 	time = 10
 	materials = list(MATERIAL_STEEL = 10000)
 
@@ -468,12 +467,15 @@
 	id   = "mech_sleeper"
 	build_path = /obj/item/mech_equipment/sleeper
 
+//[SIERRA-REMOVE] - Mechs-by-Shegar
+/*
 /datum/design/item/exosuit/mender
 	name = "mounted medigel spray"
 	id   = "mech_mender"
 	build_path = /obj/item/mech_equipment/mender
 	materials = list(MATERIAL_STEEL = 10000, MATERIAL_PLASTIC = 15000, MATERIAL_ALUMINIUM = 15000)
-
+*/
+//[SIERRA-REMOVE]
 /datum/design/item/exosuit/extinguisher
 	name = "mounted extinguisher"
 	id   = "mech_extinguisher"
@@ -519,11 +521,11 @@
 	build_type = MECHFAB
 	materials = list(MATERIAL_STEEL = 750, MATERIAL_GLASS = 750)
 	build_path = /obj/item/device/flash/synthetic
-	category = "Misc"
+	category = list("Misc")
 
 //Augments, son
 /datum/design/item/mechfab/augment
-	category = "Augments"
+	category = list("Augments")
 
 /datum/design/item/mechfab/augment/armblade
 	name = "Armblade"
@@ -683,6 +685,9 @@
 	id = "augment_circuitry"
 
 //BigRigs
+/datum/design/item/mechfab/rig
+	category = "Hardsuits"
+
 /datum/design/item/mechfab/rig/zero
 	category = "Hardsuits"
 	name = "Null suit control module"
@@ -748,7 +753,7 @@
 /datum/design/item/mechfab/rig/plasmacutter
 	category = "Hardsuits"
 	name = "Plasma Cutter"
-	build_path = /obj/item/rig_module/mounted/plasmacutter
+	build_path = /obj/item/rig_module/mounted/energy/plasmacutter
 	materials = list(MATERIAL_STEEL = 2000, MATERIAL_GLASS = 1000, MATERIAL_PLASTIC = 1000, MATERIAL_GOLD = 700, MATERIAL_PHORON = 500)
 	req_tech = list(TECH_MATERIAL = 4, TECH_PHORON = 3, TECH_ENGINEERING = 6, TECH_COMBAT = 4)
 	id = "rig_plasmacutter"
@@ -829,7 +834,7 @@
 /datum/design/item/mechfab/rig/taser
 	category = "Hardsuits"
 	name = "Electrolaser"
-	build_path = /obj/item/rig_module/mounted/taser
+	build_path = /obj/item/rig_module/mounted/energy/taser
 	materials = list(MATERIAL_STEEL = 4000, MATERIAL_PLASTIC = 2500, MATERIAL_GLASS = 2000, MATERIAL_GOLD = 1000)
 	req_tech = list(TECH_POWER = 5, TECH_COMBAT = 5, TECH_ENGINEERING = 6)
 	id = "rig_taser"
@@ -838,7 +843,7 @@
 /datum/design/item/mechfab/rig/egun
 	category = "Hardsuits"
 	name = "Energy Gun"
-	build_path = /obj/item/rig_module/mounted/egun
+	build_path = /obj/item/rig_module/mounted/energy/egun
 	materials = list(MATERIAL_STEEL = 6000, MATERIAL_GLASS = 3000, MATERIAL_PLASTIC = 2500, MATERIAL_GOLD = 2000, MATERIAL_SILVER = 1000)
 	req_tech = list(TECH_POWER = 6, TECH_COMBAT = 6, TECH_ENGINEERING = 6)
 	id = "rig_egun"

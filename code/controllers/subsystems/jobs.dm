@@ -45,8 +45,8 @@ SUBSYSTEM_DEF(jobs)
 
 	// Create abstract submap archetype jobs for use in prefs, etc.
 	archetype_job_datums.Cut()
-	for(var/atype in SSmapping.submap_archetypes)
-		var/singleton/submap_archetype/arch = SSmapping.submap_archetypes[atype]
+	var/list/submap_archetypes = GET_SINGLETON_SUBTYPE_LIST(/singleton/submap_archetype)
+	for (var/singleton/submap_archetype/arch in submap_archetypes)
 		for(var/jobtype in arch.crew_jobs)
 			var/datum/job/job = get_by_path(jobtype)
 			if(!job && ispath(jobtype, /datum/job/submap))
@@ -67,9 +67,8 @@ SUBSYSTEM_DEF(jobs)
 	// Populate/set up map job lists.
 	job_lists_by_map_name = list("[GLOB.using_map.full_name]" = list("jobs" = primary_job_datums, "default_to_hidden" = FALSE))
 
-	for(var/atype in SSmapping.submap_archetypes)
+	for (var/singleton/submap_archetype/arch in submap_archetypes)
 		var/list/submap_job_datums
-		var/singleton/submap_archetype/arch = SSmapping.submap_archetypes[atype]
 		for(var/jobtype in arch.crew_jobs)
 			var/datum/job/job = get_by_path(jobtype)
 			if(job)
@@ -398,6 +397,17 @@ SUBSYSTEM_DEF(jobs)
 						if(!H.skill_check(required,G.allowed_skills[required]))
 							permitted = 0
 
+				// [SIERRA-ADD] - LOADOUT_ITEMS - Поддержка фракционных предметов в лодауте, поддержка тиров доната
+				if(permitted && G.allowed_factions)
+					var/singleton/cultural_info/faction = H.get_cultural_value(TAG_FACTION)
+					var/facname = faction ? faction.name : "Unset"
+					if(!(facname in G.allowed_factions))
+						permitted = 0
+				
+				if(permitted && (!(G.has_donation_tier(H))))
+					permitted = 0
+				// [/SIERRA-ADD]
+
 				if(G.whitelisted && (!(H.species.name in G.whitelisted)))
 					permitted = 0
 
@@ -481,7 +491,7 @@ SUBSYSTEM_DEF(jobs)
 	if(!joined_late || job.latejoin_at_spawnpoints)
 		var/obj/S = job.get_roundstart_spawnpoint()
 
-		if(istype(S, /obj/effect/landmark/start) && istype(S.loc, /turf))
+		if(istype(S, /obj/landmark/start) && istype(S.loc, /turf))
 			H.forceMove(S.loc)
 		else
 			var/datum/spawnpoint/spawnpoint = job.get_spawnpoint(H.client)
@@ -555,7 +565,7 @@ SUBSYSTEM_DEF(jobs)
 	return positions_by_department["[dept]"] || list()
 
 /datum/controller/subsystem/jobs/proc/spawn_empty_ai()
-	for(var/obj/effect/landmark/start/S in landmarks_list)
+	for(var/obj/landmark/start/S in landmarks_list)
 		if(S.name != "AI")
 			continue
 		if(locate(/mob/living) in S.loc)

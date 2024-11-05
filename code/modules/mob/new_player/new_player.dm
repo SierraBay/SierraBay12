@@ -83,8 +83,8 @@
 			stat("Game Mode:", PUBLIC_GAME_MODE)
 		var/extra_antags = list2params(additional_antag_types)
 		stat("Added Antagonists:", extra_antags ? extra_antags : "None")
-		stat("Initial Continue Vote:", "[round(config.vote_autotransfer_initial / 600, 1)] minutes")
-		stat("Additional Vote Every:", "[round(config.vote_autotransfer_interval / 600, 1)] minutes")
+		stat("Initial Continue Vote:", "[config.vote_autotransfer_initial] minutes")
+		stat("Additional Vote Every:", "[config.vote_autotransfer_interval] minutes")
 
 		if(GAME_STATE <= RUNLEVEL_LOBBY)
 			stat("Time To Start:", "[round(SSticker.pregame_timeleft/10)][SSticker.round_progressing ? "" : " (DELAYED)"]")
@@ -99,19 +99,23 @@
 						highjob = " as [player.client.prefs.job_high]"
 					if (!player.is_stealthed())
 						var/can_see_hidden = check_rights(R_INVESTIGATE, 0)
-						var/datum/game_mode/mode = SSticker.pick_mode(SSticker.master_mode)
-						var/list/readied_antag_roles = list()
-						if (mode && can_see_hidden)
-							for (var/role in player.client.prefs.be_special_role)
-								if (role in mode.antag_tags)
-									readied_antag_roles += role
+						var/datum/game_mode/mode = SSticker.mode
+						var/antag_role_text = ""
+						if(mode)
+							var/list/readied_antag_roles = list()
+							if (can_see_hidden)
+								for (var/role in player.client.prefs.be_special_role)
+									if (role in mode.antag_tags)
+										readied_antag_roles += role
 
-						var/antag_role_text = "[length(readied_antag_roles) ? "Readied for ([english_list(readied_antag_roles)])" : ""]"
+							if(length(readied_antag_roles))
+								antag_role_text = "Readied for ([english_list(readied_antag_roles)])"
+
 						stat("[player.key]", (player.ready && (show_ready || can_see_hidden)?("(Playing[highjob]) [(can_see_hidden && !show_ready) ? "(Hidden)" : ""] [antag_role_text]"):(null)))
 				totalPlayers++
 				if(player.ready)totalPlayersReady++
 		else
-			stat("Next Continue Vote:", "[max(round(transfer_controller.time_till_transfer_vote() / 600, 1), 0)] minutes")
+			stat("Next Continue Vote:", "[SSroundend.vote_cache] minutes")
 
 /mob/new_player/Topic(href, href_list) // This is a full override; does not call parent.
 	if (usr != src)
@@ -206,6 +210,13 @@
 		if(!check_species_allowed(S))
 			return 0
 
+		//[SIERRA-ADD] - XENO WHITELIST
+		if(client.prefs.organ_data[BP_CHEST] == "cyborg")
+			if(!whitelist_lookup(SPECIES_FBP, client.ckey) && client.prefs.species != SPECIES_IPC)
+				to_chat(usr, "Нельзя зайти за ППТ без вайтлиста.")
+				return FALSE
+		//[/SIERRA-ADD]
+
 		AttemptLateSpawn(job, client.prefs.spawnpoint)
 		return
 
@@ -218,6 +229,10 @@
 
 /mob/new_player/proc/AttemptLateSpawn(datum/job/job, spawning_at)
 
+	if(GAME_STATE == RUNLEVEL_GAME)
+		if(job.late_joinable == FALSE)
+			to_chat(usr, SPAN_WARNING("Вы не можете зайти за эту роль во время раунда."))
+			return 0
 	if(src != usr)
 		return 0
 	if(GAME_STATE != RUNLEVEL_GAME)
@@ -461,6 +476,13 @@
 
 /mob/new_player/proc/create_character(turf/spawn_turf)
 	spawning = 1
+	//[SIERRA-ADD] - XENO WHITELIST
+	if(client.prefs.organ_data[BP_CHEST] == "cyborg")
+		if(!whitelist_lookup(SPECIES_FBP, client.ckey) && client.prefs.species != SPECIES_IPC)
+			to_chat(src, "Нельзя зайти за ППТ без вайтлиста.")
+			spawning = 0
+			return null
+	//[/SIERRA-ADD]
 	close_spawn_windows()
 
 	var/mob/living/carbon/human/new_character

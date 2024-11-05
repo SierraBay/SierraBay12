@@ -6,10 +6,11 @@ var/global/datum/species/shapeshifter/promethean/prometheans
 	name =             SPECIES_PROMETHEAN
 	name_plural =      "Prometheans"
 	description =            "What has Science done?"
+	preview_icon = null
 	show_ssd =         "totally quiescent"
 	death_message =    "rapidly loses cohesion, splattering across the ground..."
 	knockout_message = "collapses inwards, forming a disordered puddle of goo."
-	remains_type = /obj/effect/decal/cleanable/ash
+	remains_type = /obj/decal/cleanable/ash
 
 	meat_type = null
 	bone_material = null
@@ -84,13 +85,13 @@ var/global/datum/species/shapeshifter/promethean/prometheans
 	H.apply_stored_shock_to(target)
 
 /datum/species/shapeshifter/promethean/handle_death(mob/living/carbon/human/H)
-	addtimer(new Callback(H, /mob/proc/gib),0)
+	addtimer(new Callback(H, TYPE_PROC_REF(/mob, gib)),0)
 
 /datum/species/shapeshifter/promethean/handle_environment_special(mob/living/carbon/human/H)
 
 	var/turf/T = H.loc
 	if(istype(T))
-		var/obj/effect/decal/cleanable/C = locate() in T
+		var/obj/decal/cleanable/C = locate() in T
 		if(C)
 			if(H.nutrition < 300)
 				H.adjust_nutrition(rand(10,20))

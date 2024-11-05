@@ -11,7 +11,7 @@
 		"Droid" = "droid-science"
 	)
 	equipment = list(
-		/obj/item/portable_destructive_analyzer,
+//		/obj/item/portable_destructive_analyzer,
 		/obj/item/gripper/research,
 		/obj/item/gripper/no_use/loader,
 		/obj/item/device/robotanalyzer,
@@ -34,7 +34,6 @@
 	emag_gear = list(
 		/obj/item/melee/baton/robot/electrified_arm,
 		/obj/item/device/flash,
-		/obj/item/gun/energy/gun,
 		/obj/prefab/hand_teleporter,
 		/obj/item/gun/energy/decloner
 	)

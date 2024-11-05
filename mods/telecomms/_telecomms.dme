@@ -1,0 +1,32 @@
+#ifndef MODPACK_TELECOMMS
+#define MODPACK_TELECOMMS
+
+#include "_telecomms.dm"
+#include "code\macros.dm"
+#include "code\text.dm"
+#include "code\traffic_control.dm"
+#include "code\boards.dm"
+#include "code\telemonitor.dm"
+#include "code\scripting\Errors.dm"
+#include "code\scripting\IDE.dm"
+#include "code\scripting\Options.dm"
+#include "code\scripting\stack.dm"
+#include "code\scripting\AST\AST Nodes.dm"
+#include "code\scripting\AST\Blocks.dm"
+#include "code\scripting\AST\Statements.dm"
+#include "code\scripting\AST\Operators\Binary Operators.dm"
+#include "code\scripting\AST\Operators\Unary Operators.dm"
+#include "code\scripting\Implementations\_Logic.dm"
+#include "code\scripting\Implementations\Telecomms.dm"
+#include "code\scripting\Interpreter\Evaluation.dm"
+#include "code\scripting\Interpreter\Interaction.dm"
+#include "code\scripting\Interpreter\Interpreter.dm"
+#include "code\scripting\Interpreter\Scope.dm"
+#include "code\scripting\Parser\Expressions.dm"
+#include "code\scripting\Parser\Keywords.dm"
+#include "code\scripting\Parser\Parser.dm"
+#include "code\scripting\Scanner\Scanner.dm"
+#include "code\scripting\Scanner\Tokens.dm"
+#include "code\telecommunications.dm"
+
+#endif

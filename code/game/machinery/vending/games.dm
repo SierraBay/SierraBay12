@@ -34,10 +34,13 @@
 		/obj/item/storage/box/checkers = 10,
 		/obj/item/storage/box/checkers/chess/red = 10,
 		/obj/item/storage/box/checkers/chess = 10,
+		/obj/item/stack/package_wrap/gift_wrap = 10,
 		/obj/item/board = 2,
 		/obj/item/storage/fancy/crayons = 3,
 		/obj/item/reagent_containers/spray/waterflower = 10,
-		/obj/item/storage/box/snappops = 15
+		/obj/item/storage/box/snappops = 15,
+		/obj/structure/plushie/carp  = 10,
+		/obj/structure/plushie/beepsky = 10
 	)
 	products = list(
 		/obj/item/toy/blink = 0,
@@ -51,10 +54,13 @@
 		/obj/item/storage/box/checkers = 0,
 		/obj/item/storage/box/checkers/chess/red = 0,
 		/obj/item/storage/box/checkers/chess = 0,
+		/obj/item/stack/package_wrap/gift_wrap = 0,
 		/obj/item/board = 0,
 		/obj/item/storage/fancy/crayons = 0,
 		/obj/item/reagent_containers/spray/waterflower = 0,
-		/obj/item/storage/box/snappops = 0
+		/obj/item/storage/box/snappops = 0,
+		/obj/structure/plushie/carp = 0,
+		/obj/structure/plushie/beepsky = 0
 	)
 	rare_products = list(
 		/obj/item/reagent_containers/spray/waterflower = 30,

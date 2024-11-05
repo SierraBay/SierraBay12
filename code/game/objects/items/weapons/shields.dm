@@ -89,14 +89,15 @@
 	return base_block_chance
 
 
-/obj/item/shield/riot/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/shield/riot/use_tool(obj/item/W, mob/living/user, list/click_params)
 	if(istype(W, /obj/item/melee/baton))
 		if(cooldown < world.time - 25)
-			user.visible_message(SPAN_WARNING("[user] bashes [src] with [W]!"))
+			user.visible_message(SPAN_WARNING("\The [user] bashes \the [src] with \the [W]!"))
 			playsound(user.loc, 'sound/effects/shieldbash.ogg', 50, 1)
 			cooldown = world.time
+			return TRUE
 	else
-		..()
+		return ..()
 
 
 /obj/item/shield/riot/metal
@@ -167,7 +168,7 @@
 	var/sound_id
 	var/damaged = FALSE
 	var/disabled
-	var/datum/effect/effect/system/spark_spread/sparks
+	var/datum/effect/spark_spread/sparks
 
 
 /obj/item/shield/energy/Destroy()
@@ -185,7 +186,7 @@
 /obj/item/shield/energy/on_update_icon()
 	icon_state = "eshield[active]"
 	if (active)
-		set_light(0.6, 0.1, 2, 1, "#006aff")
+		set_light(1.5, 1.5, "#006aff")
 	else
 		set_light(0)
 
@@ -221,7 +222,7 @@
 		H.update_inv_r_hand()
 
 	update_icon()
-	addtimer(new Callback(src, /obj/item/shield/energy/proc/UpdateSoundLoop), 0.25 SECONDS)
+	addtimer(new Callback(src, TYPE_PROC_REF(/obj/item/shield/energy, UpdateSoundLoop)), 0.25 SECONDS)
 
 
 /obj/item/shield/energy/proc/deactivate(mob/living/user)
@@ -235,13 +236,14 @@
 		force = initial(force)
 		w_class = initial(w_class)
 
+	update_icon()
+
 	if (istype(user,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = user
 		H.update_inv_l_hand()
 		H.update_inv_r_hand()
 
-	update_icon()
-	addtimer(new Callback(src, /obj/item/shield/energy/proc/UpdateSoundLoop), 0.1 SECONDS)
+	addtimer(new Callback(src, TYPE_PROC_REF(/obj/item/shield/energy, UpdateSoundLoop)), 0.1 SECONDS)
 
 
 /obj/item/shield/energy/attack_self(mob/living/user)
@@ -270,6 +272,7 @@
 
 
 /obj/item/shield/energy/emp_act(severity)
+	SHOULD_CALL_PARENT(FALSE)
 	if (!active)
 		return
 	if (damaged)
@@ -279,7 +282,7 @@
 		disabletime = 1 MINUTES
 
 	visible_message(SPAN_DANGER("\The [src] violently shudders!"))
-	new /obj/effect/overlay/self_deleting/emppulse(get_turf(src))
+	new /obj/overlay/self_deleting/emppulse(get_turf(src))
 
 	disabled = world.time + disabletime
 	damaged = TRUE
@@ -289,6 +292,7 @@
 	else
 		deactivate()
 	update_icon()
+	GLOB.empd_event.raise_event(src, severity)
 
 
 /obj/item/shield/energy/proc/UpdateSoundLoop()

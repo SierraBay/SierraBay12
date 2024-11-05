@@ -51,7 +51,7 @@
 			var/image/adding_mat_overlay = image(icon, "[base_icon_state]_mat")
 			adding_mat_overlay.color = mat_colour
 			AddOverlays(adding_mat_overlay)
-			addtimer(new Callback(src, /atom/proc/CutOverlays, adding_mat_overlay), 1 SECOND)
+			addtimer(new Callback(src, TYPE_PROC_REF(/atom, CutOverlays), adding_mat_overlay), 1 SECOND)
 		if(istype(thing, /obj/item/stack))
 			var/obj/item/stack/S = thing
 			S.use(stacks_used)
@@ -70,8 +70,11 @@
 	else
 		to_chat(user, SPAN_WARNING("\The [src] cannot process \the [thing]."))
 
-/obj/machinery/fabricator/attackby(obj/item/O, mob/user)
-	if(component_attackby(O, user) || stat)
+/obj/machinery/fabricator/use_tool(obj/item/O, mob/living/user, list/click_params)
+	if ((. = ..()))
+		return
+	if(stat)
+		to_chat(user, SPAN_WARNING("\The [src] is not operating."))
 		return TRUE
 	if(panel_open && (isMultitool(O) || isWirecutter(O)))
 		attack_hand(user)
@@ -97,7 +100,6 @@
 			qdel(O)
 		updateUsrDialog()
 		return TRUE
-	. = ..()
 
 /obj/machinery/fabricator/physical_attack_hand(mob/user)
 	if(fab_status_flags & FAB_SHOCKED)

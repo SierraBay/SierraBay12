@@ -27,6 +27,9 @@
 	///Whether or not the BSD Instability event is active
 	var/instability_event_active = FALSE
 
+	///Chance to teleport someone to the interlude during a pulse.
+	var/interlude_chance = 55
+
 
 /obj/machinery/bluespacedrive/Destroy()
 	QDEL_NULL(drive_sound)
@@ -38,7 +41,7 @@
 	. = ..()
 	drive_sound = GLOB.sound_player.PlayLoopingSound(src, "\ref[src]", 'sound/machines/BSD_idle.ogg', 50, 7)
 	AddParticles(/particles/torus/bluespace)
-	set_light(1, 5, 15, 10, COLOR_CYAN)
+	set_light(15, 1, COLOR_CYAN)
 	update_icon()
 
 
@@ -82,7 +85,7 @@
 /obj/machinery/bluespacedrive/on_death()
 	playsound(loc, 'sound/machines/BSD_explosion.ogg', 100)
 	visible_message(SPAN_DANGER(FONT_LARGE("\The [src] begins emitting an ear-splitting, horrible shrill! Get back!")))
-	addtimer(new Callback(src, .proc/explode), 5 SECONDS)
+	addtimer(new Callback(src, PROC_REF(explode)), 5 SECONDS)
 	..()
 
 
@@ -96,15 +99,17 @@
 		verbs -= verb
 	update_icon()
 
+/obj/machinery/bluespacedrive/use_grab(obj/item/grab/grab, list/click_params)
+	to_chat(grab.assailant, SPAN_WARNING("\The [src] pulls at \the [grab.affecting] but they're too heavy."))
+	return TRUE
 
-/obj/machinery/bluespacedrive/attackby(obj/item/item, mob/user)
-	if (istype(item, /obj/item/grab))
-		var/obj/item/grab/grab = item
-		to_chat(user, SPAN_WARNING("\The [src] pulls at \the [grab.affecting] but they're too heavy."))
+/obj/machinery/bluespacedrive/use_tool(obj/item/item, mob/living/user, list/click_params)
+	if ((. = ..()))
 		return
+
 	if (issilicon(user) || !user.unEquip(item, src))
 		to_chat(user, SPAN_WARNING("\The [src] pulls at \the [item] but it's attached to you."))
-		return
+		return TRUE
 	user.visible_message(
 		SPAN_WARNING("\The [user] reaches out \a [item] to \the [src], warping briefly as it disappears in a flash of blue light, scintillating motes left behind."),
 		SPAN_DANGER("You touch \the [src] with \the [item], the field buckling around it before retracting with a crackle as it leaves small, blue scintillas on your hand as you flinch away."),
@@ -112,9 +117,10 @@
 	)
 	qdel(item)
 	if (prob(5))
-		playsound(loc, 'sound/items/eatfood.ogg', 40)		//Yum
+		playsound(loc, 'sound/items/eatfood.ogg', 40)
 	else
 		playsound(loc, 'sound/machines/BSD_interact.ogg', 40)
+	return TRUE
 
 
 /obj/machinery/bluespacedrive/examine_damage_state(mob/user)
@@ -140,7 +146,7 @@
 	playsound(src, 'sound/effects/EMPulse.ogg', 100, TRUE)
 	var/datum/bubble_effect/bluespace_pulse/parent
 	for (var/level in GetConnectedZlevels(z))
-		parent = new (x, y, level, 1, 1, parent)
+		parent = new (x, y, level, 1, 1, parent, interlude_teleport_chance = interlude_chance)
 
 
 /// Creates a blinding flash of light that will blind and deafen those in range, and change turfs to bluespace
@@ -154,7 +160,7 @@
 			to_chat(living, SPAN_DANGER(FONT_LARGE("The Drive's field cracks open briefly, emitting a blinding flash of blue light and a deafenening screech!")))
 		living.flash_eyes(FLASH_PROTECTION_MAJOR)
 		living.Stun(3)
-		living.confused += 15
+		living.mod_confused(15)
 		living.ear_damage += rand(0, 5)
 		living.ear_deaf = max(living.ear_deaf, 15)
 	if (!change_turf)
@@ -168,9 +174,11 @@
 /datum/bubble_effect/bluespace_pulse
 	///List of mobs that can be swapped around when the pulse hits
 	var/list/mob/living/mobs_to_switch = list()
+	var/interlude_teleport_chance = 0
 
-/datum/bubble_effect/bluespace_pulse/New()
+/datum/bubble_effect/bluespace_pulse/New(interlude_teleport_chance = 50)
 	..()
+	src.interlude_teleport_chance = interlude_teleport_chance
 	START_PROCESSING(SSfastprocess, src)
 	var/list/zlevels = GetConnectedZlevels(z)
 	for (var/mob/living/L as anything in GLOB.alive_mobs)
@@ -197,7 +205,7 @@
 	if (TICK_CHECK)
 		return TRUE
 	if (radius <= 20)
-		new /obj/effect/temporary (turf, 0.2 SECONDS, 'icons/effects/effects.dmi', "cyan_sparkles")
+		new /obj/temporary (turf, 0.2 SECONDS, 'icons/effects/effects.dmi', "cyan_sparkles")
 	var/obj/machinery/light/light = locate() in turf
 	if (light && prob(20))
 		light.broken()
@@ -208,6 +216,18 @@
 		for (var/mob/living/mob as anything in mobs_to_switch)
 			if (!(mob.z in zlevels))
 				continue
+
+			if (GLOB.using_map.use_bluespace_interlude && prob(interlude_teleport_chance))
+				if (istype(mob, /mob/living/simple_animal) && prob(80))
+					return
+				var/turf/T = pick_area_turf_in_connected_z_levels(
+					list(GLOBAL_PROC_REF(is_not_space_area)),
+					list(GLOBAL_PROC_REF(not_turf_contains_dense_objects), GLOBAL_PROC_REF(IsTurfAtmosSafe)),
+					zlevels[1])
+				if (!T)
+					return
+				GLOB.using_map.do_interlude_teleport(mob, T, Frand(1, 2.5) MINUTES)
+				return
 			if (mob != being)
 				var/source_position = being.loc
 				var/other_position = mob.loc

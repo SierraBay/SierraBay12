@@ -25,7 +25,7 @@
 	health_hud_intensity = 1.75
 
 	min_age = 19
-	max_age = 140 //good medicine?
+	max_age = 120
 
 	description = "The Tajaran are a species of furred mammalian bipeds hailing from the chilly planet of Ahdomai \
 	in the Zamsiin-lr system. They are a naturally superstitious species, with the new generations growing up with tales \
@@ -71,7 +71,7 @@
 	blood_color = "#862a51"
 	organs_icon = 'mods/tajara/icons/tajara_body/organs.dmi'
 
-	move_trail = /obj/effect/decal/cleanable/blood/tracks/paw
+	move_trail = /obj/decal/cleanable/blood/tracks/paw
 /*
 	base_auras = list(
 		/obj/aura/speed/bio/tajaran
@@ -94,9 +94,10 @@
 			CULTURE_HUMAN_VENUSLOW,
 			CULTURE_HUMAN_BELTER,
 			CULTURE_HUMAN_EARTH,
-			CULTURE_HUMAN_CETI,
+			CULTURE_HUMAN_CETIN,
+			CULTURE_HUMAN_CETIS,
+			CULTURE_HUMAN_CETII,
 			CULTURE_HUMAN_SPACER,
-			CULTURE_HUMAN_SPAFRO,
 			CULTURE_HUMAN_OTHER
 		),
 		TAG_HOMEWORLD = list(

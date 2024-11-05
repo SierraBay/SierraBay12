@@ -65,6 +65,13 @@
 	else
 		return 0
 
+/obj/machinery/power/post_anchor_change()
+	if(anchored && !MACHINE_IS_BROKEN(src)) // Powernet connection stuff.
+		connect_to_network()
+	else
+		disconnect_from_network()
+	..()
+
 // connect the machine to a powernet if a node cable is present on the turf
 /obj/machinery/power/proc/connect_to_network()
 	var/turf/T = src.loc
@@ -87,14 +94,12 @@
 
 // attach a wire to a power machine - leads from the turf you are standing on
 //almost never called, overwritten by all power machines but terminal and generator
-/obj/machinery/power/attackby(obj/item/W, mob/user)
+/obj/machinery/power/use_tool(obj/item/W, mob/living/user, list/click_params)
 	if((. = ..()))
 		return
 
 	if(isCoil(W))
-
 		var/obj/item/stack/cable_coil/coil = W
-
 		var/turf/T = user.loc
 
 		if(!T.is_plating() || !istype(T, /turf/simulated/floor))
@@ -105,6 +110,8 @@
 
 		coil.PlaceCableOnTurf(T, user)
 		return TRUE
+
+	return ..()
 
 ///////////////////////////////////////////
 // Powernet handling helpers
@@ -189,31 +196,25 @@
 	return .
 
 //remove the old powernet and replace it with a new one throughout the network.
-/proc/propagate_network(obj/O, datum/powernet/PN)
+/proc/propagate_network(obj/structure/cable/cable, datum/powernet/PN)
 	//to_world_log("propagating new network")
-	var/list/worklist = list()
+	var/list/cables = list()
 	var/list/found_machines = list()
 	var/index = 1
-	var/obj/P = null
+	var/obj/structure/cable/working_cable = null
 
-	worklist+=O //start propagating from the passed object
-
-	while(index<=length(worklist)) //until we've exhausted all power objects
-		P = worklist[index] //get the next power object found
+	// add the first cable to the list
+	cables[cable] = TRUE // associative list for speedy deduplication
+	while(index <= length(cables)) //until we've exhausted all power objects
+		working_cable = cables[index] //get the next power object found
 		index++
 
-		if( istype(P,/obj/structure/cable))
-			var/obj/structure/cable/C = P
-			if(C.powernet != PN) //add it to the powernet, if it isn't already there
-				PN.add_cable(C)
-			worklist |= C.get_connections() //get adjacents power objects, with or without a powernet
+		for(var/new_cable in working_cable.get_cable_connections()) //get adjacent cables, with or without a powernet
+			cables[new_cable] = TRUE
 
-		else if(P.anchored && istype(P,/obj/machinery/power))
-			var/obj/machinery/power/M = P
-			found_machines |= M //we wait until the powernet is fully propagates to connect the machines
-
-		else
-			continue
+	for(var/obj/structure/cable/cable_entry in cables)
+		PN.add_cable(cable_entry)
+		found_machines += cable_entry.get_machine_connections()
 
 	//now that the powernet is set, connect found machines to it
 	for(var/obj/machinery/power/PM in found_machines)
@@ -257,7 +258,7 @@
 	var/area/source_area
 	if(istype(power_source,/area))
 		source_area = power_source
-		power_source = source_area.get_apc()
+		power_source = source_area.apc
 	if(istype(power_source,/obj/structure/cable))
 		var/obj/structure/cable/Cable = power_source
 		power_source = Cable.powernet

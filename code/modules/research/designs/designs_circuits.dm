@@ -4,17 +4,23 @@
 	materials = list(MATERIAL_PLASTIC = 1000, MATERIAL_ALUMINIUM = 1000)
 	chemicals = list(/datum/reagent/acid = 20)
 	time = 5
-
+//[SIERRA-EDIT] - MODPACK_RND
+	category = list("Circuit")
+	///Кто нибудь потом распределите это по другим категориям, дохера тут плат
 /datum/design/circuit/AssembleDesignName()
 	..()
 	if(build_path)
 		var/obj/item/stock_parts/circuitboard/C = build_path
 		if(initial(C.board_type) == "machine")
 			name = "Machine circuit design ([item_name])"
+			category = list("Machine Circuit")
 		else if(initial(C.board_type) == "computer")
 			name = "Computer circuit design ([item_name])"
+			category = list("Computer Circuit")
 		else
 			name = "Circuit design ([item_name])"
+			category = list("Circuit")
+//[/SIERRA-EDIT] - MODPACK_RND
 
 /datum/design/circuit/AssembleDesignDesc()
 	if(!desc)
@@ -319,12 +325,14 @@
 
 /datum/design/circuit/atmosalerts
 	name = "atmosphere alert console"
+	category = list("Computer")
 	id = "atmosalerts"
 	build_path = /obj/item/stock_parts/circuitboard/atmos_alert
 	sort_string = "JAAAA"
 
 /datum/design/circuit/air_management
 	name = "atmosphere monitoring console"
+	category = list("Computer")
 	id = "air_management"
 	build_path = /obj/item/stock_parts/circuitboard/air_management
 	sort_string = "JAAAB"
@@ -642,8 +650,6 @@
 /datum/design/circuit/tcom
 	req_tech = list(TECH_DATA = 4, TECH_ENGINEERING = 4)
 
-/datum/design/circuit/tcom/AssembleDesignName()
-	name = "Telecommunications machinery circuit design ([name])"
 /datum/design/circuit/tcom/AssembleDesignDesc()
 	desc = "Allows for the construction of a telecommunications [name] circuit board."
 

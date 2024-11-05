@@ -141,9 +141,8 @@
 	var/alarm_level = "off"
 
 	// These values are primarily for station alarms and status displays, and which light colors and overlays to use
-	var/light_max_bright = 0.5
-	var/light_inner_range = 0.1
-	var/light_outer_range = 1
+	var/light_range
+	var/light_power
 	var/light_color_alarm
 	var/light_color_status_display
 
@@ -194,10 +193,10 @@
 	notify_station()
 
 /singleton/security_level/default/proc/notify_station()
-	for(var/obj/machinery/firealarm/FA in SSmachines.machinery)
+	for(var/obj/machinery/firealarm/FA as anything in SSmachines.get_machinery_of_type(/obj/machinery/firealarm))
 		if(FA.z in GLOB.using_map.contact_levels)
 			FA.update_icon()
-	for (var/obj/machinery/rotating_alarm/security_alarm/SA in SSmachines.machinery)
+	for (var/obj/machinery/rotating_alarm/security_alarm/SA as anything in SSmachines.get_machinery_of_type(/obj/machinery/rotating_alarm/security_alarm))
 		if (SA.z in GLOB.using_map.contact_levels)
 			SA.set_alert(name, alarm_level, light_color_alarm)
 	post_status("alert")
@@ -205,9 +204,8 @@
 /singleton/security_level/default/code_green
 	name = "code green"
 
-	light_max_bright = 0.25
-	light_inner_range = 0.1
-	light_outer_range = 1
+	light_range = 2
+	light_power = 1
 
 	light_color_alarm = COLOR_GREEN
 	light_color_status_display = COLOR_GREEN
@@ -222,9 +220,8 @@
 	name = "code blue"
 	alarm_level = "on"
 
-	light_max_bright = 0.5
-	light_inner_range = 0.1
-	light_outer_range = 2
+	light_range = 2
+	light_power = 1
 	light_color_alarm = COLOR_BLUE
 	light_color_status_display = COLOR_BLUE
 
@@ -241,9 +238,8 @@
 	name = "code red"
 	alarm_level = "on"
 
-	light_max_bright = 0.5
-	light_inner_range = 0.1
-	light_outer_range = 2
+	light_range = 4
+	light_power = 2
 	light_color_alarm = COLOR_RED
 	light_color_status_display = COLOR_RED
 
@@ -260,9 +256,8 @@
 	name = "code delta"
 	alarm_level = "on"
 
-	light_max_bright = 0.75
-	light_inner_range = 0.1
-	light_outer_range = 3
+	light_range = 4
+	light_power = 2
 	light_color_alarm = COLOR_RED
 	light_color_status_display = COLOR_NAVY_BLUE
 
@@ -272,7 +267,7 @@
 
 	psionic_control_level = PSI_IMPLANT_DISABLED
 
-	var/static/datum/announcement/priority/security/security_announcement_delta = new(do_log = 0, do_newscast = 1, new_sound = sound('sound/effects/siren.ogg'))
+	var/static/datum/announcement/priority/security/security_announcement_delta = new(do_log = 0, do_newscast = 1, new_sound = sound('sound/effects/siren.ogg', volume = 70))
 
 /singleton/security_level/default/code_delta/switching_up_to()
 	security_announcement_delta.Announce("The self-destruct mechanism has been engaged. All crew are instructed to obey all instructions given by heads of staff. Any violations of these orders can be punished by death. This is not a drill.", "Attention! Delta security level reached!")

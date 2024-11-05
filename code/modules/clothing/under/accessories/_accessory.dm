@@ -106,18 +106,6 @@
 	else
 		dropInto(loc)
 
-/obj/item/clothing/accessory/use_on(obj/target, mob/user)
-	if (istype(target, /obj/item/clothing))
-		var/obj/item/clothing/clothes = target
-		if (clothes.attempt_attach_accessory(src, user))
-			return TRUE
-	return ..()
-
-//default attackby behaviour
-/obj/item/clothing/accessory/attackby(obj/item/I, mob/user)
-	..()
-
-
 //default attack_hand behaviour
 /obj/item/clothing/accessory/attack_hand(mob/user as mob)
 	if(parent)
@@ -134,10 +122,10 @@
 /obj/item/clothing/accessory/toggleable/var/icon_closed
 
 
-/obj/item/clothing/accessory/toggleable/New()
+/obj/item/clothing/accessory/toggleable/Initialize()
 	if (!icon_closed)
 		icon_closed = icon_state
-	..()
+	return ..()
 
 
 /obj/item/clothing/accessory/toggleable/on_attached(obj/item/clothing/under/S, mob/user as mob)

@@ -15,7 +15,7 @@
 	damage = 5
 	agony = 20
 	life_span = 15 //if the shell hasn't hit anything after travelling this far it just explodes.
-	muzzle_type = /obj/effect/projectile/bullet/muzzle
+	muzzle_type = /obj/projectile/bullet
 	var/flash_range = 1
 	var/brightness = 7
 	var/light_colour = "#ffffff"
@@ -29,18 +29,18 @@
 		if(M.eyecheck() < FLASH_PROTECTION_MAJOR)
 			M.flash_eyes()
 			M.eye_blurry += (brightness / 2)
-			M.confused += (brightness / 2)
+			M.mod_confused(brightness / 2)
 
 	//snap pop
 	playsound(src, 'sound/effects/snap.ogg', 50, 1)
 	src.visible_message(SPAN_WARNING("\The [src] explodes in a bright flash!"))
 
-	var/datum/effect/effect/system/spark_spread/sparks = new /datum/effect/effect/system/spark_spread()
+	var/datum/effect/spark_spread/sparks = new /datum/effect/spark_spread()
 	sparks.set_up(2, 1, T)
 	sparks.start()
 
-	new /obj/effect/decal/cleanable/ash(src.loc) //always use src.loc so that ash doesn't end up inside windows
-	new /obj/effect/effect/smoke/illumination(T, 5, 4, 1, light_colour)
+	new /obj/decal/cleanable/ash(src.loc) //always use src.loc so that ash doesn't end up inside windows
+	new /obj/effect/smoke/illumination(T, 5, 4, 2, light_colour)
 
 //blinds people like the flash round, but in a larger area and can also be used for temporary illumination
 /obj/item/projectile/energy/flash/flare
@@ -60,11 +60,11 @@
 
 /obj/item/projectile/energy/flash/flare/on_impact(atom/A)
 	light_colour = pick("#e58775", "#ffffff", "#faa159", "#e34e0e")
-	set_light(1, 2, 6, 1, light_colour)
+	set_light(6, 1, light_colour)
 	..() //initial flash
 
 	//residual illumination
-	new /obj/effect/effect/smoke/illumination/flare(src.loc, rand(30 SECONDS,60 SECONDS), range=8, power=1, color=light_colour) //same lighting power as flare
+	new /obj/effect/smoke/illumination/flare(src.loc, rand(30 SECONDS,60 SECONDS), range=8, power=1, color=light_colour) //same lighting power as flare
 
 	var/turf/TO = get_turf(src)
 	var/area/AO = TO.loc
@@ -165,8 +165,6 @@
 	var/ear_safety = 0
 	if(M.get_sound_volume_multiplier() < 0.2)
 		ear_safety += 2
-	if(MUTATION_HULK in M.mutations)
-		ear_safety += 1
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(istype(H.head, /obj/item/clothing/head/helmet))

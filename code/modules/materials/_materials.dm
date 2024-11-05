@@ -118,7 +118,7 @@
 	var/list/window_options = list()
 
 	// Damage values.
-	var/hardness = MATERIAL_HARD            // Prob of wall destruction by hulk, used for edge damage in weapons.
+	var/hardness = MATERIAL_HARD // Used for edge damage in weapons.
 	var/weight = 20              // Determines blunt damage/throwforce for weapons.
 
 	// Noise when someone is faceplanted onto a table made of this material.
@@ -249,7 +249,7 @@
 /material/proc/place_dismantled_product(turf/target,is_devastated)
 	if (is_devastated)
 		var/return_count = rand(1, 2)
-		if (place_shard(target, return_count) == null)
+		if (isnull(place_shard(target, return_count)))
 			place_sheet(target, return_count)
 	else
 		place_sheet(target, 2)

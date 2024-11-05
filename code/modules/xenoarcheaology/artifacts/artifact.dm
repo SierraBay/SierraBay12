@@ -88,11 +88,11 @@
 	// We're on a turf or inside a broken or invalid anomaly container
 
 	if(pulledby)
-		check_triggers(/datum/artifact_trigger/proc/on_touch, pulledby)
+		check_triggers(TYPE_PROC_REF(/datum/artifact_trigger, on_touch), pulledby)
 
 	var/datum/gas_mixture/enivonment = loc.return_air()
 	if(enivonment.return_pressure() >= SOUND_MINIMUM_PRESSURE)
-		check_triggers(/datum/artifact_trigger/proc/on_gas_exposure, enivonment)
+		check_triggers(TYPE_PROC_REF(/datum/artifact_trigger, on_gas_exposure), enivonment)
 
 	for(var/datum/artifact_effect/effect in list(my_effect, secondary_effect))
 		effect.process()
@@ -100,26 +100,26 @@
 /obj/machinery/artifact/attack_robot(mob/living/user)
 	if(!CanPhysicallyInteract(user))
 		return
-	check_triggers(/datum/artifact_trigger/proc/on_touch, user)
+	check_triggers(TYPE_PROC_REF(/datum/artifact_trigger, on_touch), user)
 
 /obj/machinery/artifact/attack_hand(mob/living/user)
 	. = ..()
 	visible_message("[user] touches \the [src].")
-	check_triggers(/datum/artifact_trigger/proc/on_touch, user)
+	check_triggers(TYPE_PROC_REF(/datum/artifact_trigger, on_touch), user)
 
-/obj/machinery/artifact/attackby(obj/item/W, mob/living/user)
+/obj/machinery/artifact/use_tool(obj/item/W, mob/living/user, list/click_params)
 	. = ..()
-	check_triggers(/datum/artifact_trigger/proc/on_hit, W, user)
+	check_triggers(TYPE_PROC_REF(/datum/artifact_trigger, on_hit), W, user)
 
 /obj/machinery/artifact/Bumped(M)
 	..()
-	check_triggers(/datum/artifact_trigger/proc/on_bump, M)
+	check_triggers(TYPE_PROC_REF(/datum/artifact_trigger, on_bump), M)
 
 /obj/machinery/artifact/bullet_act(obj/item/projectile/P)
-	check_triggers(/datum/artifact_trigger/proc/on_hit, P)
+	check_triggers(TYPE_PROC_REF(/datum/artifact_trigger, on_hit), P)
 
 /obj/machinery/artifact/ex_act(severity)
-	if(check_triggers(/datum/artifact_trigger/proc/on_explosion, severity))
+	if(check_triggers(TYPE_PROC_REF(/datum/artifact_trigger, on_explosion), severity))
 		return
 	switch(severity)
 		if(EX_ACT_DEVASTATING)
@@ -136,7 +136,7 @@
 		secondary_effect.UpdateMove()
 
 /obj/machinery/artifact/water_act(depth)
-	check_triggers(/datum/artifact_trigger/proc/on_water_act, depth)
+	check_triggers(TYPE_PROC_REF(/datum/artifact_trigger, on_water_act), depth)
 
 
 //Damage/Destruction procs
@@ -208,15 +208,6 @@
 	..()
 	queue_icon_update()
 	if (health_mod < 0)
-		var/initial_damage_percentage = round((prior_health / get_max_health()) * 100)
-		var/damage_percentage = get_damage_percentage()
-		if (damage_percentage >= 75 && initial_damage_percentage < 75)
-			visible_message("\The [src] looks like it's about to break!")
-		else if (damage_percentage >= 50 && initial_damage_percentage < 50)
-			visible_message("\The [src] looks seriously damaged!" )
-		else if (damage_percentage >= 25 && initial_damage_percentage < 25)
-			visible_message("\The [src] shows signs of damage!" )
-
 		for (var/datum/artifact_effect/A in list(my_effect, secondary_effect))
 			A.holder_damaged(get_current_health(), abs(health_mod))
 

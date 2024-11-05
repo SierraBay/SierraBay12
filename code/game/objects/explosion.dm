@@ -1,3 +1,4 @@
+/*
 #define EXPLOSION_RATIO_DEVASTATION 1
 #define EXPLOSION_RATIO_HEAVY 2
 #define EXPLOSION_RATIO_LIGHT 4
@@ -85,7 +86,7 @@
 		GLOB.defer_powernet_rebuild = 1
 
 	if(heavy_impact_range > 1)
-		var/datum/effect/system/explosion/E = new/datum/effect/system/explosion()
+		var/datum/effect/explosion/E = new
 		E.set_up(epicenter)
 		E.start()
 
@@ -106,3 +107,4 @@
 #undef EXPLOSION_RATIO_DEVASTATION
 #undef EXPLOSION_RATIO_HEAVY
 #undef EXPLOSION_RATIO_LIGHT
+*/

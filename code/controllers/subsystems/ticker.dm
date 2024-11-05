@@ -4,7 +4,7 @@ SUBSYSTEM_DEF(ticker)
 	priority = SS_PRIORITY_TICKER
 	init_order = SS_INIT_TICKER
 	flags = SS_NO_TICK_CHECK | SS_KEEP_TIMING
-	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
+	runlevels = RUNLEVELS_PREGAME | RUNLEVELS_GAME
 
 	var/pregame_timeleft
 	var/start_ASAP = FALSE          //the game will start as soon as possible, bypassing all pre-game nonsense
@@ -192,7 +192,7 @@ SUBSYSTEM_DEF(ticker)
 	if(mode_finished && game_finished())
 		Master.SetRunLevel(RUNLEVEL_POSTGAME)
 		end_game_state = END_GAME_READY_TO_END
-		invoke_async(src, .proc/declare_completion)
+		invoke_async(src, PROC_REF(declare_completion))
 		if(config.allow_map_switching && config.auto_map_vote && length(GLOB.all_maps) > 1)
 			SSvote.initiate_vote(/datum/vote/map/end_game, automatic = 1)
 

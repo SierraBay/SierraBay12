@@ -195,7 +195,7 @@
 
 	var/list/override_organ_types // Used for species that only need to change one or two entries in has_organ.
 
-	var/obj/effect/decal/cleanable/blood/tracks/move_trail = /obj/effect/decal/cleanable/blood/tracks/footprints // What marks are left when walking
+	var/obj/decal/cleanable/blood/tracks/move_trail = /obj/decal/cleanable/blood/tracks/footprints // What marks are left when walking
 
 	var/list/skin_overlays = list()
 
@@ -331,6 +331,11 @@ The slots that you can use are found in items_clothing.dm and are the inventory 
 			var/list/map_systems = GLOB.using_map.available_cultural_info[token]
 			available_cultural_info[token] = map_systems.Copy()
 
+		// [SIERRA-ADD] - EXPANDED_CULTURE_DESCRIPTOR - Вносит культуры из мода в список культур после всех возможных альтераций, чтобы предотвратить конфликты при добавлении оффами новых культур
+		if(extended_cultural_info[token])
+			available_cultural_info[token] |= extended_cultural_info[token]
+		// [/SIERRA-ADD]
+
 		if(LAZYLEN(available_cultural_info[token]) && !default_cultural_info[token])
 			var/list/avail_systems = available_cultural_info[token]
 			default_cultural_info[token] = avail_systems[1]
@@ -426,7 +431,7 @@ The slots that you can use are found in items_clothing.dm and are the inventory 
 		post_organ_rejuvenate(O, H)
 
 	H.sync_organ_dna()
-
+/* ------------------------> code\modules\emotes\definitions\_species.dm
 /datum/species/proc/hug(mob/living/carbon/human/H,mob/living/target)
 
 	var/t_him = "them"
@@ -442,7 +447,7 @@ The slots that you can use are found in items_clothing.dm and are the inventory 
 	if(H != target)
 		H.update_personal_goal(/datum/goal/achievement/givehug, TRUE)
 		target.update_personal_goal(/datum/goal/achievement/gethug, TRUE)
-
+*/
 /datum/species/proc/add_base_auras(mob/living/carbon/human/H)
 	if(base_auras)
 		for(var/type in base_auras)
@@ -482,7 +487,10 @@ The slots that you can use are found in items_clothing.dm and are the inventory 
 	handle_limbs_setup(H)
 
 /datum/species/proc/handle_pre_spawn(mob/living/carbon/human/H)
-	return
+	// Changing species can change NPC behaviour, so delete the holder if there is one
+	if (H.ai_holder && istype(H.ai_holder, /datum))
+		GLOB.stat_set_event.unregister(H, H.ai_holder, TYPE_PROC_REF(/datum/ai_holder, holder_stat_change))
+		QDEL_NULL(H.ai_holder)
 
 /datum/species/proc/handle_death(mob/living/carbon/human/H) //Handles any species-specific death events (such as dionaea nymph spawns).
 	return
@@ -555,10 +563,6 @@ The slots that you can use are found in items_clothing.dm and are the inventory 
 			return 1
 
 	return 0
-
-// Called in life() when the mob has no client.
-/datum/species/proc/handle_npc(mob/living/carbon/human/H)
-	return
 
 /datum/species/proc/handle_vision(mob/living/carbon/human/H)
 	var/list/vision = H.get_accumulated_vision_handlers()
@@ -638,7 +642,7 @@ The slots that you can use are found in items_clothing.dm and are the inventory 
 // Impliments different trails for species depending on if they're wearing shoes.
 /datum/species/proc/get_move_trail(mob/living/carbon/human/H)
 	if(H.lying)
-		return /obj/effect/decal/cleanable/blood/tracks/body
+		return /obj/decal/cleanable/blood/tracks/body
 	if(H.shoes || (H.wear_suit && (H.wear_suit.body_parts_covered & FEET)))
 		var/obj/item/clothing/shoes = (H.wear_suit && (H.wear_suit.body_parts_covered & FEET)) ? H.wear_suit : H.shoes // suits take priority over shoes
 		if(footwear_trail_overrides)
@@ -726,7 +730,7 @@ The slots that you can use are found in items_clothing.dm and are the inventory 
 				continue
 			if(S.subspecies_allowed && !(name in S.subspecies_allowed))
 				continue
-			ADD_SORTED(L, hairstyle, /proc/cmp_text_asc)
+			ADD_SORTED(L, hairstyle, GLOBAL_PROC_REF(cmp_text_asc))
 			L[hairstyle] = S
 	return L
 
@@ -751,7 +755,9 @@ The slots that you can use are found in items_clothing.dm and are the inventory 
 				continue
 			if(S.subspecies_allowed && !(name in S.subspecies_allowed))
 				continue
-			ADD_SORTED(facial_hair_style_by_gender, facialhairstyle, /proc/cmp_text_asc)
+			if(src.species_flags && SPECIES_IPC)
+				break
+			ADD_SORTED(facial_hair_style_by_gender, facialhairstyle, GLOBAL_PROC_REF(cmp_text_asc))
 			facial_hair_style_by_gender[facialhairstyle] = S
 
 	return facial_hair_style_by_gender
@@ -763,6 +769,7 @@ The slots that you can use are found in items_clothing.dm and are the inventory 
 		"lack of air" = oxy_mod,
 		"poison" = toxins_mod
 	)
+	var/name_clean = replace_characters(name,list("'"=""))
 	if(!header)
 		header = "<center><h2>[name]</h2></center><hr/>"
 	var/dat = list()
@@ -780,8 +787,8 @@ The slots that you can use are found in items_clothing.dm and are the inventory 
 	if((!skip_photo && preview_icon) || !skip_detail)
 		dat += "<td width = 200 align='center'>"
 		if(!skip_photo && preview_icon)
-			send_rsc(usr, icon(icon = preview_icon, icon_state = ""), "species_preview_[name].png")
-			dat += "<img src='species_preview_[name].png' width='64px' height='64px'><br/><br/>"
+			send_rsc(usr, icon(icon = preview_icon, icon_state = ""), "species_preview_[name_clean].png")
+			dat += "<img src='species_preview_[name_clean].png'>"
 		if(!skip_detail)
 			dat += "<small>"
 			if(spawn_flags & SPECIES_CAN_JOIN)

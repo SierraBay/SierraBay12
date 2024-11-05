@@ -33,7 +33,7 @@
 	print_language = LANGUAGE_SPACER
 
 
-/obj/machinery/computer/ship/sensors/attempt_hook_up(obj/effect/overmap/visitable/ship/sector)
+/obj/machinery/computer/ship/sensors/attempt_hook_up(obj/overmap/visitable/ship/sector)
 	if (!(. = ..()))
 		return
 	find_sensors()
@@ -91,7 +91,7 @@
 /obj/machinery/computer/ship/sensors/proc/find_sensors()
 	if (!linked)
 		return
-	for (var/obj/machinery/shipsensors/S in SSmachines.machinery)
+	for (var/obj/machinery/shipsensors/S as anything in SSmachines.get_machinery_of_type(/obj/machinery/shipsensors))
 		if (linked.check_ownership(S))
 			LAZYADD(S.linked_consoles, src)
 			S.link_ship(linked)
@@ -133,12 +133,12 @@
 		var/list/potential_contacts = list()
 
 		if (sensors?.use_power)
-			for (var/obj/effect/overmap/nearby in view(round(sensors.range,1), linked))
+			for (var/obj/overmap/nearby in view(round(sensors.range,1), linked))
 				if (nearby.requires_contact) // Some ships require.
 					continue
 				potential_contacts |= nearby
 
-		for (var/obj/effect/overmap/visitable/contact in sensors.objects_in_view)
+		for (var/obj/overmap/visitable/contact in sensors.objects_in_view)
 			if (contact in sensors.contact_datums)
 				potential_contacts |= contact
 			else
@@ -150,7 +150,7 @@
 					"progress" = sensors.objects_in_view[contact]
 				)))
 
-		for (var/obj/effect/overmap/contact in potential_contacts)
+		for (var/obj/overmap/contact in potential_contacts)
 			if (linked == contact)
 				continue
 			if (!contact.scannable)
@@ -220,7 +220,7 @@
 			return TOPIC_REFRESH
 
 	if (href_list["scan"])
-		var/obj/effect/overmap/O = locate(href_list["scan"])
+		var/obj/overmap/O = locate(href_list["scan"])
 		if (istype(O) && !QDELETED(O))
 			if ((O in view(7,linked))|| (O in sensors.contact_datums))
 				playsound(loc, "sound/effects/ping.ogg", 50, 1)
@@ -270,30 +270,6 @@
 	..()
 	sensor_strength = clamp(total_component_rating_of_type(/obj/item/stock_parts/manipulator), 0, 5) * SENSORS_STRENGTH_COEFFICIENT
 
-
-/obj/machinery/shipsensors/attackby(obj/item/W, mob/user)
-	if (isWelder(W) && user.a_intent != I_HURT)
-		var/damage = get_damage_value()
-		var/obj/item/weldingtool/WT = W
-		if (!damage)
-			to_chat(user, SPAN_WARNING("\The [src] doesn't need any repairs."))
-			return TRUE
-		if (!WT.isOn())
-			to_chat(user, SPAN_WARNING("\The [W] needs to be turned on first."))
-			return TRUE
-		if (!WT.remove_fuel(0,user))
-			to_chat(user, SPAN_WARNING("You need more welding fuel to complete this task."))
-			return TRUE
-		to_chat(user, SPAN_NOTICE("You start repairing the damage to [src]."))
-		playsound(src, 'sound/items/Welder.ogg', 100, 1)
-		if (do_after(user, max(5, damage / 5), src, DO_REPAIR_CONSTRUCT) && WT?.isOn())
-			to_chat(user, SPAN_NOTICE("You finish repairing the damage to [src]."))
-			revive_health()
-		return TRUE
-
-	return ..()
-
-
 /obj/machinery/shipsensors/proc/in_vacuum()
 	var/turf/T=get_turf(src)
 	if (istype(T))
@@ -332,7 +308,7 @@
 			toggle()
 		if (heat > critical_heat)
 			src.visible_message(SPAN_DANGER("\The [src] violently spews out sparks!"))
-			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+			var/datum/effect/spark_spread/s = new /datum/effect/spark_spread
 			s.set_up(3, 1, src)
 			s.start()
 

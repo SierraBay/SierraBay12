@@ -83,7 +83,7 @@
 // message is the message output to anyone who can see e.g. "[src] does something!"
 // self_message (optional) is what the src mob sees  e.g. "You do something!"
 // blind_message (optional) is what blind people will hear e.g. "You hear something!"
-/mob/visible_message(message, self_message, blind_message, range = world.view, checkghosts = null, narrate = FALSE, list/exclude_objs = null, list/exclude_mobs = null)
+/mob/visible_message(message, self_message, blind_message, range = world.view, checkghosts = null, narrate = FALSE, list/exclude_objs = null, list/exclude_mobs = null, runemessage = -1)
 	set waitfor = FALSE
 	var/turf/T = get_turf(src)
 	var/list/mobs = list()
@@ -122,6 +122,8 @@
 
 		if((!M.is_blind() && M.see_invisible >= src.invisibility) || narrate)
 			M.show_message(mob_message, VISIBLE_MESSAGE, blind_message, AUDIBLE_MESSAGE)
+			if(runemessage != -1)
+				M.create_chat_message(src, "[runemessage]", FALSE, list("emote"), audible = FALSE)
 			continue
 
 		if(blind_message)
@@ -137,7 +139,7 @@
 // self_message (optional) is what the src mob hears.
 // deaf_message (optional) is what deaf people will see.
 // hearing_distance (optional) is the range, how many tiles away the message can be heard.
-/mob/audible_message(message, self_message, deaf_message, hearing_distance = world.view, checkghosts = null, narrate = FALSE, list/exclude_objs = null, list/exclude_mobs = null)
+/mob/audible_message(message, self_message, deaf_message, hearing_distance = world.view, checkghosts = null, narrate = FALSE, list/exclude_objs = null, list/exclude_mobs = null, runemessage = -1)
 	var/turf/T = get_turf(src)
 	var/list/mobs = list()
 	var/list/objs = list()
@@ -167,6 +169,9 @@
 			M.show_message(mob_message, AUDIBLE_MESSAGE, deaf_message, VISIBLE_MESSAGE)
 		else
 			M.show_message(mob_message, AUDIBLE_MESSAGE)
+
+		if(runemessage != -1)
+			M.create_chat_message(src, "[runemessage]", FALSE, list("emote"), audible = TRUE)
 
 	for(var/o in objs)
 		var/obj/O = o
@@ -208,17 +213,18 @@
 	return -1
 
 
-/mob/proc/movement_delay()
+/mob/proc/movement_delay(singleton/move_intent/using_intent = move_intent)
 	. = 0
-	if(istype(loc, /turf))
-		var/turf/T = loc
-		. += T.movement_delay
-
+	if(isturf(loc))
+		var/turf/turf = loc
+		. += turf.movement_delay
 	if (drowsyness > 0)
 		. += 6
 	if(lying) //Crawling, it's slower
 		. += (8 + ((weakened * 3) + (confused * 2)))
-	. += move_intent.move_delay
+	if (ispath(using_intent))
+		using_intent = GET_SINGLETON(using_intent)
+	. += using_intent.move_delay
 	. += encumbrance() * (0.5 + 1.5 * (SKILL_MAX - get_skill_value(SKILL_HAULING))/(SKILL_MAX - SKILL_MIN)) //Varies between 0.5 and 2, depending on skill
 
 //How much the stuff the mob is pulling contributes to its movement delay.
@@ -336,7 +342,7 @@
 
 	if(!src || !isturf(src.loc) || !(A in view(src.loc)))
 		return 0
-	if(istype(A, /obj/effect/decal/point))
+	if(istype(A, /obj/decal/point))
 		return 0
 
 	var/turf/tile = get_turf(A)
@@ -344,7 +350,7 @@
 		return 0
 
 	var/turf/mob_tile = get_turf(src)
-	var/obj/P = new /obj/effect/decal/point(mob_tile)
+	var/obj/P = new /obj/decal/point(mob_tile)
 	P.set_invisibility(invisibility)
 	animate(P, pixel_x = (tile.x - mob_tile.x) * world.icon_size + A.pixel_x, pixel_y = (tile.y - mob_tile.y) * world.icon_size + A.pixel_y, time = 3, easing = EASE_OUT)
 	face_atom(A)
@@ -523,7 +529,11 @@
 
 /mob/proc/start_pulling(atom/movable/AM)
 
-	if ( !AM || !usr || src==AM || !isturf(src.loc) )	//if there's no person pulling OR the person is pulling themself OR the object being pulled is inside something: abort!
+	if ( !AM || !usr || src==AM || !isturf(src.loc))	//if there's no person pulling OR the person is pulling themself OR the object being pulled is inside something: abort!
+		return
+
+	if (!Adjacent(AM))
+		to_chat(src, SPAN_WARNING("You must remain next to \the [AM]."))
 		return
 
 	if (AM.anchored)
@@ -646,6 +656,13 @@
 	return P
 
 
+/mob/proc/get_formal_pronouns()
+	var/datum/pronouns/P = GLOB.pronouns_from_gender[gender]
+	if (pronouns)
+		P = GLOB.pronouns.by_key[pronouns]
+	return P.formal_term
+
+
 /mob/proc/see(message)
 	if(!is_active())
 		return 0
@@ -671,6 +688,7 @@
 	if(client.holder)
 		if(statpanel("MC"))
 			stat("CPU:","[world.cpu]")
+			stat("Map CPU:","[world.map_cpu]")
 			stat("Instances:","[length(world.contents)]")
 			stat(null)
 			var/time = Uptime()
@@ -748,8 +766,10 @@
 	//Temporarily moved here from the various life() procs
 	//I'm fixing stuff incrementally so this will likely find a better home.
 	//It just makes sense for now. ~Carn
-	if( update_icon )	//forces a full overlay update
-		update_icon = 0
+	//[SIERRA-ADD]
+	if(update_icon)	//forces a full overlay update
+		update_icon = FALSE
+	////[SIERRA-ADD]
 		regenerate_icons()
 	else if( lying != lying_prev )
 		update_icons()
@@ -861,6 +881,59 @@
 /mob/proc/AdjustSleeping(amount)
 	sleeping = max(sleeping + amount,0)
 	return
+
+
+/**
+ * Sets a mob's confused value.
+ *
+ * Parameters:
+ * - `amount` (Positive Int) - The confused value to set. Decimal values are rounded.
+ * - `limit` (Positive Int, default `CONFUSED_MAX`) - The maximum value `confused` can be set to. Decimal values are rounded.
+ *
+ * Returns integer. The new value of `confused`.
+ */
+/mob/proc/set_confused(amount, limit = CONFUSED_MAX)
+	confused = clamp(round(amount), 0, round(limit))
+	return confused
+
+
+/**
+ * Modifies a mob's confused value by `mod_amount`.
+ *
+ * Parameters:
+ * - `mod_amount` (Integer) - The amount to modify `confused` by. Allows negative values for subtraction. Decimal values are rounded.
+ * - `floor` (Positive Integer, default `0`) - The minimum value to set `confused` to. Decimal values are rounded.
+ * - `ceiling` (Positive Integer, default `CONFUSED_MAX`) - The maximum value to set `confused` to. Decimal values are rounded.
+ *
+ * Returns integer. The new value of `confused`.
+ */
+/mob/proc/mod_confused(mod_amount, floor = 0, ceiling = CONFUSED_MAX)
+	confused += round(mod_amount)
+	confused = clamp(confused, round(floor), round(ceiling))
+	return confused
+
+
+/**
+ * Sets a mob's confused value to `0`.
+ *
+ * Returns integer. The new value of `confused`.
+ */
+/mob/proc/clear_confused()
+	confused = 0
+	return confused
+
+
+/**
+ * Whether or not the mob's confusion level is at the threshhold.
+ *
+ * Parameters:
+ * - `threshhold` (Positive Integer, default `1`) - The threshhold at which the mob should be considered confused.
+ *
+ * Returns boolean.
+ */
+/mob/proc/is_confused(threshhold = 1)
+	return confused >= threshhold
+
 
 /mob/proc/get_species()
 	return ""

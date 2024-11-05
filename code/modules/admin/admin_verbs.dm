@@ -47,6 +47,7 @@ var/global/list/admin_verbs_admin = list(
 	/client/proc/cmd_admin_visible_narrate,
 	/client/proc/cmd_admin_audible_narrate,
 	/client/proc/cmd_admin_local_narrate,
+	/client/proc/cmd_admin_legion_narrate,
 	/client/proc/cmd_admin_world_narrate,	//sends text to all players with no padding,
 	/client/proc/cmd_admin_create_centcom_report,
 	/client/proc/check_ai_laws,			//shows AI and borg laws,
@@ -100,9 +101,10 @@ var/global/list/admin_verbs_admin = list(
 	/datum/admins/proc/sendFax,
 	/client/proc/check_fax_history,
 	/client/proc/cmd_admin_notarget,
-	/datum/admins/proc/setroundlength,
-	/datum/admins/proc/toggleroundendvote,
-	/datum/admins/proc/togglemoderequirementchecks
+	/datum/admins/proc/SetRoundLength,
+	/datum/admins/proc/ToggleContinueVote,
+	/datum/admins/proc/togglemoderequirementchecks,
+	/client/proc/delete_crew_record
 )
 var/global/list/admin_verbs_ban = list(
 	/client/proc/unban_panel,
@@ -143,6 +145,9 @@ var/global/list/admin_verbs_spawn = list(
 	/datum/admins/proc/spawn_atom,		// allows us to spawn instances,
 	/datum/admins/proc/spawn_artifact,
 	/client/proc/spawn_chemdisp_cartridge,
+	// [SIERRA-ADD] - CLIENT_VERBS - ,
+	/client/proc/respawn_as_self,
+	// [/SIERRA-ADD] - CLIENT_VERBS ,
 	/datum/admins/proc/mass_debug_closet_icons
 	)
 var/global/list/admin_verbs_server = list(
@@ -183,6 +188,9 @@ var/global/list/admin_verbs_debug = list(
 	/client/proc/delete_random_map,
 	/datum/admins/proc/map_template_load,
 	/datum/admins/proc/map_template_load_new_z,
+	//[SIERRA-ADD] - Colony-types,
+	/datum/admins/proc/map_template_colony_spawn_settings,
+	//[SIERRA-ADD],
 	/datum/admins/proc/map_template_upload,
 	/client/proc/enable_debug_verbs,
 	/client/proc/callproc,
@@ -245,6 +253,7 @@ var/global/list/admin_verbs_hideable = list(
 	/client/proc/cmd_admin_visible_narrate,
 	/client/proc/cmd_admin_audible_narrate,
 	/client/proc/cmd_admin_local_narrate,
+	/client/proc/cmd_admin_legion_narrate,
 	/client/proc/cmd_admin_world_narrate,
 	/client/proc/play_local_sound,
 	/client/proc/play_sound,
@@ -534,11 +543,11 @@ var/global/list/admin_verbs_mod = list(
 		if (null)
 			return
 		if("Small Bomb")
-			explosion(epicenter, 6)
+			explosion(epicenter, 1, 2, 3, 3)
 		if("Medium Bomb")
-			explosion(epicenter, 9)
+			explosion(epicenter, 2, 3, 4, 4)
 		if("Big Bomb")
-			explosion(epicenter, 15)
+			explosion(epicenter, 3, 5, 7, 5)
 		if("Custom Bomb")
 			var/range = input("Explosion radius (in tiles):") as num|null
 			if (isnull(range) || range <= 0)
@@ -674,10 +683,10 @@ var/global/list/admin_verbs_mod = list(
 
 	switch(alert("Do you wish for [H] to be allowed to select non-whitelisted races?","Alter Mob Appearance","Yes","No","Cancel"))
 		if("Yes")
-			log_and_message_admins("has allowed [H] to change \his appearance, ignoring allow lists.")
+			log_and_message_admins("has allowed [H] to change their appearance, ignoring allow lists.")
 			H.change_appearance(APPEARANCE_COMMON | APPEARANCE_SKIP_ALLOW_LIST_CHECK)
 		if("No")
-			log_and_message_admins("has allowed [H] to change \his appearance, respecting allow lists.")
+			log_and_message_admins("has allowed [H] to change their appearance, respecting allow lists.")
 			H.change_appearance(APPEARANCE_COMMON)
 
 /client/proc/change_security_level()
@@ -904,3 +913,28 @@ var/global/list/admin_verbs_mod = list(
 	if(!S) return
 	T.add_spell(new S)
 	log_and_message_admins("gave [key_name(T)] the spell [S].")
+
+/client/proc/delete_crew_record()
+	set category = "Admin"
+	set name = "Delete Crew Record"
+	set desc = "Delete a crew record from the global crew list."
+
+	var/list/entries = list()
+
+	for (var/datum/computer_file/report/crew_record/entry in GLOB.all_crew_records)
+		entries["[entry.get_name()], [entry.get_job()]"] = entry
+
+	if (!length(entries))
+		return
+
+	var/choice = input("Pick a record to delete:", "Delete Crew Record") as null | anything in entries
+
+	if (!choice)
+		return
+
+	var/check = alert("Are you sure you want to delete [choice]?", "Delete Record?", "Yes", "No")
+	var/datum/computer_file/report/crew_record/record = entries[choice]
+
+	if (check == "Yes")
+		GLOB.all_crew_records.Remove(record)
+		log_and_message_admins("has removed [record.get_name()], [record.get_job()]'s crew record.")

@@ -23,6 +23,7 @@
 		/obj/item/device/megaphone,
 		/obj/item/reagent_containers/hypospray/vial,
 		/obj/item/device/flashlight/pen,
+		/obj/item/folder/envelope/nuke,
 		/obj/item/storage/belt/medical,
 		/obj/item/device/remote_device/chief_medical_officer,
 		/obj/item/device/taperecorder,

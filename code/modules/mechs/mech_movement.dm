@@ -15,20 +15,6 @@
 	if(Process_Spacemove()) //Handle here
 		return TRUE
 
-/mob/living/exosuit/Process_Spacemove()
-	. = ..()
-	if(.)
-		return
-
-	//Regardless of modules, emp prevents control
-	if(emp_damage >= EMP_MOVE_DISRUPT && prob(25))
-		return FALSE
-
-	var/obj/item/mech_equipment/ionjets/J = hardpoints[HARDPOINT_BACK]
-	if(istype(J))
-		if(J.allowSpaceMove())
-			return TRUE
-
 //Inertia drift making us face direction makes exosuit flight a bit difficult, plus newtonian flight model yo
 /mob/living/exosuit/set_dir(ndir)
 	if(inertia_dir && inertia_dir == ndir)
@@ -113,16 +99,73 @@
 	if(direction & (UP|DOWN))
 		var/txt_dir = direction & UP ? "upwards" : "downwards"
 		exosuit.visible_message(SPAN_NOTICE("\The [exosuit] moves [txt_dir]."))
+//[SIERRA-ADD] - Mechs-by-Shegar - STRAFE
+	if(exosuit.legs.can_strafe)
+		if(exosuit.strafe_status)
+			var/move_speed = exosuit.legs.move_delay
+			if(!exosuit.legs.good_in_strafe)
+				move_speed = move_speed * 2.5
+			if(direction == NORTHWEST || direction == NORTHEAST || direction == SOUTHWEST || direction == SOUTHEAST)
+				move_speed = sqrt((move_speed*move_speed) + (move_speed * move_speed))
+			if(move_speed > 12)
+				move_speed = 12
+			exosuit.SetMoveCooldown(exosuit.legs ? move_speed : 3)
+			var/turf/target_loc = get_step(exosuit, direction)
+			if(target_loc && exosuit.legs && exosuit.legs.can_move_on(exosuit.loc, target_loc) && exosuit.MayEnterTurf(target_loc))
+				exosuit.Move(target_loc)
+				//[SIERRA-ADD] - Mechs-by-Shegar
+				exosuit.add_heat(exosuit.legs.heat_generation)
+				//[SIERRA-ADD]
+			return MOVEMENT_HANDLED
+//[SIERRA-ADD]
 
+//TURN
 	if(exosuit.dir != moving_dir && !(direction & (UP|DOWN)))
 		playsound(exosuit.loc, exosuit.legs.mech_turn_sound, 40,1)
+		////[SIERRA-ADD] - Mechs-by-Shegar
+		//Первым делом мы найдём угол между текущим диром и тот на который мы хотим перейти
+		if(exosuit.dir == turn(direction, 45) || exosuit.dir == turn(direction, -45))
+			exosuit.sub_speed( exosuit.legs.turn_diogonal_slowdown)
+		else if(exosuit.dir == turn(direction, 90) || exosuit.dir == turn(direction, -90))
+			exosuit.sub_speed( exosuit.legs.turn_slowdown )
+		else if(exosuit.dir == turn(direction, 135) || exosuit.dir == turn(direction, -135))
+			exosuit.sub_speed( (exosuit.legs.turn_slowdown + exosuit.legs.turn_diogonal_slowdown)  )
+		else if(exosuit.dir == turn(direction, 180) || exosuit.dir == turn(direction, -180))
+			exosuit.legs.current_speed = exosuit.legs.min_speed
+		exosuit.add_heat(exosuit.legs.heat_generation)
+		//[SIERRA-ADD]
 		exosuit.set_dir(moving_dir)
 		exosuit.SetMoveCooldown(exosuit.legs.turn_delay)
+
+//TURN
+
+//MOVE
 	else
-		exosuit.SetMoveCooldown(exosuit.legs ? exosuit.legs.move_delay : 3)
+		//[SIERRA-EDIT] - Mechs-by-Shegar
+		//exosuit.SetMoveCooldown(exosuit.legs ? exosuit.legs.move_delay : 3)
+		exosuit.SetMoveCooldown(exosuit.legs ? exosuit.legs.current_speed : 3)
+		//[SIERRA-EDIT]
 		var/turf/target_loc = get_step(exosuit, direction)
 		if(target_loc && exosuit.legs && exosuit.legs.can_move_on(exosuit.loc, target_loc) && exosuit.MayEnterTurf(target_loc))
-			exosuit.Move(target_loc)
+			if(!exosuit.body.phazon)
+				exosuit.Move(target_loc)
+				//[SIERRA-ADD] - Mechs-by-Shegar
+				exosuit.add_heat(exosuit.legs.heat_generation)
+				exosuit.add_speed()
+				//[SIERRA-ADD]
+			else
+				for(var/thing in exosuit.pilots) //Для всех пилотов внутри
+					var/mob/pilot = thing
+					if(pilot && pilot.client)
+						for(var/key in pilot.client.keys_held)
+							if (key == "Shift")
+								var/move_speed = exosuit.legs.move_delay
+								move_speed = move_speed * 2.5
+								exosuit.SetMoveCooldown(exosuit.legs ? move_speed : 3)
+								exosuit.forceMove(target_loc)
+
+							else
+								exosuit.Move(target_loc)
 	return MOVEMENT_HANDLED
 /datum/movement_handler/mob/space/exosuit
 	expected_host_type = /mob/living/exosuit
@@ -141,13 +184,21 @@
 /mob/living/exosuit/Check_Shoegrip()//mechs are always magbooting
 	return TRUE
 
-/mob/living/exosuit/Process_Spacemove()
+/mob/living/exosuit/Process_Spacemove(allow_movement)
 	if(has_gravity() || throwing || !isturf(loc) || length(grabbed_by) || check_space_footing() || locate(/obj/structure/lattice) in range(1, get_turf(src)))
 		anchored = TRUE
-		return 1
+		return TRUE
 
 	anchored = FALSE
-	return 0
+
+	//Regardless of modules, emp prevents control
+	if(emp_damage >= EMP_MOVE_DISRUPT && prob(25))
+		return FALSE
+
+	var/obj/item/mech_equipment/ionjets/J = hardpoints[HARDPOINT_BACK]
+	if(istype(J))
+		if(J.allowSpaceMove() && (allow_movement || J.stabilizers))
+			return TRUE
 
 /mob/living/exosuit/check_space_footing()//mechs can't push off things to move around in space, they stick to hull or float away
 	for(var/thing in trange(1,src))

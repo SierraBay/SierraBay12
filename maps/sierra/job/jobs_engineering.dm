@@ -9,7 +9,8 @@
 	spawn_positions = 1
 	economic_power = 7
 	minimal_player_age = 14
-	ideal_character_age = 34
+	minimum_character_age = list(SPECIES_HUMAN = 26)
+	ideal_character_age = 28
 
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/engineering/senior_engineer
 	allowed_branches = list(/datum/mil_branch/employee)
@@ -31,7 +32,7 @@
 
 	access = list(	access_engine, access_engine_equip, access_maint_tunnels, access_external_airlocks, access_emergency_storage,
 			        access_eva, access_tech_storage, access_atmospherics, access_janitor, access_construction,
-			        access_tcomsat, access_seneng, access_hangar)
+			        access_tcomsat, access_seneng, access_hangar, access_network)
 
 
 	software_on_spawn = list(/datum/computer_file/program/power_monitor,
@@ -60,7 +61,8 @@
 	total_positions = 4
 	spawn_positions = 4
 	minimal_player_age = 7
-	ideal_character_age = 25
+	minimum_character_age = list(SPECIES_HUMAN = 22)
+	ideal_character_age = 24
 	economic_power = 6
 
 	alt_titles = list(
@@ -116,7 +118,8 @@
 
 	total_positions = 2
 	spawn_positions = 2
-	ideal_character_age = 20
+	minimum_character_age = list(SPECIES_HUMAN = 20)
+	ideal_character_age = 21
 	economic_power = 3
 
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/engineering/engineer/trainee
@@ -165,6 +168,7 @@
 	total_positions = 1
 	spawn_positions = 1
 	minimal_player_age = 7
+	minimum_character_age = list(SPECIES_HUMAN = 22)
 	ideal_character_age = 24
 	economic_power = 6
 
@@ -180,7 +184,7 @@
 	max_skill = list(   SKILL_ELECTRICAL   = SKILL_MAX,
 	                    SKILL_COMPUTER	   = SKILL_MAX)
 
-	access = list(	access_maint_tunnels, access_network,
+	access = list(	access_maint_tunnels, access_network, access_network_admin, access_external_airlocks,
 			       	access_tech_storage, access_emergency_storage, access_tcomsat)
 
 

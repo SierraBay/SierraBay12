@@ -28,6 +28,13 @@
 
 	var/current_heat_capacity = 50
 
+	var/temperature_warning_threshhold = 170
+	var/temperature_danger_threshhold = T0C
+
+	var/fast_stasis_mult = 0.8
+	var/slow_stasis_mult = 1.25
+	var/current_stasis_mult = 1
+
 /obj/machinery/atmospherics/unary/cryo_cell/Initialize()
 	. = ..()
 	icon = 'icons/obj/machines/medical/cryogenics_split.dmi'
@@ -82,6 +89,7 @@
 		temperature_archived = air_contents.temperature
 		heat_gas_contents()
 		expel_gas()
+		queue_icon_update()
 
 	if(abs(temperature_archived-air_contents.temperature) > 1)
 		network.update = 1
@@ -138,9 +146,9 @@
 
 	data["cellTemperature"] = round(air_contents.temperature)
 	data["cellTemperatureStatus"] = "good"
-	if(air_contents.temperature > T0C) // if greater than 273.15 kelvin (0 celsius)
+	if(air_contents.temperature >= temperature_danger_threshhold) // if greater than 273.15 kelvin (0 celsius)
 		data["cellTemperatureStatus"] = "bad"
-	else if(air_contents.temperature > 225)
+	else if(air_contents.temperature >= temperature_warning_threshhold)
 		data["cellTemperatureStatus"] = "average"
 
 	data["isBeakerLoaded"] = beaker ? 1 : 0
@@ -150,6 +158,10 @@
 	if(beaker)
 		data["beakerLabel"] = beaker.name
 		data["beakerVolume"] = beaker.reagents.total_volume
+
+	data["fast_stasis_mult"] = fast_stasis_mult
+	data["slow_stasis_mult"] = slow_stasis_mult
+	data["current_stasis_mult"] = current_stasis_mult
 
 	// update the ui if it exists, returns null if no ui is passed/found
 	ui = SSnano.try_update_ui(user, src, ui_key, ui, data, force_open)
@@ -192,23 +204,39 @@
 		go_out()
 		return TOPIC_REFRESH
 
+	if(href_list["goFast"])
+		current_stasis_mult = fast_stasis_mult
+		update_icon()
+		return TOPIC_REFRESH
+
+	if(href_list["goRegular"])
+		current_stasis_mult = 1
+		update_icon()
+		return TOPIC_REFRESH
+
+	if(href_list["goSlow"])
+		current_stasis_mult = slow_stasis_mult
+		update_icon()
+		return TOPIC_REFRESH
+
 /obj/machinery/atmospherics/unary/cryo_cell/state_transition(singleton/machine_construction/default/new_state)
 	. = ..()
 	if(istype(new_state))
 		updateUsrDialog()
 
-/obj/machinery/atmospherics/unary/cryo_cell/attackby(obj/G, mob/user as mob)
-	if(component_attackby(G, user))
+/obj/machinery/atmospherics/unary/cryo_cell/use_tool(obj/item/G, mob/living/user, list/click_params)
+	if (!istype(G, /obj/item/reagent_containers/glass))
+		return ..()
+
+	if (beaker)
+		to_chat(user, SPAN_WARNING("A beaker is already loaded into the machine."))
 		return TRUE
-	if(istype(G, /obj/item/reagent_containers/glass))
-		if(beaker)
-			to_chat(user, SPAN_WARNING("A beaker is already loaded into the machine."))
-			return
-		if(!user.unEquip(G, src))
-			return // Temperature will be adjusted on Entered()
-		beaker =  G
-		user.visible_message("[user] adds \a [G] to \the [src]!", "You add \a [G] to \the [src]!")
-	return
+	if (!user.unEquip(G, src))
+		return TRUE
+
+	beaker =  G
+	user.visible_message("\The [user] adds \a [G] to \the [src]!", "You add \a [G] to \the [src]!")
+	return TRUE
 
 /obj/machinery/atmospherics/unary/cryo_cell/on_update_icon()
 	ClearOverlays()
@@ -234,6 +262,25 @@
 	I = image(icon, "lid[on]_top")
 	I.pixel_z = 32
 	AddOverlays(I)
+
+	if (powered())
+		var/warn_state = "off"
+		if (on)
+			warn_state = "safe"
+			if (air_contents.temperature >= temperature_danger_threshhold)
+				warn_state = "danger"
+			else if (air_contents.temperature >= temperature_warning_threshhold)
+				warn_state = "warn"
+		I = overlay_image(icon, "lights_[warn_state]")
+		AddOverlays(I)
+		I = overlay_image(icon, "lights_[warn_state]_top")
+		I.pixel_z = 32
+		AddOverlays(I)
+		AddOverlays(emissive_appearance(icon, "lights_mask"))
+		I = emissive_appearance(icon, "lights_mask_top")
+		I.pixel_z = 32
+		AddOverlays(I)
+
 
 /obj/machinery/atmospherics/unary/cryo_cell/proc/process_occupant()
 	if(air_contents.total_moles < 10)
@@ -384,6 +431,12 @@
 		return loc.return_air()
 	else
 		return null
+
+/obj/machinery/atmospherics/unary/cryo_cell/RefreshParts()
+	..()
+	var/stasis_coeff = total_component_rating_of_type(/obj/item/stock_parts/manipulator)
+	fast_stasis_mult = max(1 - (stasis_coeff * 0.06), 0.66)
+	slow_stasis_mult = min(1 + (stasis_coeff * 0.08), 1.5)
 
 /datum/data/function/proc/reset()
 	return

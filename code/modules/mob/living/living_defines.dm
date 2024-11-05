@@ -43,7 +43,7 @@
 	var/fire_stacks
 
 	var/failed_last_breath = 0 //This is used to determine if the mob failed a breath. If they did fail a brath, they will attempt to breathe each tick, otherwise just once per 4 ticks.
-	var/possession_candidate // Can be possessed by ghosts if unplayed.
+	var/possession_candidate = FALSE // Can be possessed by ghosts if unplayed.
 
 	var/eye_blind = null	//Carbon
 	var/eye_blurry = null	//Carbon
@@ -68,3 +68,6 @@
 
 	/// An associative list of /singleton/trait and trait level - See individual traits for valid levels
 	var/list/traits
+
+	/// Some combination of HAZARD_FLAG_*. When set, the flagged hazard types will not damage the mob.
+	var/ignore_hazard_flags = EMPTY_BITFIELD

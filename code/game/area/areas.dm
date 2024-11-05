@@ -54,10 +54,10 @@
 	A.contents.Add(T)
 	if(old_area)
 		old_area.Exited(T, A)
-		for(var/atom/movable/AM in T)
+		for(var/atom/movable/AM as anything in T)
 			old_area.Exited(AM, A)  // Note: this _will_ raise exited events.
 	A.Entered(T, old_area)
-	for(var/atom/movable/AM in T)
+	for(var/atom/movable/AM as anything in T)
 		A.Entered(AM, old_area) // Note: this will _not_ raise moved or entered events. If you change this, you must also change everything which uses them.
 
 	for(var/obj/machinery/M in T)
@@ -330,13 +330,12 @@
 
 /// Trigger for the prison break event. Causes lighting to overload and dooes to open. Has no effect if the area lacks an APC or the APC is turned off.
 /area/proc/prison_break()
-	var/obj/machinery/power/apc/theAPC = get_apc()
-	if(theAPC && theAPC.operating)
-		for(var/obj/machinery/power/apc/temp_apc in src)
+	if (apc?.operating)
+		for (var/obj/machinery/power/apc/temp_apc in src)
 			temp_apc.overload_lighting(70)
-		for(var/obj/machinery/door/airlock/temp_airlock in src)
+		for (var/obj/machinery/door/airlock/temp_airlock in src)
 			temp_airlock.prison_open()
-		for(var/obj/machinery/door/window/temp_windoor in src)
+		for (var/obj/machinery/door/window/temp_windoor in src)
 			temp_windoor.open()
 
 /// Returns boolean. Whether or not the area is considered to have gravity.

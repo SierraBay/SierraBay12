@@ -66,3 +66,5 @@
 	species_restricted = list(SPECIES_VOX)
 	siemens_coefficient = 1 //Its literally metal
 	item_flags = ITEM_FLAG_THICKMATERIAL | ITEM_FLAG_INVALID_FOR_CHAMELEON
+
+/obj/item/clothing/head/helmet/vox_scrap //[SIERRA-ADD] mods\guns\code\xenos.dm

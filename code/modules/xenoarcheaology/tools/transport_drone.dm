@@ -67,7 +67,7 @@
 		to_chat(user, SPAN_WARNING("You should probably try to use this outside."))
 		return
 	if (validate_target(target, user))
-		var/datum/beam/B = user.Beam(BeamTarget = T, icon_state = "n_beam", maxdistance = get_dist(user, T), beam_type = /obj/effect/ebeam)
+		var/datum/beam/B = user.Beam(BeamTarget = T, icon_state = "n_beam", maxdistance = get_dist(user, T), beam_type = /obj/ebeam)
 		user.visible_message(SPAN_NOTICE("\The [user] points \the [src] at \the [target]."))
 		playsound(src,'sound/effects/scanbeep.ogg',30,0)
 		if(do_after(user, 2 SECONDS, target, (DO_PUBLIC_UNIQUE & ~DO_USER_SAME_HAND) | DO_MOVE_CHECKS_TURFS))
@@ -116,7 +116,6 @@
 		QDEL_NULL(current_flight)
 
 /obj/machinery/drone_pad/on_update_icon()
-	. = ..()
 	ClearOverlays()
 	if (current_flight)
 		AddOverlays(list(
@@ -201,7 +200,7 @@
 
 /obj/machinery/drone_pad/proc/finish_moving()
 	landing_animation(current_flight.payload, src.loc)
-	addtimer(new Callback(current_flight.payload, /atom/movable/proc/forceMove, src.loc), 3 SECONDS)
+	addtimer(new Callback(current_flight.payload, TYPE_PROC_REF(/atom/movable, forceMove), src.loc), 3 SECONDS)
 	QDEL_NULL(current_flight)
 	update_icon()
 
@@ -213,8 +212,8 @@
 		return FALSE
 	else
 		//Overmap travel necessary?
-		var/obj/effect/overmap/visitable/other = map_sectors["[target.z]"]
-		var/obj/effect/overmap/visitable/self = map_sectors["[src.z]"]
+		var/obj/overmap/visitable/other = map_sectors["[target.z]"]
+		var/obj/overmap/visitable/self = map_sectors["[src.z]"]
 		//Start animation
 		pickup_animation(target)
 
@@ -232,7 +231,7 @@
 		audible_message(SPAN_NOTICE("<b>\The [src]</b> pings, Incoming payload. Delivery expected in T - [(flight_time) / (1 SECOND)] seconds."))
 
 
-		active_timer = addtimer(new Callback(src, .proc/finish_moving), flight_time, TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_STOPPABLE)
+		active_timer = addtimer(new Callback(src, PROC_REF(finish_moving)), flight_time, TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_STOPPABLE)
 		update_icon()
 		return TRUE
 
@@ -264,9 +263,9 @@
 			to_chat(user, SPAN_NOTICE("\The [tool] was synchronized with the [transport.id_tag] network."))
 			designator.network = transport.id_tag
 			playsound(src.loc, 'sound/machines/twobeep.ogg', 50, 1, -3)
+		update_icon()
 		return TRUE
 
-	update_icon()
 	return ..()
 
 /obj/machinery/drone_pad/RefreshParts()

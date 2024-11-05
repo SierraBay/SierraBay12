@@ -3,11 +3,12 @@
 	name_plural = "Humans"
 	primitive_form = "Monkey"
 	unarmed_types = list(/datum/unarmed_attack/stomp, /datum/unarmed_attack/kick, /datum/unarmed_attack/punch, /datum/unarmed_attack/bite)
-	description = "Humanity originated in the Sol system, and over the last five centuries has spread \
+	description = "Humanity originated in the Sol system, and over the last three centuries has spread \
 	colonies across a wide swathe of space. They hold a wide range of forms and creeds.<br/><br/> \
-	While the central Sol government maintains control of its far-flung people, powerful corporate \
-	interests, rampant cyber and bio-augmentation and secretive factions make life on most human \
-	worlds tumultous at best."
+	The two largest human governments are the Sol Central Government and the Gilgamesh Colonial Confederation, \
+	which are currently locked in a cold war. Many other human states exist, however - these include the Frontier \
+	Alliance, a loose collection of planets which has recently seceded from the Sol Central Government; \
+	Magnitka, an independent authoritarian planet; and many other minor colonies."
 	assisted_langs = list(LANGUAGE_NABBER)
 	min_age = 18
 	max_age = 100
@@ -31,11 +32,25 @@
 			CULTURE_HUMAN_VENUSLOW,
 			CULTURE_HUMAN_BELTER,
 			CULTURE_HUMAN_PLUTO,
+			CULTURE_HUMAN_MAGNITKA,
 			CULTURE_HUMAN_EARTH,
-			CULTURE_HUMAN_CETI,
+			CULTURE_HUMAN_CETIN,
+			CULTURE_HUMAN_CETIS,
+			CULTURE_HUMAN_CETII,
 			CULTURE_HUMAN_SPACER,
-			CULTURE_HUMAN_SPAFRO,
-			CULTURE_HUMAN_CONFED,
+			CULTURE_HUMAN_OFFWORLD,
+			CULTURE_HUMAN_CONFEDC,
+			CULTURE_HUMAN_CONFEDO,
+			CULTURE_HUMAN_FOSTER,
+			CULTURE_HUMAN_PIRXL,
+			CULTURE_HUMAN_PIRXB,
+			CULTURE_HUMAN_PIRXF,
+			CULTURE_HUMAN_TADMOR,
+			CULTURE_HUMAN_IOLAUS,
+			CULTURE_HUMAN_BRAHE,
+			CULTURE_HUMAN_EOS,
+			CULTURE_HUMAN_CONFEDC,
+			CULTURE_HUMAN_CONFEDO,
 			CULTURE_HUMAN_GAIAN,
 			CULTURE_HUMAN_OTHER
 		)
@@ -58,50 +73,6 @@
 
 /datum/species/human/get_bodytype(mob/living/carbon/human/H)
 	return SPECIES_HUMAN
-
-/datum/species/human/handle_npc(mob/living/carbon/human/H)
-	if(H.stat != CONSCIOUS)
-		return
-
-	if(H.get_shock() && H.shock_stage < 40 && prob(3))
-		H.emote(pick("moan","groan"))
-
-	if(H.shock_stage > 10 && prob(3))
-		H.emote(pick("cry","whimper"))
-
-	if(H.shock_stage >= 40 && prob(3))
-		H.emote("scream")
-
-	if(!H.restrained() && H.lying && H.shock_stage >= 60 && prob(3))
-		H.custom_emote("thrashes in agony")
-
-	if(!H.restrained() && H.shock_stage < 40 && prob(3))
-		var/maxdam = 0
-		var/obj/item/organ/external/damaged_organ = null
-		for(var/obj/item/organ/external/E in H.organs)
-			if(!E.can_feel_pain()) continue
-			var/dam = E.get_damage()
-			// make the choice of the organ depend on damage,
-			// but also sometimes use one of the less damaged ones
-			if(dam > maxdam && (maxdam == 0 || prob(50)) )
-				damaged_organ = E
-				maxdam = dam
-		var/datum/pronouns/P = H.choose_from_pronouns()
-		if(damaged_organ)
-			if(damaged_organ.status & ORGAN_BLEEDING)
-				H.custom_emote("clutches [P.his] [damaged_organ.name], trying to stop the blood.")
-			else if(damaged_organ.status & ORGAN_BROKEN)
-				H.custom_emote("holds [P.his] [damaged_organ.name] carefully.")
-			else if(damaged_organ.burn_dam > damaged_organ.brute_dam && damaged_organ.organ_tag != BP_HEAD)
-				H.custom_emote("blows on [P.his] [damaged_organ.name] carefully.")
-			else
-				H.custom_emote("rubs [P.his] [damaged_organ.name] carefully.")
-
-		for(var/obj/item/organ/I in H.internal_organs)
-			if((I.status & ORGAN_DEAD) || BP_IS_ROBOTIC(I)) continue
-			if(I.damage > 2) if(prob(2))
-				var/obj/item/organ/external/parent = H.get_organ(I.parent_organ)
-				H.custom_emote("clutches [P.his] [parent.name]!")
 
 /datum/species/human/get_ssd(mob/living/carbon/human/H)
 	if (H.ai_holder)
@@ -133,7 +104,7 @@
 	pronouns = list(PRONOUNS_THEY_THEM)
 	hidden_from_codex = FALSE
 	min_age = 19
-	max_age = 90
+	max_age = 130
 
 	burn_mod = 0.9
 	oxy_mod = 1.3
@@ -175,13 +146,6 @@
 		/datum/mob_descriptor/build = 0,
 		/datum/mob_descriptor/headtail_length = 0
 	)
-
-	speech_sounds = list(
-		'sound/skrell/warble1.ogg',
-		'sound/skrell/warble2.ogg',
-		'sound/skrell/warble3.ogg'
-	)
-	speech_chance = 10
 
 	available_cultural_info = list(
 		TAG_CULTURE = list(
@@ -380,7 +344,7 @@
 	var/mob/living/carbon/alien/diona/nymph = new (target)
 	var/datum/ghosttrap/trap = get_ghost_trap("living plant")
 	trap.request_player(nymph, "A diona nymph has split from its gestalt.", 30 SECONDS)
-	addtimer(new Callback(nymph, /mob/living/carbon/alien/diona/proc/check_spawn_death), 30 SECONDS)
+	addtimer(new Callback(nymph, TYPE_PROC_REF(/mob/living/carbon/alien/diona, check_spawn_death)), 30 SECONDS)
 
 /mob/living/carbon/alien/diona/proc/check_spawn_death()
 	if (QDELETED(src))
@@ -417,7 +381,7 @@
 /datum/species/diona/handle_post_spawn(mob/living/carbon/human/H)
 	H.gender = NEUTER
 	. = ..()
-	addtimer(new Callback(src, .proc/fill_with_nymphs, H), 0)
+	addtimer(new Callback(src, PROC_REF(fill_with_nymphs), H), 0)
 
 /datum/species/diona/proc/fill_with_nymphs(mob/living/carbon/human/H)
 

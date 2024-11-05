@@ -6,7 +6,6 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = ITEM_SIZE_SMALL
-	item_flags = ITEM_FLAG_TRY_ATTACK
 	matter = list(MATERIAL_ALUMINIUM = 1000, MATERIAL_GLASS = 1000)
 	var/obj/item/implant/imp = null
 
@@ -35,15 +34,16 @@
 		return 1
 	return 0
 
-/obj/item/implanter/attackby(obj/item/I, mob/user)
+/obj/item/implanter/use_tool(obj/item/I, mob/living/user, list/click_params)
 	if(!imp && istype(I, /obj/item/implant) && user.unEquip(I,src))
 		to_chat(usr, SPAN_NOTICE("You slide \the [I] into \the [src]."))
 		imp = I
 		update_icon()
-	else
-		..()
+		return TRUE
 
-/obj/item/implanter/attack(mob/M as mob, mob/user as mob)
+	return ..()
+
+/obj/item/implanter/use_before(mob/M as mob, mob/user as mob)
 	. = FALSE
 	if (!istype(M, /mob/living/carbon))
 		return FALSE

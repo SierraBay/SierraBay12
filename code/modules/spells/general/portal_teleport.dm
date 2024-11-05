@@ -45,10 +45,13 @@
 		to_chat(user, "The spell matrix was unable to locate a suitable teleport destination for an unknown reason. Sorry.")
 		return
 
-	new /obj/effect/portal/wizard(start, end, 35 MINUTES)
-	new /obj/effect/portal/wizard(end, start, 35 MINUTES)
+	new /obj/portal/wizard(start, end, 35 MINUTES)
+	new /obj/portal/wizard(end, start, 35 MINUTES)
 
 	return
+
+/spell/portal_teleport/check_valid_targets(list/targets)
+	return islist(targets) && length(targets)
 
 /spell/portal_teleport/after_cast()
 	return
@@ -61,7 +64,7 @@
 		..()
 	return
 
-/obj/effect/portal/wizard
+/obj/portal/wizard
 	name = "dark anomaly"
 	desc = "It pulls on the edges of reality as if trying to draw them in."
 	icon = 'icons/obj/unused.dmi'

@@ -83,6 +83,7 @@
 	else
 		to_chat(usr, SPAN_NOTICE("The generator is off."))
 /obj/machinery/power/port_gen/emp_act(severity)
+	SHOULD_CALL_PARENT(FALSE)
 	if(!active)
 		return
 	var/duration
@@ -95,10 +96,11 @@
 			if(prob(25)) set_broken(TRUE)
 			if(prob(10)) explode()
 			else duration = 30 SECONDS
+	GLOB.empd_event.raise_event(src, severity)
 
 	if(duration)
 		set_stat(MACHINE_STAT_EMPED, TRUE)
-		addtimer(new Callback(src, .proc/resolve_emp_timer), duration)
+		addtimer(new Callback(src, PROC_REF(resolve_emp_timer)), duration)
 
 /obj/machinery/power/port_gen/proc/resolve_emp_timer()
 	set_stat(MACHINE_STAT_EMPED, FALSE)
@@ -132,6 +134,7 @@
 	construct_state = /singleton/machine_construction/default/panel_closed
 	uncreated_component_parts = null
 	stat_immune = 0
+	obj_flags = OBJ_FLAG_ANCHORABLE
 	var/max_power_output = 5	//The maximum power setting without emagging.
 	var/max_safe_output = 4		// For UI use, maximal output that won't cause overheat.
 	var/time_per_sheet = 96		//fuel efficiency - how long 1 sheet lasts at power level 1
@@ -290,29 +293,24 @@
 		return SPAN_WARNING("You cannot do this while \the [src] is running!")
 	return ..()
 
-/obj/machinery/power/port_gen/pacman/attackby(obj/item/O as obj, mob/user as mob)
+/obj/machinery/power/port_gen/pacman/use_tool(obj/item/O, mob/living/user, list/click_params)
 	if(istype(O, sheet_path))
 		var/obj/item/stack/addstack = O
 		var/amount = min((max_sheets - sheets), addstack.amount)
 		if(amount < 1)
 			to_chat(user, SPAN_NOTICE("The [src.name] is full!"))
-			return
+			return TRUE
 		to_chat(user, SPAN_NOTICE("You add [amount] sheet\s to the [src.name]."))
 		sheets += amount
 		addstack.use(amount)
 		updateUsrDialog()
-		return
-	if(isWrench(O) && !active)
-		if(!anchored)
-			connect_to_network()
-			to_chat(user, SPAN_NOTICE("You secure the generator to the floor."))
-		else
-			disconnect_from_network()
-			to_chat(user, SPAN_NOTICE("You unsecure the generator from the floor."))
+		return TRUE
 
-		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-		anchored = !anchored
-	return component_attackby(O, user)
+	if(isWrench(O) && active)
+		to_chat(SPAN_WARNING("Turn off \the [src] before wrenching its bolts."))
+		return TRUE
+
+	return ..()
 
 /obj/machinery/power/port_gen/pacman/dismantle()
 	while (sheets > 0)
@@ -383,7 +381,7 @@
 	var/stack_percent = round(sheet_left * 100, 1)
 	dat += text("Current stack: [stack_percent]% <br>")
 	dat += text("Power output: <A href='?src=\ref[src];action=lower_power'>-</A> [power_gen * power_output] Watts<A href='?src=\ref[src];action=higher_power'>+</A><br>")
-	dat += text("Power current: [(powernet == null ? "Unconnected" : "[avail()]")]<br>")
+	dat += text("Power current: [(isnull(powernet) ? "Unconnected" : "[avail()]")]<br>")
 
 	var/tempstr = "Temperature: [temperature]&deg;C<br>"
 	dat += (overheating)? SPAN_DANGER("[tempstr]") : tempstr
@@ -447,7 +445,7 @@
 		I.blend_mode = BLEND_ADD
 		I.alpha = round(255*power_output/max_power_output)
 		AddOverlays(I)
-		set_light(0.7, 0.1, rad_power + power_output - max_safe_output, 2, "#3b97ca")
+		set_light(rad_power + power_output - max_safe_output, 0.7, "#3b97ca")
 	else
 		set_light(0)
 
@@ -477,7 +475,7 @@
 	machine_desc = "This nuclear generator uses a combination of uranium and, strangely, vodka. Rated for 150 kW max safe output."
 	var/coolant_volume = 120
 	var/coolant_use = 1
-	var/coolant_reagent = /datum/reagent/ethanol/vodka
+	var/datum/reagent/coolant_reagent = /datum/reagent/ethanol/vodka
 
 /obj/machinery/power/port_gen/pacman/super/potato/New()
 	create_reagents(coolant_volume)
@@ -505,18 +503,28 @@
 	if(power_output > max_safe_output)
 		icon_state = "potatodanger"
 
-/obj/machinery/power/port_gen/pacman/super/potato/attackby(obj/item/O, mob/user)
-	if(istype(O, /obj/item/reagent_containers))
-		var/obj/item/reagent_containers/R = O
-		if(R.standard_pour_into(src,user))
-			if(reagents.has_reagent("vodka"))
-				audible_message(SPAN_NOTICE("[src] blips happily"))
-				playsound(get_turf(src),'sound/machines/synth_yes.ogg', 50, 0)
-			else
-				audible_message(SPAN_WARNING("[src] blips in disappointment"))
-				playsound(get_turf(src), 'sound/machines/synth_no.ogg', 50, 0)
-		return
-	..()
+/obj/machinery/power/port_gen/pacman/super/potato/use_tool(obj/item/item, mob/living/user, list/click_params)
+	if (!istype(item, /obj/item/reagent_containers))
+		return ..()
+	var/datum/reagents/item_reagents = item.reagents
+	if (!HAS_FLAGS(item.atom_flags, ATOM_FLAG_OPEN_CONTAINER))
+		to_chat(user, SPAN_WARNING("\The [item] is closed."))
+	else if (!item_reagents.has_reagent(coolant_reagent))
+		to_chat(user, SPAN_WARNING("\The [src] needs [initial(coolant_reagent.name)] to run."))
+	else if (length(item_reagents.reagent_list) > 1)
+		to_chat(user, SPAN_WARNING("The contents of \the [item] is impure."))
+	else
+		var/obj/item/reagent_containers/container = item
+		var/transferred = item_reagents.trans_to_holder(reagents, container.amount_per_transfer_from_this)
+		if (transferred)
+			user.visible_message(
+				SPAN_ITALIC("\The [user] pours something from \the [item] into \the [src]."),
+				SPAN_ITALIC("You pour [transferred]u from \the [item] into \the [src]."),
+				SPAN_ITALIC("You hear a liquid gurgling.")
+			)
+		else
+			to_chat(user, SPAN_WARNING("The [src] is full."))
+	return TRUE
 
 /obj/machinery/power/port_gen/pacman/super/potato/reactor
 	name = "nuclear reactor"

@@ -66,7 +66,6 @@
 	emag_gear = list(
 		/obj/item/melee/baton/robot/electrified_arm,
 		/obj/item/device/flash,
-		/obj/item/gun/energy/gun,
 		/obj/item/rcd/borg,
 		/obj/item/flamethrower/full/loaded,
 		/obj/item/shield_diffuser,
@@ -80,6 +79,8 @@
 		SKILL_ELECTRICAL   = SKILL_MASTER,
 		SKILL_COMPUTER     = SKILL_EXPERIENCED
 	)
+
+	var/flamethrower_recharge_modifier = 8
 
 /obj/item/robot_module/engineering/finalize_synths()
 
@@ -127,15 +128,18 @@
 /obj/item/robot_module/engineering/respawn_consumable(mob/living/silicon/robot/R, amount)
 	..()
 	var/obj/item/device/lightreplacer/LR = locate() in equipment
-	LR.Charge(R, amount)
+	if (LR)
+		LR.Charge(R, amount)
 
 	if (R.emagged)
 		var/obj/item/flamethrower/full/loaded/flamethrower = locate() in equipment
-		flamethrower.beaker.reagents.add_reagent(/datum/reagent/napalm, 10 * amount)
+		if (flamethrower)
+			flamethrower.beaker.reagents.add_reagent(/datum/reagent/napalm, flamethrower_recharge_modifier * amount)
 
 		var/obj/item/shield_diffuser/diff = locate() in equipment
-		diff.cell.charge += amount
+		if (diff)
+			diff.cell.charge += amount
 
 		var/obj/item/gun/launcher/grenade/foam/foam = locate() in equipment
-		if (LAZYLEN(foam.grenades) < foam.max_grenades)
+		if (foam?.max_grenades > length(foam?.grenades))
 			foam.grenades += new /obj/item/grenade/chem_grenade/metalfoam(src)

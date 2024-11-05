@@ -16,8 +16,8 @@
 	disruptable = 1
 	disruptive = 0
 
-	use_power_cost = 250 KILOWATTS
-	active_power_cost = 30 KILOWATTS
+	use_power_cost = 500 KILOWATTS
+	active_power_cost = 60 KILOWATTS
 	passive_power_cost = 0
 	module_cooldown = 10 SECONDS
 	origin_tech = list(TECH_MATERIAL = 5, TECH_POWER = 6, TECH_MAGNET = 6, TECH_ESOTERIC = 6, TECH_ENGINEERING = 7)
@@ -60,7 +60,7 @@
 	name = "teleportation module"
 	desc = "A complex, sleek-looking, hardsuit-integrated teleportation module."
 	icon_state = "teleporter"
-	use_power_cost = 400 KILOWATTS
+	use_power_cost = 800 KILOWATTS
 	redundant = 1
 	usable = 1
 	selectable = 1
@@ -220,7 +220,7 @@
 	holder.visible_message(SPAN_DANGER("\The [src.holder] emits a shrill tone!"),SPAN_DANGER(" You hear a shrill tone!"))
 	sleep(blink_solid_time)
 	src.blink_mode = 0
-	src.holder.set_light(0, 0, 0, 2, "#000000")
+	src.holder.set_light(2, 0, "#000000")
 
 	explosion(get_turf(src), explosion_radius, explosion_max_power)
 	if(holder && holder.wearer)
@@ -244,17 +244,17 @@
 		if(0)
 			return
 		if(1)
-			src.holder.set_light(1, 1, 8.5, 2, "#ff0a00")
+			src.holder.set_light(8.5, 1, "#ff0a00")
 			sleep(6)
-			src.holder.set_light(0, 0, 0, 2, "#000000")
+			src.holder.set_light(0)
 			spawn(6) .()
 		if(2)
-			src.holder.set_light(1, 1, 8.5, 2, "#ff0a00")
+			src.holder.set_light(8.5, 1, "#ff0a00")
 			sleep(2)
-			src.holder.set_light(0, 0, 0, 2, "#000000")
+			src.holder.set_light(0)
 			spawn(2) .()
 		if(3)
-			src.holder.set_light(1, 1, 8.5, 2, "#ff0a00")
+			src.holder.set_light(8.5, 1, "#ff0a00")
 
 /obj/item/rig_module/grenade_launcher/ninja
 	suit_overlay = null

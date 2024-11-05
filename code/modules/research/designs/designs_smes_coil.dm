@@ -1,6 +1,6 @@
-/datum/design/item/smes_coil/AssembleDesignName()
-	..()
-	name = "Superconductive magnetic coil ([item_name])"
+/datum/design/item/smes_coil
+	category = list("Engineering")
+
 
 /datum/design/item/smes_coil
 	desc = "A superconductive magnetic coil used to store power in magnetic fields."

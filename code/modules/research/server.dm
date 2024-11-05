@@ -18,14 +18,22 @@
 	var/delay = 10
 	req_access = list(access_rd) //Only the R&D can change server settings.
 
-/obj/machinery/r_n_d/server/RefreshParts()
-	var/tot_rating = 0
-	for(var/obj/item/stock_parts/SP in src)
-		tot_rating += SP.rating
-	change_power_consumption(initial(idle_power_usage)/max(1, tot_rating), POWER_USE_IDLE)
+
+/obj/machinery/r_n_d/server/Destroy()
+	//[SIERRA-ADD] - MODPACK_RND
+	rnd_server_list += src
+	//[/SIERRA-ADD] - MODPACK_RND
+
+	QDEL_NULL(files)
+	return ..()
+
 
 /obj/machinery/r_n_d/server/Initialize()
 	. = ..()
+	//[SIERRA-ADD] - MODPACK_RND
+	rnd_server_list += src
+	//[/SIERRA-ADD] - MODPACK_RND
+
 	if(!files)
 		files = new /datum/research(src)
 	var/list/temp_list
@@ -39,6 +47,36 @@
 		temp_list = splittext(id_with_download_string, ";")
 		for(var/N in temp_list)
 			id_with_download += text2num(N)
+	update_icon()
+
+
+/obj/machinery/r_n_d/server/operable()
+	return !inoperable(MACHINE_STAT_EMPED)
+
+
+/obj/machinery/r_n_d/server/on_update_icon()
+	ClearOverlays()
+	if (operable())
+		AddOverlays(list(
+			"server_on",
+			"server_lights_on",
+			emissive_appearance(icon, "server_lights_on"),
+		))
+	else
+		AddOverlays(list(
+			"server_lights_off",
+			emissive_appearance(icon, "server_lights_off")
+		))
+	if (panel_open)
+		AddOverlays("server_panel")
+
+
+/obj/machinery/r_n_d/server/RefreshParts()
+	var/tot_rating = 0
+	for(var/obj/item/stock_parts/SP in src)
+		tot_rating += SP.rating
+	change_power_consumption(initial(idle_power_usage)/max(1, tot_rating), POWER_USE_IDLE)
+
 
 /obj/machinery/r_n_d/server/Process()
 	..()
@@ -51,16 +89,15 @@
 		if((T20C + 20) to (T0C + 70))
 			health = max(0, health - 1)
 	if(health <= 0)
-		files.known_designs = list()
-		for(var/datum/tech/T in files.known_tech)
-			if(prob(1))
-				T.level--
-		files.RefreshResearch()
+	//[SIERRA-EDIT] - MODPACK_RND
+		files.forget_random_technology()
+	//[/SIERRA-EDIT] - MODPACK_RND
 	if(delay)
 		delay--
 	else
 		produce_heat()
 		delay = initial(delay)
+	update_icon()
 
 /obj/machinery/r_n_d/server/proc/produce_heat()
 	if(!produces_heat)
@@ -92,7 +129,7 @@
 /obj/machinery/r_n_d/server/centcom/proc/update_connections()
 	var/list/no_id_servers = list()
 	var/list/server_ids = list()
-	for(var/obj/machinery/r_n_d/server/S in SSmachines.machinery)
+	for(var/obj/machinery/r_n_d/server/S as anything in SSmachines.get_machinery_of_type(/obj/machinery/r_n_d/server))
 		switch(S.server_id)
 			if(-1)
 				continue
@@ -142,20 +179,20 @@
 		temp_server = null
 		consoles = list()
 		servers = list()
-		for(var/obj/machinery/r_n_d/server/S in SSmachines.machinery)
+		for(var/obj/machinery/r_n_d/server/S as anything in SSmachines.get_machinery_of_type(/obj/machinery/r_n_d/server))
 			if(S.server_id == text2num(href_list["access"]) || S.server_id == text2num(href_list["data"]) || S.server_id == text2num(href_list["transfer"]))
 				temp_server = S
 				break
 		if(href_list["access"])
 			screen = 1
-			for(var/obj/machinery/computer/rdconsole/C in SSmachines.machinery)
+			for(var/obj/machinery/computer/rdconsole/C as anything in SSmachines.get_machinery_of_type(/obj/machinery/computer/rdconsole))
 				if(C.sync)
 					consoles += C
 		else if(href_list["data"])
 			screen = 2
 		else if(href_list["transfer"])
 			screen = 3
-			for(var/obj/machinery/r_n_d/server/S in SSmachines.machinery)
+			for(var/obj/machinery/r_n_d/server/S as anything in SSmachines.get_machinery_of_type(/obj/machinery/r_n_d/server))
 				if(S == src)
 					continue
 				servers += S
@@ -177,25 +214,20 @@
 			temp_server.id_with_download += num
 		. = TOPIC_REFRESH
 
+//[SIERRA-EDIT] - MODPACK_RND
 	else if(href_list["reset_tech"])
-		var/choice = alert(user, "Technology Data Reset", "Are you sure you want to reset this technology to its default data? Data lost cannot be recovered.", "Continue", "Cancel")
-		if(choice == "Continue" && CanUseTopic(user, state))
-			for(var/datum/tech/T in temp_server.files.known_tech)
-				if(T.level > 0 && T.id == href_list["reset_tech"])
-					T.level = 1
-					break
-		temp_server.files.RefreshResearch()
+		var/choice = alert("Are you sure you want to reset this technology to its default data? Data lost cannot be recovered.", "Technology Data Reset", "Continue", "Cancel")
+		if(choice == "Continue")
+			temp_server.files.forget_all(href_list["reset_tech"])
 		. = TOPIC_REFRESH
 
-	else if(href_list["reset_design"])
-		var/choice = alert(user, "Design Data Deletion", "Are you sure you want to delete this design? If you still have the prerequisites for the design, it'll reset to its base reliability. Data lost cannot be recovered.", "Continue", "Cancel")
-		if(choice == "Continue" && CanUseTopic(user, state))
-			for(var/datum/design/D in temp_server.files.known_designs)
-				if(D.id == href_list["reset_design"])
-					temp_server.files.known_designs -= D
-					break
-		temp_server.files.RefreshResearch()
+	else if(href_list["reset_technology"])
+		var/choice = alert("Are you sure you want to delete this design? Data lost cannot be recovered.", "Techology Deletion", "Continue", "Cancel")
+		var/techology = temp_server.files.researched_tech[href_list["reset_technology"]]
+		if(choice == "Continue" && techology)
+			temp_server.files.forget_techology(techology)
 		. = TOPIC_REFRESH
+//[/SIERRA-EDIT] - MODPACK_RND
 
 /obj/machinery/computer/rdservercontrol/interface_interact(mob/user)
 	interact(user)
@@ -209,7 +241,7 @@
 		if(0) //Main Menu
 			dat += "Connected Servers:<BR><BR>"
 			var/turf/T = get_turf(src)
-			for(var/obj/machinery/r_n_d/server/S in SSmachines.machinery)
+			for(var/obj/machinery/r_n_d/server/S as anything in SSmachines.get_machinery_of_type(/obj/machinery/r_n_d/server))
 				var/turf/ST = get_turf(S)
 				if((istype(S, /obj/machinery/r_n_d/server/centcom) && !badmin) || (ST && !AreConnectedZLevels(ST.z, T.z)))
 					continue
@@ -239,17 +271,21 @@
 					dat += " (Add)</A><BR>"
 			dat += "<HR><A href='?src=\ref[src];main=1'>Main Menu</A>"
 
+//[SIERRA-EDIT] - MODPACK_RND
 		if(2) //Data Management menu
 			dat += "[temp_server.name] Data ManagementP<BR><BR>"
-			dat += "Known Technologies<BR>"
-			for(var/datum/tech/T in temp_server.files.known_tech)
+			dat += "Known Tech<BR>"
+			for(var/tech_tree in temp_server.files.tech_trees)
+				var/datum/tech/T = temp_server.files.tech_trees[tech_tree]
 				dat += "* [T.name] "
 				dat += "<A href='?src=\ref[src];reset_tech=[T.id]'>(Reset)</A><BR>" //FYI, these are all strings.
-			dat += "Known Designs<BR>"
-			for(var/datum/design/D in temp_server.files.known_designs)
-				dat += "* [D.name] "
-				dat += "<A href='?src=\ref[src];reset_design=[D.id]'>(Delete)</A><BR>"
+			dat += "Known Technology<BR>"
+			for(var/D in temp_server.files.researched_tech)
+				var/datum/technology/T = temp_server.files.researched_tech[D]
+				dat += "* [T.name] "
+				dat += "<A href='?src=\ref[src];reset_technology=[T.id]'>(Delete)</A><BR>"
 			dat += "<HR><A href='?src=\ref[src];main=1'>Main Menu</A>"
+//[/SIERRA-EDIT] - MODPACK_RND
 
 		if(3) //Server Data Transfer
 			dat += "[temp_server.name] Server to Server Transfer<BR><BR>"

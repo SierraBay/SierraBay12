@@ -172,7 +172,7 @@
 		entry += "</td></tr>"
 
 		if(!hide_unavailable_gear || allowed_to_see || ticked)
-			if(user.client.donator_info.has_item(G.type) || (G.donation_tier && user.client.donator_info.donation_tier_available(G.donation_tier)))
+			if(G.donation_tier && user.client.donator_info.donation_tier_available(G.donation_tier))
 				purchased_gears += entry
 			else if(G.donation_tier)
 				paid_gears += entry
@@ -293,6 +293,21 @@
 					. += SPAN_COLOR("#55cc55", "[S.levels[skills_required[skill]]] [skill]")
 				else
 					. += SPAN_COLOR("#808080", "[S.levels[skills_required[skill]]] [skill]")
+			. += "</i>"
+			. += "<br>"
+			
+		if(length(selected_gear.allowed_factions))
+			. += "<b>Has faction restrictions:</b>"
+			. += "<br>"
+			. += "<i>"
+			var/singleton/cultural_info/faction = SSculture.get_culture(pref.cultural_info[TAG_FACTION])
+			var/facname = faction ? faction.name : "Unset"
+			
+			if(facname in selected_gear.allowed_factions)
+				. += SPAN_COLOR("#55cc55", facname)
+			else
+				. += SPAN_COLOR("#808080", facname)
+			
 			. += "</i>"
 			. += "<br>"
 
@@ -523,6 +538,13 @@
 
 			if (!branch_ok)
 				return FALSE
+				
+	if (length(G.allowed_factions))
+		var/singleton/cultural_info/faction = SSculture.get_culture(pref.cultural_info[TAG_FACTION])
+		var/facname = faction ? faction.name : "Unset"
+		if(!(facname in G.allowed_factions))
+			return FALSE
+				
 
 	if(G.whitelisted && !(pref.species in G.whitelisted))
 		return FALSE

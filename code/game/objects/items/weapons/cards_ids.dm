@@ -32,17 +32,19 @@
 	else
 		to_chat(user, "It has a blank space for a signature.")
 
-/obj/item/card/union/attackby(obj/item/thing, mob/user)
+/obj/item/card/union/use_tool(obj/item/thing, mob/living/user, list/click_params)
 	if(istype(thing, /obj/item/pen))
 		if(signed_by)
 			to_chat(user, SPAN_WARNING("\The [src] has already been signed."))
+			return TRUE
 		else
 			var/signature = sanitizeSafe(input("What do you want to sign the card as?", "Union Card") as text, MAX_NAME_LEN)
 			if(signature && !signed_by && !user.incapacitated() && Adjacent(user))
 				signed_by = signature
 				user.visible_message(SPAN_NOTICE("\The [user] signs \the [src] with a flourish."))
-		return
-	..()
+			return TRUE
+
+	return ..()
 
 /obj/item/card/operant_card
 	name = "operant registration card"
@@ -114,11 +116,12 @@
 	detail_overlay.color = detail_color
 	AddOverlays(detail_overlay)
 
-/obj/item/card/data/attackby(obj/item/I, mob/living/user)
-	if(istype(I, /obj/item/device/integrated_electronics/detailer))
-		var/obj/item/device/integrated_electronics/detailer/D = I
-		detail_color = D.detail_color
+/obj/item/card/data/use_tool(obj/item/item, mob/living/user, list/click_params)
+	if (istype(item, /obj/item/device/integrated_electronics/detailer))
+		var/obj/item/device/integrated_electronics/detailer/Det = item
+		detail_color = Det.detail_color
 		update_icon()
+		return TRUE
 	return ..()
 
 /obj/item/card/data/full_color
@@ -156,30 +159,39 @@
 	item_state = "card-id"
 	origin_tech = list(TECH_MAGNET = 2, TECH_ESOTERIC = 2)
 	var/uses = 10
+	//[SIERRA-ADD]
+	var/list/emag_sounds = list('mods/utility_items/sounds/emag_act.ogg')
+	//[SIERRA-ADD]
 
 var/global/const/NO_EMAG_ACT = -50
 
-/obj/item/card/emag/resolve_attackby(atom/A, mob/user)
-	var/used_uses = A.emag_act(uses, user, src)
-	if(used_uses == NO_EMAG_ACT)
-		return ..(A, user)
-
+/obj/item/card/emag/use_before(atom/target, mob/living/user, click_parameters)
+	var/used_uses = target.emag_act(uses, user, src)
+	if (used_uses == NO_EMAG_ACT)
+		return ..()
 	uses -= used_uses
-	A.add_fingerprint(user)
-	if(used_uses)
-		log_and_message_admins("emagged \an [A].")
+	target.add_fingerprint(user, tool = src)
+	if (used_uses)
+		log_and_message_admins("emagged \a [target].")
+		//[SIERRA-ADD]
+		playsound(get_turf(target), pick(emag_sounds), 40, extrarange = -3)
+		//[SIERRA-ADD]
 
-	if(uses<1)
-		user.visible_message(SPAN_WARNING("\The [src] fizzles and sparks - it seems it's been used once too often, and is now spent."))
+	if (uses < 1)
+		user.visible_message(
+			SPAN_WARNING("\The [user]'s [name] fizzles and sparks."),
+			SPAN_WARNING("\The [name] fizzles and sparks - it seems it's been used once too often, and is now spent.")
+		)
 		var/obj/item/card/emag_broken/junk = new(user.loc)
-		junk.add_fingerprint(user)
+		transfer_fingerprints_to(junk)
 		qdel(src)
+		user.put_in_active_hand(junk)
+	return TRUE
 
-	return 1
 
 /obj/item/card/emag/Initialize()
 	. = ..()
-	set_extension(src,/datum/extension/chameleon/emag)
+	set_extension(src, /datum/extension/chameleon/emag)
 
 /obj/item/card/emag/get_antag_info()
 	. = ..()
@@ -284,8 +296,11 @@ var/global/const/NO_EMAG_ACT = -50
 		. += ", [assignment]"
 
 /obj/item/card/id/proc/set_id_photo(mob/M)
-	front = getFlatIcon(M, SOUTH, always_use_defdir = 1)
-	side = getFlatIcon(M, WEST, always_use_defdir = 1)
+	M.ImmediateOverlayUpdate()
+//[SIERRA-EDIT]
+	front = getFlatIcon(M, SOUTH)
+	side = getFlatIcon(M, WEST)
+//[/SIERRA-EDIT]
 
 /mob/proc/set_id_info(obj/item/card/id/id_card)
 	id_card.age = 0
@@ -300,12 +315,7 @@ var/global/const/NO_EMAG_ACT = -50
 				id_card.formal_name_suffix = "[id_card.formal_name_suffix][culture.get_formal_name_suffix()]"
 
 	id_card.registered_name = real_name
-
-	var/pronouns = "Unset"
-	var/datum/pronouns/P = choose_from_pronouns()
-	if(P)
-		pronouns = P.formal_term
-	id_card.sex = pronouns
+	id_card.sex = get_formal_pronouns()
 	id_card.set_id_photo(src)
 
 	if(dna)

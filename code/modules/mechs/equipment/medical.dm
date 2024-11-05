@@ -29,10 +29,11 @@
 	if(.)
 		sleeper.ui_interact(user)
 
-/obj/item/mech_equipment/sleeper/attackby(obj/item/I, mob/user)
+/obj/item/mech_equipment/sleeper/use_tool(obj/item/I, mob/living/user, list/click_params)
 	if(istype(I, /obj/item/reagent_containers/glass))
-		sleeper.attackby(I, user)
-	else return ..()
+		sleeper.use_tool(I, user)
+		return TRUE
+	return ..()
 
 /obj/item/mech_equipment/sleeper/afterattack(atom/target, mob/living/user, inrange, params)
 	. = ..()
@@ -67,6 +68,10 @@
 		return S.owner
 	return null
 
+
+
+//[SIERRA-REMOVE] - Mechs-by-Shegar - Всё это тут не надо
+/*
 /obj/machinery/sleeper/mounted/go_in()
 	..()
 	var/obj/item/mech_equipment/sleeper/S = loc
@@ -80,16 +85,19 @@
 		S.passive_power_use = 0 //No passive power drain when the sleeper is empty. Set to 1.5 KW when patient is inside.
 
 //You cannot modify these, it'd probably end with something in nullspace. In any case basic meds are plenty for an ambulance
-/obj/machinery/sleeper/mounted/attackby(obj/item/I, mob/user)
+/obj/machinery/sleeper/mounted/use_tool(obj/item/I, mob/living/user, list/click_params)
 	if(istype(I, /obj/item/reagent_containers/glass))
 		if(!user.unEquip(I, src))
-			return
+			return TRUE
 
 		if(beaker)
 			beaker.forceMove(get_turf(src))
 			user.visible_message(SPAN_NOTICE("\The [user] removes \the [beaker] from \the [src]."), SPAN_NOTICE("You remove \the [beaker] from \the [src]."))
 		beaker = I
 		user.visible_message(SPAN_NOTICE("\The [user] adds \a [I] to \the [src]."), SPAN_NOTICE("You add \a [I] to \the [src]."))
+		return TRUE
+
+	return ..()
 
 #define MEDIGEL_SALVE 1
 #define MEDIGEL_SCAN  2
@@ -107,6 +115,7 @@
 	var/obj/item/device/scanner/health/scanner = null
 
 /obj/item/mech_equipment/mender/attack_self(mob/user)
+	. = ..()
 	if(!.)
 		return
 	mode = mode == MEDIGEL_SALVE ? MEDIGEL_SCAN : MEDIGEL_SALVE
@@ -120,7 +129,7 @@
 	if (mode == MEDIGEL_SALVE)
 		if (istype(target, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = target
-			var/obj/item/organ/external/affecting = H.get_organ(user.zone_sel.selecting)
+			var/obj/item/organ/external/affecting = H.get_organ(user.zone_sel ? user.zone_sel.selecting : ran_zone())
 
 			if(affecting.is_bandaged() && affecting.is_disinfected() && affecting.is_salved())
 				to_chat(user, SPAN_WARNING("The wounds on \the [H]'s [affecting.name] have already been treated."))
@@ -171,3 +180,5 @@
 
 #undef MEDIGEL_SALVE
 #undef MEDIGEL_SCAN
+*/
+//[SIERRA-REMOVE]

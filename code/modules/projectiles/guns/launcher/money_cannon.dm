@@ -57,8 +57,8 @@
 		release_force = 0
 		return
 
-	// Must launch at least 100 thaler to incur damage.
-	release_force = dispensing / 100
+	// Must launch at least 100 thaler to incur damage. Max of 15k to prevent infinite damage.
+	release_force = min(dispensing / 100, 150)
 
 /obj/item/gun/launcher/money/proc/unload_receptacle(mob/user)
 	if(receptacle_value < 1)
@@ -107,7 +107,7 @@
 	bling.update_icon()
 	update_release_force(bling.worth)
 	if(release_force >= 1)
-		var/datum/effect/effect/system/spark_spread/s = new()
+		var/datum/effect/spark_spread/s = new()
 		s.set_up(3, 1, src)
 		s.start()
 
@@ -189,7 +189,7 @@
 	if(!emagged)
 		emagged = TRUE
 		to_chat(user, SPAN_NOTICE("You slide the sequencer into [src]... only for it to spit it back out and emit a motorized squeal!"))
-		var/datum/effect/effect/system/spark_spread/s = new()
+		var/datum/effect/spark_spread/s = new()
 		s.set_up(3, 1, src)
 		s.start()
 	else

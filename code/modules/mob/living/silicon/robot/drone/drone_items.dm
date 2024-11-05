@@ -221,7 +221,7 @@
 			break
 
 	if(wrapped) //Already have an item.
-		//Temporary put wrapped into user so target's attackby() checks pass.
+		//Temporary put wrapped into user so target's use_tool() checks pass.
 		wrapped.forceMove(user)
 
 		if (istype(target, /obj/structure/table))
@@ -240,7 +240,7 @@
 		var/resolved = wrapped.resolve_attackby(target,user,params)
 
 		//If resolve_attackby forces waiting before taking wrapped, we need to let it finish before doing the rest.
-		addtimer(new Callback(src, .proc/finish_using, target, user, params, force_holder, resolved), 0)
+		addtimer(new Callback(src, PROC_REF(finish_using), target, user, params, force_holder, resolved), 0)
 
 	else if(istype(target,/obj/item)) //Check that we're not pocketing a mob.
 		var/obj/item/I = target
@@ -339,46 +339,45 @@
 	var/datum/matter_synth/wood = null
 	var/datum/matter_synth/plastic = null
 
-/obj/item/matter_decompiler/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, proximity, params)
-
-	if(!proximity) return //Not adjacent.
-
+/obj/item/matter_decompiler/use_after(atom/target, mob/living/user, click_parameters)
 	//We only want to deal with using this on turfs. Specific items aren't important.
 	var/turf/T = get_turf(target)
 	if(!istype(T))
-		return
+		return FALSE
 
 	//Used to give the right message.
 	var/grabbed_something = 0
 
 	for(var/mob/M in T)
 		if(istype(M,/mob/living/simple_animal/passive/lizard) || istype(M,/mob/living/simple_animal/passive/mouse))
-			src.loc.visible_message(SPAN_DANGER("[src.loc] sucks [M] into its decompiler. There's a horrible crunching noise."),SPAN_DANGER("It's a bit of a struggle, but you manage to suck [M] into your decompiler. It makes a series of visceral crunching noises."))
-			new/obj/effect/decal/cleanable/blood/splatter(get_turf(src))
+			loc.visible_message(
+				SPAN_DANGER("\The [loc] sucks \the [M] into its decompiler. There's a horrible crunching noise."),
+				SPAN_DANGER("It's a bit of a struggle, but you manage to suck \the [M] into your decompiler. It makes a series of visceral crunching noises.")
+			)
+			new/obj/decal/cleanable/blood/splatter(get_turf(src))
 			qdel(M)
 			if(wood)
 				wood.add_charge(2000)
 			if(plastic)
 				plastic.add_charge(2000)
-			return
+			return TRUE
 
 		else if(istype(M,/mob/living/silicon/robot/drone) && !M.client)
-
-			var/mob/living/silicon/robot/D = src.loc
+			var/mob/living/silicon/robot/D = loc
 
 			if(!istype(D))
-				return
+				return TRUE
 
-			to_chat(D, SPAN_DANGER("You begin decompiling [M]."))
+			to_chat(D, SPAN_DANGER("You begin decompiling \the [M]."))
 
 			if(!do_after(D, 5 SECONDS, M, DO_PUBLIC_UNIQUE))
-				return
+				return TRUE
 
-			if(!M || !D) return
+			if(!M || !D) return TRUE
 
-			to_chat(D, SPAN_DANGER("You carefully and thoroughly decompile [M], storing as much of its resources as you can within yourself."))
+			to_chat(D, SPAN_DANGER("You carefully and thoroughly decompile \the [M], storing as much of its resources as you can within yourself."))
 			qdel(M)
-			new/obj/effect/decal/cleanable/blood/oil(get_turf(src))
+			new/obj/decal/cleanable/blood/oil(get_turf(src))
 
 			if(metal)
 				metal.add_charge(15000)
@@ -388,7 +387,7 @@
 				wood.add_charge(2000)
 			if(plastic)
 				plastic.add_charge(1000)
-			return
+			return TRUE
 		else
 			continue
 
@@ -397,7 +396,7 @@
 		if(istype(W,/obj/item/trash/cigbutt))
 			if(plastic)
 				plastic.add_charge(500)
-		else if(istype(W,/obj/effect/spider/spiderling))
+		else if(istype(W,/obj/spider/spiderling))
 			if(wood)
 				wood.add_charge(2000)
 			if(plastic)
@@ -423,7 +422,7 @@
 				metal.add_charge(1000)
 			if(plastic)
 				plastic.add_charge(3000)
-		else if(istype(W,/obj/effect/decal/cleanable/blood/gibs/robot))
+		else if(istype(W,/obj/decal/cleanable/blood/gibs/robot))
 			if(metal)
 				metal.add_charge(2000)
 			if(glass)
@@ -460,7 +459,7 @@
 		to_chat(user, SPAN_NOTICE("You deploy your decompiler and clear out the contents of \the [T]."))
 	else
 		to_chat(user, SPAN_DANGER("Nothing on \the [T] is useful to you."))
-	return
+	return TRUE
 
 //PRETTIER TOOL LIST.
 /mob/living/silicon/robot/drone/installed_modules()

@@ -45,14 +45,31 @@
 	down_icon_state = "steriledown"
 	pull_mask = 1
 
+
 /obj/item/clothing/mask/fakemoustache
 	name = "fake moustache"
 	desc = "Warning: moustache is fake."
 	icon_state = "fake-moustache"
 	item_state = "fake-moustache"
 	flags_inv = HIDEFACE
-	body_parts_covered = 0
+	body_parts_covered = EMPTY_BITFIELD
 	visible_name = "Scoundrel"
+	w_class = ITEM_SIZE_SMALL
+
+
+/obj/item/clothing/mask/fakemoustache/verb/ChangeVisibleName()
+	set name = "Change Visible Name"
+	set src in usr
+	if (usr.incapacitated())
+		return
+	var/response = input(usr, null, "Change Visible Name", visible_name) as null | text
+	response = sanitizeName(response, MAX_NAME_LEN, TRUE, FALSE)
+	if (!response)
+		return
+	if (usr.incapacitated() || !(src in usr))
+		return
+	visible_name = response
+
 
 /obj/item/clothing/mask/snorkel
 	name = "snorkel"
@@ -100,7 +117,7 @@
 	body_parts_covered = FACE|EYES
 	action_button_name = "Toggle MUI"
 	origin_tech = list(TECH_DATA = 5, TECH_ENGINEERING = 5)
-	var/active = FALSE
+	active = FALSE
 	var/mob/observer/eye/cameranet/eye
 
 /obj/item/clothing/mask/ai/New()
@@ -241,6 +258,9 @@
 			icon_state = initial(icon_state)
 			sprite_sheets = list(
 				SPECIES_VOX = 'icons/mob/species/vox/onmob_mask_vox.dmi',
+				// [SIERRA-ADD] - RESOMI
+				SPECIES_RESOMI = 'mods/resomi/icons/clothing/onmob_mask_resomi.dmi',
+				// [/SIERRA-ADD]
 				SPECIES_UNATHI = 'icons/mob/species/unathi/onmob_mask_unathi.dmi'
 				)
 		if(slot_head)
@@ -249,6 +269,9 @@
 			icon_state = "[initial(icon_state)]_up"
 			sprite_sheets = list(
 				SPECIES_VOX = 'icons/mob/species/vox/onmob_head_vox.dmi',
+				// [SIERRA-ADD] - RESOMI
+				SPECIES_RESOMI = 'mods/resomi/icons/clothing/onmob_head_resomi.dmi',
+				// [/SIERRA-ADD]
 				SPECIES_UNATHI = 'icons/mob/species/unathi/onmob_head_unathi.dmi'
 				)
 

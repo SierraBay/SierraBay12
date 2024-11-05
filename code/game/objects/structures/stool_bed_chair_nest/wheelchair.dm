@@ -77,6 +77,8 @@
 	step(src, direction)
 	if(buckled_mob) // Make sure it stays beneath the occupant
 		Move(buckled_mob.loc)
+		var/datum/movement_handler/delay/delay = GetMovementHandler(/datum/movement_handler/delay)
+		delay.SetDelay(buckled_mob.movement_delay(/singleton/move_intent/walk))
 	set_dir(direction)
 	if(pulling) // Driver
 		if(pulling.loc == src.loc) // We moved onto the wheelchair? Revert!
@@ -174,7 +176,7 @@
 			occupant.visible_message(SPAN_DANGER("[occupant] crashed into \the [A]!"))
 
 /obj/structure/bed/chair/wheelchair/proc/create_track()
-	var/obj/effect/decal/cleanable/blood/tracks/B = new(loc)
+	var/obj/decal/cleanable/blood/tracks/B = new(loc)
 	var/newdir = get_dir(get_step(loc, dir), loc)
 	if(newdir == dir)
 		B.set_dir(newdir)

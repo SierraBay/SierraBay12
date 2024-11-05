@@ -9,6 +9,10 @@
 	var/buckle_require_restraints = FALSE //require people to be handcuffed before being able to buckle. eg: pipes
 	var/mob/living/buckled_mob
 	var/buckle_sound = 'sound/effects/buckle.ogg'
+	var/breakout_time
+
+	///Verb used when the object is punched. If defined, overrides the punch's usual verb
+	var/attacked_verb
 
 	/**
 	*  A list of (x, y, z) to offset buckled_mob by, or null.
@@ -102,7 +106,7 @@
 			to_chat(user, SPAN_WARNING("\The [target] must be restrained to buckle them to \the [src]."))
 		return FALSE
 	if (user)
-		if (user.incapacitated())
+		if (user != target && user.incapacitated())
 			if (!silent)
 				to_chat(user, SPAN_WARNING("You're in no condition to buckle things right now."))
 			return FALSE
@@ -233,7 +237,7 @@
 	M.UpdateLyingBuckledAndVerbStatus()
 	M.update_floating()
 	buckled_mob = M
-	GLOB.destroyed_event.register(buckled_mob, src, /obj/proc/clear_buckle)
+	GLOB.destroyed_event.register(buckled_mob, src, TYPE_PROC_REF(/obj, clear_buckle))
 	if (buckle_sound)
 		playsound(src, buckle_sound, 20)
 	post_buckle_mob(M)
@@ -250,7 +254,7 @@
 		if (buckled_mob.buckled != src)
 			log_debug(append_admin_tools("A buckled mob ([buckled_mob.name] ([buckled_mob.type])) is buckled to multiple objects at once. This has been auto-corrected.", buckled_mob, get_turf(src)))
 			buckled_mob = null
-			GLOB.destroyed_event.unregister(., src, /obj/proc/clear_buckle)
+			GLOB.destroyed_event.unregister(., src, TYPE_PROC_REF(/obj, clear_buckle))
 			return
 		. = buckled_mob
 		buckled_mob.buckled = null
@@ -259,7 +263,7 @@
 		buckled_mob.update_floating()
 		buckled_mob = null
 
-		GLOB.destroyed_event.unregister(., src, /obj/proc/clear_buckle)
+		GLOB.destroyed_event.unregister(., src, TYPE_PROC_REF(/obj, clear_buckle))
 		post_buckle_mob(.)
 
 
@@ -274,7 +278,7 @@
 		buckled_mob = null // In case unbuckle failed
 	if (_buckled_mob.buckled == src)
 		_buckled_mob.buckled = null
-	GLOB.destroyed_event.unregister(., src, /obj/proc/clear_buckle)
+	GLOB.destroyed_event.unregister(., src, TYPE_PROC_REF(/obj, clear_buckle))
 
 /obj/proc/post_buckle_mob(mob/living/M)
 	if (buckle_pixel_shift)
@@ -372,6 +376,9 @@
 	if (!buckled_mob)
 		return
 	if (loc)
+		// [SIERRA-ADD] - SSINPUT
+		buckled_mob.set_glide_size(glide_size)
+		// [/SIERRA-ADD]
 		buckled_mob.forceMove(loc)
 	else
 		unbuckle_mob()
@@ -382,6 +389,9 @@
 	if (!buckled_mob)
 		return
 	if (loc)
+		// [SIERRA-ADD] - SSINPUT
+		buckled_mob.set_glide_size(glide_size)
+		// [/SIERRA-ADD]
 		buckled_mob.forceMove(loc)
 	else
 		unbuckle_mob()

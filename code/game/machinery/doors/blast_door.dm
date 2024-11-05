@@ -138,12 +138,16 @@
 /obj/machinery/door/blast/get_material_melting_point()
 	return 10000 // Blast doors are implicitly heavily fire resistant and are used for containing high-temperature areas like burn chambers.
 
-// Proc: attackby()
-// Parameters: 2 (C - Item this object was clicked with, user - Mob which clicked this object)
-// Description: If we are clicked with crowbar or wielded fire axe, try to manually open the door.
+/obj/machinery/door/blast/attack_hand(mob/user)
+	if (MUTATION_FERAL in user.mutations)
+		if ((!is_powered() || MACHINE_IS_BROKEN(src)) && density)
+			visible_message(SPAN_DANGER("\The [user] manages to pry \the [src] open!"))
+			return force_open()
+	return ..()
+
+// If we are clicked with crowbar or wielded fire axe, try to manually open the door.
 // This only works on broken doors or doors without power. Also allows repair with Plasteel.
-/obj/machinery/door/blast/attackby(obj/item/C as obj, mob/user as mob)
-	add_fingerprint(user, 0, C)
+/obj/machinery/door/blast/use_tool(obj/item/C, mob/living/user, list/click_params)
 	if(isCrowbar(C) || (istype(C, /obj/item/material/twohanded/fireaxe) && C:wielded == 1))
 		if(((!is_powered()) || MACHINE_IS_BROKEN(src)) && !( operating ))
 			to_chat(user, SPAN_NOTICE("You begin prying at \the [src]..."))
@@ -151,16 +155,17 @@
 				force_toggle()
 		else
 			to_chat(user, SPAN_NOTICE("[src]'s motors resist your effort."))
-		return
+		return TRUE
+
 	if(istype(C, /obj/item/stack/material) && C.get_material_name() == MATERIAL_PLASTEEL)
 		var/amt = ceil(get_damage_value() / 150)
 		if(!amt)
 			to_chat(user, SPAN_NOTICE("\The [src] is already fully functional."))
-			return
+			return TRUE
 		var/obj/item/stack/P = C
 		if(!P.can_use(amt))
 			to_chat(user, SPAN_WARNING("You don't have enough sheets to repair this! You need at least [amt] sheets."))
-			return
+			return TRUE
 		to_chat(user, SPAN_NOTICE("You begin repairing \the [src]..."))
 		if(do_after(user, 5 SECONDS, src, DO_REPAIR_CONSTRUCT))
 			if(P.use(amt))
@@ -170,7 +175,7 @@
 				to_chat(user, SPAN_WARNING("You don't have enough sheets to repair this! You need at least [amt] sheets."))
 		else
 			to_chat(user, SPAN_WARNING("You must remain still while working on \the [src]."))
-		return
+		return TRUE
 
 	return ..()
 
@@ -220,7 +225,7 @@
 /singleton/public_access/public_method/close_door_delayed
 	name = "delayed close door"
 	desc = "Closes the door if possible, after a short delay."
-	call_proc = /obj/machinery/door/blast/proc/delayed_close
+	call_proc = TYPE_PROC_REF(/obj/machinery/door/blast, delayed_close)
 
 /singleton/stock_part_preset/radio/receiver/blast_door
 	frequency = BLAST_DOORS_FREQ
@@ -294,10 +299,11 @@
 
 	open_sound = 'sound/machines/shutters_open.ogg'
 	close_sound = 'sound/machines/shutters_close.ogg'
-	health_min_damage = 15
+	health_min_damage = 10
 	health_max = 500
 	explosion_resistance = 10
 	pry_mod = 0.55
 
 /obj/machinery/door/blast/shutters/open
 	begins_closed = FALSE
+	icon_state = "shutter0"

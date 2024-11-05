@@ -20,7 +20,7 @@
 	..()
 	beams = list()
 	seen_turfs = list()
-	proximity_trigger = new(src, /obj/item/device/assembly/infra/proc/on_beam_entered, /obj/item/device/assembly/infra/proc/on_visibility_change, world.view, PROXIMITY_EXCLUDE_HOLDER_TURF)
+	proximity_trigger = new(src, TYPE_PROC_REF(/obj/item/device/assembly/infra, on_beam_entered), TYPE_PROC_REF(/obj/item/device/assembly/infra, on_visibility_change), world.view, PROXIMITY_EXCLUDE_HOLDER_TURF)
 
 /obj/item/device/assembly/infra/Destroy()
 	qdel(proximity_trigger)
@@ -125,7 +125,7 @@
 	var/list/turfs_that_need_beams = seen_turfs.Copy()
 
 	for(var/b in existing_beams)
-		var/obj/effect/beam/ir_beam/beam = b
+		var/obj/beam/ir_beam/beam = b
 		if(beam.loc in turfs_that_need_beams)
 			turfs_that_need_beams -= beam.loc
 			beam.set_invisibility(visible ? 0 : INVISIBILITY_MAXIMUM)
@@ -137,11 +137,11 @@
 		return
 
 	for(var/t in turfs_that_need_beams)
-		var/obj/effect/beam/ir_beam/beam = new(t)
+		var/obj/beam/ir_beam/beam = new(t)
 		existing_beams += beam
 		beam.set_dir(dir)
 
-/obj/effect/beam/ir_beam
+/obj/beam/ir_beam
 	name = "ir beam"
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "ibeam"

@@ -1,18 +1,18 @@
-/obj/effect/landmark/corpse/fleet
+/obj/landmark/corpse/fleet
 	name = "Fleet Armsman"
 	corpse_outfits = list(/singleton/hierarchy/outfit/job/torch/ert/hostile)
 	spawn_flags = CORPSE_SPAWNER_RANDOM_NAMELESS | CORPSE_SPAWNER_ALL_SKIPS
 
-/obj/effect/landmark/corpse/fleet/leader
+/obj/landmark/corpse/fleet/leader
 	name = "Fleet Team Leader"
 	corpse_outfits = list(/singleton/hierarchy/outfit/job/torch/ert/hostile/leader)
 
-/obj/effect/landmark/corpse/fleet/space
+/obj/landmark/corpse/fleet/space
 	name = "Fleet Assault Armsman"
 	corpse_outfits = list(/singleton/hierarchy/outfit/job/torch/ert/hostile/suit)
 
 /obj/item/clothing/suit/armor/bulletproof/armsman
-	valid_accessory_slots = list(ACCESSORY_SLOT_INSIGNIA, ACCESSORY_SLOT_ARMOR_A, ACCESSORY_SLOT_ARMOR_L, ACCESSORY_SLOT_ARMOR_S)
+	valid_accessory_slots = list(ACCESSORY_SLOT_INSIGNIA, ACCESSORY_SLOT_ARMOR_ARMS, ACCESSORY_SLOT_ARMOR_LEGS, ACCESSORY_SLOT_ARMOR_STORAGE)
 	accessories = list(
 		/obj/item/clothing/accessory/arm_guards/riot,
 		/obj/item/clothing/accessory/leg_guards/riot,
@@ -76,7 +76,7 @@
 	icon_state = "fleetarmsmanarmed"
 	icon_living = "fleetarmsmanarmed"
 
-	corpse = /obj/effect/landmark/corpse/fleet
+	corpse = /obj/landmark/corpse/fleet
 
 	casingtype = /obj/item/ammo_casing/pistol
 	projectiletype = /obj/item/projectile/bullet/pistol
@@ -119,7 +119,7 @@
 	weapon1 = /obj/item/gun/projectile/automatic/machine_pistol
 	status_flags = EMPTY_BITFIELD
 
-	corpse = /obj/effect/landmark/corpse/fleet/leader
+	corpse = /obj/landmark/corpse/fleet/leader
 
 	ai_holder = /datum/ai_holder/simple_animal/humanoid/hostile/fleet/ranged/teamlead
 	rapid = TRUE
@@ -138,7 +138,7 @@
 	icon_state = "fleetassault"
 	icon_living = "fleetassault"
 	icon_dead = "fleetassault_dead"
-	corpse = /obj/effect/landmark/corpse/fleet/space
+	corpse = /obj/landmark/corpse/fleet/space
 	ranged = TRUE
 	natural_armor = list(
 		melee = ARMOR_MELEE_KNIVES,
@@ -169,7 +169,7 @@
 	deactivated = TRUE
 	visible_message(SPAN_MFAUNA("\The [src]'s rigsuit flashes hastily, locking into place!"))
 	update_icon()
-	addtimer(new Callback(src, .proc/reactivate), 6 SECONDS)
+	addtimer(new Callback(src, PROC_REF(reactivate)), 6 SECONDS)
 
 /mob/living/simple_animal/hostile/human/fleet/space/proc/reactivate()
 	set_AI_busy(FALSE)
@@ -228,7 +228,7 @@
 	casingtype = /obj/item/ammo_casing/rifle
 	projectiletype = /obj/item/projectile/bullet/rifle
 	natural_weapon = /obj/item/gun/projectile/automatic/l6_saw
-	weapon1 = /obj/item/rig_module/mounted/lcannon
+	weapon1 = /obj/item/rig_module/mounted/energy/lcannon
 
 	var/attack_mode = ATTACK_MODE_SAW
 	var/num_shots
@@ -266,7 +266,7 @@
 			num_shots = 10
 			fire_desc = "fires a burst"
 			time_last_used_ability = base_attack_cooldown + world.time
-			visible_message(SPAN_MFAUNA("\The [src] pulls up \the machinegun to bear!"))
+			visible_message(SPAN_MFAUNA("\The [src] pulls up a machinegun to bear!"))
 
 	update_icon()
 

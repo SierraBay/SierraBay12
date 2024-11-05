@@ -4,14 +4,12 @@
 	icon_state = "coin1"
 	applies_material_colour = TRUE
 	randpixel = 8
-	force = 1
 	throwforce = 1
 	max_force = 5
 	force_multiplier = 0.1
 	thrown_force_multiplier = 0.1
 	w_class = ITEM_SIZE_TINY
 	slot_flags = SLOT_EARS
-	item_flags = ITEM_FLAG_TRY_ATTACK
 
 	/// The smallest interval allowed between coin flips.
 	var/const/FLIP_COOLDOWN = 5 SECONDS
@@ -40,14 +38,12 @@
 		ClearOverlays()
 
 
-/obj/item/material/coin/attack(atom/target, mob/living/user)
-	. = FALSE
+/obj/item/material/coin/use_after(atom/target, mob/living/user)
+
 	if (target == user)
 		attack_self(user)
 		return TRUE
 	if (ismob(target))
-		if (check_possible_surgeries(target, user))
-			return FALSE
 		if (user.a_intent == I_HURT)
 			user.visible_message(
 				SPAN_WARNING("\The [user] menaces \the [target] with \a [src]."),
@@ -84,7 +80,7 @@
 	)
 
 
-/obj/item/material/coin/attackby(obj/item/item, mob/living/user)
+/obj/item/material/coin/use_tool(obj/item/item, mob/living/user, list/click_params)
 	if (isCoil(item) && isnull(string_color))
 		var/obj/item/stack/cable_coil/coil = item
 		if (!coil.use(1))
@@ -98,6 +94,7 @@
 		string_color = coil.color
 		update_icon()
 		return TRUE
+
 	if (isWirecutter(item) && !isnull(string_color))
 		new /obj/item/stack/cable_coil (get_turf(user), 1, string_color)
 		user.visible_message(
@@ -108,7 +105,7 @@
 		string_color = null
 		update_icon()
 		return TRUE
-	..()
+	return ..()
 
 /// Non-craftable coins intented to display specific imagery.
 /obj/item/material/coin/challenge

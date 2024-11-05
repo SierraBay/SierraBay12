@@ -96,7 +96,7 @@ SUBSYSTEM_DEF(experience)
 
 	for (var/client/client as anything in clients_to_process)
 		// If a client logs out in the middle of this or has no mob or mind
-		if(!client || !client.mob || !client.mob.mind)
+		if(!client || !client.mob || !client.mob.mind || !select_queries[client.ckey])
 			clients_to_process.Remove(client)
 			continue
 
@@ -191,11 +191,11 @@ SUBSYSTEM_DEF(experience)
 /datum/controller/subsystem/experience/proc/execute_update_queue()
 
 	for (var/DBQuery/query as anything in player_update_queries)
-		invoke_async(query, /DBQuery/proc/Execute)
+		invoke_async(query, TYPE_PROC_REF(/DBQuery, Execute))
 	player_update_queries.Cut()
 
 	for (var/DBQuery/query as anything in playtime_history_update_queries)
-		invoke_async(query, /DBQuery/proc/Execute)
+		invoke_async(query, TYPE_PROC_REF(/DBQuery, Execute))
 	playtime_history_update_queries.Cut()
 
 	log_debug("Successfully requested update of all EXP data in [(world.realtime - last_check)/10]s")

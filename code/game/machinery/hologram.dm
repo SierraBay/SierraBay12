@@ -129,10 +129,10 @@ var/global/const/HOLOPAD_MODE = RANGE_BASED
 				var/zlevels_long = list()
 				if(GLOB.using_map.use_overmap && holopadType == HOLOPAD_LONG_RANGE)
 					for(var/zlevel in map_sectors)
-						var/obj/effect/overmap/visitable/O = map_sectors["[zlevel]"]
+						var/obj/overmap/visitable/O = map_sectors["[zlevel]"]
 						if(!isnull(O))
 							zlevels_long |= O.map_z
-				for(var/obj/machinery/hologram/holopad/H in SSmachines.machinery)
+				for(var/obj/machinery/hologram/holopad/H as anything in SSmachines.get_machinery_of_type(/obj/machinery/hologram/holopad))
 					if (H.operable())
 						if(H.z in zlevels)
 							holopadlist["[H.loc.loc.name]"] = H	//Define a list and fill it with the area of every holopad in the world
@@ -244,7 +244,7 @@ var/global/const/HOLOPAD_MODE = RANGE_BASED
 		to_chat(user, SPAN_NOTICE("You add \the [O] to \the [src]'s notifications list. It will now be pinged whenever a call is received."))
 		return TRUE
 
-	..()
+	return ..()
 
 /**
  * Proc to link/unlink PDAs
@@ -254,12 +254,12 @@ var/global/const/HOLOPAD_MODE = RANGE_BASED
 	if (!istype(pda))
 		return
 	LAZYADD(linked_pdas, pda)
-	GLOB.destroyed_event.register(pda, src, .proc/unlink_pda)
+	GLOB.destroyed_event.register(pda, src, PROC_REF(unlink_pda))
 
 
 /obj/machinery/hologram/holopad/proc/unlink_pda(obj/item/modular_computer/pda/pda)
 	LAZYREMOVE(linked_pdas, pda)
-	GLOB.destroyed_event.unregister(pda, src, .proc/unlink_pda)
+	GLOB.destroyed_event.unregister(pda, src, PROC_REF(unlink_pda))
 
 /*This is the proc for special two-way communication between AI and holopad/people talking near holopad.
 For the other part of the code, check silicon say.dm. Particularly robot talk.*/
@@ -334,7 +334,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 			master.show_message(rendered, type)
 
 /obj/machinery/hologram/holopad/proc/create_holo(mob/living/silicon/ai/A, mob/living/carbon/caller_id, turf/T = loc)
-	var/obj/effect/overlay/hologram = new(T)//Spawn a blank effect at the location.
+	var/obj/overlay/hologram = new(T)//Spawn a blank effect at the location.
 	if(caller_id)
 		hologram.AddOverlays(getHologramIcon(getFlatIcon(caller_id), hologram_color = holopadType))
 	else if(A)
@@ -356,9 +356,9 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 		hologram.SetName("[A.name] (Hologram)") //If someone decides to right click.
 		A.holo = src
 		masters[A] = hologram
-	hologram.set_light(1, 0.1, 2)	//hologram lighting
+	hologram.set_light(2, 0.1)	//hologram lighting
 	hologram.color = color //painted holopad gives coloured holograms
-	set_light(1, 0.1, 2)			//pad lighting
+	set_light(2, 0.1)			//pad lighting
 	icon_state = "[base_icon]1"
 	return 1
 
@@ -407,7 +407,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 /obj/machinery/hologram/holopad/proc/move_hologram(mob/living/silicon/ai/user)
 	if(masters[user])
 		step_to(masters[user], user.eyeobj) // So it turns.
-		var/obj/effect/overlay/H = masters[user]
+		var/obj/overlay/H = masters[user]
 		H.dropInto(user.eyeobj)
 		masters[user] = H
 
@@ -428,7 +428,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 
 /obj/machinery/hologram/holopad/proc/set_dir_hologram(new_dir, mob/living/silicon/ai/user)
 	if(masters[user])
-		var/obj/effect/overlay/hologram = masters[user]
+		var/obj/overlay/hologram = masters[user]
 		hologram.dir = new_dir
 
 
@@ -473,7 +473,7 @@ Holographic project of everything else.
 	set name = "Hologram Debug New"
 	set category = "CURRENT DEBUG"
 
-	var/obj/effect/overlay/hologram = new(loc)//Spawn a blank effect at the location.
+	var/obj/overlay/hologram = new(loc)//Spawn a blank effect at the location.
 	var/icon/flat_icon = icon(getFlatIcon(src,0))//Need to make sure it's a new icon so the old one is not reused.
 	flat_icon.ColorTone(rgb(125,180,225))//Let's make it bluish.
 	flat_icon.ChangeOpacity(0.5)//Make it half transparent.

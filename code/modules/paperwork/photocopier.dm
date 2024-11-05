@@ -107,21 +107,23 @@
 		to_chat(user, SPAN_NOTICE("You take \the [copyitem] out of \the [src]."))
 		copyitem = null
 
-/obj/machinery/photocopier/attackby(obj/item/O as obj, mob/user as mob)
+/obj/machinery/photocopier/use_tool(obj/item/O, mob/living/user, list/click_params)
 	if(istype(O, /obj/item/paper) || istype(O, /obj/item/photo) || istype(O, /obj/item/paper_bundle) || istype(O, /obj/item/sample/print))
 		if(!copyitem)
 			if(!user.unEquip(O, src))
-				return
+				return TRUE
 			copyitem = O
 			to_chat(user, SPAN_NOTICE("You insert \the [O] into \the [src]."))
 			flick(insert_anim, src)
 			updateUsrDialog()
 		else
 			to_chat(user, SPAN_NOTICE("There is already something in \the [src]."))
-	else if(istype(O, /obj/item/device/toner))
+		return TRUE
+
+	if (istype(O, /obj/item/device/toner))
 		if(toner <= 10) //allow replacing when low toner is affecting the print darkness
 			if(!user.unEquip(O, src))
-				return
+				return TRUE
 			to_chat(user, SPAN_NOTICE("You insert the toner cartridge into \the [src]."))
 			var/obj/item/device/toner/T = O
 			toner += T.toner_amount
@@ -129,7 +131,9 @@
 			updateUsrDialog()
 		else
 			to_chat(user, SPAN_NOTICE("This cartridge is not yet ready for replacement! Use up the rest of the toner."))
-	else ..()
+		return TRUE
+
+	return ..()
 
 /obj/machinery/photocopier/ex_act(severity)
 	switch(severity)
@@ -140,12 +144,12 @@
 				qdel(src)
 			else
 				if(toner > 0)
-					new /obj/effect/decal/cleanable/blood/oil(get_turf(src))
+					new /obj/decal/cleanable/blood/oil(get_turf(src))
 					toner = 0
 		else
 			if(prob(50))
 				if(toner > 0)
-					new /obj/effect/decal/cleanable/blood/oil(get_turf(src))
+					new /obj/decal/cleanable/blood/oil(get_turf(src))
 					toner = 0
 	return
 
@@ -219,9 +223,9 @@
 			break
 
 		if(istype(W, /obj/item/paper))
-			W = copy(W)
+			W = copy(W, need_toner)
 		else if(istype(W, /obj/item/photo))
-			W = photocopy(W)
+			W = photocopy(W, need_toner)
 		W.forceMove(p)
 		p.pages += W
 

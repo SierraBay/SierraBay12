@@ -11,10 +11,12 @@
 /datum/gear/uniform/hazard
 	allowed_roles = TECHNICAL_ROLES
 
+/* SIERRA TODO: watch for contractors uniforms, may be in mods
 /datum/gear/uniform/corpsi
 	display_name = "contractor uniform selection"
 	path = /obj/item/clothing/under/solgov/utility
 	allowed_branches = list(/datum/mil_branch/contractor)
+*/
 
 /datum/gear/uniform/si_guard
 	display_name = "NanoTrasen guard uniform"
@@ -50,6 +52,10 @@
 	flight["Hephaestus cyan flight suit"]	= /obj/item/clothing/under/rank/ntpilot/heph
 	gear_tweaks += new/datum/gear_tweak/path(flight)
 
+/datum/gear/uniform/harness
+	display_name = "gear harness (Full Body Prosthetic, Diona, Giant Armoured Serpentid)"
+	path = /obj/item/clothing/under/harness
+
 /datum/gear/uniform/si_exec_jacket
 	display_name = "NanoTrasen liason suit"
 	path = /obj/item/clothing/under/suit_jacket/corp/nanotrasen
@@ -67,3 +73,26 @@
 	shirts += /obj/item/clothing/under/suit_jacket/burgundy
 	shirts += /obj/item/clothing/under/suit_jacket/checkered
 	gear_tweaks += new/datum/gear_tweak/path/specified_types_list(shirts)
+
+/datum/gear/uniform/retro_security
+	display_name = "retro security officer's uniform"
+	allowed_roles = SECURITY_ROLES
+	path = /obj/item/clothing/under/retro/security
+
+/datum/gear/uniform/retro_medical
+	display_name = "retro medical officer's uniform"
+	allowed_roles = STERILE_ROLES
+	path = /obj/item/clothing/under/retro/medical
+
+/datum/gear/uniform/retro_engineering
+	display_name = "retro engineering uniform"
+	allowed_roles = TECHNICAL_ROLES
+	path = /obj/item/clothing/under/retro/engineering
+
+/datum/gear/uniform/retro_science
+	display_name = "retro science officer's uniform"
+	allowed_roles = RESEARCH_ROLES
+	path = /obj/item/clothing/under/retro/science
+
+/datum/gear/suit/unathi/officer_uniform
+	allowed_roles = SECURITY_ROLES

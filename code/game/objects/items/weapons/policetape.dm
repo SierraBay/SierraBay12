@@ -27,7 +27,7 @@ GLOBAL_LIST(hazard_overlays)
 			return
 		var/obj/machinery/door/airlock/airlock = locate(/obj/machinery/door/airlock) in T
 		if(airlock)
-			afterattack(airlock, null, TRUE)
+			use_after(airlock, null)
 		return INITIALIZE_HINT_QDEL
 
 var/global/list/tape_roll_applications = list()
@@ -112,13 +112,13 @@ var/global/list/tape_roll_applications = list()
 	name = "research tape"
 	desc = "A roll of research tape used to block off working areas from the public."
 	tape_type = /obj/item/tape/research
-	color = COLOR_WHITE
+	color = COLOR_RESEARCH
 
 /obj/item/tape/research
 	name = "research tape"
 	desc = "A length of research tape. Better not cross it."
 	req_access = list(access_research)
-	color = COLOR_WHITE
+	color = COLOR_RESEARCH
 
 /obj/item/taperoll/medical
 	name = "medical tape"
@@ -286,10 +286,7 @@ var/global/list/tape_roll_applications = list()
 		to_chat(usr, SPAN_NOTICE("You finish placing \the [src]."))
 		return
 
-/obj/item/taperoll/afterattack(atom/A, mob/user as mob, proximity)
-	if(!proximity)
-		return
-
+/obj/item/taperoll/use_before(atom/A, mob/living/user, click_parameters)
 	if (istype(A, /obj/machinery/door/airlock))
 		var/turf/T = get_turf(A)
 		var/obj/item/tape/P = new tape_type(T)
@@ -297,12 +294,13 @@ var/global/list/tape_roll_applications = list()
 		P.update_icon()
 		P.layer = ABOVE_DOOR_LAYER
 		to_chat(user, SPAN_NOTICE("You finish placing \the [src]."))
+		return TRUE
 
-	if (istype(A, /turf/simulated/floor) ||istype(A, /turf/unsimulated/floor))
+	if (istype(A, /turf/simulated/floor) || istype(A, /turf/unsimulated/floor))
 		var/turf/F = A
 		var/direction = user.loc == F ? user.dir : turn(user.dir, 180)
 		var/hazard_overlay = GLOB.hazard_overlays["[direction]"]
-		if(tape_roll_applications[F] == null)
+		if(isnull(tape_roll_applications[F]))
 			tape_roll_applications[F] = 0
 
 		if(tape_roll_applications[F] & direction)
@@ -313,7 +311,9 @@ var/global/list/tape_roll_applications = list()
 			user.visible_message("\The [user] applied \the [src] on \the [F] to create area markings.", "You apply \the [src] on \the [F] to create area markings.")
 			F.AddOverlays(hazard_overlay)
 			tape_roll_applications[F] |= direction
-		return
+		return TRUE
+
+	return ..()
 
 /obj/item/tape/proc/crumple()
 	if(!crumpled)
@@ -332,7 +332,9 @@ var/global/list/tape_roll_applications = list()
 			crumple()
 	return ..(mover)
 
-/obj/item/tape/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/tape/use_tool(obj/item/item, mob/living/user, list/click_params)
+	if (user.a_intent == I_HELP)
+		return ..()
 	breaktape(user)
 
 /obj/item/tape/attack_hand(mob/user as mob)

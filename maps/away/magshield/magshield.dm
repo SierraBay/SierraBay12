@@ -1,6 +1,6 @@
 #include "magshield_areas.dm"
 
-/obj/effect/overmap/visitable/sector/magshield
+/obj/overmap/visitable/sector/magshield
 	name = "orbital station"
 	desc = "Sensors detect an orbital station above the exoplanet. Sporadic magentic impulses are registred inside it. Planet landing is impossible due to lower orbits being cluttered with chaotically moving metal chunks."
 	icon_state = "object"
@@ -22,23 +22,23 @@
 	spawn_cost = 1
 	area_usage_test_exempted_root_areas = list(/area/magshield)
 
-/obj/effect/shuttle_landmark/nav_magshield/nav1
+/obj/shuttle_landmark/nav_magshield/nav1
 	name = "Orbital Station Navpoint #1"
 	landmark_tag = "nav_magshield_1"
 
-/obj/effect/shuttle_landmark/nav_magshield/nav2
+/obj/shuttle_landmark/nav_magshield/nav2
 	name = "Orbital Station Navpoint #2"
 	landmark_tag = "nav_magshield_2"
 
-/obj/effect/shuttle_landmark/nav_magshield/nav3
+/obj/shuttle_landmark/nav_magshield/nav3
 	name = "Orbital Station Navpoint #3"
 	landmark_tag = "nav_magshield_3"
 
-/obj/effect/shuttle_landmark/nav_magshield/nav4
+/obj/shuttle_landmark/nav_magshield/nav4
 	name = "Orbital Station Navpoint #4"
 	landmark_tag = "nav_magshield_4"
 
-/obj/effect/shuttle_landmark/nav_magshield/nav5
+/obj/shuttle_landmark/nav_magshield/nav5
 	name = "Orbital Station Navpoint #5"
 	landmark_tag = "nav_magshield_antag"
 
@@ -49,8 +49,8 @@
 	icon_state = "maggen"
 	anchored = TRUE
 	density = TRUE
-	light_outer_range = 3
-	light_max_bright = 1
+	light_range = 3
+	light_power = 1
 	light_color = "#ffea61"
 	var/heavy_range = 10
 	var/lighter_range = 20
@@ -100,10 +100,10 @@
 		)
 		rods.use(1)
 		visible_message(SPAN_DANGER("\The [src] stops rotating and releases a cloud of sparks. Better get to a safe distance!"))
-		var/datum/effect/effect/system/spark_spread/sparks = new(src)
+		var/datum/effect/spark_spread/sparks = new(src)
 		sparks.set_up(10, EMPTY_BITFIELD, src)
 		sparks.start()
-		addtimer(new Callback(src, .proc/explode), 5 SECONDS)
+		addtimer(new Callback(src, PROC_REF(explode)), 5 SECONDS)
 		return TRUE
 
 	return ..()
@@ -130,13 +130,13 @@
 	icon_state = "nav_light_green"
 	anchored = TRUE
 	density = TRUE
-	light_outer_range = 10
-	light_max_bright = 1
+	light_range = 10
+	light_power = 1
 	light_color = "#00ee00"
 
 /obj/structure/magshield/nav_light/New()//try make flashing through the process
 	..()
-	set_light(light_max_bright, light_outer_range / 6, light_outer_range, 2, light_color)
+	set_light(light_range, light_power, light_color)
 
 /obj/structure/magshield/nav_light/red
 	desc = "Large and bright light regularly emitting red flashes."

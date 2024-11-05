@@ -30,7 +30,17 @@
 	one_hand_penalty = 0
 	charge_cost = 40
 	max_shots = 3
+	fire_delay = 30
 	projectile_type = /obj/item/projectile/ion/small
+
+/obj/item/gun/energy/ionrifle/mounted
+	name = "mounted ion gun"
+	desc = "You should not see this. Call a developer."
+	fire_delay = 30
+	one_hand_penalty = 0
+	self_recharge = TRUE
+	use_external_power = TRUE
+	has_safety = FALSE
 
 /obj/item/gun/energy/decloner
 	name = "biological demolecularisor"
@@ -64,18 +74,13 @@
 		list(mode_name="induce specific mutations", projectile_type=/obj/item/projectile/energy/floramut/gene, modifystate="floramut"),
 		)
 
-/obj/item/gun/energy/floragun/resolve_attackby(atom/A)
-	if(istype(A,/obj/machinery/portable_atmospherics/hydroponics))
-		return FALSE // do afterattack, i.e. fire, at pointblank at trays.
-	return ..()
+/obj/item/gun/energy/floragun/use_before(atom/target, mob/living/user, click_parameters)
+	if (!istype(target, /obj/machinery/portable_atmospherics/hydroponics))
+		return FALSE
 
-/obj/item/gun/energy/floragun/afterattack(obj/target, mob/user, adjacent_flag)
-	//allow shooting into adjacent hydrotrays regardless of intent
-	if(adjacent_flag && istype(target,/obj/machinery/portable_atmospherics/hydroponics))
-		user.visible_message(SPAN_DANGER("\The [user] fires \the [src] into \the [target]!"))
-		Fire(target,user)
-		return
-	..()
+	user.visible_message(SPAN_DANGER("\The [user] fires \the [src] into \the [target]!"))
+	Fire(target,user)
+	return TRUE
 
 /obj/item/gun/energy/floragun/verb/select_gene()
 	set name = "Select Gene"
@@ -156,7 +161,7 @@
 	projectile_type = /obj/item/projectile/beam/plasmacutter
 	max_shots = 10
 	self_recharge = 1
-	var/datum/effect/effect/system/spark_spread/spark_system
+	var/datum/effect/spark_spread/spark_system
 
 	// As an industrial tool the plasma cutter's safety training falls under construction.
 	gun_skill = SKILL_CONSTRUCTION
@@ -170,7 +175,7 @@
 
 /obj/item/gun/energy/plasmacutter/Initialize()
 	. = ..()
-	spark_system = new /datum/effect/effect/system/spark_spread
+	spark_system = new /datum/effect/spark_spread
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 

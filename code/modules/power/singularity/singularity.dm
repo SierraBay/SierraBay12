@@ -8,7 +8,7 @@
 	anchored = TRUE
 	density = TRUE
 	layer = SINGULARITY_LAYER
-	light_outer_range = 6
+	light_range = 6
 	unacidable = TRUE
 
 	var/current_size = 1
@@ -39,7 +39,7 @@
 
 	..()
 	START_PROCESSING(SSobj, src)
-	for(var/obj/machinery/power/singularity_beacon/singubeacon in SSmachines.machinery)
+	for(var/obj/machinery/power/singularity_beacon/singubeacon as anything in SSmachines.get_machinery_of_type(/obj/machinery/power/singularity_beacon))
 		if(singubeacon.active)
 			target = singubeacon
 			break

@@ -15,7 +15,7 @@
 	flick(anim, animation)
 	if(do_gibs) gibs(loc, dna)
 
-	addtimer(new Callback(src, .proc/check_delete, animation), 15)
+	addtimer(new Callback(src, PROC_REF(check_delete), animation), 15)
 
 /mob/proc/check_delete(atom/movable/fake_overlay/animation)
 	if(animation)	qdel(animation)
@@ -24,7 +24,7 @@
 //This is the proc for turning a mob into ash. Mostly a copy of gib code (above).
 //Originally created for wizard disintegrate. I've removed the virus code since it's irrelevant here.
 //Dusting robots does not eject the MMI, so it's a bit more powerful than gib() /N
-/mob/proc/dust(anim="dust-m",remains=/obj/effect/decal/cleanable/ash)
+/mob/proc/dust(anim="dust-m",remains=/obj/decal/cleanable/ash)
 	death(1)
 
 	if(stat == DEAD)
@@ -44,7 +44,7 @@
 	new remains(loc)
 
 	remove_from_dead_mob_list()
-	addtimer(new Callback(src, .proc/check_delete, animation), 15)
+	addtimer(new Callback(src, PROC_REF(check_delete), animation), 15)
 
 
 /mob/proc/death(gibbed,deathmessage="seizes up and falls limp...", show_dead_message = "You have died.")

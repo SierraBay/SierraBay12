@@ -321,7 +321,7 @@
 //disables breach detection temporarily
 /obj/machinery/alarm/proc/breach_start_cooldown()
 	breach_cooldown = TRUE
-	addtimer(new Callback(src,/obj/machinery/alarm/proc/breach_end_cooldown), 10 MINUTES, TIMER_UNIQUE | TIMER_OVERRIDE)
+	addtimer(new Callback(src, TYPE_PROC_REF(/obj/machinery/alarm, breach_end_cooldown)), 10 MINUTES, TIMER_UNIQUE | TIMER_OVERRIDE)
 	return
 
 /obj/machinery/alarm/proc/get_danger_level(current_value, list/danger_levels)
@@ -355,7 +355,10 @@
 			new_color = COLOR_SUN
 		if (2)
 			new_color = COLOR_RED_LIGHT
-	AddOverlays(overlay_image(icon, "alarm[icon_level]", plane = EFFECTS_ABOVE_LIGHTING_PLANE, layer = ABOVE_LIGHTING_LAYER))
+	AddOverlays(list(
+		emissive_appearance(icon, "alarm[icon_level]"),
+		image(icon, "alarm[icon_level]")
+	))
 
 	pixel_x = 0
 	pixel_y = 0
@@ -370,7 +373,7 @@
 		else if(dir == EAST)
 			pixel_x = -21
 
-	set_light(0.25, 0.1, 1, 2, new_color)
+	set_light(2, 0.25, new_color)
 
 /obj/machinery/alarm/receive_signal(datum/signal/signal)
 	if(!signal || signal.encryption)
@@ -808,15 +811,14 @@
 			apply_mode()
 			return TOPIC_REFRESH
 
-/obj/machinery/alarm/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/alarm/use_tool(obj/item/W, mob/living/user, list/click_params)
 	switch(buildstage)
 		if(2)
-			if(isScrewdriver(W))  // Opening that Air Alarm up.
-//				to_chat(user, "You pop the Air Alarm's maintence panel open.")
+			if (isScrewdriver(W))
 				wiresexposed = !wiresexposed
 				to_chat(user, "The wires have been [wiresexposed ? "exposed" : "unexposed"]")
 				update_icon()
-				return
+				return TRUE
 
 			if (wiresexposed && isWirecutter(W))
 				user.visible_message(SPAN_WARNING("[user] has cut the wires inside \the [src]!"), "You have cut the wires inside \the [src].")
@@ -824,55 +826,59 @@
 				new/obj/item/stack/cable_coil(get_turf(src), 5)
 				buildstage = 1
 				update_icon()
-				return
+				return TRUE
 
-			if (istype(W, /obj/item/card/id) || istype(W, /obj/item/modular_computer))// trying to unlock the interface with an ID card
+			if (isid(W) || istype(W, /obj/item/modular_computer))
 				if(inoperable())
 					to_chat(user, "It does nothing")
-					return
+					return TRUE
+				if(allowed(usr) && !wires.IsIndexCut(AALARM_WIRE_IDSCAN))
+					locked = !locked
+					to_chat(user, SPAN_NOTICE("You [ locked ? "lock" : "unlock"] the Air Alarm interface."))
 				else
-					if(allowed(usr) && !wires.IsIndexCut(AALARM_WIRE_IDSCAN))
-						locked = !locked
-						to_chat(user, SPAN_NOTICE("You [ locked ? "lock" : "unlock"] the Air Alarm interface."))
-					else
-						to_chat(user, SPAN_WARNING("Access denied."))
-			return
+					to_chat(user, SPAN_WARNING("Access denied."))
+				return TRUE
 
 		if(1)
-			if(isCoil(W))
+			if (isCoil(W))
 				var/obj/item/stack/cable_coil/C = W
 				if (C.use(5))
 					to_chat(user, SPAN_NOTICE("You wire \the [src]."))
 					buildstage = 2
 					update_icon()
-					return
+					return TRUE
 				else
 					to_chat(user, SPAN_WARNING("You need 5 pieces of cable to do wire \the [src]."))
-					return
+					return TRUE
 
-			else if(isCrowbar(W))
+			if (isCrowbar(W))
 				to_chat(user, "You start prying out the circuit.")
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
-				if(do_after(user, (W.toolspeed * 2) SECONDS, src, DO_REPAIR_CONSTRUCT) && buildstage == 1)
-					to_chat(user, "You pry out the circuit!")
-					var/obj/item/airalarm_electronics/circuit = new /obj/item/airalarm_electronics()
-					circuit.dropInto(user.loc)
-					buildstage = 0
-					update_icon()
-				return
+				if (!do_after(user, (W.toolspeed * 2) SECONDS, src, DO_REPAIR_CONSTRUCT))
+					return TRUE
+
+				to_chat(user, "You pry out the circuit!")
+				var/obj/item/airalarm_electronics/circuit = new /obj/item/airalarm_electronics()
+				circuit.dropInto(user.loc)
+				buildstage = 0
+				update_icon()
+				return TRUE
+
 		if(0)
-			if(istype(W, /obj/item/airalarm_electronics))
+			if (istype(W, /obj/item/airalarm_electronics))
 				to_chat(user, "You insert the circuit!")
 				qdel(W)
 				buildstage = 1
 				update_icon()
-				return
+				return TRUE
 
-			else if(isWrench(W))
+			if (isWrench(W))
 				to_chat(user, "You remove the fire alarm assembly from the wall!")
-				new /obj/item/frame/air_alarm(get_turf(user))
+				var/obj/item/frame/air_alarm/frame = new /obj/item/frame/air_alarm(get_turf(user))
+				transfer_fingerprints_to(frame)
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 				qdel(src)
+				return TRUE
 
 	return ..()
 
@@ -964,12 +970,12 @@ FIRE ALARM
 	else
 		if(!detecting)
 			AddOverlays(get_cached_overlay("fire1"))
-			set_light(0.25, 0.1, 1, 2, COLOR_RED)
+			set_light(2, 0.25, COLOR_RED)
 		else if(z in GLOB.using_map.contact_levels)
 			var/singleton/security_state/security_state = GET_SINGLETON(GLOB.using_map.security_state)
 			var/singleton/security_level/sl = security_state.current_security_level
 
-			set_light(sl.light_max_bright, sl.light_inner_range, sl.light_outer_range, 2, sl.light_color_alarm)
+			set_light(sl.light_power, sl.light_range, sl.light_color_alarm)
 			AddOverlays(image(sl.icon, sl.overlay_alarm))
 		else
 			AddOverlays(get_cached_overlay("fire0"))
@@ -988,27 +994,37 @@ FIRE ALARM
 		alarm(rand(30/severity, 60/severity))
 	..()
 
-/obj/machinery/firealarm/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/firealarm/use_tool(obj/item/W, mob/living/user, list/click_params)
+	if ((. = ..()))
+		return
+
 	if(isScrewdriver(W) && buildstage == 2)
 		wiresexposed = !wiresexposed
 		update_icon()
-		return
+		return TRUE
 
 	if(wiresexposed)
 		switch(buildstage)
 			if(2)
 				if(isMultitool(W))
-					src.detecting = !( src.detecting )
-					if (src.detecting)
-						user.visible_message(SPAN_NOTICE("\The [user] has reconnected [src]'s detecting unit!"), SPAN_NOTICE("You have reconnected [src]'s detecting unit."))
-					else
-						user.visible_message(SPAN_NOTICE("\The [user] has disconnected [src]'s detecting unit!"), SPAN_NOTICE("You have disconnected [src]'s detecting unit."))
-				else if(isWirecutter(W))
-					user.visible_message(SPAN_NOTICE("\The [user] has cut the wires inside \the [src]!"), SPAN_NOTICE("You have cut the wires inside \the [src]."))
+					detecting = !detecting
+					user.visible_message(
+						SPAN_NOTICE("\The [user] has [detecting? "re" : "dis"]connected \the [src]'s detecting unit!"),
+						SPAN_NOTICE("You have [detecting? "re" : "dis"]connected \the [src]'s detecting unit.")
+					)
+					return TRUE
+
+				if (isWirecutter(W))
+					user.visible_message(
+						SPAN_NOTICE("\The [user] has cut the wires inside \the [src]!"),
+						SPAN_NOTICE("You have cut the wires inside \the [src].")
+					)
 					new/obj/item/stack/cable_coil(get_turf(src), 5)
 					playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 					buildstage = 1
 					update_icon()
+					return TRUE
+
 			if(1)
 				if(istype(W, /obj/item/stack/cable_coil))
 					var/obj/item/stack/cable_coil/C = W
@@ -1016,35 +1032,40 @@ FIRE ALARM
 						to_chat(user, SPAN_NOTICE("You wire \the [src]."))
 						buildstage = 2
 						update_icon()
-						return
+						return TRUE
 					else
 						to_chat(user, SPAN_WARNING("You need 5 pieces of cable to wire \the [src]."))
-						return
-				else if(isCrowbar(W))
+						return TRUE
+				if(isCrowbar(W))
 					to_chat(user, "You start prying out the circuit.")
 					playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
-					if (do_after(user, (W.toolspeed * 2) SECONDS, src, DO_REPAIR_CONSTRUCT))
-						to_chat(user, "You pry out the circuit!")
-						var/obj/item/firealarm_electronics/circuit = new /obj/item/firealarm_electronics()
-						circuit.dropInto(user.loc)
-						buildstage = 0
-						update_icon()
+					if (!do_after(user, (W.toolspeed * 2) SECONDS, src, DO_REPAIR_CONSTRUCT))
+						return TRUE
+
+					to_chat(user, "You pry out the circuit!")
+					var/obj/item/firealarm_electronics/circuit = new /obj/item/firealarm_electronics()
+					circuit.dropInto(user.loc)
+					buildstage = 0
+					update_icon()
+					return TRUE
 			if(0)
 				if(istype(W, /obj/item/firealarm_electronics))
 					to_chat(user, "You insert the circuit!")
 					qdel(W)
 					buildstage = 1
 					update_icon()
+					return TRUE
 
-				else if(isWrench(W))
+				if (isWrench(W))
 					to_chat(user, "You remove the fire alarm assembly from the wall!")
 					new /obj/item/frame/fire_alarm(get_turf(user))
 					playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 					qdel(src)
-		return
+					return TRUE
 
-	src.alarm()
-	return
+	to_chat(user, SPAN_WARNING("You fumble with \the [W] and trigger the alarm!"))
+	alarm()
+	return TRUE
 
 /obj/machinery/firealarm/Process()//Note: this processing was mostly phased out due to other code, and only runs when needed
 	if(inoperable())
@@ -1074,6 +1095,7 @@ FIRE ALARM
 	var/d1
 	var/d2
 
+	var/datum/browser/popup = new(user, "firealarm", "Fire alarm")
 	var/singleton/security_state/security_state = GET_SINGLETON(GLOB.using_map.security_state)
 	if (istype(user, /mob/living/carbon/human) || istype(user, /mob/living/silicon))
 		A = A.loc
@@ -1088,9 +1110,7 @@ FIRE ALARM
 			d2 = text("<A href='?src=\ref[];time=1'>Initiate Time Lock</A>", src)
 		var/second = round(src.time) % 60
 		var/minute = (round(src.time) - second) / 60
-		var/dat = "<HTML><HEAD></HEAD><BODY><TT><B>Fire alarm</B> [d1]\n<HR>The current alert level is <b>[security_state.current_security_level.name]</b><br><br>\nTimer System: [d2]<BR>\nTime Left: [(minute ? "[minute]:" : null)][second] <A href='?src=\ref[src];tp=-30'>-</A> <A href='?src=\ref[src];tp=-1'>-</A> <A href='?src=\ref[src];tp=1'>+</A> <A href='?src=\ref[src];tp=30'>+</A>\n</TT></BODY></HTML>"
-		show_browser(user, dat, "window=firealarm")
-		onclose(user, "firealarm")
+		popup.set_content("[d1]\n<HR>The current alert level is <b>[security_state.current_security_level.name]</b><br><br>\nTimer System: [d2]<BR>\nTime Left: [(minute ? "[minute]:" : null)][second] <A href='?src=\ref[src];tp=-30'>-</A> <A href='?src=\ref[src];tp=-1'>-</A> <A href='?src=\ref[src];tp=1'>+</A> <A href='?src=\ref[src];tp=30'>+</A>")
 	else
 		A = A.loc
 		if (A.fire)
@@ -1103,9 +1123,8 @@ FIRE ALARM
 			d2 = text("<A href='?src=\ref[];time=1'>[]</A>", src, stars("Initiate Time Lock"))
 		var/second = round(src.time) % 60
 		var/minute = (round(src.time) - second) / 60
-		var/dat = "<HTML><HEAD></HEAD><BODY><TT><B>[stars("Fire alarm")]</B> [d1]\n<HR>The current security level is <b>[security_state.current_security_level.name]</b><br><br>\nTimer System: [d2]<BR>\nTime Left: [(minute ? text("[]:", minute) : null)][second] <A href='?src=\ref[src];tp=-30'>-</A> <A href='?src=\ref[src];tp=-1'>-</A> <A href='?src=\ref[src];tp=1'>+</A> <A href='?src=\ref[src];tp=30'>+</A>\n</TT></BODY></HTML>"
-		show_browser(user, dat, "window=firealarm")
-		onclose(user, "firealarm")
+		popup.set_content("[d1]\n<HR>The current security level is <b>[security_state.current_security_level.name]</b><br><br>\nTimer System: [d2]<BR>\nTime Left: [(minute ? text("[]:", minute) : null)][second] <A href='?src=\ref[src];tp=-30'>-</A> <A href='?src=\ref[src];tp=-1'>-</A> <A href='?src=\ref[src];tp=1'>+</A> <A href='?src=\ref[src];tp=30'>+</A>\n")
+	popup.open()
 	return
 
 /obj/machinery/firealarm/CanUseTopic(user)
@@ -1210,6 +1229,7 @@ Just a object used in constructing fire alarms
 	ASSERT(isarea(A))
 	var/d1
 	var/d2
+	var/datum/browser/popup = new(user, "partyalarm", "Party alarm")
 	if (istype(user, /mob/living/carbon/human) || istype(user, /mob/living/silicon/ai))
 
 		if (A.party)
@@ -1222,9 +1242,7 @@ Just a object used in constructing fire alarms
 			d2 = text("<A href='?src=\ref[];time=1'>Initiate Time Lock</A>", src)
 		var/second = time % 60
 		var/minute = (time - second) / 60
-		var/dat = text("<HTML><HEAD></HEAD><BODY><TT><B>Party Button</B> []\n<HR>\nTimer System: []<BR>\nTime Left: [][] <A href='?src=\ref[];tp=-30'>-</A> <A href='?src=\ref[];tp=-1'>-</A> <A href='?src=\ref[];tp=1'>+</A> <A href='?src=\ref[];tp=30'>+</A>\n</TT></BODY></HTML>", d1, d2, (minute ? text("[]:", minute) : null), second, src, src, src, src)
-		show_browser(user, dat, "window=partyalarm")
-		onclose(user, "partyalarm")
+		popup.set_content(text("<TT><B>Party Button</B> []\n<HR>\nTimer System: []<BR>\nTime Left: [][] <A href='?src=\ref[];tp=-30'>-</A> <A href='?src=\ref[];tp=-1'>-</A> <A href='?src=\ref[];tp=1'>+</A> <A href='?src=\ref[];tp=30'>+</A>\n</TT>", d1, d2, (minute ? text("[]:", minute) : null), second, src, src, src, src))
 	else
 		if (A.fire)
 			d1 = text("<A href='?src=\ref[];reset=1'>[]</A>", src, stars("No Party :("))
@@ -1236,9 +1254,8 @@ Just a object used in constructing fire alarms
 			d2 = text("<A href='?src=\ref[];time=1'>[]</A>", src, stars("Initiate Time Lock"))
 		var/second = time % 60
 		var/minute = (time - second) / 60
-		var/dat = text("<HTML><HEAD></HEAD><BODY><TT><B>[]</B> []\n<HR>\nTimer System: []<BR>\nTime Left: [][] <A href='?src=\ref[];tp=-30'>-</A> <A href='?src=\ref[];tp=-1'>-</A> <A href='?src=\ref[];tp=1'>+</A> <A href='?src=\ref[];tp=30'>+</A>\n</TT></BODY></HTML>", stars("Party Button"), d1, d2, (minute ? text("[]:", minute) : null), second, src, src, src, src)
-		show_browser(user, dat, "window=partyalarm")
-		onclose(user, "partyalarm")
+		popup.set_content(text("<TT><B>[]</B> []\n<HR>\nTimer System: []<BR>\nTime Left: [][] <A href='?src=\ref[];tp=-30'>-</A> <A href='?src=\ref[];tp=-1'>-</A> <A href='?src=\ref[];tp=1'>+</A> <A href='?src=\ref[];tp=30'>+</A>\n</TT>", stars("Party Button"), d1, d2, (minute ? text("[]:", minute) : null), second, src, src, src, src))
+	popup.open()
 	return
 
 /obj/machinery/partyalarm/proc/reset()

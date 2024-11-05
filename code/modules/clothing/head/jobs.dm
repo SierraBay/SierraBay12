@@ -25,7 +25,13 @@
 /obj/item/clothing/head/caphat/formal
 	name = "parade hat"
 	desc = "No one in a commanding position should be without a perfect, white hat of ultimate authority."
-	icon_state = "officercap"
+	// [SIERRA-EDIT]
+	// icon_state = "officercap" - ORIGINAL
+	icon = 'maps/sierra/icons/obj/clothing/obj_head.dmi'
+	item_icons = list(slot_head_str = 'maps/sierra/icons/mob/onmob/onmob_head.dmi')
+	icon_state = "cap_parade_cap"
+	item_state = "cap_parade_cap"
+	// [/SIERRA-EDIT]
 
 //HOP
 /obj/item/clothing/head/caphat/hop
@@ -88,6 +94,10 @@
 	name = "heliodor surgical cap"
 	color = "#aad539"
 
+/obj/item/clothing/head/surgery/lavender
+	name = "lavender surgical cap"
+	color = "#bebbee"
+
 //Berets
 /obj/item/clothing/head/beret
 	name = "beret"
@@ -95,17 +105,29 @@
 	icon_state = "beret"
 	slot_flags = SLOT_HEAD | SLOT_BELT
 	body_parts_covered = 0
+	// [SIERRA-ADD] - RESOMI
+	var/base_sprite_sheets = list()
+	// [/SIERRA-ADD]
+
+// [SIERRA-ADD] - RESOMI
+/obj/item/clothing/head/beret/Initialize()
+	. = ..()
+	base_sprite_sheets = sprite_sheets
+// [/SIERRA-ADD]
 
 /obj/item/clothing/head/beret/equipped(mob/user, slot)
 	switch(slot)
 		if(slot_belt)
 			sprite_sheets = list()
 		if(slot_head)
-			sprite_sheets = list(
-				SPECIES_VOX = 'icons/mob/species/vox/onmob_head_vox.dmi',
-				SPECIES_UNATHI = 'icons/mob/species/unathi/onmob_head_unathi.dmi',
-				SPECIES_NABBER = 'icons/mob/species/nabber/onmob_head_gas.dmi'
-				)
+			// [SIERRA-EDIT] - RESOMI
+			//sprite_sheets = list( // SIERRA-EDIT - ORIGINAL
+			//	SPECIES_VOX = 'icons/mob/species/vox/onmob_head_vox.dmi', // SIERRA-EDIT - ORIGINAL
+			//	SPECIES_UNATHI = 'icons/mob/species/unathi/onmob_head_unathi.dmi', // SIERRA-EDIT - ORIGINAL
+			//	SPECIES_NABBER = 'icons/mob/species/nabber/onmob_head_gas.dmi' // SIERRA-EDIT - ORIGINAL
+			//	) // SIERRA-EDIT - ORIGINAL
+			sprite_sheets = base_sprite_sheets
+			// [/SIERRA-EDIT]
 	return ..()
 
 /obj/item/clothing/head/beret/sec

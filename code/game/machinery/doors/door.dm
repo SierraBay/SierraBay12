@@ -50,6 +50,8 @@
 
 	/// Integer. Width of the door in tiles.
 	var/width = 1
+	/// List. Player view blocking fillers for multi-tile doors.
+	var/list/fillers
 
 	// Integer. Used for intercepting clicks on our turf. Set 0 to disable click interception. Passed directly to `/datum/extension/turf_hand`.
 	var/turf_hand_priority = 3
@@ -67,20 +69,13 @@
 	else
 		layer = open_layer
 
-
-	if(width > 1)
-		if(dir in list(EAST, WEST))
-			bound_width = width * world.icon_size
-			bound_height = world.icon_size
-		else
-			bound_width = world.icon_size
-			bound_height = width * world.icon_size
+	update_bounds()
 
 	if (turf_hand_priority)
 		set_extension(src, /datum/extension/turf_hand, turf_hand_priority)
 
 /obj/machinery/door/Initialize()
-	set_extension(src, /datum/extension/penetration, /datum/extension/penetration/proc_call, .proc/CheckPenetration)
+	set_extension(src, /datum/extension/penetration, /datum/extension/penetration/proc_call, PROC_REF(CheckPenetration))
 	. = ..()
 
 	update_connections(1)
@@ -170,49 +165,39 @@
 			do_animate("deny")
 	return
 
-/obj/machinery/door/airlock/attack_generic(mob/user)
-	if (MUTATION_FERAL in user.mutations)
-		user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN*2)
-		playsound(loc, damage_hitsound, 50, 1)
-		attack_animation(user)
-
-		if((MACHINE_IS_BROKEN(src)||!arePowerSystemsOn(src)) && density)
-			visible_message(SPAN_DANGER("\The [user] manages to pry \the [src] open!"))
-			open(1)
-		else
-			visible_message(SPAN_DANGER("\The [user] smashes into \the [src]!"))
-			damage_health(10)
-		return
-	..()
-
 /obj/machinery/door/attack_hand(mob/user)
 	if (MUTATION_FERAL in user.mutations)
-		attack_generic(user, 15)
+		if ((!is_powered() || MACHINE_IS_BROKEN(src)) && density)
+			visible_message(SPAN_DANGER("\The [user] manages to pry \the [src] open!"))
+			return open(TRUE)
+
+	if ((. = ..()))
 		return
 
-	..()
-	if (allowed(user) && operable())
+	if (!operating)
+		if (allowed(user) && operable())
+			if(density)
+				open()
+			else
+				close()
+			return TRUE
+
 		if (density)
-			open()
-		else
-			close()
+			do_animate("deny")
+		update_icon()
+		return TRUE
 
-/obj/machinery/door/attackby(obj/item/I as obj, mob/user as mob)
-	src.add_fingerprint(user, 0, I)
-
-	if (user.a_intent == I_HURT)
-		return ..()
-
-	if(istype(I, /obj/item/stack/material) && I.get_material_name() == src.get_material_name())
+/obj/machinery/door/use_tool(obj/item/I, mob/living/user, list/click_params)
+	if(istype(I, /obj/item/stack/material) && I.get_material_name() == get_material_name())
 		if(MACHINE_IS_BROKEN(src))
 			to_chat(user, SPAN_NOTICE("It looks like \the [src] is pretty busted. It's going to need more than just patching up now."))
-			return
+			return TRUE
 		if (!get_damage_value())
 			to_chat(user, SPAN_NOTICE("Nothing to fix!"))
-			return
+			return TRUE
 		if(!density)
 			to_chat(user, SPAN_WARNING("\The [src] must be closed before you can repair it."))
-			return
+			return TRUE
 
 		//figure out how much metal we need
 		var/amount_needed = get_damage_value() / DOOR_REPAIR_AMOUNT
@@ -224,6 +209,7 @@
 			transfer = stack.transfer_to(repairing, amount_needed - repairing.amount)
 			if (!transfer)
 				to_chat(user, SPAN_WARNING("You must weld or remove \the [repairing] from \the [src] before you can add anything else."))
+				return TRUE
 		else
 			repairing = stack.split(amount_needed)
 			if (repairing)
@@ -233,48 +219,49 @@
 		if (transfer)
 			to_chat(user, SPAN_NOTICE("You fit [stack.get_exact_name(transfer)] to damaged and broken parts on \the [src]."))
 
-		return
+		return TRUE
 
 	if(repairing && isWelder(I))
 		if(!density)
 			to_chat(user, SPAN_WARNING("\The [src] must be closed before you can repair it."))
-			return
+			return TRUE
 
 		var/obj/item/weldingtool/welder = I
-		if(welder.remove_fuel(0,user))
+		if(welder.can_use(2, user))
 			to_chat(user, SPAN_NOTICE("You start to fix dents and weld \the [repairing] into place."))
 			playsound(src, 'sound/items/Welder.ogg', 100, 1)
-			if(do_after(user, (0.5 * repairing.amount) SECONDS, src, DO_REPAIR_CONSTRUCT) && welder && welder.isOn())
+			if(do_after(user, (0.5 * repairing.amount) SECONDS, src, DO_REPAIR_CONSTRUCT) && welder.remove_fuel(2, user))
 				if (!repairing)
-					return //the materials in the door have been removed before welding was finished.
+					return TRUE//the materials in the door have been removed before welding was finished.
 
 				to_chat(user, SPAN_NOTICE("You finish repairing the damage to \the [src]."))
 				restore_health(repairing.amount * DOOR_REPAIR_AMOUNT)
 				update_icon()
 				qdel(repairing)
 				repairing = null
-		return
+		return TRUE
 
 	if(repairing && isCrowbar(I))
 		to_chat(user, SPAN_NOTICE("You remove \the [repairing]."))
 		playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
 		repairing.dropInto(user.loc)
 		repairing = null
-		return
+		return TRUE
 
-	if(src.operating) return
+	if (!operating)
+		if (allowed(user) && operable())
+			if(density)
+				open()
+			else
+				close()
+			return TRUE
 
-	if(src.allowed(user) && operable())
-		if(src.density)
-			open()
-		else
-			close()
-		return
+		if (density)
+			do_animate("deny")
+		update_icon()
+		return TRUE
 
-	if(src.density)
-		do_animate("deny")
-	update_icon()
-	return
+	return ..()
 
 /obj/machinery/door/emag_act(remaining_charges)
 	if(density && operable())
@@ -288,16 +275,6 @@
 /obj/machinery/door/post_health_change(health_mod, prior_health, damage_type)
 	. = ..()
 	queue_icon_update()
-	if (health_mod < 0 && !health_dead())
-		var/initial_damage_percentage = round((prior_health / get_max_health()) * 100)
-		var/damage_percentage = get_damage_percentage()
-		if (damage_percentage >= 75 && initial_damage_percentage < 75)
-			visible_message("\The [src] looks like it's about to break!" )
-		else if (damage_percentage >= 50 && initial_damage_percentage < 50)
-			visible_message("\The [src] looks seriously damaged!" )
-		else if (damage_percentage >= 25 && initial_damage_percentage < 25)
-			visible_message("\The [src] shows signs of damage!" )
-
 
 /obj/machinery/door/on_revive()
 	. = ..()
@@ -308,12 +285,6 @@
 	. = ..()
 	if (emagged && ishuman(user) && user.skill_check(SKILL_COMPUTER, SKILL_TRAINED))
 		to_chat(user, SPAN_WARNING("\The [src]'s control panel looks fried."))
-
-
-/obj/machinery/door/set_broken(new_state)
-	. = ..()
-	if(. && new_state)
-		visible_message(SPAN_WARNING("\The [src.name] breaks!"))
 
 
 /obj/machinery/door/on_update_icon()
@@ -365,15 +336,20 @@
 	operating = DOOR_OPERATING_YES
 
 	do_animate("opening")
-	icon_state = "door0"
 	set_opacity(0)
+	if(width > 1)
+		set_fillers_opacity(0)
 	sleep(3)
 	src.set_density(0)
+	if(width > 1)
+		set_fillers_density(0)
 	update_nearby_tiles()
 	sleep(7)
 	src.layer = open_layer
 	update_icon()
 	set_opacity(0)
+	if(width > 1)
+		set_fillers_opacity(0)
 	operating = DOOR_OPERATING_NO
 
 	if(autoclose)
@@ -393,6 +369,8 @@
 	close_door_at = 0
 	do_animate("closing")
 	src.set_density(1)
+	if(width > 1)
+		set_fillers_density(1)
 	sleep(3)
 	src.layer = closed_layer
 	update_nearby_tiles()
@@ -400,6 +378,8 @@
 	update_icon()
 	if (visible && !glass)
 		set_opacity(1)	//caaaaarn!
+		if(width > 1)
+			set_fillers_opacity(1)
 	operating = DOOR_OPERATING_NO
 
 	//I shall not add a check every x ticks if a door has closed over some fire.
@@ -438,15 +418,9 @@
 
 /obj/machinery/door/Move(new_loc, new_dir)
 	update_nearby_tiles()
+	update_bounds()
 
 	. = ..()
-	if(width > 1)
-		if(dir in list(EAST, WEST))
-			bound_width = width * world.icon_size
-			bound_height = world.icon_size
-		else
-			bound_width = world.icon_size
-			bound_height = width * world.icon_size
 
 	if(.)
 		deconstruct(null, TRUE)
@@ -534,14 +508,75 @@
 	if (heat_proof)
 		. += 4000
 
+/**
+ * Checks which way the airlock is facing and adjusts the direction accordingly.
+ * For use with multi-tile airlocks.
+ */
+/obj/machinery/door/proc/get_adjusted_dir(dir)
+	if(dir in list(NORTH, SOUTH))
+		return EAST
+	else
+		return NORTH
+
+/**
+ * Sets the bounds of the airlock. For use with multi-tile airlocks.
+ * If the airlock is multi-tile, it will set the bounds to be the size of the airlock.
+ * If the airlock doesn't already have fillers, it will create them.
+ * If the airlock already has fillers, it will move them to the correct location.
+ */
+/obj/machinery/door/proc/update_bounds()
+	if(width <= 1)
+		return
+
+	if(dir in list(NORTH, SOUTH))
+		bound_width = width * world.icon_size
+		bound_height = world.icon_size
+	else
+		bound_width = world.icon_size
+		bound_height = width * world.icon_size
+
+	LAZYINITLIST(fillers)
+
+	var/adjusted_dir = get_adjusted_dir(dir)
+	var/obj/last_filler = src
+	for (var/i = 1, i < width, i++)
+		var/obj/airlock_filler_object/filler
+
+		if (length(fillers) < i)
+			filler = new
+			filler.pair_airlock(src)
+			fillers.Add(filler)
+		else
+			filler = fillers[i]
+
+		filler.loc = get_step(last_filler, adjusted_dir)
+		filler.density = density
+		filler.set_opacity(opacity)
+
+		last_filler = filler
+
+/obj/machinery/door/proc/set_fillers_density(density)
+	if (!length(fillers))
+		return
+
+	for (var/obj/airlock_filler_object/filler as anything in fillers)
+		filler.density = density
+
+/obj/machinery/door/proc/set_fillers_opacity(opacity)
+	if (!length(fillers))
+		return
+
+	for (var/obj/airlock_filler_object/filler as anything in fillers)
+		filler.set_opacity(opacity)
+
 // Public access
 
 /singleton/public_access/public_method/open_door
 	name = "open door"
 	desc = "Opens the door if possible."
-	call_proc = /obj/machinery/door/proc/open
+	call_proc = TYPE_PROC_REF(/obj/machinery/door, open)
 
 /singleton/public_access/public_method/toggle_door
 	name = "toggle door"
 	desc = "Toggles whether the door is open or not, if possible."
-	call_proc = /obj/machinery/door/proc/toggle
+	call_proc = TYPE_PROC_REF(/obj/machinery/door, toggle)

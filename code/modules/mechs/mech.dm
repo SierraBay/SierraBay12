@@ -24,6 +24,8 @@
 
 	can_be_buckled = FALSE
 
+	ignore_hazard_flags = HAZARD_FLAG_SHARD
+
 	var/emp_damage = 0
 
 	var/obj/item/device/radio/exosuit/radio
@@ -46,7 +48,7 @@
 	var/obj/item/mech_component/chassis/body
 
 	// Invisible components.
-	var/datum/effect/effect/system/spark_spread/sparks
+	var/datum/effect/spark_spread/sparks
 
 	// Equipment tracking vars.
 	var/obj/item/mech_equipment/selected_system
@@ -68,12 +70,12 @@
 	// Interface stuff.
 	var/list/hud_elements = list()
 	var/list/hardpoint_hud_elements = list()
-	var/obj/screen/exosuit/health/hud_health
-	var/obj/screen/exosuit/toggle/hatch_open/hud_open
-	var/obj/screen/exosuit/power/hud_power
-	var/obj/screen/exosuit/heat/hud_heat
-	var/obj/screen/exosuit/toggle/power_control/hud_power_control
-	var/obj/screen/exosuit/toggle/camera/hud_camera
+	var/obj/screen/movable/exosuit/health/hud_health
+	var/obj/screen/movable/exosuit/toggle/hatch_open/hud_open
+	var/obj/screen/movable/exosuit/power/hud_power
+	var/obj/screen/movable/exosuit/heat/hud_heat
+	var/obj/screen/movable/exosuit/toggle/power_control/hud_power_control
+	var/obj/screen/movable/exosuit/toggle/camera/hud_camera
 
 	//POWER
 	var/power = MECH_POWER_OFF
@@ -87,6 +89,9 @@
 
 /mob/living/exosuit/is_flooded(lying_mob, absolute)
 	. = (body && body.pilot_coverage >= 100 && hatch_closed) ? FALSE : ..()
+
+/mob/living/exosuit/isSynthetic()
+	return TRUE
 
 /mob/living/exosuit/Initialize(mapload, obj/structure/heavy_vehicle_frame/source_frame)
 	. = ..()
@@ -153,6 +158,9 @@
 	hud_camera = null
 
 	QDEL_NULL_LIST(hud_elements)
+	//[SIERRA-ADD]-Mechs-by-Shegar
+	QDEL_NULL_LIST(menu_hud_elements)
+	//[SIERRA-ADD]
 
 	for (var/hardpoint in hardpoints)
 		qdel(hardpoints[hardpoint])
@@ -166,7 +174,7 @@
 	QDEL_NULL(body)
 
 	for(var/hardpoint in hardpoint_hud_elements)
-		var/obj/screen/exosuit/hardpoint/H = hardpoint_hud_elements[hardpoint]
+		var/obj/screen/movable/exosuit/hardpoint/H = hardpoint_hud_elements[hardpoint]
 		H.owner = null
 		H.holding = null
 		qdel(H)
@@ -211,6 +219,17 @@
 	. = ..()
 	if(.)
 		update_pilots()
+		//[SIERRA-ADD] - Mechs-by-Shegar - Обновит спрайт пассажиров при развороте меха
+		if(passengers_ammount > 0)
+			update_passengers()
+		var/need_to_update = FALSE
+		//exosuit.passenger_compartment.count_passengers()
+		for(var/hardpoint in hardpoints)
+			if(hardpoint == "left hand" || hardpoint == "right hand" || hardpoint == "left shoulder" || hardpoint == "right shoulder")
+				need_to_update = TRUE
+		if(need_to_update == TRUE)
+			update_icon()
+		//[SIERRA-ADD]
 
 /mob/living/exosuit/proc/toggle_power(mob/user)
 	if(power == MECH_POWER_TRANSITION)

@@ -10,17 +10,10 @@
 
 // Client
 #include "client\spawnpoints.dm"
-#include "client\verbs.dm"
-
-// Gamemodes
-#include "gamemodes\revolutionary.dm"
 
 // Mob
 #include "mob\say.dm"
 #include "mob\stat.dm"
-
-// NTNet
-#include "machinery\NTNet\NTNet-core.dm"
 
 // Objects
 #include "objects\buckling.dm"

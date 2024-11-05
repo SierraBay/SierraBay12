@@ -78,7 +78,7 @@
 		sparkle()
 		if(!istype(target, /turf) && istype(focus,/obj/item) && target.Adjacent(focus))
 			var/obj/item/I = focus
-			var/resolved = target.attackby(I, user, user:get_organ_target())
+			var/resolved = I.resolve_attackby(target, user)
 			if(!resolved && target && I)
 				I.afterattack(target,user,1) // for splashing with beakers
 		else
@@ -92,7 +92,7 @@
 /obj/item/psychic_power/telekinesis/proc/sparkle()
 	set waitfor = 0
 	if(focus)
-		var/obj/effect/overlay/O = new /obj/effect/overlay(get_turf(focus))
+		var/obj/overlay/O = new /obj/overlay(get_turf(focus))
 		O.name = "sparkles"
 		O.anchored = TRUE
 		O.density = FALSE

@@ -10,7 +10,7 @@ GLOBAL_LIST_INIT(exo_event_mob_count,list())// a list of all mobs currently spaw
 	///all possible exoplanet areas the event can take place on
 	var/list/exoplanet_areas
 	var/area/chosen_area
-	var/obj/effect/overmap/visitable/sector/chosen_planet
+	var/obj/overmap/visitable/sector/chosen_planet
 	///how many players we need present on the planet for the event to start
 	var/required_players_count = 4
 	var/list/players_on_site = list()
@@ -24,16 +24,18 @@ GLOBAL_LIST_INIT(exo_event_mob_count,list())// a list of all mobs currently spaw
 	var/spawning = FALSE
 	///Set to TRUE when the event fails one or more of the start conditions
 	var/failed = FALSE
+	///Severity of the event. Used to calculate spawn rates and event length.
+	var/event_severity
 
 /datum/event/exo_awakening/setup()
 	announceWhen = rand(15, 45)
 	affecting_z = list()
 	if (prob(25))
-		severity = EVENT_LEVEL_MAJOR
+		event_severity = EVENT_LEVEL_MAJOR
 
 		chosen_mob_list = pick(typesof(/datum/mob_list/major) - /datum/mob_list/major)
 	else
-		severity = EVENT_LEVEL_MODERATE
+		event_severity = EVENT_LEVEL_MODERATE
 		chosen_mob_list = pick(typesof(/datum/mob_list/moderate) - /datum/mob_list/moderate)
 
 	for (var/area/A in world)
@@ -43,15 +45,15 @@ GLOBAL_LIST_INIT(exo_event_mob_count,list())// a list of all mobs currently spaw
 	chosen_mob_list = new chosen_mob_list
 	target_mob_count = chosen_mob_list.limit
 	endWhen = chosen_mob_list.length
-	endWhen += severity*25
+	endWhen += event_severity*25
 
 	apply_spawn_delay()
 
 /datum/event/exo_awakening/proc/apply_spawn_delay()
 	delay_time = chosen_mob_list.delay_time
 	var/delay_mod = delay_time / 6
-	var/delay_max = (EVENT_LEVEL_MAJOR - severity) * delay_mod
-	var/delay_min = -1 * severity * delay_mod
+	var/delay_max = (EVENT_LEVEL_MAJOR - event_severity) * delay_mod
+	var/delay_min = -1 * event_severity * delay_mod
 	delay_mod = max(rand(delay_min, delay_max), 0)
 	delay_time += delay_mod
 	endWhen += delay_time
@@ -76,7 +78,7 @@ GLOBAL_LIST_INIT(exo_event_mob_count,list())// a list of all mobs currently spaw
 	notify_players()
 	adjust_to_planet_size()
 
-	addtimer(new Callback(src, /datum/event/exo_awakening/proc/start_spawning), delay_time)
+	addtimer(new Callback(src, TYPE_PROC_REF(/datum/event/exo_awakening, start_spawning)), delay_time)
 
 //Locates a planet with players on it and kills the event if there aren't enough present
 /datum/event/exo_awakening/proc/find_suitable_planet()
@@ -113,7 +115,7 @@ GLOBAL_LIST_INIT(exo_event_mob_count,list())// a list of all mobs currently spaw
 //Notify all players on the planet that the event is beginning.
 /datum/event/exo_awakening/proc/notify_players()
 	for (var/mob/M in players_on_site[chosen_area])
-		if (severity > EVENT_LEVEL_MODERATE)
+		if (event_severity > EVENT_LEVEL_MODERATE)
 			to_chat(M, SPAN_DANGER(chosen_mob_list.arrival_message))
 		else
 			to_chat(M, SPAN_WARNING(chosen_mob_list.arrival_message))
@@ -128,12 +130,12 @@ GLOBAL_LIST_INIT(exo_event_mob_count,list())// a list of all mobs currently spaw
 
 /datum/event/exo_awakening/announce()
 	var/announcement = ""
-	if (severity > EVENT_LEVEL_MODERATE)
+	if (event_severity > EVENT_LEVEL_MODERATE)
 		announcement = "Extreme biological activity spike detected on [location_name()]."
 	else
 		announcement = "Anomalous biological activity detected on [location_name()]."
 
-	for (var/obj/effect/overmap/visitable/ship/S in range(chosen_planet,2)) //announce the event to ships in range of the planet
+	for (var/obj/overmap/visitable/ship/S in range(chosen_planet,2)) //announce the event to ships in range of the planet
 		command_announcement.Announce(announcement, "[S.name] Biological Sensor Array", zlevels = S.map_z)
 
 	chosen_planet.add_scan_data("exo_awaken", SPAN_COLOR(COLOR_RED, announcement), null, SKILL_SCIENCE, SKILL_TRAINED)
@@ -154,7 +156,7 @@ GLOBAL_LIST_INIT(exo_event_mob_count,list())// a list of all mobs currently spaw
 		return
 
 	var/list/area_turfs = get_area_turfs(chosen_area)
-	var/n = rand(severity-1, severity*2)
+	var/n = rand(event_severity-1, event_severity*2)
 	var/I = 0
 	while (I < n)
 		var/turf/T
@@ -164,7 +166,7 @@ GLOBAL_LIST_INIT(exo_event_mob_count,list())// a list of all mobs currently spaw
 				var/mob/M = pick(players_on_site[chosen_area])
 				var/turf/MT = get_turf(M)
 				if (MT)
-					if (istype(chosen_planet, /obj/effect/overmap/visitable/sector/exoplanet))
+					if (istype(chosen_planet, /obj/overmap/visitable/sector/exoplanet))
 						T = CircularRandomTurfAround(MT, Frand(3, 5))
 				else
 					T = pick(area_turfs)
@@ -191,12 +193,12 @@ GLOBAL_LIST_INIT(exo_event_mob_count,list())// a list of all mobs currently spaw
 			var/mob/living/simple_animal/hostile/M = new mob_to_spawn(T)
 			if (istype(M))
 				M.visible_message(SPAN_DANGER("\The [M] bursts forth from the ground!"))
-				GLOB.death_event.register(M,src,/datum/event/exo_awakening/proc/reduce_mob_count)
-				GLOB.destroyed_event.register(M,src,/datum/event/exo_awakening/proc/reduce_mob_count)
+				GLOB.death_event.register(M,src, TYPE_PROC_REF(/datum/event/exo_awakening, reduce_mob_count))
+				GLOB.destroyed_event.register(M,src,  TYPE_PROC_REF(/datum/event/exo_awakening, reduce_mob_count))
 				LAZYADD(GLOB.exo_event_mob_count, M)
 
-				if (istype(chosen_planet, /obj/effect/overmap/visitable/sector/exoplanet))
-					var/obj/effect/overmap/visitable/sector/exoplanet/E = chosen_planet
+				if (istype(chosen_planet, /obj/overmap/visitable/sector/exoplanet))
+					var/obj/overmap/visitable/sector/exoplanet/E = chosen_planet
 					E.adapt_animal(M, FALSE)
 
 			spawned_mobs++
@@ -209,8 +211,8 @@ GLOBAL_LIST_INIT(exo_event_mob_count,list())// a list of all mobs currently spaw
 	if (M in L)
 		LAZYREMOVE(L,M)
 
-	GLOB.death_event.unregister(M,src,/datum/event/exo_awakening/proc/reduce_mob_count)
-	GLOB.destroyed_event.unregister(M,src,/datum/event/exo_awakening/proc/reduce_mob_count)
+	GLOB.death_event.unregister(M, src,  TYPE_PROC_REF(/datum/event/exo_awakening, reduce_mob_count))
+	GLOB.destroyed_event.unregister(M, src,  TYPE_PROC_REF(/datum/event/exo_awakening, reduce_mob_count))
 
 /datum/event/exo_awakening/end()
 	if (!chosen_area)
@@ -220,7 +222,7 @@ GLOBAL_LIST_INIT(exo_event_mob_count,list())// a list of all mobs currently spaw
 	chosen_planet.add_scan_data("exo_awaken_aftermath", SPAN_COLOR(COLOR_GREEN, "Biological and geological activity within tolerance, trace unknown lifeforms detected."), null, SKILL_SCIENCE, SKILL_TRAINED)
 
 	QDEL_NULL(chosen_mob_list)
-	log_debug("Exoplanet Awakening event spawned [spawned_mobs] mobs. It was a level [severity] out of 3 severity.")
+	log_debug("Exoplanet Awakening event spawned [spawned_mobs] mobs. It was a level [event_severity] out of 3 severity.")
 
 	if (!failed)
 		for (var/mob/M in GLOB.player_list)

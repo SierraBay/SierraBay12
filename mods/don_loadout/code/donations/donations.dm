@@ -29,7 +29,7 @@
 
 	var/DBQuery/query = dbcon.NewQuery({"
 		SELECT CAST(SUM(amount) as UNSIGNED INTEGER)
-		FROM budget
+		FROM `[sqlfdbkdbutil]`.`budget`
 		WHERE
 			ckey = '[player.ckey]' AND
 			is_valid = TRUE AND
@@ -38,8 +38,10 @@
 		GROUP BY ckey
 	"})
 
+	query.Execute()
+
 	if(query.NextRow())
-		var/total = query.item[1]
+		var/total = text2num(query.item[1])
 		var/donator_level = DONATION_TIER_NONE
 		if(total >= DONATION_TIER_ONE_SUM)
 			donator_level = DONATION_TIER_ONE
@@ -50,6 +52,9 @@
 		if(total >= DONATION_TIER_FOUR_SUM)
 			donator_level = DONATION_TIER_FOUR
 		player.donator_info.donation_type = donator_level
+
+	if(player.holder?.rights & R_ADMIN)
+		player.donator_info.donation_type = DONATION_TIER_ADMIN
 
 	if(!was_donator)
 		player.donator_info.on_donation_tier_loaded(player)

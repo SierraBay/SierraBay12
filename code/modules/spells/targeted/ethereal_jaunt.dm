@@ -16,7 +16,7 @@
 	hud_state = "wiz_jaunt"
 
 	var/reappear_duration = 5
-	var/obj/effect/dummy/spell_jaunt/jaunt_holder
+	var/obj/dummy/spell_jaunt/jaunt_holder
 	var/atom/movable/fake_overlay/animation
 
 /spell/targeted/ethereal_jaunt/Destroy()
@@ -37,7 +37,7 @@
 			target.buckled.unbuckle_mob()
 		spawn(0)
 			var/mobloc = get_turf(target.loc)
-			jaunt_holder = new/obj/effect/dummy/spell_jaunt(mobloc)
+			jaunt_holder = new/obj/dummy/spell_jaunt(mobloc)
 			animation = new/atom/movable/fake_overlay(mobloc)
 			animation.SetName("residue")
 			animation.set_density(FALSE)
@@ -50,7 +50,7 @@
 			jaunt_disappear(animation, target)
 			jaunt_steam(mobloc)
 			target.forceMove(jaunt_holder)
-			addtimer(new Callback(src, .proc/start_reappear, target), duration)
+			addtimer(new Callback(src, PROC_REF(start_reappear), target), duration)
 
 /spell/targeted/ethereal_jaunt/proc/start_reappear(mob/living/user)
 	var/mob_loc = jaunt_holder.last_valid_turf
@@ -58,7 +58,7 @@
 	jaunt_steam(mob_loc)
 	jaunt_reappear(animation, user)
 	animation.forceMove(mob_loc)
-	addtimer(new Callback(src, .proc/reappear, mob_loc, user), reappear_duration)
+	addtimer(new Callback(src, PROC_REF(reappear), mob_loc, user), reappear_duration)
 
 /spell/targeted/ethereal_jaunt/proc/reappear(mob_loc, mob/living/user)
 	if(!user.forceMove(mob_loc))
@@ -87,11 +87,11 @@
 	playsound(get_turf(target), 'sound/magic/ethereal_exit.ogg', 30)
 
 /spell/targeted/ethereal_jaunt/proc/jaunt_steam(mobloc)
-	var/datum/effect/effect/system/steam_spread/steam = new /datum/effect/effect/system/steam_spread()
+	var/datum/effect/steam_spread/steam = new /datum/effect/steam_spread()
 	steam.set_up(10, 0, mobloc)
 	steam.start()
 
-/obj/effect/dummy/spell_jaunt
+/obj/dummy/spell_jaunt
 	name = "water"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "nothing"
@@ -101,17 +101,17 @@
 	anchored = TRUE
 	var/turf/last_valid_turf
 
-/obj/effect/dummy/spell_jaunt/New(location)
+/obj/dummy/spell_jaunt/New(location)
 	..()
 	last_valid_turf = get_turf(location)
 
-/obj/effect/dummy/spell_jaunt/Destroy()
+/obj/dummy/spell_jaunt/Destroy()
 	// Eject contents if deleted somehow
 	for(var/atom/movable/AM in src)
 		AM.dropInto(loc)
 	return ..()
 
-/obj/effect/dummy/spell_jaunt/relaymove(mob/user, direction)
+/obj/dummy/spell_jaunt/relaymove(mob/user, direction)
 	if (!canmove || reappearing) return
 	var/turf/newLoc = get_step(src, direction)
 	if (!newLoc)
@@ -124,14 +124,14 @@
 	else
 		to_chat(user, SPAN_WARNING("Some strange aura is blocking the way!"))
 	canmove = 0
-	addtimer(new Callback(src, .proc/allow_move), 2)
+	addtimer(new Callback(src, PROC_REF(allow_move)), 2)
 
-/obj/effect/dummy/spell_jaunt/proc/allow_move()
+/obj/dummy/spell_jaunt/proc/allow_move()
 	canmove = TRUE
 
-/obj/effect/dummy/spell_jaunt/ex_act(blah)
+/obj/dummy/spell_jaunt/ex_act(blah)
 	return
-/obj/effect/dummy/spell_jaunt/bullet_act(blah)
+/obj/dummy/spell_jaunt/bullet_act(blah)
 	return
 
 /spell/targeted/ethereal_jaunt/tower

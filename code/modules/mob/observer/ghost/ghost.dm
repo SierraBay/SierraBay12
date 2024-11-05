@@ -141,6 +141,8 @@ Works together with spawning an observer, noted above.
 	return 1
 
 /mob/proc/ghostize(can_reenter_corpse = CORPSE_CAN_REENTER)
+	//remove color filters
+	clear_client_colors()
 	// Are we the body of an aghosted admin? If so, don't make a ghost.
 	if(teleop && istype(teleop, /mob/observer/ghost))
 		var/mob/observer/ghost/G = teleop
@@ -154,10 +156,10 @@ Works together with spawning an observer, noted above.
 		ghost.key = key
 		if(ghost.client && !ghost.client.holder && !config.antag_hud_allowed)		// For new ghosts we remove the verb from even showing up if it's not allowed.
 			ghost.verbs -= /mob/observer/ghost/verb/toggle_antagHUD	// Poor guys, don't know what they are missing!
+			ghost.update_client_color()
 		return ghost
 
 /mob/observer/ghostize() // Do not create ghosts of ghosts.
-
 /*
 This is the proc mobs get to turn into a ghost. Forked from ghostize due to compatibility issues.
 */
@@ -165,11 +167,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set category = "OOC"
 	set name = "Ghost"
 	set desc = "Relinquish your life and enter the land of the dead."
-
 	if (admin_paralyzed)
 		to_chat(usr, SPAN_DEBUG("You cannot ghost while admin paralyzed."))
 		return
-
+	clear_client_colors()
 	if(stat == DEAD)
 		announce_ghost_joinleave(ghostize(1))
 	else
@@ -192,9 +193,16 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		if (ghost)
 			ghost.timeofdeath = world.time // Because the living mob won't have a time of death and we want the respawn timer to work properly.
 			announce_ghost_joinleave(ghost)
+		ghost.update_client_color()
 
-/mob/observer/ghost/can_use_hands()	return 0
-/mob/observer/ghost/is_active()		return 0
+
+/mob/observer/ghost/can_use_hands()
+	return FALSE
+
+
+/mob/observer/ghost/is_active()
+	return FALSE
+
 
 /mob/observer/ghost/Stat()
 	. = ..()
@@ -274,7 +282,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(src, "No area available.")
 		return
 
-	var/list/area_turfs = get_area_turfs(thearea, shall_check_if_holy() ? list(/proc/is_not_holy_turf) : list())
+	var/list/area_turfs = get_area_turfs(thearea, shall_check_if_holy() ? list(GLOBAL_PROC_REF(is_not_holy_turf)) : list())
 	if(!length(area_turfs))
 		to_chat(src, SPAN_WARNING("This area has been entirely made into sacred grounds, you cannot enter it while you are in this plane of existence!"))
 		return
@@ -383,7 +391,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	var/mob/living/simple_animal/passive/mouse/host
 	var/obj/machinery/atmospherics/unary/vent_pump/vent_found
 	var/list/found_vents = list()
-	for(var/obj/machinery/atmospherics/unary/vent_pump/v in SSmachines.machinery)
+	for(var/obj/machinery/atmospherics/unary/vent_pump/v as anything in SSmachines.get_machinery_of_type(/obj/machinery/atmospherics/unary/vent_pump))
 		if(!v.welded && v.z == T.z)
 			found_vents.Add(v)
 	if(length(found_vents))
@@ -428,13 +436,17 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	return ..()
 
-/mob/observer/ghost/proc/try_possession(mob/living/M)
-	if(!config.ghosts_can_possess_animals)
+/mob/observer/ghost/proc/try_possession(mob/living/target)
+	if(target.is_zombie())
+		if(!config.ghosts_can_possess_zombies)
+			to_chat(src, SPAN_WARNING("Ghosts are not permitted to possess zombies."))
+			return 0
+	else if(!config.ghosts_can_possess_animals)
 		to_chat(src, SPAN_WARNING("Ghosts are not permitted to possess animals."))
 		return 0
-	if(!M.can_be_possessed_by(src))
+	if(!target.can_be_possessed_by(src))
 		return 0
-	return M.do_possession(src)
+	return target.do_possession(src)
 
 /mob/observer/ghost/pointed(atom/A as mob|obj|turf in view())
 	if(!..())
@@ -471,6 +483,13 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	ghostvision = !(ghostvision)
 	updateghostsight()
 	to_chat(src, "You [(ghostvision?"now":"no longer")] have ghost vision.")
+
+/mob/observer/ghost/verb/set_ghost_alpha()
+	set name = "Set Ghost Alpha"
+	set desc = "Giving you option to enter value for custom ghost transparency"
+	set category = "Ghost"
+	alpha = alpha == 127 ? 0 : 127
+	mouse_opacity = alpha ? 1 : 0
 
 /mob/observer/ghost/verb/toggle_darkness()
 	set name = "Toggle Darkness"

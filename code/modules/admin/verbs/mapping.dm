@@ -22,20 +22,20 @@
 var/global/camera_range_display_status = 0
 var/global/intercom_range_display_status = 0
 
-/obj/effect/debugging/camera_range
+/obj/debugging/camera_range
 	icon = 'icons/480x480.dmi'
 	icon_state = "25percent"
 
-/obj/effect/debugging/camera_range/Initialize()
+/obj/debugging/camera_range/Initialize()
 	. = ..()
 	pixel_x = -224
 	pixel_y = -224
 
-/obj/effect/debugging/marker
+/obj/debugging/marker
 	icon = 'icons/turf/areas.dmi'
 	icon_state = "yellow"
 
-/obj/effect/debugging/marker/Move()
+/obj/debugging/marker/Move()
 	return 0
 
 /client/proc/do_not_use_these()
@@ -53,12 +53,12 @@ var/global/intercom_range_display_status = 0
 
 
 
-	for(var/obj/effect/debugging/camera_range/C in world)
+	for(var/obj/debugging/camera_range/C in world)
 		qdel(C)
 
 	if(camera_range_display_status)
 		for(var/obj/machinery/camera/C in cameranet.cameras)
-			new/obj/effect/debugging/camera_range(C.loc)
+			new/obj/debugging/camera_range(C.loc)
 
 
 
@@ -106,13 +106,13 @@ var/global/intercom_range_display_status = 0
 	else
 		intercom_range_display_status = 1
 
-	for(var/obj/effect/debugging/marker/M in world)
+	for(var/obj/debugging/marker/M in world)
 		qdel(M)
 
 	if(intercom_range_display_status)
 		for(var/obj/item/device/radio/intercom/I in world)
 			for(var/turf/T in orange(7,I))
-				var/obj/effect/debugging/marker/F = new/obj/effect/debugging/marker(T)
+				var/obj/debugging/marker/F = new/obj/debugging/marker(T)
 				if (!(F in view(7,I.loc)))
 					qdel(F)
 
@@ -328,7 +328,7 @@ var/global/list/debug_verbs = list (
 	set name = "Find Leaky Pipes"
 
 	var/list/baddies = list("LEAKY PIPES")
-	for(var/obj/machinery/atmospherics/pipe/P in SSmachines.machinery)
+	for(var/obj/machinery/atmospherics/pipe/P as anything in SSmachines.get_machinery_of_type(/obj/machinery/atmospherics/pipe))
 		if(P.leaking)
 			baddies += "[P] ([P.x],[P.y],[P.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[P.x];Y=[P.y];Z=[P.z]'>JMP</a>)"
 

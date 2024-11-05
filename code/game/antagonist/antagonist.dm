@@ -55,7 +55,7 @@
 	var/datum/language/required_language = null
 
 	// Used for setting appearance.
-	var/list/valid_species =       list(SPECIES_UNATHI,SPECIES_SKRELL,SPECIES_HUMAN,SPECIES_VOX)
+	var/list/valid_species =       list(SPECIES_UNATHI,SPECIES_SKRELL,SPECIES_HUMAN,SPECIES_VOX,SPECIES_DIONA,SPECIES_IPC)
 	var/min_player_age = 14
 
 	// Runtime vars.
@@ -200,7 +200,7 @@
 //so that they do not occupy regular job slots. All other antag roles should be spawned after jobs are
 //assigned, so that job restrictions can be respected.
 /datum/antagonist/proc/attempt_spawn(spawn_target = null)
-	if(spawn_target == null)
+	if(isnull(spawn_target))
 		spawn_target = initial_spawn_target
 
 	// Update our boundaries.

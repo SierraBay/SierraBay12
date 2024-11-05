@@ -209,7 +209,7 @@
 
 			for(var/turf/T in linkedholodeck)
 				if(prob(30))
-					var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+					var/datum/effect/spark_spread/s = new /datum/effect/spark_spread
 					s.set_up(2, 1, T)
 					s.start()
 				T.ex_act(EX_ACT_LIGHT)
@@ -218,7 +218,7 @@
 /obj/machinery/computer/HolodeckControl/proc/derez(obj/obj , silent = 1)
 	holographic_objs.Remove(obj)
 
-	if(obj == null)
+	if(isnull(obj))
 		return
 
 	if(!silent)
@@ -274,17 +274,14 @@
 		holographic_mobs -= C
 		C.death()
 
-	for(var/obj/effect/decal/cleanable/blood/B in linkedholodeck)
+	for(var/obj/decal/cleanable/blood/B in linkedholodeck)
 		qdel(B)
 
 	holographic_objs = A.copy_contents_to(linkedholodeck , 1)
 	for(var/obj/holo_obj in holographic_objs)
 		holo_obj.alpha *= 0.8 //give holodeck objs a slight transparency
 		holo_obj.holographic = TRUE
-		if(istype(holo_obj,/obj/item/storage))
-			set_extension(holo_obj,/datum/extension/chameleon/backpack)
-		if(istype(holo_obj,/obj/item/clothing))
-			set_extension(holo_obj,/datum/extension/chameleon/clothing)
+		holo_obj.SetupChameleonExtension(CHAMELEON_FLEXIBLE_OPTIONS_PARENT_TYPE, TRUE, FALSE)
 
 	if(HP.ambience)
 		linkedholodeck.forced_ambience = HP.ambience.Copy()
@@ -298,11 +295,11 @@
 	linkedholodeck.sound_env = A.sound_env
 
 	spawn(30)
-		for(var/obj/effect/landmark/L in linkedholodeck)
+		for(var/obj/landmark/L in linkedholodeck)
 			if(L.name=="Atmospheric Test Start")
 				spawn(20)
 					var/turf/T = get_turf(L)
-					var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+					var/datum/effect/spark_spread/s = new /datum/effect/spark_spread
 					s.set_up(2, 1, T)
 					s.start()
 					if(T)

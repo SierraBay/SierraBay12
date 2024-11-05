@@ -27,7 +27,7 @@
 	var/interact_page = 0
 	var/components_per_page = 10
 	/// Spark system used for creating sparks while the assembly is damaged and destroyed.
-	var/datum/effect/effect/system/spark_spread/spark_system
+	var/datum/effect/spark_spread/spark_system
 	var/adrone = FALSE
 	pass_flags = 0
 	anchored = FALSE
@@ -66,11 +66,11 @@
 	visible_message(SPAN_WARNING("\The [src] falls to pieces!"))
 	if(w_class == ITEM_SIZE_HUGE)
 		if(adrone)
-			new /obj/effect/decal/cleanable/blood/gibs/robot(loc)
+			new /obj/decal/cleanable/blood/gibs/robot(loc)
 		new /obj/item/stack/material/steel(loc, rand(7, 10))
 	else if(w_class == ITEM_SIZE_LARGE)
 		if(adrone)
-			new /obj/effect/decal/cleanable/blood/gibs/robot(loc)
+			new /obj/decal/cleanable/blood/gibs/robot(loc)
 		new /obj/item/stack/material/steel(loc, rand(3, 6))
 	else if(w_class == ITEM_SIZE_NORMAL)
 		new /obj/item/stack/material/steel(loc, rand(1, 3))
@@ -80,7 +80,7 @@
 		spark_system.start()
 	playsound(loc, 'sound/items/electronic_assembly_empty.ogg', 100, 1)
 	icon = 0
-	addtimer(new Callback(src, .proc/fall_apart), 5.1)
+	addtimer(new Callback(src, PROC_REF(fall_apart)), 5.1)
 
 /obj/item/device/electronic_assembly/post_health_change(health_mod, prior_health, damage_type)
 	..()
@@ -112,7 +112,7 @@
 	.=..()
 	START_PROCESSING(SScircuit, src)
 	matter[MATERIAL_STEEL] = round((max_complexity + max_components) / 4) * SScircuit.cost_multiplier
-	spark_system = new /datum/effect/effect/system/spark_spread
+	spark_system = new /datum/effect/spark_spread
 	spark_system.set_up(7, 0, src)
 	spark_system.attach(src)
 
@@ -157,7 +157,8 @@
 
 	if(opened)
 		open_interact(user)
-	closed_interact(user)
+	else
+		closed_interact(user)
 
 /obj/item/device/electronic_assembly/proc/closed_interact(mob/user)
 	var/HTML = list()
@@ -210,12 +211,12 @@
 		for(var/i = start_index to min(length(assembly_components), start_index + (components_per_page - 1)))
 			var/obj/item/integrated_circuit/circuit = assembly_components[i]
 			HTML += "\[ <a href='?src=\ref[src];component=\ref[circuit];set_slot=1'>[i]</a> \] | "
-			HTML += "<a href='?src=\ref[circuit];component=\ref[circuit];rename=1'>\[R\]</a> | "
+			HTML += "<a href='?src=\ref[src];component=\ref[circuit];rename_component=1'>\[R\]</a> | "
 			if(circuit.removable)
 				HTML += "<a href='?src=\ref[src];component=\ref[circuit];remove=1'>\[-\]</a> | "
 			else
 				HTML += "\[-\] | "
-			HTML += "<a href='?src=\ref[circuit];examine=1'>[circuit.displayed_name]</a>"
+			HTML += "<a href='?src=\ref[src];component=\ref[circuit];examine_component=1'>[circuit.displayed_name]</a>"
 			HTML += "<br>"
 
 		if(length(assembly_components) > components_per_page)
@@ -275,17 +276,22 @@
 			if(href_list["remove"])
 				try_remove_component(component, usr)
 
-			else
-				// Adjust the position
-				if(href_list["set_slot"])
-					var/selected_slot = input("Select a new slot", "Select slot", current_pos) as null|num
-					if(!check_interactivity(usr))
-						return 0
-					if(selected_slot < 1 || selected_slot > length(assembly_components))
-						return 0
+			else if (href_list["rename_component"])
+				component.rename_component()
 
-					assembly_components.Remove(component)
-					assembly_components.Insert(selected_slot, component)
+			else if(href_list["set_slot"])
+				var/selected_slot = input("Select a new slot", "Select slot", current_pos) as null|num
+				if(!check_interactivity(usr))
+					return 0
+				if(selected_slot < 1 || selected_slot > length(assembly_components))
+					return 0
+
+				assembly_components.Remove(component)
+				assembly_components.Insert(selected_slot, component)
+
+			else if (href_list["examine_component"])
+				component.interact(usr)
+				return
 
 
 	interact(usr) // To refresh the UI.
@@ -719,6 +725,12 @@
 	icon_state = "setup_large_industrial"
 	desc = "It's a case used for assembling large electronics. This one resembles some kind of industrial machinery."
 
+/obj/item/device/electronic_assembly/large/exo
+	name = "type-a exosuit electronic assembly"
+	icon_state = "setup_medium_radio"
+	desc = "It's a case, for building large electronics with. This one resembles a box, or some type of rack for weapon."
+	allowed_circuit_action_flags = IC_ACTION_COMBAT | IC_ACTION_LONG_RANGE
+
 /obj/item/device/electronic_assembly/drone
 	name = "electronic drone"
 	icon_state = "setup_drone"
@@ -779,9 +791,10 @@
 	max_complexity = IC_COMPLEXITY_BASE * 2
 	health_max = 40
 
-/obj/item/device/electronic_assembly/wallmount/afterattack(atom/a, mob/user, proximity)
-	if(proximity && istype(a ,/turf) && a.density)
-		mount_assembly(a,user)
+/obj/item/device/electronic_assembly/wallmount/use_after(atom/target, mob/living/user, click_parameters)
+	if(istype(target ,/turf) && target.density)
+		mount_assembly(target,user)
+		return TRUE
 
 /obj/item/device/electronic_assembly/wallmount/heavy
 	name = "heavy wall-mounted electronic assembly"

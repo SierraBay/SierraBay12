@@ -11,8 +11,8 @@
 	var/on = 0
 	var/activation_sound = 'sound/effects/flare.ogg'
 	light_color = "#e58775"
-	light_outer_range = 2
-	light_max_bright = 1
+	light_range = 2
+	light_power = 1
 	var/brightness_on = 1 // Moderate-low bright.
 	action_button_name = null
 
@@ -20,10 +20,10 @@
 	..()
 	update_icon()
 
-/obj/item/device/oxycandle/afterattack(obj/O, mob/user, proximity)
-	if(proximity && istype(O) && on)
+/obj/item/device/oxycandle/use_after(obj/O, mob/living/user, click_parameters)
+	if(istype(O) && on)
 		O.HandleObjectHeating(src, user, 500)
-	..()
+		return TRUE
 
 /obj/item/device/oxycandle/attack_self(mob/user)
 	if(!on)

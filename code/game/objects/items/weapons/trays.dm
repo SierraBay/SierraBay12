@@ -12,7 +12,6 @@
 	throw_range = 5
 	w_class = ITEM_SIZE_NORMAL
 	obj_flags = OBJ_FLAG_CONDUCTIBLE
-	item_flags = ITEM_FLAG_TRY_ATTACK
 	matter = list(MATERIAL_ALUMINIUM = 3000)
 	hitsound = "tray_hit"
 	var/bash_cooldown = 0 // You can bash a rolling pin against a tray to make a shield bash sound! Based on world.time
@@ -33,7 +32,7 @@
 	. = ..()
 
 // When hitting people with the tray, drop all its items everywhere. You jerk.
-/obj/item/tray/attack(mob/living/M, mob/living/user)
+/obj/item/tray/use_before(mob/living/M, mob/living/user)
 	. = FALSE
 	if (user.a_intent != I_HURT)
 		return FALSE
@@ -48,14 +47,14 @@
 
 
 // Bash a rolling pin against a tray like a true knight!
-/obj/item/tray/attackby(obj/item/W, mob/living/user)
-	if(istype(W, /obj/item/material/kitchen/rollingpin) && user.a_intent == I_HURT)
+/obj/item/tray/use_tool(obj/item/W, mob/living/user, list/click_params)
+	if(istype(W, /obj/item/material/kitchen/rollingpin))
 		if(bash_cooldown < world.time)
 			user.visible_message(SPAN_WARNING("[user] bashes [src] with [W]!"))
 			playsound(user.loc, 'sound/effects/shieldbash.ogg', 50, 1)
 			bash_cooldown = world.time + 25
 		return TRUE
-	else if (user.a_intent != I_HURT && !istype(W, /obj/item/projectile) && !istype(W, /obj/item/clothing))
+	if (!istype(W, /obj/item/projectile) && !istype(W, /obj/item/clothing))
 		if (calc_carry() + storage_cost_for_item(W) > max_carry)
 			to_chat(user, SPAN_WARNING("\The [src] can't fit \the [W]!"))
 		else if (!can_add_item(W))
@@ -65,8 +64,8 @@
 			user.drop_item()
 			pickup_item(W)
 		return TRUE
-	else
-		. = ..()
+
+	return ..()
 
 
 // Returns the space an object takes up on the tray. Non-food takes up double!
@@ -97,58 +96,62 @@
 	add_item_overlay(I)
 
 
-// Intercepts hits against atoms in order to pick up items or dump stuff out as required.
-/obj/item/tray/resolve_attackby(atom/A, mob/user)
-	var/grab_intent = ishuman(user) ? I_GRAB : I_HELP
-	if (user.a_intent != grab_intent || istype(A, /obj/item/storage) || istype(A, /obj/screen/storage))
+/obj/item/tray/use_before(atom/target, mob/living/user, click_parameters)
+	var/intent_check = ishuman(user) ? I_GRAB : I_HELP
+	if (user.a_intent != intent_check || istype(target, /obj/item/storage) || istype(target, /obj/screen/storage))
 		return ..()
 
-	var/turf/T = get_turf(A)
-
+	var/turf/turf = get_turf(target)
 	if (LAZYLEN(carrying))
-		if (istype(A, /obj/structure/table)) // If we're a table, prioritize dumping stuff out
+		// Table - Dump contents
+		if (istype(target, /obj/structure/table))
 			ClearOverlays()
 			for (var/obj/item/carried in carrying)
-				carried.dropInto(T)
-				LAZYREMOVE(carrying, carried)
-			user.visible_message(SPAN_NOTICE("[user] dumps \the [src] onto \the [A]."), SPAN_NOTICE("You empty \the [src] onto \the [A]."))
-			return FALSE
-		else if (istype(A, /obj/machinery/smartfridge))
-			var/obj/machinery/smartfridge/fridge = A
+				carried.dropInto(turf)
+			LAZYCLEARLIST(carrying)
+			user.visible_message(
+				SPAN_NOTICE("\The [user] dumps \a [src]'s contents onto \the [target]."),
+				SPAN_NOTICE("You dump \the [src]'s contents onto \the [target].")
+			)
+			return TRUE
+
+		// Fridge - Load fridge
+		if (istype(target, /obj/machinery/smartfridge))
+			var/obj/machinery/smartfridge/fridge = target
 			var/fed_in = 0
 			ClearOverlays()
 			for (var/obj/item/carried in carrying)
-				if (fridge.accept_check(carried))
-					carried.dropInto(fridge)
-					fridge.stock_item(carried)
-					LAZYREMOVE(carrying, carried)
-					fed_in++
-				else
-					add_item_overlay(carried) // Re-add overlays for items we're keeping on the tray, since we fully cut overlays earlier
+				if (!fridge.accept_check(carried))
+					add_item_overlay(carried)
+					continue
+				carried.dropInto(fridge)
+				fridge.stock_item(carried)
+				LAZYREMOVE(carrying, carried)
+				fed_in++
 			if (!fed_in)
-				to_chat(user, SPAN_WARNING("Nothing in \the [src] is valid for \the [A]!"))
-			else if (LAZYLEN(carrying))
-				user.visible_message(SPAN_NOTICE("[user] fills \the [A] with \the [src]."), SPAN_NOTICE("You fill \the [A] with some of \the [src]'s contents."))
-			else
-				user.visible_message(SPAN_NOTICE("[user] fills \the [A] with \the [src]."), SPAN_NOTICE("You fill \the [A] with \the [src]."))
+				USE_FEEDBACK_FAILURE("Nothing in \the [src] is valid for \the [target].")
+				return TRUE
+			var/some_of = LAZYLEN(carrying) ? "some of " : ""
+			user.visible_message(
+				SPAN_NOTICE("\The [user] fills \the [target] with [some_of]\a [src]'s contents."),
+				SPAN_NOTICE("You fill \the [target] with [some_of]\the [src]'s contents.")
+			)
+			return TRUE
 
-			return FALSE
-
-	var/obj/item/I = locate() in T
-
-	if (!isnull(I))
-		var/added_items = 0
-		for(var/obj/item/item in T)
-			if (can_add_item(I))
-				pickup_item(item)
-				added_items++
-
-		if (!added_items)
-			to_chat(user, SPAN_WARNING("You fail to pick anything up with \the [src]."))
-		else
-			user.visible_message(SPAN_NOTICE("[user] scoops up some things with \the [src]."), SPAN_NOTICE("You put everything you could onto \the [src]."))
-
-		return FALSE
+	// Attempt to load items
+	var/added_items = 0
+	for (var/obj/item/item in turf)
+		if (can_add_item(item))
+			pickup_item(item)
+			added_items++
+	if (!added_items)
+		USE_FEEDBACK_FAILURE("\The [target] doesn't have anything to pick up with \the [src].")
+		return TRUE
+	user.visible_message(
+		SPAN_NOTICE("\The [user] scoops some things up from \the [target] with \a [src]."),
+		SPAN_NOTICE("You scoop some things up from \the [target] with \the [src].")
+	)
+	return TRUE
 
 
 // Adds a visible overlay on the tray with the item's icon, state, and overlays, to display them on the tray itself

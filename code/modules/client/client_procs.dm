@@ -64,9 +64,6 @@
 		if(!holder && received_irc_pm < world.time - 6000) //Worse they can do is spam IRC for 10 minutes
 			to_chat(usr, SPAN_WARNING("You are no longer able to use this, it's been more then 10 minutes since an admin on IRC has responded to you"))
 			return
-		if(mute_irc)
-			to_chat(usr, SPAN_WARNING("You cannot use this as your client has been muted from sending messages to the admins on IRC"))
-			return
 		cmd_admin_irc_pm(href_list["irc_msg"])
 		return
 
@@ -151,9 +148,10 @@
 			break
 
 	// Change the way they should download resources.
-	if(config.resource_urls && length(config.resource_urls))
-		src.preload_rsc = pick(config.resource_urls)
-	else src.preload_rsc = 1 // If config.resource_urls is not set, preload like normal.
+	if (length(config.resource_urls))
+		preload_rsc = pick(config.resource_urls)
+	else
+		preload_rsc = TRUE
 
 	if(byond_version < DM_VERSION)
 		to_chat(src, SPAN_WARNING("You are running an older version of BYOND than the server and may experience issues."))
@@ -181,6 +179,7 @@
 	// [SIERRA-ADD]
 
 	. = ..()	//calls mob.Login()
+	//view = get_preference_value(/datum/client_preference/client_view)
 
 	GLOB.using_map.map_info(src)
 
@@ -400,9 +399,25 @@
 		'html/images/eclogo.png',
 		'html/images/FleetLogo.png',
 		'html/images/sfplogo.png',
-		'html/images/falogo.png'
+		'html/images/falogo.png',
+		// [SIERRA-ADD]
+		'html/images/ofbluelogo.png',
+		'html/images/ofntlogo.png',
+		'html/images/foundlogo.png',
+		'html/images/ccalogo.png',
+		'html/images/sierralogo.png',
+		'html/images/saarelogo.png',
+		'html/images/pcrclogo.png',
+		'html/images/zpcilogo.png',
+		'html/images/heglogo.png',
+		'html/images/convlogo.png',
+		'html/images/leaguelogo.png',
+		'html/images/ouerelogo.png',
+		'html/images/terstenlogo.png',
+		// [/SIERRA-ADD]
+		'html/images/zhlogo.png'
 		)
-	addtimer(new Callback(src, .proc/after_send_resources), 1 SECOND)
+	addtimer(new Callback(src, PROC_REF(after_send_resources)), 1 SECOND)
 
 
 /client/proc/after_send_resources()
@@ -449,14 +464,18 @@
 		winset(usr, "mainwindow", "can-resize=false")
 		winset(usr, "mainwindow", "is-maximized=false")
 		winset(usr, "mainwindow", "is-maximized=true")
-		winset(usr, "mainwindow", "statusbar=false")
+		// [SIERRA-REMOVE] - SSINPUT
+		// winset(usr, "mainwindow", "statusbar=false")
+		// [/SIERRA-REMOVE]
 		winset(usr, "mainwindow", "menu=")
 //		winset(usr, "mainwindow.mainvsplit", "size=0x0")
 	else
 		winset(usr, "mainwindow", "is-maximized=false")
 		winset(usr, "mainwindow", "titlebar=true")
 		winset(usr, "mainwindow", "can-resize=true")
-		winset(usr, "mainwindow", "statusbar=true")
+		// [SIERRA-REMOVE] - SSINPUT
+		// winset(usr, "mainwindow", "statusbar=true")
+		// [/SIERRA-REMOVE]
 		winset(usr, "mainwindow", "menu=menu")
 
 	fit_viewport()

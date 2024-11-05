@@ -189,12 +189,11 @@
 	if (damtype == DAMAGE_BURN)
 		. |= DAMAGE_FLAG_LASER
 
-/obj/attackby(obj/item/O, mob/user)
-	if (isWrench(O) && HAS_FLAGS(obj_flags, OBJ_FLAG_ANCHORABLE))
-		wrench_floor_bolts(user, O)
+/obj/use_tool(obj/item/tool, mob/living/user, list/click_params)
+	if (isWrench(tool) && HAS_FLAGS(obj_flags, OBJ_FLAG_ANCHORABLE))
+		wrench_floor_bolts(user, tool)
 		return TRUE
 	return ..()
-
 
 /**
  * Whether or not the object can be anchored in its current state/position. Assumes the anchorable flag has already been checked.
@@ -243,9 +242,43 @@
 
 
 /obj/attack_hand(mob/living/user)
-	if(Adjacent(user))
+	. = ..()
+	if (.)
+		return
+	if (Adjacent(user))
 		add_fingerprint(user)
-	..()
+
+	if (ishuman(user) && !isitem(src) && user.a_intent == I_HURT && get_max_health())
+		var/mob/living/carbon/human/assailant = user
+		var/datum/unarmed_attack/attack = assailant.get_unarmed_attack(src)
+		if (!attack)
+			return ..()
+		assailant.do_attack_animation(src)
+		assailant.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
+		var/damage = attack.damage + rand(1,5)
+		var/attack_verb = "[pick(attack.attack_verb)]"
+
+		if (MUTATION_FERAL in user.mutations)
+			attack_verb = "smashes"
+			damage = 10
+
+		if (!can_damage_health(damage, attack.get_damage_type()))
+			playsound(loc, use_weapon_hitsound? attack.attack_sound : damage_hitsound, 25, TRUE, -1)
+			user.visible_message(
+				SPAN_WARNING("\The [user] hits \the [src], but doesn't even leave a dent!"),
+				SPAN_WARNING("You hit \the [src], but cause no visible damage and hurt yourself!")
+			)
+			if (!(MUTATION_FERAL in user.mutations))
+				user.apply_damage(3, DAMAGE_BRUTE, user.hand ? BP_L_HAND : BP_R_HAND)
+				return TRUE
+
+		playsound(loc, use_weapon_hitsound? attack.attack_sound : damage_hitsound, 25, TRUE, -1)
+		assailant.visible_message(
+				SPAN_WARNING("\The [assailant] [attack_verb] \the [src]!"),
+				SPAN_WARNING("You [attack_verb] \the [src]!")
+				)
+		damage_health(damage, attack.get_damage_type(), attack.damage_flags())
+		return TRUE
 
 /obj/is_fluid_pushable(amt)
 	return ..() && w_class <= round(amt/20)
@@ -263,6 +296,8 @@
 	. = ..()
 	if((obj_flags & OBJ_FLAG_ROTATABLE))
 		to_chat(user, SPAN_SUBTLE("Can be rotated with alt-click."))
+	if((obj_flags & OBJ_FLAG_ANCHORABLE))
+		to_chat(user, SPAN_SUBTLE("Can be [anchored? "unsecured from the floor" : "secured to the floor"] using a wrench."))
 
 /obj/proc/rotate(mob/user)
 	if(!CanPhysicallyInteract(user))

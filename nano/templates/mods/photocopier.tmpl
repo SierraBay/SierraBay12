@@ -1,0 +1,63 @@
+<div class="section">
+	<div class="section-title">
+		Toner
+        <div class="section-buttons">
+        {{if data.toner }}
+            {{:helper.link('Eject', 'eject', {'eject_toner' : 1})}}
+        {{/if}}
+        </div>
+	</div>
+	<div class="section-content">
+        {{if data.toner }}
+            <div style="height: 20px;">
+                {{:helper.displayBar(data.toner, 0, data.max_toner, 'photo-bar ' +  ((data.toner_capacity >= 50) ? 'good' : (data.toner_capacity >= 25) ? 'average' : 'bad'), data.toner_capacity + '%')}}
+            </div>
+        {{else}}
+            Toner doesn't installed!
+        {{/if}}
+	</div>
+</div>
+
+<div class="section">
+	<div class="section-title">
+		Options
+        {{if data.copyitem}}
+            <div class="section-buttons">
+                {{:helper.link('Eject', 'eject', {'eject_item' : 1})}}
+            </div>
+        {{/if}}
+	</div>
+	<div class="section-content">
+        <div class="labelList">
+            {{if data.copyitem}}
+                    <div class="labelList-item">
+                        <div class="labelList-item-label">
+                            Make copies:
+                        </div>
+                        <div style="display: flex;">
+                            {{:helper.link(data.copies, null, {'set_count' : 1})}}
+                            {{:helper.link('Copy', 'copy', {'copy_item' : 1})}}
+                        </div>
+                    </div>
+            {{else}}
+                No inserted item.
+            {{/if}}
+            {{if data.ai}}
+                <div class="labelList-item">
+                    <div class="labelList-item-label">
+                        Print picture from database:
+                    </div>
+                    <div style="display: flex;">
+                        {{:helper.link('Print', 'print', {'aipic' : 1})}}
+                    </div>
+                </div>
+            {{/if}}
+        </div>
+	</div>
+</div>
+
+<style>
+    .photo-bar {
+        width: 100%;
+    }
+</style>

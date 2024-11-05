@@ -19,22 +19,22 @@
 	)
 	spawn_weight = 0.67
 
-/obj/effect/overmap/visitable/sector/skrellscoutspace
+/obj/overmap/visitable/sector/skrellscoutspace
 	name = "Empty Sector"
 	desc = "Slight traces of a cloaking device are present. Unable to determine exact location."
 	icon_state = "event"
 	hide_from_reports = TRUE
 	sensor_visibility = 10
 
-/obj/effect/submap_landmark/joinable_submap/skrellscoutship
+/obj/submap_landmark/joinable_submap/skrellscoutship
 	name = "Xilvuxix"
 	archetype = /singleton/submap_archetype/skrellscoutship
 
-/obj/effect/submap_landmark/spawnpoint/skrellscoutship
+/obj/submap_landmark/spawnpoint/skrellscoutship
 	name = "Qrri-Zuumqix"
 	movable_flags = MOVABLE_FLAG_EFFECTMOVE
 
-/obj/effect/submap_landmark/spawnpoint/skrellscoutship/leader
+/obj/submap_landmark/spawnpoint/skrellscoutship/leader
 	name = "Qrri-Vuxix"
 
 /singleton/webhook/submap_loaded/skrell
@@ -148,17 +148,14 @@ var/global/const/access_skrellscoutship = "ACCESS_SKRELLSCOUT"
 
 
 /obj/item/reagent_containers/food/condiment/psilocybin
-	label_text = "Psilocybin"
 	starting_reagents = list(/datum/reagent/drugs/psilocybin = 50)
 
 
 /obj/item/reagent_containers/food/condiment/mindbreaker
-	label_text = "Mindbreaker"
 	starting_reagents = list(/datum/reagent/drugs/mindbreaker = 50)
 
 
 /obj/item/reagent_containers/food/condiment/hextro
-	label_text = "Ambrosia"
 	starting_reagents = list(/datum/reagent/drugs/hextro = 50)
 
 
@@ -219,7 +216,7 @@ var/global/const/access_skrellscoutship = "ACCESS_SKRELLSCOUT"
 	item_state = "security"
 	storage_slots = 8
 	overlay_flags = BELT_OVERLAY_ITEMS|BELT_OVERLAY_HOLSTER
-	can_hold = list(
+	contents_allowed = list(
 		/obj/item/crowbar,
 		/obj/item/grenade,
 		/obj/item/reagent_containers/spray/pepper,

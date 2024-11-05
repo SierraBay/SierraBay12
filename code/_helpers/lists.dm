@@ -237,13 +237,19 @@ Checks if a list has the same entries and values as an element of big.
 		return len
 	return null
 
-//Pick a random element from the list and remove it from the list.
-/proc/pick_n_take(list/listfrom)
-	if (length(listfrom) > 0)
-		var/picked = pick(listfrom)
-		listfrom -= picked
-		return picked
-	return null
+/// Pick a random element from the list and remove it from the list.
+/proc/pick_n_take(list/list_to_pick)
+	RETURN_TYPE(list_to_pick[_].type)
+
+	var/list_length = length(list_to_pick)
+	if(!list_length)
+		return null
+
+	var/picked_index = rand(1, list_length)
+	var/picked = list_to_pick[picked_index]
+	list_to_pick.Cut(picked_index, picked_index + 1)
+
+	return picked
 
 
 /// Remove and return the last element of the list, or null.
@@ -279,17 +285,19 @@ Checks if a list has the same entries and values as an element of big.
 			output += L[i]
 	return output
 
-//Randomize: Return the list in a random order
-/proc/shuffle(list/L)
+
+/// Returns a Fisher-Yates shuffled copy of list, or list itself if in_place.
+/proc/shuffle(list/list, in_place)
 	RETURN_TYPE(/list)
-	if(!L)
+	if (!islist(list))
 		return
+	if (!in_place)
+		list = list.Copy()
+	var/size = length(list)
+	for (var/i = 1 to size)
+		list.Swap(i, rand(i, size))
+	return list
 
-	L = L.Copy()
-
-	for(var/i=1; i<length(L); i++)
-		L.Swap(i, rand(i,length(L)))
-	return L
 
 //Return a list with no duplicate entries
 /proc/uniquelist(list/L)

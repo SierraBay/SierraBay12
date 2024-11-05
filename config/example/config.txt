@@ -135,6 +135,13 @@ VOTE_DELAY 6000
 ## time period (deciseconds) which voting session will last (default 1 minute)
 VOTE_PERIOD 600
 
+## Maximum time a round can last for (in minutes). If this time is exceeded, the round
+# will autotransfer without a vote at the next continue vote. Leave disabled for no limit.
+#MAXIMUM_ROUND_LENGTH 120
+
+## The time in minutes after no living players remain at which the round will end. Defaults off.
+#EMPTY_ROUND_TIMEOUT 5
+
 ## autovote initial delay in minutes before first automatic transfer vote call (default 120)
 # using seven semicolon (;) separated values allows for different weekday-based values
 VOTE_AUTOTRANSFER_INITIAL 120
@@ -143,6 +150,9 @@ VOTE_AUTOTRANSFER_INITIAL 120
 # using seven semicolon (;) separated values allows for different weekday-based values
 VOTE_AUTOTRANSFER_INTERVAL 30
 
+## Time in minutes leading up to the next autotransfer vote in which antagonists cannot
+# automatically be created. Default 20.
+#TRANSFER_VOTE_BLOCK_ANTAG_TIME 20
 
 ## Time left (seconds) before round start when automatic gamemote vote is called (default 160).
 VOTE_AUTOGAMEMODE_TIMELEFT 160
@@ -327,8 +337,8 @@ EVENT_CUSTOM_START_MAJOR 80;100
 ## The delay in minutes before an observer that has returned to the main menu may rejoin the game.
 #RESPAWN_MENU_DELAY 0
 
-## Strength of ambient star light. Set to 0 or less to turn off. A value of 1 is unlikely to have a noticeable effect in most lighting systems.
-STARLIGHT 0
+## Enables and disables starlight. This will make space turfs and some turfs considered to be in exterior areas to be lit based on the colour of the background parallax.
+STARLIGHT 1
 
 ## Defines which races are allowed to join as ERT, in singular form. If unset, defaults to only human. Casing matters, separate using ;
 ## Example races include: Human, Tajara, Skrell, Unathi
@@ -440,10 +450,6 @@ RADIATION_LOWER_LIMIT 0.15
 ## Add lines of 'DISALLOW_VOTABLE_MODE config_tag' to prevent a normally votable mode from being votable, eg:
 ## DISALLOW_VOTABLE_MODE changeling
 ## DISALLOW_VOTABLE_MODE malfunction
-
-## Maximum time a round can last for (in minutes). If this time is exceeded,
-## the round will autotransfer without a vote at the next continue vote. Leave disabled for no limit.
-#MAXIMUM_ROUND_LENGTH 120
 
 ## The delay in deciseconds between stat() updates.
 ## Lower can be more responsive to scene changes and updates but has a higher client/server overhead.

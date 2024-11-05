@@ -39,19 +39,18 @@ SUBSYSTEM_DEF(machines)
 	init_order = SS_INIT_MACHINES
 	priority = SS_PRIORITY_MACHINERY
 	flags = SS_KEEP_TIMING
-	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 	var/static/current_step = SSMACHINES_PIPENETS
 	var/static/cost_pipenets = 0
 	var/static/cost_machinery = 0
 	var/static/cost_powernets = 0
 	var/static/cost_power_objects = 0
 	var/static/list/pipenets = list()
-	var/static/list/machinery = list()
 	var/static/list/powernets = list()
 	var/static/list/power_objects = list()
 	var/static/list/processing = list()
 	var/static/list/queue = list()
-
+	var/static/list/machinery = list()
+	var/static/list/machinery_by_type = list()
 
 /datum/controller/subsystem/machines/Recover()
 	current_step = SSMACHINES_PIPENETS
@@ -100,6 +99,53 @@ SUBSYSTEM_DEF(machines)
 			return
 		current_step = SSMACHINES_PIPENETS
 
+/datum/controller/subsystem/machines/proc/register_machinery(obj/machinery/machine)
+	if(!machine)
+		CRASH("Null machinery was tried to be registered")
+
+	machinery += machine
+	LAZYADDASSOCLIST(machinery_by_type, machine.type, machine)
+	var/area/A = get_area(machine)
+	if(A)
+		LAZYADD(A.machinery_list, machine)
+
+/datum/controller/subsystem/machines/proc/unregister_machinery(obj/machinery/machine)
+	if(!machine)
+		CRASH("Null machinery was tried to be unregistered")
+
+	machinery -= machine
+	var/list/machinery_of_type = machinery_by_type[machine.type]
+	machinery_of_type -= machine
+	if(!length(machinery_of_type))
+		machinery_by_type -= machine.type
+
+	var/area/A = get_area(machine)
+	if(A)
+		LAZYREMOVE(A.machinery_list, machine)
+
+/datum/controller/subsystem/machines/proc/get_machinery_of_type(obj/machinery/machinery_type)
+	if(!machinery_type)
+		return list()
+
+	if(!ispath(machinery_type))
+		machinery_type = machinery_type.type
+
+	if(!ispath(machinery_type, /obj/machinery))
+		CRASH("Non-machinery type passed in `/datum/controller/subsystem/machines/proc/get_machinery_of_type`")
+
+	if(machinery_type == /obj/machinery)
+		return get_all_machinery()
+
+	var/list/machinery = list()
+	for(var/type in typesof(machinery_type))
+		var/list/machinery_of_type = machinery_by_type[type]
+		if(machinery_of_type)
+			machinery += machinery_of_type
+
+	return machinery
+
+/datum/controller/subsystem/machines/proc/get_all_machinery()
+	return machinery.Copy()
 
 /// Rebuilds power networks from scratch. Called by world initialization and elevators.
 /datum/controller/subsystem/machines/proc/makepowernets()
@@ -183,8 +229,7 @@ SUBSYSTEM_DEF(machines)
 			continue
 
 		if(machine.processing_flags & MACHINERY_PROCESS_COMPONENTS)
-			for(var/thing in machine.processing_parts)
-				var/obj/item/stock_parts/part = thing
+			for(var/obj/item/stock_parts/part as anything in machine.processing_parts)
 				if(part.machine_process(machine) == PROCESS_KILL)
 					part.stop_processing()
 

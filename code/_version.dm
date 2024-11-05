@@ -5,8 +5,6 @@ Retain even if empty - the future exists
 
 #if DM_VERSION < 515
 
-#define call_ext(ARGS...) call(ARGS)
-
 /proc/ceil(number)
 	return -round(-number)
 
@@ -54,21 +52,16 @@ Retain even if empty - the future exists
 /client/proc/RenderIcon(atom)
 	throw EXCEPTION("client::RenderIcon() not available below 515")
 
-/* lists cannot have new procs. But if they could:
-/list/proc/RemoveAll()
-	var/result = 0
-	for (var/entry in args)
-		while (Remove(entry))
-			++result
-	return result
-*/
+#define PROC_REF(X) (.proc/##X)
+#define TYPE_PROC_REF(TYPE, X) (##TYPE.proc/##X)
+#define GLOBAL_PROC_REF(X) (.proc/##X)
+#define CALL_EXT call
 
-var/global/const/ANIMATION_SLICE = 8
-var/global/const/ANIMATION_CONTINUE = 512
+#else
 
-var/global/const/JSON_PRETTY_PRINT = 1
-
-var/global/const/JSON_STRICT = 1
-var/global/const/JSON_ALLOW_COMMENTS = 2
+#define PROC_REF(X) (nameof(.proc/##X))
+#define TYPE_PROC_REF(TYPE, X) (nameof(##TYPE.proc/##X))
+#define GLOBAL_PROC_REF(X) (/proc/##X)
+#define CALL_EXT call_ext
 
 #endif

@@ -24,12 +24,15 @@ GLOBAL_VAR_INIT(arrest_security_status, "Arrest")
 
 /datum/computer_file/report/crew_record/proc/load_from_mob(mob/living/carbon/human/H)
 	if(istype(H))
-		photo_front = getFlatIcon(H, SOUTH, always_use_defdir = 1)
-		photo_side = getFlatIcon(H, WEST, always_use_defdir = 1)
+		H.ImmediateOverlayUpdate()
+//[SIERRA-EDIT]
+		photo_front = getFlatIcon(H, SOUTH)
+		photo_side = getFlatIcon(H, WEST)
 	else
 		var/mob/living/carbon/human/dummy = new()
-		photo_front = getFlatIcon(dummy, SOUTH, always_use_defdir = 1)
-		photo_side = getFlatIcon(dummy, WEST, always_use_defdir = 1)
+		photo_front = getFlatIcon(dummy, SOUTH)
+		photo_side = getFlatIcon(dummy, WEST)
+//[/SIERRA-EDIT]
 		qdel(dummy)
 
 	// Add honorifics, etc.
@@ -48,12 +51,7 @@ GLOBAL_VAR_INIT(arrest_security_status, "Arrest")
 	set_name(H ? H.real_name : "Unset")
 	set_formal_name(formal_name)
 	set_job(H ? GetAssignment(H) : "Unset")
-	var/pronouns = "Unset"
-	if(H)
-		var/datum/pronouns/P = H.choose_from_pronouns()
-		if(P)
-			pronouns = P.formal_term
-	set_sex(pronouns)
+	set_sex(H ? H.get_formal_pronouns() : "Unset")
 	set_age(H ? H.age : 30)
 	set_status(GLOB.default_physical_status)
 	set_species(H ? H.get_species() : SPECIES_HUMAN)
@@ -130,8 +128,14 @@ GLOBAL_VAR_INIT(arrest_security_status, "Arrest")
 // Used by character creation to create a record for new arrivals.
 /proc/CreateModularRecord(mob/living/carbon/human/H)
 	var/datum/computer_file/report/crew_record/CR = new/datum/computer_file/report/crew_record()
-	GLOB.all_crew_records.Add(CR)
 	CR.load_from_mob(H)
+
+	//ensure we don't get duplicated records
+	for (var/datum/computer_file/report/crew_record/record as anything in GLOB.all_crew_records)
+		if ((CR.get_name() == record.get_name()))
+			qdel(record)
+
+	GLOB.all_crew_records.Add(CR)
 	return CR
 
 // Gets crew records filtered by set of positions

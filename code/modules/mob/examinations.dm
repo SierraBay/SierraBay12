@@ -28,6 +28,20 @@
 		crash_with("Improper /examine() override: [log_info_line(A)]")
 	if (!A.LateExamine(user, distance, is_adjacent))
 		crash_with("Improper /LateExamine() override: [log_info_line(A)]")
+//[SIERRA-ADD]
+	if(user.is_species(SPECIES_IPC))
+		ecscamera(user, A)
+
+
+/proc/ecscamera(mob/living/carbon/human/user, atom/A)
+	if(istype(user, /mob/living/carbon/human))
+		var/mob/living/carbon/human/M = user
+		if(M.internal_organs_by_name[BP_EXONET])
+			var/obj/item/organ/internal/ecs/ecs = M.internal_organs_by_name[BP_EXONET]
+			if(ecs.computer.in_camera_mode)
+				ecs.computer.hard_drive.create_file(ecs.computer.camera.captureimagecomputer(A, usr))
+				to_chat(usr, SPAN_NOTICE("You took a photo of \the [A]."))
+//[/SIERRA-ADD]
 
 /mob/proc/ForensicsExamination(atom/A, distance, is_adjacent)
 	if (!(get_skill_value(SKILL_FORENSICS) >= SKILL_EXPERIENCED && distance <= (get_skill_value(SKILL_FORENSICS) - SKILL_TRAINED)))

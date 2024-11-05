@@ -19,7 +19,6 @@
 	name = "Anomaly power utilizer"
 	icon = 'icons/obj/tools/xenoarcheology_anomaly_utilizer.dmi'
 	icon_state = "anodev"
-	item_flags = ITEM_FLAG_TRY_ATTACK
 	var/activated = 0
 	var/duration = 0
 	var/interval = 0
@@ -34,16 +33,17 @@
 	. = ..()
 	START_PROCESSING(SSobj, src)
 
-/obj/item/anodevice/attackby(obj/I as obj, mob/user as mob)
+/obj/item/anodevice/use_tool(obj/item/I, mob/living/user, list/click_params)
 	if(istype(I, /obj/item/anobattery))
 		if(!inserted_battery)
 			if(!user.unEquip(I, src))
-				return
+				FEEDBACK_UNEQUIP_FAILURE(user, I)
+				return TRUE
 			to_chat(user, SPAN_NOTICE("You insert the battery."))
 			inserted_battery = I
 			UpdateSprite()
-	else
-		return ..()
+			return TRUE
+	return ..()
 
 /obj/item/anodevice/attack_self(mob/user as mob)
 	return src.interact(user)
@@ -204,12 +204,15 @@
 	STOP_PROCESSING(SSobj, src)
 	..()
 
-/obj/item/anodevice/attack(mob/living/M as mob, mob/living/user as mob)
+/obj/item/anodevice/use_before(mob/living/M as mob, mob/living/user as mob)
 	. = FALSE
 	if (!istype(M))
 		return FALSE
+	if(!inserted_battery)
+		user.visible_message(SPAN_NOTICE("[user] taps [M] with [src], but with no battery inserted, nothing happens."))
+		return FALSE
 
-	if (activated && inserted_battery.battery_effect.effect == EFFECT_TOUCH && !isnull(inserted_battery))
+	if (inserted_battery.battery_effect.effect == EFFECT_TOUCH  && ((inserted_battery.stored_charge - energy_consumed_on_touch) > 0))
 		inserted_battery.battery_effect.DoEffectTouch(M)
 		inserted_battery.use_power(energy_consumed_on_touch)
 		user.visible_message(SPAN_NOTICE("[user] taps [M] with [src], and it shudders on contact."))

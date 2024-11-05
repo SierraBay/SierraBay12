@@ -377,7 +377,7 @@
 	desc = "Drymate brand monkey cubes. Just add water!"
 	icon = 'icons/obj/food/food.dmi'
 	icon_state = "monkeycubebox"
-	can_hold = list(/obj/item/reagent_containers/food/snacks/monkeycube)
+	contents_allowed = list(/obj/item/reagent_containers/food/snacks/monkeycube)
 	startswith = list(/obj/item/reagent_containers/food/snacks/monkeycube/wrapped = 5)
 
 
@@ -448,7 +448,7 @@
 	desc = "Eight wrappers of fun! Ages 8 and up. Not suitable for children."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "spbox"
-	can_hold = list(/obj/item/toy/snappop)
+	contents_allowed = list(/obj/item/toy/snappop)
 	startswith = list(/obj/item/toy/snappop = 8)
 
 
@@ -465,7 +465,7 @@
 	icon_state = "light"
 	desc = "This box is shaped on the inside so that only light tubes and bulbs fit."
 	item_state = "syringe_kit"
-	use_to_pickup = 1 // for picking up broken bulbs, not that most people will try
+	allow_quick_gather = TRUE
 
 
 /obj/item/storage/box/lights/Initialize()
@@ -530,7 +530,7 @@
 	icon_state = "checkers"
 	max_storage_space = 24
 	foldable = null
-	can_hold = list(/obj/item/reagent_containers/food/snacks/checker)
+	contents_allowed = list(/obj/item/reagent_containers/food/snacks/checker)
 	startswith = list(/obj/item/reagent_containers/food/snacks/checker = 12,
 					/obj/item/reagent_containers/food/snacks/checker/red = 12)
 

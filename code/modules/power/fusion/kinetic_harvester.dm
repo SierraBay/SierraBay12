@@ -5,7 +5,7 @@
 	anchored = TRUE
 	use_power = POWER_USE_IDLE
 	icon = 'icons/obj/machines/kinetic_harvester.dmi'
-	icon_state = "off"
+	icon_state = "harvester"
 	var/initial_id_tag
 	var/list/stored =     list()
 	var/list/harvesting = list()
@@ -27,12 +27,13 @@
 	ui_interact(user)
 	return TRUE
 
-/obj/machinery/kinetic_harvester/attackby(obj/item/thing, mob/user)
+/obj/machinery/kinetic_harvester/use_tool(obj/item/thing, mob/living/user, list/click_params)
 	if(isMultitool(thing))
 		var/datum/extension/local_network_member/lanm = get_extension(src, /datum/extension/local_network_member)
 		if(lanm.get_new_tag(user))
 			find_core()
-		return
+		return TRUE
+
 	return ..()
 
 /obj/machinery/kinetic_harvester/proc/find_core()

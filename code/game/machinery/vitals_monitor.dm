@@ -31,8 +31,8 @@
 
 /obj/machinery/vitals_monitor/Initialize()
 	. = ..()
-	alerts = new /list(3)
-	last_alert = new /list(3)
+	alerts = new(3)
+	last_alert = new(3)
 	for (dir in list(NORTH,EAST,SOUTH,WEST))
 		connected_optable = locate(/obj/machinery/optable, get_step(src, dir))
 		if (connected_optable)
@@ -220,7 +220,7 @@
 				AddOverlays(emissive_appearance(icon, "brain_ok"))
 				AddOverlays(image(icon, icon_state = "brain_ok"))
 			if (3 to 5)
-				AddOverlays(emissive_appearance(icon, "breathing_bad"))
+				AddOverlays(emissive_appearance(icon, "brain_bad"))
 				AddOverlays(image(icon, icon_state = "brain_bad"))
 				if (read_alerts)
 					alerts[BRAIN_ALERT] = "Weak brain activity!"

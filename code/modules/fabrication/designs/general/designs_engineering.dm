@@ -22,3 +22,7 @@
 
 /datum/fabricator_recipe/engineering/camera_assembly
 	path = /obj/item/camera_assembly
+// [SIERRA-ADD]
+/datum/fabricator_recipe/engineering/transfer_valve
+	path = /obj/item/device/transfer_valve
+// [/SIERRA-ADD]

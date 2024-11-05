@@ -13,6 +13,8 @@
 
 	///Has a high chance to teleport the user to a semi random location when TRUE.
 	var/interference = FALSE
+	///Chance (0 - 100%) to send a teleported object to The Interlude.
+	var/interlude_chance = 0
 
 /obj/machinery/tele_pad/Destroy()
 	if (computer)
@@ -24,7 +26,7 @@
 /obj/machinery/tele_pad/proc/clear_computer()
 	if (!computer)
 		return
-	GLOB.destroyed_event.unregister(computer, src, /obj/machinery/tele_pad/proc/lost_computer)
+	GLOB.destroyed_event.unregister(computer, src, TYPE_PROC_REF(/obj/machinery/tele_pad, lost_computer))
 	computer = null
 
 
@@ -38,7 +40,7 @@
 		return
 	clear_computer()
 	computer = _computer
-	GLOB.destroyed_event.register(computer, src, /obj/machinery/tele_pad/proc/lost_computer)
+	GLOB.destroyed_event.register(computer, src, TYPE_PROC_REF(/obj/machinery/tele_pad, lost_computer))
 
 
 /obj/machinery/tele_pad/Bumped(atom/movable/AM)
@@ -51,9 +53,16 @@
 	if (istype(computer.target, /obj/machinery/tele_beacon))
 		var/obj/machinery/tele_beacon = computer.target
 		tele_beacon.use_power_oneoff(1 KILOWATTS)
+
+	if (prob(interlude_chance))
+		GLOB.using_map.do_interlude_teleport(AM, T, rand(30, 120))
+		computer.set_timer()
+		return
+
 	if (interference && prob(75))
 		do_unstable_teleport_safe(AM)
-	do_teleport(AM, T)
+	else
+		do_teleport(AM, T)
 	computer.set_timer()
 
 
@@ -81,7 +90,7 @@
 		I.plane = EFFECTS_ABOVE_LIGHTING_PLANE
 		I.layer = ABOVE_LIGHTING_LAYER
 		AddOverlays(I)
-		set_light(0.4, 1.2, 4, 10)
+		set_light(4, 0.4)
 
 		if (interference && prob(20))
 			visible_message(SPAN_WARNING("The teleporter sparks ominously!"))

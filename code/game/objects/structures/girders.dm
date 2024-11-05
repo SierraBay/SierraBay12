@@ -255,7 +255,7 @@
 	to_chat(user, SPAN_NOTICE("You begin adding the plating..."))
 
 	if(!do_after(user,4 SECONDS, src, DO_REPAIR_CONSTRUCT) || !S.use(2))
-		return 1 //once we've gotten this far don't call parent attackby()
+		return TRUE
 
 	if(anchored)
 		to_chat(user, SPAN_NOTICE("You added the plating!"))
@@ -289,7 +289,7 @@
 
 	to_chat(user, SPAN_NOTICE("Now reinforcing..."))
 	if (!do_after(user, 4 SECONDS, src, DO_REPAIR_CONSTRUCT) || !S.use(2))
-		return 1 //don't call parent attackby() past this point
+		return TRUE
 	to_chat(user, SPAN_NOTICE("You added reinforcement!"))
 
 	reinf_material = M
@@ -306,13 +306,6 @@
 /obj/structure/girder/proc/dismantle()
 	new /obj/item/stack/material/steel(get_turf(src))
 	qdel(src)
-
-/obj/structure/girder/attack_hand(mob/user as mob)
-	if (MUTATION_HULK in user.mutations)
-		visible_message(SPAN_DANGER("[user] smashes [src] apart!"))
-		dismantle()
-		return
-	return ..()
 
 /obj/structure/girder/cult
 	icon= 'icons/obj/cult.dmi'

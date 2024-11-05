@@ -48,7 +48,7 @@
 	desc = "A box with coals for a hookah."
 	icon_state = "largebox"
 	startswith = list(/obj/item/coal = 10)
-	can_hold = list(/obj/item/coal)
+	contents_allowed = list(/obj/item/coal)
 	w_class = ITEM_SIZE_LARGE
 	max_w_class = ITEM_SIZE_NORMAL
 	max_storage_space = DEFAULT_LARGEBOX_STORAGE
@@ -87,7 +87,7 @@
 		T.check_exited()
 
 /obj/item/tube/dropped(mob/user)
-	GLOB.moved_event.unregister(user, src, /obj/item/tube/proc/check_exited)
+	GLOB.moved_event.unregister(user, src, TYPE_PROC_REF(/obj/item/tube, check_exited))
 	. = ..()
 	check_exited()
 
@@ -174,7 +174,7 @@
 			return TRUE
 		tubes.Add(T)
 		user.unEquip(T, src)
-		GLOB.moved_event.unregister(user, T, /obj/item/tube/proc/check_exited)
+		GLOB.moved_event.unregister(user, T, TYPE_PROC_REF(/obj/item/tube, check_exited))
 		to_chat(user, SPAN_INFO("You put the tube back in the hookah."))
 		return TRUE
 
@@ -235,32 +235,38 @@
 	if(!user.put_in_active_hand(T))
 		to_chat(user, SPAN_WARNING("Your active hand must be empty!"))
 		return TRUE
-	GLOB.moved_event.register(user, T, /obj/item/tube/proc/check_exited)
+	GLOB.moved_event.register(user, T, TYPE_PROC_REF(/obj/item/tube, check_exited))
 	tubes.Remove(T)
 	to_chat(user, SPAN_INFO("You take the smoking tube."))
 
 /obj/item/tube/attack_hand(mob/user)
 	. = ..()
 	if(!check_exited())
-		GLOB.moved_event.register(user, src, /obj/item/tube/proc/check_exited)
+		GLOB.moved_event.register(user, src, TYPE_PROC_REF(/obj/item/tube, check_exited))
 
-/obj/item/tube/attack(mob/living/carbon/human/H, mob/user, def_zone)
+/obj/item/tube/use_before(mob/living/carbon/human/H, mob/user, def_zone)
+	if (!istype(H) || H != user || !H.check_has_mouth())
+		return ..()
+
 	if(!parent.lit)
 		to_chat(user, SPAN_WARNING("You try to take a drag from the tube but nothing happens. Looks like the hookah isn't lit."))
 		return FALSE
-	if(H == user && istype(H) && H.check_has_mouth())
-		var/obj/item/blocked = H.check_mouth_coverage()
-		if(blocked)
-			to_chat(H, SPAN_WARNING("\The [blocked] is in the way!"))
-			return TRUE
-		to_chat(H, SPAN_INFO("You take a drag on your [name]."))
-		if(parent.liquid_level <= 0)
-			to_chat(user, SPAN_WARNING("It looks like the water has run out."))
-			return FALSE
-		playsound(H.loc, pick('packs/infinity/sound/effects/hookah.ogg', 'packs/infinity/sound/effects/hookah1.ogg'), 50, 0, -1)
-		smoke(5, user)
+
+	var/obj/item/blocked = H.check_mouth_coverage()
+	if(blocked)
+		to_chat(H, SPAN_WARNING("\The [blocked] is in the way!"))
 		return TRUE
-	return ..()
+
+	to_chat(H, SPAN_INFO("You take a drag on your [name]."))
+
+	if(parent.liquid_level <= 0)
+		to_chat(user, SPAN_WARNING("It looks like the water has run out."))
+		return FALSE
+
+	playsound(H.loc, pick('packs/infinity/sound/effects/hookah.ogg', 'packs/infinity/sound/effects/hookah1.ogg'), 50, 0, -1)
+	smoke(5, user)
+
+	return TRUE
 
 /obj/item/hookah/proc/light(flavor_text)
 	if(lit || !smoketime)
@@ -287,7 +293,7 @@
 
 /obj/item/tube/Destroy()
 	if(istype(loc, /mob/living))
-		GLOB.moved_event.unregister(loc, src, /obj/item/tube/proc/check_exited)
+		GLOB.moved_event.unregister(loc, src, TYPE_PROC_REF(/obj/item/tube, check_exited))
 	. = ..()
 
 /obj/item/hookah/water_act(depth)
@@ -304,7 +310,7 @@
 			var/mob/living/carbon/M = loc
 			visible_message(SPAN_WARNING("The tube was placed back to the hookah by [loc] as they were walking away."))
 			M.unEquip(src, parent)
-			GLOB.moved_event.unregister(loc, src, /obj/item/tube/proc/check_exited)
+			GLOB.moved_event.unregister(loc, src, TYPE_PROC_REF(/obj/item/tube, check_exited))
 		else
 			visible_message(SPAN_WARNING("The tube magically flies back to the hookah. Woah."))
 			parent.contents.Add(src)
@@ -332,6 +338,6 @@
 			environment.remove_by_flag(XGM_GAS_OXIDIZER, parent.gas_consumption)
 			environment.adjust_gas(GAS_CO2, 0.5*parent.gas_consumption, 0)
 			environment.adjust_gas(GAS_STEAM, 0.5*parent.gas_consumption, 0)
-			var/datum/effect/effect/system/steam_spread/steam = new /datum/effect/effect/system/steam_spread()
+			var/datum/effect/steam_spread/steam = new /datum/effect/steam_spread()
 			steam.set_up(3, usr.dir, usr.loc)
 			steam.start()

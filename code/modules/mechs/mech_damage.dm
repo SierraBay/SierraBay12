@@ -69,11 +69,39 @@
 /mob/living/exosuit/bullet_act(obj/item/projectile/P, def_zone, used_weapon)
 	if (status_flags & GODMODE)
 		return PROJECTILE_FORCE_MISS
+	//[SIERRA-ADD] - Mechs-by-Shegar - Модификаторы урона в зависимости от частей
+	// U U U
+	// U M U  ↓ (Mech dir, look on SOUTH)
+	// D D D
+	// M - mech, U - unload passengers if was hit from this side, D - defense passengers(Dont unload) if was hit from this side
+
+	var/obj/item/mech_component/target = zoneToComponent(def_zone)
+
+	//Проверяем, с какого направления прилетает атака!
+	var/local_dir = get_dir(src, get_turf(P)) // <- Узнаём направление от меха до снаряда
+
+	//Попадание с фронта
+	if(local_dir == turn(dir, -45) || local_dir == turn(dir, 0) || local_dir == turn(dir, 45))
+		P.damage = ( P.damage * target.front_modificator_damage ) + target.front_additional_damage
+	//Попадание с тыла
+	else if(local_dir == turn(dir, 180) || local_dir == turn(dir, -135) || local_dir == turn(dir, 135))
+		if(passengers_ammount > 0)
+			forced_leave_passenger(null,MECH_DROP_ALL_PASSENGER,"attack")
+		P.damage = ( P.damage * target.back_modificator_damage ) + target.back_additional_damage
+	//[SIERRA-ADD]
 	switch(def_zone)
 		if(BP_HEAD , BP_CHEST, BP_MOUTH, BP_EYES)
 			if(LAZYLEN(pilots) && (!hatch_closed || !prob(body.pilot_coverage)))
+				//[SIERRA-EDIT] - Mechs-by-Shegar
+				//Если мех открыт и снаряд прилетает в спину меха, урон уйдёт в меха
+				/*
 				var/mob/living/pilot = pick(pilots)
 				return pilot.bullet_act(P, def_zone, used_weapon)
+				*/
+				if(local_dir != turn(dir,-135) || local_dir != turn(dir,135) || local_dir != turn(dir,180))
+					var/mob/living/pilot = pick(pilots)
+					return pilot.bullet_act(P, def_zone, used_weapon)
+				//[SIERRA-EDIT]
 	..()
 
 /mob/living/exosuit/get_armors_by_zone(def_zone, damage_type, damage_flags)
@@ -84,7 +112,10 @@
 			. += body_armor
 
 /mob/living/exosuit/updatehealth()
-	maxHealth = body ? body.mech_health : 0
+	//[SIERRA-EDIT] - Mechs-by-Shegar - Тарков система здоровья меха
+	//maxHealth = body ? body.mech_health : 0
+	maxHealth = (body.mech_health + material.integrity) + head.max_damage + arms.max_damage + legs.max_damage
+	//[SIERRA-EDIT]
 	health = maxHealth-(getFireLoss()+getBruteLoss())
 
 /mob/living/exosuit/adjustFireLoss(amount, obj/item/mech_component/MC = pick(list(arms, legs, body, head)))
@@ -138,15 +169,48 @@
 	damage = after_armor[1]
 	damagetype = after_armor[2]
 
+	//[SIERRA-ADD] - Mechs-by-Shegar - Перенаправление урона
+	var/obj/item/mech_component/target = zoneToComponent(def_zone)
+	if(target.total_damage >= target.max_damage)
+		if(target == head && !head.camera && !head.radio)
+			body.take_brute_damage(damage/3)
+			arms.take_brute_damage(damage/3)
+			legs.take_brute_damage(damage/3)
+		else if(target == body && !body.m_armour && !body.diagnostics )
+			head.take_brute_damage(damage/1.5)
+			legs.take_brute_damage(damage/1.5)
+			arms.take_brute_damage(damage/1.5)
+		else if(target == arms && !arms.motivator)
+			body.take_brute_damage(damage/3)
+			head.take_brute_damage(damage/3)
+			legs.take_brute_damage(damage/3)
+		else if(target == legs && !legs.motivator)
+			body.take_brute_damage(damage/2)
+			head.take_brute_damage(damage/2)
+			arms.take_brute_damage(damage/2)
+		updatehealth()
+
+	//[SIERRA-ADD]
 	if(!damage)
 		return 0
 
-	var/target = zoneToComponent(def_zone)
 	//Only 3 types of damage concern mechs and vehicles
 	switch(damagetype)
 		if (DAMAGE_BRUTE)
+		//[SIERRA-ADD] - Mechs-by-Shegar - сопротивление материала бёрн урону
+			var/brute_resist = ((material.brute_armor-7)) // Макс защита - 4 от брута, 5 от бёрна
+			if(brute_resist > 5)
+				brute_resist = 5
+			damage = damage - brute_resist
+		//[SIERRA-ADD]
 			adjustBruteLoss(damage, target)
 		if (DAMAGE_BURN)
+		//[SIERRA-ADD] - Mechs-by-Shegar - Сопротивление материала бёрн урону
+			var/burn_resist = ((material.burn_armor-7))
+			if(burn_resist > 5)
+				burn_resist = 5
+			damage = damage - burn_resist
+		//[SIERRA-ADD]
 			adjustFireLoss(damage, target)
 		if (DAMAGE_RADIATION)
 			for(var/mob/living/pilot in pilots)
@@ -186,19 +250,41 @@
 /mob/living/exosuit/emp_act(severity)
 	if (status_flags & GODMODE)
 		return
+	//[SIERRA-ADD] - Mechs-by-Shegar - Эми удар по щиту
+	for(var/obj/aura/mechshield/thing in auras)
+		if(thing.active)
+			thing.emp_attack(severity)
+			return
+	//[SIERRA-ADD]
+	//
 	var/ratio = get_blocked_ratio(null, DAMAGE_BURN, null, (3-severity) * 20) // HEAVY = 40; LIGHT = 20
-
+	//[SIERRA-ADD] - Mechs-by-Shegar
+	add_glitch_effects()
+	//[SIERRA-ADD] - Mechs-by-Shegar
 	if(ratio >= 0.5)
 		for(var/mob/living/m in pilots)
 			to_chat(m, SPAN_NOTICE("Your Faraday shielding absorbed the pulse!"))
+		//[SIERRA-ADD] - Mechs-by-Shegar
+		if(power == MECH_POWER_ON)
+			for(var/obj/item/mech_component/thing in list(arms,legs,head,body))
+				thing.emp_heat(severity, ratio, src)
+		//[SIERRA-ADD]
 		return
 	else if(ratio > 0)
 		for(var/mob/living/m in pilots)
 			to_chat(m, SPAN_NOTICE("Your Faraday shielding mitigated the pulse!"))
 
 	emp_damage += round((12 - (severity*3))*( 1 - ratio))
+	//[SIERRA-EDIT] - Mechs-by-Shegar
+	/*
 	for(var/obj/item/thing in list(arms,legs,head,body))
 		thing.emp_act(severity)
+	*/
+	for(var/obj/item/mech_component/thing in list(arms,legs,head,body))
+		thing.emp_act(severity)
+		if(power == MECH_POWER_ON)
+			thing.emp_heat(severity, ratio, src)
+	//[SIERRA-EDIT]
 	if(!hatch_closed || !prob(body.pilot_coverage))
 		for(var/thing in pilots)
 			var/mob/pilot = thing

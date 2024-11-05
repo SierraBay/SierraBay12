@@ -39,7 +39,7 @@
 	var/init_start = 0                 // What timeofday did we start initializing?
 	var/init_finish                    // What timeofday did we finish initializing?
 
-	var/runlevels = RUNLEVELS_DEFAULT	//points of the game at which the SS can fire
+	var/runlevels = RUNLEVELS_GAME	//points of the game at which the SS can fire
 
 	var/static/list/failure_strikes //How many times we suspect a subsystem type has crashed the MC, 3 strikes and you're out!
 
@@ -273,7 +273,7 @@
 /singleton/vv_set_handler/subsystem_handler
 	handled_type = /datum/controller/subsystem
 	handled_vars = list("can_fire")
-	predicates = list(/proc/is_num_predicate)
+	predicates = list(GLOBAL_PROC_REF(is_num_predicate))
 
 /singleton/vv_set_handler/subsystem_handler/handle_set_var(datum/controller/subsystem/SS, variable, var_value, client)
 	if (var_value)

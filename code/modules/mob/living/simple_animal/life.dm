@@ -33,8 +33,8 @@
 		handle_bleeding()
 
 	if(buckled && can_escape)
-		if(istype(buckled, /obj/effect/energy_net))
-			var/obj/effect/energy_net/Net = buckled
+		if(istype(buckled, /obj/energy_net))
+			var/obj/energy_net/Net = buckled
 			Net.escape_net(src)
 		else if(prob(50))
 			escape(src, buckled)
@@ -92,12 +92,6 @@
 
 /mob/living/simple_animal/gib(anim = icon_gib, do_gibs = TRUE)
 	..()
-
-/mob/living/simple_animal/proc/visible_emote(act_desc)
-	custom_emote(1, act_desc)
-
-/mob/living/simple_animal/proc/audible_emote(act_desc)
-	custom_emote(2, act_desc)
 
 /mob/living/simple_animal/proc/handle_special()
 	return

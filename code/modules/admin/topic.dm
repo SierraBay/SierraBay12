@@ -1489,8 +1489,8 @@
 		log_admin("[key_name(M)] has been hit by Bluespace Artillery fired by [src.owner]")
 		message_admins("[key_name(M)] has been hit by Bluespace Artillery fired by [src.owner]")
 
-		var/obj/effect/stop/S
-		S = new /obj/effect/stop(M.loc)
+		var/obj/stop/S
+		S = new /obj/stop(M.loc)
 		S.victim = M
 		spawn(20)
 			qdel(S)
@@ -1695,7 +1695,7 @@
 				if(!check_rights(R_FUN,0))
 					removed_paths += dirty_path
 					continue
-			else if(ispath(path, /obj/effect/bhole))
+			else if(ispath(path, /obj/bhole))
 				if(!check_rights(R_FUN,0))
 					removed_paths += dirty_path
 					continue
@@ -2115,12 +2115,12 @@
 			if (!istype(M.loc, /obj/machinery/cryopod))
 				var/obj/machinery/cryopod/C
 				if (isrobot(M))
-					for (var/obj/machinery/cryopod/robot/CP in SSmachines.machinery)
+					for (var/obj/machinery/cryopod/robot/CP as anything in SSmachines.get_machinery_of_type(/obj/machinery/cryopod/robot))
 						if (CP.occupant || !(CP.z in GLOB.using_map.station_levels))
 							continue
 						C = CP
 				else
-					for (var/obj/machinery/cryopod/CP in SSmachines.machinery)
+					for (var/obj/machinery/cryopod/CP as anything in SSmachines.get_machinery_of_type(/obj/machinery/cryopod))
 						if (CP.occupant || !(CP.z in GLOB.using_map.station_levels))
 							continue
 						C = CP

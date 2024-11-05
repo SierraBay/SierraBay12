@@ -20,9 +20,9 @@
 
 /singleton/surgery_step/robotics/success_chance(mob/living/user, mob/living/carbon/human/target, obj/item/tool)
 	. = ..()
-	if(!user.skill_check(SKILL_DEVICES, SKILL_TRAINED))
+	if(!user.skill_check(SKILL_DEVICES, SKILL_BASIC))
 		. -= 30
-	if(!user.skill_check(SKILL_DEVICES, SKILL_EXPERIENCED))
+	if(!user.skill_check(SKILL_DEVICES, SKILL_TRAINED))
 		. -= 20
 	if(user.skill_check(SKILL_DEVICES, SKILL_EXPERIENCED))
 		. += 35
@@ -215,7 +215,7 @@
 			return FALSE
 		if(isWelder(tool))
 			var/obj/item/weldingtool/welder = tool
-			if(!welder.isOn() || !welder.remove_fuel(1,user))
+			if(!welder.remove_fuel(1,user))
 				return FALSE
 		if(istype(tool, /obj/item/gun/energy/plasmacutter))
 			var/obj/item/gun/energy/plasmacutter/cutter = tool
@@ -398,16 +398,21 @@
 	for(var/obj/item/organ/I in affected.internal_organs)
 		if(I && I.damage > 0)
 			if(BP_IS_ROBOTIC(I))
+				if(((I.organ_tag == BP_POSIBRAIN) && (I.damage >= I.min_broken_damage)))
+					to_chat(user, SPAN_WARNING("Can't mend the damage to [target]'s [I.name]'s internally, you need to remove it first."))
+					return
 				user.visible_message("[user] starts mending the damage to [target]'s [I.name]'s mechanisms.", \
 				"You start mending the damage to [target]'s [I.name]'s mechanisms." )
-	playsound(target.loc, 'sound/items/bonegel.ogg', 50, TRUE)
-	..()
+		playsound(target.loc, 'sound/items/bonegel.ogg', 50, TRUE)
+		..()
 
 /singleton/surgery_step/robotics/fix_organ_robotic/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/affected = target.get_organ(target_zone)
 	for(var/obj/item/organ/I in affected.internal_organs)
 		if(I && I.damage > 0)
 			if(BP_IS_ROBOTIC(I))
+				if(((I.organ_tag == BP_POSIBRAIN) && (I.damage >= I.min_broken_damage)))
+					return
 				user.visible_message(SPAN_NOTICE("[user] repairs [target]'s [I.name] with [tool]."), \
 				SPAN_NOTICE("You repair [target]'s [I.name] with [tool].") )
 				I.damage = 0
@@ -463,7 +468,7 @@
 
 /singleton/surgery_step/robotics/detatch_organ_robotic/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/affected = target.get_organ(target_zone)
-	var/obj/removing = target.internal_organs_by_name[LAZYACCESS(target.surgeries_in_progress, target_zone)]
+	var/obj/removing = LAZYACCESS(target.surgeries_in_progress, target_zone)
 	user.visible_message(SPAN_NOTICE("[user] has decoupled \the [removing] from \the [target]'s [affected.name] with \the [tool].") , \
 	SPAN_NOTICE("You have decoupled \the [removing] from \the [target]'s [affected.name] with \the [tool]."))
 
@@ -479,7 +484,7 @@
 //	robotic organ transplant finalization surgery step
 //////////////////////////////////////////////////////////////////
 /singleton/surgery_step/robotics/attach_organ_robotic
-	name = "Reattach prosthetic organ"
+	name = "Attach prosthetic organ"
 	allowed_tools = list(
 		/obj/item/screwdriver = 50,
 		/obj/item/swapper/power_drill = 70,
@@ -504,7 +509,7 @@
 		if (organ.organ_tag in target.internal_organs_by_name)
 			continue
 		var/image/radial_button = image(icon = organ.icon, icon_state = organ.icon_state)
-		radial_button.name = "Reattach \the [organ.name]"
+		radial_button.name = "Attach \the [organ.name]"
 		LAZYSET(candidates, organ, radial_button)
 	if (length(candidates) == 1 && user.get_preference_value(/datum/client_preference/surgery_skip_radial))
 		return candidates[1]
@@ -521,9 +526,9 @@
 
 /singleton/surgery_step/robotics/attach_organ_robotic/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/affected = target.get_organ(target_zone)
-	var/obj/attaching = target.internal_organs_by_name[LAZYACCESS(target.surgeries_in_progress, target_zone)]
-	user.visible_message("[user] begins reattaching \the [attaching] from \the [target]'s [affected.name] with \the [tool].", \
-	"You start reattaching \the [attaching] from \the [target]'s [affected.name] with \the [tool].")
+	var/obj/attaching = LAZYACCESS(target.surgeries_in_progress, target_zone)
+	user.visible_message("[user] begins attaching \the [attaching] to \the [target]'s [affected.name] with \the [tool].", \
+	"You start attaching \the [attaching] to \the [target]'s [affected.name] with \the [tool].")
 	playsound(target.loc, 'sound/items/Screwdriver.ogg', 15, 1)
 	..()
 
@@ -534,8 +539,8 @@
 	attaching.status &= ~ORGAN_CUT_AWAY
 	attaching.replaced(target, affected)
 	user.visible_message(
-		SPAN_NOTICE("\The [user] has reattached \a [target]'s [attaching] with \a [tool]."),
-		SPAN_NOTICE("You have reattached \the [target]'s [attaching] with \the [tool].")
+		SPAN_NOTICE("\The [user] has attached \the [target]'s [attaching.name] with \the [tool]."),
+		SPAN_NOTICE("You have attached \the [target]'s [attaching.name] with \the [tool].")
 	)
 
 
@@ -671,16 +676,16 @@
 //					BROKEN PROSTHETIC SURGERY					//
 //////////////////////////////////////////////////////////////////
 
-/singleton/surgery_step/robone
+/singleton/surgery_step/robotics/robone
 	surgery_candidate_flags = SURGERY_NO_FLESH | SURGERY_NO_CRYSTAL | SURGERY_NEEDS_ENCASEMENT
 	var/required_stage = 0
 
-/singleton/surgery_step/robone/assess_bodypart(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/singleton/surgery_step/robotics/robone/assess_bodypart(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/affected = ..()
 	if(affected && (affected.status & ORGAN_BROKEN) && affected.stage == required_stage)
 		return affected
 
-/singleton/surgery_step/robone/get_skill_reqs(mob/living/user, mob/living/carbon/human/target, obj/item/tool)
+/singleton/surgery_step/robotics/robone/get_skill_reqs(mob/living/user, mob/living/carbon/human/target, obj/item/tool)
 	if(target.isSynthetic())
 		return SURGERY_SKILLS_ROBOTIC
 	else
@@ -689,7 +694,7 @@
 //////////////////////////////////////////////////////////////////
 //	welding surgery step
 //////////////////////////////////////////////////////////////////
-/singleton/surgery_step/robone/weld
+/singleton/surgery_step/robotics/robone/weld
 	name = "Begin structural support repair"
 	allowed_tools = list(
 		/obj/item/weldingtool = 50,
@@ -699,7 +704,7 @@
 	min_duration = 50
 	max_duration = 60
 
-/singleton/surgery_step/robone/weld/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/singleton/surgery_step/robotics/robone/weld/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/affected = target.get_organ(target_zone)
 	var/prosthetic = affected.encased ? "\the [target]'s [affected.encased]" : "structural support in \the [target]'s [affected.name]"
 	if (affected.stage == 0)
@@ -710,7 +715,7 @@
 	playsound(target.loc, 'sound/items/Welder.ogg', 15, 1)
 	..()
 
-/singleton/surgery_step/robone/weld/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/singleton/surgery_step/robotics/robone/weld/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/affected = target.get_organ(target_zone)
 	var/prosthetic = affected.encased ? "\the [target]'s [affected.encased]" : "structural support in \the [target]'s [affected.name]"
 	user.visible_message(
@@ -721,7 +726,7 @@
 		affected.stage = 1
 	affected.status &= ~ORGAN_BRITTLE
 
-/singleton/surgery_step/robone/weld/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/singleton/surgery_step/robotics/robone/weld/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/affected = target.get_organ(target_zone)
 	user.visible_message(
 		SPAN_WARNING("\The [user]'s hand slips, causing damage with \the [tool] in the open panel on [target]'s [affected.name]!"),
@@ -732,9 +737,10 @@
 //////////////////////////////////////////////////////////////////
 //	prosthetic realignment surgery step
 //////////////////////////////////////////////////////////////////
-/singleton/surgery_step/robone/realign_support
+/singleton/surgery_step/robotics/robone/realign_support
 	name = "Realign support"
 	allowed_tools = list(
+		/obj/item/swapper/power_drill = 100,
 		/obj/item/wrench = 70,
 		/obj/item/bonesetter = 50
 	)
@@ -745,7 +751,7 @@
 	surgery_candidate_flags = SURGERY_NO_FLESH | SURGERY_NEEDS_ENCASEMENT
 	required_stage = 1
 
-/singleton/surgery_step/robone/realign_support/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/singleton/surgery_step/robotics/robone/realign_support/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/affected = target.get_organ(target_zone)
 	var/prosthetic = affected.encased ? "\the [target]'s [affected.encased]" : "structural support in \the [target]'s [affected.name]"
 	if(affected.encased == "skull")
@@ -761,7 +767,7 @@
 	playsound(target.loc, 'sound/items/bonesetter.ogg', 50, TRUE)
 	..()
 
-/singleton/surgery_step/robone/realign_support/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/singleton/surgery_step/robotics/robone/realign_support/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/affected = target.get_organ(target_zone)
 	var/prosthetic = affected.encased ? "\the [target]'s [affected.encased]" : "structural support in \the [target]'s [affected.name]"
 	if (affected.status & ORGAN_BROKEN)
@@ -783,7 +789,7 @@
 		)
 		affected.fracture()
 
-/singleton/surgery_step/robone/realign_support/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/singleton/surgery_step/robotics/robone/realign_support/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/affected = target.get_organ(target_zone)
 	user.visible_message(
 		SPAN_WARNING("\The [user]'s hand slips, damaging the [affected.encased ? affected.encased : "structural support"] in \the [target]'s [affected.name] with \the [tool]!"),
@@ -795,7 +801,7 @@
 //////////////////////////////////////////////////////////////////
 //	post realignment surgery step
 //////////////////////////////////////////////////////////////////
-/singleton/surgery_step/robone/finish
+/singleton/surgery_step/robotics/robone/finish
 	name = "Finish structural support repair"
 	allowed_tools = list(
 		/obj/item/weldingtool = 50,
@@ -806,7 +812,7 @@
 	max_duration = 60
 	required_stage = 2
 
-/singleton/surgery_step/robone/finish/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/singleton/surgery_step/robotics/robone/finish/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/affected = target.get_organ(target_zone)
 	var/prosthetic = affected.encased ? "\the [target]'s damaged [affected.encased]" : "structural support in \the [target]'s [affected.name]"
 	user.visible_message(
@@ -816,7 +822,7 @@
 	playsound(target.loc, 'sound/items/Welder.ogg', 15, 1)
 	..()
 
-/singleton/surgery_step/robone/finish/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/singleton/surgery_step/robotics/robone/finish/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/affected = target.get_organ(target_zone)
 	var/prosthetic = affected.encased ? "\the [target]'s damaged [affected.encased]" : "structural support in [target]'s [affected.name]"
 	user.visible_message(
@@ -827,7 +833,7 @@
 	affected.stage = 0
 	affected.update_wounds()
 
-/singleton/surgery_step/robone/finish/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/singleton/surgery_step/robotics/robone/finish/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/affected = target.get_organ(target_zone)
 	user.visible_message(
 		SPAN_WARNING("\The [user]'s hand slips, causing damage with \the [tool] in the open panel in [target]'s [affected.name]!"),

@@ -4,7 +4,7 @@
 	var/obj/item/in_slot = get_equipped_item(slot)
 	if (istype(in_slot))
 		if (istype(in_hand))
-			in_slot.attackby(in_hand, src)
+			in_slot.use_tool(in_hand, src)
 		else
 			in_slot.attack_hand(src)
 	else
@@ -212,12 +212,12 @@
 
 /// Whether or not the mob's hands or other holding slots are empty. Returns boolean.
 /mob/proc/HandsEmpty()
-	return l_hand == null && r_hand == null
+	return isnull(l_hand) && isnull(r_hand)
 
 
 /// Whether or not the mob has any free hands/holding slots.
 /mob/proc/HasFreeHand()
-	return l_hand == null || r_hand == null
+	return isnull(l_hand) || isnull(r_hand)
 
 
 // Removes an item from inventory and places it in the target atom.

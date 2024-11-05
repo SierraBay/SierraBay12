@@ -32,14 +32,24 @@
 	read_only = TRUE
 	papertype = /obj/item/paper/bodyscan
 
+//[SIERRA-EDIT]
 /datum/computer_file/data/bodyscan/generate_file_data(mob/user)
-	return display_medical_data(metadata, user.get_skill_value(SKILL_MEDICAL), TRUE)
+	return display_medical_data(stored_data, user.get_skill_value(SKILL_MEDICAL), TRUE)
+//[/SIERRA-EDIT]
+//[SIERRA-ADD]
+/datum/computer_file/data/bodyscan/proc/generate_print_data(mob/user)
+	return digitalPencode2html(stored_data)
+
+/datum/computer_file/data/bodyscan/proc/set_filename(new_name)
+	var/list/replacechars = list(":" = ""," " = "")
+	return replace_characters(new_name, replacechars)
+//[/SIERRA-ADD]
 
 /// Mapping tool - creates a named modular computer file in a computer's storage on late initialize.
 /// Use this to do things like automatic records and blackboxes. Alternative for paper records.
 /// Values can be in the editor for each map or as a subtype.
 /// This is an obj because raw atoms can't be placed in DM or third-party mapping tools.
-/obj/effect/computer_file_creator
+/obj/computer_file_creator
 	name = "computer file creator"
 	desc = "This is a mapping tool used for installing text files onto a modular device when it's mapped on top of them. If you see it, it's bugged."
 	icon = 'icons/effects/landmarks.dmi'
@@ -53,11 +63,11 @@
 	/// The contents of this file. Uses paper formatting.
 	var/file_info = "Hello World!"
 
-/obj/effect/computer_file_creator/Initialize()
+/obj/computer_file_creator/Initialize()
 	. = ..()
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/effect/computer_file_creator/LateInitialize(mapload)
+/obj/computer_file_creator/LateInitialize(mapload)
 	var/turf/T = get_turf(src)
 	for (var/obj/O in T)
 		if (!istype(O, /obj/machinery/computer/modular) && !istype(O, /obj/item/modular_computer))

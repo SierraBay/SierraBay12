@@ -16,7 +16,7 @@
 	throw_range = 5
 	w_class = ITEM_SIZE_NORMAL
 	origin_tech = list(TECH_ENGINEERING = 4, TECH_MATERIAL = 2)
-	var/datum/effect/effect/system/spark_spread/spark_system
+	var/datum/effect/spark_spread/spark_system
 	var/stored_matter = 0
 	var/max_stored_matter = 120
 
@@ -48,7 +48,7 @@
 
 /obj/item/rcd/New()
 	..()
-	src.spark_system = new /datum/effect/effect/system/spark_spread
+	src.spark_system = new /datum/effect/spark_spread
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 	update_icon()	//Initializes the ammo counter
@@ -58,13 +58,12 @@
 	spark_system = null
 	return ..()
 
-/obj/item/rcd/attackby(obj/item/W, mob/user)
-
+/obj/item/rcd/use_tool(obj/item/W, mob/living/user, list/click_params)
 	if(istype(W, /obj/item/rcd_ammo))
 		var/obj/item/rcd_ammo/cartridge = W
 		if(stored_matter >= max_stored_matter)
-			to_chat(user, SPAN_NOTICE("The RCD is at maximum capacity."))
-			return
+			to_chat(user, SPAN_WARNING("The RCD is at maximum capacity."))
+			return TRUE
 		var/matter_exchange = min(cartridge.remaining,max_stored_matter - stored_matter)
 		stored_matter += matter_exchange
 		cartridge.remaining -= matter_exchange
@@ -74,7 +73,7 @@
 		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 		to_chat(user, SPAN_NOTICE("The RCD now holds [stored_matter]/[max_stored_matter] matter-units."))
 		update_icon()
-		return
+		return TRUE
 
 	if(isScrewdriver(W))
 		crafting = !crafting
@@ -82,10 +81,9 @@
 			to_chat(user, SPAN_NOTICE("You reassemble the RCD"))
 		else
 			to_chat(user, SPAN_NOTICE("The RCD can now be modified."))
-		src.add_fingerprint(user)
-		return
+		return TRUE
 
-	..()
+	return ..()
 
 /obj/item/rcd/attack_self(mob/user)
 	//Change the mode
@@ -110,8 +108,10 @@
 			work_mode = GET_SINGLETON(/singleton/hierarchy/rcd_mode/floor_and_walls)
 		if ("Wall Frames")
 			work_mode = GET_SINGLETON(/singleton/hierarchy/rcd_mode/wall_frame)
-		if ("Machine & Computer Frame")
+		if ("Machine Frame")
 			work_mode = GET_SINGLETON(/singleton/hierarchy/rcd_mode/machine_frame)
+		if ("Computer Frame")
+			work_mode = GET_SINGLETON(/singleton/hierarchy/rcd_mode/computer_frame)
 		if ("Deconstruction")
 			work_mode = GET_SINGLETON(/singleton/hierarchy/rcd_mode/deconstruction)
 
@@ -121,14 +121,14 @@
 	playsound(src.loc, 'sound/effects/pop.ogg', 50, 0)
 	if(prob(20)) src.spark_system.start()
 
-/obj/item/rcd/afterattack(atom/A, mob/user, proximity)
-	if(!proximity) return
+/obj/item/rcd/use_after(atom/A, mob/living/user, click_parameters)
 	if(disabled && !isrobot(user))
-		return 0
+		return FALSE
 	if(istype(get_area(A),/area/shuttle)||istype(get_area(A),/turf/space/transit))
-		return 0
+		return FALSE
 	work_id++
 	work_mode.do_work(src, A, user)
+	return TRUE
 
 /obj/item/rcd/proc/useResource(amount, mob/user)
 	if(stored_matter < amount)

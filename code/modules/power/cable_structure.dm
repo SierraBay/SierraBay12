@@ -101,7 +101,6 @@ By design, d1 is the smallest direction and d2 is the highest
 /obj/structure/cable/attack_ghost(mob/user)
 	if(user.client && user.client.inquisitive_ghost)
 		examinate(user, src)
-		// following code taken from attackby (multitool)
 		if(powernet && (powernet.avail > 0))
 			to_chat(user, SPAN_WARNING("[get_wattage()] in power network."))
 		else
@@ -215,7 +214,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	if(!prob(prb))
 		return 0
 	if (electrocute_mob(user, powernet, src, siemens_coeff))
-		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+		var/datum/effect/spark_spread/s = new /datum/effect/spark_spread
 		s.set_up(5, 1, src)
 		s.start()
 		if(usr.stunned)
@@ -362,7 +361,7 @@ By design, d1 is the smallest direction and d2 is the highest
 //////////////////////////////////////////////
 
 //if powernetless_only = 1, will only get connections without powernet
-/obj/structure/cable/proc/get_connections(powernetless_only = 0)
+/obj/structure/cable/proc/get_cable_connections(skip_assigned_powernets = FALSE)
 	. = list()	// this will be a list of all connected power objects
 	var/turf/T
 
@@ -390,17 +389,23 @@ By design, d1 is the smallest direction and d2 is the highest
 		if(C.d1 == d1 || C.d2 == d1 || C.d1 == d2 || C.d2 == d2) // if either of C's d1 and d2 match either of ours
 			. += C
 
-	if(d1 == 0)
-		for(var/obj/machinery/power/P in loc)
-			if(P.powernet == 0) continue // exclude APCs with powernet=0
-			if(!powernetless_only || !P.powernet)
-				. += P
-
-	// if the caller asked for powernetless cables only, dump the ones with powernets
-	if(powernetless_only)
+	// if asked, skip any cables with powernts
+	if(skip_assigned_powernets)
 		for(var/obj/structure/cable/C in .)
 			if(C.powernet)
 				. -= C
+
+/obj/structure/cable/proc/get_machine_connections(skip_assigned_powernets = FALSE)
+	. = list()	// this will be a list of all connected power objects
+
+	if(d1 == 0)
+		for(var/obj/machinery/power/P in loc)
+			if(P.powernet == 0) continue // exclude APCs with powernet=0
+			if(!skip_assigned_powernets  || !P.powernet)
+				. += P
+
+/obj/structure/cable/proc/get_connections(skip_assigned_powernets = FALSE)
+	return get_cable_connections(skip_assigned_powernets) + get_machine_connections(skip_assigned_powernets)
 
 //should be called after placing a cable which extends another cable, creating a "smooth" cable that no longer terminates in the centre of a turf.
 //needed as this can, unlike other placements, disconnect cables

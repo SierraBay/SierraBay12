@@ -10,8 +10,8 @@
 	icon = 'icons/turf/flooring/circuit.dmi'
 	icon_state = "bcircuit"
 	initial_flooring = /singleton/flooring/reinforced/circuit
-	light_outer_range = 2
-	light_max_bright = 1
+	light_range = 2
+	light_power = 1
 	light_color = COLOR_BLUE
 
 /turf/simulated/floor/greengrid
@@ -19,8 +19,8 @@
 	icon = 'icons/turf/flooring/circuit.dmi'
 	icon_state = "gcircuit"
 	initial_flooring = /singleton/flooring/reinforced/circuit/green
-	light_outer_range = 2
-	light_max_bright = 3
+	light_range = 2
+	light_power = 3
 	light_color = COLOR_GREEN
 
 /turf/simulated/floor/redgrid
@@ -28,8 +28,8 @@
 	icon = 'icons/turf/flooring/circuit.dmi'
 	icon_state = "rcircuit"
 	initial_flooring = /singleton/flooring/reinforced/circuit/red
-	light_outer_range = 2
-	light_max_bright = 2
+	light_range = 2
+	light_power = 2
 	light_color = COLOR_RED
 
 /turf/simulated/floor/selfestructgrid
@@ -37,8 +37,8 @@
 	icon = 'icons/turf/flooring/circuit.dmi'
 	icon_state = "rcircuit_off"
 	initial_flooring = /singleton/flooring/reinforced/circuit/selfdestruct
-	light_outer_range = 2
-	light_max_bright = 2
+	light_range = 2
+	light_power = 2
 	light_color = COLOR_BLACK
 
 /turf/simulated/floor/wood
@@ -77,6 +77,16 @@
 	icon = 'icons/turf/flooring/grass.dmi'
 	icon_state = "grass0"
 	initial_flooring = /singleton/flooring/grass
+
+/turf/simulated/floor/grass/use_tool(obj/item/I, mob/user)
+	if(I.IsWirecutter())
+		user.visible_message(SPAN_NOTICE("\The [user] trims \the [src] with \the [I]."), SPAN_NOTICE("You trim \the [src] with \the [I]."))
+		ChangeTurf(/turf/simulated/floor/grass/cut)
+		return TRUE
+	return ..()
+
+/turf/simulated/floor/grass/cut
+	initial_flooring = /singleton/flooring/grass/cut
 
 /turf/simulated/floor/carpet
 	name = "brown carpet"
@@ -123,6 +133,11 @@
 	name = "red carpet"
 	icon_state = "red"
 	initial_flooring = /singleton/flooring/carpet/red
+
+/turf/simulated/floor/carpet/black
+	name = "black carpet"
+	icon_state = "black"
+	initial_flooring = /singleton/flooring/carpet/black
 
 /turf/simulated/floor/reinforced
 	name = "reinforced floor"
@@ -400,4 +415,4 @@
 			SPAN_WARNING("\The [L] starts flickering in and out of existence as they step onto the bluespace!"),
 			SPAN_WARNING("You feel your entire body tingle, and something pulling you away!")
 		)
-		addtimer(new Callback(GLOBAL_PROC, /proc/do_unstable_teleport_safe, L, GetConnectedZlevels(L.z)), rand(5, 15))
+		addtimer(new Callback(GLOBAL_PROC, GLOBAL_PROC_REF(do_unstable_teleport_safe), L, GetConnectedZlevels(L.z)), rand(5, 15))

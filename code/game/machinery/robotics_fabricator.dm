@@ -53,11 +53,12 @@
 	if(panel_open)
 		AddOverlays("[icon_state]_panel")
 	if(is_powered())
-		AddOverlays(emissive_appearance(icon, "[icon_state]_lights"))
-		AddOverlays("[icon_state]_lights")
-	else if(busy)
-		AddOverlays(emissive_appearance(icon, "[icon_state]_lights_working"))
-		AddOverlays("[icon_state]_lights_working")
+		if (busy)
+			AddOverlays(emissive_appearance(icon, "[icon_state]_lights_working"))
+			AddOverlays("[icon_state]_lights_working")
+		else
+			AddOverlays(emissive_appearance(icon, "[icon_state]_lights"))
+			AddOverlays("[icon_state]_lights")
 
 /obj/machinery/robotics_fabricator/dismantle()
 	for(var/f in materials)
@@ -113,11 +114,18 @@
 	if(..())
 		return
 
+	//[SIERRA-EDIT] - MODPACK_RND
 	if(href_list["build"])
-		add_to_queue(text2num(href_list["build"]))
+		var/datum/design/D = locate(href_list["build"]) in files.known_designs
+		if(D)
+			add_to_queue(D)
 
 	if(href_list["remove"])
-		remove_from_queue(text2num(href_list["remove"]))
+		var/num = text2num(href_list["remove"])
+		if(num)
+			num = clamp(num, 1,LAZYLEN(queue))
+			remove_from_queue(num)
+		//[/SIERRA-EDIT] - MODPACK_RND
 
 	if(href_list["category"])
 		if(href_list["category"] in categories)
@@ -145,10 +153,10 @@
 		return SPAN_NOTICE("\The [src] is busy. Please wait for completion of previous operation.")
 	return ..()
 
-/obj/machinery/robotics_fabricator/attackby(obj/item/I, mob/user)
+/obj/machinery/robotics_fabricator/use_tool(obj/item/I, mob/living/user, list/click_params)
 	if(busy)
 		to_chat(user, SPAN_NOTICE("\The [src] is busy. Please wait for completion of previous operation."))
-		return 1
+		return TRUE
 	if(!istype(I, /obj/item/stack/material))
 		return ..()
 
@@ -163,7 +171,7 @@
 
 	if(!(material in materials))
 		to_chat(user, SPAN_WARNING("\The [src] does not accept [stack_plural]!"))
-		return
+		return TRUE
 
 	if(materials[material] + amnt <= res_max_amount)
 		if(stack && stack.can_use(1))
@@ -180,6 +188,7 @@
 			update_busy()
 	else
 		to_chat(user, "The fabricator cannot hold more [stack_plural].")// use the plural form even if the given sheet is singular
+	return TRUE
 
 
 /obj/machinery/robotics_fabricator/emag_act(remaining_charges, mob/user)
@@ -200,8 +209,7 @@
 	else
 		busy = 0
 
-/obj/machinery/robotics_fabricator/proc/add_to_queue(index)
-	var/datum/design/D = files.known_designs[index]
+/obj/machinery/robotics_fabricator/proc/add_to_queue(datum/design/D)
 	queue += D
 	update_busy()
 
@@ -214,7 +222,9 @@
 
 /obj/machinery/robotics_fabricator/proc/can_build(datum/design/D)
 	for(var/M in D.materials)
-		if(materials[M] <= D.materials[M] * mat_efficiency)
+	//[SIERRA-EDIT] - MODPACK_RND
+		if(materials[M] < D.materials[M] * mat_efficiency)
+	//[/SIERRA-EDIT] - MODPACK_RND
 			return 0
 	return 1
 
@@ -241,17 +251,19 @@
 
 /obj/machinery/robotics_fabricator/proc/get_queue_names()
 	. = list()
+//[SIERRA-ADD] - MODPACK_RND
 	for(var/i = 2 to length(queue))
 		var/datum/design/D = queue[i]
 		. += D.name
 
 /obj/machinery/robotics_fabricator/proc/get_build_options()
 	. = list()
-	for(var/i = 1 to length(files.known_designs))
-		var/datum/design/D = files.known_designs[i]
-		if(!D.build_path || !(D.build_type & MECHFAB))
+	for(var/i in files.known_designs)
+		var/datum/design/D = i
+		if(!(D.build_type & MECHFAB))
 			continue
-		. += list(list("name" = D.name, "id" = i, "category" = D.category, "resourses" = get_design_resourses(D), "time" = get_design_time(D)))
+		. += list(list("name" = D.name, "id" = "\ref[D]", "category" = D.category, "resourses" = get_design_resourses(D), "time" = get_design_time(D)))
+//[/SIERRA-ADD] - MODPACK_RND
 
 /obj/machinery/robotics_fabricator/proc/get_design_resourses(datum/design/D)
 	var/list/F = list()
@@ -271,8 +283,8 @@
 		if(!D.build_path || !(D.build_type & MECHFAB))
 			continue
 		categories |= D.category
-	if(!category || !(category in categories))
-		category = categories[1]
+//	if(!category || !(category in categories))
+//		category = categories[1]
 
 /obj/machinery/robotics_fabricator/proc/get_materials()
 	. = list()
@@ -286,6 +298,10 @@
 	switch(material)
 		if(MATERIAL_STEEL)
 			mattype = /obj/item/stack/material/steel
+		//[SIERRA-ADD] - Mechs-by-Shegar
+		if(MATERIAL_PLASTEEL)
+			mattype = /obj/item/stack/material/plasteel
+		//[SIERRA-ADD]
 		if(MATERIAL_GLASS)
 			mattype = /obj/item/stack/material/glass
 		if(MATERIAL_ALUMINIUM)
@@ -322,10 +338,8 @@
 	for(var/obj/machinery/computer/rdconsole/RDC in get_area_all_atoms(get_area(src)))
 		if(!RDC.sync)
 			continue
-		for(var/datum/tech/T in RDC.files.known_tech)
-			files.AddTech2Known(T)
-		for(var/datum/design/D in RDC.files.known_designs)
-			files.AddDesign2Known(D)
-		files.RefreshResearch()
-		sync_message = "Sync complete."
+//[SIERRA-EDIT] - MODPACK_RND
+		files = RDC.files
+	sync_message = "Sync complete."
 	update_categories()
+//[/SIERRA-EDIT] - MODPACK_RND

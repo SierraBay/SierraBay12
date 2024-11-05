@@ -91,8 +91,10 @@
 	var/list/processed_evac_options = list()
 	if(!isnull(evacuation_controller))
 		for (var/datum/evacuation_option/EO in evacuation_controller.available_evac_options())
-			if(EO.abandon_ship)
-				continue
+		//[SIERRA-REMOVE]
+			//if(EO.abandon_ship)
+			//	continue
+		//[/SIERRA-REMOVE]
 			var/list/option = list()
 			option["option_text"] = EO.option_text
 			option["option_target"] = EO.option_target
@@ -141,11 +143,14 @@
 				if(announcment_cooldown)
 					to_chat(usr, "Please allow at least one minute to pass between announcements")
 					return
-				var/input = input(usr, "Please write a message to announce to the [station_name()].", "Priority Announcement") as null|message
+				var/input = sanitize(input(usr, "Please write a message to announce to the [station_name()].", "Priority Announcement") as null|message, extra = FALSE)
 				if(!input || !can_still_topic())
 					return
 				var/affected_zlevels = GetConnectedZlevels(get_host_z())
-				crew_announcement.Announce(input, zlevels = affected_zlevels)
+				crew_announcement.Announce(input, msg_sanitized = TRUE, zlevels = affected_zlevels)
+				//[SIERRA-ADD]
+				ntnet_global.add_log("***[program.computer.get_network_tag()] make announcement.***")
+				//[/SIERRA-ADD]
 				announcment_cooldown = 1
 				spawn(600)//One minute cooldown
 					announcment_cooldown = 0
@@ -198,6 +203,9 @@
 				var/confirm = alert("Are you sure you want to [selected_evac_option.option_desc]?", name, "No", "Yes")
 				if (confirm == "Yes" && can_still_topic())
 					evacuation_controller.handle_evac_option(selected_evac_option.option_target, user)
+					//[SIERRA-ADD]
+					ntnet_global.add_log("***[program.computer.get_network_tag()] [selected_evac_option.option_desc]***")
+					//[/SIERRA-ADD]
 		if("setstatus")
 			. = TOPIC_HANDLED
 			if(is_authenticated(user) && ntn_cont)
@@ -330,7 +338,7 @@ var/global/last_message_id = 0
 
 
 /proc/is_relay_online()
-	for(var/obj/machinery/bluespacerelay/M in SSmachines.machinery)
+	for(var/obj/machinery/bluespacerelay/M as anything in SSmachines.get_machinery_of_type(/obj/machinery/bluespacerelay))
 		if(M.stat == EMPTY_BITFIELD)
 			return 1
 	return 0

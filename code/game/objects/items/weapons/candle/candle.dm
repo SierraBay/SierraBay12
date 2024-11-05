@@ -11,10 +11,8 @@
 	var/wax
 	var/last_lit
 	var/icon_set = "candle"
-	var/candle_max_bright = 0.3
-	var/candle_inner_range = 0.1
-	var/candle_outer_range = 4
-	var/candle_falloff = 2
+	var/candle_range = CANDLE_LUM
+	var/candle_power
 
 /obj/item/flame/candle/Initialize()
 	wax = rand(27 MINUTES, 33 MINUTES) / SSobj.wait // Enough for 27-33 minutes. 30 minutes on average, adjusted for subsystem tickrate.
@@ -37,22 +35,25 @@
 		if(lit)
 			AddOverlays(overlay_image(icon, "[icon_state]_lit", flags=RESET_COLOR))
 
-/obj/item/flame/candle/attackby(obj/item/W as obj, mob/user as mob)
-	..()
-	if (isFlameOrHeatSource(W))
-		light(user)
+/obj/item/flame/candle/use_tool(obj/item/tool, mob/living/user, list/click_params)
+	// Light the candle
+	if (isFlameOrHeatSource(tool))
+		if (lit)
+			USE_FEEDBACK_FAILURE("\The [src] is already lit.")
+			return TRUE
+		light()
+		user.visible_message(
+			SPAN_NOTICE("\The [user] lights \a [src] with \a [tool]."),
+			SPAN_NOTICE("You light \the [src] with \the [tool].")
+		)
+		return TRUE
 
-/obj/item/flame/candle/resolve_attackby(atom/A, mob/user)
-	. = ..()
-	if (istype(A, /obj/item/flame/candle) && IsHeatSource())
-		var/obj/item/flame/candle/other_candle = A
-		other_candle.light()
+	return ..()
 
-/obj/item/flame/candle/proc/light(mob/user)
-	if(!lit)
-		lit = 1
-		visible_message(SPAN_NOTICE("\The [user] lights the [name]."))
-		set_light(candle_max_bright, candle_inner_range, candle_outer_range, candle_falloff)
+/obj/item/flame/candle/proc/light()
+	if (!lit)
+		lit = TRUE
+		set_light(candle_range, candle_power)
 		START_PROCESSING(SSobj, src)
 
 /obj/item/flame/candle/Process()

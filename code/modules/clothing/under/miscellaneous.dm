@@ -437,6 +437,24 @@
 	item_state = "w_suit"
 	worn_state = "shortjumpskirt"
 
+// [SIERRA-ADD]
+/obj/item/clothing/under/captain_parade
+	name = "captain parade suit"
+	desc = "Captain's formal pants with white shirt and tie attached to it, also featuring NanoTrasen Captain ranks on shoulders. For special occasions."
+	icon = 'maps/sierra/icons/obj/clothing/obj_under.dmi'
+	item_icons = list(slot_w_uniform_str = 'maps/sierra/icons/mob/onmob/onmob_under.dmi')
+	icon_state = "cap_parade"
+	item_state = "cap_parade"
+
+/obj/item/clothing/under/captain_parade/female
+	name = "captain parade skirt"
+	desc = "Captain's formal skirt with white shirt and tie attached to it, also featuring NanoTrasen Captain ranks on shoulders. For special occasions."
+	icon = 'maps/sierra/icons/obj/clothing/obj_under.dmi'
+	item_icons = list(slot_w_uniform_str = 'maps/sierra/icons/mob/onmob/onmob_under.dmi')
+	icon_state = "cap_parade_f"
+	item_state = "cap_parade_f"
+// [/SIERRA-ADD]
+
 /obj/item/clothing/under/captainformal
 	name = "captain's formal uniform"
 	desc = "A captain's formal-wear, for special occasions."
@@ -547,6 +565,13 @@
 	worn_state = "gear_harness"
 	species_restricted = null
 	body_parts_covered = 0
+	// [ASCENT-ADD]
+	sprite_sheets = list(
+		SPECIES_MONARCH_QUEEN =  'icons/mob/species/nabber/msq/onmob_under_msq.dmi',
+		SPECIES_NABBER =  'icons/mob/species/nabber/onmob_under_gas.dmi',
+		SPECIES_MONARCH_WORKER =  'icons/mob/species/nabber/onmob_under_gas.dmi'
+	)
+	// [/ASCENT-ADD]
 
 /obj/item/clothing/under/pcrc
 	name = "\improper PCRC uniform"

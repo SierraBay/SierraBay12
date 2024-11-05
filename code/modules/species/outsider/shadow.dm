@@ -4,6 +4,7 @@
 	description = "A being of pure darkness, hates the light and all that comes with it."
 	icobase = 'icons/mob/human_races/species/shadow/body.dmi'
 	deform = 'icons/mob/human_races/species/shadow/body.dmi'
+	preview_icon = null
 
 	meat_type = null
 	bone_material = null
@@ -17,7 +18,7 @@
 	blood_color = COLOR_GRAY80
 	flesh_color = "#aaaaaa"
 
-	remains_type = /obj/effect/decal/cleanable/ash
+	remains_type = /obj/decal/cleanable/ash
 	death_message = "dissolves into ash..."
 
 	species_flags = SPECIES_FLAG_NO_SCAN | SPECIES_FLAG_NO_SLIP | SPECIES_FLAG_NO_POISON | SPECIES_FLAG_NO_EMBED

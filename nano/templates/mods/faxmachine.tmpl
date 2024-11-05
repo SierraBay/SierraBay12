@@ -1,0 +1,98 @@
+{{if !data.authenticated}}
+    <div class="section">
+        <div class="section-title">
+            Confirm Access
+            <div class="section-buttons">
+                {{:helper.link('Log In', null, {'auth' : 1}, data.scan ? null : 'disabled', data.scan ? 'selected' : null)}}
+            </div>
+        </div>
+        <div class="section-content">
+            <div class="item">
+                {{:helper.link(data.scan ? data.scan : 'Insert Card', null, {'scan_card' : 1}, null, data.scan ? 'selected' : null)}}
+            </div>
+        </div>
+    </div>
+{{else}}
+    <div class="section">
+        <div class="section-title">
+            Fax Information
+            <div class="section-buttons">
+                {{:helper.link('Logout', null, {'logout' : 1}, null, 'redButton')}}
+            </div>
+        </div>
+        <div class="section-content">
+            <div class="labelList">
+                <div class="labelList-item">
+                    <div class="labelList-item-label">
+                        Network:
+                    </div>
+                    <div class="labelList-item-content">
+                        {{:data.network}}
+                    </div>
+                </div>
+                <div class="labelList-item">
+                    <div class="labelList-item-label">
+                        Name:
+                    </div>
+                    <div class="labelList-item-content">
+                        {{:data.name}}
+                    </div>
+                </div>
+                <div class="labelList-item">
+                    <div class="labelList-item-label">
+                        Linked PDAs:
+                    </div>
+                    <div class="labelList-item-content">
+                        {{:data.pdas}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">
+            Paper
+            <div class="section-buttons">
+                {{:helper.link('Remove', 'eject', {'remove' : 1}, data.paper ? null : 'disabled')}}
+            </div>
+        </div>
+        <div class="section-content">
+            <div class="labelList">
+                <div class="labelList-item">
+                    <div class="labelList-item-label">
+                        Paper:
+                    </div>
+                    <div class="labelList-item-content">
+                        {{:data.paper ? data.paper : '<span class="bad">No Paper</span>'}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="section">
+        <div class="section-title">
+            Sending
+        </div>
+        <div class="section-content">
+            <div class="labelList">
+                <div class="labelList-item">
+                    <div class="labelList-item-label">
+                        Departament:
+                    </div>
+                    <div class="labelList-item-content">
+                        {{:helper.link(data.destination, null, {'dept' : 1})}}
+                    </div>
+                </div>
+                <div class="labelList-item">
+                    <div class="labelList-item-label">
+                        Actions:
+                    </div>
+                    <div class="labelList-item-content">
+                        {{:helper.link('Send', null, {'send' : 1}, data.paper ? null : 'disabled')}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{{/if}}

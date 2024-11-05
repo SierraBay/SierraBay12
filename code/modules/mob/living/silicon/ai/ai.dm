@@ -24,6 +24,15 @@ var/global/list/ai_verbs_default = list(
 	/mob/living/silicon/ai/proc/toggle_camera_light,
 	/mob/living/silicon/ai/proc/multitool_mode,
 	/mob/living/silicon/ai/proc/toggle_hologram_movement,
+	// [SIERRA-ADD] - AI - ,
+	/mob/living/silicon/ai/proc/ai_view_images,
+	/mob/living/silicon/ai/proc/ai_take_image,
+	/mob/living/silicon/ai/proc/change_floor,
+	/mob/living/silicon/ai/proc/show_crew_monitor,
+	/mob/living/silicon/ai/proc/show_crew_records,
+	/mob/living/silicon/ai/proc/show_crew_manifest,
+	/mob/living/silicon/ai/verb/interact_with_machine,
+	// [/SIERRA-ADD] ,
 	/mob/living/silicon/ai/proc/ai_power_override,
 	/mob/living/silicon/ai/proc/ai_shutdown,
 	/mob/living/silicon/ai/proc/ai_reset_radio_keys
@@ -48,14 +57,14 @@ var/global/list/ai_verbs_default = list(
 	anchored = TRUE // -- TLE
 	density = TRUE
 	status_flags = CANSTUN|CANPARALYSE|CANPUSH
-	shouldnt_see = list(/obj/effect/rune)
+	shouldnt_see = list(/obj/rune)
 	maxHealth = 200
 	var/list/network = list("Exodus")
 	var/obj/machinery/camera/camera = null
 	var/list/connected_robots = list()
 	var/aiRestorePowerRoutine = 0
 	var/viewalerts = FALSE
-	var/icon/holo_icon//Blue hologram. Face is assigned when AI is created.
+	var/icon/holo_icon //Blue hologram. Face is assigned when AI is created.
 	var/icon/holo_icon_longrange //Yellow hologram.
 	var/holo_icon_malf = FALSE // for new hologram system
 	var/obj/item/device/multitool/aiMulti = null
@@ -449,7 +458,7 @@ var/global/list/ai_verbs_default = list(
 		camera = A
 	..()
 	if(istype(A,/obj/machinery/camera))
-		if(camera_light_on)	A.set_light(0.5, 0.1, AI_CAMERA_LUMINOSITY)
+		if(camera_light_on)	A.set_light(AI_CAMERA_LUMINOSITY, 0.5)
 		else				A.set_light(0)
 
 
@@ -599,7 +608,7 @@ var/global/list/ai_verbs_default = list(
 				src.camera.set_light(0)
 				if(!camera.light_disabled)
 					src.camera = camera
-					src.camera.set_light(0.5, 0.1, AI_CAMERA_LUMINOSITY)
+					src.camera.set_light(AI_CAMERA_LUMINOSITY, 0.5)
 				else
 					src.camera = null
 			else if(isnull(camera))
@@ -609,7 +618,7 @@ var/global/list/ai_verbs_default = list(
 			var/obj/machinery/camera/camera = near_range_camera(src.eyeobj)
 			if(camera && !camera.light_disabled)
 				src.camera = camera
-				src.camera.set_light(0.5, 0.1, AI_CAMERA_LUMINOSITY)
+				src.camera.set_light(AI_CAMERA_LUMINOSITY, 0.5)
 		camera_light_on = world.timeofday + 1 * 20 // Update the light every 2 seconds.
 
 
@@ -709,13 +718,13 @@ var/global/list/ai_verbs_default = list(
 	icon = selected_sprite.icon
 	if(stat == DEAD)
 		icon_state = selected_sprite.dead_icon
-		set_light(0.7, 0.1, 1, 2, selected_sprite.dead_light)
+		set_light(1, 0.7, selected_sprite.dead_light)
 	else if(!has_power())
 		icon_state = selected_sprite.nopower_icon
-		set_light(0.4, 0.1, 1, 2, selected_sprite.nopower_light)
+		set_light(1, 0.4, selected_sprite.nopower_light)
 	else
 		icon_state = selected_sprite.alive_icon
-		set_light(0.4, 0.1, 1, 2, selected_sprite.alive_light)
+		set_light(1, 0.4, selected_sprite.alive_light)
 
 // Pass lying down or getting up to our pet human, if we're in a rig.
 /mob/living/silicon/ai/lay_down()

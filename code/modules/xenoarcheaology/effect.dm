@@ -11,6 +11,7 @@
 	var/toggled = FALSE
 	var/on_time //time artifact should stay on for when toggled
 
+
 	var/datum/artifact_trigger/trigger
 
 /datum/artifact_effect/New(atom/location)
@@ -47,7 +48,7 @@
 	. = ..()
 
 /datum/artifact_effect/proc/ToggleActivate(reveal_toggle = 1)
-	addtimer(new Callback(src, .proc/DoActivation, reveal_toggle), 0)
+	addtimer(new Callback(src, PROC_REF(DoActivation), reveal_toggle), 0)
 
 /datum/artifact_effect/proc/DoActivation(reveal_toggle = 1)
 	if (toggled && activated)
@@ -56,7 +57,7 @@
 	if(activated)
 		activated = FALSE
 	else
-		addtimer(new Callback(src, /datum/artifact_effect/proc/toggle_off), on_time)
+		addtimer(new Callback(src, TYPE_PROC_REF(/datum/artifact_effect, toggle_off)), on_time)
 		activated = TRUE
 		toggled = TRUE
 	if(reveal_toggle && holder)

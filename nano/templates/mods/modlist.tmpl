@@ -1,0 +1,48 @@
+{{for data.mods}}
+    <div class="section">
+        <div class="section-title">
+            {{:value.name}}
+        </div>
+        <div class="section-content">
+            <div class="labelList">
+                <div class="labelList-item">
+                    <div class="labelList-item-label">
+                        Описание:
+                    </div>
+                    <div class="labelList-item-content">
+                        {{:value.description}}
+                    </div>
+                </div>
+                <div class="labelList-item">
+                    <div class="labelList-item-label">
+                        Автор:
+                    </div>
+                    <div class="labelList-item-content">
+                        {{:value.author}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{{/for}}
+<!--
+<div class="section">
+	<div class="section-title">
+
+	</div>
+	<div class="section-content">
+
+	</div>
+</div>
+
+<div class="labelList">
+	<div class="labelList-item">
+		<div class="labelList-item-label">
+
+		</div>
+		<div class="labelList-item-content">
+
+		</div>
+	</div>
+</div>
+-->

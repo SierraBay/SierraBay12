@@ -64,7 +64,7 @@
 				continue
 
 			if (prob(25))
-				new /obj/effect/gibspawner/human(F)
+				new /obj/gibspawner/human(F)
 
 			F.set_flooring(GET_SINGLETON(/singleton/flooring/flesh))
 			F.desc = "Disgusting flooring made out of flesh, bone, eyes, and various other human bits and peices."
@@ -76,16 +76,16 @@
 			if (length(portals) >= active_portals_max)
 				return
 
-			var/turf/T = pick(pick_turf_in_range(get_turf(holder), effectrange, list(/proc/not_turf_contains_dense_objects, /proc/is_not_space_turf, /proc/is_not_holy_turf, /proc/is_not_open_space)))
+			var/turf/T = pick(pick_turf_in_range(get_turf(holder), effectrange, list(GLOBAL_PROC_REF(not_turf_contains_dense_objects), GLOBAL_PROC_REF(is_not_space_turf), GLOBAL_PROC_REF(is_not_holy_turf),GLOBAL_PROC_REF(is_not_open_space))))
 
 			if (!T)
 				return
 
-			var/obj/effect/gateway/artifact/small/gate = new(T)
+			var/obj/gateway/artifact/small/gate = new(T)
 			gate.parent = src
 			portals += gate
 
-			GLOB.destroyed_event.register(gate, src, /datum/artifact_effect/hellportal/proc/reduce_portal_count)
+			GLOB.destroyed_event.register(gate, src, TYPE_PROC_REF(/datum/artifact_effect/hellportal, reduce_portal_count))
 
 /datum/artifact_effect/hellportal/proc/hurt_players(send_message = TRUE)
 	for (var/mob/living/carbon/human/H in range(effectrange, get_turf(holder)))
@@ -98,7 +98,7 @@
 			else
 				to_chat(H, SPAN_DANGER("Searing pain strikes your body as you briefly find yourself in a burning hellscape!"))
 
-/datum/artifact_effect/hellportal/proc/reduce_portal_count(obj/effect/gateway/artifact/P)
+/datum/artifact_effect/hellportal/proc/reduce_portal_count(obj/gateway/artifact/P)
 	GLOB.destroyed_event.unregister(P, src)
 	portals -= P
 
@@ -109,8 +109,8 @@
 
 /datum/artifact_effect/hellportal/proc/register_mob(mob/M)
 	mobs += M
-	GLOB.destroyed_event.register(M, src, .proc/unregister_mob)
-	GLOB.death_event.register(M, src, .proc/unregister_mob)
+	GLOB.destroyed_event.register(M, src, PROC_REF(unregister_mob))
+	GLOB.death_event.register(M, src, PROC_REF(unregister_mob))
 
 
 /datum/artifact_effect/hellportal/destroyed_effect()
@@ -128,4 +128,4 @@
 				var/mob/living/carbon/human/H = M
 				H.apply_damage((damage / 4), DAMAGE_BRUTE, damage_flags = DAMAGE_FLAG_DISPERSED)
 
-	new /obj/effect/gateway/artifact/big(get_turf(holder))
+	new /obj/gateway/artifact/big(get_turf(holder))

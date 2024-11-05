@@ -17,17 +17,19 @@
 	var/list/connected_displays = list()
 	var/list/data = list()
 	var/scan_data
+	var/obj/item/stock_parts/computer/hard_drive/portable/disk = null	//Stores the data disk.
 
 /obj/machinery/body_scanconsole/Initialize()
 	. = ..()
 	FindScanner()
 	update_icon()
+	disk = new /obj/item/stock_parts/computer/hard_drive/portable/advanced(src)
 
 /obj/machinery/body_scanconsole/on_update_icon()
 	ClearOverlays()
 	if(panel_open)
 		AddOverlays("[icon_state]_panel")
-	if(!connected.inoperable())
+	if(!connected?.inoperable())
 		AddOverlays(emissive_appearance(icon, "[icon_state]_lights"))
 		AddOverlays("[icon_state]_lights")
 
@@ -45,19 +47,19 @@
 		connected = locate(/obj/machinery/bodyscanner, get_step(src, D))
 		if(connected)
 			break
-		GLOB.destroyed_event.register(connected, src, .proc/unlink_scanner)
+		GLOB.destroyed_event.register(connected, src, PROC_REF(unlink_scanner))
 	update_icon()
 
 /obj/machinery/body_scanconsole/proc/unlink_scanner(obj/machinery/bodyscanner/scanner)
-	GLOB.destroyed_event.unregister(scanner, src, .proc/unlink_scanner)
+	GLOB.destroyed_event.unregister(scanner, src, PROC_REF(unlink_scanner))
 	connected = null
 	update_icon()
 
 /obj/machinery/body_scanconsole/proc/FindDisplays()
-	for(var/obj/machinery/body_scan_display/D in SSmachines.machinery)
+	for(var/obj/machinery/body_scan_display/D as anything in SSmachines.get_machinery_of_type(/obj/machinery/body_scan_display))
 		if (AreConnectedZLevels(D.z, z))
 			connected_displays += D
-			GLOB.destroyed_event.register(D, src, .proc/remove_display)
+			GLOB.destroyed_event.register(D, src, PROC_REF(remove_display))
 	return !!length(connected_displays)
 
 /obj/machinery/body_scanconsole/attack_hand(mob/user)
@@ -76,6 +78,7 @@
 	return ..()
 
 /obj/machinery/body_scanconsole/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1)
+	data["has_disk"] = !!disk
 	if(connected && connected.occupant)
 		data["scanEnabled"] = TRUE
 		if(ishuman(connected.occupant))
@@ -123,6 +126,7 @@
 			SPAN_ITALIC("You hear a series of beeps, followed by a deep humming sound.")
 		)
 		playsound(connected.loc, 'sound/machines/medbayscanner.ogg', 50)
+		savescan() // SIERRA-ADD
 		return TOPIC_REFRESH
 
 	if (href_list["print"])
@@ -155,6 +159,14 @@
 		data["pushEnabled"] = FALSE
 		return TOPIC_REFRESH
 
+// SIERRA-ADD
+	if(href_list["eject"])
+		if(disk)
+			disk.forceMove(get_turf(src))
+			disk = null
+// /SIERRA-ADD
+		return TOPIC_REFRESH
+
 /obj/machinery/body_scanconsole/state_transition(singleton/machine_construction/default/new_state)
 	. = ..()
 	if(istype(new_state))
@@ -162,10 +174,33 @@
 
 /obj/machinery/body_scanconsole/proc/remove_display(obj/machinery/body_scan_display/display)
 	connected_displays -= display
-	GLOB.destroyed_event.unregister(display, src, .proc/remove_display)
+	GLOB.destroyed_event.unregister(display, src, PROC_REF(remove_display))
 
 /obj/machinery/body_scanconsole/Destroy()
 	. = ..()
 	for(var/D in connected_displays)
 		remove_display(D)
 	unlink_scanner(connected)
+
+// SIERRA-ADD
+/obj/machinery/body_scanconsole/use_tool(obj/item/D, mob/living/user, list/click_params)
+	. = ..()
+	if(istype(D, /obj/item/stock_parts/computer/hard_drive/portable))
+		if(disk)
+			to_chat(user, SPAN_NOTICE("A disk is already loaded into the machine."))
+			return
+
+		user.drop_item()
+		D.forceMove(src)
+		disk = D
+		to_chat(user, SPAN_NOTICE("You add \the [D] to the machine."))
+		SSnano.update_uis(src)
+
+/obj/machinery/body_scanconsole/proc/savescan()
+	if(!disk)
+		return
+	var/datum/computer_file/data/bodyscan/file = new /datum/computer_file/data/bodyscan
+	var/list/filedata = data["scan"]
+	var/name = file.set_filename("[connected.occupant]-[stationtime2text()]")
+	disk.save_data_file(name, filedata.Copy(), file_type = /datum/computer_file/data/bodyscan)
+// /SIERRA-ADD

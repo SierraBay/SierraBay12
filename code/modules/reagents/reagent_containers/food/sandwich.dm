@@ -1,12 +1,12 @@
-/obj/item/reagent_containers/food/snacks/slice/bread/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/reagent_containers/food/snacks/slice/bread/use_tool(obj/item/W, mob/living/user, list/click_params)
 	if(istype(W,/obj/item/material/shard) || istype(W,/obj/item/reagent_containers/food/snacks))
 		if (is_path_in_list(W.type, list(/obj/item/reagent_containers/food/snacks/custombowl, /obj/item/reagent_containers/food/snacks/csandwich)))
-			return
+			return ..()
 		var/obj/item/reagent_containers/food/snacks/csandwich/S = new(get_turf(src))
-		S.attackby(W,user)
+		S.use_tool(W,user)
 		qdel(src)
-		return
-	. = ..()
+		return TRUE
+	return ..()
 
 /obj/item/reagent_containers/food/snacks/csandwich
 	name = "sandwich"
@@ -17,7 +17,6 @@
 	var/list/ingredients = list()
 	var/fullname = ""
 	var/renamed = 0
-	item_flags = ITEM_FLAG_TRY_ATTACK
 
 /obj/item/reagent_containers/food/snacks/csandwich/verb/rename_sandwich()
 	set name = "Rename Sandwich"
@@ -32,8 +31,7 @@
 			SetName("\improper [sandwich_label] sandwich")
 			renamed = 1
 
-/obj/item/reagent_containers/food/snacks/csandwich/attackby(obj/item/W, mob/user)
-
+/obj/item/reagent_containers/food/snacks/csandwich/use_tool(obj/item/W, mob/living/user, list/click_params)
 	var/sandwich_limit = 4
 	for(var/obj/item/O in ingredients)
 		if(istype(O,/obj/item/reagent_containers/food/snacks/slice/bread))
@@ -41,18 +39,22 @@
 
 	if(length(src.contents) > sandwich_limit)
 		to_chat(user, SPAN_WARNING("If you put anything else on \the [src] it's going to collapse."))
-		return
-	else if(istype(W,/obj/item/material/shard))
+		return TRUE
+
+	if(istype(W,/obj/item/material/shard))
 		if(!user.unEquip(W, src))
-			return
+			FEEDBACK_UNEQUIP_FAILURE(user, W)
+			return TRUE
 		to_chat(user, SPAN_WARNING("You hide [W] in \the [src]."))
 		update()
-		return
-	else if(istype(W,/obj/item/reagent_containers/food/snacks))
+		return TRUE
+
+	if(istype(W,/obj/item/reagent_containers/food/snacks))
 		if (is_path_in_list(W.type, list(/obj/item/reagent_containers/food/snacks/custombowl, /obj/item/reagent_containers/food/snacks/csandwich)))
-			return
+			return ..()
 		if(!user.unEquip(W, src))
-			return
+			FEEDBACK_UNEQUIP_FAILURE(user, W)
+			return TRUE
 		user.visible_message(
 			SPAN_NOTICE("\The [user] layers \the [W] over \the [src]."),
 			SPAN_NOTICE("You layer \the [W] over \the [src].")
@@ -61,8 +63,9 @@
 		F.reagents.trans_to_obj(src, F.reagents.total_volume)
 		ingredients += W
 		update()
-		return
-	. = ..()
+		return TRUE
+
+	return ..()
 
 /obj/item/reagent_containers/food/snacks/csandwich/proc/update()
 	var/i = 0
@@ -102,7 +105,7 @@
 	var/obj/item/O = pick(contents)
 	to_chat(user, SPAN_ITALIC("You think you can see [O.name] in there."))
 
-/obj/item/reagent_containers/food/snacks/csandwich/attack(mob/living/M as mob, mob/user as mob)
+/obj/item/reagent_containers/food/snacks/csandwich/use_before(mob/living/M as mob, mob/user as mob)
 	. = FALSE
 	if (!istype(M))
 		return FALSE

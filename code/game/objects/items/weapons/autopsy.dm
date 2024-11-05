@@ -10,6 +10,12 @@
 	var/list/chemtraces = list()
 	var/target_name = null
 	var/timeofdeath = null
+	var/target = null
+//[SIERRA-ADD] - MODPACK_RND
+
+/obj/item/paper/autopsy_report
+	var/list/autopsy_data
+//[/SIERRA-ADD] - MODPACK_RND
 
 /datum/autopsy_data_scanner
 	var/weapon = null // this is the DEFINITE weapon type that was used
@@ -137,7 +143,18 @@
 
 	sleep(10)
 
-	var/obj/item/paper/P = new(usr.loc, "<tt>[scan_data]</tt>", "Autopsy Data ([target_name])")
+//[SIERRA-ADD] - MODPACK_RND
+	var/obj/item/paper/autopsy_report/P = new(usr.loc, "<tt>[scan_data]</tt>", "Autopsy Data ([target_name])")
+	P.name = "Autopsy Data ([target_name])"
+	P.info = "<tt>[scan_data]</tt>"
+	P.autopsy_data = list() // Copy autopsy data for science tool
+	for(var/wdata_idx in wdata)
+		var/datum/autopsy_data_scanner/D = wdata[wdata_idx]
+		for(var/wound_idx in D.organs_scanned)
+			var/datum/autopsy_data/W = D.organs_scanned[wound_idx]
+			P.autopsy_data += W.copy()
+	P.icon_state = "paper_words"
+//[/SIERRA-ADD] - MODPACK_RND
 	if(istype(usr,/mob/living/carbon))
 		// place the item in the usr's hand if possible
 		usr.put_in_hands(P)
@@ -167,21 +184,24 @@
 	return 1
 
 /obj/item/autopsy_scanner/proc/set_target(atom/new_target, user)
-	if(target_name != new_target.name)
-		target_name = new_target.name
-		wdata.Cut()
-		chemtraces.Cut()
-		timeofdeath = null
-		to_chat(user, SPAN_NOTICE("A new patient has been registered. Purging data for previous patient."))
+//[SIERRA-ADD]
+	if(target != new_target)
+		target = new_target
+//[/SIERRA-ADD]
+		if(target_name != new_target.name)
+			target_name = new_target.name
+			wdata.Cut()
+			chemtraces.Cut()
+			timeofdeath = null
+			to_chat(user, SPAN_NOTICE("A new patient has been registered. Purging data for previous patient."))
 
-/obj/item/autopsy_scanner/afterattack(obj/item/organ/external/target, mob/user, proximity_flag, click_parameters)
-	if(!proximity_flag)
-		return
+/obj/item/autopsy_scanner/use_after(obj/item/organ/external/target, mob/living/user, click_parameters)
 	if(!istype(target))
-		return
+		return FALSE
 
 	set_target(target, user)
 	add_data(target)
+	return TRUE
 
 /obj/item/autopsy_scanner/attack_self(mob/user)
 	print_data(user)

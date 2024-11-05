@@ -1,8 +1,8 @@
 /*
 	Global associative list for caching humanoid icons.
-	Index format m or f, followed by a string of 0 and 1 to represent bodyparts followed by husk fat hulk skeleton 1 or 0.
+	Index format m or f, followed by a string of 0 and 1 to represent bodyparts followed by husk fat skeleton 1 or 0.
 	TODO: Proper documentation
-	icon_key is [species.race_key][g][husk][fat][hulk][skeleton][skin_tone]
+	icon_key is [species.race_key][g][husk][fat][skeleton][skin_tone]
 */
 var/global/list/human_icon_cache = list()
 var/global/list/tail_icon_cache = list() //key is [species.race_key][skin_color]
@@ -292,7 +292,7 @@ var/global/list/damage_icon_parts = list()
 		var/icon/DI
 		var/use_colour = (BP_IS_ROBOTIC(O) ? SYNTH_BLOOD_COLOUR : O.species.get_blood_colour(src))
 		var/cache_index = "[O.damage_state]/[O.icon_name]/[use_colour]/[species.get_bodytype(src)]"
-		if(damage_icon_parts[cache_index] == null)
+		if(isnull(damage_icon_parts[cache_index]))
 			DI = new /icon(species.get_damage_overlays(src), O.damage_state)			// the damage icon for whole human
 			DI.Blend(new /icon(species.get_damage_mask(src), O.icon_name), ICON_MULTIPLY)	// mask with this organ's pixels
 			DI.Blend(use_colour, ICON_MULTIPLY)
@@ -551,8 +551,8 @@ var/global/list/damage_icon_parts = list()
 	if(shoes && !((wear_suit && wear_suit.flags_inv & HIDESHOES) || (w_uniform && w_uniform.flags_inv & HIDESHOES)))
 		overlays_standing[HO_SHOES_LAYER] = shoes.get_mob_overlay(src,slot_shoes_str)
 	else
-		if(feet_blood_DNA && species.blood_mask)
-			var/image/bloodsies = overlay_image(species.blood_mask, "shoeblood", hand_blood_color, RESET_COLOR)
+		if(feet_blood_color && species.blood_mask)
+			var/image/bloodsies = overlay_image(species.blood_mask, "shoeblood", feet_blood_color, RESET_COLOR)
 			overlays_standing[HO_SHOES_LAYER] = bloodsies
 		else
 			overlays_standing[HO_SHOES_LAYER] = null
@@ -779,9 +779,12 @@ var/global/list/damage_icon_parts = list()
 	overlays_standing[HO_SURGERY_LAYER] = null
 	var/image/total = new
 	for(var/obj/item/organ/external/E in organs)
-		if(BP_IS_ROBOTIC(E) || E.is_stump())
+	//[SIERRA-EDIT]-[IPC-MODS]
+		if(E.is_stump())
 			continue
 		var/how_open = round(E.how_open())
+		if(BP_IS_ROBOTIC(E))
+			how_open = E.hatch_state
 		if(how_open <= 0)
 			continue
 		var/surgery_icon = E.species.get_surgery_overlay_icon(src)
@@ -791,6 +794,13 @@ var/global/list/damage_icon_parts = list()
 		var/base_state = "[E.icon_name][how_open]"
 		var/overlay_state = "[base_state]-flesh"
 		var/list/overlays_to_add
+		if(BP_IS_ROBOTIC(E))
+			surgery_icon = 'mods/ipc_mods/icons/ipc_icons.dmi'
+			overlay_state = "[base_state]-robo"
+			LAZYADD(overlays_to_add, image(icon = surgery_icon, icon_state = overlay_state, layer = -HO_SURGERY_LAYER))
+			total.AddOverlays(overlays_to_add)
+			continue
+	//[/SIERRA-EDIT]-[IPC-MODS]
 		if(overlay_state in surgery_states)
 			var/image/flesh = image(icon = surgery_icon, icon_state = overlay_state, layer = -HO_SURGERY_LAYER)
 			flesh.color = E.species.get_flesh_colour(src)

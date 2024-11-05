@@ -73,6 +73,9 @@
 			if(!do_after(user, 2 SECONDS, owner, DO_PUBLIC_UNIQUE)) return
 			if(owner.hatch_closed || !chosen_obj) return
 			if(user.put_in_active_hand(chosen_obj))
+				//[SIERRA-ADD]
+				owner.add_heat(heat_generation)
+				//[SIERRA-ADD]
 				owner.visible_message(SPAN_NOTICE("\The [user] carefully grabs \the [chosen_obj] from \the [src]."))
 				playsound(src, 'sound/mecha/hydraulic.ogg', 50, 1)
 				carrying -= chosen_obj
@@ -100,7 +103,7 @@
 							playsound(FD, 'sound/effects/meteorimpact.ogg', 100, 1)
 							playsound(FD, 'sound/machines/airlock_creaking.ogg', 100, 1)
 							FD.blocked = FALSE
-							addtimer(new Callback(FD, /obj/machinery/door/firedoor/.proc/open, TRUE), 0)
+							addtimer(new Callback(FD, TYPE_PROC_REF(/obj/machinery/door/firedoor, open), TRUE), 0)
 							FD.set_broken(TRUE)
 							FD.visible_message(SPAN_WARNING("\The [owner] tears \the [FD] open!"))
 					else
@@ -109,10 +112,13 @@
 							playsound(FD, 'sound/machines/airlock_creaking.ogg', 100, 1)
 							if(FD.density)
 								FD.visible_message(SPAN_DANGER("\The [owner] forces \the [FD] open!"))
-								addtimer(new Callback(FD, /obj/machinery/door/firedoor/.proc/open, TRUE), 0)
+								addtimer(new Callback(FD, TYPE_PROC_REF(/obj/machinery/door/firedoor, open), TRUE), 0)
 							else
 								FD.visible_message(SPAN_WARNING("\The [owner] forces \the [FD] closed!"))
-								addtimer(new Callback(FD, /obj/machinery/door/firedoor/.proc/close, TRUE), 0)
+								addtimer(new Callback(FD, TYPE_PROC_REF(/obj/machinery/door/firedoor, close), TRUE), 0)
+					//[SIERRA-ADD]
+					owner.add_heat(heat_generation)
+					//[SIERRA-ADD]
 					return
 				else if(istype(O, /obj/machinery/door/airlock))
 					var/obj/machinery/door/airlock/AD = O
@@ -125,7 +131,7 @@
 								playsound(AD, 'sound/effects/meteorimpact.ogg', 100, 1)
 								playsound(AD, 'sound/machines/airlock_creaking.ogg', 100, 1)
 								AD.visible_message(SPAN_DANGER("\The [owner] tears \the [AD] open!"))
-								addtimer(new Callback(AD, /obj/machinery/door/airlock/.proc/open, TRUE), 0)
+								addtimer(new Callback(AD, TYPE_PROC_REF(/obj/machinery/door/airlock, open), TRUE), 0)
 								AD.set_broken(TRUE)
 								return
 						else
@@ -133,12 +139,12 @@
 							if((MACHINE_IS_BROKEN(AD) || !AD.is_powered() || do_after(owner, 5 SECONDS, AD, DO_DEFAULT | DO_USER_UNIQUE_ACT | DO_PUBLIC_PROGRESS)) && !(AD.operating || AD.welded || AD.locked))
 								playsound(AD, 'sound/machines/airlock_creaking.ogg', 100, 1)
 								if(AD.density)
-									addtimer(new Callback(AD, /obj/machinery/door/airlock/.proc/open, TRUE), 0)
+									addtimer(new Callback(AD, TYPE_PROC_REF(/obj/machinery/door/airlock, open), TRUE), 0)
 									if(!MACHINE_IS_BROKEN(AD) && AD.is_powered())
 										AD.set_broken(TRUE)
 									AD.visible_message(SPAN_DANGER("\The [owner] forces \the [AD] open!"))
 								else
-									addtimer(new Callback(AD, /obj/machinery/door/airlock/.proc/close, TRUE), 0)
+									addtimer(new Callback(AD, TYPE_PROC_REF(/obj/machinery/door/airlock, close), TRUE), 0)
 									if(!MACHINE_IS_BROKEN(AD) && AD.is_powered())
 										AD.set_broken(TRUE)
 									AD.visible_message(SPAN_DANGER("\The [owner] forces \the [AD] closed!"))
@@ -178,6 +184,9 @@
 				M.throw_at(get_edge_target_turf(owner ,owner.dir),5, 2)
 				to_chat(user, SPAN_WARNING("You slam [target] with [src.name]."))
 				owner.visible_message(SPAN_DANGER("[owner] slams [target] with the hydraulic clamp."))
+				//[SIERRA-ADD]
+				owner.add_heat(heat_generation)
+				//[SIERRA-ADD]
 			else
 				step_away(M, owner)
 				to_chat(user, "You push [target] out of the way.")
@@ -274,9 +283,8 @@
 
 
 	var/on = 0
-	var/l_max_bright = 0.9
-	var/l_inner_range = 1
-	var/l_outer_range = 6
+	var/l_power = 2
+	var/l_range = 6
 	origin_tech = list(TECH_MATERIAL = 1, TECH_ENGINEERING = 1)
 
 /obj/item/mech_equipment/light/installed(mob/living/exosuit/_owner)
@@ -304,7 +312,7 @@
 /obj/item/mech_equipment/light/on_update_icon()
 	if(on)
 		icon_state = "[initial(icon_state)]-on"
-		set_light(l_max_bright, l_inner_range, l_outer_range)
+		set_light(l_range, l_power, angle = LIGHT_WIDE)
 	else
 		icon_state = "[initial(icon_state)]"
 		set_light(0, 0)
@@ -333,15 +341,16 @@
  	///For when targetting a single object, will create a warp beam
 	var/datum/beam = null
 	var/max_dist = 6
-	var/obj/effect/effect/warp/small/warpeffect = null
+	var/obj/effect/warp/small/warpeffect = null
 
-/obj/effect/ebeam/warp
+/obj/ebeam/warp
 	plane = WARP_EFFECT_PLANE
+	appearance_flags = DEFAULT_APPEARANCE_FLAGS | TILE_BOUND | NO_CLIENT_COLOR
 	z_flags = ZMM_IGNORE
 
-/obj/effect/effect/warp/small
+/obj/effect/warp/small
 	plane = WARP_EFFECT_PLANE
-	appearance_flags = PIXEL_SCALE
+	appearance_flags = PIXEL_SCALE | NO_CLIENT_COLOR
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "singularity_s3"
 	pixel_x = -32
@@ -350,7 +359,7 @@
 
 /obj/item/mech_equipment/catapult/proc/beamdestroyed()
 	if(beam)
-		GLOB.destroyed_event.unregister(beam, src, .proc/beamdestroyed)
+		GLOB.destroyed_event.unregister(beam, src, PROC_REF(beamdestroyed))
 		beam = null
 	if(locked)
 		if(owner)
@@ -402,8 +411,8 @@
 						to_chat(user, SPAN_NOTICE("Unable to lock on [target]."))
 						return
 					locked = AM
-					beam = owner.Beam(BeamTarget = target, icon_state = "r_beam", maxdistance = max_dist, beam_type = /obj/effect/ebeam/warp)
-					GLOB.destroyed_event.register(beam, src, .proc/beamdestroyed)
+					beam = owner.Beam(BeamTarget = target, icon_state = "r_beam", maxdistance = max_dist, beam_type = /obj/ebeam/warp)
+					GLOB.destroyed_event.register(beam, src, PROC_REF(beamdestroyed))
 
 					animate(target,pixel_y= initial(target.pixel_y) - 2,time=1 SECOND, easing = SINE_EASING, flags = ANIMATION_PARALLEL, loop = -1)
 					animate(pixel_y= initial(target.pixel_y) + 2,time=1 SECOND)
@@ -416,6 +425,9 @@
 					if(locked in view(owner))
 						log_and_message_admins("used [src] to throw [locked] at [target].", user, owner.loc)
 						endanimation() //End animation without waiting for delete, so throw won't be affected
+						//[SIERRA-ADD]
+						owner.add_heat(heat_generation)
+						//[SIERRA-ADD]
 						locked.throw_at(target, 14, 1.5, owner)
 						locked = null
 						deactivate()
@@ -440,9 +452,11 @@
 					alpha = 0,
 					time = 1.25 SECONDS
 				)
-				addtimer(new Callback(warpeffect, /atom/movable/proc/forceMove, null), 1.25 SECONDS)
+				addtimer(new Callback(warpeffect, TYPE_PROC_REF(/atom/movable, forceMove), null), 1.25 SECONDS)
 				playsound(warpeffect, 'sound/effects/heavy_cannon_blast.ogg', 50, 1)
-
+				//[SIERRA-ADD] - Mechs-by-Shegar
+				owner.add_heat(heat_generation)
+				//[SIERRA-ADD]
 				var/list/atoms = list()
 				if(isturf(target))
 					atoms = range(target,3)
@@ -550,11 +564,11 @@
 	drill_head = DH
 
 
-/obj/item/mech_equipment/drill/attackby(obj/item/I, mob/user)
+/obj/item/mech_equipment/drill/use_tool(obj/item/I, mob/living/user, list/click_params)
 	if (istype(I, /obj/item/material/drill_head))
 		attach_head(I, user)
 		return TRUE
-	. = ..()
+	return ..()
 
 /obj/item/mech_equipment/drill/proc/scoop_ore(at_turf)
 	if (!owner)
@@ -697,6 +711,7 @@
 /obj/item/gun/energy/plasmacutter/mounted/mech
 	use_external_power = TRUE
 	has_safety = FALSE
+	max_shots = 10
 
 
 /obj/item/mech_equipment/mounted_system/taser/plasma
@@ -736,14 +751,14 @@
 	var/activated_passive_power = 2 KILOWATTS
 	var/movement_power = 75
 	origin_tech = list(TECH_ENGINEERING = 3, TECH_MAGNET = 3, TECH_PHORON = 3)
-	var/datum/effect/effect/system/trail/ion/ion_trail
+	var/datum/effect/trail/ion/ion_trail
 	require_adjacent = FALSE
 	var/stabilizers = FALSE
 	var/slide_distance = 6
 
 /obj/item/mech_equipment/ionjets/Initialize()
 	. = ..()
-	ion_trail = new /datum/effect/effect/system/trail/ion()
+	ion_trail = new /datum/effect/trail/ion()
 	ion_trail.set_up(src)
 
 /obj/item/mech_equipment/ionjets/proc/allowSpaceMove()
@@ -781,6 +796,9 @@
 	passive_power_use = activated_passive_power
 	ion_trail.start()
 	active = TRUE
+	//[SIERRA-ADD]
+	owner.add_heat(heat_generation/2)
+	//[SIERRA-ADD]
 	update_icon()
 
 /obj/item/mech_equipment/ionjets/deactivate()
@@ -790,10 +808,9 @@
 	update_icon()
 
 /obj/item/mech_equipment/ionjets/on_update_icon()
-	. = ..()
 	if (active)
 		icon_state = "mech_jet_on"
-		set_light(1, 1, 1, l_color = COLOR_LIGHT_CYAN)
+		set_light(1, 1, l_color = COLOR_LIGHT_CYAN)
 	else
 		icon_state = "mech_jet_off"
 		set_light(0)
@@ -824,9 +841,12 @@
 				SPAN_WARNING("\The [src] charges up in preparation for a slide!"),
 				blind_message = SPAN_WARNING("You hear a loud hum and an intense crackling.")
 			)
-			new /obj/effect/temporary(get_step(owner.loc, reverse_direction(owner.dir)), 2 SECONDS, 'icons/effects/effects.dmi',"cyan_sparkles")
+			new /obj/temporary(get_step(owner.loc, reverse_direction(owner.dir)), 2 SECONDS, 'icons/effects/effects.dmi',"cyan_sparkles")
 			owner.setClickCooldown(2 SECONDS)
 			if (do_after(owner, 2 SECONDS, target, (DO_DEFAULT | DO_PUBLIC_PROGRESS | DO_USER_UNIQUE_ACT) & ~DO_USER_CAN_TURN) && slideCheck(TT))
+				//[SIERRA-ADD]
+				owner.add_heat(heat_generation)
+				//[SIERRA-ADD]
 				owner.visible_message(SPAN_DANGER("Burning hard, \the [owner] thrusts forward!"))
 				owner.throw_at(get_ranged_target_turf(owner, owner.dir, slide_distance), slide_distance, 1, owner, FALSE)
 			else
@@ -886,9 +906,7 @@
 	passive_power_use = 0
 	. = ..()
 
-/obj/item/mech_equipment/camera/attackby(obj/item/W, mob/user)
-	. = ..()
-
+/obj/item/mech_equipment/camera/use_tool(obj/item/W, mob/living/user, list/click_params)
 	if(isScrewdriver(W))
 		var/list/all_networks = list()
 		for(var/network in GLOB.using_map.station_networks)
@@ -900,11 +918,15 @@
 		var/network = input("Which network would you like to configure it for?") as null|anything in (all_networks)
 		if(!network)
 			to_chat(user, SPAN_WARNING("You cannot connect to any camera network!."))
+			return TRUE
 		var/delay = 2 SECONDS * user.skill_delay_mult(SKILL_DEVICES)
 		if(do_after(user, delay, src, DO_DEFAULT | DO_BOTH_UNIQUE_ACT) && network)
 			camera.network = list(network)
 			camera.update_coverage(TRUE)
 			to_chat(user, SPAN_NOTICE("You configure the camera for \the [network] network."))
+		return TRUE
+
+	return ..()
 
 /obj/item/mech_equipment/camera/attack_self(mob/user)
 	. = ..()

@@ -6,6 +6,7 @@
 	var/obj/item/tank/tank_one
 	var/obj/item/tank/tank_two
 	var/obj/item/device/assembly/attached_device
+	matter = list(MATERIAL_STEEL = 2300)
 	var/mob/attacher = null
 	var/valve_open = FALSE
 	var/armed = FALSE

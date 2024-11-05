@@ -55,12 +55,12 @@
 	if(filtering > 0)
 		if(beaker)
 			if(beaker.reagents.total_volume < beaker.reagents.maximum_volume)
-				var/pumped = 0
+				var/filter_speed = 0
 				for(var/datum/reagent/x in occupant.reagents.reagent_list)
-					occupant.reagents.trans_to_obj(beaker, pump_speed)
-					pumped++
+					filter_speed += x.filter_mod * x.volume / occupant.reagents.total_volume
+				occupant.reagents.trans_to_obj(beaker, pump_speed * filter_speed)
 				if(ishuman(occupant))
-					occupant.vessel.trans_to_obj(beaker, pumped + 1)
+					occupant.vessel.trans_to_obj(beaker, pump_speed * filter_speed)
 		else
 			toggle_filter()
 	if(pump > 0)
@@ -173,17 +173,17 @@
 		updateUsrDialog()
 		go_out()
 
-/obj/machinery/sleeper/attackby(obj/item/I, mob/user)
+/obj/machinery/sleeper/use_tool(obj/item/I, mob/living/user, list/click_params)
 	if(istype(I, /obj/item/reagent_containers/glass))
-		add_fingerprint(user)
-		if(!beaker)
-			if(!user.unEquip(I, src))
-				return
-			beaker = I
-			user.visible_message(SPAN_NOTICE("\The [user] adds \a [I] to \the [src]."), SPAN_NOTICE("You add \a [I] to \the [src]."))
-		else
-			to_chat(user, SPAN_WARNING("\The [src] has a beaker already."))
+		if(beaker)
+			to_chat(user, SPAN_WARNING("There is already a beaker loaded in \the [src]."))
+			return TRUE
+		if(!user.unEquip(I, src))
+			return TRUE
+		beaker = I
+		user.visible_message(SPAN_NOTICE("\The [user] adds \a [I] to \the [src]."), SPAN_NOTICE("You add \a [I] to \the [src]."))
 		return TRUE
+
 	return ..()
 
 /obj/machinery/sleeper/user_can_move_target_inside(mob/target, mob/user)
@@ -239,6 +239,8 @@
 	if (occupant)
 		to_chat(user, SPAN_WARNING("\The [src] is already occupied."))
 		return FALSE
+	if (!user_can_move_target_inside(target, user))
+		return
 	if (target == user)
 		visible_message("\The [user] starts climbing into \the [src].")
 	else

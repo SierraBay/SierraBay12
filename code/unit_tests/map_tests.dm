@@ -347,14 +347,14 @@
 	var/space_landmarks = 0
 
 	for(var/lm in landmarks_list)
-		var/obj/effect/landmark/landmark = lm
-		if(istype(landmark, /obj/effect/landmark/test/safe_turf))
+		var/obj/landmark/landmark = lm
+		if(istype(landmark, /obj/landmark/test/safe_turf))
 			log_debug("Safe landmark found: [log_info_line(landmark)]")
 			safe_landmarks++
-		else if(istype(landmark, /obj/effect/landmark/test/space_turf))
+		else if(istype(landmark, /obj/landmark/test/space_turf))
 			log_debug("Space landmark found: [log_info_line(landmark)]")
 			space_landmarks++
-		else if(istype(landmark, /obj/effect/landmark/test))
+		else if(istype(landmark, /obj/landmark/test))
 			log_debug("Test landmark with unknown tag found: [log_info_line(landmark)]")
 
 	if(safe_landmarks != 1 || space_landmarks != 1)
@@ -376,12 +376,12 @@
 /datum/unit_test/cryopod_comp_check/start_test()
 	var/pass = TRUE
 
-	for(var/obj/machinery/cryopod/C in SSmachines.machinery)
+	for(var/obj/machinery/cryopod/C as anything in SSmachines.get_machinery_of_type(/obj/machinery/cryopod))
 		if(!C.control_computer)
 			log_bad("[get_area(C)] lacks a cryopod control computer while holding a cryopod.")
 			pass = FALSE
 
-	for(var/obj/machinery/computer/cryopod/C in SSmachines.machinery)
+	for(var/obj/machinery/computer/cryopod/C as anything in SSmachines.get_machinery_of_type(/obj/machinery/computer/cryopod))
 		if(!(locate(/obj/machinery/cryopod) in get_area(C)))
 			log_bad("[get_area(C)] lacks a cryopod while holding a control computer.")
 			pass = FALSE
@@ -532,9 +532,9 @@
 
 /datum/unit_test/shutoff_valves_shall_connect_to_two_different_pipe_networks/start_test()
 	var/failures = 0
-	for(var/obj/machinery/atmospherics/valve/shutoff/SV in SSmachines.machinery)
+	for(var/obj/machinery/atmospherics/valve/shutoff/SV as anything in SSmachines.get_machinery_of_type(/obj/machinery/atmospherics/valve/shutoff))
 		SV.close()
-	for(var/obj/machinery/atmospherics/valve/shutoff/SV in SSmachines.machinery)
+	for(var/obj/machinery/atmospherics/valve/shutoff/SV as anything in SSmachines.get_machinery_of_type(/obj/machinery/atmospherics/valve/shutoff))
 		if(SV.network_node1 == SV.network_node2)
 			log_bad("Following shutoff valve does not connect to two different pipe networks: [log_info_line(SV)]")
 			failures++
@@ -570,7 +570,7 @@
 
 /datum/unit_test/station_power_terminals_shall_be_wired/start_test()
 	var/failures = 0
-	for(var/obj/machinery/power/terminal/term in SSmachines.machinery)
+	for(var/obj/machinery/power/terminal/term as anything in SSmachines.get_machinery_of_type(/obj/machinery/power/terminal))
 		var/turf/T = get_turf(term)
 		if(!T)
 			failures++

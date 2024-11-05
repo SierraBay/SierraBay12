@@ -173,7 +173,7 @@
 	original = target
 	def_zone = target_zone
 
-	addtimer(new Callback(src, .proc/finalize_launch, curloc, targloc, x_offset, y_offset, angle_offset),0)
+	addtimer(new Callback(src, PROC_REF(finalize_launch), curloc, targloc, x_offset, y_offset, angle_offset),0)
 	return 0
 
 /obj/item/projectile/proc/launch_from_mob(atom/target, mob/user, target_zone, x_offset = 0, y_offset = 0, angle_offset = 0)
@@ -221,12 +221,15 @@
 /obj/item/projectile/proc/attack_mob(mob/living/target_mob, distance, special_miss_modifier=0)
 	if(!istype(target_mob))
 		return
+// [SIERRA-EDIT]
+	if(firer && firer.skill_check(SKILL_WEAPONS,SKILL_BASIC))
+		special_miss_modifier -= 5 * firer.get_skill_value(SKILL_WEAPONS)
 
 	//roll to-hit
 	var/miss_modifier = max(distance_falloff*(distance)*(distance) - hitchance_mod + special_miss_modifier, -30)
 	//makes moving targets harder to hit, and stationary easier to hit
-	var/movment_mod = min(5, (world.time - target_mob.l_move_time) - 5)
-
+	var/movement_mod = min(5, (world.time - target_mob.l_move_time) - 20)
+// [SIERRA-EDIT-END]
 	if (damage_falloff)
 		var/damage_mod = 1
 		for (var/list/entry as anything in damage_falloff_list)
@@ -237,12 +240,12 @@
 		armor_penetration = armor_penetration * damage_mod
 		agony = agony * damage_mod
 	//running in a straight line isnt as helpful tho
-	if(movment_mod < 0)
+	if(movement_mod < 0)
 		if(target_mob.last_move == get_dir(firer, target_mob))
-			movment_mod *= 0.25
+			movement_mod *= 0.25
 		else if(target_mob.last_move == get_dir(target_mob,firer))
-			movment_mod *= 0.5
-	miss_modifier -= movment_mod
+			movement_mod *= 0.25
+	miss_modifier -= movement_mod
 	var/hit_zone = get_zone_with_miss_chance(def_zone, target_mob, miss_modifier, ranged_attack=(distance > 1 || original != target_mob)) //if the projectile hits a target we weren't originally aiming at then retain the chance to miss
 
 	var/result = PROJECTILE_FORCE_MISS
@@ -251,6 +254,14 @@
 		if(!target_mob.aura_check(AURA_TYPE_BULLET, src,def_zone))
 			return 1
 		result = target_mob.bullet_act(src, def_zone)
+	//[SIERRA-ADD] - Mechs-by-Shegar - В меха нельзя просто так промахнуться!
+	if(result == PROJECTILE_FORCE_MISS && istype(target_mob, /mob/living/exosuit) )
+		if(prob(20))
+			target_mob.visible_message(SPAN_NOTICE("\The [src] rebounds from  [target_mob]!"))
+			return
+		else
+			result = null
+	//[SIERRA-ADD] - Mechs-by-Shegar
 
 	if(result == PROJECTILE_FORCE_MISS)
 		if(!silenced)
@@ -283,66 +294,51 @@
 
 	return 1
 
-/obj/item/projectile/Bump(atom/A as mob|obj|turf|area, forced=0)
-	if(A == src)
-		return 0 //no
 
-	if(A == firer)
-		forceMove(A.loc)
-		return 0 //cannot shoot yourself
-
-	if((bumped && !forced) || (A in permutated))
-		return 0
-
-	var/passthrough = 0 //if the projectile should continue flying
-	var/distance = get_dist(starting,loc)
-
-	bumped = 1
-	if(ismob(A))
-		var/mob/M = A
-		if(istype(A, /mob/living))
-			//if they have a neck grab on someone, that person gets hit instead
-			var/obj/item/grab/G = locate() in M
-			if(G && G.shield_assailant())
-				G.affecting.visible_message(SPAN_DANGER("\The [M] uses \the [G.affecting] as a shield!"))
-				if(Bump(G.affecting, forced=1))
-					return //If Bump() returns 0 (keep going) then we continue on to attack M.
-
-			passthrough = !attack_mob(M, distance)
-		else
-			passthrough = 1 //so ghosts don't stop bullets
+/obj/item/projectile/Bump(atom/atom, forced)
+	if (atom == src)
+		return FALSE
+	if (atom == firer)
+		forceMove(atom.loc)
+		return FALSE
+	if (bumped && !forced || (atom in permutated))
+		return FALSE
+	bumped = TRUE
+	var/passthrough
+	var/distance = get_dist(starting, loc)
+	if (ismob(atom))
+		passthrough = TRUE
+		if (istype(atom, /mob/living))
+			var/obj/item/grab/grab = locate() in atom
+			var/dirs = GLOB.reverse_dir[atom.dir & 0xF]
+			dirs = list(dirs, GLOB.cw_dir_8[dirs], GLOB.ccw_dir_8[dirs])
+			if (grab?.shield_assailant() && (dir in dirs))
+				grab.affecting.visible_message(SPAN_DANGER("\The [atom] uses \the [grab.affecting] as a shield!"))
+				if (Bump(grab.affecting, TRUE))
+					return
+			passthrough = !attack_mob(atom, distance)
 	else
-		passthrough = (A.bullet_act(src, def_zone) == PROJECTILE_CONTINUE) //backwards compatibility
-		if(isturf(A))
-			for(var/obj/O in A)
-				O.bullet_act(src)
-			for(var/mob/living/M in A)
-				attack_mob(M, distance)
-
-	//penetrating projectiles can pass through things that otherwise would not let them
-	if(!passthrough && penetrating > 3)
-		if(check_penetrate(A))
-			passthrough = 1
-		penetrating--
-
-	//the bullet passes through a dense object!
-	if(passthrough)
-		//move ourselves onto A so we can continue on our way.
-		var/turf/T = get_turf(A)
-		if(T)
-			forceMove(T)
-		permutated.Add(A)
-		bumped = 0 //reset bumped variable!
-		return 0
-
-	//stop flying
-	on_impact(A)
-
-	set_density(0)
+		passthrough = atom.bullet_act(src, def_zone) == PROJECTILE_CONTINUE
+		if (isturf(atom))
+			for (var/obj/obj in atom)
+				obj.bullet_act(src)
+			for (var/mob/living/mob in atom)
+				attack_mob(mob, distance)
+	if (!passthrough && penetrating > 3)
+		if (check_penetrate(atom))
+			passthrough = TRUE
+		--penetrating
+	if (passthrough && isturf(atom))
+		forceMove(atom)
+		permutated += atom
+		bumped = FALSE
+		return FALSE
+	on_impact(atom)
+	set_density(FALSE)
 	set_invisibility(INVISIBILITY_ABSTRACT)
-
 	qdel(src)
-	return 1
+	return TRUE
+
 
 /obj/item/projectile/ex_act()
 	return //explosions probably shouldn't delete projectiles
@@ -422,7 +418,7 @@
 		return
 
 	if(ispath(muzzle_type))
-		var/obj/effect/projectile/M = new muzzle_type(get_turf(src))
+		var/obj/projectile/M = new muzzle_type(get_turf(src))
 
 		if(istype(M))
 			M.SetTransform(others = effect_transform)
@@ -435,7 +431,7 @@
 
 /obj/item/projectile/proc/tracer_effect()
 	if(ispath(tracer_type))
-		var/obj/effect/projectile/P = new tracer_type(location.loc)
+		var/obj/projectile/P = new tracer_type(location.loc)
 
 		if(istype(P))
 			P.SetTransform(others = effect_transform)
@@ -446,7 +442,7 @@
 
 /obj/item/projectile/proc/impact_effect()
 	if(ispath(impact_type))
-		var/obj/effect/projectile/P = new impact_type(location ? location.loc : get_turf(src))
+		var/obj/projectile/P = new impact_type(location ? location.loc : get_turf(src))
 
 		if(istype(P) && location)
 			P.SetTransform(others = effect_transform)
@@ -499,7 +495,7 @@
 		trajectory.increment()	// increment the current location
 		location = trajectory.return_location(location)		// update the locally stored location data
 		if (!location)
-			return FALSE
+			return 0
 
 		Move(location.return_turf())
 
@@ -514,7 +510,7 @@
 //Helper proc to check if you can hit them or not.
 /proc/check_trajectory(atom/target as mob|obj, atom/firer as mob|obj, pass_flags=PASS_FLAG_TABLE|PASS_FLAG_GLASS|PASS_FLAG_GRILLE, item_flags = null, obj_flags = null)
 	if(!istype(target) || !istype(firer))
-		return 0
+		return null
 
 	var/obj/item/projectile/test/trace = new /obj/item/projectile/test(get_turf(firer)) //Making the test....
 
@@ -526,8 +522,9 @@
 	trace.pass_flags = pass_flags
 
 	var/output = trace.launch(target) //Test it!
+	var/hit_thing = trace.hit_thing
 	qdel(trace) //No need for it anymore
-	return output //Send it back to the gun!
+	return output ? hit_thing : null //Send it back to the gun!
 
 /obj/item/projectile/after_wounding(obj/item/organ/external/organ, datum/wound/wound)
 	//Check if we even broke skin in first place

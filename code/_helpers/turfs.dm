@@ -173,10 +173,13 @@
 	new_turf.transport_properties_from(source)
 
 	for(var/obj/O in source)
-		if(O.simulated)
+		if (QDELETED(O))
+			testing("Failed to translate [O] to new turf as it was qdel'd.")
+			continue
+		if(O.simulated || HAS_FLAGS(O.movable_flags, MOVABLE_FLAG_EFFECTMOVE))
 			O.forceMove(new_turf)
 		else if(istype(O,/obj/effect))
-			var/obj/effect/E = O
+			var/obj/E = O
 			if(E.movable_flags & MOVABLE_FLAG_EFFECTMOVE)
 				E.forceMove(new_turf)
 

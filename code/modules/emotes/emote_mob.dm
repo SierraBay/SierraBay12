@@ -44,7 +44,8 @@
 
 	var/singleton/emote/use_emote = usable_emotes[act]
 	if(!use_emote)
-		to_chat(src, SPAN_WARNING("Unknown emote '[act]'. Type <b>say *help</b> for a list of usable emotes."))
+		var/emote_prefix = get_prefix_key(/singleton/prefix/custom_emote)
+		to_chat(src, SPAN_WARNING("Unknown emote '[act]'. Type <b>say [emote_prefix]help</b> for a list of usable emotes."))
 		return
 
 	if(m_type != use_emote.message_type && use_emote.conscious && stat != CONSCIOUS)
@@ -137,9 +138,9 @@
 	//do not show NPC animal emotes to ghosts, it turns into hellscape
 	var/check_ghosts = client ? /datum/client_preference/ghost_sight : null
 	if(m_type == VISIBLE_MESSAGE)
-		visible_message(message, checkghosts = check_ghosts)
+		visible_message(message, checkghosts = check_ghosts, runemessage = input)
 	else
-		audible_message(message, checkghosts = check_ghosts)
+		audible_message(message, checkghosts = check_ghosts, runemessage = input)
 
 // Specific mob type exceptions below.
 /mob/living/silicon/ai/emote(act, type, message)

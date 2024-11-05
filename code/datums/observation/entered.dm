@@ -21,4 +21,8 @@ GLOBAL_DATUM_INIT(entered_event, /singleton/observ/entered, new)
 
 /atom/Entered(atom/movable/enterer, atom/old_loc)
 	..()
+	//[SIERRA-ADD]
+	SEND_SIGNAL(src, COMSIG_ATOM_ENTERED, enterer, old_loc)
+	SEND_SIGNAL(enterer, COMSIG_ATOM_ENTERING, src, old_loc)
+	//[/SIERRA-ADD]
 	GLOB.entered_event.raise_event(src, enterer, old_loc)

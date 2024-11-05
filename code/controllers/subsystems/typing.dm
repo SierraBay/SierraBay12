@@ -1,7 +1,6 @@
 SUBSYSTEM_DEF(typing)
 	name = "Typing"
 	flags = SS_BACKGROUND | SS_NO_INIT
-	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 	wait = 0.5 SECONDS
 
 	/// The skin control to poll for TYPING_STATE_INPUT status.
@@ -35,7 +34,7 @@ SUBSYSTEM_DEF(typing)
 			istyping_input = 0|1,
 			istyping_hotkey = 0|1
 		), ...)
-		See .proc/GetEntry for details.
+		See PROC_REF(GetEntry for details.
 	*/
 	var/static/list/status = list()
 
@@ -173,7 +172,7 @@ SUBSYSTEM_DEF(typing)
 	icon_state = "typing"
 	plane = EFFECTS_ABOVE_LIGHTING_PLANE
 	layer = SPEECH_INDICATOR_LAYER
-	mouse_opacity = XMOUSE_OPACITY_NEVER
+	mouse_opacity = MOUSE_OPACITY_UNCLICKABLE
 	simulated = FALSE
 	anchored = TRUE
 

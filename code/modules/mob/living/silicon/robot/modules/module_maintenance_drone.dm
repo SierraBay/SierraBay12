@@ -53,7 +53,6 @@
 		SKILL_CONSTRUCTION = SKILL_EXPERIENCED,
 		SKILL_ELECTRICAL   = SKILL_EXPERIENCED
 	)
-	use_all_station_access = TRUE
 
 /obj/item/robot_module/drone/finalize_equipment(mob/living/silicon/robot/R)
 	. = ..()
@@ -104,10 +103,6 @@
 	var/obj/item/stack/material/cyborg/plastic/P = locate() in equipment
 	P.synths = list(plastic)
 
-/obj/item/robot_module/drone/respawn_consumable(mob/living/silicon/robot/R, amount)
-	..()
-	var/obj/item/reagent_containers/spray/cleaner/drone/SC = locate() in equipment
-	SC.reagents.add_reagent(/datum/reagent/space_cleaner, 8 * amount)
 
 /obj/item/robot_module/drone/construction
 	name = "construction drone module"
@@ -118,6 +113,7 @@
 	. = ..()
 
 /obj/item/robot_module/drone/respawn_consumable(mob/living/silicon/robot/R, amount)
-	var/obj/item/device/lightreplacer/LR = locate() in equipment
-	LR.Charge(R, amount)
 	..()
+	var/obj/item/device/lightreplacer/LR = locate() in equipment
+	if (LR)
+		LR.Charge(R, amount)

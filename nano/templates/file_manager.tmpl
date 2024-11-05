@@ -11,7 +11,12 @@
 		{{:helper.link('EDIT', null, { "PRG_edit" : 1 })}}
 		{{:helper.link('PRINT', null, { "PRG_printfile" : 1 })}}
 		</div><hr>
-		{{:data.filedata}}
+		{{if data.photodata}}
+			{{:data.photodata}}
+		{{/if}}
+		{{if data.filedata}}
+			{{:data.filedata}}
+		{{/if}}
 	{{else}}
 		<h2>Available files (local):</h2>
 		<table>
@@ -54,5 +59,4 @@
 		{{/if}}
 		{{:helper.link('NEW DATA FILE', null, { "PRG_newtextfile" : 1 })}}
 	{{/if}}
-	
 {{/if}}

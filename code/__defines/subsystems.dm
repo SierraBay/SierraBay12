@@ -8,6 +8,8 @@
 
 #define RUNLEVELS_ALL (~EMPTY_BITFIELD)
 #define RUNLEVELS_DEFAULT (RUNLEVEL_SETUP | RUNLEVEL_GAME | RUNLEVEL_POSTGAME)
+#define RUNLEVELS_GAME (RUNLEVEL_GAME | RUNLEVEL_POSTGAME)
+#define RUNLEVELS_PREGAME (RUNLEVEL_LOBBY | RUNLEVEL_SETUP)
 
 
 // Subsystem init_order, from highest priority to lowest priority
@@ -43,10 +45,11 @@
 #define SS_INIT_SHUTTLE         -5
 #define SS_INIT_GOALS           -5
 #define SS_INIT_LIGHTING        -6
-#define SS_INIT_ZCOPY           -7
-#define SS_INIT_HOLOMAP         -8
-#define SS_INIT_OVERLAYS -9
-#define SS_INIT_XENOARCH        -10
+#define SS_INIT_AMBIENT_LIGHT   -7
+#define SS_INIT_ZCOPY           -8
+#define SS_INIT_HOLOMAP         -9
+#define SS_INIT_OVERLAYS        -10
+#define SS_INIT_XENOARCH        -11
 #define SS_INIT_BAY_LEGACY      -12
 #define SS_INIT_TICKER          -20
 #define SS_INIT_AI              -21

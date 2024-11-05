@@ -23,7 +23,7 @@
 	var/custom_sprite = FALSE
 	var/crisis //Admin-settable for combat module use.
 	var/crisis_override = FALSE
-	var/integrated_light_max_bright = 0.75
+	var/integrated_light_power = 0.75
 	var/datum/wires/robot/wires
 	var/module_category = ROBOT_MODULE_TYPE_GROUNDED
 	var/dismantle_type = /obj/item/robot_parts/robot_suit
@@ -79,7 +79,7 @@
 	var/list/req_access = list(access_robotics)
 	var/ident = 0
 	var/modtype = "Default"
-	var/datum/effect/effect/system/spark_spread/spark_system //So they can initialize sparks whenever/N
+	var/datum/effect/spark_spread/spark_system //So they can initialize sparks whenever/N
 	var/lawupdate = TRUE //Cyborgs will sync their laws with their AI by default
 	var/lockcharge //If a robot is locked down
 	var/scrambledcodes = FALSE // Used to determine if a borg shows up on the robotics console.  Setting to one hides them.
@@ -96,7 +96,7 @@
 
 /mob/living/silicon/robot/Initialize()
 	. = ..()
-	spark_system = new /datum/effect/effect/system/spark_spread()
+	spark_system = new /datum/effect/spark_spread()
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 
@@ -408,9 +408,9 @@
 /mob/living/silicon/robot/proc/update_robot_light()
 	if(lights_on)
 		if(intenselight)
-			set_light(1, 2, 6)
+			set_light(6, 1)
 		else
-			set_light(0.75, 1, 4)
+			set_light(4, 0.75)
 	else
 		set_light(0)
 
@@ -552,7 +552,8 @@
 					USE_FEEDBACK_FAILURE("\The [src]'s maintenance hatch is already closed.")
 					return TRUE
 				if (!cell)
-					USE_FEEDBACK_FAILURE("\The [src]'s cell needs to remain in place to close \his maintenance hatch.")
+					var/datum/pronouns/pronouns = choose_from_pronouns()
+					USE_FEEDBACK_FAILURE("\The [src]'s cell needs to remain in place to close [pronouns.his] maintenance hatch.")
 					return TRUE
 				opened = FALSE
 				update_icon()
@@ -881,11 +882,7 @@
 			if(!eye_overlay)
 				eye_overlay = image(icon, eye_icon_state)
 				var/mutable_appearance/A = emissive_appearance(icon, eye_icon_state)
-				A.render_target = "*I am testing stuff ok"
-				eye_overlay.filters += filter(type = "layer", render_source = "*I am testing stuff ok")
 				eye_overlay.AddOverlays(A)
-				//eye_overlay.plane = EFFECTS_ABOVE_LIGHTING_PLANE
-				//eye_overlay.layer = EYE_GLOW_LAYER
 				eye_overlays[eye_icon_state] = eye_overlay
 				z_flags |= ZMM_MANGLE_PLANES
 			AddOverlays(eye_overlay)
@@ -1209,7 +1206,8 @@
 			laws = new /datum/ai_laws/syndicate_override
 			var/time = time2text(world.realtime,"hh:mm:ss")
 			GLOB.lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) emagged [name]([key])")
-			set_zeroth_law("Only [user.real_name] and people \he designates as being such are operatives.")
+			var/datum/pronouns/pronouns = user.choose_from_pronouns()
+			set_zeroth_law("Only [user.real_name] and people [pronouns.he] designates as being such are operatives.")
 			SetLockdown(0)
 			. = 1
 			spawn()

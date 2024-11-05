@@ -43,17 +43,17 @@
 		additional_antag_types |= antag_type
 		return
 
-	invoke_async(src, .proc/spawn_antags) //There is a sleep in this proc.
+	invoke_async(src, PROC_REF(spawn_antags)) //There is a sleep in this proc.
 
 /datum/vote/add_antagonist/proc/spawn_antags()
 	var/list/antag_choices = list()
 	for(var/antag_type in result)
-		antag_choices += GLOB.all_antag_types_[antag_type]
+		antag_choices += GLOB.all_antag_types_[GLOB.antag_names_to_ids_[antag_type]]
 	if(SSticker.attempt_late_antag_spawn(antag_choices)) // This takes a while.
 		antag_add_finished = 1
 		if(automatic)
-			// the buffer will already have half an hour added to it, so we'll give it one more
-			transfer_controller.timerbuffer += config.vote_autotransfer_interval
+			if (SSroundend.vote_check)
+				SSroundend.vote_check += config.vote_autotransfer_interval
 	else
 		to_world("<b>No antags were added.</b>")
 		if(automatic)

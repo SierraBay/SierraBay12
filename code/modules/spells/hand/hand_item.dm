@@ -9,7 +9,6 @@ Basically: I can use it to target things where I click. I can then pass these ta
 	item_flags = 0
 	obj_flags = 0
 	simulated = FALSE
-	item_flags = ITEM_FLAG_TRY_ATTACK
 	icon_state = "spell"
 	var/next_spell_time = 0
 	var/spell/hand/hand_spell
@@ -23,7 +22,7 @@ Basically: I can use it to target things where I click. I can then pass these ta
 /obj/item/magic_hand/get_storage_cost()
 	return ITEM_SIZE_NO_CONTAINER
 
-/obj/item/magic_hand/attack(mob/living/M, mob/living/user)
+/obj/item/magic_hand/use_before(mob/living/M, mob/living/user)
 	. = FALSE
 	if (hand_spell && hand_spell.valid_target(M, user))
 		fire_spell(M, user)
@@ -45,11 +44,12 @@ Basically: I can use it to target things where I click. I can then pass these ta
 	if(hand_spell.show_message)
 		user.visible_message("\The [user][hand_spell.show_message]")
 	if(hand_spell.cast_hand(A,user))
-		next_spell_time = world.time + hand_spell.spell_delay
-		if(hand_spell.move_delay)
-			user.ExtraMoveCooldown(hand_spell.move_delay)
-		if(hand_spell.click_delay)
-			user.setClickCooldown(hand_spell.move_delay)
+		if(hand_spell)
+			next_spell_time = world.time + hand_spell.spell_delay
+			if(hand_spell.move_delay)
+				user.ExtraMoveCooldown(hand_spell.move_delay)
+			if(hand_spell.click_delay)
+				user.setClickCooldown(hand_spell.move_delay)
 
 /obj/item/magic_hand/afterattack(atom/A, mob/user, proximity)
 	if(hand_spell)
@@ -60,7 +60,8 @@ Basically: I can use it to target things where I click. I can then pass these ta
 
 /obj/item/magic_hand/dropped() //gets deleted on drop
 	..()
-	qdel(src)
+	if(!QDESTROYING(src))
+		qdel(src)
 
 /obj/item/magic_hand/Destroy() //better save than sorry.
 	hand_spell.current_hand = null

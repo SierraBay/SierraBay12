@@ -56,6 +56,10 @@
 			to_chat(user, SPAN_NOTICE("You work the bolt open."))
 	else
 		to_chat(user, SPAN_NOTICE("You work the bolt closed."))
+		if (length(loaded))
+			chambered = loaded[1]
+		else
+			chambered = null
 		playsound(src.loc, 'sound/weapons/guns/interaction/rifle_boltforward.ogg', 50, 1)
 		bolt_open = 0
 	add_fingerprint(user)
@@ -77,6 +81,22 @@
 		return
 	..()
 
+/obj/item/gun/projectile/heavysniper/getAmmo()
+	var/bullets = 0
+	if (loaded)
+		bullets += length(loaded)
+	if (ammo_magazine && ammo_magazine.stored_ammo)
+		bullets += length(ammo_magazine.stored_ammo)
+	return bullets
+
+/obj/item/gun/projectile/heavysniper/DrawChamber()
+	if (chambered)
+		if (chambered.BB)
+			return "◉"
+		else
+			return "◎"
+	else
+		return "🌣"
 
 /obj/item/gun/projectile/heavysniper/boltaction
 	name = "bolt action rifle"
@@ -94,6 +114,7 @@
 	scope_zoom = 0
 	scoped_accuracy = 0
 	wielded_item_state = "boltaction-wielded"
+	fire_sound = 'sound/weapons/gunshot/gunshot3.ogg'
 
 /obj/item/gun/projectile/sniper/panther //semi-automatic only
 	name = "marksman rifle"
@@ -120,6 +141,7 @@
 	wielded_item_state = "dmr-wielded"
 	mag_insert_sound = 'sound/weapons/guns/interaction/ltrifle_magin.ogg'
 	mag_remove_sound = 'sound/weapons/guns/interaction/ltrifle_magout.ogg'
+	fire_sound = 'sound/weapons/gunshot/gunshot3.ogg'
 
 /obj/item/gun/projectile/sniper/panther/on_update_icon()
 	if(ammo_magazine)
@@ -151,6 +173,7 @@
 	wielded_item_state = "garand-wielded"
 	mag_insert_sound = 'sound/weapons/guns/interaction/ltrifle_magin.ogg'
 	mag_remove_sound = 'sound/weapons/guns/interaction/garand_magout.ogg'
+	fire_sound = 'sound/weapons/gunshot/gunshot3.ogg'
 
 /obj/item/gun/projectile/sniper/garand/on_update_icon()
 	if(ammo_magazine && length(ammo_magazine.stored_ammo))
@@ -179,6 +202,7 @@
 	max_shells = 10
 	accuracy = 1
 	wielded_item_state = "semistrip-wielded"
+	fire_sound = 'sound/weapons/gunshot/gunshot_strong.ogg'
 
 /obj/item/gun/projectile/sniper/semistrip/on_update_icon()
 	if(ammo_magazine && length(ammo_magazine.stored_ammo))

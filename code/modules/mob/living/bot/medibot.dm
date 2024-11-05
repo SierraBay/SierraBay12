@@ -228,7 +228,7 @@
 	visible_message(SPAN_DANGER("[src] blows apart!"))
 	var/turf/Tsec = get_turf(src)
 
-	new /obj/item/storage/firstaid(Tsec)
+	new /obj/item/storage/firstaid/empty(Tsec)
 	new /obj/item/device/assembly/prox_sensor(Tsec)
 	new /obj/item/device/scanner/health(Tsec)
 	if (prob(50))
@@ -238,7 +238,7 @@
 		reagent_glass.forceMove(Tsec)
 		reagent_glass = null
 
-	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	var/datum/effect/spark_spread/s = new /datum/effect/spark_spread
 	s.set_up(3, 1, src)
 	s.start()
 	qdel(src)
