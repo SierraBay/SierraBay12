@@ -6,7 +6,7 @@
 
 /datum/gear/suit/poncho
 	display_name = "poncho selection"
-	path = /obj/item/clothing/suit/poncho/colored
+	path = /obj/item/clothing/suit/poncho
 
 /datum/gear/suit/security_poncho
 	allowed_roles = list(/datum/job/hos, /datum/job/warden, /datum/job/detective, /datum/job/officer,   )
