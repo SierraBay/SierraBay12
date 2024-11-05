@@ -191,7 +191,7 @@ var/global/list/gear_datums = list()
 		entry += "<tr style='vertical-align:top;'><td><a style='white-space:normal;' class='[gear_link_class]' href='?src=\ref[src];toggle_gear=\ref[G]'>[G.display_name]</a></td>" //inf, was: entry += "<tr style='vertical-align:top;'><td width=25%><a style='white-space:normal;' [ticked ? "class='linkOn' " : ""]href='?src=\ref[src];toggle_gear=\ref[G]'>[G.display_name]</a></td>"
 		// [/SIERRA-EDIT]
 		entry += "<td width = 10% style='vertical-align:top'>[G.cost]</td>"
-		entry += "<td>[FONT_NORMAL(G.get_description(get_gear_metadata(G,1), ticked))]"
+		entry += "<td>[FONT_NORMAL(G.get_description(get_gear_metadata(G,1)))]"
 		var/allowed = 1
 		if(allowed && G.allowed_roles)
 			var/good_job = 0
@@ -387,10 +387,10 @@ var/global/list/gear_datums = list()
 	if(custom_setup_proc)
 		gear_tweaks += new/datum/gear_tweak/custom_setup(custom_setup_proc)
 
-/datum/gear/proc/get_description(metadata, include_extended_description)
+/datum/gear/proc/get_description(metadata)
 	. = description
 	for(var/datum/gear_tweak/gt in gear_tweaks)
-		. = gt.tweak_description(., metadata["[gt]"], include_extended_description && (flags & GEAR_HAS_EXTENDED_DESCRIPTION))
+		. = gt.tweak_description(., metadata["[gt]"])
 
 /datum/gear_data
 	var/path

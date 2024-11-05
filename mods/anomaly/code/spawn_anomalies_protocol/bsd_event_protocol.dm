@@ -15,7 +15,7 @@
 	var/started_in = world.time
 	var/list/turfs_for_spawn = list()
 	for(var/obj/machinery/bluespacedrive/picked_drive in drives)
-		for(var/turf/turfs in RANGE_TURFS(picked_drive.loc, 10))
+		for(var/turf/turfs as anything in RANGE_TURFS(picked_drive.loc, 10))
 			if(!TurfBlocked(turfs) || TurfBlockedByAnomaly(turfs))
 				LAZYADD(turfs_for_spawn, turfs)
 	all_spawned_anomalies = generate_anomalies_in_turfs(possible_anomalies, turfs_for_spawn, 5, 15, 0, 0, 9, 9, "BSD event", started_in)
