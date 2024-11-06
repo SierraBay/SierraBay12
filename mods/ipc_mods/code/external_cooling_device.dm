@@ -156,7 +156,6 @@
 
 
 /obj/machinery/external_cooling_device/Destroy()
-	STOP_PROCESSING(SSobj,src)
 	attached = null
 	QDEL_NULL(cell)
 	. = ..()

@@ -134,6 +134,10 @@ GLOBAL_VAR(planet_repopulation_disabled)
 	generate_features()
 	for (var/datum/exoplanet_theme/T in themes)
 		T.after_map_generation(src)
+	//[SIERRA-ADD] - ANOMALIES
+	if(can_spawn_anomalies)
+		generate_anomalies()
+	//[SIERRA-ADD]
 	generate_landing(2)
 	update_biome()
 	generate_daycycle()

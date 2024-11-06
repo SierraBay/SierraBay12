@@ -237,7 +237,10 @@ GLOBAL_LIST_EMPTY(overmap_helm_computers)
 
 	if (href_list["manual"])
 		viewing_overmap(user) ? unlook(user) : look(user)
-
+	//[SIERRA-ADD]
+	if(href_list["Throw off"])
+		Throw_off_the_pursuers(user)
+	//[SIERRA-ADD]
 	add_fingerprint(user)
 	updateUsrDialog()
 

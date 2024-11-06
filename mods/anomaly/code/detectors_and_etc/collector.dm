@@ -5,38 +5,57 @@
 	var/closed = FALSE
 	var/obj/item/artefact/stored_artefact
 
-/obj/item/collector/Initialize()
+
+/obj/item/collector/examine(mob/user, distance, is_adjacent)
 	. = ..()
+	to_chat(user, SPAN_GOOD("Click with collector on object to capture."))
+
+
+/obj/item/collector/attack_hand(mob/user)
+	if (stored_artefact && user.get_inactive_hand() == src && !closed)
+		user.visible_message("[user] removes [stored_artefact] from \the [src].")
+		try_pop_out_artefact(user)
+	else
+		..()
+
 
 /obj/item/collector/use_tool(obj/item/item, mob/living/user, list/click_params)
 	. = ..()
+	if(closed)
+		to_chat(user,SPAN_NOTICE("\the [src] clossed."))
+		return
 	if(istype(item, /obj/item/artefact))
 		try_insert_artefact(user, item)
-	else if(isScrewdriver(item))
-		try_pop_out_artefact(user)
+
 
 /obj/item/collector/proc/try_insert_artefact(mob/living/user, obj/item/item)
 	if(!stored_artefact)
 		to_chat(user,SPAN_NOTICE("You inserted [item] in [src]."))
 		insert_artefact(user, item)
 
+
 /obj/item/collector/proc/insert_artefact(mob/living/user, obj/item/item)
 	if(!user.unEquip(item))
 		return
 	stored_artefact = item
+	stored_artefact.react_to_insert_in_collector()
 	item.forceMove(src)
 	update_icon()
+
 
 /obj/item/collector/proc/try_pop_out_artefact(mob/living/user)
 	if(stored_artefact)
 		to_chat(user,SPAN_NOTICE("You pop-out [stored_artefact] from [src]."))
 		pop_out_artefact(user)
 
+
 /obj/item/collector/proc/pop_out_artefact(mob/living/user)
 	stored_artefact.forceMove(get_turf(src))
 	user.put_in_hands(stored_artefact)
+	stored_artefact.react_to_remove_from_collector()
 	stored_artefact = null
 	update_icon()
+
 
 /obj/item/collector/attack_self(mob/living/user)
 	. = ..()
@@ -52,13 +71,16 @@
 			open_collector()
 			playsound(src, 'mods/anomaly/sounds/collector_open.ogg', 25, FALSE  )
 
+
 /obj/item/collector/proc/close_collector()
 	closed = TRUE
 	update_icon()
 
+
 /obj/item/collector/proc/open_collector()
 	closed = FALSE
 	update_icon()
+
 
 /obj/item/collector/on_update_icon()
 	. = ..()
@@ -80,17 +102,21 @@
 	icon_state = "collector_pruzhina"
 	stored_artefact = new /obj/item/artefact/pruzhina
 
+
 /obj/item/collector/zjar_inside
 	icon_state = "collector_zjar"
 	stored_artefact = new /obj/item/artefact/zjar
+
 
 /obj/item/collector/svetlyak_inside
 	icon_state = "collector_svetlyak"
 	stored_artefact = new /obj/item/artefact/svetlyak
 
+
 /obj/item/collector/gravi_inside
 	icon_state = "collector_gravi"
 	stored_artefact = new /obj/item/artefact/gravi
+
 
 /datum/design/item/bluespace/collector
 	name = "artefact collector"
