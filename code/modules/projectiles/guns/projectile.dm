@@ -73,16 +73,10 @@
 		chambered = loaded[1] //load next casing.
 		if(handle_casings != HOLD_CASINGS)
 			loaded -= chambered
-	else if(ammo_magazine)
-		if(!ammo_magazine.contents_initialized && ammo_magazine.initial_ammo > 0)
-			chambered = new ammo_magazine.ammo_type(src)
-			if(handle_casings == HOLD_CASINGS)
-				ammo_magazine.stored_ammo += chambered
-			ammo_magazine.initial_ammo--
-		else if(ammo_magazine && length(ammo_magazine.stored_ammo))
-			chambered = ammo_magazine.stored_ammo[length(ammo_magazine.stored_ammo)]
-			if(handle_casings != HOLD_CASINGS)
-				ammo_magazine.stored_ammo -= chambered
+	else if(ammo_magazine && length(ammo_magazine.stored_ammo))
+		chambered = ammo_magazine.stored_ammo[length(ammo_magazine.stored_ammo)]
+		if(handle_casings != HOLD_CASINGS)
+			ammo_magazine.stored_ammo -= chambered
 
 	if (chambered)
 		return chambered.BB
@@ -321,7 +315,7 @@
 
 /obj/item/gun/projectile/afterattack(atom/A, mob/living/user)
 	..()
-	if(auto_eject && ammo_magazine && !ammo_magazine.get_stored_ammo_count())
+	if(auto_eject && ammo_magazine && ammo_magazine.stored_ammo && !length(ammo_magazine.stored_ammo))
 		ammo_magazine.dropInto(user.loc)
 		user.visible_message(
 			"[ammo_magazine] falls out and clatters on the floor!",
@@ -348,8 +342,8 @@
 	var/bullets = 0
 	if(loaded)
 		bullets += length(loaded)
-	if(ammo_magazine)
-		bullets += ammo_magazine.get_stored_ammo_count()
+	if(ammo_magazine && ammo_magazine.stored_ammo)
+		bullets += length(ammo_magazine.stored_ammo)
 	if(chambered)
 		bullets += 1
 	return bullets
