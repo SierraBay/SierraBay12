@@ -6,3 +6,8 @@
 #define RUIN_WRECK 		8		//crashed vessel
 #define RUIN_NATURAL	16		//naturally occuring structure
 #define RUIN_WATER 		32		//ruin depending on planet having water accessible
+
+//[SIERRA-ADD] - ANOMALIES
+#define RUIN_HOT_ANOMALIES 64
+#define RUIN_ELECTRA_ANOMALIES 128
+//[SIERRA-ADD]

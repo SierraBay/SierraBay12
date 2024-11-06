@@ -7624,6 +7624,12 @@
 	},
 /turf/simulated/floor,
 /area/ship/farfleet/dock)
+"Yu" = (
+/obj/structure/panic_button{
+	pixel_y = -32
+	},
+/turf/simulated/floor/tiled/dark,
+/area/ship/farfleet/command/bridge)
 "Yv" = (
 /obj/floor_decal/corner/paleblue{
 	dir = 6
@@ -14922,7 +14928,7 @@ ox
 rM
 Ad
 Ad
-Ad
+Yu
 eV
 eV
 FI
