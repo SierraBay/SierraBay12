@@ -121,7 +121,7 @@
 #define WALL_CAN_OPEN 1
 #define WALL_OPENING 2
 
-#define BOMBCAP_RADIUS (config.max_explosion_range * 1.75)
+#define BOMBCAP_RADIUS (config.max_explosion_range * 1.15) //[SIERRA-EDIT] was (config.max_explosion_range * 1.75)
 									// NTNet module-configuration values. Do not change these. If you need to add another use larger number (5..6..7 etc)
 #define NTNET_SOFTWAREDOWNLOAD 1 	// Downloads of software from NTNet
 #define NTNET_PEERTOPEER 2			// P2P transfers of files between devices
@@ -523,3 +523,7 @@
 ///from /datum/bank_account/pay_debt(), after a portion or all the debt has been paid.
 #define COMSIG_BANK_ACCOUNT_DEBT_PAID "bank_account_debt_paid"
 //[/SIERRA-ADD]
+
+/// A null statement to guard against EmptyBlock lint without necessitating the use of pass()
+/// Used to avoid proc-call overhead. But use sparingly. Probably pointless in most places.
+#define EMPTY_BLOCK_GUARD ;
