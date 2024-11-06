@@ -9,8 +9,6 @@ SUBSYSTEM_DEF(mapping)
 	var/list/away_sites_templates = list()
 	var/list/submaps = list()
 	var/list/submap_archetypes = list()
-	/// The largest plane offset we've generated so far
-	var/max_plane_offset = 0
 
 
 /datum/controller/subsystem/mapping/UpdateStat(time)
@@ -27,6 +25,8 @@ SUBSYSTEM_DEF(mapping)
 	space_ruins_templates = SSmapping.space_ruins_templates
 	exoplanet_ruins_templates = SSmapping.exoplanet_ruins_templates
 	away_sites_templates = SSmapping.away_sites_templates
+	submaps = SSmapping.submaps
+	submap_archetypes = SSmapping.submap_archetypes
 
 /datum/controller/subsystem/mapping/proc/preloadTemplates(path = "maps/templates/") //see master controller setup
 	var/list/filelist = flist(path)

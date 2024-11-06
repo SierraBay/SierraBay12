@@ -6907,6 +6907,8 @@
 /obj/item/tank/oxygen_emergency_extended,
 /obj/item/tank/oxygen_emergency_extended,
 /obj/item/device/suit_cooling_unit,
+/obj/item/storage/bolt_bag/full_of_bolts,
+/obj/item/device/ano_scanner,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/colony/airlock)
 "mE" = (
@@ -7262,7 +7264,6 @@
 /obj/floor_decal/corner/yellow{
 	dir = 5
 	},
-/obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/colony/airlock)
 "nj" = (
@@ -7277,6 +7278,7 @@
 /obj/floor_decal/corner/yellow{
 	dir = 5
 	},
+/obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/colony/airlock)
 "nk" = (
@@ -7386,6 +7388,9 @@
 /obj/item/tank/oxygen_emergency_extended,
 /obj/item/tank/oxygen_emergency_extended,
 /obj/item/device/suit_cooling_unit,
+/obj/structure/table/rack,
+/obj/item/storage/bolt_bag/full_of_bolts,
+/obj/item/device/ano_scanner,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/colony/airlock)
 "nx" = (
@@ -7713,7 +7718,6 @@
 	dir = 8;
 	pixel_x = 22
 	},
-/obj/structure/table/rack,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 8;

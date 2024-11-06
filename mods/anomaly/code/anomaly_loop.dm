@@ -16,7 +16,7 @@
 	start_processing_long_effect()
 	last_activation_time = world.time
 
-///Аномалия будет поджигать и жечь согласно её effect_range столько, сколько указано в effect_time
+///Аномалия будет исполнять get_effect_by_anomaly согласно её effect_range столько, сколько указано в effect_time
 /obj/anomaly/proc/start_processing_long_effect()
 	if((world.time - last_activation_time) > effect_time)
 		stop_processing_long_effect()
