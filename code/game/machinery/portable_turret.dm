@@ -620,10 +620,6 @@ var/global/list/turret_icons
 	check_arrest = TC.check_arrest
 	check_weapons = TC.check_weapons
 	check_anomalies = TC.check_anomalies
-	//[SIERRA-ADD] - AI-UPDATE
-	attack_robots = TC.attack_robots
-	hold_deployed = TC.hold_deployed
-	//[SIERRA-ADD]
 	ailock = TC.ailock
 
 	src.power_change()

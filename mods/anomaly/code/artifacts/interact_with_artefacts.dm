@@ -10,26 +10,31 @@
 	. = ..()
 	prev_loc = get_turf(src)
 
-/obj/item/artefact/pickup(mob/living/user as mob)
-	if(connected_to_anomaly)
-		prev_loc = get_turf(src)
-		for(var/obj/anomaly/anomka in src.loc.contents)
-			if(prob(25 * user.get_skill_value(SKILL_SCIENCE)))
-				to_chat(user, SPAN_GOOD("[desc]"))
-				connected_to_anomaly = FALSE
-			else
-				to_chat(user, SPAN_WARNING("Обьект уплывает из ваших рук"))
-				if(istype(anomka, /obj/anomaly/part))
-					var/obj/anomaly/part/anomka_part = anomka
-					if(anomka_part.core.isready())
-						anomka_part.core.activate_anomaly()
+/obj/item/artefact/attack_hand(mob/user as mob)
+	if(inmech_sec(user))
+		to_chat(user, SPAN_WARNING("Вы недотягиваетесь."))
+		return
+	else if(connected_to_anomaly)
+		if(AnomaliesAmmountInTurf(get_turf(src)) == 0)
+			connected_to_anomaly = FALSE
+		else
+			for(var/obj/anomaly/anomka in src.loc.contents)
+				if(prob(25 * user.get_skill_value(SKILL_SCIENCE)))
+					to_chat(user, SPAN_GOOD("[desc]"))
+					connected_to_anomaly = FALSE
 				else
-					if(anomka.isready())
-						anomka.activate_anomaly()
-				return
+					to_chat(user, SPAN_WARNING("Обьект уплывает из ваших рук"))
+					if(istype(anomka, /obj/anomaly/part))
+						var/obj/anomaly/part/anomka_part = anomka
+						if(anomka_part.core.isready())
+							anomka_part.core.activate_anomaly()
+					else
+						if(anomka.isready())
+							anomka.activate_anomaly()
+					return
+	react_to_touched(user)
+
 	.=..()
-	if(connected_to_anomaly)
-		src.forceMove(prev_loc)
 
 
 
@@ -89,6 +94,7 @@
 
 	to_chat(user, SPAN_NOTICE("Ничего не произошло."))
 
+///ВЗАИМОДЕЙСТВИЯ ОТ ЛЮДЕЙ НАПРЯМУЮ
 /obj/item/artefact/proc/lick_interaction(mob/living/user)
 	return
 
@@ -108,7 +114,24 @@
 	return
 
 
+///ВЗАИМОДЕЙСТВИЯ ОТ МАШИНЫ ДЛЯ ИЗУЧЕНИЙ И АНАЛИЗА
+/obj/item/artefact/proc/urm_radiation(mob/living/user)
+	return
 
+/obj/item/artefact/proc/urm_laser(mob/living/user)
+	return
+
+/obj/item/artefact/proc/urm_electro(mob/living/user)
+	return
+
+/obj/item/artefact/proc/urm_plasma(mob/living/user)
+	return
+
+/obj/item/artefact/proc/urm_phoron(mob/living/user)
+	return
+
+/obj/item/artefact/proc/urm_microscope(mob/living/user)
+	return
 
 /obj/item/artefact/proc/angry_activity(mob/living/user)
 	return

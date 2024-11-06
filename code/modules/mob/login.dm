@@ -135,8 +135,8 @@
 
 	client.deferred_skybox_update(TRUE)
 
-	if(ability_master)
-		ability_master.update_abilities(1, src)
+	if(ability_master && ability_master.ability_objects)
+		ability_master.update_abilities(TRUE, src)
 		ability_master.toggle_open(1)
 
 	//set macro to normal incase it was overriden (like cyborg currently does)

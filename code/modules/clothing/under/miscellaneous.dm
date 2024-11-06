@@ -565,6 +565,13 @@
 	worn_state = "gear_harness"
 	species_restricted = null
 	body_parts_covered = 0
+	// [ASCENT-ADD]
+	sprite_sheets = list(
+		SPECIES_MONARCH_QUEEN =  'icons/mob/species/nabber/msq/onmob_under_msq.dmi',
+		SPECIES_NABBER =  'icons/mob/species/nabber/onmob_under_gas.dmi',
+		SPECIES_MONARCH_WORKER =  'icons/mob/species/nabber/onmob_under_gas.dmi'
+	)
+	// [/ASCENT-ADD]
 
 /obj/item/clothing/under/pcrc
 	name = "\improper PCRC uniform"
