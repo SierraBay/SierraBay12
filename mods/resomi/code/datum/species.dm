@@ -61,7 +61,7 @@
 	heat_level_1 = 320
 	heat_level_2 = 370
 	heat_level_3 = 600
-	heat_discomfort_level = 292
+	heat_discomfort_level = 295
 	heat_discomfort_strings = list(
 		"Вашу кожу покалывает от жары.",
 		"Вам жарко.",
