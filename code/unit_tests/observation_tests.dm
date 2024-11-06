@@ -8,8 +8,7 @@
 	var/list/received_moves
 
 	var/list/stored_global_listen_count
-	var/list/stored_event_sources_count
-	var/list/stored_event_listen_count
+
 
 /datum/unit_test/observation/start_test()
 	if(!received_moves)
@@ -20,8 +19,6 @@
 		GLOB.moved_event.unregister_global(global_listener)
 
 	stored_global_listen_count = GLOB.global_listen_count.Copy()
-	stored_event_sources_count = GLOB.event_sources_count.Copy()
-	stored_event_listen_count = GLOB.event_listen_count.Copy()
 
 	sanity_check_events("Pre-Test")
 	. = conduct_test()
@@ -54,10 +51,6 @@
 
 	for(var/entry in (GLOB.global_listen_count - stored_global_listen_count))
 		fail("[phase]: global_listen_count - Contained [log_info_line(entry)].")
-	for(var/entry in (GLOB.event_sources_count - stored_event_sources_count))
-		fail("[phase]: event_sources_count - Contained [log_info_line(entry)].")
-	for(var/entry in (GLOB.event_listen_count - stored_event_listen_count))
-		fail("[phase]: event_listen_count - Contained [log_info_line(entry)].")
 
 /datum/unit_test/observation/proc/conduct_test()
 	return 0

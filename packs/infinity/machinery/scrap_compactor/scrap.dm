@@ -5,7 +5,7 @@
 	name = MATERIAL_SCRAP
 	stack_type = /obj/item/stack/material/scrap
 	icon_colour = "#999966"
-	sheet_icon_base = "sheet"
+	sheet_icon_base = "unrefined"
 	sheet_icon_reinf = "reinf-overlay"
 	wall_icon_base = "metal"
 	door_icon_base = "metal"
@@ -21,9 +21,11 @@
 	hardness = 30
 	hitsound = 'sound/weapons/smash.ogg'
 	sale_price = 1
+	sheet_has_plural_icon = FALSE
 
 /material/scrap/refined
 	name = MATERIAL_SCRAP_REFINED
+	sheet_icon_base = "refined"
 	stack_type = /obj/item/stack/material/refined_scrap
 	melting_point = 820
 	brute_armor = 4
@@ -36,11 +38,9 @@
 /obj/item/stack/material/scrap
 	name = MATERIAL_SCRAP
 	icon = 'packs/infinity/machinery/scrap_compactor/icons/refine.dmi'
-	icon_state = "refined"
 	default_type = MATERIAL_SCRAP
 
 /obj/item/stack/material/refined_scrap
 	name = MATERIAL_SCRAP_REFINED
 	icon = 'packs/infinity/machinery/scrap_compactor/icons/refine.dmi'
-	icon_state = "refined"
 	default_type = MATERIAL_SCRAP_REFINED

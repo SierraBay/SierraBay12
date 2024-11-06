@@ -13,6 +13,13 @@
 #define LANGUAGE_SIIK_TAJR		"Siik'tajr"
 // TAJARA - End
 
+// ASCENT - Start
+#define SPECIES_MANTID_ALATE	"Kharmaan Alate"
+#define SPECIES_MANTID_GYNE		"Kharmaan Gyne"
+#define SPECIES_MONARCH_WORKER	"Monarch Serpentid Worker"
+#define SPECIES_MONARCH_QUEEN	"Monarch Serpentid Queen"
+// ASCENT - End
+
 // LEGALESE - Start
 #define LANGUAGE_LEGALESE		"Legalese"
 // LEGALESE - End
