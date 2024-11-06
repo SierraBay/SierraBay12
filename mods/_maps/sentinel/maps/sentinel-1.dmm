@@ -8612,6 +8612,9 @@
 /obj/floor_decal/corner/blue{
 	dir = 5
 	},
+/obj/structure/panic_button{
+	pixel_y = 32
+	},
 /turf/simulated/floor/tiled/dark,
 /area/ship/patrol/command/bridge)
 "ya" = (

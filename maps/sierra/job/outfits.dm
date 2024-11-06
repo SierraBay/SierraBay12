@@ -252,6 +252,10 @@ Keeping them simple for now, just spawning with basic EC uniforms, and pretty mu
 	name = OUTFIT_JOB_NAME("Xenosurgeon")
 	uniform = /obj/item/clothing/under/rank/medical/scrubs/purple
 
+/singleton/hierarchy/outfit/job/sierra/crew/medical/senior/surgicalresident
+	name = OUTFIT_JOB_NAME("Surgical Resident")
+	uniform = /obj/item/clothing/under/rank/medical/scrubs
+
 /singleton/hierarchy/outfit/job/sierra/crew/medical/doctor
 	name = OUTFIT_JOB_NAME("Doctor")
 	uniform = /obj/item/clothing/under/rank/medical
@@ -532,3 +536,11 @@ Keeping them simple for now, just spawning with basic EC uniforms, and pretty mu
 /singleton/hierarchy/outfit/job/sierra/ert/leader
 	name = OUTFIT_JOB_NAME("ERT Leader - Sierra")
 	head = /obj/item/clothing/head/beret/centcom/captain
+
+/singleton/hierarchy/outfit/job/sierra/passenger/vagabond
+	name = OUTFIT_JOB_NAME("Vagabond - Sierra")
+	uniform = /obj/item/clothing/under/color/grey
+	l_ear = /obj/item/device/radio/headset
+	shoes = /obj/item/clothing/shoes/black
+	r_hand = /obj/item/crowbar/red
+	id_types = list(/obj/item/card/id/sierra/vagabond)

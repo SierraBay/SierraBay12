@@ -1,5 +1,8 @@
 /datum
-	var/gc_destroyed //Time when this object was destroyed.
+	/// Int. `world.time` when this datum was destroyed, or `GC_CURRENTLY_BEING_QDELETED` if currently being deleted. Controlled by `qdel()`.
+	var/gc_destroyed
+
+	/// Whether or not this datum is currently being processed, and by which subsystem. Controlled by the various `START_PROCESSING*()` and `STOP_PROCESSING*()` defines.
 	var/is_processing = FALSE
 
 	/// If this datum is pooled, the pool it belongs to.
@@ -7,6 +10,7 @@
 
 	/// If this datum is pooled, the last configurator applied (if any).
 	var/singleton/instance_configurator/instance_configurator
+
 //[SIERRA-ADD]
 	/**
 	  * Components attached to this datum
@@ -22,10 +26,15 @@
 	var/list/_listen_lookup
 	/// Lazy associated list in the structure of `target -> list(signal -> proctype)` that are run when the datum receives that signal
 	var/list/list/_signal_procs
+
+	/// Used to avoid unnecessary refstring creation in Destroy().
+	var/has_state_machine = FALSE
+
 //[/SIERRA-ADD]
 // Default implementation of clean-up code.
 // This should be overridden to remove all references pointing to the object being destroyed.
 // Return the appropriate QDEL_HINT; in most cases this is QDEL_HINT_QUEUE.
+
 /datum/proc/Destroy()
 	SHOULD_CALL_PARENT(TRUE)
 	SHOULD_NOT_SLEEP(TRUE)
@@ -58,11 +67,12 @@
 	//[/SIERRA-ADD]
 	GLOB.destroyed_event && GLOB.destroyed_event.raise_event(src)
 	cleanup_events(src)
-	var/list/machines = global.state_machines["\ref[src]"]
-	if (length(machines))
-		for (var/base_type in machines)
-			qdel(machines[base_type])
-		global.state_machines -= "\ref[src]"
+	if(has_state_machine)
+		var/list/machines = global.state_machines["\ref[src]"]
+		if(length(machines))
+			for(var/base_type in machines)
+				qdel(machines[base_type])
+			global.state_machines -= "\ref[src]"
 	if (instance_pool?.ReturnInstance(src))
 		return QDEL_HINT_IWILLGC
 	instance_configurator = null
@@ -90,6 +100,11 @@
 	for(var/target in _signal_procs)
 		UnregisterSignal(target, _signal_procs[target])
 
+/**
+ * The processing handler for this datum. Called regularly by the relevant subsystem defined by `is_processing`.
+ *
+ * Return `PROCESS_KILL` to tell the subsystem to stop processing this datum.
+ */
 /datum/proc/Process()
 	set waitfor = 0
 	return PROCESS_KILL
