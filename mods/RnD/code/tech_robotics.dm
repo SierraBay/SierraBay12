@@ -72,7 +72,7 @@
 	required_tech_levels = list()
 	cost = 2500
 
-	unlocks_designs = list("augment_circuitry","augment_nanounit","augment_wolverine","augment_blade","augment_powerfist","augment_booster_reflex","augment_booster_gunnery","augment_booster_muscles")
+	unlocks_designs = list("augment_circuitry","augment_nanounit","augment_wolverine","augment_blade","augment_powerfist","augment_booster_reflex","augment_booster_gunnery","augment_booster_muscles","augment_armor")
 
 /datum/technology/robo/adv_hardsuits
 	name = "Advanced Hardsuits Mods"

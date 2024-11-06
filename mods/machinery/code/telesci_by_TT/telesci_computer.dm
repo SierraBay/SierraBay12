@@ -40,7 +40,6 @@
 
 /obj/machinery/computer/telescience/examine(mob/user)
 	. = ..()
-	
 	to_chat(user, "There are [xlen ? xlen : "no"] bluespace crystal\s in the crystal slots.")
 
 /obj/machinery/computer/telescience/Initialize()
@@ -59,6 +58,7 @@
 		crystals += W
 		W.forceMove(null)
 		user.visible_message("[user] inserts [W] into \the [src]'s crystal slot.", "<span class='notice'>You insert [W] into \the [src]'s crystal slot.</span>")
+		xlen = LAZYLEN(crystals)
 		updateDialog()
 	else if(istype(W, /obj/item/device/gps))
 		if(!inserted_gps)
@@ -342,6 +342,7 @@
 	for(var/obj/item/I in crystals)
 		I.forceMove(src.loc)
 		crystals -= I
+	xlen = LAZYLEN(crystals)
 	power = 0
 
 /obj/machinery/computer/telescience/Topic(href, href_list)
