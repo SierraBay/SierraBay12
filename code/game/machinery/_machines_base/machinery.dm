@@ -216,20 +216,17 @@
 			return TOPIC_HANDLED
 
 	. = ..()
-	if(isAI(usr))
-		//[SIERRA-ADD] - AI-UPDATE
-		//Здесь мы будем овверрайдить решение кода свыше. Давайте проверим, есть ли у нас доступ проводом?
-		//(Технически это костыль, вместо того чтоб вмешиваться в CanUseTopic и глубже в код, мы перебьём)
-		//Значение на нужное нам. ИИ сможет взаимодействовать с обьектами, если они вне доступа камер
+	//[SIERRA-ADD] - AI-UPDATE
+	if(isAI(usr)) //Оверрайд для ИИ, ему всегда обновляет УИ
 		if(istype(src, /obj/machinery/door/airlock))
 			var/obj/machinery/door/airlock/door = src
 			if(door.CanAIUseTopic(usr))
 				updateUsrDialog()
 				return FALSE
-		//[SIERRA-ADD]
 		else
 			updateUsrDialog()
 			return FALSE
+	//[SIERRA-ADD]
 	if(. == TOPIC_REFRESH)
 		updateUsrDialog() // Update legacy UIs to the extent possible.
 

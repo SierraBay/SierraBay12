@@ -122,7 +122,13 @@
 #define rustg_file_seek_line(fname, line) RUSTG_CALL(RUST_G, "file_seek_line")(fname, "[line]")
 
 #ifdef RUSTG_OVERRIDE_BUILTINS
+	/*
+	//Данная строка почему-то работает НЕВЕРНО и если выполнить map templace upload, получаем ""
+	//Понятия не имею как работает rust_g и не вижу смысла тратить на это время
+	//Если хотите найти причину и всё исправить - велкам
+	//Стандартная функция бьёнда не выдаёт подобных фокусов
 	#define file2text(fname) rustg_file_read("[fname]")
+	*/
 	#define text2file(text, fname) rustg_file_append(text, "[fname]")
 	#define fexists(fname) (rustg_file_exists("[fname]") == "true")
 #endif

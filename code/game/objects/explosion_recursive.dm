@@ -1,7 +1,4 @@
-
-
-
-
+/*
 var/global/list/explosion_turfs = list()
 
 var/global/explosion_in_progress = 0
@@ -148,3 +145,4 @@ var/global/explosion_in_progress = 0
 		return 0
 	else
 		return ..()
+*/

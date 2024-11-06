@@ -147,7 +147,7 @@ GLOBAL_DATUM_INIT(ninjas, /datum/antagonist/ninja, new)
 			directive += "There are no special supplemental instructions at this time."
 	return directive
 
-
+// [sierra-edit]
 /obj/item/selection/ninja
 	name = "loadout selection kit"
 	desc = "A secure box containing standard operation kit for special forces operatives."
@@ -156,5 +156,6 @@ GLOBAL_DATUM_INIT(ninjas, /datum/antagonist/ninja, new)
 		"Gilgameshi Commando" = /obj/structure/closet/crate/ninja/gcc,
 		"Syndicate Mercenary" = /obj/structure/closet/crate/ninja/merc,
 		"Corporate Operative" = /obj/structure/closet/crate/ninja/corpo,
-		"Spider-Clan Ninja" = /obj/structure/closet/crate/ninja
+		"Spider-Clan Ninja" = /obj/structure/closet/crate/ninja/reborn
 	)
+// [sierra-edit-end]
