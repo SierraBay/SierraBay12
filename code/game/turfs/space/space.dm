@@ -65,7 +65,7 @@
 		return
 
 	//We only need starlight on turfs adjacent to dynamically lit turfs, for example space near bulkhead
-	for (var/turf/T in RANGE_TURFS(src, 1))
+	for (var/turf/T as anything in RANGE_TURFS(src, 1))
 		if (!isloc(T.loc) || !TURF_IS_DYNAMICALLY_LIT_UNSAFE(T))
 			continue
 
