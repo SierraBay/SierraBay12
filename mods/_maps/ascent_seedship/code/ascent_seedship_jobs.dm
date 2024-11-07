@@ -3,10 +3,10 @@
 
 /datum/submap/ascent_inf/sync_cell(obj/overmap/visitable/cell)
 	return
-/*
+
 // Rename procs are already implemented in Ascent Caulship
 /mob/living/carbon/human/proc/gyne_rename_lineage_inf()
-	set name = "Name Nest-Lineage"
+	set name = "Name Nest-Lineage — Seedship"
 	set category = "IC"
 	set desc = "Rename yourself and your alates."
 
@@ -46,13 +46,13 @@
 	verbs -= /mob/living/carbon/human/proc/gyne_rename_lineage_inf
 
 /mob/living/carbon/human/proc/serpentid_namepick_inf()
-	set name = "Choose a name"
+	set name = "Choose a name — Seedship"
 	set category = "IC"
 	set desc = "Rename yourself."
 
-	if(mind && istype(mind.assigned_job, /datum/job/submap/ascent))
-		var/datum/job/submap/ascent/ascent_job = mind.assigned_job
-		var/datum/submap/ascent/cutter = ascent_job.owner
+	if(mind && istype(mind.assigned_job, /datum/job/submap/ascent_inf))
+		var/datum/job/submap/ascent_inf/ascent_job = mind.assigned_job
+		var/datum/submap/ascent_inf/cutter = ascent_job.owner
 		if(istype(cutter))
 			if(!mind || mind.assigned_job != ascent_job)
 				return
@@ -71,7 +71,7 @@
 				fully_replace_character_name("[new_name]")
 
 	verbs -= /mob/living/carbon/human/proc/serpentid_namepick_inf
-*/
+
 // Jobs.
 /datum/job/submap/ascent_inf
 	title = "Ascent gyne"
@@ -117,16 +117,16 @@
 	switch(H.species.name)
 		if(SPECIES_MANTID_GYNE)
 			H.real_name = "[random_id(/datum/species/mantid, 1, 99)] [cutter.gyne_name]"
-			H.verbs |= /mob/living/carbon/human/proc/gyne_rename_lineage
+			H.verbs |= /mob/living/carbon/human/proc/gyne_rename_lineage_inf
 		if(SPECIES_MANTID_ALATE)
 			var/new_alate_number = is_species_whitelisted(H, SPECIES_MANTID_GYNE) ? random_id(/datum/species/mantid, 1000, 9999) : random_id(/datum/species/mantid, 10000, 99999)
 			H.real_name = "[new_alate_number] [cutter.gyne_name]"
 		if(SPECIES_MONARCH_WORKER)
 			H.real_name = "[TYPE_PROC_REF(/singleton/cultural_info/culture/ascent, create_worker_name)]"
-			H.verbs |= /mob/living/carbon/human/proc/serpentid_namepick
+			H.verbs |= /mob/living/carbon/human/proc/serpentid_namepick_inf
 		if(SPECIES_MONARCH_QUEEN)
 			H.real_name = "["Queen "][TYPE_PROC_REF(/singleton/cultural_info/culture/ascent, create_queen_name)]"
-			H.verbs |= /mob/living/carbon/human/proc/serpentid_namepick
+			H.verbs |= /mob/living/carbon/human/proc/serpentid_namepick_inf
 	H.name = H.real_name
 	if(H.mind)
 		H.mind.name = H.real_name
