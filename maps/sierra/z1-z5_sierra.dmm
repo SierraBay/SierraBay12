@@ -42662,7 +42662,7 @@
 	icon_state = "1-2"
 	},
 /obj/landmark/start{
-	name = "Stowaway"
+	name = "Unknown"
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/seconddeck/hangar)
@@ -50224,7 +50224,7 @@
 "hsY" = (
 /obj/decal/cleanable/dirt,
 /obj/landmark/start{
-	name = "Stowaway"
+	name = "Unknown"
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/maintenance/abandoned_hydroponics)
@@ -59540,7 +59540,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/landmark/start{
-	name = "Stowaway"
+	name = "Unknown"
 	},
 /turf/simulated/floor/tiled,
 /area/maintenance/seconddeck/aftstarboard)
@@ -91465,7 +91465,7 @@
 /area/security/sierra/armory/lobby)
 "nwZ" = (
 /obj/landmark/start{
-	name = "Stowaway"
+	name = "Unknown"
 	},
 /turf/simulated/floor/wood/walnut,
 /area/maintenance/firstdeck/aftstarboard)
