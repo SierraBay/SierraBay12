@@ -1,0 +1,5 @@
+author: RocheHendson
+changes:
+  - {tweak: Seedship теперь имеет должности для захода}
+  - {tweak: Seedship командование теперь может поставить имя своему наследию}
+delete-after: true
