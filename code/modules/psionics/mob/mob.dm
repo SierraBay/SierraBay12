@@ -13,10 +13,10 @@
 	. = ..()
 
 /mob/living/proc/set_psi_rank(faculty, rank, take_larger, defer_update, temporary)
-	if(!src.zone_sel)
-		to_chat(src, SPAN_NOTICE("You feel something strange brush against your mind... but your brain is not able to grasp it."))
-		return
 	if(!psi)
+		if(!zone_sel)
+			to_chat(src, SPAN_NOTICE("You feel something strange brush against your mind... but your brain is not able to grasp it."))
+			return
 		psi = new(src)
 	var/current_rank = psi.get_rank(faculty)
 	if(current_rank != rank && (!take_larger || current_rank < rank))
