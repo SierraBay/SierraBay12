@@ -1,0 +1,4 @@
+author: Shegar
+changes:
+  - {bugfix: Минификсик для гитхаба}
+delete-after: true
