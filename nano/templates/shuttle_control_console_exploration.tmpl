@@ -77,6 +77,9 @@
 	<span class="average">{{:data.destination_name}}</span>
 	<div class="item">
 		{{:helper.link('Choose Destination', 'arrowreturn-1-s', {'pick' : '1'}, data.can_pick ? null : 'disabled' , null)}}
+		{{if data.skilled_enough}}
+			{{:helper.link('Advanced Landing', 'arrowreturn-1-s', {'advancedpick' : '1'}, data.can_pick ? null : 'disabled' , null)}}
+		{{/if}}
 	</div>
 </div>
 {{if data.fuel_usage}}

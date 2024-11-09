@@ -17223,6 +17223,9 @@
 	pixel_y = 1;
 	pixel_x = -2
 	},
+/obj/structure/panic_button{
+	pixel_x = 32
+	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/guppy_hangar/start)
 "cCD" = (
@@ -19794,6 +19797,7 @@
 	name = "Docking Port Airlock"
 	},
 /obj/floor_decal/industrial/hatch/yellow,
+/obj/shuttle_landmark/ascent_seedship_inf/sierra/two,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/crew_quarters/docking)
 "cUR" = (
@@ -42644,6 +42648,24 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/bridge)
+"gkh" = (
+/obj/structure/catwalk,
+/obj/floor_decal/borderfloor{
+	dir = 4
+	},
+/obj/floor_decal/industrial/danger{
+	dir = 4
+	},
+/obj/structure/cable/green{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/landmark/start{
+	name = "Stowaway"
+	},
+/turf/simulated/floor/plating,
+/area/maintenance/seconddeck/hangar)
 "gki" = (
 /obj/floor_decal/industrial/hatch/yellow,
 /obj/structure/cable/green{
@@ -50201,6 +50223,9 @@
 /area/quartermaster/expedition/storage)
 "hsY" = (
 /obj/decal/cleanable/dirt,
+/obj/landmark/start{
+	name = "Stowaway"
+	},
 /turf/simulated/floor/tiled/monotile,
 /area/maintenance/abandoned_hydroponics)
 "hsZ" = (
@@ -59514,6 +59539,9 @@
 	dir = 6
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/landmark/start{
+	name = "Stowaway"
+	},
 /turf/simulated/floor/tiled,
 /area/maintenance/seconddeck/aftstarboard)
 "iNN" = (
@@ -69828,6 +69856,9 @@
 	dir = 8
 	},
 /obj/structure/table/steel,
+/obj/structure/panic_button{
+	pixel_x = -32
+	},
 /turf/simulated/floor/tiled/monotile,
 /area/exploration_shuttle/cockpit)
 "kpk" = (
@@ -91433,6 +91464,9 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/security/sierra/armory/lobby)
 "nwZ" = (
+/obj/landmark/start{
+	name = "Stowaway"
+	},
 /turf/simulated/floor/wood/walnut,
 /area/maintenance/firstdeck/aftstarboard)
 "nxq" = (
@@ -128767,6 +128801,12 @@
 "sSX" = (
 /turf/simulated/wall/r_wall/hull,
 /area/crew_quarters/lounge/upper)
+"sTa" = (
+/obj/machinery/door/firedoor,
+/obj/wallframe_spawn/reinforced/hull,
+/obj/shuttle_landmark/ascent_seedship_inf/sierra,
+/turf/simulated/floor/plating,
+/area/hallway/primary/fourthdeck/center)
 "sTh" = (
 /obj/structure/cable/green{
 	d1 = 1;
@@ -160303,6 +160343,7 @@
 /obj/machinery/shield_diffuser,
 /obj/floor_decal/industrial/hatch/yellow,
 /obj/shuttle_landmark/sierra/deck4/skrellshuttle,
+/obj/shuttle_landmark/ascent_caulship/sierra,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/hallway/primary/fourthdeck/center)
 "xIl" = (
@@ -179840,7 +179881,7 @@ nrC
 eoT
 efZ
 cBk
-eoT
+sTa
 wJN
 wJN
 wJN
@@ -271509,7 +271550,7 @@ nab
 oGD
 tOw
 mRk
-mRk
+gkh
 tqL
 wek
 xno
