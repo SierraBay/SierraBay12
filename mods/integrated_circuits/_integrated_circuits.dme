@@ -7,5 +7,6 @@
 #include "code/pai.dm"
 #include "code/input.dm"
 #include "code/manipulation.dm"
+#include "code/size_converter.dm"
 
 #endif
