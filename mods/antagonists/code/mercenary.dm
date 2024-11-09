@@ -524,3 +524,70 @@ Used for quick dress-up. Also comes with several discount
 		/obj/item/rig_module/vision,
 		/obj/item/rig_module/cooling_unit
 		)
+
+
+/obj/machinery/button/alternate/pod_doors_explodey
+	name = "Explode pod door"
+
+	var/burst = 4
+	var/notbeenactivated = TRUE
+
+/obj/machinery/button/alternate/pod_doors_explodey/activate(mob/living/user)
+	if(notbeenactivated)
+		door_activate()
+		notbeenactivated = FALSE
+	else
+		to_chat(usr, SPAN_WARNING("The hullbreaker is already been used."))
+
+/obj/machinery/button/alternate/pod_doors_explodey/proc/door_activate()
+	for(burst; burst >= 0; burst -= 1)
+		var/obj/item/projectile/proj = new /obj/item/projectile/beam/hullbreaker(get_turf(src))
+		proj.launch( get_step(loc, src.dir) )
+
+
+
+/obj/item/projectile/beam/hullbreaker
+	name = "hullbreaker"
+	icon_state = "omnilaser"
+	fire_sound = 'sound/weapons/railgun.ogg'
+	damage = 600
+	armor_penetration = 100
+	edge = TRUE
+	damage_type = DAMAGE_EXPLODE
+	life_span = 4
+	pass_flags = PASS_FLAG_TABLE
+	distance_falloff = 4
+
+	muzzle_type = /obj/projectile/pointdefense/muzzle
+	tracer_type = /obj/projectile/pointdefense/tracer
+	impact_type = /obj/projectile/pointdefense/impact
+/*
+/obj/item/projectile/beam/hullbreaker/on_hit(atom/A)
+	. = ..()
+	if(A.density)
+		A.ex_act(EX_ACT_DEVASTATING)
+		playsound(src.loc, 'sound/effects/meteorimpact.ogg', 40, 1)
+		for(var/mob/H in range(10, src))
+			if(!H.stat && !istype(H, /mob/living/silicon/ai))\
+				shake_camera(H, 3, 1)
+		qdel(src)*/
+/*
+/obj/item/projectile/beam/hullbreaker/Bump(atom/A)
+	. = ..()
+	if(A.density)
+		A.ex_act(EX_ACT_DEVASTATING)
+		playsound(src.loc, 'sound/effects/meteorimpact.ogg', 40, 1)
+		for(var/mob/H in range(10, src))
+			if(!H.stat && !istype(H, /mob/living/silicon/ai))\
+				shake_camera(H, 3, 1)
+		qdel(src)*/
+
+/obj/item/projectile/beam/hullbreaker/on_impact(atom/A)
+	. = ..()
+	if(A.density)
+		A.ex_act(EX_ACT_DEVASTATING)
+		playsound(src.loc, 'sound/effects/meteorimpact.ogg', 40, 1)
+		for(var/mob/H in range(10, src))
+			if(!H.stat && !istype(H, /mob/living/silicon/ai))\
+				shake_camera(H, 3, 1)
+		qdel(src)
