@@ -1,3 +1,6 @@
+/datum/antagonist/mercenary
+	initial_spawn_target = 5
+
 /obj/item/storage/dufflebag/heavy/syndie
 	name = "Heavy gorlex bag"
 	desc = "it looks too bulky and bloody"

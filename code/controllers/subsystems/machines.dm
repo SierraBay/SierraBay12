@@ -36,7 +36,6 @@ if(Datum.is_processing) {\
 
 SUBSYSTEM_DEF(machines)
 	name = "Machines"
-	wait = 3 SECONDS
 	init_order = SS_INIT_MACHINES
 	priority = SS_PRIORITY_MACHINERY
 	flags = SS_KEEP_TIMING
