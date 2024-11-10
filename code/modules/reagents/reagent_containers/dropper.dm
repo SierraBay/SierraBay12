@@ -29,9 +29,6 @@
 		var/trans = 0
 
 		if(ismob(target))
-			if(user.a_intent == I_HELP)
-				return TRUE
-
 			var/time = 20 //2/3rds the time of a syringe
 			user.visible_message(SPAN_WARNING("[user] is trying to squirt something into [target]'s eyes!"))
 
