@@ -239,7 +239,7 @@
 		var/turf/T = locate(eyeturf.x + coords[1], eyeturf.y + coords[2], eyeturf.z)
 		var/area/A = get_area(T)
 		I.loc = T
-		if(!(T.density) && (((A.type in accesible_areas)) | (typesof(A) in accesible_areas)))
+		if(!(T.density) && (((A.type in accesible_areas)) | (typesof(A.type) in accesible_areas)))
 			I.icon_state = "blue"
 		else
 			I.icon_state = "red"
