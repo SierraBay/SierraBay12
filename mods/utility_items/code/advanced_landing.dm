@@ -43,7 +43,7 @@
 	if(!usr)
 		return
 	operator_skill = usr.get_skill_value(SKILL_PILOT)
-	if (operator_skill >= SKILL_EXPERIENCED)
+	if (operator_skill >= SKILL_EXPERIENCED && !(istype(usr, /mob/living/silicon/ai)))
 		skilled_enough = TRUE
 	else
 		skilled_enough = FALSE
@@ -163,6 +163,7 @@
 // ______________________________________________________________
 
 /obj/machinery/computer/shuttle_control/explore/
+
 	var/landmarkx_off
 	var/landmarky_off
 	//Лучше способа не придумал, поэтому если check_zone шаттла захватывает территории, больше чем надо, то пихаем консоль этого шаттла, в список
@@ -175,7 +176,8 @@
 	/obj/machinery/computer/shuttle_control/explore/graysontug/hand_one,
 	/obj/machinery/computer/shuttle_control/explore/pod_hand_one,
 	/obj/machinery/computer/shuttle_control/explore/pod_hand_two,
-	/obj/machinery/computer/shuttle_control/explore/graysontug/hand_two
+	/obj/machinery/computer/shuttle_control/explore/graysontug/hand_two,
+	/obj/machinery/computer/shuttle_control/explore/merc_shuttle,
 	)
 
 	//Списки куда разрешена посадка
@@ -237,7 +239,7 @@
 		var/turf/T = locate(eyeturf.x + coords[1], eyeturf.y + coords[2], eyeturf.z)
 		var/area/A = get_area(T)
 		I.loc = T
-		if(!(T.density) && ((A.type in accesible_areas)))
+		if(!(T.density) && (((A.type in accesible_areas)) | (typesof(A) in accesible_areas)))
 			I.icon_state = "blue"
 		else
 			I.icon_state = "red"
@@ -275,7 +277,6 @@
 	SetName(initial(name))
 
 
-
 /obj/shuttle_landmark/ship/advancedlandmark/Initialize(mapload, obj/shuttle_landmark/ship/master, _name)
 	landmark_tag = "_[shuttle_name] [rand(1,99999)]"
 	. = ..()
@@ -295,3 +296,11 @@
 						var/turf/T = locate(eyeturf.x + c.landmarkx_off, eyeturf.y + c.landmarky_off , eyeturf.z)
 						landmark = new (T, src)
 						c.shuttle_type.set_destination(landmark)
+
+/turf
+	var/prev_type
+
+/turf/ChangeTurf(turf/N, tell_universe = TRUE, force_lighting_update = FALSE, keep_air = FALSE)
+	.=..()
+	var/old_prev_type = prev_type
+	prev_type = old_prev_type
