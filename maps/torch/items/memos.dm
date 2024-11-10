@@ -177,6 +177,17 @@
 	name = "fleet rank abbreviations"
 	info = {"Some "internal use only" reports on proper and improper ways of abbreviating fleet ranks and roles, including emphasis that "sub" is NOT an authorized way, shorthand or otherwise, to refer to sub lieutenant."}
 
+<<<<<<< ours
+=======
+/obj/item/paper/memo/generic/misuseofcom
+	name = "misuse of communications"
+	info = {"Some "internal use only" reports on telecommunications use, reminding personnel that all telecommunications data is automatically relayed to command upon its transcription to the server, and that if you don't want command to hear something, don't say it on radio or in emails."}
+
+/obj/item/paper/memo/generic/identificationissues
+	name = "your xeno crew members and you"
+	info = {"An at-length article with multiple images of well-meaning charts and comparing images on how to respectfully refer to xeno crewmembers, and that the expectations on what gender they may be will be different from human expectations. It is seemingly bulletproof, up until you reach the lines regarding increasingly esoteric (and invasive) methods of deciding what pronouns to use for them, when it would be easier to just ask or look for them on their IDs cards."}
+
+>>>>>>> theirs
 
 // scgr memos
 
@@ -301,6 +312,10 @@
 
 
 
+/obj/item/paper/memo/command/testing
+	name = "research testing complaints"
+	info = {"A growing stack of interdepartmental complaints from various members of the Engineering department concerning the repeated instances of explosives testing in the Science department aboard the ship. It heavily implies that should further occurances of damage to the Vessel take place, engineering staff may "cause bureaucratic barricades". A handwritten note at the bottom of the memo from the Chief of Security advises heavy handed legal consequences for those involved with testing in the event of future explosive related incidents to prevent "understandable yet annoying actions" from the engineering department in the form of more paperwork.."}
+
 // supply memos
 
 /obj/item/paper/memo/supply/skrellcookery
@@ -390,6 +405,23 @@
 /obj/item/paper/memo/engineering/bsddamage
 	name = "\improper Bluespace drive safety notice"
 	info = {"A "confidential" memo from Krri'gli Engineering regarding the new Bluespace drive. It explains in very slow and simple language that this is a "Bluespace drive", a very expensive and volatile piece of machinery, and that you should not break this one or remove the exotic particle shielding. The author does not appear to have a very high opinion of human engineering or mental faculties."}
+
+
+/obj/item/paper/memo/engineering/researchbombs
+	name = "testing complaint"
+	info = {"A draft of an "internal use only" memo from the Chief Engineer about repeated instances of Researchers testing explosives in the Misc Lab, resulting in damage to the vessel's thruster fuel storage tank. It states that should this keep happening, legal action will need to be taken against those testing to prevent the engineering staff from 'drowning the system in paperwork'."}
+
+/obj/item/paper/memo/engineering/slowstart
+	name = "slow power setup"
+	info = {"An "internal use only" report on complaints about failures to meet Engine Startup standards has led to Torch maneuvers being delayed, power outages in critical areas of the ship, and damage going unrepaired due to power setup still being performed late in the shift. It goes on to recommend Engineering set up reliable power generation and distribution before undertaking any non-standard modifications."}
+
+/obj/item/paper/memo/engineering/obtusecomms
+	name = "obtuse radio communications"
+	info = {"An "internal use only" report on complaints about obtuse and confusing radio abbreviation and protocols created by members of Engineering. The writer goes on at great length how slowing comms down to use ridiculous abbreviations and shorthand is not helpful, and that nonstandard radio etiquette is not required due to the clarity and use-case of the Torch's communication suite. It asks Engineering to talk normally and use common shorthand, but it highlights the rising use of Non-ZAC communications on net with another, less lengthy complaint. The author ends by asking why their nickname is 'NUB'"}
+
+/obj/item/paper/memo/engineering/browsinghabits
+	name = "intranet browsing methods"
+	info = {"An "internal use only" memo sent from the Chief Engineer, regarding the use of the Torch's local intranet and the brief periods when the vessel is in range of access to the extranet. It notes that, while information is freely available online, that all of these queries are logged as a mandatory security measure, and unsubtly hints that some crew members are racking up increasingly alarming browsing habits. It notes some ranging from how to bootleg chemicals, how to create bombs or homemade firearms, to accessing Wetskrell during shift hours."}
 
 
 // medical memos
@@ -498,6 +530,9 @@
 	name = "pioneers and you"
 	info = {"An "internal use only" memo detailing proper ettiquette for explorers interacting with Terran Pioneer Corps personnel. It stresses very heavily that yes, most Terrans do speak ZAC; no, you should not share your funny Pan-Slavic impression; and no, you should ABSOLUTELY not ask if they know any war criminals."}
 
+/obj/item/paper/memo/exploration/mice
+	name = "invasive species and shuttles"
+	info = {"Some "internal use only" documents that discuss the introduction of invasive species to terraformed or near-earth exoplanets through negligence and improper vermin control onboard spaceships. The document focuses almost exclusively on species that originate from Earth, with a highlight on Mice. Inspections of Hangar Bays, Landing Shuttles and Cargo is paramount to preventing an introduction of Invasive species. The author cites a report about the Charon landing while harboring an infestation of mice, and the ecological devastation that followed. "}
 
 // research memos
 
@@ -612,3 +647,19 @@
 /obj/item/paper/memo/security/extremism
 	name = "anti-radicalization pamphlet"
 	info = {"An "internal use only" document detailing strategies for identifying signs and risk factors for radicalization, created in light of perceived extremism in the SCGF. It discusses low self-esteem, stress, marginalization, repeat disciplinary issues, and excessive interest in weaponry."}
+<<<<<<< ours
+=======
+
+/obj/item/paper/memo/security/useofforce
+	name = "use of force complaint"
+	info = {"An inter-departmental memo from the Chief Medical Officer to the Chief of Security and Brig Chief about the amount of detainees treated for injuries "far greater then would be needed" following their detainment. It has a quite graphic description of a crewmember who's legs were broken for simply walking away from a master at arms."}
+
+/obj/item/paper/memo/security/testing
+	name = "research testing notice"
+	info = {"An inter-departmental memo from the Chief Engineer, co-signed by the Seinor Enlisted Advisor conserning repeated instances of the research department testing explosive devices aboard the vessel. Attached is a copy of the vessel's SOP pertaining to research operations, with in big bold letters "Testing of any explosives with risk of penetrating the hull or causing mass destruction must be done at an away site." with a note that the testing aboard has repeatedly caused damage to the thruster fuel storage tank, and that engineering staff are 'prepared to file as much paperwork that is required'."}
+
+/obj/item/paper/memo/security/goodcomms
+	name = "security comm report"
+	info = {"An "internal use only" report created by mid-level EXO Security Officers, complimenting Torch for their effective, direct and information focused radio-communication. The author mentions an abbreviation table from years ago that is no longer used. It ends by gently reminding members that gossiping in person is fine, but not to do it in recorded rooms like interrogation."}
+
+>>>>>>> theirs
