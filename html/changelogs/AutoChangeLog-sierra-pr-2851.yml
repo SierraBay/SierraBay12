@@ -1,0 +1,6 @@
+author: Lexanx
+changes:
+  - {bugfix: Баг взаимодействия синтетов}
+  - {bugfix: Некорректная зона меркшипа}
+  - {bugfix: Пофикшена кража тюрфов при взлете}
+delete-after: true

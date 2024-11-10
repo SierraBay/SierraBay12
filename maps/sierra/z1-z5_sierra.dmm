@@ -20102,6 +20102,8 @@
 	dir = 5
 	},
 /obj/floor_decal/industrial/outline/yellow,
+/obj/item/clothing/gloves/anomaly_detector,
+/obj/item/storage/bolt_bag/full_of_beacons,
 /turf/simulated/floor/tiled,
 /area/quartermaster/expedition)
 "cXD" = (
@@ -30422,6 +30424,7 @@
 /obj/floor_decal/borderfloor,
 /obj/floor_decal/corner/brown/border,
 /obj/floor_decal/industrial/outline/yellow,
+/obj/item/beacon_deployer/full,
 /turf/simulated/floor/tiled,
 /area/quartermaster/expedition)
 "etS" = (
@@ -42662,7 +42665,7 @@
 	icon_state = "1-2"
 	},
 /obj/landmark/start{
-	name = "Stowaway"
+	name = "Unknown"
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/seconddeck/hangar)
@@ -50224,7 +50227,7 @@
 "hsY" = (
 /obj/decal/cleanable/dirt,
 /obj/landmark/start{
-	name = "Stowaway"
+	name = "Unknown"
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/maintenance/abandoned_hydroponics)
@@ -59540,7 +59543,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/landmark/start{
-	name = "Stowaway"
+	name = "Unknown"
 	},
 /turf/simulated/floor/tiled,
 /area/maintenance/seconddeck/aftstarboard)
@@ -91465,7 +91468,7 @@
 /area/security/sierra/armory/lobby)
 "nwZ" = (
 /obj/landmark/start{
-	name = "Stowaway"
+	name = "Unknown"
 	},
 /turf/simulated/floor/wood/walnut,
 /area/maintenance/firstdeck/aftstarboard)
@@ -103796,16 +103799,17 @@
 	},
 /obj/item/shuttle_beacon,
 /obj/item/shuttle_beacon,
-/obj/item/stack/flag/yellow,
-/obj/item/stack/flag/yellow,
-/obj/item/stack/flag/teal,
-/obj/item/stack/flag/teal,
-/obj/item/stack/flag/red,
-/obj/item/stack/flag/red,
-/obj/item/stack/flag/green,
-/obj/item/stack/flag/green,
+/obj/item/beacon_deployer/full,
 /obj/item/stack/flag/blue,
 /obj/item/stack/flag/blue,
+/obj/item/stack/flag/green,
+/obj/item/stack/flag/green,
+/obj/item/stack/flag/red,
+/obj/item/stack/flag/red,
+/obj/item/stack/flag/teal,
+/obj/item/stack/flag/yellow,
+/obj/item/stack/flag/teal,
+/obj/item/stack/flag/yellow,
 /turf/simulated/floor/tiled/techfloor,
 /area/quartermaster/exploration/eva)
 "pnI" = (
