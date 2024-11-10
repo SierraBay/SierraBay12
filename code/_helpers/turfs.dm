@@ -160,9 +160,9 @@
 				ChangeArea(target, get_area(source))
 				ChangeArea(source, base_area)
 			transport_turf_contents(source, target)
-//[SIERRA-EDIT] Advanced Landing
 	//change the old turfs
 	for(var/turf/source in translation)
+//[SIERRA-EDIT] Advanced Landing
 		var/old_turf = source.prev_type || base_turf || get_base_turf_by_area(source)
 		source.ChangeTurf(old_turf)
 //[/SIERRA-EDIT] Advanced Landing

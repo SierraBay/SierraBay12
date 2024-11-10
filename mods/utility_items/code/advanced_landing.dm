@@ -238,9 +238,16 @@
 		var/list/coords = image_cache[I]
 		var/turf/T = locate(eyeturf.x + coords[1], eyeturf.y + coords[2], eyeturf.z)
 		var/area/A = get_area(T)
+		var/zone_good = FALSE
 		I.loc = T
-		if(!(T.density) && (((A.type in accesible_areas)) | (typesof(A.type) in accesible_areas)))
-			I.icon_state = "blue"
+		if(!(T.density))
+			for(var/type in accesible_areas)
+				if(A.type in typesof(type))
+					zone_good = TRUE
+			if(zone_good)
+				I.icon_state = "blue"
+			else
+				I.icon_state = "red"
 		else
 			I.icon_state = "red"
 			landable = FALSE
