@@ -102,6 +102,7 @@ var/global/list/admin_verbs_admin = list(
 	/client/proc/check_fax_history,
 	/client/proc/cmd_admin_notarget,
 	/datum/admins/proc/SetRoundLength,
+	/datum/admins/proc/SetMaximumRoundLength,
 	/datum/admins/proc/ToggleContinueVote,
 	/datum/admins/proc/togglemoderequirementchecks,
 	/client/proc/delete_crew_record
