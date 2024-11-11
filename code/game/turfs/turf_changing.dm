@@ -105,7 +105,7 @@
 		recalc_atom_opacity()
 		lighting_overlay = old_lighting_overlay
 		affecting_lights = old_affecting_lights
-		if (old_opacity != opacity || dynamic_lighting != old_dynamic_lighting || force_lighting_update)
+		if (old_opacity != opacity || dynamic_lighting != old_dynamic_lighting || z_flags != old_zflags || force_lighting_update)
 			reconsider_lights()
 			updateVisibility(src)
 
