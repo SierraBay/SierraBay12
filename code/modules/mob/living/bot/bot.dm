@@ -227,7 +227,7 @@
 
 	..(message, null, verb)
 
-/mob/living/bot/Bump(atom/A)
+/mob/living/bot/Bump(atom/A, called)
 	if(on && botcard && istype(A, /obj/machinery/door))
 		var/obj/machinery/door/D = A
 		if(!istype(D, /obj/machinery/door/firedoor) && !istype(D, /obj/machinery/door/blast) && D.check_access(botcard))
