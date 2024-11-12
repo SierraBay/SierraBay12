@@ -62,37 +62,22 @@
 	density = FALSE
 	alpha = 127
 	plane = OBSERVER_PLANE
+	simulated = FALSE
+	stat = CONSCIOUS
 	invisibility = INVISIBILITY_EYE
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	sight = SEE_TURFS
-	simulated = TRUE
-	stat = CONSCIOUS
-	status_flags = GODMODE
 	ghost_image_flag = GHOST_IMAGE_NONE
 	var/list/placement_images = list()
 	var/obj/machinery/computer/shuttle_control/explore/console_link
 	var/list/to_add = list()
-/*
-/mob/living/carbon/human/
-	var/list/obscured_turfs = list()
-*/
+
 /mob/living/carbon/human/update_dead_sight()
-	. = ..()
-	/*
-	var/area = seen_turfs_in_range(src.eyeobj, world.view)
-	var/image/O = image('icons/effects/cameravis.dmi', null, "black")*/
 	if(eyeobj.type == /mob/observer/eye/landeye)
-		set_sight(BLIND|SEE_TURFS)
 		set_see_in_dark(8)
 		set_see_invisible(SEE_INVISIBLE_MINIMUM)
-		/*for(var/turf/simulated/t in area)
-			if(t in obscured_turfs)
-				return
-			if(!(t in list(/area/space)))
-				O.loc = t.loc
-				O.layer = TURF_LAYER
-				obscured_turfs[O] = t
-		client.images += obscured_turfs*/
+		set_sight(SEE_TURFS)
+
 
 /mob/observer/eye/landeye/proc/acquire_visible_turfs(list/visible)
 	for(var/turf/t in seen_turfs_in_range(src, world.view))
@@ -113,6 +98,7 @@
 		owner.verbs |= /mob/living/proc/extra_view
 		owner.verbs |= /mob/living/proc/cancel_landeye_view
 		owner.client.eye = src
+
 /mob/observer/eye/landeye/setLoc(T)
 	if(!owner)
 		return FALSE
