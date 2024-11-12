@@ -4,6 +4,7 @@
 
 /obj/anomaly/ventilyator
 	name = "air flows"
+	anomaly_tag = "Vent"
 	with_sound = TRUE
 	sound_type = 'mods/anomaly/sounds/tramplin.ogg'
 	idle_effect_type = "trampline_idle"

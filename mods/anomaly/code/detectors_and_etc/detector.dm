@@ -12,6 +12,8 @@
 	desc = "A complex technological device designed taking into account all possible dangers of anomalies."
 	icon = 'mods/anomaly/icons/detector.dmi'
 	icon_state = "detector_idle"
+	//Базовое название детектора используемое в коде смена иконок.
+	var/detector_basic_name = "detector"
 	action_button_name = "Scan anomalies"
 	var/last_peek_time = 0
 	var/peek_delay = 1 SECONDS
@@ -20,16 +22,16 @@
 	var/in_scanning = FALSE
 	var/last_scan_time = 0
 	var/result_tesla = FALSE
-	var/global_scan_cooldown = 300 SECONDS
-	var/last_global_scan = 0
+	//Некоторые детекторы могут вовсе не замечать некоторые аномалии. Укажите их теги, если потребутеся (Переменная anomaly_tag)
+	var/list/blacklisted_amomalies = list()
 
 /obj/item/clothing/gloves/anomaly_detector/proc/switch_toggle()
 	if(!is_processing)
-		to_chat(usr, SPAN_NOTICE("You turn on detector"))
+		to_chat(usr, SPAN_NOTICE("Вы включили детектор"))
 		START_PROCESSING(SSanom, src)
 		SSanom.processing_ammount++
 	else
-		to_chat(usr, SPAN_NOTICE("You turn off detector"))
+		to_chat(usr, SPAN_NOTICE("Вы выключили детектор"))
 		STOP_PROCESSING(SSanom, src)
 		SSanom.processing_ammount--
 
@@ -37,17 +39,9 @@
 /obj/item/clothing/gloves/anomaly_detector/attack_self(mob/living/user)
 	. = ..()
 	if(!is_processing)
-		to_chat(usr, SPAN_BAD("Device turned off"))
+		to_chat(usr, SPAN_BAD("Сперва включите устройство."))
 		return
 	try_found_anomalies(user)
-
-
-/obj/item/clothing/gloves/anomaly_detector/AltClick()
-	if(!is_processing)
-		to_chat(usr, SPAN_BAD("Device turned off"))
-		return
-	scan_z_level_for_anomalies(usr)
-	return TRUE
 
 /obj/item/clothing/gloves/anomaly_detector/CtrlClick(mob/user)
 	. = ..()
@@ -61,13 +55,13 @@
 /obj/item/clothing/gloves/anomaly_detector/on_update_icon()
 	.=..()
 	if(!in_tesla_range && !in_scanning)
-		icon_state = "detector_idle"
+		icon_state = "[detector_basic_name]_idle"
 	else if(in_tesla_range && !in_scanning)
-		icon_state = "detector_idle_and_peak"
+		icon_state = "[detector_basic_name]_idle_and_peak"
 	else if(!in_tesla_range && in_scanning)
-		icon_state = "detector_scanning"
+		icon_state = "[detector_basic_name]_scanning"
 	else if(in_tesla_range && in_scanning)
-		icon_state = "detector_scanning_and_peak"
+		icon_state = "[detector_basic_name]_scanning_and_peak"
 
 
 /obj/item/clothing/gloves/anomaly_detector/verb/scan_anomalies()
@@ -99,17 +93,16 @@
 
 /obj/item/clothing/gloves/anomaly_detector/examine(mob/user, distance, is_adjacent)
 	. = ..()
-	to_chat(user, SPAN_GOOD("Use LBM in anomaly scan mode for search anomalies, or use action button."))
-	to_chat(user, SPAN_GOOD("Use Alt + LBM to use more powerfull mode."))
-	to_chat(user, SPAN_GOOD("Use Cntrl + LBM to turn on/turn off device."))
+	to_chat(user, SPAN_GOOD("Жмите ЛКМ когда включен, для сканирования, или жмите на кнопку слева сверху."))
+	to_chat(user, SPAN_GOOD("Жмите Контрол + ЛКМ чтоб включить/выключить устройство."))
 
 ///Пользователь проводит поиск при помощи сканера
 /obj/item/clothing/gloves/anomaly_detector/proc/try_found_anomalies(mob/living/user)
 	if((user.r_hand != src && user.l_hand !=src) && (wearer && wearer.gloves != src) )
-		to_chat(user, SPAN_BAD("You cant reach device."))
+		to_chat(user, SPAN_BAD("Не дотягиваюсь до детектора."))
 		return
 	if(!user.skill_check(SKILL_SCIENCE, SKILL_BASIC))
-		to_chat(user, SPAN_BAD("I dont know how use this function of this device."))
+		to_chat(user, SPAN_BAD("Понятия не имею как им пользоваться."))
 		return
 	//Мы проверили, есть ли у пользователя базовый навык НАУКИ.
 	// Снижаем 1.2 секунды сканирования за каждый пункт науки у персонажа
@@ -132,6 +125,9 @@
 		//Список разрешённых для показа игроку аномалий
 		var/list/allowed_anomalies = list()
 		for(var/obj/anomaly/choosed_anomaly in objs)
+			//Если аномалия в блэклисте детектора - игнорируем аномалию
+			if(choosed_anomaly.anomaly_tag in blacklisted_amomalies)
+				continue
 			if(!choosed_anomaly.is_helper) //Вспомогательные части аномалий нас не интересуют
 				var/chance_to_find = (user_science_lvl * 20) - (100 - choosed_anomaly.chance_to_be_detected)
 				if(prob(chance_to_find))
@@ -150,28 +146,6 @@
 		usr.update_action_buttons()
 
 
-/obj/item/clothing/gloves/anomaly_detector/proc/scan_z_level_for_anomalies(mob/living/user)
-	if(in_scanning)
-		return
-	if((world.time - last_global_scan) < global_scan_cooldown)
-		to_chat(user, SPAN_BAD("Detector still isn't ready."))
-		return
-	last_global_scan = world.time
-	var/user_science_lvl = user.get_skill_value(SKILL_SCIENCE)
-	var/time_to_scan = (30 - (2 * user_science_lvl)) SECONDS
-	in_scanning = TRUE
-	update_icon()
-	usr.update_action_buttons()
-	if (do_after(user, time_to_scan, src, DO_DEFAULT | DO_USER_UNIQUE_ACT) && user)
-		in_scanning = FALSE
-		update_icon()
-		usr.update_action_buttons()
-		for(var/obj/anomaly/picked_anomaly in SSanom.all_anomalies_cores)
-			if(picked_anomaly.z == get_z(src))
-				to_chat(user, SPAN_BAD("Обнаружена аномальная активность."))
-				return TRUE
-		to_chat(user, SPAN_GOOD("Аномалий не обнаружено."))
-		return FALSE
 
 ///Показывает игроку аномалии, которые он обнаружил детектером
 /proc/show_anomalies(mob/living/viewer, flick_time, allowed_anomalies)

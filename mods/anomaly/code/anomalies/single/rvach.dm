@@ -5,6 +5,7 @@
 
 /obj/anomaly/rvach
 	name = "Refractions of light"
+	anomaly_tag = "Rvach"
 	with_sound = TRUE
 	sound_type = 'mods/anomaly/sounds/rvach_activation.ogg'
 	idle_effect_type = "rvach_idle"

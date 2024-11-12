@@ -1,5 +1,6 @@
 /obj/anomaly/tramplin
 	name = "Refractions of light"
+	anomaly_tag = "Tramp"
 	with_sound = TRUE
 	sound_type = 'mods/anomaly/sounds/tramplin.ogg'
 	idle_effect_type = "trampline_idle"
