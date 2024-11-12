@@ -20,11 +20,19 @@
 	ruin_tags_blacklist = RUIN_HABITAT|RUIN_WATER|RUIN_HOT_ANOMALIES|RUIN_ELECTRA_ANOMALIES
 	surface_color = "#a46610"
 	water_color = "#ffffff"
-	daycycle_range = list(2 HOURS, 3 HOURS)
-	daycycle = FALSE
+	daycycle_range = list(5 HOURS, 1 MINUTES)
+	//Вечный день
+	sun_position = 1
 	habitability_weight = HABITABILITY_EXTREME
 	has_trees = FALSE
-	flora_diversity = 0
+	flora_diversity = 5
+	//Следующие руины нам НЕ подойдут из-за того что на облакал они выглядят крайне убого
+	ruin_tags_blacklist = list(
+		"trash_heap",
+		"drill_site",
+		"skrell_biodome",
+		"exoplanet_oldlab"
+	)
 
 //Генерируем бэкграунд для островов. TODO: нарисовать очень красивый бэкграунд
 /obj/overmap/visitable/sector/exoplanet/flying/build_level()
@@ -43,6 +51,13 @@
 
 /obj/overmap/visitable/sector/exoplanet/flying/generate_map()
 	.=..()
+	//Обьявим генератор для спавна травушки
+	var/datum/random_map/noise/exoplanet/generator = pick(map_generators)
+	//Расставляем свет для облак
+	for(var/turf/cloud in planetary_area)
+		cloud.light_color = "#ffcc99"
+		cloud.light_range = 3
+		cloud.update_light()
 	//Находим Z планеты, создаём с ним список
 	var/turf/any_turf
 	for(var/turf/turfs in planetary_area)
@@ -85,6 +100,17 @@
 		LAZYREMOVE(list_of_turfs, current_turf)
 		if(failures_ammount == 100) //Как и в генераторе аномок, аварийно выйдет из цикла при слишком большом количестве "ошибок"
 			break
+	//Расставляем свет для самих островов. Будут чутка светится зелёненьким светом
+	for(var/turf/simulated/floor/exoplanet/grass/picked_flying_grass in planetary_area)
+		//Если в соседнем тайле нет облачек - подсветим турф
+		picked_flying_grass.light_color = "#a3c8a0"
+		picked_flying_grass.light_range = 2
+		picked_flying_grass.light_power = 2
+		picked_flying_grass.update_light()
+		//Высадим травушку на острова
+		if(prob(50))
+			generator.spawn_grass(picked_flying_grass)
+
 
 
 
@@ -106,15 +132,16 @@
 	descriptor = "flying islands"
 	smoothing_iterations = 5
 	land_type = /turf/simulated/floor/exoplanet/clouds
+	//Указываем облака так же и водой, чтоб трава не могла спавнить на них флору и травушку
+	water_type = /turf/simulated/floor/exoplanet/clouds
 	fauna_prob = 0
 	flora_prob = 0
-	large_flora_prob = 0
+	grass_prob = 50
 
 
 /area/exoplanet/flying
 	ambience = list('sound/effects/wind/tundra0.ogg','sound/effects/wind/tundra1.ogg','sound/effects/wind/tundra2.ogg','sound/effects/wind/spooky0.ogg','sound/effects/wind/spooky1.ogg')
 	base_turf = /turf/simulated/floor/exoplanet/clouds
-
 
 //Облачка
 /turf/simulated/floor/exoplanet/clouds
@@ -128,9 +155,10 @@
 
 /turf/simulated/floor/exoplanet/clouds/Entered(atom/movable/AM)
 	..()
-	if(locate(/obj/structure/catwalk) in src)
+	//Если обьект НЕ моб, НЕ предмет или прожектайл - игнор
+	if((!isliving(AM) && !isitem(AM)) || isprojectile(AM))
 		return
-	if(!isitem(AM) && !isliving(AM))
+	if(locate(/obj/structure/catwalk) in src)
 		return
 	if(isliving(AM))
 		var/mob/living/L = AM
