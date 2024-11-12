@@ -242,6 +242,43 @@
 	new painting_decal(F, painting_dir, painting_color)
 	return TRUE
 
+<<<<<<< ours
+=======
+/obj/item/device/paint_sprayer/proc/calc_paint_dir(mob/user, placement_mode, click_parameters, inversed)
+	if (!placement_mode)
+		return user.dir
+	if (istext(click_parameters)) // Borgs pass down click parameters in a string format
+		click_parameters = params2list(click_parameters)
+	var/mouse_x = text2num(click_parameters["icon-x"])
+	var/mouse_y = text2num(click_parameters["icon-y"])
+	switch (placement_mode)
+		if (PLACEMENT_MODE_QUARTERS)
+			// One case for each of the four quarters of a turf
+			if (mouse_x <= 16)
+				if (mouse_y <= 16)
+					. = WEST
+				else
+					. = NORTH
+			else
+				if (mouse_y <= 16)
+					. = SOUTH
+				else
+					. = EAST
+		if (PLACEMENT_MODE_TRIANGLES)
+			// One case for each triangle sectioned off by the diagonals of a square
+			if (mouse_y > mouse_x)
+				if (mouse_y > 32-mouse_x)
+					. = NORTH
+				else
+					. = WEST
+			else
+				if (mouse_y > 32-mouse_x)
+					. = EAST
+				else
+					. = SOUTH
+	return inversed ? reverse_direction(.) : .
+
+>>>>>>> theirs
 /obj/item/device/paint_sprayer/proc/pick_color_from_airlock(obj/machinery/door/airlock/D, mob/user)
 	if (!D.paintable)
 		return FALSE
