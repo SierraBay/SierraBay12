@@ -73,10 +73,11 @@
 	var/list/to_add = list()
 
 /mob/living/carbon/human/update_dead_sight()
+	. = ..()
 	if(eyeobj.type == /mob/observer/eye/landeye)
 		set_see_in_dark(8)
 		set_see_invisible(SEE_INVISIBLE_MINIMUM)
-		set_sight(SEE_TURFS)
+		set_sight(BLIND|SEE_TURFS)
 
 
 /mob/observer/eye/landeye/proc/acquire_visible_turfs(list/visible)
