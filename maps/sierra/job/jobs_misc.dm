@@ -55,6 +55,7 @@
 	supervisors = "самому себе"
 	selection_color = "#515151"
 	department_flag = CIV
+	is_semi_antagonist = TRUE
 	account_allowed = FALSE
 	create_record = FALSE
 	announced = FALSE

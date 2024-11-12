@@ -1,0 +1,5 @@
+author: KandJX
+changes:
+  - {maptweak: Добавил лестницу между бригом и мостиком.}
+  - {maptweak: Убрал шлюз в теха из комнаты капитана.}
+delete-after: true
