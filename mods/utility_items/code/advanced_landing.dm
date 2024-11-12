@@ -1,3 +1,8 @@
+/obj/machinery/computer/shuttle_control/Initialize(mapload, init_shuttle_tag)
+	. = ..()
+	if(shuttle_tag == init_shuttle_tag)
+		sync_shuttle()
+
 /obj/machinery/computer/shuttle_control/explore/handle_topic_href(datum/shuttle/autodock/overmap/shuttle, list/href_list)
 	. = ..()
 	if(href_list["advancedpick"])
@@ -78,13 +83,6 @@
 		set_see_in_dark(8)
 		set_see_invisible(SEE_INVISIBLE_MINIMUM)
 		set_sight(BLIND|SEE_TURFS)
-
-
-/mob/observer/eye/landeye/proc/acquire_visible_turfs(list/visible)
-	for(var/turf/t in seen_turfs_in_range(src, world.view))
-		if(t in typesof(/area/space))
-			visible[t] = t
-	return visible
 
 /mob/observer/eye/landeye/possess(mob/user)
 	if(owner && owner != user)
@@ -190,7 +188,6 @@
 
 /obj/machinery/computer/shuttle_control/explore/proc/create_zone()
 	var/area/area_oko = get_area(src)
-	//var/obj/overmap/visitable/ship/landable/shuttle_landmark = locate(/obj/overmap/visitable/ship/landable) in area_oko
 	var/turf/origin = locate(src.x + x_offset, src.y + y_offset, src.z)
 	var/turf/turf
 	var/obj/shuttle_landmark/shuttle_landmark
