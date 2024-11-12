@@ -18,7 +18,7 @@
 #include "code\anomalies\single\tramplin.dm"
 #include "code\anomalies\single\ventilyator.dm"
 #include "code\anomalies\single\vspishka.dm"
-#include "code\anomalies\single\zjarka.dm"
+#include "code\anomalies\single\zharka.dm"
 //аномалии 3 на 3
 #include "code\anomalies\threeandthree\cooler_3x3.dm"
 #include "code\anomalies\threeandthree\electra_3x3.dm"
@@ -60,6 +60,7 @@
 //Детекторы и прочее оборудование
 #include "code\detectors_and_etc\bolt.dm"
 #include "code\detectors_and_etc\detector.dm"
+#include "code\detectors_and_etc\gurza_detector.dm"
 #include "code\detectors_and_etc\collector.dm"
 #include "code\detectors_and_etc\deployer.dm"
 #include "code\detectors_and_etc\beacon.dm"
@@ -90,7 +91,7 @@
 
 //Карты, диреликты и прочее
 #include "maps\electra_ruins\electra_ruins.dm"
-#include "maps\zjarka_ruins\zjarka_ruins.dm"
+#include "maps\zharka_ruins\zharka_ruins.dm"
 //Код островов
 #include "maps\flying_islands\flying_island.dm"
 #include "maps\flying_islands\flying_island_ball.dm"
