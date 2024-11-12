@@ -35,7 +35,7 @@
 		break
 	var/planet_z = get_z(any_turf)
 	var/datum/event/change_z_skybox = new /datum/event/change_z_skybox(new /datum/event_meta(EVENT_LEVEL_MAJOR))
-	change_z_skybox.affecting_z += planet_z
+	change_z_skybox.affecting_z = list(planet_z)
 	change_z_skybox.setup('mods/anomaly/icons/planet_backgrounds.dmi', "flying")
 	SSskybox.generate_skybox(planet_z)
 

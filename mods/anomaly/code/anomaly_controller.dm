@@ -110,14 +110,14 @@ PROCESSING_SUBSYSTEM_DEF(anom)
 		anomaly_text += "<br>Аномалии были взведены [anomalies_activated_times] Раз. В целом, игроки подверглись влиянию аномалий [humanoids_effected_by_anomaly] раз, а [humanoids_gibbed_by_anomaly] игроков были гибнуты. [simplemobs_effected_by_anomaly] симплмобов подверглись влиянию аномалий и [simplemobs_gibbed_by_anomaly] было гибнуто."
 		//Раненные, умершие, гибнутые
 		if(last_attacked_message)
-			anomaly_text += "<br><b>[last_attacked_message].</b>"
+			anomaly_text += "<br>[last_attacked_message]."
 		else
-			anomaly_text += "<br><b>Никто не пострадал от аномалий.</b>"
+			anomaly_text += "<br>Никто не пострадал от аномалий."
 
 		if(gibbed_last_message)
-			anomaly_text += "<br><b>[gibbed_last_message].</b>"
+			anomaly_text += "<br>[gibbed_last_message]."
 		else
-			anomaly_text += "<br><b>Никого не порвало от аномалии.</b>"
+			anomaly_text += "<br>Никого не порвало от аномалии."
 		return anomaly_text
 
 /datum/controller/subsystem/processing/anom/proc/add_last_attack(mob/living/user, attack_name)
