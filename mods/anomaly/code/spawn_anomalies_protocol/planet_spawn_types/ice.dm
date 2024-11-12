@@ -18,6 +18,11 @@
 		/datum/exoplanet_theme/ruined_city = 5,
 		/datum/exoplanet_theme/robotic_guardians = 10
 		)
+	ruin_tags_blacklist = list(
+		"trash_heap",
+		"skrell_biodome",
+		"exoplanet_oldlab"
+	)
 	min_anomaly_size = 4
 	max_anomaly_size = 9
 	min_anomalies_ammout = 600
@@ -80,8 +85,7 @@
 
 /obj/overmap/visitable/sector/exoplanet/ice/generate_atmosphere()
 	..()
-	var/generator/new_temp = generator("num", 273, 300, NORMAL_RAND)
-	atmosphere.temperature = new_temp.Rand()
+	atmosphere.temperature = rand(70, 150)
 	atmosphere.update_values()
 
 
