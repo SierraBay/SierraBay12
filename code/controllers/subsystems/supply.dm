@@ -1,284 +1,468 @@
+// Subsystem for station/ship trade via supply program. Not to be mistaked with trade.dm, which is for merchant.
 SUBSYSTEM_DEF(supply)
 	name = "Supply"
-	wait = 20 SECONDS
 	priority = SS_PRIORITY_SUPPLY
-	//Initializes at default time
-	flags = SS_NO_TICK_CHECK
+	flags = SS_NO_FIRE
 
-	//supply points
-	var/points = 50
-	var/points_per_process = 1
-	var/points_per_slip = 2
-	var/point_sources = list()
-	var/pointstotalsum = 0
-	var/pointstotal = 0
-	//control
-	var/ordernum
-	var/list/shoppinglist = list()
-	var/list/requestlist = list()
-	var/list/donelist = list()
-	var/list/master_supply_list = list()
-	//shuttle movement
-	var/movetime = 1200
-	var/datum/shuttle/autodock/ferry/supply/shuttle
-	var/list/point_source_descriptions = list(
-		"time" = "Base station supply",
-		"manifest" = "From exported manifests",
-		"crate" = "From exported crates",
-		"gep" = "From uploaded good explorer points",
-		"anomaly" = "From scanned and categorized anomalies",
-		"animal" = "From captured exotic alien fauna",
-		//[SIERRA-ADD] - ANOMALY - Добавляем категорию "Артефакты"
-		"artefacts" = "From artefacts",
-		//[SIERRA-ADD]
-		"total" = "Total" // If you're adding additional point sources, add it here in a new line. Don't forget to put a comma after the old last line.
-	)
+	/// Budget for trading stations with spawn_always at FALSE
+	var/trade_stations_budget = 5
+	/// All available trading stations - visible, hidden, doesn't matter
+	var/list/all_trading_stations = list()
+	/// All visible and available stations
+	var/list/visible_trading_stations = list()
+	/// All hidden/unavailable stations
+	var/list/hidden_trading_stations = list()
+	/// All factions in the world; Assoc list Name = Datum.
+	/// Trading stations get the datums from here
+	var/list/factions = list()
+	// Lists of available sending/receiving beacons
+	var/list/beacons_sending = list()
+	var/list/beacons_receiving = list()
 
-/datum/controller/subsystem/supply/Initialize(start_uptime)
-	ordernum = rand(1,9000)
+	// For tracking/logging
+	var/shipping_invoice_number = 0
+	var/export_invoice_number = 0
+	var/offer_invoice_number = 0
+	var/order_number = 0
 
-	//Build master supply list
-	var/singleton/hierarchy/supply_pack/root = GET_SINGLETON(/singleton/hierarchy/supply_pack)
-	for (var/singleton/hierarchy/supply_pack/sp in root.children)
-		if(sp.is_category())
-			for(var/singleton/hierarchy/supply_pack/spc in sp.get_descendents())
-				spc.setup()
-				master_supply_list += spc
+	var/list/shipping_log = list()
+	var/list/export_log = list()
+	var/list/offer_log = list()
+	var/list/order_log = list()
 
-	for (var/material/mat in SSmaterials.materials)
-		if(mat.sale_price > 0)
-			point_source_descriptions[mat.display_name] = "From exported [mat.display_name]"
+	// For ordering
+	var/handling_fee = 0.1
+	var/order_queue_id = 0
+	var/list/order_queue = list()
 
-// Just add points over time.
-/datum/controller/subsystem/supply/fire()
-	add_points_from_source(points_per_process, "time")
+/datum/controller/subsystem/supply/Initialize()
+	. = ..()
+	for(var/faction_type in typesof(/datum/trade_faction))
+		var/datum/trade_faction/TF = new faction_type
+		factions[TF.name] = TF
 
-
-/datum/controller/subsystem/supply/UpdateStat(time)
-	if (PreventUpdateStat(time))
-		return ..()
-	..("Points: [points]")
-
-
-//Supply-related helper procs.
-
-/datum/controller/subsystem/supply/proc/add_points_from_source(amount, source)
-	points += amount
-	point_sources[source] += amount
-	point_sources["total"] += amount
-
-	//To stop things being sent to centcomm which should not be sent to centcomm. Recursively checks for these types.
-/datum/controller/subsystem/supply/proc/forbidden_atoms_check(atom/A)
-	if (istype(A, /mob/living))
-		var/mob/living/mob = A
-		if (istype(mob, /mob/living/simple_animal/hostile/human) || mob.mind)
-			return TRUE
-	if (istype(A, /obj/item/disk/nuclear))
-		return TRUE
-	if (istype(A, /obj/machinery/nuclearbomb))
-		return TRUE
-	if (istype(A, /obj/machinery/tele_beacon))
-		return TRUE
-
-	for(var/i=1, i<=length(A.contents), i++)
-		var/atom/B = A.contents[i]
-		if(.(B))
-			return TRUE
-
-/datum/controller/subsystem/supply/proc/sell()
-	var/list/material_count = list()
-
-	for(var/area/subarea in shuttle.shuttle_area)
-		for(var/atom/movable/AM in subarea)
-			if(AM.anchored)
+	// Factions that aren't set in relationship list of the datum are set to neutral.
+	for(var/tf in factions)
+		var/datum/trade_faction/TF = factions[tf]
+		for(var/tf2 in factions)
+			var/datum/trade_faction/TF2 = factions[tf]
+			if(TF == TF2)
+				// Technically not, but this will be how we declare same faction relations for now
+				TF.relationship[TF2.name] = FACTION_STATE_PROTECTORATE
 				continue
-			if(istype(AM, /obj/structure/closet/crate))
-				var/obj/structure/closet/crate/CR = AM
-				callHook("sell_crate", list(CR, subarea))
-				add_points_from_source(CR.points_per_crate, "crate")
-				var/find_slip = 1
+			if(!(TF2.name in TF.relationship))
+				TF.relationship[TF2] = FACTION_STATE_NEUTRAL
+			// This ensures that relations are always mirrored between two datums
+			SetFactionRelations(TF, TF2, TF.relationship[TF2])
 
-				for(var/atom in CR)
-					// Sell manifests
-					var/atom/A = atom
-					if(find_slip && istype(A,/obj/item/paper/manifest))
-						var/obj/item/paper/manifest/slip = A
-						if(!slip.is_copy && slip.stamped && length(slip.stamped)) //Any stamp works.
-							add_points_from_source(points_per_slip, "manifest")
-							find_slip = 0
-						continue
 
-					// Sell materials
-					if(istype(A, /obj/item/stack/material))
-						var/obj/item/stack/material/P = A
-						if(P.material && P.material.sale_price > 0)
-							material_count[P.material.display_name] += P.get_amount() * P.material.sale_price * P.matter_multiplier
-						if(P.reinf_material && P.reinf_material.sale_price > 0)
-							material_count[P.reinf_material.display_name] += P.get_amount() * P.reinf_material.sale_price * P.matter_multiplier * 0.5
-						continue
+	InitTradeStations()
 
-					// Must sell ore detector disks in crates
-					if(istype(A, /obj/item/disk/survey))
-						var/obj/item/disk/survey/D = A
-						add_points_from_source(round(D.Value() * 0.05), "gep")
-					//[SIERRA-ADD] - ANOMALY - Продажа артефактов
-					if(istype(A, /obj/item/artefact))
-						var/obj/item/artefact/D = A
-						add_points_from_source(D.cargo_price, "artefacts")
-					if(istype(A, /obj/item/collector))
-						var/obj/item/collector/D = A
-						add_points_from_source(D.stored_artefact.cargo_price, "artefacts")
-					//[SIERRA-ADD]
+/datum/controller/subsystem/supply/Destroy()
+	DeInitTradeStations()
+	. = ..()
 
-			// Sell artefacts (in anomaly cages)
-			if (istype(AM, /obj/machinery/anomaly_container))
-				var/obj/machinery/anomaly_container/AC = AM
-				var/points_per_anomaly = 10
-				callHook("sell_anomalycage", list(AC, subarea))
-				if (AC.contained)
-					var/obj/machinery/artifact/C = AC.contained
-					var/list/my_effects = list()
-					if (C.my_effect)
-						var/datum/artifact_effect/eone = C.my_effect
-						my_effects += eone
-					if (C.secondary_effect)
-						var/datum/artifact_effect/etwo = C.secondary_effect
-						my_effects += etwo
-					//Different effects and trigger combos give different rewards
+/datum/controller/subsystem/supply/proc/GetFaction(fac)
+	if(!(fac in factions))
+		return null
+	return factions[fac]
 
-					if (AC.attached_paper) //Needs to have a scan sheet of the anomaly to the container.
-						if (istype(AC.attached_paper, /obj/item/paper/anomaly_scan))
-							var/obj/item/paper/anomaly_scan/P = AC.attached_paper
-							if (!P.is_copy)
-								for (var/datum/artifact_effect/E in my_effects)
-									switch (E.effect_type)
-										if (EFFECT_UNKNOWN, EFFECT_PSIONIC)
-											points_per_anomaly += 10
-										if (EFFECT_ENERGY, EFFECT_ELECTRO)
-											points_per_anomaly += 20
-										if (EFFECT_ORGANIC, EFFECT_SYNTH)
-											points_per_anomaly += 30
-										if (EFFECT_BLUESPACE, EFFECT_PARTICLE)
-											points_per_anomaly += 40
-										else
-											points_per_anomaly += 10
-											//In case there's ever a broken artifact, it's still worth SOMETHING
-									switch (E.trigger.trigger_type)
-										if (TRIGGER_SIMPLE)
-											points_per_anomaly += 5
-										if (TRIGGER_COMPLEX)
-											points_per_anomaly += 10
-										else
-											points_per_anomaly += 2
-
-								add_points_from_source(points_per_anomaly, "anomaly")
-
-			//Only for animals in stasis cages.
-			if (istype(AM, /obj/machinery/stasis_cage))
-				var/obj/machinery/stasis_cage/SC = AM
-				var/points_per_animal = 10
-				callHook("sell_animal", list(SC, subarea))
-				if (SC.contained)
-					var/mob/living/simple_animal/CA = SC.contained
-					if (istype(CA, /mob/living/simple_animal/hostile/human))
-						continue
-					if (istype(CA, /mob/living/simple_animal/hostile))
-						points_per_animal *= 2
-					if (istype(CA, /mob/living/simple_animal/hostile/retaliate/beast))
-						points_per_animal *= 2
-					if (CA.stat != DEAD) //Alive gives more.
-						points_per_animal *= 2
-
-					qdel(SC.contained)
-					add_points_from_source(points_per_animal, "animal")
-
-			qdel(AM)
-
-	if(length(material_count))
-		for(var/material_type in material_count)
-			add_points_from_source(material_count[material_type], material_type)
-
-/datum/controller/subsystem/supply/proc/get_clear_turfs()
-	var/list/clear_turfs = list()
-
-	for(var/area/subarea in shuttle.shuttle_area)
-		for(var/turf/T in subarea)
-			if(T.density)
-				continue
-			var/occupied = 0
-			for(var/atom/A in T.contents)
-				if(!A.simulated)
-					continue
-				occupied = 1
-				break
-			if(!occupied)
-				clear_turfs += T
-
-	return clear_turfs
-
-//Buyin
-/datum/controller/subsystem/supply/proc/buy()
-	if(!length(shoppinglist))
-		return
-
-	var/list/clear_turfs = get_clear_turfs()
-
-	for(var/S in shoppinglist)
-		if(!length(clear_turfs))
-			break
-		var/turf/pickedloc = pick_n_take(clear_turfs)
-		shoppinglist -= S
-		donelist += S
-
-		var/datum/supply_order/SO = S
-		var/singleton/hierarchy/supply_pack/SP = SO.object
-
-		var/obj/A = new SP.containertype(pickedloc)
-		A.SetName("[SP.containername][SO.comment ? " ([SO.comment])":"" ]")
-		//supply manifest generation begin
-
-		var/obj/item/paper/manifest/slip
-		if(!SP.contraband)
-			var/info = list()
-			info +="<h3>[GLOB.using_map.boss_name] Shipping Manifest</h3><hr><br>"
-			info +="Order #[SO.ordernum]<br>"
-			info +="Destination: [GLOB.using_map.station_name]<br>"
-			info +="[length(shoppinglist)] PACKAGES IN THIS SHIPMENT<br>"
-			info +="CONTENTS:<br><ul>"
-
-			slip = new /obj/item/paper/manifest(A, JOINTEXT(info))
-			slip.is_copy = FALSE
-
-		//spawn the stuff, finish generating the manifest while you're at it
-		if(SP.access)
-			if(!islist(SP.access))
-				A.req_access = list(SP.access)
-			else if(islist(SP.access))
-				var/list/L = SP.access // access var is a plain var, we need a list
-				A.req_access = L.Copy()
-
-		var/list/spawned = SP.spawn_contents(A)
-		if(slip)
-			for(var/atom/content in spawned)
-				slip.info += "<li>[content.name]</li>" //add the item to the manifest
-			slip.info += "</ul><br>CHECK CONTENTS AND STAMP BELOW THE LINE TO CONFIRM RECEIPT OF GOODS<hr>"
-
-// Adds any given item to the supply shuttle
-/datum/controller/subsystem/supply/proc/addAtom(atom/movable/A)
-	var/list/clear_turfs = get_clear_turfs()
-	if(!length(clear_turfs))
+/// Sets equal relations between two factions
+/datum/controller/subsystem/supply/proc/SetFactionRelations(fac1, fac2, relation)
+	if(!(fac1 in factions) || !(fac2 in factions) || fac1 == fac2 || !relation)
 		return FALSE
 
-	var/turf/pickedloc = pick(clear_turfs)
-
-	A.forceMove(pickedloc)
-
+	var/datum/trade_faction/F1 = factions[fac1]
+	var/datum/trade_faction/F2 = factions[fac2]
+	F1.ModifyRelationsWith(fac2, relation)
+	F2.ModifyRelationsWith(fac1, relation)
 	return TRUE
 
-/datum/supply_order
-	var/ordernum
-	var/singleton/hierarchy/supply_pack/object = null
-	var/orderedby = null
-	var/comment = null
-	var/reason = null
-	var/orderedrank = null //used for supply console printing
+// === TRADE STATIONS ===
+
+/datum/controller/subsystem/supply/proc/DiscoverAllTradeStations()
+	visible_trading_stations = all_trading_stations.Copy()
+
+/datum/controller/subsystem/supply/proc/ReInitTradeStations()
+	DeInitTradeStations()
+	InitTradeStations()
+
+/datum/controller/subsystem/supply/proc/DeInitTradeStations()
+	for(var/datum/trading_station/TS in all_trading_stations)
+		TS.RegainTradeStationsBudget()
+		qdel(TS)
+		hidden_trading_stations -= TS
+		visible_trading_stations -= TS
+		all_trading_stations -= TS
+
+/datum/controller/subsystem/supply/proc/InitTradeStations()
+	var/list/weightstationlist = CollectTradeStations()
+	var/list/stations_to_init = CollectSpawnAlways()
+
+	while(trade_stations_budget && length(weightstationlist))
+		var/datum/trading_station/TS = pickweight(weightstationlist)
+		if(istype(TS))
+			stations_to_init += TS
+			TS.SpendTradeStationsBudget()
+		weightstationlist.Remove(TS)
+	InitTradeStationsByList(stations_to_init)
+
+/datum/controller/subsystem/supply/proc/InitTradeStation(stype)
+	var/datum/trading_station/station
+	if(istype(stype, /datum/trading_station))
+		station = stype
+		if(!station.name)
+			station.InitSrc()
+	else if(ispath(stype, /datum/trading_station))
+		station = new stype(TRUE)
+	. = station
+
+/datum/controller/subsystem/supply/proc/InitTradeStationsByList(list/L)
+	. = list()
+	for(var/i in L)
+		var/a = InitTradeStation(i)
+		if(a)
+			. += a
+
+/datum/controller/subsystem/supply/proc/DiscoverByUid(list/uid_list)
+	for(var/target_uid in uid_list)
+		for(var/datum/trading_station/station in all_trading_stations)
+			if(station.uid == target_uid)
+				visible_trading_stations |= station
+				GLOB.entered_event.unregister(station.overmap_location, station, /datum/trading_station/proc/Discovered)
+
+/datum/controller/subsystem/supply/proc/GetStationByUid(target_uid)
+	for(var/datum/trading_station/station in all_trading_stations)
+		if(station.uid == target_uid)
+			return station
+	return FALSE
+
+/datum/controller/subsystem/supply/proc/GetVisibleStationByUid(target_uid)
+	for(var/datum/trading_station/station in visible_trading_stations)
+		if(station.uid == target_uid)
+			return station
+	return FALSE
+
+/datum/controller/subsystem/supply/proc/CollectSpawnAlways()
+	. = list()
+	for(var/path in subtypesof(/datum/trading_station))
+		var/datum/trading_station/TS = path
+		if(!initial(TS.spawn_always))
+			continue
+		. += new path()
+
+/datum/controller/subsystem/supply/proc/CollectTradeStations()
+	. = list()
+	for(var/path in subtypesof(/datum/trading_station))
+		var/datum/trading_station/TS = path
+		if(initial(TS.spawn_always) || !initial(TS.spawn_probability))
+			continue
+		.[new path] = initial(TS.spawn_probability)
+
+// Get a weighted list of all stations that have not already been spawned
+/datum/controller/subsystem/supply/proc/CollectAvailableTradeStations()
+	. = list()
+	for(var/path in subtypesof(/datum/trading_station))
+		var/is_available = TRUE
+		for(var/datum/trading_station/TS in SSsupply.all_trading_stations)
+			if(istype(TS, path))
+				is_available = FALSE
+		if(!is_available)
+			continue
+		var/datum/trading_station/TS = path
+		if(!initial(TS.spawn_probability))
+			continue
+		. += new path()
+
+// Cost of the item with ONLY markup added
+/datum/controller/subsystem/supply/proc/GetBasicImportCost(path, datum/trading_station/station)
+	. = station?.GetGoodPrice(path)								// get_good_price() gets the custom price of the item, if it exists
+	if(!.)
+		. = get_value(path)
+		if(istype(station))
+			. *= station.markup
+
+// This one is modified by faction relations and will display "(+50%)" near the price if cost is different from basic one
+/datum/controller/subsystem/supply/proc/GetImportCost(path, datum/trading_station/station, datum/trade_faction/buyer_faction = null)
+	. = GetBasicImportCost(path, station)
+	if(!buyer_faction)
+		return
+
+	if(!istype(buyer_faction))
+		buyer_faction = GetFaction(buyer_faction)
+
+	var/datum/trade_faction/seller_faction = GetFaction(station.faction)
+	if(!seller_faction)
+		return
+
+	switch(seller_faction.relationship[buyer_faction.name])
+		if(FACTION_STATE_ANIMOSITY)
+			. *= 1.25
+		if(FACTION_STATE_RIVAL)
+			. *= 1.5
+		if(FACTION_STATE_ENEMY)
+			. *= 2.0
+		if(FACTION_STATE_WAR) // Normally that'd be an embargo, but some outlaw traders exist
+			. *= 3.0
+
+	if(buyer_faction.name in seller_faction.trade_markup)
+		. *= seller_faction.trade_markup[buyer_faction.name]
+
+/datum/controller/subsystem/supply/proc/CollectCountsFrom(list/shopList)
+	. = 0
+	for(var/station in shopList)
+		var/list/shoplist_station = shopList[station]
+		for(var/category_name in shoplist_station)
+			var/list/category = shoplist_station[category_name]
+			if(length(category))
+				for(var/path in category)
+					. += category[path]
+
+/datum/controller/subsystem/supply/proc/CollectPriceForCategory(list/category, datum/trading_station/station)
+	. = 0
+	if(!length(category))
+		return
+
+	for(var/path in category)
+		. += GetImportCost(path, station) * category[path]
+
+/datum/controller/subsystem/supply/proc/CollectPriceForList(list/shopList)
+	. = 0
+	for(var/station in shopList)
+		var/list/shoplist_station = shopList[station]
+		for(var/category_name in shoplist_station)
+			var/category = shoplist_station[category_name]
+			if(length(category))
+				for(var/path in category)
+					. += GetImportCost(path, station) * category[path]
+
+// Ordering
+
+/datum/controller/subsystem/supply/proc/BuildOrder(requesting_account, reason, list/shopping_list)
+	if(!requesting_account || !shopping_list || !shopping_list.len)
+		return
+
+	var/cost = CollectPriceForList(shopping_list)
+	var/order_contents_info
+	var/list/goods = list()
+	var/datum/money_account/requesting_acct = requesting_account
+	var/datum/money_account/master_acct = department_accounts["Supply"]
+	var/is_requestor_master = (requesting_acct == master_acct) ? TRUE : FALSE
+
+	for(var/station in shopping_list)
+		var/list/shoplist_categories = shopping_list[station]
+		for(var/category in shoplist_categories)
+			var/list/shoplist_goods = shoplist_categories[category]
+			for(var/good in shoplist_goods)
+				goods |= good
+
+				var/amount_to_add = shoplist_goods[good]
+
+				goods[good] += amount_to_add
+
+				var/atom/movable/AM = good
+				order_contents_info += "<li>[amount_to_add]x [initial(AM.name)]</li>"
+
+	var/list/new_order = list(
+		"requesting_acct" = requesting_account,
+		"reason" = reason,
+		"cost" = cost,
+		"fee" = (is_requestor_master ? 0 : cost * handling_fee),
+		"contents" = shopping_list,
+		"viewable_contents" = order_contents_info
+	)
+
+	var/order_queue_slot = "order_[++order_queue_id]"
+	order_queue |= order_queue_slot
+	order_queue[order_queue_slot] = new_order
+
+	return order_queue_slot
+
+/datum/controller/subsystem/supply/proc/PurchaseOrder(obj/machinery/trade_beacon/receiving/beacon, order_id)
+	if(QDELETED(beacon) || !beacon || !order_id)
+		return
+
+	if(order_queue.Find(order_id))
+		var/list/order = order_queue[order_id]
+
+		var/datum/money_account/master_account = department_accounts["Supply"]
+		var/datum/money_account/requesting_account = order["requesting_acct"]
+		var/list/shopping_list = order["contents"]
+		var/list/viewable_contents = order["viewable_contents"]
+		var/total_cost = order["cost"] + order["fee"]
+		var/is_requestor_master = (requesting_account == master_account) ? TRUE : FALSE
+
+		Buy(beacon, master_account, shopping_list, !is_requestor_master, requesting_account.owner_name)
+		if(!is_requestor_master)
+			requesting_account.transfer(master_account, total_cost, "Order Request")
+		CreateLogEntry("Order", requesting_account.owner_name, viewable_contents, total_cost)
+
+/datum/controller/subsystem/supply/proc/Buy(obj/machinery/trade_beacon/receiving/senderBeacon, datum/money_account/account, list/shopList, is_order = FALSE, buyer_name = null)
+	if(QDELETED(senderBeacon) || !istype(senderBeacon) || !account || !RecursiveLen(shopList))
+		return FALSE
+
+	var/count_of_all = CollectCountsFrom(shopList)
+	var/price_for_all = CollectPriceForList(shopList)
+
+	if(price_for_all && account.money < price_for_all)
+		return FALSE
+
+	var/obj/structure/closet/secure_closet/personal/trade/C
+
+	if(isnum(count_of_all) && count_of_all > 1)
+		C = senderBeacon.DropItem(/obj/structure/closet/secure_closet/personal/trade)
+		if(is_order)
+			C.locked = TRUE
+			C.registered_name = buyer_name
+			C.name = "[initial(C.name)] ([C.registered_name])"
+			C.update_icon()
+
+	var/order_contents_info
+	var/invoice_location
+
+	for(var/datum/trading_station/station in shopList)
+		var/list/shoplist_station = shopList[station]
+		var/to_station_wealth = 0
+		for(var/category_name in shoplist_station)
+			var/list/shoplist_category = shoplist_station[category_name]
+			var/list/inventory_category = station.inventory[category_name] + station.hidden_inventory[category_name]
+			to_station_wealth += CollectPriceForCategory(shoplist_category, station)
+			if(length(shoplist_category) && length(inventory_category))
+				for(var/good_path in shoplist_category)
+					var/count_of_good = shoplist_category[good_path] //in shoplist
+					var/index_of_good = inventory_category.Find(good_path) //in inventory
+					for(var/i in 1 to count_of_good)
+						if(istype(C))
+							new good_path(C)
+						else
+							var/atom/movable/new_item = senderBeacon.DropItem(good_path)
+							invoice_location = new_item.loc
+					if(isnum(index_of_good))
+						station.SetGoodAmount(category_name, index_of_good, max(0, station.GetGoodAmount(category_name, index_of_good) - count_of_good))
+
+					// invoice gen stuff
+					var/atom/movable/AM = good_path
+					var/list/good_packet = inventory_category[good_path]
+					var/item_name = initial(AM.name)
+					if(islist(good_packet))
+						item_name = good_packet["name"] ? good_packet["name"] : item_name
+					order_contents_info += "<li>[count_of_good]x [item_name]</li>"
+		station.AddToWealth(to_station_wealth)
+
+	if(count_of_all > 1)
+		invoice_location = C
+
+	CreateLogEntry("Shipping", account.owner_name, order_contents_info, price_for_all, FALSE, invoice_location)
+	account.withdraw(price_for_all, "Purchase", "Trade Network")
+	return TRUE
+
+/datum/controller/subsystem/supply/proc/Export(obj/machinery/trade_beacon/sending/senderBeacon, datum/money_account/moneyAccount)
+	if(QDELETED(senderBeacon))
+		return
+
+	var/invoice_contents_info
+	var/export_count = 0
+	var/cost = 0
+
+	for(var/atom/movable/AM in senderBeacon.GetObjects())
+		if(ishuman(AM))
+			var/mob/living/carbon/human/H = AM
+			H.apply_damage(15, DAMAGE_BURN)
+			continue
+
+		var/list/contents_incl_self = AM.GetAllContents(3, TRUE)
+
+		if(is_path_in_list(/mob/living/carbon/human, contents_incl_self))
+			continue
+
+		// We go backwards, so it'll be innermost objects sold first
+		for(var/atom/movable/item in reverseRange(contents_incl_self))
+			var/item_price = get_value(item)
+			var/export_value = item_price
+
+			if(export_value)
+				invoice_contents_info += "<li>[item.name]</li>"
+				cost += export_value
+				//SEND_SIGNAL(src, COMSIG_TRADE_BEACON, item)
+				qdel(item)
+				++export_count
+			else if(item != AM)
+				item.forceMove(get_turf(AM))		// Should be the same tile
+
+		// The max is a soft cap
+		if(export_count > 100)
+			break
+
+	senderBeacon.StartExport()
+	moneyAccount.deposit(cost, "Export", "Trade Network")
+
+	if(invoice_contents_info)	// If no info, then nothing was exported
+		CreateLogEntry("Export", moneyAccount.owner_name, invoice_contents_info, cost, FALSE, get_turf(senderBeacon))
+	return TRUE
+
+// Logging
+
+/datum/controller/subsystem/supply/proc/CreateLogEntry(type, ordering_account, contents, total_paid, create_invoice = FALSE, invoice_location = null)
+	var/log_id
+
+	switch(type)
+		if("Shipping")
+			log_id = "[++shipping_invoice_number]-S"
+			shipping_log.Add(list(list("id" = log_id, "ordering_acct" = ordering_account, "contents" = contents, "total_paid" = total_paid, "time" = time2text(world.time, "hh:mm"))))
+		if("Export")
+			log_id = "[++export_invoice_number]-E"
+			export_log.Add(list(list("id" = log_id, "ordering_acct" = ordering_account, "contents" = contents, "total_paid" = total_paid, "time" = time2text(world.time, "hh:mm"))))
+		if("Special Offer")
+			log_id = "[++offer_invoice_number]-SO"
+			offer_log.Add(list(list("id" = log_id, "ordering_acct" = ordering_account, "contents" = contents, "total_paid" = total_paid, "time" = time2text(world.time, "hh:mm"))))
+		if("Order")
+			log_id = "[++order_number]-O"
+			order_log.Add(list(list("id" = log_id, "ordering_acct" = ordering_account, "contents" = contents, "total_paid" = total_paid, "time" = time2text(world.time, "hh:mm"))))
+		else
+			return
+
+	if(create_invoice && invoice_location && log_id)
+		PrintInvoice(type, log_id, ordering_account, contents, total_paid, FALSE, invoice_location)
+		if(type == "Shipping")
+			PrintInvoice(type, log_id, ordering_account, contents, total_paid, TRUE, invoice_location)
+
+/datum/controller/subsystem/supply/proc/PrintInvoice(type, log_id, ordering_account, contents, total_paid, is_internal = FALSE, location)
+	if(!location)
+		return
+
+	var/title
+	title = "[lowertext(type)] invoice - #[log_id]"
+	title += is_internal ? " (internal)" : null
+
+	var/text
+	text += "<h3>[type] Invoice - #[log_id]</h3>"
+	text += "<hr><font size = \"2\">"
+	text += is_internal ? "FOR INTERNAL USE ONLY<br><br>" : null
+	text += type != "Shipping" && type ? "Recipient: [ordering_account]<br>" : "Recipient: \[field\]<br>"
+	text += type == "Shipping" ? "Package Name: \[field\]<br>" : null
+	text += "Contents:<br>"
+	text += "<ul>"
+	text += contents
+	text += "</ul>"
+	text += is_internal ? "Order Cost: [total_paid]<br>" : null
+	text += type == "Shipping" ? "Total Credits Paid: \[field\]<br>" : "Total Credits Paid: [total_paid]<br>"
+	text += "</font>"
+	text += type == "Shipping" ? "<hr><h5>Stamp below to confirm receipt of goods:</h5>" : null
+
+	new/obj/item/paper(location, text, title)
+
+/datum/controller/subsystem/supply/proc/GetLogDataById(log_id)
+	var/id_data = splittext(log_id, "-")
+	var/log_num = text2num(id_data[1])
+	var/log_type = id_data[2]
+	switch(log_type)
+		if("S")
+			return shipping_log[log_num]
+		if("E")
+			return export_log[log_num]
+		if("SO")
+			return offer_log[log_num]
+		if("O")
+			return order_log[log_num]
+		else
+			return

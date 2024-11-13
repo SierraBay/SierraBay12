@@ -26,6 +26,9 @@ var/global/const/MAP_HAS_RANK = 2		//Rank system, also togglable
 	var/path
 	var/config_path = null
 
+	// Faction of the map as is used for trading
+	var/trade_faction = FACTION_INDEPENDENT
+
 	var/list/station_levels = list() // Z-levels the station exists on
 	var/list/admin_levels = list()   // Z-levels for admin functionality (Centcom, shuttle transit, etc)
 	var/list/contact_levels = list() // Z-levels that can be contacted from the station, for eg announcements
@@ -463,13 +466,8 @@ var/global/const/MAP_HAS_RANK = 2		//Rank system, also togglable
 
 /datum/map/proc/setup_economy()
 	for (var/datum/feed_network/N in news_network)
-		N.CreateFeedChannel("Nyx Daily", "SolGov Minister of Information", 1, 1)
+		N.CreateFeedChannel("Nyx Daily", "[company_short] Minister of Information", 1, 1)
 		N.CreateFeedChannel("The Gibson Gazette", "Editor Mike Hammers", 1, 1)
-
-	for(var/loc_type in typesof(/datum/trade_destination) - /datum/trade_destination)
-		var/datum/trade_destination/D = new loc_type
-		weighted_randomevent_locations[D] = length(D.viable_random_events)
-		weighted_mundaneevent_locations[D] = length(D.viable_mundane_events)
 
 	if(!station_account)
 		station_account = create_account("[station_name()] Primary Account", "[station_name()]", starting_money, ACCOUNT_TYPE_DEPARTMENT)

@@ -41,10 +41,11 @@
 	#include "datums/reports/science.dm"
 
 	#include "datums/shackle_law_sets.dm"
+	/*
 	#include "datums/supplypacks/engineering.dm"
 	#include "datums/supplypacks/security.dm"
 	#include "datums/supplypacks/science.dm"
-
+	*/
 	#include "datums/species/species_overrides.dm"
 
 	#include "game/languages.dm"

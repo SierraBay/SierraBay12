@@ -5,6 +5,8 @@
 	config_path = "config/sierra_config.txt"
 	flags = MAP_HAS_BRANCH | MAP_HAS_RANK
 
+	trade_faction = FACTION_NANOTRASEN
+
 	welcome_sound = ANNOUNCER_WELCOME
 
 	use_bluespace_interlude = TRUE

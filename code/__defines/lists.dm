@@ -14,6 +14,12 @@
 //[SIERRA-ADD]
 ///Add an item to the list if not already present, if the list is null it will initialize it
 #define LAZYOR(L, I) if(!L) { L = list(); } L |= I;
+
+// Adds value to the existing value of a key
+#define LAZYAPLUS(L,K,V) if(!L) { L = list(); } if (!L[K]) { L[K] = 0; } L[K] += V;
+// Subtracts value from the existing value of a key
+#define LAZYAMINUS(L,K,V) if(L && L[K]) { L[K] -= V; if(!LAZYLEN(L[K])) { L -= K } }
+
 ////[/SIERRA-ADD]
 // Insert I into L at position X, initalizing L if necessary
 #define LAZYINSERT(L, I, X) if(!L) { L = list(); } L.Insert(X, I);

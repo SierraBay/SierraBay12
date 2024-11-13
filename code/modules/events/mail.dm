@@ -47,7 +47,7 @@
 /datum/event/mail/tick()
 	var/datum/shuttle/autodock/ferry/supply/shuttle = SSsupply.shuttle
 
-	// No shuttle on the map
+	// No beacon  on the map
 	if(isnull(shuttle))
 		kill()
 		return

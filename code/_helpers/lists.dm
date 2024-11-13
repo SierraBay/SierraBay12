@@ -883,3 +883,24 @@ Checks if a list has the same entries and values as an element of big.
 		map["[entry.name] [index]"] = entry
 	else
 		map[entry.name] = entry
+
+/proc/try_json_decode(t)
+	. = list()
+	if(istext(t))
+		. = json_decode(t)
+	else if(islist(t))
+		. = t
+	else if(t)
+		. += t
+
+/proc/RecursiveLen(list/L)
+	. = 0
+	if(istext(L))
+		L = try_json_decode(L)
+	if(length(L))
+		. += length(L)
+		for(var/list/i in L)
+			if(islist(i))
+				. += RecursiveLen(i)
+			else if(islist(L[i]))
+				. += RecursiveLen(L[i])
