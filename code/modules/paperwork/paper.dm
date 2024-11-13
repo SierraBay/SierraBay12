@@ -671,6 +671,18 @@
 	info = "<I>The manufacturer and the retailer make no claims of the contained products' effacy.</I> <BR><BR><B>Use at your own risk.</B>"
 
 
+/obj/item/paper/supply_account
+	name = "supply account note"
+
+/obj/item/paper/supply_account/Initialize()
+	. = ..()
+	var/datum/money_account/MA = department_accounts["Supply"]
+	info = "<b><center>CONFIDENTIAL: ONLY FOR COMMAND PERSONNEL AND QM.</b></center>\
+			<BR><BR>\
+			Account number: [MA.account_number]<br>\
+			Account pin: [MA.remote_access_pin]"
+
+
 #undef PAPER_CAMERA_DISTANCE
 #undef PAPER_EYEBALL_DISTANCE
 
