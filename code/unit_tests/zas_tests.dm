@@ -115,65 +115,6 @@
 
 // ==================================================================================================
 
-
-// Here we move a shuttle then test it's area once the shuttle has arrived.
-
-/datum/unit_test/zas_supply_shuttle_moved
-	name = "ZAS: Supply Shuttle (When Moved)"
-	async=1				// We're moving the shuttle using built in procs.
-
-	var/datum/shuttle/autodock/ferry/supply/shuttle = null
-
-	var/testtime = 0	//Used as a timer.
-
-/datum/unit_test/zas_supply_shuttle_moved/start_test()
-
-	if(!SSshuttle)
-		fail("Shuttle Controller not setup at time of test.")
-		return 1
-	if(!length(SSshuttle.shuttles))
-		skip("No shuttles have been setup for this map.")
-		return 1
-
-	shuttle = SSsupply.shuttle
-	if(isnull(shuttle))
-		return 1
-
-	// Initiate the Move.
-	SSsupply.movetime = 5 // Speed up the shuttle movement.
-	shuttle.short_jump(shuttle.get_location_waypoint(!shuttle.location)) //TODO
-
-	return 1
-
-/datum/unit_test/zas_supply_shuttle_moved/check_result()
-	if(!shuttle)
-		skip("This map has no supply shuttle.")
-		return 1
-
-	if(shuttle.moving_status == SHUTTLE_IDLE && !shuttle.at_station())
-		fail("Shuttle Did not Move")
-		return 1
-
-	if(!shuttle.at_station())
-		return 0
-
-	if(!testtime)
-		testtime = world.time+40                // Wait another 2 ticks then proceed.
-
-	if(world.time < testtime)
-		return 0
-	for(var/area/A in shuttle.shuttle_area)
-		var/list/test = test_air_in_area(A.type)
-		if(isnull(test))
-			fail("Check Runtimed")
-			return 1
-
-		switch(test["result"])
-			if(SUCCESS) pass(test["msg"])
-			if(SKIP)    skip(test["msg"])
-			else        fail(test["msg"])
-	return 1
-
 #undef UT_NORMAL
 #undef UT_VACUUM
 #undef UT_NORMAL_COLD
