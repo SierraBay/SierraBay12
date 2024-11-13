@@ -12169,7 +12169,6 @@
 /turf/unsimulated/floor/techfloor,
 /area/centcom/control)
 "jFg" = (
-/obj/shuttle_landmark/supply/centcom,
 /obj/floor_decal/industrial/outline/grey,
 /turf/simulated/floor/tiled/techmaint,
 /area/supply/dock)
