@@ -46,3 +46,13 @@
 		src.registered_name = null
 		src.SetName(initial(name))
 		src.desc = initial(desc)
+
+/obj/structure/closet/secure_closet/personal/trade
+	name = "order crate"
+	desc = "A secure crate."
+	closet_appearance = /singleton/closet_appearance/crate
+	open_sound = 'sound/machines/click.ogg'
+	close_sound = 'sound/machines/click.ogg'
+
+/obj/structure/closet/secure_closet/personal/trade/WillContain()
+	return
