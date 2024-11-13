@@ -1,0 +1,6 @@
+author: Lexanx
+changes:
+  - {bugfix: Неотстыковка некоторых подов}
+  - {bugfix: 'Невозможность синхронизировать консоли, после их пересборки'}
+  - {bugfix: Проблема с Advanced Landing в лававой экзопланете}
+delete-after: true

@@ -1,0 +1,4 @@
+author: awkardlyconfusedneuralnetwork
+changes:
+  - {tweak: Добавил face direction по нажатию иконки интента движения с зажатым ctrl}
+delete-after: true

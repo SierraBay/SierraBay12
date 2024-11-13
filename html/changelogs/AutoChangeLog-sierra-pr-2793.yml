@@ -1,0 +1,4 @@
+author: awkardlyconfusedneuralnetwork
+changes:
+  - {tweak: Increases large map loading speed}
+delete-after: true

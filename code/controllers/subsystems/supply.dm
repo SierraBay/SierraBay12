@@ -140,9 +140,11 @@ SUBSYSTEM_DEF(supply)
 					if(istype(A, /obj/item/artefact))
 						var/obj/item/artefact/D = A
 						add_points_from_source(D.cargo_price, "artefacts")
+						SSanom.earned_cargo_points += D.cargo_price
 					if(istype(A, /obj/item/collector))
 						var/obj/item/collector/D = A
 						add_points_from_source(D.stored_artefact.cargo_price, "artefacts")
+						SSanom.earned_cargo_points += D.stored_artefact.cargo_price
 					//[SIERRA-ADD]
 
 			// Sell artefacts (in anomaly cages)
@@ -292,6 +294,7 @@ SUBSYSTEM_DEF(supply)
 
 /datum/supply_order
 	var/ordernum
+	var/timestamp
 	var/singleton/hierarchy/supply_pack/object = null
 	var/orderedby = null
 	var/comment = null
