@@ -27,12 +27,6 @@
 	has_trees = FALSE
 	flora_diversity = 5
 	//Следующие руины нам НЕ подойдут из-за того что на облакал они выглядят крайне убого
-	ruin_tags_blacklist = list(
-		"trash_heap",
-		"drill_site",
-		"skrell_biodome",
-		"exoplanet_oldlab"
-	)
 
 //Генерируем бэкграунд для островов. TODO: нарисовать очень красивый бэкграунд
 /obj/overmap/visitable/sector/exoplanet/flying/build_level()
@@ -156,10 +150,11 @@
 /turf/simulated/floor/exoplanet/clouds/Entered(atom/movable/AM)
 	..()
 	//Если обьект НЕ моб, НЕ предмет или прожектайл - игнор
-	if((!isliving(AM) && !isitem(AM)) || isprojectile(AM))
+	if((!ismech(AM) && !isliving(AM) && !isitem(AM)) || isprojectile(AM))
 		return
 	if(locate(/obj/structure/catwalk) in src)
 		return
+
 	if(isliving(AM))
 		var/mob/living/L = AM
 		//Летающие существа не тревожат облака
@@ -170,6 +165,7 @@
 		if(result_effects)
 			if(result_effects.Find("Защищает от падения"))
 				return
+
 	if(!opened && started_openning)
 		return
 	if(!opened && !started_openning)
