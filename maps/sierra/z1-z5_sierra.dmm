@@ -27471,18 +27471,6 @@
 	},
 /turf/simulated/open,
 /area/hallway/primary/thirddeck/central_stairwell)
-"dYn" = (
-/obj/structure/cable/yellow{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/obj/machinery/power/solar{
-	id = "auxsolarsbridge";
-	name = "Bridge Auxiliary Solar Array"
-	},
-/obj/floor_decal/solarpanel,
-/turf/simulated/floor/reinforced,
-/area/solar/bridge_starboard)
 "dYr" = (
 /obj/machinery/vending/cigarette{
 	dir = 4
@@ -59601,18 +59589,6 @@
 	},
 /turf/simulated/floor/reinforced/oxygen,
 /area/thruster/d1port)
-"iOb" = (
-/obj/structure/cable/yellow{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/obj/machinery/power/solar{
-	id = "auxsolarstrbbridge";
-	name = "Bridge Auxiliary Solar Array"
-	},
-/obj/floor_decal/solarpanel,
-/turf/simulated/floor/reinforced,
-/area/solar/bridge_port)
 "iOc" = (
 /obj/structure/table/steel,
 /obj/structure/sign/warning/nosmoking_1{
@@ -90048,15 +90024,6 @@
 /obj/floor_decal/techfloor,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/maintenance/solar/bridge_starboard)
-"nnH" = (
-/obj/structure/cable/yellow,
-/obj/machinery/power/solar{
-	id = "auxsolarsbridge";
-	name = "Bridge Auxiliary Solar Array"
-	},
-/obj/floor_decal/solarpanel,
-/turf/simulated/floor/reinforced,
-/area/solar/bridge_port)
 "nnI" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/conveyor{
@@ -104625,18 +104592,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/thirddeck/port)
-"psZ" = (
-/obj/structure/cable/yellow{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/obj/machinery/power/solar{
-	id = "auxsolarsbridge";
-	name = "Bridge Auxiliary Solar Array"
-	},
-/obj/floor_decal/solarpanel,
-/turf/simulated/floor/reinforced,
-/area/solar/bridge_port)
 "ptb" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 4
@@ -115257,15 +115212,6 @@
 	},
 /turf/simulated/floor/bluegrid,
 /area/turret_protected/ai)
-"qYI" = (
-/obj/structure/cable/yellow,
-/obj/machinery/power/solar{
-	id = "auxsolarsbridge";
-	name = "Bridge Auxiliary Solar Array"
-	},
-/obj/floor_decal/solarpanel,
-/turf/simulated/floor/reinforced,
-/area/solar/bridge_starboard)
 "qYL" = (
 /obj/floor_decal/corner/yellow/half{
 	dir = 8
@@ -124326,6 +124272,18 @@
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/medical/backstorage)
+"soX" = (
+/obj/structure/cable/yellow{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/machinery/power/solar{
+	id = "auxsolarstrbbridge";
+	name = "Bridge Auxiliary Solar Array"
+	},
+/obj/floor_decal/solarpanel,
+/turf/simulated/floor/reinforced,
+/area/solar/bridge_port)
 "soZ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable{
@@ -346153,9 +346111,9 @@ erQ
 nIc
 sEd
 olf
-dYn
+erQ
 nIc
-qYI
+sEd
 jev
 uYw
 uYw
@@ -346185,13 +346143,13 @@ uYw
 uYw
 uYw
 ehW
-psZ
+soX
 oOh
-nnH
+fJa
 olf
-psZ
+soX
 oOh
-nnH
+fJa
 jev
 kHz
 atx
@@ -346355,9 +346313,9 @@ erQ
 nIc
 sEd
 rip
-dYn
+erQ
 nIc
-qYI
+sEd
 jev
 uYw
 uYw
@@ -346387,13 +346345,13 @@ uYw
 uYw
 uYw
 ehW
-psZ
+soX
 oOh
-nnH
+fJa
 rip
-psZ
+soX
 oOh
-nnH
+fJa
 jev
 tGd
 cFl
@@ -346557,9 +346515,9 @@ erQ
 nIc
 sEd
 rip
-dYn
+erQ
 nIc
-qYI
+sEd
 jev
 uYw
 uYw
@@ -346589,13 +346547,13 @@ uYw
 uYw
 uYw
 ehW
-psZ
+soX
 oOh
-nnH
+fJa
 rip
-psZ
+soX
 oOh
-nnH
+fJa
 jev
 uYw
 uYw
@@ -346759,9 +346717,9 @@ erQ
 nIc
 sEd
 rip
-dYn
+erQ
 nIc
-qYI
+sEd
 jev
 uYw
 uYw
@@ -346791,13 +346749,13 @@ uYw
 uYw
 uYw
 ehW
-psZ
+soX
 oOh
-nnH
+fJa
 rip
-psZ
+soX
 oOh
-nnH
+fJa
 jev
 uYw
 uYw
@@ -346961,9 +346919,9 @@ erQ
 nIc
 sEd
 rip
-dYn
+erQ
 nIc
-qYI
+sEd
 jev
 uYw
 uYw
@@ -346993,13 +346951,13 @@ uYw
 uYw
 uYw
 ehW
-psZ
+soX
 oOh
-nnH
+fJa
 rip
-psZ
+soX
 oOh
-nnH
+fJa
 jev
 uYw
 uYw
@@ -347163,9 +347121,9 @@ erQ
 nIc
 sEd
 rip
-dYn
+erQ
 nIc
-qYI
+sEd
 jev
 uYw
 uYw
@@ -347195,13 +347153,13 @@ uYw
 uYw
 uYw
 ehW
-psZ
+soX
 oOh
-nnH
+fJa
 rip
-psZ
+soX
 oOh
-nnH
+fJa
 jev
 uYw
 uYw
@@ -347365,9 +347323,9 @@ erQ
 nIc
 sEd
 rip
-dYn
+erQ
 nIc
-qYI
+sEd
 jev
 uYw
 uYw
@@ -347397,13 +347355,13 @@ uYw
 uYw
 uYw
 ehW
-psZ
+soX
 oOh
-nnH
+fJa
 rip
-psZ
+soX
 oOh
-nnH
+fJa
 jev
 uYw
 uYw
@@ -347567,9 +347525,9 @@ erQ
 nIc
 sEd
 rip
-dYn
+erQ
 nIc
-qYI
+sEd
 jev
 uYw
 uYw
@@ -347599,13 +347557,13 @@ uYw
 uYw
 uYw
 ehW
-psZ
+soX
 oOh
-nnH
+fJa
 rip
-psZ
+soX
 oOh
-nnH
+fJa
 jev
 uYw
 uYw
@@ -347769,9 +347727,9 @@ erQ
 nIc
 sEd
 rip
-dYn
+erQ
 nIc
-qYI
+sEd
 jev
 uYw
 uYw
@@ -347801,13 +347759,13 @@ uYw
 uYw
 uYw
 ehW
-psZ
+soX
 oOh
-nnH
+fJa
 rip
-psZ
+soX
 oOh
-nnH
+fJa
 jev
 uYw
 uYw
@@ -347971,9 +347929,9 @@ erQ
 nIc
 sEd
 rip
-dYn
+erQ
 nIc
-qYI
+sEd
 jev
 uYw
 uYw
@@ -348003,13 +347961,13 @@ uYw
 uYw
 uYw
 ehW
-psZ
+soX
 oOh
-nnH
+fJa
 rip
-psZ
+soX
 oOh
-nnH
+fJa
 jev
 uYw
 uYw
@@ -348173,9 +348131,9 @@ erQ
 nIc
 sEd
 rip
-dYn
+erQ
 nIc
-qYI
+sEd
 jev
 uYw
 uYw
@@ -348205,13 +348163,13 @@ uYw
 uYw
 uYw
 ehW
-psZ
+soX
 oOh
-nnH
+fJa
 rip
-psZ
+soX
 oOh
-nnH
+fJa
 jev
 uYw
 uYw
@@ -348375,9 +348333,9 @@ erQ
 nIc
 sEd
 rip
-dYn
+erQ
 nIc
-qYI
+sEd
 jev
 uYw
 uYw
@@ -348407,13 +348365,13 @@ uYw
 uYw
 uYw
 ehW
-psZ
+soX
 oOh
-nnH
+fJa
 rip
-psZ
+soX
 oOh
-nnH
+fJa
 jev
 uYw
 uYw
@@ -348577,9 +348535,9 @@ erQ
 nIc
 sEd
 rip
-dYn
+erQ
 nIc
-qYI
+sEd
 jev
 uYw
 uYw
@@ -348609,13 +348567,13 @@ uYw
 uYw
 uYw
 ehW
-psZ
+soX
 oOh
-nnH
+fJa
 rip
-psZ
+soX
 oOh
-nnH
+fJa
 jev
 uYw
 uYw
@@ -348779,9 +348737,9 @@ erQ
 nIc
 sEd
 rip
-dYn
+erQ
 nIc
-qYI
+sEd
 jev
 uYw
 uYw
@@ -348811,13 +348769,13 @@ uYw
 uYw
 uYw
 ehW
-psZ
+soX
 oOh
-nnH
+fJa
 rip
-psZ
+soX
 oOh
-nnH
+fJa
 jev
 uYw
 uYw
@@ -348981,9 +348939,9 @@ erQ
 nIc
 sEd
 rip
-dYn
+erQ
 nIc
-qYI
+sEd
 jev
 uYw
 uYw
@@ -349013,13 +348971,13 @@ uYw
 uYw
 uYw
 ehW
-psZ
+soX
 oOh
-nnH
+fJa
 rip
-psZ
+soX
 oOh
-nnH
+fJa
 jev
 uYw
 uYw
@@ -349183,9 +349141,9 @@ erQ
 nIc
 sEd
 rip
-dYn
+erQ
 nIc
-qYI
+sEd
 jev
 uYw
 uYw
@@ -349215,13 +349173,13 @@ uYw
 uYw
 uYw
 ehW
-psZ
+soX
 oOh
-nnH
+fJa
 rip
-psZ
+soX
 oOh
-nnH
+fJa
 jev
 uYw
 uYw
@@ -349385,9 +349343,9 @@ erQ
 nIc
 sEd
 rip
-dYn
+erQ
 nIc
-qYI
+sEd
 jev
 uYw
 uYw
@@ -349417,13 +349375,13 @@ uYw
 uYw
 uYw
 ehW
-psZ
+soX
 oOh
-nnH
+fJa
 rip
-psZ
+soX
 oOh
-nnH
+fJa
 jev
 uYw
 uYw
@@ -349588,7 +349546,7 @@ nIc
 sEd
 rip
 erQ
-iAt
+nIc
 sEd
 jev
 uYw
@@ -349619,12 +349577,12 @@ uYw
 uYw
 uYw
 ehW
-iOb
-htf
+soX
+oOh
 fJa
 rip
-iOb
-htf
+soX
+oOh
 fJa
 jev
 uYw
@@ -349821,11 +349779,11 @@ uYw
 uYw
 uYw
 ehW
-iOb
+soX
 htf
 fJa
 rip
-iOb
+soX
 htf
 fJa
 jev
