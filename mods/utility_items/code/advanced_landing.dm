@@ -36,6 +36,7 @@
 	var/y_offset = 0
 	var/landloc
 	var/skilled_enough = FALSE
+	var/skill_req = SKILL_EXPERIENCED
 
 /obj/machinery/computer/shuttle_control/proc/update_operator_skill()
 	if (isobserver(usr))
@@ -43,7 +44,7 @@
 	if(!usr)
 		return
 	operator_skill = usr.get_skill_value(SKILL_PILOT)
-	if (operator_skill >= SKILL_EXPERIENCED && !(istype(usr, /mob/living/silicon/ai)))
+	if (operator_skill >= skill_req && !(istype(usr, /mob/living/silicon/ai)))
 		skilled_enough = TRUE
 	else
 		skilled_enough = FALSE

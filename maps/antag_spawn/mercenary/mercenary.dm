@@ -152,9 +152,10 @@
 /obj/overmap/visitable/ship/landable/merc_drop_pod
 	name = "Cyclopes Droppod"
 	shuttle = "Cyclopes Droppod"
-	desc = "Sensor array detects a small, unmarked vessel."
-	fore_dir = WEST
-	vessel_size = SHIP_SIZE_TINY
+	desc = "A small, unmarked vessel."
+	fore_dir = NORTH
+	vessel_size = SHIP_SIZE_SMALL
+	vessel_mass = 2500
 
 /obj/shuttle_landmark/merc_pod/start
 	landmark_tag = "nav_merc_pod_start"

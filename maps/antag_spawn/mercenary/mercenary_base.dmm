@@ -1933,7 +1933,7 @@
 	},
 /obj/machinery/mech_recharger,
 /obj/floor_decal/industrial/outline/yellow,
-/mob/living/exosuit/premade/heavy/merc,
+/mob/living/exosuit/premade/light,
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/merc_shuttle)
 "vA" = (
@@ -2177,7 +2177,7 @@
 	dir = 1;
 	name = "north bump";
 	pixel_y = 24;
-	req_access = list(list("ACCESS_EXPLORER","ACCESS_ENGINEERING"))
+	req_access = null
 	},
 /obj/random/powercell{
 	pixel_y = 7
@@ -3437,7 +3437,8 @@
 /area/map_template/merc_spawn)
 "WX" = (
 /obj/structure/fuel_port{
-	pixel_y = 32
+	pixel_y = 32;
+	invisibility = 100
 	},
 /obj/floor_decal/techfloor/orange{
 	dir = 9
