@@ -3,6 +3,7 @@
 	with_sound = TRUE
 	sound_type = 'mods/anomaly/sounds/zjarka.ogg'
 	idle_effect_type = "zjarka_idle"
+	detection_icon_state = "hot_anomaly"
 	layer = ABOVE_HUMAN_LAYER
 	light_after_activation = TRUE
 	effect_type = LONG_ANOMALY_EFFECT
@@ -10,7 +11,7 @@
 	color_of_light = COLOR_WHITE
 	effect_time = 5 SECONDS
 	time_of_light = 5 SECONDS
-	can_born_artifacts = TRUE
+	can_born_artefacts = TRUE
 	//Урон который наносит открытое пламя телу в
 	var/burn_damage = 10
 	activation_effect_type = "zjarka_active"
@@ -33,9 +34,7 @@
 	artefact_spawn_chance = 10
 	can_be_preloaded = FALSE
 	being_preload_chance = 20
-	can_walking = TRUE
-	chance_spawn_walking = 1
-	walking_activity = 2
+	detection_skill_req = SKILL_BASIC
 
 
 /obj/anomaly/zjarka/activate_anomaly()
@@ -59,10 +58,12 @@
 		return
 	//Поджечь человека
 	if(istype(target, /mob/living))
+		SSanom.add_last_attack(target, "Жарка")
 		var/mob/living/victim = target
 		if(inmech_sec(victim))
 			return
 		if(victim.health == 0)
+			SSanom.add_last_gibbed(target, "Жарка")
 			anything_in_remains(victim)
 			return
 		victim.fire_stacks = max(2, victim.fire_stacks)
@@ -95,3 +96,12 @@
 	if(can_be_activated(O))
 		activate_anomaly()
 	return
+
+
+/obj/anomaly/zjarka/get_detection_icon()
+	if(effect_range == 1 || effect_range == 0)
+		return "zjarka_detection"
+	else if(effect_range == 2)
+		return "zjarka_first_detection"
+	else if(effect_range > 2)
+		return "zjarka_second_detection"

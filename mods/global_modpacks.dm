@@ -23,6 +23,7 @@
 #include "lobbyscreen/_lobbyscreen.dme"
 #include "music_player/_music_player.dme"
 #include "ntnet/_ntnet.dme"
+#include "virusology/_virusology.dme"
 #include "RnD/_RnD.dme"
 #include "nyc_posters/_nyc_posters.dme"
 #include "pixelshift/_pixelshift.dme"

@@ -1,29 +1,58 @@
 /obj/anomaly
 	///Шанс, что аномалию найдут детектором при условии что у пользователя максимальный навык науки
 	var/chance_to_be_detected = 100
+	//Спрайт обнаруженной аномалии. Смотри прок get_detection_icon(). Этот спрайт - стандартный для любых аномок.
+	var/detection_icon_state = "any_anomaly"
+	///Уровень навыка в науке, требуемый, чтоб персонаж смог понять тип аномалии
+	var/detection_skill_req = SKILL_TRAINED
 
 
 /obj/item/clothing/gloves/anomaly_detector
 	name = "anomaly detection device"
-	desc = "TEST."
+	desc = "A complex technological device designed taking into account all possible dangers of anomalies."
 	icon = 'mods/anomaly/icons/detector.dmi'
 	icon_state = "detector_idle"
 	action_button_name = "Scan anomalies"
 	var/last_peek_time = 0
-	var/peek_delay = 0.2 SECONDS
+	var/peek_delay = 1 SECONDS
 	var/show_anomalies_delay = 10 SECONDS
 	var/in_tesla_range = FALSE
 	var/in_scanning = FALSE
 	var/last_scan_time = 0
 	var/result_tesla = FALSE
+	var/global_scan_cooldown = 300 SECONDS
+	var/last_global_scan = 0
 
-/obj/item/clothing/gloves/anomaly_detector/Initialize()
-	. = ..()
-	START_PROCESSING(SSanom, src)
+/obj/item/clothing/gloves/anomaly_detector/proc/switch_toggle()
+	if(!is_processing)
+		to_chat(usr, SPAN_NOTICE("You turn on detector"))
+		START_PROCESSING(SSanom, src)
+		SSanom.processing_ammount++
+	else
+		to_chat(usr, SPAN_NOTICE("You turn off detector"))
+		STOP_PROCESSING(SSanom, src)
+		SSanom.processing_ammount--
+
 
 /obj/item/clothing/gloves/anomaly_detector/attack_self(mob/living/user)
 	. = ..()
+	if(!is_processing)
+		to_chat(usr, SPAN_BAD("Device turned off"))
+		return
 	try_found_anomalies(user)
+
+
+/obj/item/clothing/gloves/anomaly_detector/AltClick()
+	if(!is_processing)
+		to_chat(usr, SPAN_BAD("Device turned off"))
+		return
+	scan_z_level_for_anomalies(usr)
+	return TRUE
+
+/obj/item/clothing/gloves/anomaly_detector/CtrlClick(mob/user)
+	. = ..()
+	switch_toggle()
+	return TRUE
 
 /obj/item/clothing/gloves/anomaly_detector/Process()
 	check_electrostatic()
@@ -41,19 +70,19 @@
 		icon_state = "detector_scanning_and_peak"
 
 
-/obj/item/clothing/gloves/anomaly_detector/verb/scan()
+/obj/item/clothing/gloves/anomaly_detector/verb/scan_anomalies()
 	set category = "Object"
-	set name = "Scan anomalies with detector"
+	set name = "Scan anomalies"
 	set src in usr
 
 	if(!usr.incapacitated())
 		try_found_anomalies(usr)
 		usr.update_action_buttons()
 
-
 /obj/item/clothing/gloves/anomaly_detector/proc/check_electrostatic()
-	if(world.time - last_scan_time >= peek_delay )
-		last_peek_time = world.time
+	if(world.time - last_peek_time < peek_delay )
+		return
+	last_peek_time = world.time
 	var/turf/cur_turf = get_turf(src)
 	//Проверяем, турф на котором мы находимся находится в зоне поражения?
 	if(LAZYLEN(cur_turf.list_of_in_range_anomalies))
@@ -71,6 +100,8 @@
 /obj/item/clothing/gloves/anomaly_detector/examine(mob/user, distance, is_adjacent)
 	. = ..()
 	to_chat(user, SPAN_GOOD("Use LBM in anomaly scan mode for search anomalies, or use action button."))
+	to_chat(user, SPAN_GOOD("Use Alt + LBM to use more powerfull mode."))
+	to_chat(user, SPAN_GOOD("Use Cntrl + LBM to turn on/turn off device."))
 
 ///Пользователь проводит поиск при помощи сканера
 /obj/item/clothing/gloves/anomaly_detector/proc/try_found_anomalies(mob/living/user)
@@ -83,7 +114,7 @@
 	//Мы проверили, есть ли у пользователя базовый навык НАУКИ.
 	// Снижаем 1.2 секунды сканирования за каждый пункт науки у персонажа
 	var/user_science_lvl = user.get_skill_value(SKILL_SCIENCE)
-	var/time_to_scan = (10 - (1.2 * user_science_lvl)) SECONDS
+	var/time_to_scan = (20 - (2 * user_science_lvl)) SECONDS
 	var/scan_radius = (4 + user_science_lvl) //макс радиус - 9 "квадратов"
 	in_scanning = TRUE
 	update_icon()
@@ -101,11 +132,15 @@
 		//Список разрешённых для показа игроку аномалий
 		var/list/allowed_anomalies = list()
 		for(var/obj/anomaly/choosed_anomaly in objs)
-			var/chance_to_find = (user_science_lvl * 20) - (100 - choosed_anomaly.chance_to_be_detected)
-			if(prob(chance_to_find))
-				LAZYADD(allowed_anomalies, choosed_anomaly)
-		var/flick_time = (1 + (user_science_lvl * 2))SECONDS
-		show_anomalies(user, flick_time, allowed_anomalies)
+			if(!choosed_anomaly.is_helper) //Вспомогательные части аномалий нас не интересуют
+				var/chance_to_find = (user_science_lvl * 20) - (100 - choosed_anomaly.chance_to_be_detected)
+				if(prob(chance_to_find))
+					LAZYADD(allowed_anomalies, choosed_anomaly) //Добавляем саму аномалию
+					//Если у неё есть вспомогательные части - добавляем её вспомогательные части
+					if(choosed_anomaly.multitile)
+						for(var/obj/anomaly/choosed_part in choosed_anomaly.list_of_parts)
+							LAZYADD(allowed_anomalies, choosed_part)
+		show_anomalies(user, time_to_scan, allowed_anomalies)
 		if(LAZYLEN(allowed_anomalies))
 			flick("detector_detected_anomalies", src)
 			usr.update_action_buttons()
@@ -115,29 +150,51 @@
 		usr.update_action_buttons()
 
 
-/proc/show_anomalies(mob/viewer, flick_time, allowed_anomalies)
+/obj/item/clothing/gloves/anomaly_detector/proc/scan_z_level_for_anomalies(mob/living/user)
+	if(in_scanning)
+		return
+	if((world.time - last_global_scan) < global_scan_cooldown)
+		to_chat(user, SPAN_BAD("Detector still isn't ready."))
+		return
+	last_global_scan = world.time
+	var/user_science_lvl = user.get_skill_value(SKILL_SCIENCE)
+	var/time_to_scan = (30 - (2 * user_science_lvl)) SECONDS
+	in_scanning = TRUE
+	update_icon()
+	usr.update_action_buttons()
+	if (do_after(user, time_to_scan, src, DO_DEFAULT | DO_USER_UNIQUE_ACT) && user)
+		in_scanning = FALSE
+		update_icon()
+		usr.update_action_buttons()
+		for(var/obj/anomaly/picked_anomaly in SSanom.all_anomalies_cores)
+			if(picked_anomaly.z == get_z(src))
+				to_chat(user, SPAN_BAD("Обнаружена аномальная активность."))
+				return TRUE
+		to_chat(user, SPAN_GOOD("Аномалий не обнаружено."))
+		return FALSE
+
+///Показывает игроку аномалии, которые он обнаружил детектером
+/proc/show_anomalies(mob/living/viewer, flick_time, allowed_anomalies)
 	if(!ismob(viewer) || !viewer.client)
 		return
-	var/list/t_ray_images = list()
+	var/user_science_lvl = viewer.get_skill_value(SKILL_SCIENCE)
+	var/list/list_of_showed_anomalies = list()
 	for(var/obj/anomaly/in_turf_atom in allowed_anomalies)
 		var/turf/T = get_turf(in_turf_atom)
-		var/image/I = image(icon = 'mods/anomaly/icons/effects.dmi',loc = T,icon_state = "none")
-		var/mutable_appearance/MA = new(in_turf_atom)
-		MA.alpha = 255
-		MA.dir = in_turf_atom.dir
-		MA.plane = FLOAT_PLANE
-		I.layer = HUD_ABOVE_ITEM_LAYER
-		I.appearance = MA
-		t_ray_images += I
+		var/image/I
+		if(user_science_lvl >= in_turf_atom.detection_skill_req)
+			I = image(icon = 'mods/anomaly/icons/detection_icon.dmi',loc = T, icon_state = in_turf_atom.get_detection_icon())
+		else
+			I = image(icon = 'mods/anomaly/icons/detection_icon.dmi',loc = T, icon_state = in_turf_atom.detection_icon_state)
+		I.layer = EFFECTS_ABOVE_LIGHTING_PLANE
+		list_of_showed_anomalies += I
 
-	for(var/image/choosed_image in t_ray_images)
-		choosed_image.icon_state = "none"
-	if(length(t_ray_images))
-		flick_overlay(t_ray_images, list(viewer.client), flick_time)
+	if(length(list_of_showed_anomalies))
+		flick_overlay(list_of_showed_anomalies, list(viewer.client), flick_time)
 
 
 /obj/item/paper/sierra/exploration
 	name = "new dangers"
-	info = "<tt><center><b><large>NSV Sierra</large></b></center><center>Новые опасности</center><li><b>Одна из последних экспедиций вернулась с новой информацией, и ранениями. Согласно последнему отчёту, экспедиционный отряд наткнулся на некую аномальную активность на одной из планет. Научно исследовательский отдел выделил вашему отряду дополнительное снаряжение и модифицировал сканеры Саcпаровой, добавив им АЛЬТЕРНАТИВНЫЙ режим. Советуем проявлять огромную осторожность при работе на планетах. Удачи.</b><hr></tt><br><i>This paper has been stamped by the Research&Development department.</i>"
+	info = "<tt><center><b><large>NSV Sierra</large></b></center><center>Новые опасности</center><li><b>Одна из последних экспедиций вернулась с новой информацией, и ранениями. Согласно последнему отчёту, экспедиционный отряд наткнулся на некую аномальную активность на одной из планет. Научно исследовательский отдел выделил вашему отряду дополнительное снаряжение в виде маячков, коллекторов аномальных образований, детектора аномальной активности и раздатчика флагов. Советуем проявлять огромную осторожность при работе на планетах. Удачи.</b><hr></tt><br><i>This paper has been stamped by the Research&Development department.</i>"
 	icon = 'maps/sierra/icons/obj/uniques.dmi'
 	icon_state = "paper_words"
