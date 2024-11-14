@@ -1619,35 +1619,6 @@
 /obj/floor_decal/industrial/hatch/yellow,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/maintenance/firstdeck/centralstarboard)
-"amo" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/structure/cable/green{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/floor_decal/borderfloor{
-	dir = 4
-	},
-/obj/floor_decal/industrial/danger{
-	dir = 4
-	},
-/obj/floor_decal/borderfloor/corner{
-	dir = 8
-	},
-/obj/floor_decal/corner/lime/bordercorner{
-	dir = 8
-	},
-/turf/simulated/floor/tiled,
-/area/hallway/primary/seconddeck/center)
 "ams" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 1
@@ -44439,8 +44410,11 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/floor_decal/borderfloor{
-	dir = 8
+/obj/floor_decal/corner/green/bordercorner{
+	dir = 1
+	},
+/obj/floor_decal/borderfloor/corner{
+	dir = 1
 	},
 /obj/floor_decal/corner/green/bordercorner{
 	dir = 1
@@ -59692,26 +59666,6 @@
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/engineering/bluespace)
-"iOx" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/floor_decal/borderfloor{
-	dir = 4
-	},
-/obj/floor_decal/industrial/danger{
-	dir = 4
-	},
-/obj/floor_decal/borderfloor/corner{
-	dir = 1
-	},
-/obj/floor_decal/corner/green/bordercorner{
-	dir = 1
-	},
-/turf/simulated/floor/tiled,
-/area/hallway/primary/seconddeck/center)
 "iOy" = (
 /obj/structure/table/standard,
 /obj/item/book/manual/ripley_build_and_repair,
@@ -65805,12 +65759,8 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/multi_tile/maintenance{
-	dir = 8;
-	autoset_access = 0
-	},
-/obj/floor_decal/industrial/hatch/yellow,
+/obj/floor_decal/borderfloor,
+/obj/floor_decal/corner/green/border,
 /turf/simulated/floor/tiled,
 /area/hallway/primary/seconddeck/center)
 "jMp" = (
@@ -79441,6 +79391,7 @@
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 4
 	},
+/obj/structure/closet/crate/secure/biohazard,
 /turf/simulated/floor/tiled/white,
 /area/medical/virology)
 "lIc" = (
@@ -82763,9 +82714,6 @@
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
-	},
-/obj/floor_decal/borderfloor{
-	dir = 8
 	},
 /obj/floor_decal/corner/green/bordercorner,
 /obj/floor_decal/corner/green/bordercorner{
@@ -116914,16 +116862,6 @@
 	},
 /turf/simulated/floor/airless,
 /area/solar/port)
-"rjG" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/door/firedoor,
-/obj/floor_decal/industrial/hatch/yellow,
-/turf/simulated/floor/tiled,
-/area/hallway/primary/seconddeck/center)
 "rjN" = (
 /obj/floor_decal/industrial/warning/corner{
 	dir = 4
@@ -161740,6 +161678,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/structure/closet/crate/secure/biohazard,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/medical/virology/atmos)
 "xRB" = (
@@ -225324,8 +225263,8 @@ rtT
 rtT
 rtT
 rtT
-idA
-tXe
+rtT
+rtT
 egk
 opM
 kJW
@@ -266353,8 +266292,8 @@ xFc
 ano
 kDh
 dBU
-iOx
-amo
+eIl
+jMh
 egj
 dFc
 dFc
@@ -266555,7 +266494,7 @@ dBU
 dBU
 dBU
 dBU
-rjG
+eIl
 jMh
 fhm
 lNl
