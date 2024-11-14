@@ -1,3 +1,8 @@
+/obj/machinery/computer/shuttle_control/Initialize(mapload, init_shuttle_tag)
+	. = ..()
+	if(shuttle_tag == init_shuttle_tag)
+		sync_shuttle()
+
 /obj/machinery/computer/shuttle_control/explore/handle_topic_href(datum/shuttle/autodock/overmap/shuttle, list/href_list)
 	. = ..()
 	if(href_list["advancedpick"])
@@ -62,43 +67,22 @@
 	density = FALSE
 	alpha = 127
 	plane = OBSERVER_PLANE
+	simulated = FALSE
+	stat = CONSCIOUS
 	invisibility = INVISIBILITY_EYE
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	sight = SEE_TURFS
-	simulated = TRUE
-	stat = CONSCIOUS
-	status_flags = GODMODE
 	ghost_image_flag = GHOST_IMAGE_NONE
 	var/list/placement_images = list()
 	var/obj/machinery/computer/shuttle_control/explore/console_link
 	var/list/to_add = list()
-/*
-/mob/living/carbon/human/
-	var/list/obscured_turfs = list()
-*/
+
 /mob/living/carbon/human/update_dead_sight()
 	. = ..()
-	/*
-	var/area = seen_turfs_in_range(src.eyeobj, world.view)
-	var/image/O = image('icons/effects/cameravis.dmi', null, "black")*/
 	if(eyeobj.type == /mob/observer/eye/landeye)
-		set_sight(BLIND|SEE_TURFS)
 		set_see_in_dark(8)
 		set_see_invisible(SEE_INVISIBLE_MINIMUM)
-		/*for(var/turf/simulated/t in area)
-			if(t in obscured_turfs)
-				return
-			if(!(t in list(/area/space)))
-				O.loc = t.loc
-				O.layer = TURF_LAYER
-				obscured_turfs[O] = t
-		client.images += obscured_turfs*/
-
-/mob/observer/eye/landeye/proc/acquire_visible_turfs(list/visible)
-	for(var/turf/t in seen_turfs_in_range(src, world.view))
-		if(t in typesof(/area/space))
-			visible[t] = t
-	return visible
+		set_sight(BLIND|SEE_TURFS)
 
 /mob/observer/eye/landeye/possess(mob/user)
 	if(owner && owner != user)
@@ -113,6 +97,7 @@
 		owner.verbs |= /mob/living/proc/extra_view
 		owner.verbs |= /mob/living/proc/cancel_landeye_view
 		owner.client.eye = src
+
 /mob/observer/eye/landeye/setLoc(T)
 	if(!owner)
 		return FALSE
@@ -203,7 +188,6 @@
 
 /obj/machinery/computer/shuttle_control/explore/proc/create_zone()
 	var/area/area_oko = get_area(src)
-	//var/obj/overmap/visitable/ship/landable/shuttle_landmark = locate(/obj/overmap/visitable/ship/landable) in area_oko
 	var/turf/origin = locate(src.x + x_offset, src.y + y_offset, src.z)
 	var/turf/turf
 	var/obj/shuttle_landmark/shuttle_landmark
