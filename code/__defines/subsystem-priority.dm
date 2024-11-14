@@ -12,7 +12,7 @@
 // SS_TICKER
 #define SS_PRIORITY_TIMER 30
 #define SS_PRIORITY_OVERLAYS 20
-#define SS_PRIORITY_ICON_UPDATE 10
+
 
 // Normal
 #define SS_PRIORITY_TICKER         100 // Gameticker.
@@ -27,6 +27,7 @@
 #define SS_PRIORITY_CHAT           40  // Chat
 #define SS_PRIORITY_AI             25  // Mob AI
 #define SS_PRIORITY_ALARM          20  // Alarm processing.
+#define SS_PRIORITY_ICON_UPDATE    20  // Queued icon updates. Mostly used by APCs and tables.
 #define SS_PRIORITY_EVENT          20  // Event processing and queue handling.
 #define SS_PRIORITY_SHUTTLE        20  // Shuttle movement.
 #define SS_PRIORITY_CIRCUIT_COMP   20  // Processing circuit component do_work.
