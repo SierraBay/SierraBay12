@@ -18,7 +18,7 @@
 	planetary_area = /area/exoplanet/flying
 	map_generators = list(/datum/random_map/noise/exoplanet/flying)
 	ruin_tags_blacklist = RUIN_HABITAT|RUIN_WATER|RUIN_HOT_ANOMALIES|RUIN_ELECTRA_ANOMALIES
-	surface_color = "#a46610"
+	surface_color = "#11420c"
 	water_color = "#ffffff"
 	daycycle_range = list(5 HOURS, 1 MINUTES)
 	//Вечный день

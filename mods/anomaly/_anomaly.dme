@@ -44,16 +44,17 @@
 
 
 //Код артефактов и всё с ними связанное
-#include "code\artefacts\anomaly_artefacts.dm" //Ядро артефактов
-#include "code\artefacts\artefact_external_interact.dm" //реакции на внешние события на артефакт/носителя
+#include "code\artefacts\_anomaly_artefacts.dm" //Ядро артефактов
+#include "code\artefacts\_artefact_external_interact.dm" //реакции на внешние события на артефакт/носителя
+#include "code\artefacts\_artefact_processing.dm" //Процессинг/постоянная обработка артефакта
+#include "code\artefacts\_interact_with_artefacts.dm" //Интеракции с артефактом (Персонаж/URM)
+#include "code\artefacts\_artefact_spawn.dm"
 #include "code\artefacts\artefact_gravi.dm"
-#include "code\artefacts\artefact_processing.dm" //Процессинг/постоянная обработка артефакта
 #include "code\artefacts\artefact_pruzhina.dm"
-#include "code\artefacts\artefact_spawn.dm"
 #include "code\artefacts\artefact_svetlyak.dm"
 #include "code\artefacts\artefact_zjar.dm"
+//#include "code\artefacts\artefact_flyer.dm"
 //#include "code\artefacts\artefact_zjemchug.dm"
-#include "code\artefacts\interact_with_artefacts.dm" //Интеракции с артефактом (Персонаж/URM)
 
 
 
