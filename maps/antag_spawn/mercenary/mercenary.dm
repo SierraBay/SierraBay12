@@ -15,7 +15,7 @@
 		"nav_merc_1",
 		"nav_merc_2",
 		"nav_merc_3",
-		"nav_merc_4",
+		"nav_merc_4"
 	)
 
 /obj/overmap/visitable/ship/landable/merc
