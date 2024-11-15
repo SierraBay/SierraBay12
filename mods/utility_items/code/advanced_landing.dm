@@ -139,6 +139,7 @@
 /obj/machinery/computer/shuttle_control/explore/pod_hand_one
 /obj/machinery/computer/shuttle_control/explore/pod_hand_two
 /obj/machinery/computer/shuttle_control/explore/graysontug/hand_two
+/obj/machinery/computer/shuttle_control/explore/merc_shuttle/merc_drop_pod
 
 /area/mine
 	name = "Mine"
