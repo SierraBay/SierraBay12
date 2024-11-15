@@ -1,7 +1,7 @@
 /datum/map_template/ruin/antag_spawn/mercenary
 	name = "Mercenary Base"
 	suffixes = list("mercenary/mercenary_base.dmm")
-	shuttles_to_initialise = list(/datum/shuttle/autodock/overmap/merc_shuttle, /datum/shuttle/autodock/overmap/merc_drop_pod)
+	shuttles_to_initialise = list(/datum/shuttle/autodock/overmap/merc_shuttle)
 
 /obj/overmap/visitable/sector/merc_base
 	name = "Tiny Asteroid"
@@ -16,7 +16,6 @@
 		"nav_merc_2",
 		"nav_merc_3",
 		"nav_merc_4",
-		"nav_merc_pod_start"
 	)
 
 /obj/overmap/visitable/ship/landable/merc
@@ -131,44 +130,3 @@
 		</div>
 		<p><i>Takriakakaw, Chief Technical Officer, Golden Prawn Enterprises</i></p>
 	"}
-
-
-/datum/shuttle/autodock/overmap/merc_drop_pod
-	name = "Cyclopes Droppod"
-	shuttle_area = list(/area/map_template/merc_shuttle/drop_pod)
-	dock_target = "merc_drop_pod"
-	current_location = "nav_merc_pod_start"
-	landmark_transition = "nav_transit_scavshuttle"
-	range = 1
-	fuel_consumption = 4
-	ceiling_type = /turf/simulated/floor/shuttle_ceiling
-	defer_initialisation = TRUE
-	mothershuttle = "Cyclopes"
-
-/obj/machinery/computer/shuttle_control/explore/merc_shuttle/merc_drop_pod
-	name = "Pod control console"
-	shuttle_tag = "Cyclopes Droppod"
-
-/obj/overmap/visitable/ship/landable/merc_drop_pod
-	name = "Cyclopes Droppod"
-	shuttle = "Cyclopes Droppod"
-	desc = "A small, unmarked vessel."
-	fore_dir = NORTH
-	vessel_size = SHIP_SIZE_SMALL
-	vessel_mass = 2500
-
-/obj/shuttle_landmark/merc_pod/start
-	landmark_tag = "nav_merc_pod_start"
-	name = "Cyclopes Drop Pod Base"
-	base_area = /area/map_template/merc_shuttle/drop_pod
-	movable_flags = MOVABLE_FLAG_EFFECTMOVE
-
-/obj/shuttle_landmark/merc_pod/merc_ship
-	landmark_tag = "nav_merc_pod_ship"
-	name = "Cyclopes Drop Pod Ship"
-
-/area/map_template/merc_shuttle/drop_pod
-	name = "\improper Cyclopes Droppod"
-	icon_state = "yellow"
-	area_flags = AREA_FLAG_RAD_SHIELDED | AREA_FLAG_ION_SHIELDED
-	req_access = list(access_syndicate)

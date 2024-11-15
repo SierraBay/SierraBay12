@@ -527,6 +527,57 @@ Used for quick dress-up. Also comes with several discount
 
 
 //droppod stuff
+
+/datum/map_template/ruin/antag_spawn/mercenary/New()
+	. = ..()
+	shuttles_to_initialise += list(/datum/shuttle/autodock/overmap/merc_drop_pod)
+
+/obj/overmap/visitable/sector/merc_base/New()
+	. = ..()
+	initial_generic_waypoints += list(
+		"nav_merc_pod_start"
+	)
+
+/datum/shuttle/autodock/overmap/merc_drop_pod
+	name = "Cyclopes Droppod"
+	shuttle_area = list(/area/map_template/merc_shuttle/drop_pod)
+	dock_target = "merc_drop_pod"
+	current_location = "nav_merc_pod_start"
+	landmark_transition = "nav_transit_scavshuttle"
+	range = 1
+	fuel_consumption = 4
+	ceiling_type = /turf/simulated/floor/shuttle_ceiling
+	defer_initialisation = TRUE
+	mothershuttle = "Cyclopes"
+
+/obj/machinery/computer/shuttle_control/explore/merc_shuttle/merc_drop_pod
+	name = "Pod control console"
+	shuttle_tag = "Cyclopes Droppod"
+
+/obj/overmap/visitable/ship/landable/merc_drop_pod
+	name = "Cyclopes Droppod"
+	shuttle = "Cyclopes Droppod"
+	desc = "A small, unmarked vessel."
+	fore_dir = NORTH
+	vessel_size = SHIP_SIZE_SMALL
+	vessel_mass = 2500
+
+/obj/shuttle_landmark/merc_pod/start
+	landmark_tag = "nav_merc_pod_start"
+	name = "Cyclopes Drop Pod Base"
+	base_area = /area/map_template/merc_shuttle/drop_pod
+	movable_flags = MOVABLE_FLAG_EFFECTMOVE
+
+/obj/shuttle_landmark/merc_pod/merc_ship
+	landmark_tag = "nav_merc_pod_ship"
+	name = "Cyclopes Drop Pod Ship"
+
+/area/map_template/merc_shuttle/drop_pod
+	name = "\improper Cyclopes Droppod"
+	icon_state = "yellow"
+	area_flags = AREA_FLAG_RAD_SHIELDED | AREA_FLAG_ION_SHIELDED
+	req_access = list(access_syndicate)
+
 /obj/machinery/computer/shuttle_control/explore/merc_shuttle/merc_drop_pod
 	skill_req = SKILL_BASIC
 
