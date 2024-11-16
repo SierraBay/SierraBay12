@@ -53,7 +53,7 @@
 #include "code\artefacts\artefact_pruzhina.dm"
 #include "code\artefacts\artefact_svetlyak.dm"
 #include "code\artefacts\artefact_zjar.dm"
-//#include "code\artefacts\artefact_flyer.dm"
+#include "code\artefacts\artefact_flyer.dm"
 //#include "code\artefacts\artefact_zjemchug.dm"
 
 
@@ -82,10 +82,17 @@
 #include "code\spawn_anomalies_protocol\spawn_anomaly_with_big_artefact.dm" //Код, отвечающий за спавн аномалий вокруг больших артефактов
 #include "code\spawn_anomalies_protocol\spawn_with_ruins.dm"
 #include "code\spawn_anomalies_protocol\bsd_event_protocol.dm"
-#include "code\spawn_anomalies_protocol\planet_spawn_types\vulcanic.dm" //Вулканическая планета
-#include "code\spawn_anomalies_protocol\planet_spawn_types\ice.dm" //[WIP] Ледяная планета
-#include "code\spawn_anomalies_protocol\planet_spawn_types\flying.dm" //[WIP] Летающие острова
-// #include "code\spawn_anomalies_protocol\planet_spawn_types\sargas.dm" // [WIP] Саргасово болото
+//Планетарный спавн
+#include "code\spawn_anomalies_protocol\planet_spawn_protocol\_planet_spawn_core.dm"
+//Летающие острова[WIP]
+#include "code\spawn_anomalies_protocol\planet_spawn_protocol\flying_planet\clouds.dm"
+#include "code\spawn_anomalies_protocol\planet_spawn_protocol\flying_planet\flying.dm"
+//Ледяная планета[WIP]
+#include "code\spawn_anomalies_protocol\planet_spawn_protocol\ice.dm"
+//Вулкан
+#include "code\spawn_anomalies_protocol\planet_spawn_protocol\vulcanic.dm"
+//Саргасово болото [WIP-WIP]
+// #include "code\spawn_anomalies_protocol\planet_spawn_protocol\sargas.dm"
 #include "code\spawn_anomalies_protocol\spawn_on_planet.dm" //Спавн на планетах
 
 
