@@ -102,7 +102,7 @@
 		if(100)
 			color = "#ffffff"
 		if(90 to 100)
-			color  = "#E5F6FF"
+			color  = "#e5f6ff"
 		if(80 to 90)
 			color  = "#cceeff"
 		if(70 to 80)
