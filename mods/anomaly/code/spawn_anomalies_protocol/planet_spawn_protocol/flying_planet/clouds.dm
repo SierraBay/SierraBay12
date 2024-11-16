@@ -19,6 +19,8 @@
 
 /turf/simulated/floor/exoplanet/clouds/Entered(atom/movable/AM)
 	..()
+	if(isanomalyhere(src))
+		return
 	//Если обьект НЕ моб, НЕ предмет или прожектайл - игнор
 	if((!ismech(AM) && !ismob(AM) && !isitem(AM)) || isprojectile(AM))
 		return
