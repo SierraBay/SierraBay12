@@ -1,7 +1,7 @@
 /obj/item/artefact/flyer
 	name = "Something"
-	desc = "Обьект абсолютно невесом."
-	icon_state = "gravi"
+	desc = "Обьект абсолютно невесом, выглядит как какой-то плотный кусок воздуха."
+	icon_state = "flyer"
 	need_to_process = TRUE
 	//В артефакте нет энергии/она неограничена
 	rect_to_interactions = list(
@@ -35,7 +35,7 @@
 
 /obj/item/artefact/flyer/knock_interaction(mob/living/carbon/human/user)
 	to_chat(user,SPAN_NOTICE("Стукнув по нему рукой, тот упрыгивает из ваших рук."))
-	jump_away()
+	//jump_away() TODO
 
 /obj/item/artefact/flyer/compress_interaction(mob/living/carbon/human/user)
 	if(isrobot(user))
@@ -70,14 +70,13 @@
 	if(current_user.stamina < 85)
 		current_user.adjust_stamina(5)
 
-//Грави заставляет отлететь в направление, противположное текущее. Так смешнее.
-/obj/item/artefact/flyer/react_at_electra(mob/living/user)
-	. = ..()
-	var/turf/target_turf = get_turf(user)
-	var/throw_dir = turn(user.dir, 180) //Противоположное направление моба
-	for(var/i = 1, i < 2, i++)
-		target_turf = get_edge_target_turf(user, throw_dir)
-	user.throw_at(target_turf, 2, 1)
+/mob/living/carbon/human/can_fall(anchor_bypass, turf/location_override)
+	var/list/result_effects = calculate_artefact_reaction(src, "Возможность упасть")
+	if(result_effects)
+		if(result_effects.Find("Держит в воздухе"))
+			return
+	.=..()
+
 
 /obj/item/artefact/flyer/react_at_tramplin(mob/living/user)
 	. = ..()
@@ -85,3 +84,6 @@
 
 /obj/item/artefact/flyer/react_at_rvach_gib(mob/living/user)
 	return "Усиливает дальность полёта"
+
+/obj/item/artefact/flyer/react_at_can_fall(mob/living/user)
+	return "Держит в воздухе"
