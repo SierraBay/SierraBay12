@@ -14,6 +14,9 @@
 		/mob/living,
 		/obj/item
 	)
+	artefacts = list(
+		/obj/item/artefact/flyer = 1
+	)
 	//Рандомизация
 	ranzomize_with_initialize = TRUE
 	can_born_artefacts = FALSE
@@ -37,13 +40,15 @@
 /obj/anomaly/tramplin/get_effect_by_anomaly(target)
 	if(ismech(target))
 		return
-
+	var/local_range_of_throw = range_of_throw
 	if(istype(target, /mob/living))
 		SSanom.add_last_attack(target, "Трамплин")
 		var/list/result_effects = calculate_artefact_reaction(target, "Трамплин")
 		if(result_effects)
 			if(result_effects.Find("Не даёт кинуть"))
 				return
+			if(result_effects.Find("Усиливает дальность полёта"))
+				local_range_of_throw = local_range_of_throw * 3
 
 	if(ishuman(target))
 		var/mob/living/carbon/human/victim = target
@@ -57,15 +62,15 @@
 	var/turf/own_turf = get_turf(src)
 	var/turf/target_turf = own_turf
 	if(!random_throw_dir)
-		target_turf = get_ranged_target_turf(target, throw_dir, range_of_throw)
+		target_turf = get_ranged_target_turf(target, throw_dir, local_range_of_throw)
 	var/atom/movable/victim = target
 	if(isliving(victim))
 		var/mob/victim_mob = victim
 		victim_mob.Weaken(1)
 	if(random_throw_dir)
-		victim.throw_at_random(own_turf, range_of_throw, speed_of_throw )
+		victim.throw_at_random(own_turf, local_range_of_throw, speed_of_throw )
 	else
-		victim.throw_at(target_turf, range_of_throw, speed_of_throw)
+		victim.throw_at(target_turf, local_range_of_throw, speed_of_throw)
 
 /obj/anomaly/tramplin/get_detection_icon()
 	return "trampline_detection"
