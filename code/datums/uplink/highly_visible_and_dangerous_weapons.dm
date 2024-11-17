@@ -222,3 +222,10 @@
 	item_cost = 12
 	path = /obj/item/gun/projectile/heavysniper/boltaction
 	antag_roles = list(MODE_REVOLUTIONARY)
+
+/datum/uplink_item/item/visible_weapons/sniperlaser
+	name = "Marksman Energy Rifle"
+	desc = "An energy based long-range weapon. Not as powerful as a sniper rifle, but it can be recharged."
+	item_cost = 50
+	path = /obj/item/gun/energy/sniperrifle
+	antag_roles = list(MODE_MERCENARY)
