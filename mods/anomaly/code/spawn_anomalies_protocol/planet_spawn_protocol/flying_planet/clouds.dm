@@ -89,11 +89,9 @@
 	addtimer(new Callback(src, PROC_REF(close_clouds)), 10 SECONDS)
 
 /turf/simulated/floor/exoplanet/clouds/proc/close_clouds()
-	flick("clouds_closing", src)
-	icon_state = "clouds"
-	integrity = 100
 	appearance = initial(appearance)
 	opened = FALSE
+	START_PROCESSING(SSanom, src)
 
 
 /turf/simulated/floor/exoplanet/clouds/on_update_icon()
