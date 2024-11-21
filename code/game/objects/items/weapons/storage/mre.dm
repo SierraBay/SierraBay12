@@ -19,7 +19,7 @@ MRE Stuff
 		/obj/random/mre/spread,
 		/obj/random/mre/drink,
 		/obj/item/reagent_containers/food/condiment/small/packet/capsaicin,
-		/obj/item/material/kitchen/utensil/fork/plastic
+		/obj/item/material/utensil/fork/plastic
 	)
 
 /obj/item/storage/mre/Initialize()
@@ -54,7 +54,7 @@ MRE Stuff
 		/obj/random/mre/spread,
 		/obj/random/mre/drink,
 		/obj/item/reagent_containers/food/condiment/small/packet/salt,
-		/obj/item/material/kitchen/utensil/fork/plastic
+		/obj/item/material/utensil/fork/plastic
 	)
 
 /obj/item/storage/mre/menu3
@@ -67,7 +67,7 @@ MRE Stuff
 		/obj/random/mre/spread,
 		/obj/random/mre/drink,
 		/obj/item/reagent_containers/food/condiment/small/packet/pepper,
-		/obj/item/material/kitchen/utensil/fork/plastic
+		/obj/item/material/utensil/fork/plastic
 	)
 
 /obj/item/storage/mre/menu4
@@ -80,7 +80,7 @@ MRE Stuff
 		/obj/random/mre/spread,
 		/obj/random/mre/drink,
 		/obj/item/reagent_containers/food/condiment/small/packet/mayo,
-		/obj/item/material/kitchen/utensil/spork/plastic
+		/obj/item/material/utensil/spork/plastic
 	)
 
 /obj/item/storage/mre/menu5
@@ -93,7 +93,7 @@ MRE Stuff
 		/obj/random/mre/spread,
 		/obj/random/mre/drink,
 		/obj/item/reagent_containers/food/condiment/small/packet/ketchup,
-		/obj/item/material/kitchen/utensil/spork/plastic
+		/obj/item/material/utensil/spork/plastic
 	)
 
 /obj/item/storage/mre/menu6
@@ -106,7 +106,7 @@ MRE Stuff
 		/obj/random/mre/spread,
 		/obj/random/mre/drink,
 		/obj/random/mre/sauce/sugarfree,
-		/obj/item/material/kitchen/utensil/fork/plastic
+		/obj/item/material/utensil/fork/plastic
 	)
 
 /obj/item/storage/mre/menu7
@@ -119,7 +119,7 @@ MRE Stuff
 		/obj/random/mre/spread,
 		/obj/random/mre/drink,
 		/obj/item/reagent_containers/food/condiment/small/packet/soy,
-		/obj/item/material/kitchen/utensil/spoon/plastic
+		/obj/item/material/utensil/spoon/plastic
 	)
 
 /obj/item/storage/mre/menu8
@@ -132,7 +132,7 @@ MRE Stuff
 		/obj/random/mre/spread,
 		/obj/random/mre/drink,
 		/obj/item/reagent_containers/food/condiment/small/packet/capsaicin,
-		/obj/item/material/kitchen/utensil/spoon/plastic
+		/obj/item/material/utensil/spoon/plastic
 	)
 
 /obj/item/storage/mre/menu9
@@ -146,7 +146,7 @@ MRE Stuff
 		/obj/random/mre/spread/vegan,
 		/obj/random/mre/drink,
 		/obj/item/reagent_containers/food/condiment/small/packet/soy,
-		/obj/item/material/kitchen/utensil/spoon/plastic
+		/obj/item/material/utensil/spoon/plastic
 	)
 
 /obj/item/storage/mre/menu10
@@ -158,7 +158,7 @@ MRE Stuff
 		/obj/item/reagent_containers/food/snacks/proteinbar,
 		/obj/item/reagent_containers/food/condiment/small/packet/protein,
 		/obj/random/mre/sauce/sugarfree,
-		/obj/item/material/kitchen/utensil/fork/plastic
+		/obj/item/material/utensil/fork/plastic
 	)
 
 /obj/item/storage/mre/menu11

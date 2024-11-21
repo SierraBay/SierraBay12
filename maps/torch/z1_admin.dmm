@@ -2832,7 +2832,7 @@
 "avz" = (
 /obj/structure/table/standard,
 /obj/random/donkpocket_box,
-/obj/item/material/kitchen/rollingpin,
+/obj/item/material/rollingpin,
 /turf/unsimulated/floor{
 	icon_state = "white"
 	},
