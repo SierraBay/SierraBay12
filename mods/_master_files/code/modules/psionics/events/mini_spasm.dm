@@ -11,6 +11,18 @@
 	)
 	sound_to(world, sound(alarm_sound))
 
+/datum/event/minispasm/start()
+	var/list/victims = list()
+	for(var/obj/item/device/radio/radio in GLOB.listening_objects)
+		if(radio.on)
+			for(var/mob/living/victim in view(radio.canhear_range, radio.loc))
+				if(isnull(victims[victim]) && victim.stat == CONSCIOUS && !victim.ear_deaf)
+					victims[victim] = radio
+	for(var/thing in victims)
+		var/mob/living/victim = thing
+		var/obj/item/device/radio/source = victims[victim]
+		do_spasm(victim, source)
+
 /datum/event/minispasm/end()
 	priority_announcement.Announce( \
 		"PRIORITY ALERT: SIGNAL BROADCAST HAS CEASED. Personnel are cleared to resume use of non-hardened radio transmission equipment. Have a nice day.", \

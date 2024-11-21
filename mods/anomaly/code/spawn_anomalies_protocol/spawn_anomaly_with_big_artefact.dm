@@ -12,7 +12,7 @@
 	var/min_artefacts_ammount = 1
 	var/max_artefacts_ammount = 2
 	///Область в которой будет спавнить аномалии
-	var/range_spawn = 5
+	var/range_spawn = 6
 	//Лист возможных аномалий для спавна
 	var/list/possible_anomalies = list(
 		/obj/anomaly/electra/three_and_three = 5,
@@ -23,12 +23,14 @@
 		/obj/anomaly/rvach/three_and_three = 4
 		)
 
+/*
+//Выведено из ротации, большой артефакт ничего не спавнит
 /obj/machinery/artifact/Initialize()
 	. = ..()
-	if(icon_num == 0 || icon_num == 1 || icon_num == 7 || icon_num == 11 || icon_num == 12)
+	if(icon_num == 0 || icon_num == 1 || icon_num == 7 || icon_num == 11)
 		if(can_born_anomalies)
 			born_anomalies()
-
+*/
 /obj/machinery/artifact/no_anomalies
 	can_born_anomalies = FALSE
 
