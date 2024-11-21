@@ -14,6 +14,7 @@
 	spawn_positions = 2
 	selection_color = "#013d3b"
 	alt_titles = list(
+		"Surgical Resident" = /singleton/hierarchy/outfit/job/sierra/crew/medical/senior/surgicalresident,
 		"Xenosurgeon" = /singleton/hierarchy/outfit/job/sierra/crew/medical/senior/xenosurgeon,
 		"Trauma Surgeon" = /singleton/hierarchy/outfit/job/sierra/crew/medical/senior/traumasurgeon
 	)
@@ -163,11 +164,12 @@
 	economic_power = 5
 	skill_points = 18
 
-	total_positions = 1
-	spawn_positions = 1
+	total_positions = 2 //[было 1]
+	spawn_positions = 2 //[было 1]
 	selection_color = "#013d3b"
 	alt_titles = list(
-		"Pharmacist" = /singleton/hierarchy/outfit/job/sierra/crew/medical/doctor/chemist
+		"Pharmacist" = /singleton/hierarchy/outfit/job/sierra/crew/medical/doctor/chemist,
+		"Virologist" = /singleton/hierarchy/outfit/job/sierra/crew/medical/doctor/chemist/virologist
 	)
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/medical/doctor/chemist
 	allowed_branches = list(/datum/mil_branch/employee, /datum/mil_branch/contractor)
@@ -182,7 +184,7 @@
 	)
 	access = list(
 		access_medical, access_maint_tunnels, access_emergency_storage,
-		access_medical_equip, access_chemistry
+		access_medical_equip, access_chemistry, access_virology
 	)
 
 
