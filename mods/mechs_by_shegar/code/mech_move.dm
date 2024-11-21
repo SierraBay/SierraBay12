@@ -32,7 +32,7 @@
 	var/mob/living/pilot = pick(pilots)
 	if(legs.bump_safety && pilot.a_intent != I_HURT) //Мы не хотим топтать и ноги могут не топтать?
 		return //Не топчем
-	src.visible_message(SPAN_DANGER("forcefully tramples [target] on the floor!"), blind_message = SPAN_DANGER("You hear the loud hissing of hydraulics!"))
+	src.visible_message(SPAN_DANGER("[src] forcefully tramples [target] on the floor!"), blind_message = SPAN_DANGER("You hear the loud hissing of hydraulics!"))
 	target.apply_effects(5, 5) //Чтоб не вставал
 	var/damage = rand(5, 10)
 	damage = 2 * (damage * (total_weight / 1000)  + (legs.bump_type * 3)) // 30 урона в лучшем случае по груди и голове
@@ -59,6 +59,8 @@
 		return
 	Bumps = !Bumps
 	collision_attack(target)
+	target.Move(get_ranged_target_turf(target, src.dir, 1))
+	src.forceMove(get_ranged_target_turf(src, src.dir, 1))
 	return
 
 /mob/living/exosuit/proc/collision_attack(mob/living/target,bump_type) //Attack colissioned things

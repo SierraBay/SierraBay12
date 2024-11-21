@@ -1,3 +1,12 @@
+/datum/movement_handler/mob/buckle_relay/DoMove(direction, mover)
+	..()
+	if(istype(mob.buckled, /obj/vehicle))
+		. = MOVEMENT_HANDLED
+		if(mob.is_confused() && prob(20)) //vehicles tend to keep moving in the same direction
+			direction = turn(direction, pick(90, -90))
+		mob.buckled.relaymove(mob, direction)
+		return
+
 //Dummy object for holding items in vehicles.
 //Prevents items from being interacted with.
 /datum/vehicle_dummy_load
