@@ -20,6 +20,11 @@
 		return printer.print_text(content, title)
 
 //[SIERRA-ADD]
+/datum/extension/interactive/ntos/proc/print_bodyscan(text_to_print, paper_title, bodyscan, md)
+	var/obj/item/stock_parts/computer/nano_printer/printer = get_component(PART_PRINTER)
+	if(printer)
+		return printer.print_picture() // just to spend paper
+
 /datum/extension/interactive/ntos/proc/print_photo(photo, name)
 	var/obj/item/stock_parts/computer/nano_printer/printer = get_component(PART_PRINTER)
 	if(printer)

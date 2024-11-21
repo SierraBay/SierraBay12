@@ -1,6 +1,4 @@
-//Данный код отвечает за размещение аномалий по всей планете.
 /obj/overmap/visitable/sector/exoplanet/volcanic
-	///Спавнятся ли на подобном типе планет аномалии
 	can_spawn_anomalies = TRUE
 	anomalies_type = list(
 		/obj/anomaly/zjarka = 4,
