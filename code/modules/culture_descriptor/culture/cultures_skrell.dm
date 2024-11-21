@@ -1,7 +1,7 @@
 /singleton/cultural_info/culture/skrell
 	name = CULTURE_SKRELL_QERR
 	description = "Considered as the leaders of Skrellkind, the Qerr-Katish are the face and soul of skrellian society. \
-		Managers, diplomats, lawyers, they are notably the only caste allowed to fulfil the role of Qerr-Skria,\
+		Managers, diplomats, lawyers, they are notably the only caste allowed to fulfill the role of Qerr-Skria,\
 		and the only one forbidden from being appointed to the Xaq Moglar. As the representatives of the Skrell, \
 		the Qerr-Katish are highly social beings, sophisticated, cultured and very organised. As defenders of their society's \
 		values, they tend to be rather conservative, although progressive ideas regularly grow within the caste, as a stagnant \
@@ -46,26 +46,26 @@
 /singleton/cultural_info/culture/skrell/caste_talum
 	name = CULTURE_SKRELL_TALUM
 	description = " Considering the Skrells' emphasis on functionality and practicality, one would be mistaken to think they do not consider arts much. \
-		This very important sector of skrellian society is handled by the Talum-Katish, artists, aesthetes, entertainers, chefs, actors, writers, singers. \
+		This very important sector of skrellian society is handled by the Talum-Katish as artists, aesthetes, entertainers, chefs, actors, writers, and singers. \
 		They somewhat compete with the Qerr-Katish's role as representatives of skrellkind, although in a different way. As such, they are often mistaken for \
 		Qerr-Katish themselves, which might explain why this caste is generally seen as rarer and less celebrated than the others, while they are in fact \
-		frequently on the public scene. The Talum-Katish are the most individualistic members of skrellkind, although once again, they share the Qerr-Katish's \
+		frequently on the public scene. The Talum-Katish are the most individualistic members of skrellkind, although they share the Qerr-Katish's \
 		taste for a busy social life. Highly cultured, they are the free-thinkers of skrellian society, often at odds with more traditionalist and conservative castes. \
 		A heterogeneous lot, it is hard to estimate their global financial capacities, they however tend to reproduce a lot, multiplying their encounters \
 		with various partners, which might put a strain on their savings. Their clothing is often an odd mix of Qerr-Katish and Kanin-Katish, as they often wear \
-		clothing that is colourful , adorned with embroidery and their headtails sparkling with various brilliant metals. Their skin is generally purple, blue, pink, orange, red or white."
+		clothing that is colourful — adorned with embroidery and their headtails sparkling with various brilliant metals. Their skin is generally purple, blue, pink, orange, red or white."
 	economic_power = 1.3
 
 /singleton/cultural_info/culture/skrell/caste_raskinta
 	name = CULTURE_SKRELL_RASKINTA
-	description = "Rarely seen outside the skrellian society, the Raskinta-Katish are however recognised and respected by their entire species, for \
-		they are the ones who ensure the safety and stability of skrellian civilisation, both against internal and external threats. \
-		The military caste of the Skrell, most end up working for the various city-states, either in the police or as a career soldier,\
+	description = "Rarely seen outside the skrellian society, the Raskinta-Katish are recognised and respected by their entire species, for \
+		they are the ones who ensure the safety and stability of skrellian civilisation against both internal and external threats. \
+		The military caste of the Skrell, most end up working for the various city-states as either police or as career soldiers,\
 		although some of them end up working for private security or as entertainment fighters. They are very conservative, almost reactionary, \
 		and deeply committed to their community, caring very little for self-development and personal satisfaction. Their martial training \
 		leaves very little time for most intellectual pursuits, although they are trained to be expert tacticians and are only beaten by the \
 		Qerr-Katish in terms of organisational skills. While they are wealthier than the Kanin-Katish overall, they are still among the poorer \
 		castes of skrellkind and their large families of three or four bondings put a heavy strain on their earnings, only compensated by their \
-		strong social cohesion. These are often the hardest to spot among a crowd because they intentionally wear clothing other castes are known \
+		strong social cohesion. Raskinta-Katish skrell are often the hardest to spot among a crowd because they intentionally wear clothing other castes are known \
 		for while not working, however they tend to stick to clothing that is easy to move in and are often dark blue. Their skin is generally green, blue, black, brown or yellow."
 	economic_power = 1.2

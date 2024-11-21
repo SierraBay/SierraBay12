@@ -54,7 +54,7 @@
 /datum/codex_entry/geiger_counter
 	associated_paths = list(/obj/item/device/geiger)
 	mechanics_text = "By using this item, you may toggle its scanning mode on and off. Examine it while it's on to check for ambient radiation."
-	lore_text = "For centuries geiger counters have been saving the lives of unsuspecting laborers and technicians. You can never be too careful around radiation."
+	lore_text = "For centuries, geiger counters have been saving the lives of unsuspecting laborers and technicians. You can never be too careful around radiation."
 
 /datum/codex_entry/light_replacer
 	associated_paths = list(/obj/item/device/lightreplacer)

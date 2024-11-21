@@ -81,11 +81,11 @@
 
 /singleton/cultural_info/culture/unathi_yeosa
 	name = CULTURE_UNATHI_YEOSA_LITTORAL
-	description = "On Moghes, the boundaries between regions, cultures, and even races are rarely set in stone the yeosa realm is by no means an exception. \
+	description = "On Moghes, the boundaries between regions, cultures, and even races are rarely set in stone, and the yeosa realm is by no means an exception. \
 	Spread wide along the coast of the World Sea, islander communities coexist (and sometimes cooperate) with their sinta brethren. This is especially \
-	true not only for those living in the deltas and estuaries of the Salt Swamps the birthplace of yeosa'unathi race but also for those settling in proximity \
+	true not only for those living in the deltas and estuaries of the Salt Swamps, the birthplace of yeosa'unathi race, but also for those settling in proximity \
 	of major ports belonging to the Diamond Peaks (Gazalor) and other ethnic groups. Those coastal yeosa are generally known to the outsiders as yeosa littoral, or simply littorals - a name rarely used by the islanders themselves. \
-	While the name implies that yeosa in question are lagoon-bound, this may often not be the case; ties with the land-dwellers, or lack thereof, have \
+	While the name implies that yeosa in question are lagoon-bound, this is often not the case; ties with the land-dwellers, or lack thereof, have \
 	also been used as a criterion, although less so in recent years. What is true, however, is that the littoral clans have adopted some sinta ways of life \
 	through their constant mingling with the outsiders, integrating not only some elements of continental cults and festivities, but also the newer political ideas, such as \
 	clan leagues, city-states, and the Krukzuz. Technology works the same way - just as the well-preserved units of precursor crafts found their way to \

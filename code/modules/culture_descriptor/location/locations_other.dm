@@ -1,6 +1,6 @@
 /singleton/cultural_info/location/stateless
 	name = HOME_SYSTEM_STATELESS
-	description = "Sometimes people fall through the cracks... You have nobody to speak on your behalf."
+	description = "Sometimes, people fall through the cracks... You have nobody to speak on your behalf."
 	economic_power = 0
 	ruling_body = "None"
 

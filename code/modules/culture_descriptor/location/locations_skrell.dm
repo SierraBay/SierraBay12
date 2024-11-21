@@ -26,7 +26,7 @@
 
 /singleton/cultural_info/location/roasora
 	name = HOME_SYSTEM_ROASORA
-	description = "Roa'Sora, in the Qrri'terr system, is a small planet consisting of a single city-state, Tri'sorr. Ro'moxi.Since its founding some 200 years prior \
+	description = "Roa'Sora, in the Qrri'terr system, is a small planet consisting of a single city-state, Tri'sorr. Since its founding some 200 years prior \
 	The Skrell of Roa'Sora have been engaged in a state of constant defence against a nearby species that has made no diplomatic attempts to communicate known \
 	only as the 'Throom,' a name given because of a distinctive sound made by their vessels. The species, which appear to do little other than raid, make regular incursions.\
 	It is because of this state that Roa'Sora is heavily militarised in nature, with a heavy Raskinta influence and strong cooperation with its SDTF, Sora'terr.\

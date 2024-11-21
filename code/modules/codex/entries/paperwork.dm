@@ -12,7 +12,7 @@
 \[small\] - \[/small\] : Decreases the size of the text.<br>
 \[large\] - \[/large\] : Increases the size of the text.<br>
 \[sign\] : Inserts a signature of your name in a foolproof way.<br>
-\[field\] : Inserts an invisible field which lets you start type from there. Useful for forms.<br>
+\[field\] : Inserts an invisible field which lets you start typing from there. Useful for forms.<br>
 \[date\] : Inserts today's station date.<br>
 \[time\] : Inserts the current station time.<br>
 \[table\] - \[/table\] : Creates table using \[row\] and \[cell\] tags.<br>

@@ -24,19 +24,19 @@
 
 /singleton/cultural_info/religion/sikh
 	name = RELIGION_SIKHISM
-	description = "An Indian monotheistic religion based on the spiritual teachings of Guru Nanak and the nine Sikh gurus that succeeded him. Someone who practicies Sikhism is called a Sikh."
+	description = "An Indian, monotheistic religion based on the spiritual teachings of Guru Nanak and the nine Sikh gurus that succeeded him. Someone who practicies Sikhism is called a Sikh."
 
 /singleton/cultural_info/religion/muslim
 	name = RELIGION_ISLAM
-	description = "An Abrahamic monotheistic religion teaching that there is only one God and that Muhammad is His prophet. Someone who practices Islam is called a Muslim."
+	description = "An Abrahamic, monotheistic religion teaching that there is only one God and that Muhammad is His prophet. Someone who practices Islam is called a Muslim."
 
 /singleton/cultural_info/religion/christian
 	name = RELIGION_CHRISTIANITY
-	description = "An Abrahamic monotheistic religion based on the life and teachings of Jesus of Nazareth. Someone who practices Christianity is called a Christian."
+	description = "An Abrahamic, monotheistic religion based on the life and teachings of Jesus of Nazareth. Someone who practices Christianity is called a Christian."
 
 /singleton/cultural_info/religion/bahai
 	name = RELIGION_BAHAI_FAITH
-	description = "An Abrahamic monotheistic religion that follows the teachings of Baha'u'llah and believes in universal peace and unity. Someone who practices the Baha'i Faith is called a Baha'i."
+	description = "An Abrahamic, monotheistic religion that follows the teachings of Baha'u'llah and believes in universal peace and unity. Someone who practices the Baha'i Faith is called a Baha'i."
 
 /singleton/cultural_info/religion/agnostic
 	name = RELIGION_AGNOSTICISM
@@ -52,7 +52,7 @@
 
 /singleton/cultural_info/religion/thelemite
 	name = RELIGION_THELEMA
-	description = "An esoteric Western religion focusing on the law of Thelema. Someone who practices Thelema is called a Thelemite."
+	description = "An esoteric, Western religion focusing on the law of Thelema. Someone who practices Thelema is called a Thelemite."
 
 /singleton/cultural_info/religion/spiritualism
 	name = RELIGION_SPIRITUALISM

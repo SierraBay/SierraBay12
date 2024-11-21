@@ -83,4 +83,4 @@
 	<br>\
 	There are several things to keep in mind when using it. First off, you need Basic Medicine AND Anatomy skills to align it properly, otherwise it'll hurt patient. \
 	It will only provide some circulation, you need to fix blood volume and oxygen supply issues for it to be useful. \
-	It performs worse than manual CPR by a skilled user and will NOT restart the heart. It's advantage is automatic nature.<br>"
+	It performs worse than manual CPR by a skilled user and will NOT restart the heart. Its advantage is in its automatic nature.<br>"

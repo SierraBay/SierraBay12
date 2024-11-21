@@ -1,7 +1,7 @@
 /singleton/cultural_info/location/moghes
 	name = HOME_SYSTEM_MOGHES
 	description = "A dead world full of strange, monstrous creatures and mysterious and dangerous landscapes, \
-	this is the home of the unathi. Unathi believe this world was once lush and full of life, but due to the \
+	Moghes is the home of the unathi. Unathi believe this world was once lush and full of life, but due to the \
 	decisions of the precursors, it was killed and left to rot. For the unathi, it is their duty to bring it \
 	back to life, or to become strong enough that they don't have to."
 	ruling_body = "Clan Hegemony"
@@ -17,10 +17,10 @@
 /singleton/cultural_info/location/ouere
 	name = HOME_SYSTEM_OUERE
 	description = "The recently discovered system of precursor gateway devices connecting Moghes to its smaller sister \
-planet of Ouere has seen many clans and small groups stepping through it into this new world. There is \
-no clear consensus on how to treat this new world - either as a logical extension of Moghes, a completely new entity, \
-or simply as a resource base for improving the home planet. Many colonists, artifact hunters, and ostracised groups have \
-flocked to the planet, with Markesheli communities growing quite rapidly in numbers compared to other parts of Moghes. "
+	planet of Ouere has seen many clans and small groups stepping through it into this new world. There is \
+	no clear consensus on how to treat this new world - either as a logical extension of Moghes, a completely new entity, \
+	or simply as a resource base for improving the home planet. Many colonists, artifact hunters, and ostracised groups have \
+	flocked to the planet, with Markesheli communities growing quite rapidly in numbers compared to other parts of Moghes. "
 	ruling_body = "Clan Hegemony"
 	distance = "20 light-years"
 	secondary_langs = list(
