@@ -6,6 +6,7 @@
 #include "colony_fractions/_colony_types.dme"
 // #include "don_loadout/_don_loadout.dme" // Не открывать до Рождества
 #include "eris_announcer/_eris_announcer.dme"
+#include "effects/_effects.dme"
 #include "emote_panel/_emote_panel.dme"
 #include "ex666_ecosystem/_ex666_ecosystem.dme"
 #include "escpodinf/_escpodinf.dme"
