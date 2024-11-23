@@ -77,3 +77,64 @@
 	display_name = "investigator holobadge (IAA)"
 	path = /obj/item/clothing/accessory/badge/holo/investigator
 	allowed_roles = list(/datum/job/iaa)
+
+/datum/gear/accessory/solgov
+	display_name = "Solgov command insignia"
+	path = /obj/item/clothing/accessory/solgov/department/command
+	allowed_roles = list(/datum/job/captain, /datum/job/hop, /datum/job/rd, /datum/job/cmo, /datum/job/chief_engineer, /datum/job/hos, /datum/job/iaa, /datum/job/adjutant)
+	allowed_branches = list(/datum/mil_branch/contractor)
+	allowed_factions = list(FACTION_EXPEDITIONARY, FACTION_CORPORATE)
+	flags = GEAR_HAS_NO_CUSTOMIZATION
+	cost = 0
+
+/datum/gear/accessory/solgov/engineering
+	display_name = "Solgov engineering insignia"
+	path = /obj/item/clothing/accessory/solgov/department/engineering
+	allowed_roles = list(/datum/job/chief_engineer, /datum/job/senior_engineer, /datum/job/engineer, /datum/job/infsys, /datum/job/roboticist, /datum/job/engineer_trainee, /datum/job/explorer_engineer)
+	allowed_branches = list(/datum/mil_branch/contractor)
+	allowed_factions = list(FACTION_EXPEDITIONARY, FACTION_CORPORATE)
+	flags = GEAR_HAS_NO_CUSTOMIZATION
+	cost = 0
+
+/datum/gear/accessory/solgov/exploration
+	display_name = "Solgov exploration insignia"
+	path = /obj/item/clothing/accessory/solgov/department/exploration
+	allowed_roles = list(/datum/job/explorer, /datum/job/explorer_medic, /datum/job/explorer_engineer, /datum/job/explorer_pilot, /datum/job/exploration_leader)
+	allowed_branches = list(/datum/mil_branch/contractor)
+	allowed_factions = list(FACTION_EXPEDITIONARY, FACTION_CORPORATE)
+	flags = GEAR_HAS_NO_CUSTOMIZATION
+	cost = 0
+
+/datum/gear/accessory/solgov/medical
+	display_name = "Solgov medical insignia"
+	path = /obj/item/clothing/accessory/solgov/department/medical
+	allowed_roles = list(/datum/job/cmo, /datum/job/senior_doctor, /datum/job/doctor, /datum/job/doctor_trainee, /datum/job/explorer_medic, /datum/job/psychiatrist, /datum/job/chemist, /datum/job/roboticist)
+	allowed_branches = list(/datum/mil_branch/contractor)
+	allowed_factions = list(FACTION_EXPEDITIONARY, FACTION_CORPORATE)
+	flags = GEAR_HAS_NO_CUSTOMIZATION
+	cost = 0
+
+/datum/gear/accessory/solgov/security
+	display_name = "Solgov security insignia"
+	path = /obj/item/clothing/accessory/solgov/department/security
+	allowed_roles = list(/datum/job/hos, /datum/job/warden, /datum/job/detective, /datum/job/officer, /datum/job/security_assistant)
+	allowed_branches = list(/datum/mil_branch/contractor)
+	allowed_factions = list(FACTION_EXPEDITIONARY, FACTION_CORPORATE)
+	flags = GEAR_HAS_NO_CUSTOMIZATION
+	cost = 0
+
+/datum/gear/accessory/solgov/supply
+	display_name = "Solgov supply insignia"
+	path = /obj/item/clothing/accessory/solgov/department/supply
+	allowed_roles = list(/datum/job/qm,/datum/job/cargo_tech,/datum/job/cargo_assistant)
+	allowed_branches = list(/datum/mil_branch/contractor)
+	allowed_factions = list(FACTION_EXPEDITIONARY, FACTION_CORPORATE)
+	flags = GEAR_HAS_NO_CUSTOMIZATION
+	cost = 0
+
+/datum/gear/accessory/armband_corpsman
+	display_name = "medical armband"
+	path = /obj/item/clothing/accessory/armband/medblue
+	allowed_roles = list(/datum/job/cmo, /datum/job/senior_doctor, /datum/job/doctor, /datum/job/doctor_trainee, /datum/job/explorer_medic, /datum/job/psychiatrist, /datum/job/chemist)
+	flags = GEAR_HAS_NO_CUSTOMIZATION
+	cost = 0
