@@ -92,7 +92,7 @@
 		toggle()
 		playsound(owner.loc,'sound/mecha/internaldmgalarm.ogg',35,1)
 	*/
-	owner.add_heat(difference)
+	owner.add_heat(difference * 2)
 	if(difference >= 0)
 		toggle()
 		OVERHEAT = TRUE
@@ -311,7 +311,7 @@
 		if (target.mob_size < user.mob_size) //Damaging attacks overwhelm smaller mobs
 			target.throw_at(get_edge_target_turf(target,get_dir(user, target)),1, 1)
 
-/obj/item/material/hatchet/machete/mech/resolve_attackby(atom/A, mob/user, click_params)
+/obj/item/material/hatchet/machete/mech/use_before(atom/A, mob/user, click_params)
 	//Case 1: Default, you are hitting something that isn't a mob. Just do whatever, this isn't dangerous or op.
 	//[SIERRA-ADD] - Mechs-by-Shegar
 	holder.owner.add_heat(holder.heat_generation)
