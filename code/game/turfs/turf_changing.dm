@@ -1,5 +1,5 @@
 /turf/proc/ReplaceWithLattice(material)
-	var base_turf = get_base_turf_by_area(src, TRUE)
+	var/base_turf = get_base_turf_by_area(src, TRUE)
 	if(type != base_turf)
 		src.ChangeTurf(get_base_turf_by_area(src, TRUE))
 	if(!locate(/obj/structure/lattice) in src)
@@ -120,7 +120,7 @@
 		W.rebuild_zbleed()
 	// end of lighting stuff
 
-	for(var/turf/T in RANGE_TURFS(src, 1))
+	for(var/turf/T as anything in RANGE_TURFS(src, 1))
 		T.update_icon()
 
 	if(density != old_density)
