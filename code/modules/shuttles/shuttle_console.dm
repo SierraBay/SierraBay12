@@ -14,6 +14,7 @@
 	var/ui_template = "shuttle_control_console.tmpl"
 
 
+
 /obj/machinery/computer/shuttle_control/Initialize(mapload)
 	. = ..()
 	if (!shuttle_tag)
