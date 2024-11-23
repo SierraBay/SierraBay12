@@ -11,6 +11,11 @@
 	mouse_opacity = MOUSE_OPACITY_UNCLICKABLE
 	renderer_flags = RENDERER_MAIN | RENDERER_SHARED
 
+/atom/movable/renderer/scene_group/Initialize()
+	. = ..()
+	remove_filter("Grav Effect")
+	add_filter("Grav Effect", 5, displacement_map_filter(render_source = GRAV_EFFECT_TARGET, size = 3))
+
 /obj/effect/gravity
 	plane = GRAV_EFFECT_PLANE
 	appearance_flags = PIXEL_SCALE | NO_CLIENT_COLOR
@@ -23,6 +28,7 @@
 /obj/effect/gravity/New(loc, ...)
 	. = ..()
 	add_filter("ripple", 1, ripple_filter(radius = 0, size = 250, falloff = 0.5, repeat = 100))
+	add_filter("layer", 2, layering_filter(icon = icon(icon, "gravitational_lens"), transform = matrix().Scale(0.15, 0.15)))
 	START_PROCESSING(SSobj, src)
 
 /obj/effect/gravity/Process()
@@ -31,14 +37,6 @@
 	animate(get_filter("ripple"), radius = 230, size = 0, time = 14, flags = ANIMATION_PARALLEL)
 	animate(radius = 0, size = 150, time = 0)
 
-
-/atom/movable/renderer/scene_group/Initialize()
-	. = ..()
-	filters += filter(
-		type = "ripple",
-		render_source = GRAV_EFFECT_TARGET,
-		size = 250
-	)
 
 /obj/machinery/bluespacedrive
 	var/obj/effect/gravity/grav
