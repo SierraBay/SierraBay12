@@ -10273,6 +10273,8 @@
 /obj/item/device/suit_cooling_unit,
 /obj/floor_decal/industrial/outline/grey,
 /obj/item/device/suit_cooling_unit,
+/obj/item/device/suit_cooling_unit/miniature,
+/obj/item/device/suit_cooling_unit/miniature,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/storage/eva)
 "bAm" = (
@@ -85417,6 +85419,8 @@
 	dir = 4
 	},
 /obj/item/tank/jetpack/carbondioxide,
+/obj/item/device/suit_cooling_unit/miniature,
+/obj/item/device/suit_cooling_unit/miniature,
 /turf/simulated/floor/tiled/techfloor,
 /area/security/sierra/suits)
 "mDw" = (
@@ -125682,6 +125686,8 @@
 	dir = 8
 	},
 /obj/floor_decal/industrial/outline/yellow,
+/obj/item/device/suit_cooling_unit/miniature,
+/obj/item/device/suit_cooling_unit/miniature,
 /turf/simulated/floor/tiled,
 /area/quartermaster/expedition/eva)
 "syP" = (
