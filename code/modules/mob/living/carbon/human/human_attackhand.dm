@@ -61,6 +61,11 @@
 			apply_effect(4, EFFECT_WEAKEN, armor_block)
 		return
 
+//[SIERRA-ADD] VIRUSOLOGY
+	if(istype(M,/mob/living/carbon))
+		M.spread_disease_to(src, "Contact")
+//[/SIERRA-ADD] VIRUSOLOGY
+
 	for (var/obj/item/grab/G in H)
 		if (G.assailant == H && G.affecting == src)
 			if(G.resolve_openhand_attack())
