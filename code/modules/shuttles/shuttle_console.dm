@@ -7,14 +7,13 @@
 	machine_name = "basic shuttle console"
 	machine_desc = "A simple control system for small spacecraft, allowing automated movement from one navigation point to another."
 
-	var/shuttle_tag  // Used to coordinate data in shuttle controller.
+	/// Used to coordinate data in shuttle controller. Set by `sync_shuttle()`.
+	var/shuttle_tag
 	var/hacked = 0   // Has been emagged, no access restrictions.
 
 	var/ui_template = "shuttle_control_console.tmpl"
 
 
-<<<<<<< ours
-=======
 /obj/machinery/computer/shuttle_control/Initialize(mapload)
 	. = ..()
 	if (!shuttle_tag)
@@ -45,7 +44,6 @@
 	return !istype(shuttle, /datum/shuttle/autodock/overmap)
 
 
->>>>>>> theirs
 /obj/machinery/computer/shuttle_control/interface_interact(mob/user)
 	ui_interact(user)
 	return TRUE
