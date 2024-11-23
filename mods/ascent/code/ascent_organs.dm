@@ -92,3 +92,6 @@
 /obj/item/organ/external/head/insectoid/mantid/proc/reset_cooldown()
 	cooldown = FALSE
 	refresh_action_button()
+
+/obj/item/organ/internal/eyes/insectoid/nabber/ascent
+	eye_icon = null // eye overlays mess with helmets, eyes are visible over everything. Some dumb workaround

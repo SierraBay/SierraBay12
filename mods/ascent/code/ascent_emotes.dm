@@ -1,7 +1,7 @@
 /singleton/emote/audible/ascent_purr
 	key = "purr"
 	emote_message_3p = "USER purrs."
-	emote_sound = 'sound/voice/ascent1.ogg'
+	emote_sound = 'mods/ascent/sound/ascent1.ogg'
 
 /singleton/emote/audible/ascent_hiss
 	key ="hiss"
@@ -36,3 +36,31 @@
 /singleton/emote/visible/ascent_dazzle
 	key = "dazzle"
 	emote_message_3p = "USER dazzles!"
+
+/mob/living/silicon/robot/flying/ascent
+	default_emotes = list(
+		/singleton/emote/audible/ascent_purr,
+		/singleton/emote/audible/ascent_hiss,
+		/singleton/emote/audible/ascent_snarl
+	)
+
+/datum/species/mantid
+	default_emotes = list(
+		/singleton/emote/audible/ascent_purr,
+		/singleton/emote/audible/ascent_hiss,
+		/singleton/emote/audible/ascent_snarl,
+		/singleton/emote/visible/ascent_flicker,
+		/singleton/emote/visible/ascent_glint,
+		/singleton/emote/visible/ascent_glimmer,
+		/singleton/emote/visible/ascent_pulse,
+		/singleton/emote/visible/ascent_shine,
+		/singleton/emote/visible/ascent_dazzle
+	)
+
+/datum/species/nabber/monarch_queen
+	default_emotes = list(
+		/singleton/emote/audible/bug_hiss,
+		/singleton/emote/audible/bug_buzz,
+		/singleton/emote/audible/bug_chitter,
+		/singleton/emote/audible/ascent_purr,
+	)

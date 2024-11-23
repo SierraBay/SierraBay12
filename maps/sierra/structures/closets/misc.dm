@@ -19,6 +19,7 @@
 		/obj/item/gun/energy/gun/small/secure,
 		/obj/item/storage/secure/briefcase,
 		/obj/item/clothing/shoes/laceup,
+		/obj/item/folder/envelope/rep,
 		/obj/item/storage/belt/holster/general,
 		/obj/item/clothing/under/rank/internalaffairs,
 		/obj/item/clothing/suit/storage/toggle/suit/black,

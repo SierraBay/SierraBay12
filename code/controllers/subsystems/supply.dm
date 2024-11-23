@@ -27,6 +27,12 @@ SUBSYSTEM_DEF(supply)
 		"crate" = "From exported crates",
 		"gep" = "From uploaded good explorer points",
 		"anomaly" = "From scanned and categorized anomalies",
+
+//SIERRA-ADD VIRUSOLOGY
+		"virology_antibodies" = "From uploaded antibody data",
+		"virology_dishes" = "From exported virus dishes",
+//SIERRA-ADD
+		"animal" = "From captured exotic alien fauna",
 		//[SIERRA-ADD] - ANOMALY - Добавляем категорию "Артефакты"
 		"artefacts" = "From artefacts",
 		//[SIERRA-ADD]
@@ -120,22 +126,35 @@ SUBSYSTEM_DEF(supply)
 					if(istype(A, /obj/item/disk/survey))
 						var/obj/item/disk/survey/D = A
 						add_points_from_source(round(D.Value() * 0.05), "gep")
+//SIERRA-ADD VIRUSOLOGY
+										// Sell virus dishes.
+					if(istype(A, /obj/item/virusdish))
+						//Obviously the dish must be unique and never sold before.
+						var/obj/item/virusdish/dish = A
+						if(dish.analysed && istype(dish.virus2) && dish.virus2.uniqueID)
+							if(!(dish.virus2.uniqueID in sold_virus_strains))
+								add_points_from_source(5, "virology_dishes")
+								sold_virus_strains += dish.virus2.uniqueID
+//SIERRA-ADD
 					//[SIERRA-ADD] - ANOMALY - Продажа артефактов
 					if(istype(A, /obj/item/artefact))
 						var/obj/item/artefact/D = A
 						add_points_from_source(D.cargo_price, "artefacts")
+						SSanom.earned_cargo_points += D.cargo_price
 					if(istype(A, /obj/item/collector))
 						var/obj/item/collector/D = A
 						add_points_from_source(D.stored_artefact.cargo_price, "artefacts")
+						SSanom.earned_cargo_points += D.stored_artefact.cargo_price
 					//[SIERRA-ADD]
 
 			// Sell artefacts (in anomaly cages)
 			if (istype(AM, /obj/machinery/anomaly_container))
 				var/obj/machinery/anomaly_container/AC = AM
+				var/points_per_anomaly = 10
 				callHook("sell_anomalycage", list(AC, subarea))
 				if (AC.contained)
 					var/obj/machinery/artifact/C = AC.contained
-					var/list/my_effects
+					var/list/my_effects = list()
 					if (C.my_effect)
 						var/datum/artifact_effect/eone = C.my_effect
 						my_effects += eone
@@ -151,25 +170,25 @@ SUBSYSTEM_DEF(supply)
 								for (var/datum/artifact_effect/E in my_effects)
 									switch (E.effect_type)
 										if (EFFECT_UNKNOWN, EFFECT_PSIONIC)
-											points += 20
+											points_per_anomaly += 10
 										if (EFFECT_ENERGY, EFFECT_ELECTRO)
-											points += 30
+											points_per_anomaly += 20
 										if (EFFECT_ORGANIC, EFFECT_SYNTH)
-											points += 40
+											points_per_anomaly += 30
 										if (EFFECT_BLUESPACE, EFFECT_PARTICLE)
-											points += 50
+											points_per_anomaly += 40
 										else
-											points += 10
+											points_per_anomaly += 10
 											//In case there's ever a broken artifact, it's still worth SOMETHING
 									switch (E.trigger.trigger_type)
 										if (TRIGGER_SIMPLE)
-											points += 5
+											points_per_anomaly += 5
 										if (TRIGGER_COMPLEX)
-											points += 10
+											points_per_anomaly += 10
 										else
-											points += 2
+											points_per_anomaly += 2
 
-				add_points_from_source(points, "anomaly")
+								add_points_from_source(points_per_anomaly, "anomaly")
 
 			//Only for animals in stasis cages.
 			if (istype(AM, /obj/machinery/stasis_cage))
@@ -179,16 +198,16 @@ SUBSYSTEM_DEF(supply)
 				if (SC.contained)
 					var/mob/living/simple_animal/CA = SC.contained
 					if (istype(CA, /mob/living/simple_animal/hostile/human))
-						return
-					if (istype(CA, /mob/living/simple_animal/passive))
-						add_points_from_source(points_per_animal, "animal")
-					if (istype(CA, /mob/living/simple_animal/hostile/retaliate/beast))
-						add_points_from_source((points_per_animal * 2), "animal")
-						return //So that it doesn't give points twice for beasts
+						continue
 					if (istype(CA, /mob/living/simple_animal/hostile))
-						add_points_from_source((points_per_animal * 4), "animal")
+						points_per_animal *= 2
+					if (istype(CA, /mob/living/simple_animal/hostile/retaliate/beast))
+						points_per_animal *= 2
 					if (CA.stat != DEAD) //Alive gives more.
-						add_points_from_source((point_sources["animal"] * 2), "animal")
+						points_per_animal *= 2
+
+					qdel(SC.contained)
+					add_points_from_source(points_per_animal, "animal")
 
 			qdel(AM)
 
@@ -275,6 +294,7 @@ SUBSYSTEM_DEF(supply)
 
 /datum/supply_order
 	var/ordernum
+	var/timestamp
 	var/singleton/hierarchy/supply_pack/object = null
 	var/orderedby = null
 	var/comment = null
