@@ -1758,8 +1758,8 @@
 /obj/structure/table/woodentable_reinforced/walnut,
 /obj/random_multi/single_item/memo_command,
 /obj/random_multi/single_item/memo_supply,
-/obj/item/folder/envelope/dcorder,
-/obj/item/folder/envelope/csorder,
+/obj/item/folder/envelope/preset/dcorder,
+/obj/item/folder/envelope/preset/csorder,
 /turf/simulated/floor/wood/walnut,
 /area/crew_quarters/heads/office/xo)
 "de" = (
@@ -4197,7 +4197,7 @@
 	dir = 6
 	},
 /obj/random_multi/single_item/memo_engineering,
-/obj/item/folder/envelope/ceorder,
+/obj/item/folder/envelope/preset/ceorder,
 /turf/simulated/floor/tiled,
 /area/crew_quarters/heads/office/ce)
 "iU" = (
@@ -4899,7 +4899,7 @@
 /obj/random_multi/single_item/memo_command,
 /obj/random_multi/single_item/memo_supply,
 /obj/random_multi/single_item/memo_medical,
-/obj/item/folder/envelope/ndaorder,
+/obj/item/folder/envelope/preset/ndaorder,
 /obj/item/paper/immediateorder,
 /turf/simulated/floor/tiled/dark,
 /area/bridge)
@@ -5392,7 +5392,7 @@
 /area/hallway/primary/bridge/aft)
 "mT" = (
 /obj/structure/table/woodentable/walnut,
-/obj/item/folder/envelope/cmdorder,
+/obj/item/folder/envelope/preset/cmdorder,
 /turf/simulated/floor/wood/walnut,
 /area/crew_quarters/heads/cobed)
 "mV" = (
@@ -7711,7 +7711,7 @@
 /obj/structure/noticeboard{
 	pixel_x = 32
 	},
-/obj/item/folder/envelope/cmdorder,
+/obj/item/folder/envelope/preset/cmdorder,
 /turf/simulated/floor/wood/walnut,
 /area/crew_quarters/heads/office/sgr)
 "tC" = (
@@ -7970,7 +7970,7 @@
 /obj/item/storage/secure/safe{
 	pixel_x = 36
 	},
-/obj/item/folder/envelope/rep,
+/obj/item/folder/envelope/preset/rep,
 /obj/item/documents/scgr,
 /turf/simulated/floor/wood/walnut,
 /area/crew_quarters/heads/office/sgr)
@@ -8928,7 +8928,7 @@
 	},
 /obj/item/stamp/cos,
 /obj/random_multi/single_item/memo_security,
-/obj/item/folder/envelope/cosorder,
+/obj/item/folder/envelope/preset/cosorder,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/crew_quarters/heads/office/cos)
 "wD" = (
@@ -11116,7 +11116,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/item/folder/envelope/lauletter1,
+/obj/item/folder/envelope/preset/lauletter1,
 /turf/simulated/floor/carpet/blue,
 /area/crew_quarters/heads/office/co)
 "Fn" = (
@@ -12328,7 +12328,7 @@
 /obj/floor_decal/corner/paleblue/diagonal,
 /obj/structure/table/glass,
 /obj/random_multi/single_item/memo_medical,
-/obj/item/folder/envelope/cmoorder,
+/obj/item/folder/envelope/preset/cmoorder,
 /turf/simulated/floor/tiled/white,
 /area/crew_quarters/heads/office/cmo)
 "Kh" = (
@@ -12634,7 +12634,7 @@
 /obj/floor_decal/corner/research{
 	dir = 5
 	},
-/obj/item/folder/envelope/exploorder,
+/obj/item/folder/envelope/preset/exploorder,
 /turf/simulated/floor/tiled,
 /area/crew_quarters/heads/office/rd)
 "Lw" = (
@@ -12764,7 +12764,7 @@
 /area/aquila/airlock)
 "Mf" = (
 /obj/structure/table/woodentable_reinforced/walnut/maple,
-/obj/item/folder/envelope/captain,
+/obj/item/folder/envelope/preset/captain,
 /obj/random_multi/single_item/runtime,
 /turf/simulated/floor/wood/walnut,
 /area/crew_quarters/heads/office/co)
@@ -13289,7 +13289,7 @@
 	pixel_y = -4
 	},
 /obj/item/hand_labeler,
-/obj/item/folder/envelope/clorder,
+/obj/item/folder/envelope/preset/clorder,
 /turf/simulated/floor/carpet/green,
 /area/crew_quarters/heads/office/cl/backroom)
 "Ox" = (
