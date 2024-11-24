@@ -160,18 +160,20 @@
 				ChangeArea(target, get_area(source))
 				ChangeArea(source, base_area)
 			transport_turf_contents(source, target)
-
 	//change the old turfs
 	for(var/turf/source in translation)
-		source.ChangeTurf(base_turf ? base_turf : get_base_turf_by_area(source), 1, 1)
+//[SIERRA-EDIT] Advanced Landing
+		var/old_turf = source.prev_type || base_turf || get_base_turf_by_area(source)
+		source.ChangeTurf(old_turf)
+//[/SIERRA-EDIT] Advanced Landing
 
 //Transports a turf from a source turf to a target turf, moving all of the turf's contents and making the target a copy of the source.
 /proc/transport_turf_contents(turf/source, turf/target)
 	RETURN_TYPE(/turf)
-
+	var/target_type = target.type //[/SIERRA-ADD] Advanced Landing
 	var/turf/new_turf = target.ChangeTurf(source.type, 1, 1)
 	new_turf.transport_properties_from(source)
-
+	new_turf.prev_type = target_type //[/SIERRA-ADD] Advanced Landing
 	for(var/obj/O in source)
 		if (QDELETED(O))
 			testing("Failed to translate [O] to new turf as it was qdel'd.")
