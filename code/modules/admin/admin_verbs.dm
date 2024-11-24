@@ -102,6 +102,7 @@ var/global/list/admin_verbs_admin = list(
 	/client/proc/check_fax_history,
 	/client/proc/cmd_admin_notarget,
 	/datum/admins/proc/SetRoundLength,
+	/datum/admins/proc/SetMaximumRoundLength,
 	/datum/admins/proc/ToggleContinueVote,
 	/datum/admins/proc/togglemoderequirementchecks,
 	/client/proc/delete_crew_record
@@ -147,6 +148,7 @@ var/global/list/admin_verbs_spawn = list(
 	/client/proc/spawn_chemdisp_cartridge,
 	// [SIERRA-ADD] - CLIENT_VERBS - ,
 	/client/proc/respawn_as_self,
+	/client/proc/virus2_editor,
 	// [/SIERRA-ADD] - CLIENT_VERBS ,
 	/datum/admins/proc/mass_debug_closet_icons
 	)
@@ -214,7 +216,7 @@ var/global/list/admin_verbs_debug = list(
 	/client/proc/reload_webhooks,
 	/client/proc/toggle_planet_repopulating,
 	/client/proc/spawn_exoplanet,
-	/client/proc/profiler_start
+	/client/proc/profiler_init_verb
 	)
 
 var/global/list/admin_verbs_paranoid_debug = list(
