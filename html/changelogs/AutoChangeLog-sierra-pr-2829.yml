@@ -1,0 +1,7 @@
+author: Hubblenaut
+changes:
+  - {rscadd: The paint sprayer now uses a radial menu and has some more decals available.}
+  - {tweak: The paint sprayer now uses mouse position to determine the direction of
+      all decals on placement -- not just quarter-tiles.}
+  - {bugfix: The paint sprayer can now once again be used on airlocks without issue.}
+delete-after: true

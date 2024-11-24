@@ -299,6 +299,9 @@
 	if(boozed)
 		M.add_chemical_effect(CE_ALCOHOL_TOXIC, 1)
 		M.add_chemical_effect(CE_BREATHLOSS, 0.1 * boozed) //drinking and opiating makes breathing kinda hard
+	if(isfast(M))
+		M.add_chemical_effect(CE_BREATHLOSS, 0.5)
+		M.add_chemical_effect(CE_SLOWDOWN, 2) //hyperzine reacts negatively with opiates
 
 /datum/reagent/tramadol/overdose(mob/living/carbon/M)
 	..()
@@ -308,6 +311,10 @@
 	M.add_chemical_effect(CE_BREATHLOSS, 0.6) //Have trouble breathing, need more air
 	if(isboozed(M))
 		M.add_chemical_effect(CE_BREATHLOSS, 0.2) //Don't drink and OD on opiates folks
+	if(isfast(M))
+		M.add_chemical_effect(CE_NOPULSE, 1)
+		var/obj/item/organ/internal/heart = M.internal_organs_by_name[BP_HEART] //heart damage + arrest
+		heart.take_internal_damage(heart.max_damage * 0.045)
 
 /datum/reagent/tramadol/proc/isboozed(mob/living/carbon/M)
 	. = 0
@@ -320,6 +327,16 @@
 			. = 1
 			if(booze.strength < 40) //liquor stuff hits harder
 				return 2
+
+/datum/reagent/tramadol/proc/isfast(mob/living/carbon/M)
+	. = FALSE
+	var/datum/reagents/ingested = M.get_ingested_reagents()
+	if(!ingested)
+		return FALSE
+	var/list/pool = M.reagents.reagent_list | ingested.reagent_list
+	for(var/datum/reagent/hyperzine/fast in pool)
+		if(M.chem_doses[fast.type])
+			return TRUE
 
 /datum/reagent/tramadol/oxycodone
 	name = "Oxycodone"
@@ -488,7 +505,7 @@
 
 /datum/reagent/hyperzine
 	name = "Hyperzine"
-	description = "Hyperzine is a highly effective, long lasting, muscle stimulant."
+	description = "Hyperzine is a highly effective, long lasting, muscle stimulant. Do not mix with opiates!"
 	taste_description = "acid"
 	reagent_state = LIQUID
 	color = "#ff3300"
