@@ -581,7 +581,7 @@
 	return
 
 /obj/machinery/power/supermatter/ex_act(severity)
-	..()
+	// not calling parent ex_act as it has a chance to qdel the supermatter
 	switch(severity)
 		if(EX_ACT_DEVASTATING)
 			power *= 4

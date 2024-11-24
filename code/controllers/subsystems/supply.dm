@@ -27,6 +27,11 @@ SUBSYSTEM_DEF(supply)
 		"crate" = "From exported crates",
 		"gep" = "From uploaded good explorer points",
 		"anomaly" = "From scanned and categorized anomalies",
+
+//SIERRA-ADD VIRUSOLOGY
+		"virology_antibodies" = "From uploaded antibody data",
+		"virology_dishes" = "From exported virus dishes",
+//SIERRA-ADD
 		"animal" = "From captured exotic alien fauna",
 		//[SIERRA-ADD] - ANOMALY - Добавляем категорию "Артефакты"
 		"artefacts" = "From artefacts",
@@ -121,13 +126,25 @@ SUBSYSTEM_DEF(supply)
 					if(istype(A, /obj/item/disk/survey))
 						var/obj/item/disk/survey/D = A
 						add_points_from_source(round(D.Value() * 0.05), "gep")
+//SIERRA-ADD VIRUSOLOGY
+										// Sell virus dishes.
+					if(istype(A, /obj/item/virusdish))
+						//Obviously the dish must be unique and never sold before.
+						var/obj/item/virusdish/dish = A
+						if(dish.analysed && istype(dish.virus2) && dish.virus2.uniqueID)
+							if(!(dish.virus2.uniqueID in sold_virus_strains))
+								add_points_from_source(5, "virology_dishes")
+								sold_virus_strains += dish.virus2.uniqueID
+//SIERRA-ADD
 					//[SIERRA-ADD] - ANOMALY - Продажа артефактов
 					if(istype(A, /obj/item/artefact))
 						var/obj/item/artefact/D = A
 						add_points_from_source(D.cargo_price, "artefacts")
+						SSanom.earned_cargo_points += D.cargo_price
 					if(istype(A, /obj/item/collector))
 						var/obj/item/collector/D = A
 						add_points_from_source(D.stored_artefact.cargo_price, "artefacts")
+						SSanom.earned_cargo_points += D.stored_artefact.cargo_price
 					//[SIERRA-ADD]
 
 			// Sell artefacts (in anomaly cages)
@@ -277,6 +294,7 @@ SUBSYSTEM_DEF(supply)
 
 /datum/supply_order
 	var/ordernum
+	var/timestamp
 	var/singleton/hierarchy/supply_pack/object = null
 	var/orderedby = null
 	var/comment = null

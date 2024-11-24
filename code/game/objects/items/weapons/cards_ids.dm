@@ -480,6 +480,14 @@ var/global/const/NO_EMAG_ACT = -50
 	access = GLOB.using_map.synth_access.Copy()
 	..()
 
+/obj/item/card/id/synthetic/ai
+	name = "\improper AI ID"
+	desc = "All-access module for the AI."
+
+/obj/item/card/id/synthetic/ai/New()
+	..()
+	access = get_all_station_access() + access_synth
+
 /obj/item/card/id/centcom
 	name = "\improper CentCom. ID"
 	desc = "An ID straight from Cent. Com."
