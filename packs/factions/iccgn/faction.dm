@@ -146,7 +146,7 @@
 		/obj/item/clothing/accessory/iccgn_rank/or9_alt,
 		/obj/item/clothing/accessory/iccgn_badge/enlisted
 	)
-	sort_order = 100
+	sort_order = 91
 
 
 /datum/mil_rank/iccgn/of1
@@ -246,4 +246,4 @@
 		/obj/item/clothing/accessory/iccgn_rank/of9_alt,
 		/obj/item/clothing/accessory/iccgn_badge/officer
 	)
-	sort_order = 200
+	sort_order = 191
