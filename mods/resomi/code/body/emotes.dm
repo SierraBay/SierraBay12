@@ -19,3 +19,7 @@
 /singleton/emote/audible/sneeze/resomi
 	emote_sound = 'mods/resomi/sound/resomisneeze.ogg'
 	sounded_species = null
+
+/singleton/emote/audible/giggle/resomi
+	emote_sound = 'mods/resomi/sound/resomilaugh.ogg'
+	sounded_species = null

@@ -110,6 +110,13 @@
 	current_hp = max_damage
 	. = ..()
 
+///Состояние части упало до 0
+/obj/item/mech_component/proc/part_has_been_destroyed()
+
+///Состояние части поднялось выше 0.
+/obj/item/mech_component/proc/part_has_been_restored()
+
+
 /obj/item/mech_component/proc/emp_heat(severity, emp_armor, mob/living/exosuit/mech) //Накидываем тепло учитывая армор меха
 	if(emp_armor > 0.8)
 		emp_armor = 0.8
