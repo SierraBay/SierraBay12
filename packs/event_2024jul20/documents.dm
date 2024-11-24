@@ -19,11 +19,11 @@
 "}
 
 
-/obj/item/folder/envelope/ndaorder
+/obj/item/folder/envelope/preset/ndaorder
 	desc = "A thick envelope. The Expeditionary Corps crest is stamped in the corner, along with 'DO NOT DISSEMINATE. FOR BRIDGE EYES ONLY.'"
 
 
-/obj/item/folder/envelope/ndaorder/Initialize()
+/obj/item/folder/envelope/preset/ndaorder/Initialize()
 	. = ..()
 	new /obj/item/paper/ndaorder (src)
 
@@ -53,11 +53,11 @@
 "}
 
 
-/obj/item/folder/envelope/cmoorder
+/obj/item/folder/envelope/preset/cmoorder
 	desc = "A thick envelope. The Expeditionary Corps crest is stamped in the corner, along with 'DISSEMINATE AS NECESSARY. FOR CMO EYES.'"
 
 
-/obj/item/folder/envelope/cmoorder/Initialize()
+/obj/item/folder/envelope/preset/cmoorder/Initialize()
 	. = ..()
 	new /obj/item/paper/cmoorder (src)
 
@@ -87,11 +87,11 @@
 "}
 
 
-/obj/item/folder/envelope/cosorder
+/obj/item/folder/envelope/preset/cosorder
 	desc = "A thick envelope. The Expeditionary Corps crest is stamped in the corner, along with 'DISSEMINATE AS NECESSARY. FOR COS EYES.'"
 
 
-/obj/item/folder/envelope/cosorder/Initialize()
+/obj/item/folder/envelope/preset/cosorder/Initialize()
 	. = ..()
 	new /obj/item/paper/cosorder (src)
 
@@ -119,11 +119,11 @@
 "}
 
 
-/obj/item/folder/envelope/ceorder
+/obj/item/folder/envelope/preset/ceorder
 	desc = "A thick envelope. The Expeditionary Corps crest is stamped in the corner, along with 'DISSEMINATE AS NECESSARY. FOR CE EYES.'"
 
 
-/obj/item/folder/envelope/ceorder/Initialize()
+/obj/item/folder/envelope/preset/ceorder/Initialize()
 	. = ..()
 	new /obj/item/paper/ceorder (src)
 
@@ -151,11 +151,11 @@
 "}
 
 
-/obj/item/folder/envelope/exploorder
+/obj/item/folder/envelope/preset/exploorder
 	desc = "A thick envelope. The Expeditionary Corps crest is stamped in the corner, along with 'DISSEMINATE AS NECESSARY. FOR CSO/PATHFINDER EYES.'"
 
 
-/obj/item/folder/envelope/exploorder/Initialize()
+/obj/item/folder/envelope/preset/exploorder/Initialize()
 	. = ..()
 	new /obj/item/paper/exploorder (src)
 
@@ -183,11 +183,11 @@
 "}
 
 
-/obj/item/folder/envelope/dcorder
+/obj/item/folder/envelope/preset/dcorder
 	desc = "A thick envelope. The Expeditionary Corps crest is stamped in the corner, along with 'DISSEMINATE AS NECESSARY. FOR DC/XO EYES.'"
 
 
-/obj/item/folder/envelope/dcorder/Initialize()
+/obj/item/folder/envelope/preset/dcorder/Initialize()
 	. = ..()
 	new /obj/item/paper/dcorder (src)
 
@@ -214,11 +214,11 @@
 "}
 
 
-/obj/item/folder/envelope/csorder
+/obj/item/folder/envelope/preset/csorder
 	desc = "A thick envelope. The Expeditionary Corps crest is stamped in the corner, along with 'DISSEMINATE AS NECESSARY. FOR CS/XO EYES.'"
 
 
-/obj/item/folder/envelope/csorder/Initialize()
+/obj/item/folder/envelope/preset/csorder/Initialize()
 	. = ..()
 	new /obj/item/paper/csorder (src)
 
@@ -243,11 +243,12 @@
 "}
 
 
-/obj/item/folder/envelope/clorder
+/obj/item/folder/envelope/preset/clorder
 	desc = "A thick envelope. The Expeditionary Corps Organisation crest is stamped in the corner, along with 'DO NOT DISSEMINATE. FOR CL EYES ONLY.'"
+	seal_stamp = "\improper Expeditionary Corps Organisation rubber stamp"
 
 
-/obj/item/folder/envelope/clorder/Initialize()
+/obj/item/folder/envelope/preset/clorder/Initialize()
 	. = ..()
 	new /obj/item/paper/clorder (src)
 
@@ -274,11 +275,12 @@
 "}
 
 
-/obj/item/folder/envelope/cmdorder
+/obj/item/folder/envelope/preset/cmdorder
 	desc = "A thick envelope. The Sol Central Government crest is stamped in the corner, along with 'DO NOT DISSEMINATE. FOR SCGR/CO EYES ONLY.'"
+	seal_stamp = "\improper Bureau of Emergency Operations rubber stamp"
 
 
-/obj/item/folder/envelope/cmdorder/Initialize()
+/obj/item/folder/envelope/preset/cmdorder/Initialize()
 	. = ..()
 	new /obj/item/paper/cmdorder (src)
 
