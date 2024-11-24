@@ -77,3 +77,6 @@
 	display_name = "investigator holobadge (IAA)"
 	path = /obj/item/clothing/accessory/badge/holo/investigator
 	allowed_roles = list(/datum/job/iaa)
+
+/datum/gear/accessory/stole
+	allowed_roles = list(/datum/job/chaplain)
