@@ -431,13 +431,8 @@ The slots that you can use are found in items_clothing.dm and are the inventory 
 		post_organ_rejuvenate(O, H)
 
 	H.sync_organ_dna()
-<<<<<<< ours
-/* ------------------------> code\modules\emotes\definitions\_species.dm
-/datum/species/proc/hug(mob/living/carbon/human/H,mob/living/target)
-=======
-
+/* ------------------------> code\modules\emotes\definitions\_species.dm (У нас всё в моде в mods\emote_panel\code\species.dm)
 /datum/species/proc/hug(mob/living/carbon/human/H, mob/living/target)
->>>>>>> theirs
 
 	var/t_him = "them"
 	switch(target.gender)
