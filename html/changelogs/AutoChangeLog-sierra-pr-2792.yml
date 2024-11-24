@@ -1,0 +1,4 @@
+author: Hubblenaut
+changes:
+  - {bugfix: Fixes various issues with the paint sprayer}
+delete-after: true

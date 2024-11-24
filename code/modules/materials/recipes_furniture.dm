@@ -15,8 +15,6 @@
 /datum/stack_recipe/furniture/chair/display_name()
 	return modifiers ? jointext(modifiers + ..(), " ") : ..()
 
-/datum/stack_recipe/furniture/chair/padded
-	req_amount = 2
 
 #define PADDED_CHAIR(color) /datum/stack_recipe/furniture/chair/padded/##color{\
 	result_type = /obj/structure/bed/chair/padded/##color;\
