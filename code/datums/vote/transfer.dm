@@ -48,9 +48,7 @@
 	to_world(SPAN_COLOR("purple", "Bluespace Jump Factor: [factor]"))
 
 /datum/vote/transfer/report_result()
-	if(..())
-		return 1
-	if(result[1] == CHOICE_TRANSFER)
+	if(..() || result[1] == CHOICE_TRANSFER)
 		init_autotransfer()
 	else if(result[1] == CHOICE_ADD_ANTAG)
 		SSvote.queued_auto_vote = /datum/vote/add_antagonist
