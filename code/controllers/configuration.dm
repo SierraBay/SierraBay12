@@ -54,17 +54,15 @@
 
 	/// log world.log to game log
 	var/static/log_world_output = FALSE
-<<<<<<< ours
-//[SIERRA-ADD]
+
+	//[SIERRA-ADD]
 	/// log signals messages
 	var/static/log_signals = FALSE
-//[/SIERRA-ADD]
-=======
+	//[/SIERRA-ADD]
 
 	/// log computer commands
 	var/static/log_computer_commands = FALSE
 
->>>>>>> theirs
 	/// Allows admins with relevant permissions to have their own ooc colour
 	var/static/allow_admin_ooccolor = FALSE
 
