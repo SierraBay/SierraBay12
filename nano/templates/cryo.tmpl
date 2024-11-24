@@ -1,5 +1,5 @@
-<!-- 
-Title: Cryo Cell Status UI 
+<!--
+Title: Cryo Cell Status UI
 Used In File(s): \code\game\machinery\cryo.dm
  -->
 <h3>Cryo Cell Status</h3>
@@ -36,7 +36,7 @@ Used In File(s): \code\game\machinery\cryo.dm
 		Beaker:
 	</div>
 	<div class="itemContent" style="width: 40%;">
-		{{if data.isBeakerLoaded}}		
+		{{if data.isBeakerLoaded}}
 			{{:data.beakerLabel ? data.beakerLabel : '<span class="average">No label</span>'}}<br>
 			{{if data.beakerVolume}}
 				<span class="highlight">{{:data.beakerVolume}} units remaining</span><br>
@@ -54,12 +54,12 @@ Used In File(s): \code\game\machinery\cryo.dm
 <div class="item">&nbsp;</div>
 <div class="item">
 	<div class="itemLabel">
-		Cryostasis Speed:
+		Cryostasis Intensity:
 	</div>
 	<div class="itemContent" style="width: 40%;">
-		{{:helper.link('Fast', null, {'goFast' : 1}, data.current_stasis_mult === data.fast_stasis_mult ? 'selected' : null)}}
-		{{:helper.link('Regular', null, {'goRegular' : 1}, data.current_stasis_mult === 1 ? 'selected' : null)}}
-		{{:helper.link('Slow', null, {'goSlow' : 1}, data.current_stasis_mult === data.slow_stasis_mult ? 'selected' : null)}}
+		{{:helper.link('Low', null, {'goFast' : 1}, data.current_stasis_mult === data.fast_stasis_mult ? 'selected' : null)}}
+		{{:helper.link('Standard', null, {'goRegular' : 1}, data.current_stasis_mult === 1 ? 'selected' : null)}}
+		{{:helper.link('High', null, {'goSlow' : 1}, data.current_stasis_mult === data.slow_stasis_mult ? 'selected' : null)}}
 	</div>
 </div>
 </div>

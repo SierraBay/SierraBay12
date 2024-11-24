@@ -709,10 +709,10 @@ ranks - ec
 	desc = "Insignia denoting the rank of Admiral."
 	icon_state = "ecrank_o8"
 
-/obj/item/clothing/accessory/solgov/rank/ec/officer/o8_alt
-	name = "ranks (O-8 commandant of the expeditionary corps)"
+/obj/item/clothing/accessory/solgov/rank/ec/officer/o10
+	name = "ranks (O-10 commandant of the expeditionary corps)"
 	desc = "Insignia denoting the rank of Commandant of the Expeditonary Corps."
-	icon_state = "ecrank_o8_alt"
+	icon_state = "ecrank_o10"
 
 /************
 ranks - fleet

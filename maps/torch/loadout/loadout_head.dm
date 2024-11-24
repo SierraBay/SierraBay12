@@ -172,7 +172,7 @@
 
 
 /datum/gear/tactical/armor_tag_corporate
-	display_name = "Armor Tag Selection - Corporate Insignia"
+	display_name = "Armor Tag Selection - Faction Insignia"
 	path = /obj/item/clothing/accessory/armor_tag
 	flags = GEAR_HAS_NO_CUSTOMIZATION
 
@@ -182,4 +182,5 @@
 	var/list/options = list()
 	options["SAARE tag"] = /obj/item/clothing/accessory/armor_tag/saare
 	options["PCRC tag"] =  /obj/item/clothing/accessory/armor_tag/pcrc
+	options["SFP tag"] = /obj/item/clothing/accessory/armor_tag/sfp
 	gear_tweaks += new /datum/gear_tweak/path (options)

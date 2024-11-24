@@ -1,0 +1,5 @@
+author: JuneauQT
+changes:
+  - {bugfix: 'Shrouded, Chlorine, and Volcanic exoplanet clouds now generate the way
+      they were intended to instead of being solid black'}
+delete-after: true
