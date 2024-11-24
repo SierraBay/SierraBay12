@@ -218,7 +218,7 @@
 			GLOB.moved_event.raise_event(src, old_loc, null)
 
 		// freelook
-		if(opacity)
+		if(simulated && opacity)
 			updateVisibility(src)
 
 		// lighting
@@ -244,7 +244,7 @@
 		GLOB.moved_event.raise_event(src, old_loc, null)
 
 	// freelook
-	if(opacity)
+	if(simulated && opacity)
 		updateVisibility(src)
 
 	// lighting
