@@ -22,43 +22,6 @@
 	var/category
 
 	var/list/decals = list(
-<<<<<<< ours
-		"Quarter-turf" =      list("path" = /obj/floor_decal/corner, "precise" = 1, "colored" = 1),
-		"Monotile full" =     list("path" = /obj/floor_decal/corner/white/mono, "colored" = 1),
-		"Monotile halved" =   list("path" = /obj/floor_decal/corner/white/half, "colored" = 1),
-		"Hazard stripes" =    list("path" = /obj/floor_decal/industrial/warning/fulltile),
-		"Border, hazard" =    list("path" = /obj/floor_decal/industrial/warning),
-		"Corner, hazard" =    list("path" = /obj/floor_decal/industrial/warning/corner, "precise" = 1),
-		"Hatched marking" =   list("path" = /obj/floor_decal/industrial/hatch, "colored" = 1),
-		"Dashed outline" =    list("path" = /obj/floor_decal/industrial/outline, "colored" = 1),
-		"Loading sign" =      list("path" = /obj/floor_decal/industrial/loading),
-		"Mosaic, large" =     list("path" = /obj/floor_decal/chapel),
-		"1" =                 list("path" = /obj/floor_decal/sign),
-		"2" =                 list("path" = /obj/floor_decal/sign/two),
-		"A" =                 list("path" = /obj/floor_decal/sign/a),
-		"B" =                 list("path" = /obj/floor_decal/sign/b),
-		"C" =                 list("path" = /obj/floor_decal/sign/c),
-		"D" =                 list("path" = /obj/floor_decal/sign/d),
-		"M" =                 list("path" = /obj/floor_decal/sign/m),
-		"V" =                 list("path" = /obj/floor_decal/sign/v),
-		"CMO" =               list("path" = /obj/floor_decal/sign/cmo),
-		"Ex" =                list("path" = /obj/floor_decal/sign/ex),
-		"Psy" =               list("path" = /obj/floor_decal/sign/p),
-		"Remove all decals" = list("path" = /obj/floor_decal/reset),
-		)
-
-	var/list/paint_dirs = list(
-		"North" =       NORTH,
-		"Northwest" =   NORTHWEST,
-		"West" =        WEST,
-		"Southwest" =   SOUTHWEST,
-		"South" =       SOUTH,
-		"Southeast" =   SOUTHEAST,
-		"East" =        EAST,
-		"Northeast" =   NORTHEAST,
-		"Precise" = 0,
-		)
-=======
 		"Quarter-Tile"        = list("path" = /obj/floor_decal/corner, "category" = CATEGORY_TILES, "colored" = TRUE, "placement" = PLACEMENT_MODE_QUARTERS),
 		"Half-Tile"           = list("path" = /obj/floor_decal/corner/white/half, "category" = CATEGORY_TILES, "colored" = TRUE, "placement" = PLACEMENT_MODE_TRIANGLES),
 		"Full Tile"           = list("path" = /obj/floor_decal/corner/white/mono, "category" = CATEGORY_TILES, "colored" = TRUE),
@@ -93,7 +56,6 @@
 		"Ward Decals"   = list("id" = CATEGORY_WARD,   "icon_state" = "ward"),
 		"Misc Decals"   = list("id" = CATEGORY_MISC,   "icon_state" = "misc"),
 	)
->>>>>>> theirs
 
 	var/list/preset_colors = list(
 		"Beasty brown" =   COLOR_BEASTY_BROWN,
@@ -300,30 +262,7 @@
 		to_chat(user, SPAN_WARNING("\The [F] has been painted too much; you need to clear it off."))
 		return FALSE
 
-<<<<<<< ours
-	var/painting_dir = 0
-	if(!decal_data["precise"])
-		painting_dir = user.dir
-	else
-		var/mouse_x = text2num(click_parameters["icon-x"])
-		var/mouse_y = text2num(click_parameters["icon-y"])
-		if(isnum(mouse_x) && isnum(mouse_y))
-			if(mouse_x <= 16)
-				if(mouse_y <= 16)
-					painting_dir = WEST
-				else
-					painting_dir = NORTH
-			else
-				if(mouse_y <= 16)
-					painting_dir = SOUTH
-				else
-					painting_dir = EAST
-		else
-			painting_dir = user.dir
-
-=======
 	var/painting_dir = calc_paint_dir(user, decal_data["placement"], click_parameters, decal_data["inversed"])
->>>>>>> theirs
 	var/painting_color
 	if(decal_data["colored"] && paint_color)
 		painting_color = paint_color
