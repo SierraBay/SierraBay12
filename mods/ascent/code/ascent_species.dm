@@ -12,7 +12,7 @@
 	deform =                  'mods/ascent/icons/mob/alate/body.dmi'
 	damage_overlays =         'mods/ascent/icons/mob/alate/damage_mask.dmi'
 	blood_mask =              'mods/ascent/icons/mob/alate/blood_mask.dmi'
-	organs_icon =             'mods/ascent/icons/items/organs.dmi'
+	organs_icon =             'mods/ascent/icons/obj/items/organs.dmi'
 
 	blood_color =             "#660066"
 	flesh_color =             "#009999"
@@ -251,7 +251,7 @@
 	years ago and now allies and peers within the Ascent."
 	icobase = 'icons/mob/human_races/species/nabber/body_msw.dmi'
 	deform = 'icons/mob/human_races/species/nabber/body_msw.dmi'
-	spawn_flags = SPECIES_CAN_JOIN | SPECIES_NO_FBP_CONSTRUCTION | SPECIES_NO_FBP_CHARGEN | SPECIES_IS_WHITELISTED
+	spawn_flags = SPECIES_IS_RESTRICTED | SPECIES_NO_FBP_CONSTRUCTION | SPECIES_NO_FBP_CHARGEN | SPECIES_IS_WHITELISTED
 	appearance_flags = 0
 	base_skin_colours = null
 	hud_type = /datum/hud_data/mantid
@@ -304,7 +304,7 @@
 	hud_type = /datum/hud_data/mantid
 	appearance_flags = 0
 	base_skin_colours = null
-	spawn_flags = SPECIES_CAN_JOIN | SPECIES_NO_FBP_CONSTRUCTION | SPECIES_NO_FBP_CHARGEN | SPECIES_IS_WHITELISTED
+	spawn_flags = SPECIES_IS_RESTRICTED | SPECIES_NO_FBP_CONSTRUCTION | SPECIES_NO_FBP_CHARGEN | SPECIES_IS_WHITELISTED
 	has_organ = list(
 		BP_BRAIN =             /obj/item/organ/internal/brain/insectoid/nabber,
 		BP_EYES =              /obj/item/organ/internal/eyes/insectoid/msq,
