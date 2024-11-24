@@ -812,6 +812,9 @@ var/global/list/floor_decals = list()
 /obj/floor_decal/industrial/warning/corner
 	icon_state = "stripecorner"
 
+/obj/floor_decal/industrial/warning/inner
+	icon_state = "stripeinner"
+
 /obj/floor_decal/industrial/warning/full
 	icon_state = "stripefull"
 

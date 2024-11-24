@@ -1,0 +1,7 @@
+author: SierraKomodo
+changes:
+  - {tweak: "Removing papers from noticeboards now places the paper in your hands
+      instead of on the floor, if there's a free hand."}
+  - {bugfix: Removing papers from noticeboards now properly adds fingerprints to the
+      removed paper.}
+delete-after: true
