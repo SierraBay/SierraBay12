@@ -13,7 +13,7 @@ GLOBAL_DATUM_INIT(raiders, /datum/antagonist/raider, new)
 	hard_cap = 6
 	hard_cap_round = 10
 	initial_spawn_req = 3
-	initial_spawn_target = 4
+	initial_spawn_target = 3
 	min_player_age = 14
 
 	id_type = /obj/item/card/id/syndicate
@@ -59,7 +59,7 @@ GLOBAL_DATUM_INIT(raiders, /datum/antagonist/raider, new)
 		/obj/item/clothing/suit/storage/toggle/hoodie,
 		/obj/item/clothing/suit/storage/toggle/hoodie/black,
 		/obj/item/clothing/suit/unathi/mantle,
-		/obj/item/clothing/suit/poncho/colored,
+		/obj/item/clothing/suit/poncho,
 		)
 
 	var/list/raider_guns = list(
