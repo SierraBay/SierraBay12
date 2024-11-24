@@ -74,7 +74,6 @@
 	.=..()
 
 
-
 /mob/living/exosuit/toggle_power(mob/user)
 	if(!body.cell.check_charge(50) && power == MECH_POWER_OFF)
 		to_chat(user, SPAN_WARNING("Error: Not enough power for power up."))
@@ -83,6 +82,7 @@
 		to_chat(user, SPAN_WARNING("Error: overheat detected, safe protocol active."))
 		return
 	.=..()
+	check_sensors_blind()
 
 /mob/living/exosuit/proc/fast_toggle_power(mob/user)
 	//Данная функция - "Быстрый старт", тратящий энергию батареи и поднимающий температуру меха.
@@ -98,7 +98,7 @@
 		playsound(src, 'mods/mechs_by_shegar/sounds/mecha_fast_power_up.ogg', 70, 0)
 		power = MECH_POWER_ON
 		hud_power_control.update_icon()
-		//hud_power_control?.queue_icon_update()
+		check_sensors_blind()
 		add_heat(100)
 		var/obj/item/cell/cell = src.get_cell()
 		cell.use(100)
@@ -110,6 +110,7 @@
 /mob/living/exosuit/proc/fast_toggle_power_garanted(mob/user)
 	if(get_cell(TRUE))
 		power = MECH_POWER_ON
+		check_sensors_blind()
 		hud_power_control.update_icon()
 		update_icon()
 	else

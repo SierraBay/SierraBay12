@@ -1,6 +1,9 @@
 //
 //        DOOR CHARGE
 //
+/datum/antagonist/traitor
+	initial_spawn_target = 3
+
 
 /obj/item/door_charge
 	name = "door charge"

@@ -1,0 +1,5 @@
+author: SierraKomodo
+changes:
+  - {tweak: Colors and styles used for various injury states when examining carbon
+      mobs have been individually tweaked. Injuries are now red again.}
+delete-after: true

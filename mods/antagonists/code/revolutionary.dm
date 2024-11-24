@@ -4,7 +4,7 @@
 	restricted_jobs = list(/datum/job/detective, /datum/job/officer, /datum/job/warden)
 
 /datum/game_mode/revolution
-	antag_tags = list(MODE_REVOLUTIONARY, MODE_MERCENARY)
+	antag_tags = list(MODE_REVOLUTIONARY)
 
 /datum/game_mode/siege
 	antag_tags = list(MODE_REVOLUTIONARY, MODE_MERCENARY)
