@@ -330,7 +330,7 @@
 		flick(fire_anim, src)
 
 	if (user)
-		var/user_message = SPAN_WARNING("You fire \the [src][pointblank ? " point blank":""] at \the [target][reflex ? " by reflex" : ""]!")
+		var/user_message = SPAN_DANGER("You fire \the [src][pointblank ? " point blank":""] at \the [target][reflex ? " by reflex" : ""]!")
 		if (silenced)
 			to_chat(user, user_message)
 		else
