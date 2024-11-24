@@ -1,0 +1,4 @@
+author: Hubblenaut
+changes:
+  - {bugfix: Fixes taped paper not correctly being placed under the cursor.}
+delete-after: true

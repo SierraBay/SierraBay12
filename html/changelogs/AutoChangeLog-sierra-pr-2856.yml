@@ -1,0 +1,4 @@
+author: SierraKomodo
+changes:
+  - {bugfix: Droppers can now be used on mobs on help intent again.}
+delete-after: true

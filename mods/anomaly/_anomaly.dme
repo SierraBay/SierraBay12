@@ -18,7 +18,7 @@
 #include "code\anomalies\single\tramplin.dm"
 #include "code\anomalies\single\ventilyator.dm"
 #include "code\anomalies\single\vspishka.dm"
-#include "code\anomalies\single\zjarka.dm"
+#include "code\anomalies\single\zharka.dm"
 //аномалии 3 на 3
 #include "code\anomalies\threeandthree\cooler_3x3.dm"
 #include "code\anomalies\threeandthree\electra_3x3.dm"
@@ -44,22 +44,24 @@
 
 
 //Код артефактов и всё с ними связанное
-#include "code\artefacts\anomaly_artefacts.dm" //Ядро артефактов
-#include "code\artefacts\artefact_external_interact.dm" //реакции на внешние события на артефакт/носителя
+#include "code\artefacts\_anomaly_artefacts.dm" //Ядро артефактов
+#include "code\artefacts\_artefact_external_interact.dm" //реакции на внешние события на артефакт/носителя
+#include "code\artefacts\_artefact_processing.dm" //Процессинг/постоянная обработка артефакта
+#include "code\artefacts\_interact_with_artefacts.dm" //Интеракции с артефактом (Персонаж/URM)
+#include "code\artefacts\_artefact_spawn.dm"
 #include "code\artefacts\artefact_gravi.dm"
-#include "code\artefacts\artefact_processing.dm" //Процессинг/постоянная обработка артефакта
 #include "code\artefacts\artefact_pruzhina.dm"
-#include "code\artefacts\artefact_spawn.dm"
 #include "code\artefacts\artefact_svetlyak.dm"
 #include "code\artefacts\artefact_zjar.dm"
+#include "code\artefacts\artefact_flyer.dm"
 //#include "code\artefacts\artefact_zjemchug.dm"
-#include "code\artefacts\interact_with_artefacts.dm" //Интеракции с артефактом (Персонаж/URM)
 
 
 
 //Детекторы и прочее оборудование
 #include "code\detectors_and_etc\bolt.dm"
 #include "code\detectors_and_etc\detector.dm"
+#include "code\detectors_and_etc\gurza_detector.dm"
 #include "code\detectors_and_etc\collector.dm"
 #include "code\detectors_and_etc\deployer.dm"
 #include "code\detectors_and_etc\beacon.dm"
@@ -80,17 +82,24 @@
 #include "code\spawn_anomalies_protocol\spawn_anomaly_with_big_artefact.dm" //Код, отвечающий за спавн аномалий вокруг больших артефактов
 #include "code\spawn_anomalies_protocol\spawn_with_ruins.dm"
 #include "code\spawn_anomalies_protocol\bsd_event_protocol.dm"
-#include "code\spawn_anomalies_protocol\planet_spawn_types\vulcanic.dm" //Вулканическая планета
-#include "code\spawn_anomalies_protocol\planet_spawn_types\ice.dm" //[WIP] Ледяная планета
-#include "code\spawn_anomalies_protocol\planet_spawn_types\flying.dm" //[WIP] Летающие острова
-// #include "code\spawn_anomalies_protocol\planet_spawn_types\sargas.dm" // [WIP] Саргасово болото
+//Планетарный спавн
+#include "code\spawn_anomalies_protocol\planet_spawn_protocol\_planet_spawn_core.dm"
+//Летающие острова[WIP]
+#include "code\spawn_anomalies_protocol\planet_spawn_protocol\flying_planet\clouds.dm"
+#include "code\spawn_anomalies_protocol\planet_spawn_protocol\flying_planet\flying.dm"
+//Ледяная планета[WIP]
+#include "code\spawn_anomalies_protocol\planet_spawn_protocol\ice.dm"
+//Вулкан
+#include "code\spawn_anomalies_protocol\planet_spawn_protocol\vulcanic.dm"
+//Саргасово болото [WIP-WIP]
+// #include "code\spawn_anomalies_protocol\planet_spawn_protocol\sargas.dm"
 #include "code\spawn_anomalies_protocol\spawn_on_planet.dm" //Спавн на планетах
 
 
 
 //Карты, диреликты и прочее
 #include "maps\electra_ruins\electra_ruins.dm"
-#include "maps\zjarka_ruins\zjarka_ruins.dm"
+#include "maps\zharka_ruins\zharka_ruins.dm"
 //Код островов
 #include "maps\flying_islands\flying_island.dm"
 #include "maps\flying_islands\flying_island_ball.dm"
