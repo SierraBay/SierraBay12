@@ -1,0 +1,5 @@
+author: Merlin1230
+changes:
+  - {bugfix: Makeshift splints are now fixed and can be made again by applying tape
+      to a rod}
+delete-after: true
