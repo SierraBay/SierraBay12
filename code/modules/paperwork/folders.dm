@@ -114,9 +114,16 @@
 
 /obj/item/folder/envelope
 	name = "envelope"
-	desc = "A thick envelope. You can't see what's inside."
+	desc = "A thick envelope."
+	icon_state = "envelope0"
+	var/sealed = FALSE
+	var/seal_stamp = ""
+
+/obj/item/folder/envelope/preset
 	icon_state = "envelope_sealed"
-	var/sealed = 1
+	sealed = TRUE
+	//seal_stamp = "\improper SCG Expeditionary Command rubber stamp"
+	seal_stamp = "\improper NanoTrasen Central Command rubber stamp"
 
 /obj/item/folder/envelope/on_update_icon()
 	if(sealed)
@@ -126,15 +133,18 @@
 
 /obj/item/folder/envelope/examine(mob/user)
 	. = ..()
-	to_chat(user, "The seal is [sealed ? "intact" : "broken"].")
+	if (sealed || seal_stamp)
+		to_chat(user, "It [sealed ? "is" : "was"] sealed with \the [seal_stamp]. The seal is [sealed ? "intact" : "broken"].")
+	else
+		to_chat(user, "It is not sealed.")
 
 /obj/item/folder/envelope/proc/sealcheck(user)
 	var/ripperoni = alert("Are you sure you want to break the seal on \the [src]?", "Confirmation","Yes", "No")
 	if(ripperoni == "Yes")
 		visible_message("[user] breaks the seal on \the [src], and opens it.")
-		sealed = 0
+		sealed = FALSE
 		update_icon()
-		return 1
+		return TRUE
 
 /obj/item/folder/envelope/attack_self(mob/user as mob)
 	if(sealed)
@@ -146,6 +156,13 @@
 /obj/item/folder/envelope/use_tool(obj/item/item, mob/living/user, list/click_params)
 	if(sealed)
 		sealcheck(user)
+		return TRUE
+	else if (istype(item, /obj/item/stamp) && !sealed)
+		seal_stamp = item.name
+		visible_message("[user] seals \the [src] with [item].")
+		sealed = TRUE
+		playsound(src, 'sound/effects/stamp.ogg', 50, 1)
+		update_icon()
 		return TRUE
 	else
 		return ..()
