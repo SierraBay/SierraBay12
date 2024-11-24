@@ -1,0 +1,4 @@
+author: Banditoz
+delete-after: True
+changes:
+  - bugfix: "Fixed images in newscaster articles not showing up if the channel has special symbols in its title."

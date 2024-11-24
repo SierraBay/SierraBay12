@@ -26,7 +26,7 @@
 
 /obj/overmap/visitable/sector/exoplanet/shrouded/get_atmosphere_color()
 	var/air_color = ..()
-	return MixColors(COLOR_BLACK, air_color)
+	return MixColors(list(COLOR_BLACK, air_color))
 
 /datum/random_map/noise/exoplanet/shrouded
 	descriptor = "shrouded exoplanet"

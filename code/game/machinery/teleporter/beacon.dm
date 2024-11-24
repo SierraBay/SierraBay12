@@ -13,6 +13,7 @@ var/global/const/TELEBEACON_WIRE_SIGNALLER = 4
 	active_power_usage = 50
 	anchored = TRUE
 	level = ATOM_LEVEL_UNDER_TILE
+	layer = ABOVE_EXPOSED_WIRE_LAYER
 	obj_flags = OBJ_FLAG_ANCHORABLE
 
 	machine_name = "teleporter beacon"

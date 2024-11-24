@@ -1,0 +1,4 @@
+author: SierraKomodo
+changes:
+  - {tweak: Toolbelts can now hold Rapid Construction Devices}
+delete-after: true
