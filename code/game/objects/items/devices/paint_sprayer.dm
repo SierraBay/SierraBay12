@@ -17,7 +17,7 @@
 		"Monotile halved" =   list("path" = /obj/floor_decal/corner/white/half, "colored" = 1),
 		"Hazard stripes" =    list("path" = /obj/floor_decal/industrial/warning/fulltile),
 		"Border, hazard" =    list("path" = /obj/floor_decal/industrial/warning),
-		"Corner, hazard" =    list("path" = /obj/floor_decal/industrial/warning/corner),
+		"Corner, hazard" =    list("path" = /obj/floor_decal/industrial/warning/corner, "precise" = 1),
 		"Hatched marking" =   list("path" = /obj/floor_decal/industrial/hatch, "colored" = 1),
 		"Dashed outline" =    list("path" = /obj/floor_decal/industrial/outline, "colored" = 1),
 		"Loading sign" =      list("path" = /obj/floor_decal/industrial/loading),
@@ -111,10 +111,9 @@
 		GLOB.module_deselected_event.unregister(user, src, TYPE_PROC_REF(/obj/item/device/paint_sprayer, remove_click_handler))
 		GLOB.module_deactivated_event.unregister(user, src, TYPE_PROC_REF(/obj/item/device/paint_sprayer, remove_click_handler))
 
-/obj/item/device/paint_sprayer/use_before(atom/target, mob/living/user, click_parameters)
+/obj/item/device/paint_sprayer/use_after(atom/target, mob/living/user, click_parameters)
 	if (apply_paint(target, user, click_parameters))
 		return TRUE
-
 	return ..()
 
 /obj/item/device/paint_sprayer/proc/pick_color(atom/A, mob/user)
@@ -131,12 +130,12 @@
 		to_chat(user, SPAN_WARNING("\The [A] does not have a color that you could pick from."))
 	return TRUE // There was an attempt to pick a color.
 
-/obj/item/device/paint_sprayer/proc/apply_paint(atom/A, mob/user, params)
+/obj/item/device/paint_sprayer/proc/apply_paint(atom/A, mob/user, click_parameters)
 	if (A.atom_flags & ATOM_FLAG_CAN_BE_PAINTED)
 		A.set_color(paint_color)
 		. = TRUE
 	else if (istype(A, /turf/simulated/floor))
-		. = paint_floor(A, user, params)
+		. = paint_floor(A, user, click_parameters)
 	else if (istype(A, /obj/machinery/door/airlock))
 		. = paint_airlock(A, user)
 	else if (istype(A, /mob/living/exosuit))
@@ -186,7 +185,7 @@
 			return FALSE
 	return picked_color
 
-/obj/item/device/paint_sprayer/proc/paint_floor(turf/simulated/floor/F, mob/user, params)
+/obj/item/device/paint_sprayer/proc/paint_floor(turf/simulated/floor/F, mob/user, click_parameters)
 	if(!F.flooring)
 		to_chat(user, SPAN_WARNING("You need flooring to paint on."))
 		return FALSE
@@ -217,9 +216,8 @@
 	if(!decal_data["precise"])
 		painting_dir = user.dir
 	else
-		var/list/mouse_control = params2list(params)
-		var/mouse_x = text2num(mouse_control["icon-x"])
-		var/mouse_y = text2num(mouse_control["icon-y"])
+		var/mouse_x = text2num(click_parameters["icon-x"])
+		var/mouse_y = text2num(click_parameters["icon-y"])
 		if(isnum(mouse_x) && isnum(mouse_y))
 			if(mouse_x <= 16)
 				if(mouse_y <= 16)
