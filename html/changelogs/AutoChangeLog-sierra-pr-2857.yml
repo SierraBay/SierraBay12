@@ -1,0 +1,5 @@
+author: Mucker
+changes:
+  - {admin: Added a verb to set how long before the initial continue vote occurs to
+      the 'Server' tab.}
+delete-after: true

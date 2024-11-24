@@ -101,14 +101,11 @@
 	var/attack_ignore_harm_check = FALSE
 
 
-/obj/item/New()
-	..()
-	if(randpixel && (!pixel_x && !pixel_y) && isturf(loc)) //hopefully this will prevent us from messing with mapper-set pixel_x/y
-		pixel_x = rand(-randpixel, randpixel)
-		pixel_y = rand(-randpixel, randpixel)
-
 /obj/item/Initialize()
 	. = ..()
+	if(randpixel && (!pixel_x && !pixel_y) && isturf(loc))
+		pixel_x = rand(-randpixel, randpixel)
+		pixel_y = rand(-randpixel, randpixel)
 	if(islist(armor))
 		for(var/type in armor)
 			if(armor[type]) // Don't set it if it gives no armor anyway, which is many items.

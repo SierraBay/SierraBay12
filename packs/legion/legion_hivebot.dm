@@ -91,7 +91,7 @@
 // Random legion hivebot spawner
 /obj/random/legion/hivebot
 	abstract_type = /obj/random/legion/hivebot
-	icon = 'packs/legion/hivebot.dmi'
+	icon = 'icons/mob/simple_animal/hivebot.dmi'
 	icon_state = "spawner"
 
 

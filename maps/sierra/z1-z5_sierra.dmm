@@ -138836,7 +138836,7 @@
 /area/exploration_shuttle/airlock)
 "uwr" = (
 /obj/structure/table/woodentable_reinforced/walnut,
-/obj/item/folder/envelope/captain,
+/obj/item/folder/envelope/preset/captain,
 /obj/floor_decal/spline/fancy/wood,
 /obj/machinery/light{
 	dir = 4
