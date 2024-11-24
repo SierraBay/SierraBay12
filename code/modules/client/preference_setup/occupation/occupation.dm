@@ -167,6 +167,9 @@
 					bad_message = "<b>\[SPECIES RESTRICTED]</b>"
 				else if(!S.check_background(job, user.client.prefs))
 					bad_message = "<b>\[BACKGROUND RESTRICTED]</b>"
+				else if(GAME_STATE == RUNLEVEL_GAME)
+					if(job.late_joinable == FALSE)
+						bad_message = "<b>\[LATEJOIN RESTRICTED]</b>"
 
 				var/current_level = JOB_LEVEL_NEVER
 				if(pref.job_high == job.title)

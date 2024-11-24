@@ -508,7 +508,7 @@
 				update_icon(FALSE)
 				sleep(rand(5, 15))
 			on = (get_status() == LIGHT_OK)
-			update_icon(0)
+			queue_icon_update(0)
 		flickering = FALSE
 
 // ai attack - make lights flicker, because why not
