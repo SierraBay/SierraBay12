@@ -170,6 +170,7 @@
 
 
 /mob/living/carbon/swap_hand()
+	. = ..()
 	hand = !hand
 	if(hud_used.l_hand_hud_object && hud_used.r_hand_hud_object)
 		if(hand)	//This being 1 means the left hand is in use
@@ -386,6 +387,10 @@
 	if(now_pushing || !yes)
 		return
 	..()
+	//[SIERRA-ADD] VIRUSOLOGY
+	if(istype(AM, /mob/living/carbon) && prob(10))
+		src.spread_disease_to(AM, "Contact")
+	//[/SIERRA-ADD] VIRUSOLOGY
 
 /mob/living/carbon/slip(slipped_on, stun_duration = 8)
 	if(!has_gravity())

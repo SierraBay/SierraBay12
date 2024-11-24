@@ -109,7 +109,7 @@
 	access = access_atmospherics
 
 /singleton/hierarchy/supply_pack/atmospherics/fuel
-	name = "Liquid - Fuel tanks"
+	name = "Gas - Hydrogen tanks"
 	contains = list(/obj/item/tank/hydrogen = 4)
 	cost = 15
 	containername = "fuel tank crate"

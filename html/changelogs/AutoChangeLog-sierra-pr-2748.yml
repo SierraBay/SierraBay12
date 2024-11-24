@@ -1,0 +1,7 @@
+author: Sbotkin
+changes:
+  - {rscadd: 'Added stoles (accessory) for chaplains, in the loadout.'}
+  - {rscadd: Added the matching hood to the chaplain's locker.}
+  - {maptweak: Holopad and a filling cabinet for the chaplain's office.}
+  - {tweak: Various religious stuff can be carried on the chaplain's hoodie.}
+delete-after: true
