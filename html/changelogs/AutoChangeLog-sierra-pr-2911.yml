@@ -1,0 +1,7 @@
+author: JuneauQT
+changes:
+  - {tweak: Refactors ranking orders of Fleet and Expeditionary Corps ranks to the
+      newer standard}
+  - {bugfix: The 'Admiral' and 'Commandant of the Expeditionary Corps' ranks of the
+      Expedtionary Corps now function correctly.}
+delete-after: true

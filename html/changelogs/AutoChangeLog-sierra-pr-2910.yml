@@ -1,0 +1,7 @@
+author: Sbotkin
+changes:
+  - {spellcheck: "Changes the wording of the cryo cell's cryostasis setting, making
+      it more clear. High intensity makes people freeze deeper and metabolize slower,
+      good for stasis. Low intensity makes people freeze less and metabolize faster,
+      good for healing."}
+delete-after: true
