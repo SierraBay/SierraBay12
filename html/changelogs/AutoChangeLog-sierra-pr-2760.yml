@@ -1,0 +1,7 @@
+author: SierraKomodo
+changes:
+  - {tweak: 'Colors used for certain types of in-chat messages have been adjusted.
+      Primarily, there is now a different in color between warning (red -> orange
+      bold italic) and danger (red bold), and notice (blue), info (blue -> purple),
+      and subtle (blue -> gray italic).'}
+delete-after: true
