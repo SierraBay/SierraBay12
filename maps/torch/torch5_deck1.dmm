@@ -1495,7 +1495,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/thruster/d1starboard)
 "acY" = (
-/obj/machinery/power/apc{
+/obj/machinery/power/apc/critical{
 	name = "south bump";
 	pixel_y = -28
 	},
@@ -13058,7 +13058,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/thruster/d1port)
 "aTS" = (
-/obj/machinery/power/apc{
+/obj/machinery/power/apc/critical{
 	dir = 1;
 	name = "north bump";
 	pixel_y = 24

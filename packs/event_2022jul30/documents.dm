@@ -19,11 +19,11 @@
 "}
 
 
-/obj/item/folder/envelope/lauletter1
+/obj/item/folder/envelope/preset/lauletter1
 	desc = "A thick envelope. The Expeditionary Corps crest is stamped in the corner, along with 'DO NOT DISSEMINATE.'"
 
 
-/obj/item/folder/envelope/lauletter1/Initialize()
+/obj/item/folder/envelope/preset/lauletter1/Initialize()
 	. = ..()
 	new /obj/item/paper/lauletter1 (src)
 

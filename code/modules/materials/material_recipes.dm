@@ -175,6 +175,7 @@
 	. += create_recipe_list(/datum/stack_recipe/box)
 	. += new/datum/stack_recipe/cardborg_suit(src)
 	. += new/datum/stack_recipe/cardborg_helmet(src)
+	. += new/datum/stack_recipe/envelope(src)
 	. += new/datum/stack_recipe_list("folders", create_recipe_list(/datum/stack_recipe/folder))
 
 /material/aluminium/generate_recipes(reinforce_material)

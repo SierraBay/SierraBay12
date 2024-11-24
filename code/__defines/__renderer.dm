@@ -66,7 +66,7 @@
 	#define ABOVE_TILE_LAYER            2.05
 	#define EXPOSED_PIPE_LAYER          2.06
 	#define EXPOSED_WIRE_LAYER          2.07
-	#define EXPOSED_WIRE_TERMINAL_LAYER 2.08
+	#define ABOVE_EXPOSED_WIRE_LAYER    2.08
 	#define CATWALK_LAYER               2.09
 	#define ABOVE_CATWALK_LAYER         2.10
 	#define BLOOD_LAYER                 2.11

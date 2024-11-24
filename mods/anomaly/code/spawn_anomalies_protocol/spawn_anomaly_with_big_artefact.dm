@@ -18,8 +18,8 @@
 		/obj/anomaly/electra/three_and_three = 5,
 		/obj/anomaly/electra/three_and_three/tesla = 1,
 		/obj/anomaly/thamplin/random = 5,
-		/obj/anomaly/zjarka/short_effect = 3,
-		/obj/anomaly/zjarka/long_effect = 2,
+		/obj/anomaly/zharka/short_effect = 3,
+		/obj/anomaly/zharka/long_effect = 2,
 		/obj/anomaly/rvach/three_and_three = 4
 		)
 
