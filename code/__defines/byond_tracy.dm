@@ -18,11 +18,6 @@
 		return
 	profiler_init()
 
-
-<<<<<<< ours
-	var/init = CALL_EXT(lib, "init")()
-	if("0" != init) CRASH("[lib] init error: [init]")
-=======
 /// Starts the profiler.
 /proc/profiler_init()
 	var/lib
@@ -36,4 +31,3 @@
 	var/init = call_ext(lib, "init")()
 	if(init != "0")
 		CRASH("[lib] init error: [init]")
->>>>>>> theirs
