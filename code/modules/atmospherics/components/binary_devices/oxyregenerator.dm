@@ -12,10 +12,7 @@
 	construct_state = /singleton/machine_construction/default/panel_closed
 	uncreated_component_parts = null
 	stat_immune = 0
-<<<<<<< ours
-=======
 	layer = STRUCTURE_LAYER
->>>>>>> theirs
 
 	machine_name = "oxygen regenerator"
 	machine_desc = "Catalyzes gaseous CO2 to convert it into gaseous oxygen. The excess carbon is condensed and ejected as graphite sheets."
