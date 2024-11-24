@@ -29,13 +29,13 @@
 	walk_time = 2 SECONDS
 	chance_spawn_walking = 100
 
-/obj/anomaly/zjarka/walking
+/obj/anomaly/zharka/walking
 	chance_spawn_walking = 100
 
-/obj/anomaly/zjarka/short_effect
+/obj/anomaly/zharka/short_effect
 	effect_range = 0
 
-/obj/anomaly/zjarka/long_effect
+/obj/anomaly/zharka/long_effect
 	effect_range = 2
 
 /obj/anomaly/electra/three_and_three/preload

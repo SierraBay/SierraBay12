@@ -215,7 +215,7 @@ var/global/list/admin_verbs_debug = list(
 	/client/proc/reload_webhooks,
 	/client/proc/toggle_planet_repopulating,
 	/client/proc/spawn_exoplanet,
-	/client/proc/profiler_start
+	/client/proc/profiler_init_verb
 	)
 
 var/global/list/admin_verbs_paranoid_debug = list(
