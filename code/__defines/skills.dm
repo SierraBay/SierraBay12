@@ -39,3 +39,4 @@
 #define SKILL_MEDICAL       /singleton/hierarchy/skill/medical/medical
 #define SKILL_ANATOMY       /singleton/hierarchy/skill/medical/anatomy
 #define SKILL_CHEMISTRY     /singleton/hierarchy/skill/medical/chemistry
+#define SKILL_VIROLOGY      /singleton/hierarchy/skill/medical/chemistry/virology
