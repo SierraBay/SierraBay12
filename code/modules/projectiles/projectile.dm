@@ -60,7 +60,7 @@
 	var/space_knockback = 0	//whether or not it will knock things back in space
 
 	var/hitscan = FALSE		// whether the projectile should be hitscan
-	var/step_delay = 1	// the delay between iterations if not a hitscan projectile
+	var/step_delay = 0.65	// the delay between iterations if not a hitscan projectile
 
 	// effect types to be used
 	var/muzzle_type

@@ -44,12 +44,14 @@ GLOBAL_LIST_EMPTY(overmap_helm_computers)
 /obj/machinery/computer/ship/helm/Process()
 	..()
 
-	if (current_operator)
-		if (!linked)
+	if (!linked)
+		if (current_operator)
 			to_chat(current_operator, SPAN_DANGER("\The [src]'s controls lock up with an error flashing across the screen: Connection to vessel lost!"))
 			set_operator(null, TRUE)
-		else if (!Adjacent(current_operator) || CanUseTopic(current_operator) != STATUS_INTERACTIVE || !viewing_overmap(current_operator))
-			set_operator(null)
+		return
+
+	if (current_operator && (!Adjacent(current_operator) || CanUseTopic(current_operator) != STATUS_INTERACTIVE || !viewing_overmap(current_operator)))
+		set_operator(null)
 
 	if (autopilot && dx && dy)
 		var/turf/T = locate(dx,dy,GLOB.using_map.overmap_z)

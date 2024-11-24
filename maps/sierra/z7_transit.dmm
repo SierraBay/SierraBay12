@@ -314,6 +314,14 @@
 /obj/shuttle_landmark/ert/internim,
 /turf/space,
 /area/space)
+"qc" = (
+/obj/shuttle_landmark/escape_pod/transit/pod11,
+/turf/space/transit/north,
+/area/space)
+"ub" = (
+/obj/shuttle_landmark/escape_pod/transit/pod9,
+/turf/space/transit/north,
+/area/space)
 "Cm" = (
 /obj/step_trigger/teleporter/random{
 	affect_ghosts = 0;
@@ -326,6 +334,10 @@
 	teleport_z_offset = 0
 	},
 /turf/space,
+/area/space)
+"XE" = (
+/obj/shuttle_landmark/escape_pod/transit/pod10,
+/turf/space/transit/north,
 /area/space)
 
 (1,1,1) = {"
@@ -2581,7 +2593,7 @@ aA
 aF
 aF
 aF
-aF
+qc
 ah
 aF
 aF
@@ -3389,7 +3401,7 @@ aA
 aF
 aF
 aF
-aF
+XE
 ah
 aF
 aF
@@ -4197,7 +4209,7 @@ aA
 aF
 aF
 aF
-aF
+ub
 ah
 aF
 aF
