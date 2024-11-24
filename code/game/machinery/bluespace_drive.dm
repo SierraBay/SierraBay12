@@ -238,20 +238,6 @@
 			if (!(mob.z in zlevels))
 				continue
 
-<<<<<<< ours
-			if (GLOB.using_map.use_bluespace_interlude && prob(interlude_teleport_chance))
-				if (istype(mob, /mob/living/simple_animal) && prob(80))
-					return
-				var/turf/T = pick_area_turf_in_connected_z_levels(
-					list(GLOBAL_PROC_REF(is_not_space_area)),
-					list(GLOBAL_PROC_REF(not_turf_contains_dense_objects), GLOBAL_PROC_REF(IsTurfAtmosSafe)),
-					zlevels[1])
-				if (!T)
-					return
-				GLOB.using_map.do_interlude_teleport(mob, T, Frand(1, 2.5) MINUTES)
-				return
-=======
->>>>>>> theirs
 			if (mob != being)
 				var/source_position = being.loc
 				var/other_position = mob.loc
