@@ -1,0 +1,5 @@
+author: SierraKomodo
+changes:
+  - {bugfix: Cargo piles stacked on the same tile no longer block eachother from being
+      cleaned up.}
+delete-after: true

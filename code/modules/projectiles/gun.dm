@@ -139,11 +139,6 @@
 	if(scope_zoom)
 		verbs += /obj/item/gun/proc/scope
 
-/obj/item/gun/update_twohanding()
-	if(one_hand_penalty)
-		update_icon() // In case item_state is set somewhere else.
-	..()
-
 /obj/item/gun/on_update_icon()
 	var/mob/living/M = loc
 	ClearOverlays()
@@ -234,11 +229,8 @@
 			else
 				Fire(target, user, pointblank = TRUE)
 		return TRUE
-
 	// Point blank shooting
 	if (user.a_intent == I_HURT && !user.isEquipped(target))
-		if (safety()) // Pistol whip instead of unsafety+fire
-			return ..()
 		Fire(target, user, pointblank = TRUE)
 		return TRUE
 
@@ -338,7 +330,7 @@
 		flick(fire_anim, src)
 
 	if (user)
-		var/user_message = SPAN_WARNING("You fire \the [src][pointblank ? " point blank":""] at \the [target][reflex ? " by reflex" : ""]!")
+		var/user_message = SPAN_DANGER("You fire \the [src][pointblank ? " point blank":""] at \the [target][reflex ? " by reflex" : ""]!")
 		if (silenced)
 			to_chat(user, user_message)
 		else
