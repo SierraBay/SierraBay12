@@ -201,8 +201,8 @@
 	gear_tweaks += new/datum/gear_tweak/path(armors)
 
 /datum/gear/suit/sfp
-	display_name = "Agent's jacket"
-	path = /obj/item/clothing/suit/storage/toggle/agent_jacket
+	display_name = "SFP agent jackets"
+	path = /obj/item/clothing/suit/storage
 	allowed_roles = list(
 		/datum/job/detective
 	)
@@ -210,6 +210,14 @@
 		/datum/mil_branch/solgov
 	)
 	flags = GEAR_HAS_NO_CUSTOMIZATION
+
+/datum/gear/suit/sfp/New()
+	..()
+	var/list/options = list()
+	options["SFP leather jacket"] = /obj/item/clothing/suit/storage/toggle/agent_jacket
+	options["formal SFP jacket"] = /obj/item/clothing/suit/storage/toggle/agent_jacket/formal
+	options["SFP patrol cloak"] = /obj/item/clothing/suit/storage/agent_rain
+	gear_tweaks += new/datum/gear_tweak/path(options)
 
 /datum/gear/suit/chest_rig/New()
 	allowed_roles = TECHNICAL_ROLES + SECURITY_ROLES + list(

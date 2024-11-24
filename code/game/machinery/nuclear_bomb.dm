@@ -423,7 +423,7 @@ var/global/bomb_set
 	startswith = list(
 		/obj/item/disk/nuclear,
 		/obj/item/pinpointer,
-		/obj/item/folder/envelope/nuke_instructions,
+		/obj/item/folder/envelope/preset/nuke_instructions,
 		/obj/item/modular_computer/laptop/preset/custom_loadout/cheap
 	)
 
@@ -431,11 +431,11 @@ var/global/bomb_set
 	. = ..()
 	to_chat(user,"On closer inspection, you see \a [GLOB.using_map.company_name] emblem is etched into the front of it.")
 
-/obj/item/folder/envelope/nuke_instructions
+/obj/item/folder/envelope/preset/nuke_instructions
 	name = "instructions envelope"
 	desc = "A small envelope. The label reads 'open only in event of high emergency'."
 
-/obj/item/folder/envelope/nuke_instructions/Initialize()
+/obj/item/folder/envelope/preset/nuke_instructions/Initialize()
 	. = ..()
 	var/obj/item/paper/R = new(src)
 	R.set_content("<center><img src=sollogo.png><br><br>\
