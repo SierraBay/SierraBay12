@@ -1,0 +1,4 @@
+author: Hubblenaut
+changes:
+  - {bugfix: Fixes the removal or placing of floor causing dark areas.}
+delete-after: true
