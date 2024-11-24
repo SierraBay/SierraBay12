@@ -28,12 +28,21 @@
 	var/blood_per_tick = 3
 	var/health_per_tick = 0.8
 	pass_flags = PASS_FLAG_TABLE
-
+	var/datum/disease2/disease/carried //[SIERRA-ADD] VIRUSOLOGY
 	bleed_colour = "#aad9de"
 
 	ai_holder = /datum/ai_holder/hostile/melee/vagrant
 
 /datum/ai_holder/hostile/melee/vagrant
+
+
+//[SIERRA-ADD] VIRUSOLOGY
+/mob/living/simple_animal/hostile/vagrant/Initialize()
+	. = ..()
+	if(prob(25))
+		carried = new/datum/disease2/disease()
+		carried.makerandom(rand(2, 4))
+//[/SIERRA-ADD] VIRUSOLOGY
 
 /datum/ai_holder/hostile/melee/vagrant/engage_target()
 	if(ishuman(target))
@@ -53,7 +62,10 @@
 			H.Stun(1)
 			H.visible_message(SPAN_DANGER("\the [holder] latches onto \the [H], pulsating!"))
 			V.forceMove(V.gripping.loc)
-
+			//[SIERRA-ADD] VIRUSOLOGY
+			if(V.carried && length(V.gripping.virus2) == 0)
+				infect_virus2(V.gripping, V.carried, 1)
+			//[/SIERRA-ADD] VIRUSOLOGY
 /mob/living/simple_animal/hostile/vagrant/Process_Spacemove()
 	return 1
 
