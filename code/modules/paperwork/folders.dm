@@ -122,7 +122,8 @@
 /obj/item/folder/envelope/preset
 	icon_state = "envelope_sealed"
 	sealed = TRUE
-	seal_stamp = "\improper SCG Expeditionary Command rubber stamp"
+	//seal_stamp = "\improper SCG Expeditionary Command rubber stamp"
+	seal_stamp = "\improper NanoTrasen Central Command rubber stamp"
 
 /obj/item/folder/envelope/on_update_icon()
 	if(sealed)
