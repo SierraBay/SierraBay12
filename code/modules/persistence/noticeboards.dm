@@ -197,8 +197,12 @@
 		. = TOPIC_HANDLED
 
 	if(href_list["remove"])
-		remove_paper(locate(href_list["remove"]))
-		add_fingerprint(user)
+		var/obj/item/paper = locate(href_list["remove"])
+		if (paper)
+			remove_paper(paper)
+			user.put_in_any_hand_if_possible(paper)
+			paper.add_fingerprint(user)
+			add_fingerprint(user)
 		. = TOPIC_REFRESH
 
 	if(href_list["write"])
