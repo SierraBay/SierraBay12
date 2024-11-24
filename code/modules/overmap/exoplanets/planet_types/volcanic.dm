@@ -17,7 +17,7 @@
 
 /obj/overmap/visitable/sector/exoplanet/volcanic/get_atmosphere_color()
 	var/air_color = ..()
-	return MixColors(COLOR_GRAY20, air_color)
+	return MixColors(list(COLOR_GRAY20, air_color))
 
 /obj/overmap/visitable/sector/exoplanet/volcanic/generate_atmosphere()
 	..()
