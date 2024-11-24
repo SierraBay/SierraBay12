@@ -73,6 +73,7 @@
 /datum/shuttle/autodock/overmap/ascent_inf/two
 	name = "Lepidopterax"
 	warmup_time = 5
+	current_location = "nav_hangar_ascent_inf_two"
 	range = 2
 	dock_target = "ascent_inf_starboard"
 	shuttle_area = /area/ship/ascent_inf/shuttle_starboard

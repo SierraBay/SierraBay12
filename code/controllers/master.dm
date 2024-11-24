@@ -270,7 +270,7 @@ var/global/datum/controller/master/Master = new
 		SS.state = SS_IDLE
 		if (SS.flags & SS_TICKER)
 			tickersubsystems += SS
-			timer += world.tick_lag * rand(1, 5)
+			timer += world.tick_lag * rand(0,1)
 			SS.next_fire = timer
 			continue
 
