@@ -4,9 +4,8 @@ GLOBAL_LIST_INIT(cable_default_colors, list(
 	"Blue"   = CABLE_COLOR_BLUE,
 	"Cyan"   = CABLE_COLOR_CYAN,
 	"Green"  = CABLE_COLOR_GREEN,
-	"Orange" = CABLE_COLOR_ORANGE,
-	"Purple" = CABLE_COLOR_PINK,
 	"Red"    = CABLE_COLOR_RED,
+	"Orange" = CABLE_COLOR_ORANGE,
 	"Yellow" = CABLE_COLOR_YELLOW,
 	"White"  = CABLE_COLOR_WHITE
 ))
@@ -108,6 +107,24 @@ GLOBAL_LIST_INIT(cable_default_colors, list(
 	if (organ.robo_repair(3 * use_amount, DAMAGE_BURN, "some damaged wiring", src, user))
 		use(use_amount)
 		return TRUE
+
+
+/obj/item/stack/cable_coil/attack_self(mob/living/user)
+	var/list/radial = list()
+	for (var/color in GLOB.cable_default_colors)
+		radial[color] = mutable_appearance(icon, icon_state, GLOB.cable_default_colors[color])
+	var/new_color = show_radial_menu(user, user, radial, require_near = TRUE, radius = 42, tooltips = TRUE, check_locs = list(src))
+	if (!new_color || !user.use_sanity_check(src))
+		return TRUE
+	var/new_color_code = GLOB.cable_default_colors[new_color]
+	if (get_color() == new_color_code)
+		return TRUE
+	set_color(new_color_code)
+	user.visible_message(
+		SPAN_NOTICE("\The [user] changes \the [src]'s color."),
+		SPAN_NOTICE("You set \the [src]'s color to '[new_color]'.")
+	)
+	return TRUE
 
 
 /obj/item/stack/cable_coil/transfer_to(obj/item/stack/cable_coil/coil)
@@ -334,7 +351,7 @@ GLOBAL_LIST_INIT(cable_default_colors, list(
 		CABLE_COLOR_YELLOW,
 		CABLE_COLOR_GREEN,
 		CABLE_COLOR_BLUE,
-		CABLE_COLOR_PINK,
+		CABLE_COLOR_RED,
 		CABLE_COLOR_ORANGE,
 		CABLE_COLOR_CYAN,
 		CABLE_COLOR_WHITE,

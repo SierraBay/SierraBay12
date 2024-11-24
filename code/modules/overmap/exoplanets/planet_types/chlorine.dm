@@ -18,7 +18,7 @@
 
 /obj/overmap/visitable/sector/exoplanet/chlorine/get_atmosphere_color()
 	var/air_color = ..()
-	return MixColors("#e5f2bd", air_color)
+	return MixColors(list("#e5f2bd", air_color))
 
 /obj/overmap/visitable/sector/exoplanet/chlorine/generate_atmosphere()
 	..()

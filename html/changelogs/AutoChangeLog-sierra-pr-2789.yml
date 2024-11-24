@@ -1,0 +1,4 @@
+author: Hubblenaut
+changes:
+  - {bugfix: Fixes not being able to put the light replacer into a container.}
+delete-after: true
