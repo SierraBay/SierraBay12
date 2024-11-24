@@ -1,31 +1,33 @@
 // Implements https://github.com/mafemergency/byond-tracy
 // Client https://github.com/wolfpld/tracy
-// As of now, only 0.8.2 is supported as a client, this might change in the future however
 
-// In case you need to start the capture as soon as the server boots, uncomment the following lines and recompile:
 
-// /world/New()
-// 	prof_init()
-// 	. = ..()
+#ifdef PROFILE_FROM_BOOT
+/world/New()
+	profiler_init()
+	return ..()
+#endif
 
-/client/proc/profiler_start()
-	set name = "Start Tracy Profiler"
+
+/client/proc/profiler_init_verb()
+	set name = "Start Profiler"
 	set category = "Debug"
 	set desc = "Starts the tracy profiler, which will await the client connection."
-	switch(alert("Are you sure? Tracy will remain active until the server restarts.", "Tracy Init", "No", "Yes"))
-		if("Yes")
-			prof_init()
+	var/response = alert("Are you sure? The profiler will run until restart.", null, "No", "Yes")
+	if (response != "Yes")
+		return
+	profiler_init()
 
-/**
- * Starts Tracy
- */
-/proc/prof_init()
+/// Starts the profiler.
+/proc/profiler_init()
 	var/lib
-
-	switch(world.system_type)
-		if(MS_WINDOWS) lib = "prof.dll"
-		if(UNIX) lib = "libprof.so"
-		else CRASH("Tracy initialization failed: unsupported platform or DLL not found.")
-
+	switch (world.system_type)
+		if (MS_WINDOWS)
+			lib = "tracy.dll"
+		if (UNIX)
+			lib = "tracy.so"
+		else
+			CRASH("Tracy initialization failed: unsupported platform or DLL not found.")
 	var/init = CALL_EXT(lib, "init")()
-	if("0" != init) CRASH("[lib] init error: [init]")
+	if(init != "0")
+		CRASH("[lib] init error: [init]")

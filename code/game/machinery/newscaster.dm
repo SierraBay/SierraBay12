@@ -18,6 +18,7 @@
 
 /datum/feed_channel
 	var/channel_name=""
+	var/channel_id=0
 	var/list/datum/feed_message/messages = list()
 	var/locked=0
 	var/author=""
@@ -67,6 +68,7 @@
 /datum/feed_network/proc/CreateFeedChannel(channel_name, author, locked, adminChannel = 0, announcement_message)
 	var/datum/feed_channel/newChannel = new /datum/feed_channel
 	newChannel.channel_name = channel_name
+	newChannel.channel_id = length(network_channels)
 	newChannel.author = author
 	newChannel.locked = locked
 	newChannel.is_admin_channel = adminChannel
@@ -95,7 +97,7 @@
 /datum/feed_network/proc/insert_message_in_channel(datum/feed_channel/FC, datum/feed_message/newMsg)
 	FC.messages += newMsg
 	if(newMsg.img)
-		register_asset("newscaster_photo_[sanitize(FC.channel_name)]_[length(FC.messages)].png", newMsg.img)
+		register_asset("newscaster_photo_[FC.channel_id]_[length(FC.messages)].png", newMsg.img)
 	newMsg.parent_channel = FC
 	FC.update()
 	alert_readers(FC.announcement)
@@ -354,7 +356,7 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 							++i
 							dat+="-[MESSAGE.body] <BR>"
 							if(MESSAGE.img)
-								var/resourc_name = "newscaster_photo_[sanitize(viewing_channel.channel_name)]_[i].png"
+								var/resourc_name = "newscaster_photo_[viewing_channel.channel_id]_[i].png"
 								send_asset(usr.client, resourc_name)
 								dat+="<img src='[resourc_name]' width = '180'><BR>"
 								if(MESSAGE.caption)
@@ -841,7 +843,7 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 							++i
 							dat+="-[MESSAGE.body] <BR>"
 							if(MESSAGE.img)
-								var/resourc_name = "newscaster_photo_[sanitize(C.channel_name)]_[i].png"
+								var/resourc_name = "newscaster_photo_[C.channel_id]_[i].png"
 								send_asset(user.client, resourc_name)
 								dat+="<img src='[resourc_name]' width = '180'><BR>"
 							dat+="[FONT_SMALL("\[[MESSAGE.message_type] by [SPAN_COLOR("maroon", MESSAGE.author)]\]")]<BR><BR>"
