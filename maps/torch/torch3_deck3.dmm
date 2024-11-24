@@ -10486,7 +10486,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/chapel/main)
 "zx" = (
-/obj/machinery/power/apc{
+/obj/machinery/power/apc/critical{
 	name = "south bump";
 	pixel_y = -28
 	},
@@ -14753,7 +14753,7 @@
 /turf/simulated/floor/tiled/white,
 /area/crew_quarters/mess)
 "Kp" = (
-/obj/machinery/power/apc{
+/obj/machinery/power/apc/critical{
 	dir = 1;
 	name = "north bump";
 	pixel_y = 24
