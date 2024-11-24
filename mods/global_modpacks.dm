@@ -23,6 +23,7 @@
 #include "lobbyscreen/_lobbyscreen.dme"
 #include "music_player/_music_player.dme"
 #include "ntnet/_ntnet.dme"
+#include "virusology/_virusology.dme"
 #include "RnD/_RnD.dme"
 #include "nyc_posters/_nyc_posters.dme"
 #include "pixelshift/_pixelshift.dme"
@@ -38,5 +39,9 @@
 #include "integrated_circuits/_integrated_circuits.dme"
 #include "playable_away_yacht/_yacht.dme"
 #include "overmap/_overmap.dme"
+#include "ooc_notes/_ooc_notes.dme"
+#include "character_traits/_character_traits.dme"
+#include "failu_skrell_clothes/_failu_skrell_clothes.dme"
+#include "chemtweaks/_chemtweaks.dme"
 
 #include "../packs/sierra-tweaks/_pack.dm"

@@ -50,6 +50,13 @@
 	desc = "This suit says to you 'hush'!"
 	icon_state = "chaplain_hoodie"
 	body_parts_covered = UPPER_TORSO|ARMS
+	allowed = list (
+		/obj/item/nullrod,
+		/obj/item/storage/bible,
+		/obj/item/reagent_containers/food/drinks/bottle/holywater,
+		/obj/item/material/cross
+	)
+	valid_accessory_slots = list(ACCESSORY_SLOT_INSIGNIA, ACCESSORY_SLOT_DECOR)
 
 //Chaplain
 /obj/item/clothing/suit/nun
@@ -192,7 +199,9 @@
 		/obj/item/tank/oxygen_emergency_extended,
 		/obj/item/tank/nitrogen_emergency,
 		/obj/item/clothing/mask/gas,
-		/obj/item/taperoll/engineering
+		/obj/item/taperoll/engineering,
+		/obj/item/clothing/head/deckcrew,
+		/obj/item/clothing/head/hardhat
 	)
 	body_parts_covered = UPPER_TORSO
 	valid_accessory_slots = list(ACCESSORY_SLOT_INSIGNIA)

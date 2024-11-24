@@ -189,6 +189,8 @@
 	#include "../../mods/_maps/sentinel/_map_sentinel.dme"
 	#include "../../mods/_maps/farfleet/_map_farfleet.dme"
 	#include "../../mods/_maps/hand/_map_hand.dme"
+	#include "../../mods/_maps/ascent_seedship/_map_ascent_seedship.dme"
+	#include "../../mods/_maps/ascent_caulship/_map_ascent_caulship.dme"
 
 	#include "../../mods/antagonists/_antagonists.dme"
 	#include "../../mods/ascent/_ascent.dme"
@@ -209,8 +211,6 @@
 	// UNUSED MODS
 	// Keep them in ascending alphabetical order too, please
 
-	// #include "../../mods/_maps/ascent/_map_ascent.dme"
-	// #include "../../mods/_maps/ascent_caulship/_map_ascent_caulship.dme"
 	// #include "../../mods/atmos_ret_field/_atm_ret_field.dme"
 	// #include "../../mods/bluespace_kitty/_bluespace_kitty.dme"
 

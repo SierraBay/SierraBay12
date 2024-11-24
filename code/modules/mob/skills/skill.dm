@@ -336,3 +336,13 @@ GLOBAL_LIST_EMPTY(skills)
 						"Trained"			= "You can accurately measure out reagents, grind powders, and perform chemical reactions. You may still lose some product on occasion, but are unlikely to endanger yourself or those around you.<br>- You can fully operate the chem dispenser.",
 						"Experienced"		= "You work as a chemist, or else you are a doctor with training in chemistry. If you are a research chemist, you can create most useful chemicals; if you are a pharmacist, you can make most medications. At this stage, you're working mostly by-the-book. You can weaponize your chemicals by making grenades, smoke bombs, and similar devices.<br>- You can examine held containers for scannable reagents.",
 						"Master"		= "You specialized in chemistry or pharmaceuticals; you are either a medical researcher or professional chemist. You can create custom mixes and make even the trickiest of medications easily. You understand how your pharmaceuticals interact with the bodies of your patients. You are probably the originator of at least one new chemical innovation.<br>- You can examine held containers for all reagents.")
+
+/singleton/hierarchy/skill/medical/chemistry/virology
+	ID = "virology"
+	name = "Virology"
+	desc = "Virology requires a specialist to have not only a deep knowledge of viruses, but also the ability to work with them, similar to how a chemist works with chemicals. This means not only understanding chemical reactions and their effects, but also knowing how these reactions will affect the human body. Thus, a virologist must have not only knowledge of virology, but also medical skills. An analogy can be drawn with a medical chemist, who must have experience working with chemicals and understand what effect they will have in order to use them safely in medicine."
+	levels = list( "Unskilled"			= "You know that virologist work with viruses; you know that they can be very dangerous. You probably know basic defence against viruses..",
+						"Trained"				= "You can engeener viruses. You have some training in safety and you won't infect yourself while work... probably. You can almost safely use the virologist equipment.")
+	prerequisites = list(SKILL_CHEMISTRY = SKILL_TRAINED)
+	default_max = SKILL_BASIC
+	difficulty = SKILL_AVERAGE
