@@ -39,13 +39,13 @@
 		/obj/anomaly/electra/three_and_three/tesla_second = 1
 		)
 
-/obj/anomaly_spawner/zjarka
+/obj/anomaly_spawner/Zharka
 	name = "Hot spawner"
-	icon_state = "zjarka_spawn"
+	icon_state = "zharka_spawn"
 	possible_anomalies = list(
-		/obj/anomaly/zjarka = 5,
-		/obj/anomaly/zjarka/short_effect = 2,
-		/obj/anomaly/zjarka/long_effect = 1,
+		/obj/anomaly/zharka = 5,
+		/obj/anomaly/zharka/short_effect = 2,
+		/obj/anomaly/zharka/long_effect = 1,
 		/obj/anomaly/heater/three_and_three = 3,
 		/obj/anomaly/heater/two_and_two = 5
 		)
