@@ -6,7 +6,18 @@
 
 /datum/gear/suit/poncho
 	display_name = "poncho selection"
-	path = /obj/item/clothing/suit/poncho/colored
+	path = /obj/item/clothing/suit/poncho
+
+/datum/gear/suit/poncho/New()
+	flags = null
+	..()
+	var/ponchos = list()
+	ponchos += /obj/item/clothing/suit/poncho
+	ponchos += /obj/item/clothing/suit/poncho/red
+	ponchos += /obj/item/clothing/suit/poncho/blue
+	ponchos += /obj/item/clothing/suit/poncho/purple
+	ponchos += /obj/item/clothing/suit/poncho/green
+	gear_tweaks += new/datum/gear_tweak/path/specified_types_list(ponchos)
 
 /datum/gear/suit/security_poncho
 	allowed_roles = list(/datum/job/hos, /datum/job/warden, /datum/job/detective, /datum/job/officer,   )
