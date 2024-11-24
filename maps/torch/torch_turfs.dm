@@ -12,4 +12,4 @@
 	color = COLOR_SOL
 
 /turf/simulated/floor/shuttle_ceiling/torch/air
-	initial_gas = list(GAS_OXYGEN = MOLES_O2STANDARD, GAS_NITROGEN = MOLES_N2STANDARD)
+	initial_gas = GAS_STANDARD_AIRMIX
