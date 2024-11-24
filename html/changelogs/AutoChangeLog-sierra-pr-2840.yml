@@ -1,0 +1,5 @@
+author: PurplePineapple
+changes:
+  - {tweak: Changes the wood pump shotgun to 'Crawford' from 'Bulldog' to reduce confusion.
+      The riot version is now the 'Bateman'.}
+delete-after: true

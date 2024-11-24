@@ -104,10 +104,10 @@ PROCESSING_SUBSYSTEM_DEF(anom)
 		//Арты
 		anomaly_text += "<br>Игра заспавнила [artefacts_spawned_by_game] артефактов, из них [artefacts_deleted_by_game] удалено. Собрано игроками артефактов: [collected_artefacts_by_player]. Всего артефактов на конец раунда: [LAZYLEN(artefacts_list_in_world)]"
 		anomaly_text += "<br>Заработано каргопоинтов за продажу артефактов: [earned_cargo_points], заработано РНД поинтов за изучение артефактов: [earned_rnd_points]"
-		anomaly_text += "<br>Всего попыток взаимодействия с артефактами [interactions_with_artefacts_by_players_ammount], из них [good_interactions_with_artefacts_by_players_ammount] принесли пользу, а [bad_interactions_with_artefacts_by_players_ammount] - вред."
+		anomaly_text += "<br>Всего попыток взаимодействия с артефактами: [interactions_with_artefacts_by_players_ammount], из них [good_interactions_with_artefacts_by_players_ammount] принесли пользу, а [bad_interactions_with_artefacts_by_players_ammount] принесли вред."
 		//Сработало аномок
 		//Электра
-		anomaly_text += "<br>Аномалии были взведены [anomalies_activated_times] Раз. В целом, игроки подверглись влиянию аномалий [humanoids_effected_by_anomaly] раз, а [humanoids_gibbed_by_anomaly] игроков были гибнуты. [simplemobs_effected_by_anomaly] симплмобов подверглись влиянию аномалий и [simplemobs_gibbed_by_anomaly] было гибнуто."
+		anomaly_text += "<br>Аномалии были взведены [anomalies_activated_times] раз. В целом, игроки подверглись влиянию аномалий [humanoids_effected_by_anomaly] раз, а [humanoids_gibbed_by_anomaly] игроков были гибнуты. [simplemobs_effected_by_anomaly] симплмобов подверглись влиянию аномалий и [simplemobs_gibbed_by_anomaly] было гибнуто."
 		//Раненные, умершие, гибнутые
 		if(last_attacked_message)
 			anomaly_text += "<br>[last_attacked_message]."
