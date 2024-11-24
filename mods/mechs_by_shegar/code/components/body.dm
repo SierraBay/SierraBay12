@@ -20,6 +20,8 @@
 	var/overheat_time = 10 SECONDS
 	///Куллдаун для обработки тепла.
 	var/heat_process_speed = 2 SECONDS
+	///Выбито ли пузо?
+	var/body_critical_damaged = FALSE
 
 
 /obj/item/mech_component/chassis/proc/atmos_clear_protocol(mob/living/user)
@@ -35,7 +37,30 @@
 	cockpit.gas = good_gas
 	cockpit.temperature = 293.152
 
-	//air_contents
+///Пузо было выбито
+/obj/item/mech_component/chassis/part_has_been_destroyed()
+	if(!body_critical_damaged)
+		body_critical_damaged = TRUE
+		addtimer(new Callback(src, PROC_REF(do_overheat)), rand(20 SECONDS, 40 SECONDS))
+
+/obj/item/mech_component/chassis/proc/do_overheat()
+	//Произошёл баг или иное чудо
+	if(!loc)
+		return
+	//Меху зачинили пузо, просчитывать больше не нужно
+	if(total_damage != max_damage)
+		return
+	//Определяем нашего меха
+	var/mob/living/exosuit/mech = loc
+	mech.add_heat(mech.max_heat)
+	if(body_critical_damaged)
+		addtimer(new Callback(src, PROC_REF(do_overheat)), rand(60 SECONDS, 180 SECONDS))
+
+
+
+/obj/item/mech_component/chassis/part_has_been_restored()
+	body_critical_damaged = FALSE
+
 
 /obj/item/mech_component/chassis/powerloader
 	max_damage = 100
