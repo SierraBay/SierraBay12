@@ -1,9 +1,10 @@
+#define VAGABONDS_JOBS /datum/job/vagabond
 /datum/map/sierra
 	species_to_job_whitelist = list(
 		/datum/species/adherent = list(ADHERENT_JOBS),
 		/datum/species/nabber = list(NABBER_JOBS),
-		/datum/species/vox = list(SILICON_JOBS),
-		/datum/species/human/mule = list(SILICON_JOBS)
+		/datum/species/vox = list(SILICON_JOBS, VAGABONDS_JOBS),
+		/datum/species/human/mule = list(SILICON_JOBS, VAGABONDS_JOBS)
 	)
 
 	species_to_job_blacklist = list(
@@ -37,7 +38,7 @@
 		/datum/job/chief_steward, /datum/job/janitor, /datum/job/cook, /datum/job/bartender, /datum/job/steward, /datum/job/chaplain, /datum/job/actor,
 		/datum/job/senior_scientist, /datum/job/scientist, /datum/job/roboticist, /datum/job/scientist_assistant,
 		/datum/job/ai, /datum/job/cyborg,
-		/datum/job/assistant
+		/datum/job/assistant, /datum/job/vagabond
 	)
 
 	access_modify_region = list(
@@ -150,6 +151,8 @@
 		/datum/mil_rank/civ/civ
 	)
 	required_language = LANGUAGE_HUMAN_EURO
+	psi_latency_chance = 8
+	give_psionic_implant_on_join = FALSE
 
 /datum/map/sierra
 	default_assistant_title = "Crewman"
@@ -160,3 +163,4 @@
 #undef NABBER_JOBS
 #undef SKRELL_BLACKLISTED_JOBS
 #undef MACHINE_BLACKLISTED_JOBS
+#undef VAGABONDS_JOBS

@@ -281,7 +281,11 @@
 		"blood_type" = blood_type,
 		"trace_chem" = null,
 		"blood_species" = blood_species,
-		"blood_colour" = species.blood_color
+		"blood_colour" = species.blood_color,
+//SIERRA-ADD MODPACK VIRUSOLOGY
+		"virus2" = list(),
+		"antibodies" = list()
+//SIERRA-ADD MODPACK VIRUSOLOGY
 	))
 	AddLabel("[blood_species] [blood_type]")
 	UpdateItemSize()

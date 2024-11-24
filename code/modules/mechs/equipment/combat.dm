@@ -92,7 +92,7 @@
 		toggle()
 		playsound(owner.loc,'sound/mecha/internaldmgalarm.ogg',35,1)
 	*/
-	owner.add_heat(difference)
+	owner.add_heat(difference * 2)
 	if(difference >= 0)
 		toggle()
 		OVERHEAT = TRUE

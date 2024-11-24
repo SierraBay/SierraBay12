@@ -73,20 +73,48 @@
 	islocked = 1
 	ssu_color = "#55aaaa"
 
-/obj/machinery/suit_storage_unit/mining/Initialize()
-	. = ..()
+/obj/machinery/suit_storage_unit/mining
+	name = "mining voidsuit storage unit"
+	suit= /obj/item/clothing/suit/space/void/mining
+	helmet = /obj/item/clothing/head/helmet/space/void/mining
+	boots = /obj/item/clothing/shoes/magboots
+	tank = /obj/item/tank/oxygen
+	mask = /obj/item/clothing/mask/breath
+	req_access = list(access_mining)
+	islocked = 1
 	ssu_color = "#b88a3b"
 
-/obj/machinery/suit_storage_unit/engineering/Initialize()
-	. = ..()
+/obj/machinery/suit_storage_unit/engineering
+	name = "engineering voidsuit storage unit"
+	suit= /obj/item/clothing/suit/space/void/engineering
+	helmet = /obj/item/clothing/head/helmet/space/void/engineering
+	boots = /obj/item/clothing/shoes/magboots
+	tank = /obj/item/tank/oxygen
+	mask = /obj/item/clothing/mask/breath
+	req_access = list(access_construction)
+	islocked = 1
 	ssu_color = "#ffbf00"
 
-/obj/machinery/suit_storage_unit/atmos/Initialize()
-	. = ..()
+/obj/machinery/suit_storage_unit/atmos
+	name = "atmospherics voidsuit storage unit"
+	suit= /obj/item/clothing/suit/space/void/atmos
+	helmet = /obj/item/clothing/head/helmet/space/void/atmos
+	boots = /obj/item/clothing/shoes/magboots
+	tank = /obj/item/tank/oxygen
+	mask = /obj/item/clothing/mask/breath
+	req_access = list(access_atmospherics)
+	islocked = 1
 	ssu_color = "#00cccc"
 
-/obj/machinery/suit_storage_unit/science/Initialize()
-	. = ..()
+/obj/machinery/suit_storage_unit/science
+	name = "excavation voidsuit storage unit"
+	suit= /obj/item/clothing/suit/space/void/excavation
+	helmet = /obj/item/clothing/head/helmet/space/void/excavation
+	boots = /obj/item/clothing/shoes/magboots
+	tank = /obj/item/tank/oxygen
+	mask = /obj/item/clothing/mask/breath
+	req_access = list(access_xenoarch)
+	islocked = 1
 	ssu_color = "#990000"
 
 /obj/machinery/suit_storage_unit/security/sapper
