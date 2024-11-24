@@ -11,5 +11,5 @@
 #include "code/traitor.dm"
 #include "code/uplink.dm"
 #include "code/maint_ninja.dm"
-
+#include "code/raider.dm"
 #endif

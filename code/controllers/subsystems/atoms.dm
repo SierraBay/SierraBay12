@@ -96,19 +96,26 @@ SUBSYSTEM_DEF(atoms)
 	if (QDELING(atom))
 		bad_inits[atom_type] |= BAD_INIT_QDEL_BEFORE
 		return TRUE
+	// This is handled and battle tested by dreamchecker. Limit to UNIT_TESTS just in case that ever fails.
+	#ifdef UNIT_TESTS
 	var/start_tick = world.time
+	#endif
 	var/hint = atom.Initialize(arglist(arguments))
+	#ifdef UNIT_TESTS
 	if (start_tick != world.time)
 		bad_inits[atom_type] |= BAD_INIT_SLEPT
+	#endif
 	var/deleted = FALSE
-	switch (hint)
-		if (INITIALIZE_HINT_NORMAL) //noop
-		if (INITIALIZE_HINT_LATELOAD)
-			if (arguments[1])	//mapload
+	switch(hint)
+		if(INITIALIZE_HINT_NORMAL)
+			EMPTY_BLOCK_GUARD
+		if(INITIALIZE_HINT_LATELOAD)
+			if(arguments[1])	//mapload
 				late_init_queue[atom] = arguments
 			else
 				atom.LateInitialize(arglist(arguments))
-		if (INITIALIZE_HINT_QDEL)
+		if(INITIALIZE_HINT_QDEL)
+			atom.atom_flags |= ATOM_FLAG_INITIALIZED // never call EarlyDestroy if we return this hint
 			qdel(atom)
 			deleted = TRUE
 		else
