@@ -62,20 +62,7 @@
 	#define TURF_SHADOW_LAYER           2.02
 	//ABOVE TURF
 	#define DECAL_LAYER                 2.03
-<<<<<<< ours
-	#define RUNE_LAYER                  2.04
-	#define ABOVE_TILE_LAYER            2.05
-	#define EXPOSED_PIPE_LAYER          2.06
-	#define EXPOSED_WIRE_LAYER          2.07
-	#define ABOVE_EXPOSED_WIRE_LAYER    2.08
-	#define CATWALK_LAYER               2.09
-	#define ABOVE_CATWALK_LAYER         2.10
-	#define BLOOD_LAYER                 2.11
-	#define MOUSETRAP_LAYER             2.12
-	#define PLANT_LAYER                 2.13
-	#define AO_LAYER                    2.14
-	#define ABOVE_AO_LAYER              2.141
-=======
+
 	#define AO_LAYER                    2.04
 	#define ABOVE_AO_LAYER              2.05
 	#define RUNE_LAYER                  2.06
@@ -88,7 +75,7 @@
 	#define BLOOD_LAYER                 2.13
 	#define MOUSETRAP_LAYER             2.14
 	#define PLANT_LAYER                 2.15
->>>>>>> theirs
+
 	//HIDING MOB
 	#define HIDING_MOB_LAYER            2.16
 	#define SHALLOW_FLUID_LAYER         2.17
