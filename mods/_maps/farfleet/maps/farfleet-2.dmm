@@ -2589,6 +2589,9 @@
 	pixel_y = 2
 	},
 /obj/item/device/scanner/health,
+/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/glass/bucket,
 /turf/simulated/floor/tiled/techmaint,
 /area/ship/farfleet/maintenance/anomaly)
 "yK" = (
@@ -3760,8 +3763,11 @@
 	pixel_x = -22;
 	req_access = list("ACCESS_ICCGN")
 	},
-/obj/structure/table/steel_reinforced,
-/obj/item/reagent_containers/glass/bucket,
+/obj/structure/table/rack,
+/obj/item/clothing/gloves/anomaly_detector/gurza,
+/obj/item/storage/bolt_bag/full_of_bolts,
+/obj/item/storage/bolt_bag/full_of_bolts,
+/obj/item/storage/bolt_bag/full_of_bolts,
 /turf/simulated/floor/tiled/techmaint,
 /area/ship/farfleet/maintenance/anomaly)
 "KF" = (
