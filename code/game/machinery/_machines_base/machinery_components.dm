@@ -38,6 +38,10 @@ GLOBAL_LIST_INIT(machine_path_to_circuit_type, cache_circuits_by_build_path())
 	for(var/component_path in uncreated_component_parts)
 		var/number = uncreated_component_parts[component_path] || 1
 		LAZYREMOVE(uncreated_component_parts, component_path)
+		// Stacks are created differently to avoid qdel churn.
+		if(ispath(component_path, /obj/item/stack))
+			install_component(new component_path(src, number), refresh_parts = FALSE)
+			continue
 		for(var/i in 1 to number)
 			install_component(component_path, refresh_parts = FALSE)
 
