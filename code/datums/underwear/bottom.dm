@@ -87,3 +87,21 @@
 	underwear_name = "long johns"
 	icon_state = "ljonb"
 	has_color = TRUE
+
+datum/category_item/underwear/bottom/pantysnormfull
+	name = "Panties, alte"
+	underwear_name = "panties"
+	icon_state = "pantysnormfull"
+	has_color = TRUE
+
+datum/category_item/underwear/bottom/pantyesstring
+	name = "Panties, strings"
+	underwear_name = "panties"
+	icon_state = "pantystring"
+	has_color = TRUE
+
+datum/category_item/underwear/bottom/pantyesshorts
+	name = "Panties, shorts"
+	underwear_name = "panties"
+	icon_state = "pantyshorts"
+	has_color = TRUE

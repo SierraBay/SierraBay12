@@ -47,3 +47,8 @@
 	underwear_name = "tube top"
 	icon_state = "tubetop"
 	has_color = TRUE
+
+/datum/category_item/underwear/top/branew
+	name = "Bra, alte"
+	icon_state = "branew"
+	has_color = TRUE
