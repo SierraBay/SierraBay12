@@ -1,6 +1,0 @@
-author: Sbotkin
-changes:
-  - {rscadd: Envelopes are craftable from cardboard.}
-  - {rscadd: Envelopes can be sealed and resealed with rubber stamps. Open envelope
-      will show the last stamp it was sealed with.}
-delete-after: true

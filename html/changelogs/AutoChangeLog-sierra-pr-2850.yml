@@ -1,5 +1,0 @@
-author: Mucker
-changes:
-  - {admin: Say messages heard by your mob while aghosted will show up in chat with
-      a 'Near you:' prefix.}
-delete-after: true
