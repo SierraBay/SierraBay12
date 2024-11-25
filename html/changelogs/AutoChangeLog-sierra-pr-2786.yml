@@ -1,4 +1,0 @@
-author: Hubblenaut
-changes:
-  - {bugfix: Fixes the emergency shield generator not blocking air.}
-delete-after: true
