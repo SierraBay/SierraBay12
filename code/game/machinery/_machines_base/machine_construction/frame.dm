@@ -11,6 +11,7 @@
 		else
 			try_change_state(machine, /singleton/machine_construction/frame/wrenched)
 
+<<<<<<< ours
 /singleton/machine_construction/frame/unwrenched/attackby(obj/item/I, mob/user, obj/machinery/machine)
 	if(isWrench(I))
 		playsound(machine.loc, 'sound/items/Ratchet.ogg', 50, 1)
@@ -21,6 +22,40 @@
 	if(isWelder(I))
 		var/obj/item/weldingtool/WT = I
 		if(!WT.can_use(3, user))
+=======
+
+/singleton/machine_construction/frame/unwrenched/use_tool(obj/item/tool, mob/user, obj/machinery/machine)
+	// Wrench - Anchor machine.
+	if (isWrench(tool))
+		user.visible_message(
+			SPAN_NOTICE("\The [user] begins securing \the [machine] to the floor with \a [tool]."),
+			SPAN_NOTICE("You begin securing \the [machine] to the floor with \the [tool].")
+		)
+		playsound(machine, 'sound/items/Ratchet.ogg', 50, TRUE)
+		if (!user.do_skilled((tool.toolspeed * 2 SECONDS), SKILL_CONSTRUCTION, machine, do_flags = DO_REPAIR_CONSTRUCT) || !user.use_sanity_check(machine, tool))
+			return TRUE
+		TRANSFER_STATE(/singleton/machine_construction/frame/wrenched)
+		user.visible_message(
+			SPAN_NOTICE("\The [user] secures \a [machine] to the floor with \a [tool]."),
+			SPAN_NOTICE("You secure \the [machine] to the floor with \the [tool].")
+		)
+		machine.anchored = TRUE
+		machine.post_anchor_change()
+		return TRUE
+
+	if (isWelder(tool))
+		var/obj/item/weldingtool/welder = tool
+		if (!welder.can_use(3, user))
+			return TRUE
+		playsound(machine, 'sound/items/Welder.ogg', 50, TRUE)
+		user.visible_message(
+			SPAN_NOTICE("\The [user] starts dismantling \a [machine] with \a [tool]."),
+			SPAN_NOTICE("You start dismantling \the [machine] with \the [tool].")
+		)
+		if (!user.do_skilled(tool.toolspeed * 2 SECONDS, SKILL_CONSTRUCTION, machine, do_flags = DO_REPAIR_CONSTRUCT) || !user.use_sanity_check(machine, tool))
+			return TRUE
+		if (!welder.remove_fuel(3, user))
+>>>>>>> theirs
 			return TRUE
 		playsound(machine.loc, 'sound/items/Welder.ogg', 50, 1)
 		if(do_after(user, (I.toolspeed * 2) SECONDS, machine, DO_REPAIR_CONSTRUCT))
