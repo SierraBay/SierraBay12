@@ -1,4 +1,0 @@
-author: Sbotkin
-changes:
-  - {bugfix: Fixed metal foam not blocking air.}
-delete-after: true
