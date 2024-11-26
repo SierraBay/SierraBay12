@@ -1,0 +1,4 @@
+author: SierraKomodo
+changes:
+  - {bugfix: Fixes certain railguns having invalid sprite overlays.}
+delete-after: true

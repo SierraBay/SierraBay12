@@ -19,7 +19,7 @@
 
 	if (!mapload)
 		new /obj/explosion(loc)
-		playsound(src, 'sound/effects/EMPulse.ogg', 25, TRUE)
+		playsound(src, GLOB.legion_warp_sound, 25, TRUE)
 		if (linked_beacon)
 			visible_message(SPAN_WARNING("\The [linked_beacon] warps \a [src] in!"))
 		else

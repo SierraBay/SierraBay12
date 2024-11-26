@@ -203,7 +203,7 @@
 	if(T == src.loc)
 		unload(dir)
 
-/mob/living/bot/mulebot/Bump(mob/living/carbon/human/M)
+/mob/living/bot/mulebot/Bump(mob/living/carbon/human/M, called)
 	if(!safety && istype(M))
 		visible_message(SPAN_WARNING("[src] knocks over [M]!"))
 		M.Stun(8)

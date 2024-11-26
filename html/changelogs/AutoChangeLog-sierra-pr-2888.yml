@@ -1,0 +1,7 @@
+author: PurplePineapple
+changes:
+  - {bugfix: Adds missing toggle verbs to take off the suit when the RIG is offline
+      and only when offline.}
+  - {tweak: The speed at which you can activate your RIG is dependent on your EVA
+      skill. Trained is the same as previous normal.}
+delete-after: true

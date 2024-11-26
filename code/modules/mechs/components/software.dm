@@ -8,7 +8,7 @@
 /obj/item/circuitboard/exosystem/engineering
 	name = "exosuit software (engineering systems)"
 	contains_software = list(MECH_SOFTWARE_ENGINEERING)
-	origin_tech = list(TECH_DATA = 1)
+	origin_tech = list(TECH_DATA = 1, TECH_ENGINEERING = 1)
 
 /obj/item/circuitboard/exosystem/utility
 	name = "exosuit software (utility systems)"
@@ -20,10 +20,10 @@
 	name = "exosuit software (medical systems)"
 	contains_software = list(MECH_SOFTWARE_MEDICAL)
 	icon_state = "mcontroller"
-	origin_tech = list(TECH_DATA = 3,TECH_BIO = 2)
+	origin_tech = list(TECH_DATA = 1,TECH_BIO = 1)
 
 /obj/item/circuitboard/exosystem/weapons
 	name = "exosuit software (basic weapon systems)"
 	contains_software = list(MECH_SOFTWARE_WEAPONS)
 	icon_state = "mainboard"
-	origin_tech = list(TECH_DATA = 4, TECH_COMBAT = 3)
+	origin_tech = list(TECH_DATA = 1, TECH_COMBAT = 3)
