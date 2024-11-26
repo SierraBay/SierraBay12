@@ -270,7 +270,7 @@
 	heal_damage(damage)
 
 /obj/item/organ/internal/brain/get_scarring_level()
-	. = (species.total_health - max_damage)/species.total_health
+	return (species.total_health - max_damage) * 100 / species.total_health
 
 /obj/item/organ/internal/brain/get_mechanical_assisted_descriptor()
 	return "machine-interface [name]"

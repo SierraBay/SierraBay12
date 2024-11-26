@@ -5,6 +5,7 @@
 
 /obj/anomaly/rvach
 	name = "Refractions of light"
+	anomaly_tag = "Rvach"
 	with_sound = TRUE
 	sound_type = 'mods/anomaly/sounds/rvach_activation.ogg'
 	idle_effect_type = "rvach_idle"
@@ -22,7 +23,8 @@
 		/obj/item
 	)
 	artefacts = list(
-		/obj/item/artefact/gravi = 1
+		/obj/item/artefact/gravi = 1,
+		/obj/item/artefact/flyer = 2
 	)
 	artefact_spawn_chance = 20
 	detection_skill_req = SKILL_EXPERIENCED
@@ -56,7 +58,6 @@
 				if(victim.skill_check(SKILL_HAULING, SKILL_MASTER))
 					if(prob(7 * victim.get_skill_value(SKILL_HAULING)))
 						victim.Weaken(10)
-						to_chat(victim, SPAN_WARNING("То-ли от страха, то-ли от огромной физической подготовки, вы выныриваете из аномалии."))
 						return
 
 			//Создаём список органов, которые мы МОЖЕМ оторвать
@@ -95,7 +96,7 @@
 	for(var/atom/movable/target in src.loc)
 		get_end_effect_by_anomaly(target)
 	//Рвач раскидает всех из себя
-	throw_everyone_from_rvach()
+	throw_everyone_from_rvach(throw_range)
 	//Выполняем стандартные действия функции stop_processing_long_effect()
 	stop_long_visual_effect()
 	currently_active = FALSE
@@ -103,21 +104,33 @@
 
 //Рвач раскидывает всё что попадает в зону рвача из себя
 /obj/anomaly/rvach/proc/throw_everyone_from_rvach()
-	//Если рвач мультитайтловый
-	for(var/atom/movable/victim in src.loc)
-		if(!ismob(victim) && !isitem(victim) )
+	var/list/victims = list()
+	var/list/objs = list()
+	var/turf/T = get_turf(src)
+	//Собираем все обьекты радиусом на 1 больше, чем расположены вспомогательные части рвачика
+	get_mobs_and_objs_in_view_fast(T, multititle_parts_range, victims, objs)
+	LAZYMERGELIST(victims, objs)
+	for(var/atom/movable/detected_atom in victims)
+		if((!ismob(detected_atom) && !isitem(detected_atom)) || detected_atom.anchored)
 			continue
-		if(!victim.anchored)
-			victim.throw_at_random(get_turf(src), effect_range+1, 5)
-	if(multitile)
-		for(var/obj/anomaly/part/parts in list_of_parts)
-			var/throw_dir = get_dir(src, parts)
-			var/target_turf = get_edge_target_turf(parts, throw_dir)
-			for(var/atom/movable/victim in parts.loc)
-				if(!ismob(victim) && !isitem(victim) )
-					continue
-				if(!victim.anchored)
-					victim.throw_at(target_turf, effect_range, 5)
+		var/local_range_of_throw = 1
+		if(ismob(detected_atom))
+			var/mob/detected_mob = detected_atom
+			var/list/result_effects = calculate_artefact_reaction(detected_mob, "Гиб Рвача")
+			if(result_effects)
+				//Цель не сможет вышвырнуть из рвача, артефакт не даёт
+				if(result_effects.Find("Защищает от гиба рвачом"))
+					return
+				if(result_effects.Find("Усиливает дальность полёта"))
+					local_range_of_throw = 5
+
+		var/dis = get_dist(src, detected_atom)
+		if(dis < 1)
+			detected_atom.throw_at_random(get_turf(src), local_range_of_throw, 5)
+		else
+			var/throw_dir = get_dir(src, detected_atom)
+			var/target_turf = get_ranged_target_turf(detected_atom, throw_dir, local_range_of_throw)
+			detected_atom.throw_at(target_turf, local_range_of_throw, 5)
 
 
 /proc/rvach_pull_around(atom/target, pull_range = 255, pull_power = STAGE_FIVE)

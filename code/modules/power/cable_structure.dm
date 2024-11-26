@@ -81,9 +81,6 @@ By design, d1 is the smallest direction and d2 is the highest
 /obj/structure/cable/blue
 	color = CABLE_COLOR_BLUE
 
-/obj/structure/cable/pink
-	color = CABLE_COLOR_PINK
-
 /obj/structure/cable/orange
 	color = CABLE_COLOR_ORANGE
 

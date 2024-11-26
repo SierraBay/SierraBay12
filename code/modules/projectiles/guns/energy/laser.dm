@@ -137,14 +137,14 @@
 	item_state = "laser"
 	origin_tech = list(TECH_COMBAT = 6, TECH_MATERIAL = 5, TECH_POWER = 4)
 	projectile_type = /obj/item/projectile/beam/sniper
-	one_hand_penalty = 5 // The weapon itself is heavy, and the long barrel makes it hard to hold steady with just one hand.
+	one_hand_penalty = 8 // The weapon itself is heavy, and the long barrel makes it hard to hold steady with just one hand.
 	slot_flags = SLOT_BACK
 	charge_cost = 40
 	max_shots = 8
-	fire_delay = 35
+	fire_delay = 30
 	force = 10
 	w_class = ITEM_SIZE_HUGE
-	accuracy = -2 //shooting at the hip
+	accuracy = -4 //shooting at the hip
 	scoped_accuracy = 9
 	scope_zoom = 2
 	wielded_item_state = "gun_wielded"

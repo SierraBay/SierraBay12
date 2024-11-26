@@ -164,5 +164,6 @@
 
 	if (href_list["changelanguage"])
 		choose_language(usr, TRUE)
+		generateInteractions()
 		updateDisplay()
 		return
