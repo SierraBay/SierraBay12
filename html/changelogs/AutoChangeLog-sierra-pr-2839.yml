@@ -1,5 +1,0 @@
-author: Hubblenaut
-changes:
-  - {bugfix: 'Fixes pipes, wires, atmos machinery and other specific object types
-      adjacent to walls being hard to click.'}
-delete-after: true

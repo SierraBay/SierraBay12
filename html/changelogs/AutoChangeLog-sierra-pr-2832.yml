@@ -1,7 +1,0 @@
-author: Hubblenaut
-changes:
-  - {rscadd: Adds a radial menu for choosing cable colors.}
-  - {tweak: A multitool is no longer necessary for choosing cable colors. Use them
-      in your hand.}
-  - {rscdel: Removes purple cable so all cable colors fit on one menu page.}
-delete-after: true

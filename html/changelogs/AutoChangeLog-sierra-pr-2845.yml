@@ -1,7 +1,0 @@
-author: Sbotkin
-changes:
-  - {tweak: Medical system control for mechs is available for printing from round
-      start.}
-  - {tweak: All system controls require Data 1 and yield the appropriate origin tech
-      upon destruction.}
-delete-after: true
