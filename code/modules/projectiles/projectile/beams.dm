@@ -223,8 +223,9 @@
 	name = "sniper beam"
 	icon_state = "xray"
 	fire_sound = 'sound/weapons/marauder.ogg'
-	damage = 35
+	damage = 60
 	armor_penetration = 10
+	distance_falloff = 0.5
 	damage_falloff_list = null
 
 	muzzle_type = /obj/projectile/laser/xray/muzzle
