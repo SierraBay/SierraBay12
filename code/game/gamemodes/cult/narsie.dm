@@ -83,7 +83,7 @@ var/global/list/narsie_list = list()
 				M.apply_effect(3, EFFECT_STUN)
 
 
-/obj/singularity/narsie/large/Bump(atom/A)
+/obj/singularity/narsie/large/Bump(atom/A, called)
 	if(!cause_hell) return
 	if(isturf(A))
 		narsiewall(A)

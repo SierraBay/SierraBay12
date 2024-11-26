@@ -159,7 +159,7 @@
 		if(disk.track) //Removing old datum disk if there one
 			qdel(disk.track)
 
-		var/jukebox_track/T = new(new_name, new_sound_file)
+		var/datum/jukebox_track/T = new(new_name, new_sound_file)
 
 		if(T)
 			disk.track = T

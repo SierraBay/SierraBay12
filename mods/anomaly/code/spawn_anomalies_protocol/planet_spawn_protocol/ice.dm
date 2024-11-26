@@ -80,8 +80,7 @@
 
 /obj/overmap/visitable/sector/exoplanet/ice/generate_atmosphere()
 	..()
-	var/generator/new_temp = generator("num", 273, 300, NORMAL_RAND)
-	atmosphere.temperature = new_temp.Rand()
+	atmosphere.temperature = rand(70, 150)
 	atmosphere.update_values()
 
 
