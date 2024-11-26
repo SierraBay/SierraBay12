@@ -135,5 +135,7 @@ SUBSYSTEM_DEF(fabrication)
 		if (stage.can_begin_with(target) && stage.is_appropriate_tool(tool))
 			var/obj/item/crafting_holder/crafting = new (turf, stage, target, tool, user)
 			if (stage.progress_to(tool, user, crafting))
+				if (!length(stage.next_stages))
+					crafting.advance_to(stage, user, tool)
 				return crafting
 			qdel(crafting)

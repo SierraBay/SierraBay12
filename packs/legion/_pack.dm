@@ -1,4 +1,5 @@
-#include "hivebot.dm"
-#include "mob.dm"
-#include "structure.dm"
+#include "_globals.dm"
+#include "legion_beacon.dm"
+#include "legion_hivebot.dm"
+#include "legion_mob.dm"
 #include "legion_narrate.dm"
