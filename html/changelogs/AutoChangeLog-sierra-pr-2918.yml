@@ -1,0 +1,5 @@
+author: TheStripes
+changes:
+  - {spellcheck: Tweaked the th'oom reagent description to make its delectable origins
+      unclear.}
+delete-after: true
