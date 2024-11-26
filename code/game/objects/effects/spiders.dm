@@ -171,7 +171,7 @@
 	GLOB.moved_event.unregister(src, src, TYPE_PROC_REF(/obj/spider/spiderling, disturbed))
 	START_PROCESSING(SSobj, src)
 
-/obj/spider/spiderling/Bump(atom/user)
+/obj/spider/spiderling/Bump(atom/user, called)
 	if(istype(user, /obj/structure/table))
 		forceMove(user.loc)
 	else

@@ -1,0 +1,5 @@
+author: SierraKomodo
+changes:
+  - {tweak: Mercenaries can now buy the energy marksman rifle through the uplink for
+      50 buckaroos. _Do_ test this out for me.}
+delete-after: true

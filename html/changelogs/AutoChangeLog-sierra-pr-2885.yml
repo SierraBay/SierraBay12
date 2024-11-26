@@ -1,0 +1,6 @@
+author: JebediahTechnic
+changes:
+  - {balance: "Laser DMR's damage increased dramatically, long-range accuracy buffed,
+      one-handed and un-scoped accuracy negatives increased, rate of fire slightly
+      increased."}
+delete-after: true
