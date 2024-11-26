@@ -1,0 +1,4 @@
+author: Lexanx
+changes:
+  - {rscadd: Зона посадки в адванседлендинге теперь видна в виде "тени"}
+delete-after: true
