@@ -329,17 +329,11 @@ Standard helpers for users interacting with machinery parts.
 	if(!user.canUnEquip(part) && !isstack(part))
 		return FALSE
 	var/number = can_add_component(part, user)
-<<<<<<< ours
-	if(!number)
-		return istype(part) // If it's not a stock part, we don't block further interactions; presumably the user meant to do something else.
-	if(isstack(part))
-=======
 	if (number == -1)
 		return TRUE
 	if (number == 0)
 		return FALSE
 	if (isstack(part))
->>>>>>> theirs
 		var/obj/item/stack/stack = part
 		if (!stack.can_use(number))
 			USE_FEEDBACK_STACK_NOT_ENOUGH(stack, number, "to install into \the [src].")
