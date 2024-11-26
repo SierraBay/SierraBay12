@@ -342,15 +342,9 @@ var/global/list/escape_pods_by_name = list()
 	signal.data = list(
 		"tag" = tag_pump,
 		"sigtype" = "command",
-<<<<<<< ours
-		"set_power" = 1,	// [SIERRA-ADD], was	"power" = 1,
-		"set_direction" = "release",	// [SIERRA-ADD], was	"direction" = 1,
 		"status" = TRUE,	// [SIERRA-ADD],
-=======
-		//"status" = TRUE,
 		"set_power" = 1,
 		"set_direction" = 1,
->>>>>>> theirs
 		"set_external_pressure" = ONE_ATMOSPHERE
 	)
 	post_signal(signal)
