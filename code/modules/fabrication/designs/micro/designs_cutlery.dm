@@ -35,7 +35,7 @@
 
 /datum/fabricator_recipe/cutlery/knife_plastic
 	name = "table knife, plastic"
-	path = /obj/item/material/utensil/knife
+	path = /obj/item/material/utensil/knife/plastic
 
 /datum/fabricator_recipe/cutlery/foon_plastic
 	name = "foon, plastic"
