@@ -64,7 +64,7 @@ default behaviour is:
 		return 0
 	return ..()
 
-/mob/living/Bump(atom/movable/AM, yes)
+/mob/living/Bump(atom/movable/AM, called)
 
 	// This is boilerplate from /atom/movable/Bump() but in all honest
 	// I have no clue what is going on in the logic below this and I'm
@@ -75,7 +75,7 @@ default behaviour is:
 	// End boilerplate.
 
 	spawn(0)
-		if ((!( yes ) || now_pushing) || !loc)
+		if ((!( called ) || now_pushing) || !loc)
 			return
 
 		now_pushing = 1
