@@ -63087,6 +63087,8 @@
 /obj/item/device/suit_cooling_unit,
 /obj/item/device/suit_cooling_unit,
 /obj/floor_decal/industrial/outline/yellow,
+/obj/item/device/suit_cooling_unit/miniature,
+/obj/item/device/suit_cooling_unit/miniature,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/quartermaster/exploration/storage)
 "joT" = (
@@ -74090,6 +74092,8 @@
 	dir = 1;
 	pixel_y = -21
 	},
+/obj/item/device/suit_cooling_unit/miniature,
+/obj/item/device/suit_cooling_unit/miniature,
 /turf/simulated/floor/tiled/steel_grid,
 /area/engineering/engine_eva)
 "kUj" = (
@@ -130818,6 +130822,8 @@
 	dir = 1
 	},
 /obj/floor_decal/industrial/outline/yellow,
+/obj/item/device/suit_cooling_unit/miniature,
+/obj/item/device/suit_cooling_unit/miniature,
 /turf/simulated/floor/tiled/white/monotile,
 /area/medical/locker)
 "tkw" = (
