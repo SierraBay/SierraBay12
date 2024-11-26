@@ -1,5 +1,0 @@
-author: SierraKomodo
-changes:
-  - {tweak: Firing a gun now uses the same red text style for the user as is used
-      for observers.}
-delete-after: true

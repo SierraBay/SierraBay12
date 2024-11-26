@@ -1495,7 +1495,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/thruster/d1starboard)
 "acY" = (
-/obj/machinery/power/apc{
+/obj/machinery/power/apc/critical{
 	name = "south bump";
 	pixel_y = -28
 	},
@@ -9156,9 +9156,9 @@
 /obj/structure/table/rack,
 /obj/item/clothing/shoes/dutyboots,
 /obj/item/clothing/accessory/storage/holster/thigh,
-/obj/item/clothing/glasses/tacgoggles,
 /obj/item/clothing/suit/armor/pcarrier/medium/sol,
 /obj/item/clothing/head/helmet,
+/obj/item/clothing/accessory/glassesmod/nvg,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/command/armoury/tactical)
 "aEH" = (
@@ -10376,14 +10376,14 @@
 /turf/simulated/wall/prepainted,
 /area/maintenance/firstdeck/centralport)
 "aKv" = (
-/obj/structure/table/rack,
 /obj/floor_decal/industrial/outline/grey,
-/obj/item/storage/box/ammo/pistol,
-/obj/item/storage/box/ammo/pistol,
-/obj/item/storage/box/ammo/pistol,
-/obj/item/storage/box/ammo/pistol,
 /obj/machinery/light{
 	dir = 1
+	},
+/obj/structure/table/steel,
+/obj/item/reagent_containers/food/snacks/toastedsandwich{
+	desc = "Discontinued after a slew of food poisoning related incidents following a failed attempt at using th'oom cheese, the beloved MRE Menu 9 grilled cheese is a well-sought after trophy for spacers and members of the Defense Forces alike.";
+	name = "special toasted sandwich"
 	},
 /turf/simulated/floor/tiled/dark,
 /area/security/armoury)
@@ -10830,10 +10830,8 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/item/storage/box/ammo/pistol/rubber,
-/obj/item/storage/box/ammo/pistol/rubber,
-/obj/item/storage/box/ammo/pistol/rubber,
-/obj/item/storage/box/ammo/pistol/rubber,
+/obj/item/gun/energy/laser/xenofauna,
+/obj/item/gun/energy/laser/xenofauna,
 /turf/simulated/floor/tiled/dark,
 /area/security/secure_storage)
 "aMD" = (
@@ -13058,7 +13056,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/thruster/d1port)
 "aTS" = (
-/obj/machinery/power/apc{
+/obj/machinery/power/apc/critical{
 	dir = 1;
 	name = "north bump";
 	pixel_y = 24
@@ -14020,13 +14018,15 @@
 /turf/space,
 /area/space)
 "aWQ" = (
-/obj/structure/closet/secure_closet/guncabinet/sidearm,
 /obj/machinery/power/apc{
 	name = "south bump";
 	pixel_y = -28
 	},
 /obj/structure/cable/green,
 /obj/floor_decal/industrial/outline/grey,
+/obj/structure/table/rack,
+/obj/item/storage/box/ammo/smg,
+/obj/item/storage/box/ammo/smg,
 /turf/simulated/floor/tiled/dark,
 /area/security/armoury)
 "aXb" = (
@@ -14272,6 +14272,10 @@
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
+	},
+/obj/structure/closet/secure_closet{
+	name = "Secure Evidence Locker";
+	req_access = list("ACCESS_SECURITY")
 	},
 /turf/simulated/floor/plating,
 /area/security/wing)
@@ -18296,10 +18300,10 @@
 /obj/structure/table/rack,
 /obj/item/clothing/shoes/dutyboots,
 /obj/item/clothing/accessory/storage/holster/thigh,
-/obj/item/clothing/glasses/tacgoggles,
 /obj/item/clothing/suit/armor/pcarrier/medium/sol,
 /obj/item/clothing/head/helmet,
 /obj/machinery/rotating_alarm/security_alarm,
+/obj/item/clothing/accessory/glassesmod/nvg,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/command/armoury/tactical)
 "hrE" = (
@@ -21102,9 +21106,11 @@
 /area/maintenance/substation/firstdeck)
 "kSs" = (
 /obj/structure/table/rack,
-/obj/item/gun/energy/ionrifle/small,
-/obj/item/gun/energy/ionrifle/small,
 /obj/floor_decal/industrial/outline/grey,
+/obj/item/gun/projectile/shotgun/pump/empty,
+/obj/item/gun/projectile/shotgun/pump/empty,
+/obj/item/storage/box/ammo/beanbags,
+/obj/item/storage/box/ammo/beanbags,
 /turf/simulated/floor/tiled/dark,
 /area/security/secure_storage)
 "kTb" = (
@@ -23916,10 +23922,8 @@
 "ozG" = (
 /obj/structure/table/rack,
 /obj/floor_decal/industrial/outline/grey,
-/obj/item/storage/box/ammo/smg/rubber,
-/obj/item/storage/box/ammo/smg/rubber,
-/obj/item/storage/box/ammo/smg/rubber,
-/obj/item/storage/box/ammo/smg/rubber,
+/obj/item/storage/box/ammo/pistol/rubber,
+/obj/item/storage/box/ammo/pistol/rubber,
 /turf/simulated/floor/tiled/dark,
 /area/security/secure_storage)
 "oAp" = (
@@ -24294,6 +24298,8 @@
 /obj/item/gun/projectile/automatic/sec_smg/empty,
 /obj/item/gun/projectile/automatic/sec_smg/empty,
 /obj/item/gun/projectile/automatic/sec_smg/empty,
+/obj/item/storage/box/ammo/smg/rubber,
+/obj/item/storage/box/ammo/smg/rubber,
 /turf/simulated/floor/tiled/dark,
 /area/security/secure_storage)
 "oXx" = (
@@ -24567,6 +24573,7 @@
 "pud" = (
 /obj/structure/table/steel,
 /obj/floor_decal/industrial/outline/grey,
+/obj/machinery/recharger,
 /turf/simulated/floor/tiled/techfloor,
 /area/security/armoury)
 "puw" = (
@@ -24629,12 +24636,10 @@
 /turf/simulated/floor/plating,
 /area/maintenance/firstdeck/aftport)
 "pxv" = (
-/obj/structure/table/rack,
-/obj/item/storage/box/ammo/smg/rubber,
-/obj/item/storage/box/ammo/smg/rubber,
-/obj/item/storage/box/ammo/smg/rubber,
-/obj/item/storage/box/ammo/smg/rubber,
 /obj/floor_decal/industrial/outline/grey,
+/obj/item/storage/box/ammo/pistol,
+/obj/item/storage/box/ammo/pistol,
+/obj/structure/table/rack,
 /turf/simulated/floor/tiled/dark,
 /area/security/armoury)
 "pyb" = (
@@ -25990,8 +25995,6 @@
 /area/rnd/xenobiology/xenoflora)
 "rby" = (
 /obj/structure/table/rack,
-/obj/item/gun/projectile/shotgun/pump/empty,
-/obj/item/gun/projectile/shotgun/pump/empty,
 /obj/floor_decal/industrial/outline/grey,
 /obj/machinery/rotating_alarm/security_alarm{
 	dir = 8
@@ -26000,6 +26003,8 @@
 	dir = 4
 	},
 /obj/machinery/mech_recharger,
+/obj/item/gun/energy/ionrifle/small,
+/obj/item/gun/energy/ionrifle/small,
 /turf/simulated/floor/tiled/dark,
 /area/security/armoury)
 "rcb" = (
@@ -26520,11 +26525,9 @@
 /area/thruster/d1starboard)
 "rEK" = (
 /obj/structure/table/rack,
-/obj/item/storage/box/ammo/smg,
-/obj/item/storage/box/ammo/smg,
-/obj/item/storage/box/ammo/smg,
-/obj/item/storage/box/ammo/smg,
 /obj/floor_decal/industrial/outline/grey,
+/obj/item/storage/box/ammo/stunshells,
+/obj/item/storage/box/ammo/stunshells,
 /turf/simulated/floor/tiled/techfloor,
 /area/security/armoury)
 "rFb" = (
@@ -27478,10 +27481,11 @@
 /turf/simulated/floor/tiled/freezer,
 /area/rnd/xenobiology/xenoflora)
 "sBg" = (
-/obj/structure/table/rack,
-/obj/item/storage/box/ammo/beanbags,
-/obj/item/storage/box/ammo/beanbags,
 /obj/floor_decal/industrial/outline/grey,
+/obj/structure/closet/secure_closet{
+	name = "Secure Evidence Locker";
+	req_access = list("ACCESS_SECURITY")
+	},
 /turf/simulated/floor/tiled/dark,
 /area/security/armoury)
 "sCb" = (
@@ -28697,13 +28701,11 @@
 /turf/simulated/floor/plating,
 /area/maintenance/firstdeck/aftport)
 "uie" = (
-/obj/structure/table/rack,
 /obj/floor_decal/industrial/outline/grey,
-/obj/item/storage/box/ammo/stunshells,
-/obj/item/storage/box/ammo/stunshells,
 /obj/machinery/camera/network/security{
 	c_tag = "Security - Brig Secure Armory"
 	},
+/obj/structure/closet/secure_closet/guncabinet/sidearm,
 /turf/simulated/floor/tiled/dark,
 /area/security/armoury)
 "uiY" = (

@@ -1,0 +1,4 @@
+author: Hubblenaut
+changes:
+  - {bugfix: Fixes the paint sprayer for borgs.}
+delete-after: true
