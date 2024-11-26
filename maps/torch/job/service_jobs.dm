@@ -61,7 +61,14 @@
 		/datum/mil_rank/fleet/o1,
 		/datum/mil_rank/fleet/o2,
 		/datum/mil_rank/ec/o1)
+<<<<<<< ours
 	min_skill = list(SKILL_BUREAUCRACY = SKILL_BASIC)
+=======
+	min_skill = list( // 1 point
+		SKILL_BUREAUCRACY = SKILL_BASIC, // 1 point
+		SKILL_WEAPONS = SKILL_UNSKILLED // Fleet chaplains may refuse weapon training
+	)
+>>>>>>> theirs
 
 	access = list(
 		access_morgue, access_chapel_office,

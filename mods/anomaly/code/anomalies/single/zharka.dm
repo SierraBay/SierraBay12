@@ -1,8 +1,9 @@
-/obj/anomaly/zjarka
+/obj/anomaly/zharka
 	name = "Jet of flame"
+	anomaly_tag = "Zharka"
 	with_sound = TRUE
-	sound_type = 'mods/anomaly/sounds/zjarka.ogg'
-	idle_effect_type = "zjarka_idle"
+	sound_type = 'mods/anomaly/sounds/zharka.ogg'
+	idle_effect_type = "zharka_idle"
 	detection_icon_state = "hot_anomaly"
 	layer = ABOVE_HUMAN_LAYER
 	light_after_activation = TRUE
@@ -14,7 +15,7 @@
 	can_born_artefacts = TRUE
 	//Урон который наносит открытое пламя телу в
 	var/burn_damage = 10
-	activation_effect_type = "zjarka_active"
+	activation_effect_type = "zharka_active"
 
 	special_iniciators = list(
 		/obj/item
@@ -37,7 +38,7 @@
 	detection_skill_req = SKILL_BASIC
 
 
-/obj/anomaly/zjarka/activate_anomaly()
+/obj/anomaly/zharka/activate_anomaly()
 	last_activation_time = world.time
 	var/list/victims = list()
 	var/list/objs = list()
@@ -51,7 +52,7 @@
 			anything_in_ashes(I)
 	.=..()
 
-/obj/anomaly/zjarka/get_effect_by_anomaly(atom/movable/target)
+/obj/anomaly/zharka/get_effect_by_anomaly(atom/movable/target)
 	if(!isturf(target.loc))
 		return
 	if(isanomaly(target))
@@ -75,7 +76,7 @@
 			anything_in_ashes(target)
 
 ///Жарим всех вокруг в течении действия аномалии
-/obj/anomaly/zjarka/process_long_effect()
+/obj/anomaly/zharka/process_long_effect()
 	var/list/victims = list()
 	var/list/objs = list()
 	var/turf/T = get_turf(src)
@@ -88,7 +89,7 @@
 		get_effect_by_anomaly(atoms)
 	start_processing_long_effect()
 
-/obj/anomaly/zjarka/Crossed(atom/movable/O)
+/obj/anomaly/zharka/Crossed(atom/movable/O)
 	if(currently_active)
 		get_effect_by_anomaly(O)
 	if(currently_charging_after_activation)
@@ -98,10 +99,10 @@
 	return
 
 
-/obj/anomaly/zjarka/get_detection_icon()
+/obj/anomaly/zharka/get_detection_icon()
 	if(effect_range == 1 || effect_range == 0)
-		return "zjarka_detection"
+		return "zharka_detection"
 	else if(effect_range == 2)
-		return "zjarka_first_detection"
+		return "zharka_first_detection"
 	else if(effect_range > 2)
-		return "zjarka_second_detection"
+		return "zharka_second_detection"

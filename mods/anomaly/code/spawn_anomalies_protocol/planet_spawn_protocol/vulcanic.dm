@@ -1,9 +1,9 @@
 /obj/overmap/visitable/sector/exoplanet/volcanic
 	can_spawn_anomalies = TRUE
 	anomalies_type = list(
-		/obj/anomaly/zjarka = 4,
-		/obj/anomaly/zjarka/short_effect = 2,
-		/obj/anomaly/zjarka/long_effect = 1,
+		/obj/anomaly/zharka = 4,
+		/obj/anomaly/zharka/short_effect = 2,
+		/obj/anomaly/zharka/long_effect = 1,
 		/obj/anomaly/heater/three_and_three = 3,
 		/obj/anomaly/heater/two_and_two = 3
 		)

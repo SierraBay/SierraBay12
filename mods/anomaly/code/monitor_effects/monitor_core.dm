@@ -1,6 +1,6 @@
 GLOBAL_LIST_EMPTY(effected_by_weather)
 GLOBAL_VAR_INIT(ambience_channel_weather, GLOB.sound_channels.RequestChannel("AMBIENCE_WEATHER"))
-
+#define ismonitorhere(A) locate(/obj/monitor_effect_triger) in A
 ///Кто-то или что-то вошло в монитор-эффект
 /obj/monitor_effect_triger/Crossed(O)
 	react_at_enter_monitor(O)
@@ -39,15 +39,9 @@ GLOBAL_VAR_INIT(ambience_channel_weather, GLOB.sound_channels.RequestChannel("AM
 	if(!must_react_at_enter)
 		return
 	var/mob/detected_mob = atom
-	if(!IsMonitorHere(get_turf(atom)))
+	if(!ismonitorhere(get_turf(atom)))
 		if(atom in GLOB.effected_by_weather)
 			LAZYREMOVE(GLOB.effected_by_weather, atom)
 			remove_monitor_effect(detected_mob)
 			if(LAZYLEN(sound_type))
 				sound_to(detected_mob, sound(null, channel = GLOB.ambience_channel_weather))
-
-/proc/IsMonitorHere(turf/input_turf)
-	if(locate(/obj/monitor_effect_triger) in input_turf)
-		return TRUE
-	else
-		return FALSE
