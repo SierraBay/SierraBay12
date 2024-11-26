@@ -1,0 +1,7 @@
+author: Mucker
+changes:
+  - {tweak: Edited the IT Skill description to reflect that the command line is usable
+      with Basic skill.}
+  - {tweak: 'Adjusted the following computer command skill requirements: ifconfig
+      -> Basic, hwinfo -> Basic, status -> Basic,  log -> Skilled, sysnotify -> Experienced.'}
+delete-after: true

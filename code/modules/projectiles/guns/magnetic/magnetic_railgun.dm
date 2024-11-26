@@ -62,15 +62,13 @@
 	icon = 'icons/obj/guns/railgun_old.dmi'
 	icon_state = "old_railgun"
 
-/obj/item/gun/magnetic/railgun/tcc // Oppa! Should only be available to TCC shock troops or high-budget mercs.
+// Oppa! Should only be available to TCC shock troops or high-budget mercs.
+/obj/item/gun/magnetic/railgun/tcc
 	name = "advanced railgun"
 	desc = "The HelTek Arms HR-22 Hammerhead. A man-portable helical rail cannon; favorite weapon of Terran shock troops and anti-tank personnel."
 	icon = 'icons/obj/guns/railgun_adv.dmi'
 	icon_state = "railgun-tcc"
-	removable_components = TRUE // Railgunners are expected to be able to completely disassemble and reassemble their weapons in the field. But we don't have that mechanic, so the cell and capacitor will do.
 
-	cell = /obj/item/cell/hyper // Standard power
-	capacitor = /obj/item/stock_parts/capacitor/adv // 6-8 shots
 	power_cost = 280 // Same number of shots, but it'll seem to recharge slightly faster
 
 	loaded = /obj/item/stack/material/rods
