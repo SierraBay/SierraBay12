@@ -1,0 +1,5 @@
+author: LynxQueen
+changes:
+  - {tweak: Slows e-cig consumation and also allows player to take drags off of the
+      e-cig}
+delete-after: true
