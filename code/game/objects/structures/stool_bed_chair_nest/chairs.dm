@@ -241,11 +241,11 @@
 			if (propelled)
 				for (var/mob/O in src.loc)
 					if (O != occupant)
-						Bump(O)
+						Bump(O, TRUE)
 			else
 				unbuckle_mob()
 
-/obj/structure/bed/chair/office/Bump(atom/A)
+/obj/structure/bed/chair/office/Bump(atom/A, called)
 	..()
 	if(!buckled_mob)	return
 
