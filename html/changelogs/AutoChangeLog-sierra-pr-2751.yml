@@ -1,7 +1,0 @@
-author: JuneauQT
-changes:
-  - {rscadd: Added the Alliance United Flotillas Branch and three ranks for it to
-      ID cards (and all other places Branch can be set.)}
-  - {tweak: ICCGN and SCGA ranks now have their officer/enlisted badge included in
-      their define.}
-delete-after: true

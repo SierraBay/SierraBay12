@@ -1,6 +1,0 @@
-author: Hubblenaut
-changes:
-  - {bugfix: The construction of support lattices is no longer blocked by objects
-      on lower z-levels.}
-  - {bugfix: Construction of lattices and floors on holes is no longer free.}
-delete-after: true

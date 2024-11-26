@@ -142,10 +142,17 @@
 				begin_cycle_in()
 
 		if("cycle_ext_door")
-			cycleDoors(TARGET_OUTOPEN)
+			// Close the door if it's open, otherwise cycle
+			if(memory["exterior_status"]["state"] == "open")
+				toggleDoor(memory["exterior_status"], tag_exterior_door, memory["secure"], "toggle")
+			else
+				cycleDoors(TARGET_OUTOPEN)
 
 		if("cycle_int_door")
-			cycleDoors(TARGET_INOPEN)
+			if(memory["interior_status"]["state"] == "open")
+				toggleDoor(memory["interior_status"], tag_interior_door, memory["secure"], "toggle")
+			else
+				cycleDoors(TARGET_INOPEN)
 
 		if("abort")
 			stop_cycling()
