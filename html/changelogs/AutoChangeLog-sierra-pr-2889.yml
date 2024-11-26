@@ -1,0 +1,5 @@
+author: Hubblenaut
+changes:
+  - {rscadd: Characters that are at least 'experienced' in atmospherics will find
+      that the rapid piping device will place pipes intuitively based on mouse position.}
+delete-after: true

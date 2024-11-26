@@ -1,6 +1,6 @@
 /obj/item/artefact/gravi
 	name = "Something"
-	desc = "Вы чувствуете лёгкость."
+	desc = "При подборе вы чувствуете, как тот сопротивляется вашей руке."
 	icon_state = "gravi"
 	need_to_process = TRUE
 	//В артефакте нет энергии/она неограничена

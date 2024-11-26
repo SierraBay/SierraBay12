@@ -102,7 +102,7 @@
 				if (propelled)
 					for (var/mob/O in src.loc)
 						if (O != occupant)
-							Bump(O)
+							Bump(O, TRUE)
 				else
 					unbuckle_mob()
 			if (pulling && (get_dist(src, pulling) > 1))
@@ -141,7 +141,7 @@
 		return TRUE
 	return FALSE
 
-/obj/structure/bed/chair/wheelchair/Bump(atom/A)
+/obj/structure/bed/chair/wheelchair/Bump(atom/A, called)
 	..()
 	if(!buckled_mob)	return
 

@@ -240,7 +240,7 @@
  * - `mover` - The atom that's attempting to move.
  * - `target` - The detination turf `mover` is attempting to move to.
  *
- * Returns boolean. If `FALSE`, blocks movement and calls `mover.Bump(src)`.
+ * Returns boolean. If `FALSE`, blocks movement and calls `mover.Bump(src, TRUE)`.
  */
 /atom/proc/CheckExit(atom/movable/mover, turf/target)
 	return TRUE

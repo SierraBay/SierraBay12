@@ -1,5 +1,6 @@
 /obj/anomaly/cooler
 	name = "Refractions of light"
+	anomaly_tag = "Cooler"
 	with_sound = FALSE
 	can_born_artefacts = TRUE
 	//Длинна эффекта подогрева

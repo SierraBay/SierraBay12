@@ -20,7 +20,7 @@
 		to_chat(user, SPAN_NOTICE("You press a button and \the [src] shudders to life."))
 	return TRUE
 
-/obj/machinery/giga_drill/Bump(atom/A)
+/obj/machinery/giga_drill/Bump(atom/A, called)
 	if(active && !drilling_turf)
 		if(istype(A,/turf/simulated/mineral))
 			var/turf/simulated/mineral/M = A
