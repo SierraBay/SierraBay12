@@ -242,8 +242,6 @@
 	new painting_decal(F, painting_dir, painting_color)
 	return TRUE
 
-<<<<<<< ours
-=======
 /obj/item/device/paint_sprayer/proc/calc_paint_dir(mob/user, placement_mode, click_parameters, inversed)
 	if (!placement_mode)
 		return user.dir
@@ -278,7 +276,6 @@
 					. = SOUTH
 	return inversed ? reverse_direction(.) : .
 
->>>>>>> theirs
 /obj/item/device/paint_sprayer/proc/pick_color_from_airlock(obj/machinery/door/airlock/D, mob/user)
 	if (!D.paintable)
 		return FALSE
