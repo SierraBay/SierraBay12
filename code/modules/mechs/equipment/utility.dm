@@ -30,7 +30,7 @@
 			return
 		if(chosen_obj.density)
 			for(var/atom/A in get_turf(src))
-				if(A != src && A.density && !(A.atom_flags & ATOM_FLAG_CHECKS_BORDER))
+				if(!istype(A, /obj/structure/cargopile) && A.density && !(A.atom_flags & ATOM_FLAG_CHECKS_BORDER))
 					to_chat(user, SPAN_WARNING("\The [A] blocks you from pulling out \the [chosen_obj]."))
 					return
 		if(!do_after(user, 0.5 SECONDS, src, DO_PUBLIC_UNIQUE)) return

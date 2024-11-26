@@ -9,6 +9,7 @@
 	unacidable = TRUE
 	health_max = 200
 	damage_hitsound = 'sound/effects/EMPulse.ogg'
+	atmos_canpass = CANPASS_NEVER
 	var/shield_generate_power = 7500	//how much power we use when regenerating
 	var/shield_idle_power = 1500		//how much power we use when just being sustained.
 
