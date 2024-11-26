@@ -5850,19 +5850,19 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/item/material/knife/table/plastic,
-/obj/item/material/knife/table/plastic,
-/obj/item/material/knife/table/plastic,
-/obj/item/material/kitchen/utensil/fork/plastic,
-/obj/item/material/kitchen/utensil/fork/plastic,
-/obj/item/material/kitchen/utensil/fork/plastic,
-/obj/item/material/kitchen/utensil/spoon/plastic,
-/obj/item/material/kitchen/utensil/spoon/plastic,
-/obj/item/material/kitchen/utensil/spoon/plastic,
-/obj/item/material/kitchen/utensil/foon/plastic,
-/obj/item/material/kitchen/utensil/foon/plastic,
-/obj/item/material/kitchen/utensil/foon/plastic,
-/obj/item/material/kitchen/rollingpin,
+/obj/item/material/utensil/knife/plastic,
+/obj/item/material/utensil/knife/plastic,
+/obj/item/material/utensil/knife/plastic,
+/obj/item/material/utensil/fork/plastic,
+/obj/item/material/utensil/fork/plastic,
+/obj/item/material/utensil/fork/plastic,
+/obj/item/material/utensil/spoon/plastic,
+/obj/item/material/utensil/spoon/plastic,
+/obj/item/material/utensil/spoon/plastic,
+/obj/item/material/utensil/foon/plastic,
+/obj/item/material/utensil/foon/plastic,
+/obj/item/material/utensil/foon/plastic,
+/obj/item/material/rollingpin,
 /obj/structure/cable/green{
 	d1 = 4;
 	d2 = 8;
@@ -14539,7 +14539,7 @@
 	pixel_x = 8
 	},
 /obj/item/pen,
-/obj/item/material/kitchen/utensil/fork{
+/obj/item/material/utensil/fork{
 	pixel_y = 7;
 	pixel_x = -6
 	},
@@ -33141,7 +33141,7 @@
 /area/maintenance/bridgedeck/port)
 "eOx" = (
 /obj/structure/table/marble,
-/obj/item/material/kitchen/rollingpin,
+/obj/item/material/rollingpin,
 /turf/simulated/floor/tiled/white,
 /area/crew_quarters/galley)
 "eOA" = (
@@ -74098,7 +74098,7 @@
 /area/engineering/engine_eva)
 "kUj" = (
 /obj/structure/table/marble,
-/obj/item/material/kitchen/rollingpin,
+/obj/item/material/rollingpin,
 /obj/floor_decal/corner/red/diagonal,
 /obj/machinery/light_construct,
 /turf/simulated/floor/tiled/dark,
@@ -75378,7 +75378,7 @@
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 1
 	},
-/obj/item/material/kitchen/utensil/fork/plastic{
+/obj/item/material/utensil/fork/plastic{
 	pixel_x = 10;
 	name = "prisoners fork"
 	},
