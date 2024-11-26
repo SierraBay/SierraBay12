@@ -6,7 +6,7 @@
 
 /obj/item/gun/projectile/shotgun/pump
 	name = "shotgun"
-	desc = "A mass-produced shotgun by Mars Security Industries. The rugged ZX-870 'Bulldog' is common throughout most frontier worlds. Useful for sweeping alleys or ship corridors."
+	desc = "A mass-produced shotgun by Mars Security Industries. The rugged MSI-870 'Crawford' is a common sight across much of settled space. Useful for sweeping alleys or ship corridors."
 	icon = 'icons/obj/guns/shotguns.dmi'
 	icon_state = "shotgun"
 	item_state = "shotgun"
@@ -158,7 +158,7 @@
 
 /obj/item/gun/projectile/shotgun/pump/sawn
 	name = "riot shotgun"
-	desc = "A mass-produced shotgun by Mars Security Industries. The rugged ZX-870 'Bulldog' is common throughout most frontier worlds. This one has had its stock cut off..."
+	desc = "A mass-produced shotgun by Mars Security Industries. The rugged MSI-870 is a common sight across much of settled space. MSI sells its own 'riot' configuration as the 870 'Bateman'."
 	icon = 'icons/obj/guns/shotguns.dmi'
 	icon_state = "rshotgun"
 	item_state = "rshotgun"

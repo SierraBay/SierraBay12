@@ -1,6 +1,6 @@
 /* Не доделан
 /obj/overmap/visitable/sector/exoplanet/swamp
-	name = "Sargassov swamp"
+	name = "Sargas"
 	desc = "Wild and mysterious planet, covered in vast swamplands and impenetrable swamps that provide both spectacular and dangerous terrain. Its unique ecosystem includes a variety of species of flora and fauna that have adapted to the conditions of such an environment."
 	color = "#054515"
 	rock_colors = list(COLOR_WHITE)

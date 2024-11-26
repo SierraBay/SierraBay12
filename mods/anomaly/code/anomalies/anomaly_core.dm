@@ -9,6 +9,8 @@
 /obj/anomaly
 	name = "Аномалия. Вы не должны это видеть."
 	anchored = TRUE //Чтоб аномалию не двигало в случае чего.
+	//Позволяет быстро определять для кода какая именно аномалия (electra, Zharka, и прочее)
+	var/anomaly_tag
 	//COULDOWN AND SMTH
 	///Аномалия уходит на КД после срабатывания?
 	var/can_be_discharged = FALSE
