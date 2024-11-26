@@ -1,0 +1,7 @@
+author: SierraKomodo
+changes:
+  - {bugfix: power cell rack PSU machines now accept power cells again. Probably also
+      fixes some other non-standard item->machinery interactions.}
+  - {tweak: 'Attempting to add a non-component item to a machine that can accept said
+      item, but is already full, now displays a user feedback message.'}
+delete-after: true

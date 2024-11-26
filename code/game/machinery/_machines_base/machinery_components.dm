@@ -218,23 +218,36 @@ GLOBAL_LIST_INIT(machine_path_to_circuit_type, cache_circuits_by_build_path())
 /obj/machinery/proc/components_are_accessible(path)
 	return panel_open
 
-/// Installation. Returns number of such components which can be inserted.
+/**
+ * Determines if a given item can be inserted, and how many.
+ *
+ * **Parameters**:
+ * - `component` (Path or instance) - The item path to test. Does not have to be a subtype of `/obj/item/stock_parts`.
+ * - `user` - The mob performing the interaction. Used for feedback messages
+ *
+ * Returns number of such components which can be inserted,
+ * `-1` if there was a validation or user error, stopping the interaction chain,
+ * or `0` if the item isn't valid for adding as a component, allowing the interaction chain to continue.
+ */
 /obj/machinery/proc/can_add_component(obj/item/stock_parts/component, mob/user)
 	if(!istype(component)) // Random items. Only insert if actually needed.
 		var/list/missing = missing_parts()
 		for(var/path in missing)
 			if(istype(component, path))
+				if (missing[path] == 0)
+					to_chat(user, SPAN_WARNING("\The [src] cannot hold another [component.name]."))
+					return -1
 				return missing[path]
 		return 0
 	if(!(component.part_flags & PART_FLAG_HAND_REMOVE))
 		return 0
 	if(!components_are_accessible(component.type))
 		to_chat(user, SPAN_WARNING("The insertion point for \the [component] is inaccessible!"))
-		return 0
+		return -1
 	for(var/path in maximum_component_parts)
 		if(istype(component, path) && (number_of_components(path) == maximum_component_parts[path]))
 			to_chat(user, SPAN_WARNING("There are too many parts of this type installed in \the [src] already!"))
-			return 0
+			return -1
 	return 1
 
 /// Called whenever an attached component updates it's status. Override to handle updates to the machine.
