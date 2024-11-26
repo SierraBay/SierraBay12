@@ -1,0 +1,4 @@
+author: Builder13
+changes:
+  - {tweak: Увеличено максимальное количество символов для записей персонажа на 500}
+delete-after: true
