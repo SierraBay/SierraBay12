@@ -161,6 +161,7 @@
 					{{#def.supply_request_item}}
 					<td>
 					{{:helper.link('Cancel', 'cancel', {'cancel_order' : value.id})}}
+					{{:helper.link('Pending', 'arrow_up', {'order_back_to_pending' : value.id})}}
 					{{:helper.link('Print', 'print', {'print_receipt' : value.id, 'list_id' : value.list_id}, data.can_print ? null : 'disabled')}}
 				{{/for}}
 			</table>

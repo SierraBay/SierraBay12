@@ -1,0 +1,4 @@
+author: Hubblenaut
+changes:
+  - {bugfix: Fixes escape pods not repressurizing after launch.}
+delete-after: true

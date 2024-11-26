@@ -62,29 +62,31 @@
 	#define TURF_SHADOW_LAYER           2.02
 	//ABOVE TURF
 	#define DECAL_LAYER                 2.03
-	#define RUNE_LAYER                  2.04
-	#define ABOVE_TILE_LAYER            2.05
-	#define EXPOSED_PIPE_LAYER          2.06
-	#define EXPOSED_WIRE_LAYER          2.07
-	#define EXPOSED_WIRE_TERMINAL_LAYER 2.08
-	#define CATWALK_LAYER               2.09
-	#define ABOVE_CATWALK_LAYER         2.10
-	#define BLOOD_LAYER                 2.11
-	#define MOUSETRAP_LAYER             2.12
-	#define PLANT_LAYER                 2.13
-	#define AO_LAYER                    2.14
-	#define ABOVE_AO_LAYER              2.141
+
+	#define AO_LAYER                    2.04
+	#define ABOVE_AO_LAYER              2.05
+	#define RUNE_LAYER                  2.06
+	#define ABOVE_TILE_LAYER            2.07
+	#define EXPOSED_PIPE_LAYER          2.08
+	#define EXPOSED_WIRE_LAYER          2.09
+	#define ABOVE_EXPOSED_WIRE_LAYER    2.10
+	#define CATWALK_LAYER               2.11
+	#define ABOVE_CATWALK_LAYER         2.12
+	#define BLOOD_LAYER                 2.13
+	#define MOUSETRAP_LAYER             2.14
+	#define PLANT_LAYER                 2.15
+
 	//HIDING MOB
-	#define HIDING_MOB_LAYER            2.15
-	#define SHALLOW_FLUID_LAYER         2.16
-	#define MOB_SHADOW_LAYER            2.17
+	#define HIDING_MOB_LAYER            2.16
+	#define SHALLOW_FLUID_LAYER         2.17
+	#define MOB_SHADOW_LAYER            2.18
 	//OBJ
-	#define BELOW_DOOR_LAYER            2.18
-	#define OPEN_DOOR_LAYER             2.19
-	#define BELOW_TABLE_LAYER           2.20
-	#define TABLE_LAYER                 2.21
-	#define BELOW_OBJ_LAYER             2.22
-	#define STRUCTURE_LAYER             2.23
+	#define BELOW_DOOR_LAYER            2.19
+	#define OPEN_DOOR_LAYER             2.20
+	#define BELOW_TABLE_LAYER           2.21
+	#define TABLE_LAYER                 2.22
+	#define BELOW_OBJ_LAYER             2.23
+	#define STRUCTURE_LAYER             2.24
 	// OBJ_LAYER                        3
 	#define ABOVE_OBJ_LAYER             3.01
 	#define CLOSED_DOOR_LAYER           3.02

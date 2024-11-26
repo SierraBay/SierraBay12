@@ -23,7 +23,7 @@
 	active = TRUE
 	move(1)
 
-/obj/accelerated_particle/Bump(atom/A)
+/obj/accelerated_particle/Bump(atom/A, called)
 	if (!active)
 		return
 	if (A)
@@ -50,7 +50,7 @@
 	if (!active)
 		return
 	if(ismob(A))
-		Bump(A)
+		Bump(A, TRUE)
 
 /obj/accelerated_particle/ex_act(severity)
 	if (!active)
