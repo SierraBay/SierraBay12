@@ -136,7 +136,8 @@
 		/obj/item/swapper,
 		/obj/item/device/drone_designator,
 		/obj/item/modular_computer/tablet,
-		/obj/item/modular_computer/pda
+		/obj/item/modular_computer/pda,
+		/obj/item/rcd
 		)
 
 

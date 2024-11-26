@@ -1,6 +1,6 @@
 /obj/structure/legion
 	abstract_type = /obj/structure/legion
-	icon = 'packs/legion/legion.dmi'
+	icon = 'packs/legion/icons/beacon.dmi'
 
 
 /obj/structure/legion/beacon
@@ -33,7 +33,7 @@
 	var/broadcast_rate = 30 SECONDS
 
 	/// Integer. Percentage change of a legion message broadcast per tick.
-	var/broadcast_change = 5
+	var/broadcast_chance = 5
 
 	/// Integer. `world.time` of the last legion broadcast.
 	var/last_broadcast_time = 0
@@ -93,7 +93,7 @@
 				return
 			spawn_legion()
 
-	if (world.time >= last_broadcast_time + broadcast_rate && rand(1, 100) <= broadcast_change)
+	if (world.time >= last_broadcast_time + broadcast_rate && rand(1, 100) <= broadcast_chance)
 		last_broadcast_time = world.time
 		show_legion_messages(get_z(src))
 
@@ -116,11 +116,13 @@
 
 
 /obj/structure/legion/beacon/on_update_icon()
+	ClearOverlays()
 	switch (beacon_state)
 		if (BEACON_STATE_ON)
 			icon_state = "beacon_active"
 		if (BEACON_STATE_OFF)
 			icon_state = "beacon"
+	AddOverlays(emissive_appearance(icon, "[icon_state]_emissive", src))
 
 
 /obj/structure/legion/beacon/on_death()
@@ -240,7 +242,7 @@
 	if (!target)
 		target = get_turf(src)
 	new /obj/explosion(target)
-	playsound(src, 'sound/effects/EMPulse.ogg', 25, TRUE)
+	playsound(src, GLOB.legion_warp_sound, 25, TRUE)
 
 
 /* Hivebot Variant */

@@ -9,6 +9,7 @@
 	obj_flags = OBJ_FLAG_ROTATABLE
 	var/propelled = 0 // Check for fire-extinguisher-driven chairs
 	buckle_movable = TRUE
+	dismantle_return = 1
 
 /obj/structure/bed/chair/do_simple_ranged_interaction(mob/user)
 	if(!buckled_mob && user)
@@ -140,6 +141,7 @@
 	desc = "It's a chair. It looks comfy."
 	icon_state = "comfychair_preview"
 	base_icon = "comfychair"
+	dismantle_return = 3
 
 /obj/structure/bed/chair/comfy/brown/New(newloc, newmaterial = DEFAULT_FURNITURE_MATERIAL)
 	..(newloc, newmaterial, MATERIAL_LEATHER_GENERIC)
@@ -192,6 +194,7 @@
 	icon_state = "armchair_preview"
 	base_icon = "armchair"
 	buckle_movable = FALSE
+	dismantle_return = 4
 
 /obj/structure/bed/chair/armchair/brown/New(newloc, newmaterial = DEFAULT_FURNITURE_MATERIAL)
 	..(newloc, newmaterial, MATERIAL_LEATHER_GENERIC)
@@ -228,6 +231,7 @@
 	icon_state = "officechair_preview"
 	base_icon = "officechair"
 	anchored = FALSE
+	dismantle_return = 5
 
 /obj/structure/bed/chair/office/Move()
 	. = ..()
@@ -237,11 +241,11 @@
 			if (propelled)
 				for (var/mob/O in src.loc)
 					if (O != occupant)
-						Bump(O)
+						Bump(O, TRUE)
 			else
 				unbuckle_mob()
 
-/obj/structure/bed/chair/office/Bump(atom/A)
+/obj/structure/bed/chair/office/Bump(atom/A, called)
 	..()
 	if(!buckled_mob)	return
 
@@ -277,6 +281,7 @@
 	desc = "It's an office chair. It looks comfy."
 	icon_state = "comfyofficechair_preview"
 	base_icon = "comfyofficechair"
+	dismantle_return = 7
 
 /obj/structure/bed/chair/office/comfy/brown/New(newloc, newmaterial = DEFAULT_FURNITURE_MATERIAL)
 	..(newloc, newmaterial, MATERIAL_LEATHER_GENERIC)
@@ -351,6 +356,7 @@
 	var/chair_material = MATERIAL_WOOD
 	buckle_movable = FALSE
 	bed_flags = BED_FLAG_CANNOT_BE_PADDED
+	dismantle_return = 3
 
 /obj/structure/bed/chair/wood/New(newloc, _material)
 	..(newloc, _material? _material : chair_material)
@@ -403,6 +409,7 @@
 	var/material/pew_material = MATERIAL_WOOD
 	obj_flags = 0
 	buckle_movable = FALSE
+	dismantle_return = 4
 
 /obj/structure/bed/chair/pew/left
 	icon_state = "pew_left"

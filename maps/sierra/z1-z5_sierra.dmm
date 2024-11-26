@@ -20211,9 +20211,6 @@
 /turf/simulated/floor/grass/cut,
 /area/crew_quarters/garden_room)
 "cYd" = (
-/obj/structure/bed/chair/shuttle/blue{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/visible/universal,
 /obj/machinery/firealarm{
 	pixel_y = 24
@@ -20221,6 +20218,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/machinery/recharge_station,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/guppy_hangar/start)
 "cYe" = (
@@ -138838,7 +138836,7 @@
 /area/exploration_shuttle/airlock)
 "uwr" = (
 /obj/structure/table/woodentable_reinforced/walnut,
-/obj/item/folder/envelope/captain,
+/obj/item/folder/envelope/preset/captain,
 /obj/floor_decal/spline/fancy/wood,
 /obj/machinery/light{
 	dir = 4
