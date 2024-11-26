@@ -273,6 +273,8 @@
 /obj/item/device/paint_sprayer/proc/calc_paint_dir(mob/user, placement_mode, click_parameters, inversed)
 	if (!placement_mode)
 		return user.dir
+	if (istext(click_parameters)) // Borgs pass down click parameters in a string format
+		click_parameters = params2list(click_parameters)
 	var/mouse_x = text2num(click_parameters["icon-x"])
 	var/mouse_y = text2num(click_parameters["icon-y"])
 	switch (placement_mode)
