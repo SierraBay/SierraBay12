@@ -170,6 +170,7 @@
 
 
 /mob/living/carbon/swap_hand()
+	. = ..()
 	hand = !hand
 	if(hud_used.l_hand_hud_object && hud_used.r_hand_hud_object)
 		if(hand)	//This being 1 means the left hand is in use
@@ -382,8 +383,8 @@
 	if(alert("Are you sure you want to [player_triggered_sleeping ? "wake up?" : "sleep for a while? Use 'sleep' again to wake up"]", "Sleep", "No", "Yes") == "Yes")
 		player_triggered_sleeping = !player_triggered_sleeping
 
-/mob/living/carbon/Bump(atom/movable/AM, yes)
-	if(now_pushing || !yes)
+/mob/living/carbon/Bump(atom/movable/AM, called)
+	if(now_pushing || !called)
 		return
 	..()
 	//[SIERRA-ADD] VIRUSOLOGY

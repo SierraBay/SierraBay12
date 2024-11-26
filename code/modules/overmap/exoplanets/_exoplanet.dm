@@ -134,12 +134,6 @@ GLOBAL_VAR(planet_repopulation_disabled)
 	generate_features()
 	for (var/datum/exoplanet_theme/T in themes)
 		T.after_map_generation(src)
-	//[SIERRA-ADD] - ANOMALIES
-	if(can_spawn_anomalies)
-		generate_anomalies()
-	if(monitor_effect_type)
-		generate_monitor_effects()
-	//[SIERRA-ADD]
 	generate_landing(2)
 	update_biome()
 	generate_daycycle()
@@ -359,11 +353,12 @@ GLOBAL_VAR(planet_repopulation_disabled)
 
 	if (LAZYLEN(spawned_features) && user.skill_check(SKILL_SCIENCE, SKILL_TRAINED))
 		var/ruin_num = 0
+		var/inaccuracy = rand(-2,2)
 		for (var/datum/map_template/ruin/exoplanet/R in spawned_features)
 			if (!(R.ruin_tags & RUIN_NATURAL))
 				ruin_num++
 		if (ruin_num)
-			extra_data += "<br>[ruin_num] possible artificial structure\s detected."
+			extra_data += "<br>Approximately [max(1, ruin_num+inaccuracy)] possible artificial structure\s detected."
 
 	for (var/datum/exoplanet_theme/T in themes)
 		if (T.get_sensor_data())

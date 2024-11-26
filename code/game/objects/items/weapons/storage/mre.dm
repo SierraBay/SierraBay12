@@ -151,7 +151,7 @@ MRE Stuff
 
 /obj/item/storage/mre/menu10
 	name = "protein MRE"
-	meal_desc = "This one is menu 10, protein."
+	meal_desc = "This one is menu 10, protein (unathi-safe)."
 	icon_state = "meatmre"
 	main_meal = /obj/item/storage/mrebag/menu10
 	startswith = list(

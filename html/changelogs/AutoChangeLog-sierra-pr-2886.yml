@@ -1,0 +1,5 @@
+author: Sbotkin
+changes:
+  - {tweak: MRE crates come with at least one vegan and at least one sugar-free protein
+      option.}
+delete-after: true

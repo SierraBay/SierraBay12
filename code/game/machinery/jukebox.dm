@@ -13,7 +13,7 @@
 	obj_flags = OBJ_FLAG_ANCHORABLE
 	layer = ABOVE_WINDOW_LAYER
 
-	var/jukebox/jukebox
+	var/datum/jukebox/jukebox
 
 
 /obj/machinery/jukebox/Initialize()

@@ -117,8 +117,8 @@
 
 	return tally
 
-/mob/living/carbon/slime/Bump(atom/movable/AM as mob|obj, yes)
-	if ((!(yes) || now_pushing))
+/mob/living/carbon/slime/Bump(atom/movable/AM, called)
+	if ((!(called) || now_pushing))
 		return
 	now_pushing = 1
 

@@ -13,7 +13,9 @@ GLOBAL_LIST_INIT(legion_last_words_generic, list(\
 	"I don't want to die!",\
 	"No, get away!",\
 	"I give up. Just do it already.",\
-	"I'm so scared..."\
+	"I'm so scared...",\
+	"Help me!",\
+	"It's so hot!",\
 ))
 
 
@@ -81,12 +83,14 @@ GLOBAL_LIST_EMPTY(legion_last_words_player)
 		message = pick(GLOB.legion_narrations)
 
 	var/count = 0
+	var/sound_to_play = pick(GLOB.legion_voices_sounds)
 	for (var/mob/player in GLOB.player_list)
 		if (!(get_z(player) in connected_z_levels))
 			continue
 		if (!player.isSynthetic() && !isobserver(player))
 			continue
 		to_chat(player, SPAN_LEGION(message))
+		sound_to(player, sound_to_play)
 		count++
 
 	log_debug("Displayed legion message to [count] mob\s across [length(connected_z_levels)] z-level\s.")
