@@ -159,17 +159,18 @@
 		particles = null
 	return ..()
 
-/atom/movable/Bump(atom/A, yes)
-	if(!QDELETED(throwing))
+
+/// Called should be true when calling this in code.
+/atom/movable/Bump(atom/A, called)
+	if (!QDELETED(throwing))
 		throwing.hit_atom(A)
-
-	if(inertia_dir)
+	if (inertia_dir)
 		inertia_dir = 0
-
-	if (A && yes)
+	if (A && called)
 		A.last_bumped = world.time
 		invoke_async(A, TYPE_PROC_REF(/atom, Bumped), src) // Avoids bad actors sleeping or unexpected side effects, as the legacy behavior was to spawn here
 	..()
+
 
 /atom/movable/proc/forceMove(atom/destination)
 	if((gc_destroyed && gc_destroyed != GC_CURRENTLY_BEING_QDELETED) && !isnull(destination))

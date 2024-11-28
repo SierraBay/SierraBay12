@@ -1,0 +1,4 @@
+author: SierraKomodo
+changes:
+  - {bugfix: Half-pint glass no longer appears twice in the microlathe.}
+delete-after: true

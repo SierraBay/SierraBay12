@@ -3215,7 +3215,7 @@
 /obj/floor_decal/corner/grey/diagonal{
 	dir = 4
 	},
-/obj/item/material/kitchen/rollingpin{
+/obj/item/material/rollingpin{
 	pixel_x = 3
 	},
 /obj/structure/table/marble,
@@ -12205,7 +12205,7 @@
 /obj/decal/cleanable/dirt,
 /obj/random/trash,
 /obj/structure/table/marble,
-/obj/item/material/kitchen/rollingpin,
+/obj/item/material/rollingpin,
 /obj/item/device/radio/intercom{
 	dir = 4;
 	pixel_x = -21
