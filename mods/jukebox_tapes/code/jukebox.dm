@@ -11,7 +11,7 @@
 
 	if(tape)
 		jukebox.Stop()
-		for(var/jukebox_track/T in jukebox.tracks)
+		for(var/datum/jukebox_track/T in jukebox.tracks)
 			if(T == tape.track)
 				jukebox.tracks -= T
 				jukebox.Last()
@@ -104,12 +104,12 @@
 
 
 // SIERRA TODO: Move to corecode or override
-/jukebox/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui, force_open = TRUE, datum/topic_state/state = GLOB.default_state)//, datum/topic_state/state = GLOB.jukebox_state)
+/datum/jukebox/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui, force_open = TRUE, datum/topic_state/state = GLOB.default_state)//, datum/topic_state/state = GLOB.jukebox_state)
 	var/list/data_tracks = list()
 	for (var/i = 1 to length(tracks))
-		var/jukebox_track/track = tracks[i]
+		var/datum/jukebox_track/track = tracks[i]
 		data_tracks += list(list("track" = track.title, "index" = i))
-	var/jukebox_track/track = tracks[index]
+	var/datum/jukebox_track/track = tracks[index]
 	var/list/data = list(
 		"track" = track.title,
 		"playing" = playing,
@@ -125,7 +125,7 @@
 		ui.set_initial_data(data)
 		ui.open()
 
-/jukebox/Topic(href, href_list)
+/datum/jukebox/Topic(href, href_list)
 	switch ("[href_list["act"]]")
 		if ("next") Next()
 		if ("last") Last()

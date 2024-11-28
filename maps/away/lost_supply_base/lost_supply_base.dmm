@@ -1196,7 +1196,7 @@
 /area/lost_supply_base/common)
 "de" = (
 /obj/structure/table/standard,
-/obj/item/material/kitchen/utensil/fork,
+/obj/item/material/utensil/fork,
 /turf/simulated/floor/tiled,
 /area/lost_supply_base/common)
 "df" = (
@@ -1314,7 +1314,7 @@
 /turf/simulated/wall,
 /area/lost_supply_base)
 "dx" = (
-/obj/item/material/kitchen/utensil/spoon,
+/obj/item/material/utensil/spoon,
 /turf/simulated/floor/tiled,
 /area/lost_supply_base/common)
 "dy" = (
@@ -1337,7 +1337,7 @@
 /turf/simulated/floor/tiled,
 /area/lost_supply_base/common)
 "dB" = (
-/obj/item/material/kitchen/utensil/fork,
+/obj/item/material/utensil/fork,
 /obj/structure/bed/chair{
 	dir = 8
 	},

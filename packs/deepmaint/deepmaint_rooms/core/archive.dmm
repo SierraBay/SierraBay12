@@ -50,7 +50,7 @@
 /obj/item/reagent_containers/glass/beaker{
 	pixel_x = 5
 	},
-/obj/item/material/kitchen/rollingpin,
+/obj/item/material/rollingpin,
 /turf/simulated/floor/tiled/white,
 /area/map_template/deepmaint)
 "ak" = (

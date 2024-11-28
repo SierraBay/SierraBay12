@@ -2319,7 +2319,7 @@
 /area/abandoned_hotel/pool)
 "Dw" = (
 /obj/decal/cleanable/dirt,
-/obj/item/material/kitchen/utensil/fork/silver,
+/obj/item/material/utensil/fork/silver,
 /turf/simulated/floor/wood,
 /area/abandoned_hotel/buffet)
 "Dx" = (
@@ -2510,7 +2510,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/item/material/kitchen/utensil/fork/silver,
+/obj/item/material/utensil/fork/silver,
 /turf/simulated/floor/tiled/old_tile,
 /area/abandoned_hotel/buffet)
 "Gu" = (
@@ -2773,7 +2773,7 @@
 "Kv" = (
 /obj/structure/table/woodentable/walnut,
 /obj/machinery/atmospherics/unary/vent_pump/on,
-/obj/item/material/kitchen/utensil/fork/silver,
+/obj/item/material/utensil/fork/silver,
 /turf/simulated/floor/wood,
 /area/abandoned_hotel/buffet)
 "Kw" = (
@@ -3043,7 +3043,7 @@
 /obj/floor_decal/corner/black/diagonal,
 /obj/structure/table/marble,
 /obj/decal/cleanable/dirt,
-/obj/item/material/kitchen/rollingpin,
+/obj/item/material/rollingpin,
 /turf/simulated/floor/tiled/kafel_full,
 /area/abandoned_hotel/kitchen)
 "Og" = (

@@ -303,28 +303,24 @@
 	. = jointext(.,"<br>")
 	. = jointext(list(header,.),null)
 
+
 // Calculates severity based on the ratios defined external limbs.
-/proc/get_wound_severity(damage_ratio, can_heal_overkill = 0)
-	var/degree
-
+/proc/get_wound_severity(damage_ratio, can_heal_overkill)
 	switch(damage_ratio)
-		if(0 to 10)
-			degree = "minor"
-		if(10 to 25)
-			degree = "moderate"
-		if(25 to 50)
-			degree = "significant"
-		if(50 to 75)
-			degree = "severe"
-		if(75 to 99)
-			degree = "extreme"
-		else
-			if(can_heal_overkill)
-				degree = "critical"
-			else
-				degree = "irreparable"
+		if (0 to 10)
+			return "minor"
+		if (10 to 25)
+			return "moderate"
+		if (25 to 50)
+			return "significant"
+		if (50 to 75)
+			return "severe"
+		if (75 to 99)
+			return "extreme"
+	if (can_heal_overkill)
+		return "critical"
+	return "irreparable"
 
-	return degree
 
 /obj/item/device/scanner/health/verb/toggle_mode()
 	set name = "Switch Verbosity"

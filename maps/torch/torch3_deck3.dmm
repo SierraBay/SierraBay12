@@ -3215,7 +3215,7 @@
 /obj/floor_decal/corner/grey/diagonal{
 	dir = 4
 	},
-/obj/item/material/kitchen/rollingpin{
+/obj/item/material/rollingpin{
 	pixel_x = 3
 	},
 /obj/structure/table/marble,
@@ -3912,7 +3912,7 @@
 	pixel_x = 2;
 	pixel_y = 6
 	},
-/obj/item/folder/envelope/csorder,
+/obj/item/folder/envelope/preset/csorder,
 /turf/simulated/floor/carpet/green,
 /area/crew_quarters/chief_steward)
 "iO" = (
@@ -9451,10 +9451,10 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/structure/flora/pottedplant/flower,
 /obj/machinery/alarm{
 	pixel_y = 24
 	},
+/obj/structure/filingcabinet,
 /turf/simulated/floor/carpet/purple,
 /area/chapel/office)
 "wB" = (
@@ -10194,6 +10194,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
 	},
+/obj/machinery/hologram/holopad,
 /turf/simulated/floor/carpet/purple,
 /area/chapel/office)
 "yC" = (
@@ -10485,7 +10486,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/chapel/main)
 "zx" = (
-/obj/machinery/power/apc{
+/obj/machinery/power/apc/critical{
 	name = "south bump";
 	pixel_y = -28
 	},
@@ -12204,7 +12205,7 @@
 /obj/decal/cleanable/dirt,
 /obj/random/trash,
 /obj/structure/table/marble,
-/obj/item/material/kitchen/rollingpin,
+/obj/item/material/rollingpin,
 /obj/item/device/radio/intercom{
 	dir = 4;
 	pixel_x = -21
@@ -14752,7 +14753,7 @@
 /turf/simulated/floor/tiled/white,
 /area/crew_quarters/mess)
 "Kp" = (
-/obj/machinery/power/apc{
+/obj/machinery/power/apc/critical{
 	dir = 1;
 	name = "north bump";
 	pixel_y = 24
