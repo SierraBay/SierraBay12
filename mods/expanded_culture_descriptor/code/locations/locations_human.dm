@@ -130,3 +130,16 @@
 	distance = "30 световых лет"
 	economic_power = 1
 	secondary_langs = list(LANGUAGE_SPACER, LANGUAGE_SIGN)
+
+/singleton/cultural_info/location/quig
+	name = HOME_SYSTEM_QUIG
+	nickname = "Кьюиг"
+	description = "Кьюиг - это уникальный город, построенный по совместному проекту ЦПСС, Скреллианской Империи и беженцев из числа резоми. Призванный создать единую среду для представителей трёх столь различных, но так или иначе неразрывно связанных судьбами видов, Кьюиг предоставляет наиболее комфортные условия для жизни и работы \
+	каждого жителя, независимо от его вида. Учебные заведения и научные институты этого \"города прогресса\" известны по всей территории Центрального Правительства. Кьюиг находится на поверхности планеты Тиамат, но юридически является ассоциированным субъектом ЦПСС, что позволяет ему широкую автономию, в частности в вопросе гражданства \
+	для представителей нечеловеческих рас."
+	language = LANGUAGE_HUMAN_EURO
+	capital = "Кьюиг"
+	ruling_body = "Центральное Правительство Солнечной Системы"
+	distance = "4 световых года"
+	economic_power = 1.2
+	secondary_langs = list(LANGUAGE_RESOMI, LANGUAGE_SKRELLIAN, LANGUAGE_HUMAN_CHINESE, LANGUAGE_HUMAN_ARABIC, LANGUAGE_HUMAN_INDIAN, LANGUAGE_HUMAN_IBERIAN, LANGUAGE_HUMAN_RUSSIAN)
