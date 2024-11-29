@@ -3,6 +3,10 @@
 #define PIPE_ROTATE_TWODIR   1 // Sanitizes cardinal directions to just two, leaves corner directions alone
 #define PIPE_ROTATE_ONEDIR   2 // Only has one dir, south
 
+#define PIPE_PLACEMENT_SIMPLE     1
+#define PIPE_PLACEMENT_ORTHOGONAL 2
+#define PIPE_PLACEMENT_DIAGONAL   3
+
 //Connection Type Definitions
 #define CONNECT_TYPE_REGULAR        1
 #define CONNECT_TYPE_SUPPLY         2

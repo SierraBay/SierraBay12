@@ -27,7 +27,7 @@
 		/obj/item/ammo_magazine/pistol/hos/extend,
 		/obj/item/melee/telebaton,
 		/obj/item/device/taperecorder,
-		/obj/item/folder/envelope/nuke,
+		/obj/item/folder/envelope/preset/nuke,
 		/obj/item/reagent_containers/spray/pepper,
 		/obj/item/clothing/accessory/storage/black_vest,
 		/obj/item/device/remote_device/head_of_security,

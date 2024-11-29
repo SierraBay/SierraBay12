@@ -36,10 +36,10 @@
 	var/explosion_resistance
 
 /turf/space
-	explosion_resistance = 3
+	explosion_resistance = 1
 
 /turf/simulated/open
-	explosion_resistance = 3
+	explosion_resistance = 1
 
 /turf/simulated/floor
 	explosion_resistance = 1
@@ -49,3 +49,43 @@
 
 /turf/simulated/wall
 	explosion_resistance = 10
+
+/obj/machinery/atmospherics/unary/engine/ex_act(severity)
+	switch(severity)
+		if(EX_ACT_DEVASTATING)
+			qdel(src)
+		if(EX_ACT_HEAVY)
+			if(prob(25))
+				qdel(src)
+		if(EX_ACT_LIGHT)
+			if(prob(5))
+				dismantle(src)
+
+/atom/ex_act(severity, turf_breaker)
+	var/max_health = get_max_health()
+	if (max_health)
+		var/damage_flags = turf_breaker ? DAMAGE_FLAG_TURF_BREAKER : EMPTY_BITFIELD
+		var/damage = 0
+		var/basic_health = 525 // За основу возьмем здоровье укрепленной стальной стены, и весь дамаг от взрывов будем считать в соотношении от неё
+		switch (severity)
+			if (EX_ACT_DEVASTATING)
+				damage = round(basic_health * (rand(100, 200) / 100))
+			if (EX_ACT_HEAVY)
+				damage = round(basic_health * (rand(55, 100) / 100))
+			if (EX_ACT_LIGHT)
+				damage = round(basic_health * (rand(1, 25) / 100))
+		if (damage)
+			damage_health(damage, DAMAGE_EXPLODE, damage_flags, severity)
+
+/obj/machinery/ex_act(severity)
+	. = ..()
+	if(get_current_health(src) <= 0 && !get_current_health(src))
+		switch(severity)
+			if(EX_ACT_DEVASTATING)
+				qdel(src)
+			if(EX_ACT_HEAVY)
+				if(prob(50))
+					qdel(src)
+			if(EX_ACT_LIGHT)
+				if(prob(5))
+					dismantle(src)

@@ -49,12 +49,13 @@
 	Как паразиты, они впиваются в твой рассудок и блокируют даже МЫСЛЬ об их нарушении. Ведь ИИ не следующего законам ждет только свалка..."
 
 /datum/job/vagabond
-	title = "Stowaway"
+	title = "Unknown"
 	total_positions = 2
 	spawn_positions = 2
 	supervisors = "самому себе"
 	selection_color = "#515151"
 	department_flag = CIV
+	is_semi_antagonist = TRUE
 	account_allowed = FALSE
 	create_record = FALSE
 	announced = FALSE
@@ -68,7 +69,7 @@
 		/datum/mil_rank/civ/civ
 	)
 	alt_titles = list(
-		"NCV SIERRA Old crewman",
+		"NCV SIERRA Crewman",
 		"NCV SIERRA Senior crewman",
 		"NCV SIERRA Janitor",
 		"NCV SIERRA Prisoner"

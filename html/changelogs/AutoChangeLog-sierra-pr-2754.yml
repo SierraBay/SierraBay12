@@ -1,4 +1,0 @@
-author: Builder13
-changes:
-  - {tweak: Генокрад больше не утрачивает навыки от профессии при получении роли}
-delete-after: true

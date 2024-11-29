@@ -256,7 +256,7 @@
 "wF" = (
 /obj/floor_decal/corner/blue/diagonal,
 /obj/structure/table/marble,
-/obj/item/material/kitchen/rollingpin,
+/obj/item/material/rollingpin,
 /obj/item/material/chopping_board,
 /obj/item/reagent_containers/food/condiment/small/saltshaker{
 	pixel_x = -3

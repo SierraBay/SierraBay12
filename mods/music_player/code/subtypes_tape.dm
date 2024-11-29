@@ -23,6 +23,6 @@
 	SetName("tape - \"[new_name]\"")
 
 	if(new_sound && new_name && !track)
-		track = new /jukebox_track(new_name, new_sound)
+		track = new /datum/jukebox_track(new_name, new_sound)
 		return TRUE
 	return FALSE

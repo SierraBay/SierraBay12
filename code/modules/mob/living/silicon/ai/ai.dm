@@ -114,6 +114,8 @@ var/global/list/ai_verbs_default = list(
 	var/default_ai_icon = /singleton/ai_icon/blue
 	var/static/list/custom_ai_icons_by_ckey_and_name
 
+	idcard = /obj/item/card/id/synthetic/ai
+
 /mob/living/silicon/ai/proc/add_ai_verbs()
 	src.verbs |= ai_verbs_default
 	src.verbs -= /mob/living/verb/ghost

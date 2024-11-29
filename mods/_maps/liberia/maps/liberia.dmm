@@ -4417,7 +4417,7 @@
 	},
 /obj/structure/table/reinforced,
 /obj/item/clothing/suit/chef/classic,
-/obj/item/material/kitchen/rollingpin,
+/obj/item/material/rollingpin,
 /obj/item/material/knife/kitchen,
 /turf/simulated/floor/tiled/freezer,
 /area/liberia/bar)
