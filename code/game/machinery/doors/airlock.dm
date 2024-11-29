@@ -79,8 +79,8 @@
 	/// String. Partial icon state for generating the airlock appearance overlay.
 	var/airlock_type = "Standard"
 	var/static/list/airlock_icon_cache = list()
-	/// Bitflag (Any of `AIRLOCK_PAINTABLE_*`). Determines what parts of the airlock can be recolored with paint.
-	var/paintable = AIRLOCK_PAINTABLE_MAIN | AIRLOCK_PAINTABLE_STRIPE
+	/// Bitflag (Any of `MATERIAL_PAINTABLE*`). Determines what parts of the airlock can be recolored with paint.
+	var/paintable = MATERIAL_PAINTABLE_MAIN | MATERIAL_PAINTABLE_STRIPE
 	/// Color. The color of the main door body.
 	var/door_color = null
 	/// Color. The color of the stripe detail.
@@ -255,7 +255,7 @@
 	emag_file = 'icons/obj/doors/external/emag.dmi'
 	assembly_type = /obj/structure/door_assembly/door_assembly_ext
 	door_color = COLOR_NT_RED
-	paintable = AIRLOCK_PAINTABLE_MAIN
+	paintable = MATERIAL_PAINTABLE_MAIN
 
 /obj/machinery/door/airlock/external/inherit_access_from_area()
 	..()
@@ -380,7 +380,7 @@
 	explosion_resistance = 20
 	opacity = 1
 	assembly_type = /obj/structure/door_assembly/door_assembly_hatch
-	paintable = AIRLOCK_PAINTABLE_STRIPE
+	paintable = MATERIAL_PAINTABLE_STRIPE
 
 /obj/machinery/door/airlock/hatch/maintenance
 	name = "Maintenance Hatch"
@@ -1344,7 +1344,7 @@ About the new airlock wires panel:
 			brace.update_access()
 		update_icon()
 	if (glass)
-		paintable |= AIRLOCK_PAINTABLE_WINDOW
+		paintable |= MATERIAL_PAINTABLE_WINDOW
 		window_material = SSmaterials.get_material_by_name(init_material_window)
 		if (!window_color)
 			window_color = window_material.icon_colour

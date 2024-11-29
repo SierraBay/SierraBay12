@@ -31,7 +31,7 @@
 	var/panel_icon = 'icons/obj/doors/station/panel.dmi'
 	var/fill_icon = 'icons/obj/doors/station/fill_steel.dmi'
 	var/glass_icon = 'icons/obj/doors/station/fill_glass.dmi'
-	var/paintable = AIRLOCK_PAINTABLE_MAIN|AIRLOCK_PAINTABLE_STRIPE
+	var/paintable = MATERIAL_PAINTABLE_MAIN|MATERIAL_PAINTABLE_STRIPE
 	var/door_color = "none"
 	var/stripe_color = "none"
 	var/symbol_color = "none"

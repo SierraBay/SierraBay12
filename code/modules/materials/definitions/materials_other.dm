@@ -12,6 +12,13 @@
 	name = MATERIAL_CULT
 	display_name = "disturbing stone"
 	wall_icon_base = "cult"
+	wall_flags = EMPTY_BITFIELD
+	wall_blend_icons = list(
+		"solid" = TRUE,
+		"wood" = TRUE,
+		"metal" = TRUE,
+		"stone" = TRUE
+	)
 	icon_colour = "#402821"
 	wall_icon_reinf = "reinf_cult"
 	shard_type = SHARD_STONE_PIECE
