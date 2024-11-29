@@ -24,6 +24,7 @@
 #define CULTURE_HUMAN_LORDLOW "Lordanian, Lower"
 #define CULTURE_HUMAN_MIRANIAN "Miranian"
 #define CULTURE_HUMAN_NYXIAN "Nyxian"
+#define CULTURE_HUMAN_CONFEDC "Confederate, Core Systems"
 
 #define HOME_SYSTEM_PLUTO      "Pluto"
 #define HOME_SYSTEM_TERSTEN                 "Tersten"
