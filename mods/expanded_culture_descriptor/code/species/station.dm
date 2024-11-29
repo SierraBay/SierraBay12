@@ -73,7 +73,7 @@
 		TAG_FACTION = list(
 			FACTION_SKRELL_MED,
 			FACTION_SKRELL_FOOD
-		)
+		),
 		TAG_HOMEWORLD = list(
 			HOME_SYSTEM_QUIG
 		)
