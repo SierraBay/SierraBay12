@@ -1,5 +1,0 @@
-author: Gaxeer, awkardlyconfusedneuralnetwork
-changes:
-  - {bugfix: Починил обновление оверлея газов}
-  - {bugfix: 'Починил то, что рычаг на конвейере проходит все объекты в мире'}
-delete-after: true

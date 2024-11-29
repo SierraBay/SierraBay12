@@ -3846,7 +3846,7 @@
 /turf/space,
 /area/space)
 "iT" = (
-/obj/item/material/kitchen/utensil/spork,
+/obj/item/material/utensil/spork,
 /turf/space,
 /area/space)
 "iU" = (
@@ -3874,7 +3874,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/meatstation/kitchen)
 "iY" = (
-/obj/item/material/kitchen/utensil/fork,
+/obj/item/material/utensil/fork,
 /turf/space,
 /area/space)
 "iZ" = (
@@ -3901,7 +3901,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/item/material/kitchen/utensil/fork,
+/obj/item/material/utensil/fork,
 /turf/simulated/floor/tiled/dark,
 /area/meatstation/kitchen)
 "jb" = (
@@ -3909,7 +3909,7 @@
 /turf/space,
 /area/meatstation/storage)
 "jc" = (
-/obj/item/material/kitchen/utensil/spork/plastic,
+/obj/item/material/utensil/spork/plastic,
 /turf/simulated/floor/tiled/dark,
 /area/meatstation/kitchen)
 "jd" = (
@@ -4446,7 +4446,7 @@
 	icon_state = "4-8"
 	},
 /obj/structure/table/marble,
-/obj/item/material/kitchen/utensil/fork,
+/obj/item/material/utensil/fork,
 /turf/simulated/floor/lino,
 /area/meatstation/mess)
 "kr" = (
@@ -4619,7 +4619,7 @@
 /area/meatstation/mess)
 "kN" = (
 /obj/structure/table/marble,
-/obj/item/material/kitchen/utensil/spork,
+/obj/item/material/utensil/spork,
 /turf/simulated/floor/lino,
 /area/meatstation/mess)
 "kO" = (
@@ -8976,7 +8976,7 @@
 /turf/simulated/floor/lino,
 /area/meatstation/mess)
 "vP" = (
-/obj/item/material/kitchen/utensil/spork,
+/obj/item/material/utensil/spork,
 /obj/floor_decal/corner/lightgrey/border{
 	dir = 4
 	},

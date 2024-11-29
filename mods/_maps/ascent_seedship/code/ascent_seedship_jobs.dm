@@ -5,8 +5,8 @@
 	return
 
 // Rename procs are already implemented in Ascent Caulship
-/* /mob/living/carbon/human/proc/gyne_rename_lineage_inf()
-	set name = "Name Nest-Lineage"
+/mob/living/carbon/human/proc/gyne_rename_lineage_inf()
+	set name = "Name Nest-Lineage — Seedship"
 	set category = "IC"
 	set desc = "Rename yourself and your alates."
 
@@ -46,13 +46,13 @@
 	verbs -= /mob/living/carbon/human/proc/gyne_rename_lineage_inf
 
 /mob/living/carbon/human/proc/serpentid_namepick_inf()
-	set name = "Choose a name"
+	set name = "Choose a name — Seedship"
 	set category = "IC"
 	set desc = "Rename yourself."
 
-	if(mind && istype(mind.assigned_job, /datum/job/submap/ascent))
-		var/datum/job/submap/ascent/ascent_job = mind.assigned_job
-		var/datum/submap/ascent/cutter = ascent_job.owner
+	if(mind && istype(mind.assigned_job, /datum/job/submap/ascent_inf))
+		var/datum/job/submap/ascent_inf/ascent_job = mind.assigned_job
+		var/datum/submap/ascent_inf/cutter = ascent_job.owner
 		if(istype(cutter))
 			if(!mind || mind.assigned_job != ascent_job)
 				return
@@ -70,7 +70,7 @@
 					return
 				fully_replace_character_name("[new_name]")
 
-	verbs -= /mob/living/carbon/human/proc/serpentid_namepick_inf */
+	verbs -= /mob/living/carbon/human/proc/serpentid_namepick_inf
 
 // Jobs.
 /datum/job/submap/ascent_inf
@@ -79,11 +79,10 @@
 	allowed_ranks = list(/datum/mil_rank/alien)
 	total_positions = 1
 	supervisors = "youself"
-	info = "You are Gyna on your own independent vessel. Your path has led you to this remote sector full of primitive bioforms. \
+	info = "Вы Кхармаани Гиина на вашем независимом корабле. Твой путь привел тебя к этим землям, насыщенными низшими формами жизни. \
 	\
-	Show everyone your greatness, crush all those who dare to oppose you, establish your new nest here and bring prosperity to your lineage. \
-	Your radars picked up a large ship equipped with a bluespace engine, until you find out who owns it, it's better not to give yourself away with vigorous activity. \
-	Your ship was damaged during the bluespace jump, you need to restore it to fully function."
+	Покажи всем свое величие, распространи свой улей в этом секторе, приготовься к очередному приступу размножения и укрепи тут свою власть. \
+	Твои радары показали, что в этом секторе присутствует огромный корабль с скрелльским блюспейс двигателем на борту. Нападение на этот корабль, может привести к еще одной войной со скреллами"
 	outfit_type = /singleton/hierarchy/outfit/job/ascent
 	blacklisted_species = null
 	whitelisted_species = list(SPECIES_MANTID_GYNE)
@@ -111,23 +110,23 @@
 
 	if(!cutter.gyne_name)
 		cutter.gyne_name = TYPE_PROC_REF(/singleton/cultural_info/culture/ascent, create_gyne_name)
-	
+
 	if(set_species_on_join)
 		H.set_species(set_species_on_join)
 
 	switch(H.species.name)
 		if(SPECIES_MANTID_GYNE)
 			H.real_name = "[random_id(/datum/species/mantid, 1, 99)] [cutter.gyne_name]"
-			H.verbs |= /mob/living/carbon/human/proc/gyne_rename_lineage
+			H.verbs |= /mob/living/carbon/human/proc/gyne_rename_lineage_inf
 		if(SPECIES_MANTID_ALATE)
 			var/new_alate_number = is_species_whitelisted(H, SPECIES_MANTID_GYNE) ? random_id(/datum/species/mantid, 1000, 9999) : random_id(/datum/species/mantid, 10000, 99999)
 			H.real_name = "[new_alate_number] [cutter.gyne_name]"
 		if(SPECIES_MONARCH_WORKER)
 			H.real_name = "[TYPE_PROC_REF(/singleton/cultural_info/culture/ascent, create_worker_name)]"
-			H.verbs |= /mob/living/carbon/human/proc/serpentid_namepick
+			H.verbs |= /mob/living/carbon/human/proc/serpentid_namepick_inf
 		if(SPECIES_MONARCH_QUEEN)
 			H.real_name = "["Queen "][TYPE_PROC_REF(/singleton/cultural_info/culture/ascent, create_queen_name)]"
-			H.verbs |= /mob/living/carbon/human/proc/serpentid_namepick
+			H.verbs |= /mob/living/carbon/human/proc/serpentid_namepick_inf
 	H.name = H.real_name
 	if(H.mind)
 		H.mind.name = H.real_name
@@ -147,8 +146,8 @@
 /datum/job/submap/ascent_inf/alate
 	title = "Ascent alate"
 	total_positions = 3
-	supervisors = "your Gyne"
-	info = "You are an Alate of an independent Ascent vessel. Your Gyne has directed you to this remote sector full of crawling primitives. Follow her instructions and bring prosperity to your nest-lineage."
+	supervisors = "Гиине"
+	info = "Ты Кхармаани Алат независимого корабля Восхождения. Гиина направила вас в этот сектор, полный ползущих примитивов. Верь в нее, до конца своей жизни и возведи новое гнездо, чтобы стать подобным ей или слится с ее телом."
 	outfit_type = /singleton/hierarchy/outfit/job/ascent/attendant
 	whitelisted_species = list(SPECIES_MANTID_ALATE)
 	requires_supervisor = "Ascent gyne"
@@ -160,9 +159,9 @@
 
 /datum/job/submap/ascent_inf/drone
 	title = "Ascent drone"
-	supervisors = "your Gyne"
+	supervisors = "Гиине"
 	total_positions = 1
-	info = "You are a Machine Intelligence of an independent Ascent vessel. The Gyne you assist, and her children, have wandered into this sector full of primitive bioforms. Try to keep them alive, and assist where you can."
+	info = "Ты дрон Контролирущего Разума на отдаленном секторе. Гиина, направила вас с ее выводком, в этот сектор, полным примитивных созданий. Постарайся сохранить им жизнь и помочь во всем, чем можешь."
 	set_species_on_join = /mob/living/silicon/robot/flying/ascent
 	requires_supervisor = "Ascent gyne"
 	whitelisted_species = list(SPECIES_MANTID_ALATE)
@@ -171,8 +170,8 @@
 	title = "Serpentid adjunct"
 	supervisors = "вашей Королевой"
 	total_positions = 3
-	info = "You are a Monarch Serpentid Worker serving as an attendant to your Queen on this vessel. Serve her however she requires."
-	whitelisted_species = list(SPECIES_NABBER, SPECIES_MANTID_ALATE)
+	info = "Ты Серпентид-Монарх Рабочий, который служит своей королеве. Услужи ей и не заставь стыдится за тебя."
+	whitelisted_species = list(SPECIES_MANTID_ALATE, SPECIES_NABBER)
 	set_species_on_join = SPECIES_MONARCH_WORKER
 	outfit_type = /singleton/hierarchy/outfit/job/ascent/worker
 	min_skill = list(SKILL_EVA = SKILL_TRAINED,
@@ -186,9 +185,10 @@
 	title = "Serpentid queen"
 	supervisors = "другими Королевами и Гииной"
 	total_positions = 1
-	info = "You are a Monarch Serpentid Queen living on an independant Ascent vessel. Assist the Gyne in her duties and tend to your Workers."
+	info = "Ты СМ-Королева, на независимом корабле Восхождения. Твоя родственная душа, Гиина, надеется на тебя и твоих прислуг."
 	whitelisted_species = list(SPECIES_NABBER, SPECIES_MANTID_GYNE)
 	set_species_on_join = SPECIES_MONARCH_QUEEN
+	outfit_type = /singleton/hierarchy/outfit/job/ascent/queen
 	min_skill = list(SKILL_EVA = SKILL_TRAINED,
 					SKILL_HAULING = SKILL_TRAINED,
 					SKILL_COMBAT = SKILL_TRAINED,

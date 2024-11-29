@@ -268,7 +268,7 @@ var/global/const/OVERMAP_SPEED_CONSTANT = (1 SECOND)
 	if(!SSshuttle.overmap_halted)
 		halted = 0
 
-/obj/overmap/visitable/ship/Bump(atom/A)
+/obj/overmap/visitable/ship/Bump(atom/A, called)
 	if(istype(A,/turf/unsimulated/map/edge))
 		handle_wraparound()
 	..()

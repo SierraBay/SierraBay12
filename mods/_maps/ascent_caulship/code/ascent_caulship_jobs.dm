@@ -5,7 +5,7 @@
 	return
 
 /mob/living/carbon/human/proc/gyne_rename_lineage()
-	set name = "Name Nest-Lineage"
+	set name = "Name Nest-Lineage — Caulship"
 	set category = "IC"
 	set desc = "Rename yourself and your alates."
 
@@ -45,7 +45,7 @@
 	verbs -= /mob/living/carbon/human/proc/gyne_rename_lineage
 
 /mob/living/carbon/human/proc/serpentid_namepick()
-	set name = "Choose a name"
+	set name = "Choose a name — Caulship"
 	set category = "IC"
 	set desc = "Rename yourself."
 
@@ -184,7 +184,7 @@
 
 /datum/job/submap/ascent/queen
 	title = "Serpentid Queen"
-	supervisors = "the Gyne"	
+	supervisors = "the Gyne"
 	total_positions = 1
 	info = "You are a Monarch Serpentid Queen living on an independant Ascent vessel. Assist the Gyne in her duties and tend to your Workers."
 	outfit_type = /singleton/hierarchy/outfit/job/ascent/queen

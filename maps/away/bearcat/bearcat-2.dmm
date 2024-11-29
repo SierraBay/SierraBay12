@@ -2118,7 +2118,7 @@
 	},
 /obj/random/donkpocket_box,
 /obj/floor_decal/corner/red/diagonal,
-/obj/item/material/kitchen/rollingpin,
+/obj/item/material/rollingpin,
 /obj/item/reagent_containers/food/condiment/small/saltshaker{
 	pixel_x = -3
 	},

@@ -1230,7 +1230,7 @@
 "cR" = (
 /obj/structure/table/standard,
 /obj/item/trash/snack_bowl,
-/obj/item/material/kitchen/utensil/spoon,
+/obj/item/material/utensil/spoon,
 /obj/item/reagent_containers/food/drinks/glass2/shot,
 /turf/simulated/floor/tiled/monotile,
 /area/outpost/mining/recreation)
@@ -2595,9 +2595,9 @@
 /area/outpost/mining)
 "ft" = (
 /obj/structure/table/standard,
-/obj/item/material/kitchen/utensil/fork,
-/obj/item/material/kitchen/utensil/fork,
-/obj/item/material/kitchen/utensil/spoon,
+/obj/item/material/utensil/fork,
+/obj/item/material/utensil/fork,
+/obj/item/material/utensil/spoon,
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
@@ -2755,7 +2755,7 @@
 /area/outpost/mining/kitchen)
 "fK" = (
 /obj/structure/table/reinforced,
-/obj/item/material/kitchen/rollingpin,
+/obj/item/material/rollingpin,
 /obj/item/material/knife/kitchen,
 /turf/simulated/floor/tiled/old_tile,
 /area/outpost/mining/kitchen)

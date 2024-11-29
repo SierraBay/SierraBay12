@@ -2935,11 +2935,11 @@
 /area/scavver/yachtup)
 "wI" = (
 /obj/structure/closet/fridge,
-/obj/item/material/kitchen/utensil/spork,
-/obj/item/material/kitchen/utensil/spork,
+/obj/item/material/utensil/spork,
+/obj/item/material/utensil/spork,
 /obj/item/reagent_containers/food/condiment/enzyme,
 /obj/random/donkpocket_box,
-/obj/item/material/kitchen/utensil/spork,
+/obj/item/material/utensil/spork,
 /obj/random/loot,
 /mob/living/simple_animal/passive/mouse/brown/Tom,
 /turf/simulated/floor/wood/yew,
