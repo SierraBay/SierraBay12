@@ -34,6 +34,7 @@
 #define HOME_SYSTEM_NYX_ROANOK           	"Roanok"
 #define HOME_SYSTEM_NYX_YUKLIT           	"Yuklit"
 #define HOME_SYSTEM_NYX_CASSER           	"Casser"
+#define HOME_SYSTEM_QUIG           	      "Quig"
 
 #define FACTION_SKRELL_MED  "Gloa'Morr Corp."
 #define FACTION_SKRELL_AIR  "Krri'gli Corp."
