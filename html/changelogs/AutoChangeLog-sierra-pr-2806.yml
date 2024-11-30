@@ -1,0 +1,5 @@
+author: LordNest
+changes:
+  - {maptweak: Исправил зону второго пода и добавил кнопки для взрывостойких дверей
+      для реактора}
+delete-after: true
