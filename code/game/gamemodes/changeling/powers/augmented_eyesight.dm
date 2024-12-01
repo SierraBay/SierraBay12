@@ -29,8 +29,6 @@
 		eyes = null
 		has_organ++
 	if(has_organ)
-		if(H.seedarkness)
-			H.seedarkness = FALSE
 		for(var/obj/item/organ/internal/augment/ling_lenses/eyes in H.internal_organs)
 			if(!eyes.is_active)
 				to_chat(src, SPAN_NOTICE("We feel a minute twitch in our eyes, and a hidden layer to the world is revealed."))

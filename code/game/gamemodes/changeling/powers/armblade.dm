@@ -125,15 +125,17 @@
 	STOP_PROCESSING(SSobj, src)
 	creator = null
 	return ..()
+
 /obj/item/melee/changeling/Process()
 	var/mob/living/carbon/human/H = creator
 	if ( H.handcuffed || (H.stat != CONSCIOUS))
 		qdel(src)
-	if(!istype(loc,/mob))
-		src.visible_message(SPAN_DANGER("\The [src] rapidly decays and melts into a puddle of slime!"))
-		new /obj/decal/cleanable/ling_vomit(src.loc)
+	if(!ismob(loc))
+		visible_message(SPAN_DANGER("\The [src] rapidly decays and melts into a puddle of slime!"))
+		new /obj/decal/cleanable/ling_vomit(loc)
 		qdel(src)
 		..()
+
 /obj/item/melee/changeling/arm_hammer
 	name = "arm hammer"
 	desc = "A hammer made out of flesh and bone, heavy enough to smash through armor and people alike."
@@ -322,8 +324,8 @@
 	var/mob/living/carbon/human/H = creator
 	if ( H.handcuffed || (H.stat != CONSCIOUS))
 		qdel(src)
-	if(!istype(loc,/mob))
-		src.visible_message(SPAN_DANGER("\The [src] rapidly decays and melts into a puddle of slime!"))
-		new /obj/decal/cleanable/ling_vomit(src.loc)
+	if(!ismob(loc))
+		visible_message(SPAN_DANGER("\The [src] rapidly decays and melts into a puddle of slime!"))
+		new /obj/decal/cleanable/ling_vomit(loc)
 		qdel(src)
 		..()
