@@ -1,3 +1,6 @@
+/datum/species/adherent
+	additional_languages = 2
+
 /obj/item/organ/internal/cell/adherent
 	var/ready_to_charge
 
