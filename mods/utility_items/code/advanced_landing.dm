@@ -80,6 +80,9 @@
 
 /mob/living/carbon/human/update_dead_sight()
 	. = ..()
+	if(!eyeobj)
+		cancel_landeye_view()
+		return
 	if(eyeobj.type == /mob/observer/eye/landeye)
 		set_see_in_dark(8)
 		set_see_invisible(SEE_INVISIBLE_MINIMUM)
@@ -323,10 +326,3 @@
 		var/turf/T = locate(I.loc.x, I.loc.y, I.loc.z)
 		I = image('mods/utility_items/icons/alphacolors.dmi', T, "dither50")
 		T.AddOverlays(I)
-
-/datum/shuttle/autodock/process_arrived()
-	.=..()
-	for(var/i in 1 to LAZYLEN(next_location.image_shadow))
-		var/image/I = next_location.image_shadow[i]
-		var/turf/T = locate(I.loc.x, I.loc.y, I.loc.z)
-		T.ClearOverlays(I)
