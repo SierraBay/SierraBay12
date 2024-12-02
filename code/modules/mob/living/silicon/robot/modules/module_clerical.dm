@@ -28,7 +28,7 @@
 		/obj/item/device/scanner/plant,
 		/obj/item/storage/plants,
 		/obj/item/robot_harvester,
-		/obj/item/material/kitchen/rollingpin,
+		/obj/item/material/rollingpin,
 		/obj/item/material/knife/kitchen,
 		/obj/item/crowbar,
 		/obj/item/rsf,

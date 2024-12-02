@@ -150,10 +150,55 @@ GLOBAL_LIST_INIT(rpd_pipe_selection_skilled, list(
 				return TRUE
 			playsound (get_turf(user), 'sound/items/Deconstruct.ogg', 50, 1)
 
-		P.Build(P, T, pipe_colors[pipe_color])
+		var/obj/item/pipe/pipe = P.Build(P, T, pipe_colors[pipe_color])
+		var/num_rotations
+		if (user.skill_check(SKILL_ATMOS, SKILL_EXPERIENCED))
+			num_rotations = get_placement_rotation(user, P.placement_mode, click_parameters)
+		else
+			num_rotations = rand(3)
+		for (var/i = 0, i < num_rotations, i++)
+			pipe.dir = GLOB.cw_dir[pipe.dir]
 		if (prob(20))
 			spark_system.start()
 		return TRUE
+
+/obj/item/rpd/proc/get_placement_rotation(mob/user, placement_mode, click_parameters)
+	var/mouse_x = text2num(click_parameters["icon-x"])
+	var/mouse_y = text2num(click_parameters["icon-y"])
+	switch (placement_mode)
+		if (PIPE_PLACEMENT_SIMPLE)
+			// Zero rotations as we use the default direction of the pipe
+			return 0
+		if (PIPE_PLACEMENT_DIAGONAL)
+			// One case for each of the four quarters of a square
+			//  0 │ 1
+			// ───┼───
+			//  3 │ 2
+			if (mouse_x <= 16)
+				if (mouse_y <= 16)
+					. = 3
+				else
+					. = 0
+			else
+				if (mouse_y <= 16)
+					. = 2
+				else
+					. = 1
+		if (PIPE_PLACEMENT_ORTHOGONAL)
+			// One case for each of the four triangles of a square
+			//  ⟍ 0 ⟋
+			//  3 ⤫ 1
+			//  ⟋ 2 ⟍
+			if (mouse_y > mouse_x)
+				if (mouse_y > 32-mouse_x)
+					. = 0
+				else
+					. = 3
+			else
+				if (mouse_y > 32-mouse_x)
+					. = 1
+				else
+					. = 2
 
 /obj/item/rpd/examine(mob/user, distance)
 	. = ..()

@@ -76,6 +76,8 @@
 		<option value='?_src_=vars;addaura=\ref[src]'>Add Aura</option>
 		<option value='?_src_=vars;removeaura=\ref[src]'>Remove Aura</option>
 		<option value='?_src_=vars;debug_mob_ai=\ref[src]'>Toggle AI Debug Output</option>
+		<option value='?_src_=vars;settrait=\ref[src]'>Set Trait</option>
+		<option value='?_src_=vars;removetrait=\ref[src]'>Remove Trait</option>
 		"}
 
 /mob/living/carbon/human/get_view_variables_options()
@@ -156,7 +158,7 @@
 
 
 /atom/VV_static()
-	return ..() + list("bound_x", "bound_y", "bound_height", "bound_width", "bounds", "step_x", "step_y", "step_size")
+	return ..() + list("bound_x", "bound_y", "bound_height", "bound_width", "bounds", "step_x", "step_y", "step_size", "underlays", "overlays")
 
 /client/VV_static()
 	return ..() + list("holder", "prefs")

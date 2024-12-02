@@ -282,7 +282,7 @@
 	/// When being fed a reagent item, the amount this species eats per bite on help intent.
 	var/ingest_amount = 10
 
-	/// An associative list of /singleton/trait and trait level - See individual traits for valid levels
+	/// An associative list of /singleton/trait and trait level a species starts with by default - See individual traits for valid levels
 	var/list/traits = list()
 
 	/**
@@ -431,8 +431,8 @@ The slots that you can use are found in items_clothing.dm and are the inventory 
 		post_organ_rejuvenate(O, H)
 
 	H.sync_organ_dna()
-/* ------------------------> code\modules\emotes\definitions\_species.dm
-/datum/species/proc/hug(mob/living/carbon/human/H,mob/living/target)
+/* ------------------------> code\modules\emotes\definitions\_species.dm (У нас всё в моде в mods\emote_panel\code\species.dm)
+/datum/species/proc/hug(mob/living/carbon/human/H, mob/living/target)
 
 	var/t_him = "them"
 	switch(target.gender)
@@ -441,8 +441,15 @@ The slots that you can use are found in items_clothing.dm and are the inventory 
 		if(FEMALE)
 			t_him = "her"
 
-	H.visible_message(SPAN_NOTICE("[H] hugs [target] to make [t_him] feel better!"), \
-					SPAN_NOTICE("You hug [target] to make [t_him] feel better!"))
+	// If aiming for the head, try a headpat
+	if (ishuman(target))
+		var/target_zone = check_zone(H.zone_sel.selecting)
+		var/mob/living/carbon/human/h_target = target
+		if (target_zone == BP_HEAD && h_target.get_organ(target_zone))
+			H.visible_message(SPAN_NOTICE("[H] pats [h_target]'s head to make [t_him] feel better!"), SPAN_NOTICE("You pat [h_target]'s head to make [t_him] feel better!"))
+			return
+
+	H.visible_message(SPAN_NOTICE("[H] hugs [target] to make [t_him] feel better!"), SPAN_NOTICE("You hug [target] to make [t_him] feel better!"))
 
 	if(H != target)
 		H.update_personal_goal(/datum/goal/achievement/givehug, TRUE)
@@ -761,6 +768,22 @@ The slots that you can use are found in items_clothing.dm and are the inventory 
 			facial_hair_style_by_gender[facialhairstyle] = S
 
 	return facial_hair_style_by_gender
+
+/datum/species/proc/get_selectable_traits()
+	var/list/allowed_traits = list()
+	var/list/trait_list = GET_SINGLETON_SUBTYPE_LIST(/singleton/trait)
+	for (var/singleton/trait/allowed_trait in trait_list)
+		if (!allowed_trait.selectable)
+			continue
+		if (LAZYISIN(traits, allowed_trait.type))
+			continue
+		if (LAZYISIN(allowed_trait.forbidden_species, name))
+			continue
+		if (!allowed_trait.name)
+			continue
+		LAZYSET(allowed_traits, allowed_trait.name, allowed_trait)
+
+	return allowed_traits
 
 /datum/species/proc/get_description(header, append, verbose = TRUE, skip_detail, skip_photo)
 	var/list/damage_types = list(

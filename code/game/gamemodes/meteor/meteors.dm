@@ -176,7 +176,7 @@ var/global/list/meteors_cataclysm = list(\
 	if (!ismissile)
 		SpinAnimation()
 
-/obj/meteor/Bump(atom/A)
+/obj/meteor/Bump(atom/A, called)
 	..()
 	if(A && !QDELETED(src))	// Prevents explosions and other effects when we were deleted by whatever we Bumped() - currently used by shields.
 		ram_turf(get_turf(A))

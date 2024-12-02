@@ -45,6 +45,10 @@
 		for(var/obj/item/artefact/choosed_artefact in detected_artefacts_in_victim)
 			LAZYADD(result_effects, choosed_artefact.react_at_failing(user))
 		return result_effects
+	else if(anomaly_type == "Возможность упасть")
+		for(var/obj/item/artefact/choosed_artefact in detected_artefacts_in_victim)
+			LAZYADD(result_effects, choosed_artefact.react_at_can_fall(user))
+		return result_effects
 
 /proc/generate_artefacts_in_mob_list(mob/living/user)
 	if(!istype(user, /mob/living))
@@ -78,6 +82,9 @@
 	return
 
 /obj/item/artefact/proc/react_at_failing(mob/living/user)
+	return
+
+/obj/item/artefact/proc/react_at_can_fall(mob/living/user)
 	return
 
 /mob/living/emp_act(severity)

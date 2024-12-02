@@ -450,6 +450,8 @@
 		if(module)
 			for(var/datum/matter_synth/ms in module.synths)
 				stat("[ms.name]: [ms.energy]/[ms.max_energy_multiplied]")
+		stat("Local Time:", "[stationtime2text()]")
+		stat("Local Date:", "[stationdate2text()]")
 
 /mob/living/silicon/robot/restrained()
 	return 0
