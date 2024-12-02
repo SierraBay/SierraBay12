@@ -48,7 +48,7 @@
 
 // Bash a rolling pin against a tray like a true knight!
 /obj/item/tray/use_tool(obj/item/W, mob/living/user, list/click_params)
-	if(istype(W, /obj/item/material/kitchen/rollingpin))
+	if(istype(W, /obj/item/material/rollingpin))
 		if(bash_cooldown < world.time)
 			user.visible_message(SPAN_WARNING("[user] bashes [src] with [W]!"))
 			playsound(user.loc, 'sound/effects/shieldbash.ogg', 50, 1)

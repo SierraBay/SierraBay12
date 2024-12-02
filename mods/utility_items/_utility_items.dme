@@ -26,6 +26,7 @@
 #include "code/advanced_landing.dm"
 #include "code/chemistry.dm"
 #include "code/jobs.dm"
-
+#include "code/bottom.dm"
+#include "code/top.dm"
 
 #endif

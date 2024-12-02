@@ -22,12 +22,12 @@
 		playsound(machine, 'sound/items/Ratchet.ogg', 50, TRUE)
 		if (!user.do_skilled((tool.toolspeed * 2 SECONDS), SKILL_CONSTRUCTION, machine, do_flags = DO_REPAIR_CONSTRUCT) || !user.use_sanity_check(machine, tool))
 			return TRUE
-		TRANSFER_STATE(/singleton/machine_construction/frame/unwrenched)
+		TRANSFER_STATE(/singleton/machine_construction/frame/wrenched)
 		user.visible_message(
 			SPAN_NOTICE("\The [user] secures \a [machine] to the floor with \a [tool]."),
 			SPAN_NOTICE("You secure \the [machine] to the floor with \the [tool].")
 		)
-		machine.anchored = FALSE
+		machine.anchored = TRUE
 		machine.post_anchor_change()
 		return TRUE
 

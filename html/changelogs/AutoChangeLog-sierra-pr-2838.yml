@@ -1,4 +1,0 @@
-author: Hubblenaut
-changes:
-  - {rscadd: Adds an airlock controller to the engine room}
-delete-after: true

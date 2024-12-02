@@ -1,4 +1,0 @@
-author: Spookerton
-changes:
-  - {bugfix: Organ scarring is correctly reported by scanners.}
-delete-after: true

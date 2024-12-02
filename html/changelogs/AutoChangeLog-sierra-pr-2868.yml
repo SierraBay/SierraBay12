@@ -1,4 +1,0 @@
-author: Builder13
-changes:
-  - {bugfix: Fixed languages for papers printed from faxes and photocopiers.}
-delete-after: true

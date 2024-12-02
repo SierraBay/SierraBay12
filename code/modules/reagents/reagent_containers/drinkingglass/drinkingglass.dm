@@ -214,7 +214,7 @@ var/global/const/DRINK_ICON_NOISY = "noise"
 	return TRUE
 
 /obj/item/reagent_containers/food/drinks/glass2/use_tool(obj/item/W, mob/living/user, list/click_params)
-	if(istype(W, /obj/item/material/kitchen/utensil/spoon))
+	if(istype(W, /obj/item/material/utensil/spoon))
 		if(user.a_intent == I_HURT)
 			user.visible_message(SPAN_WARNING("[user] bashes \the [src] with a spoon, shattering it to pieces! What a rube."))
 			playsound(src, "shatter", 30, 1)
