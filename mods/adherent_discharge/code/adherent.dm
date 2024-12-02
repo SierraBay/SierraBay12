@@ -1,5 +1,5 @@
 /datum/species/adherent
-	additional_languages = 2
+	additional_languages = 1
 
 /obj/item/organ/internal/cell/adherent
 	var/ready_to_charge
