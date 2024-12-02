@@ -235,7 +235,7 @@
 		var/zone_good = FALSE
 		I.loc = T
 		shadow_images += I
-		if(!(T.density))
+		if(T && !(T.density))
 			for(var/type in accesible_areas)
 				if(A.type in typesof(type))
 					zone_good = TRUE
