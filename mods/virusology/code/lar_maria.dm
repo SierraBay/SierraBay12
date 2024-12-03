@@ -55,13 +55,13 @@
 			to_chat(mob, "<span class='warning'>You angrily chew \the [mouth_status[2]] covering your mouth!</span>")
 			return
 		var/list/mobs_to_bite = list()
-		for (var/mob/living/carbon/human/L in range(1))
+		for (var/mob/living/carbon/L in range(1))
 			if (L == mob)
 				continue
 			mobs_to_bite += L
 		if (LAZYLEN(mobs_to_bite) < 1)//nobody to bite
 			return
-		var/mob/living/carbon/human/Target = pick(mobs_to_bite)
+		var/mob/living/Target = pick(mobs_to_bite)
 		mob.visible_message("<span class='warning'>[mob] violently bites [Target]!</span>")
 		Target.adjustBruteLoss(5)
 		if (prob(50))

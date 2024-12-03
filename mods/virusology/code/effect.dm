@@ -23,7 +23,7 @@
 	var/chance			//probality to fire every tick
 	var/chance_max = 50
 	var/multiplier = 1	//effect magnitude multiplier
-	var/multiplier_max = 1
+	var/multiplier_max = 5
 	var/stage = 4		//minimal stage
 	var/badness = VIRUS_MILD	//Used in random generation to limit how bad result should come out.
 	var/data = null 	//For semi-procedural effects; this should be generated in generate() if used
@@ -69,6 +69,29 @@
 /datum/disease2/effect/invisible
 	name = "Waiting Syndrome"
 	stage = 1
+
+/datum/disease2/effect/gibbingtons
+	name = "Gibbingtons Syndrome"
+	stage = 4
+	badness = VIRUS_EXOTIC
+	activate(mob/living/carbon/human/mob, multiplier)
+		mob.adjustBruteLoss(10*multiplier)
+		var/obj/item/organ/external/O = pick(mob.organs)
+		if(prob(25))
+			to_chat(mob, "<span class='warning'>Your [O.name] feels as if it might burst!</span>")
+		if(prob(10))
+			if(O)
+				O.droplimb(0,DROPLIMB_BLUNT)
+
+
+/datum/disease2/effect/radian
+	name = "Radian's Syndrome"
+	stage = 4
+	multiplier_max = 3
+	badness = VIRUS_COMMON
+	activate(mob/living/carbon/human/mob,multiplier)
+		mob.apply_damage(2*multiplier, IRRADIATE, armor_pen = 100)
+
 
 /datum/disease2/effect/killertoxins
 	name = "Toxification Syndrome"
@@ -277,6 +300,17 @@
 	if (prob(30))
 		mob.jitteriness = min(mob.jitteriness + 10, 500)
 
+/datum/disease2/effect/hair
+	name = "Hair Loss"
+	stage = 2
+	badness = VIRUS_COMMON
+	activate(mob/living/carbon/human/mob, multiplier)
+		if(mob.species.name == SPECIES_HUMAN && !(mob.h_style == "Bald") && !(mob.h_style == "Balding Hair"))
+			to_chat(mob, "<span class='danger'>Your hair starts to fall out in clumps...</span>")
+			spawn(50)
+				mob.h_style = "Balding Hair"
+				mob.update_hair()
+
 ////////////////////////STAGE 1/////////////////////////////////
 
 /datum/disease2/effect/sneeze
@@ -339,3 +373,10 @@
 	delay = 25 SECONDS
 /datum/disease2/effect/stomach/activate(mob/living/carbon/human/mob, multiplier)
 	to_chat(mob, "<span class='warning'>Your stomach feels heavy.</span>")
+
+/datum/disease2/effect/stealth
+	name = "Silent Death Syndrome"
+	stage = 1
+	badness = VIRUS_EXOTIC
+	chance_max = 0
+	allow_multiple = 1
