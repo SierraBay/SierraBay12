@@ -59,7 +59,7 @@
 
 /obj/item/virusdish/use_tool(obj/item/W, mob/living/user, list/click_params)
 	. = ..()
-	if(istype(W, /obj/item/hand_labeler) || istype(W, /obj/item/reagent_containers/syringe))
+	if(istype(W, /obj/item/hand_labeler) || istype(W, /obj/item/reagent_containers))
 		return
 	..()
 	if(prob(50))
@@ -88,7 +88,7 @@
 
 /obj/item/ruinedvirusdish/use_tool(obj/item/W, mob/living/user, list/click_params)
 	. = ..()
-	if(istype(W,/obj/item/hand_labeler) || istype(W,/obj/item/reagent_containers/syringe))
+	if(istype(W,/obj/item/hand_labeler) || istype(W,/obj/item/reagent_containers))
 		return ..()
 
 	if(prob(50))
