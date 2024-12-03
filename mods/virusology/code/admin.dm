@@ -113,7 +113,10 @@
 	<a href="?src=\ref[src];what=go" style="color:#ff0000">RELEASE</a>
 	"}
 
+	show_browser(usr, H, "window=admin2;size=540x600")
+
 /datum/virus2_editor/Topic(href, href_list)
+	..()
 	switch(href_list["what"])
 		if("effect")
 			var/stage = text2num(href_list["stage"])
@@ -214,8 +217,8 @@
 
 
 /client/proc/give_disease2(mob/T as mob in SSmobs.mob_list) // -- Giacom
+	set name = "Gives Disease"
 	set category = "Fun"
-	set name = "Give Disease"
 	set desc = "Gives a Disease to a mob."
 
 	var/datum/disease2/disease/D = new /datum/disease2/disease()
