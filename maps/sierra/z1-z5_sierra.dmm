@@ -93177,7 +93177,6 @@
 	},
 /obj/floor_decal/techfloor,
 /obj/floor_decal/industrial/hatch/yellow,
-/obj/shuttle_landmark/reaper/dock,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/crew_quarters/docking)
 "nMh" = (
@@ -94471,6 +94470,7 @@
 /area/engineering/engine_room)
 "nYR" = (
 /obj/shuttle_landmark/merc/dock,
+/obj/shuttle_landmark/reaper/dock,
 /turf/space,
 /area/space)
 "nYS" = (
@@ -163586,6 +163586,10 @@
 	},
 /turf/simulated/floor/grass/cut,
 /area/crew_quarters/garden_room)
+"yfe" = (
+/obj/shuttle_landmark/snz/dock,
+/turf/space,
+/area/space)
 "yfi" = (
 /obj/structure/cable/green{
 	d1 = 4;
@@ -180044,7 +180048,7 @@ wJN
 wJN
 wJN
 wJN
-wJN
+yfe
 wJN
 wJN
 wJN

@@ -44,7 +44,8 @@
 
 	else if(href_list["add_language"])
 
-		if(length(pref.alternate_languages) >= MAX_LANGUAGES)
+		// if(length(pref.alternate_languages) >= MAX_LANGUAGES) // SIERRA-EDIT - ORIGINAL
+		if(length(pref.alternate_languages) >= total_languages())
 			// [SIERRA-EDIT] - EXPANDED_CULTURE_DESCRIPTOR - Перевод
 			// alert(user, "You have already selected the maximum number of languages!") // SIERRA-EDIT - ORIGINAL
 			alert(user, "Вы уже выбрали максимальное количество языков!")
@@ -115,8 +116,12 @@
 			pref.alternate_languages.Insert(1, lang)
 
 	pref.alternate_languages = uniquelist(pref.alternate_languages)
+/*
 	if(length(pref.alternate_languages) > MAX_LANGUAGES)
-		pref.alternate_languages.Cut(MAX_LANGUAGES + 1)
+		pref.alternate_languages.Cut(MAX_LANGUAGES + 1) // SIERRA-EDIT - ORIGINAL
+*/
+	if(length(pref.alternate_languages) > total_languages())
+		pref.alternate_languages.Cut(total_languages() + 1)
 
 /datum/category_item/player_setup_item/background/languages/proc/get_language_text()
 	sanitize_alt_languages()
@@ -133,8 +138,12 @@
 				// LAZYADD(., "- [lang] <a href='?src=\ref[src];remove_language=[i]'>Remove.</a> <span style='color:#ff0000;font-style:italic;'>[all_languages[lang].warning]</span><br>") // SIERRA-EDIT - ORIGINAL
 				LAZYADD(., "- [lang] <a href='?src=\ref[src];remove_language=[i]'>Убрать.</a> <span style='color:#ff0000;font-style:italic;'>[all_languages[lang].warning]</span><br>")
 				// [/SIERRA-EDIT]
+/*
 	if(length(pref.alternate_languages) < MAX_LANGUAGES)
-		var/remaining_langs = MAX_LANGUAGES - length(pref.alternate_languages)
+		var/remaining_langs = MAX_LANGUAGES - length(pref.alternate_languages) // SIERRA-EDIT - ORIGINAL
+*/
+	if(length(pref.alternate_languages) < total_languages())
+		var/remaining_langs = total_languages() - length(pref.alternate_languages)
 		// [SIERRA-EDIT] - EXPANDED_CULTURE_DESCRIPTOR - Перевод
 		// LAZYADD(., "- <a href='?src=\ref[src];add_language=1'>add</a> ([remaining_langs] remaining)<br>") // SIERRA-EDIT - ORIGINAL
 		LAZYADD(., "- <a href='?src=\ref[src];add_language=1'>Добавить</a> ([remaining_langs] осталось)<br>")

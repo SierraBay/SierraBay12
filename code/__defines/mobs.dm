@@ -163,7 +163,7 @@
 #define FLASH_PROTECTION_MODERATE 2
 #define FLASH_PROTECTION_MAJOR 3
 
-#define ANIMAL_SPAWN_DELAY round(config.respawn_delay / 6)
+#define ANIMAL_SPAWN_DELAY round(config.respawn_delay / 2) //SIERRA-EDIT ORIG was /6
 #define DRONE_SPAWN_DELAY  round(config.respawn_delay / 3)
 
 // Incapacitation flags, used by the mob/proc/incapacitated() proc
