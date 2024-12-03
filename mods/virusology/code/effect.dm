@@ -74,14 +74,15 @@
 	name = "Gibbingtons Syndrome"
 	stage = 4
 	badness = VIRUS_EXOTIC
-	activate(mob/living/carbon/human/mob, multiplier)
-		mob.adjustBruteLoss(10*multiplier)
-		var/obj/item/organ/external/O = pick(mob.organs)
-		if(prob(25))
-			to_chat(mob, "<span class='warning'>Your [O.name] feels as if it might burst!</span>")
-		if(prob(10))
-			if(O)
-				O.droplimb(0,DROPLIMB_BLUNT)
+
+/datum/disease2/effect/gibbingtons/activate(mob/living/carbon/human/mob, multiplier)
+	mob.adjustBruteLoss(10*multiplier)
+	var/obj/item/organ/external/O = pick(mob.organs)
+	if(prob(25))
+		to_chat(mob, "<span class='warning'>Your [O.name] feels as if it might burst!</span>")
+	if(prob(10))
+		if(O)
+			O.droplimb(0,DROPLIMB_BLUNT)
 
 
 /datum/disease2/effect/radian
@@ -89,8 +90,9 @@
 	stage = 4
 	multiplier_max = 3
 	badness = VIRUS_COMMON
-	activate(mob/living/carbon/human/mob,multiplier)
-		mob.apply_damage(2*multiplier, IRRADIATE, armor_pen = 100)
+
+/datum/disease2/effect/radian/activate(mob/living/carbon/human/mob,multiplier)
+		mob.apply_damage(2*multiplier, DAMAGE_RADIATION, armor_pen = 100)
 
 
 /datum/disease2/effect/killertoxins
@@ -304,12 +306,12 @@
 	name = "Hair Loss"
 	stage = 2
 	badness = VIRUS_COMMON
-	activate(mob/living/carbon/human/mob, multiplier)
-		if(mob.species.name == SPECIES_HUMAN && !(mob.h_style == "Bald") && !(mob.h_style == "Balding Hair"))
-			to_chat(mob, "<span class='danger'>Your hair starts to fall out in clumps...</span>")
-			spawn(50)
-				mob.h_style = "Balding Hair"
-				mob.update_hair()
+
+/datum/disease2/effect/hair/activate(mob/living/carbon/human/mob, multiplier)
+	if(mob.species.name == SPECIES_HUMAN && !(mob.head_hair_style == "Bald") && !(mob.head_hair_style == "Balding Hair"))
+		to_chat(mob, "<span class='danger'>Your hair starts to fall out in clumps...</span>")
+		mob.head_hair_style = "Balding Hair"
+		mob.update_hair()
 
 ////////////////////////STAGE 1/////////////////////////////////
 
