@@ -1,5 +1,5 @@
 /obj/item/clothing/accessory/cross_blue
-	name = "TEST"
+	name = "Cross blue"
 	desc = "Test OBJECT"
 	icon = 'mods/utility_items/icons/pins.dmi'
 	accessory_icons = list(slot_w_uniform_str = 'mods/utility_items/icons/pins.dmi', slot_wear_suit_str = 'mods/utility_items/icons/pins.dmi')
@@ -7,7 +7,7 @@
 	slot = ACCESSORY_SLOT_INSIGNIA
 
 /obj/item/clothing/accessory/cross_red
-	name = "TEST"
+	name = "Cross red"
 	desc = "TEST OBJECT"
 	icon = 'mods/utility_items/icons/pins.dmi'
 	accessory_icons = list(slot_w_uniform_str = 'mods/utility_items/icons/pins.dmi', slot_wear_suit_str = 'mods/utility_items/icons/pins.dmi')
@@ -15,7 +15,7 @@
 	slot = ACCESSORY_SLOT_INSIGNIA
 
 /obj/item/clothing/accessory/flower_gold
-	name = "TEST"
+	name = "Flower gold"
 	desc = "TEST OBJECT"
 	icon = 'mods/utility_items/icons/pins.dmi'
 	accessory_icons = list(slot_w_uniform_str = 'mods/utility_items/icons/pins.dmi', slot_wear_suit_str = 'mods/utility_items/icons/pins.dmi')
@@ -23,7 +23,7 @@
 	slot = ACCESSORY_SLOT_INSIGNIA
 
 /obj/item/clothing/accessory/flower_silver
-	name = "TEST"
+	name = "Flower silver"
 	desc = "TEST OBJECT"
 	icon = 'mods/utility_items/icons/pins.dmi'
 	accessory_icons = list(slot_w_uniform_str = 'mods/utility_items/icons/pins.dmi', slot_wear_suit_str = 'mods/utility_items/icons/pins.dmi')
@@ -31,7 +31,7 @@
 	slot = ACCESSORY_SLOT_INSIGNIA
 
 /obj/item/clothing/accessory/flower_bronze
-	name = "TEST"
+	name = "Flower bronze"
 	desc = "TEST OBJECT"
 	icon = 'mods/utility_items/icons/pins.dmi'
 	accessory_icons = list(slot_w_uniform_str = 'mods/utility_items/icons/pins.dmi', slot_wear_suit_str = 'mods/utility_items/icons/pins.dmi')
