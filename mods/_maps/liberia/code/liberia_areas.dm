@@ -73,10 +73,6 @@
 	name = "FTV Liberia - Shower"
 	icon_state = "showroom"
 
-/area/liberia/toiletroom2
-	name = "FTV Liberia - Toilet"
-	icon_state = "toilet"
-
 /area/liberia/bar
 	name = "FTV Liberia - Bar"
 	icon_state = "bar"

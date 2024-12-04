@@ -56,13 +56,15 @@
 
 /obj/item/gun/magnetic/Process()
 	if(capacitor)
+		var/prior_charge = capacitor.charge
 		if(cell)
 			if(capacitor.charge < capacitor.max_charge && cell.checked_use(power_per_tick))
 				capacitor.charge(power_per_tick)
 		else
 			if(capacitor)
 				capacitor.use(capacitor.charge * 0.05)
-	update_icon()
+		if (capacitor.charge != prior_charge)
+			update_icon()
 
 /obj/item/gun/magnetic/on_update_icon()
 	..()

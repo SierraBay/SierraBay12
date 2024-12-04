@@ -112,7 +112,7 @@
 		/obj/item/retractor = 40,
 		/obj/item/crowbar = 60,
 		/obj/item/swapper/jaws_of_life = 80,
-		/obj/item/material/kitchen/utensil = 30
+		/obj/item/material/utensil = 30
 	)
 
 	min_duration = 30
@@ -150,7 +150,7 @@
 		/obj/item/retractor = 40,
 		/obj/item/crowbar = 60,
 		/obj/item/swapper/jaws_of_life = 80,
-		/obj/item/material/kitchen/utensil = 30
+		/obj/item/material/utensil = 30
 	)
 
 	min_duration = 70
@@ -629,7 +629,7 @@
 	allowed_tools = list(
 		/obj/item/hemostat = 100,
 		/obj/item/wirecutters = 75,
-		/obj/item/material/kitchen/utensil/fork = 20
+		/obj/item/material/utensil/fork = 20
 	)
 	can_infect = 0
 	surgery_candidate_flags = SURGERY_NO_CRYSTAL | SURGERY_NO_FLESH | SURGERY_NO_STUMP | SURGERY_NEEDS_ENCASEMENT

@@ -29,7 +29,7 @@
 	head = /obj/item/clothing/head/chefhat
 	uniform = /obj/item/clothing/under/rank/chef
 	suit = /obj/item/clothing/suit/chef
-	r_hand = /obj/item/material/kitchen/rollingpin
+	r_hand = /obj/item/material/rollingpin
 	l_pocket = /obj/item/material/knife/combat
 	r_pocket = /obj/item/material/knife/combat
 

@@ -100,7 +100,7 @@
 		var/o_access = O.GetAccess()
 		. |= o_access
 
-/obj/item/device/electronic_assembly/Bump(atom/AM)
+/obj/item/device/electronic_assembly/Bump(atom/AM, called)
 	collw = weakref(AM)
 	.=..()
 	if(istype(AM, /obj/machinery/door/airlock) ||  istype(AM, /obj/machinery/door/window))

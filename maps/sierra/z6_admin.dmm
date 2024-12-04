@@ -3890,7 +3890,7 @@
 /area/tdome/tdomeobserve)
 "axo" = (
 /obj/structure/table/glass,
-/obj/item/material/kitchen/rollingpin,
+/obj/item/material/rollingpin,
 /turf/unsimulated/floor{
 	icon_state = "white"
 	},
@@ -15838,7 +15838,7 @@
 /area/centcom/holding)
 "qws" = (
 /obj/structure/table/marble,
-/obj/item/material/kitchen/rollingpin,
+/obj/item/material/rollingpin,
 /obj/floor_decal/corner/paleblue/diagonal,
 /obj/floor_decal/corner/white/diagonal{
 	dir = 4
@@ -18055,8 +18055,8 @@
 /area/centcom)
 "ueR" = (
 /obj/structure/table/standard,
-/obj/item/material/kitchen/rollingpin,
-/obj/item/material/knife/table/plastic,
+/obj/item/material/rollingpin,
+/obj/item/material/utensil/knife/plastic,
 /obj/item/reagent_containers/food/condiment/small/saltshaker{
 	pixel_x = -3
 	},

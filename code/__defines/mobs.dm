@@ -163,7 +163,7 @@
 #define FLASH_PROTECTION_MODERATE 2
 #define FLASH_PROTECTION_MAJOR 3
 
-#define ANIMAL_SPAWN_DELAY round(config.respawn_delay / 6)
+#define ANIMAL_SPAWN_DELAY round(config.respawn_delay / 2) //SIERRA-EDIT ORIG was /6
 #define DRONE_SPAWN_DELAY  round(config.respawn_delay / 3)
 
 // Incapacitation flags, used by the mob/proc/incapacitated() proc
@@ -486,7 +486,7 @@
 #define FAKE_INVIS_ALPHA_THRESHOLD 127 // If something's alpha var is at or below this number, certain things will pretend it is invisible.
 
 #define PRONOUNS_THEY_THEM	"they/them"
-#define PRONOUNS_HE_HIM		"he/his"
+#define PRONOUNS_HE_HIM		"he/him"
 #define PRONOUNS_SHE_HER	"she/her"
 #define PRONOUNS_IT_ITS		"it/its"
 #define PRONOUNS_HE_THEY	"he/they"
@@ -496,3 +496,7 @@
 
 /// Integer (~ticks * SSMobs/wait fire rate). The default maximum value a mob's confused var can be set to.
 #define CONFUSED_MAX 15
+
+///Flags assigned to carbon mobs trait_flags when they're actively having an allergy.
+#define MILD_ALLERGY FLAG(0)
+#define SEVERE_ALLERGY FLAG(1)

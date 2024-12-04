@@ -44,6 +44,8 @@
 		<option value='?_src_=vars;mob_player_panel=\ref[src]'>Show player panel</option>
 		<option>---</option>
 		<option value='?_src_=vars;give_spell=\ref[src]'>Give Spell</option>
+		<option value='?_src_=vars;give_disease2=\ref[src]'>Give Disease</option>
+		<option value='?_src_=vars;give_disease=\ref[src]'>Give TG-style Disease</option>
 		<option value='?_src_=vars;godmode=\ref[src]'>Toggle Godmode</option>
 		<option value='?_src_=vars;build_mode=\ref[src]'>Toggle Build Mode</option>
 
@@ -74,6 +76,8 @@
 		<option value='?_src_=vars;addaura=\ref[src]'>Add Aura</option>
 		<option value='?_src_=vars;removeaura=\ref[src]'>Remove Aura</option>
 		<option value='?_src_=vars;debug_mob_ai=\ref[src]'>Toggle AI Debug Output</option>
+		<option value='?_src_=vars;settrait=\ref[src]'>Set Trait</option>
+		<option value='?_src_=vars;removetrait=\ref[src]'>Remove Trait</option>
 		"}
 
 /mob/living/carbon/human/get_view_variables_options()
@@ -154,7 +158,7 @@
 
 
 /atom/VV_static()
-	return ..() + list("bound_x", "bound_y", "bound_height", "bound_width", "bounds", "step_x", "step_y", "step_size")
+	return ..() + list("bound_x", "bound_y", "bound_height", "bound_width", "bounds", "step_x", "step_y", "step_size", "underlays", "overlays")
 
 /client/VV_static()
 	return ..() + list("holder", "prefs")
@@ -164,7 +168,7 @@
 
 // The following vars require R_DEBUG to edit
 /datum/proc/VV_locked()
-	return list("vars", "cuffed")
+	return list("vars", "virus", "viruses", "cuffed") //[SIEERA EDIT]
 
 /client/VV_locked()
 	return list("vars", "mob")

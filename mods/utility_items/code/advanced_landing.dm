@@ -1,3 +1,8 @@
+/obj/machinery/computer/shuttle_control/Initialize(mapload, init_shuttle_tag)
+	. = ..()
+	if(shuttle_tag == init_shuttle_tag)
+		sync_shuttle()
+
 /obj/machinery/computer/shuttle_control/explore/handle_topic_href(datum/shuttle/autodock/overmap/shuttle, list/href_list)
 	. = ..()
 	if(href_list["advancedpick"])
@@ -36,6 +41,7 @@
 	var/y_offset = 0
 	var/landloc
 	var/skilled_enough = FALSE
+	var/skill_req = SKILL_EXPERIENCED
 
 /obj/machinery/computer/shuttle_control/proc/update_operator_skill()
 	if (isobserver(usr))
@@ -43,7 +49,7 @@
 	if(!usr)
 		return
 	operator_skill = usr.get_skill_value(SKILL_PILOT)
-	if (operator_skill >= SKILL_EXPERIENCED)
+	if (operator_skill >= skill_req && !(istype(usr, /mob/living/silicon/ai)))
 		skilled_enough = TRUE
 	else
 		skilled_enough = FALSE
@@ -62,43 +68,25 @@
 	density = FALSE
 	alpha = 127
 	plane = OBSERVER_PLANE
+	simulated = FALSE
+	stat = CONSCIOUS
 	invisibility = INVISIBILITY_EYE
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	sight = SEE_TURFS
-	simulated = TRUE
-	stat = CONSCIOUS
-	status_flags = GODMODE
 	ghost_image_flag = GHOST_IMAGE_NONE
 	var/list/placement_images = list()
 	var/obj/machinery/computer/shuttle_control/explore/console_link
 	var/list/to_add = list()
-/*
-/mob/living/carbon/human/
-	var/list/obscured_turfs = list()
-*/
+
 /mob/living/carbon/human/update_dead_sight()
 	. = ..()
-	/*
-	var/area = seen_turfs_in_range(src.eyeobj, world.view)
-	var/image/O = image('icons/effects/cameravis.dmi', null, "black")*/
+	if(!eyeobj)
+		cancel_landeye_view()
+		return
 	if(eyeobj.type == /mob/observer/eye/landeye)
-		set_sight(BLIND|SEE_TURFS)
 		set_see_in_dark(8)
 		set_see_invisible(SEE_INVISIBLE_MINIMUM)
-		/*for(var/turf/simulated/t in area)
-			if(t in obscured_turfs)
-				return
-			if(!(t in list(/area/space)))
-				O.loc = t.loc
-				O.layer = TURF_LAYER
-				obscured_turfs[O] = t
-		client.images += obscured_turfs*/
-
-/mob/observer/eye/landeye/proc/acquire_visible_turfs(list/visible)
-	for(var/turf/t in seen_turfs_in_range(src, world.view))
-		if(t in typesof(/area/space))
-			visible[t] = t
-	return visible
+		set_sight(BLIND|SEE_TURFS)
 
 /mob/observer/eye/landeye/possess(mob/user)
 	if(owner && owner != user)
@@ -113,6 +101,7 @@
 		owner.verbs |= /mob/living/proc/extra_view
 		owner.verbs |= /mob/living/proc/cancel_landeye_view
 		owner.client.eye = src
+
 /mob/observer/eye/landeye/setLoc(T)
 	if(!owner)
 		return FALSE
@@ -153,6 +142,7 @@
 /obj/machinery/computer/shuttle_control/explore/pod_hand_one
 /obj/machinery/computer/shuttle_control/explore/pod_hand_two
 /obj/machinery/computer/shuttle_control/explore/graysontug/hand_two
+/obj/machinery/computer/shuttle_control/explore/merc_shuttle/merc_drop_pod
 
 /area/mine
 	name = "Mine"
@@ -163,6 +153,7 @@
 // ______________________________________________________________
 
 /obj/machinery/computer/shuttle_control/explore/
+
 	var/landmarkx_off
 	var/landmarky_off
 	//Лучше способа не придумал, поэтому если check_zone шаттла захватывает территории, больше чем надо, то пихаем консоль этого шаттла, в список
@@ -175,7 +166,9 @@
 	/obj/machinery/computer/shuttle_control/explore/graysontug/hand_one,
 	/obj/machinery/computer/shuttle_control/explore/pod_hand_one,
 	/obj/machinery/computer/shuttle_control/explore/pod_hand_two,
-	/obj/machinery/computer/shuttle_control/explore/graysontug/hand_two
+	/obj/machinery/computer/shuttle_control/explore/graysontug/hand_two,
+	/obj/machinery/computer/shuttle_control/explore/merc_shuttle,
+	/obj/machinery/computer/shuttle_control/explore/merc_shuttle/merc_drop_pod,
 	)
 
 	//Списки куда разрешена посадка
@@ -185,6 +178,10 @@
 	/area/exoplanet,
 	/area/bluespaceriver,
 	)
+
+	var/list/shadow_images = list()
+	var/list/saved_landmarks= list()
+
 
 /obj/machinery/computer/shuttle_control/explore/proc/oko_enter()
 	oko = new /mob/observer/eye/landeye
@@ -201,7 +198,6 @@
 
 /obj/machinery/computer/shuttle_control/explore/proc/create_zone()
 	var/area/area_oko = get_area(src)
-	//var/obj/overmap/visitable/ship/landable/shuttle_landmark = locate(/obj/overmap/visitable/ship/landable) in area_oko
 	var/turf/origin = locate(src.x + x_offset, src.y + y_offset, src.z)
 	var/turf/turf
 	var/obj/shuttle_landmark/shuttle_landmark
@@ -227,7 +223,7 @@
 		landmarky_off = shuttle_landmark.y - origin.y
 
 /obj/machinery/computer/shuttle_control/explore/proc/check_zone()
-
+	shadow_images = list()
 	var/turf/eyeturf = get_turf(oko)
 	var/list/image_cache = oko.placement_images
 	var/landable = TRUE
@@ -236,9 +232,17 @@
 		var/list/coords = image_cache[I]
 		var/turf/T = locate(eyeturf.x + coords[1], eyeturf.y + coords[2], eyeturf.z)
 		var/area/A = get_area(T)
+		var/zone_good = FALSE
 		I.loc = T
-		if(!(T.density) && ((A.type in accesible_areas)))
-			I.icon_state = "blue"
+		shadow_images += I
+		if(T && !(T.density))
+			for(var/type in accesible_areas)
+				if(A.type in typesof(type))
+					zone_good = TRUE
+			if(zone_good)
+				I.icon_state = "blue"
+			else
+				I.icon_state = "red"
 		else
 			I.icon_state = "red"
 			landable = FALSE
@@ -274,7 +278,8 @@
 	src.Destroy()
 	SetName(initial(name))
 
-
+/obj/shuttle_landmark
+	var/list/image_shadow
 
 /obj/shuttle_landmark/ship/advancedlandmark/Initialize(mapload, obj/shuttle_landmark/ship/master, _name)
 	landmark_tag = "_[shuttle_name] [rand(1,99999)]"
@@ -290,8 +295,34 @@
 			var/datum/shuttle/shuttle_datum = SSshuttle.shuttles[shuttle_name]
 			if(temp in shuttle_datum.shuttle_area)
 				for(var/obj/machinery/computer/shuttle_control/explore/c in temp)
+					for(var/obj/shuttle_landmark/ship/advancedlandmark/l in c.saved_landmarks)
+						var/area/landmarkarea = get_area(l)
+						if(landmarkarea in shuttle_datum.shuttle_area)
+							continue
+						else
+							c.saved_landmarks -= l
+							qdel(l)
 					if(c.check_zone())
 						var/turf/eyeturf = get_turf(c.oko)
 						var/turf/T = locate(eyeturf.x + c.landmarkx_off, eyeturf.y + c.landmarky_off , eyeturf.z)
 						landmark = new (T, src)
+						c.saved_landmarks += landmark
 						c.shuttle_type.set_destination(landmark)
+						c.shuttle_type.next_location.image_shadow = c.shadow_images
+
+/turf
+	var/prev_type
+
+/turf/ChangeTurf(turf/N, tell_universe = TRUE, force_lighting_update = FALSE, keep_air = FALSE)
+	.=..()
+	var/old_prev_type = prev_type
+	prev_type = old_prev_type
+
+
+/datum/shuttle/autodock/process_launch()
+	.=..()
+	for(var/i in 1 to LAZYLEN(next_location.image_shadow))
+		var/image/I = next_location.image_shadow[i]
+		var/turf/T = locate(I.loc.x, I.loc.y, I.loc.z)
+		I = image('mods/utility_items/icons/alphacolors.dmi', T, "dither50")
+		T.AddOverlays(I)
