@@ -1,3 +1,6 @@
+/datum/species/adherent
+	additional_languages = 1
+
 /obj/item/organ/internal/cell/adherent
 	var/ready_to_charge
 
@@ -19,3 +22,17 @@
 
 	adherent_core.ready_to_charge = FALSE
 	to_chat(src, SPAN_WARNING("You have relieved the tension of your tentacles."))
+
+/singleton/cultural_info/culture/adherent
+	secondary_langs = list(
+		LANGUAGE_HUMAN_EURO,
+		LANGUAGE_HUMAN_CHINESE,
+		LANGUAGE_HUMAN_ARABIC,
+		LANGUAGE_HUMAN_INDIAN,
+		LANGUAGE_HUMAN_IBERIAN,
+		LANGUAGE_HUMAN_RUSSIAN,
+		LANGUAGE_SPACER,
+		LANGUAGE_VOX,
+		LANGUAGE_CULT,
+		LANGUAGE_PRIMITIVE
+	)

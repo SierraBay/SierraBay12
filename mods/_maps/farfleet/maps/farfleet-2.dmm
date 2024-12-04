@@ -49,6 +49,7 @@
 /area/ship/farfleet/barracks/armory)
 "aO" = (
 /obj/machinery/photocopier,
+/obj/floor_decal/industrial/outline/grey,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/crew/brig/css)
 "aP" = (
@@ -107,6 +108,9 @@
 	pixel_y = 32
 	},
 /obj/item/stack/package_wrap/cargo_wrap,
+/obj/item/storage/lunchbox/gcc,
+/obj/item/storage/lunchbox/gcc,
+/obj/item/storage/lunchbox/gcc,
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/crew/kitchen)
 "bg" = (
@@ -122,6 +126,7 @@
 /obj/machinery/atmospherics/unary/tank/hydrogen{
 	dir = 1
 	},
+/obj/floor_decal/industrial/outline/red,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/farfleet/command/hangar_canisters)
 "br" = (
@@ -388,6 +393,7 @@
 /obj/machinery/atmospherics/unary/tank/carbon_dioxide{
 	dir = 4
 	},
+/obj/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/farfleet/command/hangar_canisters)
 "dY" = (
@@ -441,6 +447,7 @@
 /area/ship/farfleet/crew/freezer)
 "eg" = (
 /obj/machinery/artifact_analyser,
+/obj/floor_decal/industrial/outline/grey,
 /turf/simulated/floor/tiled/techmaint,
 /area/ship/farfleet/maintenance/anomaly)
 "en" = (
@@ -454,6 +461,7 @@
 /area/ship/farfleet/crew/brig)
 "eo" = (
 /obj/structure/reagent_dispensers/coolanttank,
+/obj/floor_decal/industrial/outline/blue,
 /turf/simulated/floor/tiled/techmaint,
 /area/ship/farfleet/maintenance/anomaly)
 "er" = (
@@ -567,6 +575,7 @@
 /area/ship/farfleet/barracks/armory)
 "fN" = (
 /obj/machinery/photocopier,
+/obj/floor_decal/industrial/outline/grey,
 /turf/simulated/floor/tiled/techmaint,
 /area/ship/farfleet/maintenance/anomaly)
 "fS" = (
@@ -666,6 +675,7 @@
 	icon_state = "map_connector"
 	},
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
+/obj/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/farfleet/command/hangar_canisters)
 "gL" = (
@@ -729,6 +739,7 @@
 /area/ship/farfleet/crew/kitchen)
 "hj" = (
 /obj/structure/closet/radiation,
+/obj/floor_decal/industrial/outline/grey,
 /turf/simulated/floor/tiled/techmaint,
 /area/ship/farfleet/maintenance/anomaly)
 "hn" = (
@@ -883,6 +894,7 @@
 /area/ship/farfleet/maintenance/anomaly)
 "iv" = (
 /obj/structure/closet/secure_closet/farfleet/css,
+/obj/floor_decal/industrial/outline/grey,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/crew/brig/css)
 "iG" = (
@@ -1093,8 +1105,8 @@
 /obj/structure/closet/secure_closet/hydroponics{
 	req_access = list()
 	},
-/obj/floor_decal/corner_steel_grid/diagonal,
-/turf/simulated/floor/tiled,
+/obj/floor_decal/industrial/outline/yellow,
+/turf/simulated/floor/tiled/monotile,
 /area/ship/farfleet/crew/hydroponics)
 "kS" = (
 /obj/machinery/light,
@@ -2380,6 +2392,7 @@
 /area/ship/snz)
 "xk" = (
 /obj/machinery/artifact_harvester,
+/obj/floor_decal/industrial/outline/grey,
 /turf/simulated/floor/tiled/techmaint,
 /area/ship/farfleet/maintenance/anomaly)
 "xl" = (
@@ -2589,6 +2602,9 @@
 	pixel_y = 2
 	},
 /obj/item/device/scanner/health,
+/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/glass/bucket,
 /turf/simulated/floor/tiled/techmaint,
 /area/ship/farfleet/maintenance/anomaly)
 "yK" = (
@@ -3249,6 +3265,14 @@
 /obj/item/rig_module/grenade_launcher/light,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/barracks/armory)
+"Em" = (
+/obj/structure/table/reinforced,
+/obj/item/gun/projectile/shotgun/pump/exploration,
+/obj/item/gun/projectile/shotgun/pump/exploration{
+	pixel_y = 6
+	},
+/turf/simulated/floor/tiled/dark,
+/area/ship/farfleet/barracks)
 "En" = (
 /obj/structure/cable/green{
 	d1 = 4;
@@ -3760,8 +3784,11 @@
 	pixel_x = -22;
 	req_access = list("ACCESS_ICCGN")
 	},
-/obj/structure/table/steel_reinforced,
-/obj/item/reagent_containers/glass/bucket,
+/obj/structure/table/rack,
+/obj/item/clothing/gloves/anomaly_detector/gurza,
+/obj/item/storage/bolt_bag/full_of_bolts,
+/obj/item/storage/bolt_bag/full_of_bolts,
+/obj/item/storage/bolt_bag/full_of_bolts,
 /turf/simulated/floor/tiled/techmaint,
 /area/ship/farfleet/maintenance/anomaly)
 "KF" = (
@@ -3838,6 +3865,7 @@
 /area/ship/farfleet/crew/hydroponics)
 "Lf" = (
 /obj/machinery/papershredder,
+/obj/floor_decal/industrial/outline/grey,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/crew/brig/css)
 "Ll" = (
@@ -3922,10 +3950,6 @@
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/ship/farfleet/crew/hydroponics)
-"Ms" = (
-/obj/shuttle_landmark/snz/start,
-/turf/simulated/floor/tiled/monotile,
-/area/ship/farfleet/command/snz_hangar)
 "Mt" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled/white,
@@ -4324,6 +4348,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/shuttle_landmark/snz/start,
 /turf/simulated/floor/tiled/steel_grid,
 /area/ship/snz)
 "Rs" = (
@@ -4594,6 +4619,13 @@
 /obj/item/clothing/accessory/storage/holster/armpit,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/barracks/armory)
+"Tc" = (
+/obj/structure/table/reinforced,
+/obj/item/ammo_magazine/shotholder/net,
+/obj/item/ammo_magazine/shotholder/net,
+/obj/item/ammo_magazine/shotholder/net,
+/turf/simulated/floor/tiled/dark,
+/area/ship/farfleet/barracks)
 "Tg" = (
 /obj/floor_decal/corner/b_green/diagonal{
 	dir = 8
@@ -4646,7 +4678,7 @@
 	dir = 8
 	},
 /obj/structure/table/marble,
-/obj/item/material/kitchen/rollingpin,
+/obj/item/material/rollingpin,
 /obj/machinery/atmospherics/unary/vent_pump/on,
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/crew/kitchen)
@@ -4742,6 +4774,14 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /turf/simulated/floor/plating,
 /area/ship/farfleet/command/snz_hangar)
+"Uq" = (
+/obj/floor_decal/corner/b_green/diagonal{
+	dir = 8
+	},
+/obj/structure/table/standard,
+/obj/item/storage/lunchbox/gcc,
+/turf/simulated/floor/tiled/white,
+/area/ship/farfleet/crew/canteen)
 "Uu" = (
 /turf/simulated/floor/tiled/dark,
 /area/ship/farfleet/barracks)
@@ -5250,6 +5290,7 @@
 "Yn" = (
 /obj/machinery/atmospherics/portables_connector,
 /obj/machinery/portable_atmospherics/canister/hydrogen,
+/obj/floor_decal/industrial/outline/red,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/farfleet/command/hangar_canisters)
 "Ys" = (
@@ -11575,7 +11616,7 @@ Je
 MT
 VA
 Ac
-Ac
+Uq
 Wd
 Ye
 cO
@@ -14616,7 +14657,7 @@ Uu
 Uu
 wJ
 ME
-Ms
+ns
 aW
 Iu
 eB
@@ -14979,7 +15020,7 @@ wt
 PD
 Gb
 kU
-uA
+Tc
 eS
 sh
 rq
@@ -15101,7 +15142,7 @@ wD
 Uu
 ju
 Uu
-uA
+Em
 eS
 sh
 rq

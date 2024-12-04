@@ -85,7 +85,7 @@ Contains helper procs for airflow, handled in /connection_group.
 		return 0
 	return 1
 
-/atom/movable/Bump(atom/A)
+/atom/movable/Bump(atom/A, called)
 	if(airflow_speed > 0 && airflow_dest)
 		if(airborne_acceleration > 1)
 			airflow_hit(A)

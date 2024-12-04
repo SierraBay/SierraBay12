@@ -101,14 +101,11 @@
 	var/attack_ignore_harm_check = FALSE
 
 
-/obj/item/New()
-	..()
-	if(randpixel && (!pixel_x && !pixel_y) && isturf(loc)) //hopefully this will prevent us from messing with mapper-set pixel_x/y
-		pixel_x = rand(-randpixel, randpixel)
-		pixel_y = rand(-randpixel, randpixel)
-
 /obj/item/Initialize()
 	. = ..()
+	if(randpixel && (!pixel_x && !pixel_y) && isturf(loc))
+		pixel_x = rand(-randpixel, randpixel)
+		pixel_y = rand(-randpixel, randpixel)
 	if(islist(armor))
 		for(var/type in armor)
 			if(armor[type]) // Don't set it if it gives no armor anyway, which is many items.
@@ -164,6 +161,12 @@
 		if(istype(hand) && hand.is_usable())
 			return TRUE
 	return FALSE
+
+
+/obj/item/update_icon()
+	..()
+	update_twohanding()
+
 
 /obj/item/ex_act(severity)
 	..()
@@ -555,6 +558,9 @@ var/global/list/slot_flags_enumeration = list(
 	var/parry_chance = get_parry_chance(user, attacker)
 	if(parry_chance)
 		if(default_parry_check(user, attacker, damage_source) && prob(parry_chance))
+			//[SIERRA-ADD]
+			user.dodge_animation(attacker = attacker)
+			//[SIERRA-ADD
 			user.visible_message(SPAN_DANGER("\The [user] parries [attack_text] with \the [src]!"))
 			admin_attack_log(attacker, user, "Attempted to attack with \a [damage_source] but was parried", "Was targeted with \a [damage_source] but parried the attack", "attmpted to use \a [damage_source] to attack but was parried by")
 			playsound(user.loc, 'sound/weapons/punchmiss.ogg', 50, 1)

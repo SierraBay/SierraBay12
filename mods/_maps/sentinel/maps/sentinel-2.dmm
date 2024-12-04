@@ -3209,7 +3209,7 @@
 /obj/floor_decal/corner/grey/diagonal{
 	dir = 4
 	},
-/obj/item/material/kitchen/rollingpin,
+/obj/item/material/rollingpin,
 /obj/item/material/knife/folding/swiss,
 /turf/simulated/floor/tiled/white,
 /area/ship/patrol/crew/kitchen)

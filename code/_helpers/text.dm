@@ -701,6 +701,18 @@
 			return "North-Northwest"
 
 
+/// Returns random hex of char length nibbles
+/proc/randhex(nibbles)
+	var/static/list/chars = list(
+		"0", "1", "2", "3", "4", "5", "6", "7",
+		"8", "9", "a", "b", "c", "d", "e", "f"
+	)
+	var/list/result = new (nibbles)
+	for (var/i = 1 to nibbles)
+		result[i] = chars[rand(1, 16)]
+	return jointext(result, "")
+
+
 /// Check if thing is an SUID. If other is supplied, check if other matches thing.
 /proc/is_suid(thing, other)
 	var/static/regex/suid_check = regex(@"^~[0-9a-zA-Z]{15}$")
