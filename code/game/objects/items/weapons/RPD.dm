@@ -104,7 +104,7 @@ GLOBAL_LIST_INIT(rpd_pipe_selection_skilled, list(
 		for(var/datum/pipe/pipe in pipe_categories[category])
 			. += "<tr><td>[pipe.name]</td><td>[P.type == pipe.type ? SPAN_CLASS("linkOn", "Select") : "<a href='?src=\ref[src];select=\ref[pipe]'>Select</a>"]</td></tr>"
 	.+= "</table>"
-	. = JOINTEXT(.)
+	. = jointext(., null)
 
 /obj/item/rpd/interact(mob/user)
 	popup = new (user, "Pipe List", "[src] menu")

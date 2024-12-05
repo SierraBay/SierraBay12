@@ -190,6 +190,7 @@
 	if(grown_seed.get_trait(TRAIT_CONSUME_GASSES))
 		dat += "<br>It will remove gas from the environment."
 
+<<<<<<< ours
 	return JOINTEXT(dat)
 //[SIERRA-ADD] - MODPACK_RND
 
@@ -204,3 +205,6 @@
 	user.put_in_hands(P)
 	user.visible_message("\The [src] spits out a piece of paper.")
 //[/SIERRA-ADD] - MODPACK_RND
+=======
+	return jointext(dat, null)
+>>>>>>> theirs

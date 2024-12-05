@@ -142,7 +142,7 @@ GLOBAL_LIST_INIT(random_chem_interaction_blacklist, list(
 			dat += "You aren't sure how this chemical will react with other reagents, but it does seem to be sensitive to changes in temperature."
 		else
 			dat += "Here are the chemicals you suspect this one will interact with, probably when heated or cooled:"
-			dat += JOINTEXT(interactions)
+			dat += jointext(interactions, null)
 	return jointext(dat, "<br>")
 
 /datum/reagent/random/Value()

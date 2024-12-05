@@ -250,7 +250,7 @@
 		else
 			HTML += "<s>\[[initial(O.name)]\]</s>: [initial(O.desc)]<br>"
 
-	popup.set_content(JOINTEXT(HTML))
+	popup.set_content(jointext(HTML, null))
 	popup.open()
 
 /obj/item/device/integrated_circuit_printer/Topic(href, href_list)

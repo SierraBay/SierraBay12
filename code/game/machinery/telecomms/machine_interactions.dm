@@ -136,7 +136,7 @@
 	temp = ""
 
 	var/datum/browser/popup = new(user, "tcommmachine", "Telecommunications Machine Configuration Panel", 520, 600)
-	popup.set_content(JOINTEXT(dat))
+	popup.set_content(jointext(dat, null))
 	popup.open()
 
 // Returns a multitool from a user depending on their mobtype.

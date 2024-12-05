@@ -284,7 +284,7 @@
 		. += "<br><b>Species of Origin:</b> [B.data["species"]]<br><b>Blood Type:</b> [B.data["blood_type"]]<br><b>DNA Hash:</b> [B.data["blood_DNA"]]"
 	else
 		. += "<br>[reagent.description]"
-	. = JOINTEXT(.)
+	. = jointext(., null)
 
 /obj/machinery/chem_master/proc/create_bottle(mob/user)
 	var/bottle_name = reagents.total_volume ? reagents.get_master_reagent_name() : "glass"

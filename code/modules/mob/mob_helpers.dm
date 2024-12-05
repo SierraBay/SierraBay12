@@ -202,15 +202,15 @@ var/global/list/organ_rel_size = list(
 		var/char = copytext_char(n, i, i+1)
 		if(!intag && (char == "<"))
 			intag = 1
-			. += stars_no_html(JOINTEXT(block), pr, re_encode) //stars added here
+			. += stars_no_html(jointext(block, null), pr, re_encode) //stars added here
 			block = list()
 		block += char
 		if(intag && (char == ">"))
 			intag = 0
 			. += block //We don't mess up html tags with stars
 			block = list()
-	. += (intag ? block : stars_no_html(JOINTEXT(block), pr, re_encode))
-	. = JOINTEXT(.)
+	. += (intag ? block : stars_no_html(jointext(block, null), pr, re_encode))
+	. = jointext(., null)
 
 //Ingnores the possibility of breaking tags.
 /proc/stars_no_html(text, pr, re_encode)
@@ -223,7 +223,7 @@ var/global/list/organ_rel_size = list(
 			. += char
 		else
 			. += "*"
-	. = JOINTEXT(.)
+	. = jointext(., null)
 	if(re_encode)
 		. = html_encode(.)
 

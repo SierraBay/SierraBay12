@@ -130,7 +130,7 @@
 		dat += "<html><head><title>[P.name]</title></head><body style='overflow:hidden'>"
 		dat += "<div> <img src='tmp_photo.png' width = '180'[P.scribble ? "<div> Written on the back:<br><i>[P.scribble]</i>" : null ]</body></html>"
 		send_rsc(user, P.img, "tmp_photo.png")
-		show_browser(user, JOINTEXT(dat), "window=[name]")
+		show_browser(user, jointext(dat, null), "window=[name]")
 
 /obj/item/paper_bundle/attack_self(mob/user as mob)
 	src.show_content(user)

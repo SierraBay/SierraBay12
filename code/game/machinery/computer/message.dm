@@ -186,7 +186,7 @@
 	dat += "</body>"
 	message = defaultmsg
 	var/datum/browser/popup = new(user, "message", "Message Monitoring Console", 700, 700)
-	popup.set_content(JOINTEXT(dat))
+	popup.set_content(jointext(dat, null))
 	popup.open()
 	return
 

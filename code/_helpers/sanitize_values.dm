@@ -74,7 +74,7 @@
 			fragment = ""
 	if(fragment)
 		return default //This means the format was improper.
-	return JOINTEXT(.)
+	return jointext(., null)
 
 //Internal proc, expects valid format and text input of equal length to format.
 /proc/sanitize_one_time(input, default, format)

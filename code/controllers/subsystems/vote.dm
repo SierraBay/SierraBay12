@@ -110,7 +110,7 @@ SUBSYSTEM_DEF(vote)
 		. += "</ul><hr>"
 
 	. += "<a href='?src=\ref[src];close=1' style='position:absolute;right:50px'>Close</a>"
-	return JOINTEXT(.)
+	return jointext(., null)
 
 /datum/controller/subsystem/vote/proc/show_panel(mob/user)
 	var/win_x = 450

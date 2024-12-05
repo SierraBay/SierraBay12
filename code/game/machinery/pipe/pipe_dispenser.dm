@@ -36,7 +36,7 @@
 			var/line = "[pipe.name]</td>"
 			. += "<tr><td>[line]<td><a href='?src=\ref[src];build=\ref[pipe]'>Dispense</a></td><td><a href='?src=\ref[src];buildfive=\ref[pipe]'>5x</a></td><td><a href='?src=\ref[src];buildten=\ref[pipe]'>10x</a></td></tr>"
 	.+= "</table>"
-	. = JOINTEXT(.)
+	. = jointext(., null)
 
 /obj/machinery/pipedispenser/proc/build_quantity(datum/pipe/P, quantity)
 	for(var/I = quantity;I > 0;I -= 1)

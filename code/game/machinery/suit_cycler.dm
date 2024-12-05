@@ -229,7 +229,7 @@
 		dat += "<b>Target product:</b> <A href='?src=\ref[src];select_department=1'>[target_modification.name]</a>, <A href='?src=\ref[src];select_species=1'>[target_species]</a>."
 		dat += "<A href='?src=\ref[src];apply_paintjob=1'><br>\[apply customisation routine\]</a><br><hr>"
 
-	show_browser(user, JOINTEXT(dat), "window=suit_cycler")
+	show_browser(user, jointext(dat, null), "window=suit_cycler")
 	onclose(user, "suit_cycler")
 	return
 

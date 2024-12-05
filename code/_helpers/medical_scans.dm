@@ -129,7 +129,7 @@
 	dat += "<tr><td><strong>Scan Results For:</strong></td><td>[scan["name"]]</td></tr>"
 	dat += "<tr><td><strong>Scan performed at:</strong></td><td>[scan["time"]]</td></tr>"
 
-	dat = JOINTEXT(dat)
+	dat = jointext(dat, null)
 	return dat
 
 /proc/display_medical_data_health(list/scan, skill_level = SKILL_DEFAULT)
@@ -290,7 +290,7 @@
 	else
 		dat += "<tr><td colspan='2'>You see a lot of numbers and abbreviations here, but you have no clue what any of it means.</td></tr>"
 
-	dat = JOINTEXT(dat)
+	dat = jointext(dat, null)
 
 	return dat
 
@@ -348,7 +348,7 @@
 			else
 				row += "<td>&nbsp;</td>"
 		row += "</tr>"
-		subdat += JOINTEXT(row)
+		subdat += jointext(row, null)
 	dat += subdat
 	subdat = list()
 
@@ -400,7 +400,7 @@
 		dat += "<tr><td colspan='3'>[SPAN_CLASS("average", "Retinal misalignment detected.")]</td></tr>"
 	dat += "</table></center></td></tr>"
 
-	dat = JOINTEXT(dat)
+	dat = jointext(dat, null)
 	return dat
 
 /proc/display_medical_data(list/scan, skill_level = SKILL_DEFAULT, TT = FALSE)
@@ -425,7 +425,7 @@
 	if(TT)
 		dat += "</tt>"
 
-	dat = JOINTEXT(dat)
+	dat = jointext(dat, null)
 	return dat
 
 /proc/get_severity(amount, tag = FALSE)

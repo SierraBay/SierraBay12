@@ -205,6 +205,6 @@ GLOBAL_LIST(end_titles)
 						(This disclaimer sponsored by Carcinoma - Carcinogens are our Business!(TM)).",
 						"No animals were harmed in the making of this motion picture except for those listed previously as dead. Do not try this at home.")
 	titles += "<hr>"
-	titles += "<center><span style='font-size:6pt;'>[JOINTEXT(disclaimer)]</span></center>"
+	titles += "<center><span style='font-size:6pt;'>[jointext(disclaimer, null)]</span></center>"
 
 	return titles

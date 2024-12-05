@@ -67,7 +67,7 @@
 
 	. += "</table>"
 
-	return jointext(., "")
+	return jointext(., null)
 
 /datum/category_item/player_setup_item/player_global/settings/OnTopic(href,list/href_list, mob/user)
 	var/mob/pref_mob = preference_mob()

@@ -128,7 +128,7 @@
 				runner_ups += display_choices[runner_up]
 			text += english_list(runner_ups)
 
-	return JOINTEXT(text)
+	return jointext(text, null)
 
 /datum/vote/proc/get_vote_statistics()
 	var/list/text = list()
@@ -138,7 +138,7 @@
 	for(var/R in result)
 		if (result[R] > 0)
 			text += "\n[R]: [result[R]]"
-	return JOINTEXT(text)
+	return jointext(text, null)
 
 
 /datum/vote/proc/mob_can_vote(mob/voter)

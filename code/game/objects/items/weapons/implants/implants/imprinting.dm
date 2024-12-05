@@ -62,7 +62,7 @@
 		. += "[SPAN_NOTICE("You hear an annoying voice in the back of your head. The things it keeps reminding you of:")]<br>"
 	for(var/thing in instructions)
 		. += "- [thing]<br>"
-	. = JOINTEXT(.)
+	. = jointext(., null)
 
 /obj/item/implant/imprinting/disable(time)
 	. = ..()

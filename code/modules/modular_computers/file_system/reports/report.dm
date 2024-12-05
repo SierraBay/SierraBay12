@@ -154,7 +154,7 @@
 	for(var/datum/report_field/F in fields)
 		. += F.generate_row_pencode(access, with_fields)
 	. += "\[/grid\]"
-	. = JOINTEXT(.)
+	. = jointext(., null)
 	if(no_html)
 		. = html2pencode(.)
 

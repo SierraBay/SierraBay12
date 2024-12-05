@@ -334,7 +334,7 @@
 	. += "<table>"
 	. += "<tr><td><b>Name:</b></td><td>[name]</td>"
 	. += "<tr><td><b>Pump Status:</b></td><td>[pump_direction ? SPAN_COLOR("green", "Releasing") : SPAN_COLOR("red", "Siphoning")]</td><td><a href='?src=\ref[src];switchMode=\ref[src]'>Toggle</a></td></tr>"
-	. = JOINTEXT(.)
+	. = jointext(., null)
 
 /obj/machinery/atmospherics/unary/vent_pump/OnTopic(mob/user, href_list, datum/topic_state/state)
 	if((. = ..()))

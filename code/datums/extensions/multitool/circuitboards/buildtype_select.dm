@@ -15,7 +15,7 @@
 			dat += "<td>[SPAN_BAD("&#9724")]</td><td><a href='?src=\ref[src];choose=\ref[path]'>[initial(thing.name)]</a></td>"
 		dat += "</tr>"
 	dat += "</table>"
-	return JOINTEXT(dat)
+	return jointext(dat, null)
 
 /datum/extension/interactive/multitool/circuitboards/buildtype_select/on_topic(href, href_list, user)
 	var/obj/item/stock_parts/circuitboard/board = holder

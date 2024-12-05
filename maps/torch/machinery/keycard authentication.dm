@@ -32,7 +32,7 @@
 		dat += "<p><A href='?src=\ref[src];reset=1'>Back</A>"
 
 	var/datum/browser/popup = new(user, "kad_window", "Keycard Authentication Device", 500, 250)
-	popup.set_content(JOINTEXT(dat))
+	popup.set_content(jointext(dat, null))
 	popup.open()
 	return
 

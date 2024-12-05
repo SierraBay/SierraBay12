@@ -68,7 +68,7 @@
 			. += "\[cell\]\[REDACTED\][field]"
 	else
 		. += "\[/grid\][display_name()]\[grid\]"
-	. = JOINTEXT(.)
+	. = jointext(., null)
 
 /datum/report_field/proc/generate_nano_data(list/given_access)
 	var/dat = list()

@@ -43,7 +43,7 @@
 	dat += "ID: <a href='?src=\ref[src];id_tag=1'>[radio.id_tag || "none"]</a><br>"
 	dat += "Filter: <a href='?src=\ref[src];filter=1'>[radio.filter || "none"]</a><br>"
 	dat += "Encryption key: <a href='?src=\ref[src];encryption=1'>[radio.encryption || "none"]</a><br>"
-	return JOINTEXT(dat)
+	return jointext(dat, null)
 
 /datum/extension/interactive/multitool/radio/on_topic(href, href_list, user)
 	var/obj/item/stock_parts/radio/radio = holder
@@ -168,7 +168,7 @@
 	dat += "<br>"
 	dat += "<b>Transmit every tick:</b><br>"
 	dat += event_list_to_selection_table("on_tick", radio.transmit_on_tick)
-	return ..() + JOINTEXT(dat)
+	return ..() + jointext(dat, null)
 
 /datum/extension/interactive/multitool/radio/transmitter/on_topic(href, href_list, user)
 	. = ..()
@@ -205,7 +205,7 @@
 	dat += "<br>"
 	dat += "<b>Transmit on event:</b><br>"
 	dat += event_list_to_selection_table("on_event", radio.transmit_on_event)
-	return ..() + JOINTEXT(dat)
+	return ..() + jointext(dat, null)
 
 /datum/extension/interactive/multitool/radio/event_transmitter/on_topic(href, href_list, user)
 	. = ..()
@@ -244,7 +244,7 @@
 	dat += "<br>"
 	dat += "<b>Transmit every tick:</b><br>"
 	dat += event_list_to_selection_table("write", radio.receive_and_write)
-	return ..() + JOINTEXT(dat)
+	return ..() + jointext(dat, null)
 
 /datum/extension/interactive/multitool/radio/receiver/on_topic(href, href_list, user)
 	. = ..()

@@ -130,7 +130,7 @@ var/global/list/wireColours = list("red", "blue", "green", "darkred", "orange", 
 	if (random)
 		html += "<i>\The [holder] appears to have tamper-resistant electronics installed.</i><br><br>" //maybe this could be more generic?
 
-	return JOINTEXT(html)
+	return jointext(html, null)
 
 /datum/wires/Topic(href, href_list)
 	..()

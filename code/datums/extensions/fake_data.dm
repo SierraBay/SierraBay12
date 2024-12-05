@@ -8,13 +8,13 @@
 		var/list/key = list()
 		for(var/j = 1, j <= 10, j++)
 			key += ascii2text(rand(65, 90)) //Capital letters
-		fake_data += list(list("key" = JOINTEXT(key), "value" = make_value())) //weird data structure is to fascilitate nanoui use.
+		fake_data += list(list("key" = jointext(key, null), "value" = make_value())) //weird data structure is to fascilitate nanoui use.
 
 /datum/extension/fake_data/proc/make_value()
 	var/list/value = list("0b")
 	for(var/j = 1, j <= 16, j++)
 		value += "[pick(0,1)]"
-	return JOINTEXT(value)
+	return jointext(value, null)
 
 /datum/extension/fake_data/proc/update_and_return_data()
 	var/key = rand(1, length(fake_data))
