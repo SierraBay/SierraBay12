@@ -127,13 +127,19 @@
 	var/eye_icon_location = 'icons/mob/human_races/species/diona/eyes.dmi'
 
 /obj/item/organ/external/head/diona/get_eye_overlay()
+	if (!glowing_eyes)
+		return
+
+	for (var/obj/item/equipped as anything in owner.get_equipped_items())
+		if (HAS_FLAGS(equipped.body_parts_covered, EYES))
+			return
+
 	var/icon/I = get_eyes()
-	if(glowing_eyes)
-		var/image/eye_glow = image(I)
-		eye_glow.AddOverlays(emissive_appearance(eye_icon_location, ""))
-		eye_glow.layer = FLOAT_LAYER
-		//eye_glow.plane = EFFECTS_ABOVE_LIGHTING_PLANE
-		return eye_glow
+	var/image/eye_glow = image(I)
+	eye_glow.AddOverlays(emissive_appearance(eye_icon_location, ""))
+	eye_glow.layer = FLOAT_LAYER
+	//eye_glow.plane = EFFECTS_ABOVE_LIGHTING_PLANE
+	return eye_glow
 
 /obj/item/organ/external/head/diona/get_eyes()
 	return icon(icon = eye_icon_location, icon_state = "")
