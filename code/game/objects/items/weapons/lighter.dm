@@ -26,6 +26,11 @@
 	if(submerged())
 		to_chat(user, SPAN_WARNING("You cannot light \the [src] underwater."))
 		return
+<<<<<<< ours
+=======
+	if (fail_light(user))
+		return
+>>>>>>> theirs
 	lit = 1
 	update_icon()
 	light_effects(user)
