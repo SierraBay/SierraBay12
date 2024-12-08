@@ -2962,6 +2962,7 @@
 #include "code\modules\reagents\reagent_containers\food\snacks\bugmeat.dm"
 #include "code\modules\reagents\reagent_containers\food\snacks\cheese.dm"
 #include "code\modules\reagents\reagent_containers\food\snacks\donkpocket.dm"
+#include "code\modules\reagents\reagent_containers\food\snacks\fortunecookie.dm"
 #include "code\modules\reagents\reagent_containers\food\snacks\meat.dm"
 #include "code\modules\reagents\reagent_containers\food\snacks\shellfish.dm"
 #include "code\modules\reagents\reagent_containers\glass\bottle.dm"
