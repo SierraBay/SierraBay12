@@ -99,7 +99,7 @@ Also checks if medications that stop allergies from triggering are in system. Th
 	if (trait_flags & SEVERE_ALLERGY)
 		add_chemical_effect(CE_BREATHLOSS, 2)
 		add_chemical_effect(CE_PULSE, 2)
-		if (prob(50))
+		if (prob(50) && active_breathing())
 			add_chemical_effect(CE_VOICELOSS, 1)
 
 	if (!can_feel_pain() || world.time < next_allergy_time || chem_effects[CE_STABLE])
