@@ -120,7 +120,7 @@
 
 /obj/item/clothing/head/rabbitears
 	name = "rabbit ears"
-	desc = "Wearing these makes you looks useless, and only good for your sex appeal."
+	desc = "Nyaaaaaaa, what's up doc?"
 	icon_state = "bunny"
 	body_parts_covered = 0
 
