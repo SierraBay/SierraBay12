@@ -3,7 +3,7 @@
 	desc = "A beautiful metal cross. It looks like a medal, but does not have any distinctive signs."
 	icon = 'mods/utility_items/icons/pins.dmi'
 	accessory_icons = list(slot_w_uniform_str = 'mods/utility_items/icons/pins.dmi', slot_wear_suit_str = 'mods/utility_items/icons/pins.dmi')
-	icon_state = "small cross (blue)"
+	icon_state = "small_cross (blue)"
 	slot = ACCESSORY_SLOT_INSIGNIA
 
 /obj/item/clothing/accessory/cross_red
@@ -11,7 +11,7 @@
 	desc = "A beautiful metal cross. It looks like a medal, but does not have any distinctive signs."
 	icon = 'mods/utility_items/icons/pins.dmi'
 	accessory_icons = list(slot_w_uniform_str = 'mods/utility_items/icons/pins.dmi', slot_wear_suit_str = 'mods/utility_items/icons/pins.dmi')
-	icon_state = "small cross(red)"
+	icon_state = "small_cross(red)"
 	slot = ACCESSORY_SLOT_INSIGNIA
 
 /obj/item/clothing/accessory/flower_gold
