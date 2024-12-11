@@ -35,5 +35,5 @@
 	desc = "Metal brooch, looks like a flower. This one is bronze. It looks very stylish!"
 	icon = 'mods/utility_items/icons/pins.dmi'
 	accessory_icons = list(slot_w_uniform_str = 'mods/utility_items/icons/pins.dmi', slot_wear_suit_str = 'mods/utility_items/icons/pins.dmi')
-	icon_state = "small cross(bronze)"
+	icon_state = "brooch flower(bronze)"
 	slot = ACCESSORY_SLOT_INSIGNIA
