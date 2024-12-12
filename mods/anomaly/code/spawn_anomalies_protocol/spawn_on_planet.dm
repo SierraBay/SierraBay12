@@ -1,8 +1,8 @@
 /datum/map/build_exoplanets()
 	//Игра заспавнит 1 обычную планету и 1 аномальную
 	var/list/anomaly_planets_list = list(
-		/obj/overmap/visitable/sector/exoplanet/ice,
-		/obj/overmap/visitable/sector/exoplanet/volcanic
+		// /obj/overmap/visitable/sector/exoplanet/ice,
+		// /obj/overmap/visitable/sector/exoplanet/volcanic
 		// /obj/overmap/visitable/sector/exoplanet/flying
 	)
 	var/list/all_planets_list = subtypesof(/obj/overmap/visitable/sector/exoplanet)
@@ -16,10 +16,10 @@
 		var/normal_planet_type = pick(all_planets_list)
 		var/obj/overmap/visitable/sector/exoplanet/new_planet = new normal_planet_type(null, world.maxx, world.maxy)
 		new_planet.build_level()
-
-	var/anomaly_planet_type = pick(anomaly_planets_list)
-	var/obj/overmap/visitable/sector/exoplanet/anomaly_new_planet = new anomaly_planet_type(null, world.maxx, world.maxy)
-	anomaly_new_planet.build_level()
+	if(LAZYLEN(anomaly_planets_list)
+		var/anomaly_planet_type = pick(anomaly_planets_list)
+		var/obj/overmap/visitable/sector/exoplanet/anomaly_new_planet = new anomaly_planet_type(null, world.maxx, world.maxy)
+		anomaly_new_planet.build_level()
 
 //Данный код отвечает за размещение аномалий по всей планете.
 /obj/overmap/visitable/sector/exoplanet
