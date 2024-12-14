@@ -461,7 +461,7 @@ var/global/list/datum/power/changeling/powerinstances = list()
 
 
 	if(isnull(Thepower))
-		to_chat(M.current, "This is awkward.  Changeling power purchase failed, please report this bug to a coder!")
+		CRASH("This is awkward.  Changeling power purchase failed, please report this bug to a coder!")
 		return
 
 	if(Thepower in purchasedpowers)
