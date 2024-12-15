@@ -28,7 +28,7 @@
 		product.reagents.add_reagent(/datum/reagent/blood,30,data)
 
 		virusing = 1
-		spawn(1200) virusing = 0
+
 
 		state("The [src.name] Buzzes", "blue")
 		return
