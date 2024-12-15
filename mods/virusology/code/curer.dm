@@ -1,3 +1,4 @@
+/* НЕРАБОЧИЙ АППАРАТ, ДЕЛАТЬ ЕГО СЕЙЧАС НЕ БУДУ, кто захочет, делайте
 /obj/machinery/computer/curer
 	name = "cure research machine"
 	icon = 'icons/obj/machines/computer.dmi'
@@ -96,3 +97,4 @@
 	product.reagents.add_reagent(/datum/reagent/antibodies,30,data)
 
 	state("\The [src.name] buzzes", "blue")
+*/

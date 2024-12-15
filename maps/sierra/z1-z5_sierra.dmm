@@ -16550,10 +16550,6 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/crew_quarters/sleep/bunk)
 "cxR" = (
-/obj/structure/disposalpipe/segment{
-	dir = 1;
-	icon_state = "pipe-c"
-	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 1
 	},
@@ -23235,10 +23231,6 @@
 /turf/simulated/floor/plating,
 /area/hallway/primary/seconddeck/center)
 "duu" = (
-/obj/structure/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c"
-	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
 /obj/structure/cable/green{
@@ -26693,13 +26685,14 @@
 /turf/simulated/floor/wood/mahogany,
 /area/crew_quarters/sleep/bunk)
 "dSS" = (
-/obj/structure/disposalpipe/junction{
-	dir = 1
-	},
 /obj/structure/cable/green{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/tiled/white,
 /area/medical/virology/lab)
@@ -35237,6 +35230,10 @@
 /obj/floor_decal/corner/green/bordercorner2{
 	dir = 5
 	},
+/obj/structure/sign/warning/deathsposal{
+	pixel_x = 36;
+	pixel_y = 32
+	},
 /turf/simulated/floor/tiled/white,
 /area/medical/virology/lab)
 "ffd" = (
@@ -42575,6 +42572,10 @@
 	name = "west bump";
 	pixel_x = -24
 	},
+/obj/structure/cable/green{
+	d2 = 4;
+	icon_state = "0-4"
+	},
 /turf/simulated/floor/tiled/white,
 /area/medical/virology)
 "gjE" = (
@@ -46845,6 +46846,11 @@
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
+	},
+/obj/structure/cable/green{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
 	},
 /turf/simulated/floor/tiled/white,
 /area/medical/virology)
@@ -92844,9 +92850,6 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/hallway/primary/seconddeck/aft)
 "nJm" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
@@ -107688,9 +107691,6 @@
 /turf/simulated/floor/tiled/steel_grid,
 /area/hallway/primary/thirddeck/fore)
 "pSP" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
@@ -116353,9 +116353,6 @@
 /turf/simulated/floor/tiled/monotile,
 /area/rnd/misc_lab)
 "rgQ" = (
-/obj/structure/sign/warning/deathsposal{
-	pixel_x = 32
-	},
 /obj/machinery/alarm{
 	dir = 8;
 	pixel_x = 24
@@ -153325,6 +153322,10 @@
 /area/crew_quarters/galley/freezer)
 "wDQ" = (
 /obj/structure/disposalpipe/trunk,
+/obj/structure/disposaloutlet{
+	dir = 8;
+	name = "cargo outlet"
+	},
 /obj/structure/sign/warning/mail_delivery{
 	pixel_y = 24
 	},
@@ -153333,9 +153334,6 @@
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 24
-	},
-/obj/machinery/disposal/deliveryChute{
-	dir = 8
 	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/quartermaster/office/post)
