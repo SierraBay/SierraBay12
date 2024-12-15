@@ -1,27 +1,3 @@
-GLOBAL_LIST_INIT(legion_narrations, list(\
-	"A cacaphony of voices suddenly invades your mind. You can't make anything out.",\
-	"The voices. There's so many voices in your head. They're all crying out in endless agony.",\
-	"You hear a thousand voices all at once, each trying to scream over the rest. The sound drowns itself out.",\
-	"A tidal force of voices shakes your very being, each one shifting in volume and pitch to such degree that it's nothing but an overbearing white noise.",\
-	"A wave of voices coalesce and your ears ring as if struck by a hammer.",\
-	"A flood of voices crash against your head with their pleas, their cries and their dying breathes in never-ending throes of noise, sometimes they blend together into nothingness-- and then they come back, stronger and more desperate.",\
-	"A turgid symphony assaults your mind. Fleshy primordial noises are all you can make out. This place is where one abandons their dreams."\
-))
-
-
-GLOBAL_LIST_INIT(legion_last_words_generic, list(\
-	"I don't want to die!",\
-	"No, get away!",\
-	"I give up. Just do it already.",\
-	"I'm so scared...",\
-	"Help me!",\
-	"It's so hot!",\
-))
-
-
-GLOBAL_LIST_EMPTY(legion_last_words_player)
-
-
 /**
  * Adds a player's last words to the legion's pool. `origin` can be a living mob, a mind datum, or a brain.
  */
@@ -51,14 +27,45 @@ GLOBAL_LIST_EMPTY(legion_last_words_player)
 	if (!origin_name || !message)
 		return
 
-	GLOB.legion_last_words_player[origin_name] = message
+	GLOB.legion_last_words_player += list(origin_name, message)
 	log_debug("Added [origin_name]'s last words of '[message]' to the legion message pool.")
+
+
+/**
+ * Randomly chooses a legion message to broadcast.
+ *
+ * Returns list containing `"full"`, `"origin"`, and `"contents"` keys.
+ */
+/proc/pick_legion_message()
+	var/message
+	var/message_origin = ""
+	var/message_contents
+	// Choose a message to display
+	if (rand(0, 100) <= 20)
+		if (!length(GLOB.legion_last_words_player) || rand(0, 1))
+			message_contents = "A voice rises above the chorus, \"[pick(GLOB.legion_last_words_generic)]\""
+			message = message_contents
+		else
+			var/list/chosen = pick(GLOB.legion_last_words_player)
+			message_origin = chosen[1]
+			message_contents = chosen[2]
+			message = "[message_origin]'s voice rises above the chorus, \"[message_contents]\""
+			message_contents = "cries out above the chorus, \"[message_contents]\""
+	else
+		message_contents = pick(GLOB.legion_narrations)
+		message = message_contents
+
+	return list(
+		"full" = message,
+		"origin" = message_origin,
+		"contents" = message_contents
+	)
 
 
 /**
  * Displays a randomly chosen legion message to synthetic mobs in z-levels connected to the given level(s)
  */
-/proc/show_legion_messages(list/z_levels = list())
+/proc/show_legion_messages(list/z_levels = list(), message)
 	if (!islist(z_levels))
 		z_levels = list(z_levels)
 	if (!length(z_levels))
@@ -69,18 +76,6 @@ GLOBAL_LIST_EMPTY(legion_last_words_player)
 		if (z_level in connected_z_levels)
 			continue
 		connected_z_levels |= GetConnectedZlevels(z_level)
-
-	var/message
-	// Choose a message to display
-	if (rand(0, 100) <= 20)
-		if (!length(GLOB.legion_last_words_player) || rand(0, 1))
-			message = "A voice rises above the chorus, \"[pick(GLOB.legion_last_words_generic)]\""
-		else
-			var/message_origin = pick(GLOB.legion_last_words_player)
-			var/message_contents = GLOB.legion_last_words_player[message_origin]
-			message = "[message_origin]'s voice rises above the chorus, \"[message_contents]\""
-	else
-		message = pick(GLOB.legion_narrations)
 
 	var/count = 0
 	var/sound_to_play = pick(GLOB.legion_voices_sounds)
@@ -108,5 +103,13 @@ GLOBAL_LIST_EMPTY(legion_last_words_player)
 	if (!z_level)
 		return
 
-	show_legion_messages(z_level)
+	var/list/message_data = pick_legion_message()
+
+	show_legion_messages(z_level, message_data["full"])
+
+	var/mob/legion_broadcaster/broadcaster = new(get_turf(usr))
+	broadcaster.z = z_level
+	broadcaster.legion_broadcast(message_data["origin"], SPAN_LEGION(message_data["contents"]))
+	QDEL_NULL(broadcaster)
+
 	log_and_message_staff(" - Manual Legion Narrate to z-levels connected to [z_level].")
