@@ -1,4 +1,4 @@
-/* НЕРАБОЧИЙ АППАРАТ, ДЕЛАТЬ ЕГО СЕЙЧАС НЕ БУДУ, кто захочет, делайте
+// НЕРАБОЧИЙ АППАРАТ, ДЕЛАТЬ ЕГО СЕЙЧАС НЕ БУДУ, кто захочет, делайте
 /obj/machinery/computer/curer
 	name = "cure research machine"
 	icon = 'icons/obj/machines/computer.dmi'
@@ -60,7 +60,7 @@
 	else
 		dat = "Please insert a container."
 
-	user << browse(dat, "window=computer;size=400x500")
+	show_browser(user, dat, "window=computer")
 	onclose(user, "computer")
 	return
 
@@ -97,4 +97,3 @@
 	product.reagents.add_reagent(/datum/reagent/antibodies,30,data)
 
 	state("\The [src.name] buzzes", "blue")
-*/
