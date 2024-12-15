@@ -46,6 +46,16 @@
 		to_chat(mob, "<span class='warning'>You feel uncontrollable rage filling you! You want to hurt and destroy!</span>")
 		if (mob.reagents.get_reagent_amount(/datum/reagent/hyperzine) < 10)
 			mob.reagents.add_reagent(/datum/reagent/hyperzine, 4)
+		var/list/mobs_to_beat = list()
+		for(var/mob/living/L in range(1))
+			if (L == mob)
+				continue
+			mobs_to_beat += L
+		if (LAZYLEN(mobs_to_beat) < 1)//nobody to beat
+			return
+		var/mob/living/Target = pick(mobs_to_beat)
+		mob.a_intent = I_HURT
+		mob.attack_hand(Target)
 	if(prob(50) && mob.check_has_mouth())//go crazy and bite someone
 		var/list/mouth_status = mob.can_eat_status()
 		if (mouth_status[1] == 1)//if no mouth HUMAN_EATING_NBP_MOUTH
