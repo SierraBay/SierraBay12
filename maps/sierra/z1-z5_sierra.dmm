@@ -128594,9 +128594,6 @@
 /area/maintenance/seconddeck/forestarboard)
 "sSp" = (
 /obj/machinery/door/firedoor,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /obj/floor_decal/corner/green/mono,
 /obj/floor_decal/industrial/hatch/yellow,
 /obj/machinery/door/airlock/glass/virology,
