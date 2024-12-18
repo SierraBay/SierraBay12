@@ -3032,6 +3032,7 @@
 #include "code\modules\shuttles\shuttles_multi.dm"
 #include "code\modules\skrell\skrell_rigs.dm"
 #include "code\modules\species\species.dm"
+#include "code\modules\species\species_age_comparison.dm"
 #include "code\modules\species\species_attack.dm"
 #include "code\modules\species\species_getters.dm"
 #include "code\modules\species\species_grab.dm"

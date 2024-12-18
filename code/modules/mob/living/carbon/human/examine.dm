@@ -348,6 +348,11 @@
 	var/show_descs = show_descriptors_to(user)
 	if(show_descs)
 		msg += SPAN_NOTICE("[jointext(show_descs, "<br>")]")
+
+	var/age_diff = species.get_age_comparison_string(src, user)
+	if (age_diff)
+		msg += "<br />[SPAN_NOTICE(age_diff)]"
+
 	to_chat(user, SPAN_INFO(jointext(msg, null)))
 
 //Helper procedure. Called by /mob/living/carbon/human/examine() and /mob/living/carbon/human/Topic() to determine HUD access to security and medical records.
