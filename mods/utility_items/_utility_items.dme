@@ -26,7 +26,12 @@
 #include "code/advanced_landing.dm"
 #include "code/chemistry.dm"
 #include "code/jobs.dm"
+#include "code/ma21.dm"
+#include "code/modnye_patchi.dm"
 #include "code/bottom.dm"
 #include "code/top.dm"
+#include "code/skrell-ship.dm"
+#include "code/security.dm"
+#include "code/FBP_vox.dm"
 
 #endif

@@ -39,7 +39,6 @@
 	landmark_tag = "nav_hangar_snz"
 	base_area = /area/ship/farfleet/command/snz_hangar
 	base_turf = /turf/simulated/floor/plating
-	movable_flags = MOVABLE_FLAG_EFFECTMOVE
 
 /obj/shuttle_landmark/snz/altdock
 	name = "Docking Port"

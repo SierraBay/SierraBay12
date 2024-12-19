@@ -3950,10 +3950,6 @@
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/ship/farfleet/crew/hydroponics)
-"Ms" = (
-/obj/shuttle_landmark/snz/start,
-/turf/simulated/floor/tiled/monotile,
-/area/ship/farfleet/command/snz_hangar)
 "Mt" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled/white,
@@ -4352,6 +4348,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/shuttle_landmark/snz/start,
 /turf/simulated/floor/tiled/steel_grid,
 /area/ship/snz)
 "Rs" = (
@@ -14660,7 +14657,7 @@ Uu
 Uu
 wJ
 ME
-Ms
+ns
 aW
 Iu
 eB
