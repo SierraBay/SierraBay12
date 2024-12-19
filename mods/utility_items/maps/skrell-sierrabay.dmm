@@ -2217,9 +2217,6 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/mob/living/simple_animal/friendly/frog{
-	name = "Kro-Krri"
-	},
 /turf/simulated/floor/tiled/skrell/blue,
 /area/ship/skrellscoutship/crew/rec)
 "gU" = (
@@ -2351,7 +2348,7 @@
 /turf/simulated/floor/tiled/skrell/blue,
 /area/ship/skrellscoutship/crew/rec)
 "hm" = (
-/obj/structure/bed/chair/office/comfy/black{
+/obj/structure/bed/chair/rounded/blue{
 	dir = 1
 	},
 /turf/simulated/floor/carpet/purple,
@@ -2460,10 +2457,6 @@
 	},
 /turf/simulated/floor/tiled/skrell/red,
 /area/ship/skrellscoutship/crew/labs)
-"hB" = (
-/obj/structure/bed/sofa/r/purple,
-/turf/simulated/floor/carpet/purple,
-/area/ship/skrellscoutship/crew/rec)
 "hE" = (
 /turf/simulated/floor/tiled/skrell/red,
 /area/ship/skrellscoutship/command/bridge)
@@ -3591,7 +3584,6 @@
 	dir = 1
 	},
 /obj/structure/table/rack,
-/obj/item/toy/plushie/resomi,
 /turf/simulated/floor/tiled/skrell,
 /area/ship/skrellscoutshuttle)
 "kR" = (
@@ -4160,10 +4152,6 @@
 /obj/item/reagent_containers/food/snacks/tossedsalad,
 /turf/simulated/floor/tiled/skrell/white,
 /area/ship/skrellscoutship/crew/rec)
-"sv" = (
-/obj/structure/bed/sofa/m/purple,
-/turf/simulated/floor/carpet/purple,
-/area/ship/skrellscoutship/crew/rec)
 "sD" = (
 /obj/item/device/radio/intercom/map_preset/skrellscoutship{
 	dir = 4;
@@ -4473,7 +4461,7 @@
 /turf/simulated/floor/tiled/skrell,
 /area/ship/skrellscoutship/wings/port)
 "xj" = (
-/obj/structure/bed/sofa/l/purple,
+/obj/structure/bed/chair/rounded/blue,
 /turf/simulated/floor/carpet/purple,
 /area/ship/skrellscoutship/crew/rec)
 "xo" = (
@@ -4725,7 +4713,7 @@
 	dir = 1;
 	icon_state = "tube1"
 	},
-/obj/structure/bed/sofa/m/purple,
+/obj/structure/bed/chair/rounded/blue,
 /turf/simulated/floor/carpet/purple,
 /area/ship/skrellscoutship/crew/rec)
 "Aq" = (
@@ -9031,7 +9019,7 @@ Gw
 Gw
 Gw
 Dj
-sv
+xj
 ZN
 NY
 hm
@@ -9133,7 +9121,7 @@ Gw
 Gw
 Gw
 Dj
-hB
+xj
 gb
 KR
 VY
