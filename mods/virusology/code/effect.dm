@@ -171,6 +171,18 @@
 	for (var/obj/item/organ/external/E in mob.organs)
 		E.min_broken_damage = initial(E.min_broken_damage)
 
+/datum/disease2/effect/spiderfication
+	name = "Hatching Syndrome"
+	stage = 4
+	badness = VIRUS_ENGINEERED
+	chance_max = 30
+	delay = 60 SECONDS
+
+/datum/disease2/effect/spiderfication/activate(mob/living/carbon/human/mob, multiplier)
+		var/obj/spider/spiderling/S = new /obj/spider/spiderling(get_turf(mob))
+		mob.emote("cough")
+		to_chat(mob, "<span class='warning'>You cough up the [S]!</span>")
+
 ////////////////////////STAGE 3/////////////////////////////////
 
 /datum/disease2/effect/toxins
