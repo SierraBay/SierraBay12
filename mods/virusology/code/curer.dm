@@ -1,3 +1,4 @@
+// НЕРАБОЧИЙ АППАРАТ, ДЕЛАТЬ ЕГО СЕЙЧАС НЕ БУДУ, кто захочет, делайте
 /obj/machinery/computer/curer
 	name = "cure research machine"
 	icon = 'icons/obj/machines/computer.dmi'
@@ -9,13 +10,27 @@
 
 	var/obj/item/reagent_containers/container = null
 
-/obj/machinery/computer/curer/use_tool(obj/item/I, mob/living/user, list/click_params)
-	. = ..()
+/obj/machinery/computer/curer/use_tool(obj/I as obj, mob/user as mob)
 	if(istype(I,/obj/item/reagent_containers))
 		if(!container)
 			if(!user.unEquip(I, src))
 				return
 			container = I
+		return
+	if(istype(I,/obj/item/virusdish))
+		if(virusing)
+			to_chat(user, "<b>The pathogen materializer is still recharging..</b>")
+			return
+		var/obj/item/reagent_containers/glass/beaker/product = new(src.loc)
+
+		var/list/data = list("donor" = null, "blood_DNA" = null, "blood_type" = null, "trace_chem" = null, "virus2" = list(), "antibodies" = list())
+		data["virus2"] |= I:virus2
+		product.reagents.add_reagent(/datum/reagent/blood,30,data)
+
+		virusing = 1
+
+
+		state("The [src.name] Buzzes", "blue")
 		return
 	..()
 	return
@@ -29,11 +44,15 @@
 	var/dat
 	if(curing)
 		dat = "Antibody production in progress"
+	else if(virusing)
+		dat = "Virus production in progress"
 	else if(container)
-		// check to see if we have the required reagents
-		if(container.reagents.get_reagent_amount(/datum/reagent/blood) >= 5 && container.reagents.get_reagent_amount(/datum/reagent/radium) >= 15 && container.reagents.get_reagent_amount(/datum/reagent/spaceacillin) >= 10)
+		// see if there's any blood in the container
+		var/datum/reagent/blood/B = locate(/datum/reagent/blood) in container.reagents.reagent_list
 
+		if(B)
 			dat = "Blood sample inserted."
+			dat += "<BR>Antibodies: [antigens2string(B.data["antibodies"])]"
 			dat += "<BR><A href='?src=\ref[src];antibody=1'>Begin antibody production</a>"
 		else
 			dat += "<BR>Please check container contents."
@@ -41,7 +60,7 @@
 	else
 		dat = "Please insert a container."
 
-	show_browser(user, "[dat]", "window=computer;size=400x500")
+	show_browser(user, dat, "window=computer")
 	onclose(user, "computer")
 	return
 
@@ -69,22 +88,12 @@
 		attack_hand(user)
 
 /obj/machinery/computer/curer/proc/createcure(obj/item/reagent_containers/container)
-	var/obj/item/reagent_containers/C = container
-	var/antibodies
-	C.dropInto(loc)
-	var/mob/living/carbon/M = new /mob/living/carbon
-	var/datum/reagent/blood/B = locate() in container.reagents.reagent_list
-	var/data
-	if(B.data && B.data["virus2"])
-		var/list/vlist = B.data["virus2"]
-		if(LAZYLEN(vlist))
-			for(var/ID in vlist)
-				var/datum/disease2/disease/V = vlist[ID]
-				data = V.getcopy()
+	var/obj/item/reagent_containers/glass/beaker/product = new(src.loc)
 
-	for(var/ID in data)
-		var/datum/disease2/disease/V = data[ID]
-		antibodies |= V.antigen
-	C.reagents.clear_reagents()
-	C.reagents.add_reagent(/datum/reagent/antibodies, 10, antibodies)
-	qdel(M)
+	var/datum/reagent/blood/B = locate() in container.reagents.reagent_list
+
+	var/list/data = list()
+	data["antibodies"] = B.data["antibodies"]
+	product.reagents.add_reagent(/datum/reagent/antibodies,30,data)
+
+	state("\The [src.name] buzzes", "blue")

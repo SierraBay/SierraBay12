@@ -1,0 +1,7 @@
+author: SierraKomodo
+changes:
+  - {rscadd: "Examining other characters can now give you a rough approximation of
+      their age, and the relation of that age to you. Cross-species examinations are
+      less precise, don't include a comparison to your own age, and are only visible
+      for certain species."}
+delete-after: true

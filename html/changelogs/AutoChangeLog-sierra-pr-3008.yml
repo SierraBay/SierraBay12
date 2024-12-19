@@ -1,0 +1,4 @@
+author: Lexanx
+changes:
+  - {tweak: 'Скиллпоинты ИПС, Адхерантов и Дион теперь не зависят от возраста'}
+delete-after: true

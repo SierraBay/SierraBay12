@@ -7,6 +7,19 @@
 /datum/species/machine
 	virus_immune = 1
 
+/datum/species/vox
+	virus_immune = 1
+
+/datum/species/starlight
+	virus_immune = 1
+
+/datum/species/alium
+	virus_immune = 1
+
+/datum/species/mantid
+	virus_immune = 1
+
+
 /datum/species/shapeshifter/promethean
 	virus_immune = 1
 
