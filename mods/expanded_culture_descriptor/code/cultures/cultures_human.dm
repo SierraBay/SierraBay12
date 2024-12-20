@@ -8,6 +8,17 @@
 	репутация, а граждане здесь имеют дурную славу. Сами люди, однако, обычно просто мечтают о том, чтобы \
 	покинуть это место и переехать в более комфортные места. К сожалению, несмотря на усилия ЦПСС, многие \
 	плутониане, как правило, поддерживают преступные связи, даже за пределами планеты."
+	secondary_langs = list(
+		LANGUAGE_HUMAN_EURO,
+		LANGUAGE_HUMAN_CHINESE,
+		LANGUAGE_HUMAN_ARABIC,
+		LANGUAGE_HUMAN_INDIAN,
+		LANGUAGE_HUMAN_IBERIAN,
+		LANGUAGE_HUMAN_RUSSIAN,
+		LANGUAGE_SPACER,
+		LANGUAGE_GUTTER,
+		LANGUAGE_SIGN
+	)
 
 /singleton/cultural_info/culture/human/confederate
 	name = CULTURE_HUMAN_CONFEDC
@@ -74,7 +85,6 @@
 		LANGUAGE_HUMAN_IBERIAN,
 		LANGUAGE_HUMAN_RUSSIAN,
 		LANGUAGE_SPACER,
-		LANGUAGE_GUTTER,
 		LANGUAGE_SIGN
 	)
 
@@ -94,7 +104,6 @@
 		LANGUAGE_HUMAN_IBERIAN,
 		LANGUAGE_HUMAN_RUSSIAN,
 		LANGUAGE_SPACER,
-		LANGUAGE_GUTTER,
 		LANGUAGE_SIGN
 	)
 

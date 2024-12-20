@@ -95,7 +95,7 @@
 
 		var/threshold_mod = 0
 
-		if(foodsupply)
+		if(foodsupply > 0)
 			if(dish.growth + 3 >= 100 && dish.growth < 100)
 				ping("\The [src] pings, \"Sufficient viral growth density achieved.\"")
 
@@ -103,7 +103,7 @@
 			dish.growth += 3
 			SSnano.update_uis(src)
 
-		if(radiation)
+		if(radiation > 0)
 			threshold_mod++
 			if(radiation > 50 & prob(5))
 				dish.virus2.majormutate()
@@ -119,7 +119,7 @@
 		if(toxins && prob(5))
 			dish.virus2.infectionchance -= 1
 			SSnano.update_uis(src)
-		if(toxins > 50)
+		if(toxins > 70)
 			dish.growth = 0
 			dish.virus2 = null
 			SSnano.update_uis(src)

@@ -48,6 +48,8 @@
 					known_antibodies |= unknown_antibodies //Add the new antibodies to list
 				else
 					src.state("\The [src] buzzes, \"Failed to identify any new antibodies.\"")
+				if(!LAZYLEN(given_antibodies)) //return if no antibodies
+					return 0
 
 			container.dropInto(loc)
 			container = null

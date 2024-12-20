@@ -4767,6 +4767,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/red{
 	dir = 4
 	},
+/obj/shuttle_landmark/reaper/start,
 /turf/simulated/floor/plating,
 /area/ship/reaper)
 "jc" = (
@@ -4886,7 +4887,6 @@
 	icon_state = "1-2"
 	},
 /obj/structure/catwalk,
-/obj/shuttle_landmark/reaper/start,
 /turf/simulated/floor/plating,
 /area/ship/patrol/command/hangar)
 "jj" = (
