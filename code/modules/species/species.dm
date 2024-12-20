@@ -282,7 +282,7 @@
 	/// When being fed a reagent item, the amount this species eats per bite on help intent.
 	var/ingest_amount = 10
 
-	/// An associative list of /singleton/trait and trait level - See individual traits for valid levels
+	/// An associative list of /singleton/trait and trait level a species starts with by default - See individual traits for valid levels
 	var/list/traits = list()
 
 	/**
@@ -419,7 +419,6 @@ The slots that you can use are found in items_clothing.dm and are the inventory 
 			warning("[O.type] has a default organ tag \"[O.organ_tag]\" that differs from the species' organ tag \"[organ_tag]\". Updating organ_tag to match.")
 			O.organ_tag = organ_tag
 		H.internal_organs_by_name[organ_tag] = O
-
 	for(var/name in H.organs_by_name)
 		H.organs |= H.organs_by_name[name]
 
@@ -429,7 +428,6 @@ The slots that you can use are found in items_clothing.dm and are the inventory 
 	for(var/obj/item/organ/O in (H.organs|H.internal_organs))
 		O.owner = H
 		post_organ_rejuvenate(O, H)
-
 	H.sync_organ_dna()
 /* ------------------------> code\modules\emotes\definitions\_species.dm (У нас всё в моде в mods\emote_panel\code\species.dm)
 /datum/species/proc/hug(mob/living/carbon/human/H, mob/living/target)
@@ -768,6 +766,22 @@ The slots that you can use are found in items_clothing.dm and are the inventory 
 			facial_hair_style_by_gender[facialhairstyle] = S
 
 	return facial_hair_style_by_gender
+
+/datum/species/proc/get_selectable_traits()
+	var/list/allowed_traits = list()
+	var/list/trait_list = GET_SINGLETON_SUBTYPE_LIST(/singleton/trait)
+	for (var/singleton/trait/allowed_trait in trait_list)
+		if (!allowed_trait.selectable)
+			continue
+		if (LAZYISIN(traits, allowed_trait.type))
+			continue
+		if (LAZYISIN(allowed_trait.forbidden_species, name))
+			continue
+		if (!allowed_trait.name)
+			continue
+		LAZYSET(allowed_traits, allowed_trait.name, allowed_trait)
+
+	return allowed_traits
 
 /datum/species/proc/get_description(header, append, verbose = TRUE, skip_detail, skip_photo)
 	var/list/damage_types = list(
