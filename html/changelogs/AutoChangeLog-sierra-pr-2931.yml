@@ -1,0 +1,5 @@
+author: Merlin1230
+changes:
+  - {rscadd: Transmission beacons now allow you to set a tag for a GCS signal for
+      its transmissions. Using the distress mode will just set the tag to SOS.}
+delete-after: true

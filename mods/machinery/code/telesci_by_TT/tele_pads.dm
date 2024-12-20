@@ -21,7 +21,7 @@
 	return panel_open
 
 /obj/machinery/telepad/use_tool(obj/item/tool, mob/living/user, list/click_params)
-	if(component_attackby(tool, user)) return TRUE
+	//if(component_attackby(tool, user)) return TRUE
 	if(panel_open)
 		if(istype(tool, /obj/item/device/multitool))
 			var/obj/item/device/multitool/M = tool
@@ -42,7 +42,8 @@
 		if(istype(tool, /obj/item/device/multitool))
 			to_chat(user, "<span class='caution'>You should open [src]'s maintenance panel first.</span>")
 			return
-	.=..()
+	//.=..()
+	return ..()
 
 /obj/machinery/telepad/on_update_icon()
 	switch (panel_open)

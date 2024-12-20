@@ -4,6 +4,9 @@
 /obj/item/organ/internal/cell/adherent
 	var/ready_to_charge
 
+/datum/species/adherent/skills_from_age(age)
+	if(age)
+		. = 8
 
 /mob/living/carbon/human/proc/toggle_emergency_discharge()
 	set category = "Abilities"
