@@ -707,11 +707,6 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 		else
 			selected_level = possible_levels[1]
 
-		//[SIERRA-ADD] - pr34500 - Prevents runtimes, because as of now it can be null
-		if(!selected_level)
-			return
-		//[/SIERRA-ADD]
-
 		var/additional_data
 		if (length(selected.metaoptions))
 			var/list/sanitized_metaoptions
