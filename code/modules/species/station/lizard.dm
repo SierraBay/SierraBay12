@@ -170,6 +170,8 @@
 		/obj/item/clothing = /obj/decal/cleanable/blood/tracks/claw // Needs to apply to both shoes and space suits.
 	)
 
+	show_age_to_other_species = TRUE
+
 /datum/species/unathi/equip_survival_gear(mob/living/carbon/human/H)
 	..()
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(H),slot_shoes)

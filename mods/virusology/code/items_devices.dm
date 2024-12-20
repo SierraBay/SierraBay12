@@ -3,7 +3,7 @@
 /obj/item/device/scanner/antibody_scanner
 	name = "antibody scanner"
 	desc = "Scans living beings for antibodies in their blood."
-	icon = 'icons/obj/tools/health_analyzer.dmi'
+	icon = 'mods/virusology/icons/virology.dmi'
 	icon_state = "health"
 	item_state = "analyzer"
 	w_class = ITEM_SIZE_SMALL
@@ -59,7 +59,7 @@
 
 /obj/item/virusdish/use_tool(obj/item/W, mob/living/user, list/click_params)
 	. = ..()
-	if(istype(W, /obj/item/hand_labeler) || istype(W, /obj/item/reagent_containers/syringe))
+	if(istype(W, /obj/item/hand_labeler) || istype(W, /obj/item/reagent_containers))
 		return
 	..()
 	if(prob(50))
@@ -88,7 +88,7 @@
 
 /obj/item/ruinedvirusdish/use_tool(obj/item/W, mob/living/user, list/click_params)
 	. = ..()
-	if(istype(W,/obj/item/hand_labeler) || istype(W,/obj/item/reagent_containers/syringe))
+	if(istype(W,/obj/item/hand_labeler) || istype(W,/obj/item/reagent_containers))
 		return ..()
 
 	if(prob(50))

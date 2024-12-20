@@ -57,6 +57,8 @@
 
 	ingest_amount = 6
 
+	show_age_to_other_species = TRUE
+
 /datum/species/monkey/New()
 	equip_adjust = list(
 		slot_l_hand_str = list("[NORTH]" = list("x" = 1, "y" = 3), "[EAST]" = list("x" = -3, "y" = 2), "[SOUTH]" = list("x" = -1, "y" = 3), "[WEST]" = list("x" = 3, "y" = 2)),
