@@ -11,7 +11,7 @@
 	prev_loc = get_turf(src)
 
 /obj/item/artefact/attack_hand(mob/user as mob)
-	if(inmech_sec(user))
+	if(inmech(user))
 		to_chat(user, SPAN_WARNING("Вы недотягиваетесь."))
 		return
 	else if(connected_to_anomaly)

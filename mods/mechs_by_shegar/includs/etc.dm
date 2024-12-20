@@ -1,0 +1,8 @@
+#include "../code\human_resist_override.dm"
+#include "../code\mech_skill.dm"
+#include "../code\mech_construction.dm"
+#include "../code\paint_override.dm"
+#include "../code/mech_uplink.dm"
+#include "../code/minor_stuff.dm"
+#include "../code/new_prices.dm"
+#include "../code/paint_kit.dm"

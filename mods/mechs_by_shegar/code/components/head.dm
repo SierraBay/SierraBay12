@@ -48,4 +48,3 @@
 	heat_cooling = 8
 	emp_heat_generation = 100
 	weight = 75
-

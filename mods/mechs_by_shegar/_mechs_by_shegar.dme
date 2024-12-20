@@ -3,69 +3,17 @@
 
 #include "_mechs_by_shegar.dm"
 
-// Далее просто включай свой код
-// #include "code/something.dm"
 
-//компоненты
-#include "code/components/armour.dm"
-#include "code/components/arms.dm"
-#include "code/components/body.dm"
-#include "code/components/components.dm"
-#include "code/components/head.dm"
-#include "code/components/id_control.dm"
-#include "code/components/legs.dm"
+#include "code/_mech_defines.dm"
 
-//эквипмент
-#include "code/equipment/combat/ballistic_shield.dm"
-#include "code/equipment/combat/ballistic.dm"
-#include "code/equipment/combat/energy_shield.dm"
-#include "code/equipment/combat/energy_weapon.dm"
-#include "code/equipment/combat/pulse_rifle.dm"
-#include "code/equipment/combat/rocket_launcher.dm"
-#include "code/equipment/combat/flash.dm"
-#include "code/equipment/combat/flamethower.dm"
-#include "code/equipment/combat/mechete.dm"
-
-#include "code/equipment/utility/catapult.dm"
-#include "code/equipment/utility/integralka_rack.dm"
-#include "code/equipment/utility/plasma_cutter.dm"
-#include "code/equipment/utility/jets.dm"
-#include "code/equipment/utility/cargo_clamp.dm"
-#include "code/equipment/utility/camera.dm"
-#include "code/equipment/utility/auto_plasma_cutter.dm"
-#include "code/equipment/utility/drill.dm"
-
-
-#include "code/equipment/engineering/extinguisher.dm"
-#include "code/equipment/engineering/rcd.dm"
-
-#include "code/equipment/medical/sleeper.dm"
-#include "code/equipment/equipment.dm"
-
-
-
-//Премейды
-#include "code/premades/ert.dm"
-#include "code/premades/merc.dm"
-#include "code/premades/death_squad.dm"
-
-//Основной код мехов
-#include "code/heat_control.dm"
-#include "code/interface.dm"
-#include "code/keybinds.dm"
-#include "code/mech_damage.dm"
-#include "code/mech_icon.dm"
-#include "code/mech_interaction.dm"
-#include "code/mech_life.dm"
-#include "code/mech_move.dm"
-#include "code/mech_repair.dm"
-#include "code/mech_uplink.dm"
-#include "code/mech_vision.dm"
-#include "code/mech.dm"
-#include "code/minor_stuff.dm"
-#include "code/new_prices.dm"
-#include "code/paint_kit.dm"
-#include "code/passengers_compartment.dm"
-
+//Т.к мод крайне КРАЙНЕ огромный, для удобства чтения, файл с инклюдами был разбит на части
+#include "includs\mech_core.dm" //Всё ЯДРО мехов
+#include "includs\all_equipment.dm" //Всё снаряжение(Equipment)
+#include "includs\mech_components.dm" //Все запчасти мехов
+#include "includs\premades.dm" //Премейды (Заранее подготовленные мехи для чего-либо)
+#include "includs\mech_movement.dm" //Движение и мувмент меха (Скорость, таран)
+#include "includs\interface.dm" //Весь интрефейсы и кнопочки
+#include "includs\all_mech_interactions.dm" //Взаимодействие с мехом
+#include "includs\etc.dm" //ETC, всё то, что не нашло себе место
 
 #endif

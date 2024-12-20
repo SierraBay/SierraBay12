@@ -5,17 +5,11 @@
 ///ОСНОВА///
 #define CATEGORY_MECH "MECH"
 
-/proc/inmech(mob/living/A, mob/living/exosuit/B)
-	if(istype(B, /mob/living/exosuit))
-		if(B.pilots.Find(A))
-			return TRUE
-	return FALSE
-
 /datum/keybinding/mech
 	category = CATEGORY_MECH
 
 /datum/keybinding/mech/can_use(client/user)
-	return inmech(user.mob, user.mob.loc)
+	return in_this_mech(user.mob, user.mob.loc)
 ///ОСНОВА///
 
 

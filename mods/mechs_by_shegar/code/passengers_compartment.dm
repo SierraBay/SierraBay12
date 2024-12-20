@@ -3,30 +3,36 @@
 	var/list/left_back_passengers
 	var/list/right_back_passengers
 	var/datum/gas_mixture/air_contents = new
-	var/mob/living/exosuit/owner
 
 /obj/item/mech_component/passenger_compartment/Initialize()
 	. = ..()
 	owner = loc
 
-/mob/living/exosuit/proc/check_hardpoint_passengers(place,mob/user)// Данный прок проверяет, доступна ли часть тела для занятия её пассажиром в данный момент
-	var/obj/item/mech_equipment/checker
-	if(place == "Back" && hardpoints["back"] != null)
-		checker = hardpoints["back"]
-		if(checker.disturb_passengers == TRUE)
-			to_chat(user,SPAN_NOTICE("[place] covered by [checker] and cant be taked."))
-			return FALSE
-	else if(place == "Left back" && hardpoints["left shoulder"] != null)
-		checker = hardpoints["left shoulder"]
-		if(checker.disturb_passengers == TRUE)
-			to_chat(user,SPAN_NOTICE("[place] covered by [checker] and cant be taked."))
-			return FALSE
-	else if(place == "Right back" && hardpoints["right shoulder"] != null)
-		checker = hardpoints["right shoulder"]
-		if(checker.disturb_passengers == TRUE)
-			to_chat(user,SPAN_NOTICE("[place] covered by [checker] and cant be taked."))
-			return FALSE
-	return TRUE
+/obj/item/mech_component/passenger_compartment/proc/check_passengers_status()
+	var/mob/living/passenger
+	if(LAZYLEN(back_passengers) > 0)
+		passenger = back_passengers[1]
+		if(passenger.incapacitated(INCAPACITATION_UNRESISTING) == TRUE)
+			to_chat(passenger,SPAN_WARNING("You cant hold anymore yourself on mech."))
+			owner.leave_passenger(passenger)
+	if(LAZYLEN(left_back_passengers) > 0)
+		passenger = left_back_passengers[1]
+		if(passenger.incapacitated(INCAPACITATION_UNRESISTING) == TRUE)
+			to_chat(passenger,SPAN_WARNING("You cant hold anymore yourself on mech."))
+			owner.leave_passenger(passenger)
+	if(LAZYLEN(right_back_passengers > 0))
+		passenger = right_back_passengers[1]
+		if(passenger.incapacitated(INCAPACITATION_UNRESISTING) == TRUE)
+			to_chat(passenger,SPAN_WARNING("You cant hold anymore yourself on mech."))
+			owner.leave_passenger(passenger)
+
+/obj/item/mech_component/passenger_compartment/return_air()
+	var/turf/T = get_turf(loc)
+	if(istype(T))
+		return T.return_air()
+
+/obj/item/mech_component/passenger_compartment/proc/count_passengers()
+	owner.passengers_ammount = owner.passengers_ammount = LAZYLEN(back_passengers) + LAZYLEN(left_back_passengers) + LAZYLEN(right_back_passengers)
 
 /mob/living/exosuit/proc/check_passenger(mob/user) // Выбираем желаемое место, проверяем можно ли его занять, стартуем прок занятия
 	var/local_dir = get_dir(src, user)
@@ -72,6 +78,25 @@
 		return 0
 	if(check_hardpoint_passengers(choosed_place,user) == TRUE)
 		enter_passenger(user,choosed_place)
+
+/mob/living/exosuit/proc/check_hardpoint_passengers(place,mob/user)// Данный прок проверяет, доступна ли часть тела для занятия её пассажиром в данный момент
+	var/obj/item/mech_equipment/checker
+	if(place == "Back" && hardpoints["back"] != null)
+		checker = hardpoints["back"]
+		if(checker.disturb_passengers == TRUE)
+			to_chat(user,SPAN_NOTICE("[place] covered by [checker] and cant be taked."))
+			return FALSE
+	else if(place == "Left back" && hardpoints["left shoulder"] != null)
+		checker = hardpoints["left shoulder"]
+		if(checker.disturb_passengers == TRUE)
+			to_chat(user,SPAN_NOTICE("[place] covered by [checker] and cant be taked."))
+			return FALSE
+	else if(place == "Right back" && hardpoints["right shoulder"] != null)
+		checker = hardpoints["right shoulder"]
+		if(checker.disturb_passengers == TRUE)
+			to_chat(user,SPAN_NOTICE("[place] covered by [checker] and cant be taked."))
+			return FALSE
+	return TRUE
 
 /mob/living/exosuit/proc/enter_passenger(mob/user, place)// Пытается пихнуть на пассажирское место пассажира, перед этим ещё раз проверяя их
 	//Проверка спины
@@ -124,7 +149,7 @@
 
 /mob/living/exosuit/proc/forced_leave_passenger(place,mode,author)// Нечто внешнее насильно опустошает Одно/все места пассажиров
 // mode 1 - полный выгруз, mode 2 - рандомного одного, mode 0(Отсутствие мода) - ручной скид пассажира мехводом
-	if(mode == MECH_DROP_ALL_PASSENGER) // Полная разгрузка
+	if(mode == MECH_DROP_ALL_PASSENGERS) // Полная разгрузка
 		if(LAZYLEN(passenger_compartment.back_passengers)>0)
 			for(var/mob/i in passenger_compartment.back_passengers)
 				LAZYREMOVE(passenger_compartment.back_passengers,i)
@@ -214,29 +239,3 @@
 				LAZYREMOVE(passenger_compartment.right_back_passengers,i)
 		passenger_compartment.count_passengers()
 		update_passengers()
-
-/obj/item/mech_component/passenger_compartment/proc/check_passengers_status()
-	var/mob/living/passenger
-	if(LAZYLEN(back_passengers) > 0)
-		passenger = back_passengers[1]
-		if(passenger.incapacitated(INCAPACITATION_UNRESISTING) == TRUE)
-			to_chat(passenger,SPAN_WARNING("You cant hold anymore yourself on mech."))
-			owner.leave_passenger(passenger)
-	if(LAZYLEN(left_back_passengers) > 0)
-		passenger = left_back_passengers[1]
-		if(passenger.incapacitated(INCAPACITATION_UNRESISTING) == TRUE)
-			to_chat(passenger,SPAN_WARNING("You cant hold anymore yourself on mech."))
-			owner.leave_passenger(passenger)
-	if(LAZYLEN(right_back_passengers > 0))
-		passenger = right_back_passengers[1]
-		if(passenger.incapacitated(INCAPACITATION_UNRESISTING) == TRUE)
-			to_chat(passenger,SPAN_WARNING("You cant hold anymore yourself on mech."))
-			owner.leave_passenger(passenger)
-
-/obj/item/mech_component/passenger_compartment/return_air()
-	var/turf/T = get_turf(loc)
-	if(istype(T))
-		return T.return_air()
-
-/obj/item/mech_component/passenger_compartment/proc/count_passengers()
-	owner.passengers_ammount = owner.passengers_ammount = LAZYLEN(back_passengers) + LAZYLEN(left_back_passengers) + LAZYLEN(right_back_passengers)

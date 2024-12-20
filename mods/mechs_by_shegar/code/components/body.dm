@@ -5,7 +5,7 @@
 	///Могут ли пассажиры занимать пассажирское место Back?
 	var/allow_passengers = TRUE
 	///Отвечает за состояние болтов кабины. Их можно срезать сваркой, если мех закрыт. После этого мех никогда не сможет вновь опустить болты, ибо их попросту нет.
-	var/hatch_bolts_status = BOLTS_NOMITAL
+	var/hatch_bolts_status = BOLTS_NOMINAL
 	///НЕ ТРОГАТЬ. Даёт возможность меху проходить сквозь турфы
 	var/phazon = FALSE
 	///Холден, когда в последний раз проводили очистку атмосферы в мехе
@@ -20,9 +20,19 @@
 	var/overheat_time = 10 SECONDS
 	///Куллдаун для обработки тепла.
 	var/heat_process_speed = 2 SECONDS
-	///Выбито ли пузо?
-	var/body_critical_damaged = FALSE
 
+/obj/item/mech_component/chassis/MouseDrop(atom/over)
+	if(!usr || !over)
+		return
+	if(!Adjacent(usr) || !over.Adjacent(usr))
+		return
+
+	if(storage_compartment)
+		if(owner.hatch_locked)
+			to_chat(usr, SPAN_BAD("Storage compartment locked!"))
+			return
+		else
+			return storage_compartment.MouseDrop(over)
 
 /obj/item/mech_component/chassis/proc/atmos_clear_protocol(mob/living/user)
 	//Проверка куллдауна
@@ -37,30 +47,7 @@
 	cockpit.gas = good_gas
 	cockpit.temperature = 293.152
 
-///Пузо было выбито
-/obj/item/mech_component/chassis/part_has_been_destroyed()
-	if(!body_critical_damaged)
-		body_critical_damaged = TRUE
-		addtimer(new Callback(src, PROC_REF(do_overheat)), rand(20 SECONDS, 40 SECONDS))
-
-/obj/item/mech_component/chassis/proc/do_overheat()
-	//Произошёл баг или иное чудо
-	if(!loc)
-		return
-	//Меху зачинили пузо, просчитывать больше не нужно
-	if(total_damage != max_damage)
-		return
-	//Определяем нашего меха
-	var/mob/living/exosuit/mech = loc
-	mech.add_heat(mech.max_heat)
-	if(body_critical_damaged)
-		addtimer(new Callback(src, PROC_REF(do_overheat)), rand(60 SECONDS, 180 SECONDS))
-
-
-
-/obj/item/mech_component/chassis/part_has_been_restored()
-	body_critical_damaged = FALSE
-
+	//air_contents
 
 /obj/item/mech_component/chassis/powerloader
 	max_damage = 100

@@ -1,0 +1,7 @@
+#include "../code/components/armour.dm"
+#include "../code/components/arms.dm"
+#include "../code/components/body.dm"
+#include "../code/components/components.dm"
+#include "../code/components/head.dm"
+#include "../code/components/id_control.dm"
+#include "../code/components/legs.dm"

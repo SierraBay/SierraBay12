@@ -101,26 +101,28 @@
 	///Количество тепла, выделяемое при ЭМИ ударе
 	///
 	var/emp_heat_generation = 50
-													///КОНЕЦ///
+	///Владелец части
+	var/mob/living/exosuit/owner
 
-
+/obj/item/mech_component/proc/update_component_owner()
+	if(ismech(loc))
+		owner = loc
+	else
+		owner = null
 
 
 /obj/item/mech_component/Initialize()
 	current_hp = max_damage
 	. = ..()
 
-///Состояние части упало до 0
-/obj/item/mech_component/proc/part_has_been_destroyed()
-
-///Состояние части поднялось выше 0.
-/obj/item/mech_component/proc/part_has_been_restored()
-
-
 /obj/item/mech_component/proc/emp_heat(severity, emp_armor, mob/living/exosuit/mech) //Накидываем тепло учитывая армор меха
 	if(emp_armor > 0.8)
 		emp_armor = 0.8
 	mech.add_heat(emp_heat_generation * (1 - emp_armor))
+
+/obj/item/mech_component/emp_act(severity)
+	SHOULD_CALL_PARENT(FALSE)
+	take_burn_damage(rand((10 - (severity*3)),15-(severity*4)))
 
 /obj/item/mech_component/use_tool(obj/item/tool, mob/user, list/click_params)
 	//Ткнули сваркой
@@ -146,3 +148,7 @@
 				return
 		material_repair(null, material_sheet, user, user_undertand, src)
 	.=..()
+
+/obj/item/mech_component/return_diagnostics(mob/user)
+	to_chat(user, SPAN_NOTICE("[capitalize(src.name)]:"))
+	to_chat(user, SPAN_NOTICE(" - Integrity: <b> [current_hp]/[max_damage]([round(((current_hp / max_damage)) * 100)]%)</b> Unrepairable damage: <b><font color = red>[unrepairable_damage]</font></b>" ))

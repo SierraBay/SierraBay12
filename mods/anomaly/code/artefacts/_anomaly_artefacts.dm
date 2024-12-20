@@ -20,7 +20,7 @@
 	return TRUE
 
 /obj/item/artefact/proc/collector_interaction(obj/item/collector, mob/living/user)
-	if(inmech_sec(user))
+	if(inmech(user))
 		to_chat(user, SPAN_WARNING("Вы недотягиваетесь."))
 		return
 	var/obj/item/collector/input_collector = collector
