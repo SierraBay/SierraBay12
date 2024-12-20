@@ -99,3 +99,9 @@
 #define ANNOUNCER_BLUESPACEJUMP_PREP 'mods/eris_announcer/sound/announcements/bluespacejump_prepare.ogg'
 #define ANNOUNCER_BLUESPACEJUMP_START 'mods/eris_announcer/sound/announcements/bluespacejump_start.ogg'
 // ERIS_ANNOUNCER - End
+
+//PRIMLANGS - Start
+#define LANGUAGE_SIMPSKRELLIAN "Simplified Skrellian"
+#define LANGUAGE_SIMPUNATHI "Iber'Unathi"
+#define LANGUAGE_SIMPTAJARAN "Simplified Siik'Maas"
+//PRIMLANGS - End
