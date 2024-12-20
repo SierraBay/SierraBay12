@@ -50,6 +50,12 @@
 	E3.chance = 2
 	effects += E3
 	E3.multiplier = rand(1,E3.multiplier_max)
+	var/datum/disease2/effect/spiderfication/E4 = new()
+	E4.stage = 4
+	E4.chance = 2
+	effects += E4
+	E4.multiplier = rand(1,E4.multiplier_max)
+
 
 
 /mob/living/simple_animal/hostile/giant_spider
@@ -100,11 +106,16 @@
 	E1.multiplier = rand(1,E1.multiplier_max)
 	var/datum/disease2/effect/hungry/E2 = new()
 	E2.stage = 2
-	E1.chance = 2
+	E2.chance = 2
 	effects += E2
 	E2.multiplier = rand(1,E2.multiplier_max)
 	var/datum/disease2/effect/mutation/E3 = new()
 	E3.stage = 3
-	E1.chance = 2
+	E3.chance = 2
 	effects += E3
 	E3.multiplier = rand(1,E3.multiplier_max)
+	var/datum/disease2/effect/gibbingtons/E4 = new()
+	E4.stage = 4
+	E4.chance = 2
+	effects += E4
+	E4.multiplier = rand(1,E4.multiplier_max)
