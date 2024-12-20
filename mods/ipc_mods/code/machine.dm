@@ -5,6 +5,10 @@
 	passive_temp_gain = 0  // This should cause IPCs to stabilize at ~80 C in a 20 C environment.(5 is default without organ)
 	additional_languages = 1
 
+/datum/species/machine/skills_from_age(age)
+	if(age)
+		. = 8
+
 /obj/machinery/organ_printer/robot/New()
 	LAZYINITLIST(products)
 	products[BP_COOLING] = list(/obj/item/organ/internal/cooling_system, 35)
