@@ -1,0 +1,6 @@
+author: SierraKomodo
+changes:
+  - {bugfix: 'Fixed a bug where cancelling the prompt to select an allergy in character
+      setup would break your ability to see, modify, or spawn with any allergies at
+      all.'}
+delete-after: true

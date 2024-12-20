@@ -1,0 +1,4 @@
+author: SierraKomodo
+changes:
+  - {bugfix: Glowing eyes should no longer glow through clothing.}
+delete-after: true

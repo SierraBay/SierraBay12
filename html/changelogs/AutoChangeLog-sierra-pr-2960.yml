@@ -1,0 +1,7 @@
+author: SierraKomodo
+changes:
+  - {tweak: There is now a delay between a legion dying and the legion beacon summoning
+      a replacement.}
+  - {tweak: The delay between legion beacons summoning reinforcements has been increased
+      from 5 seconds to 10.}
+delete-after: true
