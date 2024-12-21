@@ -64,12 +64,12 @@
 	HTML += "<a href='?src=\ref[src];inspect=\ref[identify_item]'>\[Инспектировать предмет\]</a>"
 
 	HTML += "<hr>"
-	HTML += "Вместо этого вы можете начать <b>фейк</b> инспекцию предмета, тогда ваши навыки не будут задействованы для осмотра. Но при этом добавленные вами люди все еще могут задействовать свои навыки для инспекции.<br>"
-	HTML += "<a href='?src=\ref[src];inspect=\ref[identify_item];inspect_intent=1'>\[Фейк инспекция предмета\]</a>"
+	HTML += "Вместо этого вы можете начать <b>соглать</b> при инспекции предмета, тогда ваши навыки не будут задействованы для осмотра. Но при этом добавленные вами люди все еще могут задействовать свои навыки для инспекции.<br>"
+	HTML += "<a href='?src=\ref[src];inspect=\ref[identify_item];inspect_intent=1'>\[Солгать\]</a>"
 
 	if(user.mind && player_is_antag(user.mind))
 		HTML += "<hr>"
-		HTML += "Так как вы антаг, то можете произвести проверку предмета, как если бы у вас были максимальные навыки в каждой области.<br>"
+		HTML += "Так как вы антагонист, то можете произвести проверку предмета, как если бы у вас были максимальные навыки в каждой области.<br>"
 		HTML += "<a href='?src=\ref[src];inspect=\ref[identify_item];inspect_intent=2'>\[Гарантированно инспектировать предмет\]</a>"
 		w_height += 100
 
@@ -217,10 +217,10 @@
 
 	request_timeouts[target] = world.time + request_timeout
 	if(target.client)
-		to_chat(target, SPAN_BOLD("Вас запрашивают помочь с инспекцией предмета. В случае выбора фейк помощи вы будете принимать участие в осмотре, но ваши навыки не будут задействованы для осмотра. <a href='?src=\ref[src];candidate=\ref[target];intention=1'>(Помочь)</a><a href='?src=\ref[src];candidate=\ref[target];intention=0'>(Фейк помощь)</a>"))
+		to_chat(target, SPAN_BOLD("Вас запрашивают помочь с инспекцией предмета. В случае, если вы решите солгать, вы будете принимать участие в осмотре, но ваши навыки не будут задействованы для осмотра. <a href='?src=\ref[src];candidate=\ref[target];intention=1'>(Помочь)</a><a href='?src=\ref[src];candidate=\ref[target];intention=0'>(Солгать)</a>"))
 
 		if(target.mind && player_is_antag(target.mind))
-			to_chat(target, SPAN_BOLD("Так как вы антаг, то можете помочь с проверкой предмета, как если бы у вас были максимальные навыки в каждой области. <a href='?src=\ref[src];candidate=\ref[target];intention=2'>(Гарантированная помощь)</a>"))
+			to_chat(target, SPAN_BOLD("Так как вы антагонист, то можете помочь с проверкой предмета, как если бы у вас были максимальные навыки в каждой области. <a href='?src=\ref[src];candidate=\ref[target];intention=2'>(Гарантированная помощь)</a>"))
 
 /datum/extension/interactive/mod_inspect/Topic(href, href_list)
 	. = ..()
@@ -254,7 +254,7 @@
 
 		if(inspect_intent == 2)
 			if(!usr.mind || !player_is_antag(usr.mind))
-				to_chat(usr, SPAN_WARNING("Вы не антаг."))
+				to_chat(usr, SPAN_WARNING("Вы не антагонист."))
 				return
 
 		identify_item(usr, inspect_intent)
@@ -278,7 +278,7 @@
 
 		if(inspect_intent == 2)
 			if(!usr.mind || !player_is_antag(usr.mind))
-				to_chat(usr, SPAN_WARNING("Вы не антаг."))
+				to_chat(usr, SPAN_WARNING("Вы не антагонист."))
 				return
 
 		to_chat(holder, SPAN_WARNING("[candidate.name] соглашается участвовать в осмотре [identify_item.name]."))
