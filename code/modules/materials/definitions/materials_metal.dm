@@ -7,6 +7,12 @@
 	radioactivity = 12
 	sheet_icon_base = "puck"
 	wall_icon_base = "stone"
+	wall_flags = EMPTY_BITFIELD
+	wall_blend_icons = list(
+		"solid" = TRUE,
+		"wood" = TRUE,
+		"metal" = TRUE
+	)
 	door_icon_base = "stone"
 	table_icon_base = "stone"
 	wall_icon_reinf = "reinf_stone"
@@ -121,6 +127,11 @@
 	brute_armor = 7
 	wall_icon_base = "solid"
 	wall_icon_reinf = "reinf_over"
+	wall_flags = MATERIAL_PAINTABLE_MAIN|MATERIAL_PAINTABLE_STRIPE|MATERIAL_WALL_HAS_EDGES
+	wall_blend_icons = list(
+		"wood" = TRUE,
+		"stone" = TRUE
+	)
 	icon_colour = COLOR_STEEL
 	hitsound = 'sound/weapons/smash.ogg'
 	chem_products = list(
@@ -159,6 +170,11 @@
 	sheet_icon_base = "sheet-sheen"
 	wall_icon_base = "solid"
 	wall_icon_reinf = "reinf_over"
+	wall_flags = MATERIAL_PAINTABLE_MAIN|MATERIAL_PAINTABLE_STRIPE|MATERIAL_WALL_HAS_EDGES
+	wall_blend_icons = list(
+		"wood" = TRUE,
+		"stone" = TRUE
+	)
 	icon_colour = "#cccdcc"
 	hitsound = 'sound/weapons/smash.ogg'
 	sale_price = 1
@@ -184,6 +200,11 @@
 	sheet_icon_base = "sheet-reinf"
 	wall_icon_base = "solid"
 	wall_icon_reinf = "reinf_over"
+	wall_flags = MATERIAL_PAINTABLE_MAIN|MATERIAL_PAINTABLE_STRIPE|MATERIAL_WALL_HAS_EDGES
+	wall_blend_icons = list(
+		"wood" = TRUE,
+		"stone" = TRUE
+	)
 	icon_colour = "#a8a9b2"
 	explosion_resistance = 7.5
 	brute_armor = 8
@@ -209,6 +230,11 @@
 	weight = 18
 	stack_type = /obj/item/stack/material/titanium
 	wall_icon_base = "metal"
+	wall_flags = MATERIAL_PAINTABLE_MAIN
+	wall_blend_icons = list(
+		"wood" = TRUE,
+		"stone" = TRUE
+	)
 	door_icon_base = "metal"
 	icon_colour = "#d1e6e3"
 	wall_icon_reinf = "reinf_metal"
@@ -225,6 +251,11 @@
 	sheet_icon_base = "sheet-reinf"
 	wall_icon_base = "solid"
 	wall_icon_reinf = "reinf_over"
+	wall_flags = MATERIAL_PAINTABLE_MAIN|MATERIAL_PAINTABLE_STRIPE|MATERIAL_WALL_HAS_EDGES
+	wall_blend_icons = list(
+		"wood" = TRUE,
+		"stone" = TRUE
+	)
 	icon_colour = "#9bc6f2"
 	brute_armor = 4
 	burn_armor = 20
@@ -386,6 +417,11 @@
 
 /material/aliumium/New()
 	wall_icon_base = "metal"
+	wall_flags = MATERIAL_PAINTABLE_MAIN
+	wall_blend_icons = list(
+		"wood" = TRUE,
+		"stone" = TRUE
+	)
 	icon_colour = rgb(rand(10,150),rand(10,150),rand(10,150))
 	explosion_resistance = rand(25,40)
 	brute_armor = rand(10,20)

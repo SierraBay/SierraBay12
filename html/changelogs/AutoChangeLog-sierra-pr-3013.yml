@@ -1,4 +1,0 @@
-author: Builder13
-changes:
-  - {bugfix: Фикс подключения телепада к консоли через мультитул}
-delete-after: true
