@@ -30,11 +30,6 @@
 
 /turf/simulated/wall/r_wall/hull/Initialize()
 	. = ..()
-<<<<<<< ours
-	paint_color = color
-	color = null //color is just for mapping
-=======
->>>>>>> theirs
 	if(prob(40))
 		var/spacefacing = FALSE
 		for(var/direction in GLOB.cardinal)
