@@ -100,7 +100,7 @@
 
 	T = clamp(total_component_rating_of_type(/obj/item/stock_parts/manipulator), 0, 6)
 	mat_efficiency = 1 - (T - 2) / 8
-	speed = T / 2
+	speed = T
 	..()
 
 /obj/machinery/r_n_d/protolathe/proc/queue_design(datum/design/D, amount = 1)
