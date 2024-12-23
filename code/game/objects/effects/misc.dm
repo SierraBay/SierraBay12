@@ -19,11 +19,15 @@
 /obj/paint/LateInitialize(mapload)
 	var/turf/simulated/wall/W = get_turf(src)
 	if(istype(W))
-		W.paint_color = color
+		if(W.material.wall_flags & MATERIAL_PAINTABLE_MAIN)
+			W.paint_color = color
+		if(W.material.wall_flags & MATERIAL_PAINTABLE_STRIPE)
+			W.stripe_color = color
 		W.update_icon()
 	var/obj/structure/wall_frame/WF = locate() in loc
 	if(WF)
 		WF.paint_color = color
+		WF.stripe_color = color
 		WF.update_icon()
 	qdel(src)
 

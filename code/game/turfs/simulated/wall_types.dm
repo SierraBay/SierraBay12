@@ -1,9 +1,4 @@
 //Commonly used
-/turf/simulated/wall/prepainted
-	paint_color = COLOR_GUNMETAL
-
-/turf/simulated/wall/r_wall/prepainted
-	paint_color = COLOR_GUNMETAL
 
 /turf/simulated/wall/r_wall
 	icon_state = "r_generic"
@@ -21,12 +16,16 @@
 
 /turf/simulated/wall/prepainted
 	paint_color = COLOR_WALL_GUNMETAL
+	stripe_color = COLOR_GUNMETAL
+
 /turf/simulated/wall/r_wall/prepainted
 	paint_color = COLOR_WALL_GUNMETAL
+	stripe_color = COLOR_GUNMETAL
 
 /turf/simulated/wall/r_wall/hull/Initialize()
 	. = ..()
 	paint_color = color
+	stripe_color = color
 	color = null //color is just for mapping
 	if(prob(40))
 		var/spacefacing = FALSE
@@ -39,6 +38,7 @@
 		if(spacefacing)
 			var/bleach_factor = rand(10,50)
 			paint_color = adjust_brightness(paint_color, bleach_factor)
+			stripe_color = adjust_brightness(stripe_color, bleach_factor)
 	update_icon()
 
 /turf/simulated/wall/titanium
@@ -90,35 +90,30 @@
 	..(newloc,MATERIAL_RUTILE)
 
 /turf/simulated/wall/wood
-	blend_turfs = list(/turf/simulated/wall/cult, /turf/simulated/wall)
 	icon_state = "woodneric"
 
 /turf/simulated/wall/wood/New(newloc)
 	..(newloc,MATERIAL_WOOD)
 
 /turf/simulated/wall/mahogany
-	blend_turfs = list(/turf/simulated/wall/cult, /turf/simulated/wall)
 	icon_state = "woodneric"
 
 /turf/simulated/wall/mahogany/New(newloc)
 	..(newloc,MATERIAL_MAHOGANY)
 
 /turf/simulated/wall/maple
-	blend_turfs = list(/turf/simulated/wall/cult, /turf/simulated/wall)
 	icon_state = "woodneric"
 
 /turf/simulated/wall/maple/New(newloc)
 	..(newloc,MATERIAL_MAPLE)
 
 /turf/simulated/wall/ebony
-	blend_turfs = list(/turf/simulated/wall/cult, /turf/simulated/wall)
 	icon_state = "woodneric"
 
 /turf/simulated/wall/ebony/New(newloc)
 	..(newloc,MATERIAL_EBONY)
 
 /turf/simulated/wall/walnut
-	blend_turfs = list(/turf/simulated/wall/cult, /turf/simulated/wall)
 	icon_state = "woodneric"
 
 /turf/simulated/wall/walnut/New(newloc)
@@ -155,7 +150,6 @@
 /turf/simulated/wall/alium
 	icon_state = "jaggy"
 	floor_type = /turf/simulated/floor/fixed/alium
-	blend_objects = newlist()
 
 /turf/simulated/wall/alium/New(newloc)
 	..(newloc,MATERIAL_ALIENALLOY)
@@ -163,7 +157,6 @@
 //Cult wall
 /turf/simulated/wall/cult
 	icon_state = "cult"
-	blend_turfs = list(/turf/simulated/wall)
 
 /turf/simulated/wall/cult/New(newloc, reinforce = 0)
 	..(newloc, MATERIAL_CULT, reinforce ? MATERIAL_REINFORCED_CULT : null)
