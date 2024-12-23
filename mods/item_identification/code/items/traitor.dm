@@ -666,3 +666,16 @@
 			"LOGIC" = "AND"
 		)
 	)
+
+/obj/item/card/emag_broken/update_mod_identification()
+	mod_skill_identification = list(
+		"device_info" = list(
+			"success" = SPAN_GOOD("Вашей экспертизы в электротехнике и криминалистике достаточно, для того чтобы сказать, что магнитная лента данной карты могла использоваться для нестандартного подключения к устройствам. Невозможно определить функционал. Плата, подключенная к этой ленте, уже полностью выгорела."),
+			"failure" = SPAN_BAD("Выглядит как пустая идентификационная карта с кучей проводов, которых там точно не должно быть. Также выглядит немного сгоревшей при внешнем осмотре."),
+			"skillcheck" = list(
+				SKILL_ELECTRICAL = SKILL_EXPERIENCED,
+				SKILL_FORENSICS = SKILL_EXPERIENCED
+			),
+			"LOGIC" = "AND"
+		)
+	)

@@ -4,9 +4,13 @@
 /obj/item/proc/update_mod_identification()
 	return
 
-/mob/verb/mod_skill_examine(obj/item/I as obj in view())
+/mob/verb/mod_skill_examine(obj/item/I as obj in view(1))
 	set name = "Inspect"
 	set category = "IC"
+
+	if(I in usr.contents)
+		if(!usr.isEquipped(I) || !usr.canUnEquip(I))
+			return
 
 	mod_skill_examinate(usr, I)
 
@@ -107,14 +111,18 @@
 					if(!max_skills[S.type] || max_skills[S.type] < skill_val)
 						max_skills[S.type] = skill_val
 
-	var/starting_message = "[user] начал детальный осмотр [identify_item.name]"
+	var/starting_message = "[user] начинает детальный осмотр [identify_item.name]"
 
 	if(LAZYLEN(additional_users))
+		var/list/additional_names = list()
 		starting_message += " вместе с:"
 		for(var/auser in additional_users)
 			var/auser_name = additional_users[auser]["name"]
-			starting_message += "  [auser_name]"
-		starting_message += "."
+			additional_names.Add(auser_name)
+
+		starting_message += jointext(additional_names, ", ")
+
+	starting_message += "."
 
 	user.visible_message(starting_message)
 
