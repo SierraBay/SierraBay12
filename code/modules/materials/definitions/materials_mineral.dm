@@ -18,13 +18,6 @@
 	sheet_singular_name = "brick"
 	sheet_plural_name = "bricks"
 	wall_icon_base = "stone"
-	wall_flags = EMPTY_BITFIELD
-	wall_blend_icons = list(
-		"solid" = TRUE,
-		"wood" = TRUE,
-		"metal" = TRUE,
-		"brick" = TRUE
-	)
 	table_icon_base = "stone"
 	wall_icon_reinf = "reinf_stone"
 	sale_price = 2
@@ -90,12 +83,6 @@
 	sheet_singular_name = "brick"
 	sheet_plural_name = "bricks"
 	wall_icon_base = "stone"
-	wall_flags = EMPTY_BITFIELD
-	wall_blend_icons = list(
-		"solid" = TRUE,
-		"wood" = TRUE,
-		"metal" = TRUE
-	)
 	table_icon_base = "stone"
 	wall_icon_reinf = "reinf_stone"
 	sale_price = 2
@@ -117,12 +104,6 @@
 	sheet_singular_name = "brick"
 	sheet_plural_name = "bricks"
 	wall_icon_base = "stone"
-	wall_flags = EMPTY_BITFIELD
-	wall_blend_icons = list(
-		"solid" = TRUE,
-		"wood" = TRUE,
-		"metal" = TRUE
-	)
 	table_icon_base = "stone"
 	wall_icon_reinf = "reinf_stone"
 	ore_compresses_to = MATERIAL_PYRITE
@@ -145,12 +126,6 @@
 	sheet_singular_name = "brick"
 	sheet_plural_name = "bricks"
 	wall_icon_base = "stone"
-	wall_flags = EMPTY_BITFIELD
-	wall_blend_icons = list(
-		"solid" = TRUE,
-		"wood" = TRUE,
-		"metal" = TRUE
-	)
 	table_icon_base = "stone"
 	wall_icon_reinf = "reinf_stone"
 	sale_price = 2
@@ -172,12 +147,6 @@
 	sheet_singular_name = "brick"
 	sheet_plural_name = "bricks"
 	wall_icon_base = "stone"
-	wall_flags = EMPTY_BITFIELD
-	wall_blend_icons = list(
-		"solid" = TRUE,
-		"wood" = TRUE,
-		"metal" = TRUE
-	)
 	table_icon_base = "stone"
 	wall_icon_reinf = "reinf_stone"
 	sale_price = 2
@@ -199,12 +168,6 @@
 	sheet_singular_name = "brick"
 	sheet_plural_name = "bricks"
 	wall_icon_base = "stone"
-	wall_flags = EMPTY_BITFIELD
-	wall_blend_icons = list(
-		"solid" = TRUE,
-		"wood" = TRUE,
-		"metal" = TRUE
-	)
 	table_icon_base = "stone"
 	wall_icon_reinf = "reinf_stone"
 	sale_price = 2
@@ -226,12 +189,6 @@
 	sheet_singular_name = "brick"
 	sheet_plural_name = "bricks"
 	wall_icon_base = "stone"
-	wall_flags = EMPTY_BITFIELD
-	wall_blend_icons = list(
-		"solid" = TRUE,
-		"wood" = TRUE,
-		"metal" = TRUE
-	)
 	table_icon_base = "stone"
 	wall_icon_reinf = "reinf_stone"
 	sale_price = 2
@@ -253,12 +210,6 @@
 	sheet_singular_name = "brick"
 	sheet_plural_name = "bricks"
 	wall_icon_base = "stone"
-	wall_flags = EMPTY_BITFIELD
-	wall_blend_icons = list(
-		"solid" = TRUE,
-		"wood" = TRUE,
-		"metal" = TRUE
-	)
 	table_icon_base = "stone"
 	wall_icon_reinf = "reinf_stone"
 	sale_price = 2
@@ -279,12 +230,6 @@
 	sheet_singular_name = "brick"
 	sheet_plural_name = "bricks"
 	wall_icon_base = "stone"
-	wall_flags = EMPTY_BITFIELD
-	wall_blend_icons = list(
-		"solid" = TRUE,
-		"wood" = TRUE,
-		"metal" = TRUE
-	)
 	table_icon_base = "stone"
 	wall_icon_reinf = "reinf_stone"
 	ore_smelts_to = MATERIAL_ALUMINIUM
@@ -308,12 +253,6 @@
 	stack_type = /obj/item/stack/material/phoron
 	ignition_point = PHORON_MINIMUM_BURN_TEMPERATURE
 	wall_icon_base = "stone"
-	wall_flags = EMPTY_BITFIELD
-	wall_blend_icons = list(
-		"solid" = TRUE,
-		"wood" = TRUE,
-		"metal" = TRUE
-	)
 	table_icon_base = "stone"
 	icon_colour = "#e37108"
 	shard_type = SHARD_SHARD

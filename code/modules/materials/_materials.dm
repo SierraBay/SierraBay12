@@ -16,7 +16,6 @@
 			stone
 			metal
 			solid
-			wood
 			cult
 		DOORS
 			stone
@@ -91,10 +90,6 @@
 	var/wall_icon_base = "metal"
 	/// String. Icon overlay used for reinforced walls.
 	var/wall_icon_reinf = "reinf_metal"
-	/// Bitflag. What icon layers to look for
-	var/wall_flags = MATERIAL_PAINTABLE_MAIN
-	/// Which wall icon types walls of this material type will consider blending with. Assoc list (icon string = TRUE/FALSE)
-	var/list/wall_blend_icons = list()
 	/// String. Unpowered door base icon state. See header.
 	var/door_icon_base = "metal"
 	/// String. Table base icon state.

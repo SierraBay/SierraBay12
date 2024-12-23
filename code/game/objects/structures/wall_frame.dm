@@ -139,23 +139,24 @@
 	ClearOverlays()
 	var/image/I
 
-	var/new_color = stripe_color ? stripe_color : material.icon_colour
+	var/new_color = (paint_color ? paint_color : material.icon_colour)
+	color = new_color
 
 	for(var/i = 1 to 4)
 		if(other_connections[i] != "0")
 			I = image('icons/obj/structures/wall_frame.dmi', "frame_other[connections[i]]", dir = SHIFTL(1, i - 1))
 		else
 			I = image('icons/obj/structures/wall_frame.dmi', "frame[connections[i]]", dir = SHIFTL(1, i - 1))
-		I.color = new_color
 		AddOverlays(I)
 
-/obj/structure/wall_frame/proc/paint_wall_frame(new_paint_color)
-	paint_color = new_paint_color
-	update_icon()
-
-/obj/structure/wall_frame/proc/stripe_wall_frame(new_paint_color)
-	stripe_color = new_paint_color
-	update_icon()
+	if(stripe_color)
+		for(var/i = 1 to 4)
+			if(other_connections[i] != "0")
+				I = image('icons/obj/structures/wall_frame.dmi', "stripe_other[connections[i]]", dir = SHIFTL(1, i - 1))
+			else
+				I = image('icons/obj/structures/wall_frame.dmi', "stripe[connections[i]]", dir = SHIFTL(1, i - 1))
+			I.color = stripe_color
+			AddOverlays(I)
 
 /obj/structure/wall_frame/hull/Initialize()
 	. = ..()
@@ -170,7 +171,6 @@
 		if(spacefacing)
 			var/bleach_factor = rand(10,50)
 			paint_color = adjust_brightness(paint_color, bleach_factor)
-			stripe_color = adjust_brightness(stripe_color, bleach_factor)
 		update_icon()
 
 /obj/structure/wall_frame/on_death()
@@ -190,7 +190,6 @@
 //Subtypes
 /obj/structure/wall_frame/standard
 	paint_color = COLOR_WALL_GUNMETAL
-	stripe_color = COLOR_GUNMETAL
 
 /obj/structure/wall_frame/titanium
 	material = MATERIAL_TITANIUM
@@ -201,12 +200,9 @@
 
 /obj/structure/wall_frame/hull
 	paint_color = COLOR_SOL
-	stripe_color = COLOR_SOL
 
 /obj/structure/wall_frame/hull/vox
 	paint_color = COLOR_GREEN_GRAY
-	stripe_color = COLOR_GREEN_GRAY
 
 /obj/structure/wall_frame/hull/verne
 	paint_color = COLOR_GUNMETAL
-	stripe_color = COLOR_GUNMETAL
