@@ -1,0 +1,18 @@
+#ifndef MODPACK_DEV_MODE
+#define MODPACK_DEV_MODE
+
+#include "code\_dev_mode_core.dm"
+
+//Всё для работы именно карты
+//Всё для совместимости с всеми модами
+#include "code\dev_map\dev_ranks.dm"
+
+
+#include "code\dev_map\_dev_map.dm"
+#include "code\dev_map\dev_decals.dm"
+#include "code\dev_map\dev_define.dm"
+#include "code\dev_map\dev_lobby_music.dm"
+#include "code\dev_map\dev_setup.dm"
+#include "code\dev_map\dev_turfs.dm"
+
+#endif
