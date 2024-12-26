@@ -12,5 +12,6 @@
 	dynamic_lighting = 0
 
 /datum/map/build_away_sites()
+	SSticker.start_ASAP = TRUE //Закоментируй, если не хочешь чтоб раунд моментально стартовал
 	report_progress("РЕЖИМ РАЗРАБОТЧИКА, спавн авеек отключён.")
 	return
