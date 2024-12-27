@@ -38,10 +38,7 @@
 	if(I)
 		var/cache_key = "[last_eye_cache_key]-glow"
 		if(!human_icon_cache[cache_key])
-			var/image/eye_glow = image(I)
-			eye_glow.layer = EYE_GLOW_LAYER
-			eye_glow.plane = EFFECTS_ABOVE_LIGHTING_PLANE
-			human_icon_cache[cache_key] = eye_glow
+			human_icon_cache[cache_key] = emissive_appearance(I)
 		return human_icon_cache[cache_key]
 
 /obj/item/organ/internal/eyes/proc/change_eye_color()

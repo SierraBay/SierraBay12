@@ -78,7 +78,8 @@
 /obj/item/gun/energy/lasercannon
 	name = "laser cannon"
 	desc = "With the laser cannon, the lasing medium is enclosed in a tube lined with uranium-235 and subjected to high neutron flux in a nuclear reactor core. This incredible technology may help YOU achieve high excitation rates with small laser volumes!"
-	icon_state = "lasercannon"
+	icon_state = "lasercannon100"
+	modifystate = "lasercannon"
 	icon = 'icons/obj/guns/laser_cannon.dmi'
 	item_state = null
 	origin_tech = list(TECH_COMBAT = 4, TECH_MATERIAL = 3, TECH_POWER = 3)

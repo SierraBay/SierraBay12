@@ -701,14 +701,11 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 			for (var/severity in possible_levels)
 				LAZYSET(letterized_levels, LetterizeSeverity(severity), severity)
 			var/letterized_input = input(user, "Select the trait's level to apply.", "Select Level") as null | anything in letterized_levels
+			if (!letterized_input)
+				return
 			selected_level = letterized_levels[letterized_input]
 		else
 			selected_level = possible_levels[1]
-
-		//[SIERRA-ADD] - pr34500 - Prevents runtimes, because as of now it can be null
-		if(!selected_level)
-			return
-		//[/SIERRA-ADD]
 
 		var/additional_data
 		if (length(selected.metaoptions))
