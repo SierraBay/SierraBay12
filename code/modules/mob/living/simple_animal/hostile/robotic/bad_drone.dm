@@ -13,6 +13,7 @@
 	minbodytemp = 0
 	speed = 4
 	mob_size = MOB_TINY
+	bleed_colour = SYNTH_BLOOD_COLOUR
 	var/corpse = /obj/decal/cleanable/blood/gibs/robot
 
 	ai_holder = /datum/ai_holder/simple_animal/rogue_drone
