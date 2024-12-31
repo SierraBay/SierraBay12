@@ -1205,6 +1205,7 @@
 #include "code\game\objects\items\weapons\material\urn.dm"
 #include "code\game\objects\items\weapons\melee\energy.dm"
 #include "code\game\objects\items\weapons\melee\misc.dm"
+#include "code\game\objects\items\weapons\storage\ammobox.dm"
 #include "code\game\objects\items\weapons\storage\backpack.dm"
 #include "code\game\objects\items\weapons\storage\bags.dm"
 #include "code\game\objects\items\weapons\storage\belt.dm"
