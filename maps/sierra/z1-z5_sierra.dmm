@@ -19971,9 +19971,6 @@
 	use_power = 1
 	},
 /obj/structure/catwalk,
-/obj/machinery/light/small{
-	dir = 8
-	},
 /turf/simulated/floor/airless,
 /area/thruster/d3starboard)
 "cVp" = (
@@ -31590,9 +31587,6 @@
 	use_power = 1
 	},
 /obj/structure/catwalk,
-/obj/machinery/light/small{
-	dir = 8
-	},
 /turf/simulated/floor/airless,
 /area/thruster/d1starboard)
 "eCj" = (
@@ -40591,9 +40585,6 @@
 	use_power = 1
 	},
 /obj/structure/catwalk,
-/obj/machinery/light/small{
-	dir = 1
-	},
 /turf/simulated/floor/airless,
 /area/thruster/d1port)
 "fSa" = (
@@ -50194,7 +50185,6 @@
 	use_power = 1
 	},
 /obj/structure/catwalk,
-/obj/machinery/light/small,
 /turf/simulated/floor/airless,
 /area/thruster/d3starboard)
 "hpX" = (
@@ -72958,9 +72948,6 @@
 	use_power = 1
 	},
 /obj/structure/catwalk,
-/obj/machinery/light/small{
-	dir = 1
-	},
 /turf/simulated/floor/airless,
 /area/thruster/d3port)
 "kKP" = (
@@ -90731,9 +90718,6 @@
 	use_power = 1
 	},
 /obj/structure/catwalk,
-/obj/machinery/light/small{
-	dir = 8
-	},
 /turf/simulated/floor/airless,
 /area/thruster/d1port)
 "nqM" = (
@@ -105272,7 +105256,6 @@
 	use_power = 1
 	},
 /obj/structure/catwalk,
-/obj/machinery/light/small,
 /turf/simulated/floor/airless,
 /area/thruster/d1starboard)
 "pwz" = (
@@ -146391,9 +146374,6 @@
 	use_power = 1
 	},
 /obj/structure/catwalk,
-/obj/machinery/light/small{
-	dir = 8
-	},
 /turf/simulated/floor/airless,
 /area/thruster/d3port)
 "vya" = (
