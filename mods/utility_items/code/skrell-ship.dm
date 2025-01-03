@@ -60,3 +60,8 @@
 		/obj/item/reagent_containers/food/snacks/plumphelmetbiscuit = 8,
 		/obj/item/reagent_containers/food/snacks/tossedsalad = 8
 	)
+
+// The Frog
+/mob/living/simple_animal/friendly/frog/skrells_frog
+	name = "Kro-krri"
+	desc = "An unusual creature that looks like a frog, it looks sad."
