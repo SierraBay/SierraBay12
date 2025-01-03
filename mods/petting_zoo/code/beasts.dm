@@ -180,8 +180,8 @@
 	var/poison_type = /datum/reagent/toxin/cyanide
 
 /mob/living/simple_animal/friendly/frog/skrells_frog
-    name = "Kro-krri"
-    desc = "An unusual creature that looks like a frog, it looks sad."
+	name = "Kro-krri"
+	desc = "An unusual creature that looks like a frog, it looks sad."
 
 /datum/say_list/frog
 	speak = list("ribbit","croak")
