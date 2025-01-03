@@ -2254,6 +2254,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/mob/living/simple_animal/friendly/frog/skrells_frog,
 /turf/simulated/floor/tiled/skrell/blue,
 /area/ship/skrellscoutship/crew/rec)
 "hd" = (
