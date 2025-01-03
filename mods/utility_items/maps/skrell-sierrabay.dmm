@@ -260,9 +260,6 @@
 	pixel_y = 24;
 	req_access = list("ACCESS_SKRELLSCOUT")
 	},
-/obj/machinery/power/terminal{
-	dir = 1
-	},
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
@@ -504,9 +501,6 @@
 	pixel_y = 24;
 	req_access = list("ACCESS_SKRELLSCOUT")
 	},
-/obj/machinery/power/terminal{
-	dir = 1
-	},
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -727,15 +721,11 @@
 /turf/simulated/floor/tiled/skrell,
 /area/ship/skrellscoutshuttle)
 "cM" = (
-/obj/machinery/atmospherics/unary/vent_pump/on,
 /obj/machinery/power/apc/critical{
 	dir = 1;
 	name = "north bump";
 	pixel_y = 24;
 	req_access = list("ACCESS_SKRELLSCOUT")
-	},
-/obj/machinery/power/terminal{
-	dir = 1
 	},
 /obj/structure/cable{
 	d2 = 2;
@@ -938,14 +928,19 @@
 	dir = 4;
 	pixel_x = -24
 	},
+/obj/machinery/atmospherics/unary/vent_pump/on{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/skrell/white,
 /area/ship/skrellscoutship/crew/medbay)
 "dn" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
 	},
 /turf/simulated/floor/tiled/skrell/white,
 /area/ship/skrellscoutship/crew/medbay)
@@ -1253,9 +1248,6 @@
 	name = "north bump";
 	pixel_y = 24;
 	req_access = list("ACCESS_SKRELLSCOUT")
-	},
-/obj/machinery/power/terminal{
-	dir = 1
 	},
 /obj/structure/cable{
 	d2 = 4;
@@ -1745,9 +1737,6 @@
 	pixel_x = 24;
 	req_access = list("ACCESS_SKRELLSCOUT")
 	},
-/obj/machinery/power/terminal{
-	dir = 4
-	},
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -1911,9 +1900,6 @@
 	pixel_x = -24;
 	req_access = list("ACCESS_SKRELLSCOUT")
 	},
-/obj/machinery/power/terminal{
-	dir = 8
-	},
 /obj/structure/cable,
 /turf/simulated/floor/tiled/skrell/blue,
 /area/ship/skrellscoutship/crew/quarters)
@@ -2015,7 +2001,6 @@
 	pixel_y = -24;
 	req_access = list("ACCESS_SKRELLSCOUT")
 	},
-/obj/machinery/power/terminal,
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -2348,7 +2333,7 @@
 /turf/simulated/floor/tiled/skrell/blue,
 /area/ship/skrellscoutship/crew/rec)
 "hm" = (
-/obj/structure/bed/chair/rounded/blue{
+/obj/structure/bed/chair/comfy/purple{
 	dir = 1
 	},
 /turf/simulated/floor/carpet/purple,
@@ -2552,7 +2537,6 @@
 	pixel_y = -24;
 	req_access = list("ACCESS_SKRELLSCOUT")
 	},
-/obj/machinery/power/terminal,
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -2575,9 +2559,6 @@
 	name = "east bump";
 	pixel_x = 24;
 	req_access = list("ACCESS_SKRELLSCOUT")
-	},
-/obj/machinery/power/terminal{
-	dir = 4
 	},
 /obj/structure/cable{
 	d2 = 2;
@@ -3215,9 +3196,6 @@
 /turf/simulated/floor/tiled/skrell/green,
 /area/ship/skrellscoutship/robotics)
 "jO" = (
-/obj/machinery/power/terminal{
-	dir = 4
-	},
 /obj/machinery/power/apc/critical{
 	dir = 4;
 	name = "east bump";
@@ -3623,9 +3601,6 @@
 	name = "north bump";
 	pixel_y = 24;
 	req_access = list("ACCESS_SKRELLSCOUT")
-	},
-/obj/machinery/power/terminal{
-	dir = 1
 	},
 /obj/structure/cable{
 	d2 = 4;
@@ -4118,40 +4093,6 @@
 /obj/paint/black,
 /turf/simulated/floor/plating,
 /area/ship/skrellscoutship/crew/quarters)
-"su" = (
-/obj/item/reagent_containers/food/snacks/skrellsnacks,
-/obj/item/reagent_containers/food/snacks/skrellsnacks,
-/obj/item/reagent_containers/food/snacks/skrellsnacks,
-/obj/item/reagent_containers/food/snacks/skrellsnacks,
-/obj/item/reagent_containers/food/snacks/skrellsnacks,
-/obj/item/reagent_containers/food/snacks/skrellsnacks,
-/obj/item/reagent_containers/food/snacks/skrellsnacks,
-/obj/item/reagent_containers/food/snacks/skrellsnacks,
-/obj/item/reagent_containers/food/snacks/skrellsnacks,
-/obj/item/reagent_containers/food/snacks/skrellsnacks,
-/obj/item/reagent_containers/food/snacks/skrellsnacks,
-/obj/item/reagent_containers/food/snacks/skrellsnacks,
-/obj/item/reagent_containers/food/snacks/skrellsnacks,
-/obj/item/reagent_containers/food/snacks/skrellsnacks,
-/obj/item/reagent_containers/food/snacks/skrellsnacks,
-/obj/item/reagent_containers/food/snacks/skrellsnacks,
-/obj/structure/closet/crate/freezer,
-/obj/item/reagent_containers/food/snacks/plumphelmetbiscuit,
-/obj/item/reagent_containers/food/snacks/plumphelmetbiscuit,
-/obj/item/reagent_containers/food/snacks/plumphelmetbiscuit,
-/obj/item/reagent_containers/food/snacks/plumphelmetbiscuit,
-/obj/item/reagent_containers/food/snacks/plumphelmetbiscuit,
-/obj/item/reagent_containers/food/snacks/plumphelmetbiscuit,
-/obj/item/reagent_containers/food/snacks/plumphelmetbiscuit,
-/obj/item/reagent_containers/food/snacks/tossedsalad,
-/obj/item/reagent_containers/food/snacks/tossedsalad,
-/obj/item/reagent_containers/food/snacks/tossedsalad,
-/obj/item/reagent_containers/food/snacks/tossedsalad,
-/obj/item/reagent_containers/food/snacks/tossedsalad,
-/obj/item/reagent_containers/food/snacks/tossedsalad,
-/obj/item/reagent_containers/food/snacks/tossedsalad,
-/turf/simulated/floor/tiled/skrell/white,
-/area/ship/skrellscoutship/crew/rec)
 "sD" = (
 /obj/item/device/radio/intercom/map_preset/skrellscoutship{
 	dir = 4;
@@ -4461,7 +4402,7 @@
 /turf/simulated/floor/tiled/skrell,
 /area/ship/skrellscoutship/wings/port)
 "xj" = (
-/obj/structure/bed/chair/rounded/blue,
+/obj/structure/bed/chair/comfy/purple,
 /turf/simulated/floor/carpet/purple,
 /area/ship/skrellscoutship/crew/rec)
 "xo" = (
@@ -4713,7 +4654,7 @@
 	dir = 1;
 	icon_state = "tube1"
 	},
-/obj/structure/bed/chair/rounded/blue,
+/obj/structure/bed/chair/comfy/purple,
 /turf/simulated/floor/carpet/purple,
 /area/ship/skrellscoutship/crew/rec)
 "Aq" = (
@@ -4933,9 +4874,6 @@
 	pixel_x = 24;
 	req_access = list("ACCESS_SKRELLSCOUT")
 	},
-/obj/machinery/power/terminal{
-	dir = 4
-	},
 /obj/structure/cable,
 /turf/simulated/floor/tiled/skrell/green,
 /area/ship/skrellscoutship/forestorage)
@@ -4960,6 +4898,10 @@
 	},
 /turf/simulated/floor/tiled/skrell/blue,
 /area/ship/skrellscoutship/crew/quarters)
+"Ek" = (
+/obj/structure/closet/crate/freezer/skrell,
+/turf/simulated/floor/tiled/skrell/white,
+/area/ship/skrellscoutship/crew/rec)
 "Ep" = (
 /obj/machinery/light/skrell{
 	dir = 8;
@@ -5123,9 +5065,6 @@
 /turf/simulated/floor/plating,
 /area/ship/skrellscoutship/maintenance/power)
 "Ii" = (
-/obj/machinery/power/terminal{
-	dir = 8
-	},
 /obj/structure/cable/cyan,
 /obj/machinery/power/apc/debug/skrell{
 	dir = 8;
@@ -5166,7 +5105,6 @@
 	pixel_y = -24;
 	req_access = list("ACCESS_SKRELLSCOUT")
 	},
-/obj/machinery/power/terminal,
 /obj/structure/cable,
 /turf/simulated/floor/tiled/skrell,
 /area/ship/skrellscoutship/wings/port)
@@ -5618,9 +5556,6 @@
 	pixel_x = -24;
 	req_access = list("ACCESS_SKRELLSCOUT")
 	},
-/obj/machinery/power/terminal{
-	dir = 8
-	},
 /obj/structure/cable,
 /turf/simulated/floor/tiled/skrell/orange,
 /area/ship/skrellscoutship/maintenance/atmos)
@@ -5843,9 +5778,6 @@
 	name = "east bump";
 	pixel_x = 24;
 	req_access = list("ACCESS_SKRELLSCOUT")
-	},
-/obj/machinery/power/terminal{
-	dir = 4
 	},
 /obj/structure/cable,
 /turf/simulated/floor/tiled/skrell,
@@ -9733,7 +9665,7 @@ Gw
 Rb
 Rb
 Rb
-su
+Ek
 TL
 TL
 TL

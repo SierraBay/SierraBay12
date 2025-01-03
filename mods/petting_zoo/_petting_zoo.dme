@@ -8,6 +8,5 @@
 #include "code/fox.dm"
 #include "code/koala.dm"
 #include "code/rabbit.dm"
-#include "code/skrell_frog.dm"
 
 #endif

@@ -48,3 +48,15 @@
 		SPECIES_UNATHI = 'icons/obj/clothing/species/unathi/obj_suit_unathi.dmi',
 		SPECIES_SKRELL = 'mods/utility_items/icons/skrell_suit_on_mob.dmi',
 		)
+
+// Very vegan freezer
+/obj/structure/closet/crate/freezer/skrell
+	name = "SDF rations"
+	desc = "A crate of skrellian rations."
+
+/obj/structure/closet/crate/freezer/skrell/WillContain()
+	return list(
+		/obj/item/reagent_containers/food/snacks/skrellsnacks = 16,
+		/obj/item/reagent_containers/food/snacks/plumphelmetbiscuit = 8,
+		/obj/item/reagent_containers/food/snacks/tossedsalad = 8
+	)
