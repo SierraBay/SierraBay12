@@ -3,10 +3,7 @@
 /obj/floor_decal/snow,
 /obj/structure/aurora/informative/wall_computer{
 	pixel_y = 32;
-	possible_information = list(
-		"#244...Шеф, я понимаю, вам приказали сверху, эксперименты и всё такое, но вы же сам человек умный, и понимаете, что колёсная техника на такой планете - это же шутка! После первого выезда, у колесницы колёса превратились в труху, день на это угробил! Пришлось из челнока брать запаски, благо взя42u447$@!*.",
-		"14$@!*(4)...ледней вылазке случилось что-то совсем странное, странные огни в небе, словно "
-		)
+	possible_information = list(		"#244...Шеф, я понимаю, вам приказали сверху, эксперименты и всё такое, но вы же сам человек умный, и понимаете, что колёсная техника на такой планете - это же шутка! После первого выезда, у колесницы колёса превратились в труху, день на это угробил! Пришлось из челнока брать запаски, благо взя42u447$@!*.",		"14$@!*(4)...ледней вылазке случилось что-то совсем странное, странные огни в небе, словно "		)
 	},
 /turf/simulated/floor/exoplanet/concrete,
 /area/map_template/garage)
@@ -124,11 +121,6 @@
 /obj/structure/broken_cryo,
 /turf/simulated/floor/exoplanet/snow,
 /area/template_noop)
-"mE" = (
-/obj/decal/cleanable/ash,
-/obj/floor_decal/industrial/danger,
-/turf/simulated/floor/exoplanet/concrete,
-/area/template_noop)
 "op" = (
 /obj/floor_decal/snow,
 /turf/simulated/floor/exoplanet/concrete,
@@ -163,12 +155,6 @@
 /obj/floor_decal/snow,
 /turf/simulated/floor/holofloor/tiled,
 /area/map_template/garage)
-"rj" = (
-/obj/floor_decal/industrial/danger{
-	dir = 1
-	},
-/turf/simulated/floor/exoplanet/concrete,
-/area/template_noop)
 "tT" = (
 /obj/structure/aurora/smes,
 /turf/simulated/floor/exoplanet/snow,
@@ -256,9 +242,6 @@
 /area/template_noop)
 "BS" = (
 /obj/structure/aurora/nav_light,
-/obj/floor_decal/industrial/danger{
-	dir = 5
-	},
 /turf/simulated/floor/exoplanet/concrete,
 /area/template_noop)
 "CI" = (
@@ -280,12 +263,6 @@
 /obj/random/junk,
 /turf/simulated/floor/exoplanet/concrete,
 /area/map_template/garage)
-"Gj" = (
-/obj/floor_decal/industrial/danger{
-	dir = 4
-	},
-/turf/simulated/floor/exoplanet/concrete,
-/area/template_noop)
 "Gy" = (
 /obj/structure/disposalpipe/broken,
 /turf/template_noop,
@@ -339,12 +316,6 @@
 /obj/machinery/door/blast/regular,
 /turf/simulated/floor/exoplanet/concrete,
 /area/map_template/garage)
-"NJ" = (
-/obj/floor_decal/industrial/danger{
-	dir = 8
-	},
-/turf/simulated/floor/exoplanet/concrete,
-/area/template_noop)
 "OQ" = (
 /obj/floor_decal/snow,
 /obj/decal/cleanable/ash,
@@ -422,10 +393,6 @@
 "YK" = (
 /obj/structure/railing/mapped,
 /turf/simulated/floor/exoplanet/ice,
-/area/template_noop)
-"YZ" = (
-/obj/floor_decal/industrial/danger,
-/turf/simulated/floor/exoplanet/concrete,
 /area/template_noop)
 "Zu" = (
 /obj/machinery/door/blast/regular,
@@ -1318,11 +1285,11 @@ fr
 fH
 gP
 ZL
-NJ
-NJ
-NJ
 lS
-NJ
+lS
+lS
+lS
+lS
 gP
 oS
 oS
@@ -1366,7 +1333,7 @@ ZL
 Pl
 lS
 xu
-YZ
+lS
 fr
 fr
 By
@@ -1402,14 +1369,14 @@ lO
 cc
 hq
 fr
-rj
+lS
 lS
 lS
 ZL
 ZL
 Pl
 lS
-YZ
+lS
 fr
 fr
 Pi
@@ -1452,7 +1419,7 @@ ZL
 lS
 lS
 lS
-YZ
+lS
 TO
 fr
 Pi
@@ -1495,7 +1462,7 @@ lS
 Pl
 ZL
 lS
-mE
+Pl
 fr
 fr
 Pi
@@ -1575,10 +1542,10 @@ cc
 fr
 YK
 BS
-Gj
-Gj
-Gj
-Gj
+lS
+lS
+lS
+lS
 lS
 ZL
 Lx
