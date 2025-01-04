@@ -32,6 +32,7 @@
 	var/list/blacklisted_amomalies = list()
 
 /obj/item/clothing/gloves/anomaly_detector/emp_act(severity)
+	SHOULD_CALL_PARENT(FALSE)
 	if(!destroyed)
 		destroyed = TRUE
 		STOP_PROCESSING(SSanom, src)
