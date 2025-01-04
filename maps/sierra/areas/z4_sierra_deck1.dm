@@ -125,7 +125,7 @@
 /area/rnd/storage
 	name = "First Deck - RND - Storage"
 	icon_state = "toxstorage"
-	req_access = list(access_tox_storage)
+	req_access = list(access_research_storage)
 
 /area/rnd/development
 	name = "First Deck - RND - Fabricator Lab"

@@ -49,6 +49,7 @@
 
 /area/crew_quarters/heads/captain
 	req_access = list(access_captain)
+	name = "Bridge - Command - Captain's Cabin"
 	icon_state = "heads_cap"
 	holomap_color = HOLOMAP_AREACOLOR_COMMAND
 
