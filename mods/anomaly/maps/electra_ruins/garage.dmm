@@ -139,10 +139,10 @@
 /turf/simulated/floor/exoplanet/concrete,
 /area/map_template/garage)
 "qM" = (
-/obj/machinery/cryopod{
+/obj/floor_decal/snow,
+/obj/structure/broken_cryo{
 	dir = 4
 	},
-/obj/floor_decal/snow,
 /turf/simulated/floor/holofloor/tiled,
 /area/map_template/garage)
 "tT" = (
@@ -316,12 +316,13 @@
 /turf/simulated/floor/exoplanet/snow,
 /area/template_noop)
 "Pk" = (
-/obj/machinery/cryopod{
-	dir = 4
-	},
 /obj/structure/aurora/wall_light{
 	dir = 1
 	},
+/obj/structure/broken_cryo{
+	dir = 4
+	},
+/obj/floor_decal/snow,
 /turf/simulated/floor/holofloor/tiled,
 /area/map_template/garage)
 "Pl" = (
