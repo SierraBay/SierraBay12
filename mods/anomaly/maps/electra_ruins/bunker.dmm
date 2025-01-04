@@ -27,22 +27,10 @@
 "bi" = (
 /turf/simulated/floor/tiled/freezer,
 /area/map_template/bunker)
-"bH" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/aurora/wall_light{
-	dir = 8
-	},
-/turf/simulated/floor/tiled/white,
-/area/map_template/bunker)
 "bI" = (
 /obj/structure/table/reinforced,
 /obj/item/paper/crumpled,
 /turf/simulated/floor/tiled/white,
-/area/map_template/bunker)
-"bO" = (
-/obj/machinery/door/unpowered/simple/iron,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/turf/simulated/floor/tiled/freezer,
 /area/map_template/bunker)
 "cd" = (
 /obj/structure/table/rack,
@@ -60,13 +48,6 @@
 	pixel_y = 16
 	},
 /turf/simulated/floor/tiled/freezer,
-/area/map_template/bunker)
-"dI" = (
-/obj/structure/table/reinforced,
-/obj/machinery/atmospherics/unary/vent_pump/on{
-	dir = 4
-	},
-/turf/simulated/floor/tiled/white,
 /area/map_template/bunker)
 "dR" = (
 /obj/structure/bed/chair/comfy/brown{
@@ -90,11 +71,6 @@
 "fr" = (
 /turf/simulated/floor/exoplanet/ice,
 /area/template_noop)
-"fA" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/decal/cleanable/ash,
-/turf/simulated/floor/tiled/white,
-/area/map_template/bunker)
 "fQ" = (
 /obj/structure/table/rack,
 /turf/simulated/floor/tiled,
@@ -104,29 +80,10 @@
 /obj/machinery/door/blast/shutters,
 /turf/simulated/floor/tiled/white,
 /area/map_template/bunker)
-"fU" = (
-/obj/machinery/atmospherics/pipe/simple/visible/red{
-	dir = 10
-	},
-/turf/simulated/floor/tiled,
-/area/map_template/bunker)
 "fW" = (
 /obj/structure/table/reinforced,
 /obj/item/paper/anomaly_scan,
 /turf/simulated/floor/tiled/white,
-/area/map_template/bunker)
-"gb" = (
-/obj/item/storage/mirror{
-	pixel_y = 32
-	},
-/obj/structure/hygiene/sink{
-	dir = 1;
-	pixel_y = 16
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 10
-	},
-/turf/simulated/floor/tiled/freezer,
 /area/map_template/bunker)
 "gf" = (
 /obj/structure/table/rack,
@@ -140,12 +97,6 @@
 	dir = 1
 	},
 /turf/simulated/floor/tiled/techfloor,
-/area/map_template/bunker)
-"gG" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 10
-	},
-/turf/simulated/floor/tiled,
 /area/map_template/bunker)
 "gI" = (
 /obj/structure/aurora/wall_light{
@@ -162,12 +113,6 @@
 /obj/structure/table/marble,
 /obj/machinery/chemical_dispenser/bar_coffee/full,
 /turf/simulated/floor/tiled/techfloor,
-/area/map_template/bunker)
-"hL" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/turf/simulated/floor/tiled/white,
 /area/map_template/bunker)
 "if" = (
 /obj/structure/bed/chair/comfy/brown{
@@ -192,35 +137,11 @@
 "iy" = (
 /turf/simulated/floor,
 /area/map_template/bunker)
-"iJ" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/turf/simulated/floor/tiled/freezer,
-/area/map_template/bunker)
-"ja" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/turf/simulated/floor/tiled/techfloor,
-/area/map_template/bunker)
-"jk" = (
-/obj/machinery/portable_atmospherics/hydroponics,
-/obj/machinery/atmospherics/unary/vent_scrubber/on{
-	dir = 1
-	},
-/turf/simulated/floor/tiled/white,
-/area/map_template/bunker)
 "jn" = (
 /obj/structure/aurora/wall_light{
 	dir = 1
 	},
 /turf/simulated/floor/tiled/freezer,
-/area/map_template/bunker)
-"jo" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 10
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor/tiled,
 /area/map_template/bunker)
 "jA" = (
 /obj/structure/cable/orange,
@@ -230,42 +151,11 @@
 /obj/decal/cleanable/ash,
 /turf/simulated/floor/tiled/white,
 /area/map_template/bunker)
-"jW" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor/tiled/white,
-/area/map_template/bunker)
-"ka" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 9
-	},
-/turf/simulated/floor/tiled/white,
-/area/map_template/bunker)
 "ls" = (
 /obj/structure/aurora/wall_light{
 	dir = 4
 	},
 /turf/simulated/floor/tiled/techfloor,
-/area/map_template/bunker)
-"mb" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor/tiled,
-/area/map_template/bunker)
-"mv" = (
-/obj/machinery/atmospherics/pipe/manifold/visible/red,
-/turf/simulated/floor/tiled,
-/area/map_template/bunker)
-"mU" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 10
-	},
-/turf/simulated/floor/tiled/techfloor,
-/area/map_template/bunker)
-"nm" = (
-/obj/machinery/atmospherics/pipe/manifold/visible/red{
-	dir = 1
-	},
-/obj/decal/cleanable/ash,
-/turf/simulated/floor/tiled/white,
 /area/map_template/bunker)
 "nE" = (
 /obj/structure/bed/chair/armchair/red{
@@ -276,12 +166,6 @@
 "nK" = (
 /obj/structure/aurora/wall_light{
 	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 10
 	},
 /obj/decal/cleanable/ash,
 /turf/simulated/floor/tiled/white,
@@ -303,13 +187,6 @@
 "pd" = (
 /obj/structure/aurora/wall_light{
 	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor/tiled,
-/area/map_template/bunker)
-"pw" = (
-/obj/machinery/atmospherics/binary/pump/on{
-	dir = 8
 	},
 /turf/simulated/floor/tiled,
 /area/map_template/bunker)
@@ -368,10 +245,6 @@
 /obj/structure/aurora/wall_light{
 	dir = 1
 	},
-/turf/simulated/floor/tiled,
-/area/map_template/bunker)
-"tp" = (
-/obj/machinery/atmospherics/pipe/manifold/visible/cyan,
 /turf/simulated/floor/tiled,
 /area/map_template/bunker)
 "ua" = (
@@ -437,12 +310,6 @@
 	},
 /turf/simulated/floor/tiled,
 /area/map_template/bunker)
-"zB" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 5
-	},
-/turf/simulated/floor/tiled/freezer,
-/area/map_template/bunker)
 "AX" = (
 /obj/item/paper/crumpled,
 /turf/simulated/floor/tiled/white,
@@ -471,28 +338,10 @@
 /obj/structure/broken_door,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/map_template/bunker)
-"DI" = (
-/obj/machinery/atmospherics/unary/vent_scrubber/on{
-	dir = 1
-	},
-/turf/simulated/floor/tiled/techfloor,
-/area/map_template/bunker)
 "Eu" = (
 /obj/anomaly/electra/three_and_three/tesla_second,
 /turf/simulated/floor/exoplanet/ice,
 /area/template_noop)
-"Fa" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/turf/simulated/floor/tiled,
-/area/map_template/bunker)
-"FA" = (
-/obj/machinery/atmospherics/unary/vent_scrubber/on{
-	dir = 1
-	},
-/turf/simulated/floor/tiled/freezer,
-/area/map_template/bunker)
 "FI" = (
 /obj/machinery/constructable_frame/machine_frame,
 /obj/decal/cleanable/ash,
@@ -509,11 +358,6 @@
 	dir = 4;
 	start_pressure = 4559.63
 	},
-/turf/simulated/floor/tiled,
-/area/map_template/bunker)
-"GG" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled,
 /area/map_template/bunker)
 "GN" = (
@@ -560,22 +404,6 @@
 /obj/structure/broken_door,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/template_noop)
-"Ik" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/turf/simulated/floor/tiled/white,
-/area/map_template/bunker)
-"IC" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 5
-	},
-/turf/simulated/floor/tiled/white,
-/area/map_template/bunker)
 "IH" = (
 /turf/simulated/mineral/ice,
 /area/template_noop)
@@ -589,13 +417,6 @@
 /obj/machinery/vending/hydronutrients,
 /turf/simulated/floor/tiled/white,
 /area/map_template/bunker)
-"Kl" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/decal/cleanable/ash,
-/turf/simulated/floor/tiled/white,
-/area/map_template/bunker)
 "KJ" = (
 /obj/structure/aurora/wall_light{
 	dir = 8
@@ -604,12 +425,6 @@
 /area/template_noop)
 "La" = (
 /obj/machinery/door/firedoor/autoset,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
 /turf/simulated/floor/tiled,
 /area/map_template/bunker)
 "Lb" = (
@@ -622,11 +437,6 @@
 "Mq" = (
 /obj/structure/aurora/wall_light,
 /turf/simulated/floor/tiled/white,
-/area/map_template/bunker)
-"Mz" = (
-/obj/structure/table/reinforced,
-/obj/machinery/atmospherics/unary/vent_pump/on,
-/turf/simulated/floor/tiled,
 /area/map_template/bunker)
 "MD" = (
 /obj/structure/hygiene/shower{
@@ -657,24 +467,8 @@
 	},
 /turf/simulated/floor/tiled,
 /area/map_template/bunker)
-"Nw" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 10
-	},
-/turf/simulated/floor/exoplanet/ice,
-/area/template_noop)
 "NJ" = (
 /obj/structure/table/reinforced,
-/turf/simulated/floor/tiled/white,
-/area/map_template/bunker)
-"NP" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/decal/cleanable/ash,
 /turf/simulated/floor/tiled/white,
 /area/map_template/bunker)
 "Od" = (
@@ -688,17 +482,6 @@
 /obj/item/clothing/head/bio_hood/anomaly,
 /obj/structure/table/rack,
 /turf/simulated/floor/tiled/techfloor,
-/area/map_template/bunker)
-"OF" = (
-/obj/machinery/atmospherics/binary/pump/on{
-	dir = 4
-	},
-/turf/simulated/floor/tiled,
-/area/map_template/bunker)
-"OY" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/door/unpowered/simple/iron,
-/turf/simulated/floor/tiled/white,
 /area/map_template/bunker)
 "Ph" = (
 /obj/structure/aurora/informative/old_computer,
@@ -714,9 +497,6 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/bunker)
 "PC" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
 /obj/machinery/door/unpowered/simple/iron,
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/bunker)
@@ -738,24 +518,12 @@
 /obj/structure/aurora/wall_light,
 /turf/simulated/floor/exoplanet/ice,
 /area/template_noop)
-"Ql" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/turf/simulated/floor/tiled,
-/area/map_template/bunker)
 "QQ" = (
 /obj/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/tiled,
 /area/map_template/bunker)
 "QW" = (
 /obj/machinery/portable_atmospherics/powered/scrubber,
-/turf/simulated/floor/tiled,
-/area/map_template/bunker)
-"Re" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/universal{
-	dir = 4
-	},
 /turf/simulated/floor/tiled,
 /area/map_template/bunker)
 "Rq" = (
@@ -766,12 +534,6 @@
 /obj/machinery/door/unpowered/simple/glass,
 /obj/decal/cleanable/ash,
 /turf/simulated/floor/tiled/white,
-/area/map_template/bunker)
-"SG" = (
-/obj/machinery/atmospherics/pipe/manifold/visible/red{
-	dir = 8
-	},
-/turf/simulated/floor/tiled/techfloor,
 /area/map_template/bunker)
 "Tf" = (
 /obj/structure/aurora/beaker_dropper,
@@ -796,10 +558,6 @@
 /obj/structure/aurora/informative/old_computer,
 /turf/simulated/floor/tiled/white,
 /area/map_template/bunker)
-"VO" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/turf/simulated/floor/tiled/white,
-/area/map_template/bunker)
 "WQ" = (
 /obj/machinery/door/unpowered/simple/iron,
 /turf/simulated/floor/tiled/white,
@@ -808,21 +566,6 @@
 /obj/structure/ice_rock,
 /turf/simulated/floor/exoplanet/ice,
 /area/template_noop)
-"XG" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 5
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 5
-	},
-/turf/simulated/floor/tiled,
-/area/map_template/bunker)
-"XR" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/turf/simulated/floor/tiled/techfloor,
-/area/map_template/bunker)
 "Ye" = (
 /obj/structure/bed,
 /obj/item/bedsheet/brown,
@@ -835,13 +578,8 @@
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor/tiled,
 /area/map_template/bunker)
-"YY" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/turf/simulated/floor/exoplanet/ice,
-/area/template_noop)
 "Zf" = (
 /obj/machinery/door/unpowered/simple/iron,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/tiled,
 /area/map_template/bunker)
 "Zy" = (
@@ -1548,9 +1286,9 @@ Jx
 Jx
 Jx
 Nn
-tp
-fU
-mv
+ua
+ua
+ua
 ua
 ua
 Jx
@@ -1591,9 +1329,9 @@ Jx
 Jx
 Jx
 iv
-OF
+ua
 iv
-pw
+ua
 Yz
 Yz
 Jx
@@ -1634,9 +1372,9 @@ Jx
 Jx
 Jx
 Yz
-Re
+ua
 QW
-Re
+ua
 Yz
 Yz
 Jx
@@ -1677,9 +1415,9 @@ Jx
 Jx
 Jx
 Yz
-Fa
 ua
-Ql
+ua
+ua
 ua
 ua
 Jx
@@ -1720,11 +1458,11 @@ Jx
 Jx
 Jx
 Yz
-gG
-mb
-jo
-GG
-XG
+ua
+ua
+ua
+ua
+ua
 Jx
 fQ
 ua
@@ -1810,7 +1548,7 @@ ua
 ua
 Jx
 CU
-Ik
+CU
 CU
 gI
 CU
@@ -1853,7 +1591,7 @@ ua
 ML
 Jx
 Ph
-Ik
+CU
 CU
 NJ
 NJ
@@ -1896,7 +1634,7 @@ ua
 ua
 Jx
 Vb
-Ik
+CU
 CU
 bI
 fW
@@ -1939,7 +1677,7 @@ ua
 ua
 Jx
 Tf
-NP
+jR
 AX
 bI
 bI
@@ -1982,9 +1720,9 @@ ua
 ML
 Jx
 zc
-Ik
+CU
 jR
-dI
+NJ
 bI
 CU
 CU
@@ -2020,14 +1758,14 @@ xu
 Jx
 Jx
 Jx
-Mz
+Cc
 pd
-mb
+ua
 Zf
-jW
+CU
 nK
-IC
-ka
+CU
+CU
 UU
 CU
 CU
@@ -2069,7 +1807,7 @@ Jx
 Jx
 Jx
 Jx
-Kl
+jR
 Jx
 Jx
 Jx
@@ -2112,17 +1850,17 @@ CU
 jR
 CU
 Sp
-nm
-VO
-bH
+jR
 CU
-VO
-OY
-ja
-SG
-ja
-bO
-zB
+gI
+CU
+CU
+WQ
+Ni
+Ni
+Ni
+By
+bi
 bi
 By
 Rq
@@ -2155,7 +1893,7 @@ FY
 jR
 CU
 Sp
-Kl
+jR
 CS
 jR
 CS
@@ -2165,7 +1903,7 @@ Jx
 PC
 Jx
 Jx
-iJ
+bi
 bi
 Jx
 Jx
@@ -2198,18 +1936,18 @@ CU
 CU
 jR
 qI
-hL
+CU
 CS
 Zy
 CS
 jR
 Jx
 Ni
-XR
+Ni
 Ni
 Jx
-gb
-FA
+dl
+bi
 By
 Rq
 Jx
@@ -2241,14 +1979,14 @@ Jx
 WQ
 Jx
 Jx
-Nw
-YY
-fA
-jk
+fr
+fr
+jR
+CS
 Mq
 Jx
 Ha
-XR
+Ni
 Ni
 Jx
 jn
@@ -2291,8 +2029,8 @@ CS
 jR
 Jx
 xM
-mU
-DI
+Ni
+Ni
 Jx
 dl
 bi
