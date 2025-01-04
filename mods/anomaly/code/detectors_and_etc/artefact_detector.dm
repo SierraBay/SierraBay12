@@ -4,7 +4,7 @@
 	icon = 'mods/anomaly/icons/artefact_detector.dmi'
 	icon_state = "medv_turned_off"
 	item_state = "on_floor_off"
-	on_turf_icon = 'mods/anomaly/icons/artefact_detector_on_floor.dmi'
+	//on_turf_icon = 'mods/anomaly/icons/artefact_detector_on_floor.dmi'
 	var/capturing_method = "RANDOM" //RANDOM - любой на Z уровне. CLOSEST - ближайший на Z уровне. LONGEST - дальнейший на Z уровне.
 	var/status = FALSE
 	var/showing_artefact = FALSE //Детектор уже указывает куда-то
