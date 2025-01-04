@@ -33,6 +33,6 @@
 #include "code/skrell-ship.dm"
 #include "code/security.dm"
 #include "code/FBP_vox.dm"
-//#include "code\on_floor_icon.dm" test
+#include "code\on_floor_icon.dm"
 
 #endif
