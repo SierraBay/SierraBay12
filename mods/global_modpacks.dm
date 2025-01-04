@@ -45,5 +45,7 @@
 #include "chemtweaks/_chemtweaks.dme"
 #include "diona/_diona.dme"
 #include "simplangs/simplangs.dme"
+#include "makeshift_sword_overhaul/makeshift_sword_overhaul.dme"
+#include "item_identification/_item_identification.dme"
 
 #include "../packs/sierra-tweaks/_pack.dm"
