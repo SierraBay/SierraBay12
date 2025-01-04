@@ -67,7 +67,8 @@
 
 /obj/structure/aurora/informative/Initialize()
 	. = ..()
-	stored_information = pick(possible_information)
+	if(LAZYLEN(possible_information))
+		stored_information = pick(possible_information)
 
 /obj/structure/aurora/informative/examine(mob/user)
 	. = ..()
