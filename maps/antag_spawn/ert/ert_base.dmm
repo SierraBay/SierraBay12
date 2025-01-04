@@ -1338,16 +1338,10 @@
 "cY" = (
 /obj/structure/window/reinforced/crescent,
 /obj/structure/table/rack,
-<<<<<<< ours
-/obj/item/rig_module/mounted/energy/taser,
-/obj/item/rig_module/vision/nvg,
-/obj/item/rig_module/device/flash,
-=======
 /obj/item/rig_module/device/drill,
 /obj/item/rig_module/device/drill,
 /obj/item/rig_module/vision/meson,
 /obj/item/rig_module/vision/meson,
->>>>>>> theirs
 /obj/structure/window/reinforced/crescent{
 	dir = 8
 	},
@@ -1798,18 +1792,12 @@
 	},
 /area/map_template/rescue_base/base)
 "dT" = (
-<<<<<<< ours
-/obj/structure/table/glass,
-/obj/item/storage/firstaid/surgery,
-/turf/simulated/floor/tiled/dark/monotile,
-=======
 /obj/machinery/atmospherics/unary/tank/air{
 	dir = 1;
 	start_pressure = 4559.63
 	},
 /obj/floor_decal/industrial/outline/blue,
 /turf/simulated/floor/tiled/techfloor,
->>>>>>> theirs
 /area/map_template/rescue_base/start)
 "dU" = (
 /obj/structure/table/steel,
@@ -1857,7 +1845,6 @@
 /area/map_template/rescue_base/base)
 "ec" = (
 /obj/structure/table/reinforced,
-/obj/item/mech_equipment/mounted_system/melee/mechete,
 /turf/unsimulated/floor{
 	dir = 1;
 	icon_state = "vault"
@@ -1867,9 +1854,6 @@
 /obj/item/device/radio/intercom/specops{
 	pixel_y = 22
 	},
-<<<<<<< ours
-/obj/item/device/paint_sprayer,
-=======
 /obj/structure/table/rack,
 /obj/item/gun/energy/plasmacutter/mounted/mech,
 /obj/item/gun/energy/plasmacutter/mounted/mech,
@@ -1881,19 +1865,12 @@
 /obj/item/mech_equipment/mounted_system/extinguisher,
 /obj/item/mech_equipment/mounted_system/rcd,
 /obj/item/mech_equipment/mounted_system/rcd,
->>>>>>> theirs
 /turf/unsimulated/floor{
 	dir = 1;
 	icon_state = "vault"
 	},
 /area/map_template/rescue_base/base)
 "ee" = (
-<<<<<<< ours
-/obj/structure/table/reinforced,
-/obj/machinery/cell_charger,
-/obj/item/cell/hyper,
-/obj/item/cell/hyper,
-=======
 /obj/structure/table/rack,
 /obj/item/mech_equipment/camera,
 /obj/item/mech_equipment/camera,
@@ -1901,7 +1878,6 @@
 /obj/item/mech_equipment/light,
 /obj/item/mech_equipment/clamp,
 /obj/item/mech_equipment/clamp,
->>>>>>> theirs
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -1987,10 +1963,6 @@
 /area/map_template/rescue_base/base)
 "eq" = (
 /obj/machinery/mech_recharger,
-<<<<<<< ours
-/mob/living/exosuit/premade/ert,
-=======
->>>>>>> theirs
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -2007,8 +1979,6 @@
 	icon_state = "vault"
 	},
 /area/map_template/rescue_base/base)
-<<<<<<< ours
-=======
 "es" = (
 /obj/structure/table/steel,
 /obj/random/clipboard,
@@ -2017,7 +1987,6 @@
 	icon_state = "dark"
 	},
 /area/map_template/rescue_base/base)
->>>>>>> theirs
 "et" = (
 /obj/structure/table/rack,
 /obj/item/roller_bed,
@@ -2294,20 +2263,11 @@
 /turf/simulated/floor/tiled/dark,
 /area/map_template/rescue_base/start)
 "eT" = (
-<<<<<<< ours
-/obj/machinery/light{
-	dir = 8
-=======
 /obj/machinery/porta_turret/crescent,
 /turf/unsimulated/floor{
 	icon_state = "asteroidfloor"
->>>>>>> theirs
 	},
-/obj/structure/closet/crate/secure{
-	req_access = list("ACCESS_CENT_SPECOPS")
-	},
-/turf/simulated/floor/plating,
-/area/map_template/rescue_base/start)
+/area/map_template/rescue_base/base)
 "eU" = (
 /obj/floor_decal/techfloor,
 /obj/structure/table/steel_reinforced,
@@ -2326,8 +2286,6 @@
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/rescue_base/start)
-<<<<<<< ours
-=======
 "eV" = (
 /obj/structure/cable/green{
 	d1 = 1;
@@ -2336,7 +2294,6 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/map_template/rescue_base/start)
->>>>>>> theirs
 "eW" = (
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 9
@@ -2352,39 +2309,12 @@
 /turf/simulated/floor/tiled/white,
 /area/map_template/rescue_base/start)
 "eY" = (
-<<<<<<< ours
-/obj/machinery/computer/prisoner{
-	name = "Implant Management";
-=======
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
->>>>>>> theirs
 	dir = 8
 	},
 /turf/simulated/floor/tiled/dark,
 /area/map_template/rescue_base/start)
 "eZ" = (
-<<<<<<< ours
-/obj/machinery/atmospherics/pipe/manifold/visible{
-	dir = 4
-	},
-/turf/simulated/floor/tiled/white,
-/area/map_template/rescue_base/start)
-"fa" = (
-/obj/machinery/door/airlock/centcom{
-	name = "Infirmary";
-	icon_state = "closed"
-	},
-/turf/simulated/floor/tiled/white,
-/area/map_template/rescue_base/start)
-"fb" = (
-/obj/item/device/radio/intercom/specops{
-	dir = 8;
-	pixel_x = 22
-	},
-/obj/structure/table/steel_reinforced,
-/obj/item/storage/fancy/smokable/dromedaryco,
-/turf/simulated/floor/tiled/dark,
-=======
 /obj/structure/closet{
 	name = "emergency response team wardrobe"
 	},
@@ -2423,7 +2353,6 @@
 	dir = 6
 	},
 /turf/simulated/floor/tiled/techfloor,
->>>>>>> theirs
 /area/map_template/rescue_base/start)
 "fc" = (
 /obj/machinery/optable,
@@ -2437,36 +2366,6 @@
 /turf/simulated/wall/titanium,
 /area/map_template/rescue_base/start)
 "fe" = (
-<<<<<<< ours
-/obj/machinery/atmospherics/unary/vent_pump/high_volume/shuttle{
-	dir = 8;
-	id_tag = "rescue_shuttle_pump"
-	},
-/obj/machinery/embedded_controller/radio/airlock/docking_port{
-	frequency = 1331;
-	id_tag = "rescue_shuttle";
-	pixel_x = -8;
-	pixel_y = 24
-	},
-/obj/machinery/light{
-	dir = 4
-	},
-/obj/machinery/button/blast_door{
-	id_tag = "rescuedock";
-	name = "Window Shutters Control";
-	pixel_x = 4;
-	pixel_y = 24
-	},
-/turf/simulated/floor/plating,
-/area/map_template/rescue_base/start)
-"ff" = (
-/obj/structure/table/steel_reinforced,
-/turf/simulated/floor/tiled/dark,
-/area/map_template/rescue_base/start)
-"fg" = (
-/obj/floor_decal/corner/paleblue{
-	dir = 4
-=======
 /obj/structure/bed/padded,
 /obj/item/bedsheet/ce,
 /turf/unsimulated/floor{
@@ -2478,33 +2377,14 @@
 /obj/machinery/atmospherics/unary/vent_pump/on,
 /obj/floor_decal/techfloor{
 	dir = 1
->>>>>>> theirs
 	},
-/obj/floor_decal/floordetail/edgedrain{
-	dir = 10
-	},
-/obj/structure/closet/medical_wall{
-	pixel_y = -24
-	},
-/obj/item/reagent_containers/glass/bottle/stoxin,
-/obj/item/reagent_containers/glass/bottle/stoxin,
-/obj/item/reagent_containers/syringe,
-/obj/item/tank/anesthetic,
-/obj/item/clothing/mask/breath/medical,
-/turf/simulated/floor/tiled/white,
+/turf/simulated/floor/tiled/dark,
 /area/map_template/rescue_base/start)
 "fh" = (
-<<<<<<< ours
-/obj/machinery/atmospherics/unary/freezer{
-	icon_state = "freezer"
-	},
-/turf/simulated/floor/tiled/white,
-=======
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
 /turf/simulated/floor/tiled/dark,
->>>>>>> theirs
 /area/map_template/rescue_base/start)
 "fi" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -2514,32 +2394,6 @@
 /turf/simulated/floor/tiled/dark,
 /area/map_template/rescue_base/start)
 "fj" = (
-<<<<<<< ours
-/obj/machinery/sleeper{
-	dir = 8
-	},
-/obj/structure/closet/medical_wall{
-	pixel_x = 32
-	},
-/obj/item/reagent_containers/ivbag/blood/human/oneg,
-/obj/item/reagent_containers/ivbag/blood/human/oneg,
-/obj/item/reagent_containers/syringe/antiviral,
-/obj/item/reagent_containers/syringe/antiviral,
-/obj/item/reagent_containers/syringe,
-/obj/item/reagent_containers/glass/bottle/antitoxin{
-	pixel_x = -4;
-	pixel_y = 8
-	},
-/obj/item/reagent_containers/glass/bottle/inaprovaline{
-	pixel_x = 4;
-	pixel_y = 7
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden{
-	dir = 9
-	},
-/turf/simulated/floor/tiled/white,
-/area/map_template/rescue_base/start)
-=======
 /obj/structure/table/reinforced,
 /obj/machinery/cell_charger,
 /obj/item/cell/hyper,
@@ -2547,80 +2401,31 @@
 	icon_state = "dark"
 	},
 /area/map_template/rescue_base/base)
->>>>>>> theirs
 "fk" = (
 /obj/machinery/atmospherics/unary/cryo_cell,
 /turf/simulated/floor/tiled/white/monotile,
 /area/map_template/rescue_base/start)
 "fl" = (
-<<<<<<< ours
-/obj/machinery/door/airlock/external{
-	frequency = 1331;
-	id_tag = "rescue_shuttle_outer";
-	name = "Ship External Access"
-	},
-/obj/shuttle_landmark/ert/start,
-/obj/machinery/door/blast/regular{
-	dir = 4;
-	id_tag = "ert_starboard_airlock_blast_door"
-	},
-/turf/simulated/floor/plating,
-=======
 /obj/machinery/atmospherics/pipe/manifold/hidden/fuel{
 	dir = 8
 	},
 /obj/paint/sun,
 /turf/simulated/wall/titanium,
->>>>>>> theirs
 /area/map_template/rescue_base/start)
 "fn" = (
 /turf/simulated/floor/tiled/dark,
 /area/map_template/rescue_base/start)
 "fp" = (
-<<<<<<< ours
-<<<<<<< ours
-/obj/machinery/body_scanconsole{
-	dir = 4
-	},
-/turf/simulated/floor/tiled/white,
-/area/map_template/rescue_base/start)
-"fq" = (
-/obj/item/device/radio/intercom/specops{
-	dir = 8;
-	pixel_x = 22;
-	pixel_y = -10
-	},
-=======
-=======
 /obj/paint/merc,
->>>>>>> theirs
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
 /turf/simulated/wall/titanium,
 /area/map_template/rescue_base/start)
 "fq" = (
->>>>>>> theirs
 /obj/structure/handrail{
 	dir = 4
 	},
-<<<<<<< ours
-/obj/machinery/button/blast_door{
-	id_tag = "ert_starboard_airlock_blast_door";
-	name = "Port Exit Shutters Control";
-	pixel_x = 24;
-	pixel_y = 8;
-	dir = 8
-	},
-/turf/simulated/floor/plating,
-/area/map_template/rescue_base/start)
-"fs" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/obj/structure/bed/chair{
-	dir = 1
-=======
 /obj/machinery/atmospherics/unary/vent_pump/high_volume/shuttle{
 	dir = 4;
 	id_tag = "rescue_shuttle_pump"
@@ -2638,7 +2443,6 @@
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "vault"
->>>>>>> theirs
 	},
 /area/map_template/rescue_base/base)
 "fs" = (
@@ -2706,16 +2510,9 @@
 /turf/simulated/floor/plating,
 /area/map_template/rescue_base/start)
 "fy" = (
-<<<<<<< ours
-/obj/structure/bed/chair/office/dark{
-	dir = 4
-	},
-/turf/simulated/floor/tiled/dark,
-=======
 /obj/structure/catwalk,
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
 /turf/simulated/floor/plating,
->>>>>>> theirs
 /area/map_template/rescue_base/start)
 "fz" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
@@ -2745,27 +2542,9 @@
 	icon_state = "asteroidplating"
 	},
 /area/map_template/rescue_base/base)
-<<<<<<< ours
-"fC" = (
-/obj/structure/table/steel_reinforced,
-/obj/item/clothing/head/solgov/dress/fleet/command,
-/turf/simulated/floor/tiled/dark,
-/area/map_template/rescue_base/start)
-"fD" = (
-/obj/machinery/light{
-	dir = 8
-	},
-/obj/structure/closet/radiation,
-/turf/simulated/floor/tiled/dark,
-/area/map_template/rescue_base/start)
-"fE" = (
-/obj/machinery/computer/modular/preset/medical{
-	dir = 8
-=======
 "fE" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
->>>>>>> theirs
 	},
 /obj/structure/catwalk,
 /turf/simulated/floor/plating,
@@ -2823,14 +2602,8 @@
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/rescue_base/start)
-<<<<<<< ours
-"fL" = (
-/obj/structure/closet/bombclosetsecurity,
-/turf/simulated/floor/tiled/dark,
-=======
 "fK" = (
 /turf/simulated/floor/tiled/techfloor/grid,
->>>>>>> theirs
 /area/map_template/rescue_base/start)
 "fM" = (
 /obj/machinery/body_scanconsole{
@@ -2865,16 +2638,6 @@
 /turf/simulated/floor/tiled/dark,
 /area/map_template/rescue_base/start)
 "fP" = (
-<<<<<<< ours
-/obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 5
-	},
-/obj/item/device/radio/intercom/specops{
-	pixel_x = -22;
-	dir = 4
-	},
-/turf/simulated/floor/tiled/white,
-=======
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
 	},
@@ -2882,7 +2645,6 @@
 	dir = 9
 	},
 /turf/simulated/floor/tiled/dark,
->>>>>>> theirs
 /area/map_template/rescue_base/start)
 "fQ" = (
 /obj/machinery/atmospherics/unary/engine{
@@ -2891,19 +2653,6 @@
 /obj/paint/sun,
 /turf/simulated/wall/titanium,
 /area/map_template/rescue_base/start)
-<<<<<<< ours
-"fS" = (
-/obj/machinery/door/airlock/centcom{
-	name = "Cell";
-	icon_state = "closed"
-	},
-/turf/simulated/floor/tiled/dark,
-/area/map_template/rescue_base/start)
-"fT" = (
-/obj/machinery/door/airlock/centcom{
-	name = "Storage";
-	icon_state = "closed"
-=======
 "fR" = (
 /obj/item/device/radio/intercom/specops{
 	dir = 8;
@@ -2934,21 +2683,10 @@
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
 /obj/floor_decal/techfloor{
 	dir = 1
->>>>>>> theirs
-	},
-/turf/simulated/floor/plating,
-/area/map_template/rescue_base/start)
-"fU" = (
-<<<<<<< ours
-/obj/machinery/door/airlock/centcom{
-	name = "Flight Deck";
-	icon_state = "closed"
 	},
 /turf/simulated/floor/tiled/dark,
 /area/map_template/rescue_base/start)
-"fV" = (
-/obj/structure/closet/l3closet/general,
-=======
+"fU" = (
 /obj/machinery/power/apc/hyper{
 	dir = 1;
 	pixel_y = 18;
@@ -2961,7 +2699,6 @@
 /obj/floor_decal/techfloor{
 	dir = 1
 	},
->>>>>>> theirs
 /turf/simulated/floor/tiled/dark,
 /area/map_template/rescue_base/start)
 "fV" = (
@@ -2971,25 +2708,6 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/map_template/rescue_base/start)
-<<<<<<< ours
-"fY" = (
-/obj/structure/table/rack,
-/obj/machinery/light,
-/obj/item/tank/jetpack/carbondioxide,
-/obj/item/tank/jetpack/carbondioxide,
-/obj/machinery/button/blast_door{
-	id_tag = "rescueeva";
-	name = "Window Shutters Control";
-	pixel_x = 24;
-	pixel_y = -4
-	},
-/turf/simulated/floor/tiled/dark,
-/area/map_template/rescue_base/start)
-"fZ" = (
-/obj/machinery/door/airlock/centcom{
-	name = "Brig";
-	icon_state = "closed"
-=======
 "fX" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -3007,7 +2725,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
->>>>>>> theirs
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
@@ -3016,31 +2733,6 @@
 /turf/simulated/floor/tiled/dark,
 /area/map_template/rescue_base/start)
 "ga" = (
-<<<<<<< ours
-/obj/structure/shuttle/engine/heater,
-/obj/paint/sun,
-/turf/simulated/wall/titanium,
-/area/map_template/rescue_base/start)
-"gb" = (
-/obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 5
-	},
-/turf/simulated/floor/tiled/white,
-/area/map_template/rescue_base/start)
-"gc" = (
-/obj/floor_decal/corner/red{
-	dir = 6
-	},
-/obj/floor_decal/floordetail/edgedrain{
-	dir = 8
-	},
-/turf/simulated/floor/tiled/white,
-/area/map_template/rescue_base/start)
-"gd" = (
-/obj/machinery/door/airlock/centcom{
-	name = "Passageway";
-	icon_state = "closed"
-=======
 /obj/machinery/atmospherics/pipe/simple/hidden/fuel{
 	dir = 4
 	},
@@ -3090,17 +2782,10 @@
 "gd" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
->>>>>>> theirs
 	},
 /turf/simulated/floor/tiled/dark,
 /area/map_template/rescue_base/start)
 "gf" = (
-<<<<<<< ours
-/obj/structure/closet,
-/obj/item/storage/box/donkpocket_premium,
-/obj/item/storage/box/donkpocket_premium,
-/obj/machinery/light{
-=======
 /obj/structure/table/rack,
 /obj/item/melee/baton/loaded,
 /obj/item/melee/baton/loaded,
@@ -3133,7 +2818,6 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
->>>>>>> theirs
 	dir = 4
 	},
 /obj/floor_decal/techfloor,
@@ -3164,18 +2848,6 @@
 /turf/simulated/floor/tiled/dark,
 /area/map_template/rescue_base/start)
 "gk" = (
-<<<<<<< ours
-/obj/structure/table/steel_reinforced,
-/obj/machinery/recharger{
-	pixel_y = 4
-	},
-/turf/simulated/floor/tiled/dark,
-/area/map_template/rescue_base/start)
-"gl" = (
-/obj/floor_decal/corner/paleblue,
-/obj/floor_decal/floordetail/edgedrain{
-	dir = 9
-=======
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
@@ -3191,7 +2863,6 @@
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide{
 	maximum_pressure = 12000;
 	start_pressure = 12000
->>>>>>> theirs
 	},
 /obj/machinery/atmospherics/portables_connector,
 /obj/floor_decal/industrial/outline/orange,
@@ -3214,16 +2885,6 @@
 /turf/simulated/floor/tiled/dark,
 /area/map_template/rescue_base/start)
 "go" = (
-<<<<<<< ours
-/obj/item/device/radio/intercom/specops{
-	dir = 8;
-	pixel_x = 22
-	},
-/obj/machinery/bodyscanner{
-	dir = 8
-	},
-/turf/simulated/floor/tiled/white,
-=======
 /obj/structure/bed/chair/shuttle/blue{
 	dir = 8
 	},
@@ -3234,7 +2895,6 @@
 	dir = 8
 	},
 /turf/simulated/floor/tiled/techfloor,
->>>>>>> theirs
 /area/map_template/rescue_base/start)
 "gp" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
@@ -3300,21 +2960,6 @@
 "gw" = (
 /turf/simulated/floor/tiled/white,
 /area/map_template/rescue_base/start)
-<<<<<<< ours
-"gx" = (
-/turf/simulated/floor/reinforced,
-/area/map_template/rescue_base/start)
-"gy" = (
-/obj/structure/table/steel_reinforced,
-/obj/machinery/button/blast_door{
-	id_tag = "rescuebridge";
-	name = "Window Shutters Control";
-	pixel_y = -4
-	},
-/obj/item/device/radio/intercom/hailing{
-	dir = 8;
-	pixel_x = 24
-=======
 "gy" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 1
@@ -3330,69 +2975,10 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 4
->>>>>>> theirs
 	},
 /obj/floor_decal/techfloor,
 /turf/simulated/floor/tiled/dark,
 /area/map_template/rescue_base/start)
-<<<<<<< ours
-"gz" = (
-/obj/machinery/door/airlock/external{
-	frequency = 1331;
-	id_tag = "rescue_shuttle_outer";
-	name = "Ship External Access"
-	},
-/obj/shuttle_landmark/ert/start,
-/obj/machinery/door/blast/regular{
-	dir = 4;
-	id_tag = "ert_port_airlock_blast_door"
-	},
-/turf/simulated/floor/plating,
-/area/map_template/rescue_base/start)
-"gA" = (
-/obj/structure/table/glass,
-/obj/item/defibrillator/loaded,
-/obj/item/reagent_containers/glass/beaker/cryoxadone,
-/obj/machinery/atmospherics/binary/pump/on,
-/turf/simulated/floor/tiled/white,
-/area/map_template/rescue_base/start)
-"gB" = (
-/obj/structure/closet/secure_closet/medical1,
-/turf/simulated/floor/tiled/white,
-/area/map_template/rescue_base/start)
-"gD" = (
-/obj/structure/table/steel_reinforced,
-/obj/machinery/vending/wallmed1{
-	name = "Emergency NanoMed";
-	pixel_x = 28;
-	req_access = newlist()
-	},
-/turf/simulated/floor/tiled/dark,
-/area/map_template/rescue_base/start)
-"gE" = (
-/obj/structure/table/rack,
-/obj/item/device/radio,
-/obj/item/device/radio,
-/obj/item/device/radio,
-/obj/item/device/radio,
-/obj/item/device/radio,
-/obj/item/device/radio,
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/simulated/floor/tiled/dark,
-/area/map_template/rescue_base/start)
-"gF" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/iv_stand,
-/obj/floor_decal/corner/red{
-	dir = 10
-	},
-/obj/floor_decal/floordetail/edgedrain{
-	dir = 1
-=======
 "gA" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -3433,7 +3019,6 @@
 	},
 /obj/floor_decal/techfloor{
 	dir = 8
->>>>>>> theirs
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/rescue_base/start)
@@ -3453,46 +3038,6 @@
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/rescue_base/start)
-<<<<<<< ours
-"gJ" = (
-/obj/machinery/recharge_station,
-/turf/simulated/floor/tiled/dark,
-/area/map_template/rescue_base/start)
-"gK" = (
-/obj/structure/bed/chair,
-/turf/simulated/floor/tiled/dark,
-/area/map_template/rescue_base/start)
-"gL" = (
-/obj/machinery/vending/wallmed1{
-	name = "Emergency NanoMed";
-	pixel_x = 28;
-	req_access = newlist()
-	},
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/structure/handrail{
-	dir = 8
-	},
-/turf/simulated/floor/tiled/dark,
-/area/map_template/rescue_base/start)
-"gM" = (
-/obj/structure/handrail{
-	dir = 8
-	},
-/turf/simulated/floor/tiled/dark,
-/area/map_template/rescue_base/start)
-"gN" = (
-/obj/structure/handrail{
-	dir = 4
-	},
-/turf/simulated/floor/tiled/dark,
-/area/map_template/rescue_base/start)
-"gO" = (
-/obj/machinery/optable,
-/obj/machinery/light{
-	dir = 4
-=======
 "gH" = (
 /obj/machinery/computer/shuttle_control/multi/rescue{
 	dir = 4
@@ -3537,7 +3082,6 @@
 /obj/machinery/light,
 /obj/floor_decal/techfloor{
 	dir = 1
->>>>>>> theirs
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/rescue_base/start)
@@ -3557,34 +3101,6 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/map_template/rescue_base/start)
-<<<<<<< ours
-"gQ" = (
-/obj/machinery/portable_atmospherics/canister/air,
-/turf/simulated/floor/plating,
-/area/map_template/rescue_base/start)
-"gR" = (
-/obj/structure/table/glass,
-/obj/item/reagent_containers/syringe/antiviral,
-/obj/item/reagent_containers/syringe/antiviral,
-/obj/item/stack/medical/advanced/bruise_pack,
-/turf/simulated/floor/tiled/dark/monotile,
-/area/map_template/rescue_base/start)
-"gS" = (
-/obj/machinery/button/blast_door{
-	id_tag = "rescueinfirm";
-	name = "Window Shutters Control";
-	pixel_x = 4;
-	pixel_y = -24;
-	dir = 1
-	},
-/obj/floor_decal/corner/red{
-	dir = 5
-	},
-/obj/floor_decal/floordetail/edgedrain,
-/obj/structure/hygiene/sink{
-	dir = 4;
-	pixel_x = 22
-=======
 "gN" = (
 /obj/structure/closet/hydrant{
 	pixel_x = -32
@@ -3606,7 +3122,6 @@
 /obj/item/mech_equipment/shields,
 /turf/unsimulated/floor{
 	icon_state = "dark"
->>>>>>> theirs
 	},
 /area/map_template/rescue_base/base)
 "gQ" = (
@@ -3663,35 +3178,6 @@
 /turf/simulated/floor/tiled/dark,
 /area/map_template/rescue_base/start)
 "gY" = (
-<<<<<<< ours
-/obj/structure/bed/chair/shuttle{
-	dir = 1
-	},
-/turf/simulated/floor/tiled/dark,
-/area/map_template/rescue_base/start)
-"gZ" = (
-/obj/floor_decal/industrial/hatch/yellow,
-/obj/machinery/porta_turret/crescent,
-/turf/unsimulated/floor{
-	icon_state = "asteroidplating"
-	},
-/area/map_template/rescue_base/base)
-"ha" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/table/glass,
-/obj/item/reagent_containers/spray/cleaner{
-	pixel_x = 6
-	},
-/obj/item/reagent_containers/spray/sterilizine{
-	pixel_x = -6;
-	pixel_y = 3
-	},
-/obj/item/clothing/gloves/latex,
-/obj/item/clothing/mask/surgical,
-/turf/simulated/floor/tiled/dark/monotile,
-=======
 /obj/structure/table/steel_reinforced,
 /obj/item/material/ashtray/glass,
 /obj/floor_decal/techfloor{
@@ -3720,7 +3206,6 @@
 	dir = 1
 	},
 /turf/simulated/floor/tiled/dark,
->>>>>>> theirs
 /area/map_template/rescue_base/start)
 "hb" = (
 /obj/structure/catwalk,
@@ -3760,24 +3245,6 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/rescue_base/start)
 "hg" = (
-<<<<<<< ours
-/obj/machinery/computer/shuttle_control/multi/rescue,
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/simulated/floor/tiled/dark,
-/area/map_template/rescue_base/start)
-"hh" = (
-/obj/machinery/computer/modular/preset/engineering,
-/turf/simulated/floor/tiled/dark,
-/area/map_template/rescue_base/start)
-"hi" = (
-/obj/machinery/computer/modular/preset/security,
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/simulated/floor/tiled/dark,
-=======
 /obj/structure/catwalk,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
@@ -3791,7 +3258,6 @@
 	dir = 6
 	},
 /turf/simulated/floor/plating,
->>>>>>> theirs
 /area/map_template/rescue_base/start)
 "hn" = (
 /obj/structure/bed/chair/office/dark{
@@ -5210,44 +4676,6 @@
 	icon_state = "vault"
 	},
 /area/map_template/rescue_base/base)
-<<<<<<< ours
-"qv" = (
-/obj/structure/table/reinforced,
-/obj/item/mech_equipment/sleeper,
-/turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "vault"
-	},
-/area/map_template/rescue_base/base)
-"to" = (
-/obj/structure/table/reinforced,
-/obj/item/mech_equipment/ballistic_shield,
-/turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "vault"
-	},
-/area/map_template/rescue_base/base)
-"xA" = (
-/obj/structure/table/reinforced,
-/obj/item/robot_parts/robot_component/actuator,
-/obj/item/robot_parts/robot_component/actuator,
-/turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "vault"
-	},
-/area/map_template/rescue_base/base)
-"zv" = (
-/obj/machinery/mech_recharger,
-/mob/living/exosuit/premade/light,
-/turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "vault"
-	},
-/area/map_template/rescue_base/base)
-"CM" = (
-/obj/machinery/mech_recharger,
-/mob/living/exosuit/premade/powerloader,
-=======
 "WJ" = (
 /obj/machinery/recharger/wallcharger{
 	pixel_x = 26
@@ -5269,42 +4697,11 @@
 /obj/item/storage/toolbox/mechanical,
 /obj/item/storage/box/glowsticks,
 /obj/item/inflatable_dispenser,
->>>>>>> theirs
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "vault"
 	},
 /area/map_template/rescue_base/base)
-<<<<<<< ours
-"DF" = (
-/obj/structure/handrail{
-	dir = 4
-	},
-/obj/item/device/radio/intercom/hailing{
-	dir = 4;
-	pixel_x = -24;
-	pixel_y = -10
-	},
-/obj/machinery/button/blast_door{
-	id_tag = "ert_port_airlock_blast_door";
-	name = "Port Exit Shutters Control";
-	pixel_x = -24;
-	dir = 4;
-	pixel_y = 8
-	},
-/turf/simulated/floor/plating,
-/area/map_template/rescue_base/start)
-"Es" = (
-/obj/machinery/telecomms/allinone/ert,
-/turf/simulated/floor/plating,
-/area/map_template/rescue_base/start)
-"Fo" = (
-/obj/structure/table/reinforced,
-/obj/item/circuitboard/exosystem/medical,
-/obj/item/circuitboard/exosystem/utility,
-/obj/item/circuitboard/exosystem/engineering,
-/obj/item/circuitboard/exosystem/weapons,
-=======
 "XO" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 32
@@ -5319,17 +4716,11 @@
 /obj/structure/table/rack,
 /obj/item/storage/backpack/dufflebag/scga_accessories,
 /obj/item/storage/backpack/dufflebag/scga_accessories,
->>>>>>> theirs
 /turf/unsimulated/floor{
 	dir = 1;
 	icon_state = "vault"
 	},
 /area/map_template/rescue_base/base)
-<<<<<<< ours
-"Mv" = (
-/obj/structure/table/reinforced,
-/obj/item/device/kit/mech,
-=======
 "YA" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/fuel{
 	dir = 4
@@ -5356,41 +4747,11 @@
 	pixel_y = 22
 	},
 /obj/machinery/pipedispenser,
->>>>>>> theirs
 /turf/unsimulated/floor{
 	dir = 1;
 	icon_state = "vault"
 	},
 /area/map_template/rescue_base/base)
-<<<<<<< ours
-"Tc" = (
-/obj/machinery/mech_recharger,
-/obj/structure/heavy_vehicle_frame,
-/turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "vault"
-	},
-/area/map_template/rescue_base/base)
-"Vo" = (
-/obj/structure/table/reinforced,
-/obj/item/ammo_magazine/shotgunmag/mech,
-/obj/item/ammo_magazine/shotgunmag/mech,
-/obj/item/ammo_magazine/shotgunmag/mech,
-/obj/item/ammo_magazine/shotgunmag/mech,
-/turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "vault"
-	},
-/area/map_template/rescue_base/base)
-"Wf" = (
-/obj/structure/table/reinforced,
-/obj/item/robot_parts/robot_component/armour/exosuit/combat,
-/turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "vault"
-	},
-/area/map_template/rescue_base/base)
-=======
 "ZD" = (
 /obj/structure/closet/crate/freezer/rations,
 /obj/floor_decal/techfloor{
@@ -5412,7 +4773,6 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/map_template/rescue_base/start)
->>>>>>> theirs
 
 (1,1,1) = {"
 ac
@@ -5838,10 +5198,6 @@ ac
 ac
 ac
 ac
-<<<<<<< ours
-ac
-=======
->>>>>>> theirs
 ac
 ac
 ac
@@ -5921,13 +5277,7 @@ ac
 ac
 ac
 ac
-<<<<<<< ours
-ac
-ac
-ac
-=======
 bA
->>>>>>> theirs
 ac
 ac
 ac
@@ -5990,17 +5340,9 @@ ac
 ac
 ac
 ac
-<<<<<<< ours
-ac
-ac
-ac
-ac
-ac
-=======
 gT
 bA
 hc
->>>>>>> theirs
 ac
 ac
 ac
@@ -6044,10 +5386,6 @@ ad
 ac
 ac
 ac
-<<<<<<< ours
-=======
-ac
->>>>>>> theirs
 ac
 ac
 ac
@@ -6066,10 +5404,9 @@ ac
 ac
 ac
 ac
-ac
-ac
-ac
-ac
+bB
+bB
+bA
 ac
 ac
 ac
@@ -6112,12 +5449,6 @@ ad
 ad
 ac
 ac
-<<<<<<< ours
-=======
-ac
-ac
-ac
->>>>>>> theirs
 ac
 ac
 ac
@@ -6134,18 +5465,11 @@ ac
 ac
 ac
 ac
-<<<<<<< ours
 ac
 ac
 ac
-ac
-ac
-ac
-ac
-=======
 bB
 bA
->>>>>>> theirs
 ac
 ac
 ac
@@ -6192,6 +5516,11 @@ ac
 ac
 ac
 ac
+bB
+bA
+bC
+bB
+bB
 ac
 ac
 ac
@@ -6199,24 +5528,6 @@ ac
 ac
 ac
 ac
-<<<<<<< ours
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-hc
-ac
-ac
-ac
-=======
 bB
 bB
 bB
@@ -6225,7 +5536,6 @@ bB
 bB
 fB
 bB
->>>>>>> theirs
 ac
 ac
 ac
@@ -6268,8 +5578,6 @@ ac
 ac
 ac
 ac
-<<<<<<< ours
-=======
 bB
 bB
 bB
@@ -6279,35 +5587,19 @@ bA
 fB
 bB
 bB
->>>>>>> theirs
 ac
 ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-bA
-bA
-<<<<<<< ours
-ac
-ac
-ac
-=======
 bB
->>>>>>> theirs
+bB
+bB
+bA
+bC
+bB
+bC
+bB
+bA
+bA
+bB
 ac
 ac
 ac
@@ -6348,35 +5640,6 @@ ac
 ac
 ac
 ac
-<<<<<<< ours
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-gT
-bA
-bB
-ac
-ac
-ac
-=======
 bB
 bB
 bB
@@ -6402,7 +5665,6 @@ bB
 bB
 bB
 bA
->>>>>>> theirs
 ac
 ac
 ac
@@ -6442,41 +5704,6 @@ ac
 ac
 ac
 ac
-<<<<<<< ours
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-bB
-bB
-bA
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-"}
-(12,1,1) = {"
-=======
 bB
 eQ
 eQ
@@ -6508,7 +5735,6 @@ ac
 ac
 "}
 (16,1,1) = {"
->>>>>>> theirs
 ac
 ac
 ac
@@ -6530,12 +5756,6 @@ ar
 ar
 ar
 ar
-<<<<<<< ours
-dO
-ef
-eg
-=======
->>>>>>> theirs
 ar
 dr
 aE
@@ -6547,37 +5767,7 @@ ac
 ac
 ac
 ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
 bB
-<<<<<<< ours
-bA
-bB
-ac
-ac
-ac
-ac
-=======
 bC
 eQ
 eQ
@@ -6604,7 +5794,6 @@ eQ
 bB
 bA
 bA
->>>>>>> theirs
 ac
 ac
 ac
@@ -6616,26 +5805,6 @@ ac
 ac
 aE
 ar
-<<<<<<< ours
-ao
-ao
-ao
-cb
-ao
-ao
-ao
-ao
-ao
-ao
-ao
-dy
-ao
-ao
-dU
-ao
-dP
-ad
-=======
 ar
 ar
 ar
@@ -6660,32 +5829,9 @@ ac
 ac
 ac
 ac
->>>>>>> theirs
-ac
-ac
-ac
-ac
 ac
 ac
 bB
-<<<<<<< ours
-ac
-ac
-ac
-ac
-ac
-bB
-bB
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-=======
 bA
 eQ
 eT
@@ -6709,16 +5855,8 @@ eQ
 eQ
 eQ
 eQ
->>>>>>> theirs
 bB
 bB
-bB
-fB
-bB
-bB
-ac
-ac
-ac
 ac
 ac
 ac
@@ -6758,10 +5896,7 @@ ac
 ac
 ac
 ac
-ac
 bB
-<<<<<<< ours
-=======
 eQ
 eQ
 eQ
@@ -6784,37 +5919,10 @@ eQ
 eQ
 eQ
 eQ
->>>>>>> theirs
-bB
-ac
-ac
-ac
-ac
-bB
-ac
-ac
-<<<<<<< ours
-bB
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-bB
-bB
-bC
-bB
-bA
-bA
 bB
 bB
 ac
 ac
-ac
-=======
->>>>>>> theirs
 ac
 ac
 "}
@@ -6851,39 +5959,8 @@ ac
 ac
 ac
 ac
-bB
-bB
-bB
-bB
 ac
 bB
-<<<<<<< ours
-bB
-bB
-bB
-bB
-bB
-bB
-ac
-bB
-bB
-bB
-bB
-bB
-bB
-bB
-bB
-bB
-bB
-bB
-bB
-bB
-bB
-ac
-ac
-ac
-ac
-=======
 eQ
 eQ
 eQ
@@ -6910,7 +5987,6 @@ bB
 bB
 bA
 bC
->>>>>>> theirs
 ac
 ac
 "}
@@ -6949,8 +6025,6 @@ ac
 ac
 bB
 bB
-<<<<<<< ours
-=======
 eQ
 eQ
 eQ
@@ -6973,37 +6047,10 @@ eQ
 eQ
 eQ
 eQ
->>>>>>> theirs
 bB
 bB
 bA
 bB
-bB
-bB
-bB
-bB
-bB
-bB
-bB
-bB
-bA
-bB
-bB
-bB
-bB
-bB
-bB
-bB
-bB
-bB
-bB
-bB
-bB
-bC
-ac
-ac
-ac
-ac
 ac
 ac
 "}
@@ -7042,8 +6089,6 @@ ac
 bB
 bB
 bA
-<<<<<<< ours
-=======
 eQ
 eQ
 eQ
@@ -7066,35 +6111,8 @@ eQ
 eQ
 eQ
 eQ
->>>>>>> theirs
 bB
 bB
-bB
-bB
-bB
-bC
-bB
-bB
-bB
-bB
-bB
-bB
-bC
-bB
-bB
-bA
-bA
-bA
-bB
-bB
-bB
-bB
-bB
-bB
-bB
-ac
-ac
-ac
 ac
 ac
 ac
@@ -7135,36 +6153,6 @@ bB
 bB
 bA
 bB
-<<<<<<< ours
-bB
-bB
-bA
-bA
-bA
-bA
-bB
-fB
-bB
-bB
-bB
-bB
-bB
-bB
-bB
-bB
-bB
-bB
-bB
-bA
-bB
-bB
-bA
-bB
-bB
-ac
-ac
-ac
-=======
 eQ
 eQ
 eQ
@@ -7190,7 +6178,6 @@ eQ
 bB
 bA
 bB
->>>>>>> theirs
 ac
 ac
 ac
@@ -7230,34 +6217,6 @@ bA
 bB
 bB
 bB
-<<<<<<< ours
-bB
-bB
-bB
-bB
-bB
-bB
-bB
-bB
-bB
-bB
-bB
-bB
-bB
-bC
-bB
-bB
-bB
-bB
-bB
-bB
-bB
-bB
-bB
-bB
-bB
-bB
-=======
 eQ
 eQ
 eQ
@@ -7280,7 +6239,6 @@ eQ
 eQ
 eQ
 eQ
->>>>>>> theirs
 bB
 bB
 bA
@@ -7323,100 +6281,6 @@ bC
 bB
 bA
 bB
-<<<<<<< ours
-bB
-bB
-bB
-bB
-bB
-bB
-bB
-bB
-bB
-bB
-bB
-bB
-bB
-bB
-bB
-bB
-bB
-bB
-bB
-bB
-bB
-bB
-bB
-bB
-bB
-bB
-bA
-bB
-ac
-ac
-"}
-(21,1,1) = {"
-ac
-ac
-ac
-ad
-aU
-ao
-ao
-ao
-ao
-ad
-ar
-ar
-ad
-ad
-bg
-bg
-bg
-ad
-ad
-dm
-ao
-ad
-ad
-bg
-bg
-bg
-ad
-ad
-ad
-bB
-bB
-bB
-eM
-eP
-eP
-eP
-eP
-eP
-eP
-eP
-eP
-eP
-eP
-eP
-eP
-eP
-eP
-eP
-eP
-eP
-eP
-eP
-eP
-eP
-eP
-eP
-eP
-eP
-eP
-hj
-=======
 eQ
 eQ
 eQ
@@ -7442,7 +6306,6 @@ eQ
 bB
 bB
 bA
->>>>>>> theirs
 ac
 ac
 ac
@@ -7550,36 +6413,7 @@ eQ
 eQ
 eQ
 eQ
-<<<<<<< ours
-<<<<<<< ours
-eQ
-eQ
-eQ
-eQ
-eQ
-eQ
-eQ
-eQ
-eQ
-eQ
-eQ
-eQ
-eQ
-eQ
-eQ
-eQ
-eQ
-eQ
-eQ
-eQ
-eQ
-eQ
-hk
-=======
-fp
-=======
 MZ
->>>>>>> theirs
 gl
 jG
 gh
@@ -7600,7 +6434,6 @@ eQ
 bB
 bB
 bB
->>>>>>> theirs
 ac
 ac
 ac
@@ -7641,34 +6474,8 @@ bB
 bA
 bB
 eQ
-gZ
 eQ
 eQ
-<<<<<<< ours
-eQ
-eQ
-eQ
-eQ
-eQ
-eQ
-eU
-eU
-eU
-eU
-eU
-eU
-gU
-eU
-eU
-eU
-eU
-eU
-eU
-gX
-gX
-eQ
-hk
-=======
 kg
 MZ
 yK
@@ -7692,7 +6499,6 @@ bB
 bA
 bB
 ac
->>>>>>> theirs
 ac
 ac
 "}
@@ -7734,26 +6540,6 @@ bA
 eQ
 eQ
 eQ
-<<<<<<< ours
-gx
-eU
-gh
-gp
-fx
-gG
-gG
-gV
-hd
-eU
-gu
-gu
-eT
-Es
-ga
-hf
-eQ
-hk
-=======
 ft
 MZ
 fp
@@ -7777,7 +6563,6 @@ bB
 bA
 ac
 ac
->>>>>>> theirs
 ac
 ac
 "}
@@ -7819,35 +6604,7 @@ bB
 eQ
 eQ
 eQ
-<<<<<<< ours
-<<<<<<< ours
-eQ
-eQ
-gx
-gx
-gx
-eU
-gi
-fn
-fS
-fn
-fn
-fn
-fn
-eU
-gQ
-gt
-gt
-gt
-ga
-hf
-eQ
-hk
-=======
-MZ
-=======
 Hn
->>>>>>> theirs
 DF
 jV
 uv
@@ -7870,7 +6627,6 @@ bB
 bB
 bA
 ac
->>>>>>> theirs
 ac
 ac
 "}
@@ -7912,31 +6668,6 @@ bB
 eQ
 eQ
 eQ
-<<<<<<< ours
-eQ
-gx
-gx
-gx
-gx
-gx
-eU
-gj
-gq
-fx
-fn
-gP
-gW
-he
-eU
-gQ
-gt
-gt
-gs
-ga
-hf
-eQ
-hk
-=======
 MZ
 fc
 gw
@@ -7960,7 +6691,6 @@ bB
 bB
 bA
 bB
->>>>>>> theirs
 ac
 ac
 "}
@@ -8000,34 +6730,6 @@ bB
 bB
 bB
 eQ
-<<<<<<< ours
-eU
-eU
-gz
-eU
-eU
-eU
-fJ
-fJ
-fJ
-eU
-eU
-eU
-eU
-fZ
-eU
-eU
-eU
-eU
-eU
-eU
-fT
-eU
-gX
-gX
-gX
-hk
-=======
 eQ
 eQ
 MZ
@@ -8052,7 +6754,6 @@ eQ
 bB
 bB
 bB
->>>>>>> theirs
 ac
 ac
 ac
@@ -8157,34 +6858,6 @@ bB
 bB
 bB
 eQ
-<<<<<<< ours
-eU
-fc
-gt
-DF
-ft
-eU
-fF
-fM
-fQ
-fW
-fx
-gN
-gN
-fn
-gr
-gr
-gJ
-gE
-fx
-fL
-fn
-fV
-fD
-ga
-hf
-hk
-=======
 eQ
 eQ
 MZ
@@ -8209,7 +6882,6 @@ eQ
 bB
 bB
 ac
->>>>>>> theirs
 ac
 ac
 ac
@@ -8238,41 +6910,6 @@ ao
 dk
 ar
 ar
-<<<<<<< ours
-eD
-ad
-dZ
-dZ
-dZ
-dZ
-eR
-eW
-fd
-fk
-fk
-fu
-fz
-fG
-fn
-fn
-fn
-gd
-fn
-fn
-fn
-fn
-fn
-fn
-fn
-fU
-fn
-fn
-fn
-fn
-ga
-hf
-hk
-=======
 aE
 bU
 dP
@@ -8310,7 +6947,6 @@ bB
 bB
 bB
 ac
->>>>>>> theirs
 ac
 ac
 "}
@@ -8367,25 +7003,6 @@ rF
 gU
 fn
 fn
-<<<<<<< ours
-fX
-eU
-ge
-fn
-fn
-fn
-gV
-gV
-fn
-fx
-fO
-fn
-fy
-ff
-ga
-hf
-hk
-=======
 gR
 eQ
 eQ
@@ -8394,7 +7011,6 @@ bB
 bB
 bB
 bB
->>>>>>> theirs
 ac
 ac
 "}
@@ -8424,98 +7040,6 @@ ar
 ar
 dC
 eQ
-<<<<<<< ours
-eU
-fe
-gt
-fq
-fw
-eU
-fI
-fN
-fN
-fY
-eU
-gL
-gM
-fn
-gK
-gD
-fb
-fs
-fx
-gf
-fn
-eY
-fE
-ga
-hf
-hk
-ac
-ac
-"}
-(32,1,1) = {"
-ad
-ad
-ad
-ad
-ad
-bg
-bg
-bg
-bg
-bT
-bT
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ao
-dx
-ad
-ad
-bg
-bg
-bg
-bg
-ad
-ad
-dZ
-dZ
-bB
-eN
-eQ
-eU
-eU
-fl
-eU
-eU
-eU
-fJ
-fJ
-fJ
-eU
-eU
-eU
-fx
-fa
-eU
-eU
-eU
-eU
-eU
-eU
-fU
-eU
-gX
-gX
-gX
-hk
-=======
 dQ
 eQ
 eQ
@@ -8551,7 +7075,6 @@ bB
 bB
 bB
 fB
->>>>>>> theirs
 ac
 ac
 "}
@@ -8585,30 +7108,6 @@ dQ
 eQ
 eQ
 eQ
-<<<<<<< ours
-gx
-gx
-gx
-gx
-gx
-eU
-gm
-fP
-gw
-gw
-gB
-ha
-dT
-gR
-eU
-hg
-fo
-gk
-ga
-hf
-eQ
-hk
-=======
 eQ
 eQ
 eQ
@@ -8640,7 +7139,6 @@ bB
 bB
 bC
 bB
->>>>>>> theirs
 ac
 ac
 "}
@@ -8682,32 +7180,6 @@ bA
 eQ
 eQ
 eQ
-<<<<<<< ours
-eQ
-eQ
-eQ
-eQ
-gx
-gx
-gx
-eU
-fh
-eZ
-gb
-fp
-gw
-gl
-gc
-fg
-eU
-hh
-gY
-fC
-ga
-hf
-eQ
-hk
-=======
 BY
 WJ
 fH
@@ -8731,7 +7203,6 @@ bB
 bB
 bB
 bB
->>>>>>> theirs
 ac
 ac
 "}
@@ -8792,26 +7263,6 @@ BY
 eQ
 eQ
 eQ
-<<<<<<< ours
-gx
-eU
-gn
-gA
-fj
-go
-gv
-gF
-gO
-gS
-eU
-hi
-fi
-gy
-ga
-hf
-eQ
-hk
-=======
 bB
 fB
 bB
@@ -8879,7 +7330,6 @@ eQ
 bB
 bA
 bB
->>>>>>> theirs
 ac
 ac
 ac
@@ -8915,35 +7365,13 @@ ar
 ar
 ar
 ao
-<<<<<<< ours
-cX
-ad
-ao
-ao
-ao
-ao
-dR
-eb
-ao
-ao
-ao
-ao
-Fo
-ad
-=======
 ic
 aE
->>>>>>> theirs
 bB
 bC
 eQ
 eQ
 eQ
-<<<<<<< ours
-=======
-eQ
-eQ
->>>>>>> theirs
 eQ
 eQ
 eQ
@@ -8953,25 +7381,8 @@ eQ
 eQ
 eQ
 eQ
-<<<<<<< ours
-eU
-eU
-eU
-eU
-eU
-eU
-hb
-eU
-eU
-eU
-eU
-eU
-eU
-gX
-gX
 eQ
-hk
-=======
+eQ
 eQ
 eQ
 eQ
@@ -8983,7 +7394,6 @@ eQ
 bB
 bB
 ac
->>>>>>> theirs
 ac
 ac
 ac
@@ -9019,31 +7429,10 @@ ar
 ar
 ar
 ao
-<<<<<<< ours
-cY
-ad
-aU
-ao
-ao
-ao
-dR
-ao
-ao
-ao
-ao
-ao
-to
-ad
-bC
-eN
-eQ
-eQ
-=======
 UV
 aE
 bB
 bA
->>>>>>> theirs
 eQ
 eQ
 eQ
@@ -9066,75 +7455,6 @@ eQ
 eQ
 eQ
 eQ
-<<<<<<< ours
-eQ
-eQ
-hk
-ac
-ac
-"}
-(38,1,1) = {"
-ad
-ad
-ad
-ad
-ad
-bj
-ar
-bH
-ad
-bH
-ar
-bj
-ad
-cs
-ao
-ar
-ao
-cZ
-ad
-ao
-ao
-ad
-ad
-ad
-Mv
-ao
-ao
-ao
-ao
-qv
-ad
-bA
-eO
-eS
-eS
-eS
-eS
-eS
-eS
-eS
-eS
-eS
-eS
-eS
-eS
-eS
-eS
-eS
-eS
-eS
-eS
-eS
-eS
-eS
-eS
-eS
-eS
-eS
-eS
-hl
-=======
 bB
 bA
 bB
@@ -9143,7 +7463,6 @@ ac
 ac
 "}
 (43,1,1) = {"
->>>>>>> theirs
 ac
 ac
 ac
@@ -9213,19 +7532,6 @@ ac
 ac
 ac
 ac
-<<<<<<< ours
-ad
-ee
-zv
-CM
-Tc
-ao
-xA
-ad
-bB
-bC
-bB
-=======
 ac
 ac
 ac
@@ -9256,7 +7562,6 @@ aE
 aE
 ac
 ac
->>>>>>> theirs
 bA
 bB
 bB
@@ -9434,13 +7739,6 @@ ac
 ac
 ac
 ac
-<<<<<<< ours
-ad
-Wf
-eq
-Vo
-ad
-=======
 ac
 ac
 ac
@@ -9454,7 +7752,6 @@ eq
 ao
 ec
 aE
->>>>>>> theirs
 ac
 ac
 ac
