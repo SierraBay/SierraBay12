@@ -89,7 +89,6 @@
 
 /obj/weather_manager/proc/calculate_blowout_message_delay_time()
 	delay_between_message_and_blowout = rand(2 MINUTES, 4 MINUTES)
-	delay_between_message_and_blowout = rand(1 SECONDS, 2 SECONDS)
 
 /obj/weather_manager/shuttle_land_on()
 	move_to_safe_turf()
