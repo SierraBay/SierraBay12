@@ -27,6 +27,13 @@
 "bi" = (
 /turf/simulated/floor/tiled/freezer,
 /area/map_template/bunker)
+"bH" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/aurora/wall_light{
+	dir = 8
+	},
+/turf/simulated/floor/tiled/white,
+/area/map_template/bunker)
 "bI" = (
 /obj/structure/table/reinforced,
 /obj/item/paper/crumpled,
@@ -38,10 +45,11 @@
 /turf/simulated/floor/tiled/freezer,
 /area/map_template/bunker)
 "cd" = (
+/obj/structure/table/rack,
 /obj/structure/aurora/wall_light{
-	dir = 4
+	dir = 8
 	},
-/turf/simulated/floor/tiled/white,
+/turf/simulated/floor/tiled,
 /area/map_template/bunker)
 "dl" = (
 /obj/item/storage/mirror{
@@ -60,10 +68,25 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/bunker)
+"dR" = (
+/obj/structure/bed/chair/comfy/brown{
+	dir = 4
+	},
+/obj/structure/aurora/wall_light{
+	dir = 8
+	},
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/bunker)
 "dV" = (
 /obj/machinery/portable_atmospherics/canister/empty,
 /turf/simulated/floor/tiled,
 /area/map_template/bunker)
+"fq" = (
+/obj/structure/aurora/wall_light{
+	dir = 4
+	},
+/turf/simulated/floor/exoplanet/ice,
+/area/template_noop)
 "fr" = (
 /turf/simulated/floor/exoplanet/ice,
 /area/template_noop)
@@ -105,6 +128,13 @@
 	},
 /turf/simulated/floor/tiled/freezer,
 /area/map_template/bunker)
+"gf" = (
+/obj/structure/table/rack,
+/obj/structure/aurora/wall_light{
+	dir = 4
+	},
+/turf/simulated/floor/tiled,
+/area/map_template/bunker)
 "gg" = (
 /obj/structure/bed/chair/comfy/brown{
 	dir = 1
@@ -116,6 +146,12 @@
 	dir = 10
 	},
 /turf/simulated/floor/tiled,
+/area/map_template/bunker)
+"gI" = (
+/obj/structure/aurora/wall_light{
+	dir = 8
+	},
+/turf/simulated/floor/tiled/white,
 /area/map_template/bunker)
 "hs" = (
 /obj/structure/firedoor_assembly,
@@ -144,6 +180,9 @@
 /obj/machinery/chemical_dispenser/bar_alc/full{
 	dir = 4
 	},
+/obj/structure/aurora/wall_light{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/bunker)
 "iv" = (
@@ -170,6 +209,12 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/bunker)
+"jn" = (
+/obj/structure/aurora/wall_light{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/freezer,
+/area/map_template/bunker)
 "jo" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
@@ -194,6 +239,12 @@
 	dir = 9
 	},
 /turf/simulated/floor/tiled/white,
+/area/map_template/bunker)
+"ls" = (
+/obj/structure/aurora/wall_light{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/techfloor,
 /area/map_template/bunker)
 "mb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -235,6 +286,12 @@
 /obj/decal/cleanable/ash,
 /turf/simulated/floor/tiled/white,
 /area/map_template/bunker)
+"nU" = (
+/obj/structure/aurora/wall_light{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/map_template/bunker)
 "oA" = (
 /obj/decal/cleanable/ash,
 /turf/simulated/floor/exoplanet/ice,
@@ -255,6 +312,14 @@
 	dir = 8
 	},
 /turf/simulated/floor/tiled,
+/area/map_template/bunker)
+"pF" = (
+/obj/machinery/constructable_frame/machine_frame,
+/obj/decal/cleanable/ash,
+/obj/structure/aurora/wall_light{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/white,
 /area/map_template/bunker)
 "qI" = (
 /obj/machinery/door/unpowered/simple/glass,
@@ -285,7 +350,7 @@
 /area/map_template/bunker)
 "sT" = (
 /obj/structure/aurora/informative/old_computer{
-	possible_information = list(		"Рапорт N3124: Экспедицию на ледяную планету приказано свернуть. Вчера на планете по неизвестным для нас причиниам началась сильнейшая электромагнитная активность, некоторые сотрудники сообщали, что видели молнии - вздор. В любом случае, до выяснения безопасности планеты, весь основной научный состав эвакуируется с планеты, этот бункер консервируется. Вероятно, процедура проверки займёт не больше нескольких суток.",		"Рапорт N1234: Высадились на ледяную экзопланету для проведения ряда научных изучений. Все аванпосты в штатном режиме, связь функционирует прекрасно, судно на орбите на связи."		)
+	possible_information = list("Рапорт N3124: Экспедицию на ледяную планету приказано свернуть. Вчера на планете по неизвестным для нас причиниам началась сильнейшая электромагнитная активность, некоторые сотрудники сообщали, что видели молнии - вздор. В любом случае, до выяснения безопасности планеты, весь основной научный состав эвакуируется с планеты, этот бункер консервируется. Вероятно, процедура проверки займёт не больше нескольких суток.",		"Рапорт N1234: Высадились на ледяную экзопланету для проведения ряда научных изучений. Все аванпосты в штатном режиме, связь функционирует прекрасно, судно на орбите на связи.")
 	},
 /obj/structure/table/reinforced,
 /obj/structure/aurora/wall_light{
@@ -315,14 +380,14 @@
 "vI" = (
 /obj/structure/aurora/informative/old_computer,
 /obj/structure/table/reinforced,
+/obj/structure/aurora/wall_light{
+	dir = 1
+	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/bunker)
 "wF" = (
 /obj/machinery/mech_recharger,
 /obj/structure/mech_wreckage,
-/obj/structure/aurora/wall_light{
-	dir = 1
-	},
 /turf/simulated/floor/tiled,
 /area/map_template/bunker)
 "xg" = (
@@ -332,6 +397,19 @@
 "xu" = (
 /turf/simulated/wall/r_titanium,
 /area/template_noop)
+"xM" = (
+/obj/item/storage/mre/random,
+/obj/item/storage/mre/random,
+/obj/item/storage/mre/random,
+/obj/item/storage/mre/random,
+/obj/item/storage/mre/random,
+/obj/item/storage/mre/random,
+/obj/structure/closet/crate/freezer/rations,
+/obj/structure/aurora/wall_light{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/bunker)
 "xY" = (
 /obj/machinery/door/blast/regular,
 /turf/simulated/floor/tiled,
@@ -418,6 +496,12 @@
 "FI" = (
 /obj/machinery/constructable_frame/machine_frame,
 /obj/decal/cleanable/ash,
+/turf/simulated/floor/tiled/white,
+/area/map_template/bunker)
+"FY" = (
+/obj/structure/aurora/wall_light{
+	dir = 1
+	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/bunker)
 "Gv" = (
@@ -512,6 +596,12 @@
 /obj/decal/cleanable/ash,
 /turf/simulated/floor/tiled/white,
 /area/map_template/bunker)
+"KJ" = (
+/obj/structure/aurora/wall_light{
+	dir = 8
+	},
+/turf/simulated/floor/exoplanet/ice,
+/area/template_noop)
 "La" = (
 /obj/machinery/door/firedoor/autoset,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -524,6 +614,9 @@
 /area/map_template/bunker)
 "Lb" = (
 /obj/machinery/mech_recharger,
+/obj/structure/aurora/wall_light{
+	dir = 1
+	},
 /turf/simulated/floor/tiled,
 /area/map_template/bunker)
 "Mq" = (
@@ -691,6 +784,13 @@
 "Uy" = (
 /obj/structure/aurora/informative/old_computer,
 /turf/simulated/floor/tiled,
+/area/map_template/bunker)
+"UU" = (
+/obj/decal/cleanable/ash,
+/obj/structure/aurora/wall_light{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/white,
 /area/map_template/bunker)
 "Vb" = (
 /obj/structure/aurora/informative/old_computer,
@@ -1148,22 +1248,22 @@ fr
 fr
 fr
 fr
+fq
 fr
 fr
+fq
 fr
 fr
+fq
 fr
 fr
+fq
 fr
 fr
+fq
 fr
 fr
-fr
-fr
-fr
-fr
-fr
-fr
+fq
 fr
 fr
 fr
@@ -1413,7 +1513,7 @@ TI
 Jx
 zd
 fQ
-fQ
+cd
 fQ
 Jx
 MQ
@@ -1421,7 +1521,7 @@ Hj
 is
 Ni
 Ni
-Od
+dR
 Od
 Ni
 Jx
@@ -1454,7 +1554,7 @@ mv
 ua
 ua
 Jx
-ua
+td
 ua
 QQ
 ua
@@ -1548,7 +1648,7 @@ Jx
 Jx
 Jx
 Jx
-Ni
+Pw
 qN
 GN
 oS
@@ -1628,12 +1728,12 @@ XG
 Jx
 fQ
 ua
-fQ
+gf
 PO
 Jx
 Ni
 Ni
-Ni
+ls
 Ni
 Ni
 Ni
@@ -1712,9 +1812,9 @@ Jx
 CU
 Ik
 CU
+gI
 CU
-CU
-CU
+gI
 CU
 Jx
 Ni
@@ -1764,7 +1864,7 @@ Pw
 Ni
 Ni
 Jx
-iy
+nU
 ua
 ua
 iy
@@ -1888,12 +1988,12 @@ dI
 bI
 CU
 CU
-st
+fR
 Ni
 Ni
 Of
 Jx
-ua
+td
 Hh
 iy
 ML
@@ -1928,11 +2028,11 @@ jW
 nK
 IC
 ka
-jR
-cd
+UU
 CU
-fR
-Ni
+CU
+Jx
+Pw
 Ni
 sX
 Jx
@@ -2014,7 +2114,7 @@ CU
 Sp
 nm
 VO
-VO
+bH
 CU
 VO
 OY
@@ -2051,7 +2151,7 @@ Jx
 Jx
 Jx
 Jx
-CU
+FY
 jR
 CU
 Sp
@@ -2151,7 +2251,7 @@ Ha
 XR
 Ni
 Jx
-bi
+jn
 bi
 Jx
 Jx
@@ -2190,7 +2290,7 @@ CU
 CS
 jR
 Jx
-Ha
+xM
 mU
 DI
 Jx
@@ -2227,7 +2327,7 @@ vI
 nE
 CU
 Jx
-FI
+pF
 WS
 oA
 CS
@@ -2438,9 +2538,9 @@ fr
 fr
 fr
 fr
+KJ
 fr
-fr
-fr
+KJ
 fr
 fr
 fr
@@ -2450,10 +2550,10 @@ fr
 Eu
 fr
 fr
+KJ
 fr
 fr
-fr
-fr
+KJ
 fr
 fr
 fr
