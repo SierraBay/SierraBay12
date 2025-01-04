@@ -12,6 +12,7 @@
 	desc = "A complex technological device designed taking into account all possible dangers of anomalies."
 	icon = 'mods/anomaly/icons/detector.dmi'
 	icon_state = "detector_idle"
+	var/destroyed = FALSE // Детектор убит из-за ЭМИ и уже никогда не проснётся.
 	//Базовое название детектора используемое в коде смена иконок.
 	var/detector_basic_name = "detector"
 	action_button_name = "Scan anomalies"
@@ -30,7 +31,16 @@
 	//Некоторые детекторы могут вовсе не замечать некоторые аномалии. Укажите их теги, если потребутеся (Переменная anomaly_tag)
 	var/list/blacklisted_amomalies = list()
 
+/obj/item/clothing/gloves/anomaly_detector/emp_act(severity)
+	if(!destroyed)
+		destroyed = TRUE
+		STOP_PROCESSING(SSanom, src)
+		SSanom.processing_ammount--
+
 /obj/item/clothing/gloves/anomaly_detector/proc/switch_toggle()
+	if(destroyed)
+		to_chat(usr, SPAN_NOTICE("Устройство не реагирует на нажатие кнопки. Похоже, оно уже не включится."))
+		return
 	if(!is_processing)
 		to_chat(usr, SPAN_NOTICE("Вы включили детектор"))
 		START_PROCESSING(SSanom, src)
@@ -205,3 +215,12 @@
 	info = "<tt><center><b><large>NSV Sierra</large></b></center><center>Новые опасности</center><li><b>Одна из последних экспедиций вернулась с новой информацией, и ранениями. Согласно последнему отчёту, экспедиционный отряд наткнулся на некую аномальную активность на одной из планет. Научно исследовательский отдел выделил вашему отряду дополнительное снаряжение в виде маячков, коллекторов аномальных образований, детектора аномальной активности и раздатчика флагов. Советуем проявлять огромную осторожность при работе на планетах. Удачи.</b><hr></tt><br><i>This paper has been stamped by the Research&Development department.</i>"
 	icon = 'maps/sierra/icons/obj/uniques.dmi'
 	icon_state = "paper_words"
+
+/datum/design/item/bluespace/detector
+	name = "anomaly detector"
+	desc = "Experiment anomaly detector, which can detect anomalies."
+	id = "anomaly_detector"
+	req_tech = list(TECH_MATERIAL = 4, TECH_MAGNET = 4, TECH_BLUESPACE = 4, TECH_POWER = 4)
+	build_path = /obj/item/clothing/gloves/anomaly_detector
+	materials = list(MATERIAL_ALUMINIUM = 4000, MATERIAL_STEEL = 4000, MATERIAL_PLASTIC = 4000)
+	sort_string = "VAWAB"

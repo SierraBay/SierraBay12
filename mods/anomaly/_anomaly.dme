@@ -72,6 +72,7 @@
 #include "code\detectors_and_etc\research_machine.dm"
 #include "code\detectors_and_etc\artefact_detector.dm"
 #include "code\detectors_and_etc\rig_detector.dm"
+#include "code\detectors_and_etc\flux_detector.dm"
 
 
 //Размещение аномалий в игре

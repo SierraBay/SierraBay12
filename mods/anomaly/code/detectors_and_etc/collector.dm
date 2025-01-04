@@ -126,3 +126,4 @@
 	materials = list(MATERIAL_ALUMINIUM = 1000, MATERIAL_STEEL = 5000, MATERIAL_GLASS = 2500, MATERIAL_PLASTEEL = 2500, MATERIAL_PLASTIC = 1000)
 	build_path = /obj/item/collector
 	sort_string = "VAWAB"
+
