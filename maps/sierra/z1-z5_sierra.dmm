@@ -45041,7 +45041,6 @@
 	},
 /obj/item/storage/bolt_bag/full_of_beacons,
 /obj/item/clothing/gloves/anomaly_detector,
-/obj/item/artefact_detector,
 /turf/simulated/floor/tiled,
 /area/command/exploration_leader)
 "gDH" = (
