@@ -16,7 +16,7 @@
 	var/electra_attack_cooldown
 
 /obj/structure/big_artefact/electra/Initialize()
-	..()
+	.=..()
 	if(!is_processing)
 		START_PROCESSING(SSanom, src)
 	electra_attack_cooldown = rand(20 SECONDS, 50 SECONDS)

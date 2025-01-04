@@ -19,7 +19,7 @@ GLOBAL_VAR_INIT(ambience_channel_weather, GLOB.sound_channels.RequestChannel("AM
 	react_at_leave_monitor(O)
 
 /obj/weather/Initialize()
-	..()
+	.=..()
 	LAZYADD(SSweather.weather_turf_in_world, src)
 	start_area = get_area(src)
 

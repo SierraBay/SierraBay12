@@ -3,7 +3,7 @@
 	var/on_turf_icon
 
 /obj/item/Initialize()
-	..()
+	.=..()
 	update_onturf_icon_status()
 
 /obj/item/Move()

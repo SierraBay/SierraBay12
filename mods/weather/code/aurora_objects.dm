@@ -11,7 +11,7 @@
 	var/waked_up = FALSE
 
 /obj/structure/aurora/Initialize()
-	..()
+	.=..()
 	LAZYADD(SSweather.aurora_sctructures, src)
 
 //Обьект прошлого просыпается. Зажигаются фары/огни/монитор и прочее

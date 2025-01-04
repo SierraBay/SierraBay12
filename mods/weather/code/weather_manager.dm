@@ -18,7 +18,7 @@
 	var/delay_between_message_and_blowout
 
 /obj/weather_manager/Initialize()
-	..()
+	.=..()
 	var/area/my_area = get_area(src)
 	var/managers_here = 0
 	for(var/turf/picked_turf in my_area)
