@@ -277,12 +277,6 @@
 /obj/machinery/door/blast/shutters,
 /turf/simulated/floor/tiled/white,
 /area/map_template/bunker)
-"sH" = (
-/obj/machinery/stasis_cage{
-	req_access = list()
-	},
-/turf/simulated/floor/tiled/techfloor,
-/area/map_template/bunker)
 "sQ" = (
 /obj/structure/aurora/wall_light{
 	dir = 1
@@ -291,10 +285,7 @@
 /area/map_template/bunker)
 "sT" = (
 /obj/structure/aurora/informative/old_computer{
-	possible_information = list(
-		"Рапорт N3124: Экспедицию на ледяную планету приказано свернуть. Вчера на планете по неизвестным для нас причиниам началась сильнейшая электромагнитная активность, некоторые сотрудники сообщали, что видели молнии - вздор. В любом случае, до выяснения безопасности планеты, весь основной научный состав эвакуируется с планеты, этот бункер консервируется. Вероятно, процедура проверки займёт не больше нескольких суток.",
-		"Рапорт N1234: Высадились на ледяную экзопланету для проведения ряда научных изучений. Все аванпосты в штатном режиме, связь функционирует прекрасно, судно на орбите на связи."
-		)
+	possible_information = list(		"Рапорт N3124: Экспедицию на ледяную планету приказано свернуть. Вчера на планете по неизвестным для нас причиниам началась сильнейшая электромагнитная активность, некоторые сотрудники сообщали, что видели молнии - вздор. В любом случае, до выяснения безопасности планеты, весь основной научный состав эвакуируется с планеты, этот бункер консервируется. Вероятно, процедура проверки займёт не больше нескольких суток.",		"Рапорт N1234: Высадились на ледяную экзопланету для проведения ряда научных изучений. Все аванпосты в штатном режиме, связь функционирует прекрасно, судно на орбите на связи."		)
 	},
 /obj/structure/table/reinforced,
 /obj/structure/aurora/wall_light{
@@ -406,9 +397,6 @@
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 1
 	},
-/obj/machinery/anomaly_container{
-	req_access = list()
-	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/bunker)
 "Eu" = (
@@ -438,10 +426,6 @@
 	start_pressure = 4559.63
 	},
 /turf/simulated/floor/tiled,
-/area/map_template/bunker)
-"Gw" = (
-/obj/structure/closet/crate/radiation,
-/turf/simulated/floor/tiled/techfloor,
 /area/map_template/bunker)
 "GG" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -690,10 +674,6 @@
 /obj/decal/cleanable/ash,
 /turf/simulated/floor/tiled/white,
 /area/map_template/bunker)
-"SB" = (
-/obj/structure/closet/radiation,
-/turf/simulated/floor/tiled/techfloor,
-/area/map_template/bunker)
 "SG" = (
 /obj/machinery/atmospherics/pipe/manifold/visible/red{
 	dir = 8
@@ -716,10 +696,6 @@
 /obj/structure/aurora/informative/old_computer,
 /turf/simulated/floor/tiled/white,
 /area/map_template/bunker)
-"VK" = (
-/obj/structure/closet/l3closet/scientist,
-/turf/simulated/floor/tiled/techfloor,
-/area/map_template/bunker)
 "VO" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled/white,
@@ -732,10 +708,6 @@
 /obj/structure/ice_rock,
 /turf/simulated/floor/exoplanet/ice,
 /area/template_noop)
-"Xj" = (
-/obj/structure/closet/crate/hydroponics,
-/turf/simulated/floor/tiled/white,
-/area/map_template/bunker)
 "XG" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
@@ -1747,7 +1719,7 @@ CU
 Jx
 Ni
 Ni
-Gw
+Ni
 Jx
 ua
 ua
@@ -1790,7 +1762,7 @@ AX
 Jx
 Pw
 Ni
-SB
+Ni
 Jx
 iy
 ua
@@ -1833,7 +1805,7 @@ CU
 fR
 Ni
 Ni
-VK
+Ni
 Jx
 ua
 jA
@@ -2036,7 +2008,7 @@ Jx
 Jx
 Jx
 Jx
-Xj
+CU
 jR
 CU
 Sp
@@ -2079,7 +2051,7 @@ Jx
 Jx
 Jx
 Jx
-Xj
+CU
 jR
 CU
 Sp
@@ -2122,7 +2094,7 @@ Jx
 Jx
 Jx
 Jx
-Xj
+CU
 CU
 jR
 qI
@@ -2177,7 +2149,7 @@ Mq
 Jx
 Ha
 XR
-sH
+Ni
 Jx
 bi
 bi

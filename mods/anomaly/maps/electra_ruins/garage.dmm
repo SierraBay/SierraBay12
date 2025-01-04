@@ -37,11 +37,6 @@
 /obj/forcefield/blocker,
 /turf/simulated/floor/exoplanet/concrete,
 /area/map_template/garage)
-"dZ" = (
-/obj/floor_decal/snow,
-/obj/structure/closet/emcloset,
-/turf/simulated/floor/holofloor/tiled,
-/area/map_template/garage)
 "eb" = (
 /obj/structure/grille/broken,
 /turf/simulated/floor/exoplanet/ice,
@@ -85,7 +80,6 @@
 "ib" = (
 /obj/floor_decal/snow,
 /obj/floor_decal/snow,
-/obj/structure/closet/emcloset,
 /turf/simulated/floor/holofloor/tiled,
 /area/map_template/garage)
 "kt" = (
@@ -134,10 +128,6 @@
 	},
 /turf/simulated/floor/exoplanet/concrete,
 /area/map_template/garage)
-"pw" = (
-/obj/structure/closet/emcloset,
-/turf/simulated/floor/exoplanet/snow,
-/area/template_noop)
 "qc" = (
 /obj/structure/ice_rock,
 /turf/simulated/floor/exoplanet/ice,
@@ -1322,7 +1312,7 @@ fr
 cc
 uE
 ZL
-pw
+ZL
 cc
 fr
 zk
@@ -1537,7 +1527,7 @@ fr
 WC
 Tb
 ZL
-dZ
+zc
 cc
 fr
 YK
@@ -1720,7 +1710,7 @@ ib
 ZL
 ZL
 Lx
-pw
+ZL
 Lx
 cb
 cc
