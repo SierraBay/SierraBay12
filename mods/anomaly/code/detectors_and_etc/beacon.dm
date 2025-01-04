@@ -12,6 +12,7 @@
 		for(var/obj/item/storage/bolt_bag/bag in usr)
 			if(bag.autocollect)
 				bag.can_be_inserted(src, usr, 0)
+				src.forceMove(bag)
 
 /obj/item/advanced_bolt/Move()
 	. = ..()

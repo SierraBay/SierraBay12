@@ -1,0 +1,378 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"c" = (
+/obj/structure/aurora/cable,
+/obj/floor_decal/snow,
+/obj/structure/droppod_door,
+/turf/simulated/floor/away,
+/area/map_template/deployed_generator)
+"e" = (
+/obj/structure/aurora/cable,
+/obj/floor_decal/snow,
+/obj/structure/droppod_door{
+	dir = 1
+	},
+/turf/simulated/floor/away,
+/area/map_template/deployed_generator)
+"h" = (
+/obj/structure/aurora/cable{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/floor_decal/snow,
+/turf/simulated/floor/reinforced,
+/area/map_template/deployed_generator)
+"j" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/floor_decal/snow,
+/turf/simulated/floor/reinforced,
+/area/map_template/deployed_generator)
+"k" = (
+/obj/floor_decal/snow,
+/obj/structure/aurora/smes,
+/turf/simulated/floor/reinforced,
+/area/map_template/deployed_generator)
+"m" = (
+/obj/structure/aurora/cable{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/floor_decal/snow,
+/turf/simulated/floor/reinforced,
+/area/map_template/deployed_generator)
+"o" = (
+/obj/floor_decal/snow,
+/obj/machinery/power/smes/batteryrack,
+/turf/simulated/floor/reinforced,
+/area/map_template/deployed_generator)
+"q" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	desc = "A flexible superconducting cable for heavy-duty power transfer. It's been labeled 'chaos reigns'.";
+	icon_state = "2-8"
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/floor_decal/snow,
+/turf/simulated/floor/reinforced,
+/area/map_template/deployed_generator)
+"t" = (
+/obj/floor_decal/snow,
+/turf/simulated/floor,
+/area/template_noop)
+"u" = (
+/obj/structure/aurora/cable{
+	dir = 4
+	},
+/obj/floor_decal/snow,
+/obj/structure/droppod_door{
+	dir = 8
+	},
+/turf/simulated/floor/reinforced,
+/area/map_template/deployed_generator)
+"z" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	desc = "A flexible superconducting cable for heavy-duty power transfer. It's been labeled 'chaos reigns'.";
+	icon_state = "2-8"
+	},
+/obj/floor_decal/snow,
+/turf/simulated/floor/reinforced,
+/area/map_template/deployed_generator)
+"B" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	desc = "A flexible superconducting cable for heavy-duty power transfer. It's been labeled 'chaos reigns'.";
+	icon_state = "2-8"
+	},
+/obj/floor_decal/snow,
+/turf/simulated/floor/reinforced,
+/area/map_template/deployed_generator)
+"C" = (
+/obj/structure/aurora/cable{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/floor_decal/snow,
+/turf/simulated/floor/reinforced,
+/area/map_template/deployed_generator)
+"D" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/floor_decal/snow,
+/turf/simulated/floor/reinforced,
+/area/map_template/deployed_generator)
+"F" = (
+/obj/floor_decal/snow,
+/obj/structure/droppod_door{
+	dir = 4
+	},
+/turf/simulated/floor/away,
+/area/map_template/deployed_generator)
+"I" = (
+/obj/structure/aurora/informative/old_computer{
+	possible_information = list(
+		"Бортовой журнал N3: Получена команда отстыковки. Выполнена отстыковка. Начат процесс входа в атмосферу. Процедура высадки на поверхность планеты выполнена. Отчёт отправл#@**$!"
+		"Бортовой журнал N4: ОШИБКА: В течении суток команда от центра управления не получена. Невозможно связаться с центром управления. Энергохранилище переходит в режим сна."
+		"Бортовой журнал N7: ОШИБКА: Основные компоненты дроппода получили критические повреждения. 7 энергоячеек из 8 не отвечает. Окончание работы контроллера."
+		)
+	},
+/obj/floor_decal/snow,
+/turf/simulated/floor/reinforced,
+/area/map_template/deployed_generator)
+"J" = (
+/obj/structure/aurora/cable,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	desc = "A flexible superconducting cable for heavy-duty power transfer. It's been labeled 'chaos reigns'.";
+	icon_state = "2-8"
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/floor_decal/snow,
+/turf/simulated/floor/reinforced,
+/area/map_template/deployed_generator)
+"L" = (
+/obj/structure/aurora/cable{
+	dir = 4
+	},
+/obj/floor_decal/snow,
+/turf/simulated/floor/reinforced,
+/area/map_template/deployed_generator)
+"N" = (
+/obj/structure/aurora/nav_light,
+/obj/floor_decal/snow,
+/turf/simulated/floor,
+/area/template_noop)
+"P" = (
+/obj/floor_decal/snow,
+/obj/structure/droppod_door,
+/turf/simulated/floor/away,
+/area/map_template/deployed_generator)
+"S" = (
+/obj/floor_decal/snow,
+/obj/structure/droppod_door{
+	dir = 1
+	},
+/turf/simulated/floor/away,
+/area/map_template/deployed_generator)
+"V" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/floor_decal/snow,
+/turf/simulated/floor/reinforced,
+/area/map_template/deployed_generator)
+"X" = (
+/turf/simulated/wall/r_titanium,
+/area/map_template/deployed_generator)
+"Y" = (
+/obj/structure/aurora/cable,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
+/obj/floor_decal/snow,
+/turf/simulated/floor/reinforced,
+/area/map_template/deployed_generator)
+
+(1,1,1) = {"
+a
+N
+t
+a
+a
+a
+a
+t
+N
+a
+"}
+(2,1,1) = {"
+a
+t
+X
+X
+u
+u
+X
+X
+t
+a
+"}
+(3,1,1) = {"
+a
+a
+X
+I
+L
+L
+o
+X
+a
+a
+"}
+(4,1,1) = {"
+a
+a
+S
+j
+C
+h
+V
+P
+a
+a
+"}
+(5,1,1) = {"
+a
+a
+S
+q
+k
+k
+z
+P
+a
+a
+"}
+(6,1,1) = {"
+a
+a
+e
+J
+k
+k
+Y
+c
+a
+a
+"}
+(7,1,1) = {"
+a
+a
+S
+q
+k
+k
+q
+P
+a
+a
+"}
+(8,1,1) = {"
+a
+a
+S
+B
+m
+m
+D
+P
+a
+a
+"}
+(9,1,1) = {"
+a
+a
+X
+o
+L
+L
+o
+X
+a
+a
+"}
+(10,1,1) = {"
+a
+t
+X
+X
+F
+F
+X
+X
+t
+a
+"}
+(11,1,1) = {"
+a
+N
+t
+a
+a
+a
+a
+t
+N
+a
+"}

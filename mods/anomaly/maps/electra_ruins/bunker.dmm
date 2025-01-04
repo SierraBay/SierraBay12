@@ -1,0 +1,2668 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ab" = (
+/obj/decal/cleanable/ash,
+/obj/structure/aurora/wall_light,
+/turf/simulated/floor/tiled/white,
+/area/map_template/bunker)
+"as" = (
+/obj/structure/aurora/wall_light{
+	dir = 1
+	},
+/turf/simulated/floor/exoplanet/ice,
+/area/template_noop)
+"az" = (
+/obj/structure/aurora/cable,
+/turf/simulated/floor,
+/area/map_template/bunker)
+"aJ" = (
+/obj/structure/grille/broken,
+/obj/structure/ice_rock,
+/turf/simulated/floor/exoplanet/ice,
+/area/template_noop)
+"bd" = (
+/obj/structure/grille/broken,
+/obj/structure/aurora/cable,
+/turf/simulated/floor/exoplanet/ice,
+/area/template_noop)
+"bi" = (
+/turf/simulated/floor/tiled/freezer,
+/area/map_template/bunker)
+"bI" = (
+/obj/structure/table/reinforced,
+/obj/item/paper/crumpled,
+/turf/simulated/floor/tiled/white,
+/area/map_template/bunker)
+"bO" = (
+/obj/machinery/door/unpowered/simple/iron,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor/tiled/freezer,
+/area/map_template/bunker)
+"cd" = (
+/obj/structure/aurora/wall_light{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/white,
+/area/map_template/bunker)
+"dl" = (
+/obj/item/storage/mirror{
+	pixel_y = 32
+	},
+/obj/structure/hygiene/sink{
+	dir = 1;
+	pixel_y = 16
+	},
+/turf/simulated/floor/tiled/freezer,
+/area/map_template/bunker)
+"dI" = (
+/obj/structure/table/reinforced,
+/obj/machinery/atmospherics/unary/vent_pump/on{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/white,
+/area/map_template/bunker)
+"dV" = (
+/obj/machinery/portable_atmospherics/canister/empty,
+/turf/simulated/floor/tiled,
+/area/map_template/bunker)
+"fr" = (
+/turf/simulated/floor/exoplanet/ice,
+/area/template_noop)
+"fA" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/decal/cleanable/ash,
+/turf/simulated/floor/tiled/white,
+/area/map_template/bunker)
+"fQ" = (
+/obj/structure/table/rack,
+/turf/simulated/floor/tiled,
+/area/map_template/bunker)
+"fR" = (
+/obj/wallframe_spawn/reinforced_phoron/hull,
+/obj/machinery/door/blast/shutters,
+/turf/simulated/floor/tiled/white,
+/area/map_template/bunker)
+"fU" = (
+/obj/machinery/atmospherics/pipe/simple/visible/red{
+	dir = 10
+	},
+/turf/simulated/floor/tiled,
+/area/map_template/bunker)
+"fW" = (
+/obj/structure/table/reinforced,
+/obj/item/paper/anomaly_scan,
+/turf/simulated/floor/tiled/white,
+/area/map_template/bunker)
+"gb" = (
+/obj/item/storage/mirror{
+	pixel_y = 32
+	},
+/obj/structure/hygiene/sink{
+	dir = 1;
+	pixel_y = 16
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 10
+	},
+/turf/simulated/floor/tiled/freezer,
+/area/map_template/bunker)
+"gg" = (
+/obj/structure/bed/chair/comfy/brown{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/bunker)
+"gG" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
+	},
+/turf/simulated/floor/tiled,
+/area/map_template/bunker)
+"hs" = (
+/obj/structure/firedoor_assembly,
+/obj/machinery/door/blast/regular/open,
+/turf/simulated/floor/tiled,
+/area/map_template/bunker)
+"hC" = (
+/obj/structure/table/marble,
+/obj/machinery/chemical_dispenser/bar_coffee/full,
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/bunker)
+"hL" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/white,
+/area/map_template/bunker)
+"if" = (
+/obj/structure/bed/chair/comfy/brown{
+	dir = 8
+	},
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/bunker)
+"is" = (
+/obj/structure/table/marble,
+/obj/machinery/chemical_dispenser/bar_alc/full{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/bunker)
+"iv" = (
+/obj/structure/aurora/smes,
+/turf/simulated/floor/tiled,
+/area/map_template/bunker)
+"iy" = (
+/turf/simulated/floor,
+/area/map_template/bunker)
+"iJ" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/freezer,
+/area/map_template/bunker)
+"ja" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/bunker)
+"jk" = (
+/obj/machinery/portable_atmospherics/hydroponics,
+/obj/machinery/atmospherics/unary/vent_scrubber/on{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/white,
+/area/map_template/bunker)
+"jo" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/turf/simulated/floor/tiled,
+/area/map_template/bunker)
+"jA" = (
+/obj/structure/cable/orange,
+/turf/simulated/floor,
+/area/map_template/bunker)
+"jR" = (
+/obj/decal/cleanable/ash,
+/turf/simulated/floor/tiled/white,
+/area/map_template/bunker)
+"jW" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/turf/simulated/floor/tiled/white,
+/area/map_template/bunker)
+"ka" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 9
+	},
+/turf/simulated/floor/tiled/white,
+/area/map_template/bunker)
+"mb" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/turf/simulated/floor/tiled,
+/area/map_template/bunker)
+"mv" = (
+/obj/machinery/atmospherics/pipe/manifold/visible/red,
+/turf/simulated/floor/tiled,
+/area/map_template/bunker)
+"mU" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 10
+	},
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/bunker)
+"nm" = (
+/obj/machinery/atmospherics/pipe/manifold/visible/red{
+	dir = 1
+	},
+/obj/decal/cleanable/ash,
+/turf/simulated/floor/tiled/white,
+/area/map_template/bunker)
+"nE" = (
+/obj/structure/bed/chair/armchair/red{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/white,
+/area/map_template/bunker)
+"nK" = (
+/obj/structure/aurora/wall_light{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 10
+	},
+/obj/decal/cleanable/ash,
+/turf/simulated/floor/tiled/white,
+/area/map_template/bunker)
+"oA" = (
+/obj/decal/cleanable/ash,
+/turf/simulated/floor/exoplanet/ice,
+/area/template_noop)
+"oS" = (
+/obj/structure/table/steel_reinforced,
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/bunker)
+"pd" = (
+/obj/structure/aurora/wall_light{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/turf/simulated/floor/tiled,
+/area/map_template/bunker)
+"pw" = (
+/obj/machinery/atmospherics/binary/pump/on{
+	dir = 8
+	},
+/turf/simulated/floor/tiled,
+/area/map_template/bunker)
+"qI" = (
+/obj/machinery/door/unpowered/simple/glass,
+/turf/simulated/floor/tiled/white,
+/area/map_template/bunker)
+"qN" = (
+/obj/structure/bed/chair/comfy/brown,
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/bunker)
+"rw" = (
+/obj/machinery/door/blast/shutters/open,
+/turf/simulated/floor/tiled,
+/area/map_template/bunker)
+"rC" = (
+/obj/structure/reagent_dispensers/watertank,
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/bunker)
+"st" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/blast/shutters,
+/turf/simulated/floor/tiled/white,
+/area/map_template/bunker)
+"sH" = (
+/obj/machinery/stasis_cage{
+	req_access = list()
+	},
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/bunker)
+"sQ" = (
+/obj/structure/aurora/wall_light{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/steel_ridged,
+/area/map_template/bunker)
+"sT" = (
+/obj/structure/aurora/informative/old_computer{
+	possible_information = list(		"Рапорт N3124: Экспедицию на ледяную планету приказано свернуть. Вчера на планете по неизвестным для нас причиниам началась сильнейшая электромагнитная активность, некоторые сотрудники сообщали, что видели молнии - вздор. В любом случае, до выяснения безопасности планеты, весь основной научный состав эвакуируется с планеты, этот бункер консервируется. Вероятно, процедура проверки займёт не больше нескольких суток.",		"Рапорт N1234: Высадились на ледяную экзопланету для проведения ряда научных изучений. Все аванпосты в штатном режиме, связь функционирует прекрасно, судно на орбите на связи."		)
+	},
+/obj/structure/table/reinforced,
+/obj/structure/aurora/wall_light{
+	dir = 1
+	},
+/turf/simulated/floor/tiled,
+/area/map_template/bunker)
+"sX" = (
+/obj/structure/table/rack,
+/obj/item/clothing/head/bio_hood/anomaly,
+/obj/item/clothing/suit/bio_suit/anomaly,
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/bunker)
+"td" = (
+/obj/structure/aurora/wall_light{
+	dir = 1
+	},
+/turf/simulated/floor/tiled,
+/area/map_template/bunker)
+"tp" = (
+/obj/machinery/atmospherics/pipe/manifold/visible/cyan,
+/turf/simulated/floor/tiled,
+/area/map_template/bunker)
+"ua" = (
+/turf/simulated/floor/tiled,
+/area/map_template/bunker)
+"vI" = (
+/obj/structure/aurora/informative/old_computer,
+/obj/structure/table/reinforced,
+/turf/simulated/floor/tiled/white,
+/area/map_template/bunker)
+"wF" = (
+/obj/machinery/mech_recharger,
+/obj/structure/mech_wreckage,
+/obj/structure/aurora/wall_light{
+	dir = 1
+	},
+/turf/simulated/floor/tiled,
+/area/map_template/bunker)
+"xg" = (
+/obj/structure/grille/broken,
+/turf/simulated/floor/exoplanet/ice,
+/area/template_noop)
+"xu" = (
+/turf/simulated/wall/r_titanium,
+/area/template_noop)
+"xY" = (
+/obj/machinery/door/blast/regular,
+/turf/simulated/floor/tiled,
+/area/map_template/bunker)
+"yp" = (
+/obj/structure/aurora/wall_light{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/steel_ridged,
+/area/template_noop)
+"yE" = (
+/obj/structure/closet/fridge/meat,
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/bunker)
+"zc" = (
+/obj/decal/cleanable/ash,
+/obj/structure/aurora/wall_light{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/white,
+/area/map_template/bunker)
+"zd" = (
+/obj/machinery/robotics_fabricator{
+	req_access = list()
+	},
+/turf/simulated/floor/tiled,
+/area/map_template/bunker)
+"zB" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 5
+	},
+/turf/simulated/floor/tiled/freezer,
+/area/map_template/bunker)
+"AX" = (
+/obj/item/paper/crumpled,
+/turf/simulated/floor/tiled/white,
+/area/map_template/bunker)
+"By" = (
+/obj/machinery/door/unpowered/simple/iron,
+/turf/simulated/floor/tiled/freezer,
+/area/map_template/bunker)
+"BY" = (
+/obj/structure/reagent_dispensers/fueltank,
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/bunker)
+"Cc" = (
+/obj/structure/table/reinforced,
+/turf/simulated/floor/tiled,
+/area/map_template/bunker)
+"CS" = (
+/obj/machinery/portable_atmospherics/hydroponics,
+/turf/simulated/floor/tiled/white,
+/area/map_template/bunker)
+"CU" = (
+/turf/simulated/floor/tiled/white,
+/area/map_template/bunker)
+"DH" = (
+/obj/machinery/door/blast/regular/open,
+/obj/structure/broken_door,
+/turf/simulated/floor/tiled/steel_ridged,
+/area/map_template/bunker)
+"DI" = (
+/obj/machinery/atmospherics/unary/vent_scrubber/on{
+	dir = 1
+	},
+/obj/machinery/anomaly_container{
+	req_access = list()
+	},
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/bunker)
+"Eu" = (
+/obj/anomaly/electra/three_and_three/tesla_second,
+/turf/simulated/floor/exoplanet/ice,
+/area/template_noop)
+"Fa" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/turf/simulated/floor/tiled,
+/area/map_template/bunker)
+"FA" = (
+/obj/machinery/atmospherics/unary/vent_scrubber/on{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/freezer,
+/area/map_template/bunker)
+"FI" = (
+/obj/machinery/constructable_frame/machine_frame,
+/obj/decal/cleanable/ash,
+/turf/simulated/floor/tiled/white,
+/area/map_template/bunker)
+"Gv" = (
+/obj/machinery/atmospherics/unary/tank/air{
+	dir = 4;
+	start_pressure = 4559.63
+	},
+/turf/simulated/floor/tiled,
+/area/map_template/bunker)
+"Gw" = (
+/obj/structure/closet/crate/radiation,
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/bunker)
+"GG" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor/tiled,
+/area/map_template/bunker)
+"GN" = (
+/obj/structure/table/steel_reinforced,
+/obj/item/reagent_containers/food/drinks/glass2/coffeecup/metal{
+	pixel_y = -18;
+	pixel_x = 8
+	},
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/bunker)
+"Ha" = (
+/obj/item/storage/mre/random,
+/obj/item/storage/mre/random,
+/obj/item/storage/mre/random,
+/obj/item/storage/mre/random,
+/obj/item/storage/mre/random,
+/obj/item/storage/mre/random,
+/obj/structure/closet/crate/freezer/rations,
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/bunker)
+"Hh" = (
+/obj/structure/aurora/cable{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/map_template/bunker)
+"Hj" = (
+/obj/structure/table/marble,
+/obj/machinery/chemical_dispenser/bar_soft/full{
+	pixel_y = 8;
+	dir = 4
+	},
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/bunker)
+"Hk" = (
+/turf/simulated/floor/tiled/steel_ridged,
+/area/template_noop)
+"Ho" = (
+/obj/machinery/door/unpowered/simple/glass,
+/turf/simulated/floor/tiled/steel_ridged,
+/area/map_template/bunker)
+"HX" = (
+/obj/machinery/door/blast/regular/open,
+/obj/structure/broken_door,
+/turf/simulated/floor/tiled/steel_ridged,
+/area/template_noop)
+"Ik" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/white,
+/area/map_template/bunker)
+"IC" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 5
+	},
+/turf/simulated/floor/tiled/white,
+/area/map_template/bunker)
+"IH" = (
+/turf/simulated/mineral/ice,
+/area/template_noop)
+"Jx" = (
+/turf/simulated/wall/r_titanium,
+/area/map_template/bunker)
+"Ka" = (
+/obj/structure/sign/hydrostorage{
+	pixel_y = 32
+	},
+/obj/machinery/vending/hydronutrients,
+/turf/simulated/floor/tiled/white,
+/area/map_template/bunker)
+"Kl" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/decal/cleanable/ash,
+/turf/simulated/floor/tiled/white,
+/area/map_template/bunker)
+"La" = (
+/obj/machinery/door/firedoor/autoset,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor/tiled,
+/area/map_template/bunker)
+"Lb" = (
+/obj/machinery/mech_recharger,
+/turf/simulated/floor/tiled,
+/area/map_template/bunker)
+"Mq" = (
+/obj/structure/aurora/wall_light,
+/turf/simulated/floor/tiled/white,
+/area/map_template/bunker)
+"Mz" = (
+/obj/structure/table/reinforced,
+/obj/machinery/atmospherics/unary/vent_pump/on,
+/turf/simulated/floor/tiled,
+/area/map_template/bunker)
+"MD" = (
+/obj/structure/hygiene/shower{
+	dir = 8;
+	pixel_x = 9
+	},
+/turf/simulated/floor/tiled/freezer,
+/area/map_template/bunker)
+"ML" = (
+/obj/structure/aurora/wall_light,
+/turf/simulated/floor/tiled,
+/area/map_template/bunker)
+"MQ" = (
+/obj/structure/table/marble,
+/obj/machinery/microwave,
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/bunker)
+"Ni" = (
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/bunker)
+"Nl" = (
+/obj/structure/aurora/wall_light,
+/turf/simulated/floor/tiled/steel_ridged,
+/area/template_noop)
+"Nn" = (
+/obj/machinery/atmospherics/unary/tank/air{
+	start_pressure = 4559.63
+	},
+/turf/simulated/floor/tiled,
+/area/map_template/bunker)
+"Nw" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 10
+	},
+/turf/simulated/floor/exoplanet/ice,
+/area/template_noop)
+"NJ" = (
+/obj/structure/table/reinforced,
+/turf/simulated/floor/tiled/white,
+/area/map_template/bunker)
+"NP" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/decal/cleanable/ash,
+/turf/simulated/floor/tiled/white,
+/area/map_template/bunker)
+"Od" = (
+/obj/structure/bed/chair/comfy/brown{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/bunker)
+"Of" = (
+/obj/item/clothing/suit/bio_suit/anomaly,
+/obj/item/clothing/head/bio_hood/anomaly,
+/obj/structure/table/rack,
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/bunker)
+"OF" = (
+/obj/machinery/atmospherics/binary/pump/on{
+	dir = 4
+	},
+/turf/simulated/floor/tiled,
+/area/map_template/bunker)
+"OY" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/door/unpowered/simple/iron,
+/turf/simulated/floor/tiled/white,
+/area/map_template/bunker)
+"Ph" = (
+/obj/structure/aurora/informative/old_computer,
+/obj/structure/aurora/wall_light{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/white,
+/area/map_template/bunker)
+"Pw" = (
+/obj/structure/aurora/wall_light{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/bunker)
+"PC" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/door/unpowered/simple/iron,
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/bunker)
+"PO" = (
+/obj/structure/closet,
+/obj/item/clothing/under/rank/roboticist,
+/obj/item/book/manual/robotics_cyborgs,
+/turf/simulated/floor/tiled,
+/area/map_template/bunker)
+"PP" = (
+/obj/item/bedsheet/brown,
+/obj/structure/bed,
+/obj/structure/curtain/open/bed{
+	anchored = 1
+	},
+/turf/simulated/floor/tiled/white,
+/area/map_template/bunker)
+"PS" = (
+/obj/structure/aurora/wall_light,
+/turf/simulated/floor/exoplanet/ice,
+/area/template_noop)
+"Ql" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor/tiled,
+/area/map_template/bunker)
+"QQ" = (
+/obj/floor_decal/industrial/outline/yellow,
+/turf/simulated/floor/tiled,
+/area/map_template/bunker)
+"QW" = (
+/obj/machinery/portable_atmospherics/powered/scrubber,
+/turf/simulated/floor/tiled,
+/area/map_template/bunker)
+"Re" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/universal{
+	dir = 4
+	},
+/turf/simulated/floor/tiled,
+/area/map_template/bunker)
+"Rq" = (
+/obj/structure/hygiene/toilet,
+/turf/simulated/floor/tiled/freezer,
+/area/map_template/bunker)
+"Sp" = (
+/obj/machinery/door/unpowered/simple/glass,
+/obj/decal/cleanable/ash,
+/turf/simulated/floor/tiled/white,
+/area/map_template/bunker)
+"SB" = (
+/obj/structure/closet/radiation,
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/bunker)
+"SG" = (
+/obj/machinery/atmospherics/pipe/manifold/visible/red{
+	dir = 8
+	},
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/bunker)
+"Tf" = (
+/obj/structure/aurora/beaker_dropper,
+/turf/simulated/floor/tiled/white,
+/area/map_template/bunker)
+"TI" = (
+/obj/machinery/portable_atmospherics/canister/air,
+/turf/simulated/floor/tiled,
+/area/map_template/bunker)
+"Uy" = (
+/obj/structure/aurora/informative/old_computer,
+/turf/simulated/floor/tiled,
+/area/map_template/bunker)
+"Vb" = (
+/obj/structure/aurora/informative/old_computer,
+/turf/simulated/floor/tiled/white,
+/area/map_template/bunker)
+"VK" = (
+/obj/structure/closet/l3closet/scientist,
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/bunker)
+"VO" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor/tiled/white,
+/area/map_template/bunker)
+"WQ" = (
+/obj/machinery/door/unpowered/simple/iron,
+/turf/simulated/floor/tiled/white,
+/area/map_template/bunker)
+"WS" = (
+/obj/structure/ice_rock,
+/turf/simulated/floor/exoplanet/ice,
+/area/template_noop)
+"Xj" = (
+/obj/structure/closet/crate/hydroponics,
+/turf/simulated/floor/tiled/white,
+/area/map_template/bunker)
+"XG" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 5
+	},
+/turf/simulated/floor/tiled,
+/area/map_template/bunker)
+"XR" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/bunker)
+"Ye" = (
+/obj/structure/bed,
+/obj/item/bedsheet/brown,
+/obj/structure/curtain/open/bed{
+	anchored = 1
+	},
+/turf/simulated/floor/tiled,
+/area/map_template/bunker)
+"Yz" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/simulated/floor/tiled,
+/area/map_template/bunker)
+"YY" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor/exoplanet/ice,
+/area/template_noop)
+"Zf" = (
+/obj/machinery/door/unpowered/simple/iron,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/turf/simulated/floor/tiled,
+/area/map_template/bunker)
+"Zy" = (
+/obj/anomaly/electra/three_and_three/tesla_second,
+/turf/simulated/floor/tiled/white,
+/area/map_template/bunker)
+
+(1,1,1) = {"
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+"}
+(2,1,1) = {"
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+IH
+IH
+IH
+IH
+fr
+fr
+fr
+fr
+fr
+fr
+IH
+IH
+IH
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+"}
+(3,1,1) = {"
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+IH
+IH
+IH
+IH
+IH
+IH
+IH
+IH
+fr
+IH
+IH
+IH
+IH
+IH
+IH
+IH
+IH
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+"}
+(4,1,1) = {"
+fr
+fr
+fr
+WS
+fr
+fr
+fr
+fr
+fr
+fr
+IH
+IH
+IH
+fr
+IH
+IH
+IH
+IH
+IH
+IH
+IH
+IH
+IH
+IH
+IH
+IH
+IH
+IH
+IH
+IH
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+"}
+(5,1,1) = {"
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+IH
+IH
+IH
+IH
+IH
+IH
+IH
+IH
+IH
+IH
+IH
+IH
+IH
+IH
+IH
+IH
+IH
+fr
+fr
+fr
+WS
+fr
+fr
+fr
+fr
+fr
+fr
+"}
+(6,1,1) = {"
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+IH
+IH
+IH
+IH
+IH
+IH
+IH
+IH
+IH
+IH
+IH
+IH
+IH
+IH
+fr
+IH
+IH
+IH
+IH
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+"}
+(7,1,1) = {"
+fr
+fr
+fr
+WS
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+IH
+IH
+IH
+IH
+IH
+IH
+IH
+IH
+IH
+IH
+IH
+IH
+IH
+IH
+IH
+fr
+IH
+IH
+IH
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+"}
+(8,1,1) = {"
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+WS
+fr
+fr
+IH
+IH
+IH
+fr
+fr
+IH
+IH
+IH
+IH
+fr
+IH
+IH
+IH
+IH
+IH
+IH
+fr
+IH
+IH
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+"}
+(9,1,1) = {"
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+IH
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+"}
+(10,1,1) = {"
+fr
+fr
+fr
+fr
+fr
+fr
+WS
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+"}
+(11,1,1) = {"
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+xu
+xu
+xu
+xu
+xu
+xu
+xu
+xu
+xu
+xu
+xu
+xu
+xu
+xu
+xu
+xu
+xu
+xu
+xu
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+"}
+(12,1,1) = {"
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+xu
+xu
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+xu
+xu
+fr
+fr
+fr
+fr
+fr
+WS
+fr
+fr
+fr
+fr
+fr
+"}
+(13,1,1) = {"
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+xu
+xu
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+xu
+xu
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+"}
+(14,1,1) = {"
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+xu
+xu
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+xu
+xu
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+"}
+(15,1,1) = {"
+fr
+fr
+fr
+fr
+fr
+fr
+xu
+xu
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+xu
+xu
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+"}
+(16,1,1) = {"
+fr
+fr
+fr
+WS
+fr
+xu
+xu
+xu
+Jx
+Jx
+Gv
+dV
+dV
+ua
+TI
+Jx
+zd
+fQ
+fQ
+fQ
+Jx
+MQ
+Hj
+is
+Ni
+Ni
+Od
+Od
+Ni
+Jx
+Jx
+Jx
+xu
+xu
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+"}
+(17,1,1) = {"
+fr
+fr
+fr
+fr
+PS
+xu
+Jx
+Jx
+Jx
+Nn
+tp
+fU
+mv
+ua
+ua
+Jx
+ua
+ua
+QQ
+ua
+Jx
+hC
+if
+Ni
+Ni
+qN
+oS
+oS
+gg
+Jx
+Jx
+Jx
+Jx
+xu
+fr
+fr
+IH
+fr
+fr
+fr
+fr
+"}
+(18,1,1) = {"
+fr
+fr
+fr
+fr
+fr
+xu
+Jx
+Jx
+Jx
+iv
+OF
+iv
+pw
+Yz
+Yz
+Jx
+wF
+ua
+ua
+ML
+Jx
+yE
+Ni
+Ni
+Ni
+qN
+oS
+oS
+gg
+Jx
+Jx
+Jx
+Jx
+xu
+as
+IH
+IH
+IH
+fr
+fr
+fr
+"}
+(19,1,1) = {"
+fr
+fr
+fr
+fr
+fr
+xu
+Jx
+Jx
+Jx
+Yz
+Re
+QW
+Re
+Yz
+Yz
+Jx
+Uy
+ua
+ua
+ua
+Jx
+Jx
+Jx
+Jx
+Ni
+qN
+GN
+oS
+gg
+Jx
+Jx
+Jx
+Jx
+xu
+fr
+IH
+IH
+IH
+IH
+fr
+fr
+"}
+(20,1,1) = {"
+fr
+fr
+fr
+fr
+fr
+xu
+Jx
+Jx
+Jx
+Yz
+Fa
+ua
+Ql
+ua
+ua
+Jx
+Lb
+ua
+QQ
+ua
+rw
+Ni
+Ni
+Ni
+Ni
+Ni
+Ni
+Ni
+Ni
+Jx
+Jx
+Jx
+Jx
+xu
+fr
+fr
+IH
+IH
+IH
+IH
+fr
+"}
+(21,1,1) = {"
+fr
+fr
+fr
+fr
+fr
+xu
+Jx
+Jx
+Jx
+Yz
+gG
+mb
+jo
+GG
+XG
+Jx
+fQ
+ua
+fQ
+PO
+Jx
+Ni
+Ni
+Ni
+Ni
+Ni
+Ni
+Ni
+Ni
+Jx
+Jx
+Jx
+Jx
+xu
+fr
+fr
+fr
+fr
+IH
+IH
+fr
+"}
+(22,1,1) = {"
+fr
+fr
+fr
+fr
+PS
+xu
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+La
+Jx
+Jx
+Ho
+Jx
+Jx
+Jx
+az
+az
+Jx
+Jx
+xY
+hs
+xY
+xY
+Jx
+Jx
+Jx
+Jx
+xu
+fr
+fr
+fr
+fr
+IH
+IH
+fr
+"}
+(23,1,1) = {"
+fr
+fr
+fr
+fr
+fr
+xu
+Jx
+Jx
+Jx
+Ye
+ua
+ua
+Jx
+CU
+Ik
+CU
+CU
+CU
+CU
+CU
+Jx
+Ni
+Ni
+Gw
+Jx
+ua
+ua
+iy
+ua
+Jx
+Jx
+Jx
+Jx
+xu
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+"}
+(24,1,1) = {"
+fr
+fr
+fr
+fr
+fr
+xu
+Jx
+Jx
+Jx
+td
+ua
+ML
+Jx
+Ph
+Ik
+CU
+NJ
+NJ
+CU
+AX
+Jx
+Pw
+Ni
+SB
+Jx
+iy
+ua
+ua
+iy
+Jx
+Jx
+Jx
+Jx
+xu
+fr
+fr
+IH
+IH
+fr
+fr
+fr
+"}
+(25,1,1) = {"
+fr
+fr
+fr
+fr
+PS
+xu
+Jx
+Jx
+Jx
+ua
+ua
+ua
+Jx
+Vb
+Ik
+CU
+bI
+fW
+CU
+CU
+fR
+Ni
+Ni
+VK
+Jx
+ua
+jA
+ua
+ML
+Jx
+sQ
+Hk
+Nl
+xu
+as
+fr
+IH
+WS
+fr
+fr
+fr
+"}
+(26,1,1) = {"
+fr
+fr
+fr
+fr
+fr
+xu
+Jx
+Jx
+Jx
+Cc
+ua
+ua
+Jx
+Tf
+NP
+AX
+bI
+bI
+CU
+CU
+st
+Ni
+Ni
+sX
+Jx
+ua
+iy
+iy
+ua
+DH
+Hk
+Hk
+Hk
+HX
+fr
+IH
+IH
+fr
+fr
+fr
+fr
+"}
+(27,1,1) = {"
+fr
+fr
+fr
+fr
+fr
+xu
+Jx
+Jx
+Jx
+sT
+ua
+ML
+Jx
+zc
+Ik
+jR
+dI
+bI
+CU
+CU
+st
+Ni
+Ni
+Of
+Jx
+ua
+Hh
+iy
+ML
+Jx
+yp
+Hk
+Nl
+xu
+as
+WS
+WS
+fr
+fr
+fr
+fr
+"}
+(28,1,1) = {"
+fr
+fr
+fr
+fr
+PS
+xu
+Jx
+Jx
+Jx
+Mz
+pd
+mb
+Zf
+jW
+nK
+IC
+ka
+jR
+cd
+CU
+fR
+Ni
+Ni
+sX
+Jx
+ua
+Hh
+ua
+iy
+Jx
+Jx
+Jx
+Jx
+xu
+IH
+fr
+fr
+fr
+WS
+fr
+fr
+"}
+(29,1,1) = {"
+fr
+fr
+fr
+fr
+fr
+xu
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+Kl
+Jx
+Jx
+Jx
+Jx
+Jx
+az
+az
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+xu
+IH
+IH
+IH
+fr
+fr
+fr
+fr
+"}
+(30,1,1) = {"
+fr
+fr
+fr
+fr
+fr
+xu
+Jx
+Jx
+Jx
+Jx
+Jx
+Xj
+jR
+CU
+Sp
+nm
+VO
+VO
+CU
+VO
+OY
+ja
+SG
+ja
+bO
+zB
+bi
+By
+Rq
+Jx
+Jx
+Jx
+Jx
+xu
+IH
+IH
+IH
+IH
+fr
+fr
+fr
+"}
+(31,1,1) = {"
+fr
+fr
+fr
+fr
+fr
+xu
+Jx
+Jx
+Jx
+Jx
+Jx
+Xj
+jR
+CU
+Sp
+Kl
+CS
+jR
+CS
+Mq
+Jx
+Jx
+PC
+Jx
+Jx
+iJ
+bi
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+xu
+IH
+IH
+IH
+fr
+fr
+fr
+fr
+"}
+(32,1,1) = {"
+fr
+fr
+fr
+fr
+fr
+xu
+Jx
+Jx
+Jx
+Jx
+Jx
+Xj
+CU
+jR
+qI
+hL
+CS
+Zy
+CS
+jR
+Jx
+Ni
+XR
+Ni
+Jx
+gb
+FA
+By
+Rq
+Jx
+Jx
+Jx
+Jx
+xu
+as
+IH
+fr
+fr
+fr
+fr
+fr
+"}
+(33,1,1) = {"
+fr
+fr
+fr
+fr
+PS
+xu
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+WQ
+Jx
+Jx
+Nw
+YY
+fA
+jk
+Mq
+Jx
+Ha
+XR
+sH
+Jx
+bi
+bi
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+xu
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+"}
+(34,1,1) = {"
+fr
+fr
+fr
+fr
+fr
+xu
+xu
+Jx
+Jx
+Jx
+Jx
+NJ
+CU
+CU
+Jx
+Ka
+oA
+CU
+CS
+jR
+Jx
+Ha
+mU
+DI
+Jx
+dl
+bi
+By
+MD
+Jx
+Jx
+Jx
+xu
+xu
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+"}
+(35,1,1) = {"
+fr
+fr
+fr
+fr
+fr
+fr
+xu
+xu
+Jx
+Jx
+Jx
+vI
+nE
+CU
+Jx
+FI
+WS
+oA
+CS
+ab
+Jx
+Ha
+Ni
+BY
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+xu
+xu
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+"}
+(36,1,1) = {"
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+xu
+xu
+Jx
+Jx
+NJ
+NJ
+PP
+Jx
+FI
+oA
+Eu
+fr
+CU
+Jx
+Ha
+Ni
+rC
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+xu
+xu
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+"}
+(37,1,1) = {"
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+xu
+xu
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+bd
+aJ
+xg
+xu
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+xu
+xu
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+"}
+(38,1,1) = {"
+fr
+fr
+fr
+WS
+fr
+fr
+fr
+fr
+fr
+xu
+xu
+Jx
+Jx
+Jx
+xu
+xu
+fr
+fr
+xg
+xg
+xu
+xu
+Jx
+Jx
+Jx
+Jx
+Jx
+Jx
+xu
+xu
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+"}
+(39,1,1) = {"
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+xu
+xu
+xu
+xu
+xu
+bd
+fr
+Eu
+WS
+xg
+bd
+bd
+xu
+xu
+xu
+xu
+xu
+xu
+xu
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+"}
+(40,1,1) = {"
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+Eu
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+"}
+(41,1,1) = {"
+fr
+fr
+fr
+fr
+fr
+fr
+WS
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+Eu
+WS
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+"}
+(42,1,1) = {"
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+Eu
+fr
+WS
+fr
+fr
+WS
+fr
+fr
+fr
+fr
+fr
+fr
+Eu
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+"}
+(43,1,1) = {"
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+Eu
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+"}
+(44,1,1) = {"
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
+"}

@@ -8,7 +8,7 @@
 
 /obj/item/collector/examine(mob/user, distance, is_adjacent)
 	. = ..()
-	to_chat(user, SPAN_GOOD("Click with collector on object to capture."))
+	to_chat(user, SPAN_GOOD("Кликните коллектором на обьект для захвата."))
 
 
 /obj/item/collector/attack_hand(mob/user)

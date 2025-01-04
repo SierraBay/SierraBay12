@@ -22,6 +22,11 @@
 	var/in_scanning = FALSE
 	var/last_scan_time = 0
 	var/result_tesla = FALSE
+	//Круги обнаружения
+	var/start_garanted_detection_radius = 3 //Гарантированный радиус обнаружения присутствия аномалии
+	var/garanted_detection_per_skill = 2
+	var/start_chance_detection_radius = 4
+	var/chance_detection_per_skill = 4
 	//Некоторые детекторы могут вовсе не замечать некоторые аномалии. Укажите их теги, если потребутеся (Переменная anomaly_tag)
 	var/list/blacklisted_amomalies = list()
 
@@ -107,8 +112,7 @@
 	//Мы проверили, есть ли у пользователя базовый навык НАУКИ.
 	// Снижаем 1.2 секунды сканирования за каждый пункт науки у персонажа
 	var/user_science_lvl = user.get_skill_value(SKILL_SCIENCE)
-	var/time_to_scan = (20 - (2 * user_science_lvl)) SECONDS
-	var/scan_radius = (4 + user_science_lvl) //макс радиус - 9 "квадратов"
+	var/time_to_scan = (10 - (1 * user_science_lvl)) SECONDS
 	in_scanning = TRUE
 	update_icon()
 	usr.update_action_buttons()
@@ -117,6 +121,15 @@
 		update_icon()
 		usr.update_action_buttons()
 		//Время прошло, пользователь простоял нужное нам время.
+		//1.Расчитаем гарантированный круг обнаружения
+		//2.Расчитаем шансовый круг обнаружения
+		var/garant_radius = calculate_garanted_radius(user)
+		var/chance_radius = calculate_chance_radius(user)
+		var/scan_radius
+		if(chance_radius > garant_radius)
+			scan_radius = chance_radius
+		else
+			scan_radius = garant_radius
 		var/list/victims = list()
 		var/list/objs = list()
 		var/turf/T = get_turf(src)
@@ -124,19 +137,8 @@
 		//Собрали все обьекты рядом
 		//Список разрешённых для показа игроку аномалий
 		var/list/allowed_anomalies = list()
-		for(var/obj/anomaly/choosed_anomaly in objs)
-			//Если аномалия в блэклисте детектора - игнорируем аномалию
-			if(choosed_anomaly.anomaly_tag in blacklisted_amomalies)
-				continue
-			if(!choosed_anomaly.is_helper) //Вспомогательные части аномалий нас не интересуют
-				var/chance_to_find = (user_science_lvl * 20) - (100 - choosed_anomaly.chance_to_be_detected)
-				if(prob(chance_to_find))
-					LAZYADD(allowed_anomalies, choosed_anomaly) //Добавляем саму аномалию
-					//Если у неё есть вспомогательные части - добавляем её вспомогательные части
-					if(choosed_anomaly.multitile)
-						for(var/obj/anomaly/choosed_part in choosed_anomaly.list_of_parts)
-							LAZYADD(allowed_anomalies, choosed_part)
-		show_anomalies(user, time_to_scan, allowed_anomalies)
+		allowed_anomalies = calculate_allowed_anomalies(objs, garant_radius, user_science_lvl)
+		show_anomalies(user, 15 SECONDS, allowed_anomalies)
 		if(LAZYLEN(allowed_anomalies))
 			flick("detector_detected_anomalies", src)
 			usr.update_action_buttons()
@@ -145,7 +147,38 @@
 		update_icon()
 		usr.update_action_buttons()
 
+/obj/item/clothing/gloves/anomaly_detector/proc/calculate_allowed_anomalies(list/input_anomalies_list, garant_radius, user_science_lvl)
+	var/list/result_anomalies_list = list()
+	for(var/obj/anomaly/choosed_anomaly in input_anomalies_list)
+		//Если аномалия в блэклисте детектора - игнорируем аномалию
+		if(choosed_anomaly.anomaly_tag in blacklisted_amomalies)
+			continue
+		//Если в зоне гарант круга
+		if(get_dist(src, choosed_anomaly) <= garant_radius)
+			LAZYADD(result_anomalies_list, choosed_anomaly) //Добавляем саму аномалию
+		//Если у неё есть вспомогательные части - добавляем её вспомогательные части
+			if(choosed_anomaly.multitile)
+				for(var/obj/anomaly/choosed_part in choosed_anomaly.list_of_parts)
+					LAZYADD(result_anomalies_list, choosed_part)
+		//Если в зоне шансового круга
+		else
+			if(!choosed_anomaly.is_helper) //Вспомогательные части аномалий нас не интересуют
+				var/chance_to_find = (user_science_lvl * 20) - (100 - choosed_anomaly.chance_to_be_detected)
+				if(prob(chance_to_find))
+					LAZYADD(result_anomalies_list, choosed_anomaly) //Добавляем саму аномалию
+					//Если у неё есть вспомогательные части - добавляем её вспомогательные части
+					if(choosed_anomaly.multitile)
+						for(var/obj/anomaly/choosed_part in choosed_anomaly.list_of_parts)
+							LAZYADD(result_anomalies_list, choosed_part)
+	return result_anomalies_list
 
+/obj/item/clothing/gloves/anomaly_detector/proc/calculate_garanted_radius(mob/living/user)
+	var/skill_num = user.get_skill_value(SKILL_SCIENCE) - 1
+	return start_garanted_detection_radius + (garanted_detection_per_skill * skill_num)
+
+/obj/item/clothing/gloves/anomaly_detector/proc/calculate_chance_radius(mob/living/user)
+	var/skill_num = user.get_skill_value(SKILL_SCIENCE) - 1
+	return start_chance_detection_radius + (chance_detection_per_skill * skill_num)
 
 ///Показывает игроку аномалии, которые он обнаружил детектером
 /proc/show_anomalies(mob/living/viewer, flick_time, allowed_anomalies)
@@ -159,7 +192,7 @@
 		if(user_science_lvl >= in_turf_atom.detection_skill_req)
 			I = image(icon = 'mods/anomaly/icons/detection_icon.dmi',loc = T, icon_state = in_turf_atom.get_detection_icon())
 		else
-			I = image(icon = 'mods/anomaly/icons/detection_icon.dmi',loc = T, icon_state = in_turf_atom.detection_icon_state)
+			I = image(icon = 'mods/anomaly/icons/detection_icon.dmi',loc = T, icon_state = "any_anomaly")
 		I.layer = EFFECTS_ABOVE_LIGHTING_PLANE
 		list_of_showed_anomalies += I
 

@@ -3,18 +3,18 @@
 	desc = "A cluster of floating islands moving around an unknown object. WARNING: large gravity-anomalous activity detected. Extreme caution is required."
 	color = "#ebe3e3"
 	rock_colors = list(COLOR_WHITE)
-	can_spawn_anomalies = TRUE
-	anomalies_type = list(
-		/obj/anomaly/tramplin = 2,
-		/obj/anomaly/rvach/three_and_three = 1
+	//Большие артефакты
+	big_anomaly_artefacts_min_amount = 4
+	big_anomaly_artefacts_max_amount = 6
+	big_artefacts_types = list(
+		/obj/structure/big_artefact/gravi
 		)
+	big_artefacts_can_be_close = FALSE
+	big_artefacts_range_spawn = 30
+	//
 	possible_themes = list(
 		/datum/exoplanet_theme = 100
 		)
-	min_anomaly_size = 1
-	max_anomaly_size = 9
-	min_anomalies_ammout = 500
-	max_anomalies_ammout = 700
 	planetary_area = /area/exoplanet/flying
 	map_generators = list(/datum/random_map/noise/exoplanet/flying)
 	ruin_tags_blacklist = RUIN_HABITAT|RUIN_WATER|RUIN_HOT_ANOMALIES|RUIN_ELECTRA_ANOMALIES
@@ -60,8 +60,9 @@
 	//Основные изменения
 	for (var/datum/exoplanet_theme/T in themes)
 		T.after_map_generation(src)
-	if(can_spawn_anomalies)
-		generate_anomalies()
+	if(LAZYLEN(big_artefacts_types))
+		generate_big_anomaly_artefacts()
+	deploy_weather()
 	generate_landing(2)
 	update_biome()
 	generate_daycycle()

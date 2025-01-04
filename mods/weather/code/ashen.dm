@@ -1,5 +1,4 @@
 //Эффект вулкана WIP
-/obj/monitor_effect_triger/vulcan
+/obj/weather/ashen
 	icon_state = "light_storm"
-	icon = 'mods/anomaly/icons/weather_effects.dmi'
 	invisibility = FALSE
