@@ -2508,6 +2508,8 @@
 /obj/item/storage/bolt_bag/full_of_beacons,
 /obj/item/storage/bolt_bag/full_of_beacons,
 /obj/item/beacon_deployer/full,
+/obj/item/clothing/gloves/anomaly_detector/flux,
+/obj/item/clothing/gloves/anomaly_detector/flux,
 /turf/simulated/floor/tiled/skrell/red,
 /area/ship/skrellscoutship/crew/labs)
 "hR" = (
