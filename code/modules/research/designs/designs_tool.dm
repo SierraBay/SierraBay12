@@ -87,7 +87,7 @@
 	id = "oxycandle"
 	req_tech = list(TECH_ENGINEERING = 2)
 	materials = list(MATERIAL_STEEL = 3000)
-	chemicals = list(/datum/reagent/sodiumchloride = 20, /datum/reagent/acetone = 20)
+	//chemicals = list(/datum/reagent/sodiumchloride = 20, /datum/reagent/acetone = 20) [SIERRA-REMOVE]
 	build_path = /obj/item/device/oxycandle
 	sort_string = "VAGAJ"
 
