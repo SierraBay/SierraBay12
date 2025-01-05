@@ -5703,7 +5703,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/security/evidence)
 "alX" = (
-/obj/machinery/dnaforensics,
+/obj/machinery/computer/dnaforensics,
 /obj/structure/table/glass,
 /turf/simulated/floor/tiled/white,
 /area/security/detectives_office)
@@ -21639,7 +21639,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/machinery/microscope,
+/obj/machinery/computer/microscope,
 /turf/simulated/floor/tiled/white,
 /area/security/detectives_office)
 "lAb" = (

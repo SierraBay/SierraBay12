@@ -16242,7 +16242,7 @@
 /area/crew_quarters/heads/office/cmo)
 "dAo" = (
 /obj/structure/table/glass,
-/obj/machinery/microscope,
+/obj/machinery/computer/microscope,
 /obj/item/device/radio/intercom{
 	pixel_y = 26
 	},
@@ -22595,7 +22595,7 @@
 	},
 /turf/simulated/floor/tiled/dark)
 "eTl" = (
-/obj/machinery/dnaforensics,
+/obj/machinery/computer/dnaforensics,
 /obj/machinery/light{
 	dir = 1
 	},
