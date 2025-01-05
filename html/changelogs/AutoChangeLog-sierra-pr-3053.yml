@@ -1,6 +1,0 @@
-author: FeudeyTF
-changes:
-  - {tweak: 'Теперь можно выключить или включить NanoUI для меню входа в игру и манифеста
-      через настройки Character Setup (раздел Global, OOC, самый низ, Show NanoUI
-      interfaces int start menu)'}
-delete-after: true

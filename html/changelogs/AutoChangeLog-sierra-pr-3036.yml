@@ -1,4 +1,0 @@
-author: Shegar
-changes:
-  - {experiment: Добавлен DEV-mode в билд}
-delete-after: true
