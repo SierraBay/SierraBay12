@@ -14,7 +14,11 @@
 /atom/movable/renderer/scene_group/Initialize()
 	. = ..()
 	remove_filter("Grav Effect")
+	remove_filter("Warp Effect")
+
 	add_filter("Grav Effect", 5, displacement_map_filter(render_source = GRAV_EFFECT_TARGET, size = 3))
+	add_filter("Warp Effect", 6, displacement_map_filter(render_source = "*warp", size = 5))
+
 
 /obj/effect/gravity
 	plane = GRAV_EFFECT_PLANE
