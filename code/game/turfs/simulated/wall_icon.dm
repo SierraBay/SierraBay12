@@ -30,13 +30,6 @@
 	update_icon()
 	calculate_damage_data()
 
-/turf/simulated/wall/proc/paint_wall(new_paint_color)
-	paint_color = new_paint_color
-	update_icon()
-
-/turf/simulated/wall/proc/stripe_wall(new_paint_color)
-	stripe_color = new_paint_color
-	update_icon()
 
 /turf/simulated/wall/proc/set_material(material/newmaterial, material/newrmaterial)
 	material = newmaterial
@@ -67,13 +60,9 @@
 		I = image('icons/turf/wall_masks.dmi', "[material.wall_icon_base][wall_connections[i]]", dir = SHIFTL(1, i - 1))
 		I.color = base_color
 		AddOverlays(I)
-		if(paint_color)
-			I = image('icons/turf/wall_masks.dmi', "[material.wall_icon_base]_paint[wall_connections[i]]", dir = SHIFTL(1, i-1))
-			I.color = paint_color
-			AddOverlays(I)
-		if(stripe_color)
-			I = image('icons/turf/wall_masks.dmi', "[material.wall_icon_base]_stripe[wall_connections[i]]", dir = SHIFTL(1, i-1))
-			I.color = stripe_color
+		if(other_connections[i] != "0")
+			I = image('icons/turf/wall_masks.dmi', "[material.wall_icon_base]_other[wall_connections[i]]", dir = SHIFTL(1, i - 1))
+			I.color = base_color
 			AddOverlays(I)
 
 	if(reinf_material)
@@ -93,16 +82,17 @@
 				I = image('icons/turf/wall_masks.dmi', material.wall_icon_reinf)
 				I.color = reinf_color
 				AddOverlays(I)
-
-	if(material.wall_flags & MATERIAL_WALL_HAS_EDGES)
-		for(var/i = 1 to 4)
-			I = image('icons/turf/wall_masks.dmi', "[material.wall_icon_base]_other[other_connections[i]]", dir = SHIFTL(1, i-1))
-			I.color = stripe_color ? stripe_color : base_color
-			AddOverlays(I)
-
 	var/image/texture = material.get_wall_texture()
 	if(texture)
 		AddOverlays(texture)
+	if(stripe_color)
+		for(var/i = 1 to 4)
+			if(other_connections[i] != "0")
+				I = image('icons/turf/wall_masks.dmi', "stripe_other[wall_connections[i]]", dir = SHIFTL(1, i - 1))
+			else
+				I = image('icons/turf/wall_masks.dmi', "stripe[wall_connections[i]]", dir = SHIFTL(1, i - 1))
+			I.color = stripe_color
+			AddOverlays(I)
 
 	if(get_damage_value() != 0)
 		var/overlay = round((get_damage_percentage() / 100) * length(damage_overlays)) + 1
@@ -127,50 +117,47 @@
 	var/list/wall_dirs = list()
 	var/list/other_dirs = list()
 
-	for(var/stepdir in GLOB.alldirs)
-		var/turf/T = get_step(src, stepdir)
-		if(!T)
-			continue
-		if(istype(T, /turf/simulated/wall))
-			switch(can_join_with(T))
-				if(0)
-					continue
-				if(1)
-					wall_dirs += get_dir(src, T)
-				if(2)
-					wall_dirs += get_dir(src, T)
-					other_dirs += get_dir(src, T)
-			if(propagate)
-				var/turf/simulated/wall/W = T
-				W.update_connections()
-				W.update_icon()
+	for(var/turf/simulated/wall/W in orange(src, 1))
+		switch(can_join_with(W))
+			if(0)
+				continue
+			if(1)
+				wall_dirs += get_dir(src, W)
+			if(2)
+				wall_dirs += get_dir(src, W)
+				other_dirs += get_dir(src, W)
+		if(propagate)
+			W.update_connections()
+			W.update_icon()
+
+	for(var/turf/T in orange(src, 1))
 		var/success = 0
-		for(var/O in T)
-			for(var/b_type in GLOB.wall_blend_objects)
+		for(var/obj/O in T)
+			for(var/b_type in blend_objects)
 				if(istype(O, b_type))
-					success = TRUE
-					break
-			for(var/nb_type in GLOB.wall_noblend_objects)
-				if(istype(O, nb_type))
-					success = FALSE
+					success = 1
+				for(var/nb_type in noblend_objects)
+					if(istype(O, nb_type))
+						success = 0
+				if(success)
 					break
 			if(success)
-				wall_dirs += get_dir(src, T)
-				var/blendable = FALSE
-				for(var/fb_type in GLOB.wall_fullblend_objects)
-					if(istype(O, fb_type))
-						blendable = TRUE
-						break
-				if(!blendable)
-					other_dirs += get_dir(src, T)
 				break
-		wall_connections = dirs_to_corner_states(wall_dirs)
-		other_connections = dirs_to_corner_states(other_dirs)
+
+		if(success)
+			wall_dirs += get_dir(src, T)
+			if(get_dir(src, T) in GLOB.cardinal)
+				other_dirs += get_dir(src, T)
+
+	wall_connections = dirs_to_corner_states(wall_dirs)
+	other_connections = dirs_to_corner_states(other_dirs)
 
 /turf/simulated/wall/proc/can_join_with(turf/simulated/wall/W)
-	if(material && istype(W.material))
-		if(material.wall_blend_icons[W.material.wall_icon_base])
-			return 2
-		if(material.wall_icon_base == W.material.wall_icon_base)
+	if(material && W.material && material.wall_icon_base == W.material.wall_icon_base)
+		if((reinf_material && W.reinf_material) || (!reinf_material && !W.reinf_material))
 			return 1
+		return 2
+	for(var/wb_type in blend_turfs)
+		if(istype(W, wb_type))
+			return 2
 	return 0

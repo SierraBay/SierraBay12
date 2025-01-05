@@ -6,10 +6,6 @@
 	wall_icon_base = "solid"
 	door_icon_base = "plastic"
 	wall_icon_reinf = "reinf_over"
-	wall_blend_icons = list(
-		"wood" = TRUE,
-		"stone" = TRUE
-	)
 	icon_colour = COLOR_WHITE
 	hardness = MATERIAL_FLEXIBLE
 	weight = 5
@@ -40,11 +36,6 @@
 	sheet_icon_base = "sheet-card"
 	wall_icon_base = "solid"
 	wall_icon_reinf = "reinf_over"
-	wall_flags = MATERIAL_PAINTABLE_MAIN|MATERIAL_PAINTABLE_STRIPE|MATERIAL_WALL_HAS_EDGES
-	wall_blend_icons = list(
-		"wood" = TRUE,
-		"stone" = TRUE
-	)
 	icon_colour = "#aaaaaa"
 	hardness = MATERIAL_SOFT
 	brute_armor = 1
@@ -323,14 +314,6 @@
 	display_name = "organic material"
 	sheet_icon_base = "skin"
 	wall_icon_base = "cult"
-	wall_flags = EMPTY_BITFIELD
-	wall_blend_icons = list(
-		"solid" = TRUE,
-		"wood" = TRUE,
-		"metal" = TRUE,
-		"stone" = TRUE
-	)
-	wall_flags = EMPTY_BITFIELD
 	door_icon_base = "cult"
 	table_icon_base = "cult"
 	wall_icon_reinf = "reinf_cult"
