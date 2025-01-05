@@ -446,6 +446,10 @@
 "cN" = (
 /obj/wallframe_spawn/reinforced,
 /obj/paint/sun,
+/obj/machinery/door/blast/regular/open{
+	name = "Reactor Blast Doors";
+	id_tag = "hand_nuke"
+	},
 /turf/simulated/floor/plating,
 /area/ship/hand/maintenance/engine)
 "cQ" = (
@@ -2938,6 +2942,10 @@
 	icon_state = "0-8"
 	},
 /obj/floor_decal/industrial/warning/full,
+/obj/structure/sign/warning/vent_port{
+	dir = 1;
+	pixel_y = -36
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/hand/maintenance/engine)
 "pu" = (
@@ -4337,6 +4345,18 @@
 /obj/machinery/alarm{
 	pixel_y = 24;
 	req_access = list("ACCESS_HAND")
+	},
+/obj/machinery/button/blast_door{
+	pixel_x = -23;
+	name = "Reactor Emergensy Vent";
+	id_tag = "Hnreactor";
+	dir = 4;
+	pixel_y = -7;
+	desc = "Nuclear reactor emergency vent. Use in emergency only!"
+	},
+/obj/structure/sign/warning/vacuum{
+	dir = 4;
+	pixel_x = -43
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/ship/hand/maintenance/engine)
@@ -6148,6 +6168,10 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/door/blast/regular/open{
+	name = "Reactor Blast Doors";
+	id_tag = "hand_nuke"
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/hand/maintenance/engine)
 "Fy" = (
@@ -7043,6 +7067,10 @@
 	icon_state = "0-4"
 	},
 /obj/floor_decal/industrial/warning/full,
+/obj/structure/sign/warning/vent_port{
+	dir = 1;
+	pixel_y = -36
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/hand/maintenance/engine)
 "JI" = (
@@ -7317,6 +7345,13 @@
 /obj/structure/sign/warning/radioactive{
 	dir = 1;
 	pixel_y = -32
+	},
+/obj/machinery/button/blast_door{
+	pixel_x = -23;
+	name = "Reactor Blast Doors";
+	id_tag = "hand_nuke";
+	dir = 4;
+	pixel_y = -7
 	},
 /turf/simulated/floor/tiled/steel_grid,
 /area/ship/hand/engineering/hallway)

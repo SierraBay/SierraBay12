@@ -44,5 +44,9 @@
 #include "character_traits/_character_traits.dme"
 #include "failu_skrell_clothes/_failu_skrell_clothes.dme"
 #include "chemtweaks/_chemtweaks.dme"
+#include "diona/_diona.dme"
+#include "simplangs/simplangs.dme"
+#include "makeshift_sword_overhaul/makeshift_sword_overhaul.dme"
+#include "item_identification/_item_identification.dme"
 
 #include "../packs/sierra-tweaks/_pack.dm"

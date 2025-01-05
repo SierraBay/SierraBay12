@@ -119,6 +119,10 @@
 #define TURBGENG 0.8
 
 /obj/machinery/power/turbine/Process()
+//[SIERRA-ADD]
+	if(!compressor)
+		return
+//[SIERRA-ADD] Мод делать ради двух строк не хочу
 	if(!compressor.starter)
 		return
 	ClearOverlays()
