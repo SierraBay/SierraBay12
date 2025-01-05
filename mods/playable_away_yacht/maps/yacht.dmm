@@ -929,7 +929,7 @@
 /turf/simulated/floor/tiled/white,
 /area/playable_yacht/kitchen)
 "dl" = (
-/obj/item/material/kitchen/rollingpin,
+/obj/item/material/rollingpin,
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 4
 	},

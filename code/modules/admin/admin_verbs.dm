@@ -102,6 +102,7 @@ var/global/list/admin_verbs_admin = list(
 	/client/proc/check_fax_history,
 	/client/proc/cmd_admin_notarget,
 	/datum/admins/proc/SetRoundLength,
+	/datum/admins/proc/SetMaximumRoundLength,
 	/datum/admins/proc/ToggleContinueVote,
 	/datum/admins/proc/togglemoderequirementchecks,
 	/client/proc/delete_crew_record
@@ -133,7 +134,8 @@ var/global/list/admin_verbs_fun = list(
 	/client/proc/cmd_admin_simulate_distant_explosion,
 	/datum/admins/proc/ai_hologram_set,
 	/client/proc/bombard_zlevel,
-	/client/proc/rename_shuttle
+	/client/proc/rename_shuttle,
+	/client/proc/give_disease2 // [/SIERRA-ADD] - CLIENT_VERBS
 	)
 
 var/global/list/admin_verbs_spawn = list(

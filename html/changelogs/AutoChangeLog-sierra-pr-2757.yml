@@ -1,5 +1,0 @@
-author: Merlin1230
-changes:
-  - {bugfix: Chairs and beds return their construction cost when deconstructed}
-  - {tweak: Padded chairs now only cost 1 sheet to make}
-delete-after: true

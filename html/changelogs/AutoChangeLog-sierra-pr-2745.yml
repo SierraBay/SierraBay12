@@ -1,6 +1,0 @@
-author: Hubblenaut
-changes:
-  - {tweak: Pumps and valves are now hidden by catwalks.}
-  - {tweak: Mapped pumps and valves can be removed without having to pry off the floor
-      tile.}
-delete-after: true

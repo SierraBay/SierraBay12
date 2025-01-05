@@ -171,7 +171,7 @@
 	GLOB.moved_event.unregister(src, src, TYPE_PROC_REF(/obj/spider/spiderling, disturbed))
 	START_PROCESSING(SSobj, src)
 
-/obj/spider/spiderling/Bump(atom/user)
+/obj/spider/spiderling/Bump(atom/user, called)
 	if(istype(user, /obj/structure/table))
 		forceMove(user.loc)
 	else
@@ -294,7 +294,13 @@
 	icon_state = "greenshatter"
 	anchored = TRUE
 	layer = BLOOD_LAYER
-
+/obj/decal/cleanable/ling_vomit
+	name = "green goop"
+	desc = "Green squishy mess."
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "greenshatter"
+	anchored = TRUE
+	layer = BLOOD_LAYER
 /obj/spider/cocoon
 	name = "cocoon"
 	desc = "Something wrapped in silky spider web."

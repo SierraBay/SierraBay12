@@ -25,10 +25,18 @@
 	var/graffiti_style
 
 /obj/item/organ/external/head/proc/get_eye_overlay()
-	if(glowing_eyes && owner)
-		var/obj/item/organ/internal/eyes/eyes = owner.internal_organs_by_name[owner.species.vision_organ ? owner.species.vision_organ : BP_EYES]
-		if(eyes)
-			return eyes.get_special_overlay()
+	if (!glowing_eyes || !owner)
+		return
+
+	var/obj/item/organ/internal/eyes/eyes = owner.internal_organs_by_name[owner.species.vision_organ ? owner.species.vision_organ : BP_EYES]
+	if (!eyes)
+		return
+
+	for (var/obj/item/equipped as anything in owner.get_equipped_items())
+		if (HAS_FLAGS(equipped.body_parts_covered, EYES))
+			return
+
+	return eyes.get_special_overlay()
 
 /obj/item/organ/external/head/proc/get_eyes()
 	var/obj/item/organ/internal/eyes/eyes = owner.internal_organs_by_name[owner.species.vision_organ ? owner.species.vision_organ : BP_EYES]

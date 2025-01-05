@@ -1280,7 +1280,7 @@
 /area/ship/hand/crew/kitchen)
 "mK" = (
 /obj/structure/table/marble,
-/obj/item/material/kitchen/rollingpin{
+/obj/item/material/rollingpin{
 	pixel_x = -4;
 	pixel_y = 7
 	},

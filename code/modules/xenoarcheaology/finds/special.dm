@@ -221,5 +221,5 @@
 	else
 		STOP_PROCESSING(SSobj, src)
 
-/obj/shadow_wight/Bump(atom/obstacle)
+/obj/shadow_wight/Bump(atom/obstacle, called)
 	to_chat(obstacle, SPAN_WARNING("You feel a chill run down your spine!"))

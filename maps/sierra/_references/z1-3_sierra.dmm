@@ -22493,7 +22493,7 @@
 "eSf" = (
 /obj/floor_decal/corner/paleblue/mono,
 /obj/structure/table/marble,
-/obj/item/material/kitchen/rollingpin,
+/obj/item/material/rollingpin,
 /turf/simulated/floor/tiled/white/monotile,
 /area/crew_quarters/galley)
 "eSi" = (
@@ -88859,7 +88859,6 @@
 	},
 /obj/structure/table/steel,
 /obj/item/folder/yellow,
-/obj/item/paper/sierra/bsd,
 /obj/floor_decal/techfloor{
 	dir = 1
 	},

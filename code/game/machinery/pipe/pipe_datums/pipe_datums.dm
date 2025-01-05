@@ -1,5 +1,6 @@
-#define PIPE_STRAIGHT 2
-#define PIPE_BENT     5
+#define PIPE_STRAIGHT 1
+#define PIPE_BENT     9
+#define PIPE_CAP      1
 
 /datum/pipe/pipe_dispenser/simple
 	category = "Regular Pipes"
@@ -9,11 +10,13 @@
 	constructed_path = /obj/machinery/atmospherics/pipe/simple/hidden
 	pipe_class = PIPE_CLASS_BINARY
 
+
 /datum/pipe/pipe_dispenser/simple/straight
 	name = "a pipe fitting"
 	desc = "a straight pipe segment."
 	build_path = /obj/item/pipe
 	rotate_class = PIPE_ROTATE_TWODIR
+	placement_mode = PIPE_PLACEMENT_ORTHOGONAL
 
 /datum/pipe/pipe_dispenser/simple/bent
 	name = "bent pipe fitting"
@@ -21,6 +24,7 @@
 	build_path = /obj/item/pipe
 	dir = PIPE_BENT
 	rotate_class = PIPE_ROTATE_TWODIR
+	placement_mode = PIPE_PLACEMENT_DIAGONAL
 
 /datum/pipe/pipe_dispenser/simple/manifold
 	name = "pipe manifold fitting"
@@ -29,6 +33,7 @@
 	build_icon_state = "manifold"
 	constructed_path = /obj/machinery/atmospherics/pipe/manifold/hidden
 	pipe_class = PIPE_CLASS_TRINARY
+	placement_mode = PIPE_PLACEMENT_ORTHOGONAL
 
 /datum/pipe/pipe_dispenser/simple/manifold4w
 	name = "four-way pipe manifold fitting"
@@ -43,9 +48,11 @@
 	name = "pipe cap fitting"
 	desc = "a pipe cap for a regular pipe."
 	build_path = /obj/item/pipe
+	dir = PIPE_CAP
 	build_icon_state = "cap"
 	constructed_path = /obj/machinery/atmospherics/pipe/cap/hidden
 	pipe_class = PIPE_CLASS_UNARY
+	placement_mode = PIPE_PLACEMENT_ORTHOGONAL
 
 /datum/pipe/pipe_dispenser/simple/up
 	name = "upward pipe fitting"
@@ -53,7 +60,9 @@
 	build_path = /obj/item/pipe
 	build_icon = 'icons/obj/structures/structures.dmi'
 	build_icon_state = "up"
+	dir = PIPE_CAP
 	constructed_path = /obj/machinery/atmospherics/pipe/zpipe/up
+	placement_mode = PIPE_PLACEMENT_ORTHOGONAL
 
 /datum/pipe/pipe_dispenser/simple/down
 	name = "downward pipe fitting"
@@ -61,7 +70,9 @@
 	build_path = /obj/item/pipe
 	build_icon = 'icons/obj/structures/structures.dmi'
 	build_icon_state = "down"
+	dir = PIPE_CAP
 	constructed_path = /obj/machinery/atmospherics/pipe/zpipe/down
+	placement_mode = PIPE_PLACEMENT_ORTHOGONAL
 
 /datum/pipe/pipe_dispenser/simple/autoshutoff
 	name = "automatic shutoff valve"
@@ -87,6 +98,7 @@
 	desc = "a straight supply pipe segment."
 	build_path = /obj/item/pipe
 	rotate_class = PIPE_ROTATE_TWODIR
+	placement_mode = PIPE_PLACEMENT_ORTHOGONAL
 
 /datum/pipe/pipe_dispenser/supply/bent
 	name = "bent supply pipe fitting"
@@ -94,6 +106,7 @@
 	build_path = /obj/item/pipe
 	dir = PIPE_BENT
 	rotate_class = PIPE_ROTATE_TWODIR
+	placement_mode = PIPE_PLACEMENT_DIAGONAL
 
 /datum/pipe/pipe_dispenser/supply/manifold
 	name = "supply pipe manifold fitting"
@@ -102,6 +115,7 @@
 	build_icon_state = "manifold"
 	constructed_path = /obj/machinery/atmospherics/pipe/manifold/hidden/supply
 	pipe_class = PIPE_CLASS_TRINARY
+	placement_mode = PIPE_PLACEMENT_ORTHOGONAL
 
 /datum/pipe/pipe_dispenser/supply/manifold4w
 	name = "four-way supply pipe manifold fitting"
@@ -116,6 +130,7 @@
 	name = "supply pipe cap fitting"
 	desc = "a pipe cap for a regular pipe."
 	build_path = /obj/item/pipe
+	dir = PIPE_CAP
 	build_icon_state = "cap"
 	constructed_path = /obj/machinery/atmospherics/pipe/cap/hidden/supply
 	pipe_class = PIPE_CLASS_UNARY
@@ -126,6 +141,7 @@
 	build_path = /obj/item/pipe
 	build_icon = 'icons/obj/structures/structures.dmi'
 	build_icon_state = "up"
+	dir = PIPE_CAP
 	constructed_path = /obj/machinery/atmospherics/pipe/zpipe/up/supply
 
 /datum/pipe/pipe_dispenser/supply/down
@@ -134,6 +150,7 @@
 	build_path = /obj/item/pipe
 	build_icon = 'icons/obj/structures/structures.dmi'
 	build_icon_state = "down"
+	dir = PIPE_CAP
 	constructed_path = /obj/machinery/atmospherics/pipe/zpipe/down/supply
 
 /datum/pipe/pipe_dispenser/supply/autoshutoff
@@ -160,6 +177,7 @@
 	desc = "a straight scrubber pipe segment"
 	build_path = /obj/item/pipe
 	rotate_class = PIPE_ROTATE_TWODIR
+	placement_mode = PIPE_PLACEMENT_ORTHOGONAL
 
 /datum/pipe/pipe_dispenser/scrubber/bent
 	name = "bent scrubber pipe fitting"
@@ -167,6 +185,7 @@
 	build_path = /obj/item/pipe
 	rotate_class = PIPE_ROTATE_TWODIR
 	dir = PIPE_BENT
+	placement_mode = PIPE_PLACEMENT_DIAGONAL
 
 /datum/pipe/pipe_dispenser/scrubber/manifold
 	name = "scrubber pipe manifold fitting"
@@ -175,6 +194,7 @@
 	build_icon_state = "manifold"
 	constructed_path = /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers
 	pipe_class = PIPE_CLASS_TRINARY
+	placement_mode = PIPE_PLACEMENT_ORTHOGONAL
 
 /datum/pipe/pipe_dispenser/scrubber/manifold4w
 	name = "four-way scrubber pipe manifold fitting"
@@ -189,6 +209,7 @@
 	name = "scrubber pipe cap fitting"
 	desc = "a pipe cap for a scrubber pipe."
 	build_path = /obj/item/pipe
+	dir = PIPE_CAP
 	build_icon_state = "cap"
 	constructed_path = /obj/machinery/atmospherics/pipe/cap/hidden/scrubbers
 
@@ -198,6 +219,7 @@
 	build_path = /obj/item/pipe
 	build_icon = 'icons/obj/structures/structures.dmi'
 	build_icon_state = "up"
+	dir = PIPE_CAP
 	constructed_path = /obj/machinery/atmospherics/pipe/zpipe/up/scrubbers
 
 /datum/pipe/pipe_dispenser/scrubber/down
@@ -206,6 +228,7 @@
 	build_path = /obj/item/pipe
 	build_icon = 'icons/obj/structures/structures.dmi'
 	build_icon_state = "down"
+	dir = PIPE_CAP
 	constructed_path = /obj/machinery/atmospherics/pipe/zpipe/down/scrubbers
 
 /datum/pipe/pipe_dispenser/scrubber/autoshutoff
@@ -232,6 +255,7 @@
 	desc = "a striaght fuel pipe segment"
 	build_path = /obj/item/pipe
 	rotate_class = PIPE_ROTATE_TWODIR
+	placement_mode = PIPE_PLACEMENT_ORTHOGONAL
 
 /datum/pipe/pipe_dispenser/fuel/bent
 	name = "bent fuel pipe fitting"
@@ -239,6 +263,7 @@
 	build_path = /obj/item/pipe
 	rotate_class = PIPE_ROTATE_TWODIR
 	dir = PIPE_BENT
+	placement_mode = PIPE_PLACEMENT_DIAGONAL
 
 /datum/pipe/pipe_dispenser/fuel/manifold
 	name = "fuel pipe manifold fitting"
@@ -247,6 +272,7 @@
 	build_icon_state = "manifold"
 	constructed_path = /obj/machinery/atmospherics/pipe/manifold/hidden/fuel
 	pipe_class = PIPE_CLASS_TRINARY
+	placement_mode = PIPE_PLACEMENT_ORTHOGONAL
 
 /datum/pipe/pipe_dispenser/fuel/manifold4w
 	name = "four-way supply pipe manifold fitting"
@@ -261,6 +287,7 @@
 	name = "fuel pipe cap fitting"
 	desc = "a pipe cap for a fuel pipe."
 	build_path = /obj/item/pipe
+	dir = PIPE_CAP
 	build_icon_state = "cap"
 	constructed_path = /obj/machinery/atmospherics/pipe/cap/hidden/fuel
 	pipe_class = PIPE_CLASS_UNARY
@@ -271,6 +298,7 @@
 	build_path = /obj/item/pipe
 	build_icon = 'icons/obj/structures/structures.dmi'
 	build_icon_state = "up"
+	dir = PIPE_CAP
 	constructed_path = /obj/machinery/atmospherics/pipe/zpipe/up/fuel
 
 /datum/pipe/pipe_dispenser/fuel/down
@@ -279,6 +307,7 @@
 	build_path = /obj/item/pipe
 	build_icon = 'icons/obj/structures/structures.dmi'
 	build_icon_state = "down"
+	dir = PIPE_CAP
 	constructed_path = /obj/machinery/atmospherics/pipe/zpipe/down/fuel
 
 /datum/pipe/pipe_dispenser/fuel/autoshutoff
@@ -314,6 +343,7 @@
 	rotate_class = PIPE_ROTATE_TWODIR
 	build_icon_state = "he"
 	dir = PIPE_BENT
+	placement_mode = PIPE_PLACEMENT_DIAGONAL
 
 /datum/pipe/pipe_dispenser/he/junction
 	name = "heat exchanger junction"

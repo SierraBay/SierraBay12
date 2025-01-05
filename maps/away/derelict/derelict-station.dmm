@@ -960,7 +960,7 @@
 /area/constructionsite/hallway/fore)
 "dc" = (
 /obj/structure/table/marble,
-/obj/item/material/kitchen/rollingpin,
+/obj/item/material/rollingpin,
 /turf/simulated/floor,
 /area/constructionsite/hallway/fore)
 "dd" = (
