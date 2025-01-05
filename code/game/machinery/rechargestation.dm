@@ -48,10 +48,12 @@
 		return
 
 	// If we have repair capabilities, repair any damage.
-	if(weld_rate && occupant.getBruteLoss())
+	//if(weld_rate && occupant.getBruteLoss()) //SIERRA-REMOVE
+	if(weld_rate) //SIERRA-ADD
 		var/repair = weld_rate - use_power_oneoff(weld_power_use * weld_rate, LOCAL) / weld_power_use
 		occupant.adjustBruteLoss(-repair)
-	if(wire_rate && occupant.getFireLoss())
+	//if(wire_rate && occupant.getFireLoss()) //SIERRA-REMOVE
+	if(wire_rate) //SIERRA-ADD
 		var/repair = wire_rate - use_power_oneoff(wire_power_use * wire_rate, LOCAL) / wire_power_use
 		occupant.adjustFireLoss(-repair)
 

@@ -325,8 +325,13 @@ In most cases it makes more sense to use apply_damage() instead! And make sure t
 
 		var/brute_was = picked.brute_dam
 		var/burn_was = picked.burn_dam
-
-		picked.heal_damage(brute,burn)
+//[SIERRA-ADD] to heal damaged robotic organs
+		var/organ_type = 0
+		if(picked.status & ORGAN_ROBOTIC)
+			organ_type = 1
+//[/SIERRA-ADD]
+		//picked.heal_damage(brute,burn)//[/SIERRA-REMOVE]
+		picked.heal_damage(brute,burn,0, organ_type)//[/SIERRA-ADD]
 
 		brute -= (brute_was-picked.brute_dam)
 		burn -= (burn_was-picked.burn_dam)
