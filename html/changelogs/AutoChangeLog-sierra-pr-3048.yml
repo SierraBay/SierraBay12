@@ -1,6 +1,0 @@
-author: Builder13
-changes:
-  - {tweak: Верб Inspect теперь изначально скрыт. Для его активации нужно нажать IC>Inspect.
-      Чтобы вновь скрыть - IC>Hide Inspect. Верб изначально не скрыт для СБ или при
-      проставленном скилле Forensics.}
-delete-after: true
