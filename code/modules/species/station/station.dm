@@ -81,6 +81,8 @@
 		/singleton/emote/exertion/synthetic/creak
 	)
 
+	show_age_to_other_species = TRUE
+
 /datum/species/human/get_bodytype(mob/living/carbon/human/H)
 	return SPECIES_HUMAN
 

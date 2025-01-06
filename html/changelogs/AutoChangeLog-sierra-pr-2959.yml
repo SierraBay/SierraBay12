@@ -1,5 +1,0 @@
-author: Sbotkin
-changes:
-  - {rscdel: "Removed the cyborgification contract from the report editor. It's illegal,
-      btw."}
-delete-after: true

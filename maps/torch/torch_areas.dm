@@ -933,6 +933,7 @@
 /area/rnd/development
 	name = "\improper Fabricator Lab"
 	icon_state = "devlab"
+	req_access = list(access_fabrication)
 
 /area/rnd/office
 	name = "\improper Research Paperwork Office"
