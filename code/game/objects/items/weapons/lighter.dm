@@ -12,6 +12,7 @@
 	var/max_fuel = 5
 	var/random_colour = FALSE
 	var/available_colors = list(COLOR_WHITE, COLOR_BLUE_GRAY, COLOR_GREEN_GRAY, COLOR_BOTTLE_GREEN, COLOR_DARK_GRAY, COLOR_RED_GRAY, COLOR_GUNMETAL, COLOR_RED, COLOR_YELLOW, COLOR_CYAN, COLOR_GREEN, COLOR_VIOLET, COLOR_NAVY_BLUE, COLOR_PINK)
+	var/fail_chance = 25
 
 /obj/item/flame/lighter/Initialize()
 	. = ..()
@@ -26,11 +27,26 @@
 	if(submerged())
 		to_chat(user, SPAN_WARNING("You cannot light \the [src] underwater."))
 		return
+	if (fail_light(user))
+		return
 	lit = 1
 	update_icon()
 	light_effects(user)
 	set_light(2, l_color = COLOR_PALE_ORANGE)
 	START_PROCESSING(SSobj, src)
+
+/obj/item/flame/lighter/proc/fail_light(mob/user)
+	if (prob(fail_chance))
+		user.visible_message(
+			SPAN_ITALIC("\The [user] fails to light \the [src]."),
+			SPAN_WARNING("You have failed to light \the [src]. Try again!")
+		)
+
+		playsound(src.loc, "light_bic", 70, TRUE, -4)
+
+		return TRUE
+
+	return FALSE
 
 /obj/item/flame/lighter/proc/light_effects(mob/living/carbon/user)
 	if(prob(95))

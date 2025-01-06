@@ -110,7 +110,7 @@
 <p>3. Ensure to keep a check on your subordinates. The security crew is essential to the operations of the vessel. Fleet quick reaction forces will be on stand-by in case extra equipment is required.</p>
 <p>4. In case of extreme breaches of the SCUJ (Sol Code of Uniform Justice), field court martials are <strong>henceforth encouraged</strong>. Permanant brigging and transfer of uniformed personnel may not be possible at all times.</p>
 <p>5. Infractions caused by positronics (especially owned by the state), if any, must be scrutinised heavily. While damage to positronics is <strong>discouraged</strong>; psychiatric and mechanical evaluations of such units are to be conducted in co-operation with the <strong>Chief Medical Officer</strong> and <strong>Chief Engineer</strong>.
-<p>6. Ensure security personnel attached to away-teams are equipped to handle synthetic threats.</p>
+<p>6. Ensure security personnel attached to away-teams are equipped to handle synthetic threats. <b>Be aware it has been demonstrated EMP and ion weaponry are not effected against legion units.</b></p>
 <p>It is important for you to assume an emergent state of distress if the need arises, until you reach your intended destination. Further guidelines and orders to follow beyond that point.</p>
 <p>Crucially, your senior enlisted will be essential in these trying times. Try to keep them close.</p>
 <hr />
@@ -168,7 +168,7 @@
 <p><tt><tt><strong>FROM:</strong> Lieutenant Vasco Espueza, SCGEC Observatory<br /><strong>TO:</strong> Expeditionary Corps Vessel #3, SEV Torch<br /><strong>CC:</strong> Admiral William Henry Lau, Observatory <br /><strong>SUBJECT:</strong> First Contact and Anomalies<br /></tt></tt></p>
 <hr />
 <p>Good day.</p>
-<p>With the emergent need for a stronger solution to synthetic threats. It is <strong>authorised</strong> and <strong>highly encouraged</strong> to retain, study and utilise any anomalies exhibiting ionic properties.</p>
+<p>With the emergent need for a stronger solution to synthetic threats. It is <strong>authorised</strong> and <strong>highly encouraged</strong> to retain, study and utilise any anomalies exhibiting ionic properties. <b>Note that so far, legion units have proven immune to current EMP and ion weaponry.</b></p>
 <p>Fleet cargo vessels will be authorised to carry anomalies from research sites, for studies aboard your vessel. Ensure a communique is sent to EXCOM for relay. Supply and logistics will be handled as needed.</p>
 <p>Ensure that your research and exploration personnel are kept in top mental integrities at all times, as first contact procedures - especially hostile - are strongly draining on the psyche.</p>
 <p>Regular evaluation of personnel is recommended, in co-operation with the <strong>Chief Medical Officer</strong>.
