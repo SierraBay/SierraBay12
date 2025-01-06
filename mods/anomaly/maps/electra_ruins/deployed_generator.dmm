@@ -1,18 +1,4 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"ao" = (
-/obj/structure/aurora/informative/old_computer,
-/obj/floor_decal/snow,
-/turf/simulated/floor,
-/area/map_template/deployed_generator)
-"bm" = (
-/obj/structure/aurora/cable,
-/obj/item/stack/material/rods,
-/turf/simulated/floor/exoplanet/snow,
-/area/template_noop)
-"bv" = (
-/obj/decal/cleanable/generic,
-/turf/simulated/floor/exoplanet/snow,
-/area/template_noop)
 "bT" = (
 /turf/simulated/wall/titanium,
 /area/map_template/deployed_generator)
@@ -22,77 +8,15 @@
 	},
 /turf/template_noop,
 /area/template_noop)
-"cN" = (
-/obj/structure/aurora/wall_light{
-	dir = 1
-	},
-/obj/floor_decal/snow,
-/turf/simulated/floor/tiled/techmaint,
-/area/map_template/deployed_generator)
-"da" = (
-/obj/structure/aurora/nav_light,
-/turf/simulated/floor/exoplanet/snow,
-/area/template_noop)
-"gY" = (
-/obj/structure/grille/broken,
-/obj/item/stack/material/rods,
-/turf/simulated/floor/exoplanet/snow,
-/area/template_noop)
-"jq" = (
-/obj/floor_decal/snow,
-/turf/simulated/floor/tiled/techmaint,
-/area/map_template/deployed_generator)
-"mr" = (
-/obj/decal/cleanable/generic,
-/obj/item/stack/material/rods,
-/obj/floor_decal/snow,
-/turf/simulated/floor/tiled/techmaint,
-/area/map_template/deployed_generator)
-"nM" = (
-/obj/structure/aurora/cable,
-/obj/item/stack/material/rods,
-/turf/simulated/floor/tiled/techmaint,
-/area/map_template/deployed_generator)
 "of" = (
 /obj/structure/aurora/wall_light{
 	dir = 4
 	},
 /turf/template_noop,
 /area/template_noop)
-"pf" = (
-/obj/structure/aurora/smes,
-/turf/simulated/floor/exoplanet/snow,
-/area/map_template/deployed_generator)
-"pw" = (
-/obj/structure/aurora/cable,
-/obj/decal/cleanable/generic,
-/turf/simulated/floor/exoplanet/snow,
-/area/template_noop)
-"pE" = (
-/obj/structure/aurora/wall_light,
-/turf/simulated/floor/exoplanet/snow,
-/area/template_noop)
-"rk" = (
-/turf/simulated/wall/titanium,
-/area/template_noop)
-"sI" = (
-/obj/structure/aurora/smes,
-/obj/floor_decal/snow,
-/turf/simulated/floor,
-/area/map_template/deployed_generator)
-"tR" = (
-/obj/decal/cleanable/generic,
-/obj/item/stack/material/rods,
-/turf/simulated/floor/exoplanet/snow,
-/area/template_noop)
 "wQ" = (
 /turf/template_noop,
 /area/template_noop)
-"yx" = (
-/obj/structure/aurora/cable,
-/obj/floor_decal/snow,
-/turf/simulated/floor/tiled/techmaint,
-/area/map_template/deployed_generator)
 "Ar" = (
 /obj/structure/droppod_door{
 	dir = 4
@@ -106,14 +30,6 @@
 /obj/structure/aurora/cable,
 /turf/simulated/floor,
 /area/map_template/deployed_generator)
-"AN" = (
-/obj/item/stack/material/rods,
-/turf/simulated/floor/tiled/techmaint,
-/area/map_template/deployed_generator)
-"BA" = (
-/obj/structure/aurora/wall_light,
-/turf/template_noop,
-/area/template_noop)
 "FR" = (
 /obj/structure/aurora/smes,
 /turf/simulated/floor,
@@ -124,14 +40,6 @@
 	},
 /turf/simulated/floor/tiled/techmaint,
 /area/map_template/deployed_generator)
-"Gt" = (
-/turf/simulated/floor/exoplanet/snow,
-/area/template_noop)
-"Is" = (
-/obj/structure/girder/displaced,
-/obj/item/stack/material/rods,
-/turf/simulated/floor/exoplanet/snow,
-/area/template_noop)
 "KJ" = (
 /obj/structure/aurora/nav_light,
 /obj/floor_decal/snow,
@@ -170,14 +78,11 @@
 "Qn" = (
 /turf/simulated/floor/tiled/techmaint,
 /area/map_template/deployed_generator)
-"Qu" = (
-/obj/structure/grille/broken,
-/turf/simulated/floor/exoplanet/snow,
-/area/template_noop)
 "Vn" = (
-/obj/decal/cleanable/generic,
-/turf/simulated/floor/tiled/techmaint,
-/area/map_template/deployed_generator)
+/obj/floor_decal/snow,
+/obj/floor_decal/snow,
+/turf/simulated/floor,
+/area/template_noop)
 "VD" = (
 /obj/structure/aurora/wall_light,
 /turf/simulated/floor/tiled/techmaint,
@@ -193,172 +98,27 @@
 /area/map_template/deployed_generator)
 
 (1,1,1) = {"
+Vn
+Na
+of
 wQ
 wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
+of
+Na
+KJ
 "}
 (2,1,1) = {"
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
+Na
+bT
+bT
+Ar
+Ar
+bT
+bT
+Na
 "}
 (3,1,1) = {"
 wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-"}
-(4,1,1) = {"
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-"}
-(5,1,1) = {"
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-"}
-(6,1,1) = {"
-wQ
-KJ
-Na
-of
-wQ
-wQ
-of
-Na
-KJ
-wQ
-wQ
-KJ
-Na
-of
-wQ
-wQ
-of
-Na
-KJ
-wQ
-"}
-(7,1,1) = {"
-wQ
-Na
-bT
-bT
-Ar
-Ar
-bT
-bT
-Na
-wQ
-wQ
-Na
-bT
-bT
-Ar
-Ar
-bT
-bT
-Na
-wQ
-"}
-(8,1,1) = {"
-wQ
-BA
-bT
-cN
-Qn
-AN
-VD
-bT
-MO
-wQ
-wQ
-BA
 bT
 FT
 Qn
@@ -366,20 +126,8 @@ Qn
 VD
 bT
 MO
-wQ
 "}
-(9,1,1) = {"
-wQ
-wQ
-Qu
-mr
-FR
-FR
-Vn
-Qf
-wQ
-wQ
-wQ
+(4,1,1) = {"
 wQ
 Lp
 Qn
@@ -388,20 +136,8 @@ FR
 Qn
 Qf
 wQ
-wQ
 "}
-(10,1,1) = {"
-wQ
-wQ
-bm
-yx
-sI
-FR
-XD
-Xr
-wQ
-wQ
-wQ
+(5,1,1) = {"
 wQ
 AM
 XD
@@ -410,20 +146,8 @@ FR
 XD
 Xr
 wQ
-wQ
 "}
-(11,1,1) = {"
-wQ
-wQ
-Qu
-pw
-sI
-sI
-nM
-Qf
-wQ
-wQ
-wQ
+(6,1,1) = {"
 wQ
 Lp
 XD
@@ -432,20 +156,8 @@ FR
 XD
 Qf
 wQ
-wQ
 "}
-(12,1,1) = {"
-wQ
-wQ
-tR
-Gt
-pf
-ao
-jq
-Qf
-wQ
-wQ
-wQ
+(7,1,1) = {"
 wQ
 Lp
 Qn
@@ -454,21 +166,9 @@ Lr
 Qn
 Qf
 wQ
-wQ
 "}
-(13,1,1) = {"
+(8,1,1) = {"
 wQ
-wQ
-Is
-bv
-Gt
-bv
-pE
-bT
-MO
-wQ
-wQ
-BA
 bT
 FT
 Qn
@@ -476,20 +176,8 @@ Qn
 VD
 bT
 MO
-wQ
 "}
-(14,1,1) = {"
-wQ
-bv
-Gt
-gY
-Qu
-Qu
-tR
-rk
-Na
-wQ
-wQ
+(9,1,1) = {"
 Na
 bT
 bT
@@ -498,21 +186,9 @@ OR
 bT
 bT
 Na
-wQ
 "}
-(15,1,1) = {"
-wQ
-da
-tR
-wQ
-wQ
-wQ
-wQ
-tR
-KJ
-wQ
-wQ
-KJ
+(10,1,1) = {"
+Na
 Na
 cg
 wQ
@@ -520,115 +196,4 @@ wQ
 cg
 Na
 KJ
-wQ
-"}
-(16,1,1) = {"
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-"}
-(17,1,1) = {"
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-"}
-(18,1,1) = {"
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-"}
-(19,1,1) = {"
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-"}
-(20,1,1) = {"
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
 "}
