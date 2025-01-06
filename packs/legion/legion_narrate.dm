@@ -41,7 +41,7 @@
 	var/message_origin = ""
 	var/message_contents
 	// Choose a message to display
-	if (rand(0, 100) <= 20)
+	if (rand(0, 100) <= 30)
 		if (!length(GLOB.legion_last_words_player) || rand(0, 1))
 			message_contents = "A voice rises above the chorus, \"[pick(GLOB.legion_last_words_generic)]\""
 			message = message_contents
