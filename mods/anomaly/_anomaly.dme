@@ -98,8 +98,8 @@
 #include "maps\electra_ruins\electra_ruins.dm"
 #include "maps\zharka_ruins\zharka_ruins.dm"
 #include "maps\electra_ruins\garage.dm"
-#include "maps\electra_ruins\bunker.dm"
-//#include "maps\electra_ruins\deployed_generator.dm"
+//#include "maps\electra_ruins\bunker.dm"
+#include "maps\electra_ruins\deployed_generator.dm"
 //Код островов
 #include "maps\flying_islands\flying_island.dm"
 #include "maps\flying_islands\flying_island_ball.dm"
