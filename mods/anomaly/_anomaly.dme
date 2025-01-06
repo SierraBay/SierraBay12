@@ -74,6 +74,7 @@
 #include "code\detectors_and_etc\rig_detector.dm"
 #include "code\detectors_and_etc\flux_detector.dm"
 
+#include "code\anomalies\anomaly_teamplay.dm" //Помощь игрокам друг другу в аномалии
 
 //Размещение аномалий в игре
 #include "code\spawn_anomalies_protocol\core_spawn_protocol.dm"
