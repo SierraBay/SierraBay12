@@ -95,9 +95,9 @@
 #include "code\spawn_anomalies_protocol\planet_spawn_protocol\another_planets.dm"
 
 //Карты, диреликты и прочее
-//#include "maps\electra_ruins\electra_ruins.dm"
-//#include "maps\zharka_ruins\zharka_ruins.dm"
-//#include "maps\electra_ruins\garage.dm"
+#include "maps\electra_ruins\electra_ruins.dm"
+#include "maps\zharka_ruins\zharka_ruins.dm"
+#include "maps\electra_ruins\garage.dm"
 //#include "maps\electra_ruins\bunker.dm"
 //#include "maps\electra_ruins\deployed_generator.dm"
 //Код островов
