@@ -37,6 +37,13 @@
 "cg" = (
 /turf/simulated/wall/titanium,
 /area/map_template/bunker)
+"dj" = (
+/obj/structure/rubble/house,
+/obj/random/trash,
+/obj/item/stack/material/rods,
+/obj/floor_decal/snow,
+/turf/simulated/floor/holofloor/tiled,
+/area/template_noop)
 "eb" = (
 /obj/structure/hygiene/sink{
 	pixel_y = -12
@@ -49,6 +56,7 @@
 /area/map_template/bunker)
 "fn" = (
 /obj/machinery/vending/tool,
+/obj/floor_decal/snow,
 /turf/simulated/floor/holofloor/tiled,
 /area/map_template/bunker)
 "fr" = (
@@ -94,6 +102,7 @@
 /area/map_template/bunker)
 "lN" = (
 /obj/machinery/constructable_frame,
+/obj/floor_decal/snow,
 /turf/simulated/floor/holofloor/tiled,
 /area/template_noop)
 "lO" = (
@@ -105,6 +114,7 @@
 /obj/random/loot,
 /obj/random/loot,
 /obj/random/loot,
+/obj/floor_decal/snow,
 /turf/simulated/floor/holofloor/tiled,
 /area/template_noop)
 "lS" = (
@@ -117,6 +127,7 @@
 /area/map_template/bunker)
 "mb" = (
 /obj/random/trash,
+/obj/floor_decal/snow,
 /turf/simulated/floor/holofloor/tiled,
 /area/template_noop)
 "op" = (
@@ -126,6 +137,7 @@
 /obj/machinery/vending/engineering{
 	req_access = list()
 	},
+/obj/floor_decal/snow,
 /turf/simulated/floor/holofloor/tiled,
 /area/map_template/bunker)
 "oS" = (
@@ -190,6 +202,7 @@
 /area/map_template/bunker)
 "vR" = (
 /obj/structure/broken_door,
+/obj/floor_decal/snow,
 /turf/simulated/floor/holofloor/tiled,
 /area/map_template/bunker)
 "vW" = (
@@ -207,6 +220,7 @@
 /obj/random/loot,
 /obj/random/loot,
 /obj/random/loot,
+/obj/floor_decal/snow,
 /turf/simulated/floor/holofloor/tiled,
 /area/template_noop)
 "wv" = (
@@ -222,6 +236,12 @@
 	},
 /turf/simulated/floor/holofloor/tiled,
 /area/map_template/bunker)
+"wM" = (
+/obj/structure/rubble/house,
+/obj/random/trash,
+/obj/floor_decal/snow,
+/turf/simulated/floor/holofloor/tiled,
+/area/template_noop)
 "wQ" = (
 /turf/template_noop,
 /area/template_noop)
@@ -262,8 +282,15 @@
 /obj/structure/aurora/wall_light{
 	dir = 1
 	},
+/obj/floor_decal/snow,
 /turf/simulated/floor/tiled/techmaint,
 /area/map_template/bunker)
+"Dr" = (
+/obj/structure/rubble/house,
+/obj/decal/cleanable/generic,
+/obj/floor_decal/snow,
+/turf/simulated/floor/holofloor/tiled,
+/area/template_noop)
 "Ek" = (
 /obj/machinery/door/blast/regular,
 /obj/structure/broken_door,
@@ -372,8 +399,14 @@
 "TO" = (
 /obj/machinery/door/blast/regular/open,
 /obj/structure/broken_door,
+/obj/floor_decal/snow,
 /turf/simulated/floor/tiled/techmaint,
 /area/map_template/bunker)
+"Vd" = (
+/obj/structure/rubble/house,
+/obj/floor_decal/snow,
+/turf/simulated/floor/holofloor/tiled,
+/area/template_noop)
 "Vi" = (
 /obj/structure/table/steel_reinforced,
 /obj/structure/aurora/wall_light{
@@ -385,6 +418,7 @@
 /obj/machinery/stasis_cage{
 	req_access = list()
 	},
+/obj/floor_decal/snow,
 /turf/simulated/floor/holofloor/tiled,
 /area/template_noop)
 "XD" = (
@@ -400,6 +434,10 @@
 	pixel_y = -12
 	},
 /obj/item/clothing/glasses/science,
+/turf/simulated/floor/holofloor/tiled,
+/area/map_template/bunker)
+"Yv" = (
+/obj/floor_decal/snow,
 /turf/simulated/floor/holofloor/tiled,
 /area/map_template/bunker)
 "YK" = (
@@ -1156,8 +1194,8 @@ wQ
 ZL
 ZL
 fH
-xJ
-Hk
+Vd
+Dr
 xJ
 qc
 cg
@@ -1171,7 +1209,7 @@ ZL
 hq
 ZL
 ZL
-AB
+Yv
 AB
 cg
 cg
@@ -1200,7 +1238,7 @@ wQ
 ZL
 YK
 ZL
-Gy
+dj
 xJ
 Hk
 IS
@@ -1211,10 +1249,10 @@ Lx
 AB
 vR
 ZL
-AB
+Yv
 ZL
-AB
-AB
+Yv
+Yv
 AB
 cg
 cg
@@ -1243,8 +1281,8 @@ wQ
 ZL
 XD
 kt
-uX
-uX
+wM
+wM
 Gy
 cg
 vg
@@ -1253,9 +1291,9 @@ cg
 AB
 AB
 cg
-AB
-AB
-AB
+Yv
+Yv
+Yv
 cg
 Lx
 AB
@@ -1286,8 +1324,8 @@ wQ
 wQ
 xu
 ZL
-uX
-uX
+wM
+wM
 uX
 cg
 cg
@@ -1330,7 +1368,7 @@ ZL
 By
 By
 hq
-Gy
+dj
 uX
 cg
 uE
@@ -1344,7 +1382,7 @@ AB
 FP
 cg
 Pl
-AB
+Yv
 cg
 CI
 hq
@@ -1373,7 +1411,7 @@ wQ
 ua
 fr
 ZL
-uX
+wM
 lO
 cg
 Pk
@@ -1386,8 +1424,8 @@ Lx
 AB
 FP
 cg
-AB
-AB
+Yv
+Yv
 TO
 hq
 ZL
@@ -1417,7 +1455,7 @@ ZL
 ZL
 By
 IH
-uX
+wM
 cg
 br
 Lx
@@ -1430,7 +1468,7 @@ AB
 FP
 cg
 gP
-AB
+Yv
 cg
 hn
 ZL

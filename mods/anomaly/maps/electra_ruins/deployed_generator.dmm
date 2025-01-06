@@ -1,423 +1,634 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"a" = (
-/turf/template_noop,
-/area/template_noop)
-"c" = (
-/obj/structure/aurora/cable,
-/obj/floor_decal/snow,
-/obj/structure/droppod_door,
-/turf/simulated/floor,
-/area/map_template/deployed_generator)
-"e" = (
-/obj/structure/droppod_door{
-	dir = 1
-	},
-/obj/structure/aurora/cable,
-/turf/simulated/floor,
-/area/map_template/deployed_generator)
-"h" = (
-/obj/structure/aurora/cable{
-	dir = 4
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/floor_decal/snow,
-/turf/simulated/floor/reinforced,
-/area/map_template/deployed_generator)
-"i" = (
-/obj/structure/aurora/wall_light{
-	dir = 8
-	},
-/turf/template_noop,
-/area/template_noop)
-"j" = (
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/obj/floor_decal/snow,
-/turf/simulated/floor/reinforced,
-/area/map_template/deployed_generator)
-"k" = (
-/obj/floor_decal/snow,
-/obj/structure/aurora/smes,
-/turf/simulated/floor/reinforced,
-/area/map_template/deployed_generator)
-"m" = (
-/obj/structure/aurora/cable{
-	dir = 4
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/floor_decal/snow,
-/turf/simulated/floor/reinforced,
-/area/map_template/deployed_generator)
-"o" = (
-/obj/floor_decal/snow,
-/obj/machinery/power/smes/batteryrack,
-/obj/structure/aurora/wall_light,
-/obj/structure/aurora/wall_light{
-	dir = 8
-	},
-/turf/simulated/floor/reinforced,
-/area/map_template/deployed_generator)
-"p" = (
-/obj/structure/aurora/wall_light,
-/turf/template_noop,
-/area/template_noop)
-"q" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	desc = "A flexible superconducting cable for heavy-duty power transfer. It's been labeled 'chaos reigns'.";
-	icon_state = "2-8"
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/obj/floor_decal/snow,
-/turf/simulated/floor/reinforced,
-/area/map_template/deployed_generator)
-"t" = (
-/obj/floor_decal/snow,
-/turf/simulated/floor,
-/area/template_noop)
-"u" = (
-/obj/structure/aurora/cable{
-	dir = 4
-	},
-/obj/floor_decal/snow,
-/obj/structure/droppod_door{
-	dir = 8
-	},
-/turf/simulated/floor/reinforced,
-/area/map_template/deployed_generator)
-"w" = (
-/obj/floor_decal/snow,
-/obj/machinery/power/smes/batteryrack,
-/obj/structure/aurora/wall_light,
-/obj/structure/aurora/wall_light{
-	dir = 4
-	},
-/turf/simulated/floor/reinforced,
-/area/map_template/deployed_generator)
-"z" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	desc = "A flexible superconducting cable for heavy-duty power transfer. It's been labeled 'chaos reigns'.";
-	icon_state = "2-8"
-	},
-/obj/floor_decal/snow,
-/turf/simulated/floor/reinforced,
-/area/map_template/deployed_generator)
-"B" = (
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	desc = "A flexible superconducting cable for heavy-duty power transfer. It's been labeled 'chaos reigns'.";
-	icon_state = "2-8"
-	},
-/obj/floor_decal/snow,
-/turf/simulated/floor/reinforced,
-/area/map_template/deployed_generator)
-"C" = (
-/obj/structure/aurora/cable{
-	dir = 4
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/floor_decal/snow,
-/turf/simulated/floor/reinforced,
-/area/map_template/deployed_generator)
-"D" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/obj/floor_decal/snow,
-/turf/simulated/floor/reinforced,
-/area/map_template/deployed_generator)
-"F" = (
-/obj/floor_decal/snow,
-/obj/structure/droppod_door{
-	dir = 4
-	},
-/turf/simulated/floor,
-/area/map_template/deployed_generator)
-"H" = (
-/obj/structure/aurora/wall_light{
-	dir = 1
-	},
-/turf/template_noop,
-/area/template_noop)
-"I" = (
+"ao" = (
 /obj/structure/aurora/informative/old_computer,
 /obj/floor_decal/snow,
-/obj/structure/aurora/wall_light{
-	dir = 1
-	},
+/turf/simulated/floor,
+/area/map_template/deployed_generator)
+"bm" = (
+/obj/structure/aurora/cable,
+/obj/item/stack/material/rods,
+/turf/simulated/floor/exoplanet/snow,
+/area/template_noop)
+"bv" = (
+/obj/decal/cleanable/generic,
+/turf/simulated/floor/exoplanet/snow,
+/area/template_noop)
+"bT" = (
+/turf/simulated/wall/titanium,
+/area/map_template/deployed_generator)
+"cg" = (
 /obj/structure/aurora/wall_light{
 	dir = 8
 	},
-/turf/simulated/floor/reinforced,
-/area/map_template/deployed_generator)
-"J" = (
-/obj/structure/aurora/cable,
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	desc = "A flexible superconducting cable for heavy-duty power transfer. It's been labeled 'chaos reigns'.";
-	icon_state = "2-8"
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
+/turf/template_noop,
+/area/template_noop)
+"cN" = (
+/obj/structure/aurora/wall_light{
+	dir = 1
 	},
 /obj/floor_decal/snow,
-/turf/simulated/floor/reinforced,
+/turf/simulated/floor/tiled/techmaint,
 /area/map_template/deployed_generator)
-"L" = (
-/obj/structure/aurora/cable{
+"da" = (
+/obj/structure/aurora/nav_light,
+/turf/simulated/floor/exoplanet/snow,
+/area/template_noop)
+"gY" = (
+/obj/structure/grille/broken,
+/obj/item/stack/material/rods,
+/turf/simulated/floor/exoplanet/snow,
+/area/template_noop)
+"jq" = (
+/obj/floor_decal/snow,
+/turf/simulated/floor/tiled/techmaint,
+/area/map_template/deployed_generator)
+"mr" = (
+/obj/decal/cleanable/generic,
+/obj/item/stack/material/rods,
+/obj/floor_decal/snow,
+/turf/simulated/floor/tiled/techmaint,
+/area/map_template/deployed_generator)
+"nM" = (
+/obj/structure/aurora/cable,
+/obj/item/stack/material/rods,
+/turf/simulated/floor/tiled/techmaint,
+/area/map_template/deployed_generator)
+"of" = (
+/obj/structure/aurora/wall_light{
 	dir = 4
 	},
-/obj/floor_decal/snow,
-/turf/simulated/floor/reinforced,
+/turf/template_noop,
+/area/template_noop)
+"pf" = (
+/obj/structure/aurora/smes,
+/turf/simulated/floor/exoplanet/snow,
 /area/map_template/deployed_generator)
-"N" = (
+"pw" = (
+/obj/structure/aurora/cable,
+/obj/decal/cleanable/generic,
+/turf/simulated/floor/exoplanet/snow,
+/area/template_noop)
+"pE" = (
+/obj/structure/aurora/wall_light,
+/turf/simulated/floor/exoplanet/snow,
+/area/template_noop)
+"rk" = (
+/turf/simulated/wall/titanium,
+/area/template_noop)
+"sI" = (
+/obj/structure/aurora/smes,
+/obj/floor_decal/snow,
+/turf/simulated/floor,
+/area/map_template/deployed_generator)
+"tR" = (
+/obj/decal/cleanable/generic,
+/obj/item/stack/material/rods,
+/turf/simulated/floor/exoplanet/snow,
+/area/template_noop)
+"wQ" = (
+/turf/template_noop,
+/area/template_noop)
+"yx" = (
+/obj/structure/aurora/cable,
+/obj/floor_decal/snow,
+/turf/simulated/floor/tiled/techmaint,
+/area/map_template/deployed_generator)
+"Ar" = (
+/obj/structure/droppod_door{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/map_template/deployed_generator)
+"AM" = (
+/obj/structure/droppod_door{
+	dir = 1
+	},
+/obj/structure/aurora/cable,
+/turf/simulated/floor,
+/area/map_template/deployed_generator)
+"AN" = (
+/obj/item/stack/material/rods,
+/turf/simulated/floor/tiled/techmaint,
+/area/map_template/deployed_generator)
+"BA" = (
+/obj/structure/aurora/wall_light,
+/turf/template_noop,
+/area/template_noop)
+"FR" = (
+/obj/structure/aurora/smes,
+/turf/simulated/floor,
+/area/map_template/deployed_generator)
+"FT" = (
+/obj/structure/aurora/wall_light{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/techmaint,
+/area/map_template/deployed_generator)
+"Gt" = (
+/turf/simulated/floor/exoplanet/snow,
+/area/template_noop)
+"Is" = (
+/obj/structure/girder/displaced,
+/obj/item/stack/material/rods,
+/turf/simulated/floor/exoplanet/snow,
+/area/template_noop)
+"KJ" = (
 /obj/structure/aurora/nav_light,
 /obj/floor_decal/snow,
 /turf/simulated/floor,
 /area/template_noop)
-"P" = (
-/obj/floor_decal/snow,
-/obj/structure/droppod_door,
-/turf/simulated/floor,
-/area/map_template/deployed_generator)
-"S" = (
-/obj/floor_decal/snow,
+"Lp" = (
 /obj/structure/droppod_door{
 	dir = 1
 	},
 /turf/simulated/floor,
 /area/map_template/deployed_generator)
-"T" = (
-/obj/structure/aurora/wall_light{
-	dir = 4
-	},
-/turf/template_noop,
-/area/template_noop)
-"V" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/floor_decal/snow,
-/turf/simulated/floor/reinforced,
+"Lr" = (
+/obj/structure/aurora/informative/old_computer,
+/turf/simulated/floor,
 /area/map_template/deployed_generator)
-"X" = (
-/turf/simulated/wall/r_titanium,
-/area/map_template/deployed_generator)
-"Y" = (
-/obj/structure/aurora/cable,
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
-	},
-/obj/floor_decal/snow,
-/turf/simulated/floor/reinforced,
-/area/map_template/deployed_generator)
-"Z" = (
-/obj/floor_decal/snow,
-/obj/machinery/power/smes/batteryrack,
+"MO" = (
 /obj/structure/aurora/wall_light{
 	dir = 1
 	},
-/obj/structure/aurora/wall_light{
-	dir = 4
+/turf/template_noop,
+/area/template_noop)
+"Na" = (
+/obj/floor_decal/snow,
+/turf/simulated/floor,
+/area/template_noop)
+"OR" = (
+/obj/structure/droppod_door{
+	dir = 8
 	},
-/turf/simulated/floor/reinforced,
+/turf/simulated/floor,
+/area/map_template/deployed_generator)
+"Qf" = (
+/obj/structure/droppod_door,
+/turf/simulated/floor,
+/area/map_template/deployed_generator)
+"Qn" = (
+/turf/simulated/floor/tiled/techmaint,
+/area/map_template/deployed_generator)
+"Qu" = (
+/obj/structure/grille/broken,
+/turf/simulated/floor/exoplanet/snow,
+/area/template_noop)
+"Vn" = (
+/obj/decal/cleanable/generic,
+/turf/simulated/floor/tiled/techmaint,
+/area/map_template/deployed_generator)
+"VD" = (
+/obj/structure/aurora/wall_light,
+/turf/simulated/floor/tiled/techmaint,
+/area/map_template/deployed_generator)
+"Xr" = (
+/obj/structure/droppod_door,
+/obj/structure/aurora/cable,
+/turf/simulated/floor,
+/area/map_template/deployed_generator)
+"XD" = (
+/obj/structure/aurora/cable,
+/turf/simulated/floor/tiled/techmaint,
 /area/map_template/deployed_generator)
 
 (1,1,1) = {"
-a
-N
-t
-T
-a
-a
-T
-t
-N
-a
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
 "}
 (2,1,1) = {"
-a
-t
-X
-X
-u
-u
-X
-X
-t
-a
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
 "}
 (3,1,1) = {"
-a
-p
-X
-I
-L
-L
-o
-X
-H
-a
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
 "}
 (4,1,1) = {"
-a
-a
-S
-j
-C
-h
-V
-P
-a
-a
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
 "}
 (5,1,1) = {"
-a
-a
-S
-q
-k
-k
-z
-P
-a
-a
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
 "}
 (6,1,1) = {"
-a
-a
-e
-J
-k
-k
-Y
-c
-a
-a
+wQ
+KJ
+Na
+of
+wQ
+wQ
+of
+Na
+KJ
+wQ
+wQ
+KJ
+Na
+of
+wQ
+wQ
+of
+Na
+KJ
+wQ
 "}
 (7,1,1) = {"
-a
-a
-S
-q
-k
-k
-q
-P
-a
-a
+wQ
+Na
+bT
+bT
+Ar
+Ar
+bT
+bT
+Na
+wQ
+wQ
+Na
+bT
+bT
+Ar
+Ar
+bT
+bT
+Na
+wQ
 "}
 (8,1,1) = {"
-a
-a
-S
-B
-m
-m
-D
-P
-a
-a
+wQ
+BA
+bT
+cN
+Qn
+AN
+VD
+bT
+MO
+wQ
+wQ
+BA
+bT
+FT
+Qn
+Qn
+VD
+bT
+MO
+wQ
 "}
 (9,1,1) = {"
-a
-p
-X
-Z
-L
-L
-w
-X
-H
-a
+wQ
+wQ
+Qu
+mr
+FR
+FR
+Vn
+Qf
+wQ
+wQ
+wQ
+wQ
+Lp
+Qn
+FR
+FR
+Qn
+Qf
+wQ
+wQ
 "}
 (10,1,1) = {"
-a
-t
-X
-X
-F
-F
-X
-X
-t
-a
+wQ
+wQ
+bm
+yx
+sI
+FR
+XD
+Xr
+wQ
+wQ
+wQ
+wQ
+AM
+XD
+FR
+FR
+XD
+Xr
+wQ
+wQ
 "}
 (11,1,1) = {"
-a
-N
-t
-i
-a
-a
-i
-t
-N
-a
+wQ
+wQ
+Qu
+pw
+sI
+sI
+nM
+Qf
+wQ
+wQ
+wQ
+wQ
+Lp
+XD
+FR
+FR
+XD
+Qf
+wQ
+wQ
+"}
+(12,1,1) = {"
+wQ
+wQ
+tR
+Gt
+pf
+ao
+jq
+Qf
+wQ
+wQ
+wQ
+wQ
+Lp
+Qn
+FR
+Lr
+Qn
+Qf
+wQ
+wQ
+"}
+(13,1,1) = {"
+wQ
+wQ
+Is
+bv
+Gt
+bv
+pE
+bT
+MO
+wQ
+wQ
+BA
+bT
+FT
+Qn
+Qn
+VD
+bT
+MO
+wQ
+"}
+(14,1,1) = {"
+wQ
+bv
+Gt
+gY
+Qu
+Qu
+tR
+rk
+Na
+wQ
+wQ
+Na
+bT
+bT
+OR
+OR
+bT
+bT
+Na
+wQ
+"}
+(15,1,1) = {"
+wQ
+da
+tR
+wQ
+wQ
+wQ
+wQ
+tR
+KJ
+wQ
+wQ
+KJ
+Na
+cg
+wQ
+wQ
+cg
+Na
+KJ
+wQ
+"}
+(16,1,1) = {"
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+"}
+(17,1,1) = {"
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+"}
+(18,1,1) = {"
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+"}
+(19,1,1) = {"
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+"}
+(20,1,1) = {"
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
+wQ
 "}
