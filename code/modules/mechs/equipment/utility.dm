@@ -284,7 +284,7 @@
 
 	var/on = 0
 	var/l_power = 2
-	var/l_range = 6
+	var/l_range = 7
 	origin_tech = list(TECH_MATERIAL = 1, TECH_ENGINEERING = 1)
 
 /obj/item/mech_equipment/light/installed(mob/living/exosuit/_owner)
