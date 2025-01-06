@@ -1,0 +1,4 @@
+author: SierraKomodo
+changes:
+  - {bugfix: Bashing vox heads until they pop no longer crashes things.}
+delete-after: true

@@ -1,0 +1,23 @@
+author: SierraKomodo
+changes:
+  - {tweak: Existing "ammo boxes" have been renamed to "magazine boxes".}
+  - {tweak: Adding and removing bullets from magazines now has a short timer per bullet.
+      Dumping the entire magazine at once onto the ground by using it in your active
+      hand is still instant.}
+  - {rscadd: You can now transfer bullets between magazines of matching caliburs by
+      using magazines on eachother. Have a bunch of partials you want to repack? That's
+      a lot easier now.}
+  - {rscadd: 'Clicking on a pile of bullets on the ground with a magazine or ammobox
+      will now load bullets from the pile into the magazine/box. This intentionally
+      does not work when clicking tables or racks, so you can still put empty boxes
+      and magazines on those. If your pile is on a table/rack, click on the bullets
+      themselves to start the process. For ammoboxes, if the pile has different ammo
+      types and the box is empty, click on a specific bulelt to load that specific
+      ammotype. Otherwise, it just picks one to load.'}
+  - {rscadd: Added proper ammunition boxes - Boxes that contain bullets instead of
+      filled magazines. Ammo boxes can only hold a single type of ammunition at a
+      time.}
+  - {rscadd: 'Added various QOL functions for transferring bullets between bullet
+      holders. Clicking magazines, ammoboxes, ammo casings, etc with other mags, boxes,
+      etc will transfer rounds between them with short timers per round.'}
+delete-after: true

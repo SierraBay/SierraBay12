@@ -32,8 +32,6 @@
 		return
 
 	var/observed_real_age = observed.age + observed.changed_age
-	var/observer_real_age = observer.age + observer.changed_age
-	var/age_diff
 	var/age_percentile = round((observed_real_age / max_age) * 100)
 	var/age_descriptor
 	var/age_diff_descriptor
@@ -47,7 +45,8 @@
 		age_descriptor = age_descriptors[length(age_descriptors)]
 
 	if (istype(observer) && observed.get_species() == observer.get_species() && !observer.isSynthetic())
-		age_diff = observed_real_age - observer_real_age
+		var/observer_real_age = observer.age + observer.changed_age
+		var/age_diff = observed_real_age - observer_real_age
 		for (var/descriptor in age_diff_descriptors)
 			if (age_diff > age_diff_descriptors[descriptor])
 				continue
