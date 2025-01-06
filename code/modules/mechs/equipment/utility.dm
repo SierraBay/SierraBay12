@@ -711,11 +711,7 @@
 /obj/item/gun/energy/plasmacutter/mounted/mech
 	use_external_power = TRUE
 	has_safety = FALSE
-<<<<<<< ours
-	max_shots = 10
-=======
 	projectile_type = /obj/item/projectile/beam/plasmacutter/mech
->>>>>>> theirs
 
 
 /obj/item/mech_equipment/mounted_system/taser/plasma
