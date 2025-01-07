@@ -46,6 +46,16 @@
 	)
 
 
+/obj/structure/sign/memorial/torch
+	fallen = list(
+		"Senior Explorer Paula Wojciak | Expeditionary Corps",
+		"Senior Explorer Ziva Karim-Kirilisav | Expeditionary Corps",
+		"Petty Officer Third Class Tatyanna Svetka | Fleet",
+		"Lieutenant Adrian Schmidt | Expeditionary Corps",
+		"Ensign Brock Bunten | Expeditionary Corps"
+	)
+
+
 /obj/structure/sign/memorial/use_tool(obj/item/tool, mob/user, list/click_params)
 	// Dog Tags - Add dog tag
 	if (istype(tool, /obj/item/clothing/accessory/badge/solgov/tags))
