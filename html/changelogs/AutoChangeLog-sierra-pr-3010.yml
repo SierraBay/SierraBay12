@@ -1,0 +1,4 @@
+author: SierraKomodo
+changes:
+  - {tweak: Goggles now render over bandanas when worn and pushed up.}
+delete-after: true

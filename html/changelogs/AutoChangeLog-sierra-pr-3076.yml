@@ -1,0 +1,4 @@
+author: SierraKomodo
+changes:
+  - {bugfix: Splints on hands and feet now appear in examine text when examining mobs.}
+delete-after: true
