@@ -1,0 +1,5 @@
+author: SierraKomodo
+changes:
+  - {rscadd: Added single-stack pistol practice magazines. The practice magazine crate
+      now contains 4 single stack and 4 double stack mags.}
+delete-after: true

@@ -1,0 +1,5 @@
+author: CrimsonShrike
+changes:
+  - {tweak: The exosuit plasma cutters have a little under half the fallofff of regular
+      plasma cutters.}
+delete-after: true

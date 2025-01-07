@@ -1,0 +1,4 @@
+author: Zenithstar
+changes:
+  - {bugfix: Dog tags use custom loadout descriptions.}
+delete-after: true

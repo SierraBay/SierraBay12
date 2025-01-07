@@ -1,0 +1,5 @@
+author: Spookerton
+changes:
+  - {maptweak: Expedition prep has a console and space map.}
+  - {maptweak: Split hangar substation out into a full substation.}
+delete-after: true

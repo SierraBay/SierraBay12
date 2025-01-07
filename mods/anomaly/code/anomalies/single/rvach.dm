@@ -151,6 +151,12 @@
 	Weaken(5)
 
 /mob/living/carbon/human/rvach_anomaly_pull(turf/target, current_size)
+	//На не лежачих не воздействуем.
+	if(get_turf(target) == get_turf(src))
+		Weaken(5)
+		return
+	if(!lying)
+		return
 	if(get_turf(target) != get_turf(src))
 		step_towards(src, target)
 	Weaken(5)
@@ -164,6 +170,10 @@
 		O.forceMove(get_turf(src))
 	else if(can_be_activated(O))
 		activate_anomaly()
+		step_towards(O, src)
+		if(isliving(O))
+			var/mob/living/detected_living = O
+			detected_living.Weaken(5)
 
 //Человек пытается выбраться из рвача FALSE - не даём вылезти, TRUE - даём
 /obj/anomaly/rvach/Uncross(O)
@@ -186,6 +196,20 @@
 				jumper.Weaken(5)
 				helper.Weaken(5)
 		return TRUE
+
+/obj/anomaly/rvach/handle_human_teamplay(mob/living/carbon/human/target, mob/living/carbon/human/helper)
+	visible_message(SPAN_GOOD("[helper] с силой дёргает [target] на себя!"))
+	var/turf/target_turf = get_ranged_target_turf(target, get_dir(target, helper), 2)
+	if(TurfBlocked(target_turf))
+		to_chat(helper, "Чёрт, мне не куда отходить!")
+		target.forceMove(get_turf(helper))
+		target.Weaken(5)
+		helper.Weaken(5)
+	else
+		target.forceMove(target_turf)
+		helper.forceMove(target_turf)
+		target.Weaken(5)
+		helper.Weaken(5)
 
 /obj/anomaly/rvach/get_detection_icon()
 	return "rvach_detection"

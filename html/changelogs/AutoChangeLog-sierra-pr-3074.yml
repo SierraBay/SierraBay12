@@ -1,0 +1,5 @@
+author: SierraKomodo
+changes:
+  - {tweak: examining yourself now shows "You are of X age for a SPECIES" instead
+      of third person descriptions.}
+delete-after: true

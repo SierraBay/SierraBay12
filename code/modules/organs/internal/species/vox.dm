@@ -229,9 +229,6 @@
 /obj/item/organ/internal/voxstack/removed()
 	var/obj/item/organ/external/head = owner.get_organ(parent_organ)
 	owner.visible_message(SPAN_DANGER("\The [src] rips gaping holes in \the [owner]'s [head.name] as it is torn loose!"))
-	head.take_external_damage(rand(15,20))
-	for(var/obj/item/organ/internal/O in head.contents)
-		O.take_internal_damage(rand(30,70))
 	do_backup()
 	..()
 

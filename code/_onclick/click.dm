@@ -527,21 +527,16 @@ GLOBAL_LIST_INIT(click_catchers, create_click_catcher())
 	. = 1
 
 /client/MouseDown(object, location, control, params)
-	var/delay = mob.CanMobAutoclick(object, location, params)
-	if(delay)
-		selected_target[1] = object
-		selected_target[2] = params
-		while(selected_target[1])
-			Click(selected_target[1], location, control, selected_target[2])
-			sleep(delay)
+	var/datum/click_handler/click_handler = usr.GetClickHandler()
+	click_handler.OnMouseDown(object, location, params)
 
 /client/MouseUp(object, location, control, params)
-	selected_target[1] = null
+	var/datum/click_handler/click_handler = usr.GetClickHandler()
+	click_handler.OnMouseUp(object, location, params)
 
 /client/MouseDrag(src_object,atom/over_object,src_location,over_location,src_control,over_control,params)
-	if(selected_target[1] && over_object.IsAutoclickable())
-		selected_target[1] = over_object
-		selected_target[2] = params
+	var/datum/click_handler/click_handler = usr.GetClickHandler()
+	click_handler.OnMouseDrag(over_object, params)
 
 /mob/proc/CanMobAutoclick(object, location, params)
 	return

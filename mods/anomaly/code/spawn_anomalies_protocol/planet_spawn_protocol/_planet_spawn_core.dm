@@ -21,11 +21,10 @@
 	for (var/datum/exoplanet_theme/T in themes)
 		T.after_map_generation(src)
 	//Спавним аномалии
-	if(can_spawn_anomalies)
-		generate_anomalies()
+	if(LAZYLEN(big_artefacts_types))
+		generate_big_anomaly_artefacts()
+	deploy_weather()
 	//Если у планеты есть погода - спавним погоду
-	if(monitor_effect_type)
-		generate_monitor_effects()
 	generate_landing(2)
 	update_biome()
 	generate_daycycle()

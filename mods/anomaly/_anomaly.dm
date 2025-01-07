@@ -1,4 +1,4 @@
-/singleton/modpack/colony_types
+/singleton/modpack/anomaly
 	name = "Интерактивные аномалии"
 	desc = "Добавляет в игру полноценные аномалии, вдохновлённые Ашаном, пикником на обочине и сталкером."
-	author = "Shegar"
+	author = "Shegar(Код), HonkByEmo(Спрайты), AK200(Спрайты)"
