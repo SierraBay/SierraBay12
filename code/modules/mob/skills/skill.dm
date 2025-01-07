@@ -343,6 +343,6 @@ GLOBAL_LIST_EMPTY(skills)
 	desc = "Virology requires a specialist to have not only a deep knowledge of viruses, but also the ability to work with them, similar to how a chemist works with chemicals. This means not only understanding chemical reactions and their effects, but also knowing how these reactions will affect the human body. Thus, a virologist must have not only knowledge of virology, but also medical skills. An analogy can be drawn with a medical chemist, who must have experience working with chemicals and understand what effect they will have in order to use them safely in medicine."
 	levels = list( "Unskilled"			= "You know that virologist work with viruses; you know that they can be very dangerous. You probably know basic defence against viruses..",
 						"Trained"				= "You can engeener viruses. You have some training in safety and you won't infect yourself while work... probably. You can almost safely use the virologist equipment.")
-	prerequisites = list(SKILL_CHEMISTRY = SKILL_TRAINED)
+	prerequisites = list(SKILL_CHEMISTRY = SKILL_BASIC)
 	default_max = SKILL_BASIC
-	difficulty = SKILL_AVERAGE
+	difficulty = SKILL_EXPERIENCED

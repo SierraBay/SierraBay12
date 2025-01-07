@@ -12,32 +12,29 @@
 	///Отвечает за то, какого цвета будет размещён маячок
 	var/current_beacon_type = "Green"
 
-///Осмот
+/obj/item/stack/flag
+	icon = 'mods/anomaly/icons/marking_beacon.dmi'
+
+/obj/item/stack/flag/set_up()
+	upright = 1
+	dir = usr.dir
+	anchored = TRUE
+	update_icon()
+
+///Осмотр
 /obj/item/beacon_deployer/examine(mob/user, distance, is_adjacent)
 	. = ..()
-	to_chat(user, SPAN_NOTICE("Its [stored_beacon_amount] inside."))
-	to_chat(user, SPAN_GOOD("Use Alt + LBM to swap flag color."))
-	to_chat(user, SPAN_GOOD("User Cntrl + LBM to unload some flags."))
+	to_chat(user, SPAN_NOTICE("Внутри [stored_beacon_amount] маячков."))
+	to_chat(user, SPAN_GOOD("Используйте Альт + левая кнопка мыши для изменения цвета флага."))
+	to_chat(user, SPAN_GOOD("Используйте Кнтрл + левая кнопка мыши для разрядки устройства."))
 
 /obj/item/beacon_deployer/AltClick()
-	current_beacon_type = input(usr, "Choose flag color","Choose") as null|anything in list("Green", "Red", "Yellow", "Blue")
+	current_beacon_type = input(usr, "Выберите цвет флага","Выборы-выборы...") as null|anything in list("Зелёный", "Красный", "Жёлтый", "Зелёный")
 	return TRUE
 
 /obj/item/beacon_deployer/CtrlClick()
 	deploy_beacon(usr, FALSE, 10)
 	return TRUE
-
-
-///Кнопка слева сверху для деплоера
-/obj/item/beacon_deployer/verb/use_deployer()
-	set category = "Object"
-	set name = "Use flag deployer"
-	set src in usr
-
-	if(!usr.incapacitated())
-		check_current_turf(usr)
-		usr.update_action_buttons()
-
 
 /obj/item/beacon_deployer/use_tool(obj/item/item, mob/living/user, list/click_params)
 	. = ..()
@@ -101,6 +98,7 @@
 	stored_beacon_amount -= deploy_amount
 	if(deploy)
 		spawned_flag.set_up()
+		spawned_flag.dir = user.dir
 		playsound(src, 'sound/items/shuttle_beacon_complete.ogg', 50)
 
 

@@ -11,6 +11,7 @@
 #include "code/wires.dm"
 #include "code/reagents.dm"
 #include "code/cell_charger.dm"
+#include "code/cig_smoke.dm"
 #include "code/vox.dm"
 #include "code/simple.dm"
 #include "code/circuit.dm"
@@ -33,5 +34,6 @@
 #include "code/skrell-ship.dm"
 #include "code/security.dm"
 #include "code/FBP_vox.dm"
+#include "code\on_floor_icon.dm"
 
 #endif

@@ -419,7 +419,6 @@ The slots that you can use are found in items_clothing.dm and are the inventory 
 			warning("[O.type] has a default organ tag \"[O.organ_tag]\" that differs from the species' organ tag \"[organ_tag]\". Updating organ_tag to match.")
 			O.organ_tag = organ_tag
 		H.internal_organs_by_name[organ_tag] = O
-
 	for(var/name in H.organs_by_name)
 		H.organs |= H.organs_by_name[name]
 
@@ -429,7 +428,6 @@ The slots that you can use are found in items_clothing.dm and are the inventory 
 	for(var/obj/item/organ/O in (H.organs|H.internal_organs))
 		O.owner = H
 		post_organ_rejuvenate(O, H)
-
 	H.sync_organ_dna()
 /* ------------------------> code\modules\emotes\definitions\_species.dm (У нас всё в моде в mods\emote_panel\code\species.dm)
 /datum/species/proc/hug(mob/living/carbon/human/H, mob/living/target)

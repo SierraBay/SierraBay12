@@ -56,7 +56,11 @@
 #include "code\artefacts\artefact_flyer.dm"
 //#include "code\artefacts\artefact_zjemchug.dm"
 
-
+//Код больших артефактов
+#include "code\big_artefacts\_core.dm"
+#include "code\big_artefacts\gravi_concetration.dm"
+#include "code\big_artefacts\electra_gem.dm"
+#include "code\big_artefacts\fire_ball.dm"
 
 //Детекторы и прочее оборудование
 #include "code\detectors_and_etc\bolt.dm"
@@ -66,22 +70,18 @@
 #include "code\detectors_and_etc\deployer.dm"
 #include "code\detectors_and_etc\beacon.dm"
 #include "code\detectors_and_etc\research_machine.dm"
+#include "code\detectors_and_etc\artefact_detector.dm"
+#include "code\detectors_and_etc\rig_detector.dm"
+#include "code\detectors_and_etc\flux_detector.dm"
 
-
-
-//Погода и эффекты на мониторе
-#include "code\monitor_effects\monitor_core.dm"
-#include "code\monitor_effects\monitor_vars.dm"
-#include "code\monitor_effects\snow_monitor_effect.dm"
-#include "code\monitor_effects\swamp_monitor_effect.dm"
-#include "code\monitor_effects\vulcan_monitor_effect.dm"
-
+#include "code\anomalies\anomaly_teamplay.dm" //Помощь игрокам друг другу в аномалии
 
 //Размещение аномалий в игре
 #include "code\spawn_anomalies_protocol\core_spawn_protocol.dm"
 #include "code\spawn_anomalies_protocol\spawn_anomaly_with_big_artefact.dm" //Код, отвечающий за спавн аномалий вокруг больших артефактов
 #include "code\spawn_anomalies_protocol\spawn_with_ruins.dm"
 #include "code\spawn_anomalies_protocol\bsd_event_protocol.dm"
+#include "code\spawn_anomalies_protocol\planet_big_artefacts.dm"
 //Планетарный спавн
 #include "code\spawn_anomalies_protocol\planet_spawn_protocol\_planet_spawn_core.dm"
 //Летающие острова[WIP]
@@ -90,16 +90,17 @@
 //Ледяная планета[WIP]
 #include "code\spawn_anomalies_protocol\planet_spawn_protocol\ice.dm"
 //Вулкан
-#include "code\spawn_anomalies_protocol\planet_spawn_protocol\vulcanic.dm"
 //Саргасово болото [WIP-WIP]
 // #include "code\spawn_anomalies_protocol\planet_spawn_protocol\sargas.dm"
 #include "code\spawn_anomalies_protocol\spawn_on_planet.dm" //Спавн на планетах
-
-
+#include "code\spawn_anomalies_protocol\planet_spawn_protocol\another_planets.dm"
 
 //Карты, диреликты и прочее
 #include "maps\electra_ruins\electra_ruins.dm"
 #include "maps\zharka_ruins\zharka_ruins.dm"
+#include "maps\electra_ruins\garage.dm"
+//#include "maps\electra_ruins\bunker.dm"
+//#include "maps\electra_ruins\deployed_generator.dm"
 //Код островов
 #include "maps\flying_islands\flying_island.dm"
 #include "maps\flying_islands\flying_island_ball.dm"

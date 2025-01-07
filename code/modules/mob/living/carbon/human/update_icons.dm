@@ -119,6 +119,11 @@ If you have any questions/constructive-comments/bugs-to-report/or have a massivl
 Please contact me on #coderbus IRC. ~Carn x
 */
 
+//Add an entry to overlays, assuming it exists
+/mob/living/carbon/human/proc/apply_layer(cache_index)
+	if((. = overlays_standing[cache_index]))
+		overlays.Add(.)
+
 //Human Overlays Indexes/////////
 #define HO_BODY_LAYER       1
 #define HO_MUTATIONS_LAYER  2
@@ -150,6 +155,7 @@ Please contact me on #coderbus IRC. ~Carn x
 #define HO_FIRE_LAYER       28 //If you're on fire
 #define HO_EFFECTS_LAYER    29
 #define TOTAL_LAYERS        30
+
 //////////////////////////////////
 
 /mob/living/carbon/human
@@ -330,6 +336,7 @@ var/global/list/damage_icon_parts = list()
 	var/list/icon_render_keys = list()
 
 /mob/living/carbon/human/proc/update_body(update_icons=1)
+
 	//Update all limbs and visible organs one by one
 	var/list/needs_update = list()
 	var/limb_count_update = FALSE
@@ -769,7 +776,6 @@ var/global/list/damage_icon_parts = list()
 
 	if(update_icons)
 		queue_icon_update()
-
 
 /mob/living/carbon/human/update_fire(update_icons=1)
 	overlays_standing[HO_FIRE_LAYER] = null

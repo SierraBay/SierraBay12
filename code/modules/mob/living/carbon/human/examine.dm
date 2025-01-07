@@ -163,7 +163,7 @@
 			msg += "The message \"[robohead.display_text]\" is displayed on its screen.\n"
 
 	//splints
-	for(var/organ in list(BP_L_LEG, BP_R_LEG, BP_L_ARM, BP_R_ARM))
+	for(var/organ in list(BP_L_LEG, BP_R_LEG, BP_L_FOOT, BP_R_FOOT, BP_L_ARM, BP_R_ARM, BP_L_HAND, BP_R_HAND))
 		var/obj/item/organ/external/o = get_organ(organ)
 		if(o && o.splinted && o.splinted.loc == o)
 			msg += "[SPAN_WARNING("[P.He] [P.has] \a [o.splinted] on [P.his] [o.name]!")]\n"
@@ -348,6 +348,11 @@
 	var/show_descs = show_descriptors_to(user)
 	if(show_descs)
 		msg += SPAN_NOTICE("[jointext(show_descs, "<br>")]")
+
+	var/age_diff = species.get_age_comparison_string(src, user)
+	if (age_diff)
+		msg += "<br />[SPAN_NOTICE(age_diff)]"
+
 	to_chat(user, SPAN_INFO(jointext(msg, null)))
 
 //Helper procedure. Called by /mob/living/carbon/human/examine() and /mob/living/carbon/human/Topic() to determine HUD access to security and medical records.
