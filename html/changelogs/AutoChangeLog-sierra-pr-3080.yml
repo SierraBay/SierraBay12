@@ -1,0 +1,5 @@
+author: SierraKomodo
+changes:
+  - {tweak: The chapel's memorial stone now lists the names of all the current canon
+      deaths.}
+delete-after: true
