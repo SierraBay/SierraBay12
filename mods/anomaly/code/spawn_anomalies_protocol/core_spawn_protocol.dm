@@ -92,8 +92,10 @@ source - Источник(Причина) генерации аномалий н
 	set background = 1
 	//Расчитываем мин и макс количество аномалий
 	var/result_anomalies_ammout = 1
-	min_anomalies_ammout = calculate_min_anomalies_ammout(min_anomaly_size, max_anomaly_size, min_anomalies_ammout, LAZYLEN(all_turfs_for_spawn))
-	max_anomalies_ammout = calculate_max_anomalies_ammout(min_anomaly_size, max_anomaly_size, max_anomalies_ammout, LAZYLEN(all_turfs_for_spawn))
+	if(!min_anomalies_ammout)
+		min_anomalies_ammout = calculate_min_anomalies_ammout(min_anomaly_size, max_anomaly_size, min_anomalies_ammout, LAZYLEN(all_turfs_for_spawn))
+	if(!max_anomalies_ammout)
+		max_anomalies_ammout = calculate_max_anomalies_ammout(min_anomaly_size, max_anomaly_size, max_anomalies_ammout, LAZYLEN(all_turfs_for_spawn))
 	result_anomalies_ammout = calculate_result_anomalies_ammout(min_anomaly_size, max_anomaly_size, min_anomalies_ammout, max_anomalies_ammout, result_anomalies_ammout, LAZYLEN(all_turfs_for_spawn))
 
 
@@ -224,6 +226,8 @@ source - Источник(Причина) генерации аномалий н
 
 
 /proc/calculate_min_anomalies_ammout(min_anomaly_size, max_anomaly_size, min_anomalies_ammout, all_turfs_for_spawn_len)
+	if(!min_anomaly_size)
+		min_anomaly_size = 1
 	if((!min_anomalies_ammout) || (min_anomalies_ammout * min_anomaly_size > all_turfs_for_spawn_len))
 		min_anomalies_ammout = 1
 	return min_anomalies_ammout
@@ -231,6 +235,8 @@ source - Источник(Причина) генерации аномалий н
 
 
 /proc/calculate_max_anomalies_ammout(min_anomaly_size, max_anomaly_size, max_anomalies_ammout, all_turfs_for_spawn_len)
+	if(!max_anomaly_size)
+		max_anomaly_size = 1
 	if(!max_anomalies_ammout)
 		max_anomalies_ammout = all_turfs_for_spawn_len
 		max_anomalies_ammout /= max_anomaly_size

@@ -48,6 +48,9 @@
 	else
 		icon_state = "generator0"
 
+/obj/machinery/power/shield_generator/Initialize()
+	. = ..()
+	GLOB.shield_generators += src
 
 /obj/machinery/power/shield_generator/New()
 	..()
@@ -64,6 +67,7 @@
 	field_segments = null
 	damaged_segments = null
 	mode_list = null
+	GLOB.shield_generators -= src
 	. = ..()
 
 

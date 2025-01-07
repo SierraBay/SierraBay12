@@ -12,19 +12,24 @@
 		for(var/obj/item/storage/bolt_bag/bag in usr)
 			if(bag.autocollect)
 				bag.can_be_inserted(src, usr, 0)
-
+				src.forceMove(bag)
 
 /obj/item/storage/bolt_bag
 	name = "Bag with bolts"
 	desc = "Sturdy bolt storage bag."
 	icon = 'mods/anomaly/icons/bolts.dmi'
 	icon_state = "bolt_bag"
+	action_button_name = "Pull out from bag"
 	allow_quick_gather = TRUE
 	allow_quick_empty  = TRUE
 	w_class = ITEM_SIZE_SMALL
 	max_w_class = ITEM_SIZE_TINY
 	max_storage_space = 10
 	var/autocollect = FALSE
+
+/obj/item/storage/bolt_bag/attack_self(mob/living/user)
+	usr.put_in_hands(pick(contents))
+
 
 /obj/item/storage/bolt_bag/examine(mob/user, distance, is_adjacent)
 	. = ..()

@@ -4,9 +4,31 @@
 /obj/item/proc/update_mod_identification()
 	return
 
-/mob/verb/mod_skill_examine(obj/item/I as obj in view())
+/mob/verb/mod_skill_examine_init()
 	set name = "Inspect"
 	set category = "IC"
+
+	to_chat(usr, SPAN_CLASS("interface", "Вы теперь можете производить инспекцию предметов через ПКМ и через верб."))
+	verbs -= /mob/verb/mod_skill_examine_init
+	verbs += /verb/mod_skill_examine
+	verbs += /verb/mod_skill_examine_hide
+
+/verb/mod_skill_examine_hide()
+	set name = "Hide Inspect"
+	set category = "IC"
+
+	to_chat(usr, SPAN_CLASS("interface", "Верб Inspect вновь спрятан."))
+	usr.verbs += /mob/verb/mod_skill_examine_init
+	usr.verbs -= /verb/mod_skill_examine
+	usr.verbs -= /verb/mod_skill_examine_hide
+
+/verb/mod_skill_examine(obj/item/I as obj in view(1))
+	set name = "Inspect"
+	set category = "IC"
+
+	if(I in usr.contents)
+		if(!usr.isEquipped(I) || !usr.canUnEquip(I))
+			return
 
 	mod_skill_examinate(usr, I)
 
@@ -107,14 +129,18 @@
 					if(!max_skills[S.type] || max_skills[S.type] < skill_val)
 						max_skills[S.type] = skill_val
 
-	var/starting_message = "[user] начал детальный осмотр [identify_item.name]"
+	var/starting_message = "[user] начинает детальный осмотр [identify_item.name]"
 
 	if(LAZYLEN(additional_users))
-		starting_message += " вместе с:"
+		var/list/additional_names = list()
+		starting_message += " вместе с: "
 		for(var/auser in additional_users)
 			var/auser_name = additional_users[auser]["name"]
-			starting_message += "  [auser_name]"
-		starting_message += "."
+			additional_names.Add(auser_name)
+
+		starting_message += jointext(additional_names, ", ")
+
+	starting_message += "."
 
 	user.visible_message(starting_message)
 

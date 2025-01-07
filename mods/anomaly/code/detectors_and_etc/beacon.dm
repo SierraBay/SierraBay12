@@ -12,6 +12,7 @@
 		for(var/obj/item/storage/bolt_bag/bag in usr)
 			if(bag.autocollect)
 				bag.can_be_inserted(src, usr, 0)
+				src.forceMove(bag)
 
 /obj/item/advanced_bolt/Move()
 	. = ..()
@@ -56,3 +57,12 @@
 		/obj/item/advanced_bolt,
 		/obj/item/advanced_bolt
 	)
+
+/datum/design/item/bluespace/beacon
+	name = "electrostatis beacon"
+	desc = "Small metal beacon with simple electronic inside which can detect powerfull electrostatic field."
+	id = "electro_beacon"
+	req_tech = list(TECH_MATERIAL = 2, TECH_MAGNET = 2, TECH_POWER = 2)
+	build_path = /obj/item/advanced_bolt
+	materials = list(MATERIAL_ALUMINIUM = 500, MATERIAL_STEEL = 500, MATERIAL_PLASTIC = 500)
+	sort_string = "VAWAB"

@@ -79,6 +79,7 @@
 	anomaly.activate_anomaly(FALSE)
 
 /obj/anomaly/electra/get_effect_by_anomaly(atom/movable/target)
+	set waitfor = FALSE
 	//Понадобится нам, если обьект по какой-либо причине будет удалён из-за удара, дабы "лучу" было куда идти
 	var/target_turf = get_turf(target)
 	if(!isturf(target.loc))
@@ -87,7 +88,10 @@
 		return
 	//Если цель подходит под критерии удара, мы рисуем молнию
 	var/create_line = FALSE
-
+	if(isaurora(target))
+		var/obj/structure/aurora/aurora = target
+		aurora.wake_up(rand(5 SECONDS, 10 SECONDS))
+		create_line = TRUE
 
 
 
@@ -128,7 +132,7 @@
 			var/mob/living/carbon/human/victim = target
 			if(victim.health == 0)
 				SSanom.add_last_gibbed(target, "Электра")
-				anything_in_remains(victim)
+				victim.dust()
 				return
 
 			if(victim.lying) //Если цель лежит нам не нужно просчитывать путь до земли. Просто делаем удар в любую конечность
@@ -158,7 +162,7 @@
 			create_line = TRUE
 			var/mob/living/victim = target
 			if(victim.health == 0)
-				anything_in_remains(victim)
+				victim.dust()
 				return
 			victim.electoanomaly_act(100, src)
 

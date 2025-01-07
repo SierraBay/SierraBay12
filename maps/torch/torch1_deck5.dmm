@@ -7478,10 +7478,6 @@
 /obj/floor_decal/corner/brown{
 	dir = 1
 	},
-/obj/machinery/alarm{
-	pixel_y = 23;
-	req_access = list(list("ACCESS_ENGINE_EQUIP","ACCESS_ATMOS"))
-	},
 /obj/structure/sign/deck/fifth{
 	pixel_y = 32
 	},
