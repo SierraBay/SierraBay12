@@ -2,6 +2,8 @@
 	name = "artefact detector"
 	desc = "Newest advanced device, which can find artefacts."
 	icon = 'mods/anomaly/icons/artefact_detector.dmi'
+	on_turf_icon = 'mods/anomaly/icons/artefact_detector_on_floor.dmi'
+	on_floor_icon
 	icon_state = "medv_turned_off"
 	item_state = "on_floor_off"
 	//on_turf_icon = 'mods/anomaly/icons/artefact_detector_on_floor.dmi'
@@ -48,11 +50,14 @@
 
 //Процессинг//
 /obj/item/artefact_detector/Process()
+	..()
 	var/dir = get_dir(get_turf(src), get_turf(captured_artefact))
 	if(!dir)
 		forgive_artefact()
-	var/text_dir = dir2text(dir)
-	icon_state = "medv_[text_dir]"
+		icon_state = "medv_turned_on"
+	else
+		var/text_dir = dir2text(dir)
+		icon_state = "medv_[text_dir]"
 
 ///Отдельные функции///
 /obj/item/artefact_detector/proc/find_and_capture_artefact_in_Z()//Задача - найти артефакт в на Z уровне и запомнить его.

@@ -43,6 +43,7 @@
 	START_PROCESSING(SSweather,src)
 
 /obj/weather_manager/Process()
+	..()
 	if(world.time - last_change_time >= change_time_result)
 		change_stage()
 	if(can_blowout && world.time - last_blowout_time >= change_time_result)

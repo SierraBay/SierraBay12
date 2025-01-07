@@ -120,6 +120,7 @@
 		STOP_PROCESSING(SSweather,src)
 
 /obj/structure/aurora/smes/Process()
+	..()
 	if(world.time - last_electra_attack > electra_attack_cooldown)
 		electra_attack()
 

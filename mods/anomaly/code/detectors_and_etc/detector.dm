@@ -65,6 +65,7 @@
 	return TRUE
 
 /obj/item/clothing/gloves/anomaly_detector/Process()
+	..()
 	check_electrostatic()
 	update_icon()
 
