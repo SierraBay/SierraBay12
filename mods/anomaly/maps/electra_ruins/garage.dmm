@@ -1,7 +1,9 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aF" = (
 /obj/floor_decal/snow,
-/obj/structure/aurora/informative/wall_computer,
+/obj/structure/aurora/informative/wall_computer/garage{
+	pixel_y = 32
+	},
 /turf/simulated/floor/exoplanet/concrete,
 /area/map_template/garage)
 "br" = (
@@ -169,9 +171,7 @@
 /area/template_noop)
 "vg" = (
 /obj/floor_decal/snow,
-/obj/structure/aurora/informative/old_computer{
-	possible_information = list()
-	},
+/obj/structure/aurora/old_comp,
 /turf/simulated/floor/holofloor/tiled,
 /area/map_template/garage/first_home)
 "vR" = (
@@ -1625,7 +1625,7 @@ fr
 fr
 WC
 XD
-WC
+XD
 Ek
 Ek
 fr
@@ -1809,7 +1809,7 @@ oS
 mb
 uE
 mb
-uE
+ZL
 kM
 wv
 xJ
