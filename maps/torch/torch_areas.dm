@@ -43,6 +43,9 @@
 /area/maintenance/substation/fifthdeck
 	name = "Fifth Deck Substation"
 
+/area/maintenance/substation/hangar
+	name = "Hangar Substation"
+
 //Fourth Deck (Z-1)
 /area/hallway/primary/fourthdeck/fore
 	name = "\improper Fourth Deck Fore Hallway"

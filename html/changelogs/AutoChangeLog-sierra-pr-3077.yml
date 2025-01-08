@@ -1,0 +1,8 @@
+author: SierraKomodo
+changes:
+  - {rscadd: "Added the voices of Adrian Schmidt, Brock Bunten, and Karl Emberchest
+      to the legion's chorus."}
+  - {tweak: Increased the chance of specific voices appearing during legion chorus
+      events.}
+  - {tweak: Changed FIND's last words.}
+delete-after: true

@@ -1,4 +1,0 @@
-author: SierraKomodo
-changes:
-  - {tweak: Legion broadcasts now piggyback off telecomms servers and abuse your radios.}
-delete-after: true

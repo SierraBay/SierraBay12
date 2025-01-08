@@ -1,4 +1,0 @@
-author: Daeberdir
-changes:
-  - {bugfix: Fixes annoying runtime in `shipsensors` processing.}
-delete-after: true

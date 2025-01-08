@@ -74,13 +74,13 @@ GLOBAL_DATUM_INIT(changelings, /datum/antagonist/changeling, new)
 				var/mob/living/carbon/human/H = player.current
 				if(H.isSynthetic() || H.isFBP())
 					return 0
-				if(H.species.species_flags & SPECIES_FLAG_NO_SCAN)
+				if(H.species.species_flags & (SPECIES_FLAG_NO_SCAN|SPECIES_FLAG_NEED_DIRECT_ABSORB))
 					return 0
 				return 1
 			else if(isnewplayer(player.current))
 				if(player.current.client && player.current.client.prefs)
 					var/datum/species/S = all_species[player.current.client.prefs.species]
-					if(S && (S.species_flags & SPECIES_FLAG_NO_SCAN))
+					if(S?.species_flags & SPECIES_FLAG_NO_SCAN|SPECIES_FLAG_NEED_DIRECT_ABSORB)
 						return 0
 					if(player.current.client.prefs.organ_data[BP_CHEST] == "cyborg") // Full synthetic.
 						return 0

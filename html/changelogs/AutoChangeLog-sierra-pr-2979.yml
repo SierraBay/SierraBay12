@@ -1,8 +1,0 @@
-author: SierraKomodo
-changes:
-  - {bugfix: 'Reworked how fortune cookies work. Now you use them in your active hand
-      to "break" them open and reveal the fortune (If one is present). If you eat
-      the cookie without breaking it open first, you also eat the fortune.'}
-  - {tweak: Using blank paper with the fortune cookie recipe generates a random fortune
-      for you. How convenient!}
-delete-after: true

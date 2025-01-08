@@ -1,5 +1,0 @@
-author: SierraKomodo
-changes:
-  - {bugfix: 'Fixes a bug where HCMs would refuse to deploy if someone put the rig
-      on you, instead of you equipping it yourself.'}
-delete-after: true
