@@ -7,11 +7,11 @@
 	update_onturf_icon_status()
 
 /obj/item/Move()
-	..()
+	.=..()
 	update_onturf_icon_status()
 
 /obj/item/forceMove()
-	..()
+	.=..()
 	update_onturf_icon_status()
 
 /obj/item/proc/update_onturf_icon_status()
