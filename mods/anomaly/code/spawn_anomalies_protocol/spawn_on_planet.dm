@@ -1,9 +1,8 @@
 /datum/map/build_exoplanets()
 	//Игра заспавнит 1 обычную планету и 1 аномальную
 	var/list/anomaly_planets_list = list(
-		 /obj/overmap/visitable/sector/exoplanet/ice,
-		 /obj/overmap/visitable/sector/exoplanet/volcanic,
-		 /obj/overmap/visitable/sector/exoplanet/flying
+		/obj/overmap/visitable/sector/exoplanet/ice,
+		/obj/overmap/visitable/sector/exoplanet/flying
 	)
 	var/list/all_planets_list = subtypesof(/obj/overmap/visitable/sector/exoplanet)
 	//Я не придумал как обьяснять игре какая планета обычная, а какая аномальная без
@@ -27,7 +26,7 @@
 	var/can_spawn_anomalies = FALSE
 	var/list/anomalies_type = list(
 		)
-	var/obj/monitor_effect_triger/monitor_effect_type
+	var/obj/weather/monitor_effect_type
 	var/min_anomaly_size = 1
 	var/max_anomaly_size = 3
 	///Минимальное количество заспавненных артов
@@ -78,10 +77,20 @@
 		return FALSE
 	return TRUE
 
-/obj/overmap/visitable/sector/exoplanet/proc/generate_monitor_effects()
-	set background = 1
-	for(var/turf/choosed_turf in planetary_area)
-		new monitor_effect_type(choosed_turf)
+/obj/overmap/visitable/sector/exoplanet/proc/full_clear_from_anomalies()//Функция очищает планету от аномалий и аномальных больших артефактов
+	set waitfor = FALSE
+	var/deleted_anomalies = 0
+	var/deleted_big_artefacts = 0
+	var/list/planet_turfs = get_area_turfs(planetary_area)
+	for(var/obj/anomaly/picked_anomaly in SSanom.all_anomalies_cores)
+		if(!picked_anomaly.is_helper && planet_turfs.Find(get_turf(picked_anomaly)))
+			picked_anomaly.delete_anomaly()
+			deleted_anomalies++
+	for(var/obj/structure/big_artefact/picked_big_artefact in SSanom.big_anomaly_artefacts)
+		if(planet_turfs.Find(get_turf(picked_big_artefact)))
+			qdel(picked_big_artefact)
+			deleted_big_artefacts++
+	report_progress("Выполнена очистка планеты [name]. Удалено аномалий: [deleted_anomalies]. Удалено больших артефактов: [deleted_big_artefacts].  ")
 
 
 

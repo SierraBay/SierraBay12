@@ -171,7 +171,7 @@
 
 
 /obj/item/storage/box/ammo
-	name = "ammo box"
+	name = "magazine box"
 	icon = 'icons/obj/weapons/ammo_boxes.dmi'
 	icon_state = "ammo"
 	desc = "A sturdy metal box with several warning symbols on the front.<br>WARNING: Live ammunition. Misuse may result in serious injury or death."
