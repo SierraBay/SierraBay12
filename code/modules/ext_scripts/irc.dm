@@ -45,13 +45,9 @@
 		export2irc(params)
 
 /proc/get_world_url()
-	. = "byond://"
-	if(config.serverurl)
-		. += config.serverurl
-	else if(config.server)
-		. += config.server
-	else
-		. += "[world.address]:[world.port]"
+	if (config.server_address)
+		return config.server_address
+	return "byond://[world.address]:[world.port]"
 
 /proc/send_to_admin_discord(type, message)
 	if(config.admin_discord && config.excom_address)

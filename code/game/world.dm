@@ -519,14 +519,13 @@ GLOBAL_VAR_INIT(world_topic_last, world.timeofday)
 
 	Master.Shutdown()
 
-	var/datum/chatOutput/co
-	for(var/client/C in GLOB.clients)
-		co = C.chatOutput
-		if(co)
-			co.ehjax_send(data = "roundrestart")
-	if(config.server)	//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
-		for(var/client/C in GLOB.clients)
-			send_link(C, "byond://[config.server]")
+	var/datum/chatOutput/chat_output
+	for (var/client/client in GLOB.clients)
+		chat_output = client.chatOutput
+		if (chat_output)
+			chat_output.ehjax_send(data = "roundrestart")
+		if (config.server_address)
+			send_link(client, config.server_address)
 
 	// [SIERRA-ADD] - RUST_G - Past this point, no logging procs can be used, at risk of data loss.
 	rustg_log_close_all()

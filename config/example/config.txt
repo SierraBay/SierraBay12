@@ -195,12 +195,8 @@ GUEST_BAN
 ## Uncomment to 1 to jobban, leave commented out to allow these positions for everyone (but see GUEST_JOBBAN above and regular jobbans)
 # USEWHITELIST
 
-## set a server location for world reboot. Don't include the byond://, just give the address and port.
-#SERVER server.net:port
-
-## set a server URL for the IRC bot to use; like SERVER, don't include the byond://
-## Unlike SERVER, this one shouldn't break auto-reconnect
-#SERVERURL server.net:port
+## Set a server location for world rejoins. May be either "address:port" or "byond://address:port".
+#SERVER_ADDRESS server.address:port
 
 ## Wiki address
 ## Where your server's documentation lives
