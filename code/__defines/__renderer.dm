@@ -52,10 +52,12 @@
 	#define DECAL_PLATING_LAYER         1.02
 	#define DISPOSALS_PIPE_LAYER        1.03
 	#define LATTICE_LAYER               1.04
-	#define PIPE_LAYER                  1.05
-	#define WIRE_LAYER                  1.06
-	#define WIRE_TERMINAL_LAYER         1.07
-	#define ABOVE_WIRE_LAYER            1.08
+	#define SCRUBBERS_LAYER             1.05
+	#define SUPPLY_LAYER                1.06
+	#define PIPE_LAYER                  1.07
+	#define WIRE_LAYER                  1.08
+	#define WIRE_TERMINAL_LAYER         1.09
+	#define ABOVE_WIRE_LAYER            1.10
 	//TURF PLANE
 	//TURF_LAYER = 2
 	#define TURF_DETAIL_LAYER           2.01
@@ -67,6 +69,7 @@
 	#define ABOVE_AO_LAYER              2.05
 	#define RUNE_LAYER                  2.06
 	#define ABOVE_TILE_LAYER            2.07
+<<<<<<< ours
 	#define EXPOSED_PIPE_LAYER          2.08
 	#define EXPOSED_WIRE_LAYER          2.09
 	#define ABOVE_EXPOSED_WIRE_LAYER    2.10
@@ -76,17 +79,29 @@
 	#define MOUSETRAP_LAYER             2.14
 	#define PLANT_LAYER                 2.15
 
+=======
+	#define EXPOSED_SCRUBBERS_LAYER     2.08
+	#define EXPOSED_SUPPLY_LAYER        2.09
+	#define EXPOSED_PIPE_LAYER          2.10
+	#define EXPOSED_WIRE_LAYER          2.11
+	#define ABOVE_EXPOSED_WIRE_LAYER    2.12
+	#define CATWALK_LAYER               2.13
+	#define ABOVE_CATWALK_LAYER         2.14
+	#define BLOOD_LAYER                 2.15
+	#define MOUSETRAP_LAYER             2.16
+	#define PLANT_LAYER                 2.17
+>>>>>>> theirs
 	//HIDING MOB
-	#define HIDING_MOB_LAYER            2.16
-	#define SHALLOW_FLUID_LAYER         2.17
-	#define MOB_SHADOW_LAYER            2.18
+	#define HIDING_MOB_LAYER            2.18
+	#define SHALLOW_FLUID_LAYER         2.19
+	#define MOB_SHADOW_LAYER            2.20
 	//OBJ
-	#define BELOW_DOOR_LAYER            2.19
-	#define OPEN_DOOR_LAYER             2.20
-	#define BELOW_TABLE_LAYER           2.21
-	#define TABLE_LAYER                 2.22
-	#define BELOW_OBJ_LAYER             2.23
-	#define STRUCTURE_LAYER             2.24
+	#define BELOW_DOOR_LAYER            2.21
+	#define OPEN_DOOR_LAYER             2.22
+	#define BELOW_TABLE_LAYER           2.23
+	#define TABLE_LAYER                 2.24
+	#define BELOW_OBJ_LAYER             2.25
+	#define STRUCTURE_LAYER             2.26
 	// OBJ_LAYER                        3
 	#define ABOVE_OBJ_LAYER             3.01
 	#define CLOSED_DOOR_LAYER           3.02
