@@ -7,9 +7,9 @@
 	holder_type = /obj/machinery/fabricator
 	wire_count = 6
 	descriptions = list(
-		new /datum/wire_description(AUTOLATHE_HACK_WIRE, "This wire appears to lead to an auxiliary data storage unit."),
-		new /datum/wire_description(AUTOLATHE_SHOCK_WIRE, "This wire seems to be carrying a heavy current."),
-		new /datum/wire_description(AUTOLATHE_DISABLE_WIRE, "This wire is connected to the power switch.", SKILL_EXPERIENCED)
+		new /datum/wire_description(AUTOLATHE_HACK_WIRE, "This wire appears to lead to an auxiliary data storage unit.", "Contraband"),
+		new /datum/wire_description(AUTOLATHE_SHOCK_WIRE, "This wire seems to be carrying a heavy current.", "Shock"),
+		new /datum/wire_description(AUTOLATHE_DISABLE_WIRE, "This wire is connected to the power switch.", "Power", SKILL_EXPERIENCED)
 	)
 
 /datum/wires/fabricator/GetInteractWindow(mob/user)
