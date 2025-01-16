@@ -17167,7 +17167,8 @@
 "cBD" = (
 /obj/structure/table/steel_reinforced,
 /obj/machinery/photocopier/faxmachine{
-	department = "Captain's reserve fax"
+	department = "Captain's reserve fax";
+	destination = "NanoTrasen Central Command"
 	},
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/techfloor/grid,
@@ -22050,7 +22051,8 @@
 	},
 /obj/structure/table/reinforced,
 /obj/machinery/photocopier/faxmachine{
-	department = "Quartermaster"
+	department = "Quartermaster";
+	destination = "NanoTrasen Central Command"
 	},
 /obj/structure/noticeboard{
 	dir = 4;
@@ -22520,7 +22522,8 @@
 	},
 /obj/structure/table/standard,
 /obj/machinery/photocopier/faxmachine{
-	department = "HOP"
+	department = "HOP";
+	destination = "NanoTrasen Central Command"
 	},
 /obj/floor_decal/borderfloor{
 	dir = 10
@@ -26993,7 +26996,8 @@
 /obj/structure/disposalpipe/segment,
 /obj/structure/table/steel,
 /obj/machinery/photocopier/faxmachine{
-	department = "HOS"
+	department = "HOS";
+	destination = "NanoTrasen Central Command"
 	},
 /obj/floor_decal/borderfloorblack{
 	dir = 8
@@ -36344,7 +36348,8 @@
 "fmH" = (
 /obj/structure/table/standard,
 /obj/machinery/photocopier/faxmachine{
-	department = "IAA Office"
+	department = "IAA Office";
+	destination = "NanoTrasen Central Command"
 	},
 /obj/item/documents/nanotrasen/sierra,
 /obj/floor_decal/borderfloorblack{
@@ -42798,7 +42803,8 @@
 	},
 /obj/structure/table/glass,
 /obj/machinery/photocopier/faxmachine{
-	department = "Bridge"
+	department = "Bridge";
+	destination = "NanoTrasen Central Command"
 	},
 /obj/floor_decal/borderfloorblack{
 	dir = 4
@@ -57308,7 +57314,8 @@
 "ivT" = (
 /obj/structure/table/steel_reinforced,
 /obj/machinery/photocopier/faxmachine{
-	department = "Warden"
+	department = "Warden";
+	destination = "NanoTrasen Central Command"
 	},
 /obj/floor_decal/borderfloor{
 	dir = 8
@@ -59536,7 +59543,7 @@
 /obj/floor_decal/spline/fancy/black{
 	dir = 1
 	},
-/obj/random/documents,
+/obj/item/reagent_containers/food/drinks/glass2/coffeecup/NT,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/bridge)
 "iMM" = (
@@ -60110,7 +60117,8 @@
 /area/engineering/engine_room)
 "iQh" = (
 /obj/machinery/photocopier/faxmachine{
-	department = "Research Director's Office"
+	department = "Research Director's Office";
+	destination = "NanoTrasen Central Command"
 	},
 /obj/item/book/manual/nt_regs,
 /obj/structure/table/glass/boron,
@@ -70967,7 +70975,8 @@
 /area/hallway/primary/bridgedeck/center)
 "kwc" = (
 /obj/machinery/photocopier/faxmachine{
-	department = "Exploration Leader"
+	department = "Exploration Leader";
+	destination = "NanoTrasen Central Command"
 	},
 /obj/structure/table/reinforced,
 /obj/machinery/light,
@@ -83899,7 +83908,8 @@
 "mrh" = (
 /obj/structure/table/woodentable/walnut,
 /obj/machinery/photocopier/faxmachine{
-	department = "Captain"
+	department = "Captain";
+	destination = "NanoTrasen Central Command"
 	},
 /obj/item/paper/sierra/captain_fax,
 /obj/machinery/recharger/wallcharger{
@@ -116498,7 +116508,8 @@
 "rfp" = (
 /obj/structure/table/steel,
 /obj/machinery/photocopier/faxmachine{
-	department = "CE"
+	department = "CE";
+	destination = "NanoTrasen Central Command"
 	},
 /obj/machinery/requests_console{
 	announcementConsole = 1;
@@ -117138,7 +117149,8 @@
 "rkb" = (
 /obj/structure/table/standard,
 /obj/machinery/photocopier/faxmachine{
-	department = "CMO"
+	department = "CMO";
+	destination = "NanoTrasen Central Command"
 	},
 /obj/floor_decal/corner/blue{
 	dir = 10
@@ -128081,7 +128093,7 @@
 /obj/floor_decal/corner/darkblue/mono,
 /obj/floor_decal/industrial/outline/yellow,
 /obj/floor_decal/spline/fancy/black,
-/obj/random/documents,
+/obj/item/reagent_containers/food/drinks/glass2/coffeecup/NT,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/bridge)
 "sMY" = (
@@ -152643,7 +152655,8 @@
 "wuk" = (
 /obj/structure/table/woodentable_reinforced,
 /obj/machinery/photocopier/faxmachine{
-	department = "Chief Steward"
+	department = "Chief Steward";
+	destination = "NanoTrasen Central Command"
 	},
 /obj/machinery/light,
 /turf/simulated/floor/wood,

@@ -70,6 +70,12 @@
 	pixel_y = -24;
 	pixel_x = 7
 	},
+/obj/machinery/button/alternate/door/bolts{
+	id_tag = "handpodone_port_shuttle_dock_interior_door";
+	name = "door bolts";
+	pixel_y = 30;
+	req_access = list("ACCESS_HAND")
+	},
 /turf/simulated/floor/plating,
 /area/ship/hand/crew/miner_one)
 "al" = (
@@ -164,6 +170,28 @@
 /obj/floor_decal/industrial/hatch/yellow,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/hand/engineering/hallway)
+"aD" = (
+/obj/machinery/button/ignition{
+	id_tag = "hand_igniter";
+	pixel_y = 5;
+	pixel_x = -24
+	},
+/obj/machinery/button/blast_door{
+	pixel_x = -23;
+	name = "Heating Chamber Vent";
+	id_tag = "hand_fuelheat";
+	dir = 4;
+	pixel_y = -7
+	},
+/obj/machinery/button/blast_door{
+	id_tag = "hand_engineview";
+	name = "Chamber viewing port control";
+	pixel_x = -32;
+	pixel_y = -7;
+	dir = 4
+	},
+/turf/simulated/floor/tiled/techmaint,
+/area/ship/hand/maintenance/atmos/fuel)
 "aE" = (
 /obj/machinery/atmospherics/pipe/simple/visible/red{
 	dir = 5
@@ -1942,6 +1970,11 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/machinery/airlock_sensor{
+	frequency = 1380;
+	id_tag = "handpodone_port_shuttle_dock_sensor_internal";
+	pixel_x = -23
+	},
 /turf/simulated/floor/plating,
 /area/ship/hand/crew/miner_one)
 "jY" = (
@@ -3123,6 +3156,9 @@
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 8
 	},
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/simulated/floor/lino,
 /area/ship/hand/command)
 "qi" = (
@@ -3497,6 +3533,8 @@
 /obj/structure/closet/crate/secure/gear,
 /obj/item/device/scanner/price,
 /obj/item/device/scanner/price,
+/obj/item/storage/bolt_bag/full_of_bolts,
+/obj/item/storage/bolt_bag/full_of_bolts,
 /turf/simulated/floor/tiled/techmaint,
 /area/ship/hand/engineering/starboard)
 "rI" = (
@@ -4222,7 +4260,7 @@
 "vf" = (
 /obj/machinery/door/blast/regular{
 	dir = 4;
-	id_tag = "HandCOVent";
+	id_tag = "hand_fuelheat";
 	name = "Heating Chamber Vent"
 	},
 /turf/simulated/floor/reinforced{
@@ -4721,7 +4759,9 @@
 /turf/simulated/floor/plating,
 /area/ship/hand/crew/miner_two)
 "xO" = (
-/obj/machinery/igniter,
+/obj/machinery/igniter{
+	id_tag = "hand_igniter"
+	},
 /turf/simulated/floor/reinforced{
 	map_airless = 1
 	},
@@ -4735,6 +4775,7 @@
 	pixel_y = 0;
 	pixel_x = -30
 	},
+/obj/item/storage/lockbox/vials/hand,
 /turf/simulated/floor/lino,
 /area/ship/hand/command/medic)
 "yk" = (
@@ -4762,6 +4803,11 @@
 	pixel_x = 32;
 	pixel_y = 8
 	},
+/obj/machinery/airlock_sensor{
+	frequency = 1380;
+	id_tag = "handpodtwo_port_shuttle_dock_sensor_internal";
+	pixel_x = 34
+	},
 /turf/simulated/floor/plating,
 /area/ship/hand/crew/miner_two)
 "yl" = (
@@ -4776,7 +4822,8 @@
 	tag_airpump = "handpodtwo_port_shuttle_dock_pump";
 	tag_chamber_sensor = "handpodtwo_port_shuttle_dock_sensor_chamber";
 	tag_exterior_door = "handpodtwo_port_shuttle_dock_exterior_door";
-	tag_interior_door = "handpodtwo_port_shuttle_dock_interior_door"
+	tag_interior_door = "handpodtwo_port_shuttle_dock_interior_door";
+	tag_interior_sensor = "handpodtwo_port_shuttle_dock_sensor_internal"
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -4803,6 +4850,12 @@
 	d2 = 8;
 	icon_state = "4-8";
 	pixel_y = 0
+	},
+/obj/machinery/button/alternate/door/bolts{
+	id_tag = "handpodtwo_port_shuttle_dock_interior_door";
+	name = "door bolts";
+	pixel_y = 30;
+	req_access = list("ACCESS_HAND")
 	},
 /turf/simulated/floor/plating,
 /area/ship/hand/crew/miner_two)
@@ -4889,6 +4942,14 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/paint/sun,
+/obj/machinery/door/blast/regular{
+	density = 0;
+	dir = 4;
+	icon_state = "pdoor0";
+	id_tag = "hand_engineview";
+	name = "blast door";
+	opacity = 0
+	},
 /turf/simulated/floor/plating,
 /area/ship/hand/maintenance/atmos/fuel)
 "yN" = (
@@ -6527,7 +6588,8 @@
 	tag_airpump = "handpodone_port_shuttle_dock_pump";
 	tag_chamber_sensor = "handpodone_port_shuttle_dock_sensor_chamber";
 	tag_exterior_door = "handpodone_port_shuttle_dock_exterior_door";
-	tag_interior_door = "handpodone_port_shuttle_dock_interior_door"
+	tag_interior_door = "handpodone_port_shuttle_dock_interior_door";
+	tag_interior_sensor = "handpodone_port_shuttle_dock_sensor_internal"
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -6992,6 +7054,7 @@
 /obj/machinery/computer/mining,
 /obj/paint/brown,
 /obj/structure/wall_frame/standard,
+/obj/structure/table/wallf/steel,
 /turf/simulated/floor/plating,
 /area/ship/hand/crew/hallway/lower)
 "Jp" = (
@@ -9105,6 +9168,9 @@
 /area/ship/hand/maintenance/atmos/fuel)
 "Uv" = (
 /obj/structure/bed/chair/comfy/green,
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/simulated/floor/lino,
 /area/ship/hand/command/medic)
 "UC" = (
@@ -16617,7 +16683,7 @@ Xe
 sT
 Cm
 Wm
-AO
+aD
 Tz
 QJ
 yT
