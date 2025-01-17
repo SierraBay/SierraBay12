@@ -1,6 +1,0 @@
-author: SierraKomodo
-changes:
-  - {rscadd: 'Characters with master electrical engineering now have little labels
-      next to each identifiable wire telling you what they are, saving you the time
-      of pressing examine on each one.'}
-delete-after: true
