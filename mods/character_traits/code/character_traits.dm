@@ -28,7 +28,7 @@
 
 /datum/category_item/player_setup_item/physical/body/content(mob/user)
 	. = ..()
-	. += "<br />[BTN("add_mod_trait", "+ Add trait")]"
+	. += "<br />[BTN("add_mod_trait", "+ Add Race-Specific trait")]"
 	for (var/mod_trait in pref.mod_traits)
 		var/datum/mod_trait/M = GLOB.all_mod_traits[mod_trait]
 

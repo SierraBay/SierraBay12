@@ -36,6 +36,5 @@
 #include "code/adherent_armor.dm"
 #include "code/security.dm"
 #include "code/FBP_vox.dm"
-#include "code\on_floor_icon.dm"
-
-#endif
+#include "code/on_floor_icon.dm"
+#include "code/rndloadoutunathifixes.dm"
