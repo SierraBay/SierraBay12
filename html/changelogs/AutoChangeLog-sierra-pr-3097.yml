@@ -1,5 +1,0 @@
-author: SierraKomodo
-changes:
-  - {tweak: Clicking on catwalks now passes through to turfs if the catwalk itself
-      doesn't handle the interaction.}
-delete-after: true
