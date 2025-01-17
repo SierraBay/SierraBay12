@@ -17,4 +17,4 @@
 	name = "high-capacity device power cell"
 
 /datum/species/unathi
-	inherent_verbs = list(null)
+	inherent_verbs = list()
