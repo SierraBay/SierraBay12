@@ -249,6 +249,7 @@
 	item_state = "bandana"
 	item_flags = ITEM_FLAG_FLEXIBLEMATERIAL | ITEM_FLAG_WASHER_ALLOWED
 	w_class = ITEM_SIZE_SMALL
+	use_alt_layer = TRUE
 
 /obj/item/clothing/mask/bandana/equipped(mob/user, slot)
 	switch(slot)

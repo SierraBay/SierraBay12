@@ -5,6 +5,7 @@
 
 
 #include "code/item_identification.dm"
+#include "code/job.dm"
 #include "code/items/traitor.dm"
 
 #endif

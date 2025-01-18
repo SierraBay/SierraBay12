@@ -3,34 +3,37 @@
 	//Генерирует ли при спавне данный артефакт вокруг себя артефакты?
 	var/can_born_anomalies = TRUE
 	///Минимальное количество аномалий, которое заспавнит артефакт
-	var/min_anomalies_ammout = 10
+	var/min_anomalies_ammout = 1
 	///Максимальное количество аномалий, которое заспавнит артефакт
-	var/max_anomalies_ammout = 20
-	//Честно указываем какой максимальный и минимальный размер аномалий, что могут быть заспавнены артефактом
-	var/max_anomaly_size = 9
-	var/min_anomaly_size = 1
-	var/min_artefacts_ammount = 1
-	var/max_artefacts_ammount = 2
+	var/max_anomalies_ammout = 2
+	var/min_artefacts_ammount = 0
+	var/max_artefacts_ammount = 0
 	///Область в которой будет спавнить аномалии
-	var/range_spawn = 6
+	var/range_spawn = 3
 	//Лист возможных аномалий для спавна
 	var/list/possible_anomalies = list(
-		/obj/anomaly/electra/three_and_three = 5,
-		/obj/anomaly/electra/three_and_three/tesla = 1,
-		/obj/anomaly/thamplin/random = 5,
-		/obj/anomaly/zharka/short_effect = 3,
-		/obj/anomaly/zharka/long_effect = 2,
-		/obj/anomaly/rvach/three_and_three = 4
+		/obj/anomaly/zharka,
+		/obj/anomaly/zharka/short_effect,
+		/obj/anomaly/zharka/long_effect,
+		/obj/anomaly/electra/three_and_three,
+		/obj/anomaly/electra/three_and_three/tesla,
+		/obj/anomaly/electra/three_and_three/tesla_second,
+		/obj/anomaly/vspishka,
+		/obj/anomaly/rvach/three_and_three,
+		/obj/anomaly/heater/three_and_three,
+		/obj/anomaly/heater/two_and_two,
+		/obj/anomaly/cooler/two_and_two,
+		/obj/anomaly/cooler/three_and_three
 		)
 
-/*
+
 //Выведено из ротации, большой артефакт ничего не спавнит
 /obj/machinery/artifact/Initialize()
 	. = ..()
 	if(icon_num == 0 || icon_num == 1 || icon_num == 7 || icon_num == 11)
 		if(can_born_anomalies)
 			born_anomalies()
-*/
+
 /obj/machinery/artifact/no_anomalies
 	can_born_anomalies = FALSE
 
@@ -46,4 +49,4 @@
 	for(var/turf/turfs in RANGE_TURFS(src.loc, range_spawn))
 		if(!TurfBlocked(turfs) || TurfBlockedByAnomaly(turfs))
 			LAZYADD(turfs_for_spawn, turfs)
-	generate_anomalies_in_turfs(possible_anomalies, turfs_for_spawn, min_anomalies_ammout, max_anomalies_ammout, min_artefacts_ammount, max_artefacts_ammount, min_anomaly_size, max_anomaly_size, "big artefact generation", started_in)
+	generate_anomalies_in_turfs(possible_anomalies, turfs_for_spawn, min_anomalies_ammout, max_anomalies_ammout, min_artefacts_ammount, max_artefacts_ammount, null, null, "big artefact generation", started_in)

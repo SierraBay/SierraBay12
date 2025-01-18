@@ -5,7 +5,7 @@
 	color = "#054515"
 	rock_colors = list(COLOR_WHITE)
 	can_spawn_anomalies = TRUE
-	monitor_effect_type = /obj/monitor_effect_triger/swamp
+	monitor_effect_type = /obj/weather/swamp
 	anomalies_type = list()
 	min_anomaly_size = 4
 	max_anomaly_size = 9
@@ -13,7 +13,7 @@
 	max_anomalies_ammout = 400
 	planetary_area = /area/exoplanet/swamp
 	map_generators = list(/datum/random_map/noise/exoplanet/swamp)
-	ruin_tags_blacklist = RUIN_HABITAT|RUIN_WATER|RUIN_HOT_ANOMALIES
+	ruin_tags_blacklist = RUIN_HABITAT|RUIN_WATER|RUIN_HOT_ANOMALIES|RUIN_ELECTRA_ANOMALIES
 	surface_color = "#ffffff"
 	water_color = "#263908"
 	habitability_weight = HABITABILITY_EXTREME

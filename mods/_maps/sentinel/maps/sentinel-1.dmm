@@ -2014,7 +2014,8 @@
 	},
 /obj/machinery/photocopier/faxmachine{
 	send_access = list();
-	department = "Sol 5th Fleet Patrol Craft"
+	department = "Sol 5th Fleet Patrol Craft";
+	destination = "SFV Stinger Command Department"
 	},
 /obj/floor_decal/corner/blue{
 	dir = 5

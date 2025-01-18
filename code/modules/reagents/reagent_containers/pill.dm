@@ -321,12 +321,12 @@
 
 
 /obj/item/reagent_containers/pill/hyronalin
-	name = "Hyronalin (7u)"
+	name = "Hyronalin (10u)"
 	desc = "Used to treat radiation poisoning."
 	icon_state = "pill1"
 /obj/item/reagent_containers/pill/hyronalin/New()
 	..()
-	reagents.add_reagent(/datum/reagent/hyronalin, 7)
+	reagents.add_reagent(/datum/reagent/hyronalin, 10)
 	color = reagents.get_color()
 
 /obj/item/reagent_containers/pill/antirad

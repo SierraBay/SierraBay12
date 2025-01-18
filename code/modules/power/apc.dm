@@ -128,14 +128,85 @@
 	var/update_overlay = -1
 	var/list/update_overlay_chan		// Used to determine if there is a change in channels
 	var/is_critical = 0
-	var/static/status_overlays = 0
+	/// Boolean. Whether or not the status overlays caches have been generated.
+	var/static/status_overlays = FALSE
 	var/failure_timer = 0               // Cooldown thing for apc outage event
 	var/force_update = 0
 	var/emp_hardened = 0
+
+	/**
+	 * List of images. Cached icon overlays for the lock indicator.
+	 *
+	 * ```dm
+	 * list(
+	 * 	1 => emmissive,
+	 * 	2 => "on",
+	 * 	3 => "off"
+	 * )
+	 * ```
+	 */
 	var/static/list/status_overlays_lock
+
+	/**
+	 * List of images. Cached icon overlays for the charging status indicator.
+	 *
+	 * ```dm
+	 * list(
+	 * 	1 => emmissive,
+	 * 	2 => "Not Charging",
+	 * 	3 => "Charging",
+	 * 	4 => "Fully Charged"
+	 * )
+	 * ```
+	 */
 	var/static/list/status_overlays_charging
+
+	/**
+	 * List of images. Cached icon overlays for the equipment channel status indicator.
+	 *
+	 * ```dm
+	 * list(
+	 * 	1 => emissive,
+	 * 	2 => POWERCHAN_OFF,
+	 * 	3 => POWERCHAN_OFF_TEMP,
+	 * 	4 => POWERCHAN_OFF_AUTO,
+	 * 	5 => POWERCHAN_ON,
+	 * 	6 => POWERCHAN_ON_AUTO
+	 * )
+	 * ```
+	 */
 	var/static/list/status_overlays_equipment
+
+	/**
+	 * List of images. Cached icon overlays for the equipment channel status indicator.
+	 *
+	 * ```dm
+	 * list(
+	 * 	1 => emissive,
+	 * 	2 => POWERCHAN_OFF,
+	 * 	3 => POWERCHAN_OFF_TEMP,
+	 * 	4 => POWERCHAN_OFF_AUTO,
+	 * 	5 => POWERCHAN_ON,
+	 * 	6 => POWERCHAN_ON_AUTO
+	 * )
+	 * ```
+	 */
 	var/static/list/status_overlays_lighting
+
+	/**
+	 * List of images. Cached icon overlays for the equipment channel status indicator.
+	 *
+	 * ```dm
+	 * list(
+	 * 	1 => emissive,
+	 * 	2 => POWERCHAN_OFF,
+	 * 	3 => POWERCHAN_OFF_TEMP,
+	 * 	4 => POWERCHAN_OFF_AUTO,
+	 * 	5 => POWERCHAN_ON,
+	 * 	6 => POWERCHAN_ON_AUTO
+	 * )
+	 * ```
+	 */
 	var/static/list/status_overlays_environ
 	var/autoname = 1
 
@@ -261,28 +332,31 @@
 // also add overlays for indicator lights
 /obj/machinery/power/apc/on_update_icon()
 	if (!status_overlays)
-		status_overlays = 1
-		status_overlays_lock = new (2)
-		status_overlays_charging = new (3)
-		status_overlays_equipment = new (5)
-		status_overlays_lighting = new (5)
-		status_overlays_environ = new (5)
+		status_overlays = TRUE
+		status_overlays_lock = new (3)
+		status_overlays_charging = new (4)
+		status_overlays_equipment = new (6)
+		status_overlays_lighting = new (6)
+		status_overlays_environ = new (6)
 
-		status_overlays_lock[1] = overlay_image(icon, "apcox-0", plane = EFFECTS_ABOVE_LIGHTING_PLANE, layer = ABOVE_LIGHTING_LAYER)    // 0=blue 1=red
-		status_overlays_lock[2] = overlay_image(icon, "apcox-1", plane = EFFECTS_ABOVE_LIGHTING_PLANE, layer = ABOVE_LIGHTING_LAYER)
+		status_overlays_lock[1] = emissive_appearance(icon, "apcox")
+		status_overlays_lock[2] = overlay_image(icon, "apcox", COLOR_GREEN_LIGHT)
+		status_overlays_lock[3] = overlay_image(icon, "apcox", COLOR_RED_LIGHT)
 
-		status_overlays_charging[1] = overlay_image(icon, "apco3-0", plane = EFFECTS_ABOVE_LIGHTING_PLANE, layer = ABOVE_LIGHTING_LAYER)
-		status_overlays_charging[2] = overlay_image(icon, "apco3-1", plane = EFFECTS_ABOVE_LIGHTING_PLANE, layer = ABOVE_LIGHTING_LAYER)
-		status_overlays_charging[3] = overlay_image(icon, "apco3-2", plane = EFFECTS_ABOVE_LIGHTING_PLANE, layer = ABOVE_LIGHTING_LAYER)
+		status_overlays_charging[1] = emissive_appearance(icon, "apco3-emissive")
+		status_overlays_charging[2] = overlay_image(icon, "apco3-0")
+		status_overlays_charging[3] = overlay_image(icon, "apco3-1")
+		status_overlays_charging[4] = overlay_image(icon, "apco3-2")
 
 		var/list/channel_overlays = list(status_overlays_equipment, status_overlays_lighting, status_overlays_environ)
 		var/channel = 0
 		for(var/list/channel_leds in channel_overlays)
-			channel_leds[POWERCHAN_OFF + 1] = overlay_image(icon,"apco[channel]",COLOR_RED, EFFECTS_ABOVE_LIGHTING_PLANE, ABOVE_LIGHTING_LAYER)
-			channel_leds[POWERCHAN_OFF_TEMP + 1] = overlay_image(icon,"apco[channel]",COLOR_ORANGE, EFFECTS_ABOVE_LIGHTING_PLANE, ABOVE_LIGHTING_LAYER)
-			channel_leds[POWERCHAN_OFF_AUTO + 1] = overlay_image(icon,"apco[channel]",COLOR_ORANGE, EFFECTS_ABOVE_LIGHTING_PLANE, ABOVE_LIGHTING_LAYER)
-			channel_leds[POWERCHAN_ON + 1] = overlay_image(icon,"apco[channel]",COLOR_LIME, EFFECTS_ABOVE_LIGHTING_PLANE, ABOVE_LIGHTING_LAYER)
-			channel_leds[POWERCHAN_ON_AUTO + 1] = overlay_image(icon,"apco[channel]",COLOR_BLUE, EFFECTS_ABOVE_LIGHTING_PLANE, ABOVE_LIGHTING_LAYER)
+			channel_leds[1] = emissive_appearance(icon, "apco[channel]")
+			channel_leds[POWERCHAN_OFF + 2] = overlay_image(icon,"apco[channel]", COLOR_RED_LIGHT)
+			channel_leds[POWERCHAN_OFF_TEMP + 2] = overlay_image(icon,"apco[channel]", COLOR_ORANGE_LIGHT)
+			channel_leds[POWERCHAN_OFF_AUTO + 2] = overlay_image(icon,"apco[channel]", COLOR_ORANGE_LIGHT)
+			channel_leds[POWERCHAN_ON + 2] = overlay_image(icon,"apco[channel]", COLOR_GREEN_LIGHT)
+			channel_leds[POWERCHAN_ON_AUTO + 2] = overlay_image(icon,"apco[channel]", COLOR_BLUE_LIGHT)
 			channel++
 
 	if(update_state < 0)
@@ -334,12 +408,17 @@
 		if(length(overlays))
 			ClearOverlays()
 		if(!MACHINE_IS_BROKEN(src) && !GET_FLAGS(stat, MACHINE_STAT_MAINT) && update_state & UPDATE_ALLGOOD)
-			AddOverlays(status_overlays_lock[locked+1])
-			AddOverlays(status_overlays_charging[charging+1])
+			AddOverlays(status_overlays_lock[locked+2])
+			AddOverlays(status_overlays_lock[1])
+			AddOverlays(status_overlays_charging[charging+2])
+			AddOverlays(status_overlays_charging[1])
 			if(operating)
-				AddOverlays(status_overlays_equipment[equipment+1])
-				AddOverlays(status_overlays_lighting[lighting+1])
-				AddOverlays(status_overlays_environ[environ+1])
+				AddOverlays(status_overlays_equipment[equipment+2])
+				AddOverlays(status_overlays_equipment[1])
+				AddOverlays(status_overlays_lighting[lighting+2])
+				AddOverlays(status_overlays_lighting[1])
+				AddOverlays(status_overlays_environ[environ+2])
+				AddOverlays(status_overlays_environ[1])
 
 	if(update & 3)
 		if(update_state & (UPDATE_OPENED1|UPDATE_OPENED2|UPDATE_BROKE))

@@ -30,9 +30,6 @@
 	/// A message to show to online staff when joining, if any
 	var/staffwarn
 
-	/// Holds click params [2] and a reference [1] to the atom under the cursor on MouseDown/Drag
-	var/list/selected_target = list(null, null)
-
 	/// Whether or not the client is currently playing the "ship hum" ambience sound
 	var/playing_vent_ambience = FALSE
 

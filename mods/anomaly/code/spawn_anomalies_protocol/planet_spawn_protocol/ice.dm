@@ -3,28 +3,24 @@
 	desc = "A distant, abandoned and cold world, rich in artefacts and anomalous activity."
 	color = "#ebe3e3"
 	rock_colors = list(COLOR_WHITE)
-	can_spawn_anomalies = TRUE
-	monitor_effect_type = /obj/monitor_effect_triger/snow
-	anomalies_type = list(
-		/obj/anomaly/electra/three_and_three = 2,
-		/obj/anomaly/electra/three_and_three/tesla = 7,
-		/obj/anomaly/electra/three_and_three/tesla_second = 6,
-		/obj/anomaly/cooler/two_and_two = 3,
-		/obj/anomaly/cooler/three_and_three = 3
+	//Большие артефакты
+	big_anomaly_artefacts_min_amount = 4
+	big_anomaly_artefacts_max_amount = 6
+	big_artefacts_types = list(
+		/obj/structure/big_artefact/electra
 		)
+	big_artefacts_can_be_close = FALSE
+	big_artefacts_range_spawn = 30
+	weather_manager_type = /obj/weather_manager/snow
+	//
 	possible_themes = list(
 		/datum/exoplanet_theme = 45,
-		/datum/exoplanet_theme/radiation_bombing = 10,
-		/datum/exoplanet_theme/ruined_city = 5,
-		/datum/exoplanet_theme/robotic_guardians = 10
+		/datum/exoplanet_theme/radiation_bombing = 10
 		)
-	min_anomaly_size = 4
-	max_anomaly_size = 9
-	min_anomalies_ammout = 600
-	max_anomalies_ammout = 800
 	planetary_area = /area/exoplanet/ice
 	map_generators = list(/datum/random_map/automata/cave_system/mountains/ice, /datum/random_map/noise/exoplanet/ice)
 	ruin_tags_blacklist = RUIN_HABITAT|RUIN_WATER|RUIN_HOT_ANOMALIES
+	ruin_tags_whitelist = RUIN_ELECTRA_ANOMALIES
 	surface_color = "#ffffff"
 	water_color = "#0700c7"
 	habitability_weight = HABITABILITY_EXTREME
@@ -58,7 +54,7 @@
 	color = COLOR_WHITE
 
 /obj/overmap/visitable/sector/exoplanet/ice/generate_map()
-	.=..()
+	..()
 	//После создания карты, разместим камушки
 	var/list/list_of_turfs =  get_area_turfs(planetary_area)
 	//Соберём все подходящие для нас турфы льда
@@ -246,6 +242,7 @@
 	icon = 'mods/anomaly/icons/icerocks.dmi'
 	icon_state = "rock_1"
 	anchored = TRUE
+	density = TRUE
 	var/icon_state_list = list("rock_1", "rock_2", "rock_3")
 
 /obj/structure/ice_rock/Initialize()

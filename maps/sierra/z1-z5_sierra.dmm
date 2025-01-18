@@ -17183,7 +17183,8 @@
 "cBD" = (
 /obj/structure/table/steel_reinforced,
 /obj/machinery/photocopier/faxmachine{
-	department = "Captain's reserve fax"
+	department = "Captain's reserve fax";
+	destination = "NanoTrasen Central Command"
 	},
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/techfloor/grid,
@@ -20658,8 +20659,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/airlock/maintenance{
-	name = "Xenoflora Lab Maintenance";
-	req_access = newlist()
+	name = "Research Division Maintenance";
+	req_access = list("ACCESS_RESEARCH");
+	autoset_access = 0
 	},
 /obj/floor_decal/industrial/hatch/yellow,
 /turf/simulated/floor/tiled/techfloor/grid,
@@ -22059,7 +22061,8 @@
 	},
 /obj/structure/table/reinforced,
 /obj/machinery/photocopier/faxmachine{
-	department = "Quartermaster"
+	department = "Quartermaster";
+	destination = "NanoTrasen Central Command"
 	},
 /obj/structure/noticeboard{
 	dir = 4;
@@ -22529,7 +22532,8 @@
 	},
 /obj/structure/table/standard,
 /obj/machinery/photocopier/faxmachine{
-	department = "HOP"
+	department = "HOP";
+	destination = "NanoTrasen Central Command"
 	},
 /obj/floor_decal/borderfloor{
 	dir = 10
@@ -27002,7 +27006,8 @@
 /obj/structure/disposalpipe/segment,
 /obj/structure/table/steel,
 /obj/machinery/photocopier/faxmachine{
-	department = "HOS"
+	department = "HOS";
+	destination = "NanoTrasen Central Command"
 	},
 /obj/floor_decal/borderfloorblack{
 	dir = 8
@@ -27458,7 +27463,9 @@
 /obj/structure/table/woodentable_reinforced/ebony,
 /obj/floor_decal/carpet/blue,
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
-/obj/item/modular_computer/laptop/preset/custom_loadout/advanced,
+/obj/item/modular_computer/laptop/preset/custom_loadout/advanced{
+	dir = 1
+	},
 /turf/simulated/floor/carpet/blue,
 /area/crew_quarters/heads/office/iaa)
 "dXe" = (
@@ -31302,7 +31309,9 @@
 /area/crew_quarters/head_big)
 "eAi" = (
 /obj/structure/table/steel,
-/obj/item/modular_computer/laptop/preset/custom_loadout/advanced,
+/obj/item/modular_computer/laptop/preset/custom_loadout/advanced{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/shuttle/petrov/security)
 "eAj" = (
@@ -33353,15 +33362,6 @@
 /area/hallway/primary/fourthdeck/center)
 "ePs" = (
 /obj/structure/closet/crate/freezer,
-/obj/item/reagent_containers/ivbag/blood/human/oneg,
-/obj/item/reagent_containers/ivbag/blood/human/oneg,
-/obj/item/reagent_containers/ivbag/blood/human/oneg,
-/obj/item/reagent_containers/ivbag/blood/human/oneg,
-/obj/item/reagent_containers/ivbag/blood/human/aneg,
-/obj/item/reagent_containers/ivbag/blood/human/apos,
-/obj/item/reagent_containers/ivbag/blood/human/bneg,
-/obj/item/reagent_containers/ivbag/blood/human/bpos,
-/obj/item/reagent_containers/ivbag/nanoblood,
 /obj/floor_decal/industrial/outline/yellow,
 /obj/item/reagent_containers/food/snacks/candy/donor,
 /obj/item/reagent_containers/food/snacks/candy/donor,
@@ -33378,10 +33378,8 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/random/blood_packs,
-/obj/random/blood_packs,
-/obj/random/blood_packs,
-/obj/random/blood_packs,
+/obj/item/storage/box/bloodpacks,
+/obj/item/storage/box/bloodpacks,
 /turf/simulated/floor/tiled/white,
 /area/medical/equipstorage)
 "ePv" = (
@@ -36358,7 +36356,8 @@
 "fmH" = (
 /obj/structure/table/standard,
 /obj/machinery/photocopier/faxmachine{
-	department = "IAA Office"
+	department = "IAA Office";
+	destination = "NanoTrasen Central Command"
 	},
 /obj/item/documents/nanotrasen/sierra,
 /obj/floor_decal/borderfloorblack{
@@ -41467,7 +41466,8 @@
 /obj/floor_decal/industrial/hatch/yellow,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/multi_tile/virology{
-	dir = 8
+	dir = 8;
+	name = "Atmospherics Compartment"
 	},
 /obj/item/taperoll/engineering/applied,
 /turf/simulated/floor/tiled/techfloor/grid,
@@ -42812,7 +42812,8 @@
 	},
 /obj/structure/table/glass,
 /obj/machinery/photocopier/faxmachine{
-	department = "Bridge"
+	department = "Bridge";
+	destination = "NanoTrasen Central Command"
 	},
 /obj/floor_decal/borderfloorblack{
 	dir = 4
@@ -43755,7 +43756,9 @@
 /obj/machinery/door/firedoor,
 /obj/floor_decal/corner/red/mono,
 /obj/floor_decal/industrial/hatch/yellow,
-/obj/machinery/door/airlock/glass/virology,
+/obj/machinery/door/airlock/glass/virology{
+	name = "Isolator"
+	},
 /obj/machinery/door/blast/shutters{
 	id_tag = "vir_isol"
 	},
@@ -45055,6 +45058,7 @@
 	},
 /obj/item/storage/bolt_bag/full_of_beacons,
 /obj/item/clothing/gloves/anomaly_detector,
+/obj/item/artefact_detector,
 /turf/simulated/floor/tiled,
 /area/command/exploration_leader)
 "gDH" = (
@@ -51477,7 +51481,8 @@
 /obj/machinery/door/airlock/multi_tile/virology{
 	locked = 1;
 	id_tag = "virology_access_inner";
-	frequency = 1379
+	frequency = 1379;
+	name = "Virology"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable/green{
@@ -51913,7 +51918,7 @@
 /obj/structure/bed/chair/armchair/black{
 	dir = 4
 	},
-/obj/machinery/camera/network/command{
+/obj/machinery/camera/motion/command{
 	c_tag = "Command - Internal Affairs Communications Relay";
 	dir = 1
 	},
@@ -52268,6 +52273,10 @@
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 1
 	},
+/obj/machinery/alarm{
+	dir = 1;
+	pixel_y = -24
+	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/crew_quarters/sauna)
 "hGD" = (
@@ -52507,7 +52516,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/engineering/engine_room)
 "hIo" = (
-/obj/machinery/camera/all/command{
+/obj/machinery/camera/ai/core{
 	c_tag = "AI Core - Aft Starboard";
 	dir = 4
 	},
@@ -57302,7 +57311,8 @@
 "ivT" = (
 /obj/structure/table/steel_reinforced,
 /obj/machinery/photocopier/faxmachine{
-	department = "Warden"
+	department = "Warden";
+	destination = "NanoTrasen Central Command"
 	},
 /obj/floor_decal/borderfloor{
 	dir = 8
@@ -58052,14 +58062,6 @@
 /obj/structure/table/rack,
 /turf/simulated/floor/plating,
 /area/maintenance/seconddeck/foreport)
-"iBI" = (
-/obj/floor_decal/industrial/warning,
-/obj/machinery/camera/network/command{
-	c_tag = "Command - Vault";
-	dir = 8
-	},
-/turf/simulated/floor/selfestructgrid,
-/area/security/nuke_storage)
 "iBJ" = (
 /obj/floor_decal/industrial/outline/grey,
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
@@ -59530,7 +59532,7 @@
 /obj/floor_decal/spline/fancy/black{
 	dir = 1
 	},
-/obj/random/documents,
+/obj/item/reagent_containers/food/drinks/glass2/coffeecup/NT,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/bridge)
 "iMM" = (
@@ -60104,7 +60106,8 @@
 /area/engineering/engine_room)
 "iQh" = (
 /obj/machinery/photocopier/faxmachine{
-	department = "Research Director's Office"
+	department = "Research Director's Office";
+	destination = "NanoTrasen Central Command"
 	},
 /obj/item/book/manual/nt_regs,
 /obj/structure/table/glass/boron,
@@ -62517,7 +62520,9 @@
 /obj/structure/table/standard{
 	name = "plastic table frame"
 	},
-/obj/item/modular_computer/laptop/preset/custom_loadout/advanced,
+/obj/item/modular_computer/laptop/preset/custom_loadout/advanced{
+	dir = 8
+	},
 /obj/machinery/button/alternate/door/bolts{
 	id_tag = "bridgesafe_back";
 	name = "Emergency Exit door-control";
@@ -67946,9 +67951,9 @@
 /turf/simulated/floor/tiled/steel_grid,
 /area/engineering/engineering_monitoring)
 "jZW" = (
-/obj/machinery/camera/all/command{
-	c_tag = "AI Core - Auxiliary Access";
-	dir = 1
+/obj/machinery/camera/ai/core{
+	dir = 1;
+	c_tag = "AI Core - Auxiliary Access"
 	},
 /obj/machinery/alarm{
 	dir = 1;
@@ -70746,7 +70751,8 @@
 	id_tag = "petrov_shuttle_dock_inner";
 	name = "Docking Port Airlock";
 	autoset_access = 0;
-	req_access = list(list("ACCESS_PETROV","ACCESS_SEC_DOORS"))
+	req_access = list(list("ACCESS_PETROV","ACCESS_SEC_DOORS"));
+	frequency = 1380
 	},
 /obj/floor_decal/industrial/hatch/yellow,
 /obj/structure/cable/green{
@@ -70977,7 +70983,8 @@
 /area/hallway/primary/bridgedeck/center)
 "kwc" = (
 /obj/machinery/photocopier/faxmachine{
-	department = "Exploration Leader"
+	department = "Exploration Leader";
+	destination = "NanoTrasen Central Command"
 	},
 /obj/structure/table/reinforced,
 /obj/machinery/light,
@@ -75336,7 +75343,9 @@
 /area/maintenance/thirddeck/starboard)
 "ldC" = (
 /obj/structure/table/steel,
-/obj/item/modular_computer/laptop/preset/custom_loadout/standard,
+/obj/item/modular_computer/laptop/preset/custom_loadout/standard{
+	dir = 4
+	},
 /obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = -24
@@ -76406,6 +76415,10 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/green{
 	dir = 4
+	},
+/obj/machinery/camera/network/engineering{
+	c_tag = "First Deck - Port Necelle";
+	dir = 1
 	},
 /turf/simulated/floor/reinforced,
 /area/thruster/d1port)
@@ -78252,7 +78265,7 @@
 /turf/simulated/floor/tiled/white/monotile,
 /area/medical/infirmreception)
 "lyR" = (
-/obj/machinery/camera/all/command{
+/obj/machinery/camera/ai/core{
 	c_tag = "AI Core - Fore Starboard Access";
 	dir = 8
 	},
@@ -80175,7 +80188,8 @@
 /area/shuttle/petrov/test_room)
 "lMu" = (
 /obj/machinery/door/airlock/civilian{
-	dir = 4
+	dir = 4;
+	name = "Observatory"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -83020,7 +83034,9 @@
 /area/engineering/bluespace)
 "miW" = (
 /obj/structure/table/woodentable/ebony,
-/obj/item/modular_computer/laptop/preset/custom_loadout/standard,
+/obj/item/modular_computer/laptop/preset/custom_loadout/standard{
+	dir = 4
+	},
 /obj/structure/sign/poster/nyc/zeng_hu_pharmaceuticals{
 	pixel_x = -32
 	},
@@ -83915,7 +83931,8 @@
 "mrh" = (
 /obj/structure/table/woodentable/walnut,
 /obj/machinery/photocopier/faxmachine{
-	department = "Captain"
+	department = "Captain";
+	destination = "NanoTrasen Central Command"
 	},
 /obj/item/paper/sierra/captain_fax,
 /obj/machinery/recharger/wallcharger{
@@ -86217,7 +86234,8 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/civilian{
-	dir = 4
+	dir = 4;
+	name = "Recreation Compartment"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -88831,7 +88849,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/shuttle_landmark/petrov/start,
 /turf/simulated/floor/tiled/white,
 /area/shuttle/petrov/airlock)
 "ncx" = (
@@ -91533,7 +91550,9 @@
 	dir = 1
 	},
 /obj/floor_decal/industrial/hatch/yellow,
-/obj/machinery/door/airlock/hatch/maintenance,
+/obj/machinery/door/airlock/hatch/maintenance{
+	autoset_access = 0
+	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -96357,9 +96376,9 @@
 	},
 /area/space)
 "oki" = (
-/obj/machinery/camera/all/command{
-	c_tag = "AI Core - Aft Port";
-	dir = 4
+/obj/machinery/camera/ai/core{
+	dir = 4;
+	c_tag = "AI Core - Aft Port"
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -96495,7 +96514,8 @@
 	tag_exterior_door = "petrov_shuttle_dock_outer";
 	tag_interior_door = "petrov_shuttle_dock_inner";
 	tag_exterior_sensor = "petrov_shuttle_dock_sensor";
-	tag_airpump = "petrov_shuttle_dock_pump"
+	tag_airpump = "petrov_shuttle_dock_pump";
+	frequency = 1380
 	},
 /obj/floor_decal/borderfloorwhite,
 /obj/floor_decal/borderfloorwhite{
@@ -96910,7 +96930,8 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/medical/mortus{
-	dir = 4
+	dir = 4;
+	name = "Chapel Office"
 	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/chapel/office)
@@ -101914,7 +101935,8 @@
 	id_tag = "petrov_shuttle_dock_outer";
 	name = "Docking Port Airlock";
 	autoset_access = 0;
-	req_access = list(list("ACCESS_PETROV","ACCESS_SEC_DOORS"))
+	req_access = list(list("ACCESS_PETROV","ACCESS_SEC_DOORS"));
+	frequency = 1380
 	},
 /obj/machinery/shield_diffuser,
 /obj/floor_decal/industrial/hatch/yellow,
@@ -102519,14 +102541,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/blast/shutters{
-	density = 0;
-	dir = 2;
-	icon_state = "shutter0";
-	id_tag = "hangar_hallway_shutters";
-	name = "Hangar Deck Hallway Shutters";
-	opacity = 0
-	},
 /obj/floor_decal/industrial/hatch/yellow,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/maintenance/fourthdeck/foreport)
@@ -112755,7 +112769,8 @@
 /obj/floor_decal/industrial/hatch/yellow,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/medical/mortus{
-	dir = 4
+	dir = 4;
+	name = "Confessional Room"
 	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/chapel/office)
@@ -114938,7 +114953,8 @@
 /obj/machinery/door/airlock/multi_tile/virology{
 	locked = 1;
 	id_tag = "virology_access_outer";
-	frequency = 1379
+	frequency = 1379;
+	name = "Virology"
 	},
 /obj/structure/cable/green{
 	d1 = 1;
@@ -116514,7 +116530,8 @@
 "rfp" = (
 /obj/structure/table/steel,
 /obj/machinery/photocopier/faxmachine{
-	department = "CE"
+	department = "CE";
+	destination = "NanoTrasen Central Command"
 	},
 /obj/machinery/requests_console{
 	announcementConsole = 1;
@@ -117081,6 +117098,9 @@
 /obj/machinery/alarm{
 	pixel_y = 24
 	},
+/obj/machinery/camera/network/engineering{
+	c_tag = "First Deck - Starbound Necelle"
+	},
 /turf/simulated/floor/reinforced,
 /area/thruster/d1starboard)
 "rjy" = (
@@ -117154,7 +117174,8 @@
 "rkb" = (
 /obj/structure/table/standard,
 /obj/machinery/photocopier/faxmachine{
-	department = "CMO"
+	department = "CMO";
+	destination = "NanoTrasen Central Command"
 	},
 /obj/floor_decal/corner/blue{
 	dir = 10
@@ -119153,7 +119174,8 @@
 /obj/machinery/airlock_sensor{
 	id_tag = "petrov_shuttle_dock_sensor";
 	master_tag = "petrov_shuttle_dock";
-	pixel_x = -24
+	pixel_x = -24;
+	frequency = 1380
 	},
 /obj/floor_decal/industrial/warning/cee{
 	dir = 8
@@ -120390,7 +120412,7 @@
 	dir = 5
 	},
 /obj/machinery/door/window/westleft{
-	name = "Medical Reception"
+	name = "Patient Ward"
 	},
 /obj/machinery/light{
 	dir = 4
@@ -123584,7 +123606,8 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/medical/mortus{
-	dir = 4
+	dir = 4;
+	name = "Chapel Morgue"
 	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/chapel/mortuary)
@@ -125566,7 +125589,9 @@
 /obj/machinery/door/firedoor,
 /obj/floor_decal/corner/paleblue/mono,
 /obj/floor_decal/industrial/hatch/yellow,
-/obj/machinery/door/airlock/glass/virology,
+/obj/machinery/door/airlock/glass/virology{
+	name = "Patient Ward One"
+	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/item/taperoll/engineering/applied,
@@ -126439,9 +126464,9 @@
 /turf/simulated/floor/reinforced,
 /area/thruster/d1starboard)
 "sCx" = (
-/obj/machinery/camera/all/command{
-	c_tag = "AI Core - Fore Port Access";
-	dir = 8
+/obj/machinery/camera/ai/core{
+	dir = 8;
+	c_tag = "AI Core - Fore Port Access"
 	},
 /obj/floor_decal/techfloor{
 	dir = 6
@@ -127458,8 +127483,9 @@
 /area/bridge/storage)
 "sIv" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "Xenoflora Lab Maintenance";
-	req_access = newlist()
+	name = "Research Division Maintenance";
+	req_access = list("ACCESS_RESEARCH");
+	autoset_access = 0
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/blast/regular/open{
@@ -127491,7 +127517,7 @@
 /turf/simulated/floor/tiled/white,
 /area/medical/wardhallway)
 "sIK" = (
-/obj/machinery/camera/all/command{
+/obj/machinery/camera/ai/core{
 	c_tag = "AI Core - Entry";
 	dir = 1
 	},
@@ -127957,7 +127983,8 @@
 /area/crew_quarters/heads/captain/secret_room)
 "sMd" = (
 /obj/machinery/door/airlock/civilian{
-	dir = 4
+	dir = 4;
+	name = "Recreation Compartment"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -128103,7 +128130,7 @@
 /obj/floor_decal/corner/darkblue/mono,
 /obj/floor_decal/industrial/outline/yellow,
 /obj/floor_decal/spline/fancy/black,
-/obj/random/documents,
+/obj/item/reagent_containers/food/drinks/glass2/coffeecup/NT,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/bridge)
 "sMY" = (
@@ -128942,7 +128969,9 @@
 /obj/machinery/door/firedoor,
 /obj/floor_decal/corner/green/mono,
 /obj/floor_decal/industrial/hatch/yellow,
-/obj/machinery/door/airlock/glass/virology,
+/obj/machinery/door/airlock/glass/virology{
+	name = "Virology Lab"
+	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
@@ -131623,7 +131652,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
 	},
-/obj/machinery/camera/network/command{
+/obj/machinery/camera/motion/command{
 	c_tag = "Command - Internal Affairs Office";
 	dir = 4
 	},
@@ -140317,7 +140346,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/medical/mortus{
 	dir = 4;
-	name = "Chapel"
+	name = "Chapel Morgue"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -142327,6 +142356,7 @@
 	pixel_y = 32
 	},
 /obj/floor_decal/corner/green/mono,
+/obj/item/storage/lockbox/vials,
 /turf/simulated/floor/tiled/white,
 /area/medical/virology/lab)
 "uUl" = (
@@ -143121,7 +143151,8 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/civilian{
-	dir = 4
+	dir = 4;
+	name = "Observatory"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -144082,7 +144113,9 @@
 /obj/machinery/door/firedoor,
 /obj/floor_decal/corner/paleblue/mono,
 /obj/floor_decal/industrial/hatch/yellow,
-/obj/machinery/door/airlock/glass/virology,
+/obj/machinery/door/airlock/glass/virology{
+	name = "Main Patient Ward"
+	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/item/taperoll/engineering/applied,
@@ -144760,7 +144793,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/medical/mortus{
 	dir = 4;
-	name = "Chapel"
+	name = "Chapel Morgue"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -151876,6 +151909,7 @@
 	dir = 4
 	},
 /obj/floor_decal/industrial/hatch/yellow,
+/obj/shuttle_landmark/petrov/start,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/shuttle/petrov/airlock)
 "wnX" = (
@@ -152642,7 +152676,8 @@
 "wuk" = (
 /obj/structure/table/woodentable_reinforced,
 /obj/machinery/photocopier/faxmachine{
-	department = "Chief Steward"
+	department = "Chief Steward";
+	destination = "NanoTrasen Central Command"
 	},
 /obj/machinery/light,
 /turf/simulated/floor/wood,
@@ -160676,6 +160711,18 @@
 	},
 /turf/simulated/floor/tiled,
 /area/hallway/primary/firstdeck/aft)
+"xIm" = (
+/obj/machinery/door/firedoor,
+/obj/floor_decal/corner/paleblue/mono,
+/obj/floor_decal/industrial/hatch/yellow,
+/obj/machinery/door/airlock/glass/virology{
+	name = "Patient Ward Two"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/item/taperoll/engineering/applied,
+/turf/simulated/floor/tiled/white/monotile,
+/area/medical/virology/lab)
 "xIp" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden{
 	dir = 8
@@ -162749,7 +162796,9 @@
 /obj/machinery/door/firedoor,
 /obj/floor_decal/corner/green/mono,
 /obj/floor_decal/industrial/hatch/yellow,
-/obj/machinery/door/airlock/glass/virology,
+/obj/machinery/door/airlock/glass/virology{
+	name = "Virology Storage"
+	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/tiled/white/monotile,
@@ -162987,8 +163036,10 @@
 "xZt" = (
 /obj/machinery/door/firedoor,
 /obj/floor_decal/industrial/hatch/yellow,
-/obj/machinery/door/airlock/glass/maintenance{
-	autoset_access = 0
+/obj/machinery/door/airlock/glass/mining{
+	dir = 8;
+	name = "Hangar Bay";
+	req_access = newlist()
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/quartermaster/hangar/upper)
@@ -163494,8 +163545,8 @@
 /turf/simulated/floor/plating,
 /area/hallway/primary/seconddeck/center)
 "ycx" = (
-/obj/shuttle_landmark/ert/dock,
 /obj/shuttle_landmark/sierra/deck4/skrellscout,
+/obj/shuttle_landmark/ert/dock,
 /turf/space,
 /area/space)
 "ycK" = (
@@ -265614,7 +265665,7 @@ kCD
 huY
 xAG
 eGe
-swA
+xIm
 gFe
 veC
 vgV
@@ -291905,7 +291956,7 @@ hJM
 hDE
 iNw
 xCY
-iBI
+dOH
 pQr
 diy
 dKB
