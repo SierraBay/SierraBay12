@@ -221,6 +221,10 @@ GLOBAL_LIST_INIT(cable_default_colors, list(
 		if (!can_use(2))
 			to_chat(user, SPAN_WARNING("You don't have enough cable to hang a wire down."))
 			return
+		var/turf/below = GetBelow(target)
+		if (!below.is_plating())
+			USE_FEEDBACK_FAILURE("\The [below] below needs to have its tiling removed before you can lay a cable.")
+			return
 		to_dir = DOWN
 	var/from_dir = user.dir
 	if (user.loc != target)

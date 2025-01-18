@@ -3,9 +3,9 @@
 	random = 1
 	wire_count = 7
 	descriptions = list(
-		new /datum/wire_description(NUCLEARBOMB_WIRE_LIGHT, "This wire seems to connect to the small light on the device.", SKILL_EXPERIENCED),
-		new /datum/wire_description(NUCLEARBOMB_WIRE_TIMING, "This wire connects to the time display."),
-		new /datum/wire_description(NUCLEARBOMB_WIRE_SAFETY, "This wire connects to a safety override.")
+		new /datum/wire_description(NUCLEARBOMB_WIRE_LIGHT, "This wire seems to connect to the small light on the device.", "Light", SKILL_EXPERIENCED),
+		new /datum/wire_description(NUCLEARBOMB_WIRE_TIMING, "This wire connects to the time display.", "Timer"),
+		new /datum/wire_description(NUCLEARBOMB_WIRE_SAFETY, "This wire connects to a safety override.", "Safety")
 	)
 
 var/global/const/NUCLEARBOMB_WIRE_LIGHT		= 1
