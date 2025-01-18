@@ -57,3 +57,4 @@ package-lock.json
 # ignore local selected map
 /maps/using.dm
 mods/failu_skrell_clothes/code/suits.dm
+/mods/failu_skrell_clothes
