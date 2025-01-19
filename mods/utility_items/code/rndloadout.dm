@@ -15,6 +15,3 @@
 
 /datum/design/item/powercell/device/high
 	name = "high-capacity device power cell"
-
-/datum/species/unathi
-	inherent_verbs = list()

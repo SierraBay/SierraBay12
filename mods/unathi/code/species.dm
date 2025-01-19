@@ -4,3 +4,6 @@
 	unarmed_types += /datum/unarmed_attack/bite/venom/yeosa
 	inherent_verbs += list(/mob/living/carbon/human/unathi/yeosa/proc/decant_venom)
 	. = ..()
+
+/datum/species/unathi
+	inherent_verbs = list()
