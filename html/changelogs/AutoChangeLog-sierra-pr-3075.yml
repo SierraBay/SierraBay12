@@ -1,0 +1,7 @@
+author: JebediahTechnic
+changes:
+  - {tweak: 'All helmet light ranges are now on par with regular flashlight ranges.
+      Some helmets such as engineering/atmospheric helmets, exploration/pathfinder
+      helmets, hardhats, and skrell recon helmets were given slightly stronger lights.'}
+  - {tweak: Floodlights have a wider angle of illumination and a slightly longer range.}
+delete-after: true

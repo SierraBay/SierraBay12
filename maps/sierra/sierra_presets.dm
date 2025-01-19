@@ -135,6 +135,19 @@ var/global/const/NETWORK_ENGINEERING_OUTPOST = "Engineering Outpost"
 /obj/machinery/camera/motion/engineering_outpost
 	network = list(NETWORK_ENGINEERING_OUTPOST)
 
+/obj/machinery/camera/motion/command
+	network = list(NETWORK_COMMAND)
+
+// AI Core
+
+/obj/machinery/camera/ai/Initialize()
+	. = ..()
+	upgradeEmpProof()
+	upgradeMotion()
+
+/obj/machinery/camera/ai/core
+	network = list(NETWORK_COMMAND)
+
 // All Upgrades
 /obj/machinery/camera/all/command
 	network = list(NETWORK_COMMAND)

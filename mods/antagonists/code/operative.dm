@@ -1,4 +1,5 @@
 ///Ninja equipment loadouts. Placed here because author overrided them using Torch files. Now we overriding this again for some QoL stuff.
+
 /obj/structure/closet/crate/ninja/sol
 	name = "sol equipment crate"
 	desc = "A tactical equipment crate."
