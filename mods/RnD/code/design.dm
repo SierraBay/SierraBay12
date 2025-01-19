@@ -14,6 +14,12 @@
 			size += 1
 	return size
 
+/datum/computer_file/binary/design/proc/on_design_set()
+	if(design.id == "id")
+		set_filename(design.name)
+	else
+		set_filename(design.id)
+
 /datum/computer_file/binary/design/proc/set_filename(new_name)
 	filename = sanitizeFileName("[new_name]")
 	if(findtext(filename, "datum_design_") == 1)

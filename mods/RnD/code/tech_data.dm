@@ -23,7 +23,7 @@
 	y = 0.2
 	icon = "tablet_frame"
 
-	required_technologies = list("basic_modular")
+	required_technologies = list(/datum/technology/data)
 	required_tech_levels = list()
 	cost = 750
 
@@ -38,7 +38,7 @@
 	y = 0.4
 	icon = "hdd64"
 
-	required_technologies = list("basic_modular")
+	required_technologies = list(/datum/technology/data)
 	required_tech_levels = list()
 	cost = 250
 
@@ -53,7 +53,7 @@
 	y = 0.5
 	icon = "hdd256"
 
-	required_technologies = list("ms_hdd")
+	required_technologies = list(/datum/technology/data/ms_hdd)
 	required_tech_levels = list()
 	cost = 500
 
@@ -68,7 +68,7 @@
 	y = 0.6
 	icon = "hdd512"
 
-	required_technologies = list("adv_hdd")
+	required_technologies = list(/datum/technology/data/adv_hdd)
 	required_tech_levels = list()
 	cost = 750
 
@@ -83,7 +83,7 @@
 	y = 0.7
 	icon = "hdd2048"
 
-	required_technologies = list("sup_hdd")
+	required_technologies = list(/datum/technology/data/sup_hdd)
 	required_tech_levels = list()
 	cost = 1250
 
@@ -98,7 +98,7 @@
 	y = 0.4
 	icon = "netcard_w"
 
-	required_technologies = list("basic_modular")
+	required_technologies = list(/datum/technology/data)
 	required_tech_levels = list()
 	cost = 500
 
@@ -113,7 +113,7 @@
 	y = 0.5
 	icon = "netcard_adv"
 
-	required_technologies = list("netcard_w")
+	required_technologies = list(/datum/technology/data/netcard_w)
 	required_tech_levels = list()
 	cost = 1250
 
@@ -128,7 +128,7 @@
 	y = 0.4
 	icon = "cpu_small"
 
-	required_technologies = list("basic_modular")
+	required_technologies = list(/datum/technology/data/netcard_adv)
 	required_tech_levels = list()
 	cost = 250
 
@@ -143,7 +143,7 @@
 	y = 0.5
 	icon = "pcpu_small"
 
-	required_technologies = list("cpu_small")
+	required_technologies = list(/datum/technology/data/cpu_small)
 	required_tech_levels = list()
 	cost = 500
 
@@ -158,7 +158,7 @@
 	y = 0.6
 	icon = "pcpu"
 
-	required_technologies = list("pcpu_small")
+	required_technologies = list(/datum/technology/data/pcpu_small)
 	required_tech_levels = list()
 	cost = 1200
 
@@ -173,7 +173,7 @@
 	y = 0.4
 	icon = "modular_bat_micro"
 
-	required_technologies = list("basic_modular")
+	required_technologies = list(/datum/technology/data)
 	required_tech_levels = list()
 	cost = 250
 
@@ -188,7 +188,7 @@
 	y = 0.5
 	icon = "modular_bat_advanced"
 
-	required_technologies = list("modular_bat_micro")
+	required_technologies = list(/datum/technology/data/modular_bat_micro)
 	required_tech_levels = list()
 	cost = 500
 
@@ -203,7 +203,7 @@
 	y = 0.6
 	icon = "modular_bat_super"
 
-	required_technologies = list("modular_bat_advanced")
+	required_technologies = list(/datum/technology/data/modular_bat_advanced)
 	required_tech_levels = list()
 	cost = 750
 
@@ -218,7 +218,7 @@
 	y = 0.7
 	icon = "modular_bat_ultra"
 
-	required_technologies = list("modular_bat_super")
+	required_technologies = list(/datum/technology/data/modular_bat_super)
 	required_tech_levels = list()
 	cost = 1250
 
@@ -233,7 +233,7 @@
 	y = 0.2
 	icon = "tesla_link"
 
-	required_technologies = list("basic_modular")
+	required_technologies = list(/datum/technology/data)
 	required_tech_levels = list()
 	cost = 500
 
@@ -248,7 +248,7 @@
 	y = 0.2
 	icon = "nanoprinter"
 
-	required_technologies = list("basic_modular")
+	required_technologies = list(/datum/technology/data)
 	required_tech_levels = list()
 	cost = 500
 
@@ -263,7 +263,7 @@
 	y = 0.2
 	icon = "rfid"
 
-	required_technologies = list("basic_modular")
+	required_technologies = list(/datum/technology/data)
 	required_tech_levels = list()
 	cost = 750
 
@@ -278,7 +278,7 @@
 	y = 0.3
 	icon = "nanoprinter"
 
-	required_technologies = list("basic_modular")
+	required_technologies = list(/datum/technology/data)
 	required_tech_levels = list()
 	cost = 750
 
@@ -294,7 +294,7 @@
 	y = 0.6
 	icon = "aicircuit"
 
-	required_technologies = list("pcpu_small")
+	required_technologies = list(/datum/technology/data/pcpu_small)
 	required_tech_levels = list()
 	cost = 1500
 
@@ -309,7 +309,7 @@
 	y = 0.7
 	icon = "aicircuit"
 
-	required_technologies = list("ai_laws")
+	required_technologies = list(/datum/technology/data/ai_laws)
 	required_tech_levels = list()
 	cost = 1500
 

@@ -1,4 +1,5 @@
 /obj/machinery/fabricator
+	/*
 	name = "autolathe"
 	desc = "It produces common day to day items from a variety of materials."
 	icon = 'icons/obj/machines/fabricators/autolathe.dmi'
@@ -132,3 +133,4 @@
 				M.place_sheet(get_turf(src), round(stored_material[mat] / M.units_per_sheet), M.name)
 	..()
 	return TRUE
+*/

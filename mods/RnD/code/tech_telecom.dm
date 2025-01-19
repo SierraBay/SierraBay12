@@ -22,7 +22,7 @@
 	y = 0.6
 	icon = "monitoring"
 
-	required_technologies = list("telecomm_parts")
+	required_technologies = list(/datum/technology/tcom/tcom_parts)
 	required_tech_levels = list()
 	cost = 1250
 
@@ -37,7 +37,7 @@
 	y = 0.7
 	icon = "monitoring"
 
-	required_technologies = list("tcom_monitoring")
+	required_technologies = list(/datum/technology/tcom/monitoring)
 	required_tech_levels = list()
 	cost = 1550
 
@@ -52,7 +52,7 @@
 	y = 0.6
 	icon = "relay"
 
-	required_technologies = list("telecomm_parts")
+	required_technologies = list(/datum/technology/tcom/tcom_parts)
 	required_tech_levels = list()
 	cost = 1500
 
@@ -67,7 +67,7 @@
 	y = 0.6
 	icon = "solnet_relay"
 
-	required_technologies = list("telecomm_parts")
+	required_technologies = list(/datum/technology/tcom/tcom_parts)
 	required_tech_levels = list()
 	cost = 1750
 
@@ -82,7 +82,7 @@
 	y = 0.6
 	icon = "subspace"
 
-	required_technologies = list("telecomm_parts")
+	required_technologies = list(/datum/technology/tcom/tcom_parts)
 	required_tech_levels = list()
 	cost = 1500
 
@@ -97,7 +97,7 @@
 	y = 0.6
 	icon = "processor"
 
-	required_technologies = list("telecomm_parts")
+	required_technologies = list(/datum/technology/tcom/tcom_parts)
 	required_tech_levels = list()
 	cost = 1500
 
@@ -113,7 +113,7 @@
 	y = 0.5
 	icon = "telecom_part"
 
-	required_technologies = list("track_dev")
+	required_technologies = list(/datum/technology/tcom)
 	required_tech_levels = list()
 	cost = 750
 
@@ -128,7 +128,7 @@
 	y = 0.3
 	icon = "bscrystal"
 
-	required_technologies = list("track_dev")
+	required_technologies = list(/datum/technology/tcom)
 	required_tech_levels = list()
 	cost = 1000
 
@@ -144,7 +144,7 @@
 	y = 0.2
 	icon = "telepad"
 
-	required_technologies = list("crystal")
+	required_technologies = list(/datum/technology/tcom/arti_blue)
 	required_tech_levels = list()
 	cost = 3000
 
@@ -160,7 +160,7 @@
 	y = 0.2
 	icon = "rd"
 
-	required_technologies = list("crystal")
+	required_technologies = list(/datum/technology/tcom/arti_blue)
 	required_tech_levels = list()
 	cost = 2500
 
@@ -176,7 +176,7 @@
 	y = 0.2
 	icon = "teleport"
 
-	required_technologies = list("crystal")
+	required_technologies = list(/datum/technology/tcom/arti_blue)
 	required_tech_levels = list()
 	cost = 3000
 
@@ -192,7 +192,7 @@
 	y = 0.2
 	icon = "bluespace"
 
-	required_technologies = list("crystal")
+	required_technologies = list(/datum/technology/tcom/arti_blue)
 	required_tech_levels = list()
 	cost = 1800
 
@@ -207,7 +207,7 @@
 	y = 0.2
 	icon = "shieldgen"
 
-	required_technologies = list("crystal")
+	required_technologies = list(/datum/technology/tcom/arti_blue)
 	required_tech_levels = list()
 	cost = 1500
 

@@ -19,11 +19,12 @@
 	desc = "Basic Medical Machines"
 	id = "basic_medical_machines"
 
+
 	x = 0.2
 	y = 0.5
 	icon = "operationcomputer"
 
-	required_technologies = list("basic_biotech")
+	required_technologies = list(/datum/technology/bio)
 	required_tech_levels = list()
 	cost = 250
 
@@ -34,11 +35,12 @@
 	desc = "Hydroponics"
 	id = "hydroponics"
 
+
 	x = 0.1
 	y = 0.4
 	icon = "hydroponics"
 
-	required_technologies = list("basic_biotech")
+	required_technologies = list(/datum/technology/bio)
 	required_tech_levels = list()
 	cost = 500
 
@@ -49,11 +51,12 @@
 	desc = "Advanced Hydroponics"
 	id = "adv_hydroponics"
 
+
 	x = 0.1
 	y = 0.3
 	icon = "gene"
 
-	required_technologies = list("hydroponics")
+	required_technologies = list(/datum/technology/bio/hydroponics)
 	required_tech_levels = list()
 	cost = 1200
 
@@ -64,11 +67,12 @@
 	desc = "Food Processing"
 	id = "food_process"
 
+
 	x = 0.2
 	y = 0.4
 	icon = "microwave"
 
-	required_technologies = list("hydroponics")
+	required_technologies = list(/datum/technology/bio/hydroponics)
 	required_tech_levels = list()
 	cost = 500
 
@@ -79,11 +83,12 @@
 	desc = "Implants"
 	id = "implants"
 
+
 	x = 0.2
 	y = 0.6
 	icon = "implant"
 
-	required_technologies = list("basic_medical_machines")
+	required_technologies = list(/datum/technology/bio/basic_medical_machines)
 	required_tech_levels = list()
 	cost = 1500
 
@@ -94,11 +99,12 @@
 	desc = "Advanced Medical Machines"
 	id = "adv_med_machines"
 
+
 	x = 0.3
 	y = 0.5
 	icon = "sleeper"
 
-	required_technologies = list("basic_medical_machines")
+	required_technologies = list(/datum/technology/bio/basic_medical_machines)
 	required_tech_levels = list()
 	cost = 1500
 
@@ -109,11 +115,12 @@
 	desc = "Additional Medical Tools"
 	id = "add_med_tools"
 
+
 	x = 0.4
 	y = 0.5
 	icon = "medhud"
 
-	required_technologies = list("adv_med_machines")
+	required_technologies = list(/datum/technology/bio/adv_med_machines)
 	required_tech_levels = list()
 	cost = 1000
 
@@ -124,11 +131,12 @@
 	desc = "Advanced Additional Medical Tools"
 	id = "adv_add_med_tools"
 
+
 	x = 0.6
 	y = 0.5
 	icon = "adv_mass_spec"
 
-	required_technologies = list("add_med_tools")
+	required_technologies = list(/datum/technology/bio/add_med_tools)
 	required_tech_levels = list()
 	cost = 1500
 
@@ -138,13 +146,13 @@
 	name = "Hypospray"
 	desc = "Hypospray"
 	id = "hypospray"
-	tech_type = RESEARCH_BIOTECH
+
 
 	x = 0.6
 	y = 0.4
 	icon = "hypo"
 
-	required_technologies = list("adv_add_med_tools")
+	required_technologies = list(/datum/technology/bio/add_med_tools)
 	required_tech_levels = list()
 	cost = 2000
 
@@ -155,11 +163,12 @@
 	desc = "Incision Management System"
 	id = "scalpelmanager"
 
+
 	x = 0.7
 	y = 0.5
 	icon = "scalpelmanager"
 
-	required_technologies = list("adv_add_med_tools")
+	required_technologies = list(/datum/technology/bio/add_med_tools)
 	required_tech_levels = list()
 	cost = 2000
 
@@ -170,11 +179,12 @@
 	desc = "Special Beakers"
 	id = "beakers"
 
+
 	x = 0.6
 	y = 0.6
 	icon = "blue_beaker"
 
-	required_technologies = list("adv_add_med_tools")
+	required_technologies = list(/datum/technology/bio/add_med_tools)
 	required_tech_levels = list()
 	cost = 2000
 

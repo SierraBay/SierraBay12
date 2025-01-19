@@ -2344,7 +2344,6 @@
 "aqf" = (
 /obj/machinery/fabricator{
 	desc = "Your typical Autolathe. It appears to have much more options than your regular one, however...";
-	fab_status_flags = 1;
 	name = "unlocked autolathe"
 	},
 /obj/floor_decal/borderfloorblack{
@@ -10410,7 +10409,7 @@
 	dir = 9
 	},
 /obj/structure/table/reinforced,
-/obj/machinery/fabricator/micro,
+/obj/machinery/fabricator,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/flooring/tiles.dmi';
 	icon_state = "white"

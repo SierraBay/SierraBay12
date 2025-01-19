@@ -2,6 +2,10 @@
 #define MODPACK_RND
 
 #include "_RnD.dm"
+#include "code/_designs.dm"
+#include "code/asset.dm"
+#include "code/autolathe.dm"
+#include "code/designownloader.dm"
 #include "code/research.dm"
 #include "code/experiment.dm"
 #include "code/tech_biotech.dm"
@@ -15,8 +19,53 @@
 #include "code/binary.dm"
 #include "code/design.dm"
 #include "code/camera.dm"
+#include "code/SSresearch.dm"
 #include "code/sciefolder.dm"
 #include "code/misc.dm"
+#include "code/designs_autolathe/designs_arms_ammo.dm"
+#include "code/designs_autolathe/designs_cutlery.dm"
+#include "code/designs_autolathe/designs_devices_components.dm"
+#include "code/designs_autolathe/designs_engineering.dm"
+#include "code/designs_autolathe/designs_medical.dm"
+#include "code/designs_autolathe/designs_glasses.dm"
+#include "code/designs_autolathe/designs_general.dm"
 
 
 #endif
+// BEGIN_INTERNALS
+// END_INTERNALS
+// BEGIN_FILE_DIR
+#define FILE_DIR .
+// END_FILE_DIR
+// BEGIN_PREFERENCES
+// END_PREFERENCES
+// BEGIN_INCLUDE
+#include "_RnD.dm"
+#include "code\_designs.dm"
+#include "code\asset.dm"
+#include "code\autolathe.dm"
+#include "code\binary.dm"
+#include "code\camera.dm"
+#include "code\design.dm"
+#include "code\designownloader.dm"
+#include "code\experiment.dm"
+#include "code\misc.dm"
+#include "code\research.dm"
+#include "code\sciefolder.dm"
+#include "code\SSresearch.dm"
+#include "code\tech_biotech.dm"
+#include "code\tech_combat.dm"
+#include "code\tech_data.dm"
+#include "code\tech_engineering.dm"
+#include "code\tech_illegal.dm"
+#include "code\tech_power.dm"
+#include "code\tech_robotics.dm"
+#include "code\tech_telecom.dm"
+#include "code\designs_autolathe\designs_arms_ammo.dm"
+#include "code\designs_autolathe\designs_cutlery.dm"
+#include "code\designs_autolathe\designs_devices_components.dm"
+#include "code\designs_autolathe\designs_engineering.dm"
+#include "code\designs_autolathe\designs_general.dm"
+#include "code\designs_autolathe\designs_glasses.dm"
+#include "code\designs_autolathe\designs_medical.dm"
+// END_INCLUDE

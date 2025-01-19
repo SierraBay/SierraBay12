@@ -51,8 +51,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 	var/can_research = TRUE   //Is this console capable of researching
 
-	var/selected_tech_tree
-	var/selected_technology
+	var/datum/tech/selected_tech_tree
+	var/datum/technology/selected_technology
 	var/show_settings = FALSE
 	var/show_link_menu = FALSE
 	var/selected_protolathe_category
@@ -327,23 +327,24 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	if(..())
 		return 1
 
-	if(href_list["select_tech_tree"])
-		var/new_select_tech_tree = href_list["select_tech_tree"]
-		if(files.all_technologies[new_select_tech_tree])
-			selected_tech_tree = new_select_tech_tree
+	if(href_list["select_tech_tree"]) // User selected a tech tree.
+		var/datum/tech/tech_tree = locate(href_list["select_tech_tree"]) in files.researched_tech
+		if(tech_tree && tech_tree.shown)
+			selected_tech_tree = tech_tree
 			selected_technology = null
-	if(href_list["select_technology"])
-		var/new_selected_technology = href_list["select_technology"]
-		if(files.all_technologies[selected_tech_tree][new_selected_technology])
-			selected_technology = new_selected_technology
-	if(href_list["unlock_technology"])
-		var/unlock = href_list["unlock_technology"]
-		files.UnlockTechology(files.all_technologies[selected_tech_tree][unlock])
-	if(href_list["go_screen"])
+	if(href_list["select_technology"]) // User selected a technology node.
+		var/tech_node = locate(href_list["select_technology"]) in SSresearch.all_tech_nodes
+		if(tech_node)
+			selected_technology = tech_node
+	if(href_list["unlock_technology"]) // User attempts to unlock a technology node (Safeties are within UnlockTechnology)
+		var/tech_node = locate(href_list["unlock_technology"]) in SSresearch.all_tech_nodes
+		if(tech_node)
+			files.UnlockTechology(tech_node)
+	if(href_list["go_screen"]) // User is changing the screen.
 		var/where = href_list["go_screen"]
 		if(href_list["need_access"])
 			if(!allowed(usr) && !emagged)
-				to_chat(usr, "<span class='warning'>Unauthorized Access.</span>")
+				to_chat(usr, SPAN_WARNING("Unauthorized access."))
 				return
 		screen = where
 		if(screen == "protolathe" || screen == "circuit_imprinter")
@@ -511,16 +512,16 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		data["can_research"] = can_research
 
 		var/list/tech_tree_list = list()
-		for(var/tech_tree_id in files.tech_trees)
-			var/datum/tech/Tech_Tree = files.tech_trees[tech_tree_id]
-			if(!Tech_Tree.shown)
+		for(var/tree in files.researched_tech)
+			var/datum/tech/tech_tree = tree
+			if(!tech_tree.shown)
 				continue
 			var/list/tech_tree_data = list(
-				"id" =             Tech_Tree.id,
-				"name" =           "[Tech_Tree.name]",
-				"shortname" =      "[Tech_Tree.shortname]",
-				"level" =          Tech_Tree.level,
-				"maxlevel" =       Tech_Tree.maxlevel,
+				"id" =             tech_tree.type,
+				"name" =           "[tech_tree.name]",
+				"shortname" =      "[tech_tree.shortname]",
+				"level" =          tech_tree.level,
+				"maxlevel" =       tech_tree.maxlevel,
 			)
 			tech_tree_list += list(tech_tree_data)
 		data["tech_trees"] = tech_tree_list
@@ -641,113 +642,123 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		var/list/line_list = list()
 
 		var/list/tech_tree_list = list()
-		for(var/tech_tree_id in files.tech_trees)
-			var/datum/tech/Tech_Tree = files.tech_trees[tech_tree_id]
-			if(!Tech_Tree.shown)
+		for(var/tree in files.researched_tech)
+			var/datum/tech/tech_tree = tree
+			if(!tech_tree.shown)
 				continue
 			var/list/tech_tree_data = list(
-				"id" =             Tech_Tree.id,
-				"name" =           "[Tech_Tree.name]",
-				"shortname" =      "[Tech_Tree.shortname]",
+				"id" =             "\ref[tech_tree]",
+				"name" =           "[tech_tree.name]",
+				"shortname" =      "[tech_tree.shortname]",
 			)
 			tech_tree_list += list(tech_tree_data)
 
 		data["tech_trees"] = tech_tree_list
 
 		if(!selected_tech_tree)
-			selected_tech_tree = files.all_technologies[1]
+			selected_tech_tree = files.researched_tech[1]
 
 		var/list/tech_list = list()
-		if(selected_tech_tree && files.all_technologies[selected_tech_tree])
-			var/datum/tech/Tech_Tree = files.tech_trees[selected_tech_tree]
-			data["tech_tree_name"] = Tech_Tree.name
-			data["tech_tree_desc"] = Tech_Tree.desc
-			data["tech_tree_level"] = Tech_Tree.level
+		if(selected_tech_tree)
+			data["tech_tree_name"] = selected_tech_tree.name
+			data["tech_tree_desc"] = selected_tech_tree.desc
+			data["tech_tree_level"] = selected_tech_tree.level
 
-			for(var/tech_id in files.all_technologies[selected_tech_tree])
-				var/datum/technology/Tech = files.all_technologies[selected_tech_tree][tech_id]
+			for(var/tech in SSresearch.all_tech_trees[selected_tech_tree.type])
+				var/datum/technology/tech_node = tech
 				var/list/tech_data = list(
-					"id" =             Tech.id,
-					"name" =           "[Tech.name]",
-					"x" =              round(Tech.x*100),
-					"y" =              round(Tech.y*100),
-					"icon" =           "[Tech.icon]",
-					"isresearched" =   "[files.IsResearched(Tech)]",
-					"canresearch" =    "[files.CanResearch(Tech)]",
+					"id" =             "\ref[tech_node]",
+					"name" =           "[tech_node.name]",
+					"x" =              round(tech_node.x*100),
+					"y" =              round(tech_node.y*100),
+					"icon" =           "[tech_node.icon]",
+					"isresearched" =   "[files.IsResearched(tech_node)]",
+					"canresearch" =    "[files.CanResearch(tech_node)]",
+					"description" =		"[tech_node.desc]"
 				)
 				tech_list += list(tech_data)
 
-				for(var/req_tech_id in Tech.required_technologies)
-					if(files.all_technologies[selected_tech_tree][req_tech_id])
-						var/datum/technology/OTech = files.all_technologies[selected_tech_tree][req_tech_id]
-						if(OTech.tech_type == Tech.tech_type)
-							var/line_x = (min(round(OTech.x*100), round(Tech.x*100)))
-							var/line_y = (min(round(OTech.y*100), round(Tech.y*100)))
-							var/width = (abs(round(OTech.x*100) - round(Tech.x*100)))
-							var/height = (abs(round(OTech.y*100) - round(Tech.y*100)))
+				for(var/req_tech in tech_node.required_technologies)
+					var/datum/technology/other_tech = locate(req_tech) in SSresearch.all_tech_nodes
+					if(other_tech && other_tech.tech_type == tech_node.tech_type)
+						var/line_x = (min(round(other_tech.x*100), round(tech_node.x*100)))
+						var/line_y = (min(round(other_tech.y*100), round(tech_node.y*100)))
+						var/width = (abs(round(other_tech.x*100) - round(tech_node.x*100)))
+						var/height = (abs(round(other_tech.y*100) - round(tech_node.y*100)))
 
-							var/istop = FALSE
-							if(OTech.y > Tech.y)
-								istop = TRUE
-							var/isright = FALSE
-							if(OTech.x < Tech.x)
-								isright = TRUE
+						var/istop = FALSE
+						if(other_tech.y > tech_node.y)
+							istop = TRUE
+						var/isright = FALSE
+						if(other_tech.x < tech_node.x)
+							isright = TRUE
 
-							var/list/line_data = list(
-								"line_x" =           line_x,
-								"line_y" =           line_y,
-								"width" =            width,
-								"height" =           height,
-								"istop" =            istop,
-								"isright" =          isright,
-							)
-							line_list += list(line_data)
+						var/list/line_data = list(
+							"line_x" =           line_x,
+							"line_y" =           line_y,
+							"width" =            width,
+							"height" =           height,
+							"istop" =            istop,
+							"isright" =          isright,
+						)
+						line_list += list(line_data)
 
 		data["techs"] = tech_list
 		data["lines"] = line_list
-		data["selected_tech_tree"] = selected_tech_tree
+		data["selected_tech_tree"] = "\ref[selected_tech_tree]"
 		data["research_points"] = files.research_points
 
 		data["selected_technology_id"] = ""
 		if(selected_technology)
-			var/datum/technology/Tech = files.all_technologies[selected_tech_tree][selected_technology]
+			var/datum/technology/tech_node = selected_technology
 			var/list/technology_data = list(
-				"name" =           Tech.name,
-				"desc" =           Tech.desc,
-				"id" =             Tech.id,
-				"tech_type" =      Tech.tech_type,
-				"cost" =           Tech.cost,
-				"isresearched" =   files.IsResearched(Tech),
+				"name" =           tech_node.name,
+				"desc" =           tech_node.desc,
+				"id" =             "\ref[tech_node]",
+				"tech_type" =      tech_node.tech_type,
+				"cost" =           tech_node.cost,
+				"isresearched" =   files.IsResearched(tech_node),
 			)
-			data["selected_technology_id"] = Tech.id
+			data["selected_technology_id"] = "\ref[tech_node]"
 
 			var/list/requirement_list = list()
-			for(var/t in Tech.required_tech_levels)
-				var/datum/tech/Tech_Tree = files.tech_trees[t]
-
-				var/level = Tech.required_tech_levels[t]
+			for(var/t in tech_node.required_tech_levels)
+				var/datum/tech/tree = locate(t) in files.researched_tech
+				var/level = tech_node.required_tech_levels[t]
 				var/list/req_data = list(
-					"text" =           "[Tech_Tree.shortname] level [level]",
-					"isgood" =         (Tech_Tree.level >= level)
+					"text" =           "[tree.shortname] level [level]",
+					"isgood" =         (tree.level >= level)
 				)
 				requirement_list += list(req_data)
-			for(var/t in Tech.required_technologies)
-				var/datum/technology/OTech = files.all_technologies[selected_tech_tree][t]
-
+			for(var/t in tech_node.required_technologies)
+				var/datum/technology/other_tech = locate(t) in SSresearch.all_tech_nodes
 				var/list/req_data = list(
-					"text" =           "[OTech.name]",
-					"isgood" =         files.IsResearched(OTech)
+					"text" =           "[other_tech.name]",
+					"isgood" =         files.IsResearched(other_tech)
 				)
 				requirement_list += list(req_data)
 			technology_data["requirements"] = requirement_list
 
 			var/list/unlock_list = list()
-			for(var/T in Tech.unlocks_designs)
-				var/datum/design/D = files.design_by_id[T]
-				var/list/unlock_data = list(
-					"text" = "[D.shortname]"
-				)
-				unlock_list += list(unlock_data)
+			for(var/T in tech_node.unlocks_designs)
+				var/datum/design/D = SSresearch.get_design(T)
+				if(D) // remove?
+					var/list/build_types = list()
+					if(D.build_type & IMPRINTER)
+						build_types += "imprinter"
+					if(D.build_type & PROTOLATHE)
+						build_types += "protolathe"
+					if(D.build_type & BIOPRINTER)
+						build_types += "bioprinter"
+					if(D.build_type & MECHFAB)
+						build_types += "exosuit fabricator"
+					if(D.build_type & ORGAN_GROWER)
+						build_types += "organ grower"
+					var/list/unlock_data = list(
+						"text" =           "[D.name]",
+						"build_types" =		english_list(build_types, "")
+					)
+					unlock_list += list(unlock_data)
 			technology_data["unlocks"] = unlock_list
 
 			data["selected_technology"] = technology_data
@@ -758,6 +769,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 		ui.set_initial_data(data)
 		ui.open()
+		ui.set_auto_update(1)
 //[/SIERRA-EDIT] - MODPACK_RND
 
 /obj/machinery/computer/rdconsole/robotics

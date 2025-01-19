@@ -45,6 +45,7 @@
 		/obj/item/stock_parts/matter_bin = 1,
 		/obj/item/stock_parts/manipulator = 1
 	)
+/*
 /obj/item/stock_parts/circuitboard/replicator
 	name = "circuit board (replicator)"
 	build_path = /obj/machinery/fabricator/replicator
@@ -58,7 +59,7 @@
 		/obj/item/stock_parts/keyboard = 1,
 		/obj/item/stock_parts/power/apc/buildable = 1
 	)
-
+*/
 /obj/item/stock_parts/circuitboard/protolathe
 	name = "circuit board (protolathe)"
 	build_path = /obj/machinery/r_n_d/protolathe

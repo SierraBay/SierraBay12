@@ -986,7 +986,7 @@
 /turf/simulated/wall,
 /area/lost_supply_base/common)
 "cw" = (
-/obj/machinery/fabricator/replicator,
+///obj/machinery/fabricator/replicator,
 /turf/simulated/floor/tiled,
 /area/lost_supply_base/common)
 "cx" = (

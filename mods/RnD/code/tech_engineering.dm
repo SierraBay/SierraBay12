@@ -23,7 +23,7 @@
 	y = 0.6
 	icon = "spaceheater"
 
-	required_technologies = list("monitoring")
+	required_technologies = list(/datum/technology/engineering/monitoring)
 	required_tech_levels = list()
 	cost = 500
 
@@ -38,7 +38,7 @@
 	y = 0.7
 	icon = "pump"
 
-	required_technologies = list("gas_heat")
+	required_technologies = list(/datum/technology/engineering/gas_heat)
 	required_tech_levels = list()
 	cost = 1000
 
@@ -53,7 +53,7 @@
 	y = 0.7
 	icon = "jetpack"
 
-	required_technologies = list("gas_heat")
+	required_technologies = list(/datum/technology/engineering/gas_heat)
 	required_tech_levels = list()
 	cost = 1500
 
@@ -68,7 +68,7 @@
 	y = 0.4
 	icon = "advmatterbin"
 
-	required_technologies = list("monitoring")
+	required_technologies = list(/datum/technology/engineering/monitoring)
 	required_tech_levels = list()
 	cost = 1000
 
@@ -83,7 +83,7 @@
 	y = 0.5
 	icon = "supermatterbin"
 
-	required_technologies = list("adv_eng")
+	required_technologies = list(/datum/technology/engineering/adv_eng)
 	required_tech_levels = list()
 	cost = 2000
 
@@ -98,7 +98,7 @@
 	y = 0.5
 	icon = "monitoring"
 
-	required_technologies = list("basic_engineering")
+	required_technologies = list(/datum/technology/engineering)
 	required_tech_levels = list()
 	cost = 500
 
@@ -113,7 +113,7 @@
 	y = 0.5
 	icon = "rd"
 
-	required_technologies = list("monitoring")
+	required_technologies = list(/datum/technology/engineering/monitoring)
 	required_tech_levels = list()
 	cost = 750
 
@@ -129,7 +129,7 @@
 	y = 0.5
 	icon = "pickaxe"
 
-	required_technologies = list("res_tech")
+	required_technologies = list(/datum/technology/engineering/res_tech)
 	required_tech_levels = list()
 	cost = 1000
 
@@ -145,7 +145,7 @@
 	y = 0.6
 	icon = "anom"
 
-	required_technologies = list("basic_mining")
+	required_technologies = list(/datum/technology/engineering/basic_mining)
 	required_tech_levels = list()
 	cost = 500
 
@@ -161,7 +161,7 @@
 	y = 0.7
 	icon = "drill"
 
-	required_technologies = list("xenoarch")
+	required_technologies = list(/datum/technology/engineering/xenoarch)
 	required_tech_levels = list()
 	cost = 750
 
@@ -177,7 +177,7 @@
 	y = 0.7
 	icon = "diamond_drill"
 
-	required_technologies = list("excavation_drill")
+	required_technologies = list(/datum/technology/engineering/excavation_drill)
 	required_tech_levels = list()
 	cost = 1250
 
@@ -193,7 +193,7 @@
 	y = 0.3
 	icon = "smelter"
 
-	required_technologies = list("basic_mining")
+	required_technologies = list(/datum/technology/engineering/basic_mining)
 	required_tech_levels = list()
 	cost = 1000
 
@@ -208,7 +208,7 @@
 	y = 0.2
 	icon = "cutter"
 
-	required_technologies = list("mining_prod")
+	required_technologies = list(/datum/technology/engineering/mining_prod)
 	required_tech_levels = list()
 	cost = 1500
 
@@ -224,7 +224,7 @@
 	y = 0.4
 	icon = "nav"
 
-	required_technologies = list("basic_mining")
+	required_technologies = list(/datum/technology/engineering/basic_mining)
 	required_tech_levels = list()
 	cost = 2000
 
@@ -239,7 +239,7 @@
 	y = 0.5
 	icon = "rped"
 
-	required_technologies = list("nav")
+	required_technologies = list(/datum/technology/engineering/ship)
 	required_tech_levels = list()
 	cost = 2000
 
@@ -254,7 +254,7 @@
 	y = 0.5
 	icon = "jawsoflife"
 
-	required_technologies = list("adv_eng")
+	required_technologies = list(/datum/technology/engineering/adv_eng)
 	required_tech_levels = list()
 	cost = 2000
 
@@ -269,7 +269,7 @@
 	y = 0.4
 	icon = "brace"
 
-	required_technologies = list("res_tech")
+	required_technologies = list(/datum/technology/engineering/res_tech)
 	required_tech_levels = list()
 	cost = 1500
 
@@ -284,7 +284,7 @@
 	y = 0.3
 	icon = "icprinter"
 
-	required_technologies = list("adv_eng")
+	required_technologies = list(/datum/technology/engineering/adv_eng)
 	required_tech_levels = list()
 	cost = 750
 
@@ -299,7 +299,7 @@
 	y = 0.2
 	icon = "icupgradv"
 
-	required_technologies = list("icprinter")
+	required_technologies = list(/datum/technology/engineering/icprinter)
 	required_tech_levels = list()
 	cost = 1500
 
@@ -314,7 +314,7 @@
 	y = 0.3
 	icon = "icupclo"
 
-	required_technologies = list("icprinter")
+	required_technologies = list(/datum/technology/engineering/icprinter)
 	required_tech_levels = list()
 	cost = 1000
 

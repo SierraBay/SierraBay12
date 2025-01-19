@@ -423,6 +423,13 @@
 	icon_state = "dark"
 	},
 /area/tdome/testing)
+"beD" = (
+/obj/machinery/computer/rdconsole,
+/obj/item/research,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/tdome/testing)
 "beU" = (
 /obj/structure/flora/ausbushes/ywflowers,
 /turf/unsimulated/floor/grass,
@@ -486,6 +493,12 @@
 	icon_state = "dark"
 	},
 /area/tdome/testing)
+"bvm" = (
+/obj/machinery/robotics_fabricator,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/tdome/testing)
 "bZN" = (
 /obj/floor_decal/corner/paleblue/mono,
 /turf/unsimulated/floor{
@@ -494,6 +507,21 @@
 /area/tdome/testing)
 "ckU" = (
 /obj/item/melee/powerfist/mounted,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/tdome/testing)
+"cEM" = (
+/obj/machinery/r_n_d/destructive_analyzer,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/tdome/testing)
+"cZW" = (
+/obj/item/stock_parts/computer/hard_drive/portable/advanced,
+/obj/item/stock_parts/computer/hard_drive/portable/advanced,
+/obj/item/stock_parts/computer/hard_drive/portable/advanced,
+/obj/item/stock_parts/computer/hard_drive/portable/advanced,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -539,6 +567,15 @@
 "ezA" = (
 /obj/item/mech_equipment/catapult,
 /obj/structure/table/steel,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/tdome/testing)
+"eEg" = (
+/obj/item/stack/material/steel/fifty,
+/obj/item/stack/material/plastic/fifty,
+/obj/item/stack/material/glass/fifty,
+/obj/item/stack/material/aluminium/fifty,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -605,6 +642,12 @@
 	icon_state = "dark"
 	},
 /area/tdome/testing)
+"iuO" = (
+/obj/machinery/r_n_d/circuit_imprinter,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/tdome/testing)
 "iQN" = (
 /obj/item/gun/projectile/sniper/garand,
 /turf/unsimulated/floor{
@@ -653,6 +696,12 @@
 "ktR" = (
 /obj/item/artefact/gravi,
 /obj/structure/table/steel,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/tdome/testing)
+"kwb" = (
+/obj/item/modular_computer/laptop/preset/custom_loadout/advanced,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -734,6 +783,12 @@
 	icon_state = "dark"
 	},
 /area/tdome/testing)
+"olC" = (
+/obj/machinery/r_n_d/server,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/tdome/testing)
 "owp" = (
 /mob/living/exosuit/premade/combat,
 /turf/unsimulated/floor{
@@ -742,6 +797,12 @@
 /area/tdome/testing)
 "oCN" = (
 /mob/living/exosuit/premade/firefighter,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/tdome/testing)
+"oDH" = (
+/obj/machinery/fabricator/micro,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -786,6 +847,12 @@
 /area/tdome/testing)
 "qRg" = (
 /obj/item/gun/projectile/revolver/capgun,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/tdome/testing)
+"rkx" = (
+/obj/machinery/computer/modular/preset/civilian/professional,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -862,6 +929,12 @@
 	icon_state = "dark"
 	},
 /area/tdome/testing)
+"vVv" = (
+/obj/machinery/r_n_d/protolathe,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/tdome/testing)
 "wKa" = (
 /obj/item/gun/projectile/sniper/semistrip,
 /turf/unsimulated/floor{
@@ -881,8 +954,20 @@
 	icon_state = "dark"
 	},
 /area/tdome/testing)
+"wRk" = (
+/obj/machinery/computer/rdservercontrol,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/tdome/testing)
 "xcX" = (
 /obj/item/stack/material/steel/fifty,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/tdome/testing)
+"xKL" = (
+/obj/machinery/fabricator,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -17355,15 +17440,15 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+lCd
+lCd
+lCd
+lCd
+lCd
+lCd
+lCd
+lCd
+lCd
 aab
 aab
 aab
@@ -17557,15 +17642,15 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+lCd
+olC
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+lCd
 aab
 aab
 aab
@@ -17759,15 +17844,15 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+lCd
+wRk
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+lCd
 aab
 aab
 aab
@@ -17961,15 +18046,15 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+lCd
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+lCd
 aab
 aab
 aab
@@ -18163,15 +18248,15 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+lCd
+cEM
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+lCd
 aab
 aab
 aab
@@ -18365,15 +18450,15 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+lCd
+vVv
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+lCd
 aab
 aab
 aab
@@ -18567,15 +18652,15 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+lCd
+beD
+gqB
+gqB
+gqB
+gqB
+gqB
+eEg
+lCd
 aab
 aab
 aab
@@ -18769,15 +18854,15 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+lCd
+iuO
+gqB
+gqB
+gqB
+gqB
+gqB
+bvm
+lCd
 aab
 aab
 aab
@@ -18971,15 +19056,15 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+lCd
+kwb
+cZW
+gqB
+gqB
+gqB
+gqB
+gqB
+lCd
 aab
 aab
 aab
@@ -19173,15 +19258,15 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+lCd
+rkx
+gqB
+gqB
+gqB
+gqB
+gqB
+xKL
+lCd
 aab
 aab
 aab
@@ -19375,15 +19460,15 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+lCd
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+eEg
+lCd
 aab
 aab
 aab
@@ -19577,15 +19662,15 @@ aab
 aab
 aab
 aab
-aab
-aab
 lCd
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+oDH
 lCd
-lCd
-lCd
-lCd
-aab
-aab
 aab
 aab
 aab
@@ -19780,13 +19865,13 @@ lCd
 lCd
 lCd
 lCd
-lCd
-lCd
 gqB
 gqB
 gqB
-lCd
-lCd
+gqB
+gqB
+gqB
+gqB
 lCd
 lCd
 lCd

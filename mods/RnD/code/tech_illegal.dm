@@ -23,7 +23,7 @@
 	y = 0.6
 	icon = "kit"
 
-	required_technologies = list("radiokey")
+	required_technologies = list(/datum/technology/esoteric)
 	required_tech_levels = list()
 	cost = 1500
 
@@ -38,7 +38,7 @@
 	y = 0.6
 	icon = "kit"
 
-	required_technologies = list("chameleon_kit")
+	required_technologies = list(/datum/technology/esoteric/chameleon_kit)
 	required_tech_levels = list()
 	cost = 1500
 
@@ -55,7 +55,7 @@
 	y = 0.5
 	icon = "implantcase"
 
-	required_technologies = list("radiokey")
+	required_technologies = list(/datum/technology/esoteric)
 	required_tech_levels = list()
 	cost = 1500
 
@@ -71,7 +71,7 @@
 	y = 0.5
 	icon = "aicircuit"
 
-	required_technologies = list("radiokey")
+	required_technologies = list(/datum/technology/esoteric)
 	required_tech_levels = list()
 	cost = 2000
 
@@ -86,7 +86,7 @@
 	y = 0.4
 	icon = "aicircuit"
 
-	required_technologies = list("borg_syndicate_module")
+	required_technologies = list(/datum/technology/esoteric/borg_syndicate_module)
 	required_tech_levels = list()
 	cost = 1500
 
@@ -101,7 +101,7 @@
 	y = 0.6
 	icon = "implantcase"
 
-	required_technologies = list("freedom_implant")
+	required_technologies = list(/datum/technology/esoteric/freedom_implant)
 	required_tech_levels = list()
 	cost = 1250
 
@@ -116,7 +116,7 @@
 	y = 0.4
 	icon = "hardsuitmodule"
 
-	required_technologies = list("radiokey")
+	required_technologies = list(/datum/technology/esoteric)
 	required_tech_levels = list()
 	cost = 1250
 
@@ -132,7 +132,7 @@
 	y = 0.4
 	icon = "hardsuitmodule"
 
-	required_technologies = list("enet")
+	required_technologies = list(/datum/technology/esoteric/enet)
 	required_tech_levels = list()
 	cost = 2000
 

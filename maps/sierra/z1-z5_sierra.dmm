@@ -38004,7 +38004,7 @@
 /area/quartermaster/hangar_stairs)
 "fAj" = (
 /obj/structure/table/woodentable_reinforced/walnut,
-/obj/machinery/fabricator/micro/bartender{
+/obj/machinery/fabricator{
 	pixel_x = 4
 	},
 /obj/structure/noticeboard{
@@ -38586,7 +38586,7 @@
 	dir = 8
 	},
 /obj/structure/table/standard,
-/obj/machinery/fabricator/micro/bartender{
+/obj/machinery/fabricator{
 	pixel_x = 5;
 	pixel_y = 2
 	},
@@ -82194,7 +82194,7 @@
 /area/crew_quarters/cafe)
 "mdp" = (
 /obj/structure/table/reinforced,
-/obj/machinery/fabricator/micro/bartender{
+/obj/machinery/fabricator/{
 	pixel_x = 9;
 	pixel_y = 7
 	},
@@ -101940,9 +101940,6 @@
 "paa" = (
 /obj/structure/closet/walllocker{
 	pixel_x = -28
-	},
-/obj/machinery/fabricator{
-	fab_status_flags = 1
 	},
 /obj/item/stack/material/steel/fifty{
 	pixel_x = -5
@@ -148992,7 +148989,7 @@
 	pixel_x = -28
 	},
 /obj/structure/table/marble,
-/obj/machinery/fabricator/micro/bartender{
+/obj/machinery/fabricator/{
 	pixel_x = 4
 	},
 /obj/item/stack/material/glass/ten{
@@ -153604,7 +153601,7 @@
 	dir = 8
 	},
 /obj/structure/table/woodentable_reinforced/ebony,
-/obj/machinery/fabricator/micro/bartender{
+/obj/machinery/fabricator/{
 	pixel_x = 4
 	},
 /turf/simulated/floor/wood/walnut,

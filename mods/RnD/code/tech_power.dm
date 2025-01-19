@@ -23,7 +23,7 @@
 	y = 0.6
 	icon = "cell"
 
-	required_technologies = list("basic_power")
+	required_technologies = list(/datum/technology/power)
 	required_tech_levels = list()
 	cost = 500
 
@@ -38,7 +38,7 @@
 	y = 0.4
 	icon = "cell"
 
-	required_technologies = list("adv_power")
+	required_technologies = list(/datum/technology/power/adv_power)
 	required_tech_levels = list()
 	cost = 1000
 
@@ -53,7 +53,7 @@
 	y = 0.4
 	icon = "cell"
 
-	required_technologies = list("sup_power")
+	required_technologies = list(/datum/technology/power/sup_power)
 	required_tech_levels = list()
 	cost = 1500
 
@@ -68,7 +68,7 @@
 	y = 0.6
 	icon = "solarcontrol"
 
-	required_technologies = list("adv_power")
+	required_technologies = list(/datum/technology/power/adv_power)
 	required_tech_levels = list()
 	cost = 750
 
@@ -83,7 +83,7 @@
 	y = 0.6
 	icon = "generator"
 
-	required_technologies = list("adv_power")
+	required_technologies = list(/datum/technology/power/adv_power)
 	required_tech_levels = list()
 	cost = 1250
 
@@ -98,7 +98,7 @@
 	y = 0.6
 	icon = "batteryrack"
 
-	required_technologies = list("adv_power_gen")
+	required_technologies = list(/datum/technology/power/adv_power_gen)
 	required_tech_levels = list()
 	cost = 1750
 
@@ -113,7 +113,7 @@
 	y = 0.5
 	icon = "smes"
 
-	required_technologies = list("power_storage")
+	required_technologies = list(/datum/technology/power/power_storage)
 	required_tech_levels = list()
 	cost = 2500
 
@@ -128,7 +128,7 @@
 	y = 0.4
 	icon = "generator"
 
-	required_technologies = list("adv_power_gen","sup_power")
+	required_technologies = list(/datum/technology/power/adv_power_storage, /datum/technology/power/sup_power)
 	required_tech_levels = list()
 	cost = 2000
 
@@ -143,7 +143,7 @@
 	y = 0.4
 	icon = "fusion"
 
-	required_technologies = list("sup_power_gen")
+	required_technologies = list(/datum/technology/power/sup_power_gen)
 	required_tech_levels = list()
 	cost = 2500
 
