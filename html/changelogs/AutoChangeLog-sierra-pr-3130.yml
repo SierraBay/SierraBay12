@@ -1,0 +1,5 @@
+author: UEDHighCommand
+changes:
+  - {experiment: Попытка пофиксить периодические лагспайки путем отката использования
+      прока update_dead_sight до пре-генокрадного состояния}
+delete-after: true

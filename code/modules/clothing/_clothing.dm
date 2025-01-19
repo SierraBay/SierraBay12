@@ -512,6 +512,7 @@ BLIND     // can't see anything
 	var/image/light_overlay_image
 	var/light_overlay = "helmet_light"
 	var/light_applied
+	var/head_light_range = 4
 	var/brightness_on
 	var/on = 0
 
@@ -553,7 +554,7 @@ BLIND     // can't see anything
 
 /obj/item/clothing/head/proc/update_flashlight(mob/user = null)
 	if(on && !light_applied)
-		set_light(3, brightness_on, angle = LIGHT_WIDE)
+		set_light(head_light_range, brightness_on, angle = LIGHT_WIDE)
 		light_applied = 1
 	else if(!on && light_applied)
 		set_light(0)
