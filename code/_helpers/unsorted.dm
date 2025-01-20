@@ -537,9 +537,15 @@ Turf and target are seperate in case you want to teleport some distance from a t
  *
  * Returns a list of atoms.
  */
-/atom/proc/GetAllContents(searchDepth = 5)
+
+
+/atom/proc/GetAllContents(searchDepth = 5, include_self = FALSE)
+
 	RETURN_TYPE(/list)
 	var/list/toReturn = list()
+
+	if(include_self)
+		toReturn += src
 
 	for(var/atom/part in contents)
 		toReturn += part

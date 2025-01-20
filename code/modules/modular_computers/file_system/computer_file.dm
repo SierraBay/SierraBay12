@@ -52,3 +52,7 @@ var/global/file_uid = 0
 		temp.filename += "(Copy)"
 	temp.filetype = filetype
 	return temp
+
+// Called by hard drive when program is added to the computer
+/datum/computer_file/proc/OnStoreFile(obj/item/stock_parts/computer/hard_drive/HD)
+	return

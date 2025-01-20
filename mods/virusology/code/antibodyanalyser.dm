@@ -27,6 +27,7 @@
 		return
 
 /obj/machinery/disease2/antibodyanalyser/Process()
+	var/datum/money_account/master_acct = department_accounts["Supply"]
 	if(stat & (MACHINE_STAT_NOPOWER|MACHINE_IS_BROKEN(src)))
 		return
 
@@ -43,7 +44,8 @@
 				var/list/unknown_antibodies = common_antibodies ^ given_antibodies
 				if(LAZYLEN(unknown_antibodies))
 					var/payout = LAZYLEN(unknown_antibodies) * 45
-					SSsupply.add_points_from_source(payout, "virology_antibodies")
+//			SSsupply.add_points_from_source(payout, "virology_antibodies")
+					master_acct.deposit(payout / 2, "virology_antibodies")
 					ping("\The [src] pings, \"Successfully uploaded new antibodies to the ExoNet.\"")
 					known_antibodies |= unknown_antibodies //Add the new antibodies to list
 				else

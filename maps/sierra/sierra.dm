@@ -184,6 +184,7 @@
 
 	// USED MODS
 	// Keep them in ascending alphabetical order, please
+	#include "../../mods/eris_cargo/_eris_cargo.dme"
 
 	#include "../../mods/_maps/liberia/_map_liberia.dme"
 	#include "../../mods/_maps/sentinel/_map_sentinel.dme"

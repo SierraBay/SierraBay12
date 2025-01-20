@@ -118,6 +118,14 @@
 
 // Here we move a shuttle then test it's area once the shuttle has arrived.
 
+
+// ======================================
+// 	This test was removed in favor of the Eris Cargo modpack.
+// 	It tested the air in the supply shuttle when it was moved.
+// ======================================
+
+/*
+
 /datum/unit_test/zas_supply_shuttle_moved
 	name = "ZAS: Supply Shuttle (When Moved)"
 	async=1				// We're moving the shuttle using built in procs.
@@ -173,6 +181,7 @@
 			if(SKIP)    skip(test["msg"])
 			else        fail(test["msg"])
 	return 1
+*/
 
 #undef UT_NORMAL
 #undef UT_VACUUM

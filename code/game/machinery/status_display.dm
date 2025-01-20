@@ -251,6 +251,7 @@
 		return ""
 	return "[pad_left(num2text((timeleft / 60) % 60), 2, "0")]:[pad_left(num2text(timeleft % 60), 2, "0")]"
 
+/*
 /obj/machinery/status_display/proc/get_supply_shuttle_timer()
 	var/datum/shuttle/autodock/ferry/supply/shuttle = SSsupply.shuttle
 	if (!shuttle)
@@ -262,6 +263,7 @@
 			return "Late"
 		return "[pad_left(num2text((timeleft / 60) % 60), 2, "0")]:[pad_left(num2text(timeleft % 60), 2, "0")]"
 	return ""
+*/
 
 /obj/machinery/status_display/proc/remove_display()
 	if(length(overlays))

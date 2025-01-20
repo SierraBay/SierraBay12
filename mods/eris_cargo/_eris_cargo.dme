@@ -1,0 +1,48 @@
+// Check if the MODPACK_ERIS_CARGO is not defined
+#ifndef MODPACK_ERIS_CARGO
+// Define the MODPACK_ERIS_CARGO to include related components
+#define MODPACK_ERIS_CARGO
+
+// Include the main Eris Cargo module for further definitions and implementations
+#include "_eris_cargo.dm"
+
+#include "../../mods/eris_cargo/objects/misc/misc.dm"
+
+// Include all the supply-related definitions and implementations
+#include "../../packs/0_eris_cargo/~defines/supply.dm"
+#include "../../packs/0_eris_cargo/~subsystem/supply.dm"
+
+// Include the modular program for supply - a system for dynamically buying and selling goods
+#include "../../packs/0_eris_cargo/0_modular_program/supply.dm"
+#include "../../packs/0_eris_cargo/0_modular_program/supply_subtypes.dm"
+
+// Include the definition of the trade beacon type
+#include "../../packs/0_eris_cargo/1_trade_beacon.dm"
+
+// Include the definitions of the factions for trading stations
+#include "../../packs/0_eris_cargo/trading_stations/_faction.dm"
+
+// Include the definition of the trading station type
+#include "../../packs/0_eris_cargo/trading_stations/_trading_station.dm"
+
+// Include the definitions of the trading station types that are always spawned
+#include "../../packs/0_eris_cargo/trading_stations/trading_station_types/0_always_spawn/eva.dm"
+#include "../../packs/0_eris_cargo/trading_stations/trading_station_types/0_always_spawn/materials.dm"
+
+// Include the definitions of the trading station types that are rarely spawned
+#include "../../packs/0_eris_cargo/trading_stations/trading_station_types/2_rare/weapons.dm"
+
+// Include an example of how to create a trading station
+#include "../../packs/0_eris_cargo/trading_stations/trading_station_types/_example.dm"
+
+
+#endif
+// BEGIN_INTERNALS
+// END_INTERNALS
+// BEGIN_FILE_DIR
+#define FILE_DIR .
+// END_FILE_DIR
+// BEGIN_PREFERENCES
+// END_PREFERENCES
+// BEGIN_INCLUDE
+// END_INCLUDE

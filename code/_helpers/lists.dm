@@ -883,3 +883,45 @@ Checks if a list has the same entries and values as an element of big.
 		map["[entry.name] [index]"] = entry
 	else
 		map[entry.name] = entry
+
+
+/**
+ * This proc attempts to decode a given string into a JSON object.
+ * If the given parameter is already a list, it is returned as is.
+ * If the given parameter is not a string or a list, it is wrapped in a list.
+ * @param t The string or list to decode.
+ * @return A list containing the decoded JSON object, or the original list if it was already a list.
+ */
+/proc/try_json_decode(t)
+	. = list()
+	if(istext(t))
+		// Try to decode the given string into a JSON object.
+		. = json_decode(t)
+	else if(islist(t))
+		// If the given parameter is already a list, just return it.
+		. = t
+	else if(t)
+		// If the given parameter is not a string or a list, wrap it in a list.
+		. += t
+
+/**
+ * This proc recursively calculates the length of a given list.
+ * If a given element of the list is itself a list, it is recursively called on that element.
+ * @param L The list to calculate the length of.
+ * @return The length of the list, including all sublists.
+ */
+/proc/RecursiveLen(list/L)
+	. = 0
+	if(istext(L))
+		// If the given parameter is a string, attempt to decode it into a JSON object.
+		L = try_json_decode(L)
+	if(length(L))
+		// Add the length of the list to the total length.
+		. += length(L)
+		for(var/list/i in L)
+			if(islist(i))
+				// If a given element of the list is itself a list, recursively call this proc on it.
+				. += RecursiveLen(i)
+			else if(islist(L[i]))
+				// If a given element of the list is itself a list, recursively call this proc on it.
+				. += RecursiveLen(L[i])

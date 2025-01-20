@@ -315,26 +315,8 @@ SIERRA_ESCAPE_POD(11)
 	landmark_tag = "nav_specops_out"
 	docking_controller = "specops_dock"
 
-//Cargo drone
-
-/datum/shuttle/autodock/ferry/supply/drone
-	name = "Supply Drone"
-	location = 1
-	shuttle_area = /area/supply/dock
-	waypoint_offsite = "nav_cargo_start"
-	waypoint_station = "nav_cargo_station"
-	ceiling_type = /turf/simulated/floor/shuttle_ceiling
-	warmup_time = 7
-
-/obj/shuttle_landmark/supply/centcom
-	name = "Offsite"
-	landmark_tag = "nav_cargo_start"
-
-/obj/shuttle_landmark/supply/station
-	name = "Hangar"
-	landmark_tag = "nav_cargo_station"
-	base_area = /area/quartermaster/hangar
-	base_turf = /turf/simulated/floor/plating
+//Cargo drone was removed: because delivering a crate of spare toilet paper to a space station is a matter of life and death...
+//and also because we lost the invoice for the last shipment"
 
 /datum/shuttle/autodock/overmap/exploration_shuttle
 	name = "Charon"

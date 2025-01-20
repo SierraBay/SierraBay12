@@ -83267,7 +83267,6 @@
 /turf/simulated/floor/tiled/techmaint,
 /area/tcommsat/storage)
 "rRK" = (
-/obj/shuttle_landmark/supply/station,
 /turf/simulated/floor/plating,
 /area/quartermaster/hangar)
 "rRP" = (

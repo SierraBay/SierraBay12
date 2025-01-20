@@ -59747,7 +59747,6 @@
 /turf/simulated/floor/tiled/dark/monotile,
 /area/security/nuke_storage)
 "iNG" = (
-/obj/shuttle_landmark/supply/station,
 /turf/simulated/floor/plating,
 /area/quartermaster/hangar)
 "iNH" = (

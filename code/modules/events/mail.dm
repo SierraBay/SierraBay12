@@ -6,7 +6,7 @@
 /datum/event/mail
 	// This event is actually intended to end when the mail has been spawned on the shuttle, but have a "timeout" just in case
 	endWhen = 3000
-
+/*
 	var/list/possible_gifts = list(
 		/obj/item/device/flashlight/lamp/lava,
 		/obj/item/storage/fancy/crayons,
@@ -90,3 +90,4 @@
 		return FALSE
 
 	return TRUE
+*/

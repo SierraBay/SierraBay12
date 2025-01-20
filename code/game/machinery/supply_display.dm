@@ -1,6 +1,12 @@
+/// ==============================================================================
+/// TODO: DELETE THIS FROM EVERYWHERE - part of Eris Cargo modpack
+/// ==============================================================================
+
+
+
 /obj/machinery/status_display/supply_display
 	ignore_friendc = 1
-
+/*
 /obj/machinery/status_display/supply_display/update()
 	if(!..() && mode == STATUS_DISPLAY_CUSTOM)
 		message1 = "CARGO"
@@ -32,3 +38,4 @@
 		mode = STATUS_DISPLAY_CUSTOM
 	else
 		..(signal)
+*/
