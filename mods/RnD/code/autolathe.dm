@@ -22,7 +22,7 @@
 #define ERR_STOPPED "lazy user"
 #define ERR_SKILL_ISSUE "unskilled user"
 //AUTOLATHE
-#define SANITIZE_LATHE_COST(n) round(n * mat_efficiency, 0.01)
+#define SANITIZE_LATHE_COST(n) round((n * mechfabmod), 0.01)
 
 /obj/machinery/fabricator
 	name = "autolathe"
@@ -124,7 +124,10 @@
 /obj/machinery/fabricator/proc/materials_data()
 	var/list/data = list()
 
-	data["mat_efficiency"] = mat_efficiency
+	if(mechfabmod == 2)
+		data["mat_efficiency"] = (mat_efficiency * mechfabmod)
+	else if (mechfabmod == 1)
+		data["mat_efficiency"] = mat_efficiency
 	data["mat_capacity"] = storage_capacity
 
 	data["container"] = !!container
@@ -690,13 +693,23 @@
 
 
 /obj/machinery/fabricator/proc/res_load()
-	flick("autolathe_load_m", src)
+	var/list/viewing = list()
+	for (var/mob/M in view(6,src))
+		if (M.client)
+			viewing |= M.client
+	var/image/orderimage = image('mods/RnD/icons/autolathe.dmi', src, "autolathe_load_m")
+	flick_overlay(orderimage, viewing, 8)
 
 /obj/machinery/fabricator/components_are_accessible(path)
 	return !(fab_status_flags & FAB_BUSY) && ..()
 
 /obj/machinery/fabricator/proc/check_materials(datum/design/design)
 	mechfabmod = 1
+	if(design.build_type == MECHFAB)
+		mechfabmod = 2
+		if(!(fab_status_flags & FAB_HACKED))
+			return ERR_NOCOMPAT
+
 	for(var/rmat in design.materials)
 		if(!(rmat in stored_material))
 			return ERR_NOMATERIAL
@@ -711,11 +724,6 @@
 		for(var/rgn in design.chemicals)
 			if(!container.reagents.has_reagent(rgn, design.chemicals[rgn]))
 				return ERR_NOREAGENT
-
-	if(design.build_type == MECHFAB)
-		mechfabmod = 2
-		if(!(fab_status_flags & FAB_HACKED))
-			return ERR_NOCOMPAT
 
 	return ERR_OK
 
