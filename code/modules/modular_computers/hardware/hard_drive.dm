@@ -156,6 +156,7 @@
 	F.holder = src
 	stored_files += F
 	recalculate_size()
+	F.OnStoreFile(src) // [Sierra-Add]
 	return F
 
 /// Use this proc to remove file from the drive. Contains necessary sanity checks.

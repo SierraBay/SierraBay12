@@ -43,6 +43,7 @@
 	slot_flags = SLOT_BELT | SLOT_EARS
 	throwforce = 1
 	w_class = ITEM_SIZE_TINY
+	matter = list(MATERIAL_STEEL = 100) // [Sierra-Add]
 
 	var/leaves_residue = TRUE
 	var/caliber = ""					//Which kind of guns it can be loaded into
@@ -70,6 +71,8 @@
 	. = BB
 	BB = null
 	set_dir(pick(GLOB.alldirs)) //spin spent casings
+	for(var/mat in matter)
+		matter[mat] = round(matter[mat] * 0.2)	//[sierra-add]
 
 	// Aurora forensics port, gunpowder residue.
 	if(leaves_residue)

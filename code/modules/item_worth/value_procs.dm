@@ -1,3 +1,5 @@
+// [SIERRA-EDIT BEGIN]
+
 /atom/proc/Value(base)
 	return base
 
@@ -23,8 +25,13 @@
 
 /obj/item/ammo_casing/Value(base)
 	if(!BB)
-		return 1
-	return ..()
+		return
+
+	for(var/mat in matter)
+		var/material/material_def = SSmaterials.get_material_by_name(mat)
+		. += material_def.value * (matter[mat] / SHEET_MATERIAL_AMOUNT)
+
+	. = round(., 0.5)
 
 /obj/item/reagent_containers/Value(base)
 	. = ..()
@@ -60,3 +67,10 @@
 	. = ..()
 	if(species)
 		. *= species.rarity_value
+
+/obj/item/organ/Value(base)
+	. = ..()
+	if(damage)
+		. -= round(. * (damage / max_damage))
+
+// [SIERRA-EDIT END]
