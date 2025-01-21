@@ -1,0 +1,5 @@
+author: Banditoz
+changes:
+  - {bugfix: Fix images from news stories not appearing in the "Newscast" modular
+      computer program.}
+delete-after: true
