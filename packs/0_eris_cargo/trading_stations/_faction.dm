@@ -10,18 +10,6 @@
 	/// Access level required to set faction on supply program to this
 	var/access_required = null
 
-/datum/trade_faction/New()
-	. = ..()
-	// Factions that aren't set in relationship list of the datum are set to neutral.
-	for(var/datum/trade_faction/TF in SSsupply.factions)
-		if(TF.name == name)
-			// Technically not, but this will be how we declare same faction relations for now
-			relationship[TF.name] = FACTION_STATE_PROTECTORATE
-			continue
-		if(!(TF.name in relationship))
-			relationship[TF.name] = FACTION_STATE_NEUTRAL
-		// This ensures that relations are always mirrored between two datums
-		SSsupply.SetFactionRelations(name, TF.name, relationship[TF.name])
 
 /datum/trade_faction/proc/ModifyRelationsWith(target = null, change = FACTION_STATE_NEUTRAL)
 	if(istype(target, /datum/trade_faction))
@@ -46,6 +34,8 @@
 		FACTION_NANOTRASEN = FACTION_STATE_ANIMOSITY,
 		FACTION_DAIS = FACTION_STATE_ANIMOSITY,
 		)
+	access_required = access_supplylink_terragov
+
 
 /datum/trade_faction/solgov
 	name = FACTION_SOL_CENTRAL
@@ -56,6 +46,8 @@
 		FACTION_FREETRADE = FACTION_STATE_RIVAL,
 		FACTION_NANOTRASEN = FACTION_STATE_WELCOMING,
 		)
+	access_required = access_supplylink_solgov
+
 
 /datum/trade_faction/ftu
 	name = FACTION_FREETRADE
@@ -66,6 +58,9 @@
 		FACTION_NANOTRASEN = FACTION_STATE_ALLY,
 		FACTION_DAIS = FACTION_STATE_ALLY,
 		)
+
+	access_required = access_supplylink_ftu
+
 
 // Corpos
 
@@ -78,6 +73,8 @@
 		FACTION_FREETRADE = FACTION_STATE_ALLY,
 		FACTION_DAIS = FACTION_STATE_ALLY,
 		)
+	access_required = access_supplylink_nanotrasen
+
 
 /datum/trade_faction/dais
 	name = FACTION_DAIS
@@ -88,6 +85,8 @@
 		FACTION_FREETRADE = FACTION_STATE_ALLY,
 		FACTION_NANOTRASEN = FACTION_STATE_ALLY,
 		)
+	access_required = access_supplylink_dais
+
 
 // Member states of ISC
 

@@ -4,6 +4,24 @@
 	anchored = TRUE
 	density = TRUE
 
+/// The effective range of the trade beacon. This is how far the beacon can reach into space to find items to export.
+	var/beacon_range = 2
+
+
+/obj/machinery/trade_beacon/use_tool(obj/item/W, mob/living/user, list/click_params)
+	if(isMultitool(W))
+		beacon_range = beacon_range >= 2 ? 1 : 2
+		anchored = !anchored
+		user.visible_message(
+			SPAN_NOTICE("\The [user] pulses some circuitry within [src]."),
+			SPAN_NOTICE("You set [src]'s effective range to [beacon_range].")
+			)
+		playsound(src.loc, "sound/effects/pop.ogg", 50)
+		return TRUE
+
+	return ..()
+
+
 /obj/machinery/trade_beacon/proc/Activate()
 	flick("[icon_state]_active", src)
 	var/datum/effect/spark_spread/sparks = new /datum/effect/spark_spread
@@ -32,7 +50,7 @@
 
 /obj/machinery/trade_beacon/sending/proc/GetObjects()
 	var/list/objects = list()
-	for(var/atom/movable/A in range(2, src))
+	for(var/atom/movable/A in range(beacon_range, src))
 		if(A.anchored)
 			continue
 		if(A == src)
@@ -65,7 +83,7 @@
 
 /obj/machinery/trade_beacon/receiving/proc/DropItem(drop_type)
 	var/list/valid_turfs = list()
-	for(var/turf/simulated/floor/F in range(2, src))
+	for(var/turf/simulated/floor/F in range(beacon_range, src))
 		if(F.contains_dense_objects(TRUE))
 			continue
 		valid_turfs += F

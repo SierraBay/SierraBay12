@@ -301,3 +301,33 @@
 	if(!isnum(cost))
 		return
 	wealth -= cost
+
+/// Returns a multiplier to markup based on faction relations
+/datum/trading_station/proc/GetFactionMarkup(datum/trade_faction/buyer_faction)
+	// Returns a multiplier that marks up the price of goods based on the faction relations between the buyer and seller.
+	// This is to simulate the fact that different factions have different resources and priorities, so the same good
+	// might cost more or less depending on which faction is buying it.
+	// The faction relations are used to determine the markup, as well as the seller's faction to determine the
+	// baseline price of the good.
+
+	var/datum/trade_faction/seller_faction = SSsupply.GetFaction(faction)
+	if(!istype(seller_faction) || !istype(buyer_faction))
+		return 1.0 // If the factions can't be determined, don't apply a markup
+
+	// The faction relationships are as follows:
+	//  - FACTION_STATE_ANIMOSITY: 25% markup
+	//  - FACTION_STATE_RIVAL: 50% markup
+	//  - FACTION_STATE_ENEMY: 100% markup
+	//  - FACTION_STATE_WAR: 200% markup (but this is normally an embargo, so it shouldn't come up)
+	//  - Anything else: no markup
+	switch(seller_faction.relationship[buyer_faction.name])
+		if(FACTION_STATE_ANIMOSITY)
+			return 1.25
+		if(FACTION_STATE_RIVAL)
+			return 1.5
+		if(FACTION_STATE_ENEMY)
+			return 2.0
+		if(FACTION_STATE_WAR)
+			return 3.0
+		else
+			return 1.0

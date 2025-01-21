@@ -480,7 +480,7 @@ var/global/const/access_merchant = "ACCESS_MERCHANT" //301
  * Supply faction link access levels
  * These are used by the supply console to determine which factions an user can link to
  */
-#ifdef SUPPLY_LINKS
+
 /**
  * SolGov faction link access level
  */
@@ -502,12 +502,12 @@ var/global/const/access_merchant = "ACCESS_MERCHANT" //301
 	access_type = ACCESS_TYPE_NONE
 
 /**
- * ISC faction link access level
+ * FTU faction link access level
  */
-/var/const/access_supplylink_isc = "ACCESS_SUPPLY_LINK_ISC"
-/datum/access/supplylink_isc
-	id = access_supplylink_isc
-	desc = "Supply Console - ISC Link"
+/var/const/access_supplylink_ftu = "ACCESS_SUPPLY_LINK_FTU"
+/datum/access/supplylink_ftu
+	id = access_supplylink_ftu
+	desc = "Supply Console - FTU Link"
 	region = ACCESS_REGION_SUPPLY
 	access_type = ACCESS_TYPE_NONE
 
@@ -522,12 +522,12 @@ var/global/const/access_merchant = "ACCESS_MERCHANT" //301
 	access_type = ACCESS_TYPE_NONE
 
 /**
- * Cybersun faction link access level
+ * DAIS faction link access level
  */
-/var/const/access_supplylink_cybersun = "ACCESS_SUPPLY_LINK_CYBERSUN"
-/datum/access/supplylink_cybersun
-	id = access_supplylink_cybersun
-	desc = "Supply Console - Cybersun Link"
+/var/const/access_supplylink_dais = "ACCESS_SUPPLY_LINK_DAIS"
+/datum/access/supplylink_dais
+	id = access_supplylink_dais
+	desc = "Supply Console - DAIS Link"
 	region = ACCESS_REGION_SUPPLY
 	access_type = ACCESS_TYPE_NONE
 
@@ -550,4 +550,3 @@ var/global/const/access_merchant = "ACCESS_MERCHANT" //301
 	desc = "Supply Console - Reborn Christian Church Link"
 	region = ACCESS_REGION_SUPPLY
 	access_type = ACCESS_TYPE_NONE
-#endif

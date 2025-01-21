@@ -47,16 +47,23 @@ SUBSYSTEM_DEF(supply)
 	for(var/tf in factions)
 		var/datum/trade_faction/TF = factions[tf]
 		for(var/tf2 in factions)
-			var/datum/trade_faction/TF2 = factions[tf]
+			var/datum/trade_faction/TF2 = factions[tf2]
 			if(TF == TF2)
 				// Technically not, but this will be how we declare same faction relations for now
 				TF.relationship[TF2.name] = FACTION_STATE_PROTECTORATE
 				continue
-			if(!(TF2.name in TF.relationship))
-				TF.relationship[TF2] = FACTION_STATE_NEUTRAL
+
 			// This ensures that relations are always mirrored between two datums
 			SetFactionRelations(TF, TF2, TF.relationship[TF2])
 
+
+	// Now we set it to neutral for the missing ones
+	for(var/tf in factions)
+		var/datum/trade_faction/TF = factions[tf]
+		for(var/tf2 in factions)
+			var/datum/trade_faction/TF2 = factions[tf2]
+			if(!(TF2.name in TF.relationship))
+				SetFactionRelations(TF, TF2, FACTION_STATE_NEUTRAL)
 
 	InitTradeStations()
 
@@ -197,15 +204,7 @@ SUBSYSTEM_DEF(supply)
 	if(!seller_faction)
 		return
 
-	switch(seller_faction.relationship[buyer_faction.name])
-		if(FACTION_STATE_ANIMOSITY)
-			. *= 1.25
-		if(FACTION_STATE_RIVAL)
-			. *= 1.5
-		if(FACTION_STATE_ENEMY)
-			. *= 2.0
-		if(FACTION_STATE_WAR) // Normally that'd be an embargo, but some outlaw traders exist
-			. *= 3.0
+	. *= station.GetFactionMarkup(buyer_faction)
 
 	if(buyer_faction.name in seller_faction.trade_markup)
 		. *= seller_faction.trade_markup[buyer_faction.name]
@@ -389,7 +388,10 @@ SUBSYSTEM_DEF(supply)
 				qdel(item)
 				++export_count
 			else if(item != AM)
-				item.forceMove(get_turf(AM))		// Should be the same tile
+				if(!isobj(item) || !ismob(item))
+					qdel(item)
+				else
+					item.forceMove(get_turf(AM))		// Should be the same tile
 
 		// The max is a soft cap
 		if(export_count > 100)
