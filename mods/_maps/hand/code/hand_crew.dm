@@ -17,10 +17,10 @@
 /obj/submap_landmark/spawnpoint/away_hand/captain
 	name = "Corporate Vessel Captain"
 
-/obj/submap_landmark/spawnpoint/away_hand/captain/guardsman
+/obj/submap_landmark/spawnpoint/away_hand/guardsman
 	name = "Frontier Alliance Guardsman"
 
-/obj/submap_landmark/spawnpoint/away_hand/captain/pilot
+/obj/submap_landmark/spawnpoint/away_hand/pilot
 	name = "Battlegroup Alpha Pilot"
 
 /obj/submap_landmark/spawnpoint/away_hand/surgeon
@@ -95,8 +95,8 @@ var/global/const/access_away_hand_captain = "ACCESS_HAND_CAPTAIN"
 	title = "Corporate Vessel Captain"
 	total_positions = 1
 	alt_titles = list(
-		"Frontier Alliance Guardsman",
-		"Battlegroup Alpha Pilot"
+		"Frontier Alliance Guardsman" = /singleton/hierarchy/outfit/job/hand/guardsman,
+		"Battlegroup Alpha Pilot" = /singleton/hierarchy/outfit/job/hand/pilot
 	)
 	outfit_type = /singleton/hierarchy/outfit/job/hand/captain
 	allowed_branches = list(
@@ -131,14 +131,9 @@ var/global/const/access_away_hand_captain = "ACCESS_HAND_CAPTAIN"
 	)
 	access = list(access_away_hand, access_away_hand_captain)
 
-/* TO DO: Make this doable
 /datum/job/submap/hand/captain/equip(mob/living/carbon/human/H)
-	if(H.mind.role_alt_title == "Frontier Alliance Guardsman")
-		outfit_type = /singleton/hierarchy/outfit/job/hand/captain/guardsman
-	if(H.mind.role_alt_title == "Battlegroup Alpha Pilot")
-		outfit_type = /singleton/hierarchy/outfit/job/hand/captain/pilot
-	return ..()
-*/
+	outfit_type =  H.mind.role_alt_title!="Corporate Vessel Captain" ? alt_titles[H.mind.role_alt_title] : outfit_type
+	. = ..()
 
 /datum/job/submap/hand/surgeon
 	title = "Corporate Vessel Corpsman"
@@ -217,27 +212,28 @@ var/global/const/access_away_hand_captain = "ACCESS_HAND_CAPTAIN"
 	backpack_contents = null
 	flags = OUTFIT_EXTENDED_SURVIVAL
 
-/singleton/hierarchy/outfit/job/hand/captain/guardsman
+/singleton/hierarchy/outfit/job/hand/guardsman
 	name = HAND_OUTFIT_JOB_NAME("Frontier Alliance Guardsman")
-	head = /obj/item/clothing/head/deckcrew
 	uniform = /obj/item/clothing/under/fa/vacsuit/hand/guardsman
 	shoes = /obj/item/clothing/shoes/jackboots
 	id_types = list(/obj/item/card/id/hand/captain)
-	gloves = /obj/item/clothing/gloves/thick/duty
+	gloves = /obj/item/clothing/gloves/thick
 	back = /obj/item/storage/backpack/rucksack/blue
 	backpack_contents = null
+	id_pda_assignment = "Frontier Alliance Guardsman"
 	flags = OUTFIT_EXTENDED_SURVIVAL
 
-/singleton/hierarchy/outfit/job/hand/captain/pilot
+/singleton/hierarchy/outfit/job/hand/pilot
 	name = HAND_OUTFIT_JOB_NAME("Battlegroup Alpha Pilot")
 	head = /obj/item/clothing/head/solgov/utility/fleet
 	uniform = /obj/item/clothing/under/solgov/utility/fleet/command/pilot/fifth_fleet
 	shoes = /obj/item/clothing/shoes/jackboots
 	id_types = list(/obj/item/card/id/hand/captain/fifth_fleet)
 	belt = /obj/item/storage/belt/holster/security/tactical/away_solpatrol
-	gloves = /obj/item/clothing/gloves/thick/duty
+	gloves = /obj/item/clothing/gloves/thick
 	back = /obj/item/storage/backpack/rucksack/navy
 	backpack_contents = null
+	id_pda_assignment = "Fleet Pilot"
 	flags = OUTFIT_EXTENDED_SURVIVAL
 
 /singleton/hierarchy/outfit/job/hand/surgeon
