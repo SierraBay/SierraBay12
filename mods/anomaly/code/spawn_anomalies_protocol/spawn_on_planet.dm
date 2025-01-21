@@ -1,7 +1,7 @@
 /datum/map/build_exoplanets()
 	//Игра заспавнит 1 обычную планету и 1 аномальную
 	var/list/anomaly_planets_list = list(
-		///obj/overmap/visitable/sector/exoplanet/ice,
+		/obj/overmap/visitable/sector/exoplanet/ice,
 		/obj/overmap/visitable/sector/exoplanet/flying
 	)
 	var/list/all_planets_list = subtypesof(/obj/overmap/visitable/sector/exoplanet)

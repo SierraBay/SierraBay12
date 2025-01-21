@@ -394,15 +394,6 @@
 	icon_state = "wood_broken4"
 	},
 /area/space)
-"XQ" = (
-/obj/structure/bed/chair/office/purple{
-	dir = 8
-	},
-/obj/decal/cleanable/dirt,
-/turf/simulated/floor/wood{
-	icon_state = "wood_broken5"
-	},
-/area/space)
 "YF" = (
 /obj/structure/flora/ausbushes/sparsegrass,
 /turf/simulated/floor/exoplanet/grass,
@@ -656,7 +647,7 @@ Fj
 tQ
 eF
 eF
-XQ
+wx
 Zj
 Mu
 zw
