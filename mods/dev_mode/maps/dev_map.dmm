@@ -814,6 +814,12 @@
 	icon_state = "dark"
 	},
 /area/tdome/testing)
+"pBI" = (
+/obj/item/stock_parts/computer/hard_drive/portable/design/components,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/tdome/testing)
 "pCq" = (
 /obj/item/gun/projectile/pirate,
 /turf/unsimulated/floor{
@@ -19261,7 +19267,7 @@ aab
 lCd
 rkx
 gqB
-gqB
+pBI
 gqB
 gqB
 gqB

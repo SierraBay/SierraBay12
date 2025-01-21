@@ -29,6 +29,8 @@
 #include "code/designs_autolathe/designs_medical.dm"
 #include "code/designs_autolathe/designs_glasses.dm"
 #include "code/designs_autolathe/designs_general.dm"
+#include "code/designs_autolathe/designs_tools.dm"
+#include "code/designs_autolathe/disks.dm"
 
 
 #endif

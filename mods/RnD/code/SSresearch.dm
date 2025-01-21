@@ -100,7 +100,7 @@ SUBSYSTEM_DEF(research)
 
 /datum/controller/subsystem/research/proc/get_autolathe_design_by_build_path(build_path)
 	for(var/datum/design/autolathe/design in all_designs)
-		if("[design.build_path]" == build_path)
+		if("[design.build_path]" == build_path || design.build_path == build_path)
 			return design
 
 	error("Incorrect design ID or path: [build_path]")

@@ -3,6 +3,7 @@
 	category = list("Tools")
 
 /datum/design/autolathe/tool/prybar
+	name = "pry bar"
 	build_path = /obj/item/crowbar/prybar
 
 /datum/design/autolathe/tool/rescuetool
@@ -43,7 +44,5 @@
 
 /datum/design/autolathe/tool/welder_industrial
 	build_path = /obj/item/weldingtool/largetank
-	hidden = TRUE
-
 /datum/design/autolathe/tool/designator
 	build_path = /obj/item/device/drone_designator

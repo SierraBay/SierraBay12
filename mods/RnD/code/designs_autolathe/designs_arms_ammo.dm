@@ -1,9 +1,11 @@
 /datum/design/autolathe/arms_ammo
+	name = "syringe gun cartridge"
 	build_path = /obj/item/syringe_cartridge
 	category = list("Arms and Ammunition")
 	access = list(access_security)
 
 /datum/design/autolathe/arms_ammo/shotgun_holder
+	name = "shotgun ammunition holder"
 	build_path = /obj/item/ammo_magazine/shotholder/empty
 
 /datum/design/autolathe/arms_ammo/shotgun_blanks
@@ -15,6 +17,7 @@
 	build_path = /obj/item/gun/projectile/flare
 
 /datum/design/autolathe/arms_ammo/hidden
+	name = "fabricated machete"
 	build_path = /obj/item/material/hatchet/machete/steel
 
 /datum/design/autolathe/arms_ammo/hidden/shotgun
@@ -30,6 +33,7 @@
 	build_path = /obj/item/ammo_magazine/smg_top/rubber
 
 /datum/design/autolathe/arms_ammo/hidden/flamethrower
+	name = "flamethrower"
 	build_path = /obj/item/flamethrower/full
 
 /datum/design/autolathe/arms_ammo/hidden/speedloader
@@ -101,6 +105,7 @@
 	build_path = /obj/item/ammo_casing/shotgun/pellet
 
 /datum/design/autolathe/arms_ammo/hidden/tacknife
+	name = "combat knife"
 	build_path = /obj/item/material/knife/combat
 
 /datum/design/autolathe/arms_ammo/hidden/stunshell

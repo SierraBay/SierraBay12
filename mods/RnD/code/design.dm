@@ -15,15 +15,19 @@
 	return size
 
 /datum/computer_file/binary/design/proc/on_design_set()
-	if(design.id == "id")
+	if(design)
 		set_filename(design.name)
-	else
-		set_filename(design.id)
 
 /datum/computer_file/binary/design/proc/set_filename(new_name)
 	filename = sanitizeFileName("[new_name]")
 	if(findtext(filename, "datum_design_") == 1)
 		filename = copytext(filename, 14)
+
+/datum/computer_file/binary/design/proc/set_design_type(design_type)
+	set_filename(design_type)
+	design = design_type // Temporarily assign that to pass the type down into research controller
+	SSresearch.initialize_design_file(src)
+
 
 /datum/computer_file/binary/design/ui_data()
 	var/list/data = design.ui_data()
