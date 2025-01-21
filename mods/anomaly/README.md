@@ -10,6 +10,7 @@ https://github.com/SierraBay/SierraBay12/pull/2991
 https://github.com/SierraBay/SierraBay12/pull/3033
 https://github.com/SierraBay/SierraBay12/pull/3034
 https://github.com/SierraBay/SierraBay12/pull/3068
+https://github.com/SierraBay/SierraBay12/pull/3151
 <!--
   Ссылки на PRы, связанные с модом:
   - Создание

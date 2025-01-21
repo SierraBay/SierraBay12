@@ -85,8 +85,8 @@
 	var/high_brightness = 1.0
 	var/low_color = "#dddddd"
 	var/high_color = "#ff9933"
-	var/min = 0.80
-	var/max = 1
+	var/min = 1.5
+	var/max = 2
 
 	var/interpolate_weight = (sun_position - min) / (max - min)
 	var/new_brightness = (Interpolate(low_brightness, high_brightness, interpolate_weight) ) * sun_brightness_modifier
