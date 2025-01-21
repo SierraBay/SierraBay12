@@ -1,4 +1,3 @@
-/* Выведено из ротации
 /datum/event/bsd_instability
 	var/list/all_spawned_anomalies = list()
 	var/list/possible_anomalies = list(
@@ -26,4 +25,4 @@
 	.=..()
 	for(var/obj/anomaly/picked_anomaly in all_spawned_anomalies)
 		picked_anomaly.delete_anomaly()
-*/
+

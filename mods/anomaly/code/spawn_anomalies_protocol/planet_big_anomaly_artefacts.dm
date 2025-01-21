@@ -1,6 +1,6 @@
 /obj/overmap/visitable/sector/exoplanet
-	var/big_anomaly_artefacts_min_amount = 4 //Минимальное количество больших артефактов
-	var/big_anomaly_artefacts_max_amount = 6 //Максимальное количество больших артефактов
+	var/big_anomaly_artefacts_min_amount = 2 //Минимальное количество больших артефактов
+	var/big_anomaly_artefacts_max_amount = 4 //Максимальное количество больших артефактов
 	var/big_anomaly_artefacts_amount = 0 //Фиксированное количество больших артефактов
 	//Какие большие артефакты будут заспавнены
 	var/list/big_artefacts_types = list(
@@ -23,6 +23,15 @@
 		log_and_message_admins("ОШИБКА. Аномальная планета не смогла разместить аномальные артефакты.")
 		CRASH("ОШИБКА. Аномальная планета не смогла разместить аномальные артефакты.")
 
+	var/biggest_x = 0
+	var/biggest_y = 0
+	for(var/turf/choosed_turf in all_turfs)
+		if(choosed_turf.x > biggest_x)
+			biggest_x = choosed_turf.x
+		if(choosed_turf.y > biggest_y)
+			biggest_y = choosed_turf.y
+	biggest_x -= 9
+	biggest_y -= 9
 
 	var/i = 1
 	var/false_counter = 0
@@ -44,6 +53,7 @@
 		if(status)
 			var/big_artefact_type_for_spawn = pick(big_artefacts_types)
 			var/obj/structure/big_artefact/spawned_big_artefact = new big_artefact_type_for_spawn(picked_turf)
+			spawned_big_artefact.born_anomalies(biggest_x, biggest_y)
 			LAZYADD(SSanom.big_anomaly_artefacts,spawned_big_artefact)
 			spawned_big_artefacts++
 
