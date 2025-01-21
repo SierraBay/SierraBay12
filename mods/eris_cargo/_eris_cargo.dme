@@ -28,6 +28,9 @@
 // Include the definitions of the trading station types that are always spawned
 #include "../../packs/0_eris_cargo/trading_stations/trading_station_types/0_always_spawn/eva.dm"
 #include "../../packs/0_eris_cargo/trading_stations/trading_station_types/0_always_spawn/materials.dm"
+#include "../../packs/0_eris_cargo/trading_stations/trading_station_types/0_always_spawn/engineering.dm"
+#include "../../packs/0_eris_cargo/trading_stations/trading_station_types/0_always_spawn/medical.dm"
+#include "../../packs/0_eris_cargo/trading_stations/trading_station_types/0_always_spawn/terra.dm"
 
 // Include the definitions of the trading station types that are rarely spawned
 #include "../../packs/0_eris_cargo/trading_stations/trading_station_types/2_rare/weapons.dm"
