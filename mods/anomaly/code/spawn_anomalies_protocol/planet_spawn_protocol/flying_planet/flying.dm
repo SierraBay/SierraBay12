@@ -81,11 +81,11 @@
 
 
 /obj/overmap/visitable/sector/exoplanet/flying/update_sun()
-	var/low_brightness = 0.8
-	var/high_brightness = 1.0
-	var/low_color = "#dddddd"
+	var/low_brightness = 2
+	var/high_brightness = 2
+	var/low_color = "#ff9933"
 	var/high_color = "#ff9933"
-	var/min = 1.5
+	var/min = 2
 	var/max = 2
 
 	var/interpolate_weight = (sun_position - min) / (max - min)

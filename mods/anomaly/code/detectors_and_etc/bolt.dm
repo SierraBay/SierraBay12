@@ -28,7 +28,8 @@
 	var/autocollect = TRUE
 
 /obj/item/storage/bolt_bag/attack_self(mob/living/user)
-	usr.put_in_hands(pick(contents))
+	if(LAZYLEN(contents))
+		usr.put_in_hands(pick(contents))
 
 
 /obj/item/storage/bolt_bag/examine(mob/user, distance, is_adjacent)
