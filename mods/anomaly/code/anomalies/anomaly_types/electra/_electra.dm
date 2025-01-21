@@ -63,7 +63,7 @@
 
 /obj/anomaly/electra/proc/activate_tesla_around()
 	var/list/anomalies_list = list()
-	get_anomalies_in_view_fast(get_turf(src), 3, anomalies_list)
+	get_anomalies_in_view_fast(get_turf(src), 5, anomalies_list)
 	for(var/obj/anomaly/electra/picked_electra in anomalies_list)
 		if(picked_electra.isready() && picked_electra.subtype_tesla)
 			picked_electra.last_activation_time = world.time
