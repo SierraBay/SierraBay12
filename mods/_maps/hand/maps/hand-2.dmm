@@ -584,7 +584,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/obj/submap_landmark/spawnpoint/away_hand/captain/guardsman,
+/obj/submap_landmark/spawnpoint/away_hand/pilot,
 /turf/simulated/floor/tiled/white,
 /area/ship/hand/crew)
 "eZ" = (
@@ -1818,6 +1818,10 @@
 	dir = 8;
 	pixel_x = -12
 	},
+/obj/item/storage/mirror{
+	pixel_x = -26;
+	pixel_y = 1
+	},
 /turf/simulated/floor/tiled/freezer,
 /area/ship/hand/crew/toilet)
 "se" = (
@@ -2231,6 +2235,10 @@
 	dir = 1;
 	pixel_y = -24
 	},
+/obj/item/storage/mirror{
+	pixel_x = -26;
+	pixel_y = 1
+	},
 /turf/simulated/floor/tiled/freezer,
 /area/ship/hand/crew/toilet)
 "wn" = (
@@ -2414,14 +2422,6 @@
 /obj/paint/black,
 /turf/simulated/floor/plating,
 /area/ship/hand/crew)
-"yF" = (
-/obj/structure/table/marble,
-/obj/machinery/door/firedoor{
-	dir = 4
-	},
-/obj/item/reagent_containers/food/condiment/small/oliveoil,
-/turf/simulated/floor/tiled/white,
-/area/ship/hand/crew/kitchen)
 "yN" = (
 /obj/structure/table/marble,
 /obj/machinery/fabricator/micro/bartender,
@@ -2522,6 +2522,7 @@
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 1
 	},
+/obj/item/reagent_containers/food/condiment/oliveoil,
 /turf/simulated/floor/tiled/white,
 /area/ship/hand/crew/kitchen)
 "zZ" = (
@@ -3997,6 +3998,10 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/item/storage/mirror{
+	pixel_x = -26;
+	pixel_y = 1
+	},
 /turf/simulated/floor/tiled/freezer,
 /area/ship/hand/crew/toilet)
 "QE" = (
@@ -4037,14 +4042,14 @@
 /turf/simulated/floor/wood/walnut,
 /area/ship/hand/crew/bar)
 "QT" = (
-/obj/structure/hygiene/sink{
-	pixel_y = -15
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 8
+	},
+/obj/structure/hygiene/sink{
+	pixel_y = -15
 	},
 /turf/simulated/floor/tiled/freezer,
 /area/ship/hand/crew/toilet)
@@ -4138,6 +4143,10 @@
 	},
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 1
+	},
+/obj/item/taperoll/bog{
+	pixel_x = -12;
+	pixel_y = -10
 	},
 /turf/simulated/floor/tiled/freezer,
 /area/ship/hand/crew/toilet)
@@ -4638,7 +4647,7 @@
 "XF" = (
 /obj/floor_decal/borderfloorblack,
 /obj/floor_decal/corner/paleblue/border,
-/obj/submap_landmark/spawnpoint/away_hand/captain/pilot,
+/obj/submap_landmark/spawnpoint/away_hand/guardsman,
 /turf/simulated/floor/tiled/white,
 /area/ship/hand/crew)
 "XI" = (
@@ -12190,7 +12199,7 @@ KE
 Cj
 Kz
 iZ
-yF
+ho
 XU
 Ae
 co

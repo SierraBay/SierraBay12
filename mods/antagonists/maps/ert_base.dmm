@@ -2337,10 +2337,16 @@
 	dir = 8
 	},
 /obj/structure/closet/emcloset,
+/obj/floor_decal/industrial/warning{
+	dir = 9
+	},
 /turf/simulated/floor/plating,
 /area/map_template/rescue_base/start)
 "fd" = (
 /obj/machinery/atmospherics/pipe/manifold/visible{
+	dir = 1
+	},
+/obj/floor_decal/industrial/warning{
 	dir = 1
 	},
 /turf/simulated/floor/plating,
@@ -2364,6 +2370,9 @@
 	name = "Window Shutters Control";
 	pixel_x = 4;
 	pixel_y = 24
+	},
+/obj/floor_decal/industrial/warning{
+	dir = 5
 	},
 /turf/simulated/floor/plating,
 /area/map_template/rescue_base/start)
@@ -2399,6 +2408,9 @@
 /obj/item/device/radio/intercom/specops{
 	dir = 8;
 	pixel_x = 22
+	},
+/obj/floor_decal/techfloor/orange{
+	dir = 4
 	},
 /turf/simulated/floor/tiled/dark,
 /area/map_template/rescue_base/start)
@@ -2437,7 +2449,6 @@
 	id_tag = "rescue_shuttle_outer";
 	name = "Ship External Access"
 	},
-/obj/shuttle_landmark/ert/start,
 /obj/machinery/door/blast/regular{
 	dir = 4;
 	id_tag = "ert_starboard_airlock_blast_door"
@@ -2449,7 +2460,17 @@
 /area/map_template/rescue_base/start)
 "fo" = (
 /obj/machinery/hologram/holopad/longrange,
-/turf/simulated/floor/tiled/dark,
+/obj/floor_decal/corner_techfloor_grid{
+	dir = 9
+	},
+/obj/floor_decal/techfloor/orange/corner{
+	dir = 1
+	},
+/obj/floor_decal/techfloor/orange/corner{
+	dir = 8
+	},
+/obj/floor_decal/industrial/outline/yellow,
+/turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/rescue_base/start)
 "fp" = (
 /obj/machinery/body_scanconsole{
@@ -2473,6 +2494,9 @@
 	pixel_y = 8;
 	dir = 8
 	},
+/obj/floor_decal/industrial/warning{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/map_template/rescue_base/start)
 "fs" = (
@@ -2492,15 +2516,20 @@
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/floor_decal/industrial/warning{
+	dir = 10
+	},
 /turf/simulated/floor/plating,
 /area/map_template/rescue_base/start)
 "fu" = (
 /obj/machinery/atmospherics/pipe/manifold4w/visible,
+/obj/floor_decal/industrial/warning,
 /turf/simulated/floor/plating,
 /area/map_template/rescue_base/start)
 "fv" = (
 /obj/machinery/atmospherics/pipe/manifold4w/visible,
 /obj/machinery/meter,
+/obj/floor_decal/industrial/warning,
 /turf/simulated/floor/plating,
 /area/map_template/rescue_base/start)
 "fw" = (
@@ -2511,6 +2540,9 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/floor_decal/industrial/warning{
+	dir = 6
+	},
 /turf/simulated/floor/plating,
 /area/map_template/rescue_base/start)
 "fx" = (
@@ -2519,7 +2551,7 @@
 /turf/simulated/floor/plating,
 /area/map_template/rescue_base/start)
 "fy" = (
-/obj/structure/bed/chair/office/dark{
+/obj/structure/bed/chair/shuttle{
 	dir = 4
 	},
 /turf/simulated/floor/tiled/dark,
@@ -2545,7 +2577,8 @@
 /area/map_template/rescue_base/base)
 "fC" = (
 /obj/structure/table/steel_reinforced,
-/obj/item/clothing/head/solgov/dress/fleet/command,
+/obj/floor_decal/techfloor/orange,
+/obj/item/clothing/head/beret/sec/corporate/whitered,
 /turf/simulated/floor/tiled/dark,
 /area/map_template/rescue_base/start)
 "fD" = (
@@ -2592,6 +2625,7 @@
 /obj/machinery/atmospherics/unary/tank/air{
 	dir = 8
 	},
+/obj/floor_decal/industrial/outline,
 /turf/simulated/floor/tiled/dark,
 /area/map_template/rescue_base/start)
 "fJ" = (
@@ -2776,6 +2810,9 @@
 /obj/machinery/recharger{
 	pixel_y = 4
 	},
+/obj/floor_decal/techfloor/orange{
+	dir = 10
+	},
 /turf/simulated/floor/tiled/dark,
 /area/map_template/rescue_base/start)
 "gl" = (
@@ -2795,6 +2832,7 @@
 "gn" = (
 /obj/machinery/atmospherics/portables_connector,
 /obj/machinery/portable_atmospherics/canister/oxygen/prechilled,
+/obj/floor_decal/industrial/outline/blue,
 /turf/simulated/floor/tiled/white,
 /area/map_template/rescue_base/start)
 "go" = (
@@ -2819,7 +2857,6 @@
 /area/map_template/rescue_base/start)
 "gr" = (
 /obj/structure/table/rack,
-/obj/random/solgov,
 /turf/simulated/floor/tiled/dark,
 /area/map_template/rescue_base/start)
 "gs" = (
@@ -2856,6 +2893,9 @@
 	dir = 8;
 	pixel_x = 24
 	},
+/obj/floor_decal/techfloor/orange{
+	dir = 6
+	},
 /turf/simulated/floor/tiled/dark,
 /area/map_template/rescue_base/start)
 "gz" = (
@@ -2864,7 +2904,6 @@
 	id_tag = "rescue_shuttle_outer";
 	name = "Ship External Access"
 	},
-/obj/shuttle_landmark/ert/start,
 /obj/machinery/door/blast/regular{
 	dir = 4;
 	id_tag = "ert_port_airlock_blast_door"
@@ -3122,16 +3161,25 @@
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/floor_decal/techfloor/orange{
+	dir = 9
+	},
 /turf/simulated/floor/tiled/dark,
 /area/map_template/rescue_base/start)
 "hh" = (
-/obj/machinery/computer/modular/preset/engineering,
+/obj/machinery/computer/modular/preset/full/ert,
+/obj/floor_decal/techfloor/orange{
+	dir = 1
+	},
 /turf/simulated/floor/tiled/dark,
 /area/map_template/rescue_base/start)
 "hi" = (
-/obj/machinery/computer/modular/preset/security,
 /obj/machinery/light{
 	dir = 4
+	},
+/obj/machinery/computer/modular/preset/cardslot/command_sec,
+/obj/floor_decal/techfloor/orange{
+	dir = 5
 	},
 /turf/simulated/floor/tiled/dark,
 /area/map_template/rescue_base/start)
@@ -3250,6 +3298,12 @@
 /obj/item/rig/ert/engineer,
 /turf/unsimulated/floor/techfloor,
 /area/map_template/rescue_base/base)
+"vP" = (
+/obj/floor_decal/industrial/warning{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/map_template/rescue_base/start)
 "xd" = (
 /obj/structure/table/rack,
 /obj/item/ammo_magazine/shotgunmag/mech,
@@ -3361,6 +3415,9 @@
 	dir = 4;
 	pixel_y = 8
 	},
+/obj/floor_decal/industrial/warning{
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/map_template/rescue_base/start)
 "DH" = (
@@ -3382,6 +3439,7 @@
 /area/map_template/rescue_base/base)
 "Es" = (
 /obj/machinery/telecomms/allinone/ert,
+/obj/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/plating,
 /area/map_template/rescue_base/start)
 "GI" = (
@@ -3427,6 +3485,12 @@
 	icon_state = "dark"
 	},
 /area/map_template/rescue_base/base)
+"Nx" = (
+/obj/floor_decal/industrial/warning{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/map_template/rescue_base/start)
 "Wi" = (
 /obj/structure/table/rack,
 /obj/item/storage/box/smokes,
@@ -3458,6 +3522,7 @@
 	dir = 4;
 	start_pressure = 740.5
 	},
+/obj/floor_decal/industrial/outline,
 /turf/simulated/floor/tiled/dark,
 /area/map_template/rescue_base/start)
 "ZX" = (
@@ -4781,7 +4846,7 @@ bA
 bB
 eU
 fc
-gt
+Nx
 DF
 ft
 eU
@@ -4973,7 +5038,7 @@ bA
 bB
 eU
 fe
-gt
+vP
 fq
 fw
 eU
