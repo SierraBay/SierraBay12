@@ -7,6 +7,7 @@
 	matter = list(MATERIAL_STEEL = 10000, MATERIAL_PLASTIC = 5000, MATERIAL_OSMIUM = 500)
 	force = 10
 
+	var/on_mech_icon = 'icons/mecha/mech_weapon_overlays.dmi'
 	var/list/restricted_hardpoints
 	var/mob/living/exosuit/owner
 	var/list/restricted_software

@@ -95,11 +95,15 @@
 					new_overlays += get_mech_image(decal, use_icon_state, 'mods/mechs_by_shegar/icons/mech_weapon_overlays_off.dmi', color, hardpoint_object.mech_layer )
 // [/SIERRA-ADD]
 
+<<<<<<< ours
 // [/SIERRA-REMOVE]
 /*
 				new_overlays += get_mech_image(decal, use_icon_state, 'icons/mecha/mech_weapon_overlays.dmi', color, hardpoint_object.mech_layer )
 */
 // [/SIERRA-REMOVE]
+=======
+				new_overlays += get_mech_image(decal, use_icon_state, hardpoint_object.on_mech_icon, color, hardpoint_object.mech_layer )
+>>>>>>> theirs
 	SetOverlays(new_overlays)
 
 /mob/living/exosuit/proc/update_pilots(update_overlays = TRUE)
