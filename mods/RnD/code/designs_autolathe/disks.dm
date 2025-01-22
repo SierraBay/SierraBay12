@@ -1,3 +1,6 @@
+/obj/item/stock_parts/computer/hard_drive/portable/
+	var/disk_name
+
 /obj/item/stock_parts/computer/hard_drive/portable/design/
 	name = "design disk"
 	desc = "Data disk used to store autolathe designs."
@@ -8,12 +11,17 @@
 	matter = list(MATERIAL_STEEL = 100, MATERIAL_PLASTIC = 200, MATERIAL_GOLD = 50)
 	var/list/designs = list()
 
-
-/obj/item/stock_parts/computer/hard_drive/portable/design/LateInitialize(mapload)
+/obj/item/stock_parts/computer/hard_drive/portable/LateInitialize(mapload)
 	install_default_programs()
 
 /obj/item/stock_parts/computer/hard_drive/portable/design/install_default_programs()
 	// Add design files to the disk
+	if(name)
+		var/datum/computer_file/data/text/D = new
+		D.filename = "DISK_NAME"
+		D.stored_data = name
+		create_file(D)
+
 	for(var/D in designs)
 		var/datum/design/dsgn = D
 		var/build = dsgn.build_path
