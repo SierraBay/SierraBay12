@@ -484,7 +484,7 @@ var/global/const/access_merchant = "ACCESS_MERCHANT" //301
 /**
  * SolGov faction link access level
  */
-/var/const/access_supplylink_solgov = "ACCESS_SUPPLY_LINK_SOLGOV"
+var/global/const/access_supplylink_solgov = "ACCESS_SUPPLY_LINK_SOLGOV"
 /datum/access/supplylink_solgov
 	id = access_supplylink_solgov
 	desc = "Supply Console - SolGov Link"
@@ -494,7 +494,7 @@ var/global/const/access_merchant = "ACCESS_MERCHANT" //301
 /**
  * TerraGov faction link access level
  */
-/var/const/access_supplylink_terragov = "ACCESS_SUPPLY_LINK_TERRAGOV"
+var/global/const/access_supplylink_terragov = "ACCESS_SUPPLY_LINK_TERRAGOV"
 /datum/access/supplylink_terragov
 	id = access_supplylink_terragov
 	desc = "Supply Console - TerraGov Link"
@@ -504,7 +504,7 @@ var/global/const/access_merchant = "ACCESS_MERCHANT" //301
 /**
  * FTU faction link access level
  */
-/var/const/access_supplylink_ftu = "ACCESS_SUPPLY_LINK_FTU"
+var/global/const/access_supplylink_ftu = "ACCESS_SUPPLY_LINK_FTU"
 /datum/access/supplylink_ftu
 	id = access_supplylink_ftu
 	desc = "Supply Console - FTU Link"
@@ -514,7 +514,7 @@ var/global/const/access_merchant = "ACCESS_MERCHANT" //301
 /**
  * Nanotrasen faction link access level
  */
-/var/const/access_supplylink_nanotrasen = "ACCESS_SUPPLY_LINK_NANOTRASEN"
+var/global/const/access_supplylink_nanotrasen = "ACCESS_SUPPLY_LINK_NANOTRASEN"
 /datum/access/supplylink_nanotrasen
 	id = access_supplylink_nanotrasen
 	desc = "Supply Console - Nanotrasen Link"
@@ -524,7 +524,7 @@ var/global/const/access_merchant = "ACCESS_MERCHANT" //301
 /**
  * DAIS faction link access level
  */
-/var/const/access_supplylink_dais = "ACCESS_SUPPLY_LINK_DAIS"
+var/global/const/access_supplylink_dais = "ACCESS_SUPPLY_LINK_DAIS"
 /datum/access/supplylink_dais
 	id = access_supplylink_dais
 	desc = "Supply Console - DAIS Link"
@@ -534,7 +534,7 @@ var/global/const/access_merchant = "ACCESS_MERCHANT" //301
 /**
  * OBS faction link access level
  */
-/var/const/access_supplylink_obs = "ACCESS_SUPPLY_LINK_OBS"
+var/global/const/access_supplylink_obs = "ACCESS_SUPPLY_LINK_OBS"
 /datum/access/supplylink_obs
 	id = access_supplylink_obs
 	desc = "Supply Console - OBS Link"
@@ -544,7 +544,7 @@ var/global/const/access_merchant = "ACCESS_MERCHANT" //301
 /**
  * Reborn Christian Church faction link access level
  */
-/var/const/access_supplylink_reborn_church = "ACCESS_SUPPLY_LINK_REBORN_CHURCH"
+var/global/const/access_supplylink_reborn_church = "ACCESS_SUPPLY_LINK_REBORN_CHURCH"
 /datum/access/supplylink_reborn_church
 	id = access_supplylink_reborn_church
 	desc = "Supply Console - Reborn Christian Church Link"

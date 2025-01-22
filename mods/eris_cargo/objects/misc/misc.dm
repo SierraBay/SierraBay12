@@ -39,10 +39,10 @@
 /obj/item/paper/supply_account/Initialize()
 	. = ..()
 	var/datum/money_account/MA = department_accounts["Supply"]
-	info = "<b><center>CONFIDENTIAL: ONLY FOR COMMAND PERSONNEL AND QM.</b></center>\
+	info = "<b><center>СТРОГО КОНФИДЕНЦИАЛЬНО: ТОЛЬКО ДЛЯ КОММАНДНОГО СОСТАВА И КВАРТИРМЕЙСТЕРА.</b></center>\
 			<BR><BR>\
-			Account number: [MA.account_number]<br>\
-			Account pin: [MA.remote_access_pin]"
+			Номер счета: [MA.account_number]<br>\
+			Пин-код счета: [MA.remote_access_pin]"
 
 
 /obj/machinery/computer/modular/preset/cardslot/command

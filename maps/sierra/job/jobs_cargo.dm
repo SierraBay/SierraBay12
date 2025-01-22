@@ -1,11 +1,12 @@
 /datum/job/qm
 	title = "Quartermaster"
-	department = "Снабжения"
+	department = "Supply"
 	department_flag = SUP
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = "Главе Персонала"
 	economic_power = 8
+	head_position = 1
 	minimal_player_age = 7
 	minimum_character_age = list(SPECIES_HUMAN = 23)
 	ideal_character_age = 25
@@ -23,7 +24,7 @@
 
 	access = list(		access_maint_tunnels, access_emergency_storage, access_bridge, access_tech_storage,  access_cargo, access_guppy_helm,
 						access_cargo_bot, access_qm, access_mailsorting, access_expedition_shuttle, access_guppy, access_hangar,
-						access_mining, access_mining_office, access_mining_station, access_commissary, access_external_airlocks)
+						access_mining, access_mining_office, access_mining_station, access_commissary, access_external_airlocks, access_supplylink_nanotrasen)
 
 
 
@@ -39,7 +40,7 @@
 
 /datum/job/cargo_tech
 	title = "Cargo Technician"
-	department = "Снабжения"
+	department = "Supply"
 	department_flag = SUP
 	total_positions = 2
 	spawn_positions = 2
@@ -72,7 +73,7 @@
 
 /datum/job/mining
 	title = "Prospector"
-	department = "Снабжения"
+	department = "Supply"
 	department_flag = SUP
 	total_positions = 4
 	spawn_positions = 4
@@ -108,7 +109,7 @@
 
 /datum/job/cargo_assistant
 	title = "Cargo Assistant"
-	department = "Снабжения"
+	department = "Supply"
 	department_flag = SUP
 	total_positions = 1
 	spawn_positions = 1
