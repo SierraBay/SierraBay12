@@ -11,7 +11,7 @@
 	name = "anomaly detection device"
 	desc = "A complex technological device designed taking into account all possible dangers of anomalies."
 	icon = 'mods/anomaly/icons/detector.dmi'
-	on_turf_icon = 'mods/anomaly/icons/on_floor_icons/anomaly_radar_on_floor.dmi'
+	on_turf_icon = 'mods/anomaly/icons/on_floor_icons/anomaly_detector_on_floor.dmi'
 	icon_state = "detector_turned_off"
 	var/destroyed = FALSE // Детектор убит из-за ЭМИ и уже никогда не проснётся.
 	//Базовое название детектора используемое в коде смена иконок.
