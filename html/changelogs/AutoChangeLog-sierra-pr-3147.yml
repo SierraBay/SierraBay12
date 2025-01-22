@@ -1,0 +1,5 @@
+author: Merlin1230
+changes:
+  - {tweak: Medical Huds now display a allergy button for anyone with allergies to
+      display all of them.}
+delete-after: true
