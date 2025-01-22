@@ -91,6 +91,15 @@
 	area_flags = AREA_FLAG_RAD_SHIELDED | AREA_FLAG_ION_SHIELDED
 	req_access = list(access_guppy)
 
+/area/drone_hangar/start
+	name = "Shuttle - Cargo Drone"
+	icon_state = "shuttlered"
+	requires_power = 1
+	dynamic_lighting = 1
+	area_flags = AREA_FLAG_RAD_SHIELDED | AREA_FLAG_ION_SHIELDED
+	req_access = list(access_cargo)
+	holomap_color = HOLOMAP_AREACOLOR_CARGO
+
 /area/shuttle/petrov
 	name = "Shuttle - Petrov"
 	requires_power = 1
