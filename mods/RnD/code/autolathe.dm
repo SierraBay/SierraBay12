@@ -199,7 +199,7 @@
 
 	var/list/qmats = stored_material.Copy()
 
-	for(var/i = 1; i <= queue.len; i++)
+	for(var/i = 1; i <= LAZYLEN(queue); i++)
 		var/datum/computer_file/binary/design/design_file = queue[i]
 		var/list/QR = design_file.ui_data()
 
@@ -371,19 +371,19 @@
 
 	if(href_list["remove_from_queue"])
 		var/ind = text2num(href_list["remove_from_queue"])
-		if(ind >= 1 && ind <= queue.len)
+		if(ind >= 1 && ind <= LAZYLEN(queue))
 			queue.Cut(ind, ind + 1)
 		return 1
 
 	if(href_list["move_up_queue"])
 		var/ind = text2num(href_list["move_up_queue"])
-		if(ind >= 2 && ind <= queue.len)
+		if(ind >= 2 && ind <= LAZYLEN(queue))
 			queue.Swap(ind, ind - 1)
 		return 1
 
 	if(href_list["move_down_queue"])
 		var/ind = text2num(href_list["move_down_queue"])
-		if(ind >= 1 && ind <= queue.len-1)
+		if(ind >= 1 && ind <= LAZYLEN(queue)-1)
 			queue.Swap(ind, ind + 1)
 		return 1
 
@@ -630,7 +630,7 @@
 	if(design_file)
 		design_file = design_file.clone()
 
-	while(amount && queue.len < queue_max)
+	while(amount && LAZYLEN(queue) < queue_max)
 		queue.Add(design_file)
 		amount--
 
@@ -665,7 +665,7 @@
 	return FALSE
 
 /obj/machinery/fabricator/update_icon()
-	overlays.Cut()
+	CutOverlays()
 
 	icon_state = initial(icon_state)
 
@@ -687,7 +687,7 @@
 
 /obj/machinery/fabricator/proc/print_post()
 	flick("[initial(icon_state)]_finish", src)
-	if(!current_file && !queue.len)
+	if(!current_file && !LAZYLEN(queue))
 		playsound(src.loc, 'sound/machines/ping.ogg', 50, 1, -3)
 		visible_message("\The [src] pings, indicating that queue is complete.")
 
@@ -717,7 +717,7 @@
 		if(stored_material[rmat] < SANITIZE_LATHE_COST(design.materials[rmat]))
 			return ERR_NOMATERIAL
 
-	if(design.chemicals.len)
+	if(LAZYLEN(design.chemicals))
 		if(!container)
 			return ERR_NOREAGENT
 
@@ -798,7 +798,7 @@
 /obj/machinery/fabricator/proc/next_file()
 	current_file = null
 	progress = 0
-	if(queue.len)
+	if(LAZYLEN(queue))
 		current_file = queue[1]
 		print_pre()
 		working = TRUE
