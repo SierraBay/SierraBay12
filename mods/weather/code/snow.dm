@@ -22,7 +22,9 @@
 	can_blowout = FALSE
 
 /obj/weather_manager/snow/change_stage(force_state, monitor = FALSE, sound = FALSE)
-	..()
+	.=..()
+	if(!.) //Родитель сказал Баста, смена не нужна
+		return FALSE
 	var/possible_stages = stages.Copy()
 	LAZYREMOVE(possible_stages, current_stage)
 	if(!force_state)
@@ -31,21 +33,18 @@
 		current_stage = force_state
 	if(current_stage == "calm")
 		for(var/obj/weather/weather in connected_weather_turfs)
-			weather.flick_weather_icon("void")
 			weather.icon_state = "void"
 			weather.play_monitor_effect = FALSE
 			weather.play_sound = FALSE
 			weather.update()
 	else if(current_stage == "midle")
 		for(var/obj/weather/weather in connected_weather_turfs)
-			weather.flick_weather_icon("light_snow")
 			weather.icon_state = "light_snow"
 			weather.play_monitor_effect = FALSE
 			weather.play_sound = FALSE
 			weather.update()
 	else if(current_stage == "storm")
 		for(var/obj/weather/weather in connected_weather_turfs)
-			weather.flick_weather_icon("snow_storm")
 			weather.icon_state = "snow_storm"
 			weather.play_monitor_effect = TRUE
 			weather.play_sound = TRUE
@@ -56,6 +55,9 @@
 
 
 /obj/weather_manager/snow/prepare_to_blowout()
+	.=..()
+	if(!.) //Родитель сказал Баста, выброс не нужен
+		return
 	for(var/obj/weather/weather in connected_weather_turfs)
 		weather.icon_state = "void_storm"
 		weather.play_monitor_effect = FALSE
@@ -63,7 +65,9 @@
 		weather.update()
 
 /obj/weather_manager/snow/start_blowout()
-	..()
+	.=..()
+	if(!.) //Родитель сказал Баста, выброс не нужен
+		return
 	//Выброс в виде белой мглы медленно перекатывается слева направо
 	var/start_x
 	var/list/blowout_weather_turfs = connected_weather_turfs.Copy()

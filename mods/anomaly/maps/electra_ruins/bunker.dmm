@@ -166,7 +166,7 @@
 /obj/item/stack/material/rods,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
-/area/template_noop)
+/area/map_template/bunker)
 "qL" = (
 /obj/structure/table/steel_reinforced,
 /obj/random/contraband,
@@ -348,15 +348,6 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
 /area/template_noop)
-"GD" = (
-/obj/structure/bed/padded{
-	dir = 1
-	},
-/obj/item/bedsheet/hop,
-/obj/structure/curtain/open/bed,
-/obj/decal/cleanable/dirt,
-/turf/simulated/floor/holofloor/tiled,
-/area/template_noop)
 "GF" = (
 /obj/structure/aurora/wall_light{
 	dir = 8
@@ -369,7 +360,7 @@
 /obj/decal/cleanable/generic,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
-/area/template_noop)
+/area/map_template/bunker)
 "HI" = (
 /obj/structure/hygiene/shower{
 	dir = 4
@@ -1154,8 +1145,8 @@ ZL
 fH
 fH
 fH
-fH
-fH
+cg
+cg
 cg
 cg
 cg
@@ -1196,14 +1187,14 @@ ZL
 ZL
 fH
 xJ
-xJ
-xJ
-xJ
+ro
+ro
+ro
 cg
 BS
 BS
 cg
-GD
+vW
 GF
 cg
 ZL
@@ -1240,7 +1231,7 @@ ZL
 fH
 Vd
 Dr
-xJ
+ro
 qc
 cg
 vg

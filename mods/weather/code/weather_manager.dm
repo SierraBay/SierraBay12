@@ -57,10 +57,18 @@
 /obj/weather_manager/proc/change_stage()
 	set waitfor = FALSE
 	set background = TRUE
+	var/need_change = FALSE
+	last_change_time = world.time
+	for(var/mob/living/carbon/human/picked_human in GLOB.living_players)
+		if(get_z(picked_human) == get_z(src))
+			need_change = TRUE
+			break
+	if(!need_change)
+		return FALSE
 	for(var/obj/weather/connected_weather in connected_weather_turfs)
 		connected_weather.update()
-	last_change_time = world.time
 	calculate_change_time()
+	return TRUE
 
 /obj/weather_manager/proc/start_blowout()
 	set waitfor = FALSE
@@ -71,7 +79,7 @@
 	STOP_PROCESSING(SSweather, src)
 	prepare_to_blowout()
 	for(var/mob/living/carbon/human/picked_human in GLOB.living_players)
-		if(picked_human.z == src.z)
+		if(get_z(picked_human) == get_z(src))
 			need_blowout = TRUE
 			if(must_message_about_blowout)
 				message_about_blowout_prepare(picked_human)
@@ -79,16 +87,17 @@
 		report_progress("DEBUG ANOM: Должен был случиться выброс, но нет игроков на Z уровне погоды. Отмена.")
 		calculate_blowout_time()
 		last_blowout_time = world.time
-		return
+		return FALSE
 	for(var/obj/weather/connected_weather in connected_weather_turfs)
 		if(connected_weather.blowout_status)
 			change_stage(connected_weather.blowout_status, FALSE, FALSE)
 	sleep(delay_between_message_and_blowout)
 	report_progress("DEBUG ANOM: Начинается выброс. Стадия - начало.")
 	for(var/mob/living/carbon/human/picked_human in GLOB.living_players)
-		if(picked_human.z == src.z)
+		if(get_z(picked_human) == get_z(src))
 			if(must_message_about_blowout)
 				message_about_blowout(picked_human)
+	return TRUE
 
 /obj/weather_manager/proc/message_about_blowout_prepare(mob/living/input_mob)
 	if(LAZYLEN(blowout_prepare_messages))
