@@ -21,7 +21,7 @@
 		return
 	//Собираем все турфы в определённом радиусе
 	for(var/turf/choosed_turf in RANGE_TURFS(src.loc, range_spawn))
-		if(!TurfBlocked(choosed_turf) || TurfBlockedByAnomaly(choosed_turf) && turf_in_playable_place(choosed_turf, biggest_x, biggest_y))
+		if(!TurfBlocked(choosed_turf) && !TurfBlockedByAnomaly(choosed_turf) && turf_in_playable_place(choosed_turf, biggest_x, biggest_y))
 			LAZYADD(turfs_for_spawn, choosed_turf)
 	generate_anomalies_in_turfs(possible_anomalies, turfs_for_spawn, min_anomalies_ammout, max_anomalies_ammout, min_artefacts_ammount, max_artefacts_ammount, null, null, "Большой аномальный артефакт", started_in)
 

@@ -70,8 +70,8 @@
 
 ///Проверяет, что турф находится в играбельной зоне планеты
 /proc/turf_in_playable_place(turf/inputed_turf, x_limit, y_limit)
-	if(!x_limit && !y_limit)
-		return
+	if(!x_limit || !y_limit || !inputed_turf)
+		return TRUE //x и y ограничений нет
 	if(inputed_turf.x < 17)
 		return FALSE
 	else if(inputed_turf.x > x_limit)
