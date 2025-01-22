@@ -614,7 +614,7 @@
 /obj/machinery/fabricator/proc/can_recycle(obj/O)
 	if(!selectively_recycled_types)
 		return FALSE
-	if(!selectively_recycled_types.len)
+	if(!LAZYLEN(selectively_recycled_types))
 		return FALSE
 
 	for(var/type in selectively_recycled_types)
