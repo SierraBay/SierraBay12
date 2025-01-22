@@ -33,7 +33,6 @@
 
 	// Our associated trade faction
 	var/faction = FACTION_INDEPENDENT
-
 	// Point at world.time when we can set/reset the faction again
 	var/faction_cooldown
 	// How often we can change faction on the console
@@ -264,6 +263,7 @@
 			return
 
 		faction = faction_chosen
+		faction_cooldown = world.time + faction_cooldown_time
 		return TRUE
 
 	if(href_list["PRG_faction_unlink"])
@@ -294,7 +294,6 @@
 		if(istype(A))
 			account = A
 			return TRUE
-
 
 		var/acc_pin = input("Enter PIN", "Account linking") as num|null
 		if(!acc_pin)
@@ -445,7 +444,7 @@
 		trade_screen = ORDER_SCREEN
 		if(account != department_accounts["Supply"])
 			orders_locked = TRUE
-			addtimer(new Callback(src, .proc/UnlockOrdering), 10 SECONDS, TIMER_STOPPABLE)
+			addtimer(new Callback(src, PROC_REF(UnlockOrdering)), 10 SECONDS, TIMER_STOPPABLE)
 		return TRUE
 
 	if(href_list["PRG_view_order"])
@@ -816,7 +815,6 @@
 					continue
 				var/cost = 0
 				var/normal_cost = 0
-
 				for(var/atom/movable/item in reverselist(contents_incl_self))
 					cost += SSsupply.GetExportValue(item)
 					normal_cost += get_value(item)
