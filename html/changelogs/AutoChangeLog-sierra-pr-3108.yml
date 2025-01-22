@@ -1,0 +1,5 @@
+author: Titanized
+changes:
+  - {tweak: Changeling antag skill selection no longer resets all skills. Instead
+      it derives from the same skill setter as traitors and most on-ship antags.}
+delete-after: true
