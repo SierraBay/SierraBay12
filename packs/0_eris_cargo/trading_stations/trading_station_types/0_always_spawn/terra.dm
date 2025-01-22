@@ -4,8 +4,8 @@
 		)
 	uid = "terra"
 	unlock_favor = 10000
-	faction = FACTION_TERRAGOV
-	whitelist_factions = list(FACTION_TERRAGOV)
+	faction = FACTION_INDIE_CONFED
+	whitelist_factions = list(FACTION_INDIE_CONFED)
 	spawn_always = TRUE
 	markup = 2.2
 	inventory = list(
