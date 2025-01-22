@@ -77,7 +77,7 @@
 				message_about_blowout_prepare(picked_human)
 	if(!need_blowout)
 		report_progress("DEBUG ANOM: Должен был случиться выброс, но нет игроков на Z уровне погоды. Отмена.")
-		calculate_blowout_message_delay_time()
+		calculate_blowout_time()
 		last_blowout_time = world.time
 		return
 	for(var/obj/weather/connected_weather in connected_weather_turfs)
