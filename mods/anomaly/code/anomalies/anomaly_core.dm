@@ -180,7 +180,7 @@
 	if(ranzomize_with_initialize)
 		ranzomize_parameters()
 	icon_state = idle_effect_type
-	if(have_static_sound)
+	if(static_sound_type)
 		GLOB.sound_player.PlayLoopingSound(src, "\ref[src]", static_sound_type, 10, 6)
 	if(detectable_effect_range)
 		calculate_effected_turfs_from_new_anomaly(src)

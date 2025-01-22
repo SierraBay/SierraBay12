@@ -66,7 +66,7 @@
 	if(!LAZYLEN(all_turfs))
 		log_and_message_admins("ОШИБКА. В результате анализа планеты, код отвечающий за размещение аномалий на планете не нашёл подходящих турфов.")
 		CRASH("ОШИБКА. В результате анализа планеты, код отвечающий за размещение аномалий на планете не нашёл подходящих турфов.")
-	generate_anomalies_in_turfs(anomalies_type, all_turfs, min_anomalies_ammout, max_anomalies_ammout, min_artefacts_ammount, max_artefacts_ammount, min_anomaly_size, max_anomaly_size, "planet generation protocol", started_in)
+	generate_anomalies_in_turfs(anomalies_type, all_turfs, min_anomalies_ammout, max_anomalies_ammout, min_artefacts_ammount, max_artefacts_ammount, min_anomaly_size, max_anomaly_size, "Планета [name]", started_in)
 
 ///Проверяет, что турф находится в играбельной зоне планеты
 /proc/turf_in_playable_place(turf/inputed_turf, x_limit, y_limit)

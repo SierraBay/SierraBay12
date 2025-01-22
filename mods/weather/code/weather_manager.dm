@@ -55,12 +55,16 @@
 		start_blowout()
 
 /obj/weather_manager/proc/change_stage()
+	set waitfor = FALSE
+	set background = TRUE
 	for(var/obj/weather/connected_weather in connected_weather_turfs)
 		connected_weather.update()
 	last_change_time = world.time
 	calculate_change_time()
 
 /obj/weather_manager/proc/start_blowout()
+	set waitfor = FALSE
+	set background = TRUE
 	var/need_blowout = FALSE
 	calculate_blowout_message_delay_time()
 	report_progress("DEBUG ANOM: Начинается выброс. Стадия - подготовка.")

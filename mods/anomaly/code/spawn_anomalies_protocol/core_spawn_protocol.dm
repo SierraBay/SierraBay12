@@ -186,8 +186,8 @@ source - Источник(Причина) генерации аномалий н
 	var/spended_time = world.time - started_in
 	//Отчитаемся
 	if(spawned_anomalies_ammount > 0)
-		report_progress("Spawned [spawned_anomalies_ammount] anomalies with [spawned_artefacts_ammount] artefacts by: [source], spended [spended_time] ticks ")
-		LAZYADD(SSanom.important_logs, "Spawned [spawned_anomalies_ammount] anomalies with [spawned_artefacts_ammount] artefacts by: [source], spended [spended_time] ticks ")
+		report_progress("Создано [spawned_anomalies_ammount] аномалий, создано [spawned_artefacts_ammount] артефактов в них. Источник: [source], затрачено [spended_time] тиков. ")
+		LAZYADD(SSanom.important_logs, "Создано [spawned_anomalies_ammount] аномалий, создано [spawned_artefacts_ammount] артефактов в них. Источник: [source], затрачено [spended_time] тиков. ")
 	return spawned_anomalies
 
 ///Функция генерация артефактов в аномалиях. Спавнит количество артефактов, находящиеся в диапазоне между min_artefacts_ammoun и max_artefacts_ammount

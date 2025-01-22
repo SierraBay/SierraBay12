@@ -34,7 +34,7 @@
 
 /obj/item/storage/bolt_bag/examine(mob/user, distance, is_adjacent)
 	. = ..()
-	to_chat(user, SPAN_GOOD("Use RBM and use Toggle autocollect to toggle autocollect."))
+	to_chat(user, SPAN_GOOD("Нажмите ПКМ по мешку, выберите toggle autocollect для переключения режима автоподбора."))
 
 /obj/item/storage/bolt_bag/verb/toggle_autocollect()
 	set category = "Object"
@@ -43,9 +43,9 @@
 
 	autocollect = !autocollect
 	if(autocollect)
-		to_chat(usr, SPAN_NOTICE("Now you will automaticly collect bolts and beacons in this bag."))
+		to_chat(usr, SPAN_GOOD("Теперь вы автоматически складываете болты/маяки в мешочек при пересечении с ними."))
 	else
-		to_chat(usr, SPAN_NOTICE("Now you will NOT automaticly collect bolts and beacons in this bag."))
+		to_chat(usr, SPAN_BAD("Больше вы НЕ складываете автоматически болты/маяки в мешочек при пересечении с ними."))
 
 /obj/item/storage/bolt_bag/full_of_bolts
 	startswith = list(

@@ -2,7 +2,7 @@
 	name = "Flux-detector"
 	desc = "An extremely complex device created by the Skrell civilization."
 	icon = 'mods/anomaly/icons/flux_detector.dmi'
-	icon_state = "flux_undeployed"
+	icon_state = "flux_turned_off"
 	detector_basic_name = "flux"
 	action_button_name = "Scan anomalies"
 	//Устройство не лезет на кисть.

@@ -11,10 +11,6 @@
 	var/range_spawn = 30
 	var/list/possible_anomalies = list()
 
-/obj/structure/big_artefact/Initialize()
-	. = ..()
-	born_anomalies()
-
 ///Функция, которая заспавнит вокруг большого артефакта аномалии
 /obj/structure/big_artefact/proc/born_anomalies(biggest_x, biggest_y)
 	set background = 1
@@ -27,7 +23,7 @@
 	for(var/turf/choosed_turf in RANGE_TURFS(src.loc, range_spawn))
 		if(!TurfBlocked(choosed_turf) || TurfBlockedByAnomaly(choosed_turf) && turf_in_playable_place(choosed_turf, biggest_x, biggest_y))
 			LAZYADD(turfs_for_spawn, choosed_turf)
-	generate_anomalies_in_turfs(possible_anomalies, turfs_for_spawn, min_anomalies_ammout, max_anomalies_ammout, min_artefacts_ammount, max_artefacts_ammount, null, null, "big anomaly artefact generation", started_in)
+	generate_anomalies_in_turfs(possible_anomalies, turfs_for_spawn, min_anomalies_ammout, max_anomalies_ammout, min_artefacts_ammount, max_artefacts_ammount, null, null, "Большой аномальный артефакт", started_in)
 
 /obj/structure/big_artefact/shuttle_land_on()
 	delete_artefact()

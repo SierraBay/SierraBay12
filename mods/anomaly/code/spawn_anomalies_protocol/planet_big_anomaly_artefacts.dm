@@ -62,7 +62,7 @@
 
 		i++
 
-	report_progress("Spawned [spawned_big_artefacts]  big anomaly artefacts (Tryed to spawn [result_big_artefacts_amount]) for anomaly planet. Spended [world.time - started_in] ticks ")
+	report_progress("Создано [spawned_big_artefacts]  больших аномальных артефактов (Требовали создать [result_big_artefacts_amount]) для аномальной планеты. Затрачено [world.time - started_in] тиков. ")
 
 
 /obj/overmap/visitable/sector/exoplanet/proc/collect_good_turfs()

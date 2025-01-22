@@ -21,7 +21,6 @@
 		/obj/item/artefact/pruzhina = 80,
 		/obj/item/artefact/svetlyak = 20
 	)
-	have_static_sound = TRUE
 	var/play_sound_second_time = FALSE //Костыль, чтоб тесла при ударе по целям вдаль тоже играла звук удара
 	static_sound_type = 'mods/anomaly/sounds/electra_idle.ogg'
 	var/datum/beam = null
@@ -71,11 +70,14 @@
 
 /obj/anomaly/electra/get_effect_by_anomaly(atom/movable/target)
 	set waitfor = FALSE
+	set background = TRUE
 	electroanomaly_act(target, src)
 
 
 ///Функция обрабатывающее влияние электроаномалии на цель
 /proc/electroanomaly_act(atom/movable/target, obj/anomaly/electra/input_electra, called_by_tesla = FALSE)
+	set waitfor = FALSE
+	set background = TRUE
 	//Понадобится нам, если обьект по какой-либо причине будет удалён из-за удара, дабы "лучу" было куда идти
 	var/target_turf = get_turf(target)
 	if(!isturf(target.loc))

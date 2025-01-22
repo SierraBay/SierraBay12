@@ -8,6 +8,7 @@
 	anomaly_tag = "Rvach"
 	with_sound = TRUE
 	sound_type = 'mods/anomaly/sounds/rvach_activation.ogg'
+	static_sound_type = 'mods/anomaly/sounds/gravi_idle.ogg'
 	idle_effect_type = "rvach_idle"
 	activation_effect_type = "gravy_anomaly_down"
 	detection_icon_state = "hot_anomaly"

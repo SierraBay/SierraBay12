@@ -28,7 +28,6 @@
 	habitability_weight = HABITABILITY_EXTREME
 	has_trees = FALSE
 	flora_diversity = 5
-	//Следующие руины нам НЕ подойдут из-за того что на облакал они выглядят крайне убого
 
 
 /obj/overmap/visitable/sector/exoplanet/flying/build_level()
@@ -41,7 +40,7 @@
 	var/planet_z = get_z(any_turf)
 	var/datum/event/change_z_skybox = new /datum/event/change_z_skybox(new /datum/event_meta(EVENT_LEVEL_MAJOR))
 	change_z_skybox.affecting_z = list(planet_z)
-	change_z_skybox.setup('mods/anomaly/icons/planet_backgrounds.dmi', "flying")
+	change_z_skybox.setup('mods/anomaly/icons/planet_backgrounds.dmi', "mods/anomaly/sounds/gravi_planet_wind_1.ogg")
 	SSskybox.generate_skybox(planet_z)
 	update_sun()
 
@@ -73,8 +72,8 @@
 	mineral_turf =  /turf/simulated/floor/exoplanet/grass
 
 /area/exoplanet/flying
-	ambience = list('sound/effects/wind/tundra0.ogg','sound/effects/wind/tundra1.ogg','sound/effects/wind/tundra2.ogg','sound/effects/wind/spooky0.ogg','sound/effects/wind/spooky1.ogg')
-	base_turf = /turf/simulated/floor/exoplanet/grass
+	ambience = list('sound/effects/wind/tundra0.ogg','mods/anomaly/sounds/gravi_planet_wind_1.ogg')
+	base_turf = /turf/simulated/floor/exoplanet/clouds
 
 
 
@@ -85,8 +84,9 @@
 	var/high_brightness = 2
 	var/low_color = "#ff9933"
 	var/high_color = "#ff9933"
-	var/min = 2
-	var/max = 2
+	var/min = 0.70
+	var/max = 1.0
+	sun_position = 1
 
 	var/interpolate_weight = (sun_position - min) / (max - min)
 	var/new_brightness = (Interpolate(low_brightness, high_brightness, interpolate_weight) ) * sun_brightness_modifier
