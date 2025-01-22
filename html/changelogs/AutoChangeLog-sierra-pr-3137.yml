@@ -1,4 +1,0 @@
-author: Banditoz
-changes:
-  - {bugfix: The noticeboard will render correctly if there are over five papers attached.}
-delete-after: true

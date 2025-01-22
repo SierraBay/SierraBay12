@@ -1,6 +1,0 @@
-author: Ryan180602
-changes:
-  - {rscadd: Add SCG lunchbox.}
-  - {tweak: Random toy pool now has a chance of spawning the th'oom plushie. (somewhere
-      in D4 maints)}
-delete-after: true
