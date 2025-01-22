@@ -34,6 +34,11 @@
 	// Our associated trade faction
 	var/faction = FACTION_INDEPENDENT
 
+	// Point at world.time when we can set/reset the faction again
+	var/faction_cooldown
+	// How often we can change faction on the console
+	var/faction_cooldown_time = 2 MINUTES
+
 	var/prg_screen = PRG_TREE
 	var/trade_screen = GOODS_SCREEN
 	var/log_screen
@@ -212,7 +217,10 @@
 		return TRUE
 
 	if(href_list["PRG_log_screen"])
-		log_screen = input("Select log type", "Log Type", null) as null|anything in LOG_SCREEN_LIST
+		if(!(href_list["PRG_log_screen"] in LOG_SCREEN_LIST))
+			return FALSE
+
+		log_screen = href_list["PRG_log_screen"]
 		current_log_page = 1
 		return TRUE
 
@@ -223,6 +231,10 @@
 		return TRUE
 
 	if(href_list["PRG_faction"])
+		if(faction_cooldown > world.time)
+			to_chat(usr, SPAN_WARNING("The option is currently unavailable! Try again later!"))
+			return
+
 		var/obj/item/stock_parts/computer/card_slot/card_slot = computer.get_component(PART_CARD)
 		if(!istype(card_slot))
 			to_chat(usr, SPAN_WARNING("Card slot is not installed."))
@@ -255,21 +267,41 @@
 		return TRUE
 
 	if(href_list["PRG_faction_unlink"])
+		if(faction_cooldown > world.time)
+			to_chat(usr, SPAN_WARNING("The option is currently unavailable! Try again later!"))
+			return
+
 		faction = FACTION_INDEPENDENT
 		return TRUE
 
 	if(href_list["PRG_account"])
 		var/obj/item/stock_parts/computer/card_slot/card_slot = computer.get_component(PART_CARD)
-		var/acc_num = input("Enter account number", "Account linking", card_slot?.stored_card?.associated_account_number) as num|null
+		var/obj/item/card/id/ID = card_slot.stored_card
+		if(!istype(ID))
+			ID = usr.GetIdCard()
+		// Account security level is 0 - auto-login from the ID
+		var/autofill = null
+		if(istype(ID) && ID.associated_account_number)
+			var/datum/money_account/A = get_account(ID.associated_account_number)
+			if(istype(A) && A.security_level == 0)
+				autofill = ID.associated_account_number
+		var/acc_num = input("Enter account number", "Account linking", autofill) as num|null
 		if(!acc_num)
 			return
+
+		// 0 sec level - auto login
+		var/datum/money_account/A = attempt_account_access(acc_num)
+		if(istype(A))
+			account = A
+			return TRUE
+
 
 		var/acc_pin = input("Enter PIN", "Account linking") as num|null
 		if(!acc_pin)
 			return
 
-		var/card_check = card_slot?.stored_card?.associated_account_number == acc_num
-		var/datum/money_account/A = attempt_account_access(acc_num, acc_pin, card_check ? 2 : 1, TRUE)
+		var/card_check = ID.associated_account_number == acc_num
+		A = attempt_account_access(acc_num, acc_pin, card_check ? 2 : 1, TRUE)
 		if(!A)
 			to_chat(usr, SPAN_WARNING("Unable to link account: access denied."))
 			return
@@ -299,6 +331,9 @@
 		if(!account)
 			to_chat(usr, SPAN_WARNING("ERROR: No account linked."))
 			return
+		if(account.suspended)
+			to_chat(usr, SPAN_WARNING("ERROR: Linked account is suspended."))
+			return
 		if(LAZYLEN(station.whitelist_factions) && !(faction in station.whitelist_factions))
 			to_chat(usr, SPAN_WARNING("ERROR: Trading is forbidden for your associated faction."))
 			return
@@ -325,6 +360,9 @@
 		// Double check for input
 		if(!account)
 			to_chat(usr, SPAN_WARNING("ERROR: No account linked."))
+			return
+		if(account.suspended)
+			to_chat(usr, SPAN_WARNING("ERROR: Linked account is suspended."))
 			return
 		if(LAZYLEN(station.whitelist_factions) && !(faction in station.whitelist_factions))
 			to_chat(usr, SPAN_WARNING("ERROR: Trading is forbidden for your associated faction."))
@@ -397,6 +435,9 @@
 	if(href_list["PRG_build_order"])
 		if(orders_locked)
 			to_chat(usr, SPAN_WARNING("ERROR: You cannot place an order at this time. Please wait 10 seconds."))
+			return
+		if(account.suspended)
+			to_chat(usr, SPAN_WARNING("ERROR: Linked account is suspended."))
 			return
 		var/reason = sanitizeName(input("Enter reason(s) for order", "Request Reason", ""), MAX_NAME_LEN)
 		current_order = SSsupply.BuildOrder(account, reason, shopping_list)
@@ -589,10 +630,13 @@
 				if(!account)
 					to_chat(usr, SPAN_WARNING("ERROR: No account linked."))
 					return
+				if(account.suspended)
+					to_chat(usr, SPAN_WARNING("ERROR: Linked account is suspended."))
+					return
 				if(get_area(receiving) != get_area(computer) && program_type != "master")
 					to_chat(usr, SPAN_WARNING("ERROR: Receiving beacon is too far from \the [computer]."))
 					return
-				if(!SSsupply.Buy(receiving, account, shopping_list))
+				if(!SSsupply.Buy(receiving, account, shopping_list, FALSE, null, faction))
 					to_chat(usr, SPAN_WARNING("ERROR: Purchase failed."))
 					return FALSE
 				ResetShopList()
@@ -603,7 +647,10 @@
 				if(get_area(sending) != get_area(computer) && program_type != "master")
 					to_chat(usr, SPAN_WARNING("ERROR: Sending beacon is too far from \the [computer]."))
 					return
-				SSsupply.Export(sending, account)
+				if(account.suspended)
+					to_chat(usr, SPAN_WARNING("ERROR: Linked account is suspended."))
+					return
+				SSsupply.Export(sending, account, faction)
 				return TRUE
 
 		if(href_list["PRG_approve_order"])
@@ -622,7 +669,7 @@
 				to_chat(usr, SPAN_WARNING("ERROR: Not enough funds in requesting account ([requesting_account.owner_name] #[requesting_account.account_number])."))
 				return
 
-			SSsupply.PurchaseOrder(receiving, order)
+			SSsupply.PurchaseOrder(receiving, order, faction)
 			SSsupply.order_queue.Remove(order)
 			if(current_order == order)
 				current_order = null
@@ -649,6 +696,8 @@
 	dat += " | "
 	dat += trade_screen == CART_SCREEN ? "<b><u>Cart</u></b>" :"<A href='?src=\ref[src];PRG_trade_screen=[CART_SCREEN]'>Cart</A>"
 	dat += " | "
+	dat += trade_screen == LOG_SCREEN ? "<b><u>Logs</u></b>" :"<A href='?src=\ref[src];PRG_trade_screen=[LOG_SCREEN]'>Logs</A>"
+	dat += " | "
 	dat += "<A href='?src=\ref[src];PC_exit=1'>Exit</A>"
 
 	dat += "<hr>"
@@ -663,7 +712,8 @@
 			dat += "<A href='?src=\ref[src];PRG_faction=1'>Link Faction</A><br><br>"
 
 		if(account)
-			dat += "Current Account: [account.owner_name]<br>"
+			dat += "Current Account: [account.owner_name][account.suspended ? " <span style='color: [COLOR_RED]'>\[SUSPENDED\]</span>" : ""]<br>"
+			dat += "Balance: [account.get_balance()]<br>"
 			dat += "<a href='?src=\ref[src];PRG_account_unlink=1'>Unlink</A><br><br>"
 		else
 			dat += "<A href='?src=\ref[src];PRG_account=1'>Link Account</A><br><br>"
@@ -751,9 +801,12 @@
 		if(!sending)
 			dat += "<b>Sending beacon is missing!</b>"
 		else
-			dat += "<A href='?src=\ref[src];PRG_update=1'>Update</A>"
+			dat += "<A href='?src=\ref[src];PRG_update=1'>Update</A> "
 			dat += "<A href='?src=\ref[src];PRG_export=1'>Export</A>"
 			dat += "<hr>"
+			if(sending.export_cooldown > world.time)
+				dat += "<b>Export cooldown: [round((sending.export_cooldown - world.time) / 10)] seconds</b>"
+				dat += "<hr>"
 			var/total_cost = 0
 			for(var/atom/movable/AM in sending.GetObjects())
 				if(ishuman(AM))
@@ -762,16 +815,26 @@
 				if(is_path_in_list(/mob/living/carbon/human, contents_incl_self))
 					continue
 				var/cost = 0
+				var/normal_cost = 0
 
 				for(var/atom/movable/item in reverselist(contents_incl_self))
-					cost += get_value(item)
-
-				dat += "- [AM.name] ([cost] [GLOB.using_map.local_currency_name_short])<br>"
+					cost += SSsupply.GetExportValue(item)
+					normal_cost += get_value(item)
+				if(!cost)
+					continue
+				dat += "- [AM.name] ([cost] [GLOB.using_map.local_currency_name_short])"
+				if(cost < normal_cost)
+					var/percent_diff = round(cost / normal_cost, 0.01) * 100
+					dat += " <span style='color: [COLOR_RED]'>([percent_diff]%)</span>"
+				else if(cost > normal_cost)
+					var/percent_diff = round(cost / normal_cost, 0.01) * 100
+					dat += " <span style='color: [COLOR_GREEN]'>([percent_diff]%)</span>"
+				dat += "<br>"
 				total_cost += cost
 			if(total_cost)
 				dat += "<b>Total export cost: [total_cost] [GLOB.using_map.local_currency_name_short]</b>"
 			else
-				dat += "<b>There is no items within sending beacon's range!</b>"
+				dat += "<b>There is no items for export within sending beacon's range!</b>"
 
 	if(trade_screen == CART_SCREEN)
 		dat += "<A href='?src=\ref[src];PRG_receive=1'>Purchase</A> | "
@@ -792,6 +855,35 @@
 					dat += "- - [good_name] x[shopping_list[TS][cat][path]]<br>"
 				dat += "<br>"
 			dat += "<br>"
+
+	if(trade_screen == LOG_SCREEN)
+		dat += log_screen == LOG_SHIPPING ? "<b><u>Shipping</u></b>" :"<A href='?src=\ref[src];PRG_log_screen=[LOG_SHIPPING]'>Shipping</A>"
+		dat += " | "
+		dat += log_screen == LOG_EXPORT ? "<b><u>Export</u></b>" :"<A href='?src=\ref[src];PRG_log_screen=[LOG_EXPORT]'>Export</A>"
+
+		dat += "<hr>"
+
+		switch(log_screen)
+			if(LOG_SHIPPING)
+				var/list/L = SSsupply.shipping_log.Copy()
+				for(var/list/log in reverseRange(L))
+					dat += "Time: [log["time"]]<br>"
+					dat += "Account: [log["ordering_acct"]]<br>"
+					dat += "Link: [log["assoc_faction"]]<br>"
+					dat += "Total invoice: [log["total_paid"]] [GLOB.using_map.local_currency_name_short]<br>"
+					dat += "Articles bought: [log["contents"]]<br>"
+					dat += "<A href='?src=\ref[src];PRG_print=[log["id"]]'>Print</A>"
+					dat += "<hr>"
+			if(LOG_EXPORT)
+				var/list/L = SSsupply.export_log.Copy()
+				for(var/list/log in reverseRange(L))
+					dat += "Time: [log["time"]]<br>"
+					dat += "Account: [log["ordering_acct"]]<br>"
+					dat += "Link: [log["assoc_faction"]]<br>"
+					dat += "Total invoice: [log["total_paid"]] [GLOB.using_map.local_currency_name_short]<br>"
+					dat += "Articles sold: [log["contents"]]<br>"
+					dat += "<A href='?src=\ref[src];PRG_print=[log["id"]]'>Print</A>"
+					dat += "<hr>"
 
 	var/datum/browser/popup = new(user, "supply_prg", "Trade Network", 600, 680)
 	popup.set_content(dat)

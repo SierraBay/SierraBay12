@@ -37,6 +37,24 @@ SUBSYSTEM_DEF(supply)
 	var/order_queue_id = 0
 	var/list/order_queue = list()
 
+
+	// For exporting
+	/// Maximum price of an atom before it becomes affected by an export modifier
+	var/export_maximum = 25000
+	var/list/export_modifier = list()
+	var/list/export_counter = list()
+	/// Paths of atoms that are entirely unaffected by export price modifiers
+	var/list/export_modifier_exempt_types = list(
+		/obj/item/ore,
+		/obj/item/stack,
+		/obj/item/reagent_containers,
+		/obj/item/slime_extract,
+		/obj/item/ammo_casing,
+		/obj/machinery/artifact,
+		/obj/machinery/portable_atmospherics/canister,
+		/mob/living/carbon/slime,
+		)
+
 /datum/controller/subsystem/supply/Initialize()
 	. = ..()
 	for(var/faction_type in typesof(/datum/trade_faction))
@@ -71,6 +89,15 @@ SUBSYSTEM_DEF(supply)
 	DeInitTradeStations()
 	. = ..()
 
+/datum/controller/subsystem/supply/fire()
+	for(var/datum/money_account/A in all_money_accounts)
+		A.PayrollTick()
+	for(var/A in export_counter)
+		var/reduction = max(export_maximum, export_counter[A] * 0.5)
+		export_counter[A] = max(0, export_counter[A] -= reduction)
+	ExportCounterCheck()
+
+
 /datum/controller/subsystem/supply/proc/GetFaction(fac)
 	if(!(fac in factions))
 		return null
@@ -100,7 +127,6 @@ SUBSYSTEM_DEF(supply)
 	for(var/datum/trading_station/TS in all_trading_stations)
 		TS.RegainTradeStationsBudget()
 		qdel(TS)
-		hidden_trading_stations -= TS
 		visible_trading_stations -= TS
 		all_trading_stations -= TS
 
@@ -237,6 +263,12 @@ SUBSYSTEM_DEF(supply)
 				for(var/path in category)
 					. += GetImportCost(path, station) * category[path]
 
+
+#define LOG_TYPE_SHIPPING "Shipping"
+#define LOG_TYPE_EXPORT "Export"
+#define LOG_TYPE_SPECIAL_OFFER "Special Offer"
+#define LOG_TYPE_ORDER "Order"
+
 // Ordering
 
 /datum/controller/subsystem/supply/proc/BuildOrder(requesting_account, reason, list/shopping_list)
@@ -279,7 +311,7 @@ SUBSYSTEM_DEF(supply)
 
 	return order_queue_slot
 
-/datum/controller/subsystem/supply/proc/PurchaseOrder(obj/machinery/trade_beacon/receiving/beacon, order_id)
+/datum/controller/subsystem/supply/proc/PurchaseOrder(obj/machinery/trade_beacon/receiving/beacon, order_id, used_faction = FACTION_INDEPENDENT)
 	if(QDELETED(beacon) || !beacon || !order_id)
 		return
 
@@ -293,12 +325,12 @@ SUBSYSTEM_DEF(supply)
 		var/total_cost = order["cost"] + order["fee"]
 		var/is_requestor_master = (requesting_account == master_account) ? TRUE : FALSE
 
-		Buy(beacon, master_account, shopping_list, !is_requestor_master, requesting_account.owner_name)
+		Buy(beacon, master_account, shopping_list, !is_requestor_master, requesting_account.owner_name, used_faction)
 		if(!is_requestor_master)
 			requesting_account.transfer(master_account, total_cost, "Order Request")
-		CreateLogEntry("Order", requesting_account.owner_name, viewable_contents, total_cost)
+		CreateLogEntry(LOG_TYPE_ORDER, requesting_account.owner_name, used_faction, viewable_contents, total_cost)
 
-/datum/controller/subsystem/supply/proc/Buy(obj/machinery/trade_beacon/receiving/senderBeacon, datum/money_account/account, list/shopList, is_order = FALSE, buyer_name = null)
+/datum/controller/subsystem/supply/proc/Buy(obj/machinery/trade_beacon/receiving/senderBeacon, datum/money_account/account, list/shopList, is_order = FALSE, buyer_name = null, used_faction = FACTION_INDEPENDENT)
 	if(QDELETED(senderBeacon) || !istype(senderBeacon) || !account || !RecursiveLen(shopList))
 		return FALSE
 
@@ -353,12 +385,17 @@ SUBSYSTEM_DEF(supply)
 	if(count_of_all > 1)
 		invoice_location = C
 
-	CreateLogEntry("Shipping", account.owner_name, order_contents_info, price_for_all, FALSE, invoice_location)
+	CreateLogEntry(LOG_TYPE_SHIPPING, account.owner_name, used_faction, order_contents_info, price_for_all, FALSE, invoice_location)
 	account.withdraw(price_for_all, "Purchase", "Trade Network")
 	return TRUE
 
-/datum/controller/subsystem/supply/proc/Export(obj/machinery/trade_beacon/sending/senderBeacon, datum/money_account/moneyAccount)
+/datum/controller/subsystem/supply/proc/Export(obj/machinery/trade_beacon/sending/senderBeacon, datum/money_account/moneyAccount, used_faction = FACTION_INDEPENDENT)
+	// Check if the sender beacon has been deleted.
 	if(QDELETED(senderBeacon))
+		return
+
+	// Attempt to start the export process on the sender beacon.
+	if(!senderBeacon.StartExport())
 		return
 
 	var/invoice_contents_info
@@ -378,12 +415,20 @@ SUBSYSTEM_DEF(supply)
 
 		// We go backwards, so it'll be innermost objects sold first
 		for(var/atom/movable/item in reverseRange(contents_incl_self))
-			var/item_price = get_value(item)
+			if(istype(item, /obj/screen))
+				continue
+
+			var/item_price = GetExportValue(item)
 			var/export_value = item_price
 
 			if(export_value)
 				invoice_contents_info += "<li>[item.name]</li>"
 				cost += export_value
+				if(!(is_path_in_list(item.type, export_modifier_exempt_types)))
+					if(!(item.type in export_counter))
+						export_counter[item.type] = 0
+					if(export_counter[item.type] < export_maximum * 2)
+						export_counter[item.type] += round(min(export_value, export_maximum * 0.25))
 				//SEND_SIGNAL(src, COMSIG_TRADE_BEACON, item)
 				qdel(item)
 				++export_count
@@ -397,37 +442,56 @@ SUBSYSTEM_DEF(supply)
 		if(export_count > 100)
 			break
 
-	senderBeacon.StartExport()
-	moneyAccount.deposit(cost, "Export", "Trade Network")
+	ExportCounterCheck()
+
+	moneyAccount.deposit(cost, LOG_TYPE_EXPORT, "Trade Network")
 
 	if(invoice_contents_info)	// If no info, then nothing was exported
-		CreateLogEntry("Export", moneyAccount.owner_name, invoice_contents_info, cost, FALSE, get_turf(senderBeacon))
+		CreateLogEntry(LOG_TYPE_EXPORT, moneyAccount.owner_name, used_faction, invoice_contents_info, cost, FALSE, get_turf(senderBeacon))
 	return TRUE
+
+/datum/controller/subsystem/supply/proc/GetExportValue(atom/A)
+	/// Returns the value of this atom for export purposes. If the item is in the export modifier list, we multiply the value by the modifier.
+	/// This is used to limit the amount of money that can be made from exporting certain items, by dynamically adjusting the export price.
+	. = get_value(A)
+	if(A.type in export_modifier)
+		. *= export_modifier[A.type]
+
+/datum/controller/subsystem/supply/proc/ExportCounterCheck()
+	// Checks the export counter and adjusts the export modifiers as needed.
+	// If an item has been exported too many times, the export modifier is set to a value between 0.5 and 2.0, which will scale the export price down.
+	// If an item has not been exported too many times, its export modifier is removed.
+	for(var/A in export_counter)
+		if(export_counter[A] > export_maximum)
+			export_modifier[A] = clamp(round(export_maximum / export_counter[A], 0.01), 0.5, 2.0)
+		else if(A in export_modifier)
+			export_modifier -= A
 
 // Logging
 
-/datum/controller/subsystem/supply/proc/CreateLogEntry(type, ordering_account, contents, total_paid, create_invoice = FALSE, invoice_location = null)
+/datum/controller/subsystem/supply/proc/CreateLogEntry(type, ordering_account, assoc_faction = FACTION_INDEPENDENT, contents, total_paid, create_invoice = FALSE, invoice_location = null)
+
 	var/log_id
 
 	switch(type)
-		if("Shipping")
+		if(LOG_TYPE_SHIPPING)
 			log_id = "[++shipping_invoice_number]-S"
-			shipping_log.Add(list(list("id" = log_id, "ordering_acct" = ordering_account, "contents" = contents, "total_paid" = total_paid, "time" = time2text(world.time, "hh:mm"))))
-		if("Export")
+			shipping_log.Add(list(list("id" = log_id, "ordering_acct" = ordering_account, "assoc_faction" = assoc_faction, "contents" = contents, "total_paid" = total_paid, "time" = time2text(world.time, "hh:mm"))))
+		if(LOG_TYPE_EXPORT)
 			log_id = "[++export_invoice_number]-E"
-			export_log.Add(list(list("id" = log_id, "ordering_acct" = ordering_account, "contents" = contents, "total_paid" = total_paid, "time" = time2text(world.time, "hh:mm"))))
-		if("Special Offer")
+			export_log.Add(list(list("id" = log_id, "ordering_acct" = ordering_account, "assoc_faction" = assoc_faction, "contents" = contents, "total_paid" = total_paid, "time" = time2text(world.time, "hh:mm"))))
+		if(LOG_TYPE_SPECIAL_OFFER)
 			log_id = "[++offer_invoice_number]-SO"
-			offer_log.Add(list(list("id" = log_id, "ordering_acct" = ordering_account, "contents" = contents, "total_paid" = total_paid, "time" = time2text(world.time, "hh:mm"))))
-		if("Order")
+			offer_log.Add(list(list("id" = log_id, "ordering_acct" = ordering_account, "assoc_faction" = assoc_faction, "contents" = contents, "total_paid" = total_paid, "time" = time2text(world.time, "hh:mm"))))
+		if(LOG_TYPE_ORDER)
 			log_id = "[++order_number]-O"
-			order_log.Add(list(list("id" = log_id, "ordering_acct" = ordering_account, "contents" = contents, "total_paid" = total_paid, "time" = time2text(world.time, "hh:mm"))))
+			order_log.Add(list(list("id" = log_id, "ordering_acct" = ordering_account, "assoc_faction" = assoc_faction, "contents" = contents, "total_paid" = total_paid, "time" = time2text(world.time, "hh:mm"))))
 		else
 			return
 
 	if(create_invoice && invoice_location && log_id)
 		PrintInvoice(type, log_id, ordering_account, contents, total_paid, FALSE, invoice_location)
-		if(type == "Shipping")
+		if(type == LOG_TYPE_SHIPPING)
 			PrintInvoice(type, log_id, ordering_account, contents, total_paid, TRUE, invoice_location)
 
 /datum/controller/subsystem/supply/proc/PrintInvoice(type, log_id, ordering_account, contents, total_paid, is_internal = FALSE, location)
@@ -442,16 +506,16 @@ SUBSYSTEM_DEF(supply)
 	text += "<h3>[type] Invoice - #[log_id]</h3>"
 	text += "<hr><font size = \"2\">"
 	text += is_internal ? "FOR INTERNAL USE ONLY<br><br>" : null
-	text += type != "Shipping" && type ? "Recipient: [ordering_account]<br>" : "Recipient: \[field\]<br>"
-	text += type == "Shipping" ? "Package Name: \[field\]<br>" : null
+	text += type != LOG_TYPE_SHIPPING && type ? "Recipient: [ordering_account]<br>" : "Recipient: \[field\]<br>"
+	text += type == LOG_TYPE_SHIPPING ? "Package Name: \[field\]<br>" : null
 	text += "Contents:<br>"
 	text += "<ul>"
 	text += contents
 	text += "</ul>"
 	text += is_internal ? "Order Cost: [total_paid]<br>" : null
-	text += type == "Shipping" ? "Total Credits Paid: \[field\]<br>" : "Total Credits Paid: [total_paid]<br>"
+	text += type == LOG_TYPE_SHIPPING ? "Total Credits Paid: \[field\]<br>" : "Total Credits Paid: [total_paid]<br>"
 	text += "</font>"
-	text += type == "Shipping" ? "<hr><h5>Stamp below to confirm receipt of goods:</h5>" : null
+	text += type == LOG_TYPE_SHIPPING ? "<hr><h5>Stamp below to confirm receipt of goods:</h5>" : null
 
 	new/obj/item/paper(location, text, title)
 

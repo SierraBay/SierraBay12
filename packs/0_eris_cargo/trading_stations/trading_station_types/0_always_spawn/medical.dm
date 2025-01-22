@@ -21,7 +21,7 @@
 			/obj/item/storage/box/pillbottles = GOODS_DEFAULT,
 			/obj/item/storage/box/syringes = GOODS_DEFAULT,
 			/obj/item/storage/box/masks = GOODS_DEFAULT,
-			/obj/item/storage/box/gloves = GOODS_DEFAULT,
+			/obj/item/storage/box/latexgloves = GOODS_DEFAULT,
 			/obj/item/storage/box/freezer = GOODS_DEFAULT,
 			),
 		TRADE_CAT_MEDICAL = list(
@@ -40,8 +40,7 @@
 			/obj/item/storage/firstaid/adv = GOODS_DEFAULT,
 			),
 		TRADE_CAT_CHEMICAL = list(
-			/obj/item/reagent_containers/glass/bottle/carpotoxin = GOODS_DEFAULT,
-			/obj/item/reagent_containers/glass/bottle/spider_venom = GOODS_DEFAULT,
+			/obj/item/reagent_containers/glass/bottle/cyanide = GOODS_DEFAULT,
 			),
 		TRADE_CAT_CHEMCARTS = list(
 			CARTRIDGE(water) = CUSTOM_GOODS_NAME("cartridge (water)"),
@@ -57,9 +56,7 @@
 			CARTRIDGE(mercury) = CUSTOM_GOODS_NAME("cartridge (mercury)"),
 			CARTRIDGE(radium) = CUSTOM_GOODS_NAME("cartridge (radium)"),
 			CARTRIDGE(ethanol) = CUSTOM_GOODS_NAME("cartridge (ethanol)"),
-			CARTRIDGE(sacid) = CUSTOM_GOODS_NAME("cartridge (sacid)"),
 			CARTRIDGE(tungsten) = CUSTOM_GOODS_NAME("cartridge (tungsten)"),
-			CARTRIDGE(hclacid) = CUSTOM_GOODS_NAME("cartridge (hclacid)"),
 			CARTRIDGE(lithium) = CUSTOM_GOODS_NAME("cartridge (lithium)"),
 			CARTRIDGE(carbon) = CUSTOM_GOODS_NAME("cartridge (carbon)"),
 			CARTRIDGE(ammonia) = CUSTOM_GOODS_NAME("cartridge (ammonia)"),

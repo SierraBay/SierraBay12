@@ -2,6 +2,7 @@
 #define CHANGE_SECURITY_LEVEL 1
 #define TRANSFER_FUNDS 2
 #define VIEW_TRANSACTION_LOGS 3
+#define PAYROLLS 4
 
 /obj/item/card/id/var/money = 2000
 
@@ -185,6 +186,19 @@
 							t += "Transaction purpose: <input type='text' name='purpose' value='Funds transfer' style='width:200px; background-color:white;'><br>"
 							t += "<input type='submit' value='Transfer funds'><br>"
 							t += "</form>"
+						//[SIERRA ADD] - ERIS CARGO
+						if(PAYROLLS)
+							t += "<b>Accounts on payroll:</b><br>"
+							for(var/acc_id in authenticated_account.payroll_accounts)
+								var/datum/money_account/A = get_account(text2num(acc_id))
+								if(!istype(A))
+									authenticated_account.payroll_accounts -= acc_id
+									continue
+								var/paycheck = authenticated_account.payroll_accounts[acc_id]
+								t += "[A.account_name]: <A href='?src=\ref[src];choice=set_payroll&account=[acc_id]'>[paycheck]</A><br>"
+							t += "<br>"
+							t += "<A href='?src=\ref[src];choice=set_payroll'>Add new account</A><br>"
+							//[/SIERRA ADD] - ERIS CARGO
 						else
 							t += "<b>Account balance:</b> [GLOB.using_map.local_currency_name_short][authenticated_account.money]"
 							t += "<form name='withdrawal' action='?src=\ref[src]' method='get'>"
@@ -195,6 +209,7 @@
 							t += "<A href='?src=\ref[src];choice=view_screen;view_screen=1'>Change account security level</a><br>"
 							t += "<A href='?src=\ref[src];choice=view_screen;view_screen=2'>Make transfer</a><br>"
 							t += "<A href='?src=\ref[src];choice=view_screen;view_screen=3'>View transaction log</a><br>"
+							t += "<A href='?src=\ref[src];choice=view_screen;view_screen=4'>Setup payrolls</a><br>" // Sierra Add
 							t += "<A href='?src=\ref[src];choice=balance_statement'>Print balance statement</a><br>"
 
 					//Logout/back buttons, put here for some modularity and for less repeated code
@@ -421,6 +436,30 @@
 			if("logout")
 				authenticated_account = null
 				account_security_level = 0
+//[SIERRA ADD] - ERIS CARGO
+			if("set_payroll")
+				if(!authenticated_account)
+					return
+
+				var/list/payroll = authenticated_account.payroll_accounts
+				var/account_id = text2num(href_list["account"])
+				if(!account_id)
+					account_id = input("Enter account number", "Account payroll") as num|null
+
+				var/datum/money_account/A = get_account(account_id)
+				if(!istype(A))
+					to_chat(usr, SPAN_WARNING("Account with this number does not exist!"))
+					return
+
+				var/autofill_pay = null
+				if(payroll[num2text(account_id)])
+					autofill_pay = payroll[num2text(account_id)]
+				var/account_pay = input("Enter new payroll", "Account payroll", autofill_pay) as num|null
+				if(!account_pay)
+					payroll -= num2text(account_id)
+				else
+					payroll[num2text(account_id)] = account_pay
+//[/SIERRA ADD] - ERIS CARGO
 
 	interact(usr)
 

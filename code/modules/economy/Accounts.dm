@@ -12,6 +12,10 @@
 							//2 - require card and manual login
 	var/account_type = ACCOUNT_TYPE_PERSONAL
 
+
+	/// Associative list of account IDs which we pay into every 30 minutes; account_number = money
+	var/list/payroll_accounts = list() //[SIERRA ADD] - ERIS CARGO
+
 /datum/money_account/New(account_type)
 	account_type = account_type ? account_type : ACCOUNT_TYPE_PERSONAL
 
@@ -42,6 +46,22 @@
 	var/datum/transaction/T = new(src, to_account, amount, purpose)
 	return T.perform()
 
+//[SIERRA ADD] - ERIS CARGO
+// Called by supply subsystem fire() proc every ~30 minutes
+/datum/money_account/proc/PayrollTick()
+	listclearnulls(payroll_accounts)
+	for(var/acc_id in payroll_accounts)
+		var/datum/money_account/A = get_account(text2num(acc_id))
+		if(!istype(A))
+			continue
+		if(!isnum(payroll_accounts[acc_id]))
+			payroll_accounts[acc_id] = 0
+			continue
+		var/pay = payroll_accounts[acc_id]
+		if(!pay || pay > money)
+			continue
+		transfer(A, pay, "Payroll from [account_name]")
+//[/SIERRA ADD] - ERIS CARGO
 
 /proc/create_account(account_name = "Default account name", owner_name, starting_funds = 0, account_type = ACCOUNT_TYPE_PERSONAL, obj/machinery/computer/account_database/source_db)
 	RETURN_TYPE(/datum/money_account)

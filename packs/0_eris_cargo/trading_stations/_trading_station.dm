@@ -49,10 +49,21 @@
 	var/update_time = 0
 	var/update_timer_start = 0
 
+	/// Overmap object that represents the station on the overmap
 	var/obj/overmap/overmap_object
+
+	/// The location of the overmap object
 	var/turf/overmap_location
-	var/list/forced_overmap_zone // list(list(minx, maxx), list(miny, maxy))
+
+	/// A list of forced overmap zones. Each zone is a list of two lists: one for the min and max X coordinates and one for the min and max Y coordinates.
+	/// Example: forced_overmap_zone = list(list(10, 20), list(30, 40)) would restrict the overmap object to spawn within the area (10, 30) to (20, 40)
+	var/list/forced_overmap_zone
+
+	/// The opacity of the overmap object. 0 means fully transparent, 255 means fully opaque
 	var/overmap_opacity = 0
+
+	/// The color of the overmap object. If null, the default color will be used
+	var/overmap_color = null
 
 	/// If not empty - only factions in this list can trade with it
 	var/list/whitelist_factions = list()
@@ -120,8 +131,10 @@
 	overmap_object.opacity = overmap_opacity
 	overmap_object.dir = pick(rand(1,2), 4, 8)
 	overmap_object.icon_state = pick(icon_states)
+	overmap_object.color = overmap_color
 
 	if(start_hidden)
+		overmap_object.name = "unidentified trade beacon"
 		overmap_object.color = "#444444"
 		GLOB.entered_event.register(overmap_location, src, .proc/Discovered)
 
@@ -130,8 +143,11 @@
 		return
 
 	SSsupply.visible_trading_stations |= src
-	overmap_object.color = null
-	GLOB.entered_event.unregister(overmap_location, src, .proc/Discovered)
+	overmap_object.name = "bluespace trade beacon - [name]"
+	overmap_object.color = overmap_color
+	for(var/obj/machinery/computer/ship/helm/H in SSmachines.machinery)
+		H.visible_message(SPAN_NOTICE("\The [H] pings as <b>[overmap_object.name]</b> is discovered!"))
+		playsound(H, 'sound/machines/sensors/contactgeneric.ogg', 50, TRUE, 3)
 
 /datum/trading_station/proc/AssembleInventory()
 	for(var/list/category_name in inventory)
