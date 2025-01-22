@@ -1178,6 +1178,16 @@
 /obj/machinery/atmospherics/pipe/simple/hidden,
 /turf/simulated/floor/plating,
 /area/maintenance/seconddeck/foreport)
+"aja" = (
+/obj/floor_decal/borderfloor/corner,
+/obj/floor_decal/industrial/danger/corner,
+/obj/structure/cable/cyan{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/tiled/monotile,
+/area/quartermaster/hangar)
 "ajb" = (
 /obj/structure/cable/green{
 	d1 = 1;
@@ -3975,6 +3985,16 @@
 	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/medical/sleeper)
+"aCB" = (
+/obj/wallframe_spawn/reinforced/titanium,
+/obj/paint/brown,
+/obj/machinery/door/blast/regular{
+	dir = 2;
+	id_tag = "drone_shield";
+	name = "Window Shield"
+	},
+/turf/simulated/floor/plating,
+/area/drone_hangar/start)
 "aCD" = (
 /obj/structure/cable/green{
 	d1 = 4;
@@ -15364,6 +15384,14 @@
 /obj/machinery/portable_atmospherics/powered/scrubber,
 /turf/simulated/floor/plating,
 /area/maintenance/seconddeck/port)
+"cnA" = (
+/obj/floor_decal/industrial/outline/grey,
+/obj/structure/closet/medical_wall{
+	pixel_x = 32
+	},
+/obj/item/storage/firstaid/o2,
+/turf/simulated/floor/tiled/techmaint,
+/area/drone_hangar/start)
 "coc" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -15978,6 +16006,20 @@
 	},
 /turf/simulated/floor/tiled,
 /area/command/exploration_leader)
+"cty" = (
+/obj/floor_decal/borderfloor{
+	dir = 4
+	},
+/obj/floor_decal/industrial/danger{
+	dir = 4
+	},
+/obj/structure/cable/cyan{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/tiled/monotile,
+/area/quartermaster/hangar)
 "ctB" = (
 /obj/structure/catwalk,
 /obj/machinery/power/apc{
@@ -31015,6 +31057,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/fourthdeck/aft)
+"exO" = (
+/obj/structure/cable/green{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/paint/brown,
+/turf/simulated/floor/tiled/monotile,
+/area/quartermaster/office)
 "exY" = (
 /obj/structure/cable/green{
 	d1 = 1;
@@ -42723,6 +42774,18 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/medical/virology)
+"gjs" = (
+/obj/machinery/atmospherics/binary/pump{
+	dir = 4
+	},
+/obj/machinery/embedded_controller/radio/airlock/tin_can{
+	frequency = 1431;
+	id_tag = "drone_shuttle";
+	pixel_y = 20
+	},
+/obj/floor_decal/industrial/outline/grey,
+/turf/simulated/floor/tiled/techmaint,
+/area/drone_hangar/start)
 "gjE" = (
 /turf/simulated/wall/r_wall/prepainted,
 /area/engineering/bluespace)
@@ -44054,6 +44117,22 @@
 	},
 /turf/simulated/floor/reinforced,
 /area/thruster/d1starboard)
+"gty" = (
+/obj/machinery/computer/ship/sensors{
+	dir = 1
+	},
+/obj/structure/cable/cyan{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/machinery/power/apc/hyper{
+	dir = 8;
+	name = "east bump";
+	pixel_x = -24;
+	req_access = list(list("ACCESS_ENGINE_EQUIP","ACCESS_GUPPY"))
+	},
+/turf/simulated/floor/tiled/steel_ridged,
+/area/drone_hangar/start)
 "gtz" = (
 /obj/machinery/door/airlock/hatch{
 	frequency = 1379;
@@ -48040,6 +48119,17 @@
 	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/medical/wardhallway)
+"gZr" = (
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/unary/vent_pump/on{
+	dir = 1
+	},
+/turf/simulated/floor/tiled,
+/area/drone_hangar/start)
 "gZs" = (
 /obj/structure/railing/mapped{
 	dir = 4
@@ -49605,6 +49695,10 @@
 	},
 /turf/simulated/floor/tiled,
 /area/hallway/primary/firstdeck/aft)
+"hld" = (
+/obj/floor_decal/industrial/outline/grey,
+/turf/simulated/floor/tiled/techmaint,
+/area/drone_hangar/start)
 "hlo" = (
 /obj/structure/table/reinforced,
 /obj/machinery/button/blast_door{
@@ -50683,6 +50777,18 @@
 	},
 /turf/simulated/floor/bluegrid,
 /area/turret_protected/ai_upload)
+"hve" = (
+/obj/machinery/power/terminal{
+	dir = 8
+	},
+/obj/structure/cable/yellow,
+/obj/structure/cable/cyan{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/structure/bed/chair/shuttle/blue,
+/turf/simulated/floor/tiled,
+/area/drone_hangar/start)
 "hvh" = (
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 1
@@ -50961,6 +51067,20 @@
 /obj/random/maintenance/clean,
 /turf/simulated/floor/tiled/techfloor,
 /area/quartermaster/storage)
+"hxl" = (
+/obj/floor_decal/borderfloor{
+	dir = 4
+	},
+/obj/floor_decal/industrial/danger{
+	dir = 4
+	},
+/obj/structure/cable/cyan{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/tiled/monotile,
+/area/quartermaster/hangar)
 "hxm" = (
 /obj/structure/table/rack,
 /obj/structure/railing/mapped{
@@ -51101,6 +51221,15 @@
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/hydroponics/third_deck_storage)
+"hyh" = (
+/obj/machinery/atmospherics/unary/engine,
+/obj/structure/window/boron_reinforced,
+/obj/structure/sign/warning/hot_exhaust{
+	dir = 8;
+	pixel_x = 32
+	},
+/turf/simulated/floor/plating,
+/area/drone_hangar/start)
 "hyj" = (
 /obj/floor_decal/corner/black/bordercorner{
 	dir = 1
@@ -56307,6 +56436,10 @@
 /obj/decal/cleanable/filth,
 /turf/simulated/floor/tiled/dark,
 /area/vacant/mess)
+"ing" = (
+/obj/paint/brown,
+/turf/simulated/wall/r_titanium,
+/area/drone_hangar/start)
 "inh" = (
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 4
@@ -59747,8 +59880,19 @@
 /turf/simulated/floor/tiled/dark/monotile,
 /area/security/nuke_storage)
 "iNG" = (
-/turf/simulated/floor/plating,
-/area/quartermaster/hangar)
+/obj/structure/cable/cyan{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/valve/open{
+	name = "air supply valve";
+	open = 0;
+	dir = 4
+	},
+/obj/shuttle_landmark/sierra/hangar/drone,
+/turf/simulated/floor/tiled,
+/area/drone_hangar/start)
 "iNH" = (
 /obj/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -60723,6 +60867,11 @@
 /obj/floor_decal/techfloor,
 /turf/simulated/floor/tiled/techfloor,
 /area/engineering/hardstorage)
+"iUn" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel,
+/obj/paint/brown,
+/turf/simulated/wall/r_titanium,
+/area/drone_hangar/start)
 "iUA" = (
 /obj/structure/table/rack,
 /obj/item/clothing/shoes/sandal,
@@ -60770,6 +60919,10 @@
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/security/sierra/armory/lobby)
+"iUF" = (
+/obj/machinery/radio_beacon,
+/turf/simulated/floor/tiled/steel_ridged,
+/area/drone_hangar/start)
 "iUN" = (
 /obj/structure/hygiene/sink{
 	dir = 4;
@@ -60813,6 +60966,31 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/security/sierra/sergeant)
+"iUT" = (
+/obj/machinery/door/blast/regular/open{
+	dir = 4;
+	id_tag = "supply_shuttle_blast";
+	name = "Supply Drone Blast Doors"
+	},
+/obj/machinery/button/blast_door{
+	id_tag = "supply_shuttle_blast";
+	name = "Supply Drone Blast Doors Control";
+	pixel_y = 26;
+	req_access = list("ACCESS_CARGO")
+	},
+/obj/machinery/door/airlock/external{
+	autoset_access = 0;
+	dir = 4;
+	frequency = 1431;
+	id_tag = "drone_shuttle_outer";
+	name = "Drone External Access";
+	req_access = list("ACCESS_CARGO")
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
+	dir = 5
+	},
+/turf/simulated/floor/plating,
+/area/drone_hangar/start)
 "iVd" = (
 /obj/machinery/portable_atmospherics/powered/scrubber,
 /obj/floor_decal/industrial/outline/yellow,
@@ -63126,6 +63304,16 @@
 	},
 /turf/simulated/floor/tiled/steel_grid,
 /area/engineering/engineering_monitoring)
+"jnb" = (
+/obj/machinery/tele_beacon,
+/obj/floor_decal/industrial/outline/grey,
+/obj/structure/cable/cyan{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/tiled/techmaint,
+/area/drone_hangar/start)
 "jny" = (
 /obj/item/storage/secure/safe{
 	pixel_x = 32
@@ -63232,6 +63420,12 @@
 /obj/random/coin,
 /turf/simulated/floor/plating,
 /area/maintenance/firstdeck/aftport)
+"jop" = (
+/obj/machinery/computer/ship/engines{
+	dir = 8
+	},
+/turf/simulated/floor/tiled/steel_ridged,
+/area/drone_hangar/start)
 "jor" = (
 /obj/structure/bed/sofa/r/brown{
 	dir = 8
@@ -69671,6 +69865,11 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
+/obj/structure/cable/cyan{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/plating,
 /area/quartermaster/hangar)
 "kmZ" = (
@@ -72309,6 +72508,11 @@
 /obj/structure/catwalk,
 /turf/simulated/floor/plating,
 /area/maintenance/seconddeck/aftstarboard)
+"kGE" = (
+/obj/paint/brown,
+/obj/structure/sign/nanotrasen,
+/turf/simulated/wall/r_titanium,
+/area/drone_hangar/start)
 "kGG" = (
 /obj/structure/cable/green{
 	d1 = 4;
@@ -83861,6 +84065,15 @@
 	},
 /turf/simulated/floor/tiled/freezer,
 /area/security/sierra/prison)
+"mqt" = (
+/obj/machinery/atmospherics/unary/engine,
+/obj/structure/window/boron_reinforced,
+/obj/structure/sign/warning/hot_exhaust{
+	dir = 4;
+	pixel_x = -32
+	},
+/turf/simulated/floor/plating,
+/area/drone_hangar/start)
 "mqx" = (
 /obj/structure/railing/mapped{
 	dir = 4
@@ -86366,6 +86579,13 @@
 	},
 /turf/simulated/floor/tiled,
 /area/hallway/primary/firstdeck/aft)
+"mJn" = (
+/obj/machinery/computer/modular/preset/dock,
+/obj/machinery/atmospherics/pipe/manifold/hidden/fuel{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/drone_hangar/start)
 "mJq" = (
 /obj/structure/cable/green{
 	d1 = 2;
@@ -93584,6 +93804,17 @@
 "nNm" = (
 /turf/simulated/floor/tiled/techfloor,
 /area/crew_quarters/safe_room/firstdeck)
+"nNn" = (
+/obj/machinery/power/port_gen/pacman{
+	anchored = 1;
+	sheets = 10
+	},
+/obj/structure/cable/yellow{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/tiled/steel_ridged,
+/area/drone_hangar/start)
 "nNq" = (
 /obj/structure/cable/green{
 	d1 = 1;
@@ -99261,6 +99492,20 @@
 /obj/structure/catwalk,
 /turf/simulated/floor/airless,
 /area/solar/port)
+"oFJ" = (
+/obj/machinery/power/smes/buildable/preset/sierra/shuttle{
+	RCon_tag = "Shuttle - Drone"
+	},
+/obj/structure/cable/cyan{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/item/device/radio/intercom{
+	dir = 1;
+	pixel_y = -29
+	},
+/turf/simulated/floor/tiled/steel_ridged,
+/area/drone_hangar/start)
 "oFK" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -104307,6 +104552,15 @@
 "pqy" = (
 /turf/simulated/floor/tiled/dark/monotile,
 /area/bridge/marine_room)
+"pqA" = (
+/obj/structure/cable/cyan{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/paint/brown,
+/turf/simulated/wall/r_titanium,
+/area/drone_hangar/start)
 "pqD" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -109080,6 +109334,13 @@
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/security/sierra/hallway/port)
+"qbb" = (
+/obj/floor_decal/industrial/outline/grey,
+/obj/structure/fuel_port{
+	pixel_y = 32
+	},
+/turf/simulated/floor/tiled/techmaint,
+/area/drone_hangar/start)
 "qbg" = (
 /obj/structure/towel/fitness,
 /obj/floor_decal/corner/black/half{
@@ -110298,6 +110559,15 @@
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/quartermaster/hangar)
+"qjJ" = (
+/obj/structure/bed/chair/shuttle/blue,
+/obj/structure/cable/cyan{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/tiled,
+/area/drone_hangar/start)
 "qjM" = (
 /obj/machinery/atmospherics/binary/pump{
 	dir = 8
@@ -110568,6 +110838,16 @@
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor/plating,
 /area/maintenance/thirddeck/port)
+"qmD" = (
+/obj/machinery/atmospherics/unary/vent_pump/on,
+/obj/floor_decal/industrial/outline/grey,
+/obj/structure/cable/cyan{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/tiled/techmaint,
+/area/drone_hangar/start)
 "qmG" = (
 /obj/floor_decal/corner/paleblue/diagonal,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -124382,6 +124662,13 @@
 	},
 /turf/simulated/floor/tiled,
 /area/command/exploration_leader)
+"snG" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
+	dir = 9
+	},
+/obj/floor_decal/industrial/outline/grey,
+/turf/simulated/floor/tiled/techmaint,
+/area/drone_hangar/start)
 "snH" = (
 /obj/structure/bed/sofa/r/beige{
 	dir = 8
@@ -126114,6 +126401,17 @@
 	},
 /turf/simulated/floor/tiled,
 /area/crew_quarters/docking)
+"szL" = (
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 24;
+	dir = 8
+	},
+/obj/overmap/visitable/ship/landable/drone,
+/obj/machinery/computer/shuttle_control/explore/drone{
+	dir = 8
+	},
+/turf/simulated/floor/tiled/steel_ridged,
+/area/drone_hangar/start)
 "szN" = (
 /obj/machinery/atmospherics/binary/pump{
 	dir = 4
@@ -130984,6 +131282,16 @@
 	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/chapel/main)
+"tje" = (
+/obj/structure/cable/cyan{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/hologram/holopad/longrange,
+/obj/floor_decal/industrial/outline/yellow,
+/turf/simulated/floor/tiled,
+/area/drone_hangar/start)
 "tji" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -134562,6 +134870,13 @@
 	},
 /turf/simulated/floor/shuttle_ceiling/sierra,
 /area/space)
+"tLn" = (
+/obj/machinery/trade_beacon/receiving,
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
+	dir = 9
+	},
+/turf/simulated/floor/plating,
+/area/drone_hangar/start)
 "tLp" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -137106,6 +137421,16 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /turf/simulated/floor/wood/walnut,
 /area/crew_quarters/cafe/upper)
+"ueA" = (
+/obj/wallframe_spawn/reinforced/titanium,
+/obj/paint/brown,
+/obj/machinery/door/blast/regular{
+	dir = 4;
+	id_tag = "drone_shield_side";
+	name = "Window Shield"
+	},
+/turf/simulated/floor/plating,
+/area/drone_hangar/start)
 "ueK" = (
 /obj/machinery/airlock_sensor{
 	frequency = 1380;
@@ -141164,6 +141489,21 @@
 /obj/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/shuttle/petrov/scan)
+"uKZ" = (
+/obj/machinery/portable_atmospherics/canister/air/airlock{
+	start_pressure = 6000
+	},
+/obj/machinery/atmospherics/portables_connector{
+	dir = 8
+	},
+/obj/machinery/alarm{
+	dir = 8;
+	pixel_x = 24;
+	req_access = list(list("ACCESS_ATMOS","ACCESS_ENGINE_EQUIP","ACCESS_CARGO"))
+	},
+/obj/floor_decal/industrial/outline/yellow,
+/turf/simulated/floor/tiled/steel_ridged,
+/area/drone_hangar/start)
 "uLa" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 1
@@ -145102,6 +145442,30 @@
 	},
 /turf/simulated/floor/tiled/steel_grid,
 /area/security/sierra/brig)
+"vof" = (
+/obj/machinery/computer/ship/helm{
+	dir = 1
+	},
+/obj/machinery/button/blast_door{
+	airflow_od = -6;
+	dir = 1;
+	id_tag = "drone_shield_side";
+	name = "Window Shield Control";
+	pixel_x = 22;
+	req_access = list("ACCESS_CARGO");
+	pixel_y = -4
+	},
+/obj/machinery/button/blast_door{
+	airflow_od = -6;
+	dir = 1;
+	id_tag = "drone_shield";
+	name = "Window Shield Control";
+	pixel_x = 22;
+	pixel_y = 4;
+	req_access = list("ACCESS_CARGO")
+	},
+/turf/simulated/floor/tiled/steel_ridged,
+/area/drone_hangar/start)
 "vog" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -150224,6 +150588,15 @@
 	},
 /turf/simulated/floor/tiled,
 /area/crew_quarters/docking)
+"wam" = (
+/obj/floor_decal/industrial/outline/grey,
+/obj/structure/cable/cyan{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/tiled/techmaint,
+/area/drone_hangar/start)
 "waq" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
 /obj/floor_decal/corner_techfloor_grid{
@@ -157843,6 +158216,17 @@
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/maintenance/seconddeck/aftstarboard)
+"xlG" = (
+/obj/structure/cable/yellow{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden{
+	dir = 8
+	},
+/turf/simulated/floor/tiled,
+/area/drone_hangar/start)
 "xlH" = (
 /obj/structure/cable/green{
 	d1 = 4;
@@ -158739,6 +159123,16 @@
 	},
 /turf/simulated/floor/tiled/steel_grid,
 /area/maintenance/firstdeck/foreport)
+"xsP" = (
+/obj/machinery/shipsensors,
+/obj/structure/railing/mapped{
+	dir = 1
+	},
+/obj/structure/railing/mapped{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/drone_hangar/start)
 "xsQ" = (
 /obj/structure/catwalk,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -159604,6 +159998,16 @@
 "xzN" = (
 /turf/simulated/wall/r_wall/prepainted,
 /area/thruster/d3starboard)
+"xzR" = (
+/obj/machinery/atmospherics/portables_connector,
+/obj/structure/railing/mapped{
+	dir = 1
+	},
+/obj/machinery/portable_atmospherics/canister/carbon_dioxide{
+	start_pressure = 0
+	},
+/turf/simulated/floor/plating,
+/area/drone_hangar/start)
 "xzT" = (
 /obj/floor_decal/corner/paleblue/mono,
 /obj/floor_decal/industrial/outline/yellow,
@@ -162626,6 +163030,22 @@
 /obj/machinery/light/spot,
 /turf/simulated/floor/tiled/dark,
 /area/bridge/hallway)
+"xWo" = (
+/obj/machinery/door/airlock/external{
+	autoset_access = 0;
+	dir = 4;
+	frequency = 1431;
+	id_tag = "drone_shuttle_outer";
+	name = "Drone External Access";
+	req_access = list("ACCESS_CARGO")
+	},
+/obj/structure/cable/cyan{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/drone_hangar/start)
 "xWr" = (
 /obj/floor_decal/spline/fancy/wood{
 	dir = 6
@@ -182661,7 +183081,7 @@ aBN
 cBg
 gRi
 ivP
-pen
+exO
 tgt
 jNE
 tKP
@@ -185291,11 +185711,11 @@ qQL
 qQL
 qQL
 kmV
-sJJ
-lWu
-lWu
-lWu
-lWu
+aja
+hxl
+hxl
+hxl
+cty
 lWu
 lWu
 lWu
@@ -185494,14 +185914,14 @@ lWu
 iMx
 iNj
 kBm
-mdD
-mdD
-mdD
-mdD
-mdD
-mdD
-mdD
-mdD
+xzR
+iUn
+iUT
+xWo
+ing
+ing
+ueA
+kGE
 mdD
 goN
 guo
@@ -185696,15 +186116,15 @@ tIX
 xxB
 iNj
 kBm
-mdD
-mdD
-mdD
-mdD
-mdD
-mdD
-mdD
-mdD
-mdD
+ing
+ing
+gjs
+wam
+nNn
+iUF
+oFJ
+pqA
+ing
 goN
 guo
 lFk
@@ -185898,15 +186318,15 @@ tIX
 tam
 npy
 kBm
-mdD
-mdD
-mdD
-mdD
-mdD
-mdD
-mdD
-mdD
-mdD
+mqt
+mJn
+snG
+qmD
+xlG
+gZr
+hve
+gty
+aCB
 goN
 guo
 lFk
@@ -186100,15 +186520,15 @@ tIX
 wqu
 fzK
 kBm
-mdD
-mdD
-mdD
-mdD
+hyh
+tLn
+hld
+jnb
 iNG
-mdD
-mdD
-mdD
-mdD
+tje
+qjJ
+vof
+aCB
 goN
 olX
 mbT
@@ -186302,15 +186722,15 @@ tIX
 rgy
 fzK
 kBm
-mdD
-mdD
-mdD
-mdD
-mdD
-mdD
-mdD
-mdD
-mdD
+ing
+ing
+qbb
+cnA
+uKZ
+szL
+jop
+ing
+ing
 goN
 guo
 pYa
@@ -186504,14 +186924,14 @@ aUh
 kim
 fzK
 kBm
-mdD
-mdD
-mdD
-mdD
-mdD
-mdD
-mdD
-mdD
+xsP
+ing
+ing
+ing
+ing
+ing
+ueA
+kGE
 mdD
 goN
 guo

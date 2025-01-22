@@ -493,3 +493,29 @@ SIERRA_ESCAPE_POD(11)
 	name = "Fourth Deck Auxillary Dock"
 	landmark_tag = "nav_deck4_skrellscout"
 	docking_controller = "rescue_shuttle_dock_airlock"
+
+/datum/shuttle/autodock/overmap/drone
+	name = "Drone"
+	move_time = 30
+	shuttle_area = /area/drone_hangar/start
+	dock_target ="drone_shuttle"
+	current_location = "nav_hangar_drone"
+	landmark_transition = "nav_transit_drone"
+	sound_takeoff = 'sound/effects/rocket.ogg'
+	sound_landing = 'sound/effects/rocket_backwards.ogg'
+	fuel_consumption = 2
+	logging_home_tag = "nav_hangar_drone"
+	logging_access = access_cargo
+	skill_needed = SKILL_UNSKILLED
+	ceiling_type = /turf/simulated/floor/shuttle_ceiling/sierra
+	warmup_time = 10
+
+/obj/shuttle_landmark/sierra/hangar/drone
+	name = "Drone Hangar"
+	landmark_tag = "nav_hangar_drone"
+	base_area = /area/quartermaster/hangar
+	base_turf = /turf/simulated/floor/plating
+
+/obj/shuttle_landmark/sierra/transit/drone
+	name = "In transit"
+	landmark_tag = "nav_transit_drone"

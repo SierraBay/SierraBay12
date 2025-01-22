@@ -5,7 +5,7 @@
 	fore_dir = WEST
 	vessel_mass = 63000
 	sector_flags = OVERMAP_SECTOR_KNOWN|OVERMAP_SECTOR_IN_SPACE|OVERMAP_SECTOR_BASE
-	known_ships = list(/obj/overmap/visitable/ship/landable/exploration_shuttle, /obj/overmap/visitable/ship/landable/guppy)
+	known_ships = list(/obj/overmap/visitable/ship/landable/exploration_shuttle, /obj/overmap/visitable/ship/landable/guppy, /obj/overmap/visitable/ship/landable/drone)
 
 	icon = 'maps/sierra/icons/obj/overmap.dmi'
 	color = "#a97faa"
@@ -13,6 +13,7 @@
 	initial_restricted_waypoints = list(
 		"Charon" = list("nav_hangar_calypso"),
 		"Guppy" = list("nav_hangar_guppy"),
+		"Drone" = list("nav_hangar_drone"),
 		"Crucian" = list("nav_hangar_crucian"),
 		"Cyclopes" = list("nav_merc_dock"), //maps/antag_spawn/mercenary/mercenary.dm shuttle
 		"Mule" = list("nav_merchant_out"), //../mods/maps/liberia/_map_liberia.dme shuttle,
@@ -87,6 +88,16 @@
 	vessel_size = SHIP_SIZE_TINY
 	skill_needed = SKILL_BASIC
 
+/obj/overmap/visitable/ship/landable/drone
+	name = "Cargo Drone"
+	shuttle = "Drone"
+	max_speed = 1/(4 SECONDS)
+	burn_delay = 1 SECONDS
+	vessel_mass = 1500
+	fore_dir = SOUTH
+	vessel_size = SHIP_SIZE_TINY
+	skill_needed = SKILL_BASIC
+
 /obj/machinery/computer/shuttle_control/explore/exploration_shuttle
 	name = "charon control console"
 	shuttle_tag = "Charon"
@@ -100,3 +111,8 @@
 /obj/machinery/computer/shuttle_control/explore/crucian
 	name = "crucian control console"
 	shuttle_tag = "Crucian"
+
+/obj/machinery/computer/shuttle_control/explore/drone
+	name = "cargo drone control console"
+	shuttle_tag = "Drone"
+	req_access = list(access_cargo)
