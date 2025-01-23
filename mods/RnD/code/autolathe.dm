@@ -1,16 +1,3 @@
-/client/proc/browse_queue_flush(timeout = 50)
-	var/job = ++last_asset_job
-	var/t = 0
-	var/timeout_time = timeout
-	src << browse({"<script>window.location.href="?asset_cache_confirm_arrival=[job]"</script>"}, "window=asset_cache_browser&file=asset_cache_send_verify.htm")
-
-	while(!completed_asset_jobs["[job]"] && t < timeout_time) // Reception is handled in Topic()
-		stoplag(1) // Lock up the caller until this is received.
-		t++
-	if (t < timeout_time)
-		return TRUE
-
-
 //Autolathe defines
 #define ERR_OK 0
 #define ERR_NOTFOUND "not found"
@@ -664,7 +651,7 @@
 		return TRUE
 	return FALSE
 
-/obj/machinery/fabricator/update_icon()
+/obj/machinery/fabricator/on_update_icon()
 	CutOverlays()
 
 	icon_state = initial(icon_state)
@@ -935,7 +922,7 @@
 		return ERR_NOCOMPAT
 
 
-/obj/machinery/fabricator/micro/update_icon()
+/obj/machinery/fabricator/micro/on_update_icon()
 	ClearOverlays()
 	if(panel_open)
 		AddOverlays("[icon_state]_panel")

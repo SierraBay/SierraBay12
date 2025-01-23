@@ -246,7 +246,7 @@
 	name = "Tools Designs"
 	icon_state = "red"
 	designs = list(
-		/datum/design/autolathe/tool/,
+		/datum/design/autolathe/tool,
 		/datum/design/autolathe/tool/prybar,
 		/datum/design/autolathe/tool/rescuetool,
 		/datum/design/autolathe/tool/int_wirer,
@@ -261,5 +261,5 @@
 		/datum/design/autolathe/tool/hatchet,
 		/datum/design/autolathe/tool/minihoe,
 		/datum/design/autolathe/tool/welder_industrial,
-		/datum/design/autolathe/tool/designator
+		/datum/design/autolathe/tool/designator,
 		)
