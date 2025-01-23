@@ -7,7 +7,7 @@
 		)
 	var/prescription = FALSE
 	off_state = "degoggles"
-	activation_sound = 'sound/items/goggles_charge.ogg'
+	activation_sound = 'sound/machines/boop1.ogg'
 	deactivation_sound = null
 	var/obj/screen/overlay = null
 	var/obj/item/clothing/glasses/hud/hud = null	// Hud glasses, if any
