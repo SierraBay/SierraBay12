@@ -203,7 +203,7 @@ var/global/list/explosion_watcher_list = list()
 			if(item_tech == T.item_tech_req)
 				T.shown = TRUE
 				return
-/*
+
 /datum/research/proc/is_research_file_type(datum/computer_file/file)
 	if(istype(file, /datum/computer_file/binary/research_points))
 		return TRUE
@@ -226,7 +226,7 @@ var/global/list/explosion_watcher_list = list()
 		known_research_file_ids += research_points_file.research_id
 		adjust_research_points(research_points_file.size * 1000)
 		return TRUE
-*/
+
 	return FALSE
 
 /datum/research/proc/AddSciPoints(datum/computer_file/binary/sci/D)
