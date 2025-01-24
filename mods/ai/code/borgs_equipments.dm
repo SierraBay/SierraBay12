@@ -291,6 +291,7 @@
 		/obj/item/reagent_containers/syringe,
 		/obj/item/gripper/chemistry,
 		/obj/item/stack/nanopaste,
+		/obj/item/storage/part_replacer,
 		/obj/item/device/flash
 	)
 
