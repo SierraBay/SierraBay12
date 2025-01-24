@@ -1,11 +1,11 @@
 /obj/overmap/visitable/sector/exoplanet/ice
 	name = "ice exoplanet"
-	desc = "A distant, abandoned and cold world, rich in artefacts and anomalous activity."
+	desc = "A distant, abandoned and cold world, rich in artefacts and anomalous activity. WARNING: large electro-anomalous activity detected. Extreme caution is required."
 	color = "#ebe3e3"
 	rock_colors = list(COLOR_WHITE)
 	//Большие артефакты
-	big_anomaly_artefacts_min_amount = 4
-	big_anomaly_artefacts_max_amount = 6
+	big_anomaly_artefacts_min_amount = 2
+	big_anomaly_artefacts_max_amount = 4
 	big_artefacts_types = list(
 		/obj/structure/big_artefact/electra
 		)
@@ -19,7 +19,7 @@
 		)
 	planetary_area = /area/exoplanet/ice
 	map_generators = list(/datum/random_map/automata/cave_system/mountains/ice, /datum/random_map/noise/exoplanet/ice)
-	ruin_tags_blacklist = RUIN_HABITAT|RUIN_WATER|RUIN_HOT_ANOMALIES
+	ruin_tags_blacklist = RUIN_HABITAT|RUIN_WATER|RUIN_HOT_ANOMALIES|RUIN_GRAVI_ANOMALIES
 	ruin_tags_whitelist = RUIN_ELECTRA_ANOMALIES
 	surface_color = "#ffffff"
 	water_color = "#0700c7"
@@ -27,6 +27,12 @@
 	has_trees = FALSE
 	flora_diversity = 0
 
+/obj/overmap/visitable/sector/exoplanet/ice/generate_atmosphere()
+	atmosphere = new
+	atmosphere.temperature = rand(50, 150)
+	atmosphere.update_values()
+	var/good_gas = list(GAS_OXYGEN = MOLES_O2STANDARD, GAS_NITROGEN = MOLES_N2STANDARD)
+	atmosphere.gas = good_gas
 
 /obj/overmap/visitable/sector/exoplanet/ice/get_atmosphere_color()
 	var/air_color = ..()
@@ -93,7 +99,7 @@
 
 
 /area/exoplanet/ice
-	ambience = list('sound/effects/wind/tundra0.ogg','sound/effects/wind/tundra1.ogg','sound/effects/wind/tundra2.ogg','sound/effects/wind/spooky0.ogg','sound/effects/wind/spooky1.ogg')
+	ambience = list('sound/effects/wind/tundra0.ogg','sound/effects/wind/tundra1.ogg','mods/anomaly/sounds/electra_planet_wind_2.ogg')
 	base_turf = /turf/simulated/floor/exoplanet/ice
 
 

@@ -35,5 +35,4 @@
 #include "code/designs_autolathe/designs_tools.dm"
 #include "code/designs_autolathe/disks.dm"
 
-
 #endif

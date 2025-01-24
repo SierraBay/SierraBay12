@@ -14,11 +14,14 @@
 
 GLOBAL_DATUM_INIT(cult, /datum/antagonist/cultist, new)
 
-/proc/iscultist(mob/player)
-	if(!GLOB.cult || !player.mind)
-		return 0
-	if(player.mind in GLOB.cult.current_antagonists)
-		return 1
+
+/// Tests if subject is a cultist. Subject may be a /mob or /datum/mind.
+/proc/iscultist(mob/subject)
+	var/datum/mind/mind = subject
+	if (ismob(mind))
+		mind = subject.mind
+	return istype(mind) && (mind in GLOB.cult?.current_antagonists)
+
 
 /datum/antagonist/cultist
 	id = MODE_CULTIST
