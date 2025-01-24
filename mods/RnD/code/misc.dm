@@ -155,7 +155,7 @@
 
 /obj/machinery/computer/modular/Initialize()
 	. = ..()
-	var/obj/item/stock_parts/computer/hard_drive/disk = get_component_of_type(/obj/item/stock_parts/computer/hard_drive)
+	var/obj/item/stock_parts/computer/hard_drive/disk = get_component_of_type(PART_HDD)
 	if(disk.check_away_zone())
 		if(prob(10))
 			if(prob(20))

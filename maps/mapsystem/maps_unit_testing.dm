@@ -54,8 +54,12 @@
 		/area/exoplanet,
 		/area/ship,
 		/area/mine,
-		/area/bluespaceriver)
-		// /area/mine, /area/bluespaceriver //[SIERRA-ADD]
+		/area/bluespaceriver,
+		/area/lar_maria,
+		/area/casino,
+		/area/meatstation
+		)
+		// /area/mine, /area/bluespaceriver, /area/lar_maria, /area/casino, /area/meatstation //[SIERRA-ADD]
 
 	var/list/area_purity_test_exempt_areas = list()
 
