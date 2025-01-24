@@ -955,6 +955,13 @@
 		A.vis_contents -= src
 	return ..()
 
+/obj/machinery/fabricator/hacked
+	fab_status_flags = FAB_HACKED
+
+/obj/machinery/fabricator/micro/bartender
+	name = "Microlathe"
+
+
 #undef ERR_OK
 #undef ERR_NOTFOUND
 #undef ERR_NOMATERIAL
