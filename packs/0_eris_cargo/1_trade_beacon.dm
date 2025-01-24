@@ -3,6 +3,8 @@
 	icon_state = "beacon"
 	anchored = TRUE
 	density = TRUE
+	construct_state = /singleton/machine_construction/default/panel_closed
+
 
 /// The effective range of the trade beacon. This is how far the beacon can reach into space to find items to export.
 	var/beacon_range = 2
@@ -24,10 +26,17 @@
 
 /obj/machinery/trade_beacon/proc/Activate()
 	flick("[icon_state]_active", src)
+
+	var/turf/T = get_turf(src)
+	if(!T)
+		return
+
 	var/datum/effect/spark_spread/sparks = new /datum/effect/spark_spread
 	sparks.set_up(5, 1, get_turf(src))
 	sparks.start()
 	playsound(get_turf(src), "sparks", 50, 1)
+
+
 
 /obj/machinery/trade_beacon/proc/GetId()
 	var/area/A = get_area(src)

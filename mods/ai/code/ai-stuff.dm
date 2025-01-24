@@ -42,7 +42,7 @@
 		os.create_file(new/datum/computer_file/program/email_client())
 		os.create_file(new/datum/computer_file/program/docking())
 		os.create_file(new/datum/computer_file/program/forceauthorization())
-		os.create_file(new/datum/computer_file/program/supply())
+		// create_file(new/datum/computer_file/program/supply())
 		os.create_file(new/datum/computer_file/program/deck_management())
 		os.create_file(new/datum/computer_file/program/nttransfer())
 		os.set_autorun("alarmmonitor")

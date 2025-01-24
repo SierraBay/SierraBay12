@@ -475,7 +475,7 @@
 
 		var/log_id = href_list["PRG_print"] || href_list["PRG_print_internal"]
 		var/list/log_data = SSsupply.GetLogDataById(log_id)
-		if(!log_data.len)
+		if(!length(log_data))
 			to_chat(usr, SPAN_WARNING("Unable to print invoice: no log with id \"[log_id]\" found."))
 			return
 
@@ -603,7 +603,7 @@
 					var/beacon_id = beacon.GetId()
 					beacons_by_id.Insert(beacon_id, beacon_id)
 					beacons_by_id[beacon_id] = beacon
-			if(beacons_by_id.len == 1)
+			if(length(beacons_by_id) == 1)
 				receiving = beacons_by_id[beacons_by_id[1]]
 			else
 				var/id = input("Select nearby receiving beacon", "Receiving Beacon", null) as null|anything in beacons_by_id
@@ -617,7 +617,7 @@
 					var/beacon_id = beacon.GetId()
 					beacons_by_id.Insert(beacon_id, beacon_id)
 					beacons_by_id[beacon_id] = beacon
-			if(beacons_by_id.len == 1)
+			if(length(beacons_by_id) == 1)
 				sending = beacons_by_id[beacons_by_id[1]]
 			else
 				var/id = input("Select nearby sending beacon", "Sending Beacon", null) as null|anything in beacons_by_id
