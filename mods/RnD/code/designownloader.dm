@@ -12,7 +12,7 @@
 	nanomodule_path = /datum/nano_module/program/computer_ntnetdesign
 	ui_header = "downloader_finished.gif"
 	var/datum/computer_file/binary/design/downloaded_file = null
-	var/hacked_download = FALSE
+	var/backdoor_access = FALSE
 	/// GQ of downloaded data.
 	var/download_completion = 0
 	var/download_netspeed = 0
@@ -55,17 +55,6 @@
 
 	generate_network_log("Began downloading file [file_info] from [server].")
 	downloaded_file = design_file.clone()
-
-/datum/computer_file/program/ntnetdesign/proc/hide_file_info(datum/computer_file/file, skill)
-	server = (file in ntnet_global.available_station_software) ? "NTNet Software Repository" : "unspecified server"
-	if(!hacked_download)
-		return "[file.filename].[file.filetype]"
-	var/stealth_chance = max(skill - SKILL_BASIC, 0) * 30
-	if(!prob(stealth_chance))
-		return "**ENCRYPTED**.[file.filetype]"
-	var/datum/computer_file/fake_file = pick(ntnet_global.available_station_software)
-	server = "NTNet Software Repository"
-	return "[fake_file.filename].[fake_file.filetype]"
 
 /datum/computer_file/program/ntnetdesign/proc/abort_file_download()
 	if(!downloaded_file)
@@ -182,19 +171,23 @@
 /datum/nano_module/program/computer_ntnetdesign/proc/get_category()
 	var/list/categories = list()
 	var/list/all_cat = SSresearch.design_categories_autolathe
+	var/datum/computer_file/program/ntnetdesign/prog = program
 	if(usr)
 		lastusr = usr
 	if(!lastusr)
 		return all_cat
 	var/mob/living/carbon/human/H = lastusr
 	var/obj/item/card/id/I = H.GetIdCard()
-	if(!I)
-		categories = all_cat - list("Arms and Ammunition")
-		return categories
-	if(!(access_security in I.access))
-		categories = all_cat - list("Arms and Ammunition")
-		return categories
+	if(!prog.backdoor_access)
+		if(!I)
+			categories = all_cat - list("Arms and Ammunition")
+			return categories
+		if(!(access_security in I.access))
+			categories = all_cat - list("Arms and Ammunition")
+			return categories
 	return all_cat
+
+
 
 /datum/nano_module/program/computer_ntnetdesign/proc/get_autolathe_designs_data(category)
 	var/list/designs_list = list()

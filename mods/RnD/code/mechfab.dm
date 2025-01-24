@@ -1,6 +1,6 @@
 /obj/machinery/robotics_fabricator
 	var/fab_status_flags
-	wires = /datum/wires/robotics_fabricator
+	wires = /datum/wires/fabricator/robotics_fabricator
 
 /obj/machinery/robotics_fabricator/attack_hand(mob/user)
 	if(!(fab_status_flags & FAB_HACKED))
