@@ -127,6 +127,14 @@
 	// Stops people from screwing around with unprotected disks too.
 	return TRUE
 
+
+
+////// Zones что бы успокоить бота
+/area/meatstation
+/area/casino
+/area/lar_maria
+///////
+
 /obj/item/stock_parts/computer/hard_drive/proc/check_away_zone()
 	var/area/area = get_area(src)
 	var/list/reserchpointareas = list(/area/lar_maria, /area/casino, /area/meatstation, /area/mine, /area/bluespaceriver)
@@ -163,5 +171,5 @@
 			else
 				portable_drive = new /obj/item/stock_parts/computer/hard_drive/portable/away/research_data
 			verbs += /obj/machinery/computer/modular/proc/eject_usb
-		else if(prob(50))
+		else if(prob(20))
 			disk.install_away_designs()
