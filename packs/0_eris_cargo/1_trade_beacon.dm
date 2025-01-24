@@ -32,10 +32,10 @@
 		return
 
 	var/datum/effect/spark_spread/sparks = new /datum/effect/spark_spread
-	sparks.set_up(5, 1, get_turf(src))
+	sparks.set_up(5, 1, T)
 	sparks.start()
-	playsound(get_turf(src), "sparks", 50, 1)
 
+	playsound(T, "sparks", 50, 1)
 
 
 /obj/machinery/trade_beacon/proc/GetId()
@@ -60,15 +60,10 @@
 /obj/machinery/trade_beacon/sending/proc/GetObjects()
 	var/list/objects = list()
 	for(var/atom/movable/A in range(beacon_range, src))
-		if(A.anchored)
-			continue
-		if(A == src)
-			continue
-		if(A.loc == src)
-			continue
-		if(A.invisibility)
+		if(A.anchored || A == src || A.invisibility || (A.loc == src))
 			continue
 		objects += A
+
 	return objects
 
 /obj/machinery/trade_beacon/sending/proc/StartExport()
@@ -92,13 +87,14 @@
 
 /obj/machinery/trade_beacon/receiving/proc/DropItem(drop_type)
 	var/list/valid_turfs = list()
-	for(var/turf/simulated/floor/F in range(beacon_range, src))
+	for(var/turf/simulated/floor/F in orange(beacon_range, src))
 		if(F.contains_dense_objects(TRUE))
 			continue
 		valid_turfs += F
 	if(!LAZYLEN(valid_turfs))
 		return FALSE
 	Activate()
+
 	var/turf/simulated/floor/pickfloor = pick(valid_turfs)
 	var/datum/effect/spark_spread/s = new /datum/effect/spark_spread
 	s.set_up(5, 1, pickfloor)
