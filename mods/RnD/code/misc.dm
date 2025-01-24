@@ -127,6 +127,15 @@
 	// Stops people from screwing around with unprotected disks too.
 	return TRUE
 
+/area/lar_maria
+	name = "Lar Maria"
+
+/area/casino
+	name = "Casino"
+
+/area/meatstation
+	name = "Meat Station"
+
 /obj/item/stock_parts/computer/hard_drive/proc/check_away_zone()
 	var/area/area = get_area(src)
 	var/list/reserchpointareas = list(/area/lar_maria, /area/casino, /area/meatstation, /area/mine, /area/bluespaceriver)
