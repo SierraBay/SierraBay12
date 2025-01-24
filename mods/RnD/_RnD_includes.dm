@@ -24,7 +24,6 @@
 #include "code/SSresearch.dm"
 #include "code/sciefolder.dm"
 #include "code/mechfab.dm"
-#include "code/mechfabwires.dm"
 #include "code/misc.dm"
 #include "code/designs_autolathe/designs_arms_ammo.dm"
 #include "code/designs_autolathe/designs_cutlery.dm"

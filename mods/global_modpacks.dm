@@ -24,7 +24,7 @@
 #include "music_player/_music_player.dme"
 #include "ntnet/_ntnet.dme"
 #include "virusology/_virusology.dme"
-#include "RnD/_RnD.dme"
+#include "RnD/_RnD_includes.dm"
 #include "nyc_posters/_nyc_posters.dme"
 #include "pixelshift/_pixelshift.dme"
 #include "ssinput/_ssinput.dme"
