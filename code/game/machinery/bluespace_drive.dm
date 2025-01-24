@@ -229,7 +229,7 @@
 				zlevels[1])
 			if (!T)
 				return
-			GLOB.using_map.do_interlude_teleport(being, T, Frand(parent.interlude_min_time, parent.interlude_max_time) MINUTES)
+			GLOB.using_map.do_interlude_teleport(being, T, Frand(parent.interlude_min_time, parent.interlude_max_time))
 			return
 
 		//swap places with another mob

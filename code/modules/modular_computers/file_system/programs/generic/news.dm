@@ -119,7 +119,7 @@
 				story["timestamp"] = message.time_stamp
 				story["has_photo"] = message.img != null
 				if (user && message.img) // user check here to avoid runtimes
-					var/resource_name = "newscaster_photo_[sanitize(feed.channel_name)]_[i].png"
+					var/resource_name = "newscaster_photo_[feed.channel_id]_[i].png"
 					send_asset(user.client, resource_name)
 					story["photo_dat"] = "<img src='[resource_name]' width='180'><br>"
 				story["story_ref"] = "\ref[message]"
