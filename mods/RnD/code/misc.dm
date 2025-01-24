@@ -131,8 +131,11 @@
 
 ////// Zones что бы успокоить бота
 /area/meatstation
+	name = "Meatstation"
 /area/casino
+	name = "Casino"
 /area/lar_maria
+	name = "Lar maria"
 ///////
 
 /obj/item/stock_parts/computer/hard_drive/proc/check_away_zone()
