@@ -291,11 +291,11 @@
 		return
 
 	usr.set_machine(src)
-
-	if(href_list["insert"])
+/*
+	if(href_list["insert"]) Отключаем рекуклинг пока стоимость печати вещей не будет приведена в адекватную норму
 		eat(usr)
 		return 1
-
+*/
 	if(href_list["disk"])
 		if(disk)
 			eject_disk(usr)
@@ -515,7 +515,6 @@
 	var/filltype = 0       // Used to determine message.
 	var/reagents_filltype = 0
 	var/total_used = 0     // Amount of material used.
-
 	var/list/total_material_gained = list()
 
 	for(var/obj/O in eating.GetAllContents(includeSelf = TRUE))
@@ -652,12 +651,11 @@
 	return FALSE
 
 /obj/machinery/fabricator/on_update_icon()
-	CutOverlays()
+	ClearOverlays()
+	if(panel_open)
+		AddOverlays("[icon_state]_panel")
 
 	icon_state = initial(icon_state)
-
-	if(panel_open)
-		overlays.Add(image(icon, "[icon_state]_panel"))
 
 	if(icon_off())
 		return
