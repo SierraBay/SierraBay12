@@ -204,31 +204,6 @@ var/global/list/explosion_watcher_list = list()
 				T.shown = TRUE
 				return
 
-/datum/research/proc/is_research_file_type(datum/computer_file/file)
-	if(istype(file, /datum/computer_file/binary/research_points))
-		return TRUE
-
-	return FALSE
-
-/datum/research/proc/can_load_file(datum/computer_file/file)
-	if(istype(file, /datum/computer_file/binary/research_points))
-		var/datum/computer_file/binary/research_points/research_points_file = file
-		return !(research_points_file.research_id in known_research_file_ids)
-
-	return FALSE
-
-/datum/research/proc/load_file(datum/computer_file/file)
-	if(!can_load_file(file))
-		return FALSE
-
-	if(istype(file, /datum/computer_file/binary/research_points))
-		var/datum/computer_file/binary/research_points/research_points_file = file
-		known_research_file_ids += research_points_file.research_id
-		adjust_research_points(research_points_file.size * 1000)
-		return TRUE
-
-	return FALSE
-
 /datum/research/proc/AddSciPoints(datum/computer_file/binary/sci/D)
 	if(D.uniquekey in uniquekeys)
 		return 0

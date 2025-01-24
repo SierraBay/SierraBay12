@@ -6,6 +6,7 @@
 #include "code/asset.dm"
 #include "code/autolathe.dm"
 #include "code/designownloader.dm"
+#include "code/event.dm"
 #include "code/research.dm"
 #include "code/experiment.dm"
 #include "code/tech_biotech.dm"

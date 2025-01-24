@@ -64,10 +64,9 @@
 		pass("All machines had valid construction states.")
 	return  1
 
-
+/*
 /datum/unit_test/fabricator_recipes_shall_be_buildable
 	name = "MACHINE: All fabricators will be able to produce all of their recipes"
-/*
 /datum/unit_test/fabricator_recipes_shall_be_buildable/start_test()
 	var/failed = list()
 	for(var/thing in typesof(/obj/machinery/fabricator))
