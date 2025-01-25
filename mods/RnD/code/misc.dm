@@ -175,3 +175,54 @@
 			verbs += /obj/machinery/computer/modular/proc/eject_usb
 		else if(prob(20))
 			disk.install_away_designs()
+
+
+/obj/machinery/smartfridge/disks
+	name = "\improper Disks Storage"
+	desc = "When you need disks fast!"
+	icon_state = "smartfridge"
+	icon_base = "smartfridge"
+	icon_contents = "disk"
+	icon = 'mods/RnD/icons/vending.dmi'
+	accepted_types = list(
+		/obj/item/stock_parts/computer/hard_drive/portable)
+
+/obj/machinery/smartfridge/disks/accept_check(obj/item/O as obj)
+	if(istype(O, /obj/item/stock_parts/computer/hard_drive/portable))
+		return 1
+	return 0
+
+/obj/machinery/smartfridge/disks/on_update_icon()
+	ClearOverlays()
+	if(MACHINE_IS_BROKEN(src))
+		icon_state = "[icon_state]-broken"
+	if(stat & MACHINE_STAT_NOPOWER)
+		icon_state = "[icon_base]-off"
+	else
+		icon_state = icon_base
+
+	if(panel_open)
+		AddOverlays(image(icon, "[icon_base]-panel"))
+
+	var/image/I
+	var/is_off = ""
+	if(stat & MACHINE_STAT_NOPOWER)
+		is_off = "-off"
+
+	// Fridge contents
+	switch(length(contents))
+		if(1)
+			I = image(icon, "empty[is_off]")
+		if(2 to 4)
+			I = image(icon, "[icon_contents]-1[is_off]")
+		if(5 to 8)
+			I = image(icon, "[icon_contents]-2[is_off]")
+		else
+			I = image(icon, "[icon_contents]-3[is_off]")
+	AddOverlays(I)
+
+	// Fridge top
+	I = image(icon, "[icon_base]-top")
+	I.pixel_z = 32
+	I.layer = ABOVE_WINDOW_LAYER
+	AddOverlays(I)
