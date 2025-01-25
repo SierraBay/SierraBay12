@@ -11,23 +11,19 @@
 	var/range_spawn = 30
 	var/list/possible_anomalies = list()
 
-/obj/structure/big_artefact/Initialize()
-	. = ..()
-	born_anomalies()
-
 ///Функция, которая заспавнит вокруг большого артефакта аномалии
-/obj/structure/big_artefact/proc/born_anomalies()
+/obj/structure/big_artefact/proc/born_anomalies(biggest_x, biggest_y)
 	set background = 1
 	var/started_in = world.time
 	var/list/turfs_for_spawn = list()
 	//У нас нет турфа?
 	if(!src.loc)
 		return
-		//Собираем все турфы в определённом радиусе
-	for(var/turf/turfs in RANGE_TURFS(src.loc, range_spawn))
-		if(!TurfBlocked(turfs) || TurfBlockedByAnomaly(turfs))
-			LAZYADD(turfs_for_spawn, turfs)
-	generate_anomalies_in_turfs(possible_anomalies, turfs_for_spawn, min_anomalies_ammout, max_anomalies_ammout, min_artefacts_ammount, max_artefacts_ammount, null, null, "big artefact generation", started_in)
+	//Собираем все турфы в определённом радиусе
+	for(var/turf/choosed_turf in RANGE_TURFS(src.loc, range_spawn))
+		if(!TurfBlocked(choosed_turf) && !TurfBlockedByAnomaly(choosed_turf) && turf_in_playable_place(choosed_turf, biggest_x, biggest_y))
+			LAZYADD(turfs_for_spawn, choosed_turf)
+	generate_anomalies_in_turfs(possible_anomalies, turfs_for_spawn, min_anomalies_ammout, max_anomalies_ammout, min_artefacts_ammount, max_artefacts_ammount, null, null, "Большой аномальный артефакт", started_in)
 
 /obj/structure/big_artefact/shuttle_land_on()
 	delete_artefact()
@@ -64,3 +60,6 @@
 	else
 		if(get_turf(src) == loc)
 			START_PROCESSING(SSanom, src)
+
+/obj/structure/big_artefact/shuttle_land_on()
+	move_to_safe_turf(src)

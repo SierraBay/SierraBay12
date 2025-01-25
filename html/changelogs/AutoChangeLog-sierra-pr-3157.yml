@@ -1,0 +1,4 @@
+author: Builder13
+changes:
+  - {bugfix: РПЕД теперь добавляется к научному модулю}
+delete-after: true
