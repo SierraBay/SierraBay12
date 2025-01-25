@@ -17,7 +17,7 @@
 	skill_needed = SKILL_TRAINED
 
 /datum/terminal_command/prog/proper_input_entered(text, mob/user, datum/terminal/terminal)
-	. = syntax_error()
+	. =..()
 	var/list/arguments = get_arguments(text)
 	if(isnull(arguments))
 		return
