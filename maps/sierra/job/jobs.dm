@@ -16,7 +16,7 @@
 		/datum/species/diona = list(
 			HUMAN_ONLY_JOBS, /datum/job/exploration_leader, /datum/job/explorer_pilot,
 			/datum/job/officer, /datum/job/warden, /datum/job/detective,
-			/datum/job/qm,
+			/datum/job/qm, /datum/job/explorer_medic,
 			/datum/job/senior_engineer, /datum/job/senior_doctor,
 			/datum/job/senior_scientist, /datum/job/security_assistant
 		),
