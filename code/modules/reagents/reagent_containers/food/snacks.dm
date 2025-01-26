@@ -2121,7 +2121,7 @@
 	trash = /obj/item/trash/snack_bowl
 	filling_color = "#fac9ff"
 	center_of_mass = "x=15;y=8"
-	nutriment_desc = list("tomato" = 4, "beet" = 4)
+	nutriment_desc = list("cabbage" = 4, "beet" = 4)
 	nutriment_amt = 8
 	bitesize = 2
 	eat_sound = 'sound/items/drink.ogg'

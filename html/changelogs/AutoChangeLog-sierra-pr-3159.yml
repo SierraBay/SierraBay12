@@ -1,0 +1,4 @@
+author: Builder13
+changes:
+  - {tweak: Теперь можно ставить больше одной нательной метки на часть тела}
+delete-after: true

@@ -11,7 +11,8 @@
 	name = "anomaly detection device"
 	desc = "A complex technological device designed taking into account all possible dangers of anomalies."
 	icon = 'mods/anomaly/icons/detector.dmi'
-	icon_state = "detector_idle"
+	on_turf_icon = 'mods/anomaly/icons/on_floor_icons/anomaly_detector_on_floor.dmi'
+	icon_state = "detector_turned_off"
 	var/destroyed = FALSE // Детектор убит из-за ЭМИ и уже никогда не проснётся.
 	//Базовое название детектора используемое в коде смена иконок.
 	var/detector_basic_name = "detector"
@@ -43,10 +44,14 @@
 		to_chat(usr, SPAN_NOTICE("Устройство не реагирует на нажатие кнопки. Похоже, оно уже не включится."))
 		return
 	if(!is_processing)
+		flick("[detector_basic_name]_turning_on", src)
+		icon_state = "[detector_basic_name]_idle"
 		to_chat(usr, SPAN_NOTICE("Вы включили детектор"))
 		START_PROCESSING(SSanom, src)
 		SSanom.processing_ammount++
 	else
+		flick("[detector_basic_name]_turning_off", src)
+		icon_state = "[detector_basic_name]_turned_off"
 		to_chat(usr, SPAN_NOTICE("Вы выключили детектор"))
 		STOP_PROCESSING(SSanom, src)
 		SSanom.processing_ammount--
