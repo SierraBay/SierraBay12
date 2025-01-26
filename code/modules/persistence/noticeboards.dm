@@ -83,7 +83,7 @@
 	dismantle()
 
 /obj/structure/noticeboard/on_update_icon()
-	icon_state = "[base_icon_state][LAZYLEN(notices)]"
+	icon_state = "[base_icon_state][min(LAZYLEN(notices), 5)]"
 
 
 /obj/structure/noticeboard/use_tool(obj/item/tool, mob/user, list/click_params)
