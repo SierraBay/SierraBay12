@@ -40,8 +40,6 @@
 		LANGUAGE_PRIMITIVE
 	)
 
-
-/datum/job/adjutant
 /singleton/cultural_info/faction/adherent/
 	var/list/valid_jobs = list()
 
