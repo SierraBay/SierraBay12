@@ -35,6 +35,7 @@
 	var/old_hotspot = hotspot
 	var/old_turf_fire = null
 	var/old_opacity = opacity
+	var/old_corners = corners
 	var/old_dynamic_lighting = TURF_IS_DYNAMICALLY_LIT_UNSAFE(src)
 	var/old_affecting_lights = affecting_lights
 	var/old_lighting_overlay = lighting_overlay
@@ -105,6 +106,7 @@
 		recalc_atom_opacity()
 		lighting_overlay = old_lighting_overlay
 		affecting_lights = old_affecting_lights
+		corners = old_corners
 		if (old_opacity != opacity || dynamic_lighting != old_dynamic_lighting || z_flags != old_zflags || force_lighting_update)
 			reconsider_lights()
 			updateVisibility(src)
