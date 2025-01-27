@@ -36,5 +36,7 @@
 #include "code/security.dm"
 #include "code/FBP_vox.dm"
 #include "code/on_floor_icon.dm"
+#include "code/changed_sprite.dm"
 #include "code/rndloadout.dm"
+#include "code/dls_loadout.dm"
 #endif
