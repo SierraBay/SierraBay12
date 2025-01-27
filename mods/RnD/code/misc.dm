@@ -226,3 +226,21 @@
 	I.pixel_z = 32
 	I.layer = ABOVE_WINDOW_LAYER
 	AddOverlays(I)
+
+/obj/machinery/smartfridge/disks/full
+	var/list/disks = list(
+		/obj/item/stock_parts/computer/hard_drive/portable/design/arms,
+		/obj/item/stock_parts/computer/hard_drive/portable/design/general,
+		/obj/item/stock_parts/computer/hard_drive/portable/design/components,
+		/obj/item/stock_parts/computer/hard_drive/portable/design/cuttery,
+		/obj/item/stock_parts/computer/hard_drive/portable/design/engineering,
+		/obj/item/stock_parts/computer/hard_drive/portable/design/drinking,
+		/obj/item/stock_parts/computer/hard_drive/portable/design/medical,
+		/obj/item/stock_parts/computer/hard_drive/portable/design/tool
+	)
+
+/obj/machinery/smartfridge/disks/full/LateInitialize(mapload, ...)
+	. = ..()
+	for(var/disk in disks)
+		stock_item(disk)
+	on_update_icon()

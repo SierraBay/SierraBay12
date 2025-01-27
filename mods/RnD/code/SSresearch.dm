@@ -8,7 +8,7 @@
 SUBSYSTEM_DEF(research)
 	name = "Research"
 	flags = SS_NO_FIRE
-	init_order = SS_INIT_DEFAULT
+	init_order = SS_INIT_EARLY
 
 	var/list/all_designs = list()	// All design datums
 	var/list/starting_designs = list() // List of designs starts_unlocked = TRUE

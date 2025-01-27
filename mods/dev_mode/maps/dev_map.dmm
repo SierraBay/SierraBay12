@@ -955,7 +955,7 @@
 /area/tdome/testing)
 "sHT" = (
 /obj/item/stock_parts/computer/hard_drive/portable/design/components,
-/obj/item/stock_parts/computer/hard_drive/portable/design/arm,
+/obj/item/stock_parts/computer/hard_drive/portable/design/arms,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},

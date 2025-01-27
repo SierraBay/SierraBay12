@@ -25468,6 +25468,8 @@
 /obj/floor_decal/spline/fancy/wood{
 	dir = 10
 	},
+/obj/item/stock_parts/computer/hard_drive/portable/design/cuttery,
+/obj/item/stock_parts/computer/hard_drive/portable/design/drinking,
 /turf/simulated/floor/wood/walnut,
 /area/crew_quarters/cafe)
 "dIX" = (
@@ -38003,9 +38005,6 @@
 /area/quartermaster/hangar_stairs)
 "fAj" = (
 /obj/structure/table/woodentable_reinforced/walnut,
-/obj/machinery/fabricator{
-	pixel_x = 4
-	},
 /obj/structure/noticeboard{
 	pixel_y = 32
 	},
@@ -38013,6 +38012,7 @@
 	dir = 6
 	},
 /obj/item/paper/sierra,
+/obj/machinery/fabricator/micro,
 /turf/simulated/floor/wood/walnut,
 /area/crew_quarters/cafe)
 "fAm" = (
@@ -38585,16 +38585,14 @@
 	dir = 8
 	},
 /obj/structure/table/standard,
-/obj/machinery/fabricator{
-	pixel_x = 5;
-	pixel_y = 2
-	},
 /obj/floor_decal/borderfloorblack{
 	dir = 10
 	},
 /obj/floor_decal/corner/purple/border{
 	dir = 10
 	},
+/obj/machinery/fabricator/micro,
+/obj/item/stock_parts/computer/hard_drive/portable/design/drinking,
 /turf/simulated/floor/tiled/white,
 /area/rnd/misc_lab)
 "fEY" = (
@@ -48328,9 +48326,9 @@
 /turf/simulated/floor/tiled/monotile,
 /area/hallway/primary/firstdeck/aft)
 "hba" = (
-/obj/structure/reagent_dispensers/water_cooler,
 /obj/floor_decal/industrial/outline/yellow,
 /obj/structure/disposalpipe/segment,
+/obj/machinery/smartfridge/disks/full,
 /turf/simulated/floor/tiled,
 /area/rnd/development)
 "hbb" = (
@@ -82207,10 +82205,6 @@
 /area/crew_quarters/cafe)
 "mdp" = (
 /obj/structure/table/reinforced,
-/obj/machinery/fabricator/{
-	pixel_x = 9;
-	pixel_y = 7
-	},
 /obj/item/storage/box/beakers,
 /obj/floor_decal/corner/beige/three_quarters{
 	dir = 1
@@ -101981,6 +101975,9 @@
 	},
 /obj/item/stack/material/plastic/ten,
 /obj/item/stack/material/plastic/ten,
+/obj/item/stock_parts/computer/hard_drive/portable/design/arms,
+/obj/item/stock_parts/computer/hard_drive/portable/design/general,
+/obj/machinery/fabricator,
 /turf/simulated/floor/tiled/techfloor,
 /area/security/sierra/armory/lobby)
 "pad" = (
@@ -115488,18 +115485,15 @@
 	dir = 8
 	},
 /obj/structure/table/standard,
-/obj/item/reagent_containers/food/drinks/glass2/coffeecup/one{
-	pixel_x = 7;
-	pixel_y = 10
-	},
-/obj/item/reagent_containers/food/drinks/pitcher{
-	pixel_y = 4;
-	pixel_x = -3
-	},
 /obj/machinery/camera/network/supply{
 	c_tag = "Supply Office - Office Room";
 	dir = 4
 	},
+/obj/item/stock_parts/computer/hard_drive/portable/design/general,
+/obj/item/stock_parts/computer/hard_drive/portable/design/engineering,
+/obj/item/stock_parts/computer/hard_drive/portable/design/components,
+/obj/item/stock_parts/computer/hard_drive/portable/design/tool,
+/obj/item/stock_parts/computer/hard_drive/portable/design/medical,
 /turf/simulated/floor/tiled,
 /area/quartermaster/office)
 "qYN" = (
@@ -128878,6 +128872,7 @@
 "sRG" = (
 /obj/structure/table/standard,
 /obj/machinery/reagent_temperature,
+/obj/item/stock_parts/computer/hard_drive/portable/design/arms,
 /turf/simulated/floor/tiled/white,
 /area/vacant/gambling)
 "sRN" = (
@@ -149021,9 +149016,6 @@
 	pixel_x = -28
 	},
 /obj/structure/table/marble,
-/obj/machinery/fabricator/{
-	pixel_x = 4
-	},
 /obj/item/stack/material/glass/ten{
 	pixel_x = 4;
 	pixel_y = -4
@@ -153635,9 +153627,6 @@
 	dir = 8
 	},
 /obj/structure/table/woodentable_reinforced/ebony,
-/obj/machinery/fabricator/{
-	pixel_x = 4
-	},
 /turf/simulated/floor/wood/walnut,
 /area/crew_quarters/cafe/upper)
 "wCA" = (

@@ -1,6 +1,5 @@
 /// Shows and manipulates programs running on the computer
 /datum/terminal_command/prog
-	name = "prog"
 	man_entry = list(
 		"Format: prog \[-flag pid|filename\]",
 		"Without options, list all programs currently running.",
@@ -10,19 +9,59 @@
 		"With -x followed by filename, attempt to execute filename as a program.",
 		"With -a and no further arguments, clears the autorun setting.",
 		"With -a followed by filename, set autorun to use the specified filename.",
-		"With -b and no further arguments, sets the backdoor access flah is on.",
+		"With -b and no further arguments, sets the backdoor access flag is on, for some running programs.",
 		"NOTICE: Programs are executed using access credentials of the original terminal session."
 	)
-	pattern = "^prog"
-	skill_needed = SKILL_TRAINED
 
 /datum/terminal_command/prog/proper_input_entered(text, mob/user, datum/terminal/terminal)
-	. =..()
+	. = syntax_error()
 	var/list/arguments = get_arguments(text)
 	if(isnull(arguments))
 		return
+	// Program list
+	if(!length(arguments))
+		. = list()
+		. += "[name]: Listing running programs..."
+		. += "PID Status Filename"
+		for(var/datum/computer_file/program/P in terminal.computer.running_programs)
+			if(P.program_state)
+				. += "[P.uid] - [(P.program_state == PROGRAM_STATE_ACTIVE ? "active" : "bckgrn")] - [P.filename]"
+		. += ""
+	// Run command with flag only
 	else if(length(arguments) == 1)
-		if(arguments[1] == "-b")
+		if(arguments[1] == "-k")
+			for(var/datum/computer_file/program/P in terminal.computer.running_programs)
+				terminal.computer.kill_program_remote(P, 1)
+			return "[name]: All running programs terminated."
+		else if(arguments[1] == "-a")
+			if(!terminal.computer.set_autorun(null))
+				return "[name]: Error; could not modify autorun data."
+			return "[name]: Autorun disabled"
+		else if(arguments[1] == "-b")
 			for(var/datum/computer_file/program/ntnetdesign/P in terminal.computer.running_programs)
 				P.backdoor_access = !P.backdoor_access
 				return "[P.filedesc]: Backdoor access set to [P.backdoor_access]."
+
+	// Run command on a pid or filename
+	else if(length(arguments) == 2)
+		if(arguments[1] == "-f")
+			var/datum/computer_file/program/P = get_program_by_pid(arguments[2], terminal)
+			if(!istype(P))
+				return "[name]: Error; invalid pid."
+			(P.program_state == PROGRAM_STATE_ACTIVE ? terminal.computer.minimize_program() : terminal.computer.activate_program(P))
+			return "[name]: Program focus toggled."
+		else if(arguments[1] == "-k")
+			var/datum/computer_file/program/P = get_program_by_pid(arguments[2], terminal)
+			if(!istype(P))
+				return "[name]: Error; invalid pid."
+			terminal.computer.kill_program_remote(P, 1)
+			return "[name]: Program [P.filename] terminated."
+		else if(arguments[1] == "-x")
+			var/datum/computer_file/program/P = terminal.computer.run_program_remote(arguments[2], user, 0)
+			if(!istype(P))
+				return "[name]: Error; unable to execute program '[arguments[2]]'."
+			return "[name]: Program '[P.filename]' running with pid [P.uid]."
+		else if(arguments[1] == "-a")
+			if(!terminal.computer.set_autorun(arguments[2]))
+				return "[name]: Error; could not modify autorun data."
+			return "[name]: Autorun updated to '[arguments[2]]'"

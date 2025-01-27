@@ -6,7 +6,12 @@
 
 		var/atom/item = design.build_path
 		var/icon_file = initial(item.icon)
-		var/icon_state = initial(item.icon_state)
+		var/icon_state
+		if(item in typesof(/obj/item/reagent_containers/food/drinks/glass2))
+			var/obj/item/reagent_containers/food/drinks/glass2/glass = item
+			icon_state = initial(glass.base_icon)
+		else
+			icon_state = initial(item.icon_state)
 
 		// eugh
 		if (!icon_file)

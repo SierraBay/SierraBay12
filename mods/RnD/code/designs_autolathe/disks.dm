@@ -1,4 +1,4 @@
-/obj/item/stock_parts/computer/hard_drive/portable/design/arm
+/obj/item/stock_parts/computer/hard_drive/portable/design/arms
 	name = "Arms and Ammo Designs"
 	icon_state = "red"
 	designs = list(
@@ -43,9 +43,9 @@
 		)
 
 
-/obj/item/stock_parts/computer/hard_drive/portable/design/components
+/obj/item/stock_parts/computer/hard_drive/portable/design/general
 	name = "General Designs"
-	icon_state = "red"
+	icon_state = "black"
 	designs = list(
 		/datum/design/autolathe/general,
 		/datum/design/autolathe/general/flashlight,
@@ -90,7 +90,7 @@
 
 /obj/item/stock_parts/computer/hard_drive/portable/design/components
 	name = "Components Designs"
-	icon_state = "red"
+	icon_state = "yellow"
 	designs = list(
 		/datum/design/autolathe/device_component,
 		/datum/design/autolathe/device_component/keyboard,
@@ -120,7 +120,7 @@
 
 /obj/item/stock_parts/computer/hard_drive/portable/design/cuttery
 	name = "Cuttery Designs"
-	icon_state = "red"
+	icon_state = "green"
 	designs = list(
 		/datum/design/autolathe/cutlery,
 		/datum/design/autolathe/cutlery/spoon_aluminium,
@@ -136,7 +136,7 @@
 
 /obj/item/stock_parts/computer/hard_drive/portable/design/engineering
 	name = "Engineering Designs"
-	icon_state = "red"
+	icon_state = "yellow"
 	designs = list(
 		/datum/design/autolathe/engineering,
 		/datum/design/autolathe/engineering/airalarm,
@@ -151,7 +151,7 @@
 
 /obj/item/stock_parts/computer/hard_drive/portable/design/drinking
 	name = "Drinking Glass Designs"
-	icon_state = "red"
+	icon_state = "purple"
 	designs = list(
 		/datum/design/autolathe/drinkingglass,
 		/datum/design/autolathe/drinkingglass/rocks,
@@ -171,7 +171,7 @@
 
 /obj/item/stock_parts/computer/hard_drive/portable/design/medical
 	name = "Medical Designs"
-	icon_state = "red"
+	icon_state = "blue"
 	designs = list(
 		/datum/design/autolathe/medical,
 		/datum/design/autolathe/medical/circularsaw,
@@ -194,7 +194,7 @@
 
 /obj/item/stock_parts/computer/hard_drive/portable/design/tool
 	name = "Tools Designs"
-	icon_state = "red"
+	icon_state = "yellow"
 	designs = list(
 		/datum/design/autolathe/tool,
 		/datum/design/autolathe/tool/prybar,
