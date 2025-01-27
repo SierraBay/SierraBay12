@@ -35,7 +35,6 @@
 	var/obj/item/reagent_containers/container
 	var/grinding
 
-
 /obj/machinery/reagentgrinder/proc/detach(mob/user)
 	if (!container)
 		return
@@ -46,19 +45,14 @@
 	container = null
 	update_icon()
 
-
 /obj/machinery/reagentgrinder/proc/eject()
 	for (var/obj/item/I in items)
 		I.dropInto(get_turf(src))
 	items.Cut()
 
-
 /obj/machinery/reagentgrinder/proc/reset_machine(mob/user)
 	grinding = FALSE
 	update_icon()
-	if (user)
-		interact(user)
-
 
 /obj/machinery/reagentgrinder/proc/grind(mob/user)
 	if (grinding)
@@ -100,7 +94,6 @@
 		items -= I
 		qdel(I)
 
-
 /obj/machinery/reagentgrinder/proc/grindable(obj/item/I)
 	if (I.reagents?.total_volume)
 		return TRUE
@@ -117,7 +110,6 @@
 		icon_state = "[initial(icon_state)]_beaker"
 	else
 		icon_state = "[initial(icon_state)]"
-
 
 /obj/machinery/reagentgrinder/use_tool(obj/item/I, mob/living/user, list/click_params)
 	if((. = ..()))
@@ -178,22 +170,45 @@
 
 	if (user.unEquip(I, src))
 		items += I
-		updateUsrDialog()
 		return TRUE
 
 /obj/machinery/reagentgrinder/interface_interact(mob/user)
 	interact(user)
 	return TRUE
 
-
 /obj/machinery/reagentgrinder/interact(mob/user)
-	if (inoperable())
+	if (inoperable() || grinding)
 		return
 	user.set_machine(src)
+	var/list/options = list()
+	if(length(items))
+		options["Eject"] = mutable_appearance('icons/screen/radial.dmi', "radial_eject")
+		if(container)
+			options["Grind"] = mutable_appearance('icons/screen/radial.dmi', "radial_grind")
+	if(container)
+		options["Detach Beaker"] = mutable_appearance('icons/screen/radial.dmi', "radial_detach_beaker")
+
+	var/choice = show_radial_menu(user, src, options, require_near = TRUE, radius = 42, tooltips = TRUE, check_locs = list(src))
+	if (!choice || !user.use_sanity_check(src))
+		return
+	switch(choice)
+		if ("Eject")
+			eject()
+		if ("Grind")
+			grind(user)
+		if ("Detach Beaker")
+			detach(user)
+
+/obj/machinery/reagentgrinder/examine(mob/user, distance)
+	. = ..()
+	if (distance > 1 || grinding)
+		return
 	var/window = list()
-	if (grinding)
-		window += "Working, please wait..."
+	window += "<b>Processing Hopper</b>"
+	if (!length(items))
+		window += " (empty)"
 	else
+<<<<<<< ours
 		window += "<b>Processing Hopper</b>"
 		if (!length(items))
 			window += " (empty)"
@@ -232,6 +247,21 @@
 		interact(user)
 		return TOPIC_REFRESH
 
+=======
+		for (var/obj/item/I in items)
+			window += "<br>\An [I]"
+			if (isstack(I))
+				var/obj/item/stack/material/S = I
+				window += " ([S.get_amount()])"
+	window += "<br><b>Chemical Container</b>"
+	if (!container)
+		window += " (not attached)"
+	else
+		window += " (\an [container], [Percent(container.reagents.total_volume, container.reagents.maximum_volume, 1)]% full)"
+		for (var/datum/reagent/R in container.reagents.reagent_list)
+			window += "<br>[R.volume] - [R.name]"
+	to_chat(user, strip_improper(jointext(window, null)))
+>>>>>>> theirs
 
 /obj/machinery/reagentgrinder/AltClick(mob/user)
 	if(CanDefaultInteract(user))
@@ -239,13 +269,11 @@
 		return TRUE
 	return ..()
 
-
 /obj/machinery/reagentgrinder/CtrlClick(mob/user)
 	if(anchored && CanDefaultInteract(user))
 		grind(user)
 		return TRUE
 	return ..()
-
 
 /obj/machinery/reagentgrinder/CtrlAltClick(mob/user)
 	if(CanDefaultInteract(user))
@@ -253,10 +281,8 @@
 		return TRUE
 	return ..()
 
-
 /obj/machinery/reagentgrinder/RefreshParts()
 	..()
-
 
 /obj/machinery/reagentgrinder/juicer
 	name = "blender"
