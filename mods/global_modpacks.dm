@@ -31,7 +31,7 @@
 #include "statusbar/_statusbar.dme"
 #include "unathi/_unathi.dme"
 #include "utf8/_utf8.dme"
-#include "utility_items/_utility_items.dme"
+#include "utility_items/_utility_items_includes.dm"
 #include "mechs_by_shegar/_mechs_by_shegar.dme"
 #include "newUI/_newUI.dme"
 #include "weather\_weather.dme"
