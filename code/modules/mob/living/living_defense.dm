@@ -335,6 +335,18 @@
 			I.action.name = I.action_button_name
 			I.action.SetTarget(I)
 			I.action.Grant(src)
+
+		//Clothing accessories
+		var/obj/item/clothing/C = I
+		if (istype(C))
+			for(var/obj/item/clothing/accessory/CA in C.accessories)
+				if(CA.action_button_name)
+					if(!CA.action)
+						CA.action = new CA.default_action_type
+					CA.action.name = CA.action_button_name
+					CA.action.SetTarget(CA)
+					CA.action.Grant(src)
+
 	return
 
 /mob/living/update_action_buttons()

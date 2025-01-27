@@ -211,7 +211,7 @@
 	result_path = /obj/item/reagent_containers/food/snacks/donkpocket
 
 
-/datum/microwave_recipe/hot_donkpocket/CreateResult(obj/machinery/microwave/microwave)
+/datum/microwave_recipe/hot_donkpocket/CreateResult(obj/machinery/microwave/microwave, ...)
 	var/obj/item/reagent_containers/food/snacks/donkpocket/donk = locate() in microwave
 	donk?.SetHot()
 	return donk
@@ -469,22 +469,12 @@
 	result_path = /obj/item/reagent_containers/food/snacks/fortunecookie
 
 
-/datum/microwave_recipe/fortunecookie/CreateResult(obj/machinery/microwave/microwave)
-	var/obj/item/reagent_containers/food/snacks/fortunecookie/cookie = ..()
+/datum/microwave_recipe/fortunecookie/CreateResult(obj/machinery/microwave/microwave, ...)
 	var/obj/item/paper/paper = locate() in microwave
-	if (paper)
-		paper.forceMove(cookie)
-		cookie.trash = paper
-		paper.loc = null
-	return cookie
-
-
-/datum/microwave_recipe/fortunecookie/CheckItems(obj/machinery/microwave/microwave)
-	. = ..()
-	if (.)
-		var/obj/item/paper/paper = locate() in microwave
-		if (!paper?.info)
-			return FALSE
+	if (paper.info)
+		microwave.ingredients -= paper
+		return ..(microwave, paper)
+	return ..(microwave)
 
 
 /datum/microwave_recipe/plainsteak
@@ -616,7 +606,7 @@
 	result_path = /obj/item/reagent_containers/food/snacks/amanitajelly
 
 
-/datum/microwave_recipe/amanitajelly/CreateResult(obj/machinery/microwave/microwave)
+/datum/microwave_recipe/amanitajelly/CreateResult(obj/machinery/microwave/microwave, ...)
 		var/obj/item/reagent_containers/food/snacks/amanitajelly/jelly = ..()
 		jelly.reagents.del_reagent(/datum/reagent/toxin/amatoxin)
 		return jelly
@@ -1349,7 +1339,7 @@
 	result_path = /obj/item/reagent_containers/food/snacks/validsalad
 
 
-/datum/microwave_recipe/validsalad/CreateResult(obj/machinery/microwave/microwave)
+/datum/microwave_recipe/validsalad/CreateResult(obj/machinery/microwave/microwave, ...)
 	var/obj/item/reagent_containers/food/snacks/validsalad/salad = ..()
 	salad.reagents.del_reagent(/datum/reagent/toxin)
 	return salad

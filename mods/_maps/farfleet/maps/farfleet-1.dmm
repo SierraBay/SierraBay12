@@ -2949,7 +2949,8 @@
 "lU" = (
 /obj/structure/table/steel_reinforced,
 /obj/machinery/photocopier/faxmachine{
-	department = "Pioneer Corps Craft"
+	department = "Pioneer Corps Craft";
+	destination = "ICCGN PC Konigsberg Command Relay"
 	},
 /obj/structure/sign/iccg{
 	pixel_y = 32

@@ -284,7 +284,7 @@
 
 	var/on = 0
 	var/l_power = 2
-	var/l_range = 6
+	var/l_range = 7
 	origin_tech = list(TECH_MATERIAL = 1, TECH_ENGINEERING = 1)
 
 /obj/item/mech_equipment/light/installed(mob/living/exosuit/_owner)
@@ -712,11 +712,12 @@
 	use_external_power = TRUE
 	has_safety = FALSE
 	max_shots = 10
+	projectile_type = /obj/item/projectile/beam/plasmacutter/mech
 
 
 /obj/item/mech_equipment/mounted_system/taser/plasma
 	name = "mounted plasma cutter"
-	desc = "An industrial plasma cutter mounted onto the chassis of the mech. "
+	desc = "An industrial plasma cutter mounted onto the chassis of the mech. The additional size means increased coherency at longer range. "
 	icon_state = "mech_plasma"
 	holding_type = /obj/item/gun/energy/plasmacutter/mounted/mech
 	restricted_hardpoints = list(HARDPOINT_LEFT_HAND, HARDPOINT_RIGHT_HAND, HARDPOINT_LEFT_SHOULDER, HARDPOINT_RIGHT_SHOULDER)

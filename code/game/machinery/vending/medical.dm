@@ -34,7 +34,8 @@
 		/obj/item/stack/medical/advanced/bruise_pack = 3,
 		/obj/item/stack/medical/advanced/ointment = 3,
 		/obj/item/stack/medical/splint = 2,
-		/obj/item/reagent_containers/hypospray/autoinjector/pain = 4
+		/obj/item/reagent_containers/hypospray/autoinjector/pain = 4,
+		/obj/item/reagent_containers/hypospray/autoinjector/pouch_auto/allergy = 12
 	)
 	rare_products = list(
 		/obj/item/device/cosmetic_surgery_kit = 75,
