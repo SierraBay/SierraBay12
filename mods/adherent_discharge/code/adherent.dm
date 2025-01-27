@@ -40,6 +40,10 @@
 		LANGUAGE_PRIMITIVE
 	)
 
+/datum/job/adjutant
+	department = "Командный"
+	department_flag = SPT
+
 /singleton/cultural_info/faction/adherent/
 	var/list/valid_jobs = list()
 
