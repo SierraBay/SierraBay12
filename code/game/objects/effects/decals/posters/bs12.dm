@@ -375,11 +375,11 @@
 
 /singleton/poster/no_alcohol
 	icon_state = "no_alcohol"
-	name = "СП * РТ"
-	desc = "At the very top of the poster is a word, where one of the letters is replaced by \
-	an asterisk: \"СП * РТ\", and below - two signatures. The first: \"o - сила\", the second \
-	\"и - могила\". The poster is clean and without small text, which makes it clear the \
-	seriousness of the statement."
+	name = "Clean Living"
+	desc = {"At the top of the poster is a word in Cyrillic script missing its middle letter: \
+	"СП*РТ". Below are two letters to fill in, "O" and "И", along with a word association for \
+	each: "СПOРТ - СИЛА" (SPORT - STRENGTH), and "СПИРТ - МОГИЛА" (SPIRIT - GRAVE). Public health \
+	messaging at its finest!"}
 
 
 /singleton/poster/pizza_for_captain
