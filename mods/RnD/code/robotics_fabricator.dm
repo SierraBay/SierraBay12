@@ -186,7 +186,7 @@
 		if(stack && stack.can_use(1))
 			var/count = 0
 			AddOverlays("fab-load-metal")
-			spawn(10)
+			sleep(10)
 				CutOverlays("fab-load-metal")
 			while(materials[material] + amnt <= res_max_amount && stack.amount >= 1)
 				materials[material] += amnt

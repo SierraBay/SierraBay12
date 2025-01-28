@@ -33,7 +33,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 		T += S.rating
 	decon_mod = T * 0.1
 
-/obj/machinery/r_n_d/destructive_analyzer/update_icon()
+/obj/machinery/r_n_d/destructive_analyzer/on_update_icon()
 	if(panel_open)
 		icon_state = "d_analyzer_t"
 	else if(loaded_item)
@@ -75,7 +75,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 
 /obj/machinery/r_n_d/destructive_analyzer/proc/reset_busy()
 	busy = FALSE
-	update_icon()
+	on_update_icon()
 	if(linked_console)
 		SSnano.update_uis(linked_console)
 
@@ -112,7 +112,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 		loaded_item = null
 
 	use_power_oneoff(active_power_usage)
-	update_icon()
+	on_update_icon()
 	if(linked_console)
 		linked_console.reset_screen()
 
@@ -124,4 +124,4 @@ Note: Must be placed within 3 tiles of the R&D Console
 	if(loaded_item)
 		loaded_item.forceMove(loc)
 		loaded_item = null
-		update_icon()
+		on_update_icon()
