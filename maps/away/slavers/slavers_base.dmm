@@ -4690,7 +4690,7 @@
 /turf/simulated/floor/tiled,
 /area/slavers_base/dorms)
 "sX" = (
-/obj/machinery/r_n_d/circuit_imprinter,
+/obj/machinery/fabricator/rnd/imprinter,
 /turf/simulated/floor/tiled/techfloor,
 /area/slavers_base/powatm)
 "sZ" = (

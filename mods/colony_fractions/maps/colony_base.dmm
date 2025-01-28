@@ -940,7 +940,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/machinery/r_n_d/circuit_imprinter,
+/obj/machinery/fabricator/rnd/imprinter,
 /turf/simulated/floor/tiled,
 /area/map_template/colony/science)
 "bT" = (
@@ -8541,7 +8541,7 @@
 /turf/simulated/floor/plating,
 /area/map_template/colony/messhall)
 "vQ" = (
-/obj/machinery/r_n_d/protolathe,
+/obj/machinery/fabricator/rnd/protolathe,
 /turf/simulated/floor/tiled,
 /area/map_template/colony/science)
 "wB" = (

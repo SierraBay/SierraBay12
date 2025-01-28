@@ -216,7 +216,7 @@
 /turf/simulated/floor/tiled,
 /area/bluespaceriver/ship)
 "aM" = (
-/obj/machinery/r_n_d/protolathe,
+/obj/machinery/fabricator/rnd/protolathe,
 /obj/item/paper{
 	info = "Well, it only took three weeks... this trip... but we finally found something worth investigating! An energy signature, just on or under the planet's surface. It's bizarre, similar to a bluespace signature, but... not. I'll need to get down there to really get a reading on it, but this could be the kind of discovery that makes a career. We've identified a landing site, so our pilot is setting the ship down there in the next couple of hours. it'll take some more time after that to set up a base camp and such."
 	},
@@ -294,7 +294,7 @@
 /turf/simulated/floor/plating,
 /area/bluespaceriver/ship)
 "bb" = (
-/obj/machinery/r_n_d/circuit_imprinter,
+/obj/machinery/fabricator/rnd/imprinter,
 /obj/item/device/ano_scanner,
 /obj/item/paper{
 	info = "I don't understand where they could have gone, but one of the researchers and a guard disappeared last night. We've started looking for them, figuring maybe they got trapped somewhere in the ruins, maybe a booby trap or something that was still functioning, but we haven't seen any sign of them. Their equipment, both of their equipment, is still in the ship, and there's no signs of anything grabbing them in the night, they're just... Gone.  Tomorrow morning we head back into space to go resupply and submit what we've found so far, but when we come back we'll have more than enough manpower to really dig into this place."
