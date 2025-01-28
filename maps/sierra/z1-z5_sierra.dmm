@@ -16789,6 +16789,8 @@
 /obj/floor_decal/corner/purple,
 /obj/item/disk/tech_disk,
 /obj/item/disk/tech_disk,
+/obj/item/melee/baton/loaded,
+/obj/item/flame/lighter/random,
 /turf/simulated/floor/tiled/white,
 /area/shuttle/petrov/scan)
 "czn" = (
@@ -24652,15 +24654,12 @@
 /area/tcommsat/computer)
 "dCx" = (
 /obj/structure/table/standard,
-/obj/item/device/integrated_electronics/debugger{
-	pixel_x = -5
-	},
-/obj/item/device/integrated_electronics/analyzer{
-	pixel_x = 6
-	},
-/obj/item/device/integrated_electronics/wirer,
-/obj/item/device/integrated_circuit_printer,
 /obj/floor_decal/industrial/outline/yellow,
+/obj/item/stack/nanopaste,
+/obj/item/folder/nt,
+/obj/random/powercell,
+/obj/random/powercell,
+/obj/machinery/cell_charger,
 /turf/simulated/floor/tiled,
 /area/rnd/development)
 "dCA" = (
@@ -38593,6 +38592,7 @@
 	},
 /obj/machinery/fabricator/micro,
 /obj/item/stock_parts/computer/hard_drive/portable/design/drinking,
+/obj/item/stock_parts/computer/hard_drive/portable/design/general,
 /turf/simulated/floor/tiled/white,
 /area/rnd/misc_lab)
 "fEY" = (
@@ -48948,20 +48948,20 @@
 /area/teleporter)
 "hfH" = (
 /obj/structure/table/standard,
-/obj/machinery/cell_charger,
-/obj/item/stock_parts/capacitor,
-/obj/item/stock_parts/capacitor,
-/obj/random/powercell,
-/obj/random/powercell,
-/obj/random/powercell,
-/obj/item/folder/nt,
-/obj/item/stack/nanopaste,
 /obj/floor_decal/industrial/outline/yellow,
 /obj/structure/cable/green{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/item/stock_parts/computer/hard_drive/portable/design/components,
+/obj/item/stock_parts/computer/hard_drive/portable/design/cuttery,
+/obj/item/stock_parts/computer/hard_drive/portable/design/drinking,
+/obj/item/stock_parts/computer/hard_drive/portable/design/engineering,
+/obj/item/stock_parts/computer/hard_drive/portable/design/general,
+/obj/item/stock_parts/computer/hard_drive/portable/design/medical,
+/obj/item/stock_parts/computer/hard_drive/portable/design/tool,
+/obj/item/stock_parts/computer/hard_drive/portable/design/arms,
 /turf/simulated/floor/tiled,
 /area/rnd/development)
 "hfK" = (
@@ -55823,14 +55823,7 @@
 /area/space)
 "ijN" = (
 /obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
 	dir = 8
-	},
-/obj/floor_decal/industrial/outline/yellow,
-/obj/floor_decal/industrial/warning{
-	dir = 9
 	},
 /obj/structure/table/standard,
 /obj/machinery/reagent_temperature,
@@ -63917,6 +63910,7 @@
 "juH" = (
 /obj/machinery/hologram/holopad/longrange,
 /obj/floor_decal/industrial/outline/yellow,
+/obj/overmap/visitable/ship/landable/petrov,
 /turf/simulated/floor/tiled/white,
 /area/shuttle/petrov/cockpit)
 "juR" = (
@@ -80752,6 +80746,8 @@
 /obj/structure/table/standard,
 /obj/item/folder/nt,
 /obj/item/device/science_tool,
+/obj/item/device/scanner/health,
+/obj/item/device/geiger,
 /turf/simulated/floor/tiled/white,
 /area/shuttle/petrov/scan)
 "lQt" = (
@@ -93222,14 +93218,14 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/turret_protected/ai_cyborg_station)
 "nKk" = (
-/obj/structure/table/standard,
-/obj/item/crowbar,
-/obj/item/flame/lighter/random,
-/obj/item/melee/baton/loaded,
-/obj/item/screwdriver{
-	pixel_y = 15
+/obj/floor_decal/industrial/warning{
+	dir = 1
 	},
-/turf/simulated/floor/tiled/white,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/machinery/fabricator/rnd/imprinter,
+/turf/simulated/floor/tiled/dark/monotile,
 /area/shuttle/petrov/scan)
 "nKn" = (
 /obj/structure/bed/chair/padded/red{
@@ -100050,9 +100046,18 @@
 /turf/simulated/floor/plating,
 /area/shuttle/escape_pod/escape_pod2/station)
 "oLp" = (
-/obj/structure/table/steel_reinforced,
-/turf/simulated/floor/tiled/techfloor/grid,
-/area/engineering/hardstorage)
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/floor_decal/industrial/warning{
+	dir = 1
+	},
+/obj/machinery/fabricator,
+/turf/simulated/floor/tiled/dark/monotile,
+/area/shuttle/petrov/scan)
 "oLr" = (
 /obj/machinery/computer/mining,
 /obj/machinery/door/firedoor,
@@ -112770,7 +112775,7 @@
 /turf/simulated/floor/tiled/dark/monotile,
 /area/bridge)
 "qEj" = (
-/obj/shuttle_landmark/petrov/out,
+/obj/shuttle_landmark/sierra/petrov/out,
 /turf/space,
 /area/space)
 "qEm" = (
@@ -117723,12 +117728,6 @@
 /turf/simulated/open,
 /area/maintenance/firstdeck/forestarboard)
 "rpR" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/floor_decal/industrial/warning{
-	dir = 1
-	},
 /obj/machinery/reagentgrinder,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/item/stack/material/phoron,
@@ -129413,6 +129412,9 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
+/obj/structure/fuel_port{
+	pixel_x = -32
+	},
 /turf/simulated/floor/plating,
 /area/shuttle/petrov/ship)
 "sVt" = (
@@ -131920,10 +131922,7 @@
 /turf/simulated/floor/reinforced/carbon_dioxide,
 /area/engineering/fuelbay)
 "tqw" = (
-/obj/structure/table/standard,
-/obj/item/device/geiger,
-/obj/item/device/scanner/health,
-/turf/simulated/floor/tiled/white,
+/turf/simulated/floor/tiled/dark/monotile,
 /area/shuttle/petrov/scan)
 "tqx" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -137462,6 +137461,13 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/item/stock_parts/computer/hard_drive/portable/design/components,
+/obj/item/stock_parts/computer/hard_drive/portable/design/cuttery,
+/obj/item/stock_parts/computer/hard_drive/portable/design/drinking,
+/obj/item/stock_parts/computer/hard_drive/portable/design/engineering,
+/obj/item/stock_parts/computer/hard_drive/portable/design/general,
+/obj/item/stock_parts/computer/hard_drive/portable/design/medical,
+/obj/item/stock_parts/computer/hard_drive/portable/design/tool,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/storage/tech)
 "uju" = (
@@ -138327,13 +138333,11 @@
 /turf/simulated/floor/plating,
 /area/maintenance/thirddeck/starboard)
 "upO" = (
-/obj/machinery/computer/shuttle_control{
-	dir = 4;
-	shuttle_tag = "Petrov";
-	req_access = list("ACCESS_PETROV_HELM")
-	},
 /obj/machinery/newscaster{
 	pixel_y = -28
+	},
+/obj/machinery/computer/shuttle_control/explore/petrov{
+	dir = 4
 	},
 /turf/simulated/floor/tiled/white/monotile,
 /area/shuttle/petrov/cockpit)
@@ -151899,7 +151903,7 @@
 	dir = 4
 	},
 /obj/floor_decal/industrial/hatch/yellow,
-/obj/shuttle_landmark/petrov/start,
+/obj/shuttle_landmark/sierra/petrov/start,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/shuttle/petrov/airlock)
 "wnX" = (
@@ -156989,6 +156993,7 @@
 	density = 0;
 	pixel_x = -32
 	},
+/obj/machinery/fabricator/rnd/imprinter,
 /turf/simulated/floor/tiled/steel_grid,
 /area/assembly/robotics)
 "xgj" = (
@@ -159146,12 +159151,17 @@
 /turf/simulated/floor/plating,
 /area/crew_quarters/commissary)
 "xwP" = (
-/obj/structure/bed/chair/office/light,
-/obj/floor_decal/corner/purple{
-	dir = 1
-	},
-/turf/simulated/floor/tiled/white,
-/area/shuttle/petrov/scan)
+/obj/structure/table/steel_reinforced,
+/obj/floor_decal/industrial/outline/grey,
+/obj/item/stock_parts/computer/hard_drive/portable/design/components,
+/obj/item/stock_parts/computer/hard_drive/portable/design/cuttery,
+/obj/item/stock_parts/computer/hard_drive/portable/design/drinking,
+/obj/item/stock_parts/computer/hard_drive/portable/design/engineering,
+/obj/item/stock_parts/computer/hard_drive/portable/design/general,
+/obj/item/stock_parts/computer/hard_drive/portable/design/medical,
+/obj/item/stock_parts/computer/hard_drive/portable/design/tool,
+/turf/simulated/floor/tiled/techfloor/grid,
+/area/engineering/hardstorage)
 "xwR" = (
 /obj/structure/table/rack,
 /obj/random/maintenance,
@@ -163844,6 +163854,7 @@
 /obj/structure/table/standard,
 /obj/item/storage/box/autoinjectors,
 /obj/item/storage/box/beakers,
+/obj/item/stock_parts/circuitboard/circuit_imprinter,
 /turf/simulated/floor/plating,
 /area/vacant/gambling)
 "yeA" = (
@@ -194152,7 +194163,7 @@ skb
 xct
 czd
 xab
-cUh
+oLp
 ijN
 vXp
 alS
@@ -194353,9 +194364,9 @@ wJN
 skb
 xct
 lQj
-xwP
 aFg
 jPr
+tqw
 vbV
 xuz
 bXZ
@@ -194555,7 +194566,7 @@ wJN
 fgD
 fgD
 uUN
-tqw
+cUh
 nKk
 rpR
 uKY
@@ -215348,7 +215359,7 @@ rtT
 dHK
 tKr
 hmE
-sfM
+xwP
 fQW
 isA
 wEf
@@ -216151,7 +216162,7 @@ rtT
 rtT
 rtT
 rtT
-rtT
+wJN
 rtT
 dHK
 tKr
@@ -216559,7 +216570,7 @@ rtT
 rtT
 dHK
 tKr
-oLp
+sfM
 err
 hmZ
 uEb

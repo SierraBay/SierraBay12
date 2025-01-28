@@ -49,6 +49,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	var/obj/machinery/r_n_d/destructive_analyzer/linked_destroy = null	//Linked Destructive Analyzer
 	var/obj/machinery/fabricator/rnd/protolathe/linked_lathe = null		//Linked Protolathe
 	var/obj/machinery/fabricator/rnd/imprinter/linked_imprinter = null	//Linked Circuit Imprinter
+	base_type = /obj/machinery/computer/rdconsole/core
 
 	var/screen = SCREEN_MAIN	//Which screen is currently showing.
 	var/id     = 0			//ID of the computer (for server restrictions).
@@ -65,6 +66,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	var/selected_imprinter_category
 	var/search_text
 	var/quick_deconstruct = FALSE
+	var/list/diskstored = list()
 
 /obj/machinery/computer/rdconsole/proc/SyncRDevices() //Makes sure it is properly sync'ed up with the devices attached to it (if any).
 	for(var/obj/machinery/r_n_d/destructive_analyzer/D in range(3, src))
@@ -95,7 +97,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				linked_imprinter.eject_disk()
 
 
-/obj/machinery/computer/rdconsole/Initialize()
+/obj/machinery/computer/rdconsole/New()
 	. = ..()
 	files = new /datum/research(src) //Setup the research data holder.
 	SyncRDevices()
@@ -118,9 +120,31 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	return ..()
 
 /obj/machinery/computer/rdconsole/use_tool(obj/item/D, mob/living/user, list/click_params)
-	. = ..()
+	if(!user.canUnEquip(D))
+		return TRUE
+	if(istype(D, /obj/item/disk/secret_project))
+		var/obj/item/disk/secret_project/disk = D
+		to_chat(user, "<span class='notice'>[name] received [disk.stored_points] research points from [disk.name]</span>")
+		files.research_points += disk.stored_points
+		user.remove_from_mob(disk)
+		qdel(disk)
+		return
+
+	else if(istype(D, /obj/item/disk/tech_disk))
+		var/obj/item/disk/tech_disk/disk = D
+		if(disk.stored)
+			if(disk.stored.id in diskstored)
+				to_chat(user, "<span class='notice'>[name] has already have same data as at the [disk]</span>")
+				return
+			var/science_value = disk.stored.level * 1000
+			files.research_points += science_value
+			to_chat(user, "<span class='notice'>[name] received [science_value] research points from [disk]</span>")
+			diskstored += disk.stored.id
+			user.remove_from_mob(disk)
+			qdel(disk)
+
 	//Loading a disk into it.
-	if(istype(D, /obj/item/stock_parts/computer/hard_drive/portable))
+	else if(istype(D, /obj/item/stock_parts/computer/hard_drive/portable))
 		if(disk)
 			to_chat(user, SPAN_NOTICE("A disk is already loaded into the machine."))
 			return
@@ -136,12 +160,9 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			files.adjust_research_points(research_points)
 		else
 			to_chat(user, SPAN_NOTICE("There was no useful data inside [D.name]'s buffer."))
-	else
-		//The construction/deconstruction of the console code.
-		..()
 
 	SSnano.update_uis(src)
-	return
+	return ..()
 
 /obj/machinery/computer/rdconsole/emag_act(remaining_charges)
 	if(!emagged)
@@ -516,7 +537,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			if(search_text)
 				data["all_categories"] = list("Search Results") + data["all_categories"]
 
-			if((!selected_category || !(selected_category in data["all_categories"])) && design_categories.len)
+			if((!selected_category || !(selected_category in data["all_categories"])) && LAZYLEN(design_categories))
 				selected_category = design_categories[1]
 
 			if(selected_category)

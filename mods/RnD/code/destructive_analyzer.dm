@@ -60,7 +60,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 		if(!I.origin_tech)
 			to_chat(user, SPAN_NOTICE("This doesn't seem to have a tech origin."))
 			return
-		if(I.origin_tech.len == 0)
+		if(LAZYLEN(I.origin_tech) == 0)
 			to_chat(user, SPAN_NOTICE("You cannot deconstruct this item."))
 			return
 
