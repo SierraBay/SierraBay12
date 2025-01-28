@@ -185,9 +185,12 @@
 	if(materials[material] + amnt <= res_max_amount)
 		if(stack && stack.can_use(1))
 			var/count = 0
-			AddOverlays("fab-load-metal")
-			sleep(10)
-				CutOverlays("fab-load-metal")
+			var/viewing
+			for (var/mob/M in view(6,src))
+				if (M.client)
+					viewing |= M.client
+			var/image/orderimage = image('icons/obj/machines/fabricators/robotics_fabricator.dmi', src, "fab-load-metal")
+			flick_overlay(orderimage, viewing, 8)
 			while(materials[material] + amnt <= res_max_amount && stack.amount >= 1)
 				materials[material] += amnt
 				stack.use(1)
