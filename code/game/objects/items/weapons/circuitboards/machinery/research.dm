@@ -59,7 +59,7 @@
 		/obj/item/stock_parts/keyboard = 1,
 		/obj/item/stock_parts/power/apc/buildable = 1
 	)
-*/
+
 /obj/item/stock_parts/circuitboard/protolathe
 	name = "circuit board (protolathe)"
 	build_path = /obj/machinery/r_n_d/protolathe
@@ -85,7 +85,7 @@
 	additional_spawn_components = list(
 		/obj/item/stock_parts/power/apc/buildable = 1
 	)
-
+*/
 /obj/item/stock_parts/circuitboard/mechfab
 	name = "circuit board (exosuit fabricator)"
 	build_path = /obj/machinery/robotics_fabricator

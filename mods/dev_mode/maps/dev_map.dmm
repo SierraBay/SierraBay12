@@ -314,11 +314,6 @@
 	icon_state = "dark"
 	},
 /area/tdome/testing)
-"aQu" = (
-/turf/unsimulated/floor{
-	icon_state = "dark"
-	},
-/area/space)
 "aQB" = (
 /obj/item/melee/whip/abyssal,
 /turf/unsimulated/floor{
@@ -505,7 +500,7 @@
 /turf/unsimulated/wall,
 /area/space)
 "bTN" = (
-/obj/machinery/r_n_d/protolathe,
+/obj/machinery/fabricator/rnd/protolathe,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -828,7 +823,7 @@
 	},
 /area/tdome/testing)
 "oCN" = (
-/obj/machinery/r_n_d/circuit_imprinter,
+/obj/machinery/fabricator/rnd/imprinter,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -21325,7 +21320,7 @@ gqB
 gqB
 gqB
 gqB
-aQu
+gqB
 gqB
 gqB
 gqB

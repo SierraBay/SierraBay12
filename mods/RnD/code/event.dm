@@ -1,3 +1,4 @@
+/*
 /datum/event/rnd_design_leak
 	announceWhen	= 21
 
@@ -26,4 +27,4 @@
 				ndesigns--
 				var/datum/design/D = pick(S.files)
 				os.create_file(D)
-				S.produce_heat(500)
+				S.produce_heat(500)*/

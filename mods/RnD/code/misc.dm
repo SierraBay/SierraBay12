@@ -239,8 +239,35 @@
 		/obj/item/stock_parts/computer/hard_drive/portable/design/tool
 	)
 
-/obj/machinery/smartfridge/disks/full/LateInitialize(mapload, ...)
+/obj/machinery/smartfridge/disks/full/New()
 	. = ..()
-	for(var/disk in disks)
+	for(var/obj/item/stock_parts/computer/hard_drive/portable/design/disk in disks)
 		stock_item(disk)
 	on_update_icon()
+
+
+/obj/item/stock_parts/circuitboard/protolathe
+	name = "circuit board (protolathe)"
+	build_path = /obj/machinery/fabricator/rnd/protolathe
+	board_type = "machine"
+	origin_tech = list(TECH_ENGINEERING = 2, TECH_DATA = 2)
+	req_components = list(
+							/obj/item/stock_parts/matter_bin = 2,
+							/obj/item/stock_parts/manipulator = 2,
+							/obj/item/reagent_containers/glass/beaker = 2)
+	additional_spawn_components = list(
+		/obj/item/stock_parts/power/apc/buildable = 1
+	)
+
+/obj/item/stock_parts/circuitboard/circuit_imprinter
+	name = "circuit board (circuit imprinter)"
+	build_path = /obj/machinery/fabricator/rnd/imprinter
+	board_type = "machine"
+	origin_tech = list(TECH_ENGINEERING = 2, TECH_DATA = 2)
+	req_components = list(
+							/obj/item/stock_parts/matter_bin = 1,
+							/obj/item/stock_parts/manipulator = 1,
+							/obj/item/reagent_containers/glass/beaker = 2)
+	additional_spawn_components = list(
+		/obj/item/stock_parts/power/apc/buildable = 1
+	)

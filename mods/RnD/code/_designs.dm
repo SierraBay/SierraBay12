@@ -99,10 +99,15 @@ other types of metals and chemistry for reagents).
 	if(length(chemicals))
 		var/list/RS = list()
 
-		for(var/datum/reagent/reagent in chemicals)
-			RS.Add(list(list("id" = reagent, "name" = reagent.name, "req" = chemicals[reagent])))
+		for(var/reagent in chemicals)
+			CallReagentName(reagent)
+			RS.Add(list(list("id" = reagent, "name" = CallReagentName(reagent), "req" = chemicals[reagent])))
 
 		ui_data["chemicals"] = RS
+
+/datum/design/proc/CallReagentName(reagent_type)
+	var/datum/reagent/R = reagent_type
+	return ispath(reagent_type, /datum/reagent) ? initial(R.name) : "Unknown"
 
 /datum/design/ui_data()
 	RETURN_TYPE(/list)

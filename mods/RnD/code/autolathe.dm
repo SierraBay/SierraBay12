@@ -237,7 +237,7 @@
 /obj/machinery/fabricator/use_tool(obj/item/I, mob/living/user, list/click_params)
 	if(fab_status_flags & FAB_SHOCKED)
 		shock(user, 50)
-		return TRUE
+
 	if((fab_status_flags & FAB_DISABLED) && !panel_open)
 		to_chat(user, SPAN_WARNING("\The [src] is disabled!"))
 		return TRUE
@@ -252,6 +252,7 @@
 		return TRUE
 	if(istype(I, /obj/item/stock_parts/computer/hard_drive/portable))
 		insert_disk(user, I)
+		return
 
 	// Some item types are consumed by default
 	if(istype(I, /obj/item/stack) || istype(I, /obj/item/trash) || istype(I, /obj/item/material/shard))
@@ -543,11 +544,10 @@
 				total_material_gained[material] += total_material
 				total_used += total_material
 
-/* It's not used for now, and i think never will be.
 		if(O.reagents)
 			if(container)
 				var/datum/reagents/RG = new(0)
-				for(var/r in O.reagents)
+				for(var/r in O.reagents.reagent_list)
 					RG.maximum_volume += O.reagents[r]
 					RG.add_reagent(r ,O.reagents[r])
 				reagents_filltype = 1
@@ -555,7 +555,7 @@
 
 			else
 				reagents_filltype = 2
-*/
+
 		if(O.reagents && container)
 			O.reagents.trans_to(container, O.reagents.total_volume)
 
@@ -682,18 +682,21 @@
 	for (var/mob/M in view(6,src))
 		if (M.client)
 			viewing |= M.client
-	var/image/orderimage = image('mods/RnD/icons/autolathe.dmi', src, "autolathe_load_m")
+	var/image/orderimage = image('mods/RnD/icons/autolathe.dmi', src, "[icon_state]_load_m")
 	flick_overlay(orderimage, viewing, 8)
 
 /obj/machinery/fabricator/components_are_accessible(path)
 	return !(fab_status_flags & FAB_BUSY) && ..()
 
 /obj/machinery/fabricator/proc/check_materials(datum/design/design)
+/*
 	mechfabmod = 1
 	if(design.build_type == MECHFAB)
 		mechfabmod = 2
 		if(!(fab_status_flags & FAB_HACKED))
-			return ERR_NOCOMPAT
+			return ERR_NOCOMPAT*/
+	if(design.build_type != build_type)
+		return ERR_NOCOMPAT
 
 	for(var/rmat in design.materials)
 		if(!(rmat in stored_material))
