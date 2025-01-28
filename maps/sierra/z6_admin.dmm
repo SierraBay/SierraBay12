@@ -12251,7 +12251,6 @@
 /area/centcom/specops)
 "jLn" = (
 /obj/floor_decal/borderfloorwhite,
-/obj/machinery/r_n_d/circuit_imprinter,
 /obj/item/reagent_containers/glass/beaker/sulphuric,
 /obj/floor_decal/corner/purple/border,
 /obj/floor_decal/industrial/outline/yellow,
@@ -16153,8 +16152,8 @@
 /obj/floor_decal/corner/purple/border{
 	dir = 9
 	},
-/obj/machinery/r_n_d/circuit_imprinter,
 /obj/item/reagent_containers/glass/beaker/sulphuric,
+/obj/machinery/fabricator/rnd/imprinter,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/flooring/tiles.dmi';
 	icon_state = "white"
@@ -16398,7 +16397,7 @@
 /obj/floor_decal/corner/purple/border{
 	dir = 1
 	},
-/obj/machinery/r_n_d/protolathe,
+/obj/machinery/fabricator/rnd/protolathe,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/flooring/tiles.dmi';
 	icon_state = "white"

@@ -37727,13 +37727,13 @@
 /turf/simulated/floor/tiled/monotile,
 /area/crew_quarters/docking)
 "fxV" = (
-/obj/machinery/r_n_d/protolathe,
 /obj/floor_decal/techfloor{
 	dir = 1
 	},
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
+/obj/machinery/fabricator/rnd/protolathe,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/rnd/development)
 "fxZ" = (
@@ -70255,7 +70255,6 @@
 /turf/simulated/floor/plating,
 /area/maintenance/seconddeck/port)
 "kru" = (
-/obj/machinery/r_n_d/circuit_imprinter,
 /obj/floor_decal/techfloor{
 	dir = 5
 	},
@@ -70265,6 +70264,7 @@
 /obj/structure/closet/shipping_wall/filled{
 	pixel_x = 24
 	},
+/obj/machinery/fabricator/rnd/imprinter,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/rnd/development)
 "krA" = (
@@ -128873,6 +128873,7 @@
 /obj/structure/table/standard,
 /obj/machinery/reagent_temperature,
 /obj/item/stock_parts/computer/hard_drive/portable/design/arms,
+/obj/item/stock_parts/circuitboard/robotics,
 /turf/simulated/floor/tiled/white,
 /area/vacant/gambling)
 "sRN" = (
@@ -156969,7 +156970,6 @@
 	req_access = list("ACCESS_ADJUTANTS")
 	})
 "xfY" = (
-/obj/machinery/r_n_d/circuit_imprinter,
 /obj/item/reagent_containers/glass/beaker/sulphuric,
 /obj/floor_decal/borderfloorblack{
 	dir = 8

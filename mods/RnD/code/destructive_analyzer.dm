@@ -19,6 +19,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 
 	machine_name = "destructive analyzer"
 	machine_desc = "Breaks down objects into their component parts, gaining new information in the process. Part of an R&D network."
+
 /obj/machinery/r_n_d/destructive_analyzer/Destroy()
 	if(linked_console)
 		if(linked_console.linked_destroy == src)
