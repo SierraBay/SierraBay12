@@ -124,7 +124,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		return TRUE
 	if(istype(D, /obj/item/disk/secret_project))
 		var/obj/item/disk/secret_project/disk = D
-		to_chat(user, "<span class='notice'>[name] received [disk.stored_points] research points from [disk.name]</span>")
+		to_chat(user, SPAN_NOTICE("[name] received [disk.stored_points] research points from [disk.name]"))
 		files.research_points += disk.stored_points
 		user.remove_from_mob(disk)
 		qdel(disk)
@@ -134,11 +134,11 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		var/obj/item/disk/tech_disk/disk = D
 		if(disk.stored)
 			if(disk.stored.id in diskstored)
-				to_chat(user, "<span class='notice'>[name] has already have same data as at the [disk]</span>")
+				to_chat(user,SPAN_NOTICE("[name] has already have same data as at the [disk]"))
 				return
 			var/science_value = disk.stored.level * 1000
 			files.research_points += science_value
-			to_chat(user, "<span class='notice'>[name] received [science_value] research points from [disk]</span>")
+			to_chat(user, SPAN_NOTICE("[name] received [science_value] research points from [disk]"))
 			diskstored += disk.stored.id
 			user.remove_from_mob(disk)
 			qdel(disk)
@@ -247,12 +247,12 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			var/datum/computer_file/binary/sci/file = locate(href_list["download_disk_data"]) in disk.stored_files
 			var/savedpionts = files.AddSciPoints(file)
 			files.research_points += savedpionts
-			to_chat(usr, "<span class='notice'>[savedpionts] new science points downloaded from the [file.filename].</span>")
+			to_chat(usr, SPAN_NOTICE("[savedpionts] new science points downloaded from the [file.filename]."))
 	if(href_list["toggle_settings"]) // User wants to see the settings.
 		if(allowed(usr) || emagged)
 			show_settings = !show_settings
 		else
-			to_chat(usr, SPAN_WARNING("Unauthorized access.</span>"))
+			to_chat(usr, SPAN_WARNING("Unauthorized access."))
 	if(href_list["toggle_link_menu"]) // User wants to see the device linkage menu.
 		if(allowed(usr) || emagged)
 			show_link_menu = !show_link_menu

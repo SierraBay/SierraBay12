@@ -437,7 +437,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			PR.info_links = PR.info
 			PR.icon_state = "paper_words"
 			PR.dropInto(loc)
-			sleep(10)
+			spawn(10)
 				screen = ((text2num(href_list["print"]) == 2) ? 5.0 : 1.1)
 				interact(user)
 	else if (href_list["protolathe_search"])
