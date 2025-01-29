@@ -491,7 +491,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			var/list/known_designs = list()
 			for(var/i in files.known_designs)
 				var/datum/design/D = i
-				if(!(D.starts_unlocked && !(D.build_type & (BIOPRINTER))))
+				if(!(D.starts_unlocked))
 					// doesn't make much sense to copy starting designs around, unless you can use them in lathes
 					known_designs += list(list("name" = D.name, "id" = "\ref[D]"))
 			data["known_designs"] = known_designs
@@ -667,12 +667,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 						build_types += "imprinter"
 					if(D.build_type & PROTOLATHE)
 						build_types += "protolathe"
-					if(D.build_type & BIOPRINTER)
-						build_types += "bioprinter"
 					if(D.build_type & MECHFAB)
 						build_types += "exosuit fabricator"
-					if(D.build_type & ORGAN_GROWER)
-						build_types += "organ grower"
 					var/list/unlock_data = list(
 						"text" =           "[D.shortname]",
 					)

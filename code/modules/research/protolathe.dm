@@ -1,4 +1,4 @@
-/*
+/* [SIERRA-REMOVE] - MODPACK_RND
 /obj/machinery/r_n_d/protolathe
 	name = "protolathe"
 	desc = "Accessed by a connected core fabricator console, it produces items from various materials."

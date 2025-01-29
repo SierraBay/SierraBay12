@@ -109,7 +109,7 @@
 		ui.set_initial_data(data)
 		ui.open()
 		ui.set_auto_update(1)
-/*
+/* [SIERRA-REMOVE] - MODPACK_RND
 /obj/machinery/robotics_fabricator/Topic(href, href_list)
 	if(..())
 		return
@@ -152,7 +152,7 @@
 	if(busy)
 		return SPAN_NOTICE("\The [src] is busy. Please wait for completion of previous operation.")
 	return ..()
-/*
+/*	[SIERRA-REMOVE] - MODPACK_RND
 /obj/machinery/robotics_fabricator/use_tool(obj/item/I, mob/living/user, list/click_params)
 	if(busy)
 		to_chat(user, SPAN_NOTICE("\The [src] is busy. Please wait for completion of previous operation."))

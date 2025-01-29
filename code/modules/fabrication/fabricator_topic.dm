@@ -1,4 +1,4 @@
-/*
+/* [SIERRA-REMOVE] - MODPACK_RND
 /obj/machinery/fabricator/OnTopic(user, href_list, state)
 	if(href_list["change_category"])
 		var/choice = input("Which category do you wish to display?") as null|anything in SSfabrication.get_categories(fabricator_class)|"All"

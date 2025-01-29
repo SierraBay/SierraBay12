@@ -1,4 +1,4 @@
-/*
+/* [SIERRA-REMOVE] - MODPACK_RND
 Destructive Analyzer
 
 It is used to destroy hand-held objects and advance technological research. Controls are in the linked R&D console.

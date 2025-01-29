@@ -1,4 +1,4 @@
-/*
+/* [SIERRA-REMOVE] - MODPACK_RND
 /***************************************************************
 **						Design Datums						  **
 **	All the data for building stuff and tracking reliability. **

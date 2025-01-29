@@ -1,4 +1,4 @@
-// ПРОКИ spawn() из коркода ЗАМЕНЕНЫ НА sleep() БУДЬ ВНИМАТЕЛЕН
+// ПРОКИ spawn() из коркода ЗАМЕНЕНЫ НА sleep() БУДЬ ВНИМАТЕЛЕН [SIERRA-REMOVE] - MODPACK_RND
 
 /*
 #define CHECK_LATHE \

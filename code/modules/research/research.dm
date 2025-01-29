@@ -1,5 +1,5 @@
 /* // mods\RnD\code\research.dm
-/*
+/* [SIERRA-REMOVE] - MODPACK_RND
 General Explination:
 The research datum is the "folder" where all the research information is stored in a R&D console. It's also a holder for all the
 various procs used to manipulate it. It has four variables and seven procs:

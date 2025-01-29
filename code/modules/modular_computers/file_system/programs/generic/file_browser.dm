@@ -15,7 +15,7 @@
 	var/error
 	usage_flags = PROGRAM_ALL
 	category = PROG_UTIL
-
+/*
 /datum/computer_file/program/filemanager/Topic(href, href_list)
 	if(..())
 		return TOPIC_HANDLED
@@ -117,7 +117,7 @@
 //[/SIERRA-EDIT]
 	if(.)
 		SSnano.update_uis(NM)
-
+*/
 /datum/nano_module/program/computer_filemanager
 	name = "NTOS File Manager"
 
