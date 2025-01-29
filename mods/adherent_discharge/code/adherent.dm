@@ -40,15 +40,6 @@
 		LANGUAGE_PRIMITIVE
 	)
 
-/singleton/cultural_info/faction/adherent/
-	var/list/valid_jobs = list()
-
-
-/singleton/cultural_info/faction/adherent/loyalists
-	valid_jobs = list(
-		/datum/job/adjutant,
-	)
-
 /datum/species/adherent/check_background(datum/job/job, datum/preferences/prefs)
 	var/singleton/cultural_info/faction/adherent/faction = SSculture.get_culture(prefs.cultural_info[TAG_FACTION])
 	. = istype(faction) ? (job.type in faction.valid_jobs) : ..()
