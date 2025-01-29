@@ -52,12 +52,13 @@
 			{{/if}}
 			<div class="item">
 				<div style="margin-top:8px" class="itemLabelWidest"><b>Build time:</b> {{:data.current.time}}</div>
+				<div style="margin-top:8px" class="itemLabelWidest"><b>Build speed:</b> {{:data.speed}}</div>
 			</div>
 
 		</div>
 		{{else}}
 			<div class="itemLabelWidest"><div class="average">Idle</div></div>
-		{{/if}}	
+		{{/if}}
 	</div>
 </div>
 {{if data.queue_max}}
@@ -74,7 +75,7 @@
 						<div class="average">{{:value.name}}</div>
 					{{else}}
 						{{:value.name}}
-					{{/if}}				
+					{{/if}}
 				</div>
 				<div class="itemLabelWidest">
 					{{:helper.link('', 'close', {'remove_from_queue' : value.ind}, null, 'statusValue')}}

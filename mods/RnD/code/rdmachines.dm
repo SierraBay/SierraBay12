@@ -38,6 +38,7 @@
 	icon_state = "protolathe"
 
 	build_type = PROTOLATHE
+	base_type = /obj/machinery/fabricator/rnd/protolathe
 
 
 
@@ -47,6 +48,7 @@
 	icon_state = "imprinter"
 
 	build_type = IMPRINTER
+	base_type = /obj/machinery/fabricator/rnd/imprinter
 
 
 /obj/machinery/fabricator/rnd/imprinter/loaded/Initialize()

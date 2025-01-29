@@ -353,7 +353,7 @@
 			<div class="item">
 				{{:value.name}}
 				{{:helper.link("", 'trash', {'delete_disk_file' : value.id}, data.disk_read_only ? 'disabled' : null)}}
-				{{:helper.link("", 'arrowthick-1-e', {'download_disk_design' : value.id}, value.can_download ? null : 'disabled')}}
+				{{:helper.link("", 'arrowthick-1-e', {'download_disk_design' : value.id})}}
 			</div>
 		{{empty}}
 			<div class="item">The disk has no accessible design files stored on it.</div>
@@ -432,7 +432,7 @@
 			<div class="item">
 				{{:value.name}}
 				{{:helper.link("", 'trash', {'delete_disk_file' : value.id},data.disk_read_only ? 'disabled' : null)}}
-				{{:helper.link("", 'arrowthick-1-e', {'download_disk_data' : value.id}, value.can_download ? null : 'disabled')}}
+				{{:helper.link("", 'arrowthick-1-e', {'download_disk_data' : value.id})}}
 				</div>
 		{{empty}}
 			<div class="item">The disk has no accessible research data files stored on it.</div>

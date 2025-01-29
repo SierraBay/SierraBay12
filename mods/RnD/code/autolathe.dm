@@ -875,7 +875,7 @@
 	las_rating = total_component_rating_of_type(/obj/item/stock_parts/micro_laser)
 
 	speed = initial(speed) + man_rating + las_rating
-	mat_efficiency = max(0.2, 1 - (man_rating * 0.1))
+	mat_efficiency = max(0.4, 1 - (man_rating * 0.1))
 
 	storage_capacity = 30000 * clamp(total_component_rating_of_type(/obj/item/stock_parts/matter_bin), 0, 20)
 	..()

@@ -48328,7 +48328,7 @@
 "hba" = (
 /obj/floor_decal/industrial/outline/yellow,
 /obj/structure/disposalpipe/segment,
-/obj/machinery/smartfridge/disks/full,
+/obj/machinery/smartfridge/disks,
 /turf/simulated/floor/tiled,
 /area/rnd/development)
 "hbb" = (

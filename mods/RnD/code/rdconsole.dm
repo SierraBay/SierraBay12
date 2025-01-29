@@ -245,9 +245,10 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	if(href_list["download_disk_data"])
 		if(disk)
 			var/datum/computer_file/binary/sci/file = locate(href_list["download_disk_data"]) in disk.stored_files
-			var/savedpionts = files.AddSciPoints(file)
-			files.research_points += savedpionts
-			to_chat(usr, SPAN_NOTICE("[savedpionts] new science points downloaded from the [file.filename]."))
+			if(file)
+				var/savedpionts = files.AddSciPoints(file)
+				files.research_points += savedpionts
+				to_chat(usr, SPAN_NOTICE("[savedpionts] new science points downloaded from the [file.filename]."))
 	if(href_list["toggle_settings"]) // User wants to see the settings.
 		if(allowed(usr) || emagged)
 			show_settings = !show_settings
