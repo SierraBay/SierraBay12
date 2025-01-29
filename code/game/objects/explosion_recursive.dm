@@ -1,3 +1,4 @@
+<<<<<<< ours
 /*
 var/global/list/explosion_turfs = list()
 
@@ -30,28 +31,67 @@ var/global/explosion_in_progress = 0
 		var/turf/T = get_step(epicenter, direction)
 		var/adj_power = power - epicenter.get_explosion_resistance()
 		if(shaped)
+=======
+#define EXPLOSION_MIN_POWER 0.05
+#define EXPLOSION_BUSY_TIMEOUT 10
+
+/// The number of /proc/explosion_rec currently in progress
+GLOBAL_VAR_AS(running_explosions, 0)
+
+/proc/explosion_rec(turf/epicenter, power, shaped, force)
+	if (power <= 0)
+		return
+	var/busy_timeout = EXPLOSION_BUSY_TIMEOUT
+	epicenter = get_turf(epicenter)
+	if (!epicenter)
+		return
+	var/x = epicenter.x
+	var/y = epicenter.y
+	var/z = epicenter.z
+	while (GLOB.running_explosions > 0)
+		if (force)
+			break
+		if (--busy_timeout < 1)
+			log_debug("explosion at [epicenter] timed out waiting to run")
+			return
+		sleep(0.5 SECONDS)
+	if (busy_timeout < EXPLOSION_BUSY_TIMEOUT)
+		epicenter = get_turf(epicenter)
+		if (!epicenter)
+			return
+	var/power_self = power - epicenter.get_explosion_resistance()
+	if (power_self < EXPLOSION_MIN_POWER)
+		return
+	++GLOB.running_explosions
+	var/list/turfs = list()
+	turfs[epicenter] = power
+	for (var/direction in GLOB.cardinal)
+		var/turf/sibling = get_step(epicenter, direction)
+		if (!sibling)
+			continue
+		var/power_sibling = power_self
+		if (shaped)
+>>>>>>> theirs
 			if (shaped == direction)
-				adj_power *= 3
+				power_sibling *= 3
 			else if (shaped == reverse_direction(direction))
-				adj_power *= 0.10
+				power_sibling *= 0.10
 			else
-				adj_power *= 0.45
-
-		if (adj_power > 0)
-			T.explosion_spread(adj_power, direction)
-
-	//This step applies the ex_act effects for the explosion, as planned in the previous step.
-	for(var/spot in explosion_turfs)
-		var/turf/T = spot
-		if(explosion_turfs[T] <= 0) continue
-		if(!T) continue
-
-		//Wow severity looks confusing to calculate... Fret not, I didn't leave you with any additional instructions or help. (just kidding, see the line under the calculation)
-		var/severity = explosion_turfs[T] // effective power on tile
-		severity /= max(3, power / 3) // One third the total explosion power - One third because there are three power levels and I want each one to take up a third of the crater
-		severity = clamp(severity, 1, 3) // Sanity
-		severity = 4 - severity // Invert the value to accomodate lower numbers being a higher severity. Removing this inversion would require a lot of refactoring of math in `ex_act()` handlers.
+				power_sibling *= 0.45
+		if (power_sibling < EXPLOSION_MIN_POWER)
+			continue
+		sibling.explosion_spread(power_sibling, direction, turfs)
+	for (var/turf/turf as anything in turfs)
+		if (!turf)
+			continue
+		var/severity = turfs[turf]
+		if (severity <= 0)
+			continue
+		severity /= max(3, power / 3)
+		severity = clamp(severity, 1, 3)
+		severity = 4 - severity
 		severity = floor(severity)
+<<<<<<< ours
 
 		var/x = T.x
 		var/y = T.y
@@ -91,58 +131,106 @@ var/global/explosion_in_progress = 0
 		M.color = "#ffcc00"
 */
 	var/spread_power = power - src.get_explosion_resistance() //This is the amount of power that will be spread to the tile in the direction of the blast
+=======
+		x = turf.x
+		y = turf.y
+		z = turf.z
+		turf.ex_act(severity)
+		if (!turf)
+			turf = locate(x, y, z)
+		var/throw_target = get_edge_target_turf(turf, get_dir(epicenter, turf))
+		var/throw_power = 9 / severity
+		for (var/atom/movable/movable in turf)
+			if (!movable?.simulated || turf.protects_atom(movable))
+				continue
+			movable.ex_act(severity)
+			if (QDELETED(movable) || movable.anchored)
+				continue
+			addtimer(new Callback(movable, /atom/movable/.proc/throw_at, throw_target, throw_power, throw_power), 0)
+	if (--GLOB.running_explosions < 0)
+		GLOB.running_explosions = 0
+
+#undef EXPLOSION_MIN_POWER
+#undef EXPLOSION_BUSY_TIMEOUT
+
+
+/turf/proc/explosion_spread(power, direction, list/turfs)
+	if (turfs[src] >= power)
+		return
+	turfs[src] = power
+	var/spread_power = power - get_explosion_resistance()
+>>>>>>> theirs
 	if (spread_power <= 0)
 		return
+	var/spread_dir = direction
+	get_step(src, spread_dir)?.explosion_spread(spread_power, spread_dir, turfs)
+	spread_dir = turn(direction, 90)
+	get_step(src, spread_dir)?.explosion_spread(spread_power, spread_dir, turfs)
+	spread_dir = turn(direction, -90)
+	get_step(src, spread_dir)?.explosion_spread(spread_power, spread_dir, turfs)
 
-	var/turf/T = get_step(src, direction)
-	if(T)
-		T.explosion_spread(spread_power, direction)
-	T = get_step(src, turn(direction,90))
-	if(T)
-		T.explosion_spread(spread_power, turn(direction,90))
-	T = get_step(src, turn(direction,-90))
-	if(T)
-		T.explosion_spread(spread_power, turn(direction,90))
 
-/turf/unsimulated/explosion_spread(power)
-	return //So it doesn't get to the parent proc, which simulates explosions
+/turf/unsimulated/explosion_spread()
+	return
+
 
 /// Float. The atom's explosion resistance value. Used to calculate how much of an explosion is 'absorbed' and not passed on to tiles on the other side of the atom's turf. See `/proc/explosion_rec()`.
 /atom/var/explosion_resistance = 0
 
-/**
- * Retrieves the atom's explosion resistance. Generally, this is `explosion_resistance` for simulated atoms.
- */
+
+/// Retrieves the atom's explosion resistance. Generally, this is `explosion_resistance` for simulated atoms.
 /atom/proc/get_explosion_resistance()
-	if(simulated)
+	if (simulated)
 		return explosion_resistance
+
 
 /turf/get_explosion_resistance()
 	. = ..()
-	for(var/obj/O in src)
+	for (var/obj/O in src)
 		. += O.get_explosion_resistance()
+
 
 /turf/space/explosion_resistance = 3
 
+
 /turf/simulated/floor/get_explosion_resistance()
 	. = ..()
-	if(is_below_sound_pressure(src))
+	if (is_below_sound_pressure(src))
 		. *= 3
+
 
 /turf/simulated/wall/get_explosion_resistance()
 	return 5 // Standardized health results in explosion_resistance being used to reduce overall damage taken, instead of changing explosion severity. 5 was the original default, so 5 is always returned here.
 
+
 /turf/simulated/floor/explosion_resistance = 1
+
+
+/turf/simulated/open/explosion_resistance = 1
+
+
+/turf/simulated/open/get_explosion_resistance()
+	. = ..()
+	if (is_below_sound_pressure(src))
+		. *= 3
+
 
 /turf/simulated/mineral/explosion_resistance = 2
 
+
 /turf/simulated/shuttle/wall/explosion_resistance = 10
+
 
 /turf/simulated/wall/explosion_resistance = 10
 
+
 /obj/machinery/door/get_explosion_resistance()
-	if(!density)
+	if (!density)
 		return 0
+<<<<<<< ours
 	else
 		return ..()
 */
+=======
+	return ..()
+>>>>>>> theirs
