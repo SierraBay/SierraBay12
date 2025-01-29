@@ -128,7 +128,7 @@
 	y = 0.4
 	icon = "generator"
 
-	required_technologies = list(/datum/technology/power/adv_power_storage, /datum/technology/power/sup_power)
+	required_technologies = list(/datum/technology/power/sup_power)
 	required_tech_levels = list()
 	cost = 2000
 
@@ -143,7 +143,7 @@
 	y = 0.4
 	icon = "fusion"
 
-	required_technologies = list(/datum/technology/power/sup_power_gen)
+	required_technologies = list(/datum/technology/power/sup_power_gen, /datum/technology/power/adv_power_storage)
 	required_tech_levels = list()
 	cost = 2500
 
