@@ -92,6 +92,7 @@
 
 	name = "small remote"
 	desc = "A small remote control covered in a number of lights, with several antennae extending from the top."
+	id = "radio_jammer"
 	req_tech = list(TECH_ENGINEERING = 5, TECH_DATA = 5)
 	materials = list(MATERIAL_STEEL = 12000, MATERIAL_GLASS = 10000, MATERIAL_SILVER = 2000)
 	build_path = /obj/item/device/radio_jammer
@@ -100,70 +101,79 @@
 /datum/design/item/away/hacktool
 	name = "hacktool"
 	desc = "This small, handheld device is made of durable, insulated plastic, and tipped with electrodes, perfect for interfacing with numerous machines."
+	id = "hacktool"
 	req_tech = list(TECH_ENGINEERING = 4, TECH_DATA = 3)
-	materials = list(MATERIAL_STEEL = 12000, MATERIAL_GLASS = 10000, MATERIAL_SILVER = 2000)
+	materials = list(MATERIAL_STEEL = 12000, MATERIAL_GLASS = 10000, MATERIAL_SILVER = 2000, MATERIAL_GOLD = 2000)
 	build_path = /obj/item/device/multitool/hacktool
 	sort_string = "ZAAAB"
 
 /datum/design/item/away/energyshield
 	name = "energy shield"
 	desc = "A shield capable of stopping most projectile and melee attacks. It can be retracted, expanded, and stored anywhere."
+	id = "energyshield"
 	req_tech = list(TECH_MATERIAL = 4, TECH_MAGNET = 3, TECH_ESOTERIC = 4)
-	materials = list(MATERIAL_STEEL = 12000, MATERIAL_GLASS = 10000, MATERIAL_SILVER = 2000)
+	materials = list(MATERIAL_STEEL = 12000, MATERIAL_URANIUM = 10000, MATERIAL_SILVER = 2000)
 	build_path = /obj/item/shield/energy
 	sort_string = "ZAAAC"
 
 /datum/design/item/away/personal_shield
 	name = "personal shield"
 	desc = "Truly a life-saver: this device protects its user from being hit by objects moving very, very fast, as long as it holds a charge."
+	id = "personal_shield"
 	req_tech = list(TECH_MATERIAL = 4, TECH_MAGNET = 3, TECH_ESOTERIC = 4)
-	materials = list(MATERIAL_STEEL = 12000, MATERIAL_GLASS = 10000, MATERIAL_SILVER = 2000)
+	materials = list(MATERIAL_STEEL = 12000, MATERIAL_URANIUM = 10000, MATERIAL_GOLD = 2000)
 	build_path = /obj/item/device/personal_shield
 	sort_string = "ZAAAD"
 
 /datum/design/item/away/ai_mask
 	name = "ai mask"
 	desc = "A mask that can be used to hide the identity of an AI."
+	id = "ai_mask"
 	req_tech = list(TECH_MATERIAL = 4, TECH_MAGNET = 3, TECH_ESOTERIC = 4)
-	materials = list(MATERIAL_STEEL = 12000, MATERIAL_GLASS = 10000, MATERIAL_SILVER = 2000)
+	materials = list(MATERIAL_STEEL = 12000, MATERIAL_GOLD = 10000, MATERIAL_SILVER = 4000)
 	build_path = /obj/item/clothing/mask/ai
 	sort_string = "ZAAAE"
 
 /datum/design/item/away/anti_photon
 	desc = "An experimental device for temporarily removing light in a limited area."
 	name = "photon disruption grenade"
+	id = "anti_photon"
 	req_tech = list(TECH_MATERIAL = 4, TECH_MAGNET = 3, TECH_ESOTERIC = 4)
-	materials = list(MATERIAL_STEEL = 12000, MATERIAL_GLASS = 10000, MATERIAL_SILVER = 2000)
+	materials = list(MATERIAL_STEEL = 4000, MATERIAL_GLASS = 2000, MATERIAL_SILVER = 1000)
 	build_path = /obj/item/grenade/anti_photon
 	sort_string = "ZAAAF"
 
 /datum/design/item/away/empgrenade
 	name = "classic emp grenade"
 	desc = "A classic emp grenade, with a high yield and a long range."
+	id = "empgrenade"
 	req_tech = list(TECH_MATERIAL = 2, TECH_MAGNET = 3)
-	materials = list(MATERIAL_STEEL = 12000, MATERIAL_GLASS = 10000, MATERIAL_SILVER = 2000)
+	materials = list(MATERIAL_STEEL = 2000, MATERIAL_GLASS = 2000, MATERIAL_URANIUM = 2000)
 	build_path = /obj/item/grenade/empgrenade
 	sort_string = "ZAAAG"
 
 /datum/design/item/away/frag
 	name = "fragmentation grenade"
 	desc = "A military fragmentation grenade, designed to explode in a deadly shower of fragments, while avoiding massive structural damage."
+	id = "frag"
 	req_tech = list(TECH_MATERIAL = 2, TECH_MAGNET = 3)
-	materials = list(MATERIAL_STEEL = 12000, MATERIAL_GLASS = 10000, MATERIAL_SILVER = 2000)
+	materials = list(MATERIAL_STEEL = 8000, MATERIAL_GLASS = 4000, MATERIAL_SILVER = 2000)
 	build_path = /obj/item/grenade/frag
 	sort_string = "ZAAAH"
 
 /datum/design/item/away/supermatter
 	name = "supermatter grenade"
 	desc = "A highly experimental supermatter grenade."
+	id = "supermatter"
 	req_tech = list(TECH_MATERIAL = 2, TECH_MAGNET = 3)
-	materials = list(MATERIAL_STEEL = 12000, MATERIAL_GLASS = 10000, MATERIAL_SILVER = 2000)
+	materials = list(MATERIAL_STEEL = 20000, MATERIAL_PHORON = 40000, MATERIAL_SILVER = 8000)
 	build_path = /obj/item/grenade/supermatter
 	sort_string = "ZAAAI"
 
 /datum/design/item/away/rigvoice
 	name = "hardsuit voice synthesiser"
 	desc = "A speaker box and sound processor."
+	id = "rigvoice"
 	req_tech = list(TECH_MATERIAL = 4, TECH_MAGNET = 3, TECH_ESOTERIC = 4)
 	materials = list(MATERIAL_STEEL = 12000, MATERIAL_GLASS = 10000, MATERIAL_SILVER = 2000)
 	build_path = /obj/item/rig_module/voice
@@ -172,31 +182,35 @@
 /datum/design/item/away/disperser_charge/explosive
 	name = "explosive disperser charge"
 	desc = "An explosive disperser charge."
+	id = "explosive_disperser_charge"
 	req_tech = list(TECH_MATERIAL = 4, TECH_MAGNET = 3, TECH_ESOTERIC = 4)
-	materials = list(MATERIAL_STEEL = 12000, MATERIAL_GLASS = 10000, MATERIAL_SILVER = 2000)
+	materials = list(MATERIAL_STEEL = 40000, MATERIAL_GLASS = 30000, MATERIAL_PHORON = 15000)
 	build_path = /obj/structure/ship_munition/disperser_charge/explosive
 	sort_string = "ZAAAK"
 
 /datum/design/item/away/disperser_charge/fire
 	name = "fire disperser charge"
 	desc = "A fire disperser charge."
+	id = "fire_disperser_charge"
 	req_tech = list(TECH_MATERIAL = 4, TECH_MAGNET = 3, TECH_ESOTERIC = 4)
-	materials = list(MATERIAL_STEEL = 12000, MATERIAL_GLASS = 10000, MATERIAL_SILVER = 2000)
+	materials = list(MATERIAL_STEEL = 40000, MATERIAL_GLASS = 30000, MATERIAL_PHORON = 10000)
 	build_path = /obj/structure/ship_munition/disperser_charge/fire
 	sort_string = "ZAAAL"
 
 /datum/design/item/away/disperser_charge/emp
 	name = "emp disperser charge"
 	desc = "An emp disperser charge."
+	id = "emp_disperser_charge"
 	req_tech = list(TECH_MATERIAL = 4, TECH_MAGNET = 3, TECH_ESOTERIC = 4)
-	materials = list(MATERIAL_STEEL = 12000, MATERIAL_GLASS = 10000, MATERIAL_SILVER = 2000)
+	materials = list(MATERIAL_STEEL = 40000, MATERIAL_GLASS = 30000, MATERIAL_URANIUM = 10000)
 	build_path = /obj/structure/ship_munition/disperser_charge/emp
 	sort_string = "ZAAAM"
 
 /datum/design/item/away/disperser_charge/mining
 	name = "mining disperser charge"
 	desc = "A mining disperser charge."
+	id = "mining_disperser_charge"
 	req_tech = list(TECH_MATERIAL = 4, TECH_MAGNET = 3, TECH_ESOTERIC = 4)
-	materials = list(MATERIAL_STEEL = 12000, MATERIAL_GLASS = 10000, MATERIAL_SILVER = 2000)
+	materials = list(MATERIAL_STEEL = 50000, MATERIAL_GLASS = 40000)
 	build_path = /obj/structure/ship_munition/disperser_charge/mining
 	sort_string = "ZAAAN"
