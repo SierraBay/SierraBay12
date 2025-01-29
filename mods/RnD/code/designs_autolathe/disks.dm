@@ -188,7 +188,6 @@
 		/datum/design/autolathe/medical/syringe,
 		/datum/design/autolathe/medical/pill_bottle,
 		/datum/design/autolathe/medical/hypospray/autoinjector,
-		/datum/design/autolathe/medical/scalpel,
 		)
 
 

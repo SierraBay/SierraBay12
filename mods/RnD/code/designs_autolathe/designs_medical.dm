@@ -1,5 +1,6 @@
 /datum/design/autolathe/medical
 	category = list("Medical")
+	build_path = /obj/item/scalpel/basic
 
 /datum/design/autolathe/medical/circularsaw
 	build_path = /obj/item/circular_saw
@@ -37,15 +38,8 @@
 /datum/design/autolathe/medical/syringe
 	build_path = /obj/item/reagent_containers/syringe
 
-/* [SIERRA-REMOVE] Имплантер теперь в протолате
-/datum/design/autolathe/medical/implanter
-	build_path = /obj/item/implanter
-*/
 /datum/design/autolathe/medical/pill_bottle
 	build_path = /obj/item/storage/pill_bottle
 
 /datum/design/autolathe/medical/hypospray/autoinjector
 	build_path = /obj/item/reagent_containers/hypospray/autoinjector
-
-/datum/design/autolathe/medical/scalpel
-	build_path = /obj/item/scalpel/basic
