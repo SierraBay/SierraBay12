@@ -39,6 +39,9 @@
 		LANGUAGE_CULT,
 		LANGUAGE_PRIMITIVE
 	)
+/singleton/cultural_info/faction/adherent
+	var/valid_jobs = list()
+
 
 /datum/species/adherent/check_background(datum/job/job, datum/preferences/prefs)
 	var/singleton/cultural_info/faction/adherent/faction = SSculture.get_culture(prefs.cultural_info[TAG_FACTION])
