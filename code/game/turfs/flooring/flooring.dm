@@ -51,11 +51,15 @@
 
 	var/height = 0
 
+<<<<<<< ours
 /singleton/flooring/Initialize()
 	. = ..()
 	flooring_whitelist = typecacheof(flooring_whitelist)
 	flooring_blacklist = typecacheof(flooring_blacklist)
 
+=======
+	var/z_flags //same z flags used for turfs, i.e ZMIMIC_DEFAULT etc
+>>>>>>> theirs
 
 /singleton/flooring/proc/on_remove()
 	return
@@ -422,6 +426,14 @@
 	space_smooth = SMOOTH_NONE
 	height = -FLUID_OVER_MOB_HEAD * 2
 
+/singleton/flooring/forcefield
+	name = "ship forcefield"
+	desc = "A shimmering barrier of pure energy."
+	icon = 'icons/turf/flooring/forcefield.dmi'
+	icon_base = "forcefield"
+	build_type = null
+	flags = TURF_HAS_CORNERS | TURF_ACID_IMMUNE
+	footstep_type = /singleton/footsteps/blank
 
 /singleton/flooring/bluespace
 	name = "bluespace"
@@ -434,3 +446,24 @@
 	floor_smooth = SMOOTH_NONE
 	wall_smooth = SMOOTH_NONE
 	space_smooth = SMOOTH_NONE
+
+/singleton/flooring/glass
+	name = "glass flooring"
+	desc = "A window to the world outside. Or the world beneath your feet, rather."
+	icon = 'icons/turf/flooring/glassfloor.dmi'
+	icon_base = "glassfloor"
+	build_type = /obj/item/stack/material/glass/reinforced
+	damage_temperature = T100C
+	flags = TURF_REMOVE_WRENCH
+	can_engrave = FALSE
+	color = GLASS_COLOR
+	z_flags = ZM_MIMIC_DEFAULTS
+	floor_smooth = SMOOTH_NONE
+	wall_smooth = SMOOTH_NONE
+	space_smooth = SMOOTH_NONE
+
+/singleton/flooring/glass/boro
+	name = "borosilicate glass flooring"
+	build_type = /obj/item/stack/material/glass/boron
+	color = GLASS_COLOR_BORON
+	damage_temperature = T0C + 4000
