@@ -32,6 +32,15 @@ GLOBAL_LIST_INIT(NTNet_machines, list())
 	GLOB.NTNet_machines += src
 	get_new_ntnet_id("PC")
 
+/obj/machinery/alarm/Initialize()
+	. = ..()
+	GLOB.NTNet_machines += src
+	get_new_ntnet_id("AA")
+
+/obj/machinery/camera/Initialize()
+	. = ..()
+	GLOB.NTNet_machines += src
+	get_new_ntnet_id("CM")
 
 /datum/terminal/proc/get_remote_ID(ID)
 	for(var/obj/machinery/R as anything in SSmachines.get_all_machinery())

@@ -1,0 +1,7 @@
+#include "anomalies_premades.dm"
+#include "twoandtwo\cooler2x2.dm"
+#include "twoandtwo\heater2x2.dm"
+#include "threeandthree\cooler_3x3.dm"
+#include "threeandthree\electra_3x3.dm"
+#include "threeandthree\heater_3x3.dm"
+#include "threeandthree\rvach_3x3.dm"

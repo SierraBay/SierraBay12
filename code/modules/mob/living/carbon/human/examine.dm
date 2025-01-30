@@ -328,6 +328,8 @@
 
 		msg += "[SPAN_CLASS("deptradio", "Physical status:")] <a href='?src=\ref[src];medical=1'>\[[medical]\]</a>\n"
 		msg += "[SPAN_CLASS("deptradio", "Medical records:")] <a href='?src=\ref[src];medrecord=`'>\[View\]</a>\n"
+		if (R?.get_allergies())
+			msg += "[SPAN_CLASS("deptradio", "Allergies:")] <a href='?src=\ref[src];allergies=1'>\[View\]</a>\n"
 
 
 	if(print_flavor_text()) msg += "[print_flavor_text()]\n"
