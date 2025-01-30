@@ -49,4 +49,4 @@
 	for(var/turf/turfs in RANGE_TURFS(src.loc, range_spawn))
 		if(!TurfBlocked(turfs) || TurfBlockedByAnomaly(turfs))
 			LAZYADD(turfs_for_spawn, turfs)
-	generate_anomalies_in_turfs(possible_anomalies, turfs_for_spawn, min_anomalies_ammout, max_anomalies_ammout, min_artefacts_ammount, max_artefacts_ammount, null, null, "big artefact generation", started_in)
+	generate_anomalies_in_turfs(possible_anomalies, turfs_for_spawn, min_anomalies_ammout, max_anomalies_ammout, min_artefacts_ammount, max_artefacts_ammount, null, null, "Обычный большой артефакт (Архотек)", started_in)
