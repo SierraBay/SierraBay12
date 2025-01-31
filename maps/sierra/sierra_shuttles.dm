@@ -70,7 +70,7 @@ SIERRA_ESCAPE_POD(11)
 
 /datum/shuttle/autodock/overmap/petrov
 	name = "Petrov"
-	dock_target = "petrov_shuttle"
+	dock_target = "petrov_shuttle_airlock"
 	current_location = "nav_petrov_start"
 	landmark_transition = "nav_transit_scavshuttle"
 	logging_home_tag = "nav_petrov_start"
@@ -112,7 +112,7 @@ SIERRA_ESCAPE_POD(11)
 /obj/shuttle_landmark/sierra/petrov/start
 	name = "Petrov Dock"
 	landmark_tag = "nav_petrov_start"
-	docking_controller = "petrov_shuttle_dock"
+	docking_controller = "petrov_shuttle_dock_airlock"
 
 /obj/shuttle_landmark/sierra/petrov/out
 	name = "Space near the vessel"

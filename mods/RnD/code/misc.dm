@@ -200,8 +200,6 @@
 	ClearOverlays()
 	if(MACHINE_IS_BROKEN(src))
 		icon_state = "[icon_state]-broken"
-	if(stat & MACHINE_STAT_NOPOWER)
-		icon_state = "[icon_base]-off"
 	else
 		icon_state = icon_base
 
@@ -215,22 +213,15 @@
 
 	// Fridge contents
 	switch(length(contents))
-		if(1)
+		if(0)
 			I = image(icon, "empty[is_off]")
-		if(2 to 4)
+		if(1 to 2)
 			I = image(icon, "[icon_contents]-1[is_off]")
-		if(5 to 8)
+		if(3 to 5)
 			I = image(icon, "[icon_contents]-2[is_off]")
 		else
 			I = image(icon, "[icon_contents]-3[is_off]")
 	AddOverlays(I)
-
-	// Fridge top
-	I = image(icon, "[icon_base]-top")
-	I.pixel_z = 32
-	I.layer = ABOVE_WINDOW_LAYER
-	AddOverlays(I)
-
 
 /obj/item/stock_parts/circuitboard/protolathe
 	name = "circuit board (protolathe)"
