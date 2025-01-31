@@ -2630,8 +2630,7 @@
 	},
 /obj/structure/cable/cyan{
 	d2 = 4;
-	icon_state = "0-4";
-	dir = 8
+	icon_state = "0-4"
 	},
 /turf/simulated/floor/tiled/white/monotile,
 /area/shuttle/petrov/scan)
@@ -37239,6 +37238,19 @@
 /obj/floor_decal/industrial/warning/half,
 /turf/simulated/floor/plating,
 /area/maintenance/solar)
+"ftT" = (
+/obj/floor_decal/industrial/warning{
+	dir = 8
+	},
+/obj/floor_decal/corner/purple,
+/obj/structure/cable/cyan{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8";
+	dir = 1
+	},
+/turf/simulated/floor/tiled/white,
+/area/shuttle/petrov/scan)
 "ftU" = (
 /obj/floor_decal/techfloor,
 /obj/floor_decal/techfloor/corner{
@@ -51566,12 +51578,6 @@
 	dir = 4;
 	pixel_x = -24
 	},
-/obj/structure/cable/cyan{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8";
-	dir = 1
-	},
 /turf/simulated/floor/tiled/white/monotile,
 /area/shuttle/petrov/scan)
 "hBd" = (
@@ -63294,18 +63300,6 @@
 /obj/machinery/door/airlock/hatch/maintenance,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/maintenance/bridgedeck/port)
-"jpe" = (
-/obj/floor_decal/industrial/warning{
-	dir = 8
-	},
-/obj/floor_decal/corner/purple,
-/obj/structure/cable/cyan{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/turf/simulated/floor/tiled/white,
-/area/shuttle/petrov/scan)
 "jpo" = (
 /obj/floor_decal/industrial/warning/corner,
 /obj/structure/cable{
@@ -86185,19 +86179,6 @@
 	},
 /turf/simulated/floor/reinforced,
 /area/thruster/d1port)
-"mHF" = (
-/obj/floor_decal/industrial/warning{
-	dir = 8
-	},
-/obj/floor_decal/corner/purple,
-/obj/structure/cable/cyan{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8";
-	dir = 1
-	},
-/turf/simulated/floor/tiled/white,
-/area/shuttle/petrov/scan)
 "mHL" = (
 /obj/structure/cable/green{
 	d1 = 4;
@@ -99855,6 +99836,11 @@
 	pixel_y = 32
 	},
 /obj/floor_decal/corner/purple,
+/obj/structure/cable/cyan{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
 /turf/simulated/floor/tiled/white,
 /area/shuttle/petrov/scan)
 "oKq" = (
@@ -125149,6 +125135,18 @@
 	},
 /turf/simulated/floor/plating,
 /area/crew_quarters/docking)
+"stV" = (
+/obj/floor_decal/industrial/warning{
+	dir = 8
+	},
+/obj/floor_decal/corner/purple,
+/obj/structure/cable/cyan{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/tiled/white,
+/area/shuttle/petrov/scan)
 "sup" = (
 /obj/floor_decal/industrial/warning,
 /obj/structure/railing/mapped{
@@ -193716,8 +193714,8 @@ wJN
 fgD
 fgD
 oJT
-jpe
-mHF
+stV
+ftT
 oZg
 vFu
 wUV

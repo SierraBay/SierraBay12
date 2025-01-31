@@ -2471,7 +2471,7 @@
 "hL" = (
 /obj/structure/table/woodentable/walnut,
 /obj/machinery/fabricator/micro,
-/obj/item/storage/box/microlathe_designs
+/obj/item/storage/box/microlathe_designs,
 /turf/simulated/floor/tiled/skrell/blue,
 /area/ship/skrellscoutship/crew/rec)
 "hO" = (
