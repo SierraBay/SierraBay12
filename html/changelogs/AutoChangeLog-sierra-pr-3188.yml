@@ -1,0 +1,4 @@
+author: Lexanx
+changes:
+  - {bugfix: Космос снова взрывается}
+delete-after: true
