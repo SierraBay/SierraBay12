@@ -4,6 +4,7 @@
 /obj/structure/aurora/wall_light{
 	dir = 4
 	},
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
 /area/map_template/bunker)
 "br" = (
@@ -12,6 +13,7 @@
 	dir = 1
 	},
 /obj/random/contraband,
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
 /area/map_template/bunker)
 "bI" = (
@@ -19,6 +21,7 @@
 /obj/structure/aurora/wall_light{
 	dir = 1
 	},
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
 /area/map_template/bunker)
 "bX" = (
@@ -26,12 +29,14 @@
 	req_access = list();
 	dir = 1
 	},
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
 /area/map_template/bunker)
 "cb" = (
 /obj/structure/hygiene/toilet{
 	dir = 8
 	},
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
 /area/map_template/bunker)
 "cg" = (
@@ -48,10 +53,12 @@
 /obj/structure/hygiene/sink{
 	pixel_y = -12
 	},
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
 /area/map_template/bunker)
 "eL" = (
 /obj/structure/closet/emcloset,
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
 /area/map_template/bunker)
 "fn" = (
@@ -71,6 +78,7 @@
 	dir = 1
 	},
 /obj/decal/cleanable/generic,
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
 /area/map_template/bunker)
 "hn" = (
@@ -85,6 +93,7 @@
 /area/template_noop)
 "ib" = (
 /obj/machinery/washing_machine,
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
 /area/map_template/bunker)
 "kt" = (
@@ -93,11 +102,13 @@
 /area/template_noop)
 "kM" = (
 /obj/structure/closet/radiation,
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
 /area/map_template/bunker)
 "lJ" = (
 /obj/structure/bed/chair/comfy/brown,
 /obj/decal/cleanable/generic,
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
 /area/map_template/bunker)
 "lN" = (
@@ -142,30 +153,36 @@
 /area/map_template/bunker)
 "oS" = (
 /obj/structure/aurora/wall_light,
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
 /area/map_template/bunker)
 "pl" = (
 /obj/structure/reagent_dispensers/watertank,
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
 /area/map_template/bunker)
 "qc" = (
 /obj/structure/rubble/house,
 /obj/item/stack/material/rods,
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
-/area/template_noop)
+/area/map_template/bunker)
 "qL" = (
 /obj/structure/table/steel_reinforced,
 /obj/random/contraband,
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
 /area/map_template/bunker)
 "qM" = (
 /obj/machinery/anomaly_container{
 	req_access = list()
 	},
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
 /area/map_template/bunker)
 "ro" = (
 /obj/structure/rubble/house,
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
 /area/map_template/bunker)
 "tT" = (
@@ -174,6 +191,7 @@
 	pixel_x = -7;
 	pixel_y = 32
 	},
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
 /area/map_template/bunker)
 "ua" = (
@@ -186,11 +204,13 @@
 /obj/structure/aurora/wall_light{
 	dir = 1
 	},
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
 /area/map_template/bunker)
 "uX" = (
 /obj/structure/rubble/house,
 /obj/random/trash,
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
 /area/template_noop)
 "vg" = (
@@ -198,6 +218,7 @@
 /obj/structure/aurora/wall_light{
 	dir = 1
 	},
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
 /area/map_template/bunker)
 "vR" = (
@@ -211,6 +232,7 @@
 	},
 /obj/item/bedsheet/hop,
 /obj/structure/curtain/open/bed,
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
 /area/map_template/bunker)
 "wa" = (
@@ -257,6 +279,7 @@
 /area/map_template/bunker)
 "xJ" = (
 /obj/structure/rubble/house,
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
 /area/template_noop)
 "zk" = (
@@ -265,9 +288,11 @@
 /area/map_template/bunker)
 "zW" = (
 /obj/structure/curtain/open/shower,
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
 /area/map_template/bunker)
 "AB" = (
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
 /area/map_template/bunker)
 "By" = (
@@ -320,35 +345,32 @@
 /obj/structure/rubble/house,
 /obj/random/trash,
 /obj/item/stack/material/rods,
-/turf/simulated/floor/holofloor/tiled,
-/area/template_noop)
-"GD" = (
-/obj/structure/bed/padded{
-	dir = 1
-	},
-/obj/item/bedsheet/hop,
-/obj/structure/curtain/open/bed,
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
 /area/template_noop)
 "GF" = (
 /obj/structure/aurora/wall_light{
 	dir = 8
 	},
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
 /area/map_template/bunker)
 "Hk" = (
 /obj/structure/rubble/house,
 /obj/decal/cleanable/generic,
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
-/area/template_noop)
+/area/map_template/bunker)
 "HI" = (
 /obj/structure/hygiene/shower{
 	dir = 4
 	},
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
 /area/map_template/bunker)
 "Ih" = (
 /obj/structure/dispenser/oxygen,
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
 /area/map_template/bunker)
 "IH" = (
@@ -362,14 +384,17 @@
 "KT" = (
 /obj/structure/table/steel_reinforced,
 /obj/random/toolbox,
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
 /area/map_template/bunker)
 "Lx" = (
 /obj/decal/cleanable/generic,
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
 /area/map_template/bunker)
 "OQ" = (
 /obj/structure/table/steel_reinforced,
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
 /area/map_template/bunker)
 "Pi" = (
@@ -380,16 +405,24 @@
 "Pk" = (
 /obj/structure/aurora/old_comp,
 /obj/structure/table/steel_reinforced,
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
 /area/map_template/bunker)
 "Pl" = (
 /obj/structure/aurora/wall_light{
 	dir = 1
 	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/holofloor/tiled,
+/area/map_template/bunker)
+"Sq" = (
+/obj/machinery/door/airlock,
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
 /area/map_template/bunker)
 "Tb" = (
 /obj/machinery/r_n_d/protolathe,
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
 /area/map_template/bunker)
 "Td" = (
@@ -412,6 +445,7 @@
 /obj/structure/aurora/wall_light{
 	dir = 4
 	},
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
 /area/map_template/bunker)
 "WC" = (
@@ -434,6 +468,7 @@
 	pixel_y = -12
 	},
 /obj/item/clothing/glasses/science,
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
 /area/map_template/bunker)
 "Yv" = (
@@ -1110,8 +1145,8 @@ ZL
 fH
 fH
 fH
-fH
-fH
+cg
+cg
 cg
 cg
 cg
@@ -1152,14 +1187,14 @@ ZL
 ZL
 fH
 xJ
-xJ
-xJ
-xJ
+ro
+ro
+ro
 cg
 BS
 BS
 cg
-GD
+vW
 GF
 cg
 ZL
@@ -1196,7 +1231,7 @@ ZL
 fH
 Vd
 Dr
-xJ
+ro
 qc
 cg
 vg
@@ -1550,7 +1585,7 @@ AB
 oS
 cg
 cg
-IS
+Sq
 cg
 cg
 ib

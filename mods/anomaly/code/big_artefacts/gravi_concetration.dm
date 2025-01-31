@@ -4,7 +4,7 @@
 	max_anomalies_ammout = 120
 	range_spawn = 30
 	possible_anomalies = list(
-		/obj/anomaly/thamplin/random = 2,
+		/obj/anomaly/tramplin/random = 2,
 		/obj/anomaly/rvach/three_and_three = 1
 		)
 	var/last_gravi_attack

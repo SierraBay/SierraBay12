@@ -75,6 +75,15 @@
 	qdel(src)
 
 
+/obj/structure/catwalk/use_weapon(obj/item/weapon, mob/living/user, list/click_params)
+	var/parent = ..()
+	if (parent)
+		return TRUE
+
+	var/turf/floor = get_turf(src)
+	return floor.use_weapon(weapon, user, click_params)
+
+
 /obj/structure/catwalk/use_tool(obj/item/tool, mob/user, list/click_params)
 	// Crowbar - Toggle hatch
 	if (isCrowbar(tool))
@@ -139,7 +148,12 @@
 		)
 		return TRUE
 
-	return ..()
+	var/parent = ..()
+	if (parent)
+		return TRUE
+
+	var/turf/floor = get_turf(src)
+	return floor.use_tool(tool, user, click_params)
 
 
 /obj/structure/catwalk/refresh_neighbors()
