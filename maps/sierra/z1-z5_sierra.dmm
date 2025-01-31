@@ -37238,19 +37238,6 @@
 /obj/floor_decal/industrial/warning/half,
 /turf/simulated/floor/plating,
 /area/maintenance/solar)
-"ftT" = (
-/obj/floor_decal/industrial/warning{
-	dir = 8
-	},
-/obj/floor_decal/corner/purple,
-/obj/structure/cable/cyan{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8";
-	dir = 1
-	},
-/turf/simulated/floor/tiled/white,
-/area/shuttle/petrov/scan)
 "ftU" = (
 /obj/floor_decal/techfloor,
 /obj/floor_decal/techfloor/corner{
@@ -72118,6 +72105,18 @@
 /obj/floor_decal/corner/lime/border,
 /turf/simulated/floor/tiled,
 /area/hallway/primary/seconddeck/fore)
+"kEZ" = (
+/obj/floor_decal/industrial/warning{
+	dir = 8
+	},
+/obj/floor_decal/corner/purple,
+/obj/structure/cable/cyan{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/tiled/white,
+/area/shuttle/petrov/scan)
 "kFn" = (
 /obj/structure/bed/chair/padded/green{
 	dir = 4
@@ -94798,6 +94797,18 @@
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/maintenance/thirddeck/starboard)
+"nZv" = (
+/obj/floor_decal/industrial/warning{
+	dir = 8
+	},
+/obj/floor_decal/corner/purple,
+/obj/structure/cable/cyan{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/tiled/white,
+/area/shuttle/petrov/scan)
 "nZw" = (
 /obj/machinery/cryopod{
 	dir = 1
@@ -125135,18 +125146,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/crew_quarters/docking)
-"stV" = (
-/obj/floor_decal/industrial/warning{
-	dir = 8
-	},
-/obj/floor_decal/corner/purple,
-/obj/structure/cable/cyan{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/tiled/white,
-/area/shuttle/petrov/scan)
 "sup" = (
 /obj/floor_decal/industrial/warning,
 /obj/structure/railing/mapped{
@@ -193714,8 +193713,8 @@ wJN
 fgD
 fgD
 oJT
-stV
-ftT
+nZv
+kEZ
 oZg
 vFu
 wUV

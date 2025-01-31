@@ -23,10 +23,11 @@
 			if(os.get_hardware_flag() & (PROGRAM_CONSOLE | PROGRAM_LAPTOP |  PROGRAM_TELESCREEN))
 				loc = get_area(os.get_physical_host())
 				zos = get_turf(os.get_physical_host())
-				if(!zos)
-					continue
-				nidislegal = TRUE
+				if(zos)
+					nidislegal = TRUE
 	for(var/obj/machinery/r_n_d/server/server in rnd_server_list)
+		if(!zos)
+			return
 		if(!(zos.z in GetConnectedZlevels(server.z)))
 			break
 		if(server.stat & MACHINE_STAT_NOPOWER)
