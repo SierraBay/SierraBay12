@@ -312,7 +312,7 @@
  * Has no return value.
  */
 /obj/item/ammobox/proc/set_ammo_type(obj/item/ammo_casing/new_ammo_type, casing_spent = FALSE)
-	if (isatom(new_ammo_type))
+	if (istom(new_ammo_type))
 		if (!istype(new_ammo_type))
 			return
 		casing_spent = !new_ammo_type.BB
