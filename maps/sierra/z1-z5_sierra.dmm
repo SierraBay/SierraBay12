@@ -2621,7 +2621,7 @@
 /obj/machinery/power/emitter{
 	desc = "A massive, heavy-duty industrial laser. This design is a fixed installation, capable of shooting in only one direction. It has a label on it reading 'SRV Petrov Analysis Lab.'";
 	name = "emitter (Petrov)";
-	req_lock_access = list("ACCESS_TORCH_PETROV_ANALYSIS");
+	req_lock_access = list("ACCESS_PETROV");
 	anchored = 1;
 	state = 2
 	},
@@ -47205,7 +47205,7 @@
 	frequency = 1380;
 	id_tag = "petrov_shuttle_dock_airlock";
 	pixel_x = 24;
-	req_access = list(list("ACCESS_SECURITY","ACCESS_EXTERNAL","ACCESS_TORCH_PETROV"));
+	req_access = list(list("ACCESS_PETROV"));
 	tag_airpump = "petrov_shuttle_dock_pump";
 	tag_chamber_sensor = "petrov_shuttle_dock_sensor";
 	tag_exterior_door = "petrov_shuttle_dock_outer";
@@ -140675,7 +140675,7 @@
 	frequency = 1380;
 	id_tag = "petrov_shuttle_airlock";
 	pixel_x = -24;
-	req_access = list("ACCESS_TORCH_PETROV");
+	req_access = list("ACCESS_PETROV");
 	tag_airpump = "petrov_shuttle_pump";
 	tag_chamber_sensor = "petrov_shuttle_sensor";
 	tag_exterior_door = "petrov_shuttle_outer";
