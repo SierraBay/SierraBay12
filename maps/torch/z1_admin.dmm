@@ -2696,6 +2696,7 @@
 /area/shuttle/administration/centcom)
 "ave" = (
 /obj/machinery/fabricator/hacked,
+/obj/item/storage/box/autolathe_designs,
 /turf/simulated/floor/shuttle/red,
 /area/shuttle/administration/centcom)
 "avf" = (
@@ -4610,6 +4611,7 @@
 /area/centcom/specops)
 "aBa" = (
 /obj/machinery/fabricator/hacked,
+/obj/item/storage/box/autolathe_designs,
 /turf/unsimulated/floor{
 	dir = 1;
 	icon_state = "vault"
@@ -10075,6 +10077,7 @@
 /area/merchant_station)
 "aUP" = (
 /obj/machinery/fabricator/hacked,
+/obj/item/storage/box/autolathe_designs,
 /turf/simulated/floor/tiled,
 /area/merchant_station)
 "aUQ" = (

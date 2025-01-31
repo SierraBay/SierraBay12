@@ -6804,6 +6804,7 @@
 /area/slavers_base/demo)
 "Uc" = (
 /obj/machinery/fabricator,
+/obj/item/storage/box/autolathe_designs,
 /turf/simulated/floor/tiled/techfloor,
 /area/slavers_base/powatm)
 "Uo" = (

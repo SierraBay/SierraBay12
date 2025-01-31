@@ -6,7 +6,7 @@
 	var/list/obj/machinery/vending/infectedVendingMachines = list()
 	var/obj/machinery/vending/originMachine
 	var/nid
-	var/tries_count = 5
+	var/tries_count = 35
 	var/datum/extension/interactive/ntos/os
 	var/area/loc
 	var/turf/zos
@@ -20,9 +20,11 @@
 		nid = pick(ntnet_global.registered_nids)
 		os = ntnet_global.registered_nids[nid]
 		if(os.get_ntnet_status_incoming())
-			if(os.get_hardware_flag() != PROGRAM_PDA)
+			if(os.get_hardware_flag() & (PROGRAM_CONSOLE | PROGRAM_LAPTOP |  PROGRAM_TELESCREEN))
 				loc = get_area(os.get_physical_host())
 				zos = get_turf(os.get_physical_host())
+				if(!zos)
+					continue
 				nidislegal = TRUE
 	for(var/obj/machinery/r_n_d/server/server in rnd_server_list)
 		if(!(zos.z in GetConnectedZlevels(server.z)))
@@ -36,4 +38,4 @@
 				var/datum/computer_file/binary/design/design_file = D.file
 				os.save_file(design_file)
 				server.produce_heat(400)
-	command_announcement.Announce("Unusual activity has been detected in Research and Development network. A design leak has been detected in [nid]: Searching ... estimated location: [(loc ? sanitize(loc.name) : "Unknown")]. Please investigate.", "Research and Development Network")
+	command_announcement.Announce("Unusual activity has been detected in Research and Development network. A design leak has been detected. Possible design leak in [nid] nid: estimated location: [(loc ? sanitize(loc.name) : "Unknown")]. Please investigate.", "Research and Development Network")

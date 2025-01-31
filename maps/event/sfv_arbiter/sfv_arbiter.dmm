@@ -1328,6 +1328,7 @@
 "Jz" = (
 /obj/floor_decal/industrial/outline/yellow,
 /obj/machinery/fabricator/hacked,
+/obj/item/storage/box/autolathe_designs,
 /turf/simulated/floor/tiled/dark,
 /area/map_template/sfv_arbiter)
 "JO" = (

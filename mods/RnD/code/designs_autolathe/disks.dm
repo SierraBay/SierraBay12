@@ -213,3 +213,23 @@
 		/datum/design/autolathe/tool/welder_industrial,
 		/datum/design/autolathe/tool/designator,
 		)
+
+/obj/item/storage/box/autolathe_designs
+	name = "box of basic autolathe designs"
+	desc = "A box full of disks."
+	startswith = list(/obj/item/stock_parts/computer/hard_drive/portable/design/tool,
+						/obj/item/stock_parts/computer/hard_drive/portable/design/engineering,
+						/obj/item/stock_parts/computer/hard_drive/portable/design/drinking,
+						/obj/item/stock_parts/computer/hard_drive/portable/design/medical,
+						/obj/item/stock_parts/computer/hard_drive/portable/design/cuttery,
+						/obj/item/stock_parts/computer/hard_drive/portable/design/components,
+						/obj/item/stock_parts/computer/hard_drive/portable/design/general,
+						/obj/item/stock_parts/computer/hard_drive/portable/design/arms,
+						)
+
+/obj/item/storage/box/microlathe_designs
+	name = "box of basic microlathe designs"
+	desc = "A box with few of disks."
+	startswith = list(/obj/item/stock_parts/computer/hard_drive/portable/design/cuttery,
+						/obj/item/stock_parts/computer/hard_drive/portable/design/drinking,
+						)
