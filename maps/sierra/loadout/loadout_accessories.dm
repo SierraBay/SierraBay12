@@ -71,7 +71,7 @@
 /datum/gear/utility/holster_belt
 	display_name = "holser belt"
 	path = /obj/item/storage/belt/holster/general
-	allowed_roles = list(/datum/job/captain, /datum/job/hop, /datum/job/rd, /datum/job/cmo, /datum/job/chief_engineer, /datum/job/hos, /datum/job/iaa, /datum/job/adjutant)
+	allowed_roles = list(/datum/job/captain, /datum/job/hop, /datum/job/rd, /datum/job/cmo, /datum/job/chief_engineer, /datum/job/hos, /datum/job/iaa, /datum/job/iso, /datum/job/adjutant)
 
 /datum/gear/accessory/corpbadge
 	display_name = "investigator holobadge (IAA)"
