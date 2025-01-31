@@ -11,11 +11,6 @@
 	to their duties and their roles, embracing the ethos that service is life and purpose is happiness. Deviation from Protocol \
 	and 'disrespect' of the creators by suggesting the Vigil strike out alone is disapproved of by this faction, and they tend to \
 	be hidebound, servile and eager to please to the point of fawning over those they wish to serve."
-	//[SIERRA-ADD] - Adherent
-	valid_jobs = list(
-		/datum/job/adjutant,
-	)
-	//[/SIERRA-ADD] - Adherent список работ, которые могут выполнять доступны только лоялистам
 
 /singleton/cultural_info/faction/adherent/separatists
 	name = FACTION_ADHERENT_SEPARATISTS
