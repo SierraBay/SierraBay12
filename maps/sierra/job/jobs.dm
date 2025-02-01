@@ -146,19 +146,15 @@
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ADHERENT  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 /singleton/cultural_info/faction/adherent/
-	var/list/valid_jobs = list()
 
+	var/list/valid_jobs = list(/datum/job/ai, /datum/job/cyborg, /datum/job/assistant, /datum/job/janitor, /datum/job/engineer_trainee, /datum/job/cook, /datum/job/cargo_tech, /datum/job/scientist_assistant, /datum/job/doctor_trainee, /datum/job/engineer, /datum/job/mining, /datum/job/cargo_assistant, /datum/job/roboticist, /datum/job/chemist, /datum/job/bartender, /datum/job/steward, /datum/job/explorer_engineer)
 
 /singleton/cultural_info/faction/adherent/loyalists
-	valid_jobs = list(
-		/datum/job/adjutant,
-	)
-
+	valid_jobs = list(ADHERENT_JOBS)
 
 /datum/species/adherent/check_background(datum/job/job, datum/preferences/prefs)
 	var/singleton/cultural_info/faction/adherent/faction = SSculture.get_culture(prefs.cultural_info[TAG_FACTION])
 	. = istype(faction) ? (job.type in faction.valid_jobs) : ..()
-
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 /datum/job
 	allowed_branches = list(
