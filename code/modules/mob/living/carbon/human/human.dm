@@ -516,6 +516,24 @@
 				to_chat(user, SPAN_WARNING("Unable to locate a data core entry for this person."))
 			return TOPIC_HANDLED
 
+	if (href_list["allergies"])
+		if (!hasHUD(user, HUD_MEDICAL))
+			return TOPIC_HANDLED
+		var/apparent_name = fake_name || name
+		var/obj/item/card/id/id = GetIdCard()
+		if (istype(id))
+			apparent_name = id.registered_name
+		var/datum/computer_file/report/crew_record/record = get_crewmember_record(apparent_name)
+		if (!record)
+			to_chat(user, SPAN_WARNING("Unable to locate a data core entry for this person."))
+			return TOPIC_HANDLED
+		var/allergies = record.get_allergies()
+		if (!allergies)
+			to_chat(user, SPAN_INFO("<i>No allergies.</i>"))
+			return TOPIC_HANDLED
+		to_chat(user, "[SPAN_INFO("[allergies]")]")
+		return TOPIC_HANDLED
+
 	if (href_list["webbed"])
 		for (var/obj/aura/web/W in auras)
 			W.remove_webbing(user)

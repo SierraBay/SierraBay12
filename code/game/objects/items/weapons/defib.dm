@@ -553,9 +553,12 @@
 */
 /obj/item/shockpaddles/linked
 	var/obj/item/defibrillator/base_unit
+	icon_state = "defibpaddles0"
 
 /obj/item/shockpaddles/linked/New(newloc, obj/item/defibrillator/defib)
 	base_unit = defib
+	if(base_unit.bcell)
+		icon_state = "defibpaddles1"
 	..(newloc)
 
 /obj/item/shockpaddles/linked/Destroy()

@@ -1,0 +1,5 @@
+author: Detritus-Ha
+changes:
+  - {bugfix: Constructed ion thrusters now work properly}
+  - {tweak: Ion Thrusters are not turned on by default}
+delete-after: true

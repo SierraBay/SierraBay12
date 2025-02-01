@@ -59,7 +59,7 @@
 /datum/gear/uniform/si_exec_jacket
 	display_name = "NanoTrasen liason suit"
 	path = /obj/item/clothing/under/suit_jacket/corp/nanotrasen
-	allowed_roles = list(/datum/job/iaa)
+	allowed_roles = list(/datum/job/iaa, /datum/job/iso)
 
 /datum/gear/uniform/formal_shirt_and_pants
 	display_name = "formal shirts with pants"

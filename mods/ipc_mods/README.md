@@ -50,6 +50,7 @@ ID мода: IPC_MODS
  - `/mob/living/carbon/human/OnSelfTopic(href_list, topic_status)`
  - `/datum/species/machine/check_background(datum/job/job, datum/preferences/prefs)`
  - `code/modules/mob/living/carbon/human/update_icons.dm`
+ - `code/modules/mob/living/carbon/human/life.dm`
 
 
 

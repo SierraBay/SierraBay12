@@ -17,6 +17,7 @@
 //Обьект прошлого просыпается. Зажигаются фары/огни/монитор и прочее
 /obj/structure/aurora/proc/wake_up(wake_up_time)
 	set waitfor = FALSE
+	set background = TRUE
 	if(waked_up)
 		return
 	sleep(rand(2,10)) //Для того чтоб техника не зажигалась одновременно
@@ -127,12 +128,11 @@
 //Смес бьёт
 /obj/structure/aurora/smes/proc/electra_attack()
 	set waitfor = FALSE
+	set background = TRUE
 	last_electra_attack = world.time
 	var/turf/picked_turf
 	picked_turf = pick(RANGE_TURFS(src, 3))
-	for(var/mob/living/picked_living in picked_turf)
-		picked_living.electoanomaly_act(50, src)
-	for(var/obj/structure/aurora/picked_aurora in picked_turf)
-		picked_aurora.wake_up(5 SECONDS)
+	for(var/atom/picked_atom in picked_turf)
+		electroanomaly_act(picked_atom, src)
 	beam = src.Beam(BeamTarget = picked_turf, icon_state = "electra_long",icon='mods/anomaly/icons/effects.dmi',time = 0.3 SECONDS)
 	playsound(src, 'mods/anomaly/sounds/electra_blast.ogg', 100, FALSE  )
