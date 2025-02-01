@@ -69,17 +69,6 @@
 	#define ABOVE_AO_LAYER              2.05
 	#define RUNE_LAYER                  2.06
 	#define ABOVE_TILE_LAYER            2.07
-<<<<<<< ours
-	#define EXPOSED_PIPE_LAYER          2.08
-	#define EXPOSED_WIRE_LAYER          2.09
-	#define ABOVE_EXPOSED_WIRE_LAYER    2.10
-	#define CATWALK_LAYER               2.11
-	#define ABOVE_CATWALK_LAYER         2.12
-	#define BLOOD_LAYER                 2.13
-	#define MOUSETRAP_LAYER             2.14
-	#define PLANT_LAYER                 2.15
-
-=======
 	#define EXPOSED_SCRUBBERS_LAYER     2.08
 	#define EXPOSED_SUPPLY_LAYER        2.09
 	#define EXPOSED_PIPE_LAYER          2.10
@@ -90,7 +79,6 @@
 	#define BLOOD_LAYER                 2.15
 	#define MOUSETRAP_LAYER             2.16
 	#define PLANT_LAYER                 2.17
->>>>>>> theirs
 	//HIDING MOB
 	#define HIDING_MOB_LAYER            2.18
 	#define SHALLOW_FLUID_LAYER         2.19
