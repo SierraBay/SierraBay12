@@ -208,46 +208,6 @@
 	if (!length(items))
 		window += " (empty)"
 	else
-<<<<<<< ours
-		window += "<b>Processing Hopper</b>"
-		if (!length(items))
-			window += " (empty)"
-		else
-			window += "<br><a href='?src=\ref[src];action=grind'>(grind)</a> <a href='?src=\ref[src];action=eject'>(eject)</a><br>"
-			for (var/obj/item/I in items)
-				window += "<br>\An [I]"
-				if (isstack(I))
-					var/obj/item/stack/material/S = I
-					window += " ([S.get_amount()])"
-		window += "<br><br><b>Chemical Container</b>"
-		if (!container)
-			window += " (not attached)"
-		else
-			window += " (\an [container], [Percent(container.reagents.total_volume, container.reagents.maximum_volume, 1)]% full)"
-			window += "<br><a href='?src=\ref[src];action=detach'>(detach)</a><br>"
-			for (var/datum/reagent/R in container.reagents.reagent_list)
-				window += "<br>[R.volume] - [R.name]"
-
-	window = strip_improper("<head><title>[name]</title></head><tt>[JOINTEXT(window)]</tt>")
-	var/datum/browser/popup = new(user, "reagentgrinder", "Reagent Grinder")
-	popup.set_content(window)
-	popup.open()
-	onclose(user, "reagentgrinder")
-
-
-/obj/machinery/reagentgrinder/OnTopic(user, href_list)
-	if (user && href_list && href_list["action"])
-		switch (href_list["action"])
-			if ("grind")
-				grind(user)
-			if ("eject")
-				eject()
-			if ("detach")
-				detach(user)
-		interact(user)
-		return TOPIC_REFRESH
-
-=======
 		for (var/obj/item/I in items)
 			window += "<br>\An [I]"
 			if (isstack(I))
@@ -261,7 +221,6 @@
 		for (var/datum/reagent/R in container.reagents.reagent_list)
 			window += "<br>[R.volume] - [R.name]"
 	to_chat(user, strip_improper(jointext(window, null)))
->>>>>>> theirs
 
 /obj/machinery/reagentgrinder/AltClick(mob/user)
 	if(CanDefaultInteract(user))
