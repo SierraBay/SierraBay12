@@ -33,7 +33,7 @@
 	var/turf/picked_turf
 	picked_turf = pick(RANGE_TURFS(src, 3))
 	for(var/mob/living/picked_living in picked_turf)
-		picked_living.electoanomaly_act(50, src)
+		electroanomaly_act(picked_living, null)
 	for(var/obj/structure/aurora/picked_aurora in picked_turf)
 		picked_aurora.wake_up(5 SECONDS)
 	beam = src.Beam(BeamTarget = picked_turf, icon_state = "electra_long",icon='mods/anomaly/icons/effects.dmi',time = 0.3 SECONDS)
