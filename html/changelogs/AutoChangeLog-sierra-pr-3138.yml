@@ -1,0 +1,4 @@
+author: Banditoz
+changes:
+  - {bugfix: Fix invalid defibrillator paddles icon before they're first used.}
+delete-after: true

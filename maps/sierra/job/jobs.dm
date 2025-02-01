@@ -16,7 +16,7 @@
 		/datum/species/diona = list(
 			HUMAN_ONLY_JOBS, /datum/job/exploration_leader, /datum/job/explorer_pilot,
 			/datum/job/officer, /datum/job/warden, /datum/job/detective,
-			/datum/job/qm,
+			/datum/job/qm, /datum/job/explorer_medic,
 			/datum/job/senior_engineer, /datum/job/senior_doctor,
 			/datum/job/senior_scientist, /datum/job/security_assistant
 		),
@@ -142,6 +142,23 @@
 		/datum/job/ai, /datum/job/cyborg, /datum/job/assistant
 )
 //[/SIERRA-ADD] - [IPC-MODS]
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ADHERENT  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/singleton/cultural_info/faction/adherent/
+	var/list/valid_jobs = list()
+
+
+/singleton/cultural_info/faction/adherent/loyalists
+	valid_jobs = list(
+		/datum/job/adjutant,
+	)
+
+
+/datum/species/adherent/check_background(datum/job/job, datum/preferences/prefs)
+	var/singleton/cultural_info/faction/adherent/faction = SSculture.get_culture(prefs.cultural_info[TAG_FACTION])
+	. = istype(faction) ? (job.type in faction.valid_jobs) : ..()
+
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 /datum/job
 	allowed_branches = list(
