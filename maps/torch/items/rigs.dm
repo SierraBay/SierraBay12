@@ -351,6 +351,7 @@
 	camera = /obj/machinery/camera/network/helmet
 	icon_state = "command_exp_rig"
 	light_overlay = "helmet_light_wide"
+	head_light_range = 5
 	brightness_on = 0.8
 
 /obj/item/clothing/suit/space/rig/command/exploration

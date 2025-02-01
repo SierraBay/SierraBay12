@@ -3391,7 +3391,7 @@
 #include "mods\_master_files\code\_onclick\click.dm"
 #include "mods\_master_files\code\game\world.dm"
 #include "mods\_master_files\code\game\antagonist\station\changeling.dm"
-#include "mods\_master_files\code\game\gamemodes\ert.dm"
+#include "mods\_master_files\code\game\gamemodes\antag_maps.dm"
 #include "mods\_master_files\code\game\objects\effects\decals\contraband.dm"
 #include "mods\_master_files\code\game\objects\structures\mineral_bath.dm"
 #include "mods\_master_files\code\game\objects\structures\signs.dm"

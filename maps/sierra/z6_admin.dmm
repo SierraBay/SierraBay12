@@ -10898,7 +10898,7 @@
 	},
 /obj/structure/table/steel_reinforced,
 /obj/machinery/photocopier/faxmachine/centcomm{
-	department = "Central Command";
+	department = "NanoTrasen Central Command";
 	desc = "Fax machine, called in honor of the legendary bureaucrat. It has small keyboard so you can write answers right there!";
 	name = "fox machine"
 	},

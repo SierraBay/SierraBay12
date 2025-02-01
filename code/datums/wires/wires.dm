@@ -22,8 +22,8 @@ var/global/list/wireColours = list("red", "blue", "green", "darkred", "orange", 
 
 	var/table_options = " align='center'"
 	var/row_options1 = " width='80px'"
-	var/row_options2 = " width='320px'"
-	var/window_x = 450
+	var/row_options2 = " width='370px'"
+	var/window_x = 500
 	var/window_y = 470
 
 	var/list/descriptions // Descriptions of wires (datum/wire_description) for use with examining.
@@ -116,6 +116,10 @@ var/global/list/wireColours = list("red", "blue", "green", "darkred", "orange", 
 	if(!user.skill_check(SKILL_ELECTRICAL, SKILL_BASIC))
 		wires_used = shuffle(wires_used)
 
+	var/show_labels = FALSE
+	if (user.skill_check(SKILL_ELECTRICAL, SKILL_MASTER))
+		show_labels = TRUE
+
 	for(var/colour in wires_used)
 		html += "<tr>"
 		html += "<td[row_options1]>[SPAN_COLOR(colour, "&#9724;")][capitalize(colour)]</td>"
@@ -123,7 +127,14 @@ var/global/list/wireColours = list("red", "blue", "green", "darkred", "orange", 
 		html += "<A href='?src=\ref[src];action=1;cut=[colour]'>[IsColourCut(colour) ? "Mend" :  "Cut"]</A>"
 		html += " <A href='?src=\ref[src];action=1;pulse=[colour]'>Pulse</A>"
 		html += " <A href='?src=\ref[src];action=1;attach=[colour]'>[IsAttached(colour) ? "Detach" : "Attach"] Signaller</A>"
-		html += " <A href='?src=\ref[src];action=1;examine=[colour]'>Examine</A></td></tr>"
+		var/label = "Examine"
+		if (show_labels)
+			var/datum/wire_description/wire_description = get_description(GetIndex(colour))
+			if (wire_description && wire_description.skill_level <= SKILL_MASTER)
+				label = "[label] ([wire_description.label])"
+			else
+				label = "[label] (???)"
+		html += " <A href='?src=\ref[src];action=1;examine=[colour]'>[label]</A></td></tr>"
 	html += "</table>"
 	html += "</div>"
 

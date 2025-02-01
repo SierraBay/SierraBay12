@@ -7,37 +7,57 @@
 		"midle",
 		"storm"
 	)
+	can_blowout = TRUE
+	blowout_prepare_messages = list(
+		"...всё резко стихло...затишье перед бурей?...не к добру...",
+		"Всё стихло, а в небе что-то словно зажигается...это не есть хорошо.",
+		"Все чувства, даже шестое, проснулось в тебе...что-то грядёт."
+	)
+	blowout_messages = list(
+		"Вы видете в небе северное сияние и разряды молний в небе! Нужно укрыться!",
+		"Вы слышите треск и шорох словно от статического электричества, а по полу расползаются малые электродуги! Нужно укрыться!"
+	)
+
+/obj/weather_manager/snow/no_blowout
+	can_blowout = FALSE
 
 /obj/weather_manager/snow/change_stage(force_state, monitor = FALSE, sound = FALSE)
-	..()
+	.=..()
+	if(!.) //Родитель сказал Баста, смена не нужна
+		return FALSE
+	var/possible_stages = stages.Copy()
+	LAZYREMOVE(possible_stages, current_stage)
 	if(!force_state)
-		var/state = pick(stages)
-		if(state == "calm")
-			for(var/obj/weather/weather in connected_weather_turfs)
-				weather.icon_state = "void_storm"
-				weather.play_monitor_effect = FALSE
-				weather.play_sound = FALSE
-				weather.update()
-		else if(state == "midle")
-			for(var/obj/weather/weather in connected_weather_turfs)
-				weather.icon_state = "light_snow"
-				weather.play_monitor_effect = FALSE
-				weather.play_sound = FALSE
-				weather.update()
-		else if(state == "storm")
-			for(var/obj/weather/weather in connected_weather_turfs)
-				weather.icon_state = "snow_storm"
-				weather.play_monitor_effect = TRUE
-				weather.play_sound = TRUE
-				weather.update()
+		current_stage = pick(possible_stages)
 	else
+		current_stage = force_state
+	if(current_stage == "calm")
 		for(var/obj/weather/weather in connected_weather_turfs)
-			weather.icon_state = "void_storm"
-			weather.play_monitor_effect = monitor
-			weather.play_sound = sound
+			weather.icon_state = "void"
+			weather.play_monitor_effect = FALSE
+			weather.play_sound = FALSE
+			weather.update()
+	else if(current_stage == "midle")
+		for(var/obj/weather/weather in connected_weather_turfs)
+			weather.icon_state = "light_snow"
+			weather.play_monitor_effect = FALSE
+			weather.play_sound = FALSE
+			weather.update()
+	else if(current_stage == "storm")
+		for(var/obj/weather/weather in connected_weather_turfs)
+			weather.icon_state = "snow_storm"
+			weather.play_monitor_effect = TRUE
+			weather.play_sound = TRUE
 			weather.update()
 
+/obj/weather/snow/flick_weather_icon(state)
+	flick("[icon_state]_to_[state]", src)
+
+
 /obj/weather_manager/snow/prepare_to_blowout()
+	.=..()
+	if(!.) //Родитель сказал Баста, выброс не нужен
+		return
 	for(var/obj/weather/weather in connected_weather_turfs)
 		weather.icon_state = "void_storm"
 		weather.play_monitor_effect = FALSE
@@ -45,7 +65,9 @@
 		weather.update()
 
 /obj/weather_manager/snow/start_blowout()
-	..()
+	.=..()
+	if(!.) //Родитель сказал Баста, выброс не нужен
+		return
 	//Выброс в виде белой мглы медленно перекатывается слева направо
 	var/start_x
 	var/list/blowout_weather_turfs = connected_weather_turfs.Copy()
@@ -60,10 +82,10 @@
 				weather.update()
 				weather.blowout_check_turf()
 				LAZYREMOVE(blowout_weather_turfs, weather)
-		sleep(7)
+		sleep(15)
 		start_x++
 	sleep(rand(10 SECONDS,20 SECONDS))
-	report_progress("DEBUG: Выброс в процессе. Начинается стадия авроры.")
+	report_progress("DEBUG ANOM: Выброс в процессе. Начинается стадия авроры.")
 	for(var/obj/weather/weather in connected_weather_turfs)
 		weather.blowout_status = FALSE
 		weather.icon_state = "void_storm"
@@ -71,7 +93,7 @@
 		if(z == aurora_structure.z)
 			aurora_structure.wake_up(rand(5 MINUTES, 9 MINUTES))
 	sleep(rand(10 MINUTES, 15 MINUTES))
-	report_progress("DEBUG: Выброс в процессе. Аврора окончена. Начинается очистка планеты.")
+	report_progress("DEBUG ANOM:: Выброс в процессе. Аврора окончена. Начинается перереспавн аномалий и артефактов.")
 	regenerate_anomalies_on_planet()
 	stop_blowout()
 
@@ -98,11 +120,7 @@
 		'mods/weather/sounds/snowstorm.ogg'
 	)
 	blowout_icon_state = "snow_blowout"
-	blowout_messages = list(
-		"...всё резко стихло...затишье перед бурей?...не к добру...",
-		"Всё стихло, а в небе что-то словно зажигается...это не есть хорошо.",
-		"Все чувства, даже шестое, проснулось в тебе...что-то грядёт."
-	)
+
 
 
 
