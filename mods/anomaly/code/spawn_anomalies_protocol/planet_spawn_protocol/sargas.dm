@@ -13,7 +13,7 @@
 	max_anomalies_ammout = 400
 	planetary_area = /area/exoplanet/swamp
 	map_generators = list(/datum/random_map/noise/exoplanet/swamp)
-	ruin_tags_blacklist = RUIN_HABITAT|RUIN_WATER|RUIN_HOT_ANOMALIES|RUIN_ELECTRA_ANOMALIES
+	ruin_tags_blacklist = RUIN_HABITAT|RUIN_WATER|RUIN_HOT_ANOMALIES|RUIN_ELECTRA_ANOMALIES|RUIN_GRAVI_ANOMALIES
 	surface_color = "#ffffff"
 	water_color = "#263908"
 	habitability_weight = HABITABILITY_EXTREME
