@@ -208,6 +208,7 @@
 	#include "../../mods/contraband_vending/_contraband_vending_includes.dm"
 	#include "../../mods/telecomms/_telecomms_includes.dm"
 	#include "../../mods/modernUI/_modernUI_includes.dm"
+	#include "../../mods/utility_items/code/vox_beacon.dm"
 
 	// UNUSED MODS
 	// Keep them in ascending alphabetical order too, please
