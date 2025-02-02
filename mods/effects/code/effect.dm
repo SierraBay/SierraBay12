@@ -1,7 +1,10 @@
 //ANOMALIES EFFECT
 
-#define GRAV_EFFECT_PLANE -5
+#define GRAV_EFFECT_PLANE -35
 #define GRAV_EFFECT_TARGET "*grav"
+
+#define SPIRAL_EFFECT_PLANE -34
+#define SPIRAL_EFFECT_TARGET "*spir"
 
 /atom/movable/renderer/grav
 	name = "Grav Effect"
@@ -11,13 +14,27 @@
 	mouse_opacity = MOUSE_OPACITY_UNCLICKABLE
 	renderer_flags = RENDERER_MAIN | RENDERER_SHARED
 
+
+
+/atom/movable/renderer/spir
+	name = "Spiral Effect"
+	group = RENDER_GROUP_NONE
+	plane = SPIRAL_EFFECT_PLANE
+	render_target_name = SPIRAL_EFFECT_TARGET
+	mouse_opacity = MOUSE_OPACITY_UNCLICKABLE
+	renderer_flags = RENDERER_MAIN | RENDERER_SHARED
+
+
+
 /atom/movable/renderer/scene_group/Initialize()
 	. = ..()
 	remove_filter("Grav Effect")
 	remove_filter("Warp Effect")
+	remove_filter("Spiral Effect")
 
 	add_filter("Grav Effect", 5, displacement_map_filter(render_source = GRAV_EFFECT_TARGET, size = 3))
 	add_filter("Warp Effect", 6, displacement_map_filter(render_source = "*warp", size = 5))
+	add_filter("Spiral Effect", 7, displacement_map_filter(render_source = SPIRAL_EFFECT_TARGET, size = 3))
 
 
 /obj/effect/gravity
@@ -41,6 +58,27 @@
 	animate(get_filter("ripple"), radius = 230, size = 0, time = 14, flags = ANIMATION_PARALLEL)
 	animate(radius = 0, size = 150, time = 0)
 
+/obj/effect/spiral
+	plane = SPIRAL_EFFECT_PLANE
+	appearance_flags = PIXEL_SCALE | NO_CLIENT_COLOR
+	icon = 'mods/effects/icons/288x288.dmi'
+	icon_state = "gravitational_swirl"
+	pixel_x = -128
+	pixel_y = -128
+	z_flags = ZMM_IGNORE
+
+/obj/effect/spiral/New(loc, ...)
+	. = ..()
+	add_filter("layer", 1, layering_filter(icon = icon(icon, "gravitational_spirl"), transform = matrix().Scale(0.15, 0.15)))
+	add_filter("wave_filter", 2, wave_filter(x = 25, y = 25, size = 100, offset = 50))
+	add_filter("ripple", 3, ripple_filter(radius = 0, size = 150, falloff = 0.5, repeat = 100))
+	START_PROCESSING(SSobj, src)
+
+/obj/effect/spiral/Process()
+	animate(src, time = 6, transform = matrix().Scale(0.5, 0.5))
+	animate(time = 14, transform = matrix(), flags = ANIMATION_PARALLEL)
+	animate(get_filter("wave_filter"), radius = 50, size = 0, time = 14, flags = ANIMATION_PARALLEL)
+	animate(get_filter("ripple"), radius = 230, size = 0, time = 14, flags = ANIMATION_PARALLEL)
 
 /obj/machinery/bluespacedrive
 	var/obj/effect/gravity/grav
@@ -139,3 +177,8 @@
 	var/atom/A = src//Here's a "Fint Ushami" and this will work even with images.
 	filter_data = null
 	A.filters = null
+
+
+
+#undef GRAV_EFFECT_PLANE
+#undef GRAV_EFFECT_TARGET
