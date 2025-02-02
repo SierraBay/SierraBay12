@@ -45,6 +45,7 @@
 		/obj/item/material/knife/kitchen/cleaver = 1
 	)
 	contraband = list(
+		/obj/item/storage/lunchbox/ntmisprint = 1,
 		/obj/item/material/knife/kitchen/cleaver/bronze = 1
 	)
 	rare_products = list(
