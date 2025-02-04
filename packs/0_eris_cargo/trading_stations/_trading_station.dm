@@ -222,7 +222,7 @@
 	else
 		initialized = TRUE
 	update_time = rand(6, 8) MINUTES
-	addtimer(new Callback(src, .proc/UpdateTick), update_time, TIMER_STOPPABLE)
+	addtimer(new Callback(src, PROC_REF(UpdateTick)), update_time, TIMER_STOPPABLE)
 	update_timer_start = world.time
 
 // The station will restock based on base_income + wealth, then check unlockables.
@@ -251,12 +251,12 @@
 					"cost" = cost,
 					"to add" = amount_to_add,
 					"current amt" = current_amount)
-				var/restock_index = restock_candidates.len + 1
+				var/restock_index = length(restock_candidates) + 1
 				restock_candidates.Insert(restock_index, restock_index)
 				restock_candidates[restock_index] = content
 
 	for(var/count in 1 to 20)
-		if(!restock_candidates.len || !wealth)
+		if(!length(restock_candidates) || !wealth)
 			break
 
 		var/list/good_packet = pick(restock_candidates)

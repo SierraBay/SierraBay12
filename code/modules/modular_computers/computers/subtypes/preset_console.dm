@@ -141,9 +141,9 @@
 
 /obj/machinery/computer/modular/preset/supply_public
 	default_software = list(
-		//datum/computer_file/program/supply [sierra-remove]
+//		/datum/computer_file/program/supply [sierra-remove]
 	)
-	//autorun_program = /datum/computer_file/program/supply [sierra-remove]
+	autorun_program = /datum/computer_file/program/supply
 
 /obj/machinery/computer/modular/preset/full/ert
 	default_software = list(

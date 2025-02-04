@@ -55,7 +55,7 @@ SUBSYSTEM_DEF(supply)
 		/mob/living/carbon/slime,
 		)
 
-/datum/controller/subsystem/supply/Initialize()
+/datum/controller/subsystem/supply/Initialize(start_uptime)
 	. = ..()
 	for(var/faction_type in typesof(/datum/trade_faction))
 		var/datum/trade_faction/TF = new faction_type
@@ -272,7 +272,7 @@ SUBSYSTEM_DEF(supply)
 // Ordering
 
 /datum/controller/subsystem/supply/proc/BuildOrder(requesting_account, reason, list/shopping_list)
-	if(!requesting_account || !shopping_list || !shopping_list.len)
+	if(!requesting_account || !shopping_list || !length(shopping_list))
 		return
 
 	var/cost = CollectPriceForList(shopping_list)
