@@ -200,6 +200,7 @@
 			to_chat(user, SPAN_WARNING("Turn off \the [src] first.."))
 			return
 
+<<<<<<< ours
 		else if(!anchored)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 			to_chat(user, "You secure the external reinforcing bolts to the floor.")
@@ -211,6 +212,13 @@
 			to_chat(user, "You undo the external reinforcing bolts.")
 			src.anchored = FALSE
 			return
+=======
+/obj/machinery/shieldwallgen/can_anchor(obj/item/tool, mob/user, silent)
+	if (active)
+		to_chat(user, SPAN_WARNING("Turn off \the [src] first."))
+		return FALSE
+	return ..()
+>>>>>>> theirs
 
 	if(istype(W, /obj/item/card/id)||istype(W, /obj/item/modular_computer))
 		if (src.allowed(user))
