@@ -15,7 +15,7 @@
 
 /turf/space/Initialize()
 	. = ..()
-	update_starlight()
+	AMBIENT_LIGHT_QUEUE_TURF(src) //Doesnt really matter if we're considered outside or not
 
 	set_extension(src, /datum/extension/support_lattice)
 
@@ -35,11 +35,12 @@
 	return INITIALIZE_HINT_LATELOAD // oh no! we need to switch to being a different kind of turf!
 
 /turf/space/Destroy()
-	remove_starlight()
 	// Cleanup cached z_eventually_space values above us.
 	if (above)
 		var/turf/T = src
 		while ((T = GetAbove(T)))
+			if (istype(T, /turf/space))
+				break
 			T.z_eventually_space = FALSE
 	return ..()
 
@@ -57,6 +58,7 @@
 /turf/space/is_solid_structure()
 	return locate(/obj/structure/lattice, src) || locate(/obj/structure/catwalk, src) //counts as solid structure if it has a lattice or catwalk
 
+<<<<<<< ours
 /turf/space/proc/remove_starlight()
 	if(starlit)
 		replace_ambient_light(SSskybox.background_color, null, config.starlight, 0)
@@ -78,6 +80,8 @@
 	if(TURF_IS_AMBIENT_LIT_UNSAFE(src))
 		remove_starlight()
 
+=======
+>>>>>>> theirs
 /turf/space/use_tool(obj/item/C, mob/living/user, list/click_params)
 	var/datum/extension/support_lattice/sl = get_extension(src, /datum/extension/support_lattice)
 	if (sl.try_construct(C, user))

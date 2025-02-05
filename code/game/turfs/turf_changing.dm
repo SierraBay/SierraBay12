@@ -90,8 +90,8 @@
 
 	SSair.mark_for_update(src) //handle the addition of the new turf.
 
-	for(var/turf/space/S in range(W,1))
-		S.update_starlight()
+	for(var/turf/space/S in range(W,1)) //Special handling for space, needs to check if it needs to illuminate us!
+		AMBIENT_LIGHT_QUEUE_TURF(S)
 
 	W.above = old_above
 
