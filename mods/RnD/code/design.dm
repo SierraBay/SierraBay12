@@ -68,6 +68,7 @@
 	F.uniquekey = uniquekey
 	return F
 
+///////////////////////////////// Designs //////////////////////////////////////////////////////////////////////////
 
 /datum/design/item/tool/jetpack
 	shortname = "Jetpack"
@@ -85,7 +86,6 @@
 	req_tech = list(TECH_DATA = 2)
 	build_path = /obj/item/stock_parts/circuitboard/area_atmos
 	sort_string = "KCAAR"
-
 
 
 /datum/design/item/away/radio_jammer
@@ -214,3 +214,7 @@
 	materials = list(MATERIAL_STEEL = 50000, MATERIAL_GLASS = 40000)
 	build_path = /obj/structure/ship_munition/disperser_charge/mining
 	sort_string = "ZAAAN"
+
+/datum/antagonist/cultist/Initialize()
+	. = ..()
+	global.Tier1Runes = list()
