@@ -183,7 +183,7 @@
 	name = "explosive disperser charge"
 	desc = "An explosive disperser charge."
 	id = "explosive_disperser_charge"
-	req_tech = list(TECH_MATERIAL = 4, TECH_MAGNET = 3, TECH_ESOTERIC = 4)
+	req_tech = list(TECH_MATERIAL = 4, TECH_ENGINEERING = 3)
 	materials = list(MATERIAL_STEEL = 40000, MATERIAL_GLASS = 30000, MATERIAL_PHORON = 15000)
 	build_path = /obj/structure/ship_munition/disperser_charge/explosive
 	sort_string = "ZAAAK"
@@ -192,7 +192,7 @@
 	name = "fire disperser charge"
 	desc = "A fire disperser charge."
 	id = "fire_disperser_charge"
-	req_tech = list(TECH_MATERIAL = 4, TECH_MAGNET = 3, TECH_ESOTERIC = 4)
+	req_tech = list(TECH_MATERIAL = 4, TECH_ENGINEERING = 3)
 	materials = list(MATERIAL_STEEL = 40000, MATERIAL_GLASS = 30000, MATERIAL_PHORON = 10000)
 	build_path = /obj/structure/ship_munition/disperser_charge/fire
 	sort_string = "ZAAAL"
@@ -201,7 +201,7 @@
 	name = "emp disperser charge"
 	desc = "An emp disperser charge."
 	id = "emp_disperser_charge"
-	req_tech = list(TECH_MATERIAL = 4, TECH_MAGNET = 3, TECH_ESOTERIC = 4)
+	req_tech = list(TECH_MATERIAL = 4, TECH_ENGINEERING = 3)
 	materials = list(MATERIAL_STEEL = 40000, MATERIAL_GLASS = 30000, MATERIAL_URANIUM = 10000)
 	build_path = /obj/structure/ship_munition/disperser_charge/emp
 	sort_string = "ZAAAM"
@@ -210,7 +210,98 @@
 	name = "mining disperser charge"
 	desc = "A mining disperser charge."
 	id = "mining_disperser_charge"
-	req_tech = list(TECH_MATERIAL = 4, TECH_MAGNET = 3, TECH_ESOTERIC = 4)
+	req_tech = list(TECH_MATERIAL = 4, TECH_ENGINEERING = 3)
 	materials = list(MATERIAL_STEEL = 50000, MATERIAL_GLASS = 40000)
 	build_path = /obj/structure/ship_munition/disperser_charge/mining
 	sort_string = "ZAAAN"
+
+/datum/design/item/away/military_pistol_optimus
+	name = "military pistol"
+	desc = "A HelTek Optimus. A heavy pistol best known as one of the Confederation Navy's service weapons."
+	id = "military_pistol_optimus"
+	req_tech = list(TECH_MATERIAL = 4)
+	materials = list(MATERIAL_STEEL = 6000, MATERIAL_GLASS = 3000, MATERIAL_PLASTIC = 5000)
+	build_path = /obj/item/gun/projectile/pistol/optimus
+	sort_string = "ZAAAO"
+
+/datum/design/item/away/military_pistol_magnum
+	name = "military pistol"
+	desc = "The HelTek Magnus, a robust handgun that uses high-caliber ammo. Issued to Confederation Pioneers for holster sized defence."
+	id = "military_pistol_magnum"
+	req_tech = list(TECH_MATERIAL = 4)
+	materials = list(MATERIAL_STEEL = 6000, MATERIAL_GLASS = 5000, MATERIAL_PLASTIC = 8000)
+	build_path = /obj/item/gun/projectile/pistol/magnum_pistol
+	sort_string = "ZAAAP"
+
+/datum/design/item/away/military_pistol_bobcat
+	name = "military pistol"
+	desc = "The Bobcat, a handgun that uses high-caliber ammo. Issued to Confederation Pioneers for holster sized defence."
+	id = "military_pistol_bobcat"
+	req_tech = list(TECH_MATERIAL = 4)
+	materials = list(MATERIAL_STEEL = 6000, MATERIAL_GLASS = 4000, MATERIAL_PLASTIC = 4000)
+	build_path = /obj/item/gun/projectile/pistol/bobcat
+	sort_string = "ZAAAQ"
+
+
+/datum/design/item/away/battlerifle
+	name = "battle rifle"
+	desc = "The battle rifle hasn't changed much since its inception in the mid 20th century. Built to last in the toughest conditions, the select fire rifle is well reguarded as a dependable weapon."
+	id = "battlerifle"
+	req_tech = list(TECH_COMBAT = 4, TECH_MATERIAL = 1, TECH_ESOTERIC = 5)
+	materials = list(MATERIAL_STEEL = 20000, MATERIAL_DIAMOND = 8000, MATERIAL_SILVER = 12000)
+	build_path = /obj/item/gun/projectile/automatic/battlerifle
+	sort_string = "ZAAAR"
+
+/datum/design/item/away/machine_pistol
+	name = "machine pistol"
+	desc = "A machine pistol, with a high capacity and a high rate of fire."
+	id = "machine_pistol"
+	req_tech = list(TECH_COMBAT = 4, TECH_MATERIAL = 1, TECH_ESOTERIC = 3)
+	materials = list(MATERIAL_STEEL = 15000, MATERIAL_GLASS = 6000, MATERIAL_SILVER = 10000)
+	build_path = /obj/item/gun/projectile/automatic/machine_pistol
+	sort_string = "ZAAAS"
+
+/datum/design/item/away/retro_laser
+	name = "retro laser"
+	desc = "An older model of the basic lasergun. Nevertheless, it is still quite deadly and easy to maintain, making it a favorite amongst pirates and other outlaws."
+	id = "retro_laser"
+	req_tech = list(TECH_MATERIAL = 2)
+	materials = list(MATERIAL_STEEL = 8000, MATERIAL_GLASS = 8000, MATERIAL_GOLD = 2000)
+	build_path = /obj/item/gun/energy/retro
+	sort_string = "ZAAAT"
+
+/datum/design/item/away/doublebarrel
+	name = "doublebarrel shotgun"
+	desc = "A classic double-barreled shotgun. In production for centuries, it has proliferated across human space, earning a sizable reputation for being simple and effective. Produced by Novaya Zemlya Arms."
+	id = "doublebarrel"
+	req_tech = list(TECH_COMBAT = 2, TECH_MATERIAL = 2)
+	materials = list(MATERIAL_STEEL = 8000, MATERIAL_WOOD = 12000, MATERIAL_PLASTIC = 2000)
+	build_path = /obj/item/gun/projectile/shotgun/doublebarrel
+	sort_string = "ZAAAU"
+
+/datum/design/item/away/mine
+	name = "mine"
+	desc = "An explosive device that tends to detonate if you look at it wrong."
+	id = "mine"
+	req_tech = list(TECH_COMBAT = 2, TECH_MATERIAL = 2)
+	materials = list(MATERIAL_STEEL = 6000, MATERIAL_GLASS = 8000, MATERIAL_URANIUM = 6000)
+	build_path = /obj/structure/mine
+	sort_string = "ZAAAV"
+
+/datum/design/item/stunbaton
+	name = "stun baton"
+	desc = "A baton that can stun a target."
+	id = "stunbaton"
+	req_tech = list(TECH_COMBAT = 2, TECH_MATERIAL = 2)
+	materials = list(MATERIAL_STEEL = 8000, MATERIAL_PLASTIC = 10000)
+	build_path = /obj/item/melee/baton
+	sort_string = "ZAAAW"
+
+/datum/design/item/away/katana
+	name = "katana"
+	desc = "A katana, a traditional Japanese sword."
+	id = "katana"
+	req_tech = list(TECH_MATERIAL = 2)
+	materials = list(MATERIAL_STEEL = 20000, MATERIAL_SILVER = 10000)
+	build_path = /obj/item/material/sword/katana
+	sort_string = "ZAAAX"

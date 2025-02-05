@@ -139,7 +139,8 @@
 /obj/item/stock_parts/computer/hard_drive/proc/check_away_zone()
 	var/area/area = get_area(src)
 	if(area)
-		var/list/reserchpointareas = list(/area/lar_maria, /area/casino, /area/meatstation, /area/mine, /area/bluespaceriver)
+		var/list/reserchpointareas = list(/area/lar_maria, /area/casino, /area/meatstation, /area/mine, /area/bluespaceriver,
+		/area/constructionsite, /area/lost_supply_base, /area/magshield, /area/map_template/oldlab2, /area/map_template/marooned)
 		// Тут можно добавлять новые зоны где могут спавнится флешки и дизайны в компах
 		for(var/a in reserchpointareas)
 			if(area.type in subtypesof(a))

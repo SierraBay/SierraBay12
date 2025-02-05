@@ -6,7 +6,7 @@
 
 	x = 0.1
 	y = 0.5
-	icon = "stunbaton"
+	icon = "add_sec_eq"
 
 	required_technologies = list()
 	required_tech_levels = list()
@@ -36,13 +36,13 @@
 
 	x = 0.2
 	y = 0.5
-	icon = "add_sec_eq"
+	icon = "stunbaton"
 
 	required_technologies = list(/datum/technology/combat)
 	required_tech_levels = list()
 	cost = 500
 
-	unlocks_designs = list("security_hud")
+	unlocks_designs = list("stunbaton")
 
 /datum/technology/combat/nleth_eq
 	name = "Non-lethal Eqiupment"
