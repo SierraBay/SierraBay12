@@ -214,7 +214,3 @@
 	materials = list(MATERIAL_STEEL = 50000, MATERIAL_GLASS = 40000)
 	build_path = /obj/structure/ship_munition/disperser_charge/mining
 	sort_string = "ZAAAN"
-
-/datum/antagonist/cultist/Initialize()
-	. = ..()
-	global.Tier1Runes = list()
