@@ -5,11 +5,6 @@
 	var/turf/prev_loc
 
 //Подбор артефакта
-
-/obj/item/artefact/Initialize()
-	. = ..()
-	prev_loc = get_turf(src)
-
 /obj/item/artefact/attack_hand(mob/user as mob)
 	if(inmech_sec(user))
 		to_chat(user, SPAN_WARNING("Вы недотягиваетесь."))
@@ -127,6 +122,8 @@
 /obj/item/artefact/proc/rub_interaction(mob/living/user)
 	return
 
+/obj/item/artefact/rvach_destroy_effect()
+	delete_artefact()
 
 ///ВЗАИМОДЕЙСТВИЯ ОТ МАШИНЫ ДЛЯ ИЗУЧЕНИЙ И АНАЛИЗА
 /obj/item/artefact/proc/urm_radiation(mob/living/user)

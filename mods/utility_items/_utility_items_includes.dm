@@ -35,6 +35,9 @@
 #include "code/adherent_armor.dm"
 #include "code/security.dm"
 #include "code/FBP_vox.dm"
-#include "code/on_floor_icon.dm"
 #include "code/rndloadout.dm"
+#include "code/money_resprite.dm"
+#include "code/laders_stairs_grabs.dm"
+#include "code/screen_movable_fix.dm"
+#include "code/skills_desc.dm"
 #endif

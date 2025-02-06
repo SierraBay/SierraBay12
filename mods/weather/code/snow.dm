@@ -54,20 +54,17 @@
 	flick("[icon_state]_to_[state]", src)
 
 
-/obj/weather_manager/snow/prepare_to_blowout()
-	.=..()
-	if(!.) //Родитель сказал Баста, выброс не нужен
-		return
-	for(var/obj/weather/weather in connected_weather_turfs)
-		weather.icon_state = "void_storm"
-		weather.play_monitor_effect = FALSE
-		weather.play_sound = FALSE
-		weather.update()
-
 /obj/weather_manager/snow/start_blowout()
 	.=..()
 	if(!.) //Родитель сказал Баста, выброс не нужен
 		return
+	change_stage("calm", FALSE, FALSE)
+	sleep(delay_between_message_and_blowout)
+	report_progress("DEBUG ANOM: Начинается выброс. Стадия - начало.")
+	for(var/mob/living/carbon/human/picked_human in GLOB.living_players)
+		if(get_z(picked_human) == get_z(src))
+			if(must_message_about_blowout)
+				message_about_blowout(picked_human)
 	//Выброс в виде белой мглы медленно перекатывается слева направо
 	var/start_x
 	var/list/blowout_weather_turfs = connected_weather_turfs.Copy()
@@ -82,13 +79,11 @@
 				weather.update()
 				weather.blowout_check_turf()
 				LAZYREMOVE(blowout_weather_turfs, weather)
-		sleep(15)
+		sleep(1.5 SECONDS)
 		start_x++
 	sleep(rand(10 SECONDS,20 SECONDS))
-	report_progress("DEBUG ANOM: Выброс в процессе. Начинается стадия авроры.")
-	for(var/obj/weather/weather in connected_weather_turfs)
-		weather.blowout_status = FALSE
-		weather.icon_state = "void_storm"
+	report_progress("DEBUG ANOM: Выброс в процессе. Начинается стадия авроры, пробуждаем технику и устройва..")
+	change_stage("calm", FALSE, FALSE)
 	for(var/obj/structure/aurora/aurora_structure in SSweather.aurora_sctructures)
 		if(z == aurora_structure.z)
 			aurora_structure.wake_up(rand(5 MINUTES, 9 MINUTES))

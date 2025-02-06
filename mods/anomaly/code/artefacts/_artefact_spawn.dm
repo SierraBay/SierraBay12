@@ -64,5 +64,4 @@
 		var/artifact = pick(artefacts)
 		var/obj/item/artefact/spawned_artefact =  new artifact(result)
 		spawned_artefact.connected_to_anomaly = TRUE
-		LAZYADD(SSanom.artefacts_list_in_world ,spawned_artefact)
 		SSanom.artefacts_spawned_by_game++

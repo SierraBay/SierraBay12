@@ -40,3 +40,9 @@
 
 /obj/anomaly/electra/three_and_three/preload
 	need_preload = TRUE
+
+/obj/anomaly/tramplin/powerfull
+	random_throw_dir = FALSE
+	ranzomize_with_initialize = FALSE
+	range_of_throw = 10
+	speed_of_throw = 10
