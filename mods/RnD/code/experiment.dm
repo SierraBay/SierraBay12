@@ -137,12 +137,12 @@ var/global/list/rnd_server_list = list()
 
 	for(var/effect in I.scanned_plants)
 		var/list/effects = list(
-			"It is well adapted to low pressure levels." = 1500,
-			"It is well adapted to high pressure levels." = 1500,
-			"It is well adapted to a range of temperatures." = 1500,
-			"It is very sensitive to temperature shifts." = 1500,
-			"It is well adapted to a range of light levels." = 1500,
-			"It is very sensitive to light level shifts." = 1500,
+			"It is well adapted to low pressure levels." = 1000,
+			"It is well adapted to high pressure levels." = 1000,
+			"It is well adapted to a range of temperatures." = 1000,
+			"It is very sensitive to temperature shifts." = 1000,
+			"It is well adapted to a range of light levels." = 1000,
+			"It is very sensitive to light level shifts." = 1000,
 			"It is highly sensitive to toxins." = 1000,
 			"It is remarkably resistant to toxins." = 1000,
 			"It is highly sensitive to pests." = 1000,
@@ -150,27 +150,27 @@ var/global/list/rnd_server_list = list()
 			"It is highly sensitive to weeds." = 1000,
 			"It is remarkably resistant to weeds." = 1000,
 			"It is able to be planted outside of a tray." = 1000,
-			"It is a robust and vigorous vine that will spread rapidly." = 2000,
+			"It is a robust and vigorous vine that will spread rapidly." = 1500,
 			"It is carnivorous and will eat tray pests for sustenance." = 1000,
-			"It is carnivorous and poses a significant threat to living things around it." = 2000,
+			"It is carnivorous and poses a significant threat to living things around it." = 1500,
 			"It is capable of parisitizing and gaining sustenance from tray weeds." = 1000,
-			"It will periodically alter the local temperature by " = 2000,
-			"bio-luminescent" = 2000,
-			"The fruit will function as a battery if prepared appropriately." = 2000,
-			"The fruit is covered in stinging spines." = 2000,
+			"It will periodically alter the local temperature by " = 1500,
+			"bio-luminescent" = 1500,
+			"The fruit will function as a battery if prepared appropriately." = 1500,
+			"The fruit is covered in stinging spines." = 1500,
 			"The fruit is soft-skinned and juicy." = 1000,
-			"The fruit is excessively juicy." = 2000,
-			"The fruit is internally unstable."	= 3000,
-			"The fruit is temporal/spatially unstable." = 3000,
-			"It will release gas into the environment." = 3000,
-			"It will remove gas from the environment." = 3000
+			"The fruit is excessively juicy." = 1500,
+			"The fruit is internally unstable."	= 2000,
+			"The fruit is temporal/spatially unstable." = 2000,
+			"It will release gas into the environment." = 2000,
+			"It will remove gas from the environment." = 2000
 	)
 		for(var/l in effects)
 			if(findtext(effect, l))
 				if(!(l in saved_plants))
 					points += effects[l]
 					saved_plants += l
-		points = I.potency/20 * points
+		points *= I.potency/40
 
 	for(var/s in I.scanned_spectrometers)
 		if(s in saved_spectrometers)

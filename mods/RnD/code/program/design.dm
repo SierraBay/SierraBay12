@@ -215,13 +215,13 @@
 	build_path = /obj/structure/ship_munition/disperser_charge/mining
 	sort_string = "ZAAAN"
 
-/datum/design/item/away/military_pistol_optimus
-	name = "military pistol"
-	desc = "A HelTek Optimus. A heavy pistol best known as one of the Confederation Navy's service weapons."
-	id = "military_pistol_optimus"
+/datum/design/item/away/military_sec
+	name = "pistol"
+	desc = "The NT Mk58 is a cheap, ubiquitous sidearm, produced by a NanoTrasen subsidiary. Found pretty much everywhere humans are."
+	id = "military_sec"
 	req_tech = list(TECH_MATERIAL = 4)
 	materials = list(MATERIAL_STEEL = 6000, MATERIAL_GLASS = 3000, MATERIAL_PLASTIC = 5000)
-	build_path = /obj/item/gun/projectile/pistol/optimus
+	build_path = /obj/item/gun/projectile/pistol/sec
 	sort_string = "ZAAAO"
 
 /datum/design/item/away/military_pistol_magnum
@@ -233,13 +233,13 @@
 	build_path = /obj/item/gun/projectile/pistol/magnum_pistol
 	sort_string = "ZAAAP"
 
-/datum/design/item/away/military_pistol_bobcat
-	name = "military pistol"
-	desc = "The Bobcat, a handgun that uses high-caliber ammo. Issued to Confederation Pioneers for holster sized defence."
+/datum/design/item/away/gyropistol
+	name = "gyrojet pistol"
+	desc = "A bulky pistol designed to fire self propelled rounds."
 	id = "military_pistol_bobcat"
 	req_tech = list(TECH_MATERIAL = 4)
 	materials = list(MATERIAL_STEEL = 6000, MATERIAL_GLASS = 4000, MATERIAL_PLASTIC = 4000)
-	build_path = /obj/item/gun/projectile/pistol/bobcat
+	build_path = /obj/item/gun/projectile/pistol/gyropistol
 	sort_string = "ZAAAQ"
 
 

@@ -258,7 +258,7 @@
 	required_tech_levels = list()
 	cost = 2000
 
-	unlocks_designs = list("arc_welder", "power_drill", "jaws_of_life", "experimental_welder", "price_scanner","hand_rcd")
+	unlocks_designs = list("arc_welder", "power_drill", "jaws_of_life", "experimental_welder", "price_scanner","hand_rcd","multimeter")
 
 /datum/technology/engineering/crusher
 	name = "Crusher"
