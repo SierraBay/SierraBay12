@@ -40,9 +40,7 @@
 #include "code/laders_stairs_grabs.dm"
 #include "code/screen_movable_fix.dm"
 #include "code/skills_desc.dm"
-#include "code\utility_items_resprites.dm"
-#include "code/on_floor_icon.dm"
+#include "code/utility_items_resprites.dm"
 #include "code/changed_sprite.dm"
-#include "code/rndloadout.dm"
 #include "code/dls_loadout.dm"
 #endif
