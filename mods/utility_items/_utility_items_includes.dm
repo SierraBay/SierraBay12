@@ -40,4 +40,5 @@
 #include "code/laders_stairs_grabs.dm"
 #include "code/screen_movable_fix.dm"
 #include "code/skills_desc.dm"
+#include "code\utility_items_resprites.dm"
 #endif
