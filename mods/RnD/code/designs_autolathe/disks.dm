@@ -3,6 +3,7 @@
 	icon_state = "red"
 	designs = list(
 		/datum/design/autolathe/arms_ammo,
+		/datum/design/autolathe/arms_ammo/net_shell,
 		/datum/design/autolathe/arms_ammo/shotgun_holder,
 		/datum/design/autolathe/arms_ammo/shotgun_blanks,
 		/datum/design/autolathe/arms_ammo/flaregun,

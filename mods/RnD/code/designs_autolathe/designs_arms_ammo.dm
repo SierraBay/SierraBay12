@@ -6,7 +6,7 @@
 
 
 /datum/design/autolathe/arms_ammo/net_shell
-	name = "net shell"
+	name = "ammunition (net shell)"
 	build_path = /obj/item/net_shell
 
 /datum/design/autolathe/arms_ammo/shotgun_holder

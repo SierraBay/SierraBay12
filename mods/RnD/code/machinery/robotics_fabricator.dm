@@ -3,6 +3,12 @@
 	wires = /datum/wires/fabricator/robotics_fabricator
 	var/obj/item/stock_parts/computer/hard_drive/portable/disk
 
+/obj/machinery/robotics_fabricator/Initialize()
+	files = new /datum/research(src) //Setup the research data holder.
+	manufacturer = basic_robolimb.company
+	. = ..()
+
+
 /obj/machinery/robotics_fabricator/attack_hand(mob/user)
 	if(!(fab_status_flags & FAB_HACKED))
 		req_access = list(access_robotics)
@@ -138,7 +144,7 @@
 			disk.forceMove(get_turf(src))
 			to_chat(usr, SPAN_NOTICE("You remove \the [disk] from \the [src]."))
 			disk = null
-			update_categories()
+			sync()
 			return TOPIC_HANDLED
 
 
@@ -163,7 +169,7 @@
 
 	if(istype(I, /obj/item/stock_parts/computer/hard_drive/portable))
 		insert_disk(user, I)
-		update_categories()
+		sync()
 		return TRUE
 
 	if(!istype(I, /obj/item/stack/material))
@@ -209,19 +215,16 @@
 		if(!D.build_path || !(D.build_type & MECHFAB))
 			continue
 		categories |= D.category
+
+/obj/machinery/robotics_fabricator/sync()
+	for(var/obj/machinery/computer/rdconsole/RDC in view(11, src))
+		if(!RDC.sync)
+			sync_message = "Error: no console found."
+			return
+		files = RDC.files
+		sync_message = "Sync complete."
+		update_categories()
 	if(disk)
 		categories |= "Disk"
 	else if(!disk)
 		categories -= "Disk"
-
-/obj/machinery/robotics_fabricator/sync()
-	var/obj/machinery/computer/rdconsole/RDC
-	if(!(RDC in view(11, src)))
-		sync_message = "Error: no console found."
-		return
-	for(RDC in get_area_all_atoms(get_area(src)))
-		if(!RDC.sync)
-			continue
-		files = RDC.files
-	sync_message = "Sync complete."
-	update_categories()

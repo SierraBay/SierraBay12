@@ -31,12 +31,13 @@
 	var/manufacturer = null
 	var/sync_message = ""
 
+/* [SIERRA-REMOVE] - MODPACK_RND
 /obj/machinery/robotics_fabricator/Initialize()
 	files = new /datum/research(src) //Setup the research data holder.
 	manufacturer = basic_robolimb.company
 	update_categories()
 	. = ..()
-
+*/
 /obj/machinery/robotics_fabricator/Process()
 	if(stat)
 		return
