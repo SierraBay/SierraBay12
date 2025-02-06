@@ -216,7 +216,7 @@
 
 /obj/machinery/robotics_fabricator/sync()
 	var/obj/machinery/computer/rdconsole/RDC
-	if(!RDC in view(11, src))
+	if(!(RDC in view(11, src)))
 		sync_message = "Error: no console found."
 		return
 	for(RDC in get_area_all_atoms(get_area(src)))
