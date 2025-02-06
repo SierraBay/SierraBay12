@@ -694,6 +694,18 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 		if (!selected || !istype(selected))
 			return
 
+		if (selected.maximum_count && length(pref.picked_traits[selected.type]) >= selected.maximum_count)
+			to_chat(usr, SPAN_WARNING("\The [selected.name] trait can only be selected [selected.maximum_count] times."))
+			return
+
+		for (var/existing_type as anything in pref.picked_traits)
+			var/singleton/trait/existing_trait = GET_SINGLETON(existing_type)
+			if (!existing_trait || !istype(existing_trait))
+				continue
+			if (LAZYISIN(existing_trait.incompatible_traits, selected.type) || LAZYISIN(selected.incompatible_traits, existing_type))
+				to_chat(usr, SPAN_WARNING("\The [selected.name] trait is incompatible with [existing_trait.name]."))
+				return
+
 		var/list/possible_levels = selected.levels
 		var/selected_level
 		if (length(possible_levels) > 1)
@@ -716,14 +728,6 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 
 			var/additional_input = input(user, "[selected.addprompt]", "Select Option") as null | anything in sanitized_metaoptions
 			additional_data = sanitized_metaoptions[additional_input]
-
-		for (var/existing_type as anything in pref.picked_traits)
-			var/singleton/trait/existing_trait = GET_SINGLETON(existing_type)
-			if (!existing_trait || !istype(existing_trait))
-				continue
-			if (LAZYISIN(existing_trait.incompatible_traits, selected.type) || LAZYISIN(selected.incompatible_traits, existing_type))
-				to_chat(usr, SPAN_WARNING("The [selected.name] trait is incompatible with [existing_trait.name]."))
-				return
 
 		if (additional_data)
 			var/list/interim = list()
