@@ -1,47 +1,3 @@
-/obj/item/photo/use_tool(obj/item/P, mob/living/user)
-	. = ..()
-	if(istype(P, /obj/item/flame))
-		burnphoto(P, user)
-
-/obj/item/photo/proc/burnphoto(obj/item/flame/P, mob/user)
-	var/class = "warning"
-
-	if(P.lit && !user.restrained())
-		if(istype(P, /obj/item/flame/lighter/zippo))
-			class = "rose"
-
-		user.visible_message("<span class='[class]'>[user] holds \the [P] up to \the [src], it looks like \he's trying to burn it!</span>", \
-		"<span class='[class]'>You hold \the [P] up to \the [src], burning it slowly.</span>")
-
-		if (do_after(user, 5 SECONDS, src, DO_PUBLIC_UNIQUE))
-			if(get_dist(src, user) < 2 && user.get_active_hand() == P && P.lit)
-				user.visible_message("<span class='[class]'>[user] burns right through \the [src], turning it to ash. It flutters through the air before settling on the floor in a heap.</span>", \
-				"<span class='[class]'>You burn right through \the [src], turning it to ash. It flutters through the air before settling on the floor in a heap.</span>")
-				new /obj/decal/cleanable/ash(get_turf(src))
-				qdel(src)
-			else
-				to_chat(user, "<span class='warning'>You must hold \the [P] steady to burn \the [src].</span>")
-		else
-			to_chat(user, "<span class='warning'>You must hold \the [P] steady to burn \the [src].</span>")
-
-/obj/item/stock_parts/computer/hard_drive/ui_data()
-	var/list/data = list(
-		"disk_name" = get_disk_name(),
-		"max_capacity" = max_capacity,
-		"used_capacity" = used_capacity
-	)
-
-	var/list/files = list()
-	for(var/datum/computer_file/F in stored_files)
-		files.Add(list(list(
-			"filename" = F.filename,
-			"filetype" = F.filetype,
-			"size" = F.size,
-			"undeletable" = F.undeletable
-		)))
-	data["files"] = files
-	return data
-
 /obj/item/stock_parts/computer/hard_drive/proc/get_disk_name()
 	var/datum/computer_file/data/text/D = find_file_by_name("DISK_NAME")
 	if(!istype(D))
@@ -136,6 +92,12 @@
 /area/meatstation
 	name = "Meat Station"
 
+/area/lost_supply_base
+	name = "Abandoned Supply Station"
+
+/area/magshield
+	name = "Magshield"
+
 /obj/item/stock_parts/computer/hard_drive/proc/check_away_zone()
 	var/area/area = get_area(src)
 	if(area)
@@ -176,76 +138,3 @@
 			verbs += /obj/machinery/computer/modular/proc/eject_usb
 		else if(prob(20))
 			disk.install_away_designs()
-
-
-/obj/machinery/smartfridge/disks
-	name = "\improper Disks Storage"
-	desc = "When you need disks fast!"
-	icon_state = "smartfridge"
-	icon_base = "smartfridge"
-	icon_contents = "disk"
-	icon = 'mods/RnD/icons/vending.dmi'
-	accepted_types = list(
-		/obj/item/stock_parts/computer/hard_drive/portable)
-
-/obj/machinery/smartfridge/disks/New()
-	. = ..()
-	on_update_icon()
-
-/obj/machinery/smartfridge/disks/accept_check(obj/item/O as obj)
-	if(istype(O, /obj/item/stock_parts/computer/hard_drive/portable))
-		return 1
-	return 0
-
-/obj/machinery/smartfridge/disks/on_update_icon()
-	ClearOverlays()
-	if(MACHINE_IS_BROKEN(src))
-		icon_state = "[icon_state]-broken"
-	else
-		icon_state = icon_base
-
-	if(panel_open)
-		AddOverlays(image(icon, "[icon_base]-panel"))
-
-	var/image/I
-	var/is_off = ""
-	if(stat & MACHINE_STAT_NOPOWER)
-		is_off = "-off"
-
-	// Fridge contents
-	switch(length(contents))
-		if(0)
-			I = image(icon, "empty[is_off]")
-		if(1 to 2)
-			I = image(icon, "[icon_contents]-1[is_off]")
-		if(3 to 5)
-			I = image(icon, "[icon_contents]-2[is_off]")
-		else
-			I = image(icon, "[icon_contents]-3[is_off]")
-	AddOverlays(I)
-
-/obj/item/stock_parts/circuitboard/protolathe
-	name = "circuit board (protolathe)"
-	build_path = /obj/machinery/fabricator/rnd/protolathe
-	board_type = "machine"
-	origin_tech = list(TECH_ENGINEERING = 2, TECH_DATA = 2)
-	req_components = list(
-							/obj/item/stock_parts/matter_bin = 2,
-							/obj/item/stock_parts/manipulator = 2,
-							/obj/item/reagent_containers/glass/beaker = 2)
-	additional_spawn_components = list(
-		/obj/item/stock_parts/power/apc/buildable = 1
-	)
-
-/obj/item/stock_parts/circuitboard/circuit_imprinter
-	name = "circuit board (circuit imprinter)"
-	build_path = /obj/machinery/fabricator/rnd/imprinter
-	board_type = "machine"
-	origin_tech = list(TECH_ENGINEERING = 2, TECH_DATA = 2)
-	req_components = list(
-							/obj/item/stock_parts/matter_bin = 1,
-							/obj/item/stock_parts/manipulator = 1,
-							/obj/item/reagent_containers/glass/beaker = 2)
-	additional_spawn_components = list(
-		/obj/item/stock_parts/power/apc/buildable = 1
-	)

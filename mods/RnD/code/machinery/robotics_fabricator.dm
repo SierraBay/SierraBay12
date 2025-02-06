@@ -213,3 +213,15 @@
 		categories |= "Disk"
 	else if(!disk)
 		categories -= "Disk"
+
+/obj/machinery/robotics_fabricator/sync()
+	var/obj/machinery/computer/rdconsole/RDC
+	if(!RDC in view(11, src))
+		sync_message = "Error: no console found."
+		return
+	for(RDC in get_area_all_atoms(get_area(src)))
+		if(!RDC.sync)
+			continue
+		files = RDC.files
+	sync_message = "Sync complete."
+	update_categories()

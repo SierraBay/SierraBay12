@@ -305,3 +305,15 @@
 	materials = list(MATERIAL_STEEL = 20000, MATERIAL_SILVER = 10000)
 	build_path = /obj/item/material/sword/katana
 	sort_string = "ZAAAX"
+
+//////////////////////////////items/////////////////////////////////////////
+
+
+/obj/item/net_shell
+	matter = list(MATERIAL_STEEL = 50, MATERIAL_PLASTIC = 50)
+
+/datum/stack_recipe/furniture/flaps
+	title = "flaps"
+	result_type = /obj/structure/plasticflaps
+	req_amount = 5
+	time = 50

@@ -4,6 +4,11 @@
 	category = list("Arms and Ammunition")
 	access = list(access_security)
 
+
+/datum/design/autolathe/arms_ammo/net_shell
+	name = "net shell"
+	build_path = /obj/item/net_shell
+
 /datum/design/autolathe/arms_ammo/shotgun_holder
 	name = "shotgun ammunition holder"
 	build_path = /obj/item/ammo_magazine/shotholder/empty
