@@ -59,7 +59,7 @@
 /datum/gear/uniform/si_exec_jacket
 	display_name = "NanoTrasen liason suit"
 	path = /obj/item/clothing/under/suit_jacket/corp/nanotrasen
-	allowed_roles = list(/datum/job/iaa)
+	allowed_roles = list(/datum/job/iaa, /datum/job/iso)
 
 /datum/gear/uniform/formal_shirt_and_pants
 	display_name = "formal shirts with pants"
@@ -96,6 +96,7 @@
 
 /datum/gear/suit/unathi/officer_uniform
 	allowed_roles = SECURITY_ROLES
+
 
 //papaleroy and honk
 /datum/gear/uniform/cargo_trousers
@@ -176,3 +177,13 @@
 /datum/gear/uniform/pcrc
 	display_name = "PCRC uniform"
 	path = /obj/item/clothing/under/new_uniform/chvk
+
+/datum/gear/uniform/skirt_c
+	display_name = "short skirt, colour select"
+	path = /obj/item/clothing/under/skirt_c
+	flags = GEAR_HAS_COLOR_SELECTION
+
+/datum/gear/uniform/longskirt
+	display_name = "long skirt, colour select"
+	path = /obj/item/clothing/under/skirt/longskirt
+	flags = GEAR_HAS_COLOR_SELECTION

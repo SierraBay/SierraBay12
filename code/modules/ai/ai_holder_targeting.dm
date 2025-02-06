@@ -26,7 +26,7 @@
 /// Step 1, find out what we can see.
 /datum/ai_holder/proc/list_targets()
 	. = ohearers(vision_range, holder)
-	. -= global.dview_mob // Not the dview mob!
+	. -= GLOB.dview_mob
 
 	for (var/HM in range(vision_range, holder))
 		if (!(istype(HM, /obj/machinery/porta_turret) || \
