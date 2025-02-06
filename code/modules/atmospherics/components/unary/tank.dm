@@ -9,7 +9,6 @@
 	var/start_pressure = 25*ONE_ATMOSPHERE
 	var/filling // list of gas ratios to use.
 
-	level = ATOM_LEVEL_UNDER_TILE
 	dir = 2
 	initialize_directions = 2
 	density = TRUE
@@ -37,7 +36,7 @@
 		update_icon()
 
 /obj/machinery/atmospherics/unary/tank/set_initial_level()
-	level = ATOM_LEVEL_UNDER_TILE // Always on top, apparently.
+	level = ATOM_LEVEL_OVER_TILE // Always on top, apparently.
 
 // required for paint sprayers to work due to an override in pipes.dm
 /obj/machinery/atmospherics/unary/tank/set_color(new_color)
@@ -120,7 +119,6 @@
 	color =  PIPE_COLOR_WHITE
 	connect_types = CONNECT_TYPE_REGULAR|CONNECT_TYPE_REGULAR|CONNECT_TYPE_SCRUBBER|CONNECT_TYPE_FUEL
 	w_class = ITEM_SIZE_HUGE
-	level = ATOM_LEVEL_UNDER_TILE
 	dir = SOUTH
 	constructed_path = /obj/machinery/atmospherics/unary/tank
 	pipe_class = PIPE_CLASS_UNARY

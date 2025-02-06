@@ -86,16 +86,15 @@
 
 /obj/machinery/atmospherics/unary/engine/Initialize()
 	. = ..()
-	controller = new(src)
-	update_nearby_tiles(need_rebuild=1)
-
-	for(var/ship in SSshuttle.ships)
-		var/obj/overmap/visitable/ship/S = ship
-		if(S.check_ownership(src))
-			S.engines |= controller
-			if(dir != S.fore_dir)
-				set_broken(TRUE)
-			break
+	controller = new (src)
+	update_nearby_tiles(need_rebuild = TRUE)
+	for (var/obj/overmap/visitable/ship/ship as anything in SSshuttle.ships)
+		if (!ship.check_ownership(src))
+			continue
+		ship.engines |= controller
+		if (dir != ship.fore_dir)
+			set_broken(TRUE)
+		break
 
 /obj/machinery/atmospherics/unary/engine/Destroy()
 	QDEL_NULL(controller)
