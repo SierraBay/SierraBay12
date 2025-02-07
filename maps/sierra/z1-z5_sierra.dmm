@@ -12497,6 +12497,8 @@
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 5
 	},
+/obj/paint_stripe/nt_red,
+/obj/paint/nt_white,
 /turf/simulated/floor/plating,
 /area/shuttle/petrov/ship)
 "bQy" = (
@@ -33718,10 +33720,10 @@
 /turf/simulated/floor/tiled/monotile,
 /area/assembly/robotics)
 "eSI" = (
-/obj/machinery/portable_atmospherics/canister/air/airlock,
 /obj/machinery/atmospherics/portables_connector{
 	dir = 4
 	},
+/obj/machinery/portable_atmospherics/canister/air,
 /turf/simulated/floor/plating,
 /area/shuttle/petrov/ship)
 "eSJ" = (
@@ -37956,9 +37958,6 @@
 /turf/simulated/floor/plating,
 /area/quartermaster/hangar)
 "fAd" = (
-/obj/machinery/atmospherics/pipe/simple/hidden{
-	dir = 1
-	},
 /obj/machinery/door/airlock/external{
 	frequency = 1331;
 	icon_state = "closed";
@@ -37970,6 +37969,9 @@
 /obj/machinery/door/blast/regular{
 	id_tag = "petrovexitblast";
 	name = "Petrov Exit Blast Door"
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden{
+	dir = 4
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/shuttle/petrov/ship)
@@ -101669,6 +101671,24 @@
 	},
 /turf/simulated/floor/wood/walnut,
 /area/crew_quarters/cafe/upper)
+"oXc" = (
+/obj/machinery/door/airlock/external{
+	frequency = 1331;
+	icon_state = "closed";
+	id_tag = "petrov_shuttle_outer";
+	name = "Petrov Interior Access";
+	req_access = list("ACCESS_PETROV");
+	autoset_access = 0
+	},
+/obj/machinery/door/blast/regular{
+	id_tag = "petrovexitblast";
+	name = "Petrov Exit Blast Door"
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden{
+	dir = 8
+	},
+/turf/simulated/floor/tiled/techfloor/grid,
+/area/shuttle/petrov/ship)
 "oXn" = (
 /obj/machinery/alarm{
 	dir = 4;
@@ -194116,7 +194136,7 @@ qAt
 ctW
 jxi
 axq
-fAd
+oXc
 hDv
 wJN
 wJN
