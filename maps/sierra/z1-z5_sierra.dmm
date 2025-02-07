@@ -236,15 +236,9 @@
 /turf/simulated/floor/tiled/steel_grid,
 /area/assembly/robotics)
 "abK" = (
-/obj/structure/sign/warning/radioactive{
-	dir = 1;
-	pixel_y = -32
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 5
 	},
-/obj/floor_decal/industrial/outline/yellow,
-/obj/structure/closet/bombcloset,
 /turf/simulated/floor/plating,
 /area/shuttle/petrov/ship)
 "abM" = (
@@ -3153,21 +3147,11 @@
 /turf/simulated/floor/plating,
 /area/maintenance/seconddeck/foreport)
 "axq" = (
-/obj/structure/table/standard,
-/obj/item/device/scanner/health,
-/obj/item/device/geiger,
-/obj/floor_decal/corner/black/three_quarters,
-/obj/floor_decal/corner/purple/border{
+/obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 10
 	},
-/obj/floor_decal/corner/purple/bordercorner2,
-/obj/floor_decal/corner/purple/bordercorner2{
-	dir = 10
-	},
-/obj/floor_decal/corner/purple/bordercorner{
-	dir = 8
-	},
-/turf/simulated/floor/tiled/white,
+/obj/structure/catwalk,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/shuttle/petrov/ship)
 "axt" = (
 /obj/machinery/suit_cycler/science,
@@ -5661,8 +5645,6 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/plating,
 /area/shuttle/petrov/ship)
 "aQp" = (
@@ -12358,6 +12340,13 @@
 /obj/floor_decal/corner/black/mono,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/chapel/mortuary)
+"bPw" = (
+/obj/structure/table/standard,
+/obj/item/device/scanner/health,
+/obj/item/device/geiger,
+/obj/item/reagent_containers/glass/bucket,
+/turf/simulated/floor/tiled/white,
+/area/shuttle/petrov/test_room)
 "bPB" = (
 /obj/floor_decal/carpet/blue{
 	dir = 8
@@ -12502,6 +12491,14 @@
 	},
 /turf/simulated/floor/wood,
 /area/maintenance/firstdeck/forestarboard)
+"bQr" = (
+/obj/wallframe_spawn/reinforced/titanium,
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/hidden{
+	dir = 5
+	},
+/turf/simulated/floor/plating,
+/area/shuttle/petrov/ship)
 "bQy" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -14712,20 +14709,11 @@
 /turf/simulated/floor/plating,
 /area/maintenance/fourthdeck/aft)
 "ciu" = (
-/obj/floor_decal/corner/black/three_quarters{
-	dir = 4
-	},
-/obj/floor_decal/corner/purple/border{
+/obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 6
 	},
-/obj/floor_decal/corner/purple/bordercorner2{
-	dir = 9
-	},
-/obj/floor_decal/corner/purple/bordercorner2{
-	dir = 5
-	},
-/obj/floor_decal/corner/purple/bordercorner,
-/turf/simulated/floor/tiled/white,
+/obj/structure/catwalk,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/shuttle/petrov/ship)
 "ciz" = (
 /obj/structure/cable/green{
@@ -16039,25 +16027,11 @@
 /turf/simulated/floor/tiled/white/monotile,
 /area/medical/sleeper)
 "ctW" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_y = 29
-	},
-/obj/floor_decal/corner/black/three_quarters{
-	dir = 8
-	},
-/obj/floor_decal/corner/purple/border{
-	dir = 9
-	},
-/obj/floor_decal/corner/purple/bordercorner2{
-	dir = 8
-	},
-/obj/floor_decal/corner/purple/bordercorner2{
+/obj/machinery/atmospherics/pipe/manifold/hidden{
 	dir = 4
 	},
-/obj/floor_decal/corner/purple/bordercorner{
-	dir = 1
-	},
-/turf/simulated/floor/tiled/white,
+/obj/structure/catwalk,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/shuttle/petrov/ship)
 "ctX" = (
 /obj/floor_decal/spline/fancy/black{
@@ -16453,11 +16427,23 @@
 /turf/simulated/floor/wood/walnut,
 /area/crew_quarters/heads/office/captain)
 "cxi" = (
-/obj/machinery/radiocarbon_spectrometer,
-/obj/machinery/atmospherics/unary/vent_scrubber/on{
+/obj/structure/hygiene/shower{
+	dir = 8;
+	pixel_x = 9
+	},
+/obj/machinery/atmospherics/unary/vent_pump/high_volume/shuttle{
+	id_tag = "petrov_shuttle_pump";
 	dir = 8
 	},
-/turf/simulated/floor/tiled/dark,
+/obj/machinery/airlock_sensor{
+	frequency = 1331;
+	id_tag = "petrov_shuttle_sensor";
+	master_tag = "petrov_shuttle_airlock";
+	pixel_y = 25;
+	pixel_x = -7
+	},
+/obj/structure/catwalk,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/shuttle/petrov/ship)
 "cxm" = (
 /obj/floor_decal/corner/green/border{
@@ -18678,8 +18664,6 @@
 	icon_state = "1-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/plating,
 /area/shuttle/petrov/ship)
 "cLI" = (
@@ -20517,9 +20501,6 @@
 /obj/floor_decal/corner/purple/border{
 	dir = 10
 	},
-/obj/floor_decal/industrial/warning/corner{
-	dir = 4
-	},
 /turf/simulated/floor/tiled/monotile,
 /area/rnd/misc_lab)
 "cZj" = (
@@ -21998,11 +21979,13 @@
 	dir = 4;
 	pixel_x = -24
 	},
-/obj/floor_decal/corner/purple/border{
-	dir = 8
+/obj/structure/railing/mapped{
+	init_color = "#393f43";
+	color = "#393f43";
+	dir = 1
 	},
-/obj/floor_decal/industrial/warning{
-	dir = 4
+/obj/floor_decal/corner/purple/border{
+	dir = 9
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/rnd/misc_lab)
@@ -22376,8 +22359,8 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/maintenance/firstdeck/centralstarboard)
 "dnh" = (
-/obj/machinery/atmospherics/unary/vent_pump/on{
-	dir = 1
+/obj/machinery/atmospherics/pipe/simple/hidden{
+	dir = 10
 	},
 /turf/simulated/floor/plating,
 /area/shuttle/petrov/ship)
@@ -31455,6 +31438,12 @@
 	},
 /turf/simulated/floor/wood/walnut,
 /area/vacant/dungeon)
+"eBh" = (
+/obj/floor_decal/industrial/warning{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/monotile,
+/area/rnd/misc_lab)
 "eBq" = (
 /obj/floor_decal/borderfloorblack{
 	dir = 10
@@ -33479,12 +33468,15 @@
 /turf/simulated/floor/wood/walnut,
 /area/crew_quarters/cafe/upper)
 "eQV" = (
-/obj/structure/table/standard,
-/obj/item/reagent_containers/glass/bucket,
-/obj/machinery/light/small{
+/obj/machinery/light{
 	dir = 8
 	},
-/turf/simulated/floor/tiled/dark,
+/obj/machinery/atmospherics/unary/vent_pump/high_volume/shuttle{
+	id_tag = "petrov_shuttle_pump";
+	dir = 4
+	},
+/obj/structure/catwalk,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/shuttle/petrov/ship)
 "eQY" = (
 /obj/machinery/alarm{
@@ -33726,8 +33718,10 @@
 /turf/simulated/floor/tiled/monotile,
 /area/assembly/robotics)
 "eSI" = (
-/obj/floor_decal/industrial/outline/yellow,
-/obj/structure/closet/l3closet/scientist,
+/obj/machinery/portable_atmospherics/canister/air/airlock,
+/obj/machinery/atmospherics/portables_connector{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/shuttle/petrov/ship)
 "eSJ" = (
@@ -35155,11 +35149,11 @@
 /turf/simulated/floor/plating,
 /area/hallway/primary/seconddeck/aft)
 "fdI" = (
-/obj/machinery/space_heater,
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/simulated/floor/plating,
+/obj/structure/reagent_dispensers/coolanttank,
+/turf/simulated/floor/tiled/dark,
 /area/shuttle/petrov/test_room)
 "fdQ" = (
 /obj/floor_decal/corner/black/mono,
@@ -37961,6 +37955,24 @@
 	},
 /turf/simulated/floor/plating,
 /area/quartermaster/hangar)
+"fAd" = (
+/obj/machinery/atmospherics/pipe/simple/hidden{
+	dir = 1
+	},
+/obj/machinery/door/airlock/external{
+	frequency = 1331;
+	icon_state = "closed";
+	id_tag = "petrov_shuttle_outer";
+	name = "Petrov Interior Access";
+	req_access = list("ACCESS_PETROV");
+	autoset_access = 0
+	},
+/obj/machinery/door/blast/regular{
+	id_tag = "petrovexitblast";
+	name = "Petrov Exit Blast Door"
+	},
+/turf/simulated/floor/tiled/techfloor/grid,
+/area/shuttle/petrov/ship)
 "fAh" = (
 /obj/structure/railing/mapped{
 	dir = 4
@@ -41068,6 +41080,18 @@
 	},
 /turf/simulated/floor/reinforced,
 /area/turret_protected/ai_maint)
+"fWj" = (
+/obj/structure/cable/green{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/floor_decal/industrial/warning{
+	dir = 1
+	},
+/obj/floor_decal/industrial/warning/corner,
+/turf/simulated/floor/tiled/monotile,
+/area/rnd/misc_lab)
 "fWs" = (
 /obj/machinery/light/small/emergency{
 	dir = 4
@@ -41453,7 +41477,6 @@
 /obj/floor_decal/industrial/warning{
 	dir = 1
 	},
-/obj/floor_decal/industrial/warning,
 /turf/simulated/floor/tiled/monotile,
 /area/rnd/misc_lab)
 "fZM" = (
@@ -42340,6 +42363,17 @@
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/firstdeck/forestarboard)
+"ggX" = (
+/obj/paint_stripe/nt_red,
+/obj/paint/nt_white,
+/obj/machinery/button/blast_door{
+	id_tag = "petrovexitblast";
+	name = "Office Shutter Control";
+	pixel_x = 5;
+	pixel_y = 6
+	},
+/turf/simulated/wall/r_titanium,
+/area/shuttle/petrov/ship)
 "ggZ" = (
 /obj/structure/holoplant,
 /obj/floor_decal/corner/yellow/half,
@@ -50678,6 +50712,24 @@
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/storage/tech)
+"huR" = (
+/obj/machinery/atmospherics/unary/vent_pump/high_volume/shuttle{
+	id_tag = "petrov_shuttle_pump_out_external";
+	dir = 1
+	},
+/obj/machinery/air_sensor{
+	id_tag = "calypso_out"
+	},
+/obj/machinery/airlock_sensor/airlock_exterior{
+	frequency = 1331;
+	id_tag = "petrov_shuttle_exterior_sensor";
+	master_tag = "petrov_shuttle";
+	pixel_x = 27;
+	pixel_y = -8;
+	req_access = list("ACCESS_PETROV")
+	},
+/turf/simulated/floor/tiled/techfloor/grid,
+/area/shuttle/petrov/ship)
 "huY" = (
 /obj/structure/bed/padded,
 /obj/item/bedsheet/blue,
@@ -51893,6 +51945,13 @@
 	},
 /turf/simulated/floor/reinforced,
 /area/command/bsa)
+"hDv" = (
+/obj/machinery/atmospherics/unary/vent_pump/high_volume/shuttle{
+	id_tag = "petrov_shuttle_pump_out_external";
+	dir = 1
+	},
+/turf/simulated/floor/tiled/techfloor/grid,
+/area/shuttle/petrov/ship)
 "hDE" = (
 /obj/floor_decal/industrial/warning{
 	dir = 9
@@ -52563,8 +52622,13 @@
 /turf/simulated/floor/bluegrid,
 /area/turret_protected/ai)
 "hIq" = (
-/obj/random/trash,
-/turf/simulated/floor/plating,
+/obj/floor_decal/corner/black/half{
+	dir = 8
+	},
+/obj/floor_decal/corner/purple/border{
+	dir = 8
+	},
+/turf/simulated/floor/tiled/white,
 /area/shuttle/petrov/test_room)
 "hIr" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -58841,10 +58905,12 @@
 /turf/simulated/floor/tiled/freezer,
 /area/crew_quarters/head)
 "iHA" = (
-/obj/structure/hygiene/shower{
-	pixel_y = 15
-	},
 /obj/structure/catwalk,
+/obj/structure/closet/l3closet/scientist,
+/obj/structure/railing/mapped{
+	init_color = "#393f43";
+	color = "#393f43"
+	},
 /turf/simulated/floor/plating,
 /area/rnd/xenobiology/xenoflora)
 "iHF" = (
@@ -61703,19 +61769,19 @@
 /turf/simulated/floor/plating,
 /area/maintenance/thirddeck/port)
 "jcJ" = (
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
-	dir = 8
-	},
 /obj/structure/cable/cyan{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden,
-/turf/simulated/floor/plating,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 5
+	},
+/turf/simulated/floor/tiled/techfloor,
 /area/shuttle/petrov/ship)
 "jcL" = (
 /obj/structure/cable/green{
@@ -61934,6 +62000,8 @@
 	},
 /obj/item/storage/toolbox/mechanical,
 /obj/item/storage/toolbox/mechanical,
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/mask/gas,
 /turf/simulated/floor/tiled/white/monotile,
 /area/shuttle/petrov/equipment)
 "jeH" = (
@@ -63609,9 +63677,16 @@
 /area/maintenance/firstdeck/forestarboard)
 "jsg" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor/plating,
+/obj/machinery/airlock_sensor/airlock_interior{
+	frequency = 1331;
+	id_tag = "petrov_shuttle_interior_sensor";
+	master_tag = "petrov_shuttle";
+	name = "interior access button";
+	pixel_x = 25;
+	pixel_y = -23;
+	req_access = list("ACCESS_PETROV")
+	},
+/turf/simulated/floor/tiled/techfloor,
 /area/shuttle/petrov/ship)
 "jsk" = (
 /obj/floor_decal/corner/lime/border{
@@ -64112,6 +64187,9 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 6
+	},
 /turf/simulated/floor/plating,
 /area/shuttle/petrov/ship)
 "jwx" = (
@@ -64193,14 +64271,11 @@
 /turf/simulated/floor/wood/walnut,
 /area/vacant/dormintories)
 "jxi" = (
-/obj/item/stool/padded,
-/obj/floor_decal/corner/black/half{
-	dir = 8
+/obj/machinery/atmospherics/pipe/simple/hidden{
+	dir = 9
 	},
-/obj/floor_decal/corner/purple/border{
-	dir = 8
-	},
-/turf/simulated/floor/tiled/white,
+/obj/structure/catwalk,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/shuttle/petrov/ship)
 "jxj" = (
 /obj/structure/railing/mapped{
@@ -64513,6 +64588,11 @@
 	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/bridge/marine_room)
+"jzZ" = (
+/obj/machinery/light/spot,
+/obj/floor_decal/corner/purple/border,
+/turf/simulated/floor/tiled/monotile,
+/area/rnd/misc_lab)
 "jAd" = (
 /turf/simulated/floor/airless,
 /area/space)
@@ -68275,8 +68355,8 @@
 	pixel_y = -24
 	},
 /obj/floor_decal/corner/purple/border,
-/obj/floor_decal/industrial/warning{
-	dir = 1
+/obj/floor_decal/industrial/warning/corner{
+	dir = 4
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/rnd/misc_lab)
@@ -75133,8 +75213,8 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/floor_decal/industrial/outline/yellow,
 /obj/structure/closet/radiation,
+/obj/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/plating,
 /area/shuttle/petrov/ship)
 "lci" = (
@@ -81575,8 +81655,8 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/engineering/bluespace/chamber)
 "lYA" = (
-/obj/structure/reagent_dispensers/coolanttank,
-/turf/simulated/floor/plating,
+/obj/machinery/radiocarbon_spectrometer,
+/turf/simulated/floor/tiled/dark,
 /area/shuttle/petrov/test_room)
 "lYK" = (
 /obj/machinery/door/window/southleft{
@@ -83240,6 +83320,15 @@
 /obj/random/storage,
 /turf/simulated/floor/plating,
 /area/maintenance/thirddeck/aftport)
+"mlR" = (
+/obj/floor_decal/industrial/warning{
+	dir = 4
+	},
+/obj/floor_decal/corner/purple/bordercorner{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/monotile,
+/area/rnd/misc_lab)
 "mlT" = (
 /obj/structure/cable/green{
 	d1 = 1;
@@ -86925,11 +87014,15 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/engineering/engine_room)
 "mNJ" = (
+/obj/structure/catwalk,
 /obj/structure/hygiene/sink{
 	dir = 1;
 	pixel_y = 18
 	},
-/obj/structure/catwalk,
+/obj/structure/railing/mapped{
+	init_color = "#393f43";
+	color = "#393f43"
+	},
 /turf/simulated/floor/plating,
 /area/rnd/xenobiology/xenoflora)
 "mNS" = (
@@ -87531,9 +87624,6 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 6
-	},
 /obj/machinery/power/terminal{
 	dir = 8
 	},
@@ -87541,6 +87631,10 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/plating,
 /area/shuttle/petrov/ship)
 "mSx" = (
@@ -87948,7 +88042,6 @@
 /turf/simulated/floor/tiled/monotile,
 /area/quartermaster/hangar)
 "mWa" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 2;
@@ -88831,7 +88924,6 @@
 /obj/floor_decal/industrial/warning/corner{
 	dir = 4
 	},
-/obj/floor_decal/industrial/warning/corner,
 /turf/simulated/floor/tiled/monotile,
 /area/rnd/misc_lab)
 "ncQ" = (
@@ -91607,6 +91699,14 @@
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/security/sierra/armory/lobby)
+"nwV" = (
+/obj/structure/railing/mapped{
+	init_color = "#393f43";
+	color = "#393f43"
+	},
+/obj/floor_decal/corner/purple/border,
+/turf/simulated/floor/tiled/monotile,
+/area/rnd/misc_lab)
 "nwZ" = (
 /obj/landmark/start{
 	name = "Unknown"
@@ -94588,6 +94688,12 @@
 /obj/structure/reagent_dispensers/watertank,
 /turf/simulated/floor/plating,
 /area/maintenance/thirddeck/port)
+"nWY" = (
+/obj/floor_decal/corner/black/bordercorner{
+	dir = 8
+	},
+/turf/simulated/floor/tiled/white,
+/area/shuttle/petrov/test_room)
 "nXa" = (
 /obj/machinery/atmospherics/binary/pump/on{
 	dir = 4;
@@ -97800,16 +97906,11 @@
 /turf/simulated/floor/tiled,
 /area/crew_quarters/heads/office/ce)
 "ouD" = (
-/obj/floor_decal/corner/black/half{
-	dir = 4
-	},
-/obj/floor_decal/corner/purple/border{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+/obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 5
 	},
-/turf/simulated/floor/tiled/white,
+/obj/structure/catwalk,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/shuttle/petrov/ship)
 "ouJ" = (
 /obj/structure/disposalpipe/trunk{
@@ -100077,6 +100178,17 @@
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/rnd/misc_lab)
+"oLJ" = (
+/obj/paint/nt_white,
+/obj/paint_stripe/nt_red,
+/obj/machinery/button/blast_door{
+	id_tag = "petrovexitblast";
+	name = "Office Shutter Control";
+	pixel_x = 5;
+	pixel_y = 6
+	},
+/turf/simulated/wall/titanium,
+/area/shuttle/petrov/ship)
 "oLN" = (
 /obj/machinery/portable_atmospherics/canister/air,
 /obj/machinery/atmospherics/portables_connector,
@@ -101892,10 +102004,6 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/vacant/prototype/engine)
 "oZK" = (
-/obj/structure/sign/warning/radioactive{
-	dir = 1;
-	pixel_y = -32
-	},
 /obj/machinery/atmospherics/portables_connector{
 	dir = 8
 	},
@@ -104602,6 +104710,17 @@
 	},
 /turf/simulated/floor/tiled/white/monotile,
 /area/medical/sleeper)
+"pse" = (
+/obj/structure/railing/mapped{
+	init_color = "#393f43";
+	color = "#393f43";
+	dir = 1
+	},
+/obj/floor_decal/corner/purple/border{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/monotile,
+/area/rnd/misc_lab)
 "psh" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -106283,8 +106402,7 @@
 /turf/simulated/floor/tiled/steel_grid,
 /area/security/sierra/brig)
 "pFu" = (
-/obj/structure/closet/l3closet/scientist,
-/obj/structure/catwalk,
+/obj/structure/stairs/east,
 /turf/simulated/floor/plating,
 /area/rnd/xenobiology/xenoflora)
 "pFv" = (
@@ -109349,11 +109467,12 @@
 	pixel_x = -21;
 	pixel_y = 8
 	},
-/obj/floor_decal/corner/purple/border{
-	dir = 8
+/obj/structure/railing/mapped{
+	init_color = "#393f43";
+	color = "#393f43"
 	},
-/obj/floor_decal/industrial/warning{
-	dir = 4
+/obj/floor_decal/corner/purple/border{
+	dir = 10
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/rnd/misc_lab)
@@ -109785,8 +109904,6 @@
 /turf/simulated/floor/tiled,
 /area/quartermaster/deckofficer)
 "qfZ" = (
-/obj/structure/closet/l3closet/scientist,
-/obj/structure/catwalk,
 /obj/machinery/light,
 /turf/simulated/floor/plating,
 /area/rnd/xenobiology/xenoflora)
@@ -112190,6 +112307,19 @@
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor/wood/walnut,
 /area/chapel/main)
+"qAt" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden{
+	dir = 1
+	},
+/obj/machinery/door/airlock/external/glass{
+	frequency = 1331;
+	id_tag = "petrov_shuttle_inner";
+	name = "Petrov Interior Access";
+	req_access = list("ACCESS_PETROV");
+	autoset_access = 0
+	},
+/turf/simulated/floor/tiled/techfloor,
+/area/shuttle/petrov/ship)
 "qAu" = (
 /obj/floor_decal/borderfloorblack{
 	dir = 1
@@ -113475,6 +113605,9 @@
 /obj/structure/railing/mapped,
 /turf/space,
 /area/space)
+"qKH" = (
+/turf/simulated/open,
+/area/rnd/misc_lab)
 "qKJ" = (
 /obj/structure/closet/l3closet/scientist,
 /obj/floor_decal/industrial/outline/yellow,
@@ -115960,10 +116093,18 @@
 /turf/simulated/floor/tiled/dark,
 /area/bridge/marine_room)
 "rbR" = (
-/obj/structure/table/standard,
-/obj/item/storage/toolbox/mechanical,
-/obj/item/storage/box/evidence,
-/turf/simulated/floor/tiled/dark,
+/obj/structure/handrail{
+	dir = 4
+	},
+/obj/machinery/atmospherics/unary/vent_pump/high_volume/shuttle{
+	id_tag = "petrov_shuttle_pump_out_internal";
+	dir = 4
+	},
+/obj/machinery/oxygen_pump{
+	pixel_x = -30
+	},
+/obj/structure/catwalk,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/shuttle/petrov/ship)
 "rbU" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -118699,26 +118840,11 @@
 /turf/simulated/floor/tiled/dark/monotile,
 /area/crew_quarters/heads/office/iaa)
 "rxK" = (
-/obj/floor_decal/corner/black/three_quarters{
-	dir = 1
+/obj/machinery/atmospherics/pipe/manifold/hidden{
+	dir = 8
 	},
-/obj/floor_decal/corner/purple/border{
-	dir = 5
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 5
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/floor_decal/corner/purple/bordercorner2{
-	dir = 6
-	},
-/obj/floor_decal/corner/purple/bordercorner2{
-	dir = 1
-	},
-/obj/floor_decal/corner/purple/bordercorner{
-	dir = 4
-	},
-/turf/simulated/floor/tiled/white,
+/obj/structure/catwalk,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/shuttle/petrov/ship)
 "rxO" = (
 /obj/machinery/atmospherics/pipe/simple/visible/fuel{
@@ -119654,13 +119780,12 @@
 /turf/simulated/floor/tiled/steel_grid,
 /area/shuttle/escape_pod/escape_pod5/station)
 "rEn" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/techfloor,
 /area/shuttle/petrov/ship)
 "rEv" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -128548,7 +128673,15 @@
 /turf/simulated/floor/plating,
 /area/security/range)
 "sQs" = (
-/turf/simulated/floor/plating,
+/obj/item/stool/padded,
+/obj/floor_decal/corner/black/half{
+	dir = 8
+	},
+/obj/floor_decal/corner/purple/border{
+	dir = 8
+	},
+/obj/item/storage/box/evidence,
+/turf/simulated/floor/tiled/white,
 /area/shuttle/petrov/test_room)
 "sQu" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
@@ -129330,6 +129463,10 @@
 /obj/structure/fuel_port{
 	pixel_x = -32
 	},
+/obj/machinery/atmospherics/unary/vent_pump/on{
+	dir = 1
+	},
+/obj/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/plating,
 /area/shuttle/petrov/ship)
 "sVt" = (
@@ -136833,6 +136970,10 @@
 "uda" = (
 /obj/machinery/door/airlock/hatch/maintenance,
 /obj/floor_decal/industrial/hatch/yellow,
+/obj/structure/sign/warning/radioactive{
+	dir = 1;
+	pixel_y = -32
+	},
 /turf/simulated/floor/tiled/white/monotile,
 /area/shuttle/petrov/test_room)
 "udc" = (
@@ -137341,6 +137482,15 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/hallway/primary/fourthdeck/center)
+"uiO" = (
+/obj/floor_decal/industrial/warning{
+	dir = 4
+	},
+/obj/floor_decal/corner/purple/bordercorner{
+	dir = 8
+	},
+/turf/simulated/floor/tiled/monotile,
+/area/rnd/misc_lab)
 "uiQ" = (
 /obj/floor_decal/borderfloor{
 	dir = 6
@@ -138907,14 +139057,15 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/teleporter)
 "uvj" = (
-/obj/machinery/radiocarbon_spectrometer,
-/obj/machinery/atmospherics/unary/vent_pump/on{
-	dir = 8
-	},
-/obj/machinery/light/small{
+/obj/machinery/light{
 	dir = 4
 	},
-/turf/simulated/floor/tiled/dark,
+/obj/machinery/atmospherics/unary/vent_pump/high_volume/shuttle{
+	id_tag = "petrov_shuttle_pump";
+	dir = 8
+	},
+/obj/structure/catwalk,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/shuttle/petrov/ship)
 "uvl" = (
 /obj/structure/disposalpipe/trunk{
@@ -142058,10 +142209,11 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/floor_decal/industrial/warning{
+/obj/structure/disposalpipe/segment,
+/obj/floor_decal/industrial/warning/corner{
 	dir = 4
 	},
-/obj/structure/disposalpipe/segment,
+/obj/floor_decal/industrial/warning/corner,
 /turf/simulated/floor/tiled/techfloor,
 /area/rnd/xenobiology/xenoflora)
 "uSn" = (
@@ -143995,8 +144147,28 @@
 /turf/simulated/floor/tiled/dark,
 /area/vacant/mess)
 "vgx" = (
-/obj/machinery/radiocarbon_spectrometer,
-/turf/simulated/floor/tiled/dark,
+/obj/machinery/embedded_controller/radio/airlock/docking_port{
+	cycle_to_external_air = 1;
+	dir = 1;
+	frequency = 1331;
+	id_tag = "petrov_shuttle";
+	pixel_x = -6;
+	req_access = list("ACCESS_PETROV");
+	tag_exterior_sensor = "petrov_shuttle_exterior_sensor";
+	pixel_y = -27
+	},
+/obj/machinery/atmospherics/unary/vent_pump/high_volume/shuttle{
+	id_tag = "petrov_shuttle_pump_out_internal";
+	dir = 8
+	},
+/obj/machinery/oxygen_pump{
+	pixel_x = 33
+	},
+/obj/structure/handrail{
+	dir = 8
+	},
+/obj/structure/catwalk,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/shuttle/petrov/ship)
 "vgF" = (
 /obj/floor_decal/corner/mauve/mono,
@@ -145486,13 +145658,17 @@
 /turf/simulated/floor/tiled,
 /area/exploration_shuttle/cargo_l)
 "vrF" = (
-/obj/machinery/door/airlock/research{
-	name = "Spectrometry Lab"
+/obj/machinery/atmospherics/pipe/simple/hidden{
+	dir = 10
 	},
-/obj/floor_decal/industrial/hatch/yellow,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor/tiled/white/monotile,
+/obj/machinery/door/airlock/external/glass{
+	frequency = 1331;
+	id_tag = "petrov_shuttle_inner";
+	name = "Petrov Interior Access";
+	req_access = list("ACCESS_PETROV");
+	autoset_access = 0
+	},
+/turf/simulated/floor/tiled/techfloor,
 /area/shuttle/petrov/ship)
 "vrG" = (
 /obj/floor_decal/borderfloorblack{
@@ -148987,14 +149163,10 @@
 /turf/simulated/floor/tiled/white,
 /area/crew_quarters/galley)
 "vTg" = (
-/obj/structure/table/rack{
-	dir = 8
-	},
-/obj/item/clothing/mask/gas,
-/obj/item/clothing/mask/gas,
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/structure/closet/l3closet/scientist,
 /turf/simulated/floor/tiled/white,
 /area/shuttle/petrov/equipment)
 "vTj" = (
@@ -152818,11 +152990,7 @@
 	dir = 1
 	},
 /obj/floor_decal/industrial/outline/yellow,
-/obj/structure/table/rack,
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/suit/bio_suit/anomaly,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/head/bio_hood/anomaly,
+/obj/structure/closet/bombcloset,
 /turf/simulated/floor/plating,
 /area/shuttle/petrov/ship)
 "wvA" = (
@@ -154099,8 +154267,15 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/engineering/atmos)
 "wJl" = (
-/obj/structure/reagent_dispensers/coolanttank,
-/turf/simulated/floor/tiled/dark,
+/obj/structure/handrail{
+	dir = 4
+	},
+/obj/machinery/atmospherics/unary/vent_pump/high_volume/shuttle{
+	id_tag = "petrov_shuttle_pump";
+	dir = 4
+	},
+/obj/structure/catwalk,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/shuttle/petrov/ship)
 "wJp" = (
 /obj/structure/cable{
@@ -157037,6 +157212,10 @@
 /area/crew_quarters/heads/office/rd/cobed)
 "xgF" = (
 /obj/structure/bed/chair/shuttle/black,
+/obj/structure/panic_button{
+	pixel_x = 28;
+	pixel_y = 2
+	},
 /turf/simulated/floor/tiled/white,
 /area/shuttle/petrov/cockpit)
 "xgH" = (
@@ -163483,6 +163662,11 @@
 /obj/shuttle_landmark/ert/dock,
 /turf/space,
 /area/space)
+"ycB" = (
+/obj/paint_stripe/nt_red,
+/obj/paint/nt_white,
+/turf/simulated/wall/r_titanium,
+/area/shuttle/petrov/ship)
 "ycK" = (
 /obj/floor_decal/corner/red{
 	dir = 1
@@ -193525,7 +193709,7 @@ sVs
 dCn
 eSI
 eYR
-eYR
+oLJ
 eYR
 eYR
 eYR
@@ -193726,12 +193910,12 @@ mSv
 mWa
 rEn
 dnh
-eYR
+bQr
 wJl
 eQV
 rbR
 eYR
-heP
+ggX
 wJN
 wJN
 egi
@@ -193928,12 +194112,12 @@ wvv
 gPM
 mcr
 abK
-eYR
+qAt
 ctW
 jxi
 axq
-eYR
-heP
+fAd
+hDv
 wJN
 wJN
 wJN
@@ -194134,8 +194318,8 @@ vrF
 rxK
 ouD
 ciu
-eYR
-heP
+fAd
+huR
 wJN
 wJN
 wJN
@@ -194337,7 +194521,7 @@ cxi
 uvj
 vgx
 eYR
-heP
+ycB
 wJN
 wJN
 wJN
@@ -197361,9 +197545,9 @@ wMx
 oLl
 rvT
 rvT
-rvT
-sQs
-sQs
+bPw
+nWY
+hIq
 hIq
 sQs
 uMi
@@ -307465,7 +307649,7 @@ wNF
 wNF
 ncM
 qdg
-wNF
+qKH
 djH
 cZc
 qSx
@@ -307666,10 +307850,10 @@ vUQ
 gMC
 kWG
 fZL
-byi
-kWG
-qeg
-tST
+nwV
+qKH
+pse
+jzZ
 qSx
 xiV
 jJA
@@ -307867,10 +308051,10 @@ gNW
 bcI
 uIc
 gKz
-fZL
-aIU
-aIU
-fyN
+fWj
+uiO
+eBh
+mlR
 kcn
 qSx
 tkY
@@ -308070,9 +308254,9 @@ uoZ
 jPh
 uGS
 iNo
-aIU
-aIU
-fyN
+byi
+kWG
+qeg
 gPJ
 qSx
 fns
