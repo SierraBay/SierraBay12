@@ -8,7 +8,12 @@ GLOBAL_LIST_INIT(surgery_tool_exceptions, list(
 	/obj/item/reagent_containers/syringe,
 	/obj/item/reagent_containers/borghypo
 ))
+<<<<<<< ours
 GLOBAL_LIST_INIT(surgery_tool_exception_cache, new)
+=======
+
+GLOBAL_LIST_EMPTY(surgery_tool_exception_cache)
+>>>>>>> theirs
 
 /* SURGERY STEPS */
 /singleton/surgery_step

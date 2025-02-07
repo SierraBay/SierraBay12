@@ -1,16 +1,15 @@
 GLOBAL_DATUM_INIT(is_http_protocol, /regex, regex("^https?://"))
 
 
-//Converts an icon to base64. Operates by putting the icon in the iconCache savefile,
-// exporting it as text, and then parsing the base64 from that.
-// (This relies on byond automatically storing icons in savefiles as base64)
-/proc/icon2base64(icon/icon, iconKey = "misc")
+/// Convert icon to base64-encoded png data. Consider caching heavy use
+/proc/icon2base64(icon/icon)
+	var/static/savefile/temp = new
+	var/static/regex/newlines = regex(@"\n", "g")
 	if (!isicon(icon))
-		return FALSE
-	to_save(GLOB.iconCache[iconKey], icon)
-	var/iconData = GLOB.iconCache.ExportText(iconKey)
-	var/list/partial = splittext(iconData, "{")
-	return replacetext(copytext(partial[2], 3, -5), "\n", "")
+		return
+	temp["_"] = icon
+	return replacetext(copytext(splittext(temp.ExportText("_"), "{")[2], 3, -5), newlines, "")
+
 
 /proc/icon2html(thing, target, icon_state, dir, frame = 1, moving = FALSE, realsize = FALSE, class = null)
 	if (!thing)
@@ -104,7 +103,7 @@ GLOBAL_DATUM_INIT(is_http_protocol, /regex, regex("^https?://"))
 			I = icon()
 			I.Insert(temp, dir = SOUTH)
 
-		bicon_cache[key] = icon2base64(I, key)
+		bicon_cache[key] = icon2base64(I)
 
 	return "<img class='icon icon-[A.icon_state]' src='data:image/png;base64,[bicon_cache[key]]'>"
 

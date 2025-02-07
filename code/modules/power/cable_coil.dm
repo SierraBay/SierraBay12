@@ -1,13 +1,22 @@
 /// Associative list of colors. Default colors that a cable coil or length of cable can be. Used for multitool interactions.
+<<<<<<< ours
 GLOBAL_LIST_INIT(cable_default_colors, list(
 	"Black"  = CABLE_COLOR_BLACK,
 	"Blue"   = CABLE_COLOR_BLUE,
 	"Cyan"   = CABLE_COLOR_CYAN,
 	"Green"  = CABLE_COLOR_GREEN,
 	"Red"    = CABLE_COLOR_RED,
+=======
+GLOBAL_LIST_AS(cable_default_colors, list(
+	"Black" = CABLE_COLOR_BLACK,
+	"Blue" = CABLE_COLOR_BLUE,
+	"Cyan" = CABLE_COLOR_CYAN,
+	"Green" = CABLE_COLOR_GREEN,
+	"Red" = CABLE_COLOR_RED,
+>>>>>>> theirs
 	"Orange" = CABLE_COLOR_ORANGE,
 	"Yellow" = CABLE_COLOR_YELLOW,
-	"White"  = CABLE_COLOR_WHITE
+	"White" = CABLE_COLOR_WHITE
 ))
 
 

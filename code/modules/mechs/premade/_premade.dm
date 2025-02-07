@@ -1,5 +1,8 @@
+<<<<<<< ours
 //GLOBAL_LIST_INIT(mech_decals, (icon_states('icons/mecha/mech_decals.dmi')-list("template", "mask")))
 
+=======
+>>>>>>> theirs
 /mob/living/exosuit/premade
 	name = "impossible exosuit"
 	desc = "It seems to be saying 'please let me die'."

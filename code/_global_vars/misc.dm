@@ -4,11 +4,19 @@ GLOBAL_LIST_EMPTY(all_observable_events)
 //GLOBAL_VAR_INIT(defer_powernet_rebuild, FALSE) //[SIERRA-REMOVE]
 
 // Those networks can only be accessed by pre-existing terminals. AIs and new terminals can't use them.
+<<<<<<< ours
 GLOBAL_LIST_INIT(restricted_camera_networks, list(\
 	NETWORK_ERT,\
 	NETWORK_MERCENARY,\
 	NETWORK_CRESCENT,\
 	"Secret"\
+=======
+GLOBAL_LIST_AS(restricted_camera_networks, list(
+	NETWORK_ERT,
+	NETWORK_MERCENARY,
+	NETWORK_CRESCENT,
+	"Secret"
+>>>>>>> theirs
 ))
 
 GLOBAL_VAR_INIT(stat_flags_planted, 0)

@@ -1,4 +1,8 @@
+<<<<<<< ours
 GLOBAL_DATUM_INIT(musical_config, /datum/musical_config, new)
+=======
+GLOBAL_TYPED_NEW(musical_config, /datum/musical_config)
+>>>>>>> theirs
 
 /datum/musical_config
 	var/highest_octave = 9

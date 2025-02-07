@@ -1,5 +1,3 @@
-
-
 // subtypes of stuff in here will be avoided when randomizing interactions.
 GLOBAL_LIST_INIT(random_chem_interaction_blacklist, list(
 	/datum/reagent/adminordrazine,

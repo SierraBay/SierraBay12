@@ -1,3 +1,4 @@
+<<<<<<< ours
 GLOBAL_DATUM_INIT(sound_channels, /repository/sound_channels, new)
 GLOBAL_VAR_INIT(lobby_sound_channel, GLOB.sound_channels.RequestChannel("LOBBY"))
 GLOBAL_VAR_INIT(vote_sound_channel, GLOB.sound_channels.RequestChannel("VOTE"))
@@ -6,6 +7,16 @@ GLOBAL_VAR_INIT(admin_sound_channel, GLOB.sound_channels.RequestChannel("ADMIN_F
 GLOBAL_VAR_INIT(ambience_channel_vents, GLOB.sound_channels.RequestChannel("AMBIENCE_VENTS"))
 GLOBAL_VAR_INIT(ambience_channel_forced, GLOB.sound_channels.RequestChannel("AMBIENCE_FORCED"))
 GLOBAL_VAR_INIT(ambience_channel_common, GLOB.sound_channels.RequestChannel("AMBIENCE_COMMON"))
+=======
+GLOBAL_TYPED_NEW_STEP(sound_channels, /repository/sound_channels, 40)
+GLOBAL_VAR_AS(lobby_sound_channel, GLOB.sound_channels.RequestChannel("LOBBY"))
+GLOBAL_VAR_AS(vote_sound_channel, GLOB.sound_channels.RequestChannel("VOTE"))
+GLOBAL_VAR_AS(admin_sound_channel, GLOB.sound_channels.RequestChannel("ADMIN_FUN"))
+
+GLOBAL_VAR_AS(ambience_channel_vents, GLOB.sound_channels.RequestChannel("AMBIENCE_VENTS"))
+GLOBAL_VAR_AS(ambience_channel_forced, GLOB.sound_channels.RequestChannel("AMBIENCE_FORCED"))
+GLOBAL_VAR_AS(ambience_channel_common, GLOB.sound_channels.RequestChannel("AMBIENCE_COMMON"))
+>>>>>>> theirs
 
 /repository/sound_channels
 	var/datum/stack/available_channels

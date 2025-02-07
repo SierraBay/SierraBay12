@@ -1,3 +1,4 @@
+<<<<<<< ours
 GLOBAL_LIST_INIT(rpd_pipe_selection, list(
 	new /datum/pipe/pipe_dispenser/simple() = list(
 		new /datum/pipe/pipe_dispenser/simple/straight(),
@@ -62,6 +63,75 @@ GLOBAL_LIST_INIT(rpd_pipe_selection_skilled, list(
 		new /datum/pipe/pipe_dispenser/device/manualvalve()
 		)
 	))
+=======
+GLOBAL_LIST_AS(rpd_pipe_selection, list(
+	new /datum/pipe/pipe_dispenser/simple = list(
+		new /datum/pipe/pipe_dispenser/simple/straight,
+		new /datum/pipe/pipe_dispenser/simple/bent,
+		new /datum/pipe/pipe_dispenser/simple/manifold,
+		new /datum/pipe/pipe_dispenser/simple/manifold4w,
+		new /datum/pipe/pipe_dispenser/simple/cap
+	),
+	new /datum/pipe/pipe_dispenser/supply = list(
+		new /datum/pipe/pipe_dispenser/supply/straight,
+		new /datum/pipe/pipe_dispenser/supply/bent,
+		new /datum/pipe/pipe_dispenser/supply/manifold,
+		new /datum/pipe/pipe_dispenser/supply/manifold4w,
+		new /datum/pipe/pipe_dispenser/supply/cap
+	),
+	new /datum/pipe/pipe_dispenser/scrubber = list(
+		new /datum/pipe/pipe_dispenser/scrubber/straight,
+		new /datum/pipe/pipe_dispenser/scrubber/bent,
+		new /datum/pipe/pipe_dispenser/scrubber/manifold,
+		new /datum/pipe/pipe_dispenser/scrubber/manifold4w,
+		new /datum/pipe/pipe_dispenser/scrubber/cap
+	),
+))
+
+GLOBAL_LIST_AS(rpd_pipe_selection_skilled, list(
+	new /datum/pipe/pipe_dispenser/simple = list(
+		new /datum/pipe/pipe_dispenser/simple/straight,
+		new /datum/pipe/pipe_dispenser/simple/bent,
+		new /datum/pipe/pipe_dispenser/simple/manifold,
+		new /datum/pipe/pipe_dispenser/simple/manifold4w,
+		new /datum/pipe/pipe_dispenser/simple/cap,
+		new /datum/pipe/pipe_dispenser/simple/up,
+		new /datum/pipe/pipe_dispenser/simple/down
+	),
+	new /datum/pipe/pipe_dispenser/supply = list(
+		new /datum/pipe/pipe_dispenser/supply/straight,
+		new /datum/pipe/pipe_dispenser/supply/bent,
+		new /datum/pipe/pipe_dispenser/supply/manifold,
+		new /datum/pipe/pipe_dispenser/supply/manifold4w,
+		new /datum/pipe/pipe_dispenser/supply/cap,
+		new /datum/pipe/pipe_dispenser/supply/up,
+		new /datum/pipe/pipe_dispenser/supply/down
+	),
+	new /datum/pipe/pipe_dispenser/scrubber = list(
+		new /datum/pipe/pipe_dispenser/scrubber/straight,
+		new /datum/pipe/pipe_dispenser/scrubber/bent,
+		new /datum/pipe/pipe_dispenser/scrubber/manifold,
+		new /datum/pipe/pipe_dispenser/scrubber/manifold4w,
+		new /datum/pipe/pipe_dispenser/scrubber/cap,
+		new /datum/pipe/pipe_dispenser/scrubber/up,
+		new /datum/pipe/pipe_dispenser/scrubber/down
+	),
+	new /datum/pipe/pipe_dispenser/fuel = list(
+		new /datum/pipe/pipe_dispenser/fuel/straight,
+		new /datum/pipe/pipe_dispenser/fuel/bent,
+		new /datum/pipe/pipe_dispenser/fuel/manifold,
+		new /datum/pipe/pipe_dispenser/fuel/manifold4w,
+		new /datum/pipe/pipe_dispenser/fuel/cap,
+		new /datum/pipe/pipe_dispenser/fuel/up,
+		new /datum/pipe/pipe_dispenser/fuel/down
+	),
+	new /datum/pipe/pipe_dispenser/device = list(
+		new /datum/pipe/pipe_dispenser/device/universaladapter,
+		new /datum/pipe/pipe_dispenser/device/gaspump,
+		new /datum/pipe/pipe_dispenser/device/manualvalve
+	)
+))
+>>>>>>> theirs
 
 /obj/item/rpd
 	name = "rapid piping device"

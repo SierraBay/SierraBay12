@@ -1,6 +1,12 @@
+<<<<<<< ours
 GLOBAL_DATUM_INIT(default_hardpoint_background, /image, null)
 GLOBAL_DATUM_INIT(hardpoint_error_icon, /image, null)
 GLOBAL_DATUM_INIT(hardpoint_bar_empty, /image, null)
+=======
+GLOBAL_TYPED(default_hardpoint_background, /image)
+GLOBAL_TYPED(hardpoint_error_icon, /image)
+GLOBAL_TYPED(hardpoint_bar_empty, /image)
+>>>>>>> theirs
 
 GLOBAL_LIST_INIT(hardpoint_bar_cache, new)
 GLOBAL_LIST_INIT(mech_damage_overlay_cache, new)

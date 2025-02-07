@@ -2,10 +2,13 @@
 For the main html chat area
 *********************************/
 
+<<<<<<< ours
 /// Cache of icons for the browser output
 GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav"))
 
 
+=======
+>>>>>>> theirs
 /// Should match the value set in the browser js
 #define MAX_COOKIE_LENGTH 5
 #define SPAM_TRIGGER_AUTOMUTE 10
