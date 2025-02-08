@@ -96,3 +96,13 @@
 
 /datum/gear/suit/unathi/officer_uniform
 	allowed_roles = SECURITY_ROLES
+
+/datum/gear/uniform/skirt_c
+	display_name = "short skirt, colour select"
+	path = /obj/item/clothing/under/skirt_c
+	flags = GEAR_HAS_COLOR_SELECTION
+
+/datum/gear/uniform/longskirt
+	display_name = "long skirt, colour select"
+	path = /obj/item/clothing/under/skirt/longskirt
+	flags = GEAR_HAS_COLOR_SELECTION

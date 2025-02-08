@@ -1,4 +1,0 @@
-author: Builder13
-changes:
-  - {rscadd: Портировано объединение материалов на тайлах}
-delete-after: true
