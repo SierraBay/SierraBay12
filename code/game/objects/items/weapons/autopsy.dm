@@ -182,7 +182,10 @@
 
 	return 1
 
-/obj/item/autopsy_scanner/proc/set_target(atom/new_target, user)
+/obj/item/autopsy_scanner/proc/set_target(mob/new_target, user)
+	if (new_target.stat != DEAD && new_target.stat != FAKEDEATH)
+		to_chat(user, SPAN_NOTICE("Scanned patient is currently alive. Aborting."))
+		return
 //[SIERRA-ADD]
 	if(target != new_target)
 		target = new_target
