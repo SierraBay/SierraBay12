@@ -25,6 +25,7 @@
 #include "code/tag_recipe.dm"
 #include "code/dodge_animation.dm"
 #include "code/advanced_landing.dm"
+#include "code/languages.dm"
 #include "code/chemistry.dm"
 #include "code/jobs.dm"
 #include "code/ma21.dm"
