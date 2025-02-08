@@ -1,5 +1,0 @@
-author: emmanuelbassil
-changes:
-  - {tweak: Allergies are now limited to two per character. Larger allergy lists should
-      automatically be pruned down.}
-delete-after: true

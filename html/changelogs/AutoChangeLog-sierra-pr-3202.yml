@@ -1,0 +1,5 @@
+author: Spookerton
+changes:
+  - {bugfix: Hardsuit defibs don't become unusable by entering a bad wield state.}
+  - {tweak: Hardsuit defibs require both hands free.}
+delete-after: true

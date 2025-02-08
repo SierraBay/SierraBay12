@@ -1,5 +1,0 @@
-author: Merlin1230
-changes:
-  - {bugfix: 'the glass in the supply warehouse now correctly has 30 sheets per stack,
-      like the steel stored right next to it'}
-delete-after: true
