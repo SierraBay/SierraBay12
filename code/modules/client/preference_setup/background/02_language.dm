@@ -102,7 +102,6 @@
 	return allowed_languages[lang.name]
 
 /datum/category_item/player_setup_item/background/languages/proc/sanitize_alt_languages()
-	pref.total_languages()
 	if(!istype(pref.alternate_languages))
 		pref.alternate_languages = list()
 	var/preference_mob = preference_mob()
