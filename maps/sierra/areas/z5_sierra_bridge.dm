@@ -49,14 +49,13 @@
 
 /area/crew_quarters/heads/captain
 	req_access = list(access_captain)
+	name = "Bridge - Command - Captain's Cabin"
 	icon_state = "heads_cap"
 	holomap_color = HOLOMAP_AREACOLOR_COMMAND
 
 /area/crew_quarters/heads/captain/beach
 	name = "Bridge - Command - Captain's Recreation Facility"
 	icon_state = "heads_cap"
-	sound_env = PLAIN
-	req_access = list("ACCESS_BRIDGE")
 	holomap_color = HOLOMAP_AREACOLOR_COMMAND
 
 /area/bridge
@@ -171,21 +170,21 @@
 
 /area/crew_quarters/heads/office/iaa
 	icon_state = "heads_cl"
-	name = "Bridge - Command - DO's Office"
+	name = "Bridge - Command - IAA's Office"
 	req_access = list(access_iaa)
 	holomap_color = HOLOMAP_AREACOLOR_COMMAND
 
 /area/crew_quarters/heads/office/iaa/high_sec
-	name = "Bridge - Command - DO's Communication Relay"
-	holomap_color = HOLOMAP_AREACOLOR_COMMAND
-
-/area/crew_quarters/heads/office/iaa/cobed
-	name = "Bridge - Command - DO's Quarters"
-	area_flags = AREA_FLAG_RAD_SHIELDED
+	name = "Bridge - Command - IAA's Communication Relay"
 	holomap_color = HOLOMAP_AREACOLOR_COMMAND
 
 /area/crew_quarters/heads/office/iaa/iso_quarters
-	name = "Bridge - Command - Enforcer's Quarters"
+	name = "Bridge - Command - ISO's Quarters"
+	area_flags = AREA_FLAG_RAD_SHIELDED
+	holomap_color = HOLOMAP_AREACOLOR_COMMAND
+
+/area/crew_quarters/heads/office/iaa/cobed
+	name = "Bridge - Command - IAA's Quarters"
 	area_flags = AREA_FLAG_RAD_SHIELDED
 	holomap_color = HOLOMAP_AREACOLOR_COMMAND
 

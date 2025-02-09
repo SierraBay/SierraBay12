@@ -125,7 +125,7 @@
 /area/rnd/storage
 	name = "First Deck - RND - Storage"
 	icon_state = "toxstorage"
-	req_access = list(access_tox_storage)
+	req_access = list(access_research_storage)
 
 /area/rnd/development
 	name = "First Deck - RND - Fabricator Lab"
@@ -178,10 +178,6 @@
 /area/crew_quarters/dungeon_master_lounge
 	name = "First Deck - Living Room"
 	sound_env = MEDIUM_SOFTFLOOR
-	holomap_color = HOLOMAP_AREACOLOR_CREW
-
-/area/crew_quarters/lounge/upper
-	name = "First Deck - Living - Library"
 	holomap_color = HOLOMAP_AREACOLOR_CREW
 
 /area/crew_quarters/safe_room/firstdeck

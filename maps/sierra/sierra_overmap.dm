@@ -1,7 +1,7 @@
 /obj/overmap/visitable/ship/sierra
-	name = "SES Sierra Democratica"
+	name = "NSV Sierra"
 	desc = "A space object with wide of 121.2 meters, length of 214.5 meters and high near 14.3 meters. A Self Indentification Signal classifices \
-	the target as a SEAF Super Destroyer, a property of Super Earth Armed Forces."
+	the target as NanoTrasen Science Vessel, a property of NanoTrasen Corporation."
 	fore_dir = WEST
 	vessel_mass = 63000
 	sector_flags = OVERMAP_SECTOR_KNOWN|OVERMAP_SECTOR_IN_SPACE|OVERMAP_SECTOR_BASE

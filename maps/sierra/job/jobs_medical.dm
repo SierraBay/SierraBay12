@@ -14,22 +14,18 @@
 	spawn_positions = 2
 	selection_color = "#013d3b"
 	alt_titles = list(
+		"Surgical Resident" = /singleton/hierarchy/outfit/job/sierra/crew/medical/senior/surgicalresident,
 		"Xenosurgeon" = /singleton/hierarchy/outfit/job/sierra/crew/medical/senior/xenosurgeon,
 		"Trauma Surgeon" = /singleton/hierarchy/outfit/job/sierra/crew/medical/senior/traumasurgeon
 	)
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/medical/senior
 	allowed_branches = list(
-		/datum/mil_branch/seaf,
+		/datum/mil_branch/employee,
 		/datum/mil_branch/contractor
 	)
 	allowed_ranks = list(
-		/datum/mil_rank/seaf/e6,
-		/datum/mil_rank/seaf/e7,
-		/datum/mil_rank/seaf/e8,
-		/datum/mil_rank/seaf/o1,
-		/datum/mil_rank/seaf/o2,
-		/datum/mil_rank/civ/contractor,
-		/datum/mil_rank/civ/nt
+		/datum/mil_rank/civ/nt,
+		/datum/mil_rank/civ/contractor
 	)
 	min_skill = list(
 		SKILL_BUREAUCRACY = SKILL_BASIC,
@@ -60,7 +56,7 @@
 	вкупе с предоперационным лечением пострадавших, спектр активности хирурга является несколько более широким, начиная от обычного лечения медикаментами в случае необходимости и заканчивая проведением сложных хирургических операций."
 
 /datum/job/doctor
-	title = "Doctor"
+	title = "Physician"
 	supervisors = "Главному Врачу"
 	department = "Медицинский"
 	department_flag = MED
@@ -73,18 +69,17 @@
 	skill_points = 22
 
 	alt_titles = list(
-		"Paramedic" = /singleton/hierarchy/outfit/job/sierra/crew/medical/doctor/paramedic
+		"Paramedic" = /singleton/hierarchy/outfit/job/sierra/crew/medical/doctor/paramedic,
+		"Medical Doctor" = /singleton/hierarchy/outfit/job/sierra/crew/medical/doctor
 	)
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/medical/doctor
 	allowed_branches = list(
-		/datum/mil_branch/seaf,
+		/datum/mil_branch/employee,
 		/datum/mil_branch/contractor
 	)
 	allowed_ranks = list(
-		/datum/mil_rank/seaf/e3,
-		/datum/mil_rank/seaf/e4,
-		/datum/mil_rank/civ/contractor,
-		/datum/mil_rank/civ/nt
+		/datum/mil_rank/civ/nt,
+		/datum/mil_rank/civ/contractor
 	)
 	min_skill = list(
 		SKILL_EVA		=	SKILL_BASIC,
@@ -130,14 +125,12 @@
 	)
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/medical/doctor
 	allowed_branches = list(
-		/datum/mil_branch/seaf,
+		/datum/mil_branch/employee,
 		/datum/mil_branch/contractor
 	)
 	allowed_ranks = list(
-		/datum/mil_rank/seaf/e1,
-		/datum/mil_rank/seaf/e2,
-		/datum/mil_rank/civ/contractor,
-		/datum/mil_rank/civ/nt
+		/datum/mil_rank/civ/nt,
+		/datum/mil_rank/civ/contractor
 	)
 	min_skill = list(
 		SKILL_EVA = SKILL_BASIC,
@@ -171,12 +164,16 @@
 	economic_power = 5
 	skill_points = 18
 
-	total_positions = 1
-	spawn_positions = 1
+	total_positions = 2 //[было 1]
+	spawn_positions = 2 //[было 1]
 	selection_color = "#013d3b"
+	alt_titles = list(
+		"Pharmacist" = /singleton/hierarchy/outfit/job/sierra/crew/medical/doctor/chemist,
+		"Virologist" = /singleton/hierarchy/outfit/job/sierra/crew/medical/doctor/chemist/virologist
+	)
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/medical/doctor/chemist
-	allowed_branches = list(/datum/mil_branch/seaf, /datum/mil_branch/contractor)
-	allowed_ranks = list(/datum/mil_rank/seaf/e3, /datum/mil_rank/seaf/e4, /datum/mil_rank/civ/contractor, /datum/mil_rank/civ/nt)
+	allowed_branches = list(/datum/mil_branch/employee, /datum/mil_branch/contractor)
+	allowed_ranks = list(/datum/mil_rank/civ/nt, /datum/mil_rank/civ/contractor)
 	min_skill = list(
 		SKILL_MEDICAL = SKILL_BASIC,
 		SKILL_CHEMISTRY = SKILL_TRAINED
@@ -187,7 +184,7 @@
 	)
 	access = list(
 		access_medical, access_maint_tunnels, access_emergency_storage,
-		access_medical_equip, access_chemistry
+		access_medical_equip, access_chemistry, access_virology
 	)
 
 
@@ -208,17 +205,20 @@
 	total_positions = 1
 	spawn_positions = 1
 	alt_titles = list(
-		"Mentalist" = /singleton/hierarchy/outfit/job/sierra/crew/medical/counselor/mentalist
+		"Mentalist" = /singleton/hierarchy/outfit/job/sierra/crew/medical/counselor/mentalist,
+		"Psychologist" = /singleton/hierarchy/outfit/job/sierra/crew/medical/counselor/mentalist,
+		"Therapist" = /singleton/hierarchy/outfit/job/sierra/crew/medical/counselor/mentalist,
+		"Psychiatrist" = /singleton/hierarchy/outfit/job/sierra/crew/medical/counselor/mentalist
 	)
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/medical/counselor
 	allowed_branches = list(
-		/datum/mil_branch/seaf,
+		/datum/mil_branch/employee,
 		/datum/mil_branch/civilian,
 		/datum/mil_branch/contractor
 	)
 	allowed_ranks = list(
-		/datum/mil_rank/seaf/e5,
-		/datum/mil_rank/civ/contractor, /datum/mil_rank/civ/nt,
+		/datum/mil_rank/civ/nt,
+		/datum/mil_rank/civ/contractor,
 		/datum/mil_rank/civ/civ
 	)
 	min_skill = list(

@@ -1,7 +1,7 @@
 /datum/job/captain
-	title = "Commanding Officer"
+	title = "Captain"
 	department = "Командный"
-	supervisors = "SEAF Sectorial Command"
+	supervisors = "Центральному Командованию"
 	department_flag = COM
 	head_position = 1
 
@@ -17,10 +17,10 @@
 	spawn_positions = 1
 	req_admin_notify = 1
 	allowed_branches = list(
-		/datum/mil_branch/seaf
+		/datum/mil_branch/employee
 	)
 	allowed_ranks = list(
-		/datum/mil_rank/seaf/o6
+		/datum/mil_rank/civ/nt
 	)
 	min_skill = list(
 		SKILL_BUREAUCRACY = SKILL_TRAINED,
@@ -43,8 +43,8 @@
 
 
 /datum/job/hop
-	title = "First Officer"
-	supervisors = "Commanding Officer"
+	title = "Head of Personnel"
+	supervisors = "Капитану"
 	department = "Командный"
 	department_flag = COM
 
@@ -61,10 +61,10 @@
 	req_admin_notify = 1
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/command/hop
 	allowed_branches = list(
-		/datum/mil_branch/seaf
+		/datum/mil_branch/employee
 	)
 	allowed_ranks = list(
-		/datum/mil_rank/seaf/o5
+		/datum/mil_rank/civ/nt
 	)
 	min_skill = list(
 		SKILL_BUREAUCRACY = SKILL_TRAINED,
@@ -95,7 +95,7 @@
 		access_guppy_helm, access_expedition_shuttle_helm, access_explorer, access_el, access_tox,
 		access_tox_storage, access_research, access_mining, access_mining_office, access_mining_station,
 		access_xenobiology, access_xenoarch, access_petrov, access_petrov_helm, access_actor, access_chief_steward,
-		access_bar, access_commissary, access_pilot, access_field_eng, access_field_med, access_network_admin, access_research_storage
+		access_bar, access_commissary, access_pilot, access_field_eng, access_field_med, access_network_admin, access_research_storage, access_adjutants
 	)
 	software_on_spawn = list(
 		/datum/computer_file/program/comm,
@@ -113,7 +113,7 @@
 
 /datum/job/rd
 	title = "Research Director"
-	supervisors = "Commanding Officer"
+	supervisors = "Капитану"
 	department = "Научный"
 	department_flag = SCI|COM
 	head_position = 1
@@ -130,13 +130,9 @@
 
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/research/rd
 	allowed_branches = list(
-		/datum/mil_branch/seaf,
-		/datum/mil_branch/contractor
+		/datum/mil_branch/employee
 	)
 	allowed_ranks = list(
-		/datum/mil_rank/seaf/o3,
-		/datum/mil_rank/seaf/o4,
-		/datum/mil_rank/civ/contractor,
 		/datum/mil_rank/civ/nt
 	)
 	min_skill = list(
@@ -165,7 +161,7 @@
 		access_sec_doors, access_medical, access_network,
 		access_maint_tunnels, access_eva, access_expedition_shuttle, access_expedition_shuttle_helm,
 		access_guppy, access_hangar, access_petrov, access_petrov_helm,
-		access_guppy_helm, access_explorer, access_el, access_network_admin
+		access_guppy_helm, access_explorer, access_el, access_network_admin, access_research_storage
 	)
 	software_on_spawn = list(
 		/datum/computer_file/program/comm,
@@ -184,7 +180,7 @@
 
 /datum/job/cmo
 	title = "Chief Medical Officer"
-	supervisors = "Commanding Officer"
+	supervisors = "Капитану"
 	head_position = 1
 	department = "Медицинский"
 	department_flag = MED|COM
@@ -199,11 +195,10 @@
 	ideal_character_age = 36
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/command/cmo
 	allowed_branches = list(
-		/datum/mil_branch/seaf
+		/datum/mil_branch/employee
 	)
 	allowed_ranks = list(
-		/datum/mil_rank/seaf/o3,
-		/datum/mil_rank/seaf/o4
+		/datum/mil_rank/civ/nt
 	)
 	min_skill = list(
 		SKILL_BUREAUCRACY	=	SKILL_BASIC,
@@ -253,7 +248,7 @@
 
 /datum/job/chief_engineer
 	title = "Chief Engineer"
-	supervisors = "Commanding Officer"
+	supervisors = "Капитану"
 	head_position = 1
 	department = "Инженерный"
 	department_flag = ENG|COM
@@ -268,11 +263,10 @@
 	ideal_character_age = 32
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/command/chief_engineer
 	allowed_branches = list(
-		/datum/mil_branch/seaf
+		/datum/mil_branch/employee
 	)
 	allowed_ranks = list(
-		/datum/mil_rank/seaf/o3,
-		/datum/mil_rank/seaf/o4
+		/datum/mil_rank/civ/nt
 	)
 	min_skill = list(
 		SKILL_BUREAUCRACY	=	SKILL_BASIC,
@@ -331,8 +325,8 @@
 	и что любые механические неисправности устраняются быстро и эффективно."
 
 /datum/job/hos
-	title = "SEAF Star Trooper Commander"
-	supervisors = "Commanding Officer"
+	title = "Head of Security"
+	supervisors = "Капитану"
 	head_position = 1
 	department = "Охранный"
 	department_flag = SEC|COM
@@ -346,12 +340,8 @@
 	minimum_character_age = list(SPECIES_HUMAN = 34)
 	ideal_character_age = 40
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/command/hos
-	allowed_branches = list(/datum/mil_branch/seaf)
-	allowed_ranks = list(
-		/datum/mil_rank/seaf/o3,
-		/datum/mil_rank/seaf/o4,
-		/datum/mil_rank/seaf/o5
-	)
+	allowed_branches = list(/datum/mil_branch/employee)
+	allowed_ranks = list(/datum/mil_rank/civ/nt)
 	min_skill = list(
 		SKILL_BUREAUCRACY	=	SKILL_TRAINED,
 		SKILL_EVA			=	SKILL_BASIC,
@@ -400,12 +390,12 @@
 	чтобы детектив не скрывал никаких необходимых улик."
 
 /datum/job/iaa
-	title = "Democracy Officer"
+	title = "Internal Affairs Agent"
 	department = "Командный"
 	department_flag = SPT
-	total_positions = 2
-	spawn_positions = 2
-	supervisors = "Ministry of Truth"
+	total_positions = 1
+	spawn_positions = 1
+	supervisors = "Центральному Командованию"
 	selection_color = "#2f2f7f"
 	economic_power = 15
 
@@ -415,10 +405,10 @@
 	ideal_character_age = 40
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/command/iaa
 	allowed_branches = list(
-		/datum/mil_branch/ministry
+		/datum/mil_branch/employee
 	)
 	allowed_ranks = list(
-		/datum/mil_rank/civ/gov
+		/datum/mil_rank/civ/nt
 	)
 	min_skill = list(
 		SKILL_BUREAUCRACY	=	SKILL_EXPERIENCED,
@@ -451,12 +441,13 @@
 	Заполняйте бумаги, следите за прибылью и приказам ЦК - и не переставайте наблюдать."
 
 /datum/job/iso
-	title = "Truth Enforcer"
+	title = "Internal Security Operative"
 	department = "Командный"
 	department_flag = SPT
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = "Ministry of Truth"
+	supervisors = "Директору Департамента Внутренних Дел"
+	requires_head = "Internal Affairs Agent"
 	selection_color = "#2f2f7f"
 	economic_power = 10
 
@@ -466,10 +457,10 @@
 	ideal_character_age = 30
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/command/iso
 	allowed_branches = list(
-		/datum/mil_branch/ministry
+		/datum/mil_branch/employee
 	)
 	allowed_ranks = list(
-		/datum/mil_rank/civ/gov
+		/datum/mil_rank/civ/nt
 	)
 	min_skill = list(
 		SKILL_BUREAUCRACY	=	SKILL_BASIC,
@@ -500,10 +491,9 @@
 	// SIERRA TODO: need_exp_to_play
 	// need_exp_to_play = 2
 
-/datum/job/iaa/get_description_blurb()
+/datum/job/iso/get_description_blurb()
 	return "Оперативник Внутренней Безопасности, неофициально известный как Багровый Щит — сотрудник силовой ветви Департамента Внутренних Дел Центрального Командования NanoTrasen.\
 	На борту Сьерры он выступает в качестве телохранителя и правой руки Агента Внутренних Дел, действуя там, где слова и бумаги оказываются недостаточно эффективны."
-
 
 /datum/job/adjutant
 	title = "Adjutant"
@@ -511,7 +501,7 @@
 	department_flag = SPT
 	total_positions = 3
 	spawn_positions = 3
-	supervisors = "Commanding Officer, First Officer and other Department Heads"
+	supervisors = "Капитану и остальным главам"
 	selection_color = "#2f2f7f"
 
 	minimal_player_age = 18
@@ -522,8 +512,8 @@
 	skill_points = 20
 
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/command/adjutant
-	allowed_branches = list(/datum/mil_branch/seaf)
-	allowed_ranks = list(/datum/mil_rank/seaf/o1, /datum/mil_rank/seaf/o2)
+	allowed_branches = list(/datum/mil_branch/employee)
+	allowed_ranks = list(/datum/mil_rank/civ/nt)
 	min_skill = list(
 		SKILL_BUREAUCRACY	=	SKILL_BASIC,
 		SKILL_PILOT			=	SKILL_TRAINED
@@ -534,7 +524,7 @@
 		access_heads, access_bridge, access_janitor, access_kitchen, access_actor, access_cargo,
 		access_RC_announce, access_keycard_auth, access_guppy, access_guppy_helm,
 		access_external_airlocks, access_expedition_shuttle, access_eva, access_hangar,
-		access_explorer, access_expedition_shuttle_helm, access_gun, access_bar
+		access_explorer, access_expedition_shuttle_helm, access_gun, access_bar, access_adjutants
 	)
 
 	software_on_spawn = list(

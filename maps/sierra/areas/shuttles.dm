@@ -12,6 +12,18 @@
 	icon_state = "exit"
 	holomap_color = HOLOMAP_AREACOLOR_ESCAPE
 
+/area/shuttle/escape_pod/escape_pod1/station
+	name = "Shuttle - Escape - Pod One"
+
+/area/shuttle/escape_pod/escape_pod2/station
+	name = "Shuttle - Escape - Pod Two"
+
+/area/shuttle/escape_pod/escape_pod3/station
+	name = "Shuttle - Escape - Pod Three"
+
+/area/shuttle/escape_pod/escape_pod4/station
+	name = "Shuttle - Escape - Pod Four"
+
 /area/shuttle/escape_pod/escape_pod5/station
 	name = "Shuttle - Escape - Pod Five"
 

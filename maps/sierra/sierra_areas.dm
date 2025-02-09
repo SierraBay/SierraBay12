@@ -6,6 +6,10 @@
 	post_round_safe_areas = list (
 		/area/centcom,
 		/area/shuttle/escape/centcom,
+		/area/shuttle/escape_pod/escape_pod1/station,
+		/area/shuttle/escape_pod/escape_pod2/station,
+		/area/shuttle/escape_pod/escape_pod3/station,
+		/area/shuttle/escape_pod/escape_pod4/station,
 		/area/shuttle/escape_pod/escape_pod5/station,
 		/area/shuttle/escape_pod/escape_pod6/station,
 		/area/shuttle/escape_pod/escape_pod7/station,

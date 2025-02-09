@@ -124,9 +124,9 @@
 	ssu_color = "#54654c"
 
 /obj/machinery/suit_storage_unit/explorer
-	name = "Helldiver Voidsuit Storage Unit"
-	suit = /obj/item/clothing/suit/space/void/exploration/helldiver
-	helmet = /obj/item/clothing/head/helmet/space/void/exploration/helldiver
+	name = "Exploration Voidsuit Storage Unit"
+	suit = /obj/item/clothing/suit/space/void/exploration
+	helmet = /obj/item/clothing/head/helmet/space/void/exploration
 	boots = /obj/item/clothing/shoes/magboots
 	tank = /obj/item/tank/oxygen
 	mask = /obj/item/clothing/mask/gas/half
@@ -135,7 +135,7 @@
 	ssu_color = "#9966ff"
 
 /obj/machinery/suit_storage_unit/pilot
-	name = "SEAF Pilot Voidsuit Storage Unit"
+	name = "Expeditionary Pilot Voidsuit Storage Unit"
 	suit = /obj/item/clothing/suit/space/void/pilot
 	helmet = /obj/item/clothing/head/helmet/space/void/pilot
 	boots = /obj/item/clothing/shoes/magboots
@@ -153,11 +153,12 @@
 /obj/machinery/photocopier/faxmachine/centcomm
 	req_access = list(access_cent_general)
 	department = "Office of Civil Investigation and Enforcement"
+	is_centcom = TRUE
 
 /obj/machinery/photocopier/faxmachine/centcomm/Initialize()
 	. = ..()
 	destination = pick(GLOB.alldepartments)
-	department = "[GLOB.using_map.boss_name]"
+	GLOB.admin_departments += src.department
 
 /obj/machinery/photocopier/faxmachine/centcomm/attack_hand(mob/user as mob)
 	user.set_machine(src)
@@ -210,7 +211,7 @@
 
 	if(href_list["secsend"])	//May cause some bad situations...
 		if (!destination)
-			visible_message("[src] beeps, \"No departament selected.\"")
+			visible_message("[src] beeps, \"No department selected.\"")
 			return
 		var/kek = user.client.holder
 		if (!istype(kek,/datum/admins))
@@ -295,69 +296,3 @@
 
 /obj/machinery/power/shield_generator
 	icon = 'maps/sierra/icons/obj/shielding.dmi'
-
-/obj/portal/hellpod
-	name = "hellpod"
-	desc = "An instant-launch platform that will deliver you straight to the planetary surface. Super Earth assured you it is perfectly safe and reliable."
-	icon = 'maps/sierra/icons/turf/decals.dmi'
-	icon_state = "hellpod"
-
-/obj/structure/superearthbanner
-	name = "\improper Super Earth banner"
-	icon = 'maps/torch/icons/obj/solbanner.dmi'
-	icon_state = "wood"
-	desc = "A wooden pole bearing a banner of Super Earth Central Government. Glory to Managed Democracy!"
-	anchored = TRUE
-	obj_flags = OBJ_FLAG_ANCHORABLE
-	layer = ABOVE_HUMAN_LAYER
-
-/obj/structure/superearthbanner/exo
-	name = "Super Earth banner"
-	desc = "A rugged metal frame with a banner of Super Earth Central Government. Glory to Managed Democracy!"
-	icon_state = "steel"
-	obj_flags = 0
-	var/plantedby
-
-/obj/structure/superearthbanner/exo/Initialize()
-	. = ..()
-	flick("deploy",src)
-
-/obj/structure/superearthbanner/exo/examine(mob/user)
-	. = ..()
-	if(plantedby)
-		to_chat(user, SPAN_NOTICE("[plantedby]"))
-
-/obj/item/superearthbanner
-	name = "\improper Super Earth banner capsule"
-	desc = "Super Earth banner packed in a rapid deployment capsule. Used for liberating new worlds in the name of Super Earth."
-	icon = 'maps/torch/icons/obj/uniques.dmi'
-	icon_state = "banner_stowed"
-	w_class = ITEM_SIZE_HUGE
-	req_access = list(access_explorer)
-
-/obj/item/superearthbanner/attack_self(mob/living/carbon/human/user)
-	..()
-	if(!istype(user))
-		return
-	if(!allowed(user))
-		to_chat(user, SPAN_WARNING("\The [src] does not recognize your authority!"))
-		return
-	var/turf/T = get_turf(src)
-	if(!istype(T) && !istype(T,/turf/space))
-		to_chat(user, SPAN_WARNING("\The [src] is unable to deploy here!"))
-		return
-	if(user.unEquip(src))
-		forceMove(T)
-		if(GLOB.using_map.use_overmap)
-			var/obj/overmap/visitable/sector/exoplanet/P = map_sectors["[z]"]
-			if(istype(P))
-				GLOB.stat_flags_planted += 1
-		qdel(src)
-		var/obj/structure/superearthbanner/exo/E = new(T)
-		var/obj/item/card/id/ID = user.GetIdCard()
-		var/dudename = ID.registered_name
-		if(istype(ID.military_rank))
-			dudename = "[ID.military_rank.name] [dudename]"
-		E.plantedby = "Planted on [stationdate2text()] by [dudename], [user.get_assignment()] of [GLOB.using_map.full_name]."
-		T.visible_message(SPAN_NOTICE("[user] successfully liberates this world with \the [E]!"))
-

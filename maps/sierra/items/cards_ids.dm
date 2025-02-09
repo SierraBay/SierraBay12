@@ -2,7 +2,7 @@
 
 /obj/item/card/id/sierra
 	name = "identification card"
-	desc = "An identification card issued to personnel aboard the SES Sierra Democratica."
+	desc = "An identification card issued to personnel aboard the NSV Sierra."
 	job_access_type = /datum/job/assistant
 
 /obj/item/card/id/sierra/silver
@@ -21,17 +21,22 @@
 
 // NanoTrasen Personnel and Passengers
 /obj/item/card/id/sierra/passenger
-	desc = "An identification card issued to passengers aboard the SES Sierra Democratica."
+	desc = "An identification card issued to passengers aboard the NSV Sierra."
 	job_access_type = /datum/job/assistant
 	color = "#ccecff"
 
 /obj/item/card/id/sierra/crew
-	desc = "An identification card issued to NanoTrasen crewmembers aboard the SES Sierra Democratica."
+	desc = "An identification card issued to NanoTrasen crewmembers aboard the NSV Sierra."
 	job_access_type = /datum/job/assistant
 	color = "#ccecff"
 
+/obj/item/card/id/sierra/vagabond
+	desc = "An old identification card issued to NanoTrasen crewmembers aboard the NCV Sierra."
+	job_access_type = /datum/job/vagabond
+	color = "#232525"
+
 /obj/item/card/id/sierra/crew/medical
-	desc = "An identification card issued to medical crewmembers aboard the SES Sierra Democratica."
+	desc = "An identification card issued to medical crewmembers aboard the NSV Sierra."
 	job_access_type = /datum/job/doctor
 	detail_color = COLOR_PALE_BLUE_GRAY
 
@@ -59,7 +64,7 @@
 	extra_details = list("onegoldstripe")
 
 /obj/item/card/id/sierra/crew/security
-	desc = "An identification card issued to asset protection depatment's personnel aboard the SES Sierra Democratica."
+	desc = "An identification card issued to the asset protection department personnel aboard the NSV Sierra."
 	job_access_type = /datum/job/officer
 	detail_color = "#e00000"
 
@@ -81,7 +86,7 @@
 	extra_details = list("onegoldstripe")
 
 /obj/item/card/id/sierra/crew/engineering
-	desc = "An identification card issued to engineering personnel aboard the SES Sierra Democratica."
+	desc = "An identification card issued to engineering personnel aboard the NSV Sierra."
 	job_access_type = /datum/job/engineer
 	detail_color = COLOR_SUN
 
@@ -115,7 +120,7 @@
 
 
 /obj/item/card/id/sierra/crew/service //unused
-	desc = "An identification card issued to service personnel aboard the SES Sierra Democratica."
+	desc = "An identification card issued to service personnel aboard the NSV Sierra."
 	detail_color = COLOR_CIVIE_GREEN
 
 /obj/item/card/id/sierra/crew/service/chief_steward
@@ -166,7 +171,7 @@
 //Research
 
 /obj/item/card/id/sierra/crew/research
-	desc = "A card issued to research personnel aboard the SES Sierra Democratica."
+	desc = "A card issued to research personnel aboard the NSV Sierra."
 	job_access_type = /datum/job/scientist_assistant
 	detail_color = COLOR_RESEARCH
 	color = COLOR_WHITE
@@ -187,7 +192,7 @@
 	job_access_type = /datum/job/roboticist
 
 /obj/item/card/id/sierra/crew/liaison
-	desc = "A card issued to corporate represenatives aboard the SES Sierra Democratica."
+	desc = "A card issued to corporate represenatives aboard the NSV Sierra."
 	job_access_type = /datum/job/iaa
 	color = COLOR_GRAY40
 	detail_color = COLOR_COMMAND_BLUE
@@ -197,7 +202,7 @@
 	detail_color = "#570b03"
 
 /obj/item/card/id/sierra/crew/adjutant
-	desc = "A card issued to command's support personnel aboard the SES Sierra Democratica."
+	desc = "A card issued to command's support personnel aboard the NSV Sierra."
 	job_access_type = /datum/job/adjutant
 	color = "#ccecff"
 	detail_color = COLOR_COMMAND_BLUE

@@ -1,13 +1,13 @@
 /obj/structure/sign/dedicationplaque/sierra
-	name = "\improper SES Sierra Democratica dedication plaque"
+	name = "\improper NSV Sierra dedication plaque"
 
 /obj/structure/sign/dedicationplaque/sierra/Initialize()
 	. = ..()
-	desc = "S.E.S. Sierra Democratica - Mako Class Superdestroyer - SEAF Registry 3525 - Blume Ship Yards, Super Earth - Fourth Vessel To Bear The Name - Launched [GLOB.using_map.game_year - 12] - Super Earth Central Government - 'The light of Democracy will guide us through the darkest abyss.'"
+	desc = "N.S.V. Sierra - Modified Mako Class - NanoTrasen Registry 3525 - Blume Ship Yards, Earth - Fourth Vessel To Bear The Name - Launched [GLOB.using_map.game_year - 12] - Sol Central Government - 'Travels to the abyss always pays off.'"
 
 
 /obj/structure/sign/memorial/sierra
-	name = "\improper SES Sierra Democratica model"
+	name = "\improper NSV Sierra model"
 	icon = 'maps/sierra/structures/memorial/sierra_memorial.dmi'
 	icon_state = "sierra"
 
@@ -29,8 +29,8 @@
 
 	set_light(2, 0.8, COLOR_TEAL)
 
-	desc = "You see a holographic sign that says: 'Model of S.E.S. Sierra Democratica - Mako Class Superdestroyer'"
-	description = {"<div style="max-width: 480px; margin: 12px auto;"><div style="border: 1px solid #4e9bcf; padding: 20px; color: #4e9bcf; margin-bottom: 10px; font-family: monospace;"><div style="font-size: 14px; text-align: center; font-weight: bold;"><div>S.E.S. Sierra Democratica - Mako Class Superdestroyer</div><div>SEAF Registry 3525 - Blume Ship Yards.</div></div><hr style="border-color: #4e9bcf;"><div style="font-style: italic; text-align: center;"><div>Super Earth - Fourth Vessel To Bear The Name</div><div>Launched [GLOB.using_map.game_year - 12] - Super Earth Central Government</div><div>"The light of Democracy will guide us through the darkest abyss"</div></div><hr style="border-color: #4e9bcf;"><div>Special thanks to the engineers of section '#2179-INF'.<br><br>Adjustment Engineers: [developers] for invaluable contributions to the development of the SES Sierra Democratica.</div></div><div class="notice">Next comes an extremely long list of names and job titles, as well as a photograph of the team of engineers responsible for building this ship.</div></div>"}
+	desc = "You see a holographic sign that says: 'Model of N.S.V. Sierra - Modified Mako Class'"
+	description = {"<div style="max-width: 480px; margin: 12px auto;"><div style="border: 1px solid #4e9bcf; padding: 20px; color: #4e9bcf; margin-bottom: 10px; font-family: monospace;"><div style="font-size: 14px; text-align: center; font-weight: bold;"><div>N.S.V. Sierra - Modified Mako Class</div><div>NanoTrasen Registry 3525 - Blume Ship Yards.</div></div><hr style="border-color: #4e9bcf;"><div style="font-style: italic; text-align: center;"><div>Earth - Fourth Vessel To Bear The Name</div><div>Launched [GLOB.using_map.game_year - 12] - Sol Central Government</div><div>"Travels to the abyss always pays off"</div></div><hr style="border-color: #4e9bcf;"><div>Special thanks to the engineers of section '#2179-INF'.<br><br>Adjustment Engineers: [developers] for invaluable contributions to the development of the NSV Sierra.</div></div><div class="notice">Next comes an extremely long list of names and job titles, as well as a photograph of the team of engineers responsible for building this ship.</div></div>"}
 
 	update_icon()
 

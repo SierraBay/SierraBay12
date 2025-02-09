@@ -16,19 +16,8 @@
 			"Research Supervisor"
 		)
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/research/senior_scientist
-	allowed_branches = list(
-		/datum/mil_branch/seaf,
-		/datum/mil_branch/contractor
-	)
-	allowed_ranks = list(
-		/datum/mil_rank/seaf/e6,
-		/datum/mil_rank/seaf/e7,
-		/datum/mil_rank/seaf/e8,
-		/datum/mil_rank/seaf/o1,
-		/datum/mil_rank/seaf/o2,
-		/datum/mil_rank/civ/contractor,
-		/datum/mil_rank/civ/nt
-	)
+	allowed_branches = list(/datum/mil_branch/employee)
+	allowed_ranks = list(/datum/mil_rank/civ/nt)
 
 	access = list(
 			access_tox,					access_tox_storage,	access_research,	access_mining,		access_mining_office,
@@ -96,13 +85,12 @@
 
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/research/scientist
 	allowed_branches = list(
-			/datum/mil_branch/seaf,
+			/datum/mil_branch/employee,
 			/datum/mil_branch/contractor
 		)
 	allowed_ranks = list(
-			/datum/mil_rank/seaf/e4,
-			/datum/mil_rank/civ/contractor,
-			/datum/mil_rank/civ/nt
+			/datum/mil_rank/civ/nt,
+			/datum/mil_rank/civ/contractor
 		)
 
 	access = list(
@@ -138,14 +126,12 @@
 		)
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/research/roboticist
 	allowed_branches = list(
-			/datum/mil_branch/seaf,
+			/datum/mil_branch/employee,
 			/datum/mil_branch/contractor
 		)
 	allowed_ranks = list(
-			/datum/mil_rank/seaf/e3,
-			/datum/mil_rank/seaf/e4,
-			/datum/mil_rank/civ/contractor,
-			/datum/mil_rank/civ/nt
+			/datum/mil_rank/civ/nt,
+			/datum/mil_rank/civ/contractor
 		)
 	min_skill = list(
 			SKILL_COMPUTER		=	SKILL_TRAINED,
@@ -210,14 +196,12 @@
 
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/research/assist
 	allowed_branches = list(
-			/datum/mil_branch/seaf,
+			/datum/mil_branch/employee,
 			/datum/mil_branch/contractor
 		)
 	allowed_ranks = list(
-			/datum/mil_rank/seaf/e1,
-			/datum/mil_rank/seaf/e2,
-			/datum/mil_rank/civ/contractor,
-			/datum/mil_rank/civ/nt
+			/datum/mil_rank/civ/nt,
+			/datum/mil_rank/civ/contractor
 		)
 
 	access = list(

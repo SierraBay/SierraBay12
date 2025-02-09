@@ -1,6 +1,6 @@
 /obj/item/spacecash
-	name = "0 Super-Thalers"
-	desc = "It's worth 0 Super-Thalers."
+	name = "0 thalers"
+	desc = "It's worth 0 thalers."
 	gender = PLURAL
 	icon = 'icons/obj/money.dmi'
 	icon_state = "spacecash1"
@@ -52,9 +52,9 @@
 		return list(icon_state)
 
 /obj/item/spacecash/bundle
-	name = "pile of Super-Thalers"
+	name = "pile of thalers"
 	icon_state = "spacecash1"
-	desc = "They are worth 0 Super-Thalers."
+	desc = "They are worth 0 Thalers."
 	worth = 0
 
 /obj/item/spacecash/bundle/Initialize()
@@ -72,7 +72,7 @@
 			sum -= i
 			num++
 			. += "spacecash[i]"
-	if(num == 0) // Less than one Super-Thaler, let's just make it look like 1 for ease
+	if(num == 0) // Less than one thaler, let's just make it look like 1 for ease
 		. += "spacecash1"
 
 /obj/item/spacecash/bundle/on_update_icon()
@@ -117,51 +117,51 @@
 		..()
 
 /obj/item/spacecash/bundle/c1
-	name = "1 Super-Thaler"
+	name = "1 Thaler"
 	icon_state = "spacecash1"
 	desc = "It's worth 1 credit."
 	worth = 1
 
 /obj/item/spacecash/bundle/c10
-	name = "10 Super-Thaler"
+	name = "10 Thaler"
 	icon_state = "spacecash10"
-	desc = "It's worth 10 Super-Thalers."
+	desc = "It's worth 10 Thalers."
 	worth = 10
 
 /obj/item/spacecash/bundle/c20
-	name = "20 Super-Thaler"
+	name = "20 Thaler"
 	icon_state = "spacecash20"
-	desc = "It's worth 20 Super-Thalers."
+	desc = "It's worth 20 Thalers."
 	worth = 20
 
 /obj/item/spacecash/bundle/c50
-	name = "50 Super-Thaler"
+	name = "50 Thaler"
 	icon_state = "spacecash50"
-	desc = "It's worth 50 Super-Thalers."
+	desc = "It's worth 50 Thalers."
 	worth = 50
 
 /obj/item/spacecash/bundle/c100
-	name = "100 Super-Thaler"
+	name = "100 Thaler"
 	icon_state = "spacecash100"
-	desc = "It's worth 100 Super-Thalers."
+	desc = "It's worth 100 Thalers."
 	worth = 100
 
 /obj/item/spacecash/bundle/c200
-	name = "200 Super-Thaler"
+	name = "200 Thaler"
 	icon_state = "spacecash200"
-	desc = "It's worth 200 Super-Thalers."
+	desc = "It's worth 200 Thalers."
 	worth = 200
 
 /obj/item/spacecash/bundle/c500
-	name = "500 Super-Thaler"
+	name = "500 Thaler"
 	icon_state = "spacecash500"
-	desc = "It's worth 500 Super-Thalers."
+	desc = "It's worth 500 Thalers."
 	worth = 500
 
 /obj/item/spacecash/bundle/c1000
-	name = "1000 Super-Thaler"
+	name = "1000 Thaler"
 	icon_state = "spacecash1000"
-	desc = "It's worth 1000 Super-Thalers."
+	desc = "It's worth 1000 Thalers."
 	worth = 1000
 
 /proc/spawn_money(sum, spawnloc, mob/living/carbon/human/human_user as mob)

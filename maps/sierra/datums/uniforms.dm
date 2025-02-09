@@ -53,7 +53,7 @@
 /singleton/hierarchy/mil_uniform/nt
 	name = "Master NT outfit"
 	hierarchy_type = /singleton/hierarchy/mil_uniform/nt
-	branches = /datum/mil_branch/seaf
+	branches = /datum/mil_branch/employee
 
 	dress_under = /obj/item/clothing/under/rank/internalaffairs/plain
 	dress_shoes = list(\

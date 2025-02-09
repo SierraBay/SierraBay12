@@ -3,8 +3,8 @@ sierra specific items
 *******************/
 
 /obj/item/toy/sierramodel
-	name = "table-top SES Sierra Democratica model"
-	desc = "This is a replica of the SES Sierra Democratica, in 1:250th scale, on a handsome wooden stand. Small lights blink on the hull and at the engine exhaust."
+	name = "table-top NSV Sierra model"
+	desc = "This is a replica of the NSV Sierra, in 1:250th scale, on a handsome wooden stand. Small lights blink on the hull and at the engine exhaust."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "torch_model_figure"
 

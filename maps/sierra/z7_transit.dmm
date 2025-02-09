@@ -95,9 +95,11 @@
 /turf/space/transit/north,
 /area/space)
 "ak" = (
+/obj/shuttle_landmark/escape_pod/transit/pod1,
 /turf/space/transit/north,
 /area/space)
 "al" = (
+/obj/shuttle_landmark/escape_pod/transit/pod2,
 /turf/space/transit/north,
 /area/space)
 "am" = (
@@ -244,9 +246,11 @@
 /turf/space/transit/north,
 /area/space)
 "aH" = (
+/obj/shuttle_landmark/escape_pod/transit/pod3,
 /turf/space/transit/north,
 /area/space)
 "aI" = (
+/obj/shuttle_landmark/escape_pod/transit/pod4,
 /turf/space/transit/north,
 /area/space)
 "aJ" = (
@@ -284,9 +288,11 @@
 /turf/space/transit/east,
 /area/space)
 "aR" = (
+/obj/shuttle_landmark/escape_pod/out/pod1,
 /turf/space,
 /area/space)
 "aT" = (
+/obj/shuttle_landmark/escape_pod/out/pod2,
 /turf/space,
 /area/space)
 "aX" = (
@@ -297,9 +303,11 @@
 /turf/space,
 /area/space)
 "bb" = (
+/obj/shuttle_landmark/escape_pod/out/pod3,
 /turf/space,
 /area/space)
 "bc" = (
+/obj/shuttle_landmark/escape_pod/out/pod4,
 /turf/space,
 /area/space)
 "er" = (

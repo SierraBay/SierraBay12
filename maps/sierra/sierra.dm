@@ -50,34 +50,6 @@
 	#include "game/languages.dm"
 	#include "game/lockdown.dm"
 
-	// --- CULTURAL STUFF --- //
-	#include "background/culture/cultures_adherent.dm"
-	#include "background/culture/cultures_diona.dm"
-	#include "background/culture/cultures_human.dm"
-	#include "background/culture/cultures_ipc.dm"
-	#include "background/culture/cultures_serpentid.dm"
-	#include "background/culture/cultures_skrell.dm"
-	#include "background/culture/cultures_unathi.dm"
-	#include "background/culture/cultures_vox.dm"
-	#include "background/faction/factions_adherent.dm"
-	#include "background/faction/factions_human.dm"
-	#include "background/faction/factions_skrell.dm"
-	#include "background/faction/factions_unathi.dm"
-	#include "background/faction/factions_vox.dm"
-	#include "background/location/_location.dm"
-	#include "background/location/locations_adherent.dm"
-	#include "background/location/locations_diona.dm"
-	#include "background/location/locations_human.dm"
-	#include "background/location/locations_other.dm"
-	#include "background/location/locations_serpentids.dm"
-	#include "background/location/locations_skrell.dm"
-	#include "background/location/locations_unathi.dm"
-	#include "background/location/locations_vox.dm"
-	#include "background/religion/religions_human.dm"
-	#include "background/religion/religions_skrell.dm"
-	#include "background/religion/religions_unathi.dm"
-	#include "background/religion/religions_vox.dm"
-
 	// --- ITEMS --- //
 	#include "items/ammo.dm"
 	#include "items/cards_ids.dm"
@@ -220,6 +192,7 @@
 	#include "../../mods/_maps/ascent_seedship/_map_ascent_seedship.dme"
 	#include "../../mods/_maps/ascent_caulship/_map_ascent_caulship.dme"
 
+
 	#include "../../mods/antagonists/_antagonists_includes.dm"
 	#include "../../mods/ascent/_ascent_includes.dm"
 	#include "../../mods/fancy_sofas/_fancy_sofas_includes.dm"
@@ -239,8 +212,8 @@
 	// UNUSED MODS
 	// Keep them in ascending alphabetical order too, please
 
-	// #include "../../mods/atmos_ret_field/_atm_ret_field_includes.dm"
-	// #include "../../mods/bluespace_kitty/_bluespace_kitty_includes.dm"
+	// #include "../../mods/atmos_ret_field/_atm_ret_field.dme"
+	// #include "../../mods/bluespace_kitty/_bluespace_kitty.dme"
 
 	// Почему UNUSED MODS стоит хранить?
 	// Потому что никто не проверяет использование тех или иных файлов

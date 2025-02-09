@@ -11,19 +11,8 @@
 	minimal_player_age = 7
 	supervisors = "Главе Персонала"
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/service/chief_steward
-	allowed_branches = list(
-		/datum/mil_branch/seaf,
-		/datum/mil_branch/contractor
-	)
-	allowed_ranks = list(
-		/datum/mil_rank/seaf/e6,
-		/datum/mil_rank/seaf/e7,
-		/datum/mil_rank/seaf/e8,
-		/datum/mil_rank/seaf/o1,
-		/datum/mil_rank/seaf/o2,
-		/datum/mil_rank/civ/contractor,
-		/datum/mil_rank/civ/nt
-	)
+	allowed_branches = list(/datum/mil_branch/employee)
+	allowed_ranks = list(/datum/mil_rank/civ/nt)
 	min_skill = list(
 		SKILL_BUREAUCRACY = SKILL_TRAINED,
 		SKILL_COOKING = SKILL_TRAINED,
@@ -73,7 +62,7 @@
 		/datum/mil_branch/contractor
 	)
 	allowed_ranks = list(
-		/datum/mil_rank/civ/contractor, /datum/mil_rank/civ/nt,
+		/datum/mil_rank/civ/contractor,
 		/datum/mil_rank/civ/civ
 	)
 	min_skill = list(SKILL_BUREAUCRACY = SKILL_BASIC)
@@ -97,13 +86,13 @@
 	supervisors = "Главному Стюарду и Главе Персонала"
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/service/janitor
 	allowed_branches = list(
-		/datum/mil_branch/seaf,
+		/datum/mil_branch/employee,
 		/datum/mil_branch/civilian,
 		/datum/mil_branch/contractor
 	)
 	allowed_ranks = list(
-		/datum/mil_rank/seaf/e2,
-		/datum/mil_rank/civ/contractor, /datum/mil_rank/civ/nt,
+		/datum/mil_rank/civ/nt,
+		/datum/mil_rank/civ/contractor,
 		/datum/mil_rank/civ/civ
 	)
 	min_skill = list(SKILL_HAULING = SKILL_BASIC)
@@ -126,13 +115,13 @@
 	supervisors = "Главному Стюарду и Главе Персонала"
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/service/cook
 	allowed_branches = list(
-		/datum/mil_branch/seaf,
+		/datum/mil_branch/employee,
 		/datum/mil_branch/civilian,
 		/datum/mil_branch/contractor
 	)
 	allowed_ranks = list(
-		/datum/mil_rank/seaf/e2, /datum/mil_rank/seaf/e3, /datum/mil_rank/seaf/e4,
-		/datum/mil_rank/civ/contractor, /datum/mil_rank/civ/nt,
+		/datum/mil_rank/civ/nt,
+		/datum/mil_rank/civ/contractor,
 		/datum/mil_rank/civ/civ
 	)
 	min_skill = list(
@@ -162,12 +151,8 @@
 	)
 	supervisors = "Главному Стюарду и Главе Персонала"
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/service/cook
-	allowed_branches = list(/datum/mil_branch/seaf, /datum/mil_branch/civilian, /datum/mil_branch/contractor)
-	allowed_ranks = list(
-		/datum/mil_rank/seaf/e2, /datum/mil_rank/seaf/e3, /datum/mil_rank/seaf/e4,
-		/datum/mil_rank/civ/contractor, /datum/mil_rank/civ/nt,
-		/datum/mil_rank/civ/civ
-	)
+	allowed_branches = list(/datum/mil_branch/employee, /datum/mil_branch/civilian, /datum/mil_branch/contractor)
+	allowed_ranks = list(/datum/mil_rank/civ/nt, /datum/mil_rank/civ/contractor, /datum/mil_rank/civ/civ)
 	min_skill = list(
 		SKILL_COOKING = SKILL_BASIC,
 		SKILL_BOTANY = SKILL_BASIC,
@@ -191,13 +176,13 @@
 	supervisors = "Главному Стюарду и Главе Персонала"
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/service/bartender
 	allowed_branches = list(
-		/datum/mil_branch/seaf,
+		/datum/mil_branch/employee,
 		/datum/mil_branch/civilian,
 		/datum/mil_branch/contractor
 	)
 	allowed_ranks = list(
-		/datum/mil_rank/seaf/e2, /datum/mil_rank/seaf/e3, /datum/mil_rank/seaf/e4,
-		/datum/mil_rank/civ/contractor, /datum/mil_rank/civ/nt,
+		/datum/mil_rank/civ/nt,
+		/datum/mil_rank/civ/contractor,
 		/datum/mil_rank/civ/civ
 	)
 	access = list(access_hydroponics, access_bar, access_commissary)
@@ -223,13 +208,13 @@
 	supervisors = "Главному Стюарду и Главе Персонала"
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/service/actor
 	allowed_branches = list(
-		/datum/mil_branch/seaf,
+		/datum/mil_branch/employee,
 		/datum/mil_branch/civilian,
 		/datum/mil_branch/contractor
 	)
 	allowed_ranks = list(
-		/datum/mil_rank/seaf/e2, /datum/mil_rank/seaf/e3, /datum/mil_rank/seaf/e4,
-		/datum/mil_rank/civ/contractor, /datum/mil_rank/civ/nt,
+		/datum/mil_rank/civ/nt,
+		/datum/mil_rank/civ/contractor,
 		/datum/mil_rank/civ/civ
 	)
 

@@ -5,21 +5,21 @@
 
 /datum/map/sierra/map_info(victim)
 	to_chat(victim, "<h2>Информация о карте</h2>")
-	to_chat(victim, "Вы находитесь на борту <b>[station_name]</b>, супер-эсминца Центрального Правительства Супер-Земли. Основной миссией вашего звездолёта является поиск и уничтожение агентов тирании и врагов свободы - зловещих терминидов, кровожадных автоматонов, а также изменников и предателей, пытающихся разрушить великий строй Регулируемой Демократии.")
-	to_chat(victim, "Экипаж звездолёта состоит из персонала Вооруженных Сил Супер-Земли - офицеров флота, бойцов звёздной пехоты, а также подразделения Адских Десантников.")
-	to_chat(victim, "Помимо военного персонала, на борту супер-эсминца также присутствуют гражданские лица - представители Министерства Правды и корпоративные подрядчики, размещенные на [station_name] с целью поддержания технологического и материального превосходства Супер-Земли. Полезные ссылки:")
-	to_chat(victim, "<a href='https://sierra.ss220.space/index.php/Стандартные_процедуры_ИКН_Сьерра'>Процедуры ВССЗ</a>, <a href='https://sierra.ss220.space/index.php/Helldivers/Космический_закон'>Космический Закон Супер-Земли</a>, <a href='https://sierra.ss220.space/index.php/Итак,_Вы_хотите_узнать_о_мире_корпораций%3F'>Список корпораций Супер-Земли</a>.")
+	to_chat(victim, "Вы находитесь на борту <b>[station_name]</b>, исследовательского судна корпорации НаноТрейзен. Основная миссия вашего объекта - проведение исследований на нейтральной территории, как правило, на известной границе космоса с целью нахождения новых залежей форона, космических объектов, артефактов и останков инопланетных цивилизаций.")
+	to_chat(victim, "Охрана судна укомплектована сотрудниками Службы Безопасности НаноТрайзен и частных предприятий.")
+	to_chat(victim, "Помимо ЧВК в охране, в остальных отделах также присутствуют подрядчики. Их наняли как выдающихся специалистов в своей области, что превзошли корпоративного кандидата. Как правило, они либо работают на себя (civilian), либо на другую корпорацию (contractor). Полезные ссылки:")
+	to_chat(victim, "<a href='https://sierra.ss220.space/index.php/Стандартные_процедуры_ИКН_Сьерра'>Процедуры НТ</a>, <a href='https://sierra.ss220.space/index.php/Корпоративные_законы'>Регуляции НТ</a>, <a href='https://sierra.ss220.space/index.php/Коды_угрозы ИКН_Сьерра'>Коды угроз НТ</a>, <a href='https://sierra.ss220.space/index.php/Итак,_Вы_хотите_узнать_о_мире_корпораций%3F'>Список корпораций</a>.")
 
 /datum/map/sierra/send_welcome()
 	set waitfor = FALSE
 
-	var/welcome_text = "<center><img src = scglogo.png /><br /><font size = 3><b>SES Sierra Democratica</b> Показания Сенсоров:</font><hr />"
+	var/welcome_text = "<center><img src = ntlogo.png /><br /><font size = 3><b>NSV Sierra</b> Показания Сенсоров:</font><hr />"
 	welcome_text += "Отчет сгенерирован [stationdate2text()] в [stationtime2text()]</center><br /><br />"
 	welcome_text += "Текущая система: <b>[system_name]</b><br />"
 	welcome_text += "Следующая система для прыжка: <b>[generate_system_name()]</b><br />"
-	welcome_text += "Дней до Супер-Земли: <b>[rand(15,45)]</b><br />"
+	welcome_text += "Дней до Солнечной Системы: <b>[rand(15,45)]</b><br />"
 	welcome_text += "Дней с последнего визита в порт: <b>[rand(60,180)]</b><br />"
-	welcome_text += "Результаты сканирования показали следующие потенциальные объекты для разведки:<br />"
+	welcome_text += "Результаты сканирования показали следующие потенциальные объекты для исследования:<br />"
 
 	var/list/space_things = list()
 	var/obj/overmap/sierra = map_sectors["1"]
@@ -48,7 +48,7 @@
 
 	welcome_text += "<hr>"
 
-	post_comm_message("SES Sierra Democratica Sensor Readings", welcome_text)
+	post_comm_message("NSV Sierra Sensor Readings", welcome_text)
 	minor_announcement.Announce(message = "Сканирование сектора завершено. Информация передана в базу данных консолей связи.")
 	sleep(2 SECONDS)
-	minor_announcement.Announce(message = "Текущая система: [system_name]. Демократичной смены на борту [station_name].", new_sound = 'sound/music/SuperEarthAnthem.ogg')
+	minor_announcement.Announce(message = "Текущая система: [system_name]. Приятной смены на борту [station_name].", new_sound = 'sound/misc/notice2.ogg')

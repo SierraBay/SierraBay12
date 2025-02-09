@@ -1,3 +1,20 @@
+/datum/gear/pet_cube
+	display_name = "PetCube X"
+	description = "Just add a water!"
+	path = /obj/item/reagent_containers/food/snacks/monkeycube
+	cost = 0
+	donation_tier = DONATION_TIER_THREE
+
+/datum/gear/pet_cube/New()
+	. = ..()
+	var/cubes = list(
+		"Cat PetCube" = /obj/item/reagent_containers/food/snacks/monkeycube/cat,
+		"Corgi PetCube" = /obj/item/reagent_containers/food/snacks/monkeycube/corgi,
+		"Lizard PetCube" = /obj/item/reagent_containers/food/snacks/monkeycube/lizard,
+		"Mouse PetCube" = /obj/item/reagent_containers/food/snacks/monkeycube/mouse,
+	)
+	gear_tweaks += new /datum/gear_tweak/path(cubes)
+
 /datum/gear/tactical/light_pcarrier
 	display_name = "light armored plate carrier"
 	description = "With additional light armor plate"

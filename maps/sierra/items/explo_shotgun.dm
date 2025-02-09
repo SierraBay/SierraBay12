@@ -124,8 +124,8 @@
 
 /obj/structure/closet/walllocker/secure_closet/explo_gun/WillContain()
 	return list(
-		/obj/item/storage/box/ammo/sniperammo = 3,
-		/obj/item/gun/projectile/heavysniper
+		/obj/item/storage/box/ammo/explo_shells = 3,
+		/obj/item/gun/projectile/shotgun/pump/exploration
 	)
 
 /singleton/closet_appearance/wall/explo_gun

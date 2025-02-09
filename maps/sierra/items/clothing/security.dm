@@ -96,8 +96,8 @@
 	gender_icons = 1
 
 /obj/item/clothing/under/rank/security/operative
-	name = "truth enforcer uniform"
-	desc = "A uniform issued to the Truth Enforcers. For when justice needs to be delivered in style."
+	name = "internal security uniform"
+	desc = "A uniform issued to NanoTrasen Internal Security operatives. For when justice needs to be delivered in style."
 	icon = 'maps/sierra/icons/obj/clothing/obj_under.dmi'
 	item_icons = list(slot_w_uniform_str ='maps/sierra/icons/mob/onmob/onmob_under.dmi')
 	item_state = "isouniform"
@@ -105,15 +105,15 @@
 	worn_state = "isouniform"
 
 /obj/item/clothing/head/beret/sec/corporate/operative
-	name = "truth enforcer beret"
-	desc = "A beret issued to the Truth Enforcers. Wearing this twenty-four-seven can prove quite tiring, considring its tenedency to get crumped."
+	name = "internal security beret"
+	desc = "A beret issued to NanoTrasen Internal Security operatives. Wearing this twenty-four-seven can prove quite tiring, considring its tenedency to get crumped."
 	icon = 'maps/sierra/icons/obj/clothing/obj_head.dmi'
 	item_icons = list(slot_head_str ='maps/sierra/icons/mob/onmob/onmob_head.dmi')
 	item_state = "isoberet"
 	icon_state = "isoberet"
 
 /obj/item/clothing/head/beret/sec/corporate/operative/parade
-	name = "truth enforcer dress beret"
-	desc = "A beret issued to the Truth Enforcers for awarding ceremonies. Even more difficult to keep clean than the regular service counterpart."
+	name = "internal security dress beret"
+	desc = "A beret issued to NanoTrasen Internal Security operatives for awarding ceremonies. Even more difficult to keep clean than the regular service counterpart."
 	item_state = "isoberet_parade"
 	icon_state = "isoberet_parade"

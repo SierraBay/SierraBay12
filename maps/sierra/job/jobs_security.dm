@@ -1,18 +1,20 @@
 /datum/job/warden
-	title = "SEAF Star Trooper Sergeant"
+	title = "Warden"
 	department = "Охранный"
 	department_flag = SEC
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = "Командиру Звёздной Пехоты"
+	supervisors = "Главе Службы безопасности"
 	economic_power = 8
 	minimal_player_age = 14
 	minimum_character_age = list(SPECIES_HUMAN = 26)
 	ideal_character_age = 28
-	alt_titles = list()
+	alt_titles = list(
+		"Security Sergeant",
+		)
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/security/warden
-	allowed_branches = list(/datum/mil_branch/seaf)
-	allowed_ranks = list(/datum/mil_rank/seaf/e5, /datum/mil_rank/seaf/e6)
+	allowed_branches = list(/datum/mil_branch/employee)
+	allowed_ranks = list(/datum/mil_rank/civ/nt)
 	min_skill = list(   SKILL_BUREAUCRACY = SKILL_TRAINED,
 	                    SKILL_EVA         = SKILL_BASIC,
 	                    SKILL_HAULING	  = SKILL_BASIC,
@@ -45,22 +47,24 @@
 	Это включает в себя обновление их записей в базах данных, а также исполнение наказаний, в виде помещения в камеру."
 
 /datum/job/detective
-	title = "Internal Security Investigator"
+	title = "Criminal Investigator"
 	department = "Охранный"
 	department_flag = SEC
 	hud_icon = "huddetective"
 	total_positions = 2
 	spawn_positions = 2
-	supervisors = "Командиру Звёздной Пехоты"
+	supervisors = "Главе Службы безопасности"
 	economic_power = 5
 	minimal_player_age = 7
 	minimum_character_age = list(SPECIES_HUMAN = 25)
 	ideal_character_age = 30
 	skill_points = 14
-	alt_titles = list()
+	alt_titles = list(
+		"Forensic Technician"
+		)
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/security/detective
-	allowed_branches = list(/datum/mil_branch/seaf, /datum/mil_branch/civilian, /datum/mil_branch/contractor)
-	allowed_ranks = list(/datum/mil_rank/seaf/e4, /datum/mil_rank/civ/contractor, /datum/mil_rank/civ/nt, /datum/mil_rank/civ/civ)
+	allowed_branches = list(/datum/mil_branch/employee, /datum/mil_branch/civilian, /datum/mil_branch/contractor)
+	allowed_ranks = list(/datum/mil_rank/civ/nt, /datum/mil_rank/civ/contractor, /datum/mil_rank/civ/civ)
 	min_skill = list(   SKILL_BUREAUCRACY = SKILL_BASIC,
 	                    SKILL_COMPUTER    = SKILL_BASIC,
 	                    SKILL_EVA         = SKILL_BASIC,
@@ -87,22 +91,23 @@
 	Его основная миссия - выяснить, кто совершил преступление и собрать все имеющиеся доказательства."
 
 /datum/job/officer
-	title = "SEAF Star Trooper"
+	title = "Security Guard"
 	department = "Охранный"
 	department_flag = SEC
 	total_positions = 4
 	spawn_positions = 4
-	supervisors = "Командиру и Сержанту Звёздной Пехоты"
+	supervisors = "Главе Службы безопасности и Смотрителю (сержанту)"
 	economic_power = 6
 	minimal_player_age = 10
 	minimum_character_age = list(SPECIES_HUMAN = 22)
 	ideal_character_age = 25
-	alt_titles = list()
+	alt_titles = list("Junior Guard")
+
 	skill_points = 20
 
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/security/officer
-	allowed_branches = list(/datum/mil_branch/seaf)
-	allowed_ranks = list(/datum/mil_rank/seaf/e2, /datum/mil_rank/seaf/e3, /datum/mil_rank/seaf/e4)
+	allowed_branches = list(/datum/mil_branch/employee, /datum/mil_branch/contractor)
+	allowed_ranks = list(/datum/mil_rank/civ/nt, /datum/mil_rank/civ/contractor)
 	min_skill = list(   SKILL_BUREAUCRACY = SKILL_BASIC,
 	                    SKILL_EVA         = SKILL_BASIC,
 	                    SKILL_COMBAT      = SKILL_BASIC,
@@ -128,18 +133,18 @@
 	 Главной задачей офицеров СБ является предотвращение ущерба персоналу корабля и собственности корпорации, и охранник который не ставит эти обязанности для себя на первое место имеет мало шансов задержаться на этой работе."
 
 /datum/job/security_assistant
-	title = "SEAF Star Trooper Cadet"
+	title = "Security Cadet"
 	department = "Охранный"
 	department_flag = SEC
 
 	total_positions = 2
 	spawn_positions = 2
-	supervisors = "старшим по званию солдатам и офицерам Звёздной Пехоты"
+	supervisors = "Главе Службы безопасности и остальному охранному персоналу"
 	economic_power = 3
 	minimum_character_age = list(SPECIES_HUMAN = 20)
 	ideal_character_age = 21
 	selection_color = "#601c1c"
-	alt_titles = list("SEAF Star Trooper Recruit")
+	alt_titles = list("Security Recruit")
 
 	min_skill = list(	SKILL_BUREAUCRACY = SKILL_BASIC,
 	                    SKILL_COMBAT      = SKILL_BASIC,
@@ -147,8 +152,12 @@
 	skill_points = 18
 
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/security/assist
-	allowed_branches = list(/datum/mil_branch/seaf)
-	allowed_ranks = list(/datum/mil_rank/seaf/e1)
+	allowed_branches = list(
+			/datum/mil_branch/employee
+		)
+	allowed_ranks = list(
+			/datum/mil_rank/civ/nt
+		)
 
 	access = list(access_seceva, access_security, access_brig, access_maint_tunnels,
 						access_external_airlocks, access_emergency_storage,

@@ -1,11 +1,11 @@
 /datum/job/exploration_leader
-	title = "Hell Commander"
+	title = "Exploration Leader"
 	department = "Экспедиционный"
 	department_flag = EXP
 
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = "Commanding Officer"
+	supervisors = "Директору Исследований и Капитану"
 	selection_color = "#68099e"
 
 	minimal_player_age = 14
@@ -16,8 +16,8 @@
 	skill_points = 22
 
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/exploration/el
-	allowed_branches = list(/datum/mil_branch/seaf)
-	allowed_ranks = list(/datum/mil_rank/seaf/e6, /datum/mil_rank/seaf/e7, /datum/mil_rank/seaf/e8, /datum/mil_rank/seaf/o1, /datum/mil_rank/seaf/o2)
+	allowed_branches = list(/datum/mil_branch/employee)
+	allowed_ranks = list(/datum/mil_rank/civ/nt)
 	min_skill = list(
 		SKILL_BUREAUCRACY = SKILL_BASIC,
 		SKILL_EVA         = SKILL_TRAINED,
@@ -28,8 +28,8 @@
 	max_skill = list(
 		SKILL_PILOT   = SKILL_MAX,
 		SKILL_SCIENCE = SKILL_MAX,
-		SKILL_COMBAT  = SKILL_MAX,
-		SKILL_WEAPONS = SKILL_MAX
+		SKILL_COMBAT  = SKILL_EXPERIENCED,
+		SKILL_WEAPONS = SKILL_EXPERIENCED
 	)
 	access = list(
 		access_el,
@@ -61,12 +61,12 @@
 	аномалии... Но не это ли то, за что Корпорация платит вам почти столько же, сколько главе?"
 
 /datum/job/explorer
-	title = "Helldiver"
+	title = "Explorer"
 	department = "Экспедиционный"
 	department_flag = EXP
-	total_positions = 5
-	spawn_positions = 5
-	supervisors = "Hell Commander"
+	total_positions = 3
+	spawn_positions = 3
+	supervisors = "Лидеру Экспедиции и Директору Исследований"
 	selection_color = "#68099e"
 
 	minimal_player_age = 4
@@ -76,8 +76,14 @@
 	economic_power = 6
 
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/exploration/explorer
-	allowed_branches = list(/datum/mil_branch/seaf)
-	allowed_ranks = list(/datum/mil_rank/seaf/e1, /datum/mil_rank/seaf/e2, /datum/mil_rank/seaf/e3, /datum/mil_rank/seaf/e4, /datum/mil_rank/seaf/e5)
+	allowed_branches = list(
+		/datum/mil_branch/employee,
+		/datum/mil_branch/contractor
+	)
+	allowed_ranks = list(
+		/datum/mil_rank/civ/nt,
+		/datum/mil_rank/civ/contractor
+	)
 	min_skill = list(
 		SKILL_EVA     = SKILL_BASIC,
 		SKILL_SCIENCE = SKILL_BASIC,
@@ -85,8 +91,8 @@
 	)
 	max_skill = list(
 		SKILL_SCIENCE = SKILL_MAX,
-		SKILL_COMBAT  = SKILL_MAX,
-		SKILL_WEAPONS = SKILL_MAX
+		SKILL_COMBAT  = SKILL_EXPERIENCED,
+		SKILL_WEAPONS = SKILL_EXPERIENCED
 	)
 	// SIERRA TODO: required_role
 	// required_role = list("Exploration Leader", "Expeditionary Pilot")
@@ -111,12 +117,12 @@
 	вам так хорошо платит?"
 
 /datum/job/explorer_pilot
-	title = "SEAF Pilot"
+	title = "Expeditionary Pilot"
 	department = "Экспедиционный"
 	department_flag = EXP
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = "Hell Commander"
+	supervisors = "Лидеру Экспедиции и Директору Исследований"
 	selection_color = "#68099e"
 
 	minimal_player_age = 14
@@ -126,8 +132,14 @@
 	economic_power = 7
 
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/exploration/pilot
-	allowed_branches = list(/datum/mil_branch/seaf)
-	allowed_ranks = list(/datum/mil_rank/seaf/e3, /datum/mil_rank/seaf/e4, /datum/mil_rank/seaf/e5)
+	allowed_branches = list(
+		/datum/mil_branch/employee,
+		/datum/mil_branch/contractor
+	)
+	allowed_ranks = list(
+		/datum/mil_rank/civ/nt,
+		/datum/mil_rank/civ/contractor
+	)
 	min_skill = list(
 		SKILL_EVA     = SKILL_BASIC,
 		SKILL_SCIENCE = SKILL_BASIC,
@@ -137,8 +149,8 @@
 	max_skill = list(
 		SKILL_SCIENCE = SKILL_MAX,
 		SKILL_PILOT   = SKILL_MAX,
-		SKILL_COMBAT  = SKILL_MAX,
-		SKILL_WEAPONS = SKILL_MAX
+		SKILL_COMBAT  = SKILL_EXPERIENCED,
+		SKILL_WEAPONS = SKILL_EXPERIENCED
 	)
 	access = list(
 		access_explorer,
@@ -162,16 +174,16 @@
 	вам так хорошо платит?"
 
 /datum/job/explorer_medic
-	title = "Helldiver Medic"
+	title = "Field Medic"
 	department = "Экспедиционный"
 	department_flag = EXP
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = "Hell Commander"
+	supervisors = "Лидеру Экспедиции и Директору Исследований"
 	selection_color = "#68099e"
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/exploration/medic
-	allowed_branches = list(/datum/mil_branch/seaf)
-	allowed_ranks = list(/datum/mil_rank/seaf/e3, /datum/mil_rank/seaf/e4, /datum/mil_rank/seaf/e5)
+	allowed_branches = list(/datum/mil_branch/employee, /datum/mil_branch/contractor)
+	allowed_ranks = list(/datum/mil_rank/civ/nt, /datum/mil_rank/civ/contractor)
 
 	minimal_player_age = 8
 
@@ -190,8 +202,8 @@
 	max_skill = list(
 		SKILL_MEDICAL = SKILL_MAX,
 		SKILL_SCIENCE = SKILL_MAX,
-		SKILL_COMBAT  = SKILL_MAX,
-		SKILL_WEAPONS = SKILL_MAX
+		SKILL_COMBAT  = SKILL_EXPERIENCED,
+		SKILL_WEAPONS = SKILL_EXPERIENCED
 	)
 	// SIERRA TODO: required_role
 	// required_role = list("Exploration Leader", "Expeditionary Pilot")
@@ -217,12 +229,12 @@
 	вам так хорошо платит?"
 
 /datum/job/explorer_engineer
-	title = "Helldiver Engineer"
+	title = "Field Engineer"
 	department = "Экспедиционный"
 	department_flag = EXP
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = "Hell Commander"
+	supervisors = "Лидеру Экспедиции и Директору Исследований"
 	selection_color = "#68099e"
 
 	minimal_player_age = 8
@@ -233,8 +245,14 @@
 	skill_points = 20
 
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/exploration/engineer
-	allowed_branches = list(/datum/mil_branch/seaf)
-	allowed_ranks = list(/datum/mil_rank/seaf/e3, /datum/mil_rank/seaf/e4, /datum/mil_rank/seaf/e5)
+	allowed_branches = list(
+		/datum/mil_branch/employee,
+		/datum/mil_branch/contractor
+	)
+	allowed_ranks = list(
+		/datum/mil_rank/civ/nt,
+		/datum/mil_rank/civ/contractor
+	)
 	min_skill = list(
 		SKILL_EVA          = SKILL_BASIC,
 		SKILL_CONSTRUCTION = SKILL_BASIC,
@@ -250,8 +268,8 @@
 		SKILL_CONSTRUCTION = SKILL_MAX,
 		SKILL_ELECTRICAL   = SKILL_MAX,
 		SKILL_SCIENCE      = SKILL_MAX,
-		SKILL_COMBAT       = SKILL_MAX,
-		SKILL_WEAPONS      = SKILL_MAX
+		SKILL_COMBAT       = SKILL_EXPERIENCED,
+		SKILL_WEAPONS      = SKILL_EXPERIENCED
 	)
 	// SIERRA TODO: required_role
 	// required_role = list("Exploration Leader", "Expeditionary Pilot")

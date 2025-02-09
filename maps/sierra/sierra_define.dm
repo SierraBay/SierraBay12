@@ -1,6 +1,6 @@
 /datum/map/sierra
 	name = "\improper Sierra"
-	full_name = "\improper SES Sierra Democratica"
+	full_name = "\improper NSV Sierra"
 	path = "sierra"
 	config_path = "config/sierra_config.txt"
 	flags = MAP_HAS_BRANCH | MAP_HAS_RANK
@@ -22,17 +22,17 @@
 	allowed_spawns = list("Cryogenic Storage", "Cyborg Storage")
 	default_spawn = "Cryogenic Storage"
 
-	station_name  = "SES Sierra Democratica"
-	station_short = "Sierra Democratica"
+	station_name  = "NSV Sierra"
+	station_short = "Sierra"
 	dock_name     = "TBD"
-	boss_name     = "SEAF Sectorial Command"
-	boss_short    = "Command"
-	company_name  = "Super Earth Central Government"
-	company_short = "SECG"
+	boss_name     = "Central Command"
+	boss_short    = "Centcomm"
+	company_name  = "NanoTrasen"
+	company_short = "NT"
 
-	map_admin_faxes = list("SEAF Sectorial Command", "Super Earth Ministry of Truth")
+	map_admin_faxes = list("Kshar'va SDF Headquarters")
 
-	evac_controller_type = /datum/evacuation_controller/starship
+	evac_controller_type = /datum/evacuation_controller/starship/fast //[SIERRA-EDIT] evac_controller_type = /datum/evacuation_controller/starship/
 
 	default_law_type = /datum/ai_laws/nanotrasen
 	use_overmap = 1
@@ -41,7 +41,7 @@
 
 //	minimum_players = 0 its already 0
 
-	away_site_budget = 0 // Было 5, увеличили на 10% вместе с уменьешением цены для одноуровневых авеек ~bear1ake
+	away_site_budget = 5.5 // Было 5, увеличили на 10% вместе с уменьешением цены для одноуровневых авеек ~bear1ake
 	min_offmap_players = 10
 
 	id_hud_icons = 'maps/sierra/icons/assignment_hud.dmi'
@@ -102,7 +102,22 @@
 			CULTURE_HUMAN_OTHER
 		),
 		TAG_RELIGION = list(
-			RELIGION_OTHER
+			RELIGION_OTHER,
+			RELIGION_JUDAISM,
+			RELIGION_HINDUISM,
+			RELIGION_BUDDHISM,
+			RELIGION_SIKHISM,
+			RELIGION_JAINISM,
+			RELIGION_ISLAM,
+			RELIGION_CHRISTIANITY,
+			RELIGION_BAHAI_FAITH,
+			RELIGION_AGNOSTICISM,
+			RELIGION_DEISM,
+			RELIGION_ATHEISM,
+			RELIGION_THELEMA,
+			RELIGION_SPIRITUALISM,
+			RELIGION_SHINTO,
+			RELIGION_TAOISM
 		)
 	)
 
