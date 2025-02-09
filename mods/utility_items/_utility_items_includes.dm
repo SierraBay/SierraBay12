@@ -37,4 +37,5 @@
 #include "code/FBP_vox.dm"
 #include "code/on_floor_icon.dm"
 #include "code/rndloadout.dm"
+#include "code/vox-ship.dm"
 #endif
