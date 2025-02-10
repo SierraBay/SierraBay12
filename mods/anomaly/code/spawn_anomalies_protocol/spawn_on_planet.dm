@@ -7,8 +7,11 @@
 	var/list/all_planets_list = subtypesof(/obj/overmap/visitable/sector/exoplanet)
 	//Я не придумал как обьяснять игре какая планета обычная, а какая аномальная без
 	//заранее подготовленных списков. Увы.
+
 	if(!use_overmap)
 		return
+	if(LAZYLEN(anomaly_planets_list))
+		LAZYREMOVE(all_planets_list, anomaly_planets_list)
 
 	for(var/i = 0, i < num_exoplanets, i++)
 		var/normal_planet_type = pick(all_planets_list)
@@ -63,10 +66,12 @@
 	if(!LAZYLEN(all_turfs))
 		log_and_message_admins("ОШИБКА. В результате анализа планеты, код отвечающий за размещение аномалий на планете не нашёл подходящих турфов.")
 		CRASH("ОШИБКА. В результате анализа планеты, код отвечающий за размещение аномалий на планете не нашёл подходящих турфов.")
-	generate_anomalies_in_turfs(anomalies_type, all_turfs, min_anomalies_ammout, max_anomalies_ammout, min_artefacts_ammount, max_artefacts_ammount, min_anomaly_size, max_anomaly_size, "planet generation protocol", started_in)
+	generate_anomalies_in_turfs(anomalies_type, all_turfs, min_anomalies_ammout, max_anomalies_ammout, min_artefacts_ammount, max_artefacts_ammount, min_anomaly_size, max_anomaly_size, "Планета [name]", started_in)
 
-///Проверяет, что турф находится в играбельно зоне планеты
-/obj/overmap/visitable/sector/exoplanet/proc/turf_in_playable_place(turf/inputed_turf, x_limit, y_limit)
+///Проверяет, что турф находится в играбельной зоне планеты
+/proc/turf_in_playable_place(turf/inputed_turf, x_limit, y_limit)
+	if(!x_limit || !y_limit || !inputed_turf)
+		return TRUE //x и y ограничений нет
 	if(inputed_turf.x < 17)
 		return FALSE
 	else if(inputed_turf.x > x_limit)
