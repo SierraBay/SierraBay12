@@ -133,7 +133,9 @@ var/global/list/gear_datums = list()
 		. += "<b>[SPAN_COLOR(fcolor, "[total_cost]/[config.max_gear_cost]")] loadout points spent.</b>"
 
 	. += "<a href='?src=\ref[src];clear_loadout=1'>Clear Loadout</a>"
-	. += "<a href='?src=\ref[src];toggle_hiding=1'>[hide_unavailable_gear ? "Show all" : "Hide unavailable"]</a></center></td></tr>"
+	. += "<a href='?src=\ref[src];toggle_hiding=1'>[hide_unavailable_gear ? "Show all" : "Hide unavailable"]</a>"
+	. += "<a href='?src=\ref[src];copy_loadout=1'>Copy Loadout</a>"
+	. += "</center></td></tr>"
 
 	. += "<tr><td colspan=3><center><b>"
 	var/firstcat = 1
@@ -250,6 +252,22 @@ var/global/list/gear_datums = list()
 
 			entry += "[english_list(skill_checks)]</i>"
 
+		if (allowed && G.allowed_traits)
+			var/datum/species/picked_species = all_species[pref.species]
+			var/list/species_traits = picked_species.traits
+			var/trait_checks = list()
+			entry += "<br><i>"
+			for (var/trait_type in G.allowed_traits)
+				var/singleton/trait/trait = GET_SINGLETON(trait_type)
+				var/trait_entry = "[trait.name]"
+				if (LAZYISIN(pref.picked_traits, trait_type) || LAZYISIN(species_traits, trait_type))
+					trait_entry = SPAN_COLOR("#55cc55", "[trait_entry]")
+				else
+					trait_entry = SPAN_COLOR("#cc5555", "[trait_entry]")
+					allowed = FALSE
+				trait_checks += trait_entry
+			entry += "[english_list(trait_checks)]</i>"
+
 		// [SIERRA-ADD] - LOADOUT-ITEMS
 		if(allowed && G.allowed_factions)
 			var/good_background = 0
@@ -351,6 +369,20 @@ var/global/list/gear_datums = list()
 	if(href_list["toggle_hiding"])
 		hide_unavailable_gear = !hide_unavailable_gear
 		return TOPIC_REFRESH
+
+	if (href_list["copy_loadout"])
+		var/list/options = list()
+		for (var/count = 1 to config.loadout_slots)
+			if (count == pref.gear_slot)
+				continue
+			options += count
+		var/selected = input(user, "Select a loadout slot to copy from", "Copy Loadout") as null | anything in options
+		if (!selected)
+			return TOPIC_NOACTION
+		var/list/selected_list = pref.gear_list[selected]
+		pref.gear_list[pref.gear_slot] = selected_list.Copy()
+		return TOPIC_REFRESH_UPDATE_PREVIEW
+
 	return ..()
 
 /datum/gear
@@ -362,6 +394,8 @@ var/global/list/gear_datums = list()
 	var/list/allowed_roles //Roles that can spawn with this item.
 	var/list/allowed_branches //Service branches that can spawn with it.
 	var/list/allowed_skills //Skills required to spawn with this item.
+	///Traits required to spawn with this item.
+	var/list/allowed_traits
 	var/whitelisted        //Term to check the whitelist for..
 	var/sort_category = "General"
 	var/flags              //Special tweaks in New

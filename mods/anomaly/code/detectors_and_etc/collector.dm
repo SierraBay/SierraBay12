@@ -8,7 +8,7 @@
 
 /obj/item/collector/examine(mob/user, distance, is_adjacent)
 	. = ..()
-	to_chat(user, SPAN_GOOD("Click with collector on object to capture."))
+	to_chat(user, SPAN_GOOD("Кликните коллектором на обьект для захвата."))
 
 
 /obj/item/collector/attack_hand(mob/user)
@@ -21,7 +21,7 @@
 /obj/item/collector/use_tool(obj/item/item, mob/living/user, list/click_params)
 	. = ..()
 	if(closed)
-		to_chat(user,SPAN_NOTICE("\the [src] clossed."))
+		to_chat(user,SPAN_NOTICE("\the [src] закрыт."))
 		return
 	if(istype(item, /obj/item/artefact))
 		try_insert_artefact(user, item)
@@ -29,7 +29,7 @@
 
 /obj/item/collector/proc/try_insert_artefact(mob/living/user, obj/item/item)
 	if(!stored_artefact)
-		to_chat(user,SPAN_NOTICE("You inserted [item] in [src]."))
+		to_chat(user,SPAN_NOTICE("Вы поместили [item] в [src]."))
 		insert_artefact(user, item)
 
 
@@ -44,7 +44,7 @@
 
 /obj/item/collector/proc/try_pop_out_artefact(mob/living/user)
 	if(stored_artefact)
-		to_chat(user,SPAN_NOTICE("You pop-out [stored_artefact] from [src]."))
+		to_chat(user,SPAN_NOTICE("Вы вытащили [stored_artefact] из [src]."))
 		pop_out_artefact(user)
 
 

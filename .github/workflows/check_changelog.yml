@@ -11,7 +11,7 @@ on:
 
 jobs:
   CheckCL:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     if: github.repository == 'SierraBay/SierraBay12' && github.base_ref == 'dev-sierra' && github.event.pull_request.draft == false
     steps:
       - name: Скачивание файлов

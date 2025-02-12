@@ -24,7 +24,7 @@
 	var/sensor_range = 8
 
 	/// Integer. Time between mob spawns.
-	var/spawn_rate = 5 SECONDS
+	var/spawn_rate = 10 SECONDS
 
 	/// Integer. `world.time` of the last mob spawn.
 	var/last_spawn_time = 0
@@ -54,6 +54,8 @@
 	/// The beacon is currently active.
 	var/const/BEACON_STATE_ON = 1
 
+	var/mob/legion_broadcaster/broadcaster
+
 
 /obj/structure/legion/beacon/Initialize(mapload)
 	. = ..()
@@ -65,6 +67,8 @@
 	if (!length(spawn_types))
 		spawn_types = typesof(/mob/living/simple_animal/hostile/legion)
 
+	broadcaster = new(src)
+
 	START_PROCESSING(SSobj, src)
 
 
@@ -74,6 +78,8 @@
 	for (var/mob/living/simple_animal/hostile/legion/legion in linked_mobs)
 		legion.linked_beacon = null
 	linked_mobs.Cut()
+
+	QDEL_NULL(broadcaster)
 
 	return ..()
 
@@ -88,6 +94,7 @@
 
 		if (BEACON_STATE_ON)
 			if (world.time < last_spawn_time + spawn_rate)
+				last_spawn_time = world.time
 				return
 			if (length(linked_mobs) >= max_active_bots)
 				return
@@ -95,7 +102,9 @@
 
 	if (world.time >= last_broadcast_time + broadcast_rate && rand(1, 100) <= broadcast_chance)
 		last_broadcast_time = world.time
-		show_legion_messages(get_z(src))
+		var/list/message_data = pick_legion_message()
+		show_legion_messages(get_z(src), message_data["full"])
+		broadcaster.legion_broadcast(message_data["origin"], message_data["contents"])
 
 
 /obj/structure/legion/beacon/proc/set_active()

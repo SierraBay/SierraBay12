@@ -39,6 +39,7 @@
 			return
 		I.equip_delay_after(src, slot, equip_flags)
 	equip_to_slot(I, slot, equip_flags & TRYEQUIP_REDRAW)
+	I.post_equip_item(src, slot, equip_flags)
 	return TRUE
 
 

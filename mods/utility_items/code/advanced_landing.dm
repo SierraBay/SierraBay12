@@ -71,19 +71,18 @@
 	simulated = FALSE
 	stat = CONSCIOUS
 	invisibility = INVISIBILITY_EYE
-	see_invisible = SEE_INVISIBLE_MINIMUM
 	sight = SEE_TURFS
 	ghost_image_flag = GHOST_IMAGE_NONE
 	var/list/placement_images = list()
 	var/obj/machinery/computer/shuttle_control/explore/console_link
 	var/list/to_add = list()
 
-/mob/living/carbon/human/update_dead_sight()
+/mob/living/carbon/human/handle_vision()
 	. = ..()
-	if(eyeobj.type == /mob/observer/eye/landeye)
-		set_see_in_dark(8)
-		set_see_invisible(SEE_INVISIBLE_MINIMUM)
-		set_sight(BLIND|SEE_TURFS)
+	if(eyeobj)
+		if(eyeobj.type == /mob/observer/eye/landeye)
+			set_sight(BLIND|SEE_TURFS)
+
 
 /mob/observer/eye/landeye/possess(mob/user)
 	if(owner && owner != user)
@@ -232,7 +231,7 @@
 		var/zone_good = FALSE
 		I.loc = T
 		shadow_images += I
-		if(!(T.density))
+		if(T && !(T.density))
 			for(var/type in accesible_areas)
 				if(A.type in typesof(type))
 					zone_good = TRUE
@@ -323,10 +322,3 @@
 		var/turf/T = locate(I.loc.x, I.loc.y, I.loc.z)
 		I = image('mods/utility_items/icons/alphacolors.dmi', T, "dither50")
 		T.AddOverlays(I)
-
-/datum/shuttle/autodock/process_arrived()
-	.=..()
-	for(var/i in 1 to LAZYLEN(next_location.image_shadow))
-		var/image/I = next_location.image_shadow[i]
-		var/turf/T = locate(I.loc.x, I.loc.y, I.loc.z)
-		T.ClearOverlays(I)

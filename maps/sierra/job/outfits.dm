@@ -130,6 +130,14 @@ Keeping them simple for now, just spawning with basic EC uniforms, and pretty mu
 //	pda_type = /obj/item/modular_computer/pda/heads/paperpusher
 	backpack_contents = list(/obj/item/clothing/accessory/badge/nanotrasen = 1)
 
+/singleton/hierarchy/outfit/job/sierra/crew/command/iso
+	name = OUTFIT_JOB_NAME("Internal Security Operative - Sierra")
+	l_ear = /obj/item/device/radio/headset/ia
+	uniform = /obj/item/clothing/under/rank/security/operative
+	shoes = /obj/item/clothing/shoes/jackboots
+	id_types = list(/obj/item/card/id/sierra/crew/liaison/iso)
+	backpack_contents = list(/obj/item/clothing/accessory/badge/iso = 1)
+
 /singleton/hierarchy/outfit/job/sierra/crew/command/adjutant
 	name = OUTFIT_JOB_NAME("Adjutant")
 	uniform = /obj/item/clothing/under/rank/adjutant

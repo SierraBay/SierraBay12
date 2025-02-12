@@ -23,6 +23,7 @@
 	if (!chameleon_choices)
 		var/chameleon_type = chameleon_base_type || holder.parent_type
 		chameleon_choices = LAZYACCESS(chameleon_choices_by_type, chameleon_type)
+
 		if (!chameleon_choices)
 			chameleon_choices = GenerateChameleonChoices(chameleon_type)
 			LAZYSET(chameleon_choices_by_type, chameleon_type, chameleon_choices)
@@ -69,8 +70,10 @@
 	return null
 
 /datum/extension/chameleon/proc/GenerateChameleonChoices(basetype)
+
 	var/choices = list()
 	var/types = islist(basetype) ? basetype : typesof(basetype)
+
 	for (var/path in types)
 		AddChameleonChoice(choices, path)
 	return sortAssoc(choices)
@@ -308,12 +311,12 @@
 /datum/extension/chameleon/emag
 	expected_type = /obj/item/card
 	chameleon_choices = list(
-		/obj/item/card/emag,
-		/obj/item/card/union,
-		/obj/item/card/data,
-		/obj/item/card/data/full_color,
-		/obj/item/card/data/disk,
-		/obj/item/card/id
+		"Broken ID Card" = /obj/item/card/emag,
+		"ID Card" = /obj/item/card/id,
+		"Union Card" = /obj/item/card/union,
+		"Data Card" = /obj/item/card/data,
+		"Data Card (Full Color)" = /obj/item/card/data/full_color,
+		"Floppy Disk" = /obj/item/card/data/disk
 	)
 
 /datum/extension/chameleon/emag/GetItemDisguiseType(singleton/hierarchy/outfit/outfit)

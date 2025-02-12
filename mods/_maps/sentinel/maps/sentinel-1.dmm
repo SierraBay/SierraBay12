@@ -2014,7 +2014,8 @@
 	},
 /obj/machinery/photocopier/faxmachine{
 	send_access = list();
-	department = "Sol 5th Fleet Patrol Craft"
+	department = "Sol 5th Fleet Patrol Craft";
+	destination = "SFV Stinger Command Department"
 	},
 /obj/floor_decal/corner/blue{
 	dir = 5
@@ -4767,6 +4768,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/red{
 	dir = 4
 	},
+/obj/shuttle_landmark/reaper/start,
 /turf/simulated/floor/plating,
 /area/ship/reaper)
 "jc" = (
@@ -4886,7 +4888,6 @@
 	icon_state = "1-2"
 	},
 /obj/structure/catwalk,
-/obj/shuttle_landmark/reaper/start,
 /turf/simulated/floor/plating,
 /area/ship/patrol/command/hangar)
 "jj" = (

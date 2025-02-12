@@ -33,6 +33,26 @@
 	if(selected_system)
 		return selected_system.MouseDragInteraction(src_object, over_object, src_location, over_location, src_control, over_control, params, user)
 
+/datum/click_handler/default/mech/CanAutoClick(object, location, params)
+	var/mob/living/exosuit/E = user.loc
+	if(!user || E.incapacitated() || user.incapacitated())
+		return 0
+
+	if(!(user in E.pilots) && user != E)
+		return 0
+	//Ask mech if given its current active item it wants to handle autoclick
+	return E.CanMobAutoclick(object, location, params)
+
+/mob/living/exosuit/CanMobAutoclick(atom/object, location, params)
+	if(!object.IsAutoclickable())
+		return
+
+	if (!istype(selected_system, /obj/item/mech_equipment))
+		return
+	var/obj/item/mech_equipment/mech_equipment = selected_system
+	var/obj/item/effective = mech_equipment.get_effective_obj()
+	return effective.CanItemAutoclick(object, location, params)
+
 /datum/click_handler/default/mech/OnClick(atom/A, params)
 	var/mob/living/exosuit/E = user.loc
 	if(!istype(E))
@@ -174,10 +194,12 @@
 				admin_attack_log(user, A, "Attacked using \a [temp_system] (MECH)", "Was attacked with \a [temp_system] (MECH)", "used \a [temp_system] (MECH) to attack")
 			//Mech equipment subtypes can add further click delays
 			var/extra_delay = 0
+			var/automatic = temp_system?.CanItemAutoclick() //Items that can autoclick do not add arm delay (else it defeats point).
 			if(!isnull(selected_system))
 				ME = selected_system
 				extra_delay = ME.equipment_delay
-			setClickCooldown(arms ? arms.action_delay + extra_delay : 15 + extra_delay)
+			var/arm_delay = arms ? arms.action_delay : 15
+			setClickCooldown(automatic ? extra_delay : arm_delay + extra_delay)
 			if(system_moved)
 				temp_system.forceMove(selected_system)
 			return

@@ -364,6 +364,18 @@
 	character.gen_record = gen_record
 	character.exploit_record = exploit_record
 
+	if(LAZYLEN(picked_traits))
+		for (var/picked_type as anything in picked_traits)
+			var/singleton/trait/selected = GET_SINGLETON(picked_type)
+			if (!selected || !istype(selected))
+				continue
+			if (length(selected.metaoptions))
+				var/list/temp_list = picked_traits[picked_type]
+				for (var/meta_option in temp_list)
+					character.SetTrait(picked_type, temp_list[meta_option], meta_option)
+			else
+				character.SetTrait(picked_type, picked_traits[picked_type])
+
 	if(LAZYLEN(character.descriptors))
 		for(var/entry in body_descriptors)
 			character.descriptors[entry] = body_descriptors[entry]
@@ -378,9 +390,11 @@
 	dat += "<tt><center>"
 
 	dat += "<b>Select a character slot to load</b><hr>"
-	for(var/i=1, i<= config.character_slots, i++)
-		var/name = (slot_names && slot_names[get_slot_key(i)]) || "Character[i]"
-		if(i==default_slot)
+	for(var/i = 1 to config.character_slots)
+		var/name = slot_names?[get_slot_key(i)]
+		if (!name)
+			name = "Character [i]"
+		if (i == default_slot)
 			name = "<b>[name]</b>"
 		dat += "<a href='?src=\ref[src];changeslot=[i];[details?"details=1":""]'>[name]</a><br>"
 

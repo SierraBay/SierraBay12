@@ -284,6 +284,20 @@
 	recalculate_synth_capacities()
 	if(module)
 		notify_ai(ROBOT_NOTIFICATION_NEW_MODULE, module.name)
+		addtimer(new Callback(src, .proc/announce_module_change), 2 SECONDS)
+
+/mob/living/silicon/robot/proc/announce_module_change()
+	var/singleton/security_state/security_state = GET_SINGLETON(GLOB.using_map.security_state)
+
+	if(!src || !(src.z in GLOB.using_map.station_levels))
+		return // don't announce offmap borgs
+
+	var/channel
+	if(length(module.channels) >= 1 && !security_state.current_security_level_is_same_or_higher_than(security_state.high_security_level))
+		channel = module.channels[1]
+	else
+		channel = "Common" // common if code red or no radio channels, replicates behavior that crew have
+	GLOB.global_announcer.autosay("[name] has loaded the [module.name].", "Robotic Module Oversight", channel)
 
 /mob/living/silicon/robot/get_cell()
 	return cell

@@ -49,6 +49,7 @@
 
 /area/crew_quarters/heads/captain
 	req_access = list(access_captain)
+	name = "Bridge - Command - Captain's Cabin"
 	icon_state = "heads_cap"
 	holomap_color = HOLOMAP_AREACOLOR_COMMAND
 
@@ -175,6 +176,11 @@
 
 /area/crew_quarters/heads/office/iaa/high_sec
 	name = "Bridge - Command - IAA's Communication Relay"
+	holomap_color = HOLOMAP_AREACOLOR_COMMAND
+
+/area/crew_quarters/heads/office/iaa/iso_quarters
+	name = "Bridge - Command - ISO's Quarters"
+	area_flags = AREA_FLAG_RAD_SHIELDED
 	holomap_color = HOLOMAP_AREACOLOR_COMMAND
 
 /area/crew_quarters/heads/office/iaa/cobed
