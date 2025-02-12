@@ -6,6 +6,7 @@ var/global/list/empty_playable_ai_cores = list()
 	name = "\improper AI core"
 	icon = 'icons/mob/AI.dmi'
 	icon_state = "0"
+	obj_flags = OBJ_FLAG_ANCHORABLE
 
 	/// State 1 - AI core frame is built.
 	var/const/STATE_FRAME = 1

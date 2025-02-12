@@ -123,12 +123,17 @@
 		var/trait_type = istext(trait) ? text2path(trait) : trait
 		var/singleton/trait/selected = GET_SINGLETON(trait_type)
 		var/severity
+
 		if (length(selected.metaoptions))
 			var/list/interim = preferences[trait]
 			var/list/final_interim = list()
+			var/trait_count
 			for (var/metaoption in interim)
+				if (selected.maximum_count && trait_count >= selected.maximum_count)
+					break
 				var/metaoption_type = istext(metaoption) ? text2path(metaoption) : metaoption
 				severity = interim[metaoption]
+				trait_count++
 				LAZYSET(final_interim, metaoption_type, severity)
 			LAZYSET(final_preferences, trait_type, final_interim)
 
@@ -156,6 +161,8 @@
 	var/list/forbidden_species = list()
 	///Determines if trait can be selected in character setup
 	var/selectable = FALSE
+	///Maximum amount of allowable traits during character setup. Only applies to traits with metaoptions. Null by default; which means no limit.
+	var/maximum_count
 
 /singleton/trait/New()
 	if(type == abstract_type)
