@@ -3,17 +3,12 @@
 
 #include "_mechs_by_shegar.dm"
 
+#include "code\core\_core_includes.dm" //Ядро, держите выше всех
+#include "code\components\_components_includes.dm" //Запчасти меха
+#include "code\equipment\_equipment_includes.dm" //Экипировка меха
+#include "code\premades\_premades_includes.dm" //Премейды мехов (Заранее построенные и собранные мехи)
 
-#include "code/_mech_defines.dm"
-
-//Т.к мод крайне КРАЙНЕ огромный, для удобства чтения, файл с инклюдами был разбит на части
-#include "includs\mech_core.dm" //Всё ЯДРО мехов
-#include "includs\all_equipment.dm" //Всё снаряжение(Equipment)
-#include "includs\mech_components.dm" //Все запчасти мехов
-#include "includs\premades.dm" //Премейды (Заранее подготовленные мехи для чего-либо)
-#include "includs\mech_movement.dm" //Движение и мувмент меха (Скорость, таран)
-#include "includs\interface.dm" //Весь интрефейсы и кнопочки
-#include "includs\all_mech_interactions.dm" //Взаимодействие с мехом
-#include "includs\etc.dm" //ETC, всё то, что не нашло себе место
+//ETC всякий второстепенный код
+#include "code\etc\_etc_includes.dm"
 
 #endif

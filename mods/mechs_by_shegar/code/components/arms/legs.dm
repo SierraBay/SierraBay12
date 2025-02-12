@@ -1,0 +1,22 @@
+/obj/item/mech_component/manipulators/light
+	name = "light arms"
+	desc = "As flexible as they are fragile, these Vey-Med manipulators can follow a pilot's movements in close to real time."
+	exosuit_desc_string = "lightweight, segmented manipulators"
+	icon_state = "light_arms"
+	punch_sound = 'sound/mecha/mech_punch_fast.ogg'
+	action_delay = 10
+	power_use = 10
+	allow_passengers = FALSE
+	max_damage = 80
+	min_damage = 50
+	max_repair = 20
+	melee_damage = 30
+	repair_damage = 15
+	req_material = MATERIAL_ALUMINIUM
+	back_modificator_damage = 1.3
+	front_modificator_damage = 1
+	max_heat = 100
+	heat_cooling = 12
+	emp_heat_generation = 80
+	heat_generation = 10
+	weight = 100

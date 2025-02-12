@@ -1,6 +1,0 @@
-#include "../code/mech_movement/bump_and_collision.dm"
-#include "../code/mech_movement/can_move.dm"
-#include "../code/mech_movement/do_move.dm"
-#include "../code/mech_movement/move_vars.dm"
-#include "../code/mech_movement/space_move.dm"
-#include "../code/mech_movement/speed.dm"
