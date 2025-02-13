@@ -189,6 +189,7 @@
 	#include "../../mods/_maps/sentinel/_map_sentinel.dme"
 	#include "../../mods/_maps/farfleet/_map_farfleet.dme"
 	#include "../../mods/_maps/hand/_map_hand.dme"
+	#include "../../mods/_maps/mininghome/_map_mininghome.dme"
 	#include "../../mods/_maps/ascent_seedship/_map_ascent_seedship.dme"
 	#include "../../mods/_maps/ascent_caulship/_map_ascent_caulship.dme"
 

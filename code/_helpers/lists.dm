@@ -107,6 +107,18 @@
 			instances++
 	return instances
 
+/// Returns the elements of list that are of type path. If strict, disallows subtypes
+/proc/list_elements_of_type(list/list, path, strict)
+	RETURN_TYPE(/list)
+	var/list/result = list()
+	for (var/datum/element as anything in list)
+		if (!istype(element, path))
+			continue
+		if (strict && element.type != path)
+			continue
+		result += element
+	return result
+
 //Removes any null entries from the list
 /proc/listclearnulls(list/list)
 	if(istype(list))
