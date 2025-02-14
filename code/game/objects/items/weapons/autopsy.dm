@@ -183,6 +183,7 @@
 
 	return 1
 
+<<<<<<< ours
 /obj/item/autopsy_scanner/proc/set_target(atom/new_target, user)
 //[SIERRA-ADD]
 	if(target != new_target)
@@ -194,6 +195,18 @@
 			chemtraces.Cut()
 			timeofdeath = null
 			to_chat(user, SPAN_NOTICE("A new patient has been registered. Purging data for previous patient."))
+=======
+/obj/item/autopsy_scanner/proc/set_target(mob/new_target, user)
+	if (new_target.stat != DEAD && new_target.stat != FAKEDEATH)
+		to_chat(user, SPAN_NOTICE("Scanned patient is currently alive. Aborting."))
+		return
+	if(target_name != new_target.name)
+		target_name = new_target.name
+		wdata.Cut()
+		chemtraces.Cut()
+		timeofdeath = null
+		to_chat(user, SPAN_NOTICE("A new patient has been registered. Purging data for previous patient."))
+>>>>>>> theirs
 
 /obj/item/autopsy_scanner/use_after(obj/item/organ/external/target, mob/living/user, click_parameters)
 	if(!istype(target))
