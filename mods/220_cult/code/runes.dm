@@ -82,7 +82,7 @@
 		M.say("Dedo ol[pick("'","`")]btoh!")
 // твик старой руны - больше не позволено спамить кликами для инста-килла, но куковать у руны долго всё ещё опасно
 	spamcheck = 1
-	spawn(40)
+	sleep(40)
 	spamcheck = 0
 
 	var/list/mob/living/previous = list()
