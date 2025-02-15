@@ -386,6 +386,9 @@
 	// SIERRA TODO: port SPECIES_TAJARA, SPECIES_RESOMI
 	species_restricted = list(SPECIES_HUMAN, SPECIES_IPC, SPECIES_TAJARA, SPECIES_RESOMI) // No available icons for aliens: скреллы + ящеры
 
+/obj/machinery/camera/network/command //чтоб гитхаб не ругался на камеру
+	network = list(NETWORK_COMMAND)
+
 /obj/item/clothing/suit/space/rig/command
 	icon = 'maps/torch/icons/obj/obj_suit_solgov.dmi'
 	item_icons = list(slot_wear_suit_str = 'maps/torch/icons/mob/onmob_suit_solgov.dmi')
