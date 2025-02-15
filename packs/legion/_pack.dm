@@ -1,5 +1,6 @@
 #include "_globals.dm"
 #include "legion_beacon.dm"
+#include "legion_broadcaster.dm"
 #include "legion_hivebot.dm"
 #include "legion_mob.dm"
 #include "legion_narrate.dm"

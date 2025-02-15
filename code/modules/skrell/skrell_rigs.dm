@@ -20,6 +20,7 @@
 	name = "skrellian recon hardsuit helmet"
 	desc = "A powerful recon hardsuit with integrated power supply and atmosphere. It's impressive design perfectly tailors to the user's body."
 	light_overlay = "helmet_light_dual"
+	head_light_range = 5
 	species_restricted = list(SPECIES_SKRELL)
 	sprite_sheets = list(
 		SPECIES_SKRELL = 'icons/mob/species/skrell/onmob_head_rig_skrell.dmi'

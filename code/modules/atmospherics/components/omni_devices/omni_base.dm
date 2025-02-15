@@ -6,7 +6,6 @@
 	icon = 'icons/atmos/omni_devices.dmi'
 	icon_state = "base"
 	initialize_directions = 0
-	level = ATOM_LEVEL_UNDER_TILE
 	layer = ABOVE_CATWALK_LAYER
 
 	var/configuring = 0

@@ -219,7 +219,7 @@ SUBSYSTEM_DEF(explosives)
 #define SEARCH_DIR(dir) \
 	search_direction = dir;\
 	search_turf = get_step(current_turf, search_direction);\
-	if (istype(search_turf, /turf/simulated)) {\
+	if (istype(search_turf, /turf)) {\
 		turf_queue += search_turf;\
 		dir_queue += search_direction;\
 		power_queue += current_power;\
@@ -276,7 +276,7 @@ SUBSYSTEM_DEF(explosives)
 	var/list/dir_queue = list(NORTH, SOUTH, EAST, WEST)
 	var/list/power_queue = list(power, power, power, power)
 
-	var/turf/simulated/current_turf
+	var/turf/current_turf
 	var/turf/search_turf
 	var/origin_direction
 	var/search_direction

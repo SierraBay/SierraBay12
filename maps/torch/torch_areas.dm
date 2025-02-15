@@ -43,6 +43,9 @@
 /area/maintenance/substation/fifthdeck
 	name = "Fifth Deck Substation"
 
+/area/maintenance/substation/hangar
+	name = "Hangar Substation"
+
 //Fourth Deck (Z-1)
 /area/hallway/primary/fourthdeck/fore
 	name = "\improper Fourth Deck Fore Hallway"
@@ -933,6 +936,7 @@
 /area/rnd/development
 	name = "\improper Fabricator Lab"
 	icon_state = "devlab"
+	req_access = list(access_fabrication)
 
 /area/rnd/office
 	name = "\improper Research Paperwork Office"

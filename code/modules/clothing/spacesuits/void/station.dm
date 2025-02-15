@@ -65,6 +65,7 @@
 		rad = ARMOR_RAD_MINOR
 		)
 	light_overlay = "helmet_light_dual_alt"
+	head_light_range = 5
 	max_pressure_protection = ENG_VOIDSUIT_MAX_PRESSURE
 
 /obj/item/clothing/suit/space/void/mining
@@ -195,6 +196,7 @@
 		)
 	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECTION_TEMPERATURE
 	light_overlay = "helmet_light_dual"
+	head_light_range = 5
 	max_pressure_protection = FIRESUIT_MAX_PRESSURE
 
 /obj/item/clothing/suit/space/void/atmos
@@ -239,6 +241,7 @@
 		rad = ARMOR_RAD_SHIELDED
 		)
 	light_overlay = "helmet_light_dual"
+	head_light_range = 5
 
 /obj/item/clothing/suit/space/void/engineering/alt
 	name = "reinforced engineering voidsuit"

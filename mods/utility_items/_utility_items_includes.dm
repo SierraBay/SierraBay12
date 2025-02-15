@@ -17,7 +17,6 @@
 #include "code/circuit.dm"
 #include "code/global_hud_sierra.dm"
 #include "code/labcoat.dm"
-#include "code/ninja-map.dm"
 #include "code/shuttle_feature.dm"
 #include "code/craft_drugs.dm"
 #include "code/hair_olivka.dm"
@@ -32,8 +31,4 @@
 #include "code/bottom.dm"
 #include "code/top.dm"
 #include "code/skrell-ship.dm"
-#include "code/security.dm"
-#include "code/FBP_vox.dm"
-#include "code/xeno_voids_and_rigs.dm"
-
 #endif

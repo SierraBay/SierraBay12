@@ -1,36 +1,38 @@
 /obj/overmap/visitable/sector/exoplanet/ice
 	name = "ice exoplanet"
-	desc = "A distant, abandoned and cold world, rich in artefacts and anomalous activity."
+	desc = "A distant, abandoned and cold world, rich in artefacts and anomalous activity. WARNING: large electro-anomalous activity detected. Extreme caution is required."
 	color = "#ebe3e3"
 	rock_colors = list(COLOR_WHITE)
-	can_spawn_anomalies = TRUE
-	monitor_effect_type = /obj/monitor_effect_triger/snow
-	anomalies_type = list(
-		/obj/anomaly/electra/three_and_three = 2,
-		/obj/anomaly/electra/three_and_three/tesla = 7,
-		/obj/anomaly/electra/three_and_three/tesla_second = 6,
-		/obj/anomaly/cooler/two_and_two = 3,
-		/obj/anomaly/cooler/three_and_three = 3
+	//Большие артефакты
+	big_anomaly_artefacts_min_amount = 2
+	big_anomaly_artefacts_max_amount = 4
+	big_artefacts_types = list(
+		/obj/structure/big_artefact/electra
 		)
+	big_artefacts_can_be_close = FALSE
+	big_artefacts_range_spawn = 30
+	weather_manager_type = /obj/weather_manager/snow
+	//
 	possible_themes = list(
 		/datum/exoplanet_theme = 45,
-		/datum/exoplanet_theme/radiation_bombing = 10,
-		/datum/exoplanet_theme/ruined_city = 5,
-		/datum/exoplanet_theme/robotic_guardians = 10
+		/datum/exoplanet_theme/radiation_bombing = 10
 		)
-	min_anomaly_size = 4
-	max_anomaly_size = 9
-	min_anomalies_ammout = 600
-	max_anomalies_ammout = 800
 	planetary_area = /area/exoplanet/ice
 	map_generators = list(/datum/random_map/automata/cave_system/mountains/ice, /datum/random_map/noise/exoplanet/ice)
-	ruin_tags_blacklist = RUIN_HABITAT|RUIN_WATER|RUIN_HOT_ANOMALIES
+	ruin_tags_blacklist = RUIN_HABITAT|RUIN_WATER|RUIN_HOT_ANOMALIES|RUIN_GRAVI_ANOMALIES
+	ruin_tags_whitelist = RUIN_ELECTRA_ANOMALIES
 	surface_color = "#ffffff"
 	water_color = "#0700c7"
 	habitability_weight = HABITABILITY_EXTREME
 	has_trees = FALSE
 	flora_diversity = 0
 
+/obj/overmap/visitable/sector/exoplanet/ice/generate_atmosphere()
+	atmosphere = new
+	atmosphere.temperature = rand(50, 150)
+	atmosphere.update_values()
+	var/good_gas = list(GAS_OXYGEN = MOLES_O2STANDARD, GAS_NITROGEN = MOLES_N2STANDARD)
+	atmosphere.gas = good_gas
 
 /obj/overmap/visitable/sector/exoplanet/ice/get_atmosphere_color()
 	var/air_color = ..()
@@ -58,7 +60,7 @@
 	color = COLOR_WHITE
 
 /obj/overmap/visitable/sector/exoplanet/ice/generate_map()
-	.=..()
+	..()
 	//После создания карты, разместим камушки
 	var/list/list_of_turfs =  get_area_turfs(planetary_area)
 	//Соберём все подходящие для нас турфы льда
@@ -97,7 +99,7 @@
 
 
 /area/exoplanet/ice
-	ambience = list('sound/effects/wind/tundra0.ogg','sound/effects/wind/tundra1.ogg','sound/effects/wind/tundra2.ogg','sound/effects/wind/spooky0.ogg','sound/effects/wind/spooky1.ogg')
+	ambience = list('sound/effects/wind/tundra0.ogg','sound/effects/wind/tundra1.ogg','mods/anomaly/sounds/electra_planet_wind_2.ogg')
 	base_turf = /turf/simulated/floor/exoplanet/ice
 
 
@@ -246,6 +248,7 @@
 	icon = 'mods/anomaly/icons/icerocks.dmi'
 	icon_state = "rock_1"
 	anchored = TRUE
+	density = TRUE
 	var/icon_state_list = list("rock_1", "rock_2", "rock_3")
 
 /obj/structure/ice_rock/Initialize()

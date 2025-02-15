@@ -45,13 +45,18 @@
 	construct_state = /singleton/machine_construction/default/panel_closed
 	var/datum/ship_engine/ion/controller
 	var/thrust_limit = 1
-	var/on = 1
+	var/on = 0
 	var/burn_cost = 750
 	var/generated_thrust = 2.5
 
 /obj/machinery/ion_engine/Initialize()
 	. = ..()
 	controller = new(src)
+	for(var/ship in SSshuttle.ships)
+		var/obj/overmap/visitable/ship/S = ship
+		if(S.check_ownership(src))
+			S.engines |= controller
+			break
 
 /obj/machinery/ion_engine/Destroy()
 	QDEL_NULL(controller)
