@@ -1,6 +1,7 @@
 /singleton/trait/malus/allergy
 	name = "Allergy"
 	levels = list(TRAIT_LEVEL_MINOR, TRAIT_LEVEL_MAJOR)
+	maximum_count = 2
 	///Used to select which reagent mob is allergic to.
 	metaoptions = list(
 		/datum/reagent/antidexafen,

@@ -971,6 +971,12 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 /obj/item/proc/equip_delay_after(mob/user, slot, equip_flags)
 	return
 
+
+/// Proc called when when the item has been equipped. Unlike `equip_delay_*`, this is always called.
+/obj/item/proc/post_equip_item(mob/user, slot, equip_flags)
+	return
+
+
 /obj/item/OnTopic(href, href_list, datum/topic_state/state)
 	. = ..()
 

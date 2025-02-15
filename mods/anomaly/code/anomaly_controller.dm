@@ -43,7 +43,8 @@ PROCESSING_SUBSYSTEM_DEF(anom)
 	var/interactions_with_artefacts_by_players_ammount = 0
 	var/bad_interactions_with_artefacts_by_players_ammount = 0
 	var/good_interactions_with_artefacts_by_players_ammount = 0
-
+	//Большие артефакты
+	var/list/big_anomaly_artefacts = list()
 
 
 	//[ИНФА ПО АНОМАЛИЯМ]

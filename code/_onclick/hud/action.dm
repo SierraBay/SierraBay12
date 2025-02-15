@@ -9,6 +9,7 @@
 #define AB_CHECK_LYING 4
 #define AB_CHECK_ALIVE 8
 #define AB_CHECK_INSIDE 16
+#define AB_CHECK_INSIDE_ACCESSORY 32
 
 
 /datum/action
@@ -112,6 +113,11 @@
 	if(check_flags & AB_CHECK_INSIDE)
 		if(!(target in owner))
 			return 0
+	if(check_flags & AB_CHECK_INSIDE_ACCESSORY)
+		if(!(target in owner))
+			var/obj/item/clothing/C = target.loc
+			if (!(istype(C) && (C in owner) && (target in C.accessories)))
+				return 0
 	return 1
 
 /datum/action/proc/UpdateName()
@@ -236,6 +242,12 @@
 
 /datum/action/item_action/CheckRemoval(mob/living/user)
 	return !(target in user)
+
+/datum/action/item_action/accessory
+	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_LYING|AB_CHECK_ALIVE|AB_CHECK_INSIDE_ACCESSORY
+
+/datum/action/item_action/accessory/CheckRemoval(mob/living/user)
+	return !(target in user || (target.loc && (target.loc in user)))
 
 /datum/action/item_action/hands_free
 	check_flags = AB_CHECK_ALIVE|AB_CHECK_INSIDE

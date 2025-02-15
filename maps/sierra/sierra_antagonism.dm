@@ -5,11 +5,11 @@
 
 /datum/antagonist/godcultist
 	blacklisted_jobs = list(/datum/job/ai, /datum/job/cyborg, /datum/job/chaplain, /datum/job/submap)
-	restricted_jobs = list(/datum/job/captain, /datum/job/hop, /datum/job/hos, /datum/job/rd, /datum/job/cmo, /datum/job/chief_engineer, /datum/job/detective, /datum/job/warden, /datum/job/officer, /datum/job/iaa,     )
+	restricted_jobs = list(/datum/job/captain, /datum/job/hop, /datum/job/hos, /datum/job/rd, /datum/job/cmo, /datum/job/chief_engineer, /datum/job/detective, /datum/job/warden, /datum/job/officer, /datum/job/iaa, /datum/job/iso,     )
 
 /datum/antagonist/cultist
 	blacklisted_jobs = list(/datum/job/ai, /datum/job/cyborg, /datum/job/chaplain, /datum/job/submap)
-	restricted_jobs = list(/datum/job/captain, /datum/job/hop, /datum/job/hos, /datum/job/rd, /datum/job/cmo, /datum/job/chief_engineer, /datum/job/detective, /datum/job/warden, /datum/job/officer, /datum/job/iaa,     )
+	restricted_jobs = list(/datum/job/captain, /datum/job/hop, /datum/job/hos, /datum/job/rd, /datum/job/cmo, /datum/job/chief_engineer, /datum/job/detective, /datum/job/warden, /datum/job/officer, /datum/job/iaa, /datum/job/iso,     )
 
 /datum/antagonist/loyalists
 	blacklisted_jobs = list(/datum/job/ai, /datum/job/cyborg, /datum/job/submap,     )
@@ -20,7 +20,7 @@
 
 /datum/antagonist/traitor
 	blacklisted_jobs = list(/datum/job/ai, /datum/job/cyborg, /datum/job/submap)
-	restricted_jobs = list(/datum/job/captain, /datum/job/hop, /datum/job/hos, /datum/job/rd, /datum/job/cmo, /datum/job/chief_engineer, /datum/job/warden, /datum/job/detective, /datum/job/officer, /datum/job/iaa,     )
+	restricted_jobs = list(/datum/job/captain, /datum/job/hop, /datum/job/hos, /datum/job/rd, /datum/job/cmo, /datum/job/chief_engineer, /datum/job/warden, /datum/job/detective, /datum/job/officer, /datum/job/iaa, /datum/job/iso,     )
 
 /datum/antagonist/ert/equip(mob/living/carbon/human/player)
 	if(!..())

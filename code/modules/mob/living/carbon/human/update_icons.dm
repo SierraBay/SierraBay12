@@ -143,17 +143,19 @@ Please contact me on #coderbus IRC. ~Carn x
 #define HO_SUIT_STORE_LAYER 16
 #define HO_BACK_LAYER       17
 #define HO_HAIR_LAYER       18 //TODO: make part of head layer?
-#define HO_GOGGLES_LAYER    19
-#define HO_EARS_LAYER       20
-#define HO_FACEMASK_LAYER   21
-#define HO_HEAD_LAYER       22
-#define HO_COLLAR_LAYER     23
-#define HO_HANDCUFF_LAYER   24
-#define HO_L_HAND_LAYER     25
-#define HO_R_HAND_LAYER     26
-#define HO_FIRE_LAYER       27 //If you're on fire
-#define HO_EFFECTS_LAYER 28
-#define TOTAL_LAYERS        29
+#define HO_EARS_LAYER       19
+#define HO_ALT_HEAD_LAYER   20
+#define HO_GOGGLES_LAYER    21
+#define HO_FACEMASK_LAYER   22
+#define HO_HEAD_LAYER       23
+#define HO_COLLAR_LAYER     24
+#define HO_HANDCUFF_LAYER   25
+#define HO_L_HAND_LAYER     26
+#define HO_R_HAND_LAYER     27
+#define HO_FIRE_LAYER       28 //If you're on fire
+#define HO_EFFECTS_LAYER    29
+#define TOTAL_LAYERS        30
+
 //////////////////////////////////
 
 /mob/living/carbon/human
@@ -576,9 +578,11 @@ var/global/list/damage_icon_parts = list()
 
 /mob/living/carbon/human/update_inv_head(update_icons=1)
 	if(head)
-		overlays_standing[HO_HEAD_LAYER] = head.get_mob_overlay(src,slot_head_str)
+		overlays_standing[head.use_alt_layer ? HO_ALT_HEAD_LAYER : HO_HEAD_LAYER] = head.get_mob_overlay(src,slot_head_str)
+		overlays_standing[head.use_alt_layer ? HO_HEAD_LAYER : HO_ALT_HEAD_LAYER] = null
 	else
-		overlays_standing[HO_HEAD_LAYER]	= null
+		overlays_standing[HO_HEAD_LAYER]     = null
+		overlays_standing[HO_ALT_HEAD_LAYER] = null
 	if(update_icons)
 		queue_icon_update()
 
