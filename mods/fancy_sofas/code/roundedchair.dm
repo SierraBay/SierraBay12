@@ -71,8 +71,7 @@ ROUNDEDCHAIR(yellow)
 ROUNDEDCHAIR(light)
 #undef ROUNDEDCHAIR
 
-material/generate_recipes()
-	.=..()
+/material/generate_recipes()
 	if(integrity >= 50 && hardness >= MATERIAL_FLEXIBLE + 10)
 		.=..()
 		. += new/datum/stack_recipe_list("padded [display_name] rounded chairs", create_recipe_list(/datum/stack_recipe/furniture/chair/rounded))
