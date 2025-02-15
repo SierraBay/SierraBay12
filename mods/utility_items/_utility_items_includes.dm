@@ -7,6 +7,7 @@
 #include "code/colony_random.dm"
 #include "code/multimeter.dm"
 #include "code/living_adv.dm"
+#include "code/faxmachine.dm"
 #include "code/noose.dm"
 #include "code/wires.dm"
 #include "code/reagents.dm"
@@ -31,4 +32,13 @@
 #include "code/bottom.dm"
 #include "code/top.dm"
 #include "code/skrell-ship.dm"
+#include "code/adherent_armor.dm"
+#include "code/security.dm"
+#include "code/FBP_vox.dm"
+#include "code/on_floor_icon.dm"
+#include "code/changed_sprite.dm"
+#include "code/rndloadout.dm"
+#include "code/dls_loadout.dm"
+#include "code/xeno_voids_and_rigs.dm"
+
 #endif
