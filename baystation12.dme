@@ -3441,7 +3441,6 @@
 #include "mods\_master_files\maps\mapsystem\maps.dm"
 #include "mods\_master_files\maps\sierra\sierra_ranks.dm"
 #include "mods\_master_files\maps\sierra\items\rigs.dm"
-#include "mods\utility_items\code\xeno_voids_and_rigs.dm"
 #include "packs\legion\_pack.dm"
 #include "~code\global_init.dm"
 // END_INCLUDE
