@@ -12,7 +12,6 @@
 		/mob/proc/cult_communicate,
 		/mob/proc/obscure,
 		/mob/proc/reveal,
-		//modded below
 		/mob/proc/burn_imbue
 		)
 
@@ -22,7 +21,6 @@
 		/mob/proc/drain_rune,
 		/mob/proc/emp_rune,
 		/mob/proc/massdefile_rune,
-		//modded below
 		/mob/proc/wrath_imbue,
 		/mob/proc/hellhunter_rune,
 		/mob/proc/hellbucket_rune,
