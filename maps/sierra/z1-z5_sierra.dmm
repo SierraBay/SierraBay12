@@ -51615,10 +51615,6 @@
 "hAZ" = (
 /obj/floor_decal/industrial/hatch/yellow,
 /obj/machinery/artifact_scanpad,
-/obj/machinery/alarm{
-	dir = 4;
-	pixel_x = -24
-	},
 /turf/simulated/floor/tiled/white/monotile,
 /area/shuttle/petrov/scan)
 "hBd" = (
@@ -142504,6 +142500,10 @@
 /obj/item/pen,
 /obj/machinery/camera/network/petrov{
 	c_tag = "Petrov - Anomaly Lab"
+	},
+/obj/machinery/alarm{
+	dir = 8;
+	pixel_x = 25
 	},
 /turf/simulated/floor/tiled/white,
 /area/shuttle/petrov/scan)

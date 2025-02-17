@@ -6660,7 +6660,6 @@
 /area/template_noop)
 "me" = (
 /obj/machinery/fabricator/hacked,
-/obj/item/storage/box/autolathe_designs,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/colony/engineering)
 "mf" = (
