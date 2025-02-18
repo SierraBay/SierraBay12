@@ -1,6 +1,6 @@
 /datum/shuttle/autodock/ferry/supply
 
-/*
+
 	var/away_location = 1	//the location to hide at while pretending to be in-transit
 	var/late_chance = 80
 	var/max_late_time = (30 SECONDS)
@@ -8,6 +8,7 @@
 	category = /datum/shuttle/autodock/ferry/supply
 	ceiling_type = /turf/simulated/floor/shuttle_ceiling
 
+/*
 /datum/shuttle/autodock/ferry/supply/short_jump(area/destination)
 	if(moving_status != SHUTTLE_IDLE)
 		return
@@ -27,7 +28,7 @@
 			return
 
 		if (!at_station())	//at centcom
-			SSsupply.buy()
+			//SSsupply.buy()
 
 		//We pretend it's a long_jump by making the shuttle stay at centcom for the "in-transit" period.
 		var/obj/shuttle_landmark/away_waypoint = get_location_waypoint(away_location)
@@ -38,7 +39,7 @@
 			attempt_move(away_waypoint)
 
 		//wait ETA here.
-		arrive_time = world.time + SSsupply.movetime
+		//arrive_time = world.time + SSsupply.movetime
 		while (world.time <= arrive_time)
 			sleep(5)
 
@@ -52,7 +53,7 @@
 		moving_status = SHUTTLE_IDLE
 
 		if (!at_station())	//at centcom
-			SSsupply.sell()
+			//SSsupply.sell()
 
 // returns 1 if the supply shuttle should be prevented from moving because it contains forbidden atoms
 /datum/shuttle/autodock/ferry/supply/proc/forbidden_atoms_check()

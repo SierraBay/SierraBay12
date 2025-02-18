@@ -50,7 +50,7 @@
 	var/update_timer_start = 0
 
 	/// Overmap object that represents the station on the overmap
-	var/obj/overmap/overmap_object
+	var/obj/overmap/visitable/sector/overmap_object
 
 	/// The location of the overmap object
 	var/turf/overmap_location
@@ -132,6 +132,8 @@
 	overmap_object.dir = pick(rand(1,2), 4, 8)
 	overmap_object.icon_state = pick(icon_states)
 	overmap_object.color = overmap_color
+	overmap_object.instant_contact = TRUE
+	overmap_object.scanner_desc = "[name] - A bluespace trade beacon used to make purchases and sell items over large distances."
 
 	if(start_hidden)
 		overmap_object.name = "unidentified trade beacon"
