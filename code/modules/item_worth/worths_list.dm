@@ -67,7 +67,6 @@ var/global/list/worths = list(
 					/obj/item/gun/projectile/sniper/garand = 1250,
 					/obj/item/gun/projectile = 1500,
 //MAGNETIC,
-
 					/obj/item/gun/magnetic/railgun/automatic = 90000,
 					/obj/item/gun/magnetic/railgun/tcc = 16000,
 					/obj/item/gun/magnetic/railgun/flechette = 21000,

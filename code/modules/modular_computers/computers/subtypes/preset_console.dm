@@ -124,7 +124,6 @@
 		/datum/computer_file/program/camera_monitor,
 		/datum/computer_file/program/records,
 		/datum/computer_file/program/email_client,
-		//datum/computer_file/program/supply, [Sierra-remove]
 		/datum/computer_file/program/wordprocessor
 	)
 
