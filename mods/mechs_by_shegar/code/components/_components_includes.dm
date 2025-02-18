@@ -17,7 +17,7 @@
 #include "arms\_arms_core.dm"
 #include "arms\combat.dm"
 #include "arms\heavy.dm"
-#include "arms\legs.dm"
+#include "arms\light.dm"
 #include "arms\powerloader.dm"
 //Ноги
 #include "legs\_legs_core.dm"
@@ -32,8 +32,23 @@
 #include "passenger_compartment\add_passenger.dm"
 #include "passenger_compartment\remove_passenger.dm"
 
+//Каркас
+#include "frame\_vars.dm"
+#include "frame\frame.dm"
+#include "frame\frame_interaction.dm"
+#include "frame\use_tool.dm"
+#include "frame\use_tool\arms_install.dm"
+#include "frame\use_tool\body_install.dm"
+#include "frame\use_tool\cable_coil.dm"
+#include "frame\use_tool\crowbar.dm"
+#include "frame\use_tool\legs_install.dm"
+#include "frame\use_tool\material_install.dm"
+#include "frame\use_tool\screwdriver_interaction.dm"
+#include "frame\use_tool\sensors_install.dm"
+#include "frame\use_tool\welder_interaction.dm"
+#include "frame\use_tool\wirecutter_interactio.dm"
+#include "frame\use_tool\wrench_interaction.dm"
 //Прочее
-#include "frame.dm"
 #include "software.dm"
 
 #include "id_control.dm" //ID control

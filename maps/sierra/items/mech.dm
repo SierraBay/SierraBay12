@@ -7,23 +7,29 @@
 	if(!body)
 		body = new /obj/item/mech_component/chassis/pod(src)
 		body.color = COLOR_GUNMETAL
-	if(!legs)
-		legs = new /obj/item/mech_component/propulsion/tracks(src)
-		legs.color = COLOR_GUNMETAL
-	if(!arms)
-		arms = new /obj/item/mech_component/manipulators/powerloader(src)
-		arms.color = COLOR_PURPLE
+	if(!L_leg)
+		L_leg = new /obj/item/mech_component/propulsion/tracks(src)
+		L_leg.color = COLOR_GUNMETAL
+	if(!R_leg)
+		R_leg = new /obj/item/mech_component/propulsion/tracks(src)
+		R_leg.color = COLOR_GUNMETAL
+	if(!L_arm)
+		L_arm = new /obj/item/mech_component/manipulators/powerloader(src)
+		L_arm.color = COLOR_PURPLE
+	if(!R_arm)
+		R_arm = new /obj/item/mech_component/manipulators/powerloader(src)
+		R_arm.color = COLOR_PURPLE
 
 	. = ..()
 
 	//Damage it
-	var/list/parts = list(arms,legs,head,body)
+	var/list/parts = list(head, body, L_arm, R_arm, L_leg, R_leg)
 	var/obj/item/mech_component/damaged = pick(parts)
-	damaged.take_burn_damage((damaged.max_damage / 4 ) * MECH_COMPONENT_DAMAGE_DAMAGED)
+	damaged.take_burn_damage((damaged.max_hp / 4 ) * MECH_COMPONENT_DAMAGE_DAMAGED)
 	if(prob(33))
 		parts -= damaged
 		damaged = pick(parts)
-		damaged.take_burn_damage((damaged.max_damage / 4 ) * MECH_COMPONENT_DAMAGE_DAMAGED)
+		damaged.take_burn_damage((damaged.max_hp / 4 ) * MECH_COMPONENT_DAMAGE_DAMAGED)
 
 /mob/living/exosuit/premade/light/exploration/spawn_mech_equipment()
 	install_system(new /obj/item/mech_equipment/light(src), HARDPOINT_HEAD)

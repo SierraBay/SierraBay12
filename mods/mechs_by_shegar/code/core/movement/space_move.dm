@@ -11,3 +11,7 @@
 			return MOVEMENT_STOP
 
 	return MOVEMENT_PROCEED
+
+//Функция попросту не нужна меху, но для того чтоб исключить рантайм вызываемый при стрельбе - поставил.
+/mob/living/exosuit/proc/get_jetpack()
+	return

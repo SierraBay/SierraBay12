@@ -7,7 +7,7 @@
 	icon_state = "heavy_body"
 	power_use = 50
 	has_hardpoints = list(HARDPOINT_BACK)
-	max_damage = 500
+	max_hp = 500
 	mech_health = 500
 	max_repair = 150
 	min_damage = 300

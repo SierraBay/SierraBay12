@@ -6,7 +6,6 @@
 		remove_pilot(pilot)
 
 	hud_health = null
-	hud_open = null
 	hud_power = null
 	hud_power_control = null
 	hud_camera = null
@@ -19,13 +18,15 @@
 	hardpoints = null
 
 	QDEL_NULL(access_card)
-	QDEL_NULL(arms)
-	QDEL_NULL(legs)
+	QDEL_NULL(L_leg)
+	QDEL_NULL(R_leg)
+	QDEL_NULL(L_arm)
+	QDEL_NULL(R_arm)
 	QDEL_NULL(head)
 	QDEL_NULL(body)
 
 	for(var/hardpoint in hardpoint_hud_elements)
-		var/obj/screen/exosuit/hardpoint/H = hardpoint_hud_elements[hardpoint]
+		var/obj/screen/movable/exosuit/hardpoint/H = hardpoint_hud_elements[hardpoint]
 		H.owner = null
 		H.holding = null
 		qdel(H)
@@ -50,10 +51,14 @@
 	..(gibbed, (gibbed ? "explodes!" : "grinds to a halt before collapsing!"))
 
 	if(!gibbed)
-		if(arms.loc != src)
-			arms = null
-		if(legs.loc != src)
-			legs = null
+		if(L_leg.loc != src)
+			L_leg = null
+		if(R_leg.loc != src)
+			R_leg = null
+		if(L_arm.loc != src)
+			L_arm = null
+		if(R_arm.loc != src)
+			R_arm = null
 		if(head.loc != src)
 			head = null
 		if(body.loc != src)
@@ -63,15 +68,20 @@
 /mob/living/exosuit/gib()
 	death(1)
 
+
 	// Get a turf to play with.
 	var/turf/T = get_turf(src)
 	if(!T)
 		qdel(src)
 		return
 
+	//Подожгём людей и пилотов рядом
+	for(var/mob/living/detected_living in range(1, get_turf(src)))
+		detected_living.fire_stacks = max(2, detected_living.fire_stacks)
+		detected_living.IgniteMob()
 	// Hurl our component pieces about.
 	var/list/stuff_to_throw = list()
-	for(var/obj/item/thing in list(arms, legs, head, body))
+	for(var/obj/item/thing in list(head, body, L_arm, R_arm, L_leg, R_leg))
 		if(thing) stuff_to_throw += thing
 	for(var/hardpoint in hardpoints)
 		if(hardpoints[hardpoint])

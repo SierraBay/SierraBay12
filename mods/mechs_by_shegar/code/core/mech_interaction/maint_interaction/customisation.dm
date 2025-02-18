@@ -1,6 +1,6 @@
 /mob/living/exosuit/proc/mech_customization(obj/item/tool, mob/user)
 	var/obj/item/device/kit/mech/paint = tool
-	for (var/obj/item/mech_component/component in list(arms, legs, head, body))
+	for (var/obj/item/mech_component/component in list(head,body, L_arm, R_arm, L_leg, R_leg))
 		component.decal = paint.current_decal
 	if(paint.new_icon_file)
 		icon = paint.new_icon_file

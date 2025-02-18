@@ -10,7 +10,6 @@
 	return TRUE
 
 /obj/item/gun/energy/lasercannon/mounted/mech/pulse
-	name = "\improper CH-PS \"Immolator\" laser"
 	use_external_power = TRUE
 	has_safety = FALSE
 	self_recharge = TRUE

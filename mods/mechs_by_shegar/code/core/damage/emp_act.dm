@@ -21,7 +21,7 @@
 	if(power == MECH_POWER_ON)
 		setClickCooldown(10) //Орудия и модули на КД
 		sub_speed(10) //Убьём скорость меха
-		for(var/obj/item/mech_component/thing in list(arms,legs,head,body))
+		for(var/obj/item/mech_component/thing in list(head, body, L_arm, R_arm, L_leg, R_leg))
 			thing.emp_heat(severity, ratio, src) //Греем конечности
 			if(ratio < 0.5) //Без эми брони, получаем дамаг от эми
 				thing.emp_act(severity)

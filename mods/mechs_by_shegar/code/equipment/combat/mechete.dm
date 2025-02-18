@@ -1,12 +1,12 @@
 //Melee! As a general rule I would recommend using regular objects and putting logic in them.
 /obj/item/mech_equipment/mounted_system/melee
+	name = "mechete"
+	desc = "That thing was too big to be called a machete. Too big, too thick, too heavy, and too rough, it was more like a large hunk of iron."
 	restricted_hardpoints = list(HARDPOINT_LEFT_HAND, HARDPOINT_RIGHT_HAND)
 	restricted_software = list(MECH_SOFTWARE_UTILITY)
 	heat_generation = 20
 
 /obj/item/material/hatchet/machete/mech
-	name = "mechete"
-	desc = "That thing was too big to be called a machete. Too big, too thick, too heavy, and too rough, it was more like a large hunk of iron."
 	w_class = ITEM_SIZE_GARGANTUAN
 	slot_flags = 0
 	default_material = MATERIAL_STEEL

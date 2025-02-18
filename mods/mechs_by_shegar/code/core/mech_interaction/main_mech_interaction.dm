@@ -116,7 +116,6 @@
 	else // <- кабина открыта
 		close_hatch()
 	update_icon()
-	need_update_sensor_effects = TRUE
 
 /mob/living/exosuit/proc/selftoggle_mech_hatch_lock()
 	if(hatch_locked) // <- Замок включен
@@ -137,7 +136,6 @@
 	if(hatch_closed) // <- Кабина закрыта?
 		open_hatch()
 	update_icon()
-	need_update_sensor_effects = TRUE
 
 /mob/living/exosuit/get_inventory_slot(obj/item/I)
 	for(var/h in hardpoints)

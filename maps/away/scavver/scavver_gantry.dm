@@ -78,12 +78,18 @@
 	if(!body)
 		body = new /obj/item/mech_component/chassis/pod(src)
 		body.color = COLOR_ORANGE
-	if(!legs)
-		legs = new /obj/item/mech_component/propulsion/spider(src)
-		legs.color = COLOR_GUNMETAL
-	if(!arms)
-		arms = new /obj/item/mech_component/manipulators/powerloader(src)
-		arms.color = COLOR_GUNMETAL
+	if(!L_leg)
+		L_leg = new /obj/item/mech_component/propulsion/spider(src)
+		L_leg.color = COLOR_GUNMETAL
+	if(!R_leg)
+		R_leg = new /obj/item/mech_component/propulsion/spider/right(src)
+		R_leg.color = COLOR_GUNMETAL
+	if(!L_arm)
+		L_arm = new /obj/item/mech_component/manipulators/powerloader(src)
+		L_arm.color = COLOR_GUNMETAL
+	if(!R_arm)
+		R_arm = new /obj/item/mech_component/manipulators/powerloader/right(src)
+		R_arm.color = COLOR_GUNMETAL
 	if(!head)
 		head = new /obj/item/mech_component/sensors/light/salvage(src)
 		head.color = COLOR_GUNMETAL

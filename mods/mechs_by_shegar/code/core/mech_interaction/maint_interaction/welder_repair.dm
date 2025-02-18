@@ -2,11 +2,7 @@
 	if (!getBruteLoss())
 		USE_FEEDBACK_FAILURE("\The [src] has no physical damage to repair.")
 		return
-	var/list/damaged_parts = list()
-	for (var/obj/item/mech_component/component in list(arms, legs, body, head))
-		if (component?.brute_damage)
-			damaged_parts += component
-	var/obj/item/mech_component/input_fix = input(user, "Which component would you like to fix?", "\The [src] - Fix Component") as null|anything in damaged_parts
+	var/obj/item/mech_component/input_fix = show_radial_menu(user, src, parts_list_images, require_near = TRUE, radius = 42, tooltips = TRUE, check_locs = list(src))
 	if (!input_fix || !user.use_sanity_check(src, tool))
 		return
 	if (!input_fix.brute_damage)

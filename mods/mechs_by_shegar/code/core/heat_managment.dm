@@ -18,6 +18,16 @@
 	///Модификатор начисления тепла
 	var/overheat_heat_modificator = 1
 
+/obj/item/mech_component
+	///Максимальное тепло, которое может хранить в себе часть меха.
+	var/max_heat = 100
+	///Количество тепла, которое сбрасывает данная часть
+	var/heat_cooling = 5
+	///Количество тепла, которое вырабатывает данная часть при использовании
+	var/heat_generation = 5
+	///Количество тепла, выделяемое при ЭМИ ударе
+	var/emp_heat_generation = 50
+
 /mob/living/exosuit/proc/add_heat(ammount,)
 	current_heat += ammount * overheat_heat_modificator
 	advanced_heat_indicator.Update()
@@ -46,6 +56,10 @@
 		overheat()
 
 /mob/living/exosuit/proc/overheat()
+	//При повторном перегреве, перегретый мех лопается
+	if(overheat)
+		gib()
+		return
 	advanced_heat_indicator.start_overheat()
 	overheat_heat_modificator = 2
 	if(power == MECH_POWER_ON)

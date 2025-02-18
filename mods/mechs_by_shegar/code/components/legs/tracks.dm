@@ -1,28 +1,33 @@
 /obj/item/mech_component/propulsion/tracks
-	name = "tracks"
+	name = "track"
 	desc = "A classic brought back. The Hephaestus' Landmaster class tracks are impervious to most damage and can maintain top speed regardless of load. Watch out for corners."
 	exosuit_desc_string = "armored tracks"
+	cant_be_differents = TRUE
 	icon_state = "tracks"
-	mech_turn_sound = 'sound/mecha/mechstep03.ogg' //Now, i know what you're thinking, but it works.
+	mech_turn_sound = 'sound/mecha/mechstep03.ogg'
 	mech_step_sound = 'sound/machines/engine.ogg'
-	move_delay = 2 //It´s fast
+	move_delay = 2 //Скорость на уровне лёгких ног
 	turn_delay = 7
-	power_use = 150
-	max_damage = 250
-	min_damage = 200
-	max_repair = 100
+	power_use = 75
+	max_hp = 125
+	min_damage = 100
+	max_repair = 50
 	repair_damage = 20
 	bump_type = HARD_BUMP
 	bump_safety = FALSE
 	back_modificator_damage = 1.3
 	front_modificator_damage = 1
-	max_heat = 200
-	heat_cooling = 2
-	emp_heat_generation = 125
-	heat_generation = 2
+	max_heat = 100
+	heat_cooling = 1
+	emp_heat_generation = 75
+	heat_generation = 1
 	max_speed = 2
 	min_speed = 6
 	acceleration = 0.75
 	turn_slowdown = 2
 	turn_diogonal_slowdown = 1.5
-	weight = 300
+	weight = 150
+
+/obj/item/mech_component/propulsion/tracks/right
+	name = "track"
+	side = RIGHT

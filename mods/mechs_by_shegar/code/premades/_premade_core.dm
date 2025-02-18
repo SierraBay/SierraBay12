@@ -1,23 +1,37 @@
 //GLOBAL_LIST_INIT(mech_decals, (icon_states('icons/mecha/mech_decals.dmi')-list("template", "mask")))
 
 /mob/living/exosuit/premade
-	name = "impossible exosuit"
+	name = "impossible mech"
 	desc = "Убейте меня"
 	var/decal
 
 /mob/living/exosuit/premade/Initialize()
-	if(arms)
-		arms.decal = decal
-		arms.prebuild()
-	if(legs)
-		legs.decal = decal
-		legs.prebuild()
 	if(head)
 		head.decal = decal
 		head.prebuild()
 	if(body)
 		body.decal = decal
 		body.prebuild()
+	if(L_arm)
+		L_arm.decal = decal
+		L_arm.prebuild()
+		L_arm.side = LEFT
+		L_arm.setup_side()
+	if(R_arm)
+		R_arm.decal = decal
+		R_arm.prebuild()
+		R_arm.side = RIGHT
+		R_arm.setup_side()
+	if(L_leg)
+		L_leg.decal = decal
+		L_leg.prebuild()
+		L_leg.side = LEFT
+		L_leg.setup_side()
+	if(R_leg)
+		R_leg.decal = decal
+		R_leg.prebuild()
+		R_leg.side = RIGHT
+		R_leg.setup_side()
 	if(!material)
 		material = SSmaterials.get_material_by_name(MATERIAL_STEEL)
 	. = ..()
@@ -29,7 +43,7 @@
 	install_system(new /obj/item/mech_equipment/light(src), HARDPOINT_HEAD)
 
 /mob/living/exosuit/premade/random
-	name = "mismatched exosuit"
+	name = "mismatched mech"
 	desc = "It seems to have been roughly thrown together and then spraypainted a single colour."
 
 /mob/living/exosuit/premade/random/Initialize(mapload, obj/structure/heavy_vehicle_frame/source_frame, super_random = FALSE, using_boring_colours = FALSE)
@@ -129,14 +143,6 @@
 		)
 
 	var/mech_colour = super_random ? FALSE : pick(use_colours)
-	if(!arms)
-		var/armstype = pick(typesof(/obj/item/mech_component/manipulators)-/obj/item/mech_component/manipulators)
-		arms = new armstype(src)
-		arms.color = mech_colour ? mech_colour : pick(use_colours)
-	if(!legs)
-		var/legstype = pick(typesof(/obj/item/mech_component/propulsion)-/obj/item/mech_component/propulsion)
-		legs = new legstype(src)
-		legs.color = mech_colour ? mech_colour : pick(use_colours)
 	if(!head)
 		var/headtype = pick(typesof(/obj/item/mech_component/sensors)-/obj/item/mech_component/sensors)
 		head = new headtype(src)
@@ -145,6 +151,43 @@
 		var/bodytype = pick(typesof(/obj/item/mech_component/chassis)-/obj/item/mech_component/chassis)
 		body = new bodytype(src)
 		body.color = mech_colour ? mech_colour : pick(use_colours)
+	if(!L_arm)
+		var/armstype = pick(typesof(/obj/item/mech_component/manipulators)-/obj/item/mech_component/manipulators)
+		L_arm = new armstype(src)
+		L_arm.color = mech_colour ? mech_colour : pick(use_colours)
+		L_arm.side = LEFT
+		L_arm.setup_side()
+	if(!R_arm)
+		var/armstype = pick(typesof(/obj/item/mech_component/manipulators)-/obj/item/mech_component/manipulators)
+		R_arm = new armstype(src)
+		R_arm.color = mech_colour ? mech_colour : pick(use_colours)
+		R_arm.side = RIGHT
+		R_arm.setup_side()
+	var/spawn_cant_be_differents = TRUE
+	if(!L_leg)
+		var/legstype = pick(typesof(/obj/item/mech_component/propulsion)-/obj/item/mech_component/propulsion)
+		L_leg = new legstype(src)
+		L_leg.color = mech_colour ? mech_colour : pick(use_colours)
+		L_leg.side = LEFT
+		L_leg.setup_side()
+		if(L_leg.cant_be_differents)
+			spawn_cant_be_differents = FALSE
+			R_leg = new legstype(src)
+			R_leg.color = mech_colour ? mech_colour : pick(use_colours)
+			R_leg.side = RIGHT
+			R_leg.setup_side()
+	if(!R_leg && spawn_cant_be_differents)
+		var/legstype = pick(typesof(/obj/item/mech_component/propulsion)-/obj/item/mech_component/propulsion)
+		R_leg = new legstype(src)
+		R_leg.color = mech_colour ? mech_colour : pick(use_colours)
+		R_leg.side = RIGHT
+		R_leg.setup_side()
+		if(R_leg.cant_be_differents)
+			QDEL_NULL(L_leg)
+			L_leg = new legstype(src)
+			L_leg.color = mech_colour ? mech_colour : pick(use_colours)
+			L_leg.side = LEFT
+			L_leg.setup_side()
 	. = ..()
 
 // Used for spawning/debugging.

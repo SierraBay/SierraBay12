@@ -1,20 +1,30 @@
 /mob/living/exosuit/premade/combat
-	name = "combat exosuit"
-	desc = "A sleek, modern combat exosuit."
+	name = "combat mech"
+	desc = "A sleek, modern combat mech."
 
 /mob/living/exosuit/premade/combat/Initialize()
-	if(!arms)
-		arms = new /obj/item/mech_component/manipulators/combat(src)
-		arms.color = COLOR_GUNMETAL
-	if(!legs)
-		legs = new /obj/item/mech_component/propulsion/combat(src)
-		legs.color = COLOR_GUNMETAL
 	if(!head)
 		head = new /obj/item/mech_component/sensors/combat(src)
 		head.color = COLOR_GUNMETAL
 	if(!body)
 		body = new /obj/item/mech_component/chassis/combat(src)
 		body.color = COLOR_GUNMETAL
+	if(!L_arm)
+		L_arm = new /obj/item/mech_component/manipulators/combat(src)
+		L_arm.color = COLOR_GUNMETAL
+	if(!R_arm)
+		R_arm = new /obj/item/mech_component/manipulators/combat(src)
+		R_arm.color = COLOR_GUNMETAL
+		R_arm.side = RIGHT
+		R_arm.setup_side()
+	if(!L_leg)
+		L_leg = new /obj/item/mech_component/propulsion/combat(src)
+		L_leg.color = COLOR_GUNMETAL
+	if(!R_leg)
+		R_leg = new /obj/item/mech_component/propulsion/combat(src)
+		R_leg.color = COLOR_GUNMETAL
+		R_leg.side = RIGHT
+		R_leg.setup_side()
 
 	. = ..()
 
@@ -33,5 +43,5 @@
 
 /mob/living/exosuit/premade/combat/military/Initialize()
 	. = ..()
-	for(var/obj/thing in list(arms,legs,head,body))
+	for(var/obj/thing in list(head,body, L_arm, R_arm, L_leg, R_leg))
 		thing.color = COLOR_WHITE

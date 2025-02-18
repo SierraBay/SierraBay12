@@ -58,12 +58,12 @@
 	maxHealth = body ? body.mech_health : 0
 	health = maxHealth-(getFireLoss()+getBruteLoss())
 
-/mob/living/exosuit/adjustFireLoss(amount, obj/item/mech_component/MC = pick(list(arms, legs, body, head)))
+/mob/living/exosuit/adjustFireLoss(amount, obj/item/mech_component/MC = pick(list(head, body, L_arm, R_arm, L_leg, R_leg)))
 	if(MC)
 		MC.take_burn_damage(amount)
 		MC.update_health()
 
-/mob/living/exosuit/adjustBruteLoss(amount, obj/item/mech_component/MC = pick(list(arms, legs, body, head)))
+/mob/living/exosuit/adjustBruteLoss(amount, obj/item/mech_component/MC = pick(list(head, body, L_arm, R_arm, L_leg, R_leg)))
 	if(MC)
 		MC.take_brute_damage(amount)
 		MC.update_health()
@@ -72,10 +72,14 @@
 	switch(zone)
 		if(BP_EYES , BP_HEAD)
 			return head
-		if(BP_L_ARM , BP_R_ARM)
-			return arms
-		if(BP_L_LEG , BP_R_LEG)
-			return legs
+		if(BP_L_LEG)
+			return L_leg
+		if(BP_R_LEG)
+			return R_leg
+		if(BP_L_ARM)
+			return L_arm
+		if(BP_R_ARM)
+			return R_arm
 		else
 			return body
 
@@ -91,14 +95,14 @@
 
 /mob/living/exosuit/getFireLoss()
 	var/total = 0
-	for(var/obj/item/mech_component/MC in list(arms, legs, body, head))
+	for(var/obj/item/mech_component/MC in list(head, body, L_arm, R_arm, L_leg, R_leg))
 		if(MC)
 			total += MC.burn_damage
 	return total
 
 /mob/living/exosuit/getBruteLoss()
 	var/total = 0
-	for(var/obj/item/mech_component/MC in list(arms, legs, body, head))
+	for(var/obj/item/mech_component/MC in list(head, body, L_arm, R_arm, L_leg, R_leg))
 		if(MC)
 			total += MC.brute_damage
 	return total

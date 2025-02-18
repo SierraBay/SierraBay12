@@ -7,3 +7,4 @@
 #include "new_prices.dm"
 #include "paint_kit.dm"
 #include "paint_override.dm"
+#include "roboscan.dm"

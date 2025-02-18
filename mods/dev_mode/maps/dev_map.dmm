@@ -16,8 +16,10 @@
 	},
 /area/tdome/testing)
 "aaX" = (
-/obj/item/mech_equipment/mounted_system/extinguisher,
-/obj/structure/table/steel,
+/obj/machinery/computer/rdconsole/core/colony{
+	req_access = list();
+	dir = 1
+	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -101,8 +103,14 @@
 	},
 /area/tdome/testing)
 "ahh" = (
-/obj/item/mech_equipment/mounted_system/rcd,
-/obj/structure/table/steel,
+/obj/item/stack/material/steel/fifty,
+/obj/item/stack/material/plastic/fifty,
+/obj/item/stack/material/glass/fifty,
+/obj/item/stack/material/diamond/ten,
+/obj/item/stack/material/gold/ten,
+/obj/item/stack/material/silver/ten,
+/obj/item/stack/material/uranium/fifty,
+/obj/item/stack/material/aluminium/fifty,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -347,8 +355,9 @@
 	},
 /area/tdome/testing)
 "aRV" = (
-/obj/item/mech_equipment/mounted_system/taser/autoplasma,
-/obj/structure/table/steel,
+/obj/machinery/robotics_fabricator{
+	req_access = list()
+	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},

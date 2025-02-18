@@ -34,7 +34,7 @@
 	return all_images
 
 /mob/living/exosuit/on_update_icon()
-	var/list/new_overlays = get_mech_images(list(body, head), MECH_BASE_LAYER)
+	var/list/new_overlays = get_mech_images(list(head, body, L_arm, R_arm, L_leg, R_leg), MECH_BASE_LAYER)
 	if(body)
 		new_overlays += back_passengers_overlays
 		new_overlays += left_back_passengers_overlays
@@ -46,10 +46,14 @@
 		new_overlays += pilot_overlays
 	if(body)
 		new_overlays += get_mech_image(body.decal, "[body.icon_state]_overlay[hatch_closed ? "" : "_open"]", body.on_mech_icon, body.color, MECH_COCKPIT_LAYER)
-	if(arms)
-		new_overlays += get_mech_image(arms.decal, arms.icon_state, arms.on_mech_icon, arms.color, MECH_ARM_LAYER)
-	if(legs)
-		new_overlays += get_mech_image(legs.decal, legs.icon_state, legs.on_mech_icon, legs.color, MECH_LEG_LAYER)
+	if(L_leg)
+		new_overlays += get_mech_image(L_leg.decal, L_leg.icon_state, L_leg.on_mech_icon, L_leg.color, MECH_LEG_LAYER)
+	if(R_leg)
+		new_overlays += get_mech_image(R_leg.decal, R_leg.icon_state, R_leg.on_mech_icon, R_leg.color, MECH_LEG_LAYER)
+	if(L_arm)
+		new_overlays += get_mech_image(L_arm.decal, L_arm.icon_state, L_arm.on_mech_icon, L_arm.color, MECH_ARM_LAYER)
+	if(R_arm)
+		new_overlays += get_mech_image(R_arm.decal, R_arm.icon_state, R_arm.on_mech_icon, R_arm.color, MECH_ARM_LAYER)
 	for(var/hardpoint in hardpoints)
 		var/obj/item/mech_equipment/hardpoint_object = hardpoints[hardpoint]
 		if(hardpoint_object)
@@ -77,9 +81,12 @@
 				if(hardpoint in list(HARDPOINT_BACK, HARDPOINT_RIGHT_SHOULDER, HARDPOINT_LEFT_SHOULDER))
 					color = body.color
 					decal = body.decal
-				else if(hardpoint in list(HARDPOINT_RIGHT_HAND, HARDPOINT_LEFT_HAND))
-					color = arms.color
-					decal = arms.decal
+				else if(hardpoint in list(HARDPOINT_LEFT_HAND))
+					color = L_arm.color
+					decal = L_arm.decal
+				else if(hardpoint in list(HARDPOINT_RIGHT_HAND))
+					color = R_arm.color
+					decal = R_arm.decal
 				else
 					color = head.color
 					decal = head.decal
@@ -96,9 +103,8 @@
 /mob/living/exosuit/proc/generate_icons()
 	LAZYCLEARLIST(parts_list)
 	LAZYCLEARLIST(parts_list_images)
-	parts_list = list(head, body, arms, legs)
+	parts_list = list(head, L_arm, L_leg, body, R_leg, R_arm)
 	parts_list_images = make_item_radial_menu_choices(parts_list)
-	//bam
 
 /mob/living/exosuit/regenerate_icons()
 	return

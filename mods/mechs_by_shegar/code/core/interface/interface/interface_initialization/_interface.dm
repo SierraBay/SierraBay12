@@ -1,6 +1,5 @@
 /mob/living/exosuit
 	var/obj/screen/movable/exosuit/advanced_heat/advanced_heat_indicator
-	var/obj/screen/exosuit/hardpoints_menu/hardpoints_menu
 	var/obj/screen/exosuit/full_integrity/mech_hp
 
 /mob/living/exosuit/InitializeHud()
@@ -8,8 +7,8 @@
 	zone_sel = new
 	if(!LAZYLEN(hud_elements))
 		Initialize_hardpoints() //Размещение интерфейса модулей
-		Initialize_big_menu_background() //Размещение меню и задника
-		Initialize_big_menu_buttons() //Размещение больших кнопачек в меню
+		Initialize_big_menu() //Размещение .большого меню
+		Initialize_downside_menu() //Размещение основных кнопок снизу
 		Initialize_menu_parts() //Размещение частей меха в большом меню
 		hud_health = new /obj/screen/movable/exosuit/mech_integrity(src)
 		hud_health.screen_loc = "EAST-1:28,CENTER-3:11"

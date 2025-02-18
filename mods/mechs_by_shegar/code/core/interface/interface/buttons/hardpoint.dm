@@ -144,5 +144,9 @@
 		// Set the new system.
 		selected_system = hardpoints[hardpoint_tag]
 		selected_hardpoint = hardpoint_tag
+		if(selected_hardpoint == HARDPOINT_RIGHT_HAND)
+			active_arm = R_arm
+		else
+			active_arm = L_arm
 		return 1 // The element calling this proc will set its own icon.
 	return 0

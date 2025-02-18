@@ -1,0 +1,93 @@
+/obj/item/frame_holder
+	matter = list(MATERIAL_STEEL = 175000, MATERIAL_PLASTIC = 50000, MATERIAL_OSMIUM = 30000)
+
+/obj/item/frame_holder/Initialize(mapload, newloc)
+	..()
+	new /obj/structure/heavy_vehicle_frame(newloc)
+	return  INITIALIZE_HINT_QDEL
+
+/obj/structure/heavy_vehicle_frame/set_color(new_colour)
+	var/painted_component = FALSE
+	for(var/obj/item/mech_component/comp in list(head, body, L_arm, R_arm, L_leg, R_leg))
+		if(comp.set_color(new_colour))
+			painted_component = TRUE
+	if(painted_component)
+		queue_icon_update()
+
+/obj/structure/heavy_vehicle_frame/Destroy()
+	QDEL_NULL(head)
+	QDEL_NULL(body)
+	QDEL_NULL(L_arm)
+	QDEL_NULL(R_arm)
+	QDEL_NULL(L_leg)
+	QDEL_NULL(R_leg)
+	. = ..()
+
+/obj/structure/heavy_vehicle_frame/examine(mob/user)
+	. = ..()
+	if(!head)
+		to_chat(user, SPAN_WARNING("It is missing sensors."))
+	if(!body)
+		to_chat(user, SPAN_WARNING("It is missing a chassis."))
+	if(!L_arm)
+		to_chat(user, SPAN_WARNING("It is missing left manipulator."))
+	if(!R_arm)
+		to_chat(user, SPAN_WARNING("It is missing left manipulator."))
+	if(!L_leg)
+		to_chat(user, SPAN_WARNING("It is missing left propulsion."))
+	if(!R_leg)
+		to_chat(user, SPAN_WARNING("It is missing left propulsion."))
+	if(is_wired == FRAME_WIRED)
+		to_chat(user, SPAN_WARNING("It has not had its wiring adjusted."))
+	else if(!is_wired)
+		to_chat(user, SPAN_WARNING("It has not yet been wired."))
+	if(is_reinforced == FRAME_REINFORCED)
+		to_chat(user, SPAN_WARNING("It has not had its internal reinforcement secured."))
+	else if(is_reinforced == FRAME_REINFORCED_SECURE)
+		to_chat(user, SPAN_WARNING("It has not had its internal reinforcement welded in."))
+	else if(!is_reinforced)
+		to_chat(user, SPAN_WARNING("It does not have any internal reinforcement."))
+
+/obj/structure/heavy_vehicle_frame/on_update_icon()
+	var/list/new_overlays = get_mech_images(list(head, body, L_arm, R_arm, L_leg, R_leg), layer)
+	if(body)
+		set_density(TRUE)
+		AddOverlays(get_mech_image(null, "[body.icon_state]_cockpit", body.icon, body.color))
+		if(body.pilot_coverage < 100 || body.transparent_cabin)
+			new_overlays += get_mech_image(null, "[body.icon_state]_open_overlay", body.icon, body.color)
+	else
+		set_density(FALSE)
+	SetOverlays(new_overlays)
+	if(density != opacity)
+		set_opacity(density)
+
+/obj/structure/heavy_vehicle_frame/set_dir()
+	..(SOUTH)
+
+
+/obj/structure/heavy_vehicle_frame/proc/install_component(obj/item/thing, mob/user)
+	var/obj/item/mech_component/MC = thing
+	if(istype(MC) && !MC.ready_to_install())
+		to_chat(user, SPAN_WARNING("\The [MC] [MC.gender == PLURAL ? "are" : "is"] not ready to install."))
+		return 0
+	if(user)
+		visible_message(SPAN_NOTICE("\The [user] begins installing \the [thing] into \the [src]."))
+		if(!user.canUnEquip(thing) || !do_after(user, 3 SECONDS * user.skill_delay_mult(SKILL_DEVICES), src, DO_PUBLIC_UNIQUE) || user.get_active_hand() != thing)
+			return
+		if(!user.unEquip(thing))
+			return
+	thing.forceMove(src)
+	visible_message(SPAN_NOTICE("\The [user] installs \the [thing] into \the [src]."))
+	playsound(user.loc, 'sound/machines/click.ogg', 50, 1)
+	return 1
+
+/obj/structure/heavy_vehicle_frame/proc/uninstall_component(obj/item/component, mob/user)
+	if(!istype(component) || (component.loc != src) || !istype(user))
+		return FALSE
+	if(!do_after(user, 4 SECONDS * user.skill_delay_mult(SKILL_DEVICES), src, DO_PUBLIC_UNIQUE) || component.loc != src)
+		return FALSE
+	user.visible_message(SPAN_NOTICE("\The [user] crowbars \the [component] off \the [src]."))
+	component.forceMove(get_turf(src))
+	user.put_in_hands(component)
+	playsound(user.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+	return TRUE

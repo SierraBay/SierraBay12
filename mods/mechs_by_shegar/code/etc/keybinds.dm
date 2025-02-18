@@ -1,6 +1,12 @@
 //Здесь хранятся самые разнообразные бинды, при нажатии клавиши указанной в hotkey_keys, срабатывает
 //этот кейбинд
-
+/mob/living/exosuit
+///Последнее время когда использовали кейбинд
+	var/last_keybind_use = 0
+	///Мех что-то применяет и использует (К примеру)
+	var/currently_use_something = FALSE
+	///Требуется обработка кейбинда?
+	var/process_keybind = FALSE
 
 ///ОСНОВА///
 #define CATEGORY_MECH "MECH"
@@ -28,7 +34,7 @@
 	return TRUE
 
 /mob/living/exosuit/proc/toggle_strafe(mob/living/user)
-	if(legs.can_strafe)
+	if(L_leg.can_strafe && R_leg.can_strafe)
 		strafe_status = !strafe_status
 		if(strafe_status)
 			to_chat(user,SPAN_GOOD( "The position of the body in space is successfully locked."))

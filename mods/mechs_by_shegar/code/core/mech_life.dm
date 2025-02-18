@@ -6,11 +6,7 @@
 	for(var/thing in pilots)
 		var/mob/pilot = thing
 		if(pilot.loc != src) // Admin jump or teleport/grab.
-			if(pilot.client)
-				pilot.client.screen -= hud_elements
-				LAZYREMOVE(pilots, pilot)
-				UNSETEMPTY(pilots)
-		update_pilots()
+			remove_pilot(pilot)
 
 	if(radio)
 		radio.on = (head && head.radio && head.radio.is_functional() && get_cell())
@@ -30,11 +26,27 @@
 			if(istype(M) && M.active && M.passive_power_use)
 				M.deactivate()
 
+	else if(powered && current_heat != 0)
+		process_heat()
 
+	updatehealth()
+
+
+	if(emp_damage > 0)
+		emp_damage -= min(1, emp_damage) //Reduce emp accumulation over time
+
+	..() //Handles stuff like environment
+
+	lying = FALSE // Fuck off, carp.
+	if(process_mech_vision)
+		handle_hud_icons()
+		handle_vision(powered)
+		handle_hud_icons()
 
 
 /mob/living/exosuit/handle_environment(datum/gas_mixture/environment)
-	if(!environment) return
+	if(!environment)
+		return
 	//Mechs and vehicles in general can be assumed to just tend to whatever ambient temperature
 	if(abs(environment.temperature - bodytemperature) > 0 )
 		bodytemperature += ((environment.temperature - bodytemperature) / 6)
@@ -49,8 +61,6 @@
 	//A possibility is to hook up interface icons here. But this works pretty well in my experience
 		if(prob(damage))
 			visible_message(SPAN_DANGER("\The [src]'s hull bends and buckles under the intense heat!"))
-
-	hud_heat.Update()
 
 /mob/living/exosuit/handle_vision(powered)
 	var/was_blind = sight & BLIND
@@ -71,7 +81,33 @@
 	return see_invisible
 
 /mob/living/exosuit/updatehealth()
-	maxHealth = (body.mech_health + material.integrity) + head.max_damage + arms.max_damage + legs.max_damage
+	maxHealth = (head.current_hp + head.unrepairable_damage) + (body.max_hp + body.unrepairable_damage + material.integrity) + (L_arm.current_hp + L_arm.unrepairable_damage) + (R_arm.current_hp + R_arm.unrepairable_damage)  + (L_leg.current_hp + L_leg.unrepairable_damage) + (R_leg.current_hp + R_leg.unrepairable_damage)
 	health = maxHealth-(getFireLoss()+getBruteLoss())
 	if(menu_status)
 		update_big_menu_status()
+
+/mob/living/exosuit/revive()
+	current_heat = 0
+	body.cell.charge = body.cell.maxcharge
+	//голова
+	head.max_hp = head.max_hp + head.unrepairable_damage
+	head.current_hp = head.max_hp
+	head.unrepairable_damage = 0
+	//ручки
+	L_arm.max_hp = L_arm.max_hp + L_arm.unrepairable_damage
+	R_arm.max_hp = R_arm.max_hp + R_arm.unrepairable_damage
+	L_arm.current_hp = L_arm.max_hp
+	R_arm.current_hp = R_arm.max_hp
+	L_arm.unrepairable_damage = 0
+	R_arm.unrepairable_damage = 0
+	//Пузико
+	body.max_hp = body.max_hp + body.unrepairable_damage
+	body.current_hp = body.max_hp
+	body.unrepairable_damage = 0
+	//ножки
+	L_leg.max_hp = L_leg.max_hp + L_leg.unrepairable_damage
+	R_leg.max_hp = R_leg.max_hp + R_leg.unrepairable_damage
+	L_leg.current_hp = L_leg.max_hp
+	R_leg.current_hp = R_leg.max_hp
+	L_leg.unrepairable_damage = 0
+	R_leg.unrepairable_damage = 0

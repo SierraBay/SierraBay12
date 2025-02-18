@@ -15,8 +15,6 @@
 		USE_FEEDBACK_FAILURE("\The [src] has no power cell to remove.")
 		return
 	user.put_in_hands(body.cell)
-	power = MECH_POWER_OFF
-	need_update_sensor_effects = TRUE
-	hud_power_control.update_icon()
+	turn_off_mech()
 	body.cell = null
 	user.visible_message(SPAN_NOTICE("\The [user] removes \the [src]'s power cell with \a [tool]."),)

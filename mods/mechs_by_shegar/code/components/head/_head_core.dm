@@ -40,10 +40,7 @@
 	radio = locate() in src
 	camera = locate() in src
 	software = locate() in src
-
-
-
-
+	owner.need_update_sensor_effects = TRUE
 
 /obj/item/mech_component/sensors/ready_to_install()
 	return (radio && camera)

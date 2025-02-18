@@ -40,7 +40,7 @@
 		hud_health.AddOverlays(GLOB.mech_damage_overlay_cache["critfail"])
 		return
 
-	var/list/part_to_state = list("legs" = legs,"body" = body,"head" = head,"arms" = arms)
+	var/list/part_to_state = list("body" = body,"head" = head, "right_arm" = R_arm, "left_arm" = L_arm, "right_leg" = R_leg, "left_leg" = L_leg)
 	for(var/part in part_to_state)
 		var/state = 0
 		var/obj/item/mech_component/MC = part_to_state[part]
@@ -50,7 +50,7 @@
 			else
 				state = MC.damage_state
 		if(!GLOB.mech_damage_overlay_cache["[part]-[state]"])
-			var/image/I = image(icon='icons/mecha/mech_hud.dmi',icon_state="dam_[part]")
+			var/image/I = image(icon='mods/mechs_by_shegar/icons/mech_hud.dmi',icon_state="dam_[part]")
 			switch(state)
 				if(1)
 					I.color = "#00ff00"

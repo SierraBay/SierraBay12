@@ -1,124 +1,50 @@
 /obj/item/mech_component
-	icon = 'icons/mecha/mech_parts_held.dmi'
+	icon = 'mods/mechs_by_shegar/icons/mech_parts_held.dmi'
 	w_class = ITEM_SIZE_HUGE
 	gender = PLURAL
 	color = COLOR_GUNMETAL
 	atom_flags = ATOM_FLAG_CAN_BE_PAINTED
 
-	var/on_mech_icon = 'icons/mecha/mech_parts.dmi'
+	var/on_mech_icon = 'mods/mechs_by_shegar/icons/mech_parts.dmi'
 	var/exosuit_desc_string
 	var/total_damage = 0
 	var/brute_damage = 0
 	var/burn_damage = 0
-	var/max_damage = 60
 	var/damage_state = 1
 	var/list/has_hardpoints = list()
 	var/decal
 	var/power_use = 0
 	matter = list(MATERIAL_STEEL = 15000, MATERIAL_PLASTIC = 1000, MATERIAL_OSMIUM = 500)
 	dir = SOUTH
-	///
 	///Отвечает за минимальное возможное ХП части меха, ОБЯЗАТЕЛЬНО прописывайте этот пункт. При ремонте повреждений
 	///листом материала максимальное ХП части меха уменьшается, min_damage является минимальным пределом до куда будет
 	///снижаться макс ХП меха.
-	///
 	var/min_damage = 5
-
-
-	///
 	///Отвечает за ТЕКУЩУЮ структурную целостность части, вычисляется по max_damage - ( brute_damage + burn_damage)
-	///
 	var/current_hp
-
-
-
-
-
-													///РЕМОНТ И ОБСЛУЖИВАНИЕ///
-
-	///
+	///Отвечает за МАКСИМАЛЬНУЮ структурную целостность части, выставляеться до инициализации
+	var/max_hp = 60
 	/// Отвечает за то на сколько снижается максимальное хп части после ремонта. Обратите внимание, что макс хп падает
 	///лишь при ремонте листами материала.
-	///
 	var/repair_damage = 5
-
-
-
-	///
 	///Отвечает за максимальное число урона, при котором не потребуется ремонт листами матеиала, можно обойтись сваркой.
 	///Если количество ХП ниже этого значения - ремонт лишь листами.
-	///
 	var/max_repair = 5
-
-
-	///
 	///Отвечает за то какой материал требуется для ремонта данной части листами. Проверяется переменная при клику листами по
 	///меху.
-	///
 	var/req_material = MATERIAL_STEEL
-
-
 	///Содержит в себе значение НЕЧИНИБЕЛЬНОГО урона что скопился в части.
 	var/unrepairable_damage = 0
-
 	///Обозначает вес компонента в КИЛОГРАММАХ
 	var/weight = 100
-
-													///КОНЕЦ///
-
-
-
-
-
-													///МОДИФИКАТОРЫ УРОНОВ///
-
-	///
 	///Модификатор урона по части, когда она принимает урон лицевой стороной
-	///
 	var/front_modificator_damage = 1
-
-	///
 	///Модификатор урона по части, когда она принимает урон задней стороной
-	///
 	var/back_modificator_damage = 1
-
-
-
-	///
 	///Гарантированный дополнительный урон, когда часть принимает урон лицевой стороной
-	///
 	var/front_additional_damage = 0
-
-	///
 	///Гарантированный дополнительный урон, когда часть принимает урон задней стороной
-	///
 	var/back_additional_damage = 0
-
-													///КОНЕЦ///
-
-
-
-
-
-
-													///ТЕПЛО///
-
-	///
-	///Максимальное тепло, которое может хранить в себе часть меха.
-	///
-	var/max_heat = 100
-	///
-	///Количество тепла, которое сбрасывает данная часть
-	///
-	var/heat_cooling = 5
-	///
-	///Количество тепла, которое вырабатывает данная часть при использовании
-	///
-	var/heat_generation = 5
-	///
-	///Количество тепла, выделяемое при ЭМИ ударе
-	///
-	var/emp_heat_generation = 50
 	///Владелец части
 	var/mob/living/exosuit/owner
 
@@ -129,7 +55,7 @@
 		owner = null
 
 /obj/item/mech_component/Initialize()
-	current_hp = max_damage
+	current_hp = max_hp
 	. = ..()
 
 /obj/item/mech_component/proc/emp_heat(severity, emp_armor, mob/living/exosuit/mech) //Накидываем тепло учитывая армор меха
@@ -170,9 +96,10 @@
 
 /obj/item/mech_component/proc/update_health()
 	total_damage = brute_damage + burn_damage
-	if(total_damage > max_damage) total_damage = max_damage
+	if(total_damage > max_hp)
+		total_damage = max_hp
 	var/prev_state = damage_state
-	damage_state = clamp(round((total_damage/max_damage) * 4), MECH_COMPONENT_DAMAGE_UNDAMAGED, MECH_COMPONENT_DAMAGE_DAMAGED_TOTAL)
+	damage_state = clamp(round((total_damage/max_hp) * 4), MECH_COMPONENT_DAMAGE_UNDAMAGED, MECH_COMPONENT_DAMAGE_DAMAGED_TOTAL)
 	if(damage_state > prev_state)
 		if(damage_state == MECH_COMPONENT_DAMAGE_DAMAGED_BAD)
 			playsound(src.loc, 'sound/mecha/internaldmgalarm.ogg', 40, 1)
@@ -191,13 +118,13 @@
 /obj/item/mech_component/proc/take_brute_damage(amt)
 	brute_damage = max(0, brute_damage + amt)
 	update_health()
-	if(total_damage == max_damage)
+	if(total_damage == max_hp)
 		take_component_damage(amt,0)
 
 /obj/item/mech_component/proc/take_burn_damage(amt)
 	burn_damage = max(0, burn_damage + amt)
 	update_health()
-	if(total_damage == max_damage)
+	if(total_damage == max_hp)
 		take_component_damage(0,amt)
 
 /obj/item/mech_component/proc/take_component_damage(brute, burn)
@@ -327,4 +254,4 @@
 
 /obj/item/mech_component/proc/return_diagnostics(mob/user)
 	to_chat(user, SPAN_NOTICE("[capitalize(src.name)]:"))
-	to_chat(user, SPAN_NOTICE(" - Integrity: <b> [current_hp]/[max_damage]([round(((current_hp / max_damage)) * 100)]%)</b> Unrepairable damage: <b><font color = red>[unrepairable_damage]</font></b>" ))
+	to_chat(user, SPAN_NOTICE(" - Integrity: <b> [current_hp]/[max_hp]([round(((current_hp / max_hp)) * 100)]%)</b> Unrepairable damage: <b><font color = red>[unrepairable_damage]</font></b>" ))

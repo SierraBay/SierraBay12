@@ -85,15 +85,15 @@
 		if(LAZYLEN(passenger_compartment.left_back_passengers) > 0)
 			to_chat(user,SPAN_NOTICE("[choosed_place] is busy"))
 			return 0
-		else if(arms.allow_passengers == FALSE)
-			to_chat(user,SPAN_NOTICE("[choosed_place] not able with [arms.name]"))
+		else if(L_arm.allow_passengers == FALSE)
+			to_chat(user,SPAN_NOTICE("[choosed_place] not able with [L_arm.name]"))
 			return 0
 	else if(choosed_place == "Right back")
 		if(LAZYLEN(passenger_compartment.right_back_passengers) > 0)
 			to_chat(user,SPAN_NOTICE("[choosed_place] is busy"))
 			return 0
-		else if(arms.allow_passengers == FALSE)
-			to_chat(user,SPAN_NOTICE("[choosed_place] not able with [arms.name]"))
+		else if(R_arm.allow_passengers == FALSE)
+			to_chat(user,SPAN_NOTICE("[choosed_place] not able with [R_arm.name]"))
 			return 0
 	else if(!choosed_place)
 		return 0

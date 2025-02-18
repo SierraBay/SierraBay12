@@ -5,15 +5,14 @@
 	var/move_time_holder = 0
 	///Итоговый общий вес меха
 	var/total_weight = 0
-	///Итоговое ускорение меха.(Это число отнимается из current_speed, таким образом КД до следующего шага снижается.)
-	var/total_acceleration
-
 	var/strafe_status = FALSE
 
 /mob/living/exosuit/Move()
 	. = ..()
 	if(. && !istype(loc, /turf/space))
-		playsound(src.loc, legs.mech_step_sound, 40, 1)
+		playsound(src.loc, R_leg.mech_step_sound, 40, 1)
+		sleep(1)
+		playsound(src.loc, L_leg.mech_step_sound, 40, 1)
 
 /mob/living/exosuit/can_ztravel()
 	if(Process_Spacemove()) //Handle here
@@ -87,5 +86,7 @@
 /mob/living/exosuit/handle_fall_effect(turf/landing)
 	// Return here if for any reason you shouldn´t take damage
 	..()
-	if(legs)
-		legs.handle_vehicle_fall()
+	if(L_leg)
+		L_leg.handle_vehicle_fall()
+	if(R_leg)
+		R_leg.handle_vehicle_fall()

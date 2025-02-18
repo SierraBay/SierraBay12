@@ -1,11 +1,11 @@
 /mob/living/exosuit/proc/runOver(mob/living/target) //Нам нужно проверить весь турф на наличие обьектов, которые мы можем протоптать
 	var/mob/living/pilot = pick(pilots)
-	if(legs.bump_safety && pilot.a_intent != I_HURT) //Мы не хотим топтать и ноги могут не топтать?
+	if(L_leg.bump_safety && R_leg.bump_safety && pilot.a_intent != I_HURT) //Мы не хотим топтать и ноги могут не топтать?
 		return //Не топчем
 	src.visible_message(SPAN_DANGER("forcefully tramples [target] on the floor!"), blind_message = SPAN_DANGER("You hear the loud hissing of hydraulics!"))
 	target.apply_effects(5, 5) //Чтоб не вставал
 	var/damage = rand(5, 10)
-	damage = 2 * (damage * (total_weight / 1000)  + (legs.bump_type * 3)) // 30 урона в лучшем случае по груди и голове
+	damage = 2 * (damage * (total_weight / 1000)  + (L_leg.bump_type * 3) + (R_leg.bump_type * 3)) // 30 урона в лучшем случае по груди и голове
 	target.apply_damage(0.1 * damage, DAMAGE_BRUTE, BP_HEAD)
 	target.apply_damage(0.2 * damage, DAMAGE_BRUTE, BP_CHEST)
 	target.apply_damage(0.2 * damage, DAMAGE_BRUTE, BP_GROIN)
@@ -32,7 +32,7 @@
 	return
 
 /mob/living/exosuit/proc/collision_attack(mob/living/target,bump_type) //Attack colissioned things
-	if(world.time - last_collision < legs.collision_coldown)
+	if(world.time - last_collision < (L_leg.collision_coldown + R_leg.collision_coldown))
 		return
 	var/additional_modificator = 0
 	var/mob/living/pilot = pick(pilots)
@@ -41,11 +41,11 @@
 	else
 		additional_modificator = 0.5
 	last_collision = world.time
-	if(legs.bump_safety && pilot.a_intent != I_HURT) //Мы не хотим таранить и ноги могут не таранить?
+	if(L_leg.bump_safety && R_leg.bump_safety && pilot.a_intent != I_HURT) //Мы не хотим таранить и ноги могут не таранить?
 		return //Не тараним
-	src.visible_message(SPAN_DANGER("[src] rams [target] out of the way!"), blind_message = SPAN_DANGER("You hear the loud hissing of hydraulics!"))
-	var/damage = ( ( 0.00005 * total_weight * legs.bump_type * 1 MINUTE ) / legs.current_speed) * additional_modificator
-	legs.current_speed = legs.min_speed
+	src.visible_message(SPAN_DANGER("[src] сталкивает [target] со своего пути!"), blind_message = SPAN_DANGER("You hear the loud hissing of hydraulics!"))
+	var/damage = ( ( 0.00005 * total_weight * L_leg.bump_type * R_leg.bump_type * 1 MINUTE ) / current_speed) * additional_modificator
+	current_speed = L_leg.min_speed + R_leg.min_speed
 	//Да, можно сделать цикл, но А) Хуже читается Б) Вообще никак не поможет производительности
 	target.apply_damage(0.1 * damage, DAMAGE_BRUTE, BP_HEAD)
 	target.apply_damage(0.2 * damage, DAMAGE_BRUTE, BP_CHEST)

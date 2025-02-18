@@ -1,4 +1,5 @@
 /obj/screen/exosuit/menu_button
+	name = "menu button"
 	icon = 'mods/mechs_by_shegar/icons/menu_buttons.dmi'
 	//Кнопка переключаемая, а не просто нажимаемая
 	var/switchable = FALSE

@@ -5,17 +5,6 @@
 	for(var/hardpoint in hardpoints)
 		remove_system(hardpoint, force = 1)
 	hardpoints.Cut()
-
-	if(arms)
-		frame.arms = arms
-		arms.forceMove(frame)
-		arms.update_component_owner()
-		arms = null
-	if(legs)
-		frame.legs = legs
-		legs.forceMove(frame)
-		legs.update_component_owner()
-		legs = null
 	if(body)
 		frame.body = body
 		body.update_component_owner()
@@ -26,6 +15,26 @@
 		head.update_component_owner()
 		head.forceMove(frame)
 		head = null
+	if(L_leg)
+		frame.L_leg = L_leg
+		L_leg.forceMove(frame)
+		L_leg.update_component_owner()
+		L_leg = null
+	if(R_leg)
+		frame.R_leg = R_leg
+		R_leg.forceMove(frame)
+		R_leg.update_component_owner()
+		R_leg = null
+	if(L_arm)
+		frame.L_arm = L_arm
+		L_arm.forceMove(frame)
+		L_arm.update_component_owner()
+		L_arm = null
+	if(R_arm)
+		frame.R_arm = R_arm
+		R_arm.forceMove(frame)
+		R_arm.update_component_owner()
+		R_arm = null
 
 	frame.is_wired = FRAME_WIRED_ADJUSTED
 	frame.is_reinforced = FRAME_REINFORCED_WELDED

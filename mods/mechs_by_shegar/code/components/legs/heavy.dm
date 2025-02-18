@@ -1,5 +1,5 @@
 /obj/item/mech_component/propulsion/heavy
-	name = "heavy legs"
+	name = "heavy armored leg"
 	desc = "Oversized actuators struggle to move these armoured legs. "
 	exosuit_desc_string = "heavy hydraulic legs"
 	icon_state = "heavy_legs"
@@ -7,23 +7,27 @@
 	mech_step_sound = 'sound/mecha/mechstep03.ogg'
 	move_delay = 5
 	turn_delay = 5
-	power_use = 100
-	max_damage = 500
-	min_damage = 300
-	max_repair = 150
-	repair_damage = 20
+	power_use = 50
+	max_hp = 250
+	min_damage = 150
+	max_repair = 75
+	repair_damage = 10
 	bump_type = HARD_BUMP
 	bump_safety = FALSE
 	req_material = MATERIAL_PLASTEEL
 	back_modificator_damage = 4
 	front_modificator_damage = 0.5
-	max_heat = 300
-	heat_cooling = 4
-	emp_heat_generation = 100
-	heat_generation = 5
-	max_speed = 4.5
-	min_speed = 8
+	max_heat = 150
+	heat_cooling = 2
+	emp_heat_generation = 50
+	heat_generation = 2.5
+	max_speed = 2.25
+	min_speed = 4
 	acceleration = 1
 	turn_slowdown = 2
 	turn_diogonal_slowdown = 1.5
-	weight = 400
+	weight = 200
+
+/obj/item/mech_component/propulsion/heavy/right
+	name = "heavy armored mech leg"
+	side = RIGHT

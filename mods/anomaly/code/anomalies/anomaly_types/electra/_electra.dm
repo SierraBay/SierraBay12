@@ -50,7 +50,7 @@
 	var/turf/T = get_turf(src)
 	get_mobs_and_objs_in_view_fast(T, effect_range, victims, objs)
 	for(var/atom/movable/atoms in victims)
-		if(inmech_sec(atoms))
+		if(inmech(atoms))
 			continue
 		get_effect_by_anomaly(atoms)
 	for(var/atom/movable/atoms in objs)

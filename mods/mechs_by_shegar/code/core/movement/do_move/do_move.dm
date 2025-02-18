@@ -1,0 +1,32 @@
+/datum/movement_handler/mob/exosuit/DoMove(direction, mob/mover, is_external)
+	var/mob/living/exosuit/exosuit = host
+	var/moving_dir = direction
+
+	var/failed = FALSE
+	var/fail_prob = mover != host ? (mover.skill_check(SKILL_MECH, HAS_PERK) ? 0 : 25) : 0
+	if(prob(fail_prob))
+		to_chat(mover, SPAN_DANGER("You clumsily fumble with the mech joystick."))
+		failed = TRUE
+	else if(exosuit.emp_damage >= EMP_MOVE_DISRUPT && prob(30))
+		failed = TRUE
+	if(failed)
+		moving_dir = pick(GLOB.cardinal - exosuit.dir)
+
+	exosuit.get_cell()?.use(exosuit.L_leg.power_use * CELLRATE)
+
+	if(direction & (UP|DOWN))
+		var/txt_dir = direction & UP ? "upwards" : "downwards"
+		exosuit.visible_message(SPAN_NOTICE("\The [exosuit] moves [txt_dir]."))
+	if(exosuit.L_leg.can_strafe && exosuit.R_leg.can_strafe)
+		exosuit.strafe_mech(direction)
+		return MOVEMENT_HANDLED
+	if(exosuit.dir != moving_dir && !(direction & (UP|DOWN)))
+		exosuit.turn_mech(moving_dir)
+	else
+		exosuit.step_mech()
+	return MOVEMENT_HANDLED
+
+/mob/living/exosuit/proc/do_mech_step_sound(volume = 40)
+	playsound(get_turf(src), L_leg.mech_turn_sound, volume, 1)
+	sleep(1)
+	playsound(get_turf(src), R_leg.mech_turn_sound, volume, 1)

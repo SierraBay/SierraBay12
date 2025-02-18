@@ -17,14 +17,9 @@
 	var/obj/screen/movable/exosuit/hardpoint/H = hardpoint_hud_elements[target]
 	H.holding = null
 
-	hud_elements -= module_to_forget
+	hardpoint_hud_elements -= module_to_forget
 	refresh_hud()
 	queue_icon_update()
-
-	for(var/thing in pilots)
-		var/mob/pilot = thing
-		if(pilot && pilot.client)
-			pilot.client.screen -= module_to_forget
 
 /mob/living/exosuit/proc/install_system(obj/item/system, system_hardpoint, mob/user)
 	if(hardpoints_locked || hardpoints[system_hardpoint])
@@ -80,7 +75,6 @@
 	system.screen_loc = H.screen_loc
 	system.hud_layerise()
 
-	hud_elements |= system
 	refresh_hud()
 	queue_icon_update()
 
@@ -120,7 +114,6 @@
 		if(pilot && pilot.client)
 			pilot.client.screen -= system
 
-	hud_elements -= system
 	refresh_hud()
 	queue_icon_update()
 

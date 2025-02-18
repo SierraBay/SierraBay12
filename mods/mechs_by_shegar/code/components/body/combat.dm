@@ -5,7 +5,7 @@
 	exosuit_desc_string = "an armoured chassis"
 	icon_state = "combat_body"
 	power_use = 40
-	max_damage = 180
+	max_hp = 180
 	min_damage = 100
 	max_repair = 60
 	repair_damage = 30

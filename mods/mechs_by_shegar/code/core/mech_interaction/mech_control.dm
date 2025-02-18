@@ -1,3 +1,6 @@
+/mob/living/exosuit
+	var/obj/item/mech_component/manipulators/active_arm
+
 //Здесь весь код отвечающий за то как пилот управляет мехом(Кликами). Кода много, потому всё определено в отдельный файл.
 /mob/living/exosuit/ClickOn(atom/A, params, mob/user)
 	//Пилот в состоянии действовать?
@@ -32,7 +35,7 @@
 
 	//В случае если интент стоит на ХАРМ - переходим к попытке атаковать лапой
 	else if(A.Adjacent(src) && user.a_intent == I_HURT)
-		attack_with_fists(A, user)
+		attack_with_fists(A, user, active_arm)
 	return
 
 
@@ -46,31 +49,31 @@
 	if(!canClick())
 		return
 	//Теперь определимся какой конечностью мех пытается манипулировать
-	var/arms_chosen = FALSE
+	var/L_arm_chosen = FALSE
+	var/R_arm_chosen = FALSE
 	var/body_chosen = FALSE
-	if(selected_hardpoint == HARDPOINT_LEFT_HAND || selected_hardpoint == HARDPOINT_RIGHT_HAND)
-		arms_chosen = TRUE
-		body_chosen = FALSE
+	if(selected_hardpoint == HARDPOINT_LEFT_HAND)
+		L_arm_chosen = TRUE
+	else if(selected_hardpoint == HARDPOINT_RIGHT_HAND)
+		R_arm_chosen = TRUE
 	else if(selected_hardpoint == HARDPOINT_BACK || selected_hardpoint == HARDPOINT_HEAD || selected_hardpoint == HARDPOINT_LEFT_SHOULDER || selected_hardpoint == HARDPOINT_RIGHT_SHOULDER)
-		arms_chosen = FALSE
 		body_chosen = TRUE
-	//Если пилот выбрал руки и их попросту нет(Что невозможно по коду) - пишем об этом
-	if(!arms && arms_chosen)
-		to_chat(user, SPAN_WARNING("\The [src] has no manipulators!"))
-		setClickCooldown(3)
-		return FALSE
 	//Если у меха выбиты сервоприводы в руках и он пытается работать руками - пишем ему об этом
-	if((!arms.motivator || !arms.motivator.is_functional()) && arms_chosen)
-		to_chat(user, SPAN_WARNING("Your motivators are damaged! You can't use your manipulators!"))
+	if(L_arm_chosen && (!L_arm.motivator || !L_arm.motivator.is_functional()))
+		to_chat(user, SPAN_WARNING("Left arm motivator damaged and can't be used"))
+		setClickCooldown(15)
+		return FALSE
+	if(R_arm_chosen && (!R_arm.motivator || !R_arm.motivator.is_functional()))
+		to_chat(user, SPAN_WARNING("Right arm motivator damaged and can't be used"))
 		setClickCooldown(15)
 		return FALSE
 	//Любые модули которые ставятся НЕ на руки не могут быть применены, если состояние груди меха == 0
-	if((!body || body.total_damage >= body.max_damage) && body_chosen)
+	if((!body || body.current_hp <= 0) && body_chosen)
 		to_chat(user, SPAN_WARNING("Your cockpit too damaged, additional hardpoints control system damaged, you can't use this module!"))
 		setClickCooldown(15)
 		return FALSE
 	//В случае если мех обесточен - не даём действовать
-	if(!get_cell()?.checked_use(arms.power_use * CELLRATE))
+	if(!get_cell()?.checked_use(L_arm.power_use * CELLRATE))
 		to_chat(user, power == MECH_POWER_ON ? SPAN_WARNING("Error: Power levels insufficient.") :  SPAN_WARNING("\The [src] is powered off."))
 		return FALSE
 
@@ -79,25 +82,29 @@
 
 ///Мех атакует обьект/предмет лапой.
 /mob/living/exosuit/proc/attack_with_fists(atom/click_target, mob/living/pilot)
-	setClickCooldown(arms ? arms.action_delay : 7) // You've already commited to applying fist, don't turn and back out now!
-	playsound(src.loc, legs.mech_step_sound, 60, 1)
-	var/arms_local_damage = arms.melee_damage
+	setClickCooldown(active_arm ? active_arm.action_delay : 7) // You've already commited to applying fist, don't turn and back out now!
+	playsound(src.loc, L_leg.mech_step_sound, 60, 1)
+	var/arms_local_damage = active_arm.melee_damage
 	src.visible_message(SPAN_DANGER("\The [src] steps back, preparing for a strike!"), blind_message = SPAN_DANGER("You hear the loud hissing of hydraulics!"))
 	if (do_after(src, 1.2 SECONDS, get_turf(src), DO_DEFAULT | DO_USER_UNIQUE_ACT | DO_PUBLIC_PROGRESS) && src)
-		add_heat(arms.heat_generation)
+		add_heat(active_arm.heat_generation)
 		//Если расстояние между целью оказалось слишком большой (больше 1 тайла) - мы мажем
 		if (get_dist(src, click_target) > 1.5)
 			src.visible_message(SPAN_DANGER(" [src] misses with his attack!"))
-			setClickCooldown(arms ? arms.action_delay : 7)
-			playsound(src.loc, arms.punch_sound, 50, 1)
+			setClickCooldown(active_arm ? active_arm.action_delay : 7)
+			playsound(src.loc, active_arm.punch_sound, 50, 1)
 			return
 		//Проверяем обьект на момент особых взаимодействий. Если их нет - атакуем.
-		if(!click_target.mech_fist_interaction(src, pilot, arms_local_damage))
+		if(!click_target.mech_fist_interaction(src, pilot, arms_local_damage, active_arm))
 			click_target.attack_generic(src, arms_local_damage, "strikes", DAMAGE_BRUTE) //Мех именно атакует своей лапой обьект
 			var/turf/T = get_turf(click_target)
-			if(istype(T))
-				do_attack_effect(T, "smash")
-			playsound(src.loc, arms.punch_sound, 50, 1)
+			if(ismob(click_target))
+				var/mob/target = click_target
+				if(!target.lying)
+					throw_at(get_ranged_target_turf(src, get_dir(src, click_target), 1), 1, 2, src, TRUE)
+					target.Weaken(1)
+			do_attack_effect(T, "smash")
+			playsound(src.loc, active_arm.punch_sound, 50, 1)
 
 
 
@@ -106,48 +113,48 @@
 *TRUE - атаковать не нужно, мех уже как-то повзаимодействовал по особенному. К примеру, открыл шлюз.
 *FALSE - нужно нанести удар, т.к нет особого взаимодействия (Условно нельзя раскрыть шлюз)
 */
-/atom/proc/mech_fist_interaction(mob/living/exosuit/mech, mob/living/pilot, mech_fist_damage)
+/atom/proc/mech_fist_interaction(mob/living/exosuit/mech, mob/living/pilot, mech_fist_damage, obj/item/mech_component/manipulators/active_arm)
 	return
 
 //Аир лок
-/obj/machinery/door/firedoor/mech_fist_interaction(mob/living/exosuit/mech, mob/living/pilot, mech_fist_damage)
+/obj/machinery/door/firedoor/mech_fist_interaction(mob/living/exosuit/mech, mob/living/pilot, mech_fist_damage, obj/item/mech_component/manipulators/active_arm)
 	if(!blocked)
-		mech.setClickCooldown(mech.arms ? mech.arms.action_delay : 7)
+		mech.setClickCooldown(mech.active_arm ? mech.active_arm.action_delay : 7)
 		addtimer(new Callback(src, TYPE_PROC_REF(/obj/machinery/door/firedoor, toggle), TRUE), 0)
 		return TRUE
 	return FALSE
 
 //Крепкие бласты(оружейка СБ)
-/obj/machinery/door/blast/regular/mech_fist_interaction(mob/living/exosuit/mech, mob/living/pilot, mech_fist_damage)
+/obj/machinery/door/blast/regular/mech_fist_interaction(mob/living/exosuit/mech, mob/living/pilot, mech_fist_damage, obj/item/mech_component/manipulators/active_arm)
 	if(inoperable() || !is_powered())
-		mech.setClickCooldown(mech.arms ? mech.arms.action_delay : 7)
+		mech.setClickCooldown(mech.active_arm ? mech.active_arm.action_delay : 7)
 		addtimer(new Callback(src, TYPE_PROC_REF(/obj/machinery/door/blast, force_toggle), TRUE), 0)
 		return TRUE
 	//Всё равно возвращаем TRUE, чтоб мех не ударял
 	to_chat(pilot, SPAN_NOTICE("This structure too reinforced for being damaged by [src]!"))
 	return TRUE
 
-/obj/machinery/door/blast/mech_fist_interaction(mob/living/exosuit/mech, mob/living/pilot, mech_fist_damage)
+/obj/machinery/door/blast/mech_fist_interaction(mob/living/exosuit/mech, mob/living/pilot, mech_fist_damage, obj/item/mech_component/manipulators/active_arm)
 	if(inoperable() || !is_powered())
-		mech.setClickCooldown(mech.arms ? mech.arms.action_delay : 7)
+		mech.setClickCooldown(mech.active_arm ? mech.active_arm.action_delay : 7)
 		addtimer(new Callback(src, TYPE_PROC_REF(/obj/machinery/door/blast, force_toggle), TRUE), 0)
 		return TRUE
 	mech_fist_damage = mech_fist_damage * 2
 	return FALSE
 
 //Обычные бласты(в карго)
-/obj/machinery/door/blast/shutters/mech_fist_interaction(mob/living/exosuit/mech, mob/living/pilot, mech_fist_damage)
+/obj/machinery/door/blast/shutters/mech_fist_interaction(mob/living/exosuit/mech, mob/living/pilot, mech_fist_damage, obj/item/mech_component/manipulators/active_arm)
 	if(inoperable() || !is_powered())
-		mech.setClickCooldown(mech.arms ? mech.arms.action_delay : 7)
+		mech.setClickCooldown(mech.active_arm ? mech.active_arm.action_delay : 7)
 		addtimer(new Callback(src, TYPE_PROC_REF(/obj/machinery/door/blast/shutters, force_toggle), TRUE), 0)
 		return TRUE
 	mech_fist_damage = mech_fist_damage * 2
 	return FALSE
 
 //Шлюз. Откроет, если выбита/не работает.
-/obj/machinery/door/mech_fist_interaction(mob/living/exosuit/mech, mob/living/pilot, mech_fist_damage)
+/obj/machinery/door/mech_fist_interaction(mob/living/exosuit/mech, mob/living/pilot, mech_fist_damage, obj/item/mech_component/manipulators/active_arm)
 	if(inoperable() || !is_powered())
-		mech.setClickCooldown(mech.arms ? mech.arms.action_delay : 7)
+		mech.setClickCooldown(mech.active_arm ? mech.active_arm.action_delay : 7)
 		addtimer(new Callback(src, TYPE_PROC_REF(/obj/machinery/door, toggle), TRUE), 0)
 		return TRUE
 	mech_fist_damage = mech_fist_damage * 2
@@ -254,7 +261,7 @@
 	if(!isnull(selected_system))
 		ME = selected_system
 		extra_delay = ME.equipment_delay
-	setClickCooldown(arms ? arms.action_delay + extra_delay : 15 + extra_delay)
+	setClickCooldown(active_arm ? active_arm.action_delay + extra_delay : 15 + extra_delay)
 	if(system_moved)
 		temp_system.forceMove(selected_system)
 		return

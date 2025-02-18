@@ -8,7 +8,7 @@
 	icon_state = "pod_body"
 	has_hardpoints = list(HARDPOINT_BACK)
 	power_use = 5
-	max_damage = 210
+	max_hp = 210
 	max_repair = 50
 	min_damage = 110
 	repair_damage = 30
@@ -58,4 +58,3 @@
 /obj/item/mech_component/chassis/pod/prebuild()
 	. = ..()
 	m_armour = new /obj/item/robot_parts/robot_component/armour/exosuit/radproof(src)
-

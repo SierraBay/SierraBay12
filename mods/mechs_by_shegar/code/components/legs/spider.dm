@@ -1,28 +1,33 @@
 /obj/item/mech_component/propulsion/spider
-	name = "quadlegs"
+	name = "spider leg"
 	desc = "Xion Industrial's arachnid series boasts more leg per leg than the leading competitor."
 	exosuit_desc_string = "hydraulic quadlegs"
 	icon_state = "spiderlegs"
+	cant_be_differents = TRUE
 	mech_turn_sound = 'sound/mecha/mechmove03.ogg'
 	mech_step_sound = 'sound/mecha/mechstep02.ogg'
 	move_delay = 4
 	turn_delay = 1
-	power_use = 25
-	max_damage = 210
-	min_damage = 100
-	max_repair = 60
-	repair_damage = 50
+	power_use = 12.5
+	max_hp = 105
+	min_damage = 50
+	max_repair = 30
+	repair_damage = 25
 	bump_type = MEDIUM_BUMP
 	can_strafe = TRUE
 	back_modificator_damage = 1.3
 	front_modificator_damage = 1
-	max_heat = 225
-	heat_cooling = 8
-	emp_heat_generation = 125
+	max_heat = 112.5
+	heat_cooling = 4
+	emp_heat_generation = 75
 	heat_generation = 2
 	max_speed = 4
 	min_speed = 6
 	acceleration = 0.5
 	turn_slowdown = 0.75
 	turn_diogonal_slowdown = 0.5
-	weight = 300
+	weight = 150
+
+/obj/item/mech_component/propulsion/spider/right
+	name = "spider leg"
+	side = RIGHT

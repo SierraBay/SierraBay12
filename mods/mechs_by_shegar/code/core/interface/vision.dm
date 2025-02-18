@@ -1,4 +1,6 @@
 /mob/living/exosuit
+	///Требуется ли меху обработка интерфейса? TRUE тогда когда есть хоть 1 пилот внутри
+	var/process_mech_vision = FALSE
 	///Сенсоры ослеплены из-за потери камеры?
 	var/have_no_sensors_effect = FALSE
 	///Слепота сенсоров нуждается в обновлении?
@@ -20,27 +22,21 @@
 
 /obj/item/mech_component/sensors/proc/get_sight(powered)
 	var/flags = 0
-	if(total_damage >= 0.8 * max_damage || !powered)
-		flags |= BLIND
-	else if(active_sensors && powered)
+	if(active_sensors && powered)
 		flags |= vision_flags
 
 	return flags
 
 /obj/item/mech_component/sensors/proc/get_invisible(powered)
 	var/invisible = 0
-	if((total_damage <= 0.8 * max_damage) && active_sensors && powered)
+	if((total_damage <= 0.8 *max_hp) && active_sensors && powered)
 		invisible = see_invisible
 	return invisible
 
 /mob/living/exosuit/handle_vision(powered)
-	var/was_blind = sight & BLIND
 	if(head)
 		sight = head.get_sight(powered)
 		see_invisible = head.get_invisible(powered)
-	if(sight & BLIND && !was_blind)
-		for(var/mob/pilot in pilots)
-			to_chat(pilot, SPAN_WARNING("The sensors are not operational and you cannot see a thing!"))
 	if(need_update_sensor_effects)
 		check_sensors_blind()
 	if(have_emp_effect)

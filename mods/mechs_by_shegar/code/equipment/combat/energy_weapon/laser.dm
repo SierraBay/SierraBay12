@@ -6,7 +6,6 @@
 	heat_generation = 50
 
 /obj/item/gun/energy/lasercannon/mounted/mech
-	name = "\improper CH-PS \"Immolator\" laser"
 	use_external_power = TRUE
 	has_safety = FALSE
 	self_recharge = TRUE

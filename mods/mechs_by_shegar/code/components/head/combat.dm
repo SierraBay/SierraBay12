@@ -7,7 +7,7 @@
 	see_invisible = SEE_INVISIBLE_NOLIGHTING
 	prebuilt_software = list(/obj/item/circuitboard/exosystem/weapons)
 	power_use = 200
-	max_damage = 180
+	max_hp = 180
 	min_damage = 100
 	max_repair = 60
 	repair_damage = 20

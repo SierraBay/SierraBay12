@@ -124,8 +124,6 @@
 		if(!icon_state)
 			icon = holding.icon
 			icon_state = holding.icon_state
-		SetName(holding.name)
-		desc = "[holding.desc] This one is suitable for installation on an exosuit."
 
 
 /obj/item/mech_equipment/mounted_system/Destroy()

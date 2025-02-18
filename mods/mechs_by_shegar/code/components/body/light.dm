@@ -10,7 +10,7 @@
 	power_use = 5
 	pilot_coverage = 100
 	climb_time = 15
-	max_damage = 80
+	max_hp = 80
 	min_damage = 50
 	max_repair = 40
 	repair_damage = 20

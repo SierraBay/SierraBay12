@@ -5,6 +5,7 @@
 //КНОПКИ
 #include "interface\buttons\_core.dm"
 #include "interface\buttons\_toggle.dm"
+#include "interface\buttons\downside_menu.dm"
 #include "interface\buttons\eject.dm"
 #include "interface\buttons\hardpoint.dm"
 #include "interface\buttons\hardpoints_menu.dm"
@@ -18,9 +19,9 @@
 
 //Инициализция интерфейса
 #include "interface\interface_initialization\_interface.dm"
-#include "interface\interface_initialization\big_buttons.dm"
+#include "interface\interface_initialization\downside_menu.dm"
 #include "interface\interface_initialization\hardpoints.dm"
-#include "interface\interface_initialization\mehu_background.dm"
+#include "interface\interface_initialization\main_menu.dm"
 #include "interface\interface_initialization\placing_parts.dm"
 #include "interface\interface_initialization\status_displays.dm"
 

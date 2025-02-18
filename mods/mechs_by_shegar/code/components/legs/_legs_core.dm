@@ -1,9 +1,12 @@
 /obj/item/mech_component/propulsion
-	name = "legs"
+	name = "powerloader leg"
 	pixel_y = 12
 	icon_state = "loader_legs"
+	var/side = LEFT
 	var/move_delay = 5
 	var/turn_delay = 5
+	//Некоторые ноги выглядят ужасно в раздельном состоянии. Влияет на установку и спавн.
+	var/cant_be_differents = FALSE
 	var/obj/item/robot_parts/robot_component/actuator/motivator
 	power_use = 50
 	var/max_fall_damage = 90
@@ -49,6 +52,18 @@
 	var/lost_speed_colldown = 1 SECONDS
 
 	///////////////SPEED///////////////
+
+/obj/item/mech_component/propulsion/Initialize()
+	. = ..()
+	setup_side()
+
+/obj/item/mech_component/propulsion/proc/setup_side()
+	if(side == LEFT)
+		icon_state = "[initial(icon_state)]_left"
+		name = "left [initial(name)]"
+	else if(side == RIGHT)
+		icon_state = "[initial(icon_state)]_right"
+		name = "right [initial(name)]"
 
 /obj/item/mech_component/propulsion/Destroy()
 	QDEL_NULL(motivator)

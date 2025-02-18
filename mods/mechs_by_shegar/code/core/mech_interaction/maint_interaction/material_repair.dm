@@ -66,7 +66,7 @@
 				return
 		var/repair_ammount = 50 +  ((user.get_skill_value(SKILL_DEVICES) +  user.get_skill_value(SKILL_CONSTRUCTION)) * 7)
 		repair_part.repair_brute_damage(repair_ammount)
-		repair_part.max_damage = repair_part.max_damage - repair_part.repair_damage
+		repair_part.max_hp = repair_part.max_hp - repair_part.repair_damage
 		repair_part.unrepairable_damage += repair_part.repair_damage
-		if(repair_part.min_damage > repair_part.max_damage)
-			repair_part.max_damage = repair_part.min_damage
+		if(repair_part.min_damage > repair_part.max_hp)
+			repair_part.max_hp = repair_part.min_damage

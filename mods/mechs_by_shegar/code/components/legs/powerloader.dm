@@ -1,14 +1,14 @@
 /obj/item/mech_component/propulsion/powerloader
-	name = "exosuit legs"
+	name = "exosuit leg"
 	desc = "Wide and stable but not particularly fast."
 	exosuit_desc_string = "reinforced hydraulic legs"
 	mech_step_sound = 'sound/mecha/mechstep03.ogg'
 	move_delay = 4
 	turn_delay = 4
-	power_use = 10
-	max_damage = 100
-	min_damage = 50
-	max_repair = 30
+	power_use = 5
+	max_hp = 50
+	min_damage = 25
+	max_repair = 15
 	repair_damage = 10
 	bump_type = MEDIUM_BUMP
 	back_modificator_damage = 1.3
@@ -22,4 +22,8 @@
 	acceleration = 0.75
 	turn_slowdown = 1.25
 	turn_diogonal_slowdown = 1.75
-	weight = 150
+	weight = 75
+
+/obj/item/mech_component/propulsion/powerloader/right
+	name = "exosuit leg"
+	side = RIGHT

@@ -26,26 +26,27 @@
 
 /obj/item/mech_equipment/ballistic_shield/afterattack(atom/target, mob/living/user, inrange, params)
 	. = ..()
-	if (.)
-		if (user.a_intent == I_HURT )
-			if (last_push + 1.6 SECONDS < world.time)
-				owner.visible_message(SPAN_WARNING("\The [owner] retracts \the [src], preparing to push with it!"), blind_message = SPAN_WARNING("You hear the whine of hydraulics and feel a rush of air!"))
-				owner.setClickCooldown(0.7 SECONDS)
-				last_push = world.time
-				if (do_after(owner, 0.5 SECONDS, get_turf(owner), DO_DEFAULT | DO_USER_UNIQUE_ACT | DO_PUBLIC_PROGRESS) && owner)
-					owner.visible_message(SPAN_WARNING("\The [owner] slams the area in front \the [src]!"), blind_message = SPAN_WARNING("You hear a loud hiss and feel a strong gust of wind!"))
-					playsound(src ,'sound/effects/bang.ogg',35,1)
-					var/list/turfs = list()
-					var/front = get_step(get_turf(owner), owner.dir)
-					turfs += front
-					turfs += get_step(front, turn(owner.dir, -90))
-					turfs += get_step(front, turn(owner.dir,  90))
-					for(var/turf/T in turfs)
-						for(var/mob/living/M in T)
-							if (!M.Adjacent(owner))
-								continue
-							M.attack_generic(owner, (owner.arms ? owner.arms.melee_damage * 0.2 : 0), "slammed")
-							M.throw_at(get_edge_target_turf(owner ,owner.dir),5, 2)
+	if (!.)
+		return
+	if (user.a_intent == I_HURT )
+		if (last_push + 1.6 SECONDS < world.time)
+			owner.visible_message(SPAN_WARNING("\The [owner] retracts \the [src], preparing to push with it!"), blind_message = SPAN_WARNING("You hear the whine of hydraulics and feel a rush of air!"))
+			owner.setClickCooldown(0.7 SECONDS)
+			last_push = world.time
+			if (do_after(owner, 0.5 SECONDS, get_turf(owner), DO_DEFAULT | DO_USER_UNIQUE_ACT | DO_PUBLIC_PROGRESS) && owner)
+				owner.visible_message(SPAN_WARNING("\The [owner] slams the area in front \the [src]!"), blind_message = SPAN_WARNING("You hear a loud hiss and feel a strong gust of wind!"))
+				playsound(src ,'sound/effects/bang.ogg',35,1)
+				var/list/turfs = list()
+				var/front = get_step(get_turf(owner), owner.dir)
+				turfs += front
+				turfs += get_step(front, turn(owner.dir, -90))
+				turfs += get_step(front, turn(owner.dir,  90))
+				for(var/turf/T in turfs)
+					for(var/mob/living/M in T)
+						if (!M.Adjacent(owner))
+							continue
+						M.attack_generic(owner, (owner.active_arm.melee_damage * 0.2), "slammed")
+						M.throw_at(get_edge_target_turf(owner ,owner.dir),5, 2)
 						do_attack_effect(T, "smash")
 
 /obj/item/mech_equipment/ballistic_shield/attack_self(mob/user)

@@ -42,8 +42,10 @@
 	var/list/pilot_overlays
 
 	// Visible external components. Not strictly accurately named for non-humanoid machines (submarines) but w/e
-	var/obj/item/mech_component/manipulators/arms
-	var/obj/item/mech_component/propulsion/legs
+	var/obj/item/mech_component/manipulators/L_arm
+	var/obj/item/mech_component/manipulators/R_arm
+	var/obj/item/mech_component/propulsion/L_leg
+	var/obj/item/mech_component/propulsion/R_leg
 	var/obj/item/mech_component/sensors/head
 	var/obj/item/mech_component/chassis/body
 
@@ -71,14 +73,9 @@
 	var/list/hud_elements = list()
 	var/list/hardpoint_hud_elements = list()
 	var/obj/screen/movable/exosuit/mech_integrity/hud_health
-	var/obj/screen/exosuit/toggle/hatch_open/hud_open
 	var/obj/screen/movable/exosuit/power/hud_power
-	var/obj/screen/exosuit/heat/hud_heat
 	var/obj/screen/exosuit/menu_button/power/hud_power_control
-	var/obj/screen/exosuit/toggle/camera/hud_camera
-
-	//POWER
-	var/power = MECH_POWER_OFF
+	var/obj/screen/exosuit/menu_button/camera/hud_camera
 
 	// Sounds for mech_movement.dm and mech_interaction.dm are stored on legs.dm and arms.dm, respectively
 	var/obj/item/device/gps/mech_gps/GPS
@@ -96,12 +93,6 @@
 	///Мех никогда не должен свапаться
 	mob_never_swap = TRUE
 
-	///Последнее время когда использовали кейбинд
-	var/last_keybind_use = 0
-	///Мех что-то применяет и использует (К примеру)
-	var/currently_use_something = FALSE
-	///Требуется обработка кейбинда?
-	var/process_keybind = FALSE
 
 /mob/living/exosuit/MayZoom()
 	if(head?.vision_flags)
@@ -131,7 +122,7 @@
 	else
 		to_chat(user, "It has no visible hardpoints.")
 
-	for(var/obj/item/mech_component/thing in list(arms, legs, head, body))
+	for(var/obj/item/mech_component/thing in list(head, body,L_arm, R_arm, L_leg, R_leg ))
 		if(!thing)
 			continue
 

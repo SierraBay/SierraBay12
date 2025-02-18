@@ -5,7 +5,6 @@
 	holding_type = /obj/item/gun/projectile/automatic/mounted/smg
 
 /obj/item/gun/projectile/automatic/mounted/smg
-	name = "mech scattergun"
 	icon = 'icons/obj/guns/saw.dmi'
 	icon_state = "l6closed50"
 	item_state = "l6closedmag"

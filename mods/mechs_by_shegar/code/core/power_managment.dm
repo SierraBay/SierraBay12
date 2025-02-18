@@ -1,20 +1,26 @@
+/mob/living/exosuit
+	var/power = MECH_POWER_OFF
+
 /mob/living/exosuit/proc/toggle_power(mob/user)
-	if(power == MECH_POWER_TRANSITION)
-		to_chat(user, SPAN_NOTICE("Power transition in progress. Please wait."))
+	if(!body.cell.check_charge(50) && power == MECH_POWER_OFF)
+		to_chat(user, SPAN_WARNING("Error: Not enough power for power up."))
+		return
+	if(overheat  && power == MECH_POWER_OFF)
+		to_chat(user, SPAN_WARNING("Error: overheat detected, safe protocol active."))
+		return
 	else if(power == MECH_POWER_ON) //Turning it off is instant
 		playsound(src, 'sound/mecha/mech-shutdown.ogg', 100, 0)
-		power = MECH_POWER_OFF
+		turn_off_mech()
 	else if(get_cell(TRUE))
 		//Start power up sequence
 		power = MECH_POWER_TRANSITION
 		playsound(src, 'sound/mecha/powerup.ogg', 50, 0)
 		if(user.do_skilled(1.5 SECONDS, SKILL_MECH, src, 0.5, DO_DEFAULT | DO_USER_UNIQUE_ACT) && power == MECH_POWER_TRANSITION)
 			playsound(src, 'sound/mecha/nominal.ogg', 50, 0)
-			power = MECH_POWER_ON
+			turn_on_mech()
 		else
 			to_chat(user, SPAN_WARNING("You abort the powerup sequence."))
-			power = MECH_POWER_OFF
-		hud_power_control?.update()
+			turn_off_mech()
 	else
 		to_chat(user, SPAN_WARNING("Error: No power cell was detected."))
 
@@ -40,3 +46,42 @@
 		total_draw += body.power_use
 
 	return total_draw
+
+/mob/living/exosuit/proc/fast_toggle_power(mob/user)
+	//Данная функция - "Быстрый старт", тратящий энергию батареи и поднимающий температуру меха.
+	if(power != MECH_POWER_OFF)
+		return
+	if(!body.have_fast_power_up)
+		to_chat(user, SPAN_WARNING("Error: this body dont have fast power up subsystem."))
+		return
+	if(!body.cell.check_charge(50))
+		to_chat(user, SPAN_WARNING("Error: Not enough power for fast power up."))
+		return
+	if(get_cell(TRUE))
+		playsound(src, 'mods/mechs_by_shegar/sounds/mecha_fast_power_up.ogg', 70, 0)
+		turn_on_mech()
+		add_heat(100)
+		var/obj/item/cell/cell = src.get_cell()
+		cell.use(100)
+		body.take_burn_damage(rand(5,15))
+		update_icon()
+	else
+		to_chat(user, SPAN_WARNING("Error: No power cell was detected."))
+
+/mob/living/exosuit/proc/fast_toggle_power_garanted(mob/user)
+	if(get_cell(TRUE))
+		turn_on_mech()
+	else
+		to_chat(user, SPAN_WARNING("Error: No power cell was detected, can't autoboot."))
+
+/mob/living/exosuit/proc/turn_on_mech()
+	power = MECH_POWER_ON
+	update_big_buttons()
+	update_icon()
+	need_update_sensor_effects = TRUE
+
+/mob/living/exosuit/proc/turn_off_mech()
+	power = MECH_POWER_OFF
+	update_big_buttons()
+	update_icon()
+	need_update_sensor_effects = TRUE

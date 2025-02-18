@@ -28,3 +28,5 @@
 /mob/living/exosuit/proc/update_big_buttons()
 	for(var/obj/screen/exosuit/menu_button/picked_menu_button in menu_hud_elements)
 		picked_menu_button.update()
+	for(var/obj/screen/exosuit/menu_button/picked_menu_button in downside_menu_elements)
+		picked_menu_button.update()
