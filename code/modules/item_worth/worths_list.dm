@@ -558,7 +558,6 @@ var/global/list/worths = list(
 					/obj/item/bodybag/rescue = 200,
 					/obj/item/bodybag = 20,
 					/obj/item/glass_jar = 10,
-					/obj/item/target = 15,
 					/obj/item/inflatable = 30,
 					/obj/item/roller_bed = 80,
 					/obj/item/rig_module/grenade_launcher = 1500,
