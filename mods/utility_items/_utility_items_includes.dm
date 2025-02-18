@@ -25,6 +25,7 @@
 #include "code/tag_recipe.dm"
 #include "code/dodge_animation.dm"
 #include "code/advanced_landing.dm"
+#include "code/languages.dm"
 #include "code/chemistry.dm"
 #include "code/jobs.dm"
 #include "code/ma21.dm"
@@ -39,4 +40,6 @@
 #include "code/changed_sprite.dm"
 #include "code/rndloadout.dm"
 #include "code/dls_loadout.dm"
+#include "code/xeno_voids_and_rigs.dm"
+
 #endif
