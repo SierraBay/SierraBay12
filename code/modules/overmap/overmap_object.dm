@@ -48,6 +48,53 @@
 		invisibility = INVISIBILITY_OVERMAP // Effects that require identification have their images cast to the client via sensors.
 
 	update_icon()
+<<<<<<< ours
+=======
+	var/new_x = x + deltas[1]
+	var/new_y = y + deltas[2]
+	var/turf/newloc = locate(new_x, new_y, z)
+	if(newloc && loc != newloc)
+		Move(newloc)
+
+		if(istype(newloc, /turf/unsimulated/map/edge))
+			if (delete_on_edge)
+				qdel(src)
+			else if (wraparound)
+				handle_wraparound(new_x, new_y)
+			else
+				// we're not being deleted, and we're not wrapping around, so just stop where we are
+				speed[1] = 0
+				speed[2] = 0
+				for(var/i = 1 to 2)
+					if(deltas[i] != 0)
+						position[i] -= (deltas[i] > 0) ? -1 : 1
+						position[i] += deltas[i]
+						position[i] = clamp(position[i], -1, 1)
+
+/obj/overmap/proc/handle_wraparound(nx, ny)
+	var/low_edge = 2
+	var/high_edge = GLOB.using_map.overmap_size - 1
+
+	if((dir & WEST) && (nx == 1))
+		nx = high_edge
+	else if((dir & EAST) && (nx == GLOB.using_map.overmap_size))
+		nx = low_edge
+
+	if((dir & SOUTH) && (ny == 1))
+		ny = high_edge
+	else if((dir & NORTH) && (ny == GLOB.using_map.overmap_size))
+		ny = low_edge
+
+	var/turf/T = locate(nx,ny,z)
+	if(T)
+		forceMove(T)
+
+/obj/overmap/visitable/ship/proc/halt()
+	halted = TRUE
+
+/obj/overmap/visitable/ship/proc/unhalt()
+	halted = FALSE
+>>>>>>> theirs
 
 /obj/overmap/Crossed(obj/overmap/visitable/other)
 	if(istype(other))
