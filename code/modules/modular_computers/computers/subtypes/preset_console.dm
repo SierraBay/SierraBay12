@@ -134,14 +134,13 @@
 		/datum/computer_file/program/camera_monitor,
 		/datum/computer_file/program/records,
 		/datum/computer_file/program/email_client,
-		//datum/computer_file/program/supply, [Sierra-remove]
 		/datum/computer_file/program/docking,
 		/datum/computer_file/program/deck_management
 	)
 
 /obj/machinery/computer/modular/preset/supply_public
 	default_software = list(
-//		/datum/computer_file/program/supply [sierra-remove]
+	//datum/computer_file/program/supply [sierra-remove]
 	)
 	autorun_program = /datum/computer_file/program/supply
 
