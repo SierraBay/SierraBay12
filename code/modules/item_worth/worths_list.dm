@@ -2,6 +2,12 @@
 //Mainly used so that stuff inside them can also add to their value, and other things like material,
 //stuff like that.
 
+
+/*
+ * This file has been modified by the Eris Cargo mod.
+ * For a full list of changes, see the mods/eris_cargo directory.
+ */
+
 var/global/list/worths = list(
 //ROBOT ASSEMBLIES,
 					/obj/item/device/bot_kit = 300,
@@ -22,7 +28,6 @@ var/global/list/worths = list(
 					/obj/item/gun/energy/laser/dogan = 1900,
 					/obj/item/gun/energy/laser = 3000,
 					/obj/item/gun/energy/retro = 1400,
-// [Sierra-edit begin]
 					/obj/item/gun/energy/captain = 12500,
 					/obj/item/gun/energy/lasercannon = 7100,
 					/obj/item/gun/energy/xray = 9000,
@@ -34,7 +39,6 @@ var/global/list/worths = list(
 					/obj/item/gun/energy/taser = 1500,
 					/obj/item/gun/energy/crossbow/largecrossbow = 8600,
 					/obj/item/gun/energy/crossbow = 5750,
-// [Sierra-edit end]
 					/obj/item/gun/energy = 2100,
 //LAUNCHERS,
 					/obj/item/gun/launcher/crossbow = 120,
@@ -44,11 +48,9 @@ var/global/list/worths = list(
 					/obj/item/gun/launcher/alien = 3500,
 					/obj/item/gun/launcher = 300,
 //AUTOMATICS,
-					// [Sierra-edit begin]
 					/obj/item/gun/projectile/automatic/merc_smg = 3850,
 					/obj/item/gun/projectile/automatic/assault_rifle = 5600,
 					/obj/item/gun/projectile/automatic/bullpup_rifle = 4800,
-					// [Sierra-edit end]
 					/obj/item/gun/projectile/automatic/battlerifle = 1750,
 					/obj/item/gun/projectile/automatic/l6_saw = 13400,
 					/obj/item/gun/projectile/automatic/machine_pistol/usi = 2000,
@@ -65,13 +67,13 @@ var/global/list/worths = list(
 					/obj/item/gun/projectile/sniper/garand = 1250,
 					/obj/item/gun/projectile = 1500,
 //MAGNETIC,
-// [Sierra-edit begin]
+
 					/obj/item/gun/magnetic/railgun/automatic = 90000,
 					/obj/item/gun/magnetic/railgun/tcc = 16000,
 					/obj/item/gun/magnetic/railgun/flechette = 21000,
 					/obj/item/gun/magnetic/railgun = 29000,
 					/obj/item/gun/magnetic = 8000,
-// [Sierra-edit end]
+
 //GUN,
 					/obj/item/gun = 500,
 //MATERIAL STACKS,
@@ -112,7 +114,6 @@ var/global/list/worths = list(
 					/obj/item/device/scanner/mining = 130,
 //PICK AXES,
 					/obj/item/pickaxe/hand/silver = 300,
-					// [Sierra-edit begin]
 					/obj/item/pickaxe/drill = 500,
 					/obj/item/pickaxe/jackhammer = 3490,
 					/obj/item/pickaxe/hand/gold = 1400,
@@ -120,13 +121,12 @@ var/global/list/worths = list(
 					/obj/item/pickaxe/hand/diamond = 1600,
 					/obj/item/pickaxe/diamonddrill = 2500,
 					/obj/item/pickaxe = 130,
-// [Sierra-edit end]
 					/obj/item/shovel/spade = 20,
 					/obj/item/slimepotion = 200,
 					/obj/item/slimepotion2 = 300,
 					/obj/item/slimesteroid = 150,
 					/obj/item/slimesteroid2 = 250,
-//					/obj/item/portable_destructive_analyzer = 780,
+					//obj/item/portable_destructive_analyzer = 780,
 					/obj/item/inflatable_dispenser = 300,
 					/obj/item/matter_decompiler = 400,
 //COMPUTER HARDWARE,
@@ -254,12 +254,10 @@ var/global/list/worths = list(
 					/obj/item/wrench = 30,
 					/obj/item/screwdriver = 15,
 					/obj/item/wirecutters = 25,
-					// [Sierra-edit begin]
 					/obj/item/defibrillator/compact/combat = 2800,
 					/obj/item/defibrillator/compact = 1400,
 					/obj/item/defibrillator = 700,
 					/obj/item/auto_cpr = 500,
-					// [Sierra-edit end]
 //WELDINGTOOLS,
 					/obj/item/weldingtool/largetank = 150,
 					/obj/item/weldingtool/hugetank = 300,
@@ -269,10 +267,9 @@ var/global/list/worths = list(
 					/obj/item/beartrap = 35,
 					/obj/item/nullrod = 60,
 					/obj/item/storage/backpack/weldpack = 300,
-					// [Sierra-edit begin]
 					/obj/item/stock_parts/circuitboard/aicore = 1000,
 					/obj/item/stock_parts/circuitboard = 200,
-					// [Sierra-edit end]
+
 //GRENADES,
 					/obj/item/grenade/fake = 50,
 					/obj/item/grenade/anti_photon = 200,
@@ -288,18 +285,14 @@ var/global/list/worths = list(
 					/obj/item/implanter = 80,
 //MELEE,
 					/obj/item/melee/cultblade = 500,
-					// [Sierra-edit begin]
 					/obj/item/melee/energy/axe = 5000,
 					/obj/item/melee/energy = 2500,
-					// [Sierra-edit end]
 					/obj/item/melee/whip = 200,
 					/obj/item/melee/whip/abyssal = 1025,
 					/obj/item/melee/baton/cattleprod = 30,
 					/obj/item/melee/baton = 80,
-					// [Sierra-edit begin]
 					/obj/item/melee/classic_baton = 40,
 					/obj/item/melee/telebaton = 100,
-					// [Sierra-edit end]
 					/obj/item/excalibur = 5000,
 					/obj/item/tank/jetpack = 450,
 					/obj/item/tank = 50,
@@ -357,9 +350,7 @@ var/global/list/worths = list(
 					/obj/item/clothing/glasses/welding/superior = 450,
 					/obj/item/clothing/glasses/welding = 250,
 					/obj/item/clothing/glasses/sunglasses/prescription = 230,
-					// [Sierra-edit begin]
 					/obj/item/clothing/glasses/thermal = 2200,
-					// [Sierra-edit end]
 					/obj/item/clothing/glasses/tacgoggles = 1200,
 					/obj/item/clothing/glasses = 150,
 //GLOVES,
@@ -532,7 +523,6 @@ var/global/list/worths = list(
 					/obj/item/device/eftpos = 30,
 					/obj/item/device = 90,
 //ORGANS,
-					// [Sierra-edit begin]
 					/obj/item/organ/internal/brain/adherent = -10000,
 					/obj/item/organ/internal/powered = -2000,
 					/obj/item/organ/internal/posibrain = -2000,
@@ -548,29 +538,24 @@ var/global/list/worths = list(
 					/obj/item/organ/internal/brain = -14000,
 					/obj/item/organ/internal = -900,
 					/obj/item/organ = 100,
-					// [Sierra-edit end]
 //ITEMS,
 					/obj/item/slime_extract = 2500,
 					/obj/item/robot_parts/robot_component = 250,
 					/obj/item/robot_parts = 30,
-					// [Sierra-edit begin]
 					/obj/item/modular_computer/tablet = 600,
 					/obj/item/modular_computer = 1000,
 					/obj/item/solar_assembly = 220,
 					/obj/item/ammo_magazine = -30,
 					/obj/item/ammo_casing = -5,
-					// [Sierra-edit end]
 					/obj/item/conveyor_construct = 100,
 					/obj/item/conveyor_switch_construct = 30,
 					/obj/item/supply_beacon = 5000,
 					/obj/item/frame = 60,
 					/obj/item/pipe = 100,
 					/obj/item/machine_chassis/pipe_meter = 300,
-					// [Sierra-edit begin]
 					/obj/item/blueprints = 12000, //Information is valuable,
 					/obj/item/bodybag/cryobag = 800,
 					/obj/item/bodybag/rescue = 200,
-					// [Sierra-edit end]
 					/obj/item/bodybag = 20,
 					/obj/item/glass_jar = 10,
 					/obj/item/target = 15,
