@@ -39,3 +39,5 @@
 	slowdown_per_slot[slot_r_hand] =  5
 
 	. = ..()
+
+/obj/item/storage/firstaid/combat/bunker

@@ -176,9 +176,9 @@
 "qL" = (
 /obj/decal/cleanable/dirt,
 /obj/structure/table/rack,
-/obj/item/storage/firstaid/combat,
-/obj/item/storage/firstaid/combat,
-/obj/item/storage/firstaid/combat,
+/obj/item/storage/firstaid/combat/bunker,
+/obj/item/storage/firstaid/combat/bunker,
+/obj/item/storage/firstaid/combat/bunker,
 /turf/simulated/floor/holofloor/tiled,
 /area/map_template/bunker)
 "qM" = (
