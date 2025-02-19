@@ -185,13 +185,10 @@
 	display_name = "bomber navy"
 	path = /obj/item/clothing/suit/storage/toggle/bomber_navy
 
-/datum/gear/suit/gorka_pants
-	display_name = "gorka pants"
-	path = /obj/item/clothing/suit
 
 /datum/gear/suit/gorka
 	display_name = "gorka suit"
-	path = /obj/item/clothing/suit
+	path = /obj/item/clothing/suit/storage/hooded/hoodie/gorka
 
 /datum/gear/suit/gorka/New()
 	. = ..()
