@@ -315,9 +315,9 @@
 "zx" = (
 /obj/decal/cleanable/dirt,
 /obj/structure/table/rack,
-/obj/item/storage/firstaid/combat/special,
-/obj/item/storage/firstaid/combat/special,
-/obj/item/storage/firstaid/combat/special,
+/obj/item/storage/firstaid/combat/special/bunker,
+/obj/item/storage/firstaid/combat/special/bunker,
+/obj/item/storage/firstaid/combat/special/bunker,
 /turf/simulated/floor/holofloor/tiled,
 /area/map_template/bunker)
 "zW" = (
