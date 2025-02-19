@@ -39,3 +39,6 @@
 	slowdown_per_slot[slot_r_hand] =  5
 
 	. = ..()
+//Пути ниже требуются дабы не ругался юнит тест Away sites
+/obj/item/storage/firstaid/combat/bunker
+/obj/item/storage/firstaid/combat/special/bunker
