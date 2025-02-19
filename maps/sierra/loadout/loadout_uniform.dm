@@ -138,7 +138,7 @@
 /datum/gear/uniform/plain_suit/New()
 	var/uniforms = list()
 	uniforms["White plain suit"]			= /obj/item/clothing/under/new_uniform/plain_suit
-	uniforms["Dark plain suit"]			= /obj/item/clothing/under/new_uniform/plain_suit_dark
+	uniforms["Dark plain suit"]			= /obj/item/clothing/under/new_uniform/plain_suit/dark
 	gear_tweaks += new/datum/gear_tweak/path(uniforms)
 
 /datum/gear/uniform/kitsch_dress
@@ -163,6 +163,15 @@
 /datum/gear/uniform/ems
 	display_name = "emergency medical responder's jumpsuit"
 	path = /obj/item/clothing/under/new_uniform/ems
+
+/datum/gear/uniform/gorka_pants/New()
+	. = ..()
+	var/list/options = list()
+	options["olive gorka pants"] = /obj/item/clothing/under/new_uniform/gorka_pants
+	options["tan gorka pants"] = /obj/item/clothing/under/new_uniform/gorka_pants/tan
+	options["blue gorka pants"] = /obj/item/clothing/under/new_uniform/gorka_pants/blue
+	gear_tweaks += new/datum/gear_tweak/path(options)
+
 
 /datum/gear/uniform/ems/New()
 	var/uniforms = list()

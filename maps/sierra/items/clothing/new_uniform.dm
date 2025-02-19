@@ -82,7 +82,7 @@
 	worn_state = "plain_suit"
 	gender_icons = TRUE
 
-/obj/item/clothing/under/new_uniform/plain_suit_dark
+/obj/item/clothing/under/new_uniform/plain_suit/dark
 	name = "Dark plain suit"
 	desc = "A plain suit with double-breasted shirt. Buttons not included."
 	icon_state = "plain_suit_dark"

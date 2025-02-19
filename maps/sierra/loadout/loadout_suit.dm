@@ -189,15 +189,6 @@
 	display_name = "gorka pants"
 	path = /obj/item/clothing/suit
 
-/datum/gear/suit/gorka_pants/New()
-	. = ..()
-	var/list/options = list()
-	options["olive gorka pants"] = /obj/item/clothing/under/new_uniform/gorka_pants
-	options["tan gorka pants"] = /obj/item/clothing/under/new_uniform/gorka_pants/tan
-	options["blue gorka pants"] = /obj/item/clothing/under/new_uniform/gorka_pants/blue
-	gear_tweaks += new/datum/gear_tweak/path(options)
-
-
 /datum/gear/suit/gorka
 	display_name = "gorka suit"
 	path = /obj/item/clothing/suit
