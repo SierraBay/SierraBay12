@@ -92,7 +92,7 @@
 		else
 			for(var/mob/M in GLOB.living_players)
 				var/datum/job/job = SSjobs.get_by_title(M.mind.assigned_role)
-				if(job.create_record)
+				if(job?.create_record)
 					count++
 
 		// Minimum: initial_spawn_target

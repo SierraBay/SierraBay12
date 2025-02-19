@@ -45,7 +45,7 @@
 	else if(href_list["add_language"])
 
 		// if(length(pref.alternate_languages) >= MAX_LANGUAGES) // SIERRA-EDIT - ORIGINAL
-		if(length(pref.alternate_languages) >= total_languages())
+		if(length(pref.alternate_languages) >= pref.total_languages())
 			// [SIERRA-EDIT] - EXPANDED_CULTURE_DESCRIPTOR - Перевод
 			// alert(user, "You have already selected the maximum number of languages!") // SIERRA-EDIT - ORIGINAL
 			alert(user, "Вы уже выбрали максимальное количество языков!")
@@ -120,8 +120,8 @@
 	if(length(pref.alternate_languages) > MAX_LANGUAGES)
 		pref.alternate_languages.Cut(MAX_LANGUAGES + 1) // SIERRA-EDIT - ORIGINAL
 */
-	if(length(pref.alternate_languages) > total_languages())
-		pref.alternate_languages.Cut(total_languages() + 1)
+	if(length(pref.alternate_languages) > pref.total_languages())
+		pref.alternate_languages.Cut(pref.total_languages() + 1)
 
 /datum/category_item/player_setup_item/background/languages/proc/get_language_text()
 	sanitize_alt_languages()
@@ -142,8 +142,8 @@
 	if(length(pref.alternate_languages) < MAX_LANGUAGES)
 		var/remaining_langs = MAX_LANGUAGES - length(pref.alternate_languages) // SIERRA-EDIT - ORIGINAL
 */
-	if(length(pref.alternate_languages) < total_languages())
-		var/remaining_langs = total_languages() - length(pref.alternate_languages)
+	if(length(pref.alternate_languages) < pref.total_languages())
+		var/remaining_langs = pref.total_languages() - length(pref.alternate_languages)
 		// [SIERRA-EDIT] - EXPANDED_CULTURE_DESCRIPTOR - Перевод
 		// LAZYADD(., "- <a href='?src=\ref[src];add_language=1'>add</a> ([remaining_langs] remaining)<br>") // SIERRA-EDIT - ORIGINAL
 		LAZYADD(., "- <a href='?src=\ref[src];add_language=1'>Добавить</a> ([remaining_langs] осталось)<br>")
