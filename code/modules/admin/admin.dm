@@ -1690,3 +1690,12 @@ GLOBAL_VAR_INIT(skip_allow_lists, FALSE)
 
 	SSticker.skip_requirement_checks = !SSticker.skip_requirement_checks
 	log_and_message_admins("toggled the gamemode requirement checks [SSticker.skip_requirement_checks ? "OFF" : "ON"]")
+
+
+/datum/admins/proc/EnableDevtools()
+	set category = "Debug"
+	set name = "Enable Devtools"
+	set desc = "Self-enable chromium devtools on browser panes."
+	if (!check_rights(R_DEBUG))
+		return
+	winset(usr, "", "browser-options=devtools")
