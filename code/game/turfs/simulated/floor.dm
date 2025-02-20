@@ -51,9 +51,6 @@
 /turf/simulated/floor/proc/set_flooring(singleton/flooring/newflooring)
 	make_plating(defer_icon_update = 1)
 	flooring = newflooring
-<<<<<<< ours
-	queue_icon_update(SSatoms.initialized) // only update neighbors if we're setting flooring after SSatoms has finished
-=======
 
 	var/check_z_flags
 	if(flooring)
@@ -64,7 +61,6 @@
 
 
 	update_icon(1)
->>>>>>> theirs
 	levelupdate()
 
 //This proc will set floor_type to null and the update_icon() proc will then change the icon_state of the turf

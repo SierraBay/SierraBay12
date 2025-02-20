@@ -51,15 +51,7 @@
 
 	var/height = 0
 
-<<<<<<< ours
-/singleton/flooring/Initialize()
-	. = ..()
-	flooring_whitelist = typecacheof(flooring_whitelist)
-	flooring_blacklist = typecacheof(flooring_blacklist)
-
-=======
 	var/z_flags //same z flags used for turfs, i.e ZMIMIC_DEFAULT etc
->>>>>>> theirs
 
 /singleton/flooring/proc/on_remove()
 	return
