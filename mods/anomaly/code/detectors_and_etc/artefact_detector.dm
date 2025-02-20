@@ -66,7 +66,7 @@
 
 	var/list/good_z_artefacts_list = list()
 	for(var/obj/item/artefact/choosed_artefact in SSanom.artefacts_list_in_world)
-		if(get_z(src) == get_z(choosed_artefact))
+		if(get_z(src) == get_z(choosed_artefact) && !istype(choosed_artefact.loc, /obj/item/collector))
 			LAZYADD(good_z_artefacts_list,choosed_artefact)
 
 	if(!LAZYLEN(good_z_artefacts_list)) //Артефакты то есть в мире, но не на нашем Z уровне

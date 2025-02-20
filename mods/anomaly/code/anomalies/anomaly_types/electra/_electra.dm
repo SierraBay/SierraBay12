@@ -149,8 +149,9 @@
 //Сперва мы обозначаем КУДА мы ударим, после какого-то времени производим удар
 /obj/electrostatic
 	icon = 'icons/effects/effects.dmi'
-	icon_state = "blue_electricity_constant"
+	icon_state = "electricity_constant"
 	mouse_opacity = MOUSE_OPACITY_UNCLICKABLE
+	layer = 5001
 
 /proc/tesla_act_start(target, attack_delay, obj/anomaly/electra/input_electra)
 	var/target_turf = get_turf(target)
@@ -173,8 +174,7 @@
 /mob/living/proc/electoanomaly_damage(shock_damage, obj/source, def_zone = null)
 	if(status_flags & GODMODE)	//godmode
 		return 0
-
-	apply_damage(shock_damage, DAMAGE_BURN, def_zone, used_weapon="Electrocution")
+	apply_damage(shock_damage, DAMAGE_BURN, def_zone, used_weapon="Electrocution", armor_pen = 100, silent = TRUE)
 	return shock_damage
 
 
