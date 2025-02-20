@@ -7,7 +7,7 @@
 	var/see_invisible = 0
 	var/obj/item/robot_parts/robot_component/radio/radio
 	var/obj/item/robot_parts/robot_component/camera/camera
-	var/obj/item/mech_component/control_module/software
+	var/obj/item/mech_component/control_module/computer
 	/// Takes /obj/item/circuitboard/exosystem type paths for what boards get put in for prefabs
 	var/list/prebuilt_software = list()
 	has_hardpoints = list(HARDPOINT_HEAD)
@@ -18,40 +18,55 @@
 /obj/item/mech_component/sensors/Destroy()
 	QDEL_NULL(camera)
 	QDEL_NULL(radio)
-	QDEL_NULL(software)
+	QDEL_NULL(computer)
 	. = ..()
+
+/obj/item/mech_component/sensors/MouseDrop(atom/over_atom, atom/source_loc, atom/over_loc, source_control, over_control, list/mouse_params)
+	if(!CanMouseDrop(over_atom, usr))
+		return
+	if(istype(over_atom, /obj/structure/heavy_vehicle_frame))
+		var/obj/structure/heavy_vehicle_frame/input_frame = over_atom
+		if(input_frame.head)
+			to_chat(usr, SPAN_BAD("[input_frame] already have sensors."))
+			return
+		if(input_frame.install_component(src, usr))
+			input_frame.head = src
+			input_frame.update_icon()
 
 /obj/item/mech_component/sensors/show_missing_parts(mob/user)
 	if(!radio)
 		to_chat(user, SPAN_WARNING("It is missing a radio."))
 	if(!camera)
 		to_chat(user, SPAN_WARNING("It is missing a camera."))
-	if(!software)
+	if(!computer)
 		to_chat(user, SPAN_WARNING("It is missing a software control module."))
 
 /obj/item/mech_component/sensors/prebuild()
 	radio = new(src)
 	camera = new(src)
-	software = new(src)
+	computer = new(src)
 	for(var/board in prebuilt_software)
-		software.install_software(new board)
+		computer.install_software(new board)
+	update_parts_images()
 
 /obj/item/mech_component/sensors/update_components()
 	radio = locate() in src
 	camera = locate() in src
-	software = locate() in src
+	computer = locate() in src
 	owner.need_update_sensor_effects = TRUE
+	update_parts_images()
 
 /obj/item/mech_component/sensors/ready_to_install()
 	return (radio && camera)
 
 /obj/item/mech_component/sensors/use_tool(obj/item/thing, mob/living/user, list/click_params)
 	if(istype(thing, /obj/item/mech_component/control_module))
-		if(software)
+		if(computer)
 			to_chat(user, SPAN_WARNING("\The [src] already has a control modules installed."))
 			return TRUE
 		if(install_component(thing, user))
-			software = thing
+			computer = thing
+			update_parts_images()
 			return TRUE
 
 	else if(istype(thing,/obj/item/robot_parts/robot_component/radio))
@@ -60,6 +75,7 @@
 			return TRUE
 		if(install_component(thing, user))
 			radio = thing
+			update_parts_images()
 			return TRUE
 
 	else if(istype(thing,/obj/item/robot_parts/robot_component/camera))
@@ -68,15 +84,16 @@
 			return TRUE
 		if(install_component(thing, user))
 			camera = thing
+			update_parts_images()
 			return TRUE
 	else
 		return ..()
 
 /obj/item/mech_component/sensors/return_diagnostics(mob/user)
 	..()
-	if(software)
+	if(computer)
 		to_chat(user, SPAN_NOTICE(" Installed Software"))
-		for(var/exosystem_software in software.installed_software)
+		for(var/exosystem_software in computer.installed_software)
 			to_chat(user, SPAN_NOTICE(" - <b>[capitalize(exosystem_software)]</b>"))
 	else
 		to_chat(user, SPAN_WARNING(" Control Module Missing or Non-functional."))
@@ -134,3 +151,13 @@
 	installed_software = list()
 	for(var/obj/item/circuitboard/exosystem/program in contents)
 		installed_software |= program.contains_software
+
+/obj/item/mech_component/sensors/update_parts_images()
+	var/list/parts_to_show = list()
+	if(radio)
+		parts_to_show += radio
+	if(camera)
+		parts_to_show += camera
+	if(computer)
+		parts_to_show += computer
+	parts_list_images = make_item_radial_menu_choices(parts_to_show)

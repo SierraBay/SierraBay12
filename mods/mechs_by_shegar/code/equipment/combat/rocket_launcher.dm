@@ -52,6 +52,7 @@
 
 //Перчик
 /obj/item/ammo_magazine/rockets_casing/pepper
+	name = "pepper rockets pack"
 	ammo_type = /obj/item/ammo_casing/rocket/mech/pepper
 
 /obj/item/ammo_casing/rocket/mech/pepper
@@ -66,6 +67,7 @@
 
 //Вспышка
 /obj/item/ammo_magazine/rockets_casing/flashbang
+	name = "flashbang rockets pack"
 	ammo_type = /obj/item/ammo_casing/rocket/mech/flashbang
 
 /obj/item/ammo_casing/rocket/mech/flashbang
@@ -77,3 +79,22 @@
 /obj/item/projectile/bullet/rocket/flashbang/on_hit(atom/target)
 	var/obj/item/grenade/spawned_grenade = new /obj/item/grenade/flashbang(get_turf(src))
 	spawned_grenade.detonate()
+
+
+//Зажигательная
+/obj/item/ammo_magazine/rockets_casing/fire
+	name = "incendiary rockets pack"
+	ammo_type = /obj/item/ammo_casing/rocket/mech/fire
+
+/obj/item/ammo_casing/rocket/mech/fire
+	icon = 'mods/mechs_by_shegar/icons/ammo.dmi'
+	icon_state = "rockets"
+	caliber = CALIBER_ROCKETS
+	projectile_type = /obj/item/projectile/bullet/rocket/fire
+
+/obj/item/projectile/bullet/rocket/fire/on_hit(atom/target)
+	for(var/turf/T in get_turfs_in_range(get_turf(src), 1))
+		new /obj/turf_fire/rocket_nalapm (T)
+
+/obj/turf_fire/rocket_nalapm
+	fire_power = 50

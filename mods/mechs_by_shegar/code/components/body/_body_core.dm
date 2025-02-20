@@ -90,6 +90,7 @@
 	m_armour =    locate() in src
 	air_supply =  locate() in src
 	storage_compartment = locate() in src
+	update_parts_images()
 
 /obj/item/mech_component/chassis/show_missing_parts(mob/user)
 	if(!cell)
@@ -118,6 +119,7 @@
 
 		air_supply = new /obj/machinery/portable_atmospherics/canister/air(src)
 	storage_compartment = new(src)
+	update_components()
 
 /obj/item/mech_component/chassis/proc/update_air(take_from_supply)
 
@@ -183,6 +185,7 @@
 	diagnostics = new(src)
 	cell = new /obj/item/cell/high(src)
 	cell.charge = cell.maxcharge
+	update_parts_images()
 
 /obj/item/mech_component/chassis/use_tool(obj/item/thing, mob/living/user, list/click_params)
 	if(istype(thing,/obj/item/robot_parts/robot_component/diagnosis_unit))
@@ -191,6 +194,7 @@
 			return TRUE
 		if(install_component(thing, user))
 			diagnostics = thing
+			update_parts_images()
 			return TRUE
 
 	else if(istype(thing, /obj/item/cell))
@@ -199,6 +203,7 @@
 			return TRUE
 		if(install_component(thing,user))
 			cell = thing
+			update_parts_images()
 			return TRUE
 
 	else if(istype(thing, /obj/item/robot_parts/robot_component/armour/exosuit))
@@ -207,6 +212,7 @@
 			return TRUE
 		if(install_component(thing, user))
 			m_armour = thing
+			update_parts_images()
 			return TRUE
 
 	return ..()
@@ -229,6 +235,17 @@
 	else . = ..()
 
 /obj/item/mech_component/chassis/MouseDrop(atom/over)
+	if(!ismech(loc))
+		if(!CanMouseDrop(over, usr))
+			return
+		if(istype(over, /obj/structure/heavy_vehicle_frame))
+			var/obj/structure/heavy_vehicle_frame/input_frame = over
+			if(input_frame.body)
+				to_chat(usr, SPAN_BAD("[input_frame] already have body."))
+				return
+			if(input_frame.install_component(src, usr))
+				input_frame.body = src
+				input_frame.update_icon()
 	if(!usr || !over)
 		return
 	if(!Adjacent(usr) || !over.Adjacent(usr))
@@ -251,3 +268,15 @@
 		to_chat(user, SPAN_NOTICE(" Armor Integrity: <b>[round((((m_armour.max_dam - m_armour.total_dam) / m_armour.max_dam)) * 100)]%</b>"))
 	else
 		to_chat(user, SPAN_WARNING(" Armor Missing or Non-functional."))
+
+/obj/item/mech_component/chassis/update_parts_images()
+	var/list/parts_to_show = list()
+	if(cell)
+		parts_to_show += cell
+	if(air_supply)
+		parts_to_show += air_supply
+	if(diagnostics)
+		parts_to_show += diagnostics
+	if(m_armour)
+		parts_to_show += m_armour
+	parts_list_images = make_item_radial_menu_choices(parts_to_show)

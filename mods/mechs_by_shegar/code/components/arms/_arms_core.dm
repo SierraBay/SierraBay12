@@ -19,6 +19,24 @@
 	. = ..()
 	setup_side()
 
+/obj/item/mech_component/manipulators/MouseDrop(atom/over_atom, atom/source_loc, atom/over_loc, source_control, over_control, list/mouse_params)
+	if(!CanMouseDrop(over_atom, usr))
+		return
+	if(istype(over_atom, /obj/structure/heavy_vehicle_frame))
+		var/obj/structure/heavy_vehicle_frame/input_frame = over_atom
+		if(input_frame.install_component(src, usr))
+			if(side == RIGHT)
+				if(input_frame.R_arm)
+					to_chat(usr, SPAN_BAD("[input_frame] already have left arm."))
+					return
+				input_frame.R_arm = src
+			else
+				if(input_frame.L_arm)
+					to_chat(usr, SPAN_BAD("[input_frame] already have left arm."))
+					return
+				input_frame.L_arm = src
+			input_frame.update_icon()
+
 /obj/item/mech_component/manipulators/proc/setup_side()
 	if(side == LEFT)
 		icon_state = "[initial(icon_state)]_left"
@@ -40,6 +58,7 @@
 
 /obj/item/mech_component/manipulators/prebuild()
 	motivator = new(src)
+	update_parts_images()
 
 /obj/item/mech_component/manipulators/use_tool(obj/item/thing, mob/living/user, list/click_params)
 	if(istype(thing,/obj/item/robot_parts/robot_component/actuator))
@@ -54,6 +73,7 @@
 
 /obj/item/mech_component/manipulators/update_components()
 	motivator = locate() in src
+	update_parts_images()
 
 /obj/item/mech_component/manipulators/get_damage_string()
 	if(!motivator || !motivator.is_functional())
@@ -66,3 +86,9 @@
 		to_chat(user, SPAN_NOTICE(" Actuator Integrity: <b>[round((((motivator.max_dam - motivator.total_dam) / motivator.max_dam)) * 100)]%</b>"))
 	else
 		to_chat(user, SPAN_WARNING(" Actuator Missing or Non-functional."))
+
+/obj/item/mech_component/manipulators/update_parts_images()
+	var/list/parts_to_show = list()
+	if(motivator)
+		parts_to_show += motivator
+	parts_list_images = make_item_radial_menu_choices(parts_to_show)

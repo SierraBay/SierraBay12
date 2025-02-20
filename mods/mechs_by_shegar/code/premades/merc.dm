@@ -33,6 +33,7 @@
 	QDEL_NULL(m_armour)
 	cell = new /obj/item/cell/hyper(src)
 	m_armour = new /obj/item/robot_parts/robot_component/armour/exosuit/em(src)
+	update_parts_images()
 
 /mob/living/exosuit/premade/merc/spawn_mech_equipment()
 	..()

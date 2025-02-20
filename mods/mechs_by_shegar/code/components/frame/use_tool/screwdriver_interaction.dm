@@ -1,4 +1,7 @@
 /obj/structure/heavy_vehicle_frame/proc/screwdriver_interaction(obj/item/screwdriver/tool, mob/living/user) //Сборка меха
+	if(!user.skill_check(SKILL_DEVICES, SKILL_TRAINED))
+		to_chat(user, SPAN_BAD("I dont know how work with mechs!"))
+		return
 	if (!(head && body && L_arm && R_arm && L_leg && R_leg))
 		USE_FEEDBACK_FAILURE("\The [src] is still missing parts and cannot be completed.")
 		return TRUE

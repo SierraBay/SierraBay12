@@ -1,5 +1,4 @@
 /mob/living/exosuit/proc/dismantle()
-
 	playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 	var/obj/structure/heavy_vehicle_frame/frame = new(get_turf(src))
 	for(var/hardpoint in hardpoints)

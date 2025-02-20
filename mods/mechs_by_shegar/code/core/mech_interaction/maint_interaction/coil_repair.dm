@@ -1,5 +1,8 @@
 //Ремонт BURN урона при помощи проводки
 /mob/living/exosuit/proc/coil_repair(obj/item/tool, mob/user)
+	if(!user.skill_check(SKILL_DEVICES, SKILL_TRAINED))
+		to_chat(user, SPAN_BAD("I dont know how work with mechs!"))
+		return
 	if (!getFireLoss())
 		USE_FEEDBACK_FAILURE("\The [src] has no electrical damage to repair.")
 		return TRUE

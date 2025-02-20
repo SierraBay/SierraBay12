@@ -17,6 +17,7 @@
 	return TRUE
 
 /obj/screen/exosuit/menu_button/air/Click(location, control, params)
+	press_animation()
 	var/modifiers = params2list(params)
 	if(modifiers["shift"])
 		if(owner && owner.material)

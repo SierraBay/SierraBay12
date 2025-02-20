@@ -22,7 +22,7 @@
 	queue_icon_update()
 
 /mob/living/exosuit/proc/install_system(obj/item/system, system_hardpoint, mob/user)
-	if(hardpoints_locked || hardpoints[system_hardpoint])
+	if(hardpoints[system_hardpoint])
 		return FALSE
 
 	var/obj/item/mech_equipment/ME = system
@@ -30,11 +30,11 @@
 		if(ME.restricted_hardpoints && !(system_hardpoint in ME.restricted_hardpoints))
 			return FALSE
 		if(ME.restricted_software)
-			if(!head || !head.software)
+			if(!head || !head.computer)
 				return FALSE
 			var/found
 			for(var/software in ME.restricted_software)
-				if(software in head.software.installed_software)
+				if(software in head.computer.installed_software)
 					found = TRUE
 					break
 			if(!found)
@@ -52,7 +52,7 @@
 			if(!do_after(user, delay, src, DO_PUBLIC_UNIQUE) || user.get_active_hand() != system || !user.use_sanity_check(src, system, SANITY_CHECK_DEFAULT | SANITY_CHECK_TOOL_UNEQUIP))
 				return FALSE
 
-			if(hardpoints_locked || hardpoints[system_hardpoint])
+			if(hardpoints[system_hardpoint])
 				return FALSE
 
 			if(user.unEquip(system))
@@ -82,7 +82,7 @@
 
 /mob/living/exosuit/proc/remove_system(system_hardpoint, mob/user, force)
 
-	if((hardpoints_locked && !force) || !hardpoints[system_hardpoint])
+	if(!hardpoints[system_hardpoint])
 		return 0
 
 	var/obj/item/system = hardpoints[system_hardpoint]

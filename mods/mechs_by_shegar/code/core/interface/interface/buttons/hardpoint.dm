@@ -107,9 +107,6 @@
 
 	var/modifiers = params2list(params)
 	if(modifiers["ctrl"])
-		if(owner.hardpoints_locked)
-			to_chat(usr, SPAN_WARNING("Hardpoint ejection system is locked."))
-			return
 		if(owner.remove_system(hardpoint_tag))
 			to_chat(usr, SPAN_NOTICE("You disengage and discard the system mounted to your [hardpoint_tag] hardpoint."))
 		else

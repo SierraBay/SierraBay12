@@ -20,3 +20,16 @@
 		icon_state = "[initial(icon_state)]_activated"
 	else if(owner.power == MECH_POWER_OFF)
 		icon_state = initial(icon_state)
+
+
+/obj/screen/exosuit/menu_button/power/Click(location, control, params)
+	press_animation()
+	var/mod_modifiers = params2list(params)
+	if(mod_modifiers["alt"])
+		owner.fast_toggle_power(usr)
+		owner.update_icon()
+		return
+	if(owner.overheat && owner.power != MECH_POWER_ON)
+		to_chat(usr, "Overheat detected, safe protocol active.")
+		return
+	.=..()

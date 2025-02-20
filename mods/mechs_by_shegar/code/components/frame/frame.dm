@@ -50,6 +50,7 @@
 
 /obj/structure/heavy_vehicle_frame/on_update_icon()
 	var/list/new_overlays = get_mech_images(list(head, body, L_arm, R_arm, L_leg, R_leg), layer)
+	update_parts_images()
 	if(body)
 		set_density(TRUE)
 		AddOverlays(get_mech_image(null, "[body.icon_state]_cockpit", body.icon, body.color))
@@ -72,9 +73,7 @@
 		return 0
 	if(user)
 		visible_message(SPAN_NOTICE("\The [user] begins installing \the [thing] into \the [src]."))
-		if(!user.canUnEquip(thing) || !do_after(user, 3 SECONDS * user.skill_delay_mult(SKILL_DEVICES), src, DO_PUBLIC_UNIQUE) || user.get_active_hand() != thing)
-			return
-		if(!user.unEquip(thing))
+		if(!do_after(user, 3 SECONDS * user.skill_delay_mult(SKILL_DEVICES), src, DO_PUBLIC_UNIQUE))
 			return
 	thing.forceMove(src)
 	visible_message(SPAN_NOTICE("\The [user] installs \the [thing] into \the [src]."))
@@ -88,6 +87,19 @@
 		return FALSE
 	user.visible_message(SPAN_NOTICE("\The [user] crowbars \the [component] off \the [src]."))
 	component.forceMove(get_turf(src))
-	user.put_in_hands(component)
 	playsound(user.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 	return TRUE
+
+/obj/structure/heavy_vehicle_frame/proc/paint_spray_interaction(mob/living/user, color)
+	var/obj/item/mech_component/choice = show_radial_menu(user, src, parts_list_images, require_near = TRUE, radius = 42, tooltips = TRUE, check_locs = list(src))
+	choice.set_color(color)
+	update_icon()
+	return TRUE
+
+/obj/structure/heavy_vehicle_frame/Initialize()
+	. = ..()
+	update_parts_images()
+
+/obj/structure/heavy_vehicle_frame/on_update_icon()
+	.=..()
+	update_parts_images()

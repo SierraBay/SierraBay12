@@ -48,6 +48,11 @@
 	///Владелец части
 	var/mob/living/exosuit/owner
 
+/obj/item/mech_component/attack_hand(mob/user)
+	to_chat(user, SPAN_BAD("Too heavy!"))
+	return
+
+
 /obj/item/mech_component/proc/update_component_owner()
 	if(ismech(loc))
 		owner = loc
@@ -57,6 +62,7 @@
 /obj/item/mech_component/Initialize()
 	current_hp = max_hp
 	. = ..()
+	update_parts_images()
 
 /obj/item/mech_component/proc/emp_heat(severity, emp_armor, mob/living/exosuit/mech) //Накидываем тепло учитывая армор меха
 	if(emp_armor > 0.8)
@@ -87,7 +93,7 @@
 	return
 
 /obj/item/mech_component/proc/prebuild()
-	return
+	update_components()
 
 /obj/item/mech_component/proc/install_component(obj/item/thing, mob/user)
 	if(user.unEquip(thing, src))
@@ -147,7 +153,7 @@
 					valid_contents += A
 			if(!length(valid_contents))
 				return TRUE
-			var/obj/item/removed = pick(valid_contents)
+			var/obj/item/mech_component/removed = show_radial_menu(user, src, parts_list_images, require_near = TRUE, radius = 42, tooltips = TRUE, check_locs = list(src))
 			if(!(removed in contents))
 				return TRUE
 			user.visible_message(SPAN_NOTICE("\The [user] removes \the [removed] from \the [src]."))
@@ -255,3 +261,10 @@
 /obj/item/mech_component/proc/return_diagnostics(mob/user)
 	to_chat(user, SPAN_NOTICE("[capitalize(src.name)]:"))
 	to_chat(user, SPAN_NOTICE(" - Integrity: <b> [current_hp]/[max_hp]([round(((current_hp / max_hp)) * 100)]%)</b> Unrepairable damage: <b><font color = red>[unrepairable_damage]</font></b>" ))
+
+/obj/item/mech_component
+	//Список изображений внутрянки в части меха
+	var/list/parts_list_images = list()
+
+/obj/item/mech_component/proc/update_parts_images()
+	return

@@ -135,9 +135,9 @@
 
 /obj/item/mech_component/sensors/heavy/death_heavy/prebuild()
 	. = ..()
-	QDEL_NULL(software)
-	software = new(src)
-	software.installed_software = list(MECH_SOFTWARE_WEAPONS, MECH_SOFTWARE_UTILITY)
+	QDEL_NULL(computer)
+	computer = new(src)
+	computer.installed_software = list(MECH_SOFTWARE_WEAPONS, MECH_SOFTWARE_UTILITY)
 
 /obj/item/mech_component/chassis/heavy/death_heavy/prebuild()
 	. = ..()
@@ -203,9 +203,9 @@
 
 /obj/item/mech_component/sensors/light/death_light/prebuild()
 	. = ..()
-	QDEL_NULL(software)
-	software = new(src)
-	software.installed_software = list(MECH_SOFTWARE_WEAPONS, MECH_SOFTWARE_UTILITY)
+	QDEL_NULL(computer)
+	computer = new(src)
+	computer.installed_software = list(MECH_SOFTWARE_WEAPONS, MECH_SOFTWARE_UTILITY)
 
 /obj/item/mech_component/chassis/light/death_light/prebuild()
 	. = ..()

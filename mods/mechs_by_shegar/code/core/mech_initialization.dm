@@ -22,7 +22,7 @@
 			L_leg = source_frame.L_leg
 		if(source_frame.R_leg)
 			source_frame.R_leg.forceMove(src)
-			R_leg = source_frame.L_leg
+			R_leg = source_frame.R_leg
 		if(source_frame.L_arm)
 			source_frame.L_arm.forceMove(src)
 			L_arm = source_frame.L_arm
@@ -65,13 +65,12 @@
 	overheat_heat_generation = (head.emp_heat_generation/2) + (body.emp_heat_generation/2) + (L_arm.emp_heat_generation/2) + (R_arm.emp_heat_generation/2) +  (L_leg.emp_heat_generation/2) + (R_leg.emp_heat_generation/2)
 	current_speed = L_leg.min_speed + R_leg.min_speed
 	max_speed = L_leg.max_speed + R_leg.max_speed
-	total_acceleration = L_leg.acceleration + R_leg.acceleration
 	currently_use_something = FALSE
 	next_move = world.time
 
 	total_weight = head.weight + body.weight + L_arm.weight + R_arm.weight + L_leg.weight + R_leg.weight
 	//Расчитываем разгон меха. Вес будет являться модификатором
-	total_acceleration = L_leg.acceleration + R_leg.acceleration / ( total_weight / 1000)
+	total_acceleration = ((L_leg.acceleration + R_leg.acceleration)/2)  / ( total_weight / 1000)
 
 	for(var/obj/item/mech_component/component  in parts_list)
 		component.update_component_owner()

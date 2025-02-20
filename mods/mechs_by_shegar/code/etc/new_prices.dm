@@ -126,3 +126,10 @@
 	req_tech = list(TECH_COMBAT = 7, TECH_MAGNET = 7, TECH_MATERIAL = 7)
 	materials = list(MATERIAL_STEEL = 20000, MATERIAL_PHORON = 2500, MATERIAL_PLASTIC = 10000, MATERIAL_ALUMINIUM = 10000)
 	build_path = /obj/item/ammo_magazine/rockets_casing/flashbang
+
+/datum/design/item/exosuit/weapon/fire_ammo_crate
+	name = "GRAD fire rockets"
+	id = "mech_GRAD_fire"
+	req_tech = list(TECH_COMBAT = 7, TECH_MAGNET = 7, TECH_MATERIAL = 7)
+	materials = list(MATERIAL_STEEL = 20000, MATERIAL_PHORON = 20000, MATERIAL_PLASTIC = 20000, MATERIAL_ALUMINIUM = 20000)
+	build_path = /obj/item/ammo_magazine/rockets_casing/fire

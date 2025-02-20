@@ -100,11 +100,12 @@
 			var/turf/T = get_turf(click_target)
 			if(ismob(click_target))
 				var/mob/target = click_target
-				if(!target.lying)
-					throw_at(get_ranged_target_turf(src, get_dir(src, click_target), 1), 1, 2, src, TRUE)
+				if(!target.lying && target.mob_size < mob_size)
+					target.throw_at(get_ranged_target_turf(target, get_dir(src, target), 1),1, 1, src, TRUE)
 					target.Weaken(1)
 			do_attack_effect(T, "smash")
 			playsound(src.loc, active_arm.punch_sound, 50, 1)
+			setClickCooldown(active_arm ? active_arm.action_delay : 7)
 
 
 

@@ -26,7 +26,14 @@
 		exosuit.step_mech()
 	return MOVEMENT_HANDLED
 
+/mob/living/exosuit
+	//Используется чтоб менять шаги между собой
+	var/current_leg = FALSE
+
 /mob/living/exosuit/proc/do_mech_step_sound(volume = 40)
-	playsound(get_turf(src), L_leg.mech_turn_sound, volume, 1)
-	sleep(1)
-	playsound(get_turf(src), R_leg.mech_turn_sound, volume, 1)
+	if(current_leg)
+		playsound(get_turf(src), L_leg.mech_turn_sound, volume, 1)
+		current_leg = FALSE
+	else
+		playsound(get_turf(src), R_leg.mech_turn_sound, volume, 1)
+		current_leg = TRUE

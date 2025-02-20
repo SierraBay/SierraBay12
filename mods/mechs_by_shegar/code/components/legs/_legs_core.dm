@@ -57,13 +57,31 @@
 	. = ..()
 	setup_side()
 
+/obj/item/mech_component/propulsion/MouseDrop(atom/over_atom, atom/source_loc, atom/over_loc, source_control, over_control, list/mouse_params)
+	if(!CanMouseDrop(over_atom, usr))
+		return
+	if(istype(over_atom, /obj/structure/heavy_vehicle_frame))
+		var/obj/structure/heavy_vehicle_frame/input_frame = over_atom
+		if(input_frame.install_component(src, usr))
+			if(side == RIGHT)
+				if(input_frame.R_leg)
+					to_chat(usr, SPAN_BAD("[input_frame] already have right leg."))
+					return
+				input_frame.R_leg = src
+			else
+				if(input_frame.L_leg)
+					to_chat(usr, SPAN_BAD("[input_frame] already have left leg."))
+					return
+				input_frame.L_leg = src
+			input_frame.update_icon()
+
 /obj/item/mech_component/propulsion/proc/setup_side()
-	if(side == LEFT)
-		icon_state = "[initial(icon_state)]_left"
-		name = "left [initial(name)]"
-	else if(side == RIGHT)
+	if(side == RIGHT)
 		icon_state = "[initial(icon_state)]_right"
 		name = "right [initial(name)]"
+	else if(side == LEFT)
+		icon_state = "[initial(icon_state)]_left"
+		name = "left [initial(name)]"
 
 /obj/item/mech_component/propulsion/Destroy()
 	QDEL_NULL(motivator)
@@ -78,6 +96,7 @@
 
 /obj/item/mech_component/propulsion/update_components()
 	motivator = locate() in src
+	update_parts_images()
 
 /obj/item/mech_component/propulsion/use_tool(obj/item/thing, mob/living/user, list/click_params)
 	if(istype(thing,/obj/item/robot_parts/robot_component/actuator))
@@ -86,12 +105,14 @@
 			return TRUE
 		if(install_component(thing, user))
 			motivator = thing
+			update_parts_images()
 			return TRUE
 	else
 		return ..()
 
 /obj/item/mech_component/propulsion/prebuild()
 	motivator = new(src)
+	update_parts_images()
 
 /obj/item/mech_component/propulsion/proc/can_move_on(turf/location, turf/target_loc)
 	if(!location) //Unsure on how that'd even work
@@ -120,3 +141,9 @@
 		var/mob/living/exosuit/E = loc
 		if(istype(E)) //route it through exosuit for proper handling
 			E.apply_damage(rand(0, max_fall_damage), DAMAGE_BRUTE, BP_R_LEG) //Any leg is good, will damage us correctly
+
+/obj/item/mech_component/propulsion/update_parts_images()
+	var/list/parts_to_show = list()
+	if(motivator)
+		parts_to_show += motivator
+	parts_list_images = make_item_radial_menu_choices(parts_to_show)

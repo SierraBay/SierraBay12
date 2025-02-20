@@ -4,8 +4,7 @@
 	if(target_loc && L_leg && R_leg && L_leg.can_move_on(get_turf(src), target_loc) && MayEnterTurf(target_loc))
 		if(!body.phazon)
 			Move(target_loc)
-			add_heat(L_leg.heat_generation)
-			add_heat(R_leg.heat_generation)
+			add_heat(L_leg.heat_generation + R_leg.heat_generation)
 			add_speed()
 		else
 			for(var/thing in pilots) //Для всех пилотов внутри

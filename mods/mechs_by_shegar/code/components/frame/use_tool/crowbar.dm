@@ -1,5 +1,8 @@
 /obj/structure/heavy_vehicle_frame/proc/crowbar_interaction(tool, mob/living/user)
 // Remove reinforcement
+	if(!user.skill_check(SKILL_DEVICES, SKILL_TRAINED))
+		to_chat(user, SPAN_BAD("I dont know how work with mechs!"))
+		return
 	var/input = input(user, "What you wanna do?") as null|anything in list("Отсоединить листы материала", "Отсоединить часть меха")
 	if(input == "Отсоединить листы материала")
 		if (is_reinforced == FRAME_REINFORCED)
@@ -19,20 +22,20 @@
 		return TRUE
 
 	else if(input == "Отсоединить часть меха")
-		input = input(user, "Какую часть меха вы хотите отсоединить?", "[src] - Remove Component") as null|anything in list(head, body, L_arm, R_arm, L_leg, R_leg)
-		if (!input || !user.use_sanity_check(src, tool) || !uninstall_component(input, user))
+		var/obj/item/mech_component/choised_part = show_radial_menu(user, src, parts_list_images, require_near = TRUE, radius = 42, tooltips = TRUE, check_locs = list(src))
+		if (!choised_part || !user.use_sanity_check(src, tool) || !uninstall_component(choised_part, user))
 			return TRUE
-		if (input == body)
+		if (choised_part == body)
 			body = null
-		else if (input == head)
+		else if (choised_part == head)
 			head = null
-		else if (input == L_arm)
+		else if (choised_part == L_arm)
 			L_arm = null
-		else if (input == R_arm)
-			L_arm = null
-		else if (input == L_leg)
+		else if (choised_part == R_arm)
+			R_arm = null
+		else if (choised_part == L_leg)
 			L_leg = null
-		else if (input == R_leg)
+		else if (choised_part == R_leg)
 			R_leg = null
 		update_icon()
 		return TRUE

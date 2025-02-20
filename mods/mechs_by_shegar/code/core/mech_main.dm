@@ -56,7 +56,6 @@
 	var/obj/item/mech_equipment/selected_system
 	var/selected_hardpoint
 	var/list/hardpoints = list()
-	var/hardpoints_locked
 	var/maintenance_protocols
 
 	// Material

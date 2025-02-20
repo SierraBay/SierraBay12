@@ -79,10 +79,14 @@
 		if (!maintenance_protocols)
 			USE_FEEDBACK_FAILURE("\The [src]'s maintenance protocols must be enabled to access the securing bolts.")
 			return
-		var/choose = input(usr, "Что будем делать?","Мм?") as null|anything in list("Разобрать меха", "Снять оборудование с меха")
+		var/list/options = list(
+			"Снять оборудование" = mutable_appearance('mods/mechs_by_shegar/icons/radial_menu.dmi', "unequip_equipment"),
+			"Разобрать меха" = mutable_appearance('mods/mechs_by_shegar/icons/radial_menu.dmi', "dismantle")
+			)
+		var/choose = show_radial_menu(user, user, options, require_near = TRUE, radius = 42, tooltips = TRUE, check_locs = list(src))
 		if(choose == "Разобрать меха")
 			start_dismantle_mech(tool, user)
-		else if(choose == "Снять оборудование с меха")
+		else if(choose == "Снять оборудование")
 			deinstall_equipment(tool, user)
 
 

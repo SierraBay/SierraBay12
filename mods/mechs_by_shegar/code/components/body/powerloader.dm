@@ -55,3 +55,4 @@
 /obj/item/mech_component/chassis/powerloader/prebuild()
 	. = ..()
 	m_armour = new /obj/item/robot_parts/robot_component/armour/exosuit(src)
+	update_parts_images()

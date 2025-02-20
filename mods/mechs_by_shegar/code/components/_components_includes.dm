@@ -35,7 +35,7 @@
 //Каркас
 #include "frame\_vars.dm"
 #include "frame\frame.dm"
-#include "frame\frame_interaction.dm"
+#include "frame\render.dm"
 #include "frame\use_tool.dm"
 #include "frame\use_tool\arms_install.dm"
 #include "frame\use_tool\body_install.dm"
