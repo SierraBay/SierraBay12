@@ -58,30 +58,6 @@
 /turf/space/is_solid_structure()
 	return locate(/obj/structure/lattice, src) || locate(/obj/structure/catwalk, src) //counts as solid structure if it has a lattice or catwalk
 
-<<<<<<< ours
-/turf/space/proc/remove_starlight()
-	if(starlit)
-		replace_ambient_light(SSskybox.background_color, null, config.starlight, 0)
-		starlit = FALSE
-
-/turf/space/proc/update_starlight()
-	if(!config.starlight)
-		return
-
-	//We only need starlight on turfs adjacent to dynamically lit turfs, for example space near bulkhead
-	for (var/turf/T as anything in RANGE_TURFS(src, 1))
-		if (!isloc(T.loc) || !TURF_IS_DYNAMICALLY_LIT_UNSAFE(T))
-			continue
-
-		add_ambient_light(SSskybox.background_color, config.starlight)
-		starlit = TRUE
-		return
-
-	if(TURF_IS_AMBIENT_LIT_UNSAFE(src))
-		remove_starlight()
-
-=======
->>>>>>> theirs
 /turf/space/use_tool(obj/item/C, mob/living/user, list/click_params)
 	var/datum/extension/support_lattice/sl = get_extension(src, /datum/extension/support_lattice)
 	if (sl.try_construct(C, user))
