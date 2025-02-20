@@ -328,33 +328,28 @@ var/global/floorIsLava = 0
 	return TRUE
 
 
-/// Page matter from #30904, to be replaced by that behavior later
-/proc/html_page(title, list/body, head = "")
-	if (islist(body))
-		body = body.Join()
+/proc/html_page(title, list/body, list/head)
 	return {"\
-		<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" \
-			"http://www.w3.org/TR/html4/strict.dtd">\n\
+		<!doctype html>
 		<html lang="en">\
 		<head>\
-			<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">\
-			<meta http-equiv="X-UA-Compatible" content="IE=IE8">\
+			<meta charset="UTF-8">\
 			<meta name="viewport" content="width=device-width,initial-scale=1">\
-			<link rel="stylesheet" type="text/css" href="common.css">\
-			<style type="text/css">\
-				html, body {\
-					padding: 8px;\
-					font-family: Verdana, Geneva, sans-serif;\
-				}\
-			</style>\
+			<link rel="icon" href="data:,">\
+			[head ? (islist(head) ? jointext(head, null) : head) : ""]\
 			<title>[title]</title>\
-			[head]\
-		<head>\
-		<body scroll="auto">\
-			[body]\
-		</body>\
+		</head>\
+		<body>[body ? (islist(body) ? jointext(body, null) : body) : ""]</body>\
 		</html>\
 	"}
+
+
+/proc/html_page_common(title, list/body, list/head)
+	var/list/prefix = list(
+		{"<link rel="stylesheet" href="common.css">"},
+		"<style>html, body { padding: 8px; font-family: Verdana, Geneva, sans-serif; }</style>"
+	)
+	return html_page(title, body, head ? prefix + head : prefix)
 
 
 /datum/admins/proc/show_player_info(target as text)
@@ -406,7 +401,7 @@ var/global/floorIsLava = 0
 			</div>\
 		"}
 	send_rsc(user, 'html/browser/common.css', "common.css")
-	show_browser(user, html_page("Player Info: [target]", body), "window=showplayernotes;size=480x480;")
+	show_browser(user, html_page_common("Player Info: [target]", body), "window=showplayernotes;size=480x480;")
 
 
 /datum/admins/proc/access_news_network() //MARKER
