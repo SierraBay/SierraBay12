@@ -1,6 +1,6 @@
 /datum/fabricator_recipe/food
 	fabricator_types = list(FABRICATOR_CLASS_FOOD)
-	path = /obj/item/reagent_containers/food/snacks/tofurkey
+	path = /obj/item/reagent_containers/food/snacks/sliceable/tofurkey
 
 /datum/fabricator_recipe/food/soylentviridians
 	path = /obj/item/reagent_containers/food/snacks/soylenviridians

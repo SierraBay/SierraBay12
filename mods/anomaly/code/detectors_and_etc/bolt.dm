@@ -6,6 +6,12 @@
 	w_class = ITEM_SIZE_TINY
 	matter = list(MATERIAL_STEEL = 200)
 
+/obj/item/bolt/throw_at(atom/target, range, speed, mob/thrower, spin, datum/callback/callback)
+	. = ..()
+	for(var/obj/item/storage/bolt_bag/detected_bag in thrower)
+		detected_bag.attack_self(thrower)
+		break
+
 /obj/item/bolt/Crossed(O)
 	. = ..()
 	if(ishuman(usr))
@@ -28,8 +34,11 @@
 	var/autocollect = TRUE
 
 /obj/item/storage/bolt_bag/attack_self(mob/living/user)
-	if(LAZYLEN(contents))
+	if(user.get_active_hand()) //Что-то в руке есть
+		src.use_tool(user.get_active_hand())
+	else if(LAZYLEN(contents))
 		usr.put_in_hands(pick(contents))
+		user.throw_mode_on()
 
 
 /obj/item/storage/bolt_bag/examine(mob/user, distance, is_adjacent)
@@ -74,10 +83,6 @@
 /obj/item/bolt/advanced_bolt/dropped(mob/user)
 	. = ..()
 	on_update_icon()
-
-/obj/item/bolt/advanced_bolt/add_fingerprint(mob/M, ignoregloves, obj/item/tool)
-	on_update_icon()
-	. = ..()
 
 /obj/item/bolt/advanced_bolt/on_update_icon()
 	. = ..()

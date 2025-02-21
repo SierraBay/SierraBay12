@@ -118,3 +118,106 @@
 	options["formal SFP jacket"] = /obj/item/clothing/suit/storage/toggle/agent_jacket/formal
 	options["SFP patrol cloak"] = /obj/item/clothing/suit/storage/agent_rain
 	gear_tweaks += new/datum/gear_tweak/path(options)
+
+//papa leroy and honk
+/datum/gear/suit/shortcoat
+	display_name = "shortcoat"
+	path = /obj/item/clothing/suit/new_suits/shortcoat
+
+/datum/gear/suit/freefit_shirt
+	display_name = "freefit shirt"
+	path = /obj/item/clothing/suit
+
+/datum/gear/suit/freefit_shirt/New()
+	. = ..()
+	var/list/options = list()
+	options["blue freefit shirt"] = /obj/item/clothing/suit/new_suits/freefit_shirt
+	options["black freefit shirt with red stripes"] = /obj/item/clothing/suit/new_suits/freefit_shirt/second
+	options[ "black freefit shirt with yellow stripes"] = /obj/item/clothing/suit/new_suits/freefit_shirt/third
+	gear_tweaks += new/datum/gear_tweak/path(options)
+
+/datum/gear/suit/cropped_shirt
+	display_name = "cropped shirt"
+	path = /obj/item/clothing/suit
+
+/datum/gear/suit/cropped_shirt/New()
+	. = ..()
+	var/list/options = list()
+	options["black and red cropped sweater"] = /obj/item/clothing/suit/new_suits/crop_sweater
+	options["black and yellow cropped sweater"] = /obj/item/clothing/suit/new_suits/crop_sweater/second
+	options["white cropped sweater"] = /obj/item/clothing/suit/new_suits/crop_sweater/third
+	gear_tweaks += new/datum/gear_tweak/path(options)
+
+/datum/gear/suit/denim_jacket
+	display_name = "denim jacket"
+	path = /obj/item/clothing/suit/new_suits/denim_jacket
+
+/datum/gear/suit/rugby
+	display_name = "Rugby"
+	path = /obj/item/clothing/suit
+
+/datum/gear/suit/rugby/New()
+	. = ..()
+	var/list/options = list()
+	options["red rugby"] = /obj/item/clothing/suit/new_suits/rugby
+	options["black rugby"] = /obj/item/clothing/suit/new_suits/rugby/black
+	options["blue rugby"] = /obj/item/clothing/suit/new_suits/rugby/blue
+	options["brown rugby"] = /obj/item/clothing/suit/new_suits/rugby/brown
+	gear_tweaks += new/datum/gear_tweak/path(options)
+
+/datum/gear/suit/enjijacket
+	display_name = "engineer jacket"
+	path = /obj/item/clothing/suit/new_suits/engjacket
+
+/datum/gear/suit/cargo_jacket
+	display_name = "cargo jacket"
+	path = /obj/item/clothing/suit/new_suits/cargojacket
+
+/datum/gear/suit/cool_jacket
+	display_name = "cool jacket"
+	path = /obj/item/clothing/suit/new_suits/amizov
+
+/datum/gear/suit/grimjacket
+	display_name = "grim jacket"
+	path = /obj/item/clothing/suit/new_suits/grimjacket
+
+/datum/gear/suit/bomber_navy
+	display_name = "bomber navy"
+	path = /obj/item/clothing/suit/storage/toggle/bomber_navy
+
+
+/datum/gear/suit/gorka
+	display_name = "gorka suit"
+	path = /obj/item/clothing/suit/storage/hooded/hoodie/gorka
+
+/datum/gear/suit/gorka/New()
+	. = ..()
+	var/list/options = list()
+	options["olive gorka"] = /obj/item/clothing/suit/storage/hooded/hoodie/gorka
+	options["tan gorka"] = /obj/item/clothing/suit/storage/hooded/hoodie/gorka/tan
+	options["blue gorka"] = /obj/item/clothing/suit/storage/hooded/hoodie/gorka/blue
+	gear_tweaks += new/datum/gear_tweak/path(options)
+
+/datum/gear/suit/neo_blaser
+	display_name = "neokitsch blaser"
+	path = /obj/item/clothing/suit/color/storage/neo_blaser
+	flags = GEAR_HAS_COLOR_SELECTION
+
+/datum/gear/suit/neo_blaser/New()
+	. = ..()
+	var/list/options = list()
+	options["man"] = /obj/item/clothing/suit/color/storage/neo_blaser
+	options["female"] = /obj/item/clothing/suit/color/storage/neo_blaser/female
+	gear_tweaks += new/datum/gear_tweak/path(options)
+//У одежды ниже ломается выбор цвета, описания и прочий кал. Почему? Если бы я знал
+//TODO: починить шмот ниже
+/datum/gear/suit/neo_jacket
+	display_name = "neo jacket"
+	path = /obj/item/clothing/suit/color/storage/neo_jacket
+	flags = GEAR_HAS_COLOR_SELECTION
+
+/datum/gear/suit/neo_jacket/New()
+	var/list/options = list()
+	options["man"] = /obj/item/clothing/suit/color/storage/neo_jacket
+	options["female"] = /obj/item/clothing/suit/color/storage/neo_jacket/female
+	gear_tweaks += new/datum/gear_tweak/path(options)

@@ -1,0 +1,5 @@
+author: jwc1015
+changes:
+  - {rscadd: Added a big space bee plushie! Also available in loadout!}
+  - {bugfix: Enabled the Farwa plushie's handheld sprite.}
+delete-after: true

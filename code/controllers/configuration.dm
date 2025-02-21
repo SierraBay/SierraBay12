@@ -301,9 +301,9 @@
 	/// Clients with these byond versions will be banned. "512.1234;513.2345" etc.
 	var/static/list/forbidden_versions = list()
 
-	var/static/minimum_byond_version = 514
+	var/static/minimum_byond_version = 515
 
-	var/static/minimum_byond_build = 1568
+	var/static/minimum_byond_build = 1647
 
 	var/static/login_export_addr
 

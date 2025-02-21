@@ -1,4 +1,0 @@
-author: Banditoz
-changes:
-  - {bugfix: Fix being unable to wrench down an AI core after it's been crafted.}
-delete-after: true

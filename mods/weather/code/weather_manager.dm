@@ -88,15 +88,6 @@
 		calculate_blowout_time()
 		last_blowout_time = world.time
 		return FALSE
-	for(var/obj/weather/connected_weather in connected_weather_turfs)
-		if(connected_weather.blowout_status)
-			change_stage(connected_weather.blowout_status, FALSE, FALSE)
-	sleep(delay_between_message_and_blowout)
-	report_progress("DEBUG ANOM: Начинается выброс. Стадия - начало.")
-	for(var/mob/living/carbon/human/picked_human in GLOB.living_players)
-		if(get_z(picked_human) == get_z(src))
-			if(must_message_about_blowout)
-				message_about_blowout(picked_human)
 	return TRUE
 
 /obj/weather_manager/proc/message_about_blowout_prepare(mob/living/input_mob)
@@ -108,7 +99,7 @@
 		to_chat(input_mob, SPAN_DANGER(pick(blowout_messages)))
 
 /obj/weather_manager/proc/prepare_to_blowout()
-	return
+	return TRUE
 
 /obj/weather_manager/proc/stop_blowout()
 	if(!is_processing)
