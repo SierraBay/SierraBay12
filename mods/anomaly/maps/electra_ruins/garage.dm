@@ -14,6 +14,7 @@
 /area/map_template/garage
 	name = "\improper Science garage"
 	icon_state = "A"
+	turfs_airless = TRUE
 
 /area/map_template/garage/first_home
 

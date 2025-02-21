@@ -42,6 +42,8 @@
 	if(!init())
 		return INITIALIZE_HINT_QDEL
 
+	assailant.transfer_bloody_hands(affecting, target_zone)
+
 	var/obj/item/organ/O = get_targeted_organ()
 	SetName("[initial(name)] ([O.name])")
 	GLOB.dismembered_event.register(affecting, src, PROC_REF(on_organ_loss))

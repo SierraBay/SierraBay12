@@ -77,6 +77,7 @@
 
 	#include "items/clothing/clothing.dm"
 	#include "items/clothing/exploration.dm"
+	#include "items/clothing/new_uniform.dm"
 	#include "items/clothing/override.dm"
 	#include "items/clothing/storages.dm"
 	#include "items/clothing/security.dm"
