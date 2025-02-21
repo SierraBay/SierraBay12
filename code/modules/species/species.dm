@@ -443,9 +443,12 @@ The slots that you can use are found in items_clothing.dm and are the inventory 
 	if (ishuman(target))
 		var/target_zone = check_zone(H.zone_sel.selecting)
 		var/mob/living/carbon/human/h_target = target
+		H.transfer_bloody_hands(target, target_zone)
 		if (target_zone == BP_HEAD && h_target.get_organ(target_zone))
 			H.visible_message(SPAN_NOTICE("[H] pats [h_target]'s head to make [t_him] feel better!"), SPAN_NOTICE("You pat [h_target]'s head to make [t_him] feel better!"))
 			return
+		else
+			H.transfer_bloody_body(target, BP_CHEST)
 
 	H.visible_message(SPAN_NOTICE("[H] hugs [target] to make [t_him] feel better!"), SPAN_NOTICE("You hug [target] to make [t_him] feel better!"))
 
