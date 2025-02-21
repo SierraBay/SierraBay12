@@ -236,17 +236,15 @@
 		/datum/computer_file/program/suit_sensors,
 		/datum/computer_file/program/camera_monitor
 	)
-	give_psionic_implant_on_join = FALSE
-// [SIERRA-REMOVE] - PSIONICS
-/*
+	give_psionic_implant_on_join = TRUE // [/SIERRA-EDIT] - PSIONICS
+
 /datum/job/psychiatrist/equip(mob/living/carbon/human/H)
 	if(H.mind.role_alt_title == "Counselor")
-		psi_faculties = list("[PSI_REDACTION]" = PSI_RANK_OPERANT)
+		psi_faculties = list("[PSI_REDACTION]" = PSI_RANK_OPERANT) // [/SIERRA-EDIT] - PSIONICS
 	if(H.mind.role_alt_title == "Mentalist")
-		psi_faculties = list("[PSI_CONSCIOUSNESS]" = PSI_RANK_OPERANT)
+		psi_faculties = list("[PSI_CONSCIOUSNESS]" = PSI_RANK_OPERANT) // [/SIERRA-EDIT] - PSIONICS
 	return ..()
-*/
-// [/SIERRA-REMOVE] - PSIONICS
+
 
 /datum/job/psychiatrist/get_description_blurb()
 	return "Вы - друг, наставник, священник... Или обычный психотерапевт. Помимо своих прямых обязанностей в обеспечении \
