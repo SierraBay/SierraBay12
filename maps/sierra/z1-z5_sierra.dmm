@@ -8346,10 +8346,7 @@
 	dir = 6
 	},
 /obj/structure/window/reinforced,
-/obj/structure/table/woodentable_reinforced/walnut,
-/obj/item/modular_computer/laptop/preset/custom_loadout/advanced{
-	dir = 1
-	},
+/obj/machinery/papershredder,
 /turf/simulated/floor/carpet/blue,
 /area/crew_quarters/heads/office/iaa)
 "bkU" = (
@@ -12363,6 +12360,9 @@
 /obj/item/sticky_pad/random{
 	pixel_x = -6;
 	pixel_y = 9
+	},
+/obj/item/modular_computer/laptop/preset/custom_loadout/advanced{
+	dir = 1
 	},
 /turf/simulated/floor/carpet/blue,
 /area/crew_quarters/heads/office/iaa)
@@ -86039,7 +86039,6 @@
 /obj/floor_decal/carpet/blue{
 	dir = 4
 	},
-/obj/machinery/papershredder,
 /turf/simulated/floor/carpet/blue,
 /area/crew_quarters/heads/office/iaa)
 "mFw" = (
