@@ -1,4 +1,4 @@
-/datum/species/human
+/singleton/species/human
 	extended_cultural_info = list(
 		TAG_CULTURE = list(
 			CULTURE_HUMAN_AVACOMMON,
@@ -74,7 +74,7 @@
 		)
 	)
 
-/datum/species/skrell
+/singleton/species/skrell
 	extended_cultural_info = list(
 		TAG_FACTION = list(
 			FACTION_SKRELL_MED,

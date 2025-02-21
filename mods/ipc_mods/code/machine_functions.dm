@@ -121,7 +121,7 @@
 	alpha = 160
 
 
-/datum/species/handle_vision(mob/living/carbon/human/H)
+/singleton/species/handle_vision(mob/living/carbon/human/H)
 	if(H.isSynthetic())
 		var/list/vision = H.get_accumulated_vision_handlers()
 		H.update_sight()

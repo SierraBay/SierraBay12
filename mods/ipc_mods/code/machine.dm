@@ -1,11 +1,11 @@
 #define SCREEN_CHANGE_BUTTON "Change Screen"
 #define EXONET_ACTION_NAME "Enter Exonet"
 #define SHOW_LAWS_POSIBRAN "Show laws posibran"
-/datum/species/machine
+/singleton/species/machine
 	passive_temp_gain = 0  // This should cause IPCs to stabilize at ~80 C in a 20 C environment.(5 is default without organ)
 	additional_languages = 1
 
-/datum/species/machine/skills_from_age(age)
+/singleton/species/machine/skills_from_age(age)
 	if(age)
 		. = 8
 
@@ -134,7 +134,7 @@
 
 
 
-/datum/species/machine/check_background(datum/job/job, datum/preferences/prefs)
+/singleton/species/machine/check_background(datum/job/job, datum/preferences/prefs)
 	var/singleton/cultural_info/culture/ipc/c = SSculture.get_culture(prefs.cultural_info[TAG_CULTURE])
 	. = istype(c) ? (job.type in c.valid_jobs) : ..()
 
@@ -177,7 +177,7 @@
 
 /obj/item/organ/external/head/refresh_action_button()
 	. = ..()
-	if(. && istype(species, /datum/species/machine))
+	if(. && istype(species, /singleton/species/machine))
 		action.button_icon_state = "ipc_rgb"
 		action.button_icon = 'mods/ipc_mods/icons/ipc_icons.dmi'
 		if(action.button) action.button.UpdateIcon()

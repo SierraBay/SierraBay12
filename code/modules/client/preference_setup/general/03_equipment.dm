@@ -53,7 +53,7 @@
 					pref.all_underwear[WRC.name] = WRI.name
 					break
 
-	var/datum/species/mob_species = all_species[pref.species]
+	var/singleton/species/mob_species = GLOB.species_by_name[pref.species]
 	if(!(mob_species && mob_species.appearance_flags & SPECIES_APPEARANCE_HAS_UNDERWEAR))
 		pref.all_underwear.Cut()
 

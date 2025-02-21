@@ -30,7 +30,7 @@
 		var/mob/living/new_mob
 
 		var/options = list("robot", "slime")
-		for(var/t in all_species)
+		for(var/t in GLOB.species_by_name)
 			options += t
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M

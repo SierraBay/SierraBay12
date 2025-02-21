@@ -87,8 +87,8 @@
 
 /datum/unit_test/trait/all_species_shall_have_valid_trait_levels/start_test()
 	var/list/invalid_species = list()
-	for(var/species_name in all_species)
-		var/datum/species/S = all_species[species_name]
+	for(var/species_name in GLOB.species_by_name)
+		var/singleton/species/S = GLOB.species_by_name[species_name]
 		for(var/trait_type in S.traits)
 			var/trait_level = S.traits[trait_type]
 			var/singleton/trait/T = GET_SINGLETON(trait_type)
@@ -110,8 +110,8 @@
 /datum/unit_test/trait/all_species_shall_have_valid_trait_compatibilities/start_test()
 	var/list/invalid_species = list()
 
-	for (var/species_name in all_species)
-		var/datum/species/S = all_species[species_name]
+	for (var/species_name in GLOB.species_by_name)
+		var/singleton/species/S = GLOB.species_by_name[species_name]
 		for (var/trait_type in S.traits)
 			var/singleton/trait/T = GET_SINGLETON(trait_type)
 			for (var/incompatible_trait_type in T.incompatible_traits)

@@ -1,6 +1,6 @@
 #define SETUP_RANDOM_COLOR_GETTER(X, Y, Z, W)  \
-/datum/species/var/list/random_##Y = W;\
-/datum/species/proc/get_random_##X(){\
+/singleton/species/var/list/random_##Y = W;\
+/singleton/species/proc/get_random_##X(){\
 	if(!(appearance_flags & Z) || !length(random_##Y)){\
 		return;\
 	}\
@@ -53,12 +53,12 @@ SETUP_RANDOM_COLOR_GETTER(eye_color, eye_colors, SPECIES_APPEARANCE_HAS_EYE_COLO
 	/singleton/color_generator/albino_eye))
 SETUP_RANDOM_COLOR_SETTER(eye_color, change_eye_color)
 
-/datum/species/proc/get_random_facial_hair_color()
+/singleton/species/proc/get_random_facial_hair_color()
 	return get_random_hair_color()
 
 SETUP_RANDOM_COLOR_SETTER(facial_hair_color, change_facial_hair_color)
 
-/datum/species/proc/get_random_skin_tone()
+/singleton/species/proc/get_random_skin_tone()
 	return random_skin_tone(src)
 
 /mob/living/carbon/human/proc/randomize_skin_tone()

@@ -206,7 +206,7 @@
 		if(!SSjobs.check_general_join_blockers(src, job))
 			return FALSE
 
-		var/datum/species/S = all_species[client.prefs.species]
+		var/singleton/species/S = GLOB.species_by_name[client.prefs.species]
 		if(!check_species_allowed(S))
 			return 0
 
@@ -487,9 +487,9 @@
 
 	var/mob/living/carbon/human/new_character
 
-	var/datum/species/chosen_species
+	var/singleton/species/chosen_species
 	if(client.prefs.species)
-		chosen_species = all_species[client.prefs.species]
+		chosen_species = GLOB.species_by_name[client.prefs.species]
 
 	if(!spawn_turf)
 		var/datum/job/job = SSjobs.get_by_title(mind.assigned_role)
@@ -556,7 +556,7 @@
 	// panel.close()
 	// [/SIERRA-REMOVE]
 
-/mob/new_player/proc/check_species_allowed(datum/species/S, show_alert=1)
+/mob/new_player/proc/check_species_allowed(singleton/species/S, show_alert=1)
 	if(!S.is_available_for_join() && !has_admin_rights())
 		if(show_alert)
 			to_chat(src, alert("Your current species, [client.prefs.species], is not available for play."))
@@ -568,9 +568,9 @@
 	return 1
 
 /mob/new_player/get_species()
-	var/datum/species/chosen_species
+	var/singleton/species/chosen_species
 	if(client.prefs.species)
-		chosen_species = all_species[client.prefs.species]
+		chosen_species = GLOB.species_by_name[client.prefs.species]
 
 	if(!chosen_species || !check_species_allowed(chosen_species, 0))
 		return SPECIES_HUMAN
