@@ -109,3 +109,6 @@
 
 /obj/item/artefact/gravi/react_at_failing(mob/living/user)
 	return "Защищает от падения"
+
+/obj/item/artefact/rvach_destroy_effect()
+	return

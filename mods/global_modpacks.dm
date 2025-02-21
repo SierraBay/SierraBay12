@@ -51,3 +51,4 @@
 #include "item_identification/_item_identification_includes.dm"
 #include "vehicle\_vehicle_includes.dm"
 #include "../packs/sierra-tweaks/_pack.dm"
+#include "on_floor_icon\_on_floor_icons_includes.dm"

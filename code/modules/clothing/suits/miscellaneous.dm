@@ -12,7 +12,7 @@
 	name = "blue laser tag armour"
 	desc = "Blue Pride, Galaxy Wide."
 	icon_state = "bluetag"
-	blood_overlay_type = "armor"
+	blood_overlay_type = "armorblood"
 	item_flags = null
 	body_parts_covered = UPPER_TORSO
 	allowed = list (/obj/item/gun/energy/lasertag/blue)
@@ -22,7 +22,7 @@
 	name = "red laser tag armour"
 	desc = "Reputed to go faster."
 	icon_state = "redtag"
-	blood_overlay_type = "armor"
+	blood_overlay_type = "armorblood"
 	item_flags = null
 	body_parts_covered = UPPER_TORSO
 	allowed = list (/obj/item/gun/energy/lasertag/red)
@@ -391,7 +391,7 @@
 	desc = "A black raincloak belonging to an agent of the Sol Federal Police. It is almost certainly wind and waterproof."
 	icon_state = "agent_raincloak"
 	valid_accessory_slots = list(ACCESSORY_SLOT_INSIGNIA)
-	blood_overlay_type = "coat"
+	blood_overlay_type = "coatblood"
 
 /obj/item/clothing/suit/storage/mbill
 	name = "shipping jacket"
