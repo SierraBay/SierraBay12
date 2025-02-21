@@ -54,7 +54,7 @@ Also checks if medications that stop allergies from triggering are in system. Th
 		return
 
 	if ((trait_flags & MILD_ALLERGY) && (!allergy_flag || (allergy_flag & MILD_ALLERGY)))
-		if (!chem_effects[CE_STABLE]) //People with inaprov aren't itching to start with.
+		if (!can_feel_pain() && !chem_effects[CE_STABLE]) //People with inaprov aren't itching to start with.
 			to_chat(src, SPAN_NOTICE("You feel the itching subside."))
 		trait_flags &= ~MILD_ALLERGY
 
@@ -62,14 +62,17 @@ Also checks if medications that stop allergies from triggering are in system. Th
 		to_chat(src, SPAN_NOTICE("You feel your airways open up and breathing feels easier!"))
 		trait_flags &= ~SEVERE_ALLERGY
 
+/// Integer. The `world.time` the next allergy message should be displayed to `src`. Does not affect any other allergy symptoms.
 /mob/living/var/next_allergy_time = 0
-/mob/living/proc/handle_allergy()
-	return
 
 ///Main proc through which all other allergy procs are called; it is called by carbon/Life().
 ///If adrenaline is in system, all active allergies will be stopped. Having inaprov (CE_STABLE) will prevent them from retriggering when adrenaline washes out.
+
+/mob/living/proc/handle_allergy()
+	return
+
 /mob/living/carbon/handle_allergy()
-	if (stat)
+	if (stat == DEAD)
 		return
 	if (!HAS_TRAIT(src, /singleton/trait/malus/allergy))
 		return
@@ -99,7 +102,7 @@ Also checks if medications that stop allergies from triggering are in system. Th
 	if (trait_flags & SEVERE_ALLERGY)
 		add_chemical_effect(CE_BREATHLOSS, 2)
 		add_chemical_effect(CE_PULSE, 2)
-		if (prob(50))
+		if (prob(50) && active_breathing())
 			add_chemical_effect(CE_VOICELOSS, 1)
 
 	if (!can_feel_pain() || world.time < next_allergy_time || chem_effects[CE_STABLE])

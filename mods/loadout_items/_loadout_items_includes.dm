@@ -1,0 +1,26 @@
+#ifndef MODPACK_LOADOUT_ITEMS
+#define MODPACK_LOADOUT_ITEMS
+
+#include "_loadout_items.dm"
+#include "code/accessory.dm"
+#include "code/armor.dm"
+#include "code/cloak.dm"
+#include "code/gloves.dm"
+#include "code/head.dm"
+#include "code/shoes.dm"
+#include "code/general.dm"
+#include "code/suits.dm"
+#include "code/uniforms.dm"
+#include "code/lists/accessories.dm"
+#include "code/lists/cloaks.dm"
+#include "code/lists/general.dm"
+#include "code/lists/uniforms.dm"
+#include "code/lists/suits.dm"
+#include "code/lists/xenowear.dm"
+#include "code/lists/headwear.dm"
+#include "code/loadout/loadout.dm"
+#include "code/loadout/donations.dm"
+#include "code/loadout/donator.dm"
+#include "code/loadout/preferences.dm"
+
+#endif

@@ -9,6 +9,7 @@
 	item_state = ""	//no inhands
 	slot_flags = SLOT_TIE
 	w_class = ITEM_SIZE_SMALL
+	default_action_type = /datum/action/item_action/accessory
 	var/accessory_flags = ACCESSORY_DEFAULT_FLAGS
 	var/slot = ACCESSORY_SLOT_DECOR
 	var/body_location = UPPER_TORSO //most accessories are here

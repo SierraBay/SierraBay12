@@ -259,7 +259,6 @@
 	citizens of Sestris enjoy a generally high standard of living and many can be found within the ranks of the ICCG Defense Forces. Those from Amelie, \
 	within Sestris itself are immensely proud of their Franco heratige, with many holding on to some of their cultural roots. "
 	language = LANGUAGE_HUMAN_RUSSIAN
-	secondary_langs = list(LANGUAGE_HUMAN_EURO)
 	economic_power = 1.3
 
 /singleton/cultural_info/culture/human/confederate_putkari

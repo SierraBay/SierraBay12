@@ -32,7 +32,7 @@
 	name = "armor"
 	desc = "An armored vest that protects against some damage."
 	icon_state = "armor"
-	blood_overlay_type = "armor"
+	blood_overlay_type = "armorblood"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 	cold_protection = UPPER_TORSO|LOWER_TORSO
 	heat_protection = UPPER_TORSO|LOWER_TORSO
@@ -69,7 +69,7 @@
 	desc = "An armored jacket used in special operations."
 	icon_state = "detective"
 	item_state = "detective"
-	blood_overlay_type = "coat"
+	blood_overlay_type = "coatblood"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
 	cold_protection = UPPER_TORSO|LOWER_TORSO|ARMS
 	heat_protection = UPPER_TORSO|LOWER_TORSO|ARMS
@@ -80,7 +80,7 @@
 	name = "armor"
 	desc = "An armored vest with a detective's badge on it."
 	icon_state = "detective-armor"
-	blood_overlay_type = "armor"
+	blood_overlay_type = "armorblood"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 	armor = list(
 		melee = ARMOR_MELEE_RESISTANT,
@@ -98,7 +98,7 @@
 	desc = "Someone separated our Chief Science Officer from their own head!"
 	active = 0.0
 	icon_state = "reactiveoff"
-	blood_overlay_type = "armor"
+	blood_overlay_type = "armorblood"
 	armor = null
 
 
@@ -283,7 +283,7 @@
 	name = "makeshift armor"
 	desc = "A pair of sheets held together by rods and wires, meant to cover your upper body and back."
 	icon_state = "makeshift-armor"
-	blood_overlay_type = "armor"
+	blood_overlay_type = "armorblood"
 	armor = list(
 		melee = ARMOR_MELEE_KNIVES,
 		bullet = ARMOR_BALLISTIC_SMALL,
@@ -303,7 +303,7 @@
 	icon_state = "pcarrier"
 	valid_accessory_slots = list(ACCESSORY_SLOT_INSIGNIA, ACCESSORY_SLOT_ARMOR_CHEST, ACCESSORY_SLOT_ARMOR_ARMS, ACCESSORY_SLOT_ARMOR_LEGS, ACCESSORY_SLOT_ARMOR_STORAGE, ACCESSORY_SLOT_ARMOR_MISC)
 	restricted_accessory_slots = list(ACCESSORY_SLOT_ARMOR_CHEST, ACCESSORY_SLOT_ARMOR_ARMS, ACCESSORY_SLOT_ARMOR_LEGS, ACCESSORY_SLOT_ARMOR_STORAGE)
-	blood_overlay_type = "armor"
+	blood_overlay_type = "armorblood"
 	flags_inv = 0
 
 	sprite_sheets = list(

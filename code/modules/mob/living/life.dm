@@ -193,21 +193,12 @@
 /mob/living/proc/update_sight()
 	if(stat == DEAD || eyeobj)
 		update_dead_sight()
-	if (seedarkness)
-		set_sight(0)
-		set_see_in_dark(0)
-		if(stat == DEAD || eyeobj)
-			update_dead_sight()
-		else
-			update_living_sight()
-
-		var/list/vision = get_accumulated_vision_handlers()
-		set_sight(sight | vision[1])
-		set_see_invisible(max(vision[2], see_invisible))
-
 	else
-		set_see_in_dark(8)
-		set_see_invisible(SEE_INVISIBLE_NOLIGHTING)
+		update_living_sight()
+
+	var/list/vision = get_accumulated_vision_handlers()
+	set_sight(sight | vision[1])
+	set_see_invisible(max(vision[2], see_invisible))
 
 /mob/living/proc/update_living_sight()
 	var/set_sight_flags = sight & ~(SEE_TURFS|SEE_MOBS|SEE_OBJS)

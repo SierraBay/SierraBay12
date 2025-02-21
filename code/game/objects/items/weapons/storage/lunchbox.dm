@@ -128,6 +128,17 @@
 	filled = TRUE
 
 
+/obj/item/storage/lunchbox/scg
+	name = "\improper SCG lunchbox"
+	icon_state = "lunchbox_scg"
+	item_state = "toolbox_blue"
+	desc = "A little lunchbox. This one is branded with the flag of the Solar Assembly!"
+
+
+/obj/item/storage/lunchbox/scg/filled
+	filled = TRUE
+
+
 /obj/item/storage/lunchbox/picnic
 	name = "picnic basket"
 	icon = 'icons/obj/picnic_basket.dmi'
