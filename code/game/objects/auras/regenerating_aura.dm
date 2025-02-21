@@ -110,9 +110,10 @@
 	return TRUE
 
 /obj/aura/regenerating/human/unathi
-	nutrition_damage_mult = 2
-	brute_mult = 2
-	organ_mult = 4
+	brute_mult = 0
+	fire_mult = 0
+	tox_mult = 0
+	organ_mult = 0
 	regen_message = "<span class='warning'>You feel a soothing sensation as your ORGAN mends...</span>"
 	grow_chance = 2
 	grow_threshold = 150
@@ -121,6 +122,9 @@
 
 /obj/aura/regenerating/human/unathi/can_toggle()
 	return FALSE
+
+/obj/aura/regenerating/human/unathi/can_regenerate_organs()
+	return can_toggle()
 
 // Default return; we're just logging.
 /obj/aura/regenerating/human/unathi/aura_check_weapon(obj/item/weapon, mob/attacker, click_params)
@@ -145,26 +149,15 @@
 		H.apply_damage(5, DAMAGE_TOXIN)
 		H.adjust_nutrition(3)
 		return AURA_FALSE
-	nutrition_damage_mult = 2
-	brute_mult = 2
-	organ_mult = 4
-	grow_chance = 2
-	var/obj/machinery/optable/optable = locate() in get_turf(H)
-	if (optable?.suppressing && H.sleeping)
-		nutrition_damage_mult = 1
-		brute_mult = 1
-		organ_mult = 2
-		grow_chance = 1
 
 	return ..()
 
-/obj/aura/regenerating/human/unathi/can_regenerate_organs()
-	return can_toggle()
 
 /obj/aura/regenerating/human/unathi/external_regeneration_effect(obj/item/organ/external/O, mob/living/carbon/human/H)
 	to_chat(H, SPAN_DANGER("With a shower of fresh blood, a new [O.name] forms."))
 	H.visible_message(SPAN_DANGER("With a shower of fresh blood, a length of biomass shoots from [H]'s [O.amputation_point], forming a new [O.name]!"))
 	H.adjust_nutrition(-external_nutrition_mult)
+	H.adjustHalLoss(10)
 	var/datum/reagent/blood/B = locate(/datum/reagent/blood) in H.vessel.reagent_list
 	blood_splatter(H,B,1)
 	O.set_dna(H.dna)
@@ -184,8 +177,3 @@
 /obj/aura/regenerating/human/diona/external_regeneration_effect(obj/item/organ/external/O, mob/living/carbon/human/H)
 	to_chat(H, SPAN_WARNING("Some of your nymphs split and hurry to reform your [O.name]."))
 	H.adjust_nutrition(-external_nutrition_mult)
-
-/obj/aura/regenerating/human/unathi/yeosa
-	brute_mult = 1.5
-	organ_mult = 3
-	tox_mult = 2

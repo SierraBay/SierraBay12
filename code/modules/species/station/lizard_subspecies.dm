@@ -18,10 +18,6 @@
 	their culture has diverged majorly from the Sinta, spending less time performing acts of violence and more time socializing. \
 	Their biology is heavily attuned to surviving Moghes' dangerous waters, including gills, fins, and a venomous bite."
 
-	base_auras = list(
-		/obj/aura/regenerating/human/unathi/yeosa
-		)
-
 	additional_available_cultural_info = list(
 		TAG_CULTURE = list(
 			CULTURE_UNATHI_YEOSA_ABYSS,
