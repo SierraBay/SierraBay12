@@ -1,0 +1,8 @@
+#ifndef MODPACK_MAP_MININGHOME
+#define MODPACK_MAP_MININGHOME
+
+#include "_map_mininghome.dm"
+#include "mininghome.dm"
+
+
+#endif

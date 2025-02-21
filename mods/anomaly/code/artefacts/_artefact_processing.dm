@@ -16,6 +16,8 @@
 
 /obj/item/artefact/Initialize()
 	. = ..()
+	prev_loc = get_turf(src)
+	LAZYADD(SSanom.artefacts_list_in_world , src)
 	user_long_check_cooldown = rand(3 SECONDS, 6 SECONDS)
 	user_check_cooldown = rand(2 SECONDS, 4 SECONDS)
 	additional_process_cooldown = rand(20 SECONDS, 50 SECONDS)
@@ -71,10 +73,17 @@
 	// В случае перемещения предмета между contents или подбора, обновляет своего ПОЛЬЗОВАТЕЛЯ
 	if(current_user) //Юзер уже есть,
 		if(get_turf(current_user) != get_turf(src)) //проверяем,
-			current_user = null
+			disconnect_user(user)
 	else if(!current_user)
-		current_user = user
+		connect_user(user)
 
+/obj/item/artefact/proc/disconnect_user(mob/living/user)
+	stop_process_by_ssanom()
+	current_user = null
+
+/obj/item/artefact/proc/connect_user(mob/living/user)
+	start_process_by_ssanom()
+	current_user = user
 
 /obj/item/artefact/proc/start_process_by_ssanom()
 	if(!is_processing)

@@ -28,7 +28,8 @@
 
 /obj/anomaly/tramplin/Initialize()
 	. = ..()
-	range_of_throw = rand(2,5)
+	if(ranzomize_with_initialize)
+		range_of_throw = rand(2,5)
 
 /obj/anomaly/tramplin/activate_anomaly()
 	for(var/obj/item/target in src.loc)

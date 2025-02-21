@@ -64,11 +64,14 @@
 /obj/item/artefact/flyer/urm_phoron(mob/living/user)
 	return "Обьект не реагирует"
 
-
-
 /obj/item/artefact/flyer/process_artefact_effect_to_user()
 	if(current_user.stamina < 85)
 		current_user.adjust_stamina(5)
+	if(istype(current_user, /mob/living/carbon/human/adherent) || current_user.is_floating)
+		return
+	current_user.pass_flags |= PASS_FLAG_TABLE
+	if(current_user.floatiness <= 5)
+		current_user.make_floating(5)
 
 /mob/living/carbon/human/can_fall(anchor_bypass, turf/location_override)
 	var/list/result_effects = calculate_artefact_reaction(src, "Возможность упасть")
@@ -76,7 +79,6 @@
 		if(result_effects.Find("Держит в воздухе"))
 			return
 	.=..()
-
 
 /obj/item/artefact/flyer/react_at_tramplin(mob/living/user)
 	. = ..()
@@ -87,3 +89,17 @@
 
 /obj/item/artefact/flyer/react_at_can_fall(mob/living/user)
 	return "Держит в воздухе"
+
+/obj/item/artefact/flyer/rvach_destroy_effect()
+	//У нас нет турфа?
+	if(!src.loc)
+		return
+	var/started_in = world.time
+	var/list/turfs_for_spawn = list()
+	//Собираем все турфы в определённом радиусе
+	for(var/turf/choosed_turf in RANGE_TURFS(src.loc, 5))
+		if(!TurfBlocked(choosed_turf) && !TurfBlockedByAnomaly(choosed_turf))
+			LAZYADD(turfs_for_spawn, choosed_turf)
+	var/list/possible_anomalies = list(/obj/anomaly/tramplin/powerfull)
+	generate_anomalies_in_turfs(possible_anomalies, turfs_for_spawn, 10, 20, 0, 0, null, null, "разрыв малого артефакта", started_in)
+	delete_artefact()

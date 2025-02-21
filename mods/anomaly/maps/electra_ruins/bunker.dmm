@@ -156,6 +156,12 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
 /area/map_template/bunker)
+"oX" = (
+/obj/structure/table/steel_reinforced,
+/obj/decal/cleanable/dirt,
+/obj/random/firstaid,
+/turf/simulated/floor/holofloor/tiled,
+/area/map_template/bunker)
 "pl" = (
 /obj/structure/reagent_dispensers/watertank,
 /obj/decal/cleanable/dirt,
@@ -168,9 +174,11 @@
 /turf/simulated/floor/holofloor/tiled,
 /area/map_template/bunker)
 "qL" = (
-/obj/structure/table/steel_reinforced,
-/obj/random/contraband,
 /obj/decal/cleanable/dirt,
+/obj/structure/table/rack,
+/obj/item/storage/firstaid/combat/bunker,
+/obj/item/storage/firstaid/combat/bunker,
+/obj/item/storage/firstaid/combat/bunker,
 /turf/simulated/floor/holofloor/tiled,
 /area/map_template/bunker)
 "qM" = (
@@ -221,18 +229,36 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
 /area/map_template/bunker)
+"vi" = (
+/obj/decal/cleanable/generic,
+/obj/decal/cleanable/dirt,
+/obj/item/disk/secret_project/science,
+/obj/random/documents{
+	pixel_y = -16;
+	pixel_x = -8
+	},
+/obj/random/documents,
+/turf/simulated/floor/holofloor/tiled,
+/area/map_template/bunker)
 "vR" = (
-/obj/structure/broken_door,
-/obj/floor_decal/snow,
+/obj/structure/table/steel_reinforced,
+/obj/decal/cleanable/dirt,
+/obj/random/documents,
 /turf/simulated/floor/holofloor/tiled,
 /area/map_template/bunker)
 "vW" = (
-/obj/structure/bed/padded{
-	dir = 1
-	},
-/obj/item/bedsheet/hop,
-/obj/structure/curtain/open/bed,
 /obj/decal/cleanable/dirt,
+/obj/structure/table/steel_reinforced,
+/obj/item/paper/Court{
+	info = "Техника отказала, пишу на эту бумажку. Наш отряд вернулся с полевой экспедиции и обнаружила, что основная научная группа эвакуировалась.  Если кто-то из наших вернётся, мы отправились на местную гору, высота номер 102, попытаемся свзяаться с штабом. Техника сгорела из-за откуда-то взявшейся молнии, чертовщина...";
+	name = "Записка"
+	},
+/obj/random/documents,
+/obj/random/documents,
+/obj/item/disk/secret_project/science,
+/obj/item/disk/secret_project/science,
+/obj/item/disk/secret_project/science,
+/obj/item/disk/secret_project/science,
 /turf/simulated/floor/holofloor/tiled,
 /area/map_template/bunker)
 "wa" = (
@@ -286,6 +312,14 @@
 /obj/wallframe_spawn/reinforced/titanium,
 /turf/template_noop,
 /area/map_template/bunker)
+"zx" = (
+/obj/decal/cleanable/dirt,
+/obj/structure/table/rack,
+/obj/item/storage/firstaid/combat/special/bunker,
+/obj/item/storage/firstaid/combat/special/bunker,
+/obj/item/storage/firstaid/combat/special/bunker,
+/turf/simulated/floor/holofloor/tiled,
+/area/map_template/bunker)
 "zW" = (
 /obj/structure/curtain/open/shower,
 /obj/decal/cleanable/dirt,
@@ -317,8 +351,16 @@
 /turf/simulated/floor/holofloor/tiled,
 /area/template_noop)
 "Ek" = (
-/obj/machinery/door/blast/regular,
-/obj/structure/broken_door,
+/obj/structure/aurora/vault_door,
+/turf/simulated/floor/holofloor/tiled,
+/area/map_template/bunker)
+"Ey" = (
+/obj/decal/cleanable/dirt,
+/obj/item/disk/secret_project/science,
+/obj/random/documents,
+/obj/random/documents{
+	pixel_y = -14
+	},
 /turf/simulated/floor/holofloor/tiled,
 /area/map_template/bunker)
 "Fi" = (
@@ -353,6 +395,12 @@
 	dir = 8
 	},
 /obj/decal/cleanable/dirt,
+/obj/structure/table/steel_reinforced,
+/obj/item/disk/secret_project/science,
+/obj/item/disk/secret_project/science,
+/obj/item/disk/secret_project/science,
+/obj/random/documents,
+/obj/item/toy/bronze_pig,
 /turf/simulated/floor/holofloor/tiled,
 /area/map_template/bunker)
 "Hk" = (
@@ -392,9 +440,15 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
 /area/map_template/bunker)
+"Oc" = (
+/obj/decal/cleanable/dirt,
+/obj/random/documents,
+/turf/simulated/floor/holofloor/tiled,
+/area/map_template/bunker)
 "OQ" = (
 /obj/structure/table/steel_reinforced,
 /obj/decal/cleanable/dirt,
+/obj/random/contraband,
 /turf/simulated/floor/holofloor/tiled,
 /area/map_template/bunker)
 "Pi" = (
@@ -446,6 +500,7 @@
 	dir = 4
 	},
 /obj/decal/cleanable/dirt,
+/obj/random/documents,
 /turf/simulated/floor/holofloor/tiled,
 /area/map_template/bunker)
 "WC" = (
@@ -455,6 +510,9 @@
 /obj/floor_decal/snow,
 /turf/simulated/floor/holofloor/tiled,
 /area/template_noop)
+"WQ" = (
+/turf/simulated/wall/titanium/bunker_map,
+/area/map_template/bunker)
 "XD" = (
 /obj/structure/grille/broken,
 /turf/simulated/floor/exoplanet/snow,
@@ -475,11 +533,23 @@
 /obj/floor_decal/snow,
 /turf/simulated/floor/holofloor/tiled,
 /area/map_template/bunker)
+"YF" = (
+/obj/structure/table/steel_reinforced,
+/obj/decal/cleanable/dirt,
+/obj/item/integrated_circuit/arithmetic/random,
+/turf/simulated/floor/holofloor/tiled,
+/area/map_template/bunker)
 "YK" = (
 /obj/structure/grille/broken,
 /obj/item/stack/material/rods,
 /turf/simulated/floor/exoplanet/snow,
 /area/template_noop)
+"YZ" = (
+/obj/decal/cleanable/dirt,
+/obj/item/disk/secret_project/science,
+/obj/random/documents,
+/turf/simulated/floor/holofloor/tiled,
+/area/map_template/bunker)
 "Zu" = (
 /obj/wallframe_spawn/reinforced/titanium,
 /turf/simulated/wall/titanium,
@@ -1150,10 +1220,10 @@ cg
 cg
 cg
 cg
-cg
-cg
-cg
-cg
+WQ
+WQ
+WQ
+WQ
 XD
 By
 xu
@@ -1193,10 +1263,10 @@ ro
 cg
 BS
 BS
-cg
+WQ
 vW
 GF
-cg
+WQ
 ZL
 ZL
 ZL
@@ -1236,10 +1306,10 @@ qc
 cg
 vg
 Lx
-cg
-vW
-AB
-cg
+WQ
+Ey
+YZ
+WQ
 ZL
 hq
 ZL
@@ -1280,9 +1350,9 @@ IS
 Lx
 ro
 Ek
-Lx
-AB
-vR
+vi
+Oc
+WQ
 ZL
 Yv
 ZL
@@ -1322,10 +1392,10 @@ Gy
 cg
 vg
 Lx
-cg
-AB
-AB
-cg
+WQ
+qL
+zx
+WQ
 Yv
 Yv
 Yv
@@ -1365,10 +1435,10 @@ uX
 cg
 cg
 IS
-cg
-cg
-cg
-cg
+WQ
+WQ
+WQ
+WQ
 AB
 AB
 cg
@@ -1409,8 +1479,8 @@ cg
 uE
 Lx
 OQ
-qL
-OQ
+AB
+oX
 zk
 AB
 AB
@@ -1494,9 +1564,9 @@ wM
 cg
 br
 Lx
-OQ
+vR
 Vi
-OQ
+YF
 Zu
 AB
 AB

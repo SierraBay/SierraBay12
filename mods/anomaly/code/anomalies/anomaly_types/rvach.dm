@@ -60,25 +60,17 @@
 					if(prob(7 * victim.get_skill_value(SKILL_HAULING)))
 						victim.Weaken(10)
 						return
-
-			//Создаём список органов, которые мы МОЖЕМ оторвать
-			var/list/list_of_organs_types = list(
-				/obj/item/organ/external/arm,
-				/obj/item/organ/external/arm/right,
-				/obj/item/organ/external/leg,
-				/obj/item/organ/external/leg/right
-			)
-			var/obj/item/organ/external/to_destroy = pick(list_of_organs_types)
-			for(var/obj/item/organ/external/E in victim.organs)
-				if(E.type == to_destroy)
-					E.take_external_damage(500)
-					playsound(src, 'mods/anomaly/sounds/rvach_gibbed.ogg', 100, FALSE  )
+			victim.apply_damage(500, DAMAGE_BRUTE, pick(BP_R_ARM, BP_L_ARM, BP_R_LEG, BP_L_LEG), armor_pen = 100)
+			playsound(src, 'mods/anomaly/sounds/rvach_gibbed.ogg', 100, FALSE  )
 		else if(istype(target, /mob/living))
 			var/mob/living/victim = target
 			SSanom.add_last_gibbed(target, "Рвач")
 			victim.gib()
 			playsound(src, 'mods/anomaly/sounds/rvach_gibbed.ogg', 100, FALSE  )
-		else if(istype(target, /obj/item))
+		else if(istype(target, /obj/item/artefact))
+			var/obj/item/artefact/detected_artefact = target
+			detected_artefact.rvach_destroy_effect()
+		else if(isitem(target))
 			qdel(target)
 		else if(istype(target, /obj/structure/mech_wreckage))
 			qdel(target)
@@ -134,18 +126,22 @@
 			detected_atom.throw_at(target_turf, local_range_of_throw, 5)
 
 
-/proc/rvach_pull_around(atom/target, pull_range = 255, pull_power = STAGE_FIVE)
+/proc/rvach_pull_around(atom/target, pull_range = 255)
 	for(var/atom/A in range(pull_range, target))
 		if(ismech(A))
 			continue
-		A.rvach_anomaly_pull(get_turf(target), pull_power)
+		A.rvach_anomaly_pull(get_turf(target))
 
 
-/atom/proc/rvach_anomaly_pull(turf/target, current_size)
+/atom/proc/rvach_anomaly_pull(turf/target)
 	return
 
-/obj/item/rvach_anomaly_pull(turf/target, current_size)
+/obj/item/rvach_anomaly_pull(turf/target)
 	step_towards(src, target)
+
+/obj/item/artefact/rvach_anomaly_pull(turf/target)
+	src.forceMove(target)
+
 
 /mob/living/rvach_anomaly_pull(turf/target, current_size)
 	step_towards(src, target)

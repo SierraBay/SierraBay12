@@ -54,6 +54,7 @@
 	#include "../../../../maps/sierra/items/datajack.dm"
 	#include "../../../../maps/sierra/items/clothing/clothing.dm"
 	#include "../../../../maps/sierra/items/clothing/exploration.dm"
+	#include "../../../../maps\sierra\items\clothing\new_uniform.dm"
 	#include "../../../../maps/sierra/items/clothing/override.dm"
 	#include "../../../../maps/sierra/items/clothing/storages.dm"
 	#include "../../../../maps/sierra/items/clothing/security.dm"
