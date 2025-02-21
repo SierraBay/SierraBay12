@@ -29,6 +29,30 @@
 
 		// Space Oddity - Chris Hadfield		--,
 		/singleton/audio/track/space_oddity,
+
+		// Duke Gneiss - Codebrain	 	--,
+		/singleton/audio/track/codebrain,
+
+		// Duke Gneiss - Get Set	 	--,
+		/singleton/audio/track/get_set,
+
+		// Duke Gneiss - Gneiss	 	--,
+		/singleton/audio/track/gneiss,
+
+		// Duke Gneiss - Intruder	 	--,
+		/singleton/audio/track/intruder,
+
+		// Duke Gneiss - Night at the Citadel	 	--,
+		/singleton/audio/track/night_at_the_citadel,
+
+		// Duke Gneiss - O.W.L	 	--,
+		/singleton/audio/track/owl,
+
+		// Duke Gneiss - Oxygen Facility	 	--,
+		/singleton/audio/track/oxygen_facility,
+
+		// Duke Gneiss - Quantum	 	--,
+		/singleton/audio/track/quantum
 	)
 
 
@@ -74,3 +98,59 @@
 	author = "Chris Remo"
 	license = /singleton/license/cc_by_4_0
 	url = "https://idlethumbs.bandcamp.com/album/the-music-of-idle-thumbs"
+
+/singleton/audio/track/codebrain
+	source = 'packs/infinity/sound/music/gneiss/Codebrain.mp3'
+	title = "Codebrain"
+	author = "Duke Gneiss"
+	license = /singleton/license/cc_by_nc_sa_3_0
+	url = "https://soundcloud.com/dukegneiss/codebrain"
+
+/singleton/audio/track/get_set
+	source = 'packs/infinity/sound/music/gneiss/Get Set.mp3'
+	title = "Get Set"
+	author = "Duke Gneiss"
+	license = /singleton/license/cc_by_nc_sa_3_0
+	url = "https://soundcloud.com/dukegneiss/get-set"
+
+/singleton/audio/track/gneiss
+	source = 'packs/infinity/sound/music/gneiss/Gneiss.mp3'
+	title = "Gneiss"
+	author = "Duke Gneiss"
+	license = /singleton/license/cc_by_nc_sa_3_0
+	url = "https://soundcloud.com/dukegneiss/gneiss"
+
+/singleton/audio/track/intruder
+	source = 'packs/infinity/sound/music/gneiss/Intruder.mp3'
+	title = "Intruder"
+	author = "Duke Gneiss"
+	license = /singleton/license/cc_by_nc_sa_3_0
+	url = "https://soundcloud.com/dukegneiss/intruder"
+
+/singleton/audio/track/night_at_the_citadel
+	source = 'packs/infinity/sound/music/gneiss/Night at the Citadel.mp3'
+	title = "Night at the Citadel"
+	author = "Duke Gneiss"
+	license = /singleton/license/cc_by_nc_sa_3_0
+	url = "https://soundcloud.com/dukegneiss/night-at-the-citadel"
+
+/singleton/audio/track/owl
+	source = 'packs/infinity/sound/music/gneiss/O.W.L.mp3'
+	title = "O.W.L"
+	author = "Duke Gneiss"
+	license = /singleton/license/cc_by_nc_sa_3_0
+	url = "https://soundcloud.com/dukegneiss/o-w-l"
+
+/singleton/audio/track/oxygen_facility
+	source = 'packs/infinity/sound/music/gneiss/Oxygen Facility.mp3'
+	title = "Oxygen Facility"
+	author = "Duke Gneiss"
+	license = /singleton/license/cc_by_nc_sa_3_0
+	url = "https://soundcloud.com/dukegneiss/oxygen-facility"
+
+/singleton/audio/track/quantum
+	source = 'packs/infinity/sound/music/gneiss/quantum.mp3'
+	title = "Quantum"
+	author = "Duke Gneiss"
+	license = /singleton/license/cc_by_nc_sa_3_0
+	url = "https://soundcloud.com/dukegneiss/quantum"
