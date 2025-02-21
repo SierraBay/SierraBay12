@@ -230,6 +230,7 @@
 	// This turns out to be a touch too much when a bunch of people are connecting at once from a restart during init.
 	if (GAME_STATE & RUNLEVELS_DEFAULT)
 		spawn()
+		log_and_message_staff(SPAN_NOTICE("[key_name_admin(src)] has connected to the server."))
 		if (!check_rights(R_MOD, FALSE, src))
 			// Check connections
 			var/list/connections = fetch_connections()

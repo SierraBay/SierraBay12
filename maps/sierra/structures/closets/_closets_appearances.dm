@@ -251,6 +251,16 @@
 		"command" = COLOR_OFF_WHITE
 	)
 
+/singleton/closet_appearance/secure_closet/sierra/corporate/iso
+	decals = list(
+		"lower_holes"
+	)
+	extra_decals = list(
+		"stripe_vertical_left_full"  = "#570b03",
+		"stripe_vertical_right_full" = "#570b03",
+		"command" = "#570b03"
+	)
+
 /singleton/closet_appearance/secure_closet/sierra/exploration
 	color = COLOR_WALL_GUNMETAL
 	decals = list(

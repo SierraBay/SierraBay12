@@ -181,12 +181,14 @@ var/global/const/FINGERPRINT_COMPLETE = 6
 		return
 	if(M.gloves && istype(M.gloves,/obj/item/clothing/gloves))
 		var/obj/item/clothing/gloves/G = M.gloves
-		if(G.transfer_blood) //bloodied gloves transfer blood to touched objects
-			if(add_blood(G.bloody_hands_mob)) //only reduces the bloodiness of our gloves if the item wasn't already bloody
-				G.transfer_blood--
+		if(G.blood_transfer_amount >= 1) //bloodied gloves transfer blood to touched objects
+			var/taken = rand(1, G.blood_transfer_amount)
+			if(add_blood_custom(G.blood_color, taken, G.blood_DNA)) //only reduces the bloodiness of our gloves if the item wasn't already bloody
+				G.blood_transfer_amount -= taken
 	else if(M.bloody_hands)
-		if(add_blood(M.bloody_hands_mob))
-			M.bloody_hands--
+		var/taken = rand(1, M.bloody_hands)
+		if(add_blood_custom(M.hand_blood_color, taken, M.hands_blood_DNA))
+			M.bloody_hands -= taken
 
 	var/fibertext
 	var/item_multiplier = istype(src,/obj/item)?1.2:1

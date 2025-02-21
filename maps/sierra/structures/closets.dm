@@ -44,7 +44,7 @@
 
 /obj/random/sierracloset/spawn_choices()
 	return list(/obj/structure/closet,
-//				/obj/structure/closet/walllocker/firecloset,
+				/obj/structure/closet/firecloset,
 				/obj/structure/closet/emcloset,
 				/obj/structure/closet/jcloset/sierra,
 				/obj/structure/closet/athletic_mixed,

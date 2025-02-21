@@ -149,9 +149,8 @@
 /// Creates an expanding bluespace pulse on all z-levels connected to the drive
 /obj/machinery/bluespacedrive/proc/do_pulse()
 	playsound(src, 'sound/effects/EMPulse.ogg', 100, TRUE)
-	var/datum/bubble_effect/bluespace_pulse/parent
 	for (var/level in GetConnectedZlevels(z))
-		parent = new (x, y, level, 1, 1, parent)
+		new /datum/bubble_effect/bluespace_pulse(x, y, level, 1, 1, src)
 
 
 /// Creates a blinding flash of light that will blind and deafen those in range, and change turfs to bluespace
@@ -183,7 +182,7 @@
 	var/interlude_teleport_chance = 0
 	var/affect_chance = 0
 
-/datum/bubble_effect/bluespace_pulse/New(obj/machinery/bluespacedrive/parent)
+/datum/bubble_effect/bluespace_pulse/New(center_x, center_y, z, initial_radius, delta, parent)
 	..()
 	src.parent = parent
 	START_PROCESSING(SSfastprocess, src)
@@ -230,7 +229,7 @@
 				zlevels[1])
 			if (!T)
 				return
-			GLOB.using_map.do_interlude_teleport(being, T, Frand(parent.interlude_min_time, parent.interlude_max_time) MINUTES)
+			GLOB.using_map.do_interlude_teleport(being, T, Frand(parent.interlude_min_time, parent.interlude_max_time))
 			return
 
 		//swap places with another mob

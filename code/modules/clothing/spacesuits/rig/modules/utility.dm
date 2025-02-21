@@ -48,6 +48,11 @@
 	use_power_cost = 0//Already handled by defib, but it's 150 Wh, normal defib takes 100
 	device = /obj/item/shockpaddles/rig
 
+/obj/item/rig_module/device/defib/Initialize()
+	. = ..()
+	var/obj/item/shockpaddles/rig/paddles = device
+	paddles.module = src
+
 /obj/item/rig_module/device/drill
 	name = "hardsuit mounted drill"
 	desc = "A very heavy diamond-tipped drill."

@@ -9,7 +9,7 @@
 	atom_flags = ATOM_FLAG_OPEN_CONTAINER
 
 	/// The set of options for the amount of reagents the bag will try to transfer per process.
-	var/static/list/allowed_transfer_amounts = list(2, 1, 0)
+	var/static/list/allowed_transfer_amounts = list(2, 1, 0.5, 0)
 
 	/// The configured amount of reagents the IV bag will try to transfer per process.
 	var/transfer_amount = 2
@@ -227,9 +227,20 @@
 	var/title = "[origin]"
 	if (origin != src)
 		title = "[title] - [src]"
-	var/response = input(user, "Set Drip Rate:", title) as null | anything in allowed_transfer_amounts
-	if (isnull(response) || !(response in allowed_transfer_amounts))
+	var/list/options = allowed_transfer_amounts.Copy()
+	if (user.skill_check(SKILL_MEDICAL, SKILL_EXPERIENCED))
+		options += "Custom"
+	var/response = input(user, "Set Drip Rate:", title) as null | anything in options
+	if (isnull(response))
 		return
+	if (response == "Custom")
+		response = input(user, "Set Drip Rate (Custom):", title, transfer_amount) as null | num
+		if (isnull(response))
+			return
+		response = round(response, 0.1)
+		if (response < 0 || response > 2)
+			to_chat(user, SPAN_WARNING("Selected number is out of bounds. Drip rate must be between 0 and 2, inclusive."))
+			return
 	if (!origin.Adjacent(user) || user.incapacitated())
 		to_chat(user, SPAN_WARNING("You're in no condition to do that."))
 		return

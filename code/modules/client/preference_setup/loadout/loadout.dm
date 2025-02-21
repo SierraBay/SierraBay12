@@ -133,7 +133,9 @@ var/global/list/gear_datums = list()
 		. += "<b>[SPAN_COLOR(fcolor, "[total_cost]/[config.max_gear_cost]")] loadout points spent.</b>"
 
 	. += "<a href='?src=\ref[src];clear_loadout=1'>Clear Loadout</a>"
-	. += "<a href='?src=\ref[src];toggle_hiding=1'>[hide_unavailable_gear ? "Show all" : "Hide unavailable"]</a></center></td></tr>"
+	. += "<a href='?src=\ref[src];toggle_hiding=1'>[hide_unavailable_gear ? "Show all" : "Hide unavailable"]</a>"
+	. += "<a href='?src=\ref[src];copy_loadout=1'>Copy Loadout</a>"
+	. += "</center></td></tr>"
 
 	. += "<tr><td colspan=3><center><b>"
 	var/firstcat = 1
@@ -367,6 +369,20 @@ var/global/list/gear_datums = list()
 	if(href_list["toggle_hiding"])
 		hide_unavailable_gear = !hide_unavailable_gear
 		return TOPIC_REFRESH
+
+	if (href_list["copy_loadout"])
+		var/list/options = list()
+		for (var/count = 1 to config.loadout_slots)
+			if (count == pref.gear_slot)
+				continue
+			options += count
+		var/selected = input(user, "Select a loadout slot to copy from", "Copy Loadout") as null | anything in options
+		if (!selected)
+			return TOPIC_NOACTION
+		var/list/selected_list = pref.gear_list[selected]
+		pref.gear_list[pref.gear_slot] = selected_list.Copy()
+		return TOPIC_REFRESH_UPDATE_PREVIEW
+
 	return ..()
 
 /datum/gear
