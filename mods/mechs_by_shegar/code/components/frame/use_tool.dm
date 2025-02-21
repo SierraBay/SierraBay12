@@ -19,6 +19,8 @@
 		body_install(tool, user)
 	else if (istype(tool, /obj/item/mech_component/manipulators))
 		arms_install(tool, user)
+	else if(istype(tool, /obj/item/mech_component/doubled_legs))
+		doubled_legs_install(tool, user)
 	else if (istype(tool, /obj/item/mech_component/propulsion))
 		legs_install(tool, user)
 

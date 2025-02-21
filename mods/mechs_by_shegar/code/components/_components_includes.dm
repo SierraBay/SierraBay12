@@ -22,6 +22,7 @@
 //Ноги
 #include "legs\_legs_core.dm"
 #include "legs\combat.dm"
+#include "legs\doubled_legs.dm"
 #include "legs\heavy.dm"
 #include "legs\light.dm"
 #include "legs\powerloader.dm"
@@ -41,6 +42,7 @@
 #include "frame\use_tool\body_install.dm"
 #include "frame\use_tool\cable_coil.dm"
 #include "frame\use_tool\crowbar.dm"
+#include "frame\use_tool\doubled_leg_instalation.dm"
 #include "frame\use_tool\legs_install.dm"
 #include "frame\use_tool\material_install.dm"
 #include "frame\use_tool\screwdriver_interaction.dm"

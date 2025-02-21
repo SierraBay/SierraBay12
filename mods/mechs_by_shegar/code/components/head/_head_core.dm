@@ -21,18 +21,6 @@
 	QDEL_NULL(computer)
 	. = ..()
 
-/obj/item/mech_component/sensors/MouseDrop(atom/over_atom, atom/source_loc, atom/over_loc, source_control, over_control, list/mouse_params)
-	if(!CanMouseDrop(over_atom, usr))
-		return
-	if(istype(over_atom, /obj/structure/heavy_vehicle_frame))
-		var/obj/structure/heavy_vehicle_frame/input_frame = over_atom
-		if(input_frame.head)
-			to_chat(usr, SPAN_BAD("[input_frame] already have sensors."))
-			return
-		if(input_frame.install_component(src, usr))
-			input_frame.head = src
-			input_frame.update_icon()
-
 /obj/item/mech_component/sensors/show_missing_parts(mob/user)
 	if(!radio)
 		to_chat(user, SPAN_WARNING("It is missing a radio."))

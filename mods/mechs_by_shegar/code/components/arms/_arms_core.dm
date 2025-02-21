@@ -19,24 +19,6 @@
 	. = ..()
 	setup_side()
 
-/obj/item/mech_component/manipulators/MouseDrop(atom/over_atom, atom/source_loc, atom/over_loc, source_control, over_control, list/mouse_params)
-	if(!CanMouseDrop(over_atom, usr))
-		return
-	if(istype(over_atom, /obj/structure/heavy_vehicle_frame))
-		var/obj/structure/heavy_vehicle_frame/input_frame = over_atom
-		if(input_frame.install_component(src, usr))
-			if(side == RIGHT)
-				if(input_frame.R_arm)
-					to_chat(usr, SPAN_BAD("[input_frame] already have left arm."))
-					return
-				input_frame.R_arm = src
-			else
-				if(input_frame.L_arm)
-					to_chat(usr, SPAN_BAD("[input_frame] already have left arm."))
-					return
-				input_frame.L_arm = src
-			input_frame.update_icon()
-
 /obj/item/mech_component/manipulators/proc/setup_side()
 	if(side == LEFT)
 		icon_state = "[initial(icon_state)]_left"

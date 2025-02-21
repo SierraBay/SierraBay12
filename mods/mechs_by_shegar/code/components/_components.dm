@@ -45,6 +45,8 @@
 	var/front_additional_damage = 0
 	///Гарантированный дополнительный урон, когда часть принимает урон задней стороной
 	var/back_additional_damage = 0
+	///Применяется при установки части которая в себе содержит несколько частей (Условно траки или паучьи ноги)
+	var/doubled_owner
 	///Владелец части
 	var/mob/living/exosuit/owner
 
@@ -52,6 +54,12 @@
 	to_chat(user, SPAN_BAD("Too heavy!"))
 	return
 
+/obj/item/mech_component/MouseDrop(atom/over_atom, atom/source_loc, atom/over_loc, source_control, over_control, list/mouse_params)
+	if(!CanMouseDrop(over_atom, usr))
+		return
+	if(istype(over_atom, /obj/structure/heavy_vehicle_frame))
+		var/obj/structure/heavy_vehicle_frame/input_frame = over_atom
+		input_frame.use_tool(src, usr)
 
 /obj/item/mech_component/proc/update_component_owner()
 	if(ismech(loc))

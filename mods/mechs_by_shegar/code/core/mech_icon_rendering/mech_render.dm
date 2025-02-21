@@ -34,7 +34,7 @@
 	return all_images
 
 /mob/living/exosuit/on_update_icon()
-	var/list/new_overlays = get_mech_images(list(head, body, L_arm, R_arm, L_leg, R_leg), MECH_BASE_LAYER)
+	var/list/new_overlays = get_mech_images(list(body, head, L_arm, R_arm, L_leg, R_leg), MECH_BASE_LAYER)
 	if(body)
 		new_overlays += back_passengers_overlays
 		new_overlays += left_back_passengers_overlays
@@ -54,6 +54,7 @@
 		new_overlays += get_mech_image(L_arm.decal, L_arm.icon_state, L_arm.on_mech_icon, L_arm.color, MECH_ARM_LAYER)
 	if(R_arm)
 		new_overlays += get_mech_image(R_arm.decal, R_arm.icon_state, R_arm.on_mech_icon, R_arm.color, MECH_ARM_LAYER)
+
 	for(var/hardpoint in hardpoints)
 		var/obj/item/mech_equipment/hardpoint_object = hardpoints[hardpoint]
 		if(hardpoint_object)

@@ -240,12 +240,7 @@
 			return
 		if(istype(over, /obj/structure/heavy_vehicle_frame))
 			var/obj/structure/heavy_vehicle_frame/input_frame = over
-			if(input_frame.body)
-				to_chat(usr, SPAN_BAD("[input_frame] already have body."))
-				return
-			if(input_frame.install_component(src, usr))
-				input_frame.body = src
-				input_frame.update_icon()
+			input_frame.use_tool(src, usr)
 	if(!usr || !over)
 		return
 	if(!Adjacent(usr) || !over.Adjacent(usr))
