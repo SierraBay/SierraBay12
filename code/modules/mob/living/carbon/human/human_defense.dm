@@ -404,24 +404,86 @@ meteor_act
 		affecting.embed(O, supplied_wound = supplied_wound)
 
 /mob/living/carbon/human/proc/bloody_hands(mob/living/source, amount = 2)
+	if (!istype(source.dna, /datum/dna))
+		source.dna = new /datum/dna(null)
+		source.dna.real_name = source.real_name
+	var/blood_colour = COLOR_BLOOD_HUMAN
+	if(ishuman(source))
+		var/mob/living/carbon/human/human = source
+		human.check_dna()
+		blood_colour = human.species.get_blood_colour(source)
+	bloody_hands_custom(blood_colour, amount, list(source.dna))
+
+/mob/living/carbon/human/proc/bloody_hands_custom(source_blood_color = COLOR_BLOOD_HUMAN, amount = 1, list/source_blood_DNA = list())
 	var/obj/item/clothing/gloves/gloves = get_equipped_item(slot_gloves)
 	if(istype(gloves))
-		gloves.add_blood(source)
-		gloves.transfer_blood = amount
-		gloves.bloody_hands_mob = source
+		gloves.add_blood_custom(source_blood_color, amount, source_blood_DNA)
+		gloves.blood_transfer_amount = amount
 	else
-		add_blood(source)
+		add_blood_custom(source_blood_color, amount, source_blood_DNA)
+		hand_blood_color = source_blood_color
 		bloody_hands = amount
-		bloody_hands_mob = source
-	update_inv_gloves()		//updates on-mob overlays for bloody hands and/or bloody gloves
+	update_inv_gloves()	//updates on-mob overlays for bloody hands and/or bloody gloves
 
 /mob/living/carbon/human/proc/bloody_body(mob/living/source)
+	if (!istype(source.dna, /datum/dna))
+		source.dna = new /datum/dna(null)
+		source.dna.real_name = source.real_name
+	var/blood_colour = COLOR_BLOOD_HUMAN
+	if(ishuman(source))
+		var/mob/living/carbon/human/human = source
+		human.check_dna()
+		blood_colour = human.species.get_blood_colour(source)
+	bloody_body_custom(blood_colour, 3, list(source.dna))
+
+/mob/living/carbon/human/proc/bloody_body_custom(source_blood_color = COLOR_BLOOD_HUMAN, amount = 1, list/source_blood_DNA = list())
 	if(wear_suit)
-		wear_suit.add_blood(source)
-		update_inv_wear_suit(0)
+		wear_suit.add_blood_custom(source_blood_color, amount, source_blood_DNA)
+		update_inv_wear_suit(1)
 	if(w_uniform)
-		w_uniform.add_blood(source)
-		update_inv_w_uniform(0)
+		w_uniform.add_blood_custom(source_blood_color, amount, source_blood_DNA)
+		update_inv_w_uniform(1)
+
+/mob/living/carbon/human/proc/bloody_feet_custom(source_blood_color = COLOR_BLOOD_HUMAN, amount = 1, list/source_blood_DNA = list())
+	var/obj/item/organ/external/l_foot = get_organ(BP_L_FOOT)
+	var/obj/item/organ/external/r_foot = get_organ(BP_R_FOOT)
+	var/hasfeet = 1
+	if((isnull(l_foot) || l_foot.is_stump()) && (isnull(r_foot) || r_foot.is_stump()))
+		hasfeet = 0
+	if(!buckled)
+		if(shoes) //Adding blood to shoes
+			var/obj/item/clothing/shoes/S = shoes
+			if(istype(S))
+				S.add_blood_custom(source_blood_color, amount, source_blood_DNA)
+		else if (hasfeet) //Or feet
+			feet_blood_color = source_blood_color
+			track_blood = max(amount, track_blood)
+			if(!feet_blood_DNA)
+				feet_blood_DNA = list()
+			feet_blood_DNA |= source_blood_DNA.Copy()
+	update_inv_shoes(1)
+
+/mob/living/carbon/human/proc/transfer_bloody_hands(mob/living/target, target_zone)
+	var/obj/item/clothing/gloves/gloves = get_equipped_item(slot_gloves)
+	if(istype(gloves))
+		gloves.transfer_blood(target, target_zone)
+	else if (ishuman(target))
+		var/mob/living/carbon/human/h_target = target
+		var/obj/item/clothing/equipped_item = h_target.get_covering_equipped_item_by_zone(target_zone)
+		if(istype(equipped_item))
+			equipped_item.add_blood_custom(hand_blood_color, bloody_hands, hands_blood_DNA)
+		else
+			switch(target_zone)
+				if(BP_L_HAND , BP_R_HAND)
+					bloody_hands_custom(hand_blood_color, bloody_hands, hands_blood_DNA)
+				if(BP_CHEST, BP_GROIN, BP_L_ARM , BP_R_ARM, BP_L_LEG , BP_R_LEG)
+					bloody_body_custom(hand_blood_color, bloody_hands, hands_blood_DNA)
+
+/mob/living/carbon/human/proc/transfer_bloody_body(mob/living/target, target_zone)
+	if(wear_suit)
+		wear_suit.transfer_blood(target, target_zone)
+	if((!wear_suit || !(wear_suit.flags_inv & HIDEJUMPSUIT)) && w_uniform)
+		w_uniform.transfer_blood(target, target_zone)
 
 /mob/living/carbon/human/proc/handle_suit_punctures(damtype, damage, def_zone)
 
