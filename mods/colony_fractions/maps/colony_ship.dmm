@@ -690,7 +690,7 @@
 	pixel_y = 24
 	},
 /obj/floor_decal/corner/paleblue/mono,
-/obj/machinery/r_n_d/circuit_imprinter,
+/obj/machinery/fabricator/rnd/imprinter,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/colony2/engineering)
 "lm" = (
@@ -1994,6 +1994,7 @@
 /obj/floor_decal/corner/paleblue/mono,
 /obj/structure/table/steel_reinforced,
 /obj/machinery/fabricator/micro,
+/obj/item/storage/box/microlathe_designs,
 /obj/item/stack/material/aluminium/ten,
 /obj/item/stack/material/glass/ten,
 /obj/item/stack/material/steel/ten,
@@ -2214,7 +2215,7 @@
 /obj/item/device/radio/intercom/map_preset/playablecolony2{
 	pixel_y = 21
 	},
-/obj/machinery/r_n_d/protolathe,
+/obj/machinery/fabricator/rnd/protolathe,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/colony2/engineering)
 "OB" = (
@@ -2488,6 +2489,7 @@
 	},
 /obj/floor_decal/corner/paleblue/mono,
 /obj/machinery/fabricator/hacked,
+/obj/item/storage/box/autolathe_designs,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/colony2/engineering)
 "Sp" = (

@@ -1,0 +1,4 @@
+author: Ryan180602
+changes:
+  - {bugfix: Pipes do not die in fires once again}
+delete-after: true

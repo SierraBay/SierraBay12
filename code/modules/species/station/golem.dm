@@ -1,4 +1,4 @@
-/datum/species/golem
+/singleton/species/golem
 	name = SPECIES_GOLEM
 	name_plural = "Golems"
 
@@ -51,7 +51,7 @@
 		/singleton/trait/general/nonpermeable_skin = TRAIT_LEVEL_EXISTS
 	)
 
-/datum/species/golem/handle_post_spawn(mob/living/carbon/human/H)
+/singleton/species/golem/handle_post_spawn(mob/living/carbon/human/H)
 	if(H.mind)
 		H.mind.reset()
 		H.mind.assigned_role = "Golem"
@@ -61,8 +61,8 @@
 	H.status_flags |= NO_ANTAG
 	..()
 
-/datum/species/golem/post_organ_rejuvenate(obj/item/organ/org, mob/living/carbon/human/H)
+/singleton/species/golem/post_organ_rejuvenate(obj/item/organ/org, mob/living/carbon/human/H)
 	org.status |= (ORGAN_BRITTLE|ORGAN_CRYSTAL)
 
-/datum/species/golem/can_float(mob/living/carbon/human/H)
+/singleton/species/golem/can_float(mob/living/carbon/human/H)
 	return FALSE

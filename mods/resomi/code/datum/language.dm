@@ -21,7 +21,7 @@
 	return ..(gender, 1, 4, 1.5)
 
  //AUTOHISS
-/datum/species/resomi
+/singleton/species/resomi
 	autohiss_basic_map = list(
 			"з" = list("с")
 		)

@@ -88,7 +88,7 @@
 //Sets up skills_allocated
 /datum/preferences/proc/sanitize_skills(list/input)
 	. = list()
-	var/datum/species/S = all_species[species]
+	var/singleton/species/S = GLOB.species_by_name[species]
 	for(var/job_name in SSjobs.titles_to_datums)
 		var/datum/job/job = SSjobs.get_by_title(job_name)
 		var/input_skills = list()

@@ -1396,6 +1396,7 @@
 /area/voxship/scavship)
 "dg" = (
 /obj/machinery/fabricator,
+/obj/item/storage/box/autolathe_designs,
 /obj/floor_decal/borderfloorblack{
 	dir = 1
 	},

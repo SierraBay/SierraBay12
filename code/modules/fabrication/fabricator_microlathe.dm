@@ -1,4 +1,4 @@
-/obj/machinery/fabricator/micro
+/*/obj/machinery/fabricator/micro [SIERRA-REMOVE] - MODPACK_RND
 	name = "microlathe"
 	desc = "It produces small items from common resources."
 	icon = 'icons/obj/machines/fabricators/microlathe.dmi'
@@ -22,4 +22,4 @@
 
 /obj/machinery/fabricator/micro/bartender/Initialize()
 	. = ..()
-	stored_material[/material/glass] = base_storage_capacity[/material/glass]
+	stored_material[/material/glass] = base_storage_capacity[/material/glass]*/

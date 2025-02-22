@@ -31,12 +31,13 @@
 	var/manufacturer = null
 	var/sync_message = ""
 
+/* [SIERRA-REMOVE] - MODPACK_RND
 /obj/machinery/robotics_fabricator/Initialize()
 	files = new /datum/research(src) //Setup the research data holder.
 	manufacturer = basic_robolimb.company
 	update_categories()
 	. = ..()
-
+*/
 /obj/machinery/robotics_fabricator/Process()
 	if(stat)
 		return
@@ -109,7 +110,7 @@
 		ui.set_initial_data(data)
 		ui.open()
 		ui.set_auto_update(1)
-
+/* [SIERRA-REMOVE] - MODPACK_RND
 /obj/machinery/robotics_fabricator/Topic(href, href_list)
 	if(..())
 		return
@@ -144,7 +145,7 @@
 		sync_message = ""
 
 	return 1
-
+*/
 /obj/machinery/robotics_fabricator/components_are_accessible(path)
 	return !busy && ..()
 
@@ -152,7 +153,7 @@
 	if(busy)
 		return SPAN_NOTICE("\The [src] is busy. Please wait for completion of previous operation.")
 	return ..()
-
+/*	[SIERRA-REMOVE] - MODPACK_RND
 /obj/machinery/robotics_fabricator/use_tool(obj/item/I, mob/living/user, list/click_params)
 	if(busy)
 		to_chat(user, SPAN_NOTICE("\The [src] is busy. Please wait for completion of previous operation."))
@@ -189,7 +190,7 @@
 	else
 		to_chat(user, "The fabricator cannot hold more [stack_plural].")// use the plural form even if the given sheet is singular
 	return TRUE
-
+*/
 
 /obj/machinery/robotics_fabricator/emag_act(remaining_charges, mob/user)
 	if (emagged)

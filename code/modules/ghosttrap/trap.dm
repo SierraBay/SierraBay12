@@ -30,7 +30,7 @@ var/global/list/ghost_traps
 	var/can_set_own_name = TRUE
 
 	var/list/request_timeouts
-	var/datum/species/species_whitelist // If defined, this is the species whitelist required to join
+	var/singleton/species/species_whitelist // If defined, this is the species whitelist required to join
 
 /datum/ghosttrap/New()
 	request_timeouts = list()
@@ -64,7 +64,7 @@ var/global/list/ghost_traps
 
 	if (!assess_whitelist(candidate))
 		if (feedback)
-			var/datum/species/S = new species_whitelist()
+			var/singleton/species/S = new species_whitelist()
 			to_chat(candidate, "You require \a [S] whitelist to play as \a [object].")
 		return FALSE
 	return TRUE
@@ -73,7 +73,7 @@ var/global/list/ghost_traps
 	. = TRUE
 	if (!species_whitelist)
 		return
-	var/datum/species/S = new species_whitelist()
+	var/singleton/species/S = new species_whitelist()
 	if (!is_alien_whitelisted(candidate, S))
 		. = FALSE
 
@@ -180,7 +180,7 @@ var/global/list/ghost_traps
 	ban_checks = list("Dionaea")
 	ghost_trap_message = "They are occupying a living plant now."
 	ghost_trap_role = "Plant"
-	species_whitelist = /datum/species/diona
+	species_whitelist = /singleton/species/diona
 
 /datum/ghosttrap/plant/welcome_candidate(mob/target)
 	to_chat(target, SPAN_CLASS("alium", "<B>You awaken slowly, stirring into sluggish motion as the air caresses you.</B>"))
