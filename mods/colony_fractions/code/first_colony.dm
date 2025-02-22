@@ -263,7 +263,7 @@ GLOBAL_VAR_INIT(error_colony_reaction, "Прервать спавн колони
 	//стандарт значение
 	return list(/obj/item/gun/projectile/automatic/battlerifle)
 
-/obj/machinery/computer/rdconsole/core/colony/New()
+/obj/machinery/computer/rdconsole/core/colony/Initialize()
 	. = ..()
 	files.research_points = 41250
 

@@ -626,6 +626,12 @@
 	icon_state = "dark"
 	},
 /area/tdome/testing)
+"hMy" = (
+/obj/machinery/fabricator/micro/loaded,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/tdome/testing)
 "hNF" = (
 /mob/living/exosuit/premade/random,
 /turf/unsimulated/floor{
@@ -20703,7 +20709,7 @@ oLH
 gqB
 ezf
 aZQ
-gqB
+hMy
 gqB
 gqB
 gqB

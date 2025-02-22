@@ -194,7 +194,7 @@
 			var/viewing
 			for (var/mob/M in view(6,src))
 				if (M.client)
-					viewing |= M.client
+					viewing += M.client
 			var/image/orderimage = image('icons/obj/machines/fabricators/robotics_fabricator.dmi', src, "fab-load-metal")
 			flick_overlay(orderimage, viewing, 8)
 			while(materials[material] + amnt <= res_max_amount && stack.amount >= 1)

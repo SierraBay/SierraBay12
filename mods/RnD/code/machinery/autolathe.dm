@@ -49,6 +49,7 @@
 	var/list/queue = list()
 	var/queue_max = 8
 
+	var/mechfabmod = 1
 	var/storage_capacity = 0
 	var/speed = 1
 	var/mat_efficiency = 1
@@ -93,8 +94,6 @@
 		/obj/item/stock_parts/manipulator,
 
 	)
-
-	var/mechfabmod = 1
 
 /obj/machinery/fabricator/Initialize()
 	. = ..()
@@ -958,6 +957,19 @@
 
 /obj/machinery/fabricator/hacked
 	fab_status_flags = FAB_HACKED
+
+
+/obj/machinery/fabricator/micro/loaded
+
+/obj/machinery/fabricator/micro/loaded/Initialize()
+	. = ..()
+	stored_material = list(
+	MATERIAL_STEEL = 40000,
+	MATERIAL_ALUMINIUM = 40000,
+	MATERIAL_PLASTIC = 40000,
+	MATERIAL_GLASS = 90000,
+	)
+
 
 /obj/machinery/fabricator/micro/bartender
 	name = "Microlathe"
