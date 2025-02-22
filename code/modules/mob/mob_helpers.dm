@@ -37,11 +37,11 @@
 
 
 /// Determine if the mob is the supplied species by text name, species path, or species instance name
-/mob/proc/is_species(datum/species/S)
+/mob/proc/is_species(singleton/species/S)
 	return FALSE
 
 
-/mob/living/carbon/is_species(datum/species/S)
+/mob/living/carbon/is_species(singleton/species/S)
 	if (!S || !species) return FALSE
 	if (istext(S)) return species.name == S
 	if (ispath(S)) return species.name == initial(S.name)

@@ -1172,6 +1172,7 @@
 /area/map_template/rescue_base/base)
 "cD" = (
 /obj/machinery/fabricator/hacked,
+/obj/item/storage/box/autolathe_designs,
 /turf/unsimulated/floor{
 	dir = 1;
 	icon_state = "vault"

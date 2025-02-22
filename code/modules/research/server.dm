@@ -21,7 +21,7 @@
 
 /obj/machinery/r_n_d/server/Destroy()
 	//[SIERRA-ADD] - MODPACK_RND
-	rnd_server_list += src
+	rnd_server_list -= src
 	//[/SIERRA-ADD] - MODPACK_RND
 
 	QDEL_NULL(files)
@@ -273,18 +273,18 @@
 
 //[SIERRA-EDIT] - MODPACK_RND
 		if(2) //Data Management menu
-			dat += "[temp_server.name] Data ManagementP<BR><BR>"
-			dat += "Known Tech<BR>"
-			for(var/tech_tree in temp_server.files.tech_trees)
-				var/datum/tech/T = temp_server.files.tech_trees[tech_tree]
+			dat += "[temp_server.name] Data Management<BR><BR>"
+			dat += "Known Tech Trees<BR>"
+			for(var/datum/tech/T in temp_server.files.researched_tech)
 				dat += "* [T.name] "
-				dat += "<A href='?src=\ref[src];reset_tech=[T.id]'>(Reset)</A><BR>" //FYI, these are all strings.
-			dat += "Known Technology<BR>"
-			for(var/D in temp_server.files.researched_tech)
-				var/datum/technology/T = temp_server.files.researched_tech[D]
+				dat += "<A href='?src=\ref[src];reset_tech=\ref[T]'>(Reset)</A><BR>"
+			dat += "Known Technologies<BR>"
+			for(var/t in temp_server.files.researched_nodes)
+				var/datum/technology/T = t
 				dat += "* [T.name] "
-				dat += "<A href='?src=\ref[src];reset_technology=[T.id]'>(Delete)</A><BR>"
+				dat += "<A href='?src=\ref[src];reset_techology=\ref[T]'>(Delete)</A><BR>"
 			dat += "<HR><A href='?src=\ref[src];main=1'>Main Menu</A>"
+
 //[/SIERRA-EDIT] - MODPACK_RND
 
 		if(3) //Server Data Transfer

@@ -253,7 +253,7 @@ var/global/list/gear_datums = list()
 			entry += "[english_list(skill_checks)]</i>"
 
 		if (allowed && G.allowed_traits)
-			var/datum/species/picked_species = all_species[pref.species]
+			var/singleton/species/picked_species = GLOB.species_by_name[pref.species]
 			var/list/species_traits = picked_species.traits
 			var/trait_checks = list()
 			entry += "<br><i>"

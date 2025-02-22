@@ -263,6 +263,7 @@
 	pixel_y = 4;
 	pixel_x = 4
 	},
+/obj/item/storage/box/microlathe_designs,
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/crew/canteen)
 "cz" = (
@@ -1399,6 +1400,7 @@
 	desc = "Your typical Special Forces Autolathe.";
 	name = "Autolathe"
 	},
+/obj/item/storage/box/autolathe_designs,
 /obj/floor_decal/industrial/outline/yellow,
 /obj/machinery/light,
 /turf/simulated/floor/tiled/dark/monotile,

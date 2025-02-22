@@ -58,7 +58,7 @@
 	},
 /area/tdome/testing)
 "adH" = (
-/mob/living/exosuit/premade/heavy,
+/obj/machinery/computer/rdconsole/core,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -314,12 +314,6 @@
 	icon_state = "dark"
 	},
 /area/tdome/testing)
-"aQu" = (
-/mob/living/exosuit/premade/ert,
-/turf/unsimulated/floor{
-	icon_state = "dark"
-	},
-/area/tdome/testing)
 "aQB" = (
 /obj/item/melee/whip/abyssal,
 /turf/unsimulated/floor{
@@ -393,6 +387,14 @@
 /area/tdome/testing)
 "aZy" = (
 /obj/item/melee/baton/cattleprod,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/tdome/testing)
+"aZQ" = (
+/obj/item/stack/material/silver/ten,
+/obj/item/stack/material/silver/ten,
+/obj/item/stack/material/silver/ten,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -486,9 +488,29 @@
 	icon_state = "dark"
 	},
 /area/tdome/testing)
+"bvf" = (
+/obj/item/stock_parts/computer/hard_drive/portable/away/research_data,
+/obj/item/stock_parts/computer/hard_drive/portable/away/research_data,
+/obj/item/stock_parts/computer/hard_drive/portable/away/research_data,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/tdome/testing)
 "bJK" = (
 /turf/unsimulated/wall,
 /area/space)
+"bTN" = (
+/obj/machinery/fabricator/rnd/protolathe,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/tdome/testing)
+"bVV" = (
+/obj/machinery/r_n_d/destructive_analyzer,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/tdome/testing)
 "bZN" = (
 /obj/floor_decal/corner/paleblue/mono,
 /turf/unsimulated/floor{
@@ -497,6 +519,12 @@
 /area/tdome/testing)
 "ckU" = (
 /obj/item/melee/powerfist/mounted,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/tdome/testing)
+"cDy" = (
+/obj/machinery/r_n_d/server/core,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -525,6 +553,12 @@
 /area/tdome/testing)
 "dsV" = (
 /obj/item/gun/projectile/pistol/gyropistol,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/tdome/testing)
+"dJA" = (
+/obj/machinery/computer/modular/preset/civilian/professional,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -586,6 +620,12 @@
 	icon_state = "dark"
 	},
 /area/tdome/testing)
+"hyc" = (
+/obj/machinery/fabricator/micro,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/tdome/testing)
 "hNF" = (
 /mob/living/exosuit/premade/random,
 /turf/unsimulated/floor{
@@ -611,6 +651,18 @@
 "ilP" = (
 /obj/structure/table/steel,
 /obj/item/gun/projectile/automatic/minigun,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/tdome/testing)
+"iDh" = (
+/obj/item/stack/material/plastic/fifty,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/tdome/testing)
+"iJN" = (
+/obj/machinery/robotics_fabricator,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -679,6 +731,15 @@
 	icon_state = "dark"
 	},
 /area/tdome/testing)
+"kOX" = (
+/obj/item/stock_parts/computer/hard_drive/portable/advanced,
+/obj/item/stock_parts/computer/hard_drive/portable/advanced,
+/obj/item/stock_parts/computer/hard_drive/portable/advanced,
+/obj/item/stock_parts/computer/hard_drive/portable/advanced,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/tdome/testing)
 "kWF" = (
 /obj/structure/flora/ausbushes/brflowers,
 /obj/landmark{
@@ -723,6 +784,12 @@
 	icon_state = "dark"
 	},
 /area/tdome/testing)
+"mze" = (
+/obj/machinery/r_n_d/server/robotics,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/tdome/testing)
 "mXE" = (
 /obj/structure/table/steel,
 /obj/item/gun/projectile/automatic/mounted/shotgun,
@@ -756,7 +823,22 @@
 	},
 /area/tdome/testing)
 "oCN" = (
-/mob/living/exosuit/premade/firefighter,
+/obj/machinery/fabricator/rnd/imprinter,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/tdome/testing)
+"oIM" = (
+/obj/item/stack/material/gold/ten,
+/obj/item/stack/material/gold/ten,
+/obj/item/stack/material/gold/ten,
+/obj/item/stack/material/gold/ten,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/tdome/testing)
+"oLH" = (
+/obj/item/modular_computer/laptop/preset/custom_loadout/advanced,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -818,6 +900,25 @@
 	icon_state = "dark"
 	},
 /area/tdome/testing)
+"ryI" = (
+/obj/item/stock_parts/computer/hard_drive/portable/design/tool,
+/obj/item/stock_parts/computer/hard_drive/portable/design/medical,
+/obj/item/stock_parts/computer/hard_drive/portable/design/engineering,
+/obj/item/stock_parts/computer/hard_drive/portable/design/drinking,
+/obj/item/stock_parts/computer/hard_drive/portable/design/cuttery,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/tdome/testing)
+"rJA" = (
+/obj/item/stack/material/glass/ten,
+/obj/item/stack/material/glass/ten,
+/obj/item/stack/material/glass/ten,
+/obj/item/stack/material/glass/ten,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/tdome/testing)
 "rSf" = (
 /obj/item/gun/projectile/revolver/medium/marooned,
 /turf/unsimulated/floor{
@@ -843,6 +944,13 @@
 /area/tdome/testing)
 "sHC" = (
 /mob/living/exosuit/premade/light,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/tdome/testing)
+"sHT" = (
+/obj/item/stock_parts/computer/hard_drive/portable/design/components,
+/obj/item/stock_parts/computer/hard_drive/portable/design/arms,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -898,6 +1006,18 @@
 /area/tdome/testing)
 "xcX" = (
 /obj/item/stack/material/steel/fifty,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/tdome/testing)
+"xvM" = (
+/obj/machinery/fabricator,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/tdome/testing)
+"xCD" = (
+/obj/item/stack/material/uranium/fifty,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -19770,21 +19890,21 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+lCd
+lCd
+lCd
+lCd
+lCd
+lCd
+lCd
+lCd
+lCd
+lCd
+lCd
+lCd
+lCd
+lCd
+lCd
 lCd
 lCd
 lCd
@@ -19972,21 +20092,21 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+lCd
+cDy
+gqB
+iJN
+gqB
+xvM
+gqB
+bVV
+bTN
+adH
+oCN
+gqB
+gqB
+gqB
+gqB
 lCd
 owp
 gqB
@@ -20174,21 +20294,21 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+lCd
+mze
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
 lCd
 ifG
 gqB
@@ -20376,21 +20496,21 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+lCd
+gqB
+gqB
+oIM
+xCD
+hyc
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
 lCd
 aoQ
 gqB
@@ -20578,21 +20698,21 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+lCd
+oLH
+gqB
+ezf
+aZQ
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
 lCd
 kOJ
 gqB
@@ -20780,21 +20900,21 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+lCd
+dJA
+gqB
+rJA
+xcX
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
 lCd
 lQe
 gqB
@@ -20982,21 +21102,21 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+lCd
+kOX
+gqB
+ahe
+iDh
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
 lCd
 aSQ
 gqB
@@ -21184,23 +21304,23 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
 lCd
-aQu
+bvf
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
 gqB
 gqB
 gqB
@@ -21386,23 +21506,23 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
 lCd
-oCN
+ryI
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
 gqB
 gqB
 gqB
@@ -21588,23 +21708,23 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
 lCd
-adH
+sHT
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
 gqB
 gqB
 gqB
@@ -21790,21 +21910,21 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+lCd
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
 lCd
 ayV
 gqB
@@ -21992,21 +22112,21 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+lCd
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
 lCd
 sHC
 gqB
@@ -22194,21 +22314,21 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+lCd
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
 lCd
 lGT
 gqB
@@ -22396,21 +22516,21 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+lCd
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
 lCd
 aGV
 gqB
@@ -22598,21 +22718,21 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+lCd
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
 lCd
 ahf
 gqB
@@ -22800,21 +22920,21 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+lCd
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
+gqB
 lCd
 vDZ
 gqB
@@ -23002,21 +23122,21 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+lCd
+lCd
+lCd
+lCd
+lCd
+lCd
+lCd
+lCd
+lCd
+lCd
+lCd
+lCd
+lCd
+lCd
+lCd
 lCd
 lCd
 lCd
