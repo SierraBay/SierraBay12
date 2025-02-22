@@ -1,8 +1,21 @@
-/*
-	Datum-based species. Should make for much cleaner and easier to maintain race code.
-*/
+GLOBAL_LIST_EMPTY(species_by_name)
 
-/datum/species
+GLOBAL_LIST_INIT(playable_species, list(
+	SPECIES_HUMAN
+))
+
+GLOBAL_LIST_EMPTY(mob_ref_to_species_name)
+
+/hook/startup/proc/CreateSpeciesLists()
+	var/race_key = 1
+	for (var/singleton/species/species as anything in GET_SINGLETON_SUBTYPE_LIST(/singleton/species))
+		GLOB.species_by_name[species.name] = species
+		if (~species.spawn_flags & SPECIES_IS_RESTRICTED)
+			GLOB.playable_species += species.name
+		species.race_key = race_key++
+	return TRUE
+
+/singleton/species
 
 	// Descriptors and strings.
 	var/name
@@ -310,7 +323,7 @@ The slots that you can use are found in items_clothing.dm and are the inventory 
 	you use the _str version of the slot.
 */
 
-/datum/species/New()
+/singleton/species/New()
 
 	if(!codex_description)
 		codex_description = description
@@ -382,7 +395,7 @@ The slots that you can use are found in items_clothing.dm and are the inventory 
 		var/obj/item/organ/limb_path = organ_data["path"]
 		organ_data["descriptor"] = initial(limb_path.name)
 
-/datum/species/proc/equip_survival_gear(mob/living/carbon/human/H,extendedtank = 1)
+/singleton/species/proc/equip_survival_gear(mob/living/carbon/human/H,extendedtank = 1)
 	if(istype(H.get_equipped_item(slot_back), /obj/item/storage/backpack))
 		if (extendedtank)	H.equip_to_slot_or_del(new /obj/item/storage/box/engineer(H.back), slot_in_backpack)
 		else	H.equip_to_slot_or_del(new /obj/item/storage/box/survival(H.back), slot_in_backpack)
@@ -390,7 +403,7 @@ The slots that you can use are found in items_clothing.dm and are the inventory 
 		if (extendedtank)	H.equip_to_slot_or_del(new /obj/item/storage/box/engineer(H), slot_r_hand)
 		else	H.equip_to_slot_or_del(new /obj/item/storage/box/survival(H), slot_r_hand)
 
-/datum/species/proc/create_organs(mob/living/carbon/human/H) //Handles creation of mob organs.
+/singleton/species/proc/create_organs(mob/living/carbon/human/H) //Handles creation of mob organs.
 
 	H.mob_size = mob_size
 	for(var/obj/item/organ/organ in H.contents)
@@ -430,7 +443,7 @@ The slots that you can use are found in items_clothing.dm and are the inventory 
 		post_organ_rejuvenate(O, H)
 	H.sync_organ_dna()
 /* ------------------------> code\modules\emotes\definitions\_species.dm (У нас всё в моде в mods\emote_panel\code\species.dm)
-/datum/species/proc/hug(mob/living/carbon/human/H, mob/living/target)
+/singleton/species/proc/hug(mob/living/carbon/human/H, mob/living/target)
 
 	var/t_him = "them"
 	switch(target.gender)
@@ -456,12 +469,12 @@ The slots that you can use are found in items_clothing.dm and are the inventory 
 		H.update_personal_goal(/datum/goal/achievement/givehug, TRUE)
 		target.update_personal_goal(/datum/goal/achievement/gethug, TRUE)
 */
-/datum/species/proc/add_base_auras(mob/living/carbon/human/H)
+/singleton/species/proc/add_base_auras(mob/living/carbon/human/H)
 	if(base_auras)
 		for(var/type in base_auras)
 			H.add_aura(new type(H))
 
-/datum/species/proc/remove_base_auras(mob/living/carbon/human/H)
+/singleton/species/proc/remove_base_auras(mob/living/carbon/human/H)
 	if(base_auras)
 		var/list/bcopy = base_auras.Copy()
 		for(var/a in H.auras)
@@ -471,19 +484,19 @@ The slots that you can use are found in items_clothing.dm and are the inventory 
 				H.remove_aura(A)
 				qdel(A)
 
-/datum/species/proc/remove_inherent_verbs(mob/living/carbon/human/H)
+/singleton/species/proc/remove_inherent_verbs(mob/living/carbon/human/H)
 	if(inherent_verbs)
 		for(var/verb_path in inherent_verbs)
 			H.verbs -= verb_path
 	return
 
-/datum/species/proc/add_inherent_verbs(mob/living/carbon/human/H)
+/singleton/species/proc/add_inherent_verbs(mob/living/carbon/human/H)
 	if(inherent_verbs)
 		for(var/verb_path in inherent_verbs)
 			H.verbs |= verb_path
 	return
 
-/datum/species/proc/handle_post_spawn(mob/living/carbon/human/H) //Handles anything not already covered by basic species assignment.
+/singleton/species/proc/handle_post_spawn(mob/living/carbon/human/H) //Handles anything not already covered by basic species assignment.
 	H.icon_width = icon_width
 	H.icon_height = icon_height
 	add_inherent_verbs(H)
@@ -494,19 +507,19 @@ The slots that you can use are found in items_clothing.dm and are the inventory 
 	H.pass_flags = pass_flags
 	handle_limbs_setup(H)
 
-/datum/species/proc/handle_pre_spawn(mob/living/carbon/human/H)
+/singleton/species/proc/handle_pre_spawn(mob/living/carbon/human/H)
 	// Changing species can change NPC behaviour, so delete the holder if there is one
 	if (H.ai_holder && istype(H.ai_holder, /datum))
 		GLOB.stat_set_event.unregister(H, H.ai_holder, TYPE_PROC_REF(/datum/ai_holder, holder_stat_change))
 		QDEL_NULL(H.ai_holder)
 
-/datum/species/proc/handle_death(mob/living/carbon/human/H) //Handles any species-specific death events (such as dionaea nymph spawns).
+/singleton/species/proc/handle_death(mob/living/carbon/human/H) //Handles any species-specific death events (such as dionaea nymph spawns).
 	return
 
-/datum/species/proc/handle_new_grab(mob/living/carbon/human/H, obj/item/grab/G)
+/singleton/species/proc/handle_new_grab(mob/living/carbon/human/H, obj/item/grab/G)
 	return
 
-/datum/species/proc/handle_sleeping(mob/living/carbon/human/H)
+/singleton/species/proc/handle_sleeping(mob/living/carbon/human/H)
 	if(prob(2) && !H.failed_last_breath && !H.isSynthetic())
 		if(!H.paralysis)
 			H.emote("snore")
@@ -514,37 +527,37 @@ The slots that you can use are found in items_clothing.dm and are the inventory 
 			H.emote("groan")
 
 // Only used for alien plasma weeds atm, but could be used for Dionaea later.
-/datum/species/proc/handle_environment_special(mob/living/carbon/human/H)
+/singleton/species/proc/handle_environment_special(mob/living/carbon/human/H)
 	return
 
-/datum/species/proc/handle_movement_delay_special(mob/living/carbon/human/H)
+/singleton/species/proc/handle_movement_delay_special(mob/living/carbon/human/H)
 	return 0
 
 // Used to update alien icons for aliens.
-/datum/species/proc/handle_login_special(mob/living/carbon/human/H)
+/singleton/species/proc/handle_login_special(mob/living/carbon/human/H)
 	return
 
 // As above.
-/datum/species/proc/handle_logout_special(mob/living/carbon/human/H)
+/singleton/species/proc/handle_logout_special(mob/living/carbon/human/H)
 	return
 
 // Builds the HUD using species-specific icons and usable slots.
-/datum/species/proc/build_hud(mob/living/carbon/human/H)
+/singleton/species/proc/build_hud(mob/living/carbon/human/H)
 	return
 
 //Used by xenos understanding larvae and dionaea understanding nymphs.
-/datum/species/proc/can_understand(mob/other)
+/singleton/species/proc/can_understand(mob/other)
 	return
 
-/datum/species/proc/can_overcome_gravity(mob/living/carbon/human/H)
+/singleton/species/proc/can_overcome_gravity(mob/living/carbon/human/H)
 	return FALSE
 
 // Used for any extra behaviour when falling and to see if a species will fall at all.
-/datum/species/proc/can_fall(mob/living/carbon/human/H)
+/singleton/species/proc/can_fall(mob/living/carbon/human/H)
 	return TRUE
 
 //Used for swimming
-/datum/species/proc/can_float(mob/living/carbon/human/H)
+/singleton/species/proc/can_float(mob/living/carbon/human/H)
 	if(!H.is_physically_disabled())
 		if(H.skill_check(SKILL_HAULING, SKILL_BASIC))
 			if(H.encumbrance() < 1)
@@ -552,11 +565,11 @@ The slots that you can use are found in items_clothing.dm and are the inventory 
 	return FALSE
 
 // Used to override normal fall behaviour. Use only when the species does fall down a level.
-/datum/species/proc/handle_fall_special(mob/living/carbon/human/H, turf/landing)
+/singleton/species/proc/handle_fall_special(mob/living/carbon/human/H, turf/landing)
 	return FALSE
 
 // Called when using the shredding behavior.
-/datum/species/proc/can_shred(mob/living/carbon/human/H, ignore_intent, ignore_antag)
+/singleton/species/proc/can_shred(mob/living/carbon/human/H, ignore_intent, ignore_antag)
 
 	if((!ignore_intent && H.a_intent != I_HURT) || H.pulling_punches)
 		return 0
@@ -572,7 +585,7 @@ The slots that you can use are found in items_clothing.dm and are the inventory 
 
 	return 0
 
-/datum/species/proc/handle_vision(mob/living/carbon/human/H)
+/singleton/species/proc/handle_vision(mob/living/carbon/human/H)
 	var/list/vision = H.get_accumulated_vision_handlers()
 	H.update_sight()
 	H.set_sight(H.sight|get_vision_flags(H)|H.equipment_vision_flags|vision[1])
@@ -607,7 +620,7 @@ The slots that you can use are found in items_clothing.dm and are the inventory 
 
 	return 1
 
-/datum/species/proc/get_how_nearsighted(mob/living/carbon/human/H)
+/singleton/species/proc/get_how_nearsighted(mob/living/carbon/human/H)
 	var/prescriptions = short_sighted
 	if(H.disabilities & NEARSIGHTED)
 		prescriptions += 7
@@ -631,24 +644,24 @@ The slots that you can use are found in items_clothing.dm and are the inventory 
 					light -= H.equipment_light_protection
 	return clamp(max(prescriptions, light), 0, 7)
 
-/datum/species/proc/set_default_hair(mob/living/carbon/human/H)
+/singleton/species/proc/set_default_hair(mob/living/carbon/human/H)
 	H.head_hair_style = H.species.default_head_hair_style
 	H.facial_hair_style = H.species.default_facial_hair_style
 	H.update_hair()
 
-/datum/species/proc/get_blood_name()
+/singleton/species/proc/get_blood_name()
 	return "blood"
 
-/datum/species/proc/handle_death_check(mob/living/carbon/human/H)
+/singleton/species/proc/handle_death_check(mob/living/carbon/human/H)
 	return FALSE
 
 //Mostly for toasters
-/datum/species/proc/handle_limbs_setup(mob/living/carbon/human/H)
+/singleton/species/proc/handle_limbs_setup(mob/living/carbon/human/H)
 	for(var/thing in H.organs)
 		post_organ_rejuvenate(thing, H)
 
 // Impliments different trails for species depending on if they're wearing shoes.
-/datum/species/proc/get_move_trail(mob/living/carbon/human/H)
+/singleton/species/proc/get_move_trail(mob/living/carbon/human/H)
 	if(H.lying)
 		return /obj/decal/cleanable/blood/tracks/body
 	if(H.shoes || (H.wear_suit && (H.wear_suit.body_parts_covered & FEET)))
@@ -661,10 +674,10 @@ The slots that you can use are found in items_clothing.dm and are the inventory 
 	else
 		return move_trail
 
-/datum/species/proc/update_skin(mob/living/carbon/human/H)
+/singleton/species/proc/update_skin(mob/living/carbon/human/H)
 	return
 
-/datum/species/proc/disarm_attackhand(mob/living/carbon/human/attacker, mob/living/carbon/human/target)
+/singleton/species/proc/disarm_attackhand(mob/living/carbon/human/attacker, mob/living/carbon/human/target)
 	attacker.do_attack_animation(target)
 
 	if(target.w_uniform)
@@ -714,11 +727,11 @@ The slots that you can use are found in items_clothing.dm and are the inventory 
 	playsound(target.loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 	target.visible_message(SPAN_DANGER("[attacker] attempted to disarm \the [target]!"))
 
-/datum/species/proc/disfigure_msg(mob/living/carbon/human/H) //Used for determining the message a disfigured face has on examine. To add a unique message, just add this onto a specific species and change the "return" message.
+/singleton/species/proc/disfigure_msg(mob/living/carbon/human/H) //Used for determining the message a disfigured face has on examine. To add a unique message, just add this onto a specific species and change the "return" message.
 	var/datum/pronouns/P = H.choose_from_pronouns()
 	return "[SPAN_DANGER("[P.His] face is horribly mangled!")]\n"
 
-/datum/species/proc/max_skin_tone()
+/singleton/species/proc/max_skin_tone()
 	if(appearance_flags & SPECIES_APPEARANCE_HAS_SKIN_TONE_GRAV)
 		return 100
 	if(appearance_flags & SPECIES_APPEARANCE_HAS_SKIN_TONE_SPCR)
@@ -727,7 +740,7 @@ The slots that you can use are found in items_clothing.dm and are the inventory 
 		return 80
 	return 220
 
-/datum/species/proc/get_hair_styles()
+/singleton/species/proc/get_hair_styles()
 	var/list/L = LAZYACCESS(hair_styles, type)
 	if(!L)
 		L = list()
@@ -742,7 +755,7 @@ The slots that you can use are found in items_clothing.dm and are the inventory 
 			L[hairstyle] = S
 	return L
 
-/datum/species/proc/get_facial_hair_styles(gender)
+/singleton/species/proc/get_facial_hair_styles(gender)
 	var/list/facial_hair_styles_by_species = LAZYACCESS(facial_hair_styles, type)
 	if(!facial_hair_styles_by_species)
 		facial_hair_styles_by_species = list()
@@ -770,7 +783,7 @@ The slots that you can use are found in items_clothing.dm and are the inventory 
 
 	return facial_hair_style_by_gender
 
-/datum/species/proc/get_selectable_traits()
+/singleton/species/proc/get_selectable_traits()
 	var/list/allowed_traits = list()
 	var/list/trait_list = GET_SINGLETON_SUBTYPE_LIST(/singleton/trait)
 	for (var/singleton/trait/allowed_trait in trait_list)
@@ -786,7 +799,7 @@ The slots that you can use are found in items_clothing.dm and are the inventory 
 
 	return allowed_traits
 
-/datum/species/proc/get_description(header, append, verbose = TRUE, skip_detail, skip_photo)
+/singleton/species/proc/get_description(header, append, verbose = TRUE, skip_detail, skip_photo)
 	var/list/damage_types = list(
 		"physical trauma" = brute_mod,
 		"burns" = burn_mod,
@@ -866,22 +879,22 @@ The slots that you can use are found in items_clothing.dm and are the inventory 
 
 	show_browser(src, species.get_description(), "window=species;size=700x400")
 
-/datum/species/proc/skills_from_age(age)	//Converts an age into a skill point allocation modifier. Can be used to give skill point bonuses/penalities not depending on job.
+/singleton/species/proc/skills_from_age(age)	//Converts an age into a skill point allocation modifier. Can be used to give skill point bonuses/penalities not depending on job.
 	switch(age)
 		if(0 to 22) 	. = 0
 		if(23 to 30) 	. = 3
 		if(31 to 45)	. = 6
 		else			. = 8
 
-/datum/species/proc/post_organ_rejuvenate(obj/item/organ/org, mob/living/carbon/human/H)
+/singleton/species/proc/post_organ_rejuvenate(obj/item/organ/org, mob/living/carbon/human/H)
 	return
 
-/datum/species/proc/check_no_slip(mob/living/carbon/human/H)
+/singleton/species/proc/check_no_slip(mob/living/carbon/human/H)
 	if(can_overcome_gravity(H))
 		return TRUE
 	return (species_flags & SPECIES_FLAG_NO_SLIP)
 
-/datum/species/proc/get_pain_emote(mob/living/carbon/human/H, pain_power)
+/singleton/species/proc/get_pain_emote(mob/living/carbon/human/H, pain_power)
 	if(!(species_flags & SPECIES_FLAG_NO_PAIN))
 		return
 	for(var/pain_emotes in pain_emotes_with_pain_level)
@@ -891,7 +904,7 @@ The slots that you can use are found in items_clothing.dm and are the inventory 
 			var/singleton/emote/E = GET_SINGLETON(pick(pain_emotes))
 			return E.key
 
-/datum/species/proc/handle_exertion(mob/living/carbon/human/H)
+/singleton/species/proc/handle_exertion(mob/living/carbon/human/H)
 	if (!exertion_effect_chance)
 		return
 	var/chance = exertion_effect_chance * H.encumbrance()

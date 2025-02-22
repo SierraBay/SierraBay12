@@ -37,6 +37,9 @@
 /obj/machinery/atmospherics/pipe/hides_under_flooring()
 	return level != ATOM_LEVEL_OVER_TILE
 
+/obj/machinery/atmospherics/pipe/fire_act()
+	return FALSE
+
 /obj/machinery/atmospherics/pipe/on_death()
 	burst()
 

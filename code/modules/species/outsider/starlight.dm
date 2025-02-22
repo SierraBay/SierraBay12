@@ -1,4 +1,4 @@
-/datum/species/starlight
+/singleton/species/starlight
 	name = "Starlight Base"
 	preview_icon = null
 
@@ -28,15 +28,15 @@
 		TAG_CULTURE = CULTURE_STARLIGHT
 	)
 
-/datum/species/starlight/handle_death_check(mob/living/carbon/human/H)
+/singleton/species/starlight/handle_death_check(mob/living/carbon/human/H)
 	if(H.health == 0)
 		return TRUE
 	return FALSE
 
-/datum/species/starlight/handle_death(mob/living/carbon/human/H)
+/singleton/species/starlight/handle_death(mob/living/carbon/human/H)
 	addtimer(new Callback(H, TYPE_PROC_REF(/mob, dust)),0)
 
-/datum/species/starlight/starborn
+/singleton/species/starlight/starborn
 	name = "Starborn"
 	name_plural = "Starborn"
 	icobase = 'icons/mob/human_races/species/starborn/body.dmi'
@@ -81,13 +81,13 @@
 		/obj/aura/starborn
 		)
 
-/datum/species/starlight/starborn/handle_death(mob/living/carbon/human/H)
+/singleton/species/starlight/starborn/handle_death(mob/living/carbon/human/H)
 	..()
 	var/turf/T = get_turf(H)
 	new/obj/decal/cleanable/liquid_fuel(T, 20, TRUE)
 	T.hotspot_expose(PHORON_MINIMUM_BURN_TEMPERATURE)
 
-/datum/species/starlight/blueforged
+/singleton/species/starlight/blueforged
 	name = "Blueforged"
 	name_plural = "Blueforged"
 	icobase = 'icons/mob/human_races/species/blueforged/body.dmi'
@@ -111,6 +111,6 @@
 
 	override_organ_types = list(BP_EYES = /obj/item/organ/internal/eyes/blueforged)
 
-/datum/species/starlight/blueforged/handle_death(mob/living/carbon/human/H)
+/singleton/species/starlight/blueforged/handle_death(mob/living/carbon/human/H)
 	..()
 	new /obj/temporary(get_turf(H),11, 'icons/mob/mob.dmi', "liquify")

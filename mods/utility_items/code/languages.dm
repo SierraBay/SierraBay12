@@ -16,5 +16,5 @@
 	. = ..()
 	additional_languages = character.species.additional_languages
 
-/datum/species
+/singleton/species
 	var/additional_languages = 0

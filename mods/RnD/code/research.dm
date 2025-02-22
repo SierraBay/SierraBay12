@@ -1,108 +1,151 @@
+/*
+General Explination:
+The research datum is the "folder" where all the research information is stored in a R&D console. It's also a holder for all the
+various procs used to manipulate it. It has four variables and seven procs:
 
+Variables:
+- tech_trees is a list of all /datum/tech that can potentially be researched by the player.
+- all_designs is a list of all /datum/technology that can potentially be researched by the player.
+- researched_tech contains all researched technologies
+- known_designs contains all researched /datum/design.
+- experiments contains data related to earning research points, more info in experiment.dm
+- research_points is an amount of points that can be spend on researching technologies
+- design_categories_protolathe stores all unlocked categories for protolathe designs
+- design_categories_imprinter stores all unlocked categories for circuit imprinter designs
+
+Procs:
+- AddDesign2Known: Adds a /datum/design to known_designs.
+- IsResearched
+- CanResearch
+- UnlockTechology
+- download_from: Unlocks all technologies from a different /datum/research and syncs experiment data
+- forget_techology
+- forget_random_technology
+- forget_all
+
+The tech datums are the actual "tech trees" that you improve through researching. Each one has five variables:
+- Name:		Pretty obvious. This is often viewable to the players.
+- Desc:		Pretty obvious. Also player viewable.
+- ID:		This is the unique ID of the tech that is used by the various procs to find and/or maniuplate it.
+- Level:	This is the current level of the tech. Based on the amount of researched technologies
+- MaxLevel: Maxium level possible for this tech. Based on the amount of technologies of that tech
+
+*/
+/***************************************************************
+**						Master Types						  **
+**	Includes all the helper procs and basic tech processing.  **
+***************************************************************/
+#define RESEARCH_ENGINEERING   /datum/tech/engineering
+#define RESEARCH_BIOTECH       /datum/tech/biotech
+#define RESEARCH_COMBAT        /datum/tech/combat
+#define RESEARCH_DATA          /datum/tech/programming
+#define RESEARCH_POWERSTORAGE  /datum/tech/powerstorage
+#define RESEARCH_BLUESPACE     /datum/tech/bluespace
+#define RESEARCH_ESOTERIC      /datum/tech/esoteric
+#define RESEARCH_MAGNETS       /datum/tech/magnets
+#define RESEARCH_MATERIALS     /datum/tech/materials
+
+GLOBAL_VAR_INIT(research_point_gained, 0)
+GLOBAL_VAR_INIT(score_research_point_gained, 0)
 var/global/list/RDcomputer_list = list()
 var/global/list/explosion_watcher_list = list()
 
 
+/datum/research								//Holder for all the existing, archived, and known tech. Individual to console.
+	var/list/known_designs = list()			//List of available designs (at base reliability).
+	//Increased by each created prototype with formula: reliability += reliability * (RND_RELIABILITY_EXPONENT^created_prototypes)
+	var/list/design_categories_protolathe = list()
+	var/list/design_categories_imprinter = list()
+
+	var/list/researched_tech = list() // Tree = list(of_researched_tech)
+	var/list/researched_nodes = list() // All research nodes
+
+	var/datum/experiment_data/experiments
+	var/research_points = 0
+	var/list/uniquekeys = list()
+	var/known_research_file_ids = list()
+
+
 /datum/research/New()
-	for(var/D in subtypesof(/datum/design))
-		var/datum/design/d = new D(src)
-		design_by_id[d.id] = d
-		var/datum/computer_file/binary/design/design_file = new
-		design_file.design = d
-		design_file.set_filename(d.shortname)
-		d.file = design_file
-		d.file.setsize(d)
-
-	for(var/T in subtypesof(/datum/tech))
-		var/datum/tech/Tech_Tree = new T
-		tech_trees[Tech_Tree.id] = Tech_Tree
-		all_technologies[Tech_Tree.id] = list()
-
-	for(var/T in subtypesof(/datum/technology))
-		var/datum/technology/Tech = new T
-		if(all_technologies[Tech.tech_type])
-			all_technologies[Tech.tech_type][Tech.id] = Tech
-		else
-			WARNING("Unknown tech_type '[Tech.tech_type]' in technology '[Tech.name]'")
-
-	for(var/tech_tree_id in tech_trees)
-		var/datum/tech/Tech_Tree = tech_trees[tech_tree_id]
-		Tech_Tree.maxlevel = length(all_technologies[tech_tree_id])
-
-	for(var/design_id in design_by_id)
-		var/datum/design/D = design_by_id[design_id]
-		if(D.starts_unlocked)
-			AddDesign2Known(D)
-
+	..()
+	SSresearch.initialize_research_datum(src)
 	experiments = new /datum/experiment_data()
 	// This is a science station. Most tech is already at least somewhat known.
 	experiments.init_known_tech()
 
 /datum/research/proc/IsResearched(datum/technology/T)
-	return !!researched_tech[T.id]
+	return (T in researched_nodes)
 
 /datum/research/proc/CanResearch(datum/technology/T)
 	if(T.cost > research_points)
 		return FALSE
+	var/datum/tech/mytree = locate(T.tech_type) in researched_tech
+	if(!mytree || !mytree.shown) // invalid tech_type or hidden tree, no bypassing safeties!
+		return
 
-	for(var/t in T.required_tech_levels)
-		var/datum/tech/Tech_Tree = tech_trees[t]
-		var/level = T.required_tech_levels[t]
+	for(var/tree in T.required_tech_levels)
+		var/datum/tech/tech_tree = locate(tree) in researched_tech
+		var/level = T.required_tech_levels[tree]
 
-		if(Tech_Tree.level < level)
+		if(tech_tree.level < level)
 			return FALSE
 
-	for(var/t in T.required_technologies)
-		var/datum/technology/OTech = all_technologies[T.tech_type][t]
-
-		if(!IsResearched(OTech))
+	for(var/tech in T.required_technologies)
+		var/datum/technology/tech_node = locate(tech) in SSresearch.all_tech_nodes
+		if(!IsResearched(tech_node))
 			return FALSE
 
 	return TRUE
 
-/datum/research/proc/UnlockTechology(datum/technology/T, force = FALSE)
+/datum/research/proc/UnlockTechology(datum/technology/T, force = FALSE, initial = FALSE)
 	if(IsResearched(T))
-		return
+		return FALSE
 	if(!CanResearch(T) && !force)
-		return
-
-	researched_tech[T.id] = T
+		return FALSE
+	researched_nodes += T
+	var/datum/tech/tree = locate(T.tech_type) in researched_tech
+	researched_tech[tree] += T
 	if(!force)
-		research_points -= T.cost
-	tech_trees[T.tech_type].level += 1
+		adjust_research_points(-T.cost)
 
-	for(var/t in T.unlocks_designs)
-		var/datum/design/D = design_by_id[t]
+	if(initial) // Initial technologies don't add levels
+		tree.maxlevel -= 1
+	else
+		tree.level += 1
 
-		AddDesign2Known(D)
+	for(var/id in T.unlocks_designs)
+		AddDesign2Known(SSresearch.get_design(id))
+
+	return TRUE
 
 
 /datum/research/proc/download_from(datum/research/O)
+	for(var/t in O.researched_tech)
+		var/datum/tech/tree = t
+		var/datum/tech/our_tree = locate(tree.type) in researched_tech
 
-	for(var/tech_tree_id in O.tech_trees)
-		var/datum/tech/Tech_Tree = O.tech_trees[tech_tree_id]
-		var/datum/tech/Our_Tech_Tree = tech_trees[tech_tree_id]
+		if(tree.shown && !our_tree.shown)
+			our_tree.shown = tree.shown
+			. = TRUE // we actually updated something
 
-		if(Tech_Tree.shown)
-			Our_Tech_Tree.shown = Tech_Tree.shown
-
-	for(var/tech_id in O.researched_tech)
-		var/datum/technology/T = O.researched_tech[tech_id]
-		UnlockTechology(T, force = TRUE)
-
+		for(var/tech in O.researched_tech[t])
+			var/datum/technology/T = tech
+			if(UnlockTechology(T, force = TRUE))
+				. = TRUE // we actually updated something
+	known_research_file_ids |= O.known_research_file_ids
 	experiments.merge_with(O.experiments)
 
 /datum/research/proc/forget_techology(datum/technology/T)
 	if(!IsResearched(T))
 		return
-	var/datum/tech/Tech_Tree = tech_trees[T.tech_type]
-	if(!Tech_Tree)
+	var/datum/tech/tree = locate(T.tech_type) in researched_tech
+	if(!tree)
 		return
-	Tech_Tree.level -= 1
-	researched_tech -= T.id
+	tree.level -= 1
+	researched_tech[tree] -= T
+	researched_nodes -= T
 
-	for(var/t in T.unlocks_designs)
-		var/datum/design/D = design_by_id[t]
+	for(var/D in T.unlocks_designs)
 		known_designs -= D
 
 /datum/research/proc/forget_random_technology()
@@ -113,18 +156,15 @@ var/global/list/explosion_watcher_list = list()
 		forget_techology(T)
 
 /datum/research/proc/forget_all(tech_type)
-	var/datum/tech/Tech_Tree = tech_trees[tech_type]
-	if(!Tech_Tree)
+	var/datum/tech/tree = locate(tech_type) in researched_tech
+	if(!tree)
 		return
-	Tech_Tree.level = 1
-	for(var/tech_id in researched_tech)
-		var/datum/technology/T = researched_tech[tech_id]
-		if(T.tech_type == tech_type)
-			researched_tech -= tech_id
-
-			for(var/t in T.unlocks_designs)
-				var/datum/design/D = design_by_id[t]
-				known_designs -= D
+	tree.level = 1
+	researched_nodes -= researched_tech[tree] // Remove all the nodes of the tree from the general researched nodes list
+	for(var/tech in researched_tech[tree])
+		var/datum/technology/T = tech
+		for(var/D in T.unlocks_designs)
+			known_designs -= D
 
 /datum/research/proc/AddDesign2Known(datum/design/D)
 	if(D in known_designs)
@@ -150,19 +190,19 @@ var/global/list/explosion_watcher_list = list()
 
 // Unlocks hidden tech trees
 /datum/research/proc/check_item_for_tech(obj/item/I)
-	if(!LAZYLEN(I.origin_tech))
+	var/list/temp_tech = I.origin_tech
+	if(!LAZYLEN(temp_tech))
 		return
 
-	for(var/tech_tree_id in tech_trees)
-		var/datum/tech/T = tech_trees[tech_tree_id]
+	for(var/tree in researched_tech)
+		var/datum/tech/T = tree
 		if(T.shown || !T.item_tech_req)
 			continue
 
-		for(var/item_tech in I.origin_tech)
+		for(var/item_tech in temp_tech)
 			if(item_tech == T.item_tech_req)
 				T.shown = TRUE
 				return
-
 
 /datum/research/proc/AddSciPoints(datum/computer_file/binary/sci/D)
 	if(D.uniquekey in uniquekeys)
@@ -170,6 +210,10 @@ var/global/list/explosion_watcher_list = list()
 	uniquekeys += D.uniquekey
 	return (rand(500, 1000) * D.size)
 
+/datum/research/proc/adjust_research_points(value)
+	if(value > 0)
+		GLOB.research_point_gained += value
+	research_points += value
 
 /datum/tech	//Datum of individual technologies.
 	var/name = "name"          //Name of the technology.
@@ -215,13 +259,11 @@ var/global/list/explosion_watcher_list = list()
 	name = "Power Manipulation Technology"
 	shortname = "Power Manipulation"
 	desc = "The various technologies behind the storage and generation of electicity."
-	id = RESEARCH_POWERSTORAGE
 
 /datum/tech/bluespace
 	name = "'Blue-space' Technology"
 	shortname = "Blue-space"
 	desc = "Devices that utilize the sub-reality known as 'blue-space'"
-	id = RESEARCH_BLUESPACE
 
 /datum/tech/biotech
 	name = "Biological Technology"
@@ -233,19 +275,16 @@ var/global/list/explosion_watcher_list = list()
 	name = "Robotics"
 	shortname = "Robotics"
 	desc = "The use of magnetic fields to make electrical devices."
-	id = RESEARCH_MAGNETS
 
 /datum/tech/combat
 	name = "Combat Systems"
 	shortname = "Combat"
 	desc = "Offensive and defensive systems."
-	id = RESEARCH_COMBAT
 
 /datum/tech/programming
 	name = "Data Theory"
 	shortname = "Data Theory"
 	desc = "Computer and artificial intelligence and data storage systems."
-	id = RESEARCH_DATA
 
 /datum/tech/esoteric
 	name = "Esoteric Technology"
@@ -290,3 +329,11 @@ var/global/list/explosion_watcher_list = list()
 	var/list/required_tech_levels = list()  // list("biotech" = 5, ...) Ids and required levels of tech
 	var/cost = 100                          // How much research points required to unlock this techology
 	var/list/unlocks_designs = list()       // Ids of designs that this technology unlocks
+
+/datum/technology/proc/getCost()
+	// Calculates tech disk's supply points sell cost
+	var/datum/tech/tree = locate(tech_type) in SSresearch.all_tech_trees
+	if(tree)
+		return (cost/100)*initial(tree.rare)
+	else
+		return cost/100

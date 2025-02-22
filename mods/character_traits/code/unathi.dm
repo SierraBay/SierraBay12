@@ -8,7 +8,7 @@
 
 /datum/mod_trait/unathi/slow_regen/apply_trait(mob/living/carbon/human/H)
 	H.species.remove_base_auras(H)
-	if(H.species.type == /datum/species/unathi/yeosa)
+	if(H.species.type == /singleton/species/unathi/yeosa)
 		H.species.base_auras = list(/obj/aura/regenerating/human/unathi_slow_regen/yeosa)
 	else
 		H.species.base_auras = list(/obj/aura/regenerating/human/unathi_slow_regen)

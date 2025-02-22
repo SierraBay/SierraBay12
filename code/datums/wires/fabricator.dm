@@ -1,16 +1,35 @@
 #define AUTOLATHE_HACK_WIRE    1
 #define AUTOLATHE_SHOCK_WIRE   2
 #define AUTOLATHE_DISABLE_WIRE 4
-
+//[SIERRA-EDIT] - MODPACK_RND
 /datum/wires/fabricator
-
+	var/obj/machinery/fabricator/A
 	holder_type = /obj/machinery/fabricator
 	wire_count = 6
 	descriptions = list(
-		new /datum/wire_description(AUTOLATHE_HACK_WIRE, "This wire appears to lead to an auxiliary data storage unit.", "Contraband"),
+		new /datum/wire_description(AUTOLATHE_HACK_WIRE, "This wire appears to lead to an auxiliary data storage unit.", "Access"),
 		new /datum/wire_description(AUTOLATHE_SHOCK_WIRE, "This wire seems to be carrying a heavy current.", "Shock"),
 		new /datum/wire_description(AUTOLATHE_DISABLE_WIRE, "This wire is connected to the power switch.", "Power", SKILL_EXPERIENCED)
 	)
+
+/datum/wires/fabricator/New()
+	.=..()
+	A = holder
+
+/datum/wires/fabricator/robotics_fabricator
+	var/obj/machinery/robotics_fabricator/F
+	holder_type = /obj/machinery/robotics_fabricator
+	wire_count = 6
+	descriptions = list(
+		new /datum/wire_description(AUTOLATHE_HACK_WIRE, "This wire appears to lead to an auxiliary data storage unit.", "Access"),
+		new /datum/wire_description(AUTOLATHE_SHOCK_WIRE, "This wire seems to be carrying a heavy current.", "Shock"),
+		new /datum/wire_description(AUTOLATHE_DISABLE_WIRE, "This wire is connected to the power switch.", "Power", SKILL_EXPERIENCED)
+	)
+
+/datum/wires/fabricator/robotics_fabricator/New()
+	A = F
+	.=..()
+//[/SIERRA-EDIT] - MODPACK_RND
 
 /datum/wires/fabricator/GetInteractWindow(mob/user)
 	var/obj/machinery/fabricator/A = holder
