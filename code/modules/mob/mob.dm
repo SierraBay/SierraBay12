@@ -693,7 +693,7 @@
 			stat("Map CPU:","[world.map_cpu]")
 			stat("Instances:","[length(world.contents)]")
 			stat(null)
-			var/time = Uptime()
+			var/time = uptime()
 			if(Master)
 				Master.UpdateStat(time)
 			else
