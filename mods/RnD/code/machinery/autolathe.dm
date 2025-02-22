@@ -695,7 +695,9 @@
 		if(!(fab_status_flags & FAB_HACKED))
 			return ERR_NOCOMPAT*/
 	if(design.build_type != build_type)
-		return ERR_NOCOMPAT
+		var/second_check = build_type | MECHFAB
+		if(design.build_type != second_check)
+			return ERR_NOCOMPAT
 
 	for(var/rmat in design.materials)
 		if(!(rmat in stored_material))
