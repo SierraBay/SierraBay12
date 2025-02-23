@@ -1,7 +1,7 @@
 //Wireweeds are created by the AI's nanites to spread its connectivity through the ship.
 //When they reach any machine, they annihilate them and re-purpose them to the AI's needs. They are the 'hands' of our rogue AI.
 
-/obj/effect/plant/hivemind
+/obj/vine/hivemind
 	layer = 2
 	health = 80
 	max_health = 80 //we are a little bit durable
@@ -11,20 +11,20 @@
 	var/list/wires_connections = list("0", "0", "0", "0")
 
 
-/obj/effect/plant/hivemind/New()
+/obj/vine/hivemind/New()
 	..()
 	icon = 'icons/obj/hivemind.dmi'
 	spawn(2)
 		update_neighbors()
 
 
-/obj/effect/plant/hivemind/Destroy()
+/obj/vine/hivemind/Destroy()
 	if(master_node)
 		master_node.my_wireweeds.Remove(src)
 	return ..()
 
 
-/obj/effect/plant/hivemind/after_spread(obj/effect/plant/child, turf/target_turf)
+/obj/vine/hivemind/after_spread(obj/vine/child, turf/target_turf)
 	if(master_node)
 		master_node.add_wireweed(child)
 	spawn(1)
@@ -34,7 +34,7 @@
 		update_icon()
 
 
-/obj/effect/plant/hivemind/proc/try_to_assimilate()
+/obj/vine/hivemind/proc/try_to_assimilate()
 	if(hive_mind_ai && master_node)
 		for(var/obj/machinery/machine_on_my_tile in loc)
 			var/can_assimilate = TRUE
@@ -68,19 +68,19 @@
 				assimilate(dead_body)
 
 
-/obj/effect/plant/hivemind/update_neighbors()
+/obj/vine/hivemind/update_neighbors()
 	..()
 	update_connections()
 	update_icon()
 	update_openspace()
 
 
-/obj/effect/plant/hivemind/spread()
+/obj/vine/hivemind/spread()
 	if(hive_mind_ai && master_node)
 		..()
 
 
-/obj/effect/plant/hivemind/life()
+/obj/vine/hivemind/life()
 	if(hive_mind_ai && master_node)
 		try_to_assimilate()
 		chem_handler()
@@ -91,11 +91,11 @@
 		check_health()
 
 
-/obj/effect/plant/hivemind/is_mature()
+/obj/vine/hivemind/is_mature()
 	return TRUE
 
 
-/obj/effect/plant/hivemind/refresh_icon()
+/obj/vine/hivemind/refresh_icon()
 	overlays.Cut()
 	var/image/I
 	for(var/i = 1 to 4)
@@ -117,9 +117,9 @@
 			overlays += wall_hug_overlay
 
 
-/obj/effect/plant/hivemind/proc/update_connections(propagate = 0)
+/obj/vine/hivemind/proc/update_connections(propagate = 0)
 	var/list/dirs = list()
-	for(var/obj/effect/plant/hivemind/W in range(1, src) - src)
+	for(var/obj/vine/hivemind/W in range(1, src) - src)
 		if(propagate)
 			W.update_connections()
 			W.update_icon()
@@ -128,7 +128,7 @@
 	wires_connections = dirs_to_corner_states(dirs)
 
 
-/obj/effect/plant/hivemind/door_interaction(obj/machinery/door/airlock/door)
+/obj/vine/hivemind/door_interaction(obj/machinery/door/airlock/door)
 	if(!door || !istype(door))
 		return FALSE
 
@@ -158,7 +158,7 @@
 	return TRUE
 
 
-/obj/effect/plant/hivemind/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/vine/hivemind/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(mover == src)
 		if(target.density)
 			return FALSE
@@ -178,7 +178,7 @@
 
 
 //What a pity that we haven't some kind proc as special library to use it somewhere
-/obj/effect/plant/hivemind/proc/anim_shake(atom/thing)
+/obj/vine/hivemind/proc/anim_shake(atom/thing)
 	var/init_px = thing.pixel_x
 	var/shake_dir = pick(-1, 1)
 	animate(thing, transform=turn(matrix(), 8*shake_dir), pixel_x=init_px + 2*shake_dir, time=1)
@@ -186,13 +186,13 @@
 
 
 //assimilation process
-/obj/effect/plant/hivemind/proc/assimilate(var/atom/subject)
-	if(istype(subject, /obj/machinery) || istype(subject, /obj/item/modular_computer/console))
+/obj/vine/hivemind/proc/assimilate(var/atom/subject)
+	if(istype(subject, /obj/machinery) || istype(subject, /obj/item/modular_computer))
 		if(prob(hive_mind_ai.failure_chance))
 			//critical failure! This machine would be a dummy, which means - without any ability
 			//let's make an infested sprite
 			var/obj/machinery/hivemind_machine/new_machine = new (loc)
-			var/icon/infected_icon = new('icons/obj/hivemind_machines.dmi', icon_state = "wires-[rand(1, 3)]")
+			var/icon/infected_icon = new('mods/hivemind/icons/hivemind_machines.dmi', icon_state = "wires-[rand(1, 3)]")
 			var/icon/new_icon = new(subject.icon, icon_state = subject.icon_state, dir = subject.dir)
 			new_icon.Blend(infected_icon, ICON_OVERLAY)
 			new_machine.icon = new_icon
@@ -251,7 +251,7 @@
 
 //in fact, this is some kind of reinforced wires, so we can't take samples from it and inject something too
 //but we still can slice it with something sharp
-/obj/effect/plant/hivemind/attackby(obj/item/weapon/W, mob/user)
+/obj/vine/hivemind/attackby(obj/item/weapon/W, mob/user)
 	user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
 
 	var/weapon_type
@@ -277,20 +277,20 @@
 
 
 //fire is effective, but there need some time to melt the covering
-/obj/effect/plant/hivemind/fire_act()
+/obj/vine/hivemind/fire_act()
 	health -= rand(1, 4)
 	check_health()
 
 
 //emp is effective too
 //it causes electricity failure, so our wireweeds just blowing up inside, what makes them fragile
-/obj/effect/plant/hivemind/emp_act(severity)
+/obj/vine/hivemind/emp_act(severity)
 	if(severity)
 		die_off()
 
 
 //Some acid and there's no problem
-/obj/effect/plant/hivemind/proc/chem_handler()
+/obj/vine/hivemind/proc/chem_handler()
 	for(var/obj/effect/effect/smoke/chem/smoke in loc)
 		for(var/lethal in killer_reagents)
 			if(smoke.reagents.has_reagent(lethal))

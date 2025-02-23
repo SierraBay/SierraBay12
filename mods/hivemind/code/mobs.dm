@@ -175,7 +175,7 @@
 
 	//now we work with icons, take victim's one and multiply it with special icon
 	var/icon/infested = new /icon(icon, icon_state)
-	var/icon/covering_mask = new /icon('icons/mob/hivemind.dmi', "covering[rand(1, 3)]")
+	var/icon/covering_mask = new /icon('mods/hivemind/icons/hivemind.dmi', "covering[rand(1, 3)]")
 	infested.Blend(covering_mask, ICON_MULTIPLY)
 	overlays += infested
 
@@ -330,7 +330,9 @@
 	speed = 12
 	malfunction_chance = 15
 	mob_size = MOB_MEDIUM
+	say_list_type = /datum/say_list/hiborg
 
+/datum/say_list/hiborg
 	speak = list("Everytime something breaks apart. Hell, I hate this job!",
 				"What? I hear something. Just mice? Just mice, phew...",
 				"I'm too tired, man, too tired. This job is... Awful.",
@@ -407,7 +409,9 @@
 	var/fake_dead = FALSE
 	var/fake_dead_wait_time = 0
 	var/fake_death_cooldown = 0
+	say_list_type = /datum/say_list/hiborg
 
+/datum/say_list/himan
 	speak = list(
 				"Stop... It. Just... STOP IT!",
 				"Why, honey? Why? Why-hy-hy?",
@@ -530,7 +534,7 @@
 /mob/living/simple_animal/hostile/hivemind/mechiver
 	name = "Robotic Horror"
 	desc = "A weird-looking machinery Frankenstein"
-	icon = 'icons/mob/hivemind.dmi'
+	icon = 'mods/hivemind/icons/hivemind.dmi'
 	icon_state = "mechiver-closed"
 	icon_dead = "mechiver-dead"
 	health = 450
@@ -546,6 +550,9 @@
 	var/pilot						//Yes, there's no pilot, so we just use var
 	var/mob/living/passenger
 	var/hatch_closed = TRUE
+	say_list_type = /datum/say_list/mechiver
+
+/datum/say_list/mechiver
 	//default speaking
 	speak = list(
 				"Somebody, just tell him to shut up...",
@@ -593,7 +600,7 @@
 
 	//when we have passenger, we torture him
 	if(passenger && prob(15))
-		passenger.apply_damage(rand(5, 10), pick(BRUTE, BURN, TOX))
+		passenger.apply_damage(rand(5, 10), pick(DAMAGE_BRUTE, DAMAGE_BURN, DAMAGE_TOXIN))
 		passenger << SPAN_DANGER(pick(
 								"Something grabs your neck!", "You hear whisper: \" It's okay, now you're sa-sa-safe! \"",
 								"You've been hit by something metal", "You almost can't feel your leg!", "Something liquid covers you!",
@@ -754,7 +761,7 @@
 /mob/living/simple_animal/hostile/hivemind/phaser
 	name = "phaser"
 	desc = "A Crooked human with a strange device on its head. It twitches sometimes and... Why are you still looking? Run!"
-	icon = 'icons/mob/hivemind.dmi'
+	icon = 'mods/hivemind/icons/hivemind.dmi'
 	icon_state = "phaser-1"
 	health = 120
 	maxHealth = 120

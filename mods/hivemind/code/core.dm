@@ -17,12 +17,12 @@ var/datum/hivemind/hive_mind_ai
 											/obj/machinery/camera,					/obj/machinery/light_switch,
 											/obj/machinery/disposal,				/obj/machinery/firealarm,
 											/obj/machinery/alarm,					/obj/machinery/recharger,
-											/obj/machinery/hologram,				/obj/machinery/holoposter,
+											/obj/machinery/hologram,				/obj/machinery/hivemind_machine,
 											/obj/machinery/button,					/obj/machinery/ai_status_display,
 											/obj/machinery/status_display,			/obj/machinery/requests_console,
 											/obj/machinery/newscaster,				/obj/machinery/floor_light,
-											/obj/machinery/nuclearbomb,				/obj/machinery/flasher,
-											/obj/machinery/filler_object,			/obj/machinery/hivemind_machine)
+											/obj/machinery/nuclearbomb,				/obj/machinery/flasher)
+
 	//internals
 	var/list/global_abilities_cooldown = list()
 	var/list/EP_price_list = list()

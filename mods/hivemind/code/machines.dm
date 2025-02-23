@@ -213,13 +213,13 @@
 
 	update_icon()
 
-	var/obj/effect/plant/hivemind/founded_wire = locate() in loc
+	var/obj/vine/hivemind/founded_wire = locate() in loc
 	if(!founded_wire)
-		var/obj/effect/plant/hivemind/wire = new(loc, new /datum/seed/wires)
+		var/obj/vine/hivemind/wire = new(loc, new /datum/seed/wires)
 		add_wireweed(wire)
 		wire.Process()
 	else
-		for(var/obj/effect/plant/hivemind/W in range(6, src))
+		for(var/obj/vine/hivemind/W in range(6, src))
 			if(W.master_node)
 				if(!(locate(type) in W.loc) && (get_dist(W, W.master_node) > 6) )
 					add_wireweed(W)
@@ -228,7 +228,7 @@
 /obj/machinery/hivemind_machine/node/Destroy()
 	hive_mind_ai.hives.Remove(src)
 	check_for_other()
-	for(var/obj/effect/plant/hivemind/wire in my_wireweeds)
+	for(var/obj/vine/hivemind/wire in my_wireweeds)
 		remove_wireweed(wire)
 	return ..()
 
@@ -248,8 +248,8 @@
 		icon_state = initial(icon_state)
 	use_ability()
 	//if we haven't any wireweeds at our location, let's make new one
-	if(!(locate(/obj/effect/plant/hivemind) in loc))
-		var/obj/effect/plant/hivemind/wireweed = new(loc, new /datum/seed/wires)
+	if(!(locate(/obj/vine/hivemind) in loc))
+		var/obj/vine/hivemind/wireweed = new(loc, new /datum/seed/wires)
 		add_wireweed(wireweed)
 
 
@@ -273,13 +273,13 @@
 
 //there we binding or un-binding hive with wire
 //in this way, when our node will be destroyed, wireweeds will die too
-/obj/machinery/hivemind_machine/node/proc/add_wireweed(obj/effect/plant/hivemind/wireweed)
+/obj/machinery/hivemind_machine/node/proc/add_wireweed(obj/vine/hivemind/wireweed)
 	if(wireweed.master_node)
 		wireweed.master_node.remove_wireweed(wireweed)
 	wireweed.master_node = src
 	my_wireweeds.Add(wireweed)
 
-/obj/machinery/hivemind_machine/node/proc/remove_wireweed(obj/effect/plant/hivemind/wireweed)
+/obj/machinery/hivemind_machine/node/proc/remove_wireweed(obj/vine/hivemind/wireweed)
 	my_wireweeds.Remove(wireweed)
 	wireweed.master_node = null
 
