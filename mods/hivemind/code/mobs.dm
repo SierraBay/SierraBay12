@@ -20,12 +20,12 @@
 	var/speak_chance = 5
 	var/malfunction_chance = 5
 	ability_cooldown = 30 SECONDS
-	var/list/target_speak = list()			//this is like speak list, but when we see our target
+	var/list/say_got_target = list()			//this is like speak list, but when we see our target
 
 	//internals
 	var/obj/machinery/hivemind_machine/master
 	var/special_ability_cooldown = 0		//use ability_cooldown, don't touch this
-	//ВЫДАТЬ АИ ХОЛДЕРА
+	ai_holder = /datum/ai_holder/simple_animal/melee
 	// ВЫДАТЬ НАТУРАЛ ВЕАПОН
 
 /mob/living/simple_animal/hostile/hivemind/New()
@@ -53,7 +53,7 @@
 
 //That's just stuns us for a while and start second proc
 /mob/living/simple_animal/hostile/hivemind/proc/mulfunction()
-	stance = HOSTILE_STANCE_IDLE //it give us some kind of stun effect
+	stance = STANCE_IDLE //it give us some kind of stun effect
 	target_mob = null
 	walk(src, FALSE)
 	var/datum/effect/spark_spread/spark_system = new /datum/effect/spark_spread()
@@ -101,21 +101,10 @@
 	if(!.)
 		return
 
-	speak()
-
 	if(malfunction_chance && prob(malfunction_chance))
 		mulfunction()
 
 	closet_interaction()
-
-
-/mob/living/simple_animal/hostile/hivemind/proc/speak()
-	if(!client && speak_chance && prob(speak_chance) && speak.len)
-		if(target_mob && target_speak.len)
-			say(pick(target_speak))
-		else
-			say(pick(speak))
-
 
 //damage and raise malfunction chance
 //due to nature of malfunction, they just burn to death sometimes
@@ -148,7 +137,7 @@
 /mob/living/simple_animal/hostile/hivemind/resurrected
 	name = "resurrected creature"
 	malfunction_chance = 10
-
+//	say_list_type = /datum/say_list/resurrected
 
 //careful with this proc, it's used to 'transform' corpses into our mobs.
 //it takes appearence, gives hive-like overlays and makes stats a little better
@@ -167,11 +156,11 @@
 		attacktext = SA.attacktext
 
 	//another check for superior mobs, fuk this mob spliting
-	if(istype(victim, /mob/living/carbon/human/H))
+	if(istype(victim, /mob/living/carbon/human))
 		var/mob/living/carbon/human/SA = victim
-		icon_state = SA.icon_living
-		icon_living = SA.icon_living
-		attacktext = SA.attacktext
+		icon_state = SA.icon
+		icon_living = SA.icon
+		attacktext = "attacked"
 
 	//now we work with icons, take victim's one and multiply it with special icon
 	var/icon/infested = new /icon(icon, icon_state)
@@ -188,16 +177,22 @@
 	mob_size = victim.mob_size
 	pass_flags = victim.pass_flags
 
-	//corrupted speak imitation
-	var/phrase_amount = rand(2, 5)
-	for(var/count = 1 to phrase_amount)
-		var/first_word = pick("You", "I", "They", "Hive", "Corpses", "We", "Your friend", "This ship", "Your mind", "These guys")
-		var/second_word = pick("kill", "stop", "transform", "connect", "rebuild", "fix", "hug", "hit", "told", "help", "rework", "burn")
-		var/third_word = pick("them", "me", "you", "your soul", "us", "hive", "system", "this ship", "your head", "your brain")
-		var/end_symbol = pick("...", ".", "?", "!")
-		var/phrase = "[first_word] [second_word] [third_word][end_symbol]"
-		speak.Add(phrase)
+/* TO DO - Исправить
+/datum/say_list/resurrected
 
+	//corrupted speak imitation
+	var/phrase_amount = 0
+		for (var/i = 1 to x)
+			phrase_amount += rand(2, 5)
+		for(count = 1 in phrase_amount)
+			var/first_word =  list("You", "I", "They", "Hive", "Corpses", "We", "Your friend", "This ship", "Your mind", "These guys")
+			var/second_word = list("kill", "stop", "transform", "connect", "rebuild", "fix", "hug", "hit", "told", "help", "rework", "burn")
+			var/third_word =  list("them", "me", "you", "your soul", "us", "hive", "system", "this ship", "your head", "your brain")
+			var/end_symbol =  list("...", ".", "?", "!")
+			var/phrase = "[pick[first_word] [second_word] [third_word][end_symbol]]"
+
+	speak = list("[phrase]")
+*/
 
 /mob/living/simple_animal/hostile/hivemind/resurrected/death()
 	..()
@@ -226,16 +221,19 @@
 	speak_chance = 3
 	malfunction_chance = 15
 	mob_size = MOB_SMALL
-	pass_flags = PASSTABLE
+	pass_flags = PASS_FLAG_TABLE
 	speed = 4
+	ai_holder = /datum/ai_holder/simple_animal/melee
+	say_list_type = /datum/say_list/stinger
 
+/datum/say_list/stinger
 	speak = list(
 				"I've seen this ai. Ma-an, that's aw-we-e-ewful!",
 				"I know, i know, i remember this one.",
 				"Rad-d-dar, put a ma-ma... mask on!",
 				"Delicious! Delicious... Del-delicious?..",
 				)
-	target_speak = list(
+	say_got_target = list(
 				"Hey, i'm comming!",
 				"Hold on! I'm almost there!",
 				"I'll help you! Come closer.",
@@ -266,9 +264,12 @@
 	speak_chance = 3
 	malfunction_chance = 15
 	mob_size = MOB_SMALL
-	pass_flags = PASSTABLE
+	pass_flags = PASS_FLAG_TABLE
 	speed = 6
+	ai_holder = /datum/ai_holder/simple_animal/destructive
+	say_list_type = /datum/say_list/bomber
 
+/datum/say_list/bomber
 	speak = list(
 				"Can you help me, please? There's something strange.",
 				"Are you... Are you kidding?",
@@ -276,7 +277,7 @@
 				"This place is really bad, we are in deep shit here.",
 				"I'm not sure if we can just stop it",
 				)
-	target_speak = list(
+	say_got_target = list(
 						"Here you are! I have something for you. Something special!",
 						"Hey! Hey? Help me, please!",
 						"Hey, look, look. I won't harm you, just calm down!",
@@ -296,7 +297,7 @@
 	qdel(src)
 
 
-/mob/living/simple_animal/hostile/hivemind/bomber/AttackingTarget()
+/mob/living/simple_animal/hostile/hivemind/bomber/afterattack()
 	death()
 
 
@@ -324,12 +325,12 @@
 	icon_dead = "hiborg-dead"
 	health = 220
 	maxHealth = 220
-	melee_damage_lower = 10
 	harm_intent_damage = 15
 	attacktext = "claws"
 	speed = 12
 	malfunction_chance = 15
 	mob_size = MOB_MEDIUM
+	ai_holder = /datum/ai_holder/simple_animal/humanoid/hostile
 	say_list_type = /datum/say_list/hiborg
 
 /datum/say_list/hiborg
@@ -338,13 +339,16 @@
 				"I'm too tired, man, too tired. This job is... Awful.",
 				"These people know nothing about this work or about me. I can surprise them.",
 				"Blue wire is bolts, green is safety. Just... Pulse it here, okay? Right...")
-	target_speak = list(
+	say_got_target = list(
 						"I know what's wrong, just let me fix that.",
 						"You need my help? What's wrong? Gimme that thing, I can fix that.",
 						"Si-i-ir... Sir. Sir. It's better to... Stop here! Stop i said, what are you!?",
 						"Wait! Hey! Can i fix that!? I'm an engineer, you fuck! Sto-op-op-p here, i know what to do!"
 						)
 
+/*
+
+TO DO - забрать у паука вот это /mob/living/simple_animal/hostile/giant_spider/tunneler/do_special_attack(atom/A)
 
 /mob/living/simple_animal/hostile/hivemind/hiborg/AttackingTarget()
 	if(!Adjacent(target_mob))
@@ -366,7 +370,7 @@
 	src.visible_message(SPAN_DANGER("[src] spins around and slashes in a circle!"))
 	for(var/atom/target in range(1, src))
 		if(target != src)
-			target.attack_generic(src, rand(melee_damage_lower, harm_intent_damage*2))
+			target.attack_generic(src, rand(harm_intent_damage*1,5))
 	if(!client && prob(speak_chance))
 		say(pick("Get away from me!", "They are everywhere!"))
 
@@ -381,6 +385,7 @@
 					"I will fix you! Don't resist! Don't resist you rat!",
 					"I just want to replace that broken thing!"))
 
+*/
 
 /////////////////////////////////////HIMAN////////////////////////////////////
 //Hive + Man
@@ -398,7 +403,6 @@
 	icon_dead = "himan-dead"
 	health = 120
 	maxHealth = 120
-	melee_damage_lower = 20
 	harm_intent_damage = 25
 	attacktext = "slashes with claws"
 	malfunction_chance = 10
@@ -409,6 +413,7 @@
 	var/fake_dead = FALSE
 	var/fake_dead_wait_time = 0
 	var/fake_death_cooldown = 0
+	ai_holder = /datum/ai_holder/simple_animal/humanoid/hostile
 	say_list_type = /datum/say_list/hiborg
 
 /datum/say_list/himan
@@ -420,7 +425,7 @@
 				"Come on, you ba-ba-bastard, I know what you really want.",
 				"How much fun!"
 				)
-	target_speak = list(
+	say_got_target = list(
 						"Are you... Are you okay? Wa-wait, wait a minu-nu-nute.",
 						"Come on, you ba-ba-bastard, i know what you really want to.",
 						"How much fun!",
@@ -457,16 +462,16 @@
 		return
 	..()
 
-/*
+
 /mob/living/simple_animal/hostile/hivemind/himan/MoveToTarget()
 	if(!fake_dead)
 		..()
 	else
 		if(!target_mob || SA_attackable(target_mob))
-			stance = HOSTILE_STANCE_IDLE
+			stance = STANCE_IDLE
 		if(target_mob in ListTargets(10))
 			if(get_dist(src, target_mob) > 1)
-				stance = HOSTILE_STANCE_ATTACKING
+				stance = STANCE_ATTACKING
 
 
 /mob/living/simple_animal/hostile/hivemind/himan/AttackingTarget()
@@ -477,9 +482,6 @@
 			awake()
 	else
 		..()
-
-*///РЕФАКТОРИНГ ВСЕГО ЧТО ВЫШЕ
-
 
 //Shriek stuns our victims and make them deaf for a while
 /mob/living/simple_animal/hostile/hivemind/himan/special_ability()
@@ -517,10 +519,8 @@
 		say(msg)
 	icon_state = "himan-damaged"
 	fake_dead = FALSE
-	stance = HOSTILE_STANCE_IDLE
+	stance = STANCE_IDLE
 	fake_death_cooldown = world.time + 2 MINUTES
-
-
 
 /////////////////////////////////////MECHIVER/////////////////////////////////
 //Mech + Hive + Driver
@@ -539,7 +539,6 @@
 	icon_dead = "mechiver-dead"
 	health = 450
 	maxHealth = 450
-	melee_damage_lower = 10
 	harm_intent_damage = 15
 	mob_size = MOB_LARGE
 	attacktext = "tramples"
@@ -550,6 +549,7 @@
 	var/pilot						//Yes, there's no pilot, so we just use var
 	var/mob/living/passenger
 	var/hatch_closed = TRUE
+	ai_holder = /datum/ai_holder/simple_animal/humanoid/hostile
 	say_list_type = /datum/say_list/mechiver
 
 /datum/say_list/mechiver
@@ -558,7 +558,7 @@
 				"Somebody, just tell him to shut up...",
 				"Bzew-zew-zewt. Th-this way!",
 				"Wha-a-at? When I'm near this cargo, I feel... fe-fe-fea-fear-er.")
-	target_speak = list(
+	say_got_target = list(
 				"Come here, jo-jo-join me. Join us-s.",
 				"Time to be-to be-to be whole.",
 				"Enter me, i'm be-best mech among all of these rusty buckets.",
@@ -621,6 +621,7 @@
 				break
 
 
+/* TO DO - Пофиксить диалоги о рыбалке
 /mob/living/simple_animal/hostile/hivemind/mechiver/speak()
 	if(!client && prob(speak_chance) && speak.len)
 		if(pilot)
@@ -632,7 +633,7 @@
 				say(pick(other_answers))
 		else
 			..()
-
+*/
 
 //animations
 //updates every life tick
@@ -772,6 +773,7 @@
 	//internals
 	var/can_use_special_ability = TRUE
 	var/list/my_copies = list()
+	ai_holder = /datum/ai_holder/simple_animal/melee/evasive
 
 /mob/living/simple_animal/hostile/hivemind/phaser/New()
 	..()
@@ -803,19 +805,19 @@
 
 /mob/living/simple_animal/hostile/hivemind/phaser/AttackTarget()
 	if(target_mob && get_dist(src, target_mob) > 1)
-		stance = HOSTILE_STANCE_ATTACK
+		stance = STANCE_ATTACK
 	..()
 
 
 /mob/living/simple_animal/hostile/hivemind/phaser/MoveToTarget()
 	if(!target_mob || SA_attackable(target_mob))
-		stance = HOSTILE_STANCE_IDLE
+		stance = STANCE_IDLE
 	if(target_mob in ListTargets(10))
 		if(get_dist(src, target_mob) > 1)
-			stance = HOSTILE_STANCE_ATTACK
+			stance = STANCE_ATTACK
 			phase_move_to(target_mob, nearby = TRUE)
 		else
-			stance = HOSTILE_STANCE_ATTACKING
+			stance = STANCE_ATTACKING
 
 
 /mob/living/simple_animal/hostile/hivemind/phaser/proc/is_can_jump_on(turf/target)
@@ -842,7 +844,7 @@
 	//if our target is near, we move precisely to it
 	if(distance_to_target <= 3)
 		if(nearby)
-			for(var/d in alldirs)
+			for(var/d in GLOB.alldirs)
 				var/turf/nearby_turf = get_step(new_place, d)
 				if(is_can_jump_on(nearby_turf))
 					new_place = nearby_turf
@@ -886,7 +888,7 @@
 
 /mob/living/simple_animal/hostile/hivemind/phaser/special_ability()
 	my_copies = list() //let's clean it up
-	var/possible_directions = alldirs - cardinal
+	var/possible_directions = GLOB.alldirs - GLOB.cardinal
 	var/turf/spawn_point = get_turf(src)
 	//we gives to copies our appearence and pick random direction for them
 	//with animation it's hard to say, who's real. And i hope it looks great

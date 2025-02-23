@@ -3,8 +3,7 @@
 
 /obj/vine/hivemind
 	layer = 2
-	health = 80
-	max_health = 80 //we are a little bit durable
+	health_max = 80 //we are a little bit durable
 	var/list/killer_reagents = list("pacid", "sacid", "hclacid", "thermite")
 	//internals
 	var/obj/machinery/hivemind_machine/node/master_node
@@ -13,7 +12,7 @@
 
 /obj/vine/hivemind/New()
 	..()
-	icon = 'icons/obj/hivemind.dmi'
+	icon = 'mods/hivemind/icons/hivemind_obj.dmi'
 	spawn(2)
 		update_neighbors()
 
@@ -58,7 +57,7 @@
 				qdel(machine_on_my_tile)
 
 		//modular computers handling
-		var/obj/item/modular_computer/console/mod_comp = locate() in loc
+		var/obj/item/modular_computer/mod_comp = locate() in loc
 		if(mod_comp)
 			assimilate(mod_comp)
 
@@ -72,7 +71,6 @@
 	..()
 	update_connections()
 	update_icon()
-	update_openspace()
 
 
 /obj/vine/hivemind/spread()
@@ -86,8 +84,8 @@
 		chem_handler()
 	else
 		//slow vanishing after node death
-		health -= 10
-		alpha = 255 * health/max_health
+		health_current -= 10
+		alpha = 255 * health_current/health_max
 		check_health()
 
 
@@ -95,13 +93,13 @@
 	return TRUE
 
 
-/obj/vine/hivemind/refresh_icon()
+/obj/vine/hivemind/update_icon()
 	overlays.Cut()
 	var/image/I
 	for(var/i = 1 to 4)
 		I = image(src.icon, "wires[wires_connections[i]]", dir = 1<<(i-1))
 		overlays += I
-	for(var/d in cardinal)
+	for(var/d in GLOB.cardinal)
 		var/turf/T = get_step(loc, d)
 		if((locate(/obj/structure/window) in T) || istype(T, /turf/simulated/wall))
 			var/image/wall_hug_overlay = image(icon = src.icon, icon_state = "wall_hug", dir = d)
@@ -251,11 +249,14 @@
 
 //in fact, this is some kind of reinforced wires, so we can't take samples from it and inject something too
 //but we still can slice it with something sharp
-/obj/vine/hivemind/attackby(obj/item/weapon/W, mob/user)
+
+/*
+/obj/vine/hivemind/use_weapon(obj/item/weapon/W, mob/user, list/click_params)
+	. = ..()
 	user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
 
 	var/weapon_type
-	if (W.has_quality(QUALITY_CUTTING))
+	if (W.has_edge(weapon))
 		weapon_type = QUALITY_CUTTING
 	else if (W.has_quality(QUALITY_WELDING))
 		weapon_type = QUALITY_WELDING
@@ -263,22 +264,39 @@
 	if(weapon_type)
 		if(W.use_tool(user, src, WORKTIME_FAST, weapon_type, FAILCHANCE_EASY, required_stat = STAT_ROB))
 			user.visible_message(SPAN_DANGER("[user] cuts down [src]."), SPAN_DANGER("You cut down [src]."))
-			die_off()
+			kill_health()
 			return
 		return
 	else
 		if(W.sharp && W.force >= 10)
-			health -= rand(W.force/2, W.force) //hm, maybe make damage based on player's robust stat?
+			health_current -= rand(W.force/2, W.force) //hm, maybe make damage based on player's robust stat?
 			user.visible_message(SPAN_DANGER("[user] slices [src]."), SPAN_DANGER("You slice [src]."))
 		else
 			user.visible_message(SPAN_DANGER("[user] tries to slice [src] with [W], but seems to do nothing."),
 								SPAN_DANGER("You try to slice [src], but it's useless!"))
 	check_health()
+*/
 
+/obj/vine/hivemind/use_weapon(obj/item/weapon/W, mob/user, list/click_params)
+	. = ..()
+	user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
+
+	if(W.sharp && W.force >= 30)
+		user.visible_message(SPAN_DANGER("[user] cuts down [src]."), SPAN_DANGER("You cut down [src]."))
+		kill_health()
+		return
+	if(W.sharp && W.force >= 10)
+		health_current -= rand(W.force/2, W.force) //hm, maybe make damage based on player's robust stat?
+		user.visible_message(SPAN_DANGER("[user] slices [src]."), SPAN_DANGER("You slice [src]."))
+	else
+		user.visible_message(SPAN_DANGER("[user] tries to slice [src] with [W], but seems to do nothing."),
+							SPAN_DANGER("You try to slice [src], but it's useless!"))
+
+	return ..()
 
 //fire is effective, but there need some time to melt the covering
 /obj/vine/hivemind/fire_act()
-	health -= rand(1, 4)
+	health_current -= rand(1, 4)
 	check_health()
 
 
@@ -286,13 +304,13 @@
 //it causes electricity failure, so our wireweeds just blowing up inside, what makes them fragile
 /obj/vine/hivemind/emp_act(severity)
 	if(severity)
-		die_off()
+		kill_health()
 
 
 //Some acid and there's no problem
 /obj/vine/hivemind/proc/chem_handler()
-	for(var/obj/effect/effect/smoke/chem/smoke in loc)
+	for(var/obj/effect/smoke/chem/smoke in loc)
 		for(var/lethal in killer_reagents)
 			if(smoke.reagents.has_reagent(lethal))
-				die_off()
+				kill_health()
 				return

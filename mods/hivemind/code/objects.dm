@@ -8,7 +8,6 @@
 	icon_state = "goo_proj"
 	damage = 15
 	damage_type = DAMAGE_BURN
-	check_armour = "energy"
 	step_delay = 2
 
 

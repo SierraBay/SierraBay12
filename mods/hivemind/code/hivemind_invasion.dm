@@ -17,7 +17,7 @@
 	var/turf/start_location
 	for(var/i=1 to 100)
 		var/turf/T = pick_subarea_turf(/area/maintenance, list(GLOBAL_PROC_REF(is_station_turf), GLOBAL_PROC_REF(not_turf_contains_dense_objects)))
-		start_location = T.random_space()
+		start_location = T
 		if(!start_location && i == 100)
 			log_and_message_admins("Hivemind failed to find a viable turf.")
 			kill()
@@ -25,5 +25,5 @@
 		if(start_location)
 			break
 
-	log_and_message_admins("Hivemind spawned in \the [get_area(T)]", location = T)
+	log_and_message_admins("Hivemind spawned in \the [get_area(start_location)]", location = start_location)
 	new /obj/machinery/hivemind_machine/node(start_location)

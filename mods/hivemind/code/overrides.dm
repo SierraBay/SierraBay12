@@ -28,7 +28,7 @@
 			health_current += rand_between(0,0.5)
 		else
 			health_current += rand_between(1,2.5)
-		refresh_icon()
+		update_icon()
 		if(health_current > health_max)
 			health_current = health_max
 	else if(health_current == health_max && !vine && (seed.type != /datum/seed/mushroom/maintshroom))
