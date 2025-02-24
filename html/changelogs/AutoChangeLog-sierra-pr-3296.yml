@@ -1,4 +1,0 @@
-author: Lexanx
-changes:
-  - {bugfix: Фикс некорекктной ветки в НИО и невозможности печатать батарейку}
-delete-after: true
