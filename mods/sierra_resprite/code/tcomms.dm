@@ -14,7 +14,7 @@
 	icon = 'mods/sierra_resprite/icons/tcomm.dmi'
 	icon_state = "bus"
 
-obj/machinery/telecomms/processor
+/obj/machinery/telecomms/processor
 	icon = 'mods/sierra_resprite/icons/tcomm.dmi'
 	icon_state = "processor"
 
