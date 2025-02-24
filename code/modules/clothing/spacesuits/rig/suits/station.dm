@@ -65,6 +65,7 @@
 
 /obj/item/clothing/head/helmet/space/rig/industrial
 	light_overlay = "helmet_light_wide"
+	head_light_range = 5
 	camera = /obj/machinery/camera/network/helmet
 	species_restricted = list(SPECIES_HUMAN,SPECIES_SKRELL,SPECIES_UNATHI,SPECIES_IPC)
 
@@ -131,6 +132,7 @@
 
 /obj/item/clothing/head/helmet/space/rig/eva
 	light_overlay = "helmet_light_alt"
+	head_light_range = 5
 	camera = /obj/machinery/camera/network/helmet
 	species_restricted = list(SPECIES_HUMAN,SPECIES_SKRELL,SPECIES_UNATHI,SPECIES_IPC)
 	sprite_sheets = list(
@@ -220,6 +222,7 @@
 
 /obj/item/clothing/head/helmet/space/rig/ce
 	light_overlay = "helmet_light_alt"
+	head_light_range = 5
 	camera = /obj/machinery/camera/network/helmet
 	species_restricted = list(SPECIES_HUMAN,SPECIES_SKRELL,SPECIES_UNATHI,SPECIES_IPC)
 	sprite_sheets = list(

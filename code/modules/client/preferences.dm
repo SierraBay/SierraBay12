@@ -390,9 +390,11 @@
 	dat += "<tt><center>"
 
 	dat += "<b>Select a character slot to load</b><hr>"
-	for(var/i=1, i<= config.character_slots, i++)
-		var/name = (slot_names && slot_names[get_slot_key(i)]) || "Character[i]"
-		if(i==default_slot)
+	for(var/i = 1 to config.character_slots)
+		var/name = slot_names?[get_slot_key(i)]
+		if (!name)
+			name = "Character [i]"
+		if (i == default_slot)
 			name = "<b>[name]</b>"
 		dat += "<a href='?src=\ref[src];changeslot=[i];[details?"details=1":""]'>[name]</a><br>"
 

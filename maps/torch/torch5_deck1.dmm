@@ -22777,6 +22777,12 @@
 	},
 /turf/simulated/floor/tiled,
 /area/hallway/primary/firstdeck/fore)
+"niA" = (
+/obj/structure/sign/poster/torch/counselor{
+	icon_state = "live_laugh_love"
+	},
+/turf/simulated/wall/prepainted,
+/area/medical/counselor/therapy)
 "njb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -55911,7 +55917,7 @@ aho
 ahH
 ahn
 air
-ahd
+niA
 eGb
 pbb
 pFb

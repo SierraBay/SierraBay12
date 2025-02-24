@@ -377,7 +377,7 @@
 	)
 
 /singleton/hierarchy/mil_uniform/fleet/sup/flagofficer
-	name = "Fleet spply flag command"
+	name = "Fleet supply flag command"
 	min_rank = 170
 
 	service_hat = /obj/item/clothing/head/solgov/dress/fleet/command

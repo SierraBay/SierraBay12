@@ -65,7 +65,7 @@
 	slot_flags = SLOT_OCLOTHING //can wear in suit slot as well
 	slot = ACCESSORY_SLOT_UTILITY
 	w_class = ITEM_SIZE_NORMAL
-	blood_overlay_type = "armor"
+	blood_overlay_type = "armorblood"
 	icon_state = "undervest"
 
 

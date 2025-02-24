@@ -487,11 +487,9 @@
 /area/ship/skrellscoutship/forestorage)
 "bQ" = (
 /obj/structure/table/glass,
-/obj/item/folder/blue{
-	pixel_x = -8
+/obj/machinery/photocopier/faxmachine{
+	department = "Skrellian Scout Vessel"
 	},
-/obj/machinery/recharger,
-/obj/item/folder/red,
 /turf/simulated/floor/tiled/skrell/red,
 /area/ship/skrellscoutship/command/bridge)
 "bR" = (
@@ -1159,7 +1157,6 @@
 /area/ship/skrellscoutship/crew/medbay)
 "dT" = (
 /obj/machinery/vending/medical/skrell{
-	density = 0;
 	dir = 1
 	},
 /turf/simulated/floor/tiled/skrell/white,
@@ -1502,6 +1499,7 @@
 /area/ship/skrellscoutship/dock)
 "fb" = (
 /obj/machinery/fabricator/hacked,
+/obj/item/storage/box/autolathe_designs,
 /turf/simulated/floor/tiled/skrell/green,
 /area/ship/skrellscoutship/robotics)
 "fe" = (
@@ -2473,6 +2471,7 @@
 "hL" = (
 /obj/structure/table/woodentable/walnut,
 /obj/machinery/fabricator/micro,
+/obj/item/storage/box/microlathe_designs,
 /turf/simulated/floor/tiled/skrell/blue,
 /area/ship/skrellscoutship/crew/rec)
 "hO" = (
@@ -2508,6 +2507,8 @@
 /obj/item/storage/bolt_bag/full_of_beacons,
 /obj/item/storage/bolt_bag/full_of_beacons,
 /obj/item/beacon_deployer/full,
+/obj/item/clothing/gloves/anomaly_detector/flux,
+/obj/item/clothing/gloves/anomaly_detector/flux,
 /turf/simulated/floor/tiled/skrell/red,
 /area/ship/skrellscoutship/crew/labs)
 "hR" = (
@@ -4909,7 +4910,7 @@
 	icon_state = "tube1"
 	},
 /obj/item/toy/icarus_model{
-	name = "table-top SDFSV Kshar'vara model";
+	name = "table-top SDFSV Kshar'va model";
 	desc = "A model of the Skrell mothership, mounted on a wooden stand. The stand is engraved with the words, 'We remember our home, our guard will be eternal.' The small lights on the hull and the ion engines still glow and flicker.";
 	color = "#00e1ff";
 	pixel_y = 12

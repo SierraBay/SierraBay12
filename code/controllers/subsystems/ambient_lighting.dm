@@ -3,7 +3,7 @@ SUBSYSTEM_DEF(ambient_lighting) //A simple SS that handles updating ambient ligh
 	wait = 1
 	priority = SS_PRIORITY_LIGHTING
 	init_order = SS_INIT_AMBIENT_LIGHT
-	runlevels = RUNLEVELS_PREGAME | RUNLEVELS_GAME
+	runlevels = RUNLEVELS_GAME
 
 	/// List of turfs queued for ambient light evaluation
 	var/list/queued = list()
@@ -23,6 +23,22 @@ SUBSYSTEM_DEF(ambient_lighting) //A simple SS that handles updating ambient ligh
 	var/apparent_b
 	/// Prevent modification of member turfs or colour while an operation is taking place
 	var/busy = FALSE
+
+/turf
+	/// Whether this turf has been queued for an ambient lighting update.
+	var/ambient_queued = FALSE
+
+#define AMBIENT_LIGHT_QUEUE_TURF(T) \
+	if(!T.ambient_queued) { \
+		T.ambient_queued = TRUE; \
+		SSambient_lighting.queued += T; \
+	}
+
+#define AMBIENT_LIGHT_DEQUEUE_TURF(T) \
+	if(T.ambient_queued) { \
+		T.ambient_queued = FALSE; \
+		SSambient_lighting.queued -= T; \
+	}
 
 /datum/ambient_group/New(ncolor, nmultiplier, nindex)
 	. = ..()
@@ -211,6 +227,8 @@ SUBSYSTEM_DEF(ambient_lighting) //A simple SS that handles updating ambient ligh
 	while (length(curr))
 		var/turf/target = curr[length(curr)]
 		LIST_DEC(curr)
+
+		target.ambient_queued = FALSE
 
 		if(target && target.is_outside())
 			needs_ambience = TURF_IS_DYNAMICALLY_LIT_UNSAFE(target)

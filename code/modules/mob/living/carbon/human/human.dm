@@ -516,6 +516,24 @@
 				to_chat(user, SPAN_WARNING("Unable to locate a data core entry for this person."))
 			return TOPIC_HANDLED
 
+	if (href_list["allergies"])
+		if (!hasHUD(user, HUD_MEDICAL))
+			return TOPIC_HANDLED
+		var/apparent_name = fake_name || name
+		var/obj/item/card/id/id = GetIdCard()
+		if (istype(id))
+			apparent_name = id.registered_name
+		var/datum/computer_file/report/crew_record/record = get_crewmember_record(apparent_name)
+		if (!record)
+			to_chat(user, SPAN_WARNING("Unable to locate a data core entry for this person."))
+			return TOPIC_HANDLED
+		var/allergies = record.get_allergies()
+		if (!allergies)
+			to_chat(user, SPAN_INFO("<i>No allergies.</i>"))
+			return TOPIC_HANDLED
+		to_chat(user, "[SPAN_INFO("[allergies]")]")
+		return TOPIC_HANDLED
+
 	if (href_list["webbed"])
 		for (var/obj/aura/web/W in auras)
 			W.remove_webbing(user)
@@ -1193,7 +1211,7 @@
 			new_species = dna.species
 
 	// No more invisible screaming wheelchairs because of set_species() typos.
-	if(!all_species[new_species])
+	if(!GLOB.species_by_name[new_species])
 		new_species = SPECIES_HUMAN
 	if(dna)
 		dna.species = new_species
@@ -1208,7 +1226,7 @@
 		species.remove_inherent_verbs(src)
 		holder_type = null
 
-	species = all_species[new_species]
+	species = GLOB.species_by_name[new_species]
 	species.handle_pre_spawn(src)
 
 	if(species.grab_type)
