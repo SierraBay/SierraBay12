@@ -52,3 +52,4 @@
 #include "vehicle\_vehicle_includes.dm"
 #include "../packs/sierra-tweaks/_pack.dm"
 #include "on_floor_icon\_on_floor_icons_includes.dm"
+#include "sierra_resprite/_sierra_resprite_includes.dm"
