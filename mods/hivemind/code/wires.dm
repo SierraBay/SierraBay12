@@ -32,6 +32,12 @@
 		child.forceMove(target_turf)
 		update_icon()
 
+// Насильно обновляем соседей - LordNest
+/obj/vine/proc/update_neighbors(location = loc)
+	for (var/dir in GLOB.cardinal)
+		var/obj/vine/hivemind/L = locate(/obj/vine/hivemind/, get_step(location, dir))
+		if(L)
+			L.update_icon()
 
 /obj/vine/hivemind/proc/try_to_assimilate()
 	if(hive_mind_ai && master_node)
@@ -86,7 +92,7 @@
 		//slow vanishing after node death
 		health_current -= 10
 		alpha = 255 * health_current/health_max
-		check_health()
+		update_health()
 
 
 /obj/vine/hivemind/is_mature()
@@ -131,7 +137,7 @@
 		return FALSE
 
 	//if our door isn't broken, we will try to break open. We can do only one action per call
-	if(!(door.stat & BROKEN))
+	if(!(door.stat & MACHINE_BROKEN_GENERIC))
 		anim_shake(door)
 		//first, we open our panel to give our wireweeds access to exposed airlock's electronics
 		if(!door.p_open)
@@ -150,7 +156,7 @@
 				return FALSE
 			//and then, if airlock is closed, we begin destroy it electronics
 			if(door.density)
-				door.take_damage(rand(15, 50))
+				door.damage_health(rand(15, 50))
 				return FALSE
 
 	return TRUE
@@ -274,7 +280,7 @@
 		else
 			user.visible_message(SPAN_DANGER("[user] tries to slice [src] with [W], but seems to do nothing."),
 								SPAN_DANGER("You try to slice [src], but it's useless!"))
-	check_health()
+	update_health()
 */
 
 /obj/vine/hivemind/use_weapon(obj/item/weapon/W, mob/user, list/click_params)
@@ -297,7 +303,7 @@
 //fire is effective, but there need some time to melt the covering
 /obj/vine/hivemind/fire_act()
 	health_current -= rand(1, 4)
-	check_health()
+	update_health()
 
 
 //emp is effective too

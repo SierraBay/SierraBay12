@@ -171,7 +171,7 @@
 	maxHealth = victim.maxHealth * 2 + 10
 	health = maxHealth
 	name = "[pick("rebuilded", "undead", "unnatural", "fixed")] [victim.name]"
-	if(lentext(victim.desc))
+	if(length(victim.desc))
 		desc = desc + " But something wasn't right..."
 	density = victim.density
 	mob_size = victim.mob_size
@@ -296,10 +296,10 @@
 	explosion(get_turf(src), 0, 0, 2)
 	qdel(src)
 
-
+/* Дописать камиказде - LordNest
 /mob/living/simple_animal/hostile/hivemind/bomber/afterattack()
 	death()
-
+*/
 
 ////hive brings us here to////////////////////////////////////////////////////
 ////////////////////////////////////BIG GUYS/////////////////////////////////
@@ -434,7 +434,7 @@ TO DO - забрать у паука вот это /mob/living/simple_animal/hos
 						"Hey! I'm friendly! Wait, it's just a-UGH"
 						)
 
-
+/* TO DO - переписать в холдер как для паука-невидимки
 /mob/living/simple_animal/hostile/hivemind/himan/Life()
 	. = ..()
 
@@ -449,7 +449,7 @@ TO DO - забрать у паука вот это /mob/living/simple_animal/hos
 
 	//shhhh, there an ambush
 	if(fake_dead)
-		stop_automated_movement = TRUE
+		stance = STANCE_DISABLED
 
 
 /mob/living/simple_animal/hostile/hivemind/himan/speak()
@@ -521,6 +521,8 @@ TO DO - забрать у паука вот это /mob/living/simple_animal/hos
 	fake_dead = FALSE
 	stance = STANCE_IDLE
 	fake_death_cooldown = world.time + 2 MINUTES
+
+*/
 
 /////////////////////////////////////MECHIVER/////////////////////////////////
 //Mech + Hive + Driver
@@ -658,7 +660,7 @@ TO DO - забрать у паука вот это /mob/living/simple_animal/hos
 		if(passenger)
 			overlays += "mechiver-process"
 
-
+/* TO DO - переписать
 /mob/living/simple_animal/hostile/hivemind/mechiver/AttackingTarget()
 	if(!Adjacent(target_mob))
 		return
@@ -713,6 +715,7 @@ TO DO - забрать у паука вот это /mob/living/simple_animal/hos
 			special_ability_cooldown = world.time + ability_cooldown
 		playsound(src, 'sound/effects/blobattack.ogg', 70, 1)
 
+// Здесь всё работает, просто комментим из-за коммента прока с пассажиром
 
 /mob/living/simple_animal/hostile/hivemind/mechiver/proc/dead_body_restoration(mob/living/corpse)
 	var/picked_mob
@@ -736,6 +739,7 @@ TO DO - забрать у паука вот это /mob/living/simple_animal/hos
 	qdel(passenger)
 	passenger = null
 
+// Здесь всё работает, просто комментим из-за коммента прока с пассажиром
 
 //we're not forgot to release our victim safely after death
 /mob/living/simple_animal/hostile/hivemind/mechiver/Destroy()
@@ -749,7 +753,7 @@ TO DO - забрать у паука вот это /mob/living/simple_animal/hos
 	if(pilot)
 		gibs(loc, null, /obj/gibspawner/human)
 	qdel(src)
-
+*/
 
 /////////////////////////////////////PHASER///////////////////////////////////
 //Special ability: Superposition. Phaser exists at four locations. But, actually he vulnerable only at one. Other is just a copies
@@ -779,9 +783,10 @@ TO DO - забрать у паука вот это /mob/living/simple_animal/hos
 	..()
 	filters += filter(type="blur", size = 0)
 
+/* TO DO - наверное от туннелера код взять? Хотя тут у нас ещё и прятаться в шкафах можно, как понимаю - LordNest
 
 /mob/living/simple_animal/hostile/hivemind/phaser/Life()
-	stop_automated_movement = TRUE
+	stance = STANCE_DISABLED
 	. = ..()
 
 	//special ability using
@@ -924,3 +929,4 @@ TO DO - забрать у паука вот это /mob/living/simple_animal/hos
 	..()
 	gibs(loc, null, /obj/gibspawner/human)
 	qdel(src)
+*/

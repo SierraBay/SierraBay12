@@ -11,7 +11,7 @@
 	step_delay = 2
 
 
-/obj/item/projectile/goo/on_hit(atom/target, var/blocked = 0)
+/obj/item/projectile/goo/on_hit(atom/target, blocked = 0)
 	. = ..()
 	if(istype(target, /mob/living) && !istype(target, /mob/living/silicon) && !blocked)
 		var/mob/living/L = target
