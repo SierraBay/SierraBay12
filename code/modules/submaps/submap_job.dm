@@ -49,7 +49,7 @@
 		owner = _owner
 		..()
 
-/datum/job/submap/is_species_allowed(datum/species/S)
+/datum/job/submap/is_species_allowed(singleton/species/S)
 	if(LAZYLEN(whitelisted_species) && !(S.name in whitelisted_species))
 		return FALSE
 	if(S.name in blacklisted_species)
@@ -62,7 +62,7 @@
 	return TRUE
 
 /datum/job/submap/is_restricted(datum/preferences/prefs, feedback)
-	var/datum/species/S = all_species[prefs.species]
+	var/singleton/species/S = GLOB.species_by_name[prefs.species]
 	if(LAZYACCESS(minimum_character_age, S.get_bodytype()) && (prefs.age < minimum_character_age[S.get_bodytype()]))
 		to_chat(feedback, SPAN_CLASS("boldannounce", "Not old enough. Minimum character age is [minimum_character_age[S.get_bodytype()]]."))
 		return TRUE

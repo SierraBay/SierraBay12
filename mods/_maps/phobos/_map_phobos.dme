@@ -1,0 +1,11 @@
+#ifndef MODPACK_MAP_PHOBOS
+#define MODPACK_MAP_PHOBOS
+
+#include "_map_phobos.dm"
+#include "code/phobos.dm"
+#include "code/phobos_areas.dm"
+#include "code/phobos_crew.dm"
+#include "code/phobos_items.dm"
+#include "code/phobos_structures.dm"
+
+#endif

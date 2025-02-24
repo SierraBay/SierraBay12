@@ -46,7 +46,7 @@ GLOBAL_LIST_INIT(zombie_species, list(\
 
 //// Zombie Types
 
-/datum/species/zombie
+/singleton/species/zombie
 	name = "Zombie"
 	name_plural = "Zombies"
 	blood_color = "#411111"
@@ -74,7 +74,7 @@ GLOBAL_LIST_INIT(zombie_species, list(\
 	move_intents = list(/singleton/move_intent/zombie)
 	var/heal_rate = 0.5 // Regen.
 
-/datum/species/zombie/handle_post_spawn(mob/living/carbon/human/H)
+/singleton/species/zombie/handle_post_spawn(mob/living/carbon/human/H)
 	H.mutations |= MUTATION_CLUMSY
 	H.mutations |= MUTATION_FERAL
 	H.mutations |= mNobreath //Byond doesn't like adding them all in one OR statement :(
@@ -117,7 +117,7 @@ GLOBAL_LIST_INIT(zombie_species, list(\
 
 	..()
 
-/datum/species/zombie/handle_environment_special(mob/living/carbon/human/H)
+/singleton/species/zombie/handle_environment_special(mob/living/carbon/human/H)
 	if (H.stat == CONSCIOUS)
 		if (prob(5))
 			playsound(H.loc, 'sound/hallucinations/far_noise.ogg', 15, 1)
@@ -152,14 +152,14 @@ GLOBAL_LIST_INIT(zombie_species, list(\
 			if (vuln > 0.10 && prob(8))
 				M.reagents.add_reagent(/datum/reagent/zombie, 0.5) // Infect 'em
 
-/datum/species/zombie/handle_death(mob/living/carbon/human/H)
+/singleton/species/zombie/handle_death(mob/living/carbon/human/H)
 	playsound(H, 'sound/hallucinations/wail.ogg', 30, 1)
 	return TRUE
 
-/datum/species/zombie/get_blood_name()
+/singleton/species/zombie/get_blood_name()
 	return "decaying blood"
 
-/datum/species/zombie/has_fine_manipulation(mob/living/carbon/human/H)
+/singleton/species/zombie/has_fine_manipulation(mob/living/carbon/human/H)
 	return (MUTATION_CLUMSY in H.mutations) ? FALSE : TRUE
 
 /singleton/move_intent/zombie
@@ -468,7 +468,7 @@ GLOBAL_LIST_INIT(zombie_species, list(\
 		mind.special_role = ANTAG_ZOMBIE
 
 	species.handle_pre_spawn(src)
-	species = all_species[SPECIES_ZOMBIE]
+	species = GLOB.species_by_name[SPECIES_ZOMBIE]
 	species.handle_post_spawn(src)
 
 	if(!(MUTATION_HUSK in mutations))

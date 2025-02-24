@@ -174,8 +174,8 @@
 	var/datum/mind/backup
 	var/prompting = FALSE // Are we waiting for a user prompt?
 
-/obj/item/organ/internal/voxstack/New()
-	..()
+/obj/item/organ/internal/voxstack/Initialize()
+	. = ..()
 	do_backup()
 	robotize()
 
@@ -229,9 +229,6 @@
 /obj/item/organ/internal/voxstack/removed()
 	var/obj/item/organ/external/head = owner.get_organ(parent_organ)
 	owner.visible_message(SPAN_DANGER("\The [src] rips gaping holes in \the [owner]'s [head.name] as it is torn loose!"))
-	head.take_external_damage(rand(15,20))
-	for(var/obj/item/organ/internal/O in head.contents)
-		O.take_internal_damage(rand(30,70))
 	do_backup()
 	..()
 
@@ -248,7 +245,7 @@
 	owner.languages = languages.Copy()
 	to_chat(owner, SPAN_NOTICE("Consciousness slowly creeps over you as your new body awakens."))
 
-/datum/species/vox/handle_death(mob/living/carbon/human/H)
+/singleton/species/vox/handle_death(mob/living/carbon/human/H)
 	..()
 	var/obj/item/organ/internal/voxstack/stack = H.get_organ(BP_STACK)
 	if (stack)

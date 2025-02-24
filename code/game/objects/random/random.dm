@@ -537,6 +537,7 @@
 				/obj/item/toy/prize/mauler,
 				/obj/item/toy/prize/odysseus,
 				/obj/item/toy/prize/phazon,
+				/obj/item/toy/plushie/thoom,
 				/obj/item/deck/cards)
 
 /obj/random/tank

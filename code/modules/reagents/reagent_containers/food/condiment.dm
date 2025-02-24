@@ -146,6 +146,9 @@
 /obj/item/reagent_containers/food/condiment/choconutspread
 	starting_reagents = list(/datum/reagent/nutriment/choconutspread = 50)
 
+/obj/item/reagent_containers/food/condiment/spacespice
+	starting_reagents = list(/datum/reagent/spacespice = 50)
+
 /obj/item/reagent_containers/food/condiment/small
 	possible_transfer_amounts = "1;20"
 	amount_per_transfer_from_this = 1

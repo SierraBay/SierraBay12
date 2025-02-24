@@ -818,6 +818,7 @@
 /area/errant_pisces/atmos)
 "cn" = (
 /obj/machinery/fabricator,
+/obj/item/storage/box/autolathe_designs,
 /turf/simulated/floor/plating,
 /area/errant_pisces/enginering)
 "co" = (

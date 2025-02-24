@@ -44,7 +44,7 @@
 		/singleton/emote/audible/ascent_snarl
 	)
 
-/datum/species/mantid
+/singleton/species/mantid
 	default_emotes = list(
 		/singleton/emote/audible/ascent_purr,
 		/singleton/emote/audible/ascent_hiss,
@@ -57,7 +57,7 @@
 		/singleton/emote/visible/ascent_dazzle
 	)
 
-/datum/species/nabber/monarch_queen
+/singleton/species/nabber/monarch_queen
 	default_emotes = list(
 		/singleton/emote/audible/bug_hiss,
 		/singleton/emote/audible/bug_buzz,

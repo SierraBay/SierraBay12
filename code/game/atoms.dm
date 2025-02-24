@@ -9,6 +9,8 @@
 	var/was_bloodied = FALSE
 	/// Color. The color of the blood overlay effect, if present.
 	var/blood_color
+	/// The amount of times blood will transfer to other atoms.
+	var/blood_transfer_amount = 0
 	/// Integer. The `world.time` the atom was last bumped into. Only used by some subtypes to prevent bump spamming.
 	var/last_bumped = 0
 	/// Bitflag (Any of `PASS_FLAG_*`). Flags indicating the types of dense objects this atom is able to pass through/over.
@@ -609,6 +611,25 @@
  * Returns boolean - `TRUE` if the atom was bloodied, `FALSE` otherwise.
  */
 /atom/proc/add_blood(mob/living/carbon/human/M as mob)
+	if(!istype(M))
+		return 0
+	if (!istype(M.dna, /datum/dna))
+		M.dna = new /datum/dna(null)
+		M.dna.real_name = M.real_name
+	M.check_dna()
+	return add_blood_custom(M.species.get_blood_colour(M), 3, list(M.dna))
+
+/**
+ * Adds custom blood effects and DNA to the atom.
+ *
+ * **Parameters**:
+ * - `colour` - The blood colour to apply.
+ * - `colour` - The blood colour to apply.
+ * - `colour` - The blood colour to apply.
+ *
+ * Returns boolean - `TRUE` if the atom was bloodied, `FALSE` otherwise.
+ */
+/atom/proc/add_blood_custom(source_blood_color = COLOR_BLOOD_HUMAN, amount = 1, list/source_blood_DNA = list())
 	if(atom_flags & ATOM_FLAG_NO_BLOOD)
 		return 0
 
@@ -616,14 +637,35 @@
 		blood_DNA = list()
 
 	was_bloodied = 1
-	blood_color = COLOR_BLOOD_HUMAN
-	if(istype(M))
-		if (!istype(M.dna, /datum/dna))
-			M.dna = new /datum/dna(null)
-			M.dna.real_name = M.real_name
-		M.check_dna()
-		blood_color = M.species.get_blood_colour(M)
+	blood_color = source_blood_color
+	blood_DNA |= source_blood_DNA.Copy()
+	blood_transfer_amount = max(amount, blood_transfer_amount)
 	. = 1
+	return 1
+
+/**
+ * Transfers existing blood effects to the target.
+ *
+ * **Parameters**:
+ * - `target` - The target mob to transfer to.
+ * - `target_zone` - Optional target zone for humanoid mobs to apply to a specific part of the body.
+ *
+ * Returns boolean - `TRUE` if the atom was bloodied, `FALSE` otherwise.
+ */
+/atom/proc/transfer_blood(mob/living/carbon/human/target, target_zone)
+	if (!ishuman(target))
+		return 0
+	var/obj/item/clothing/equipped_item = target.get_covering_equipped_item_by_zone(target_zone)
+	var/taken = rand(1,blood_transfer_amount)
+	blood_transfer_amount -= taken
+	if(istype(equipped_item))
+		equipped_item.add_blood_custom(blood_color, taken, blood_DNA)
+	else
+		switch(target_zone)
+			if(BP_L_HAND , BP_R_HAND)
+				target.bloody_hands_custom(blood_color, 3, blood_DNA)
+			if(BP_CHEST, BP_GROIN, BP_L_ARM , BP_R_ARM, BP_L_LEG , BP_R_LEG)
+				target.bloody_body_custom(blood_color, taken, blood_DNA)
 	return 1
 
 /mob/living/proc/handle_additional_vomit_reagents(obj/decal/cleanable/vomit/vomit)

@@ -246,6 +246,7 @@
 				else
 					M.visible_message(SPAN_NOTICE("[M] hugs [src] to make [P.him] feel better!"), \
 								SPAN_NOTICE("You hug [src] to make [P.him] feel better!"))
+
 				if(M.fire_stacks >= (src.fire_stacks + 3))
 					src.fire_stacks += 1
 					M.fire_stacks -= 1

@@ -207,7 +207,7 @@
 /obj/item/clothing/mask/rubber/species/New()
 	..()
 	visible_name = species
-	var/datum/species/S = all_species[species]
+	var/singleton/species/S = GLOB.species_by_name[species]
 	if(istype(S))
 		var/singleton/cultural_info/C = SSculture.get_culture(S.default_cultural_info[TAG_CULTURE])
 		if(istype(C))
@@ -249,6 +249,7 @@
 	item_state = "bandana"
 	item_flags = ITEM_FLAG_FLEXIBLEMATERIAL | ITEM_FLAG_WASHER_ALLOWED
 	w_class = ITEM_SIZE_SMALL
+	use_alt_layer = TRUE
 
 /obj/item/clothing/mask/bandana/equipped(mob/user, slot)
 	switch(slot)

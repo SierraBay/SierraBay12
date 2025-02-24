@@ -1,26 +1,26 @@
 #define VAGABONDS_JOBS /datum/job/vagabond
 /datum/map/sierra
 	species_to_job_whitelist = list(
-		/datum/species/adherent = list(ADHERENT_JOBS),
-		/datum/species/nabber = list(NABBER_JOBS),
-		/datum/species/vox = list(SILICON_JOBS, VAGABONDS_JOBS),
-		/datum/species/human/mule = list(SILICON_JOBS, VAGABONDS_JOBS)
+		/singleton/species/adherent = list(ADHERENT_JOBS),
+		/singleton/species/nabber = list(NABBER_JOBS),
+		/singleton/species/vox = list(SILICON_JOBS, VAGABONDS_JOBS),
+		/singleton/species/human/mule = list(SILICON_JOBS, VAGABONDS_JOBS)
 	)
 
 	species_to_job_blacklist = list(
-		/datum/species/unathi = list(HUMAN_ONLY_JOBS),
-		/datum/species/unathi/yeosa = list(HUMAN_ONLY_JOBS),
-		/datum/species/tajaran = list(HUMAN_ONLY_JOBS),
-		/datum/species/skrell = list(SKRELL_BLACKLISTED_JOBS),
-		/datum/species/machine = list(MACHINE_BLACKLISTED_JOBS),
-		/datum/species/diona = list(
+		/singleton/species/unathi = list(HUMAN_ONLY_JOBS),
+		/singleton/species/unathi/yeosa = list(HUMAN_ONLY_JOBS),
+		/singleton/species/tajaran = list(HUMAN_ONLY_JOBS),
+		/singleton/species/skrell = list(SKRELL_BLACKLISTED_JOBS),
+		/singleton/species/machine = list(MACHINE_BLACKLISTED_JOBS),
+		/singleton/species/diona = list(
 			HUMAN_ONLY_JOBS, /datum/job/exploration_leader, /datum/job/explorer_pilot,
 			/datum/job/officer, /datum/job/warden, /datum/job/detective,
-			/datum/job/qm,
+			/datum/job/qm, /datum/job/explorer_medic,
 			/datum/job/senior_engineer, /datum/job/senior_doctor,
 			/datum/job/senior_scientist, /datum/job/security_assistant
 		),
-		/datum/species/resomi = list(
+		/singleton/species/resomi = list(
 	 		HUMAN_ONLY_JOBS, /datum/job/officer, /datum/job/exploration_leader,
 	 		/datum/job/warden, /datum/job/chief_engineer, /datum/job/rd,
 	 		/datum/job/iaa, /datum/job/security_assistant
@@ -29,7 +29,7 @@
 
 	allowed_jobs = list(
 		/datum/job/captain, /datum/job/hop, /datum/job/rd, /datum/job/cmo, /datum/job/chief_engineer, /datum/job/hos,
-		/datum/job/iaa, /datum/job/adjutant,
+		/datum/job/iaa, /datum/job/iso, /datum/job/adjutant,
 		/datum/job/exploration_leader, /datum/job/explorer, /datum/job/explorer_pilot, /datum/job/explorer_medic, /datum/job/explorer_engineer,
 		/datum/job/senior_engineer, /datum/job/engineer, /datum/job/infsys, /datum/job/engineer_trainee,
 		/datum/job/warden, /datum/job/detective, /datum/job/officer, /datum/job/security_assistant,
@@ -131,7 +131,7 @@
 
 /singleton/cultural_info/culture/ipc/gen3
 	valid_jobs = list(/datum/job/hop, /datum/job/rd, /datum/job/cmo, /datum/job/chief_engineer,
-		/datum/job/iaa, /datum/job/adjutant,
+		/datum/job/iaa, /datum/job/iso, /datum/job/adjutant,
 		/datum/job/exploration_leader, /datum/job/explorer, /datum/job/explorer_pilot, /datum/job/explorer_medic, /datum/job/explorer_engineer,
 		/datum/job/senior_engineer, /datum/job/engineer, /datum/job/infsys, /datum/job/engineer_trainee,
 		/datum/job/warden, /datum/job/detective, /datum/job/officer,
@@ -143,6 +143,19 @@
 )
 //[/SIERRA-ADD] - [IPC-MODS]
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ADHERENT  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/singleton/cultural_info/faction/adherent/
+
+	var/list/valid_jobs = list(/datum/job/ai, /datum/job/cyborg, /datum/job/assistant, /datum/job/janitor, /datum/job/engineer_trainee, /datum/job/cook, /datum/job/cargo_tech, /datum/job/scientist_assistant, /datum/job/doctor_trainee, /datum/job/engineer, /datum/job/mining, /datum/job/cargo_assistant, /datum/job/roboticist, /datum/job/chemist, /datum/job/bartender, /datum/job/steward, /datum/job/explorer_engineer)
+
+/singleton/cultural_info/faction/adherent/loyalists
+	valid_jobs = list(ADHERENT_JOBS)
+
+/singleton/species/adherent/check_background(datum/job/job, datum/preferences/prefs)
+	var/singleton/cultural_info/faction/adherent/faction = SSculture.get_culture(prefs.cultural_info[TAG_FACTION])
+	. = istype(faction) ? (job.type in faction.valid_jobs) : ..()
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 /datum/job
 	allowed_branches = list(
 		/datum/mil_branch/civilian
@@ -153,6 +166,17 @@
 	required_language = LANGUAGE_HUMAN_EURO
 	psi_latency_chance = 8
 	give_psionic_implant_on_join = FALSE
+	var/requires_head
+
+/datum/job/is_position_available()
+	. = ..()
+	if(. && requires_head)
+		for(var/mob/M in GLOB.player_list)
+			if(!M.client || !M.mind || !M.mind.assigned_job)
+				continue
+			if(M.mind.assigned_job.title == requires_head)
+				return TRUE
+		return FALSE
 
 /datum/map/sierra
 	default_assistant_title = "Crewman"

@@ -1,5 +1,5 @@
 #define GET_ALLOWED_VALUES(write_to, check_key) \
-	var/datum/species/S = all_species[pref.species]; \
+	var/singleton/species/S = GLOB.species_by_name[pref.species]; \
 	if(!S) { \
 		write_to = list(); \
 	} else if(S.force_cultural_info[check_key]) { \
@@ -74,7 +74,7 @@
 				// html_encode() doesn't properly sanitize + symbols, otherwise we could just use that
 				// instead, we manually rip out the plus symbol and then replace it on OnTopic
 				var/sanitized_value = html_encode(replacetext(V, "+", "PLUS"))
-				
+
 				// [SIERRA-EDIT] - EXPANDED_CULTURE_DESCRIPTOR - Изменение схемы получения названия культуры, чтобы поддерживать возможность их перевода без переработки всей сабсистемы культур
 				// if (pref.cultural_info[token] == V) // SIERRA-EDIT - ORIGINAL
 				// 	. += "[SPAN_CLASS("linkOn", "[V]")] " // SIERRA-EDIT - ORIGINAL

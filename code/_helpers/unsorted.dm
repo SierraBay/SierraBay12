@@ -537,9 +537,12 @@ Turf and target are seperate in case you want to teleport some distance from a t
  *
  * Returns a list of atoms.
  */
-/atom/proc/GetAllContents(searchDepth = 5)
+/atom/proc/GetAllContents(searchDepth = 5, includeSelf = FALSE)
 	RETURN_TYPE(/list)
 	var/list/toReturn = list()
+
+	if(includeSelf)
+		toReturn += src
 
 	for(var/atom/part in contents)
 		toReturn += part
@@ -1011,23 +1014,6 @@ var/global/list/WALLITEMS = list(
 				temp_col = "0[temp_col]"
 			colour += temp_col
 	return "#[colour]"
-
-GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
-
-//Version of view() which ignores darkness, because BYOND doesn't have it.
-/proc/dview(range = world.view, center, invis_flags = 0)
-	RETURN_TYPE(/list)
-	if(!center)
-		return
-
-	GLOB.dview_mob.loc = center
-	GLOB.dview_mob.see_invisible = invis_flags
-	. = view(range, GLOB.dview_mob)
-	GLOB.dview_mob.loc = null
-
-/mob/dview/Destroy()
-	SHOULD_CALL_PARENT(FALSE)
-	return QDEL_HINT_LETMELIVE
 
 /**
  * Sets the atom's color and light values to those of `origin`.

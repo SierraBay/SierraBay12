@@ -12,6 +12,7 @@
 	blend_mode    = BLEND_OVERLAY
 
 	var/needs_update = FALSE
+	var/safe_to_delete = FALSE
 
 	#if WORLD_ICON_SIZE != 32
 	transform = matrix(WORLD_ICON_SIZE / 32, 0, (WORLD_ICON_SIZE - 32) / 2, 0, WORLD_ICON_SIZE / 32, (WORLD_ICON_SIZE - 32) / 2)
@@ -37,8 +38,8 @@
 		needs_update = TRUE
 		SSlighting.overlay_queue += src
 
-/atom/movable/lighting_overlay/Destroy(force = FALSE)
-	if (!force)
+/atom/movable/lighting_overlay/Destroy()
+	if (!safe_to_delete)
 		return QDEL_HINT_LETMELIVE	// STOP DELETING ME
 
 	SSlighting.total_lighting_overlays -= 1
@@ -61,8 +62,8 @@
 
 		else
 			warning("A lighting overlay realised it was in nullspace in update_overlay() and got deleted!")
-
-		qdel(src, TRUE)
+		safe_to_delete = TRUE
+		qdel(src)
 		return
 
 	// See LIGHTING_CORNER_DIAGONAL in lighting_corner.dm for why these values are what they are.

@@ -57,6 +57,7 @@
 /obj/structure/ladder/use_tool(obj/item/tool, mob/user, list/click_params)
 	SHOULD_CALL_PARENT(FALSE)
 	climb(user, tool)
+	return TRUE
 
 
 /turf/hitby(atom/movable/AM)

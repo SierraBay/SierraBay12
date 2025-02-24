@@ -214,7 +214,7 @@
 		/obj/item/organ = null
 		)
 	var/datum/dna/loaded_dna_datum
-	var/datum/species/loaded_species //For quick refrencing
+	var/singleton/species/loaded_species //For quick refrencing
 
 /obj/machinery/organ_printer/flesh/mapped/Initialize()
 	. = ..()

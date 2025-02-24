@@ -81,6 +81,7 @@
 /area/map_template/deepmaint)
 "cB" = (
 /obj/machinery/fabricator/micro/bartender,
+/obj/item/storage/box/microlathe_designs,
 /obj/structure/table/standard,
 /turf/simulated/floor/tiled/dark,
 /area/map_template/deepmaint)

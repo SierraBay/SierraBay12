@@ -48,7 +48,7 @@
 	time = 10
 
 /datum/stack_recipe/furniture/chair/rounded/display_name()
-	return modifiers ? jointext(modifiers + ..(), " ") : ..()
+	return modifiers ? jointext(..(), " ") : ..()
 
 /datum/stack_recipe/furniture/chair/rounded
 	title = "rounded chair"
