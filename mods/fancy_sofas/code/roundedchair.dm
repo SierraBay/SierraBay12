@@ -79,4 +79,3 @@ ROUNDEDCHAIR(light)
 		. += new/datum/stack_recipe_list("padded [display_name] right sofas", create_recipe_list(/datum/stack_recipe/furniture/sofa/r))
 		. += new/datum/stack_recipe_list("padded [display_name] middle sofas", create_recipe_list(/datum/stack_recipe/furniture/sofa/m))
 		. += new/datum/stack_recipe_list("padded [display_name] left sofas", create_recipe_list(/datum/stack_recipe/furniture/sofa/l))
-
