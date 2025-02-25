@@ -1,4 +1,4 @@
-/datum/species/machine
+/singleton/species/machine
 	name = SPECIES_IPC
 	name_plural = "machines"
 
@@ -120,24 +120,24 @@
 		/mob/living/carbon/human/proc/MachineShowText
 	)
 
-/datum/species/machine/handle_death(mob/living/carbon/human/H)
+/singleton/species/machine/handle_death(mob/living/carbon/human/H)
 	..()
 	if(istype(H.wear_mask,/obj/item/clothing/mask/monitor))
 		var/obj/item/clothing/mask/monitor/M = H.wear_mask
 		M.monitor_state_index = "blank"
 		M.update_icon()
 
-/datum/species/machine/post_organ_rejuvenate(obj/item/organ/org, mob/living/carbon/human/H)
+/singleton/species/machine/post_organ_rejuvenate(obj/item/organ/org, mob/living/carbon/human/H)
 	var/obj/item/organ/external/E = org
 	if(istype(E) && !BP_IS_ROBOTIC(E))
 		E.robotize("Morpheus")
 
-/datum/species/machine/get_blood_name()
+/singleton/species/machine/get_blood_name()
 	return "oil"
 
-/datum/species/machine/disfigure_msg(mob/living/carbon/human/H)
+/singleton/species/machine/disfigure_msg(mob/living/carbon/human/H)
 	var/datum/pronouns/P = H.choose_from_pronouns()
 	return "[SPAN_DANGER("[P.His] monitor is completely busted!")]\n"
 
-/datum/species/machine/can_float(mob/living/carbon/human/H)
+/singleton/species/machine/can_float(mob/living/carbon/human/H)
 	return FALSE

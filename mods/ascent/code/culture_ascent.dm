@@ -102,9 +102,9 @@ GLOBAL_LIST_INIT(worker_names, list(
 
 /singleton/cultural_info/culture/ascent/get_random_name(gender)
 	if(gender == MALE)
-		return "[random_id(/datum/species/mantid, 10000, 99999)] [get_gyne_name()]"
+		return "[random_id(/singleton/species/mantid, 10000, 99999)] [get_gyne_name()]"
 	else
-		return "[random_id(/datum/species/mantid, 1, 99)] [get_gyne_name()]"
+		return "[random_id(/singleton/species/mantid, 1, 99)] [get_gyne_name()]"
 
 /singleton/cultural_info/faction/ascent_serpentid
 	name =        FACTION_ASCENT_SERPENTID

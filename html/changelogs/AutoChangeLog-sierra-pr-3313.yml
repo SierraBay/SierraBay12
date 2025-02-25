@@ -1,0 +1,4 @@
+author: Lexabx
+changes:
+  - {tweak: 'Время производства на автолате дефолтных вещей, изменено'}
+delete-after: true

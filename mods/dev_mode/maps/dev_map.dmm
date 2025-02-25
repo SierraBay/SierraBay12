@@ -41,6 +41,10 @@
 "adH" = (
 /obj/floor_decal/industrial/danger,
 /turf/simulated/floor/tiled/monotile,
+/obj/machinery/computer/rdconsole/core,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "ael" = (
 /obj/floor_decal/industrial/danger{
@@ -369,6 +373,14 @@
 /obj/item/mech_equipment/ionjets,
 /turf/simulated/floor/tiled/monotile,
 /area/tdome/testing)
+"bvf" = (
+/obj/item/stock_parts/computer/hard_drive/portable/away/research_data,
+/obj/item/stock_parts/computer/hard_drive/portable/away/research_data,
+/obj/item/stock_parts/computer/hard_drive/portable/away/research_data,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/tdome/testing)
 "bJK" = (
 /obj/floor_decal/industrial/danger{
 	dir = 8
@@ -381,6 +393,12 @@
 "ckU" = (
 /obj/item/cell/infinite,
 /turf/simulated/floor/tiled/monotile,
+/area/tdome/testing)
+"cDy" = (
+/obj/machinery/r_n_d/server/core,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "cYk" = (
 /turf/simulated/floor/tiled/monotile,
@@ -449,6 +467,18 @@
 /mob/living/exosuit/premade/random/extra,
 /turf/simulated/floor/tiled/monotile,
 /area/tdome/testing)
+"hyc" = (
+/obj/machinery/fabricator/micro,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/tdome/testing)
+"hMy" = (
+/obj/machinery/fabricator/micro/loaded,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/tdome/testing)
 "hNF" = (
 /mob/living/exosuit/premade/random,
 /turf/simulated/floor/tiled/monotile,
@@ -465,6 +495,18 @@
 /obj/structure/table/steel,
 /obj/item/gun/projectile/automatic/minigun,
 /turf/simulated/floor/tiled/monotile,
+/area/tdome/testing)
+"iDh" = (
+/obj/item/stack/material/plastic/fifty,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/tdome/testing)
+"iJN" = (
+/obj/machinery/robotics_fabricator,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "iQN" = (
 /obj/item/gun/projectile/sniper/garand{
@@ -546,6 +588,15 @@
 /mob/living/exosuit/premade/death_combat,
 /turf/simulated/floor/tiled/monotile,
 /area/tdome/testing)
+"kOX" = (
+/obj/item/stock_parts/computer/hard_drive/portable/advanced,
+/obj/item/stock_parts/computer/hard_drive/portable/advanced,
+/obj/item/stock_parts/computer/hard_drive/portable/advanced,
+/obj/item/stock_parts/computer/hard_drive/portable/advanced,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/tdome/testing)
 "kWF" = (
 /obj/structure/flora/ausbushes/brflowers,
 /obj/landmark{
@@ -567,6 +618,12 @@
 "mfE" = (
 /obj/structure/table/steel,
 /turf/simulated/floor/tiled/monotile,
+/area/tdome/testing)
+"mze" = (
+/obj/machinery/r_n_d/server/robotics,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "mXE" = (
 /obj/structure/table/steel,
@@ -648,6 +705,25 @@
 /mob/living/carbon/human,
 /turf/simulated/floor/tiled/monotile,
 /area/tdome/testing)
+"ryI" = (
+/obj/item/stock_parts/computer/hard_drive/portable/design/tool,
+/obj/item/stock_parts/computer/hard_drive/portable/design/medical,
+/obj/item/stock_parts/computer/hard_drive/portable/design/engineering,
+/obj/item/stock_parts/computer/hard_drive/portable/design/drinking,
+/obj/item/stock_parts/computer/hard_drive/portable/design/cuttery,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/tdome/testing)
+"rJA" = (
+/obj/item/stack/material/glass/ten,
+/obj/item/stack/material/glass/ten,
+/obj/item/stack/material/glass/ten,
+/obj/item/stack/material/glass/ten,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/tdome/testing)
 "rSf" = (
 /obj/item/mech_equipment/sleeper,
 /obj/structure/table/steel,
@@ -676,6 +752,13 @@
 "sHC" = (
 /mob/living/exosuit/premade/light,
 /turf/simulated/floor/tiled/monotile,
+/area/tdome/testing)
+"sHT" = (
+/obj/item/stock_parts/computer/hard_drive/portable/design/components,
+/obj/item/stock_parts/computer/hard_drive/portable/design/arms,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "tEN" = (
 /turf/simulated/floor/tiled/monotile,
@@ -740,6 +823,18 @@
 "xcX" = (
 /obj/item/stack/material/steel/fifty,
 /turf/simulated/floor/tiled/monotile,
+/area/tdome/testing)
+"xvM" = (
+/obj/machinery/fabricator,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/tdome/testing)
+"xCD" = (
+/obj/item/stack/material/uranium/fifty,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 
 (1,1,1) = {"
