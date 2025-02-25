@@ -185,7 +185,7 @@ var/global/list/severity_to_string = list(EVENT_LEVEL_MUNDANE = "Mundane", EVENT
 		new /datum/event_meta(EVENT_LEVEL_MAJOR, "Nothing",							/datum/event/nothing,				1320),
 		new /datum/event_meta(EVENT_LEVEL_MAJOR, "Blob",							/datum/event/blob, 					0,	list(ASSIGNMENT_ENGINEER = 40), 1),
 		// [SIERRA-ADD],
-		new /datum/event_meta(EVENT_LEVEL_MAJOR, "Blob",							/datum/event/hivemind, 					0,	list(ASSIGNMENT_ENGINEER = 20,ASSIGNMENT_MEDICAL = 20,ASSIGNMENT_SECURITY = 20), 1),
+		new /datum/event_meta(EVENT_LEVEL_MAJOR, "Hivemind",						/datum/event/hivemind, 				0,	list(ASSIGNMENT_ENGINEER = 20,ASSIGNMENT_MEDICAL = 20,ASSIGNMENT_SECURITY = 20), 1),
 		// [/SIERRA-ADD],
 		new /datum/event_meta/no_overmap(EVENT_LEVEL_MAJOR, "Carp Migration",		/datum/event/mob_spawning/carp,		0,	list(ASSIGNMENT_SECURITY =  5), 1),
 		new /datum/event_meta/no_overmap(EVENT_LEVEL_MAJOR, "Meteor Wave",			/datum/event/meteor_wave,			0,	list(ASSIGNMENT_ENGINEER = 10),	1),
