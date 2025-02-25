@@ -407,6 +407,13 @@
 /obj/item/mech_equipment/catapult,
 /turf/simulated/floor/tiled/monotile,
 /area/tdome/testing)
+"fee" = (
+/obj/structure/flora/ausbushes/ppflowers,
+/obj/landmark{
+	name = "Observer-Start"
+	},
+/turf/unsimulated/floor/grass,
+/area/tdome/testing)
 "fuz" = (
 /obj/structure/table/steel,
 /obj/item/storage/toolbox/syndicate,
@@ -544,9 +551,6 @@
 /obj/landmark{
 	name = "JoinLateCryo"
 	},
-/obj/landmark{
-	name = "Observer-Start"
-	},
 /turf/unsimulated/floor/grass,
 /area/tdome/testing)
 "lCd" = (
@@ -655,12 +659,11 @@
 /turf/simulated/floor/tiled/monotile,
 /area/tdome/testing)
 "rZv" = (
-/obj/structure/flora/ausbushes/ywflowers,
 /obj/landmark/map_data{
 	height = 2
 	},
-/turf/unsimulated/floor/grass,
-/area/tdome/testing)
+/turf/space,
+/area/space)
 "ssC" = (
 /obj/structure/flora/ausbushes/brflowers,
 /turf/unsimulated/floor/grass,
@@ -19449,7 +19452,7 @@ aab
 aab
 aab
 aab
-aab
+rZv
 aab
 aab
 aab
@@ -21048,7 +21051,7 @@ cYk
 cYk
 uaP
 uaP
-aby
+fee
 beU
 uaP
 cYk
@@ -21249,7 +21252,7 @@ cYk
 cYk
 cYk
 beU
-rZv
+beU
 kWF
 uaP
 ssC

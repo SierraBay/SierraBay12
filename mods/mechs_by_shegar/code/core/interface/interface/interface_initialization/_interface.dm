@@ -1,6 +1,9 @@
 /mob/living/exosuit
 	var/obj/screen/movable/exosuit/advanced_heat/advanced_heat_indicator
 	var/obj/screen/exosuit/full_integrity/mech_hp
+	//Датум хранящий в себе информацию для работы меню
+	var/datum/exosuit_holder/exosuit_data
+
 
 /mob/living/exosuit/InitializeHud()
 	on_update_icon()

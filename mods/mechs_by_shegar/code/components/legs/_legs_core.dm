@@ -50,6 +50,10 @@
 	var/turn_slowdown = 0.5
 	///КД, спустя которое мех полностью теряет ускорение если он не двигался
 	var/lost_speed_colldown = 1 SECONDS
+	///Используется для спавна в рандомных мехах мехов с сдвоенными ногами (Траки или паучьи.)
+	var/should_have_doubled_owner = FALSE
+	///Путь до управленца двухконечностей. Используется в премейдах.
+	var/doubled_owner_type
 
 	///////////////SPEED///////////////
 
@@ -128,4 +132,4 @@
 	var/list/parts_to_show = list()
 	if(motivator)
 		parts_to_show += motivator
-	parts_list_images = make_item_radial_menu_choices(parts_to_show)
+	internal_parts_list_images = make_item_radial_menu_choices(parts_to_show)

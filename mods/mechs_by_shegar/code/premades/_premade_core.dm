@@ -12,26 +12,43 @@
 	if(body)
 		body.decal = decal
 		body.prebuild()
-	if(L_arm)
-		L_arm.decal = decal
-		L_arm.prebuild()
-		L_arm.side = LEFT
-		L_arm.setup_side()
 	if(R_arm)
 		R_arm.decal = decal
 		R_arm.prebuild()
 		R_arm.side = RIGHT
 		R_arm.setup_side()
-	if(L_leg)
-		L_leg.decal = decal
-		L_leg.prebuild()
-		L_leg.side = LEFT
-		L_leg.setup_side()
-	if(R_leg)
+	if(L_arm)
+		L_arm.decal = decal
+		L_arm.prebuild()
+		L_arm.side = LEFT
+		L_arm.setup_side()
+	if(R_leg && L_leg && R_leg.should_have_doubled_owner && L_leg.should_have_doubled_owner)
+		var/obj/item/mech_component/doubled_legs/spawned_double_legs = new R_leg.doubled_owner_type (src)
+		qdel(R_leg)
+		qdel(L_leg)
+		R_leg = null
+		L_leg = null
+		R_leg = spawned_double_legs.R_stored_leg
+		spawned_double_legs.R_stored_leg.forceMove(src)
 		R_leg.decal = decal
 		R_leg.prebuild()
 		R_leg.side = RIGHT
 		R_leg.setup_side()
+		L_leg = spawned_double_legs.L_stored_leg
+		spawned_double_legs.L_stored_leg.forceMove(src)
+		L_leg.decal = decal
+		L_leg.prebuild()
+	if(R_leg && !R_leg.should_have_doubled_owner)
+		R_leg.decal = decal
+		R_leg.prebuild()
+		R_leg.side = RIGHT
+		R_leg.setup_side()
+	if(L_leg && !L_leg.should_have_doubled_owner)
+		L_leg.decal = decal
+		L_leg.prebuild()
+		L_leg.side = LEFT
+		L_leg.setup_side()
+
 	if(!material)
 		material = SSmaterials.get_material_by_name(MATERIAL_STEEL)
 	. = ..()
@@ -151,40 +168,57 @@
 		var/bodytype = pick(typesof(/obj/item/mech_component/chassis)-/obj/item/mech_component/chassis)
 		body = new bodytype(src)
 		body.color = mech_colour ? mech_colour : pick(use_colours)
-	if(!L_arm)
-		var/armstype = pick(typesof(/obj/item/mech_component/manipulators)-/obj/item/mech_component/manipulators)
-		L_arm = new armstype(src)
-		L_arm.color = mech_colour ? mech_colour : pick(use_colours)
-		L_arm.side = LEFT
-		L_arm.setup_side()
 	if(!R_arm)
 		var/armstype = pick(typesof(/obj/item/mech_component/manipulators)-/obj/item/mech_component/manipulators)
 		R_arm = new armstype(src)
 		R_arm.color = mech_colour ? mech_colour : pick(use_colours)
 		R_arm.side = RIGHT
 		R_arm.setup_side()
-	var/spawn_cant_be_differents = TRUE
-	if(!L_leg)
+	if(!L_arm)
+		var/armstype = pick(typesof(/obj/item/mech_component/manipulators)-/obj/item/mech_component/manipulators)
+		L_arm = new armstype(src)
+		L_arm.color = mech_colour ? mech_colour : pick(use_colours)
+		L_arm.side = LEFT
+		L_arm.setup_side()
+	if(!R_leg)
 		var/legstype = pick(typesof(/obj/item/mech_component/propulsion)-/obj/item/mech_component/propulsion)
-		L_leg = new legstype(src)
-		L_leg.color = mech_colour ? mech_colour : pick(use_colours)
-		L_leg.side = LEFT
-		L_leg.setup_side()
-		if(L_leg.cant_be_differents)
-			spawn_cant_be_differents = FALSE
-			R_leg = new legstype(src)
+		R_leg = new legstype(src)
+		//Если ноги сдвоенные по умолчанию, мы спавним его держателя, а уже держателя ставим в меха и коннектим к меху, рандомно его крася
+		if(R_leg.should_have_doubled_owner)
+			qdel(R_leg)
+			R_leg = null
+			var/doubled_legs_type = pick(typesof(/obj/item/mech_component/doubled_legs)-/obj/item/mech_component/doubled_legs)
+			var/obj/item/mech_component/doubled_legs/spawned_double_legs = new doubled_legs_type(src)
+			R_leg = spawned_double_legs.R_stored_leg
+			R_leg.forceMove(src)
+			L_leg = spawned_double_legs.L_stored_leg
+			L_leg.forceMove(src)
+			R_leg.color = mech_colour ? mech_colour : pick(use_colours)
+			L_leg.color = mech_colour ? mech_colour : pick(use_colours)
+		//Иначе спавн стандартный
+		else
 			R_leg.color = mech_colour ? mech_colour : pick(use_colours)
 			R_leg.side = RIGHT
 			R_leg.setup_side()
-	if(!R_leg && spawn_cant_be_differents)
+	if(!L_leg)
 		var/legstype = pick(typesof(/obj/item/mech_component/propulsion)-/obj/item/mech_component/propulsion)
-		R_leg = new legstype(src)
-		R_leg.color = mech_colour ? mech_colour : pick(use_colours)
-		R_leg.side = RIGHT
-		R_leg.setup_side()
-		if(R_leg.cant_be_differents)
-			QDEL_NULL(L_leg)
-			L_leg = new legstype(src)
+		L_leg = new legstype(src)
+		//Если ноги сдвоенные по умолчанию, мы спавним его держателя, а уже держателя ставим в меха и коннектим к меху, рандомно его крася
+		if(L_leg.should_have_doubled_owner)
+			qdel(R_leg)
+			R_leg = null
+			qdel(L_leg)
+			L_leg = null
+			var/doubled_legs_type = pick(typesof(/obj/item/mech_component/doubled_legs)-/obj/item/mech_component/doubled_legs)
+			var/obj/item/mech_component/doubled_legs/spawned_double_legs = new doubled_legs_type(src)
+			R_leg = spawned_double_legs.R_stored_leg
+			R_leg.forceMove(src)
+			L_leg = spawned_double_legs.L_stored_leg
+			L_leg.forceMove(src)
+			R_leg.color = mech_colour ? mech_colour : pick(use_colours)
+			L_leg.color = mech_colour ? mech_colour : pick(use_colours)
+		else
+		//Иначе спавн стандартный
 			L_leg.color = mech_colour ? mech_colour : pick(use_colours)
 			L_leg.side = LEFT
 			L_leg.setup_side()

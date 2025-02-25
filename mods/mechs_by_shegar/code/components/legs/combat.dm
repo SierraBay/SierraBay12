@@ -20,9 +20,9 @@
 	emp_heat_generation = 50
 	heat_generation = 2
 	turn_delay = 3.5
-	max_speed = 3
-	min_speed = 7
-	acceleration = 1.25
+	max_speed = 28
+	min_speed = 23
+	acceleration = 1.5
 	turn_slowdown = 2.5
 	turn_diogonal_slowdown = 2
 	weight = 125

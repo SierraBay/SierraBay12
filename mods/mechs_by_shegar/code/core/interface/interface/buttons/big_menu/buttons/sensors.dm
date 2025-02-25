@@ -2,6 +2,7 @@
 /obj/screen/exosuit/menu_button/camera
 	name = "toggle camera matrix"
 	icon_state = "sensors"
+	button_desc = "Управляет дополнительными визорами меха(Мезоны, тактички, ПНВ) <br>-Потребляет энергию <br>-Выключится при потери камеры"
 	switchable = TRUE
 
 /obj/screen/exosuit/menu_button/camera/switch_on()

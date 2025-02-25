@@ -14,7 +14,7 @@
 	allowed_magazines = list(/obj/item/ammo_magazine/rockets_casing)
 	load_method = SINGLE_CASING|SPEEDLOADER
 	caliber = CALIBER_ROCKETS
-	max_shells = 12
+	max_shells = 4
 	starts_loaded = FALSE
 	firemodes = list(
 	mode_name="semi auto",       burst=1, fire_delay=null,    move_delay=null, one_hand_penalty=0, burst_accuracy=null, dispersion=null,
@@ -30,7 +30,7 @@
 	caliber = CALIBER_ROCKETS
 	matter = list(MATERIAL_STEEL = 2000)
 	ammo_type = /obj/item/ammo_casing/rocket/mech
-	max_ammo = 12
+	max_ammo = 4
 
 /obj/item/ammo_casing/rocket/mech
 	icon = 'mods/mechs_by_shegar/icons/ammo.dmi'

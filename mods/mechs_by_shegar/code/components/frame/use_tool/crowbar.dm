@@ -31,6 +31,11 @@
 		var/obj/item/mech_component/choosed_part = show_radial_menu(user, src, parts_list_images, require_near = TRUE, radius = 42, tooltips = TRUE, check_locs = list(src))
 		if (!choosed_part || !user.use_sanity_check(src, tool) || !uninstall_component(choosed_part, user))
 			return TRUE
+		if(choosed_part.doubled_owner)
+			R_leg.forceMove(choosed_part.doubled_owner)
+			R_leg = null
+			L_leg.forceMove(choosed_part.doubled_owner)
+			L_leg = null
 		if (choosed_part == body)
 			body = null
 		else if (choosed_part == head)
@@ -42,9 +47,6 @@
 		else if (choosed_part == R_leg)
 			R_leg = null
 		else if (choosed_part == L_leg)
-			L_leg = null
-		if(istype(choosed_part, /obj/item/mech_component/doubled_legs))
-			R_leg = null
 			L_leg = null
 		update_icon()
 		return TRUE

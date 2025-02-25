@@ -18,7 +18,7 @@
 	var/x_step = 0.8 //как сильно мы сдвигаемся
 	var/y_step = 0.8
 	var/current_x_cord = 0
-	var/current_y_cord = 1.2
+	var/current_y_cord = 1.6
 	for(var/button_type in big_buttons)
 		var/obj/screen/exosuit/menu_button/menu_button = new button_type(src)
 		menu_button.layer = 2.2

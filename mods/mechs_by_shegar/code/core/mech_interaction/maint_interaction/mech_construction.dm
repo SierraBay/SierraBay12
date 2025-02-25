@@ -14,26 +14,36 @@
 		head.update_component_owner()
 		head.forceMove(frame)
 		head = null
-	if(L_leg)
+	if(R_leg && R_leg.doubled_owner && L_leg && L_leg.doubled_owner)
+		frame.R_leg = R_leg
 		frame.L_leg = L_leg
+		R_leg.doubled_owner.forceMove(frame)
+		R_leg.forceMove(frame)
 		L_leg.forceMove(frame)
+		R_leg.update_component_owner()
 		L_leg.update_component_owner()
+		R_leg = null
 		L_leg = null
-	if(R_leg)
+	if(R_leg && !R_leg.doubled_owner)
 		frame.R_leg = R_leg
 		R_leg.forceMove(frame)
 		R_leg.update_component_owner()
 		R_leg = null
-	if(L_arm)
-		frame.L_arm = L_arm
-		L_arm.forceMove(frame)
-		L_arm.update_component_owner()
-		L_arm = null
+	if(L_leg && !L_leg.doubled_owner)
+		frame.L_leg = L_leg
+		L_leg.forceMove(frame)
+		L_leg.update_component_owner()
+		L_leg = null
 	if(R_arm)
 		frame.R_arm = R_arm
 		R_arm.forceMove(frame)
 		R_arm.update_component_owner()
 		R_arm = null
+	if(L_arm)
+		frame.L_arm = L_arm
+		L_arm.forceMove(frame)
+		L_arm.update_component_owner()
+		L_arm = null
 
 	frame.is_wired = FRAME_WIRED_ADJUSTED
 	frame.is_reinforced = FRAME_REINFORCED_WELDED

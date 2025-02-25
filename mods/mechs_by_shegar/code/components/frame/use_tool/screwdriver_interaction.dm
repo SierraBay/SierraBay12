@@ -55,5 +55,11 @@
 		SPAN_NOTICE("\The [user] finishes constructing \the [exosuit] with \a [tool]."),
 		SPAN_NOTICE("You finish constructing \the [exosuit] with \the [tool].")
 		)
-	QDEL_NULL(src)
+	head = null
+	body = null
+	R_arm = null
+	L_arm = null
+	R_leg = null
+	L_leg = null
+	qdel(src)
 	return TRUE

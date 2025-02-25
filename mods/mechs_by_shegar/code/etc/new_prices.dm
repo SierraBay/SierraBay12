@@ -21,24 +21,39 @@
 /datum/design/item/mechfab/exosuit/control_module
 	materials = list(MATERIAL_STEEL = 15000, MATERIAL_PLASTIC = 5000, MATERIAL_ALUMINIUM = 5000, MATERIAL_GLASS = 5000)
 
-/datum/design/item/mechfab/exosuit/combat_torso
-	materials = list(MATERIAL_STEEL = 135000, MATERIAL_PLASTEEL = 10000, MATERIAL_ALUMINIUM = 40000)
-	req_tech = list(TECH_COMBAT = 4)
-
-/datum/design/item/mechfab/exosuit/combat_arms
-	materials = list(MATERIAL_STEEL = 45000, MATERIAL_PLASTEEL = 5000, MATERIAL_ALUMINIUM = 5000)
-	req_tech = list(TECH_COMBAT = 4)
-
-/datum/design/item/mechfab/exosuit/combat_legs
-	materials = list(MATERIAL_STEEL = 45000, MATERIAL_PLASTEEL = 5000, MATERIAL_ALUMINIUM = 5000)
-	req_tech = list(TECH_COMBAT = 4)
-
 /datum/design/item/mechfab/exosuit/combat_head
-	name = "combat exosuit sensors"
+	name = "combat mech sensors"
 	id = "combat_head"
 	time = 30
 	materials = list(MATERIAL_STEEL = 45000, MATERIAL_PLASTEEL = 5000, MATERIAL_ALUMINIUM = 5000)
 	build_path = /obj/item/mech_component/sensors/combat
+	req_tech = list(TECH_COMBAT = 4)
+
+/datum/design/item/mechfab/exosuit/combat_torso
+	name = "combat mech chassis"
+	materials = list(MATERIAL_STEEL = 135000, MATERIAL_PLASTEEL = 10000, MATERIAL_ALUMINIUM = 40000)
+	req_tech = list(TECH_COMBAT = 4)
+
+/datum/design/item/mechfab/exosuit/combat_arms/right
+	name = "right combat mech manipulator"
+	id = "right_combat_arm"
+	build_path = /obj/item/mech_component/manipulators/combat/right
+
+/datum/design/item/mechfab/exosuit/combat_arms
+	name = "left combat mech manipulator"
+	id = "left_combat_arm"
+	materials = list(MATERIAL_STEEL = 45000, MATERIAL_PLASTEEL = 5000, MATERIAL_ALUMINIUM = 5000)
+	req_tech = list(TECH_COMBAT = 4)
+
+/datum/design/item/mechfab/exosuit/combat_legs/right
+	name = "right combat mech motivator"
+	id = "right_combat_leg"
+	build_path =  /obj/item/mech_component/propulsion/combat/right
+
+/datum/design/item/mechfab/exosuit/combat_legs
+	name = "left combat mech motivator"
+	id = "left_combat_leg"
+	materials = list(MATERIAL_STEEL = 45000, MATERIAL_PLASTEEL = 5000, MATERIAL_ALUMINIUM = 5000)
 	req_tech = list(TECH_COMBAT = 4)
 
 /datum/design/item/exosuit/circuit
@@ -52,10 +67,24 @@
 /datum/design/item/mechfab/exosuit/powerloader_torso
 	materials = list(MATERIAL_STEEL = 20000)
 
+/datum/design/item/mechfab/exosuit/powerloader_arms/right
+	name = "right power loader manipulator"
+	id = "right_powerloader_arm"
+	build_path =  /obj/item/mech_component/manipulators/powerloader/right
+
 /datum/design/item/mechfab/exosuit/powerloader_arms
+	name = "left power loader manipulator"
+	id = "left_powerloader_arm"
 	materials = list(MATERIAL_STEEL = 5000)
 
+/datum/design/item/mechfab/exosuit/powerloader_legs/right
+	name = "right power loader motivator"
+	id = "right_powerloader_leg"
+	build_path =  /obj/item/mech_component/propulsion/light/right
+
 /datum/design/item/mechfab/exosuit/powerloader_legs
+	name = "left power loader motivator"
+	id = "left_powerloader_leg"
 	materials = list(MATERIAL_STEEL = 5000)
 
 /datum/design/item/mechfab/exosuit/light_head
@@ -64,28 +93,61 @@
 /datum/design/item/mechfab/exosuit/light_torso
 	materials = list(MATERIAL_STEEL = 100000, MATERIAL_ALUMINIUM = 20000, MATERIAL_PLASTIC = 10000)
 
+/datum/design/item/mechfab/exosuit/light_arms/right
+	name = "right light mech manipulator"
+	id = "right_light_arm"
+	build_path =  /obj/item/mech_component/manipulators/light/right
+
 /datum/design/item/mechfab/exosuit/light_arms
+	name = "left light mech manipulator"
+	id = "left_light_arm"
 	materials = list(MATERIAL_STEEL = 30000, MATERIAL_PLASTIC = 5000, MATERIAL_ALUMINIUM = 5000)
 
+/datum/design/item/mechfab/exosuit/light_legs/right
+	name = "right light mech motivator"
+	id = "right_light_leg"
+	build_path =  /obj/item/mech_component/propulsion/light/right
+
 /datum/design/item/mechfab/exosuit/light_legs
+	name = "left light mech motivator"
+	id = "left_light_leg"
 	materials = list(MATERIAL_STEEL = 30000, MATERIAL_PLASTIC = 5000, MATERIAL_ALUMINIUM = 5000)
 
 /datum/design/item/mechfab/exosuit/heavy_head
+	name = "heavy mech sensors"
 	materials = list(MATERIAL_STEEL = 48000, MATERIAL_PLASTEEL = 20000, MATERIAL_ALUMINIUM = 20000)
 
 /datum/design/item/mechfab/exosuit/heavy_torso
+	name = "heavy mech chassis"
 	materials = list(MATERIAL_STEEL = 210000, MATERIAL_URANIUM = 10000, MATERIAL_PLASTEEL = 40000, MATERIAL_ALUMINIUM = 40000)
 
+/datum/design/item/mechfab/exosuit/heavy_arms/right
+	name = "right heavy mech manipulator"
+	id = "right_heavy_arm"
+	build_path =  /obj/item/mech_component/manipulators/heavy/right
+
 /datum/design/item/mechfab/exosuit/heavy_arms
+	name = "left heavy mech manipulator"
+	id = "left_heavy_arm"
 	materials = list(MATERIAL_STEEL = 48000, MATERIAL_PLASTEEL = 20000, MATERIAL_ALUMINIUM = 20000)
 
+/datum/design/item/mechfab/exosuit/heavy_legs/right
+	name = "right heavy mech motivator"
+	id = "right_heavy_leg"
+	build_path = /obj/item/mech_component/propulsion/heavy/right
+
 /datum/design/item/mechfab/exosuit/heavy_legs
+	name = "left heavy mech motivator"
+	id = "left_heavy_leg"
 	materials = list(MATERIAL_STEEL = 48000, MATERIAL_PLASTEEL = 20000, MATERIAL_ALUMINIUM = 20000)
 
 /datum/design/item/mechfab/exosuit/spider
+	name = "spider-type motivators"
+	build_path = /obj/item/mech_component/doubled_legs/spider
 	materials = list(MATERIAL_STEEL = 48000, MATERIAL_ALUMINIUM = 5000, MATERIAL_PLASTIC = 5000)
 
 /datum/design/item/mechfab/exosuit/track
+	build_path = /obj/item/mech_component/doubled_legs/tracks
 	materials = list(MATERIAL_STEEL = 75000, MATERIAL_PLASTEEL = 5000, MATERIAL_ALUMINIUM = 5000)
 
 /datum/design/item/mechfab/exosuit/sphere_torso

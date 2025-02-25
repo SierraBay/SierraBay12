@@ -1,5 +1,6 @@
 /obj/screen/exosuit/menu_button/rename
 	name = "rename"
+	button_desc = "Кнопка меняет имя меха на любое. WARNING: Не надо неадекватно именовать мехов по типу ZH0-PA."
 	icon_state = "rename"
 
 

@@ -21,12 +21,14 @@
 	heat_cooling = 1
 	emp_heat_generation = 75
 	heat_generation = 1
-	max_speed = 2
+	max_speed = 17
 	min_speed = 6
 	acceleration = 0.75
 	turn_slowdown = 2
 	turn_diogonal_slowdown = 1.5
 	weight = 150
+	should_have_doubled_owner = TRUE
+	doubled_owner_type = /obj/item/mech_component/doubled_legs/tracks
 
 /obj/item/mech_component/propulsion/tracks/right
 	name = "track"

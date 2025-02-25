@@ -1,5 +1,6 @@
 /obj/screen/exosuit/menu_button/power
 	name = "Toggle power"
+	button_desc = "Кнопка запускает питание меха. <br> В случае перегрева и при нажатии Alt + ЛКМ, мех аварийно запускается <br> WARNING: Мех начинает греться сильнее от разных источников, а при повторном перегреве взорвётся."
 	icon_state = "power"
 	switchable = TRUE
 

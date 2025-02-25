@@ -9,22 +9,22 @@
 	if(!body)
 		body = new /obj/item/mech_component/chassis/combat/ert(src)
 		body.color = COLOR_WHITE
-	if(!L_arm)
-		L_arm = new /obj/item/mech_component/manipulators/combat(src)
-		L_arm.color = COLOR_CYAN_BLUE
 	if(!R_arm)
 		R_arm = new /obj/item/mech_component/manipulators/combat(src)
 		R_arm.color = COLOR_CYAN_BLUE
 		R_arm.side = RIGHT
 		R_arm.setup_side()
-	if(!L_leg)
-		L_leg = new /obj/item/mech_component/propulsion/combat(src)
-		L_leg.color = COLOR_CYAN_BLUE
+	if(!L_arm)
+		L_arm = new /obj/item/mech_component/manipulators/combat(src)
+		L_arm.color = COLOR_CYAN_BLUE
 	if(!R_leg)
 		R_leg = new /obj/item/mech_component/propulsion/combat(src)
 		R_leg.color = COLOR_CYAN_BLUE
 		R_leg.side = RIGHT
 		R_leg.setup_side()
+	if(!L_leg)
+		L_leg = new /obj/item/mech_component/propulsion/combat(src)
+		L_leg.color = COLOR_CYAN_BLUE
 	//Выдаём батарею и броню покруче
 	. = ..()
 

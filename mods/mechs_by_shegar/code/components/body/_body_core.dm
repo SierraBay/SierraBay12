@@ -241,6 +241,7 @@
 		if(istype(over, /obj/structure/heavy_vehicle_frame))
 			var/obj/structure/heavy_vehicle_frame/input_frame = over
 			input_frame.use_tool(src, usr)
+			return
 	if(!usr || !over)
 		return
 	if(!Adjacent(usr) || !over.Adjacent(usr))
@@ -274,4 +275,4 @@
 		parts_to_show += diagnostics
 	if(m_armour)
 		parts_to_show += m_armour
-	parts_list_images = make_item_radial_menu_choices(parts_to_show)
+	internal_parts_list_images = make_item_radial_menu_choices(parts_to_show)

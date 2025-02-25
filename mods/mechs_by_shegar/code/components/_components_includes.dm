@@ -1,5 +1,11 @@
 #include "_components.dm"
 #include "armour.dm"
+
+//Взаимодействие с частями меха
+#include "components_interactions\material.dm"
+#include "components_interactions\screwdriver.dm"
+#include "components_interactions\welder.dm"
+
 //Сенсоры
 #include "head\_head_core.dm"
 #include "head\combat.dm"

@@ -4,6 +4,10 @@
 	//Кнопка переключаемая, а не просто нажимаемая
 	var/switchable = FALSE
 	var/toggled = FALSE
+	//Используется для плавного вывода меню,
+	var/button_desc = "Ёбаная кнопка"
+	var/enter_status = FALSE
+	var/show_tooltip_cooldown = 1 SECONDS
 	maptext_x = 9
 	maptext_y = 13
 	height = 32
@@ -70,3 +74,16 @@
 		else
 			icon_state = initial(icon_state)
 			toggled = FALSE
+
+/obj/screen/exosuit/menu_button/MouseEntered(location, control, params)
+	. = ..()
+	if(!button_desc)
+		return
+	enter_status = TRUE
+	sleep(show_tooltip_cooldown)
+	if(enter_status)
+		openToolTip(usr, src, params, "Описание", button_desc)
+
+/obj/screen/exosuit/menu_button/MouseExited(location, control, params)
+	enter_status = FALSE
+	closeToolTip(usr)

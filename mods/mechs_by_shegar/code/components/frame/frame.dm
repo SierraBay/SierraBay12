@@ -81,14 +81,16 @@
 	return 1
 
 /obj/structure/heavy_vehicle_frame/proc/uninstall_component(obj/item/mech_component/component, mob/user)
+	if(component.doubled_owner)
+		component = component.doubled_owner
 	if(!istype(component) || !istype(user))
 		if(!component.doubled_owner && component.loc != src)
 			return FALSE
-		else if(component.doubled_owner)
-			component = component.doubled_owner
-			if(component.loc != src)
-				return FALSE
-	if(!do_after(user, 4 SECONDS * user.skill_delay_mult(SKILL_DEVICES), src, DO_PUBLIC_UNIQUE) || component.loc != src)
+		if(component.loc != src)
+			return FALSE
+	if(!do_after(user, 4 SECONDS * user.skill_delay_mult(SKILL_DEVICES), src, DO_PUBLIC_UNIQUE))
+		return FALSE
+	if(component.doubled_owner && component.loc != src)
 		return FALSE
 	user.visible_message(SPAN_NOTICE("\The [user] crowbars \the [component] off \the [src]."))
 	component.forceMove(get_turf(src))

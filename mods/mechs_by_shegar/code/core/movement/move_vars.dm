@@ -8,8 +8,9 @@
 
 /datum/movement_handler/mob/delay/exosuit
 	expected_host_type = /mob/living/exosuit
-
-/mob/living/exosuit/SetMoveCooldown(timeout)
+///
+/mob/living/exosuit/SetMoveCooldown(current_speed_input)
+	var/result_timeout = (BIGGEST_POSSIBLE_SPEED+1) - current_speed
 	var/datum/movement_handler/mob/delay/delay = GetMovementHandler(/datum/movement_handler/mob/delay/exosuit)
 	if(delay)
-		delay.SetDelay(timeout)
+		delay.SetDelay(result_timeout)

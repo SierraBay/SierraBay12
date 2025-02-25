@@ -46,7 +46,7 @@
 	///Гарантированный дополнительный урон, когда часть принимает урон задней стороной
 	var/back_additional_damage = 0
 	///Применяется при установки части которая в себе содержит несколько частей (Условно траки или паучьи ноги)
-	var/doubled_owner
+	var/obj/item/mech_component/doubled_owner
 	///Владелец части
 	var/mob/living/exosuit/owner
 
@@ -106,6 +106,7 @@
 /obj/item/mech_component/proc/install_component(obj/item/thing, mob/user)
 	if(user.unEquip(thing, src))
 		user.visible_message(SPAN_NOTICE("\The [user] installs \the [thing] in \the [src]."))
+		update_components()
 		return 1
 
 /obj/item/mech_component/proc/update_health()
@@ -153,30 +154,10 @@
 
 /obj/item/mech_component/use_tool(obj/item/thing, mob/living/user, list/click_params)
 	if (isScrewdriver(thing))
-		if(length(contents))
-			//Filter non movables
-			var/list/valid_contents = list()
-			for(var/atom/movable/A in contents)
-				if(!A.anchored)
-					valid_contents += A
-			if(!length(valid_contents))
-				return TRUE
-			var/obj/item/mech_component/removed = show_radial_menu(user, src, parts_list_images, require_near = TRUE, radius = 42, tooltips = TRUE, check_locs = list(src))
-			if(!(removed in contents))
-				return TRUE
-			user.visible_message(SPAN_NOTICE("\The [user] removes \the [removed] from \the [src]."))
-			removed.forceMove(user.loc)
-			playsound(user.loc, 'sound/effects/pop.ogg', 50, 0)
-			update_components()
-		else
-			to_chat(user, SPAN_WARNING("There is nothing to remove."))
+		screwdriver_interaction(user)
 		return TRUE
-
 	if (isWelder(thing))
-		if(current_hp == max_repair || current_hp < max_repair)
-			USE_FEEDBACK_FAILURE("\The [src]'s [name] is too damaged and requires repair with material.")
-			return TRUE
-		repair_brute_generic(thing, user)
+		welder_interacion(thing, user)
 		return TRUE
 
 	if (isCoil(thing))
@@ -190,21 +171,8 @@
 
 		//Ткнули листом материала
 	else if(istype(thing, /obj/item/stack/material))
-		if(current_hp > max_repair)
-			to_chat(user, "This part does not require repair.")
-			return
-		var/obj/item/stack/material/material_sheet = thing
-		var/user_undertand = FALSE // <-Персонаж пытающийся провернуть ремонт что-то смыслит в мехах для ремонта.
-		if(user.skill_check(SKILL_DEVICES , SKILL_TRAINED) && user.skill_check(SKILL_CONSTRUCTION, SKILL_BASIC))
-			user_undertand = TRUE // <- Мы даём пользователю больше информации, разрешаем проводить ремонт
-		if(req_material != material_sheet.default_type)
-			if(user_undertand)
-				to_chat(user, "My experience tells me that this material is not suitable for repairs this part. I need [req_material]")
-				return
-			else
-				to_chat(user, "I don’t know anything about bellows repair, I stand there and look at him like an idiot.")
-				return
-		material_repair(null, material_sheet, user, user_undertand, src)
+		material_interaction(thing, user)
+		return TRUE
 
 	return ..()
 
@@ -272,7 +240,7 @@
 
 /obj/item/mech_component
 	//Список изображений внутрянки в части меха
-	var/list/parts_list_images = list()
+	var/list/internal_parts_list_images = list()
 
 /obj/item/mech_component/proc/update_parts_images()
 	return

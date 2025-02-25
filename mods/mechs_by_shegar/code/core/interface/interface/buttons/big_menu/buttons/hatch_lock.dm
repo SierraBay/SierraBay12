@@ -1,6 +1,6 @@
 /obj/screen/exosuit/menu_button/hatch_bolts
 	name = "toggle hatch lock"
-	desc = "Переключает замок у кабины меха, не позволяя открыть её ломом"
+	button_desc = "Переключает замок у кабины меха, не позволяя открыть её ломом."
 	switchable = TRUE
 	icon_state = "lock"
 

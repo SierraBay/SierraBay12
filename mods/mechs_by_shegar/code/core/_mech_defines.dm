@@ -18,6 +18,8 @@
 
 //Рендеринг меха.
 #define MECH_BACK_LAYER 4
+#define BIGGEST_POSSIBLE_SPEED 30
+
 
 /proc/in_this_mech(mob/living/A, mob/living/exosuit/B)
 	if(istype(B, /mob/living/exosuit))

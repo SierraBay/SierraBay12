@@ -1,6 +1,6 @@
 /obj/screen/exosuit/menu_button/gps
 	name = "Use integrated GPS"
-	desc = "Открывает меню управления встроенного GPS."
+	button_desc = "Открывает меню управления встроенного GPS."
 	icon_state = "gps"
 
 /obj/screen/exosuit/menu_button/gps/activated()

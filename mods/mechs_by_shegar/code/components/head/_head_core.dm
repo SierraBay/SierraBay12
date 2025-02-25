@@ -148,4 +148,4 @@
 		parts_to_show += camera
 	if(computer)
 		parts_to_show += computer
-	parts_list_images = make_item_radial_menu_choices(parts_to_show)
+	internal_parts_list_images = make_item_radial_menu_choices(parts_to_show)

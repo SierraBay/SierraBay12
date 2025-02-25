@@ -29,6 +29,12 @@
 	icon_state = "heat_0"
 	var/obj/screen/exosuit/overheat/overheat
 
+/obj/screen/movable/exosuit/advanced_heat/MouseEntered(location, control, params)
+	openToolTip(usr, src, params, "DATA", "Текущее тепло в мехе: [owner.current_heat]/[owner.max_heat] <br> Скорость охлаждения: [owner.total_heat_cooling] <br> Статус перегрева:[owner.overheat]")
+
+/obj/screen/movable/exosuit/advanced_heat/MouseExited(location, control, params)
+	closeToolTip(usr)
+
 /obj/screen/movable/exosuit/advanced_heat/proc/Update()
 	var/value = (owner.current_heat/owner.max_heat) * 42
 	var/output = floor(value)
@@ -47,9 +53,3 @@
 	overheat.layer = 1.9
 	vis_contents += overheat
 	overheat.pixel_y = 32
-
-/obj/screen/movable/exosuit/advanced_heat/Click(location, control, params)
-	var/modifiers = params2list(params)
-	if(modifiers["shift"])
-		usr.show_message(SPAN_NOTICE("Текущее тепло в мехе: [owner.current_heat]/[owner.max_heat], скорость охлаждения: [owner.total_heat_cooling] Статус перегрева:[owner.overheat]"), VISIBLE_MESSAGE)
-	return

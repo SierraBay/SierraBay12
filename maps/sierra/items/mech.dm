@@ -7,18 +7,17 @@
 	if(!body)
 		body = new /obj/item/mech_component/chassis/pod(src)
 		body.color = COLOR_GUNMETAL
-	if(!L_leg)
-		L_leg = new /obj/item/mech_component/propulsion/tracks(src)
-		L_leg.color = COLOR_GUNMETAL
-	if(!R_leg)
-		R_leg = new /obj/item/mech_component/propulsion/tracks(src)
-		R_leg.color = COLOR_GUNMETAL
-	if(!L_arm)
-		L_arm = new /obj/item/mech_component/manipulators/powerloader(src)
-		L_arm.color = COLOR_PURPLE
+	if(!R_leg && !L_leg)
+		var/obj/item/mech_component/doubled_legs/spawned_double = new /obj/item/mech_component/doubled_legs/tracks (get_turf(src))
+		spawned_double.forceMove(src)
+		R_leg = spawned_double.R_stored_leg
+		L_leg = spawned_double.L_stored_leg
 	if(!R_arm)
 		R_arm = new /obj/item/mech_component/manipulators/powerloader(src)
 		R_arm.color = COLOR_PURPLE
+	if(!L_arm)
+		L_arm = new /obj/item/mech_component/manipulators/powerloader(src)
+		L_arm.color = COLOR_PURPLE
 
 	. = ..()
 

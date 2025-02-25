@@ -73,4 +73,4 @@
 	var/list/parts_to_show = list()
 	if(motivator)
 		parts_to_show += motivator
-	parts_list_images = make_item_radial_menu_choices(parts_to_show)
+	internal_parts_list_images = make_item_radial_menu_choices(parts_to_show)

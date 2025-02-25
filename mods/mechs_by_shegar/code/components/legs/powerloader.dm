@@ -17,7 +17,7 @@
 	heat_cooling = 7
 	emp_heat_generation = 50
 	heat_generation = 2
-	max_speed = 4
+	max_speed = 12
 	min_speed = 6
 	acceleration = 0.75
 	turn_slowdown = 1.25

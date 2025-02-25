@@ -15,7 +15,8 @@
 
 	var/powered = FALSE
 	if(get_cell())
-		powered = get_cell().drain_power(0, 0, calc_power_draw()) > 0
+		if(get_cell().drain_power(0, 0, calc_power_draw()) > 0)
+			powered = TRUE
 
 	if(!powered)
 		//Shut down all systems
@@ -26,7 +27,7 @@
 			if(istype(M) && M.active && M.passive_power_use)
 				M.deactivate()
 
-	else if(powered && current_heat != 0)
+	if(current_heat != 0)
 		process_heat()
 
 	updatehealth()
@@ -42,6 +43,7 @@
 		handle_hud_icons()
 		handle_vision(powered)
 		handle_hud_icons()
+	process_speed()
 
 
 /mob/living/exosuit/handle_environment(datum/gas_mixture/environment)

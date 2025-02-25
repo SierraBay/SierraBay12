@@ -32,8 +32,11 @@
 
 /mob/living/exosuit/proc/do_mech_step_sound(volume = 40)
 	if(current_leg)
-		playsound(get_turf(src), L_leg.mech_turn_sound, volume, 1)
+		playsound(get_turf(src), L_leg.mech_step_sound, volume, 1)
 		current_leg = FALSE
 	else
-		playsound(get_turf(src), R_leg.mech_turn_sound, volume, 1)
+		playsound(get_turf(src), R_leg.mech_step_sound, volume, 1)
 		current_leg = TRUE
+
+/mob/living/exosuit/proc/do_mech_turn_sound(volume = 40)
+	playsound(get_turf(src), pick(R_leg.mech_turn_sound, L_leg.mech_turn_sound), volume, 1)

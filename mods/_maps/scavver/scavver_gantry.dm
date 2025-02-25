@@ -75,24 +75,25 @@
 	desc = "An outdated mech designed to strip and repair ships by crawling along their hull. This one won't be doing many repairs anymore."
 
 /mob/living/exosuit/premade/salvage_gantry/Initialize()
-	if(!body)
-		body = new /obj/item/mech_component/chassis/pod(src)
-		body.color = COLOR_ORANGE
-	if(!L_leg)
-		L_leg = new /obj/item/mech_component/propulsion/spider(src)
-		L_leg.color = COLOR_GUNMETAL
-	if(!R_leg)
-		R_leg = new /obj/item/mech_component/propulsion/spider/right(src)
-		R_leg.color = COLOR_GUNMETAL
-	if(!L_arm)
-		L_arm = new /obj/item/mech_component/manipulators/powerloader(src)
-		L_arm.color = COLOR_GUNMETAL
-	if(!R_arm)
-		R_arm = new /obj/item/mech_component/manipulators/powerloader/right(src)
-		R_arm.color = COLOR_GUNMETAL
 	if(!head)
 		head = new /obj/item/mech_component/sensors/light/salvage(src)
 		head.color = COLOR_GUNMETAL
+	if(!body)
+		body = new /obj/item/mech_component/chassis/pod(src)
+		body.color = COLOR_ORANGE
+	if(!R_leg && L_leg)
+		var/obj/item/mech_component/doubled_legs/spawned_double = new /obj/item/mech_component/doubled_legs/spider (get_turf(src))
+		spawned_double.forceMove(src)
+		R_leg = spawned_double.R_stored_leg
+		R_leg.doubled_owner = spawned_double
+		L_leg = spawned_double.L_stored_leg
+		L_leg.doubled_owner = spawned_double
+	if(!R_arm)
+		R_arm = new /obj/item/mech_component/manipulators/powerloader/right(src)
+		R_arm.color = COLOR_GUNMETAL
+	if(!L_arm)
+		L_arm = new /obj/item/mech_component/manipulators/powerloader(src)
+		L_arm.color = COLOR_GUNMETAL
 
 	. = ..()
 
