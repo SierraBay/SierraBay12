@@ -9,7 +9,7 @@
 #define ERR_STOPPED "lazy user"
 #define ERR_SKILL_ISSUE "unskilled user"
 //AUTOLATHE
-#define SANITIZE_LATHE_COST(n) round((n * mechfabmod), 0.01)
+#define SANITIZE_LATHE_COST(n) round((n), 0.01)
 
 /obj/machinery/fabricator
 	name = "autolathe"
@@ -49,7 +49,6 @@
 	var/list/queue = list()
 	var/queue_max = 8
 
-	var/mechfabmod = 1
 	var/storage_capacity = 0
 	var/speed = 1
 	var/mat_efficiency = 1
@@ -110,10 +109,7 @@
 /obj/machinery/fabricator/proc/materials_data()
 	var/list/data = list()
 
-	if(mechfabmod == 2)
-		data["mat_efficiency"] = (mat_efficiency * mechfabmod)
-	else if (mechfabmod == 1)
-		data["mat_efficiency"] = mat_efficiency
+	data["mat_efficiency"] = mat_efficiency
 	data["mat_capacity"] = storage_capacity
 
 	data["container"] = !!container
@@ -539,7 +535,7 @@
 					stack.use(1)
 					count++
 				to_chat(user, "You insert [count] [count==1 ? stack_singular : stack_plural] into the [src].")// 0 steel sheets, 1 steel sheet, 2 steel sheets, etc
-				res_load()
+				res_load(SSmaterials.get_material_by_name(material))
 
 
 		else
@@ -554,7 +550,7 @@
 				isdesignnotexist = FALSE
 				for(var/material in D.materials)
 					if(stored_material[material] < storage_capacity)
-						stored_material[material] += (D.materials[material]/2)
+						stored_material[material] += (D.materials[material]/4)
 		if(isdesignnotexist)
 			for(var/obj/O in eating.GetAllContents(includeSelf = TRUE))
 				var/list/_matter = O.matter
@@ -563,9 +559,8 @@
 						if(material in unsuitable_materials)
 							continue
 						if(stored_material[material] < storage_capacity)
-							stored_material[material] += (_matter[material]/2)
+							stored_material[material] += (_matter[material]/4)
 		qdel(eating)
-		res_load()
 		return TRUE
 
 
@@ -654,24 +649,20 @@
 		visible_message("\The [src] pings, indicating that queue is complete.")
 
 
-/obj/machinery/fabricator/proc/res_load()
+/obj/machinery/fabricator/proc/res_load(material/material)
 	var/list/viewing = list()
 	for (var/mob/M in view(6,src))
 		if (M.client)
 			viewing |= M.client
 	var/image/orderimage = image('mods/RnD/icons/autolathe.dmi', src, "[icon_state]_load_m")
+	orderimage.color = material.icon_colour
 	flick_overlay(orderimage, viewing, 8)
 
 /obj/machinery/fabricator/components_are_accessible(path)
 	return !(fab_status_flags & FAB_BUSY) && ..()
 
 /obj/machinery/fabricator/proc/check_materials(datum/design/design)
-/*
-	mechfabmod = 1
-	if(design.build_type == MECHFAB)
-		mechfabmod = 2
-		if(!(fab_status_flags & FAB_HACKED))
-			return ERR_NOCOMPAT*/
+
 	if(design.build_type != build_type)
 		var/second_check = build_type | MECHFAB
 		if(design.build_type != second_check)
@@ -736,7 +727,7 @@
 		else
 			error = "Unknown error."
 
-		if(current_file.design && progress >= current_file.design.time * mechfabmod)
+		if(current_file.design && progress >= current_file.design.time)
 			finish_construction()
 
 	else

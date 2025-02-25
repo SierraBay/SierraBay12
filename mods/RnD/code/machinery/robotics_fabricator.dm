@@ -203,8 +203,8 @@
 			for (var/mob/M in view(6,src))
 				if (M.client)
 					viewing |= M.client
-			var/image/orderimage = image('icons/obj/machines/fabricators/robotics_fabricator.dmi', src, "fab-load-[material]")
-			flick_overlay(orderimage, viewing, 8)
+			res_load(stack.material)
+
 			while(materials[material] + amnt <= res_max_amount && stack.amount >= 1)
 				materials[material] += amnt
 				stack.use(1)
@@ -216,6 +216,16 @@
 		to_chat(user, "The fabricator cannot hold more [stack_plural].")// use the plural form even if the given sheet is singular
 
 	return TRUE
+
+/obj/machinery/robotics_fabricator/proc/res_load(material/material)
+	var/list/viewing = list()
+	for (var/mob/M in view(6,src))
+		if (M.client)
+			viewing |= M.client
+	var/image/orderimage = image('mods/RnD/icons/robotics_fabricator.dmi', src, "fab-load-blank")
+	orderimage.color = material.icon_colour
+	flick_overlay(orderimage, viewing, 8)
+
 
 /obj/machinery/robotics_fabricator/update_categories()
 	categories = list()
