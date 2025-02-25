@@ -3,6 +3,7 @@
 	build_path = /obj/item/syringe_cartridge
 	category = list("Arms and Ammunition")
 	access = list(access_security)
+	time = 5
 
 
 /datum/design/autolathe/arms_ammo/net_shell

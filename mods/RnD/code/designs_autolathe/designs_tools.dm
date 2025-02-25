@@ -1,6 +1,7 @@
 /datum/design/autolathe/tool
 	build_path = /obj/item/crowbar
 	category = list("Tools")
+	time = 6
 
 /datum/design/autolathe/tool/prybar
 	name = "pry bar"
