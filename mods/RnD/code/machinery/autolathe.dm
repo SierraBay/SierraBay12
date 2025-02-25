@@ -9,7 +9,7 @@
 #define ERR_STOPPED "lazy user"
 #define ERR_SKILL_ISSUE "unskilled user"
 //AUTOLATHE
-#define SANITIZE_LATHE_COST(n) round((n * mechfabmod), 0.01)
+#define SANITIZE_LATHE_COST(n) round((n), 0.01)
 
 /obj/machinery/fabricator
 	name = "autolathe"
@@ -49,7 +49,6 @@
 	var/list/queue = list()
 	var/queue_max = 8
 
-	var/mechfabmod = 1
 	var/storage_capacity = 0
 	var/speed = 1
 	var/mat_efficiency = 1
@@ -110,10 +109,7 @@
 /obj/machinery/fabricator/proc/materials_data()
 	var/list/data = list()
 
-	if(mechfabmod == 2)
-		data["mat_efficiency"] = (mat_efficiency * mechfabmod)
-	else if (mechfabmod == 1)
-		data["mat_efficiency"] = mat_efficiency
+	data["mat_efficiency"] = mat_efficiency
 	data["mat_capacity"] = storage_capacity
 
 	data["container"] = !!container
@@ -291,31 +287,31 @@
 		return
 
 	usr.set_machine(src)
-/*
-	if(href_list["insert"]) Отключаем рекуклинг пока стоимость печати вещей не будет приведена в адекватную норму
+
+	if(href_list["insert"])
 		eat(usr)
-		return 1
-*/
+		return TRUE
+
 	if(href_list["disk"])
 		if(disk)
 			eject_disk(usr)
 		else
 			insert_disk(usr)
-		return 1
+		return TRUE
 
 	if(href_list["container"])
 		if(container)
 			eject_beaker(usr)
 		else
 			insert_beaker(usr)
-		return 1
+		return TRUE
 
 	if(href_list["category"] && categories)
 		var/new_category = text2num(href_list["category"])
 
 		if(new_category && new_category <= length(categories))
 			show_category = categories[new_category]
-		return 1
+		return TRUE
 
 	if(href_list["eject_material"] && (!current_file || paused || error))
 		var/material = href_list["eject_material"]
@@ -324,14 +320,14 @@
 		if(!M.stack_type)
 			return
 
-		var/num = input("Enter sheets number to eject. 0-[stored_material[material]]","Eject",0) as num
+		var/num = input("Enter sheets number to eject. 0-[round(stored_material[material]/2000)]","Eject",0) as num
 		if(!CanUseTopic(usr))
 			return
 
 		num = min(max(num,0), stored_material[material])
 
 		eject(material, num)
-		return 1
+		return TRUE
 
 
 	if(href_list["add_to_queue"])
@@ -354,41 +350,41 @@
 
 			queue_design(design_file, amount)
 
-		return 1
+		return TRUE
 
 	if(href_list["remove_from_queue"])
 		var/ind = text2num(href_list["remove_from_queue"])
 		if(ind >= 1 && ind <= LAZYLEN(queue))
 			queue.Cut(ind, ind + 1)
-		return 1
+		return TRUE
 
 	if(href_list["move_up_queue"])
 		var/ind = text2num(href_list["move_up_queue"])
 		if(ind >= 2 && ind <= LAZYLEN(queue))
 			queue.Swap(ind, ind - 1)
-		return 1
+		return TRUE
 
 	if(href_list["move_down_queue"])
 		var/ind = text2num(href_list["move_down_queue"])
 		if(ind >= 1 && ind <= LAZYLEN(queue)-1)
 			queue.Swap(ind, ind + 1)
-		return 1
+		return TRUE
 
 
 	if(href_list["abort_print"])
 		abort()
-		return 1
+		return TRUE
 
 	if(href_list["pause"])
 		paused = !paused
-		return 1
+		return TRUE
 
 	if(href_list["unfold"])
 		if(unfolded == href_list["unfold"])
 			unfolded = null
 		else
 			unfolded = href_list["unfold"]
-		return 1
+		return TRUE
 
 /obj/machinery/fabricator/proc/insert_disk(mob/living/user, obj/item/stock_parts/computer/hard_drive/portable/inserted_disk)
 	if(!inserted_disk && istype(user))
@@ -512,83 +508,60 @@
 		to_chat(user, SPAN_WARNING("[src] does not support material recycling."))
 		return FALSE
 
-	var/filltype = 0       // Used to determine message.
-	var/reagents_filltype = 0
-	var/total_used = 0     // Amount of material used.
-	var/list/total_material_gained = list()
-
-	for(var/obj/O in eating.GetAllContents(includeSelf = TRUE))
-		var/list/_matter = O.matter
-		if(_matter)
-			for(var/material in _matter)
-				var/total_material = _matter[material]
-				if(material in unsuitable_materials)
-					continue
-
-				if(suitable_materials)
-					if(!(material in suitable_materials))
-						continue
-
-				if(!(material in stored_material))
-					stored_material[material] = 0
-
-				if(stored_material[material] + total_material_gained[material] >= storage_capacity)
-					continue
-
-				if(stored_material[material] + total_material > storage_capacity)
-					total_material = storage_capacity - stored_material[material]
-					filltype = 1
-				else
-					filltype = 2
-				total_material_gained[material] += total_material
-				total_used += total_material
-
-		if(O.reagents)
-			if(container)
-				var/datum/reagents/RG = new(0)
-				for(var/r in O.reagents.reagent_list)
-					RG.maximum_volume += O.reagents[r]
-					RG.add_reagent(r ,O.reagents[r])
-				reagents_filltype = 1
-				RG.trans_to(container, RG.total_volume)
-
-			else
-				reagents_filltype = 2
-
-		if(O.reagents && container)
-			O.reagents.trans_to(container, O.reagents.total_volume)
-
-	if(!filltype && !reagents_filltype)
-		to_chat(user, SPAN_NOTICE("\The [src] is full or this thing isn't suitable for this autolathe type. Try remove material from [src] in order to insert more."))
-		return
-
-	// Determine what was the main material
-	var/main_material
-	var/main_material_amt = 0
-	for(var/material in total_material_gained)
-		stored_material[material] += total_material_gained[material]
-		if(total_material_gained[material] > main_material_amt)
-			main_material_amt = total_material_gained[material]
-			main_material = material
-
-	if(istype(eating, /obj/item/stack/material))
-		res_load()
+	if(istype(eating, /obj/item/stack))
 		var/obj/item/stack/material/stack = eating
-		var/used_sheets = min(stack.get_amount(), round(total_used/stack.perunit))
+		var/material = stack.material.name
+		var/stack_singular = "[stack.material.use_name] [stack.material.sheet_singular_name]" // eg "steel sheet", "wood plank"
+		var/stack_plural = "[stack.material.use_name] [stack.material.sheet_plural_name]" // eg "steel sheets", "wood planks"
+		var/amnt = 0
+		var/list/_matter = stack.matter
+		if(_matter)
+			for(var/mat in _matter)
+				if(istype(eating, /obj/item/stack/material/rods))
+					var/amount_material_in_one = _matter[mat]/stack.amount
+					amnt = amount_material_in_one
+				else
+					amnt = stack.perunit
 
-		to_chat(user, SPAN_NOTICE("You add [used_sheets] [main_material] [stack.singular_name]\s to \the [src]."))
 
-		if(!stack.use(used_sheets))
-			qdel(stack)	// Protects against weirdness
+		if(stack.uses_charge)
+			return
+
+		if(stored_material[material] + amnt <= storage_capacity)
+			if(stack && stack.can_use(1))
+				var/count = 0
+				while(stored_material[material] + amnt <= storage_capacity && stack.amount >= 1)
+					stored_material[material] += amnt
+					stack.use(1)
+					count++
+				to_chat(user, "You insert [count] [count==1 ? stack_singular : stack_plural] into the [src].")// 0 steel sheets, 1 steel sheet, 2 steel sheets, etc
+				res_load(SSmaterials.get_material_by_name(material))
+
+
+		else
+			to_chat(user, "The [src] cannot hold more [stack_plural].")// use the plural form even if the given sheet is singular
+
+		return TRUE
+
 	else
-		res_load() // Play insertion animation.
-		to_chat(user, SPAN_NOTICE("You recycle \the [eating] in \the [src]."))
+		var/isdesignnotexist = TRUE
+		for(var/datum/design/item/D in SSresearch.all_designs)
+			if(D.build_path == eating.type)
+				isdesignnotexist = FALSE
+				for(var/material in D.materials)
+					if(stored_material[material] < storage_capacity)
+						stored_material[material] += (D.materials[material]/4)
+		if(isdesignnotexist)
+			for(var/obj/O in eating.GetAllContents(includeSelf = TRUE))
+				var/list/_matter = O.matter
+				if(_matter)
+					for(var/material in _matter)
+						if(material in unsuitable_materials)
+							continue
+						if(stored_material[material] < storage_capacity)
+							stored_material[material] += (_matter[material]/4)
 		qdel(eating)
-
-	if(reagents_filltype == 1)
-		to_chat(user, SPAN_NOTICE("Some liquid flowed to \the [container]."))
-	else if(reagents_filltype == 2)
-		to_chat(user, SPAN_NOTICE("Some liquid flowed to the floor from \the [src]."))
+		return TRUE
 
 
 /obj/machinery/fabricator/state_transition(singleton/machine_construction/default/new_state)
@@ -676,26 +649,24 @@
 		visible_message("\The [src] pings, indicating that queue is complete.")
 
 
-/obj/machinery/fabricator/proc/res_load()
+/obj/machinery/fabricator/proc/res_load(material/material)
 	var/list/viewing = list()
 	for (var/mob/M in view(6,src))
 		if (M.client)
 			viewing |= M.client
 	var/image/orderimage = image('mods/RnD/icons/autolathe.dmi', src, "[icon_state]_load_m")
+	orderimage.color = material.icon_colour
 	flick_overlay(orderimage, viewing, 8)
 
 /obj/machinery/fabricator/components_are_accessible(path)
 	return !(fab_status_flags & FAB_BUSY) && ..()
 
 /obj/machinery/fabricator/proc/check_materials(datum/design/design)
-/*
-	mechfabmod = 1
-	if(design.build_type == MECHFAB)
-		mechfabmod = 2
-		if(!(fab_status_flags & FAB_HACKED))
-			return ERR_NOCOMPAT*/
+
 	if(design.build_type != build_type)
-		return ERR_NOCOMPAT
+		var/second_check = build_type | MECHFAB
+		if(design.build_type != second_check)
+			return ERR_NOCOMPAT
 
 	for(var/rmat in design.materials)
 		if(!(rmat in stored_material))
@@ -756,7 +727,7 @@
 		else
 			error = "Unknown error."
 
-		if(current_file.design && progress >= current_file.design.time * mechfabmod)
+		if(current_file.design && progress >= current_file.design.time)
 			finish_construction()
 
 	else
@@ -835,8 +806,7 @@
 	stored_material[material] -= ejected * S.perunit
 	if(recursive && stored_material[material] >= S.perunit)
 		eject(material, -1)
-		S.update_strings()
-		S.update_icon()
+		S.update_materials()
 
 
 /obj/machinery/fabricator/dismantle()
