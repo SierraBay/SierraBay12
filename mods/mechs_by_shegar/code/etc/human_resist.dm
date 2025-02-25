@@ -18,7 +18,7 @@
 
 	//unbuckling yourself
 	if(buckled)
-		spawn() escape_buckle()
+		escape_buckle()
 		return TRUE
 
 	//Breaking out of a structure?

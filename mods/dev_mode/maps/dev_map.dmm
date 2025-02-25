@@ -4,19 +4,25 @@
 /area/space)
 "aaD" = (
 /obj/item/robot_parts/robot_component/diagnosis_unit,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "aaS" = (
 /obj/item/mech_equipment/mounted_system/melee/mechete/energy,
 /obj/structure/table/steel,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "aaX" = (
 /obj/machinery/computer/rdconsole/core/colony{
 	req_access = list();
 	dir = 1
 	},
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "aby" = (
 /obj/structure/flora/ausbushes/ppflowers,
@@ -24,24 +30,30 @@
 /area/tdome/testing)
 "abF" = (
 /obj/item/mech_component/chassis/combat,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "abN" = (
 /mob/living/exosuit/premade/powerloader/old,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "acS" = (
 /mob/living/exosuit/premade/random/normal,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "acT" = (
 /obj/structure/heavy_vehicle_frame,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "adH" = (
 /obj/floor_decal/industrial/danger,
-/turf/simulated/floor/tiled/monotile,
-/obj/machinery/computer/rdconsole/core,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -50,20 +62,28 @@
 /obj/floor_decal/industrial/danger{
 	dir = 4
 	},
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "aeE" = (
 /obj/structure/table/steel,
 /obj/item/mech_equipment/mounted_system/melee/mechete,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "ahe" = (
 /obj/item/stack/material/diamond/ten,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "ahf" = (
 /mob/living/exosuit/premade/powerloader,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "ahh" = (
 /obj/item/stack/material/steel/fifty,
@@ -75,83 +95,117 @@
 /obj/item/stack/material/uranium/fifty,
 /obj/item/stack/material/aluminium/fifty,
 /obj/structure/table/steel,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "aiO" = (
 /obj/structure/table/steel,
 /obj/item/mech_equipment/mounted_system/taser/ballistic/autoshotgun,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "ajm" = (
 /obj/structure/table/steel,
 /obj/item/mech_equipment/camera,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "akg" = (
 /obj/machinery/urm,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "akQ" = (
 /obj/anomaly/rvach/three_and_three,
 /obj/floor_decal/corner/beige/mono,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "amd" = (
 /obj/structure/table/steel,
 /obj/item/artefact/zjar,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "amF" = (
 /obj/structure/table/steel,
 /obj/item/mech_equipment/mounted_system/taser/ballistic,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "aoQ" = (
 /mob/living/exosuit/premade/combat/military/alpine,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "aqf" = (
 /obj/item/artefact/flyer,
 /obj/structure/table/steel,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "aqZ" = (
 /obj/floor_decal/corner/paleblue/mono,
 /obj/anomaly/electra/three_and_three,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "asM" = (
-/obj/machinery/r_n_d/protolathe,
-/turf/simulated/floor/tiled/monotile,
+/obj/machinery/fabricator/rnd/imprinter,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "aue" = (
 /obj/anomaly/tramplin,
 /obj/floor_decal/corner/beige/mono,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "auo" = (
 /obj/anomaly/heater,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "auO" = (
 /mob/living/exosuit/premade/salvage_gantry,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "avz" = (
 /obj/structure/table/steel,
 /obj/item/mech_equipment/shields,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "avG" = (
 /obj/structure/table/steel,
 /obj/item/melee/classic_baton,
 /obj/item/melee/telebaton,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "awf" = (
 /obj/anomaly/electra/three_and_three/tesla,
 /obj/floor_decal/corner/paleblue/mono,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "awP" = (
 /turf/simulated/open,
@@ -174,26 +228,36 @@
 	pixel_x = 12
 	},
 /obj/item/melee/energy/machete,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "ayK" = (
 /obj/anomaly/vspishka,
 /obj/floor_decal/corner/lightgrey/mono,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "ayV" = (
 /mob/living/exosuit/premade/heavy/merc,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "azI" = (
 /obj/structure/table/steel,
 /obj/item/mech_equipment/ballistic_shield,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "aAj" = (
 /obj/item/mech_equipment/mounted_system/taser/plasma,
 /obj/structure/table/steel,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "aAt" = (
 /obj/structure/table/steel,
@@ -211,65 +275,91 @@
 /obj/item/gun/projectile/revolver/holdout{
 	pixel_x = 12
 	},
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "aGI" = (
 /obj/floor_decal/corner/beige/mono,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "aGV" = (
 /mob/living/exosuit/premade/merc,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "aHz" = (
 /obj/structure/table/steel,
 /obj/item/mech_equipment/mounted_system/taser/ballistic/launcher,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "aLw" = (
 /obj/item/stack/cable_coil,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "aQu" = (
 /obj/floor_decal/industrial/danger,
 /obj/floor_decal/industrial/danger{
 	dir = 4
 	},
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "aQB" = (
 /obj/structure/table/steel,
 /obj/item/melee/energy/blade,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "aQS" = (
 /obj/item/mech_equipment/mounted_system/taser,
 /obj/structure/table/steel,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "aRH" = (
 /obj/anomaly/electra/three_and_three/tesla_second,
 /obj/floor_decal/corner/paleblue/mono,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "aRT" = (
 /mob/living/exosuit/premade/ert,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "aRV" = (
 /obj/machinery/robotics_fabricator{
 	req_access = list()
 	},
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "aSQ" = (
 /mob/living/exosuit/premade/death_light,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "aWL" = (
 /obj/floor_decal/corner/orange/mono,
 /obj/anomaly/zharka/long_effect,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "aWS" = (
 /obj/structure/table/steel,
@@ -295,7 +385,9 @@
 	pixel_x = -12;
 	pixel_y = -12
 	},
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "aWW" = (
 /obj/item/mech_equipment/clamp,
@@ -303,24 +395,34 @@
 /obj/floor_decal/industrial/danger{
 	dir = 8
 	},
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "aZy" = (
 /obj/item/robot_parts/robot_component/armour/exosuit/radproof,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "bdE" = (
 /mob/living/exosuit/premade/powerloader/flames_red,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "ber" = (
-/obj/machinery/r_n_d/circuit_imprinter,
-/turf/simulated/floor/tiled/monotile,
+/obj/machinery/r_n_d/destructive_analyzer,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "bew" = (
 /obj/floor_decal/corner/orange/mono,
 /obj/anomaly/zharka,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "beU" = (
 /obj/structure/flora/ausbushes/ywflowers,
@@ -341,42 +443,48 @@
 /obj/item/gun/projectile/shotgun/pump{
 	pixel_y = -12
 	},
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "bhr" = (
 /obj/structure/table/steel,
 /obj/item/artefact/pruzhina,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "bih" = (
 /obj/structure/table/steel,
 /obj/item/melee/whip/abyssal,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "blb" = (
 /obj/item/mech_equipment/clamp,
 /obj/structure/table/steel,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "blx" = (
 /obj/item/mech_equipment/mounted_system/taser/ion,
 /obj/structure/table/steel,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "blK" = (
 /obj/structure/table/steel,
 /obj/item/melee/baton/cattleprod,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "bpK" = (
 /obj/structure/table/steel,
 /obj/item/mech_equipment/ionjets,
-/turf/simulated/floor/tiled/monotile,
-/area/tdome/testing)
-"bvf" = (
-/obj/item/stock_parts/computer/hard_drive/portable/away/research_data,
-/obj/item/stock_parts/computer/hard_drive/portable/away/research_data,
-/obj/item/stock_parts/computer/hard_drive/portable/away/research_data,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -385,17 +493,15 @@
 /obj/floor_decal/industrial/danger{
 	dir = 8
 	},
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "bZN" = (
 /turf/simulated/open,
 /area/space)
 "ckU" = (
 /obj/item/cell/infinite,
-/turf/simulated/floor/tiled/monotile,
-/area/tdome/testing)
-"cDy" = (
-/obj/machinery/r_n_d/server/core,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -406,16 +512,22 @@
 "dhn" = (
 /obj/structure/table/steel,
 /obj/item/mech_equipment/mounted_system/circuit,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "dmH" = (
 /mob/living/exosuit/premade/heavy,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "dno" = (
 /obj/anomaly/tramplin/random,
 /obj/floor_decal/corner/beige/mono,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "ezf" = (
 /turf/unsimulated/wall,
@@ -423,7 +535,9 @@
 "ezA" = (
 /obj/structure/table/steel,
 /obj/item/mech_equipment/catapult,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "fee" = (
 /obj/structure/flora/ausbushes/ppflowers,
@@ -435,25 +549,35 @@
 "fuz" = (
 /obj/structure/table/steel,
 /obj/item/storage/toolbox/syndicate,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "gpQ" = (
 /obj/structure/table/steel,
 /obj/item/mech_equipment/mounted_system/taser/ballistic/minigun,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "gqB" = (
 /obj/structure/stairs/west,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "gJm" = (
 /mob/living/exosuit/premade/firefighter,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "gRe" = (
 /obj/item/ammo_magazine/rockets_casing/pepper,
 /obj/structure/table/steel,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "gRv" = (
 /obj/item/mech_equipment/light,
@@ -461,49 +585,48 @@
 /obj/floor_decal/industrial/danger{
 	dir = 8
 	},
-/turf/simulated/floor/tiled/monotile,
-/area/tdome/testing)
-"hnh" = (
-/mob/living/exosuit/premade/random/extra,
-/turf/simulated/floor/tiled/monotile,
-/area/tdome/testing)
-"hyc" = (
-/obj/machinery/fabricator/micro,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
 /area/tdome/testing)
-"hMy" = (
-/obj/machinery/fabricator/micro/loaded,
+"hnh" = (
+/mob/living/exosuit/premade/random/extra,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/tdome/testing)
+"hyc" = (
+/obj/machinery/smartfridge/disks,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
 /area/tdome/testing)
 "hNF" = (
 /mob/living/exosuit/premade/random,
-/turf/simulated/floor/tiled/monotile,
-/area/tdome/testing)
-"ifG" = (
-/mob/living/exosuit/premade/combat/military,
-/turf/simulated/floor/tiled/monotile,
-/area/tdome/testing)
-"ifU" = (
-/obj/floor_decal/corner/paleblue/mono,
-/turf/simulated/floor/tiled/monotile,
-/area/tdome/testing)
-"ilP" = (
-/obj/structure/table/steel,
-/obj/item/gun/projectile/automatic/minigun,
-/turf/simulated/floor/tiled/monotile,
-/area/tdome/testing)
-"iDh" = (
-/obj/item/stack/material/plastic/fifty,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
 /area/tdome/testing)
-"iJN" = (
-/obj/machinery/robotics_fabricator,
+"ifG" = (
+/mob/living/exosuit/premade/combat/military,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/tdome/testing)
+"ifU" = (
+/obj/floor_decal/corner/paleblue/mono,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/tdome/testing)
+"ilP" = (
+/obj/structure/table/steel,
+/obj/item/gun/projectile/automatic/minigun,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/tdome/testing)
+"iDh" = (
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -523,16 +646,22 @@
 /obj/item/gun/projectile/automatic/mbr{
 	pixel_y = -12
 	},
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "iRL" = (
 /obj/item/mech_equipment/mounted_system/taser/ballistic/smg,
 /obj/structure/table/steel,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "jjy" = (
 /obj/item/storage/toolbox/syndicate,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "jwB" = (
 /obj/structure/table/steel,
@@ -564,35 +693,38 @@
 	pixel_x = -12;
 	pixel_y = -6
 	},
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "jRM" = (
 /mob/living/exosuit/premade/powerloader/mechete,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "kea" = (
 /obj/item/ammo_magazine/rockets_casing/flashbang,
 /obj/structure/table/steel,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "ktR" = (
 /obj/item/artefact/gravi,
 /obj/structure/table/steel,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "kAc" = (
 /mob/living/exosuit/premade/random/boring,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "kOJ" = (
 /mob/living/exosuit/premade/death_combat,
-/turf/simulated/floor/tiled/monotile,
-/area/tdome/testing)
-"kOX" = (
-/obj/item/stock_parts/computer/hard_drive/portable/advanced,
-/obj/item/stock_parts/computer/hard_drive/portable/advanced,
-/obj/item/stock_parts/computer/hard_drive/portable/advanced,
-/obj/item/stock_parts/computer/hard_drive/portable/advanced,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -609,18 +741,18 @@
 /area/tdome/testing)
 "lGT" = (
 /mob/living/exosuit/premade/light/exploration,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "lQe" = (
 /mob/living/exosuit/premade/death_heavy,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "mfE" = (
 /obj/structure/table/steel,
-/turf/simulated/floor/tiled/monotile,
-/area/tdome/testing)
-"mze" = (
-/obj/machinery/r_n_d/server/robotics,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -649,77 +781,82 @@
 /obj/item/gun/projectile/revolver/capgun{
 	pixel_x = -12
 	},
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "nBq" = (
 /obj/floor_decal/corner/orange/mono,
 /obj/anomaly/zharka/short_effect,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "nUd" = (
 /obj/anomaly/cooler,
 /obj/floor_decal/corner/darkblue/mono,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "nUJ" = (
 /obj/structure/stairs/east,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "oCN" = (
 /obj/floor_decal/industrial/danger,
 /obj/floor_decal/industrial/danger{
 	dir = 8
 	},
-/turf/simulated/floor/tiled/monotile,
-/area/tdome/testing)
-"oPK" = (
-/obj/anomaly/electra/three_and_three/preload,
-/obj/floor_decal/corner/paleblue/mono,
-/turf/simulated/floor/tiled/monotile,
-/area/tdome/testing)
-"pCq" = (
-/obj/structure/table/steel,
-/obj/item/mech_equipment/mounted_system/taser/laser,
-/turf/simulated/floor/tiled/monotile,
-/area/tdome/testing)
-"pWW" = (
-/obj/item/stack/material/plasteel/fifty,
-/turf/simulated/floor/tiled/monotile,
-/area/tdome/testing)
-"qlv" = (
-/obj/item/mech_equipment/mounted_system/taser/pulse,
-/obj/structure/table/steel,
-/turf/simulated/floor/tiled/monotile,
-/area/tdome/testing)
-"qEw" = (
-/obj/structure/table/steel,
-/obj/item/mech_equipment/mounted_system/flamethrower/death_preloaded,
-/turf/simulated/floor/tiled/monotile,
-/area/tdome/testing)
-"rlX" = (
-/obj/structure/table/steel,
-/obj/item/mech_equipment/drill/diamond,
-/turf/simulated/floor/tiled/monotile,
-/area/tdome/testing)
-"rno" = (
-/mob/living/carbon/human,
-/turf/simulated/floor/tiled/monotile,
-/area/tdome/testing)
-"ryI" = (
-/obj/item/stock_parts/computer/hard_drive/portable/design/tool,
-/obj/item/stock_parts/computer/hard_drive/portable/design/medical,
-/obj/item/stock_parts/computer/hard_drive/portable/design/engineering,
-/obj/item/stock_parts/computer/hard_drive/portable/design/drinking,
-/obj/item/stock_parts/computer/hard_drive/portable/design/cuttery,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
 /area/tdome/testing)
-"rJA" = (
-/obj/item/stack/material/glass/ten,
-/obj/item/stack/material/glass/ten,
-/obj/item/stack/material/glass/ten,
-/obj/item/stack/material/glass/ten,
+"oPK" = (
+/obj/anomaly/electra/three_and_three/preload,
+/obj/floor_decal/corner/paleblue/mono,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/tdome/testing)
+"pCq" = (
+/obj/structure/table/steel,
+/obj/item/mech_equipment/mounted_system/taser/laser,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/tdome/testing)
+"pWW" = (
+/obj/item/stack/material/plasteel/fifty,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/tdome/testing)
+"qlv" = (
+/obj/item/mech_equipment/mounted_system/taser/pulse,
+/obj/structure/table/steel,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/tdome/testing)
+"qEw" = (
+/obj/structure/table/steel,
+/obj/item/mech_equipment/mounted_system/flamethrower/death_preloaded,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/tdome/testing)
+"rlX" = (
+/obj/structure/table/steel,
+/obj/item/mech_equipment/drill/diamond,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/tdome/testing)
+"rno" = (
+/mob/living/carbon/human,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -727,12 +864,16 @@
 "rSf" = (
 /obj/item/mech_equipment/sleeper,
 /obj/structure/table/steel,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "rTR" = (
 /obj/item/ammo_magazine/rockets_casing/fire,
 /obj/structure/table/steel,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "rZv" = (
 /obj/landmark/map_data{
@@ -747,21 +888,20 @@
 "sxw" = (
 /obj/structure/table/steel,
 /obj/item/mech_equipment/mounted_system/flamethrower,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "sHC" = (
 /mob/living/exosuit/premade/light,
-/turf/simulated/floor/tiled/monotile,
-/area/tdome/testing)
-"sHT" = (
-/obj/item/stock_parts/computer/hard_drive/portable/design/components,
-/obj/item/stock_parts/computer/hard_drive/portable/design/arms,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
 /area/tdome/testing)
 "tEN" = (
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing{
 	lightswitch = 0
 	})
@@ -771,7 +911,9 @@
 "uPl" = (
 /obj/structure/table/steel,
 /obj/item/artefact/svetlyak,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "uQt" = (
 /obj/structure/table/steel,
@@ -797,11 +939,15 @@
 	pixel_y = -12;
 	pixel_x = 12
 	},
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "vDZ" = (
 /mob/living/exosuit/premade/powerloader/flames_blue,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "wKa" = (
 /obj/structure/table/steel,
@@ -812,26 +958,26 @@
 	pixel_y = 6
 	},
 /obj/item/gun/projectile/pirate,
-/turf/simulated/floor/tiled/monotile,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/tdome/testing)
 "wOL" = (
 /obj/structure/table/steel,
 /obj/item/melee/energy/axe,
 /obj/item/melee/powerfist/mounted,
-/turf/simulated/floor/tiled/monotile,
-/area/tdome/testing)
-"xcX" = (
-/obj/item/stack/material/steel/fifty,
-/turf/simulated/floor/tiled/monotile,
-/area/tdome/testing)
-"xvM" = (
-/obj/machinery/fabricator,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
 /area/tdome/testing)
-"xCD" = (
-/obj/item/stack/material/uranium/fifty,
+"xcX" = (
+/obj/item/stack/material/steel/fifty,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/tdome/testing)
+"xvM" = (
+/obj/machinery/fabricator,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -19923,33 +20069,33 @@ dmH
 ayV
 auO
 adH
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
 acT
 abF
-cYk
+iDh
 lCd
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
 lCd
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
 lCd
 aab
 aab
@@ -20114,44 +20260,44 @@ aab
 aab
 aab
 lCd
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
 adH
-cYk
-cYk
+iDh
+iDh
 jjy
-cYk
-cYk
+iDh
+iDh
 ahe
 lCd
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
 lCd
-cYk
+iDh
 bew
-cYk
+iDh
 aWL
-cYk
+iDh
 nBq
-cYk
+iDh
 ifU
 ifU
 ifU
-cYk
+iDh
 lCd
 aab
 aab
@@ -20318,42 +20464,42 @@ aab
 lCd
 sHC
 lGT
-cYk
+iDh
 aGV
 ahf
 vDZ
-cYk
+iDh
 bdE
 jRM
 abN
 adH
-cYk
-cYk
+iDh
+iDh
 rno
-cYk
+iDh
 pWW
 pWW
 lCd
-cYk
+iDh
 nUJ
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
 lCd
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
 ifU
 aqZ
 ifU
-cYk
+iDh
 lCd
 aab
 aab
@@ -20518,44 +20664,44 @@ aab
 aab
 aab
 lCd
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
 adH
-cYk
-cYk
+iDh
+iDh
 ckU
 aZy
 aLw
 xcX
 lCd
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
 lCd
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
 amd
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
 ifU
 ifU
 ifU
-cYk
+iDh
 lCd
 aab
 aab
@@ -20724,40 +20870,40 @@ hNF
 kAc
 hnh
 acS
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
 adH
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
 aaD
-cYk
-cYk
+iDh
+iDh
 lCd
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
 lCd
 auo
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
 ifU
 ifU
 ifU
-cYk
+iDh
 lCd
 aab
 aab
@@ -20922,16 +21068,16 @@ aab
 aab
 aab
 lCd
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
 adH
 ael
 ael
@@ -20940,26 +21086,26 @@ ael
 ael
 ael
 lCd
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
 uaP
 uaP
 ssC
-cYk
-cYk
+iDh
+iDh
 lCd
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
 ifU
 oPK
 ifU
-cYk
+iDh
 lCd
 aab
 aab
@@ -21135,33 +21281,33 @@ ael
 ael
 ael
 aQu
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
 uaP
 uaP
 fee
 beU
 uaP
-cYk
-cYk
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
+iDh
+iDh
 akg
-cYk
-cYk
+iDh
+iDh
 bhr
 ifU
 ifU
 ifU
-cYk
+iDh
 lCd
 aab
 aab
@@ -21337,33 +21483,33 @@ bJK
 bJK
 bJK
 oCN
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
 beU
 beU
 kWF
 uaP
 ssC
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
 uPl
 ifU
 ifU
 ifU
-cYk
+iDh
 lCd
 aab
 aab
@@ -21530,42 +21676,42 @@ aab
 lCd
 bpK
 rSf
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
 adH
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
 tEN
-cYk
+iDh
 aby
 uaP
 aby
 aby
 beU
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
 ifU
 awf
 ifU
-cYk
+iDh
 lCd
 aab
 aab
@@ -21732,14 +21878,14 @@ aab
 lCd
 ezA
 blb
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
 adH
 bJK
 bJK
@@ -21748,26 +21894,26 @@ bJK
 bJK
 bJK
 lCd
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
 aby
 uaP
 aby
-cYk
-cYk
+iDh
+iDh
 lCd
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
 ifU
 ifU
 ifU
-cYk
+iDh
 lCd
 aab
 aab
@@ -21934,42 +22080,42 @@ aab
 lCd
 ajm
 dhn
-cYk
+iDh
 avz
 pCq
-cYk
+iDh
 sxw
 sxw
-cYk
+iDh
 rTR
 adH
-cYk
+iDh
 fuz
 ahh
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
 lCd
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
 lCd
 aGI
 aGI
 aGI
-cYk
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
+iDh
 ifU
 ifU
 ifU
-cYk
+iDh
 lCd
 aab
 aab
@@ -22135,43 +22281,43 @@ aab
 aab
 lCd
 azI
-cYk
-cYk
+iDh
+iDh
 qlv
 blx
-cYk
+iDh
 aAj
 aQS
-cYk
+iDh
 kea
 adH
-cYk
+iDh
 aaX
 aRV
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
 lCd
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
 lCd
 aGI
 akQ
 aGI
-cYk
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
+iDh
 ifU
 aRH
 ifU
-cYk
+iDh
 lCd
 aab
 aab
@@ -22337,43 +22483,43 @@ aab
 aab
 lCd
 rlX
-cYk
-cYk
+iDh
+iDh
 iRL
 aaS
-cYk
+iDh
 mfE
 mfE
-cYk
+iDh
 gRe
 adH
-cYk
+iDh
 asM
 ber
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
 lCd
-cYk
+iDh
 gqB
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
 lCd
 aGI
 aGI
 aGI
-cYk
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
+iDh
 ifU
 ifU
 ifU
-cYk
+iDh
 lCd
 aab
 aab
@@ -22538,44 +22684,44 @@ aab
 aab
 aab
 lCd
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
 adH
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
+iDh
+xvM
+hyc
+iDh
+iDh
+iDh
 lCd
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
 lCd
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
 lCd
 aab
 aab
@@ -22740,44 +22886,44 @@ aab
 aab
 aab
 lCd
-cYk
-cYk
+iDh
+iDh
 qEw
 aeE
 amF
 aiO
 aHz
 gpQ
-cYk
-cYk
+iDh
+iDh
 adH
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
 lCd
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
 lCd
-cYk
+iDh
 aue
-cYk
+iDh
 ktR
-cYk
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
+iDh
 ayK
-cYk
-cYk
+iDh
+iDh
 lCd
 aab
 aab
@@ -22963,23 +23109,23 @@ lCd
 lCd
 lCd
 lCd
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
 lCd
 lCd
 lCd
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
 aqf
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
 lCd
 aab
 aab
@@ -23154,34 +23300,34 @@ aab
 aab
 aab
 lCd
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
 lCd
 iQN
 bgD
 wKa
-cYk
-cYk
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
+iDh
+iDh
 lCd
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
 lCd
 aab
 aab
@@ -23356,34 +23502,34 @@ aab
 aab
 aab
 lCd
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
 mfE
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
 lCd
-cYk
+iDh
 dno
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
 nUd
-cYk
-cYk
+iDh
+iDh
 lCd
 aab
 aab
@@ -23558,34 +23704,34 @@ aab
 aab
 aab
 lCd
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
 mfE
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
 lCd
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
 lCd
 aab
 aab
@@ -23760,22 +23906,22 @@ aab
 aab
 aab
 lCd
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
 lCd
 jwB
 aWS
 mXE
-cYk
-cYk
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
+iDh
+iDh
 lCd
 lCd
 lCd
@@ -23962,22 +24108,22 @@ aab
 aab
 aab
 lCd
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
 mfE
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
 lCd
 aab
 aab
@@ -24164,22 +24310,22 @@ aab
 aab
 aab
 lCd
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
 mfE
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
 lCd
 aab
 aab
@@ -24366,22 +24512,22 @@ aab
 aab
 aab
 lCd
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
 lCd
 ilP
 uQt
 aAt
-cYk
-cYk
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
+iDh
+iDh
 lCd
 aab
 aab
@@ -24568,22 +24714,22 @@ aab
 aab
 aab
 lCd
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
 mfE
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
 lCd
 aab
 aab
@@ -24770,22 +24916,22 @@ aab
 aab
 aab
 lCd
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
 mfE
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
 lCd
 aab
 aab
@@ -24972,22 +25118,22 @@ aab
 aab
 aab
 lCd
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
 lCd
 ayo
 bih
 avG
-cYk
-cYk
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
+iDh
+iDh
 lCd
 aab
 aab
@@ -25174,22 +25320,22 @@ aab
 aab
 aab
 lCd
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
 mfE
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
 lCd
 aab
 aab
@@ -25376,22 +25522,22 @@ aab
 aab
 aab
 lCd
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
 lCd
 blK
 wOL
 aQB
-cYk
-cYk
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
+iDh
+iDh
 lCd
 aab
 aab
@@ -25578,22 +25724,22 @@ aab
 aab
 aab
 lCd
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
-cYk
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
+iDh
 lCd
 aab
 aab
