@@ -128,7 +128,7 @@
 	y = 0.4
 	icon = "cpu_small"
 
-	required_technologies = list(/datum/technology/data/netcard_adv)
+	required_technologies = list(/datum/technology/data)
 	required_tech_levels = list()
 	cost = 250
 
