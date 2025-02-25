@@ -918,7 +918,7 @@
 /obj/machinery/fabricator/micro/check_materials(datum/design/design)
 	. = ..()
 	var/cat = design.category[1]
-	if(!(cat == "Cutlery" || cat == "Drinking Glasses"))
+	if(!(cat == "Cutlery" || cat == "Drinking Glasses" || cat == "Medical"))
 		return ERR_NOCOMPAT
 
 
