@@ -79,12 +79,12 @@
 	update_icon()
 
 
-/obj/vine/hivemind/spread()
+/obj/vine/hivemind/spread_to(turf/target_turf) // Было - spread()
 	if(hive_mind_ai && master_node)
 		..()
 
 
-/obj/vine/hivemind/life()
+/obj/vine/hivemind/Process()
 	if(hive_mind_ai && master_node)
 		try_to_assimilate()
 		chem_handler()
@@ -92,7 +92,7 @@
 		//slow vanishing after node death
 		health_current -= 10
 		alpha = 255 * health_current/health_max
-		update_health()
+		get_current_health()
 
 
 /obj/vine/hivemind/is_mature()
@@ -132,7 +132,7 @@
 	wires_connections = dirs_to_corner_states(dirs)
 
 
-/obj/vine/hivemind/door_interaction(obj/machinery/door/airlock/door)
+/obj/vine/hivemind/targets_in_range(obj/machinery/door/airlock/door)
 	if(!door || !istype(door))
 		return FALSE
 
@@ -190,7 +190,7 @@
 
 
 //assimilation process
-/obj/vine/hivemind/proc/assimilate(var/atom/subject)
+/obj/vine/hivemind/proc/assimilate(atom/subject)
 	if(istype(subject, /obj/machinery) || istype(subject, /obj/item/modular_computer))
 		if(prob(hive_mind_ai.failure_chance))
 			//critical failure! This machine would be a dummy, which means - without any ability
@@ -280,7 +280,7 @@
 		else
 			user.visible_message(SPAN_DANGER("[user] tries to slice [src] with [W], but seems to do nothing."),
 								SPAN_DANGER("You try to slice [src], but it's useless!"))
-	update_health()
+	get_current_health()
 */
 
 /obj/vine/hivemind/use_weapon(obj/item/weapon/W, mob/user, list/click_params)
@@ -303,7 +303,7 @@
 //fire is effective, but there need some time to melt the covering
 /obj/vine/hivemind/fire_act()
 	health_current -= rand(1, 4)
-	update_health()
+	get_current_health()
 
 
 //emp is effective too
@@ -311,7 +311,7 @@
 /obj/vine/hivemind/emp_act(severity)
 	if(severity)
 		kill_health()
-
+	..()
 
 //Some acid and there's no problem
 /obj/vine/hivemind/proc/chem_handler()

@@ -16,7 +16,7 @@
 	set_trait(TRAIT_POTENCY,50)
 
 // У меня большие вопросы ко всей части ниже. Помимо того, что мы добавляем анимацию распространения и диры мы делаем... что? - LordNest
-
+/*
 /obj/vine/proc/life()
 	var/turf/simulated/T = get_turf(src)
 	var/obj/vine/vine
@@ -42,8 +42,9 @@
 			invisibility = INVISIBILITY_MAXIMUM
 		else
 			vine.layer = layer + 0.1
+*/
 
-
+/* Оверрадйы ради оверрайдов. Теоретически это оверрадит прок spread_to(turf/target_turf).
 /obj/vine/proc/spread()
 	//spread to 1-3 adjacent turfs depending on yield trait.
 	var/max_spread = between(1, round(seed.get_trait(TRAIT_YIELD)*3/14), 3)
@@ -60,7 +61,7 @@
 			// Update neighboring squares.
 			for(var/obj/vine/neighbor in range(1,target_turf))
 				neighbor.get_neighbors -= target_turf
-
+*/
 
 //after creation act
 //by default, there goes an animation code

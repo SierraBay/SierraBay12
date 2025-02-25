@@ -598,7 +598,7 @@ TO DO - забрать у паука вот это /mob/living/simple_animal/hos
 
 /mob/living/simple_animal/hostile/hivemind/mechiver/Life()
 	. = ..()
-	update_icon()
+	queue_icon_update()
 
 	//when we have passenger, we torture him
 	if(passenger && prob(15))
@@ -639,7 +639,8 @@ TO DO - забрать у паука вот это /mob/living/simple_animal/hos
 
 //animations
 //updates every life tick
-/mob/living/simple_animal/hostile/hivemind/mechiver/proc/update_icon()
+/mob/living/simple_animal/hostile/hivemind/mechiver/queue_icon_update()
+	. = ..()
 	if(target_mob && !passenger && (get_dist(target_mob, src) <= 4) && !is_on_cooldown())
 		if(!hatch_closed)
 			return

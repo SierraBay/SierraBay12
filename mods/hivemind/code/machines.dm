@@ -207,7 +207,7 @@
 /obj/machinery/hivemind_machine/node/Initialize()
 	if(!hive_mind_ai)
 		hive_mind_ai = new /datum/hivemind
-	..()
+	. = ..()
 
 	hive_mind_ai.hives.Add(src)
 
