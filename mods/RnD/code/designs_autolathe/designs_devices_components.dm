@@ -1,6 +1,7 @@
 /datum/design/autolathe/device_component
 	build_path = /obj/item/stock_parts/console_screen
 	category = list("Devices and Components")
+	time = 8
 
 /datum/design/autolathe/device_component/keyboard
 	build_path = /obj/item/stock_parts/keyboard

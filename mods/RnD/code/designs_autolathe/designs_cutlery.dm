@@ -2,6 +2,7 @@
 	name = "fork aluminium"
 	build_path = /obj/item/material/utensil/fork
 	category = list("Cutlery")
+	time = 3
 
 /datum/design/autolathe/cutlery/spoon_aluminium
 	name = "spoon aluminium"
