@@ -66,4 +66,4 @@
 //after creation act
 //by default, there goes an animation code
 /obj/vine/proc/after_spread(obj/vine/child, turf/target_turf)
-	spawn(1) // This should do a little bit of animation.
+	sleep(1) // This should do a little bit of animation.
