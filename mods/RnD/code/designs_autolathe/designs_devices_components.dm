@@ -74,3 +74,36 @@
 
 /datum/design/autolathe/device_component/conveyor_switch_oneway_construct
 	build_path = /obj/item/conveyor_switch_construct/oneway
+
+
+
+///////COMPONENTS ITEMS MATTERS///////
+/obj/item/device/assembly/igniter
+	name = "igniter"
+	matter = list(MATERIAL_STEEL = 500, MATERIAL_GLASS = 50)
+
+/obj/item/device/assembly/infra
+	name = "infrared emitter"
+	matter = list(MATERIAL_STEEL = 1000, MATERIAL_GLASS = 500)
+
+/obj/item/device/assembly/mousetrap
+	name = "mousetrap"
+	matter = list(MATERIAL_STEEL = 100)
+
+/obj/item/device/assembly/prox_sensor
+	name = "proximity sensor"
+	matter = list(MATERIAL_STEEL = 800, MATERIAL_GLASS = 200)
+
+/obj/item/device/assembly/signaler
+	name = "remote signaling device"
+
+	origin_tech = list(TECH_MAGNET = 1)
+	matter = list(MATERIAL_STEEL = 1000, MATERIAL_GLASS = 200)
+
+/obj/item/device/assembly/timer
+	name = "timer"
+	matter = list(MATERIAL_STEEL = 500, MATERIAL_GLASS = 50)
+
+/obj/item/device/assembly/voice
+	name = "voice analyzer"
+	matter = list(MATERIAL_STEEL = 500, MATERIAL_GLASS = 50)
