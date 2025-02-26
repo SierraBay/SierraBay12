@@ -1,11 +1,15 @@
 /obj/item/organ/external/add_pain(amount) //запускаем в ход agony_scream
+	.=..()
 	if(owner && ((amount > 15 && prob(20)) || (amount > 30 && prob(60))))
 		owner.agony_scream()
 
-/mob/living/carbon/human/handle_shock() // вводим agony_moan
+/mob/living/carbon/human/handle_shock()
+	.=..() // вводим agony_moan
 	if(shock_stage >= 30)
+		.=..()
 		if(prob(15))
 			src.agony_moan()
+	.=..()
 
 /mob/living/proc/agony_scream()
 	if(stat || is_species(SPECIES_MONKEY))
