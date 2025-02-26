@@ -30,7 +30,7 @@
 		// Space Oddity - Chris Hadfield		--,
 		/singleton/audio/track/space_oddity,
 
-		//Additional Duke Gneiss
+		//Additional Duke Gneiss		--,
 		/singleton/audio/track/owl,
 		/singleton/audio/track/codebrain,
 		/singleton/audio/track/getset,
