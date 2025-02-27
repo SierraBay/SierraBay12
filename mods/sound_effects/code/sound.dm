@@ -37,21 +37,6 @@
 /area/turbolift
 	forced_ambience = list('packs/infinity/sound/SS2/music/02_elevator.mp3')
 
-//артериалка
-
-/obj/item/organ/internal/heart/handle_blood()
-	if(pulse != PULSE_NONE || BP_IS_ROBOTIC(src))
-		var/list/do_spray = list()
-		.=..()
-		if(world.time >= next_blood_squirt && istype(owner.loc, /turf) && length(do_spray))
-			.=..()
-			owner.eye_blurry = 2
-
-			playsound(owner.loc, 'packs/infinity/sound/effects/gore/blood_splat.ogg', 100, 0, -2)
-			.=..()
-		.=..()
-	.=..()
-
 //гиб конечностей - отрубание, сжигание и т.д.
 /obj/item/organ/external/droplimb(clean, disintegrate = DROPLIMB_EDGE, ignore_children, silent)
 
