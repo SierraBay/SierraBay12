@@ -90,49 +90,59 @@
 /singleton/audio/track/coherence
 	source = 'maps/sierra/sound/music/lobby/Mega Drive/coherence.mp3'
 	title = "Coherence"
+	license = /singleton/license/cc_by_4_0
 	author = "Mega Drive"
 
 /singleton/audio/track/exoskeleton
 	source = 'maps/sierra/sound/music/lobby/Mega Drive/exoskeleton.mp3'
 	title = "Exoskeleton"
+	license = /singleton/license/cc_by_4_0
 	author = "Mega Drive"
 
 /singleton/audio/track/informant
 	source = 'maps/sierra/sound/music/lobby/Mega Drive/informant.mp3'
 	title = "Informant"
+	license = /singleton/license/cc_by_4_0
 	author = "Mega Drive"
 
 /singleton/audio/track/mainframe
 	source = 'maps/sierra/sound/music/lobby/Mega Drive/mainframe.mp3'
 	title = "Mainframe"
+	license = /singleton/license/cc_by_4_0
 	author = "Mega Drive"
 
 /singleton/audio/track/nakatomi
 	source = 'maps/sierra/sound/music/lobby/Mega Drive/nakatomi night assault.mp3'
 	title = "Nakatomi Night Assault"
+	license = /singleton/license/cc_by_4_0
 	author = "Mega Drive"
 
 /singleton/audio/track/narc
 	source = 'maps/sierra/sound/music/lobby/Mega Drive/narc.mp3'
 	title = "NARC"
+	license = /singleton/license/cc_by_4_0
 	author = "Mega Drive"
 
 /singleton/audio/track/silencer
 	source = 'maps/sierra/sound/music/lobby/Mega Drive/silencer.mp3'
 	title = "Silencer"
+	license = /singleton/license/cc_by_4_0
 	author = "Mega Drive"
 
 /singleton/audio/track/sourcecode
 	source = 'maps/sierra/sound/music/lobby/Mega Drive/source code.mp3'
 	title = "Source Code"
+	license = /singleton/license/cc_by_4_0
 	author = "Mega Drive"
 
 /singleton/audio/track/threatsignal
 	source = 'maps/sierra/sound/music/lobby/Mega Drive/threat signal loss.mp3'
 	title = "Threat Signal Loss"
+	license = /singleton/license/cc_by_4_0
 	author = "Mega Drive"
 
 /singleton/audio/track/visceralgrit
 	source = 'maps/sierra/sound/music/lobby/Mega Drive/visceral grit 92.mp3'
 	title = "Visceral Grit '92"
+	license = /singleton/license/cc_by_4_0
 	author = "Mega Drive"
