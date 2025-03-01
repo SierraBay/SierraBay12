@@ -100177,7 +100177,7 @@
 /obj/paint_stripe/nt_red,
 /obj/machinery/button/blast_door{
 	id_tag = "petrovexitblast";
-	name = "Office Shutter Control";
+	name = "Exit Blastdoor Control";
 	pixel_x = 5;
 	pixel_y = 6
 	},
