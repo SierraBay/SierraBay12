@@ -304,7 +304,7 @@
 			if(G.mind && G.mind.current == target && G.client)
 				to_chat(G, SPAN_NOTICE("<font size = 3><b>Your body has been revived, <b>Re-Enter Corpse</b> to return to it.</b></font>"))
 				break
-		to_chat(target, SPAN_NOTICE("<font size = 3><b>Жизненные силы снова наполняют ваше тело.</b></font>"))
+		to_chat(target, SPAN_NOTICE("<font size = 3><b>Вы просыпаетесь от вечного сна, вместе с ужасающими воспоминаниями с того света.</b></font>"))
 		target.visible_message(SPAN_NOTICE("[target] трясётся в ужасе!"))
 		new /obj/temporary(get_turf(target),8, 'icons/effects/effects.dmi', "rune_convert")
 		target.adjustOxyLoss(-rand(30,45))
