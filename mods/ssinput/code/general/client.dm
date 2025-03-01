@@ -55,6 +55,12 @@
 	if(!D?.key_bindings)
 		return
 	movement_keys = list()
+	//КОСТЫЛЬ ДЛЯ ТЕСТОВ
+	movement_keys["W"] = NORTH
+	movement_keys["S"] = SOUTH
+	movement_keys["A"] = WEST
+	movement_keys["D"] = EAST
+	//
 	var/list/communication_hotkeys = list()
 	for(var/key in D.key_bindings)
 		for(var/kb_name in D.key_bindings[key])
