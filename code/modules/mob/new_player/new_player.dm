@@ -45,23 +45,23 @@
 		if (isnum(player_age) && player_age < 7)
 			output += "<b>Welcome! Please check out these links:</b><br>"
 		if (config.wiki_url)
-			output += "<a href='byond://?src=\ref[src];show_wiki=1'>Wiki</a>"
+			output += "<a href='byond://byond://?src=\ref[src];show_wiki=1'>Wiki</a>"
 		if (config.rules_url)
-			output += "<a href='byond://?src=\ref[src];show_rules=1'>Rules</a>"
+			output += "<a href='byond://byond://?src=\ref[src];show_rules=1'>Rules</a>"
 		if (config.lore_url)
-			output += "<a href='byond://?src=\ref[src];show_lore=1'>Lore</a>"
+			output += "<a href='byond://byond://?src=\ref[src];show_lore=1'>Lore</a>"
 	output += "<hr>"
 	if (GAME_STATE > RUNLEVEL_LOBBY)
-		output += "<a href='byond://?src=\ref[src];manifest=1'>Manifest</a>"
-	output += "<a href='byond://?src=\ref[src];show_preferences=1'>Options</a>"
+		output += "<a href='byond://byond://?src=\ref[src];manifest=1'>Manifest</a>"
+	output += "<a href='byond://byond://?src=\ref[src];show_preferences=1'>Options</a>"
 	output += "<hr>"
 	output += "<b>Playing As</b><br>"
-	output += "<a href='byond://?src=\ref[client.prefs];load=1;details=1'>[client.prefs.real_name || "(Random)"]</a><br>"
+	output += "<a href='byond://byond://?src=\ref[client.prefs];load=1;details=1'>[client.prefs.real_name || "(Random)"]</a><br>"
 	output += client.prefs.job_high ? "[client.prefs.job_high]" : null
 	output += "<hr>"
-	output += "<a href='byond://?src=\ref[src];observe=1'>Join As Observer</a>"
+	output += "<a href='byond://byond://?src=\ref[src];observe=1'>Join As Observer</a>"
 	if (GAME_STATE > RUNLEVEL_LOBBY)
-		output += "<a href='byond://?src=\ref[src];late_join=1'>Join As Selected</a>"
+		output += "<a href='byond://byond://?src=\ref[src];late_join=1'>Join As Selected</a>"
 	else
 		output += "<a [ready?"class='linkOn'":""] href='byond://?src=\ref[src];ready=[!ready]'>Round Start Join</a>"
 	output += "<hr>"
@@ -338,7 +338,7 @@
 
 	var/list/dat = list()
 	dat += "Choose from the following open/valid positions:<br>"
-	dat += "<a href='byond://?src=\ref[src];invalid_jobs=1'>[show_invalid_jobs ? "Hide":"Show"] unavailable jobs.</a><br>"
+	dat += "<a href='byond://byond://?src=\ref[src];invalid_jobs=1'>[show_invalid_jobs ? "Hide":"Show"] unavailable jobs.</a><br>"
 	dat += "<table>"
 	dat += "<tr><td align = 'center' colspan = 3><b>[GLOB.using_map.station_name]:</b></td></tr>"
 

@@ -53,7 +53,7 @@
 	updatemodules()
 
 	var/dat = "<h3>Generator Control System</h3>"
-	//dat += SPAN_SIZE("-1", "<a href='byond://?src=\ref[src];refresh=1'>Refresh</a>")
+	//dat += SPAN_SIZE("-1", "<a href='byond://byond://?src=\ref[src];refresh=1'>Refresh</a>")
 	if(gravity_generator)
 		if(gravity_generator.on)
 			dat += "[SPAN_COLOR("green", "<br><tt>Gravity Status: ON</tt>")]<br>"
@@ -74,9 +74,9 @@
 
 		dat += "<br><tt>Maintainence Functions:</tt><br>"
 		if(gravity_generator.on)
-			dat += "<a href='byond://?src=\ref[src];gentoggle=1'>[SPAN_COLOR("red", " TURN GRAVITY GENERATOR OFF. ")]</a>"
+			dat += "<a href='byond://byond://?src=\ref[src];gentoggle=1'>[SPAN_COLOR("red", " TURN GRAVITY GENERATOR OFF. ")]</a>"
 		else
-			dat += "<a href='byond://?src=\ref[src];gentoggle=1'>[SPAN_COLOR("green", " TURN GRAVITY GENERATOR ON. ")]</a>"
+			dat += "<a href='byond://byond://?src=\ref[src];gentoggle=1'>[SPAN_COLOR("green", " TURN GRAVITY GENERATOR ON. ")]</a>"
 
 	else
 		dat += "No local gravity generator detected!"

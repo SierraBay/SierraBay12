@@ -11,7 +11,7 @@
 	if(!.)
 		return
 	var/dat = list()
-	dat += "<a href='?src=\ref[src]'>Refresh</a>"
+	dat += "<a href='byond://?src=\ref[src]'>Refresh</a>"
 	dat += "<HR>"
 	dat += "<table border='1' style='width:100%;border-collapse:collapse;'>"
 	dat += "<tr><th style='text-align:left;'>Time</th><th style='text-align:left;'>User</th><th style='text-align:left;'>Command</th></tr>"
@@ -22,7 +22,7 @@
 		dat += "<tr><td>[al.station_time]</td>"
 
 		if(al.user)
-			dat += "<td>[al.user.key_name(check_if_offline = FALSE)] <a HREF='?_src_=holder;adminplayeropts=[al.user.ref]'>PP</a></td>"
+			dat += "<td>[al.user.key_name(check_if_offline = FALSE)] <a href='byond://?_src_=holder;adminplayeropts=[al.user.ref]'>PP</a></td>"
 
 		dat += "<td colspan=5>[al.command]"
 		if(al.location)

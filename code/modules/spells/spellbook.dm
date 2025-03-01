@@ -99,7 +99,7 @@ var/global/list/artefact_feedback = list(/obj/structure/closet/wizard/armor = 		
 /obj/item/spellbook/interact(mob/user as mob)
 	var/dat = null
 	if(temp)
-		dat = "[temp]<br><a href='byond://?src=\ref[src];temp=1'>Return</a>"
+		dat = "[temp]<br><a href='byond://byond://?src=\ref[src];temp=1'>Return</a>"
 	else
 		dat = "<center><h3>[spellbook.title]</h3><i>[spellbook.title_desc]</i><br>You have [uses] spell slot[uses > 1 ? "s" : ""] left.</center><br>"
 		dat += "<center>[SPAN_COLOR("#ff33cc", "Requires Wizard Garb")]<br>[SPAN_COLOR("#ff6600", "Selectable Target")]<br>[SPAN_COLOR("#33cc33", "Spell Charge Type: Recharge, Sacrifice, Charges")]</center><br>"
@@ -133,24 +133,24 @@ var/global/list/artefact_feedback = list(/obj/structure/closet/wizard/armor = 		
 					if(Sp_CHARGES)
 						type = "C"
 				info += SPAN_COLOR("#33cc33", type)
-			dat += "<A href='byond://?src=\ref[src];path=\ref[spellbook.spells[i]]'>[name]</a>"
+			dat += "<a href='byond://byond://?src=\ref[src];path=\ref[spellbook.spells[i]]'>[name]</a>"
 			if(length(info))
 				dat += " ([info])"
 			dat += " ([spellbook.spells[spellbook.spells[i]]] spell slot[spellbook.spells[spellbook.spells[i]] > 1 ? "s" : "" ])"
 			if(spellbook.book_flags & CAN_MAKE_CONTRACTS)
-				dat += " <A href='byond://?src=\ref[src];path=\ref[spellbook.spells[i]];contract=1;'>Make Contract</a>"
+				dat += " <a href='byond://byond://?src=\ref[src];path=\ref[spellbook.spells[i]];contract=1;'>Make Contract</a>"
 			dat += "<br><i>[desc]</i><br><br>"
 		dat += "<br>"
-		dat += "<center><A href='byond://?src=\ref[src];reset=1'>Re-memorize your spellbook.</a></center>"
+		dat += "<center><a href='byond://byond://?src=\ref[src];reset=1'>Re-memorize your spellbook.</a></center>"
 		if(spellbook.book_flags & INVESTABLE)
 			if(investing_time)
 				dat += "<center><b>Currently investing in a slot...</b></center>"
 			else
-				dat += "<center><A href='byond://?src=\ref[src];invest=1'>Invest a Spell Slot</a><br><i>Investing a spellpoint will return two spellpoints back in 15 minutes.<br>Some say a sacrifice could even shorten the time...</i></center>"
+				dat += "<center><a href='byond://byond://?src=\ref[src];invest=1'>Invest a Spell Slot</a><br><i>Investing a spellpoint will return two spellpoints back in 15 minutes.<br>Some say a sacrifice could even shorten the time...</i></center>"
 		if(!(spellbook.book_flags & NOREVERT))
-			dat += "<center><A href='byond://?src=\ref[src];book=1'>Choose different spellbook.</a></center>"
+			dat += "<center><a href='byond://byond://?src=\ref[src];book=1'>Choose different spellbook.</a></center>"
 		if(!(spellbook.book_flags & NO_LOCKING))
-			dat += "<center><A href='byond://?src=\ref[src];lock=1'>[spellbook.book_flags & LOCKED ? "Unlock" : "Lock"] the spellbook.</a></center>"
+			dat += "<center><a href='byond://byond://?src=\ref[src];lock=1'>[spellbook.book_flags & LOCKED ? "Unlock" : "Lock"] the spellbook.</a></center>"
 	show_browser(user, dat,"window=spellbook")
 
 /obj/item/spellbook/CanUseTopic(mob/living/carbon/human/H)

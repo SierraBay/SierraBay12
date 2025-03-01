@@ -139,12 +139,12 @@ GLOBAL_LIST_EMPTY(admin_departments)
 	else
 		scan_name = "--------"
 
-	dat += "Confirm Identity: <a href='byond://?src=\ref[src];scan=1'>[scan_name]</a><br>"
+	dat += "Confirm Identity: <a href='byond://byond://?src=\ref[src];scan=1'>[scan_name]</a><br>"
 
 	if(authenticated)
-		dat += "<a href='byond://?src=\ref[src];logout=1'>{Log Out}</a>"
+		dat += "<a href='byond://byond://?src=\ref[src];logout=1'>{Log Out}</a>"
 	else
-		dat += "<a href='byond://?src=\ref[src];auth=1'>{Log In}</a>"
+		dat += "<a href='byond://byond://?src=\ref[src];auth=1'>{Log In}</a>"
 
 	dat += "<hr>"
 
@@ -152,10 +152,10 @@ GLOBAL_LIST_EMPTY(admin_departments)
 		dat += "<b>Logged in to:</b> [GLOB.using_map.boss_name] Quantum Entanglement Network<br><br>"
 
 		if(copyitem)
-			dat += "<a href='byond://?src=\ref[src];remove=1'>Remove Item</a><br><br>"
-			dat += "<a href='byond://?src=\ref[src];send=1'>Send</a><br>"
+			dat += "<a href='byond://byond://?src=\ref[src];remove=1'>Remove Item</a><br><br>"
+			dat += "<a href='byond://byond://?src=\ref[src];send=1'>Send</a><br>"
 			dat += "<b>Currently sending:</b> [copyitem.name]<br>"
-			dat += "<b>Sending to:</b> <a href='byond://?src=\ref[src];dept=1'>[destination ? destination : "Nobody"]</a><br>"
+			dat += "<b>Sending to:</b> <a href='byond://byond://?src=\ref[src];dept=1'>[destination ? destination : "Nobody"]</a><br>"
 
 		else
 			dat += "Please insert paper to send via secure connection.<br><br>"
@@ -299,8 +299,8 @@ GLOBAL_LIST_EMPTY(admin_departments)
 
 /obj/machinery/photocopier/faxmachine/proc/message_admins(mob/sender, faxname, obj/item/sent, reply_type)
 	var/msg = "<b>[SPAN_COLOR("#006100", "[faxname]: ")][get_options_bar(sender, 2,1,1)]"
-	msg += "(<A HREF='?_src_=holder;take_ic=\ref[sender]'>TAKE</a>) (<a href='?_src_=holder;FaxReply=\ref[sender];originfax=\ref[src];replyorigin=[reply_type]'>REPLY</a>)</b>: "
-	msg += "Receiving '[sent.name]' via secure connection ... <a href='?_src_=holder;AdminFaxView=\ref[sent]'>view message</a>"
+	msg += "(<a href='byond://?_src_=holder;take_ic=\ref[sender]'>TAKE</a>) (<a href='byond://?_src_=holder;FaxReply=\ref[sender];originfax=\ref[src];replyorigin=[reply_type]'>REPLY</a>)</b>: "
+	msg += "Receiving '[sent.name]' via secure connection ... <a href='byond://?_src_=holder;AdminFaxView=\ref[sent]'>view message</a>"
 	msg = SPAN_NOTICE(msg)
 
 	for(var/client/C as anything in GLOB.admins)

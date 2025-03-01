@@ -238,7 +238,7 @@
 	. = ..()
 	src.color = color
 	saved_color = color
-	maptext = "<A href='?src=\ref[src]' style='color: #ffffff'>[HOLOMAP_LEGEND_STYLING(text)]</A>"
+	maptext = "<a href='byond://?src=\ref[src]' style='color: #ffffff'>[HOLOMAP_LEGEND_STYLING(text)]</A>"
 	alpha = 254
 
 /obj/screen/legend/Click(location, control, params)

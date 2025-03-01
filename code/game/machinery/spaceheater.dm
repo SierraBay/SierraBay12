@@ -100,18 +100,18 @@
 		var/list/dat = list()
 		dat += "Power cell: "
 		if(cell)
-			dat += "<A href='byond://?src=\ref[src];op=cellremove'>Installed</A><BR>"
+			dat += "<a href='byond://byond://?src=\ref[src];op=cellremove'>Installed</A><BR>"
 		else
-			dat += "<A href='byond://?src=\ref[src];op=cellinstall'>Removed</A><BR>"
+			dat += "<a href='byond://byond://?src=\ref[src];op=cellinstall'>Removed</A><BR>"
 
 		dat += "Power Level: [cell ? round(cell.percent(),1) : 0]%<BR><BR>"
 
 		dat += "Set Temperature: "
 
-		dat += "<A href='?src=\ref[src];op=temp;val=-5'>-</A>"
+		dat += "<a href='byond://?src=\ref[src];op=temp;val=-5'>-</A>"
 
 		dat += " [set_temperature]K ([set_temperature-T0C]&deg;C)"
-		dat += "<A href='?src=\ref[src];op=temp;val=5'>+</A><BR>"
+		dat += "<a href='byond://?src=\ref[src];op=temp;val=5'>+</A><BR>"
 
 		var/datum/browser/popup = new(usr, "spaceheater", "Space Heater Control Panel")
 		popup.set_content(jointext(dat, null))

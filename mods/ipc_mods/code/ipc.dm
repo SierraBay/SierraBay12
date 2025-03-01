@@ -200,8 +200,8 @@
 	<b>Function:</b> Preventer L - 4W5. A specially designed modification of shackles that will DEFINETLY keep your property from unwanted consequences."}
 	. += "<HR><B>Laws instructions:</B><BR>"
 	for(var/i = 1 to length(laws))
-		. += "- [laws[i]] <A href='byond://?src=\ref[src];edit=[i]'>Edit</A> <A href='byond://?src=\ref[src];del=[i]'>Remove</A><br>"
-	. += "<A href='byond://?src=\ref[src];add=1'>Add</A>"
+		. += "- [laws[i]] <a href='byond://byond://?src=\ref[src];edit=[i]'>Edit</A> <a href='byond://byond://?src=\ref[src];del=[i]'>Remove</A><br>"
+	. += "<a href='byond://byond://?src=\ref[src];add=1'>Add</A>"
 
 /obj/item/organ/internal/shackles/interact(user)
 	user = usr

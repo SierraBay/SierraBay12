@@ -28,7 +28,7 @@
 #include "RnD/_RnD_includes.dm"
 #include "nyc_posters/_nyc_posters_includes.dm"
 #include "pixelshift/_pixelshift_includes.dm"
-#include "ssinput/_ssinput_includes.dm"
+//#include "ssinput/_ssinput_includes.dm"
 #include "statusbar/_statusbar_includes.dm"
 #include "unathi/_unathi_includes.dm"
 #include "utf8/_utf8_includes.dm"

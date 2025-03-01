@@ -26,24 +26,24 @@
 	if(!malfunction)
 		. += {"
 		<HR><B>Explosion yield mode:</B><BR>
-		<A href='byond://?src=\ref[src];mode=1'>[elevel ? elevel : "NONE SET"]</A><BR>
+		<a href='byond://byond://?src=\ref[src];mode=1'>[elevel ? elevel : "NONE SET"]</A><BR>
 		<B>Activation phrase:</B><BR>
-		<A href='byond://?src=\ref[src];phrase=1'>[phrase ? phrase : "NONE SET"]</A><BR>
+		<a href='byond://byond://?src=\ref[src];phrase=1'>[phrase ? phrase : "NONE SET"]</A><BR>
 		<B>Frequency:</B><BR>
-		<A href='byond://?src=\ref[src];freq=-10'>-</A>
-		<A href='byond://?src=\ref[src];freq=-2'>-</A>
+		<a href='byond://byond://?src=\ref[src];freq=-10'>-</A>
+		<a href='byond://byond://?src=\ref[src];freq=-2'>-</A>
 		[format_frequency(src.frequency)]
-		<A href='byond://?src=\ref[src];freq=2'>+</A>
-		<A href='byond://?src=\ref[src];freq=10'>+</A><BR>
+		<a href='byond://byond://?src=\ref[src];freq=2'>+</A>
+		<a href='byond://byond://?src=\ref[src];freq=10'>+</A><BR>
 		<B>Code:</B><BR>
-		<A href='byond://?src=\ref[src];code=-5'>-</A>
-		<A href='byond://?src=\ref[src];code=-1'>-</A>
-		<A href='byond://?src=\ref[src];code=set'>[src.code]</A>
-		<A href='byond://?src=\ref[src];code=1'>+</A>
-		<A href='byond://?src=\ref[src];code=5'>+</A><BR>
+		<a href='byond://byond://?src=\ref[src];code=-5'>-</A>
+		<a href='byond://byond://?src=\ref[src];code=-1'>-</A>
+		<a href='byond://byond://?src=\ref[src];code=set'>[src.code]</A>
+		<a href='byond://byond://?src=\ref[src];code=1'>+</A>
+		<a href='byond://byond://?src=\ref[src];code=5'>+</A><BR>
 		<B>Tampering warning message:</B><BR>
 		This will be broadcasted on radio if implant is exposed during surgery.<BR>
-		<A href='byond://?src=\ref[src];msg=1'>[warning_message ? warning_message : "NONE SET"]</A>
+		<a href='byond://byond://?src=\ref[src];msg=1'>[warning_message ? warning_message : "NONE SET"]</A>
 		"}
 
 /obj/item/implant/explosive/Initialize()
@@ -120,10 +120,10 @@
 	playsound(loc, 'sound/items/countdown.ogg', 75, 1, -3)
 	if(ismob(imp_in))
 		imp_in.audible_message(SPAN_WARNING("Something beeps inside [imp_in][part ? "'s [part.name]" : ""]!"))
-		log_and_message_admins("Explosive implant triggered in [imp_in] ([imp_in.key]). (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[imp_in.x];Y=[imp_in.y];Z=[imp_in.z]'>JMP</a>) ")
+		log_and_message_admins("Explosive implant triggered in [imp_in] ([imp_in.key]). (<a href='byond://?_src_=holder;adminplayerobservecoodjump=1;X=[imp_in.x];Y=[imp_in.y];Z=[imp_in.z]'>JMP</a>) ")
 	else
 		audible_message(SPAN_WARNING("[src] beeps omniously!"))
-		log_and_message_admins("Explosive implant triggered in [T.loc]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>) ")
+		log_and_message_admins("Explosive implant triggered in [T.loc]. (<a href='byond://?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>) ")
 
 	if(!elevel)
 		elevel = "Full Explosion"
