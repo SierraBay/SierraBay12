@@ -138,7 +138,7 @@
 	name = "Second Deck - Gambling Room"
 	icon_state = "restrooms"
 	sound_env = MEDIUM_SOFTFLOOR
-
+/*
 /area/vacant/dungeon
 	name = "Second Deck - Dungeon"
 	icon_state = "restrooms"
@@ -148,7 +148,7 @@
 	name = "Second Deck - Unused Sauna"
 	icon_state = "restrooms"
 	sound_env = MEDIUM_SOFTFLOOR
-
+*/
 /area/maintenance/seconddeck/hangar
 	name = "Second Deck - Auxiliary Hangar"
 	icon_state = "hangar"
@@ -215,10 +215,12 @@
 	area_flags = AREA_FLAG_RAD_SHIELDED | AREA_FLAG_ION_SHIELDED
 	holomap_color = HOLOMAP_AREACOLOR_CREW
 
+/*
 /area/crew_quarters/garden_room
 	name = "Second deck - living - Lounge"
 	icon_state = "game_room_inf"
 	holomap_color = HOLOMAP_AREACOLOR_CREW
+*/
 
 /area/crew_quarters/gym
 	name = "Second Deck - Living - Gym"
@@ -231,11 +233,11 @@
 	sound_env = SMALL_SOFTFLOOR
 	req_access = list(access_actor)
 	holomap_color = HOLOMAP_AREACOLOR_CREW
-
+/*
 /area/crew_quarters/actor/stage
 	name = "Second Deck - Service - Stage"
 	holomap_color = HOLOMAP_AREACOLOR_CREW
-
+*/
 /area/crew_quarters/lounge/upper
 	name = "Second Deck - Living - Lounge"
 	holomap_color = HOLOMAP_AREACOLOR_CREW

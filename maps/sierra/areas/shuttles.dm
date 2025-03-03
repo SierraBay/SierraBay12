@@ -225,13 +225,13 @@
 	dynamic_lighting = 1
 	area_flags = AREA_FLAG_ION_SHIELDED
 	req_access = list(access_maint_tunnels)
-
+/*
 /area/turbolift/sierra_top
 	name = "Elevator - Bridge"
 	lift_floor_label = "Мостик"
 	lift_floor_name = "Командование судна"
 	lift_announce_str = "Мостик - Командование судна."
-
+*/
 /area/turbolift/sierra_d1
 	name = "Elevator - First Deck"
 	lift_floor_label = "1 Палуба"
