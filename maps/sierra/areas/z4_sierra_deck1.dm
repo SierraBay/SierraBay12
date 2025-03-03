@@ -112,11 +112,6 @@
 /* RND AREAS
  * =========
  */
-/area/rnd/misc_lab
-	name = "First Deck - RND - Miscellaneous Lab"
-	icon_state = "misclab"
-	req_access = list(access_research)
-
 /area/rnd/research
 	name = "First Deck - RND - Research Lab"
 	icon_state = "research"
@@ -159,6 +154,16 @@
 
 /area/assembly
 	req_access = list(access_robotics)
+
+/area/assembly/chargebay
+	name = "First Deck - RND - Mech Bay"
+	icon_state = "mechbay"
+	holomap_color = HOLOMAP_AREACOLOR_SCIENCE
+
+/area/assembly/robotics
+	name = "First Deck - RND - Robotics Lab"
+	icon_state = "robotics"
+	holomap_color = HOLOMAP_AREACOLOR_SCIENCE
 
 /area/assembly/office
 	name = "First Deck - RND - Robotics Office"

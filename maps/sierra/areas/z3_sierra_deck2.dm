@@ -78,6 +78,18 @@
 /* RND AREAS
  * =========
  */
+/area/rnd/entry/lower
+	name = "Second Deck - RND - Aux Lobby"
+	icon_state = "decontamination"
+
+/area/rnd/misc_lab
+	name = "First Deck - RND - Miscellaneous Lab"
+	icon_state = "misclab"
+	req_access = list(access_research)
+
+/area/rnd/misc_lab/stairs
+	name = "Second Deck - RND - Miscellaneous Access"
+	icon_state = "research"
 
 /area/rnd/xenobiology/entry
 	name = "Xenobiology Access"
@@ -104,15 +116,10 @@
 	icon_state = "xeno_lab"
 	holomap_color = HOLOMAP_AREACOLOR_SCIENCE
 
-/area/assembly/chargebay
-	name = "Second Deck - RND - Mech Bay"
-	icon_state = "mechbay"
-	holomap_color = HOLOMAP_AREACOLOR_SCIENCE
-
-/area/assembly/robotics
-	name = "Second Deck - RND - Robotics Lab"
-	icon_state = "robotics"
-	holomap_color = HOLOMAP_AREACOLOR_SCIENCE
+/area/rnd/blanks
+	name = "Second Deck - RND - Aux Backup Storage"
+	req_access = list(access_rd)
+	icon_state = "decontamination"
 
 /area/rnd/toxins
 	name = "Second Deck - RND - Toxins Lab"

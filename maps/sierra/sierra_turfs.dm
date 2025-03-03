@@ -22,3 +22,7 @@
 
 /turf/simulated/floor/shuttle_ceiling/sierra/air
 	initial_gas = list("oxygen" = MOLES_O2STANDARD, "nitrogen" = MOLES_N2STANDARD)
+
+/obj/floor_decal/ntlogo
+	icon = 'maps/sierra/icons/turf/nt_logo.dmi'
+	icon_state = "ntlogo"
