@@ -222,6 +222,11 @@
 	holomap_color = HOLOMAP_AREACOLOR_CREW
 */
 
+/area/crew_quarters/dungeon_master_lounge
+	name = "Second Deck - Living Room"
+	sound_env = MEDIUM_SOFTFLOOR
+	holomap_color = HOLOMAP_AREACOLOR_CREW
+
 /area/crew_quarters/gym
 	name = "Second Deck - Living - Gym"
 	icon_state = "fitness"
