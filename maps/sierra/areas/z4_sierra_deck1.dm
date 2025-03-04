@@ -164,11 +164,11 @@
 	name = "First Deck - RND - Robotics Lab"
 	icon_state = "robotics"
 	holomap_color = HOLOMAP_AREACOLOR_SCIENCE
-
+/*
 /area/assembly/office
 	name = "First Deck - RND - Robotics Office"
 	icon_state = "mechbay"
-
+*/
 
 
 /* CREW AREAS
@@ -262,12 +262,12 @@
 	name = "First Deck - Vault"
 	icon_state = "nuke_storage"
 	req_access = list(access_heads_vault)
-
+/*
 /area/security/opscheck
 	name = "First Deck - RND - Security Checkpoint"
 	icon_state = "checkpoint"
 	req_access = list(access_security)
-
+*/
 /* MEDBAY AREAS
  * ============
  */
