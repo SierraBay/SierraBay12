@@ -112,6 +112,7 @@
 	icon_state = "shuttlered"
 /area/shuttle/petrov/airlock
 	name = "Shuttle - Petrov - Airlock"
+	req_access = list(list(access_petrov, access_security))
 	icon_state = "shuttlered"
 /area/shuttle/petrov/equipment
 	name = "Shuttle - Petrov - Equipment"
@@ -121,6 +122,7 @@
 	icon_state = "shuttlered"
 /area/shuttle/petrov/security
 	name = "Shuttle - Petrov - Security Room"
+	req_access = list(list(access_petrov, access_security))
 	icon_state = "shuttlered"
 /area/shuttle/petrov/scan
 	name = "Shuttle - Petrov - Scan Room"
