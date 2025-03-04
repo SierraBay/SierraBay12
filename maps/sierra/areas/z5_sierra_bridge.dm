@@ -88,11 +88,11 @@
 
 /area/bridge/hallway
 	name = "Bridge - Hallway"
-
+/*
 /area/bridge/storage
 	name = "Bridge - Storage"
 	req_access = list(access_bridge)
-
+*/
 /area/teleporter
 	name = "First Deck - Teleporter"
 	icon_state = "teleporter"
