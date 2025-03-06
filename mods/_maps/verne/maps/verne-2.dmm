@@ -121,6 +121,7 @@
 /obj/machinery/light/spot{
 	dir = 8
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel,
 /turf/simulated/floor/plating,
 /area/verne/hangar)
 "at" = (
@@ -166,6 +167,9 @@
 	},
 /obj/machinery/conveyor{
 	id = "verne_isolation"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
+	dir = 6
 	},
 /turf/simulated/floor/plating,
 /area/verne/hangar)
@@ -270,6 +274,9 @@
 /obj/structure/closet/hydrant{
 	pixel_x = -32
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
+	dir = 6
+	},
 /turf/simulated/floor/plating,
 /area/verne/hangar)
 "bl" = (
@@ -309,6 +316,7 @@
 /obj/machinery/light/spot{
 	dir = 8
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel,
 /turf/simulated/floor/plating,
 /area/verne/hangar)
 "bq" = (
@@ -435,6 +443,7 @@
 	icon_state = "1-2"
 	},
 /obj/catwalk_plated/dark,
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel,
 /turf/simulated/floor/plating,
 /area/verne/hangar)
 "bO" = (
@@ -463,6 +472,7 @@
 	dir = 4;
 	pixel_x = -32
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel,
 /turf/simulated/floor/plating,
 /area/verne/hangar)
 "bR" = (
@@ -1195,6 +1205,7 @@
 /obj/structure/railing/mapped{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel,
 /turf/simulated/floor/plating,
 /area/verne/hangar)
 "et" = (
@@ -1269,6 +1280,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel,
 /turf/simulated/floor/plating,
 /area/verne/hangar)
 "eU" = (
@@ -1657,6 +1669,9 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold4w/visible,
 /obj/catwalk_plated/dark,
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/verne/hangar)
 "iv" = (
@@ -1909,6 +1924,7 @@
 	dir = 8
 	},
 /obj/catwalk_plated/dark,
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel,
 /turf/simulated/floor/plating,
 /area/verne/hangar)
 "kE" = (
@@ -1939,6 +1955,7 @@
 	icon_state = "1-2"
 	},
 /obj/catwalk_plated/dark,
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel,
 /turf/simulated/floor/plating,
 /area/verne/hangar)
 "kN" = (
@@ -1992,6 +2009,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel,
 /turf/simulated/floor/plating,
 /area/verne/hangar)
 "ls" = (
@@ -2184,6 +2202,7 @@
 	icon_state = "1-4"
 	},
 /obj/catwalk_plated/dark,
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel,
 /turf/simulated/floor/plating,
 /area/verne/hangar)
 "mB" = (
@@ -2268,6 +2287,9 @@
 	icon_state = "2-4"
 	},
 /obj/catwalk_plated/dark,
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
+	dir = 6
+	},
 /turf/simulated/floor/plating,
 /area/verne/hangar)
 "nf" = (
@@ -2476,6 +2498,8 @@
 /obj/structure/railing/mapped{
 	dir = 1
 	},
+/obj/machinery/atmospherics/portables_connector,
+/obj/machinery/portable_atmospherics/canister/carbon_dioxide/engine_setup,
 /turf/simulated/floor/tiled/techfloor,
 /area/verne/hangar)
 "pp" = (
@@ -2530,6 +2554,7 @@
 	dir = 4;
 	pixel_x = -22
 	},
+/obj/item/reagent_containers/glass/beaker/sulphuric,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/verne/engineering/workshop)
 "qa" = (
@@ -2965,6 +2990,7 @@
 /obj/floor_decal/industrial/loading,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel,
 /turf/simulated/floor/tiled/techfloor,
 /area/verne/hangar)
 "sz" = (
@@ -3271,6 +3297,9 @@
 	id = "verne_isolation2"
 	},
 /obj/structure/closet/crate/hydroponics/prespawned,
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
+	dir = 9
+	},
 /turf/simulated/floor/plating,
 /area/verne/hangar)
 "vd" = (
@@ -3455,6 +3484,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/verne/hangar)
 "wi" = (
@@ -3514,6 +3546,9 @@
 /obj/machinery/conveyor{
 	id = "verne_isolation"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
+	dir = 5
+	},
 /turf/simulated/floor/plating,
 /area/verne/hangar)
 "wy" = (
@@ -3560,8 +3595,8 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/machinery/r_n_d/circuit_imprinter,
 /obj/floor_decal/industrial/outline/yellow,
+/obj/machinery/fabricator/rnd/imprinter,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/verne/engineering/workshop)
 "wQ" = (
@@ -3718,6 +3753,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel,
 /turf/simulated/floor/plating,
 /area/verne/hangar)
 "yn" = (
@@ -3827,6 +3863,7 @@
 	dir = 4;
 	pixel_x = -32
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel,
 /turf/simulated/floor/plating,
 /area/verne/hangar)
 "yP" = (
@@ -3851,6 +3888,7 @@
 	icon_state = "1-2"
 	},
 /obj/catwalk_plated/dark,
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel,
 /turf/simulated/floor/plating,
 /area/verne/hangar)
 "yV" = (
@@ -3902,6 +3940,7 @@
 /obj/machinery/conveyor{
 	id = "verne_isolation"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/verne/hangar)
 "zt" = (
@@ -4239,6 +4278,7 @@
 	id_tag = "verneconveyordoor";
 	name = "Verne Hangar Conveyor"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/verne/hangar)
 "BP" = (
@@ -4421,6 +4461,9 @@
 	icon_state = "1-4"
 	},
 /obj/catwalk_plated/dark,
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
+	dir = 5
+	},
 /turf/simulated/floor/plating,
 /area/verne/hangar)
 "Dk" = (
@@ -4455,6 +4498,7 @@
 	d2 = 2;
 	icon_state = "32-2"
 	},
+/obj/machinery/atmospherics/pipe/zpipe/down/fuel,
 /turf/simulated/open,
 /area/verne/hangar)
 "DD" = (
@@ -4589,6 +4633,7 @@
 /obj/machinery/light/spot{
 	dir = 8
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel,
 /turf/simulated/floor/plating,
 /area/verne/hangar)
 "ES" = (
@@ -4748,6 +4793,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/catwalk_plated/dark,
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel,
 /turf/simulated/floor/plating,
 /area/verne/hangar)
 "GA" = (
@@ -4910,8 +4956,8 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/verne/engineering/storage)
 "HI" = (
-/obj/machinery/r_n_d/protolathe,
 /obj/floor_decal/industrial/outline/yellow,
+/obj/machinery/fabricator/rnd/protolathe,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/verne/engineering/workshop)
 "HQ" = (
@@ -5298,6 +5344,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel,
 /turf/simulated/floor/plating,
 /area/verne/hangar)
 "KP" = (
@@ -5696,6 +5743,27 @@
 /obj/floor_decal/industrial/hatch/yellow,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/verne/xenosci/workshop)
+"Oe" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 4
+	},
+/obj/catwalk_plated/dark,
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/verne/hangar)
 "Oh" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/cable/cyan{
@@ -5810,6 +5878,7 @@
 /obj/machinery/atmospherics/valve/shutoff/scrubbers,
 /obj/machinery/atmospherics/valve/shutoff/supply,
 /obj/floor_decal/industrial/shutoff,
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel,
 /turf/simulated/floor/tiled/techfloor,
 /area/verne/hangar)
 "Qk" = (
@@ -5941,6 +6010,9 @@
 	icon_state = "1-8"
 	},
 /obj/catwalk_plated/dark,
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
+	dir = 9
+	},
 /turf/simulated/floor/plating,
 /area/verne/hangar)
 "QT" = (
@@ -6259,6 +6331,9 @@
 	icon_state = "2-8"
 	},
 /obj/catwalk_plated/dark,
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
+	dir = 10
+	},
 /turf/simulated/floor/plating,
 /area/verne/hangar)
 "Ub" = (
@@ -6643,6 +6718,27 @@
 /obj/floor_decal/corner/b_green/diagonal,
 /turf/simulated/floor/tiled/white,
 /area/verne/xenosci/equipment)
+"Wt" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 4
+	},
+/obj/catwalk_plated/dark,
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
+	dir = 9
+	},
+/turf/simulated/floor/plating,
+/area/verne/hangar)
 "Wv" = (
 /obj/floor_decal/techfloor/orange{
 	dir = 1
@@ -6913,6 +7009,7 @@
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 9
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel,
 /turf/simulated/floor/plating,
 /area/verne/hangar)
 "YY" = (
@@ -6981,6 +7078,9 @@
 	icon_state = "1-8"
 	},
 /obj/structure/railing/mapped,
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
+	dir = 9
+	},
 /turf/simulated/floor/plating,
 /area/verne/hangar)
 "Zv" = (
@@ -14095,7 +14195,7 @@ vt
 EJ
 NH
 QT
-BT
+Oe
 Cm
 yF
 zT
@@ -14247,7 +14347,7 @@ hG
 EJ
 jo
 pi
-BT
+Wt
 Ei
 wB
 zU
