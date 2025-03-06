@@ -867,13 +867,13 @@
 /obj/machinery/door/airlock{
 	name = "Head"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled/freezer,
 /area/ship/farfleet/crew/toilet)
 "im" = (
@@ -2884,6 +2884,15 @@
 /obj/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hallway/upper)
+"AP" = (
+/obj/paint/dark_gunmetal,
+/obj/structure/cable/green{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/wall/r_titanium,
+/area/ship/snz)
 "AW" = (
 /obj/structure/cable/green{
 	d1 = 1;
@@ -5452,6 +5461,11 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
 /obj/floor_decal/corner_steel_grid/diagonal,
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hallway/upper)
 "Zw" = (
@@ -13896,7 +13910,7 @@ zW
 MC
 Vg
 pL
-Jt
+AP
 VE
 ns
 ME
