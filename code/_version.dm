@@ -11,6 +11,7 @@ Retain even if empty - the future exists
 /proc/floor(number)
 	return round(number)
 
+<<<<<<< ours
 /proc/fract(number)
 	return number - trunc(number)
 
@@ -64,4 +65,6 @@ Retain even if empty - the future exists
 #define GLOBAL_PROC_REF(X) (/proc/##X)
 #define CALL_EXT call_ext
 
+=======
+>>>>>>> theirs
 #endif
