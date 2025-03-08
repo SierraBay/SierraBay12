@@ -13,13 +13,13 @@
 	)
 
 	initial_restricted_waypoints = list(
-		"Interseptor Shuttle" = list("nav_hangar_interseptor")
+		"Interseptor Shuttle" = list("nav_interseptor_start")
 	)
 
 #define PHOBOS_PREFIX pick("Theia","Kingfish","Sinai","Fallujah","Montjoie","Dallas","Castro","Quebec","Lee","Omaha","Gold","Utah","Juno","Sword")
 /obj/overmap/visitable/ship/phobos/New()
 	name = "SFV [PHOBOS_PREFIX], \a [name]"
-	for(var/area/ship/patrol/A)
+	for(var/area/ship/phobos/A)
 		A.name = "\improper [name] - [A.name]"
 		GLOB.using_map.area_purity_test_exempt_areas += A.type
 	..()
@@ -32,7 +32,7 @@
 	prefix = "mods/_maps/phobos/maps/"
 	suffixes = list("phobos.dmm")
 	spawn_cost = 50 // We're testing this
-	area_usage_test_exempted_root_areas = list(/area/phobos)
+	area_usage_test_exempted_root_areas = list(/area/ship/phobos)
 	shuttles_to_initialise = list(/datum/shuttle/autodock/overmap/interseptor)
 // We're deep in frontier. So no elite troops or terrans
 	ban_ruins = list(
@@ -59,9 +59,9 @@
 /datum/shuttle/autodock/overmap/interseptor
 	name = "Interseptor Shuttle"
 	warmup_time = 15
-	dock_target = "interseptor"
-	current_location = "nav_hangar_interseptor"
-	range = 2
+	dock_target = "interseptor_shuttle"
+	current_location = "nav_interseptor_start"
+	range = 1
 	fuel_consumption = 4
 	shuttle_area = /area/ship/interseptor
 	defer_initialisation = TRUE
@@ -86,7 +86,6 @@
 /area/ship/interseptor
 	name = "\improper interseptor"
 	icon_state = "shuttlered"
-	base_turf = /turf/simulated/floor
 	requires_power = 1
 	dynamic_lighting = 1
 	req_access = list(access_away_phobos)
@@ -94,8 +93,5 @@
 
 /obj/shuttle_landmark/interseptor/start
 	name = "Dock"
-	landmark_tag = "nav_hangar_interseptor"
-
-/obj/shuttle_landmark/interseptor/altdock
-	name = "Docking Port"
-	landmark_tag = "nav_hangar_interseptoralt"
+	landmark_tag = "nav_interseptor_start"
+	docking_controller = "interseptor_shuttle_dock"
