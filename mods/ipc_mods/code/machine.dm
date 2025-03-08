@@ -15,16 +15,21 @@
 	products[BP_EXONET] = list(/obj/item/organ/internal/ecs, 35)
 	. = ..()
 
-
-/mob/living/carbon/human/Stat()
+/obj/screen/bodytemp/Click(location, control, params)
 	. = ..()
-	if(statpanel("Status"))
-		var/obj/item/organ/internal/cell/potato = internal_organs_by_name[BP_CELL]
-		var/obj/item/organ/internal/cooling_system/coolant = internal_organs_by_name[BP_COOLING]
-		if(potato && potato.cell && src.is_species(SPECIES_IPC))
-			if(!coolant)
-				return
-			stat("Coolant remaining:","[coolant.get_coolant_remaining()]/[coolant.refrigerant_max]")
+	if(istype(usr) && usr.bodytemp == src && usr.isSynthetic())
+		var/mob/living/carbon/human/machine = usr
+		to_chat(usr, SPAN_WARNING("Operating temperature: [round(machine.bodytemperature-T0C)]&deg;C"))
+		if(usr.is_species(SPECIES_IPC))
+			var/obj/item/organ/internal/cooling_system/coolant = machine.internal_organs_by_name[BP_COOLING]
+			to_chat(usr, SPAN_WARNING("Coolant remaining: [coolant.get_coolant_remaining()]/[coolant.refrigerant_max]"))
+
+/obj/screen/cell/Click(location, control, params)
+	. = ..()
+	if(istype(usr))
+		var/mob/living/carbon/human/machine = usr
+		var/obj/item/organ/internal/cell/potato = machine.internal_organs_by_name[BP_CELL]
+		to_chat(usr, SPAN_WARNING(("Battery charge: [potato.get_charge()]/[potato.cell.maxcharge]")))
 
 /obj/item/organ/internal/cell/Process()
 	..()
