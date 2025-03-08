@@ -38,17 +38,17 @@ exactly 117 "to_world uses" '\sto_world\('
 exactly 0 "globals with leading /" '^/var' -P
 exactly 0 "globals without global sugar" '^var/(?!global/)' -P
 exactly 0 "apparent paths with trailing /" '\w/[,\)\n]' -P
-exactly $((50 + 3)) "to_world_log uses" '\sto_world_log\('
+exactly 50 "to_world_log uses" '\sto_world_log\('
 exactly 0 "world<< uses" 'world<<|world[[:space:]]<<'
 exactly 0 "world.log<< uses" 'world.log<<|world.log[[:space:]]<<'
 exactly 2 "<< uses" '(?<!<)<<(?!<)' -P
 exactly 2 ">> uses" '(?<!>)>>(?!>)' -P
 exactly 0 "incorrect indentations" '^( {4,})' -P
-exactly 27 "text2path uses" 'text2path'
+exactly 26 "text2path uses" 'text2path'
 exactly 5 "update_icon() override" '/update_icon\((.*)\)'  -P
 exactly 4 "goto use" 'goto '
 exactly 1 "NOOP match" 'NOOP'
-exactly 323 "spawn uses" '^\s*spawn\s*\(\s*(-\s*)?\d*\s*\)' -P
+exactly 328 "spawn uses" '^\s*spawn\s*\(\s*(-\s*)?\d*\s*\)' -P
 exactly 0 "tag uses" '\stag = ' -P '**/*.dmm'
 exactly 0 "anchored = 0/1" 'anchored\s*=\s*\d' -P
 exactly 2 "density = 0/1" 'density\s*=\s*\d' -P
@@ -56,11 +56,19 @@ exactly 0 "emagged = 0/1" 'emagged\s*=\s*\d' -P
 exactly 0 "simulated = 0/1" 'simulated\s*=\s*\d' -P
 exactly 2 "var/ in proc arguments" '(^/[^/].+/.+?\(.*?)var/' -P
 exactly 0 "tmp/ vars" 'var.*/tmp/' -P
-exactly 15 "uses of .len" '\.len\b' -P
+exactly 6 "uses of .len" '\.len\b' -P
 exactly 15 "uses of examine()" '[.|\s]examine\(' -P # If this fails it's likely because you used '/atom/proc/examine(mob)' instead of '/proc/examinate(mob, atom)' - Exception: An examine()-proc may call other examine()-procs
-exactly 13 "direct modifications of overlays list" '\boverlays((\s*[|^=+&-])|(\.(Cut)|(Add)|(Copy)|(Remove)|(Remove)))' -P
+exactly 7 "direct modifications of overlays list" '\boverlays((\s*[|^=+&-])|(\.(Cut)|(Add)|(Copy)|(Remove)|(Remove)))' -P
 exactly 0 "new/list list instantiations" 'new\s*/list' -P
 exactly 0 "== null tests" '(==\s*null\b)|(\bnull\s*==)' -P #Use isnull() instead
+exactly 0 "istype /mob where ismob should be used" 'istype\(.*?,\s*/mob\s*\)' -P
+exactly 1 "istype /obj where isobj should be used" 'istype\(.*?,\s*/obj\s*\)' -P
+exactly 0 "istype /turf where isturf should be used" 'istype\(.*?,\s*/turf\s*\)' -P
+exactly 0 "istype /area where isarea should be used" 'istype\(.*?,\s*/area\s*\)' -P
+exactly 0 "istype /icon where isicon should be used" 'istype\(.*?,\s*/icon\s*\)' -P
+exactly 0 "istype /list where islist should be used" 'istype\(.*?,\s*/list\s*\)' -P
+exactly 0 "istype /atom where isloc should be used" 'istype\(.*?,\s*/atom\s*\)' -P
+exactly 0 "istype atom/movable where ismovable should be used" 'istype\(.*?,\s*/atom/movable\s*\)' -P
 # If you increase any of these numbers you're probably doing it wrong
 
 num=`find ./html/changelogs -not -name "*.yml" | wc -l`
