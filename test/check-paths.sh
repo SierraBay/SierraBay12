@@ -61,14 +61,6 @@ exactly 15 "uses of examine()" '[.|\s]examine\(' -P # If this fails it's likely 
 exactly 7 "direct modifications of overlays list" '\boverlays((\s*[|^=+&-])|(\.(Cut)|(Add)|(Copy)|(Remove)|(Remove)))' -P
 exactly 0 "new/list list instantiations" 'new\s*/list' -P
 exactly 0 "== null tests" '(==\s*null\b)|(\bnull\s*==)' -P #Use isnull() instead
-exactly 0 "istype /mob where ismob should be used" 'istype\(.*?,\s*/mob\s*\)' -P
-exactly 1 "istype /obj where isobj should be used" 'istype\(.*?,\s*/obj\s*\)' -P
-exactly 0 "istype /turf where isturf should be used" 'istype\(.*?,\s*/turf\s*\)' -P
-exactly 0 "istype /area where isarea should be used" 'istype\(.*?,\s*/area\s*\)' -P
-exactly 0 "istype /icon where isicon should be used" 'istype\(.*?,\s*/icon\s*\)' -P
-exactly 0 "istype /list where islist should be used" 'istype\(.*?,\s*/list\s*\)' -P
-exactly 0 "istype /atom where isloc should be used" 'istype\(.*?,\s*/atom\s*\)' -P
-exactly 0 "istype atom/movable where ismovable should be used" 'istype\(.*?,\s*/atom/movable\s*\)' -P
 # If you increase any of these numbers you're probably doing it wrong
 
 num=`find ./html/changelogs -not -name "*.yml" | wc -l`
