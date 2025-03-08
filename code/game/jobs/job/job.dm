@@ -232,7 +232,7 @@
 			if(show_invalid_jobs)
 				return "<tr><td><a style='text-decoration: line-through' href='[href_string]'>[title]</a></td><td>[current_positions]</td><td>(Active: [get_active_count()])</td></tr>"
 		else
-			return "<tr><td><a href='byond://[href_string]'>[title]</a></td><td>[current_positions]</td><td>(Active: [get_active_count()])</td></tr>"
+			return "<tr><td><a href='[href_string]'>[title]</a></td><td>[current_positions]</td><td>(Active: [get_active_count()])</td></tr>"
 	return ""
 
 // Only players with the job assigned and AFK for less than 10 minutes count as active
