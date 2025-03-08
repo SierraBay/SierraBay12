@@ -1,4 +1,0 @@
-author: Builder13
-changes:
-  - {rscadd: Миррор с рефакторингом кода для времени}
-delete-after: true
