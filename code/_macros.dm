@@ -305,3 +305,11 @@
 
 /// Explicitly set the length of L to NEWLEN, adding nulls or dropping entries. Is the same value as NEWLEN.
 #define LIST_RESIZE(L, NEWLEN) ((L).len = (NEWLEN))
+
+
+
+/// A ref=src anchor.
+#define aref(text, params) "<a href=\"byond://?src=\ref[src];[params]\">[text]</a>"
+
+/// A ref=src anchor with additional anchor properties.
+#define arefext(text, params, props) "<a href=\"byond://?src=\ref[src];[params]\" [props]>[text]</a>"

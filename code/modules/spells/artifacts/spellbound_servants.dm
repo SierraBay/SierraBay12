@@ -210,7 +210,7 @@
 	var/datum/ghosttrap/G = get_ghost_trap("wizard familiar")
 	for(var/mob/observer/ghost/ghost in GLOB.player_list)
 		if(G.assess_candidate(ghost,null,FALSE))
-			to_chat(ghost,"[SPAN_NOTICE("<b>A wizard is requesting a Spell-Bound Servant!</b>")] (<a href='?src=\ref[src];master=\ref[user]'>Join</a>)")
+			to_chat(ghost,"[SPAN_NOTICE("<b>A wizard is requesting a Spell-Bound Servant!</b>")] (<a href='byond://?src=\ref[src];master=\ref[user]'>Join</a>)")
 
 /obj/cleanable/spellbound/CanUseTopic(mob)
 	if(isliving(mob))
@@ -253,7 +253,7 @@
 	var/dat = "<center><b><h3>Summoning Stone</h3></b><i>Choose a companion to help you.</i><br><br></center>"
 	for(var/type in types)
 		var/datum/spellbound_type/SB = type
-		dat += "<br><a href='byond://?src=\ref[src];type=[type]'>[initial(SB.name)]</a> - [initial(SB.desc)]"
+		dat += "<br><a href='byond://byond://?src=\ref[src];type=[type]'>[initial(SB.name)]</a> - [initial(SB.desc)]"
 	show_browser(user,dat,"window=summoning")
 	onclose(user,"summoning")
 

@@ -162,7 +162,7 @@
 	user.set_machine(src)
 	var/dat = "<b>Coordinates with positive matches</b><br>"
 
-	dat += "<A href='?src=\ref[src];clear=0'>== Clear all ==</a><br>"
+	dat += "<a href='byond://?src=\ref[src];clear=0'>== Clear all ==</a><br>"
 
 	if(current)
 		dat += "Time: [current.time]<br>"
@@ -174,7 +174,7 @@
 			dat += "Anomaly material: [GLOB.responsive_carriers_to_finds[current.material]]<br>"
 		else
 			dat += "Anomaly material: Unknown<br>"
-		dat += "<A href='?src=\ref[src];clear=[current.record_index]'>clear entry</a><br>"
+		dat += "<a href='byond://?src=\ref[src];clear=[current.record_index]'>clear entry</a><br>"
 	else
 		dat += "Select an entry from the list<br>"
 		dat += "<br><br><br><br>"
@@ -182,12 +182,12 @@
 	if(length(positive_locations))
 		for(var/index = 1 to length(positive_locations))
 			var/datum/depth_scan/D = positive_locations[index]
-			dat += "<A href='?src=\ref[src];select=[index]'>[D.time], coords: [D.coords]</a><br>"
+			dat += "<a href='byond://?src=\ref[src];select=[index]'>[D.time], coords: [D.coords]</a><br>"
 	else
 		dat += "No entries recorded."
 
 	dat += "<hr>"
-	dat += "<a href='?src=\ref[src];close=1'>Close</a>"
+	dat += "<a href='byond://?src=\ref[src];close=1'>Close</a>"
 
 	var/datum/browser/popup = new(user, "depth_scanner", "Results", 300, 500)
 	popup.set_content(dat)
@@ -245,14 +245,14 @@
 /obj/item/pinpointer/radio/interact(mob/user)
 	var/dat = "<b>Radio frequency tracker</b><br>"
 	dat += {"
-				Tracking: <A href='byond://?src=\ref[src];toggle=1'>[active ? "Enabled" : "Disabled"]</A><BR>
-				<A href='byond://?src=\ref[src];reset_tracking=1'>Reset tracker</A><BR>
+				Tracking: <a href='byond://byond://?src=\ref[src];toggle=1'>[active ? "Enabled" : "Disabled"]</A><BR>
+				<a href='byond://byond://?src=\ref[src];reset_tracking=1'>Reset tracker</A><BR>
 				Frequency:
-				<A href='byond://?src=\ref[src];freq=-10'>-</A>
-				<A href='byond://?src=\ref[src];freq=-2'>-</A>
+				<a href='byond://byond://?src=\ref[src];freq=-10'>-</A>
+				<a href='byond://byond://?src=\ref[src];freq=-2'>-</A>
 				[format_frequency(tracking_freq)]
-				<A href='byond://?src=\ref[src];freq=2'>+</A>
-				<A href='byond://?src=\ref[src];freq=10'>+</A><BR>
+				<a href='byond://byond://?src=\ref[src];freq=2'>+</A>
+				<a href='byond://byond://?src=\ref[src];freq=10'>+</A><BR>
 				"}
 	show_browser(user, dat,"window=locater;size=300x150")
 	onclose(user, "locater")

@@ -38,6 +38,6 @@
 /datum/persistent/graffiti/GetAdminDataStringFor(thing, can_modify, mob/user)
 	var/obj/decal/writing/save_graffiti = thing
 	if(can_modify)
-		. = "<td colspan = 2>[save_graffiti.message]</td><td>[save_graffiti.author]</td><td><a href='byond://?src=\ref[src];caller=\ref[user];remove_entry=\ref[thing]'>Destroy</a></td>"
+		. = "<td colspan = 2>[save_graffiti.message]</td><td>[save_graffiti.author]</td><td><a href='byond://byond://?src=\ref[src];caller=\ref[user];remove_entry=\ref[thing]'>Destroy</a></td>"
 	else
 		. = "<td colspan = 3>[save_graffiti.message]</td><td>[save_graffiti.author]</td>"

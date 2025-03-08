@@ -184,9 +184,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			return 1
 	return 0
 
-/proc/sign(x)
-	return x!=0?x/abs(x):0
-
 /proc/getline(atom/M,atom/N)//Ultra-Fast Bresenham Line-Drawing Algorithm
 	RETURN_TYPE(/list)
 	var/px=M.x		//starting x
@@ -365,97 +362,10 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		return GetConnectedZlevels(z)
 	return list() //We return an empty list, because we are apparently in nullspace
 
-/proc/get_sorted_mobs()
-	RETURN_TYPE(/list)
-	var/list/old_list = getmobs()
-	var/list/AI_list = list()
-	var/list/Dead_list = list()
-	var/list/keyclient_list = list()
-	var/list/key_list = list()
-	var/list/logged_list = list()
-	for(var/named in old_list)
-		var/mob/M = old_list[named]
-		if(issilicon(M))
-			AI_list |= M
-		else if(isghost(M) || M.stat == DEAD)
-			Dead_list |= M
-		else if(M.key && M.client)
-			keyclient_list |= M
-		else if(M.key)
-			key_list |= M
-		else
-			logged_list |= M
-		old_list.Remove(named)
-	var/list/new_list = list()
-	new_list += AI_list
-	new_list += keyclient_list
-	new_list += key_list
-	new_list += logged_list
-	new_list += Dead_list
-	return new_list
-
-//Returns a list of all mobs with their name
-/proc/getmobs()
-	RETURN_TYPE(/list)
-	var/list/mobs = sortmobs()
-	var/list/names = list()
-	var/list/creatures = list()
-	var/list/namecounts = list()
-	for(var/mob/M in mobs)
-		var/name = M.name
-		if (name in names)
-			namecounts[name]++
-			name = "[name] ([namecounts[name]])"
-		else
-			names.Add(name)
-			namecounts[name] = 1
-		if (M.real_name && M.real_name != M.name)
-			name += " \[[M.real_name]\]"
-		if (M.stat == DEAD)
-			if(isobserver(M))
-				name += " \[observer\]"
-			else
-				name += " \[dead\]"
-		creatures[name] = M
-
-	return creatures
 
 /proc/get_follow_targets()
 	RETURN_TYPE(/list)
 	return follow_repository.get_follow_targets()
-
-//Orders mobs by type then by name
-/proc/sortmobs()
-	RETURN_TYPE(/list)
-	var/list/moblist = list()
-	var/list/sortmob = sortAtom(SSmobs.mob_list)
-	for(var/mob/observer/eye/M in sortmob)
-		moblist.Add(M)
-	for(var/mob/living/silicon/ai/M in sortmob)
-		moblist.Add(M)
-	for(var/mob/living/silicon/pai/M in sortmob)
-		moblist.Add(M)
-	for(var/mob/living/silicon/robot/M in sortmob)
-		moblist.Add(M)
-	for(var/mob/living/carbon/human/M in sortmob)
-		moblist.Add(M)
-	for(var/mob/living/carbon/brain/M in sortmob)
-		moblist.Add(M)
-	for(var/mob/living/carbon/alien/M in sortmob)
-		moblist.Add(M)
-	for(var/mob/observer/ghost/M in sortmob)
-		moblist.Add(M)
-	for(var/mob/new_player/M in sortmob)
-		moblist.Add(M)
-	for(var/mob/living/carbon/slime/M in sortmob)
-		moblist.Add(M)
-	for(var/mob/living/simple_animal/M in sortmob)
-		moblist.Add(M)
-//	for(var/mob/living/silicon/hivebot/M in world)
-//		mob_list.Add(M)
-//	for(var/mob/living/silicon/hive_mainframe/M in world)
-//		mob_list.Add(M)
-	return moblist
 
 //Forces a variable to be posative
 /proc/modulus(M)
@@ -537,12 +447,9 @@ Turf and target are seperate in case you want to teleport some distance from a t
  *
  * Returns a list of atoms.
  */
-/atom/proc/GetAllContents(searchDepth = 5, includeSelf = FALSE)
+/atom/proc/GetAllContents(searchDepth = 5)
 	RETURN_TYPE(/list)
 	var/list/toReturn = list()
-
-	if(includeSelf)
-		toReturn += src
 
 	for(var/atom/part in contents)
 		toReturn += part
@@ -741,17 +648,20 @@ GLOBAL_LIST_INIT(duplicate_object_disallowed_vars, list(
 			trg_min_y = turf.y
 	var/list/refined_src = list()
 	for (var/turf/turf in turfs_src)
-		refined_src[turf] = new /datum/vector2 (turf.x - src_min_x, turf.y - src_min_y)
+		refined_src[turf] = list(turf.x - src_min_x, turf.y - src_min_y)
 	var/list/refined_trg = list()
 	for (var/turf/turf in turfs_trg)
-		refined_trg[turf] = new /datum/vector2 (turf.x - trg_min_x, turf.y - trg_min_y)
+		refined_trg[turf] = list(turf.x - src_min_x, turf.y - src_min_y)
 	var/list/turfs_to_update = list()
 	var/list/copied_movables = list()
 	moving:
 		for (var/turf/source_turf in refined_src)
-			var/datum/vector2/source_position = refined_src[source_turf]
+			var/list/source_position = refined_src[source_turf]
 			for (var/turf/target_turf in refined_trg)
-				if (source_position ~= refined_trg[target_turf])
+				var/list/target_position = refined_trg[target_turf]
+				var/same_position = source_position[1] == target_position[1] \
+					&& source_position[2] == target_position[2]
+				if (same_position)
 					var/old_dir1 = source_turf.dir
 					var/old_icon_state1 = source_turf.icon_state
 					var/old_icon1 = source_turf.icon
@@ -999,9 +909,9 @@ var/global/list/WALLITEMS = list(
 	return replacetext(replacetext(text,"\proper ",""),"\improper ","")
 
 /proc/topic_link(datum/D, arglist, content)
-	if(istype(arglist,/list))
+	if(islist(arglist))
 		arglist = list2params(arglist)
-	return "<a href='?src=\ref[D];[arglist]'>[content]</a>"
+	return "<a href='byond://byond://?src=\ref[D];[arglist]'>[content]</a>"
 
 /proc/get_random_colour(simple = FALSE, lower = 0, upper = 255)
 	var/colour

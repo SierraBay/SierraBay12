@@ -149,7 +149,7 @@
 	// --- MAP FILES --- //
 
 		// ~SIERRA~ //
-	#include "z1-z5_sierra.dmm"
+	#include "z1-z4_sierra.dmm"
 	#include "z6_admin.dmm"
 	#include "z7_transit.dmm"
 	#include "../away/empty.dmm"

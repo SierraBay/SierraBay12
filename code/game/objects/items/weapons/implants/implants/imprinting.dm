@@ -19,8 +19,8 @@
 	Any amount of "Mind-Breaker"(TM) present in bloodstream will trigger this side-effect.<BR>"}
 	. += "<HR><B>Instructions:</B><BR>"
 	for(var/i = 1 to length(instructions))
-		. += "- [instructions[i]] <A href='byond://?src=\ref[src];edit=[i]'>Edit</A> <A href='byond://?src=\ref[src];del=[i]'>Remove</A><br>"
-	. += "<A href='byond://?src=\ref[src];add=1'>Add</A>"
+		. += "- [instructions[i]] <a href='byond://byond://?src=\ref[src];edit=[i]'>Edit</A> <a href='byond://byond://?src=\ref[src];del=[i]'>Remove</A><br>"
+	. += "<a href='byond://byond://?src=\ref[src];add=1'>Add</A>"
 
 /obj/item/implant/imprinting/Topic(href, href_list)
 	..()

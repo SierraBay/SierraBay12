@@ -11446,7 +11446,6 @@
 	id_tag = "petrov_shuttle_outer";
 	name = "Petrov Exterior Access"
 	},
-/obj/shuttle_landmark/petrov/start,
 /obj/structure/cable/green{
 	d1 = 4;
 	d2 = 8;
@@ -14381,7 +14380,6 @@
 /turf/simulated/wall/titanium,
 /area/space)
 "zy" = (
-/obj/shuttle_landmark/petrov/start,
 /obj/machinery/door/firedoor,
 /obj/wallframe_spawn/reinforced/titanium,
 /obj/machinery/atmospherics/pipe/simple/hidden/universal,

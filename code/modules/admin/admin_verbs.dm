@@ -4,7 +4,7 @@ var/global/list/admin_verbs_default = list(
 	/client/proc/getserverlog,
 	// [/SIERRA-ADD],
 	/datum/admins/proc/show_player_panel, //shows an interface for individual players, with various links (links require additional flags), right-click player panel,
-	/client/proc/player_panel,
+	/client/proc/player_list,
 	/client/proc/secrets,
 	/client/proc/deadmin_self,			//destroys our own admin datum so we can play as a regular player,
 	/client/proc/hide_verbs,			//hides all our adminverbs,
@@ -35,7 +35,6 @@ var/global/list/admin_verbs_admin = list(
 	/client/proc/jumptocoord,			//we ghost and jump to a coordinate,
 	/client/proc/Getmob,				//teleports a mob to our location,
 	/client/proc/Getkey,				//teleports a mob with a certain ckey to our location,
-//	/client/proc/sendmob,				//sends a mob somewhere, -Removed due to it needing two sorting procs to work, which were executed every time an admin right-clicked. ~Errorage,
 	/client/proc/Jump,
 	/client/proc/jumptokey,				//allows us to jump to the location of a mob with a certain ckey,
 	/client/proc/jumptomob,				//allows us to jump to a specific mob,
@@ -437,11 +436,11 @@ var/global/list/admin_verbs_mod = list(
 			mob.alpha = max(mob.alpha - 100, 0)
 
 
-/client/proc/player_panel()
-	set name = "Player Panel"
+/client/proc/player_list()
+	set name = "Player List"
 	set category = "Admin"
 	if(holder)
-		holder.player_panel()
+		holder.player_list()
 	return
 
 /client/proc/check_antagonists()

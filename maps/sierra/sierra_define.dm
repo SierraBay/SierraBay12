@@ -11,10 +11,10 @@
 
 	load_legacy_saves = TRUE
 
-	station_levels = list(1,2,3,4,5)
-	admin_levels = list(6,7)
-	empty_levels = list(8)
-	accessible_z_levels = list("1"=1,"2"=1,"3"=1,"4"=1,"5"=1,"8"=25)
+	station_levels = list(1,2,3,4)
+	admin_levels = list(5,6)
+	empty_levels = list(7)
+	accessible_z_levels = list("1"=1,"2"=1,"3"=1,"4"=1,"7"=25)
 	overmap_size = 40
 	overmap_event_areas = 34
 	usable_email_tlds = list("freemail.net")

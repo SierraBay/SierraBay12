@@ -44,7 +44,7 @@
 
 /obj/structure/sign/memorial/sierra/examine(mob/user)
 	. = ..()
-	to_chat(user, "You see a holographic sign: <A href='?src=\ref[src];show_info=1'>Read Sign</A>")
+	to_chat(user, "You see a holographic sign: <a href='byond://?src=\ref[src];show_info=1'>Read Sign</A>")
 
 /obj/structure/sign/memorial/sierra/CanUseTopic()
 	return STATUS_INTERACTIVE
