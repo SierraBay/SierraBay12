@@ -1,0 +1,4 @@
+author: Builder13
+changes:
+  - {bugfix: Убраны лишние byond ссылки}
+delete-after: true
