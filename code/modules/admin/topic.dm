@@ -2179,7 +2179,7 @@
 	return list()
 
 /atom/movable/extra_admin_link(source, prefix, sufix, short_links)
-	return list("<a href='byond://?[source];adminplayerobservefollow=\ref[src]'>[prefix][short_links ? "J" : "JMP"][sufix]</A>")
+	return list("<A HREF='byond://?[source];adminplayerobservefollow=\ref[src]'>[prefix][short_links ? "J" : "JMP"][sufix]</A>")
 
 /client/extra_admin_link(source, prefix, sufix, short_links)
 	return mob ? mob.extra_admin_link(source, prefix, sufix, short_links) : list()
@@ -2187,12 +2187,12 @@
 /mob/extra_admin_link(source, prefix, sufix, short_links)
 	. = ..()
 	if(client && eyeobj)
-		. += "<a href='byond://?[source];adminplayerobservefollow=\ref[eyeobj]'>[prefix][short_links ? "E" : "EYE"][sufix]</A>"
+		. += "<A HREF='byond://?[source];adminplayerobservefollow=\ref[eyeobj]'>[prefix][short_links ? "E" : "EYE"][sufix]</A>"
 
 /mob/observer/ghost/extra_admin_link(source, prefix, sufix, short_links)
 	. = ..()
 	if(mind && (mind.current && !isghost(mind.current)))
-		. += "<a href='byond://?[source];adminplayerobservefollow=\ref[mind.current]'>[prefix][short_links ? "B" : "BDY"][sufix]</A>"
+		. += "<A HREF='byond://?[source];adminplayerobservefollow=\ref[mind.current]'>[prefix][short_links ? "B" : "BDY"][sufix]</A>"
 
 /proc/admin_jump_link(datum/target, source, delimiter = "|", prefix, sufix, short_links)
 	if(!istype(target))
