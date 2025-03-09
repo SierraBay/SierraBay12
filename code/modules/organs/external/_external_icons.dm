@@ -165,16 +165,16 @@ var/global/list/limb_icon_cache = list()
 			mob_icon.Blend(husk_over, ICON_OVERLAY)
 
 	var/list/sorted = list()
-	for(var/E in markings)
-		var/datum/sprite_accessory/marking/M = E
-		if (M.draw_target == MARKING_TARGET_SKIN)
-			var/color = markings[E]
-			var/state = M.icon_state
-			if (M.use_organ_tag)
+	for(var/datum/sprite_accessory/marking/marking as anything in markings)
+		if (marking.draw_target == MARKING_TARGET_SKIN)
+			var/color = markings[marking]
+			var/state = marking.icon_state
+			if (marking.use_organ_tag)
 				state = "[state]-[organ_tag]"
-			var/icon/I = icon(M.icon, state)
-			I.Blend(color, M.blend)
-			ADD_SORTED(sorted, list(list(M.draw_order, I, M)), GLOBAL_PROC_REF(cmp_marking_order))
+			var/icon/icon = icon(marking.icon, state)
+			icon.Blend(color, marking.blend)
+			var/list/entry = list(list(marking.draw_order, icon, marking))
+			ADD_SORTED(sorted, entry, GLOBAL_PROC_REF(cmp_marking_order))
 
 	for (var/entry in sorted) //Revisit this with blendmodes
 		var/datum/sprite_accessory/marking/marking = entry[3]
