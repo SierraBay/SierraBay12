@@ -110,7 +110,7 @@
 
 /obj/machinery/computer/arcade/battle/interact(mob/user)
 	user.set_machine(src)
-	var/dat = "<a href='byond://byond://?src=\ref[src];close=1'>Close</a>"
+	var/dat = "<a href='byond://?src=\ref[src];close=1'>Close</a>"
 	dat += "<center><h4>[src.enemy_name]</h4></center>"
 
 	dat += "<br><center><h3>[src.temp]</h3></center>"
@@ -118,11 +118,11 @@
 
 	dat += "<center><b>"
 	if (src.gameover)
-		dat += "<a href='byond://byond://?src=\ref[src];newgame=1'>New Game</a>"
+		dat += "<a href='byond://?src=\ref[src];newgame=1'>New Game</a>"
 	else
-		dat += "<a href='byond://byond://?src=\ref[src];attack=1'>Attack</a> | "
-		dat += "<a href='byond://byond://?src=\ref[src];heal=1'>Heal</a> | "
-		dat += "<a href='byond://byond://?src=\ref[src];charge=1'>Recharge Power</a>"
+		dat += "<a href='byond://?src=\ref[src];attack=1'>Attack</a> | "
+		dat += "<a href='byond://?src=\ref[src];heal=1'>Heal</a> | "
+		dat += "<a href='byond://?src=\ref[src];charge=1'>Recharge Power</a>"
 
 	dat += "</b></center>"
 

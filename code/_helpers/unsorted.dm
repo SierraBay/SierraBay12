@@ -911,7 +911,7 @@ var/global/list/WALLITEMS = list(
 /proc/topic_link(datum/D, arglist, content)
 	if(islist(arglist))
 		arglist = list2params(arglist)
-	return "<a href='byond://byond://?src=\ref[D];[arglist]'>[content]</a>"
+	return "<a href='byond://?src=\ref[D];[arglist]'>[content]</a>"
 
 /proc/get_random_colour(simple = FALSE, lower = 0, upper = 255)
 	var/colour

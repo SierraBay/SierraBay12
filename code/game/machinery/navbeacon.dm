@@ -95,14 +95,14 @@ Transponder Codes:<UL>"}
 
 		t = {"<TT><B>Navigation Beacon</B><HR><BR>
 <i>(swipe card to lock controls)</i><BR><HR>
-Location: <a href='byond://byond://?src=\ref[src];locedit=1'>[location ? location : "(none)"]</A><BR>
+Location: <a href='byond://?src=\ref[src];locedit=1'>[location ? location : "(none)"]</A><BR>
 Transponder Codes:<UL>"}
 
 		for(var/key in codes)
 			t += "<LI>[key] ... [codes[key]]"
-			t += " <small><a href='byond://byond://?src=\ref[src];edit=1;code=[key]'>(edit)</A>"
-			t += " <a href='byond://byond://?src=\ref[src];delete=1;code=[key]'>(delete)</A></small><BR>"
-		t += "<small><a href='byond://byond://?src=\ref[src];add=1;'>(add new)</A></small><BR>"
+			t += " <small><a href='byond://?src=\ref[src];edit=1;code=[key]'>(edit)</A>"
+			t += " <a href='byond://?src=\ref[src];delete=1;code=[key]'>(delete)</A></small><BR>"
+		t += "<small><a href='byond://?src=\ref[src];add=1;'>(add new)</A></small><BR>"
 		t+= "<UL></TT>"
 
 	show_browser(user, t, "window=navbeacon")

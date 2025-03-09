@@ -44,21 +44,21 @@
 	var/dat = {"
 		<TT>
 
-		<a href='byond://byond://?src=\ref[src];send=1'>Send Signal</A><BR>
+		<a href='byond://?src=\ref[src];send=1'>Send Signal</A><BR>
 		<B>Frequency/Code</B> for signaler:<BR>
 		Frequency:
-		<a href='byond://byond://?src=\ref[src];freq=-10'>-</A>
-		<a href='byond://byond://?src=\ref[src];freq=-2'>-</A>
+		<a href='byond://?src=\ref[src];freq=-10'>-</A>
+		<a href='byond://?src=\ref[src];freq=-2'>-</A>
 		[format_frequency(src.frequency)]
-		<a href='byond://byond://?src=\ref[src];freq=2'>+</A>
-		<a href='byond://byond://?src=\ref[src];freq=10'>+</A><BR>
+		<a href='byond://?src=\ref[src];freq=2'>+</A>
+		<a href='byond://?src=\ref[src];freq=10'>+</A><BR>
 
 		Code:
-		<a href='byond://byond://?src=\ref[src];code=-5'>-</A>
-		<a href='byond://byond://?src=\ref[src];code=-1'>-</A>
+		<a href='byond://?src=\ref[src];code=-5'>-</A>
+		<a href='byond://?src=\ref[src];code=-1'>-</A>
 		[src.code]
-		<a href='byond://byond://?src=\ref[src];code=1'>+</A>
-		<a href='byond://byond://?src=\ref[src];code=5'>+</A><BR>
+		<a href='byond://?src=\ref[src];code=1'>+</A>
+		<a href='byond://?src=\ref[src];code=5'>+</A><BR>
 		[t1]
 		</TT>"}
 	show_browser(user, dat, "window=radio")

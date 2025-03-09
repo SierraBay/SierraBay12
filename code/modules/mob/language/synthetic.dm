@@ -32,7 +32,7 @@
 		if(drone_only && !istype(S,/mob/living/silicon/robot/drone))
 			continue
 		else if(istype(S , /mob/living/silicon/ai))
-			message_start = "[name], <a href='byond://byond://?src=\ref[S];track2=\ref[S];track=\ref[speaker];trackname=[html_encode(speaker.name)]'>[SPAN_CLASS("name", speaker.name)]</a>"
+			message_start = "[name], <a href='byond://?src=\ref[S];track2=\ref[S];track=\ref[speaker];trackname=[html_encode(speaker.name)]'>[SPAN_CLASS("name", speaker.name)]</a>"
 		else if (!S.binarycheck())
 			continue
 

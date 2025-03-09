@@ -169,13 +169,13 @@ var/global/list/ticket_panels = list()
 			ticket_dat += "<li style='padding-bottom:10px;color:[color]'>"
 			if(open_ticket && open_ticket == ticket)
 				ticket_dat += "<i>"
-			ticket_dat += "Ticket #[id] - [ticket.owner.key_name(0)] [owner_client ? "" : "(DC)"]<br />[status]<br /><a href='byond://byond://?src=\ref[src];action=view;ticket=\ref[ticket]'>VIEW</a>"
+			ticket_dat += "Ticket #[id] - [ticket.owner.key_name(0)] [owner_client ? "" : "(DC)"]<br />[status]<br /><a href='byond://?src=\ref[src];action=view;ticket=\ref[ticket]'>VIEW</a>"
 			if(open)
-				ticket_dat += " - <a href='byond://byond://?src=\ref[src];action=pm;ticket=\ref[ticket]'>PM</a>"
+				ticket_dat += " - <a href='byond://?src=\ref[src];action=pm;ticket=\ref[ticket]'>PM</a>"
 				if(C.holder)
-					ticket_dat += " - <a href='byond://byond://?src=\ref[src];action=take;ticket=\ref[ticket]'>[(open == 1) ? "TAKE" : "JOIN"]</a>"
+					ticket_dat += " - <a href='byond://?src=\ref[src];action=take;ticket=\ref[ticket]'>[(open == 1) ? "TAKE" : "JOIN"]</a>"
 				if(ticket.status != TICKET_CLOSED && (C.holder || ticket.status == TICKET_OPEN))
-					ticket_dat += " - <a href='byond://byond://?src=\ref[src];action=close;ticket=\ref[ticket]'>CLOSE</a>"
+					ticket_dat += " - <a href='byond://?src=\ref[src];action=close;ticket=\ref[ticket]'>CLOSE</a>"
 			if(C.holder)
 				var/ref_mob = ""
 				if(owner_client)
@@ -189,7 +189,7 @@ var/global/list/ticket_panels = list()
 		dat += "<br /><div style='width:50%;float:left;'><p><b>Available tickets:</b></p><ul>[jointext(ticket_dat, null)]</ul></div>"
 
 		if(open_ticket)
-			dat += "<div style='width:50%;float:left;'><p><b>\[<a href='byond://byond://?src=\ref[src];action=unview;'>X</a>\] Messages for ticket #[open_ticket.id]:</b></p>"
+			dat += "<div style='width:50%;float:left;'><p><b>\[<a href='byond://?src=\ref[src];action=unview;'>X</a>\] Messages for ticket #[open_ticket.id]:</b></p>"
 
 			var/list/msg_dat = list()
 			for(var/datum/ticket_msg/msg in open_ticket.msgs)

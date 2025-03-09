@@ -28,15 +28,15 @@
 	user.set_machine(src)
 	var/dat
 	if (src.temp)
-		dat = "[src.temp]<BR><BR><a href='byond://byond://?src=\ref[src];temp=1'>Clear</A>"
+		dat = "[src.temp]<BR><BR><a href='byond://?src=\ref[src];temp=1'>Clear</A>"
 	else
 		dat = {"
 <B>Persistent Signal Locator</B><HR>
 Frequency:
-<a href='byond://byond://?src=\ref[src];freq=-10'>-</A>
-<a href='byond://byond://?src=\ref[src];freq=-2'>-</A> [format_frequency(src.frequency)]
-<a href='byond://byond://?src=\ref[src];freq=2'>+</A>
-<a href='byond://byond://?src=\ref[src];freq=10'>+</A><BR>
+<a href='byond://?src=\ref[src];freq=-10'>-</A>
+<a href='byond://?src=\ref[src];freq=-2'>-</A> [format_frequency(src.frequency)]
+<a href='byond://?src=\ref[src];freq=2'>+</A>
+<a href='byond://?src=\ref[src];freq=10'>+</A><BR>
 
 <a href='byond://?src=\ref[src];refresh=1'>Refresh</A>"}
 	show_browser(user, dat, "window=radio")
@@ -101,7 +101,7 @@ Frequency:
 									direct = "weak"
 							src.temp += "[W.id]-[dir2text(get_dir(sr, tr))]-[direct]<BR>"
 
-				src.temp += "<B>You are at \[[sr.x],[sr.y],[sr.z]\]</B> in orbital coordinates.<BR><BR><a href='byond://byond://?src=\ref[src];refresh=1'>Refresh</A><BR>"
+				src.temp += "<B>You are at \[[sr.x],[sr.y],[sr.z]\]</B> in orbital coordinates.<BR><BR><a href='byond://?src=\ref[src];refresh=1'>Refresh</A><BR>"
 			else
 				src.temp += "<B>[SPAN_COLOR("red", "Processing Error:")]</B> Unable to locate orbital position.<BR>"
 		else

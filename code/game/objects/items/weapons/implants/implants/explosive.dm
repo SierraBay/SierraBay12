@@ -26,24 +26,24 @@
 	if(!malfunction)
 		. += {"
 		<HR><B>Explosion yield mode:</B><BR>
-		<a href='byond://byond://?src=\ref[src];mode=1'>[elevel ? elevel : "NONE SET"]</A><BR>
+		<a href='byond://?src=\ref[src];mode=1'>[elevel ? elevel : "NONE SET"]</A><BR>
 		<B>Activation phrase:</B><BR>
-		<a href='byond://byond://?src=\ref[src];phrase=1'>[phrase ? phrase : "NONE SET"]</A><BR>
+		<a href='byond://?src=\ref[src];phrase=1'>[phrase ? phrase : "NONE SET"]</A><BR>
 		<B>Frequency:</B><BR>
-		<a href='byond://byond://?src=\ref[src];freq=-10'>-</A>
-		<a href='byond://byond://?src=\ref[src];freq=-2'>-</A>
+		<a href='byond://?src=\ref[src];freq=-10'>-</A>
+		<a href='byond://?src=\ref[src];freq=-2'>-</A>
 		[format_frequency(src.frequency)]
-		<a href='byond://byond://?src=\ref[src];freq=2'>+</A>
-		<a href='byond://byond://?src=\ref[src];freq=10'>+</A><BR>
+		<a href='byond://?src=\ref[src];freq=2'>+</A>
+		<a href='byond://?src=\ref[src];freq=10'>+</A><BR>
 		<B>Code:</B><BR>
-		<a href='byond://byond://?src=\ref[src];code=-5'>-</A>
-		<a href='byond://byond://?src=\ref[src];code=-1'>-</A>
-		<a href='byond://byond://?src=\ref[src];code=set'>[src.code]</A>
-		<a href='byond://byond://?src=\ref[src];code=1'>+</A>
-		<a href='byond://byond://?src=\ref[src];code=5'>+</A><BR>
+		<a href='byond://?src=\ref[src];code=-5'>-</A>
+		<a href='byond://?src=\ref[src];code=-1'>-</A>
+		<a href='byond://?src=\ref[src];code=set'>[src.code]</A>
+		<a href='byond://?src=\ref[src];code=1'>+</A>
+		<a href='byond://?src=\ref[src];code=5'>+</A><BR>
 		<B>Tampering warning message:</B><BR>
 		This will be broadcasted on radio if implant is exposed during surgery.<BR>
-		<a href='byond://byond://?src=\ref[src];msg=1'>[warning_message ? warning_message : "NONE SET"]</A>
+		<a href='byond://?src=\ref[src];msg=1'>[warning_message ? warning_message : "NONE SET"]</A>
 		"}
 
 /obj/item/implant/explosive/Initialize()

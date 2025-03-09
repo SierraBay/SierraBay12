@@ -168,23 +168,23 @@
 		scan_name = scan.name
 	else
 		scan_name = "--------"
-	dat += "Confirm Identity: <a href='byond://byond://?src=\ref[src];scan=1'>[scan_name]</a><br>"
+	dat += "Confirm Identity: <a href='byond://?src=\ref[src];scan=1'>[scan_name]</a><br>"
 	if(authenticated)
-		dat += "<a href='byond://byond://?src=\ref[src];logout=1'>{Log Out}</a>"
+		dat += "<a href='byond://?src=\ref[src];logout=1'>{Log Out}</a>"
 	else
-		dat += "<a href='byond://byond://?src=\ref[src];auth=1'>{Log In}</a>"
+		dat += "<a href='byond://?src=\ref[src];auth=1'>{Log In}</a>"
 	dat += "<hr>"
 	if(authenticated)
 		dat += "<b>Logged in to:</b> [GLOB.using_map.boss_name] Quantum Entanglement Network<br><br>"
 		if(copyitem)
-			dat += "<a href='byond://byond://?src=\ref[src];remove=1'>Remove Item</a><br><br>"
-			dat += "<a href='byond://byond://?src=\ref[src];send=1'>Send via NONSECURE connection</a><br>"
+			dat += "<a href='byond://?src=\ref[src];remove=1'>Remove Item</a><br><br>"
+			dat += "<a href='byond://?src=\ref[src];send=1'>Send via NONSECURE connection</a><br>"
 			dat += "<b>Currently sending:</b> [copyitem.name]<br>"
-			dat += "<b>Sending to:</b> <a href='byond://byond://?src=\ref[src];dept=1'>[destination]</a><br>"
+			dat += "<b>Sending to:</b> <a href='byond://?src=\ref[src];dept=1'>[destination]</a><br>"
 		else
 			dat += "Please insert paper to send via NONSECURE connection.<br><br>"
-			dat += "<b>Sending to:</b> <a href='byond://byond://?src=\ref[src];dept=1'>[destination]</a><br>"
-			dat += "<a href='byond://byond://?src=\ref[src];secsend=1'>Create and send message via SECURE connection</a><br>"
+			dat += "<b>Sending to:</b> <a href='byond://?src=\ref[src];dept=1'>[destination]</a><br>"
+			dat += "<a href='byond://?src=\ref[src];secsend=1'>Create and send message via SECURE connection</a><br>"
 	else
 		dat += "Proper authentication is required to use this device.<br><br>"
 		if(copyitem)
