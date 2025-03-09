@@ -46,7 +46,7 @@
 	worn_state = "breeches"
 
 /obj/item/clothing/under/new_uniform/gorka_pants //olive
-	name = "olive gorka paints"
+	name = "olive gorka pants"
 	desc = "Sturdy pants made of tarp-like fabric. Extremely durable."
 	item_flags = ITEM_FLAG_THICKMATERIAL
 	icon_state = "gorka_pants_olive"

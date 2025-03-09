@@ -111,7 +111,7 @@
 /datum/job/roboticist
 	title = "Roboticist"
 	department = "Научный"
-	department_flag = SCI
+	department_flag = SCI|ROB
 
 	total_positions = 2
 	spawn_positions = 2

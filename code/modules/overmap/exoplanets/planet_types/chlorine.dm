@@ -26,7 +26,7 @@
 	atmosphere = atmosphere.remove(chlor_moles )
 	atmosphere.adjust_gas(GAS_CHLORINE, chlor_moles )
 
-	var/datum/species/H = all_species[SPECIES_HUMAN]
+	var/singleton/species/H = GLOB.species_by_name[SPECIES_HUMAN]
 	var/generator/new_temp = generator("num", H.cold_level_1 + 40, H.heat_level_1 + 10, UNIFORM_RAND)
 	atmosphere.temperature = new_temp.Rand()
 	atmosphere.update_values()

@@ -24,17 +24,17 @@
 				genetics probably isn't for you and you should get a job-change as soon as possible before you're sued for malpractice.
 
 				<ol>
-					<li><a href='#1'>Acquire body</a></li>
-					<li><a href='#2'>Strip body</a></li>
-					<li><a href='#3'>Put body in cloning machine</a></li>
-					<li><a href='#4'>Scan body</a></li>
-					<li><a href='#5'>Clone body</a></li>
-					<li><a href='#6'>Get clean Structural Enzymes for the body</a></li>
-					<li><a href='#7'>Put body in morgue</a></li>
-					<li><a href='#8'>Await cloned body</a></li>
-					<li><a href='#9'>Cryo and use the clean SE injector</a></li>
-					<li><a href='#10'>Give person clothes back</a></li>
-					<li><a href='#11'>Send person on their way</a></li>
+					<li><a href='byond://#1'>Acquire body</a></li>
+					<li><a href='byond://#2'>Strip body</a></li>
+					<li><a href='byond://#3'>Put body in cloning machine</a></li>
+					<li><a href='byond://#4'>Scan body</a></li>
+					<li><a href='byond://#5'>Clone body</a></li>
+					<li><a href='byond://#6'>Get clean Structural Enzymes for the body</a></li>
+					<li><a href='byond://#7'>Put body in morgue</a></li>
+					<li><a href='byond://#8'>Await cloned body</a></li>
+					<li><a href='byond://#9'>Cryo and use the clean SE injector</a></li>
+					<li><a href='byond://#10'>Give person clothes back</a></li>
+					<li><a href='byond://#11'>Send person on their way</a></li>
 				</ol>
 
 				<a name='1'><H3>Step 1: Acquire body</H3>

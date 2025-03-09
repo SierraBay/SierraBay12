@@ -46,7 +46,7 @@ var/global/datum/getrev/revdata = new()
 	if(revdata.revision)
 		var/server_revision = revdata.revision
 		if(config.source_url)
-			server_revision = "<a href='[config.source_url]/commit/[server_revision]'>[server_revision]</a>"
+			server_revision = "<a href='byond://[config.source_url]/commit/[server_revision]'>[server_revision]</a>"
 		to_chat(src, "<b>Server Revision:</b> [server_revision] - [revdata.branch] - [revdata.date]")
 	else
 		to_chat(src, "<b>Server Revision:</b> Revision Unknown")

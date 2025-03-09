@@ -1,0 +1,4 @@
+author: Builder13
+changes:
+  - {bugfix: Исправлены внутриигровые ссылки}
+delete-after: true

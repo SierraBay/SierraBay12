@@ -45,5 +45,6 @@
 #include "code/changed_sprite.dm"
 #include "code/dls_loadout.dm"
 #include "code/xeno_voids_and_rigs.dm"
+#include "code\ghost_speed.dm"
 
 #endif

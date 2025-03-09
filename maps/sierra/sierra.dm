@@ -149,7 +149,7 @@
 	// --- MAP FILES --- //
 
 		// ~SIERRA~ //
-	#include "z1-z5_sierra.dmm"
+	#include "z1-z4_sierra.dmm"
 	#include "z6_admin.dmm"
 	#include "z7_transit.dmm"
 	#include "../away/empty.dmm"
@@ -189,11 +189,15 @@
 	#include "../../mods/_maps/liberia/_map_liberia.dme"
 	#include "../../mods/_maps/sentinel/_map_sentinel.dme"
 	#include "../../mods/_maps/farfleet/_map_farfleet.dme"
+	#include "../../mods/_maps/general_maps/_map_general_maps.dme"
 	#include "../../mods/_maps/hand/_map_hand.dme"
 	#include "../../mods/_maps/verne/_map_verne.dme"
 	#include "../../mods/_maps/mininghome/_map_mininghome.dme"
 	#include "../../mods/_maps/ascent_seedship/_map_ascent_seedship.dme"
 	#include "../../mods/_maps/ascent_caulship/_map_ascent_caulship.dme"
+
+	// Verne-verse
+	#include "../../mods/_maps/phobos/_map_phobos.dme"
 
 
 	#include "../../mods/antagonists/_antagonists_includes.dm"

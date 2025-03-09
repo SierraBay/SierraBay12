@@ -1058,11 +1058,11 @@
 		return
 	var/obj/item/organ/external/O = pick(meatchunks)
 	to_chat(H, SPAN_DANGER("Your [O.name]'s flesh mutates rapidly!"))
-	if(!wrapped_species_by_ref["\ref[H]"])
-		wrapped_species_by_ref["\ref[H]"] = H.species.name
+	if(!GLOB.mob_ref_to_species_name[any2ref(H)])
+		GLOB.mob_ref_to_species_name[any2ref(H)] = H.species.name
 	meatchunks = list(O) | O.children
 	for(var/obj/item/organ/external/E in meatchunks)
-		E.species = all_species[SPECIES_PROMETHEAN]
+		E.species = GLOB.species_by_name[SPECIES_PROMETHEAN]
 		E.skin_tone = null
 		E.s_col = ReadRGB("#05ff9b")
 		E.s_col_blend = ICON_ADD

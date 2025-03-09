@@ -1,4 +1,4 @@
-/datum/species/human/tritonian
+/singleton/species/human/tritonian
 	has_organ = list(
 	BP_HEART =    /obj/item/organ/internal/heart,
 	BP_STOMACH =  /obj/item/organ/internal/stomach,

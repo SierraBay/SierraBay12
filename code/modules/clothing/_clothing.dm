@@ -182,7 +182,7 @@
 		if (length(display))
 			. += " with [english_list(display)] attached"
 		if (length(visible) > length(display))
-			. += ". <a href='?src=\ref[src];list_ungabunga=1'>\[See accessories\]</a>"
+			. += ". <a href='byond://?src=\ref[src];list_ungabunga=1'>\[See accessories\]</a>"
 
 /obj/item/clothing/proc/get_visible_accessories()
 	var/list/result = list()
@@ -207,7 +207,7 @@
 	. = ..()
 	var/datum/extension/armor/ablative/armor_datum = get_extension(src, /datum/extension/armor/ablative)
 	if(istype(armor_datum) && LAZYLEN(armor_datum.get_visible_damage()))
-		to_chat(user, SPAN_WARNING("It has some <a href='?src=\ref[src];list_armor_damage=1'>damage</a>."))
+		to_chat(user, SPAN_WARNING("It has some <a href='byond://?src=\ref[src];list_armor_damage=1'>damage</a>."))
 
 /obj/item/clothing/CanUseTopic(user)
 	if(user in view(get_turf(src)))
@@ -222,7 +222,7 @@
 			var/list/display = list()
 			for (var/obj/item/clothing/accessory/A in visible)
 				if (!(A.accessory_flags & ACCESSORY_HIDDEN))
-					display += "[icon2html(A, user)] \a [A]<a href='?src=\ref[A];examine=1'>\[?\]</a>"
+					display += "[icon2html(A, user)] \a [A]<a href='byond://?src=\ref[A];examine=1'>\[?\]</a>"
 			to_chat(user, "Attached to \the [src] are [english_list(display)].")
 		return TOPIC_HANDLED
 	if(href_list["list_armor_damage"])

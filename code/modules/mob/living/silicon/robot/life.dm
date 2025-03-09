@@ -213,7 +213,7 @@
 			else
 				src.fire.icon_state = "fire1"
 	if(oxygen && environment)
-		var/datum/species/species = all_species[SPECIES_HUMAN]
+		var/singleton/species/species = GLOB.species_by_name[SPECIES_HUMAN]
 		if(environment.gas[species.breath_type] >= species.breath_pressure)
 			src.oxygen.icon_state = "oxy0"
 			for(var/gas in species.poison_types)

@@ -16,11 +16,9 @@ var/global/list/landmarks_list = list()				//list of all landmarks created
 #define all_genders_text_list list("Male","Female","Plural","Neuter")
 
 //Languages/species/whitelist.
-var/global/list/all_species[0]
+
 var/global/list/datum/language/all_languages = list()
 var/global/list/language_keys[0]					// Table of say codes for all languages
-var/global/list/playable_species = list(SPECIES_HUMAN)    // A list of ALL playable species, whitelisted, latejoin or otherwise.
-
 
 GLOBAL_LIST_EMPTY(all_particles)
 
@@ -134,22 +132,6 @@ var/global/list/string_slot_flags = list(
 		if(!(L.flags & NONGLOBAL))
 			language_keys[lowertext(L.key)] = L
 
-	var/rkey = 0
-	paths = typesof(/datum/species)
-	for(var/T in paths)
-
-		rkey++
-
-		var/datum/species/S = T
-		if(!initial(S.name))
-			continue
-
-		S = new T
-		S.race_key = rkey //Used in mob icon caching.
-		all_species[S.name] = S
-		if(!(S.spawn_flags & SPECIES_IS_RESTRICTED))
-			playable_species += S.name
-
 	//Grabs
 	paths = typesof(/datum/grab) - /datum/grab
 	for(var/T in paths)
@@ -170,6 +152,26 @@ var/global/list/string_slot_flags = list(
 	for (var/path in paths)
 		var/particles/P = new path()
 		GLOB.all_particles[P.name] = P
+
+	//[SIERRA-ADD] - HOTKEYS AND TRAITS
+	//Хоткеи
+	for(var/datum/keybinding/keybinding as anything in subtypesof(/datum/keybinding))
+		if(!initial(keybinding.name))
+			continue
+		var/datum/keybinding/instance = new keybinding
+		global.keybindings_by_name[instance.name] = instance
+		if(length(instance.hotkey_keys))
+			for(var/bound_key in instance.hotkey_keys)
+				global.hotkey_keybinding_list_by_key[bound_key] += list(instance.name)
+	//Трейты
+	paths = typesof(/datum/mod_trait) - /datum/mod_trait
+	for(var/path in paths)
+		var/datum/mod_trait/M = path
+		if (!initial(M.name))
+			continue
+		M = new path()
+		GLOB.all_mod_traits[M.name] = M
+	//[SIERRA-ADD]
 
 	return TRUE
 
