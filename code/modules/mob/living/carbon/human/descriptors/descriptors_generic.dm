@@ -21,7 +21,11 @@
 		"towering over you"
 		)
 	var/list/scale_effect = list(
-		SPECIES_HUMAN = list(-7, -4, 0, 4, 7)
+		SPECIES_HUMAN = list(-7, -4, 0, 4, 7),
+		//[SIERRA-ADD],
+		HUMAN_SPECIES = list(-7, -4, 0, 4, 7),
+		SPECIES_TAJARA = list(-7, -4, 0, 4, 7),
+		//[/SIERRA-ADD]
 	)
 
 /datum/mob_descriptor/build
