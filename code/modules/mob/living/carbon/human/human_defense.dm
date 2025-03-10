@@ -475,9 +475,9 @@ meteor_act
 		else
 			switch(target_zone)
 				if(BP_L_HAND , BP_R_HAND)
-					bloody_hands_custom(hand_blood_color, bloody_hands, hands_blood_DNA)
+					h_target.bloody_hands_custom(hand_blood_color, bloody_hands, hands_blood_DNA)
 				if(BP_CHEST, BP_GROIN, BP_L_ARM , BP_R_ARM, BP_L_LEG , BP_R_LEG)
-					bloody_body_custom(hand_blood_color, bloody_hands, hands_blood_DNA)
+					h_target.bloody_body_custom(hand_blood_color, bloody_hands, hands_blood_DNA)
 
 /mob/living/carbon/human/proc/transfer_bloody_body(mob/living/target, target_zone)
 	if(wear_suit)
