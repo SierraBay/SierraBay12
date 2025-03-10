@@ -81,7 +81,7 @@
 	if(!body)
 		body = new /obj/item/mech_component/chassis/pod(src)
 		body.color = COLOR_ORANGE
-	if(!R_leg && L_leg)
+	if(!R_leg && !L_leg)
 		var/obj/item/mech_component/doubled_legs/spawned_double = new /obj/item/mech_component/doubled_legs/spider (get_turf(src))
 		spawned_double.forceMove(src)
 		R_leg = spawned_double.R_stored_leg
