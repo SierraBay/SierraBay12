@@ -66,18 +66,18 @@
 				dat += "Please wait. Harvesting in progress ([round((inserted_battery.stored_charge/inserted_battery.capacity)*100)]%).<br>"
 			else
 				dat += "Please wait. Energy dump in progress ([round((inserted_battery.stored_charge/inserted_battery.capacity)*100)]%).<br>"
-			dat += "<A href='?src=\ref[src];stopharvest=1'>Halt early</A><BR>"
+			dat += "<a href='byond://?src=\ref[src];stopharvest=1'>Halt early</A><BR>"
 		else
 			if(inserted_battery)
 				dat += "<b>[inserted_battery.name]</b> inserted, charge level: [inserted_battery.stored_charge]/[inserted_battery.capacity] ([(inserted_battery.stored_charge/inserted_battery.capacity)*100]%)<BR>"
 				dat += "<b>Energy signature ID:</b>[inserted_battery.battery_effect ? (inserted_battery.battery_effect.artifact_id == "" ? "???" : "[inserted_battery.battery_effect.artifact_id]") : "NA"]<BR>"
-				dat += "<A href='?src=\ref[src];ejectbattery=1'>Eject battery</a><BR>"
-				dat += "<A href='?src=\ref[src];drainbattery=1'>Drain battery of all charge</a><BR>"
-				dat += "<A href='?src=\ref[src];harvest=1'>Begin harvesting</a><BR>"
+				dat += "<a href='byond://?src=\ref[src];ejectbattery=1'>Eject battery</a><BR>"
+				dat += "<a href='byond://?src=\ref[src];drainbattery=1'>Drain battery of all charge</a><BR>"
+				dat += "<a href='byond://?src=\ref[src];harvest=1'>Begin harvesting</a><BR>"
 			if(inserted_disk)
 				dat += "[inserted_disk.name] inserted.<BR>"
-				dat += "<A href='?src=\ref[src];loaddisk=1'>Copy data to disk</a><BR>"
-				dat += "<A href='?src=\ref[src];ejectdisk=1'>Eject technology disk</a><BR>"
+				dat += "<a href='byond://?src=\ref[src];loaddisk=1'>Copy data to disk</a><BR>"
+				dat += "<a href='byond://?src=\ref[src];ejectdisk=1'>Eject technology disk</a><BR>"
 			if(!inserted_disk)
 				dat += "No technology disk inserted.<BR>"
 			if(!inserted_battery)
@@ -86,8 +86,8 @@
 
 	else
 		dat += "<B>[SPAN_COLOR("red", "Unable to locate analysis pad.")]<BR></b>"
-	dat += "<A href='?src=\ref[src];syncpads=1'>Sync with nearby pad</a><BR>"
-	dat += "<A href='?src=\ref[src];close=1'>Close</a><BR>"
+	dat += "<a href='byond://?src=\ref[src];syncpads=1'>Sync with nearby pad</a><BR>"
+	dat += "<a href='byond://?src=\ref[src];close=1'>Close</a><BR>"
 	dat += "<HR>"
 	var/datum/browser/popup = new(user, "artifact_harvester", "Artifact Power Harvester", 450, 500)
 	popup.set_content(dat)
