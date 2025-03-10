@@ -119,7 +119,7 @@ other types of metals and chemistry for reagents).
 	var/atom/A = new build_path(newloc)
 
 	if(mat_efficiency != 1 && adjust_materials)
-		for(var/obj/O in A.GetAllContents(includeSelf = TRUE))
+		for(var/obj/O in A.GetAllContents())
 			if(length(O.matter))
 				for(var/i in O.matter)
 					O.matter[i] = round(O.matter[i] * mat_efficiency, 0.01)

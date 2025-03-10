@@ -159,14 +159,14 @@
 
 	var/dat = "<table style='text-align: center;'><tr>"
 	for(var/i = 1 to codelen)
-		dat += "<td><a href='?src=\ref[src];inc=[i]'>+</a>"
+		dat += "<td><a href='byond://?src=\ref[src];inc=[i]'>+</a>"
 	dat += "<tr>"
 	for(var/i = 1 to codelen)
 		dat += "<td>[code2[i]]"
 	dat += "<tr>"
 	for(var/i = 1 to codelen)
-		dat += "<td><a href='?src=\ref[src];dec=[i]'>-</a>"
-	dat += "</table><hr><a href='?src=\ref[src];check=1'>Сопоставить код</a>"
+		dat += "<td><a href='byond://?src=\ref[src];dec=[i]'>-</a>"
+	dat += "</table><hr><a href='byond://?src=\ref[src];check=1'>Сопоставить код</a>"
 
 	user.set_machine(src)
 	var/datum/browser/popup = new(user, "closet", "[name]", 90 + codelen * 30, 200)

@@ -126,7 +126,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav"))
 	sendClientData()
 	syncRegex()
 	legacy_chat(owner, SPAN_DANGER("Failed to load fancy chat. Some features won't work.")) // do NOT convert to to_chat()
-	legacy_chat(owner, SPAN_DANGER("Shall we <a href='?_src_=chat&proc=reload'>try again</a>?")) // do NOT convert to to_chat()
+	legacy_chat(owner, SPAN_DANGER("Shall we <a href='byond://?_src_=chat&proc=reload'>try again</a>?")) // do NOT convert to to_chat()
 
 
 /datum/chatOutput/proc/showChat()
