@@ -386,8 +386,6 @@
 	if (src && src.area_flags & AREA_FLAG_NO_MODIFY)
 		return FALSE
 	return TRUE
-<<<<<<< ours
-=======
 
 
 /// Attempt to move the contents of this area to A
@@ -484,4 +482,3 @@
 	for (var/turf/simulated/simulated in turfs_to_update)
 		SSair.mark_for_update(simulated)
 	return copied_movables
->>>>>>> theirs
