@@ -268,13 +268,6 @@
 /obj/item/storage/belt/holster/security,
 /turf/simulated/floor/wood/walnut,
 /area/ship/phobos/bridge/co_office)
-"aS" = (
-/obj/floor_decal/corner/red{
-	dir = 5
-	},
-/obj/machinery/ship_map,
-/turf/simulated/floor/tiled,
-/area/ship/phobos/hallway)
 "aT" = (
 /obj/structure/cable/green{
 	d1 = 1;
@@ -2669,7 +2662,6 @@
 /obj/floor_decal/corner/yellow{
 	dir = 5
 	},
-/obj/machinery/ship_map,
 /turf/simulated/floor/tiled,
 /area/ship/phobos/hallway)
 "jl" = (
@@ -21486,7 +21478,7 @@ kx
 bW
 HS
 mW
-aS
+cZ
 Ci
 em
 Yf

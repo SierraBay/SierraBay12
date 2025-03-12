@@ -28,7 +28,7 @@
 /datum/map_template/ruin/away_site/phobos
 	name = "Third Fleet Patrol Craft (SFV)"
 	id = "awaysite_phobos"
-	description = "SolGov movable small ship with turned humans."
+	description = "SolGov patrol craft straight from frontier."
 	prefix = "mods/_maps/phobos/maps/"
 	suffixes = list("phobos.dmm")
 	spawn_cost = 50 // We're testing this
