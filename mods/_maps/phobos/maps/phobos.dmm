@@ -42,8 +42,7 @@
 /area/ship/phobos/bridge)
 "ae" = (
 /obj/machinery/door/airlock/sol{
-	name = "Commanding Officer";
-	secured_wires = 1
+	name = "Commanding Officer"
 	},
 /obj/structure/cable/green{
 	d1 = 1;
@@ -193,8 +192,7 @@
 /area/ship/phobos/bridge/co_office)
 "aK" = (
 /obj/machinery/door/airlock/sol{
-	name = "CO's Quarters";
-	secured_wires = 1
+	name = "CO's Quarters"
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -762,8 +760,7 @@
 /area/ship/phobos/bridge)
 "cb" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "Security Wing Maintenance";
-	secured_wires = 1
+	name = "Security Wing Maintenance"
 	},
 /obj/structure/cable/green{
 	d1 = 4;
@@ -785,7 +782,6 @@
 /area/ship/phobos/disperser)
 "cd" = (
 /obj/machinery/door/airlock/command{
-	autoset_access = 0;
 	name = "Obstruction Field Disperser Magazine";
 	secured_wires = 1
 	},
@@ -1233,8 +1229,7 @@
 /area/ship/phobos/bridge)
 "do" = (
 /obj/machinery/door/airlock/sol{
-	name = "Bridge";
-	secured_wires = 1
+	name = "Bridge"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -1410,7 +1405,6 @@
 /area/ship/phobos/disperser)
 "dD" = (
 /obj/machinery/door/airlock/highsecurity{
-	autoset_access = 0;
 	icon_state = "closed";
 	name = "Fire Control"
 	},
@@ -2877,9 +2871,7 @@
 "kc" = (
 /obj/structure/catwalk,
 /obj/machinery/door/airlock/command{
-	autoset_access = 0;
 	name = "Obstruction Field Disperser Magazine";
-	secured_wires = 1;
 	dir = 4
 	},
 /turf/simulated/floor/plating,
@@ -4560,9 +4552,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/airlock/command{
-	autoset_access = 0;
-	name = "Obstruction Field Disperser Magazine";
-	secured_wires = 1
+	name = "Obstruction Field Disperser Magazine"
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/ship/phobos/disperser/storage)
@@ -5041,7 +5031,8 @@
 	icon_state = "1-4"
 	},
 /obj/machinery/newscaster{
-	pixel_x = -32
+	pixel_x = -32;
+	dir = 4
 	},
 /obj/machinery/suit_storage_unit/security/alt{
 	req_access = list("ACCESS_PHOBOS")
@@ -7448,8 +7439,7 @@
 /area/ship/phobos/security)
 "CI" = (
 /obj/machinery/door/airlock/security{
-	name = "Security Checkpoint";
-	secured_wires = 1
+	name = "Security Checkpoint"
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -9540,8 +9530,7 @@
 "Mq" = (
 /obj/machinery/door/airlock/sol{
 	id_tag = null;
-	name = "Bridge";
-	secured_wires = 1
+	name = "Bridge"
 	},
 /obj/structure/cable/green{
 	d1 = 4;
@@ -11866,8 +11855,7 @@
 /area/ship/phobos/living)
 "WA" = (
 /obj/machinery/door/airlock/glass/command{
-	name = "E.V.A.";
-	secured_wires = 1
+	name = "E.V.A."
 	},
 /obj/structure/cable/green{
 	d1 = 4;
