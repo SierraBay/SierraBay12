@@ -53,6 +53,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/floor_decal/industrial/hatch/yellow,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/phobos/bridge/co_office)
 "ai" = (
@@ -269,6 +270,13 @@
 /obj/item/storage/belt/holster/security,
 /turf/simulated/floor/wood/walnut,
 /area/ship/phobos/bridge/co_office)
+"aS" = (
+/obj/floor_decal/corner/red{
+	dir = 5
+	},
+/obj/machinery/ship_map,
+/turf/simulated/floor/tiled,
+/area/ship/phobos/hallway)
 "aT" = (
 /obj/structure/cable/green{
 	d1 = 1;
@@ -749,6 +757,7 @@
 	name = "Bridge Armory"
 	},
 /obj/machinery/door/firedoor,
+/obj/floor_decal/industrial/hatch/yellow,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/phobos/bridge)
 "cb" = (
@@ -769,9 +778,8 @@
 	dir = 1
 	},
 /obj/structure/disposalpipe/trunk,
-/obj/machinery/door/window/westright{
-	dir = 1;
-	name = "Ammunition Chute"
+/obj/machinery/door/window/westleft{
+	dir = 1
 	},
 /turf/simulated/floor/plating,
 /area/ship/phobos/disperser)
@@ -789,6 +797,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/floor_decal/industrial/hatch/yellow,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/phobos/disperser)
 "ce" = (
@@ -1417,6 +1426,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/floor_decal/industrial/hatch/yellow,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/phobos/bridge)
 "dE" = (
@@ -1499,11 +1509,6 @@
 /obj/floor_decal/industrial/danger{
 	dir = 10
 	},
-/obj/item/device/flashlight/lamp/floodlamp{
-	dir = 8;
-	on = 1;
-	anchored = 1
-	},
 /obj/structure/railing/mapped,
 /obj/structure/railing/mapped{
 	dir = 8
@@ -1512,6 +1517,7 @@
 	pixel_x = 32;
 	pixel_y = 32
 	},
+/obj/machinery/nav_light,
 /turf/simulated/floor/reinforced{
 	map_airless = 1
 	},
@@ -1805,12 +1811,9 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/phobos/hallway/eva)
 "fn" = (
-/obj/machinery/door/window/brigdoor/eastleft{
-	autoset_access = 0;
-	dir = 1;
-	id = "phobos_cell1";
-	name = "Cell One";
-	req_access = list("ACCESS_BRIG")
+/obj/machinery/door/airlock/glass/security{
+	id_tag = "prisonentry";
+	name = "Cell One"
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -2019,7 +2022,9 @@
 	},
 /obj/machinery/door/airlock/external{
 	id_tag = "interseptor_shuttle_inner";
-	name = "Interseptor External Access"
+	name = "Interseptor External Access";
+	frequency = 1379;
+	locked = 1
 	},
 /obj/machinery/access_button/airlock_exterior{
 	master_tag = "interseptor_shuttle";
@@ -2667,12 +2672,10 @@
 /turf/simulated/floor/tiled,
 /area/ship/phobos/hallway)
 "jj" = (
-/obj/machinery/newscaster{
-	pixel_y = 32
-	},
 /obj/floor_decal/corner/yellow{
 	dir = 5
 	},
+/obj/machinery/ship_map,
 /turf/simulated/floor/tiled,
 /area/ship/phobos/hallway)
 "jl" = (
@@ -3662,7 +3665,7 @@
 /turf/simulated/floor/tiled,
 /area/ship/phobos/hallway)
 "mV" = (
-/obj/machinery/power/smes/buildable/preset/patrol/shuttle,
+/obj/machinery/power/smes/buildable/preset/on_full,
 /obj/structure/cable,
 /obj/structure/cable{
 	d1 = 1;
@@ -5458,11 +5461,6 @@
 /obj/floor_decal/industrial/danger{
 	dir = 9
 	},
-/obj/item/device/flashlight/lamp/floodlamp{
-	dir = 8;
-	on = 1;
-	anchored = 1
-	},
 /obj/structure/railing/mapped{
 	dir = 8;
 	icon_state = "railing0-1"
@@ -5475,6 +5473,7 @@
 	pixel_x = 32;
 	pixel_y = -32
 	},
+/obj/machinery/nav_light,
 /turf/simulated/floor/reinforced{
 	map_airless = 1
 	},
@@ -5981,14 +5980,13 @@
 "wz" = (
 /obj/machinery/disposal/deliveryChute,
 /obj/structure/disposalpipe/trunk,
-/obj/machinery/door/window/westright{
-	dir = 2;
-	name = "Ammunition Chute"
-	},
 /obj/structure/window/reinforced{
 	dir = 8
 	},
 /obj/decal/cleanable/dirt,
+/obj/machinery/door/window/westleft{
+	dir = 2
+	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/phobos/disperser)
 "wC" = (
@@ -8756,14 +8754,13 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/phobos/hallway/eva)
 "Jd" = (
-/obj/machinery/door/window/westright{
-	dir = 2;
-	name = "Chemistry Desk"
-	},
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/floor_decal/corner/beige/mono,
 /obj/item/material/bell,
+/obj/machinery/door/window/westleft{
+	dir = 2
+	},
 /turf/simulated/floor/tiled/white/monotile,
 /area/ship/phobos/medbay/chemistry)
 "Jf" = (
@@ -9052,6 +9049,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/floor_decal/industrial/hatch/yellow,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/phobos/disperser)
 "Kz" = (
@@ -9394,12 +9392,6 @@
 /turf/simulated/floor/airless,
 /area/ship/phobos/disperser)
 "LM" = (
-/obj/machinery/door_timer{
-	id = "phobos_cell2";
-	name = "Cell 2 Control";
-	pixel_x = 32;
-	pixel_y = 29
-	},
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 8
 	},
@@ -10855,7 +10847,9 @@
 	},
 /obj/machinery/door/airlock/external{
 	id_tag = "interseptor_shuttle_outer";
-	name = "Interseptor External Access"
+	name = "Interseptor External Access";
+	frequency = 1379;
+	locked = 1
 	},
 /obj/shuttle_landmark/interseptor/start,
 /turf/simulated/floor,
@@ -11975,17 +11969,6 @@
 /obj/structure/table/steel,
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/phobos/security/detective)
-"WW" = (
-/obj/machinery/door_timer{
-	id = "phobos_cell1";
-	name = "Cell 1 Control";
-	pixel_y = 29
-	},
-/obj/floor_decal/corner/red{
-	dir = 5
-	},
-/turf/simulated/floor/tiled,
-/area/ship/phobos/security)
 "WZ" = (
 /obj/structure/reagent_dispensers/watertank,
 /obj/machinery/light_switch{
@@ -12425,7 +12408,9 @@
 /turf/simulated/floor/wood/ebony,
 /area/ship/phobos/living/mess)
 "Yx" = (
-/obj/structure/displaycase,
+/obj/structure/displaycase{
+	req_access = list("ACCESS_PHOBOS")
+	},
 /obj/item/gun/energy/plasmastun,
 /turf/simulated/floor/wood/walnut,
 /area/ship/phobos/bridge/co_office)
@@ -12704,12 +12689,9 @@
 /turf/simulated/floor/plating,
 /area/ship/phobos/ven)
 "Zz" = (
-/obj/machinery/door/window/brigdoor/eastleft{
-	autoset_access = 0;
-	dir = 1;
-	id = "phobos_cell2";
-	name = "Cell Two";
-	req_access = list("ACCESS_BRIG")
+/obj/machinery/door/airlock/glass/security{
+	id_tag = "prisonentry";
+	name = "Cell Two"
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -21516,7 +21498,7 @@ kx
 bW
 HS
 mW
-cZ
+aS
 Ci
 em
 Yf
@@ -23637,7 +23619,7 @@ yv
 VC
 VC
 VC
-WW
+mP
 tr
 kv
 kv

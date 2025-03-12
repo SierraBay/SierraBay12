@@ -75,16 +75,16 @@
 	shuttle_tag = "Interseptor Shuttle"
 
 /obj/overmap/visitable/ship/landable/interseptor
-	name = "interseptor-S"
+	name = "Interseptor Shuttle"
 	desc = "A heavily modified military shuttle of particular design. More of the dropship now, scanner detects heavy alteration to the hull of the vessel and no designation"
-	shuttle = "interseptor Shuttle"
+	shuttle = "Interseptor Shuttle"
 	fore_dir = WEST
 	color = "#81c6ff"
 	vessel_mass = 2500
 	vessel_size = SHIP_SIZE_TINY
 
 /area/ship/interseptor
-	name = "\improper interseptor"
+	name = "\improper Interseptor Shuttle"
 	icon_state = "shuttlered"
 	requires_power = 1
 	dynamic_lighting = 1
