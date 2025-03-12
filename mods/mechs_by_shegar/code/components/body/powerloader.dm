@@ -6,7 +6,7 @@
 	exosuit_desc_string = "an industrial rollcage"
 	power_use = 0
 	climb_time = 6
-	max_hp = 100
+	max_hp = 80
 	min_damage = 75
 	max_repair = 50
 	repair_damage = 25

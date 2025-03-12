@@ -80,7 +80,7 @@
 /datum/design/item/mechfab/exosuit/powerloader_legs/right
 	name = "right power loader motivator"
 	id = "right_powerloader_leg"
-	build_path =  /obj/item/mech_component/propulsion/light/right
+	build_path =  /obj/item/mech_component/propulsion/powerloader/right
 
 /datum/design/item/mechfab/exosuit/powerloader_legs
 	name = "left power loader motivator"

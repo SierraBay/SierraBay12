@@ -17,13 +17,13 @@
 	if(direction & (UP|DOWN))
 		var/txt_dir = direction & UP ? "upwards" : "downwards"
 		exosuit.visible_message(SPAN_NOTICE("\The [exosuit] moves [txt_dir]."))
-	if(exosuit.L_leg.can_strafe && exosuit.R_leg.can_strafe)
-		exosuit.strafe_mech(direction)
-		return MOVEMENT_HANDLED
-	if(exosuit.dir != moving_dir && !(direction & (UP|DOWN)))
+	if(exosuit.dir != moving_dir && !(direction & (UP|DOWN)) && !exosuit.strafe_status)
 		exosuit.turn_mech(moving_dir)
 	else
-		exosuit.step_mech()
+		if(exosuit.strafe_status)
+			exosuit.strafe_mech(direction)
+		else
+			exosuit.step_mech()
 	return MOVEMENT_HANDLED
 
 /mob/living/exosuit

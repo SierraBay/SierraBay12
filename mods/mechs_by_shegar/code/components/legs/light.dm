@@ -3,7 +3,7 @@
 	desc = "These Odysseus series legs are built from lightweight flexible polymers, making them capable of handling falls from up to 120 meters in 1g environments. Provided that the exosuit lands on its feet."
 
 	exosuit_desc_string = "flexible electromechanic legs"
-	icon_state = "light_legs"
+	icon_state = "light_leg"
 	mech_turn_sound = 'sound/mecha/mechmove02.ogg'
 	mech_step_sound = 'sound/mecha/mechstep01.ogg'
 	max_fall_damage = 0

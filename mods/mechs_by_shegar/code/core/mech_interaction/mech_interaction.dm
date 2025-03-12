@@ -1,11 +1,3 @@
-/mob/living/MouseDrop(atom/over)
-	if(usr == src && usr != over)
-		if(istype(over, /mob/living/exosuit))
-			var/mob/living/exosuit/exosuit = over
-			if(exosuit.enter(src))
-				return
-	return ..()
-
 /mob/living/exosuit/MouseDrop_T(atom/dropping, mob/user)
 	var/obj/machinery/portable_atmospherics/canister/C = dropping
 	if(istype(C))

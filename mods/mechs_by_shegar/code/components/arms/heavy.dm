@@ -2,7 +2,7 @@
 	name = "heavy armored mech arm"
 	desc = "Designed to function where any other piece of equipment would have long fallen apart, the Hephaestus Superheavy Lifter series can take a beating and excel at delivering it."
 	exosuit_desc_string = "super-heavy reinforced manipulators"
-	icon_state = "heavy_arms"
+	icon_state = "heavy_arm"
 	punch_sound = 'sound/mecha/mech_punch_slow.ogg'
 	action_delay = 20
 	power_use = 30

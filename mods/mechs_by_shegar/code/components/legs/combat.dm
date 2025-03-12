@@ -3,7 +3,7 @@
 /obj/item/mech_component/propulsion/combat
 	name = "combat mech leg"
 	exosuit_desc_string = "sleek hydraulic legs"
-	icon_state = "combat_legs"
+	icon_state = "combat_leg"
 	mech_turn_sound = 'sound/mecha/mechmove03.ogg'
 	mech_step_sound = 'sound/mecha/mechstep03.ogg'
 	move_delay = 3

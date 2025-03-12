@@ -1,7 +1,7 @@
 /obj/item/mech_component/propulsion
 	name = "powerloader leg"
 	pixel_y = 12
-	icon_state = "loader_legs"
+	icon_state = "loader_leg"
 	var/side = LEFT
 	var/move_delay = 5
 	var/turn_delay = 5

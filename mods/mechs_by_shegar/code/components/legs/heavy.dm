@@ -2,7 +2,7 @@
 	name = "heavy armored leg"
 	desc = "Oversized actuators struggle to move these armoured legs. "
 	exosuit_desc_string = "heavy hydraulic legs"
-	icon_state = "heavy_legs"
+	icon_state = "heavy_leg"
 	mech_turn_sound = 'sound/mecha/mechmove01.ogg'
 	mech_step_sound = 'sound/mecha/mechstep03.ogg'
 	move_delay = 5
@@ -21,8 +21,8 @@
 	heat_cooling = 2
 	emp_heat_generation = 50
 	heat_generation = 2.5
-	max_speed = 24
-	min_speed = 20
+	max_speed = 26
+	min_speed = 23
 	acceleration = 1
 	turn_slowdown = 2
 	turn_diogonal_slowdown = 1.5

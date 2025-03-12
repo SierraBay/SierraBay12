@@ -41,11 +41,15 @@
 	choosed_leg.welder_interacion(thing, user)
 
 /obj/item/mech_component/doubled_legs/spider
+	name = "spiderlegs"
+	desc = "Xion Industrial's arachnid series boasts more leg per leg than the leading competitor."
 	icon_state = "spiderlegs_both"
 	R_leg_type = /obj/item/mech_component/propulsion/spider/right
 	L_leg_type = /obj/item/mech_component/propulsion/spider
 
 /obj/item/mech_component/doubled_legs/tracks
+	name = "armored tracks"
+	desc = "A classic brought back. The Hephaestus' Landmaster class tracks are impervious to most damage and can maintain top speed regardless of load. Watch out for corners."
 	icon_state = "tracks_both"
 	R_leg_type = /obj/item/mech_component/propulsion/tracks/right
 	L_leg_type = /obj/item/mech_component/propulsion/tracks

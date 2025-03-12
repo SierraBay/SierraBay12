@@ -21,9 +21,9 @@
 	heat_cooling = 1
 	emp_heat_generation = 75
 	heat_generation = 1
-	max_speed = 17
-	min_speed = 6
-	acceleration = 0.75
+	max_speed = 29
+	min_speed = 27
+	acceleration = 0.5
 	turn_slowdown = 2
 	turn_diogonal_slowdown = 1.5
 	weight = 150

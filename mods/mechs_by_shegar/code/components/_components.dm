@@ -37,6 +37,8 @@
 	var/unrepairable_damage = 0
 	///Обозначает вес компонента в КИЛОГРАММАХ
 	var/weight = 100
+	//Можно ли взять часть в руки
+	var/can_be_pickuped = FALSE
 	///Модификатор урона по части, когда она принимает урон лицевой стороной
 	var/front_modificator_damage = 1
 	///Модификатор урона по части, когда она принимает урон задней стороной
@@ -51,8 +53,11 @@
 	var/mob/living/exosuit/owner
 
 /obj/item/mech_component/attack_hand(mob/user)
-	to_chat(user, SPAN_BAD("Too heavy!"))
-	return
+	if(!can_be_pickuped)
+		to_chat(user, SPAN_BAD("Too heavy!"))
+		return
+	else
+		.=..()
 
 /obj/item/mech_component/MouseDrop(atom/over_atom, atom/source_loc, atom/over_loc, source_control, over_control, list/mouse_params)
 	if(!CanMouseDrop(over_atom, usr))

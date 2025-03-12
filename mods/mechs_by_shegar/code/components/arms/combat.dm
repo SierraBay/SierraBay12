@@ -1,7 +1,7 @@
 /obj/item/mech_component/manipulators/combat
 	name = "combat mech arm"
 	exosuit_desc_string = "flexible, advanced manipulators"
-	icon_state = "combat_arms"
+	icon_state = "combat_arm"
 	action_delay = 10
 	power_use = 25
 	max_hp = 90

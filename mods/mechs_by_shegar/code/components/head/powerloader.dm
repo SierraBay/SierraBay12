@@ -5,7 +5,7 @@
 	exosuit_desc_string = "simple collision detection sensors"
 	prebuilt_software = list(/obj/item/circuitboard/exosystem/utility, /obj/item/circuitboard/exosystem/engineering)
 	power_use = 0
-	max_hp = 100
+	max_hp = 80
 	min_damage = 50
 	max_repair = 30
 	repair_damage = 10

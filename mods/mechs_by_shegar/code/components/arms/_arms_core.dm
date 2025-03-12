@@ -2,7 +2,7 @@
 	name = "powerloader mech arm"
 	pixel_y = -12
 	//icon_state должен указываться без приписки left или right
-	icon_state = "loader_arms"
+	icon_state = "loader_arm"
 	has_hardpoints = list(HARDPOINT_LEFT_HAND, HARDPOINT_RIGHT_HAND)
 
 	var/punch_sound = 'sound/mecha/mech_punch.ogg'

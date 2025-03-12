@@ -2,7 +2,7 @@
 	name = "light arm"
 	desc = "As flexible as they are fragile, these Vey-Med manipulators can follow a pilot's movements in close to real time."
 	exosuit_desc_string = "lightweight, segmented manipulators"
-	icon_state = "light_arms"
+	icon_state = "light_arm"
 	punch_sound = 'sound/mecha/mech_punch_fast.ogg'
 	action_delay = 10
 	power_use = 5
