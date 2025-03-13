@@ -34,7 +34,7 @@
 			L_leg = source_frame.L_leg
 		if(source_frame.R_leg && !source_frame.R_leg.doubled_owner)
 			source_frame.R_leg.forceMove(src)
-			R_leg = source_frame.L_leg
+			R_leg = source_frame.R_leg
 		if(source_frame.L_leg && !source_frame.L_leg.doubled_owner)
 			source_frame.L_leg.forceMove(src)
 			L_leg = source_frame.L_leg
