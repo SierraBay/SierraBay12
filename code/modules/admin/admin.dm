@@ -753,7 +753,7 @@ var/global/floorIsLava = 0
 		log_admin("Announce: [key_name(usr)] : [message]")
 
 
-GLOBAL_VAR_INIT(skip_allow_lists, FALSE)
+GLOBAL_VAR_AS(skip_allow_lists, FALSE)
 
 /datum/admins/proc/toggle_allowlists()
 	set category = "Server"

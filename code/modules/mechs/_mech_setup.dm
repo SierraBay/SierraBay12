@@ -1,12 +1,12 @@
-GLOBAL_DATUM_INIT(default_hardpoint_background, /image, null)
-GLOBAL_DATUM_INIT(hardpoint_error_icon, /image, null)
-GLOBAL_DATUM_INIT(hardpoint_bar_empty, /image, null)
+GLOBAL_TYPED_AS(default_hardpoint_background, /image, null)
+GLOBAL_TYPED_AS(hardpoint_error_icon, /image, null)
+GLOBAL_TYPED_AS(hardpoint_bar_empty, /image, null)
 
-GLOBAL_LIST_INIT(hardpoint_bar_cache, new)
-GLOBAL_LIST_INIT(mech_damage_overlay_cache, new)
-GLOBAL_LIST_INIT(mech_image_cache, new)
-GLOBAL_LIST_INIT(mech_icon_cache, new)
-GLOBAL_LIST_INIT(mech_weapon_overlays, icon_states('icons/mecha/mech_weapon_overlays.dmi'))
+GLOBAL_LIST_EMPTY(hardpoint_bar_cache)
+GLOBAL_LIST_EMPTY(mech_damage_overlay_cache)
+GLOBAL_LIST_EMPTY(mech_image_cache)
+GLOBAL_LIST_EMPTY(mech_icon_cache)
+GLOBAL_LIST_AS(mech_weapon_overlays, icon_states('icons/mecha/mech_weapon_overlays.dmi'))
 
 #define HARDPOINT_BACK "back"
 #define HARDPOINT_LEFT_HAND "left hand"

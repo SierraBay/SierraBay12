@@ -5,7 +5,7 @@
 //		Arguments that the called proc should expect:
 //          /obj/other : reference to instrument that started playing a song
 
-GLOBAL_DATUM_INIT(instrument_synchronizer, /singleton/observ/instrument_synchronizer, new)
+GLOBAL_TYPED_NEW(instrument_synchronizer, /singleton/observ/instrument_synchronizer)
 
 /singleton/observ/instrument_synchronizer
 	name = "Instrument synchronizer"

@@ -554,7 +554,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	return atoms
 
 
-GLOBAL_LIST_INIT(duplicate_object_disallowed_vars, list(
+GLOBAL_LIST_AS(duplicate_object_disallowed_vars, list(
 	"type",
 	"loc",
 	"locs",

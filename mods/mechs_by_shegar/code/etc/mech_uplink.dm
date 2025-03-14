@@ -1,5 +1,5 @@
-GLOBAL_VAR_INIT(max_mech, 0)
-GLOBAL_VAR_INIT(war_declared, FALSE)
+GLOBAL_VAR_AS(max_mech, 0)
+GLOBAL_VAR_AS(war_declared, FALSE)
 
 //Запрос кристаллов
 /datum/uplink_item/item/services/assault_declaration

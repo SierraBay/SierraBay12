@@ -1,6 +1,6 @@
 // Init optimization.
 
-GLOBAL_LIST_INIT(machine_path_to_circuit_type, cache_circuits_by_build_path())
+GLOBAL_LIST_AS(machine_path_to_circuit_type, cache_circuits_by_build_path())
 
 /proc/cache_circuits_by_build_path()
 	RETURN_TYPE(/list)

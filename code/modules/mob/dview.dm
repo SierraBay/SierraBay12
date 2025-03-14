@@ -1,4 +1,4 @@
-GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
+GLOBAL_TYPED_NEW(dview_mob, /mob/dview)
 
 
 /mob/dview
