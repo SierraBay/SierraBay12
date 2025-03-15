@@ -1,0 +1,13 @@
+/mob/living/exosuit/proc/turn_mech(moving_dir)
+	do_mech_turn_sound()
+	if(moving_dir == turn(dir, 45) || moving_dir == turn(dir, -45))
+		sub_speed(L_leg.turn_diogonal_slowdown + R_leg.turn_diogonal_slowdown)
+	else if(moving_dir == turn(dir, 90) || moving_dir == turn(dir, -90))
+		sub_speed(L_leg.turn_slowdown + R_leg.turn_slowdown)
+	else if(moving_dir == turn(dir, 135) || moving_dir == turn(dir, -135))
+		sub_speed((L_leg.turn_slowdown + L_leg.turn_diogonal_slowdown + R_leg.turn_slowdown + R_leg.turn_diogonal_slowdown))
+	else if(moving_dir == turn(dir, 180) || moving_dir == turn(dir, -180))
+		current_speed = min_speed
+	add_heat(L_leg.heat_generation + R_leg.heat_generation)
+	set_dir(moving_dir)
+	SetMoveCooldown((L_leg.turn_delay + R_leg.turn_delay)/2)

@@ -1,6 +1,7 @@
 /datum/design/autolathe/general
 	build_path = /obj/item/reagent_containers/glass/bucket
 	category = list("General")
+	time = 6
 
 /datum/design/autolathe/general/datacrystal
 	build_path = /obj/item/stock_parts/computer/hard_drive/portable

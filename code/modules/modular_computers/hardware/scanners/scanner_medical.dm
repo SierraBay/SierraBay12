@@ -9,5 +9,6 @@
 	var/dat = medical_scan_action(target, user, loc, 1)
 
 	if(dat && driver && driver.using_scanner)
+		playsound(src, 'sound/effects/fastbeep.ogg', 20)
 		driver.data_buffer = html2pencode(dat)
 		SSnano.update_uis(driver.NM)

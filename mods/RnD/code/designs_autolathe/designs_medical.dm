@@ -1,6 +1,7 @@
 /datum/design/autolathe/medical
 	category = list("Medical")
 	build_path = /obj/item/scalpel/basic
+	time = 10
 
 /datum/design/autolathe/medical/circularsaw
 	build_path = /obj/item/circular_saw

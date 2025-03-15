@@ -7,9 +7,14 @@
 
 #define ZONE_MIN_SIZE 14 //zones with less than this many turfs will always merge, even if the connection is not direct
 
+// Options for `/atom/movable/var/atmos_canpass`.
+/// Air can always pass through this atom.
 #define CANPASS_ALWAYS 1
+/// Air can only pass through this atom if `density` is `FALSE`.
 #define CANPASS_DENSITY 2
+/// Air passability is checked through this atom's `c_airblock()` override.
 #define CANPASS_PROC 3
+/// Air can never pass through this atom.
 #define CANPASS_NEVER 4
 
 #define NORTHUP (NORTH|UP)
@@ -25,7 +30,7 @@
 
 #ifdef MULTIZAS
 
-GLOBAL_LIST_INIT(gzn_check, list(
+GLOBAL_LIST_AS(gzn_check, list(
 	NORTH,
 	SOUTH,
 	EAST,
@@ -34,7 +39,7 @@ GLOBAL_LIST_INIT(gzn_check, list(
 	DOWN
 ))
 
-GLOBAL_LIST_INIT(csrfz_check, list(
+GLOBAL_LIST_AS(csrfz_check, list(
 	NORTHEAST,
 	NORTHWEST,
 	SOUTHEAST,
@@ -91,14 +96,14 @@ GLOBAL_LIST_INIT(csrfz_check, list(
 	}
 #else
 
-GLOBAL_LIST_INIT(csrfz_check, list(
+GLOBAL_LIST_AS(csrfz_check, list(
 	NORTHEAST,
 	NORTHWEST,
 	SOUTHEAST,
 	SOUTHWEST
 ))
 
-GLOBAL_LIST_INIT(gzn_check, list(
+GLOBAL_LIST_AS(gzn_check, list(
 	NORTH,
 	SOUTH,
 	EAST,

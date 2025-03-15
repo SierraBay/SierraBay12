@@ -1,0 +1,40 @@
+//Зрение
+#include "_interface.dm"
+#include "vision.dm"
+
+//КНОПКИ
+#include "interface\buttons\_core.dm"
+#include "interface\buttons\_toggle.dm"
+#include "interface\buttons\downside_menu.dm"
+#include "interface\buttons\eject.dm"
+#include "interface\buttons\hardpoint.dm"
+#include "interface\buttons\hardpoints_menu.dm"
+#include "interface\buttons\heat.dm"
+#include "interface\buttons\mech_integrity.dm"
+#include "interface\buttons\power.dm"
+//БИГ МЕНЮ
+#include "interface\buttons\big_menu\menu_background.dm"
+#include "interface\buttons\big_menu\menu_button.dm"
+#include "interface\buttons\big_menu\menu.dm"
+
+//Инициализция интерфейса
+#include "interface\interface_initialization\_interface.dm"
+#include "interface\interface_initialization\downside_menu.dm"
+#include "interface\interface_initialization\hardpoints.dm"
+#include "interface\interface_initialization\main_menu.dm"
+#include "interface\interface_initialization\placing_parts.dm"
+#include "interface\interface_initialization\status_displays.dm"
+
+#include "interface\buttons\big_menu\buttons\air.dm"
+#include "interface\buttons\big_menu\buttons\eject.dm"
+#include "interface\buttons\big_menu\buttons\gps.dm"
+#include "interface\buttons\big_menu\buttons\hatch_lock.dm"
+#include "interface\buttons\big_menu\buttons\hatch.dm"
+#include "interface\buttons\big_menu\buttons\id.dm"
+#include "interface\buttons\big_menu\buttons\maint.dm"
+#include "interface\buttons\big_menu\buttons\megaspeakers.dm"
+#include "interface\buttons\big_menu\buttons\pilot_medscan.dm"
+#include "interface\buttons\big_menu\buttons\power.dm"
+#include "interface\buttons\big_menu\buttons\radio.dm"
+#include "interface\buttons\big_menu\buttons\rename.dm"
+#include "interface\buttons\big_menu\buttons\sensors.dm"

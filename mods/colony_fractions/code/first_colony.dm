@@ -1,6 +1,6 @@
-GLOBAL_VAR_INIT(last_colony_type, "СЛУЧАЙНЫЙ")
-GLOBAL_VAR_INIT(choose_colony_type, "СЛУЧАЙНЫЙ") //Педальки выбирают, какой тип колонии будет заспавнен
-GLOBAL_VAR_INIT(error_colony_reaction, "Прервать спавн колонии")
+GLOBAL_VAR_AS(last_colony_type, "СЛУЧАЙНЫЙ")
+GLOBAL_VAR_AS(choose_colony_type, "СЛУЧАЙНЫЙ") //Педальки выбирают, какой тип колонии будет заспавнен
+GLOBAL_VAR_AS(error_colony_reaction, "Прервать спавн колонии")
 
 /singleton/submap_archetype/playablecolony
 	crew_jobs = list(/datum/job/submap/colonist, /datum/job/submap/colonist_leader)

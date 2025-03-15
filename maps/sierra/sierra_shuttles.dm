@@ -76,6 +76,7 @@ SIERRA_ESCAPE_POD(11)
 	logging_home_tag = "nav_petrov_start"
 	sound_takeoff = 'sound/effects/rocket.ogg'
 	sound_landing = 'sound/effects/rocket_backwards.ogg'
+	logging_access = access_petrov_helm
 	range = 1
 	fuel_consumption = 6
 	warmup_time = 10

@@ -1,5 +1,5 @@
 
-GLOBAL_LIST_INIT(proteinbar_flavors, list(
+GLOBAL_LIST_AS(proteinbar_flavors, list(
 	"apple 'n pear" = list(
 		/datum/reagent/drink/juice/apple,
 		/datum/reagent/drink/juice/pear

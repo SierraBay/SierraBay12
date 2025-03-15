@@ -37,7 +37,7 @@ GLOBAL_LIST_EMPTY(facial_hair_styles_list) //stores /datum/sprite_accessory/faci
 var/global/list/skin_styles_female_list = list()		//unused
 GLOBAL_LIST_EMPTY(body_marking_styles_list)		//stores /datum/sprite_accessory/marking indexed by name
 
-GLOBAL_DATUM_INIT(underwear, /datum/category_collection/underwear, new())
+GLOBAL_TYPED_NEW(underwear, /datum/category_collection/underwear)
 
 // Visual nets
 var/global/list/datum/visualnet/visual_nets = list()
@@ -152,6 +152,26 @@ var/global/list/string_slot_flags = list(
 	for (var/path in paths)
 		var/particles/P = new path()
 		GLOB.all_particles[P.name] = P
+
+	//[SIERRA-ADD] - HOTKEYS AND TRAITS
+	//Хоткеи
+	for(var/datum/keybinding/keybinding as anything in subtypesof(/datum/keybinding))
+		if(!initial(keybinding.name))
+			continue
+		var/datum/keybinding/instance = new keybinding
+		global.keybindings_by_name[instance.name] = instance
+		if(length(instance.hotkey_keys))
+			for(var/bound_key in instance.hotkey_keys)
+				global.hotkey_keybinding_list_by_key[bound_key] += list(instance.name)
+	//Трейты
+	paths = typesof(/datum/mod_trait) - /datum/mod_trait
+	for(var/path in paths)
+		var/datum/mod_trait/M = path
+		if (!initial(M.name))
+			continue
+		M = new path()
+		GLOB.all_mod_traits[M.name] = M
+	//[SIERRA-ADD]
 
 	return TRUE
 

@@ -1,4 +1,4 @@
-GLOBAL_DATUM_INIT(renegades, /datum/antagonist/renegade, new)
+GLOBAL_TYPED_NEW(renegades, /datum/antagonist/renegade)
 
 /datum/antagonist/renegade
 	role_text = "Renegade"

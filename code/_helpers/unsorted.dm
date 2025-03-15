@@ -184,9 +184,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			return 1
 	return 0
 
-/proc/sign(x)
-	return x!=0?x/abs(x):0
-
 /proc/getline(atom/M,atom/N)//Ultra-Fast Bresenham Line-Drawing Algorithm
 	RETURN_TYPE(/list)
 	var/px=M.x		//starting x
@@ -365,97 +362,10 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		return GetConnectedZlevels(z)
 	return list() //We return an empty list, because we are apparently in nullspace
 
-/proc/get_sorted_mobs()
-	RETURN_TYPE(/list)
-	var/list/old_list = getmobs()
-	var/list/AI_list = list()
-	var/list/Dead_list = list()
-	var/list/keyclient_list = list()
-	var/list/key_list = list()
-	var/list/logged_list = list()
-	for(var/named in old_list)
-		var/mob/M = old_list[named]
-		if(issilicon(M))
-			AI_list |= M
-		else if(isghost(M) || M.stat == DEAD)
-			Dead_list |= M
-		else if(M.key && M.client)
-			keyclient_list |= M
-		else if(M.key)
-			key_list |= M
-		else
-			logged_list |= M
-		old_list.Remove(named)
-	var/list/new_list = list()
-	new_list += AI_list
-	new_list += keyclient_list
-	new_list += key_list
-	new_list += logged_list
-	new_list += Dead_list
-	return new_list
-
-//Returns a list of all mobs with their name
-/proc/getmobs()
-	RETURN_TYPE(/list)
-	var/list/mobs = sortmobs()
-	var/list/names = list()
-	var/list/creatures = list()
-	var/list/namecounts = list()
-	for(var/mob/M in mobs)
-		var/name = M.name
-		if (name in names)
-			namecounts[name]++
-			name = "[name] ([namecounts[name]])"
-		else
-			names.Add(name)
-			namecounts[name] = 1
-		if (M.real_name && M.real_name != M.name)
-			name += " \[[M.real_name]\]"
-		if (M.stat == DEAD)
-			if(isobserver(M))
-				name += " \[observer\]"
-			else
-				name += " \[dead\]"
-		creatures[name] = M
-
-	return creatures
 
 /proc/get_follow_targets()
 	RETURN_TYPE(/list)
 	return follow_repository.get_follow_targets()
-
-//Orders mobs by type then by name
-/proc/sortmobs()
-	RETURN_TYPE(/list)
-	var/list/moblist = list()
-	var/list/sortmob = sortAtom(SSmobs.mob_list)
-	for(var/mob/observer/eye/M in sortmob)
-		moblist.Add(M)
-	for(var/mob/living/silicon/ai/M in sortmob)
-		moblist.Add(M)
-	for(var/mob/living/silicon/pai/M in sortmob)
-		moblist.Add(M)
-	for(var/mob/living/silicon/robot/M in sortmob)
-		moblist.Add(M)
-	for(var/mob/living/carbon/human/M in sortmob)
-		moblist.Add(M)
-	for(var/mob/living/carbon/brain/M in sortmob)
-		moblist.Add(M)
-	for(var/mob/living/carbon/alien/M in sortmob)
-		moblist.Add(M)
-	for(var/mob/observer/ghost/M in sortmob)
-		moblist.Add(M)
-	for(var/mob/new_player/M in sortmob)
-		moblist.Add(M)
-	for(var/mob/living/carbon/slime/M in sortmob)
-		moblist.Add(M)
-	for(var/mob/living/simple_animal/M in sortmob)
-		moblist.Add(M)
-//	for(var/mob/living/silicon/hivebot/M in world)
-//		mob_list.Add(M)
-//	for(var/mob/living/silicon/hive_mainframe/M in world)
-//		mob_list.Add(M)
-	return moblist
 
 //Forces a variable to be posative
 /proc/modulus(M)
@@ -537,12 +447,9 @@ Turf and target are seperate in case you want to teleport some distance from a t
  *
  * Returns a list of atoms.
  */
-/atom/proc/GetAllContents(searchDepth = 5, includeSelf = FALSE)
+/atom/proc/GetAllContents(searchDepth = 5)
 	RETURN_TYPE(/list)
 	var/list/toReturn = list()
-
-	if(includeSelf)
-		toReturn += src
 
 	for(var/atom/part in contents)
 		toReturn += part
@@ -646,29 +553,8 @@ Turf and target are seperate in case you want to teleport some distance from a t
 				atoms += A
 	return atoms
 
-/area/proc/move_contents_to(area/A)
-	//Takes: Area.
-	//Returns: Nothing.
-	//Notes: Attempts to move the contents of one area to another area.
-	//       Movement based on lower left corner.
 
-	if(!A || !src) return
-
-	var/list/turfs_src = get_area_turfs("\ref[src]")
-
-	if(!length(turfs_src)) return
-
-	//figure out a suitable origin - this assumes the shuttle areas are the exact same size and shape
-	//might be worth doing this with a shuttle core object instead of areas, in the future
-	var/src_origin = locate(src.x, src.y, src.z)
-	var/trg_origin = locate(A.x, A.y, A.z)
-
-	if(src_origin && trg_origin)
-		var/translation = get_turf_translation(src_origin, trg_origin, turfs_src)
-		translate_turfs(translation, null)
-
-
-GLOBAL_LIST_INIT(duplicate_object_disallowed_vars, list(
+GLOBAL_LIST_AS(duplicate_object_disallowed_vars, list(
 	"type",
 	"loc",
 	"locs",
@@ -702,85 +588,6 @@ GLOBAL_LIST_INIT(duplicate_object_disallowed_vars, list(
 			continue
 		result.vars[name] = vars[name]
 	return result
-
-
-/**
- * Attempts to move the contents, including turfs, of one area to another area.
- * Positioning is based on the lower left corner of both areas.
- * Tiles that do not fit into the new area will not be copied.
- * Source atoms are not modified or deleted.
- * Turfs are created using `ChangeTurf()`.
- * `dir`, `icon`, and `icon_state` are copied. All other vars use the default value for the copied atom.
- * Primarily used for holodecks.
- *
- * **Parameters**:
- * - `target` `/area`. The area to copy src's contents to.
- * - `plating_required` Boolean, default `FALSE`. If set, contents will only be copied to destination tiles that are not the same type as `get_base_area_by_turf()` before calling `ChangeTurf()`.
- *
- * Returns List (`/atom`). A list containing all atoms that were created at the target area during the process.
- */
-/area/proc/copy_contents_to(area/target, plating_required)
-	RETURN_TYPE(/list)
-	if (!target || !src)
-		return
-	var/list/turfs_src = get_area_turfs(type)
-	var/list/turfs_trg = get_area_turfs(target.type)
-	var/src_min_x = 0
-	var/src_min_y = 0
-	for (var/turf/turf in turfs_src)
-		if (turf.x < src_min_x || !src_min_x)
-			src_min_x = turf.x
-		if (turf.y < src_min_y || !src_min_y)
-			src_min_y = turf.y
-	var/trg_min_x = 0
-	var/trg_min_y = 0
-	for (var/turf/turf in turfs_trg)
-		if (turf.x < trg_min_x || !trg_min_x)
-			trg_min_x = turf.x
-		if (turf.y < trg_min_y || !trg_min_y)
-			trg_min_y = turf.y
-	var/list/refined_src = list()
-	for (var/turf/turf in turfs_src)
-		refined_src[turf] = new /datum/vector2 (turf.x - src_min_x, turf.y - src_min_y)
-	var/list/refined_trg = list()
-	for (var/turf/turf in turfs_trg)
-		refined_trg[turf] = new /datum/vector2 (turf.x - trg_min_x, turf.y - trg_min_y)
-	var/list/turfs_to_update = list()
-	var/list/copied_movables = list()
-	moving:
-		for (var/turf/source_turf in refined_src)
-			var/datum/vector2/source_position = refined_src[source_turf]
-			for (var/turf/target_turf in refined_trg)
-				if (source_position ~= refined_trg[target_turf])
-					var/old_dir1 = source_turf.dir
-					var/old_icon_state1 = source_turf.icon_state
-					var/old_icon1 = source_turf.icon
-					var/old_underlays = source_turf.underlays.Copy()
-					if (plating_required)
-						if (istype(target_turf, get_base_turf_by_area(target_turf)))
-							continue moving
-					var/turf/temp_target_turf = target_turf
-					temp_target_turf.ChangeTurf(source_turf.type)
-					temp_target_turf.set_dir(old_dir1)
-					temp_target_turf.icon_state = old_icon_state1
-					temp_target_turf.icon = old_icon1
-					temp_target_turf.CopyOverlays(source_turf)
-					temp_target_turf.underlays = old_underlays
-					for (var/obj/obj in source_turf)
-						if (!obj.simulated)
-							continue
-						copied_movables += clone_atom(obj, TRUE, temp_target_turf)
-					for (var/mob/mob in source_turf)
-						if (!mob.simulated)
-							continue
-						copied_movables += clone_atom(mob, TRUE, temp_target_turf)
-					turfs_to_update += temp_target_turf
-					refined_src -= source_turf
-					refined_trg -= target_turf
-					continue moving
-	for (var/turf/simulated/simulated in turfs_to_update)
-		SSair.mark_for_update(simulated)
-	return copied_movables
 
 
 /proc/get_cardinal_dir(atom/A, atom/B)
@@ -999,9 +806,9 @@ var/global/list/WALLITEMS = list(
 	return replacetext(replacetext(text,"\proper ",""),"\improper ","")
 
 /proc/topic_link(datum/D, arglist, content)
-	if(istype(arglist,/list))
+	if(islist(arglist))
 		arglist = list2params(arglist)
-	return "<a href='?src=\ref[D];[arglist]'>[content]</a>"
+	return "<a href='byond://?src=\ref[D];[arglist]'>[content]</a>"
 
 /proc/get_random_colour(simple = FALSE, lower = 0, upper = 255)
 	var/colour

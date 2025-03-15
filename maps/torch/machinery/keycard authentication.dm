@@ -16,20 +16,20 @@
 			dat += "Cannot modify the alert level at this time: [security_state.severe_security_level.name] engaged.<br>"
 		else
 			if(security_state.current_security_level == security_state.high_security_level)
-				dat += "<A href='?src=\ref[src];triggerevent=Revert alert'>Disengage [security_state.high_security_level.name]</A><br>"
+				dat += "<a href='byond://?src=\ref[src];triggerevent=Revert alert'>Disengage [security_state.high_security_level.name]</A><br>"
 			else
-				dat += "<A href='?src=\ref[src];triggerevent=Red alert'>Engage [security_state.high_security_level.name]</A><br>"
+				dat += "<a href='byond://?src=\ref[src];triggerevent=Red alert'>Engage [security_state.high_security_level.name]</A><br>"
 
 		if(!config.ert_admin_call_only)
-			dat += "<A href='?src=\ref[src];triggerevent=Emergency Response Team'>Emergency Response Team</A><br>"
+			dat += "<a href='byond://?src=\ref[src];triggerevent=Emergency Response Team'>Emergency Response Team</A><br>"
 
-		dat += "<A href='?src=\ref[src];triggerevent=Grant Emergency Maintenance Access'>Grant Emergency Maintenance Access</A><br>"
-		dat += "<A href='?src=\ref[src];triggerevent=Revoke Emergency Maintenance Access'>Revoke Emergency Maintenance Access</A><br>"
-		dat += "<A href='?src=\ref[src];triggerevent=Grant Nuclear Authorization Code'>Grant Nuclear Authorization Code</A><br>"
-		dat += "<a href='?src=\ref[src];triggerevent=Evacuate'>Initiate Evacuation Procedures</a><br>"
+		dat += "<a href='byond://?src=\ref[src];triggerevent=Grant Emergency Maintenance Access'>Grant Emergency Maintenance Access</A><br>"
+		dat += "<a href='byond://?src=\ref[src];triggerevent=Revoke Emergency Maintenance Access'>Revoke Emergency Maintenance Access</A><br>"
+		dat += "<a href='byond://?src=\ref[src];triggerevent=Grant Nuclear Authorization Code'>Grant Nuclear Authorization Code</A><br>"
+		dat += "<a href='byond://?src=\ref[src];triggerevent=Evacuate'>Initiate Evacuation Procedures</a><br>"
 	if(screen == 2)
 		dat += "Please swipe your card to authorize the following event: <b>[event]</b>"
-		dat += "<p><A href='?src=\ref[src];reset=1'>Back</A>"
+		dat += "<p><a href='byond://?src=\ref[src];reset=1'>Back</A>"
 
 	var/datum/browser/popup = new(user, "kad_window", "Keycard Authentication Device", 500, 250)
 	popup.set_content(JOINTEXT(dat))

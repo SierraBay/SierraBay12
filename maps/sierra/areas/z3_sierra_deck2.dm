@@ -64,12 +64,12 @@
 
 /area/maintenance/substation/seconddeck
 	name = "Second Deck - Substation"
-
+/*
 /area/crew_quarters/laundry
 	name = "Second Deck - Laundry Room"
 	icon_state = "Sleep"
 	holomap_color = HOLOMAP_AREACOLOR_CREW
-
+*/
 /area/maintenance/abandoned_hydroponics
 	name = "Second Deck - Abandoned - Hydroponics"
 	icon_state = "hydro"
@@ -78,6 +78,18 @@
 /* RND AREAS
  * =========
  */
+/area/rnd/entry/lower
+	name = "Second Deck - RND - Aux Lobby"
+	icon_state = "decontamination"
+
+/area/rnd/misc_lab
+	name = "First Deck - RND - Miscellaneous Lab"
+	icon_state = "misclab"
+	req_access = list(access_research)
+
+/area/rnd/misc_lab/stairs
+	name = "Second Deck - RND - Miscellaneous Access"
+	icon_state = "research"
 
 /area/rnd/xenobiology/entry
 	name = "Xenobiology Access"
@@ -104,15 +116,10 @@
 	icon_state = "xeno_lab"
 	holomap_color = HOLOMAP_AREACOLOR_SCIENCE
 
-/area/assembly/chargebay
-	name = "Second Deck - RND - Mech Bay"
-	icon_state = "mechbay"
-	holomap_color = HOLOMAP_AREACOLOR_SCIENCE
-
-/area/assembly/robotics
-	name = "Second Deck - RND - Robotics Lab"
-	icon_state = "robotics"
-	holomap_color = HOLOMAP_AREACOLOR_SCIENCE
+/area/rnd/blanks
+	name = "Second Deck - RND - Aux Backup Storage"
+	req_access = list(access_rd)
+	icon_state = "decontamination"
 
 /area/rnd/toxins
 	name = "Second Deck - RND - Toxins Lab"
@@ -131,7 +138,7 @@
 	name = "Second Deck - Gambling Room"
 	icon_state = "restrooms"
 	sound_env = MEDIUM_SOFTFLOOR
-
+/*
 /area/vacant/dungeon
 	name = "Second Deck - Dungeon"
 	icon_state = "restrooms"
@@ -141,7 +148,7 @@
 	name = "Second Deck - Unused Sauna"
 	icon_state = "restrooms"
 	sound_env = MEDIUM_SOFTFLOOR
-
+*/
 /area/maintenance/seconddeck/hangar
 	name = "Second Deck - Auxiliary Hangar"
 	icon_state = "hangar"
@@ -208,9 +215,16 @@
 	area_flags = AREA_FLAG_RAD_SHIELDED | AREA_FLAG_ION_SHIELDED
 	holomap_color = HOLOMAP_AREACOLOR_CREW
 
+/*
 /area/crew_quarters/garden_room
 	name = "Second deck - living - Lounge"
 	icon_state = "game_room_inf"
+	holomap_color = HOLOMAP_AREACOLOR_CREW
+*/
+
+/area/crew_quarters/dungeon_master_lounge
+	name = "Second Deck - Living Room"
+	sound_env = MEDIUM_SOFTFLOOR
 	holomap_color = HOLOMAP_AREACOLOR_CREW
 
 /area/crew_quarters/gym
@@ -224,11 +238,11 @@
 	sound_env = SMALL_SOFTFLOOR
 	req_access = list(access_actor)
 	holomap_color = HOLOMAP_AREACOLOR_CREW
-
+/*
 /area/crew_quarters/actor/stage
 	name = "Second Deck - Service - Stage"
 	holomap_color = HOLOMAP_AREACOLOR_CREW
-
+*/
 /area/crew_quarters/lounge/upper
 	name = "Second Deck - Living - Lounge"
 	holomap_color = HOLOMAP_AREACOLOR_CREW

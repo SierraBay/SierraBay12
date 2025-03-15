@@ -9,7 +9,7 @@
 //          new_zone: the newly selected zone
 //
 
-GLOBAL_DATUM_INIT(zone_selected_event, /singleton/observ/zone_selected, new)
+GLOBAL_TYPED_NEW(zone_selected_event, /singleton/observ/zone_selected)
 
 /singleton/observ/zone_selected
 	name = "Zone Selected"

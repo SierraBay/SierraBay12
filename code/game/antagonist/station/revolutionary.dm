@@ -1,4 +1,4 @@
-GLOBAL_DATUM_INIT(revs, /datum/antagonist/revolutionary, new)
+GLOBAL_TYPED_NEW(revs, /datum/antagonist/revolutionary)
 
 /datum/antagonist/revolutionary
 	id = MODE_REVOLUTIONARY

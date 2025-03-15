@@ -160,7 +160,7 @@
 
 
 
-GLOBAL_LIST_INIT(jukebox_tracks, list(
+GLOBAL_LIST_AS(jukebox_tracks, list(
 	/singleton/audio/track/absconditus,
 	/singleton/audio/track/ambispace,
 	/singleton/audio/track/asfarasitgets,

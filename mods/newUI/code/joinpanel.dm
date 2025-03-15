@@ -1,4 +1,4 @@
-GLOBAL_DATUM_INIT(joinpanel_state, /datum/topic_state/joinpanel, new)
+GLOBAL_TYPED_NEW(joinpanel_state, /datum/topic_state/joinpanel)
 
 /datum/topic_state/joinpanel/can_use_topic(src_object, mob/user)
 	return istype(user, /mob/new_player) ? STATUS_INTERACTIVE : STATUS_CLOSE

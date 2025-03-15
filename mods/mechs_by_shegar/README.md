@@ -24,6 +24,8 @@ ID мода: MECHS_BY_SHEGAR
 -->
 
 ### Описание мода
+WARNING: Для работы мода требуется закомментировать весь инклюд ванильных мехов.
+Не комментируйте только дефайны, ибо ебобаный код не видит дефайны обьявленные ниже кода
 
 Данный мод сильно углубляет механ мехов и имеет следующие изменения:
 -Сильно пересмотрены мехи в плане баланса, теперь каждый модуль имеет смысл
@@ -36,25 +38,7 @@ ID мода: MECHS_BY_SHEGAR
 -->
 
 ### Изменения *кор кода*
-Указывать триллион изменений - глупо и бесполезно. Ниже указаны файлы, в которых есть изменения. Вы всегда можете найти в коде изменения с помощью Mechs-by-Shegar
-code\game\machinery\robotics_fabricator.dm
-code\modules\mechs\_mech_setup.dm
-code\modules\mechs\mech_damage.dm
-code\modules\mechs\mech_icon.dm
-code\modules\mechs\mech_interaction.dm
-code\modules\mechs\mech_life.dm
-code\modules\mechs\mech_movement.dm
-code\modules\mechs\mech.dm
-code\modules\mechs\equipment\combat.dm
-code\modules\mechs\equipment\engineering.dm
-code\modules\mechs\equipment\medical.dm
-code\modules\mechs\equipment\utility.dm
-code\modules\mechs\interface\_interface.dm
-code\modules\mechs\interface\screen_objects.dm
-code\modules\mechs\premade\powerloader.dm
-code\modules\mob\living\living.dm
-code\modules\projectiles\projectile.dm
-code\modules\research\designs\designs_mechfab.dm
+Не затронут
 
 <!--
   Если вы редактировали какие-либо процедуры или переменные в кор коде,

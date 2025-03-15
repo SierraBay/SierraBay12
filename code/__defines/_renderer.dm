@@ -26,7 +26,7 @@
 /atom/movable/renderer
 	abstract_type = /atom/movable/renderer
 	appearance_flags = DEFAULT_RENDERER_APPEARANCE_FLAGS
-	screen_loc = "CENTER"
+	screen_loc = RENDERER_SCREEN_LOC
 	plane = LOWEST_PLANE
 	blend_mode = BLEND_OVERLAY
 
@@ -72,7 +72,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/renderer)
 	else if (render_target_name)
 		render_target = "*[ckey(name)]"
 	relay = new
-	relay.screen_loc = "CENTER"
+	relay.screen_loc = RENDERER_SCREEN_LOC
 	relay.appearance_flags = PASS_MOUSE | NO_CLIENT_COLOR | KEEP_TOGETHER
 	relay.name = "[render_target] relay"
 	relay.mouse_opacity = mouse_opacity

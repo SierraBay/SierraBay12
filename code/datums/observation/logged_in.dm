@@ -6,7 +6,7 @@
 //		Arguments that the called proc should expect:
 //			/mob/joiner: The mob that has logged in
 
-GLOBAL_DATUM_INIT(logged_in_event, /singleton/observ/logged_in, new)
+GLOBAL_TYPED_NEW(logged_in_event, /singleton/observ/logged_in)
 
 /singleton/observ/logged_in
 	name = "Logged In"

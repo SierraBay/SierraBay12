@@ -1,0 +1,5 @@
+author: Ryan180602
+changes:
+  - {tweak: Doubles name input on serving bowls. (32 -> 64)}
+  - {tweak: Increases name input length on using pen to food (24 -> 64)}
+delete-after: true

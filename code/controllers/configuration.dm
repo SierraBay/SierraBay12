@@ -1,6 +1,4 @@
 /datum/configuration
-	var/static/atom/movable/clickable_stat/statLine
-
 	/// server name (for world name / status)
 	var/static/server_name = "Space Station 13"
 
@@ -301,9 +299,9 @@
 	/// Clients with these byond versions will be banned. "512.1234;513.2345" etc.
 	var/static/list/forbidden_versions = list()
 
-	var/static/minimum_byond_version = 515
+	var/static/minimum_byond_version = 516
 
-	var/static/minimum_byond_build = 1647
+	var/static/minimum_byond_build = 1658
 
 	var/static/login_export_addr
 
@@ -1088,10 +1086,3 @@
 	if (entry_size > 255)
 		log_debug("The generated hub entry was [entry_size] bytes long! It will be truncated by the hub to 255.")
 	return entry
-
-
-/datum/configuration/proc/UpdateStat()
-	if (!statLine)
-		statLine = new (null, src)
-		statLine.name = "Edit"
-	stat("Config", statLine)

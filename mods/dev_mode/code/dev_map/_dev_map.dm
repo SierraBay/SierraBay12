@@ -190,7 +190,7 @@
 	#include "../../../../maps/away/meatstation/meatstation.dm"
 	#include "../../../../maps/away/miningstation/miningstation.dm"
 	#include "../../../../maps/away/mininghome/mininghome.dm"
-	#include "../../../../maps/away/scavver/scavver_gantry.dm"
+	#include "../../../_maps/scavver/scavver_gantry.dm"
 	#include "../../../../maps/away/abandoned_hotel/abandoned_hotel.dm"
 	#include "../../../../maps/event/iccgn_ship/icgnv_hound.dm"
 	#include "../../../../maps/event/sfv_arbiter/sfv_arbiter.dm"

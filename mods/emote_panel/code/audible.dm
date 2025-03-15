@@ -168,6 +168,11 @@
 	)
 	sounded_species = SOUNDED_SPECIES
 
+/datum/species/monkey
+	var/default_emotes = list(
+		/singleton/emote/audible/scream/monkey
+	) //monke scream
+
 /singleton/emote/audible/scream/monkey
 	emote_sound = list(
 		'mods/emote_panel/sound/pain_monkey_1.ogg',
@@ -185,7 +190,21 @@
 	key = "purrl"
 	emote_sound = 'mods/emote_panel/sound/cat_purr_long.ogg'
 
+/singleton/emote/audible/cat_purr/strong
+	key = "purrs"
+	emote_sound = 'mods/emote_panel/sound/cat_purr_long2.ogg'
+
+
 /singleton/emote/audible/finger_snap
 	key = "snap"
 	emote_message_3p = "USER щёлкает пальцами."
 	emote_sound = 'mods/emote_panel/sound/fingersnap.ogg'
+
+/singleton/emote/audible/hiss
+	key = "hiss"
+	emote_message_3p = "USER шипит!"
+	emote_sound = list(
+	'mods/emote_panel/sound/tajhiss1.ogg',
+	'mods/emote_panel/sound/tajhiss2.ogg',
+	'mods/emote_panel/sound/tajhiss3.ogg'
+	)

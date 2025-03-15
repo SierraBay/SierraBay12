@@ -18,7 +18,7 @@ SUBSYSTEM_DEF(init_misc_late)
 	init_recipes()
 
 
-GLOBAL_VAR_INIT(microwave_maximum_item_storage, 0)
+GLOBAL_VAR_AS(microwave_maximum_item_storage, 0)
 GLOBAL_LIST_EMPTY(microwave_recipes)
 GLOBAL_LIST_EMPTY(microwave_accepts_reagents)
 GLOBAL_LIST_EMPTY(microwave_accepts_items)
