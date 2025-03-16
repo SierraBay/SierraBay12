@@ -57,7 +57,7 @@
 
 	var/faction = MOB_FACTION_CREW
 
-	var/global/psi_allowed_species = list(/datum/species/human,/datum/species/human/vatgrown,/datum/species/human/tritonian,/datum/species/human/gravworlder,/datum/species/human/spacer) // [SIERRA-ADD] - PSIONICS
+	var/global/psi_allowed_species = list(SPECIES_HUMAN,HUMAN_SPECIES) // [SIERRA-ADD] - PSIONICS
 
 
 /datum/job/New()
@@ -77,7 +77,7 @@
 // [SIERRA-ADD] - PSIONICS
 /datum/job/proc/give_psi(mob/living/carbon/human/H)
 
-	if(!(all_species[H.client.prefs.species].type in psi_allowed_species))
+	if(!(GLOB.species_by_name[H.client.prefs.species].type in psi_allowed_species))
 		return
 
 	if(psi_latency_chance && prob(psi_latency_chance))
