@@ -1,12 +1,12 @@
 // [SIERRA-ADD] - PSIONICS
-GLOBAL_LIST_INIT(psi_level2cost, list(
+GLOBAL_LIST_AS(psi_level2cost, list(
 	"Blunt"       = 0,
 	"Latent"      = 2,
 	"Apprentice"  = 6,
 	"Operant"     = 16
 ))
 
-GLOBAL_LIST_INIT(psi_faculty2color, list(
+GLOBAL_LIST_AS(psi_faculty2color, list(
 	"Coercion"      = COLOR_RED,
 	"Consciousness" = COLOR_SURGERY_BLUE,
 	"Energistics"     = COLOR_MEDICAL_UNKNOWN_IMPLANT,
@@ -16,7 +16,7 @@ GLOBAL_LIST_INIT(psi_faculty2color, list(
 	"Redaction"   = MANIFEST_COLOR_SERVICE
 ))
 
-GLOBAL_LIST_INIT(psi_threat_level2free_points, list(6, 8, 12, 16))
+GLOBAL_LIST_AS(psi_threat_level2free_points, list(6, 8, 12, 16))
 
 /datum/preferences
 	var/list/psi_abilities
