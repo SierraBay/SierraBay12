@@ -12,6 +12,7 @@
 	construct_state = /singleton/machine_construction/default/panel_closed
 	uncreated_component_parts = null
 	stat_immune = 0
+	var/scan_for_present_mutations = FALSE
 
 	machine_name = "body scanner"
 	machine_desc = "A full-body scanning suite that provides a complete health assessment of a patient placed inside. Requires an adjacent console to operate."
@@ -168,6 +169,10 @@
 					A.ex_act(severity)
 				qdel(src)
 
+/obj/machinery/bodyscanner/RefreshParts()
+	..()
+	var/tier = clamp(total_component_rating_of_type(/obj/item/stock_parts/scanning_module), 0, 10)
+	scan_for_present_mutations = tier >= 4
 
 /obj/machinery/bodyscanner/Destroy()
 	if(occupant)

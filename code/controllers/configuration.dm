@@ -1,6 +1,4 @@
 /datum/configuration
-	var/static/atom/movable/clickable_stat/statLine
-
 	/// server name (for world name / status)
 	var/static/server_name = "Space Station 13"
 
@@ -1088,10 +1086,3 @@
 	if (entry_size > 255)
 		log_debug("The generated hub entry was [entry_size] bytes long! It will be truncated by the hub to 255.")
 	return entry
-
-
-/datum/configuration/proc/UpdateStat()
-	if (!statLine)
-		statLine = new (null, src)
-		statLine.name = "Edit"
-	stat("Config", statLine)

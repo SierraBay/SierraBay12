@@ -45,8 +45,8 @@ The tech datums are the actual "tech trees" that you improve through researching
 #define RESEARCH_MAGNETS       /datum/tech/magnets
 #define RESEARCH_MATERIALS     /datum/tech/materials
 
-GLOBAL_VAR_INIT(research_point_gained, 0)
-GLOBAL_VAR_INIT(score_research_point_gained, 0)
+GLOBAL_VAR_AS(research_point_gained, 0)
+GLOBAL_VAR_AS(score_research_point_gained, 0)
 var/global/list/RDcomputer_list = list()
 var/global/list/explosion_watcher_list = list()
 

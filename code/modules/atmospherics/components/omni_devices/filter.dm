@@ -2,7 +2,7 @@
 // on the XGM gas datums - would need to have a consistent/constant
 // id for the gasses but otherwise should allow for true omni filters.
 
-GLOBAL_LIST_INIT(filter_gas_to_mode, list(    \
+GLOBAL_LIST_AS(filter_gas_to_mode, list(    \
 	"None" =           ATM_NONE,              \
 	"Oxygen" =         ATM_O2,                \
 	"Nitrogen" =       ATM_N2,                \
@@ -13,7 +13,7 @@ GLOBAL_LIST_INIT(filter_gas_to_mode, list(    \
 	"Methyl Bromide" = ATM_CH3BR              \
 ))
 
-GLOBAL_LIST_INIT(filter_mode_to_gas, list(    \
+GLOBAL_LIST_AS(filter_mode_to_gas, list(    \
 	"[ATM_O2]" =       "Oxygen",              \
 	"[ATM_N2]" =       "Nitrogen",            \
 	"[ATM_CO2]" =      "Carbon Dioxide",      \
@@ -23,7 +23,7 @@ GLOBAL_LIST_INIT(filter_mode_to_gas, list(    \
 	"[ATM_CH3BR]" =    "Methyl Bromide"       \
 ))
 
-GLOBAL_LIST_INIT(filter_mode_to_gas_id, list( \
+GLOBAL_LIST_AS(filter_mode_to_gas_id, list( \
 	"[ATM_O2]" =       "[GAS_OXYGEN]",        \
 	"[ATM_N2]" =       "[GAS_NITROGEN]",      \
 	"[ATM_CO2]" =      "[GAS_CO2]",           \

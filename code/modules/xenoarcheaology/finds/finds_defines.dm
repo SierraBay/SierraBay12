@@ -1,5 +1,5 @@
 /// List (path or string -> string). Map of possible response carriers to strings for archaeological finds.
-GLOBAL_LIST_INIT(responsive_carriers_to_finds, list(
+GLOBAL_LIST_AS(responsive_carriers_to_finds, list(
 	/datum/reagent/carbon = "Trace organic cells",
 	/datum/reagent/potassium = "Long exposure particles",
 	/datum/reagent/hydrazine = "Trace water particles",

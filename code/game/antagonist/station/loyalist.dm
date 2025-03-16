@@ -1,4 +1,4 @@
-GLOBAL_DATUM_INIT(loyalists, /datum/antagonist/loyalists, new)
+GLOBAL_TYPED_NEW(loyalists, /datum/antagonist/loyalists)
 
 /datum/antagonist/loyalists
 	id = MODE_LOYALIST

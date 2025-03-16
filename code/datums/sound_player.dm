@@ -1,4 +1,4 @@
-GLOBAL_DATUM_INIT(sound_player, /singleton/sound_player, new)
+GLOBAL_TYPED_NEW(sound_player, /singleton/sound_player)
 
 /*
 	A sound player/manager for looping 3D sound effects.

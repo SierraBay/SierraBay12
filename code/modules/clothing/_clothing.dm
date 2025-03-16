@@ -241,6 +241,16 @@
 		return TRUE
 	return ..()
 
+/obj/item/clothing/transfer_blood(mob/living/carbon/human/target, target_zone)
+	. = ..()
+	if (.)
+		update_clothing_icon()
+
+/obj/item/clothing/add_blood_custom(source_blood_color = COLOR_BLOOD_HUMAN, amount = 3, list/source_blood_DNA = list())
+	. = ..()
+	if (amount)
+		update_clothing_icon()
+
 ///////////////////////////////////////////////////////////////////////
 // Ears: headsets, earmuffs and tiny objects
 /obj/item/clothing/ears

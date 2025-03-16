@@ -43,8 +43,8 @@ SUBSYSTEM_DEF(alarm)
 	queue.Cut()
 
 
-GLOBAL_DATUM_INIT(atmosphere_alarm, /datum/alarm_handler/atmosphere, new)
-GLOBAL_DATUM_INIT(camera_alarm, /datum/alarm_handler/camera, new)
-GLOBAL_DATUM_INIT(fire_alarm, /datum/alarm_handler/fire, new)
-GLOBAL_DATUM_INIT(motion_alarm, /datum/alarm_handler/motion, new)
-GLOBAL_DATUM_INIT(power_alarm, /datum/alarm_handler/power, new)
+GLOBAL_TYPED_NEW(atmosphere_alarm, /datum/alarm_handler/atmosphere)
+GLOBAL_TYPED_NEW(camera_alarm, /datum/alarm_handler/camera)
+GLOBAL_TYPED_NEW(fire_alarm, /datum/alarm_handler/fire)
+GLOBAL_TYPED_NEW(motion_alarm, /datum/alarm_handler/motion)
+GLOBAL_TYPED_NEW(power_alarm, /datum/alarm_handler/power)

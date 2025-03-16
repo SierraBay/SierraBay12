@@ -15,7 +15,7 @@
 	icon_state = "light-p"
 	obj_flags = OBJ_FLAG_CONDUCTIBLE
 
-GLOBAL_LIST_INIT(possible_switch_offsets, list(
+GLOBAL_LIST_AS(possible_switch_offsets, list(
 		"North" = list(
 			"Middle Lower" = list(0,25),
 			"Offset Lower" = list(7,25),

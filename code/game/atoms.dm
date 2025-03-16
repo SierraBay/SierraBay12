@@ -655,9 +655,10 @@
 /atom/proc/transfer_blood(mob/living/carbon/human/target, target_zone)
 	if (!ishuman(target))
 		return 0
+	var/taken = rand(min(1, blood_transfer_amount), blood_transfer_amount)
+	if(!taken)
+		return 0
 	var/obj/item/clothing/equipped_item = target.get_covering_equipped_item_by_zone(target_zone)
-	var/taken = rand(1,blood_transfer_amount)
-	blood_transfer_amount -= taken
 	if(istype(equipped_item))
 		equipped_item.add_blood_custom(blood_color, taken, blood_DNA)
 	else
@@ -666,6 +667,7 @@
 				target.bloody_hands_custom(blood_color, 3, blood_DNA)
 			if(BP_CHEST, BP_GROIN, BP_L_ARM , BP_R_ARM, BP_L_LEG , BP_R_LEG)
 				target.bloody_body_custom(blood_color, taken, blood_DNA)
+	blood_transfer_amount -= taken
 	return 1
 
 /mob/living/proc/handle_additional_vomit_reagents(obj/decal/cleanable/vomit/vomit)

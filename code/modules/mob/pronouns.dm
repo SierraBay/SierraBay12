@@ -93,4 +93,4 @@
 		by_key[pronouns.key] = pronouns
 
 
-GLOBAL_DATUM_INIT(pronouns, /datum/pronouns_manager, new)
+GLOBAL_TYPED_NEW(pronouns, /datum/pronouns_manager)

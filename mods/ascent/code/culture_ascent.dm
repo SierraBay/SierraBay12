@@ -1,4 +1,4 @@
-GLOBAL_LIST_INIT(gyne_names, list())
+GLOBAL_LIST_EMPTY(gyne_names)
 
 /singleton/cultural_info/culture/ascent/proc/get_gyne_name()
 	return LAZYLEN(GLOB.gyne_names) ? pick(GLOB.gyne_names) : create_gyne_name()
@@ -17,7 +17,7 @@ GLOBAL_LIST_INIT(gyne_names, list())
 // - https://en.wikipedia.org/wiki/List_of_landforms
 // - https://en.wikipedia.org/wiki/Outline_of_classical_architecture
 
-GLOBAL_LIST_INIT(gyne_geoforms, list(
+GLOBAL_LIST_AS(gyne_geoforms, list(
 	"abime",         "abyss",         "ait",         "anabranch",    "arc",           "arch",          "archipelago",  "arete",
 	"arroyo",        "atoll",         "ayre",        "badlands",     "bar",           "barchan",       "barrier",      "basin",
 	"bay",           "bayou",         "beach",       "bight",        "blowhole",      "blowout",       "bluff",        "bornhardt",
@@ -45,7 +45,7 @@ GLOBAL_LIST_INIT(gyne_geoforms, list(
 	"waterfall",     "watershed"
 ))
 
-GLOBAL_LIST_INIT(gyne_architecture, list(
+GLOBAL_LIST_AS(gyne_architecture, list(
 	"barrel",        "annular",       "aynali",      "baroque",      "catalan",       "cavetto",       "catenary",     "cloister",
 	"corbel",        "cross",         "cycloidal",   "cylindrical",  "diamond",       "domical",       "fan",          "lierne",
 	"muqarnas",      "net",           "nubian",      "ogee",         "ogival",        "parabolic",     "hyperbolic",   "volute",
@@ -70,7 +70,7 @@ GLOBAL_LIST_INIT(gyne_architecture, list(
 	"imperial",      "independant",   "managed",     "multilateral", "neutral",       "nonaligned",    "parastatal"
 ))
 
-GLOBAL_LIST_INIT(queen_names, list(
+GLOBAL_LIST_AS(queen_names, list(
 	"ascension", 		"conquest", 	"majesty", 			"triumph",  		"glory",  		"highness", 		"victory", 		"sovereignty",
 	"regality", 		"supremacy",	"transcendence", 	"vengeance", 		"might", 		"purity", 			"prosperity",	"maximaility",
 	"benevolence", 		"generosity",	"magnanimity", 		"gracefulness", 	"eternity", 	"expansiveness",	"absoluteness",	"absolution",
@@ -79,7 +79,7 @@ GLOBAL_LIST_INIT(queen_names, list(
 	"vigor",			"vibrancy",		"transiency",		"elation",			"energy",		"collaboration"
 ))
 
-GLOBAL_LIST_INIT(worker_names, list(
+GLOBAL_LIST_AS(worker_names, list(
 	"climber",		"leaper",		"leaf",		"tree",		"hider",	 "striker",		"breaker",		"river",	"waterfall",	"breaker",		"stone",
 	"dark",			"bright",		"hunter",	"killer",	"grass",	 "flame",		"fire",			"fighter",	"thinker",		"flier",		"rock",
 	"speaker",		"lake",			"devourer",	"mountain",	"soarer",	 "sleeper",		"bush",			"strong",	"clever",		"wasteful",		"cavern",

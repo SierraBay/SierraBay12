@@ -1,0 +1,8 @@
+#include "_premade_core.dm"
+#include "combat.dm"
+#include "death_squad.dm"
+#include "ert.dm"
+#include "heavy.dm"
+#include "light.dm"
+#include "merc.dm"
+#include "powerloader.dm"

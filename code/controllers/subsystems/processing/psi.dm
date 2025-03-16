@@ -1,6 +1,6 @@
 // [SIERRA-REMOVE] - PSIONICS - (Перемещено в /mods/psionics)
 /*
-GLOBAL_LIST_INIT(psychic_ranks_to_strings, list("Latent", "Operant", "Masterclass", "Grandmasterclass", "Paramount"))
+GLOBAL_LIST_AS(psychic_ranks_to_strings, list("Latent", "Operant", "Masterclass", "Grandmasterclass", "Paramount"))
 
 PROCESSING_SUBSYSTEM_DEF(psi)
 	name = "Psychics"

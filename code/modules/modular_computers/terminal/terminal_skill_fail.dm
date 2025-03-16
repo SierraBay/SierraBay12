@@ -1,4 +1,4 @@
-GLOBAL_LIST_INIT(terminal_fails, init_subtypes(/datum/terminal_skill_fail))
+GLOBAL_LIST_AS(terminal_fails, init_subtypes(/datum/terminal_skill_fail))
 
 /datum/terminal_skill_fail
 	var/require_ntnet = FALSE

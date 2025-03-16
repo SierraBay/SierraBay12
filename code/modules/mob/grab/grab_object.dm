@@ -301,8 +301,9 @@
 	return current_grab.force_stand
 
 /obj/item/grab/use_tool(obj/item/item, mob/living/user, list/click_params)
-	if(user == assailant)
-		current_grab.item_attack(src, item)
+	if (user == assailant)
+		return item.resolve_attackby(affecting, assailant, click_params)
+
 	return ..()
 
 /obj/item/grab/proc/can_absorb()

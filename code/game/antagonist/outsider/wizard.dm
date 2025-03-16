@@ -1,4 +1,4 @@
-GLOBAL_DATUM_INIT(wizards, /datum/antagonist/wizard, new)
+GLOBAL_TYPED_NEW(wizards, /datum/antagonist/wizard)
 
 /datum/antagonist/wizard
 	id = MODE_WIZARD

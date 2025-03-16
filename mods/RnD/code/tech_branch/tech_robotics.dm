@@ -57,7 +57,7 @@
 	required_tech_levels = list()
 	cost = 1000
 
-	unlocks_designs = list("mechfab","mech_software_engineering","mech_software_utility","treads","mech_frame", "mech_armour_basic", "mech_control_module", "powerloader_head", "powerloader_body", "powerloader_arms", "powerloader_legs", "quad_legs", "sphere_body","mech_armour_em","mech_armour_radproof" )
+	unlocks_designs = list("mechfab","mech_software_engineering","mech_software_utility","treads","mech_frame", "mech_armour_basic", "mech_control_module", "powerloader_head", "powerloader_body", "right_powerloader_arm", "left_powerloader_arm",  "right_powerloader_leg", "left_powerloader_leg", "quad_legs", "sphere_body","mech_armour_em","mech_armour_radproof" )
 
 /datum/technology/robo/adv_augments
 	name = "Advanced Augments"
@@ -102,7 +102,7 @@
 	required_tech_levels = list()
 	cost = 2000
 
-	unlocks_designs = list("heavy_legs", "heavy_arms","heavy_body","heavy_head")
+	unlocks_designs = list("heavy_head", "heavy_body", "right_heavy_arm", "left_heavy_arm", "right_heavy_leg", "left_heavy_leg")
 
 /datum/technology/robo/light_mech
 	name = "Light Mech Design"
@@ -117,7 +117,7 @@
 	required_tech_levels = list()
 	cost = 1500
 
-	unlocks_designs = list("light_legs","light_arms","light_body","light_head")
+	unlocks_designs = list("light_head", "light_body", "right_light_arm", "left_light_arm", "right_light_leg", "left_light_leg")
 
 /datum/technology/robo/combat_mechs
 	name = "Combat Mech Design"
@@ -132,7 +132,7 @@
 	required_tech_levels = list()
 	cost = 2500
 
-	unlocks_designs = list("combat_legs","combat_arms","combat_body","combat_head","mech_armour_combat")
+	unlocks_designs = list("combat_head", "combat_body", "right_combat_arm", "left_combat_arm", "right_combat_leg", "left_combat_leg", "mech_armour_combat")
 
 
 /datum/technology/robo/mech_equipment
@@ -148,7 +148,7 @@
 	required_tech_levels = list()
 	cost = 500
 
-	unlocks_designs = list("mech_recharger","hydraulic_clamp","gravity_catapult","mech_drill","mech_machete", "mech_floodlight","mech_camera","mech_flash", "mech_plasma","mech_shield_ballistic",)
+	unlocks_designs = list("mech_recharger","hydraulic_clamp","gravity_catapult","mech_drill","mech_machete", "mech_floodlight","mech_camera","mech_flash", "mech_plasma","mech_shield_ballistic","mech_extinguisher")
 
 /datum/technology/robo/adv_mech_tools
 	name = "Advanced Mech Tools"
@@ -178,7 +178,7 @@
 	required_tech_levels = list()
 	cost = 1500
 
-	unlocks_designs = list("mech_ion","mech_laser","mech_flamer","mech_taser","mech_software_weapons","mech_SMG","SMG_ammo","mech_shield")
+	unlocks_designs = list("mech_ion","mech_laser","mech_flamer","mech_taser","mech_software_weapons","mech_SMG","SMG_ammo","mech_shield","mech_GRAD", "mech_GRAD_peper", "mech_GRAD_flashbang", "mech_GRAD_fire")
 
 /datum/technology/robo/mech_med_tools
 	name = "Mech Medical Tools"
