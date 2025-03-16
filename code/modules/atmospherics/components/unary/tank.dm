@@ -54,9 +54,6 @@
 /obj/machinery/atmospherics/unary/tank/hide()
 	update_underlays()
 
-/obj/machinery/atmospherics/unary/tank/return_air()
-	return air_contents
-
 /obj/machinery/atmospherics/unary/tank/use_tool(obj/item/W, mob/living/user, list/click_params)
 	if(!isWrench(W))
 		return ..()
