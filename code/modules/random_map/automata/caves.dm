@@ -1,4 +1,4 @@
-GLOBAL_LIST_INIT(weighted_minerals_sparse, \
+GLOBAL_LIST_AS(weighted_minerals_sparse, \
 	list(                   \
 		MATERIAL_PITCHBLENDE =  8, \
 		MATERIAL_PLATINUM =     8, \
@@ -20,7 +20,7 @@ GLOBAL_LIST_INIT(weighted_minerals_sparse, \
 		MATERIAL_BORAX = 5
 	))
 
-GLOBAL_LIST_INIT(weighted_minerals_rich, \
+GLOBAL_LIST_AS(weighted_minerals_rich, \
 	list(                   \
 		MATERIAL_PITCHBLENDE = 10, \
 		MATERIAL_PLATINUM =    10, \

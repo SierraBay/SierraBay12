@@ -1,4 +1,4 @@
-GLOBAL_DATUM_INIT(physical_state, /datum/topic_state/physical, new)
+GLOBAL_TYPED_NEW(physical_state, /datum/topic_state/physical)
 
 /datum/topic_state/physical/can_use_topic(src_object, mob/user)
 	. = user.shared_nano_interaction(src_object)
@@ -17,7 +17,7 @@ GLOBAL_DATUM_INIT(physical_state, /datum/topic_state/physical, new)
 /mob/living/silicon/ai/check_physical_distance(src_object)
 	return max(STATUS_UPDATE, shared_living_nano_distance(src_object))
 
-GLOBAL_DATUM_INIT(physical_no_access_state, /datum/topic_state/physical/no_access, new)
+GLOBAL_TYPED_NEW(physical_no_access_state, /datum/topic_state/physical/no_access)
 
 /datum/topic_state/physical/no_access
 	check_access = FALSE

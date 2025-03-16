@@ -1,4 +1,4 @@
-GLOBAL_DATUM_INIT(is_http_protocol, /regex, regex("^https?://"))
+GLOBAL_TYPED_AS(is_http_protocol, /regex, regex("^https?://"))
 
 
 //Converts an icon to base64. Operates by putting the icon in the iconCache savefile,

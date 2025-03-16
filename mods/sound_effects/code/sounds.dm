@@ -1,4 +1,4 @@
-/*GLOBAL_LIST_INIT(heavystep_sound, list(
+/*GLOBAL_LIST_AS(heavystep_sound, list(
 "packs/infinity/sound/effects/x1.ogg",
 "packs/infinity/sound/effects/x2.ogg",
 "packs/infinity/sound/effects/x3.ogg",
@@ -6,13 +6,13 @@
 )) //нигде не используется
 */
 
-GLOBAL_LIST_INIT(light_strike_sound, list(
+GLOBAL_LIST_AS(light_strike_sound, list(
 	"packs/infinity/sound/effects/hit_kick.ogg",
 	"packs/infinity/sound/effects/hit_punch.ogg"
 )) //привязано через жепу на 50% в sound.dm без использования этого глобала
 
 
-/*GLOBAL_LIST_INIT(gun_sound, list(
+/*GLOBAL_LIST_AS(gun_sound, list(
 "packs/infinity/sound/weapons/gunshot.ogg",
 "packs/infinity/sound/weapons/gunshot2.ogg",
 "packs/infinity/sound/weapons/gunshot3.ogg",
@@ -20,18 +20,18 @@ GLOBAL_LIST_INIT(light_strike_sound, list(
 )) //нигде не используется
 */
 
-GLOBAL_LIST_INIT(human_clearing_throat, list(
+GLOBAL_LIST_AS(human_clearing_throat, list(
 	FEMALE = "packs/infinity/sound/voice/clearing-throat-f.ogg",
 	MALE = "packs/infinity/sound/voice/clearing-throat-m.ogg"
 )) // привязано в say.dm
 
-GLOBAL_LIST_INIT(machinery_exposed_sound, list(
+GLOBAL_LIST_AS(machinery_exposed_sound, list(
 "packs/infinity/sound/machines/Custom_screwdriveropen.ogg",
 "packs/infinity/sound/machines/Custom_screwdriverclose.ogg"
 )) //используется в генике щита
 
 /*
-GLOBAL_LIST_INIT(rig_breath_sound, list(
+GLOBAL_LIST_AS(rig_breath_sound, list(
 "packs/infinity/sound/voice/gasmask1.ogg","packs/infinity/sound/voice/gasmask2.ogg",
 "packs/infinity/sound/voice/gasmask3.ogg","packs/infinity/sound/voice/gasmask4.ogg",
 "packs/infinity/sound/voice/gasmask5.ogg","packs/infinity/sound/voice/gasmask6.ogg",
@@ -40,7 +40,7 @@ GLOBAL_LIST_INIT(rig_breath_sound, list(
 )) //нигде не используется
 */
 
-GLOBAL_LIST_INIT(console_interact_sound, list(
+GLOBAL_LIST_AS(console_interact_sound, list(
 "packs/infinity/sound/machines/console/console_interact1.ogg",
 "packs/infinity/sound/machines/console/console_interact2.ogg",
 "packs/infinity/sound/machines/console/console_interact3.ogg",
@@ -51,7 +51,7 @@ GLOBAL_LIST_INIT(console_interact_sound, list(
 )) //звуки записчика музыки на кассетки
 
 /*
-GLOBAL_LIST_INIT(radio_chatter_sound, list(
+GLOBAL_LIST_AS(radio_chatter_sound, list(
 "packs/infinity/sound/effects/radio1.ogg",
 "packs/infinity/sound/effects/radio2.ogg",
 "packs/infinity/sound/effects/radio3.ogg",
@@ -59,7 +59,7 @@ GLOBAL_LIST_INIT(radio_chatter_sound, list(
 )) //нигде не используется
 */
 
-GLOBAL_LIST_INIT(trauma_sound, list(
+GLOBAL_LIST_AS(trauma_sound, list(
 "packs/infinity/sound/effects/gore/trauma1.ogg",
 "packs/infinity/sound/effects/gore/trauma2.ogg",
 "packs/infinity/sound/effects/gore/trauma3.ogg"
@@ -67,14 +67,14 @@ GLOBAL_LIST_INIT(trauma_sound, list(
 
 //используется в sound.dm
 
-GLOBAL_LIST_INIT(smash_sound,list(
+GLOBAL_LIST_AS(smash_sound,list(
 "packs/infinity/sound/effects/gore/smash1.ogg",
 "packs/infinity/sound/effects/gore/smash2.ogg",
 "packs/infinity/sound/effects/gore/smash3.ogg",
 "packs/infinity/sound/effects/gore/trauma1.ogg"
 ))//используется в sound.dm
 
-GLOBAL_LIST_INIT(switch_small_sound, list(
+GLOBAL_LIST_AS(switch_small_sound, list(
 "packs/infinity/sound/effects/using/switch/small1.ogg",
 "packs/infinity/sound/effects/using/switch/small2.ogg"
 ))

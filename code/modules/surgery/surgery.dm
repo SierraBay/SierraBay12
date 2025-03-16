@@ -1,5 +1,5 @@
 // A list of types that will not attempt to perform surgery if the user is on help intent.
-GLOBAL_LIST_INIT(surgery_tool_exceptions, list(
+GLOBAL_LIST_AS(surgery_tool_exceptions, list(
 	/obj/item/auto_cpr,
 	/obj/item/device/scanner/health,
 	/obj/item/shockpaddles,
@@ -8,7 +8,7 @@ GLOBAL_LIST_INIT(surgery_tool_exceptions, list(
 	/obj/item/reagent_containers/syringe,
 	/obj/item/reagent_containers/borghypo
 ))
-GLOBAL_LIST_INIT(surgery_tool_exception_cache, new)
+GLOBAL_LIST_EMPTY(surgery_tool_exception_cache)
 
 /* SURGERY STEPS */
 /singleton/surgery_step

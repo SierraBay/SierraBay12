@@ -1,6 +1,6 @@
-GLOBAL_VAR_INIT(total_runtimes, 0)
-GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
-GLOBAL_VAR_INIT(actual_error_file_line, new/regex("^%% (.*?),(.*?) %% "))
+GLOBAL_VAR_AS(total_runtimes, 0)
+GLOBAL_VAR_AS(total_runtimes_skipped, 0)
+GLOBAL_VAR_AS(actual_error_file_line, new/regex("^%% (.*?),(.*?) %% "))
 
 #ifdef DEBUG
 /world/Error(exception/E)

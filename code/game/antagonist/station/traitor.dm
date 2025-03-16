@@ -1,4 +1,4 @@
-GLOBAL_DATUM_INIT(traitors, /datum/antagonist/traitor, new)
+GLOBAL_TYPED_NEW(traitors, /datum/antagonist/traitor)
 
 // Inherits most of its vars from the base datum.
 /datum/antagonist/traitor

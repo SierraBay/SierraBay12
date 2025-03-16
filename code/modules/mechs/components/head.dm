@@ -14,8 +14,6 @@
 	var/active_sensors = 0
 	power_use = 15
 	w_class = ITEM_SIZE_NORMAL
-	var/obj/mob/exosuit/owner
-
 
 /obj/item/mech_component/sensors/Destroy()
 	QDEL_NULL(camera)
@@ -49,18 +47,12 @@
 		flags |= BLIND
 	else if(active_sensors && powered)
 		flags |= vision_flags
+
 	return flags
-
-
 
 /obj/item/mech_component/sensors/proc/get_invisible(powered)
 	var/invisible = 0
-	// [SIERRA-EDIT]
-	/*
 	if((total_damage <= 0.8 * max_damage) && active_sensors && powered)
-	*/
-	if((camera) && active_sensors && powered)
-	// [SIERRA-EDIT]
 		invisible = see_invisible
 	return invisible
 

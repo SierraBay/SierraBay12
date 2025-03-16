@@ -1,4 +1,4 @@
-GLOBAL_DATUM_INIT(deathsquad, /datum/antagonist/deathsquad, new)
+GLOBAL_TYPED_NEW(deathsquad, /datum/antagonist/deathsquad)
 
 /datum/antagonist/deathsquad
 	id = MODE_DEATHSQUAD

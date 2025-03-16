@@ -939,7 +939,7 @@
 				/obj/item/clothing/accessory/glassesmod/nvg = 1
 				)
 
-GLOBAL_LIST_INIT(random_backpacks, list(
+GLOBAL_LIST_AS(random_backpacks, list(
 	/obj/item/storage/backpack/cultpack,
 	/obj/item/storage/backpack/clown,
 	/obj/item/storage/backpack/medic,

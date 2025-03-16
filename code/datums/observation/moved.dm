@@ -8,7 +8,7 @@
 //			/atom/old_loc: The loc before the move.
 //			/atom/new_loc: The loc after the move.
 
-GLOBAL_DATUM_INIT(moved_event, /singleton/observ/moved, new)
+GLOBAL_TYPED_NEW(moved_event, /singleton/observ/moved)
 
 /singleton/observ/moved
 	name = "Moved"

@@ -1,6 +1,0 @@
-/mob/living/exosuit/Life()
-	.=..()
-	if(process_heat)
-		process_heat()
-	if(process_move_speed)
-		process_speed()

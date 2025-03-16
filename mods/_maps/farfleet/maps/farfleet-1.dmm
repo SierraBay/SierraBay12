@@ -3504,6 +3504,9 @@
 /obj/floor_decal/corner/darkblue/border{
 	dir = 9
 	},
+/obj/structure/filingcabinet/wallcabinet{
+	pixel_x = -30
+	},
 /turf/simulated/floor/tiled/dark,
 /area/ship/farfleet/command/bridge)
 "oz" = (
@@ -3949,6 +3952,7 @@
 /obj/floor_decal/corner/darkblue/border{
 	dir = 8
 	},
+/obj/item/material/clipboard/plastic,
 /turf/simulated/floor/tiled/dark,
 /area/ship/farfleet/command/bridge)
 "rQ" = (
@@ -4352,6 +4356,7 @@
 /obj/floor_decal/corner/darkblue/border{
 	dir = 4
 	},
+/obj/item/folder/blue,
 /turf/simulated/floor/tiled/dark,
 /area/ship/farfleet/command/bridge)
 "uM" = (

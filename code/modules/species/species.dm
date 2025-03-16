@@ -1,6 +1,6 @@
 GLOBAL_LIST_EMPTY(species_by_name)
 
-GLOBAL_LIST_INIT(playable_species, list(
+GLOBAL_LIST_AS(playable_species, list(
 	SPECIES_HUMAN
 ))
 

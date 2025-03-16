@@ -1,0 +1,19 @@
+/obj/item/mech_component/sensors/heavy
+	name = "heavy sensors"
+	desc = "A solitary sensor moves inside a recessed slit in the armour plates."
+	exosuit_desc_string = "a reinforced monoeye"
+	icon_state = "heavy_head"
+	prebuilt_software = list(/obj/item/circuitboard/exosystem/weapons)
+	power_use = 0
+	max_hp = 500
+	min_damage = 300
+	max_repair = 150
+	repair_damage = 30
+	repair_damage = 30
+	req_material = MATERIAL_PLASTEEL
+	back_modificator_damage = 4
+	front_modificator_damage = 0.5
+	max_heat = 300
+	heat_cooling = 4
+	emp_heat_generation = 100
+	weight = 120

@@ -1,4 +1,4 @@
-GLOBAL_LIST_INIT(possible_chassis, list(
+GLOBAL_LIST_AS(possible_chassis, list(
 		"Drone" = "drone",
 		"Cat" = "cat",
 		"Mouse" = "mouse",
@@ -10,7 +10,7 @@ GLOBAL_LIST_INIT(possible_chassis, list(
 		"Humanoid" = "humanoid"
 		))
 
-GLOBAL_LIST_INIT(possible_say_verbs, list(
+GLOBAL_LIST_AS(possible_say_verbs, list(
 		"Robotic" = list("states","declares","queries"),
 		"Natural" = list("says","yells","asks"),
 		"Beep" = list("beeps","beeps loudly","boops"),

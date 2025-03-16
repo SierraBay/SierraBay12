@@ -4,8 +4,8 @@
 	Thick material will prevent injections, similar to other means of injections.
 */
 
-GLOBAL_VAR_INIT(MAX_SPIDER_COUNT, 30)
-GLOBAL_VAR_INIT(SPIDER_COUNT, 0)
+GLOBAL_VAR_AS(MAX_SPIDER_COUNT, 30)
+GLOBAL_VAR_AS(SPIDER_COUNT, 0)
 
 // The base spider, in the 'walking tank' family.
 /mob/living/simple_animal/hostile/giant_spider

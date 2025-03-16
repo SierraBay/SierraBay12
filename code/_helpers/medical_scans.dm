@@ -1,4 +1,4 @@
-/mob/living/carbon/human/proc/get_raw_medical_data(tag = FALSE)
+/mob/living/carbon/human/proc/get_raw_medical_data(tag = FALSE, mutations = FALSE)
 	RETURN_TYPE(/list)
 	var/mob/living/carbon/human/H = src
 	var/list/scan = list()
@@ -108,6 +108,12 @@
 		scan["blind"] = TRUE
 	if(H.sdisabilities & NEARSIGHTED)
 		scan["nearsight"] = TRUE
+	if(mutations)
+		scan["mutations"] = FALSE
+		for(var/block in 1 to length(assigned_blocks))
+			if(H.dna.GetSEState(block))
+				scan["mutations"] = TRUE
+				break;
 	return scan
 
 /proc/display_medical_data_header(list/scan, skill_level = SKILL_DEFAULT)
@@ -244,6 +250,12 @@
 
 		if(scan["paralysis"])
 			subdat += "<tr><td><strong>Paralysis Summary:</strong></td><td>approx. [scan["paralysis"]/4] seconds left</td></tr>"
+
+		if(!isnull(scan["mutations"]))
+			if(scan["mutations"])
+				subdat += "<tr><td><strong>[SPAN_BAD("Unknown genetic mutations detected.")]</strong></td></tr>"
+			else
+				subdat += "<tr><td><strong>No genetic mutations present.</strong></td></tr>"
 
 		dat += subdat
 

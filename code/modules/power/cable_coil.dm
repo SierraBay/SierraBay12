@@ -1,5 +1,5 @@
 /// Associative list of colors. Default colors that a cable coil or length of cable can be. Used for multitool interactions.
-GLOBAL_LIST_INIT(cable_default_colors, list(
+GLOBAL_LIST_AS(cable_default_colors, list(
 	"Black"  = CABLE_COLOR_BLACK,
 	"Blue"   = CABLE_COLOR_BLUE,
 	"Cyan"   = CABLE_COLOR_CYAN,

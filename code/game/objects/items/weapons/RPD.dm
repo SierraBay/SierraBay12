@@ -1,4 +1,4 @@
-GLOBAL_LIST_INIT(rpd_pipe_selection, list(
+GLOBAL_LIST_AS(rpd_pipe_selection, list(
 	new /datum/pipe/pipe_dispenser/simple() = list(
 		new /datum/pipe/pipe_dispenser/simple/straight(),
 		new /datum/pipe/pipe_dispenser/simple/bent(),
@@ -19,7 +19,7 @@ GLOBAL_LIST_INIT(rpd_pipe_selection, list(
 		new /datum/pipe/pipe_dispenser/scrubber/cap()),
 	))
 
-GLOBAL_LIST_INIT(rpd_pipe_selection_skilled, list(
+GLOBAL_LIST_AS(rpd_pipe_selection_skilled, list(
 	new /datum/pipe/pipe_dispenser/simple() = list(
 		new /datum/pipe/pipe_dispenser/simple/straight(),
 		new /datum/pipe/pipe_dispenser/simple/bent(),

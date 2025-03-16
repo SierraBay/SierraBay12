@@ -706,9 +706,18 @@
 				stat("Failsafe Controller:", "ERROR")
 			if(Master)
 				stat(null)
-				config.UpdateStat()
-				GLOB.UpdateStat()
-				GLOB.debug_real_globals.UpdateStat()
+				var/static/stat_created
+				var/static/obj/clickable_stat/config_stat
+				var/static/obj/clickable_stat/glob_stat
+				var/static/obj/clickable_stat/bare_stat
+				if (!stat_created)
+					stat_created = TRUE
+					config_stat = new (null, config, "Edit")
+					glob_stat = new (null, GLOB, "Edit")
+					bare_stat = new (null, GLOB.debug_real_globals, "Edit")
+				stat("Config", config_stat)
+				stat("Managed Globals", glob_stat)
+				stat("Real Globals", bare_stat)
 				stat(null)
 				for (var/datum/controller/subsystem/subsystem as anything in Master.subsystems)
 					subsystem.UpdateStat(time)

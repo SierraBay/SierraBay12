@@ -10,7 +10,7 @@
  *  and each branch datum definition, respectively.
  */
 
-GLOBAL_DATUM_INIT(mil_branches, /datum/mil_branches, new)
+GLOBAL_TYPED_NEW(mil_branches, /datum/mil_branches)
 
 /**
  *  Global object for handling branches

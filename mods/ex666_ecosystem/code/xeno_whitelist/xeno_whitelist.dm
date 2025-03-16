@@ -39,7 +39,7 @@ var/global/list/admin_verbs_xeno = list(
 /*
 	This state checks that the user is an ~~admin~~ XenoModerator, end of story
 */
-GLOBAL_DATUM_INIT(xeno_state, /datum/topic_state/admin_state/xeno, new)
+GLOBAL_TYPED_NEW(xeno_state, /datum/topic_state/admin_state/xeno)
 
 /datum/topic_state/admin_state/xeno/can_use_topic(src_object, mob/user)
 	return check_rights(R_XENO|R_DEBUG, 0, user) ? STATUS_INTERACTIVE : STATUS_CLOSE

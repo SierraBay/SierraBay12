@@ -1,4 +1,4 @@
-GLOBAL_DATUM_INIT(vox_raiders, /datum/antagonist/vox, new)
+GLOBAL_TYPED_NEW(vox_raiders, /datum/antagonist/vox)
 GLOBAL_LIST_EMPTY(vox_artifact_spawners)
 
 /datum/antagonist/vox

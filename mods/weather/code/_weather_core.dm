@@ -1,5 +1,5 @@
 GLOBAL_LIST_EMPTY(effected_by_weather)
-GLOBAL_VAR_INIT(ambience_channel_weather, GLOB.sound_channels.RequestChannel("AMBIENCE_WEATHER"))
+GLOBAL_VAR_AS(ambience_channel_weather, GLOB.sound_channels.RequestChannel("AMBIENCE_WEATHER"))
 #define isweatherhere(A) locate(/obj/weather) in A
 /obj/weather
 	var/play_monitor_effect = TRUE

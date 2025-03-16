@@ -1,0 +1,60 @@
+/obj/item/mech_component/chassis/pod
+	name = "spherical exosuit chassis"
+	desc = "The NanoTrasen Katamari series cockpits have won a massive tender by SCG few years back. No one is sure why, but these terrible things keep popping up on every government facility."
+	hatch_descriptor = "hatch"
+	pilot_coverage = 100
+	transparent_cabin = TRUE
+	exosuit_desc_string = "a spherical chassis"
+	icon_state = "pod_body"
+	has_hardpoints = list(HARDPOINT_BACK)
+	power_use = 5
+	max_hp = 210
+	max_repair = 50
+	min_damage = 110
+	repair_damage = 30
+	have_fast_power_up = TRUE
+	back_modificator_damage = 1.3
+	front_modificator_damage = 1
+	max_heat = 200
+	heat_cooling = 5
+	emp_heat_generation = 100
+	weight = 400
+
+/obj/item/mech_component/chassis/pod/Initialize()
+	pilot_positions = list(
+		list(
+			"[NORTH]" = list("x" = 8,  "y" = 4),
+			"[SOUTH]" = list("x" = 8,  "y" = 4),
+			"[EAST]"  = list("x" = 12,  "y" = 4),
+			"[WEST]"  = list("x" = 4,  "y" = 4)
+		),
+		list(
+			"[NORTH]" = list("x" = 8,  "y" = 8),
+			"[SOUTH]" = list("x" = 8,  "y" = 8),
+			"[EAST]"  = list("x" = 10,  "y" = 8),
+			"[WEST]"  = list("x" = 6, "y" = 8)
+		)
+	)
+	back_passengers_positions = list(
+			"[NORTH]" = list("x" = 8,  "y" = 16),
+			"[SOUTH]" = list("x" = 8,  "y" = 16),
+			"[EAST]"  = list("x" = -4, "y" = 16),
+			"[WEST]"  = list("x" = 16, "y" = 16)
+			)
+	left_back_passengers_positions = list(
+			"[NORTH]" = list("x" = -4,  "y" = 16),
+			"[SOUTH]" = list("x" = 20,  "y" = 16),
+			"[EAST]"  = list("x" = -4, "y" = 16),
+			"[WEST]"  = list("x" = 16, "y" = 16)
+			)
+	right_back_passengers_positions = list(
+			"[NORTH]" = list("x" = 20,  "y" = 16),
+			"[SOUTH]" = list("x" = -4,  "y" = 16),
+			"[EAST]"  = list("x" = -4, "y" = 16),
+			"[WEST]"  = list("x" = 16, "y" = 16)
+			)
+	. = ..()
+
+/obj/item/mech_component/chassis/pod/prebuild()
+	. = ..()
+	m_armour = new /obj/item/robot_parts/robot_component/armour/exosuit/radproof(src)
