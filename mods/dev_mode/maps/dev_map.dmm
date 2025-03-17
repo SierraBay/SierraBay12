@@ -363,10 +363,6 @@
 /area/tdome/testing)
 "aWS" = (
 /obj/structure/table/steel,
-/obj/item/gun/projectile/pistol/hos{
-	pixel_x = 12;
-	pixel_y = 12
-	},
 /obj/item/gun/projectile/pistol/broomstick{
 	pixel_x = 12
 	},
