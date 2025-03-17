@@ -132,7 +132,7 @@
 	icon_state = "decontamination"
 
 /area/rnd/containment
-	name = "First Deck - RND - Containment Zone"
+	name = "Second Deck - RND - Containment Zone"
 	icon_state = "decontamination"
 
 /area/rnd/locker
