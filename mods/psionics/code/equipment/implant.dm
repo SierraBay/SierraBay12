@@ -1,3 +1,19 @@
+#ifndef PSI_IMPLANT_AUTOMATIC
+#define PSI_IMPLANT_AUTOMATIC "Security Level Derived"
+#endif
+#ifndef PSI_IMPLANT_SHOCK
+#define PSI_IMPLANT_SHOCK     "Issue Neural Shock"
+#endif
+#ifndef PSI_IMPLANT_WARN
+#define PSI_IMPLANT_WARN      "Issue Reprimand"
+#endif
+#ifndef PSI_IMPLANT_LOG
+#define PSI_IMPLANT_LOG       "Log Incident"
+#endif
+#ifndef PSI_IMPLANT_DISABLED
+#define PSI_IMPLANT_DISABLED  "Disabled"
+#endif
+
 /obj/item/implant/psi_control
 	name = "psi dampener implant"
 	desc = "A safety implant for registered psi-operants."
@@ -111,3 +127,9 @@
 				for(var/report in SSpsi.psi_monitors)
 					var/obj/machinery/psi_monitor/monitor = report
 					monitor.report_violation(src, stress)
+
+#undef PSI_IMPLANT_AUTOMATIC
+#undef PSI_IMPLANT_SHOCK
+#undef PSI_IMPLANT_WARN
+#undef PSI_IMPLANT_LOG
+#undef PSI_IMPLANT_DISABLED

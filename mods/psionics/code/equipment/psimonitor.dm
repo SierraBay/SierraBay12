@@ -1,3 +1,19 @@
+#ifndef PSI_IMPLANT_AUTOMATIC
+#define PSI_IMPLANT_AUTOMATIC "Security Level Derived"
+#endif
+#ifndef PSI_IMPLANT_SHOCK
+#define PSI_IMPLANT_SHOCK     "Issue Neural Shock"
+#endif
+#ifndef PSI_IMPLANT_WARN
+#define PSI_IMPLANT_WARN      "Issue Reprimand"
+#endif
+#ifndef PSI_IMPLANT_LOG
+#define PSI_IMPLANT_LOG       "Log Incident"
+#endif
+#ifndef PSI_IMPLANT_DISABLED
+#define PSI_IMPLANT_DISABLED  "Disabled"
+#endif
+
 /obj/machinery/psi_monitor
 	name = "psionic implant monitor"
 	icon = 'icons/obj/machines/research/psimeter.dmi'
@@ -120,3 +136,9 @@
 
 /obj/machinery/psi_monitor/proc/report_violation(obj/item/implant/psi_control/implant, stress)
 	psi_violations += "Stress [round(stress/10)] event - [implant.imp_in.name]."
+
+#undef PSI_IMPLANT_AUTOMATIC
+#undef PSI_IMPLANT_SHOCK
+#undef PSI_IMPLANT_WARN
+#undef PSI_IMPLANT_LOG
+#undef PSI_IMPLANT_DISABLED

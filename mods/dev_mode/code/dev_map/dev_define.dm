@@ -104,19 +104,3 @@
 			RELIGION_TAOISM
 		)
 	)
-
-#ifndef PSI_IMPLANT_AUTOMATIC
-#define PSI_IMPLANT_AUTOMATIC "Security Level Derived"
-#endif
-#ifndef PSI_IMPLANT_SHOCK
-#define PSI_IMPLANT_SHOCK     "Issue Neural Shock"
-#endif
-#ifndef PSI_IMPLANT_WARN
-#define PSI_IMPLANT_WARN      "Issue Reprimand"
-#endif
-#ifndef PSI_IMPLANT_LOG
-#define PSI_IMPLANT_LOG       "Log Incident"
-#endif
-#ifndef PSI_IMPLANT_DISABLED
-#define PSI_IMPLANT_DISABLED  "Disabled"
-#endif

@@ -1,3 +1,19 @@
+#ifndef PSI_IMPLANT_AUTOMATIC
+#define PSI_IMPLANT_AUTOMATIC "Security Level Derived"
+#endif
+#ifndef PSI_IMPLANT_SHOCK
+#define PSI_IMPLANT_SHOCK     "Issue Neural Shock"
+#endif
+#ifndef PSI_IMPLANT_WARN
+#define PSI_IMPLANT_WARN      "Issue Reprimand"
+#endif
+#ifndef PSI_IMPLANT_LOG
+#define PSI_IMPLANT_LOG       "Log Incident"
+#endif
+#ifndef PSI_IMPLANT_DISABLED
+#define PSI_IMPLANT_DISABLED  "Disabled"
+#endif
+
 /obj/item/implanter/psi
 	name = "psi-null implanter"
 	desc = "An implant gun customized to interact with psi dampeners."
@@ -16,3 +32,9 @@
 /obj/item/implanter/psi/New()
 	..()
 	imp = new /obj/item/implant/psi_control(src)
+
+#undef PSI_IMPLANT_AUTOMATIC
+#undef PSI_IMPLANT_SHOCK
+#undef PSI_IMPLANT_WARN
+#undef PSI_IMPLANT_LOG
+#undef PSI_IMPLANT_DISABLED
