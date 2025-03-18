@@ -233,12 +233,12 @@
 /area/map_template/vox_raider)
 "ck" = (
 /obj/structure/closet/crate/freezer,
-/obj/item/reagent_containers/glass/bottle/antitoxin,
-/obj/item/reagent_containers/glass/bottle/antitoxin,
+/obj/item/reagent_containers/glass/bottle/dylovene,
+/obj/item/reagent_containers/glass/bottle/dylovene,
 /obj/item/reagent_containers/glass/bottle/inaprovaline,
 /obj/item/reagent_containers/glass/bottle/inaprovaline,
-/obj/item/reagent_containers/glass/bottle/stoxin,
-/obj/item/reagent_containers/glass/bottle/stoxin,
+/obj/item/reagent_containers/glass/bottle/soporific,
+/obj/item/reagent_containers/glass/bottle/soporific,
 /obj/item/reagent_containers/glass/bottle/kelotane,
 /obj/item/reagent_containers/glass/bottle/kelotane,
 /obj/machinery/atmospherics/unary/vent_pump/on{

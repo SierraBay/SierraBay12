@@ -11,14 +11,11 @@
 	w_class = ITEM_SIZE_SMALL
 	obj_flags = 0
 	volume = 60
-<<<<<<< ours
 	matter = list(MATERIAL_GLASS = 500)
-=======
 	/// The reagant the bottle will start with. If not set, the bottle spawns empty.
 	var/preset_reagent
 	/// Amount to add to the bottle, with the maximum amount being the bottle's `volume`. If not set, defaults to the bottle's total volume. Only used if `preset_reagent` is set.
 	var/preset_amount
->>>>>>> theirs
 
 /obj/item/reagent_containers/glass/bottle/on_reagent_change()
 	update_icon()
