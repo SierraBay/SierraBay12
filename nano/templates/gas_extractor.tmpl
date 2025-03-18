@@ -1,0 +1,63 @@
+<div class="item">
+	<div class="itemLabel">
+		Power:
+	</div>
+	<div class="itemContent">
+		{{:helper.link(data.on? 'On' : 'Off', null, {'power' : 1})}}
+	</div>
+</div>
+
+<div class="item">
+	<div class="itemLabel">
+		ID:
+	</div>
+	<div class="itemContent">
+		<div style="clear: both;">
+			{{:helper.link('Set ID', null, {'settag' : 1}, null)}}&nbsp;{{:data.id}}&nbsp;
+		</div>
+	</div>
+</div>
+
+<div class="item">
+	<div class="itemLabel">
+		Pressure check:
+	</div>
+	<div class="itemContent">
+		{{:helper.link(data.pressure_check? 'External' : 'Internal', null, {'toggle_mode' : 1})}}
+	</div>
+</div>
+
+<div class="item">
+	<div class="itemLabel">
+		Target pressure:
+	</div>
+	<div class="itemContent">
+		<div style="clear: both;">
+			{{:helper.link('Max', null, {'setpressure' : 'max'}, null)}}
+			{{:helper.link('Set', null, {'setpressure' : 'set'}, null)}}
+			<div style="float: left; width: 80px; text-align: center;">&nbsp;{{:(data.target_pressure/100)}} kPa&nbsp;</div>
+		</div>
+	</div>
+</div>
+
+<div class="item">
+	<div class="itemLabel">
+		Frequency:
+	</div>
+	<div class="itemContent">
+		<div style="clear: both;">
+			{{:helper.link('Set Frequency', null, {'setfreq' : 1}, null)}}&nbsp;{{:(data.frequency/10)}}&nbsp;
+		</div>
+	</div>
+</div>
+
+<div class="item">
+	<div class="itemLabel">
+		Flow Rate:
+	</div>
+	<div class="itemContent">
+		<div class="statusValue">
+			{{:(data.last_flow_rate/10)}} L/s
+		</div>
+	</div>
+</div>
