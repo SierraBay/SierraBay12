@@ -527,3 +527,6 @@
 /// Called by `/mob/Login()` if the mob has an associated `machine`.
 /obj/machinery/proc/on_user_login(mob/M)
 	return
+
+/obj/machinery/proc/set_id_tag(new_id_tag)
+	id_tag = new_id_tag
