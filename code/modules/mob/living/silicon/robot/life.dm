@@ -15,6 +15,7 @@
 	if(client)
 		handle_regular_hud_updates()
 		update_items()
+	handle_environment(loc?.return_air())
 	if (src.stat != DEAD) //still using power
 		use_power()
 	UpdateLyingBuckledAndVerbStatus()
