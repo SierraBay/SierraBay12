@@ -182,7 +182,7 @@
 		if (length(display))
 			. += " with [english_list(display)] attached"
 		if (length(visible) > length(display))
-			. += ". <a href='?src=\ref[src];list_ungabunga=1'>\[See accessories\]</a>"
+			. += ". <a href='byond://?src=\ref[src];list_ungabunga=1'>\[See accessories\]</a>"
 
 /obj/item/clothing/proc/get_visible_accessories()
 	var/list/result = list()
@@ -207,7 +207,7 @@
 	. = ..()
 	var/datum/extension/armor/ablative/armor_datum = get_extension(src, /datum/extension/armor/ablative)
 	if(istype(armor_datum) && LAZYLEN(armor_datum.get_visible_damage()))
-		to_chat(user, SPAN_WARNING("It has some <a href='?src=\ref[src];list_armor_damage=1'>damage</a>."))
+		to_chat(user, SPAN_WARNING("It has some <a href='byond://?src=\ref[src];list_armor_damage=1'>damage</a>."))
 
 /obj/item/clothing/CanUseTopic(user)
 	if(user in view(get_turf(src)))
@@ -222,7 +222,7 @@
 			var/list/display = list()
 			for (var/obj/item/clothing/accessory/A in visible)
 				if (!(A.accessory_flags & ACCESSORY_HIDDEN))
-					display += "[icon2html(A, user)] \a [A]<a href='?src=\ref[A];examine=1'>\[?\]</a>"
+					display += "[icon2html(A, user)] \a [A]<a href='byond://?src=\ref[A];examine=1'>\[?\]</a>"
 			to_chat(user, "Attached to \the [src] are [english_list(display)].")
 		return TOPIC_HANDLED
 	if(href_list["list_armor_damage"])
@@ -240,6 +240,16 @@
 	if (attempt_store_item(tool, user))
 		return TRUE
 	return ..()
+
+/obj/item/clothing/transfer_blood(mob/living/carbon/human/target, target_zone)
+	. = ..()
+	if (.)
+		update_clothing_icon()
+
+/obj/item/clothing/add_blood_custom(source_blood_color = COLOR_BLOOD_HUMAN, amount = 3, list/source_blood_DNA = list())
+	. = ..()
+	if (amount)
+		update_clothing_icon()
 
 ///////////////////////////////////////////////////////////////////////
 // Ears: headsets, earmuffs and tiny objects
@@ -512,6 +522,7 @@ BLIND     // can't see anything
 	var/image/light_overlay_image
 	var/light_overlay = "helmet_light"
 	var/light_applied
+	var/head_light_range = 4
 	var/brightness_on
 	var/on = 0
 
@@ -553,7 +564,7 @@ BLIND     // can't see anything
 
 /obj/item/clothing/head/proc/update_flashlight(mob/user = null)
 	if(on && !light_applied)
-		set_light(3, brightness_on, angle = LIGHT_WIDE)
+		set_light(head_light_range, brightness_on, angle = LIGHT_WIDE)
 		light_applied = 1
 	else if(!on && light_applied)
 		set_light(0)
@@ -875,7 +886,7 @@ BLIND     // can't see anything
 	)
 	slot_flags = SLOT_OCLOTHING
 	item_flags = ITEM_FLAG_WASHER_ALLOWED
-	blood_overlay_type = "suit"
+	blood_overlay_type = "suitblood"
 	siemens_coefficient = 0.9
 	w_class = ITEM_SIZE_NORMAL
 

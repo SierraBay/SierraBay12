@@ -28,12 +28,12 @@
 		dat += "<BR>[D.real_name] ([D.stat == 2 ? SPAN_COLOR("red", "INACTIVE") : SPAN_COLOR("green", "ACTIVE")])"
 		dat += "<span style='font-size: 9'><BR>Cell charge: [D.cell.charge]/[D.cell.maxcharge]."
 		dat += "<BR>Currently located in: [get_area(D)]."
-		dat += "<BR><A href='?src=\ref[src];resync=\ref[D]'>Resync</A> | <A href='?src=\ref[src];shutdown=\ref[D]'>Shutdown</A></span>"
+		dat += "<BR><a href='byond://?src=\ref[src];resync=\ref[D]'>Resync</A> | <a href='byond://?src=\ref[src];shutdown=\ref[D]'>Shutdown</A></span>"
 
-	dat += "<BR><BR><B>Request drone presence in area:</B> <A href='?src=\ref[src];setarea=1'>[drone_call_area]</A> (<A href='?src=\ref[src];ping=1'>Send ping</A>)"
+	dat += "<BR><BR><B>Request drone presence in area:</B> <a href='byond://?src=\ref[src];setarea=1'>[drone_call_area]</A> (<a href='byond://?src=\ref[src];ping=1'>Send ping</A>)"
 
 	dat += "<BR><BR><B>Drone fabricator</B>: "
-	dat += "[dronefab ? "<A href='?src=\ref[src];toggle_fab=1'>[(dronefab.produce_drones && dronefab.is_powered()) ? "ACTIVE" : "INACTIVE"]</A>" : "[SPAN_COLOR("red", "<b>FABRICATOR NOT DETECTED.</b>")] (<A href='?src=\ref[src];search_fab=1'>search</a>)"]"
+	dat += "[dronefab ? "<a href='byond://?src=\ref[src];toggle_fab=1'>[(dronefab.produce_drones && dronefab.is_powered()) ? "ACTIVE" : "INACTIVE"]</A>" : "[SPAN_COLOR("red", "<b>FABRICATOR NOT DETECTED.</b>")] (<a href='byond://?src=\ref[src];search_fab=1'>search</a>)"]"
 	show_browser(user, dat, "window=computer;size=400x500")
 	onclose(user, "computer")
 	return

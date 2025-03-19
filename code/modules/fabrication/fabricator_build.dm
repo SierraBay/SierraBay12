@@ -1,3 +1,4 @@
+/* [SIERRA-REMOVE] - MODPACK_RND
 /obj/machinery/fabricator/proc/update_current_build(spend_time)
 
 	if(!istype(currently_building) || !is_functioning())
@@ -70,3 +71,4 @@
 		get_next_build()
 	else
 		start_building()
+*/

@@ -129,7 +129,7 @@
 // [/SIERRA-EDIT]
 #define sound_to(target, sound)               to_target(target, sound)
 #define image_to(target, image)               to_target(target, image)
-#define show_browser(target, content, title)  to_target(target, browse(content, title))
+#define show_browser(target, content, title)  to_target(target, browse(istext(content) ? "<!doctype html><meta charset=utf-8>[content]" : content, title))
 #define close_browser(target, title)          to_target(target, browse(null, title))
 #define send_rsc(target, content, title)      to_target(target, browse_rsc(content, title))
 #define send_link(target, url)                to_target(target, link(url))
@@ -305,3 +305,11 @@
 
 /// Explicitly set the length of L to NEWLEN, adding nulls or dropping entries. Is the same value as NEWLEN.
 #define LIST_RESIZE(L, NEWLEN) ((L).len = (NEWLEN))
+
+
+
+/// A ref=src anchor.
+#define aref(text, params) "<a href=\"byond://?src=\ref[src];[params]\">[text]</a>"
+
+/// A ref=src anchor with additional anchor properties.
+#define arefext(text, params, props) "<a href=\"byond://?src=\ref[src];[params]\" [props]>[text]</a>"

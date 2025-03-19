@@ -26,7 +26,6 @@
 
 	var/outfit_type                       // The outfit the employee will be dressed in, if any
 
-
 	var/loadout_allowed = TRUE            // Whether or not loadout equipment is allowed and to be created when joining.
 	var/list/allowed_branches             // For maps using branches and ranks, also expandable for other purposes
 	var/list/allowed_ranks                // Ditto
@@ -197,10 +196,10 @@
 	return (supplied_title == desired_title) || (H.mind && H.mind.role_alt_title == desired_title)
 
 /datum/job/proc/is_restricted(datum/preferences/prefs, feedback)
-	var/datum/species/S
+	var/singleton/species/S
 
 	if (!is_species_whitelist_allowed(prefs.client, use_species_whitelist))
-		S = all_species[use_species_whitelist]
+		S = GLOB.species_by_name[use_species_whitelist]
 		to_chat(feedback, SPAN_CLASS("boldannounce", "\An [S] species whitelist is required for [title]."))
 		return TRUE
 
@@ -212,7 +211,7 @@
 		to_chat(feedback, SPAN_CLASS("boldannounce", "Wrong rank for [title]. Valid ranks in [prefs.branches[title]] are: [get_ranks(prefs.branches[title])]."))
 		return TRUE
 
-	S = all_species[prefs.species]
+	S = GLOB.species_by_name[prefs.species]
 	if(!is_species_allowed(S))
 		to_chat(feedback, SPAN_CLASS("boldannounce", "Restricted species, [S], for [title]."))
 		return TRUE
@@ -247,7 +246,7 @@
 			active++
 	return active
 
-/datum/job/proc/is_species_allowed(datum/species/S)
+/datum/job/proc/is_species_allowed(singleton/species/S)
 	if(GLOB.using_map.is_species_job_restricted(S, src))
 		return FALSE
 	// We also make sure that there is at least one valid branch-rank combo for the species.
@@ -264,7 +263,7 @@
 	return is_species_whitelisted(C.mob, use_species_whitelist)
 
 // Don't use if the map doesn't use branches but jobs do.
-/datum/job/proc/get_branch_rank(datum/species/S)
+/datum/job/proc/get_branch_rank(singleton/species/S)
 	. = species_branch_rank_cache_[S]
 	if(.)
 		return
@@ -382,7 +381,7 @@
 		reasons["Your rank choice does not allow it."] = TRUE
 	if (!is_species_whitelist_allowed(caller))
 		reasons["You do not have the required [use_species_whitelist] species whitelist."] = TRUE
-	var/datum/species/S = all_species[caller.prefs.species]
+	var/singleton/species/S = GLOB.species_by_name[caller.prefs.species]
 	if(S)
 		if(!is_species_allowed(S))
 			reasons["Your species choice does not allow it."] = TRUE

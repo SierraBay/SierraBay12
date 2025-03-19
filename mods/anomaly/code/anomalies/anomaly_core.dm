@@ -85,14 +85,16 @@
 ///Пост-обработка действия аномалии.
 /obj/anomaly/proc/handle_after_activation()
 	last_activation_time = world.time
-	if(with_sound)
-		playsound(src, sound_type, 100, FALSE  )
+	play_anomaly_sound()
 	if(effect_type == LONG_ANOMALY_EFFECT)
 		handle_long_effect()
 	else
 		do_momentum_animation()
 		start_recharge()
 
+/obj/anomaly/proc/play_anomaly_sound()
+	if(with_sound)
+		playsound(src, sound_type, 100, FALSE  )
 
 ///Эффект на цели от аномалии. Огонь, удар тока, что угодно
 /obj/anomaly/proc/get_effect_by_anomaly(atom/movable/target)
@@ -178,7 +180,7 @@
 	if(ranzomize_with_initialize)
 		ranzomize_parameters()
 	icon_state = idle_effect_type
-	if(have_static_sound)
+	if(static_sound_type)
 		GLOB.sound_player.PlayLoopingSound(src, "\ref[src]", static_sound_type, 10, 6)
 	if(detectable_effect_range)
 		calculate_effected_turfs_from_new_anomaly(src)

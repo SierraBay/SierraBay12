@@ -428,7 +428,7 @@
 					acting_object.visible_message("\The [acting_object] starts pulling \the [to_pull] around.")
 					GLOB.moved_event.register(to_pull, src, PROC_REF(check_pull)) //Whenever the target moves, make sure we can still pull it!
 					GLOB.destroyed_event.register(to_pull, src, PROC_REF(stop_pulling)) //Stop pulling if it gets destroyed
-					GLOB.moved_event.register(acting_object, src, PROC_REF(pull)) //Make sure we actually pull it.
+					GLOB.moved_event.register(acting_object, src,PROC_REF(pull)) //Make sure we actually pull it.
 			push_data()
 		if(3)
 			if(pulling)

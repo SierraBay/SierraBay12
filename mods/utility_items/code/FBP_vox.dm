@@ -1,2 +1,2 @@
-/datum/species/vox
+/singleton/species/vox
 	spawn_flags = SPECIES_CAN_JOIN | SPECIES_IS_WHITELISTED | SPECIES_NO_FBP_CONSTRUCTION

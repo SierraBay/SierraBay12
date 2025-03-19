@@ -1,4 +1,3 @@
-/* Выведено из ротации
 /datum/event/bsd_instability
 	var/list/all_spawned_anomalies = list()
 	var/list/possible_anomalies = list(
@@ -19,11 +18,10 @@
 		for(var/turf/picked_turf as anything in RANGE_TURFS(picked_drive.loc, 25))
 			if(!TurfBlocked(picked_turf, space_allowed = FALSE) || TurfBlockedByAnomaly(picked_turf))
 				LAZYADD(turfs_for_spawn, picked_turf)
-	all_spawned_anomalies = generate_anomalies_in_turfs(possible_anomalies, turfs_for_spawn, 25, 40, 0, 0, 9, 9, "BSD event", started_in)
+	all_spawned_anomalies = generate_anomalies_in_turfs(possible_anomalies, turfs_for_spawn, 25, 40, 0, 0, 9, 9, "Пролив БСД", started_in)
 
 
 /datum/event/bsd_instability/end()
 	.=..()
 	for(var/obj/anomaly/picked_anomaly in all_spawned_anomalies)
 		picked_anomaly.delete_anomaly()
-*/

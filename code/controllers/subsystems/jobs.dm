@@ -559,6 +559,8 @@ SUBSYSTEM_DEF(jobs)
 
 	job.post_equip_rank(H, alt_title || rank)
 
+	H.client.show_location_blurb(3 SECONDS)
+
 	return H
 
 /datum/controller/subsystem/jobs/proc/titles_by_department(dept)
@@ -572,3 +574,42 @@ SUBSYSTEM_DEF(jobs)
 			continue
 		empty_playable_ai_cores += new /obj/structure/AIcore/deactivated(get_turf(S))
 	return 1
+
+/client/proc/show_location_blurb(duration)
+	set waitfor = FALSE
+
+	var/location_name = station_name()
+	var/star_name = GLOB.using_map.system_name
+
+	var/obj/overmap/visitable/V = map_sectors["[mob.z]"]
+	if(istype(V))
+		location_name = V.name
+
+	var/style = "font-family: 'Fixedsys'; -dm-text-outline: 1 black; font-size: 11px;"
+	var/area/A = get_area(mob)
+	var/text = "Earthdate [stationdate2text()]\n[A.name], [location_name]\n[star_name] system"
+	text = uppertext(text)
+
+	var/obj/effect/T = new()
+	T.maptext_height = 64
+	T.maptext_width = 512
+	T.layer = FLOAT_LAYER
+	T.plane = HUD_PLANE
+	T.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+	T.screen_loc = "LEFT+1,BOTTOM+2"
+
+	screen += T
+	animate(T, alpha = 255, time = 10)
+	for(var/i = 1 to length_char(text) + 1)
+		T.maptext = "<span style=\"[style]\">[copytext_char(text, 1, i)] </span>"
+		sleep(1)
+
+	addtimer(new Callback(GLOBAL_PROC, GLOBAL_PROC_REF(fade_location_blurb), src, T), duration)
+
+
+/proc/fade_location_blurb(client/C, obj/T)
+	animate(T, alpha = 0, time = 5)
+	sleep(5)
+	if(C)
+		C.screen -= T
+	qdel(T)

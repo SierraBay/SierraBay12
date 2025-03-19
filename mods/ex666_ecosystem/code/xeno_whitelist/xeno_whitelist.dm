@@ -39,7 +39,7 @@ var/global/list/admin_verbs_xeno = list(
 /*
 	This state checks that the user is an ~~admin~~ XenoModerator, end of story
 */
-GLOBAL_DATUM_INIT(xeno_state, /datum/topic_state/admin_state/xeno, new)
+GLOBAL_TYPED_NEW(xeno_state, /datum/topic_state/admin_state/xeno)
 
 /datum/topic_state/admin_state/xeno/can_use_topic(src_object, mob/user)
 	return check_rights(R_XENO|R_DEBUG, 0, user) ? STATUS_INTERACTIVE : STATUS_CLOSE
@@ -55,8 +55,8 @@ GLOBAL_DATUM_INIT(xeno_state, /datum/topic_state/admin_state/xeno, new)
 
 /datum/nano_module/xenopanel/New()
 	.=..()
-	for(var/s in all_species)
-		var/datum/species/species = all_species[s]
+	for(var/s in GLOB.species_by_name)
+		var/singleton/species/species = GLOB.species_by_name[s]
 		if(species.spawn_flags & SPECIES_IS_WHITELISTED)
 			if(!(lowertext(species.whitelistName()) in lowerxenoname))
 				lowerxenoname.Add("[lowertext(species.whitelistName())]")
@@ -497,8 +497,8 @@ GLOBAL_DATUM_INIT(xeno_state, /datum/topic_state/admin_state/xeno, new)
 			var/list/B = secondary[A[1]]
 			if(findtext(s, " - All"))
 				B = list()
-				for(var/race in all_species)
-					var/datum/species/species = all_species[race]
+				for(var/race in GLOB.species_by_name)
+					var/singleton/species/species = GLOB.species_by_name[race]
 					if(species.spawn_flags & SPECIES_IS_WHITELISTED)
 						B.Add("[lowertext(species.name)]")
 			else
@@ -507,8 +507,8 @@ GLOBAL_DATUM_INIT(xeno_state, /datum/topic_state/admin_state/xeno, new)
 		else
 			if(findtext(s, " - All"))
 				secondary[A[1]] = list()
-				for(var/race in all_species)
-					var/datum/species/species = all_species[race]
+				for(var/race in GLOB.species_by_name)
+					var/singleton/species/species = GLOB.species_by_name[race]
 					if(species.spawn_flags & SPECIES_IS_WHITELISTED)
 						secondary[A[1]] += list("[lowertext(species.name)]")
 			else
@@ -531,5 +531,5 @@ GLOBAL_DATUM_INIT(xeno_state, /datum/topic_state/admin_state/xeno, new)
 #undef HOLDER_LIST
 
 
-/datum/species/proc/whitelistName(mob/living/carbon/human/H)
+/singleton/species/proc/whitelistName(mob/living/carbon/human/H)
 	return get_bodytype(H)

@@ -1,10 +1,10 @@
 GLOBAL_LIST_EMPTY(all_crew_records)
-GLOBAL_LIST_INIT(blood_types, list("A-", "A+", "B-", "B+", "AB-", "AB+", "O-", "O+"))
-GLOBAL_LIST_INIT(physical_statuses, list("Active", "Disabled", "SSD", "Deceased", "MIA", "Stored"))
-GLOBAL_VAR_INIT(default_physical_status, "Active")
-GLOBAL_LIST_INIT(security_statuses, list("None", "Released", "Parolled", "Incarcerated", "Arrest"))
-GLOBAL_VAR_INIT(default_security_status, "None")
-GLOBAL_VAR_INIT(arrest_security_status, "Arrest")
+GLOBAL_LIST_AS(blood_types, list("A-", "A+", "B-", "B+", "AB-", "AB+", "O-", "O+"))
+GLOBAL_LIST_AS(physical_statuses, list("Active", "Disabled", "SSD", "Deceased", "MIA", "Stored"))
+GLOBAL_VAR_AS(default_physical_status, "Active")
+GLOBAL_LIST_AS(security_statuses, list("None", "Released", "Parolled", "Incarcerated", "Arrest"))
+GLOBAL_VAR_AS(default_security_status, "None")
+GLOBAL_VAR_AS(arrest_security_status, "Arrest")
 
 // Kept as a computer file for possible future expansion into servers.
 /datum/computer_file/report/crew_record

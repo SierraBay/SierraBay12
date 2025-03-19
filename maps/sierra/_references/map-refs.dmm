@@ -7019,8 +7019,8 @@
 /obj/structure/closet/medical_wall{
 	pixel_y = -24
 	},
-/obj/item/reagent_containers/glass/bottle/stoxin,
-/obj/item/reagent_containers/glass/bottle/stoxin,
+/obj/item/reagent_containers/glass/bottle/soporific,
+/obj/item/reagent_containers/glass/bottle/soporific,
 /obj/item/reagent_containers/syringe,
 /obj/item/tank/anesthetic,
 /obj/item/clothing/mask/breath/medical,
@@ -11446,7 +11446,6 @@
 	id_tag = "petrov_shuttle_outer";
 	name = "Petrov Exterior Access"
 	},
-/obj/shuttle_landmark/petrov/start,
 /obj/structure/cable/green{
 	d1 = 4;
 	d2 = 8;
@@ -14381,7 +14380,6 @@
 /turf/simulated/wall/titanium,
 /area/space)
 "zy" = (
-/obj/shuttle_landmark/petrov/start,
 /obj/machinery/door/firedoor,
 /obj/wallframe_spawn/reinforced/titanium,
 /obj/machinery/atmospherics/pipe/simple/hidden/universal,
@@ -25950,7 +25948,7 @@
 /obj/item/reagent_containers/syringe/antiviral,
 /obj/item/reagent_containers/syringe/antiviral,
 /obj/item/reagent_containers/syringe,
-/obj/item/reagent_containers/glass/bottle/antitoxin{
+/obj/item/reagent_containers/glass/bottle/dylovene{
 	pixel_x = -4;
 	pixel_y = 8
 	},

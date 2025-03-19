@@ -176,6 +176,7 @@ var/global/list/severity_to_string = list(EVENT_LEVEL_MUNDANE = "Mundane", EVENT
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Drone Uprising",						/datum/event/rogue_maint_drones,		25,		list(ASSIGNMENT_ENGINEER = 30)),
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Supermatter Power Surge",				/datum/event/power_surge,				100,	list(ASSIGNMENT_ENGINEER = 10)),
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Bluespace Drive Instability",			/datum/event/bsd_instability,			50),
+		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Design Leak",							/datum/event/rnd_design_leak, 			60),
 	)
 
 /datum/event_container/major

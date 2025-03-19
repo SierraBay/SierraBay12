@@ -3,7 +3,7 @@
 	set name = "Traders - List"
 	for (var/trader_type in GLOB.trader_types)
 		var/datum/trader/trader = GLOB.traders[trader_type]
-		to_chat(src, "[trader.name] <a href='?_src_=vars;Vars=\ref[trader]'>\ref[trader]</a>")
+		to_chat(src, "[trader.name] <a href='byond://?_src_=vars;Vars=\ref[trader]'>\ref[trader]</a>")
 
 
 /client/proc/add_trader()

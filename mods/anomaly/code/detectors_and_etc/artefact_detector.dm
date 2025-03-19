@@ -2,8 +2,7 @@
 	name = "artefact detector"
 	desc = "Newest advanced device, which can find artefacts."
 	icon = 'mods/anomaly/icons/artefact_detector.dmi'
-	on_turf_icon = 'mods/anomaly/icons/artefact_detector_on_floor.dmi'
-	on_floor_icon
+	on_turf_icon = 'mods/anomaly/icons/on_floor_icons/artefact_detector_on_floor.dmi'
 	icon_state = "medv_turned_off"
 	item_state = "on_floor_off"
 	//on_turf_icon = 'mods/anomaly/icons/artefact_detector_on_floor.dmi'
@@ -17,7 +16,7 @@
 	to_chat(user, SPAN_GOOD("Используйте КНТРЛ + ЛКМ для включения/выключения детектора."))
 
 //Переключения//
-/obj/item/artefact_detector/AltClick()
+/obj/item/artefact_detector/CtrlClick(mob/user)
 	if(!status)
 		turn_on()
 	else
@@ -67,7 +66,7 @@
 
 	var/list/good_z_artefacts_list = list()
 	for(var/obj/item/artefact/choosed_artefact in SSanom.artefacts_list_in_world)
-		if(get_z(src) == get_z(choosed_artefact))
+		if(get_z(src) == get_z(choosed_artefact) && !istype(choosed_artefact.loc, /obj/item/collector))
 			LAZYADD(good_z_artefacts_list,choosed_artefact)
 
 	if(!LAZYLEN(good_z_artefacts_list)) //Артефакты то есть в мире, но не на нашем Z уровне

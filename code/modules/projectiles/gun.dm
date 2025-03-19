@@ -386,7 +386,6 @@
 			var/obj/item/rig/R = H.back
 			for(var/obj/item/rig_module/stealth_field/S in R.installed_modules)
 				S.deactivate()
-
 	if(space_recoil && !user.check_space_footing())
 		var/old_dir = user.dir
 		var/mob/living/carbon/human/H = user
@@ -395,7 +394,6 @@
 			user.inertia_ignore = projectile
 			step(user,get_dir(target,user))
 			user.set_dir(old_dir)
-
 
 	update_icon()
 

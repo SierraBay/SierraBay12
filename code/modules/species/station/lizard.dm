@@ -1,4 +1,4 @@
-/datum/species/unathi
+/singleton/species/unathi
 	name = SPECIES_UNATHI
 	name_plural = SPECIES_UNATHI
 	icobase = 'icons/mob/human_races/species/unathi/skin.dmi'
@@ -172,9 +172,9 @@
 
 	show_age_to_other_species = TRUE
 
-/datum/species/unathi/equip_survival_gear(mob/living/carbon/human/H)
+/singleton/species/unathi/equip_survival_gear(mob/living/carbon/human/H)
 	..()
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(H),slot_shoes)
 
-/datum/species/unathi/get_bodytype(mob/living/carbon/human/H)
+/singleton/species/unathi/get_bodytype(mob/living/carbon/human/H)
 	return SPECIES_UNATHI

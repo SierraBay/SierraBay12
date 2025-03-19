@@ -246,6 +246,7 @@
 				else
 					M.visible_message(SPAN_NOTICE("[M] hugs [src] to make [P.him] feel better!"), \
 								SPAN_NOTICE("You hug [src] to make [P.him] feel better!"))
+
 				if(M.fire_stacks >= (src.fire_stacks + 3))
 					src.fire_stacks += 1
 					M.fire_stacks -= 1
@@ -435,13 +436,13 @@
 
 /mob/living/carbon/show_inv(mob/user as mob)
 	var/dat = {"
-	<BR><B>Head(Mask):</B> <A href='?src=\ref[src];item=mask'>[(wear_mask ? wear_mask : "Nothing")]</A>
-	<BR><B>Left Hand:</B> <A href='?src=\ref[src];item=l_hand'>[(l_hand ? l_hand  : "Nothing")]</A>
-	<BR><B>Right Hand:</B> <A href='?src=\ref[src];item=r_hand'>[(r_hand ? r_hand : "Nothing")]</A>
-	<BR><B>Back:</B> <A href='?src=\ref[src];item=back'>[(back ? back : "Nothing")]</A> [((istype(wear_mask, /obj/item/clothing/mask) && istype(back, /obj/item/tank) && !( internal )) ? text(" <A href='?src=\ref[];item=internal'>Set Internal</A>", src) : "")]
-	<BR>[(internal ? text("<A href='?src=\ref[src];item=internal'>Remove Internal</A>") : "")]
-	<BR><A href='?src=\ref[src];item=pockets'>Empty Pockets</A>
-	<BR><A href='?src=\ref[user];refresh=1'>Refresh</A>
+	<BR><B>Head(Mask):</B> <a href='byond://?src=\ref[src];item=mask'>[(wear_mask ? wear_mask : "Nothing")]</A>
+	<BR><B>Left Hand:</B> <a href='byond://?src=\ref[src];item=l_hand'>[(l_hand ? l_hand  : "Nothing")]</A>
+	<BR><B>Right Hand:</B> <a href='byond://?src=\ref[src];item=r_hand'>[(r_hand ? r_hand : "Nothing")]</A>
+	<BR><B>Back:</B> <a href='byond://?src=\ref[src];item=back'>[(back ? back : "Nothing")]</A> [((istype(wear_mask, /obj/item/clothing/mask) && istype(back, /obj/item/tank) && !( internal )) ? text(" <a href='byond://?src=\ref[];item=internal'>Set Internal</A>", src) : "")]
+	<BR>[(internal ? text("<a href='byond://?src=\ref[src];item=internal'>Remove Internal</A>") : "")]
+	<BR><a href='byond://?src=\ref[src];item=pockets'>Empty Pockets</A>
+	<BR><a href='byond://?src=\ref[user];refresh=1'>Refresh</A>
 	<BR>"}
 	var/datum/browser/popup = new(user, "mob[name]", name, 325, 500)
 	popup.set_content(dat)

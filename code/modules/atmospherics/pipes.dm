@@ -2,6 +2,8 @@
 
 /obj/machinery/atmospherics/pipe
 
+	health_max = 200
+
 	var/datum/gas_mixture/air_temporary // used when reconstructing a pipeline that broke
 	var/datum/pipeline/parent
 	var/volume = 0
@@ -34,6 +36,12 @@
 
 /obj/machinery/atmospherics/pipe/hides_under_flooring()
 	return level != ATOM_LEVEL_OVER_TILE
+
+/obj/machinery/atmospherics/pipe/fire_act()
+	return FALSE
+
+/obj/machinery/atmospherics/pipe/on_death()
+	burst()
 
 /obj/machinery/atmospherics/pipe/proc/set_leaking(new_leaking)
 	if(new_leaking && !leaking)
@@ -231,13 +239,13 @@
 
 	else return 1
 
-/obj/machinery/atmospherics/pipe/simple/proc/burst()
+/obj/machinery/atmospherics/pipe/proc/burst()
 	ASSERT(parent)
 	parent.temporarily_store_air()
-	src.visible_message(SPAN_DANGER("\The [src] bursts!"));
-	playsound(src.loc, 'sound/effects/bang.ogg', 25, 1)
+	visible_message(SPAN_DANGER("\The [src] bursts!"))
+	playsound(loc, 'sound/effects/bang.ogg', 25, TRUE)
 	var/datum/effect/smoke_spread/smoke = new
-	smoke.set_up(1,0, src.loc, 0)
+	smoke.set_up(1, 0, loc, 0)
 	smoke.start()
 	qdel(src)
 
@@ -345,6 +353,8 @@
 	connect_types = CONNECT_TYPE_SCRUBBER
 	icon_connect_type = "-scrubbers"
 	color = PIPE_COLOR_RED
+	layer = EXPOSED_SCRUBBERS_LAYER
+	hidden_layer = SCRUBBERS_LAYER
 
 /obj/machinery/atmospherics/pipe/simple/visible/supply
 	name = "Air supply pipe"
@@ -353,6 +363,8 @@
 	connect_types = CONNECT_TYPE_SUPPLY
 	icon_connect_type = "-supply"
 	color = PIPE_COLOR_BLUE
+	layer = EXPOSED_SUPPLY_LAYER
+	hidden_layer = SUPPLY_LAYER
 
 /obj/machinery/atmospherics/pipe/simple/visible/yellow
 	color = PIPE_COLOR_YELLOW
@@ -391,6 +403,8 @@
 	connect_types = CONNECT_TYPE_SCRUBBER
 	icon_connect_type = "-scrubbers"
 	color = PIPE_COLOR_RED
+	layer = EXPOSED_SCRUBBERS_LAYER
+	hidden_layer = SCRUBBERS_LAYER
 
 /obj/machinery/atmospherics/pipe/simple/hidden/supply
 	name = "Air supply pipe"
@@ -399,6 +413,8 @@
 	connect_types = CONNECT_TYPE_SUPPLY
 	icon_connect_type = "-supply"
 	color = PIPE_COLOR_BLUE
+	layer = EXPOSED_SUPPLY_LAYER
+	hidden_layer = SUPPLY_LAYER
 
 /obj/machinery/atmospherics/pipe/simple/hidden/yellow
 	color = PIPE_COLOR_YELLOW
@@ -605,6 +621,8 @@
 	connect_types = CONNECT_TYPE_SCRUBBER
 	icon_connect_type = "-scrubbers"
 	color = PIPE_COLOR_RED
+	layer = EXPOSED_SCRUBBERS_LAYER
+	hidden_layer = SCRUBBERS_LAYER
 
 /obj/machinery/atmospherics/pipe/manifold/visible/supply
 	name="Air supply pipe manifold"
@@ -613,6 +631,8 @@
 	connect_types = CONNECT_TYPE_SUPPLY
 	icon_connect_type = "-supply"
 	color = PIPE_COLOR_BLUE
+	layer = EXPOSED_SUPPLY_LAYER
+	hidden_layer = SUPPLY_LAYER
 
 /obj/machinery/atmospherics/pipe/manifold/visible/yellow
 	color = PIPE_COLOR_YELLOW
@@ -651,6 +671,8 @@
 	connect_types = CONNECT_TYPE_SCRUBBER
 	icon_connect_type = "-scrubbers"
 	color = PIPE_COLOR_RED
+	layer = EXPOSED_SCRUBBERS_LAYER
+	hidden_layer = SCRUBBERS_LAYER
 
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply
 	name="Air supply pipe manifold"
@@ -659,6 +681,8 @@
 	connect_types = CONNECT_TYPE_SUPPLY
 	icon_connect_type = "-supply"
 	color = PIPE_COLOR_BLUE
+	layer = EXPOSED_SUPPLY_LAYER
+	hidden_layer = SUPPLY_LAYER
 
 /obj/machinery/atmospherics/pipe/manifold/hidden/yellow
 	color = PIPE_COLOR_YELLOW
@@ -879,6 +903,8 @@
 	connect_types = CONNECT_TYPE_SCRUBBER
 	icon_connect_type = "-scrubbers"
 	color = PIPE_COLOR_RED
+	layer = EXPOSED_SCRUBBERS_LAYER
+	hidden_layer = SCRUBBERS_LAYER
 
 /obj/machinery/atmospherics/pipe/manifold4w/visible/supply
 	name="4-way air supply pipe manifold"
@@ -887,6 +913,8 @@
 	connect_types = CONNECT_TYPE_SUPPLY
 	icon_connect_type = "-supply"
 	color = PIPE_COLOR_BLUE
+	layer = EXPOSED_SUPPLY_LAYER
+	hidden_layer = SUPPLY_LAYER
 
 /obj/machinery/atmospherics/pipe/manifold4w/visible/yellow
 	color = PIPE_COLOR_YELLOW
@@ -925,6 +953,8 @@
 	connect_types = CONNECT_TYPE_SCRUBBER
 	icon_connect_type = "-scrubbers"
 	color = PIPE_COLOR_RED
+	layer = EXPOSED_SCRUBBERS_LAYER
+	hidden_layer = SCRUBBERS_LAYER
 
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/supply
 	name="4-way air supply pipe manifold"
@@ -933,6 +963,8 @@
 	connect_types = CONNECT_TYPE_SUPPLY
 	icon_connect_type = "-supply"
 	color = PIPE_COLOR_BLUE
+	layer = EXPOSED_SUPPLY_LAYER
+	hidden_layer = SUPPLY_LAYER
 
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/yellow
 	color = PIPE_COLOR_YELLOW
@@ -1040,6 +1072,8 @@
 	connect_types = CONNECT_TYPE_SCRUBBER
 	icon_connect_type = "-scrubbers"
 	color = PIPE_COLOR_RED
+	layer = EXPOSED_SCRUBBERS_LAYER
+	hidden_layer = SCRUBBERS_LAYER
 
 /obj/machinery/atmospherics/pipe/cap/visible/supply
 	name = "supply pipe endcap"
@@ -1048,6 +1082,8 @@
 	connect_types = CONNECT_TYPE_SUPPLY
 	icon_connect_type = "-supply"
 	color = PIPE_COLOR_BLUE
+	layer = EXPOSED_SUPPLY_LAYER
+	hidden_layer = SUPPLY_LAYER
 
 /obj/machinery/atmospherics/pipe/cap/visible/fuel
 	name = "fuel pipe endcap"
@@ -1070,6 +1106,8 @@
 	connect_types = CONNECT_TYPE_SCRUBBER
 	icon_connect_type = "-scrubbers"
 	color = PIPE_COLOR_RED
+	layer = EXPOSED_SCRUBBERS_LAYER
+	hidden_layer = SCRUBBERS_LAYER
 
 /obj/machinery/atmospherics/pipe/cap/hidden/supply
 	name = "supply pipe endcap"
@@ -1078,6 +1116,8 @@
 	connect_types = CONNECT_TYPE_SUPPLY
 	icon_connect_type = "-supply"
 	color = PIPE_COLOR_BLUE
+	layer = EXPOSED_SUPPLY_LAYER
+	hidden_layer = SUPPLY_LAYER
 
 /obj/machinery/atmospherics/pipe/cap/hidden/fuel
 	name = "fuel pipe endcap"

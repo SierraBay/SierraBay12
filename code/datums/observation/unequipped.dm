@@ -7,7 +7,7 @@
 //			/mob/equipped:  The mob that unequipped/dropped the item.
 //			/obj/item/item: The unequipped item.
 
-GLOBAL_DATUM_INIT(mob_unequipped_event, /singleton/observ/mob_unequipped, new)
+GLOBAL_TYPED_NEW(mob_unequipped_event, /singleton/observ/mob_unequipped)
 
 /singleton/observ/mob_unequipped
 	name = "Mob Unequipped"
@@ -22,7 +22,7 @@ GLOBAL_DATUM_INIT(mob_unequipped_event, /singleton/observ/mob_unequipped, new)
 //			/obj/item/item: The unequipped item.
 //			/mob/equipped:  The mob that unequipped/dropped the item.
 
-GLOBAL_DATUM_INIT(item_unequipped_event, /singleton/observ/item_unequipped, new)
+GLOBAL_TYPED_NEW(item_unequipped_event, /singleton/observ/item_unequipped)
 
 /singleton/observ/item_unequipped
 	name = "Item Unequipped"

@@ -8,19 +8,18 @@
 	var/min_bruised_damage = 10       // Damage before considered bruised
 	var/damage_reduction = 0.5     //modifier for internal organ injury
 
-/obj/item/organ/internal/New(mob/living/carbon/holder)
+/obj/item/organ/internal/Initialize()
 	if(max_damage)
 		min_bruised_damage = floor(max_damage / 4)
-	..()
-	if(istype(holder) && !istype(src, /obj/item/organ/internal/augment))
+	. = ..()
+	if(iscarbon(loc) && !istype(src, /obj/item/organ/internal/augment))
+		var/mob/living/carbon/human/holder = loc
 		holder.internal_organs |= src
-
-		var/mob/living/carbon/human/H = holder
-		if(istype(H))
-			var/obj/item/organ/external/E = H.get_organ(parent_organ)
-			if(!E)
+		if(ishuman(holder))
+			var/obj/item/organ/external/external = holder.get_organ(parent_organ)
+			if(!external)
 				CRASH("[src] spawned in [holder] without a parent organ: [parent_organ].")
-			E.internal_organs |= src
+			external.internal_organs |= src
 
 /obj/item/organ/internal/Destroy()
 	if(owner)

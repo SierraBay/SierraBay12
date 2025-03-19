@@ -1,4 +1,4 @@
-GLOBAL_DATUM_INIT(joinpanel_state, /datum/topic_state/joinpanel, new)
+GLOBAL_TYPED_NEW(joinpanel_state, /datum/topic_state/joinpanel)
 
 /datum/topic_state/joinpanel/can_use_topic(src_object, mob/user)
 	return istype(user, /mob/new_player) ? STATUS_INTERACTIVE : STATUS_CLOSE
@@ -83,7 +83,7 @@ GLOBAL_DATUM_INIT(joinpanel_state, /datum/topic_state/joinpanel, new)
 			if(!SSjobs.check_general_join_blockers(player, job))
 				return FALSE
 
-			var/datum/species/S = all_species[player.client.prefs.species]
+			var/singleton/species/S = GLOB.species_by_name[player.client.prefs.species]
 			if(!player.check_species_allowed(S))
 				return 0
 

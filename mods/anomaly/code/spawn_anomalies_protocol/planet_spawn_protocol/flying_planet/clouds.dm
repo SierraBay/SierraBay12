@@ -22,7 +22,7 @@
 	if(isanomalyhere(src))
 		return
 	//Если обьект НЕ моб, НЕ предмет или прожектайл - игнор
-	if((!ismech(AM) && !ismob(AM) && !isitem(AM)) || isprojectile(AM))
+	if((!ismech(AM) && !ismob(AM) && !isitem(AM)) || isprojectile(AM) || isobserver(AM))
 		return
 	if(locate(/obj/structure/catwalk) in src)
 		return
@@ -30,7 +30,7 @@
 	if(isliving(AM))
 		var/mob/living/L = AM
 		//Летающие существа не тревожат облака
-		if (L.can_overcome_gravity())
+		if (L.can_overcome_gravity() || L.is_floating)
 			return
 		//Артефакты с этим эффектом заставят облака игнорировать существо
 		var/list/result_effects = calculate_artefact_reaction(L, "Возможность упасть")
@@ -53,16 +53,25 @@
 	//Собираем все обьекты на поверхности облачков
 	var/total_clouds_damage = 0
 	for(var/atom/movable/choosed_atom in src)
-		if(isprojectile(choosed_atom) || isghost(choosed_atom) || (choosed_atom.anchored && !ismech(choosed_atom)))
+		if(isprojectile(choosed_atom) || isghost(choosed_atom) || (choosed_atom.anchored && !ismech(choosed_atom)) || isobserver(choosed_atom))
 			continue
 		if(ismech(choosed_atom))
 			total_clouds_damage += 100
 		else if(isitem(choosed_atom))
 			var/obj/item/choosed_item = choosed_atom
-			total_clouds_damage += 5 * choosed_item.w_class
+			if(choosed_item.w_class == ITEM_SIZE_TINY)
+				total_clouds_damage += 0
+			else
+				total_clouds_damage += 5 * choosed_item.w_class
 		else if(isliving(choosed_atom))
 			var/mob/living/choosed_living = choosed_atom
-			total_clouds_damage += choosed_living.mob_size
+			if(choosed_living.is_floating)
+				continue
+			if(choosed_living.lying)
+				total_clouds_damage += choosed_living.mob_size / 2
+			else
+				total_clouds_damage += choosed_living.mob_size
+
 	if(total_clouds_damage)
 		damage_clouds(total_clouds_damage)
 	else

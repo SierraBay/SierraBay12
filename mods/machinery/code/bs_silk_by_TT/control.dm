@@ -15,7 +15,7 @@ GLOBAL_LIST_EMPTY(hubs_id)
 	construct_state = /singleton/machine_construction/default/panel_closed
 	uncreated_component_parts = null
 
-/obj/machinery/bs_snare_hub/proc/set_id_tag(nId)
+/obj/machinery/bs_snare_hub/set_id_tag(nId)
 	if(nId in GLOB.hubs_id)
 		audible_message(SPAN_WARNING("ERROR, unable to set on this bluespace highway another hub use \"[nId]\" highway."))
 		return

@@ -1,6 +1,4 @@
 /datum/configuration
-	var/static/atom/movable/clickable_stat/statLine
-
 	/// server name (for world name / status)
 	var/static/server_name = "Space Station 13"
 
@@ -8,7 +6,7 @@
 	var/static/server_suffix = FALSE
 
 	/// for topic status requests
-	var/static/game_version = "Baystation12"
+	var/static/game_version = "Baystation"
 
 	/// log OOC channel
 	var/static/log_ooc = FALSE
@@ -301,9 +299,9 @@
 	/// Clients with these byond versions will be banned. "512.1234;513.2345" etc.
 	var/static/list/forbidden_versions = list()
 
-	var/static/minimum_byond_version = 514
+	var/static/minimum_byond_version = 516
 
-	var/static/minimum_byond_build = 1568
+	var/static/minimum_byond_build = 1658
 
 	var/static/login_export_addr
 
@@ -315,27 +313,49 @@
 
 	var/static/use_irc_bot = FALSE
 
-	var/static/irc_bot_host = ""
+	var/static/irc_bot_host
 
-	var/static/main_irc = ""
+	var/static/main_irc
 
-	var/static/admin_irc = ""
+	var/static/admin_irc
 
-	var/static/admin_discord = ""
+	var/static/admin_discord
 
-	var/static/excom_address = ""
+	var/static/excom_address
+
 	var/static/announce_evac_to_irc = FALSE
 
-	var/static/expected_round_length = 3 HOURS
+	var/static/expected_round_length = 2 HOURS
 
 	/// Whether the first delay per level has a custom start time
-	var/static/list/event_first_run = list(EVENT_LEVEL_MUNDANE = null, EVENT_LEVEL_MODERATE = null, EVENT_LEVEL_MAJOR = list("lower" = 80 MINUTES, "upper" = 100 MINUTES), EVENT_LEVEL_EXO = list("lower" = 50 MINUTES, "upper" = 80 MINUTES))
+	var/static/list/event_first_run = list(
+		EVENT_LEVEL_MUNDANE = null,
+		EVENT_LEVEL_MODERATE = null,
+		EVENT_LEVEL_MAJOR = list(
+			"lower" = 80 MINUTES,
+			"upper" = 100 MINUTES
+		),
+		EVENT_LEVEL_EXO = list(
+			"lower" = 50 MINUTES,
+			"upper" = 80 MINUTES
+		)
+	)
 
 	/// The lowest delay until next event
-	var/static/list/event_delay_lower = list(EVENT_LEVEL_MUNDANE = 10 MINUTES, EVENT_LEVEL_MODERATE = 30 MINUTES, EVENT_LEVEL_MAJOR = 50 MINUTES, EVENT_LEVEL_EXO = 40 MINUTES)
+	var/static/list/event_delay_lower = list(
+		EVENT_LEVEL_MUNDANE = 10 MINUTES,
+		EVENT_LEVEL_MODERATE = 30 MINUTES,
+		EVENT_LEVEL_MAJOR = 50 MINUTES,
+		EVENT_LEVEL_EXO = 40 MINUTES
+	)
 
 	/// The upper delay until next event
-	var/static/list/event_delay_upper = list(EVENT_LEVEL_MUNDANE = 15 MINUTES, EVENT_LEVEL_MODERATE = 45 MINUTES, EVENT_LEVEL_MAJOR = 70 MINUTES, EVENT_LEVEL_EXO = 60 MINUTES)
+	var/static/list/event_delay_upper = list(
+		EVENT_LEVEL_MUNDANE = 15 MINUTES,
+		EVENT_LEVEL_MODERATE = 45 MINUTES,
+		EVENT_LEVEL_MAJOR = 70 MINUTES,
+		EVENT_LEVEL_EXO = 60 MINUTES
+	)
 
 	var/static/abandon_allowed = TRUE
 
@@ -388,16 +408,16 @@
 	var/static/autostealth = FALSE
 
 	/// The "cooldown" time for each occurrence of a unique error
-	var/static/error_cooldown = 600
+	var/static/error_cooldown = 1 MINUTE
 
 	/// How many occurrences before the next will silence them
 	var/static/error_limit = 50
 
 	/// How long a unique error will be silenced for
-	var/static/error_silence_time = 6000
+	var/static/error_silence_time = 10 MINUTES
 
 	/// How long to wait between messaging admins about occurrences of a unique error
-	var/static/error_msg_delay = 50
+	var/static/error_msg_delay = 5 SECONDS
 
 	/// Used in chargen for accessory loadout limit. 0 disables loadout, negative allows infinite points.
 	var/static/max_gear_cost = 10
@@ -421,9 +441,9 @@
 
 	var/static/hub_visible = FALSE
 
-	var/static/motd = ""
+	var/static/motd
 
-	var/static/event = ""
+	var/static/event
 
 	/// Logs all timers in buckets on automatic bucket reset
 	var/static/log_timers_on_bucket_reset = FALSE
@@ -432,7 +452,7 @@
 	var/static/maximum_round_length
 
 	/// The delay in deciseconds between stat() updates.
-	var/static/stat_delay = 5
+	var/static/stat_delay = 0.5 SECONDS
 
 	/// The maximum number of times someone can be warned in a round before they are automatically banned
 	var/static/warn_autoban_threshold = 3
@@ -1066,10 +1086,3 @@
 	if (entry_size > 255)
 		log_debug("The generated hub entry was [entry_size] bytes long! It will be truncated by the hub to 255.")
 	return entry
-
-
-/datum/configuration/proc/UpdateStat()
-	if (!statLine)
-		statLine = new (null, src)
-		statLine.name = "Edit"
-	stat("Config", statLine)

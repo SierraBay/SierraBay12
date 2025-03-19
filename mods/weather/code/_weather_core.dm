@@ -1,5 +1,5 @@
 GLOBAL_LIST_EMPTY(effected_by_weather)
-GLOBAL_VAR_INIT(ambience_channel_weather, GLOB.sound_channels.RequestChannel("AMBIENCE_WEATHER"))
+GLOBAL_VAR_AS(ambience_channel_weather, GLOB.sound_channels.RequestChannel("AMBIENCE_WEATHER"))
 #define isweatherhere(A) locate(/obj/weather) in A
 /obj/weather
 	var/play_monitor_effect = TRUE
@@ -46,11 +46,6 @@ GLOBAL_VAR_INIT(ambience_channel_weather, GLOB.sound_channels.RequestChannel("AM
 		add_monitor_effect(input_mob)
 	else
 		remove_monitor_effect(input_mob)
-
-/obj/weather/proc/message_about_blowout()
-	if(LAZYLEN(blowout_messages))
-		for(var/mob/living/somebody in get_turf(src))
-			to_chat(somebody, pick(blowout_messages))
 
 /obj/weather/proc/add_monitor_effect(mob/living/input_mob)
 	LAZYADD(input_mob,GLOB.effected_by_weather)
@@ -109,3 +104,7 @@ GLOBAL_VAR_INIT(ambience_channel_weather, GLOB.sound_channels.RequestChannel("AM
 /obj/weather/proc/delete_weather()
 	LAZYREMOVE(SSweather.weather_turf_in_world, src)
 	qdel(src)
+
+//Отрисует смену погоды
+/obj/weather/proc/flick_weather_icon(state)
+	return
