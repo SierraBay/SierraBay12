@@ -37,6 +37,14 @@
 [b]Notice[/b]: NanoTrasen Shuttle"}
 	contact_class = /decl/ship_contact_class/nt_sshuttle
 
+/obj/overmap/visitable/ship/landable/drone
+	scanner_desc = @{"
+<center><img src = bluentlogo.png></center></br><b>Property of NanoTrasen Corporation:</b>
+[i]Registration[/i]: NSS Drone
+[i]Transponder[/i]: Transmitting (CIV), non-hostile
+[b]Notice[/b]: NanoTrasen Cargo Drone"}
+	contact_class = /decl/ship_contact_class/nt_sshuttle
+
 /obj/overmap/visitable/ship/landable/merc
 	scanner_desc = @{"[i]Registration[/i]: UNKNOWN
 [i]Class[/i]: UNKNOWN

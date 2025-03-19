@@ -42,5 +42,6 @@
 	hidden_inventory = list(
 		TRADE_CAT_TOOLS = list(
 			/obj/item/storage/toolbox/syndicate = GOODS_DEFAULT,
+			/obj/structure/closet/crate/rcd =  GOODS_DEFAULT,
 			),
 		)

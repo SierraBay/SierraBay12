@@ -13,10 +13,22 @@
 	spawn_always = TRUE
 	markup = 1.5
 	inventory = list(
-		TRADE_CAT_EQUIPMENT = list(
+		TRADE_CAT_ARTILLERY = list(
+			/obj/structure/ship_munition/disperser_charge/fire = GOODS_DEFAULT,
+			/obj/structure/ship_munition/disperser_charge/emp = GOODS_DEFAULT,
+			/obj/structure/ship_munition/disperser_charge/mining = GOODS_DEFAULT,
+			/obj/structure/ship_munition/disperser_charge/explosive = GOODS_DEFAULT,
+			),
+		TRADE_CAT_GALLEY = list(
 			/obj/structure/closet/crate/freezer/meat = CUSTOM_GOODS_NAME("Meat supply pack"),
+			/obj/structure/closet/crate/freezer/rations = CUSTOM_GOODS_NAME("MRE Crate"),
 			/obj/structure/closet/crate/hydroponics/beekeeping = CUSTOM_GOODS_NAME("Beekeeping crate"),
-			/obj/item/gun/projectile/pistol/magnum_pistol = CUSTOM_GOODS_NAME("magnum pistol"),
+			/obj/structure/closet/crate/hydroponics/prespawned = CUSTOM_GOODS_NAME("Hydroponics crate"),
+			),
+		TRADE_CAT_EQUIPMENT = list(
+			/obj/structure/closet/crate/internals/fuel = CUSTOM_GOODS_NAME("Hydrogen tanks crate"),
+			/obj/structure/closet/crate/solar = CUSTOM_GOODS_NAME("Solar pack"),
+			/obj/structure/closet/crate/solar_assembly = CUSTOM_GOODS_NAME("Solar assembly"),
 			),
 		TRADE_CAT_CHEMCARTS = list(
 			CARTRIDGE(whiskey) = CUSTOM_GOODS_NAME("cartridge (whiskey)"),

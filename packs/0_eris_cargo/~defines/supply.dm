@@ -9,6 +9,7 @@ GLOBAL_LIST_EMPTY(trade_factions) /// Datums of all factions currently in the ga
 
 // Trade categories for the sake of standardization
 #define TRADE_CAT_WEAPONS "Weapons"
+#define TRADE_CAT_ARTILLERY "Ship Munitions"
 #define TRADE_CAT_AMMO "Ammunition"
 #define TRADE_CAT_ARMOR "Armor"
 #define TRADE_CAT_EQUIPMENT "Equipment"
@@ -24,6 +25,8 @@ GLOBAL_LIST_EMPTY(trade_factions) /// Datums of all factions currently in the ga
 #define TRADE_CAT_MEDICAL "Medical"
 #define TRADE_CAT_MEDKIT "Medical Kits"
 #define TRADE_CAT_CHEMICAL "Chemical"
+#define TRADE_CAT_CHEMCARTS "Dispenser Cartridges"
+#define TRADE_CAT_GALLEY "Galley"
 
 // As in - faction is a part of us
 #define FACTION_STATE_PROTECTORATE 4
