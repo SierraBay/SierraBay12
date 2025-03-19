@@ -54,14 +54,15 @@ var/global/const/access_supplylink_dais = "ACCESS_SUPPLY_LINK_DAIS"
 	access_type = ACCESS_TYPE_NONE
 
 /**
- * OBS faction link access level
+ * Hephaestus faction link access level
  */
-var/global/const/access_supplylink_obs = "ACCESS_SUPPLY_LINK_OBS"
-/datum/access/supplylink_obs
-	id = access_supplylink_obs
-	desc = "Supply Console - OBS Link"
+var/global/const/access_supplylink_hephaestus = "ACCESS_SUPPLY_LINK_HAEPHAESTUS"
+/datum/access/supplylink_hephaestus
+	id = access_supplylink_hephaestus
+	desc = "Supply Console - Hephaestus Link"
 	region = ACCESS_REGION_SUPPLY
 	access_type = ACCESS_TYPE_NONE
+
 
 /**
  * Reborn Christian Church faction link access level

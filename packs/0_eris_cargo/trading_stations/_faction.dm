@@ -87,6 +87,16 @@
 		)
 	access_required = access_supplylink_dais
 
+/datum/trade_faction/hephaestus
+	name = FACTION_HEPHAESTUS
+	desc = "A part of the DAIS mega-corporation which specializes in development of implants and artificial intelligence."
+	relationship = list(
+		FACTION_INDIE_CONFED = FACTION_STATE_RIVAL,
+		FACTION_SOL_CENTRAL = FACTION_STATE_WELCOMING,
+		FACTION_FREETRADE = FACTION_STATE_NEUTRAL,
+		FACTION_NANOTRASEN = FACTION_STATE_ANIMOSITY,
+		)
+	access_required = access_supplylink_hephaestus
 
 // Member states of ISC
 

@@ -25,6 +25,10 @@
 			/obj/structure/closet/crate/hydroponics/beekeeping = CUSTOM_GOODS_NAME("Beekeeping crate"),
 			/obj/structure/closet/crate/hydroponics/prespawned = CUSTOM_GOODS_NAME("Hydroponics crate"),
 			),
+		TRADE_CAT_WEAPONS = list(
+			/obj/item/gun/projectile/pistol/sec/empty = CUSTOM_GOODS_NAME("NT Mk58 pistol"),
+			/obj/item/gun/projectile/automatic/sec_smg/empty = CUSTOM_GOODS_NAME("WT-550 Saber submachine gun"),
+			),
 		TRADE_CAT_EQUIPMENT = list(
 			/obj/structure/closet/crate/internals/fuel = CUSTOM_GOODS_NAME("Hydrogen tanks crate"),
 			/obj/structure/closet/crate/solar = CUSTOM_GOODS_NAME("Solar pack"),
