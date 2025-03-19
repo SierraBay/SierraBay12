@@ -39,6 +39,9 @@
 
 //#include "../../packs/0_eris_cargo/trading_stations/trading_station_types/_example.dm"
 
+// For the modular build sake. We just comment original ones and make new price lists
+#include "../../packs/0_eris_cargo/worth/value_procs.dm"
+#include "../../packs/0_eris_cargo/worth/worths_list.dm"
 
 #endif
 // BEGIN_INTERNALS
