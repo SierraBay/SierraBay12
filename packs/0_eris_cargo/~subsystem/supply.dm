@@ -4,7 +4,7 @@ SUBSYSTEM_DEF(supply)
 	priority = SS_PRIORITY_SUPPLY
 	flags = SS_NO_FIRE
 	runlevels = RUNLEVEL_GAME|RUNLEVEL_POSTGAME
-	wait = 30 MINUTES
+	wait = 60 SECONDS
 
 	/// Budget for trading stations with spawn_always at FALSE
 	var/trade_stations_budget = 5
