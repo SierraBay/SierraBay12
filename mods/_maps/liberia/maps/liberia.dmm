@@ -555,34 +555,36 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/liberia/engineeringreactor)
 "be" = (
-/obj/machinery/disposal,
 /obj/floor_decal/borderfloor{
 	dir = 9
 	},
-/obj/structure/disposalpipe/trunk,
-/obj/floor_decal/industrial/hatch/yellow,
 /obj/floor_decal/corner/green,
+/obj/structure/table/steel,
+/obj/item/paper_bin,
+/obj/item/spacecash/bundle/c1000{
+	desc = "It's worth 13000 Thalers. Who the fuck made it?";
+	name = "13000 Thaler";
+	worth = 13000
+	},
+/obj/random/cash,
+/obj/item/pen,
+/obj/item/device/flashlight,
 /turf/simulated/floor/tiled/monotile,
 /area/liberia/traidingroom)
 "bf" = (
-/obj/structure/closet/crate,
-/obj/random/loot,
-/obj/random/loot,
-/obj/machinery/light{
-	dir = 1
-	},
 /obj/floor_decal/borderfloor{
 	dir = 1
 	},
-/obj/floor_decal/industrial/outline/yellow,
 /obj/floor_decal/corner/green{
 	dir = 10
+	},
+/obj/machinery/computer/modular/preset/merchant,
+/obj/machinery/light{
+	dir = 1
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/liberia/traidingroom)
 "bg" = (
-/obj/structure/table/rack,
-/obj/random/loot,
 /obj/machinery/button/blast_door{
 	id_tag = "merchantwarehouse";
 	name = "Warehouse Shutters";
@@ -592,10 +594,11 @@
 /obj/floor_decal/borderfloor{
 	dir = 1
 	},
-/obj/floor_decal/industrial/outline/yellow,
 /obj/floor_decal/corner/green{
 	dir = 10
 	},
+/obj/floor_decal/industrial/outline/yellow,
+/obj/machinery/merchant_pad,
 /turf/simulated/floor/tiled/monotile,
 /area/liberia/traidingroom)
 "bh" = (
@@ -610,43 +613,43 @@
 /turf/simulated/floor/plating,
 /area/liberia/traidingroom)
 "bj" = (
-/obj/machinery/vending/fashionvend,
 /obj/floor_decal/borderfloor{
 	dir = 1
 	},
 /obj/floor_decal/corner/green{
 	dir = 10
 	},
+/obj/machinery/disposal/small{
+	dir = 1;
+	pixel_y = 32
+	},
+/obj/structure/disposalpipe/trunk,
+/obj/floor_decal/industrial/hatch/yellow,
 /turf/simulated/floor/tiled/monotile,
 /area/liberia/traidingroom)
 "bk" = (
-/obj/structure/table/steel,
-/obj/item/paper_bin,
-/obj/item/pen,
-/obj/random/cash,
-/obj/item/spacecash/bundle/c1000{
-	desc = "It's worth 13000 Thalers. Who the fuck made it?";
-	name = "13000 Thaler";
-	worth = 13000
-	},
-/obj/item/device/flashlight,
+/obj/structure/closet/crate,
+/obj/random/loot,
+/obj/random/loot,
 /obj/floor_decal/borderfloor{
 	dir = 1
 	},
 /obj/floor_decal/corner/green{
 	dir = 10
 	},
+/obj/floor_decal/industrial/outline/yellow,
+/obj/random/loot,
 /turf/simulated/floor/tiled/monotile,
 /area/liberia/traidingroom)
 "bl" = (
-/obj/structure/table/rack,
-/obj/item/storage/bag/cash,
 /obj/floor_decal/borderfloor{
 	dir = 5
 	},
 /obj/floor_decal/corner/green{
 	dir = 8
 	},
+/obj/machinery/trade_beacon/receiving,
+/obj/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/tiled/monotile,
 /area/liberia/traidingroom)
 "bm" = (
@@ -920,24 +923,35 @@
 /turf/simulated/floor/tiled/monotile,
 /area/liberia/traidingroom)
 "bI" = (
-/obj/structure/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c"
+/obj/machinery/embedded_controller/radio/airlock/docking_port{
+	dir = 4;
+	frequency = 1380;
+	id_tag = "mule_port_dock";
+	pixel_x = -20;
+	tag_airpump = "merchant_station_vent";
+	tag_chamber_sensor = "merchant_station_sensor";
+	tag_exterior_door = "merchant_station_exterior";
+	tag_interior_door = "merchant_station_interior"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
+/obj/machinery/airlock_sensor{
+	frequency = 1380;
+	id_tag = "merchant_station_sensor";
+	pixel_x = -28;
+	pixel_y = -10
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/catwalk_plated,
+/obj/decal/cleanable/dirt,
+/obj/structure/catwalk,
 /obj/structure/cable/blue{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/machinery/atmospherics/unary/vent_pump/high_volume/external_air{
+	dir = 4;
+	id_tag = "merchant_station_vent"
 	},
 /turf/simulated/floor/plating,
-/area/liberia/traidingroom)
+/area/liberia/dockinghall)
 "bJ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -950,6 +964,9 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/liberia/traidingroom)
@@ -964,12 +981,12 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/liberia/traidingroom)
 "bM" = (
-/obj/machinery/computer/modular/preset/merchant{
-	dir = 8
-	},
 /obj/floor_decal/borderfloor{
 	dir = 4
 	},
@@ -978,6 +995,9 @@
 	},
 /obj/machinery/light{
 	dir = 4
+	},
+/obj/machinery/computer/modular/preset/cardslot/supply{
+	dir = 8
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/liberia/traidingroom)
@@ -1260,13 +1280,14 @@
 /turf/simulated/floor/tiled,
 /area/liberia/traidingroom)
 "cm" = (
-/obj/machinery/merchant_pad,
 /obj/floor_decal/borderfloor{
 	dir = 6
 	},
 /obj/floor_decal/corner/green{
 	dir = 1
 	},
+/obj/machinery/trade_beacon/sending,
+/obj/floor_decal/industrial/outline/orange,
 /turf/simulated/floor/tiled/monotile,
 /area/liberia/traidingroom)
 "cn" = (
@@ -1818,9 +1839,6 @@
 /turf/simulated/floor/plating,
 /area/liberia/mule)
 "dh" = (
-/obj/machinery/computer/ship/engines{
-	dir = 4
-	},
 /obj/structure/window/reinforced{
 	dir = 8
 	},
@@ -1828,6 +1846,7 @@
 	dir = 1
 	},
 /obj/floor_decal/corner/blue/mono,
+/obj/machinery/radio_beacon,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/liberia/bridge)
 "di" = (
@@ -1930,8 +1949,8 @@
 /obj/floor_decal/borderfloor{
 	dir = 9
 	},
-/obj/floor_decal/industrial/outline/yellow,
 /obj/floor_decal/corner/green,
+/obj/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/tiled/monotile,
 /area/liberia/traidingroom)
 "dp" = (
@@ -2176,9 +2195,6 @@
 /turf/simulated/floor/tiled/dark,
 /area/liberia/bridge)
 "dI" = (
-/obj/machinery/computer/modular/preset/security{
-	dir = 8
-	},
 /obj/structure/window/reinforced{
 	dir = 1
 	},
@@ -2186,6 +2202,9 @@
 	dir = 4
 	},
 /obj/floor_decal/corner/blue/mono,
+/obj/machinery/computer/ship/engines{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/liberia/bridge)
 "dJ" = (
@@ -2610,6 +2629,9 @@
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 8
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor/tiled,
 /area/liberia/traidingroom)
 "eo" = (
@@ -2621,20 +2643,12 @@
 /turf/simulated/floor/tiled/dark,
 /area/liberia/bridge)
 "ep" = (
-/obj/machinery/atm{
-	pixel_y = -30
+/obj/floor_decal/techfloor{
+	dir = 8
 	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/floor_decal/industrial/outline/yellow,
-/obj/machinery/door/window/northleft{
-	autoclose = 1;
-	autoset_access = 0;
-	name = "ATM Private"
-	},
-/turf/simulated/floor/tiled/steel_grid,
-/area/liberia/mule)
+/obj/machinery/atmospherics/pipe/simple/hidden,
+/turf/simulated/floor/tiled/techfloor,
+/area/liberia/dockinghall)
 "eq" = (
 /obj/machinery/atmospherics/pipe/simple/visible/red,
 /turf/simulated/floor/tiled/steel_grid,
@@ -2684,14 +2698,15 @@
 /turf/simulated/floor/tiled/monotile,
 /area/liberia/hallway)
 "eu" = (
-/obj/structure/reagent_dispensers/watertank,
 /obj/floor_decal/borderfloor{
 	dir = 10
 	},
-/obj/floor_decal/industrial/outline/yellow,
 /obj/floor_decal/corner/green{
 	dir = 4
 	},
+/obj/floor_decal/industrial/outline/yellow,
+/obj/structure/table/rack,
+/obj/item/storage/bag/cash,
 /turf/simulated/floor/tiled/monotile,
 /area/liberia/hallway)
 "ev" = (
@@ -2701,10 +2716,10 @@
 /obj/random/maintenance/clean,
 /obj/random/maintenance/clean,
 /obj/floor_decal/borderfloor,
-/obj/floor_decal/industrial/outline/yellow,
 /obj/floor_decal/corner/green{
 	dir = 5
 	},
+/obj/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/tiled/monotile,
 /area/liberia/hallway)
 "ew" = (
@@ -2714,10 +2729,10 @@
 /obj/floor_decal/borderfloor{
 	dir = 6
 	},
-/obj/floor_decal/industrial/outline/yellow,
 /obj/floor_decal/corner/green{
 	dir = 1
 	},
+/obj/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/tiled/monotile,
 /area/liberia/hallway)
 "ex" = (
@@ -3441,6 +3456,7 @@
 /area/liberia/bar)
 "fI" = (
 /obj/floor_decal/industrial/outline/yellow,
+/obj/structure/reagent_dispensers/watertank,
 /turf/simulated/floor/tiled/monotile,
 /area/liberia/hallway)
 "fJ" = (
@@ -4346,15 +4362,15 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/liberia/merchantstorage)
 "hp" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
+/obj/floor_decal/techfloor{
+	dir = 8
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 4;
-	icon_state = "pipe-c"
+/obj/machinery/light/small{
+	dir = 8
 	},
-/turf/simulated/floor/tiled,
-/area/liberia/hallway)
+/obj/machinery/atmospherics/pipe/simple/hidden,
+/turf/simulated/floor/tiled/techfloor,
+/area/liberia/dockinghall)
 "hq" = (
 /obj/structure/bed/chair/rounded/red{
 	dir = 8
@@ -4891,21 +4907,13 @@
 /area/liberia/merchantstorage)
 "iD" = (
 /obj/machinery/light/small{
-	dir = 8
+	dir = 1
 	},
-/obj/floor_decal/techfloor{
-	dir = 8
+/obj/machinery/atmospherics/pipe/simple/hidden{
+	dir = 10
 	},
-/obj/floor_decal/techfloor{
-	dir = 4
-	},
-/obj/structure/cable/blue{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden,
-/turf/simulated/floor/tiled/techfloor,
+/obj/structure/catwalk,
+/turf/simulated/floor/plating,
 /area/liberia/dockinghall)
 "iG" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -5244,10 +5252,6 @@
 /obj/floor_decal/corner/green{
 	dir = 9
 	},
-/obj/machinery/disposal,
-/obj/structure/disposalpipe/trunk{
-	dir = 8
-	},
 /turf/simulated/floor/tiled,
 /area/liberia/hallway)
 "jh" = (
@@ -5490,6 +5494,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/machinery/vending/fashionvend,
 /turf/simulated/floor/wood/walnut,
 /area/liberia/library)
 "jN" = (
@@ -5699,70 +5704,63 @@
 /turf/simulated/floor/wood/walnut,
 /area/liberia/library)
 "kk" = (
-/obj/floor_decal/techfloor{
-	dir = 9
+/obj/floor_decal/corner_techfloor_grid{
+	dir = 5
 	},
-/obj/machinery/firealarm{
-	pixel_y = 24
+/obj/floor_decal/techfloor/corner{
+	dir = 1
 	},
+/obj/floor_decal/techfloor/corner{
+	dir = 4
+	},
+/obj/structure/cable/blue{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/structure/cable/blue{
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 6
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 5
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/liberia/dockinghall)
 "kl" = (
-/obj/machinery/light{
+/obj/floor_decal/corner_techfloor_grid{
+	dir = 5
+	},
+/obj/floor_decal/techfloor/corner{
 	dir = 1
 	},
-/obj/floor_decal/techfloor{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+/obj/floor_decal/techfloor/corner{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /obj/structure/cable/blue{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/structure/cable/blue{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
 	},
 /obj/structure/cable/blue{
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/turf/simulated/floor/tiled/techfloor,
-/area/liberia/dockinghall)
-"km" = (
-/obj/floor_decal/corner_techfloor_grid,
-/obj/floor_decal/techfloor{
-	dir = 1
-	},
-/obj/floor_decal/techfloor/corner,
-/obj/machinery/alarm/merchant{
-	pixel_y = 24
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/structure/cable/blue{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /turf/simulated/floor/tiled/techfloor,
 /area/liberia/dockinghall)
-"kn" = (
+"km" = (
 /obj/machinery/door/airlock/civilian{
 	name = "Shuttle Dock"
 	},
@@ -5783,7 +5781,17 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/tiled/techfloor,
-/area/liberia/library)
+/area/liberia/dockinghall)
+"kn" = (
+/obj/floor_decal/techfloor{
+	dir = 8
+	},
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/universal,
+/turf/simulated/floor/tiled/techfloor,
+/area/liberia/dockinghall)
 "ko" = (
 /obj/floor_decal/spline/fancy/wood{
 	dir = 9
@@ -5848,9 +5856,6 @@
 /turf/simulated/floor/carpet,
 /area/liberia/library)
 "ks" = (
-/obj/floor_decal/techfloor{
-	dir = 8
-	},
 /obj/floor_decal/corner_techfloor_grid,
 /obj/floor_decal/techfloor/corner,
 /obj/structure/cable/blue{
@@ -5858,7 +5863,6 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/universal,
 /turf/simulated/floor/tiled/techfloor,
 /area/liberia/dockinghall)
 "kt" = (
@@ -5866,11 +5870,18 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/liberia/merchantstorage)
 "ku" = (
-/obj/floor_decal/techfloor{
+/obj/floor_decal/borderfloor{
 	dir = 6
 	},
-/turf/simulated/floor/tiled/techfloor,
-/area/liberia/dockinghall)
+/obj/floor_decal/corner/green{
+	dir = 1
+	},
+/obj/machinery/disposal,
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
+/turf/simulated/floor/tiled,
+/area/liberia/hallway)
 "kw" = (
 /obj/machinery/vending/coffee{
 	dir = 1
@@ -5911,9 +5922,6 @@
 /area/liberia/library)
 "kB" = (
 /obj/floor_decal/techfloor{
-	dir = 8
-	},
-/obj/floor_decal/techfloor{
 	dir = 4
 	},
 /obj/structure/cable/blue{
@@ -5921,7 +5929,6 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden,
 /turf/simulated/floor/tiled/techfloor,
 /area/liberia/dockinghall)
 "kC" = (
@@ -5972,6 +5979,18 @@
 	},
 /turf/simulated/floor/tiled/steel_grid,
 /area/liberia/atmos)
+"kH" = (
+/obj/floor_decal/corner_techfloor_grid{
+	dir = 1
+	},
+/obj/floor_decal/techfloor/corner{
+	dir = 1
+	},
+/obj/machinery/atmospherics/binary/pump/on{
+	target_pressure = 200
+	},
+/turf/simulated/floor/tiled/techfloor,
+/area/liberia/dockinghall)
 "kJ" = (
 /obj/structure/cable/blue{
 	d1 = 2;
@@ -6242,48 +6261,17 @@
 /turf/simulated/floor/plating,
 /area/liberia/hallway)
 "lg" = (
-/obj/machinery/embedded_controller/radio/airlock/docking_port{
-	dir = 4;
-	frequency = 1380;
-	id_tag = "mule_port_dock";
-	pixel_x = -20;
-	tag_airpump = "merchant_station_vent";
-	tag_chamber_sensor = "merchant_station_sensor";
-	tag_exterior_door = "merchant_station_exterior";
-	tag_interior_door = "merchant_station_interior"
-	},
-/obj/machinery/airlock_sensor{
-	frequency = 1380;
-	id_tag = "merchant_station_sensor";
-	pixel_x = -28;
-	pixel_y = -10
-	},
-/obj/decal/cleanable/dirt,
-/obj/structure/catwalk,
-/obj/structure/cable/blue{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/turf/simulated/floor/plating,
-/area/liberia/dockinghall)
-"lh" = (
-/obj/machinery/atmospherics/unary/vent_pump/high_volume/external_air{
-	dir = 4;
-	id_tag = "merchant_station_vent"
-	},
-/obj/machinery/light/small{
-	dir = 1
-	},
-/obj/structure/catwalk,
 /obj/structure/cable/blue{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/atmospherics/pipe/manifold/hidden,
+/obj/structure/catwalk,
+/obj/machinery/light/small,
 /turf/simulated/floor/plating,
 /area/liberia/dockinghall)
-"li" = (
+"lh" = (
 /obj/machinery/door/airlock/external{
 	autoset_access = 0;
 	frequency = 1380;
@@ -6294,14 +6282,16 @@
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 4
 	},
-/obj/machinery/access_button{
-	command = "cycle_interior";
-	frequency = 1380;
-	master_tag = "mule_port_dock";
-	name = "interior access button";
-	pixel_x = -1;
-	pixel_y = 22
+/obj/structure/cable/blue{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
+/turf/simulated/floor/tiled/techfloor,
+/area/liberia/dockinghall)
+"li" = (
+/obj/floor_decal/techfloor,
+/obj/machinery/atmospherics/pipe/manifold4w/hidden,
 /obj/structure/cable/blue{
 	d1 = 4;
 	d2 = 8;
@@ -6313,19 +6303,13 @@
 /obj/floor_decal/techfloor{
 	dir = 6
 	},
-/obj/floor_decal/corner_techfloor_grid{
-	dir = 1
-	},
-/obj/floor_decal/techfloor/corner{
-	dir = 1
-	},
 /obj/structure/cable/blue{
 	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden{
-	dir = 4
+/obj/machinery/atmospherics/pipe/simple/hidden{
+	dir = 10
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/liberia/dockinghall)
@@ -6546,29 +6530,23 @@
 /turf/simulated/floor/wood/walnut,
 /area/liberia/library)
 "lC" = (
-/obj/floor_decal/corner_techfloor_grid{
-	dir = 5
-	},
-/obj/floor_decal/techfloor/corner{
+/obj/machinery/light{
 	dir = 1
 	},
-/obj/floor_decal/techfloor/corner{
+/obj/floor_decal/techfloor{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
-	dir = 8
-	},
-/obj/structure/cable/blue{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
 	},
 /obj/structure/cable/blue{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 1
+	},
 /turf/simulated/floor/tiled/techfloor,
 /area/liberia/dockinghall)
 "lD" = (
@@ -6722,6 +6700,10 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/turf/simulated/floor/tiled,
+/area/liberia/traidingroom)
+"nt" = (
+/obj/floor_decal/industrial/outline/green,
 /turf/simulated/floor/tiled,
 /area/liberia/traidingroom)
 "nD" = (
@@ -7473,23 +7455,33 @@
 /obj/machinery/portable_atmospherics/canister/air/airlock,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/liberia/dockinghall)
-"xr" = (
+"xq" = (
 /obj/floor_decal/techfloor{
-	dir = 8
+	dir = 1
 	},
-/obj/floor_decal/techfloor{
+/obj/machinery/atmospherics/portables_connector{
+	dir = 1
+	},
+/obj/machinery/door/window/northleft,
+/obj/machinery/portable_atmospherics/canister/air/airlock,
+/turf/simulated/floor/tiled/techfloor/grid,
+/area/liberia/dockinghall)
+"xr" = (
+/obj/machinery/atm{
+	pixel_y = -24;
+	dir = 1
+	},
+/obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/structure/cable/blue{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/obj/floor_decal/industrial/outline/yellow,
+/obj/machinery/door/window/northleft{
+	autoclose = 1;
+	autoset_access = 0;
+	name = "ATM Private"
 	},
-/obj/machinery/atmospherics/binary/pump/on{
-	target_pressure = 200
-	},
-/turf/simulated/floor/tiled/techfloor,
-/area/liberia/dockinghall)
+/turf/simulated/floor/tiled/steel_grid,
+/area/liberia/mule)
 "xG" = (
 /obj/structure/lattice,
 /turf/space,
@@ -7540,6 +7532,7 @@
 /obj/floor_decal/corner/green/three_quarters{
 	dir = 8
 	},
+/obj/floor_decal/industrial/outline/orange,
 /turf/simulated/floor/tiled,
 /area/liberia/traidingroom)
 "yP" = (
@@ -7673,6 +7666,10 @@
 /obj/floor_decal/corner/green{
 	dir = 9
 	},
+/obj/machinery/atm{
+	pixel_x = 25;
+	dir = 8
+	},
 /turf/simulated/floor/tiled,
 /area/liberia/traidingroom)
 "Bl" = (
@@ -7802,7 +7799,9 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/liberia/merchantstorage)
 "Eq" = (
-/obj/floor_decal/techfloor,
+/obj/floor_decal/techfloor{
+	dir = 6
+	},
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 1
 	},
@@ -8148,16 +8147,23 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/liberia/atmos)
 "JI" = (
-/obj/floor_decal/borderfloor/corner,
-/obj/floor_decal/corner/green/three_quarters{
-	dir = 8
+/obj/machinery/door/airlock/external{
+	autoset_access = 0;
+	frequency = 1380;
+	id_tag = "merchant_station_interior";
+	locked = 1;
+	name = "Station Interior"
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c"
+/obj/machinery/access_button{
+	command = "cycle_interior";
+	frequency = 1380;
+	master_tag = "mule_port_dock";
+	name = "interior access button";
+	pixel_x = -1;
+	pixel_y = 22
 	},
-/turf/simulated/floor/tiled,
-/area/liberia/hallway)
+/turf/simulated/floor/tiled/techfloor,
+/area/liberia/dockinghall)
 "JS" = (
 /obj/machinery/power/apc/liberia{
 	dir = 8;
@@ -8252,12 +8258,15 @@
 /area/liberia/bridge)
 "LJ" = (
 /obj/floor_decal/borderfloor{
-	dir = 6
+	dir = 4
 	},
 /obj/floor_decal/corner/green{
-	dir = 1
+	dir = 9
 	},
-/obj/machinery/radio_beacon,
+/obj/structure/disposalpipe/segment{
+	dir = 2;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor/tiled,
 /area/liberia/hallway)
 "LW" = (
@@ -8496,6 +8505,13 @@
 /obj/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/liberia/engineeringstorage)
+"Qu" = (
+/obj/structure/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/tiled,
+/area/liberia/traidingroom)
 "QA" = (
 /obj/floor_decal/techfloor,
 /obj/machinery/power/apc/liberia{
@@ -8597,6 +8613,19 @@
 "St" = (
 /turf/simulated/wall/prepainted,
 /area/liberia/officeroom)
+"Sx" = (
+/obj/structure/cable/blue{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/unary/vent_pump/high_volume/external_air{
+	dir = 4;
+	id_tag = "merchant_station_vent"
+	},
+/obj/structure/catwalk,
+/turf/simulated/floor/plating,
+/area/liberia/dockinghall)
 "SN" = (
 /obj/structure/cable/blue{
 	d1 = 1;
@@ -8633,26 +8662,24 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/liberia/merchantstorage)
 "SY" = (
-/obj/floor_decal/corner_techfloor_grid{
-	dir = 5
-	},
-/obj/floor_decal/techfloor/corner{
+/obj/floor_decal/corner_techfloor_grid,
+/obj/floor_decal/techfloor{
 	dir = 1
 	},
-/obj/floor_decal/techfloor/corner{
+/obj/floor_decal/techfloor/corner,
+/obj/machinery/alarm/merchant{
+	pixel_y = 24
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
 /obj/structure/cable/blue{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/structure/cable/blue{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 1
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/liberia/dockinghall)
@@ -8803,6 +8830,15 @@
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/liberia/engineeringstorage)
+"Vj" = (
+/obj/floor_decal/techfloor{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 6
+	},
+/turf/simulated/floor/tiled/techfloor,
+/area/liberia/dockinghall)
 "Vk" = (
 /obj/floor_decal/techfloor{
 	dir = 1
@@ -8827,7 +8863,8 @@
 /area/liberia/traidingroom)
 "VS" = (
 /obj/machinery/atm{
-	pixel_y = -30
+	pixel_y = -24;
+	dir = 1
 	},
 /obj/structure/window/reinforced{
 	dir = 8
@@ -22322,11 +22359,11 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
+ex
+bC
+bC
+bC
+ex
 aa
 aa
 aa
@@ -22426,209 +22463,6 @@ aa
 aa
 "}
 (67,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-ex
-bC
-bC
-bC
-ex
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-"}
-(68,1,1) = {"
-aa
 aa
 aa
 aa
@@ -22828,9 +22662,9 @@ aa
 aa
 aa
 aa
-"}
-(69,1,1) = {"
 aa
+"}
+(68,1,1) = {"
 aa
 aa
 aa
@@ -23030,9 +22864,9 @@ aa
 aa
 aa
 aa
-"}
-(70,1,1) = {"
 aa
+"}
+(69,1,1) = {"
 aa
 aa
 aa
@@ -23232,9 +23066,9 @@ aa
 aa
 aa
 aa
-"}
-(71,1,1) = {"
 aa
+"}
+(70,1,1) = {"
 aa
 aa
 aa
@@ -23434,6 +23268,209 @@ aa
 aa
 aa
 aa
+aa
+"}
+(71,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ex
+ex
+ex
+cg
+cN
+ex
+ex
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 "}
 (72,1,1) = {"
 aa
@@ -23533,14 +23570,14 @@ aa
 aa
 aa
 aa
+ex
+br
+bO
+ch
+cO
+dm
+ex
 aa
-ex
-ex
-ex
-cg
-cN
-ex
-ex
 aa
 aa
 aa
@@ -23734,14 +23771,14 @@ iP
 uh
 aa
 aa
-aa
-aa
 ex
-br
-bO
-ch
-cO
-dm
+ex
+bs
+bP
+cn
+cP
+dT
+ex
 ex
 aa
 aa
@@ -23936,16 +23973,16 @@ iR
 uh
 aa
 aa
+bb
+ex
+bt
+bQ
+co
+cQ
+dU
+ex
+bb
 aa
-ex
-ex
-bs
-bP
-cn
-cP
-dT
-ex
-ex
 aa
 oM
 ZO
@@ -24138,16 +24175,16 @@ iR
 uh
 aa
 aa
+fl
+ex
+ex
+bR
+cp
+cR
+ex
+ex
+fl
 aa
-bb
-ex
-bt
-bQ
-co
-cQ
-dU
-ex
-bb
 aa
 oM
 ZO
@@ -24341,15 +24378,15 @@ uh
 aa
 aa
 aa
-fl
-ex
-ex
-bR
-cp
-cR
-ex
-ex
-fl
+bo
+bu
+bS
+cq
+cS
+ec
+bo
+aa
+aa
 aa
 oM
 ZO
@@ -24543,14 +24580,14 @@ uh
 aa
 aa
 aa
+bo
+bv
+bT
+cr
+cV
+ef
+bo
 aa
-bo
-bu
-bS
-cq
-cS
-ec
-bo
 aa
 aa
 oM
@@ -24745,14 +24782,14 @@ uh
 aa
 aa
 aa
+ex
+bw
+bU
+cs
+cU
+bw
+ex
 aa
-bo
-bv
-bT
-cr
-cV
-ef
-bo
 aa
 aa
 oM
@@ -24946,14 +24983,14 @@ iR
 uh
 aa
 aa
-aa
-aa
 ex
-bw
-bU
-cs
-cU
-bw
+ex
+bx
+bV
+ct
+cV
+eg
+ex
 ex
 aa
 aa
@@ -25148,16 +25185,16 @@ iR
 uh
 aa
 aa
-aa
+kf
 ex
-ex
-bx
+by
 bV
-ct
+cu
 cV
-eg
+eh
 ex
-ex
+kf
+aa
 aa
 oM
 ZO
@@ -25351,15 +25388,15 @@ uh
 aa
 aa
 aa
-kf
 ex
-by
-bV
-cu
-cV
-eh
+bw
+bU
+cv
+cU
+bw
 ex
-kf
+aa
+aa
 aa
 oM
 ZO
@@ -25553,14 +25590,14 @@ uh
 aa
 aa
 aa
+ex
+bz
+bW
+cw
+cV
+xr
+ex
 aa
-ex
-bw
-bU
-cv
-cU
-bw
-ex
 aa
 aa
 oM
@@ -25755,14 +25792,14 @@ uh
 aa
 aa
 aa
+ex
+bA
+bX
+cx
+cW
+VS
+ex
 aa
-ex
-bz
-bW
-cw
-cV
-ep
-ex
 aa
 aa
 oM
@@ -25957,14 +25994,14 @@ uh
 aa
 aa
 aa
+bp
+bB
+bY
+cy
+dg
+ex
+ex
 aa
-ex
-bA
-bX
-cx
-cW
-VS
-ex
 aa
 aa
 oM
@@ -26159,16 +26196,16 @@ uh
 aa
 aa
 aa
-aa
-bp
-bB
-bY
-cy
-dg
+bq
 ex
+bZ
+cz
+di
 ex
-aa
-aa
+EG
+EG
+EG
+EG
 oM
 ZO
 oM
@@ -26362,14 +26399,14 @@ aa
 aa
 aa
 aa
-bq
 ex
-bZ
-cz
-di
-ex
-EG
-EG
+ca
+cA
+dl
+ey
+ac
+Sx
+bI
 EG
 oM
 ZO
@@ -26564,13 +26601,13 @@ aa
 aa
 aa
 aa
-aa
 ex
-ca
-cA
-dl
-ey
-ac
+ex
+ex
+ex
+ex
+EG
+iD
 lg
 EG
 Sm
@@ -26762,19 +26799,19 @@ IA
 tA
 iT
 ur
-aa
-aa
-aa
-aa
-aa
-ex
-ex
-ex
-ex
-ex
+ur
+jP
+ur
+ur
 EG
+EG
+EG
+EG
+EG
+EG
+JI
 lh
-EG
+Iw
 GP
 JE
 vB
@@ -26964,19 +27001,19 @@ iu
 IA
 iU
 ur
-ur
-jP
-ur
-ur
-EG
-EG
-EG
-EG
-EG
-EG
-EG
+jG
+jR
+jY
+pa
+Vj
+kn
+ep
+ep
+hp
+ep
+kH
 li
-Iw
+xq
 Od
 sN
 Od
@@ -27166,17 +27203,17 @@ iv
 IA
 iW
 ur
-jG
-jR
-jY
-pa
+jH
+lx
+lz
+kg
 kk
 ks
 kB
 kB
-iD
 kB
-xr
+kB
+kB
 lj
 xn
 Od
@@ -27368,10 +27405,10 @@ iw
 ix
 lb
 ur
-jH
-lx
-lz
-kg
+pa
+pa
+pa
+pa
 lC
 rc
 Iw
@@ -27569,11 +27606,11 @@ fX
 tU
 Py
 lc
-ur
-pa
-pa
-pa
-pa
+Rw
+jI
+ly
+jZ
+sF
 kl
 QA
 Iw
@@ -27772,10 +27809,10 @@ SN
 dP
 ld
 Rw
-jI
-ly
-jZ
-sF
+jJ
+jU
+ka
+QM
 SY
 Eq
 Iw
@@ -27974,12 +28011,12 @@ Qo
 HQ
 Hl
 Rw
-jJ
-jU
-ka
+QM
+QM
+QM
 QM
 km
-ku
+Iw
 Iw
 dK
 Hw
@@ -28175,13 +28212,13 @@ YD
 yS
 Kh
 jt
-Rw
-QM
-QM
-QM
-QM
-kn
-BJ
+PI
+jK
+jW
+kb
+kh
+gR
+lB
 BJ
 dx
 dk
@@ -28378,10 +28415,10 @@ IA
 Gu
 IA
 PI
-jK
-jW
-kb
-kh
+jL
+jX
+kc
+oe
 gR
 lB
 BJ
@@ -28580,9 +28617,9 @@ pJ
 Rz
 rn
 PI
-jL
-jX
-kc
+lB
+lB
+lB
 oe
 ko
 kw
@@ -30197,7 +30234,7 @@ at
 aC
 lD
 be
-bI
+bJ
 fF
 cG
 cZ
@@ -31207,15 +31244,15 @@ Ut
 Qj
 lD
 bj
-fF
+Qu
 fF
 fF
 fF
 rx
 ns
 DL
-hp
-JI
+eb
+th
 ew
 qx
 eX
@@ -31409,7 +31446,7 @@ HV
 aI
 HV
 bk
-fF
+nt
 yL
 cL
 AT
@@ -31418,7 +31455,7 @@ iK
 iX
 jg
 LJ
-qx
+ku
 qx
 ZP
 fj

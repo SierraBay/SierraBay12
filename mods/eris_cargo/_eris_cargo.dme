@@ -37,6 +37,7 @@
 // Include the definitions of the trading station types that are rarely spawned
 #include "../../packs/0_eris_cargo/trading_stations/trading_station_types/2_rare/weapons.dm"
 #include "../../packs/0_eris_cargo/trading_stations/trading_station_types/2_rare/hephaestus.dm"
+#include "../../packs/0_eris_cargo/trading_stations/trading_station_types/2_rare/robotics.dm"
 
 // Include an example of how to create a trading station
 

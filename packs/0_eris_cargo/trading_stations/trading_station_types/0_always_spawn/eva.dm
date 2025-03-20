@@ -15,6 +15,10 @@
 			/obj/item/clothing/suit/space/emergency = GOODS_DEFAULT,
 			/obj/item/clothing/head/helmet/space/emergency = GOODS_DEFAULT,
 			),
+		TRADE_CAT_EQUIPMENT = list(
+			/obj/item/inflatable_dispenser = GOODS_DEFAULT,
+			/obj/item/storage/briefcase/inflatable = GOODS_DEFAULT,
+			),
 		TRADE_CAT_VOIDSUIT = list(
 			/obj/item/clothing/suit/space/void/engineering/alt = GOODS_DEFAULT,
 			/obj/item/clothing/head/helmet/space/void/engineering/alt = GOODS_DEFAULT,

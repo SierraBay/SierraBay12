@@ -7,7 +7,7 @@
 		)
 	uid = "medical"
 	unlock_favor = 5000
-	faction = FACTION_INDEPENDENT // Should be under Zeng Hu, potentially
+	faction = FACTION_ZENG_HU
 	spawn_always = TRUE
 	markup = 1.2
 	inventory = list(
@@ -30,7 +30,7 @@
 			/obj/item/reagent_containers/glass/bottle/inaprovaline = GOODS_DEFAULT,
 			/obj/item/reagent_containers/glass/bottle/dylovene = GOODS_DEFAULT,
 			/obj/item/reagent_containers/ivbag/nanoblood = CUSTOM_GOODS_NAME("nanoblood IV bag"),
-			/obj/item/bodybag/rescue = GOODS_DEFAULT,
+			/obj/item/bodybag/rescue/loaded = GOODS_DEFAULT,
 			),
 		TRADE_CAT_MEDKIT = list(
 			/obj/item/storage/firstaid/trauma = GOODS_DEFAULT,

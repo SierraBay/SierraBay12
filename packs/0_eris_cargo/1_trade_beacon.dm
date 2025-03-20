@@ -7,7 +7,7 @@
 
 
 /// The effective range of the trade beacon. This is how far the beacon can reach into space to find items to export.
-	var/beacon_range = 2
+	var/beacon_range = 1
 
 
 /obj/machinery/trade_beacon/use_tool(obj/item/W, mob/living/user, list/click_params)

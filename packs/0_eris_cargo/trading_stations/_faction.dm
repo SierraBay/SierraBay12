@@ -98,6 +98,15 @@
 		)
 	access_required = access_supplylink_hephaestus
 
-// Member states of ISC
-
-// Purely independent states
+/datum/trade_faction/zeng_hu
+	name = FACTION_ZENG_HU
+	desc = "A part of the DAIS mega-corporation which specializes in development of implants and artificial intelligence."
+	relationship = list(
+		FACTION_INDIE_CONFED = FACTION_STATE_ANIMOSITY,
+		FACTION_SOL_CENTRAL = FACTION_STATE_NEUTRAL,
+		FACTION_FREETRADE = FACTION_STATE_WELCOMING,
+		FACTION_NANOTRASEN = FACTION_STATE_ANIMOSITY,
+		FACTION_DAIS = FACTION_STATE_ALLY,
+		FACTION_HEPHAESTUS = FACTION_STATE_NEUTRAL,
+		)
+	access_required = access_supplylink_zeng_hu

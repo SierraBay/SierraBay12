@@ -14,12 +14,12 @@
 	create_record = FALSE
 	outfit_type = /singleton/hierarchy/outfit/job/liberia/merchant/leader
 	whitelisted_species = null
-	blacklisted_species = list(SPECIES_VOX, SPECIES_ALIEN, SPECIES_GOLEM, SPECIES_ADHERENT, SPECIES_NABBER) // SPECIES_MANTID_GYNE, SPECIES_MANTID_ALATE, SPECIES_MONARCH_WORKER, SPECIES_MONARCH_QUEEN Not yet... not yet...
+	blacklisted_species = list(SPECIES_VOX, SPECIES_ALIEN, SPECIES_GOLEM, SPECIES_ADHERENT, SPECIES_NABBER, SPECIES_MANTID_GYNE, SPECIES_MANTID_ALATE, SPECIES_MONARCH_WORKER, SPECIES_MONARCH_QUEEN)
 
 	latejoin_at_spawnpoints = TRUE
 
 	access = list(
-		access_merchant
+		access_merchant, access_supplylink_ftu
 	)
 
 	announced = FALSE
@@ -57,7 +57,7 @@
 	minimal_player_age = 0
 	create_record = FALSE
 	whitelisted_species = null
-	blacklisted_species = list(SPECIES_VOX, SPECIES_ALIEN, SPECIES_GOLEM, ) // SPECIES_MANTID_GYNE, SPECIES_MANTID_ALATE, SPECIES_MONARCH_WORKER, SPECIES_MONARCH_QUEEN Not yet... not yet...
+	blacklisted_species = list(SPECIES_VOX, SPECIES_ALIEN, SPECIES_GOLEM, SPECIES_MANTID_GYNE, SPECIES_MANTID_ALATE, SPECIES_MONARCH_WORKER, SPECIES_MONARCH_QUEEN)
 	alt_titles = list(
 		"Merchant Security" = /singleton/hierarchy/outfit/job/liberia/merchant/security,
 		"Merchant Engineer" = /singleton/hierarchy/outfit/job/liberia/merchant/engineer,

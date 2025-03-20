@@ -67,9 +67,9 @@ var/global/const/access_supplylink_hephaestus = "ACCESS_SUPPLY_LINK_HAEPHAESTUS"
 /**
  * Reborn Christian Church faction link access level
  */
-var/global/const/access_supplylink_reborn_church = "ACCESS_SUPPLY_LINK_REBORN_CHURCH"
-/datum/access/supplylink_reborn_church
-	id = access_supplylink_reborn_church
-	desc = "Supply Console - Reborn Christian Church Link"
+var/global/const/access_supplylink_zeng_hu = "ACCESS_SUPPLY_LINK_ZENG_HU"
+/datum/access/supplylink_zeng_hu
+	id = access_supplylink_zeng_hu
+	desc = "Supply Console - Zeng-Hu Pharmaceuticals Link"
 	region = ACCESS_REGION_SUPPLY
 	access_type = ACCESS_TYPE_NONE

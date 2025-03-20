@@ -7,10 +7,9 @@
 		"HITB \"Sonne Waffen\"" = "Hephaestus Industries \"Sonne Waffen\": Sol Finest.",
 		)
 	uid = "hephaestus"
-	unlock_favor = 10000
+	unlock_favor = 20000
 	faction = FACTION_HEPHAESTUS
 	whitelist_factions = list(FACTION_FREETRADE, FACTION_HEPHAESTUS)
-	spawn_always = TRUE
 	markup = 3
 	inventory = list(
 		TRADE_CAT_ARTILLERY = list(
@@ -25,7 +24,8 @@
 			/obj/item/gun/projectile/shotgun/pump/combat = CUSTOM_GOODS_NAME("KS-40 combat shotgun"),
 			),
 		TRADE_CAT_AMMO = list(
-
+			/obj/item/ammo_magazine/rifle = CUSTOM_GOODS_NAME("5mmR assault rifle magazine"),
+			/obj/item/ammo_magazine/machine_pistol = CUSTOM_GOODS_NAME("machine pistol magazine"),
 			),
 		TRADE_CAT_MEDICAL = list(
 			/obj/item/organ/internal/augment/active/hud/security = CUSTOM_GOODS_NAME("C-VSR HUD implant"),
@@ -35,9 +35,13 @@
 	hidden_inventory = list(
 		TRADE_CAT_WEAPONS = list(
 			/obj/item/gun/energy/sniperrifle = CUSTOM_GOODS_NAME("DMR 9E marksman energy rifle"),
+			/obj/item/gun/projectile/heavysniper = CUSTOM_GOODS_NAME("HI PTR-7 anti-material rifle"),
+			),
+		TRADE_CAT_AMMO = list(
+			/obj/item/ammo_casing/shell = CUSTOM_GOODS_NAME("15mmR rifle shell"),
+			/obj/item/ammo_casing/shell/apds = CUSTOM_GOODS_NAME("15mmR APDS rifle shell"),
 			),
 		TRADE_CAT_RIG = list(
 			/obj/item/rig/light/ninja/corpo = CUSTOM_GOODS_NAME("X-11 Lightweight hardsuit"), // expensive af
 			),
 		)
-*/
