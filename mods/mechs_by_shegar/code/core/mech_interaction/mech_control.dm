@@ -225,7 +225,7 @@
 		if(selected_system.need_combat_skill())
 			//Если мы не имеем права использовать боевое снаряжение - это конец
 			if(!pilot.skill_check(SKILL_MECH, SKILL_TRAINED))
-				to_chat(pilot, SPAN_WARNING("I dont know how to use combat modules!"))
+				to_chat(pilot, SPAN_WARNING("I don't know how to use combat modules!"))
 				return
 		if(selected_system == click_target)
 			selected_system.attack_self(pilot) //Клик по самому модулю - самоатака у модуля(Смотри attack_self)

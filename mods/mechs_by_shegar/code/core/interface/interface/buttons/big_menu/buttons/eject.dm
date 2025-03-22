@@ -1,5 +1,5 @@
 /obj/screen/exosuit/menu_button/eject
-	name = "Leave mech"
+	name = "Покинуть меха"
 	button_desc = "При нажатии, персонаж покидает меха. Требует время на выход из меха."
 	icon_state = "eject"
 

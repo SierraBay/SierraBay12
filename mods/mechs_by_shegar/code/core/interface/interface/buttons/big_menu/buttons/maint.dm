@@ -1,5 +1,5 @@
 /obj/screen/exosuit/menu_button/maint
-	name = "toggle maintenance protocol"
+	name = "Режим обслуживания"
 	button_desc = "Режим технического обслуживания меха. <br> -Требуется для внешнего снятия оборудоваиня <br> -Требуется для установки оборудования <br> -Требуется для разборки ключом меха. <br> -Требуется для доставания отвёртой батареи."
 	icon_state = "maint"
 	switchable = TRUE
