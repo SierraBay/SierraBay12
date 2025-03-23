@@ -17,6 +17,6 @@
 		if(SKILL_BASIC)
 			return 2
 		if(SKILL_TRAINED)
-			return 6
+			return 4
 		else
 			return 0

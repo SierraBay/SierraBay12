@@ -71,6 +71,7 @@
 	// Interface stuff.
 	var/list/hud_elements = list()
 	var/list/hardpoint_hud_elements = list()
+	var/obj/screen/movable/exosuit/guide/hud_guide
 	var/obj/screen/movable/exosuit/mech_integrity/hud_health
 	var/obj/screen/movable/exosuit/power/hud_power
 	var/obj/screen/exosuit/menu_button/power/hud_power_control

@@ -1,5 +1,5 @@
 /obj/screen/exosuit/menu_button/hatch
-	name = "Toggle cabin hatch"
+	name = "Кабина меха"
 	icon_state = "hatch"
 	button_desc = "Опускает кабину меха вниз. <br> -С поднятой кабиной нельзя пользоваться оборудованием. <br> -С поднятой кабиной персонаж получает урон при попадании по меху <br> -С поднятой кабиной можно взаимодействовать с миром."
 	switchable = TRUE

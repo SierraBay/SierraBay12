@@ -7,6 +7,7 @@
 	//Используется для плавного вывода меню,
 	var/button_desc = "Ёбаная кнопка"
 	var/enter_status = FALSE
+	var/obj/screen/movable/exosuit/shortcut_button/shortcut_button
 	var/show_tooltip_cooldown = 1 SECONDS
 	maptext_x = 9
 	maptext_y = 13
@@ -27,13 +28,16 @@
 	else if(modifiers["ctrl"])
 		ctrl_press()
 		return
+	else if(modifiers["middle"])
+		middle_press()
+		return
 	toggle_button()
 
 /obj/screen/exosuit/menu_button/proc/activated()
 	return
 
 /obj/screen/exosuit/menu_button/proc/toggle_button()
-	press_animation()//Нажмём кнопку
+	do_visual_stuff()
 	if(switchable)
 		if(!toggled)
 			if(!switch_on())
@@ -41,7 +45,6 @@
 		else
 			if(!switch_off())
 				return
-	change_icon_state()
 	activated()
 
 /obj/screen/exosuit/menu_button/proc/switch_off()
@@ -59,9 +62,25 @@
 /obj/screen/exosuit/menu_button/proc/ctrl_press()
 	press_animation(modificator_press = FALSE)
 
+/obj/screen/exosuit/menu_button/proc/middle_press()
+	//Здесь мы добавляем маленькую версию кнопушки в меню слева
+	owner.try_create_new_shortcut_button(src)
+
+/obj/screen/exosuit/menu_button/proc/do_visual_stuff()
+	set waitfor = FALSE
+	press_animation()
+	change_icon_state()
+
 ///Кнопку нажали, как рисовать - пусть думает функция
 /obj/screen/exosuit/menu_button/proc/press_animation(modificator_press = FALSE)
-	flick("[initial(icon_state)]_press", src)
+	var/matrix/M = matrix() // Создаем матрицу трансформации
+	M.Scale(0.8, 0.8)
+	animate(src, transform = M, time = 0.15 SECONDS)
+	sleep(0.15 SECONDS)
+	M.Scale(1.25, 1.25)
+	animate(src, transform = M, time = 0.15 SECONDS)
+	sleep(0.15 SECONDS)
+	//flick("[initial(icon_state)]_press", src)
 
 	//Здесь звук нажатия. Работает для всех нажатий
 
@@ -82,7 +101,7 @@
 	enter_status = TRUE
 	sleep(show_tooltip_cooldown)
 	if(enter_status)
-		openToolTip(usr, src, params, "Описание", button_desc)
+		openToolTip(usr, src, params, name, button_desc)
 
 /obj/screen/exosuit/menu_button/MouseExited(location, control, params)
 	enter_status = FALSE

@@ -25,7 +25,6 @@
 		process_mech_vision = TRUE
 	to_chat(user,SPAN_NOTICE("<b><font color = green> Нажмите СКМ для быстрой смены текущего модуля. </font></b>"))
 	to_chat(user,SPAN_NOTICE("<b><font color = green> Нажмите ПРОБЕЛ для переключения режима стрейфа. </font></b>"))
-	to_chat(user,SPAN_NOTICE("<b><font color = green> Основные органы управления скрыты в контекстном меню. Нажмите на кнопку ниже рук персонажа, кнопку слева сверху и кнопку справа (Состояние меха) для раскрытия контекстных меню меха. </font></b>"))
 
 
 /// Removes a mob from the pilots list and destroyed event handlers. Called by the destroyed event.
@@ -56,6 +55,7 @@
 	//Отключаем процессинг зрения меха, если пилотов внутри нет
 	if(LAZYLEN(pilots) <= 0 )
 		process_mech_vision = FALSE
+	stop_ui_guide(user)
 
 /mob/living/exosuit/proc/eject(mob/user, silent)
 	if(!user || !(user in src.contents))
