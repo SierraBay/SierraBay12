@@ -490,7 +490,7 @@
 	icon_state = "neokitsch_jacket_f"
 
 
-/obj/item/clothing/suit/storage/toggle/new_suite/eng_bomber //тотсюда искать remission
+/obj/item/clothing/suit/storage/toggle/new_suit/eng_bomber //отсюда искать remission
 	name = "engineer jacket"
 	desc = "This jacket protection without compromising mobility, making it ideal for engineers."
 	icon = 'maps/sierra/icons/obj/clothing/new_loadout_icons.dmi'
