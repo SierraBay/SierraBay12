@@ -74,3 +74,16 @@
 	allowed_branches = list(/datum/mil_branch/contractor)
 	allowed_factions = list(FACTION_EXPEDITIONARY, FACTION_CORPORATE)
 	flags = GEAR_HAS_NO_CUSTOMIZATION
+
+/datum/gear/head/engberet
+	display_name = "engineer beret selection"
+	path = /obj/item/clothing/head/engberet
+	allowed_roles = ENGINEERING_ROLES
+
+/datum/gear/head/engberet/New()
+	..()
+	var/soft_selection_type = list()
+	soft_selection_type["classic"] = /obj/item/clothing/head/engberet
+	soft_selection_type["atmos"] = /obj/item/clothing/head/engberet/atmos
+	soft_selection_type["blue cocard"] = /obj/item/clothing/head/engberet/bluecocard
+	gear_tweaks += new/datum/gear_tweak/path(soft_selection_type)
