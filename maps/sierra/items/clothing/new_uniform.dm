@@ -1,13 +1,4 @@
 //УНИФОРМА
-/obj/item/clothing/under/new_uniform/get_icon_state(mob/user_mob, slot)
-	if(item_state_slots && item_state_slots[slot])
-		. = item_state_slots[slot]
-	else
-		. = icon_state
-	if(!findtext(.,"_s", -2)) // If we don't already have our suffix
-		. +=  get_gender_suffix()
-	else
-		. += "_s"
 
 /obj/item/clothing/under/new_uniform/
 	icon = 'maps/sierra/icons/obj/clothing/new_loadout_icons.dmi'
