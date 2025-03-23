@@ -12,10 +12,12 @@
 #include "interface\buttons\heat.dm"
 #include "interface\buttons\mech_integrity.dm"
 #include "interface\buttons\power.dm"
+#include "interface\buttons\guide.dm"
 //БИГ МЕНЮ
 #include "interface\buttons\big_menu\menu_background.dm"
 #include "interface\buttons\big_menu\menu_button.dm"
 #include "interface\buttons\big_menu\menu.dm"
+#include "interface\buttons\big_menu\shortcut_menu_button.dm"
 
 //Инициализция интерфейса
 #include "interface\interface_initialization\_interface.dm"
