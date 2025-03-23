@@ -567,7 +567,7 @@
 	name = "skull leather jacket"
 	icon_state = "leather_biker_jacket_skull"
 
-/obj/item/clothing/suit/storage/toggle/new_suite/biker_jacket/heart
+/obj/item/clothing/suit/storage/toggle/new_suit/biker_jacket/heart
 	name = "heart leather jacket"
 	icon_state = "leather_biker_jacket_heart"
 

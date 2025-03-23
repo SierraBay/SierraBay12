@@ -269,7 +269,7 @@
 
 /datum/gear/suit/sport_jacket
 	display_name = "sport jackets"
-	path = /obj/item/clothing/suit/storage/toggle/new_suit/work_bomber
+	path = /obj/item/clothing/suit/storage/toggle/new_suit/sport_jacket
 
 /datum/gear/suit/sport_jacket/New()
 	. = ..()
@@ -289,7 +289,7 @@
 	options["black"] = /obj/item/clothing/suit/storage/toggle/new_suit/biker_jacket
 	options["distressed"] = /obj/item/clothing/suit/storage/toggle/new_suit/biker_jacket/dis
 	options["skull"] = /obj/item/clothing/suit/storage/toggle/new_suit/biker_jacket/skull
-	options["heart"] = /obj/item/clothing/suit/storage/toggle/new_suite/biker_jacket/heart
+	options["heart"] = /obj/item/clothing/suit/storage/toggle/new_suit/biker_jacket/heart
 	options["dragon"] = /obj/item/clothing/suit/storage/toggle/new_suit/biker_jacket/dragon
 	options["devil"] = /obj/item/clothing/suit/storage/toggle/new_suit/biker_jacket/devil
 	options["posh"] = /obj/item/clothing/suit/storage/toggle/new_suit/biker_jacket/posh
