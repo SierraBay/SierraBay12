@@ -87,3 +87,8 @@
 	soft_selection_type["atmos"] = /obj/item/clothing/head/engberet/atmos
 	soft_selection_type["blue cocard"] = /obj/item/clothing/head/engberet/bluecocard
 	gear_tweaks += new/datum/gear_tweak/path(soft_selection_type)
+
+/datum/gear/head/headband
+	display_name = "headband colour selection"
+	path = /obj/item/clothing/head/headband
+	flags = GEAR_HAS_COLOR_SELECTION
