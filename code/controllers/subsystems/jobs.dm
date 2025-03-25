@@ -204,27 +204,38 @@ SUBSYSTEM_DEF(jobs)
 /datum/controller/subsystem/jobs/proc/find_occupation_candidates(datum/job/job, level, flag)
 	var/list/candidates = list()
 	for(var/mob/new_player/player in unassigned_roundstart)
+		var/datum/preferences/prefs = player.client.prefs
 		if(jobban_isbanned(player, job.title))
 			continue
 		if(!job.player_old_enough(player.client))
 			continue
-		if(job.minimum_character_age && (player.client.prefs.age < job.minimum_character_age))
-			continue
-		if(flag && !(flag in player.client.prefs.be_special_role))
-			continue
-		if(player.client.prefs.CorrectLevel(job,level))
+		if(prefs.use_slot_priority_list)
+			for(var/datum/preferences_slot/slot in prefs.slot_priority_list)
+				if(flag && !(flag in slot.be_special_role))
+					continue
+				if(job.minimum_character_age && (slot.age < job.minimum_character_age))
+					continue
+				if(slot.CorrectLevel(job, level))
+					candidates += player
+					break
+		else if(prefs.CorrectLevel(job,level))
+			if(flag && !(flag in prefs.be_special_role))
+				continue
+			if(job.minimum_character_age && (prefs.age < job.minimum_character_age))
+				continue
 			candidates += player
 	return candidates
 
 /datum/controller/subsystem/jobs/proc/give_random_job(mob/new_player/player, datum/game_mode/mode = SSticker.mode)
+	var/datum/preferences/prefs = player.client.prefs
 	for(var/datum/job/job in shuffle(primary_job_datums))
 		if(!job)
 			continue
-		if(job.minimum_character_age && (player.client.prefs.age < job.minimum_character_age))
+		if(job.minimum_character_age && (prefs.age < job.minimum_character_age))
 			continue
 		if(istype(job, get_by_title(GLOB.using_map.default_assistant_title))) // We don't want to give him assistant, that's boring!
 			continue
-		if(job.is_restricted(player.client.prefs))
+		if(job.is_restricted(prefs))
 			continue
 		if(job.title in titles_by_department(COM)) //If you want a command position, select it!
 			continue
@@ -253,7 +264,14 @@ SUBSYSTEM_DEF(jobs)
 			for (var/mob/mob as anything in candidates)
 				if (!mob.client)
 					continue
-				var/age = mob.client.prefs.age
+				var/age = 0
+				if(mob.client.prefs.use_slot_priority_list)
+					for(var/datum/preferences_slot/slot in mob.client.prefs.slot_priority_list)
+						if(slot.CorrectLevel(job, level))
+							age = slot.age
+							break
+				else
+					age = mob.client.prefs.age
 				if (age < job.minimum_character_age)
 					continue
 				if (age < job.minimum_character_age + 10)
@@ -341,10 +359,11 @@ SUBSYSTEM_DEF(jobs)
 			give_random_job(player, mode)
 	// For those who wanted to be assistant if their preferences were filled, here you go.
 	for(var/mob/new_player/player in unassigned_roundstart)
-		if(player.client.prefs.alternate_option == BE_ASSISTANT)
+		var/datum/preferences/prefs = player.client.prefs
+		if(prefs.alternate_option == BE_ASSISTANT)
 			var/datum/job/ass = DEFAULT_JOB_TYPE
-			if((GLOB.using_map.flags & MAP_HAS_BRANCH) && player.client.prefs.branches[initial(ass.title)])
-				var/datum/mil_branch/branch = GLOB.mil_branches.get_branch(player.client.prefs.branches[initial(ass.title)])
+			if((GLOB.using_map.flags & MAP_HAS_BRANCH) && prefs.branches[initial(ass.title)])
+				var/datum/mil_branch/branch = GLOB.mil_branches.get_branch(prefs.branches[initial(ass.title)])
 				ass = branch.assistant_job
 			assign_role(player, initial(ass.title), mode = mode)
 	//For ones returning to lobby
@@ -356,12 +375,16 @@ SUBSYSTEM_DEF(jobs)
 	return TRUE
 
 /datum/controller/subsystem/jobs/proc/attempt_role_assignment(mob/new_player/player, datum/job/job, level, datum/game_mode/mode)
-	if(!jobban_isbanned(player, job.title) && \
-	 job.player_old_enough(player.client) && \
-	 player.client.prefs.CorrectLevel(job, level) && \
-	 job.is_position_available())
-		assign_role(player, job.title, mode = mode)
-		return TRUE
+	if(!jobban_isbanned(player, job.title) && job.is_position_available() && job.player_old_enough(player.client))
+		if(player.client.prefs.use_slot_priority_list)
+			for(var/datum/preferences_slot/prefs in player.client.prefs.slot_priority_list)
+				if(prefs.CorrectLevel(job, level))
+					player.client.prefs.load_character(prefs.slot)
+					assign_role(player, job.title, mode = mode)
+					return TRUE
+		else if(player.client.prefs.CorrectLevel(job, level))
+			assign_role(player, job.title, mode = mode)
+			return TRUE
 	return FALSE
 
 /datum/controller/subsystem/jobs/proc/equip_custom_loadout(mob/living/carbon/human/H, datum/job/job)

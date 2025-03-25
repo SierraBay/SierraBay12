@@ -4,6 +4,13 @@
 #define JOB_LEVEL_MEDIUM 2
 #define JOB_LEVEL_HIGH   1
 
+/datum/preferences_slot
+	var/job_high = null
+	/// List of all things selected for medium weight
+	var/list/job_medium
+	/// List of all the things selected for low weight
+	var/list/job_low
+
 /datum/preferences
 	//Since there can only be 1 high job.
 	var/job_high = null
@@ -45,6 +52,11 @@
 	W.write("branches", pref.branches)
 	W.write("ranks", pref.ranks)
 	W.write("hiding_maps", pref.hiding_maps)
+
+/datum/category_item/player_setup_item/occupation/load_slot(datum/pref_record_reader/R, datum/preferences_slot/slot)
+	slot.job_high = R.read("job_high")
+	slot.job_medium = R.read("job_medium")
+	slot.job_low = R.read("job_low")
 
 /datum/category_item/player_setup_item/occupation/sanitize_character()
 	if(!istype(pref.job_medium))		pref.job_medium = list()
@@ -497,6 +509,13 @@
 		if(JOB_LEVEL_LOW)
 			pref.job_low |= job.title
 
+	for(var/datum/preferences_slot/slot in pref.slot_priority_list)
+		if(slot.slot != pref.default_slot)
+			continue
+		slot.job_high = pref.job_high
+		slot.job_medium = pref.job_medium
+		slot.job_low = pref.job_low
+
 	return 1
 
 /datum/preferences/proc/CorrectLevel(datum/job/job, level)
@@ -509,6 +528,18 @@
 		if(3)
 			return !!(job.title in job_low)
 	return 0
+
+/datum/preferences_slot/proc/CorrectLevel(datum/job/job, level)
+	if(!job || !level)
+		return FALSE
+	switch(level)
+		if(1)
+			return job_high == job.title
+		if(2)
+			return !!(job.title in job_medium)
+		if(3)
+			return !!(job.title in job_low)
+	return FALSE
 
 /**
  *  Prune a player's job preferences based on current branch, rank and species
