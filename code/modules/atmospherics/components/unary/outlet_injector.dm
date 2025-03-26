@@ -61,26 +61,8 @@
 			else
 				add_underlay(T,, dir)
 
-<<<<<<< ours
-/obj/machinery/atmospherics/unary/outlet_injector/proc/get_console_data()
-	. = list()
-	. += "<table>"
-	. += "<tr><td><b>Name:</b></td><td>[name]</td>"
-	. += "<tr><td><b>Power:</b></td><td>[use_power ? SPAN_COLOR("green", "Injecting") : SPAN_COLOR("red", "Offline")]</td><td><a href='byond://?src=\ref[src];toggle_power=\ref[src]'>Toggle</a></td></tr>"
-	. += "<tr><td><b>ID Tag:</b></td><td>[id]</td><td><a href='byond://?src=\ref[src];settag=\ref[id]'>Set ID Tag</a></td></td></tr>"
-	if(frequency%10)
-		. += "<tr><td><b>Frequency:</b></td><td>[frequency/10]</td><td><a href='byond://?src=\ref[src];setfreq=\ref[frequency]'>Set Frequency</a></td></td></tr>"
-	else
-		. += "<tr><td><b>Frequency:</b></td><td>[frequency/10].0</td><td><a href='byond://?src=\ref[src];setfreq=\ref[frequency]'>Set Frequency</a></td></td></tr>"
-	.+= "</table>"
-	. = JOINTEXT(.)
-
-/obj/machinery/atmospherics/unary/outlet_injector/OnTopic(mob/user, href_list, datum/topic_state/state)
-	if((. = ..()))
-=======
 /obj/machinery/atmospherics/unary/outlet_injector/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1)
 	if(inoperable())
->>>>>>> theirs
 		return
 
 	var/data[0]
