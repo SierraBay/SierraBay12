@@ -371,7 +371,8 @@
 	return 1
 
 /obj/item/rig_module/maneuvering_jets/activate()
-
+	if(!..())
+		return FALSE
 	if(active)
 		return 0
 

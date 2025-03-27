@@ -269,7 +269,10 @@ would spawn and follow the beaker, even if it is carried or thrown.
 	M.adjustOxyLoss(1)
 	if (M.coughedtime != 1)
 		M.coughedtime = 1
-		M.emote("cough")
+		if (M.is_species(SPECIES_NABBER))
+			M.emote("shiver")
+		else
+			M.emote("cough")
 		addtimer(new Callback(M, TYPE_PROC_REF(/mob/living/carbon, clear_coughedtime)), 2 SECONDS)
 
 /obj/effect/smoke/bad/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)

@@ -26,6 +26,8 @@ JOBS_HAVE_MINIMAL_ACCESS
 ## Unhash this entry to set a number of days since first connection below which a new or returning player will not be allowed to successfully connect to the server.
 #MINIMUM_PLAYER_AGE 7
 
+## Change this value to limit how many characters a player can add to their character ready priorities.
+MAXIMUM_QUEUED_CHARACTERS 3
 
 ## Unhash this entry to have certain antag roles require your account to be at least a certain number of days old for round start and auto-spawn selection.
 ## Non-automatic antagonist recruitment, such as being converted to cultism is not affected. Has the same database requirements and notes as USE_AGE_RESTRICTION_FOR_JOBS.

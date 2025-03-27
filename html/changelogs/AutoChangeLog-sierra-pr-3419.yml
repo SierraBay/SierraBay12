@@ -1,5 +1,0 @@
-author: Builder13
-changes:
-  - {bugfix: Система Persistence (перенос грязи и заметок между раундами) вновь должна
-      работать}
-delete-after: true
