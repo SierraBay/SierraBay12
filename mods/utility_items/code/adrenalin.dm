@@ -27,3 +27,12 @@
 	for(var/reagent in src.imp_reagents)
 		var/amount = imp_reagents[reagent]
 		imp_in.reagents.add_reagent(reagent, amount)
+
+/datum/uplink_item/item/implants/imp_adrenalin
+	name = "Adrenaline Implant"
+	desc = "An implant with an emotive trigger that can help you escape worst scenarios. Adrenaline containing product!"
+	item_cost = 36
+	path = /obj/item/storage/box/syndie_kit/imp_adrenalin
+
+/obj/item/storage/box/syndie_kit/imp_adrenalin
+	startswith = list(/obj/item/implanter/adrenalin)
