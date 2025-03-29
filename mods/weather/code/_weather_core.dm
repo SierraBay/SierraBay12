@@ -2,6 +2,8 @@ GLOBAL_LIST_EMPTY(effected_by_weather)
 GLOBAL_VAR_INIT(ambience_channel_weather, GLOB.sound_channels.RequestChannel("AMBIENCE_WEATHER"))
 #define isweatherhere(A) locate(/obj/weather) in A
 /obj/weather
+	///Погода заспавнит этот контроллер погоды при необходимости
+	var/datum/weather_manager/recommended_weather_manager
 	var/play_monitor_effect = TRUE
 	var/play_sound = TRUE
 	var/area/start_area //Зона, в которой и создавалась погода. Используется для проверок при спавне карты.

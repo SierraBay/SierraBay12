@@ -46,8 +46,7 @@
 		/obj/anomaly/zharka = 5,
 		/obj/anomaly/zharka/short_effect = 2,
 		/obj/anomaly/zharka/long_effect = 1,
-		/obj/anomaly/heater/three_and_three = 3,
-		/obj/anomaly/heater/two_and_two = 5
+		/obj/anomaly/heater/multisize = 5,
 		)
 
 /obj/anomaly_spawner/commander/Initialize()

@@ -11,7 +11,6 @@
 	static_sound_type = 'mods/anomaly/sounds/gravi_idle.ogg'
 	idle_effect_type = "rvach_idle"
 	activation_effect_type = "gravy_anomaly_down"
-	detection_icon_state = "hot_anomaly"
 	can_born_artefacts = TRUE
 	weight_sensity = ITEM_SIZE_LARGE
 	///Сколько длится первая фаза рвача(всасывание)
@@ -101,7 +100,7 @@
 	var/list/objs = list()
 	var/turf/T = get_turf(src)
 	//Собираем все обьекты радиусом на 1 больше, чем расположены вспомогательные части рвачика
-	get_mobs_and_objs_in_view_fast(T, multititle_parts_range, victims, objs)
+	get_mobs_and_objs_in_view_fast(T, effect_range+1, victims, objs)
 	LAZYMERGELIST(victims, objs)
 	for(var/atom/movable/detected_atom in victims)
 		if((!ismob(detected_atom) && !isitem(detected_atom)) || detected_atom.anchored)
@@ -210,3 +209,6 @@
 
 /obj/anomaly/rvach/get_detection_icon()
 	return "rvach_detection"
+
+#undef RVACH_DAMAGE_EFFECT
+#undef RVACH_DESTROY_EFFECT

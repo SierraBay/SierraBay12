@@ -29,7 +29,6 @@
 	var/can_spawn_anomalies = FALSE
 	var/list/anomalies_type = list(
 		)
-	var/obj/weather/monitor_effect_type
 	var/min_anomaly_size = 1
 	var/max_anomaly_size = 3
 	///Минимальное количество заспавненных артов

@@ -20,10 +20,8 @@
 		/obj/anomaly/electra/three_and_three/tesla_second,
 		/obj/anomaly/vspishka,
 		/obj/anomaly/rvach/three_and_three,
-		/obj/anomaly/heater/three_and_three,
-		/obj/anomaly/heater/two_and_two,
-		/obj/anomaly/cooler/two_and_two,
-		/obj/anomaly/cooler/three_and_three
+		/obj/anomaly/heater/multisize,
+		/obj/anomaly/cooler/multisize
 		)
 
 

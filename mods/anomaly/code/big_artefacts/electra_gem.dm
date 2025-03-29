@@ -7,8 +7,7 @@
 		/obj/anomaly/electra/three_and_three = 1,
 		/obj/anomaly/electra/three_and_three/tesla = 2,
 		/obj/anomaly/electra/three_and_three/tesla_second = 3,
-		/obj/anomaly/cooler/two_and_two = 1,
-		/obj/anomaly/cooler/three_and_three = 1
+		/obj/anomaly/cooler/multisize = 1
 		)
 	//
 	var/datum/beam = null

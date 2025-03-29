@@ -1,7 +1,5 @@
-/obj/weather_manager/snow
-	weather_turfs_types = list(
-		/obj/weather/snow
-	)
+/datum/weather_manager/snow
+	weather_turf_type = /obj/weather/snow
 	stages = list(
 		"calm",
 		"midle",
@@ -18,10 +16,10 @@
 		"Вы слышите треск и шорох словно от статического электричества, а по полу расползаются малые электродуги! Нужно укрыться!"
 	)
 
-/obj/weather_manager/snow/no_blowout
+/datum/weather_manager/snow/no_blowout
 	can_blowout = FALSE
 
-/obj/weather_manager/snow/change_stage(force_state, monitor = FALSE, sound = FALSE)
+/datum/weather_manager/snow/change_stage(force_state, monitor = FALSE, sound = FALSE)
 	.=..()
 	if(!.) //Родитель сказал Баста, смена не нужна
 		return FALSE
@@ -54,7 +52,7 @@
 	flick("[icon_state]_to_[state]", src)
 
 
-/obj/weather_manager/snow/start_blowout()
+/datum/weather_manager/snow/start_blowout()
 	.=..()
 	if(!.) //Родитель сказал Баста, выброс не нужен
 		return
@@ -85,31 +83,24 @@
 	report_progress("DEBUG ANOM: Выброс в процессе. Начинается стадия авроры, пробуждаем технику и устройва..")
 	change_stage("calm", FALSE, FALSE)
 	for(var/obj/structure/aurora/aurora_structure in SSweather.aurora_sctructures)
-		if(z == aurora_structure.z)
+		if(my_area.z == aurora_structure.z)
 			aurora_structure.wake_up(rand(5 MINUTES, 9 MINUTES))
 	sleep(rand(10 MINUTES, 15 MINUTES))
 	report_progress("DEBUG ANOM:: Выброс в процессе. Аврора окончена. Начинается перереспавн аномалий и артефактов.")
 	regenerate_anomalies_on_planet()
 	stop_blowout()
 
-/obj/weather_manager/snow/stop_blowout()
+/datum/weather_manager/snow/stop_blowout()
 	for(var/obj/weather/weather in connected_weather_turfs)
 		weather.blowout_status = FALSE
 		weather.icon_state = initial(weather.icon_state)
 	..()
 
-
-/proc/calculate_smallest_x(list/objects_list)
-	var/smallest_x = 10000
-	for(var/obj/atom in objects_list)
-		if(atom.x < smallest_x)
-			smallest_x = atom.x
-	return smallest_x
-
 //Эффект снежной вьюги
 /obj/weather/snow
 	icon_state = "snow_storm"
 	icon = 'mods/weather/icons/weather_effects.dmi'
+	recommended_weather_manager = /datum/weather_manager/snow
 	must_react_at_enter = TRUE
 	sound_type = list(
 		'mods/weather/sounds/snowstorm.ogg'
