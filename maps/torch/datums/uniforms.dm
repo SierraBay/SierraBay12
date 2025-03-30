@@ -101,7 +101,7 @@
 	service_extra = list(/obj/item/clothing/under/skirt_c/dress/eggshell, /obj/item/clothing/shoes/heels/black, /obj/item/clothing/shoes/heels/red)
 
 	dress_under = /obj/item/clothing/under/rank/internalaffairs/plain
-	dress_skirt = /obj/item/clothing/under/skirt_c/dress/long/black
+	dress_skirt = /obj/item/clothing/under/skirt_c/dress_long/black
 	dress_over = /obj/item/clothing/suit/storage/toggle/suit/black
 	dress_shoes = /obj/item/clothing/shoes/dress
-	dress_extra = list(/obj/item/clothing/accessory/waistcoat/black, /obj/item/clothing/under/skirt_c/dress/long/eggshell, /obj/item/clothing/shoes/flats/black)
+	dress_extra = list(/obj/item/clothing/accessory/waistcoat/black, /obj/item/clothing/under/skirt_c/dress_long/eggshell, /obj/item/clothing/shoes/flats/black)

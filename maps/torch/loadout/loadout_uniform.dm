@@ -25,7 +25,7 @@
 /datum/gear/uniform/dress
 	allowed_roles = FORMAL_ROLES
 
-/datum/gear/uniform/cheongsam
+/datum/gear/uniform/dress_c
 	allowed_roles = FORMAL_ROLES
 
 /datum/gear/uniform/abaya
@@ -36,9 +36,6 @@
 
 /datum/gear/uniform/skirt_c
 	allowed_roles = SEMIANDFORMAL_ROLES
-
-/datum/gear/uniform/skirt_c/dress
-	allowed_roles = FORMAL_ROLES
 
 /datum/gear/uniform/casual_pants
 	allowed_roles = SEMIFORMAL_ROLES

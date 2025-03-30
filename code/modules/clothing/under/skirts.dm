@@ -51,7 +51,6 @@
 	worn_state = "skirt_short"
 	body_parts_covered = LOWER_TORSO
 
-// dresses
 /obj/item/clothing/under/skirt_c/dress
 	name = "short dress"
 	desc = "A short plain sleeveless dress."
@@ -59,7 +58,19 @@
 	worn_state = "shortdress"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 
-/obj/item/clothing/under/skirt_c/dress/long
+/obj/item/clothing/under/skirt_c/dress/black
+	name = "black short dress"
+	color = "#181818"
+
+/obj/item/clothing/under/skirt_c/dress/eggshell
+	name = "eggshell short dress"
+	color = "#f0ead6"
+
+/obj/item/clothing/under/skirt_c/dress/mintcream
+	name = "mint short dress"
+	color = "#dcffed"
+
+/obj/item/clothing/under/skirt_c/dress_long
 	name = "maxi dress"
 	desc = "A sleeveless dress that reaches the wearer's ankles."
 	icon_state = "longdress"
@@ -67,33 +78,41 @@
 	flags_inv = HIDESHOES
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET
 
-/obj/item/clothing/under/skirt_c/dress/long/gown
+/obj/item/clothing/under/skirt_c/dress_long/gown
 	name = "silk gown"
 	desc = "A long silky sleeveless gown with a flared hem."
 	icon_state = "gowndress"
 	worn_state = "gowndress"
 
-// some preset dresses for uniform vendors
-/obj/item/clothing/under/skirt_c/dress/black
-	name = "black short dress"
-	color = "#181818"
-
-/obj/item/clothing/under/skirt_c/dress/long/black
+/obj/item/clothing/under/skirt_c/dress_long/black
 	name = "black maxi dress"
 	color = "#181818"
 
-/obj/item/clothing/under/skirt_c/dress/eggshell
-	name = "eggshell short dress"
-	color = "#f0ead6"
-
-/obj/item/clothing/under/skirt_c/dress/long/eggshell
+/obj/item/clothing/under/skirt_c/dress_long/eggshell
 	name = "eggshell maxi dress"
 	color = "#f0ead6"
 
-/obj/item/clothing/under/skirt_c/dress/mintcream
-	name = "mint short dress"
-	color = "#dcffed"
-
-/obj/item/clothing/under/skirt_c/dress/long/mintcream
+/obj/item/clothing/under/skirt_c/dress_long/mintcream
 	name = "mint maxi dress"
 	color = "#dcffed"
+
+/obj/item/clothing/under/skirt_c/dress_elegant
+		name = "elegant dress"
+		desc = "A maxi length dress with side slits in the skirt and a fashionable view of the shoulders."
+		icon_state = "dress_e"
+		worn_state = "dress_e"
+		body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS
+
+/obj/item/clothing/under/skirt_c/dress_stripes
+		name = "striped dress"
+		desc = "A maxi length dress with side slits in the skirt, with stripes on the top."
+		icon_state = "dress_stripes"
+		worn_state = "dress_stripes"
+		body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS
+
+/obj/item/clothing/under/skirt_c/dress_flowers
+		name = "flowery turtledress"
+		desc = "A maxi length dress with side slits in the skirt, and a turtleneck top. It's covered in flowers."
+		icon_state = "dress_flowers"
+		worn_state = "dress_flowers"
+		body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS
