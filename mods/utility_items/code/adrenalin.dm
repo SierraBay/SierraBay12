@@ -1,6 +1,9 @@
+// Костыль чтобы тесты нашли реагент
+/datum/reagent/nitritozadole/adrenalin
+
 /obj/item/implant/adrenalin
 	var/activation_emote
-	var/imp_reagents = list(/datum/reagent/adrenaline = 5, /datum/reagent/tramadol/oxycodone = 10, /datum/reagent/nitritozadole = 1, /datum/reagent/synaptizine = 1)
+	var/imp_reagents = list(/datum/reagent/adrenaline = 5, /datum/reagent/tramadol/oxycodone = 10, /datum/reagent/nitritozadole/adrenalin = 1, /datum/reagent/synaptizine = 1)
 
 /obj/item/implant/adrenalin/New()
 	uses = rand(1, 5)
