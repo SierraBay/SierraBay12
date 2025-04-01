@@ -124,7 +124,7 @@ GLOBAL_VAR(href_logfile)
 
 
 GLOBAL_LIST_EMPTY(world_topic_throttle)
-GLOBAL_VAR_INIT(world_topic_last, world.timeofday)
+GLOBAL_VAR_AS(world_topic_last, world.timeofday)
 
 
 /world/Topic(T, addr, master, key)

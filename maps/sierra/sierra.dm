@@ -173,7 +173,7 @@
 	#include "../away/meatstation/meatstation.dm"
 	#include "../away/miningstation/miningstation.dm"
 	#include "../away/mininghome/mininghome.dm"
-	#include "../away/scavver/scavver_gantry.dm"
+	#include "../../mods/_maps/scavver/scavver_gantry.dm"
 	#include "../away/abandoned_hotel/abandoned_hotel.dm"
 	#include "../event/iccgn_ship/icgnv_hound.dm"
 	#include "../event/sfv_arbiter/sfv_arbiter.dm"

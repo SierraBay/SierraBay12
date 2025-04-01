@@ -8,10 +8,10 @@
 //   right here:
 
 #ifdef DEBUG
-GLOBAL_DATUM_INIT(error_cache, /datum/error_viewer/error_cache, new)
+GLOBAL_TYPED_NEW(error_cache, /datum/error_viewer/error_cache)
 #else
 // If debugging is disabled, there's nothing useful to log, so don't bother.
-GLOBAL_DATUM(error_cache, /datum/error_viewer/error_cache)
+GLOBAL_TYPED(error_cache, /datum/error_viewer/error_cache)
 #endif
 
 // - error_source datums exist for each line (of code) that generates an error,

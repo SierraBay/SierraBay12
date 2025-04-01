@@ -1,4 +1,4 @@
-GLOBAL_DATUM_INIT(foundation_agents, /datum/antagonist/foundation, new)
+GLOBAL_TYPED_NEW(foundation_agents, /datum/antagonist/foundation)
 
 /datum/antagonist/foundation
 	id = MODE_FOUNDATION

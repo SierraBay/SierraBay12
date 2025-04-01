@@ -8,7 +8,7 @@
 //			/old_invisibility: invisibility before the change
 //			/new_invisibility: invisibility after the change
 
-GLOBAL_DATUM_INIT(invisibility_set_event, /singleton/observ/invisibility_set, new)
+GLOBAL_TYPED_NEW(invisibility_set_event, /singleton/observ/invisibility_set)
 
 /singleton/observ/invisibility_set
 	name = "Invisibility Set"

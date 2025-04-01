@@ -47,5 +47,6 @@
 #include "code/xeno_voids_and_rigs.dm"
 #include "code\throw_swap_fix.dm"
 #include "code\awaking_tweaks.dm"
+#include "code\ghost_speed.dm"
 
 #endif

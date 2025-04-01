@@ -245,14 +245,14 @@
 /obj/item/pinpointer/radio/interact(mob/user)
 	var/dat = "<b>Radio frequency tracker</b><br>"
 	dat += {"
-				Tracking: <a href='byond://byond://?src=\ref[src];toggle=1'>[active ? "Enabled" : "Disabled"]</A><BR>
-				<a href='byond://byond://?src=\ref[src];reset_tracking=1'>Reset tracker</A><BR>
+				Tracking: <a href='byond://?src=\ref[src];toggle=1'>[active ? "Enabled" : "Disabled"]</A><BR>
+				<a href='byond://?src=\ref[src];reset_tracking=1'>Reset tracker</A><BR>
 				Frequency:
-				<a href='byond://byond://?src=\ref[src];freq=-10'>-</A>
-				<a href='byond://byond://?src=\ref[src];freq=-2'>-</A>
+				<a href='byond://?src=\ref[src];freq=-10'>-</A>
+				<a href='byond://?src=\ref[src];freq=-2'>-</A>
 				[format_frequency(tracking_freq)]
-				<a href='byond://byond://?src=\ref[src];freq=2'>+</A>
-				<a href='byond://byond://?src=\ref[src];freq=10'>+</A><BR>
+				<a href='byond://?src=\ref[src];freq=2'>+</A>
+				<a href='byond://?src=\ref[src];freq=10'>+</A><BR>
 				"}
 	show_browser(user, dat,"window=locater;size=300x150")
 	onclose(user, "locater")

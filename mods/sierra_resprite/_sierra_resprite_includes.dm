@@ -3,7 +3,7 @@
 
 #include "_sierra_resprite.dm"
 
-
+#include "code/disposal.dm"
 #include "code/kitchen.dm"
 #include "code/tcomms.dm"
 #include "code/chem.dm"

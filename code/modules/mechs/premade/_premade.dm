@@ -1,4 +1,4 @@
-//GLOBAL_LIST_INIT(mech_decals, (icon_states('icons/mecha/mech_decals.dmi')-list("template", "mask")))
+//GLOBAL_LIST_AS(mech_decals, (icon_states('icons/mecha/mech_decals.dmi')-list("template", "mask")))
 
 /mob/living/exosuit/premade
 	name = "impossible exosuit"

@@ -7,7 +7,7 @@
 
 //// Zombie Globals
 
-GLOBAL_LIST_INIT(zombie_messages, list(
+GLOBAL_LIST_AS(zombie_messages, list(
 	"stage1" = list(
 		"You feel uncomfortably warm.",
 		"You feel rather feverish.",
@@ -36,7 +36,7 @@ GLOBAL_LIST_INIT(zombie_messages, list(
 ))
 
 
-GLOBAL_LIST_INIT(zombie_species, list(\
+GLOBAL_LIST_AS(zombie_species, list(\
 	SPECIES_HUMAN, SPECIES_UNATHI, SPECIES_VOX,\
 	SPECIES_SKRELL, SPECIES_PROMETHEAN, SPECIES_ALIEN, SPECIES_YEOSA, SPECIES_VATGROWN,\
 	SPECIES_SPACER, SPECIES_TRITONIAN, SPECIES_GRAVWORLDER, SPECIES_MULE, SPECIES_MONKEY,\

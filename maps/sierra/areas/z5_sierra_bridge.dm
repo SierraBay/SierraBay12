@@ -87,7 +87,7 @@
 	req_access = list()
 
 /area/bridge/hallway
-	name = "Bridge - Hallway"
+	name = "Second Deck - Bridge - Hallway"
 /*
 /area/bridge/storage
 	name = "Bridge - Storage"
@@ -194,7 +194,7 @@
 	holomap_color = HOLOMAP_AREACOLOR_COMMAND
 */
 /area/bridge/adjutants
-	name = "Bridge - Adjutants Room"
+	name = "First Deck - Bridge - Adjutants Room"
 	icon = 'maps/sierra/icons/turf/areas.dmi'
 	icon_state = "bridge_gun"
 	holomap_color = HOLOMAP_AREACOLOR_COMMAND

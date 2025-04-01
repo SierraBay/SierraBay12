@@ -209,8 +209,9 @@
 	options["man"] = /obj/item/clothing/suit/color/storage/neo_blaser
 	options["female"] = /obj/item/clothing/suit/color/storage/neo_blaser/female
 	gear_tweaks += new/datum/gear_tweak/path(options)
+
 //У одежды ниже ломается выбор цвета, описания и прочий кал. Почему? Если бы я знал
-//TODO: починить шмот ниже
+//TODO: починить джакеты ниже
 /datum/gear/suit/neo_jacket
 	display_name = "neo jacket"
 	path = /obj/item/clothing/suit/color/storage/neo_jacket
@@ -221,3 +222,131 @@
 	options["man"] = /obj/item/clothing/suit/color/storage/neo_jacket
 	options["female"] = /obj/item/clothing/suit/color/storage/neo_jacket/female
 	gear_tweaks += new/datum/gear_tweak/path(options)
+
+
+
+//Nasrano Remission
+
+/datum/gear/suit/eng_bomber
+	display_name = "engineer bomber"
+	path = /obj/item/clothing/suit/storage/toggle/new_suit/eng_bomber
+	allowed_roles = ENGINEERING_ROLES
+
+/datum/gear/suit/eng_bomber/New()
+	. = ..()
+	var/list/options = list()
+	options["engineer"] = /obj/item/clothing/suit/storage/toggle/new_suit/eng_bomber
+	options["atmos"] = /obj/item/clothing/suit/storage/toggle/new_suit/eng_bomber/atmos
+	options["engineer grey"] = /obj/item/clothing/suit/storage/toggle/new_suit/eng_bomber/work
+	options["engineer white"] = /obj/item/clothing/suit/storage/toggle/new_suit/eng_bomber/white
+	gear_tweaks += new/datum/gear_tweak/path(options)
+
+
+/datum/gear/suit/leather_fur_jacket
+	display_name = "leather fur suits"
+	path = /obj/item/clothing/suit/storage/toggle/new_suit/leather_fur_jacket
+
+/datum/gear/suit/leather_fur_jacket/New()
+	. = ..()
+	var/list/options = list()
+	options["brown jacket"] = /obj/item/clothing/suit/storage/toggle/new_suit/leather_fur_jacket
+	options["grey jacket"] = /obj/item/clothing/suit/storage/toggle/new_suit/leather_fur_jacket/grey
+	options["brown coat"] = /obj/item/clothing/suit/storage/toggle/new_suit/leather_fur_jacket/coat
+	options["grey coat"] = /obj/item/clothing/suit/storage/toggle/new_suit/leather_fur_jacket/greycoat
+	gear_tweaks += new/datum/gear_tweak/path(options)
+
+
+/datum/gear/suit/work_bomber
+	display_name = "work jackets"
+	path = /obj/item/clothing/suit/storage/toggle/new_suit/work_bomber
+
+/datum/gear/suit/work_bomber/New()
+	. = ..()
+	var/list/options = list()
+	options["orange jacket"] = /obj/item/clothing/suit/storage/toggle/new_suit/work_bomber
+	options["yellow jacket"] = /obj/item/clothing/suit/storage/toggle/new_suit/work_bomber/yellow
+	gear_tweaks += new/datum/gear_tweak/path(options)
+
+/datum/gear/suit/sport_jacket
+	display_name = "sport jackets"
+	path = /obj/item/clothing/suit/storage/toggle/new_suit/sport_jacket
+
+/datum/gear/suit/sport_jacket/New()
+	. = ..()
+	var/list/options = list()
+	options["blue-white"] = /obj/item/clothing/suit/storage/toggle/new_suit/sport_jacket
+	options["black-white"] = /obj/item/clothing/suit/storage/toggle/new_suit/sport_jacket/blackwhite
+	gear_tweaks += new/datum/gear_tweak/path(options)
+
+
+/datum/gear/suit/biker_jacket
+	display_name = "biker jacket"
+	path = /obj/item/clothing/suit/storage/toggle/new_suit/biker_jacket
+
+/datum/gear/suit/biker_jacket/New()
+	. = ..()
+	var/list/options = list()
+	options["black"] = /obj/item/clothing/suit/storage/toggle/new_suit/biker_jacket
+	options["distressed"] = /obj/item/clothing/suit/storage/toggle/new_suit/biker_jacket/dis
+	options["skull"] = /obj/item/clothing/suit/storage/toggle/new_suit/biker_jacket/skull
+	options["heart"] = /obj/item/clothing/suit/storage/toggle/new_suit/biker_jacket/heart
+	options["dragon"] = /obj/item/clothing/suit/storage/toggle/new_suit/biker_jacket/dragon
+	options["devil"] = /obj/item/clothing/suit/storage/toggle/new_suit/biker_jacket/devil
+	options["posh"] = /obj/item/clothing/suit/storage/toggle/new_suit/biker_jacket/posh
+	options["fire"] = /obj/item/clothing/suit/storage/toggle/new_suit/biker_jacket/fire
+	gear_tweaks += new/datum/gear_tweak/path(options)
+
+
+/datum/gear/suit/levis_bomber
+	display_name = "denim bomber jacket"
+	path = /obj/item/clothing/suit/storage/levis_bomber
+
+
+/datum/gear/suit/multicam_jacket
+	display_name = "multicam jacket"
+	path = /obj/item/clothing/suit/storage/toggle/new_suit/multicam_jacket
+
+/datum/gear/suit/multicam_jacket/New()
+	. = ..()
+	var/list/options = list()
+	options["camo"] = /obj/item/clothing/suit/storage/toggle/new_suit/multicam_jacket
+	options["sand"] = /obj/item/clothing/suit/storage/toggle/new_suit/multicam_jacket/sand
+	options["grey"] = /obj/item/clothing/suit/storage/toggle/new_suit/multicam_jacket/grey
+	gear_tweaks += new/datum/gear_tweak/path(options)
+
+/datum/gear/suit/tracksuits
+	display_name = "tracksuits"
+	path = /obj/item/clothing/suit/storage/toggle/new_suit/tracksuits
+
+/datum/gear/suit/tracksuits/New()
+	. = ..()
+	var/list/options = list()
+	options["black"] = /obj/item/clothing/suit/storage/toggle/new_suit/tracksuits
+	options["red"] = /obj/item/clothing/suit/storage/toggle/new_suit/tracksuits/red
+	options["blue"] = /obj/item/clothing/suit/storage/toggle/new_suit/tracksuits/blue
+	options["green"] = /obj/item/clothing/suit/storage/toggle/new_suit/tracksuits/green
+	gear_tweaks += new/datum/gear_tweak/path(options)
+
+/datum/gear/suit/sporthoodie
+	display_name = "sport hoodie"
+	path = /obj/item/clothing/suit/storage/toggle/new_suit/sporthoodie
+
+/datum/gear/suit/sporthoodie/New()
+	. = ..()
+	var/list/options = list()
+	options["crimson"] = /obj/item/clothing/suit/storage/toggle/new_suit/sporthoodie
+	options["red"] = /obj/item/clothing/suit/storage/toggle/new_suit/sporthoodie/red
+	options["blue"] = /obj/item/clothing/suit/storage/toggle/new_suit/sporthoodie/blue
+	options["red-white"] = /obj/item/clothing/suit/storage/toggle/new_suit/sporthoodie/rw
+	options["black"] = /obj/item/clothing/suit/storage/toggle/new_suit/sporthoodie/black
+	gear_tweaks += new/datum/gear_tweak/path(options)
+
+
+/datum/gear/suit/colorhoodie
+	display_name = "hooded jacket colour select"
+	path = /obj/item/clothing/suit/storage/toggle/new_suit/colorhoodie
+	flags = GEAR_HAS_COLOR_SELECTION
+
+/datum/gear/suit/trench
+	display_name = "trenchcoat"
+	path = /obj/item/clothing/suit/storage/toggle/new_suit/trench

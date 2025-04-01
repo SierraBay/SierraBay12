@@ -22,9 +22,9 @@
 		Medical license not included.\
 	"}
 	products = list(
-		/obj/item/reagent_containers/glass/bottle/antitoxin = 4,
+		/obj/item/reagent_containers/glass/bottle/dylovene = 4,
 		/obj/item/reagent_containers/glass/bottle/inaprovaline = 4,
-		/obj/item/reagent_containers/glass/bottle/stoxin = 4,
+		/obj/item/reagent_containers/glass/bottle/soporific = 4,
 		/obj/item/reagent_containers/syringe/antiviral = 4,
 		/obj/item/reagent_containers/pill/antitox = 6,
 		/obj/item/reagent_containers/syringe = 12,

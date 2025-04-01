@@ -1,4 +1,4 @@
-GLOBAL_DATUM_INIT(borers, /datum/antagonist/borer, new)
+GLOBAL_TYPED_NEW(borers, /datum/antagonist/borer)
 
 /datum/antagonist/borer
 	id = MODE_BORER

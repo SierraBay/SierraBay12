@@ -269,7 +269,7 @@
 	holomap_color = HOLOMAP_AREACOLOR_CREW
 
 /area/crew_quarters/adherent
-	name = "Second Deck - Living - Adherent Maintenence"
+	name = "First Deck - Living - Adherent Maintenence"
 	icon_state = "robotics"
 	holomap_color = HOLOMAP_AREACOLOR_CREW
 

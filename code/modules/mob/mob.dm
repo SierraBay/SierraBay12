@@ -399,7 +399,7 @@
 /mob/proc/warn_flavor_changed()
 	if(flavor_text && flavor_text != "") // don't spam people that don't use it!
 		to_chat(src, "<h2 class='alert'>OOC Warning:</h2>")
-		to_chat(src, SPAN_CLASS("alert", "Your flavor text is likely out of date! <a href='byond://byond://?src=\ref[src];flavor_change=1'>Change</a>"))
+		to_chat(src, SPAN_CLASS("alert", "Your flavor text is likely out of date! <a href='byond://?src=\ref[src];flavor_change=1'>Change</a>"))
 
 /mob/proc/print_flavor_text()
 	if (flavor_text && flavor_text != "")
@@ -407,7 +407,7 @@
 		if(length(msg) <= 40)
 			return SPAN_NOTICE("[msg]")
 		else
-			return SPAN_NOTICE("[copytext_preserve_html(msg, 1, 37)]... <a href='byond://byond://?src=\ref[src];flavor_more=1'>More...</a>")
+			return SPAN_NOTICE("[copytext_preserve_html(msg, 1, 37)]... <a href='byond://?src=\ref[src];flavor_more=1'>More...</a>")
 
 /client/verb/changes()
 	set name = "Changelog"
@@ -706,9 +706,18 @@
 				stat("Failsafe Controller:", "ERROR")
 			if(Master)
 				stat(null)
-				config.UpdateStat()
-				GLOB.UpdateStat()
-				GLOB.debug_real_globals.UpdateStat()
+				var/static/stat_created
+				var/static/obj/clickable_stat/config_stat
+				var/static/obj/clickable_stat/glob_stat
+				var/static/obj/clickable_stat/bare_stat
+				if (!stat_created)
+					stat_created = TRUE
+					config_stat = new (null, config, "Edit")
+					glob_stat = new (null, GLOB, "Edit")
+					bare_stat = new (null, GLOB.debug_real_globals, "Edit")
+				stat("Config", config_stat)
+				stat("Managed Globals", glob_stat)
+				stat("Real Globals", bare_stat)
 				stat(null)
 				for (var/datum/controller/subsystem/subsystem as anything in Master.subsystems)
 					subsystem.UpdateStat(time)

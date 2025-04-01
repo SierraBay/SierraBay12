@@ -87,14 +87,14 @@
 	var/list/dat = list()
 	dat += "Power cell: "
 	if(cell)
-		dat += "<a href='byond://byond://?src=\ref[src];op=cellremove'>Installed</A><BR>"
+		dat += "<a href='byond://?src=\ref[src];op=cellremove'>Installed</A><BR>"
 	else
-		dat += "<a href='byond://byond://?src=\ref[src];op=cellinstall'>Removed</A><BR>"
+		dat += "<a href='byond://?src=\ref[src];op=cellinstall'>Removed</A><BR>"
 
 	if(!active)
-		dat += "<a href='byond://byond://?src=\ref[src];op=Power_Off'>Power On</A><BR>"
+		dat += "<a href='byond://?src=\ref[src];op=Power_Off'>Power On</A><BR>"
 	else
-		dat += "<a href='byond://byond://?src=\ref[src];op=Power_On'>Power Off</A><BR>"
+		dat += "<a href='byond://?src=\ref[src];op=Power_On'>Power Off</A><BR>"
 
 	dat += "Power Level: [cell ? round(cell.percent(),1) : 0]%<BR><BR>"
 

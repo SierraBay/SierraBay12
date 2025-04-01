@@ -92,6 +92,10 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 	W.write("traits", pref.picked_traits)
 
 
+/datum/category_item/player_setup_item/physical/body/load_slot(datum/pref_record_reader/R, datum/preferences_slot/slot)
+	slot.age = R.read("age")
+
+
 /datum/category_item/player_setup_item/physical/body/sanitize_character()
 	pref.head_hair_color = sanitize_hexcolor(pref.head_hair_color)
 	pref.facial_hair_color = sanitize_hexcolor(pref.facial_hair_color)
@@ -299,6 +303,10 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 		var/new_age = input(user, "Choose your character's age:\n([mob_species.min_age]-[mob_species.max_age])", CHARACTER_PREFERENCE_INPUT_TITLE, pref.age) as num|null
 		if(new_age && CanUseTopic(user))
 			pref.age = max(min(round(text2num(new_age)), mob_species.max_age), mob_species.min_age)
+			for(var/datum/preferences_slot/slot in pref.slot_priority_list)
+				if(slot.slot != pref.default_slot)
+					continue
+				slot.age = pref.age
 			pref.skills_allocated = pref.sanitize_skills(pref.skills_allocated)		// The age may invalidate skill loadouts
 			return TOPIC_REFRESH
 
