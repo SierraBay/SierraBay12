@@ -41,7 +41,7 @@
 /area/playable_yacht/relax_zone)
 "aj" = (
 /obj/item/inflatable_duck,
-/turf/simulated/floor/beach/water/ocean,
+/turf/simulated/floor/pool,
 /area/playable_yacht/relax_zone)
 "ak" = (
 /obj/structure/cable{
@@ -107,7 +107,7 @@
 /turf/simulated/floor/wood,
 /area/playable_yacht/relax_zone)
 "ax" = (
-/turf/simulated/floor/beach/water/ocean,
+/turf/simulated/floor/pool,
 /area/playable_yacht/relax_zone)
 "ay" = (
 /obj/paint/nt_white,
@@ -471,6 +471,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/hologram/holopad/longrange/remoteship,
 /turf/simulated/floor/wood/walnut,
 /area/playable_yacht/bridge)
 "bI" = (
@@ -712,7 +713,8 @@
 /turf/simulated/floor/tiled/white,
 /area/playable_yacht/kitchen)
 "cq" = (
-/turf/simulated/floor/beach/water/ocean,
+/obj/structure/hygiene/drain/bath,
+/turf/simulated/floor/pool,
 /area/playable_yacht/living)
 "cx" = (
 /obj/structure/cable{
@@ -2110,7 +2112,8 @@
 	dir = 4;
 	icon_state = "tube_map"
 	},
-/turf/simulated/floor/beach/water/ocean,
+/obj/structure/hygiene/faucet,
+/turf/simulated/floor/pool,
 /area/playable_yacht/living)
 "Mn" = (
 /obj/structure/table/gamblingtable,
@@ -2282,6 +2285,16 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/wood/walnut,
+/area/playable_yacht/relax_zone)
+"SA" = (
+/obj/structure/hygiene/drain/bath,
+/turf/simulated/floor/pool,
+/area/playable_yacht/relax_zone)
+"SS" = (
+/obj/structure/hygiene/faucet{
+	dir = 1
+	},
+/turf/simulated/floor/pool,
 /area/playable_yacht/relax_zone)
 "Td" = (
 /obj/structure/cable{
@@ -7337,7 +7350,7 @@ HD
 ax
 ax
 ax
-ax
+SS
 am
 hK
 ae
@@ -7437,7 +7450,7 @@ aR
 Rv
 HD
 ax
-ax
+SA
 aj
 ax
 kj
