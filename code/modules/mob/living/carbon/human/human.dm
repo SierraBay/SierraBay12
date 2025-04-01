@@ -1976,7 +1976,7 @@
 	for (var/count = 1 to rand(1, 2))
 		to_chat(src, SPAN_NOTICE("... [pick(GLOB.dream_tokens)] ..."))
 
-GLOBAL_LIST_INIT(dream_tokens, list(
+GLOBAL_LIST_AS(dream_tokens, list(
 	"an ID card", "a bottle", "a familiar face", "a crewmember",
 	"a toolbox", "a security officer", "the captain", "voices from all around",
 	"deep space", "a doctor", "the engine", "a traitor",

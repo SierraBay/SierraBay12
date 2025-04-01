@@ -136,8 +136,8 @@
 	var/dat = "<center><TT><b>Remote Control: [bot.name]</b></TT><br>"
 	dat += "Currently Holding: [bot.holding ? bot.holding.name : "Nothing"]<br><br>"
 	var/is_looking = (user.client.eye == bot)
-	dat += "<a href='byond://byond://?src=\ref[src];look=[is_looking];'>[is_looking ? "Stop" : "Start"] Looking</a><br>"
-	dat += "<a href='byond://byond://?src=\ref[src];drop=1;'>Drop Item</a><br></center>"
+	dat += "<a href='byond://?src=\ref[src];look=[is_looking];'>[is_looking ? "Stop" : "Start"] Looking</a><br>"
+	dat += "<a href='byond://?src=\ref[src];drop=1;'>Drop Item</a><br></center>"
 
 	show_browser(user, dat, "window=bot_controller")
 	onclose(user, "botcontroller")

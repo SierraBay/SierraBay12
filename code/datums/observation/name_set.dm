@@ -8,7 +8,7 @@
 //			/old_name: name before the change
 //			/new_name: name after the change
 
-GLOBAL_DATUM_INIT(name_set_event, /singleton/observ/name_set, new)
+GLOBAL_TYPED_NEW(name_set_event, /singleton/observ/name_set)
 
 /singleton/observ/name_set
 	name = "Name Set"

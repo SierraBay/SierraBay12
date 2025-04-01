@@ -1,6 +1,6 @@
 // We hardcode it, because current system for saving is not expandable or shrinkable.
 // Otherwise some of the saved experience will be lost
-GLOBAL_LIST_INIT(species_to_save_experice_for, list(
+GLOBAL_LIST_AS(species_to_save_experice_for, list(
 	SPECIES_VOX,
 	SPECIES_DIONA,
 	SPECIES_IPC,
@@ -12,7 +12,7 @@ GLOBAL_LIST_INIT(species_to_save_experice_for, list(
 	SPECIES_HUMAN
 ))
 
-GLOBAL_LIST_INIT(species_to_names_map, init_species_to_names_map())
+GLOBAL_LIST_AS(species_to_names_map, init_species_to_names_map())
 
 /**
  * Get species initial names by path.

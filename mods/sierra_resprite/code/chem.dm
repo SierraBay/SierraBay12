@@ -8,7 +8,7 @@
 
 /obj/machinery/chemical_dispenser
 	icon = 'mods/sierra_resprite/icons/chem.dmi'
-	icon_state = "сh_dispenser"
+	icon_state = "ch_dispenser"
 
 /obj/machinery/chemical_dispenser/on_update_icon()
 	ClearOverlays()

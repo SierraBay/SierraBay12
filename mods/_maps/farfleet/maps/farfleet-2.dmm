@@ -557,10 +557,10 @@
 /area/ship/farfleet/barracks)
 "ff" = (
 /obj/structure/table/steel_reinforced,
-/obj/item/modular_computer/laptop,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
 	},
+/obj/item/modular_computer/laptop/preset/custom_loadout/advanced,
 /turf/simulated/floor/carpet/purple,
 /area/ship/farfleet/crew/brig/css)
 "fi" = (
@@ -569,6 +569,9 @@
 /area/ship/farfleet/command/hangar_canisters)
 "fr" = (
 /obj/structure/bed/chair/comfy/red,
+/obj/structure/filingcabinet/wallcabinet{
+	pixel_y = -30
+	},
 /turf/simulated/floor/carpet/purple,
 /area/ship/farfleet/crew/brig/css)
 "fu" = (
@@ -864,13 +867,13 @@
 /obj/machinery/door/airlock{
 	name = "Head"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled/freezer,
 /area/ship/farfleet/crew/toilet)
 "im" = (
@@ -902,6 +905,9 @@
 "iv" = (
 /obj/structure/closet/secure_closet/farfleet/css,
 /obj/floor_decal/industrial/outline/grey,
+/obj/item/folder/blue,
+/obj/item/folder/red,
+/obj/item/material/clipboard/plastic,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/crew/brig/css)
 "iG" = (
@@ -2078,6 +2084,12 @@
 /obj/paint/dark_gunmetal,
 /turf/simulated/wall/r_wall,
 /area/ship/farfleet/crew/cryo)
+"ug" = (
+/obj/structure/filingcabinet/wallcabinet{
+	pixel_x = -30
+	},
+/turf/simulated/floor/tiled/dark,
+/area/ship/farfleet/barracks)
 "ui" = (
 /obj/machinery/pointdefense{
 	initial_id_tag = "snz_pd"
@@ -2629,6 +2641,11 @@
 /obj/item/reagent_containers/glass/bucket,
 /turf/simulated/floor/tiled/techmaint,
 /area/ship/farfleet/maintenance/anomaly)
+"yG" = (
+/obj/structure/table/reinforced,
+/obj/item/material/clipboard/plastic,
+/turf/simulated/floor/tiled/dark,
+/area/ship/farfleet/barracks)
 "yK" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/floor_decal/corner_steel_grid/diagonal,
@@ -2867,6 +2884,15 @@
 /obj/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hallway/upper)
+"AP" = (
+/obj/paint/dark_gunmetal,
+/obj/structure/cable/green{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/wall/r_titanium,
+/area/ship/snz)
 "AW" = (
 /obj/structure/cable/green{
 	d1 = 1;
@@ -5435,6 +5461,11 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
 /obj/floor_decal/corner_steel_grid/diagonal,
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hallway/upper)
 "Zw" = (
@@ -13879,7 +13910,7 @@ zW
 MC
 Vg
 pL
-Jt
+AP
 VE
 ns
 ME
@@ -14232,7 +14263,7 @@ wb
 Ab
 Ll
 Ll
-Uu
+ug
 Nd
 wi
 Db
@@ -14477,7 +14508,7 @@ CZ
 gL
 lp
 rg
-uA
+yG
 mQ
 qx
 Ll

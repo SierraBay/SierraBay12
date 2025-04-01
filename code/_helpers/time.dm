@@ -1,5 +1,5 @@
 /// The title-case full english-language name of each month
-GLOBAL_LIST_INIT(month_names, list(
+GLOBAL_LIST_AS(month_names, list(
 	"January", "February", "March",
 	"April", "May", "June",
 	"July", "August", "September",
@@ -11,7 +11,7 @@ GLOBAL_LIST_INIT(month_names, list(
 * The title-case 3-letter abbreviation of the english-language
 * name of each month
 */
-GLOBAL_LIST_INIT(month_names_short, list(
+GLOBAL_LIST_AS(month_names_short, list(
 	"Jan", "Feb", "Mar",
 	"Apr", "May", "Jun",
 	"Jul", "Aug", "Sep",
@@ -20,7 +20,7 @@ GLOBAL_LIST_INIT(month_names_short, list(
 
 
 /// The title-case full english-language name of each week day
-GLOBAL_LIST_INIT(day_names, list(
+GLOBAL_LIST_AS(day_names, list(
 	"Monday", "Tuesday", "Wednesday",
 	"Thursday","Friday", "Saturday",
 	"Sunday"
@@ -31,7 +31,7 @@ GLOBAL_LIST_INIT(day_names, list(
 * The title-case 3-letter abbreviation of the english-language
 * name of each week day
 */
-GLOBAL_LIST_INIT(day_names_short, list(
+GLOBAL_LIST_AS(day_names_short, list(
 	"Mon", "Tue", "Wed",
 	"Thu","Fri", "Sat",
 	"Sun"
@@ -110,7 +110,7 @@ GLOBAL_VAR(roundstart_hour)
 
 GLOBAL_VAR(station_date)
 
-GLOBAL_VAR_INIT(next_station_date_change, 1 DAY)
+GLOBAL_VAR_AS(next_station_date_change, 1 DAY)
 
 /proc/stationdate2text()
 	var/update_time = FALSE
@@ -150,12 +150,6 @@ GLOBAL_VAR(round_start_time)
 	result = "[hours]:[mins]"
 	next_update = world.time + 1 MINUTE
 	return result
-
-
-/proc/acquire_days_per_month()
-	. = list(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
-	if (isLeap(text2num(time2text(world.realtime, "YYYY"))))
-		.[2] = 29
 
 
 /proc/get_weekday_index()

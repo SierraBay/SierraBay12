@@ -71,8 +71,8 @@
 	dir = 1;
 	pixel_y = 16
 	},
-/obj/item/reagent_containers/glass/bottle/stoxin,
-/obj/item/reagent_containers/glass/bottle/stoxin,
+/obj/item/reagent_containers/glass/bottle/soporific,
+/obj/item/reagent_containers/glass/bottle/soporific,
 /obj/item/reagent_containers/syringe,
 /turf/unsimulated/floor{
 	icon_state = "white"

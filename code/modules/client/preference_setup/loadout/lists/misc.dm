@@ -109,7 +109,7 @@
 
 /datum/gear/lunchbox/New()
 	..()
-	var/list/types = subtypesof(/obj/item/storage/lunchbox) - /obj/item/storage/lunchbox/caltrops
+	var/list/types = subtypesof(/obj/item/storage/lunchbox) - list(/obj/item/storage/lunchbox/caltrops, /obj/item/storage/lunchbox/ntmisprint)
 	var/list/options = list()
 	for (var/obj/item/storage/lunchbox/lunchbox as anything in types)
 		if (!initial(lunchbox.filled))

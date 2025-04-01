@@ -7,7 +7,7 @@
 //			/mob/living/silicon/robot/robot:  The robot that activated the module.
 //			/obj/item/module:                 The activated module.
 
-GLOBAL_DATUM_INIT(module_activated_event, /singleton/observ/module_activated, new)
+GLOBAL_TYPED_NEW(module_activated_event, /singleton/observ/module_activated)
 
 /singleton/observ/module_activated
 	name = "Module Activated"

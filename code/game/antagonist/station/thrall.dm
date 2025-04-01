@@ -1,4 +1,4 @@
-GLOBAL_DATUM_INIT(thralls, /datum/antagonist/thrall, new)
+GLOBAL_TYPED_NEW(thralls, /datum/antagonist/thrall)
 
 /datum/antagonist/thrall
 	role_text = "Thrall"
