@@ -1,108 +1,119 @@
 //СКАЛОЛАЗАНЬЕ
-/turf/simulated/mineral/ice
-	//По горе кто-то уже лезет
+/turf/simulated
+	//Можно ли по данной стене взобраться вверх
+	var/climbable = FALSE
 	var/busy_by_climber = FALSE
+	var/pickaxe_helps_in_climbing = FALSE
 
-/turf/simulated/mineral/ice/examine(mob/user, distance, infix, suffix)
+/turf/simulated/examine(mob/user, distance, infix, suffix)
 	. = ..()
-	to_chat(user, SPAN_GOOD("Перетащите спрайт персонажа на гору для скалолазанья."))
+	if(climbable)
+		to_chat(user, SPAN_GOOD("Перетащите спрайт персонажа на гору для скалолазанья."))
 
-/turf/simulated/mineral/ice/MouseDrop(atom/over_atom, atom/source_loc, atom/over_loc, source_control, over_control, list/mouse_params)
-	if(!over_atom || !ishuman(over_atom) || isghost(over_atom))
+/turf/simulated/MouseDrop_T(mob/target, mob/user)
+	if(is_floating(user))
+		to_chat(user, SPAN_NOTICE("Мне не требуется."))
 		return
-	var/mob/living/carbon/human/human = over_atom
 	if(busy_by_climber)
-		to_chat(human, SPAN_BAD("Кто-то тут уже лезет."))
+		to_chat(user, SPAN_BAD("Кто-то тут уже лезет."))
 		return
+	if(!user || !ishuman(user) || target != user)
+		return
+	var/mob/living/carbon/human/human = user
 	if(human.get_stamina() < 60)
 		to_chat(human, SPAN_BAD("Я слишком устал!"))
 		return
+	visible_message(message = "[user] начинает взбираться вверх по склону.", range =  5)
+	var/teamplay = check_teamplay(user)
+	if(teamplay)
+		to_chat(human, SPAN_GOOD("С протянутой рукой помощи, взбираться куда проще!"))
+	if(!do_after(user, (6 SECONDS - (1 SECONDS *user.get_skill_value(SKILL_HAULING)))))
+		climb_fail(user)
+		busy_by_climber = FALSE
+		return
+	climb_to_wall(user)
 
+/turf/simulated/proc/climb_to_wall(mob/user)
+	if(!calculate_climbing_chances(user))
+		climb_fail(user) //Увы не смог
+	else //смог
+		user.forceMove(src)
+		to_chat(user, SPAN_GOOD("Вы успешно взбираетесь по склону."))
+	busy_by_climber = FALSE
+
+/turf/simulated/proc/try_move_from_wall(mob/user, turf/new_turf)
+	if(busy_by_climber)
+		to_chat(user, SPAN_NOTICE("Кто-то тут уже поднимается."))
+		return
+	busy_by_climber = TRUE
+	if(!do_after(user, (6 SECONDS - (1 SECONDS *user.get_skill_value(SKILL_HAULING)))))
+		return
+	climb_from_wall(user, new_turf)
+
+/turf/simulated/proc/climb_from_wall(mob/user, turf/new_turf)
+	busy_by_climber = FALSE
+	user.forceMove(new_turf) //Перс в любом случае спустится
 
 /turf/simulated/mineral/ice/CanPass(atom/movable/mover, turf/target, height, air_group)
-	if(istype(mover, /mob/living/carbon/human)) //Если пытается шагнуть человек - он может взабраться на скалу
-		if(!istype(mover.loc, /turf/simulated/mineral/ice))
-			var/mob/living/carbon/human/user = mover
-			if(user.stamina < 60)
-				to_chat(mover, SPAN_BAD("Я слишком устал!"))
-				return
-			visible_message("[user] начинает взбираться вверх по склону.", "Вы слышите как кто-то залезает вверх по склону.", 5)
-			if(do_after(user, (15 SECONDS - (2 SECONDS *user.get_skill_value(SKILL_HAULING)))))
-				//Помощь друга даёт 25 процентов на успех и не даёт пораниться при падении
-				//Макс бонус от навыка составит 50 процентов
-				//Бонус от кирки при подьёме составит 25 процентов
-				var/helper_chance = 0
-				var/pickaxe_chance = 0
-				for(var/mob/living/carbon/human/helper in src)
-					if(helper.a_intent == I_HELP && turn(user.dir, 180) == helper.dir) //Лезущий и помощник должны смотреть друг другу в лицо
-						helper_chance = 25
-						to_chat(user, SPAN_GOOD("[helper] помогает вам взобраться на скалу."))
-						to_chat(helper, SPAN_GOOD("Вы помогаете [user] взобраться на скалу."))
-						break //Помощник найден
-				if(user.IsHolding(/obj/item/pickaxe))
-					to_chat(user, SPAN_NOTICE("Вам куда легче взбираться вверх с киркой."))
-					pickaxe_chance = 25
-				var/success_chance = (10 * user.get_skill_value(SKILL_HAULING)) + helper_chance + pickaxe_chance //Максимально - 100 процентов
-				if(prob(success_chance))
-					user.forceMove(get_turf(src))
-					to_chat(user, SPAN_GOOD("Вы успешно взбираетесь на гору."))
-				else
-					var/list/result_effects = calculate_artefact_reaction(user, "Падение с высоты")
-					if(result_effects)
-						if(result_effects.Find("Защищает от падения"))
-							to_chat(user, SPAN_GOOD("Вы срываетесь вниз, но что-то ловит вас прямо у земли, оберегая от повреждений."))
-							return
-					if(!helper_chance) //Нам никто не помог
-						for(var/picked_organ in list(BP_L_LEG, BP_R_LEG, BP_L_FOOT, BP_R_FOOT))
-							user.apply_damage(2.5, DAMAGE_BRUTE, picked_organ, used_weapon="Gravitation")
-						user.adjust_stamina(-50)
-						to_chat(user, SPAN_BAD("Вы срываетесь вниз, ударяясь в процессе."))
-					else
-						user.adjust_stamina(-50)
-						to_chat(user, SPAN_COLOR("#ffa500","Вы срываетесь вниз, но стоящий сверху удерживает вас, предотвращая ранения."))
-
-		else
-			mover.forceMove(get_turf(src))
+	if(ishuman(mover))
+		if(istype(get_turf(mover), /turf/simulated/mineral/ice) && !is_floating(mover))
+			return FALSE
 	. = ..()
 
 /turf/simulated/mineral/ice/Exit(O, newloc)
-	if(istype(O, /mob/living/carbon/human) && !istype(newloc,/turf/simulated/mineral/ice)) //Человек пытается слезть с скалы
-		var/mob/living/carbon/human/user = O
-		if(do_after(user, (15 SECONDS - (2 SECONDS * user.get_skill_value(SKILL_HAULING))))) //Чем лучше атлетика, тем быстрее спуск
-			//Помощь друга даёт 25 процентов на успех и не даёт пораниться при падении
-			//Макс бонус от навыка составит 50 процентов
-			//Бонус от кирки при подьёме составит 25 процентов
-			var/helper_chance = 0
-			var/pickaxe_chance = 0
-			for(var/mob/living/carbon/human/helper in newloc)
-				if(helper.a_intent == I_HELP && turn(user.dir, 180) == helper.dir) //Лезущий и помощник должны смотреть друг другу в лицо
-					helper_chance = 25
-				to_chat(user, SPAN_GOOD("[helper] помогает вам взобраться на скалу."))
-				to_chat(helper, SPAN_GOOD("Вы помогаете [user] взобраться на скалу."))
-				break //Помощник найден
-			if(user.IsHolding(/obj/item/pickaxe))
-				to_chat(user, SPAN_NOTICE("Вам куда легче взбираться вверх с киркой."))
-				pickaxe_chance = 25
-			var/success_chance = (10 * user.get_skill_value(SKILL_HAULING)) + helper_chance + pickaxe_chance //Максимально - 100 процентов
-			if(prob(success_chance))
-				to_chat(user, SPAN_GOOD("Вы аккуратно слезаете со скалы."))
-				user.forceMove(newloc)
-			else
-				var/list/result_effects = calculate_artefact_reaction(user, "Падение с высоты")
-				if(result_effects)
-					if(result_effects.Find("Защищает от падения"))
-						to_chat(user, SPAN_GOOD("Вы срываетесь вниз, но что-то ловит вас прямо у земли, оберегая от повреждений."))
-						return
-				if(!helper_chance)
-					to_chat(user, SPAN_BAD("Вы срываетесь вниз со скалы."))
-					for(var/picked_organ in list(BP_L_LEG, BP_R_LEG, BP_L_FOOT, BP_R_FOOT))
-						user.apply_damage(5, DAMAGE_BRUTE, picked_organ, used_weapon="Gravitation")
-					user.adjust_stamina(-100)
-					user.forceMove(newloc)
-				else
-					to_chat(user, SPAN_COLOR("#ffa500", "Вы срываетесь вниз со скалы, но вас ловят предотвращая ранения."))
-					user.adjust_stamina(-100)
-					user.forceMove(newloc)
-		else
-			return FALSE
-	. = ..()
+	if(istype(newloc, /turf/simulated/mineral/ice) && ishuman(O) && !is_floating(O))
+		try_move_from_wall(O, newloc)
+	.=..()
+
+/turf/simulated/proc/climb_fail(mob/living/carbon/human/user)
+	to_chat(user, SPAN_BAD("Вы срываетесь вниз со скалы."))
+	for(var/picked_organ in list(BP_L_LEG, BP_R_LEG, BP_L_FOOT, BP_R_FOOT))
+		user.apply_damage(5, DAMAGE_BRUTE, picked_organ, used_weapon="Gravitation")
+
+//Проверяет помогает ли кто-то взбирающемуся по горе
+/turf/simulated/proc/check_teamplay(mob/user)
+	for(var/mob/living/carbon/human/helper in src) //На турф лезут, на нём и чекают
+		if(helper.a_intent == I_HELP && turn(user.dir, 180) == helper.dir)
+			return TRUE
+
+/turf/simulated/proc/calculate_climbing_chances(mob/user, silent = FALSE)
+	var/result = 0
+	var/result_output
+	//ПОМОЩЬ
+	if(check_teamplay(user))
+		result += 100 //Напарник гарантированно затянет к себе вверх
+		result_output += SPAN_GOOD("<br> С протянутой рукой помощи, сложно не взобраться!")
+	else
+		result_output += SPAN_BAD("<br> Рука помощи бы тут не помешала...")
+	//КИРКА
+	if(pickaxe_helps_in_climbing && user.IsHolding(/obj/item/pickaxe))
+		result += 70
+		result_output += SPAN_GOOD("<br>Куда легче взбираться вверх с киркой!")
+	else
+		result_output += SPAN_BAD("<br> Кирка бы тут не помешала...")
+	//АТЛЕТИКА
+	result += (10 * user.get_skill_value(SKILL_HAULING))
+	if(!silent)
+		to_chat(user, result_output)
+	if(prob(result))
+		return TRUE
+	else
+		return FALSE
+
+/turf/simulated/proc/do_climb_animation(mob/user, turf/new_turf)
+	var/x_anim
+	var/y_anim
+	switch(get_dir(user, new_turf))
+		if(NORTH)
+			y_anim = 16
+		if(SOUTH)
+			y_anim = -16
+		if(WEST)
+			x_anim = -16
+		if(EAST)
+			x_anim = 16
+	animate(user, time = 1 SECONDS, pixel_x = x_anim, pixel_y = y_anim, easing = LINEAR_EASING )
+
+/turf/simulated/mineral/ice
+	climbable = TRUE
+	pickaxe_helps_in_climbing = TRUE

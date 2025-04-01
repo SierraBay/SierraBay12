@@ -7,7 +7,7 @@
 		user.dir = SOUTH
 		user.resting = TRUE
 		user.UpdateLyingBuckledAndVerbStatus()
-		user.Stun(20)
+		user.Stun(2)
 		user.adjust_stamina(-100)
 		unequip_human_clotches(user)
 

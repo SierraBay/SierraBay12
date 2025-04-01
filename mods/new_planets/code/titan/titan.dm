@@ -33,7 +33,13 @@
 		/obj/anomaly/labirint = 1,
 		/obj/anomaly/doubled_teleporter/with_second = 5,
 		/obj/anomaly/doubled_teleporter/with_second/oneway = 5,
-		/obj/anomaly/doubled_teleporter/with_second/changing = 1
+		/obj/anomaly/doubled_teleporter/with_second/changing = 1,
+		/obj/anomaly/electra/three_and_three = 1,
+		/obj/anomaly/electra/three_and_three/tesla = 2,
+		/obj/anomaly/electra/three_and_three/tesla_second = 3,
+		/obj/anomaly/cooler/multisize = 1,
+		/obj/anomaly/tramplin/powerfull= 1,
+		/obj/anomaly/rvach/three_and_three = 1
 		)
 	///Минимальное количество заспавненных артов
 	min_artefacts_ammount = 1

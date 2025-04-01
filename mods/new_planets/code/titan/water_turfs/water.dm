@@ -6,6 +6,7 @@
 	var/list/possible_icons = list()
 	var/deep_status = NO_DEEP
 	var/mask_icon_state
+	var/mask_icon_state_item = "middle_deep_item"
 	var/swim_stamina_spend
 	var/next_possible_process
 	var/effect_to_drowning = DEEQUIP
@@ -81,7 +82,7 @@
 
 /turf/simulated/floor/exoplanet/titan_water/middle/get_better()
 	ChangeTurf(/turf/simulated/floor/exoplanet/titan_water/maximum)
-	
+
 //get_worst
 /turf/simulated/floor/exoplanet/titan_water/proc/get_worst()
 	ChangeTurf(/turf/simulated/floor/exoplanet/titan_water/minimal)

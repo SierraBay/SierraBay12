@@ -14,12 +14,14 @@
 			var/turf/simulated/floor/exoplanet/titan_water/prev_water = old_loc
 			if(prev_water.deep_status == deep_status)
 				return //Глубокость одинаковая, нет смысла что-то делать
-		add_water_mask_to_living(input_movable, mask_icon_state)
-	else if(isitem(input_movable) && deep_status == MAX_DEEP)
+		input_movable.setup_water_filter(mask_icon_state)
+	else if(isitem(input_movable))
+		input_movable.setup_water_filter(mask_icon_state_item)
+		if(deep_status == MAX_DEEP)
+			drown_item(input_movable)
+	else
 		if(input_movable.throwing)
 			start_spend_stamina()
-		else
-			drown_item(input_movable)
 
 /turf/simulated/floor/exoplanet/titan_water/Exited(atom/movable/input_movable, atom/newloc)
 	.=..()
@@ -32,7 +34,7 @@
 			var/turf/simulated/floor/exoplanet/titan_water/prev_water = newloc
 			if(prev_water.deep_status == deep_status)
 				return
-	remove_water_mask_from_living(input_movable)
+	input_movable.desetup_water_filter()
 
 
 //Может ли вода воздействовать на что-то? (Не может например на летающих).

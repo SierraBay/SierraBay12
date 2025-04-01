@@ -1,3 +1,8 @@
+//RENDER
+#include "render\desetup.dm"
+#include "render\setup.dm"
+#include "render\update.dm"
+
 #include "crossing.dm"
 #include "drowning.dm"
 #include "rendering.dm"

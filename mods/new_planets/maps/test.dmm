@@ -257,6 +257,25 @@
 /area/map_template/playtest_anomaly)
 "Hi" = (
 /obj/structure/table/rack/ascent,
+/obj/item/clothing/under/new_uniform/bdu,
+/obj/item/clothing/under/new_uniform/bdu,
+/obj/item/clothing/under/new_uniform/bdu,
+/obj/item/clothing/under/new_uniform/bdu,
+/obj/item/clothing/under/new_uniform/bdu,
+/obj/item/clothing/under/new_uniform/bdu,
+/obj/item/clothing/under/new_uniform/bdu,
+/obj/item/clothing/under/new_uniform/bdu,
+/obj/item/clothing/under/new_uniform/bdu,
+/obj/item/clothing/under/new_uniform/bdu,
+/obj/item/clothing/under/new_uniform/bdu,
+/obj/item/clothing/under/new_uniform/bdu,
+/obj/item/clothing/under/new_uniform/bdu,
+/obj/item/clothing/under/new_uniform/bdu,
+/obj/item/clothing/under/new_uniform/bdu,
+/obj/item/clothing/under/new_uniform/bdu,
+/obj/item/clothing/under/new_uniform/bdu,
+/obj/item/clothing/under/new_uniform/bdu,
+/obj/item/clothing/under/new_uniform/bdu,
 /turf/simulated/floor/ascent/tiled,
 /area/map_template/playtest_anomaly)
 "Ms" = (

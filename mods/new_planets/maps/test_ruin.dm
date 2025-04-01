@@ -20,6 +20,10 @@
 	icon_state = "portal"
 	invisibility = 60
 
+/obj/structute/join_the_playtest/Initialize()
+	. = ..()
+	START_PROCESSING(SSobj, src)
+
 /obj/structute/join_the_playtest/Click(location, control, params)
 	if(isghost(usr) || isobserver(usr))
 		var/result = alert(usr, "Присоединиться к плей тесту?", "Думой", "Да🏊‍♀️", "Нет, посижу в гостах", "Пошёл нахуй🤬")
@@ -34,3 +38,5 @@
 	var/name = input("Имя кукле дай", "Имечко") as text|null
 	var/mob/living/carbon/human/H = new(get_turf(src))
 	H.name = name
+	H.key = usr.key
+	qdel(usr)
