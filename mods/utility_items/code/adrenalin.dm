@@ -21,7 +21,7 @@
 		activate()
 
 /obj/item/implant/adrenalin/activate()
-	if (uses < 1 || malfunction || !imp_in || !iscarbon(imp_in)) 	return 0
+	if (uses < 1 || malfunction || !imp_in || !iscarbon(imp_in)) 	return FALSE
 	uses--
 	to_chat(imp_in, SPAN_NOTICE("You feel a sudden surge of energy!"))
 	imp_in.SetStunned(0)
