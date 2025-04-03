@@ -137,19 +137,6 @@ PROCESSING_SUBSYSTEM_DEF(anom)
 	HTML += "<br>Всего попыток взаимодействия с артефактами: [interactions_with_artefacts_by_players_ammount], из них [good_interactions_with_artefacts_by_players_ammount] принесли пользу, а [bad_interactions_with_artefacts_by_players_ammount] принесли вред."
 	HTML += "<br><br> DAMAGES"
 	HTML += "<br>"
-	HTML += "<br><br> ПРОГРЕССИЯ"
-	HTML += "<br> 🤑🤑🤑400/500 АРТЕФАКТОВ СОБРАНО ДО ПОЛУЧЕНИЯ НОВОГО СНАРЯЖЕНИЯ ЭК 🤑🤑🤑"
-	HTML += "<br> 🤯🤯🤯СЛЕДУЩЕЕ НОВОЕ СНАРЯЖЕНИЕ - Модуль для РИГа ЛЭКа Фарадей🤯🤯🤯"
-	HTML += "<br> 0 - Ебаные блять болты больше и не заслужил - ✅"
-	HTML += "<br> 50 - Ого целый детектор!(Не видит аномалию в упор) - ✅"
-	HTML += "<br> 100 - Ого болты поменялись на nanotechnology маячки (почти нет разницы) - ✅"
-	HTML += "<br> 200 - Ого детектор видит в упор, так ещё и встроен в костюм ЛЭК - ✅"
-	HTML += "<br> 300 - Детектор артефактов (не надо ходить по всей карте чзх) - ✅"
-	HTML += "<br> 500 - Модуль Фарадей что отбивает все молнии - ❌"
-	HTML += "<br> 1000 - Галоша из пикника на обочине - ❌"
-	HTML += "<br> 2500 - 1 талон на ЕРП - ❌"
-	HTML += "<br> 5000 - РАЗРАБ УДАЛИТ АНОМКИ, ЗОНА ИСЧЕЗНЕТ, ЭК ПОБЕДИЛО - ❌"
-	HTML += "</body></html>"
 
 	// Открываем окно
 	var/window_x = 600
@@ -222,3 +209,13 @@ PROCESSING_SUBSYSTEM_DEF(anom)
 	if(!input)
 		return
 	LAZYADD(important_logs, input)
+
+/datum/controller/subsystem/processing/anom/proc/announce_to_all_detectors_on_z_level(z_level, message, list/sound_list)
+	for(var/obj/item/detector in detectors)
+		if(get_z(detector) == z_level)
+			detector.runechat_message(message)
+		for(var/mob/living/carbon/human/human in get_turf(detector))
+			to_chat(human, SPAN_NOTICE("Вы видите на экране [detector] сообщение: [message]"))
+			if(sound_list)
+				var/music_play = pick(sound_list)
+				playsound(human, music_play, 100, TRUE)

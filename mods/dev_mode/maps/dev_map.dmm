@@ -64,6 +64,9 @@
 /turf/simulated/floor/exoplanet/titan_water/middle,
 /area/centcom)
 "ooX" = (
+/obj/landmark/no_weather_here{
+	layer = 2
+	},
 /turf/unsimulated/floor/grass,
 /area/centcom)
 "pnX" = (
@@ -71,6 +74,15 @@
 /area/centcom)
 "pxw" = (
 /turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/centcom)
+"pSk" = (
+/obj/landmark{
+	name = "Observer-Start"
+	},
+/obj/landmark/no_weather_here{
+	layer = 2
+	},
+/turf/unsimulated/floor/grass,
 /area/centcom)
 "qMW" = (
 /obj/item/gun/projectile/pistol/m19,
@@ -351,7 +363,7 @@ cpC
 cpC
 ooX
 ooX
-ooX
+pSk
 ooX
 ooX
 cpC

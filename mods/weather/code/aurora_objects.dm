@@ -144,6 +144,7 @@
 	icon_state = "old_vault_door"
 	var/opened = FALSE
 	anchored = TRUE
+	opacity = FALSE
 	density = TRUE
 	//Пароль, после ввода которого дверь откроется
 	var/password = 1111
@@ -172,3 +173,13 @@
 	if(opened)
 		return
 	.=..()
+
+
+
+/obj/item/aurora_key
+	name = "strange ID card"
+	desc = "Это необычная ID карта..."
+	//Они хранят в себе какие-либо данные
+	icon_state = "party_rig"
+	icon = 'icons/obj/tools/card.dmi'
+	var/stored_password = 2222

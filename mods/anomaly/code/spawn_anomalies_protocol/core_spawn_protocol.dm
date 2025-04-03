@@ -12,7 +12,6 @@ path_to_spawn - путь аномалии которую попытается з
 /proc/try_spawn_anomaly_without_collision(turf/T, obj/anomaly/path_to_spawn)
 	var/x_width = initial(path_to_spawn.parts_x_width)
 	var/y_width = initial(path_to_spawn.parts_y_width)
-	var/randomize_sizes = FALSE
 	var/min_x_size = initial(path_to_spawn.min_x_size)
 	var/max_x_size = initial(path_to_spawn.max_x_size)
 	var/min_y_size = initial(path_to_spawn.min_y_size)

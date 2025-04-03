@@ -19,6 +19,7 @@
 #include "objects\buckling.dm"
 #include "objects\items\fruit_jar.dm"
 #include "objects\items\cash.dm"
+#include "objects\items\seva.dm"
 #include "objects\machines\disposal.dm"
 #include "objects\machines\floor_light.dm"
 #include "objects\machines\machinery.dm"
