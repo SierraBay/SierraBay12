@@ -96,13 +96,13 @@
 				return FALSE
 
 /obj/anomaly/part/labirint_cube/proc/randomise_ways()
-	if(NORTH_STATUS != FORCE_OUT || NORTH_STATUS != FORCE_IN)
+	if(NORTH_STATUS != FORCE_OUT && NORTH_STATUS != FORCE_IN)
 		NORTH_STATUS = pick(list(IN, OUT, BOTH))
-	if(SOUTH_STATUS != FORCE_OUT || SOUTH_STATUS != FORCE_IN)
+	if(SOUTH_STATUS != FORCE_OUT && SOUTH_STATUS != FORCE_IN)
 		SOUTH_STATUS = pick(list(IN, OUT, BOTH))
-	if(WEST_STATUS != FORCE_OUT || WEST_STATUS != FORCE_IN)
+	if(WEST_STATUS != FORCE_OUT && WEST_STATUS != FORCE_IN)
 		WEST_STATUS = pick(list(IN, OUT, BOTH))
-	if(EAST_STATUS != FORCE_OUT || EAST_STATUS != FORCE_IN)
+	if(EAST_STATUS != FORCE_OUT && EAST_STATUS != FORCE_IN)
 		EAST_STATUS = pick(list(IN, OUT, BOTH))
 	refresh_icon_state()
 

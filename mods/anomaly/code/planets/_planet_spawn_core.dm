@@ -30,3 +30,4 @@
 	generate_daycycle()
 	generate_planet_image()
 	START_PROCESSING(SSobj, src)
+	generate_anomalies()

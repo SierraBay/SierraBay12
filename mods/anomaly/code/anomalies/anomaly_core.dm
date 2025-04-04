@@ -183,7 +183,8 @@
 		ranzomize_parameters()
 	icon_state = idle_effect_type
 	if(static_sound_type)
-		GLOB.sound_player.PlayLoopingSound(src, "\ref[src]", static_sound_type, 10, 6)
+		QDEL_NULL(static_sound_obj)
+		static_sound_obj = GLOB.sound_player.PlayLoopingSound(src, "anomaly_static", static_sound_type, volume = 10, range = 8, falloff = 4)
 	if(detectable_effect_range)
 		calculate_effected_turfs_from_new_anomaly(src)
 	if(can_walking && prob(chance_spawn_walking))

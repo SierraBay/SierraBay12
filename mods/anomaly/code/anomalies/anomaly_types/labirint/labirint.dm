@@ -26,7 +26,10 @@
 		/mob/living,
 		/obj/item
 	)
-	artefacts = list()
+	artefacts = list(
+		/obj/item/artefact/crystal
+	)
+	spawn_artefact_in_center = TRUE
 	detection_skill_req = SKILL_MASTER
 	helper_part_path = /obj/anomaly/part/labirint_cube
 	//Количество выходов из аномалии
@@ -35,7 +38,6 @@
 
 //Куб лабиринта который и будет пускать/не пускать
 /obj/anomaly/part/labirint_cube
-	invisibility = 0 //DEBUG, временно чтоб разраб видел
 	var/NORTH_STATUS = IN
 	var/SOUTH_STATUS= IN
 	var/WEST_STATUS = IN

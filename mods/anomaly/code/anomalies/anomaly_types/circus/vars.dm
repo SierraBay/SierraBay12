@@ -22,6 +22,7 @@
 	artefacts = list(
 		/obj/item/artefact/flyer = 2
 	)
+	spawn_artefact_in_center = TRUE
 	artefact_spawn_chance = 20
 	detection_skill_req = SKILL_MASTER
 	//Это очень большая аномалия

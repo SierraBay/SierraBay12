@@ -51,14 +51,13 @@
 		if(result_effects)
 			if(result_effects.Find("Защищает от гиба рвачом"))
 				return
-		if(istype(target, /mob/living/carbon/human))
+		if(ishuman(target))
+			var/mob/living/carbon/human/human = target
+			if(human.health == 0)
+				SSanom.add_last_gibbed(human, "Рвач")
+				human.gib()
+				return
 			var/mob/living/carbon/human/victim = target
-			if(!victim.incapacitated(INCAPACITATION_UNRESISTING) == TRUE) //Убедимся что наш чувак в сознании
-				//Персонаж может вырваться из аномали, деж если он аутист
-				if(victim.skill_check(SKILL_HAULING, SKILL_MASTER))
-					if(prob(7 * victim.get_skill_value(SKILL_HAULING)))
-						victim.Weaken(10)
-						return
 			victim.apply_damage(500, DAMAGE_BRUTE, pick(BP_R_ARM, BP_L_ARM, BP_R_LEG, BP_L_LEG), armor_pen = 100)
 			playsound(src, 'mods/anomaly/sounds/rvach_gibbed.ogg', 100, FALSE  )
 		else if(istype(target, /mob/living))

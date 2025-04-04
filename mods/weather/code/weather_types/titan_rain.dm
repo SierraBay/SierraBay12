@@ -16,12 +16,16 @@
 	var/need_up_water = FALSE
 	var/power_ups_counter = 0
 	var/time_before_cunami = 0
+	var/counting_started = FALSE
 
 /datum/weather_manager/titan_rain/no_cunami
 	can_blowout = FALSE
 
 //Каждые 15 минут будет усиление погоды
 /datum/weather_manager/titan_rain/change_stage(force_state, monitor = FALSE, sound = FALSE)
+	if(!counting_started && !try_start_count())
+		return
+	counting_started = TRUE
 	power_ups_counter++
 	report_progress("DEBUG ANOM: Рост уровня воды на водной планете. Осталось [60 - power_ups_counter*15] минут или же [3 - power_ups_counter] повышений до цунами.")
 	var/list/ticks_list = list('mods/weather/sounds/TICK_1.ogg', 'mods/weather/sounds/TICK_2.ogg', 'mods/weather/sounds/TICK_3.ogg')
@@ -37,6 +41,11 @@
 		STOP_PROCESSING(SSweather, src)
 		start_cunami()
 		return
+
+/datum/weather_manager/titan_rain/proc/try_start_count()
+	for(var/mob/living/carbon/human/picked_human in GLOB.living_players)
+		if(get_z(picked_human) == get_z(pick(connected_weather_turfs)))
+			return TRUE
 
 /datum/weather_manager/titan_rain/proc/temp_rain(time = 5 MINUTES)
 	for(var/obj/weather/weather in connected_weather_turfs)

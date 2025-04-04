@@ -6,6 +6,10 @@
 /obj/item/gun/projectile/automatic,
 /turf/simulated/floor/exoplanet/concrete/reinforced/road,
 /area/centcom)
+"dre" = (
+/obj/landmark/teleport_to_z_level/skat,
+/turf/simulated/floor/exoplanet/concrete/reinforced/road,
+/area/centcom)
 "dRf" = (
 /turf/simulated/mineral/ice,
 /area/centcom)
@@ -356,7 +360,7 @@ pnX
 pnX
 pnX
 cpC
-cpC
+dre
 cpC
 cpC
 cpC

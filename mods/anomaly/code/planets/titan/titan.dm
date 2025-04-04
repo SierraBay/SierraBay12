@@ -29,7 +29,7 @@
 	flora_diversity = 0
 	//ANOM
 	can_spawn_anomalies = TRUE
-	anomalies_type = list(
+	anomalies_types = list(
 		/obj/anomaly/labirint = 1,
 		/obj/anomaly/doubled_teleporter/with_second = 5,
 		/obj/anomaly/doubled_teleporter/with_second/oneway = 5,
@@ -48,6 +48,10 @@
 
 	min_anomalies_ammout = 400
 	max_anomalies_ammout = 600
+
+/obj/overmap/visitable/sector/exoplanet/water/build_level()
+	. = ..()
+	update_sun()
 
 /datum/random_map/noise/exoplanet/titan_water
 	descriptor = "ice exoplanet"
@@ -83,8 +87,8 @@
 /obj/overmap/visitable/sector/exoplanet/water/update_sun()
 	var/low_brightness = 2
 	var/high_brightness = 2
-	var/low_color = "#33e4ff"
-	var/high_color = "#33daff"
+	var/low_color = "#33ddff"
+	var/high_color = "#33ddff"
 	var/min = 0.70
 	var/max = 1.0
 	sun_position = 1

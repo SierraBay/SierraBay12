@@ -185,7 +185,7 @@ source - Источник(Причина) генерации аномалий н
 	var/spawned_anomalies_ammount = LAZYLEN(spawned_anomalies)
 	var/spawned_artefacts_ammount = generate_artefacts_in_anomalies(spawned_anomalies.Copy(), min_artefacts_ammount, max_artefacts_ammount)
 
-	var/spended_time = world.time - started_in
+	var/spended_time = world.realtime - started_in
 	//Отчитаемся
 	if(spawned_anomalies_ammount > 0)
 		report_progress("Создано [spawned_anomalies_ammount] аномалий, создано [spawned_artefacts_ammount] артефактов в них. Источник: [source], затрачено [spended_time] тиков. ")
