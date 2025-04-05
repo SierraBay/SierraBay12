@@ -56,11 +56,11 @@
 		return FALSE
 	if(hatch_locked)
 		if(!silent)
-			to_chat(user, SPAN_WARNING("The [body.hatch_descriptor] is locked."))
+			to_chat(user, SPAN_WARNING("Hatch is locked."))
 		return FALSE
 	if(hatch_closed)
 		if(!silent)
-			to_chat(user, SPAN_WARNING("The [body.hatch_descriptor] is closed."))
+			to_chat(user, SPAN_WARNING("Hatch is closed."))
 		return FALSE
 	if(LAZYLEN(pilots) >= LAZYLEN(body.pilot_positions))
 		if(!silent)

@@ -1,6 +1,6 @@
 /obj/screen/exosuit/menu_button/radio
 	name = "Связь"
-	button_desc = "Кнопка запускает питание меха. <br> В случае перегрева и при нажатии Alt + ЛКМ, мех аварийно запускается <br> WARNING: Мех начинает греться сильнее от разных источников, а при повторном перегреве взорвётся."
+	button_desc = "Позволяет использовать внутреннюю систему связи меха."
 	icon_state = "radio"
 
 /obj/screen/exosuit/menu_button/radio/activated()

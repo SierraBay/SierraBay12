@@ -102,7 +102,7 @@
 
 /obj/screen/movable/exosuit/hardpoint/Click(location, control, params)
 	if(!owner?.hatch_closed)
-		to_chat(usr, SPAN_WARNING("Error: Hardpoint interface disabled while [owner.body.hatch_descriptor] is open."))
+		to_chat(usr, SPAN_WARNING("Error: Hardpoint interface disabled while cockpit is open."))
 		return
 
 	var/modifiers = params2list(params)
