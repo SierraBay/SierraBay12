@@ -8,7 +8,7 @@
 	return
 
 /obj/item/desetup_water_filter()
-	animate(src, pixel_y = 0, time = 5, easing = SINE_EASING | EASE_IN)
+	//animate(src, pixel_y = 0, time = 5, easing = SINE_EASING | EASE_IN)
 	filters = null
 
 /mob/living/desetup_water_filter()
