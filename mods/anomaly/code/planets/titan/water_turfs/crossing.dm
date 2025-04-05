@@ -48,6 +48,8 @@
 		return FALSE
 	else if(ismob(input_movable))
 		var/mob/mobik = input_movable
-		if(mobik.is_floating || mobik.can_overcome_gravity())
-			return FALSE
+		//Жидкость ванильная не очень совместима с водой титана в вопросе этих проверок.
+		if(!locate(/obj/fluid) in get_turf(mobik))
+			if(mobik.can_overcome_gravity() || mobik.is_floating)
+				return FALSE
 	return TRUE
