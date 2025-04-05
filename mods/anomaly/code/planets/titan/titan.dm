@@ -30,24 +30,19 @@
 	//ANOM
 	can_spawn_anomalies = TRUE
 	anomalies_types = list(
-		/obj/anomaly/labirint = 1,
+		/obj/anomaly/labirint = 7,
 		/obj/anomaly/doubled_teleporter/with_second = 5,
 		/obj/anomaly/doubled_teleporter/with_second/oneway = 5,
-		/obj/anomaly/doubled_teleporter/with_second/changing = 1,
-		/obj/anomaly/electra/three_and_three = 1,
-		/obj/anomaly/electra/three_and_three/tesla = 2,
-		/obj/anomaly/electra/three_and_three/tesla_second = 3,
-		/obj/anomaly/cooler/multisize = 1,
-		/obj/anomaly/tramplin/powerfull= 1,
-		/obj/anomaly/rvach/three_and_three = 1
+		/obj/anomaly/doubled_teleporter/with_second/changing = 4,
+		/obj/anomaly/vspishka = 3
 		)
 	///Минимальное количество заспавненных артов
 	min_artefacts_ammount = 1
 	///Максимальное количество заспавненных артов
-	max_artefacts_ammount = 1
+	max_artefacts_ammount = 2
 
-	min_anomalies_ammout = 400
-	max_anomalies_ammout = 600
+	min_anomalies_ammout = 500
+	max_anomalies_ammout = 700
 
 /obj/overmap/visitable/sector/exoplanet/water/build_level()
 	. = ..()

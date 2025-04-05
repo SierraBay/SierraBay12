@@ -26,8 +26,7 @@
 	name = "Refractions of light"
 	anomaly_tag = "Doubled teleporter"
 	with_sound = TRUE
-	sound_type = 'mods/anomaly/sounds/rvach_activation.ogg'
-	static_sound_type = 'mods/anomaly/sounds/gravi_idle.ogg'
+	sound_type = 'mods/anomaly/sounds/vspishka_activated.ogg'
 	idle_effect_type = "rvach_idle"
 	activation_effect_type = "gravy_anomaly_down"
 	can_born_artefacts = TRUE

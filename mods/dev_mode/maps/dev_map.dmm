@@ -8,7 +8,7 @@
 /area/centcom)
 "dre" = (
 /obj/landmark/teleport_to_z_level/skat,
-/turf/simulated/floor/exoplanet/concrete/reinforced/road,
+/turf/simulated/floor/exoplanet/titan_water/maximum,
 /area/centcom)
 "dRf" = (
 /turf/simulated/mineral/ice,
@@ -358,9 +358,9 @@ cpC
 cpC
 pnX
 pnX
-pnX
-cpC
 dre
+cpC
+cpC
 cpC
 cpC
 cpC

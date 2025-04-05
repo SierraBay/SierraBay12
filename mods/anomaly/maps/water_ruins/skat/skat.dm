@@ -3,7 +3,7 @@
 	id = "planetsite_anomalies_flying_home"
 	description = "anomalies lol"
 	mappaths = list('mods/anomaly/maps/water_ruins/skat/skat-1.dmm')
-	spawn_cost = 1
+	spawn_cost = 0
 	apc_test_exempt_areas = list(
 		/area/map_template/skat = NO_SCRUBBER|NO_VENT|NO_APC
 	)

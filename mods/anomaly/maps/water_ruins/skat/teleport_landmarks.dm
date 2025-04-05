@@ -48,7 +48,10 @@
 	map_path = null
 	is_exit = TRUE
 
-
+//Здесь интересный момент
+//Данная функция Crossed() вызывается дважды из-за того что функция Move у Movable
+// Сперва вызывает crossed у всего в турфе, а после вызывает энтер в турф. Энтер в турф тоже вызывает
+// Crossed.
 /obj/landmark/teleport_to_z_level/Crossed(O)
 	if(temp_offed)
 		temp_offed = FALSE

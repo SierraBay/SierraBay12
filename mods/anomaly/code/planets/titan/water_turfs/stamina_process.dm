@@ -19,7 +19,7 @@
 	for(var/mob/living/carbon/human/detected_human in src)
 		if(detected_human.lying)
 			continue
-		if(detected_human.species.name == SPECIES_SKRELL || detected_human.species.name == SPECIES_TRITONIAN) //Скреллы и тритоны неуязвимы к затратам стамины от воды
+		if(detected_human.species.name == SPECIES_SKRELL || detected_human.species.name == SPECIES_TRITONIAN || detected_human.species.name == SPECIES_YEOSA) //Скреллы и тритоны неуязвимы к затратам стамины от воды
 			continue
 		else
 			should_continue_process = TRUE

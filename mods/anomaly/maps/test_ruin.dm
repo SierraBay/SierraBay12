@@ -27,7 +27,7 @@
 /obj/structute/join_the_playtest/Click(location, control, params)
 	if(isghost(usr) || isobserver(usr))
 		var/result = alert(usr, "Присоединиться к плей тесту?", "Думой", "Да🏊‍♀️", "Нет, посижу в гостах")
-		else if(result == "Нет, посижу в гостах")
+		if(result == "Нет, посижу в гостах")
 			return
 		else if(result == "Да🏊‍♀️")
 			spawn_new_tester()

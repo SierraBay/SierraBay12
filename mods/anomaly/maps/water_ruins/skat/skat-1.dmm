@@ -1938,10 +1938,6 @@
 /turf/simulated/wall/r_wall/prepainted,
 /area/map_template/skat)
 "PQ" = (
-/obj/item/paper{
-	info = "Отпишитесь если видели Боба......................... Лучше не ищите его. Вот меня он пугает.";
-	name = "BOOOOOOOOOB???"
-	},
 /obj/structure/table/steel,
 /obj/item/flame/candle,
 /obj/decal/cleanable/dirt,
