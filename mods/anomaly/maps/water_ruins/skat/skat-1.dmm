@@ -628,11 +628,9 @@
 /turf/simulated/floor/tiled/white,
 /area/map_template/skat)
 "kn" = (
-/obj/machinery/camera/network/first_deck{
-	dir = 4
-	},
-/obj/wallframe_spawn/reinforced/hull,
-/turf/simulated/floor/plating,
+/obj/decal/cleanable/dirt,
+/obj/structure/rubble/house,
+/turf/simulated/floor/tiled,
 /area/map_template/skat)
 "kA" = (
 /obj/decal/cleanable/dirt,
@@ -674,13 +672,6 @@
 /obj/decal/cleanable/dirt,
 /mob/living/bot/medbot,
 /turf/simulated/floor/tiled/white,
-/area/map_template/skat)
-"lY" = (
-/obj/structure/closet/secure_closet/guncabinet/sierra_armory/shotgun,
-/obj/random/biggun,
-/obj/random/biggun,
-/obj/decal/cleanable/dirt,
-/turf/simulated/floor/tiled/techfloor,
 /area/map_template/skat)
 "mg" = (
 /obj/floor_decal/industrial/warning{
@@ -1120,10 +1111,10 @@
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/skat)
 "vK" = (
-/obj/structure/closet/secure_closet/guncabinet/sierra_armory/stun,
 /obj/random/biggun,
 /obj/random/biggun,
 /obj/decal/cleanable/dirt,
+/obj/structure/table/rack,
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/skat)
 "vL" = (
@@ -1133,8 +1124,10 @@
 /turf/simulated/floor/tiled/white,
 /area/map_template/skat)
 "wf" = (
-/obj/machinery/suit_cycler/medical/alt,
-/turf/simulated/floor/tiled/techfloor,
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/generic,
+/obj/structure/rubble/house,
+/turf/simulated/floor/tiled,
 /area/map_template/skat)
 "wi" = (
 /obj/machinery/light/spot,
@@ -1258,6 +1251,7 @@
 	pixel_x = -34
 	},
 /obj/decal/cleanable/dirt,
+/obj/structure/rubble/house,
 /turf/simulated/floor/tiled/techmaint,
 /area/map_template/skat)
 "yx" = (
@@ -1269,8 +1263,9 @@
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/skat)
 "yG" = (
-/obj/machinery/camera/network/first_deck,
+/obj/item/welder_tank,
 /obj/decal/cleanable/dirt,
+/obj/structure/rubble/house,
 /turf/simulated/floor/tiled,
 /area/map_template/skat)
 "yX" = (
@@ -1378,7 +1373,6 @@
 "Ao" = (
 /obj/structure/table/woodentable/walnut,
 /obj/item/paper_bin,
-/obj/item/pen/multi/cmd/captain,
 /obj/item/stamp/captain,
 /turf/simulated/floor/exoplanet/titan_water/minimal,
 /area/map_template/skat)
@@ -1442,8 +1436,8 @@
 /turf/template_noop,
 /area/template_noop)
 "Di" = (
-/obj/structure/bed/chair/office/comfy/teal,
 /obj/decal/cleanable/dirt,
+/obj/structure/rubble/house,
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/skat)
 "Dl" = (
@@ -1781,8 +1775,8 @@
 /turf/simulated/wall/prepainted,
 /area/map_template/skat)
 "My" = (
-/obj/structure/closet/secure_closet/security/sierra/cadet,
 /obj/decal/cleanable/dirt,
+/obj/structure/table/rack,
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/skat)
 "MA" = (
@@ -1880,7 +1874,6 @@
 /obj/item/storage/firstaid/combat/special,
 /obj/item/storage/firstaid/combat/special,
 /obj/item/storage/firstaid/combat/special,
-/obj/item/stool/padded/red,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/skat)
@@ -2000,11 +1993,6 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/techmaint,
 /area/map_template/skat)
-"Ti" = (
-/obj/item/stool/padded/red,
-/obj/decal/cleanable/dirt,
-/turf/simulated/floor/tiled/techfloor,
-/area/map_template/skat)
 "Tl" = (
 /obj/random/trash,
 /obj/decal/cleanable/dirt,
@@ -2084,15 +2072,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/skat)
 "Wh" = (
-/obj/machinery/door/blast/shutters/open{
-	name = "Supply Desk Shutters";
-	id_tag = "sup_office";
-	dir = 4
-	},
-/obj/structure/wall_frame/standard,
-/obj/structure/table/wallf{
-	dir = 4
-	},
+/obj/structure/rubble/house,
 /turf/simulated/floor/plating,
 /area/map_template/skat)
 "Wm" = (
@@ -2125,22 +2105,6 @@
 /obj/item/paper_bin,
 /turf/simulated/floor/exoplanet/titan_water/minimal,
 /area/map_template/skat)
-"WP" = (
-/obj/machinery/door/blast/shutters/open{
-	name = "Supply Desk Shutters";
-	id_tag = "sup_office";
-	dir = 4
-	},
-/obj/structure/wall_frame/standard,
-/obj/structure/table/wallf{
-	dir = 4
-	},
-/obj/item/material/bell{
-	pixel_y = 1;
-	pixel_x = 6
-	},
-/turf/simulated/floor/plating,
-/area/map_template/skat)
 "Xe" = (
 /obj/structure/bed/chair/office/light{
 	dir = 1
@@ -2172,11 +2136,9 @@
 /turf/simulated/floor/tiled/freezer,
 /area/map_template/skat)
 "XI" = (
-/obj/structure/closet/secure_closet/guncabinet/sierra_armory/smg,
-/obj/random/biggun,
-/obj/random/biggun,
 /obj/decal/cleanable/dirt,
-/turf/simulated/floor/tiled/techfloor,
+/obj/structure/rubble/house,
+/turf/simulated/floor/tiled/techmaint,
 /area/map_template/skat)
 "XM" = (
 /obj/structure/bed/chair/padded/blue{
@@ -2820,7 +2782,7 @@ iT
 Hd
 OS
 Qb
-yG
+rp
 Fj
 Ff
 Mu
@@ -3214,7 +3176,7 @@ Ep
 Ep
 Qb
 My
-Ti
+tQ
 tQ
 tQ
 tQ
@@ -3254,11 +3216,11 @@ Ep
 Ep
 Qb
 My
-Ti
 tQ
 tQ
 tQ
-XI
+tQ
+vK
 Mu
 aV
 rp
@@ -3298,7 +3260,7 @@ NY
 TF
 tQ
 tQ
-lY
+vK
 Mu
 rp
 rp
@@ -3390,7 +3352,7 @@ nA
 Wc
 nA
 xV
-wf
+Wc
 gw
 Qb
 Ep
@@ -3863,7 +3825,7 @@ Mu
 rp
 rp
 rp
-kn
+NK
 uL
 Aa
 Aa
@@ -4340,8 +4302,8 @@ cA
 cA
 WH
 Mu
-rp
-rp
+kn
+kn
 Fj
 Mu
 Mu
@@ -4378,10 +4340,10 @@ WH
 WH
 WH
 WH
-WH
+XI
 yl
-rp
-tB
+kn
+wf
 rp
 Mu
 bH
@@ -4420,7 +4382,7 @@ WH
 WH
 eH
 Mu
-rp
+kn
 rp
 rp
 Mu
@@ -4544,7 +4506,7 @@ rp
 rp
 rp
 Mu
-rp
+kn
 Fj
 rp
 rp
@@ -4582,10 +4544,10 @@ tQ
 jJ
 rp
 rp
-rp
-rp
-dh
-rp
+kn
+kn
+yG
+kn
 rp
 dh
 tB
@@ -4623,8 +4585,8 @@ Mu
 ey
 tB
 rp
-rp
-rp
+kn
+kn
 rp
 tB
 rp
@@ -4666,9 +4628,9 @@ rp
 Mu
 rp
 rp
-rp
-rp
-rp
+kn
+kn
+kn
 Fj
 rp
 rp
@@ -4707,7 +4669,7 @@ Mu
 jN
 jN
 Wh
-WP
+Wh
 Mu
 gn
 Mu
@@ -4745,9 +4707,9 @@ tB
 rp
 Mu
 xR
-Ko
 Di
-Ko
+Di
+Di
 va
 Ld
 Ld
@@ -4785,7 +4747,7 @@ rp
 rp
 Mu
 xR
-Ko
+Di
 jS
 Ko
 va
