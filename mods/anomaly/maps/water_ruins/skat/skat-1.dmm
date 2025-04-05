@@ -946,13 +946,12 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/skat)
 "tv" = (
+/obj/decal/cleanable/dirt,
 /obj/machinery/door/window/southleft{
 	autoset_access = 0;
-	name = "Bar";
-	req_access = list("ACCESS_CASTELNAU_BAR")
+	name = "Bar"
 	},
-/obj/decal/cleanable/dirt,
-/turf/simulated/floor/tiled/dark,
+/turf/simulated/floor/tiled/white,
 /area/map_template/skat)
 "tz" = (
 /obj/machinery/photocopier/faxmachine,
@@ -1286,9 +1285,6 @@
 	},
 /obj/item/stack/nanopaste{
 	pixel_x = -6
-	},
-/obj/machinery/atmospherics/unary/vent_pump/on{
-	dir = 1
 	},
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/steel_grid,
@@ -1739,10 +1735,10 @@
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/skat)
 "LQ" = (
+/obj/item/gun/energy/captain,
 /obj/structure/displaycase{
 	req_access = list("ACCESS_CASTELNAU_CAPTAIN")
 	},
-/obj/item/gun/energy/captain,
 /turf/simulated/floor/exoplanet/titan_water/minimal,
 /area/map_template/skat)
 "LT" = (
@@ -4123,7 +4119,7 @@ wJ
 wJ
 uf
 uf
-tv
+uf
 uf
 uf
 jB
@@ -4241,7 +4237,7 @@ rp
 Mu
 cH
 cH
-cH
+tv
 cH
 Tl
 eh
