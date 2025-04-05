@@ -2234,10 +2234,6 @@
 /turf/simulated/floor/tiled/white,
 /area/map_template/skat)
 "YZ" = (
-/obj/machinery/body_scan_display{
-	pixel_y = 24;
-	tag = "scan_room"
-	},
 /obj/structure/table/reinforced,
 /obj/item/storage/firstaid/adv,
 /obj/decal/cleanable/dirt,
