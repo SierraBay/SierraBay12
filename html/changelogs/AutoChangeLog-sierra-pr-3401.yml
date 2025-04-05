@@ -1,0 +1,4 @@
+author: Builder13
+changes:
+  - {experiment: Попытка починить освещение}
+delete-after: true

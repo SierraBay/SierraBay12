@@ -48,5 +48,6 @@
 #include "code\throw_swap_fix.dm"
 #include "code\awaking_tweaks.dm"
 #include "code\ghost_speed.dm"
+#include "code/adrenalin.dm"
 
 #endif
