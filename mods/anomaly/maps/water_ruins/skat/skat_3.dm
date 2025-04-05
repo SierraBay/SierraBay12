@@ -1,3 +1,4 @@
+/*
 /datum/map_template/ruin/exoplanet/drowned_skat_under_water
 	name = "drowned SKAT"
 	id = "planetsite_anomalies_flying_home"
@@ -13,3 +14,4 @@
 	name = "\improper Drowned ship underwater"
 	icon_state = "A"
 	turfs_airless = TRUE
+*/
