@@ -1056,21 +1056,10 @@
 /obj/machinery/door/airlock/civilian{
 	autoclose = 0;
 	autoset_access = 0;
-	name = "Kitchen";
-	req_access = list("ACCESS_CASTELNAU_BAR","ACCESS_CASTELNAU_KITCHEN")
+	name = "Kitchen"
 	},
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/white,
-/area/map_template/skat)
-"vs" = (
-/obj/machinery/light{
-	dir = 8
-	},
-/obj/machinery/constructable_frame/computerframe{
-	dir = 4
-	},
-/obj/item/material/shard,
-/turf/simulated/floor/exoplanet/titan_water/minimal,
 /area/map_template/skat)
 "vu" = (
 /obj/machinery/door/airlock/civilian{
@@ -1205,7 +1194,9 @@
 /turf/simulated/floor/exoplanet/titan_water/minimal,
 /area/map_template/skat)
 "xF" = (
-/obj/structure/closet/secure_closet/captains,
+/obj/structure/closet/secure_closet/captains{
+	req_access = list()
+	},
 /obj/item/ammo_magazine/speedloader/magnum,
 /obj/item/ammo_magazine/speedloader/magnum,
 /obj/machinery/light{
@@ -1637,8 +1628,7 @@
 /obj/machinery/door/airlock/civilian{
 	autoclose = 0;
 	autoset_access = 0;
-	name = "Kitchen";
-	req_access = list("ACCESS_CASTELNAU_BAR","ACCESS_CASTELNAU_KITCHEN")
+	name = "Kitchen"
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/skat)
@@ -2141,7 +2131,9 @@
 /turf/simulated/floor/exoplanet/titan_water/minimal,
 /area/map_template/skat)
 "Xs" = (
-/obj/machinery/smartfridge/secure/medbay,
+/obj/machinery/smartfridge/secure/medbay{
+	req_access = list()
+	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/skat)
 "Xv" = (
@@ -2360,7 +2352,7 @@ gq
 gq
 aY
 aY
-vs
+HH
 HH
 HH
 HH
