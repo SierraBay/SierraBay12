@@ -26,11 +26,9 @@
 
 /obj/structute/join_the_playtest/Click(location, control, params)
 	if(isghost(usr) || isobserver(usr))
-		var/result = alert(usr, "Присоединиться к плей тесту?", "Думой", "Да🏊‍♀️", "Нет, посижу в гостах", "Пошёл нахуй🤬")
-		if(result == "Пошёл нахуй🤬")
-			to_chat(usr, SPAN_BAD("Сам пошёл нахуй🤙"))
+		var/result = alert(usr, "Присоединиться к плей тесту?", "Думой", "Да🏊‍♀️", "Нет, посижу в гостах")
 		else if(result == "Нет, посижу в гостах")
-			to_chat(usr, SPAN_NOTICE("Ну сиди😒, нигер"))
+			return
 		else if(result == "Да🏊‍♀️")
 			spawn_new_tester()
 

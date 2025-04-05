@@ -21,8 +21,6 @@
 	water_color = "#ffffff"
 	daycycle_range = list(5 HOURS, 5 HOURS)
 	sun_process_interval = 10 HOURS
-	//Вечный день
-	sun_position = 1
 	ruin_tags_blacklist = RUIN_HABITAT|RUIN_WATER|RUIN_HOT_ANOMALIES|RUIN_ELECTRA_ANOMALIES|RUIN_CHUDO_ANOMALIES
 	ruin_tags_whitelist = RUIN_GRAVI_ANOMALIES
 	habitability_weight = HABITABILITY_EXTREME

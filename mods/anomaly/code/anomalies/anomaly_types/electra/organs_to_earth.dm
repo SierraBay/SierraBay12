@@ -32,7 +32,7 @@
 		return list(attack_zone)
 
 	// Обрабатываем специальные случаи с выбором ноги
-	for(var/i in 1 to result.len)
+	for(var/i in 1 to LAZYLEN(result))
 		if(result[i] == BP_R_LEG)
 			result[i] = prob(50) ? BP_R_LEG : BP_L_LEG
 		else if(result[i] == BP_L_LEG)

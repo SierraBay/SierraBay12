@@ -175,6 +175,22 @@
 	.=..()
 
 
+/obj/structure/aurora/vault_door/id_door
+	password = 2222
+
+/obj/structure/aurora/vault_door/id_door/use_tool(obj/item/tool, mob/living/user, list/click_params)
+	. = ..()
+	if(istype(tool, /obj/item/aurora_key))
+		if(opened)
+			return
+		if(!waked_up)
+			to_chat(user, SPAN_NOTICE("Кажется, это стоит сперва запитать..."))
+			return
+		if(tool:stored_password == password)
+			open_door()
+		else
+			to_chat(user, SPAN_NOTICE("А эта карта точно подходит этой двери?"))
+
 
 /obj/item/aurora_key
 	name = "strange ID card"

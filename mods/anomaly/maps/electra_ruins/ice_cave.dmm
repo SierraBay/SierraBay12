@@ -46,6 +46,11 @@
 /obj/anomaly/electra/three_and_three/tesla_second,
 /turf/space,
 /area/space)
+"J" = (
+/obj/landmark/no_weather_here,
+/obj/item/aurora_key,
+/turf/simulated/floor/exoplanet/ice,
+/area/space)
 "M" = (
 /obj/landmark/no_weather_here,
 /turf/simulated/mineral/ice,
@@ -556,7 +561,7 @@ c
 c
 c
 R
-R
+J
 R
 g
 R
