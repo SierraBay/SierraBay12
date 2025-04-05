@@ -147,7 +147,7 @@
 /turf/simulated/floor/exoplanet/titan_water/minimal,
 /area/template_noop)
 "Ds" = (
-/obj/structure/barrier,
+/obj/structure/barrier/avanpost,
 /turf/simulated/floor/exoplanet/titan_water/minimal,
 /area/template_noop)
 "DH" = (

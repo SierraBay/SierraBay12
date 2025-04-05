@@ -22,6 +22,18 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled,
 /area/map_template/skat)
+"aP" = (
+/obj/structure/table/rack,
+/obj/floor_decal/industrial/outline/yellow,
+/obj/decal/cleanable/dirt,
+/obj/random/tool,
+/obj/random/tool,
+/obj/random/tool,
+/obj/random/tool,
+/obj/random/tool,
+/obj/random/tool,
+/turf/simulated/floor/tiled/techmaint,
+/area/map_template/skat)
 "aQ" = (
 /obj/item/reagent_containers/food/drinks/glass2/coffeecup/metal{
 	pixel_x = -4;
@@ -75,6 +87,7 @@
 	pixel_y = 8
 	},
 /obj/structure/water_drown_structures/paper,
+/obj/landmark/cutscene_landmark/skat_most_first,
 /turf/simulated/floor/exoplanet/titan_water/minimal,
 /area/map_template/skat)
 "bG" = (
@@ -413,6 +426,14 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/skat)
+"ho" = (
+/obj/floor_decal/industrial/warning{
+	dir = 8
+	},
+/obj/decal/cleanable/dirt,
+/obj/random/trash,
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/skat)
 "hq" = (
 /obj/structure/railing/mapped{
 	dir = 8
@@ -681,10 +702,12 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/skat)
 "ml" = (
-/obj/machinery/door/airlock/glass/command{
-	name = "Bridge Storage"
-	},
 /turf/simulated/floor/tiled/techfloor/grid,
+/area/map_template/skat)
+"mA" = (
+/obj/decal/cleanable/dirt,
+/obj/random/trash,
+/turf/simulated/floor/tiled/white,
 /area/map_template/skat)
 "mG" = (
 /obj/decal/skat_decals/wires_first,
@@ -695,6 +718,12 @@
 /obj/decal/cleanable/dirt,
 /obj/random/trash,
 /turf/simulated/floor/tiled/steel_grid,
+/area/map_template/skat)
+"nx" = (
+/obj/decal/cleanable/generic,
+/obj/decal/cleanable/dirt,
+/obj/random/trash,
+/turf/simulated/floor/tiled,
 /area/map_template/skat)
 "nA" = (
 /obj/machinery/suit_storage_unit/standard_unit,
@@ -744,6 +773,14 @@
 	pixel_y = 30
 	},
 /turf/simulated/wall/prepainted,
+/area/map_template/skat)
+"oI" = (
+/obj/random/obstruction,
+/obj/decal/cleanable/dirt,
+/obj/machinery/door/airlock/glass/command{
+	name = "Bridge Storage"
+	},
+/turf/simulated/floor/tiled,
 /area/map_template/skat)
 "oZ" = (
 /obj/decal/cleanable/dirt,
@@ -879,7 +916,13 @@
 "rE" = (
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/generic,
+/obj/random/trash,
 /turf/simulated/floor/tiled/freezer,
+/area/map_template/skat)
+"rI" = (
+/obj/decal/cleanable/dirt,
+/obj/random/trash,
+/turf/simulated/floor/tiled/techfloor,
 /area/map_template/skat)
 "rL" = (
 /obj/machinery/suit_storage_unit/standard_unit,
@@ -1239,6 +1282,7 @@
 	pixel_y = -1
 	},
 /obj/structure/water_drown_structures/paper,
+/obj/structure/rubble/house,
 /turf/simulated/floor/exoplanet/titan_water/minimal,
 /area/map_template/skat)
 "yb" = (
@@ -1595,6 +1639,17 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/white,
 /area/map_template/skat)
+"GP" = (
+/obj/structure/table/rack,
+/obj/floor_decal/industrial/outline/yellow,
+/obj/decal/cleanable/dirt,
+/obj/random/tool,
+/obj/random/tool,
+/obj/random/tool,
+/obj/random/tool,
+/obj/random/tool,
+/turf/simulated/floor/tiled/techmaint,
+/area/map_template/skat)
 "GV" = (
 /obj/machinery/light/small{
 	dir = 4;
@@ -1654,6 +1709,7 @@
 "Iz" = (
 /obj/floor_decal/industrial/warning,
 /obj/decal/cleanable/dirt,
+/obj/random/trash,
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/skat)
 "IK" = (
@@ -1705,6 +1761,12 @@
 "Ko" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/monotile,
+/area/map_template/skat)
+"Ks" = (
+/obj/structure/barricade,
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/generic,
+/turf/simulated/floor/tiled/techmaint,
 /area/map_template/skat)
 "Kz" = (
 /obj/structure/water_drown_structures,
@@ -1765,6 +1827,14 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/techmaint,
 /area/map_template/skat)
+"LZ" = (
+/obj/structure/bed/chair/padded/blue{
+	dir = 8
+	},
+/obj/decal/cleanable/dirt,
+/obj/random/trash,
+/turf/simulated/floor/tiled/techmaint,
+/area/map_template/skat)
 "Mk" = (
 /obj/structure/table/standard,
 /obj/item/device/scanner/spectrometer/adv,
@@ -1783,6 +1853,13 @@
 /obj/structure/table/rack,
 /obj/floor_decal/industrial/outline/yellow,
 /obj/decal/cleanable/dirt,
+/obj/random/tool,
+/obj/random/tool,
+/obj/random/tool,
+/obj/random/tool,
+/obj/random/tool,
+/obj/random/tool,
+/obj/random/tool,
 /turf/simulated/floor/tiled/techmaint,
 /area/map_template/skat)
 "MH" = (
@@ -1802,6 +1879,12 @@
 /obj/item/stack/material/phoron,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/white,
+/area/map_template/skat)
+"MX" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/generic,
+/obj/random/trash,
+/turf/simulated/floor/tiled/techmaint,
 /area/map_template/skat)
 "Nj" = (
 /obj/structure/railing/mapped{
@@ -1940,8 +2023,9 @@
 /turf/simulated/wall/r_wall/prepainted,
 /area/map_template/skat)
 "Qt" = (
-/obj/landmark/cutscene_landmark/skat_most_first,
-/turf/simulated/floor/exoplanet/titan_water/minimal,
+/obj/decal/cleanable/dirt,
+/obj/random/trash,
+/turf/simulated/floor/tiled/techmaint,
 /area/map_template/skat)
 "QN" = (
 /obj/machinery/door/airlock/engineering{
@@ -2003,6 +2087,14 @@
 /obj/item/tank/air,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/techfloor,
+/area/map_template/skat)
+"Tr" = (
+/obj/floor_decal/corner/yellow/half{
+	dir = 4
+	},
+/obj/decal/cleanable/dirt,
+/obj/random/trash,
+/turf/simulated/floor/tiled/monotile,
 /area/map_template/skat)
 "TF" = (
 /obj/structure/closet/walllocker{
@@ -2423,7 +2515,7 @@ iT
 iT
 ve
 iT
-Qt
+iT
 iT
 iT
 iT
@@ -2902,7 +2994,7 @@ Qb
 Qb
 Qb
 Qb
-Ff
+oI
 rp
 Ff
 NK
@@ -2977,7 +3069,7 @@ Ep
 Qb
 ts
 tQ
-tQ
+rI
 tQ
 tQ
 tQ
@@ -3019,7 +3111,7 @@ UA
 tQ
 tQ
 tQ
-tQ
+rI
 fQ
 rp
 rp
@@ -3176,7 +3268,7 @@ Ep
 Ep
 Qb
 My
-tQ
+rI
 tQ
 tQ
 tQ
@@ -3218,7 +3310,7 @@ Qb
 My
 tQ
 tQ
-tQ
+rI
 tQ
 vK
 Mu
@@ -3259,7 +3351,7 @@ My
 NY
 TF
 tQ
-tQ
+rI
 vK
 Mu
 rp
@@ -3375,12 +3467,12 @@ Ep
 Ep
 Ep
 Mu
+eH
+XI
 WH
-WH
-WH
-WH
-WH
-WH
+MX
+XI
+XI
 Mu
 rp
 Fj
@@ -3417,10 +3509,10 @@ Ep
 Mu
 WH
 Yh
-MA
-MA
-MA
-WH
+aP
+aP
+GP
+Qt
 Mu
 rp
 rp
@@ -3455,12 +3547,12 @@ Ep
 Ep
 Ep
 Mu
-WH
+eH
 Te
+GP
+GP
 MA
-MA
-MA
-WH
+eH
 Mu
 TO
 rp
@@ -3495,12 +3587,12 @@ Ep
 Ep
 Ep
 Qb
-WH
-WH
-WH
-WH
-WH
-WH
+XI
+eH
+XI
+eH
+XI
+Qt
 Mu
 rp
 Fj
@@ -3535,12 +3627,12 @@ Ep
 Ep
 Ep
 Qb
-WH
+Qt
 QS
+Ks
 QS
-QS
-WH
-WH
+eH
+XI
 Mu
 rp
 rp
@@ -3898,7 +3990,7 @@ Lt
 vc
 Lt
 Ld
-Ld
+ng
 Ld
 yE
 Mu
@@ -3935,7 +4027,7 @@ Ep
 Ep
 Qb
 Ld
-Ld
+ng
 Ld
 Ld
 il
@@ -4016,7 +4108,7 @@ Ep
 Qb
 WH
 WH
-WH
+Qt
 WH
 WH
 WH
@@ -4058,7 +4150,7 @@ Lg
 Hg
 WH
 WH
-WH
+Qt
 Hg
 eN
 NK
@@ -4134,7 +4226,7 @@ gq
 Ep
 Ep
 Qb
-WH
+Qt
 rZ
 rZ
 rZ
@@ -4298,7 +4390,7 @@ WH
 cA
 cA
 cA
-cA
+LZ
 cA
 WH
 Mu
@@ -4377,7 +4469,7 @@ Qb
 WH
 eH
 WH
-WH
+Qt
 WH
 WH
 eH
@@ -4387,7 +4479,7 @@ rp
 rp
 Mu
 cH
-cH
+mA
 cH
 vk
 cH
@@ -4414,13 +4506,13 @@ Ep
 Ep
 Ep
 Qb
+Qt
 WH
 WH
 WH
 WH
 WH
-WH
-WH
+Qt
 Mu
 qT
 rp
@@ -4495,7 +4587,7 @@ Ep
 Ep
 Mu
 BK
-tQ
+rI
 tQ
 tQ
 tQ
@@ -4537,9 +4629,9 @@ Mu
 tQ
 tQ
 oh
+rI
 tQ
-tQ
-tQ
+rI
 tQ
 jJ
 rp
@@ -4593,7 +4685,7 @@ rp
 rp
 rp
 dh
-wM
+nx
 Mu
 Ep
 Ep
@@ -4655,16 +4747,16 @@ Ep
 Ep
 Mu
 tQ
+rI
 tQ
 tQ
-tQ
-tQ
+rI
 tQ
 tQ
 Mu
 rp
 rp
-rp
+Fj
 Mu
 jN
 jN
@@ -4737,7 +4829,7 @@ Mu
 fP
 Dx
 jI
-tQ
+rI
 jI
 as
 BK
@@ -4788,7 +4880,7 @@ Mu
 Mu
 ep
 ep
-Ho
+Tr
 Ho
 hW
 Ld
@@ -4823,7 +4915,7 @@ vu
 Fs
 Mu
 ha
-fh
+ho
 fh
 gk
 yX

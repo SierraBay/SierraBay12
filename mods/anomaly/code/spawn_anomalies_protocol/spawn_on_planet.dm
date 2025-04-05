@@ -5,6 +5,8 @@
 	)
 	//Планеты которые сами по себе никогда не заспавнятся
 	var/list/shitspawn_planets = list(
+		/obj/overmap/visitable/sector/exoplanet/flying,
+		/obj/overmap/visitable/sector/exoplanet/ice
 	)
 	var/list/all_planets_list = subtypesof(/obj/overmap/visitable/sector/exoplanet)
 	//Я не придумал как обьяснять игре какая планета обычная, а какая аномальная без

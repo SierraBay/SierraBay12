@@ -5,3 +5,5 @@
 	mappaths = list('mods/anomaly/maps/water_ruins/avanpost/avanpost.dmm')
 	spawn_cost = 1
 	ruin_tags = RUIN_CHUDO_ANOMALIES
+
+/obj/structure/barrier/avanpost
