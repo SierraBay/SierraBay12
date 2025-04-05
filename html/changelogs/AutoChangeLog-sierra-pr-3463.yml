@@ -1,0 +1,5 @@
+author: Mucker
+changes:
+  - {tweak: Overmap hazards no longer spawn on grids where ships transition to when
+      moving over map edges.}
+delete-after: true
