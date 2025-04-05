@@ -1736,9 +1736,7 @@
 /area/map_template/skat)
 "LQ" = (
 /obj/item/gun/energy/captain,
-/obj/structure/displaycase{
-	req_access = list("ACCESS_CASTELNAU_CAPTAIN")
-	},
+/obj/structure/displaycase,
 /turf/simulated/floor/exoplanet/titan_water/minimal,
 /area/map_template/skat)
 "LT" = (
