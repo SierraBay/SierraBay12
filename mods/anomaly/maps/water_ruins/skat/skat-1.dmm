@@ -343,9 +343,6 @@
 /turf/simulated/floor/exoplanet/titan_water/minimal,
 /area/map_template/skat)
 "fP" = (
-/obj/machinery/cryopod/robot{
-	dir = 4
-	},
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/skat)
@@ -353,16 +350,6 @@
 /obj/item/shreddedp,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/techfloor,
-/area/map_template/skat)
-"fX" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/obj/machinery/constructable_frame/computerframe{
-	dir = 8
-	},
-/obj/item/material/shard,
-/turf/simulated/floor/exoplanet/titan_water/minimal,
 /area/map_template/skat)
 "ga" = (
 /obj/structure/closet/walllocker{
@@ -509,13 +496,6 @@
 /obj/structure/table/standard,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/white,
-/area/map_template/skat)
-"iO" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/obj/machinery/psi_monitor,
-/turf/simulated/floor/exoplanet/titan_water/minimal,
 /area/map_template/skat)
 "iT" = (
 /turf/simulated/floor/exoplanet/titan_water/minimal,
@@ -786,21 +766,6 @@
 /obj/decal/cleanable/dirt,
 /obj/random/obstruction,
 /turf/simulated/floor/tiled/white,
-/area/map_template/skat)
-"pn" = (
-/obj/machinery/button/blast_door{
-	dir = 8;
-	id_tag = "bridge_prot";
-	name = "Bridge Protection Doors";
-	pixel_x = 24;
-	pixel_y = 8;
-	req_access = list("ACCESS_CASTELNAU_BRIDGE")
-	},
-/obj/machinery/constructable_frame/computerframe{
-	dir = 8
-	},
-/obj/item/material/shard,
-/turf/simulated/floor/exoplanet/titan_water/minimal,
 /area/map_template/skat)
 "ps" = (
 /obj/item/reagent_containers/food/drinks/glass2/coffeecup/pawn{
@@ -1492,10 +1457,6 @@
 /turf/simulated/floor/tiled/freezer,
 /area/map_template/skat)
 "Dq" = (
-/obj/machinery/alarm/server{
-	dir = 4;
-	pixel_x = -23
-	},
 /obj/structure/flora/pottedplant/floorleaf,
 /turf/simulated/floor/exoplanet/titan_water/minimal,
 /area/map_template/skat)
@@ -1649,13 +1610,6 @@
 /obj/random/tool,
 /obj/random/tool,
 /turf/simulated/floor/tiled/techmaint,
-/area/map_template/skat)
-"GV" = (
-/obj/machinery/light/small{
-	dir = 4;
-	pixel_y = 8
-	},
-/turf/simulated/wall/prepainted,
 /area/map_template/skat)
 "GZ" = (
 /obj/machinery/jukebox/old,
@@ -1898,25 +1852,6 @@
 /turf/simulated/floor/tiled/white,
 /area/map_template/skat)
 "Np" = (
-/obj/machinery/button/windowtint{
-	dir = 1;
-	id = "captainplace";
-	pixel_x = -24;
-	pixel_y = 13
-	},
-/obj/machinery/button/alternate/door/bolts{
-	dir = 4;
-	id_tag = "captain_door";
-	name = "Office Lock Control";
-	pixel_x = -24
-	},
-/obj/machinery/button/alternate/door{
-	dir = 4;
-	id_tag = "captain_door";
-	name = "Office Door Control";
-	pixel_x = -24;
-	pixel_y = -11
-	},
 /obj/structure/flora/pottedplant/floorleaf,
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 32
@@ -2006,12 +1941,6 @@
 /obj/decal/skat_decals/water_and_pipes,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled,
-/area/map_template/skat)
-"PD" = (
-/obj/item/storage/secure/safe{
-	pixel_x = -24
-	},
-/turf/simulated/wall/r_wall/prepainted,
 /area/map_template/skat)
 "PQ" = (
 /obj/structure/table/steel,
@@ -2472,12 +2401,12 @@ Lj
 aY
 iT
 ve
-iT
 YK
+iT
 ve
 iT
-iT
 dq
+iT
 iT
 iT
 ve
@@ -2592,14 +2521,14 @@ Ep
 iT
 YK
 iT
-iO
-pn
+iT
+wB
 wB
 ps
 aQ
 wB
 wB
-fX
+wB
 ee
 xv
 iT
@@ -2868,7 +2797,7 @@ gq
 Ep
 Ep
 Ep
-PD
+Qb
 Np
 iT
 Hd
@@ -3277,7 +3206,7 @@ Mu
 Mu
 cB
 cB
-GV
+Mu
 kB
 Xe
 Yb

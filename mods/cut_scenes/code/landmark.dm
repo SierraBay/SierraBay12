@@ -6,6 +6,8 @@
 	var/activated = FALSE
 
 /obj/landmark/cutscene_landmark/Crossed(O)
+	if(isobserver(O) || isghost(O))
+		return
 	if(activated || !my_cut_scene_type)
 		return
 	activated = TRUE

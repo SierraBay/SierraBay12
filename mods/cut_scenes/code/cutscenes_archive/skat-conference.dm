@@ -3,27 +3,25 @@
 
 /datum/cut_scene/skat_conference/New()
 	actors = list(
-		"Captain" = list("type" = /obj/sctructure/titan_ghost/human_ghost, "x_offset" = 0, "y_offset" = 1),
-		"Adjutant" = list("type" = /obj/sctructure/titan_ghost/human_ghost, "x_offset" = 1, "y_offset" = 1),
+		"Captain" = list("type" = /obj/sctructure/titan_ghost/human_ghost, "x_offset" = 2, "y_offset" = 0),
+		"Adjutant" = list("type" = /obj/sctructure/titan_ghost/human_ghost, "x_offset" = 1, "y_offset" = -1),
 		//Первая линия людей
-		"FirstSoldier" = list("type" = /obj/sctructure/titan_ghost/human_ghost, "x_offset" = -2, "y_offset" = -1),
-		"1cargoboy" = list("type" = /obj/sctructure/titan_ghost/human_ghost, "x_offset" = -1, "y_offset" = -1),
-		"2cargoboy" = list("type" = /obj/sctructure/titan_ghost/human_ghost, "x_offset" = 0, "y_offset" = -1),
-		"3cargoboy" = list("type" = /obj/sctructure/titan_ghost/human_ghost, "x_offset" = 1, "y_offset" = -1),
-		"4cargoboy" = list("type" = /obj/sctructure/titan_ghost/human_ghost, "x_offset" = 2, "y_offset" = -1),
-		"SecondSoldier" = list("type" = /obj/sctructure/titan_ghost/human_ghost, "x_offset" = 3, "y_offset" = -1),
+		"FirstSoldier" = list("type" = /obj/sctructure/titan_ghost/human_ghost, "x_offset" = 5, "y_offset" = 2),
+		"1cargoboy" = list("type" = /obj/sctructure/titan_ghost/human_ghost, "x_offset" = 5, "y_offset" = 1),
+		"2cargoboy" = list("type" = /obj/sctructure/titan_ghost/human_ghost, "x_offset" = 5, "y_offset" = 0),
+		"3cargoboy" = list("type" = /obj/sctructure/titan_ghost/human_ghost, "x_offset" = 5, "y_offset" = -1),
+		"SecondSoldier" = list("type" = /obj/sctructure/titan_ghost/human_ghost, "x_offset" = 5, "y_offset" = -2),
 		//Вторая линия людей
-		"5cargoboy" = list("type" = /obj/sctructure/titan_ghost/human_ghost, "x_offset" = -2, "y_offset" = -2),
-		"6cargoboy" = list("type" = /obj/sctructure/titan_ghost/human_ghost, "x_offset" = -1, "y_offset" = -2),
-		"7cargoboy" = list("type" = /obj/sctructure/titan_ghost/human_ghost, "x_offset" = 0, "y_offset" = -2),
-		"8cargoboy" = list("type" = /obj/sctructure/titan_ghost/human_ghost, "x_offset" = 1, "y_offset" = -2),
-		"9cargoboy" = list("type" = /obj/sctructure/titan_ghost/human_ghost, "x_offset" = 2, "y_offset" = -2),
-		"10cargoboy" = list("type" = /obj/sctructure/titan_ghost/human_ghost, "x_offset" = 3, "y_offset" = -2),
+		"5cargoboy" = list("type" = /obj/sctructure/titan_ghost/human_ghost, "x_offset" = 6, "y_offset" = 2),
+		"6cargoboy" = list("type" = /obj/sctructure/titan_ghost/human_ghost, "x_offset" = 6, "y_offset" = 1),
+		"7cargoboy" = list("type" = /obj/sctructure/titan_ghost/human_ghost, "x_offset" = 6, "y_offset" = 0),
+		"8cargoboy" = list("type" = /obj/sctructure/titan_ghost/human_ghost, "x_offset" = 6, "y_offset" = -1),
+		"9cargoboy" = list("type" = /obj/sctructure/titan_ghost/human_ghost, "x_offset" = 6, "y_offset" = -2),
 		//Третий слой людей
-		"11cargoboy" = list("type" = /obj/sctructure/titan_ghost/human_ghost, "x_offset" = -2, "y_offset" = -3),
-		"12cargoboy" = list("type" = /obj/sctructure/titan_ghost/human_ghost, "x_offset" = -1, "y_offset" = -3),
-		"13cargoboy" = list("type" = /obj/sctructure/titan_ghost/human_ghost, "x_offset" = 2, "y_offset" = -3),
-		"14cargoboy" = list("type" = /obj/sctructure/titan_ghost/human_ghost, "x_offset" = 3, "y_offset" = -3)
+		"11cargoboy" = list("type" = /obj/sctructure/titan_ghost/human_ghost, "x_offset" = 7, "y_offset" = 2),
+		"12cargoboy" = list("type" = /obj/sctructure/titan_ghost/human_ghost, "x_offset" = 7, "y_offset" = 1),
+		"13cargoboy" = list("type" = /obj/sctructure/titan_ghost/human_ghost, "x_offset" = 8, "y_offset" = -1),
+		"14cargoboy" = list("type" = /obj/sctructure/titan_ghost/human_ghost, "x_offset" = 7, "y_offset" = -2)
 )
 	// Добавляем действия
 	actions_list = list(
