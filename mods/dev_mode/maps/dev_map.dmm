@@ -86,6 +86,9 @@
 /obj/landmark/no_weather_here{
 	layer = 2
 	},
+/obj/landmark{
+	name = "JoinLateCryo"
+	},
 /turf/unsimulated/floor/grass,
 /area/centcom)
 "qMW" = (
