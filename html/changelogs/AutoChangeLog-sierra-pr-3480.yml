@@ -1,0 +1,19 @@
+author: PurplePineapple
+changes:
+  - {rscadd: 'Corporate Operative now has a dash that can instantly climb ladders,
+      get into mechs, and scale objects like tables. The user is invulnerable during
+      a dash, and can grab someone if the target is a player.'}
+  - {tweak: 'AUGMENT_EYES now exists separately for eye augments like HUDs, glare
+      dampeners.'}
+  - {bugfix: The Sol operative suit shield now has a 10 second cooldown before you
+      can turn it back on after it dies.}
+  - {tweak: The shield now takes 1000kw to fill instead of 500kw. It takes the same
+      amount of time but will drain your suit cell more than before now.}
+  - {tweak: CorpoOp armblades have been merged with esword code. They're now laser
+      armblades and do more reliable damage.}
+  - {tweak: "CorpoOp dash now automatically attacks a human target if you are holding
+      a melee weapon. You still must directly click the target to dash \"at\" them,
+      not the turf they're on."}
+  - {bugfix: You no longer drop the RIG e-armblade and RIG e-sword due to pain or
+      falling over.}
+delete-after: true

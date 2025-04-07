@@ -4,6 +4,8 @@
  * /obj/item/rig_module/teleporter
  * /obj/item/rig_module/fabricator/energy_net
  * /obj/item/rig_module/self_destruct
+ * /obj/item/rig_module/actuators
+ * /obj/item/rig_module/personal_shield
  */
 
 /obj/item/rig_module/stealth_field
@@ -81,7 +83,7 @@
 		return
 	M.phase_out(T)
 
-/obj/item/rig_module/teleporter/engage(atom/target, notify_ai)
+/obj/item/rig_module/teleporter/engage(atom/target)
 
 	var/mob/living/carbon/human/H = holder.wearer
 
@@ -190,7 +192,7 @@
 	if(!..())
 		return 0
 
-/obj/item/rig_module/self_destruct/engage(skip_check = FALSE)
+/obj/item/rig_module/self_destruct/engage(atom/target, skip_check)
 	set waitfor = 0
 
 	if(self_destructing) //prevents repeat calls
@@ -201,9 +203,8 @@
 		return 1
 
 	if(!skip_check)
-		if(!usr || alert(usr, "Are you sure you want to push that button?", "Self-destruct", "No", "Yes") == "No")
-			return
-
+		if (alert(usr, "Are you sure you want to push that button?", "Self-destruct", "No", "Yes") != "Yes")
+			return 0
 		if(usr == holder.wearer)
 			holder.wearer.visible_message(SPAN_WARNING(" \The [src.holder.wearer] flicks a small switch on the back of \the [src.holder]."),1)
 			sleep(blink_delay)
@@ -235,8 +236,8 @@
 
 	//OH SHIT.
 	if(holder.wearer.stat == DEAD)
-		if(src.active)
-			engage(1)
+		if(active)
+			engage(null, TRUE)
 
 /obj/item/rig_module/self_destruct/proc/blink()
 	set waitfor = 0
@@ -258,3 +259,202 @@
 
 /obj/item/rig_module/grenade_launcher/ninja
 	suit_overlay = null
+
+
+/* Not a doc comment.
+* While on, prevents fall damage.
+* Also allows the user to dash to locations while scaling low obstacles and negating damage.
+* Also causes the user to: grab mobs, scale ladders, and enter exosuits at their dash endpoint.
+*/
+/obj/item/rig_module/actuators
+	name = "hardsuit mobility module"
+	desc = {"\
+		A set of actuators and a linked "Vaanyari" speedware chip. They allow the suit to be able \
+		to absorb impacts from fatal falls, jump remarkable heights, and move at incredible speeds.\
+	"}
+	icon_state = "actuators"
+	interface_name = "hardsuit mobility module"
+	interface_desc = {"\
+		A set of actuators and a linked \"Vaanyari\" speedware chip that dampen falls and allow you \
+		to absorb impacts from fatal falls, jump remarkable heights, and move at incredible speeds.\
+	"}
+	use_power_cost = 250 KILOWATTS
+	module_cooldown = 0.5 SECONDS
+	toggleable = TRUE
+	selectable = TRUE
+	usable = FALSE
+	engage_string = "Engage Dash"
+	activate_string = "Engage Fall Dampeners"
+	deactivate_string = "Disable Fall Dampeners"
+
+	/// Leaping radius. Inclusive. Applies to diagonal distances.
+	var/leapDistance = 7
+
+	var/datum/effect/trail/afterimage/afterimages
+
+
+/obj/item/rig_module/actuators/Initialize()
+	. = ..()
+	afterimages = new /datum/effect/trail/afterimage
+	afterimages.set_up(src)
+
+
+/obj/item/rig_module/actuators/engage(atom/target)
+	if (!..())
+		return FALSE
+	if (!target)
+		return TRUE
+	var/mob/living/carbon/human/wearer = holder.wearer
+	if (!isturf(wearer.loc))
+		to_chat(wearer, SPAN_WARNING("You cannot dash out of your current location!"))
+		return FALSE
+	var/turf/turf = get_turf(target)
+	if (!turf)
+		to_chat(wearer, SPAN_WARNING("You cannot  dash into that location!"))
+		return FALSE
+	var/dist = max(get_dist(turf, get_turf(wearer)), 0)
+	if (turf.z != wearer.z || dist > leapDistance)
+		to_chat(wearer, SPAN_WARNING("You cannot dash at such a distant object!"))
+		return FALSE
+	if (!dist)
+		return FALSE
+	wearer.visible_message(
+		SPAN_WARNING("\The [wearer]'s suit blitzes at incredible speed towards \the [target]!"),
+		SPAN_WARNING("You feel your senses dilate as you rush toward \the [target]!"),
+		SPAN_WARNING("You hear an electric <i>whirr</i> followed by a weighty thump!")
+	)
+	wearer.face_atom(turf)
+	afterimages.start()
+	playsound(wearer, 'sound/effects/basscannon.ogg', 35, TRUE)
+	var/old_pass_flags = wearer.pass_flags
+	wearer.pass_flags |= PASS_FLAG_TABLE
+	wearer.status_flags |= GODMODE
+	wearer.jump_layer_shift()
+	var/on_complete = new Callback(src, /obj/item/rig_module/actuators/proc/end_dash, target, old_pass_flags)
+	wearer.throw_at(turf, leapDistance, 1, wearer, FALSE, on_complete)
+
+
+/obj/item/rig_module/actuators/proc/end_dash(atom/target, old_pass_flags)
+	var/mob/living/carbon/human/wearer = holder.wearer
+	wearer.pass_flags = old_pass_flags
+	wearer.status_flags &= ~GODMODE
+	wearer.jump_layer_shift_end()
+	afterimages.stop()
+	if (!wearer.Adjacent(target))
+		return
+	else if (istype(target, /mob/living/carbon/human))
+		if(istype(wearer.get_active_hand(),/obj/item/melee))
+			wearer.visible_message(
+			SPAN_WARNING("\The [wearer] moves before \the [target] can even react!"),
+			SPAN_WARNING("You instinctively attack \the [target] before they can even react!")
+			)
+			target.use_weapon(wearer.get_active_hand(),wearer)
+			return
+		if (!wearer.species.attempt_grab(wearer, target))
+			return
+		var/obj/item/grab/grab = wearer.IsHolding(/obj/item/grab)
+		if (!istype(grab))
+			return
+		if (istype(grab, /obj/item/grab/normal))
+			grab.upgrade()
+		wearer.visible_message(
+			SPAN_WARNING("\The [wearer] latches onto \the [target]!"),
+			SPAN_WARNING("You latch onto \the [target] at the end of your dash!")
+		)
+	else if (istype(target, /obj/structure/ladder))
+		var/obj/structure/ladder/ladder = target
+		wearer.visible_message(
+			SPAN_WARNING("\The [wearer] quickly climbs \the [target]!"),
+			SPAN_WARNING("You quickly climb \the [target]!")
+		)
+		ladder.instant_climb(wearer)
+	else if (istype(target, /mob/living/exosuit))
+		var/mob/living/exosuit/exo = target
+		if (!exo.check_enter(wearer))
+			return
+		exo.enter(wearer, TRUE, FALSE, TRUE)
+		wearer.visible_message(
+			SPAN_WARNING("\The [wearer] dives into \the [target]!"),
+			SPAN_WARNING("You dive into \the [target]'s driver seat!")
+		)
+
+/obj/item/rig_module/personal_shield
+	name = "hardsuit energy shield"
+	desc = "Truly a life-saver: this device protects its user from being hit by objects moving very, very fast. It draws power from a hardsuit's internal battery."
+	icon = 'icons/obj/tools/batterer.dmi'
+	icon_state = "battereroff"
+	var/shield_type = /obj/aura/personal_shield/device
+	var/shield_power_cost = 200
+	var/obj/aura/personal_shield/device/shield
+
+	VAR_PRIVATE/currently_stored_power = 1000
+	VAR_PRIVATE/max_stored_power = 1000
+	VAR_PRIVATE/restored_power_per_tick = 5
+	VAR_PRIVATE/enable_when_powered = FALSE
+
+	toggleable = TRUE
+
+	interface_name = "energy shield"
+	interface_desc = "A device that protects its user from being hit by fast moving projectiles. Its internal capacitor can hold 5 charges at a time and recharges slowly over time."
+	module_cooldown = 10 SECONDS
+	origin_tech = list(TECH_MATERIAL = 5, TECH_POWER = 6, TECH_MAGNET = 6, TECH_ESOTERIC = 6, TECH_ENGINEERING = 7)
+	activate_string = "Enable Shield"
+	deactivate_string = "Disable Shield"
+
+/obj/item/rig_module/personal_shield/Initialize()
+	. = ..()
+	if (holder.cell)
+		currently_stored_power = holder.cell.use(max_stored_power)
+
+/obj/item/rig_module/personal_shield/activate()
+	if (!..())
+		return FALSE
+
+	var/mob/living/carbon/human/H = holder.wearer
+
+	if (shield || !H)
+		return FALSE
+	if (currently_stored_power < shield_power_cost)
+		to_chat(H, SPAN_WARNING("\The [src]'s internal capacitor does not have enough charge."))
+		return FALSE
+	shield = new shield_type(H, src)
+	return TRUE
+
+/obj/item/rig_module/personal_shield/deactivate()
+	if (!..())
+		return FALSE
+
+	if (!shield)
+		return
+	QDEL_NULL(shield)
+	next_use = world.time + module_cooldown
+	return TRUE
+
+/obj/item/rig_module/personal_shield/Process(wait)
+	if (!holder.cell?.charge || currently_stored_power >= max_stored_power)
+		return PROCESS_KILL
+	var/amount_to_restore = min(restored_power_per_tick * wait, max_stored_power - currently_stored_power)
+	currently_stored_power += holder.cell.use(amount_to_restore)
+
+	if (enable_when_powered && currently_stored_power >= shield_power_cost)
+		activate(get_holder_of_type(src, /mob))
+
+/obj/item/rig_module/personal_shield/proc/take_charge()
+	if (!actual_take_charge())
+		deactivate()
+		return FALSE
+	return TRUE
+
+/obj/item/rig_module/personal_shield/proc/actual_take_charge()
+	if (!holder.cell)
+		return FALSE
+	if (currently_stored_power < shield_power_cost)
+		return FALSE
+
+	currently_stored_power -= shield_power_cost
+	START_PROCESSING(SSobj, src)
+
+	if (currently_stored_power < shield_power_cost)
+		enable_when_powered = TRUE
+		return FALSE
+	return TRUE
