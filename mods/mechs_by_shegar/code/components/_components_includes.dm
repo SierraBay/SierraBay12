@@ -37,6 +37,7 @@
 //Пассажирка
 #include "passenger_compartment\_passenger_core.dm"
 #include "passenger_compartment\add_passenger.dm"
+#include "passenger_compartment\offering.dm"
 #include "passenger_compartment\remove_passenger.dm"
 
 //Каркас

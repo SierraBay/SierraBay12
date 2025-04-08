@@ -34,6 +34,7 @@
 	user.RemoveClickHandler(/datum/click_handler/default/mech)
 	if (!QDELETED(user))
 		user.dropInto(loc)
+	stop_gps_ui(user)
 	if (user.client)
 		user.client.screen -= hud_elements
 		if(hardpoints_menu_status == TRUE)
