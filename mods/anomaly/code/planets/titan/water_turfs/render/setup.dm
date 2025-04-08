@@ -8,6 +8,9 @@
 	//animate(src,transform = matrix().Translate(0, 10), time = 1 SECOND, easing = SINE_EASING)
 	//animate(transform = matrix().Translate(0, -10), time = 1 SECOND, easing = SINE_EASING, loop = -1)
 
+/obj/structure/setup_water_filter(mask_icon_state)
+	var/icon/mask_icon = icon('mods/anomaly/icons/water_mask_small.dmi', mask_icon_state)
+	filters = filter(type="alpha", icon = mask_icon)
 
 /mob/living/setup_water_filter(mask_icon_state)
 	var/icon/mask_icon = icon('mods/anomaly/icons/water_mask_small.dmi', mask_icon_state)

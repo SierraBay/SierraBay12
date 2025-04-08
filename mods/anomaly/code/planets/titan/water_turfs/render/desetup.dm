@@ -7,6 +7,9 @@
 /atom/movable/proc/desetup_water_filter()
 	return
 
+/obj/structure/desetup_water_filter()
+	filters = null
+
 /obj/item/desetup_water_filter()
 	//animate(src, pixel_y = 0, time = 5, easing = SINE_EASING | EASE_IN)
 	filters = null

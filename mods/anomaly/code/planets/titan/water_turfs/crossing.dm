@@ -19,6 +19,8 @@
 		input_movable.setup_water_filter(mask_icon_state_item)
 		if(deep_status == MAX_DEEP)
 			drown_item(input_movable)
+	else if(istype(input_movable, /obj/structure))
+		input_movable.setup_water_filter(mask_icon_state_item)
 	else
 		if(input_movable.throwing)
 			start_spend_stamina()

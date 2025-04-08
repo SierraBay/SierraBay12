@@ -7,6 +7,7 @@
 	var/deep_status = NO_DEEP
 	var/mask_icon_state
 	var/mask_icon_state_item = "middle_deep_item"
+	var/mask_icon_state_structures = "min_deep_structure"
 	var/swim_stamina_spend
 	var/next_possible_process
 	var/effect_to_drowning = DEEQUIP
@@ -33,6 +34,7 @@
 	deep_status = MIDDLE_DEEP
 	mask_icon_state = "middle_deep"
 	icon_state = "middle_deep_water1"
+	mask_icon_state_structures = "middle_deep_structure"
 	possible_icons = list("middle_deep_water1", "middle_deep_water2", "middle_deep_water3", "middle_deep_water4")
 	footstep_type = /singleton/footsteps/mid_water
 	movement_delay = 6
@@ -48,6 +50,7 @@
 	deep_status = MAX_DEEP
 	mask_icon_state = "max_deep"
 	icon_state = "max_deep_water1"
+	mask_icon_state_structures = "max_deep_structure"
 	possible_icons = list("max_deep_water1", "max_deep_water2", "max_deep_water3", "max_deep_water4")
 	footstep_type = /singleton/footsteps/max_water
 	swim_stamina_spend = 3
