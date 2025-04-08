@@ -6,7 +6,8 @@
 	var/sound_type
 	///Мощность аномалии
 	var/effect_power = MOMENTUM_ANOMALY_EFFECT
-	//Путь до звука статики
-	var/static_sound_type 
-
+	//Путь до луп звука
+	var/static_sound_type
+	///Применяется для размещения ЛУП звука
+	var/static_sound_obj
 	var/preload_sound_type

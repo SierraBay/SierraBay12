@@ -12,8 +12,9 @@
 			part.delete_anomaly()
 	qdel(src)
 
-/obj/anomaly/part/delete_anomaly()
-	SSanom.remove_anomaly_from_helpers(src)
+/obj/anomaly/part/delete_anomaly(collaps = FALSE)
+	if(collaps)
+		SSanom.remove_anomaly_from_helpers(src)
 	qdel(src)
 
 

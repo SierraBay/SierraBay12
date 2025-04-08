@@ -9,6 +9,7 @@ PROCESSING_SUBSYSTEM_DEF(weather)
 	var/list/weather_turf_in_world = list()
 	var/list/weather_managers_in_world = list()
 	var/list/aurora_sctructures = list()
+	var/list/mobs_effected_by_weather = list()
 
 /datum/controller/subsystem/processing/weather/UpdateStat(time)
 	if (PreventUpdateStat(time))

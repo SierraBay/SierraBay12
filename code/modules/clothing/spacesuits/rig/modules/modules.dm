@@ -206,7 +206,7 @@
 	return 1
 
 //Proc for one-use abilities like teleport.
-/obj/item/rig_module/proc/engage()
+/obj/item/rig_module/proc/engage(atom/target)
 
 	if(!check(use_power_cost))
 		return 0

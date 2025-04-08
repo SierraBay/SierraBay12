@@ -1,15 +1,15 @@
 //УНИФОРМА
-/obj/item/clothing/under/new_uniform/get_icon_state(mob/user_mob, slot)
-	if(item_state_slots && item_state_slots[slot])
-		. = item_state_slots[slot]
-	else
-		. = icon_state
-	if(!findtext(.,"_s", -2)) // If we don't already have our suffix
-		. +=  get_gender_suffix()
-	else
-		. += "_s"
 
 /obj/item/clothing/under/new_uniform/
+	icon = 'maps/sierra/icons/obj/clothing/new_loadout_icons.dmi'
+	item_icons = list(slot_w_uniform_str = 'maps/sierra/icons/obj/clothing/new_loadout.dmi')
+	sprite_sheets = list(
+		SPECIES_TAJARA = 'maps/sierra/icons/obj/clothing/new_loadout_tajara.dmi',
+		SPECIES_UNATHI = 'maps/sierra/icons/obj/clothing/new_loadout_unati.dmi'
+		)
+
+
+/obj/item/clothing/suit/storage/toggle/new_suit
 	icon = 'maps/sierra/icons/obj/clothing/new_loadout_icons.dmi'
 	item_icons = list(slot_w_uniform_str = 'maps/sierra/icons/obj/clothing/new_loadout.dmi')
 	sprite_sheets = list(
@@ -35,8 +35,8 @@
 	name = "neotac pants"
 	desc = "Regular-fit trousers with gradient pattern and plenty of belts around the waist. For the sake of style, of course."
 	icon_state = "neotac"
-	item_state = "cargos"
-	worn_state = "cargos"
+	item_state = "neotac"
+	worn_state = "neotac"
 
 /obj/item/clothing/under/new_uniform/breeches
 	name = "denim breeches"
@@ -155,6 +155,185 @@
 	worn_state = "pcrcsuit"
 	gender_icons = TRUE
 
+
+/obj/item/clothing/under/new_uniform/woman_business_uniform //ниже r
+	name = "woman business suit"
+	desc = "Smart woman business suit."
+	icon_state = "woman_office"
+	item_state = "woman_office"
+	worn_state = "woman_office"
+
+/obj/item/clothing/under/new_uniform/woman_business_uniform/red
+	icon_state = "woman_office_red"
+	item_state = "woman_office_red"
+	worn_state = "woman_office_red"
+
+/obj/item/clothing/under/new_uniform/woman_business_uniform/azure
+	icon_state = "woman_office_azur"
+	item_state = "woman_office_azur"
+	worn_state = "woman_office_azur"
+
+/obj/item/clothing/under/new_uniform/woman_business_uniform/dress
+	icon_state = "woman_office_dress"
+	item_state = "woman_office_dress"
+	worn_state = "woman_office_dress"
+
+/obj/item/clothing/under/new_uniform/woman_business_uniform/plaid
+	icon_state = "woman_office_plaid"
+	item_state = "woman_office_plaid"
+	worn_state = "woman_office_plaid"
+
+/obj/item/clothing/under/new_uniform/woman_business_uniform/plaid/war2
+	icon_state = "woman_office_plaid_2"
+	item_state = "woman_office_plaid_2"
+	worn_state = "woman_office_plaid_2"
+
+/obj/item/clothing/under/new_uniform/woman_business_uniform/plaid/war3
+	icon_state = "woman_office_plaid_3"
+	item_state = "woman_office_plaid_3"
+	worn_state = "woman_office_plaid_3"
+
+/obj/item/clothing/under/new_uniform/woman_business_uniform/black
+	icon_state = "woman_office_black"
+	item_state = "woman_office_black"
+	worn_state = "woman_office_black"
+
+/obj/item/clothing/under/new_uniform/heartneck_dress
+	name = "black dress with heart neckline"
+	desc = "Black outfit with flirty neckline."
+	icon_state = "heartneck_dress"
+	item_state = "heartneck_dress"
+	worn_state = "heartneck_dress"
+
+/obj/item/clothing/under/new_uniform/camo_brown
+	name = "dark khaki camo jumpsuit"
+	desc = "Military style. Always in fashion"
+	icon_state = "camo_brown"
+	item_state = "camo_brown"
+	worn_state = "camo_brown"
+
+/obj/item/clothing/under/new_uniform/plaid_colored_dress
+	name = "plaid skirt dress"
+	desc = "Simple base dress."
+	icon_state = "plaid_color_dress"
+	item_state = "plaid_color_dress"
+	worn_state = "plaid_color_dress"
+
+/obj/item/clothing/under/new_uniform/plaid_colored_dress/war2
+	name = "skirt dress"
+	icon_state = "plaid_color_dress_2"
+	item_state = "plaid_color_dress_2"
+	worn_state = "plaid_color_dress_2"
+
+/obj/item/clothing/under/new_uniform/plaid_colored_dress/war3
+	name = "straight dress"
+	icon_state = "plaid_color_dress_3"
+	item_state = "plaid_color_dress_3"
+	worn_state = "plaid_color_dress_3"
+
+/obj/item/clothing/under/new_uniform/office_skirt
+	name = "mini skirt"
+	desc = "Clasic mini-skirt. Don't lean too far forward."
+	icon_state = "skirt_mini"
+	item_state = "skirt_mini"
+	worn_state = "skirt_mini"
+
+/obj/item/clothing/under/new_uniform/office_skirt/slit
+	name = "skirt with a slit"
+	desc = "Fitted, knee-length skirt. Straight-cut hem with a slit at front."
+	icon_state = "skirt_slit"
+	item_state = "skirt_slit"
+	worn_state = "skirt_slit"
+
+/obj/item/clothing/under/new_uniform/office_skirt/wavy
+	name = "comfortable skirt"
+	desc = "Mini circle skirt."
+	icon_state = "skirt_wavy"
+	item_state = "skirt_wavy"
+	worn_state = "skirt_wavy"
+
+/obj/item/clothing/under/new_uniform/camopants
+	name = "multicam pants"
+	desc = "Loose-fit pants in woven fabric. Comfortable and strong."
+	icon_state = "multicam_pants"
+	item_state = "multicam_pants"
+	worn_state = "multicam_pants"
+
+/obj/item/clothing/under/new_uniform/camopants/baggy
+	name = "multicam pants"
+	icon_state = "multicam_pants_baggy"
+	item_state = "multicam_pants_baggy"
+	worn_state = "multicam_pants_baggy"
+
+/obj/item/clothing/under/new_uniform/camopants/grey
+	name = "multicam pants"
+	icon_state = "multicam_pants_grey"
+	item_state = "multicam_pants_grey"
+	worn_state = "multicam_pants_grey"
+
+/obj/item/clothing/under/new_uniform/camopants/greybaggy
+	name = "multicam pants"
+	icon_state = "multicam_pants_grey_baggy"
+	item_state = "multicam_pants_grey_baggy"
+	worn_state = "multicam_pants_grey_baggy"
+
+/obj/item/clothing/under/new_uniform/shortsmini
+	name = "mini shorts"
+	desc = "Fitted mini hot shorts. No ERP."
+	icon_state = "shortsmini"
+	item_state = "shortsmini"
+	worn_state = "shortsmini"
+
+/obj/item/clothing/under/new_uniform/shortsmini/denim
+	name = "mini denim shorts"
+	icon_state = "shortsmini_denim"
+	item_state = "shortsmini_denim"
+	worn_state = "shortsmini_denim"
+
+/obj/item/clothing/under/new_uniform/shortsmini/camo
+	name = "mini camo shorts"
+	icon_state = "shortsmini_camo"
+	item_state = "shortsmini_camo"
+	worn_state = "shortsmini_camo"
+
+/obj/item/clothing/under/new_uniform/scutracksuit
+	name = "scuba track suit"
+	desc = "Tracksuit with a jacket and joggers in soft scuba fabric."
+	icon_state = "tracksuit"
+	item_state = "tracksuit"
+	worn_state = "tracksuit"
+
+/obj/item/clothing/under/new_uniform/scutracksuit/red
+	name = "scuba track suit"
+	icon_state = "tracksuit_red"
+	item_state = "tracksuit_red"
+	worn_state = "tracksuit_red"
+
+/obj/item/clothing/under/new_uniform/scutracksuit/black
+	name = "scuba track suit"
+	icon_state = "tracksuit_black"
+	item_state = "tracksuit_black"
+	worn_state = "tracksuit_black"
+
+/obj/item/clothing/under/new_uniform/runningpants
+	name = "running pants"
+	icon_state = "runningpants"
+	item_state = "runningpants"
+	worn_state = "runningpants"
+
+/obj/item/clothing/under/new_uniform/runningpants/red
+	name = "running pants red"
+	icon_state = "runningpants_red"
+	item_state = "runningpants_red"
+	worn_state = "runningpants_red"
+
+/obj/item/clothing/under/new_uniform/runningpants/black
+	name = "running pants black"
+	icon_state = "runningpants_black"
+	item_state = "runningpants_black"
+	worn_state = "runningpants_black"
+
+
 //Куртки и прочий мусор в слоте EXOSUIT
 /obj/item/clothing/suit/new_suits
 	icon = 'maps/sierra/icons/obj/clothing/new_loadout_icons.dmi'
@@ -183,6 +362,11 @@
 
 /obj/item/clothing/suit/new_suits/freefit_shirt/third
 	icon_state = "freefit_shirt_3"
+
+/obj/item/clothing/suit/surgicalapron
+	icon = 'maps/sierra/icons/obj/clothing/new_loadout.dmi'
+	icon_state = "surgical_down"
+	item_icons = list(slot_wear_suit_str = 'maps/sierra/icons/obj/clothing/new_loadout.dmi')
 
 /obj/item/clothing/suit/new_suits/crop_sweater
 	name = "crop sweater"
@@ -305,6 +489,184 @@
 /obj/item/clothing/suit/color/storage/neo_jacket/female
 	icon_state = "neokitsch_jacket_f"
 
+
+/obj/item/clothing/suit/storage/toggle/new_suit/eng_bomber //отсюда искать remission
+	name = "engineer jacket"
+	desc = "This jacket protection without compromising mobility, making it ideal for engineers."
+	icon = 'maps/sierra/icons/obj/clothing/new_loadout_icons.dmi'
+	icon_state = "eng_bomber"
+	item_icons = list(slot_wear_suit_str = 'maps/sierra/icons/obj/clothing/new_loadout.dmi')
+
+/obj/item/clothing/suit/storage/toggle/new_suit/eng_bomber/atmos
+	name = "atmos jacket"
+	icon_state = "eng_bomber_atm"
+
+/obj/item/clothing/suit/storage/toggle/new_suit/eng_bomber/work
+	name = "With grey jacket"
+	icon_state = "eng_bomber_work"
+
+/obj/item/clothing/suit/storage/toggle/new_suit/eng_bomber/white
+	name = "White jacket"
+	icon_state = "eng_bomber_white"
+
+
+/obj/item/clothing/suit/storage/toggle/new_suit/leather_fur_jacket
+	name = "leather fur jacket"
+	desc = "Aviator suit in leather fabric with notch lapels in fur."
+	icon = 'maps/sierra/icons/obj/clothing/new_loadout_icons.dmi'
+	icon_state = "leather_fur_jacket"
+	item_icons = list(slot_wear_suit_str = 'maps/sierra/icons/obj/clothing/new_loadout.dmi')
+
+/obj/item/clothing/suit/storage/toggle/new_suit/leather_fur_jacket/grey
+	name = "grey leather fur jacket"
+	icon_state = "leather_fur_jacket_grey"
+
+/obj/item/clothing/suit/storage/toggle/new_suit/leather_fur_jacket/coat
+	name = "grey leather fur jacket"
+	icon_state = "leather_fur_coat"
+
+/obj/item/clothing/suit/storage/toggle/new_suit/leather_fur_jacket/greycoat
+	name = "grey leather fur jacket"
+	icon_state = "leather_fur_coat_grey"
+
+/obj/item/clothing/suit/storage/toggle/new_suit/work_bomber
+	name = "work orange jacket"
+	desc = "High-visibility padded jacket."
+	icon = 'maps/sierra/icons/obj/clothing/new_loadout_icons.dmi'
+	icon_state = "work_bomber"
+	item_icons = list(slot_wear_suit_str = 'maps/sierra/icons/obj/clothing/new_loadout.dmi')
+
+/obj/item/clothing/suit/storage/toggle/new_suit/work_bomber/yellow
+	name = "work yellow jacket"
+	icon_state = "work_bomber_yel"
+
+
+/obj/item/clothing/suit/storage/toggle/new_suit/sport_jacket
+	name = "sport white-blue jacket"
+	desc = "Two-color track jacket."
+	icon = 'maps/sierra/icons/obj/clothing/new_loadout_icons.dmi'
+	icon_state = "sport_jacket_bluewhite"
+	item_icons = list(slot_wear_suit_str = 'maps/sierra/icons/obj/clothing/new_loadout.dmi')
+
+/obj/item/clothing/suit/storage/toggle/new_suit/sport_jacket/blackwhite
+	name = "sport white-black jacket"
+	icon_state = "sport_jacket_blackwhite"
+
+/obj/item/clothing/suit/storage/toggle/new_suit/biker_jacket
+	name = "leather biker jacket"
+	desc = "Regular-fit biker jacket in soft leather with a distressed look."
+	icon = 'maps/sierra/icons/obj/clothing/new_loadout_icons.dmi'
+	icon_state = "leather_biker_jacket"
+	item_icons = list(slot_wear_suit_str = 'maps/sierra/icons/obj/clothing/new_loadout.dmi')
+
+/obj/item/clothing/suit/storage/toggle/new_suit/biker_jacket/dis
+	name = "leather distressed biker jacket"
+	icon_state = "leather_biker_jacket_dis"
+
+/obj/item/clothing/suit/storage/toggle/new_suit/biker_jacket/skull
+	name = "skull leather jacket"
+	icon_state = "leather_biker_jacket_skull"
+
+/obj/item/clothing/suit/storage/toggle/new_suit/biker_jacket/heart
+	name = "heart leather jacket"
+	icon_state = "leather_biker_jacket_heart"
+
+/obj/item/clothing/suit/storage/toggle/new_suit/biker_jacket/dragon
+	name = "dragon head leather jacket"
+	icon_state = "leather_biker_jacket_dragon"
+
+/obj/item/clothing/suit/storage/toggle/new_suit/biker_jacket/devil
+	name = "devil head leather jacket"
+	icon_state = "leather_biker_jacket_devil"
+
+/obj/item/clothing/suit/storage/toggle/new_suit/biker_jacket/fire
+	name = "fire flame leather biker jacket"
+	icon_state = "leather_biker_jacket_fire"
+
+/obj/item/clothing/suit/storage/toggle/new_suit/biker_jacket/posh
+	name = "pretentious leather jacket"
+	icon_state = "leather_biker_jacket_diamond"
+
+/obj/item/clothing/suit/storage/levis_bomber
+	name = "denim bomber jacket"
+	desc = "Classic denim jacket."
+	icon = 'maps/sierra/icons/obj/clothing/new_loadout_icons.dmi'
+	icon_state = "levis_bomber"
+	item_icons = list(slot_wear_suit_str = 'maps/sierra/icons/obj/clothing/new_loadout.dmi')
+
+/obj/item/clothing/suit/storage/toggle/new_suit/multicam_jacket
+	name = "multicam jacket"
+	desc = "Why not?."
+	icon = 'maps/sierra/icons/obj/clothing/new_loadout_icons.dmi'
+	icon_state = "multicam_jacket"
+	item_icons = list(slot_wear_suit_str = 'maps/sierra/icons/obj/clothing/new_loadout.dmi')
+
+/obj/item/clothing/suit/storage/toggle/new_suit/multicam_jacket/sand
+	name = "multicam sand jacket"
+	icon_state = "multicam_jacket_sand"
+
+/obj/item/clothing/suit/storage/toggle/new_suit/multicam_jacket/grey
+	name = "multicam sand jacket"
+	icon_state = "multicam_jacket_grey"
+
+/obj/item/clothing/suit/storage/toggle/new_suit/tracksuits
+	name = "comfortable tracksuit"
+	desc = "The latest statement sport fashion."
+	icon = 'maps/sierra/icons/obj/clothing/new_loadout_icons.dmi'
+	icon_state = "tracks"
+	item_icons = list(slot_wear_suit_str = 'maps/sierra/icons/obj/clothing/new_loadout.dmi')
+
+/obj/item/clothing/suit/storage/toggle/new_suit/tracksuits/blue
+	name = "comfortable blue tracksuit"
+	icon_state = "tracks_blue"
+
+/obj/item/clothing/suit/storage/toggle/new_suit/tracksuits/red
+	name = "comfortable red tracksuit"
+	icon_state = "tracks_red"
+
+/obj/item/clothing/suit/storage/toggle/new_suit/tracksuits/green
+	name = "comfortable green tracksuit"
+	icon_state = "tracks_green"
+
+/obj/item/clothing/suit/storage/toggle/new_suit/sporthoodie
+	name = "loose-fit hoodie jacket"
+	desc = "Loose-fit hooded sweatshirt jacket."
+	icon = 'maps/sierra/icons/obj/clothing/new_loadout_icons.dmi'
+	icon_state = "sporthoodie"
+	item_icons = list(slot_wear_suit_str = 'maps/sierra/icons/obj/clothing/new_loadout.dmi')
+
+/obj/item/clothing/suit/storage/toggle/new_suit/sporthoodie/red
+	name = "loose-fit red hoodie jacket"
+	icon_state = "sporthoodie_r"
+
+/obj/item/clothing/suit/storage/toggle/new_suit/sporthoodie/blue
+	name = "loose-fit blue hoodie jacket"
+	icon_state = "sporthoodie_blue"
+
+/obj/item/clothing/suit/storage/toggle/new_suit/sporthoodie/rw
+	name = "loose-fit two-tone hoodie jacket"
+	icon_state = "sporthoodie_rw"
+
+/obj/item/clothing/suit/storage/toggle/new_suit/sporthoodie/black
+	name = "loose-fit black hoodie"
+	icon_state = "sporthoodie_black"
+
+/obj/item/clothing/suit/storage/toggle/new_suit/colorhoodie
+	name = "hooded jacket"
+	desc = "Loose fit drawstring hood jacket."
+	icon = 'maps/sierra/icons/obj/clothing/new_loadout_icons.dmi'
+	icon_state = "colorhoodie"
+	item_icons = list(slot_wear_suit_str = 'maps/sierra/icons/obj/clothing/new_loadout.dmi')
+
+/obj/item/clothing/suit/storage/toggle/new_suit/trench
+	name = "beige trench coat"
+	desc = "Calf-length, oversized belted trench coat. Don't forget to wear something under coat. "
+	icon = 'maps/sierra/icons/obj/clothing/new_loadout_icons.dmi'
+	icon_state = "beigetrench"
+	item_icons = list(slot_wear_suit_str = 'maps/sierra/icons/obj/clothing/new_loadout.dmi')
+
+
+
 //Обувь
 /obj/item/clothing/shoes/trekking_boots
 	name = "Trekking boots"
@@ -318,6 +680,36 @@
 	icon_state = "trekking_boots"
 	species_restricted = list("exclude", SPECIES_NABBER, SPECIES_VOX)
 
+/obj/item/clothing/shoes/martens_shoes
+	name = "martens shoes."
+	desc = "A pair of branded rubber-soled shoes."
+	icon = 'maps/sierra/icons/obj/clothing/new_loadout_icons.dmi'
+	item_icons = list(slot_shoes_str = 'maps/sierra/icons/obj/clothing/new_loadout.dmi')
+	sprite_sheets = list(
+		SPECIES_TAJARA = 'maps/sierra/icons/obj/clothing/new_loadout_tajara.dmi',
+		SPECIES_UNATHI = 'maps/sierra/icons/obj/clothing/new_loadout_unati.dmi'
+		)
+	icon_state = "martens"
+	species_restricted = list("exclude", SPECIES_NABBER, SPECIES_VOX)
+
+/obj/item/clothing/shoes/martens_shoes/short
+	name = "martens short shoes."
+	icon_state = "martens_short"
+
+/obj/item/clothing/shoes/lowsneackers
+	name = "Comfort sneakers."
+	desc = "Low profile sneakers with a lightly padded upper edge and tongue."
+	icon = 'maps/sierra/icons/obj/clothing/new_loadout_icons.dmi'
+	item_icons = list(slot_shoes_str = 'maps/sierra/icons/obj/clothing/new_loadout.dmi')
+	sprite_sheets = list(
+		SPECIES_TAJARA = 'maps/sierra/icons/obj/clothing/new_loadout_tajara.dmi',
+		SPECIES_UNATHI = 'maps/sierra/icons/obj/clothing/new_loadout_unati.dmi'
+		)
+	icon_state = "lowsneackers"
+	species_restricted = list("exclude", SPECIES_NABBER, SPECIES_VOX)
+
+
+
 //Шляпки
 /obj/item/clothing/head/drill_sergeant
 	name = "drill sergeant's hat"
@@ -327,13 +719,57 @@
 	icon_state = "sergeants"
 	item_state = "sergeants"
 
+/obj/item/clothing/head/engberet
+	name = "engineers beret"
+	desc = "Attribute of a problem solver."
+	icon = 'maps/sierra/icons/obj/clothing/new_loadout_icons.dmi'
+	item_icons = list(slot_head_str = 'maps/sierra/icons/obj/clothing/new_loadout.dmi')
+	icon_state = "engberet"
+	item_state = "engberet"
+
+/obj/item/clothing/head/engberet/bluecocard
+	name = "engineers beret"
+	icon = 'maps/sierra/icons/obj/clothing/new_loadout_icons.dmi'
+	item_icons = list(slot_head_str = 'maps/sierra/icons/obj/clothing/new_loadout.dmi')
+	icon_state = "engberet_b"
+	item_state = "engberet_b"
+
+/obj/item/clothing/head/engberet/atmos
+	name = "engineers beret"
+	icon = 'maps/sierra/icons/obj/clothing/new_loadout_icons.dmi'
+	item_icons = list(slot_head_str = 'maps/sierra/icons/obj/clothing/new_loadout.dmi')
+	icon_state = "engberet_atmos"
+	item_state = "engberet_atmos"
+
+/obj/item/clothing/head/headband
+	name = "headband"
+	icon = 'maps/sierra/icons/obj/clothing/new_loadout_icons.dmi'
+	item_icons = list(slot_head_str = 'maps/sierra/icons/obj/clothing/new_loadout.dmi')
+	icon_state = "headband"
+	item_state = "headband"
+
 //Нижнее бельё
 /datum/category_item/underwear/undershirt/yukata
 	name = "Yukata shirt"
-	icon = 'maps/sierra/icons/obj/clothing/new_loadout_icons.dmi'
-	icon_state = "yukata"
-
-/obj/item/clothing/suit/surgicalapron
 	icon = 'maps/sierra/icons/obj/clothing/new_loadout.dmi'
-	icon_state = "surgical_down"
-	item_icons = list(slot_wear_suit_str = 'maps/sierra/icons/obj/clothing/new_loadout.dmi')
+	icon_state = "yukata"
+	has_color = TRUE
+
+/datum/category_item/underwear/undershirt/badlon
+	name = "Slim turtleneck shirt"
+	icon = 'maps/sierra/icons/obj/clothing/new_loadout.dmi'
+	icon_state = "u_turtleneck"
+	has_color = TRUE
+
+
+/datum/category_item/underwear/undershirt/badlonfemme
+	name = "Slim turtleneck shirt female"
+	icon = 'maps/sierra/icons/obj/clothing/new_loadout.dmi'
+	icon_state = "u_turtleneck_f"
+	has_color = TRUE
+
+/datum/category_item/underwear/undershirt/womanvneck
+	name = "Woman V-neck"
+	icon = 'maps/sierra/icons/obj/clothing/new_loadout.dmi'
+	icon_state = "womanvneck"
+	has_color = TRUE

@@ -54,3 +54,6 @@
 #include "on_floor_icon\_on_floor_icons_includes.dm"
 #include "sierra_resprite/_sierra_resprite_includes.dm"
 #include "sound_effects/_sound_effects_includes.dm"
+#include "screen_big_text\_screen_text_includes.dm"
+#include "cut_scenes\_cut_scenes_includes.dm"
+#include "TG_signals\_tg_signals_includes.dm"

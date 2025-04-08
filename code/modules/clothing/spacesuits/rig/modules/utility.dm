@@ -314,7 +314,7 @@
 	holder.speech = null
 	holder.verbs -= /obj/item/rig/proc/alter_voice
 
-/obj/item/rig_module/voice/engage()
+/obj/item/rig_module/voice/engage(atom/target)
 
 	if(!..())
 		return 0
@@ -364,14 +364,15 @@
 	origin_tech = list(TECH_MATERIAL = 6,  TECH_ENGINEERING = 7)
 	var/obj/item/tank/jetpack/rig/jets
 
-/obj/item/rig_module/maneuvering_jets/engage()
+/obj/item/rig_module/maneuvering_jets/engage(atom/target)
 	if(!..())
 		return 0
 	jets.toggle_rockets()
 	return 1
 
 /obj/item/rig_module/maneuvering_jets/activate()
-
+	if(!..())
+		return FALSE
 	if(active)
 		return 0
 

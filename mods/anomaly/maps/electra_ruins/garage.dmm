@@ -24,8 +24,9 @@
 "bI" = (
 /obj/structure/aurora/old_comp,
 /obj/floor_decal/snow,
+/obj/landmark/no_weather_here,
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/garage/first_home)
+/area/template_noop)
 "bX" = (
 /obj/structure/ice_rock,
 /obj/structure/railing/mapped{
@@ -36,8 +37,9 @@
 "cb" = (
 /obj/floor_decal/snow,
 /obj/structure/table/rack/dark,
+/obj/landmark/no_weather_here,
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/garage/first_home)
+/area/template_noop)
 "cc" = (
 /turf/simulated/wall/titanium,
 /area/map_template/garage)
@@ -125,8 +127,9 @@
 /obj/structure/aurora/wall_light{
 	dir = 8
 	},
+/obj/landmark/no_weather_here,
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/garage/second_home)
+/area/template_noop)
 "iu" = (
 /obj/floor_decal/industrial/warning/dust,
 /obj/floor_decal/snow,
@@ -142,8 +145,9 @@
 /obj/structure/aurora/wall_light{
 	dir = 4
 	},
+/obj/landmark/no_weather_here,
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/garage/second_home)
+/area/template_noop)
 "lJ" = (
 /obj/floor_decal/snow,
 /obj/floor_decal/snow,
@@ -159,8 +163,9 @@
 /obj/floor_decal/snow,
 /obj/decal/cleanable/ash,
 /obj/structure/aurora/wall_light,
+/obj/landmark/no_weather_here,
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/garage/first_home)
+/area/template_noop)
 "lS" = (
 /turf/simulated/floor/exoplanet/concrete,
 /area/template_noop)
@@ -184,11 +189,6 @@
 /obj/floor_decal/snow,
 /turf/simulated/floor/exoplanet/concrete,
 /area/map_template/garage)
-"os" = (
-/obj/structure/pit/closed,
-/obj/landmark/corpse/miningstation/deadmineroveralls,
-/turf/simulated/floor/exoplanet/snow,
-/area/template_noop)
 "oS" = (
 /turf/simulated/mineral/ice,
 /area/template_noop)
@@ -199,6 +199,12 @@
 /area/map_template/garage)
 "qc" = (
 /obj/structure/ice_rock,
+/turf/simulated/floor/exoplanet/ice,
+/area/template_noop)
+"qr" = (
+/obj/structure/aurora/cable{
+	dir = 4
+	},
 /turf/simulated/floor/exoplanet/ice,
 /area/template_noop)
 "qL" = (
@@ -213,19 +219,14 @@
 /obj/structure/broken_cryo{
 	dir = 4
 	},
+/obj/landmark/no_weather_here,
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/garage/first_home)
+/area/template_noop)
 "rg" = (
 /obj/floor_decal/industrial/loading,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/exoplanet/concrete/reinforced,
 /area/map_template/garage)
-"rp" = (
-/obj/structure/closet/secure_closet/miner,
-/obj/floor_decal/industrial/outline/red,
-/obj/floor_decal/snow,
-/turf/simulated/floor/holofloor/tiled,
-/area/map_template/garage/second_home)
 "tM" = (
 /obj/random/junk,
 /obj/floor_decal/industrial/warning/dust{
@@ -246,6 +247,7 @@
 /area/template_noop)
 "uE" = (
 /obj/structure/aurora/old_comp,
+/obj/landmark/no_weather_here,
 /turf/simulated/floor/exoplanet/snow,
 /area/template_noop)
 "uM" = (
@@ -267,8 +269,9 @@
 "vg" = (
 /obj/floor_decal/snow,
 /obj/structure/aurora/old_comp,
+/obj/landmark/no_weather_here,
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/garage/first_home)
+/area/template_noop)
 "vR" = (
 /obj/structure/aurora/cable{
 	dir = 1
@@ -284,7 +287,7 @@
 	},
 /obj/floor_decal/snow,
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/garage/first_home)
+/area/template_noop)
 "wn" = (
 /obj/random/junk,
 /obj/decal/cleanable/dirt,
@@ -298,8 +301,9 @@
 "wv" = (
 /obj/floor_decal/snow,
 /obj/structure/aurora/smes,
+/obj/landmark/no_weather_here,
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/garage/second_home)
+/area/template_noop)
 "wQ" = (
 /turf/template_noop,
 /area/template_noop)
@@ -308,10 +312,10 @@
 /obj/floor_decal/corner/yellow/mono,
 /turf/simulated/floor/exoplanet/concrete,
 /area/template_noop)
-"xz" = (
-/obj/structure/pit,
-/obj/landmark/corpse/miningstation/deadminerf,
-/turf/simulated/floor/exoplanet/snow,
+"xE" = (
+/obj/structure/aurora/vault_door,
+/obj/landmark/no_weather_here,
+/turf/simulated/floor/holofloor/tiled,
 /area/template_noop)
 "xG" = (
 /obj/decal/cleanable/dirt,
@@ -319,7 +323,7 @@
 /area/map_template/garage)
 "xJ" = (
 /turf/simulated/wall/titanium,
-/area/map_template/garage/second_home)
+/area/template_noop)
 "ys" = (
 /obj/floor_decal/industrial/warning{
 	dir = 9
@@ -339,8 +343,8 @@
 /area/map_template/garage)
 "zc" = (
 /obj/floor_decal/snow,
-/turf/simulated/floor/holofloor/tiled,
-/area/map_template/garage/second_home)
+/turf/simulated/floor/exoplanet/snow,
+/area/template_noop)
 "zk" = (
 /obj/item/material/shard/shrapnel/aluminium,
 /turf/simulated/floor/exoplanet/ice,
@@ -386,14 +390,10 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/exoplanet/concrete,
 /area/template_noop)
-"CI" = (
-/obj/floor_decal/snow,
-/obj/structure/aurora/old_comp,
-/turf/simulated/floor/holofloor/tiled,
-/area/map_template/garage/second_home)
-"Ek" = (
-/turf/simulated/wall/titanium,
-/area/map_template/garage/first_home)
+"Ct" = (
+/obj/landmark/no_weather_here,
+/turf/simulated/wall/titanium/bunker_map,
+/area/template_noop)
 "Eo" = (
 /obj/structure/ice_rock,
 /obj/structure/grille/broken,
@@ -404,8 +404,7 @@
 /turf/simulated/floor/exoplanet/concrete/reinforced,
 /area/map_template/garage)
 "EQ" = (
-/obj/structure/table/rack/dark,
-/obj/item/pickaxe/drill,
+/obj/landmark/no_weather_here,
 /turf/simulated/floor/exoplanet/snow,
 /area/template_noop)
 "Fi" = (
@@ -435,7 +434,7 @@
 /obj/floor_decal/industrial/warning/fulltile,
 /obj/floor_decal/snow,
 /turf/unsimulated/floor/tile,
-/area/map_template/garage/second_home)
+/area/template_noop)
 "GF" = (
 /obj/structure/table/rack/dark,
 /obj/structure/aurora/wall_light{
@@ -443,6 +442,11 @@
 	},
 /turf/simulated/floor/exoplanet/concrete,
 /area/map_template/garage)
+"GW" = (
+/obj/decal/cleanable/dirt,
+/obj/landmark/no_weather_here,
+/turf/simulated/floor/holofloor/tiled,
+/area/template_noop)
 "Hd" = (
 /obj/structure/aurora/cable_angle,
 /turf/simulated/floor/exoplanet/ice,
@@ -478,7 +482,7 @@
 /obj/floor_decal/snow,
 /obj/item/remains/human,
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/garage/first_home)
+/area/template_noop)
 "Jo" = (
 /obj/floor_decal/snow,
 /obj/random/junk,
@@ -492,8 +496,13 @@
 /area/map_template/garage)
 "KT" = (
 /obj/floor_decal/snow,
+/obj/landmark/no_weather_here,
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/garage/first_home)
+/area/template_noop)
+"Lb" = (
+/obj/anomaly/electra/three_and_three/tesla_second,
+/turf/simulated/floor/exoplanet/ice,
+/area/template_noop)
 "Ls" = (
 /obj/floor_decal/snow,
 /turf/simulated/floor/exoplanet/concrete,
@@ -553,11 +562,6 @@
 /obj/structure/reagent_dispensers/fueltank,
 /turf/simulated/floor/exoplanet/concrete,
 /area/map_template/garage)
-"OQ" = (
-/obj/floor_decal/snow,
-/obj/decal/cleanable/ash,
-/turf/simulated/floor/holofloor/tiled,
-/area/map_template/garage/first_home)
 "OR" = (
 /obj/floor_decal/industrial/outline/orange,
 /obj/structure/railing{
@@ -580,22 +584,15 @@
 	},
 /obj/floor_decal/snow,
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/garage/first_home)
+/area/template_noop)
 "Pl" = (
 /obj/decal/cleanable/ash,
 /turf/simulated/floor/exoplanet/concrete,
-/area/template_noop)
-"PP" = (
-/obj/machinery/mining/brace,
-/turf/simulated/floor/exoplanet/snow,
 /area/template_noop)
 "Qa" = (
 /obj/structure/aurora/wall_light{
 	dir = 8
 	},
-/obj/item/material/drill_head/steel,
-/obj/item/material/drill_head/steel,
-/obj/structure/table/rack/dark,
 /turf/simulated/floor/exoplanet/snow,
 /area/template_noop)
 "QQ" = (
@@ -611,6 +608,7 @@
 /area/map_template/garage)
 "QU" = (
 /obj/machinery/power/port_gen/pacman/mrs,
+/obj/landmark/no_weather_here,
 /turf/simulated/floor/exoplanet/snow,
 /area/template_noop)
 "Rg" = (
@@ -618,11 +616,6 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/exoplanet/concrete,
 /area/map_template/garage)
-"Ry" = (
-/obj/structure/pit,
-/obj/landmark/corpse/miningstation/deadminersuit,
-/turf/simulated/floor/exoplanet/snow,
-/area/template_noop)
 "SN" = (
 /obj/random/junk,
 /obj/structure/aurora/wall_light{
@@ -637,12 +630,6 @@
 	},
 /turf/simulated/floor/exoplanet/snow,
 /area/template_noop)
-"Td" = (
-/obj/structure/sign/science_2{
-	pixel_y = 32
-	},
-/turf/template_noop,
-/area/template_noop)
 "TO" = (
 /obj/structure/ice_rock,
 /obj/structure/railing/mapped{
@@ -653,8 +640,9 @@
 "TX" = (
 /obj/floor_decal/snow,
 /obj/decal/cleanable/ash,
+/obj/landmark/no_weather_here,
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/garage/second_home)
+/area/template_noop)
 "UL" = (
 /obj/structure/closet/toolcloset,
 /obj/floor_decal/industrial/outline/orange,
@@ -668,11 +656,11 @@
 /turf/simulated/floor/exoplanet/snow,
 /area/template_noop)
 "VA" = (
-/obj/machinery/mining/drill,
 /obj/floor_decal/industrial/outline/yellow,
 /obj/floor_decal/snow,
+/obj/landmark/no_weather_here,
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/garage/second_home)
+/area/template_noop)
 "Wm" = (
 /obj/structure/aurora/wall_light{
 	dir = 4
@@ -681,8 +669,9 @@
 /obj/machinery/constructable_frame,
 /obj/floor_decal/industrial/outline/yellow,
 /obj/floor_decal/snow,
+/obj/landmark/no_weather_here,
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/garage/second_home)
+/area/template_noop)
 "WC" = (
 /obj/structure/grille/broken,
 /obj/structure/ice_rock,
@@ -699,6 +688,7 @@
 /area/template_noop)
 "XN" = (
 /obj/structure/table/rack/dark,
+/obj/landmark/no_weather_here,
 /turf/simulated/floor/exoplanet/snow,
 /area/template_noop)
 "Yr" = (
@@ -720,6 +710,9 @@
 /area/template_noop)
 
 (1,1,1) = {"
+wQ
+wQ
+wQ
 wQ
 wQ
 wQ
@@ -751,6 +744,9 @@ wQ
 wQ
 wQ
 wQ
+wQ
+wQ
+wQ
 cc
 Fi
 ar
@@ -768,6 +764,9 @@ wQ
 wQ
 "}
 (3,1,1) = {"
+wQ
+wQ
+wQ
 wQ
 wQ
 wQ
@@ -793,8 +792,11 @@ wQ
 "}
 (4,1,1) = {"
 wQ
-wQ
-wQ
+Ct
+Ct
+Ct
+Ct
+Ct
 wQ
 wQ
 wQ
@@ -817,12 +819,15 @@ wQ
 "}
 (5,1,1) = {"
 wQ
+Ct
+GW
+GW
+GW
+Ct
 wQ
-wQ
-wQ
-wQ
-wQ
-wQ
+fr
+fr
+fr
 cc
 pl
 iu
@@ -841,12 +846,15 @@ wQ
 "}
 (6,1,1) = {"
 wQ
+Ct
+GW
+GW
+GW
+Ct
 wQ
-wQ
-wQ
-wQ
-wQ
-wQ
+fr
+Lb
+fr
 cc
 aF
 iu
@@ -865,12 +873,15 @@ wQ
 "}
 (7,1,1) = {"
 wQ
+Ct
+GW
+GW
+GW
+Ct
 wQ
-wQ
-wQ
-wQ
-wQ
-wQ
+fr
+fr
+fr
 cc
 Hk
 ZL
@@ -889,12 +900,15 @@ wQ
 "}
 (8,1,1) = {"
 wQ
+Ct
+GW
+GW
+GW
+Ct
 wQ
-wQ
-wQ
-wQ
-wQ
-wQ
+fr
+fr
+fr
 cc
 ZL
 ZL
@@ -913,12 +927,15 @@ wQ
 "}
 (9,1,1) = {"
 wQ
+Ct
+GW
+GW
+GW
+Ct
 wQ
-wQ
-wQ
-wQ
-wQ
-wQ
+fr
+fr
+fr
 oS
 oS
 oS
@@ -937,11 +954,14 @@ wQ
 "}
 (10,1,1) = {"
 wQ
+Ct
+Ct
+xE
+Ct
+Ct
 wQ
 wQ
-wQ
-wQ
-wQ
+fr
 oS
 oS
 oS
@@ -961,11 +981,14 @@ wQ
 "}
 (11,1,1) = {"
 wQ
-wQ
-wQ
-wQ
-wQ
-wQ
+qr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
 oS
 oS
 oS
@@ -985,12 +1008,15 @@ wQ
 "}
 (12,1,1) = {"
 wQ
-wQ
-Ek
-Ek
-Ek
-Ek
-Ek
+Hd
+vR
+vR
+vR
+xJ
+xJ
+xJ
+xJ
+xJ
 oS
 vR
 vR
@@ -1009,12 +1035,15 @@ oS
 "}
 (13,1,1) = {"
 wQ
+wQ
+wQ
+wQ
 Gy
-Ek
+xJ
 vg
 KT
 QU
-Ek
+xJ
 fr
 fr
 zk
@@ -1033,12 +1062,15 @@ wQ
 "}
 (14,1,1) = {"
 wQ
+wQ
+wQ
+wQ
 uX
-Ek
+xJ
 qM
 KT
 cb
-Ek
+xJ
 fr
 fH
 gP
@@ -1058,11 +1090,14 @@ wQ
 (15,1,1) = {"
 wQ
 wQ
-Ek
+wQ
+wQ
+wQ
+xJ
 uE
-ZL
-ZL
-Ek
+EQ
+EQ
+xJ
 fr
 zk
 ZL
@@ -1082,11 +1117,14 @@ wQ
 (16,1,1) = {"
 wQ
 wQ
-Ek
+wQ
+wQ
+wQ
+xJ
 Pk
 IS
 lO
-Ek
+xJ
 hq
 fr
 zV
@@ -1105,11 +1143,14 @@ wQ
 "}
 (17,1,1) = {"
 wQ
+wQ
+wQ
+wQ
 ZL
 ZL
 br
 Lx
-OQ
+TX
 Vi
 Ls
 oS
@@ -1128,13 +1169,16 @@ wQ
 wQ
 "}
 (18,1,1) = {"
+wQ
+wQ
+wQ
 ZL
 ZL
-Ek
+xJ
 wa
 IS
 lO
-Ek
+xJ
 oS
 oS
 ZL
@@ -1153,12 +1197,15 @@ wQ
 "}
 (19,1,1) = {"
 wQ
+wQ
+wQ
+wQ
 ZL
-Ek
+xJ
 bI
 KT
 XN
-Ek
+xJ
 oS
 oS
 lS
@@ -1178,11 +1225,14 @@ wQ
 (20,1,1) = {"
 wQ
 wQ
+wQ
+wQ
+wQ
 WC
 Tb
 ZL
 KT
-Ek
+xJ
 fr
 YK
 BS
@@ -1201,12 +1251,15 @@ oS
 "}
 (21,1,1) = {"
 wQ
+wQ
+wQ
+wQ
 ZL
 XD
 tT
 ZL
 Lx
-Ek
+xJ
 fr
 fr
 AB
@@ -1226,11 +1279,14 @@ oS
 (22,1,1) = {"
 wQ
 wQ
+wQ
+wQ
+wQ
 WC
 XD
 XD
-Ek
-Ek
+xJ
+xJ
 fr
 oS
 oS
@@ -1248,6 +1304,9 @@ oS
 oS
 "}
 (23,1,1) = {"
+wQ
+wQ
+wQ
 wQ
 fr
 fr
@@ -1275,6 +1334,9 @@ wQ
 wQ
 wQ
 wQ
+wQ
+wQ
+wQ
 fr
 fr
 fr
@@ -1287,15 +1349,18 @@ wv
 ib
 ZL
 ZL
-PP
+ZL
 Qa
-EQ
-rp
-xJ
-wQ
+ZL
+ZL
+ZL
+ZL
 wQ
 "}
 (25,1,1) = {"
+wQ
+wQ
+wQ
 wQ
 oS
 oS
@@ -1306,8 +1371,8 @@ oS
 oS
 oS
 xJ
-zc
-zc
+KT
+KT
 ZL
 Lx
 ZL
@@ -1315,11 +1380,14 @@ ZL
 Ba
 TX
 zc
-xJ
-wQ
+ZL
+ZL
 wQ
 "}
 (26,1,1) = {"
+wQ
+wQ
+wQ
 wQ
 oS
 oS
@@ -1330,7 +1398,7 @@ ZL
 ZL
 oS
 xJ
-CI
+vg
 kM
 oS
 mb
@@ -1339,18 +1407,21 @@ ZL
 Fn
 Wm
 VA
-xJ
-Td
+ZL
+wQ
 wQ
 "}
 (27,1,1) = {"
+wQ
+wQ
+wQ
 wQ
 wQ
 oS
 oS
 oS
 ZL
-Ry
+ZL
 ZL
 ZL
 xJ
@@ -1371,12 +1442,15 @@ wQ
 wQ
 wQ
 wQ
+wQ
+wQ
+wQ
 oS
 ZL
 ZL
 ZL
 ZL
-xz
+ZL
 ZL
 ZL
 oS
@@ -1397,7 +1471,10 @@ wQ
 wQ
 wQ
 wQ
-os
+wQ
+wQ
+wQ
+wQ
 ZL
 ZL
 ZL
@@ -1427,6 +1504,9 @@ wQ
 wQ
 wQ
 wQ
+wQ
+wQ
+wQ
 oS
 oS
 oS
@@ -1440,6 +1520,9 @@ wQ
 wQ
 "}
 (31,1,1) = {"
+wQ
+wQ
+wQ
 wQ
 wQ
 wQ

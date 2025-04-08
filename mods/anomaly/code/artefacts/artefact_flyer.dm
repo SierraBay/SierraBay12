@@ -16,7 +16,6 @@
 	max_energy = 0
 	cargo_price = 1500
 	rnd_points = 7000
-	need_to_process = TRUE
 
 /obj/item/artefact/flyer/lick_interaction(mob/living/carbon/human/user)
 	to_chat(user,SPAN_NOTICE("На вкус как воздух."))

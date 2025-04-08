@@ -32,9 +32,9 @@
 		range_of_throw = rand(2,5)
 
 /obj/anomaly/tramplin/activate_anomaly()
-	for(var/obj/item/target in src.loc)
+	for(var/obj/item/target in get_turf(src))
 		get_effect_by_anomaly(target)
-	for(var/mob/living/targetbam in src.loc)
+	for(var/mob/living/targetbam in get_turf(src))
 		get_effect_by_anomaly(targetbam)
 	.=..()
 
