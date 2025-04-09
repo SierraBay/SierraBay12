@@ -59,7 +59,7 @@
 			species_name += "[species.cyborg_noun] [species.get_bodytype(src)]"
 		else
 			species_name += "[species.name]"
-		msg += ", <b>[SPAN_COLOR(species.get_flesh_colour(src), "\a [species_name]!")]</b>[(user.can_use_codex() && SScodex.get_codex_entry(get_codex_value())) ?  SPAN_NOTICE(" \[<a href='?src=\ref[SScodex];show_examined_info=\ref[src];show_to=\ref[user]'>?</a>\]") : ""]"
+		msg += ", <b>[SPAN_COLOR(species.get_flesh_colour(src), "\a [species_name]!")]</b>[(user.can_use_codex() && SScodex.get_codex_entry(get_codex_value())) ?  SPAN_NOTICE(" \[<a href='byond://?src=\ref[SScodex];show_examined_info=\ref[src];show_to=\ref[user]'>?</a>\]") : ""]"
 
 	var/extra_species_text = species.get_additional_examine_text(src)
 	if(extra_species_text)
@@ -163,7 +163,7 @@
 			msg += "The message \"[robohead.display_text]\" is displayed on its screen.\n"
 
 	//splints
-	for(var/organ in list(BP_L_LEG, BP_R_LEG, BP_L_ARM, BP_R_ARM))
+	for(var/organ in list(BP_L_LEG, BP_R_LEG, BP_L_FOOT, BP_R_FOOT, BP_L_ARM, BP_R_ARM, BP_L_HAND, BP_R_HAND))
 		var/obj/item/organ/external/o = get_organ(organ)
 		if(o && o.splinted && o.splinted.loc == o)
 			msg += "[SPAN_WARNING("[P.He] [P.has] \a [o.splinted] on [P.his] [o.name]!")]\n"
@@ -306,8 +306,8 @@
 			if(R)
 				criminal = R.get_criminalStatus()
 
-			msg += "[SPAN_CLASS("deptradio", "Criminal status:")] <a href='?src=\ref[src];criminal=1'>\[[criminal]\]</a>\n"
-			msg += "[SPAN_CLASS("deptradio", "Security records:")] <a href='?src=\ref[src];secrecord=`'>\[View\]</a>\n"
+			msg += "[SPAN_CLASS("deptradio", "Criminal status:")] <a href='byond://?src=\ref[src];criminal=1'>\[[criminal]\]</a>\n"
+			msg += "[SPAN_CLASS("deptradio", "Security records:")] <a href='byond://?src=\ref[src];secrecord=`'>\[View\]</a>\n"
 
 	if(hasHUD(user, HUD_MEDICAL))
 		var/perpname = "wot"
@@ -326,15 +326,17 @@
 		if(R)
 			medical = R.get_status()
 
-		msg += "[SPAN_CLASS("deptradio", "Physical status:")] <a href='?src=\ref[src];medical=1'>\[[medical]\]</a>\n"
-		msg += "[SPAN_CLASS("deptradio", "Medical records:")] <a href='?src=\ref[src];medrecord=`'>\[View\]</a>\n"
+		msg += "[SPAN_CLASS("deptradio", "Physical status:")] <a href='byond://?src=\ref[src];medical=1'>\[[medical]\]</a>\n"
+		msg += "[SPAN_CLASS("deptradio", "Medical records:")] <a href='byond://?src=\ref[src];medrecord=`'>\[View\]</a>\n"
+		if (R?.get_allergies())
+			msg += "[SPAN_CLASS("deptradio", "Allergies:")] <a href='byond://?src=\ref[src];allergies=1'>\[View\]</a>\n"
 
 
 	if(print_flavor_text()) msg += "[print_flavor_text()]\n"
 
 	//[SIERRA-ADD] - OOC_NOTES
 	if(ooc_notes && !skipface)
-		msg += "<span class = 'deptradio'>OOC Notes:</span> <a href='?src=\ref[src];ooc_notes=1'>\[View\]</a>\n"
+		msg += "<span class = 'deptradio'>OOC Notes:</span> <a href='byond://?src=\ref[src];ooc_notes=1'>\[View\]</a>\n"
 	//[/SIERRA-ADD]
 
 	msg += "*---------*<br>"
@@ -348,6 +350,11 @@
 	var/show_descs = show_descriptors_to(user)
 	if(show_descs)
 		msg += SPAN_NOTICE("[jointext(show_descs, "<br>")]")
+
+	var/age_diff = species.get_age_comparison_string(src, user)
+	if (age_diff)
+		msg += "<br />[SPAN_NOTICE(age_diff)]"
+
 	to_chat(user, SPAN_INFO(jointext(msg, null)))
 
 //Helper procedure. Called by /mob/living/carbon/human/examine() and /mob/living/carbon/human/Topic() to determine HUD access to security and medical records.
@@ -427,6 +434,6 @@
 	HTML += TextPreview(flavor_texts["feet"])
 	HTML += "<br>"
 	HTML += "<hr />"
-	HTML +="<a href='?src=\ref[src];flavor_change=done'>\[Done\]</a>"
+	HTML +="<a href='byond://?src=\ref[src];flavor_change=done'>\[Done\]</a>"
 	HTML += "<tt>"
 	show_browser(src, jointext(HTML,null), "window=flavor_changes;size=430x300")

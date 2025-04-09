@@ -103,11 +103,76 @@ var/global/const/CLICK_HANDLER_REMOVE_IF_NOT_TOP    = FLAG(1)
 /datum/click_handler/proc/OnDblClick(atom/A, params)
 	return
 
+/**
+ * Called on MouseDown by `/client/MouseDown()` when this is the mob's currently active click handler.
+ *
+ * **Parameters**:
+ * - `object` - The atom mouse is underneath.
+ * - `location` - the turf, stat panel, grid cell, etc. containing the object where it was clicked
+ * - `params` (list of strings) - List of click parameters. See BYOND's `CLick()` documentation.
+ *
+ * Has no return value.
+ */
+/datum/click_handler/proc/OnMouseDown(object, location, params)
+	return
+
+/**
+ * Called on MouseUp by `/client/MouseUp()` when this is the mob's currently active click handler.
+ *
+ * **Parameters**:
+ * - `object` - The atom underneath mouse.
+ * - `location` - the turf, stat panel, grid cell, etc. containing the object where it was clicked
+ * - `params` (list of strings) - List of click parameters. See BYOND's `CLick()` documentation.
+ *
+ * Has no return value.
+ */
+/datum/click_handler/proc/OnMouseUp(object, location, params)
+	return
+
+/**
+ * Called on MouseUp by `/client/MouseDrag()` when this is the mob's currently active click handler.
+ *
+ * **Parameters**:
+ * - `over_object` - The new atom underneath mouse.
+ * - `params` (list of strings) - List of click parameters. See BYOND's `CLick()` documentation.
+ *
+ * Has no return value.
+ */
+/datum/click_handler/proc/OnMouseDrag(atom/over_object, params)
+	return
+
+/datum/click_handler/proc/CanAutoClick(object, location, params)
+	return
+
+/datum/click_handler/default
+	/// Holds click params [2] and a reference [1] to the atom under the cursor on MouseDown/Drag
+	var/list/selected_target = list(null, null)
+
 /datum/click_handler/default/OnClick(atom/A, params)
 	user.ClickOn(A, params)
 
 /datum/click_handler/default/OnDblClick(atom/A, params)
 	user.DblClickOn(A, params)
+
+/datum/click_handler/default/OnMouseDown(object, location, params)
+	var/delay = CanAutoClick(object, location, params)
+	if(delay)
+		selected_target[1] = object
+		selected_target[2] = params
+		while(selected_target[1])
+			OnClick(selected_target[1], selected_target[2])
+			sleep(delay)
+
+/datum/click_handler/default/OnMouseUp(object, location, params)
+	selected_target[1] = null
+
+/datum/click_handler/default/OnMouseDrag(atom/over_object, params)
+	if(selected_target[1] && over_object && over_object.IsAutoclickable()) //Over object could be null, for example if dragging over darkness
+		selected_target[1] = over_object
+		selected_target[2] = params
+
+/datum/click_handler/default/CanAutoClick(object, location, params)
+	return user.CanMobAutoclick(object, location, params)
 
 /**
  * Returns the mob's currently active click handler.

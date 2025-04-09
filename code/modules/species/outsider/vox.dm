@@ -1,4 +1,4 @@
-/datum/species/vox
+/singleton/species/vox
 	name = SPECIES_VOX
 	name_plural = SPECIES_VOX
 	icobase =         'icons/mob/human_races/species/vox/body.dmi'
@@ -126,7 +126,7 @@
 
 	traits = list(/singleton/trait/general/nonpermeable_skin = TRAIT_LEVEL_EXISTS)
 
-/datum/species/vox/equip_survival_gear(mob/living/carbon/human/H)
+/singleton/species/vox/equip_survival_gear(mob/living/carbon/human/H)
 	H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/vox(H), slot_wear_mask)
 
 	if(istype(H.get_equipped_item(slot_back), /obj/item/storage/backpack))
@@ -138,11 +138,11 @@
 		H.equip_to_slot_or_del(new /obj/item/storage/box/vox(H), slot_r_hand)
 		H.set_internals(H.back)
 
-/datum/species/vox/disfigure_msg(mob/living/carbon/human/H)
+/singleton/species/vox/disfigure_msg(mob/living/carbon/human/H)
 	var/datum/pronouns/P = H.choose_from_pronouns()
 	return "[SPAN_DANGER("[P.His] beak-segments are cracked and chipped! [P.He] [P.is] not even recognizable.")]\n"
 
-/datum/species/vox/skills_from_age(age)
+/singleton/species/vox/skills_from_age(age)
 	. = 8
 
 /obj/item/vox_changer
@@ -160,7 +160,7 @@
 		return
 	if (allowed_role && user.mind?.special_role != allowed_role)
 		return
-	if (user.species.name == SPECIES_VOX || !is_alien_whitelisted(user, all_species[SPECIES_VOX]))
+	if (user.species.name == SPECIES_VOX || !is_alien_whitelisted(user, GLOB.species_by_name[SPECIES_VOX]))
 		return
 	var/data = input(user, "Become Vox?", "Become Vox") as null | anything in list("No", "Yes")
 	if (isnull(data) || data == "No")

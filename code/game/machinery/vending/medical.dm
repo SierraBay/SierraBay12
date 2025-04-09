@@ -22,9 +22,9 @@
 		Medical license not included.\
 	"}
 	products = list(
-		/obj/item/reagent_containers/glass/bottle/antitoxin = 4,
+		/obj/item/reagent_containers/glass/bottle/dylovene = 4,
 		/obj/item/reagent_containers/glass/bottle/inaprovaline = 4,
-		/obj/item/reagent_containers/glass/bottle/stoxin = 4,
+		/obj/item/reagent_containers/glass/bottle/soporific = 4,
 		/obj/item/reagent_containers/syringe/antiviral = 4,
 		/obj/item/reagent_containers/pill/antitox = 6,
 		/obj/item/reagent_containers/syringe = 12,
@@ -34,7 +34,8 @@
 		/obj/item/stack/medical/advanced/bruise_pack = 3,
 		/obj/item/stack/medical/advanced/ointment = 3,
 		/obj/item/stack/medical/splint = 2,
-		/obj/item/reagent_containers/hypospray/autoinjector/pain = 4
+		/obj/item/reagent_containers/hypospray/autoinjector/pain = 4,
+		/obj/item/reagent_containers/hypospray/autoinjector/pouch_auto/allergy = 12
 	)
 	rare_products = list(
 		/obj/item/device/cosmetic_surgery_kit = 75,

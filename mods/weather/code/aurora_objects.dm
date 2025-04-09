@@ -1,0 +1,209 @@
+#define isaurora(A) istype(A, /obj/structure/aurora)
+
+//Все обьекты что оживают при белой мгле
+/obj/structure/aurora
+	name = "Dead equipment"
+	desc = "An ancient reminder of the past. It will never be able to leave the planet. Part of the planet, part of the ship."
+	density =  TRUE
+	anchored = TRUE
+	icon = 'mods/weather/icons/aurora_objects.dmi'
+	var/wake_up_icon_state
+	var/waked_up = FALSE
+	var/can_wakeup = TRUE
+
+/obj/structure/aurora/Initialize()
+	.=..()
+	LAZYADD(SSweather.aurora_sctructures, src)
+
+//Обьект прошлого просыпается. Зажигаются фары/огни/монитор и прочее
+/obj/structure/aurora/proc/wake_up(wake_up_time)
+	set waitfor = FALSE
+	set background = TRUE
+	if(waked_up || !can_wakeup)
+		return
+	sleep(rand(2,10)) //Для того чтоб техника не зажигалась одновременно
+	waked_up = TRUE
+	icon_state = "[icon_state]_wake_up"
+	addtimer(new Callback(src, PROC_REF(go_sleep)), wake_up_time)
+
+/obj/structure/aurora/proc/go_sleep()
+	icon_state = initial(icon_state)
+	waked_up = FALSE
+
+
+//Обычное(Прост красивое)
+
+/obj/structure/aurora/beaker_dropper
+	icon_state = "beaker_dropper"
+
+/obj/structure/aurora/old_comp
+	icon_state = "old_comp"
+
+/obj/structure/aurora/wall_comp
+	icon_state = "wall_computer"
+	density = FALSE
+
+/obj/structure/aurora/wall_light
+	icon_state = "light_tube"
+	density =  FALSE
+
+/obj/structure/aurora/wall_light/wake_up(wake_up_time)
+	. = ..()
+	set_light(4, 2,  COLOR_WHITE)
+
+/obj/structure/aurora/wall_light/go_sleep()
+	. = ..()
+	set_light(0)
+
+/obj/structure/aurora/nav_light
+	icon_state = "nav_light"
+	density =  FALSE
+
+
+
+//ИНФОРМАТИВНОЕ
+
+/obj/structure/aurora/informative
+	var/stored_information
+	var/list/possible_information = list()
+
+/obj/structure/aurora/informative/Initialize()
+	. = ..()
+	if(LAZYLEN(possible_information))
+		stored_information = pick(possible_information)
+
+/obj/structure/aurora/informative/examine(mob/user)
+	. = ..()
+	if(waked_up && stored_information)
+		to_chat(user, SPAN_NOTICE(stored_information))
+
+/obj/structure/aurora/informative/old_computer
+	icon_state = "old_comp_informative"
+	possible_information = list()
+
+/obj/structure/aurora/informative/wall_computer
+	icon_state = "wall_computer_informative"
+	density = FALSE
+
+//Интерактивное
+/obj/structure/aurora/cable
+	icon_state = "damaged_cable"
+	density =  FALSE
+
+/obj/structure/aurora/cable/Crossed(mob/living/M)
+	..()
+	if(waked_up)
+		M.electrocute_act(20, src, 1.0, ran_zone())
+
+/obj/structure/aurora/cable_angle
+	density =  FALSE
+	icon_state = "cable_angle"
+
+
+//Активные обьекты
+/obj/structure/aurora/smes
+	icon_state = "smes"
+	var/electra_attack_cooldown
+	var/last_electra_attack
+	var/datum/beam = null
+
+/obj/structure/aurora/smes/Initialize()
+	. = ..()
+	electra_attack_cooldown = rand(3 SECONDS, 20 SECONDS)
+
+/obj/structure/aurora/smes/wake_up(wake_up_time)
+	..()
+	last_electra_attack = world.time
+	START_PROCESSING(SSweather, src)
+
+/obj/structure/aurora/smes/go_sleep()
+	..()
+	if(is_processing)
+		STOP_PROCESSING(SSweather,src)
+
+/obj/structure/aurora/smes/Process()
+	..()
+	if(world.time - last_electra_attack > electra_attack_cooldown)
+		electra_attack()
+
+//Смес бьёт
+/obj/structure/aurora/smes/proc/electra_attack()
+	set waitfor = FALSE
+	set background = TRUE
+	last_electra_attack = world.time
+	var/turf/picked_turf
+	picked_turf = pick(RANGE_TURFS(src, 3))
+	for(var/atom/picked_atom in picked_turf)
+		electroanomaly_act(picked_atom, src)
+	beam = src.Beam(BeamTarget = picked_turf, icon_state = "electra_long",icon='mods/anomaly/icons/effects.dmi',time = 0.3 SECONDS)
+	playsound(src, 'mods/anomaly/sounds/electra_blast.ogg', 100, FALSE  )
+
+/obj/structure/aurora/vault_door
+	name = "Broken vault door"
+	desc = "The door is badly damaged but still won’t let just anyone in. Upon closer inspection, you can see that the number 1 on the keypad is completely worn out."
+	icon_state = "old_vault_door"
+	var/opened = FALSE
+	anchored = TRUE
+	opacity = TRUE
+	density = TRUE
+	//Пароль, после ввода которого дверь откроется
+	var/password = 1111
+
+/obj/structure/aurora/vault_door/attack_hand(mob/living/user)
+	if(opened)
+		return
+	if(!waked_up)
+		to_chat(user, SPAN_BAD("Дверь не реагирует на нажатия клавиши. Видимо, нет электричества!."))
+		return
+	var/input_number = input("Перед вами стандартная 10-и кнопочная клавиатура для ввода цифр, похоже, что пин-код здесь четырёхзначный. Что введём?", "ПИН-код") as null | num
+	if(input_number == password)
+		open_door()
+	else
+		to_chat(user, SPAN_BAD("Похоже, пароль неверный. Дверь не реагирует."))
+
+/obj/structure/aurora/vault_door/proc/open_door()
+	playsound(get_turf(src), 'sound/machines/blastdoor_open.ogg', 100)
+	flick("door_opening_animation", src)
+	density = FALSE
+	STOP_PROCESSING(SSweather,src)
+	icon_state = "old_vault_door_opened"
+	can_wakeup = FALSE
+	opacity = FALSE
+	opened = TRUE
+
+/obj/structure/aurora/vault_door/go_sleep()
+	if(opened)
+		return
+	.=..()
+
+
+/obj/structure/aurora/vault_door/id_door
+	password = 2222
+	desc = "The door is badly damaged but still won’t let just anyone in. Upon closer inspection, you can see id scaner on it."
+
+/obj/structure/aurora/vault_door/id_door/attack_hand(mob/living/user)
+	SHOULD_CALL_PARENT(FALSE)
+	return
+
+/obj/structure/aurora/vault_door/id_door/use_tool(obj/item/tool, mob/living/user, list/click_params)
+	. = ..()
+	if(istype(tool, /obj/item/aurora_key))
+		if(opened)
+			return
+		if(!waked_up)
+			to_chat(user, SPAN_NOTICE("Кажется, это стоит сперва запитать..."))
+			return
+		if(tool:stored_password == password)
+			to_chat(user, SPAN_NOTICE("Дверь со скрипом раскрывается."))
+			open_door()
+		else
+			to_chat(user, SPAN_NOTICE("А эта карта точно подходит этой двери?"))
+
+
+/obj/item/aurora_key
+	name = "strange ID card"
+	desc = "Это необычная ID карта..."
+	//Они хранят в себе какие-либо данные
+	icon_state = "party_rig"
+	icon = 'icons/obj/tools/card.dmi'
+	var/stored_password = 2222

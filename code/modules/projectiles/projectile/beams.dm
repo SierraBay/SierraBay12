@@ -324,6 +324,14 @@
 	tracer_type = /obj/projectile/trilaser/tracer
 	impact_type = /obj/projectile/trilaser/impact
 
+//Exosuits have heavier cutters with less falloff
+/obj/item/projectile/beam/plasmacutter/mech
+		damage_falloff_list = list(
+		list(5, 0.80),
+		list(7, 0.60),
+		list(9, 0.40),
+	)
+
 /obj/item/projectile/beam/plasmacutter/on_impact(atom/A)
 	if(istype(A, /turf/simulated/mineral))
 		var/turf/simulated/mineral/M = A

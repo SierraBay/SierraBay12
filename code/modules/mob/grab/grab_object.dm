@@ -42,6 +42,8 @@
 	if(!init())
 		return INITIALIZE_HINT_QDEL
 
+	assailant.transfer_bloody_hands(affecting, target_zone)
+
 	var/obj/item/organ/O = get_targeted_organ()
 	SetName("[initial(name)] ([O.name])")
 	GLOB.dismembered_event.register(affecting, src, PROC_REF(on_organ_loss))
@@ -299,8 +301,9 @@
 	return current_grab.force_stand
 
 /obj/item/grab/use_tool(obj/item/item, mob/living/user, list/click_params)
-	if(user == assailant)
-		current_grab.item_attack(src, item)
+	if (user == assailant)
+		return item.resolve_attackby(affecting, assailant, click_params)
+
 	return ..()
 
 /obj/item/grab/proc/can_absorb()

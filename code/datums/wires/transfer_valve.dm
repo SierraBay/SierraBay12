@@ -3,11 +3,11 @@
 	holder_type = /obj/item/device/transfer_valve
 	wire_count = 5
 	descriptions = list(
-		new /datum/wire_description(TTV_WIRE_TOGGLEVALVE, "This wire is connected to the valve latch controllers.", SKILL_EXPERIENCED),
-		new /datum/wire_description(TTV_WIRE_GASRELEASE, "This wire seems to be connected directly to the tank latch.", SKILL_TRAINED),
-		new /datum/wire_description(TTV_WIRE_DISARM, "This wire seems to be connected to the internal structural controller.", SKILL_TRAINED),
-		new /datum/wire_description(TTV_WIRE_DEVICECHANGE, "This wire seems to be connected to the attached mechanism.", SKILL_TRAINED),
-		new /datum/wire_description(TTV_WIRE_RNG, "This red wire seems to go over every little nook and cranny of the bomb.")
+		new /datum/wire_description(TTV_WIRE_TOGGLEVALVE, "This wire is connected to the valve latch controllers.", "Valve", SKILL_EXPERIENCED),
+		new /datum/wire_description(TTV_WIRE_GASRELEASE, "This wire seems to be connected directly to the tank latch.", "Tank", SKILL_TRAINED),
+		new /datum/wire_description(TTV_WIRE_DISARM, "This wire seems to be connected to the internal structural controller.", "Disarm", SKILL_TRAINED),
+		new /datum/wire_description(TTV_WIRE_DEVICECHANGE, "This wire seems to be connected to the attached mechanism.", "Rewire", SKILL_TRAINED),
+		new /datum/wire_description(TTV_WIRE_RNG, "This red wire seems to go over every little nook and cranny of the bomb.", "Valve")
 	)
 
 var/global/const/TTV_WIRE_TOGGLEVALVE =  FLAG(0)

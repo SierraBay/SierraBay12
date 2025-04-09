@@ -347,9 +347,9 @@ var/global/const/STASISCAGE_WIRE_LOCK      = 4
 	wire_count = 3
 	window_y = 500
 	descriptions = list(
-		new /datum/wire_description(STASISCAGE_WIRE_SAFETY, "This wire is connected to the internal biometric sensors.", SKILL_EXPERIENCED),
-		new /datum/wire_description(STASISCAGE_WIRE_RELEASE, "This wire is connected to the automated lid latches.", SKILL_TRAINED),
-		new /datum/wire_description(STASISCAGE_WIRE_LOCK, "This wire is connected to the lid motors.", SKILL_TRAINED)
+		new /datum/wire_description(STASISCAGE_WIRE_SAFETY, "This wire is connected to the internal biometric sensors.", "Safety", SKILL_EXPERIENCED),
+		new /datum/wire_description(STASISCAGE_WIRE_RELEASE, "This wire is connected to the automated lid latches.", "Release", SKILL_TRAINED),
+		new /datum/wire_description(STASISCAGE_WIRE_LOCK, "This wire is connected to the lid motors.", "Lock", SKILL_TRAINED)
 	)
 
 

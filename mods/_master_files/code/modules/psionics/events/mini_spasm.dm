@@ -26,8 +26,9 @@
 /datum/event/minispasm/end()
 	priority_announcement.Announce( \
 		"PRIORITY ALERT: SIGNAL BROADCAST HAS CEASED. Personnel are cleared to resume use of non-hardened radio transmission equipment. Have a nice day.", \
-		"Cuchulain Sensor Array Automated Message", \
-		new_sound = 'packs/infinity/sound/misc/foundation_restore.ogg' )
+		"Cuchulain Sensor Array Automated Message")
+	var/new_sound = 'packs/infinity/sound/misc/foundation_restore.ogg'
+	sound_to(world, sound(new_sound))
 
 /datum/event/minispasm/do_spasm(mob/living/victim, obj/item/device/radio/source)
 	set waitfor = 0

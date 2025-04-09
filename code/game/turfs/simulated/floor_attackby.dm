@@ -1,3 +1,42 @@
+/turf/simulated/floor/use_weapon(obj/item/weapon, mob/living/user, list/click_params)
+	// Attempt to wildly swing at something on the turf. Maybe you'll hit something invisible?
+	if (weapon.force <= 0 || HAS_FLAGS(weapon.item_flags, ITEM_FLAG_NO_BLUDGEON))
+		return ..()
+
+	var/list/possible_targets = list()
+	for (var/atom/thing in contents)
+		if (isobj(thing) && thing.density)
+			possible_targets += thing
+			continue
+		if (isliving(thing))
+			possible_targets += thing
+			continue
+
+	var/missed = FALSE
+	var/atom/victim
+	if (!length(possible_targets))
+		missed = TRUE
+	else
+		victim = pick(possible_targets)
+		var/miss_chance = 33
+		if (victim.invisibility > user.see_invisible)
+			miss_chance = 66
+		if (prob(miss_chance))
+			missed = TRUE
+
+	if (missed)
+		user.setClickCooldown(user.get_attack_speed(weapon))
+		user.do_attack_animation(src)
+		user.visible_message(
+			SPAN_WARNING("\The [user] swings \a [weapon] wildly through the air, but hits nothing!"),
+			SPAN_WARNING("You swing \the [weapon] through the air, but hit nothing!")
+		)
+		playsound(src, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
+		return TRUE
+
+	return victim.use_weapon(weapon, user, click_params)
+
+
 /turf/simulated/floor/use_tool(obj/item/C, mob/living/user, list/click_params)
 	var/area/A = get_area(src)
 	if (!A.can_modify_area())

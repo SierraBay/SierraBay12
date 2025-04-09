@@ -99,3 +99,21 @@
 #define ANNOUNCER_BLUESPACEJUMP_PREP 'mods/eris_announcer/sound/announcements/bluespacejump_prepare.ogg'
 #define ANNOUNCER_BLUESPACEJUMP_START 'mods/eris_announcer/sound/announcements/bluespacejump_start.ogg'
 // ERIS_ANNOUNCER - End
+
+//PRIMLANGS - Start
+#define LANGUAGE_SIMPSKRELLIAN "Simplified Skrellian"
+#define LANGUAGE_SIMPUNATHI "Iber'Unathi"
+#define LANGUAGE_SIMPTAJARAN "Simplified Siik'Maas"
+//PRIMLANGS - End
+
+
+//ANOMALIES
+#define MAX_DEEP 1
+#define MIDDLE_DEEP 2
+#define MIN_DEEP 3
+#define NO_DEEP 4
+#define DEEQUIP 5
+#define KILL 6
+#define WATER_OVERLAY 10
+#define istitanwater(A) istype(A, /turf/simulated/floor/exoplanet/titan_water)
+//ANOMALIES

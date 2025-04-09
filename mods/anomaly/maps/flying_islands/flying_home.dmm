@@ -1,0 +1,766 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aO" = (
+/obj/structure/bookcase,
+/turf/simulated/floor/wood{
+	icon_state = "wood_broken5"
+	},
+/area/space)
+"aY" = (
+/obj/structure/table/woodentable_reinforced{
+	pixel_x = 12
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/wood,
+/area/space)
+"cH" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/wood{
+	icon_state = "wood_broken0"
+	},
+/area/space)
+"em" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/wood{
+	icon_state = "wood_broken0"
+	},
+/area/space)
+"eF" = (
+/obj/item/stack/material/wood,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/wood,
+/area/space)
+"eQ" = (
+/obj/anomaly/rvach/three_and_three,
+/turf/simulated/floor/wood,
+/area/space)
+"fq" = (
+/obj/structure/rubble/house,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/wood,
+/area/space)
+"fM" = (
+/obj/structure/flora/ausbushes/grassybush,
+/obj/item/stack/material/wood,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/wood{
+	icon_state = "wood_broken4"
+	},
+/area/space)
+"gq" = (
+/obj/structure/table/woodentable_reinforced,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/wood{
+	icon_state = "wood_broken0"
+	},
+/area/space)
+"gM" = (
+/obj/structure/bookcase,
+/turf/simulated/floor/wood,
+/area/space)
+"iO" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/wood{
+	icon_state = "wood_broken5"
+	},
+/area/space)
+"jO" = (
+/obj/structure/coatrack,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/wood,
+/area/space)
+"jU" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/item/stack/material/wood,
+/turf/simulated/floor/exoplanet/grass,
+/area/space)
+"ke" = (
+/obj/structure/table/woodentable_reinforced,
+/obj/item/pen,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/wood,
+/area/space)
+"lh" = (
+/obj/structure/table/woodentable_reinforced,
+/obj/item/reagent_containers/food/drinks/dry_ramen{
+	pixel_y = -6
+	},
+/obj/item/reagent_containers/food/drinks/dry_ramen{
+	pixel_y = 9;
+	pixel_x = 5
+	},
+/obj/item/reagent_containers/food/drinks/dry_ramen{
+	pixel_y = 6;
+	pixel_x = -6
+	},
+/turf/simulated/floor/wood,
+/area/space)
+"lm" = (
+/obj/structure/reagent_dispensers/water_cooler,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/wood,
+/area/space)
+"ob" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/wood{
+	icon_state = "wood_broken0"
+	},
+/area/space)
+"oh" = (
+/obj/structure/flora/bush,
+/turf/simulated/floor/exoplanet/grass,
+/area/space)
+"oX" = (
+/obj/item/stack/material/wood,
+/turf/simulated/floor/wood{
+	icon_state = "wood_broken0"
+	},
+/area/space)
+"rR" = (
+/obj/item/stack/material/wood,
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/wood{
+	icon_state = "wood_broken4"
+	},
+/area/space)
+"st" = (
+/obj/structure/coatrack,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/wood{
+	icon_state = "wood_broken2"
+	},
+/area/space)
+"tQ" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/wood,
+/area/space)
+"uf" = (
+/obj/structure/flora/ausbushes/genericbush,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/wood{
+	icon_state = "wood_broken4"
+	},
+/area/space)
+"uu" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/wood{
+	icon_state = "wood_broken4"
+	},
+/area/space)
+"uX" = (
+/obj/item/stack/material/wood,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/wood{
+	icon_state = "wood_broken3"
+	},
+/area/space)
+"vs" = (
+/turf/template_noop,
+/area/space)
+"vK" = (
+/obj/item/stack/material/wood,
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/wood{
+	icon_state = "wood_broken0"
+	},
+/area/space)
+"wx" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/wood{
+	icon_state = "wood_broken5"
+	},
+/area/space)
+"wB" = (
+/obj/structure/flora/ausbushes/grassybush,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/wood{
+	icon_state = "wood_broken0"
+	},
+/area/space)
+"wJ" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/wood{
+	icon_state = "wood_broken3"
+	},
+/area/space)
+"xb" = (
+/obj/structure/table/woodentable_reinforced,
+/obj/item/material/knife/kitchen,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/wood,
+/area/space)
+"xf" = (
+/obj/structure/flora/ausbushes/palebush,
+/turf/simulated/floor/exoplanet/grass,
+/area/space)
+"xy" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/wood{
+	icon_state = "wood_broken3"
+	},
+/area/space)
+"yQ" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/item/stack/material/wood,
+/turf/simulated/floor/exoplanet/grass,
+/area/space)
+"zw" = (
+/turf/simulated/floor/exoplanet/grass,
+/area/space)
+"Az" = (
+/obj/structure/table/woodentable_reinforced,
+/obj/item/toy/plushie/kitten,
+/turf/simulated/floor/wood,
+/area/space)
+"AA" = (
+/obj/item/stack/material/wood,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/wood{
+	icon_state = "wood_broken0"
+	},
+/area/space)
+"AB" = (
+/obj/item/stack/material/wood,
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/wood{
+	icon_state = "wood_broken3"
+	},
+/area/space)
+"CS" = (
+/obj/structure/flora/ausbushes/stalkybush,
+/turf/simulated/floor/exoplanet/grass,
+/area/space)
+"DQ" = (
+/obj/item/stack/material/wood,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/wood{
+	icon_state = "wood_broken5"
+	},
+/area/space)
+"Em" = (
+/obj/structure/bed/chair/armchair/brown,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/wood,
+/area/space)
+"Ep" = (
+/obj/structure/table/steel_reinforced,
+/obj/item/storage/toolbox/electrical,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/wood,
+/area/space)
+"Fj" = (
+/turf/simulated/floor/wood,
+/area/space)
+"Gt" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/turf/simulated/floor/exoplanet/grass,
+/area/space)
+"GM" = (
+/obj/item/stack/material/wood,
+/turf/simulated/floor/exoplanet/grass,
+/area/space)
+"Ii" = (
+/obj/structure/flora/ausbushes/leafybush,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/wood{
+	icon_state = "wood_broken3"
+	},
+/area/space)
+"Iv" = (
+/obj/item/material/shard/shrapnel/steel,
+/turf/simulated/floor/wood{
+	icon_state = "wood_broken3"
+	},
+/area/space)
+"IW" = (
+/obj/structure/flora/ausbushes/leafybush,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/wood{
+	icon_state = "wood_broken4"
+	},
+/area/space)
+"Kv" = (
+/obj/structure/table/woodentable_reinforced{
+	pixel_x = 12
+	},
+/obj/item/forensics/sample_kit,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/wood{
+	icon_state = "wood_broken4"
+	},
+/area/space)
+"Mu" = (
+/turf/simulated/wall/wood,
+/area/space)
+"PA" = (
+/obj/structure/table/woodentable_reinforced,
+/obj/item/paper_bin,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/wood,
+/area/space)
+"RL" = (
+/obj/structure/flora/ausbushes/grassybush,
+/turf/simulated/floor/exoplanet/grass,
+/area/space)
+"Tj" = (
+/obj/structure/flora/ausbushes/ywflowers,
+/turf/simulated/floor/exoplanet/grass,
+/area/space)
+"TT" = (
+/obj/structure/bed/padded,
+/obj/item/bedsheet/orange,
+/obj/structure/curtain/open/bed{
+	anchored = 1
+	},
+/turf/simulated/floor/wood,
+/area/space)
+"Ua" = (
+/turf/simulated/floor/wood{
+	icon_state = "wood_broken3"
+	},
+/area/space)
+"Uy" = (
+/obj/anomaly/rvach/three_and_three,
+/turf/simulated/floor/wood{
+	icon_state = "wood_broken3"
+	},
+/area/space)
+"UE" = (
+/obj/structure/flora/ausbushes/grassybush,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/wood{
+	icon_state = "wood_broken2"
+	},
+/area/space)
+"Vg" = (
+/obj/structure/table/woodentable_reinforced,
+/obj/item/forensics/sample_kit/powder,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/wood,
+/area/space)
+"Vq" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/wood{
+	icon_state = "wood_broken2"
+	},
+/area/space)
+"We" = (
+/obj/structure/flora/ausbushes/grassybush,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/wood{
+	icon_state = "wood_broken5"
+	},
+/area/space)
+"Wz" = (
+/obj/structure/table/steel_reinforced,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/wood,
+/area/space)
+"WN" = (
+/obj/item/stack/material/wood,
+/turf/simulated/floor/wood{
+	icon_state = "wood_broken4"
+	},
+/area/space)
+"WZ" = (
+/obj/structure/closet/walllocker{
+	pixel_x = -28
+	},
+/obj/item/storage/firstaid/stab{
+	pixel_y = -10
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/wood,
+/area/space)
+"Xd" = (
+/obj/item/stack/material/wood,
+/turf/simulated/floor/wood{
+	icon_state = "wood_broken3"
+	},
+/area/space)
+"Xs" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/item/stack/material/wood,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/wood{
+	icon_state = "wood_broken4"
+	},
+/area/space)
+"YF" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/turf/simulated/floor/exoplanet/grass,
+/area/space)
+"Zj" = (
+/obj/structure/table/woodentable_reinforced,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/wood,
+/area/space)
+
+(1,1,1) = {"
+vs
+vs
+vs
+vs
+zw
+xf
+vs
+zw
+vs
+vs
+vs
+vs
+vs
+vs
+vs
+vs
+"}
+(2,1,1) = {"
+vs
+vs
+RL
+zw
+zw
+zw
+zw
+zw
+GM
+zw
+YF
+vs
+vs
+vs
+vs
+vs
+"}
+(3,1,1) = {"
+vs
+oh
+GM
+Mu
+Mu
+Mu
+Mu
+Mu
+Mu
+Mu
+Mu
+GM
+Gt
+zw
+vs
+vs
+"}
+(4,1,1) = {"
+oh
+oh
+YF
+Mu
+eF
+Vq
+wB
+lh
+fM
+gM
+Mu
+Gt
+zw
+Gt
+zw
+vs
+"}
+(5,1,1) = {"
+vs
+GM
+zw
+Mu
+Em
+wx
+eF
+Az
+em
+aO
+Mu
+zw
+xy
+zw
+GM
+vs
+"}
+(6,1,1) = {"
+vs
+zw
+Tj
+Mu
+vK
+fq
+cH
+Zj
+yQ
+gM
+Mu
+Mu
+fq
+Mu
+Mu
+zw
+"}
+(7,1,1) = {"
+vs
+zw
+AB
+ob
+tQ
+uf
+tQ
+eF
+tQ
+tQ
+IW
+WZ
+uX
+tQ
+Mu
+Gt
+"}
+(8,1,1) = {"
+GM
+CS
+zw
+Mu
+eF
+rR
+fq
+tQ
+rR
+iO
+Mu
+Wz
+Ep
+Iv
+oX
+zw
+"}
+(9,1,1) = {"
+zw
+YF
+zw
+Mu
+jO
+uX
+Zj
+xb
+Zj
+tQ
+Mu
+Mu
+Mu
+WN
+eQ
+zw
+"}
+(10,1,1) = {"
+vs
+GM
+zw
+Mu
+st
+We
+Vg
+AA
+UE
+DQ
+Mu
+zw
+Gt
+zw
+Gt
+zw
+"}
+(11,1,1) = {"
+vs
+zw
+zw
+Mu
+lm
+wJ
+gq
+aY
+Kv
+aY
+Mu
+YF
+GM
+Gt
+zw
+vs
+"}
+(12,1,1) = {"
+vs
+YF
+oh
+Mu
+Mu
+ob
+Mu
+Mu
+Mu
+Mu
+Mu
+zw
+zw
+vs
+vs
+vs
+"}
+(13,1,1) = {"
+vs
+GM
+zw
+Xd
+Fj
+tQ
+Xs
+ke
+PA
+Zj
+Mu
+YF
+zw
+vs
+vs
+vs
+"}
+(14,1,1) = {"
+vs
+vs
+zw
+Uy
+Fj
+tQ
+eF
+eF
+wx
+Zj
+Mu
+zw
+zw
+zw
+vs
+vs
+"}
+(15,1,1) = {"
+vs
+vs
+zw
+Xd
+Fj
+Ua
+Xd
+Fj
+tQ
+Ii
+Mu
+yQ
+zw
+YF
+vs
+vs
+"}
+(16,1,1) = {"
+vs
+vs
+YF
+Mu
+tQ
+Xd
+Uy
+Xd
+uu
+TT
+Mu
+zw
+YF
+zw
+zw
+vs
+"}
+(17,1,1) = {"
+vs
+zw
+zw
+Mu
+Mu
+Xd
+Ua
+Xd
+Mu
+Mu
+Mu
+YF
+zw
+vs
+vs
+vs
+"}
+(18,1,1) = {"
+YF
+GM
+YF
+zw
+YF
+GM
+zw
+jU
+zw
+zw
+YF
+zw
+YF
+vs
+vs
+vs
+"}
+(19,1,1) = {"
+vs
+YF
+zw
+GM
+YF
+vs
+vs
+vs
+vs
+vs
+vs
+vs
+vs
+vs
+vs
+vs
+"}
+(20,1,1) = {"
+vs
+vs
+YF
+zw
+vs
+vs
+vs
+vs
+vs
+vs
+vs
+vs
+vs
+vs
+vs
+vs
+"}

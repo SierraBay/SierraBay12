@@ -36,6 +36,9 @@
 			P.resolve_attackby(target ,user)
 			return TRUE
 
+	if (istype(target, /obj/machinery/chem_master))
+		return FALSE
+
 	if (isobj(target) && target.is_open_container() && target.reagents)
 		if (!length(contents))
 			to_chat(user, SPAN_WARNING("\The [src] is empty!"))

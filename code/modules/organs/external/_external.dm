@@ -91,8 +91,8 @@
 	if(get_fingerprint())
 		A.add_partial_print(get_fingerprint())
 
-/obj/item/organ/external/New(mob/living/carbon/holder)
-	..()
+/obj/item/organ/external/Initialize()
+	. = ..()
 	if(isnull(pain_disability_threshold))
 		pain_disability_threshold = (max_damage * 0.75)
 	if(owner)
@@ -429,7 +429,7 @@ This function completely restores a damaged organ to perfect condition.
 
 	// remove embedded objects and drop them on the floor
 	for(var/obj/implanted_object in implants)
-		if(!istype(implanted_object,/obj/item/implant))	// We don't want to remove REAL implants. Just shrapnel etc.
+		if(!istype(implanted_object,/obj/item/implant,) || istype(implanted_object,/obj/item/organ/internal/augment))	// We don't want to remove REAL implants. Just shrapnel etc.
 			implanted_object.forceMove(get_turf(src))
 			implants -= implanted_object
 

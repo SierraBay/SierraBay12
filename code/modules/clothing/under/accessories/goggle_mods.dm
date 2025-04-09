@@ -19,6 +19,13 @@
 	)
 	activation_sound = 'sound/items/goggles_charge.ogg'
 
+/obj/item/clothing/accessory/glassesmod/attack_self(mob/user)
+	if(toggleable && !user.incapacitated())
+		if(active)
+			deactivate(user)
+		else
+			activate(user)
+
 /obj/item/clothing/accessory/glassesmod/proc/process_hud(mob/M)
 	return
 
@@ -29,19 +36,23 @@
 
 /obj/item/clothing/accessory/glassesmod/activate()
 	..()
-	parent.CutOverlays(inv_overlay)
+	if (parent)
+		parent.CutOverlays(inv_overlay)
 	inv_overlay = null
 	inv_overlay = get_inv_overlay()
-	parent.AddOverlays(inv_overlay)
-	parent.update_vision()
+	if (parent)
+		parent.AddOverlays(inv_overlay)
+		parent.update_vision()
 
 /obj/item/clothing/accessory/glassesmod/deactivate()
 	..()
-	parent.CutOverlays(inv_overlay)
+	if (parent)
+		parent.CutOverlays(inv_overlay)
 	inv_overlay = null
 	inv_overlay = get_inv_overlay()
-	parent.AddOverlays(inv_overlay)
-	parent.update_vision()
+	if (parent)
+		parent.AddOverlays(inv_overlay)
+		parent.update_vision()
 
 /obj/item/clothing/accessory/glassesmod/thermal
 	name = "thermal sights"
@@ -57,6 +68,7 @@
 	tint = TINT_MODERATE
 	activation_sound = 'sound/items/metal_clicking_4.ogg'
 	deactivation_sound = 'sound/items/metal_clicking_4.ogg'
+	action_button_name = "Toggle Thermals"
 
 
 /obj/item/clothing/accessory/glassesmod/nvg
@@ -73,6 +85,10 @@
 	tint = TINT_MODERATE
 	activation_sound = 'sound/items/metal_clicking_4.ogg'
 	deactivation_sound = 'sound/items/metal_clicking_4.ogg'
+	action_button_name = "Toggle Night Vision"
+
+/obj/item/clothing/accessory/glassesmod/hud
+	action_button_name = "Toggle HUD"
 
 /obj/item/clothing/accessory/glassesmod/hud/process_hud(mob/M)
 	return
@@ -125,6 +141,7 @@
 	deactivation_sound = 'sound/items/metal_clicking_13.ogg'
 	toggle_on_message = "You flip the lenses down to protect your eyes."
 	toggle_off_message = "You push the lenses up out of your face."
+	action_button_name = "Toggle welding lenses"
 
 /obj/item/clothing/accessory/glassesmod/vision/welding/activate(mob/usr)
 	. = ..()

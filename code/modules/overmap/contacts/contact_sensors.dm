@@ -190,7 +190,7 @@
 		record.update_marker_icon()
 
 		var/time_delay = max((SENSOR_TIME_DELAY * get_dist_euclidian(overmap_obj, contact)),1)
-		addtimer(new Callback(record, PROC_REF(ping)), time_delay)
+		addtimer(new Callback(record, /datum/overmap_contact/proc/ping), time_delay)
 
 /obj/machinery/shipsensors/use_tool(obj/item/tool, mob/living/user, list/click_params)
 	if (isMultitool(tool))

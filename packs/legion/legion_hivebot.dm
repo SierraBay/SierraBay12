@@ -49,6 +49,18 @@
 	..()
 
 
+/mob/living/simple_animal/hostile/hivebot/Process_Spacemove(allow_movement)
+	if (is_legion)
+		return !is_physically_disabled()
+	return ..()
+
+
+/mob/living/simple_animal/hostile/hivebot/AirflowCanMove(n)
+	if (is_legion)
+		return FALSE
+	return ..()
+
+
 // Legion hivebot spawners
 /obj/spawner/legion/hivebot
 	abstract_type = /obj/spawner/legion/hivebot

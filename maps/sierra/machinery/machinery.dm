@@ -153,11 +153,12 @@
 /obj/machinery/photocopier/faxmachine/centcomm
 	req_access = list(access_cent_general)
 	department = "Office of Civil Investigation and Enforcement"
+	is_centcom = TRUE
 
 /obj/machinery/photocopier/faxmachine/centcomm/Initialize()
 	. = ..()
 	destination = pick(GLOB.alldepartments)
-	department = "[GLOB.using_map.boss_name]"
+	GLOB.admin_departments += src.department
 
 /obj/machinery/photocopier/faxmachine/centcomm/attack_hand(mob/user as mob)
 	user.set_machine(src)

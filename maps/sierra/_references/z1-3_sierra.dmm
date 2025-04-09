@@ -88859,7 +88859,6 @@
 	},
 /obj/structure/table/steel,
 /obj/item/folder/yellow,
-/obj/item/paper/sierra/bsd,
 /obj/floor_decal/techfloor{
 	dir = 1
 	},

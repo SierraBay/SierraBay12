@@ -191,6 +191,14 @@ var/global/list/holder_mob_icon_cache = list()
 		if(!grabber.put_in_hands(H))
 			to_chat(grabber, SPAN_WARNING("Your hands are full!"))
 			return
+		var/mob/living/carbon/human/human = src
+		if (ishuman(human))
+			var/obj/item/clothing/backpack = human.get_equipped_item(slot_back)
+			if ((human.species.name in PRIMITIVE_SPECIES) && backpack != null)
+				var/datum/pronouns/pronouns = human.choose_from_pronouns()
+				FEEDBACK_FAILURE(grabber, "\The [backpack] on \the [src]'s back makes [pronouns.him] too bulky to be picked up!")
+				return
+
 
 		to_chat(grabber, SPAN_NOTICE("You scoop up \the [src]!"))
 		to_chat(src, SPAN_NOTICE("\The [grabber] scoops you up!"))

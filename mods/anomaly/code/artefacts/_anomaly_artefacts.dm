@@ -20,7 +20,7 @@
 	return TRUE
 
 /obj/item/artefact/proc/collector_interaction(obj/item/collector, mob/living/user)
-	if(inmech_sec(user))
+	if(inmech(user))
 		to_chat(user, SPAN_WARNING("Вы недотягиваетесь."))
 		return
 	var/obj/item/collector/input_collector = collector
@@ -31,11 +31,13 @@
 		if(AnomaliesAmmountInTurf(get_turf(src)) == 0)
 			connected_to_anomaly = FALSE
 			input_collector.try_insert_artefact(user, src)
+			SSanom.collected_artefacts_by_player++
 		else
 			for(var/obj/anomaly/anomka in src.loc.contents)
 				if(prob(25 * user.get_skill_value(SKILL_SCIENCE)))
 					to_chat(user, SPAN_GOOD("Вы аккуратно, при помощи специальных щупов, помещаете обьект в контейнер."))
 					connected_to_anomaly = FALSE
+					SSanom.collected_artefacts_by_player++
 					input_collector.try_insert_artefact(user, src)
 				else
 					to_chat(user, SPAN_WARNING("Обьект уплывает из хвата щупов"))

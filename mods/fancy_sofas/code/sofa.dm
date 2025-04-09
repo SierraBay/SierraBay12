@@ -208,7 +208,7 @@
 
 #define MIDDLE_SOFA(color) /datum/stack_recipe/furniture/sofa/m/##color{\
 	result_type = /obj/structure/bed/sofa/m/##color;\
-	modifiers = list(#color, "middle")\
+	modifiers = list(#color)\
 	}
 MIDDLE_SOFA(beige)
 MIDDLE_SOFA(black)
@@ -229,7 +229,7 @@ MIDDLE_SOFA(light)
 
 #define LEFT_SOFA(color) /datum/stack_recipe/furniture/sofa/l/##color{\
 	result_type = /obj/structure/bed/sofa/l/##color;\
-	modifiers = list(#color, "left")\
+	modifiers = list(#color)\
 	}
 LEFT_SOFA(beige)
 LEFT_SOFA(black)
@@ -250,7 +250,7 @@ LEFT_SOFA(light)
 
 #define RIGHT_SOFA(color) /datum/stack_recipe/furniture/sofa/r/##color{\
 	result_type = /obj/structure/bed/sofa/r/##color;\
-	modifiers = list(#color, "right")\
+	modifiers = list(#color)\
 	}
 RIGHT_SOFA(beige)
 RIGHT_SOFA(black)

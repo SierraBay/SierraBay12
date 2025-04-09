@@ -130,7 +130,10 @@
 
 /singleton/hierarchy/supply_pack/security/pistolammopractice
 	name = "Ammunition - pistol practice ammo"
-	contains = list(/obj/item/ammo_magazine/pistol/double/practice = 8)
+	contains = list(
+		/obj/item/ammo_magazine/pistol/double/practice = 4,
+		/obj/item/ammo_magazine/pistol/practice = 4
+	)
 	cost = 20
 	containertype = /obj/structure/closet/crate/secure/weapon
 	containername = "pistol practice ammunition crate"

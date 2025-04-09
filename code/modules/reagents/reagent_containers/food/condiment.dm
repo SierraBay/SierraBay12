@@ -24,7 +24,7 @@
 
 /obj/item/reagent_containers/food/condiment/use_tool(obj/item/W, mob/living/user, list/click_params)
 	if(istype(W, /obj/item/pen) || istype(W, /obj/item/device/flashlight/pen))
-		var/label = sanitizeSafe(input(user, "Enter a label for \the [name]", "Label", label_text), MAX_NAME_LEN)
+		var/label = sanitizeSafe(input(user, "Enter a label for \the [name]", "Label", label_text), MAX_LNAME_LEN)
 		if (!label)
 			return TRUE
 		AddLabel(label, user)
@@ -145,6 +145,9 @@
 
 /obj/item/reagent_containers/food/condiment/choconutspread
 	starting_reagents = list(/datum/reagent/nutriment/choconutspread = 50)
+
+/obj/item/reagent_containers/food/condiment/spacespice
+	starting_reagents = list(/datum/reagent/spacespice = 50)
 
 /obj/item/reagent_containers/food/condiment/small
 	possible_transfer_amounts = "1;20"

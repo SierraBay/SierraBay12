@@ -66,7 +66,7 @@
 	. += "<table style='width: 100%;'><tr>"
 
 	. += "<td>"
-	. += "<b>Loadout Set: <a href='?src=\ref[src];prev_slot=1'>&lt;&lt;</a><b><font color = '[fcolor]'>\[[pref.gear_slot]\]</font></b><a href='?src=\ref[src];next_slot=1'>&gt;&gt;</a></b><br>"
+	. += "<b>Loadout Set: <a href='byond://?src=\ref[src];prev_slot=1'>&lt;&lt;</a><b><font color = '[fcolor]'>\[[pref.gear_slot]\]</font></b><a href='byond://?src=\ref[src];next_slot=1'>&gt;&gt;</a></b><br>"
 
 	. += "<table style='white-space: nowrap;'><tr>"
 	. += "<td><div class='statusDisplay' style='text-align:center'><img src=previewicon.png width=[pref.preview_icon.Width()] height=[pref.preview_icon.Height()]></div></td>"
@@ -74,10 +74,10 @@
 	. += "<td style=\"vertical-align: top;\">"
 	if(config.max_gear_cost < INFINITY)
 		. += "<font color = '[fcolor]'>[total_cost]/[config.max_gear_cost]</font> loadout points spent.<br>"
-	. += "<a href='?src=\ref[src];clear_loadout=1'>Clear Loadout</a><br>"
-	. += "<a href='?src=\ref[src];random_loadout=1'>Random Loadout</a><br>"
-	. += "<a href='?src=\ref[src];toggle_hiding=1'>[hide_unavailable_gear ? "Show unavailable" : "Hide unavailable"]</a><br>"
-	. += "<a href='?src=\ref[src];toggle_donate=1'>[hide_donate_gear ? "Show donate gears" : "Hide donate gears"]</a><br>"
+	. += "<a href='byond://?src=\ref[src];clear_loadout=1'>Clear Loadout</a><br>"
+	. += "<a href='byond://?src=\ref[src];random_loadout=1'>Random Loadout</a><br>"
+	. += "<a href='byond://?src=\ref[src];toggle_hiding=1'>[hide_unavailable_gear ? "Show unavailable" : "Hide unavailable"]</a><br>"
+	. += "<a href='byond://?src=\ref[src];toggle_donate=1'>[hide_donate_gear ? "Show donate gears" : "Hide donate gears"]</a><br>"
 	. += "</td>"
 
 	. += "</tr></table>"
@@ -295,19 +295,19 @@
 					. += SPAN_COLOR("#808080", "[S.levels[skills_required[skill]]] [skill]")
 			. += "</i>"
 			. += "<br>"
-			
+
 		if(length(selected_gear.allowed_factions))
 			. += "<b>Has faction restrictions:</b>"
 			. += "<br>"
 			. += "<i>"
 			var/singleton/cultural_info/faction = SSculture.get_culture(pref.cultural_info[TAG_FACTION])
 			var/facname = faction ? faction.name : "Unset"
-			
+
 			if(facname in selected_gear.allowed_factions)
 				. += SPAN_COLOR("#55cc55", facname)
 			else
 				. += SPAN_COLOR("#808080", facname)
-			
+
 			. += "</i>"
 			. += "<br>"
 
@@ -342,7 +342,7 @@
 			for(var/datum/gear_tweak/tweak in selected_gear.gear_tweaks)
 				var/tweak_contents = tweak.get_contents(selected_tweaks["[tweak]"])
 				if(tweak_contents)
-					. += " <a href='?src=\ref[src];tweak=\ref[tweak]'>[tweak_contents]</a>"
+					. += " <a href='byond://?src=\ref[src];tweak=\ref[tweak]'>[tweak_contents]</a>"
 					. += "<br>"
 
 		. += "<br>"
@@ -538,13 +538,13 @@
 
 			if (!branch_ok)
 				return FALSE
-				
+
 	if (length(G.allowed_factions))
 		var/singleton/cultural_info/faction = SSculture.get_culture(pref.cultural_info[TAG_FACTION])
 		var/facname = faction ? faction.name : "Unset"
 		if(!(facname in G.allowed_factions))
 			return FALSE
-				
+
 
 	if(G.whitelisted && !(pref.species in G.whitelisted))
 		return FALSE

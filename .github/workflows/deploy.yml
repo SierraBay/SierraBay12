@@ -24,7 +24,7 @@ jobs:
 
   deploy-sierra:
     name: Deploy SierraBay
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     # needs: [CI]
     if: always() && !cancelled() && !failure() && inputs.perform_deploy_sierra
 

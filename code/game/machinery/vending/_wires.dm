@@ -9,10 +9,10 @@
 	var/const/WIRE_SCAN_ID = FLAG(3)
 
 	descriptions = list(
-		new /datum/wire_description (WIRE_THROW_PRODUCTS, "This wire leads to the item dispensor force controls."),
-		new /datum/wire_description (WIRE_SHOW_CONTRABAND, "This wire appears connected to a reserve inventory compartment."),
-		new /datum/wire_description (WIRE_SHOCK_USERS, "This wire seems to be carrying a heavy current."),
-		new /datum/wire_description (WIRE_SCAN_ID, "This wire is connected to the ID scanning panel.", SKILL_EXPERIENCED)
+		new /datum/wire_description (WIRE_THROW_PRODUCTS, "This wire leads to the item dispensor force controls.", "Throw"),
+		new /datum/wire_description (WIRE_SHOW_CONTRABAND, "This wire appears connected to a reserve inventory compartment.", "Contraband"),
+		new /datum/wire_description (WIRE_SHOCK_USERS, "This wire seems to be carrying a heavy current.", "Shock"),
+		new /datum/wire_description (WIRE_SCAN_ID, "This wire is connected to the ID scanning panel.", "ID", SKILL_EXPERIENCED)
 	)
 
 

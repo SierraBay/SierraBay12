@@ -9,6 +9,7 @@
 	item_state = ""	//no inhands
 	slot_flags = SLOT_TIE
 	w_class = ITEM_SIZE_SMALL
+	default_action_type = /datum/action/item_action/accessory
 	var/accessory_flags = ACCESSORY_DEFAULT_FLAGS
 	var/slot = ACCESSORY_SLOT_DECOR
 	var/body_location = UPPER_TORSO //most accessories are here
@@ -84,6 +85,9 @@
 
 //when user attached an accessory to S
 /obj/item/clothing/accessory/proc/on_attached(obj/item/clothing/S, mob/user)
+	if(istype(src,/obj/item/clothing/accessory/chameleon/changeling))
+		if(is_type_in_list(S,changeling_fabricated_clothing))
+			return
 	if(!istype(S))
 		return
 	parent = S

@@ -1,0 +1,199 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"bT" = (
+/turf/simulated/wall/titanium,
+/area/map_template/deployed_generator)
+"cg" = (
+/obj/structure/aurora/wall_light{
+	dir = 8
+	},
+/turf/template_noop,
+/area/template_noop)
+"of" = (
+/obj/structure/aurora/wall_light{
+	dir = 4
+	},
+/turf/template_noop,
+/area/template_noop)
+"wQ" = (
+/turf/template_noop,
+/area/template_noop)
+"Ar" = (
+/obj/structure/droppod_door{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/map_template/deployed_generator)
+"AM" = (
+/obj/structure/droppod_door{
+	dir = 1
+	},
+/obj/structure/aurora/cable,
+/turf/simulated/floor,
+/area/map_template/deployed_generator)
+"FR" = (
+/obj/structure/aurora/smes,
+/turf/simulated/floor,
+/area/map_template/deployed_generator)
+"FT" = (
+/obj/structure/aurora/wall_light{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/techmaint,
+/area/map_template/deployed_generator)
+"KJ" = (
+/obj/structure/aurora/nav_light,
+/obj/floor_decal/snow,
+/turf/simulated/floor,
+/area/template_noop)
+"Lp" = (
+/obj/structure/droppod_door{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/map_template/deployed_generator)
+"Lr" = (
+/obj/structure/aurora/informative/old_computer,
+/turf/simulated/floor,
+/area/map_template/deployed_generator)
+"MO" = (
+/obj/structure/aurora/wall_light{
+	dir = 1
+	},
+/turf/template_noop,
+/area/template_noop)
+"Na" = (
+/obj/floor_decal/snow,
+/turf/simulated/floor,
+/area/template_noop)
+"OR" = (
+/obj/structure/droppod_door{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/map_template/deployed_generator)
+"Qf" = (
+/obj/structure/droppod_door,
+/turf/simulated/floor,
+/area/map_template/deployed_generator)
+"Qn" = (
+/turf/simulated/floor/tiled/techmaint,
+/area/map_template/deployed_generator)
+"Vn" = (
+/obj/floor_decal/snow,
+/obj/floor_decal/snow,
+/turf/simulated/floor,
+/area/template_noop)
+"VD" = (
+/obj/structure/aurora/wall_light,
+/turf/simulated/floor/tiled/techmaint,
+/area/map_template/deployed_generator)
+"Xr" = (
+/obj/structure/droppod_door,
+/obj/structure/aurora/cable,
+/turf/simulated/floor,
+/area/map_template/deployed_generator)
+"XD" = (
+/obj/structure/aurora/cable,
+/turf/simulated/floor/tiled/techmaint,
+/area/map_template/deployed_generator)
+
+(1,1,1) = {"
+Vn
+Na
+of
+wQ
+wQ
+of
+Na
+KJ
+"}
+(2,1,1) = {"
+Na
+bT
+bT
+Ar
+Ar
+bT
+bT
+Na
+"}
+(3,1,1) = {"
+wQ
+bT
+FT
+Qn
+Qn
+VD
+bT
+MO
+"}
+(4,1,1) = {"
+wQ
+Lp
+Qn
+FR
+FR
+Qn
+Qf
+wQ
+"}
+(5,1,1) = {"
+wQ
+AM
+XD
+FR
+FR
+XD
+Xr
+wQ
+"}
+(6,1,1) = {"
+wQ
+Lp
+XD
+FR
+FR
+XD
+Qf
+wQ
+"}
+(7,1,1) = {"
+wQ
+Lp
+Qn
+FR
+Lr
+Qn
+Qf
+wQ
+"}
+(8,1,1) = {"
+wQ
+bT
+FT
+Qn
+Qn
+VD
+bT
+MO
+"}
+(9,1,1) = {"
+Na
+bT
+bT
+OR
+OR
+bT
+bT
+Na
+"}
+(10,1,1) = {"
+Na
+Na
+cg
+wQ
+wQ
+cg
+Na
+KJ
+"}

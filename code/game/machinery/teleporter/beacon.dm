@@ -254,9 +254,9 @@ var/global/const/TELEBEACON_WIRE_SIGNALLER = 4
 	wire_count = 3
 	window_y = 500
 	descriptions = list(
-		new /datum/wire_description(TELEBEACON_WIRE_POWER, "This wire is connected to the power supply unit.", SKILL_EXPERIENCED),
-		new /datum/wire_description(TELEBEACON_WIRE_RELAY, "This wire is connected to the remote relay device.", SKILL_MASTER),
-		new /datum/wire_description(TELEBEACON_WIRE_SIGNALLER, "This wire is connected to a speaker and several indicator lights.", SKILL_EXPERIENCED)
+		new /datum/wire_description(TELEBEACON_WIRE_POWER, "This wire is connected to the power supply unit.", "Power", SKILL_EXPERIENCED),
+		new /datum/wire_description(TELEBEACON_WIRE_RELAY, "This wire is connected to the remote relay device.", "Relay", SKILL_MASTER),
+		new /datum/wire_description(TELEBEACON_WIRE_SIGNALLER, "This wire is connected to a speaker and several indicator lights.", "Signal", SKILL_EXPERIENCED)
 	)
 
 

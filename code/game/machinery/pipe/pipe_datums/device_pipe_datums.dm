@@ -224,3 +224,15 @@
 	pipe_class = PIPE_CLASS_UNARY
 	pipe_color = null
 	colorable = FALSE
+
+/datum/pipe/pipe_dispenser/device/gas_extractor
+	name = "gas extractor"
+	desc = "Transfers gas from its surroundings into pipes."
+	build_icon = 'icons/atmos/gas_extractor.dmi'
+	build_icon_state = "map_extractor"
+	build_path = /obj/item/pipe
+	connect_types = CONNECT_TYPE_REGULAR|CONNECT_TYPE_FUEL
+	colorable = FALSE
+	pipe_color = null
+	constructed_path = /obj/machinery/atmospherics/unary/gas_extractor
+	pipe_class = PIPE_CLASS_UNARY

@@ -9,12 +9,12 @@ As a specific example: Previously water checked for either the mob type `/mob/li
 ## What is a Trait?
 
 
-* A trait is at this time simply a `/decl` with a name, description, and potency:
+* A trait is at this time simply a `/singleton` with a name, description, and potency:
   * Simply has the trait, or:
   * Minor/Moderate/Major (or a subset thereof)
 * Traits are currently primarily checked for during various interactions between chemicals and mobs, but can potentially be used anywhere a mob type or species check is currently made.
 * Trait checks can either merely check if a mob has a given trait, or have the trait potency affect the effect of the interaction.
-* Can be used by both `/mob/living` and `/datum/species` subtypes. In the latter case traits are granted to all `/mob/living/carbon` instances of a given species.
+* Can be used by both `/mob/living` and `/singleton/species` subtypes. In the latter case traits are granted to all `/mob/living/carbon` instances of a given species.
 
 ## What makes a good Trait?
 
@@ -29,7 +29,7 @@ If you plan to add your own trait, it's worthwhile to consider the following poi
 
 ## Future Potential
 
-Traits do not necessarily have to be granted to entire `/mob/living` or `/datum/species` types, it is technically possible to grant them to individual mob instances as there are procs for doing so.
+Traits do not necessarily have to be granted to entire `/mob/living` or `/singleton/species` types, it is technically possible to grant them to individual mob instances as there are procs for doing so.
 
 Some examples for those inclined to implement practical uses:
 

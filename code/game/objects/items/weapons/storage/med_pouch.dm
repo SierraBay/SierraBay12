@@ -46,7 +46,7 @@ Single Use Emergency Pouches
 
 /obj/item/storage/med_pouch/examine(mob/user)
 	. = ..()
-	to_chat(user, "<A href='?src=\ref[src];show_info=1'>Please read instructions before use.</A>")
+	to_chat(user, "<a href='byond://?src=\ref[src];show_info=1'>Please read instructions before use.</A>")
 
 /obj/item/storage/med_pouch/CanUseTopic()
 	return STATUS_INTERACTIVE
@@ -218,5 +218,5 @@ Single Use Emergency Pouches
 
 /obj/item/reagent_containers/hypospray/autoinjector/pouch_auto/allergy
 	name = "emergency allergy autoinjector"
-	desc = "The ingredient label reads 1.5 units of epinephrine and 3.5 units of inaprovaline."
+	desc = "The ingredient label reads 1.5 units of adrenaline and 3.5 units of inaprovaline."
 	starts_with = list(/datum/reagent/adrenaline = 1.5, /datum/reagent/inaprovaline = 3.5)

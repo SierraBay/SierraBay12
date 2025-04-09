@@ -11,6 +11,7 @@
 	construct_state = /singleton/machine_construction/default/panel_closed
 	var/obj/overmap/radio/signal
 	var/obj/overmap/radio/distress/emergency_signal
+	var/obj/item/device/gps/gps
 	/// Integer. The `world.time` value of the last distress broadcast.
 	var/last_message_time = 0
 	/// Integer. The `world.time` of the last activation toggle.
@@ -36,6 +37,10 @@
 		/obj/item/cell/high = 1
 	)
 
+
+/obj/machinery/radio_beacon/Initialize()
+	. = ..()
+	gps = new(src)
 
 /obj/machinery/radio_beacon/interface_interact(mob/user, skip_time_check = FALSE)
 	if (!CanInteract(user, DefaultTopicState()))
@@ -84,6 +89,12 @@
 	if(!message)
 		return
 
+	var/gps_name = sanitize(input("What should its GCS signal be named?", "[gps.gps_tag] - GCS Tag", gps.gps_tag) as text|null)
+	if (gps_name && gps_name != gps.gps_tag)
+		gps.gps_tag = uppertext(copytext(gps_name, 1, 11))
+		if (!gps.tracking)
+			gps.toggle_tracking(silent=TRUE)
+
 	visible_message(SPAN_NOTICE("\The [src] whirrs to life, starting its radio broadcast."))
 
 	playsound(src, 'sound/machines/sensors/newcontact.ogg', 50, 3, 3)
@@ -113,6 +124,10 @@
 
 	emergency_signal.set_origin(O)
 
+	gps?.gps_tag = "SOS"
+	if (!gps?.tracking)
+		gps.toggle_tracking(silent=TRUE)
+
 	update_use_power(POWER_USE_ACTIVE)
 	update_icon()
 
@@ -126,6 +141,9 @@
 	QDEL_NULL(emergency_signal)
 
 	last_activation_time = world.time
+
+	if (gps?.tracking)
+		gps.toggle_tracking(silent=TRUE)
 
 	update_use_power(POWER_USE_OFF)
 	update_icon()
@@ -154,6 +172,7 @@
 /obj/machinery/radio_beacon/Destroy()
 	QDEL_NULL(signal)
 	QDEL_NULL(emergency_signal)
+	QDEL_NULL(gps)
 	. = ..()
 
 /obj/overmap/radio

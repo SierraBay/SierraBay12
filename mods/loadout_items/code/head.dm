@@ -37,3 +37,19 @@
 		icon_state = initial(icon_state)
 		item_state = initial(icon_state)
 		to_chat(user, "You lower the ear flaps on the Suncap.")
+
+// Human headgarments
+
+/obj/item/clothing/head/soft/colorable
+	name = "Soft cap"
+	desc = "A simple baseball soft cap without any special qualities"
+	icon = 'mods/loadout_items/icons/obj_head.dmi'
+	item_icons = list(
+		slot_head_str = 'mods/loadout_items/icons/onmob_head.dmi'
+	)
+	icon_state = "cprescap"
+	item_state = "cprescap"
+
+/obj/item/clothing/head/soft/on_update_icon()
+	. = ..()
+	item_state = initial(item_state) + (flipped ? "_flipped" : "")

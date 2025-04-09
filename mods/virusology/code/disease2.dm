@@ -41,20 +41,20 @@ LEGACY_RECORD_STRUCTURE(virus_records, virus_record)
 	antigen |= pick(ALL_ANTIGENS)
 	spreadtype = prob(70) ? DISEASE_SPREAD_AIRBORNE : DISEASE_SPREAD_CONTACT
 
-	if(LAZYLEN(all_species))
+	if(LAZYLEN(GLOB.species_by_name))
 		affected_species = get_infectable_species()
 
 /proc/get_infectable_species()
 	var/list/meat = list()
 	var/list/res = list()
-	for (var/specie in all_species)
-		var/datum/species/S = all_species[specie]
+	for (var/specie in GLOB.species_by_name)
+		var/singleton/species/S = GLOB.species_by_name[specie]
 		if((S.spawn_flags & SPECIES_CAN_JOIN) && !S.get_virus_immune() && !S.greater_form)
 			meat += S
 	if(LAZYLEN(meat))
 		var/num = rand(1,LAZYLEN(meat))
 		for(var/i=0,i<num,i++)
-			var/datum/species/picked = pick_n_take(meat)
+			var/singleton/species/picked = pick_n_take(meat)
 			res |= picked.name
 			if(picked.primitive_form)
 				res |= picked.primitive_form
@@ -162,7 +162,7 @@ LEGACY_RECORD_STRUCTURE(virus_records, virus_record)
 	antigen = list(pick(ALL_ANTIGENS))
 	antigen |= pick(ALL_ANTIGENS)
 
-	if (prob(5) && LAZYLEN(all_species))
+	if (prob(5) && LAZYLEN(GLOB.species_by_name))
 		affected_species = get_infectable_species()
 
 /datum/disease2/disease/proc/getcopy()

@@ -39,6 +39,8 @@
 
 	///Список турфов, находящиеся в зоне поражения
 	var/list/effected_turfs = list()
+	///Список турфов на которых расположена сама аномалия (Включая её parts)
+	var/list/anomaly_turfs = list()
 	///Сколько раз аномалия даёт свой эффект
 	//TODO: доделать эту фичу
 	var/activation_ammount = 1
@@ -85,14 +87,16 @@
 ///Пост-обработка действия аномалии.
 /obj/anomaly/proc/handle_after_activation()
 	last_activation_time = world.time
-	if(with_sound)
-		playsound(src, sound_type, 100, FALSE  )
+	play_anomaly_sound()
 	if(effect_type == LONG_ANOMALY_EFFECT)
 		handle_long_effect()
 	else
 		do_momentum_animation()
 		start_recharge()
 
+/obj/anomaly/proc/play_anomaly_sound()
+	if(with_sound)
+		playsound(src, sound_type, 100, FALSE  )
 
 ///Эффект на цели от аномалии. Огонь, удар тока, что угодно
 /obj/anomaly/proc/get_effect_by_anomaly(atom/movable/target)
@@ -178,9 +182,14 @@
 	if(ranzomize_with_initialize)
 		ranzomize_parameters()
 	icon_state = idle_effect_type
-	if(have_static_sound)
-		GLOB.sound_player.PlayLoopingSound(src, "\ref[src]", static_sound_type, 10, 6)
+	if(static_sound_type)
+		QDEL_NULL(static_sound_obj)
+		static_sound_obj = GLOB.sound_player.PlayLoopingSound(src, "anomaly_static", static_sound_type, volume = 10, range = 8, falloff = 4)
 	if(detectable_effect_range)
 		calculate_effected_turfs_from_new_anomaly(src)
 	if(can_walking && prob(chance_spawn_walking))
 		check_anomaly_ai()
+	additional_spawn_action()
+
+/obj/anomaly/proc/additional_spawn_action()
+	return

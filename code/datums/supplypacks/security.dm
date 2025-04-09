@@ -128,7 +128,7 @@
 	containername = "weapons crate"
 	access = access_security
 
-/singleton/hierarchy/supply_pack/security/weapons
+/singleton/hierarchy/supply_pack/security/tasers
 	name = "Weapons - Disposable tasers"
 	contains = list(/obj/item/gun/energy/taser/disposable = 4)
 	cost = 30

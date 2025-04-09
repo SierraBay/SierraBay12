@@ -1,4 +1,0 @@
-author: Banditoz
-changes:
-  - {rscadd: Borg module activations are now announced to their department.}
-delete-after: true

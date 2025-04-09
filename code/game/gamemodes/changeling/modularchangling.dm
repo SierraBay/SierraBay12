@@ -250,7 +250,7 @@ var/global/list/datum/power/changeling/powerinstances = list()
 
 					if(!ownsthis)
 					{
-						body += "<a href='?src=\ref[src];P="+power+"'>Evolve</a>"
+						body += "<a href='byond://?src=\ref[src];P="+power+"'>Evolve</a>"
 					}
 
 					body += "</td><td align='center'>";
@@ -461,7 +461,7 @@ var/global/list/datum/power/changeling/powerinstances = list()
 
 
 	if(isnull(Thepower))
-		to_chat(M.current, "This is awkward.  Changeling power purchase failed, please report this bug to a coder!")
+		CRASH("This is awkward.  Changeling power purchase failed, please report this bug to a coder!")
 		return
 
 	if(Thepower in purchasedpowers)

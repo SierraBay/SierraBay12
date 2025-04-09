@@ -118,6 +118,7 @@ var/global/const/access_away_iccgn_captain = "ACCESS_ICCGN_CAPTAIN"
 	min_skill = list(SKILL_COMBAT  = SKILL_BASIC,
 					 SKILL_WEAPONS = SKILL_BASIC,
 					 SKILL_HAULING = SKILL_BASIC,
+					 SKILL_SCIENCE = SKILL_BASIC,
 					 SKILL_MEDICAL = SKILL_BASIC,
 					 SKILL_EVA = SKILL_BASIC)
 
@@ -143,6 +144,7 @@ var/global/const/access_away_iccgn_captain = "ACCESS_ICCGN_CAPTAIN"
 	min_skill = list(SKILL_COMBAT  = SKILL_BASIC,
 					 SKILL_WEAPONS = SKILL_BASIC,
 					 SKILL_HAULING = SKILL_BASIC,
+					 SKILL_SCIENCE = SKILL_BASIC,
 					 SKILL_MEDICAL = SKILL_BASIC,
 					 SKILL_PILOT = SKILL_TRAINED,
 					 SKILL_EVA = SKILL_BASIC)

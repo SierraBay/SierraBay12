@@ -22,7 +22,7 @@
 /obj/item/artefact/pruzhina/lick_interaction(mob/living/carbon/human/user)
 	SSanom.bad_interactions_with_artefacts_by_players_ammount++
 	to_chat(user,SPAN_NOTICE("Как только вы подносите язык чуть ближе, вы чувствуете острую боль в нём, словно от проводов."))
-	user.electoanomaly_act(25, src, BP_HEAD)
+	user.electoanomaly_damage(25, src, BP_HEAD)
 	sub_energy(50)
 
 /obj/item/artefact/pruzhina/shake_interaction(mob/living/carbon/human/user)
@@ -34,7 +34,7 @@
 /obj/item/artefact/pruzhina/bite_interaction(mob/living/carbon/human/user)
 	to_chat(user,SPAN_NOTICE("Как только вы ухватываете обьект зубами, вы чувствуете сильнейшую боль.Глупо."))
 	sub_energy(100)
-	user.electoanomaly_act(75, src, BP_HEAD)
+	user.electoanomaly_damage(25, src, BP_HEAD)
 
 /obj/item/artefact/pruzhina/knock_interaction(mob/living/carbon/human/user)
 	angry_activity()
@@ -98,7 +98,7 @@
 		var/mob/living/carbon/human/victim = user
 		if(!victim.gloves || victim.gloves.siemens_coefficient != 0)
 			to_chat(user, SPAN_BAD("Вы чувствуете в кисти сильный удар тока."))
-			victim.electoanomaly_act(10, src, victim.get_active_hand())
+			victim.electoanomaly_damage(10, src, victim.get_active_hand())
 
 /obj/item/artefact/pruzhina/react_at_throw(atom/target, range, speed, mob/thrower, spin, datum/callback/callback)
 	create_anomaly_pruzhina(30 SECONDS)
@@ -141,7 +141,7 @@
 	var/turf/T = get_turf(src)
 	get_mobs_and_objs_in_view_fast(T, 3, victims, objs_not_used)
 	for(var/mob/living/target in victims)
-		target.electoanomaly_act(75, src, BP_CHEST)
+		target.electoanomaly_damage(50, src, BP_CHEST)
 		beam = src.Beam(BeamTarget = get_turf(target), icon_state = "electra_long",icon='mods/anomaly/icons/effects.dmi',time = 0.3 SECONDS)
 
 

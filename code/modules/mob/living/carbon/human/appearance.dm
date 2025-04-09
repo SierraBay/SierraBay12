@@ -9,7 +9,7 @@
 	if(species == new_species)
 		return
 
-	if(!(new_species in all_species))
+	if(!(new_species in GLOB.species_by_name))
 		return
 
 	set_species(new_species)
@@ -23,11 +23,15 @@
 /mob/living/carbon/human/proc/change_gender(gender)
 	if(src.gender == gender)
 		return
-
 	src.gender = gender
+
 	reset_hair()
+	force_update_limbs()
 	update_body()
 	update_dna()
+	src.sync_organ_dna()
+	if(src.gender == MALE)
+		src.UpdateAppearance()
 	return 1
 
 /mob/living/carbon/human/proc/randomize_gender()
@@ -161,7 +165,7 @@
 
 /mob/living/carbon/human/proc/generate_valid_species(appearance_flags, list/allow, list/deny)
 	var/list/result = list()
-	for (var/name in all_species)
+	for (var/name in GLOB.species_by_name)
 		if (name in deny)
 			continue
 		if (!appearance_flags)
@@ -170,7 +174,7 @@
 		if (name in allow)
 			result += name
 			continue
-		var/datum/species/species = all_species[name]
+		var/singleton/species/species = GLOB.species_by_name[name]
 		if (!(appearance_flags & APPEARANCE_SKIP_RESTRICTED_CHECK))
 			if (species.spawn_flags & SPECIES_IS_RESTRICTED)
 				continue

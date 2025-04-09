@@ -84,8 +84,8 @@ var/global/list/outfits_singletons_by_type_
 // If you want to add more items that has species restriction, consider follow-
 // ing the same format as the gloves shown in the code below. Thanks.
 /singleton/hierarchy/outfit/proc/check_and_try_equip_xeno(mob/living/carbon/human/H)
-	var/datum/species/S = H.species
-	if (!S || istype(S, /datum/species/human)) // null failcheck & get out here you damn humans
+	var/singleton/species/S = H.species
+	if (!S || istype(S, /singleton/species/human)) // null failcheck & get out here you damn humans
 		return
 
 	// Gloves

@@ -46,8 +46,7 @@
 		/obj/anomaly/zharka = 5,
 		/obj/anomaly/zharka/short_effect = 2,
 		/obj/anomaly/zharka/long_effect = 1,
-		/obj/anomaly/heater/three_and_three = 3,
-		/obj/anomaly/heater/two_and_two = 5
+		/obj/anomaly/heater/multisize = 5,
 		)
 
 /obj/anomaly_spawner/commander/Initialize()
@@ -61,7 +60,7 @@
 		min_artefacts_ammount = 1
 	if(!max_artefacts_ammount)
 		max_artefacts_ammount = 1
-	generate_anomalies_in_turfs(null, all_turfs_for_spawn, min_anomalies_ammout, max_anomalies_ammout, min_artefacts_ammount, max_artefacts_ammount,min_anomaly_size, max_anomaly_size, "direlict protocol", started_in)
+	generate_anomalies_in_turfs(null, all_turfs_for_spawn, min_anomalies_ammout, max_anomalies_ammout, min_artefacts_ammount, max_artefacts_ammount,min_anomaly_size, max_anomaly_size, "планетарная руина", started_in)
 
 	//Очистка и забытие всех спавнеров.
 	for(var/obj/anomaly_spawner/spawner in all_turfs_for_spawn)

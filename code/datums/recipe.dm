@@ -28,8 +28,11 @@
 	var/antag_text
 
 
-/datum/microwave_recipe/proc/CreateResult(obj/machinery/microwave/microwave)
-	var/atom/movable/result = new result_path (microwave)
+/datum/microwave_recipe/proc/CreateResult(obj/machinery/microwave/microwave, ...)
+	var/list/result_args = list(microwave)
+	if (length(args) > 1)
+		result_args += args.Copy(2)
+	var/atom/movable/result = new result_path (arglist(result_args))
 	microwave.reagents.clear_reagents()
 	if (!length(microwave.ingredients))
 		return result

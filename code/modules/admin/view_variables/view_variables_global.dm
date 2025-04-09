@@ -1,8 +1,7 @@
-GLOBAL_DATUM_INIT(debug_real_globals, /datum/debug_real_globals, new)
+GLOBAL_TYPED_NEW(debug_real_globals, /datum/debug_real_globals)
 
 
 /datum/debug_real_globals
-	var/static/atom/movable/clickable_stat/__stat_line
 	var/static/list/global_names
 
 
@@ -13,13 +12,6 @@ GLOBAL_DATUM_INIT(debug_real_globals, /datum/debug_real_globals, new)
 		if (name in hidden)
 			continue
 		ADD_SORTED(global_names, name, GLOBAL_PROC_REF(cmp_text_asc))
-
-
-/datum/debug_real_globals/proc/UpdateStat()
-	if (!__stat_line)
-		__stat_line = new (null, src)
-		__stat_line.name = "Edit"
-	stat("Real Globals", __stat_line)
 
 
 /datum/debug_real_globals/get_variables()
