@@ -1,4 +1,3 @@
-/*
 /datum/map_template/ruin/exoplanet/electra_cave
 	name = "garage"
 	id = "planetsite_anomalies_cave"
@@ -17,4 +16,3 @@
 	gloves = /obj/item/clothing/gloves/latex
 	head = /obj/item/clothing/head/helmet/space/void/ceti/alt
 	suit = /obj/item/clothing/suit/space/void/ceti
-*/

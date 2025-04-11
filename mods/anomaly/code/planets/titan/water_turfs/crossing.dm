@@ -8,6 +8,9 @@
 			detected_human.handle_footsteps()
 			if(detected_human.lying)
 				drown_human(detected_human)
+		if(ismech(input_movable))
+			if(deep_status == MAX_DEEP)
+				drown_mech(input_movable)
 		if(swim_stamina_spend)
 			start_spend_stamina()
 		if(istitanwater(old_loc))
@@ -20,7 +23,9 @@
 		if(deep_status == MAX_DEEP)
 			drown_item(input_movable)
 	else if(istype(input_movable, /obj/structure))
-		input_movable.setup_water_filter(mask_icon_state_item)
+		input_movable.setup_water_filter(mask_icon_state_structure)
+		if(deep_status == MAX_DEEP)
+			drown_structure(input_movable)
 	else
 		if(input_movable.throwing)
 			start_spend_stamina()
@@ -46,7 +51,7 @@
 	// Потом даст заменить все органы персонажу. Какая же это проклятая херня боже мой.
 	if(QDELETED(input_movable))
 		return FALSE
-	if(ismech(input_movable) || isghost(input_movable) || isobserver(input_movable))
+	if(isghost(input_movable) || isobserver(input_movable))
 		return FALSE
 	else if(ismob(input_movable))
 		var/mob/mobik = input_movable

@@ -14,8 +14,9 @@
 		"Вы слышите, чувствуете, видите...цунами...огромное, прямо таки до небес..."
 	)
 	var/need_up_water = FALSE
-	var/power_ups_counter = 0
+	var/remain_power_ups = 5
 	var/time_before_cunami = 0
+	can_blowout = FALSE
 	var/counting_started = FALSE
 
 /datum/weather_manager/titan_rain/no_cunami
@@ -23,24 +24,41 @@
 
 //Каждые 15 минут будет усиление погоды
 /datum/weather_manager/titan_rain/change_stage(force_state, monitor = FALSE, sound = FALSE)
-	if(!counting_started && !try_start_count())
+	calculate_change_time()
+	if(!counting_started)
+		if(try_start_count())
+			counting_started = TRUE
+			message_abount_started_counting()
 		return
-	counting_started = TRUE
-	power_ups_counter++
-	report_progress("DEBUG ANOM: Рост уровня воды на водной планете. Осталось [60 - power_ups_counter*15] минут или же [3 - power_ups_counter] повышений до цунами.")
-	var/list/ticks_list = list('mods/weather/sounds/TICK_1.ogg', 'mods/weather/sounds/TICK_2.ogg', 'mods/weather/sounds/TICK_3.ogg')
-	SSanom.announce_to_all_detectors_on_z_level(get_z(pick(connected_weather_turfs)), "Зафкисировано повышение уровня воды. Оставшееся расчётное время до критического уровня воды: [60 - power_ups_counter*15]", ticks_list)
-	temp_rain(5 MINUTES)
+	remain_power_ups--
+	report_progress("DEBUG ANOM: Рост уровня воды на водной планете. Осталось [remain_power_ups * 15] минут или же [remain_power_ups] повышений уровня воды до цунами.")
+	message_players_remaining_time(remain_power_ups * 15 MINUTES)
+	temp_rain(rand(5, 10) MINUTES)
 	if(need_up_water)
 		need_up_water = FALSE
 		power_up_water()
 	else
 		need_up_water = TRUE
 		power_up_water()
-	if(power_ups_counter >= 3)
+	if(remain_power_ups <= 0)
 		STOP_PROCESSING(SSweather, src)
 		start_cunami()
 		return
+
+//Игра показывает игрокам сколько осталось времени
+/datum/weather_manager/titan_rain/proc/message_players_remaining_time(remain_time)
+	var/list/ticks_list = list('mods/weather/sounds/TICK_1.ogg', 'mods/weather/sounds/TICK_2.ogg', 'mods/weather/sounds/TICK_3.ogg')
+	for(var/mob/living/carbon/human/picked_human in GLOB.living_players)
+		if(get_z(picked_human) == get_z(pick(connected_weather_turfs))) //Нужный нам Z уровень
+			var/obj/item/clothing/gloves/anomaly_detector/detector = locate(/obj/item/clothing/gloves/anomaly_detector) in picked_human
+			if(detector && detector.digital && detector.is_processing)
+				sound_to(picked_human, sound(pick(ticks_list), volume = 100))
+				picked_human.client.start_counting_back_on_screen(time = remain_time, text_color = "#4d4545", delete_after_time = 5 SECONDS)
+
+/datum/weather_manager/titan_rain/proc/message_abount_started_counting()
+	report_progress("DEBUG ANOM: Планета Титан обнаружила на своей поверхности игроков и начала отсчёт, у игроков осталось [remain_power_ups * 15] минут")
+	message_players_remaining_time(remain_power_ups * 15 MINUTES)
+
 
 /datum/weather_manager/titan_rain/proc/try_start_count()
 	for(var/mob/living/carbon/human/picked_human in GLOB.living_players)
@@ -63,19 +81,20 @@
 		weather.update()
 
 /datum/weather_manager/titan_rain/calculate_change_time()
-	change_time_result = 15 MINUTES
+	change_time = 15 MINUTES + world.time
 
 /datum/weather_manager/titan_rain/proc/power_up_water()
 	for(var/turf/T in get_area_turfs(my_area))
 		if(istitanwater(T))
 			var/turf/simulated/floor/exoplanet/titan_water/water = T
 			if(water.deep_status != MAX_DEEP)
-				water.get_better() //Вода становится глубже
+				SSweather.add_to_water_queue(water, "up") // Добавляем в очередь на углубление
 
 /datum/weather_manager/titan_rain/proc/weak_all_weater()
 	for(var/turf/T in get_area_turfs(my_area))
-		var/turf/simulated/floor/exoplanet/titan_water/water = T
-		water.get_worst() //Вода становится глубже
+		if(istitanwater(T))
+			var/turf/simulated/floor/exoplanet/titan_water/water = T
+			SSweather.add_to_water_queue(water, "easiest") // Добавляем в очередь на макс глубины
 
 /datum/weather_manager/titan_rain/proc/start_cunami()
 	weak_all_weater()

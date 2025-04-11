@@ -50,7 +50,7 @@ Cntrl + Left Click - Configurate anomaly
 	if (parameters["right"])
 		if(istype(A, /obj/anomaly))
 			var/obj/anomaly/target = A
-			target.delete_anomaly()
+			target.Destroy()
 		else
 			to_chat(user, SPAN_BAD("This is not anomaly"))
 		return

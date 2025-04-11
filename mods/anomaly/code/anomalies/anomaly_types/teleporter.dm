@@ -1,26 +1,3 @@
-//Этот заспавнит своего второго брата
-/obj/anomaly/doubled_teleporter/with_second
-	spawn_second_teleporter = TRUE
-
-//Этот хоть и спавнит своего брата, но вот его "брат" уже телепортировать не умеет
-//Но аномалию поставим, дабы генератор аномалий не ставил чего-то там ещё.
-/obj/anomaly/doubled_teleporter/with_second/oneway/additional_spawn_action()
-	if(spawn_second_teleporter)
-		place_second_teleporter()
-	var/list/possible_states = list(
-		"1&0",
-		"0&1"
-	)
-	var/result_state = pick(possible_states)
-	switch(result_state)
-		if("1&0")
-			teleport_status = TRUE
-			membered_second_teleporter.teleport_status = FALSE
-		if("0&1")
-			teleport_status = FALSE
-			membered_second_teleporter.teleport_status = TRUE
-
-
 //Аномалия телепортирует к такому же телепортеру, связываясь с ним
 /obj/anomaly/doubled_teleporter
 	name = "Refractions of light"
@@ -49,9 +26,33 @@
 	//Второй телепорт к которому присоединён телепортер
 	var/obj/anomaly/doubled_teleporter/membered_second_teleporter
 	var/distance_between_teleporters = 15
+	///Отсовский телепортер, применяется при удалении телепртов
+	var/is_father_teleporter = TRUE
 	var/spawn_second_teleporter = FALSE
 	//Телепортирует ли именно этот телепорт?
 	var/teleport_status = TRUE
+
+//Этот заспавнит своего второго брата
+/obj/anomaly/doubled_teleporter/with_second
+	spawn_second_teleporter = TRUE
+
+//Этот хоть и спавнит своего брата, но вот его "брат" уже телепортировать не умеет
+//Но аномалию поставим, дабы генератор аномалий не ставил чего-то там ещё и турф был безопасен.
+/obj/anomaly/doubled_teleporter/with_second/oneway/additional_spawn_action()
+	if(spawn_second_teleporter)
+		place_second_teleporter()
+	var/list/possible_states = list(
+		"1&0",
+		"0&1"
+	)
+	var/result_state = pick(possible_states)
+	switch(result_state)
+		if("1&0")
+			teleport_status = TRUE
+			membered_second_teleporter.teleport_status = FALSE
+		if("0&1")
+			teleport_status = FALSE
+			membered_second_teleporter.teleport_status = TRUE
 
 /obj/anomaly/doubled_teleporter/additional_spawn_action()
 	if(spawn_second_teleporter)
@@ -68,6 +69,7 @@
 		else
 			//Спавним второй телепортет и связываем их между собой
 			membered_second_teleporter = new /obj/anomaly/doubled_teleporter(picked_turf)
+			membered_second_teleporter.is_father_teleporter = FALSE
 			membered_second_teleporter.membered_second_teleporter = src
 			SSanom.AddImportantLog("Doubled_teleporter разместил своего собрата на координате : x: [x], y: [y], z: [z] в [round_duration_in_ticks/600]" )
 			return
@@ -89,8 +91,13 @@
 		target.forceMove(brother_turf)
 
 /obj/anomaly/doubled_teleporter/delete_anomaly()
-	membered_second_teleporter.delete_anomaly()
-	. = ..()
+	//Удаление уже выполнено, что-то не тааак
+	if(anomaly_deleting_operation_completed)
+		return
+	SSanom.remove_anomaly_from_cores(src)
+	if(membered_second_teleporter && is_father_teleporter)
+		membered_second_teleporter.Destroy()
+	anomaly_deleting_operation_completed = TRUE
 
 /obj/anomaly/rvach/get_detection_icon()
 	return "rvach_detection"

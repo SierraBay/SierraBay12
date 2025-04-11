@@ -18,6 +18,21 @@
 	sleep(11)
 	qdel(input)
 
+/turf/simulated/floor/exoplanet/titan_water/proc/drown_structure(obj/input)
+	input.anchored = TRUE
+	if(input.pulledby)
+		input.pulledby.stop_pulling()
+	visible_message(message = SPAN_BAD("[input] уходит на дно."), range = 7)
+	animate(input, alpha = 0, time = 10, easing = EASE_OUT)
+	sleep(11)
+	qdel(input)
+
+/turf/simulated/floor/exoplanet/titan_water/proc/drown_mech(mob/living/exosuit/mech)
+	mech.anchored = TRUE
+	visible_message(message = SPAN_BAD("[mech] уходит на дно."), range = 7)
+	animate(mech, alpha = 0, time = 10, easing = EASE_OUT)
+	sleep(11)
+	mech.Destroy()
 
 //Снимем с персонажа:.
 	//Рюкзак

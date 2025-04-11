@@ -77,7 +77,13 @@
 		words += char
 	return words
 
-/client/proc/start_counting_back_on_screen(time = 10 SECONDS, text_color = "#ff3333", input_shrift = "Verdana")
+/*
+* time - время в тиках (1/10 секунды), которое будет отображаться в таймере (формат ММ:СС)
+* text_color - цвет текста
+* input_shrift - шрифт
+* delete_after_time - если указано, таймер исчезнет с экрана через это время (в тиках)
+*/
+/client/proc/start_counting_back_on_screen(time = 10 SECONDS, text_color = "#ff3333", input_shrift = "Verdana", delete_after_time)
 	set waitfor = FALSE
 
 	var/obj/screen/screen_text_shit/T = new()
@@ -94,23 +100,26 @@
 	screen += T
 	animate(T, alpha = 255, time = 5, easing = EASE_IN)
 
-	var/real_seconds = round(time/10)
-	var/current_time = real_seconds
+	var/end_time = world.time + time
+	var/delete_time = delete_after_time ? (world.time + delete_after_time) : null
 
-	while(current_time >= 0)
-		if(QDELETED(T) || T.deleted_by_external)
-			return
+	while(world.time < end_time)
+		if(QDELETED(T) || (delete_time && world.time >= delete_time))
+			break
 
-		var/mins = floor(current_time/60)
-		var/secs = current_time % 60
+		var/remaining_ticks = end_time - world.time
+		var/remaining_seconds = round(remaining_ticks / 10) // Конвертируем тики в секунды
+
+		var/mins = floor(remaining_seconds / 60)
+		var/secs = remaining_seconds % 60
 		var/mins_text = mins < 10 ? "0[mins]" : "[mins]"
 		var/secs_text = secs < 10 ? "0[secs]" : "[secs]"
 
 		T.maptext = "<span style='vertical-align:top; text-align:center; color: [text_color]; font-size: 300%; text-shadow: 1px 1px 2px black, 0 0 1em black, 0 0 0.2em black; font-family: [input_shrift], \"Pterra\";'>[mins_text]:[secs_text]</span>"
 
-		current_time--
 		sleep(1 SECOND)
 
+	// Плавное исчезновение
 	if(!QDELETED(T) && screen)
 		animate(T, alpha = 0, time = 5, easing = EASE_OUT)
 		sleep(5)

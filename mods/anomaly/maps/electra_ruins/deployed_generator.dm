@@ -1,4 +1,3 @@
-/*
 /datum/map_template/ruin/exoplanet/electra_generator
 	name = "deployed_generator"
 	id = "planetsite_anomalies_generator"
@@ -15,4 +14,3 @@
 	name = "\improper Deployed science generator"
 	icon_state = "A"
 	turfs_airless = TRUE
-*/

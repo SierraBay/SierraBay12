@@ -1,4 +1,3 @@
-/*
 /datum/map_template/ruin/exoplanet/avanpost
 	name = "water avanpost"
 	id = "planetsite_anomalies_flying_home"
@@ -8,4 +7,3 @@
 	ruin_tags = RUIN_CHUDO_ANOMALIES
 
 /obj/structure/barrier/avanpost
-*/

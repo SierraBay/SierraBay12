@@ -1,13 +1,14 @@
 /datum/map/build_exoplanets()
 	//Игра заспавнит 1 обычную планету и 1 аномальную
 	var/list/anomaly_planets_list = list(
-		/obj/overmap/visitable/sector/exoplanet/flying,
-		/obj/overmap/visitable/sector/exoplanet/ice
+		/obj/overmap/visitable/sector/exoplanet/water
 	)
 	//Планеты которые сами по себе никогда не заспавнятся
 	var/list/shitspawn_planets = list(
-		/obj/overmap/visitable/sector/exoplanet/water
+		/obj/overmap/visitable/sector/exoplanet/flying,
+		/obj/overmap/visitable/sector/exoplanet/ice
 	)
+	var/spawn_only_anomaly_planet = TRUE
 	var/list/all_planets_list = subtypesof(/obj/overmap/visitable/sector/exoplanet)
 	//Я не придумал как обьяснять игре какая планета обычная, а какая аномальная без
 	//заранее подготовленных списков. Увы.
@@ -19,15 +20,18 @@
 	if(LAZYLEN(shitspawn_planets))
 		LAZYREMOVE(all_planets_list, shitspawn_planets)
 
-	for(var/i = 0, i < num_exoplanets, i++)
-		var/normal_planet_type = pick(all_planets_list)
-		var/obj/overmap/visitable/sector/exoplanet/new_planet = new normal_planet_type(null, world.maxx, world.maxy)
-		new_planet.build_level()
+
 	if(LAZYLEN(anomaly_planets_list))
 		LAZYREMOVE(all_planets_list, anomaly_planets_list)
 		var/anomaly_planet_type = pick(anomaly_planets_list)
-		var/obj/overmap/visitable/sector/exoplanet/anomaly_new_planet = new anomaly_planet_type(null, world.maxx, world.maxy)
+		var/obj/overmap/visitable/sector/exoplanet/anomaly_new_planet = new anomaly_planet_type(null, planet_size[1], planet_size[2])
 		anomaly_new_planet.build_level()
+	if(spawn_only_anomaly_planet)
+		return
+	for(var/i = 0, i < num_exoplanets, i++)
+		var/normal_planet_type = pick(all_planets_list)
+		var/obj/overmap/visitable/sector/exoplanet/new_planet = new normal_planet_type(null, planet_size[1], planet_size[2])
+		new_planet.build_level()
 
 //Данный код отвечает за размещение аномалий по всей планете.
 /obj/overmap/visitable/sector/exoplanet
@@ -94,7 +98,7 @@
 	var/list/planet_turfs = get_area_turfs(planetary_area)
 	for(var/obj/anomaly/picked_anomaly in SSanom.all_anomalies_cores)
 		if(!picked_anomaly.is_helper && planet_turfs.Find(get_turf(picked_anomaly)))
-			picked_anomaly.delete_anomaly()
+			picked_anomaly.Destroy()
 			deleted_anomalies++
 	for(var/obj/structure/big_artefact/picked_big_artefact in SSanom.big_anomaly_artefacts)
 		if(planet_turfs.Find(get_turf(picked_big_artefact)))

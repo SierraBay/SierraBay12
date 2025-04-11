@@ -44,6 +44,10 @@
 	min_anomalies_ammout = 500
 	max_anomalies_ammout = 700
 
+/obj/overmap/visitable/sector/exoplanet/water/New(nloc, max_x, max_y)
+	. = ..()
+	name = "Titan, water exoplanet"
+
 /obj/overmap/visitable/sector/exoplanet/water/build_level()
 	. = ..()
 	update_sun()
@@ -65,6 +69,12 @@
 	wall_type =  /turf/simulated/floor/exoplanet/titan_water/middle
 	mineral_turf =  /turf/simulated/floor/exoplanet/titan_water/middle
 	rock_color = COLOR_BLUE
+
+/datum/random_map/automata/cave_system/mountains/water/deep_water
+	iterations = 15
+	descriptor = "deep water"
+	wall_type =  /turf/simulated/floor/exoplanet/titan_water/maximum
+	mineral_turf =  /turf/simulated/floor/exoplanet/titan_water/maximum
 
 /obj/overmap/visitable/sector/exoplanet/water/generate_atmosphere()
 	atmosphere = new

@@ -3,13 +3,12 @@
 	var/weather_turf_type
 	var/list/connected_weather_turfs = list()
 	//Время смены
-	var/change_time_result
-	var/blowout_time_result
-	var/last_change_time
-	var/last_blowout_time
+	var/change_time
+	var/blowout_time
 	var/list/stages = list()
 	var/current_stage
 	var/area/my_area
+	var/my_z
 	//Выброс
 	var/can_blowout = FALSE
 	//Игрокам в зоне выброса сообщают о нём.
@@ -22,23 +21,19 @@
 /datum/weather_manager/New()
 	calculate_change_time()
 	calculate_blowout_time()
-	last_change_time = world.time
-	last_blowout_time = world.time
 	LAZYADD(SSweather.weather_managers_in_world, src)
-	START_PROCESSING(SSweather,src)
+	START_PROCESSING(SSweather, src)
 
 /datum/weather_manager/Process()
-	..()
-	if(world.time - last_change_time >= change_time_result)
+	if(world.time >= change_time)
 		change_stage()
-	if(can_blowout && world.time - last_blowout_time >= blowout_time_result)
+	if(can_blowout && world.time  >= blowout_time)
 		start_blowout()
 
 /datum/weather_manager/proc/change_stage()
 	set waitfor = FALSE
 	set background = TRUE
 	var/need_change = FALSE
-	last_change_time = world.time
 	for(var/mob/living/carbon/human/picked_human in GLOB.living_players)
 		if(get_z(picked_human) == get_z(pick(connected_weather_turfs)))
 			need_change = TRUE
@@ -66,7 +61,7 @@
 	if(!need_blowout)
 		report_progress("DEBUG ANOM: Должен был случиться выброс, но нет игроков на Z уровне погоды. Отмена.")
 		calculate_blowout_time()
-		last_blowout_time = world.time
+		START_PROCESSING(SSweather, src)
 		return FALSE
 	return TRUE
 
@@ -77,7 +72,7 @@
 /datum/weather_manager/proc/message_about_blowout(mob/living/input_mob)
 	if(LAZYLEN(blowout_messages))
 		input_mob.client.play_screentext_on_client_screen(pick(blowout_messages))
-	
+
 
 /datum/weather_manager/proc/prepare_to_blowout()
 	return TRUE
@@ -89,20 +84,20 @@
 
 /datum/weather_manager/proc/regenerate_anomalies_on_planet() //Выполняет перереспавн всех аномалий которые были заспавнены стандартным генератором на планете
 	set waitfor = FALSE
-	var/obj/overmap/visitable/sector/exoplanet/my_planet = map_sectors["[get_z(src)]"]
+	var/obj/overmap/visitable/sector/exoplanet/my_planet = map_sectors["[my_z]"]
 	my_planet.full_clear_from_anomalies()
 	my_planet.generate_big_anomaly_artefacts()
 
 /datum/weather_manager/proc/clean_anomalies_on_planet()
 	set waitfor = FALSE
-	var/obj/overmap/visitable/sector/exoplanet/my_planet = map_sectors["[get_z(src)]"]
+	var/obj/overmap/visitable/sector/exoplanet/my_planet = map_sectors["[my_z]"]
 	my_planet.full_clear_from_anomalies()
 
 /datum/weather_manager/proc/calculate_change_time()
-	change_time_result = rand(8, 20 MINUTES)
+	change_time = rand(8, 20 MINUTES) + world.time //Вычисляем во сколько будет следущая смена погоды
 
 /datum/weather_manager/proc/calculate_blowout_time()
-	blowout_time_result = rand(60 MINUTES, 85 MINUTES)
+	blowout_time = rand(60 MINUTES, 85 MINUTES) + world.time //Вычисляем во сколько будет следущий выброс.
 
 /datum/weather_manager/proc/calculate_blowout_message_delay_time()
 	delay_between_message_and_blowout = rand(2 MINUTES, 4 MINUTES)

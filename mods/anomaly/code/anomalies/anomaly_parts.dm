@@ -85,7 +85,7 @@
 		LAZYADD(list_of_parts, spawned_anomaly_part)
 	connect_core_with_parts(list_of_parts)
 	for(var/obj/anomaly/part/detected_anomaly_part in get_turf(src))
-		detected_anomaly_part.delete_anomaly(collaps = TRUE)
+		detected_anomaly_part.Destroy()
 
 ///Эта функция соединит все дополнительные обьекты и ядро между собой
 /obj/anomaly/proc/connect_core_with_parts(list/list_of_parts)
@@ -93,11 +93,6 @@
 		part.core = src
 		part.icon_state = icon_state
 		LAZYADD(anomaly_turfs, get_turf(part))
-
-///Этот обьект в случае детектирования подходящих условий, передаст информацию ядру.
-/obj/anomaly/part/Initialize()
-	. = ..()
-	SSanom.add_anomaly_in_helpers(src)
 
 /obj/anomaly/part
 	///ЯДРО, которму и передатся информация
