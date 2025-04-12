@@ -1,12 +1,15 @@
 /obj/item/mech_component/control_module
-	name = "exosuit control module"
+	name = "exosuit board computer"
 	desc = "A clump of circuitry and software chip docks, used to program exosuits."
 	icon_state = "control"
 	icon = 'icons/mecha/mech_equipment.dmi'
 	gender = NEUTER
 	color = COLOR_WHITE
 	can_be_pickuped = TRUE
+	//Список программ установленных в общей сумме
 	var/list/installed_software = list()
+	//Список плат вставленных в компьютер
+	var/list/installed_circuits = list()
 	var/max_installed_software = 2
 
 
@@ -42,8 +45,14 @@
 
 /obj/item/mech_component/control_module/proc/update_software()
 	installed_software = list()
+	installed_circuits = list()
 	for(var/obj/item/circuitboard/exosystem/program in contents)
 		installed_software |= program.contains_software
+		installed_circuits |= program
+	update_parts_images()
+
+/obj/item/mech_component/control_module/update_parts_images()
+	internal_parts_list_images = make_item_radial_menu_choices(installed_circuits)
 
 /obj/item/mech_component/sensors/update_parts_images()
 	var/list/parts_to_show = list()

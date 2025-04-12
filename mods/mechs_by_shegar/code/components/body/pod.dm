@@ -1,7 +1,6 @@
 /obj/item/mech_component/chassis/pod
 	name = "spherical exosuit chassis"
 	desc = "The NanoTrasen Katamari series cockpits have won a massive tender by SCG few years back. No one is sure why, but these terrible things keep popping up on every government facility."
-	hatch_descriptor = "hatch"
 	pilot_coverage = 100
 	transparent_cabin = TRUE
 	exosuit_desc_string = "a spherical chassis"
