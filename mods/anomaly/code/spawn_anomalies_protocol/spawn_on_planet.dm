@@ -1,12 +1,12 @@
 /datum/map/build_exoplanets()
 	//Игра заспавнит 1 обычную планету и 1 аномальную
 	var/list/anomaly_planets_list = list(
-		/obj/overmap/visitable/sector/exoplanet/water
+		/obj/overmap/visitable/sector/exoplanet/flying,
+		/obj/overmap/visitable/sector/exoplanet/ice
 	)
 	//Планеты которые сами по себе никогда не заспавнятся
 	var/list/shitspawn_planets = list(
-		/obj/overmap/visitable/sector/exoplanet/flying,
-		/obj/overmap/visitable/sector/exoplanet/ice
+		/obj/overmap/visitable/sector/exoplanet/water
 	)
 	var/spawn_only_anomaly_planet = FALSE
 	var/list/all_planets_list = subtypesof(/obj/overmap/visitable/sector/exoplanet)
