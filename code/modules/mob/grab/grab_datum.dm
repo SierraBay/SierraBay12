@@ -275,8 +275,6 @@
 // Used when you want an effect to happen when the grab enters this state as an upgrade
 /datum/grab/proc/enter_as_up(obj/item/grab/G)
 
-/datum/grab/proc/item_attack(obj/item/grab/G, obj/item)
-
 /datum/grab/proc/resolve_item_attack(obj/item/grab/G, mob/living/carbon/human/user, obj/item/I, target_zone)
 	return FALSE
 

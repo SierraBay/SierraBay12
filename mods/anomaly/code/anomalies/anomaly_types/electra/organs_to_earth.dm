@@ -1,44 +1,41 @@
-//Выдаёт список конечностей от введёной конечности до земли
+// Возвращает список конечностей от указанной до земли
 /mob/living/carbon/human/proc/list_organs_to_earth(input_organ)
-	var/list/result_damaged_zones = list()
-	var/attack_zone
-	if(!input_organ)
-		attack_zone = get_exposed_defense_zone()
-	else
-		attack_zone = input_organ
-	LAZYADD(result_damaged_zones, attack_zone)
-	if(attack_zone == BP_HEAD || attack_zone == BP_R_ARM || attack_zone == BP_R_HAND || attack_zone == BP_L_ARM || attack_zone == BP_L_HAND)
-		if(attack_zone == BP_R_HAND)
-			LAZYADD(result_damaged_zones, BP_R_ARM)
-		else if(attack_zone == BP_L_HAND)
-			LAZYADD(result_damaged_zones, BP_L_ARM)
-		LAZYADD(result_damaged_zones, BP_CHEST)
-		LAZYADD(result_damaged_zones, BP_GROIN)
-		var/attacked_leg = pick(BP_L_LEG, BP_R_LEG)
-		LAZYADD(result_damaged_zones, attacked_leg)
-		if(attacked_leg == BP_L_LEG)
-			LAZYADD(result_damaged_zones, BP_L_FOOT)
-		else if(attacked_leg == BP_R_LEG)
-			LAZYADD(result_damaged_zones, BP_R_FOOT)
+	var/attack_zone = input_organ || get_exposed_defense_zone()
 
-	else if(attack_zone == BP_CHEST)
-		LAZYADD(result_damaged_zones, BP_GROIN)
-		var/attacked_leg = pick(BP_L_LEG, BP_R_LEG)
-		LAZYADD(result_damaged_zones, attacked_leg)
-		if(attacked_leg == BP_L_LEG)
-			LAZYADD(result_damaged_zones, BP_L_FOOT)
-		else if(attacked_leg == BP_R_LEG)
-			LAZYADD(result_damaged_zones, BP_R_FOOT)
+	// Полный ассоциативный список всех возможных путей
+	var/static/list/limb_paths = list(
+		// Голова и туловище
+		BP_HEAD   = list(BP_HEAD, BP_CHEST, BP_GROIN, BP_R_LEG, BP_L_LEG),
+		BP_CHEST  = list(BP_CHEST, BP_GROIN, BP_R_LEG, BP_L_LEG),
+		BP_GROIN  = list(BP_GROIN, BP_R_LEG, BP_L_LEG),
 
-	else if(attack_zone == BP_GROIN)
-		var/attacked_leg = pick(BP_L_LEG, BP_R_LEG)
-		LAZYADD(result_damaged_zones, attacked_leg)
-		if(attacked_leg == BP_L_LEG)
-			LAZYADD(result_damaged_zones, BP_L_FOOT)
-		else if(attacked_leg == BP_R_LEG)
-			LAZYADD(result_damaged_zones, BP_R_FOOT)
-	else if(attack_zone == BP_L_LEG)
-		LAZYADD(result_damaged_zones, BP_L_FOOT)
-	else if(attack_zone == BP_R_LEG)
-		LAZYADD(result_damaged_zones, BP_R_FOOT)
-	return result_damaged_zones
+		// Правая сторона
+		BP_R_ARM  = list(BP_R_ARM, BP_CHEST, BP_GROIN, BP_R_LEG, BP_L_LEG),
+		BP_R_HAND = list(BP_R_HAND, BP_R_ARM, BP_CHEST, BP_GROIN, BP_R_LEG, BP_L_LEG),
+
+		// Левая сторона
+		BP_L_ARM  = list(BP_L_ARM, BP_CHEST, BP_GROIN, BP_R_LEG, BP_L_LEG),
+		BP_L_HAND = list(BP_L_HAND, BP_L_ARM, BP_CHEST, BP_GROIN, BP_R_LEG, BP_L_LEG),
+
+		// Ноги
+		BP_R_LEG  = list(BP_R_LEG, BP_R_FOOT),
+		BP_L_LEG  = list(BP_L_LEG, BP_L_FOOT),
+		BP_R_FOOT = list(BP_R_FOOT),
+		BP_L_FOOT = list(BP_L_FOOT)
+	)
+
+	// Получаем путь для указанной зоны
+	var/list/result = limb_paths[attack_zone]?:Copy()
+
+	// Если зона не найдена, возвращаем только её саму
+	if(!result)
+		return list(attack_zone)
+
+	// Обрабатываем специальные случаи с выбором ноги
+	for(var/i in 1 to LAZYLEN(result))
+		if(result[i] == BP_R_LEG)
+			result[i] = prob(50) ? BP_R_LEG : BP_L_LEG
+		else if(result[i] == BP_L_LEG)
+			result[i] = prob(50) ? BP_L_LEG : BP_R_LEG
+
+	return result

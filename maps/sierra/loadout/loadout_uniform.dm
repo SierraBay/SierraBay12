@@ -116,15 +116,15 @@
 	path = /obj/item/clothing/under/new_uniform/breeches
 
 /datum/gear/uniform/gorka_pants
-	display_name = "olive gorka paints"
+	display_name = "gorka pants"
 	path = /obj/item/clothing/under/new_uniform/gorka_pants
 
 /datum/gear/uniform/gorka_pants/New()
 	..()
 	var/uniforms = list()
-	uniforms["Olive gorka paints"]			= /obj/item/clothing/under/new_uniform/gorka_pants
-	uniforms["Tan gorka paints"]			= /obj/item/clothing/under/new_uniform/gorka_pants/tan
-	uniforms["Blue gorka paints"]			= /obj/item/clothing/under/new_uniform/gorka_pants/blue
+	uniforms["olive gorka pants"]			= /obj/item/clothing/under/new_uniform/gorka_pants
+	uniforms["tan gorka pants"]			= /obj/item/clothing/under/new_uniform/gorka_pants/tan
+	uniforms["blue gorka pants"]			= /obj/item/clothing/under/new_uniform/gorka_pants/blue
 	gear_tweaks += new/datum/gear_tweak/path(uniforms)
 
 /datum/gear/uniform/netrunner
@@ -132,13 +132,13 @@
 	display_name = "specialized netrunner suit"
 
 /datum/gear/uniform/plain_suit
-	display_name = "White plain suit"
+	display_name = "white plain suit"
 	path = /obj/item/clothing/under/new_uniform/plain_suit
 
 /datum/gear/uniform/plain_suit/New()
 	var/uniforms = list()
-	uniforms["White plain suit"]			= /obj/item/clothing/under/new_uniform/plain_suit
-	uniforms["Dark plain suit"]			= /obj/item/clothing/under/new_uniform/plain_suit/dark
+	uniforms["white plain suit"]			= /obj/item/clothing/under/new_uniform/plain_suit
+	uniforms["dark plain suit"]			= /obj/item/clothing/under/new_uniform/plain_suit/dark
 	gear_tweaks += new/datum/gear_tweak/path(uniforms)
 
 /datum/gear/uniform/kitsch_dress
@@ -164,14 +164,6 @@
 	display_name = "emergency medical responder's jumpsuit"
 	path = /obj/item/clothing/under/new_uniform/ems
 
-/datum/gear/uniform/gorka_pants/New()
-	. = ..()
-	var/list/options = list()
-	options["olive gorka pants"] = /obj/item/clothing/under/new_uniform/gorka_pants
-	options["tan gorka pants"] = /obj/item/clothing/under/new_uniform/gorka_pants/tan
-	options["blue gorka pants"] = /obj/item/clothing/under/new_uniform/gorka_pants/blue
-	gear_tweaks += new/datum/gear_tweak/path(options)
-
 
 /datum/gear/uniform/ems/New()
 	var/uniforms = list()
@@ -179,13 +171,10 @@
 	uniforms["white ems suit"]			= /obj/item/clothing/under/new_uniform/ems/white
 	gear_tweaks += new/datum/gear_tweak/path(uniforms)
 
-/datum/gear/uniform/rubiwhite
-	display_name = "Rubiwhite"
+/datum/gear/uniform/papaleroy_rubiwhite
+	display_name = "rubiwhite"
 	path = /obj/item/clothing/under/new_uniform/papaleroy_rubiwhite
 
-/datum/gear/uniform/pcrc
-	display_name = "PCRC uniform"
-	path = /obj/item/clothing/under/new_uniform/chvk
 
 /datum/gear/uniform/skirt_c
 	display_name = "short skirt, colour select"
@@ -196,3 +185,105 @@
 	display_name = "long skirt, colour select"
 	path = /obj/item/clothing/under/skirt/longskirt
 	flags = GEAR_HAS_COLOR_SELECTION
+
+
+//remission
+/datum/gear/uniform/woman_business_uniform
+	display_name = "woman business suit"
+	path = /obj/item/clothing/under/new_uniform/woman_business_uniform
+
+/datum/gear/uniform/woman_business_uniform/New()
+	..()
+	var/uniforms = list()
+	uniforms["blue vest suit"] = /obj/item/clothing/under/new_uniform/woman_business_uniform
+	uniforms["red suit"] = /obj/item/clothing/under/new_uniform/woman_business_uniform/red
+	uniforms["azure suit"] = /obj/item/clothing/under/new_uniform/woman_business_uniform/azure
+	uniforms["blue skirt suit"] = /obj/item/clothing/under/new_uniform/woman_business_uniform/dress
+	uniforms["plaid dress"] = /obj/item/clothing/under/new_uniform/woman_business_uniform/plaid
+	uniforms["black dress"] = /obj/item/clothing/under/new_uniform/woman_business_uniform/black
+	gear_tweaks += new/datum/gear_tweak/path(uniforms)
+
+/datum/gear/uniform/heartneck_dress
+	display_name = "black heart neckline dress"
+	path = /obj/item/clothing/under/new_uniform/heartneck_dress
+
+
+/datum/gear/uniform/camo_brown
+	display_name = "dark olive camo jumpsuit"
+	path = /obj/item/clothing/under/new_uniform/camo_brown
+
+/datum/gear/uniform/plaid_colored_dress
+	display_name = "colorable plaid dress"
+	path = /obj/item/clothing/under/new_uniform/plaid_colored_dress
+	flags = GEAR_HAS_COLOR_SELECTION
+
+/datum/gear/uniform/plaid_colored_dress/New()
+	..()
+	var/uniforms = list()
+	uniforms["plaid"] = /obj/item/clothing/under/new_uniform/plaid_colored_dress
+	uniforms["straight"] = /obj/item/clothing/under/new_uniform/plaid_colored_dress/war2
+	uniforms["short sleeve"] = /obj/item/clothing/under/new_uniform/plaid_colored_dress/war3
+	gear_tweaks += new/datum/gear_tweak/path(uniforms)
+
+/datum/gear/uniform/office_skirt
+	display_name = "colorable skirts"
+	path = /obj/item/clothing/under/new_uniform/office_skirt
+	flags = GEAR_HAS_COLOR_SELECTION
+
+/datum/gear/uniform/office_skirt/New()
+	..()
+	var/uniforms = list()
+	uniforms["mini"] = /obj/item/clothing/under/new_uniform/office_skirt
+	uniforms["bell"] = /obj/item/clothing/under/new_uniform/office_skirt/wavy
+	uniforms["slit"] = /obj/item/clothing/under/new_uniform/office_skirt/slit
+	gear_tweaks += new/datum/gear_tweak/path(uniforms)
+
+/datum/gear/uniform/camopants
+	display_name = "multicam pants"
+	path = /obj/item/clothing/under/new_uniform/camopants
+
+/datum/gear/uniform/camopants/New()
+	..()
+	var/uniforms = list()
+	uniforms["camo"] = /obj/item/clothing/under/new_uniform/camopants
+	uniforms["baggy sand"] = /obj/item/clothing/under/new_uniform/camopants/baggy
+	uniforms["grey"] = /obj/item/clothing/under/new_uniform/camopants/grey
+	uniforms["baggy grey"] = /obj/item/clothing/under/new_uniform/camopants/greybaggy
+	gear_tweaks += new/datum/gear_tweak/path(uniforms)
+
+
+/datum/gear/uniform/shortsmini
+	display_name = "very short shorts"
+	path = /obj/item/clothing/under/new_uniform/shortsmini
+
+/datum/gear/uniform/shortsmini/New()
+	..()
+	var/uniforms = list()
+	uniforms["black"] = /obj/item/clothing/under/new_uniform/shortsmini
+	uniforms["camo"] = /obj/item/clothing/under/new_uniform/shortsmini/camo
+	uniforms["denim"] = /obj/item/clothing/under/new_uniform/shortsmini/denim
+	gear_tweaks += new/datum/gear_tweak/path(uniforms)
+
+/datum/gear/uniform/scutracksuit
+	display_name = "scuba tracksuit"
+	path = /obj/item/clothing/under/new_uniform/scutracksuit
+
+/datum/gear/uniform/scutracksuit/New()
+	..()
+	var/uniforms = list()
+	uniforms["blue-red"] = /obj/item/clothing/under/new_uniform/scutracksuit
+	uniforms["red-white"] = /obj/item/clothing/under/new_uniform/scutracksuit/red
+	uniforms["black-white"] = /obj/item/clothing/under/new_uniform/scutracksuit/black
+	gear_tweaks += new/datum/gear_tweak/path(uniforms)
+
+/datum/gear/uniform/runningpants
+	display_name = "running pants"
+	path = /obj/item/clothing/under/new_uniform/runningpants
+
+/datum/gear/uniform/runningpants/New()
+	..()
+	var/uniforms = list()
+	uniforms["blue-red"] = /obj/item/clothing/under/new_uniform/runningpants
+	uniforms["red-white"] = /obj/item/clothing/under/new_uniform/runningpants/red
+	uniforms["black-white"] = /obj/item/clothing/under/new_uniform/runningpants/black
+	gear_tweaks += new/datum/gear_tweak/path(uniforms)

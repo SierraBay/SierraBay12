@@ -1,0 +1,213 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aY" = (
+/obj/structure/catwalk,
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/template_noop)
+"cy" = (
+/obj/machinery/constructable_frame/computerframe{
+	dir = 4
+	},
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/template_noop)
+"cH" = (
+/obj/random/trash,
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/template_noop)
+"em" = (
+/obj/structure/catwalk,
+/obj/random/trash,
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/template_noop)
+"eQ" = (
+/obj/paint/nt_white/playable_yacht,
+/turf/simulated/wall/r_wall/hull,
+/area/template_noop)
+"gq" = (
+/obj/wallframe_spawn/reinforced/hull,
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/template_noop)
+"iO" = (
+/obj/structure/bed/chair/shuttle{
+	dir = 1
+	},
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/template_noop)
+"jO" = (
+/obj/structure/fireaxecabinet{
+	pixel_x = -32
+	},
+/obj/structure/water_drown_structures/wooden_planks,
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/template_noop)
+"lP" = (
+/obj/paint/nt_white/playable_yacht,
+/turf/simulated/wall/r_wall/hull{
+	opacity = 0;
+	mouse_opacity = 0
+	},
+/area/template_noop)
+"mb" = (
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -32
+	},
+/obj/decal/skat_decals/wires_first,
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/template_noop)
+"sk" = (
+/obj/machinery/door/airlock/external,
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/template_noop)
+"tQ" = (
+/obj/machinery/constructable_frame/computerframe{
+	dir = 8
+	},
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/template_noop)
+"uf" = (
+/obj/decal/skat_decals/water_and_pipes,
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/template_noop)
+"vf" = (
+/turf/template_noop,
+/area/template_noop)
+"vK" = (
+/obj/machinery/constructable_frame/computerframe,
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/template_noop)
+"wJ" = (
+/obj/structure/closet/walllocker/emerglocker/east,
+/obj/random/trash,
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/template_noop)
+"xs" = (
+/obj/structure/bed/chair/shuttle{
+	dir = 1
+	},
+/obj/random/trash,
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/template_noop)
+"Bd" = (
+/obj/machinery/atmospherics/unary/engine{
+	dir = 1
+	},
+/obj/paint/nt_white/playable_yacht,
+/turf/simulated/wall/r_wall/hull,
+/area/template_noop)
+"CS" = (
+/obj/structure/water_drown_structures/paper,
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/template_noop)
+"Fj" = (
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/template_noop)
+"Hu" = (
+/obj/decal/skat_decals/wires_first,
+/turf/template_noop,
+/area/template_noop)
+"HY" = (
+/turf/simulated/shuttle/wall/corner/dark/sw{
+	dir = 8;
+	opacity = 0
+	},
+/area/template_noop)
+"Mq" = (
+/obj/structure/water_drown_structures/wooden_planks,
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/template_noop)
+"Px" = (
+/turf/simulated/shuttle/wall/corner/dark{
+	dir = 1;
+	opacity = 0
+	},
+/area/template_noop)
+
+(1,1,1) = {"
+HY
+lP
+lP
+lP
+lP
+eQ
+eQ
+eQ
+eQ
+eQ
+eQ
+Bd
+Hu
+"}
+(2,1,1) = {"
+vf
+vf
+lP
+gq
+gq
+cy
+cy
+jO
+mb
+Mq
+eQ
+eQ
+eQ
+"}
+(3,1,1) = {"
+lP
+lP
+lP
+gq
+vK
+xs
+iO
+uf
+CS
+cH
+sk
+em
+sk
+"}
+(4,1,1) = {"
+lP
+lP
+lP
+gq
+vK
+iO
+iO
+CS
+Mq
+Fj
+sk
+aY
+sk
+"}
+(5,1,1) = {"
+vf
+vf
+lP
+gq
+gq
+tQ
+tQ
+wJ
+cH
+CS
+eQ
+eQ
+eQ
+"}
+(6,1,1) = {"
+Px
+lP
+lP
+lP
+lP
+eQ
+eQ
+eQ
+eQ
+eQ
+eQ
+Bd
+Hu
+"}

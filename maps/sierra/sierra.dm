@@ -149,7 +149,7 @@
 	// --- MAP FILES --- //
 
 		// ~SIERRA~ //
-	#include "z1-z5_sierra.dmm"
+	#include "z1-z4_sierra.dmm"
 	#include "z6_admin.dmm"
 	#include "z7_transit.dmm"
 	#include "../away/empty.dmm"
@@ -173,7 +173,7 @@
 	#include "../away/meatstation/meatstation.dm"
 	#include "../away/miningstation/miningstation.dm"
 	#include "../away/mininghome/mininghome.dm"
-	#include "../away/scavver/scavver_gantry.dm"
+	#include "../../mods/_maps/scavver/scavver_gantry.dm"
 	#include "../away/abandoned_hotel/abandoned_hotel.dm"
 	#include "../event/iccgn_ship/icgnv_hound.dm"
 	#include "../event/sfv_arbiter/sfv_arbiter.dm"

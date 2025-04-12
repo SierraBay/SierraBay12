@@ -287,6 +287,9 @@
 	icon_state = "2-8"
 	},
 /obj/catwalk_plated,
+/obj/machinery/atmospherics/pipe/simple/visible/fuel{
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/verne/engineering)
 "bt" = (
@@ -408,11 +411,11 @@
 	},
 /area/verne/engineering/external)
 "bT" = (
-/obj/machinery/atmospherics/unary/vent_pump/siphon/on/atmos{
-	dir = 8;
+/obj/machinery/atmospherics/unary/vent_pump/siphon/on/atmos/tank{
+	id_tag = "vernechamber_out";
 	internal_pressure_bound = 35000;
 	internal_pressure_bound_default = 35000;
-	id_tag = "vernechamber_out"
+	dir = 8
 	},
 /turf/simulated/floor/reinforced{
 	map_airless = 1
@@ -586,6 +589,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/visible/fuel,
 /turf/simulated/floor/tiled/techmaint,
 /area/verne/engineering/atmospherics)
 "cI" = (
@@ -604,6 +608,9 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
 /obj/catwalk_plated,
+/obj/machinery/atmospherics/pipe/simple/visible/fuel{
+	dir = 9
+	},
 /turf/simulated/floor/plating,
 /area/verne/engineering/atmospherics)
 "cL" = (
@@ -664,6 +671,9 @@
 "dc" = (
 /obj/floor_decal/corner/b_green{
 	dir = 5
+	},
+/obj/machinery/atmospherics/unary/vent_scrubber/on{
+	dir = 1
 	},
 /turf/simulated/floor/tiled/techmaint,
 /area/verne/engineering/atmospherics)
@@ -1167,10 +1177,10 @@
 	},
 /area/verne/engineering/external)
 "hq" = (
-/obj/machinery/atmospherics/unary/vent_pump/siphon/on/atmos{
+/obj/machinery/atmospherics/unary/vent_pump/siphon/on/atmos/tank{
+	id_tag = "vernechamber_out";
 	internal_pressure_bound = 35000;
-	internal_pressure_bound_default = 35000;
-	id_tag = "vernechamber_out"
+	internal_pressure_bound_default = 35000
 	},
 /turf/simulated/floor/reinforced{
 	map_airless = 1
@@ -1342,8 +1352,11 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/manifold4w/hidden/scrubbers,
 /obj/catwalk_plated,
+/obj/machinery/atmospherics/pipe/simple/visible/fuel{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/verne/engineering/atmospherics)
 "jz" = (
@@ -1698,6 +1711,9 @@
 	icon_state = "4-8"
 	},
 /obj/catwalk_plated,
+/obj/machinery/atmospherics/pipe/simple/visible/fuel{
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/verne/engineering/atmospherics)
 "nw" = (
@@ -2033,6 +2049,9 @@
 /obj/floor_decal/industrial/warning{
 	dir = 8
 	},
+/obj/machinery/atmospherics/pipe/simple/visible/fuel{
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/verne/engineering)
 "qu" = (
@@ -2235,6 +2254,9 @@
 	icon_state = "4-8"
 	},
 /obj/catwalk_plated,
+/obj/machinery/atmospherics/pipe/simple/visible/fuel{
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/verne/engineering)
 "sh" = (
@@ -2525,6 +2547,9 @@
 	},
 /obj/machinery/meter,
 /obj/catwalk_plated,
+/obj/machinery/atmospherics/pipe/simple/visible/fuel{
+	dir = 5
+	},
 /turf/simulated/floor/plating,
 /area/verne/engineering/atmospherics)
 "uh" = (
@@ -3126,8 +3151,9 @@
 	dir = 4;
 	pixel_x = -24
 	},
-/obj/machinery/atmospherics/unary/vent_scrubber/on{
-	dir = 4
+/obj/machinery/atmospherics/binary/pump/high_power{
+	dir = 1;
+	name = "Fuel to Catfish"
 	},
 /turf/simulated/floor/tiled/techmaint,
 /area/verne/engineering/atmospherics)
@@ -3238,6 +3264,9 @@
 	},
 /obj/machinery/light{
 	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/visible/fuel{
+	dir = 6
 	},
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 4
@@ -3550,6 +3579,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/catwalk_plated,
+/obj/machinery/atmospherics/pipe/simple/visible/fuel,
 /turf/simulated/floor/plating,
 /area/verne/engineering/atmospherics)
 "Em" = (
@@ -3696,7 +3726,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
 	},
-/obj/machinery/atmospherics/pipe/simple/visible/fuel,
+/obj/machinery/atmospherics/pipe/manifold/visible/fuel{
+	dir = 4
+	},
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
@@ -3851,6 +3883,9 @@
 	dir = 4
 	},
 /obj/catwalk_plated,
+/obj/machinery/atmospherics/pipe/simple/visible/fuel{
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/verne/engineering/atmospherics)
 "GA" = (
@@ -4191,6 +4226,9 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/visible/fuel{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/verne/engineering)
 "Kq" = (
@@ -4215,6 +4253,7 @@
 	icon_state = "16-0"
 	},
 /obj/floor_decal/industrial/warning/full,
+/obj/machinery/atmospherics/pipe/zpipe/up/fuel,
 /turf/simulated/floor/plating,
 /area/verne/engineering/atmospherics)
 "Kx" = (
@@ -5038,6 +5077,9 @@
 	id_tag = "verneblastd3";
 	name = "Verne Protective Blast Doors"
 	},
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/verne/engineering/thrustgen)
 "Si" = (
 /obj/paint_stripe/gunmetal,
@@ -5107,6 +5149,9 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/visible/fuel{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/verne/engineering)
 "SO" = (
@@ -5289,10 +5334,8 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
-	dir = 4
-	},
 /obj/catwalk_plated,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/plating,
 /area/verne/engineering/atmospherics)
 "Uu" = (
@@ -5464,6 +5507,9 @@
 	},
 /obj/floor_decal/industrial/fire{
 	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/visible/fuel{
+	dir = 8
 	},
 /turf/simulated/floor/plating,
 /area/verne/engineering)

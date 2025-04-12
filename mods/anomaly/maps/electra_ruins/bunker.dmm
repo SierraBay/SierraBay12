@@ -234,17 +234,11 @@
 /obj/decal/cleanable/generic,
 /obj/decal/cleanable/dirt,
 /obj/item/disk/secret_project/science,
-/obj/random/documents{
-	pixel_y = -16;
-	pixel_x = -8
-	},
-/obj/random/documents,
 /turf/simulated/floor/holofloor/tiled,
 /area/map_template/bunker)
 "vR" = (
 /obj/structure/table/steel_reinforced,
 /obj/decal/cleanable/dirt,
-/obj/random/documents,
 /turf/simulated/floor/holofloor/tiled,
 /area/map_template/bunker)
 "vW" = (
@@ -254,8 +248,6 @@
 	info = "Техника отказала, пишу на эту бумажку. Наш отряд вернулся с полевой экспедиции и обнаружила, что основная научная группа эвакуировалась.  Если кто-то из наших вернётся, мы отправились на местную гору, высота номер 102, попытаемся свзяаться с штабом. Техника сгорела из-за откуда-то взявшейся молнии, чертовщина...";
 	name = "Записка"
 	},
-/obj/random/documents,
-/obj/random/documents,
 /obj/item/disk/secret_project/science,
 /obj/item/disk/secret_project/science,
 /obj/item/disk/secret_project/science,
@@ -355,15 +347,6 @@
 /obj/structure/aurora/vault_door,
 /turf/simulated/floor/holofloor/tiled,
 /area/map_template/bunker)
-"Ey" = (
-/obj/decal/cleanable/dirt,
-/obj/item/disk/secret_project/science,
-/obj/random/documents,
-/obj/random/documents{
-	pixel_y = -14
-	},
-/turf/simulated/floor/holofloor/tiled,
-/area/map_template/bunker)
 "Fi" = (
 /obj/structure/largecrate,
 /obj/random/loot,
@@ -400,7 +383,6 @@
 /obj/item/disk/secret_project/science,
 /obj/item/disk/secret_project/science,
 /obj/item/disk/secret_project/science,
-/obj/random/documents,
 /obj/item/toy/bronze_pig,
 /turf/simulated/floor/holofloor/tiled,
 /area/map_template/bunker)
@@ -439,11 +421,6 @@
 "Lx" = (
 /obj/decal/cleanable/generic,
 /obj/decal/cleanable/dirt,
-/turf/simulated/floor/holofloor/tiled,
-/area/map_template/bunker)
-"Oc" = (
-/obj/decal/cleanable/dirt,
-/obj/random/documents,
 /turf/simulated/floor/holofloor/tiled,
 /area/map_template/bunker)
 "OQ" = (
@@ -501,7 +478,6 @@
 	dir = 4
 	},
 /obj/decal/cleanable/dirt,
-/obj/random/documents,
 /turf/simulated/floor/holofloor/tiled,
 /area/map_template/bunker)
 "WC" = (
@@ -548,7 +524,6 @@
 "YZ" = (
 /obj/decal/cleanable/dirt,
 /obj/item/disk/secret_project/science,
-/obj/random/documents,
 /turf/simulated/floor/holofloor/tiled,
 /area/map_template/bunker)
 "Zu" = (
@@ -1308,7 +1283,7 @@ cg
 vg
 Lx
 WQ
-Ey
+YZ
 YZ
 WQ
 ZL
@@ -1352,7 +1327,7 @@ Lx
 ro
 Ek
 vi
-Oc
+AB
 WQ
 ZL
 Yv

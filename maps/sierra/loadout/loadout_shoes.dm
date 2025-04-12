@@ -63,3 +63,26 @@
 	get["red geta"] = /obj/item/clothing/shoes/geta
 	get["black geta"] = /obj/item/clothing/shoes/geta/black
 	gear_tweaks += new/datum/gear_tweak/path(get)
+
+
+/datum/gear/shoes/martens_shoes
+	display_name = "martens shoes"
+	path = /obj/item/clothing/shoes/martens_shoes
+
+/datum/gear/shoes/martens_shoes/short/New()
+	..()
+	var/get = list()
+	get["classic"] = /obj/item/clothing/shoes/martens_shoes
+	get["short"] = /obj/item/clothing/shoes/martens_shoes/short
+	gear_tweaks += new/datum/gear_tweak/path(get)
+
+
+/datum/gear/shoes/trekking_boots
+	display_name = "trekking boots"
+	path = /obj/item/clothing/shoes/trekking_boots
+
+
+/datum/gear/shoes/lowsneackers
+	display_name = "low sneackers"
+	path = /obj/item/clothing/shoes/lowsneackers
+	flags = GEAR_HAS_COLOR_SELECTION

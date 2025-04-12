@@ -1,0 +1,4 @@
+author: Builder13
+changes:
+  - {bugfix: Пофиксил верб Player List}
+delete-after: true

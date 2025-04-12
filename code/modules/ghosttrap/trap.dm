@@ -91,7 +91,7 @@ var/global/list/ghost_traps
 		if(!assess_candidate(O, target, FALSE))
 			continue
 		if(O.client)
-			to_chat(O, SPAN_BOLD(FONT_LARGE("[request_string] <a href='?src=\ref[src];candidate=\ref[O];target=\ref[target]'>(Occupy)</a> ([ghost_follow_link(target, O)])")))
+			to_chat(O, SPAN_BOLD(FONT_LARGE("[request_string] <a href='byond://?src=\ref[src];candidate=\ref[O];target=\ref[target]'>(Occupy)</a> ([ghost_follow_link(target, O)])")))
 			sound_to(O, 'sound/effects/ding2.ogg')
 
 /datum/ghosttrap/proc/unregister_target(target)

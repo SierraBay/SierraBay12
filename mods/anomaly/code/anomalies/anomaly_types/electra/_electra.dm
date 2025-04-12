@@ -50,7 +50,7 @@
 	var/turf/T = get_turf(src)
 	get_mobs_and_objs_in_view_fast(T, effect_range, victims, objs)
 	for(var/atom/movable/atoms in victims)
-		if(inmech_sec(atoms))
+		if(inmech(atoms))
 			continue
 		get_effect_by_anomaly(atoms)
 	for(var/atom/movable/atoms in objs)
@@ -186,7 +186,7 @@
 		SPAN_WARNING("You hear a heavy electrical crack.") \
 		)
 
-/obj/anomaly/electra/get_detection_icon()
+/obj/anomaly/electra/get_detection_icon(mob/living/viewer)
 	if(effect_range == 1)
 		return "electra_detection"
 	else if(effect_range == 2)

@@ -14,7 +14,7 @@
 	return ..()
 
 /datum/build_mode/copypaste/proc/get_location(atom/A)
-	return "[A.loc.name]([A.x],[A.y],[A.z]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[A.x];Y=[A.y];Z=[A.z]'>JMP</a>)"
+	return "[A.loc.name]([A.x],[A.y],[A.z]) (<a href='byond://?_src_=holder;adminplayerobservecoodjump=1;X=[A.x];Y=[A.y];Z=[A.z]'>JMP</a>)"
 
 /datum/build_mode/copypaste/OnClick(atom/object, list/parameters)
 	if(parameters["left"])

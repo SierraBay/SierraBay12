@@ -127,14 +127,14 @@ var/global/list/gear_datums = list()
 		fcolor = "#e67300"
 	. += "<table align = 'center' width = 100%>"
 	. += "<tr><td colspan=3><center>"
-	. += "<a href='?src=\ref[src];prev_slot=1'>\<=</a><b>[SPAN_COLOR(fcolor, "\[[pref.gear_slot]\]")] </b><a href='?src=\ref[src];next_slot=1'>=\></a>"
+	. += "<a href='byond://?src=\ref[src];prev_slot=1'>\<=</a><b>[SPAN_COLOR(fcolor, "\[[pref.gear_slot]\]")] </b><a href='byond://?src=\ref[src];next_slot=1'>=\></a>"
 
 	if(config.max_gear_cost < INFINITY)
 		. += "<b>[SPAN_COLOR(fcolor, "[total_cost]/[config.max_gear_cost]")] loadout points spent.</b>"
 
-	. += "<a href='?src=\ref[src];clear_loadout=1'>Clear Loadout</a>"
-	. += "<a href='?src=\ref[src];toggle_hiding=1'>[hide_unavailable_gear ? "Show all" : "Hide unavailable"]</a>"
-	. += "<a href='?src=\ref[src];copy_loadout=1'>Copy Loadout</a>"
+	. += "<a href='byond://?src=\ref[src];clear_loadout=1'>Clear Loadout</a>"
+	. += "<a href='byond://?src=\ref[src];toggle_hiding=1'>[hide_unavailable_gear ? "Show all" : "Hide unavailable"]</a>"
+	. += "<a href='byond://?src=\ref[src];copy_loadout=1'>Copy Loadout</a>"
 	. += "</center></td></tr>"
 
 	. += "<tr><td colspan=3><center><b>"
@@ -157,9 +157,9 @@ var/global/list/gear_datums = list()
 			. += " [SPAN_CLASS("linkOn", "[category] - [category_cost]")] "
 		else
 			if(category_cost)
-				. += " <a href='?src=\ref[src];select_category=[category]'>[SPAN_COLOR("#e67300", "[category] - [category_cost]")]</a> "
+				. += " <a href='byond://?src=\ref[src];select_category=[category]'>[SPAN_COLOR("#e67300", "[category] - [category_cost]")]</a> "
 			else
-				. += " <a href='?src=\ref[src];select_category=[category]'>[category] - 0</a> "
+				. += " <a href='byond://?src=\ref[src];select_category=[category]'>[category] - 0</a> "
 
 	. += "</b></center></td></tr>"
 
@@ -298,7 +298,7 @@ var/global/list/gear_datums = list()
 			for(var/datum/gear_tweak/tweak in G.gear_tweaks)
 				var/contents = tweak.get_contents(get_tweak_metadata(G, tweak))
 				if(contents)
-					entry += " <a href='?src=\ref[src];gear=\ref[G];tweak=\ref[tweak]'>[contents]</a>"
+					entry += " <a href='byond://?src=\ref[src];gear=\ref[G];tweak=\ref[tweak]'>[contents]</a>"
 			entry += "</td></tr>"
 		if(!hide_unavailable_gear || allowed || ticked)
 			. += entry

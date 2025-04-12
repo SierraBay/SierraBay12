@@ -2,6 +2,10 @@
 	var/list/may_be_special_role
 	var/list/be_special_role
 
+/datum/preferences_slot
+	var/list/may_be_special_role
+	var/list/be_special_role
+
 /datum/category_item/player_setup_item/antagonism/candidacy
 	name = "Candidacy"
 	sort_order = 1
@@ -13,6 +17,10 @@
 /datum/category_item/player_setup_item/antagonism/candidacy/save_character(datum/pref_record_writer/W)
 	W.write("be_special", pref.be_special_role)
 	W.write("may_be_special", pref.may_be_special_role)
+
+/datum/category_item/player_setup_item/antagonism/candidacy/load_slot(datum/pref_record_reader/R, datum/preferences_slot/slot)
+	slot.be_special_role = R.read("be_special")
+	slot.may_be_special_role = R.read("may_be_special")
 
 /datum/category_item/player_setup_item/antagonism/candidacy/sanitize_character()
 	if(!istype(pref.be_special_role))
@@ -41,20 +49,20 @@
 		if(jobban_isbanned(preference_mob(), antag.id) || (antag.id == MODE_MALFUNCTION && jobban_isbanned(preference_mob(), "AI")))
 			. += "[SPAN_DANGER("\[BANNED\]")]<br>"
 		else if(antag.id in pref.be_special_role)
-			. += "[SPAN_CLASS("linkOn", "High")] <a href='?src=\ref[src];add_maybe=[antag.id]'>Low</a> <a href='?src=\ref[src];del_special=[antag.id]'>Never</a></br>"
+			. += "[SPAN_CLASS("linkOn", "High")] <a href='byond://?src=\ref[src];add_maybe=[antag.id]'>Low</a> <a href='byond://?src=\ref[src];del_special=[antag.id]'>Never</a></br>"
 		else if(antag.id in pref.may_be_special_role)
-			. += "<a href='?src=\ref[src];add_special=[antag.id]'>High</a> [SPAN_CLASS("linkOn", "Low")] <a href='?src=\ref[src];del_special=[antag.id]'>Never</a></br>"
+			. += "<a href='byond://?src=\ref[src];add_special=[antag.id]'>High</a> [SPAN_CLASS("linkOn", "Low")] <a href='byond://?src=\ref[src];del_special=[antag.id]'>Never</a></br>"
 		else
-			. += "<a href='?src=\ref[src];add_special=[antag.id]'>High</a> <a href='?src=\ref[src];add_maybe=[antag.id]'>Low</a> [SPAN_CLASS("linkOn", "Never")]</br>"
+			. += "<a href='byond://?src=\ref[src];add_special=[antag.id]'>High</a> <a href='byond://?src=\ref[src];add_maybe=[antag.id]'>Low</a> [SPAN_CLASS("linkOn", "Never")]</br>"
 
 		. += "</td></tr>"
 
 	// Special handling for pAI role
 	. += "<tr></tr><tr><td>pAI:</td>"
 	if (BE_PAI in pref.be_special_role)
-		. += "<td>[SPAN_CLASS("linkOn", "Yes")] <a href='?src=\ref[src];del_special=[BE_PAI]'>No</a></br></td></tr>"
+		. += "<td>[SPAN_CLASS("linkOn", "Yes")] <a href='byond://?src=\ref[src];del_special=[BE_PAI]'>No</a></br></td></tr>"
 	else
-		. += "<td><a href='?src=\ref[src];add_special=[BE_PAI]'>Yes</a> [SPAN_CLASS("linkOn", "No")]</br></td></tr>"
+		. += "<td><a href='byond://?src=\ref[src];add_special=[BE_PAI]'>Yes</a> [SPAN_CLASS("linkOn", "No")]</br></td></tr>"
 	. += "</table>"
 	. = jointext(.,null)
 
@@ -64,6 +72,7 @@
 			return TOPIC_HANDLED
 		pref.be_special_role |= href_list["add_special"]
 		pref.may_be_special_role -= href_list["add_special"]
+		refresh_slot_roles()
 		return TOPIC_REFRESH
 
 	if(href_list["del_special"])
@@ -71,11 +80,13 @@
 			return TOPIC_HANDLED
 		pref.be_special_role -= href_list["del_special"]
 		pref.may_be_special_role -= href_list["del_special"]
+		refresh_slot_roles()
 		return TOPIC_REFRESH
 
 	if(href_list["add_maybe"])
 		pref.be_special_role -= href_list["add_maybe"]
 		pref.may_be_special_role |= href_list["add_maybe"]
+		refresh_slot_roles()
 		return TOPIC_REFRESH
 
 	if(href_list["select_all"])
@@ -93,9 +104,17 @@
 				if(2)
 					pref.be_special_role |= id
 					pref.may_be_special_role -= id
+		refresh_slot_roles()
 		return TOPIC_REFRESH
 
 	return ..()
+
+/datum/category_item/player_setup_item/antagonism/candidacy/proc/refresh_slot_roles()
+	for(var/datum/preferences_slot/slot in pref.slot_priority_list)
+		if(slot.slot != pref.default_slot)
+			continue
+		slot.be_special_role = pref.be_special_role
+		slot.may_be_special_role = pref.may_be_special_role
 
 /datum/category_item/player_setup_item/antagonism/candidacy/proc/valid_special_roles(include_bans = TRUE)
 	var/list/private_valid_special_roles = list()

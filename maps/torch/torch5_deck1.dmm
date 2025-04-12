@@ -16181,9 +16181,9 @@
 /obj/item/reagent_containers/syringe/antiviral,
 /obj/item/reagent_containers/glass/bottle/inaprovaline,
 /obj/item/reagent_containers/glass/bottle/inaprovaline,
-/obj/item/reagent_containers/glass/bottle/antitoxin,
-/obj/item/reagent_containers/glass/bottle/antitoxin,
-/obj/item/reagent_containers/glass/bottle/antitoxin,
+/obj/item/reagent_containers/glass/bottle/dylovene,
+/obj/item/reagent_containers/glass/bottle/dylovene,
+/obj/item/reagent_containers/glass/bottle/dylovene,
 /obj/item/reagent_containers/glass/bottle/inaprovaline,
 /turf/simulated/floor/tiled/white,
 /area/medical/sleeper)

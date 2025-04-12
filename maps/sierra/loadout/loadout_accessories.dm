@@ -69,7 +69,7 @@
 	cost = 0
 
 /datum/gear/utility/holster_belt
-	display_name = "holser belt"
+	display_name = "holster belt"
 	path = /obj/item/storage/belt/holster/general
 	allowed_roles = list(/datum/job/captain, /datum/job/hop, /datum/job/rd, /datum/job/cmo, /datum/job/chief_engineer, /datum/job/hos, /datum/job/iaa, /datum/job/iso, /datum/job/adjutant)
 

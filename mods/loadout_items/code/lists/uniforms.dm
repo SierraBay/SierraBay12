@@ -157,7 +157,6 @@
 	formal["callum vest"] = /obj/item/clothing/under/formal/callum
 	formal["charcoal vest"] = /obj/item/clothing/under/formal/hm_suit
 	formal["red 'n black suit"] = /obj/item/clothing/under/formal/red_n_black
-	formal["rubywhite uniform"] = /obj/item/clothing/under/formal/rubywhite
 	gear_tweaks += new/datum/gear_tweak/path(formal)
 
 /datum/gear/uniform/informal

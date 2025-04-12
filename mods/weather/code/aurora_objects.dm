@@ -144,6 +144,7 @@
 	icon_state = "old_vault_door"
 	var/opened = FALSE
 	anchored = TRUE
+	opacity = TRUE
 	density = TRUE
 	//Пароль, после ввода которого дверь откроется
 	var/password = 1111
@@ -161,14 +162,48 @@
 		to_chat(user, SPAN_BAD("Похоже, пароль неверный. Дверь не реагирует."))
 
 /obj/structure/aurora/vault_door/proc/open_door()
+	playsound(get_turf(src), 'sound/machines/blastdoor_open.ogg', 100)
 	flick("door_opening_animation", src)
 	density = FALSE
 	STOP_PROCESSING(SSweather,src)
 	icon_state = "old_vault_door_opened"
 	can_wakeup = FALSE
+	opacity = FALSE
 	opened = TRUE
 
 /obj/structure/aurora/vault_door/go_sleep()
 	if(opened)
 		return
 	.=..()
+
+
+/obj/structure/aurora/vault_door/id_door
+	password = 2222
+	desc = "The door is badly damaged but still won’t let just anyone in. Upon closer inspection, you can see id scaner on it."
+
+/obj/structure/aurora/vault_door/id_door/attack_hand(mob/living/user)
+	SHOULD_CALL_PARENT(FALSE)
+	return
+
+/obj/structure/aurora/vault_door/id_door/use_tool(obj/item/tool, mob/living/user, list/click_params)
+	. = ..()
+	if(istype(tool, /obj/item/aurora_key))
+		if(opened)
+			return
+		if(!waked_up)
+			to_chat(user, SPAN_NOTICE("Кажется, это стоит сперва запитать..."))
+			return
+		if(tool:stored_password == password)
+			to_chat(user, SPAN_NOTICE("Дверь со скрипом раскрывается."))
+			open_door()
+		else
+			to_chat(user, SPAN_NOTICE("А эта карта точно подходит этой двери?"))
+
+
+/obj/item/aurora_key
+	name = "strange ID card"
+	desc = "Это необычная ID карта..."
+	//Они хранят в себе какие-либо данные
+	icon_state = "party_rig"
+	icon = 'icons/obj/tools/card.dmi'
+	var/stored_password = 2222

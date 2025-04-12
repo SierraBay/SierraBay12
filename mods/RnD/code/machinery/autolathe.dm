@@ -552,7 +552,7 @@
 					if(stored_material[material] < storage_capacity)
 						stored_material[material] += (D.materials[material]/4)
 		if(isdesignnotexist)
-			for(var/obj/O in eating.GetAllContents(includeSelf = TRUE))
+			for(var/obj/O in eating.GetAllContents())
 				var/list/_matter = O.matter
 				if(_matter)
 					for(var/material in _matter)

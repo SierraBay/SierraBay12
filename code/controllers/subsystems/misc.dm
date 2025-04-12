@@ -57,12 +57,12 @@ SUBSYSTEM_DEF(misc)
 
 GLOBAL_LIST_EMPTY(traders)
 GLOBAL_LIST_EMPTY(trader_types)
-GLOBAL_VAR_INIT(trader_max, 10)
-GLOBAL_VAR_INIT(trader_station_count, 3)
-GLOBAL_VAR_INIT(trader_unique_chance, 5)
-GLOBAL_LIST_INIT(trader_stations, subtypesof(/datum/trader) - typesof(/datum/trader/ship))
-GLOBAL_LIST_INIT(trader_ships, subtypesof(/datum/trader/ship) - typesof(/datum/trader/ship/unique))
-GLOBAL_LIST_INIT(trader_uniques, subtypesof(/datum/trader/ship/unique))
+GLOBAL_VAR_AS(trader_max, 10)
+GLOBAL_VAR_AS(trader_station_count, 3)
+GLOBAL_VAR_AS(trader_unique_chance, 5)
+GLOBAL_LIST_AS(trader_stations, subtypesof(/datum/trader) - typesof(/datum/trader/ship))
+GLOBAL_LIST_AS(trader_ships, subtypesof(/datum/trader/ship) - typesof(/datum/trader/ship/unique))
+GLOBAL_LIST_AS(trader_uniques, subtypesof(/datum/trader/ship/unique))
 
 
 /datum/controller/subsystem/misc/proc/UpdateTraders(resumed, no_mc_tick, generate_stations = 0)
@@ -108,10 +108,10 @@ GLOBAL_LIST_INIT(trader_uniques, subtypesof(/datum/trader/ship/unique))
 			return
 
 
-GLOBAL_VAR_INIT(sun_dx, 0)
-GLOBAL_VAR_INIT(sun_dy, 0)
-GLOBAL_VAR_INIT(sun_angle, rand(0, 359))
-GLOBAL_VAR_INIT(sun_rate, (rand(0, 1) || -1) * rand(50, 200) * 0.01 * 18)
+GLOBAL_VAR_AS(sun_dx, 0)
+GLOBAL_VAR_AS(sun_dy, 0)
+GLOBAL_VAR_AS(sun_angle, rand(0, 359))
+GLOBAL_VAR_AS(sun_rate, (rand(0, 1) || -1) * rand(50, 200) * 0.01 * 18)
 GLOBAL_LIST_EMPTY(solar_controllers)
 
 

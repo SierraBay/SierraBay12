@@ -6,7 +6,7 @@
 
 //Подбор артефакта
 /obj/item/artefact/attack_hand(mob/user as mob)
-	if(inmech_sec(user))
+	if(inmech(user))
 		to_chat(user, SPAN_WARNING("Вы недотягиваетесь."))
 		return
 	else if(connected_to_anomaly)
@@ -122,7 +122,7 @@
 /obj/item/artefact/proc/rub_interaction(mob/living/user)
 	return
 
-/obj/item/artefact/rvach_destroy_effect()
+/obj/item/artefact/proc/rvach_destroy_effect()
 	delete_artefact()
 
 ///ВЗАИМОДЕЙСТВИЯ ОТ МАШИНЫ ДЛЯ ИЗУЧЕНИЙ И АНАЛИЗА

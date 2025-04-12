@@ -1,11 +1,32 @@
 /obj/item/mech_equipment/sleeper
+	name = "exosuit sleeper"
+	desc = "An exosuit-mounted sleeper designed to mantain patients stabilized on their way to medical facilities."
+	icon_state = "mech_sleeper"
+	restricted_hardpoints = list(HARDPOINT_BACK)
+	restricted_software = list(MECH_SOFTWARE_MEDICAL)
+	equipment_delay = 30 //don't spam it on people pls
+	active_power_use = 0 //Usage doesn't really require power. We don't want people stuck inside
+	origin_tech = list(TECH_DATA = 2, TECH_BIO = 3)
+	passive_power_use = 0 //Raised to 1.5 KW when patient is present.
+	var/obj/machinery/sleeper/mounted/sleeper = null
 	disturb_passengers = TRUE
 	var/obj/item/device/scanner/health/scanner = null
 	heat_generation = 20
 
 /obj/item/mech_equipment/sleeper/Initialize()
 	.=..()
+	sleeper = new /obj/machinery/sleeper/mounted(src)
+	sleeper.forceMove(src)
 	scanner = new /obj/item/device/scanner/health(src)
+
+/obj/item/mech_equipment/sleeper/Destroy()
+	sleeper.go_out() //If for any reason you weren't outside already.
+	QDEL_NULL(sleeper)
+	. = ..()
+
+/obj/item/mech_equipment/sleeper/uninstalled()
+	. = ..()
+	sleeper.go_out()
 
 /obj/item/mech_equipment/sleeper/AltClick(mob/user)
 	if (istype(sleeper.occupant, /mob/living/carbon/human))
@@ -14,6 +35,16 @@
 
 
 /obj/machinery/sleeper/mounted
+	name = "mounted sleeper"
+	density = FALSE
+	anchored = FALSE
+	idle_power_usage = 0
+	active_power_usage = 0 //It'd be hard to handle, so for now all power is consumed by mech sleeper object
+	synth_modifier = 0
+	stasis_power = 0
+	interact_offline = TRUE
+	stat_immune = MACHINE_STAT_NOPOWER
+	base_chemicals = list("Inaprovaline" = /datum/reagent/inaprovaline, "Paracetamol" = /datum/reagent/paracetamol, "Dylovene" = /datum/reagent/dylovene, "Dexalin" = /datum/reagent/dexalin, "Kelotane" = /datum/reagent/kelotane, "Hyronalin" = /datum/reagent/hyronalin)
 	var/obj/item/mech_equipment/sleeper/owner = null
 	var/list/apply_sounds = list('sound/effects/spray.ogg', 'sound/effects/spray2.ogg', 'sound/effects/spray3.ogg')
 
@@ -21,6 +52,28 @@
 	. = ..()
 	owner = loc
 
+/obj/item/mech_equipment/sleeper/attack_self(mob/user)
+	. = ..()
+	if(.)
+		sleeper.ui_interact(user)
+
+/obj/item/mech_equipment/sleeper/use_tool(obj/item/I, mob/living/user, list/click_params)
+	if(istype(I, /obj/item/reagent_containers/glass))
+		sleeper.use_tool(I, user)
+		return TRUE
+	return ..()
+
+/obj/item/mech_equipment/sleeper/afterattack(atom/target, mob/living/user, inrange, params)
+	. = ..()
+	if(.)
+		if(ishuman(target) && !sleeper.occupant)
+			owner.visible_message(SPAN_NOTICE("\The [src] is lowered down to load [target]"))
+			sleeper.go_in(target, user)
+		else to_chat(user, SPAN_WARNING("You cannot load that in!"))
+
+/obj/item/mech_equipment/sleeper/get_hardpoint_maptext()
+	if(sleeper && sleeper.occupant)
+		return "[sleeper.occupant]"
 
 /obj/machinery/sleeper/mounted/go_in(atom/target, mob/living/user)
 	..()
@@ -93,3 +146,27 @@
 		return TRUE
 
 	return ..()
+
+
+
+
+/obj/machinery/sleeper/mounted/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1, datum/topic_state/state = GLOB.mech_state)
+	. = ..()
+
+/obj/machinery/sleeper/mounted/nano_host()
+	var/obj/item/mech_equipment/sleeper/S = loc
+	if(istype(S))
+		return S.owner
+	return null
+
+/obj/machinery/sleeper/mounted/go_in()
+	..()
+	var/obj/item/mech_equipment/sleeper/S = loc
+	if(istype(S) && occupant)
+		S.passive_power_use = 1.5 KILOWATTS
+
+/obj/machinery/sleeper/mounted/go_out()
+	..()
+	var/obj/item/mech_equipment/sleeper/S = loc
+	if(istype(S))
+		S.passive_power_use = 0 //No passive power drain when the sleeper is empty. Set to 1.5 KW when patient is inside.
