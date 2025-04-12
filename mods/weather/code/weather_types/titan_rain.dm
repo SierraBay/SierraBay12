@@ -14,7 +14,7 @@
 		"Вы слышите, чувствуете, видите...цунами...огромное, прямо таки до небес..."
 	)
 	var/need_up_water = FALSE
-	var/remain_power_ups = 5
+	var/remain_power_ups = 4
 	var/time_before_cunami = 0
 	can_blowout = FALSE
 	var/counting_started = FALSE

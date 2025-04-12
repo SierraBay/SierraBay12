@@ -1,6 +1,5 @@
 /datum/map/dev
 	lobby_tracks = list(
-		//Только жоски рок на дев мапе
 		/singleton/audio/track/coherence,
 		/singleton/audio/track/exoskeleton,
 		/singleton/audio/track/informant,
