@@ -73,5 +73,5 @@
 	else
 		victim.throw_at(target_turf, local_range_of_throw, speed_of_throw)
 
-/obj/anomaly/tramplin/get_detection_icon()
+/obj/anomaly/tramplin/get_detection_icon(mob/living/viewer)
 	return "trampline_detection"

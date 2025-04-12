@@ -4,6 +4,8 @@
 #define BOTH 3
 #define FORCE_OUT 4
 #define FORCE_IN 5
+#define FORCE_BOTH 6
+#define FORCE_BLOCKED 7
 //Сильно схожая с ашановской аномалия из которой нужно искать выход, выискивая закономерности в её работе
 //После того как внутрь лабиринта попадает человек, он заводится
 //В заведённом состоянии лабиринт переключает состояния своих внутренних клеток.
@@ -15,9 +17,9 @@
 	idle_effect_type = "base"
 	effect_type = MOMENTUM_ANOMALY_EFFECT
 	multitile = TRUE
-	min_x_size = 3
+	min_x_size = 5
 	max_x_size = 10
-	min_y_size = 3
+	min_y_size = 5
 	max_y_size = 10
 	//Лабиринт перестраивает своё состояние
 	cooldown_time = 1 MINUTES
@@ -34,20 +36,9 @@
 	helper_part_path = /obj/anomaly/part/labirint_cube
 	//Количество выходов из аномалии
 	var/exits_ammout = 1
-	var/list/border_parts = list()
-
-//Куб лабиринта который и будет пускать/не пускать
-/obj/anomaly/part/labirint_cube
-	var/NORTH_STATUS = IN
-	var/SOUTH_STATUS= IN
-	var/WEST_STATUS = IN
-	var/EAST_STATUS = IN
-
-/obj/anomaly/labirint/connect_core_with_parts(list/list_of_parts)
-	.=..()
-	for(var/obj/anomaly/part/labirint_cube/picked_part in list_of_parts)
-		picked_part.icon = icon
-		picked_part.refresh_icon_state()
+	var/list/exit_parts = list() //Внешние кубы которые являются выходом
+	var/list/border_parts = list() //Крайние кубы которые расположены по краям аномалии
+	var/list/exit_path = list() //Кубы по которым и выходят из аномалии
 
 //Кто-то вошёл в аномалию, нам нужно начать обрабатывать нашу ловушку
 /obj/anomaly/labirint/Crossed(atom/movable/O)
@@ -55,6 +46,11 @@
 	if(isghost(O) || isobserver(O) || in_labirint_cooldown)
 		return
 	setup_borders()
+	setup_exit_path(O)
+	if(!LAZYLEN(exit_path))
+		//УВИ мы поймали ошибку, надо бы это в рантайм логинг как-то закинуть.
+		full_open_labirint()
+		return
 	process_labirint_trap()
 
 /obj/anomaly/labirint/proc/setup_borders()
@@ -78,33 +74,83 @@
 	for(var/obj/anomaly/part/labirint_cube/picked_part in list_of_parts)
 		if(picked_part.x == max_x || picked_part.x == min_x || picked_part.y == max_y || picked_part.y == min_y)
 			LAZYADD(border_parts, picked_part)
-	//Всем выставляем гарантированный вход всем частям по краям
+	//Всем выставляем блок по краям чтоб 2 человека в аномалию не залезли
 	for(var/obj/anomaly/part/labirint_cube/border_part in border_parts)
 		if(border_part.x == max_x)
-			border_part.EAST_STATUS = FORCE_IN
+			border_part.EAST_STATUS = FORCE_BLOCKED
 		if(border_part.x == min_x)
-			border_part.WEST_STATUS = FORCE_IN
+			border_part.WEST_STATUS = FORCE_BLOCKED
 		if(border_part.y == max_y)
-			border_part.NORTH_STATUS = FORCE_IN
+			border_part.NORTH_STATUS = FORCE_BLOCKED
 		if(border_part.y == min_y)
-			border_part.SOUTH_STATUS = FORCE_IN
+			border_part.SOUTH_STATUS = FORCE_BLOCKED
 
 
 	//После того как мы нашли все крайние блоки аномалии, нужно определиться какой из них выходной
+	//очень важно чтоб никто не стоял в этом турфе
 	var/i = 0
 	while(exits_ammout > i)
 		var/obj/anomaly/part/labirint_cube/picked = pick(border_parts)
-		if(picked.x == max_x)
-			picked.EAST_STATUS = FORCE_OUT
-		if(picked.x == min_x)
-			picked.WEST_STATUS = FORCE_OUT
-		if(picked.y == max_y)
-			picked.NORTH_STATUS = FORCE_OUT
-		if(picked.y == min_y)
-			picked.SOUTH_STATUS = FORCE_OUT
-		i++
+		if(!locate(/mob/living/carbon/human) in get_turf(picked))
+			if(picked.x == max_x)
+				picked.EAST_STATUS = FORCE_OUT
+			if(picked.x == min_x)
+				picked.WEST_STATUS = FORCE_OUT
+			if(picked.y == max_y)
+				picked.NORTH_STATUS = FORCE_OUT
+			if(picked.y == min_y)
+				picked.SOUTH_STATUS = FORCE_OUT
+			i++
+			LAZYADD(exit_parts, picked)
 
 
+/obj/anomaly/labirint/proc/setup_exit_path(atom/movable/input_movable)
+	var/turf/start = get_turf(input_movable)
+	var/obj/anomaly/part/labirint_cube/exit = get_turf(pick(exit_parts))
+	//Собираем лист турфов
+	var/list/list_of_exit_turfs = AStar(start, exit, TYPE_PROC_REF(/turf, CardinalTurfsWithAccess), TYPE_PROC_REF(/turf, Distance), 0, 50, id = null, exclude = null) //Строим путь через алгоритм АСтар
+	//Теперь собираем кубы на пути
+	for(var/turf/turf in list_of_exit_turfs)
+		for(var/obj/anomaly/part/labirint_cube/cube in turf)
+			LAZYADD(exit_path, cube)
+	//Теперь изменяем кубы в пути
+	for(var/obj/anomaly/part/labirint_cube/cube in exit_path)
+		cube.is_path_part = TRUE
+	// Делаем проходы между кубами пути FORCE_BOTH
+	for(var/i in 1 to (LAZYLEN(exit_path) - 1))
+		var/obj/anomaly/part/labirint_cube/current = exit_path[i]
+		var/obj/anomaly/part/labirint_cube/next = exit_path[i + 1]
+
+		if(!current || !next)  // На всякий случай проверяем
+			continue
+
+		var/dir_to_next = get_dir(current, next)
+
+		// Открываем сторону current в направлении next
+		switch(dir_to_next)
+			if(NORTH)
+				current.NORTH_STATUS = FORCE_BOTH
+			if(SOUTH)
+				current.SOUTH_STATUS = FORCE_BOTH
+			if(EAST)
+				current.EAST_STATUS = FORCE_BOTH
+			if(WEST)
+				current.WEST_STATUS = FORCE_BOTH
+
+		// Открываем сторону next в направлении current (чтобы можно было идти обратно)
+		var/dir_to_prev = turn(dir_to_next, 180)
+		switch(dir_to_prev)
+			if(NORTH)
+				next.NORTH_STATUS = FORCE_BOTH
+			if(SOUTH)
+				next.SOUTH_STATUS = FORCE_BOTH
+			if(EAST)
+				next.EAST_STATUS = FORCE_BOTH
+			if(WEST)
+				next.WEST_STATUS = FORCE_BOTH
+
+		current.refresh_icon_state()
+		next.refresh_icon_state()
 
 //Задача функции - обновить состояния своих блоков и проверить, требуется ли оно исходя из того
 //Есть ли в пределах аномалии люди
@@ -125,12 +171,27 @@
 	in_labirint_cooldown = TRUE
 	addtimer(new Callback(src, PROC_REF(process_labirint_trap)), cooldown_time)
 
+/obj/anomaly/labirint/proc/full_open_labirint()
+	for(var/obj/anomaly/part/labirint_cube/cube in list_of_parts)
+		cube.NORTH_STATUS = FORCE_BOTH
+		cube.EAST_STATUS = FORCE_BOTH
+		cube.WEST_STATUS = FORCE_BOTH
+		cube.SOUTH_STATUS = FORCE_BOTH
+	go_slep_labirint()
+
+
 /obj/anomaly/labirint/proc/go_slep_labirint()
 	in_labirint_cooldown = FALSE
 	border_parts = null
+	for(var/obj/anomaly/part/labirint_cube/cube in exit_path)
+		cube.is_path_part = FALSE
+	exit_path = null
 
 #undef OUT
 #undef IN
 #undef BOTH
 #undef FORCE_OUT
 #undef FORCE_IN
+#undef FORCE_BOTH
+#undef BLOCKED
+#undef FORCE_BLOCKED

@@ -69,6 +69,7 @@
 "bf" = (
 /obj/structure/railing/mapped,
 /obj/decal/skat_decals/wall_right_leaking_pipe,
+/obj/landmark/random_titan_crate,
 /turf/simulated/floor/exoplanet/titan_water/minimal,
 /area/map_template/skat)
 "bl" = (
@@ -1392,8 +1393,8 @@
 /turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/skat)
 "AI" = (
-/obj/landmark/teleport_to_z_level/skat,
-/turf/simulated/floor/exoplanet/titan_water/maximum,
+/obj/landmark/random_titan_crate,
+/turf/simulated/floor/exoplanet/titan_water/minimal,
 /area/map_template/skat)
 "AT" = (
 /obj/machinery/computer/operating,
@@ -1462,6 +1463,10 @@
 /obj/structure/table/standard,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/white,
+/area/map_template/skat)
+"Ed" = (
+/obj/landmark/random_titan_crate,
+/turf/simulated/floor/exoplanet/titan_water/middle,
 /area/map_template/skat)
 "Ee" = (
 /obj/machinery/body_scanconsole{
@@ -3662,7 +3667,7 @@ Ep
 Ep
 Qb
 bf
-AI
+Kz
 yx
 iT
 iT
@@ -3677,9 +3682,9 @@ Mu
 KI
 cz
 cQ
+AI
 iT
-iT
-iT
+AI
 Yv
 Qb
 Ep
@@ -3703,7 +3708,7 @@ Ep
 Qb
 ac
 Kz
-yx
+Ed
 iT
 cz
 iT
@@ -3719,7 +3724,7 @@ iT
 iT
 ve
 iT
-iT
+AI
 Yv
 Qb
 Ep

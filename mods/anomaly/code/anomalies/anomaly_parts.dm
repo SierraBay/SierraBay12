@@ -123,6 +123,6 @@
 
 	return FALSE
 
-/obj/anomaly/part/get_detection_icon()
+/obj/anomaly/part/get_detection_icon(mob/living/viewer)
 	if(core)
-		return core.get_detection_icon()
+		return core.get_detection_icon(viewer)

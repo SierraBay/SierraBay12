@@ -8,7 +8,7 @@
 		/obj/overmap/visitable/sector/exoplanet/flying,
 		/obj/overmap/visitable/sector/exoplanet/ice
 	)
-	var/spawn_only_anomaly_planet = TRUE
+	var/spawn_only_anomaly_planet = FALSE
 	var/list/all_planets_list = subtypesof(/obj/overmap/visitable/sector/exoplanet)
 	//Я не придумал как обьяснять игре какая планета обычная, а какая аномальная без
 	//заранее подготовленных списков. Увы.

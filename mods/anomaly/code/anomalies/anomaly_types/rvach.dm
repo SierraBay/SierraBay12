@@ -206,7 +206,7 @@
 		target.Weaken(5)
 		helper.Weaken(5)
 
-/obj/anomaly/rvach/get_detection_icon()
+/obj/anomaly/rvach/get_detection_icon(mob/living/viewer)
 	return "rvach_detection"
 
 #undef RVACH_DAMAGE_EFFECT

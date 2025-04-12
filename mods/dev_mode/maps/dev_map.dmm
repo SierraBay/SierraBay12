@@ -6,10 +6,6 @@
 /obj/item/gun/projectile/automatic,
 /turf/simulated/floor/exoplanet/concrete/reinforced/road,
 /area/centcom)
-"dre" = (
-/obj/landmark/teleport_to_z_level/skat,
-/turf/simulated/floor/exoplanet/titan_water/maximum,
-/area/centcom)
 "dRf" = (
 /turf/simulated/mineral/ice,
 /area/centcom)
@@ -361,7 +357,7 @@ cpC
 cpC
 pnX
 pnX
-dre
+pnX
 cpC
 cpC
 cpC

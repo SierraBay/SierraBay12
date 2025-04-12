@@ -186,7 +186,7 @@
 		SPAN_WARNING("You hear a heavy electrical crack.") \
 		)
 
-/obj/anomaly/electra/get_detection_icon()
+/obj/anomaly/electra/get_detection_icon(mob/living/viewer)
 	if(effect_range == 1)
 		return "electra_detection"
 	else if(effect_range == 2)

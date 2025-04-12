@@ -99,7 +99,7 @@
 		membered_second_teleporter.Destroy()
 	anomaly_deleting_operation_completed = TRUE
 
-/obj/anomaly/rvach/get_detection_icon()
+/obj/anomaly/rvach/get_detection_icon(mob/living/viewer)
 	return "rvach_detection"
 
 

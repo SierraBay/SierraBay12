@@ -209,7 +209,7 @@
 		var/turf/T = get_turf(in_turf_atom)
 		var/image/I
 		if(user_science_lvl >= in_turf_atom.detection_skill_req)
-			I = image(icon = 'mods/anomaly/icons/detection_icon.dmi',loc = T, icon_state = in_turf_atom.get_detection_icon())
+			I = image(icon = 'mods/anomaly/icons/detection_icon.dmi',loc = T, icon_state = in_turf_atom.get_detection_icon(viewer))
 		else
 			I = image(icon = 'mods/anomaly/icons/detection_icon.dmi',loc = T, icon_state = "any_anomaly")
 		I.layer = EFFECTS_ABOVE_LIGHTING_PLANE
