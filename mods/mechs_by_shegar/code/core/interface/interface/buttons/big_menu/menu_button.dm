@@ -37,7 +37,7 @@
 	return
 
 /obj/screen/exosuit/menu_button/proc/toggle_button()
-	do_visual_stuff()
+	press_animation()
 	if(switchable)
 		if(!toggled)
 			if(!switch_on())
@@ -45,6 +45,7 @@
 		else
 			if(!switch_off())
 				return
+	change_icon_state()
 	activated()
 
 /obj/screen/exosuit/menu_button/proc/switch_off()
@@ -65,11 +66,6 @@
 /obj/screen/exosuit/menu_button/proc/middle_press()
 	//Здесь мы добавляем маленькую версию кнопушки в меню слева
 	owner.try_create_new_shortcut_button(src)
-
-/obj/screen/exosuit/menu_button/proc/do_visual_stuff()
-	set waitfor = FALSE
-	press_animation()
-	change_icon_state()
 
 ///Кнопку нажали, как рисовать - пусть думает функция
 /obj/screen/exosuit/menu_button/proc/press_animation(modificator_press = FALSE)

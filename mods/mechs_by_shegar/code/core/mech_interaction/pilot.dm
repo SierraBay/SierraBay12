@@ -34,6 +34,7 @@
 	user.RemoveClickHandler(/datum/click_handler/default/mech)
 	if (!QDELETED(user))
 		user.dropInto(loc)
+	stop_gps_ui(user)
 	if (user.client)
 		user.client.screen -= hud_elements
 		if(hardpoints_menu_status == TRUE)
@@ -63,7 +64,7 @@
 	if(hatch_closed)
 		if(hatch_locked)
 			if(!silent)
-				to_chat(user, SPAN_WARNING("The [body.hatch_descriptor] is locked."))
+				to_chat(user, SPAN_WARNING("Hatch is locked."))
 			return
 		open_hatch()
 		update_icon()

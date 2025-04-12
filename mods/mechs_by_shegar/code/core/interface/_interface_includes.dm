@@ -13,6 +13,7 @@
 #include "interface\buttons\mech_integrity.dm"
 #include "interface\buttons\power.dm"
 #include "interface\buttons\guide.dm"
+#include "interface\procs.dm"
 //БИГ МЕНЮ
 #include "interface\buttons\big_menu\menu_background.dm"
 #include "interface\buttons\big_menu\menu_button.dm"

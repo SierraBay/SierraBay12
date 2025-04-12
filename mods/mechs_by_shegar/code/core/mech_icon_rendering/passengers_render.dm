@@ -33,9 +33,21 @@
 		passenger_left_back_layer = MECH_GEAR_LAYER + 0.01
 		passenger_right_back_layer = MECH_GEAR_LAYER + 0.01
 	//
-	//
-	if(LAZYLEN(passenger_compartment.back_passengers) > 0) // Отрисовка среднего пассажирка
-		var/mob/passenger_back = passenger_compartment.back_passengers[1]
+	if(passenger_compartment.left_back_passenger) // Отрисовка левого пассажира
+		var/mob/passenger_left_back = passenger_compartment.left_back_passenger
+		var/image/draw_passenger_left_back = new
+		draw_passenger_left_back.appearance = passenger_left_back
+		draw_passenger_left_back.plane = FLOAT_PLANE
+		var/list/left_offset_values = body.left_back_passengers_positions
+		var/list/left_directional_offset_values = left_offset_values["[local_dir]"]
+		draw_passenger_left_back.pixel_x = passenger_left_back.default_pixel_x + left_directional_offset_values["x"]
+		draw_passenger_left_back.pixel_y = passenger_left_back.default_pixel_y + left_directional_offset_values["y"]
+		draw_passenger_left_back.pixel_z = 0
+		draw_passenger_left_back.transform = null
+		draw_passenger_left_back.layer = passenger_left_back_layer
+		LAZYADD(left_back_passengers_overlays, draw_passenger_left_back)
+	if(passenger_compartment.back_passenger) // Отрисовка среднего пассажирка
+		var/mob/passenger_back = passenger_compartment.back_passenger
 		var/image/draw_passenger_back = new
 		draw_passenger_back.appearance = passenger_back
 		draw_passenger_back.plane = FLOAT_PLANE
@@ -48,22 +60,8 @@
 		draw_passenger_back.layer = passenger_back_layer
 		LAZYADD(back_passengers_overlays, draw_passenger_back)
 	//
-	if(LAZYLEN(passenger_compartment.left_back_passengers) > 0) // Отрисовка левого пассажира
-		var/mob/passenger_left_back = passenger_compartment.left_back_passengers[1]
-		var/image/draw_passenger_left_back = new
-		draw_passenger_left_back.appearance = passenger_left_back
-		draw_passenger_left_back.plane = FLOAT_PLANE
-		var/list/left_offset_values = body.left_back_passengers_positions
-		var/list/left_directional_offset_values = left_offset_values["[local_dir]"]
-		draw_passenger_left_back.pixel_x = passenger_left_back.default_pixel_x + left_directional_offset_values["x"]
-		draw_passenger_left_back.pixel_y = passenger_left_back.default_pixel_y + left_directional_offset_values["y"]
-		draw_passenger_left_back.pixel_z = 0
-		draw_passenger_left_back.transform = null
-		draw_passenger_left_back.layer = passenger_left_back_layer
-		LAZYADD(left_back_passengers_overlays, draw_passenger_left_back)
-	//
-	if(LAZYLEN(passenger_compartment.right_back_passengers) > 0) // Отрисовка правого пассажира
-		var/mob/passenger_right_back = passenger_compartment.right_back_passengers[1]
+	if(passenger_compartment.right_back_passenger) // Отрисовка правого пассажира
+		var/mob/passenger_right_back = passenger_compartment.right_back_passenger
 		var/image/draw_passenger_right_back = new
 		draw_passenger_right_back.layer = passenger_right_back_layer
 		draw_passenger_right_back.appearance = passenger_right_back
@@ -83,4 +81,3 @@
 		overlays += left_back_passengers_overlays
 	if(update_overlays && LAZYLEN(right_back_passengers_overlays))
 		overlays += right_back_passengers_overlays
-

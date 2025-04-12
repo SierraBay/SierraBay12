@@ -24,6 +24,7 @@
 	icon = 'mods/mechs_by_shegar/icons/guide.dmi'
 	layer = EMISSIVE_PLANE
 	scale_to_view = TRUE
+	appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 
 /obj/screen/fullscreen/mech_guide/main
 	icon_state = "background_main"
@@ -93,8 +94,14 @@
 		),
 		list(
 			guide_type = /obj/screen/fullscreen/mech_guide/main,
+			text = "Мех может возить на себе до 3 пассажиров, для этого перетащите персонажа с зажатым ЛКМ на закрытого меха. <br> Нажмите на GO для окончания обучения",
+			callbacks = list("open_big_menu"),
+			teller_loc = "CENTER, CENTER"
+		),
+		list(
+			guide_type = /obj/screen/fullscreen/mech_guide/main,
 			text = "А ещё можно закреплять кнопки в меню меха на главном экране, нажимая по ним СКМ. В целом, это всё. Заводи меха, пилот! <br> Обучение закончено,Нажмите на GO для окончания обучения",
-			callbacks = list("open_big_menu", "toggle_power"),
+			callbacks = list("toggle_power"),
 			teller_loc = "CENTER, CENTER"
 		)
 	)
@@ -111,12 +118,13 @@
 
 /mob/living/exosuit/proc/stop_ui_guide(mob/user)
 	mech_ui_guide_status = FALSE
-	mech_guide_data.current_step = 1
-	user.client.screen -= mech_guide_data.teller
-	qdel(mech_guide_data)
-	mech_guide_data = null
-	to_chat(user, SPAN_INFO("Гайд окончен."))
-	user.clear_fullscreen("mech_guide")
+	if(mech_guide_data)
+		mech_guide_data.current_step = 1
+		user.client.screen -= mech_guide_data.teller
+		qdel(mech_guide_data)
+		mech_guide_data = null
+		to_chat(user, SPAN_INFO("Гайд окончен."))
+		user.clear_fullscreen("mech_guide")
 
 /mob/living/exosuit/proc/next_step(mob/user)
 	if(!mech_guide_data)

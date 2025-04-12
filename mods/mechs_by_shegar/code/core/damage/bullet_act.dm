@@ -20,7 +20,7 @@
 	else if(local_dir == turn(dir, 180) || local_dir == turn(dir, -135) || local_dir == turn(dir, 135))
 		//В случае если у нас есть пилоты скинем их при атаке по спине.
 		if(passengers_ammount > 0)
-			forced_leave_passenger(null,MECH_DROP_ALL_PASSENGERS,"attack")
+			external_leaving_passenger(mode = MECH_DROP_ALL_PASSENGERS)
 		P.damage = ( P.damage * target.back_modificator_damage ) + target.back_additional_damage
 	switch(def_zone)
 		//В случае если атака приходит в голову/лицо/глаза/пузо - снаряд может напрямую ранить пилота при условии

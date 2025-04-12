@@ -45,9 +45,12 @@
 /obj/item/mech_equipment/drill/proc/calculate_drill_cooldown()
 	var/delay = 3 SECONDS
 	switch (drill_head.material.brute_armor)
-		if (15 to INFINITY) delay = 0.5 SECONDS //voxalloy on a good roll
-		if (10 to 15) delay = 1 SECOND //titanium, diamond
-		if (5 to 10) delay = 2 SECONDS //plasteel, steel
+		if (15 to INFINITY)
+			delay = 0.5 SECONDS //voxalloy on a good roll
+		if (10 to 15)
+			delay = 1 SECOND //titanium, diamond
+		if (5 to 10)
+			delay = 2 SECONDS //plasteel, steel
 	return delay
 
 /obj/item/mech_equipment/drill/proc/sound_and_message(atom/target)
