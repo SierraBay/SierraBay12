@@ -15,7 +15,7 @@
 		/datum/exoplanet_theme = 100
 		)
 	planetary_area = /area/exoplanet/water
-	map_generators = list(/datum/random_map/automata/cave_system/mountains/water, /datum/random_map/noise/exoplanet/titan_water)
+	map_generators = list(/datum/random_map/automata/cave_system/mountains/water/deep_water, /datum/random_map/automata/cave_system/mountains/water, /datum/random_map/noise/exoplanet/titan_water)
 	surface_color = "#0d0844"
 	water_color = "#0d0844"
 	daycycle_range = list(5 HOURS, 5 HOURS)
@@ -71,7 +71,7 @@
 	rock_color = COLOR_BLUE
 
 /datum/random_map/automata/cave_system/mountains/water/deep_water
-	iterations = 15
+	iterations = 6
 	descriptor = "deep water"
 	wall_type =  /turf/simulated/floor/exoplanet/titan_water/maximum
 	mineral_turf =  /turf/simulated/floor/exoplanet/titan_water/maximum
