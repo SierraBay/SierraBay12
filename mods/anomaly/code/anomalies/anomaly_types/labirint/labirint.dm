@@ -15,10 +15,10 @@
 	idle_effect_type = "base"
 	effect_type = MOMENTUM_ANOMALY_EFFECT
 	multitile = TRUE
-	min_x_size = 2
-	max_x_size = 9
-	min_y_size = 2
-	max_y_size = 9
+	min_x_size = 3
+	max_x_size = 10
+	min_y_size = 3
+	max_y_size = 10
 	//Лабиринт перестраивает своё состояние
 	cooldown_time = 1 MINUTES
 	var/in_labirint_cooldown = FALSE

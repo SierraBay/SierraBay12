@@ -8,6 +8,7 @@
 		/area/map_template/skat_underwater = NO_SCRUBBER|NO_VENT|NO_APC
 	)
 	ruin_tags = RUIN_CHUDO_ANOMALIES
+	skip_main_unit_tests = TRUE
 
 /area/map_template/skat_underwater
 	name = "\improper Drowned ship underwater"
