@@ -35,6 +35,7 @@
 // Juices
 /datum/reagent/drink/juice
 	sugar_amount = 0.5
+	nutrition = 1
 
 /datum/reagent/drink/juice/affect_ingest(mob/living/carbon/human/M, removed)
 	..()
@@ -140,7 +141,7 @@
 	name = "Potato Juice"
 	description = "Juice of the potato. Bleh."
 	taste_description = "potato"
-	nutrition = 2
+	nutrition = 3
 	color = "#302000"
 
 	glass_name = "potato juice"
@@ -150,7 +151,7 @@
 	name = "Garlic Juice"
 	description = "Who would even drink this?"
 	taste_description = "garlic"
-	nutrition = 1
+	nutrition = 2
 	color = "#eeddcc"
 
 	glass_name = "garlic juice"
@@ -160,7 +161,7 @@
 	name = "Onion Juice"
 	description = "Juice from an onion, for when you need to cry."
 	taste_description = "onion"
-	nutrition = 1
+	nutrition = 2
 	color = "#ffeedd"
 
 	glass_name = "onion juice"
@@ -245,7 +246,7 @@
 	glass_name = "th'oom juice"
 	glass_desc = "sweet and savory goodness!"
 	sugar_amount = 0.5
-	nutrition = 4
+	nutrition = 5
 	hydration = 3
 
 
