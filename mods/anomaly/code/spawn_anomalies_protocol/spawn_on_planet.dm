@@ -33,7 +33,7 @@
 		return
 	for(var/i = 0, i < num_exoplanets, i++)
 		var/normal_planet_type = pick(all_planets_list)
-		var/obj/overmap/visitable/sector/exoplanet/new_planet = new normal_planet_type(null, planet_size[1], planet_size[2])
+		var/obj/overmap/visitable/sector/exoplanet/new_planet = new normal_planet_type(null, world.maxx, world.maxy)
 		new_planet.build_level()
 
 //Данный код отвечает за размещение аномалий по всей планете.
