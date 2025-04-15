@@ -1,74 +1,64 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/template_noop,
-/area/space)
+/area/template_noop)
 "c" = (
 /turf/simulated/mineral/ice,
-/area/space)
+/area/template_noop)
 "d" = (
 /obj/landmark/no_weather_here,
 /obj/landmark/corpse/ice_cave,
 /turf/simulated/floor/exoplanet/ice,
-/area/space)
+/area/template_noop)
 "e" = (
+/obj/landmark/corpse/ice_cave,
 /turf/simulated/floor/exoplanet/ice,
-/area/space)
+/area/template_noop)
 "g" = (
 /obj/landmark/no_weather_here,
 /obj/structure/ice_rock,
 /turf/simulated/floor/exoplanet/ice,
-/area/space)
+/area/template_noop)
 "j" = (
 /obj/landmark/no_weather_here,
 /obj/anomaly/electra/three_and_three/tesla_second,
 /turf/simulated/floor/exoplanet/ice,
-/area/space)
+/area/template_noop)
 "n" = (
 /obj/landmark/no_weather_here,
 /obj/structure/ice_rock,
 /obj/anomaly/electra/three_and_three/tesla_second,
 /turf/simulated/floor/exoplanet/ice,
-/area/space)
+/area/template_noop)
 "t" = (
-/obj/landmark/corpse/ice_cave,
 /turf/simulated/floor/exoplanet/ice,
-/area/space)
+/area/template_noop)
 "y" = (
 /obj/structure/ice_rock,
 /obj/anomaly/electra/three_and_three/tesla_second,
 /turf/simulated/floor/exoplanet/ice,
-/area/space)
+/area/template_noop)
 "A" = (
 /obj/structure/ice_rock,
 /turf/simulated/floor/exoplanet/ice,
-/area/space)
+/area/template_noop)
 "E" = (
 /obj/anomaly/electra/three_and_three/tesla_second,
-/turf/space,
-/area/space)
+/turf/simulated/floor/exoplanet/ice,
+/area/template_noop)
 "J" = (
 /obj/landmark/no_weather_here,
 /obj/item/aurora_key,
 /turf/simulated/floor/exoplanet/ice,
-/area/space)
+/area/template_noop)
 "M" = (
 /obj/landmark/no_weather_here,
 /turf/simulated/mineral/ice,
-/area/space)
-"P" = (
-/obj/landmark/no_weather_here,
-/obj/structure/ice_rock,
-/obj/landmark/corpse/ice_cave,
-/turf/simulated/floor/exoplanet/ice,
-/area/space)
+/area/template_noop)
 "R" = (
 /obj/landmark/no_weather_here,
 /turf/simulated/floor/exoplanet/ice,
-/area/space)
-"W" = (
-/obj/anomaly/electra/three_and_three/tesla_second,
-/turf/simulated/floor/exoplanet/ice,
-/area/space)
+/area/template_noop)
 
 (1,1,1) = {"
 a
@@ -121,9 +111,9 @@ a
 a
 a
 a
-e
-e
-e
+t
+t
+t
 a
 a
 a
@@ -152,10 +142,10 @@ a
 a
 a
 a
-e
-e
-W
-e
+t
+t
+E
+t
 a
 a
 a
@@ -183,10 +173,10 @@ a
 a
 a
 a
-e
-e
-M
 t
+t
+M
+e
 R
 c
 a
@@ -376,7 +366,7 @@ c
 c
 R
 R
-d
+R
 R
 c
 c
@@ -499,7 +489,7 @@ R
 R
 g
 R
-d
+R
 R
 R
 c
@@ -818,13 +808,13 @@ a
 a
 a
 a
-e
-e
-e
-e
+t
+t
+t
+t
 R
 R
-P
+g
 R
 c
 c
@@ -850,12 +840,12 @@ a
 a
 a
 a
-e
-W
-e
 t
-e
-e
+E
+t
+t
+t
+t
 R
 R
 c
@@ -882,14 +872,14 @@ a
 a
 a
 a
-e
-e
-e
-a
-e
 t
-e
-e
+t
+t
+a
+t
+t
+t
+t
 c
 c
 a
@@ -912,17 +902,17 @@ a
 a
 a
 a
-e
-e
-e
+t
+t
+t
 a
-e
-e
-e
+t
+t
+t
 A
-e
-e
-e
+t
+t
+t
 a
 a
 c
@@ -944,18 +934,18 @@ a
 a
 a
 a
-e
-W
-e
-a
-e
+t
 E
-e
-e
-e
+t
+a
+t
+E
+t
+t
+t
 y
-e
-e
+t
+t
 a
 a
 a
@@ -976,17 +966,17 @@ a
 a
 a
 a
-e
-e
-e
+t
+t
+t
 a
-e
-e
-e
+t
+t
+t
 a
-e
-e
-e
+t
+t
+t
 a
 a
 a
