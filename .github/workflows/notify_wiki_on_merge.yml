@@ -1,0 +1,24 @@
+name: Notify Wiki On Merge
+
+on:
+  pull_request:
+    types:
+      - closed
+
+jobs:
+  notify-wiki-on-merge:
+    name: Notify Wiki On Merge
+    runs-on: ubuntu-22.04
+    if: github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'Update Wiki after Merge')
+    steps:
+      - name: Notify Wiki On Merge
+        uses: tsickert/discord-webhook@b217a69502f52803de774ded2b1ab7c282e99645
+        with:
+          webhook-url: ${{ secrets.DISCORD_WIKI_WEBHOOK_URL }}
+          username: GitHub
+          avatar-url: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
+          embed-author-name: ${{ github.event.pull_request.user }}
+          embed-title: ${{ github.event.pull_request.title }}
+          embed-url: ${{ github.event.pull_request.url }}
+          embed-description: |
+            Pull request is flagged "Update Wiki after Merge" and has been merged.
