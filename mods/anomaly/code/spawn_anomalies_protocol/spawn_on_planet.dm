@@ -24,13 +24,16 @@
 	if(LAZYLEN(anomaly_planets_list))
 		LAZYREMOVE(all_planets_list, anomaly_planets_list)
 		var/anomaly_planet_type = pick(anomaly_planets_list)
-		var/obj/overmap/visitable/sector/exoplanet/anomaly_new_planet = new anomaly_planet_type(null, planet_size[1], planet_size[2])
+		//Почему тут выставлены world.maxx и world.maxy вместо того чтоб выставить подобные параметры в карте?
+		//Потому что я пытался и игра спавнит планеты некорректно. Хотите исправить - убедитесь что ваш вариант реально
+		//будет работать.
+		var/obj/overmap/visitable/sector/exoplanet/anomaly_new_planet = new anomaly_planet_type(null, world.maxx, world.maxy)
 		anomaly_new_planet.build_level()
 	if(spawn_only_anomaly_planet)
 		return
 	for(var/i = 0, i < num_exoplanets, i++)
 		var/normal_planet_type = pick(all_planets_list)
-		var/obj/overmap/visitable/sector/exoplanet/new_planet = new normal_planet_type(null, planet_size[1], planet_size[2])
+		var/obj/overmap/visitable/sector/exoplanet/new_planet = new normal_planet_type(null, world.maxx, world.maxy)
 		new_planet.build_level()
 
 //Данный код отвечает за размещение аномалий по всей планете.

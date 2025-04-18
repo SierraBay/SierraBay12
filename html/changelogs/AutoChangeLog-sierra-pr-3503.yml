@@ -1,4 +1,0 @@
-author: Aigamuxa
-changes:
-  - {bugfix: Таярские секхуды и сцихуды больше не исчезают при выключении}
-delete-after: true
