@@ -29,5 +29,5 @@
 /datum/storyteller_ability/spawn_anomaly/gravi
 	possible_anomalies = list(
 		/obj/anomaly/rvach/three_and_three,
-		/obj/anomaly/thamplin
+		/obj/anomaly/tramplin
 	)

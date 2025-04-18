@@ -17,14 +17,19 @@
 	var/delay_between_message_and_blowout
 	var/list/blowout_prepare_messages = list()
 	var/list/blowout_messages = list()
+	var/activity_blocked_by_safe_protocol = FALSE
 
 /datum/weather_manager/New()
 	calculate_change_time()
 	calculate_blowout_time()
+	calculate_next_safe_blowout()
+	calculate_next_safe_change()
 	LAZYADD(SSweather.weather_managers_in_world, src)
 	START_PROCESSING(SSweather, src)
 
 /datum/weather_manager/Process()
+	if(activity_blocked_by_safe_protocol)
+		return
 	if(world.time >= change_time)
 		change_stage()
 	if(can_blowout && world.time  >= blowout_time)
@@ -33,6 +38,8 @@
 /datum/weather_manager/proc/change_stage()
 	set waitfor = FALSE
 	set background = TRUE
+	if(activity_blocked_by_safe_protocol || !check_change_safety())
+		return
 	var/need_change = FALSE
 	for(var/mob/living/carbon/human/picked_human in GLOB.living_players)
 		if(get_z(picked_human) == get_z(pick(connected_weather_turfs)))
@@ -48,10 +55,15 @@
 /datum/weather_manager/proc/start_blowout()
 	set waitfor = FALSE
 	set background = TRUE
+	if(activity_blocked_by_safe_protocol || !check_blowout_safety()) //Основной и самый надёжный слой защиты от страшного цикла
+		return
 	var/need_blowout = FALSE
 	calculate_blowout_message_delay_time()
 	report_progress("DEBUG ANOM: Начинается выброс. Стадия - подготовка.")
-	STOP_PROCESSING(SSweather, src)
+	can_blowout = FALSE //Первый слой защиты от страшного цикла
+	//Опасайтесь того что ваша команда STOP_PROCESSING просто не выполнится
+	STOP_PROCESSING(SSweather, src) //Второй слой защиты от страшного цикла
+	calculate_blowout_time() //Третий слой защиты от страшного цикла
 	prepare_to_blowout()
 	for(var/mob/living/carbon/human/picked_human in GLOB.living_players)
 		if(get_z(picked_human) == get_z(pick(connected_weather_turfs)))
@@ -61,6 +73,7 @@
 	if(!need_blowout)
 		report_progress("DEBUG ANOM: Должен был случиться выброс, но нет игроков на Z уровне погоды. Отмена.")
 		calculate_blowout_time()
+		can_blowout = initial(can_blowout) //Откатим состояние переменной до начального уровня
 		START_PROCESSING(SSweather, src)
 		return FALSE
 	return TRUE
@@ -81,10 +94,13 @@
 	if(!is_processing)
 		report_progress("DEBUG: Выброс окончен.")
 		START_PROCESSING(SSweather, src)
+		calculate_blowout_time()
 
 /datum/weather_manager/proc/regenerate_anomalies_on_planet() //Выполняет перереспавн всех аномалий которые были заспавнены стандартным генератором на планете
 	set waitfor = FALSE
 	var/obj/overmap/visitable/sector/exoplanet/my_planet = map_sectors["[my_z]"]
+	if(!istype(my_planet))
+		return
 	my_planet.full_clear_from_anomalies()
 	my_planet.generate_big_anomaly_artefacts()
 
