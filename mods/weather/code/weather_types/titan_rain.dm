@@ -25,7 +25,7 @@
 
 //Каждые 15 минут будет усиление погоды
 /datum/weather_manager/titan_rain/change_stage(force_state, monitor = FALSE, sound = FALSE)
-	if(!have_cunami_ang_changes)
+	if(!have_cunami_ang_changes || activity_blocked_by_safe_protocol || !check_change_safety())
 		return
 	calculate_change_time()
 	if(!counting_started)
@@ -100,6 +100,9 @@
 			SSweather.add_to_water_queue(water, "easiest") // Добавляем в очередь на макс глубины
 
 /datum/weather_manager/titan_rain/proc/start_cunami()
+	if(activity_blocked_by_safe_protocol || !check_cunami_safety())
+		return
+	have_cunami_ang_changes = FALSE
 	weak_all_weater()
 	time_before_cunami = rand(150 SECONDS, 300 SECONDS)
 	report_progress("DEBUG ANOM: Начало цунами, оставшееся время - [time_before_cunami/10] Секунд")
@@ -125,6 +128,19 @@
 	clean_anomalies_on_planet()
 	report_progress("DEBUG ANOM: планета [my_area] уничтожена Цунами.")
 	delete_manager()
+
+/datum/weather_manager/titan_rain/proc/check_cunami_safety()
+	if(warnings_ammout == critical_warnings_ammout)
+		activity_blocked_by_safe_protocol = TRUE
+		report_progress("WARNING ERROR: Критическая ситуация подтверждена, предпринимаем действия.")
+		delete_manager()
+		QDEL_NULL(src) //Если delete_manager не сработает
+		CRASH("WARNING ERROR: Критическая ситуация подтверждена, клапон безопасности сорван.")
+	if(!have_cunami_ang_changes)
+		warnings_ammout++
+		report_progress("WARNING ANOM: Цунами уже вызывалось или вовсе не может быть вызвано у данной погоды!")
+		return FALSE
+	return TRUE
 
 /obj/weather/rain
 	recommended_weather_manager = /datum/weather_manager/titan_rain

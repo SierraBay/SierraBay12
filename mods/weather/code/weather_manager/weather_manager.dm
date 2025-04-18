@@ -28,6 +28,7 @@
 	START_PROCESSING(SSweather, src)
 
 /datum/weather_manager/Process()
+	..()
 	if(activity_blocked_by_safe_protocol)
 		return
 	if(world.time >= change_time)

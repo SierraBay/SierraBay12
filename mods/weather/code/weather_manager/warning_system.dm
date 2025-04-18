@@ -20,6 +20,7 @@
 		warnings_ammout++
 		report_progress("WARNING ANOM: Слишком малый интервал перед вызовами смены погоды, вероятно опасная ситуация.")
 		calculate_next_safe_change()
+		calculate_change_time()
 		return FALSE
 	calculate_next_safe_change()
 	return TRUE
@@ -36,6 +37,7 @@
 		warnings_ammout++
 		report_progress("WARNING ANOM: Слишком малый интервал перед вызовами выброса, вероятно опасная ситуация.")
 		calculate_next_safe_blowout()
+		calculate_blowout_time()
 		return FALSE
 	calculate_next_safe_blowout()
 	return TRUE

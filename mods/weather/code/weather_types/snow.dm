@@ -106,6 +106,7 @@
 	for(var/obj/weather/weather in connected_weather_turfs)
 		weather.blowout_status = FALSE
 		weather.icon_state = initial(weather.icon_state)
+		report_progress("DEBUG ANOM: Работа выброса окончена.")
 	..()
 
 //Эффект снежной вьюги
