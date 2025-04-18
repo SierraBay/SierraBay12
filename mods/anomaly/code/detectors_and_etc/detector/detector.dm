@@ -189,6 +189,8 @@
 					if(choosed_anomaly.multitile)
 						for(var/obj/anomaly/choosed_part in choosed_anomaly.list_of_parts)
 							LAZYADD(result_anomalies_list, choosed_part)
+	for(var/obj/fake_anomaly/fake in input_anomalies_list)
+		LAZYADD(result_anomalies_list, fake)
 	return result_anomalies_list
 
 /obj/item/clothing/gloves/anomaly_detector/proc/calculate_garanted_radius(mob/living/user)
@@ -212,6 +214,11 @@
 			I = image(icon = 'mods/anomaly/icons/detection_icon.dmi',loc = T, icon_state = in_turf_atom.get_detection_icon(viewer))
 		else
 			I = image(icon = 'mods/anomaly/icons/detection_icon.dmi',loc = T, icon_state = "any_anomaly")
+		I.layer = EFFECTS_ABOVE_LIGHTING_PLANE
+		list_of_showed_anomalies += I
+	for(var/obj/fake_anomaly/fake in allowed_anomalies)
+		var/turf/T = get_turf(fake)
+		var/image/I = image(icon = 'mods/anomaly/icons/detection_icon.dmi',loc = T, icon_state = fake.get_detection_icon(viewer))
 		I.layer = EFFECTS_ABOVE_LIGHTING_PLANE
 		list_of_showed_anomalies += I
 

@@ -17,13 +17,16 @@
 	var/remain_power_ups = 4
 	var/time_before_cunami = 0
 	can_blowout = FALSE
+	var/have_cunami_ang_changes = TRUE
 	var/counting_started = FALSE
 
 /datum/weather_manager/titan_rain/no_cunami
-	can_blowout = FALSE
+	have_cunami_ang_changes = FALSE
 
 //Каждые 15 минут будет усиление погоды
 /datum/weather_manager/titan_rain/change_stage(force_state, monitor = FALSE, sound = FALSE)
+	if(!have_cunami_ang_changes)
+		return
 	calculate_change_time()
 	if(!counting_started)
 		if(try_start_count())
@@ -121,6 +124,7 @@
 		current_x++
 	clean_anomalies_on_planet()
 	report_progress("DEBUG ANOM: планета [my_area] уничтожена Цунами.")
+	delete_manager()
 
 /obj/weather/rain
 	recommended_weather_manager = /datum/weather_manager/titan_rain

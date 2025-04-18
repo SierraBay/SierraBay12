@@ -113,9 +113,11 @@
 
 /datum/weather_manager/proc/delete_manager()
 	my_area.connected_weather_manager = null
-	STOP_PROCESSING(SSweather,src)
+	if(is_processing)
+		STOP_PROCESSING(SSweather,src)
 	for(var/obj/weather/detected_weather in connected_weather_turfs)
 		detected_weather.delete_weather()
+	qdel(src)
 
 /proc/calculate_smallest_x(list/objects_list)
 	var/smallest_x = 10000

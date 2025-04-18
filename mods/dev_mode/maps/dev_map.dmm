@@ -1,4 +1,8 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"apW" = (
+/obj/deploy_storyteller_here/debug_activity,
+/turf/simulated/floor/exoplanet/concrete/reinforced/road,
+/area/centcom)
 "cpC" = (
 /turf/simulated/floor/exoplanet/concrete/reinforced/road,
 /area/centcom)
@@ -363,7 +367,7 @@ cpC
 cpC
 cpC
 cpC
-cpC
+apW
 ooX
 ooX
 pSk

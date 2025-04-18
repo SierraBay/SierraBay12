@@ -32,10 +32,10 @@
 		/obj/item/artefact/crystal
 	)
 	spawn_artefact_in_center = TRUE
-	detection_skill_req = SKILL_MASTER
+	detection_skill_req = SKILL_BASIC
 	helper_part_path = /obj/anomaly/part/labirint_cube
 	//Количество выходов из аномалии
-	var/exits_ammout = 1
+	var/exits_ammount = 1
 	var/list/exit_parts = list() //Внешние кубы которые являются выходом
 	var/list/border_parts = list() //Крайние кубы которые расположены по краям аномалии
 	var/list/exit_path = list() //Кубы по которым и выходят из аномалии
@@ -89,7 +89,7 @@
 	//После того как мы нашли все крайние блоки аномалии, нужно определиться какой из них выходной
 	//очень важно чтоб никто не стоял в этом турфе
 	var/i = 0
-	while(exits_ammout > i)
+	while(exits_ammount > i)
 		var/obj/anomaly/part/labirint_cube/picked = pick(border_parts)
 		if(!locate(/mob/living/carbon/human) in get_turf(picked))
 			if(picked.x == max_x)

@@ -76,8 +76,25 @@
 	if(capturing_method == "RANDOM")
 		capture_artefact(pick(good_z_artefacts_list))
 	else if(capturing_method == "CLOSEST")
-		return
+		var/closest_distance = 10000
+		var/obj/item/current_artefact
+		for(var/obj/item/artefact in good_z_artefacts_list)
+			var/local_distance = get_dist(get_turf(src), get_turf(artefact))
+			if(local_distance < closest_distance)
+				current_artefact = artefact
+				closest_distance = local_distance
+		if(current_artefact)
+			capture_artefact(current_artefact)
 	else if(capturing_method == "LONGEST")
+		var/longest_distance = 0
+		var/obj/item/current_artefact
+		for(var/obj/item/artefact in good_z_artefacts_list)
+			var/local_distance = get_dist(get_turf(src), get_turf(artefact))
+			if(local_distance > longest_distance)
+				current_artefact = artefact
+				longest_distance = local_distance
+		if(current_artefact)
+			capture_artefact(current_artefact)
 		return
 
 

@@ -69,15 +69,15 @@
 			LAZYREMOVE(list_of_turfs, picked_turf)
 		else if(!istype(picked_turf, /turf/simulated/floor/exoplanet/ice/ice_planet))
 			LAZYREMOVE(list_of_turfs, picked_turf)
-	var/ice_block_ammout = rand(500, 1000)
+	var/ice_block_ammount = rand(500, 1000)
 	//Спавним камушки на льду
-	while(ice_block_ammout > 0)
+	while(ice_block_ammount > 0)
 		var/turf/current_turf = pick(list_of_turfs)
 		new /obj/structure/ice_rock(current_turf)
 		LAZYREMOVE(list_of_turfs, current_turf)
 		if(!LAZYLEN(list_of_turfs))
-			ice_block_ammout = 0
-		ice_block_ammout--
+			ice_block_ammount = 0
+		ice_block_ammount--
 
 
 /obj/overmap/visitable/sector/exoplanet/ice/generate_atmosphere()

@@ -13,10 +13,14 @@ PROCESSING_SUBSYSTEM_DEF(anom)
 	var/list/all_anomalies_cores = list()
 	///Список всех ВСПОМОГАТЕЛЬНЫХ ЧАСТЕЙ
 	var/list/all_anomalies_helpers = list()
+	///Активные рассказчики
+	var/list/all_storytellers = list()
 	///Количество ядер
 	var/anomalies_cores_in_world_amount = 0
 	///Количество вспомогательных частей
 	var/anomalies_helpers_in_world_amount = 0
+	///Количество рассказчиков
+	var/storytellers_ammount = 0
 	///Количество спавнов аномалий
 	var/spawn_ammount = 0
 	///Количество удалений. Помогает определить эффективность генератора аномалий
@@ -80,25 +84,31 @@ PROCESSING_SUBSYSTEM_DEF(anom)
 /datum/controller/subsystem/processing/anom/proc/add_anomaly_in_cores(obj/anomaly/input)
 	LAZYADD(all_anomalies_cores, input)
 	spawn_ammount++
-	anomalies_cores_in_world_amount++
+	anomalies_cores_in_world_amount = LAZYLEN(all_anomalies_cores)
 
 /datum/controller/subsystem/processing/anom/proc/remove_anomaly_from_cores(obj/anomaly/input)
 	LAZYREMOVE(all_anomalies_cores, input)
 	removed_ammount++
-	anomalies_cores_in_world_amount--
+	anomalies_cores_in_world_amount = LAZYLEN(all_anomalies_cores)
 
 
 /datum/controller/subsystem/processing/anom/proc/add_anomaly_in_helpers(obj/anomaly/input)
 	LAZYADD(all_anomalies_helpers, input)
 	spawn_ammount++
-	anomalies_helpers_in_world_amount++
+	anomalies_helpers_in_world_amount = LAZYLEN(all_anomalies_helpers)
 
 /datum/controller/subsystem/processing/anom/proc/remove_anomaly_from_helpers(obj/anomaly/input)
 	LAZYREMOVE(all_anomalies_helpers, input)
 	removed_ammount++
-	anomalies_helpers_in_world_amount--
+	anomalies_helpers_in_world_amount = LAZYLEN(all_anomalies_helpers)
 
+/datum/controller/subsystem/processing/anom/proc/add_storyteller(datum/planet_storyteller/input_storyteller)
+	LAZYADD(all_storytellers, input_storyteller)
+	storytellers_ammount = LAZYLEN(all_storytellers)
 
+/datum/controller/subsystem/processing/anom/proc/remove_storyteller(datum/planet_storyteller/input_storyteller)
+	LAZYREMOVE(all_storytellers, input_storyteller)
+	storytellers_ammount = LAZYLEN(all_storytellers)
 
 /datum/controller/subsystem/processing/anom/proc/give_gameover_text()
 	var/anomaly_text
@@ -120,6 +130,9 @@ PROCESSING_SUBSYSTEM_DEF(anom)
 			anomaly_text += "<br>Никого не порвало от аномалии."
 		anomaly_text += "<br><a href='byond://?src=\ref[src];show_anomaly_stats=1'>\[Показать подробную статистику\]</a>"
 		return anomaly_text
+
+/datum/controller/subsystem/processing/anom/proc/log_storyteller_activity(input_message)
+
 
 /datum/controller/subsystem/processing/anom/Topic(href, href_list)
 	..()
@@ -196,7 +209,7 @@ PROCESSING_SUBSYSTEM_DEF(anom)
 	else if(attack_name == "Жарка")
 		result_text += "его сожгло до костей огнём."
 	else if(attack_name == "Рвач")
-		result_text += "его разорвало на куски гравианомалией."
+		result_text += "его разорвало на куски."
 
 	if(user.mind.last_words)
 		result_text += "его последние слова: [user.mind.last_words]"
