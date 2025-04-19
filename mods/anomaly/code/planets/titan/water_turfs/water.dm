@@ -77,17 +77,52 @@
 	return
 
 /turf/simulated/floor/exoplanet/titan_water/proc/get_better()
+	if(deep_status == MIN_DEEP)
+		var/turf/simulated/floor/exoplanet/titan_water/middle/water_prototype = /turf/simulated/floor/exoplanet/titan_water/middle
+		name = initial(water_prototype.name)
+		deep_status = initial(water_prototype.deep_status)
+		mask_icon_state = initial(water_prototype.mask_icon_state)
+		icon_state = initial(water_prototype.icon_state)
+		mask_icon_state_structure = initial(water_prototype.mask_icon_state_structure)
+		possible_icons = initial(water_prototype.possible_icons)
+		footstep_type = initial(water_prototype.footstep_type)
+		swim_stamina_spend = initial(water_prototype.swim_stamina_spend)
+		movement_delay = initial(water_prototype.movement_delay)
+		set_icons()
+		update_filters_for_contents()
+
+	/*
+	С среднего на макс
+	else if(deep_status == MIDDLE_DEEP)
+		var/turf/simulated/floor/exoplanet/titan_water/maximum/water_prototype = /turf/simulated/floor/exoplanet/titan_water/maximum
+		deep_status = initial(water_prototype
 	return
+	*/
 
-//get_better
-/turf/simulated/floor/exoplanet/titan_water/minimal/get_better()
-	ChangeTurf(/turf/simulated/floor/exoplanet/titan_water/middle)
-
-/*
-/turf/simulated/floor/exoplanet/titan_water/middle/get_better()
-	ChangeTurf(/turf/simulated/floor/exoplanet/titan_water/maximum)
-*/
-
-//get_worst
 /turf/simulated/floor/exoplanet/titan_water/proc/get_easiest()
-	ChangeTurf(/turf/simulated/floor/exoplanet/titan_water/minimal)
+	if(deep_status == MIDDLE_DEEP)
+		var/turf/simulated/floor/exoplanet/titan_water/minimal/water_prototype = /turf/simulated/floor/exoplanet/titan_water/minimal
+		name = initial(water_prototype.name)
+		deep_status = initial(water_prototype.deep_status)
+		mask_icon_state = initial(water_prototype.mask_icon_state)
+		icon_state = initial(water_prototype.icon_state)
+		mask_icon_state_structure = initial(water_prototype.mask_icon_state_structure)
+		possible_icons = initial(water_prototype.possible_icons)
+		footstep_type = initial(water_prototype.footstep_type)
+		swim_stamina_spend = initial(water_prototype.swim_stamina_spend)
+		movement_delay = initial(water_prototype.movement_delay)
+		set_icons()
+		update_filters_for_contents()
+	else if(deep_status == MAX_DEEP)
+		var/turf/simulated/floor/exoplanet/titan_water/middle/water_prototype = /turf/simulated/floor/exoplanet/titan_water/middle
+		name = initial(water_prototype.name)
+		deep_status = initial(water_prototype.deep_status)
+		mask_icon_state = initial(water_prototype.mask_icon_state)
+		icon_state = initial(water_prototype.icon_state)
+		mask_icon_state_structure = initial(water_prototype.mask_icon_state_structure)
+		possible_icons = initial(water_prototype.possible_icons)
+		footstep_type = initial(water_prototype.footstep_type)
+		swim_stamina_spend = initial(water_prototype.swim_stamina_spend)
+		movement_delay = initial(water_prototype.movement_delay)
+		set_icons()
+		update_filters_for_contents()

@@ -93,7 +93,7 @@
 			if(water.deep_status != MAX_DEEP)
 				SSweather.add_to_water_queue(water, "up") // Добавляем в очередь на углубление
 
-/datum/weather_manager/titan_rain/proc/weak_all_weater()
+/datum/weather_manager/titan_rain/proc/weak_all_water()
 	for(var/turf/T in get_area_turfs(my_area))
 		if(istitanwater(T))
 			var/turf/simulated/floor/exoplanet/titan_water/water = T
@@ -103,7 +103,7 @@
 	if(activity_blocked_by_safe_protocol || !check_cunami_safety())
 		return
 	have_cunami_ang_changes = FALSE
-	weak_all_weater()
+	weak_all_water()
 	time_before_cunami = rand(150 SECONDS, 300 SECONDS)
 	report_progress("DEBUG ANOM: Начало цунами, оставшееся время - [time_before_cunami/10] Секунд")
 	for(var/mob/living/carbon/human/picked_human in GLOB.living_players)
