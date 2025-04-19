@@ -1,8 +1,9 @@
 #define ASSIGN_LIST_TO_COLORS(L, R, G, B) if(L) { R = L[1]; G = L[2]; B = L[3]; }
 
 /datum/preferences/proc/randomize_appearance_and_body_for(mob/living/carbon/human/H)
-	var/datum/species/current_species = all_species[species]
-	if(!current_species) current_species = all_species[SPECIES_HUMAN]
+	var/singleton/species/current_species = GLOB.species_by_name[species]
+	if (!current_species)
+		current_species = GLOB.species_by_name[SPECIES_HUMAN]
 	gender = pick(current_species.genders)
 	pronouns = pick(current_species.pronouns)
 

@@ -24,4 +24,4 @@
 /datum/event/bsd_instability/end()
 	.=..()
 	for(var/obj/anomaly/picked_anomaly in all_spawned_anomalies)
-		picked_anomaly.delete_anomaly()
+		picked_anomaly.Destroy()

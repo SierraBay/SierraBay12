@@ -61,5 +61,5 @@
 /obj/anomaly/proc/stop_light()
 	set_light(0)
 
-/obj/anomaly/proc/get_detection_icon()
+/obj/anomaly/proc/get_detection_icon(mob/living/viewer)
 	return detection_icon_state

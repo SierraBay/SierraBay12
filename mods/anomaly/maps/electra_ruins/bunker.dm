@@ -12,3 +12,33 @@
 /area/map_template/bunker
 	name = "\improper Science bunker"
 	icon_state = "A"
+	turfs_airless = TRUE
+
+/turf/simulated/wall/titanium/bunker_map/Initialize()
+	. = ..()
+	name = "Armored titanium wall"
+
+/turf/simulated/wall/titanium/bunker_map/damage_health(damage, damage_type, damage_flags, severity, skip_can_damage_check)
+	SHOULD_CALL_PARENT(FALSE)
+	return
+
+
+/turf/simulated/wall/titanium/bunker_map/use_tool(obj/item/W, mob/living/user, list/click_params)
+	SHOULD_CALL_PARENT(FALSE)
+	return //С этой стеной вообще нельзя взаимодействовать
+
+/obj/item/toy/bronze_pig
+	name = "bronze pig"
+	desc = "This bronze piglet is the ultimate home decor flex—small, shiny, and ready to oink its way into your heart"
+	icon_state = "bronze_pig"
+	w_class = ITEM_SIZE_GARGANTUAN
+	icon = 'mods/anomaly/icons/pig.dmi'
+
+/obj/item/toy/bronze_pig/Initialize()
+	slowdown_per_slot[slot_l_hand] =  5
+	slowdown_per_slot[slot_r_hand] =  5
+
+	. = ..()
+//Пути ниже требуются дабы не ругался юнит тест Away sites
+/obj/item/storage/firstaid/combat/bunker
+/obj/item/storage/firstaid/combat/special/bunker

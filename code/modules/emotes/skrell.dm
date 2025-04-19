@@ -1,4 +1,4 @@
-/datum/species/skrell/default_emotes = list(
+/singleton/species/skrell/default_emotes = list(
 	/singleton/emote/audible/skrell_anger,
 	/singleton/emote/audible/skrell_anger1,
 	/singleton/emote/audible/skrell_anger2,

@@ -10,7 +10,7 @@
 	var/stored_beacon_amount = 0
 	var/max_beacon_amount = 50
 	///Отвечает за то, какого цвета будет размещён маячок
-	var/current_beacon_type = "Green"
+	var/current_beacon_type = "Зелёный"
 
 /obj/item/stack/flag
 	icon = 'mods/anomaly/icons/marking_beacon.dmi'
@@ -18,6 +18,12 @@
 /obj/item/stack/flag/set_up()
 	upright = 1
 	dir = usr.dir
+	anchored = TRUE
+	update_icon()
+
+/obj/item/stack/flag/proc/set_up_by_projectile()
+	upright = 1
+	dir = SOUTH
 	anchored = TRUE
 	update_icon()
 
@@ -29,7 +35,13 @@
 	to_chat(user, SPAN_GOOD("Используйте Кнтрл + левая кнопка мыши для разрядки устройства."))
 
 /obj/item/beacon_deployer/AltClick()
-	current_beacon_type = input(usr, "Выберите цвет флага","Выборы-выборы...") as null|anything in list("Зелёный", "Красный", "Жёлтый", "Зелёный")
+	var/list/options = list(
+		"Зелёный" = mutable_appearance('mods/anomaly/icons/deployer.dmi', "green"),
+		"Красный" = mutable_appearance('mods/anomaly/icons/deployer.dmi', "red"),
+		"Жёлтый" = mutable_appearance('mods/anomaly/icons/deployer.dmi', "yellow"),
+		"Синий" = mutable_appearance('mods/anomaly/icons/deployer.dmi', "blue")
+	)
+	current_beacon_type = show_radial_menu(usr, src, options, require_near = TRUE, radius = 42, tooltips = TRUE, check_locs = list(src))
 	return TRUE
 
 /obj/item/beacon_deployer/CtrlClick()
@@ -44,7 +56,7 @@
 ///Заряжает в деплоер флаги
 /obj/item/beacon_deployer/proc/reload_deployer(mob/living/user, obj/item/stack/flag/item)
 	if(stored_beacon_amount == max_beacon_amount) //Переполнен
-		to_chat(user, SPAN_NOTICE("Deployer is full."))
+		to_chat(user, SPAN_NOTICE("Полон."))
 		return
 	//Определяемся, сколько передадим флажков
 	var/transfer_amount = item.amount
@@ -54,7 +66,7 @@
 		transfer_amount = item.amount //Не позволит взять больше, чем есть в стаке
 	item.use(transfer_amount)
 	stored_beacon_amount += transfer_amount
-	to_chat(user, SPAN_NOTICE("You inserted [transfer_amount] flags in autodeployer."))
+	to_chat(user, SPAN_NOTICE("Вы вставили [transfer_amount] зарядов в установщик."))
 
 /obj/item/beacon_deployer/attack_self(mob/living/user)
 	. = ..()
@@ -77,19 +89,19 @@
 ///Установить флаг из деплоера
 /obj/item/beacon_deployer/proc/deploy_beacon(mob/living/user, deploy = TRUE, deploy_amount = 1)
 	if(stored_beacon_amount <= 0)
-		to_chat(user, SPAN_BAD("Deployer is empty."))
+		to_chat(user, SPAN_BAD("Пуст."))
 		return
 	if(deploy_amount > 1)
 		if(deploy_amount > stored_beacon_amount)
 			deploy_amount = stored_beacon_amount
 	var/type
-	if(current_beacon_type == "Green")
+	if(current_beacon_type == "Зелёный")
 		type = /obj/item/stack/flag/green
-	else if(current_beacon_type == "Red")
+	else if(current_beacon_type == "Красный")
 		type = /obj/item/stack/flag/red
-	else if(current_beacon_type == "Blue")
+	else if(current_beacon_type == "Синий")
 		type = /obj/item/stack/flag/blue
-	else if(current_beacon_type == "Yellow")
+	else if(current_beacon_type == "Жёлтый")
 		type = /obj/item/stack/flag/yellow
 	if(!type)
 		return
@@ -101,9 +113,50 @@
 		spawned_flag.dir = user.dir
 		playsound(src, 'sound/items/shuttle_beacon_complete.ogg', 50)
 
+//С его помощью даже можно стрелять! Флагами.
+/obj/item/beacon_deployer/afterattack(atom/target, mob/living/user, proximity_flag, click_parameters)
+	try_shoot_flag(target)
+
+/obj/item/projectile/flag
+	var/flag_color = "Зелёный"
+	nodamage = TRUE
+	var/turf/wanted_turf
+
+/obj/item/projectile/flag/Move()
+	.=..()
+	if(get_turf(src) == wanted_turf)
+		flag_act()
+
+/obj/item/projectile/flag/proc/flag_act()
+	if(locate(/obj/item/stack/flag) in get_turf(src))
+		return FALSE //Не стоооит создавать ещё один флаг, приводит к страшным лагам
+	var/type
+	if(flag_color == "Зелёный")
+		type = /obj/item/stack/flag/green
+	else if(flag_color == "Красный")
+		type = /obj/item/stack/flag/red
+	else if(flag_color == "Синий")
+		type = /obj/item/stack/flag/blue
+	else if(flag_color == "Жёлтый")
+		type = /obj/item/stack/flag/yellow
+	var/obj/item/stack/flag/spawned_flag = new type(get_turf(src))
+	spawned_flag.amount = 1
+	spawned_flag.set_up_by_projectile()
+	qdel(src)
 
 
-
+/obj/item/beacon_deployer/proc/try_shoot_flag(atom/target)
+	usr.setClickCooldown(DEFAULT_QUICK_COOLDOWN)
+	if(stored_beacon_amount <= 0)
+		to_chat(usr, SPAN_BAD("Грустно щёлкает."))
+		return
+	var/obj/item/projectile/flag/flag_projectile = new(get_turf(src))
+	flag_projectile.wanted_turf = get_turf(target)
+	flag_projectile.flag_color = current_beacon_type
+	flag_projectile.icon = 'mods/anomaly/icons/deployer.dmi'
+	flag_projectile.icon_state = "flagger"
+	stored_beacon_amount--
+	flag_projectile.launch(target)
 
 
 /obj/item/beacon_deployer/full

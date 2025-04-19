@@ -124,7 +124,7 @@ GLOBAL_LIST_EMPTY(powerinstances)
 
 					if(!ownsthis)
 					{
-						body += "<a href='?src=\ref[src];P="+power+"'>Evolve</a>"
+						body += "<a href='byond://?src=\ref[src];P="+power+"'>Evolve</a>"
 					}
 
 					body += "</td><td align='center'>";

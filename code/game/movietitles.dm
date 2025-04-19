@@ -166,7 +166,7 @@ GLOBAL_LIST(end_titles)
 		else if(H.real_name)
 			corpses += H.real_name
 	for(var/spec in monkies)
-		var/datum/species/S = all_species[spec]
+		var/singleton/species/S = GLOB.species_by_name[spec]
 		corpses += "[monkies[spec]] [lowertext(monkies[spec] > 1 ? S.name_plural : S.name)]"
 	if(length(corpses))
 		titles += "<center>BASED ON REAL EVENTS<br>In memory of [english_list(corpses)].</center>"

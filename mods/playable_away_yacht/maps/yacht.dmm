@@ -41,7 +41,7 @@
 /area/playable_yacht/relax_zone)
 "aj" = (
 /obj/item/inflatable_duck,
-/turf/simulated/floor/beach/water/ocean,
+/turf/simulated/floor/pool,
 /area/playable_yacht/relax_zone)
 "ak" = (
 /obj/structure/cable{
@@ -107,7 +107,7 @@
 /turf/simulated/floor/wood,
 /area/playable_yacht/relax_zone)
 "ax" = (
-/turf/simulated/floor/beach/water/ocean,
+/turf/simulated/floor/pool,
 /area/playable_yacht/relax_zone)
 "ay" = (
 /obj/paint/nt_white,
@@ -194,6 +194,7 @@
 	fab_status_flags = 1;
 	pixel_x = 5
 	},
+/obj/item/storage/box/microlathe_designs,
 /obj/structure/table/marble,
 /turf/simulated/floor/wood,
 /area/playable_yacht/relax_zone)
@@ -411,12 +412,6 @@
 	pixel_y = 8;
 	pixel_x = 27
 	},
-/obj/machinery/button/blast_door{
-	id_tag = "YachtBar";
-	name = "Bar external blasts";
-	pixel_y = 8;
-	pixel_x = 27
-	},
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 8
 	},
@@ -470,6 +465,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/hologram/holopad/longrange/remoteship,
 /turf/simulated/floor/wood/walnut,
 /area/playable_yacht/bridge)
 "bI" = (
@@ -526,8 +522,7 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/unary/vent_pump/on{
-	dir = 4;
-	pressure_checks = 0
+	dir = 4
 	},
 /obj/item/clothing/gloves/wristwatch/gold/yacht,
 /turf/simulated/floor/wood/walnut,
@@ -711,7 +706,8 @@
 /turf/simulated/floor/tiled/white,
 /area/playable_yacht/kitchen)
 "cq" = (
-/turf/simulated/floor/beach/water/ocean,
+/obj/structure/hygiene/drain/bath,
+/turf/simulated/floor/pool,
 /area/playable_yacht/living)
 "cx" = (
 /obj/structure/cable{
@@ -793,8 +789,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/unary/vent_pump/on{
-	dir = 4;
-	pressure_checks = 0
+	dir = 4
 	},
 /turf/simulated/floor/tiled/white,
 /area/playable_yacht/kitchen)
@@ -1705,8 +1700,7 @@
 /area/playable_yacht/relax_zone)
 "wU" = (
 /obj/machinery/atmospherics/unary/vent_pump/on{
-	dir = 4;
-	pressure_checks = 0
+	dir = 4
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -1802,6 +1796,7 @@
 	dir = 8
 	},
 /obj/machinery/fabricator/hacked,
+/obj/item/storage/box/autolathe_designs,
 /obj/item/stack/material/glass/ten,
 /obj/item/stack/material/steel/ten,
 /turf/simulated/floor/tiled/monotile,
@@ -2108,7 +2103,8 @@
 	dir = 4;
 	icon_state = "tube_map"
 	},
-/turf/simulated/floor/beach/water/ocean,
+/obj/structure/hygiene/faucet,
+/turf/simulated/floor/pool,
 /area/playable_yacht/living)
 "Mn" = (
 /obj/structure/table/gamblingtable,
@@ -2281,6 +2277,16 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/wood/walnut,
 /area/playable_yacht/relax_zone)
+"SA" = (
+/obj/structure/hygiene/drain/bath,
+/turf/simulated/floor/pool,
+/area/playable_yacht/relax_zone)
+"SS" = (
+/obj/structure/hygiene/faucet{
+	dir = 1
+	},
+/turf/simulated/floor/pool,
+/area/playable_yacht/relax_zone)
 "Td" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -2386,8 +2392,7 @@
 /area/playable_yacht/kitchen)
 "ZH" = (
 /obj/machinery/atmospherics/unary/vent_pump/on{
-	dir = 4;
-	pressure_checks = 0
+	dir = 4
 	},
 /turf/simulated/floor/wood/walnut,
 /area/playable_yacht/relax_zone)
@@ -7335,7 +7340,7 @@ HD
 ax
 ax
 ax
-ax
+SS
 am
 hK
 ae
@@ -7435,7 +7440,7 @@ aR
 Rv
 HD
 ax
-ax
+SA
 aj
 ax
 kj

@@ -349,6 +349,7 @@
 	icon_state = "flask"
 	volume = 60
 	center_of_mass = "x=17;y=7"
+	item_flags = ITEM_FLAG_CAN_HIDE_IN_SHOES
 
 /obj/item/reagent_containers/food/drinks/flask/shiny
 	name = "shiny flask"

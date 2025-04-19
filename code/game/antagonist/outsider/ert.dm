@@ -1,4 +1,4 @@
-GLOBAL_DATUM_INIT(ert, /datum/antagonist/ert, new)
+GLOBAL_TYPED_NEW(ert, /datum/antagonist/ert)
 
 /datum/antagonist/ert
 	id = MODE_ERT

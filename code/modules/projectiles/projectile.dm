@@ -167,6 +167,7 @@
 	if(targloc == curloc) //Shooting something in the same turf
 		target.bullet_act(src, target_zone)
 		on_impact(target)
+		QDEL_NULL_LIST(segments)
 		qdel(src)
 		return 0
 
@@ -443,12 +444,12 @@
 /obj/item/projectile/proc/impact_effect()
 	if(ispath(impact_type))
 		var/obj/projectile/P = new impact_type(location ? location.loc : get_turf(src))
+		segments += P
 
 		if(istype(P) && location)
 			P.SetTransform(others = effect_transform)
 			P.pixel_x = round(location.pixel_x, 1)
 			P.pixel_y = round(location.pixel_y, 1)
-			segments += P
 
 //"Tracing" projectile
 /obj/item/projectile/test //Used to see if you can hit them.

@@ -21,9 +21,7 @@
 
 /obj/anomaly/heater/Initialize()
 	. = ..()
-	for(var/obj/anomaly/part/choosed_part in list_of_parts)
-		LAZYADD(effected_turfs, get_turf(choosed_part))
-	LAZYADD(effected_turfs, get_turf(src))
+	LAZYADD(anomaly_turfs, get_turf(src))
 
 
 //Хитер начинает долгую обработку
@@ -33,9 +31,9 @@
 
 
 /obj/anomaly/heater/proc/heat_everybody_around()
-	for(var/turf/turfs in effected_turfs)
+	for(var/turf/turfs in anomaly_turfs)
 		for(var/mob/living/victim in turfs)
-			victim.bodytemperature += 2
+			victim.bodytemperature += 10
 
 
 /obj/anomaly/heater/Crossed(atom/movable/O)

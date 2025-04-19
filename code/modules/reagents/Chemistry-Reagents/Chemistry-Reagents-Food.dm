@@ -643,3 +643,14 @@
 	condiment_name = "NTella jar"
 	condiment_desc = "Originally called 'Entella', it was rebranded after being bought by NanoTrasen. Some humans insist this nutty chocolate spread might be the best thing they've ever created."
 	condiment_icon_state = "NTellajar"
+
+/datum/reagent/spacespice
+	name = "Space Spice"
+	description = "A melange of spices for cooking. It must flow."
+	taste_description = "spices"
+	reagent_state = SOLID
+	color = "#e08702"
+	taste_mult = 1.5
+
+	condiment_name = "bottle of space spice"
+	condiment_icon_state = "spacespicebottle"

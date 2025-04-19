@@ -1,4 +1,4 @@
-/datum/species/monkey
+/singleton/species/monkey
 	name = "Monkey"
 	name_plural = "Monkeys"
 	description = "Ook."
@@ -59,7 +59,7 @@
 
 	show_age_to_other_species = TRUE
 
-/datum/species/monkey/New()
+/singleton/species/monkey/New()
 	equip_adjust = list(
 		slot_l_hand_str = list("[NORTH]" = list("x" = 1, "y" = 3), "[EAST]" = list("x" = -3, "y" = 2), "[SOUTH]" = list("x" = -1, "y" = 3), "[WEST]" = list("x" = 3, "y" = 2)),
 		slot_r_hand_str = list("[NORTH]" = list("x" = -1, "y" = 3), "[EAST]" = list("x" = 3, "y" = 2), "[SOUTH]" = list("x" = 1, "y" = 3), "[WEST]" = list("x" = -3, "y" = 2)),
@@ -69,14 +69,14 @@
 	)
 	..()
 
-/datum/species/monkey/handle_post_spawn(mob/living/carbon/human/H)
+/singleton/species/monkey/handle_post_spawn(mob/living/carbon/human/H)
 	..()
 	H.item_state = lowertext(name)
 	H.ai_holder = new /datum/ai_holder/human/monkey (H)
 	H.say_list_type = /datum/say_list/monkey
 	H.say_list = new /datum/say_list/monkey (H)
 
-/datum/species/monkey/alien
+/singleton/species/monkey/alien
 	name = "Farwa"
 	name_plural = "Farwa"
 	health_hud_intensity = 2
@@ -93,7 +93,7 @@
 		TAG_FACTION =   FACTION_TEST_SUBJECTS
 	)
 
-/datum/species/monkey/skrell
+/singleton/species/monkey/skrell
 	name = "Neaera"
 	name_plural = "Neaera"
 	health_hud_intensity = 1.75
@@ -112,7 +112,7 @@
 	)
 
 
-/datum/species/monkey/unathi
+/singleton/species/monkey/unathi
 	name = "Stok"
 	name_plural = "Stok"
 	health_hud_intensity = 1.5

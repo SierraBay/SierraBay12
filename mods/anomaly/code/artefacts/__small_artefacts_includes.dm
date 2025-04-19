@@ -3,6 +3,7 @@
 #include "_artefact_processing.dm"
 #include "_artefact_spawn.dm"
 #include "_interact_with_artefacts.dm"
+#include "artefact_crystal.dm"
 #include "artefact_flyer.dm"
 #include "artefact_gravi.dm"
 #include "artefact_pruzhina.dm"

@@ -62,5 +62,5 @@
 		/obj/item/storage/box/syringegun,
 		/obj/item/storage/box/syringes,
 		/obj/item/reagent_containers/glass/bottle/chloralhydrate,
-		/obj/item/reagent_containers/glass/bottle/stoxin
+		/obj/item/reagent_containers/glass/bottle/soporific
 	)

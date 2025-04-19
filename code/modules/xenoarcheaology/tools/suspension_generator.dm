@@ -50,11 +50,11 @@
 		dat += "<b>Energy cell</b>: [SPAN_COLOR("[colour]", "[percent]%")]<br>"
 	else
 		dat += "<b>Energy cell</b>: None<br>"
-	dat += "<b><A href='?src=\ref[src];toggle_field=1'>[suspension_field ? "Disable" : "Enable"] field</a></b><br>"
+	dat += "<b><a href='byond://?src=\ref[src];toggle_field=1'>[suspension_field ? "Disable" : "Enable"] field</a></b><br>"
 	dat += "<hr>"
 	dat += "<hr>"
 	dat += "[SPAN_COLOR("cyan", "<b>Always wear safety gear and consult a field manual before operation.</b>")]<br>"
-	dat += "<A href='?src=\ref[src];close=1'>Close console</A>"
+	dat += "<a href='byond://?src=\ref[src];close=1'>Close console</A>"
 	var/datum/browser/popup = new(user, "suspension", "Suspension Generator", 500, 400)
 	popup.set_content(dat)
 	popup.open()

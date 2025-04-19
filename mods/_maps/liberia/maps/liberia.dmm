@@ -1893,6 +1893,7 @@
 	fab_status_flags = 1;
 	name = "unlocked autolathe"
 	},
+/obj/item/storage/box/autolathe_designs,
 /obj/machinery/embedded_controller/radio/airlock/docking_port{
 	frequency = 1380;
 	id_tag = "merchant_ship_dock";
@@ -6934,6 +6935,7 @@
 /obj/machinery/fabricator/micro/bartender{
 	pixel_x = 4
 	},
+/obj/item/storage/box/microlathe_designs,
 /obj/floor_decal/spline/fancy/wood,
 /turf/simulated/floor/carpet/red,
 /area/liberia/traidingroom)
@@ -8210,6 +8212,7 @@
 /obj/machinery/fabricator{
 	fab_status_flags = 1
 	},
+/obj/item/storage/box/autolathe_designs,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/liberia/engineeringlobby)
 "Lh" = (

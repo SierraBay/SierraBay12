@@ -13,3 +13,4 @@
 /area/map_template/deployed_generator
 	name = "\improper Deployed science generator"
 	icon_state = "A"
+	turfs_airless = TRUE

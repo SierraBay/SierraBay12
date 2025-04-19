@@ -19,7 +19,7 @@
 
 /obj/overmap/visitable/sector/exoplanet/grass/generate_atmosphere()
 	..()
-	var/datum/species/H = all_species[SPECIES_HUMAN]
+	var/singleton/species/H = GLOB.species_by_name[SPECIES_HUMAN]
 	var/generator/new_temp = generator("num", T0C, H.heat_level_1 - 10, UNIFORM_RAND)
 	atmosphere.temperature = new_temp.Rand()
 	atmosphere.update_values()
@@ -106,7 +106,7 @@
 
 /obj/overmap/visitable/sector/exoplanet/grass/terraformed/generate_atmosphere()
 	..()
-	var/datum/species/H = all_species[SPECIES_HUMAN]
+	var/singleton/species/H = GLOB.species_by_name[SPECIES_HUMAN]
 	var/generator/new_temp = generator("num", T20C, H.heat_level_1 - 15)
 	atmosphere.temperature = new_temp.Rand()
 	atmosphere.update_values()
