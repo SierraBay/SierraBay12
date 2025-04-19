@@ -2463,6 +2463,14 @@
 /obj/item/storage/box/glasses/mug{
 	pixel_x = 4
 	},
+/obj/item/material/utensil/fork/titanium,
+/obj/item/material/utensil/fork/titanium,
+/obj/item/material/utensil/fork/titanium,
+/obj/item/material/utensil/fork/titanium,
+/obj/item/material/utensil/spoon/titanium,
+/obj/item/material/utensil/spoon/titanium,
+/obj/item/material/utensil/spoon/titanium,
+/obj/item/material/utensil/spoon/titanium,
 /turf/simulated/floor/tiled/skrell/white,
 /area/ship/skrellscoutship/crew/rec)
 "hJ" = (
