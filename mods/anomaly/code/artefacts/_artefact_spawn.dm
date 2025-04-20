@@ -1,10 +1,11 @@
 /obj/anomaly
 	///Аномалия может "Рожать" артефакты?
 	var/can_born_artefacts = FALSE
+	///Аномалия всегда будет создавать артефакт в своём центре
+	var/spawn_artefact_in_center = FALSE
 	//ANOTHER
 	///Какие артефакты порождает аномалия. Справа пишем шанс выбора этого артефакта.
 	var/list/artefacts = list()
-
 	//Шанс спавна в аномалии артефакта
 	var/artefact_spawn_chance = 25
 
@@ -21,14 +22,22 @@
 ///Функция спавнит артефакт на территории аномалии
 /obj/anomaly/proc/born_artefact()
 	var/obj/artefact = pickweight(artefacts)
-	if(artefact)
+	if(artefact && !spawn_artefact_in_center)
 		born_artefact_in_random_title(artefact)
+	else if(artefact && spawn_artefact_in_center)
+		born_artefact_in_center(artefact)
+
+/obj/anomaly/proc/born_artefact_in_center(artefact)
+	//Размещает артефакт в центре
+	var/obj/item/artefact/spawned_artefact =  new artefact(get_turf(src))
+	spawned_artefact.connected_to_anomaly = TRUE
+	SSanom.artefacts_spawned_by_game++
 
 ///Функция проверяет, есть ли на территории аномалии артефакты
 /obj/anomaly/proc/check_artifacts_in_anomaly()
 	var/found_artifact = FALSE
 	//Проверим тайтл самой аномалии в поисках артефрукта.
-	for(var/atom/movable/target in src.loc)
+	for(var/atom/movable/target in get_turf(src))
 		if(istype(target, /obj/item/artefact))
 			found_artifact = TRUE
 	if(multitile && !found_artifact)
@@ -54,7 +63,7 @@
 ///Создаёт артефакт в случайном тайтле аномалии, включая вспомогательные
 /obj/anomaly/proc/born_artefact_in_random_title()
 	var/list/possible_places = list()
-	LAZYADD(possible_places, src.loc)
+	LAZYADD(possible_places, get_turf(src))
 	if(multitile)
 		if(LAZYLEN(list_of_parts))
 			for(var/obj/anomaly/part/part in list_of_parts)

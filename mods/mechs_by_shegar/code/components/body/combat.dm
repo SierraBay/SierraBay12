@@ -1,6 +1,5 @@
 /obj/item/mech_component/chassis/combat
 	name = "sealed exosuit chassis"
-	hatch_descriptor = "canopy"
 	pilot_coverage = 100
 	exosuit_desc_string = "an armoured chassis"
 	icon_state = "combat_body"

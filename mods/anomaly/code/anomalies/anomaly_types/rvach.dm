@@ -11,7 +11,6 @@
 	static_sound_type = 'mods/anomaly/sounds/gravi_idle.ogg'
 	idle_effect_type = "rvach_idle"
 	activation_effect_type = "gravy_anomaly_down"
-	detection_icon_state = "hot_anomaly"
 	can_born_artefacts = TRUE
 	weight_sensity = ITEM_SIZE_LARGE
 	///Сколько длится первая фаза рвача(всасывание)
@@ -52,14 +51,13 @@
 		if(result_effects)
 			if(result_effects.Find("Защищает от гиба рвачом"))
 				return
-		if(istype(target, /mob/living/carbon/human))
+		if(ishuman(target))
+			var/mob/living/carbon/human/human = target
+			if(human.health == 0)
+				SSanom.add_last_gibbed(human, "Рвач")
+				human.gib()
+				return
 			var/mob/living/carbon/human/victim = target
-			if(!victim.incapacitated(INCAPACITATION_UNRESISTING) == TRUE) //Убедимся что наш чувак в сознании
-				//Персонаж может вырваться из аномали, деж если он аутист
-				if(victim.skill_check(SKILL_HAULING, SKILL_MASTER))
-					if(prob(7 * victim.get_skill_value(SKILL_HAULING)))
-						victim.Weaken(10)
-						return
 			victim.apply_damage(500, DAMAGE_BRUTE, pick(BP_R_ARM, BP_L_ARM, BP_R_LEG, BP_L_LEG), armor_pen = 100)
 			playsound(src, 'mods/anomaly/sounds/rvach_gibbed.ogg', 100, FALSE  )
 		else if(istype(target, /mob/living))
@@ -101,7 +99,7 @@
 	var/list/objs = list()
 	var/turf/T = get_turf(src)
 	//Собираем все обьекты радиусом на 1 больше, чем расположены вспомогательные части рвачика
-	get_mobs_and_objs_in_view_fast(T, multititle_parts_range, victims, objs)
+	get_mobs_and_objs_in_view_fast(T, effect_range+1, victims, objs)
 	LAZYMERGELIST(victims, objs)
 	for(var/atom/movable/detected_atom in victims)
 		if((!ismob(detected_atom) && !isitem(detected_atom)) || detected_atom.anchored)
@@ -208,5 +206,8 @@
 		target.Weaken(5)
 		helper.Weaken(5)
 
-/obj/anomaly/rvach/get_detection_icon()
+/obj/anomaly/rvach/get_detection_icon(mob/living/viewer)
 	return "rvach_detection"
+
+#undef RVACH_DAMAGE_EFFECT
+#undef RVACH_DESTROY_EFFECT

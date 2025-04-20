@@ -293,6 +293,7 @@
 	options["dragon"] = /obj/item/clothing/suit/storage/toggle/new_suit/biker_jacket/dragon
 	options["devil"] = /obj/item/clothing/suit/storage/toggle/new_suit/biker_jacket/devil
 	options["posh"] = /obj/item/clothing/suit/storage/toggle/new_suit/biker_jacket/posh
+	options["fire"] = /obj/item/clothing/suit/storage/toggle/new_suit/biker_jacket/fire
 	gear_tweaks += new/datum/gear_tweak/path(options)
 
 

@@ -32,7 +32,7 @@
 		qdel(H)
 	// SIERRA-REMOVE hardpoint_hud_elements.Cut() //Это место из-за мода рантаймит, в целом бесполезный кусок кода ибо удаление всё само сделает
 	hardpoint_hud_elements = null
-	forced_leave_passenger(0 , MECH_DROP_ALL_PASSENGERS , "destroys of [src]") // Перед смертью меха, сбросим всех пассажиров
+	external_leaving_passenger(mode = MECH_DROP_ALL_PASSENGERS) // Перед смертью меха, сбросим всех пассажиров
 	. = ..()
 
 

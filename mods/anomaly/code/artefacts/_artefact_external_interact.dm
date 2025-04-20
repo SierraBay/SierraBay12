@@ -87,9 +87,6 @@
 /obj/item/artefact/proc/react_at_can_fall(mob/living/user)
 	return
 
-/obj/item/artefact/proc/rvach_destroy_effect()
-	return
-
 /mob/living/emp_act(severity)
 	var/list/result_effects = calculate_artefact_reaction(src, "ЭМИ")
 	if(result_effects)

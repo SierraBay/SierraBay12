@@ -3,33 +3,35 @@
 	///Шанс, что при протоколе генерации, будет размещена именно эта аномалия
 	var/anomaly_spawn_chance = 1
 /*Функция попытается заспавнить аномалию без коллизии с другими обьектами или аномалиями.
-Применяется мультитайтловыми аномалиями
-all_turfs_for_spawn - Внешний список, из которого мы будем удалять турфы в случае удачного/неудачного
-T - Турф предполагаемого ядра
-path_to_spawn - Путь аномалии, которую мы хотим заспавнить
+Применяется функция block() исходя из параметров(размеров) аномалии.
+Если размеры подходящие для аномалии - протокол аномалию спавнит. Иначе собирает те турфы что не подходят и идёт дальше
+Если нужно и зарандомить размеры аномалии, проток это тоже сделает.
+T - Турфы на котором протокол попытается разместить аномалию
+path_to_spawn - путь аномалии которую попытается заспавнить алгоритм
 */
-/proc/try_spawn_anomaly_without_collision(all_turfs_for_spawn, turf/T, obj/anomaly/path_to_spawn)
-	var/obj/anomaly/spawned_anomaly = new path_to_spawn(T)
-	var/need_to_delete = FALSE
-	var/list/list_of_bad_turfs = list()
-	for(var/obj/anomaly/part/checked_part in spawned_anomaly.list_of_parts)
-		if(TurfBlocked(checked_part.loc) || AnomaliesAmmountInTurf(checked_part.loc) > 1)
-			need_to_delete = TRUE
-			LAZYADD(list_of_bad_turfs, checked_part.loc)
-	//Спавн неудачный, передадим null в ответ
-	if(LAZYLEN(list_of_bad_turfs))
-		for(var/turf/picked_turf in list_of_bad_turfs)
-			LAZYREMOVE(all_turfs_for_spawn, picked_turf)
-	if(need_to_delete)
-		for(var/obj/anomaly/part/checked_part in spawned_anomaly.list_of_parts)
-			qdel(checked_part)
-			checked_part.delete_anomaly()
-		spawned_anomaly.delete_anomaly()
-		qdel(spawned_anomaly)
-		return
-	//значит нам НЕ нужно удалять, передадим ссылку на самого себя
-	else
+/proc/try_spawn_anomaly_without_collision(turf/T, obj/anomaly/path_to_spawn)
+	var/x_width = initial(path_to_spawn.parts_x_width)
+	var/y_width = initial(path_to_spawn.parts_y_width)
+	var/min_x_size = initial(path_to_spawn.min_x_size)
+	var/max_x_size = initial(path_to_spawn.max_x_size)
+	var/min_y_size = initial(path_to_spawn.min_y_size)
+	var/max_y_size = initial(path_to_spawn.max_y_size)
+	//Если требуется рандомизация - рандомизируем размеры
+	if(min_x_size && max_x_size && min_y_size && max_y_size)
+		x_width = floor(rand(min_x_size, max_x_size))
+		y_width = floor(rand(min_y_size, max_y_size))
+	//Собираем турфы в выставленных размерах
+	var/list/result_turfs = block_by_coordinates(input_turf = T, x = x_width, y = y_width, move_to_center = TRUE)
+	var/placement_error = FALSE
+	for(var/turf/turf in result_turfs)
+		if(TurfBlockedByAnomaly(turf) || TurfBlocked(turf))
+			placement_error = TRUE
+	//Проблем нет - ставим аному исходя из выставленных размеров
+	if(!placement_error)
+		var/obj/anomaly/spawned_anomaly = new path_to_spawn(T, x_width, y_width, TRUE)
 		return spawned_anomaly
+	else
+		return FALSE
 
 /proc/TurfBlocked(turf/loc, space_allowed = TRUE)
 	if(!loc) //Если входного турфа нет - автоматом сообщаем о заблокированном турфе
@@ -152,7 +154,7 @@ source - Источник(Причина) генерации аномалий н
 			add = TRUE
 			if(anomaly_to_spawn.multitile)
 				//Мы вызываем функцию, которая выдаст либо null (аномалия не заспавнена, либо ссылку на обьект)
-				var/obj/anomaly/spawned_anomaly = try_spawn_anomaly_without_collision(all_turfs_for_spawn, spawner_turf, anomaly_to_spawn, TRUE, FALSE)
+				var/obj/anomaly/spawned_anomaly = try_spawn_anomaly_without_collision(spawner_turf, anomaly_to_spawn, TRUE, FALSE)
 				if(spawned_anomaly)
 					LAZYADD(spawned_anomalies, spawned_anomaly)
 					if(!ruin_protocol)
@@ -183,11 +185,11 @@ source - Источник(Причина) генерации аномалий н
 	var/spawned_anomalies_ammount = LAZYLEN(spawned_anomalies)
 	var/spawned_artefacts_ammount = generate_artefacts_in_anomalies(spawned_anomalies.Copy(), min_artefacts_ammount, max_artefacts_ammount)
 
-	var/spended_time = world.time - started_in
+	var/spended_time = world.realtime - started_in
 	//Отчитаемся
 	if(spawned_anomalies_ammount > 0)
 		report_progress("Создано [spawned_anomalies_ammount] аномалий, создано [spawned_artefacts_ammount] артефактов в них. Источник: [source], затрачено [spended_time] тиков. ")
-		LAZYADD(SSanom.important_logs, "Создано [spawned_anomalies_ammount] аномалий, создано [spawned_artefacts_ammount] артефактов в них. Источник: [source], затрачено [spended_time] тиков. ")
+		SSanom.AddImportantLog("Создано [spawned_anomalies_ammount] аномалий, создано [spawned_artefacts_ammount] артефактов в них. Источник: [source], затрачено [spended_time] тиков. ")
 	return spawned_anomalies
 
 ///Функция генерация артефактов в аномалиях. Спавнит количество артефактов, находящиеся в диапазоне между min_artefacts_ammoun и max_artefacts_ammount

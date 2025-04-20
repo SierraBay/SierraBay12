@@ -1,6 +1,6 @@
 /obj/item/organ/internal/augment/active/item/corrective_lenses
 	name = "corrective lenses"
-	augment_slots = AUGMENT_HEAD
+	augment_slots = AUGMENT_EYES
 	icon_state = "corrective_lenses"
 	desc = "A pair of retractable, ultrathin corrective lenses are installed into the eye sockets. They can be deployed or retracted at will and serve as prescription glasses."
 	action_button_name = "Deploy lenses"

@@ -99,7 +99,7 @@
 	return
 
 
-/obj/anomaly/zharka/get_detection_icon()
+/obj/anomaly/zharka/get_detection_icon(mob/living/viewer)
 	if(effect_range == 1 || effect_range == 0)
 		return "zharka_detection"
 	else if(effect_range == 2)

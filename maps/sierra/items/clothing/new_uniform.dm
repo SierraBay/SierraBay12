@@ -741,6 +741,13 @@
 	icon_state = "engberet_atmos"
 	item_state = "engberet_atmos"
 
+/obj/item/clothing/head/headband
+	name = "headband"
+	icon = 'maps/sierra/icons/obj/clothing/new_loadout_icons.dmi'
+	item_icons = list(slot_head_str = 'maps/sierra/icons/obj/clothing/new_loadout.dmi')
+	icon_state = "headband"
+	item_state = "headband"
+
 //Нижнее бельё
 /datum/category_item/underwear/undershirt/yukata
 	name = "Yukata shirt"

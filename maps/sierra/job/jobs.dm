@@ -181,6 +181,10 @@
 /datum/map/sierra
 	default_assistant_title = "Crewman"
 
+// Away jobs avaiable at roundstart now
+/datum/job/submap
+	available_by_default = TRUE
+
 #undef HUMAN_ONLY_JOBS
 #undef SILICON_JOBS
 #undef ADHERENT_JOBS
