@@ -412,12 +412,6 @@
 	pixel_y = 8;
 	pixel_x = 27
 	},
-/obj/machinery/button/blast_door{
-	id_tag = "YachtBar";
-	name = "Bar external blasts";
-	pixel_y = 8;
-	pixel_x = 27
-	},
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 8
 	},
@@ -528,8 +522,7 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/unary/vent_pump/on{
-	dir = 4;
-	pressure_checks = 0
+	dir = 4
 	},
 /obj/item/clothing/gloves/wristwatch/gold/yacht,
 /turf/simulated/floor/wood/walnut,
@@ -796,8 +789,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/unary/vent_pump/on{
-	dir = 4;
-	pressure_checks = 0
+	dir = 4
 	},
 /turf/simulated/floor/tiled/white,
 /area/playable_yacht/kitchen)
@@ -1708,8 +1700,7 @@
 /area/playable_yacht/relax_zone)
 "wU" = (
 /obj/machinery/atmospherics/unary/vent_pump/on{
-	dir = 4;
-	pressure_checks = 0
+	dir = 4
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -2401,8 +2392,7 @@
 /area/playable_yacht/kitchen)
 "ZH" = (
 /obj/machinery/atmospherics/unary/vent_pump/on{
-	dir = 4;
-	pressure_checks = 0
+	dir = 4
 	},
 /turf/simulated/floor/wood/walnut,
 /area/playable_yacht/relax_zone)

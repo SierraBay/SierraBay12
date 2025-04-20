@@ -1,6 +1,6 @@
-/datum/controller/subsystem/lighting/StartLoadingMap()
+/datum/controller/subsystem/ambient_lighting/StartLoadingMap()
 	suspend()
 
 
-/datum/controller/subsystem/lighting/StopLoadingMap()
+/datum/controller/subsystem/ambient_lighting/StopLoadingMap()
 	wake()
