@@ -11,16 +11,11 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/skat)
 "aO" = (
-/obj/structure/sign/directions/security{
-	pixel_y = 24;
-	dir = 8
+/obj/floor_decal/industrial/warning{
+	dir = 5
 	},
-/obj/structure/sign/directions/bridge{
-	dir = 8;
-	pixel_y = 36
-	},
-/obj/decal/cleanable/dirt,
-/turf/simulated/floor/tiled,
+/obj/machinery/computer/shuttle_control/lift,
+/turf/simulated/floor/tiled/techfloor,
 /area/map_template/skat)
 "aP" = (
 /obj/structure/table/rack,
@@ -408,10 +403,9 @@
 /turf/simulated/floor/exoplanet/titan_water/minimal,
 /area/map_template/skat)
 "ha" = (
-/obj/floor_decal/industrial/warning{
-	dir = 9
-	},
+/obj/machinery/mech_recharger,
 /obj/decal/cleanable/dirt,
+/obj/structure/mech_wreckage,
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/skat)
 "ho" = (
@@ -429,16 +423,12 @@
 /turf/simulated/floor/exoplanet/titan_water/minimal,
 /area/map_template/skat)
 "hr" = (
-/obj/structure/hygiene/sink{
-	dir = 4;
-	pixel_x = 12
-	},
-/obj/machinery/door/airlock/civilian{
-	id_tag = "toilet_2_lock";
-	name = "Stall Two"
-	},
 /obj/decal/cleanable/dirt,
-/turf/simulated/floor/tiled/freezer,
+/obj/structure/sign/directions/security{
+	pixel_y = 32;
+	dir = 8
+	},
+/turf/simulated/floor/tiled,
 /area/map_template/skat)
 "hx" = (
 /obj/item/tank/air,
@@ -519,11 +509,13 @@
 /turf/simulated/floor/tiled/dark,
 /area/map_template/skat)
 "jz" = (
-/obj/floor_decal/industrial/warning{
-	dir = 5
-	},
+/obj/decal/skat_decals/wall_left_wires,
 /obj/decal/cleanable/dirt,
-/turf/simulated/floor/tiled/techfloor,
+/obj/structure/sign/directions/security{
+	dir = 4;
+	pixel_x = -32
+	},
+/turf/simulated/floor/tiled,
 /area/map_template/skat)
 "jA" = (
 /obj/structure/table/woodentable/walnut,
@@ -852,6 +844,11 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled,
 /area/map_template/skat)
+"rb" = (
+/obj/decal/cleanable/dirt,
+/mob/living/exosuit/premade/combat,
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/skat)
 "rn" = (
 /obj/item/stool/bar/padded,
 /obj/decal/cleanable/dirt,
@@ -942,7 +939,6 @@
 /area/map_template/skat)
 "ts" = (
 /obj/machinery/mech_recharger,
-/mob/living/exosuit/premade/combat/military,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/skat)
@@ -1032,21 +1028,6 @@
 /turf/simulated/floor/exoplanet/titan_water/minimal,
 /area/map_template/skat)
 "vf" = (
-/obj/structure/sign/directions/engineering{
-	dir = 4;
-	pixel_x = -32;
-	pixel_y = 10
-	},
-/obj/structure/sign/directions/security{
-	dir = 4;
-	pixel_x = -32;
-	pixel_y = 4
-	},
-/obj/structure/sign/directions/supply{
-	dir = 4;
-	pixel_x = -32;
-	pixel_y = -3
-	},
 /obj/structure/dispenser/oxygen,
 /obj/floor_decal/industrial/outline/yellow,
 /obj/decal/cleanable/dirt,
@@ -1243,7 +1224,6 @@
 /area/map_template/skat)
 "yb" = (
 /obj/decal/skat_decals/wires_first,
-/obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/techmaint,
 /area/map_template/skat)
 "yl" = (
@@ -1267,6 +1247,19 @@
 /obj/decal/cleanable/dirt,
 /obj/structure/rubble/house,
 /turf/simulated/floor/tiled,
+/area/map_template/skat)
+"yT" = (
+/obj/structure/sign/directions/supply{
+	dir = 4;
+	pixel_x = -32;
+	pixel_y = -3
+	},
+/obj/structure/sign/directions/engineering{
+	dir = 4;
+	pixel_x = -32;
+	pixel_y = 10
+	},
+/turf/simulated/wall/prepainted,
 /area/map_template/skat)
 "yX" = (
 /obj/machinery/light,
@@ -1393,8 +1386,16 @@
 /turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/skat)
 "AI" = (
-/obj/landmark/random_titan_crate,
-/turf/simulated/floor/exoplanet/titan_water/minimal,
+/obj/decal/cleanable/dirt,
+/obj/structure/sign/directions/bridge{
+	dir = 8;
+	pixel_y = 36
+	},
+/obj/structure/sign/directions/security{
+	pixel_y = 23;
+	dir = 8
+	},
+/turf/simulated/floor/tiled,
 /area/map_template/skat)
 "AT" = (
 /obj/machinery/computer/operating,
@@ -1438,10 +1439,14 @@
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/skat)
 "Dl" = (
-/obj/structure/hygiene/shower,
-/obj/structure/curtain/open/shower,
-/obj/item/soap,
+/obj/landmark/teleport_to_z_level/skat,
+/turf/simulated/floor/exoplanet/titan_water/maximum,
+/area/map_template/skat)
+"Do" = (
 /obj/decal/cleanable/dirt,
+/obj/structure/hygiene/shower,
+/obj/item/soap,
+/obj/structure/curtain/open/shower,
 /turf/simulated/floor/tiled/freezer,
 /area/map_template/skat)
 "Dq" = (
@@ -1512,11 +1517,11 @@
 /turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/skat)
 "Fs" = (
-/obj/structure/curtain/open/shower,
-/obj/structure/hygiene/shower,
-/obj/item/soap,
 /obj/decal/cleanable/dirt,
-/turf/simulated/floor/tiled/freezer,
+/obj/floor_decal/industrial/warning{
+	dir = 9
+	},
+/turf/simulated/floor/tiled/techfloor,
 /area/map_template/skat)
 "Fx" = (
 /obj/structure/table/marble,
@@ -1810,10 +1815,8 @@
 	pixel_y = 32
 	},
 /obj/structure/table/steel,
-/obj/item/mech_equipment/mounted_system/taser/ballistic/minigun,
-/obj/item/ammo_magazine/rifle/mech_minigun,
-/obj/item/ammo_magazine/rifle/mech_minigun,
 /obj/decal/cleanable/dirt,
+/obj/item/ammo_magazine/rifle/mech_minigun,
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/skat)
 "MR" = (
@@ -2068,10 +2071,8 @@
 /area/map_template/skat)
 "UA" = (
 /obj/structure/table/steel,
-/obj/item/mech_equipment/mounted_system/taser/ballistic/minigun,
-/obj/item/ammo_magazine/rifle/mech_minigun,
-/obj/item/ammo_magazine/rifle/mech_minigun,
 /obj/decal/cleanable/dirt,
+/obj/item/ammo_magazine/rifle/mech_minigun,
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/skat)
 "UF" = (
@@ -2987,13 +2988,13 @@ gq
 Ep
 Ep
 Qb
-ts
+ha
 tQ
 rI
 tQ
 tQ
 tQ
-aV
+jz
 rp
 xQ
 Fj
@@ -3114,7 +3115,7 @@ tQ
 nM
 jK
 Mu
-rp
+hr
 rp
 Mu
 Mu
@@ -3154,7 +3155,7 @@ Mu
 Mu
 Mu
 Mu
-aO
+rp
 Mu
 OC
 Mu
@@ -3314,7 +3315,7 @@ Mu
 Mu
 Mu
 Mu
-rp
+AI
 rp
 Fj
 Mu
@@ -3353,7 +3354,7 @@ jm
 Eh
 vf
 fz
-Mu
+yT
 ZT
 tB
 rp
@@ -3667,7 +3668,7 @@ Ep
 Ep
 Qb
 bf
-Kz
+Dl
 yx
 iT
 iT
@@ -3682,9 +3683,9 @@ Mu
 KI
 cz
 cQ
-AI
 iT
-AI
+iT
+iT
 Yv
 Qb
 Ep
@@ -3724,7 +3725,7 @@ iT
 iT
 ve
 iT
-AI
+iT
 Yv
 Qb
 Ep
@@ -4831,10 +4832,10 @@ vu
 xk
 xk
 Xy
-vu
-Fs
 Mu
-ha
+Fs
+fh
+fh
 ho
 fh
 gk
@@ -4872,9 +4873,9 @@ JM
 xk
 fp
 Mu
-Mu
-Mu
 ki
+tQ
+tQ
 tQ
 tQ
 To
@@ -4906,15 +4907,15 @@ Ep
 Ep
 Ep
 Mu
-Xv
+Do
 vu
 xk
 rE
 xk
-hr
-Dl
 Mu
 ki
+rb
+tQ
 tQ
 tQ
 Pr
@@ -4952,9 +4953,9 @@ xk
 xk
 xk
 Mu
-Mu
-Mu
 ki
+tQ
+tQ
 oh
 tQ
 Iz
@@ -4992,9 +4993,9 @@ fu
 Dd
 fu
 Mu
-Ep
-Mu
-jz
+aO
+mg
+mg
 mg
 mg
 qv
@@ -5032,7 +5033,7 @@ Mu
 Mu
 Mu
 Mu
-Ep
+Mu
 Mu
 Mu
 Mu

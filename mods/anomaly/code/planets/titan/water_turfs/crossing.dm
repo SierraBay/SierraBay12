@@ -51,7 +51,7 @@
 	// Потом даст заменить все органы персонажу. Какая же это проклятая херня боже мой.
 	if(QDELETED(input_movable))
 		return FALSE
-	if(isghost(input_movable) || isobserver(input_movable))
+	if(isghost(input_movable) || isobserver(input_movable) || isprojectile(input_movable))
 		return FALSE
 	else if(ismob(input_movable))
 		var/mob/mobik = input_movable
@@ -60,3 +60,9 @@
 			if(mobik.can_overcome_gravity() || mobik.is_floating)
 				return FALSE
 	return TRUE
+
+/turf/proc/react_turf_at_deploing()
+	return
+
+/turf/simulated/floor/exoplanet/titan_water/react_turf_at_deploing(atom/movable/input_movable)
+	input_movable.setup_water_filter(mask_icon_state_structure)

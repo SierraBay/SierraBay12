@@ -17,7 +17,7 @@
 
 /obj/decal/skat_decals
 	icon = 'mods/anomaly/icons/wires_and_tubes.dmi'
-	mouse_opacity = MOUSE_OPACITY_NORMAL
+	mouse_opacity = MOUSE_OPACITY_UNCLICKABLE
 
 /obj/decal/skat_decals/water_and_pipes
 	icon_state = "wires&pipes"

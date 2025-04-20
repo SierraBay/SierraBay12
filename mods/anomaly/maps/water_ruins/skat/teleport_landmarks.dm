@@ -60,3 +60,16 @@
 	if(connected_landmark)
 		connected_landmark.temp_offed = TRUE
 		victim.forceMove(get_turf(connected_landmark))
+
+
+/obj/landmark/teleport_to_z_level/skat_third_deck
+	teleport_tag = "SKAT_DEEP"
+	map_path = /datum/map_template/ruin/exoplanet/drowned_skat_third_deck
+
+/obj/landmark/teleport_to_z_level/skat_third_deck/exit
+	teleport_tag = "SKAT_DEEP"
+	map_path = null
+	is_exit = TRUE
+
+///Заспавнит на себе мобиков из под воды
+/obj/landmark/titan_crab_spawner

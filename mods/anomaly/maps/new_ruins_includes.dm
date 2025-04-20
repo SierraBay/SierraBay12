@@ -7,8 +7,10 @@
 //Водные
 #include "water_ruins\skat\skat.dm"
 #include "water_ruins\skat\skat_2.dm"
+#include "water_ruins\skat\skat_3.dm"
 #include "water_ruins\skat\skat_crates.dm"
 #include "water_ruins\skat\teleport_landmarks.dm"
 #include "water_ruins\avanpost\avanpost.dm"
+#include "water_ruins\ranger\ranger.dm"
 //ТЕСТ
 #include "test_ruin.dm"
