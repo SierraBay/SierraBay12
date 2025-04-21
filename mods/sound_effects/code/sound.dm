@@ -19,12 +19,14 @@
 		if(can_feel_pain())
 			//owner.emote("scream")
 			owner.agony_scream()
-		playsound(src.loc, pick(GLOB.trauma_sound), 100, 1, -2)
+			playsound(src.loc, pick(GLOB.trauma_sound), 100, 1, -2)
 		//playsound(src.loc, "fracture", 100, 1, -2)
 
 //падение
 /mob/living/carbon/human/handle_fall_effect(/turf/landing)
 	.=..()
+	if(src.isSynthetic())
+		return
 	playsound(loc, pick(GLOB.smash_sound), 50, 1, -1)
 	if(client) shake_camera(src, 7, 0.5)
 
