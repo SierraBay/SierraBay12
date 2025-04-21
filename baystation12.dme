@@ -3397,6 +3397,7 @@
 #include "mods\_modpack.dm"
 #include "mods\global_modpacks.dm"
 #include "mods\_master_files\code\_onclick\click.dm"
+#include "mods\_master_files\code\controllers\subsystems\lighting.dm"
 #include "mods\_master_files\code\game\world.dm"
 #include "mods\_master_files\code\game\antagonist\station\changeling.dm"
 #include "mods\_master_files\code\game\gamemodes\antag_maps.dm"
