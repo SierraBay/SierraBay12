@@ -64,7 +64,6 @@
 "bf" = (
 /obj/structure/railing/mapped,
 /obj/decal/skat_decals/wall_right_leaking_pipe,
-/obj/landmark/random_titan_crate,
 /turf/simulated/floor/exoplanet/titan_water/minimal,
 /area/map_template/skat)
 "bl" = (
@@ -99,6 +98,14 @@
 /obj/structure/closet/fridge,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/white,
+/area/map_template/skat)
+"bO" = (
+/obj/floor_decal/industrial/warning{
+	dir = 1
+	},
+/obj/decal/cleanable/dirt,
+/obj/structure/largecrate/titan_crate,
+/turf/simulated/floor/tiled/techfloor,
 /area/map_template/skat)
 "bW" = (
 /obj/machinery/constructable_frame/computerframe{
@@ -402,12 +409,6 @@
 /obj/machinery/papershredder,
 /turf/simulated/floor/exoplanet/titan_water/minimal,
 /area/map_template/skat)
-"ha" = (
-/obj/machinery/mech_recharger,
-/obj/decal/cleanable/dirt,
-/obj/structure/mech_wreckage,
-/turf/simulated/floor/tiled/techfloor,
-/area/map_template/skat)
 "ho" = (
 /obj/floor_decal/industrial/warning{
 	dir = 8
@@ -675,6 +676,9 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/skat)
 "ml" = (
+/obj/machinery/door/airlock/glass/command{
+	name = "Bridge Storage"
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/skat)
 "mA" = (
@@ -747,18 +751,18 @@
 	},
 /turf/simulated/wall/prepainted,
 /area/map_template/skat)
-"oI" = (
-/obj/random/obstruction,
-/obj/decal/cleanable/dirt,
-/obj/machinery/door/airlock/glass/command{
-	name = "Bridge Storage"
-	},
-/turf/simulated/floor/tiled,
-/area/map_template/skat)
 "oZ" = (
 /obj/decal/cleanable/dirt,
 /obj/random/obstruction,
 /turf/simulated/floor/tiled/white,
+/area/map_template/skat)
+"pr" = (
+/obj/floor_decal/industrial/warning{
+	dir = 8
+	},
+/obj/decal/cleanable/dirt,
+/obj/structure/largecrate/titan_crate,
+/turf/simulated/floor/tiled/techfloor,
 /area/map_template/skat)
 "ps" = (
 /obj/item/reagent_containers/food/drinks/glass2/coffeecup/pawn{
@@ -999,6 +1003,11 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/map_template/skat)
+"uw" = (
+/obj/machinery/mech_recharger,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/steel_grid,
+/area/map_template/skat)
 "uC" = (
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/generic,
@@ -1162,6 +1171,14 @@
 /obj/item/stack/material/plasteel/fifty,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/steel_grid,
+/area/map_template/skat)
+"xn" = (
+/obj/floor_decal/industrial/warning{
+	dir = 4
+	},
+/obj/decal/cleanable/dirt,
+/obj/structure/largecrate/titan_crate,
+/turf/simulated/floor/tiled/techfloor,
 /area/map_template/skat)
 "xq" = (
 /obj/machinery/door/blast/regular{
@@ -1470,8 +1487,9 @@
 /turf/simulated/floor/tiled/white,
 /area/map_template/skat)
 "Ed" = (
-/obj/landmark/random_titan_crate,
-/turf/simulated/floor/exoplanet/titan_water/middle,
+/obj/decal/cleanable/dirt,
+/obj/structure/largecrate/titan_crate,
+/turf/simulated/floor/tiled/steel_grid,
 /area/map_template/skat)
 "Ee" = (
 /obj/machinery/body_scanconsole{
@@ -1531,6 +1549,12 @@
 	},
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/white,
+/area/map_template/skat)
+"FN" = (
+/obj/decal/cleanable/dirt,
+/obj/random/trash,
+/obj/structure/largecrate/titan_crate,
+/turf/simulated/floor/tiled/steel_grid,
 /area/map_template/skat)
 "Ga" = (
 /obj/machinery/cooker/fryer,
@@ -2915,7 +2939,7 @@ Qb
 Qb
 Qb
 Qb
-oI
+Ff
 rp
 Ff
 NK
@@ -2988,7 +3012,7 @@ gq
 Ep
 Ep
 Qb
-ha
+ts
 tQ
 rI
 tQ
@@ -3709,7 +3733,7 @@ Ep
 Qb
 ac
 Kz
-Ed
+yx
 iT
 cz
 iT
@@ -4835,7 +4859,7 @@ Xy
 Mu
 Fs
 fh
-fh
+pr
 ho
 fh
 gk
@@ -4846,7 +4870,7 @@ sB
 Ld
 sB
 ng
-XS
+Ed
 Mu
 Ep
 Ep
@@ -4953,7 +4977,7 @@ xk
 xk
 xk
 Mu
-ki
+bO
 tQ
 tQ
 oh
@@ -4963,7 +4987,7 @@ hx
 Ld
 Ld
 Ld
-ng
+FN
 Ld
 sB
 XS
@@ -4997,12 +5021,12 @@ aO
 mg
 mg
 mg
-mg
+xn
 qv
 pT
 zm
 Ld
-jC
+uw
 Ld
 jC
 Ld

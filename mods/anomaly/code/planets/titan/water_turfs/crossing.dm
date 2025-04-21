@@ -1,6 +1,7 @@
 /turf/simulated/floor/exoplanet/titan_water/Entered(atom/movable/input_movable, atom/old_loc)
 	if(!water_cant_affect_input_movable(input_movable))
 		return
+	affect_slowdown(input_movable)
 	if(ismob(input_movable))
 		signals_setup(input_movable)
 		if(ishuman(input_movable))
@@ -43,6 +44,13 @@
 				return
 	input_movable.desetup_water_filter()
 
+/turf/simulated/floor/exoplanet/titan_water/proc/affect_slowdown(atom/movable/input_movable)
+	if(ishuman(input_movable))
+		var/mob/living/carbon/human/human = input_movable
+		if(!(human.species.name in whitelist_specis_move_slowdown))
+			var/datum/movement_handler/mob/delay/delay = human.GetMovementHandler(/datum/movement_handler/mob/delay)
+			if(delay)
+				delay.AddDelay(swim_delay)
 
 //Может ли вода воздействовать на что-то? (Не может например на летающих).
 /turf/simulated/floor/exoplanet/titan_water/proc/water_cant_affect_input_movable(atom/movable/input_movable)

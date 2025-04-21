@@ -14,6 +14,3 @@
 	name = "\improper Drowned ship underwater"
 	icon_state = "A"
 	turfs_airless = TRUE
-
-/obj/fluid/deep
-	fluid_amount = 10000

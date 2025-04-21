@@ -70,6 +70,3 @@
 	teleport_tag = "SKAT_DEEP"
 	map_path = null
 	is_exit = TRUE
-
-///Заспавнит на себе мобиков из под воды
-/obj/landmark/titan_crab_spawner

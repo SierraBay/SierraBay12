@@ -10,9 +10,19 @@
 /obj/item/gun/projectile/automatic,
 /turf/simulated/floor/exoplanet/concrete/reinforced/road,
 /area/centcom)
+"djw" = (
+/turf/simulated/floor/exoplanet/titan_water/middle,
+/area/centcom)
+"dlo" = (
+/obj/titan_fluid,
+/turf/simulated/floor/exoplanet/concrete/reinforced/road,
+/area/centcom)
 "dRf" = (
 /turf/simulated/floor/exoplanet/concrete/reinforced/road,
 /area/liberia/atmos)
+"dSB" = (
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/centcom)
 "eDA" = (
 /obj/random/biggun,
 /turf/simulated/floor/exoplanet/concrete/reinforced/road,
@@ -123,6 +133,10 @@
 /obj/item/clothing/suit/space/void/atmos,
 /turf/simulated/floor/exoplanet/concrete/reinforced/road,
 /area/liberia/atmos)
+"vuz" = (
+/obj/landmark/teleport_to_z_level/skat,
+/turf/simulated/floor/exoplanet/titan_water/maximum,
+/area/centcom)
 "vLC" = (
 /obj/item/gun/projectile/automatic/merc_smg,
 /turf/simulated/floor/exoplanet/concrete/reinforced/road,
@@ -260,11 +274,11 @@ pxw
 pxw
 pxw
 qRd
-cpC
-cpC
-cpC
-cpC
-cpC
+dSB
+dSB
+dSB
+dSB
+dSB
 cpC
 cpC
 cpC
@@ -286,11 +300,11 @@ odH
 odH
 odH
 dRf
-cpC
-cpC
-cpC
-cpC
-cpC
+dSB
+djw
+djw
+djw
+dSB
 cpC
 cpC
 cpC
@@ -312,11 +326,11 @@ odH
 jjy
 odH
 dRf
-cpC
-cpC
-cpC
-cpC
-cpC
+dSB
+djw
+vuz
+djw
+dSB
 cpC
 ooX
 ooX
@@ -338,11 +352,11 @@ odH
 odH
 odH
 dRf
-cpC
-cpC
-cpC
-cpC
-cpC
+dSB
+djw
+djw
+djw
+dSB
 ooX
 ooX
 ooX
@@ -364,11 +378,11 @@ pnX
 pnX
 pnX
 dRf
-cpC
-cpC
-cpC
-cpC
-cpC
+dSB
+dSB
+dSB
+dSB
+dSB
 ooX
 ooX
 pSk
@@ -443,9 +457,9 @@ dRf
 dRf
 apW
 cpC
-cpC
-cpC
-cpC
+dlo
+dlo
+dlo
 cpC
 cpC
 cpC
@@ -469,9 +483,9 @@ cpC
 cpC
 cpC
 cpC
-cpC
-cpC
-cpC
+dlo
+dlo
+dlo
 cpC
 uzJ
 cpC
@@ -495,9 +509,9 @@ cpC
 cpC
 cpC
 cpC
-cpC
-cpC
-cpC
+dlo
+dlo
+dlo
 mJI
 sJt
 cpC

@@ -6,16 +6,15 @@
 	trash = /obj/item/trash/shegolad
 
 /obj/item/trash/shegolad
+	name = "Shegolad empty pack"
 	icon = 'mods/anomaly/icons/shegolad.dmi'
 	icon_state = "shegolad_empty"
 
-/obj/structure/closet/crate/titan_shegolad
+/datum/titan_crate_contents/proc/return_contents()
+	return
 
-
-/obj/structure/closet/crate/titan_shegolad/WillContain()
-	return list(
-		/obj/item/reagent_containers/food/snacks/candy/shegolad,
-		/obj/item/reagent_containers/food/snacks/candy/shegolad,
+/datum/titan_crate_contents/shegolad/return_contents()
+	return  list(
 		/obj/item/reagent_containers/food/snacks/candy/shegolad,
 		/obj/item/reagent_containers/food/snacks/candy/shegolad,
 		/obj/item/reagent_containers/food/snacks/candy/shegolad,
@@ -33,34 +32,28 @@
 		/obj/item/reagent_containers/food/snacks/candy/shegolad
 	)
 
-/obj/structure/closet/crate/titan_shegolad/energizer
-
-/obj/structure/closet/crate/titan_shegolad/energizer/WillContain()
-	return list(
+/datum/titan_crate_contents/energizer/return_contents()
+	return  list(
 		/obj/item/cell/hyper,
 		/obj/item/cell/hyper,
 		/obj/item/cell/hyper,
 		/obj/item/cell/hyper,
 		/obj/item/cell/hyper,
-		/obj/item/cell/hyper,
-		/obj/item/cell/hyper,
-		/obj/item/cell/hyper,
-		/obj/item/cell/hyper,
-		/obj/item/cell/hyper,
-		/obj/item/cell/hyper,
-		/obj/item/cell/infinite,
 		/obj/item/cell/infinite
 	)
 
-/obj/landmark/random_titan_crate
-	var/list/possible_crates = list(
-		/obj/structure/closet/crate/titan_shegolad = 1,
-		/obj/structure/closet/crate/titan_shegolad/energizer = 5
+/obj/structure/largecrate/titan_crate
+	icon = 'icons/obj/ore_boxes.dmi'
+	icon_state = "orebox0"
+	var/list/possible_contents = list(
+		/datum/titan_crate_contents/shegolad = 1,
+		/datum/titan_crate_contents/energizer = 5
 	)
 
-/obj/landmark/random_titan_crate/Initialize()
+/obj/structure/largecrate/titan_crate/Initialize()
 	. = ..()
-	var/result_crate = pickweight(possible_crates)
-	var/obj/structure/closet/crate = new result_crate(get_turf(src))
-	crate.LateInitialize()
-	qdel(src)
+	var/type = pickweight(possible_contents)
+	var/datum/titan_crate_contents/result_datum_contents = new type(src)
+	var/list/spawn_items_list = result_datum_contents.return_contents()
+	for(var/item_path in spawn_items_list)
+		new item_path(src)

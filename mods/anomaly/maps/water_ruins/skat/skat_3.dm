@@ -2,7 +2,7 @@
 	name = "drowned SKAT"
 	id = "planetsite_anomalies_flying_home"
 	description = "anomalies lol"
-	mappaths = list('mods/anomaly/maps/water_ruins/skat/skat-2.dmm')
+	mappaths = list('mods/anomaly/maps/water_ruins/skat/skat-3.dmm')
 	spawn_cost = 100000
 	ruin_tags = RUIN_CHUDO_ANOMALIES
 	apc_test_exempt_areas = list(
@@ -13,3 +13,16 @@
 	name = "\improper Drowned ship underwater"
 	icon_state = "A"
 	turfs_airless = TRUE
+
+/obj/item/crab_egg
+	name = "blue crab egg"
+	desc = "Яичко"
+	icon = 'mods/ascent/icons/obj/items/egg.dmi'
+	icon_state = "egg_single"
+
+/obj/decal/cleanable/blood/crab_sliz
+	name = "something blue"
+	desc = "Склизкое синее нечто. Кровь? Слизь? Почему оно остаётся не полу под водой?"
+	icon = 'icons/effects/blood.dmi'
+	basecolor = "#055eee"
+	cleanable_scent = null

@@ -11,6 +11,12 @@
 	var/swim_stamina_spend
 	var/next_possible_process
 	var/effect_to_drowning = DEEQUIP
+	var/list/whitelist_specis_move_slowdown = list(
+		SPECIES_SKRELL,
+		SPECIES_YEOSA,
+		SPECIES_TRITONIAN
+	)
+	var/swim_delay
 
 /turf/simulated/floor/exoplanet/titan_water/minimal
 	name = "low water"
@@ -19,7 +25,7 @@
 	icon_state = "min_deep_water1"
 	possible_icons = list("min_deep_water1", "min_deep_water2", "min_deep_water3", "min_deep_water4")
 	footstep_type = /singleton/footsteps/min_water
-	movement_delay = 3
+	swim_delay = 3
 
 /singleton/footsteps/min_water
 	footstep_sounds = list(
@@ -37,7 +43,7 @@
 	mask_icon_state_structure = "middle_deep_structure"
 	possible_icons = list("middle_deep_water1", "middle_deep_water2", "middle_deep_water3", "middle_deep_water4")
 	footstep_type = /singleton/footsteps/mid_water
-	movement_delay = 6
+	swim_delay = 6
 
 /singleton/footsteps/mid_water
 	footstep_sounds = list(
@@ -54,7 +60,7 @@
 	possible_icons = list("max_deep_water1", "max_deep_water2", "max_deep_water3", "max_deep_water4")
 	footstep_type = /singleton/footsteps/max_water
 	swim_stamina_spend = 3
-	movement_delay = 10
+	swim_delay = 10
 
 /singleton/footsteps/max_water
 	footstep_sounds = list('mods/anomaly/sounds/water/max/water_move7.ogg')
