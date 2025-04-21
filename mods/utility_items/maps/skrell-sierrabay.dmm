@@ -175,7 +175,9 @@
 /obj/machinery/recharger/wallcharger{
 	pixel_x = -26
 	},
-/obj/machinery/anomaly_container,
+/obj/machinery/anomaly_container{
+	req_access = list("ACCESS_SKRELLSCOUT")
+	},
 /turf/simulated/floor/tiled/skrell,
 /area/ship/skrellscoutshuttle)
 "aO" = (
@@ -1661,7 +1663,9 @@
 /area/ship/skrellscoutship/robotics)
 "fy" = (
 /obj/floor_decal/industrial/outline/red,
-/obj/machinery/stasis_cage,
+/obj/machinery/stasis_cage{
+	req_access = list("ACCESS_SKRELLSCOUT")
+	},
 /turf/simulated/floor/tiled/skrell/green,
 /area/ship/skrellscoutship/robotics)
 "fA" = (
@@ -2396,7 +2400,9 @@
 /turf/simulated/floor/tiled/skrell/red,
 /area/ship/skrellscoutship/crew/labs)
 "hs" = (
-/obj/machinery/anomaly_container,
+/obj/machinery/anomaly_container{
+	req_access = list("ACCESS_SKRELLSCOUT")
+	},
 /obj/floor_decal/industrial/hatch/red,
 /turf/simulated/floor/tiled/skrell/red,
 /area/ship/skrellscoutship/crew/labs)
@@ -2457,6 +2463,14 @@
 /obj/item/storage/box/glasses/mug{
 	pixel_x = 4
 	},
+/obj/item/material/utensil/fork/titanium,
+/obj/item/material/utensil/fork/titanium,
+/obj/item/material/utensil/fork/titanium,
+/obj/item/material/utensil/fork/titanium,
+/obj/item/material/utensil/spoon/titanium,
+/obj/item/material/utensil/spoon/titanium,
+/obj/item/material/utensil/spoon/titanium,
+/obj/item/material/utensil/spoon/titanium,
 /turf/simulated/floor/tiled/skrell/white,
 /area/ship/skrellscoutship/crew/rec)
 "hJ" = (
@@ -5901,7 +5915,9 @@
 /area/ship/skrellscoutship/crew/labs)
 "SY" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/anomaly_container,
+/obj/machinery/anomaly_container{
+	req_access = list("ACCESS_SKRELLSCOUT")
+	},
 /turf/simulated/floor/tiled/skrell,
 /area/ship/skrellscoutshuttle)
 "Tb" = (
