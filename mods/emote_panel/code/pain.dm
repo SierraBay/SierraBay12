@@ -11,10 +11,8 @@
 		shock_stage = 0
 		return
 	if(shock_stage >= 30)
-		.=..()
 		if(prob(15))
 			src.agony_moan()
-	.=..()
 
 /mob/living/proc/agony_scream()
 	if(stat || is_species(SPECIES_MONKEY))
