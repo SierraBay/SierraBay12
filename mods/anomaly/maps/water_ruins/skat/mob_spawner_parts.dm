@@ -2,6 +2,7 @@
 	var/obj/mob_spawner/core
 	icon = 'mods/anomaly/icons/effects.dmi'
 	icon_state = "none"
+	invisibility = 100
 
 /obj/mob_spawner/proc/deploy_helper_parts()
 	var/turf/my_turf = get_turf(src)

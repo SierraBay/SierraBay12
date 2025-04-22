@@ -7,10 +7,13 @@
 	var/temp_offed = FALSE
 	var/datum/map_template/spawned_template
 	var/obj/landmark/teleport_to_z_level/connected_landmark
+	var/datum/weather_manager/connected_weather_manager
 
 /obj/landmark/teleport_to_z_level/New()
 	. = ..()
 	deploy_map()
+	connect_to_manager()
+
 
 /obj/landmark/teleport_to_z_level/proc/deploy_map()
 	set waitfor = FALSE
@@ -34,6 +37,13 @@
 				if(landmark.is_exit)
 					if(teleport_tag == landmark.teleport_tag)
 						connect_teleports_landmarks(landmark)
+
+///Планеты по типу титана требуют к себе присоединять свои карты для корректной работы. Сделаем же это
+/obj/landmark/teleport_to_z_level/proc/connect_to_manager()
+	var/area/my_area = get_area(src)
+	if(my_area.connected_weather_manager && istype(my_area.connected_weather_manager, /datum/weather_manager/titan_rain))
+		var/datum/weather_manager/titan_rain/titan = my_area.connected_weather_manager
+		LAZYADD(titan.seconds_areas_list, get_area(connected_landmark))
 
 /obj/landmark/teleport_to_z_level/proc/connect_teleports_landmarks(obj/landmark/teleport_to_z_level/input_mark)
 	connected_landmark = input_mark

@@ -62,13 +62,36 @@
 
 
 /obj/mob_spawner/titan_crabs
-	spawn_type = /mob/living/simple_animal/hostile/retaliate/giant_crab/titan_crab
+	spawn_type = /mob/living/simple_animal/hostile/titan_crab
 	whitelist_turf = /turf/simulated/floor/exoplanet/titan_water
 
-/mob/living/simple_animal/hostile/retaliate/giant_crab/titan_crab
+/mob/living/simple_animal/hostile/titan_crab
+	name = "giant blue crab"
+	desc = "A gigantic crustacean with a blue shell. Its left claw is nearly twice the size of its right."
+	icon_state = "bluecrab"
+	icon_living = "bluecrab"
+	icon_dead = "bluecrab_dead"
+	mob_size = MOB_LARGE
+	turns_per_move = 5
+	response_help  = "pats"
+	response_disarm = "gently nudges"
+	response_harm   = "strikes"
+	meat_type = /obj/item/reagent_containers/food/snacks/shellfish/crab
+	meat_amount = 12
+	can_escape = TRUE //snip snip
+	break_stuff_probability = 15
+	faction = "crabs"
+	pry_time = 2 SECONDS
+	health = 350
+	maxHealth = 350
+	natural_weapon = /obj/item/natural_weapon/pincers/giant
+	natural_armor = list(
+		melee = ARMOR_MELEE_RESISTANT,
+		bullet = ARMOR_BALLISTIC_PISTOL
+		)
 	bleed_colour = "#064b5c"
 	see_in_dark = 10
-	ai_holder = /datum/ai_holder/simple_animal/retaliate/crab/giant/titan_crab
+	ai_holder = /datum/ai_holder/simple_animal/titan_crab
 
-/datum/ai_holder/simple_animal/retaliate/crab/giant/titan_crab
+/datum/ai_holder/simple_animal/titan_crab
 	hostile = TRUE

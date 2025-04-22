@@ -12,6 +12,7 @@
 	var/move_delay = 0.5 SECONDS
 	var/turf/my_turf
 	var/move_cooldown = 0.1 SECONDS
+	var/list/water_victims = list()
 	///Список существ которые не замедляются и не задыхаются в воде
 	var/list/whitelist_specis_move_slowdown = list(
 		SPECIES_SKRELL,
@@ -30,6 +31,11 @@
 /obj/titan_fluid/New(loc, ...)
 	. = ..()
 	my_turf = get_turf(src)
+	my_turf.flooded = TRUE
+
+/obj/titan_fluid/Destroy()
+	. = ..()
+	my_turf.flooded = FALSE
 
 /obj/titan_fluid/Crossed(O)
 	. = ..()
@@ -40,3 +46,18 @@
 			var/datum/movement_handler/mob/delay/delay = human.GetMovementHandler(/datum/movement_handler/mob/delay)
 			if(delay)
 				delay.AddDelay(move_delay)
+		if(!(human.species.name in whitelist_species_oxygenization))
+			LAZYADD(water_victims, human)
+			START_PROCESSING(SSanom, src)
+
+/obj/titan_fluid/Process()
+	. = ..()
+	for(var/atom/movable/smthg in water_victims)
+		smthg.water_act(FLUID_MAX_DEPTH)
+	if(!LAZYLEN(water_victims))
+		return PROCESS_KILL
+
+/obj/titan_fluid/Uncrossed(O)
+	. = ..()
+	if(O in water_victims)
+		LAZYREMOVE(water_victims, O)

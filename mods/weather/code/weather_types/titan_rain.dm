@@ -19,6 +19,8 @@
 	can_blowout = FALSE
 	var/have_cunami_ang_changes = TRUE
 	var/counting_started = FALSE
+	//Предполагается что на тиане есть подземные уровни, нам нужно учесть это
+	var/list/seconds_areas_list = list()
 
 /datum/weather_manager/titan_rain/no_cunami
 	have_cunami_ang_changes = FALSE
@@ -52,7 +54,7 @@
 /datum/weather_manager/titan_rain/proc/message_players_remaining_time(remain_time)
 	var/list/ticks_list = list('mods/weather/sounds/TICK_1.ogg', 'mods/weather/sounds/TICK_2.ogg', 'mods/weather/sounds/TICK_3.ogg')
 	for(var/mob/living/carbon/human/picked_human in GLOB.living_players)
-		if(get_z(picked_human) == get_z(pick(connected_weather_turfs))) //Нужный нам Z уровень
+		if(get_z(picked_human) in my_z) //Нужный нам Z уровень
 			var/obj/item/clothing/gloves/anomaly_detector/detector = locate(/obj/item/clothing/gloves/anomaly_detector) in picked_human
 			if(detector && detector.digital && detector.is_processing)
 				sound_to(picked_human, sound(pick(ticks_list), volume = 100))
@@ -65,7 +67,7 @@
 
 /datum/weather_manager/titan_rain/proc/try_start_count()
 	for(var/mob/living/carbon/human/picked_human in GLOB.living_players)
-		if(get_z(picked_human) == get_z(pick(connected_weather_turfs)))
+		if(get_z(picked_human) in my_z)
 			return TRUE
 
 /datum/weather_manager/titan_rain/proc/temp_rain(time = 5 MINUTES)
@@ -107,7 +109,7 @@
 	time_before_cunami = rand(150 SECONDS, 300 SECONDS)
 	report_progress("DEBUG ANOM: Начало цунами, оставшееся время - [time_before_cunami/10] Секунд")
 	for(var/mob/living/carbon/human/picked_human in GLOB.living_players)
-		if(get_z(picked_human) == get_z(pick(connected_weather_turfs)))
+		if(get_z(picked_human) in my_z)
 			picked_human.client.start_counting_back_on_screen(time_before_cunami)
 	sleep(time_before_cunami)
 	var/list/turfs = Z_ALL_TURFS(get_z(pick(connected_weather_turfs)))
@@ -141,6 +143,11 @@
 		report_progress("WARNING ANOM: Цунами уже вызывалось или вовсе не может быть вызвано у данной погоды!")
 		return FALSE
 	return TRUE
+
+/datum/weather_manager/titan_rain/calculate_affected_z()
+	LAZYADD(my_z, get_z(pick(my_area.contents)))
+	for(var/area/area in seconds_areas_list)
+		LAZYADD(my_z, get_z(pick(area.contents)))
 
 /obj/weather/rain
 	recommended_weather_manager = /datum/weather_manager/titan_rain

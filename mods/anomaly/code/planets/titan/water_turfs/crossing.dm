@@ -2,6 +2,7 @@
 	if(!water_cant_affect_input_movable(input_movable))
 		return
 	affect_slowdown(input_movable)
+	input_movable.water_act(FLUID_MAX_DEPTH)
 	if(ismob(input_movable))
 		signals_setup(input_movable)
 		if(ishuman(input_movable))

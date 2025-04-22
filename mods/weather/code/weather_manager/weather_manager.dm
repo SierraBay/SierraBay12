@@ -8,7 +8,7 @@
 	var/list/stages = list()
 	var/current_stage
 	var/area/my_area
-	var/my_z
+	var/list/my_z
 	//Выброс
 	var/can_blowout = FALSE
 	//Игрокам в зоне выброса сообщают о нём.
@@ -24,6 +24,7 @@
 	calculate_blowout_time()
 	calculate_next_safe_blowout()
 	calculate_next_safe_change()
+	calculate_affected_z()
 	LAZYADD(SSweather.weather_managers_in_world, src)
 	START_PROCESSING(SSweather, src)
 
@@ -99,16 +100,18 @@
 
 /datum/weather_manager/proc/regenerate_anomalies_on_planet() //Выполняет перереспавн всех аномалий которые были заспавнены стандартным генератором на планете
 	set waitfor = FALSE
-	var/obj/overmap/visitable/sector/exoplanet/my_planet = map_sectors["[my_z]"]
-	if(!istype(my_planet))
-		return
-	my_planet.full_clear_from_anomalies()
-	my_planet.generate_big_anomaly_artefacts()
+	for(var/z in my_z)
+		var/obj/overmap/visitable/sector/exoplanet/my_planet = map_sectors["[z]"]
+		if(!istype(my_planet))
+			return
+		my_planet.full_clear_from_anomalies()
+		my_planet.generate_big_anomaly_artefacts()
 
 /datum/weather_manager/proc/clean_anomalies_on_planet()
 	set waitfor = FALSE
-	var/obj/overmap/visitable/sector/exoplanet/my_planet = map_sectors["[my_z]"]
-	my_planet.full_clear_from_anomalies()
+	for(var/z in my_z)
+		var/obj/overmap/visitable/sector/exoplanet/my_planet = map_sectors["[z]"]
+		my_planet.full_clear_from_anomalies()
 
 /datum/weather_manager/proc/calculate_change_time()
 	change_time = rand(8, 20 MINUTES) + world.time //Вычисляем во сколько будет следущая смена погоды
@@ -157,3 +160,6 @@
 		if(get_x(T) == smallest_x)
 			LAZYADD(result_x_turfs, T)
 	return result_x_turfs
+
+/datum/weather_manager/proc/calculate_affected_z()
+	LAZYADD(my_z, get_z(pick(my_area.contents)))

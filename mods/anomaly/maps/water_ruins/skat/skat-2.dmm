@@ -26,13 +26,12 @@
 /obj/floor_decal/industrial/warning,
 /obj/structure/railing/mapped,
 /obj/titan_fluid,
-/obj/structure/largecrate/titan_crate,
+/obj/landmark/titan_crate,
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/skat_underwater)
 "bU" = (
-/obj/floor_decal/industrial/warning,
 /obj/titan_fluid,
-/obj/structure/largecrate/titan_crate,
+/obj/landmark/titan_crate,
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/skat_underwater)
 "cm" = (
@@ -62,7 +61,7 @@
 /area/map_template/skat_underwater)
 "ei" = (
 /obj/titan_fluid,
-/obj/structure/largecrate/titan_crate,
+/obj/landmark/titan_crate,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/skat_underwater)
 "em" = (
@@ -72,15 +71,16 @@
 /area/map_template/skat_underwater)
 "en" = (
 /obj/titan_fluid,
-/obj/structure/largecrate/titan_crate,
-/turf/simulated/floor/tiled/monotile,
+/obj/landmark/titan_crate,
+/obj/landmark/titan_crate,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/skat_underwater)
 "fl" = (
 /obj/floor_decal/industrial/warning/dust{
 	dir = 8
 	},
 /obj/titan_fluid,
-/obj/structure/largecrate/titan_crate,
+/obj/landmark/titan_crate,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/skat_underwater)
 "fM" = (
@@ -143,15 +143,10 @@
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/skat_underwater)
 "ln" = (
-/obj/floor_decal/industrial/warning/dust{
-	dir = 4
-	},
-/obj/structure/railing/mapped{
-	dir = 4
-	},
+/obj/structure/water_drown_structures/paper,
 /obj/titan_fluid,
-/obj/structure/largecrate/titan_crate,
-/turf/simulated/floor/tiled/monotile,
+/obj/landmark/titan_crate,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/skat_underwater)
 "lw" = (
 /obj/titan_fluid,
@@ -161,7 +156,6 @@
 /obj/structure/water_drown_structures/paper,
 /obj/structure/railing/mapped,
 /obj/titan_fluid,
-/obj/structure/largecrate/titan_crate,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/skat_underwater)
 "nB" = (
@@ -197,7 +191,7 @@
 "qc" = (
 /obj/structure/water_drown_structures/wooden_planks,
 /obj/titan_fluid,
-/obj/structure/largecrate/titan_crate,
+/obj/landmark/titan_crate,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/skat_underwater)
 "rs" = (
@@ -277,10 +271,12 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/skat_underwater)
 "wD" = (
-/obj/structure/railing/mapped,
+/obj/floor_decal/industrial/warning{
+	dir = 1
+	},
 /obj/titan_fluid,
-/obj/structure/largecrate/titan_crate,
-/turf/simulated/floor/tiled/techfloor/grid,
+/obj/random/biggun,
+/turf/simulated/floor/tiled/monotile,
 /area/map_template/skat_underwater)
 "wJ" = (
 /obj/structure/water_drown_structures,
@@ -322,6 +318,17 @@
 /obj/titan_fluid,
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/skat_underwater)
+"ED" = (
+/obj/structure/railing/mapped{
+	dir = 4
+	},
+/obj/floor_decal/industrial/warning/dust{
+	dir = 4
+	},
+/obj/titan_fluid,
+/obj/landmark/titan_crate,
+/turf/simulated/floor/tiled/monotile,
+/area/map_template/skat_underwater)
 "Fl" = (
 /obj/titan_fluid,
 /turf/simulated/floor/plating,
@@ -337,10 +344,15 @@
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/skat_underwater)
 "FQ" = (
-/obj/structure/water_drown_structures/paper,
+/obj/floor_decal/industrial/warning/dust{
+	dir = 8
+	},
+/obj/structure/railing/mapped{
+	dir = 8
+	},
 /obj/titan_fluid,
-/obj/structure/largecrate/titan_crate,
-/turf/simulated/floor/tiled/techfloor/grid,
+/obj/landmark/titan_crate,
+/turf/simulated/floor/tiled/monotile,
 /area/map_template/skat_underwater)
 "Gt" = (
 /obj/structure/water_drown_structures/wooden_crates_damaged,
@@ -429,12 +441,9 @@
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/skat_underwater)
 "Sz" = (
-/obj/structure/destroyed_apc,
-/obj/floor_decal/industrial/warning/dust{
-	dir = 4
-	},
+/obj/structure/railing/mapped,
 /obj/titan_fluid,
-/obj/structure/largecrate/titan_crate,
+/obj/landmark/titan_crate,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/skat_underwater)
 "SS" = (
@@ -477,7 +486,7 @@
 	dir = 4
 	},
 /obj/titan_fluid,
-/obj/structure/largecrate/titan_crate,
+/obj/landmark/titan_crate,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/skat_underwater)
 "UH" = (
@@ -521,7 +530,7 @@
 	dir = 1
 	},
 /obj/titan_fluid,
-/obj/structure/largecrate/titan_crate,
+/obj/landmark/titan_crate,
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/skat_underwater)
 
@@ -1844,11 +1853,11 @@ gh
 gh
 Si
 vK
-aY
-aY
-aY
 ei
-ei
+aY
+aY
+aY
+aY
 aY
 aY
 aY
@@ -1886,11 +1895,11 @@ gh
 gh
 Si
 aY
-aY
-aY
-aY
 ei
 ei
+ei
+aY
+aY
 aY
 aY
 aY
@@ -1930,12 +1939,12 @@ Si
 aY
 aY
 as
-aY
 ei
 ei
 aY
 aY
 aY
+ei
 fR
 Ck
 gh
@@ -1972,13 +1981,13 @@ Si
 vK
 aY
 aY
+ei
 aY
 aY
 aY
-aY
-aY
-aY
-fR
+ei
+ei
+Sz
 cm
 gh
 wT
@@ -2013,15 +2022,15 @@ gh
 rt
 aY
 aY
+ei
+aY
+ei
 aY
 aY
 aY
 aY
-aY
-aY
-aY
-aY
-cm
+ei
+Zp
 wT
 wT
 cE
@@ -2053,12 +2062,12 @@ gh
 HM
 gh
 wJ
+ei
+ei
 aY
 aY
 aY
-aY
-aY
-aY
+ei
 aY
 aY
 aY
@@ -2140,12 +2149,12 @@ Si
 aY
 aY
 aY
+aY
 ei
 aY
 aY
 aY
-aY
-aY
+ei
 mP
 cm
 gh
@@ -2180,17 +2189,17 @@ gh
 gh
 Si
 aY
-ei
-ei
-FQ
-ei
 aY
 aY
-aY
+as
 ei
-wD
-cm
+ei
+ei
+aY
 en
+fR
+cm
+gh
 gh
 gh
 gh
@@ -2220,9 +2229,10 @@ gh
 vf
 QH
 gh
-bU
-ei
-ei
+rt
+aY
+aY
+aY
 ei
 ei
 ei
@@ -2230,9 +2240,8 @@ ei
 aY
 ei
 ei
-ei
-Zp
-en
+cm
+gh
 vf
 QH
 gh
@@ -2258,22 +2267,22 @@ Uc
 Mu
 Mu
 lw
-en
+gh
 vf
 QH
-en
-bU
+gh
+rt
+aY
+ei
+aY
+aY
+aY
 ei
 aY
 aY
-aY
-aY
-aY
-aY
 ei
-ei
-ei
-Zp
+aY
+cm
 gh
 QH
 vf
@@ -2301,20 +2310,20 @@ Mu
 Mu
 lw
 gh
-en
+gh
 gh
 gh
 Si
-aY
-aY
+ei
 aY
 aY
 aY
 aY
 ei
 ei
-ei
-wD
+aY
+aY
+fR
 cm
 gh
 gh
@@ -2347,10 +2356,10 @@ oX
 oX
 oX
 Si
-aY
-aY
-aY
-aY
+ei
+ei
+ei
+ei
 vK
 aY
 aY
@@ -2397,7 +2406,7 @@ aY
 aY
 aY
 aY
-aY
+ei
 aY
 ei
 aY
@@ -2434,14 +2443,14 @@ aY
 aY
 aY
 aY
-ei
-ei
-ei
 aY
 aY
 aY
+aY
+aY
 ei
 ei
+aY
 Pj
 Pj
 Pj
@@ -2473,10 +2482,10 @@ tb
 tb
 tb
 aY
-aY
-aY
-as
 ei
+ei
+as
+aY
 aY
 ei
 ei
@@ -2516,15 +2525,15 @@ ht
 ht
 ht
 aY
-vK
-ei
+qc
 ei
 aY
 aY
 ei
 ei
-as
 aY
+ln
+ei
 aY
 Pj
 Pj
@@ -2563,9 +2572,9 @@ ei
 ei
 aY
 aY
-ei
-ei
-ei
+aY
+aY
+aY
 aY
 aY
 Pj
@@ -2597,8 +2606,8 @@ lw
 oX
 oX
 oX
-oX
-Si
+ED
+bQ
 aY
 aY
 aY
@@ -2639,16 +2648,16 @@ lw
 jm
 jm
 jm
-Sz
+XQ
 UG
 ei
-ei
 aY
 aY
 aY
 aY
 aY
 ei
+aY
 aY
 aY
 aY
@@ -2685,13 +2694,13 @@ tb
 aY
 ei
 qc
+aY
+ln
 ei
-as
+ei
+ei
 aY
 aY
-ei
-ei
-ei
 fR
 cm
 vd
@@ -2725,14 +2734,14 @@ tb
 tb
 tb
 aY
-ei
-ei
-ei
+aY
 aY
 aY
 ei
 ei
-FQ
+aY
+aY
+as
 aY
 fR
 cm
@@ -2767,16 +2776,16 @@ ht
 ht
 ht
 ht
-ei
-ei
-ei
+aY
+aY
+aY
+aY
+aY
+aY
+aY
 aY
 aY
 ei
-aY
-aY
-aY
-aY
 aY
 aY
 aY
@@ -2808,7 +2817,9 @@ Xo
 Xo
 Xo
 Xo
-bQ
+Si
+aY
+aY
 aY
 aY
 aY
@@ -2817,8 +2828,6 @@ aY
 ei
 ei
 ei
-aY
-aY
 aY
 pF
 pF
@@ -2848,20 +2857,20 @@ Mu
 lw
 hL
 hL
-ln
-ln
-bQ
+hL
+hL
+Si
 aY
 aY
 aY
 aY
-ei
+aY
 qc
 ei
 ei
 ei
-aY
-aY
+ei
+ei
 pF
 pF
 pF
@@ -2892,17 +2901,17 @@ jm
 jm
 jm
 XQ
-UG
+jm
+aY
+aY
+aY
+aY
+ei
+aY
 ei
 ei
 aY
 aY
-aY
-ei
-ei
-ei
-ei
-ei
 aY
 pF
 pF
@@ -2934,17 +2943,17 @@ tb
 tb
 tb
 tb
-ei
-ei
-ei
+aY
+aY
+aY
 aY
 vK
-ei
-ei
-ei
-ei
-ei
-ei
+aY
+aY
+aY
+aY
+aY
+aY
 aY
 pF
 pF
@@ -2978,6 +2987,8 @@ tb
 tb
 as
 aY
+ei
+aY
 aY
 aY
 aY
@@ -2985,8 +2996,6 @@ aY
 ei
 ei
 ei
-ei
-aY
 aY
 pF
 pF
@@ -3019,19 +3028,19 @@ ht
 ht
 ht
 fl
-aY
-aY
-aY
-ei
-ei
-ei
-ei
-FQ
 ei
 aY
 aY
 aY
 aY
+aY
+aY
+as
+aY
+ei
+ei
+ei
+ei
 aY
 aY
 lw
@@ -3058,20 +3067,20 @@ Mu
 lw
 vd
 vd
-vd
-vd
+FQ
+FQ
 bQ
-ei
-ei
 aY
 ei
-ei
-ei
-ei
+aY
+aY
+aY
+aY
 ei
 aY
-fR
-cm
+aY
+Sz
+wD
 vd
 vd
 vd
@@ -3099,22 +3108,22 @@ Mu
 Mu
 lw
 gh
-gh
+bU
 vE
-gh
+bU
 Si
 ei
-ei
 aY
+ei
 as
 aY
-aY
-aY
 ei
-aY
-fR
-cm
-gh
+ei
+ei
+ei
+Sz
+Zp
+bU
 gh
 gh
 gh
@@ -3146,8 +3155,8 @@ gh
 AV
 AV
 aY
-ei
-ei
+aY
+aY
 aY
 aY
 vK
