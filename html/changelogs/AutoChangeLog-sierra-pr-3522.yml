@@ -1,0 +1,4 @@
+author: Builder13
+changes:
+  - {bugfix: Атмосфера авеек больше не должна утекать при спавне после раундстарта}
+delete-after: true
