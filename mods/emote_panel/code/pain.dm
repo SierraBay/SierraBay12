@@ -1,10 +1,15 @@
 /obj/item/organ/external/add_pain(amount) //запускаем в ход agony_scream
 	.=..()
+	if(!can_feel_pain())
+		return
 	if(owner && ((amount > 15 && prob(20)) || (amount > 30 && prob(60))))
 		owner.agony_scream()
 
 /mob/living/carbon/human/handle_shock()
-	.=..() // вводим agony_moan
+	. = ..() // вводим agony_moan
+	if(!can_feel_pain())
+		shock_stage = 0
+		return
 	if(shock_stage >= 30)
 		.=..()
 		if(prob(15))
