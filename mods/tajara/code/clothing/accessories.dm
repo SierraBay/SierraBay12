@@ -77,6 +77,7 @@
 	icon = 'mods/tajara/icons/obj_eyes.dmi'
 	icon_state = "tajvisor_sec"
 	item_state = "tajvisor_sec"
+	off_state = "tajvisor_sec"
 	prescription = 5
 	body_parts_covered = EYES
 
