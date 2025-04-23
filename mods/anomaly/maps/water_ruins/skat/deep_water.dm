@@ -28,20 +28,12 @@
 		SPECIES_ADHERENT
 	)
 
-/obj/titan_fluid/New(loc, ...)
-	. = ..()
-	my_turf = get_turf(src)
-	my_turf.flooded = TRUE
-
-/obj/titan_fluid/Destroy()
-	. = ..()
-	my_turf.flooded = FALSE
-
 /obj/titan_fluid/Crossed(O)
 	. = ..()
 	if(ishuman(O))
-		playsound(my_turf, 'mods/anomaly/sounds/water/max/water_move7.ogg', 100, 1)
 		var/mob/living/carbon/human/human = O
+		human.water_act(FLUID_MAX_DEPTH)
+		playsound(my_turf, 'mods/anomaly/sounds/water/max/water_move7.ogg', 100, 1)
 		if(!(human.species.name in whitelist_specis_move_slowdown))
 			var/datum/movement_handler/mob/delay/delay = human.GetMovementHandler(/datum/movement_handler/mob/delay)
 			if(delay)
@@ -52,10 +44,7 @@
 
 /obj/titan_fluid/Process()
 	. = ..()
-	for(var/atom/movable/smthg in water_victims)
-		smthg.water_act(FLUID_MAX_DEPTH)
-	if(!LAZYLEN(water_victims))
-		return PROCESS_KILL
+	
 
 /obj/titan_fluid/Uncrossed(O)
 	. = ..()

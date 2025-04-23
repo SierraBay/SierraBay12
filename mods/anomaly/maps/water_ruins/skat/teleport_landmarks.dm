@@ -1,3 +1,5 @@
+var/global/list/teleport_landmarks_list = list()
+
 /obj/landmark/teleport_to_z_level
 	var/teleport_tag = "TEST"
 	var/map_path
@@ -12,7 +14,7 @@
 /obj/landmark/teleport_to_z_level/New()
 	. = ..()
 	deploy_map()
-	connect_to_manager()
+	LAZYADD(teleport_landmarks_list, src)
 
 
 /obj/landmark/teleport_to_z_level/proc/deploy_map()
@@ -43,7 +45,7 @@
 	var/area/my_area = get_area(src)
 	if(my_area.connected_weather_manager && istype(my_area.connected_weather_manager, /datum/weather_manager/titan_rain))
 		var/datum/weather_manager/titan_rain/titan = my_area.connected_weather_manager
-		LAZYADD(titan.seconds_areas_list, get_area(connected_landmark))
+		LAZYADD(titan.seconds_z_list, get_z(connected_landmark))
 
 /obj/landmark/teleport_to_z_level/proc/connect_teleports_landmarks(obj/landmark/teleport_to_z_level/input_mark)
 	connected_landmark = input_mark

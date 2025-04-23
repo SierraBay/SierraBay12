@@ -19,7 +19,8 @@
 	var/list/blowout_messages = list()
 	var/activity_blocked_by_safe_protocol = FALSE
 
-/datum/weather_manager/New()
+/datum/weather_manager/New(area/input_area)
+	my_area = input_area
 	calculate_change_time()
 	calculate_blowout_time()
 	calculate_next_safe_blowout()

@@ -99,14 +99,6 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/white,
 /area/map_template/skat)
-"bO" = (
-/obj/floor_decal/industrial/warning{
-	dir = 1
-	},
-/obj/decal/cleanable/dirt,
-/obj/structure/largecrate/titan_crate,
-/turf/simulated/floor/tiled/techfloor,
-/area/map_template/skat)
 "bW" = (
 /obj/machinery/constructable_frame/computerframe{
 	dir = 4
@@ -382,6 +374,7 @@
 	},
 /obj/structure/railing/mapped,
 /obj/decal/cleanable/dirt,
+/obj/item/tank/air,
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/skat)
 "gn" = (
@@ -432,9 +425,9 @@
 /turf/simulated/floor/tiled,
 /area/map_template/skat)
 "hx" = (
-/obj/item/tank/air,
 /obj/decal/cleanable/dirt,
-/turf/simulated/floor/tiled/steel_grid,
+/obj/item/tank/air,
+/turf/simulated/floor/tiled/techfloor,
 /area/map_template/skat)
 "hO" = (
 /obj/item/stack/material/rods,
@@ -755,14 +748,6 @@
 /obj/decal/cleanable/dirt,
 /obj/random/obstruction,
 /turf/simulated/floor/tiled/white,
-/area/map_template/skat)
-"pr" = (
-/obj/floor_decal/industrial/warning{
-	dir = 8
-	},
-/obj/decal/cleanable/dirt,
-/obj/structure/largecrate/titan_crate,
-/turf/simulated/floor/tiled/techfloor,
 /area/map_template/skat)
 "ps" = (
 /obj/item/reagent_containers/food/drinks/glass2/coffeecup/pawn{
@@ -1172,14 +1157,6 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/skat)
-"xn" = (
-/obj/floor_decal/industrial/warning{
-	dir = 4
-	},
-/obj/decal/cleanable/dirt,
-/obj/structure/largecrate/titan_crate,
-/turf/simulated/floor/tiled/techfloor,
-/area/map_template/skat)
 "xq" = (
 /obj/machinery/door/blast/regular{
 	dir = 8;
@@ -1486,11 +1463,6 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/white,
 /area/map_template/skat)
-"Ed" = (
-/obj/decal/cleanable/dirt,
-/obj/structure/largecrate/titan_crate,
-/turf/simulated/floor/tiled/steel_grid,
-/area/map_template/skat)
 "Ee" = (
 /obj/machinery/body_scanconsole{
 	dir = 4
@@ -1549,12 +1521,6 @@
 	},
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/white,
-/area/map_template/skat)
-"FN" = (
-/obj/decal/cleanable/dirt,
-/obj/random/trash,
-/obj/structure/largecrate/titan_crate,
-/turf/simulated/floor/tiled/steel_grid,
 /area/map_template/skat)
 "Ga" = (
 /obj/machinery/cooker/fryer,
@@ -1948,6 +1914,8 @@
 /obj/floor_decal/industrial/warning,
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/generic,
+/obj/item/tank/air,
+/obj/random_titan_landmark/cargo,
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/skat)
 "Ps" = (
@@ -2029,7 +1997,6 @@
 /area/map_template/skat)
 "To" = (
 /obj/floor_decal/industrial/warning,
-/obj/item/tank/air,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/skat)
@@ -2153,6 +2120,14 @@
 	icon_state = "computer"
 	},
 /turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/map_template/skat)
+"Xn" = (
+/obj/floor_decal/industrial/warning{
+	dir = 4
+	},
+/obj/decal/cleanable/dirt,
+/obj/item/tank/air,
+/turf/simulated/floor/tiled/techfloor,
 /area/map_template/skat)
 "Xs" = (
 /obj/machinery/smartfridge/secure/medbay{
@@ -4859,7 +4834,7 @@ Xy
 Mu
 Fs
 fh
-pr
+fh
 ho
 fh
 gk
@@ -4870,7 +4845,7 @@ sB
 Ld
 sB
 ng
-Ed
+Ld
 Mu
 Ep
 Ep
@@ -4899,13 +4874,13 @@ fp
 Mu
 ki
 tQ
-tQ
+hx
 tQ
 tQ
 To
 Ld
 Ld
-hx
+Ld
 sQ
 LU
 GG
@@ -4977,17 +4952,17 @@ xk
 xk
 xk
 Mu
-bO
+ki
 tQ
-tQ
+hx
 oh
 tQ
 Iz
-hx
 Ld
 Ld
 Ld
-FN
+Ld
+ng
 Ld
 sB
 XS
@@ -5019,9 +4994,9 @@ fu
 Mu
 aO
 mg
+Xn
 mg
 mg
-xn
 qv
 pT
 zm

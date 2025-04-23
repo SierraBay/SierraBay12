@@ -2,7 +2,7 @@
 "aY" = (
 /obj/titan_fluid,
 /turf/simulated/wall/prepainted,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "bp" = (
 /obj/item/ammo_casing/rifle/used,
 /obj/item/ammo_casing/rifle/used,
@@ -11,18 +11,18 @@
 /turf/simulated/floor/wood{
 	icon_state = "wood_broken3"
 	},
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "bF" = (
 /obj/gibspawner/robot,
 /obj/structure/mech_wreckage,
 /obj/titan_fluid,
 /turf/simulated/floor/tiled/techfloor/grid,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "bQ" = (
 /obj/structure/water_drown_structures/paper,
 /obj/titan_fluid,
 /turf/simulated/floor/exoplanet/titan_water/middle,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "cd" = (
 /obj/item/trash/shegolad,
 /obj/item/ammo_casing/rifle/used,
@@ -37,7 +37,7 @@
 /turf/simulated/floor/wood{
 	icon_state = "wood_broken0"
 	},
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "dx" = (
 /obj/item/stack/material/wood,
 /obj/item/ammo_casing/rifle/used,
@@ -48,7 +48,7 @@
 /turf/simulated/floor/wood{
 	icon_state = "wood_broken0"
 	},
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "dK" = (
 /obj/item/ammo_casing/rifle/used,
 /obj/item/ammo_casing/rifle/used,
@@ -58,12 +58,12 @@
 /turf/simulated/floor/wood{
 	icon_state = "wood_broken4"
 	},
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "ea" = (
 /obj/landmark/teleport_to_z_level/skat_third_deck/exit,
 /obj/titan_fluid,
 /turf/simulated/floor/plating,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "em" = (
 /obj/floor_decal/stairs{
 	dir = 1
@@ -71,13 +71,13 @@
 /obj/structure/rubble/house,
 /obj/titan_fluid,
 /turf/simulated/floor/tiled/steel_ridged,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "ew" = (
 /obj/decal/cleanable/blood/crab_sliz,
 /obj/titan_fluid,
 /mob/living/simple_animal/hostile/titan_crab,
 /turf/simulated/floor/tiled/techfloor/grid,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "eR" = (
 /obj/item/stack/material/wood,
 /obj/item/ammo_casing/rifle/used,
@@ -92,28 +92,28 @@
 /obj/item/ammo_casing/rifle/used,
 /obj/titan_fluid,
 /turf/simulated/floor/wood,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "eY" = (
 /obj/structure/grille/broken,
 /obj/titan_fluid,
 /turf/simulated/floor/plating,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "fn" = (
 /obj/structure/rubble/house,
 /obj/random/trash,
 /obj/titan_fluid,
 /turf/simulated/floor/tiled/techfloor/grid,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "fr" = (
 /obj/structure/rubble/house,
 /obj/titan_fluid,
 /turf/simulated/floor/tiled/techfloor/grid,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "fx" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/titan_fluid,
 /turf/simulated/floor/wood,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "fM" = (
 /turf/simulated/floor/exoplanet/titan_water/maximum{
 	density = 1;
@@ -126,7 +126,7 @@
 /obj/item/mech_equipment/mounted_system/taser/ballistic/minigun,
 /obj/decal/cleanable/blood/gibs/robot/down,
 /turf/simulated/floor/tiled/techfloor/grid,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "fT" = (
 /obj/decal/cleanable/blood/crab_sliz,
 /obj/item/ammo_casing/rifle/used,
@@ -138,17 +138,17 @@
 /obj/item/ammo_casing/rifle/used,
 /obj/titan_fluid,
 /turf/simulated/floor/wood,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "fU" = (
 /obj/item/trash/tomato,
 /obj/titan_fluid,
 /turf/simulated/floor/wood,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "gH" = (
 /obj/titan_fluid,
 /obj/mob_spawner/titan_crabs,
 /turf/simulated/floor/tiled/techfloor/grid,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "gQ" = (
 /obj/item/stack/material/wood,
 /obj/structure/broken_door,
@@ -160,7 +160,7 @@
 /obj/item/ammo_casing/rifle/used,
 /obj/titan_fluid,
 /turf/simulated/floor/wood,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "ha" = (
 /obj/item/stack/material/wood,
 /obj/item/ammo_casing/rifle/used,
@@ -169,17 +169,17 @@
 /obj/item/ammo_casing/rifle/used,
 /obj/titan_fluid,
 /turf/simulated/floor/plating,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "hh" = (
 /obj/titan_fluid,
 /turf/simulated/floor/wood{
 	icon_state = "wood_broken3"
 	},
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "hp" = (
 /obj/titan_fluid,
 /turf/simulated/floor/exoplanet/titan_water/middle,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "hI" = (
 /obj/titan_fluid,
 /obj/item/ammo_casing/rifle/used,
@@ -188,7 +188,7 @@
 /obj/item/ammo_casing/rifle/used,
 /obj/item/ammo_casing/rifle/used,
 /turf/simulated/floor/tiled/techfloor/grid,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "jh" = (
 /obj/structure/water_drown_structures/wooden_planks,
 /turf/simulated/floor/exoplanet/titan_water/maximum{
@@ -200,7 +200,7 @@
 /obj/structure/rubble/house,
 /obj/titan_fluid,
 /turf/simulated/floor/tiled/steel_ridged,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "jB" = (
 /obj/forcefield/blocker,
 /turf/simulated/floor/exoplanet/titan_water/maximum{
@@ -216,13 +216,13 @@
 /obj/structure/rubble/house,
 /obj/titan_fluid,
 /turf/simulated/floor/tiled/steel_ridged,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "jP" = (
 /obj/decal/cleanable/blood/crab_sliz,
 /obj/structure/closet/fridge,
 /obj/titan_fluid,
 /turf/simulated/floor/tiled/techfloor/grid,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "ke" = (
 /obj/item/ammo_casing/rifle/used,
 /obj/item/ammo_casing/rifle/used,
@@ -233,13 +233,13 @@
 /obj/item/ammo_casing/rifle/used,
 /obj/titan_fluid,
 /turf/simulated/floor/wood,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "kz" = (
 /obj/structure/water_drown_structures/wooden_planks,
 /obj/item/stack/material/wood,
 /obj/titan_fluid,
 /turf/simulated/floor/plating,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "kJ" = (
 /obj/floor_decal/industrial/warning{
 	dir = 4
@@ -249,7 +249,7 @@
 	},
 /obj/titan_fluid,
 /turf/simulated/floor/tiled/techfloor/grid,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "mK" = (
 /obj/item/trash/shegolad,
 /obj/item/ammo_casing/rifle/used,
@@ -263,7 +263,7 @@
 /obj/item/ammo_casing/rifle/used,
 /obj/titan_fluid,
 /turf/simulated/floor/wood,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "nE" = (
 /obj/item/trash/tomato,
 /obj/decal/cleanable/blood/crab_sliz,
@@ -282,7 +282,7 @@
 /turf/simulated/floor/wood{
 	icon_state = "wood_broken3"
 	},
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "om" = (
 /obj/item/ammo_casing/rifle/used,
 /obj/item/ammo_casing/rifle/used,
@@ -290,7 +290,7 @@
 /obj/item/ammo_casing/rifle/used,
 /obj/titan_fluid,
 /turf/simulated/floor/wood,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "on" = (
 /obj/decal/cleanable/blood/crab_sliz,
 /obj/item/crab_egg{
@@ -310,26 +310,26 @@
 /obj/gibspawner/human,
 /obj/titan_fluid,
 /turf/simulated/floor/tiled/techfloor/grid,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "pb" = (
 /obj/floor_decal/industrial/warning{
 	dir = 4
 	},
 /obj/titan_fluid,
 /turf/simulated/floor/tiled/techfloor/grid,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "rz" = (
 /obj/titan_fluid,
 /obj/structure/rubble/house,
 /turf/simulated/floor/tiled/techfloor/grid,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "rQ" = (
 /obj/structure/rubble/house,
 /obj/structure/rubble/house,
 /obj/structure/rubble/house,
 /obj/titan_fluid,
 /turf/simulated/floor/tiled/steel_ridged,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "rR" = (
 /obj/forcefield/blocker,
 /turf/simulated/floor/exoplanet/titan_water/maximum,
@@ -339,7 +339,7 @@
 /obj/item/trash/snack_bowl,
 /obj/titan_fluid,
 /turf/simulated/floor/wood,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "tr" = (
 /obj/titan_fluid,
 /obj/item/ammo_casing/rifle/used,
@@ -350,7 +350,7 @@
 /obj/item/ammo_casing/rifle/used,
 /obj/item/ammo_casing/rifle/used,
 /turf/simulated/floor/tiled/techfloor/grid,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "uf" = (
 /turf/simulated/floor/exoplanet/titan_water/maximum{
 	density = 1;
@@ -364,7 +364,7 @@
 /obj/item/ammo_magazine/rifle,
 /obj/titan_fluid,
 /turf/simulated/floor/plating,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "vd" = (
 /obj/decal/cleanable/blood/crab_sliz,
 /obj/item/crab_egg{
@@ -387,7 +387,7 @@
 	},
 /obj/titan_fluid,
 /turf/simulated/floor/tiled/techfloor/grid,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "vK" = (
 /obj/decal/cleanable/blood/crab_sliz,
 /obj/item/ammo_casing/rifle/used,
@@ -407,18 +407,18 @@
 /turf/simulated/floor/wood{
 	icon_state = "wood_broken3"
 	},
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "xG" = (
 /obj/structure/grille/broken,
 /obj/decal/cleanable/blood/crab_sliz,
 /obj/titan_fluid,
 /turf/simulated/floor/tiled/techfloor/grid,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "xI" = (
 /obj/item/stack/material/wood,
 /obj/titan_fluid,
 /turf/simulated/wall/prepainted,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "xL" = (
 /obj/decal/cleanable/blood/crab_sliz,
 /obj/item/ammo_magazine/rifle,
@@ -426,31 +426,31 @@
 /turf/simulated/floor/wood{
 	icon_state = "wood_broken4"
 	},
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "yc" = (
 /obj/titan_fluid,
 /turf/simulated/floor/wood{
 	icon_state = "wood_broken4"
 	},
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "yj" = (
 /obj/item/trash/shegolad,
 /obj/decal/cleanable/blood,
 /obj/titan_fluid,
 /turf/simulated/floor/plating,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "yR" = (
 /obj/structure/broken_door,
 /obj/item/stack/material/wood,
 /obj/titan_fluid,
 /turf/simulated/floor/wood,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "zr" = (
 /obj/structure/table/woodentable_reinforced,
 /obj/item/book/manual/engineering_construction,
 /obj/titan_fluid,
 /turf/simulated/floor/wood,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "zF" = (
 /obj/item/stack/material/wood,
 /obj/decal/cleanable/blood/crab_sliz,
@@ -471,7 +471,7 @@
 /turf/simulated/floor/wood{
 	icon_state = "wood_broken0"
 	},
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "zJ" = (
 /obj/titan_fluid,
 /obj/item/ammo_casing/rifle/used,
@@ -491,16 +491,16 @@
 /obj/item/ammo_casing/rifle/used,
 /obj/item/ammo_casing/rifle/used,
 /turf/simulated/floor/tiled/techfloor/grid,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "zR" = (
 /obj/item/stack/material/wood,
 /obj/titan_fluid,
 /turf/simulated/floor/plating,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "Ag" = (
 /obj/titan_fluid,
 /turf/simulated/floor/plating,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "AZ" = (
 /obj/floor_decal/industrial/warning{
 	dir = 8
@@ -511,12 +511,12 @@
 /obj/titan_fluid,
 /obj/landmark/titan_crate,
 /turf/simulated/floor/tiled/techfloor/grid,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "Bh" = (
 /obj/structure/barricade/spike,
 /obj/titan_fluid,
 /turf/simulated/floor/plating,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "Bz" = (
 /obj/item/trash/shegolad,
 /obj/decal/cleanable/blood/crab_sliz,
@@ -527,18 +527,18 @@
 /obj/item/ammo_casing/rifle/used,
 /obj/titan_fluid,
 /turf/simulated/floor/wood,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "BS" = (
 /obj/structure/grille/broken,
 /obj/structure/rubble/house,
 /obj/titan_fluid,
 /turf/simulated/floor/plating,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "DE" = (
 /obj/titan_fluid,
 /obj/random/biggun,
 /turf/simulated/floor/tiled/techfloor/grid,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "DJ" = (
 /obj/item/stack/material/wood,
 /obj/item/ammo_casing/rifle/used,
@@ -550,7 +550,7 @@
 /obj/item/ammo_casing/rifle/used,
 /obj/titan_fluid,
 /turf/simulated/floor/wood,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "Eo" = (
 /obj/item/trash/shegolad,
 /obj/item/ammo_casing/rifle/used,
@@ -568,7 +568,7 @@
 /turf/simulated/floor/wood{
 	icon_state = "wood_broken0"
 	},
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "EM" = (
 /obj/item/ammo_casing/rifle/used,
 /obj/item/ammo_casing/rifle/used,
@@ -577,24 +577,24 @@
 /turf/simulated/floor/wood{
 	icon_state = "wood_broken5"
 	},
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "EU" = (
 /obj/item/trash/tomato,
 /obj/structure/bed/chair/armchair/black,
 /obj/titan_fluid,
 /turf/simulated/floor/wood,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "FO" = (
 /obj/decal/cleanable/blood/crab_sliz,
 /obj/titan_fluid,
 /turf/simulated/floor/tiled/techfloor/grid,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "FZ" = (
 /obj/structure/rubble/house,
 /obj/titan_fluid,
 /obj/decal/cleanable/blood/gibs/robot/down,
 /turf/simulated/floor/tiled/techfloor/grid,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "GA" = (
 /obj/item/trash/shegolad,
 /obj/structure/dispenser/oxygen,
@@ -602,7 +602,7 @@
 /turf/simulated/floor/wood{
 	icon_state = "wood_broken2"
 	},
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "GY" = (
 /obj/structure/water_drown_structures/wooden_planks,
 /obj/decal/cleanable/blood/crab_sliz,
@@ -611,12 +611,12 @@
 /obj/item/ammo_casing/rifle/used,
 /obj/titan_fluid,
 /turf/simulated/floor/wood,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "HD" = (
 /obj/structure/water_drown_structures/wooden_crates,
 /obj/titan_fluid,
 /turf/simulated/floor/exoplanet/titan_water/maximum,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "Ik" = (
 /obj/decal/cleanable/blood/crab_sliz,
 /obj/item/crab_egg{
@@ -644,13 +644,13 @@
 /obj/decal/cleanable/blood/gibs/limb,
 /obj/titan_fluid,
 /turf/simulated/floor/tiled/techfloor/grid,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "IA" = (
 /obj/structure/water_drown_structures/paper,
 /obj/titan_fluid,
 /obj/mob_spawner/titan_crabs,
 /turf/simulated/floor/exoplanet/titan_water/maximum,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "Ji" = (
 /obj/item/trash/shegolad,
 /obj/item/ammo_casing/rifle/used,
@@ -662,7 +662,7 @@
 /turf/simulated/floor/wood{
 	icon_state = "wood_broken5"
 	},
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "Jm" = (
 /obj/item/trash/tomato,
 /obj/structure/bed,
@@ -674,33 +674,33 @@
 /turf/simulated/floor/wood{
 	icon_state = "wood_broken5"
 	},
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "JS" = (
 /obj/titan_fluid,
 /mob/living/simple_animal/hostile/titan_crab,
 /turf/simulated/floor/tiled/techfloor/grid,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "Kg" = (
 /obj/floor_decal/industrial/warning,
 /obj/structure/railing/mapped,
 /obj/titan_fluid,
 /turf/simulated/floor/tiled/techfloor/grid,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "LB" = (
 /obj/structure/bookcase/manuals/engineering,
 /obj/titan_fluid,
 /turf/simulated/floor/wood{
 	icon_state = "wood_broken5"
 	},
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "Mu" = (
 /turf/simulated/wall/r_wall/hull,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "Ny" = (
 /obj/structure/water_drown_structures/paper,
 /obj/titan_fluid,
 /turf/simulated/floor/exoplanet/titan_water/maximum,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "NE" = (
 /obj/decal/cleanable/blood/crab_sliz,
 /obj/item/ammo_casing/rifle/used,
@@ -711,12 +711,12 @@
 /turf/simulated/floor/wood{
 	icon_state = "wood_broken3"
 	},
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "Og" = (
 /obj/titan_fluid,
 /obj/decal/cleanable/blood/gibs/robot/down,
 /turf/simulated/floor/tiled/techfloor/grid,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "Oj" = (
 /obj/item/ammo_casing/rifle/used,
 /obj/item/ammo_casing/rifle/used,
@@ -724,27 +724,27 @@
 /turf/simulated/floor/wood{
 	icon_state = "wood_broken2"
 	},
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "Oy" = (
 /obj/structure/barricade,
 /obj/titan_fluid,
 /turf/simulated/floor/plating,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "OX" = (
 /obj/item/ammo_casing/rifle/used,
 /obj/item/ammo_casing/rifle/used,
 /obj/titan_fluid,
 /turf/simulated/floor/wood,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "Pi" = (
 /obj/titan_fluid,
 /turf/simulated/floor/wood,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "PJ" = (
 /obj/titan_fluid,
 /obj/landmark/titan_crate,
 /turf/simulated/floor/tiled/techfloor/grid,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "Ro" = (
 /obj/floor_decal/industrial/warning{
 	dir = 8
@@ -754,7 +754,7 @@
 	},
 /obj/titan_fluid,
 /turf/simulated/floor/tiled/techfloor/grid,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "Rx" = (
 /obj/floor_decal/industrial/warning{
 	dir = 1
@@ -764,18 +764,18 @@
 	},
 /obj/titan_fluid,
 /turf/simulated/floor/tiled/techfloor/grid,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "SA" = (
 /obj/structure/rubble/house,
 /obj/structure/rubble/house,
 /obj/titan_fluid,
 /turf/simulated/floor/tiled/steel_ridged,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "SE" = (
 /obj/titan_fluid,
 /obj/mob_spawner/titan_crabs,
 /turf/simulated/floor/exoplanet/titan_water/maximum,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "SK" = (
 /obj/item/stack/material/wood,
 /obj/item/ammo_casing/rifle/used,
@@ -783,7 +783,7 @@
 /turf/simulated/floor/wood{
 	icon_state = "wood_broken5"
 	},
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "Tc" = (
 /obj/item/trash/tomato,
 /obj/decal/cleanable/blood,
@@ -797,7 +797,7 @@
 /obj/item/ammo_casing/rifle/used,
 /obj/titan_fluid,
 /turf/simulated/floor/wood,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "Tf" = (
 /obj/titan_fluid,
 /obj/item/ammo_casing/rifle/used,
@@ -810,7 +810,7 @@
 /obj/item/ammo_casing/rifle/used,
 /obj/item/ammo_casing/rifle/used,
 /turf/simulated/floor/tiled/techfloor/grid,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "Tp" = (
 /obj/decal/cleanable/blood/crab_sliz,
 /obj/item/crab_egg{
@@ -831,12 +831,12 @@
 /obj/decal/cleanable/blood/gibs/limb,
 /obj/titan_fluid,
 /turf/simulated/floor/tiled/techfloor/grid,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "Tt" = (
 /obj/structure/table/woodentable_reinforced,
 /obj/titan_fluid,
 /turf/simulated/floor/wood,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "TL" = (
 /obj/floor_decal/industrial/warning{
 	dir = 1
@@ -847,7 +847,7 @@
 /obj/titan_fluid,
 /obj/landmark/titan_crate,
 /turf/simulated/floor/tiled/techfloor/grid,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "TW" = (
 /obj/item/trash/fishegg,
 /obj/item/ammo_casing/rifle/used,
@@ -857,7 +857,7 @@
 /obj/item/ammo_casing/rifle/used,
 /obj/titan_fluid,
 /turf/simulated/floor/wood,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "Uy" = (
 /obj/structure/rubble/house,
 /obj/item/robot_parts/robot_component/actuator,
@@ -865,13 +865,13 @@
 /obj/decal/cleanable/blood/gibs/robot/limb,
 /obj/titan_fluid,
 /turf/simulated/floor/tiled/techfloor/grid,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "UG" = (
 /obj/structure/water_drown_structures/paper,
 /obj/titan_fluid,
 /obj/decal/cleanable/blood/gibs/robot/down,
 /turf/simulated/floor/exoplanet/titan_water/middle,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "Ve" = (
 /obj/titan_fluid,
 /obj/item/ammo_casing/rifle/used,
@@ -885,7 +885,7 @@
 /obj/item/ammo_casing/rifle/used,
 /obj/item/ammo_casing/rifle/used,
 /turf/simulated/floor/tiled/techfloor/grid,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "VS" = (
 /obj/decal/cleanable/blood/crab_sliz,
 /obj/item/ammo_casing/rifle/used,
@@ -896,16 +896,16 @@
 /obj/item/ammo_casing/rifle/used,
 /obj/titan_fluid,
 /turf/simulated/floor/plating,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "Wg" = (
 /obj/titan_fluid,
 /turf/simulated/wall/r_wall/hull,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "Wu" = (
 /obj/structure/water_drown_structures/wooden_crates,
 /obj/titan_fluid,
 /turf/simulated/floor/exoplanet/titan_water/middle,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "WI" = (
 /obj/item/stack/material/wood,
 /obj/item/ammo_casing/rifle/used,
@@ -921,23 +921,23 @@
 /obj/item/ammo_casing/rifle/used,
 /obj/titan_fluid,
 /turf/simulated/floor/plating,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "WQ" = (
 /obj/structure/water_drown_structures/wooden_planks,
 /obj/titan_fluid,
 /turf/simulated/floor/exoplanet/titan_water/maximum,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "WS" = (
 /obj/titan_fluid,
 /turf/simulated/floor/tiled/techfloor/grid,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "WU" = (
 /obj/item/stack/material/wood,
 /obj/titan_fluid,
 /turf/simulated/floor/wood{
 	icon_state = "wood_broken4"
 	},
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "XC" = (
 /obj/floor_decal/industrial/warning{
 	dir = 4
@@ -948,12 +948,12 @@
 /obj/titan_fluid,
 /obj/landmark/titan_crate,
 /turf/simulated/floor/tiled/techfloor/grid,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "Yc" = (
 /obj/titan_fluid,
 /obj/landmark/titan_crate,
 /turf/simulated/floor/plating,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "Yw" = (
 /obj/item/trash/tomato,
 /obj/item/ammo_casing/rifle/used,
@@ -963,11 +963,11 @@
 /obj/item/ammo_casing/rifle/used,
 /obj/titan_fluid,
 /turf/simulated/floor/wood,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "YL" = (
 /obj/titan_fluid,
 /turf/simulated/floor/exoplanet/titan_water/maximum,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "Zo" = (
 /obj/decal/cleanable/blood,
 /obj/item/ammo_magazine/rifle,
@@ -976,14 +976,14 @@
 /obj/item/ammo_casing/rifle/used,
 /obj/titan_fluid,
 /turf/simulated/floor/wood,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 "Zp" = (
 /obj/item/trash/shegolad,
 /obj/decal/cleanable/blood,
 /obj/decal/cleanable/blood/gibs/limb,
 /obj/titan_fluid,
 /turf/simulated/floor/plating,
-/area/map_template/skat_underwater)
+/area/map_template/skat_third_deck)
 
 (1,1,1) = {"
 uf

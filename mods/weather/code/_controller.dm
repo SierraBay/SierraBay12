@@ -15,7 +15,7 @@ PROCESSING_SUBSYSTEM_DEF(weather)
 	///Очередь из воды Титана которая ожидает изменение своего состояния (углубление или уменьшение глубины). Позволяет воде менятся менее лагучим образом.
 	var/list/water_changing_queue = list()
 	//Сколько турфов будет обработано за 1 процессинг контроллера. Чем больше тем быстрее выполняется очередь, но может сильней влиять на производительность игры.
-	var/changing_tufs_per_time = 10
+	var/changing_tufs_per_time = 1000
 
 /datum/controller/subsystem/processing/weather/UpdateStat(time)
 	if (PreventUpdateStat(time))
