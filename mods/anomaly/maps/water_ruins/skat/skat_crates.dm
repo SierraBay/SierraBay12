@@ -40,6 +40,7 @@
 	///Если null то просто получаем доски
 	var/destroyed_icon_state
 	var/opened = FALSE
+	var/see_throught_after_open = TRUE //Прозрачен после своего раскрытия
 	opacity = TRUE
 	density = TRUE
 	var/list/spawn_contents = list(
@@ -84,6 +85,8 @@
 		icon_state = destroyed_icon_state
 	else
 		qdel_self()
+	if(see_throught_after_open)
+		opacity = FALSE
 
 
 /obj/structure/titan_largecrate/energizer
@@ -135,6 +138,7 @@
 	icon_state = "closed_metal"
 	destroyed_icon_state = "open_metal"
 	open_case_sound = 'mods/anomaly/sounds/crates/metal_sound.ogg'
+	see_throught_after_open = FALSE
 	spawn_contents = list(
 		/obj/item/stack/material/steel/fifty,
 		/obj/item/stack/material/aluminium/fifty,

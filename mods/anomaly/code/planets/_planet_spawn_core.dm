@@ -11,7 +11,7 @@
 
 	var/min_anomalies_ammount = 40
 	var/max_anomalies_ammount = 100
-	var/storyteller_path = /datum/planet_storyteller/classic
+	var/storyteller_path
 	var/datum/planet_storyteller/storyteller
 
 /obj/overmap/visitable/sector/exoplanet/build_level()
@@ -40,8 +40,10 @@
 	if(LAZYLEN(big_artefacts_types))
 		generate_big_anomaly_artefacts()
 	planetary_area.deploy_new_weather_manager(weather_manager_type, deploy_weather = TRUE)
+	/* Ждать окончания плейтестов
 	if(storyteller_path)
-		deploy_storyteller(src)
+		deploy_storyteller()
+	*/
 	//Если у планеты есть погода - спавним погоду
 	generate_landing(2)
 	update_biome()

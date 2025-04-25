@@ -5,12 +5,12 @@
 	mappaths = list('mods/anomaly/maps/water_ruins/skat/skat-1.dmm')
 	spawn_cost = 0
 	apc_test_exempt_areas = list(
-		/area/map_template/skat = NO_SCRUBBER|NO_VENT|NO_APC
+		/area/map_template/anomaly/skat = NO_SCRUBBER|NO_VENT|NO_APC
 	)
 	ruin_tags = RUIN_CHUDO_ANOMALIES
 	skip_main_unit_tests = TRUE
 
-/area/map_template/skat
+/area/map_template/anomaly/skat
 	name = "\improper Drowned ship"
 	icon_state = "A"
 	turfs_airless = TRUE

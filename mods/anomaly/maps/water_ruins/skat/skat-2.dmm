@@ -10,42 +10,42 @@
 /obj/structure/water_drown_structures/paper,
 /obj/titan_fluid,
 /turf/simulated/floor/tiled/techfloor/grid,
-/area/map_template/skat_second_deck)
+/area/map_template/anomaly/skat_second_deck)
 "aO" = (
 /obj/machinery/door/blast/regular{
 	id_tag = "colblast"
 	},
 /obj/titan_fluid,
 /turf/simulated/floor/tiled/techfloor/grid,
-/area/map_template/skat_second_deck)
+/area/map_template/anomaly/skat_second_deck)
 "aY" = (
 /obj/titan_fluid,
 /turf/simulated/floor/tiled/techfloor/grid,
-/area/map_template/skat_second_deck)
+/area/map_template/anomaly/skat_second_deck)
 "bQ" = (
 /obj/floor_decal/industrial/warning,
 /obj/structure/railing/mapped,
 /obj/titan_fluid,
 /obj/landmark/titan_crate,
 /turf/simulated/floor/tiled/monotile,
-/area/map_template/skat_second_deck)
+/area/map_template/anomaly/skat_second_deck)
 "bU" = (
 /obj/titan_fluid,
 /obj/landmark/titan_crate,
 /turf/simulated/floor/tiled/monotile,
-/area/map_template/skat_second_deck)
+/area/map_template/anomaly/skat_second_deck)
 "cm" = (
 /obj/floor_decal/industrial/warning{
 	dir = 1
 	},
 /obj/titan_fluid,
 /turf/simulated/floor/tiled/monotile,
-/area/map_template/skat_second_deck)
+/area/map_template/anomaly/skat_second_deck)
 "cw" = (
 /obj/structure/reagent_dispensers/fueltank,
 /obj/titan_fluid,
 /turf/simulated/floor/tiled/monotile,
-/area/map_template/skat_second_deck)
+/area/map_template/anomaly/skat_second_deck)
 "cE" = (
 /obj/structure/rubble/house,
 /obj/random/trash,
@@ -53,28 +53,28 @@
 /obj/random/trash,
 /obj/titan_fluid,
 /turf/simulated/floor/tiled/monotile,
-/area/map_template/skat_second_deck)
+/area/map_template/anomaly/skat_second_deck)
 "dX" = (
 /obj/structure/railing/mapped,
 /obj/titan_fluid,
 /turf/simulated/floor/tiled/monotile,
-/area/map_template/skat_second_deck)
+/area/map_template/anomaly/skat_second_deck)
 "ei" = (
 /obj/titan_fluid,
 /obj/landmark/titan_crate,
 /turf/simulated/floor/tiled/techfloor/grid,
-/area/map_template/skat_second_deck)
+/area/map_template/anomaly/skat_second_deck)
 "em" = (
 /obj/landmark/teleport_to_z_level/skat/exit,
 /obj/titan_fluid,
 /turf/simulated/floor/tiled/monotile,
-/area/map_template/skat_second_deck)
+/area/map_template/anomaly/skat_second_deck)
 "en" = (
 /obj/titan_fluid,
 /obj/landmark/titan_crate,
 /obj/landmark/titan_crate,
 /turf/simulated/floor/tiled/techfloor/grid,
-/area/map_template/skat_second_deck)
+/area/map_template/anomaly/skat_second_deck)
 "fl" = (
 /obj/floor_decal/industrial/warning/dust{
 	dir = 8
@@ -82,7 +82,7 @@
 /obj/titan_fluid,
 /obj/landmark/titan_crate,
 /turf/simulated/floor/tiled/techfloor/grid,
-/area/map_template/skat_second_deck)
+/area/map_template/anomaly/skat_second_deck)
 "fM" = (
 /turf/simulated/floor/exoplanet/titan_water/maximum{
 	density = 1;
@@ -98,18 +98,18 @@
 /obj/structure/railing/mapped,
 /obj/titan_fluid,
 /turf/simulated/floor/tiled/techfloor/grid,
-/area/map_template/skat_second_deck)
+/area/map_template/anomaly/skat_second_deck)
 "gh" = (
 /obj/titan_fluid,
 /turf/simulated/floor/tiled/monotile,
-/area/map_template/skat_second_deck)
+/area/map_template/anomaly/skat_second_deck)
 "ht" = (
 /obj/floor_decal/industrial/warning/dust{
 	dir = 8
 	},
 /obj/titan_fluid,
 /turf/simulated/floor/tiled/techfloor/grid,
-/area/map_template/skat_second_deck)
+/area/map_template/anomaly/skat_second_deck)
 "hL" = (
 /obj/floor_decal/industrial/warning/dust{
 	dir = 4
@@ -119,52 +119,52 @@
 	},
 /obj/titan_fluid,
 /turf/simulated/floor/tiled/monotile,
-/area/map_template/skat_second_deck)
+/area/map_template/anomaly/skat_second_deck)
 "iQ" = (
 /obj/titan_fluid,
 /turf/simulated/floor/exoplanet/titan_water/middle,
-/area/map_template/skat_second_deck)
+/area/map_template/anomaly/skat_second_deck)
 "jh" = (
 /obj/structure/water_drown_structures,
 /obj/titan_fluid,
 /turf/simulated/floor/tiled/techfloor/grid,
-/area/map_template/skat_second_deck)
+/area/map_template/anomaly/skat_second_deck)
 "jm" = (
 /obj/floor_decal/industrial/warning/dust{
 	dir = 4
 	},
 /obj/titan_fluid,
 /turf/simulated/floor/tiled/techfloor/grid,
-/area/map_template/skat_second_deck)
+/area/map_template/anomaly/skat_second_deck)
 "ka" = (
 /obj/structure/water_drown_structures/paper,
 /obj/structure/reagent_dispensers/watertank,
 /obj/titan_fluid,
 /turf/simulated/floor/tiled/monotile,
-/area/map_template/skat_second_deck)
+/area/map_template/anomaly/skat_second_deck)
 "ln" = (
 /obj/structure/water_drown_structures/paper,
 /obj/titan_fluid,
 /obj/landmark/titan_crate,
 /turf/simulated/floor/tiled/techfloor/grid,
-/area/map_template/skat_second_deck)
+/area/map_template/anomaly/skat_second_deck)
 "lw" = (
 /obj/titan_fluid,
 /turf/simulated/wall/r_wall/prepainted,
-/area/map_template/skat_second_deck)
+/area/map_template/anomaly/skat_second_deck)
 "mP" = (
 /obj/structure/water_drown_structures/paper,
 /obj/structure/railing/mapped,
 /obj/titan_fluid,
 /turf/simulated/floor/tiled/techfloor/grid,
-/area/map_template/skat_second_deck)
+/area/map_template/anomaly/skat_second_deck)
 "nB" = (
 /obj/structure/railing/mapped{
 	dir = 8
 	},
 /obj/titan_fluid,
 /turf/simulated/floor/tiled/monotile,
-/area/map_template/skat_second_deck)
+/area/map_template/anomaly/skat_second_deck)
 "oK" = (
 /obj/forcefield/blocker,
 /turf/simulated/floor/exoplanet/titan_water/maximum{
@@ -182,18 +182,18 @@
 	},
 /obj/titan_fluid,
 /turf/simulated/floor/tiled/monotile,
-/area/map_template/skat_second_deck)
+/area/map_template/anomaly/skat_second_deck)
 "pF" = (
 /obj/machinery/atmospherics/unary/tank/phoron,
 /obj/titan_fluid,
 /turf/simulated/floor/tiled/techfloor/grid,
-/area/map_template/skat_second_deck)
+/area/map_template/anomaly/skat_second_deck)
 "qc" = (
 /obj/structure/water_drown_structures/wooden_planks,
 /obj/titan_fluid,
 /obj/landmark/titan_crate,
 /turf/simulated/floor/tiled/techfloor/grid,
-/area/map_template/skat_second_deck)
+/area/map_template/anomaly/skat_second_deck)
 "rs" = (
 /obj/titan_fluid,
 /turf/simulated/floor/exoplanet/titan_water/middle{
@@ -204,7 +204,7 @@
 /obj/floor_decal/industrial/warning,
 /obj/titan_fluid,
 /turf/simulated/floor/tiled/monotile,
-/area/map_template/skat_second_deck)
+/area/map_template/anomaly/skat_second_deck)
 "rR" = (
 /turf/simulated/floor/exoplanet/titan_water/maximum,
 /area/space)
@@ -219,7 +219,7 @@
 /obj/titan_fluid,
 /obj/forcefield/blocker,
 /turf/simulated/floor/tiled/techfloor/grid,
-/area/map_template/skat_second_deck)
+/area/map_template/anomaly/skat_second_deck)
 "uf" = (
 /turf/simulated/floor/exoplanet/titan_water/maximum{
 	density = 1;
@@ -236,12 +236,12 @@
 	},
 /obj/titan_fluid,
 /turf/simulated/floor/tiled/monotile,
-/area/map_template/skat_second_deck)
+/area/map_template/anomaly/skat_second_deck)
 "vf" = (
 /obj/structure/water_drown_structures,
 /obj/titan_fluid,
 /turf/simulated/floor/exoplanet/titan_water/maximum,
-/area/map_template/skat_second_deck)
+/area/map_template/anomaly/skat_second_deck)
 "vy" = (
 /obj/floor_decal/industrial/warning{
 	dir = 10
@@ -252,24 +252,24 @@
 	},
 /obj/titan_fluid,
 /turf/simulated/floor/tiled/monotile,
-/area/map_template/skat_second_deck)
+/area/map_template/anomaly/skat_second_deck)
 "vE" = (
 /obj/structure/water_drown_structures/wooden_planks,
 /obj/titan_fluid,
 /turf/simulated/floor/tiled/monotile,
-/area/map_template/skat_second_deck)
+/area/map_template/anomaly/skat_second_deck)
 "vK" = (
 /obj/structure/water_drown_structures/wooden_planks,
 /obj/titan_fluid,
 /turf/simulated/floor/tiled/techfloor/grid,
-/area/map_template/skat_second_deck)
+/area/map_template/anomaly/skat_second_deck)
 "wk" = (
 /obj/floor_decal/industrial/warning{
 	dir = 4
 	},
 /obj/titan_fluid,
 /turf/simulated/floor/tiled/techfloor/grid,
-/area/map_template/skat_second_deck)
+/area/map_template/anomaly/skat_second_deck)
 "wD" = (
 /obj/floor_decal/industrial/warning{
 	dir = 1
@@ -277,28 +277,28 @@
 /obj/titan_fluid,
 /obj/random/biggun,
 /turf/simulated/floor/tiled/monotile,
-/area/map_template/skat_second_deck)
+/area/map_template/anomaly/skat_second_deck)
 "wJ" = (
 /obj/structure/water_drown_structures,
 /obj/floor_decal/industrial/warning,
 /obj/titan_fluid,
 /turf/simulated/floor/tiled/monotile,
-/area/map_template/skat_second_deck)
+/area/map_template/anomaly/skat_second_deck)
 "wS" = (
 /obj/structure/railing/mapped,
 /obj/titan_fluid,
 /turf/simulated/floor/exoplanet/titan_water/middle,
-/area/map_template/skat_second_deck)
+/area/map_template/anomaly/skat_second_deck)
 "wT" = (
 /obj/structure/rubble/house,
 /obj/random/trash,
 /obj/titan_fluid,
 /turf/simulated/floor/tiled/monotile,
-/area/map_template/skat_second_deck)
+/area/map_template/anomaly/skat_second_deck)
 "AV" = (
 /obj/titan_fluid,
 /turf/simulated/wall/prepainted,
-/area/map_template/skat_second_deck)
+/area/map_template/anomaly/skat_second_deck)
 "Ck" = (
 /obj/structure/water_drown_structures/paper,
 /obj/floor_decal/industrial/warning{
@@ -306,7 +306,7 @@
 	},
 /obj/titan_fluid,
 /turf/simulated/floor/tiled/monotile,
-/area/map_template/skat_second_deck)
+/area/map_template/anomaly/skat_second_deck)
 "Eg" = (
 /obj/floor_decal/industrial/warning/dust{
 	dir = 4
@@ -317,7 +317,7 @@
 	},
 /obj/titan_fluid,
 /turf/simulated/floor/tiled/monotile,
-/area/map_template/skat_second_deck)
+/area/map_template/anomaly/skat_second_deck)
 "ED" = (
 /obj/structure/railing/mapped{
 	dir = 4
@@ -328,11 +328,11 @@
 /obj/titan_fluid,
 /obj/landmark/titan_crate,
 /turf/simulated/floor/tiled/monotile,
-/area/map_template/skat_second_deck)
+/area/map_template/anomaly/skat_second_deck)
 "Fl" = (
 /obj/titan_fluid,
 /turf/simulated/floor/plating,
-/area/map_template/skat_second_deck)
+/area/map_template/anomaly/skat_second_deck)
 "Fu" = (
 /obj/floor_decal/industrial/warning{
 	dir = 8
@@ -342,7 +342,7 @@
 	},
 /obj/titan_fluid,
 /turf/simulated/floor/tiled/monotile,
-/area/map_template/skat_second_deck)
+/area/map_template/anomaly/skat_second_deck)
 "FQ" = (
 /obj/floor_decal/industrial/warning/dust{
 	dir = 8
@@ -353,51 +353,51 @@
 /obj/titan_fluid,
 /obj/landmark/titan_crate,
 /turf/simulated/floor/tiled/monotile,
-/area/map_template/skat_second_deck)
+/area/map_template/anomaly/skat_second_deck)
 "Gt" = (
 /obj/structure/water_drown_structures/wooden_crates_damaged,
 /obj/titan_fluid,
 /turf/simulated/floor/tiled/techfloor/grid,
-/area/map_template/skat_second_deck)
+/area/map_template/anomaly/skat_second_deck)
 "GU" = (
 /obj/structure/water_drown_structures/wooden_planks,
 /obj/structure/railing/mapped,
 /obj/titan_fluid,
 /turf/simulated/floor/tiled/techfloor/grid,
-/area/map_template/skat_second_deck)
+/area/map_template/anomaly/skat_second_deck)
 "HF" = (
 /obj/machinery/atmospherics/unary/tank/hydrogen,
 /obj/machinery/atmospherics/unary/tank/hydrogen,
 /obj/titan_fluid,
 /turf/simulated/floor/tiled/techfloor/grid,
-/area/map_template/skat_second_deck)
+/area/map_template/anomaly/skat_second_deck)
 "HM" = (
 /obj/floor_decal/stairs{
 	dir = 1
 	},
 /obj/titan_fluid,
 /turf/simulated/floor/tiled/monotile,
-/area/map_template/skat_second_deck)
+/area/map_template/anomaly/skat_second_deck)
 "Ka" = (
 /obj/structure/railing/mapped{
 	dir = 4
 	},
 /obj/titan_fluid,
 /turf/simulated/floor/tiled/monotile,
-/area/map_template/skat_second_deck)
+/area/map_template/anomaly/skat_second_deck)
 "ME" = (
 /obj/landmark/teleport_to_z_level/skat_third_deck,
 /obj/titan_fluid,
 /turf/simulated/floor/exoplanet/titan_water/maximum,
-/area/map_template/skat_second_deck)
+/area/map_template/anomaly/skat_second_deck)
 "MH" = (
 /turf/simulated/wall/r_wall/hull,
-/area/map_template/skat_second_deck)
+/area/map_template/anomaly/skat_second_deck)
 "OM" = (
 /obj/structure/girder,
 /obj/titan_fluid,
 /turf/simulated/floor/exoplanet/titan_water/middle,
-/area/map_template/skat_second_deck)
+/area/map_template/anomaly/skat_second_deck)
 "ON" = (
 /obj/titan_fluid,
 /turf/simulated/floor/exoplanet/titan_water/maximum,
@@ -406,12 +406,12 @@
 /obj/structure/water_drown_structures/wooden_planks,
 /obj/titan_fluid,
 /turf/simulated/floor/exoplanet/titan_water/middle,
-/area/map_template/skat_second_deck)
+/area/map_template/anomaly/skat_second_deck)
 "Pj" = (
 /obj/machinery/atmospherics/unary/tank/hydrogen,
 /obj/titan_fluid,
 /turf/simulated/floor/tiled/techfloor/grid,
-/area/map_template/skat_second_deck)
+/area/map_template/anomaly/skat_second_deck)
 "Qm" = (
 /obj/titan_fluid,
 /obj/forcefield/blocker,
@@ -425,24 +425,24 @@
 /obj/structure/water_drown_structures/wooden_crates_damaged,
 /obj/titan_fluid,
 /turf/simulated/floor/exoplanet/titan_water/maximum,
-/area/map_template/skat_second_deck)
+/area/map_template/anomaly/skat_second_deck)
 "QK" = (
 /obj/structure/reagent_dispensers/watertank,
 /obj/titan_fluid,
 /turf/simulated/floor/tiled/monotile,
-/area/map_template/skat_second_deck)
+/area/map_template/anomaly/skat_second_deck)
 "Si" = (
 /obj/floor_decal/industrial/warning,
 /obj/structure/railing/mapped,
 /obj/titan_fluid,
 /turf/simulated/floor/tiled/monotile,
-/area/map_template/skat_second_deck)
+/area/map_template/anomaly/skat_second_deck)
 "Sz" = (
 /obj/structure/railing/mapped,
 /obj/titan_fluid,
 /obj/landmark/titan_crate,
 /turf/simulated/floor/tiled/techfloor/grid,
-/area/map_template/skat_second_deck)
+/area/map_template/anomaly/skat_second_deck)
 "SS" = (
 /obj/floor_decal/industrial/warning{
 	dir = 9
@@ -452,7 +452,7 @@
 	},
 /obj/titan_fluid,
 /turf/simulated/floor/tiled/monotile,
-/area/map_template/skat_second_deck)
+/area/map_template/anomaly/skat_second_deck)
 "Tw" = (
 /obj/titan_fluid,
 /turf/simulated/floor/exoplanet/titan_water/maximum{
@@ -470,14 +470,14 @@
 	dir = 8
 	},
 /turf/simulated/wall/r_wall/hull,
-/area/map_template/skat_second_deck)
+/area/map_template/anomaly/skat_second_deck)
 "UC" = (
 /obj/floor_decal/industrial/warning{
 	dir = 8
 	},
 /obj/titan_fluid,
 /turf/simulated/floor/tiled/monotile,
-/area/map_template/skat_second_deck)
+/area/map_template/anomaly/skat_second_deck)
 "UG" = (
 /obj/floor_decal/industrial/warning/dust{
 	dir = 4
@@ -485,22 +485,22 @@
 /obj/titan_fluid,
 /obj/landmark/titan_crate,
 /turf/simulated/floor/tiled/techfloor/grid,
-/area/map_template/skat_second_deck)
+/area/map_template/anomaly/skat_second_deck)
 "UH" = (
 /obj/structure/rubble/house,
 /obj/titan_fluid,
 /turf/simulated/floor/tiled/monotile,
-/area/map_template/skat_second_deck)
+/area/map_template/anomaly/skat_second_deck)
 "Wy" = (
 /obj/structure/water_drown_structures,
 /obj/titan_fluid,
 /turf/simulated/floor/tiled/monotile,
-/area/map_template/skat_second_deck)
+/area/map_template/anomaly/skat_second_deck)
 "Xe" = (
 /obj/structure/water_drown_structures/paper,
 /obj/titan_fluid,
 /turf/simulated/floor/tiled/monotile,
-/area/map_template/skat_second_deck)
+/area/map_template/anomaly/skat_second_deck)
 "Xo" = (
 /obj/structure/railing/mapped{
 	dir = 8
@@ -510,7 +510,7 @@
 	},
 /obj/titan_fluid,
 /turf/simulated/floor/tiled/monotile,
-/area/map_template/skat_second_deck)
+/area/map_template/anomaly/skat_second_deck)
 "XQ" = (
 /obj/structure/destroyed_apc,
 /obj/floor_decal/industrial/warning/dust{
@@ -518,10 +518,10 @@
 	},
 /obj/titan_fluid,
 /turf/simulated/floor/tiled/techfloor/grid,
-/area/map_template/skat_second_deck)
+/area/map_template/anomaly/skat_second_deck)
 "YL" = (
 /turf/simulated/floor/exoplanet/titan_water/maximum,
-/area/map_template/skat_second_deck)
+/area/map_template/anomaly/skat_second_deck)
 "Zp" = (
 /obj/floor_decal/industrial/warning{
 	dir = 1
@@ -529,7 +529,7 @@
 /obj/titan_fluid,
 /obj/landmark/titan_crate,
 /turf/simulated/floor/tiled/monotile,
-/area/map_template/skat_second_deck)
+/area/map_template/anomaly/skat_second_deck)
 
 (1,1,1) = {"
 uf
@@ -1110,7 +1110,7 @@ lw
 MH
 MH
 Uc
-rR
+Uc
 uf
 rR
 rR
@@ -1151,7 +1151,7 @@ aY
 lw
 MH
 MH
-Uc
+MH
 Uc
 uf
 rR

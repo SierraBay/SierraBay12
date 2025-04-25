@@ -26,8 +26,23 @@
 		started_in = world.time)
 	.=..()
 
+/datum/storyteller_ability/spawn_anomaly/electra
+	possible_anomalies = list(
+		/obj/anomaly/electra/three_and_three,
+		/obj/anomaly/electra/three_and_three/tesla,
+		/obj/anomaly/electra/three_and_three/tesla_second,
+		/obj/anomaly/cooler/multisize
+	)
+
 /datum/storyteller_ability/spawn_anomaly/gravi
 	possible_anomalies = list(
 		/obj/anomaly/rvach/three_and_three,
 		/obj/anomaly/tramplin
+	)
+
+/datum/storyteller_ability/spawn_anomaly/water
+	possible_anomalies = list(
+		/obj/anomaly/doubled_teleporter/with_second,
+		/obj/anomaly/doubled_teleporter/with_second/oneway,
+		/obj/anomaly/doubled_teleporter/with_second/changing
 	)

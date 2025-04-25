@@ -17,6 +17,7 @@
 		/datum/exoplanet_theme = 45,
 		/datum/exoplanet_theme/radiation_bombing = 10
 		)
+	storyteller_path = /datum/planet_storyteller/electra_home
 	planetary_area = /area/exoplanet/ice
 	map_generators = list(/datum/random_map/automata/cave_system/mountains/ice, /datum/random_map/noise/exoplanet/ice)
 	ruin_tags_blacklist = RUIN_HABITAT|RUIN_WATER|RUIN_HOT_ANOMALIES|RUIN_GRAVI_ANOMALIES|RUIN_CHUDO_ANOMALIES

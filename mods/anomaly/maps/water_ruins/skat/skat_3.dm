@@ -6,17 +6,17 @@
 	spawn_cost = 100000
 	ruin_tags = RUIN_CHUDO_ANOMALIES
 	apc_test_exempt_areas = list(
-		/area/map_template/skat_third_deck = NO_SCRUBBER|NO_VENT|NO_APC
+		/area/map_template/anomaly/skat_third_deck = NO_SCRUBBER|NO_VENT|NO_APC
 	)
 
-/area/map_template/skat_third_deck
-	name = "\improper Drowned ship underwater"
+/area/map_template/anomaly/skat_third_deck
+	name = "\improper SKAT third deck"
 	icon_state = "A"
 	turfs_airless = TRUE
 
 /obj/item/crab_egg
 	name = "blue crab egg"
-	desc = "Яичко"
+	desc = "Eggy egg."
 	icon = 'mods/ascent/icons/obj/items/egg.dmi'
 	icon_state = "egg_single"
 

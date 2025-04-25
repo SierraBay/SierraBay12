@@ -131,8 +131,6 @@ PROCESSING_SUBSYSTEM_DEF(anom)
 		anomaly_text += "<br><a href='byond://?src=\ref[src];show_anomaly_stats=1'>\[Показать подробную статистику\]</a>"
 		return anomaly_text
 
-/datum/controller/subsystem/processing/anom/proc/log_storyteller_activity(input_message)
-
 
 /datum/controller/subsystem/processing/anom/Topic(href, href_list)
 	..()
@@ -231,3 +229,27 @@ PROCESSING_SUBSYSTEM_DEF(anom)
 			to_chat(human, SPAN_NOTICE("Вы видите на экране [detector] сообщение: [message]"))
 			if(sound_list)
 				sound_to(human, sound(pick(sound_list), volume = 100))
+
+//Рассказчик сам найдёт в своих закромах рассказчика с этим Z уровнем
+/datum/controller/subsystem/processing/anom/proc/add_points_to_storyteller(input_z_level, points_ammout, points_type, source)
+	if(!points_type || !points_ammout)
+		CRASH("Контроллер получил пустые points_type или points_ammout при попытке добавить очков рассказчику")
+	if(!LAZYLEN(all_storytellers))
+		return //В игре пока нет рассказчиков
+	var/datum/planet_storyteller/picked_storyteller
+	if(input_z_level)
+		for(var/datum/planet_storyteller/picked in all_storytellers)
+			if(input_z_level in picked.my_z)
+				picked_storyteller = picked
+				break
+	else
+		picked_storyteller = pick(all_storytellers)
+	if(points_type == "evolution")
+		picked_storyteller.add_points(evolution = points_ammout)
+	if(points_type == "scam")
+		picked_storyteller.add_points(scam = points_ammout)
+	else if(points_type == "anomaly")
+		picked_storyteller.add_points(anomaly = points_ammout)
+	else if(points_type == "mob")
+		picked_storyteller.add_points(mob = points_ammout)
+	picked_storyteller.log_point_getting(points_ammout, points_type, source)

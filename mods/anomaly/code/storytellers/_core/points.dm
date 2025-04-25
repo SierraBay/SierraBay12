@@ -1,30 +1,4 @@
 /datum/planet_storyteller
-	var/list/points_generating_in_levels = list(
-		// impotent: медленное развитие, только обманные тактики
-		list(
-			level_name = "impotent",
-			evolution_points_generation = 0.1,
-			scam_points_generation = 4,
-			anomaly_points_generation = 0,
-			mob_points_generation = 0
-			),
-		// active: умеренная активность
-		list(
-			level_name = "active",
-			scam_points_generation = 10,
-			evolution_points_generation = 2,
-			anomaly_points_generation = 5,
-			mob_points_generation = 5
-			),
-		// angry: максимальная агрессия
-		list(
-			level_name = "angry",
-			evolution_points_generation = 0,
-			scam_points_generation = 50,
-			anomaly_points_generation = 50,
-			mob_points_generation = 25
-			)
-	)
 	/// Очки для перехода между стадиями
 	var/current_evolution_points = 0
 	/// Очки для размещения аномалий
@@ -43,15 +17,16 @@
 	calculate_points_generation_time()
 
 //ЭК сделало что-то за что можно и получить очки рассказчику
-/datum/planet_storyteller/proc/add_points(evolution_points, mob_points, anomaly_points, scam_points)
-	if(evolution_points)
-		current_evolution_points += evolution_points
-	if(mob_points)
-		current_mob_points += mob_points
-	if(anomaly_points)
-		current_anomaly_points += anomaly_points
-	if(scam_points)
-		current_scam_points += scam_points
+/datum/planet_storyteller/proc/add_points(evolution, mob, anomaly, scam, source)
+	if(evolution)
+		current_evolution_points += evolution
+		check_level_up()
+	if(mob)
+		current_mob_points += mob
+	if(anomaly)
+		current_anomaly_points += anomaly
+	if(scam)
+		current_scam_points += scam
 
 /datum/planet_storyteller/proc/can_storyteller_afford_ability(ability_type)
 	var/datum/storyteller_ability/ability_prototype = ability_type
@@ -81,41 +56,21 @@
 
 /// Генерирует очки в соответствии с текущим уровнем
 /datum/planet_storyteller/proc/generate_points()
-	var/level_data
-	for(var/list/level in points_generating_in_levels)
-		if(level[1] == current_level_name)
-			level_data = level
-			break
-
+	var/level_data = rage_levels[current_angry_level]
 	if(!level_data)
-		return
+		CRASH("Отсутствуют данные для текущего уровня [current_angry_level]")
 
-	current_evolution_points += level_data[2]
-	log_point_getting(level_data[2], "Эволюционные")
-	current_scam_points += level_data[3]
-	log_point_getting(level_data[3], "Обманные")
-	current_anomaly_points += level_data[4]
-	log_point_getting(level_data[4], "Аномальные")
-	current_mob_points += level_data[5]
-	log_point_getting(level_data[5], "Мобы")
+	// Генерация очков
+	current_evolution_points += level_data["evolution_points"]
+	log_point_getting(level_data["evolution_points"], "Эволюционные", "Генерация")
+
+	current_scam_points += level_data["scam_points"]
+	log_point_getting(level_data["scam_points"], "Обманные", "Генерация")
+
+	current_anomaly_points += level_data["anomaly_points"]
+	log_point_getting(level_data["anomaly_points"], "Аномальные", "Генерация")
+
+	current_mob_points += level_data["mob_points"]
+	log_point_getting(level_data["mob_points"], "Мобы", "Генерация")
 
 	check_level_up()
-
-/// Проверяет возможность повышения уровня
-/datum/planet_storyteller/proc/check_level_up()
-	if(current_angry_level >= LAZYLEN(rages_levels_changes_prices))
-		return
-
-	var/required_points = rages_levels_changes_prices[current_angry_level]
-	if(current_evolution_points >= required_points)
-		level_up()
-
-// Повышает уровень рассказчика
-/datum/planet_storyteller/proc/level_up()
-	current_angry_level++
-	// Обновляем имя текущего уровня
-	for(var/level_name in rages_levels)
-		if(rages_levels[level_name]["level"] == current_angry_level)
-			current_level_name = level_name
-			log_in_general("Режисёр получил повышение уровня. Текущий уровень - [current_level_name]")
-			break

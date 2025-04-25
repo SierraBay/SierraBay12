@@ -8,6 +8,7 @@
 		/datum/exoplanet_theme = 100
 		)
 	planetary_area = /area/exoplanet/water
+	storyteller_path = /datum/planet_storyteller/water_home
 	map_generators = list(/datum/random_map/automata/cave_system/mountains/water/deep_water, /datum/random_map/automata/cave_system/mountains/water, /datum/random_map/noise/exoplanet/titan_water)
 	surface_color = "#0d0844"
 	water_color = "#0d0844"

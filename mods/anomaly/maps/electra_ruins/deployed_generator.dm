@@ -6,11 +6,11 @@
 	spawn_cost = 1
 	ruin_tags = RUIN_ELECTRA_ANOMALIES
 	apc_test_exempt_areas = list(
-		/area/map_template/deployed_generator = NO_SCRUBBER|NO_VENT|NO_APC
+		/area/map_template/anomaly/deployed_generator = NO_SCRUBBER|NO_VENT|NO_APC
 	)
 
 
-/area/map_template/deployed_generator
+/area/map_template/anomaly/deployed_generator
 	name = "\improper Deployed science generator"
 	icon_state = "A"
 	turfs_airless = TRUE

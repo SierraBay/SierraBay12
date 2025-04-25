@@ -1,5 +1,5 @@
 /datum/planet_storyteller
-	var/action_delay = 5 MINUTES
+	var/action_delay = 3 MINUTES
 	var/next_possible_action
 	var/list/activity_levels = list(
 		list(
@@ -48,7 +48,7 @@
 		CRASH("level_data на 46-ой строке оказался null.")
 
 	calculate_action_time() //Для безопасности подсчитаем заранее
-	log_in_general("Рассказчик пытается что-то предпринять.")
+	log_in_general("В [time2text(world.realtime,"hh:mm:ss")] Рассказчик пытается что-то предпринять.")
 	//Теперь выбираем тип активности которую попытается провернуть
 	var/selected_action = create_possible_actions_and_choose(level_data)
 	var/success = FALSE
@@ -59,18 +59,18 @@
 	// Выполняем выбранное действие
 	switch(selected_action)
 		if("scam")
-			log_activity("Рассказчик пытается применить обманную тактику")
+			log_activity("В [time2text(world.realtime,"hh:mm:ss")] Рассказчик пытается применить обманную тактику")
 			success = execute_ability(scam_abilities, result_turf)
 		if("anomaly")
-			log_activity("Рассказчик пытается применить аномальную способность")
+			log_activity("В [time2text(world.realtime,"hh:mm:ss")] Рассказчик пытается применить аномальную способность")
 			success = execute_ability(anomaly_activities, result_turf)
 		if("mob")
-			log_activity("Рассказчик пытается применить способность мобов")
+			log_activity("В [time2text(world.realtime,"hh:mm:ss")] Рассказчик пытается применить способность мобов")
 			success = execute_ability(mob_abilities, result_turf)
 	if(success)
-		log_in_general("Рассказчик выполнил действие: [selected_action]")
+		log_in_general("В [time2text(world.realtime,"hh:mm:ss")] Рассказчик выполнил действие: [selected_action]")
 	else
-		log_in_general("Рассказчик не смог выполнить действие: [selected_action]")
+		log_in_general("В [time2text(world.realtime,"hh:mm:ss")] Рассказчик не смог выполнить действие: [selected_action]")
 	calculate_action_time()
 
 //Исходя из текущего состояния рассказчика, собирает все способности которые может выполнить рассказчик
@@ -102,7 +102,7 @@
 			weighted_abilities[ability_type] = initial(ability_prototype.proc_chance)
 
 	if(!LAZYLEN(weighted_abilities))
-		log_in_general("Рассказчик не смог себе позволить ни одну способность.")
+		log_in_general("В [time2text(world.realtime,"hh:mm:ss")] Рассказчик не смог себе позволить ни одну способность.")
 		return FALSE
 
 	// Выбираем и выполняем способность за один шаг
@@ -111,10 +111,10 @@
 	var/success = spawned_ability.execute(input_turf)
 	if(success)
 		spend_points_for_ability(picked_ability_type)
-		log_in_general("Рассказчик выполнил способность: [spawned_ability.ability_name]")
+		log_in_general("В [time2text(world.realtime,"hh:mm:ss")] Рассказчик выполнил способность: [spawned_ability.ability_name]")
 
 	else
-		log_in_general("Рассказчик не смог выполнить способность: [spawned_ability.ability_name]")
+		log_in_general("В [time2text(world.realtime,"hh:mm:ss")] Рассказчик не смог выполнить способность: [spawned_ability.ability_name]")
 
 	qdel(spawned_ability)
 

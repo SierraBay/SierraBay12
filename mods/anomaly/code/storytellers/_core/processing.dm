@@ -39,11 +39,11 @@
 //Сторителлер засыпает
 /datum/planet_storyteller/proc/go_sleep()
 	is_active = FALSE
-	log_in_general("Рассказчик больше никого не обнаружил на планете и заснул.")
+	log_in_general("В [time2text(world.realtime,"hh:mm:ss")] Рассказчик больше никого не обнаружил на планете и заснул.")
 
 /datum/planet_storyteller/proc/wake_up()
 	is_active = TRUE
-	log_in_general("Рассказчик Кого-то обнаружил на своём Z уровне и пробудился")
+	log_in_general("В [time2text(world.realtime,"hh:mm:ss")] Рассказчик кого-то обнаружил на своём Z уровне и пробудился")
 	calculate_points_generation_time()
 	calculate_action_time()
 
