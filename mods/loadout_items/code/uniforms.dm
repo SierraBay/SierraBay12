@@ -636,7 +636,7 @@
 		SPECIES_UNATHI = 'mods/loadout_items/icons/unathi/onmob_under_unathi.dmi'
 	)
 
-/obj/item/clothing/under/blue_skirt
+/obj/item/clothing/under/school_skirt
 	name = "blue skirt"
 	desc = "A school-like blue skirt with golf socks."
 	icon = 'mods/loadout_items/icons/obj_under.dmi'
@@ -644,7 +644,7 @@
 	icon_state = "blue_skirt"
 	item_state = "blue_skirt"
 
-/obj/item/clothing/under/darkcyan_skirt
+/obj/item/clothing/under/school_skirt/darkcyan
 	name = "dark cyan skirt"
 	desc = "A school-like black skirt with bright cyan stripes."
 	icon = 'mods/loadout_items/icons/obj_under.dmi'

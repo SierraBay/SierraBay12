@@ -221,15 +221,15 @@
 	dresses["black Nova-Yorvik noble dress"] = /obj/item/clothing/under/dominia/dress/noble/black/zhao
 	gear_tweaks += new/datum/gear_tweak/path(dresses)
 
-/datum/gear/uniform/blue_skirt
+/datum/gear/uniform/school_skirt
 	display_name = "school-like dress selection"
-	path = /obj/item/clothing/under/blue_skirt
+	path = /obj/item/clothing/under/school_skirt
 
-/datum/gear/uniform/blue_skirt/New()
+/datum/gear/uniform/school_skirt/New()
 	..()
 	var/dresses = list()
-	dresses["blue skirt"] = /obj/item/clothing/under/blue_skirt
-	dresses["dark cyan skirt"] = /obj/item/clothing/under/darkcyan_skirt
+	dresses["blue skirt"] = /obj/item/clothing/under/school_skirt
+	dresses["dark cyan skirt"] = /obj/item/clothing/under/school_skirt/darkcyan
 	gear_tweaks += new/datum/gear_tweak/path(dresses)
 
 /datum/gear/uniform/annosuit
