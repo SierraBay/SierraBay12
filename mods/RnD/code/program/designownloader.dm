@@ -52,7 +52,8 @@
 		return
 
 	ui_header = "downloader_running.gif"
-
+	file_info ="[design.file.filename].[design.file.filetype]"
+	server = "Fabricator Design Repository"
 	generate_network_log("Began downloading file [file_info] from [server].")
 	downloaded_file = design_file.clone()
 
