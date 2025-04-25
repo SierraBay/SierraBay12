@@ -163,7 +163,7 @@
 	item_state = "black_kimono"
 
 // First responder jacket
-	
+
 /obj/item/clothing/suit/storage/toggle/fr_jacket/highvis
 	name = "first responder jacket"
 	icon = 'mods/loadout_items/icons/obj_suit.dmi'
@@ -172,7 +172,7 @@
 /obj/item/clothing/suit/storage/toggle/fr_jacket/highvis/New()
 	. = ..()
 	sprite_sheets[SPECIES_UNATHI] = 'mods/loadout_items/icons/unathi/onmob_suit_unathi.dmi'
-	
+
 // Unathi garments
 
 /obj/item/clothing/suit/storage/security
@@ -200,7 +200,7 @@
 	)
 	siemens_coefficient = 0.9
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
-	
+
 //Aurora stuff
 /obj/item/clothing/suit/storage/dominia
 	name = "Avalon greatcoat"
@@ -251,3 +251,33 @@
 /obj/item/clothing/suit/storage/dominia/consular/coat/red
 	icon_state = "dominia_consular_coat_red"
 	item_state = "dominia_consular_coat_red"
+
+// failu's jackets
+
+/obj/item/clothing/suit/storage/toggle/cyan_jacket
+	name = "stylish cyan jacket"
+	desc = "Cool black jacket with two cyan clasps."
+	icon = 'mods/loadout_items/icons/obj_suit.dmi'
+	item_icons = list(slot_wear_suit_str = 'mods/loadout_items/icons/onmob_suit.dmi')
+	icon_state = "cyan_jacket"
+
+/obj/item/clothing/suit/storage/toggle/pink_jacket
+	name = "black n pink jacket"
+	desc = "A long black jacket with hot pink zipper. Girls edition!"
+	icon = 'mods/loadout_items/icons/obj_suit.dmi'
+	item_icons = list(slot_wear_suit_str = 'mods/loadout_items/icons/onmob_suit.dmi')
+	icon_state = "pink_jacket"
+
+/obj/item/clothing/suit/storage/veryshort_jacket
+	name = "short orange jacket"
+	desc = "This is utterly short girlish jacket in bright orange color."
+	icon = 'mods/loadout_items/icons/obj_suit.dmi'
+	item_icons = list(slot_wear_suit_str = 'mods/loadout_items/icons/onmob_suit.dmi')
+	icon_state = "veryshort_jacket_orange"
+
+/obj/item/clothing/suit/storage/veryshort_jacket/green
+	name = "short turquoise jacket"
+	desc = "This is utterly short girlish jacket in bright turquoise color."
+	icon = 'mods/loadout_items/icons/obj_suit.dmi'
+	item_icons = list(slot_wear_suit_str = 'mods/loadout_items/icons/onmob_suit.dmi')
+	icon_state = "veryshort_jacket_green"
