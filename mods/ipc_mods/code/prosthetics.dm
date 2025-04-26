@@ -1,8 +1,9 @@
 /datum/robolimb
 	var/list/armor
-	var/siemens_coefficient
+	var/siemens_coefficient		//чем больше, тем хуже
 	var/speed_modifier = 0
 	var/coolingefficiency = 0.5 // это база
+	var/expensive = FALSE
 
 	armor = list(
 		melee = ARMOR_MELEE_MINOR,
@@ -20,6 +21,7 @@
 
 /obj/item/organ/external
 	var/coolingefficiency
+	var/expensive = FALSE
 
 /mob/living/carbon/human/get_armors_by_zone(obj/item/organ/external/def_zone, damage_type, damage_flags)
 	if(!def_zone)
@@ -81,6 +83,7 @@
 			siemens_coefficient = R.siemens_coefficient
 			slowdown = R.speed_modifier
 			coolingefficiency = R.coolingefficiency
+			expensive = R.expensive
 			set_extension(src, /datum/extension/armor/prosthesis, armor)
 
 	for(var/obj/item/organ/external/T in children)
@@ -125,7 +128,7 @@
 		bio = ARMOR_BIO_SHIELDED,
 		rad = ARMOR_RAD_RESISTANT
 	)
-	speed_modifier = - 0.1
+	speed_modifier = - 1
 	coolingefficiency = 1.5
 
 /datum/robolimb/bishop/rook
@@ -163,7 +166,8 @@
 		bio = ARMOR_BIO_SHIELDED,
 		rad = ARMOR_RAD_RESISTANT
 	)
-	speed_modifier = 0.1
+	expensive = TRUE
+	speed_modifier = 1
 	coolingefficiency = 0.8
 
 /datum/robolimb/hephaestus/alt
