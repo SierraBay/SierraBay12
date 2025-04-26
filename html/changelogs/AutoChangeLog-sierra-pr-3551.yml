@@ -1,0 +1,4 @@
+author: Guared1365
+changes:
+  - {maptweak: Убирает случайно поставленный при изменении карты контроллер шлюзов.}
+delete-after: true
