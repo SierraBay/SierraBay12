@@ -84,7 +84,6 @@
 			local_y = rand(min_y_size, max_y_size)
 	if((!parts_x_width || !parts_y_width) && (!max_x_size || !max_y_size))
 		CRASH("AHTUNG RAZRAB DAUN: Ядро размещения аномалий попыталось разместить мультитайловую аномалию без нужных для этого значений.")
-	var/turf/temp_turf = get_turf(src)
 	for(var/turf/T in block_by_coordinates(input_turf = get_turf(src), x = local_x, y = local_y, move_to_center = TRUE))
 		var/obj/anomaly/part/spawned_anomaly_part = new helper_part_path(T)
 		LAZYADD(list_of_parts, spawned_anomaly_part)
