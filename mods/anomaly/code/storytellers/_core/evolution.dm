@@ -63,7 +63,7 @@
 	var/points = current_evolution_points
 
 	// Проверяем последовательно все уровни выше текущего
-	for(var/i = current_angry_level + 1 to rage_levels.len)
+	for(var/i = current_angry_level + 1 to LAZYLEN(rage_levels))
 		var/required_points = rage_levels[i]["min_points"]
 		if(points >= required_points)
 			max_level = i
