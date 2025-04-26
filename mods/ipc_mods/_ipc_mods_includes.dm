@@ -12,4 +12,5 @@
 #include "code/machine_functions.dm"
 #include "code/pictures.dm"
 #include "code/coolerbelt.dm"
+#include "code/prosthetics.dm"
 #endif
