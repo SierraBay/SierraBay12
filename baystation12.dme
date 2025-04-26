@@ -283,6 +283,7 @@
 #include "code\datums\mutable_appearance.dm"
 #include "code\datums\progressbar.dm"
 #include "code\datums\recipe.dm"
+#include "code\datums\rng.dm"
 #include "code\datums\ruins.dm"
 #include "code\datums\security_state.dm"
 #include "code\datums\shackle_law_sets.dm"
