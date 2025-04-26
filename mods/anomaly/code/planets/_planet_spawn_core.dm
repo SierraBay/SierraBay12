@@ -1,3 +1,19 @@
+//Данный код отвечает за размещение аномалий по всей планете.
+/obj/overmap/visitable/sector/exoplanet
+	///Спавнятся ли на подобном типе планет аномалии
+	var/can_spawn_anomalies = FALSE
+	var/list/anomalies_types = list(
+		)
+	///Минимальное количество заспавненных артов
+	var/min_artefacts_ammount = 4
+	///Максимальное количество заспавненных артов
+	var/max_artefacts_ammount = 8
+
+	var/min_anomalies_ammount = 40
+	var/max_anomalies_ammount = 100
+	var/storyteller_path
+	var/datum/planet_storyteller/storyteller
+
 /obj/overmap/visitable/sector/exoplanet/build_level()
 	generate_atmosphere()
 	for (var/datum/exoplanet_theme/T in themes)
@@ -24,6 +40,10 @@
 	if(LAZYLEN(big_artefacts_types))
 		generate_big_anomaly_artefacts()
 	planetary_area.deploy_new_weather_manager(weather_manager_type, deploy_weather = TRUE)
+	/* Ждать окончания плейтестов
+	if(storyteller_path)
+		deploy_storyteller()
+	*/
 	//Если у планеты есть погода - спавним погоду
 	generate_landing(2)
 	update_biome()

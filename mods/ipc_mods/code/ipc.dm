@@ -2,6 +2,53 @@
 	var/obj/item/organ/internal/shackles/shackles_module = null
 	var/shackle_set = FALSE
 
+
+/obj/item/organ/internal/posibrain/attack_self(mob/user)
+	if (!user.IsAdvancedToolUser())
+		return
+	if (user.skill_check(SKILL_DEVICES, SKILL_TRAINED))
+		if (status & ORGAN_BROKEN)
+			to_chat(user, SPAN_WARNING("\The [src] is ruined; it will never turn on again."))
+			return
+		if (damage)
+			to_chat(user, SPAN_WARNING("\The [src] is damaged and requires repair first."))
+			return
+		if (searching)
+			visible_message("\The [user] flicks the activation switch on \the [src]. The lights go dark.", range = 3)
+			cancel_search()
+			return
+		start_search(user)
+	else
+		if ((status & ORGAN_BROKEN)|| damage || searching)
+			to_chat(user, SPAN_WARNING("\The [src] doesn't respond to your pokes and prods."))
+			return
+		start_search(user)
+
+/obj/item/organ/internal/posibrain/start_search(mob/user)
+	if (brainmob)
+		return
+	if (user)
+		if ((world.time - last_search) < (30 SECONDS))
+			to_chat(user, SPAN_WARNING("\The [src] doesn't react; wait a few seconds before trying again."))
+			return
+		last_search = world.time
+		if (brainmob && brainmob.key)
+			var/murder = alert(user, "\The [src] already has a mind! Are you sure? This is probably murder.", "Commit Robocide?", "Yes", "No")
+			if (murder == "No")
+				return
+		visible_message("\The [user] flicks the activation switch on \the [src].", range = 3)
+	var/has_mind = brainmob && brainmob.key && brainmob.mind
+	var/protected = has_mind && brainmob.mind.special_role
+	if (has_mind)
+		var/actor = user ? "\The [user]" : "Your brain"
+		var/sneaky = protected ? "However, you are beyond such things." : "This might be the end!"
+		to_chat(brainmob, SPAN_WARNING("[actor] is trying to overwrite you! [sneaky]"))
+	if (!protected)
+		var/datum/ghosttrap/T = get_ghost_trap("positronic brain")
+		T.request_player(brainmob, "Someone is requesting a personality for a positronic brain.", 60 SECONDS)
+	searching = addtimer(new Callback(src, PROC_REF(cancel_search)), 60 SECONDS, TIMER_UNIQUE | TIMER_STOPPABLE)
+	icon_state = "posibrain-searching"
+
 /obj/item/organ/internal/posibrain/ipc
 	name = "Positronic brain"
 	desc = "A cube of shining metal, four inches to a side and covered in shallow grooves."

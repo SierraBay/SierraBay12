@@ -10,3 +10,4 @@
 #include "artefact_svetlyak.dm"
 #include "artefact_zjar.dm"
 #include "artefact_zjemchug.dm"
+#include "_artefact_signals.dm"

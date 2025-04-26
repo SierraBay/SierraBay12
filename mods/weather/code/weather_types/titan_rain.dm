@@ -17,13 +17,18 @@
 	var/remain_power_ups = 4
 	var/time_before_cunami = 0
 	can_blowout = FALSE
+	var/have_cunami_ang_changes = TRUE
 	var/counting_started = FALSE
+	//Предполагается что на тиане есть подземные уровни, нам нужно учесть это
+	var/list/seconds_z_list = list()
 
 /datum/weather_manager/titan_rain/no_cunami
-	can_blowout = FALSE
+	have_cunami_ang_changes = FALSE
 
 //Каждые 15 минут будет усиление погоды
 /datum/weather_manager/titan_rain/change_stage(force_state, monitor = FALSE, sound = FALSE)
+	if(!have_cunami_ang_changes || activity_blocked_by_safe_protocol || !check_change_safety())
+		return
 	calculate_change_time()
 	if(!counting_started)
 		if(try_start_count())
@@ -48,12 +53,18 @@
 //Игра показывает игрокам сколько осталось времени
 /datum/weather_manager/titan_rain/proc/message_players_remaining_time(remain_time)
 	var/list/ticks_list = list('mods/weather/sounds/TICK_1.ogg', 'mods/weather/sounds/TICK_2.ogg', 'mods/weather/sounds/TICK_3.ogg')
+	var/list/list_effected_humans = list()
 	for(var/mob/living/carbon/human/picked_human in GLOB.living_players)
-		if(get_z(picked_human) == get_z(pick(connected_weather_turfs))) //Нужный нам Z уровень
-			var/obj/item/clothing/gloves/anomaly_detector/detector = locate(/obj/item/clothing/gloves/anomaly_detector) in picked_human
-			if(detector && detector.digital && detector.is_processing)
-				sound_to(picked_human, sound(pick(ticks_list), volume = 100))
-				picked_human.client.start_counting_back_on_screen(time = remain_time, text_color = "#4d4545", delete_after_time = 5 SECONDS)
+		var/temp_z = get_z(picked_human)
+		if(temp_z in my_z) //Нужный нам Z уровень
+			LAZYADD(list_effected_humans, picked_human)
+		else if(temp_z in seconds_z_list)
+			LAZYADD(list_effected_humans, picked_human)
+	for(var/mob/living/carbon/human/human in list_effected_humans)
+		var/obj/item/clothing/gloves/anomaly_detector/detector = locate(/obj/item/clothing/gloves/anomaly_detector) in human
+		if(detector && detector.digital && detector.is_processing)
+			sound_to(human, sound(pick(ticks_list), volume = 100))
+			human.client.start_counting_back_on_screen(time = remain_time, text_color = "#4d4545", delete_after_time = 5 SECONDS)
 
 /datum/weather_manager/titan_rain/proc/message_abount_started_counting()
 	report_progress("DEBUG ANOM: Планета Титан обнаружила на своей поверхности игроков и начала отсчёт, у игроков осталось [remain_power_ups * 15] минут")
@@ -62,7 +73,10 @@
 
 /datum/weather_manager/titan_rain/proc/try_start_count()
 	for(var/mob/living/carbon/human/picked_human in GLOB.living_players)
-		if(get_z(picked_human) == get_z(pick(connected_weather_turfs)))
+		var/temp_z = get_z(picked_human)
+		if(temp_z in my_z)
+			return TRUE
+		if(temp_z in seconds_z_list)
 			return TRUE
 
 /datum/weather_manager/titan_rain/proc/temp_rain(time = 5 MINUTES)
@@ -90,18 +104,24 @@
 			if(water.deep_status != MAX_DEEP)
 				SSweather.add_to_water_queue(water, "up") // Добавляем в очередь на углубление
 
-/datum/weather_manager/titan_rain/proc/weak_all_weater()
+/datum/weather_manager/titan_rain/proc/weak_all_water()
 	for(var/turf/T in get_area_turfs(my_area))
 		if(istitanwater(T))
 			var/turf/simulated/floor/exoplanet/titan_water/water = T
 			SSweather.add_to_water_queue(water, "easiest") // Добавляем в очередь на макс глубины
 
 /datum/weather_manager/titan_rain/proc/start_cunami()
-	weak_all_weater()
+	if(activity_blocked_by_safe_protocol || !check_cunami_safety())
+		return
+	have_cunami_ang_changes = FALSE
+	weak_all_water()
 	time_before_cunami = rand(150 SECONDS, 300 SECONDS)
 	report_progress("DEBUG ANOM: Начало цунами, оставшееся время - [time_before_cunami/10] Секунд")
 	for(var/mob/living/carbon/human/picked_human in GLOB.living_players)
-		if(get_z(picked_human) == get_z(pick(connected_weather_turfs)))
+		var/temp_z = get_z(picked_human)
+		if(temp_z in my_z)
+			picked_human.client.start_counting_back_on_screen(time_before_cunami)
+		else if(temp_z in seconds_z_list)
 			picked_human.client.start_counting_back_on_screen(time_before_cunami)
 	sleep(time_before_cunami)
 	var/list/turfs = Z_ALL_TURFS(get_z(pick(connected_weather_turfs)))
@@ -121,6 +141,61 @@
 		current_x++
 	clean_anomalies_on_planet()
 	report_progress("DEBUG ANOM: планета [my_area] уничтожена Цунами.")
+	delete_manager()
+
+/datum/weather_manager/titan_rain/proc/check_cunami_safety()
+	if(warnings_ammout == critical_warnings_ammout)
+		activity_blocked_by_safe_protocol = TRUE
+		report_progress("WARNING ERROR: Критическая ситуация подтверждена, предпринимаем действия.")
+		delete_manager()
+		QDEL_NULL(src) //Если delete_manager не сработает
+		CRASH("WARNING ERROR: Критическая ситуация подтверждена, клапон безопасности сорван.")
+	if(!have_cunami_ang_changes)
+		warnings_ammout++
+		report_progress("WARNING ANOM: Цунами уже вызывалось или вовсе не может быть вызвано у данной погоды!")
+		return FALSE
+	return TRUE
+
+/datum/weather_manager/titan_rain/calculate_affected_z()
+	LAZYADD(my_z, get_z(pick(my_area.contents)))
+	//теперь соберём все ландмарки
+	collect_landmarks()
+
+/datum/weather_manager/titan_rain/proc/collect_landmarks()
+	seconds_z_list = list()
+	var/list/processed_landmarks = list() // Чтобы не зациклиться
+	// Начинаем с ландмарк, находящихся на my_z
+	for(var/obj/landmark/teleport_to_z_level/landmark in teleport_landmarks_list)
+		if(get_z(landmark) in my_z)
+			if(!(landmark in processed_landmarks))
+				process_landmark_recursively(landmark, processed_landmarks)
+
+	// Удаляем дубликаты (если uniqueList() есть)
+	seconds_z_list = uniquelist(seconds_z_list)
+	LAZYREMOVE(seconds_z_list, my_z)
+
+/datum/weather_manager/titan_rain/proc/process_landmark_recursively(obj/landmark/teleport_to_z_level/landmark, list/processed_landmarks, depth = 5)
+	// Если уже обрабатывали или достигли максимальной глубины — пропускаем
+	if(landmark in processed_landmarks || depth <= 0)
+		return
+
+	processed_landmarks += landmark
+	if(!landmark.connected_landmark && !landmark.spawn_started)
+		landmark.deploy_map()
+	var/current_z = get_z(landmark)
+	var/target_z = get_z(landmark.connected_landmark)
+
+	// Добавляем оба Z-уровня (текущий и связанный)
+	seconds_z_list |= current_z
+	seconds_z_list |= target_z
+
+	// Рекурсивно обрабатываем связанную ландмарку с уменьшенной глубиной
+	process_landmark_recursively(landmark.connected_landmark, processed_landmarks, depth - 1)
+
+	// Ищем все ландмарки на целевом Z-уровне (для матрёшки) с уменьшенной глубиной
+	for(var/obj/landmark/teleport_to_z_level/adjacent_landmark in teleport_landmarks_list)
+		if(get_z(adjacent_landmark) == target_z && !(adjacent_landmark in processed_landmarks))
+			process_landmark_recursively(adjacent_landmark, processed_landmarks, depth - 1)
 
 /obj/weather/rain
 	recommended_weather_manager = /datum/weather_manager/titan_rain
@@ -134,3 +209,9 @@
 /turf/unsimulated/wall/water_wall
 	name = "VADA"
 	color = COLOR_BLUE
+
+/turf/unsimulated/wall/water_wall/Enter(atom/movable/mover, atom/forget)
+	. = ..()
+	if(isghost(mover) || IsAbstract(mover) || isobserver(mover))
+		return
+	qdel(mover)

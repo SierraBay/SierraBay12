@@ -1,3 +1,8 @@
+///Вызывается при изменении
+/turf/simulated/floor/exoplanet/titan_water/proc/update_filters_for_contents()
+	for(var/atom/movable/movable_atom in contents)
+		movable_atom.update_water_filter(mask_icon_state)
+
 /atom/movable/proc/update_water_filter(mask_icon_state)
 	return
 
