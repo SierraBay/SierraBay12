@@ -12,7 +12,6 @@
 		return FALSE
 	connected_weather_manager = new input_weather_manager_type(src)
 	connected_weather_manager.my_area = src
-	connected_weather_manager.my_z = get_z(pick(get_area_turfs(src))) //у зоны нет Z координаты или я даун
 	if(deploy_weather)
 		for(var/turf/T in contents)
 			if(locate(/obj/landmark/no_weather_here, T)) //Здесь стоит запрет на размещение погоды от марки
