@@ -13,18 +13,15 @@ var/global/list/teleport_landmarks_list = list()
 
 /obj/landmark/teleport_to_z_level/New()
 	. = ..()
-	deploy_map()
 	LAZYADD(teleport_landmarks_list, src)
 
 
 /obj/landmark/teleport_to_z_level/proc/deploy_map()
-	set waitfor = FALSE
 	if(map_path && !spawn_started && !is_exit)
 		spawn_started = TRUE
 		spawned_template = new map_path()
 		var/turf/spawned_turf = spawned_template.load_new_z()
-		var/area/map_area
-		map_area = get_area(spawned_turf)
+		var/area/map_area = get_area(spawned_turf)
 		for(var/turf/T in map_area)
 			if(T.air)
 				qdel(T.air)
@@ -34,11 +31,14 @@ var/global/list/teleport_landmarks_list = list()
 			var/good_gas = list(GAS_OXYGEN = MOLES_O2STANDARD, GAS_NITROGEN = MOLES_N2STANDARD)
 			atmos.gas = good_gas
 			T.air = atmos
-		for(var/obj/landmark/teleport_to_z_level/landmark in landmarks_list)
-			if(map_area == get_area(landmark))
-				if(landmark.is_exit)
-					if(teleport_tag == landmark.teleport_tag)
-						connect_teleports_landmarks(landmark)
+		update_landmarks_connection(map_area)
+
+/obj/landmark/teleport_to_z_level/proc/update_landmarks_connection(area/map_area)
+	for(var/obj/landmark/teleport_to_z_level/landmark in landmarks_list)
+		if(map_area == get_area(landmark))
+			if(landmark.is_exit)
+				if(teleport_tag == landmark.teleport_tag)
+					connect_teleports_landmarks(landmark)
 
 ///Планеты по типу титана требуют к себе присоединять свои карты для корректной работы. Сделаем же это
 /obj/landmark/teleport_to_z_level/proc/connect_to_manager()

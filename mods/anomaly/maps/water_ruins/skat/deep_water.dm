@@ -42,9 +42,9 @@
 			LAZYADD(water_victims, human)
 			START_PROCESSING(SSanom, src)
 
-/obj/titan_fluid/Process()
+/obj/titan_fluid/Initialize()
 	. = ..()
-	
+	my_turf = get_turf(src)
 
 /obj/titan_fluid/Uncrossed(O)
 	. = ..()

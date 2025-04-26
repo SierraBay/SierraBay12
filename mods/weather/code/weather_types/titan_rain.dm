@@ -174,12 +174,14 @@
 	seconds_z_list = uniquelist(seconds_z_list)
 	LAZYREMOVE(seconds_z_list, my_z)
 
-/datum/weather_manager/titan_rain/proc/process_landmark_recursively(obj/landmark/teleport_to_z_level/landmark, list/processed_landmarks)
-	// Если уже обрабатывали — пропускаем
-	if(landmark in processed_landmarks)
+/datum/weather_manager/titan_rain/proc/process_landmark_recursively(obj/landmark/teleport_to_z_level/landmark, list/processed_landmarks, depth = 5)
+	// Если уже обрабатывали или достигли максимальной глубины — пропускаем
+	if(landmark in processed_landmarks || depth <= 0)
 		return
 
 	processed_landmarks += landmark
+	if(!landmark.connected_landmark && !landmark.spawn_started)
+		landmark.deploy_map()
 	var/current_z = get_z(landmark)
 	var/target_z = get_z(landmark.connected_landmark)
 
@@ -187,13 +189,13 @@
 	seconds_z_list |= current_z
 	seconds_z_list |= target_z
 
-	// Рекурсивно обрабатываем связанную ландмарку
-	process_landmark_recursively(landmark.connected_landmark, processed_landmarks)
+	// Рекурсивно обрабатываем связанную ландмарку с уменьшенной глубиной
+	process_landmark_recursively(landmark.connected_landmark, processed_landmarks, depth - 1)
 
-	// Ищем все ландмарки на целевом Z-уровне (для матрёшки)
+	// Ищем все ландмарки на целевом Z-уровне (для матрёшки) с уменьшенной глубиной
 	for(var/obj/landmark/teleport_to_z_level/adjacent_landmark in teleport_landmarks_list)
 		if(get_z(adjacent_landmark) == target_z && !(adjacent_landmark in processed_landmarks))
-			process_landmark_recursively(adjacent_landmark, processed_landmarks)
+			process_landmark_recursively(adjacent_landmark, processed_landmarks, depth - 1)
 
 /obj/weather/rain
 	recommended_weather_manager = /datum/weather_manager/titan_rain

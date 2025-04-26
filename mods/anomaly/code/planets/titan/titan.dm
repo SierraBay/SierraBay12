@@ -31,9 +31,9 @@
 		/obj/anomaly/vspishka = 3
 		)
 	///Минимальное количество заспавненных артов
-	min_artefacts_ammount = 1
+	min_artefacts_ammount = 2
 	///Максимальное количество заспавненных артов
-	max_artefacts_ammount = 2
+	max_artefacts_ammount = 4
 
 	min_anomalies_ammount = 500
 	max_anomalies_ammount = 700
