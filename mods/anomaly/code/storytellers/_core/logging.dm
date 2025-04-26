@@ -12,26 +12,32 @@
 	var/text = "В [time2text(world.realtime,"hh:mm:ss")] Получено [point_ammout] очков класса [point_type], причина: [source]"
 	LAZYADD(points_logs, text)
 	if(DEBUG_MODE)
-		report_progress(text)
+		for(var/ckey in SSanom.debug_storyteller_listeners)
+			to_chat(ckey, SPAN_WARNING(text))
+
 
 
 /datum/planet_storyteller/proc/log_point_spend(ability_name, point_ammout, point_type)
 	var/text = "В [time2text(world.realtime,"hh:mm:ss")] рассказчик затратил [point_ammout] очков типа:[point_type] на применение способности: [ability_name]. "
 	LAZYADD(points_logs, text)
 	if(DEBUG_MODE)
-		report_progress(text)
+		for(var/ckey in SSanom.debug_storyteller_listeners)
+			to_chat(ckey, SPAN_WARNING(text))
 
 /datum/planet_storyteller/proc/log_in_general(input_log)
 	LAZYADD(general_logs, input_log)
 	if(DEBUG_MODE)
-		report_progress(input_log)
+		for(var/ckey in SSanom.debug_storyteller_listeners)
+			to_chat(ckey, SPAN_WARNING(input_log))
 
 /datum/planet_storyteller/proc/log_problem(input_log)
 	LAZYADD(problems_logs, input_log)
 	if(DEBUG_MODE)
-		report_progress(input_log)
+		for(var/ckey in SSanom.debug_storyteller_listeners)
+			to_chat(ckey, SPAN_WARNING(input_log))
 
 /datum/planet_storyteller/proc/log_activity(input_log)
 	LAZYADD(activiti_logs, input_log)
 	if(DEBUG_MODE)
-		report_progress(input_log)
+		for(var/ckey in SSanom.debug_storyteller_listeners)
+			to_chat(ckey, SPAN_WARNING(input_log))

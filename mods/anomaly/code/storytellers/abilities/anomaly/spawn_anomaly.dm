@@ -14,6 +14,10 @@
 	for(var/turf/choosed_turf in RANGE_TURFS(spawning_center, spawning_range))
 		if(!TurfBlocked(choosed_turf) && !TurfBlockedByAnomaly(choosed_turf))
 			LAZYADD(turfs_for_spawn, choosed_turf)
+	for(var/mob/living/carbon/human/human in GLOB.living_players)
+		var/turf/temp_turf = get_turf(human)
+		if(temp_turf in turfs_for_spawn)
+			LAZYREMOVE(turfs_for_spawn, temp_turf)
 	generate_anomalies_in_turfs(
 		anomalies_types = possible_anomalies,
 		all_turfs_for_spawn = turfs_for_spawn,

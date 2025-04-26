@@ -5,6 +5,7 @@
 #include "_core\processing.dm"
 #include "_core\types.dm"
 #include "_core\spawn_and_delete.dm"
+#include "_core\admin.dm"
 #include "_core\victim.dm"
 #include "_core\evolution.dm"
 //Его способности

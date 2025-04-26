@@ -61,3 +61,38 @@
 	storyteller.next_possible_action = 1
 	storyteller.current_mob_points = 500
 	storyteller.check_action()
+
+
+/datum/planet_storyteller/electra_home/anom_test
+	activity_levels = list(
+		list(
+			name = "impotent",
+			scam_chance = 0,
+			anomaly_chance = 100,
+			mob_chance = 0,
+		),
+		list(
+			name = "active",
+			scam_chance = 0,
+			anomaly_chance = 100,
+			mob_chance = 0,
+		),
+		list(
+			name = "angry",
+			scam_chance = 0,
+			anomaly_chance = 100,
+			mob_chance = 0,
+		)
+	)
+
+
+/obj/deploy_storyteller_here/anomaly
+	storyteller_path = /datum/planet_storyteller/electra_home/anom_test
+
+/obj/deploy_storyteller_here/anomaly/New(loc, ...)
+	. = ..()
+	storyteller.current_evolution_points = 500
+	storyteller.check_level_up()
+	storyteller.next_possible_action = 1
+	storyteller.current_anomaly_points = 500
+	storyteller.check_action()

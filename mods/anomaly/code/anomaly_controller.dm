@@ -63,6 +63,8 @@ PROCESSING_SUBSYSTEM_DEF(anom)
 
 	//[ПРОЧЕЕ]
 	var/list/detectors = list()
+	//Сикеи что будут получать сообщения от сторителлера о своём состоянии
+	var/list/debug_storyteller_listeners = list()
 
 /datum/controller/subsystem/processing/anom/UpdateStat(time)
 	if (PreventUpdateStat(time))

@@ -429,9 +429,6 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
 /area/map_template/anomaly/bunker)
-"NL" = (
-/obj/floor_decal/snow,
-/turf/simulated/floor/holofloor/tiled)
 "OQ" = (
 /obj/structure/table/steel_reinforced,
 /obj/decal/cleanable/dirt,
@@ -1339,7 +1336,7 @@ vi
 AB
 WQ
 ZL
-NL
+Yv
 ZL
 Yv
 Yv
@@ -1381,9 +1378,9 @@ WQ
 qL
 zx
 WQ
-NL
-NL
-NL
+Yv
+Yv
+Yv
 cg
 Lx
 AB
