@@ -47,7 +47,6 @@
 /obj/structure/rubble/house,
 /obj/random/trash,
 /obj/item/stack/material/rods,
-/obj/floor_decal/snow,
 /turf/simulated/floor/holofloor/tiled,
 /area/template_noop)
 "eb" = (
@@ -64,7 +63,6 @@
 /area/map_template/anomaly/bunker)
 "fn" = (
 /obj/machinery/vending/tool,
-/obj/floor_decal/snow,
 /turf/simulated/floor/holofloor/tiled,
 /area/map_template/anomaly/bunker)
 "fr" = (
@@ -114,7 +112,6 @@
 /area/map_template/anomaly/bunker)
 "lN" = (
 /obj/machinery/constructable_frame,
-/obj/floor_decal/snow,
 /turf/simulated/floor/holofloor/tiled,
 /area/template_noop)
 "lO" = (
@@ -126,7 +123,6 @@
 /obj/random/loot,
 /obj/random/loot,
 /obj/random/loot,
-/obj/floor_decal/snow,
 /turf/simulated/floor/holofloor/tiled,
 /area/template_noop)
 "lS" = (
@@ -139,7 +135,6 @@
 /area/map_template/anomaly/bunker)
 "mb" = (
 /obj/random/trash,
-/obj/floor_decal/snow,
 /turf/simulated/floor/holofloor/tiled,
 /area/template_noop)
 "op" = (
@@ -149,7 +144,6 @@
 /obj/machinery/vending/engineering{
 	req_access = list()
 	},
-/obj/floor_decal/snow,
 /turf/simulated/floor/holofloor/tiled,
 /area/map_template/anomaly/bunker)
 "oS" = (
@@ -262,7 +256,6 @@
 /obj/random/loot,
 /obj/random/loot,
 /obj/random/loot,
-/obj/floor_decal/snow,
 /turf/simulated/floor/holofloor/tiled,
 /area/template_noop)
 "wv" = (
@@ -281,7 +274,6 @@
 "wM" = (
 /obj/structure/rubble/house,
 /obj/random/trash,
-/obj/floor_decal/snow,
 /turf/simulated/floor/holofloor/tiled,
 /area/template_noop)
 "wQ" = (
@@ -339,13 +331,11 @@
 /obj/structure/aurora/wall_light{
 	dir = 1
 	},
-/obj/floor_decal/snow,
 /turf/simulated/floor/tiled/techmaint,
 /area/map_template/anomaly/bunker)
 "Dr" = (
 /obj/structure/rubble/house,
 /obj/decal/cleanable/generic,
-/obj/floor_decal/snow,
 /turf/simulated/floor/holofloor/tiled,
 /area/template_noop)
 "Ek" = (
@@ -470,12 +460,10 @@
 "TO" = (
 /obj/machinery/door/blast/regular/open,
 /obj/structure/broken_door,
-/obj/floor_decal/snow,
 /turf/simulated/floor/tiled/techmaint,
 /area/map_template/anomaly/bunker)
 "Vd" = (
 /obj/structure/rubble/house,
-/obj/floor_decal/snow,
 /turf/simulated/floor/holofloor/tiled,
 /area/template_noop)
 "Vi" = (
@@ -490,7 +478,6 @@
 /obj/machinery/stasis_cage{
 	req_access = list()
 	},
-/obj/floor_decal/snow,
 /turf/simulated/floor/holofloor/tiled,
 /area/template_noop)
 "WQ" = (
@@ -513,7 +500,6 @@
 /turf/simulated/floor/holofloor/tiled,
 /area/map_template/anomaly/bunker)
 "Yv" = (
-/obj/floor_decal/snow,
 /turf/simulated/floor/holofloor/tiled,
 /area/map_template/anomaly/bunker)
 "YF" = (
