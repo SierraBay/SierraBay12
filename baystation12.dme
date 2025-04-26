@@ -3438,6 +3438,7 @@
 #include "mods\_master_files\code\modules\culture_descriptor\religion\religions_unathi.dm"
 #include "mods\_master_files\code\modules\culture_descriptor\religion\religions_vox.dm"
 #include "mods\_master_files\code\modules\events\gravity.dm"
+#include "mods\_master_files\code\modules\maps\map_template.dm"
 #include "mods\_master_files\code\modules\mob\living\life.dm"
 #include "mods\_master_files\code\modules\mob\living\carbon\human\human_helpers.dm"
 #include "mods\_master_files\code\modules\mob\new_player\new_player.dm"

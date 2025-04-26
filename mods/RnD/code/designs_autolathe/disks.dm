@@ -30,7 +30,6 @@
 		/datum/design/autolathe/arms_ammo/hidden/shotgun,
 		/datum/design/autolathe/arms_ammo/hidden/shotgun_pellet,
 		/datum/design/autolathe/arms_ammo/hidden/tacknife,
-		/datum/design/autolathe/arms_ammo/hidden/stunshell,
 		/datum/design/autolathe/arms_ammo/hidden/flechette,
 		/datum/design/autolathe/arms_ammo/hidden/skrellian_rifle_flechette,
 		/datum/design/autolathe/arms_ammo/hidden/skrellian_rifle_slug,
