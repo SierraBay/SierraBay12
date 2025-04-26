@@ -41,10 +41,7 @@
 /area/template_noop)
 "lP" = (
 /obj/paint/nt_white/playable_yacht,
-/turf/simulated/wall/r_wall/hull{
-	opacity = 0;
-	mouse_opacity = 0
-	},
+/turf/simulated/wall/r_wall/hull/titan_no_opacity,
 /area/template_noop)
 "mb" = (
 /obj/structure/extinguisher_cabinet{
@@ -114,6 +111,12 @@
 /obj/structure/water_drown_structures/wooden_planks,
 /turf/simulated/floor/exoplanet/titan_water/minimal,
 /area/template_noop)
+"NR" = (
+/obj/paint/nt_white/playable_yacht{
+	opacity = 1
+	},
+/turf/simulated/wall/r_wall/hull/titan_no_opacity,
+/area/template_noop)
 "Px" = (
 /turf/simulated/shuttle/wall/corner/dark{
 	dir = 1;
@@ -139,7 +142,7 @@ Hu
 (2,1,1) = {"
 vf
 vf
-lP
+NR
 gq
 gq
 cy

@@ -6,10 +6,10 @@
 	spawn_cost = 1
 	ruin_tags = RUIN_ELECTRA_ANOMALIES
 	apc_test_exempt_areas = list(
-		/area/map_template/garage = NO_SCRUBBER|NO_VENT|NO_APC
+		/area/map_template/anomaly/garage = NO_SCRUBBER|NO_VENT|NO_APC
 	)
 
-/area/map_template/garage
+/area/map_template/anomaly/garage
 	name = "\improper Science garage"
 	icon_state = "A"
 	turfs_airless = TRUE

@@ -18,8 +18,16 @@
 		for(var/turf/picked_turf as anything in RANGE_TURFS(picked_drive.loc, 25))
 			if(!TurfBlocked(picked_turf, space_allowed = FALSE) || TurfBlockedByAnomaly(picked_turf))
 				LAZYADD(turfs_for_spawn, picked_turf)
-	all_spawned_anomalies = generate_anomalies_in_turfs(possible_anomalies, turfs_for_spawn, 25, 40, 0, 0, 9, 9, "Пролив БСД", started_in)
-
+	all_spawned_anomalies = generate_anomalies_in_turfs(
+		anomalies_types = possible_anomalies,
+		all_turfs_for_spawn = turfs_for_spawn,
+		min_anomalies_ammount = 25,
+		max_anomalies_ammount = 40,
+		min_artefacts_ammount = 0,
+		max_artefacts_ammount = 0,
+		source = "Пролив БСД",
+		visible_generation = FALSE,
+		started_in = world.time)
 
 /datum/event/bsd_instability/end()
 	.=..()

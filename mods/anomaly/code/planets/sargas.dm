@@ -8,8 +8,8 @@
 	anomalies_type = list()
 	min_anomaly_size = 4
 	max_anomaly_size = 9
-	min_anomalies_ammout = 250
-	max_anomalies_ammout = 400
+	min_anomalies_ammount = 250
+	max_anomalies_ammount = 400
 	planetary_area = /area/exoplanet/swamp
 	map_generators = list(/datum/random_map/noise/exoplanet/swamp)
 	ruin_tags_blacklist = RUIN_HABITAT|RUIN_WATER|RUIN_HOT_ANOMALIES|RUIN_ELECTRA_ANOMALIES|RUIN_GRAVI_ANOMALIES|RUIN_CHUDO_ANOMALIES
