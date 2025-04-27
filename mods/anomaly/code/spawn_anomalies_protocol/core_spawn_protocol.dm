@@ -9,7 +9,7 @@
 T - Турфы на котором протокол попытается разместить аномалию
 path_to_spawn - путь аномалии которую попытается заспавнить алгоритм
 */
-/proc/try_spawn_anomaly_without_collision(turf/T, obj/anomaly/path_to_spawn)
+/proc/try_spawn_anomaly_without_collision(turf/T, obj/anomaly/path_to_spawn, visible_generation = FALSE)
 	var/x_width = initial(path_to_spawn.parts_x_width)
 	var/y_width = initial(path_to_spawn.parts_y_width)
 	var/min_x_size = initial(path_to_spawn.min_x_size)
@@ -28,7 +28,7 @@ path_to_spawn - путь аномалии которую попытается з
 			placement_error = TRUE
 	//Проблем нет - ставим аному исходя из выставленных размеров
 	if(!placement_error)
-		var/obj/anomaly/spawned_anomaly = new path_to_spawn(T, x_width, y_width, TRUE)
+		var/obj/anomaly/spawned_anomaly = new path_to_spawn(turf = T, input_x = x_width, input_y = y_width, called_by_generator = TRUE, visible_generation = visible_generation)
 		return spawned_anomaly
 	else
 		return FALSE
@@ -63,42 +63,42 @@ path_to_spawn - путь аномалии которую попытается з
 КАК РАБОТАЕТ СПАВН АНОМАЛИЙ?
 1.В входных параметрах мы получаем список турфов/спавнеров, на которых хотим провести спавн
 2.Сперва код расчитывает минимальное количество аномалий, которое выделенное пространство точно должно выдержать. После,
-Код выбирает количество аномалий, которое он будет спавнить. Итоговое число будет между min_anomalies_ammout и max_anomalies_ammout
+Код выбирает количество аномалий, которое он будет спавнить. Итоговое число будет между min_anomalies_ammount и max_anomalies_ammount
 3. Определившись с количеством аномалий, начинается цикл спавна.
 В каждой итерации цикла, из списка турфов рандомно выбирается ТУРФ и рандомно выбирается аномалия (possible_anomalies), которую игра попытается на
 нём заспавнить. Мы проверяем выбранный турф на то чтоб на нём уже не было аномалий, обьектов и прочего что мешает движению
 ЕСЛИ что-то постороннее находится, турф удаляется из списка турфов, счётчик ошибок увеличивается на одну единицу
-ЕСЛИ ничего постороннего нет, мы тестово размещаем аномалию на данном турфе. Аномалия сама спавнит свои вспомогательные части в случае если
-она мультитайтловая и сообщает нам, обнаружила ли её вспомогательные части на своих турфах аномалию/вспомогательную её часть, или нет.
+ЕСЛИ ничего постороннего нет, мы прикидываем размеры аномалии исходя из её параметров.
 Если спавн аномалии произошёл штатно, спавн признаётся успешным, переменная i растёт на одну единицу, а счётчик ошибок обнуляется.
-проверяем чтоб количество
-Если  спавн аномалии произошёл с ошибкой (Её вспомогательные части нашли что-то что мешает их спавну, обычно это пересечение с другой
-аномалией или её вспомогательной частью), спавн признаётся ошибочным, турф аномалии удаляется из списка турфов, добавляем +1 ошибку
+Если  спавн аномалии произошёл с ошибкой (После прикидывания размеров аномалий мы нашли в этом блоке что-то что нам мешает),
+спавн признаётся ошибочным, турф аномалии удаляется из списка турфов, добавляем +1 ошибку
 
-В конце каждой итерации, код проверяет, ошибок не было == 100 единицам. Если ошибок 100, код заканчивает свою работу
+В конце каждой итерации, код проверяет, ошибок не было == 100 единицам. Если ошибок 100, код заканчивает свою работу выходя с ошибкой. Это прикроет нас от вечного
+лаганного цикла.
 
 Цикл сам закончит свою работу, как только i станет равным result_anomalies_ammount
 
 ПЕРЕМЕННЫе:
 anomalies_types - Пути аномалий, которые будут спавниться на выбранных турфах
 all_turfs_for_spawn - Список турфов, на которых будут размещаться аномалии
-min_anomalies_ammout - Минимальное число аномалий, которые будут расположены на планете
-max_anomalies_ammout - Максимальное число аномалий, которые будут расположены на планете(Если null, то ограничения нет)
+min_anomalies_ammount - Минимальное число аномалий, которые будут расположены на планете
+max_anomalies_ammount - Максимальное число аномалий, которые будут расположены на планете(Если null, то ограничения нет)
 min_artefacts_ammount - Минимальное количество артефактов, что разместится в игре
 max_artefacts_ammount - Максимальное кличество артефактов, что разметится в игре
 garanted_artefacts_ammount - Если нам нужно чёткое количество заспавненных артефактов - используем эту переменную
-max_anomaly_size - Максимальный размер аномалий (anomalies_types)
 source - Источник(Причина) генерации аномалий на турфах. Используется для отчёта
+visible_generation - нужно ли рисовать анимацию размещения аномалии, или это не требуется т.к просто некому это видеть?
 */
-/proc/generate_anomalies_in_turfs(list/anomalies_types, list/all_turfs_for_spawn, min_anomalies_ammout, max_anomalies_ammout, min_artefacts_ammount, max_artefacts_ammount, min_anomaly_size, max_anomaly_size, source, started_in)
-	set background = 1
+/proc/generate_anomalies_in_turfs(list/anomalies_types, list/all_turfs_for_spawn, min_anomalies_ammount, max_anomalies_ammount, min_artefacts_ammount, max_artefacts_ammount, source, visible_generation = FALSE, started_in)
+	set background = TRUE
+	set waitfor = FALSE
 	//Расчитываем мин и макс количество аномалий
-	var/result_anomalies_ammout = 1
-	if(!min_anomalies_ammout)
-		min_anomalies_ammout = calculate_min_anomalies_ammout(min_anomaly_size, max_anomaly_size, min_anomalies_ammout, LAZYLEN(all_turfs_for_spawn))
-	if(!max_anomalies_ammout)
-		max_anomalies_ammout = calculate_max_anomalies_ammout(min_anomaly_size, max_anomaly_size, max_anomalies_ammout, LAZYLEN(all_turfs_for_spawn))
-	result_anomalies_ammout = calculate_result_anomalies_ammout(min_anomaly_size, max_anomaly_size, min_anomalies_ammout, max_anomalies_ammout, result_anomalies_ammout, LAZYLEN(all_turfs_for_spawn))
+	var/result_anomalies_ammount = 1
+	if(!min_anomalies_ammount)
+		min_anomalies_ammount = calculate_min_anomalies_ammount(min_anomalies_ammount, LAZYLEN(all_turfs_for_spawn), anomalies_types)
+	if(!max_anomalies_ammount)
+		max_anomalies_ammount = calculate_max_anomalies_ammount(max_anomalies_ammount, LAZYLEN(all_turfs_for_spawn), anomalies_types)
+	result_anomalies_ammount = calculate_result_anomalies_ammount(min_anomalies_ammount, max_anomalies_ammount, result_anomalies_ammount, LAZYLEN(all_turfs_for_spawn))
 
 
 	//Собрав все турфы и определившись с числом аномалий, давайте начинать
@@ -106,11 +106,11 @@ source - Источник(Причина) генерации аномалий н
 	//Список успешно размещённых в игре аномалий
 	var/list/spawned_anomalies = list()
 	var/critical_errors_ammount = 0
-	for(var/i = 0, i <= result_anomalies_ammout)
+	for(var/i = 0, i <= result_anomalies_ammount)
 		//Перед началом проверим, что наш список просто не опустошил себя до установки всех аномалий
 		if(!LAZYLEN(all_turfs_for_spawn))
 			//Список пуст, сообщаем коду о завершении работы.
-			i = result_anomalies_ammout + 1
+			i = result_anomalies_ammount + 1
 			break
 		var/add = FALSE
 		//Переменная обозначает что в обработке именно этого турфа используется спавнер.
@@ -138,7 +138,7 @@ source - Источник(Причина) генерации аномалий н
 			critical_errors_ammount++
 			continue
 		if(critical_errors_ammount > 2)
-			i = result_anomalies_ammout + 1
+			i = result_anomalies_ammount + 1
 			log_and_message_admins("Генератор аномалий вышел из цикла с критической ошибкой. ")
 			break
 		//Если каким-то образом спавнер/турф оказался в стене или на этом тайтле уже есть аномалия/её часть
@@ -154,7 +154,7 @@ source - Источник(Причина) генерации аномалий н
 			add = TRUE
 			if(anomaly_to_spawn.multitile)
 				//Мы вызываем функцию, которая выдаст либо null (аномалия не заспавнена, либо ссылку на обьект)
-				var/obj/anomaly/spawned_anomaly = try_spawn_anomaly_without_collision(spawner_turf, anomaly_to_spawn, TRUE, FALSE)
+				var/obj/anomaly/spawned_anomaly = try_spawn_anomaly_without_collision(T = spawner_turf, path_to_spawn = anomaly_to_spawn, visible_generation = visible_generation)
 				if(spawned_anomaly)
 					LAZYADD(spawned_anomalies, spawned_anomaly)
 					if(!ruin_protocol)
@@ -166,7 +166,7 @@ source - Источник(Причина) генерации аномалий н
 					add = FALSE
 					failures++
 			else
-				var/obj/anomaly/spawned_anomaly = new anomaly_to_spawn(spawner_turf)
+				var/obj/anomaly/spawned_anomaly = new anomaly_to_spawn(spawner_turf, visible_generation)
 				LAZYADD(spawned_anomalies, spawned_anomaly)
 				if(!ruin_protocol)
 					LAZYREMOVE(all_turfs_for_spawn, spawner_turf)
@@ -178,7 +178,7 @@ source - Источник(Причина) генерации аномалий н
 			failures = 0
 		else if(failures > 100)
 			//У нас слишком много неуспешных размещений аномалий, хватит пытаться, нужно выйти из цикла
-			i = result_anomalies_ammout + 1
+			i = result_anomalies_ammount + 1
 
 
 	//Выбрав количество артов которые мы хотим заспавнить, мы начинаем спавн
@@ -227,27 +227,37 @@ source - Источник(Причина) генерации аномалий н
 
 
 
-/proc/calculate_min_anomalies_ammout(min_anomaly_size, max_anomaly_size, min_anomalies_ammout, all_turfs_for_spawn_len)
-	if(!min_anomaly_size)
-		min_anomaly_size = 1
-	if((!min_anomalies_ammout) || (min_anomalies_ammout * min_anomaly_size > all_turfs_for_spawn_len))
-		min_anomalies_ammout = 1
-	return min_anomalies_ammout
+/proc/calculate_min_anomalies_ammount(min_anomalies_ammount, all_turfs_for_spawn_len, list/all_anomalies_types)
+	var/min_anomaly_size = 100
+	for(var/i in all_anomalies_types)
+		var/obj/anomaly/anomaly_path = i
+		var/local_anomaly_size = initial(anomaly_path.min_x_size) * initial(anomaly_path.min_y_size)
+		if(local_anomaly_size < min_anomaly_size)
+			min_anomaly_size = local_anomaly_size
+	if((!min_anomalies_ammount) || (min_anomalies_ammount * min_anomaly_size > all_turfs_for_spawn_len))
+		min_anomalies_ammount = 1
+	return min_anomalies_ammount
 
 
 
-/proc/calculate_max_anomalies_ammout(min_anomaly_size, max_anomaly_size, max_anomalies_ammout, all_turfs_for_spawn_len)
-	if(!max_anomaly_size)
-		max_anomaly_size = 1
-	if(!max_anomalies_ammout)
-		max_anomalies_ammout = all_turfs_for_spawn_len
-		max_anomalies_ammout /= max_anomaly_size
-	return max_anomalies_ammout
+/proc/calculate_max_anomalies_ammount(max_anomalies_ammount, all_turfs_for_spawn_len, all_anomalies_types)
+	//Кодер уже выставил макс количество аном, пусть генератор попробует
+	if(max_anomalies_ammount)
+		return max_anomalies_ammount
+	else
+		//Тогда вычислим сами
+		var/max_anomaly_size = 0
+		for(var/i in all_anomalies_types)
+			var/obj/anomaly/anomaly_path = i
+			var/local_anomaly_size = initial(anomaly_path.max_x_size) * initial(anomaly_path.max_y_size)
+			if(local_anomaly_size > max_anomaly_size)
+				max_anomaly_size = local_anomaly_size
+			max_anomalies_ammount = all_turfs_for_spawn_len
+			max_anomalies_ammount /= max_anomaly_size //Здесь я поставил /= ибо при применениии max_anomalies_ammount = all_turfs_for_spawn_len/max_anomaly_size тут дохнет дебаг VS кода. Почему? хз
+		return max_anomalies_ammount
 
-/proc/calculate_result_anomalies_ammout(min_anomaly_size, max_anomaly_size, min_anomalies_ammout, max_anomalies_ammout, result_anomalies_ammout, all_turfs_for_spawn_len)
-	result_anomalies_ammout = rand(min_anomalies_ammout, max_anomalies_ammout)
-	if(result_anomalies_ammout * max_anomaly_size > all_turfs_for_spawn_len)
-		result_anomalies_ammout = all_turfs_for_spawn_len
-		result_anomalies_ammout /= max_anomaly_size
-	result_anomalies_ammout = Round(result_anomalies_ammout)
-	return result_anomalies_ammout
+/proc/calculate_result_anomalies_ammount(min_anomalies_ammount, max_anomalies_ammount)
+	var/local_result = 0
+	local_result = rand(min_anomalies_ammount, max_anomalies_ammount)
+	local_result = Round(local_result)
+	return local_result

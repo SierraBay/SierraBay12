@@ -15,7 +15,7 @@ PROCESSING_SUBSYSTEM_DEF(weather)
 	///Очередь из воды Титана которая ожидает изменение своего состояния (углубление или уменьшение глубины). Позволяет воде менятся менее лагучим образом.
 	var/list/water_changing_queue = list()
 	//Сколько турфов будет обработано за 1 процессинг контроллера. Чем больше тем быстрее выполняется очередь, но может сильней влиять на производительность игры.
-	var/changing_tufs_per_time = 10
+	var/changing_tufs_per_time = 1000
 
 /datum/controller/subsystem/processing/weather/UpdateStat(time)
 	if (PreventUpdateStat(time))
@@ -26,12 +26,24 @@ PROCESSING_SUBSYSTEM_DEF(weather)
 	"})
 
 /datum/controller/subsystem/processing/weather/fire(resumed)
-	if(LAZYLEN(water_changing_queue))
-		process_water_changes()
-	for(var/datum/weather_manager/manager in weather_managers_in_world)
-		manager.Process()
-	if (MC_TICK_CHECK)
-		return
+	if (!resumed)
+		src.current_run = processing.Copy()
+	//cache for sanic speed (lists are references anyways)
+	var/list/current_run = src.current_run
+	var/wait = src.wait
+	var/times_fired = src.times_fired
+
+	while(LAZYLEN(current_run))
+		var/datum/thing = current_run[LAZYLEN(current_run)]
+		LIST_DEC(current_run)
+		if(QDELETED(thing) || (call(thing, process_proc)(wait, times_fired, src) == PROCESS_KILL))
+			if(thing)
+				thing.is_processing = null
+			processing -= thing
+		if(LAZYLEN(water_changing_queue))
+			process_water_changes()
+		if (MC_TICK_CHECK)
+			return
 
 //ВОДИЧКА
 /datum/controller/subsystem/processing/weather/proc/add_to_water_queue(turf/simulated/floor/exoplanet/titan_water/water, direction)

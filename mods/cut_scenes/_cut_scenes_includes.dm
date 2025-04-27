@@ -11,6 +11,7 @@
 #include "code\cutscene_actions\moving.dm"
 #include "code\cutscene_actions\set_dir.dm"
 //Набор премейдов
+#include "code\cutscenes_archive\skat-cargo.dm"
 #include "code\cutscenes_archive\example.dm"
 #include "code\cutscenes_archive\skat-most.dm"
 #include "code\cutscenes_archive\skat-conference.dm"
