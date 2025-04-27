@@ -65,7 +65,6 @@
 		return
 	change_stage("calm", FALSE, FALSE)
 	sleep(delay_between_message_and_blowout)
-	report_progress("DEBUG ANOM: Начинается выброс. Стадия - начало.")
 	for(var/mob/living/carbon/human/picked_human in GLOB.living_players)
 		if(get_z(picked_human) == get_z(src))
 			if(must_message_about_blowout)
@@ -107,6 +106,7 @@
 	for(var/obj/weather/weather in connected_weather_turfs)
 		weather.blowout_status = FALSE
 		weather.icon_state = initial(weather.icon_state)
+		report_progress("DEBUG ANOM: Работа выброса окончена.")
 	..()
 
 //Эффект снежной вьюги

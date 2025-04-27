@@ -16,6 +16,7 @@
 		/datum/exoplanet_theme = 100
 		)
 	planetary_area = /area/exoplanet/flying
+	storyteller_path = /datum/planet_storyteller/gravi_home
 	map_generators = list(/datum/random_map/automata/cave_system/mountains/flying, /datum/random_map/noise/exoplanet/flying)
 	surface_color = "#11420c"
 	water_color = "#ffffff"

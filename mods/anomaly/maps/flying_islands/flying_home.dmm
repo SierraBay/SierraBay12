@@ -4,41 +4,41 @@
 /turf/simulated/floor/wood{
 	icon_state = "wood_broken5"
 	},
-/area/space)
+/area/map_template/anomaly/flying_home)
 "aY" = (
 /obj/structure/table/woodentable_reinforced{
 	pixel_x = 12
 	},
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/wood,
-/area/space)
+/area/map_template/anomaly/flying_home)
 "cH" = (
 /obj/structure/flora/ausbushes/sparsegrass,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/wood{
 	icon_state = "wood_broken0"
 	},
-/area/space)
+/area/map_template/anomaly/flying_home)
 "em" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/wood{
 	icon_state = "wood_broken0"
 	},
-/area/space)
+/area/map_template/anomaly/flying_home)
 "eF" = (
 /obj/item/stack/material/wood,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/wood,
-/area/space)
+/area/map_template/anomaly/flying_home)
 "eQ" = (
 /obj/anomaly/rvach/three_and_three,
 /turf/simulated/floor/wood,
-/area/space)
+/area/template_noop)
 "fq" = (
 /obj/structure/rubble/house,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/wood,
-/area/space)
+/area/map_template/anomaly/flying_home)
 "fM" = (
 /obj/structure/flora/ausbushes/grassybush,
 /obj/item/stack/material/wood,
@@ -46,41 +46,41 @@
 /turf/simulated/floor/wood{
 	icon_state = "wood_broken4"
 	},
-/area/space)
+/area/map_template/anomaly/flying_home)
 "gq" = (
 /obj/structure/table/woodentable_reinforced,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/wood{
 	icon_state = "wood_broken0"
 	},
-/area/space)
+/area/map_template/anomaly/flying_home)
 "gM" = (
 /obj/structure/bookcase,
 /turf/simulated/floor/wood,
-/area/space)
+/area/map_template/anomaly/flying_home)
 "iO" = (
 /obj/structure/flora/ausbushes/sparsegrass,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/wood{
 	icon_state = "wood_broken5"
 	},
-/area/space)
+/area/map_template/anomaly/flying_home)
 "jO" = (
 /obj/structure/coatrack,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/wood,
-/area/space)
+/area/map_template/anomaly/flying_home)
 "jU" = (
 /obj/structure/flora/ausbushes/fullgrass,
 /obj/item/stack/material/wood,
 /turf/simulated/floor/exoplanet/grass,
-/area/space)
+/area/map_template/anomaly/flying_home)
 "ke" = (
 /obj/structure/table/woodentable_reinforced,
 /obj/item/pen,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/wood,
-/area/space)
+/area/map_template/anomaly/flying_home)
 "lh" = (
 /obj/structure/table/woodentable_reinforced,
 /obj/item/reagent_containers/food/drinks/dry_ramen{
@@ -95,29 +95,29 @@
 	pixel_x = -6
 	},
 /turf/simulated/floor/wood,
-/area/space)
+/area/map_template/anomaly/flying_home)
 "lm" = (
 /obj/structure/reagent_dispensers/water_cooler,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/wood,
-/area/space)
+/area/map_template/anomaly/flying_home)
 "ob" = (
 /obj/structure/flora/ausbushes/fullgrass,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/wood{
 	icon_state = "wood_broken0"
 	},
-/area/space)
+/area/map_template/anomaly/flying_home)
 "oh" = (
 /obj/structure/flora/bush,
 /turf/simulated/floor/exoplanet/grass,
-/area/space)
+/area/map_template/anomaly/flying_home)
 "oX" = (
 /obj/item/stack/material/wood,
 /turf/simulated/floor/wood{
 	icon_state = "wood_broken0"
 	},
-/area/space)
+/area/template_noop)
 "rR" = (
 /obj/item/stack/material/wood,
 /obj/structure/flora/ausbushes/fullgrass,
@@ -125,42 +125,42 @@
 /turf/simulated/floor/wood{
 	icon_state = "wood_broken4"
 	},
-/area/space)
+/area/map_template/anomaly/flying_home)
 "st" = (
 /obj/structure/coatrack,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/wood{
 	icon_state = "wood_broken2"
 	},
-/area/space)
+/area/map_template/anomaly/flying_home)
 "tQ" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/wood,
-/area/space)
+/area/map_template/anomaly/flying_home)
 "uf" = (
 /obj/structure/flora/ausbushes/genericbush,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/wood{
 	icon_state = "wood_broken4"
 	},
-/area/space)
+/area/map_template/anomaly/flying_home)
 "uu" = (
 /obj/structure/flora/ausbushes/sparsegrass,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/wood{
 	icon_state = "wood_broken4"
 	},
-/area/space)
+/area/map_template/anomaly/flying_home)
 "uX" = (
 /obj/item/stack/material/wood,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/wood{
 	icon_state = "wood_broken3"
 	},
-/area/space)
+/area/map_template/anomaly/flying_home)
 "vs" = (
 /turf/template_noop,
-/area/space)
+/area/template_noop)
 "vK" = (
 /obj/item/stack/material/wood,
 /obj/structure/flora/ausbushes/fullgrass,
@@ -168,63 +168,63 @@
 /turf/simulated/floor/wood{
 	icon_state = "wood_broken0"
 	},
-/area/space)
+/area/map_template/anomaly/flying_home)
 "wx" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/wood{
 	icon_state = "wood_broken5"
 	},
-/area/space)
+/area/map_template/anomaly/flying_home)
 "wB" = (
 /obj/structure/flora/ausbushes/grassybush,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/wood{
 	icon_state = "wood_broken0"
 	},
-/area/space)
+/area/map_template/anomaly/flying_home)
 "wJ" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/wood{
 	icon_state = "wood_broken3"
 	},
-/area/space)
+/area/map_template/anomaly/flying_home)
 "xb" = (
 /obj/structure/table/woodentable_reinforced,
 /obj/item/material/knife/kitchen,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/wood,
-/area/space)
+/area/map_template/anomaly/flying_home)
 "xf" = (
 /obj/structure/flora/ausbushes/palebush,
 /turf/simulated/floor/exoplanet/grass,
-/area/space)
+/area/map_template/anomaly/flying_home)
 "xy" = (
 /obj/structure/flora/ausbushes/sparsegrass,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/wood{
 	icon_state = "wood_broken3"
 	},
-/area/space)
+/area/map_template/anomaly/flying_home)
 "yQ" = (
 /obj/structure/flora/ausbushes/sparsegrass,
 /obj/item/stack/material/wood,
 /turf/simulated/floor/exoplanet/grass,
-/area/space)
+/area/map_template/anomaly/flying_home)
 "zw" = (
 /turf/simulated/floor/exoplanet/grass,
-/area/space)
+/area/map_template/anomaly/flying_home)
 "Az" = (
 /obj/structure/table/woodentable_reinforced,
 /obj/item/toy/plushie/kitten,
 /turf/simulated/floor/wood,
-/area/space)
+/area/map_template/anomaly/flying_home)
 "AA" = (
 /obj/item/stack/material/wood,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/wood{
 	icon_state = "wood_broken0"
 	},
-/area/space)
+/area/map_template/anomaly/flying_home)
 "AB" = (
 /obj/item/stack/material/wood,
 /obj/structure/flora/ausbushes/fullgrass,
@@ -232,60 +232,60 @@
 /turf/simulated/floor/wood{
 	icon_state = "wood_broken3"
 	},
-/area/space)
+/area/map_template/anomaly/flying_home)
 "CS" = (
 /obj/structure/flora/ausbushes/stalkybush,
 /turf/simulated/floor/exoplanet/grass,
-/area/space)
+/area/map_template/anomaly/flying_home)
 "DQ" = (
 /obj/item/stack/material/wood,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/wood{
 	icon_state = "wood_broken5"
 	},
-/area/space)
+/area/map_template/anomaly/flying_home)
 "Em" = (
 /obj/structure/bed/chair/armchair/brown,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/wood,
-/area/space)
+/area/map_template/anomaly/flying_home)
 "Ep" = (
 /obj/structure/table/steel_reinforced,
 /obj/item/storage/toolbox/electrical,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/wood,
-/area/space)
+/area/map_template/anomaly/flying_home)
 "Fj" = (
 /turf/simulated/floor/wood,
-/area/space)
+/area/template_noop)
 "Gt" = (
 /obj/structure/flora/ausbushes/fullgrass,
 /turf/simulated/floor/exoplanet/grass,
-/area/space)
+/area/map_template/anomaly/flying_home)
 "GM" = (
 /obj/item/stack/material/wood,
 /turf/simulated/floor/exoplanet/grass,
-/area/space)
+/area/map_template/anomaly/flying_home)
 "Ii" = (
 /obj/structure/flora/ausbushes/leafybush,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/wood{
 	icon_state = "wood_broken3"
 	},
-/area/space)
+/area/map_template/anomaly/flying_home)
 "Iv" = (
 /obj/item/material/shard/shrapnel/steel,
 /turf/simulated/floor/wood{
 	icon_state = "wood_broken3"
 	},
-/area/space)
+/area/template_noop)
 "IW" = (
 /obj/structure/flora/ausbushes/leafybush,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/wood{
 	icon_state = "wood_broken4"
 	},
-/area/space)
+/area/map_template/anomaly/flying_home)
 "Kv" = (
 /obj/structure/table/woodentable_reinforced{
 	pixel_x = 12
@@ -295,24 +295,28 @@
 /turf/simulated/floor/wood{
 	icon_state = "wood_broken4"
 	},
-/area/space)
+/area/map_template/anomaly/flying_home)
 "Mu" = (
 /turf/simulated/wall/wood,
-/area/space)
+/area/map_template/anomaly/flying_home)
 "PA" = (
 /obj/structure/table/woodentable_reinforced,
 /obj/item/paper_bin,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/wood,
-/area/space)
+/area/map_template/anomaly/flying_home)
 "RL" = (
 /obj/structure/flora/ausbushes/grassybush,
 /turf/simulated/floor/exoplanet/grass,
-/area/space)
+/area/map_template/anomaly/flying_home)
 "Tj" = (
 /obj/structure/flora/ausbushes/ywflowers,
 /turf/simulated/floor/exoplanet/grass,
-/area/space)
+/area/map_template/anomaly/flying_home)
+"TM" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/turf/simulated/floor/exoplanet/grass,
+/area/template_noop)
 "TT" = (
 /obj/structure/bed/padded,
 /obj/item/bedsheet/orange,
@@ -320,56 +324,56 @@
 	anchored = 1
 	},
 /turf/simulated/floor/wood,
-/area/space)
+/area/map_template/anomaly/flying_home)
 "Ua" = (
 /turf/simulated/floor/wood{
 	icon_state = "wood_broken3"
 	},
-/area/space)
+/area/template_noop)
 "Uy" = (
 /obj/anomaly/rvach/three_and_three,
 /turf/simulated/floor/wood{
 	icon_state = "wood_broken3"
 	},
-/area/space)
+/area/template_noop)
 "UE" = (
 /obj/structure/flora/ausbushes/grassybush,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/wood{
 	icon_state = "wood_broken2"
 	},
-/area/space)
+/area/map_template/anomaly/flying_home)
 "Vg" = (
 /obj/structure/table/woodentable_reinforced,
 /obj/item/forensics/sample_kit/powder,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/wood,
-/area/space)
+/area/map_template/anomaly/flying_home)
 "Vq" = (
 /obj/structure/flora/ausbushes/fullgrass,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/wood{
 	icon_state = "wood_broken2"
 	},
-/area/space)
+/area/map_template/anomaly/flying_home)
 "We" = (
 /obj/structure/flora/ausbushes/grassybush,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/wood{
 	icon_state = "wood_broken5"
 	},
-/area/space)
+/area/map_template/anomaly/flying_home)
 "Wz" = (
 /obj/structure/table/steel_reinforced,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/wood,
-/area/space)
+/area/map_template/anomaly/flying_home)
 "WN" = (
 /obj/item/stack/material/wood,
 /turf/simulated/floor/wood{
 	icon_state = "wood_broken4"
 	},
-/area/space)
+/area/template_noop)
 "WZ" = (
 /obj/structure/closet/walllocker{
 	pixel_x = -28
@@ -379,13 +383,13 @@
 	},
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/wood,
-/area/space)
+/area/map_template/anomaly/flying_home)
 "Xd" = (
 /obj/item/stack/material/wood,
 /turf/simulated/floor/wood{
 	icon_state = "wood_broken3"
 	},
-/area/space)
+/area/template_noop)
 "Xs" = (
 /obj/structure/flora/ausbushes/fullgrass,
 /obj/item/stack/material/wood,
@@ -393,16 +397,19 @@
 /turf/simulated/floor/wood{
 	icon_state = "wood_broken4"
 	},
-/area/space)
+/area/map_template/anomaly/flying_home)
 "YF" = (
 /obj/structure/flora/ausbushes/sparsegrass,
 /turf/simulated/floor/exoplanet/grass,
-/area/space)
+/area/map_template/anomaly/flying_home)
 "Zj" = (
 /obj/structure/table/woodentable_reinforced,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/wood,
-/area/space)
+/area/map_template/anomaly/flying_home)
+"Zz" = (
+/turf/simulated/floor/exoplanet/grass,
+/area/template_noop)
 
 (1,1,1) = {"
 vs
@@ -546,7 +553,7 @@ Wz
 Ep
 Iv
 oX
-zw
+Zz
 "}
 (9,1,1) = {"
 zw
@@ -564,7 +571,7 @@ Mu
 Mu
 WN
 eQ
-zw
+Zz
 "}
 (10,1,1) = {"
 vs
@@ -580,9 +587,9 @@ DQ
 Mu
 zw
 Gt
-zw
-Gt
-zw
+Zz
+TM
+Zz
 "}
 (11,1,1) = {"
 vs
@@ -623,7 +630,7 @@ vs
 (13,1,1) = {"
 vs
 GM
-zw
+Zz
 Xd
 Fj
 tQ
@@ -641,7 +648,7 @@ vs
 (14,1,1) = {"
 vs
 vs
-zw
+Zz
 Uy
 Fj
 tQ
@@ -659,7 +666,7 @@ vs
 (15,1,1) = {"
 vs
 vs
-zw
+Zz
 Xd
 Fj
 Ua

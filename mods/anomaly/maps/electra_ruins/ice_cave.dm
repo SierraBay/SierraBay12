@@ -15,4 +15,4 @@
 	shoes = /obj/item/clothing/shoes/magboots
 	gloves = /obj/item/clothing/gloves/latex
 	head = /obj/item/clothing/head/helmet/space/void/ceti/alt
-	suit = /obj/item/clothing/suit/space/void/ceti
+	suit = /obj/item/clothing/suit/space/void/ceti/alt

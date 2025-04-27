@@ -3,18 +3,12 @@
 	desc = "Планета покрытая толстым слоем воды."
 	color = "#ebe3e3"
 	rock_colors = list(COLOR_WHITE)
-	//Большие артефакты
-	big_anomaly_artefacts_min_amount = 4
-	big_anomaly_artefacts_max_amount = 6
-	big_artefacts_types = list()
-	big_artefacts_can_be_close = FALSE
 	weather_manager_type = /datum/weather_manager/titan_rain
-	big_artefacts_range_spawn = 30
-	//
 	possible_themes = list(
 		/datum/exoplanet_theme = 100
 		)
 	planetary_area = /area/exoplanet/water
+	storyteller_path = /datum/planet_storyteller/water_home
 	map_generators = list(/datum/random_map/automata/cave_system/mountains/water/deep_water, /datum/random_map/automata/cave_system/mountains/water, /datum/random_map/noise/exoplanet/titan_water)
 	surface_color = "#0d0844"
 	water_color = "#0d0844"
@@ -37,12 +31,12 @@
 		/obj/anomaly/vspishka = 3
 		)
 	///Минимальное количество заспавненных артов
-	min_artefacts_ammount = 1
+	min_artefacts_ammount = 2
 	///Максимальное количество заспавненных артов
-	max_artefacts_ammount = 2
+	max_artefacts_ammount = 4
 
-	min_anomalies_ammout = 500
-	max_anomalies_ammout = 700
+	min_anomalies_ammount = 500
+	max_anomalies_ammount = 700
 
 /obj/overmap/visitable/sector/exoplanet/water/New(nloc, max_x, max_y)
 	. = ..()

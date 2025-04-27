@@ -8,7 +8,7 @@
 	var/list/stages = list()
 	var/current_stage
 	var/area/my_area
-	var/my_z
+	var/list/my_z
 	//Выброс
 	var/can_blowout = FALSE
 	//Игрокам в зоне выброса сообщают о нём.
@@ -17,14 +17,22 @@
 	var/delay_between_message_and_blowout
 	var/list/blowout_prepare_messages = list()
 	var/list/blowout_messages = list()
+	var/activity_blocked_by_safe_protocol = FALSE
 
-/datum/weather_manager/New()
+/datum/weather_manager/New(area/input_area)
+	my_area = input_area
 	calculate_change_time()
 	calculate_blowout_time()
+	calculate_next_safe_blowout()
+	calculate_next_safe_change()
+	calculate_affected_z()
 	LAZYADD(SSweather.weather_managers_in_world, src)
 	START_PROCESSING(SSweather, src)
 
 /datum/weather_manager/Process()
+	..()
+	if(activity_blocked_by_safe_protocol)
+		return
 	if(world.time >= change_time)
 		change_stage()
 	if(can_blowout && world.time  >= blowout_time)
@@ -33,6 +41,8 @@
 /datum/weather_manager/proc/change_stage()
 	set waitfor = FALSE
 	set background = TRUE
+	if(activity_blocked_by_safe_protocol || !check_change_safety())
+		return
 	var/need_change = FALSE
 	for(var/mob/living/carbon/human/picked_human in GLOB.living_players)
 		if(get_z(picked_human) == get_z(pick(connected_weather_turfs)))
@@ -48,10 +58,15 @@
 /datum/weather_manager/proc/start_blowout()
 	set waitfor = FALSE
 	set background = TRUE
+	if(activity_blocked_by_safe_protocol || !check_blowout_safety()) //Основной и самый надёжный слой защиты от страшного цикла
+		return
 	var/need_blowout = FALSE
 	calculate_blowout_message_delay_time()
 	report_progress("DEBUG ANOM: Начинается выброс. Стадия - подготовка.")
-	STOP_PROCESSING(SSweather, src)
+	can_blowout = FALSE //Первый слой защиты от страшного цикла
+	//Опасайтесь того что ваша команда STOP_PROCESSING просто не выполнится
+	STOP_PROCESSING(SSweather, src) //Второй слой защиты от страшного цикла
+	calculate_blowout_time() //Третий слой защиты от страшного цикла
 	prepare_to_blowout()
 	for(var/mob/living/carbon/human/picked_human in GLOB.living_players)
 		if(get_z(picked_human) == get_z(pick(connected_weather_turfs)))
@@ -61,6 +76,7 @@
 	if(!need_blowout)
 		report_progress("DEBUG ANOM: Должен был случиться выброс, но нет игроков на Z уровне погоды. Отмена.")
 		calculate_blowout_time()
+		can_blowout = initial(can_blowout) //Откатим состояние переменной до начального уровня
 		START_PROCESSING(SSweather, src)
 		return FALSE
 	return TRUE
@@ -81,17 +97,22 @@
 	if(!is_processing)
 		report_progress("DEBUG: Выброс окончен.")
 		START_PROCESSING(SSweather, src)
+		calculate_blowout_time()
 
 /datum/weather_manager/proc/regenerate_anomalies_on_planet() //Выполняет перереспавн всех аномалий которые были заспавнены стандартным генератором на планете
 	set waitfor = FALSE
-	var/obj/overmap/visitable/sector/exoplanet/my_planet = map_sectors["[my_z]"]
-	my_planet.full_clear_from_anomalies()
-	my_planet.generate_big_anomaly_artefacts()
+	for(var/z in my_z)
+		var/obj/overmap/visitable/sector/exoplanet/my_planet = map_sectors["[z]"]
+		if(!istype(my_planet))
+			return
+		my_planet.full_clear_from_anomalies()
+		my_planet.generate_big_anomaly_artefacts()
 
 /datum/weather_manager/proc/clean_anomalies_on_planet()
 	set waitfor = FALSE
-	var/obj/overmap/visitable/sector/exoplanet/my_planet = map_sectors["[my_z]"]
-	my_planet.full_clear_from_anomalies()
+	for(var/z in my_z)
+		var/obj/overmap/visitable/sector/exoplanet/my_planet = map_sectors["[z]"]
+		my_planet.full_clear_from_anomalies()
 
 /datum/weather_manager/proc/calculate_change_time()
 	change_time = rand(8, 20 MINUTES) + world.time //Вычисляем во сколько будет следущая смена погоды
@@ -113,9 +134,11 @@
 
 /datum/weather_manager/proc/delete_manager()
 	my_area.connected_weather_manager = null
-	STOP_PROCESSING(SSweather,src)
+	if(is_processing)
+		STOP_PROCESSING(SSweather,src)
 	for(var/obj/weather/detected_weather in connected_weather_turfs)
 		detected_weather.delete_weather()
+	qdel(src)
 
 /proc/calculate_smallest_x(list/objects_list)
 	var/smallest_x = 10000
@@ -138,3 +161,6 @@
 		if(get_x(T) == smallest_x)
 			LAZYADD(result_x_turfs, T)
 	return result_x_turfs
+
+/datum/weather_manager/proc/calculate_affected_z()
+	LAZYADD(my_z, get_z(pick(my_area.contents)))

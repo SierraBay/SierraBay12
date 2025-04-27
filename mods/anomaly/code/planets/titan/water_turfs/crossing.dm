@@ -1,6 +1,8 @@
 /turf/simulated/floor/exoplanet/titan_water/Entered(atom/movable/input_movable, atom/old_loc)
 	if(!water_cant_affect_input_movable(input_movable))
 		return
+	affect_slowdown(input_movable)
+	input_movable.water_act(FLUID_MAX_DEPTH)
 	if(ismob(input_movable))
 		signals_setup(input_movable)
 		if(ishuman(input_movable))
@@ -43,6 +45,13 @@
 				return
 	input_movable.desetup_water_filter()
 
+/turf/simulated/floor/exoplanet/titan_water/proc/affect_slowdown(atom/movable/input_movable)
+	if(ishuman(input_movable))
+		var/mob/living/carbon/human/human = input_movable
+		if(!(human.species.name in whitelist_specis_move_slowdown))
+			var/datum/movement_handler/mob/delay/delay = human.GetMovementHandler(/datum/movement_handler/mob/delay)
+			if(delay)
+				delay.AddDelay(swim_delay)
 
 //Может ли вода воздействовать на что-то? (Не может например на летающих).
 /turf/simulated/floor/exoplanet/titan_water/proc/water_cant_affect_input_movable(atom/movable/input_movable)
@@ -51,7 +60,7 @@
 	// Потом даст заменить все органы персонажу. Какая же это проклятая херня боже мой.
 	if(QDELETED(input_movable))
 		return FALSE
-	if(isghost(input_movable) || isobserver(input_movable))
+	if(isghost(input_movable) || isobserver(input_movable) || isprojectile(input_movable))
 		return FALSE
 	else if(ismob(input_movable))
 		var/mob/mobik = input_movable
@@ -60,3 +69,9 @@
 			if(mobik.can_overcome_gravity() || mobik.is_floating)
 				return FALSE
 	return TRUE
+
+/turf/proc/react_turf_at_deploing()
+	return
+
+/turf/simulated/floor/exoplanet/titan_water/react_turf_at_deploing(atom/movable/input_movable)
+	input_movable.setup_water_filter(mask_icon_state_structure)
