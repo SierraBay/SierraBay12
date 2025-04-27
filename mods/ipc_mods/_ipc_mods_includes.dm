@@ -14,4 +14,5 @@
 #include "code/coolerbelt.dm"
 #include "code/prosthetics.dm"
 #include "code/roborepair.dm"
+#include "code/cargo.dm"
 #endif

@@ -11,7 +11,7 @@
 		laser = 0,
 		energy = 0,
 		bomb = 0,
-		bio = ARMOR_BIO_SHIELDED,
+		bio = ARMOR_BIO_MINOR,
 		rad = ARMOR_RAD_MINOR
 	)
 
@@ -120,10 +120,10 @@
 	unavailable_at_fab = 1
 
 	armor = list(
-		melee = ARMOR_MELEE_KNIVES,
-		bullet = ARMOR_BALLISTIC_SMALL,
+		melee = ARMOR_MELEE_MINOR,
+		bullet = ARMOR_BALLISTIC_MINOR,
 		laser = ARMOR_LASER_MINOR,
-		energy = ARMOR_ENERGY_MINOR,
+		energy = ARMOR_ENERGY_SMALL,
 		bomb = ARMOR_BOMB_PADDED,
 		bio = ARMOR_BIO_SHIELDED,
 		rad = ARMOR_RAD_RESISTANT
@@ -137,6 +137,17 @@
 	icon = 'icons/mob/human_races/cyberlimbs/bishop/bishop_rook.dmi'
 	has_eyes = FALSE
 	unavailable_at_fab = 1
+	armor = list(
+		melee = ARMOR_MELEE_SMALL,
+		bullet = ARMOR_BALLISTIC_MINOR,
+		laser = ARMOR_LASER_MINOR,
+		energy = ARMOR_ENERGY_SMALL,
+		bomb = ARMOR_BOMB_PADDED,
+		bio = ARMOR_BIO_SHIELDED,
+		rad = ARMOR_RAD_RESISTANT
+	)
+	speed_modifier = - 0.7
+	coolingefficiency = 1.5
 
 /datum/robolimb/bishop/alt
 	company = "Bishop Alt."
@@ -158,16 +169,15 @@
 	unavailable_at_fab = 1
 
 	armor = list(
-		melee = ARMOR_MELEE_RESISTANT,
-		bullet = ARMOR_BALLISTIC_PISTOL,
-		laser = ARMOR_LASER_HANDGUNS,
+		melee = ARMOR_MELEE_KNIVES,
+		bullet = ARMOR_BALLISTIC_SMALL,
+		laser = ARMOR_LASER_SMALL,
 		energy = ARMOR_ENERGY_SMALL,
 		bomb = ARMOR_BOMB_RESISTANT,
 		bio = ARMOR_BIO_SHIELDED,
 		rad = ARMOR_RAD_RESISTANT
 	)
-	expensive = TRUE
-	speed_modifier = 1
+	speed_modifier = 0.5
 	coolingefficiency = 0.8
 
 /datum/robolimb/hephaestus/alt
@@ -182,6 +192,18 @@
 	icon = 'icons/mob/human_races/cyberlimbs/hephaestus/hephaestus_titan.dmi'
 	has_eyes = FALSE
 	unavailable_at_fab = 1
+	armor = list(
+		melee = ARMOR_MELEE_RESISTANT,
+		bullet = ARMOR_BALLISTIC_PISTOL,
+		laser = ARMOR_LASER_HANDGUNS,
+		energy = ARMOR_ENERGY_SMALL,
+		bomb = ARMOR_BOMB_RESISTANT,
+		bio = ARMOR_BIO_SHIELDED,
+		rad = ARMOR_RAD_RESISTANT
+	)
+	expensive = TRUE
+	speed_modifier = 1.2
+	coolingefficiency = 0.6
 
 /datum/robolimb/hephaestus/alt/monitor
 	company = "Hephaestus Monitor."
@@ -199,14 +221,17 @@
 	unavailable_at_fab = 1
 	allowed_bodytypes = list(SPECIES_HUMAN,SPECIES_IPC)
 	armor = list(
-		melee = ARMOR_MELEE_SMALL,
-		bullet = ARMOR_BALLISTIC_MINOR,
-		laser = ARMOR_LASER_MINOR,
-		energy = ARMOR_ENERGY_MINOR,
-		bomb = ARMOR_BOMB_PADDED,
+		melee = ARMOR_MELEE_MINOR,
+		bullet = 0,
+		laser = 0,
+		energy = ARMOR_ENERGY_SMALL,
+		bomb = ARMOR_BOMB_MINOR,
 		bio = ARMOR_BIO_SHIELDED,
 		rad = ARMOR_RAD_RESISTANT
 	)
+	speed_modifier = - 0.3
+	coolingefficiency = 1.2
+	siemens_coefficient = 0.8
 
 
 /datum/robolimb/zenghu/spirit
@@ -214,13 +239,24 @@
 	desc = "This limb has a sleek black and white polymer finish."
 	icon = 'icons/mob/human_races/cyberlimbs/zenghu/zenghu_spirit.dmi'
 	unavailable_at_fab = 1
+	armor = list(
+		melee = ARMOR_MELEE_MINOR,
+		bullet = 0,
+		laser = 0,
+		energy = ARMOR_ENERGY_SMALL,
+		bomb = ARMOR_BOMB_MINOR,
+		bio = ARMOR_BIO_SHIELDED,
+		rad = ARMOR_RAD_RESISTANT
+	)
+	speed_modifier = - 0.3
+	coolingefficiency = 1.2
 
 /datum/robolimb/xion
 	company = "Xion"
 	desc = "This limb has a minimalist black and red casing."
 	icon = 'icons/mob/human_races/cyberlimbs/xion/xion_main.dmi'
 	armor = list(
-		melee = ARMOR_MELEE_SMALL,
+		melee = ARMOR_MELEE_MINOR,
 		bullet = ARMOR_BALLISTIC_MINOR,
 		laser = 0,
 		energy = 0,
@@ -234,6 +270,18 @@
 	desc = "This skeletal mechanical limb has a minimalist black and red casing."
 	icon = 'icons/mob/human_races/cyberlimbs/xion/xion_econo.dmi'
 	unavailable_at_fab = 1
+	armor = list(
+		melee = 0,
+		bullet = 0,
+		laser = 0,
+		energy = 0,
+		bomb = 0,
+		bio = ARMOR_BIO_SHIELDED,
+		rad = ARMOR_RAD_RESISTANT
+	)
+	speed_modifier = 1.1
+	coolingefficiency = 1.2
+	siemens_coefficient = 0.8
 
 /datum/robolimb/xion/alt
 	company = "Xion Alt."
@@ -254,8 +302,8 @@
 	desc = "This limb is made from a cheap polymer."
 	icon = 'icons/mob/human_races/cyberlimbs/nanotrasen/nanotrasen_main.dmi'
 	armor = list(
-		melee = ARMOR_MELEE_SMALL,
-		bullet = ARMOR_BALLISTIC_MINOR,
+		melee = ARMOR_MELEE_MINOR,
+		bullet = 0,
 		laser = 0,
 		energy = 0,
 		bomb = 0,
@@ -264,6 +312,7 @@
 	)
 	speed_modifier = 0.1
 	coolingefficiency = 0.7
+	siemens_coefficient = 1.2
 
 /datum/robolimb/wardtakahashi
 	company = "Ward-Takahashi"
@@ -272,10 +321,10 @@
 	can_eat = 1
 	unavailable_at_fab = 1
 	armor = list(
-		melee = ARMOR_MELEE_KNIVES,
+		melee = ARMOR_MELEE_MINOR,
 		bullet = ARMOR_BALLISTIC_MINOR,
 		laser = ARMOR_LASER_MINOR,
-		energy = 0,
+		energy = ARMOR_ENERGY_MINOR,
 		bomb = 0,
 		bio = ARMOR_BIO_SHIELDED,
 		rad = ARMOR_RAD_RESISTANT
@@ -286,14 +335,15 @@
 	desc = "A simple robotic limb with retro design. Seems rather stiff."
 	icon = 'icons/mob/human_races/cyberlimbs/wardtakahashi/wardtakahashi_economy.dmi'
 	armor = list(
-		melee = ARMOR_MELEE_KNIVES,
+		melee = ARMOR_MELEE_MINOR,
 		bullet = ARMOR_BALLISTIC_MINOR,
-		laser = ARMOR_LASER_MINOR,
+		laser = 0,
 		energy = 0,
 		bomb = 0,
 		bio = ARMOR_BIO_SHIELDED,
 		rad = ARMOR_RAD_RESISTANT
 	)
+	coolingefficiency = 1.2
 
 /datum/robolimb/wardtakahashi/alt
 	company = "Ward-Takahashi Alt."
@@ -315,9 +365,9 @@
 	icon = 'icons/mob/human_races/cyberlimbs/morpheus/morpheus_main.dmi'
 	unavailable_at_fab = 1
 	armor = list(
-		melee = ARMOR_MELEE_KNIVES,
-		bullet = ARMOR_BALLISTIC_SMALL,
-		laser = ARMOR_LASER_SMALL,
+		melee = ARMOR_MELEE_SMALL,
+		bullet = ARMOR_MELEE_SMALL,
+		laser = ARMOR_LASER_MINOR,
 		energy = ARMOR_ENERGY_MINOR,
 		bomb = ARMOR_BOMB_PADDED,
 		bio = ARMOR_BIO_SHIELDED,
@@ -358,14 +408,16 @@
 	unavailable_at_fab = 1
 	has_eyes = FALSE
 	armor = list(
-		melee = ARMOR_MELEE_KNIVES,
+		melee = ARMOR_MELEE_SMALL,
 		bullet = ARMOR_BALLISTIC_SMALL,
-		laser = ARMOR_LASER_SMALL,
-		energy = ARMOR_ENERGY_MINOR,
+		laser = ARMOR_LASER_MINOR,
+		energy = ARMOR_ENERGY_SMALL,
 		bomb = ARMOR_BOMB_PADDED,
 		bio = ARMOR_BIO_SHIELDED,
 		rad = ARMOR_RAD_RESISTANT
 	)
+	speed_modifier = - 0.1
+	coolingefficiency = 0.9
 
 /datum/robolimb/morpheus/monitor
 	company = "Morpheus Monitor."
@@ -390,15 +442,15 @@
 	desc = "This limb has a sturdy and heavy build to it."
 	icon = 'icons/mob/human_races/cyberlimbs/shellguard/shellguard_main.dmi'
 	armor = list(
-		melee = ARMOR_MELEE_RESISTANT,
+		melee = ARMOR_MELEE_KNIVES,
 		bullet = ARMOR_BALLISTIC_SMALL,
 		laser = ARMOR_LASER_SMALL,
-		energy = ARMOR_ENERGY_SMALL,
-		bomb = ARMOR_BOMB_PADDED,
+		energy = ARMOR_ENERGY_MINOR,
+		bomb = ARMOR_BOMB_RESISTANT,
 		bio = ARMOR_BIO_SHIELDED,
 		rad = ARMOR_RAD_RESISTANT
 	)
-	speed_modifier = 0.1
+	speed_modifier = 0.8
 	coolingefficiency = 0.9
 
 /datum/robolimb/shellguard/alt
