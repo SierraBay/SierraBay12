@@ -1,3 +1,5 @@
+#define EXPENSIVE_ROBOLIMB_SELF_REPAIR_CAP 20
+
 /obj/item/stack/cable_coil/use_after(mob/living/carbon/human/target, mob/living/user)
 	if (!istype(target))
 		return FALSE
@@ -15,7 +17,7 @@
 	if (!can_use(use_amount))
 		to_chat(user, SPAN_WARNING("You don't have enough of \the [src] left to repair \the [target]'s [organ.name]."))
 		return TRUE
-	if(organ.expensive && organ.damage >= 10)
+	if(organ.expensive && organ.damage >= EXPENSIVE_ROBOLIMB_SELF_REPAIR_CAP)
 		to_chat(user, SPAN_WARNING("\The [target]'s [organ.name] cannot be repaired with such simple tools - \the [src] cannot repair it."))
 		return TRUE
 	if(organ.robo_repair(3 * use_amount, DAMAGE_BURN, "some damaged wiring", src, user))
@@ -46,7 +48,7 @@
 	if (!can_use(2, user, silent = TRUE)) //The surgery check above already returns can_use's feedback.
 		return TRUE
 
-	if(S.expensive && S.damage >= 10)
+	if(S.expensive && S.damage >= EXPENSIVE_ROBOLIMB_SELF_REPAIR_CAP)
 		to_chat(user, SPAN_WARNING("\The [target]'s [S.name] cannot be repaired with such simple tools - \the [src] cannot repair it."))
 		return TRUE
 
@@ -77,10 +79,9 @@
 	if (BP_IS_BRITTLE(S))
 		to_chat(user, SPAN_WARNING("\The [target]'s [S.name] is hard and brittle - \the [src] cannot repair it."))
 		return TRUE
-	if(do_after(usr, 2.5 SECONDS, src, DO_PUBLIC_UNIQUE))
-		if(S.robo_repair(25, DAMAGE_BRUTE, "some broken elements", src, user))
-			qdel(src)
-			return TRUE
+	if(S.robo_repair(25, DAMAGE_BRUTE, "some broken elements", src, user))
+		qdel(src)
+		return TRUE
 
 	else return FALSE
 
@@ -154,12 +155,14 @@
 	SPAN_NOTICE("You finish install new [tool.name] to [target]'s [affected.name]"))
 	affected.heal_damage(rand(30,50),0,1,1)
 	affected.status &= ~ORGAN_DISFIGURED
+	qdel(tool)
 
 /singleton/surgery_step/robotics/repair_brute_manipulator/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/affected = target.get_organ(target_zone)
 	user.visible_message(SPAN_WARNING("[user]'s [tool.name] slips, damaging the internal structure of [target]'s [affected.name]."),
 	SPAN_WARNING("Your [tool.name] slips, damaging the internal structure of [target]'s [affected.name]."))
 	target.apply_damage(rand(5,10), DAMAGE_BURN, affected)
+	qdel(tool)
 
 /singleton/surgery_step/robotics/repair_burn_capacitor
 	name = "Repair burns on prosthetic with capacitor"
@@ -207,9 +210,66 @@
 	SPAN_NOTICE("You finishes install new [tool.name] into [target]'s [affected.name]."))
 	affected.heal_damage(0,rand(30,50),1,1)
 	affected.status &= ~ORGAN_DISFIGURED
+	qdel(tool)
 
 /singleton/surgery_step/robotics/repair_burn_capacitor/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/affected = target.get_organ(target_zone)
 	user.visible_message(SPAN_WARNING("[user] causes a short circuit in [target]'s [affected.name]!"),
 	SPAN_WARNING("You cause a short circuit in [target]'s [affected.name]!"))
 	target.apply_damage(rand(5,10), DAMAGE_BURN, affected)
+	qdel(tool)
+
+
+/obj/item/organ/external/robo_repair(repair_amount, damage_type, damage_desc, obj/item/tool, mob/living/user)
+	if((!BP_IS_ROBOTIC(src)))
+		return 0
+
+	var/damage_amount
+	switch(damage_type)
+		if (DAMAGE_BRUTE)
+			damage_amount = brute_dam
+		if (DAMAGE_BURN)
+			damage_amount = burn_dam
+		else return 0
+
+	if(!damage_amount)
+		if(src.hatch_state != HATCH_OPENED)
+			to_chat(user, SPAN_NOTICE("Nothing to fix!"))
+		return 0
+
+	else if(damage_amount >= ROBOLIMB_SELF_REPAIR_CAP && !src.expensive)
+		to_chat(user, SPAN_DANGER("The damage is far too severe to patch over externally."))
+		return 0
+
+	else if(damage_amount >= EXPENSIVE_ROBOLIMB_SELF_REPAIR_CAP && src.expensive)
+		to_chat(user, SPAN_DANGER("The damage is far too severe to patch over externally."))
+		return 0
+
+	else if(user == src.owner)
+		var/grasp
+		if(user.l_hand == tool && (src.body_part & (ARM_LEFT|HAND_LEFT)))
+			grasp = BP_L_HAND
+		else if(user.r_hand == tool && (src.body_part & (ARM_RIGHT|HAND_RIGHT)))
+			grasp = BP_R_HAND
+
+		if(grasp)
+			to_chat(user, SPAN_WARNING("You can't reach your [src.name] while holding [tool] in your [owner.get_bodypart_name(grasp)]."))
+			return 0
+
+	user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
+	if(!do_after(user, 1 SECOND, owner, DO_SURGERY))
+		return 0
+
+	switch(damage_type)
+		if (DAMAGE_BRUTE)
+			src.heal_damage(repair_amount, 0, 0, 1)
+		if (DAMAGE_BURN)
+			heal_damage(0, repair_amount, 0, 1)
+	owner.regenerate_icons()
+	if(user == src.owner)
+		var/datum/pronouns/pronouns = user.choose_from_pronouns()
+		user.visible_message(SPAN_NOTICE("\The [user] patches [damage_desc] on [pronouns.his] [src.name] with [tool]."))
+	else
+		user.visible_message(SPAN_NOTICE("\The [user] patches [damage_desc] on [owner]'s [src.name] with [tool]."))
+
+	return 1
