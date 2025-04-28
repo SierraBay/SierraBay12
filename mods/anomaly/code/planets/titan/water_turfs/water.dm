@@ -18,6 +18,9 @@
 	)
 	var/swim_delay
 
+/turf/simulated/floor/exoplanet/titan_water/ex_act(severity)
+	return
+
 /turf/simulated/floor/exoplanet/titan_water/minimal
 	name = "low water"
 	deep_status = MIN_DEEP

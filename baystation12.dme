@@ -3047,7 +3047,7 @@
 #include "code\modules\research\designs\designs_exosuits.dm"
 #include "code\modules\research\designs\designs_hud_optical.dm"
 #include "code\modules\research\designs\designs_implant.dm"
-#include "code\modules\research\designs\designs_mechfab.dm"
+//#include "code\modules\research\designs\designs_mechfab.dm"
 #include "code\modules\research\designs\designs_medical.dm"
 #include "code\modules\research\designs\designs_mining.dm"
 #include "code\modules\research\designs\designs_modular_computer.dm"

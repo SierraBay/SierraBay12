@@ -16,8 +16,6 @@
 		return
 
 	var/input = show_radial_menu(user, user, free_hardpoints_images, require_near = TRUE, radius = 42, tooltips = TRUE, check_locs = list(src))
-	if (!input || !user.use_sanity_check(src, tool, SANITY_CHECK_DEFAULT | SANITY_CHECK_TOOL_UNEQUIP))
-		return
 	if (hardpoints[input] != null)
 		USE_FEEDBACK_FAILURE("\The [input] slot on \the [src] is no longer free. It has \a [hardpoints[input]] attached.")
 		return

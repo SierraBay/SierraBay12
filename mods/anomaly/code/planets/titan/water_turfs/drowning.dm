@@ -3,7 +3,8 @@
 		user.client.play_screentext_on_client_screen(input_text = "Вы ушли на дно морское", holding_on_screen_time = 3 SECONDS, delay_between_words = 0.025 SECONDS)
 		qdel(user)
 	else if(effect_to_drowning == DEEQUIP)
-		user.client.play_screentext_on_client_screen(input_text = "Тону! Скидываю с себя всё что только можно!", holding_on_screen_time = 3 SECONDS, delay_between_words = 0.025 SECONDS)
+		if(user.client)
+			user.client.play_screentext_on_client_screen(input_text = "Тону! Скидываю с себя всё что только можно!", holding_on_screen_time = 3 SECONDS, delay_between_words = 0.025 SECONDS)
 		user.dir = SOUTH
 		user.resting = TRUE
 		user.UpdateLyingBuckledAndVerbStatus()

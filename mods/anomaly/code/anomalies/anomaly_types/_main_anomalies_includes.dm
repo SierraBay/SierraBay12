@@ -1,8 +1,8 @@
 
 //Электрические
-#include "electra\electra_includes.dm"
+#include "electra\_electra.dm"
 //Гравитационные
-#include "rvach.dm"
+#include "rvach\rvach.dm"
 //#include "circus\circus_includes.dm" [WIP]
 #include "tramplin.dm"
 #include "ventilyator.dm" //[WIP]

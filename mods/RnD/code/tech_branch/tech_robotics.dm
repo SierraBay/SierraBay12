@@ -163,7 +163,7 @@
 	required_tech_levels = list()
 	cost = 1500
 
-	unlocks_designs = list("mech_rcd","mech_ionjets","mech_atmoshields","mech_plasma_auto","exosuit_circuit")
+	unlocks_designs = list("mech_rcd","mech_ionjets","mech_atmoshields","mech_plasma_auto","mech_circuit")
 
 /datum/technology/robo/mech_weapons
 	name = "Mech Weapons"

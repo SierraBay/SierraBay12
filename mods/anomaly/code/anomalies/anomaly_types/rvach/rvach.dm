@@ -1,3 +1,4 @@
+#include "visual.dm"
 //Рвач просто порвёт конечности
 #define RVACH_DAMAGE_EFFECT 2
 //Рвач гибнет, админская штука

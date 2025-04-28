@@ -82,7 +82,7 @@
 		checker = hardpoints["back"]
 	else if(place == "Правый бок" && hardpoints["right shoulder"] != null)
 		checker = hardpoints["right shoulder"]
-	if(checker.disturb_passengers == TRUE)
+	if(checker && checker.disturb_passengers == TRUE)
 		to_chat(user, SPAN_NOTICE("[place] перекрыт из-за [checker]."))
 		return FALSE
 	return TRUE
