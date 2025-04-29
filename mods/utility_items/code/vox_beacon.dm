@@ -1,3 +1,6 @@
+#include "packs\factions\iccgn\clothing.dm"
+
+
 /obj/structure/closet/crate/vox_sierra
 	name = "Vox crate"
 	desc = "Fashion box"
