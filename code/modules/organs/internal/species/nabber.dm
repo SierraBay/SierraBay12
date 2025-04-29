@@ -60,7 +60,7 @@
 /obj/item/organ/internal/eyes/insectoid/nabber/proc/remove_shield()
 	owner.clear_fullscreen("eyeshield")
 
-/obj/item/organ/internal/eyes/nabber/Initialize()
+/obj/item/organ/internal/eyes/nabber/New(mob/living/carbon/holder)
 	. = ..()
 	if(dna)
 		color = rgb(dna.GetUIValue(DNA_UI_EYES_R), dna.GetUIValue(DNA_UI_EYES_G), dna.GetUIValue(DNA_UI_EYES_B))
@@ -193,12 +193,12 @@
 			if(prob(15))
 				to_chat(owner, SPAN_WARNING("You're almost unable to move!"))
 				if(!owner.pulling_punches)
-					var/singleton/species/nabber/nab = species
+					var/datum/species/nabber/nab = species
 					nab.arm_swap(owner, TRUE)
 		if(-(INFINITY) to BLOOD_VOLUME_SURVIVE)
 			lowblood_tally = 10
 			if(prob(30) && !owner.pulling_punches)
-				var/singleton/species/nabber/nab = species
+				var/datum/species/nabber/nab = species
 				nab.arm_swap(owner, TRUE)
 			if(prob(10))
 				to_chat(owner, SPAN_WARNING("Your body is barely functioning and is starting to shut down."))

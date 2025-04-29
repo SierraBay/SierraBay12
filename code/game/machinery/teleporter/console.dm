@@ -182,10 +182,9 @@
 		if (QDELETED(T) || !T.implanted || !ismob(T.loc))
 			continue
 		var/mob/M = T.loc
-		var/turf/TT = get_turf(M)
 		if (M.stat == DEAD && world.time > M.timeofdeath + 15 MINUTES)
 			continue
-		if (!isPlayerLevel(TT.z))
+		if (!isPlayerLevel(M.z))
 			continue
 		result["[M.name] \[[++ids[M.name]]\]"] = T
 	return result

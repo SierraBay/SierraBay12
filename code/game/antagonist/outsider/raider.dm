@@ -1,4 +1,4 @@
-GLOBAL_TYPED_NEW(raiders, /datum/antagonist/raider)
+GLOBAL_DATUM_INIT(raiders, /datum/antagonist/raider, new)
 
 /datum/antagonist/raider
 	id = MODE_RAIDER

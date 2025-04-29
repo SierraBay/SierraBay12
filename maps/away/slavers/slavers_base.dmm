@@ -4690,7 +4690,7 @@
 /turf/simulated/floor/tiled,
 /area/slavers_base/dorms)
 "sX" = (
-/obj/machinery/fabricator/rnd/imprinter,
+/obj/machinery/r_n_d/circuit_imprinter,
 /turf/simulated/floor/tiled/techfloor,
 /area/slavers_base/powatm)
 "sZ" = (
@@ -6804,7 +6804,6 @@
 /area/slavers_base/demo)
 "Uc" = (
 /obj/machinery/fabricator,
-/obj/item/storage/box/autolathe_designs,
 /turf/simulated/floor/tiled/techfloor,
 /area/slavers_base/powatm)
 "Uo" = (

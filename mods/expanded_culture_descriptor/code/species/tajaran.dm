@@ -1,4 +1,4 @@
-/singleton/species/tajaran
+/datum/species/tajaran
 	extended_cultural_info = list(
 		TAG_FACTION = list(
 			FACTION_NANOTRASEN,

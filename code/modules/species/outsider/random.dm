@@ -1,4 +1,4 @@
-/singleton/species/alium
+/datum/species/alium
 	name = SPECIES_ALIEN
 	name_plural = "Humanoids"
 	description = "Some alien humanoid species, unknown to humanity. How exciting."
@@ -28,7 +28,7 @@
 		/singleton/emote/exertion/biological/pant
 	)
 
-/singleton/species/alium/New()
+/datum/species/alium/New()
 	//Coloring
 	blood_color = RANDOM_RGB
 	flesh_color = RANDOM_RGB
@@ -96,10 +96,10 @@
 
 	..()
 
-/singleton/species/alium/get_bodytype(mob/living/carbon/human/H)
+/datum/species/alium/get_bodytype(mob/living/carbon/human/H)
 	return SPECIES_HUMAN
 
-/singleton/species/alium/proc/adapt_to_atmosphere(datum/gas_mixture/atmosphere)
+/datum/species/alium/proc/adapt_to_atmosphere(datum/gas_mixture/atmosphere)
 	var/temp_comfort_shift = atmosphere.temperature - body_temperature
 
 	cold_level_1 += temp_comfort_shift

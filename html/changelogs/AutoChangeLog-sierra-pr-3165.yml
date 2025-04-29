@@ -1,0 +1,5 @@
+author: Lexanx
+changes:
+  - {tweak: Убраны медики ЭК для Дион}
+  - {tweak: Добавлены Адьютанты Адхеранты Лоялисты}
+delete-after: true

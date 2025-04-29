@@ -1,6 +1,5 @@
 #include "anomaly_types\_main_anomalies_includes.dm" //Сами аномалии
 #include "premades\_anomaly_premade_includes.dm" //Премейды аномалий
-#include "premades\differents_sizes.dm"
 #include "anomaly_core.dm"
 #include "anomaly_deleting.dm"
 #include "anomaly_electrostatic.dm"

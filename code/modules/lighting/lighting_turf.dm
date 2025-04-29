@@ -151,8 +151,7 @@
 		if (lighting_overlay.loc != src)
 			stack_trace("Lighting overlay variable on turf [log_info_line(src)] is insane, lighting overlay actually located on [log_info_line(lighting_overlay.loc)]!")
 
-		lighting_overlay.safe_to_delete = TRUE //Can kill it now
-		qdel(lighting_overlay)
+		qdel(lighting_overlay, TRUE)
 		lighting_overlay = null
 
 	for (var/datum/lighting_corner/C in corners)

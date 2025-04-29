@@ -35,7 +35,6 @@
 	var/old_hotspot = hotspot
 	var/old_turf_fire = null
 	var/old_opacity = opacity
-	//[SIERRA-REMOVE]var/old_corners = corners
 	var/old_dynamic_lighting = TURF_IS_DYNAMICALLY_LIT_UNSAFE(src)
 	var/old_affecting_lights = affecting_lights
 	var/old_lighting_overlay = lighting_overlay
@@ -91,8 +90,8 @@
 
 	SSair.mark_for_update(src) //handle the addition of the new turf.
 
-	for(var/turf/space/S in range(W,1)) //Special handling for space, needs to check if it needs to illuminate us!
-		AMBIENT_LIGHT_QUEUE_TURF(S)
+	for(var/turf/space/S in range(W,1))
+		S.update_starlight()
 
 	W.above = old_above
 
@@ -106,7 +105,6 @@
 		recalc_atom_opacity()
 		lighting_overlay = old_lighting_overlay
 		affecting_lights = old_affecting_lights
-		//[SIERRA-REMOVE]corners = old_corners
 		if (old_opacity != opacity || dynamic_lighting != old_dynamic_lighting || z_flags != old_zflags || force_lighting_update)
 			reconsider_lights()
 			updateVisibility(src)

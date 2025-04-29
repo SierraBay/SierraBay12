@@ -1,4 +1,4 @@
-GLOBAL_LIST_EMPTY(local_networks)
+GLOBAL_LIST_INIT(local_networks, new)
 
 /datum/local_network
 	var/id_tag
@@ -58,7 +58,7 @@ GLOBAL_LIST_EMPTY(local_networks)
 
 
 //Multilevel network
-GLOBAL_LIST_EMPTY(multilevel_local_networks)
+GLOBAL_LIST_INIT(multilevel_local_networks, new)
 
 /datum/local_network/multilevel/New(_id)
 	id_tag = _id

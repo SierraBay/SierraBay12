@@ -493,14 +493,7 @@
 	if(direction != dir)
 		facedir(direction)
 
-GLOBAL_LIST_INIT(click_catchers)
-	click_catchers = list()
-	var/obj/screen/click_catcher/catcher
-	for (var/i = 0 to 14)
-		for (var/j = 0 to 14)
-			catcher = new
-			catcher.screen_loc = "NORTH-[i],EAST-[j]"
-			click_catchers += catcher
+GLOBAL_LIST_INIT(click_catchers, create_click_catcher())
 
 /obj/screen/click_catcher
 	icon = 'icons/mob/screen_gen.dmi'
@@ -513,6 +506,14 @@ GLOBAL_LIST_INIT(click_catchers)
 	SHOULD_CALL_PARENT(FALSE)
 	return QDEL_HINT_LETMELIVE
 
+/proc/create_click_catcher()
+	RETURN_TYPE(/list)
+	. = list()
+	for(var/i = 0, i<15, i++)
+		for(var/j = 0, j<15, j++)
+			var/obj/screen/click_catcher/CC = new()
+			CC.screen_loc = "NORTH-[i],EAST-[j]"
+			. += CC
 
 /obj/screen/click_catcher/Click(location, control, params)
 	var/list/modifiers = params2list(params)

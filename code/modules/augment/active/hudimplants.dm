@@ -3,7 +3,7 @@
 	desc = "A small implantable heads-up display."
 	icon_state = "eye"
 	action_button_name = "Toggle HUD"
-	augment_slots = AUGMENT_EYES
+	augment_slots = AUGMENT_HEAD
 	var/list/hud_type = list(HUD_MEDICAL, HUD_SECURITY)
 	var/active = FALSE
 

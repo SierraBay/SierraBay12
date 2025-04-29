@@ -16,6 +16,5 @@
 #include "code/bs_silk_by_TT/circuits.dm"
 #include "code/bs_silk_by_TT/accessory.dm"
 #include "code/bs_silk_by_TT/control.dm"
-#include "code/rechargestation.dm"
 
 #endif

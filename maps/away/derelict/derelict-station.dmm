@@ -1748,7 +1748,7 @@
 /turf/simulated/floor,
 /area/constructionsite/storage)
 "fy" = (
-/obj/machinery/fabricator/rnd/imprinter,
+/obj/machinery/r_n_d/circuit_imprinter,
 /turf/simulated/floor/tiled/dark,
 /area/constructionsite/storage)
 "fz" = (
@@ -1756,7 +1756,10 @@
 /turf/simulated/floor,
 /area/constructionsite/storage)
 "fA" = (
-/obj/machinery/fabricator/rnd/protolathe,
+/obj/machinery/r_n_d/protolathe{
+	icon_state = "protolathe_t";
+	reason_broken = 1
+	},
 /turf/simulated/floor,
 /area/constructionsite/storage)
 "fB" = (

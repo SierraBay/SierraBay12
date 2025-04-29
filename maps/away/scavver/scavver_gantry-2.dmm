@@ -22,7 +22,6 @@
 	icon_state = "railing0-1"
 	},
 /obj/machinery/fabricator/hacked,
-/obj/item/storage/box/autolathe_designs,
 /turf/simulated/floor,
 /area/scavver/gantry/up1)
 "ae" = (

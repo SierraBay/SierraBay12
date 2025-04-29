@@ -12,11 +12,11 @@
 	//at 0.26 completely depleted after 60ish minutes of constant walking or 130 minutes of standing still
 	var/servo_cost = 0.26
 
-/obj/item/organ/internal/cell/Initialize()
-	. = ..()
+/obj/item/organ/internal/cell/New()
 	robotize()
 	if(ispath(cell))
 		cell = new cell(src)
+	..()
 
 /obj/item/organ/internal/cell/proc/percent()
 	if(!cell)
@@ -120,16 +120,12 @@
 	stored_mmi = null
 	return ..()
 
-/obj/item/organ/internal/mmi_holder/Initialize()
-	. = ..()
+/obj/item/organ/internal/mmi_holder/New(mob/living/carbon/human/new_owner, internal)
+	..(new_owner, internal)
 	if(!stored_mmi)
 		stored_mmi = new(src)
-	return INITIALIZE_HINT_LATELOAD
-
-/obj/item/organ/internal/mmi_holder/LateInitialize()
+	sleep(-1)
 	update_from_mmi()
-	if (!owner)
-		return
 	persistantMind = owner.mind
 	ownerckey = owner.ckey
 

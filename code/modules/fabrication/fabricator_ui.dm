@@ -1,4 +1,4 @@
-/*#define PRINT_MULTIPLIER_DIVISOR 5 [SIERRA-REMOVE] - MODPACK_RND
+#define PRINT_MULTIPLIER_DIVISOR 5
 
 /obj/machinery/fabricator/ui_interact(mob/user, ui_key = "rcon", datum/nanoui/ui=null, force_open=1)
 
@@ -89,4 +89,3 @@
 	return TRUE
 
 #undef PRINT_MULTIPLIER_DIVISOR
-*/

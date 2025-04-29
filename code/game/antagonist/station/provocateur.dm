@@ -1,4 +1,4 @@
-GLOBAL_TYPED_NEW(provocateurs, /datum/antagonist/provocateur)
+GLOBAL_DATUM_INIT(provocateurs, /datum/antagonist/provocateur, new)
 
 /datum/antagonist/provocateur
 	id = MODE_MISC_AGITATOR

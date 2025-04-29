@@ -1,4 +1,4 @@
-/singleton/species/tajaran
+/datum/species/tajaran
 	name = SPECIES_TAJARA
 	name_plural = "Tajaran"
 	icobase = 'mods/tajara/icons/tajara_body/body.dmi'
@@ -60,11 +60,7 @@
 		/singleton/emote/human/qwag,
 		/singleton/emote/human/fastsway,
 		/singleton/emote/human/swag,
-		/singleton/emote/human/stopsway,
-		/singleton/emote/audible/cat_purr,
-		/singleton/emote/audible/cat_purr/long,
-		/singleton/emote/audible/cat_purr/strong,
-		/singleton/emote/audible/hiss
+		/singleton/emote/human/stopsway
 		)
 
 	spawn_flags = SPECIES_CAN_JOIN | SPECIES_IS_WHITELISTED
@@ -155,7 +151,7 @@
 	name = "tajara eyes"
 
 
-/singleton/species/tajaran/equip_survival_gear(mob/living/carbon/human/H)
+/datum/species/tajaran/equip_survival_gear(mob/living/carbon/human/H)
 	..()
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(H),slot_shoes)
 	H.equip_to_slot_or_del(new /obj/item/clothing/glasses/tajblind(H),slot_glasses)

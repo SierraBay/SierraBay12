@@ -1,0 +1,5 @@
+author: Mucker
+changes:
+  - {bugfix: Fixed the laser impact effect persisting forever if the target was on
+      the same turf the laser was fired from.}
+delete-after: true

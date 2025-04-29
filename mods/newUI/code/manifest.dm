@@ -1,4 +1,4 @@
-GLOBAL_TYPED_NEW(manifest_state, /datum/topic_state/manifest)
+GLOBAL_DATUM_INIT(manifest_state, /datum/topic_state/manifest, new)
 
 /datum/topic_state/manifest/can_use_topic(src_object, mob/user)
 	return STATUS_INTERACTIVE

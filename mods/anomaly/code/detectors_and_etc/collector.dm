@@ -18,6 +18,7 @@
 	else
 		..()
 
+
 /obj/item/collector/use_tool(obj/item/item, mob/living/user, list/click_params)
 	. = ..()
 	if(closed)
@@ -93,8 +94,6 @@
 		icon_state = "collector_zjar"
 	else if(istype(stored_artefact, /obj/item/artefact/gravi))
 		icon_state = "collector_gravi"
-	else if(istype(stored_artefact, /obj/item/artefact/flyer))
-		icon_state = "collector_flyer"
 	else if(!stored_artefact)
 		icon_state = "collector_empty"
 

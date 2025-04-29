@@ -59,6 +59,10 @@
 	name = "\improper Colony Lavatory"
 	icon_state = "shower"
 
+/area/map_template/colony/commons
+	name = "\improper Colony Common Area"
+	icon_state = "A"
+
 /area/map_template/colony/messhall
 	name = "\improper Colony Mess Hall"
 	icon_state = "B"

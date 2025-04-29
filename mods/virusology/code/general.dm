@@ -1,29 +1,29 @@
-/singleton/species
+/datum/species
 	var/virus_immune
 
-/singleton/species/adherent
+/datum/species/adherent
 	virus_immune = 1
 
-/singleton/species/machine
+/datum/species/machine
 	virus_immune = 1
 
-/singleton/species/vox
+/datum/species/vox
 	virus_immune = 1
 
-/singleton/species/starlight
+/datum/species/starlight
 	virus_immune = 1
 
-/singleton/species/alium
+/datum/species/alium
 	virus_immune = 1
 
-/singleton/species/mantid
+/datum/species/mantid
 	virus_immune = 1
 
 
-/singleton/species/shapeshifter/promethean
+/datum/species/shapeshifter/promethean
 	virus_immune = 1
 
-/singleton/species/proc/get_virus_immune(mob/living/carbon/human/H)
+/datum/species/proc/get_virus_immune(mob/living/carbon/human/H)
 	return ((H && H.isSynthetic()) ? 1 : virus_immune)
 
 ///

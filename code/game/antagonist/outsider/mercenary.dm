@@ -1,4 +1,4 @@
-GLOBAL_TYPED_NEW(mercs, /datum/antagonist/mercenary)
+GLOBAL_DATUM_INIT(mercs, /datum/antagonist/mercenary, new)
 
 /datum/antagonist/mercenary
 	id = MODE_MERCENARY

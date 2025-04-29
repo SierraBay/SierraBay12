@@ -6,7 +6,7 @@
 //		Arguments that the called proc should expect:
 //			/mob/dead: The mob that was added to the life_mob_list
 
-GLOBAL_TYPED_NEW(life_event, /singleton/observ/life)
+GLOBAL_DATUM_INIT(life_event, /singleton/observ/life, new)
 
 /singleton/observ/life
 	name = "Life"

@@ -1,4 +1,4 @@
-GLOBAL_TYPED_NEW(paramounts, /datum/antagonist/paramount)
+GLOBAL_DATUM_INIT(paramounts, /datum/antagonist/paramount, new)
 
 /datum/antagonist/paramount
 	id = MODE_PARAMOUNT

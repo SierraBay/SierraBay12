@@ -1,4 +1,4 @@
-GLOBAL_TYPED_NEW(malf, /datum/antagonist/rogue_ai)
+GLOBAL_DATUM_INIT(malf, /datum/antagonist/rogue_ai, new)
 
 /datum/antagonist/rogue_ai
 	id = MODE_MALFUNCTION

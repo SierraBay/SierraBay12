@@ -172,7 +172,7 @@
 	return list(/obj/random/medical/lite = 21,
 				/obj/item/bodybag = 2,
 				/obj/item/reagent_containers/glass/bottle/inaprovaline = 2,
-				/obj/item/reagent_containers/glass/bottle/dylovene = 2,
+				/obj/item/reagent_containers/glass/bottle/antitoxin = 2,
 				/obj/item/storage/pill_bottle = 2,
 				/obj/item/storage/pill_bottle/tramadol = 1,
 				/obj/item/storage/pill_bottle/citalopram = 2,
@@ -939,7 +939,7 @@
 				/obj/item/clothing/accessory/glassesmod/nvg = 1
 				)
 
-GLOBAL_LIST_AS(random_backpacks, list(
+GLOBAL_LIST_INIT(random_backpacks, list(
 	/obj/item/storage/backpack/cultpack,
 	/obj/item/storage/backpack/clown,
 	/obj/item/storage/backpack/medic,

@@ -8,14 +8,14 @@
 	usable_emotes = sortAssoc(usable_emotes)
 
 // Specific defines follow.
-/singleton/species/slime/default_emotes = list(
+/datum/species/slime/default_emotes = list(
 	/singleton/emote/visible/bounce,
 	/singleton/emote/visible/jiggle,
 	/singleton/emote/visible/lightup,
 	/singleton/emote/visible/vibrate
 )
 
-/singleton/species/unathi/default_emotes = list(
+/datum/species/unathi/default_emotes = list(
 	/singleton/emote/human/swish,
 	/singleton/emote/human/wag,
 	/singleton/emote/human/sway,
@@ -26,7 +26,7 @@
 	/singleton/emote/audible/lizard_bellow
 )
 
-/singleton/species/unathi/yeosa/default_emotes = list(
+/datum/species/unathi/yeosa/default_emotes = list(
 	/singleton/emote/human/swish,
 	/singleton/emote/human/wag,
 	/singleton/emote/human/sway,
@@ -38,22 +38,22 @@
 	/singleton/emote/audible/lizard_squeal
 )
 
-/singleton/species/nabber/default_emotes = list(
+/datum/species/nabber/default_emotes = list(
 	/singleton/emote/audible/bug_hiss,
 	/singleton/emote/audible/bug_buzz,
 	/singleton/emote/audible/bug_chitter
 )
 
-/singleton/species/adherent/default_emotes = list(
+/datum/species/adherent/default_emotes = list(
 	/singleton/emote/audible/adherent_chime,
 	/singleton/emote/audible/adherent_ding
 )
 
-/singleton/species/vox/default_emotes = list(
+/datum/species/vox/default_emotes = list(
 	/singleton/emote/audible/vox_shriek
 )
 
-/singleton/species/diona/default_emotes = list(
+/datum/species/diona/default_emotes = list(
 	/singleton/emote/audible/chirp,
 	/singleton/emote/audible/multichirp
 )

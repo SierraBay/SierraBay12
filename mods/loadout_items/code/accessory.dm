@@ -284,19 +284,19 @@ ranks - ec
 		return
 	user.set_machine(src)
 	var/dat = {"<TT>
-			<a href='byond://?src=\ref[src];power=1'>Turn [on ? "Off" : "On"]</A><BR>
+			<A href='?src=\ref[src];power=1'>Turn [on ? "Off" : "On"]</A><BR>
 			<B>Frequency/Code</B> for collar:<BR>
 			Frequency:
-			<a href='byond://?src=\ref[src];freq=-10'>-</A>
-			<a href='byond://?src=\ref[src];freq=-2'>-</A> [format_frequency(frequency)]
-			<a href='byond://?src=\ref[src];freq=2'>+</A>
-			<a href='byond://?src=\ref[src];freq=10'>+</A><BR>
+			<A href='byond://?src=\ref[src];freq=-10'>-</A>
+			<A href='byond://?src=\ref[src];freq=-2'>-</A> [format_frequency(frequency)]
+			<A href='byond://?src=\ref[src];freq=2'>+</A>
+			<A href='byond://?src=\ref[src];freq=10'>+</A><BR>
 
 			Code:
-			<a href='byond://?src=\ref[src];code=-5'>-</A>
-			<a href='byond://?src=\ref[src];code=-1'>-</A> [code]
-			<a href='byond://?src=\ref[src];code=1'>+</A>
-			<a href='byond://?src=\ref[src];code=5'>+</A><BR>
+			<A href='byond://?src=\ref[src];code=-5'>-</A>
+			<A href='byond://?src=\ref[src];code=-1'>-</A> [code]
+			<A href='byond://?src=\ref[src];code=1'>+</A>
+			<A href='byond://?src=\ref[src];code=5'>+</A><BR>
 			</TT>"}
 	show_browser(user, dat, "window=radio")
 	onclose(user, "radio")
@@ -313,47 +313,3 @@ ranks - ec
 	item_icons = list(
 		slot_wear_mask_str = 'mods/loadout_items/icons/onmob_accessory.dmi'
 	)
-
-/obj/item/clothing/glasses/prescription/hitech
-	name = "high-tech blue visor"
-	desc = "Blue glistening visor for vision corrective."
-	item_icons = list(slot_glasses_str = 'mods/loadout_items/icons/onmob_accessory.dmi')
-	icon = 'mods/loadout_items/icons/obj_accessory.dmi'
-	icon_state = "hitech_blue"
-	item_state = "hitech_blue"
-	body_parts_covered = EYES
-	prescription = 7
-
-/obj/item/clothing/glasses/prescription/hitech
-	name = "high-tech blue visor"
-	desc = "Blue glistening visor for vision corrective."
-	item_icons = list(slot_glasses_str = 'mods/loadout_items/icons/onmob_accessory.dmi')
-	icon = 'mods/loadout_items/icons/obj_accessory.dmi'
-	icon_state = "hitech_blue"
-	item_state = "hitech_blue"
-	body_parts_covered = EYES
-	prescription = 7
-
-/obj/item/clothing/glasses/prescription/hitech/red
-	name = "high-tech red visor"
-	desc = "Red glistening visor for vision corrective."
-	icon_state = "hitech_red"
-	item_state = "hitech_red"
-
-/obj/item/clothing/glasses/prescription/hitech/green
-	name = "high-tech green glasses"
-	desc = "Green glistening glasses for vision corrective."
-	icon_state = "hitech_green"
-	item_state = "hitech_green"
-
-/obj/item/clothing/glasses/prescription/hitech/purple
-	name = "high-tech purple visor"
-	desc = "Purple glistening visor for vision corrective."
-	icon_state = "hitech_purple"
-	item_state = "hitech_purple"
-
-/obj/item/clothing/glasses/prescription/hitech/retro
-	name = "high-tech retro glasses"
-	desc = "Dark green glistening glasses for vision corrective."
-	icon_state = "hitech_retro"
-	item_state = "hitech_retro"

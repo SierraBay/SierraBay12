@@ -123,9 +123,3 @@
 	node2 = null
 
 	. = ..()
-
-/obj/machinery/atmospherics/binary/return_air()			
-	if(air1.return_pressure() > air2.return_pressure())
-		return air1
-	else
-		return air2

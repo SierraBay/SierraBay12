@@ -1,4 +1,4 @@
-/singleton/species/unathi/default_emotes = list(
+/datum/species/unathi/default_emotes = list(
 	/singleton/emote/human/swish,
 	/singleton/emote/human/wag,
 	/singleton/emote/human/sway,
@@ -14,7 +14,7 @@
 	/singleton/emote/audible/lizard_threat
 )
 
-/singleton/species/unathi/yeosa/default_emotes = list(
+/datum/species/unathi/yeosa/default_emotes = list(
 	/singleton/emote/human/swish,
 	/singleton/emote/human/wag,
 	/singleton/emote/human/sway,

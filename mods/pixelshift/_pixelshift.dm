@@ -1,4 +1,4 @@
-/singleton/modpack/pixelshift
+/singleton/modpack/example
 	name = "Pixel Shift"
-	desc = "Добавляет возможность с зажатым V и нажатиями WASD изменять смещение персонажа."
-	author = "Lexanx"
+	desc = "Pixel Shift."
+	author = "Твой никнейм"

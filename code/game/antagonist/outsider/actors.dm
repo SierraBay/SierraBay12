@@ -1,4 +1,4 @@
-GLOBAL_TYPED_NEW(actor, /datum/antagonist/actor)
+GLOBAL_DATUM_INIT(actor, /datum/antagonist/actor, new)
 
 /datum/antagonist/actor
 	id = MODE_ACTOR

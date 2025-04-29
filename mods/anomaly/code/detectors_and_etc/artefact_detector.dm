@@ -6,7 +6,7 @@
 	icon_state = "medv_turned_off"
 	item_state = "on_floor_off"
 	//on_turf_icon = 'mods/anomaly/icons/artefact_detector_on_floor.dmi'
-	var/capturing_method = "LONGEST" //RANDOM - любой на Z уровне. CLOSEST - ближайший на Z уровне. LONGEST - дальнейший на Z уровне.
+	var/capturing_method = "RANDOM" //RANDOM - любой на Z уровне. CLOSEST - ближайший на Z уровне. LONGEST - дальнейший на Z уровне.
 	var/status = FALSE
 	var/showing_artefact = FALSE //Детектор уже указывает куда-то
 	var/obj/item/artefact/captured_artefact
@@ -66,7 +66,7 @@
 
 	var/list/good_z_artefacts_list = list()
 	for(var/obj/item/artefact/choosed_artefact in SSanom.artefacts_list_in_world)
-		if(get_z(src) == get_z(choosed_artefact) && !istype(choosed_artefact.loc, /obj/item/collector))
+		if(get_z(src) == get_z(choosed_artefact))
 			LAZYADD(good_z_artefacts_list,choosed_artefact)
 
 	if(!LAZYLEN(good_z_artefacts_list)) //Артефакты то есть в мире, но не на нашем Z уровне
@@ -76,25 +76,8 @@
 	if(capturing_method == "RANDOM")
 		capture_artefact(pick(good_z_artefacts_list))
 	else if(capturing_method == "CLOSEST")
-		var/closest_distance = 10000
-		var/obj/item/current_artefact
-		for(var/obj/item/artefact in good_z_artefacts_list)
-			var/local_distance = get_dist(get_turf(src), get_turf(artefact))
-			if(local_distance < closest_distance)
-				current_artefact = artefact
-				closest_distance = local_distance
-		if(current_artefact)
-			capture_artefact(current_artefact)
+		return
 	else if(capturing_method == "LONGEST")
-		var/longest_distance = 0
-		var/obj/item/current_artefact
-		for(var/obj/item/artefact in good_z_artefacts_list)
-			var/local_distance = get_dist(get_turf(src), get_turf(artefact))
-			if(local_distance > longest_distance)
-				current_artefact = artefact
-				longest_distance = local_distance
-		if(current_artefact)
-			capture_artefact(current_artefact)
 		return
 
 

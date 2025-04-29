@@ -1,4 +1,3 @@
-/*
 /area/hallway/primary/bridgedeck/center
 	name = "Bridge - Hallway - Central"
 	icon_state = "hallC3"
@@ -37,7 +36,7 @@
 	name = "Bridge - Living - Cryogenic Storage"
 	area_flags = AREA_FLAG_RAD_SHIELDED | AREA_FLAG_ION_SHIELDED
 	holomap_color = HOLOMAP_AREACOLOR_CREW
-*/
+
 /* COMMAND AREAS
  * =============
  */
@@ -53,14 +52,14 @@
 	name = "Bridge - Command - Captain's Cabin"
 	icon_state = "heads_cap"
 	holomap_color = HOLOMAP_AREACOLOR_COMMAND
-/*
+
 /area/crew_quarters/heads/captain/beach
 	name = "Bridge - Command - Captain's Recreation Facility"
 	icon_state = "heads_cap"
 	holomap_color = HOLOMAP_AREACOLOR_COMMAND
-*/
+
 /area/bridge
-	name = "Second Deck - Bridge"
+	name = "Bridge Deck - Bridge"
 	icon_state = "bridge"
 	req_access = list(access_bridge)
 	ambience = list('maps/sierra/sound/ambience/bridge.wav')
@@ -68,52 +67,36 @@
 
 /area/bridge/nano
 	icon = 'maps/sierra/icons/turf/areas.dmi'
-	name = "Second Deck - Bridge - Entrance"
+	name = "Bridge Deck - Entrance"
 	icon_state = "bridge_room"
 
 /area/bridge/meeting_room
-	name = "Second Deck - Command - Meeting Room"
+	name = "Bridge - Command - Meeting Room"
 	icon_state = "briefing_room"
 	ambience = list()
 	sound_env = MEDIUM_SOFTFLOOR
 
 /area/bridge/marine_room
 	icon = 'maps/sierra/icons/turf/areas.dmi'
-	name = "Second Deck - Command - Briefing Room"
+	name = "Bridge - Command - Briefing Room"
 	icon_state = "bridge_room"
 
 /area/bridge/lobby
-	name = "Second Deck - Bridge - Lobby"
+	name = "Bridge - Lobby"
 	req_access = list()
 
 /area/bridge/hallway
-	name = "Second Deck - Bridge - Hallway"
-/*
+	name = "Bridge - Hallway"
+
 /area/bridge/storage
 	name = "Bridge - Storage"
 	req_access = list(access_bridge)
-*/
+
 /area/teleporter
-	name = "First Deck - Teleporter"
+	name = "Bridge - Teleporter"
 	icon_state = "teleporter"
 	sound_env = SMALL_ENCLOSED
 	req_access = list(access_teleporter)
-	holomap_color = HOLOMAP_AREACOLOR_COMMAND
-
-/area/crew_quarters/heads/office/iaa
-	icon_state = "heads_cl"
-	name = "Bridge - Command - IAA's Office"
-	req_access = list(access_iaa)
-	holomap_color = HOLOMAP_AREACOLOR_COMMAND
-
-/area/crew_quarters/heads/office/iaa/high_sec
-	name = "Bridge - Command - IAA's Communication Relay"
-	holomap_color = HOLOMAP_AREACOLOR_COMMAND
-
-/area/crew_quarters/heads/office/hop
-	name = "Bridge - Command - HoP's Office"
-	icon_state = "heads_hop"
-	req_access = list(access_hop)
 	holomap_color = HOLOMAP_AREACOLOR_COMMAND
 
 // AI
@@ -133,7 +116,7 @@
 /area/turret_protected/ai
 	name = "AI Chamber"
 	icon_state = "ai_chamber"
-/*
+
 /area/turret_protected/ai_maint
 	name = "AI Chamber - Maintenance"
 	icon_state = "ai_chamber"
@@ -141,13 +124,13 @@
 /area/turret_protected/ai_teleport
 	name = "AI Chamber - Teleporter"
 	icon_state = "ai_upload"
-*/
+
 /area/turret_protected/ai_upload
 	name = "Third Deck - AI Upload"
 	icon_state = "ai_upload"
 
 // Heads Quarters
-/*
+
 /area/crew_quarters/safe_room/bridge
 	name = "Bridge - Safe Room"
 
@@ -175,13 +158,25 @@
 	req_access = list(access_hos)
 	holomap_color = HOLOMAP_AREACOLOR_COMMAND
 
-
+/area/crew_quarters/heads/office/hop
+	name = "Bridge - Command - HoP's Office"
+	icon_state = "heads_hop"
+	req_access = list(access_hop)
+	holomap_color = HOLOMAP_AREACOLOR_COMMAND
 
 /area/crew_quarters/heads/office/hop/cobed
 	name = "Bridge - Command - HoP's Quarters"
 	holomap_color = HOLOMAP_AREACOLOR_COMMAND
 
+/area/crew_quarters/heads/office/iaa
+	icon_state = "heads_cl"
+	name = "Bridge - Command - IAA's Office"
+	req_access = list(access_iaa)
+	holomap_color = HOLOMAP_AREACOLOR_COMMAND
 
+/area/crew_quarters/heads/office/iaa/high_sec
+	name = "Bridge - Command - IAA's Communication Relay"
+	holomap_color = HOLOMAP_AREACOLOR_COMMAND
 
 /area/crew_quarters/heads/office/iaa/iso_quarters
 	name = "Bridge - Command - ISO's Quarters"
@@ -192,20 +187,21 @@
 	name = "Bridge - Command - IAA's Quarters"
 	area_flags = AREA_FLAG_RAD_SHIELDED
 	holomap_color = HOLOMAP_AREACOLOR_COMMAND
-*/
+
 /area/bridge/adjutants
-	name = "First Deck - Bridge - Adjutants Room"
+	name = "Bridge - Adjutants Room"
 	icon = 'maps/sierra/icons/turf/areas.dmi'
 	icon_state = "bridge_gun"
 	holomap_color = HOLOMAP_AREACOLOR_COMMAND
 
-/area/crew_quarters/heads/captain/secret_room/level_one
-	name = "Second Deck - Captain's restroom"
-	area_flags = AREA_FLAG_RAD_SHIELDED
-/*
 /area/bridge/adjutants/cobed
 	name = "Bridge - Adjutants Dormintories"
 	holomap_color = HOLOMAP_AREACOLOR_COMMAND
+
+
+/area/crew_quarters/heads/captain/secret_room/level_one
+	name = "Second Deck - Captain's restroom"
+	area_flags = AREA_FLAG_RAD_SHIELDED
 
 /area/crew_quarters/head_big
 	name = "Bridge - Living - Restroom"
@@ -213,9 +209,9 @@
 	sound_env = SMALL_ENCLOSED
 	area_flags = AREA_FLAG_RAD_SHIELDED | AREA_FLAG_ION_SHIELDED
 	holomap_color = HOLOMAP_AREACOLOR_CREW
-*/
+
 // Solars
-/*
+
 /area/maintenance/solar/bridge_port
 	name = "Bridge - Solar - Port"
 	icon_state = "SolarcontrolP"
@@ -240,4 +236,3 @@
 	sound_env = SMALL_ENCLOSED
 	req_access = list(access_atmospherics)
 	holomap_color = HOLOMAP_AREACOLOR_ENGINEERING
-*/

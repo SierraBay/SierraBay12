@@ -1,4 +1,4 @@
-GLOBAL_TYPED_NEW(commandos, /datum/antagonist/deathsquad/mercenary)
+GLOBAL_DATUM_INIT(commandos, /datum/antagonist/deathsquad/mercenary, new)
 
 /datum/antagonist/deathsquad/mercenary
 	id = MODE_COMMANDO

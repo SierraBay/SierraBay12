@@ -18,13 +18,13 @@
 //			/obj/shuttle_landmark/old_location: the old location's shuttle landmark
 //			/obj/shuttle_landmark/new_location: the new location's shuttle landmark
 
-GLOBAL_TYPED_NEW(shuttle_moved_event, /singleton/observ/shuttle_moved)
+GLOBAL_DATUM_INIT(shuttle_moved_event, /singleton/observ/shuttle_moved, new)
 
 /singleton/observ/shuttle_moved
 	name = "Shuttle Moved"
 	expected_type = /datum/shuttle
 
-GLOBAL_TYPED_NEW(shuttle_pre_move_event, /singleton/observ/shuttle_pre_move)
+GLOBAL_DATUM_INIT(shuttle_pre_move_event, /singleton/observ/shuttle_pre_move, new)
 
 /singleton/observ/shuttle_pre_move
 	name = "Shuttle Pre Move"

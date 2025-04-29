@@ -34,9 +34,9 @@
 		dat += "[SPAN_COLOR("#005500", "Data stored in memory.")]<BR>"
 	else
 		dat += "No data stored in memory.<BR>"
-	dat += "<a href='byond://?src=\ref[src];scan=1'>\[Scan\]</A>"
+	dat += "<A href='?src=\ref[src];scan=1'>\[Scan\]</A>"
 	if(cache)
-		dat += "       <a href='byond://?src=\ref[src];clear=1'>\[Clear Memory\]</A><BR><BR><a href='byond://?src=\ref[src];eject=1'>\[Remove Book\]</A>"
+		dat += "       <A href='?src=\ref[src];clear=1'>\[Clear Memory\]</A><BR><BR><A href='?src=\ref[src];eject=1'>\[Remove Book\]</A>"
 	else
 		dat += "<BR>"
 	show_browser(user, dat, "window=scanner")

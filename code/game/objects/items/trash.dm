@@ -70,8 +70,6 @@
 	name = "snack bowl"
 	icon_state	= "snack_bowl"
 
-/obj/item/trash/snack_bowl/blue
-	icon_state	= "snack_bowl_blue"
 
 /obj/item/trash/pistachios
 	name = "pistachios pack"
@@ -227,11 +225,3 @@
 /obj/item/trash/usedplatter
 	name = "dirty platter"
 	icon_state = "usedplatter"
-
-/obj/item/trash/ramiken
-	name = "dirty ramiken"
-	icon_state = "ramiken"
-
-/obj/item/trash/pot
-	name = "empty pot"
-	icon_state = "pot_empty"

@@ -1,4 +1,4 @@
-GLOBAL_TYPED_NEW(temp_reagents_holder, /obj)
+GLOBAL_DATUM_INIT(temp_reagents_holder, /obj, new)
 
 /datum/reagents
 	var/list/datum/reagent/reagent_list = list()

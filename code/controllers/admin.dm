@@ -1,20 +1,18 @@
 // Clickable stat() button.
-/obj/clickable_stat
+/atom/movable/clickable_stat
 	name = "Initializing..."
 	var/target
 	var/class
 
-INITIALIZE_IMMEDIATE(/obj/clickable_stat)
+INITIALIZE_IMMEDIATE(/atom/movable/clickable_stat)
 
 
-/obj/clickable_stat/Initialize(mapload, target, name)
+/atom/movable/clickable_stat/Initialize(mapload, new_target)
 	. = ..()
-	src.target = target
-	if (name)
-		src.name = name
+	target = new_target
 
 
-/obj/clickable_stat/Click()
+/atom/movable/clickable_stat/Click()
 	if (!target)
 		return
 	var/client/client = usr?.client

@@ -1,13 +1,13 @@
-/mob/living/carbon/human/electra_mob_effect()
-	if(health == 0)
-		SSanom.add_last_gibbed(src, "Электра")
-		dust()
+/proc/electra_human_effect(mob/living/carbon/human/victim)
+	if(victim.health == 0)
+		SSanom.add_last_gibbed(victim, "Электра")
+		victim.dust()
 		return
 
-	if(lying) //Если цель лежит нам не нужно просчитывать путь до земли. Просто делаем удар в любую конечность
-		electoanomaly_damage(50, null)
+	if(victim.lying) //Если цель лежит нам не нужно просчитывать путь до земли. Просто делаем удар в любую конечность
+		victim.electoanomaly_damage(50, null)
 	else
-		var/list/organs = list_organs_to_earth()
+		var/list/organs = victim.list_organs_to_earth()
 		var/damage = 50/LAZYLEN(organs)
 		for(var/picked_organ in organs)
-			electoanomaly_damage(damage, null, picked_organ)
+			victim.electoanomaly_damage(damage, null, picked_organ)

@@ -1,10 +1,10 @@
-/singleton/species/adherent
+/datum/species/adherent
 	additional_languages = 1
 
 /obj/item/organ/internal/cell/adherent
 	var/ready_to_charge
 
-/singleton/species/adherent/skills_from_age(age)
+/datum/species/adherent/skills_from_age(age)
 	if(age)
 		. = 8
 

@@ -1,4 +1,4 @@
-/singleton/species/machine
+/datum/species/machine
 	extended_cultural_info = list(
 		TAG_HOMEWORLD = list(
 			HOME_SYSTEM_ROOT,

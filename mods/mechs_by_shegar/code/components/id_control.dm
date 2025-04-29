@@ -49,6 +49,3 @@
 	else
 		to_chat(user, "ERROR. ID restore protocol canceled.")
 		return
-
-/mob/living/exosuit/GetIdCard()
-	return access_card

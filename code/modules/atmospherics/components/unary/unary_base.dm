@@ -90,6 +90,3 @@
 	update_underlays()
 
 	return null
-
-/obj/machinery/atmospherics/unary/return_air()
-	return air_contents

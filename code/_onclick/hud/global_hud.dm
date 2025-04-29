@@ -3,7 +3,7 @@
 	Uses the same visual objects for all players.
 */
 
-GLOBAL_TYPED_NEW(global_hud, /datum/global_hud)
+GLOBAL_DATUM_INIT(global_hud, /datum/global_hud, new())
 
 /datum/global_hud
 	var/obj/screen/nvg

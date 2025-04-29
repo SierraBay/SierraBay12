@@ -8,7 +8,7 @@
 //			/obj/item/item: The equipped item.
 //			slot:           The slot equipped to.
 
-GLOBAL_TYPED_NEW(mob_equipped_event, /singleton/observ/mob_equipped)
+GLOBAL_DATUM_INIT(mob_equipped_event, /singleton/observ/mob_equipped, new)
 
 /singleton/observ/mob_equipped
 	name = "Mob Equipped"
@@ -24,7 +24,7 @@ GLOBAL_TYPED_NEW(mob_equipped_event, /singleton/observ/mob_equipped)
 //			/mob/equipper:  The mob that equipped the item.
 //			slot:           The slot equipped to.
 
-GLOBAL_TYPED_NEW(item_equipped_event, /singleton/observ/item_equipped)
+GLOBAL_DATUM_INIT(item_equipped_event, /singleton/observ/item_equipped, new)
 
 /singleton/observ/item_equipped
 	name = "Item Equipped"

@@ -1,4 +1,4 @@
-/*/obj/machinery/fabricator/replicator [SIERRA-REMOVE] - MODPACK_RND
+/obj/machinery/fabricator/replicator
 	name = "food replicator"
 	desc = "A versatile machine that dispenses nourishing but bland food. Responds to voice commands like 'menu' and 'status'."
 	fabricator_class = FABRICATOR_CLASS_FOOD
@@ -44,4 +44,3 @@
 		audible_message("<b>\The [src]</b> states, \"Greetings! I serve the following dishes: [english_list(menu)]\"")
 	else
 		audible_message("<b>\The [src]</b> states, \"Apologies! I cannot serve any dishes at the moment.\"")
-*/

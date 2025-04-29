@@ -1,37 +1,24 @@
-/obj/anomaly
-	///Процедура выполнения вторичных операций при удалении аномалии выполнена
-	var/anomaly_deleting_operation_completed = FALSE
+//В данном файле располагается код отвечающий за удаление аномалий из мира
 
-/obj/anomaly/Destroy()
+
+/obj/anomaly/shuttle_land_on()
 	delete_anomaly()
-	.=..()
 
-
-///Функция НЕ вызывает удаление самой аномалии - оно вызывает вторичные
-///Функции по типу удаления вспомогательных частей, удаление из контроллера и т.д
 /obj/anomaly/proc/delete_anomaly()
-	//Удаление уже выполнено, что-то не тааак
-	if(anomaly_deleting_operation_completed)
-		return
 	SSanom.remove_anomaly_from_cores(src)
 	calculate_effected_turfs_from_deleting_anomaly(src)
 	if(multitile)
 		for(var/obj/anomaly/part in list_of_parts)
-			part.Destroy()
-	anomaly_deleting_operation_completed = TRUE
+			part.delete_anomaly()
+	qdel(src)
 
 /obj/anomaly/part/delete_anomaly()
-	if(anomaly_deleting_operation_completed)
-		return
 	SSanom.remove_anomaly_from_helpers(src)
-	anomaly_deleting_operation_completed = TRUE
+	qdel(src)
 
 
 /obj/anomaly/part/shuttle_land_on()
-	core.Destroy()
+	core.delete_anomaly()
 
 /obj/anomaly/proc/kill_later(time)
-	addtimer(new Callback(src, PROC_REF(call_destroy)), time)
-
-/obj/anomaly/proc/call_destroy()
-	Destroy()
+	addtimer(new Callback(src, PROC_REF(delete_anomaly)), time)

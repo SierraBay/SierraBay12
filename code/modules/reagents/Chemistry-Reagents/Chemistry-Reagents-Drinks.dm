@@ -139,7 +139,7 @@
 /datum/reagent/drink/juice/potato
 	name = "Potato Juice"
 	description = "Juice of the potato. Bleh."
-	taste_description = "potato"
+	taste_description = "irish sadness and potatoes"
 	nutrition = 2
 	color = "#302000"
 
@@ -149,7 +149,7 @@
 /datum/reagent/drink/juice/garlic
 	name = "Garlic Juice"
 	description = "Who would even drink this?"
-	taste_description = "garlic"
+	taste_description = "bad breath"
 	nutrition = 1
 	color = "#eeddcc"
 
@@ -159,7 +159,7 @@
 /datum/reagent/drink/juice/onion
 	name = "Onion Juice"
 	description = "Juice from an onion, for when you need to cry."
-	taste_description = "onion"
+	taste_description = "stinging tears"
 	nutrition = 1
 	color = "#ffeedd"
 

@@ -33,7 +33,7 @@
 	shorthand = "TS"
 
  //AUTOHISS
-/singleton/species/tajaran
+/datum/species/tajaran
 	//Autohiss
 	autohiss_basic_map = list(
 		"r" = list("rr", "rrr", "rrrr"),

@@ -9,7 +9,7 @@
 //
 //		This is called immediately, before the organ is actually moved or deleted.
 
-GLOBAL_TYPED_NEW(dismembered_event, /singleton/observ/dismembered)
+GLOBAL_DATUM_INIT(dismembered_event, /singleton/observ/dismembered, new)
 
 /singleton/observ/dismembered
 	name = "Dismembered"

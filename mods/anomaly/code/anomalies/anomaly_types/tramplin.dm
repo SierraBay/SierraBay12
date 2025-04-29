@@ -28,13 +28,12 @@
 
 /obj/anomaly/tramplin/Initialize()
 	. = ..()
-	if(ranzomize_with_initialize)
-		range_of_throw = rand(2,5)
+	range_of_throw = rand(2,5)
 
 /obj/anomaly/tramplin/activate_anomaly()
-	for(var/obj/item/target in get_turf(src))
+	for(var/obj/item/target in src.loc)
 		get_effect_by_anomaly(target)
-	for(var/mob/living/targetbam in get_turf(src))
+	for(var/mob/living/targetbam in src.loc)
 		get_effect_by_anomaly(targetbam)
 	.=..()
 
@@ -73,5 +72,5 @@
 	else
 		victim.throw_at(target_turf, local_range_of_throw, speed_of_throw)
 
-/obj/anomaly/tramplin/get_detection_icon(mob/living/viewer)
+/obj/anomaly/tramplin/get_detection_icon()
 	return "trampline_detection"

@@ -1,11 +1,11 @@
 #define SCREEN_CHANGE_BUTTON "Change Screen"
 #define EXONET_ACTION_NAME "Enter Exonet"
 #define SHOW_LAWS_POSIBRAN "Show laws posibran"
-/singleton/species/machine
+/datum/species/machine
 	passive_temp_gain = 0  // This should cause IPCs to stabilize at ~80 C in a 20 C environment.(5 is default without organ)
 	additional_languages = 1
 
-/singleton/species/machine/skills_from_age(age)
+/datum/species/machine/skills_from_age(age)
 	if(age)
 		. = 8
 
@@ -15,21 +15,16 @@
 	products[BP_EXONET] = list(/obj/item/organ/internal/ecs, 35)
 	. = ..()
 
-/obj/screen/bodytemp/Click(location, control, params)
-	. = ..()
-	if(istype(usr) && usr.bodytemp == src && usr.isSynthetic())
-		var/mob/living/carbon/human/machine = usr
-		to_chat(usr, SPAN_WARNING("Operating temperature: [round(machine.bodytemperature-T0C)]&deg;C"))
-		if(usr.is_species(SPECIES_IPC))
-			var/obj/item/organ/internal/cooling_system/coolant = machine.internal_organs_by_name[BP_COOLING]
-			to_chat(usr, SPAN_WARNING("Coolant remaining: [coolant.get_coolant_remaining()]/[coolant.refrigerant_max]"))
 
-/obj/screen/cell/Click(location, control, params)
+/mob/living/carbon/human/Stat()
 	. = ..()
-	if(istype(usr))
-		var/mob/living/carbon/human/machine = usr
-		var/obj/item/organ/internal/cell/potato = machine.internal_organs_by_name[BP_CELL]
-		to_chat(usr, SPAN_WARNING(("Battery charge: [potato.get_charge()]/[potato.cell.maxcharge]")))
+	if(statpanel("Status"))
+		var/obj/item/organ/internal/cell/potato = internal_organs_by_name[BP_CELL]
+		var/obj/item/organ/internal/cooling_system/coolant = internal_organs_by_name[BP_COOLING]
+		if(potato && potato.cell && src.is_species(SPECIES_IPC))
+			if(!coolant)
+				return
+			stat("Coolant remaining:","[coolant.get_coolant_remaining()]/[coolant.refrigerant_max]")
 
 /obj/item/organ/internal/cell/Process()
 	..()
@@ -139,7 +134,7 @@
 
 
 
-/singleton/species/machine/check_background(datum/job/job, datum/preferences/prefs)
+/datum/species/machine/check_background(datum/job/job, datum/preferences/prefs)
 	var/singleton/cultural_info/culture/ipc/c = SSculture.get_culture(prefs.cultural_info[TAG_CULTURE])
 	. = istype(c) ? (job.type in c.valid_jobs) : ..()
 
@@ -182,7 +177,7 @@
 
 /obj/item/organ/external/head/refresh_action_button()
 	. = ..()
-	if(. && istype(species, /singleton/species/machine))
+	if(. && istype(species, /datum/species/machine))
 		action.button_icon_state = "ipc_rgb"
 		action.button_icon = 'mods/ipc_mods/icons/ipc_icons.dmi'
 		if(action.button) action.button.UpdateIcon()

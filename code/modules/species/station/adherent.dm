@@ -1,4 +1,4 @@
-/singleton/species/adherent
+/datum/species/adherent
 	name = SPECIES_ADHERENT
 	name_plural = "Adherents"
 
@@ -109,7 +109,7 @@
 		"Jet"         = "_black"
 	)
 
-/singleton/species/adherent/New()
+/datum/species/adherent/New()
 	equip_adjust = list(
 		"[slot_l_hand_str]" = list("[NORTH]" = list("x" = 0, "y" = 14), "[EAST]" = list("x" = 0, "y" = 14), "[SOUTH]" = list("x" = 0, "y" = 14), "[WEST]" = list("x" = 0,  "y" = 14)),
 		"[slot_r_hand_str]" = list("[NORTH]" = list("x" = 0, "y" = 14), "[EAST]" = list("x" = 0, "y" = 14), "[SOUTH]" = list("x" = 0, "y" = 14), "[WEST]" = list("x" = 0,  "y" = 14)),
@@ -121,7 +121,7 @@
 	)
 	..()
 
-/singleton/species/adherent/can_overcome_gravity(mob/living/carbon/human/H)
+/datum/species/adherent/can_overcome_gravity(mob/living/carbon/human/H)
 	. = FALSE
 	if(H && H.stat == CONSCIOUS)
 		for(var/obj/item/organ/internal/powered/float/float in H.internal_organs)
@@ -129,16 +129,16 @@
 				. = TRUE
 				break
 
-/singleton/species/adherent/can_fall(mob/living/carbon/human/H)
+/datum/species/adherent/can_fall(mob/living/carbon/human/H)
 	. = !can_overcome_gravity(H)
 
-/singleton/species/adherent/can_float(mob/living/carbon/human/H)
+/datum/species/adherent/can_float(mob/living/carbon/human/H)
 	return FALSE
 
-/singleton/species/adherent/get_slowdown(mob/living/carbon/human/H)
+/datum/species/adherent/get_slowdown(mob/living/carbon/human/H)
 	return slowdown
 
-/singleton/species/adherent/handle_fall_special(mob/living/carbon/human/H, turf/landing)
+/datum/species/adherent/handle_fall_special(mob/living/carbon/human/H, turf/landing)
 	var/float_is_usable = FALSE
 	if(H && H.stat == CONSCIOUS)
 		for(var/obj/item/organ/internal/powered/float/float in H.internal_organs)
@@ -153,17 +153,17 @@
 		return TRUE
 	return FALSE
 
-/singleton/species/adherent/get_blood_name()
+/datum/species/adherent/get_blood_name()
 	return "coolant"
 
-/singleton/species/adherent/skills_from_age(age)
+/datum/species/adherent/skills_from_age(age)
 	switch(age)
 		if(0 to 1000)    . = -4
 		if(1000 to 2000) . =  0
 		if(2000 to 8000) . =  4
 		else             . =  8
 
-/singleton/species/adherent/get_additional_examine_text(mob/living/carbon/human/H)
+/datum/species/adherent/get_additional_examine_text(mob/living/carbon/human/H)
 	if(can_overcome_gravity(H)) return "\nThey are floating on a cloud of shimmering distortion."
 
 /datum/hud_data/adherent
@@ -176,5 +176,5 @@
 		"belt" =  list("loc" = ui_belt,      "name" = "Belt",     "slot" = slot_belt,    "state" = "belt")
 	)
 
-/singleton/species/adherent/post_organ_rejuvenate(obj/item/organ/org, mob/living/carbon/human/H)
+/datum/species/adherent/post_organ_rejuvenate(obj/item/organ/org, mob/living/carbon/human/H)
 	org.status |= (ORGAN_BRITTLE|ORGAN_CRYSTAL|ORGAN_ROBOTIC)

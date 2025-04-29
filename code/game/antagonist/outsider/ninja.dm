@@ -1,4 +1,4 @@
-GLOBAL_TYPED_NEW(ninjas, /datum/antagonist/ninja)
+GLOBAL_DATUM_INIT(ninjas, /datum/antagonist/ninja, new)
 
 
 /datum/antagonist/ninja

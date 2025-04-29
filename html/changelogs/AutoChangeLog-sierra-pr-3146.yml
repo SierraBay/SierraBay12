@@ -1,0 +1,6 @@
+author: Hubblenaut
+changes:
+  - {tweak: 'Mapped pressure tanks, connectors and omni devices are now treated as
+      above turf when wrenching/unwrenching them. In particular, pressure tanks can
+      now be built above turf.'}
+delete-after: true

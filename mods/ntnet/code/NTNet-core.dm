@@ -1,5 +1,5 @@
 #include "terminal\terminal-core.dm"
-GLOBAL_LIST_EMPTY(NTNet_machines)
+GLOBAL_LIST_INIT(NTNet_machines, list())
 
 // modify core
 /obj/machinery

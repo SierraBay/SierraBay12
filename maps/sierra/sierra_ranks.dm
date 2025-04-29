@@ -35,31 +35,31 @@
  */
 
 	species_to_branch_blacklist = list(
-		/singleton/species/human    = list(
+		/datum/species/human    = list(
 			/datum/mil_branch/alien,
 			/datum/mil_branch/skrell_fleet),
-		/singleton/species/machine  = list(
+		/datum/species/machine  = list(
 			/datum/mil_branch/alien,
 			/datum/mil_branch/skrell_fleet),
-		/singleton/species/adherent = list(
+		/datum/species/adherent = list(
 			/datum/mil_branch/contractor,
 			/datum/mil_branch/alien,
 			/datum/mil_branch/skrell_fleet),
-		/singleton/species/unathi   = list(
+		/datum/species/unathi   = list(
 			/datum/mil_branch/alien,
 			/datum/mil_branch/skrell_fleet),
-		/singleton/species/skrell   = list(
+		/datum/species/skrell   = list(
 			/datum/mil_branch/alien),
-		/singleton/species/nabber   = list(
+		/datum/species/nabber   = list(
 			/datum/mil_branch/civilian,
 			/datum/mil_branch/employee,
 			/datum/mil_branch/alien,
 			/datum/mil_branch/skrell_fleet),
-		/singleton/species/diona    = list(
+		/datum/species/diona    = list(
 			/datum/mil_branch/contractor,
 			/datum/mil_branch/alien,
 			/datum/mil_branch/skrell_fleet),
-		/singleton/species/vox      = list(
+		/datum/species/vox      = list(
 			/datum/mil_branch/contractor,
 			/datum/mil_branch/employee,
 			/datum/mil_branch/skrell_fleet
@@ -67,24 +67,24 @@
 	)
 
 	species_to_branch_whitelist = list(
-		/singleton/species/diona      = list(/datum/mil_branch/civilian,
+		/datum/species/diona      = list(/datum/mil_branch/civilian,
 		 								 /datum/mil_branch/employee),
-		/singleton/species/nabber     = list(/datum/mil_branch/contractor),
-		/singleton/species/skrell     = list(/datum/mil_branch/civilian,
+		/datum/species/nabber     = list(/datum/mil_branch/contractor),
+		/datum/species/skrell     = list(/datum/mil_branch/civilian,
 		 								 /datum/mil_branch/employee,
 		 								 /datum/mil_branch/contractor,
 		 								 /datum/mil_branch/skrell_fleet),
-		/singleton/species/unathi     = list(/datum/mil_branch/civilian,
+		/datum/species/unathi     = list(/datum/mil_branch/civilian,
 										 /datum/mil_branch/employee,
 										 /datum/mil_branch/contractor),
-		/singleton/species/adherent   = list(/datum/mil_branch/civilian,
+		/datum/species/adherent   = list(/datum/mil_branch/civilian,
 										 /datum/mil_branch/employee),
-		/singleton/species/vox        = list(/datum/mil_branch/alien,
+		/datum/species/vox        = list(/datum/mil_branch/alien,
 										 /datum/mil_branch/civilian)
 	)
 
 	species_to_rank_whitelist = list(
-		/singleton/species/vox = list(
+		/datum/species/vox = list(
 			/datum/mil_branch/alien = list(
 				/datum/mil_rank/alien
 			)

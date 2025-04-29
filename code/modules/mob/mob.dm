@@ -693,7 +693,7 @@
 			stat("Map CPU:","[world.map_cpu]")
 			stat("Instances:","[length(world.contents)]")
 			stat(null)
-			var/time = uptime()
+			var/time = Uptime()
 			if(Master)
 				Master.UpdateStat(time)
 			else
@@ -706,18 +706,9 @@
 				stat("Failsafe Controller:", "ERROR")
 			if(Master)
 				stat(null)
-				var/static/stat_created
-				var/static/obj/clickable_stat/config_stat
-				var/static/obj/clickable_stat/glob_stat
-				var/static/obj/clickable_stat/bare_stat
-				if (!stat_created)
-					stat_created = TRUE
-					config_stat = new (null, config, "Edit")
-					glob_stat = new (null, GLOB, "Edit")
-					bare_stat = new (null, GLOB.debug_real_globals, "Edit")
-				stat("Config", config_stat)
-				stat("Managed Globals", glob_stat)
-				stat("Real Globals", bare_stat)
+				config.UpdateStat()
+				GLOB.UpdateStat()
+				GLOB.debug_real_globals.UpdateStat()
 				stat(null)
 				for (var/datum/controller/subsystem/subsystem as anything in Master.subsystems)
 					subsystem.UpdateStat(time)
@@ -777,8 +768,12 @@
 	//Temporarily moved here from the various life() procs
 	//I'm fixing stuff incrementally so this will likely find a better home.
 	//It just makes sense for now. ~Carn
+	//[SIERRA-ADD]
+	if(update_icon)	//forces a full overlay update
+		update_icon = FALSE
+	////[SIERRA-ADD]
 		regenerate_icons()
-	if( lying != lying_prev )
+	else if( lying != lying_prev )
 		update_icons()
 
 /mob/proc/reset_layer()

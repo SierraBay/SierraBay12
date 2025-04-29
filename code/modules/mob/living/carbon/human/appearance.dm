@@ -9,7 +9,7 @@
 	if(species == new_species)
 		return
 
-	if(!(new_species in GLOB.species_by_name))
+	if(!(new_species in all_species))
 		return
 
 	set_species(new_species)
@@ -165,7 +165,7 @@
 
 /mob/living/carbon/human/proc/generate_valid_species(appearance_flags, list/allow, list/deny)
 	var/list/result = list()
-	for (var/name in GLOB.species_by_name)
+	for (var/name in all_species)
 		if (name in deny)
 			continue
 		if (!appearance_flags)
@@ -174,7 +174,7 @@
 		if (name in allow)
 			result += name
 			continue
-		var/singleton/species/species = GLOB.species_by_name[name]
+		var/datum/species/species = all_species[name]
 		if (!(appearance_flags & APPEARANCE_SKIP_RESTRICTED_CHECK))
 			if (species.spawn_flags & SPECIES_IS_RESTRICTED)
 				continue

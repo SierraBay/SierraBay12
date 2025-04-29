@@ -7,7 +7,7 @@
 //			/mob/living/silicon/robot/robot:  The robot that deactivated the module.
 //			/obj/item/module:                 The deactivated module.
 
-GLOBAL_TYPED_NEW(module_deactivated_event, /singleton/observ/module_deactivated)
+GLOBAL_DATUM_INIT(module_deactivated_event, /singleton/observ/module_deactivated, new)
 
 /singleton/observ/module_deactivated
 	name = "Module Deactivated"

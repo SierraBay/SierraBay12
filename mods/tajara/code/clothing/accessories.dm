@@ -25,7 +25,6 @@
 	icon = 'mods/tajara/icons/obj_eyes.dmi'
 	icon_state = "tajblind_sci"
 	item_state = "tajblind_sci"
-	off_state = "tajblind_sci"
 	prescription = 5
 	body_parts_covered = EYES
 
@@ -36,7 +35,6 @@
 	icon = 'mods/tajara/icons/obj_eyes.dmi'
 	icon_state = "tajblind_sec"
 	item_state = "tajblind_sec"
-	off_state = "tajblind_sec"
 	prescription = 5
 	body_parts_covered = EYES
 
@@ -77,7 +75,6 @@
 	icon = 'mods/tajara/icons/obj_eyes.dmi'
 	icon_state = "tajvisor_sec"
 	item_state = "tajvisor_sec"
-	off_state = "tajvisor_sec"
 	prescription = 5
 	body_parts_covered = EYES
 
@@ -585,3 +582,4 @@
 	capes["decorated cape"] = /obj/item/clothing/accessory/shouldercape/officer
 	capes["government cape"] = /obj/item/clothing/accessory/shouldercape/command
 	gear_tweaks += new/datum/gear_tweak/path(capes)
+

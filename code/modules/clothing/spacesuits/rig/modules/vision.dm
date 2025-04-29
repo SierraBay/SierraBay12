@@ -156,7 +156,7 @@
 	..()
 	holder.visor = src
 
-/obj/item/rig_module/vision/engage(atom/target)
+/obj/item/rig_module/vision/engage()
 
 	var/starting_up = !active
 

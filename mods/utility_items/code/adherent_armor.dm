@@ -1,4 +1,4 @@
-/singleton/species/adherent/New()
+/datum/species/adherent/New()
 	. = ..()
 	brute_mod = 0.8
 	burn_mod =  0.8

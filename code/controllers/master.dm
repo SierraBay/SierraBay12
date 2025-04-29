@@ -65,6 +65,7 @@ var/global/datum/controller/master/Master = new
 
 
 /datum/controller/master/New()
+	Uptime() //Uptime as close to boot as possible to set its statics
 	// [SIERRA-REMOVE] - RUST_G
 	/*
 	if (!global.diary)
@@ -101,10 +102,10 @@ var/global/datum/controller/master/Master = new
 	reverseRange(subsystems)
 	for(var/datum/controller/subsystem/ss in subsystems)
 		if (ss.flags & SS_NEEDS_SHUTDOWN)
-			var/time = uptime()
+			var/time = Uptime()
 			report_progress("Shutting down [ss] subsystem...")
 			ss.Shutdown()
-			report_progress("[ss] shutdown in [(uptime() - time)/10]s.")
+			report_progress("[ss] shutdown in [(Uptime() - time)/10]s.")
 	report_progress("Shutdown complete.")
 
 // Returns 1 if we created a new mc, 0 if we couldn't due to a recent restart,
@@ -174,7 +175,7 @@ var/global/datum/controller/master/Master = new
 // 	Make a subsystem, give it the SS_NO_FIRE flag, and do your work in it's Initialize()
 /datum/controller/master/Initialize(delay, init_sss)
 	set waitfor = FALSE
-	var/start_uptime = uptime()
+	var/start_uptime = Uptime()
 
 	if(delay)
 		sleep(delay)
@@ -193,10 +194,10 @@ var/global/datum/controller/master/Master = new
 	for (var/datum/controller/subsystem/SS in subsystems)
 		if (SS.flags & SS_NO_INIT)
 			continue
-		SS.DoInitialize(uptime())
+		SS.DoInitialize(Uptime())
 		CHECK_TICK
 	current_ticklimit = tick_limit_default
-	var/msg = "Initializations complete within [(uptime() - start_uptime) / 10] second\s!"
+	var/msg = "Initializations complete within [(Uptime() - start_uptime) / 10] second\s!"
 	report_progress(msg)
 	log_world(msg)
 
@@ -296,7 +297,7 @@ var/global/datum/controller/master/Master = new
 	var/cached_runlevel = current_runlevel
 	var/list/current_runlevel_subsystems = runlevel_sorted_subsystems[cached_runlevel]
 
-	init_timeofday = uptime()
+	init_timeofday = Uptime()
 	init_time = world.time
 
 	iteration = 1
@@ -306,7 +307,7 @@ var/global/datum/controller/master/Master = new
 	//the actual loop.
 
 	while (1)
-		tickdrift = max(0, MC_AVERAGE_FAST(tickdrift, (((uptime() - init_timeofday) - (world.time - init_time)) / world.tick_lag)))
+		tickdrift = max(0, MC_AVERAGE_FAST(tickdrift, (((Uptime() - init_timeofday) - (world.time - init_time)) / world.tick_lag)))
 		var/starting_tick_usage = world.tick_usage
 		if (processing <= 0)
 			current_ticklimit = tick_limit_default

@@ -7,7 +7,7 @@
 //			/obj/machinery/power/supermatter: the shard
 //          danger : True or false depending on if shard has crossed warning treshold (or if it is being removed and no longer matters)
 
-GLOBAL_TYPED_NEW(supermatter_status, /singleton/observ/supermatter_status)
+GLOBAL_DATUM_INIT(supermatter_status, /singleton/observ/supermatter_status, new)
 
 /singleton/observ/supermatter_status
 	name = "Supermatter status changed"

@@ -3096,7 +3096,6 @@
 /area/ship/hand/shuttle/tug_one)
 "pV" = (
 /obj/machinery/fabricator/hacked,
-/obj/item/storage/box/autolathe_designs,
 /turf/simulated/floor/tiled/techmaint,
 /area/ship/hand/engineering/starboard)
 "pW" = (
