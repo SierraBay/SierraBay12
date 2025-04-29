@@ -80,6 +80,10 @@ var/global/const/CHARACTER_PREFERENCE_INPUT_TITLE = "Character Preference"
 	for(var/datum/category_group/player_setup_category/PS in categories)
 		PS.load_preferences(R)
 
+/datum/category_collection/player_setup_collection/proc/load_slot(datum/pref_record_reader/R, datum/preferences_slot/slot)
+	for(var/datum/category_group/player_setup_category/PS in categories)
+		PS.load_slot(R, slot)
+
 /datum/category_collection/player_setup_collection/proc/save_preferences(datum/pref_record_writer/W)
 	for(var/datum/category_group/player_setup_category/PS in categories)
 		PS.save_preferences(W)
@@ -90,7 +94,7 @@ var/global/const/CHARACTER_PREFERENCE_INPUT_TITLE = "Character Preference"
 		if(PS == selected_category)
 			dat += "[PS.name] "	// TODO: Check how to properly mark a href/button selected in a classic browser window
 		else
-			dat += "<a href='?src=\ref[src];category=\ref[PS]'>[PS.name]</a> "
+			dat += "<a href='byond://?src=\ref[src];category=\ref[PS]'>[PS.name]</a> "
 	return dat
 
 /datum/category_collection/player_setup_collection/proc/content(mob/user)
@@ -150,6 +154,10 @@ var/global/const/CHARACTER_PREFERENCE_INPUT_TITLE = "Character Preference"
 	for(var/datum/category_item/player_setup_item/player_setup_item in items)
 		player_setup_item.save_preferences(S)
 
+/datum/category_group/player_setup_category/proc/load_slot(savefile/S, datum/preferences_slot/slot)
+	for(var/datum/category_item/player_setup_item/player_setup_item in items)
+		player_setup_item.load_slot(S, slot)
+
 /datum/category_group/player_setup_category/proc/content(mob/user)
 	. = "<table style='width:100%'><tr style='vertical-align:top'><td style='width:50%'>"
 	var/current = 0
@@ -200,6 +208,12 @@ var/global/const/CHARACTER_PREFERENCE_INPUT_TITLE = "Character Preference"
 * Called when the item is asked to load user/global settings
 */
 /datum/category_item/player_setup_item/proc/load_preferences(datum/pref_record_reader/R)
+	return
+
+/*
+* Called when the item is asked to load character settings onto a reserve slot
+*/
+/datum/category_item/player_setup_item/proc/load_slot(datum/pref_record_reader/R, datum/preferences_slot/slot)
 	return
 
 /*
@@ -258,4 +272,4 @@ var/global/const/CHARACTER_PREFERENCE_INPUT_TITLE = "Character Preference"
 		return pref.client.mob
 
 /datum/category_item/player_setup_item/proc/preference_species()
-	return all_species[pref.species] || all_species[SPECIES_HUMAN]
+	return GLOB.species_by_name[pref.species] || GLOB.species_by_name[SPECIES_HUMAN]

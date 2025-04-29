@@ -10,8 +10,8 @@
 		name_by_type = "APC"
 	if(istype(src, /datum/wires/robot))
 		name_by_type = "Cyborg"
-	if(istype(src, /datum/wires/fabricator))
-		name_by_type = "Autolathe"
+	//if(istype(src, /datum/wires/fabricator))
+	//	name_by_type = "Autolathe"
 	if(istype(src, /datum/wires/alarm))
 		name_by_type = "Air Alarm"
 	if(istype(src, /datum/wires/camera))

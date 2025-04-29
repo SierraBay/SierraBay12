@@ -940,7 +940,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/machinery/r_n_d/circuit_imprinter,
+/obj/machinery/fabricator/rnd/imprinter,
 /turf/simulated/floor/tiled,
 /area/map_template/colony/science)
 "bT" = (
@@ -2303,6 +2303,7 @@
 /obj/floor_decal/corner/blue{
 	dir = 5
 	},
+/obj/item/storage/box/microlathe_designs,
 /turf/simulated/floor/tiled/white,
 /area/map_template/colony/medbay)
 "ey" = (
@@ -8541,7 +8542,7 @@
 /turf/simulated/floor/plating,
 /area/map_template/colony/messhall)
 "vQ" = (
-/obj/machinery/r_n_d/protolathe,
+/obj/machinery/fabricator/rnd/protolathe,
 /turf/simulated/floor/tiled,
 /area/map_template/colony/science)
 "wB" = (
@@ -8750,6 +8751,7 @@
 	pixel_x = 32
 	},
 /obj/machinery/fabricator/hacked,
+/obj/item/storage/box/autolathe_designs,
 /turf/simulated/floor/tiled,
 /area/map_template/colony/science)
 "Dj" = (

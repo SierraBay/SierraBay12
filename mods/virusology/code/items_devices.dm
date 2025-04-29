@@ -73,7 +73,7 @@
 /obj/item/virusdish/examine(mob/user)
 	. = ..()
 	if(basic_info)
-		to_chat(user, "[basic_info] : <a href='?src=\ref[src];info=1'>More Information</a>")
+		to_chat(user, "[basic_info] : <a href='byond://?src=\ref[src];info=1'>More Information</a>")
 
 /obj/item/virusdish/OnTopic(user, href_list)
 	if(href_list["info"])

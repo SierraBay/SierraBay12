@@ -50,7 +50,7 @@
 	var/turf/T = get_turf(src)
 	get_mobs_and_objs_in_view_fast(T, effect_range, victims, objs)
 	for(var/atom/movable/atoms in victims)
-		if(inmech_sec(atoms))
+		if(inmech(atoms))
 			continue
 		get_effect_by_anomaly(atoms)
 	for(var/atom/movable/atoms in objs)
@@ -95,21 +95,8 @@
 			return
 	if(istype(target, /mob/living)) //Жертвой удара является моб или его наследник(ребёнок)
 		create_line = TRUE
-		if(istype(target, /mob/living/carbon/human/adherent))
-			electra_adherant_effect(target)
-
-		else if(ishuman(target))
-			electra_human_effect(target)
-			stun_and_jittery_by_electra(target)
-
-		else if(istype(target, /mob/living/silicon/robot )) //Если целью является борг, мы так же наносим ему электроудар
-			electra_borg_effect(target)
-
-		else if(istype(target, /mob/living/exosuit)) //Если целью является мех, мы наносим ему ЭМИ удар
-			electra_mech_effect(target)
-
-		else if(istype(target, /mob/living)) //Если целью является симплмоб, мы его гибаем
-			electra_mob_effect(target)
+		var/mob/living/living = target
+		living.electra_mob_effect()
 
 	else if(isaurora(target))
 		var/obj/structure/aurora/aurora = target
@@ -149,8 +136,9 @@
 //Сперва мы обозначаем КУДА мы ударим, после какого-то времени производим удар
 /obj/electrostatic
 	icon = 'icons/effects/effects.dmi'
-	icon_state = "blue_electricity_constant"
+	icon_state = "electricity_constant"
 	mouse_opacity = MOUSE_OPACITY_UNCLICKABLE
+	layer = 5001
 
 /proc/tesla_act_start(target, attack_delay, obj/anomaly/electra/input_electra)
 	var/target_turf = get_turf(target)
@@ -173,8 +161,7 @@
 /mob/living/proc/electoanomaly_damage(shock_damage, obj/source, def_zone = null)
 	if(status_flags & GODMODE)	//godmode
 		return 0
-
-	apply_damage(shock_damage, DAMAGE_BURN, def_zone, used_weapon="Electrocution")
+	apply_damage(shock_damage, DAMAGE_BURN, def_zone, used_weapon="Electrocution", armor_pen = 100, silent = TRUE)
 	return shock_damage
 
 
@@ -186,7 +173,7 @@
 		SPAN_WARNING("You hear a heavy electrical crack.") \
 		)
 
-/obj/anomaly/electra/get_detection_icon()
+/obj/anomaly/electra/get_detection_icon(mob/living/viewer)
 	if(effect_range == 1)
 		return "electra_detection"
 	else if(effect_range == 2)

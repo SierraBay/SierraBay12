@@ -3,7 +3,7 @@
 	desc = "a thin, almost transparent lense surrounded by nerve fibers"
 	icon_state = "thermal_eyes"
 	status = ORGAN_CONFIGURE
-	augment_slots = AUGMENT_HEAD
+	augment_slots = AUGMENT_EYES
 	augment_flags = AUGMENT_BIOLOGICAL
 	var/is_active = FALSE
 /obj/item/organ/internal/augment/ling_lenses/emp_act()

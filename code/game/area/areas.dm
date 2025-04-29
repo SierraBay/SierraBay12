@@ -386,3 +386,99 @@
 	if (src && src.area_flags & AREA_FLAG_NO_MODIFY)
 		return FALSE
 	return TRUE
+
+
+/// Attempt to move the contents of this area to A
+/area/proc/move_contents_to(area/A)
+	if (!A || !src)
+		return
+	var/list/turfs_src = get_area_turfs("\ref[src]")
+	if (!length(turfs_src))
+		return
+	var/src_origin = locate(x, y, z)
+	var/trg_origin = locate(A.x, A.y, A.z)
+	if (src_origin && trg_origin)
+		var/translation = get_turf_translation(src_origin, trg_origin, turfs_src)
+		translate_turfs(translation, null)
+
+
+/**
+ * Attempts to move the contents, including turfs, of one area to another area.
+ * Positioning is based on the lower left corner of both areas.
+ * Tiles that do not fit into the new area will not be copied.
+ * Source atoms are not modified or deleted.
+ * Turfs are created using `ChangeTurf()`.
+ * `dir`, `icon`, and `icon_state` are copied. All other vars use the default value for the copied atom.
+ * Primarily used for holodecks.
+ *
+ * **Parameters**:
+ * - `target` `/area`. The area to copy src's contents to.
+ * - `plating_required` Boolean, default `FALSE`. If set, contents will only be copied to destination tiles that are not the same type as `get_base_area_by_turf()` before calling `ChangeTurf()`.
+ *
+ * Returns List (`/atom`). A list containing all atoms that were created at the target area during the process.
+ */
+/area/proc/copy_contents_to(area/target, plating_required)
+	RETURN_TYPE(/list)
+	if (!target || !src)
+		return
+	var/list/turfs_src = get_area_turfs(type)
+	var/list/turfs_trg = get_area_turfs(target.type)
+	var/src_min_x = 0
+	var/src_min_y = 0
+	for (var/turf/turf in turfs_src)
+		if (turf.x < src_min_x || !src_min_x)
+			src_min_x = turf.x
+		if (turf.y < src_min_y || !src_min_y)
+			src_min_y = turf.y
+	var/trg_min_x = 0
+	var/trg_min_y = 0
+	for (var/turf/turf in turfs_trg)
+		if (turf.x < trg_min_x || !trg_min_x)
+			trg_min_x = turf.x
+		if (turf.y < trg_min_y || !trg_min_y)
+			trg_min_y = turf.y
+	var/list/refined_src = list()
+	for (var/turf/turf in turfs_src)
+		refined_src[turf] = list(turf.x - src_min_x, turf.y - src_min_y)
+	var/list/refined_trg = list()
+	for (var/turf/turf in turfs_trg)
+		refined_trg[turf] = list(turf.x - trg_min_x, turf.y - trg_min_y)
+	var/list/turfs_to_update = list()
+	var/list/copied_movables = list()
+	moving:
+		for (var/turf/source_turf in refined_src)
+			var/list/source_position = refined_src[source_turf]
+			for (var/turf/target_turf in refined_trg)
+				var/list/target_position = refined_trg[target_turf]
+				var/same_position = source_position[1] == target_position[1] \
+					&& source_position[2] == target_position[2]
+				if (same_position)
+					var/old_dir1 = source_turf.dir
+					var/old_icon_state1 = source_turf.icon_state
+					var/old_icon1 = source_turf.icon
+					var/old_underlays = source_turf.underlays.Copy()
+					if (plating_required)
+						if (istype(target_turf, get_base_turf_by_area(target_turf)))
+							continue moving
+					var/turf/temp_target_turf = target_turf
+					temp_target_turf.ChangeTurf(source_turf.type)
+					temp_target_turf.set_dir(old_dir1)
+					temp_target_turf.icon_state = old_icon_state1
+					temp_target_turf.icon = old_icon1
+					temp_target_turf.CopyOverlays(source_turf)
+					temp_target_turf.underlays = old_underlays
+					for (var/obj/obj in source_turf)
+						if (!obj.simulated)
+							continue
+						copied_movables += clone_atom(obj, TRUE, temp_target_turf)
+					for (var/mob/mob in source_turf)
+						if (!mob.simulated)
+							continue
+						copied_movables += clone_atom(mob, TRUE, temp_target_turf)
+					turfs_to_update += temp_target_turf
+					refined_src -= source_turf
+					refined_trg -= target_turf
+					continue moving
+	for (var/turf/simulated/simulated in turfs_to_update)
+		SSair.mark_for_update(simulated)
+	return copied_movables

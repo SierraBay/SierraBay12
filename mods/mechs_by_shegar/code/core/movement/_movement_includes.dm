@@ -1,0 +1,11 @@
+#include "_core.dm"
+//Движ меха
+#include "do_move\do_move.dm"
+#include "do_move\strafe_mech.dm"
+#include "do_move\step_mech.dm"
+#include "do_move\turn_mech.dm"
+#include "bump_and_collision.dm"
+#include "can_move.dm"
+#include "move_vars.dm"
+#include "space_move.dm"
+#include "speed.dm"

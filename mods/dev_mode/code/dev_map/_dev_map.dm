@@ -54,6 +54,7 @@
 	#include "../../../../maps/sierra/items/datajack.dm"
 	#include "../../../../maps/sierra/items/clothing/clothing.dm"
 	#include "../../../../maps/sierra/items/clothing/exploration.dm"
+	#include "../../../../maps\sierra\items\clothing\new_uniform.dm"
 	#include "../../../../maps/sierra/items/clothing/override.dm"
 	#include "../../../../maps/sierra/items/clothing/storages.dm"
 	#include "../../../../maps/sierra/items/clothing/security.dm"
@@ -147,7 +148,6 @@
 	#include "../../../../mods/screentips/_screentips_includes.dm"
 	#include "../../../../mods/tajara/_tajara_includes.dm"
 	#include "../../../../mods/sauna_props/_sauna_props_includes.dm"
-	#include "../../../../mods/wyccbay_optimization/_wyccbay_optimization_includes.dm"
 	#include "../../../../mods/contraband_vending/_contraband_vending_includes.dm"
 	#include "../../../../mods/telecomms/_telecomms_includes.dm"
 	#include "../../../../mods/modernUI/_modernUI_includes.dm"
@@ -157,6 +157,7 @@
 
 	// #include "../../mods/atmos_ret_field/_atm_ret_field.dme"
 	// #include "../../mods/bluespace_kitty/_bluespace_kitty.dme"
+	// #include "../../../../mods/wyccbay_optimization/_wyccbay_optimization_includes.dm"
 
 	// Почему UNUSED MODS стоит хранить?
 	// Потому что никто не проверяет использование тех или иных файлов
@@ -189,7 +190,7 @@
 	#include "../../../../maps/away/meatstation/meatstation.dm"
 	#include "../../../../maps/away/miningstation/miningstation.dm"
 	#include "../../../../maps/away/mininghome/mininghome.dm"
-	#include "../../../../maps/away/scavver/scavver_gantry.dm"
+	#include "../../../_maps/scavver/scavver_gantry.dm"
 	#include "../../../../maps/away/abandoned_hotel/abandoned_hotel.dm"
 	#include "../../../../maps/event/iccgn_ship/icgnv_hound.dm"
 	#include "../../../../maps/event/sfv_arbiter/sfv_arbiter.dm"

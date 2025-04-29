@@ -5,15 +5,15 @@ var/global/list/stored_shock_by_ref = list()
 		target.electrocute_act(stored_shock_by_ref["\ref[src]"]*0.9, src)
 		stored_shock_by_ref["\ref[src]"] = 0
 
-/datum/species/proc/has_fine_manipulation(mob/living/carbon/human/H)
+/singleton/species/proc/has_fine_manipulation(mob/living/carbon/human/H)
 	return has_fine_manipulation
 
-/datum/species/proc/toggle_stance(mob/living/carbon/human/H)
+/singleton/species/proc/toggle_stance(mob/living/carbon/human/H)
 	if(!H.incapacitated())
 		H.pulling_punches = !H.pulling_punches
 		to_chat(H, SPAN_NOTICE("You are now [H.pulling_punches ? "pulling your punches" : "not pulling your punches"]."))
 
-/datum/species/proc/get_offset_overlay_image(spritesheet, mob_icon, mob_state, color, slot)
+/singleton/species/proc/get_offset_overlay_image(spritesheet, mob_icon, mob_state, color, slot)
 
 	// If we don't actually need to offset this, don't bother with any of the generation/caching.
 	if(!spritesheet && length(equip_adjust) && equip_adjust[slot] && LAZYLEN(equip_adjust[slot]))
@@ -39,14 +39,14 @@ var/global/list/stored_shock_by_ref = list()
 		return I
 	return overlay_image(mob_icon, mob_state, color, RESET_COLOR)
 
-/datum/species/proc/water_act(mob/living/carbon/human/H, depth)
+/singleton/species/proc/water_act(mob/living/carbon/human/H, depth)
 	if(!isnull(water_soothe_amount) && depth >= 40)
 		if(H.getHalLoss())
 			H.adjustHalLoss(-(water_soothe_amount))
 			if(prob(5))
 				to_chat(H, SPAN_NOTICE("The water ripples gently over your skin in a soothing balm."))
 
-/datum/species/proc/is_available_for_join()
+/singleton/species/proc/is_available_for_join()
 	if(!(spawn_flags & SPECIES_CAN_JOIN))
 		return FALSE
 	else if(!isnull(max_players))
@@ -58,16 +58,16 @@ var/global/list/stored_shock_by_ref = list()
 					return FALSE
 	return TRUE
 
-/datum/species/proc/check_background(datum/job/job, datum/preferences/prefs)
+/singleton/species/proc/check_background(datum/job/job, datum/preferences/prefs)
 	. = TRUE
 
-/datum/species/proc/get_digestion_product()
+/singleton/species/proc/get_digestion_product()
 	return /datum/reagent/nutriment
 
-/datum/species/proc/get_resized_organ_w_class(organ_w_class)
+/singleton/species/proc/get_resized_organ_w_class(organ_w_class)
 	. = clamp(organ_w_class + mob_size_difference(mob_size, MOB_MEDIUM), ITEM_SIZE_TINY, ITEM_SIZE_GARGANTUAN)
 
-/datum/species/proc/resize_organ(obj/item/organ/organ)
+/singleton/species/proc/resize_organ(obj/item/organ/organ)
 	if(!istype(organ))
 		return
 	organ.w_class = get_resized_organ_w_class(initial(organ.w_class))

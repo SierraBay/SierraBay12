@@ -50,7 +50,7 @@
 
 
 /datum/keybinding/admin/list_players/down(client/user)
-	user.holder.player_panel()
+	user.holder.player_list()
 	return TRUE
 
 

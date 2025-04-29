@@ -1,5 +1,5 @@
 /// To cut down on unneeded creation/deletion, these are global.
-GLOBAL_LIST_INIT(terminal_commands, init_subtypes(/datum/terminal_command))
+GLOBAL_LIST_AS(terminal_commands, init_subtypes(/datum/terminal_command))
 
 /datum/terminal_command
 	/// The name of the command. Used for display and also in syntax checking.

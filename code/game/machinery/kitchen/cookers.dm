@@ -685,6 +685,7 @@
 	icon_state = "stew"
 	nutriment_amt = 4
 	nutriment_desc = list("stew" = 3)
+	trash = /obj/item/trash/pot
 
 
 /obj/item/material/chopping_board

@@ -10,7 +10,7 @@ Various overrides for standart species, which are too tiny to have their own mod
 
 // Unathi
 
-/datum/species/unathi
+/singleton/species/unathi
 	autohiss_basic_map = list(
 			"s" = list("ss", "sss", "ssss"),
 

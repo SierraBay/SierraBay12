@@ -1,3 +1,4 @@
+/* [SIERRA-REMOVE] - MODPACK_RND
 /obj/machinery/fabricator/OnTopic(user, href_list, state)
 	if(href_list["change_category"])
 		var/choice = input("Which category do you wish to display?") as null|anything in SSfabrication.get_categories(fabricator_class)|"All"
@@ -35,3 +36,4 @@
 					mat.place_sheet(get_turf(src), sheet_count)
 			else if(!isnull(stored_material[mat_path]))
 				stored_material[mat_path] = 0
+*/

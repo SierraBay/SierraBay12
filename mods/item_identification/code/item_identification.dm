@@ -74,25 +74,25 @@
 	var/list/HTML = list()
 	HTML += "<html><head><title>[identify_item.name]</title></head><body>"
 
-	HTML += "<a href='?src=\ref[src];refresh=1'>\[Refresh\]</a><br>"
+	HTML += "<a href='byond://?src=\ref[src];refresh=1'>\[Refresh\]</a><br>"
 	HTML += "<b>Инспектируют предмет:</b><br>"
 	HTML += "[user.name]<br>"
 	for(var/user_ref in additional_users)
 		var/user_name = additional_users[user_ref]["name"]
-		HTML += "[user_name] <a href='?src=\ref[src];remove_person=\ref[user_ref]'>\[-\]</a><br>"
+		HTML += "[user_name] <a href='byond://?src=\ref[src];remove_person=\ref[user_ref]'>\[-\]</a><br>"
 
-	HTML += "<a href='?src=\ref[src];add_person=1'>\[Добавить человека\]</a><br><br>"
+	HTML += "<a href='byond://?src=\ref[src];add_person=1'>\[Добавить человека\]</a><br><br>"
 
-	HTML += "<a href='?src=\ref[src];inspect=\ref[identify_item]'>\[Инспектировать предмет\]</a>"
+	HTML += "<a href='byond://?src=\ref[src];inspect=\ref[identify_item]'>\[Инспектировать предмет\]</a>"
 
 	HTML += "<hr>"
 	HTML += "Вместо этого вы можете <b>солгать</b> при инспекции предмета, тогда ваши навыки не будут задействованы для осмотра. Но при этом добавленные вами люди все еще могут задействовать свои навыки для инспекции.<br>"
-	HTML += "<a href='?src=\ref[src];inspect=\ref[identify_item];inspect_intent=1'>\[Солгать\]</a>"
+	HTML += "<a href='byond://?src=\ref[src];inspect=\ref[identify_item];inspect_intent=1'>\[Солгать\]</a>"
 
 	if(user.mind && player_is_antag(user.mind))
 		HTML += "<hr>"
 		HTML += "Так как вы антагонист, то можете произвести проверку предмета, как если бы у вас были максимальные навыки в каждой области.<br>"
-		HTML += "<a href='?src=\ref[src];inspect=\ref[identify_item];inspect_intent=2'>\[Гарантированно инспектировать предмет\]</a>"
+		HTML += "<a href='byond://?src=\ref[src];inspect=\ref[identify_item];inspect_intent=2'>\[Гарантированно инспектировать предмет\]</a>"
 		w_height += 100
 
 	HTML += "</body></html>"
@@ -243,10 +243,10 @@
 
 	request_timeouts[target] = world.time + request_timeout
 	if(target.client)
-		to_chat(target, SPAN_BOLD("Вас запрашивают помочь с инспекцией предмета. В случае, если вы решите солгать, вы будете принимать участие в осмотре, но ваши навыки не будут задействованы для осмотра. <a href='?src=\ref[src];candidate=\ref[target];intention=1'>(Помочь)</a><a href='?src=\ref[src];candidate=\ref[target];intention=0'>(Солгать)</a>"))
+		to_chat(target, SPAN_BOLD("Вас запрашивают помочь с инспекцией предмета. В случае, если вы решите солгать, вы будете принимать участие в осмотре, но ваши навыки не будут задействованы для осмотра. <a href='byond://?src=\ref[src];candidate=\ref[target];intention=1'>(Помочь)</a><a href='byond://?src=\ref[src];candidate=\ref[target];intention=0'>(Солгать)</a>"))
 
 		if(target.mind && player_is_antag(target.mind))
-			to_chat(target, SPAN_BOLD("Так как вы антагонист, то можете помочь с проверкой предмета, как если бы у вас были максимальные навыки в каждой области. <a href='?src=\ref[src];candidate=\ref[target];intention=2'>(Гарантированная помощь)</a>"))
+			to_chat(target, SPAN_BOLD("Так как вы антагонист, то можете помочь с проверкой предмета, как если бы у вас были максимальные навыки в каждой области. <a href='byond://?src=\ref[src];candidate=\ref[target];intention=2'>(Гарантированная помощь)</a>"))
 
 /datum/extension/interactive/mod_inspect/Topic(href, href_list)
 	. = ..()
