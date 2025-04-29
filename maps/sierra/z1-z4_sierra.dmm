@@ -9381,7 +9381,7 @@
 "rWq" = (/obj/structure/table/rack,/obj/item/stock_parts/subspace/ansible,/obj/item/stock_parts/subspace/ansible,/obj/item/stock_parts/subspace/ansible,/turf/simulated/floor/tiled/steel_ridged,/area/tcommsat/storage)
 "rWF" = (/obj/structure/janitorialcart,/obj/item/mop,/obj/machinery/light/small,/obj/floor_decal/corner/purple{pixel_y = 1},/turf/simulated/floor/tiled/steel_grid,/area/janitor)
 "rWG" = (/obj/random/closet,/turf/simulated/floor/tiled/techfloor,/area/maintenance/seconddeck/aftstarboard)
-"rWK" = (/obj/machinery/light/spot,/obj/floor_decal/industrial/warning{dir = 9},/obj/machinery/atmospherics/unary/vent_pump/on{dir = 1},/obj/structure/table/standard,/obj/item/device/scanner/xenobio,/obj/item/device/scanner/xenobio,/turf/simulated/floor/tiled/steel_grid,/area/rnd/xenobiology/level1)
+"rWK" = (/obj/machinery/light/spot,/obj/floor_decal/industrial/warning{dir = 9},/obj/machinery/atmospherics/unary/vent_pump/on{dir = 1},/obj/structure/table/standard,/obj/item/storage/xenobio,/obj/item/storage/xenobio,/obj/item/device/scanner/xenobio,/obj/item/device/scanner/xenobio,/turf/simulated/floor/tiled/steel_grid,/area/rnd/xenobiology/level1)
 "rWO" = (/obj/machinery/portable_atmospherics/canister/oxygen,/obj/floor_decal/techfloor,/obj/floor_decal/industrial/outline/blue,/turf/simulated/floor/tiled/techfloor/grid,/area/engineering/atmos)
 "rWR" = (/obj/structure/hygiene/sink{dir = 1; pixel_y = 18},/obj/machinery/light/small{dir = 8},/obj/machinery/atmospherics/unary/vent_scrubber/on,/turf/simulated/floor/tiled/techfloor,/area/maintenance/cistern)
 "rWS" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/obj/floor_decal/techfloor{dir = 5},/turf/simulated/floor/tiled/techfloor/grid,/area/maintenance/thirddeck/port)

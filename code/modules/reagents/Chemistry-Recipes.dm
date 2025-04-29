@@ -1035,7 +1035,7 @@
 							/mob/living/simple_animal/passive/opossum,
 							/mob/living/simple_animal/passive/snake,
 							/mob/living/simple_animal/passive/thoom,
-							// [SIERRA-ADD], - Petting Zoo expansion
+							// [SIERRA-ADD], - Petting Zoo expansion,
 							/mob/living/simple_animal/butterfly,
 							/mob/living/simple_animal/friendly/cat/maine_coon,
 							/mob/living/simple_animal/friendly/cat/floppa,
