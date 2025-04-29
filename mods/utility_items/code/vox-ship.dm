@@ -1,3 +1,3 @@
 /datum/map_template/ruin/away_site/scavship
-	prefix = "mods/utility_items/maps/"
+	prefix = "mods/_maps/voxship/"
 	suffixes = list("voxship-sierrabay.dmm")
