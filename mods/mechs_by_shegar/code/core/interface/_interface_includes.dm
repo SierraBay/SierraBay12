@@ -40,4 +40,5 @@
 #include "interface\buttons\big_menu\buttons\power.dm"
 #include "interface\buttons\big_menu\buttons\radio.dm"
 #include "interface\buttons\big_menu\buttons\rename.dm"
+#include "interface\buttons\big_menu\buttons\right_click.dm"
 #include "interface\buttons\big_menu\buttons\sensors.dm"

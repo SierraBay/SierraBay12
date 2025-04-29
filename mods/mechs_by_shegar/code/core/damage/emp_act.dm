@@ -22,9 +22,9 @@
 		setClickCooldown(10) //Орудия и модули на КД
 		current_speed = min_speed //Убьём скорость меха
 		for(var/obj/item/mech_component/thing in list(head, body, L_arm, R_arm, L_leg, R_leg))
-			thing.emp_heat(severity, ratio, src) //Греем конечности
-			if(ratio < 0.5) //Без эми брони, получаем дамаг от эми
-				thing.emp_act(severity)
+			//Выполнение этой функции с результатом TRUE Означает что мех вследствии перегрева этой части перегрелся.
+			if(thing.emp_heat(severity, ratio, src)) //Греем конечности
+				break
 	//Если кабина меха не закрыта - воздействуем и на пилота.
 	if(!hatch_closed || !prob(body.pilot_coverage))
 		for(var/thing in pilots)

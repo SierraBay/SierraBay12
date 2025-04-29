@@ -13,7 +13,8 @@
 		/obj/screen/exosuit/menu_button/medscan,
 		/obj/screen/exosuit/menu_button/id,
 		/obj/screen/exosuit/menu_button/hatch_bolts,
-		/obj/screen/exosuit/menu_button/camera
+		/obj/screen/exosuit/menu_button/camera,
+		/obj/screen/exosuit/menu_button/right_click
 	)
 	var/x_step = 0 //как сильно мы сдвигаемся
 	var/y_step = 0.5

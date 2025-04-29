@@ -55,8 +55,6 @@
 	var/atmos_clear_cooldown = 60 SECONDS
 	///Статус очистки. TRUE - она идёт. FALSE - не идёт
 	var/atmos_clear_status = FALSE
-	///Отвечает за возможность меха быстро стартовать за счёт определённых штрафов
-	var/have_fast_power_up = FALSE
 	///Время перегрева меха
 	var/overheat_time = 10 SECONDS
 	///Куллдаун для обработки тепла.

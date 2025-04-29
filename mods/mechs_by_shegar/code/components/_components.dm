@@ -80,7 +80,8 @@
 /obj/item/mech_component/proc/emp_heat(severity, emp_armor, mob/living/exosuit/mech) //Накидываем тепло учитывая армор меха
 	if(emp_armor > 0.8)
 		emp_armor = 0.8
-	mech.add_heat(emp_heat_generation * (1 - emp_armor))
+	if(mech.add_heat(emp_heat_generation * (1 - emp_armor)))
+		return TRUE
 
 /obj/item/mech_component/set_color(new_colour)
 	var/last_colour = color

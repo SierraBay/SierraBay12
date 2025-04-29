@@ -188,7 +188,36 @@
 					click_target.AltClick(pilot)
 					setClickCooldown(3)
 					return TRUE
+	else if(!show_right_click_menu)
+		if(modifiers["right"])
+			handle_right_and_left_click("right")
+		else if(modifiers["left"])
+			handle_right_and_left_click("left")
 	return FALSE
+
+//Задача функции сменить хардпоинт на левый или правый в зависимости от текущего состояния
+/mob/living/exosuit/proc/handle_right_and_left_click(mouse_type)
+	var/obj/screen/movable/exosuit/hardpoint = hardpoint_hud_elements[selected_hardpoint]
+	var/obj/screen/movable/exosuit/hardpoint/previous_hardpoint = hardpoint
+	if(mouse_type == "left")
+		if(!selected_hardpoint)
+			set_hardpoint("left hand")
+		if(selected_hardpoint == "right hand")
+			set_hardpoint("left hand")
+		else if(selected_hardpoint == "right shoulder")
+			if(hardpoints.Find("left shoulder"))
+				set_hardpoint("left shoulder")
+	else if(mouse_type == "right")
+		if(!selected_hardpoint)
+			set_hardpoint("right hand")
+		if(selected_hardpoint == "left hand" )
+			set_hardpoint("right hand")
+		else if(selected_hardpoint == "left shoulder")
+			if(hardpoints.Find("right shoulder"))
+				set_hardpoint("right shoulder")
+	hardpoint = hardpoint_hud_elements[selected_hardpoint]
+	update_selected_hardpoint(do_sound = FALSE, hardpoint = hardpoint, prev_hardpoint = previous_hardpoint)
+
 
 ///Обновит интент меха, взяв оный с последнего пилота.
 /mob/living/exosuit/proc/mech_update_intent(mob/living/pilot)
