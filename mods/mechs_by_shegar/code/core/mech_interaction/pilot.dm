@@ -24,7 +24,7 @@
 	need_update_sensor_effects = TRUE
 	if(LAZYLEN(pilots) >= 0 )
 		process_mech_vision = TRUE
-	to_chat(user,SPAN_NOTICE("<b><font color = green> Не понимаешь как управлять мехом? Нажми зелёную кнопочку что находится ниже показателя голода и жажды!. </font></b>"))
+	to_chat(user,SPAN_NOTICE("<b><font color = green> Не понимаешь как управлять мехом? Нажми зелёную кнопочку что находится ниже показателя голода и жажды! </font></b>"))
 	to_chat(user,SPAN_NOTICE("<b><font color = green> Нажмите ПРОБЕЛ для переключения режима стрейфа. </font></b>"))
 
 
