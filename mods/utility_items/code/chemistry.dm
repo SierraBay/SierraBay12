@@ -121,7 +121,7 @@
 		if(prob(10))
 			to_chat(H, SPAN_DANGER("Your flesh rapidly mutates!"))
 			H.set_species(SPECIES_YEOSA)
-			H.shapeshifter_set_colour("#13BC5E")
+			H.shapeshifter_set_colour("#13bc5e")
 		return
 	var/obj/item/organ/external/O = pick(meatchunks)
 	to_chat(H, SPAN_DANGER("Your [O.name]'s flesh mutates rapidly!"))
@@ -131,7 +131,7 @@
 	for(var/obj/item/organ/external/E in meatchunks)
 		E.species = GLOB.species_by_name[SPECIES_YEOSA]
 		E.skin_tone = null
-		E.s_col = ReadRGB("#13BC5E")
+		E.s_col = ReadRGB("#13bc5e")
 		E.s_col_blend = ICON_ADD
 		E.status &= ~ORGAN_BROKEN
 		E.status |= ORGAN_MUTATED
