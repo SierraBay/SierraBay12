@@ -2,8 +2,10 @@
 	var/list/armor
 	var/siemens_coefficient		//чем больше, тем хуже
 	var/speed_modifier = 0
-	var/coolingefficiency = 0.5 // это база
+	var/coolingefficiency = 0.5 // это база // меньше лучше
 	var/expensive = FALSE
+	var/addmax_damage
+	var/addmin_broken_damage
 
 	armor = list(
 		melee = ARMOR_MELEE_MINOR,
@@ -11,13 +13,8 @@
 		laser = 0,
 		energy = 0,
 		bomb = 0,
-		bio = ARMOR_BIO_MINOR,
 		rad = ARMOR_RAD_MINOR
 	)
-
-/datum/extension/armor/prosthesis
-	under_armor_mult = 0.4
-	over_armor_mult = 1.2
 
 /obj/item/organ/external
 	var/coolingefficiency
@@ -79,12 +76,14 @@
 			force_icon = R.icon
 			name = "robotic [initial(name)]"
 			desc = "[R.desc] It looks like it was produced by [R.company]."
-			armor = R.armor
-			siemens_coefficient = R.siemens_coefficient
-			slowdown = R.speed_modifier
-			coolingefficiency = R.coolingefficiency
-			expensive = R.expensive
-			set_extension(src, /datum/extension/armor/prosthesis, armor)
+		armor = R.armor
+		siemens_coefficient = R.siemens_coefficient
+		slowdown = R.speed_modifier
+		coolingefficiency = R.coolingefficiency
+		expensive = R.expensive
+		max_damage = max_damage +  R.addmax_damage
+		min_broken_damage = min_broken_damage +  R.addmin_broken_damage
+		set_extension(src, /datum/extension/armor, armor)
 
 	for(var/obj/item/organ/external/T in children)
 		T.robotize(company, 1)
@@ -129,7 +128,7 @@
 		rad = ARMOR_RAD_RESISTANT
 	)
 	speed_modifier = - 1
-	coolingefficiency = 1.5
+	coolingefficiency = 0.3
 
 /datum/robolimb/bishop/rook
 	company = "Bishop Rook"
@@ -147,7 +146,7 @@
 		rad = ARMOR_RAD_RESISTANT
 	)
 	speed_modifier = - 0.7
-	coolingefficiency = 1.5
+	coolingefficiency = 0.4
 
 /datum/robolimb/bishop/alt
 	company = "Bishop Alt."
@@ -203,7 +202,7 @@
 	)
 	expensive = TRUE
 	speed_modifier = 1.2
-	coolingefficiency = 0.6
+	coolingefficiency = 1
 
 /datum/robolimb/hephaestus/alt/monitor
 	company = "Hephaestus Monitor."
@@ -224,13 +223,12 @@
 		melee = ARMOR_MELEE_MINOR,
 		bullet = 0,
 		laser = 0,
-		energy = ARMOR_ENERGY_SMALL,
+		energy = ARMOR_ENERGY_MINOR,
 		bomb = ARMOR_BOMB_MINOR,
 		bio = ARMOR_BIO_SHIELDED,
 		rad = ARMOR_RAD_RESISTANT
 	)
-	speed_modifier = - 0.3
-	coolingefficiency = 1.2
+	coolingefficiency = 0.4
 	siemens_coefficient = 0.8
 
 
@@ -243,13 +241,13 @@
 		melee = ARMOR_MELEE_MINOR,
 		bullet = 0,
 		laser = 0,
-		energy = ARMOR_ENERGY_SMALL,
+		energy = ARMOR_ENERGY_MINOR,
 		bomb = ARMOR_BOMB_MINOR,
 		bio = ARMOR_BIO_SHIELDED,
 		rad = ARMOR_RAD_RESISTANT
 	)
 	speed_modifier = - 0.3
-	coolingefficiency = 1.2
+	coolingefficiency = 0.4
 
 /datum/robolimb/xion
 	company = "Xion"
@@ -279,9 +277,10 @@
 		bio = ARMOR_BIO_SHIELDED,
 		rad = ARMOR_RAD_RESISTANT
 	)
-	speed_modifier = 1.1
-	coolingefficiency = 1.2
-	siemens_coefficient = 0.8
+	speed_modifier = 0.4
+	coolingefficiency = 0.7
+	addmax_damage = - 8
+	addmin_broken_damage = - 15
 
 /datum/robolimb/xion/alt
 	company = "Xion Alt."
@@ -310,8 +309,8 @@
 		bio = ARMOR_BIO_SHIELDED,
 		rad = ARMOR_RAD_RESISTANT
 	)
-	speed_modifier = 0.1
-	coolingefficiency = 0.7
+	speed_modifier = 0.2
+	coolingefficiency = 0.6
 	siemens_coefficient = 1.2
 
 /datum/robolimb/wardtakahashi
@@ -335,8 +334,8 @@
 	desc = "A simple robotic limb with retro design. Seems rather stiff."
 	icon = 'icons/mob/human_races/cyberlimbs/wardtakahashi/wardtakahashi_economy.dmi'
 	armor = list(
-		melee = ARMOR_MELEE_MINOR,
-		bullet = ARMOR_BALLISTIC_MINOR,
+		melee = 0,
+		bullet = 0,
 		laser = 0,
 		energy = 0,
 		bomb = 0,
@@ -344,6 +343,9 @@
 		rad = ARMOR_RAD_RESISTANT
 	)
 	coolingefficiency = 1.2
+	speed_modifier = 0.1
+	addmax_damage = - 5
+	addmin_broken_damage = - 10
 
 /datum/robolimb/wardtakahashi/alt
 	company = "Ward-Takahashi Alt."
@@ -417,7 +419,7 @@
 		rad = ARMOR_RAD_RESISTANT
 	)
 	speed_modifier = - 0.1
-	coolingefficiency = 0.9
+	coolingefficiency = 0.52
 
 /datum/robolimb/morpheus/monitor
 	company = "Morpheus Monitor."
@@ -451,7 +453,9 @@
 		rad = ARMOR_RAD_RESISTANT
 	)
 	speed_modifier = 0.8
-	coolingefficiency = 0.9
+	coolingefficiency = 0.8
+	addmax_damage = 10
+	addmin_broken_damage = 5
 
 /datum/robolimb/shellguard/alt
 	company = "Shellguard Alt."
@@ -472,7 +476,29 @@
 	icon = 'icons/mob/human_races/cyberlimbs/vox/primalis.dmi'
 	unavailable_at_fab = 1
 	allowed_bodytypes = list(SPECIES_VOX)
+	armor = list(
+		melee = ARMOR_MELEE_KNIVES,
+		bullet = ARMOR_BALLISTIC_MINOR,
+		laser = ARMOR_LASER_MINOR,
+		energy = ARMOR_ENERGY_MINOR,
+		bomb = ARMOR_BOMB_PADDED,
+		bio = ARMOR_BIO_SHIELDED,
+		rad = ARMOR_RAD_RESISTANT
+	)
+	speed_modifier = 1.2
+	coolingefficiency = 0.4
+	addmax_damage = 10
+	addmin_broken_damage = 5
 
 /datum/robolimb/vox/crap
 	company = "Improvised"
 	icon = 'icons/mob/human_races/cyberlimbs/vox/improvised.dmi'
+	armor = list(
+		melee = ARMOR_MELEE_MINOR,
+		bullet = ARMOR_BALLISTIC_MINOR,
+		laser = ARMOR_LASER_MINOR,
+		energy = ARMOR_ENERGY_MINOR,
+		bomb = ARMOR_BOMB_PADDED,
+		bio = ARMOR_BIO_SHIELDED,
+		rad = ARMOR_RAD_RESISTANT
+	)
