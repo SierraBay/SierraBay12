@@ -3401,6 +3401,7 @@
 #include "mods\_master_files\code\game\world.dm"
 #include "mods\_master_files\code\game\antagonist\station\changeling.dm"
 #include "mods\_master_files\code\game\gamemodes\antag_maps.dm"
+#include "mods\_master_files\code\game\objects\effects\afterimages.dm"
 #include "mods\_master_files\code\game\objects\effects\decals\contraband.dm"
 #include "mods\_master_files\code\game\objects\items\stacks\stack.dm"
 #include "mods\_master_files\code\game\objects\structures\mineral_bath.dm"
