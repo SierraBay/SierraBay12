@@ -1034,31 +1034,7 @@
 							/mob/living/simple_animal/passive/crab,
 							/mob/living/simple_animal/passive/opossum,
 							/mob/living/simple_animal/passive/snake,
-							/mob/living/simple_animal/passive/thoom,
-							// [SIERRA-ADD], - Petting Zoo expansion,
-							/mob/living/simple_animal/butterfly,
-							/mob/living/simple_animal/friendly/cat/maine_coon,
-							/mob/living/simple_animal/friendly/cat/floppa,
-							/mob/living/simple_animal/friendly/dogs,
-							/mob/living/simple_animal/friendly/dogs/pug,
-							/mob/living/simple_animal/friendly/dogs/shiba_inu,
-							/mob/living/simple_animal/friendly/frog,
-							/mob/living/simple_animal/friendly/rabbit,
-							/mob/living/simple_animal/hostile/retaliate/kangaroo,
-							/mob/living/simple_animal/friendly/lizard/axolotl,
-							/mob/living/simple_animal/friendly/megamoth,
-							/mob/living/simple_animal/penguin,
-							/mob/living/simple_animal/penguin/emperor,
-							/mob/living/simple_animal/penguin/baby,
-							/mob/living/simple_animal/hostile/retaliate/reindeer,
-							/mob/living/simple_animal/pet/sloth,
-							/mob/living/simple_animal/hostile/commanded/dog/german,
-							/mob/living/simple_animal/hostile/commanded/dog/german/black,
-							/mob/living/simple_animal/hostile/commanded/dog/golden_retriever,
-							/mob/living/simple_animal/hostile/commanded/dog/bullterrier,
-							/mob/living/simple_animal/friendly/fox,
-							/mob/living/simple_animal/friendly/koala,
-							// [/SIERRA-ADD]
+							/mob/living/simple_animal/passive/thoom
 							)
 
 /singleton/reaction/slime/crit/on_reaction(datum/reagents/holder)

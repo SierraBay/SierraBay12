@@ -144,3 +144,42 @@
 		to_chat(H, SPAN_DANGER("Your new [O.name] explodes with a stream of blood and unformed muscles!"))
 		O.droplimb()
 	H.update_body()
+
+// Critter
+
+/singleton/reaction/slime/crit
+	possible_mobs = list(
+							/mob/living/simple_animal/passive/cat,
+							/mob/living/simple_animal/passive/cat/kitten,
+							/mob/living/simple_animal/passive/corgi,
+							/mob/living/simple_animal/passive/corgi/puppy,
+							/mob/living/simple_animal/passive/cow,
+							/mob/living/simple_animal/passive/chick,
+							/mob/living/simple_animal/passive/chicken,
+							/mob/living/simple_animal/passive/crab,
+							/mob/living/simple_animal/passive/opossum,
+							/mob/living/simple_animal/passive/snake,
+							/mob/living/simple_animal/passive/thoom,
+							/mob/living/simple_animal/butterfly,
+							/mob/living/simple_animal/friendly/cat/maine_coon,
+							/mob/living/simple_animal/friendly/cat/floppa,
+							/mob/living/simple_animal/friendly/dogs,
+							/mob/living/simple_animal/friendly/dogs/pug,
+							/mob/living/simple_animal/friendly/dogs/shiba_inu,
+							/mob/living/simple_animal/friendly/frog,
+							/mob/living/simple_animal/friendly/rabbit,
+							/mob/living/simple_animal/hostile/retaliate/kangaroo,
+							/mob/living/simple_animal/friendly/lizard/axolotl,
+							/mob/living/simple_animal/friendly/megamoth,
+							/mob/living/simple_animal/penguin,
+							/mob/living/simple_animal/penguin/emperor,
+							/mob/living/simple_animal/penguin/baby,
+							/mob/living/simple_animal/hostile/retaliate/reindeer,
+							/mob/living/simple_animal/pet/sloth,
+							/mob/living/simple_animal/hostile/commanded/dog/german,
+							/mob/living/simple_animal/hostile/commanded/dog/german/black,
+							/mob/living/simple_animal/hostile/commanded/dog/golden_retriever,
+							/mob/living/simple_animal/hostile/commanded/dog/bullterrier,
+							/mob/living/simple_animal/friendly/fox,
+							/mob/living/simple_animal/friendly/koala
+							)
