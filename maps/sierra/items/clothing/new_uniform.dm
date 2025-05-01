@@ -692,8 +692,8 @@
 	icon_state = "martens"
 	species_restricted = list("exclude", SPECIES_NABBER, SPECIES_VOX)
 
-/obj/item/clothing/shoes/martens_shoes/short
-	name = "martens short shoes."
+/obj/item/clothing/shoes/martens_shoes/low
+	name = "martens low shoes."
 	icon_state = "martens_short"
 
 /obj/item/clothing/shoes/lowsneackers
