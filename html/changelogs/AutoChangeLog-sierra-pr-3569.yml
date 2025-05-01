@@ -1,0 +1,5 @@
+author: Roche Hendson
+changes:
+  - {tweak: У АВД изменен доступ. Теперь у него есть расширенный доступ к лазарету
+      и НИО}
+delete-after: true
