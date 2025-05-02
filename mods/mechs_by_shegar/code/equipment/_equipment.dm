@@ -26,7 +26,7 @@
 
 /obj/item/mech_equipment/attack_hand(mob/user)
 	if(!can_be_pickuped)
-		to_chat(user, SPAN_BAD("Too heavy!"))
+		to_chat(user, SPAN_BAD("Я такое не подниму!"))
 		return
 	else
 		.=..()
