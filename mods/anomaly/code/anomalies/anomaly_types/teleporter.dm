@@ -31,6 +31,7 @@
 	var/spawn_second_teleporter = FALSE
 	//Телепортирует ли именно этот телепорт?
 	var/teleport_status = TRUE
+	var/obj/spawned_visual
 
 //Этот заспавнит своего второго брата
 /obj/anomaly/doubled_teleporter/with_second
@@ -53,6 +54,19 @@
 		if("0&1")
 			teleport_status = FALSE
 			membered_second_teleporter.teleport_status = TRUE
+
+/obj/anomaly/doubled_teleporter/do_momentum_animation()
+	spawned_visual = new /obj/effect/warp/teleport(get_turf(src))
+	addtimer(new Callback(src, PROC_REF(hide_momentum_animation)), 1 SECONDS)
+
+/obj/anomaly/doubled_teleporter/hide_momentum_animation()
+	spawned_visual.Destroy()
+
+/obj/effect/warp/teleport
+	icon = 'mods/anomaly/icons/effects.dmi'
+	icon_state = "teleport"
+	pixel_x = 0
+	pixel_y = 0
 
 /obj/anomaly/doubled_teleporter/additional_spawn_action()
 	if(spawn_second_teleporter)
