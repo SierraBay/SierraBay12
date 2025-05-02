@@ -1,0 +1,5 @@
+author: Builder13
+changes:
+  - {tweak: Multiz тайлы космоса теперь имеют отдельный подтип. Падений в космосе
+      больше не должно быть}
+delete-after: true
