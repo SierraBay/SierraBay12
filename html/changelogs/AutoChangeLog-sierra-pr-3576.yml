@@ -1,4 +1,0 @@
-author: Shegar
-changes:
-  - {bugfix: Фикс юнит теста}
-delete-after: true
