@@ -19,4 +19,15 @@
 	if (hardpoints[input] != null)
 		USE_FEEDBACK_FAILURE("\The [input] slot on \the [src] is no longer free. It has \a [hardpoints[input]] attached.")
 		return
+	if(!check_whitelist_equipment(tool))
+		USE_FEEDBACK_FAILURE("Одна из часть меха не поддерживает данное снаряжение.")
+		return
 	install_system(tool, input, user)
+
+/mob/living/exosuit/proc/check_whitelist_equipment(obj/item/tool)
+	for(var/obj/item/mech_component/mech_part in list(head, body, R_arm, L_arm, R_leg, L_leg))
+		if(!LAZYLEN(mech_part.whitelist_equipment_paths))
+			continue
+		if(!(tool.type in mech_part.whitelist_equipment_paths))
+			return FALSE
+	return TRUE

@@ -27,6 +27,7 @@
 	var/heat_generation = 5
 	///Количество тепла, выделяемое при ЭМИ ударе
 	var/emp_heat_generation = 50
+	var/list/whitelist_equipment_paths = list()
 
 //TRUE Означает что мех от переданного тепла перегрелся
 /mob/living/exosuit/proc/add_heat(ammount,)
