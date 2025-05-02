@@ -8,7 +8,7 @@
 #include "ventilyator.dm" //[WIP]
 //Пространственные (Необьяснимые какой-либо природой)
 #include "vspishka.dm"
-#include "labirint\labirint.dm"
+#include "labirint\_labirint.dm"
 #include "cooler.dm"
 #include "sleeper.dm"
 #include "teleporter.dm"
