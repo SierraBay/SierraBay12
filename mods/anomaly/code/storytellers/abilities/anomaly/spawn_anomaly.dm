@@ -26,8 +26,7 @@
 		min_artefacts_ammount = 0,
 		max_artefacts_ammount = 0,
 		source = "Действие сторителлера",
-		visible_generation = TRUE,
-		started_in = world.time)
+		visible_generation = TRUE)
 	.=..()
 
 /datum/storyteller_ability/spawn_anomaly/electra
