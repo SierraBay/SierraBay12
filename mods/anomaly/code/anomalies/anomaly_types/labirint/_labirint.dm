@@ -29,6 +29,7 @@
 	artefacts = list(
 		/obj/item/artefact/crystal
 	)
+	can_born_artefacts = TRUE
 	spawn_artefact_in_center = TRUE
 	detection_skill_req = SKILL_BASIC
 	helper_part_path = /obj/anomaly/part/labirint_cube
