@@ -59,9 +59,9 @@
 		data["shopping_cart_length"] = length(SSsupply.shoppinglist)
 		data["request_length"] = length(SSsupply.requestlist)
 	data["screen"] = screen
-	data["credits"] = "[SSsupply.points]"
-	data["currency"] = GLOB.using_map.supply_currency_name
-	data["currency_short"] = GLOB.using_map.supply_currency_name_short
+	data["credits"] = "[department_accounts["Снабжения"].money]"
+	data["currency"] = GLOB.using_map.local_currency_name
+	data["currency_short"] = GLOB.using_map.local_currency_name_short
 	switch(screen)
 		if(1)// Main ordering menu
 			data["categories"] = category_names
@@ -219,12 +219,12 @@
 		var/id = text2num(href_list["approve_order"])
 		var/datum/supply_order/SO = find_order_by_id(id, SSsupply.requestlist)
 		if(SO)
-			if(SO.object.cost >= SSsupply.points)
+			if(SO.object.cost >= department_accounts["Снабжения"].money)
 				to_chat(usr, SPAN_WARNING("Not enough points to purchase \the [SO.object.name]!"))
 			else
 				SSsupply.requestlist -= SO
 				SSsupply.shoppinglist += SO
-				SSsupply.points -= SO.object.cost
+				department_accounts["Снабжения"].money -= SO.object.cost * 15
 
 		else
 			to_chat(user, SPAN_WARNING("Could not find order number [id] to approve."))
@@ -237,7 +237,7 @@
 		if(SO)
 			SSsupply.requestlist += SO
 			SSsupply.shoppinglist -= SO
-			SSsupply.points += SO.object.cost
+			department_accounts["Снабжения"].money += SO.object.cost * 15
 
 		else
 			to_chat(user, SPAN_WARNING("Could not find order number [id] to move back to pending."))
@@ -263,7 +263,7 @@
 			return 1
 		if(SO)
 			SSsupply.shoppinglist -= SO
-			SSsupply.points += SO.object.cost
+			department_accounts["Снабжения"].money += SO.object.cost * 15
 		else
 			to_chat(user, SPAN_WARNING("Could not find order number [id] to cancel."))
 
@@ -326,7 +326,7 @@
 				continue
 			category.Add(list(list(
 				"name" = spc.name,
-				"cost" = spc.cost,
+				"cost" = spc.cost * 15,
 				"ref" = "\ref[spc]"
 			)))
 		category_contents[sp.name] = category
@@ -381,7 +381,7 @@
 		"time" = SO.timestamp,
 		"object" = SO.object.name,
 		"orderer" = SO.orderedby,
-		"cost" = SO.object.cost,
+		"cost" = SO.object.cost * 15,
 		"reason" = SO.reason,
 		"list_id" = list_id
 		))

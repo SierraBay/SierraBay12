@@ -56,7 +56,6 @@ SUBSYSTEM_DEF(supply)
 
 // Just add points over time.
 /datum/controller/subsystem/supply/fire()
-	add_points_from_source(points_per_process, "time")
 
 
 /datum/controller/subsystem/supply/UpdateStat(time)
@@ -68,7 +67,7 @@ SUBSYSTEM_DEF(supply)
 //Supply-related helper procs.
 
 /datum/controller/subsystem/supply/proc/add_points_from_source(amount, source)
-	points += amount
+	department_accounts["Снабжения"].money += amount * 15
 	point_sources[source] += amount
 	point_sources["total"] += amount
 

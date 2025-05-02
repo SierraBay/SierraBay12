@@ -277,7 +277,6 @@
 		bio = ARMOR_BIO_SHIELDED,
 		rad = ARMOR_RAD_RESISTANT
 	)
-	speed_modifier = 0.4
 	coolingefficiency = 0.7
 	addmax_damage = - 8
 	addmin_broken_damage = - 15
