@@ -1,4 +1,11 @@
-//GLOBAL_LIST_INIT(mech_decals, (icon_states('icons/mecha/mech_decals.dmi')-list("template", "mask")))
+#include "combat.dm"
+#include "death_squad.dm"
+#include "ert.dm"
+#include "heavy.dm"
+#include "light.dm"
+#include "merc.dm"
+#include "powerloader.dm"
+#include "security.dm"
 
 /mob/living/exosuit/premade
 	name = "impossible mech"
