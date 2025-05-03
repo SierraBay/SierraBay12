@@ -2344,7 +2344,6 @@
 "aqf" = (
 /obj/machinery/fabricator{
 	desc = "Your typical Autolathe. It appears to have much more options than your regular one, however...";
-	fab_status_flags = 1;
 	name = "unlocked autolathe"
 	},
 /obj/floor_decal/borderfloorblack{
@@ -10410,7 +10409,7 @@
 	dir = 9
 	},
 /obj/structure/table/reinforced,
-/obj/machinery/fabricator/micro,
+/obj/machinery/fabricator,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/flooring/tiles.dmi';
 	icon_state = "white"
@@ -12252,7 +12251,6 @@
 /area/centcom/specops)
 "jLn" = (
 /obj/floor_decal/borderfloorwhite,
-/obj/machinery/r_n_d/circuit_imprinter,
 /obj/item/reagent_containers/glass/beaker/sulphuric,
 /obj/floor_decal/corner/purple/border,
 /obj/floor_decal/industrial/outline/yellow,
@@ -16154,8 +16152,8 @@
 /obj/floor_decal/corner/purple/border{
 	dir = 9
 	},
-/obj/machinery/r_n_d/circuit_imprinter,
 /obj/item/reagent_containers/glass/beaker/sulphuric,
+/obj/machinery/fabricator/rnd/imprinter,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/flooring/tiles.dmi';
 	icon_state = "white"
@@ -16399,7 +16397,7 @@
 /obj/floor_decal/corner/purple/border{
 	dir = 1
 	},
-/obj/machinery/r_n_d/protolathe,
+/obj/machinery/fabricator/rnd/protolathe,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/flooring/tiles.dmi';
 	icon_state = "white"

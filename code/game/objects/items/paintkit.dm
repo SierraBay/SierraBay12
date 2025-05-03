@@ -81,8 +81,6 @@
 	return ..()
 
 // Mechs are handled in their attackby (mech_interaction.dm).
-// [SIERRA-REMOVE] - Mechs_by_shegar - Не нужны
-	/*
 
 
 
@@ -117,8 +115,3 @@
 	name = "\"Alpine\" exosuit customisation kit"
 	new_icon = "cammo2"
 	desc = "A muted pattern for alpine environments. Don't miss the forest for the trees!"
-
-
-
-  */
-// [/SIERRA-REMOVE]

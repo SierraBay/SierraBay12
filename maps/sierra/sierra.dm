@@ -77,6 +77,7 @@
 
 	#include "items/clothing/clothing.dm"
 	#include "items/clothing/exploration.dm"
+	#include "items/clothing/new_uniform.dm"
 	#include "items/clothing/override.dm"
 	#include "items/clothing/storages.dm"
 	#include "items/clothing/security.dm"
@@ -148,7 +149,7 @@
 	// --- MAP FILES --- //
 
 		// ~SIERRA~ //
-	#include "z1-z5_sierra.dmm"
+	#include "z1-z4_sierra.dmm"
 	#include "z6_admin.dmm"
 	#include "z7_transit.dmm"
 	#include "../away/empty.dmm"
@@ -172,7 +173,7 @@
 	#include "../away/meatstation/meatstation.dm"
 	#include "../away/miningstation/miningstation.dm"
 	#include "../away/mininghome/mininghome.dm"
-	#include "../away/scavver/scavver_gantry.dm"
+	#include "../../mods/_maps/scavver/scavver_gantry.dm"
 	#include "../away/abandoned_hotel/abandoned_hotel.dm"
 	#include "../event/iccgn_ship/icgnv_hound.dm"
 	#include "../event/sfv_arbiter/sfv_arbiter.dm"
@@ -188,11 +189,15 @@
 	#include "../../mods/_maps/liberia/_map_liberia.dme"
 	#include "../../mods/_maps/sentinel/_map_sentinel.dme"
 	#include "../../mods/_maps/farfleet/_map_farfleet.dme"
+	#include "../../mods/_maps/general_maps/_map_general_maps.dme"
 	#include "../../mods/_maps/hand/_map_hand.dme"
 	#include "../../mods/_maps/verne/_map_verne.dme"
 	#include "../../mods/_maps/mininghome/_map_mininghome.dme"
 	#include "../../mods/_maps/ascent_seedship/_map_ascent_seedship.dme"
 	#include "../../mods/_maps/ascent_caulship/_map_ascent_caulship.dme"
+
+	// Verne-verse
+	#include "../../mods/_maps/phobos/_map_phobos.dme"
 
 
 	#include "../../mods/antagonists/_antagonists_includes.dm"
@@ -201,7 +206,6 @@
 	#include "../../mods/guns/_guns_includes.dm"
 	#include "../../mods/jukebox_tapes/_jukebox_tapes_includes.dm"
 	#include "../../mods/legalese_language/_legalese_includes.dm"
-	#include "../../mods/petting_zoo/_petting_zoo_includes.dm"
 	#include "../../mods/resomi/_resomi_includes.dm"
 	#include "../../mods/screentips/_screentips_includes.dm"
 	#include "../../mods/tajara/_tajara_includes.dm"

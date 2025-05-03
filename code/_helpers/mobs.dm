@@ -19,34 +19,35 @@
 		var/M = AM.get_mob()
 		if(M)
 			mobs += M
-
 	return mobs
+
 
 /proc/random_hair_style(gender, species = SPECIES_HUMAN)
 	var/h_style = "Bald"
-
-	var/datum/species/mob_species = all_species[species]
+	var/singleton/species/mob_species = GLOB.species_by_name[species]
 	var/list/valid_hairstyles = mob_species.get_hair_styles()
 	if(length(valid_hairstyles))
 		h_style = pick(valid_hairstyles)
-
 	return h_style
+
 
 /proc/random_facial_hair_style(gender, species = SPECIES_HUMAN)
 	var/f_style = "Shaved"
-	var/datum/species/mob_species = all_species[species]
+	var/singleton/species/mob_species = GLOB.species_by_name[species]
 	var/list/valid_facialhairstyles = mob_species.get_facial_hair_styles(gender)
 	if(length(valid_facialhairstyles))
 		f_style = pick(valid_facialhairstyles)
 		return f_style
 
+
 /proc/random_name(gender, species = SPECIES_HUMAN)
-	var/datum/species/current_species = all_species[species]
+	var/singleton/species/current_species = GLOB.species_by_name[species]
 	var/singleton/cultural_info/current_culture = SSculture.get_culture(current_species.default_cultural_info[TAG_CULTURE])
 	return current_culture.get_random_name(gender)
 
-/proc/random_skin_tone(datum/species/current_species)
-	var/species_tone = current_species ? 35 - current_species.max_skin_tone() : -185
+
+/proc/random_skin_tone(singleton/species/species)
+	var/species_tone = species ? 35 - species.max_skin_tone() : -185
 	switch(pick(60;"caucasian", 15;"afroamerican", 10;"african", 10;"latino", 5;"albino"))
 		if("caucasian")		. = -10
 		if("afroamerican")	. = -115

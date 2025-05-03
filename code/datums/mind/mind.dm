@@ -107,7 +107,7 @@
 
 	var/out = "<B>[name]</B>[(current&&(current.real_name!=name))?" (as [current.real_name])":""]<br>"
 	out += "Mind currently owned by key: [key] [active?"(synced)":"(not synced)"]<br>"
-	out += "Assigned role: [assigned_role]. <a href='?src=\ref[src];role_edit=1'>Edit</a><br>"
+	out += "Assigned role: [assigned_role]. <a href='byond://?src=\ref[src];role_edit=1'>Edit</a><br>"
 	out += "<hr>"
 	out += "Factions and special roles:<br><table>"
 	var/list/all_antag_types = GLOB.all_antag_types_
@@ -121,16 +121,16 @@
 		var/num = 1
 		for(var/datum/objective/O in objectives)
 			out += "<b>Objective #[num]:</b> [O.explanation_text] "
-			out += " <a href='?src=\ref[src];obj_delete=\ref[O]'>\[remove\]</a><br>"
+			out += " <a href='byond://?src=\ref[src];obj_delete=\ref[O]'>\[remove\]</a><br>"
 			num++
-		out += "<br><a href='?src=\ref[src];obj_announce=1'>\[announce objectives\]</a>"
+		out += "<br><a href='byond://?src=\ref[src];obj_announce=1'>\[announce objectives\]</a>"
 
 	else
 		out += "None."
-	out += "<br><a href='?src=\ref[src];obj_add=1'>\[add\]</a><br><br>"
+	out += "<br><a href='byond://?src=\ref[src];obj_add=1'>\[add\]</a><br><br>"
 
 	var/datum/goal/ambition/ambition = SSgoals.ambitions[src]
-	out += "<b>Ambitions:</b> [ambition ? ambition.description : "None"] <a href='?src=\ref[src];amb_edit=\ref[src]'>\[edit\]</a></br>"
+	out += "<b>Ambitions:</b> [ambition ? ambition.description : "None"] <a href='byond://?src=\ref[src];amb_edit=\ref[src]'>\[edit\]</a></br>"
 	show_browser(usr, out, "window=edit_memory[src]")
 
 /datum/mind/Topic(href, href_list)
@@ -142,8 +142,9 @@
 
 	if(href_list["add_goal"])
 
-		var/mob/caller = locate(href_list["add_goal_caller"])
-		if(!isghost(usr) && caller && caller == current) can_modify = TRUE
+		var/mob/calling_mob = locate(href_list["add_goal_caller"])
+		if(!isghost(usr) && calling_mob && calling_mob == current)
+			can_modify = TRUE
 
 		if(can_modify)
 			var/did_generate_goal = generate_goals(assigned_job, TRUE, 1, bypass_goal_checks = is_admin)
@@ -163,8 +164,9 @@
 	if(href_list["abandon_goal"])
 		var/datum/goal/goal = locate(href_list["abandon_goal"])
 
-		var/mob/caller = locate(href_list["abandon_goal_caller"])
-		if(!isghost(usr) && caller && caller == current) can_modify = TRUE
+		var/mob/calling_mob = locate(href_list["reroll_goal_caller"])
+		if(!isghost(usr) && calling_mob && calling_mob == current)
+			can_modify = TRUE
 
 		if(can_modify && goal && (goal in goals))
 			if(delete_goal(assigned_job, goal, is_admin))
@@ -179,8 +181,8 @@
 	if(href_list["reroll_goal"])
 		var/datum/goal/goal = locate(href_list["reroll_goal"])
 
-		var/mob/caller = locate(href_list["reroll_goal_caller"])
-		if(!isghost(usr) && caller && caller == current) can_modify = TRUE
+		var/mob/calling_mob = locate(href_list["reroll_goal_caller"])
+		if(!isghost(usr) && calling_mob && calling_mob == current) can_modify = TRUE
 
 		if(can_modify && goal && (goal in goals))
 			if(generate_goals(assigned_job, TRUE, 1, bypass_goal_checks = TRUE))

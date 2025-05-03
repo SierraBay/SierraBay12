@@ -1,4 +1,4 @@
-/datum/species/mantid
+/singleton/species/mantid
 
 	name =                   SPECIES_MANTID_ALATE
 	name_plural =            "Kharmaan Alates"
@@ -120,24 +120,24 @@
 		/singleton/emote/exertion/biological/pant
 	)
 
-/datum/species/mantid/skills_from_age(age)
+/singleton/species/mantid/skills_from_age(age)
 	. = 0
 
-/datum/species/mantid/handle_sleeping(mob/living/carbon/human/H)
+/singleton/species/mantid/handle_sleeping(mob/living/carbon/human/H)
 	return
 
-/datum/species/mantid/get_blood_name()
+/singleton/species/mantid/get_blood_name()
 	return "hemolymph"
 
-/datum/species/mantid/post_organ_rejuvenate(obj/item/organ/org, mob/living/carbon/human/H)
+/singleton/species/mantid/post_organ_rejuvenate(obj/item/organ/org, mob/living/carbon/human/H)
 	org.status |= ORGAN_CRYSTAL
 
-/datum/species/mantid/equip_survival_gear(mob/living/carbon/human/H, extendedtank = 1)
+/singleton/species/mantid/equip_survival_gear(mob/living/carbon/human/H, extendedtank = 1)
 	return
 
 /// Gyne ///
 
-/datum/species/mantid/gyne
+/singleton/species/mantid/gyne
 
 	name =                    SPECIES_MANTID_GYNE
 	name_plural =             "Kharmaan Gynes"
@@ -184,10 +184,10 @@
 		TAG_RELIGION =  RELIGION_KHARMAANI
 	)
 
-/datum/species/mantid/gyne/skills_from_age(age)
+/singleton/species/mantid/gyne/skills_from_age(age)
 	. = 0
 
-/datum/species/mantid/gyne/attempt_grab(mob/living/carbon/human/grabber, mob/living/target)
+/singleton/species/mantid/gyne/attempt_grab(mob/living/carbon/human/grabber, mob/living/target)
 	if(grabber != target)
 		grabber.unEquip(grabber.l_hand)
 		grabber.unEquip(grabber.r_hand)
@@ -195,7 +195,7 @@
 		playsound(grabber.loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
 	. = ..(grabber, target, GRAB_NAB)
 
-/datum/species/mantid/gyne/New()
+/singleton/species/mantid/gyne/New()
 	equip_adjust = list(
 		slot_l_hand_str = list(
 			"[NORTH]" = list("x" = -4, "y" = 12),
@@ -244,7 +244,7 @@
 		"belt" =         list("loc" = ui_belt,      "name" = "Belt",         "slot" = slot_belt,      "state" = "belt")
 		)*/
 
-/datum/species/nabber/monarch_worker
+/singleton/species/nabber/monarch_worker
 	name = SPECIES_MONARCH_WORKER
 	name_plural = "Monarch Serpentid Workers"
 	description = "close cousins to the Giant Armoured Serpentids, saved from their crippled homeworld hundreds of \
@@ -272,18 +272,18 @@
 		TAG_RELIGION =  RELIGION_KHARMAANI
 	)
 
-/datum/species/nabber/monarch_worker/skills_from_age(age)
+/singleton/species/nabber/monarch_worker/skills_from_age(age)
 	. = 0
 
-/datum/species/nabber/monarch_worker/get_bodytype(mob/living/carbon/human/H)
+/singleton/species/nabber/monarch_worker/get_bodytype(mob/living/carbon/human/H)
 	return SPECIES_NABBER
 
-/datum/species/nabber/monarch_worker/equip_survival_gear(mob/living/carbon/human/H)
+/singleton/species/nabber/monarch_worker/equip_survival_gear(mob/living/carbon/human/H)
 	return
 
 /// Queen ///
 
-/datum/species/nabber/monarch_queen
+/singleton/species/nabber/monarch_queen
 	name = SPECIES_MONARCH_QUEEN
 	name_plural = "Monarch Serpentid Queens"
 	description = "close cousins to the Giant Armoured Serpentids, saved from their crippled homeworld hundreds of \
@@ -342,7 +342,7 @@
 		TAG_RELIGION =  RELIGION_KHARMAANI
 		)
 
-/datum/species/nabber/monarch_queen/New()
+/singleton/species/nabber/monarch_queen/New()
 	equip_adjust = list(
 		slot_belt_str = list(
 			"[NORTH]" = list("x" = 0, "y" = 0),
@@ -359,8 +359,8 @@
 	)
 	..()
 
-/datum/species/nabber/monarch_queen/skills_from_age(age)
+/singleton/species/nabber/monarch_queen/skills_from_age(age)
 	. = 0
 
-/datum/species/nabber/monarch_queen/equip_survival_gear(mob/living/carbon/human/H)
+/singleton/species/nabber/monarch_queen/equip_survival_gear(mob/living/carbon/human/H)
 	return

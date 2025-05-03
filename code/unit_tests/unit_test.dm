@@ -57,9 +57,10 @@ var/global/ascii_reset = "[ascii_esc]\[0m"
 	var/async = 0       // If the check can be left to do it's own thing, you must define a check_result() proc if you use this.
 	var/reported = 0	// If it's reported a success or failure.  Any tests that have not are assumed to be failures.
 	var/why_disabled = "No reason set."   // If we disable a unit test we will display why so it reminds us to check back on it later.
-
 	var/safe_landmark
 	var/space_landmark
+	var/test_start_time
+	var/test_done_time
 
 /datum/unit_test/proc/log_debug(message)
 	log_unit_test("[ascii_yellow]---  DEBUG  --- \[[name]\]: [message][ascii_reset]")
@@ -71,16 +72,22 @@ var/global/ascii_reset = "[ascii_esc]\[0m"
 	all_unit_tests_passed = 0
 	failed_unit_tests++
 	reported = 1
-	log_unit_test("[ascii_red]!!! FAILURE !!! \[[name]\]: [message][ascii_reset]")
+	test_done_time = uptime()
+	var/test_time = round((test_done_time - test_start_time) / 10, 0.1)
+	log_unit_test("[ascii_red]!!! FAILURE !!! ([test_time]s) \[[name]\]: [message][ascii_reset]")
 
 /datum/unit_test/proc/pass(message)
 	reported = 1
-	log_unit_test("[ascii_green]*** SUCCESS *** \[[name]\]: [message][ascii_reset]")
+	test_done_time = uptime()
+	var/test_time = round((test_done_time - test_start_time) / 10, 0.1)
+	log_unit_test("[ascii_green]*** SUCCESS *** ([test_time]s) \[[name]\]: [message][ascii_reset]")
 
 /datum/unit_test/proc/skip(message)
 	skipped_unit_tests++
 	reported = 1
-	log_unit_test("[ascii_yellow]--- SKIPPED --- \[[name]\]: [message][ascii_reset]")
+	test_done_time = uptime()
+	var/test_time = round((test_done_time - test_start_time) / 10, 0.1)
+	log_unit_test("[ascii_yellow]--- SKIPPED --- ([test_time]s) \[[name]\]: [message][ascii_reset]")
 
 /datum/unit_test/proc/start_test()
 	fail("No test proc - [type]")
@@ -127,6 +134,7 @@ var/global/ascii_reset = "[ascii_esc]\[0m"
 		. += d
 
 /proc/do_unit_test(datum/unit_test/test, end_time, skip_disabled_tests = TRUE)
+	test.test_start_time = uptime()
 	if(test.disabled && skip_disabled_tests)
 		test.pass("[ascii_red]Check Disabled: [test.why_disabled]")
 		return

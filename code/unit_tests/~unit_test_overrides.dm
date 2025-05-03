@@ -21,7 +21,7 @@
 /obj/random
 	spawn_method = TYPE_PROC_REF(/obj/random, unit_test_spawn_item)
 
-GLOBAL_DATUM(unit_test_last_obj_random_creation, /atom/movable)
+GLOBAL_TYPED(unit_test_last_obj_random_creation, /atom/movable)
 /obj/random/proc/unit_test_spawn_item()
 	var/build_path = unit_test_select_heaviest(spawn_choices())
 	GLOB.unit_test_last_obj_random_creation = new build_path()

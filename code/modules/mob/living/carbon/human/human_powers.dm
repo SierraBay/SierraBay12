@@ -33,45 +33,6 @@
 		else
 			to_chat(src, SPAN_NOTICE("You're already using that style."))
 
-/****************
- misc alien verbs
-****************/
-/mob/living/carbon/human/proc/commune()
-	set category = "Abilities"
-	set name = "Commune with creature"
-	set desc = "Send a telepathic message to an unlucky recipient."
-
-	var/list/targets = list()
-	var/target = null
-	var/text = null
-
-	targets += getmobs() //Fill list, prompt user with list
-	target = input("Select a creature!", "Speak to creature", null, null) as null|anything in targets
-
-	if(!target) return
-
-	text = input("What would you like to say?", "Speak to creature", null, null)
-
-	text = sanitize(text)
-
-	if(!text) return
-
-	var/mob/M = targets[target]
-
-	if(isghost(M) || M.stat == DEAD)
-		to_chat(src, SPAN_WARNING("Not even a [src.species.name] can speak to the dead."))
-		return
-
-	log_say("[key_name(src)] communed to [key_name(M)]: [text]")
-
-	to_chat(M, SPAN_NOTICE("Like lead slabs crashing into the ocean, alien thoughts drop into your mind: <i>[text]</i>"))
-	if(istype(M,/mob/living/carbon/human))
-		var/mob/living/carbon/human/H = M
-		if(H.species.name == src.species.name)
-			return
-		if(prob(75))
-			to_chat(H, SPAN_WARNING("Your nose begins to bleed..."))
-			H.drip(1)
 
 /mob/living/carbon/human/proc/psychic_whisper(mob/M as mob in oview())
 	set name = "Psychic Whisper"

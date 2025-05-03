@@ -2,6 +2,8 @@
 
 /obj/machinery/atmospherics/pipe
 
+	health_max = 200
+
 	var/datum/gas_mixture/air_temporary // used when reconstructing a pipeline that broke
 	var/datum/pipeline/parent
 	var/volume = 0
@@ -34,6 +36,12 @@
 
 /obj/machinery/atmospherics/pipe/hides_under_flooring()
 	return level != ATOM_LEVEL_OVER_TILE
+
+/obj/machinery/atmospherics/pipe/fire_act()
+	return FALSE
+
+/obj/machinery/atmospherics/pipe/on_death()
+	burst()
 
 /obj/machinery/atmospherics/pipe/proc/set_leaking(new_leaking)
 	if(new_leaking && !leaking)
@@ -231,13 +239,13 @@
 
 	else return 1
 
-/obj/machinery/atmospherics/pipe/simple/proc/burst()
+/obj/machinery/atmospherics/pipe/proc/burst()
 	ASSERT(parent)
 	parent.temporarily_store_air()
-	src.visible_message(SPAN_DANGER("\The [src] bursts!"));
-	playsound(src.loc, 'sound/effects/bang.ogg', 25, 1)
+	visible_message(SPAN_DANGER("\The [src] bursts!"))
+	playsound(loc, 'sound/effects/bang.ogg', 25, TRUE)
 	var/datum/effect/smoke_spread/smoke = new
-	smoke.set_up(1,0, src.loc, 0)
+	smoke.set_up(1, 0, loc, 0)
 	smoke.start()
 	qdel(src)
 

@@ -135,8 +135,8 @@
 				// [/SIERRA-EDIT]
 			else
 				// [SIERRA-EDIT] - EXPANDED_CULTURE_DESCRIPTOR - Перевод
-				// LAZYADD(., "- [lang] <a href='?src=\ref[src];remove_language=[i]'>Remove.</a> <span style='color:#ff0000;font-style:italic;'>[all_languages[lang].warning]</span><br>") // SIERRA-EDIT - ORIGINAL
-				LAZYADD(., "- [lang] <a href='?src=\ref[src];remove_language=[i]'>Убрать.</a> <span style='color:#ff0000;font-style:italic;'>[all_languages[lang].warning]</span><br>")
+				// LAZYADD(., "- [lang] <a href='byond://?src=\ref[src];remove_language=[i]'>Remove.</a> <span style='color:#ff0000;font-style:italic;'>[all_languages[lang].warning]</span><br>") // SIERRA-EDIT - ORIGINAL
+				LAZYADD(., "- [lang] <a href='byond://?src=\ref[src];remove_language=[i]'>Убрать.</a> <span style='color:#ff0000;font-style:italic;'>[all_languages[lang].warning]</span><br>")
 				// [/SIERRA-EDIT]
 /*
 	if(length(pref.alternate_languages) < MAX_LANGUAGES)
@@ -145,6 +145,6 @@
 	if(length(pref.alternate_languages) < pref.total_languages())
 		var/remaining_langs = pref.total_languages() - length(pref.alternate_languages)
 		// [SIERRA-EDIT] - EXPANDED_CULTURE_DESCRIPTOR - Перевод
-		// LAZYADD(., "- <a href='?src=\ref[src];add_language=1'>add</a> ([remaining_langs] remaining)<br>") // SIERRA-EDIT - ORIGINAL
-		LAZYADD(., "- <a href='?src=\ref[src];add_language=1'>Добавить</a> ([remaining_langs] осталось)<br>")
+		// LAZYADD(., "- <a href='byond://?src=\ref[src];add_language=1'>add</a> ([remaining_langs] remaining)<br>") // SIERRA-EDIT - ORIGINAL
+		LAZYADD(., "- <a href='byond://?src=\ref[src];add_language=1'>Добавить</a> ([remaining_langs] осталось)<br>")
 		// [/SIERRA-EDIT]

@@ -32,10 +32,10 @@
 		)
 	var/shackle = 0
 
-/obj/item/organ/internal/posibrain/New(mob/living/carbon/H)
-	..()
-	if(!brainmob && H)
-		init(H)
+/obj/item/organ/internal/posibrain/Initialize()
+	. = ..()
+	if(!brainmob && iscarbon(loc))
+		init(loc)
 // [SIERRA-REMOVE] - IPC_MODS
 /*
 	unshackle()

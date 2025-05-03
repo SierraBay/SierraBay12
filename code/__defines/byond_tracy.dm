@@ -28,6 +28,6 @@
 			lib = "tracy.so"
 		else
 			CRASH("Tracy initialization failed: unsupported platform or DLL not found.")
-	var/init = CALL_EXT(lib, "init")()
+	var/init = call_ext(lib, "init")()
 	if(init != "0")
 		CRASH("[lib] init error: [init]")

@@ -33,7 +33,7 @@
 	return B.allow_custom_email
 
 /datum/category_item/player_setup_item/background/records/content(mob/user)
-	. = list() 
+	. = list()
 	// [SIERRA-EDIT] - EXPANDED_CULTURE_DESCRIPTOR - Перевод
 	// . += "<br><b>Records</b>:" // SIERRA-EDIT - ORIGINAL
 	. += "<br><b>Записи</b>:"
@@ -47,15 +47,15 @@
 		// .+= TBTN("set_general_records", TextPreview(pref.gen_record, 40), "Employment") // SIERRA-EDIT - ORIGINAL
 		// .+= TBTN("set_security_records", TextPreview(pref.sec_record, 40), "Security") // SIERRA-EDIT - ORIGINAL
 		// .+= TBTN("set_memory", TextPreview(pref.memory, 40), "Memory") // SIERRA-EDIT - ORIGINAL
-	// . += "<br><b>Other</b>:" // SIERRA-EDIT - ORIGINAL	
+	// . += "<br><b>Other</b>:" // SIERRA-EDIT - ORIGINAL
 	// var/set_addr_button = TBTN("set_email_addr", pref.email_addr ? pref.email_addr : "(default)", "Email Address") // SIERRA-EDIT - ORIGINAL
-	// var/list/branches = pref.for_each_selected_branch(new Callback(src, PROC_REF(allow_email_branch_check)) // SIERRA-EDIT - ORIGINAL
+	// var/list/branches = pref.for_each_selected_branch(new Callback(src, TYPE_PROC_REF(allow_email_branch_check)) // SIERRA-EDIT - ORIGINAL
 	// for (var/name in branches) // SIERRA-EDIT - ORIGINAL
 		// set_addr_button += "  " + (branches[name] ? UI_FONT_GOOD(name) : UI_FONT_BAD(name)) // SIERRA-EDIT - ORIGINAL
 	// . += set_addr_button // SIERRA-EDIT - ORIGINAL
 	// . += TBTN("set_email_pass", pref.email_pass ? pref.email_pass : "(random)", "Email Password") // SIERRA-EDIT - ORIGINAL
 	else
-		.+= TBTN("set_public_record", TextPreview(pref.public_record, 40), "Публичные записи") 
+		.+= TBTN("set_public_record", TextPreview(pref.public_record, 40), "Публичные записи")
 		.+= TBTN("set_medical_records", TextPreview(pref.med_record, 40), "Записи здравоохранения")
 		.+= TBTN("set_general_records", TextPreview(pref.gen_record, 40), "Записи трудоустройства")
 		.+= TBTN("set_security_records", TextPreview(pref.sec_record, 40), "Записи защиты активов")
@@ -139,7 +139,7 @@
 	else if (href_list["set_email_addr"])
 		// [SIERRA-EDIT] - EXPANDED_CULTURE_DESCRIPTOR - Перевод
 		// var/value = input(user, "Enter email username:", "Email Address", pref.email_addr) as text // SIERRA-EDIT - ORIGINAL
-		var/value = input(user, "Введите логин для почты:", "Email Address", pref.email_addr) as text 
+		var/value = input(user, "Введите логин для почты:", "Email Address", pref.email_addr) as text
 		// [/SIERRA-EDIT]
 		if (isnull(value) || !CanUseTopic(user))
 			return TOPIC_NOACTION
@@ -149,7 +149,7 @@
 			if (chars < 4 || chars > 24)
 				// [SIERRA-EDIT] - EXPANDED_CULTURE_DESCRIPTOR - Перевод
 				// to_chat(user, SPAN_WARNING("Invalid Email Username '[clean]': must be 4..24 glyphs from /a-z0-9./")) // SIERRA-EDIT - ORIGINAL
-				to_chat(user, SPAN_WARNING("Неподходящий логин '[clean]': логин должен содержать 4..24 символов /a-z0-9./")) 
+				to_chat(user, SPAN_WARNING("Неподходящий логин '[clean]': логин должен содержать 4..24 символов /a-z0-9./"))
 				// [/SIERRA-EDIT]
 				return TOPIC_NOACTION
 			value = clean

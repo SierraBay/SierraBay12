@@ -207,7 +207,7 @@
 /obj/item/clothing/mask/rubber/species/New()
 	..()
 	visible_name = species
-	var/datum/species/S = all_species[species]
+	var/singleton/species/S = GLOB.species_by_name[species]
 	if(istype(S))
 		var/singleton/cultural_info/C = SSculture.get_culture(S.default_cultural_info[TAG_CULTURE])
 		if(istype(C))

@@ -1,0 +1,4 @@
+author: Guared1365
+changes:
+  - {maptweak: Удалил дубликат контроллера шлюзов на четвёртой палубе.}
+delete-after: true

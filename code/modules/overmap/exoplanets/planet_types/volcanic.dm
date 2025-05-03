@@ -21,7 +21,7 @@
 
 /obj/overmap/visitable/sector/exoplanet/volcanic/generate_atmosphere()
 	..()
-	var/datum/species/H = all_species[SPECIES_HUMAN]
+	var/singleton/species/H = GLOB.species_by_name[SPECIES_HUMAN]
 	var/xtreme = H.heat_level_2 + (rand(1,3) *  H.heat_level_2)
 	var/generator/new_temp = generator("num", H.heat_level_2, xtreme, UNIFORM_RAND)
 	atmosphere.temperature = new_temp.Rand()

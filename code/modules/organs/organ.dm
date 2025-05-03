@@ -18,7 +18,7 @@ var/global/list/organ_cache = list()
 	// Reference data.
 	var/mob/living/carbon/human/owner // Current mob owning the organ.
 	var/datum/dna/dna                 // Original DNA.
-	var/datum/species/species         // Original species.
+	var/singleton/species/species         // Original species.
 
 	// Damage vars.
 	var/damage = 0                    // Current damage to the organ
@@ -50,8 +50,8 @@ var/global/list/organ_cache = list()
 	return (damage >= min_broken_damage || (status & ORGAN_CUT_AWAY) || (status & ORGAN_BROKEN))
 
 //Second argument may be a dna datum; if null will be set to holder's dna.
-/obj/item/organ/New(mob/living/carbon/holder, datum/dna/given_dna)
-	..(holder)
+/obj/item/organ/Initialize(mapload, datum/dna/given_dna)
+	. = ..()
 	if(!istype(given_dna))
 		given_dna = null
 
@@ -59,18 +59,17 @@ var/global/list/organ_cache = list()
 		min_broken_damage = floor(max_damage / 2)
 	else
 		max_damage = min_broken_damage * 2
-
-	if(istype(holder))
-		owner = holder
-		if(!given_dna && holder.dna)
-			given_dna = holder.dna
+	if (iscarbon(loc))
+		owner = loc
+		if(!given_dna && owner.dna)
+			given_dna = owner.dna
 		else
-			log_debug("[src] spawned in [holder] without a proper DNA.")
+			log_debug("[src] spawned in [owner] without a proper DNA.")
 
 	if (given_dna)
 		set_dna(given_dna)
 	if (!species)
-		species = all_species[SPECIES_HUMAN]
+		species = GLOB.species_by_name[SPECIES_HUMAN]
 	species.resize_organ(src)
 
 	create_reagents(5 * (w_class-1)**2)
@@ -85,7 +84,7 @@ var/global/list/organ_cache = list()
 			blood_DNA = list()
 		blood_DNA.Cut()
 		blood_DNA[dna.unique_enzymes] = dna.b_type
-		species = all_species[dna.species]
+		species = GLOB.species_by_name[dna.species]
 		if (!species)
 			crash_with("Invalid DNA species. Expected a valid species name as string, was: [log_info_line(dna.species)]")
 

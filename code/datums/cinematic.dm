@@ -1,4 +1,4 @@
-GLOBAL_DATUM_INIT(cinematic, /datum/cinematic, new)
+GLOBAL_TYPED_NEW(cinematic, /datum/cinematic)
 //Was moved from the gameticker to here. Could use further improvement.
 
 /datum/cinematic

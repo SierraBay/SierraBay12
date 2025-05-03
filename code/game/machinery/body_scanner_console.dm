@@ -114,7 +114,7 @@
 		data["printEnabled"] = TRUE
 		data["eraseEnabled"] = TRUE
 		data["pushEnabled"] = TRUE
-		data["scan"] = connected.occupant.get_raw_medical_data(TRUE)
+		data["scan"] = connected.occupant.get_raw_medical_data(TRUE, connected.scan_for_present_mutations)
 		data["html_scan_header"] = display_medical_data_header(data["scan"], user.get_skill_value(SKILL_MEDICAL))
 		data["html_scan_health"] = display_medical_data_health(data["scan"], user.get_skill_value(SKILL_MEDICAL))
 		data["html_scan_body"] = display_medical_data_body(data["scan"], user.get_skill_value(SKILL_MEDICAL))

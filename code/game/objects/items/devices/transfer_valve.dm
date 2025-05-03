@@ -162,7 +162,7 @@
 	if(armed && href_list["activate"])
 		attached_device.activate()
 		visible_message(SPAN_WARNING("The [attached_device] blips!"), range = 3)
-		message_admins("[key_name_admin(usr)] triggered \the [src]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.loc.x];Y=[src.loc.y];Z=[src.loc.z]'>JMP</a>)")
+		message_admins("[key_name_admin(usr)] triggered \the [src]. (<a href='byond://?_src_=holder;adminplayerobservecoodjump=1;X=[src.loc.x];Y=[src.loc.y];Z=[src.loc.z]'>JMP</a>)")
 	return TRUE // Returning 1 sends an update to attached UIs
 
 /obj/item/device/transfer_valve/process_activation(obj/item/device/D)
@@ -258,16 +258,16 @@
 		else
 			attacher_name = "[attacher.name]([attacher.ckey])"
 
-		var/log_str = "Bomb valve opened in <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name]</a> "
+		var/log_str = "Bomb valve opened in <a href='byond://?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name]</a> "
 		log_str += "with [attached_device ? attached_device : "no device"] attacher: [attacher_name]"
 
 		if(attacher)
-			log_str += "(<A HREF='?_src_=holder;adminmoreinfo=\ref[attacher]'>?</A>)"
+			log_str += "(<a href='byond://?_src_=holder;adminmoreinfo=\ref[attacher]'>?</A>)"
 
 		var/mob/mob = get_mob_by_key(src.fingerprintslast)
 		var/last_touch_info = ""
 		if(mob)
-			last_touch_info = "(<A HREF='?_src_=holder;adminmoreinfo=\ref[mob]'>?</A>)"
+			last_touch_info = "(<a href='byond://?_src_=holder;adminmoreinfo=\ref[mob]'>?</A>)"
 
 		log_str += " Last touched by: [src.fingerprintslast][last_touch_info]"
 		GLOB.bombers += log_str

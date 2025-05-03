@@ -45,7 +45,7 @@
 	if(T == src)
 		to_chat(src,SPAN_WARNING("We would have to be very silly to try absorbing ourselves."))
 		return
-	if(!istype(T) || T.isSynthetic() || istype(T.species,/datum/species/vox))
+	if(!istype(T) || T.isSynthetic() || istype(T.species,/singleton/species/vox))
 		to_chat(src, "<span class='warning'>\The [T] is not compatible with our biology.</span>")
 		return
 

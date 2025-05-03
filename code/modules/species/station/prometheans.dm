@@ -1,8 +1,4 @@
-var/global/datum/species/shapeshifter/promethean/prometheans
-
-// Species definition follows.
-/datum/species/shapeshifter/promethean
-
+/singleton/species/shapeshifter/promethean
 	name =             SPECIES_PROMETHEAN
 	name_plural =      "Prometheans"
 	description =            "What has Science done?"
@@ -74,20 +70,17 @@ var/global/datum/species/shapeshifter/promethean/prometheans
 
 	traits = list(/singleton/trait/malus/water = TRAIT_LEVEL_MODERATE)
 
-/datum/species/shapeshifter/promethean/New()
-	..()
-	prometheans = src
 
-/datum/species/shapeshifter/promethean/hug(mob/living/carbon/human/H,mob/living/target)
+/singleton/species/shapeshifter/promethean/hug(mob/living/carbon/human/H,mob/living/target)
 	var/datum/gender/G = GLOB.gender_datums[target.gender]
 	H.visible_message(SPAN_NOTICE("\The [H] glomps [target] to make [G.him] feel better!"), \
 					SPAN_NOTICE("You glomps [target] to make [G.him] feel better!"))
 	H.apply_stored_shock_to(target)
 
-/datum/species/shapeshifter/promethean/handle_death(mob/living/carbon/human/H)
+/singleton/species/shapeshifter/promethean/handle_death(mob/living/carbon/human/H)
 	addtimer(new Callback(H, TYPE_PROC_REF(/mob, gib)),0)
 
-/datum/species/shapeshifter/promethean/handle_environment_special(mob/living/carbon/human/H)
+/singleton/species/shapeshifter/promethean/handle_environment_special(mob/living/carbon/human/H)
 
 	var/turf/T = H.loc
 	if(istype(T))
@@ -133,17 +126,17 @@ var/global/datum/species/shapeshifter/promethean/prometheans
 		H.adjustToxLoss(-heal_rate)
 		return 1
 
-/datum/species/shapeshifter/promethean/get_blood_colour(mob/living/carbon/human/H)
+/singleton/species/shapeshifter/promethean/get_blood_colour(mob/living/carbon/human/H)
 	if (H)
 		return H.skin_color
 	return ..()
 
-/datum/species/shapeshifter/promethean/get_flesh_colour(mob/living/carbon/human/H)
+/singleton/species/shapeshifter/promethean/get_flesh_colour(mob/living/carbon/human/H)
 	if (H)
 		return H.skin_color
 	return ..()
 
-/datum/species/shapeshifter/promethean/get_additional_examine_text(mob/living/carbon/human/H)
+/singleton/species/shapeshifter/promethean/get_additional_examine_text(mob/living/carbon/human/H)
 
 	if(!stored_shock_by_ref["\ref[H]"])
 		return

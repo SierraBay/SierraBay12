@@ -2,7 +2,7 @@
 	This state checks that the user is on the same Z-level as src_object
 */
 
-GLOBAL_DATUM_INIT(z_state, /datum/topic_state/z_state, new)
+GLOBAL_TYPED_NEW(z_state, /datum/topic_state/z_state)
 
 /datum/topic_state/z_state/can_use_topic(src_object, mob/user)
 	var/turf/turf_obj = get_turf(src_object)

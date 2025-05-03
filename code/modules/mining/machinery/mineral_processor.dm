@@ -146,10 +146,10 @@
 					status_string = SPAN_COLOR("gray", "alloying")
 		else
 			status_string = SPAN_COLOR("red", "not processing")
-		result += "<tr><td>[line]</td><td><a href='?src=\ref[src];toggle_smelting=[ore]'>[status_string]</a></td></tr>"
+		result += "<tr><td>[line]</td><td><a href='byond://?src=\ref[src];toggle_smelting=[ore]'>[status_string]</a></td></tr>"
 	. += "<table>[result]</table>"
-	. += "Currently displaying [report_all_ores ? "all ore types" : "only available ore types"]. <A href='?src=\ref[src];toggle_ores=1'>[report_all_ores ? "Show less" : "Show more"]</a>"
-	. += "The ore processor is currently <A href='?src=\ref[src];toggle_power=1'>[(active ? "enabled" : "disabled")].</a>"
+	. += "Currently displaying [report_all_ores ? "all ore types" : "only available ore types"]. <a href='byond://?src=\ref[src];toggle_ores=1'>[report_all_ores ? "Show less" : "Show more"]</a>"
+	. += "The ore processor is currently <a href='byond://?src=\ref[src];toggle_power=1'>[(active ? "enabled" : "disabled")].</a>"
 
 /obj/machinery/mineral/processing_unit/Topic(href, href_list)
 	if((. = ..()))
