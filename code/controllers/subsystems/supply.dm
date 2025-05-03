@@ -56,6 +56,7 @@ SUBSYSTEM_DEF(supply)
 
 // Just add points over time.
 /datum/controller/subsystem/supply/fire()
+	add_points_from_source(points_per_process, "time")
 
 
 /datum/controller/subsystem/supply/UpdateStat(time)
