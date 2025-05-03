@@ -101,7 +101,7 @@
 	minimal_player_age = 10
 	minimum_character_age = list(SPECIES_HUMAN = 22)
 	ideal_character_age = 25
-	alt_titles = list("Junior Guard")
+	alt_titles = list("Junior Guard", "Combat Mech pilot")
 
 	skill_points = 20
 
