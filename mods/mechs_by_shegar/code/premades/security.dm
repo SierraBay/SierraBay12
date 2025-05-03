@@ -36,10 +36,14 @@
 
 /obj/item/mech_component/sensors/powerloader/security
 	icon_state = "combat_head"
+	name = "old combat sensors array"
+	exosuit_desc_string = "really old combat sensors array"
 	whitelist_equipment_paths = SEC_WHITELIST_EQUIPMENT
 
 /obj/item/mech_component/chassis/combat/security
 	icon_state = "combat_body"
+	name = "old combat body"
+	exosuit_desc_string = "really old combat body"
 	power_use = 0
 	climb_time = 6
 	max_hp = 80
@@ -56,8 +60,12 @@
 
 /obj/item/mech_component/manipulators/powerloader/security
 	icon_state = "combat_arm"
+	name = "old combat manipulator"
+	exosuit_desc_string = "really old combat mech arm"
 	whitelist_equipment_paths = SEC_WHITELIST_EQUIPMENT
 
 /obj/item/mech_component/propulsion/powerloader/security
 	icon_state = "combat_leg"
+	name = "old combat motivator"
+	exosuit_desc_string = "really old combat mech motivator"
 	whitelist_equipment_paths = SEC_WHITELIST_EQUIPMENT
