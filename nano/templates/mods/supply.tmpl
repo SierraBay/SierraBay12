@@ -7,9 +7,10 @@
   <th style="width:5%">ID
   <th style="width:5%">Time
   <th style="width:20%">Requested item
-  <th style="width:20%">Requested by
+  <th style="width:15%">Requested by
   <th style="width:20%">Reason
-  <th style="width:10%">Cost
+  <th style="width:5%">Cost
+  <th style="width:10%">Paid by
   <th style="width:20%">Options
 #}}
 {{##def.supply_request_item:
@@ -18,8 +19,9 @@
 	<td>{{:value.time}}
 	<td>{{:value.object}}
 	<td>{{:value.orderer}}
-	<td>{{:value.reason || '<i>No reason provided.</i>'}}
+	<td>{{:value.reason|| '<i>No reason provided.</i>'}}
 	<td>{{:value.cost}} {{:data.currency_short}}
+	<td>{{:value.payer}}
 #}}
 <div class='notice'>
 	{{if data.is_admin}}
@@ -55,6 +57,15 @@
 </div>
 <hr>
 <span>Current balance: {{:data.credits}} {{:data.currency}}</span>
+<hr>
+{{if data.card_inserted == 1}}
+	<div>
+		<tr>
+			<th>Card balance: {{:data.money}} {{:data.currency}}</th>
+			<th>{{:helper.link('  Use Card Payment', 'check', {'use_card' : 1}, null, data.card_use ? 'yellowButton' : null)}}<th>
+		</tr>
+	</div>
+{{/if}}
 <hr>
 {{if data.screen == 1}}
 	{{for data.categories}}

@@ -67,7 +67,7 @@ SUBSYSTEM_DEF(supply)
 //Supply-related helper procs.
 
 /datum/controller/subsystem/supply/proc/add_points_from_source(amount, source)
-	department_accounts["Снабжения"].money += amount * 15
+	points += amount
 	point_sources[source] += amount
 	point_sources["total"] += amount
 
@@ -299,6 +299,3 @@ SUBSYSTEM_DEF(supply)
 	var/comment = null
 	var/reason = null
 	var/orderedrank = null //used for supply console printing
-	var/accountnubmer = null //аккаунт, с которого списали деньги
-	var/payer = null
-	var/sum_money = 0 //сумма, списанная с аккаунта
