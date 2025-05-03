@@ -44,6 +44,12 @@
 	var/current_security_level
 	var/notifications_enabled = FALSE
 	var/admin_access = list(access_cargo, access_mailsorting)
+	var/card_inserted
+	var/card_use = FALSE
+	var/datum/money_account/custom_account
+	var/money
+	var/datum/extension/interactive/ntos/os
+	var/obj/item/stock_parts/computer/card_slot/card_slot
 
 /datum/nano_module/supply/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1, state = GLOB.default_state)
 	var/list/data = host.initial_data()
@@ -62,6 +68,20 @@
 	data["credits"] = "[department_accounts["Снабжения"].money]"
 	data["currency"] = GLOB.using_map.local_currency_name
 	data["currency_short"] = GLOB.using_map.local_currency_name_short
+	os = get_extension(nano_host(), /datum/extension/interactive/ntos)
+	card_slot = os.get_component(PART_CARD)
+	card_inserted = FALSE
+	if(card_slot)
+		if(card_slot.stored_card)
+			card_inserted = TRUE
+			custom_account = get_account(card_slot.stored_card.associated_account_number)
+			if(custom_account)
+				money = custom_account.money
+				data["money"] = "[money]"
+				data["card_use"] = card_use
+
+
+	data["card_inserted"] = card_inserted
 	switch(screen)
 		if(1)// Main ordering menu
 			data["categories"] = category_names
@@ -129,6 +149,11 @@
 	if(..())
 		return 1
 
+	if(href_list["use_card"])
+		if(card_slot.stored_card)
+			card_use = !card_use
+
+
 	if(href_list["select_category"])
 		clear_order_contents()
 		selected_category = href_list["select_category"]
@@ -161,9 +186,13 @@
 		var/idname = "*None Provided*"
 		var/idrank = "*None Provided*"
 		if(ishuman(user))
-			var/mob/living/carbon/human/H = user
-			idname = H.get_authentification_name()
-			idrank = H.get_assignment()
+			if(!card_use)
+				var/mob/living/carbon/human/H = user
+				idname = H.get_authentification_name()
+				idrank = H.get_assignment()
+			else
+				idname = card_slot.stored_card.registered_name
+				idrank = card_slot.stored_card.assignment
 		else if(issilicon(user))
 			idname = user.real_name
 
@@ -177,6 +206,16 @@
 		O.reason = reason
 		O.orderedrank = idrank
 		O.comment = "#[O.ordernum]"
+		O.accountnubmer = department_accounts["Снабжения"]
+		O.sum_money = P.cost * 15
+		O.payer = "None Provided"
+		if(card_use)
+			custom_account = get_account(card_slot.stored_card.associated_account_number)
+			custom_account.transfer(department_accounts["Снабжения"], O.sum_money , "Order of [P.name]. Order number [O.ordernum]")
+			O.accountnubmer = custom_account
+			O.payer = card_slot.stored_card.registered_name
+
+
 		SSsupply.requestlist += O
 
 		if(can_print() && alert(user, "Would you like to print a confirmation receipt?", "Print receipt?", "Yes", "No") == "Yes")
@@ -251,6 +290,7 @@
 			return 1
 		if(SO)
 			SSsupply.requestlist -= SO
+			department_accounts["Снабжения"].transfer(SO.accountnubmer, SO.sum_money , "Deny of order [SO.ordernum]")
 		else
 			to_chat(user, SPAN_WARNING("Could not find order number [id] to deny."))
 
@@ -382,6 +422,7 @@
 		"object" = SO.object.name,
 		"orderer" = SO.orderedby,
 		"cost" = SO.object.cost * 15,
+		"payer" = SO.payer,
 		"reason" = SO.reason,
 		"list_id" = list_id
 		))

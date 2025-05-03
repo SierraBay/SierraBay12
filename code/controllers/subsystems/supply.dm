@@ -299,3 +299,6 @@ SUBSYSTEM_DEF(supply)
 	var/comment = null
 	var/reason = null
 	var/orderedrank = null //used for supply console printing
+	var/accountnubmer = null //аккаунт, с которого списали деньги
+	var/payer = null
+	var/sum_money = 0 //сумма, списанная с аккаунта
