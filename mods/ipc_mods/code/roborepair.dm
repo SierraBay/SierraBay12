@@ -35,6 +35,10 @@
 	if (!S || !BP_IS_ROBOTIC(S) || user.a_intent != I_HELP)
 		return FALSE
 
+	if(S.expensive && S.damage >= EXPENSIVE_ROBOLIMB_SELF_REPAIR_CAP)
+		to_chat(user, SPAN_WARNING("\The [target]'s [S.name] cannot be repaired with such simple tools - \the [src] cannot repair it."))
+		return TRUE
+
 	var/list/all_surgeries = GET_SINGLETON_SUBTYPE_MAP(/singleton/surgery_step)
 	for (var/singleton in all_surgeries)
 		var/singleton/surgery_step/step = all_surgeries[singleton]
@@ -46,10 +50,6 @@
 		return TRUE
 
 	if (!can_use(2, user, silent = TRUE)) //The surgery check above already returns can_use's feedback.
-		return TRUE
-
-	if(S.expensive && S.damage >= EXPENSIVE_ROBOLIMB_SELF_REPAIR_CAP)
-		to_chat(user, SPAN_WARNING("\The [target]'s [S.name] cannot be repaired with such simple tools - \the [src] cannot repair it."))
 		return TRUE
 
 	if (S.robo_repair(15, DAMAGE_BRUTE, "some dents", src, user))

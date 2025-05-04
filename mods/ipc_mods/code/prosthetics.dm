@@ -129,6 +129,7 @@
 	)
 	speed_modifier = - 1
 	coolingefficiency = 0.3
+	expensive = TRUE
 
 /datum/robolimb/bishop/rook
 	company = "Bishop Rook"
@@ -437,6 +438,7 @@
 	can_eat = 1
 	skintone = 1
 	unavailable_at_fab = 1
+	expensive = TRUE
 	species_cannot_use = list(SPECIES_IPC)
 
 /datum/robolimb/shellguard
