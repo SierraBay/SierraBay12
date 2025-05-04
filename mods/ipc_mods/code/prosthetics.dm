@@ -125,7 +125,7 @@
 		energy = ARMOR_ENERGY_SMALL,
 		bomb = ARMOR_BOMB_PADDED,
 		bio = ARMOR_BIO_SHIELDED,
-		rad = ARMOR_RAD_RESISTANT
+		rad = ARMOR_RAD_SMALL
 	)
 	speed_modifier = - 1
 	coolingefficiency = 0.3
@@ -140,10 +140,10 @@
 		melee = ARMOR_MELEE_SMALL,
 		bullet = ARMOR_BALLISTIC_MINOR,
 		laser = ARMOR_LASER_MINOR,
-		energy = ARMOR_ENERGY_SMALL,
+		energy = ARMOR_ENERGY_MINOR,
 		bomb = ARMOR_BOMB_PADDED,
 		bio = ARMOR_BIO_SHIELDED,
-		rad = ARMOR_RAD_RESISTANT
+		rad = ARMOR_RAD_SMALL
 	)
 	speed_modifier = - 0.7
 	coolingefficiency = 0.4
@@ -171,8 +171,8 @@
 		melee = ARMOR_MELEE_KNIVES,
 		bullet = ARMOR_BALLISTIC_SMALL,
 		laser = ARMOR_LASER_SMALL,
-		energy = ARMOR_ENERGY_SMALL,
-		bomb = ARMOR_BOMB_RESISTANT,
+		energy = ARMOR_ENERGY_MINOR,
+		bomb = ARMOR_BOMB_PADDED,
 		bio = ARMOR_BIO_SHIELDED,
 		rad = ARMOR_RAD_RESISTANT
 	)
@@ -253,6 +253,7 @@
 	company = "Xion"
 	desc = "This limb has a minimalist black and red casing."
 	icon = 'icons/mob/human_races/cyberlimbs/xion/xion_main.dmi'
+	unavailable_at_fab = 1
 	armor = list(
 		melee = ARMOR_MELEE_MINOR,
 		bullet = ARMOR_BALLISTIC_MINOR,
@@ -320,8 +321,8 @@
 	unavailable_at_fab = 1
 	armor = list(
 		melee = ARMOR_MELEE_MINOR,
-		bullet = ARMOR_BALLISTIC_MINOR,
-		laser = ARMOR_LASER_MINOR,
+		bullet = 0,
+		laser = 0,
 		energy = ARMOR_ENERGY_MINOR,
 		bomb = 0,
 		bio = ARMOR_BIO_SHIELDED,
@@ -367,7 +368,7 @@
 	unavailable_at_fab = 1
 	armor = list(
 		melee = ARMOR_MELEE_SMALL,
-		bullet = ARMOR_MELEE_SMALL,
+		bullet = ARMOR_BALLISTIC_MINOR,
 		laser = ARMOR_LASER_MINOR,
 		energy = ARMOR_ENERGY_MINOR,
 		bomb = ARMOR_BOMB_PADDED,
@@ -442,6 +443,7 @@
 	company = "Shellguard"
 	desc = "This limb has a sturdy and heavy build to it."
 	icon = 'icons/mob/human_races/cyberlimbs/shellguard/shellguard_main.dmi'
+	unavailable_at_fab = 1
 	armor = list(
 		melee = ARMOR_MELEE_KNIVES,
 		bullet = ARMOR_BALLISTIC_SMALL,
@@ -477,8 +479,8 @@
 	allowed_bodytypes = list(SPECIES_VOX)
 	armor = list(
 		melee = ARMOR_MELEE_KNIVES,
-		bullet = ARMOR_BALLISTIC_MINOR,
-		laser = ARMOR_LASER_MINOR,
+		bullet = ARMOR_BALLISTIC_SMALL,
+		laser = ARMOR_LASER_SMALL,
 		energy = ARMOR_ENERGY_MINOR,
 		bomb = ARMOR_BOMB_PADDED,
 		bio = ARMOR_BIO_SHIELDED,
@@ -498,6 +500,19 @@
 		laser = ARMOR_LASER_MINOR,
 		energy = ARMOR_ENERGY_MINOR,
 		bomb = ARMOR_BOMB_PADDED,
+		bio = ARMOR_BIO_SHIELDED,
+		rad = ARMOR_RAD_RESISTANT
+	)
+
+/datum/robolimb/resomi
+	company = "Small prosthetic"
+	desc = "This prosthetic is small and fit for nonhuman proportions."
+	armor = list(
+		melee = 2,
+		bullet = 0,
+		laser = 0,
+		energy = 0,
+		bomb = 0,
 		bio = ARMOR_BIO_SHIELDED,
 		rad = ARMOR_RAD_RESISTANT
 	)

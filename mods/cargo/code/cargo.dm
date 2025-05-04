@@ -1,6 +1,7 @@
 #define SUPPLY_LIST_ID_CART 1
 #define SUPPLY_LIST_ID_REQUEST 2
 #define SUPPLY_LIST_ID_DONE 3
+#define CARGO_POINT_TO_THALLER 15	// Если кому то когда то захочется поменять курс таллера, менять тут, и в mods\cargo\code\cargo_controller.dm
 
 /datum/supply_order
 	var/accountnubmer = null //аккаунт, с которого списали деньги
@@ -112,6 +113,7 @@
 		if(card_slot.stored_card)
 			custom_account = get_account(card_slot.stored_card.associated_account_number)
 			if(custom_account && custom_account.suspended)
+				to_chat(user, SPAN_WARNING("Card is invalid or suspended."))
 				card_use = FALSE
 				return
 			card_use = !card_use
@@ -170,10 +172,16 @@
 		O.orderedrank = idrank
 		O.comment = "#[O.ordernum]"
 		O.accountnubmer = department_accounts["Снабжения"]
-		O.sum_money = P.cost * 15
+		O.sum_money = P.cost * CARGO_POINT_TO_THALLER
 		O.payer = "None Provided"
 		if(card_use)
 			custom_account = get_account(card_slot.stored_card.associated_account_number)
+			if(!custom_account || custom_account.suspended)
+				to_chat(user, SPAN_WARNING("Card is invalid or suspended."))
+				return
+			if(custom_account.money < O.sum_money)
+				to_chat(user, SPAN_WARNING("Not enough funds to purchase \the [P.name]!"))
+				return
 			custom_account.transfer(department_accounts["Снабжения"], O.sum_money , "Order of [P.name]. Order number [O.ordernum]")
 			O.accountnubmer = custom_account
 			O.payer = card_slot.stored_card.registered_name
@@ -226,7 +234,7 @@
 			else
 				SSsupply.requestlist -= SO
 				SSsupply.shoppinglist += SO
-				department_accounts["Снабжения"].money -= SO.object.cost * 15
+				department_accounts["Снабжения"].money -= SO.object.cost * CARGO_POINT_TO_THALLER
 
 		else
 			to_chat(user, SPAN_WARNING("Could not find order number [id] to approve."))
@@ -239,7 +247,7 @@
 		if(SO)
 			SSsupply.requestlist += SO
 			SSsupply.shoppinglist -= SO
-			department_accounts["Снабжения"].money += SO.object.cost * 15
+			department_accounts["Снабжения"].money += SO.object.cost * CARGO_POINT_TO_THALLER
 
 		else
 			to_chat(user, SPAN_WARNING("Could not find order number [id] to move back to pending."))
@@ -266,7 +274,7 @@
 			return 1
 		if(SO)
 			SSsupply.shoppinglist -= SO
-			department_accounts["Снабжения"].money += SO.object.cost * 15
+			department_accounts["Снабжения"].money += SO.object.cost * CARGO_POINT_TO_THALLER
 		else
 			to_chat(user, SPAN_WARNING("Could not find order number [id] to cancel."))
 
@@ -330,7 +338,7 @@
 				continue
 			category.Add(list(list(
 				"name" = spc.name,
-				"cost" = spc.cost * 15,
+				"cost" = spc.cost * CARGO_POINT_TO_THALLER,
 				"ref" = "\ref[spc]"
 			)))
 		category_contents[sp.name] = category
@@ -343,12 +351,13 @@
 		"time" = SO.timestamp,
 		"object" = SO.object.name,
 		"orderer" = SO.orderedby,
-		"cost" = SO.object.cost * 15,
+		"cost" = SO.object.cost * CARGO_POINT_TO_THALLER,
 		"payer" = SO.payer,
 		"reason" = SO.reason,
 		"list_id" = list_id
 		))
 
+#undef CARGO_POINT_TO_THALLER
 #undef SUPPLY_LIST_ID_CART
 #undef SUPPLY_LIST_ID_REQUEST
 #undef SUPPLY_LIST_ID_DONE
