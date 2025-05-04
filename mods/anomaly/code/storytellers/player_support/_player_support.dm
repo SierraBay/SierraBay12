@@ -1,3 +1,5 @@
+#include "hud.dm"
+
 /mob/observer/alive_planet
 	icon = 'mods/anomaly/icons/alive_planet.dmi'
 	icon_state = "ghost_icon"

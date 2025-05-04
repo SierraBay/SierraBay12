@@ -1,3 +1,14 @@
+#include "admin.dm"
+#include "evolution.dm"
+#include "logging.dm"
+#include "points.dm"
+#include "processing.dm"
+#include "spawn_and_delete.dm"
+#include "types.dm"
+#include "victim.dm"
+#include "../abilities/abilities.dm"
+#include "../player_support/_player_support.dm"
+
 /datum/planet_storyteller
 	var/action_delay = 3 MINUTES
 	var/next_possible_action
