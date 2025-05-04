@@ -88,6 +88,12 @@
 			SSanom.AddImportantLog("Doubled_teleporter разместил своего собрата на координате : x: [x], y: [y], z: [z] в [round_duration_in_ticks/600]" )
 			return
 
+/obj/anomaly/doubled_teleporter/spawn_temp_spawn_effects()
+	.=..()
+	if(membered_second_teleporter && !membered_second_teleporter.is_father_teleporter)
+		membered_second_teleporter.spawn_temp_spawn_effects()
+
+
 /obj/anomaly/doubled_teleporter/activate_anomaly()
 	//шпим
 	if(!teleport_status)

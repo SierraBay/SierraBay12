@@ -15,12 +15,6 @@
 	time_between_effects = 0.5 SECOND
 	var/list/all_spawned_visuals = list()
 
-
-/obj/anomaly/cooler/Initialize()
-	. = ..()
-	LAZYADD(anomaly_turfs, get_turf(src))
-
-
 //Хитер начинает долгую обработку
 /obj/anomaly/cooler/process_long_effect()
 	heat_everybody_around()

@@ -117,3 +117,37 @@
 	storyteller.next_possible_action = 1
 	storyteller.current_scam_points = 500
 	storyteller.check_action()
+
+
+/obj/deploy_storyteller_here/anomaly_test_titan
+	storyteller_path = /datum/planet_storyteller/water_home/anoms
+
+/datum/planet_storyteller/water_home/anoms
+	activity_levels = list(
+		list(
+			name = "impotent",
+			scam_chance = 0,
+			anomaly_chance = 100,
+			mob_chance = 0,
+		),
+		list(
+			name = "active",
+			scam_chance = 0,
+			anomaly_chance = 100,
+			mob_chance = 0,
+		),
+		list(
+			name = "angry",
+			scam_chance = 0,
+			anomaly_chance = 100,
+			mob_chance = 0,
+		)
+	)
+
+/obj/deploy_storyteller_here/anomaly_test_titan/New(loc, ...)
+	. = ..()
+	storyteller.current_evolution_points = 500
+	storyteller.check_level_up()
+	storyteller.next_possible_action = 1
+	storyteller.current_anomaly_points = 500
+	storyteller.check_action()
