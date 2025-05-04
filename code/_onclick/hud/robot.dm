@@ -150,6 +150,11 @@ var/global/obj/screen/robot_inventory
 
 	var/mob/living/silicon/robot/r = mymob
 
+//Fov
+	if(r.can_have_vision_cone)
+		r.vision_cone_overlay = new /obj/screen/fov()
+		src.adding += r.vision_cone_overlay
+
 	r.shown_robot_modules = !r.shown_robot_modules
 	update_robot_modules_display()
 

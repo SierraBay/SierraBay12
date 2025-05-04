@@ -7,6 +7,8 @@
 /mob
 	var/hud_type = null
 	var/datum/hud/hud_used = null
+	var/obj/screen/vision_cone_overlay = null
+	var/can_have_vision_cone = FALSE
 
 /mob/proc/InitializeHud()
 	if(hud_used)

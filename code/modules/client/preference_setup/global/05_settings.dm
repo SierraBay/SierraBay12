@@ -70,6 +70,7 @@
 
 	pref.lastchangelog	= sanitize_text(pref.lastchangelog, initial(pref.lastchangelog))
 	pref.default_slot	= sanitize_integer(pref.default_slot, 1, config.character_slots, initial(pref.default_slot))
+	pref.fov_cone_alpha = sanitize_integer(text2num(pref.fov_cone_alpha), 0, 255, initial(pref.fov_cone_alpha))
 
 /datum/category_item/player_setup_item/player_global/settings/content(mob/user)
 	. = list()
@@ -94,6 +95,13 @@
 
 	. += "</table>"
 
+	. += "<b>FOV Cone Alpha:</b> "
+	if(pref.fov_cone_alpha == initial(pref.fov_cone_alpha))
+		. += "<a href='?src=\ref[src];select_fov_cone_alpha=1'><b>Using Default</b></a><br>"
+	else
+		. += "<a href='?src=\ref[src];select_fov_cone_alpha=1'><b>[pref.fov_cone_alpha]</b></a> [(pref.fov_cone_alpha)] - <a href='?src=\ref[src];reset=fov_cone_alpha'>reset</a><br>"
+
+
 	return jointext(., "")
 
 /datum/category_item/player_setup_item/player_global/settings/OnTopic(href,list/href_list, mob/user)
@@ -101,6 +109,19 @@
 
 	if(href_list["pref"] && href_list["value"])
 		. = pref_mob.set_preference(href_list["pref"], href_list["value"])
+
+	else if(href_list["select_fov_cone_alpha"])
+		var/fov_alpha_new = input(user, "Choose a new opacity for the FOV darkness cone.", "Global Preference", pref.fov_cone_alpha) as null|num
+		if(!fov_alpha_new || !CanUseTopic(user))
+			return TOPIC_NOACTION
+		pref.fov_cone_alpha = fov_alpha_new
+		return TOPIC_REFRESH
+
+	else if(href_list["reset"])
+		switch(href_list["reset"])
+			if("fov")
+				pref.fov_cone_alpha = initial(pref.fov_cone_alpha)
+		return TOPIC_REFRESH
 
 	if(.)
 		return TOPIC_REFRESH
