@@ -1,4 +1,0 @@
-author: Lexanx
-changes:
-  - {bugfix: Фикс двойного попадания от одной пули}
-delete-after: true

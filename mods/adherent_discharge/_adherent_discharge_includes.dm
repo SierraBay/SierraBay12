@@ -3,4 +3,6 @@
 
 #include "_adherent_discharge.dm"
 #include "code/adherent.dm"
+#include "code\adherent_armor.dm"
+#include "code\adherent_reset_ident.dm"
 #endif
