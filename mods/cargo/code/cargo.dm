@@ -16,6 +16,25 @@
 	var/datum/extension/interactive/ntos/os
 	var/obj/item/stock_parts/computer/card_slot/card_slot
 
+/datum/nano_module/supply/print_order(datum/supply_order/O, mob/user)
+	if(!O)
+		return
+
+	var/t = ""
+	t += "<h3>[GLOB.using_map.station_name] Supply Requisition Reciept</h3><hr>"
+	t += "INDEX: #[O.ordernum]<br>"
+	t += "TIME: [O.timestamp]<br>"
+	t += "REQUESTED BY: [O.orderedby]<br>"
+	t += "PAID BY: [O.payer]<br>"
+	t += "RANK: [O.orderedrank]<br>"
+	t += "REASON: [O.reason]<br>"
+	t += "SUPPLY CRATE TYPE: [O.object.name]<br>"
+	t += "ACCESS RESTRICTION: [get_access_desc(O.object.access)]<br>"
+	t += "CONTENTS:<br>"
+	t += O.object.manifest
+	t += "<hr>"
+	print_text(t, user)
+
 
 /datum/nano_module/supply/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1, state = GLOB.default_state)
 	var/list/data = host.initial_data()
