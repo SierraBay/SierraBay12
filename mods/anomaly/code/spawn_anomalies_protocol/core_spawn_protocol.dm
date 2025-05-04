@@ -106,11 +106,10 @@ visible_generation - нужно ли рисовать анимацию разм�
 	//Список успешно размещённых в игре аномалий
 	var/list/spawned_anomalies = list()
 	var/critical_errors_ammount = 0
-	for(var/i = 0, i <= result_anomalies_ammount)
+	for(var/i = 0, i != result_anomalies_ammount)
 		//Перед началом проверим, что наш список просто не опустошил себя до установки всех аномалий
 		if(!LAZYLEN(all_turfs_for_spawn))
 			//Список пуст, сообщаем коду о завершении работы.
-			i = result_anomalies_ammount + 1
 			break
 		var/add = FALSE
 		//Переменная обозначает что в обработке именно этого турфа используется спавнер.
@@ -138,7 +137,6 @@ visible_generation - нужно ли рисовать анимацию разм�
 			critical_errors_ammount++
 			continue
 		if(critical_errors_ammount > 2)
-			i = result_anomalies_ammount + 1
 			log_and_message_admins("Генератор аномалий вышел из цикла с критической ошибкой. ")
 			break
 		//Если каким-то образом спавнер/турф оказался в стене или на этом тайтле уже есть аномалия/её часть
@@ -166,7 +164,7 @@ visible_generation - нужно ли рисовать анимацию разм�
 					add = FALSE
 					failures++
 			else
-				var/obj/anomaly/spawned_anomaly = new anomaly_to_spawn(spawner_turf, visible_generation)
+				var/obj/anomaly/spawned_anomaly = try_spawn_anomaly_without_collision(T = spawner_turf, path_to_spawn = anomaly_to_spawn, visible_generation = visible_generation)
 				LAZYADD(spawned_anomalies, spawned_anomaly)
 				if(!ruin_protocol)
 					LAZYREMOVE(all_turfs_for_spawn, spawner_turf)
@@ -178,7 +176,7 @@ visible_generation - нужно ли рисовать анимацию разм�
 			failures = 0
 		else if(failures > 100)
 			//У нас слишком много неуспешных размещений аномалий, хватит пытаться, нужно выйти из цикла
-			i = result_anomalies_ammount + 1
+			break
 
 
 	//Выбрав количество артов которые мы хотим заспавнить, мы начинаем спавн
