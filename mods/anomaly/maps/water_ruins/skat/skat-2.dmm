@@ -365,12 +365,6 @@
 /obj/titan_fluid,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/anomaly/skat_second_deck)
-"HF" = (
-/obj/machinery/atmospherics/unary/tank/hydrogen,
-/obj/machinery/atmospherics/unary/tank/hydrogen,
-/obj/titan_fluid,
-/turf/simulated/floor/tiled/techfloor/grid,
-/area/map_template/anomaly/skat_second_deck)
 "HM" = (
 /obj/floor_decal/stairs{
 	dir = 1
@@ -2617,7 +2611,7 @@ aY
 aY
 aY
 Pj
-HF
+Pj
 Pj
 aY
 lw

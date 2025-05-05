@@ -41,14 +41,14 @@
 
 //гиб конечностей - отрубание, сжигание и т.д.
 /obj/item/organ/external/droplimb(clean, disintegrate = DROPLIMB_EDGE, ignore_children, silent)
-
+	.=..()
 	var/mob/living/carbon/human/victim = owner
 
 	var/use_flesh_colour = species.get_flesh_colour(owner)
 	var/use_blood_colour = species.get_blood_colour(owner)
-	. = ..()
 	switch(disintegrate)
 		if(DROPLIMB_EDGE)
+
 			if(!clean)
 				playsound(victim, pick('packs/infinity/sound/effects/gore/chop2.ogg', 'packs/infinity/sound/effects/gore/chop3.ogg', 'packs/infinity/sound/effects/gore/chop4.ogg'), 100, 0)
 			else
@@ -77,10 +77,9 @@
 				if(victim.can_feel_pain() && prob(50))
 					victim.agony_scream()
 
-
 //попадания пулями
 /obj/item/projectile/attack_mob(mob/living/target_mob, distance, special_miss_modifier=0)
-	. = ..()
+	.=..()
 	if(silenced)
 		if(damage_type == DAMAGE_BRUTE)
 			playsound(target_mob.loc, pick('packs/infinity/sound/effects/bullethit1.ogg', 'packs/infinity/sound/effects/bullethit2.ogg', 'packs/infinity/sound/effects/bullethit3.ogg', 'packs/infinity/sound/effects/bullethit4.ogg'), 100, 1)
@@ -88,5 +87,5 @@
 
 //бросок штуки
 /mob/living/carbon/throw_item(atom/target)
-	. = ..()
+	.=..()
 	playsound(src, 'packs/infinity/sound/effects/throw.ogg', 50, 1)
