@@ -191,17 +191,18 @@
 	chance_max = 80
 	delay = 20 SECONDS
 	var/first_message_shown = FALSE
+	var/time_of_first_tick = 0
+	var/total_trasformation = 0
+	var/time_to_trasform = 5 MINUTES
 
 
 /datum/disease2/effect/zombie/activate(mob/living/carbon/human/mob, multiplier)
-	mob.emote("cough")
-	mob.immunity -= 10
-	if (!first_message_shown)
+	if(mob.is_species(SPECIES_ZOMBIE))
+		return
+	if(!first_message_shown)
 		first_message_shown = TRUE
-		to_chat(mob, "<span class='warning'>Your muscles start tensing up, and you can feel your pulse rising, throbbing at the back of your head. Your breathing increases, and you feel... angry. An urge wells up inside you. Everything is making you angry, and you want it to <i>pay</i> for it.</span>")
-		return //nothing else happens first time giving chance to adjust RP
-	if (mob.reagents.get_reagent_amount(/datum/reagent/zombie) < 10)
-		mob.reagents.add_reagent(/datum/reagent/zombie, 15)
+		time_of_first_tick = world.time
+		total_trasformation = time_of_first_tick + time_to_trasform
 		to_chat(mob, "<span class='notice'>You feel as something hungry is woke up inside you!</span>")
 	if(prob(50))
 		to_chat(mob, "<span class='warning'>You feel uncontrollable rage filling you! Your hunger is killing you! You want to eat!</span>")
@@ -228,8 +229,21 @@
 		Target.adjustBruteLoss(5)
 		if (prob(50))
 			infect_virus2(Target, src, 1)
+	if(total_trasformation)
+		var/time_left = total_trasformation - world.time
+		var/transform_chance = (time_left/total_trasformation)*100
+		if(prob(100-transform_chance))
+			mob.zombify()
 
 ////////////////////////STAGE 3/////////////////////////////////
+
+/datum/disease2/effect/hiv
+	name = "Immunodeficiency"
+	stage = 3
+	multiplier_max = 3
+	badness = VIRUS_COMMON
+/datum/disease2/effect/toxins/activate(mob/living/carbon/human/mob, multiplier)
+	mob.immunity -=(5*multiplier)
 
 /datum/disease2/effect/toxins
 	name = "Hyperacidity"
