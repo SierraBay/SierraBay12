@@ -1,0 +1,4 @@
+author: Vipo24
+changes:
+  - {bugfix: призыв адской воды (культ) снова работает}
+delete-after: true

@@ -73,7 +73,7 @@
 	..()
 	var/get = list()
 	get["classic"] = /obj/item/clothing/shoes/martens_shoes
-	get["short"] = /obj/item/clothing/shoes/martens_shoes/short
+	get["low"] = /obj/item/clothing/shoes/martens_shoes/low
 	gear_tweaks += new/datum/gear_tweak/path(get)
 
 

@@ -18,6 +18,7 @@
 #include "code\ai_hack.dm" //Взлом шлюза у ИИ
 #include "code\ai-stuff.dm" //Дополнительные действия и фичи у ИИ
 #include "code\ai_machine_interaction.dm" //Взаимодействие ИИ с машинами
+#include "code\boris.dm" //Модуль B.O.R.I.S. и его логика
 
 
 #endif
