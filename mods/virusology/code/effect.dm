@@ -183,6 +183,52 @@
 		mob.emote("cough")
 		to_chat(mob, "<span class='warning'>You cough up the [S]!</span>")
 
+
+/datum/disease2/effect/zombie
+	name = "Corruption Syndrome"
+	stage = 4
+	badness = VIRUS_EXOTIC
+	chance_max = 80
+	delay = 20 SECONDS
+	var/first_message_shown = FALSE
+
+
+/datum/disease2/effect/zombie/activate(mob/living/carbon/human/mob, multiplier)
+	mob.emote("cough")
+	mob.immunity -= 10
+	if (!first_message_shown)
+		first_message_shown = TRUE
+		to_chat(mob, "<span class='warning'>Your muscles start tensing up, and you can feel your pulse rising, throbbing at the back of your head. Your breathing increases, and you feel... angry. An urge wells up inside you. Everything is making you angry, and you want it to <i>pay</i> for it.</span>")
+		return //nothing else happens first time giving chance to adjust RP
+	if (mob.reagents.get_reagent_amount(/datum/reagent/zombie) < 10)
+		mob.reagents.add_reagent(/datum/reagent/zombie, 15)
+		to_chat(mob, "<span class='notice'>You feel as something hungry is woke up inside you!</span>")
+	if(prob(50))
+		to_chat(mob, "<span class='warning'>You feel uncontrollable rage filling you! Your hunger is killing you! You want to eat!</span>")
+		if (mob.reagents.get_reagent_amount(/datum/reagent/hyperzine) < 10)
+			mob.reagents.add_reagent(/datum/reagent/hyperzine, 4)
+			mob.adjust_nutrition(-50)
+	if(prob(50) && mob.check_has_mouth())//go crazy and bite someone
+		var/list/mouth_status = mob.can_eat_status()
+		if (mouth_status[1] == 1)//if no mouth HUMAN_EATING_NBP_MOUTH
+			to_chat(mob, "<span class='warning'>You angrily attempt to bite someone but you can't without a mouth!</span>")
+			return
+		if (mouth_status[1] == 2)//if something covers mouth HUMAN_EATING_BLOCKED_MOUTH
+			to_chat(mob, "<span class='warning'>You angrily chew \the [mouth_status[2]] covering your mouth!</span>")
+			return
+		var/list/mobs_to_bite = list()
+		for (var/mob/living/carbon/L in range(1))
+			if (L == mob)
+				continue
+			mobs_to_bite += L
+		if (LAZYLEN(mobs_to_bite) < 1)//nobody to bite
+			return
+		var/mob/living/Target = pick(mobs_to_bite)
+		mob.visible_message("<span class='warning'>[mob] violently bites [Target]!</span>")
+		Target.adjustBruteLoss(5)
+		if (prob(50))
+			infect_virus2(Target, src, 1)
+
 ////////////////////////STAGE 3/////////////////////////////////
 
 /datum/disease2/effect/toxins
