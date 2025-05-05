@@ -33,7 +33,8 @@
 /obj/anomaly/cooler/proc/heat_everybody_around()
 	for(var/turf/turfs in anomaly_turfs)
 		for(var/mob/living/victim in turfs)
-			victim.bodytemperature -= 30
+			if(victim.bodytemperature > 200)
+				victim.bodytemperature -= 30
 
 
 /obj/anomaly/cooler/Crossed(atom/movable/O)

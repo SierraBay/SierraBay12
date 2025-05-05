@@ -478,7 +478,8 @@
 
 	dat += "<table style='width:100%; padding:4px;'><tr>"
 	for(var/i = 1 to length(GLOB.tagger_locations))
-		dat += "<td><a href='byond://?src=\ref[src];nextTag=[GLOB.tagger_locations[i]]'>[GLOB.tagger_locations[i]]</a></td>"
+		var/encoded_tag = html_encode(GLOB.tagger_locations[i])
+		dat += "<td><a href='byond://?src=\ref[src];nextTag=[encoded_tag]'>[encoded_tag]</a></td>"
 
 		if (i%4==0)
 			dat += "</tr><tr>"
@@ -492,8 +493,9 @@
 	openwindow(user)
 
 /obj/item/device/destTagger/OnTopic(user, href_list, state)
-	if(href_list["nextTag"] && (href_list["nextTag"] in GLOB.tagger_locations))
-		src.currTag = href_list["nextTag"]
+	var/decoded_tag = html_decode(href_list["nextTag"])
+	if(decoded_tag && (decoded_tag in GLOB.tagger_locations))
+		src.currTag = decoded_tag
 		to_chat(user, SPAN_NOTICE("You set [src] to <b>[src.currTag]</b>."))
 		playsound(src.loc, 'sound/machines/chime.ogg', 50, 1)
 		. = TOPIC_REFRESH

@@ -2,11 +2,11 @@
 	//Игра заспавнит 1 обычную планету и 1 аномальную
 	var/list/anomaly_planets_list = list(
 		/obj/overmap/visitable/sector/exoplanet/flying,
-		/obj/overmap/visitable/sector/exoplanet/ice
+		/obj/overmap/visitable/sector/exoplanet/ice,
+		/obj/overmap/visitable/sector/exoplanet/water
 	)
 	//Планеты которые сами по себе никогда не заспавнятся
 	var/list/shitspawn_planets = list(
-		/obj/overmap/visitable/sector/exoplanet/water
 	)
 	var/spawn_only_anomaly_planet = FALSE
 	var/list/all_planets_list = subtypesof(/obj/overmap/visitable/sector/exoplanet)
@@ -36,27 +36,8 @@
 		var/obj/overmap/visitable/sector/exoplanet/new_planet = new normal_planet_type(null, world.maxx, world.maxy)
 		new_planet.build_level()
 
-//Данный код отвечает за размещение аномалий по всей планете.
-/obj/overmap/visitable/sector/exoplanet
-	///Спавнятся ли на подобном типе планет аномалии
-	var/can_spawn_anomalies = FALSE
-	var/list/anomalies_types = list(
-		)
-	var/min_anomaly_size = 1
-	var/max_anomaly_size = 3
-	///Минимальное количество заспавненных артов
-	var/min_artefacts_ammount = 4
-	///Максимальное количество заспавненных артов
-	var/max_artefacts_ammount = 8
-
-	var/min_anomalies_ammout = 40
-	var/max_anomalies_ammout = 100
-
-
-
 /obj/overmap/visitable/sector/exoplanet/proc/generate_anomalies()
 	set background = 1
-	var/started_in = world.time
 	if(!LAZYLEN(anomalies_types))
 		return
 	var/list/all_turfs = list() //Все турфы на планете
@@ -78,7 +59,16 @@
 	if(!LAZYLEN(all_turfs))
 		log_and_message_admins("ОШИБКА. В результате анализа планеты, код отвечающий за размещение аномалий на планете не нашёл подходящих турфов.")
 		CRASH("ОШИБКА. В результате анализа планеты, код отвечающий за размещение аномалий на планете не нашёл подходящих турфов.")
-	generate_anomalies_in_turfs(anomalies_types, all_turfs, min_anomalies_ammout, max_anomalies_ammout, min_artefacts_ammount, max_artefacts_ammount, min_anomaly_size, max_anomaly_size, "Планета [name]", started_in)
+	generate_anomalies_in_turfs(
+		anomalies_types = anomalies_types,
+		all_turfs_for_spawn = all_turfs,
+		min_anomalies_ammount = min_anomalies_ammount,
+		max_anomalies_ammount = max_anomalies_ammount,
+		min_artefacts_ammount = min_artefacts_ammount,
+		max_artefacts_ammount = max_artefacts_ammount,
+		source =  "Планета [name]",
+		visible_generation = FALSE,
+		started_in = world.time)
 
 ///Проверяет, что турф находится в играбельной зоне планеты
 /proc/turf_in_playable_place(turf/inputed_turf, x_limit, y_limit)

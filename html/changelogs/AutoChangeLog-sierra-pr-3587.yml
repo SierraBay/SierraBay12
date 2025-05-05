@@ -1,0 +1,4 @@
+author: Guared1365
+changes:
+  - {bugfix: Адхеранты больше не могут есть еду и пить напитки.}
+delete-after: true

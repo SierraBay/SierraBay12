@@ -1,0 +1,10 @@
+author: Atebite
+changes:
+  - {tweak: Refactor overmap objects to allow all objects on the overmap to move}
+  - {tweak: Movement indicators on the overmap have been adjusted to work with multiple
+      object types}
+  - {tweak: The sub-tile position of all overmap objects is now slightly randomized}
+  - {bugfix: Fixed ships wrapping around the overmap too early into edges}
+  - {bugfix: Fixed minimum speed checks on overmap movement}
+  - {bugfix: Fix overmap wraparound not working on north/south edges}
+delete-after: true

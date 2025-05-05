@@ -11,12 +11,13 @@
 		)
 	big_artefacts_can_be_close = FALSE
 	big_artefacts_range_spawn = 30
-	weather_manager_type = null
+	weather_manager_type = /datum/weather_manager/snow
 	//
 	possible_themes = list(
 		/datum/exoplanet_theme = 45,
 		/datum/exoplanet_theme/radiation_bombing = 10
 		)
+	storyteller_path = /datum/planet_storyteller/electra_home
 	planetary_area = /area/exoplanet/ice
 	map_generators = list(/datum/random_map/automata/cave_system/mountains/ice, /datum/random_map/noise/exoplanet/ice)
 	ruin_tags_blacklist = RUIN_HABITAT|RUIN_WATER|RUIN_HOT_ANOMALIES|RUIN_GRAVI_ANOMALIES|RUIN_CHUDO_ANOMALIES
@@ -69,15 +70,15 @@
 			LAZYREMOVE(list_of_turfs, picked_turf)
 		else if(!istype(picked_turf, /turf/simulated/floor/exoplanet/ice/ice_planet))
 			LAZYREMOVE(list_of_turfs, picked_turf)
-	var/ice_block_ammout = rand(500, 1000)
+	var/ice_block_ammount = rand(500, 1000)
 	//Спавним камушки на льду
-	while(ice_block_ammout > 0)
+	while(ice_block_ammount > 0)
 		var/turf/current_turf = pick(list_of_turfs)
 		new /obj/structure/ice_rock(current_turf)
 		LAZYREMOVE(list_of_turfs, current_turf)
 		if(!LAZYLEN(list_of_turfs))
-			ice_block_ammout = 0
-		ice_block_ammout--
+			ice_block_ammount = 0
+		ice_block_ammount--
 
 
 /obj/overmap/visitable/sector/exoplanet/ice/generate_atmosphere()

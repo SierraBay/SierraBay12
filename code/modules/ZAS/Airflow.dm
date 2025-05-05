@@ -86,6 +86,9 @@ Contains helper procs for airflow, handled in /connection_group.
 	return 1
 
 /atom/movable/Bump(atom/A, called)
+	//[SIERRA-ADD] - Anomaly
+	SEND_SIGNAL(src, COMSIG_MOB_BUMPED, A)
+	//[SIERRA-ADD]
 	if(airflow_speed > 0 && airflow_dest)
 		if(airborne_acceleration > 1)
 			airflow_hit(A)

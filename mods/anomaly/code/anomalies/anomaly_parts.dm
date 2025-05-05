@@ -56,13 +56,17 @@
 	if(multitile && !spawn_called_by_generator)
 		deploy_tiles_of_anomaly()
 
-//Должен вызываться
-/obj/anomaly/New(turf,input_x, input_y, called_by_generator = FALSE)
+
+/obj/anomaly/New(turf,input_x, input_y, called_by_generator = FALSE, visible_generation)
+	if(turf)
+		src.forceMove(turf)
 	if(called_by_generator)
 		spawn_called_by_generator = TRUE
 	.=..()
 	if(called_by_generator)
 		deploy_tiles_of_anomaly(input_x, input_y)
+	if(visible_generation)
+		spawn_temp_spawn_effects()
 
 /obj/anomaly/proc/deploy_tiles_of_anomaly(input_x_width, input_y_width)
 	//Найдём конечный тууурф

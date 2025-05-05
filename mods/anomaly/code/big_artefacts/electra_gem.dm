@@ -1,7 +1,7 @@
 /obj/structure/big_artefact/electra
 	icon_state = "electra_anomalies"
-	min_anomalies_ammout = 70
-	max_anomalies_ammout = 150
+	min_anomalies_ammount = 70
+	max_anomalies_ammount = 150
 	range_spawn = 30
 	possible_anomalies = list(
 		/obj/anomaly/electra/three_and_three = 1,

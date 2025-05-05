@@ -19,12 +19,18 @@
 	upright = 1
 	dir = usr.dir
 	anchored = TRUE
+	flick("flag_deploing", src)
+	var/turf/my_turf = get_turf(src)
+	my_turf.react_turf_at_deploing(src)
 	update_icon()
 
 /obj/item/stack/flag/proc/set_up_by_projectile()
 	upright = 1
 	dir = SOUTH
 	anchored = TRUE
+	flick("flag_deploing", src)
+	var/turf/my_turf = get_turf(src)
+	my_turf.react_turf_at_deploing(src)
 	update_icon()
 
 ///Осмотр
