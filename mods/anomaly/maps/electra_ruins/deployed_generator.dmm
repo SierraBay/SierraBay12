@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "bT" = (
 /turf/simulated/wall/titanium,
-/area/map_template/deployed_generator)
+/area/map_template/anomaly/deployed_generator)
 "cg" = (
 /obj/structure/aurora/wall_light{
 	dir = 8
@@ -22,24 +22,24 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/map_template/deployed_generator)
+/area/map_template/anomaly/deployed_generator)
 "AM" = (
 /obj/structure/droppod_door{
 	dir = 1
 	},
 /obj/structure/aurora/cable,
 /turf/simulated/floor,
-/area/map_template/deployed_generator)
+/area/map_template/anomaly/deployed_generator)
 "FR" = (
 /obj/structure/aurora/smes,
 /turf/simulated/floor,
-/area/map_template/deployed_generator)
+/area/map_template/anomaly/deployed_generator)
 "FT" = (
 /obj/structure/aurora/wall_light{
 	dir = 1
 	},
 /turf/simulated/floor/tiled/techmaint,
-/area/map_template/deployed_generator)
+/area/map_template/anomaly/deployed_generator)
 "KJ" = (
 /obj/structure/aurora/nav_light,
 /obj/floor_decal/snow,
@@ -50,11 +50,11 @@
 	dir = 1
 	},
 /turf/simulated/floor,
-/area/map_template/deployed_generator)
+/area/map_template/anomaly/deployed_generator)
 "Lr" = (
 /obj/structure/aurora/informative/old_computer,
 /turf/simulated/floor,
-/area/map_template/deployed_generator)
+/area/map_template/anomaly/deployed_generator)
 "MO" = (
 /obj/structure/aurora/wall_light{
 	dir = 1
@@ -70,14 +70,14 @@
 	dir = 8
 	},
 /turf/simulated/floor,
-/area/map_template/deployed_generator)
+/area/map_template/anomaly/deployed_generator)
 "Qf" = (
 /obj/structure/droppod_door,
 /turf/simulated/floor,
-/area/map_template/deployed_generator)
+/area/map_template/anomaly/deployed_generator)
 "Qn" = (
 /turf/simulated/floor/tiled/techmaint,
-/area/map_template/deployed_generator)
+/area/map_template/anomaly/deployed_generator)
 "Vn" = (
 /obj/floor_decal/snow,
 /obj/floor_decal/snow,
@@ -86,16 +86,16 @@
 "VD" = (
 /obj/structure/aurora/wall_light,
 /turf/simulated/floor/tiled/techmaint,
-/area/map_template/deployed_generator)
+/area/map_template/anomaly/deployed_generator)
 "Xr" = (
 /obj/structure/droppod_door,
 /obj/structure/aurora/cable,
 /turf/simulated/floor,
-/area/map_template/deployed_generator)
+/area/map_template/anomaly/deployed_generator)
 "XD" = (
 /obj/structure/aurora/cable,
 /turf/simulated/floor/tiled/techmaint,
-/area/map_template/deployed_generator)
+/area/map_template/anomaly/deployed_generator)
 
 (1,1,1) = {"
 Vn

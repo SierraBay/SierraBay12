@@ -6,10 +6,10 @@
 	spawn_cost = 1
 	ruin_tags = RUIN_ELECTRA_ANOMALIES
 	apc_test_exempt_areas = list(
-		/area/map_template/bunker = NO_SCRUBBER|NO_VENT|NO_APC
+		/area/map_template/anomaly/bunker = NO_SCRUBBER|NO_VENT|NO_APC
 	)
 
-/area/map_template/bunker
+/area/map_template/anomaly/bunker
 	name = "\improper Science bunker"
 	icon_state = "A"
 	turfs_airless = TRUE

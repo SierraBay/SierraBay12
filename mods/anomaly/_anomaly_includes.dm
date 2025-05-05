@@ -16,7 +16,9 @@
 #include "code\big_artefacts\_big_artefacts_includes.dm" //Код больших артефактов
 #include "code\detectors_and_etc\_equipment_includes.dm" //Детекторы и прочее оборудование
 #include "code\spawn_anomalies_protocol\__spawn_protocols_includes.dm" //Размещение аномалий в игре
-#include "code\planets\planet_includes.dm.dm"
+#include "code\planets\planet_includes.dm" //Аномальные планеты и всё с ними связанное
+#include "code\storytellers\storytellers_includes.dm" //Рассказчик или же динамическая сложность
+
 //ETC
 #include "code\functions\locating.dm"
 #include "maps\new_ruins_includes.dm"

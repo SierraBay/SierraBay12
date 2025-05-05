@@ -12,12 +12,12 @@
 	cost = 1
 	slot = slot_wear_suit
 
-/datum/gear/suit/skrell_clothes
+/datum/gear/uniform/skrell_clothes
 	display_name = "(Skrell) Skrell clothes selection"
 	path = /obj/item/clothing/under/
 	sort_category = "Xenowear"
 
-/datum/gear/suit/skrell_clothes/New()
+/datum/gear/uniform/skrell_clothes/New()
 	..()
 	var/skrell_clothes = list()
 	skrell_clothes["Talum-Katish blue dress"] = /obj/item/clothing/under/uniform/skrell_talum_bluedress
@@ -33,4 +33,3 @@
 	skrell_clothes["Raskinta-Katish red clothes"] = /obj/item/clothing/under/uniform/skrell_raskinta_redclothes
 	skrell_clothes["Skrellian diving suit"] = /obj/item/clothing/under/uniform/skrell_skrellian_divingsuit
 	gear_tweaks += new/datum/gear_tweak/path(skrell_clothes)
-
