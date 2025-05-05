@@ -85,7 +85,7 @@
 
 //Black
 /singleton/reaction/slime/psimutate
-	name = "Darvin Mutation Toxin"
+	name = "Mule Mutation Toxin"
 	result = /datum/reagent/psislimetoxin
 	required_reagents = list(/datum/reagent/blood = 1)
 	result_amount = 1
