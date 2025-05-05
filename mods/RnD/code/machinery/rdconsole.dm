@@ -162,6 +162,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			to_chat(user, SPAN_NOTICE("There was no useful data inside [D.name]'s buffer."))
 
 	SSnano.update_uis(src)
+	update_icon()
 	return ..()
 
 /obj/machinery/computer/rdconsole/emag_act(remaining_charges)

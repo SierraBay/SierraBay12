@@ -24,13 +24,20 @@
 
 /mob/living/exosuit/proc/toggle_main_buttons()
 	if(downside_menu_status) //Закрыть меню
-		downside_menu_status = FALSE
-		downside_menu.icon_state = "context_menu_closed"
-		downside_menu.screen_loc = downside_menu.closed_position
+		close_main_buttons()
 	else
-		downside_menu_status = TRUE
-		downside_menu.icon_state = "context_menu_open"
-		downside_menu.screen_loc = downside_menu.open_position
+		open_main_buttons()
+
+/mob/living/exosuit/proc/close_main_buttons()
+	downside_menu_status = FALSE
+	downside_menu.icon_state = "context_menu_closed"
+	downside_menu.screen_loc = downside_menu.closed_position
+	refresh_main_buttons_hud()
+
+/mob/living/exosuit/proc/open_main_buttons()
+	downside_menu_status = TRUE
+	downside_menu.icon_state = "context_menu_open"
+	downside_menu.screen_loc = downside_menu.open_position
 	refresh_main_buttons_hud()
 
 /mob/living/exosuit/proc/refresh_main_buttons_hud()

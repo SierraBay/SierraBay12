@@ -1,5 +1,5 @@
 /obj/screen/exosuit/menu_button/hatch_bolts
-	name = "toggle hatch lock"
+	name = "Электрозамок кабины меха"
 	button_desc = "Переключает замок у кабины меха, не позволяя открыть её ломом."
 	switchable = TRUE
 	icon_state = "lock"
@@ -14,9 +14,11 @@
 	if(owner.body.hatch_bolts_status == BOLTS_DESTROYED)
 		to_chat(usr, SPAN_WARNING("ERROR. Security cockpit bolts damaged or non operable anymore."))
 		return
-	to_chat(usr, SPAN_NOTICE("The [owner.body.hatch_descriptor] is [owner.hatch_locked ? "now" : "no longer" ] locked."))
+	to_chat(usr, SPAN_NOTICE("Hatch is now locked."))
 	owner.hatch_locked = TRUE
-
+	return TRUE
 
 /obj/screen/exosuit/menu_button/hatch_bolts/switch_off()
+	to_chat(usr, SPAN_NOTICE("Hatch no longer locked."))
 	owner.hatch_locked = FALSE
+	return TRUE

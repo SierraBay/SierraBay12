@@ -138,3 +138,21 @@
 			verbs += /obj/machinery/computer/modular/proc/eject_usb
 		else if(prob(20))
 			disk.install_away_designs()
+
+
+// Xenobiology stuff
+
+/obj/item/storage/xenobio
+	name = "xenobiology satchel"
+	desc = "This insulated bag can be used to store slime extracts."
+	icon = 'mods/RnD/icons/biobag.dmi'
+	icon_state = "biobag"
+	slot_flags = SLOT_BELT
+	max_storage_space = 100
+	max_w_class = ITEM_SIZE_NORMAL
+	w_class = ITEM_SIZE_NORMAL
+	contents_allowed = list(
+		/obj/item/slime_extract
+	)
+	allow_quick_gather = TRUE
+	allow_quick_empty = TRUE

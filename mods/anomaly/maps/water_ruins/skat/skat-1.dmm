@@ -1,0 +1,5258 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ac" = (
+/obj/structure/railing/mapped,
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/map_template/anomaly/skat)
+"as" = (
+/obj/machinery/vending/fashionvend{
+	dir = 8
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/anomaly/skat)
+"aO" = (
+/obj/floor_decal/industrial/warning{
+	dir = 5
+	},
+/obj/machinery/computer/shuttle_control/lift,
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/anomaly/skat)
+"aP" = (
+/obj/structure/table/rack,
+/obj/floor_decal/industrial/outline/yellow,
+/obj/decal/cleanable/dirt,
+/obj/random/tool,
+/obj/random/tool,
+/obj/random/tool,
+/obj/random/tool,
+/obj/random/tool,
+/obj/random/tool,
+/turf/simulated/floor/tiled/techmaint,
+/area/map_template/anomaly/skat)
+"aQ" = (
+/obj/item/reagent_containers/food/drinks/glass2/coffeecup/metal{
+	pixel_x = -4;
+	pixel_y = 8
+	},
+/obj/item/stack/material/rods,
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/map_template/anomaly/skat)
+"aV" = (
+/obj/decal/skat_decals/wall_left_wires,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled,
+/area/map_template/anomaly/skat)
+"aY" = (
+/obj/machinery/door/blast/regular/open{
+	id_tag = "bridge_prot";
+	name = "Bridge Protection Shutters"
+	},
+/obj/wallframe_spawn/reinforced/hull,
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/map_template/anomaly/skat)
+"bb" = (
+/obj/structure/table/marble,
+/obj/item/reagent_containers/food/condiment/small/peppermill{
+	pixel_x = 3
+	},
+/obj/item/reagent_containers/food/condiment/small/saltshaker{
+	pixel_x = -3
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/white,
+/area/map_template/anomaly/skat)
+"bf" = (
+/obj/structure/railing/mapped,
+/obj/decal/skat_decals/wall_right_leaking_pipe,
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/map_template/anomaly/skat)
+"bl" = (
+/obj/structure/table/steel,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/dark/monotile,
+/area/map_template/anomaly/skat)
+"bu" = (
+/obj/machinery/atmospherics/unary/cryo_cell,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/white,
+/area/map_template/anomaly/skat)
+"bz" = (
+/obj/item/reagent_containers/food/drinks/glass2/coffeecup/glass{
+	pixel_x = 6;
+	pixel_y = 8
+	},
+/obj/structure/water_drown_structures/paper,
+/obj/landmark/cutscene_landmark/skat_most_first,
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/map_template/anomaly/skat)
+"bG" = (
+/obj/structure/table/marble,
+/obj/machinery/door/blast/shutters/open{
+	id_tag = "bar_shutters";
+	name = "Bar Shutters"
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/dark,
+/area/map_template/anomaly/skat)
+"bH" = (
+/obj/structure/closet/fridge,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/white,
+/area/map_template/anomaly/skat)
+"bW" = (
+/obj/machinery/constructable_frame/computerframe{
+	dir = 4
+	},
+/obj/item/stack/material/rods,
+/obj/item/material/shard,
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/map_template/anomaly/skat)
+"cr" = (
+/obj/machinery/vending/medical,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/white,
+/area/map_template/anomaly/skat)
+"cx" = (
+/obj/machinery/cooker/grill,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/white,
+/area/map_template/anomaly/skat)
+"cz" = (
+/obj/structure/water_drown_structures,
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/map_template/anomaly/skat)
+"cA" = (
+/obj/structure/bed/chair/padded/blue{
+	dir = 8
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/techmaint,
+/area/map_template/anomaly/skat)
+"cB" = (
+/obj/structure/rubble/house,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled,
+/area/map_template/anomaly/skat)
+"cH" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/white,
+/area/map_template/anomaly/skat)
+"cL" = (
+/obj/structure/table/marble,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/white,
+/area/map_template/anomaly/skat)
+"cQ" = (
+/obj/decal/skat_decals/wires_first,
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/map_template/anomaly/skat)
+"cU" = (
+/obj/machinery/door/airlock/civilian{
+	autoset_access = 0;
+	name = "Showers"
+	},
+/turf/simulated/floor/tiled/freezer,
+/area/map_template/anomaly/skat)
+"dh" = (
+/obj/item/welder_tank,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled,
+/area/map_template/anomaly/skat)
+"di" = (
+/obj/structure/table/reinforced,
+/obj/machinery/chemical_dispenser/bar_coffee/full{
+	dir = 1
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/dark,
+/area/map_template/anomaly/skat)
+"dp" = (
+/obj/machinery/bodyscanner{
+	dir = 4
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/white,
+/area/map_template/anomaly/skat)
+"dq" = (
+/obj/item/storage/box/donut,
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/map_template/anomaly/skat)
+"ds" = (
+/obj/structure/barricade,
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/anomaly/skat)
+"dv" = (
+/obj/machinery/vending/dinnerware{
+	dir = 1
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/dark,
+/area/map_template/anomaly/skat)
+"dZ" = (
+/obj/structure/table/marble,
+/obj/machinery/reagent_temperature,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/white,
+/area/map_template/anomaly/skat)
+"ee" = (
+/obj/item/pen/blue,
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/map_template/anomaly/skat)
+"eh" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/generic,
+/turf/simulated/floor/tiled/white,
+/area/map_template/anomaly/skat)
+"em" = (
+/obj/structure/table/marble,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/dark,
+/area/map_template/anomaly/skat)
+"ep" = (
+/obj/structure/table/standard,
+/obj/floor_decal/corner/yellow/half{
+	dir = 4
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/monotile,
+/area/map_template/anomaly/skat)
+"ey" = (
+/obj/decal/skat_decals/water_and_pipes,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled,
+/area/map_template/anomaly/skat)
+"eH" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/generic,
+/turf/simulated/floor/tiled/techmaint,
+/area/map_template/anomaly/skat)
+"eN" = (
+/obj/structure/railing/mapped{
+	dir = 1
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/techmaint,
+/area/map_template/anomaly/skat)
+"eQ" = (
+/obj/machinery/constructable_frame/computerframe,
+/obj/item/material/shard,
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/map_template/anomaly/skat)
+"eS" = (
+/obj/structure/table/rack,
+/obj/item/tank/jetpack/carbondioxide,
+/obj/item/tank/jetpack/carbondioxide,
+/obj/item/tank/jetpack/carbondioxide,
+/obj/item/tank/jetpack/carbondioxide,
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/anomaly/skat)
+"eT" = (
+/obj/item/storage/belt/medical,
+/obj/item/storage/belt/medical/emt,
+/obj/item/clothing/gloves/latex/nitrile,
+/obj/item/clothing/gloves/latex,
+/obj/item/cane,
+/obj/item/clothing/mask/surgical,
+/obj/structure/table/rack,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/white,
+/area/map_template/anomaly/skat)
+"ff" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/anomaly/skat)
+"fh" = (
+/obj/floor_decal/industrial/warning{
+	dir = 8
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/anomaly/skat)
+"fj" = (
+/obj/item/pen/red,
+/obj/structure/water_drown_structures/paper,
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/map_template/anomaly/skat)
+"fp" = (
+/obj/structure/table/glass,
+/obj/item/haircomb/brush,
+/obj/item/haircomb/random,
+/obj/random/soap,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/freezer,
+/area/map_template/anomaly/skat)
+"fu" = (
+/obj/machinery/washing_machine,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/freezer,
+/area/map_template/anomaly/skat)
+"fz" = (
+/obj/structure/table/rack,
+/obj/item/tank/jetpack/oxygen,
+/obj/item/tank/jetpack/oxygen,
+/obj/floor_decal/industrial/outline/yellow,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/techmaint,
+/area/map_template/anomaly/skat)
+"fC" = (
+/obj/structure/closet/walllocker{
+	pixel_y = 28
+	},
+/obj/item/stack/material/rods/fifty,
+/obj/item/stack/material/rods/fifty,
+/obj/item/stack/material/rods/fifty,
+/obj/item/stack/material/rods/fifty,
+/obj/item/stack/material/rods/fifty,
+/obj/item/stack/material/rods/fifty,
+/obj/item/stack/material/rods/fifty,
+/obj/item/stack/material/rods/fifty,
+/obj/item/stack/material/rods/fifty,
+/obj/item/stack/material/rods/fifty,
+/obj/random/trash,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/anomaly/skat)
+"fE" = (
+/obj/decal/skat_decals/wires_first,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/white,
+/area/map_template/anomaly/skat)
+"fG" = (
+/obj/random/trash,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/anomaly/skat)
+"fK" = (
+/obj/structure/table/rack/dark,
+/obj/item/stack/material/wood/bamboo/fifty,
+/obj/item/stack/material/wood/bamboo/fifty,
+/obj/item/stack/material/wood/bamboo/fifty,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/steel_grid,
+/area/map_template/anomaly/skat)
+"fM" = (
+/obj/floor_decal/stairs{
+	dir = 4
+	},
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/map_template/anomaly/skat)
+"fP" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/techfloor/grid,
+/area/map_template/anomaly/skat)
+"fQ" = (
+/obj/item/shreddedp,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/anomaly/skat)
+"ga" = (
+/obj/structure/closet/walllocker{
+	pixel_y = 28
+	},
+/obj/item/stack/material/rods/fifty,
+/obj/item/stack/material/rods/fifty,
+/obj/item/stack/material/rods/fifty,
+/obj/item/stack/material/rods/fifty,
+/obj/item/stack/material/rods/fifty,
+/obj/item/stack/material/rods/fifty,
+/obj/item/stack/material/rods/fifty,
+/obj/item/stack/material/rods/fifty,
+/obj/item/stack/material/rods/fifty,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/anomaly/skat)
+"gj" = (
+/obj/machinery/door/airlock/glass/command,
+/obj/decal/skat_decals/wires_first,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/white,
+/area/map_template/anomaly/skat)
+"gk" = (
+/obj/floor_decal/industrial/warning{
+	dir = 10
+	},
+/obj/structure/railing/mapped,
+/obj/decal/cleanable/dirt,
+/obj/item/tank/air,
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/anomaly/skat)
+"gn" = (
+/obj/machinery/door/airlock/mining{
+	dir = 4;
+	name = "Supply Office";
+	req_access = newlist()
+	},
+/obj/machinery/door/blast/shutters/open{
+	name = "Supply Desk Shutters";
+	id_tag = "sup_office";
+	dir = 4
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled,
+/area/map_template/anomaly/skat)
+"gq" = (
+/turf/template_noop,
+/area/template_noop)
+"gw" = (
+/obj/structure/reagent_dispensers/watertank,
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/anomaly/skat)
+"gz" = (
+/obj/machinery/papershredder,
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/map_template/anomaly/skat)
+"ho" = (
+/obj/floor_decal/industrial/warning{
+	dir = 8
+	},
+/obj/decal/cleanable/dirt,
+/obj/random/trash,
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/anomaly/skat)
+"hq" = (
+/obj/structure/railing/mapped{
+	dir = 8
+	},
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/map_template/anomaly/skat)
+"hr" = (
+/obj/decal/cleanable/dirt,
+/obj/structure/sign/directions/security{
+	pixel_y = 32;
+	dir = 8
+	},
+/turf/simulated/floor/tiled,
+/area/map_template/anomaly/skat)
+"hx" = (
+/obj/decal/cleanable/dirt,
+/obj/item/tank/air,
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/anomaly/skat)
+"hO" = (
+/obj/item/stack/material/rods,
+/turf/template_noop,
+/area/template_noop)
+"hW" = (
+/obj/machinery/fabricator,
+/obj/floor_decal/corner/yellow/half,
+/obj/floor_decal/corner/yellow/half{
+	dir = 4
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/monotile,
+/area/map_template/anomaly/skat)
+"ic" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/floor_decal/industrial/outline/grey,
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/anomaly/skat)
+"il" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/structure/aurora/smes,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/steel_grid,
+/area/map_template/anomaly/skat)
+"ip" = (
+/obj/structure/wall_frame/hull,
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/map_template/anomaly/skat)
+"iA" = (
+/obj/machinery/chemical_dispenser/full,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/white,
+/area/map_template/anomaly/skat)
+"iI" = (
+/obj/machinery/light/small{
+	dir = 4;
+	icon_state = "bulb1"
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/white,
+/area/map_template/anomaly/skat)
+"iN" = (
+/obj/item/storage/box/syringes,
+/obj/item/reagent_containers/spray/cleaner{
+	desc = "Someone has crossed out the 'Space' from Space Cleaner and written in Chemistry. Scrawled on the back is, 'Okay, whoever filled this with polytrinic acid, it was only funny the first time. It was hard enough replacing the CMO's first cat!'";
+	name = "Chemistry Cleaner"
+	},
+/obj/structure/table/standard,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/white,
+/area/map_template/anomaly/skat)
+"iT" = (
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/map_template/anomaly/skat)
+"jm" = (
+/obj/structure/table/steel_reinforced,
+/obj/item/storage/toolbox/electrical,
+/obj/item/clothing/head/welding,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/device/multitool,
+/obj/floor_decal/industrial/outline/yellow,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/techmaint,
+/area/map_template/anomaly/skat)
+"jr" = (
+/obj/machinery/media/music_writer{
+	pixel_x = -30
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/dark,
+/area/map_template/anomaly/skat)
+"jz" = (
+/obj/decal/skat_decals/wall_left_wires,
+/obj/decal/cleanable/dirt,
+/obj/structure/sign/directions/security{
+	dir = 4;
+	pixel_x = -32
+	},
+/turf/simulated/floor/tiled,
+/area/map_template/anomaly/skat)
+"jA" = (
+/obj/structure/table/woodentable/walnut,
+/obj/machinery/photocopier/faxmachine,
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/map_template/anomaly/skat)
+"jB" = (
+/obj/machinery/disposal,
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/dark,
+/area/map_template/anomaly/skat)
+"jC" = (
+/mob/living/exosuit/premade/powerloader/old,
+/obj/machinery/mech_recharger,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/steel_grid,
+/area/map_template/anomaly/skat)
+"jI" = (
+/obj/decal/cleanable/dirt,
+/obj/structure/broken_cryo/opened{
+	dir = 8
+	},
+/turf/simulated/floor/tiled/techfloor/grid,
+/area/map_template/anomaly/skat)
+"jJ" = (
+/obj/machinery/door/airlock/glass/civilian{
+	name = "Cryogenic Storage"
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/anomaly/skat)
+"jK" = (
+/obj/structure/table/rack,
+/obj/random/toolbox,
+/obj/random/toolbox,
+/obj/random/toolbox,
+/obj/random/toolbox,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/anomaly/skat)
+"jN" = (
+/obj/machinery/door/blast/shutters/open{
+	name = "Supply Desk Shutters";
+	id_tag = "sup_office";
+	dir = 4
+	},
+/obj/wallframe_spawn/reinforced/hull,
+/turf/simulated/floor/plating,
+/area/map_template/anomaly/skat)
+"jO" = (
+/obj/structure/table/marble,
+/obj/item/reagent_containers/glass/beaker{
+	pixel_x = 5
+	},
+/obj/machinery/reagentgrinder/juicer,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/white,
+/area/map_template/anomaly/skat)
+"jS" = (
+/obj/decal/cleanable/dirt,
+/obj/random/trash,
+/turf/simulated/floor/tiled/monotile,
+/area/map_template/anomaly/skat)
+"jT" = (
+/obj/structure/closet/firecloset,
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/map_template/anomaly/skat)
+"jW" = (
+/obj/machinery/shieldgen,
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/anomaly/skat)
+"kb" = (
+/obj/machinery/hologram/holopad,
+/obj/structure/table/steel,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/dark/monotile,
+/area/map_template/anomaly/skat)
+"ki" = (
+/obj/floor_decal/industrial/warning{
+	dir = 1
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/anomaly/skat)
+"kj" = (
+/obj/machinery/chem_master/condimaster{
+	name = "CondiMaster Neo";
+	pixel_x = -5
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/white,
+/area/map_template/anomaly/skat)
+"kl" = (
+/obj/structure/closet/fridge/meat,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/white,
+/area/map_template/anomaly/skat)
+"km" = (
+/obj/decal/cleanable/dirt,
+/obj/random/junk,
+/turf/simulated/floor/tiled/white,
+/area/map_template/anomaly/skat)
+"kn" = (
+/obj/decal/cleanable/dirt,
+/obj/structure/rubble/house,
+/turf/simulated/floor/tiled,
+/area/map_template/anomaly/skat)
+"kA" = (
+/obj/decal/cleanable/dirt,
+/obj/structure/rubble/house,
+/turf/simulated/floor/tiled/white,
+/area/map_template/anomaly/skat)
+"kB" = (
+/obj/machinery/optable,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/white,
+/area/map_template/anomaly/skat)
+"kL" = (
+/obj/structure/filingcabinet/chestdrawer,
+/obj/item/folder/white,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/white,
+/area/map_template/anomaly/skat)
+"kP" = (
+/obj/structure/table/rack,
+/obj/random/tool,
+/obj/random/tool,
+/obj/random/tool,
+/obj/random/tool,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/anomaly/skat)
+"lD" = (
+/obj/machinery/door/airlock/glass/command{
+	name = "Bridge Storage"
+	},
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/map_template/anomaly/skat)
+"lE" = (
+/obj/structure/table/woodentable/walnut,
+/obj/item/folder/blue,
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/map_template/anomaly/skat)
+"lI" = (
+/obj/decal/cleanable/dirt,
+/mob/living/bot/medbot,
+/turf/simulated/floor/tiled/white,
+/area/map_template/anomaly/skat)
+"mg" = (
+/obj/floor_decal/industrial/warning{
+	dir = 4
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/anomaly/skat)
+"ml" = (
+/obj/machinery/door/airlock/glass/command{
+	name = "Bridge Storage"
+	},
+/turf/simulated/floor/tiled/techfloor/grid,
+/area/map_template/anomaly/skat)
+"mA" = (
+/obj/decal/cleanable/dirt,
+/obj/random/trash,
+/turf/simulated/floor/tiled/white,
+/area/map_template/anomaly/skat)
+"mG" = (
+/obj/decal/skat_decals/wires_first,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/steel_grid,
+/area/map_template/anomaly/skat)
+"ng" = (
+/obj/decal/cleanable/dirt,
+/obj/random/trash,
+/turf/simulated/floor/tiled/steel_grid,
+/area/map_template/anomaly/skat)
+"nx" = (
+/obj/decal/cleanable/generic,
+/obj/decal/cleanable/dirt,
+/obj/random/trash,
+/turf/simulated/floor/tiled,
+/area/map_template/anomaly/skat)
+"nA" = (
+/obj/machinery/suit_storage_unit/standard_unit,
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/anomaly/skat)
+"nH" = (
+/obj/machinery/light_switch{
+	dir = 8;
+	pixel_x = 23
+	},
+/obj/machinery/button/windowtint{
+	dir = 8;
+	id = "sec_restroom";
+	pixel_x = 23;
+	pixel_y = -8
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/white,
+/area/map_template/anomaly/skat)
+"nM" = (
+/obj/structure/table/rack,
+/obj/random/tool,
+/obj/random/tool,
+/obj/random/tool,
+/obj/random/tool,
+/obj/random/tool,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/anomaly/skat)
+"nR" = (
+/obj/item/material/ashtray/bronze,
+/obj/structure/table/marble,
+/obj/machinery/door/blast/shutters/open{
+	id_tag = "bar_shutters";
+	name = "Bar Shutters"
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/dark,
+/area/map_template/anomaly/skat)
+"oh" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/generic,
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/anomaly/skat)
+"ov" = (
+/obj/structure/sign/chemistry{
+	pixel_y = 30
+	},
+/turf/simulated/wall/prepainted,
+/area/map_template/anomaly/skat)
+"oZ" = (
+/obj/decal/cleanable/dirt,
+/obj/random/obstruction,
+/turf/simulated/floor/tiled/white,
+/area/map_template/anomaly/skat)
+"ps" = (
+/obj/item/reagent_containers/food/drinks/glass2/coffeecup/pawn{
+	pixel_x = -9
+	},
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/map_template/anomaly/skat)
+"pv" = (
+/obj/item/pen,
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/map_template/anomaly/skat)
+"pO" = (
+/obj/machinery/vending/security,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/anomaly/skat)
+"pT" = (
+/obj/structure/railing/mapped{
+	dir = 8
+	},
+/obj/structure/table/rack/dark,
+/obj/item/storage/firstaid/trauma{
+	pixel_x = -7;
+	pixel_y = 7
+	},
+/obj/item/storage/firstaid/fire{
+	pixel_x = 7;
+	pixel_y = 7
+	},
+/obj/item/storage/firstaid/trauma{
+	pixel_x = -7
+	},
+/obj/item/storage/firstaid/fire{
+	pixel_x = 7
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/steel_grid,
+/area/map_template/anomaly/skat)
+"qh" = (
+/obj/machinery/gibber,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/white,
+/area/map_template/anomaly/skat)
+"qm" = (
+/obj/machinery/vending/wallmed1{
+	dir = 1;
+	pixel_y = -32
+	},
+/obj/structure/table/standard,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/white,
+/area/map_template/anomaly/skat)
+"qv" = (
+/obj/floor_decal/industrial/warning{
+	dir = 6
+	},
+/obj/structure/railing/mapped,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/anomaly/skat)
+"qQ" = (
+/obj/floor_decal/industrial/outline/grey,
+/obj/structure/barricade,
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/anomaly/skat)
+"qT" = (
+/obj/structure/sign/directions/bridge{
+	dir = 8;
+	pixel_y = 21
+	},
+/obj/structure/sign/directions/engineering{
+	dir = 8;
+	pixel_y = 28
+	},
+/obj/structure/sign/directions/infirmary{
+	dir = 8;
+	pixel_y = 35
+	},
+/obj/structure/sign/directions/security{
+	dir = 8;
+	pixel_y = 41
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled,
+/area/map_template/anomaly/skat)
+"rb" = (
+/obj/decal/cleanable/dirt,
+/mob/living/exosuit/premade/combat,
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/anomaly/skat)
+"rn" = (
+/obj/item/stool/bar/padded,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/dark,
+/area/map_template/anomaly/skat)
+"rp" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled,
+/area/map_template/anomaly/skat)
+"rq" = (
+/obj/machinery/door/blast/shutters/open,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled,
+/area/map_template/anomaly/skat)
+"rw" = (
+/obj/structure/bed/chair/armchair/black{
+	dir = 4
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/dark/monotile,
+/area/map_template/anomaly/skat)
+"rB" = (
+/obj/structure/extinguisher_cabinet{
+	pixel_y = 32
+	},
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/map_template/anomaly/skat)
+"rE" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/generic,
+/obj/random/trash,
+/turf/simulated/floor/tiled/freezer,
+/area/map_template/anomaly/skat)
+"rI" = (
+/obj/decal/cleanable/dirt,
+/obj/random/trash,
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/anomaly/skat)
+"rL" = (
+/obj/machinery/suit_storage_unit/standard_unit,
+/obj/machinery/suit_storage_unit/standard_unit,
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/anomaly/skat)
+"rZ" = (
+/obj/structure/railing/mapped{
+	dir = 8
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/techmaint,
+/area/map_template/anomaly/skat)
+"se" = (
+/obj/machinery/icecream_vat,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/white,
+/area/map_template/anomaly/skat)
+"sk" = (
+/obj/structure/table/marble,
+/obj/machinery/chemical_dispenser/bar_alc/full{
+	dir = 1
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/dark,
+/area/map_template/anomaly/skat)
+"sB" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/generic,
+/turf/simulated/floor/tiled/steel_grid,
+/area/map_template/anomaly/skat)
+"sQ" = (
+/obj/structure/table/rack/dark,
+/obj/item/stack/material/plastic/fifty,
+/obj/item/stack/material/plastic/fifty,
+/obj/item/stack/material/plastic/fifty,
+/obj/item/stack/material/plastic/fifty,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/steel_grid,
+/area/map_template/anomaly/skat)
+"sT" = (
+/obj/item/paper_bin,
+/obj/item/pen,
+/obj/structure/table/marble,
+/obj/machinery/door/blast/shutters/open{
+	id_tag = "bar_shutters";
+	name = "Bar Shutters"
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/dark,
+/area/map_template/anomaly/skat)
+"ts" = (
+/obj/machinery/mech_recharger,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/anomaly/skat)
+"tv" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/door/window/southleft{
+	autoset_access = 0;
+	name = "Bar"
+	},
+/turf/simulated/floor/tiled/white,
+/area/map_template/anomaly/skat)
+"tz" = (
+/obj/machinery/photocopier/faxmachine,
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/map_template/anomaly/skat)
+"tB" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/generic,
+/turf/simulated/floor/tiled,
+/area/map_template/anomaly/skat)
+"tL" = (
+/obj/machinery/atmospherics/unary/freezer{
+	icon_state = "freezer"
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/white,
+/area/map_template/anomaly/skat)
+"tQ" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/anomaly/skat)
+"tV" = (
+/obj/structure/table/reinforced,
+/obj/item/reagent_containers/spray/cleaner,
+/obj/item/reagent_containers/spray/sterilizine{
+	pixel_x = -8
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/white,
+/area/map_template/anomaly/skat)
+"tY" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/firstaid/surgery,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/white,
+/area/map_template/anomaly/skat)
+"tZ" = (
+/obj/structure/reagent_dispensers/fueltank,
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/anomaly/skat)
+"uf" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/dark,
+/area/map_template/anomaly/skat)
+"uo" = (
+/obj/decal/skat_decals/wires_first,
+/obj/landmark/cutscene_landmark/skat_conference,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/plating,
+/area/map_template/anomaly/skat)
+"uw" = (
+/obj/machinery/mech_recharger,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/steel_grid,
+/area/map_template/anomaly/skat)
+"uC" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/generic,
+/turf/simulated/floor/tiled/dark,
+/area/map_template/anomaly/skat)
+"uL" = (
+/obj/structure/flora/pottedplant/orientaltree,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/dark,
+/area/map_template/anomaly/skat)
+"va" = (
+/obj/machinery/computer/modular/preset/dock{
+	dir = 1
+	},
+/obj/floor_decal/corner/yellow/half,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/monotile,
+/area/map_template/anomaly/skat)
+"vc" = (
+/obj/machinery/power/port_gen/pacman,
+/obj/decal/skat_decals/wires_first,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/steel_grid,
+/area/map_template/anomaly/skat)
+"ve" = (
+/obj/structure/water_drown_structures/paper,
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/map_template/anomaly/skat)
+"vf" = (
+/obj/structure/dispenser/oxygen,
+/obj/floor_decal/industrial/outline/yellow,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/techmaint,
+/area/map_template/anomaly/skat)
+"vk" = (
+/obj/machinery/door/airlock/civilian{
+	autoclose = 0;
+	autoset_access = 0;
+	name = "Kitchen"
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/white,
+/area/map_template/anomaly/skat)
+"vu" = (
+/obj/machinery/door/airlock/civilian{
+	id_tag = "toilet_2_lock";
+	name = "Stall Two"
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/freezer,
+/area/map_template/anomaly/skat)
+"vx" = (
+/obj/structure/table/standard,
+/obj/item/reagent_containers/glass/beaker/large,
+/obj/machinery/reagent_temperature{
+	density = 0
+	},
+/obj/item/reagent_containers/dropper,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/white,
+/area/map_template/anomaly/skat)
+"vy" = (
+/obj/structure/table/rack/dark,
+/obj/item/storage/box/latexgloves,
+/obj/item/storage/box/nitrilegloves,
+/obj/item/storage/box/bloodpacks,
+/obj/item/storage/box/beakers,
+/obj/item/storage/box/masks,
+/obj/item/storage/box/syringes,
+/obj/item/storage/box/bodybags,
+/obj/item/storage/box/freezer{
+	pixel_y = 13
+	},
+/obj/item/storage/med_pouch/burn,
+/obj/item/storage/med_pouch/burn,
+/obj/item/storage/med_pouch/oxyloss,
+/obj/item/storage/med_pouch/oxyloss,
+/obj/item/storage/med_pouch/toxin,
+/obj/item/storage/med_pouch/toxin,
+/obj/item/storage/med_pouch/trauma,
+/obj/item/storage/med_pouch/trauma,
+/obj/item/roller_bed,
+/obj/item/roller_bed,
+/obj/item/bodybag/cryobag,
+/obj/item/bodybag/cryobag,
+/obj/item/auto_cpr,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/steel_grid,
+/area/map_template/anomaly/skat)
+"vK" = (
+/obj/random/biggun,
+/obj/random/biggun,
+/obj/decal/cleanable/dirt,
+/obj/structure/table/rack,
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/anomaly/skat)
+"vL" = (
+/obj/structure/table/marble,
+/obj/item/material/chopping_board/mahogany,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/white,
+/area/map_template/anomaly/skat)
+"wf" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/generic,
+/obj/structure/rubble/house,
+/turf/simulated/floor/tiled,
+/area/map_template/anomaly/skat)
+"wi" = (
+/obj/machinery/light/spot,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/white,
+/area/map_template/anomaly/skat)
+"wo" = (
+/obj/structure/table/glass,
+/obj/machinery/chemical_dispenser/bar_coffee/full,
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/map_template/anomaly/skat)
+"wB" = (
+/obj/machinery/constructable_frame/computerframe{
+	dir = 8
+	},
+/obj/item/material/shard,
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/map_template/anomaly/skat)
+"wJ" = (
+/obj/structure/bed/chair/padded/black{
+	dir = 8
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/dark,
+/area/map_template/anomaly/skat)
+"wL" = (
+/obj/structure/water_drown_structures/wooden_planks,
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/map_template/anomaly/skat)
+"wM" = (
+/obj/decal/cleanable/generic,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled,
+/area/map_template/anomaly/skat)
+"wQ" = (
+/obj/structure/table/marble,
+/obj/machinery/cooker/candy,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/white,
+/area/map_template/anomaly/skat)
+"xe" = (
+/obj/structure/barricade,
+/turf/simulated/floor/tiled,
+/area/map_template/anomaly/skat)
+"xk" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/freezer,
+/area/map_template/anomaly/skat)
+"xm" = (
+/obj/structure/table/rack/dark,
+/obj/item/stack/material/plasteel/fifty,
+/obj/item/stack/material/plasteel/fifty,
+/obj/item/stack/material/plasteel/fifty,
+/obj/item/stack/material/plasteel/fifty,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/steel_grid,
+/area/map_template/anomaly/skat)
+"xq" = (
+/obj/machinery/door/blast/regular{
+	dir = 8;
+	id_tag = "armory_lethal"
+	},
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/anomaly/skat)
+"xv" = (
+/obj/item/storage/secure/briefcase,
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/map_template/anomaly/skat)
+"xF" = (
+/obj/structure/closet/secure_closet/captains{
+	req_access = list()
+	},
+/obj/item/ammo_magazine/speedloader/magnum,
+/obj/item/ammo_magazine/speedloader/magnum,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/map_template/anomaly/skat)
+"xM" = (
+/obj/machinery/chem_master,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/white,
+/area/map_template/anomaly/skat)
+"xQ" = (
+/obj/decal/cleanable/dirt,
+/obj/random/junk,
+/turf/simulated/floor/tiled,
+/area/map_template/anomaly/skat)
+"xR" = (
+/obj/structure/table/standard,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/monotile,
+/area/map_template/anomaly/skat)
+"xU" = (
+/obj/machinery/chemical_dispenser/bar_soft/full{
+	dir = 1
+	},
+/obj/structure/table/reinforced,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/dark,
+/area/map_template/anomaly/skat)
+"xV" = (
+/obj/structure/dispenser/oxygen,
+/obj/floor_decal/industrial/outline/grey,
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/anomaly/skat)
+"xW" = (
+/obj/item/reagent_containers/food/drinks/glass2/coffeecup/one{
+	pixel_x = 11;
+	pixel_y = -1
+	},
+/obj/structure/water_drown_structures/paper,
+/obj/structure/rubble/house,
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/map_template/anomaly/skat)
+"yb" = (
+/obj/decal/skat_decals/wires_first,
+/turf/simulated/floor/tiled/techmaint,
+/area/map_template/anomaly/skat)
+"yl" = (
+/obj/decal/skat_decals/wires_second{
+	pixel_x = -34
+	},
+/obj/decal/cleanable/dirt,
+/obj/structure/rubble/house,
+/turf/simulated/floor/tiled/techmaint,
+/area/map_template/anomaly/skat)
+"yx" = (
+/turf/simulated/floor/exoplanet/titan_water/middle,
+/area/map_template/anomaly/skat)
+"yE" = (
+/obj/structure/aurora/smes,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/steel_grid,
+/area/map_template/anomaly/skat)
+"yG" = (
+/obj/item/welder_tank,
+/obj/decal/cleanable/dirt,
+/obj/structure/rubble/house,
+/turf/simulated/floor/tiled,
+/area/map_template/anomaly/skat)
+"yT" = (
+/obj/structure/sign/directions/supply{
+	dir = 4;
+	pixel_x = -32;
+	pixel_y = -3
+	},
+/obj/structure/sign/directions/engineering{
+	dir = 4;
+	pixel_x = -32;
+	pixel_y = 10
+	},
+/turf/simulated/wall/prepainted,
+/area/map_template/anomaly/skat)
+"yX" = (
+/obj/machinery/light,
+/obj/structure/table/rack/dark,
+/obj/item/storage/firstaid/adv{
+	pixel_y = 8
+	},
+/obj/item/storage/firstaid/stab{
+	pixel_y = 2
+	},
+/obj/item/storage/firstaid/adv{
+	pixel_y = -3
+	},
+/obj/item/device/robotanalyzer,
+/obj/item/stack/nanopaste{
+	pixel_x = 1
+	},
+/obj/item/stack/nanopaste{
+	pixel_x = -6
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/steel_grid,
+/area/map_template/anomaly/skat)
+"zm" = (
+/obj/structure/table/rack/dark,
+/obj/item/stack/medical/splint,
+/obj/item/stack/medical/splint,
+/obj/item/stack/medical/splint,
+/obj/item/stack/medical/splint,
+/obj/item/stack/medical/advanced/bruise_pack{
+	pixel_x = -7;
+	pixel_y = -6
+	},
+/obj/item/stack/medical/advanced/bruise_pack{
+	pixel_x = -7
+	},
+/obj/item/stack/medical/advanced/bruise_pack{
+	pixel_x = -7;
+	pixel_y = 9
+	},
+/obj/item/stack/medical/advanced/ointment{
+	pixel_x = 7;
+	pixel_y = -6
+	},
+/obj/item/stack/medical/advanced/ointment{
+	pixel_x = 7
+	},
+/obj/item/stack/medical/advanced/ointment{
+	pixel_x = 7;
+	pixel_y = 9
+	},
+/obj/item/storage/firstaid/surgery,
+/obj/item/bodybag/rescue/loaded,
+/obj/item/bodybag/rescue/loaded,
+/obj/item/defibrillator,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/steel_grid,
+/area/map_template/anomaly/skat)
+"zn" = (
+/obj/item/cell/hyper,
+/obj/item/cell/hyper,
+/obj/item/cell/hyper,
+/obj/item/cell/hyper,
+/obj/item/cell/hyper,
+/obj/structure/table/rack,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/anomaly/skat)
+"zt" = (
+/obj/random/trash,
+/obj/decal/cleanable/generic,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/anomaly/skat)
+"zG" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/machinery/photocopier,
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/map_template/anomaly/skat)
+"zI" = (
+/obj/item/reagent_containers/food/drinks/glass2/coffeecup/custom,
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/map_template/anomaly/skat)
+"zQ" = (
+/obj/structure/closet/emcloset,
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/map_template/anomaly/skat)
+"Aa" = (
+/obj/structure/barricade,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/dark,
+/area/map_template/anomaly/skat)
+"Am" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/dirt,
+/obj/random/junk,
+/turf/simulated/floor/tiled/white,
+/area/map_template/anomaly/skat)
+"Ao" = (
+/obj/structure/table/woodentable/walnut,
+/obj/item/paper_bin,
+/obj/item/stamp/captain,
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/map_template/anomaly/skat)
+"Ax" = (
+/obj/machinery/door/airlock/multi_tile/glass/medical{
+	id_tag = "med_door";
+	name = "Emergency Treatment Center"
+	},
+/obj/decal/skat_decals/wires_second,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/white,
+/area/map_template/anomaly/skat)
+"AA" = (
+/obj/machinery/atmospherics/unary/engine{
+	dir = 8
+	},
+/turf/simulated/wall/r_wall/hull,
+/area/map_template/anomaly/skat)
+"AB" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/dark/monotile,
+/area/map_template/anomaly/skat)
+"AI" = (
+/obj/decal/cleanable/dirt,
+/obj/structure/sign/directions/bridge{
+	dir = 8;
+	pixel_y = 36
+	},
+/obj/structure/sign/directions/security{
+	pixel_y = 23;
+	dir = 8
+	},
+/turf/simulated/floor/tiled,
+/area/map_template/anomaly/skat)
+"AT" = (
+/obj/machinery/computer/operating,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/white,
+/area/map_template/anomaly/skat)
+"BD" = (
+/obj/decal/cleanable/dirt,
+/obj/structure/broken_cryo/opened{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/techfloor/grid,
+/area/map_template/anomaly/skat)
+"BK" = (
+/obj/structure/closet/emcloset,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/anomaly/skat)
+"Ck" = (
+/obj/structure/filingcabinet/wallcabinet{
+	pixel_y = 24
+	},
+/obj/item/folder/blue,
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/map_template/anomaly/skat)
+"Dd" = (
+/obj/random/ironing_board_structure,
+/obj/item/ironing_iron,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/freezer,
+/area/map_template/anomaly/skat)
+"Df" = (
+/obj/structure/sign/warning/hot_exhaust{
+	pixel_x = -28
+	},
+/turf/template_noop,
+/area/template_noop)
+"Di" = (
+/obj/decal/cleanable/dirt,
+/obj/structure/rubble/house,
+/turf/simulated/floor/tiled/monotile,
+/area/map_template/anomaly/skat)
+"Dl" = (
+/obj/landmark/teleport_to_z_level/skat,
+/turf/simulated/floor/exoplanet/titan_water/maximum,
+/area/map_template/anomaly/skat)
+"Do" = (
+/obj/decal/cleanable/dirt,
+/obj/structure/hygiene/shower,
+/obj/item/soap,
+/obj/structure/curtain/open/shower,
+/turf/simulated/floor/tiled/freezer,
+/area/map_template/anomaly/skat)
+"Dq" = (
+/obj/structure/flora/pottedplant/floorleaf,
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/map_template/anomaly/skat)
+"Dx" = (
+/obj/machinery/recharge_station,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/techfloor/grid,
+/area/map_template/anomaly/skat)
+"Dz" = (
+/obj/structure/aurora/smes,
+/obj/decal/skat_decals/wires_first,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/steel_grid,
+/area/map_template/anomaly/skat)
+"DJ" = (
+/obj/structure/table/standard,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/white,
+/area/map_template/anomaly/skat)
+"Ee" = (
+/obj/machinery/body_scanconsole{
+	dir = 4
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/white,
+/area/map_template/anomaly/skat)
+"Eh" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/floor_decal/industrial/outline/yellow,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/techmaint,
+/area/map_template/anomaly/skat)
+"Ep" = (
+/turf/simulated/wall/r_wall/hull,
+/area/map_template/anomaly/skat)
+"EB" = (
+/obj/item/stool/bar/padded,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/dark/monotile,
+/area/map_template/anomaly/skat)
+"Ff" = (
+/obj/random/obstruction,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled,
+/area/map_template/anomaly/skat)
+"Fj" = (
+/obj/decal/cleanable/dirt,
+/obj/random/trash,
+/turf/simulated/floor/tiled,
+/area/map_template/anomaly/skat)
+"Fo" = (
+/obj/structure/bed/padded,
+/obj/item/bedsheet/captain,
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/map_template/anomaly/skat)
+"Fp" = (
+/obj/machinery/door/airlock/multi_tile/civilian{
+	name = "Saloon"
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/dark/monotile,
+/area/map_template/anomaly/skat)
+"Fs" = (
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/industrial/warning{
+	dir = 9
+	},
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/anomaly/skat)
+"Fx" = (
+/obj/structure/table/marble,
+/obj/machinery/microwave{
+	pixel_x = -3;
+	pixel_y = 6
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/white,
+/area/map_template/anomaly/skat)
+"Ga" = (
+/obj/machinery/cooker/fryer,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/white,
+/area/map_template/anomaly/skat)
+"Gf" = (
+/obj/structure/table/marble,
+/obj/machinery/door/blast/shutters/open{
+	id_tag = "bar_shutters";
+	name = "Bar Shutters"
+	},
+/obj/machinery/recharger,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/dark,
+/area/map_template/anomaly/skat)
+"Gh" = (
+/obj/machinery/door/blast/regular/open{
+	dir = 8;
+	id_tag = "bridge_prot";
+	name = "Bridge Protection Shutters"
+	},
+/obj/wallframe_spawn/reinforced/hull,
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/map_template/anomaly/skat)
+"Gm" = (
+/obj/random/trash,
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/generic,
+/turf/simulated/floor/tiled/dark,
+/area/map_template/anomaly/skat)
+"Gr" = (
+/obj/structure/table/rack/dark,
+/obj/item/stack/material/steel/fifty,
+/obj/item/stack/material/steel/fifty,
+/obj/item/stack/material/steel/fifty,
+/obj/item/stack/material/steel/fifty,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/steel_grid,
+/area/map_template/anomaly/skat)
+"Gt" = (
+/obj/structure/bed/chair/comfy/captain,
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/map_template/anomaly/skat)
+"Gw" = (
+/obj/machinery/vending/boozeomat,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/dark,
+/area/map_template/anomaly/skat)
+"GG" = (
+/obj/structure/table/rack/dark,
+/obj/item/stack/material/glass/reinforced/fifty,
+/obj/item/stack/material/glass/reinforced/fifty,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/steel_grid,
+/area/map_template/anomaly/skat)
+"GH" = (
+/obj/structure/table/rack,
+/obj/item/storage/belt/medical,
+/obj/item/storage/belt/medical/emt,
+/obj/item/clothing/gloves/latex/nitrile,
+/obj/item/clothing/gloves/latex,
+/obj/item/clothing/mask/surgical,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/white,
+/area/map_template/anomaly/skat)
+"GP" = (
+/obj/structure/table/rack,
+/obj/floor_decal/industrial/outline/yellow,
+/obj/decal/cleanable/dirt,
+/obj/random/tool,
+/obj/random/tool,
+/obj/random/tool,
+/obj/random/tool,
+/obj/random/tool,
+/turf/simulated/floor/tiled/techmaint,
+/area/map_template/anomaly/skat)
+"GZ" = (
+/obj/machinery/jukebox/old,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/dark,
+/area/map_template/anomaly/skat)
+"Hd" = (
+/obj/structure/flora/pottedplant/floorleaf,
+/obj/structure/water_drown_structures/paper,
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/map_template/anomaly/skat)
+"Hg" = (
+/obj/structure/table/steel_reinforced,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/techmaint,
+/area/map_template/anomaly/skat)
+"Ho" = (
+/obj/floor_decal/corner/yellow/half{
+	dir = 4
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/monotile,
+/area/map_template/anomaly/skat)
+"HA" = (
+/obj/machinery/door/airlock/civilian{
+	autoclose = 0;
+	autoset_access = 0;
+	name = "Kitchen"
+	},
+/turf/simulated/floor/tiled/white,
+/area/map_template/anomaly/skat)
+"HH" = (
+/obj/machinery/constructable_frame/computerframe{
+	dir = 4
+	},
+/obj/item/material/shard,
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/map_template/anomaly/skat)
+"Ip" = (
+/obj/machinery/door/airlock/glass/civilian{
+	dir = 4;
+	autoset_access = 0;
+	welded = 1
+	},
+/obj/floor_decal/stairs{
+	dir = 8
+	},
+/turf/simulated/floor/tiled,
+/area/map_template/anomaly/skat)
+"Iz" = (
+/obj/floor_decal/industrial/warning,
+/obj/decal/cleanable/dirt,
+/obj/random/trash,
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/anomaly/skat)
+"IK" = (
+/obj/machinery/status_display/supply_display{
+	pixel_y = 30
+	},
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/map_template/anomaly/skat)
+"Jd" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/white,
+/area/map_template/anomaly/skat)
+"Jv" = (
+/obj/machinery/smartfridge/drinks,
+/obj/machinery/door/blast/shutters/open{
+	id_tag = "bar_shutters";
+	name = "Bar Shutters"
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/dark,
+/area/map_template/anomaly/skat)
+"Jy" = (
+/obj/machinery/door/airlock/multi_tile/glass/medical{
+	id_tag = "med_door";
+	name = "Emergency Treatment Center"
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/white,
+/area/map_template/anomaly/skat)
+"JM" = (
+/obj/structure/hygiene/sink{
+	dir = 1;
+	pixel_y = 18
+	},
+/obj/item/storage/mirror{
+	pixel_y = 32
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/freezer,
+/area/map_template/anomaly/skat)
+"JT" = (
+/obj/structure/closet/secure_closet/chemical,
+/obj/item/stack/material/phoron,
+/obj/item/storage/box/beakers,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/white,
+/area/map_template/anomaly/skat)
+"Ko" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/monotile,
+/area/map_template/anomaly/skat)
+"Ks" = (
+/obj/structure/barricade,
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/generic,
+/turf/simulated/floor/tiled/techmaint,
+/area/map_template/anomaly/skat)
+"Kz" = (
+/obj/structure/water_drown_structures,
+/turf/simulated/floor/exoplanet/titan_water/maximum,
+/area/map_template/anomaly/skat)
+"KI" = (
+/obj/decal/skat_decals/wall_right_leaking_pipe,
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/map_template/anomaly/skat)
+"Ld" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/steel_grid,
+/area/map_template/anomaly/skat)
+"Lg" = (
+/obj/structure/railing/mapped,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/techmaint,
+/area/map_template/anomaly/skat)
+"Lj" = (
+/obj/structure/girder,
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/map_template/anomaly/skat)
+"Lt" = (
+/obj/machinery/power/port_gen/pacman,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/steel_grid,
+/area/map_template/anomaly/skat)
+"LQ" = (
+/obj/item/gun/energy/captain,
+/obj/structure/displaycase,
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/map_template/anomaly/skat)
+"LT" = (
+/obj/structure/table/marble,
+/obj/machinery/fabricator/micro,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/white,
+/area/map_template/anomaly/skat)
+"LU" = (
+/obj/structure/table/rack/dark,
+/obj/item/stack/material/glass/fifty,
+/obj/item/stack/material/glass/fifty,
+/obj/item/stack/material/glass/fifty,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/steel_grid,
+/area/map_template/anomaly/skat)
+"LX" = (
+/obj/structure/table/rack,
+/obj/item/stack/material/plasteel/ten,
+/obj/item/stack/material/plasteel/ten,
+/obj/item/stack/material/steel/fifty,
+/obj/item/stack/material/steel/fifty,
+/obj/item/stack/material/glass/fifty,
+/obj/item/stack/material/glass/fifty,
+/obj/floor_decal/industrial/outline/yellow,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/techmaint,
+/area/map_template/anomaly/skat)
+"LZ" = (
+/obj/structure/bed/chair/padded/blue{
+	dir = 8
+	},
+/obj/decal/cleanable/dirt,
+/obj/random/trash,
+/turf/simulated/floor/tiled/techmaint,
+/area/map_template/anomaly/skat)
+"Mk" = (
+/obj/structure/table/standard,
+/obj/item/device/scanner/spectrometer/adv,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/white,
+/area/map_template/anomaly/skat)
+"Mu" = (
+/turf/simulated/wall/prepainted,
+/area/map_template/anomaly/skat)
+"My" = (
+/obj/decal/cleanable/dirt,
+/obj/structure/table/rack,
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/anomaly/skat)
+"MA" = (
+/obj/structure/table/rack,
+/obj/floor_decal/industrial/outline/yellow,
+/obj/decal/cleanable/dirt,
+/obj/random/tool,
+/obj/random/tool,
+/obj/random/tool,
+/obj/random/tool,
+/obj/random/tool,
+/obj/random/tool,
+/obj/random/tool,
+/turf/simulated/floor/tiled/techmaint,
+/area/map_template/anomaly/skat)
+"MH" = (
+/obj/structure/reagent_dispensers/peppertank{
+	pixel_y = 32
+	},
+/obj/structure/table/steel,
+/obj/decal/cleanable/dirt,
+/obj/item/ammo_magazine/rifle/mech_minigun,
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/anomaly/skat)
+"MR" = (
+/obj/structure/table/standard,
+/obj/machinery/reagentgrinder,
+/obj/item/stack/material/phoron,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/white,
+/area/map_template/anomaly/skat)
+"MX" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/generic,
+/obj/random/trash,
+/turf/simulated/floor/tiled/techmaint,
+/area/map_template/anomaly/skat)
+"Nj" = (
+/obj/structure/railing/mapped{
+	dir = 4
+	},
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/map_template/anomaly/skat)
+"No" = (
+/obj/structure/kitchenspike,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/white,
+/area/map_template/anomaly/skat)
+"Np" = (
+/obj/structure/flora/pottedplant/floorleaf,
+/obj/structure/extinguisher_cabinet{
+	pixel_y = 32
+	},
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/map_template/anomaly/skat)
+"ND" = (
+/obj/structure/bed/chair/armchair/black,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/dark,
+/area/map_template/anomaly/skat)
+"NG" = (
+/obj/structure/table/steel,
+/obj/item/material/ashtray/glass,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/dark/monotile,
+/area/map_template/anomaly/skat)
+"NK" = (
+/obj/wallframe_spawn/reinforced/hull,
+/turf/simulated/floor/plating,
+/area/map_template/anomaly/skat)
+"NS" = (
+/obj/structure/rubble/house,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/plating,
+/area/map_template/anomaly/skat)
+"NW" = (
+/obj/structure/bed/chair/padded/red{
+	dir = 1
+	},
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/map_template/anomaly/skat)
+"NY" = (
+/obj/structure/closet/walllocker{
+	pixel_x = 28
+	},
+/obj/item/storage/firstaid/regular,
+/obj/item/storage/firstaid/combat/special,
+/obj/item/storage/firstaid/combat/special,
+/obj/item/storage/firstaid/combat/special,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/anomaly/skat)
+"Oi" = (
+/obj/structure/bed/chair/office/light{
+	dir = 4
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/white,
+/area/map_template/anomaly/skat)
+"OC" = (
+/obj/structure/rubble/house,
+/obj/decal/skat_decals/wires_first,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled,
+/area/map_template/anomaly/skat)
+"OJ" = (
+/obj/structure/flora/pottedplant/minitree,
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/map_template/anomaly/skat)
+"OQ" = (
+/obj/item/defibrillator/loaded,
+/obj/structure/table/standard,
+/obj/machinery/cell_charger,
+/obj/item/reagent_containers/glass/beaker/cryoxadone,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/white,
+/area/map_template/anomaly/skat)
+"OR" = (
+/obj/random/obstruction,
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/map_template/anomaly/skat)
+"OS" = (
+/obj/structure/coatrack,
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/map_template/anomaly/skat)
+"Pr" = (
+/obj/floor_decal/industrial/warning,
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/generic,
+/obj/item/tank/air,
+/obj/random_titan_landmark/cargo,
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/anomaly/skat)
+"Ps" = (
+/obj/structure/sign/warning/pods/east{
+	pixel_y = 30
+	},
+/obj/decal/skat_decals/water_and_pipes,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled,
+/area/map_template/anomaly/skat)
+"PQ" = (
+/obj/structure/table/steel,
+/obj/item/flame/candle,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/dark/monotile,
+/area/map_template/anomaly/skat)
+"Qb" = (
+/turf/simulated/wall/r_wall/prepainted,
+/area/map_template/anomaly/skat)
+"Qt" = (
+/obj/decal/cleanable/dirt,
+/obj/random/trash,
+/turf/simulated/floor/tiled/techmaint,
+/area/map_template/anomaly/skat)
+"QN" = (
+/obj/machinery/door/airlock/engineering{
+	name = "Shield Generator";
+	welded = 1
+	},
+/obj/floor_decal/stairs{
+	dir = 8
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/techmaint,
+/area/map_template/anomaly/skat)
+"QP" = (
+/obj/decal/cleanable/generic,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/anomaly/skat)
+"QS" = (
+/obj/structure/barricade,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/techmaint,
+/area/map_template/anomaly/skat)
+"QU" = (
+/obj/random/trash,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/dark,
+/area/map_template/anomaly/skat)
+"SX" = (
+/obj/structure/table/marble,
+/obj/item/reagent_containers/food/drinks/shaker,
+/obj/machinery/fabricator/micro/bartender,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/dark,
+/area/map_template/anomaly/skat)
+"SZ" = (
+/obj/machinery/status_display{
+	pixel_y = 32
+	},
+/obj/structure/table/glass,
+/obj/machinery/recharger,
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/map_template/anomaly/skat)
+"Te" = (
+/obj/structure/table/rack,
+/obj/item/device/radio,
+/obj/item/device/flashlight/flare,
+/obj/item/crowbar,
+/obj/floor_decal/industrial/outline/yellow,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/techmaint,
+/area/map_template/anomaly/skat)
+"Tl" = (
+/obj/random/trash,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/white,
+/area/map_template/anomaly/skat)
+"To" = (
+/obj/floor_decal/industrial/warning,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/anomaly/skat)
+"Tr" = (
+/obj/floor_decal/corner/yellow/half{
+	dir = 4
+	},
+/obj/decal/cleanable/dirt,
+/obj/random/trash,
+/turf/simulated/floor/tiled/monotile,
+/area/map_template/anomaly/skat)
+"TF" = (
+/obj/structure/closet/walllocker{
+	pixel_x = 28
+	},
+/obj/item/storage/box/flashbangs,
+/obj/item/storage/box/flashbangs,
+/obj/item/storage/box/flashbangs,
+/obj/item/storage/box/flashbangs,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/anomaly/skat)
+"TL" = (
+/obj/machinery/door/airlock/glass/command,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/white,
+/area/map_template/anomaly/skat)
+"TO" = (
+/obj/decal/skat_decals/wires_first,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled,
+/area/map_template/anomaly/skat)
+"TT" = (
+/obj/structure/bed/chair/comfy/blue{
+	dir = 1
+	},
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/map_template/anomaly/skat)
+"Uf" = (
+/obj/machinery/door/airlock/glass/civilian{
+	dir = 4;
+	autoset_access = 0;
+	welded = 1
+	},
+/turf/simulated/floor/tiled,
+/area/map_template/anomaly/skat)
+"Un" = (
+/obj/machinery/portable_atmospherics/powered/pump/filled,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/anomaly/skat)
+"Ut" = (
+/obj/item/shreddedp,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled,
+/area/map_template/anomaly/skat)
+"Uy" = (
+/obj/machinery/sleeper{
+	dir = 1
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/white,
+/area/map_template/anomaly/skat)
+"UA" = (
+/obj/structure/table/steel,
+/obj/decal/cleanable/dirt,
+/obj/item/ammo_magazine/rifle/mech_minigun,
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/anomaly/skat)
+"UF" = (
+/turf/simulated/floor/exoplanet/titan_water/maximum,
+/area/map_template/anomaly/skat)
+"Wc" = (
+/obj/structure/rubble/house,
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/anomaly/skat)
+"Wh" = (
+/obj/structure/rubble/house,
+/turf/simulated/floor/plating,
+/area/map_template/anomaly/skat)
+"Wm" = (
+/obj/machinery/door/airlock/engineering{
+	name = "Shield Generator";
+	welded = 1
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/techmaint,
+/area/map_template/anomaly/skat)
+"Wo" = (
+/obj/structure/table/steel_reinforced,
+/obj/item/cell/high,
+/obj/item/device/radio/off,
+/obj/machinery/cell_charger,
+/obj/floor_decal/industrial/outline/yellow,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/techmaint,
+/area/map_template/anomaly/skat)
+"WF" = (
+/obj/floor_decal/industrial/outline/grey,
+/obj/machinery/portable_atmospherics/powered/scrubber,
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/anomaly/skat)
+"WH" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/techmaint,
+/area/map_template/anomaly/skat)
+"WN" = (
+/obj/item/paper_bin,
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/map_template/anomaly/skat)
+"Xe" = (
+/obj/structure/bed/chair/office/light{
+	dir = 1
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/white,
+/area/map_template/anomaly/skat)
+"Xk" = (
+/obj/machinery/computer/modular/preset/cardslot/command{
+	dir = 1;
+	icon_state = "computer"
+	},
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/map_template/anomaly/skat)
+"Xn" = (
+/obj/floor_decal/industrial/warning{
+	dir = 4
+	},
+/obj/decal/cleanable/dirt,
+/obj/item/tank/air,
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/anomaly/skat)
+"Xs" = (
+/obj/machinery/smartfridge/secure/medbay{
+	req_access = list()
+	},
+/turf/simulated/floor/tiled/white,
+/area/map_template/anomaly/skat)
+"Xv" = (
+/obj/structure/hygiene/toilet,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/freezer,
+/area/map_template/anomaly/skat)
+"Xy" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/freezer,
+/area/map_template/anomaly/skat)
+"XI" = (
+/obj/decal/cleanable/dirt,
+/obj/structure/rubble/house,
+/turf/simulated/floor/tiled/techmaint,
+/area/map_template/anomaly/skat)
+"XM" = (
+/obj/structure/bed/chair/padded/blue{
+	dir = 8
+	},
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/generic,
+/turf/simulated/floor/tiled/techmaint,
+/area/map_template/anomaly/skat)
+"XR" = (
+/obj/machinery/organ_printer/flesh/mapped,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/white,
+/area/map_template/anomaly/skat)
+"XS" = (
+/obj/structure/table/rack/dark,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/steel_grid,
+/area/map_template/anomaly/skat)
+"Ya" = (
+/obj/structure/bed/chair/padded/black{
+	dir = 4
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/dark/monotile,
+/area/map_template/anomaly/skat)
+"Yb" = (
+/obj/decal/cleanable/dirt,
+/obj/random/junk,
+/obj/decal/cleanable/generic,
+/turf/simulated/floor/tiled/white,
+/area/map_template/anomaly/skat)
+"Yh" = (
+/obj/structure/table/rack,
+/obj/item/inflatable_dispenser,
+/obj/item/storage/briefcase/inflatable,
+/obj/floor_decal/industrial/outline/yellow,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/techmaint,
+/area/map_template/anomaly/skat)
+"Yv" = (
+/obj/structure/railing/mapped{
+	dir = 1
+	},
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/map_template/anomaly/skat)
+"YK" = (
+/obj/item/stack/material/rods,
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/map_template/anomaly/skat)
+"YX" = (
+/obj/structure/table/marble,
+/obj/machinery/cooker/cereal,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/white,
+/area/map_template/anomaly/skat)
+"YZ" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/firstaid/adv,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/white,
+/area/map_template/anomaly/skat)
+"Zg" = (
+/obj/structure/hygiene/sink{
+	dir = 4;
+	pixel_x = 12
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/white,
+/area/map_template/anomaly/skat)
+"Zk" = (
+/obj/machinery/cooker/oven,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/white,
+/area/map_template/anomaly/skat)
+"Zm" = (
+/obj/structure/water_drown_structures/wooden_crates,
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/map_template/anomaly/skat)
+"Zv" = (
+/obj/structure/barricade,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/steel_grid,
+/area/map_template/anomaly/skat)
+"Zx" = (
+/obj/structure/table/rack,
+/obj/item/bodybag/cryobag,
+/obj/item/bodybag/cryobag,
+/obj/item/bodybag/cryobag,
+/obj/item/bodybag/cryobag,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/white,
+/area/map_template/anomaly/skat)
+"ZC" = (
+/obj/random/trash,
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/techfloor,
+/area/map_template/anomaly/skat)
+"ZT" = (
+/obj/decal/skat_decals/wires_second,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled,
+/area/map_template/anomaly/skat)
+
+(1,1,1) = {"
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+hO
+gq
+gq
+gq
+hO
+gq
+gq
+gq
+gq
+hO
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+"}
+(2,1,1) = {"
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+hO
+gq
+aY
+Lj
+Gh
+Gh
+Gh
+Lj
+ip
+ip
+ip
+ip
+Lj
+ip
+gq
+hO
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+"}
+(3,1,1) = {"
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+aY
+aY
+HH
+HH
+HH
+HH
+HH
+HH
+tz
+HH
+HH
+bW
+iT
+iT
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+"}
+(4,1,1) = {"
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+Lj
+aY
+iT
+ve
+YK
+iT
+ve
+iT
+dq
+iT
+iT
+iT
+ve
+iT
+iT
+Lj
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+"}
+(5,1,1) = {"
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+Lj
+iT
+iT
+iT
+iT
+ve
+iT
+iT
+iT
+iT
+iT
+ve
+pv
+fj
+xv
+Lj
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+"}
+(6,1,1) = {"
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+Ep
+Ep
+eQ
+TT
+ve
+iT
+iT
+iT
+iT
+ve
+iT
+ve
+iT
+WN
+ve
+YK
+Ep
+Ep
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+"}
+(7,1,1) = {"
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+Ep
+Ep
+iT
+YK
+iT
+iT
+wB
+wB
+ps
+aQ
+wB
+wB
+wB
+ee
+xv
+iT
+Ep
+Ep
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+"}
+(8,1,1) = {"
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+Ep
+Qb
+Qb
+Qb
+Qb
+Qb
+Qb
+wo
+bz
+iT
+Qb
+Qb
+Qb
+Qb
+Qb
+Qb
+Qb
+Ep
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+"}
+(9,1,1) = {"
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+Ep
+Ep
+Qb
+Ck
+Xk
+ve
+Dq
+Qb
+IK
+zI
+xW
+Qb
+iA
+xM
+km
+cH
+iN
+Qb
+Ep
+Ep
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+"}
+(10,1,1) = {"
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+Ep
+Ep
+Qb
+Gt
+Ao
+NW
+ve
+lD
+ve
+OR
+iT
+Qb
+fE
+Oi
+oZ
+cH
+vx
+Qb
+Ep
+Ep
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+"}
+(11,1,1) = {"
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+Ep
+Ep
+Ep
+Qb
+rB
+lE
+ve
+iT
+Qb
+SZ
+iT
+ve
+Qb
+cH
+cH
+eh
+km
+MR
+Qb
+Ep
+Ep
+Ep
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+"}
+(12,1,1) = {"
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+Ep
+Ep
+Ep
+Qb
+OJ
+iT
+iT
+gz
+Qb
+zQ
+fM
+jT
+Qb
+JT
+cH
+iI
+cH
+Mk
+Qb
+Ep
+Ep
+Ep
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+"}
+(13,1,1) = {"
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+Ep
+Ep
+Ep
+Qb
+Qb
+ve
+Qb
+Qb
+Qb
+Qb
+ml
+Qb
+Qb
+Qb
+TL
+Qb
+Xs
+Qb
+Qb
+Qb
+Ep
+Ep
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+"}
+(14,1,1) = {"
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+Ep
+Ep
+Ep
+Qb
+Np
+iT
+Hd
+OS
+Qb
+rp
+Fj
+Ff
+Mu
+cr
+cH
+km
+cH
+cH
+Uy
+Qb
+Ep
+Ep
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+"}
+(15,1,1) = {"
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+Ep
+Ep
+Ep
+Qb
+xF
+iT
+iT
+Fo
+Qb
+Ps
+Ff
+rp
+NK
+Ee
+oZ
+cH
+cH
+km
+Uy
+Qb
+Ep
+Ep
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+"}
+(16,1,1) = {"
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+Ep
+Ep
+Ep
+Ep
+Qb
+jA
+ve
+zG
+LQ
+Qb
+Fj
+Ut
+rp
+NK
+dp
+cH
+eh
+oZ
+cH
+cH
+Qb
+Ep
+Ep
+Ep
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+"}
+(17,1,1) = {"
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+Ep
+Ep
+Qb
+Qb
+Qb
+Qb
+Qb
+Qb
+Qb
+Qb
+Ff
+rp
+Ff
+NK
+Zx
+cH
+lI
+cH
+cH
+bu
+Qb
+Ep
+Ep
+Ep
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+"}
+(18,1,1) = {"
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+Ep
+Ep
+Qb
+MH
+tQ
+nM
+kP
+kP
+zn
+Mu
+rp
+rp
+Ut
+Mu
+NK
+NK
+Mu
+cH
+cH
+tL
+Mu
+Ep
+Ep
+Ep
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+"}
+(19,1,1) = {"
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+Ep
+Ep
+Qb
+ts
+tQ
+rI
+tQ
+tQ
+tQ
+jz
+rp
+xQ
+Fj
+Ax
+Jd
+Am
+Jy
+eh
+cH
+OQ
+Mu
+Ep
+Ep
+Ep
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+"}
+(20,1,1) = {"
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+Ep
+Ep
+Qb
+UA
+tQ
+tQ
+tQ
+rI
+fQ
+rp
+rp
+Ut
+rp
+cH
+Jd
+Jd
+nH
+cH
+oZ
+qm
+Mu
+Ep
+Ep
+Ep
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+"}
+(21,1,1) = {"
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+Ep
+Ep
+Qb
+ts
+tQ
+fQ
+tQ
+tQ
+tQ
+rp
+Fj
+rp
+rp
+Mu
+NK
+NK
+Mu
+GH
+cH
+eT
+Mu
+Ep
+Ep
+Ep
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+"}
+(22,1,1) = {"
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+Ep
+Ep
+Qb
+pO
+tQ
+tQ
+tQ
+nM
+jK
+Mu
+hr
+rp
+Mu
+Mu
+AT
+kL
+Mu
+Mu
+gj
+Mu
+Mu
+Ep
+Ep
+Ep
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+"}
+(23,1,1) = {"
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+Ep
+Ep
+Qb
+Mu
+Mu
+xq
+Mu
+Mu
+Mu
+Mu
+rp
+Mu
+OC
+Mu
+YZ
+cH
+cH
+cH
+oZ
+cH
+Mu
+Ep
+Ep
+Ep
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+"}
+(24,1,1) = {"
+gq
+gq
+gq
+gq
+gq
+gq
+Ep
+Ep
+Ep
+Qb
+My
+rI
+tQ
+tQ
+tQ
+vK
+Mu
+Mu
+cB
+cB
+Mu
+kB
+Xe
+Yb
+oZ
+km
+DJ
+Mu
+Ep
+Ep
+Ep
+Ep
+gq
+gq
+gq
+gq
+gq
+gq
+"}
+(25,1,1) = {"
+gq
+gq
+gq
+gq
+gq
+gq
+Ep
+Ep
+Ep
+Qb
+My
+tQ
+tQ
+rI
+tQ
+vK
+Mu
+aV
+rp
+cB
+Mu
+XR
+cH
+cH
+cH
+Oi
+DJ
+Mu
+Ep
+Ep
+Ep
+Ep
+gq
+gq
+gq
+gq
+gq
+gq
+"}
+(26,1,1) = {"
+gq
+gq
+gq
+gq
+gq
+gq
+Ep
+Ep
+Ep
+Qb
+My
+NY
+TF
+tQ
+rI
+vK
+Mu
+rp
+rp
+rp
+Mu
+tY
+tV
+Zg
+kA
+DJ
+DJ
+Mu
+Ep
+Ep
+Ep
+Ep
+gq
+gq
+gq
+gq
+gq
+gq
+"}
+(27,1,1) = {"
+gq
+gq
+gq
+gq
+gq
+gq
+Ep
+Ep
+Ep
+Qb
+Qb
+Qb
+Qb
+Mu
+Mu
+Mu
+Mu
+AI
+rp
+Fj
+Mu
+Mu
+Mu
+Mu
+NS
+Mu
+Mu
+Mu
+Mu
+Qb
+Ep
+Ep
+gq
+gq
+gq
+gq
+gq
+gq
+"}
+(28,1,1) = {"
+gq
+gq
+gq
+gq
+gq
+gq
+Ep
+Ep
+Ep
+Mu
+LX
+Wo
+jm
+Eh
+vf
+fz
+yT
+ZT
+tB
+rp
+NK
+xV
+nA
+nA
+Wc
+nA
+xV
+Wc
+gw
+Qb
+Ep
+Ep
+gq
+gq
+gq
+gq
+gq
+gq
+"}
+(29,1,1) = {"
+gq
+gq
+gq
+gq
+gq
+gq
+Ep
+Ep
+Ep
+Mu
+eH
+XI
+WH
+MX
+XI
+XI
+Mu
+rp
+Fj
+rp
+Mu
+fC
+tQ
+tQ
+QP
+tQ
+fG
+tQ
+ZC
+Qb
+Ep
+Ep
+gq
+gq
+gq
+gq
+gq
+gq
+"}
+(30,1,1) = {"
+gq
+gq
+gq
+gq
+gq
+gq
+Ep
+Ep
+Ep
+Mu
+WH
+Yh
+aP
+aP
+GP
+Qt
+Mu
+rp
+rp
+rp
+rq
+fG
+nA
+nA
+nA
+nA
+nA
+nA
+ff
+Qb
+Ep
+Ep
+gq
+gq
+gq
+gq
+gq
+gq
+"}
+(31,1,1) = {"
+gq
+gq
+gq
+gq
+gq
+gq
+Ep
+Ep
+Ep
+Mu
+eH
+Te
+GP
+GP
+MA
+eH
+Mu
+TO
+rp
+tB
+rq
+tQ
+rL
+nA
+nA
+nA
+nA
+nA
+Un
+Qb
+Ep
+Ep
+gq
+gq
+gq
+gq
+gq
+gq
+"}
+(32,1,1) = {"
+gq
+gq
+gq
+gq
+gq
+gq
+Ep
+Ep
+Ep
+Qb
+XI
+eH
+XI
+eH
+XI
+Qt
+Mu
+rp
+Fj
+rp
+Mu
+ga
+tQ
+fG
+tQ
+zt
+tQ
+tQ
+fG
+Qb
+Ep
+Ep
+gq
+gq
+gq
+gq
+gq
+gq
+"}
+(33,1,1) = {"
+gq
+gq
+gq
+gq
+gq
+gq
+Ep
+Ep
+Ep
+Qb
+Qt
+QS
+Ks
+QS
+eH
+XI
+Mu
+rp
+rp
+rp
+NK
+WF
+qQ
+ds
+qQ
+eS
+ic
+tZ
+jW
+Qb
+Ep
+Ep
+gq
+gq
+gq
+gq
+gq
+gq
+"}
+(34,1,1) = {"
+gq
+gq
+gq
+gq
+gq
+gq
+Ep
+Ep
+Qb
+Mu
+Mu
+Mu
+QN
+Mu
+Mu
+Mu
+Mu
+rp
+rp
+rp
+Mu
+Mu
+Mu
+Ip
+Mu
+Mu
+Mu
+Mu
+Mu
+Qb
+Ep
+Ep
+gq
+gq
+gq
+gq
+gq
+gq
+"}
+(35,1,1) = {"
+gq
+gq
+gq
+gq
+gq
+gq
+Ep
+Ep
+Qb
+cz
+Nj
+Nj
+iT
+iT
+wL
+Mu
+xe
+rp
+rp
+Fj
+xe
+Mu
+wL
+iT
+iT
+iT
+Nj
+Nj
+ve
+Qb
+Ep
+Ep
+gq
+gq
+gq
+gq
+gq
+gq
+"}
+(36,1,1) = {"
+gq
+gq
+gq
+gq
+gq
+gq
+Ep
+Ep
+Qb
+bf
+Dl
+yx
+iT
+iT
+iT
+Mu
+xe
+Fj
+rp
+rp
+xe
+Mu
+KI
+cz
+cQ
+iT
+iT
+iT
+Yv
+Qb
+Ep
+Ep
+gq
+gq
+gq
+gq
+gq
+gq
+"}
+(37,1,1) = {"
+gq
+gq
+gq
+gq
+gq
+gq
+Ep
+Ep
+Qb
+ac
+Kz
+yx
+iT
+cz
+iT
+Mu
+xe
+rp
+rp
+rp
+xe
+Mu
+iT
+iT
+iT
+ve
+iT
+iT
+Yv
+Qb
+Ep
+Ep
+gq
+gq
+gq
+gq
+gq
+gq
+"}
+(38,1,1) = {"
+gq
+gq
+gq
+gq
+gq
+gq
+Ep
+Ep
+Qb
+wL
+hq
+hq
+fM
+iT
+cz
+Mu
+xe
+rp
+rp
+rp
+xe
+Mu
+iT
+fM
+iT
+cQ
+hq
+hq
+Zm
+Qb
+Ep
+Ep
+gq
+gq
+gq
+gq
+gq
+gq
+"}
+(39,1,1) = {"
+gq
+gq
+gq
+gq
+gq
+gq
+Ep
+Ep
+Qb
+Mu
+Mu
+Mu
+Wm
+Mu
+Mu
+Mu
+Mu
+rp
+rp
+tB
+Mu
+Mu
+Mu
+Uf
+Mu
+ov
+Mu
+Mu
+Mu
+Mu
+Ep
+Ep
+gq
+gq
+gq
+gq
+gq
+gq
+"}
+(40,1,1) = {"
+gq
+gq
+gq
+gq
+gq
+gq
+Ep
+Ep
+Qb
+Ld
+Ld
+Zv
+Zv
+Zv
+yE
+yE
+Mu
+rp
+rp
+rp
+NK
+uL
+Aa
+Aa
+Aa
+Mu
+jr
+uf
+dv
+Mu
+Ep
+Ep
+gq
+gq
+gq
+gq
+gq
+gq
+"}
+(41,1,1) = {"
+gq
+gq
+gq
+gq
+gq
+gq
+Ep
+Ep
+Qb
+vc
+Lt
+Lt
+mG
+Ld
+Ld
+yE
+Mu
+ZT
+tB
+rp
+NK
+ND
+uf
+uf
+rn
+Jv
+uf
+uf
+Gw
+Mu
+Ep
+Ep
+gq
+gq
+gq
+gq
+gq
+gq
+"}
+(42,1,1) = {"
+gq
+gq
+gq
+gq
+gq
+gq
+Ep
+Ep
+Qb
+Lt
+vc
+Lt
+Ld
+ng
+Ld
+yE
+Mu
+rp
+Fj
+rp
+Fp
+AB
+rw
+Gm
+EB
+sT
+QU
+uf
+em
+Mu
+Ep
+Ep
+gq
+gq
+gq
+gq
+gq
+gq
+"}
+(43,1,1) = {"
+gq
+gq
+gq
+gq
+gq
+gq
+Ep
+Ep
+Qb
+Ld
+ng
+Ld
+Ld
+il
+yE
+Dz
+Mu
+rp
+rp
+rp
+AB
+AB
+uf
+GZ
+EB
+nR
+uf
+uf
+xU
+Mu
+Ep
+Ep
+gq
+gq
+gq
+gq
+gq
+gq
+"}
+(44,1,1) = {"
+gq
+gq
+gq
+gq
+gq
+gq
+Ep
+Ep
+Qb
+Qb
+Qb
+Qb
+uo
+Mu
+Mu
+Mu
+Mu
+tB
+rp
+Fj
+NK
+Ya
+Ya
+uf
+EB
+bG
+rn
+uC
+di
+Mu
+Ep
+Ep
+gq
+gq
+gq
+gq
+gq
+gq
+"}
+(45,1,1) = {"
+gq
+gq
+gq
+gq
+gq
+gq
+Ep
+Ep
+Qb
+WH
+WH
+Qt
+WH
+WH
+WH
+WH
+Mu
+rp
+rp
+rp
+NK
+PQ
+kb
+uC
+EB
+bG
+uf
+uf
+sk
+Mu
+Ep
+Ep
+gq
+gq
+gq
+gq
+gq
+gq
+"}
+(46,1,1) = {"
+gq
+gq
+gq
+gq
+gq
+gq
+Ep
+Ep
+Qb
+Lg
+Hg
+WH
+WH
+Qt
+Hg
+eN
+NK
+rp
+Fj
+rp
+NK
+bl
+NG
+QU
+EB
+Gf
+uf
+QU
+SX
+Mu
+Ep
+Ep
+gq
+gq
+gq
+gq
+gq
+gq
+"}
+(47,1,1) = {"
+gq
+gq
+gq
+gq
+gq
+gq
+Ep
+Ep
+Qb
+Lg
+Hg
+Hg
+Hg
+Hg
+Hg
+eN
+NK
+rp
+rp
+tB
+NK
+wJ
+wJ
+uf
+uf
+uf
+uf
+uf
+jB
+Mu
+Ep
+Ep
+gq
+gq
+gq
+gq
+gq
+gq
+"}
+(48,1,1) = {"
+gq
+gq
+gq
+gq
+gq
+gq
+Ep
+Ep
+Qb
+Qt
+rZ
+rZ
+rZ
+rZ
+rZ
+WH
+NK
+rp
+tB
+rp
+Mu
+Mu
+Mu
+Mu
+Mu
+Mu
+NK
+HA
+NK
+Mu
+Ep
+Ep
+gq
+gq
+gq
+gq
+gq
+gq
+"}
+(49,1,1) = {"
+gq
+gq
+gq
+gq
+gq
+gq
+Ep
+Ep
+Qb
+WH
+cA
+cA
+cA
+cA
+cA
+eH
+NK
+rp
+rp
+rp
+Mu
+Fx
+Zk
+wQ
+cx
+cH
+cH
+Tl
+cH
+Mu
+Ep
+Ep
+gq
+gq
+gq
+gq
+gq
+gq
+"}
+(50,1,1) = {"
+gq
+gq
+gq
+gq
+gq
+gq
+Ep
+Ep
+Qb
+WH
+cA
+cA
+XM
+cA
+cA
+WH
+NK
+rp
+Fj
+rp
+Mu
+cH
+cH
+tv
+cH
+Tl
+eh
+cH
+cH
+Mu
+Ep
+Ep
+gq
+gq
+gq
+gq
+gq
+gq
+"}
+(51,1,1) = {"
+gq
+gq
+gq
+gq
+gq
+Ep
+Ep
+Ep
+Qb
+WH
+cA
+cA
+cA
+cA
+cA
+WH
+NK
+rp
+rp
+rp
+Mu
+Ga
+dZ
+vL
+bb
+cH
+jO
+YX
+wi
+Mu
+Ep
+Ep
+Ep
+gq
+gq
+gq
+gq
+gq
+"}
+(52,1,1) = {"
+gq
+gq
+gq
+gq
+gq
+Ep
+Ep
+Ep
+Qb
+WH
+cA
+cA
+cA
+LZ
+cA
+WH
+Mu
+kn
+kn
+Fj
+Mu
+Mu
+Mu
+Mu
+Mu
+cH
+cL
+LT
+Tl
+Mu
+Ep
+Ep
+Ep
+gq
+gq
+gq
+gq
+gq
+"}
+(53,1,1) = {"
+gq
+gq
+gq
+gq
+gq
+Ep
+Ep
+Ep
+Qb
+yb
+WH
+WH
+WH
+WH
+WH
+XI
+yl
+kn
+wf
+rp
+Mu
+bH
+No
+se
+Mu
+cH
+cL
+kj
+cH
+Mu
+Ep
+Ep
+Ep
+gq
+gq
+gq
+gq
+gq
+"}
+(54,1,1) = {"
+gq
+gq
+gq
+gq
+gq
+Ep
+Ep
+Ep
+Qb
+WH
+eH
+WH
+Qt
+WH
+WH
+eH
+Mu
+kn
+rp
+rp
+Mu
+cH
+mA
+cH
+vk
+cH
+Tl
+cH
+eh
+Mu
+Ep
+Ep
+Ep
+gq
+gq
+gq
+gq
+gq
+"}
+(55,1,1) = {"
+gq
+gq
+gq
+gq
+gq
+Ep
+Ep
+Ep
+Qb
+Qt
+WH
+WH
+WH
+WH
+WH
+Qt
+Mu
+qT
+rp
+rp
+Mu
+kl
+bH
+qh
+Mu
+cH
+cH
+cH
+cH
+Mu
+Ep
+Ep
+Ep
+gq
+gq
+gq
+gq
+gq
+"}
+(56,1,1) = {"
+gq
+gq
+gq
+gq
+gq
+Ep
+Ep
+Ep
+Mu
+Mu
+Mu
+Mu
+Mu
+Mu
+Mu
+Mu
+Mu
+rp
+Fj
+rp
+Mu
+Mu
+Mu
+Mu
+Mu
+Mu
+Mu
+Mu
+Mu
+Mu
+Ep
+Ep
+Ep
+gq
+gq
+gq
+gq
+gq
+"}
+(57,1,1) = {"
+gq
+gq
+gq
+gq
+gq
+Ep
+Ep
+Ep
+Mu
+BK
+rI
+tQ
+tQ
+tQ
+tQ
+BK
+Mu
+rp
+rp
+rp
+Mu
+kn
+Fj
+rp
+rp
+rp
+rp
+Fj
+wM
+Mu
+Ep
+Ep
+Ep
+gq
+gq
+gq
+gq
+gq
+"}
+(58,1,1) = {"
+gq
+gq
+gq
+Ep
+Ep
+Ep
+Ep
+Ep
+Mu
+tQ
+tQ
+oh
+rI
+tQ
+rI
+tQ
+jJ
+rp
+rp
+kn
+kn
+yG
+kn
+rp
+dh
+tB
+rp
+rp
+rp
+Mu
+Ep
+Ep
+Ep
+Ep
+Ep
+gq
+gq
+gq
+"}
+(59,1,1) = {"
+gq
+gq
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Mu
+jI
+jI
+jI
+jI
+jI
+tQ
+tQ
+Mu
+ey
+tB
+rp
+kn
+kn
+rp
+tB
+rp
+rp
+rp
+dh
+nx
+Mu
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+gq
+gq
+"}
+(60,1,1) = {"
+gq
+gq
+Ep
+iT
+iT
+Ep
+Ep
+Ep
+Mu
+BD
+BD
+BD
+BD
+BD
+tQ
+oh
+Mu
+rp
+rp
+rp
+Mu
+rp
+rp
+kn
+kn
+kn
+Fj
+rp
+rp
+Mu
+Ep
+Ep
+Ep
+iT
+iT
+Ep
+gq
+gq
+"}
+(61,1,1) = {"
+gq
+Ep
+Ep
+iT
+iT
+Ep
+Ep
+Ep
+Mu
+tQ
+rI
+tQ
+tQ
+rI
+tQ
+tQ
+Mu
+rp
+rp
+Fj
+Mu
+jN
+jN
+Wh
+Wh
+Mu
+gn
+Mu
+Mu
+Mu
+Ep
+Ep
+Ep
+iT
+iT
+Ep
+Ep
+gq
+"}
+(62,1,1) = {"
+gq
+Ep
+iT
+iT
+iT
+Ep
+Ep
+Ep
+Mu
+tQ
+tQ
+tQ
+oh
+tQ
+tQ
+tQ
+jJ
+rp
+tB
+rp
+Mu
+xR
+Di
+Di
+Di
+va
+Ld
+Ld
+XS
+Mu
+Ep
+Ep
+Ep
+iT
+iT
+iT
+Ep
+gq
+"}
+(63,1,1) = {"
+gq
+Ep
+yx
+yx
+yx
+Ep
+Ep
+Ep
+Mu
+fP
+Dx
+jI
+rI
+jI
+as
+BK
+Mu
+rp
+rp
+rp
+Mu
+xR
+Di
+jS
+Ko
+va
+ng
+Ld
+XS
+Mu
+Ep
+Ep
+Ep
+iT
+iT
+iT
+Ep
+gq
+"}
+(64,1,1) = {"
+gq
+Ep
+yx
+yx
+yx
+Ep
+Ep
+Ep
+Mu
+Mu
+Mu
+Mu
+cU
+Mu
+Mu
+Mu
+Mu
+Mu
+Mu
+Mu
+Mu
+ep
+ep
+Tr
+Ho
+hW
+Ld
+Ld
+XS
+Mu
+Ep
+Ep
+Ep
+yx
+yx
+yx
+Ep
+gq
+"}
+(65,1,1) = {"
+gq
+Ep
+UF
+UF
+UF
+Ep
+Ep
+Ep
+Mu
+Xv
+vu
+xk
+xk
+Xy
+Mu
+Fs
+fh
+fh
+ho
+fh
+gk
+yX
+vy
+Ld
+sB
+Ld
+sB
+ng
+Ld
+Mu
+Ep
+Ep
+Ep
+yx
+yx
+yx
+Ep
+gq
+"}
+(66,1,1) = {"
+gq
+Ep
+UF
+UF
+UF
+Ep
+Ep
+Ep
+Mu
+Mu
+Mu
+JM
+xk
+fp
+Mu
+ki
+tQ
+hx
+tQ
+tQ
+To
+Ld
+Ld
+Ld
+sQ
+LU
+GG
+Ld
+XS
+Mu
+Ep
+Ep
+Ep
+UF
+UF
+UF
+Ep
+gq
+"}
+(67,1,1) = {"
+gq
+Ep
+UF
+UF
+UF
+Ep
+Ep
+Ep
+Mu
+Do
+vu
+xk
+rE
+xk
+Mu
+ki
+rb
+tQ
+tQ
+tQ
+Pr
+sB
+Ld
+Ld
+Gr
+xm
+fK
+Ld
+XS
+Mu
+Ep
+Ep
+Ep
+UF
+UF
+UF
+Ep
+gq
+"}
+(68,1,1) = {"
+gq
+Ep
+UF
+UF
+UF
+Ep
+Ep
+Ep
+Mu
+Mu
+Mu
+xk
+xk
+xk
+Mu
+ki
+tQ
+hx
+oh
+tQ
+Iz
+Ld
+Ld
+Ld
+Ld
+ng
+Ld
+sB
+XS
+Mu
+Ep
+Ep
+Ep
+UF
+UF
+UF
+Ep
+gq
+"}
+(69,1,1) = {"
+gq
+Ep
+UF
+UF
+UF
+Ep
+Ep
+Ep
+Ep
+Ep
+Mu
+fu
+Dd
+fu
+Mu
+aO
+mg
+Xn
+mg
+mg
+qv
+pT
+zm
+Ld
+uw
+Ld
+jC
+Ld
+XS
+Mu
+Ep
+Ep
+Ep
+UF
+UF
+UF
+Ep
+gq
+"}
+(70,1,1) = {"
+gq
+Ep
+UF
+UF
+UF
+Ep
+Ep
+Ep
+Ep
+Ep
+Mu
+Mu
+Mu
+Mu
+Mu
+Mu
+Mu
+Mu
+Mu
+Mu
+Mu
+Mu
+Mu
+Mu
+Mu
+Mu
+Mu
+Mu
+Mu
+Mu
+Ep
+Ep
+Ep
+UF
+UF
+UF
+Ep
+gq
+"}
+(71,1,1) = {"
+gq
+Ep
+AA
+AA
+AA
+Ep
+gq
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+gq
+Ep
+AA
+AA
+AA
+Ep
+gq
+"}
+(72,1,1) = {"
+gq
+Df
+gq
+gq
+gq
+Df
+gq
+gq
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+gq
+gq
+Df
+gq
+gq
+gq
+Df
+gq
+"}
+(73,1,1) = {"
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+"}
+(74,1,1) = {"
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+"}
+(75,1,1) = {"
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+"}

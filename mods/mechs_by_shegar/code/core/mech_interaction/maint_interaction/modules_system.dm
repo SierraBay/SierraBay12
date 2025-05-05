@@ -38,6 +38,10 @@
 					found = TRUE
 					break
 			if(!found)
+				var/output_message
+				for(var/i in ME.restricted_software)
+					output_message += i
+				to_chat(user, SPAN_NOTICE("Данное оборудование бесполезно без [ME.restricted_software]"))
 				return FALSE
 	else
 		return FALSE

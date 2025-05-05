@@ -82,7 +82,3 @@
 
 /obj/floor_decal/industrial/hatch/green
 	color = COLOR_GREEN_GRAY
-
-/obj/floor_decal/stairs
-	icon = 'icons/obj/structures/stairs.dmi'
-	icon_state = "above"

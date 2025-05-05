@@ -94,7 +94,7 @@
 	// Drag the pilot out if possible.
 	if(user.a_intent == I_HURT)
 		if(passengers_ammount > 0 && hatch_closed)// Стянуть пассажира с меха рукой!
-			forced_leave_passenger(null,2,user)
+			external_leaving_passenger(mode = MECH_DROP_ANY_PASSENGER)
 			return
 		if(!LAZYLEN(pilots))
 			to_chat(user, SPAN_WARNING("There is nobody inside \the [src]."))

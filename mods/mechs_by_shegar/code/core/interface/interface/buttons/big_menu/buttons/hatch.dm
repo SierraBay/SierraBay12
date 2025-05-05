@@ -1,5 +1,5 @@
 /obj/screen/exosuit/menu_button/hatch
-	name = "Toggle cabin hatch"
+	name = "Кабина меха"
 	icon_state = "hatch"
 	button_desc = "Опускает кабину меха вниз. <br> -С поднятой кабиной нельзя пользоваться оборудованием. <br> -С поднятой кабиной персонаж получает урон при попадании по меху <br> -С поднятой кабиной можно взаимодействовать с миром."
 	switchable = TRUE
@@ -9,7 +9,7 @@
 		to_chat(usr, SPAN_WARNING("You cant close hatch while mech unpowered."))
 		return
 	owner.hatch_closed = TRUE
-	to_chat(usr, SPAN_NOTICE("The [owner.body.hatch_descriptor] is now closed."))
+	to_chat(usr, SPAN_NOTICE("Hatch is now closed."))
 	playsound(src.loc, 'sound/machines/suitstorage_cycledoor.ogg', 50, 1, -6)
 	owner.update_icon()
 	return TRUE
@@ -37,7 +37,7 @@
 	need_update_sensor_effects = TRUE
 	playsound(src.loc, 'sound/machines/suitstorage_cycledoor.ogg', 50, 1, -6)
 	if(user)
-		to_chat(user, SPAN_NOTICE("The [body.hatch_descriptor] is now open."))
+		to_chat(user, SPAN_NOTICE("Hatch is now open."))
 
 /mob/living/exosuit/proc/close_hatch(mob/living/user)
 	hatch_closed = TRUE
@@ -46,4 +46,4 @@
 	need_update_sensor_effects = TRUE
 	playsound(src.loc, 'sound/machines/suitstorage_cycledoor.ogg', 50, 1, -6)
 	if(user)
-		to_chat(usr, SPAN_NOTICE("The [body.hatch_descriptor] is now close."))
+		to_chat(usr, SPAN_NOTICE("Hatch is now close."))

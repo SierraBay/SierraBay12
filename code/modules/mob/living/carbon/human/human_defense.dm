@@ -468,6 +468,8 @@ meteor_act
 	if(istype(gloves))
 		gloves.transfer_blood(target, target_zone)
 	else if (ishuman(target))
+		if (!bloody_hands)
+			return
 		var/mob/living/carbon/human/h_target = target
 		var/obj/item/clothing/equipped_item = h_target.get_covering_equipped_item_by_zone(target_zone)
 		if(istype(equipped_item))

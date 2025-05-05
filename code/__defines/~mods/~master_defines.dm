@@ -106,6 +106,17 @@
 #define LANGUAGE_SIMPTAJARAN "Simplified Siik'Maas"
 //PRIMLANGS - End
 
+//ANOMALIES
+#define MAX_DEEP 1
+#define MIDDLE_DEEP 2
+#define MIN_DEEP 3
+#define NO_DEEP 4
+#define DEEQUIP 5
+#define KILL 6
+#define WATER_OVERLAY 10
+#define istitanwater(A) istype(A, /turf/simulated/floor/exoplanet/titan_water)
+//ANOMALIES
+
 // PSIONICS - Start
 #define PSI_IMPLANT_AUTOMATIC "Security Level Derived"
 #define PSI_IMPLANT_SHOCK     "Issue Neural Shock"

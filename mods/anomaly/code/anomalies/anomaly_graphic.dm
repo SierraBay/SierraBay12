@@ -22,6 +22,16 @@
 	var/color_of_light = COLOR_WHITE
 	var/range_of_light = 3
 	var/power_of_light = 2
+	///Визуал при спавне
+	var/spawn_visual_path = /obj/overlay/self_deleting/anomaly_spawn
+
+/obj/overlay/self_deleting/anomaly_spawn
+	name = "anomaly spawn"
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "purple_electricity_constant"
+	anchored = TRUE
+	mouse_opacity = MOUSE_OPACITY_UNCLICKABLE
+	delete_time = 4 SECONDS
 
 /obj/anomaly/proc/do_momentum_animation()
 	if(activation_effect_type)
@@ -61,5 +71,10 @@
 /obj/anomaly/proc/stop_light()
 	set_light(0)
 
-/obj/anomaly/proc/get_detection_icon()
+///Размещает на себе временные визуальные эффекты дабы показать игрокам, где появилась угроза
+/obj/anomaly/proc/spawn_temp_spawn_effects()
+	for(var/turf/T in anomaly_turfs)
+		new spawn_visual_path(T)
+
+/obj/anomaly/proc/get_detection_icon(mob/living/viewer)
 	return detection_icon_state

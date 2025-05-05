@@ -1,5 +1,5 @@
 /obj/screen/exosuit/menu_button/id
-	name = "ID control"
+	name = "Управление ID"
 	button_desc = "Управляет ID Доступом в мехе. <br> Нажмите по кнопке ID картой чтоб задать доступ для меха. <br> После, мех будет открываться и закрываться при нажатии картой по меху."
 	icon_state = "id"
 

@@ -15,17 +15,14 @@
 		/obj/screen/exosuit/menu_button/hatch_bolts,
 		/obj/screen/exosuit/menu_button/camera
 	)
-	var/x_step = 0.8 //как сильно мы сдвигаемся
-	var/y_step = 0.8
-	var/current_x_cord = 0
-	var/current_y_cord = 1.6
+	var/x_step = 0 //как сильно мы сдвигаемся
+	var/y_step = 0.5
+	var/current_x_cord = 2.3
+	var/current_y_cord = 0
 	for(var/button_type in big_buttons)
 		var/obj/screen/exosuit/menu_button/menu_button = new button_type(src)
 		menu_button.layer = 2.2
-		if(current_x_cord >= 6) //Все кнопки после каждой 10-ки будут находится ниже остальных, а счётчик обнулится
-			current_x_cord = 0
-			current_y_cord += y_step
-
-		menu_button.screen_loc = "CENTER-2+[current_x_cord], CENTER-[current_y_cord]" //Высставляем положение кнопачки
+		menu_button.screen_loc = "CENTER-[current_x_cord], CENTER+1.5-[current_y_cord]" //Высставляем положение кнопачки
 		menu_hud_elements |= menu_button //Размещаем кнопушку в меню
-		current_x_cord += x_step //Делаем шаг правее
+		current_y_cord += y_step //Делаем шаг ниже
+		current_x_cord += x_step

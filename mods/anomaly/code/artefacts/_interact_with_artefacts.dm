@@ -11,14 +11,12 @@
 		return
 	else if(connected_to_anomaly)
 		if(AnomaliesAmmountInTurf(get_turf(src)) == 0)
-			connected_to_anomaly = FALSE
-			SSanom.collected_artefacts_by_player++
+			artefact_collected_by_player()
 		else
 			for(var/obj/anomaly/anomka in src.loc.contents)
 				if(prob(25 * user.get_skill_value(SKILL_SCIENCE)))
 					to_chat(user, SPAN_GOOD("[desc]"))
-					connected_to_anomaly = FALSE
-					SSanom.collected_artefacts_by_player++
+					artefact_collected_by_player()
 				else
 					to_chat(user, SPAN_WARNING("Обьект уплывает из ваших рук"))
 					if(istype(anomka, /obj/anomaly/part))
@@ -122,7 +120,7 @@
 /obj/item/artefact/proc/rub_interaction(mob/living/user)
 	return
 
-/obj/item/artefact/rvach_destroy_effect()
+/obj/item/artefact/proc/rvach_destroy_effect()
 	delete_artefact()
 
 ///ВЗАИМОДЕЙСТВИЯ ОТ МАШИНЫ ДЛЯ ИЗУЧЕНИЙ И АНАЛИЗА

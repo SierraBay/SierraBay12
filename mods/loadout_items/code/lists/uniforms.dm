@@ -157,7 +157,6 @@
 	formal["callum vest"] = /obj/item/clothing/under/formal/callum
 	formal["charcoal vest"] = /obj/item/clothing/under/formal/hm_suit
 	formal["red 'n black suit"] = /obj/item/clothing/under/formal/red_n_black
-	formal["rubywhite uniform"] = /obj/item/clothing/under/formal/rubywhite
 	gear_tweaks += new/datum/gear_tweak/path(formal)
 
 /datum/gear/uniform/informal
@@ -221,3 +220,26 @@
 	dresses["black Kvoblau noble dress"] = /obj/item/clothing/under/dominia/dress/noble/black/caladius
 	dresses["black Nova-Yorvik noble dress"] = /obj/item/clothing/under/dominia/dress/noble/black/zhao
 	gear_tweaks += new/datum/gear_tweak/path(dresses)
+
+/datum/gear/uniform/school_skirt
+	display_name = "school-like dress selection"
+	path = /obj/item/clothing/under/school_skirt
+
+/datum/gear/uniform/school_skirt/New()
+	..()
+	var/dresses = list()
+	dresses["blue skirt"] = /obj/item/clothing/under/school_skirt
+	dresses["dark cyan skirt"] = /obj/item/clothing/under/school_skirt/darkcyan
+	gear_tweaks += new/datum/gear_tweak/path(dresses)
+
+/datum/gear/uniform/annosuit
+	display_name = "annosuit"
+	path = /obj/item/clothing/under/annosuit
+
+/datum/gear/uniform/blackorange_shirt
+	display_name = "orange t-shirt n shorts"
+	path = /obj/item/clothing/under/blackorange_shirt
+
+/datum/gear/uniform/blackpurple_shirt
+	display_name = "black n purple double tracksuit"
+	path = /obj/item/clothing/under/blackpurple_shirt

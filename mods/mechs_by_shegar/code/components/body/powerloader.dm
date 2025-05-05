@@ -1,7 +1,6 @@
 /obj/item/mech_component/chassis/powerloader
 	name = "open exosuit chassis"
 	desc = "A Xion industrial brand roll cage. Technically OSHA compliant. Technically."
-	hatch_descriptor = "roll cage"
 	pilot_coverage = 40
 	exosuit_desc_string = "an industrial rollcage"
 	power_use = 0

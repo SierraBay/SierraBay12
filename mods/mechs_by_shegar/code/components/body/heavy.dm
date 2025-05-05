@@ -1,7 +1,6 @@
 /obj/item/mech_component/chassis/heavy
 	name = "reinforced exosuit chassis"
 	desc = "The HI-Koloss chassis is a veritable juggernaut, capable of protecting a pilot even in the most hostile of environments. It handles like a battlecruiser, however."
-	hatch_descriptor = "hatch"
 	pilot_coverage = 100
 	exosuit_desc_string = "a heavily armoured chassis"
 	icon_state = "heavy_body"

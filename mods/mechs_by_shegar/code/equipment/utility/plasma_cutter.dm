@@ -10,6 +10,10 @@
 	icon_state = "railauto"
 	heat_generation = 15
 
+/obj/item/mech_equipment/mounted_system/taser/plasma/need_combat_skill()
+	return FALSE
+
+
 /obj/item/gun/energy/plasmacutter/mounted/mech
 	use_external_power = FALSE
 	has_safety = FALSE
@@ -25,5 +29,3 @@
 /obj/item/gun/energy/plasmacutter/mounted/mech/handle_post_fire()
 	.=..()
 	holder.owner.add_heat(holder.heat_generation)
-
-

@@ -1,5 +1,5 @@
 /obj/screen/exosuit/menu_button/megaspeakers
-	name = "Use megaspeakers "
+	name = "Громкоговорители"
 	button_desc = "Позволяет громко и чётко говорить с помощью громкоговорителя меха."
 	icon_state = "megaspeakers"
 

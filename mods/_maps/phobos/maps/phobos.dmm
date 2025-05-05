@@ -2521,7 +2521,7 @@
 "iH" = (
 /obj/machinery/vending/medical{
 	dir = 4;
-	products = list(/obj/item/reagent_containers/glass/bottle/antitoxin = 0, /obj/item/reagent_containers/glass/bottle/inaprovaline = 0, /obj/item/reagent_containers/glass/bottle/stoxin = 1, /obj/item/reagent_containers/syringe/antiviral = 2, /obj/item/reagent_containers/pill/antitox = 1, /obj/item/reagent_containers/syringe = 7, /obj/item/device/scanner/health = 1, /obj/item/reagent_containers/glass/beaker = 1, /obj/item/reagent_containers/dropper = 2, /obj/item/stack/medical/advanced/bruise_pack = 0, /obj/item/stack/medical/advanced/ointment = 0, /obj/item/stack/medical/splint = 0, /obj/item/reagent_containers/hypospray/autoinjector/pain = 0);
+	products = list(/obj/item/reagent_containers/glass/bottle/dylovene = 0, /obj/item/reagent_containers/glass/bottle/inaprovaline = 0, /obj/item/reagent_containers/glass/bottle/soporific = 1, /obj/item/reagent_containers/syringe/antiviral = 2, /obj/item/reagent_containers/pill/antitox = 1, /obj/item/reagent_containers/syringe = 7, /obj/item/device/scanner/health = 1, /obj/item/reagent_containers/glass/beaker = 1, /obj/item/reagent_containers/dropper = 2, /obj/item/stack/medical/advanced/bruise_pack = 0, /obj/item/stack/medical/advanced/ointment = 0, /obj/item/stack/medical/splint = 0, /obj/item/reagent_containers/hypospray/autoinjector/pain = 0);
 	req_access = list("ACCESS_PHOBOS")
 	},
 /turf/simulated/floor/tiled/white,

@@ -1,7 +1,6 @@
 /obj/item/mech_component/chassis/light
 	name = "light exosuit chassis"
 	desc = "The Veymed Odysseus series cockpits combine ultralight materials and clear aluminum laminates to provide an optimized cockpit experience."
-	hatch_descriptor = "canopy"
 	transparent_cabin =  TRUE
 	exosuit_desc_string = "an open and light chassis"
 	icon_state = "light_body"

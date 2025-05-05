@@ -2,12 +2,9 @@
 	return
 
 /obj/item/mech_equipment/drill/resolve_attackby(atom/atom, mob/living/user, click_params)
-	if (!atom.can_use_item(src, user, click_params))
-		return FALSE
-	//У дрели меха нам не нужны какие-то доп расчёты ибо это приводит к тому что мех открывает дрелью дверь.
-	//При надобности, все итеракции описываются ниже.
-	atom.pre_use_item(src, user, click_params)
-	atom.post_use_item(src, user, ., "drill", click_params)
+	if(owner)
+		return 0
+	return ..()
 
 /turf/simulated/wall/mech_drill_interaction(mob/living/exosuit/mech, obj/item/mech_equipment/drill/mech_drill, mob/living/pilot)
 	var/wall_hardness = max(material.hardness, reinf_material ? reinf_material.hardness : 0)

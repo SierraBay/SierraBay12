@@ -121,7 +121,7 @@
 	desc = "The utility uniform of the SCG Expeditionary Corps, made from biohazard resistant material. This one has gold trim."
 	icon_state = "blackutility_com"
 	worn_state = "blackutility_com"
-	
+
 // Unathi garnments
 
 /obj/item/clothing/under/medic/paramedic
@@ -635,3 +635,43 @@
 	sprite_sheets = list(
 		SPECIES_UNATHI = 'mods/loadout_items/icons/unathi/onmob_under_unathi.dmi'
 	)
+
+/obj/item/clothing/under/school_skirt
+	name = "blue skirt"
+	desc = "A school-like blue skirt with golf socks."
+	icon = 'mods/loadout_items/icons/obj_under.dmi'
+	item_icons = list(slot_w_uniform_str = 'mods/loadout_items/icons/onmob_under.dmi')
+	icon_state = "blue_skirt"
+	item_state = "blue_skirt"
+
+/obj/item/clothing/under/school_skirt/darkcyan
+	name = "dark cyan skirt"
+	desc = "A school-like black skirt with bright cyan stripes."
+	icon = 'mods/loadout_items/icons/obj_under.dmi'
+	item_icons = list(slot_w_uniform_str = 'mods/loadout_items/icons/onmob_under.dmi')
+	icon_state = "darkcyan_skirt"
+	item_state = "darkcyan_skirt"
+
+/obj/item/clothing/under/annosuit
+	name = "annosuit"
+	desc = "Black suit with cyan straps that slims any bodytype, making you look athletic and delicate."
+	icon = 'mods/loadout_items/icons/obj_under.dmi'
+	item_icons = list(slot_w_uniform_str = 'mods/loadout_items/icons/onmob_under.dmi')
+	icon_state = "annosuit"
+	item_state = "annosuit"
+
+/obj/item/clothing/under/blackorange_shirt
+	name = "orange t-shirt n shorts"
+	desc = "A loose orange t-shirt with long pale blue shorts."
+	icon = 'mods/loadout_items/icons/obj_under.dmi'
+	item_icons = list(slot_w_uniform_str = 'mods/loadout_items/icons/onmob_under.dmi')
+	icon_state = "blackorange_shirt"
+	item_state = "blackorange_shirt"
+
+/obj/item/clothing/under/blackpurple_shirt
+	name = "black n purple double tracksuit"
+	desc = "A tight black-purple tracksuit with dark stripes. Stylish!"
+	icon = 'mods/loadout_items/icons/obj_under.dmi'
+	item_icons = list(slot_w_uniform_str = 'mods/loadout_items/icons/onmob_under.dmi')
+	icon_state = "blackpurple_shirt"
+	item_state = "blackpurple_shirt"

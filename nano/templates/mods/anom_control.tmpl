@@ -1,0 +1,54 @@
+<style type="text/css">
+    /* ... (ваши стили остаются без изменений) ... */
+</style>
+
+{{if data}}
+    <!-- Выбор Z-уровней -->
+    <div class="z-level-selector">
+        <h3>Выберите Z-уровни:</h3>
+        <div class="z-level-buttons">
+            {{for data.z_levels :level}}
+                <button class="{{if level.selected}}selected{{/if}}"
+                        onclick="window.location='byond://?src=\ref[src];toggle_z={{:level.z}}'">
+                    {{:level.name}}
+                </button>
+            {{/for}}
+        </div>
+    </div>
+
+    <!-- Вкладки -->
+    <div class="tab-buttons">
+        <button class="{{if data.current_tab == 'anomalies'}}active{{/if}}"
+                onclick="window.location='byond://?src=\ref[src];switch_tab=anomalies'">
+            Аномалии
+        </button>
+        <button class="{{if data.current_tab == 'artifacts'}}active{{/if}}"
+                onclick="window.location='byond://?src=\ref[src];switch_tab=artifacts'">
+            Артефакты
+        </button>
+        <!-- Остальные кнопки вкладок аналогично -->
+    </div>
+
+    <!-- Содержимое вкладки аномалий -->
+    {{if data.current_tab == 'anomalies'}}
+        <table class="anomalies">
+            <tr>
+                <th>Название</th>
+                <th>Действия</th>
+            </tr>
+            {{for data.anomalies_data.anomalies :anomaly}}
+                <tr>
+                    <td>{{:anomaly.name}}</td>
+                    <td>
+                        <button onclick="window.location='byond://?src=\ref[src];anomaly_action=\ref[anomaly.ref];action=delete'">
+                            Удалить
+                        </button>
+                        <button onclick="window.location='byond://?src=\ref[src];anomaly_action=\ref[anomaly.ref];action=move'">
+                            Переместить
+                        </button>
+                    </td>
+                </tr>
+            {{/for}}
+        </table>
+    {{/if}}
+{{/if}}

@@ -87,8 +87,14 @@
 /obj/item/artefact/proc/react_at_can_fall(mob/living/user)
 	return
 
-/obj/item/artefact/proc/rvach_destroy_effect()
+/obj/item/artefact/proc/user_bumped_at_atom(atom/bump_atom)
 	return
+
+/obj/item/artefact/proc/artefact_collected_by_player()
+	connected_to_anomaly = FALSE
+	SSanom.collected_artefacts_by_player++
+	SSanom.add_points_to_storyteller(input_z_level = get_z(src), points_ammout = 50, points_type = "anom", source = "Сбор артефакта")
+	SSanom.add_points_to_storyteller(input_z_level = get_z(src), points_ammout = 50, points_type = "evolution", source = "Сбор артефакта")
 
 /mob/living/emp_act(severity)
 	var/list/result_effects = calculate_artefact_reaction(src, "ЭМИ")

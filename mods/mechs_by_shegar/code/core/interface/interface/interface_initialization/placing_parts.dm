@@ -23,12 +23,12 @@
 		exosuit_data = new /datum/exosuit_holder(src)
 	//Спавн состовляющих для общего спрайта меха
 	var/list/main_image_parts = list(
-		"head" = list("part" = head, "screen_loc" = "CENTER+0.5,CENTER+0.5"),
-		"body" = list("part" = body, "screen_loc" = "CENTER+0.5,CENTER+0.5"),
-		"R_arm" = list("part" = R_arm, "screen_loc" = "CENTER+0.5,CENTER+0.5"),
-		"L_arm" = list("part" = L_arm, "screen_loc" = "CENTER+0.5,CENTER+0.5"),
-		"R_leg" = list("part" = R_leg, "screen_loc" = "CENTER+0.5,CENTER+0.5"),
-		"L_leg" = list("part" = L_leg, "screen_loc" = "CENTER+0.5,CENTER+0.5")
+		"head" = list("part" = head, "screen_loc" = "CENTER+0.7,CENTER-0.3"),
+		"body" = list("part" = body, "screen_loc" = "CENTER+0.7,CENTER-0.3"),
+		"R_arm" = list("part" = R_arm, "screen_loc" = "CENTER+0.7,CENTER-0.3"),
+		"L_arm" = list("part" = L_arm, "screen_loc" = "CENTER+0.7,CENTER-0.3"),
+		"R_leg" = list("part" = R_leg, "screen_loc" = "CENTER+0.7,CENTER-0.3"),
+		"L_leg" = list("part" = L_leg, "screen_loc" = "CENTER+0.7,CENTER-0.3")
 	)
 	for(var/part_name in main_image_parts)
 		var/obj/item/mech_component/part = main_image_parts[part_name]["part"]
@@ -43,12 +43,12 @@
 
 	// Список частей меха и их координат на экране
 	var/list/parts = list(
-		"head" = list("part" = head, "screen_loc" = "CENTER+0.5,CENTER+1.8"),
-		"body" = list("part" = body, "screen_loc" = "CENTER+0.5,CENTER-1.05"),
-		"R_arm" = list("part" = R_arm, "screen_loc" = "CENTER-0.65,CENTER+1.3"),
-		"L_arm" = list("part" = L_arm, "screen_loc" = "CENTER+1.6,CENTER+1.3"),
-		"R_leg" = list("part" = R_leg, "screen_loc" = "CENTER-0.65,CENTER+0.5"),
-		"L_leg" = list("part" = L_leg, "screen_loc" = "CENTER+1.7,CENTER+0.5")
+		"head" = list("part" = head, "screen_loc" = "CENTER+0.7,CENTER+0.6"),
+		"body" = list("part" = body, "screen_loc" = "CENTER+0.7,CENTER-1.7"),
+		"R_arm" = list("part" = R_arm, "screen_loc" = "CENTER-0.2,CENTER+0.1"),
+		"L_arm" = list("part" = L_arm, "screen_loc" = "CENTER+1.4,CENTER+0.1"),
+		"R_leg" = list("part" = R_leg, "screen_loc" = "CENTER-0.2,CENTER-0.5"),
+		"L_leg" = list("part" = L_leg, "screen_loc" = "CENTER+1.6,CENTER-0.5")
 	)
 
 	// Создаем кнопки для каждой части меха

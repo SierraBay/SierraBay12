@@ -16,7 +16,6 @@
 	max_energy = 0
 	cargo_price = 1500
 	rnd_points = 7000
-	need_to_process = TRUE
 
 /obj/item/artefact/flyer/lick_interaction(mob/living/carbon/human/user)
 	to_chat(user,SPAN_NOTICE("На вкус как воздух."))
@@ -92,14 +91,22 @@
 
 /obj/item/artefact/flyer/rvach_destroy_effect()
 	//У нас нет турфа?
-	if(!src.loc)
+	var/turf/spawn_turf = get_turf(src)
+	if(!spawn_turf)
 		return
-	var/started_in = world.time
 	var/list/turfs_for_spawn = list()
 	//Собираем все турфы в определённом радиусе
-	for(var/turf/choosed_turf in RANGE_TURFS(src.loc, 5))
+	for(var/turf/choosed_turf in RANGE_TURFS(spawn_turf, 5))
 		if(!TurfBlocked(choosed_turf) && !TurfBlockedByAnomaly(choosed_turf))
 			LAZYADD(turfs_for_spawn, choosed_turf)
-	var/list/possible_anomalies = list(/obj/anomaly/tramplin/powerfull)
-	generate_anomalies_in_turfs(possible_anomalies, turfs_for_spawn, 10, 20, 0, 0, null, null, "разрыв малого артефакта", started_in)
+	generate_anomalies_in_turfs(
+		anomalies_types = list(/obj/anomaly/tramplin/powerfull),
+		all_turfs_for_spawn = turfs_for_spawn,
+		min_anomalies_ammount = 10,
+		max_anomalies_ammount = 20,
+		min_artefacts_ammount = 0,
+		max_artefacts_ammount = 0,
+		source = "разрыв малого артефакта",
+		visible_generation = TRUE,
+		started_in = world.time)
 	delete_artefact()

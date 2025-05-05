@@ -19,16 +19,11 @@
 	controller = TRUE
 	var/random_ammount_of_anomalies = TRUE
 	///Минимальное количество аномалий, которое заспавнит главный спавнер
-	var/min_anomalies_ammout = 10
+	var/min_anomalies_ammount = 10
 	///Максимальное количество аномалий, которое заспавнит главный спавнер
-	var/max_anomalies_ammout = 20
+	var/max_anomalies_ammount = 20
 	var/min_artefacts_ammount
 	var/max_artefacts_ammount
-	//Итоговое число аномалий, которое заспавнит спавнер
-	var/result_anomalies_ammout
-	var/min_anomaly_size = 1
-	//Честно указываем какой минимальный размер аномалий из нашего "набора"
-	var/max_anomaly_size = 9
 
 /obj/anomaly_spawner/electra
 	name = "Electra spawner"
@@ -46,22 +41,25 @@
 		/obj/anomaly/zharka = 5,
 		/obj/anomaly/zharka/short_effect = 2,
 		/obj/anomaly/zharka/long_effect = 1,
-		/obj/anomaly/heater/three_and_three = 3,
-		/obj/anomaly/heater/two_and_two = 5
+		/obj/anomaly/heater/multisize = 5,
 		)
 
 /obj/anomaly_spawner/commander/Initialize()
 	. = ..()
 	var/list/all_turfs_for_spawn = list()
-	var/started_in = world.time
 	//Собираем спавнеры, расположенные у контроллера
 	for(var/obj/anomaly_spawner/spawner in orange(15, src.loc))
 		LAZYADD(all_turfs_for_spawn, spawner)
-	if(!min_artefacts_ammount)
-		min_artefacts_ammount = 1
-	if(!max_artefacts_ammount)
-		max_artefacts_ammount = 1
-	generate_anomalies_in_turfs(null, all_turfs_for_spawn, min_anomalies_ammout, max_anomalies_ammout, min_artefacts_ammount, max_artefacts_ammount,min_anomaly_size, max_anomaly_size, "планетарная руина", started_in)
+	generate_anomalies_in_turfs(
+		anomalies_types = possible_anomalies,
+		all_turfs_for_spawn = all_turfs_for_spawn,
+		min_anomalies_ammount = 10,
+		max_anomalies_ammount = 20,
+		min_artefacts_ammount = 0,
+		max_artefacts_ammount = 0,
+		source =  "планетарная руина",
+		visible_generation = FALSE,
+		started_in = world.time)
 
 	//Очистка и забытие всех спавнеров.
 	for(var/obj/anomaly_spawner/spawner in all_turfs_for_spawn)

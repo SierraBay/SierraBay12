@@ -274,6 +274,7 @@
 	sharp = TRUE
 	edge = TRUE
 	anchored = TRUE    // Never spawned outside of inventory, should be fine.
+	canremove = FALSE // You can use it while prone. Still deleted if the arm is destroyed.
 	active_throwforce = 1  //Throwing or dropping the item deletes it.
 	throw_speed = 1
 	throw_range = 1
@@ -281,7 +282,7 @@
 	atom_flags = ATOM_FLAG_NO_TEMP_CHANGE | ATOM_FLAG_NO_BLOOD
 	active_attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	hitsound = 'sound/weapons/blade1.ogg'
-	var/mob/living/creator
+	var/mob/living/carbon/human/creator
 	var/datum/effect/spark_spread/spark_system
 
 
@@ -294,11 +295,16 @@
 
 /obj/item/melee/energy/blade/Initialize()
 	. = ..()
+	if(ishuman(loc))
+		creator = loc
 	START_PROCESSING(SSobj, src)
+	playsound(creator, 'sound/weapons/saberon.ogg', 50, 1)
 
 
 /obj/item/melee/energy/blade/Destroy()
 	STOP_PROCESSING(SSobj, src)
+	playsound(creator, 'sound/weapons/saberoff.ogg', 50, 1)
+	creator = null
 	. = ..()
 
 
@@ -316,6 +322,9 @@
 
 
 /obj/item/melee/energy/blade/Process()
+	if (creator.handcuffed || (creator.stat != CONSCIOUS))
+		QDEL_IN(src, 0)
+
 	if (!creator || loc != creator || !creator.IsHolding(src))
 		// Tidy up a bit.
 		if(istype(loc,/mob/living))
@@ -329,6 +338,16 @@
 			host.embedded -= src
 			host.drop_from_inventory(src)
 		QDEL_IN(src, 0)
+
+
+/obj/item/melee/energy/blade/e_armblade
+	name = "hardsuit armblade"
+	desc = "An extra large, extra sharp laser armblade. Rip and tear."
+	icon_state = "e_armblade"
+	active_icon = "e_armblade"
+	lighting_color = COLOR_SABER_RED
+	active_force = 30 // Regular energy sword damage.
+	armor_penetration = 40 // Absolutely not 100AP for this one. Thank you.
 
 
 /obj/item/melee/energy/machete

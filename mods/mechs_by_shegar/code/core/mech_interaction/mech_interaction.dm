@@ -54,13 +54,8 @@
 		return FALSE
 	if(!user.Adjacent(src))
 		return FALSE
-	if(hatch_locked)
-		if(!silent)
-			to_chat(user, SPAN_WARNING("The [body.hatch_descriptor] is locked."))
-		return FALSE
 	if(hatch_closed)
-		if(!silent)
-			to_chat(user, SPAN_WARNING("The [body.hatch_descriptor] is closed."))
+		offer_passenger_place(user)
 		return FALSE
 	if(LAZYLEN(pilots) >= LAZYLEN(body.pilot_positions))
 		if(!silent)
