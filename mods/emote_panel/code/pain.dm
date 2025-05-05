@@ -6,10 +6,8 @@
 /mob/living/carbon/human/handle_shock()
 	.=..() // вводим agony_moan
 	if(shock_stage >= 30)
-		.=..()
 		if(prob(15))
 			src.agony_moan()
-	.=..()
 
 /mob/living/proc/agony_scream()
 	if(stat || is_species(SPECIES_MONKEY))

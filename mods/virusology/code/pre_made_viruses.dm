@@ -191,10 +191,10 @@
 /singleton/species/zombie/handle_post_spawn(mob/living/carbon/human/H)
 	. = ..()
 	natural_armour_values = list(
-		melee = ARMOR_MELEE_KNIVES,
+		melee = ARMOR_MELEE_RESISTANT,
+		bullet = ARMOR_BALLISTIC_SMALL,
 		laser = ARMOR_LASER_SMALL,
 		bomb = ARMOR_BOMB_PADDED,
 		bio = ARMOR_BIO_SHIELDED,
 		rad = ARMOR_RAD_RESISTANT
 		)
-	species_flags += SPECIES_FLAG_NO_PAIN | SPECIES_FLAG_NO_POISON | SPECIES_FLAG_NO_MINOR_CUT | SPECIES_FLAG_NO_EMBED
