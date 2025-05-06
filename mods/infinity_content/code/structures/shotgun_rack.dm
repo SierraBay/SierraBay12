@@ -1,7 +1,7 @@
 /obj/structure/shotgun_rack
 	name = "shotgun rack"
 	desc = "A wooden rack designated to store shotguns."
-	icon = 'packs/sierra-tweaks/icons/obj/shotgunrack.dmi'
+	icon = 'mods/infinity_content/icons/obj/shotgunrack.dmi'
 	icon_state = "shotgun_rack"
 	anchored = TRUE
 	density = FALSE

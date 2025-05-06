@@ -1,5 +1,5 @@
 /obj/machinery/floor_light
-	icon = 'packs/sierra-tweaks/icons/machinery/floor_light.dmi'
+	icon = 'mods/infinity_content/icons/machinery/floor_light.dmi'
 
 /obj/machinery/floor_light/use_tool(obj/item/tool, mob/user)
 	if(isMultitool(tool))

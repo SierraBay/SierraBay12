@@ -1,12 +1,11 @@
 /obj/structure/cart
 	name = "Cargo cart"
 	desc = "Brand-new cart for heavy things. you can see little logo of NT on the back side."
-	icon = 'packs/sierra-tweaks/icons/obj/cart.dmi'
+	icon = 'mods/infinity_content/icons/obj/cart.dmi'
 	icon_state = "cart"
 	layer = STRUCTURE_LAYER
 	density = FALSE
 	w_class = ITEM_SIZE_LARGE
-	var/haswheels = FALSE
 	var/cargoweight = 0
 	var/atom/movable/load = null
 
@@ -21,17 +20,10 @@
 		load.set_dir(todir)
 
 	var/sound
-	if(haswheels)
-		sound = pick(list(
-			'packs/sierra-tweaks/sound/effects/cart1.ogg',
-			'packs/sierra-tweaks/sound/effects/cart2.ogg',
-			'packs/sierra-tweaks/sound/effects/cart3.ogg'
-		))
-	else
-		sound = pick(list(
-			'sound/effects/metalscrape1.ogg',
-			'sound/effects/metalscrape2.ogg',
-			'sound/effects/metalscrape3.ogg'
+	sound = pick(list(
+		'mods/infinity_content/sound/effects/cart1.ogg',
+		'mods/infinity_content/sound/effects/cart2.ogg',
+		'mods/infinity_content/sound/effects/cart3.ogg'
 		))
 
 	playsound(src, sound, 50, 1, 10)
@@ -42,10 +34,6 @@
 		return
 
 	if(!CanPhysicallyInteract(user) || !user.Adjacent(cargo) || !istype(cargo) || (user == cargo))
-		return
-
-	if(haswheels)
-		USE_FEEDBACK_FAILURE("You can't load the cart unless wheels are folded!")
 		return
 
 	if(do_after(user, 2 SECONDS, src, DO_DEFAULT | DO_TARGET_UNIQUE_ACT | DO_PUBLIC_PROGRESS))
@@ -65,40 +53,15 @@
 	if(!load)
 		return FALSE
 
-	if(haswheels)
-		USE_FEEDBACK_FAILURE("You must fold the wheels to unload the cart!")
-		return
-
 	if(do_after(user, 2 SECONDS, src, DO_DEFAULT | DO_TARGET_UNIQUE_ACT | DO_PUBLIC_PROGRESS))
 		unload(user)
 
 	return ..()
 
-/obj/structure/cart/verb/turn_wheels()
-	set name = "Release wheels"
-	set category = "Object"
-	set src in view(1)
-
-	if(usr.stat || !Adjacent(usr))
-		return
-
-	if(!istype(usr, /mob/living/carbon))
-		return
-
-	var/wheelstat = haswheels ? "folded" : "released"
-	usr.visible_message(SPAN_NOTICE("[usr] [wheelstat] wheels on [src]"), SPAN_NOTICE("You have [wheelstat] wheels."))
-	desc = initial(desc)
-	desc += "\nNow the wheels are [wheelstat]."
-	haswheels = !haswheels
-
-/obj/structure/cart/CtrlAltClick(mob/user)
-	. = ..()
-	turn_wheels()
-
 /obj/structure/cart/proc/load(atom/movable/cargo)
 	if(ismob(cargo))
 		return FALSE
-	if(!(istype(cargo, /obj/machinery) || istype(cargo, /obj/structure/closet) || istype(cargo, /obj/structure/largecrate) || istype(cargo, /obj/structure/ore_box)))
+	if(!(istype(cargo, /obj/machinery) || istype(cargo, /obj/structure/closet) || istype(cargo, /obj/structure/largecrate) || istype(cargo, /obj/structure/ore_box) || istype(cargo, /obj/item/mech_component) || istype(cargo, /obj/item/mech_equipment)))
 		return FALSE
 
 	//if there are any items you don't want to be able to interact with, add them to this check
@@ -215,13 +178,3 @@
 	update_icon()
 
 	return TRUE
-
-// SIERRA TODO: Port to Bay12
-// /obj/structure/cart/get_additional_speed_decrease()
-// 	. = ..()
-// 	if (haswheels)
-// 		return 0.1
-
-/datum/codex_entry/cargo_cart
-	associated_paths = list(/obj/structure/cart)
-	mechanics_text = "To change wheel state you need to press Alt+Ctrl+LMB."

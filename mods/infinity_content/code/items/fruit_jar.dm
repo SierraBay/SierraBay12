@@ -1,7 +1,7 @@
 /obj/item/storage/bar_fruit_jar
 	name = "Fruit jar"
 	desc = "Jar with fresh fruit. They are definitely edible and never plastic."
-	icon = 'packs/sierra-tweaks/icons/obj/storage.dmi'
+	icon = 'mods/infinity_content/icons/obj/storage.dmi'
 	icon_state = "fruitjar"
 	max_storage_space = 20
 	startswith = list(
