@@ -14,7 +14,6 @@
 	contact_class = /decl/ship_contact_class/srv_shuttle
 	fore_dir = NORTH
 	vessel_size = SHIP_SIZE_SMALL
-	moving_state = "ship_moving"
 	max_speed = 1/(2 SECONDS) //same stats as charon
 	burn_delay = 1 SECONDS
 	vessel_mass = 5000

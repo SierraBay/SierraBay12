@@ -1,51 +1,41 @@
 #define SUPPLY_LIST_ID_CART 1
 #define SUPPLY_LIST_ID_REQUEST 2
 #define SUPPLY_LIST_ID_DONE 3
+#define CARGO_POINT_TO_THALLER 15	// Если кому то когда то захочется поменять курс таллера, менять тут, и в mods\cargo\code\cargo_controller.dm
 
-/datum/computer_file/program/supply
-	filename = "supply"
-	filedesc = "Supply Management"
-	nanomodule_path = /datum/nano_module/supply
-	ui_header = null // Set when enabled by an admin user.
-	program_icon_state = "supply"
-	program_key_state = "rd_key"
-	program_menu_icon = "cart"
-	extended_desc = "A management tool that allows for ordering of various supplies through the facility's cargo system. Some features may require additional access."
-	size = 21
-	available_on_ntnet = TRUE
-	requires_ntnet = TRUE
-	category = PROG_SUPPLY
-
-/datum/computer_file/program/supply/process_tick()
-	..()
-	var/datum/nano_module/supply/SNM = NM
-	if(istype(SNM))
-		SNM.emagged = computer.emagged()
-		if(SNM.notifications_enabled)
-			if(length(SSsupply.requestlist))
-				ui_header = "supply_new_order.gif"
-			else if(length(SSsupply.shoppinglist))
-				ui_header = "supply_awaiting_delivery.gif"
-			else
-				ui_header = "supply_idle.gif"
-		else if(ui_header)
-			ui_header = null
+/datum/supply_order
+	var/accountnubmer = null //аккаунт, с которого списали деньги
+	var/payer = null
+	var/sum_money = 0 //сумма, списанная с аккаунта
 
 /datum/nano_module/supply
-	name = "Supply Management program"
-	var/screen = 1		// 1: Ordering menu, 2: Statistics, 3: Shuttle control, 4: Orders menu
-	var/selected_category
-	var/list/category_names = list()
-	var/list/category_contents = list()
-	var/showing_contents_of_ref = null
-	var/list/contents_of_order = list()
-	var/emagged = FALSE	// TODO: Implement synchronization with modular computer framework.
-	var/emagged_memory = FALSE // Keeps track if the program has to regenerate the catagories after an emag.
-	var/current_security_level
-	var/notifications_enabled = FALSE
-	var/admin_access = list(access_cargo, access_mailsorting)
+	var/card_inserted
+	var/card_use = FALSE
+	var/datum/money_account/custom_account
+	var/money
+	var/datum/extension/interactive/ntos/os
+	var/obj/item/stock_parts/computer/card_slot/card_slot
 
-/* [SIERRA-REMOVE] - Cargo ушло в мод
+/datum/nano_module/supply/print_order(datum/supply_order/O, mob/user)
+	if(!O)
+		return
+
+	var/t = ""
+	t += "<h3>[GLOB.using_map.station_name] Supply Requisition Reciept</h3><hr>"
+	t += "INDEX: #[O.ordernum]<br>"
+	t += "TIME: [O.timestamp]<br>"
+	t += "REQUESTED BY: [O.orderedby]<br>"
+	t += "PAID BY: [O.payer]<br>"
+	t += "RANK: [O.orderedrank]<br>"
+	t += "REASON: [O.reason]<br>"
+	t += "SUPPLY CRATE TYPE: [O.object.name]<br>"
+	t += "ACCESS RESTRICTION: [get_access_desc(O.object.access)]<br>"
+	t += "CONTENTS:<br>"
+	t += O.object.manifest
+	t += "<hr>"
+	print_text(t, user)
+
+
 /datum/nano_module/supply/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1, state = GLOB.default_state)
 	var/list/data = host.initial_data()
 	var/is_admin = emagged || check_access(user, admin_access)
@@ -60,9 +50,23 @@
 		data["shopping_cart_length"] = length(SSsupply.shoppinglist)
 		data["request_length"] = length(SSsupply.requestlist)
 	data["screen"] = screen
-	data["credits"] = "[SSsupply.points]"
-	data["currency"] = GLOB.using_map.supply_currency_name
-	data["currency_short"] = GLOB.using_map.supply_currency_name_short
+	data["credits"] = "[department_accounts["Снабжения"].money]"
+	data["currency"] = GLOB.using_map.local_currency_name
+	data["currency_short"] = GLOB.using_map.local_currency_name_short
+	os = get_extension(nano_host(), /datum/extension/interactive/ntos)
+	card_slot = os.get_component(PART_CARD)
+	card_inserted = FALSE
+	if(card_slot)
+		if(card_slot.stored_card)
+			card_inserted = TRUE
+			custom_account = get_account(card_slot.stored_card.associated_account_number)
+			if(custom_account)
+				money = custom_account.money
+				data["money"] = "[money]"
+				data["card_use"] = card_use
+
+
+	data["card_inserted"] = card_inserted
 	switch(screen)
 		if(1)// Main ordering menu
 			data["categories"] = category_names
@@ -114,22 +118,25 @@
 
 	ui = SSnano.try_update_ui(user, src, ui_key, ui, data, force_open)
 	if (!ui)
-		ui = new(user, src, ui_key, "supply.tmpl", name, 1050, 800, state = state)
+		ui = new(user, src, ui_key, "mods-supply.tmpl", name, 1050, 800, state = state)
 		ui.set_auto_update(1)
 		ui.set_initial_data(data)
 		ui.open()
-*/
 
-// Supply the order ID and where to look. This is just to reduce copypaste code.
-/datum/nano_module/supply/proc/find_order_by_id(order_id, list/find_in)
-	for(var/datum/supply_order/SO in find_in)
-		if(SO.ordernum == order_id)
-			return SO
-/* [SIERRA-REMOVE] - Cargo топики конфликтуют, нужно комментить
 /datum/nano_module/supply/Topic(href, href_list)
 	var/mob/user = usr
 	if(..())
 		return 1
+
+	if(href_list["use_card"])
+		if(card_slot.stored_card)
+			custom_account = get_account(card_slot.stored_card.associated_account_number)
+			if(custom_account && custom_account.suspended)
+				to_chat(user, SPAN_WARNING("Card is invalid or suspended."))
+				card_use = FALSE
+				return
+			card_use = !card_use
+
 
 	if(href_list["select_category"])
 		clear_order_contents()
@@ -163,9 +170,13 @@
 		var/idname = "*None Provided*"
 		var/idrank = "*None Provided*"
 		if(ishuman(user))
-			var/mob/living/carbon/human/H = user
-			idname = H.get_authentification_name()
-			idrank = H.get_assignment()
+			if(!card_use)
+				var/mob/living/carbon/human/H = user
+				idname = H.get_authentification_name()
+				idrank = H.get_assignment()
+			else
+				idname = card_slot.stored_card.registered_name
+				idrank = card_slot.stored_card.assignment
 		else if(issilicon(user))
 			idname = user.real_name
 
@@ -179,6 +190,22 @@
 		O.reason = reason
 		O.orderedrank = idrank
 		O.comment = "#[O.ordernum]"
+		O.accountnubmer = department_accounts["Снабжения"]
+		O.sum_money = P.cost * CARGO_POINT_TO_THALLER
+		O.payer = "None Provided"
+		if(card_use)
+			custom_account = get_account(card_slot.stored_card.associated_account_number)
+			if(!custom_account || custom_account.suspended)
+				to_chat(user, SPAN_WARNING("Card is invalid or suspended."))
+				return
+			if(custom_account.money < O.sum_money)
+				to_chat(user, SPAN_WARNING("Not enough funds to purchase \the [P.name]!"))
+				return
+			custom_account.transfer(department_accounts["Снабжения"], O.sum_money , "Order of [P.name]. Order number [O.ordernum]")
+			O.accountnubmer = custom_account
+			O.payer = card_slot.stored_card.registered_name
+
+
 		SSsupply.requestlist += O
 
 		if(can_print() && alert(user, "Would you like to print a confirmation receipt?", "Print receipt?", "Yes", "No") == "Yes")
@@ -221,12 +248,12 @@
 		var/id = text2num(href_list["approve_order"])
 		var/datum/supply_order/SO = find_order_by_id(id, SSsupply.requestlist)
 		if(SO)
-			if(SO.object.cost >= SSsupply.points)
+			if(SO.object.cost >= department_accounts["Снабжения"].money)
 				to_chat(usr, SPAN_WARNING("Not enough points to purchase \the [SO.object.name]!"))
 			else
 				SSsupply.requestlist -= SO
 				SSsupply.shoppinglist += SO
-				SSsupply.points -= SO.object.cost
+				department_accounts["Снабжения"].money -= SO.object.cost * CARGO_POINT_TO_THALLER
 
 		else
 			to_chat(user, SPAN_WARNING("Could not find order number [id] to approve."))
@@ -239,7 +266,7 @@
 		if(SO)
 			SSsupply.requestlist += SO
 			SSsupply.shoppinglist -= SO
-			SSsupply.points += SO.object.cost
+			department_accounts["Снабжения"].money += SO.object.cost * CARGO_POINT_TO_THALLER
 
 		else
 			to_chat(user, SPAN_WARNING("Could not find order number [id] to move back to pending."))
@@ -253,6 +280,7 @@
 			return 1
 		if(SO)
 			SSsupply.requestlist -= SO
+			department_accounts["Снабжения"].transfer(SO.accountnubmer, SO.sum_money , "Deny of order [SO.ordernum]")
 		else
 			to_chat(user, SPAN_WARNING("Could not find order number [id] to deny."))
 
@@ -265,7 +293,7 @@
 			return 1
 		if(SO)
 			SSsupply.shoppinglist -= SO
-			SSsupply.points += SO.object.cost
+			department_accounts["Снабжения"].money += SO.object.cost * CARGO_POINT_TO_THALLER
 		else
 			to_chat(user, SPAN_WARNING("Could not find order number [id] to cancel."))
 
@@ -313,8 +341,9 @@
 	if(href_list["toggle_notifications"])
 		notifications_enabled = !notifications_enabled
 		return 1
-*/
-/datum/nano_module/supply/proc/generate_categories()
+
+
+/datum/nano_module/supply/generate_categories()
 	category_names.Cut()
 	category_contents.Cut()
 	var/singleton/hierarchy/supply_pack/root = GET_SINGLETON(/singleton/hierarchy/supply_pack)
@@ -328,97 +357,26 @@
 				continue
 			category.Add(list(list(
 				"name" = spc.name,
-				"cost" = spc.cost,
+				"cost" = spc.cost * CARGO_POINT_TO_THALLER,
 				"ref" = "\ref[spc]"
 			)))
 		category_contents[sp.name] = category
 
-/datum/nano_module/supply/proc/generate_order_contents(order_ref)
-	var/singleton/hierarchy/supply_pack/sp = locate(order_ref) in SSsupply.master_supply_list
-	if(!istype(sp))
-		return FALSE
-	contents_of_order.Cut()
-	showing_contents_of_ref = order_ref
-	for(var/item_path in sp.contains) // Thanks to Lohikar for helping me with type paths - CarlenWhite
-		var/obj/item/stack/OB = item_path // Not always a stack, but will always have a name we can fetch.
-		var/name = initial(OB.name)
-		var/amount = sp.contains[item_path] || 1 // If it's just one item (has no number associated), fallback to 1.
-		if(ispath(item_path, /obj/item/stack)) // And if it is a stack, consider the amount
-			amount *= initial(OB.amount)
 
 
-		contents_of_order.Add(list(list(
-			"name" = name,
-			"amount" = amount
-		)))
-
-	if(length(sp.contains) == 0) // Handles the case where sp.contains is empty, e.g. for livecargo
-		contents_of_order.Add(list(list(
-			"name" = sp.containername,
-			"amount" = 1
-		)))
-
-	return TRUE
-
-
-/datum/nano_module/supply/proc/clear_order_contents()
-	contents_of_order.Cut()
-	showing_contents_of_ref = null
-
-/datum/nano_module/supply/proc/get_shuttle_status()
-	var/datum/shuttle/autodock/ferry/supply/shuttle = SSsupply.shuttle
-	if(!istype(shuttle))
-		return "No Connection"
-
-	if(shuttle.has_arrive_time())
-		return "In transit ([shuttle.eta_seconds()] s)"
-
-	if (shuttle.can_launch())
-		return "Docked"
-	return "Docking/Undocking"
-
-/datum/nano_module/supply/proc/order_to_nanoui(datum/supply_order/SO, list_id)
+/datum/nano_module/supply/order_to_nanoui(datum/supply_order/SO, list_id)
 	return list(list(
 		"id" = SO.ordernum,
 		"time" = SO.timestamp,
 		"object" = SO.object.name,
 		"orderer" = SO.orderedby,
-		"cost" = SO.object.cost,
+		"cost" = SO.object.cost * CARGO_POINT_TO_THALLER,
+		"payer" = SO.payer,
 		"reason" = SO.reason,
 		"list_id" = list_id
 		))
 
-/datum/nano_module/supply/proc/can_print()
-	var/datum/extension/interactive/ntos/os = get_extension(nano_host(), /datum/extension/interactive/ntos)
-	if(os)
-		return os.has_component(PART_PRINTER)
-	return 0
-
-/datum/nano_module/supply/proc/print_order(datum/supply_order/O, mob/user)
-	if(!O)
-		return
-
-	var/t = ""
-	t += "<h3>[GLOB.using_map.station_name] Supply Requisition Reciept</h3><hr>"
-	t += "INDEX: #[O.ordernum]<br>"
-	t += "TIME: [O.timestamp]<br>"
-	t += "REQUESTED BY: [O.orderedby]<br>"
-	t += "RANK: [O.orderedrank]<br>"
-	t += "REASON: [O.reason]<br>"
-	t += "SUPPLY CRATE TYPE: [O.object.name]<br>"
-	t += "ACCESS RESTRICTION: [get_access_desc(O.object.access)]<br>"
-	t += "CONTENTS:<br>"
-	t += O.object.manifest
-	t += "<hr>"
-	print_text(t, user)
-
-/datum/nano_module/supply/proc/print_summary(mob/user)
-	var/t = ""
-	t += "<center><BR><b><large>[GLOB.using_map.station_name]</large></b><BR><i>[GLOB.station_date]</i><BR><i>Export overview<field></i></center><hr>"
-	for(var/source in SSsupply.point_source_descriptions)
-		t += "[SSsupply.point_source_descriptions[source]]: [SSsupply.point_sources[source] || 0]<br>"
-	print_text(t, user)
-
+#undef CARGO_POINT_TO_THALLER
 #undef SUPPLY_LIST_ID_CART
 #undef SUPPLY_LIST_ID_REQUEST
 #undef SUPPLY_LIST_ID_DONE

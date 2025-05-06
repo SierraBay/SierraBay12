@@ -1,0 +1,6 @@
+author: Atebite
+changes:
+  - {rscadd: Some carp now move around on the overmap}
+  - {tweak: Carp schools now always spawn in continous blobs and move together}
+  - {rscdel: Removed the carp migration random event}
+delete-after: true
