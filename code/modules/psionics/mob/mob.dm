@@ -1,5 +1,3 @@
-// [SIERRA-REMOVE] - PSIONICS - (Перемещено в /mods/psionics)
-/*
 /mob/living
 	var/datum/psi_complexus/psi
 
@@ -32,5 +30,3 @@
 			to_chat(src, SPAN_DANGER("\The [attacker] strikes out with a mental attack, but you deflect it!"))
 		return TRUE
 	return FALSE
-*/
-// [/SIERRA-REMOVE] - PSIONICS - (Перемещено в /mods/psionics)

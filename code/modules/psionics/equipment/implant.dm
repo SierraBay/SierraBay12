@@ -1,5 +1,3 @@
-// [SIERRA-REMOVE] - PSIONICS - (Перемещено в /mods/psionics)
-/*
 /obj/item/implant/psi_control
 	name = "psi dampener implant"
 	desc = "A safety implant for registered psi-operants."
@@ -108,5 +106,3 @@
 					if(M.psi) M.psi.stunned(5)
 			else if(use_psi_mode == PSI_IMPLANT_WARN)
 				to_chat(imp_in, SPAN_WARNING("Your psi dampener primly informs you it has reported this violation."))
-*/
-// [/SIERRA-REMOVE] - PSIONICS - (Перемещено в /mods/psionics)

@@ -1,5 +1,3 @@
-// [SIERRA-REMOVE] - PSIONICS - (Перемещено в /mods/psionics)
-/*
 // Begin psi armour toggle.
 /obj/screen/psi/armour
 	name = "Psi-Armour"
@@ -45,5 +43,3 @@
 	else
 		icon_state = "arrow_right"
 // End menu toggle.
-*/
-// [/SIERRA-REMOVE] - PSIONICS - (Перемещено в /mods/psionics)

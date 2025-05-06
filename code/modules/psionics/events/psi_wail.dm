@@ -1,5 +1,3 @@
-// [SIERRA-REMOVE] - PSIONICS - (Перемещено в /mods/psionics)
-/*
 /datum/event/psi/wail
 	var/static/list/whine_messages = list(
 		"A nerve-tearing psychic whine intrudes on your thoughts.",
@@ -17,5 +15,3 @@
 		annoyed = TRUE
 	if(annoyed && prob(1))
 		to_chat(psi.owner, SPAN_NOTICE("<i>[pick(whine_messages)]</i>"))
-*/
-// [/SIERRA-REMOVE] - PSIONICS - (Перемещено в /mods/psionics)

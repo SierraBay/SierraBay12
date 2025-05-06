@@ -1,5 +1,3 @@
-// [SIERRA-REMOVE] - PSIONICS - (Перемещено в /mods/psionics)
-/*
 /datum/psi_complexus
 
 	var/announced = FALSE             // Whether or not we have been announced to our holder yet.
@@ -94,5 +92,3 @@
 			qdel(thing)
 		manifested_items.Cut()
 	. = ..()
-*/
-// [/SIERRA-REMOVE] - PSIONICS - (Перемещено в /mods/psionics)

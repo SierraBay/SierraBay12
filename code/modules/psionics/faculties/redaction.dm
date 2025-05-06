@@ -1,5 +1,3 @@
-// [SIERRA-REMOVE] - PSIONICS - (Перемещено в /mods/psionics)
-/*
 /singleton/psionic_faculty/redaction
 	id = PSI_REDACTION
 	name = "Redaction"
@@ -190,5 +188,3 @@
 		target.adjustOxyLoss(-rand(15,20))
 		target.basic_revival()
 		return TRUE
-*/
-// [/SIERRA-REMOVE] - PSIONICS - (Перемещено в /mods/psionics)

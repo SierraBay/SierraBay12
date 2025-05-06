@@ -1,5 +1,3 @@
-// [SIERRA-REMOVE] - PSIONICS - (Перемещено в /mods/psionics)
-/*
 /turf/simulated/wall/disrupts_psionics()
 	return ((material && material.is_psi_null()) || (reinf_material && reinf_material.is_psi_null())) ? src : ..()
 
@@ -18,5 +16,3 @@
 /turf/simulated/wall/nullglass/Initialize(ml)
 	color = null
 	..(ml, MATERIAL_NULLGLASS)
-*/
-// [/SIERRA-REMOVE] - PSIONICS - (Перемещено в /mods/psionics)

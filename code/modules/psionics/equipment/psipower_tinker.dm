@@ -1,5 +1,3 @@
-// [SIERRA-REMOVE] - PSIONICS - (Перемещено в /mods/psionics)
-/*
 /obj/item/psychic_power/tinker
 	name = "psychokinetic crowbar"
 	icon_state = "tinker"
@@ -39,5 +37,3 @@
 	name = "psychokinetic [lowertext(emulating)]"
 	to_chat(owner, SPAN_NOTICE("You begin emulating \a [lowertext(emulating)]."))
 	sound_to(owner, 'sound/effects/psi/power_fabrication.ogg')
-*/
-// [/SIERRA-REMOVE] - PSIONICS - (Перемещено в /mods/psionics)

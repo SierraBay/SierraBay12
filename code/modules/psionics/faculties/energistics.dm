@@ -1,5 +1,3 @@
-// [SIERRA-REMOVE] - PSIONICS - (Перемещено в /mods/psionics)
-/*
 /singleton/psionic_faculty/energistics
 	id = PSI_ENERGISTICS
 	name = "Energistics"
@@ -116,5 +114,3 @@
 			sparks.set_up(3, 0, get_turf(target))
 			sparks.start()
 		return TRUE
-*/
-// [/SIERRA-REMOVE] - PSIONICS - (Перемещено в /mods/psionics)

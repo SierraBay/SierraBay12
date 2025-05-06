@@ -1,5 +1,3 @@
-// [SIERRA-REMOVE] - PSIONICS - (Перемещено в /mods/psionics)
-/*
 /obj/screen/psi/hub
 	name = "Psi"
 	icon_state = "psi_suppressed"
@@ -71,5 +69,3 @@
 		sound_to(owner, sound('sound/effects/psi/power_unlock.ogg'))
 		owner.psi.show_auras()
 	update_icon()
-*/
-// [/SIERRA-REMOVE] - PSIONICS - (Перемещено в /mods/psionics)

@@ -1,5 +1,3 @@
-// [SIERRA-REMOVE] - PSIONICS - (Перемещено в /mods/psionics)
-/*
 /obj/item/psychic_power/telekinesis
 	name = "telekinetic grip"
 	maintain_cost = 6
@@ -105,5 +103,3 @@
 		flick("empdisable",O)
 		sleep(5)
 		qdel(O)
-*/
-// [/SIERRA-REMOVE] - PSIONICS - (Перемещено в /mods/psionics)

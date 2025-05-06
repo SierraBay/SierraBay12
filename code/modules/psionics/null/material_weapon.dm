@@ -1,5 +1,3 @@
-// [SIERRA-REMOVE] - PSIONICS - (Перемещено в /mods/psionics)
-/*
 /obj/item/material/disrupts_psionics()
 	return (material && material.is_psi_null()) ? src : FALSE
 
@@ -11,5 +9,3 @@
 
 /obj/item/material/shard/nullglass/New(newloc)
 	..(newloc, MATERIAL_NULLGLASS)
-*/
-// [/SIERRA-REMOVE] - PSIONICS - (Перемещено в /mods/psionics)

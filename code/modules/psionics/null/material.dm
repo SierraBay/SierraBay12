@@ -1,5 +1,3 @@
-// [SIERRA-REMOVE] - PSIONICS - (Перемещено в /mods/psionics)
-/*
 /material
 	var/is_psionic_nullifier
 
@@ -32,5 +30,3 @@
 /material/nullglass/generate_recipes()
 	. = ..()
 	. += new /datum/stack_recipe/tile/nullglass(src)
-*/
-// [/SIERRA-REMOVE] - PSIONICS - (Перемещено в /mods/psionics)

@@ -1,5 +1,3 @@
-// [SIERRA-REMOVE] - PSIONICS - (Перемещено в /mods/psionics)
-/*
 /singleton/psionic_faculty
 	var/id
 	var/name
@@ -11,5 +9,3 @@
 	..()
 	for(var/atype in armour_types)
 		SSpsi.armour_faculty_by_type[atype] = id
-*/
-// [/SIERRA-REMOVE] - PSIONICS - (Перемещено в /mods/psionics)

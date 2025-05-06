@@ -1,5 +1,3 @@
-// [SIERRA-REMOVE] - PSIONICS - (Перемещено в /mods/psionics)
-/*
 /datum/psi_complexus/CanUseTopic(mob/user, datum/topic_state/state = GLOB.default_state)
 	return (user.client && check_rights(R_ADMIN, FALSE, user.client))
 
@@ -20,5 +18,3 @@
 			var/datum/admins/admin = GLOB.admins[usr.key]
 			if(istype(admin))
 				admin.show_player_panel(owner)
-*/
-// [/SIERRA-REMOVE] - PSIONICS - (Перемещено в /mods/psionics)

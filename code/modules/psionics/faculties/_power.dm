@@ -1,5 +1,3 @@
-// [SIERRA-REMOVE] - PSIONICS - (Перемещено в /mods/psionics)
-/*
 /singleton/psionic_power
 	abstract_type = /singleton/psionic_power
 	var/name             // Name. If null, psipower won't be generated on roundstart.
@@ -47,5 +45,3 @@
 		admin_attack_log(user, target, "Used psipower ([name])", "Was subjected to a psipower ([name])", "used a psipower ([name]) on")
 	if(use_sound)
 		playsound(user.loc, use_sound, 75)
-*/
-// [/SIERRA-REMOVE] - PSIONICS - (Перемещено в /mods/psionics)

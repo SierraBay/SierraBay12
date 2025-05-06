@@ -1,5 +1,3 @@
-// [SIERRA-REMOVE] - PSIONICS - (Перемещено в /mods/psionics)
-/*
 /obj/item/stack/material/withstand_psi_stress(stress, atom/source)
 	. = ..(stress, source)
 	if(amount > 0 && . > 0 && disrupts_psionics())
@@ -22,5 +20,3 @@
 
 /obj/item/stack/material/nullglass/fifty
 	amount = 50
-*/
-// [/SIERRA-REMOVE] - PSIONICS - (Перемещено в /mods/psionics)

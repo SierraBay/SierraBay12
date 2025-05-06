@@ -1,5 +1,3 @@
-// [SIERRA-REMOVE] - PSIONICS - (Перемещено в /mods/psionics)
-/*
 /datum/psi_complexus/proc/update(force)
 
 	set waitfor = FALSE
@@ -250,5 +248,3 @@
 		owner.adjustOxyLoss(-(heal_rate))
 		if(prob(25))
 			to_chat(owner, SPAN_NOTICE("Your skin crawls as your autoredactive faculty heals your body."))
-*/
-// [/SIERRA-REMOVE] - PSIONICS - (Перемещено в /mods/psionics)

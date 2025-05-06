@@ -1,5 +1,3 @@
-// [SIERRA-REMOVE] - PSIONICS - (Перемещено в /mods/psionics)
-/*
 /obj/item/implanter/psi
 	name = "psi-null implanter"
 	desc = "An implant gun customized to interact with psi dampeners."
@@ -18,5 +16,3 @@
 /obj/item/implanter/psi/New()
 	..()
 	imp = new /obj/item/implant/psi_control(src)
-*/
-// [/SIERRA-REMOVE] - PSIONICS - (Перемещено в /mods/psionics)

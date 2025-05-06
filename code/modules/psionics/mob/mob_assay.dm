@@ -1,5 +1,3 @@
-// [SIERRA-REMOVE] - PSIONICS - (Перемещено в /mods/psionics)
-/*
 /mob/living/proc/show_psi_assay(mob/viewer, obj/machinery/psi_meter/machine)
 
 	if(!viewer) viewer = usr
@@ -93,5 +91,3 @@
 	var/datum/browser/popup = new(viewer, "psi_assay_\ref[src]", "Psi-Assay")
 	popup.set_content(jointext(dat,null))
 	popup.open()
-*/
-// [/SIERRA-REMOVE] - PSIONICS - (Перемещено в /mods/psionics)
