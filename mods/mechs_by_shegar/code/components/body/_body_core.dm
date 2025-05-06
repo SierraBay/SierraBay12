@@ -244,12 +244,14 @@
 	if(!Adjacent(usr) || !over.Adjacent(usr))
 		return
 
-	if(storage_compartment)
-		if(owner.hatch_locked)
+	if(owner)
+		if(storage_compartment && owner.hatch_locked)
 			to_chat(usr, SPAN_BAD("Storage compartment locked!"))
 			return
 		else
 			return storage_compartment.MouseDrop(over)
+	.=..()
+
 
 /obj/item/mech_component/chassis/return_diagnostics(mob/user)
 	..()

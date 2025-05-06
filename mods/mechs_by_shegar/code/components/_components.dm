@@ -4,6 +4,7 @@
 	gender = PLURAL
 	color = COLOR_GUNMETAL
 	atom_flags = ATOM_FLAG_CAN_BE_PAINTED
+	anchored = TRUE //Часть меха нешуточно тяжёлые, кто их вообще сможет утащить?
 
 	var/on_mech_icon = 'mods/mechs_by_shegar/icons/mech_parts.dmi'
 	var/exosuit_desc_string
@@ -51,10 +52,14 @@
 	var/obj/item/mech_component/doubled_owner
 	///Владелец части
 	var/mob/living/exosuit/owner
+	//Кто-то прям сейчас пытается тащить нашу часть!
+	var/turf/haul_turf
 
 /obj/item/mech_component/attack_hand(mob/user)
 	if(!can_be_pickuped)
-		to_chat(user, SPAN_BAD("Я такое не подниму!"))
+		to_chat(user, SPAN_BAD("Такую тяжесть тащить только с кем-то!"))
+		to_chat(user, SPAN_GOOD("А для этого вам нужно совместно с кем-то перетащить эту часть меха на пол, куда вы потащите часть"))
+		to_chat(user, SPAN_GOOD("Или, воспользоваться тележкой!"))
 		return
 	else
 		.=..()
@@ -65,6 +70,32 @@
 	if(istype(over_atom, /obj/structure/heavy_vehicle_frame))
 		var/obj/structure/heavy_vehicle_frame/input_frame = over_atom
 		input_frame.use_tool(src, usr)
+	if(istype(over_atom, /turf))
+		try_team_hauling(usr, over_atom)
+	.=..()
+
+/obj/item/mech_component/proc/try_team_hauling(mob/living/user, turf/new_turf)
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/human = user
+	if(human.stamina < 60)
+		to_chat(human, SPAN_WARNING("Устал, не могу!"))
+		return FALSE
+	human.adjust_stamina(-50)
+	if(haul_turf && haul_turf == new_turf)
+		haul_turf = null
+		src.Move(new_turf)
+		return TRUE
+	else if(haul_turf && haul_turf != new_turf)
+		haul_turf = null
+		human.adjust_stamina(-100)
+		to_chat(human, SPAN_WARNING("Что-то вы тащите совсем в разные стороны!"))
+		return FALSE
+	haul_turf = new_turf
+	if(do_after(user, 10 SECONDS, src, DO_PUBLIC_UNIQUE))
+		haul_turf = null
+	else
+		haul_turf = null
 
 /obj/item/mech_component/proc/update_component_owner()
 	if(ismech(loc))

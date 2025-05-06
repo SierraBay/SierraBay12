@@ -68,7 +68,10 @@
 	// ~no more shielded, emitter armed death trains
 	if(!isturf(cargo.loc)) //To prevent loading things from someone's inventory, which wouldn't get handled properly.
 		return FALSE
-	if(load || cargo.anchored)
+	if(load)
+		return FALSE
+
+	if(cargo.anchored && !(istype(cargo, /obj/item/mech_component) || istype(cargo, /obj/item/mech_equipment)))
 		return FALSE
 
 	if(istype(cargo, /obj/machinery))
@@ -166,7 +169,6 @@
 
 	load.forceMove(dest)
 	load.set_dir(get_dir(loc, dest))
-	load.anchored = FALSE		//we can only load non-anchored items, so it makes sense to set this to false
 	load.pixel_y = initial(load.pixel_y)
 	load.reset_plane_and_layer()
 
