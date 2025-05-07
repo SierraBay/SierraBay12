@@ -5,7 +5,6 @@
 
 
 #include "code/psi.dm"
-#include "code/misc/psi.dm"
 #include "code/misc/decoyobj.dm"
 #include "code/complexus/complexus_helpers.dm"
 #include "code/complexus/complexus_latency.dm"
