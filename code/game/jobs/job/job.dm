@@ -71,7 +71,6 @@
 /datum/job/dd_SortValue()
 	return title
 
-
 /datum/job/proc/equip(mob/living/carbon/human/H, alt_title, datum/mil_branch/branch, datum/mil_rank/grade)
 
 	if (required_language)
@@ -100,6 +99,7 @@
 				affected.implants += imp
 				imp.part = affected
 			to_chat(H, SPAN_DANGER("As a registered psionic, you are fitted with a psi-dampening control implant. Using psi-power while the implant is active will result in neural shocks and your violation being reported."))
+
 	var/singleton/hierarchy/outfit/outfit = get_outfit(H, alt_title, branch, grade)
 	if(outfit) . = outfit.equip(H, title, alt_title)
 	if(faction)
