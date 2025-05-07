@@ -84,9 +84,18 @@
 
 /mob/living/exosuit/updatehealth()
 	maxHealth = (head.current_hp + head.unrepairable_damage) + (body.max_hp + body.unrepairable_damage + material.integrity) + (L_arm.current_hp + L_arm.unrepairable_damage) + (R_arm.current_hp + R_arm.unrepairable_damage)  + (L_leg.current_hp + L_leg.unrepairable_damage) + (R_leg.current_hp + R_leg.unrepairable_damage)
-	health = maxHealth-(getFireLoss()+getBruteLoss())
+	health = collect_current_hp()
+	if(health <= 0) //тобишь 0 или меньше
+		death()
+		return
 	if(menu_status)
 		update_big_menu_status()
+
+/mob/living/exosuit/proc/collect_current_hp()
+	var/result = 0
+	for(var/obj/item/mech_component/part in list(head, body, R_arm, L_arm, R_leg, L_leg))
+		result += part.current_hp
+	return result
 
 /mob/living/exosuit/revive()
 	current_heat = 0

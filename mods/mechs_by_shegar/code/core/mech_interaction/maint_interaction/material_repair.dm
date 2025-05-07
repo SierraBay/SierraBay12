@@ -45,14 +45,14 @@
 		if(isWelder(user.r_hand))
 			welder_hand = user.r_hand
 		else
-			to_chat(user,SPAN_NOTICE("You need welding in the other hand."))
+			to_chat(user,SPAN_NOTICE("Нужна сварка в другой руке"))
 			return
 	else
 		sheet_hand = user.r_hand
 		if(isWelder(user.l_hand))
 			welder_hand = user.l_hand
 		else
-			to_chat(user,SPAN_NOTICE("You need welding in the other hand."))
+			to_chat(user,SPAN_NOTICE("Нужна сварка в другой руке"))
 			return
 	if(!welder_hand.can_use(1, user)) //Сварка включена и достаточно топлива?
 		return
@@ -69,7 +69,7 @@
 				return
 		var/repair_ammount = 50 +  ((user.get_skill_value(SKILL_DEVICES) +  user.get_skill_value(SKILL_CONSTRUCTION)) * 7)
 		repair_part.repair_brute_damage(repair_ammount)
-		repair_part.max_hp = repair_part.max_hp - repair_part.repair_damage
 		repair_part.unrepairable_damage += repair_part.repair_damage
 		if(repair_part.min_damage > repair_part.max_hp)
 			repair_part.max_hp = repair_part.min_damage
+		repair_part.update_health()

@@ -153,6 +153,8 @@
 	total_damage = brute_damage + burn_damage
 	if(total_damage > max_hp)
 		total_damage = max_hp
+
+	current_hp = max_hp - total_damage - unrepairable_damage
 	var/prev_state = damage_state
 	damage_state = clamp(round((total_damage/max_hp) * 4), MECH_COMPONENT_DAMAGE_UNDAMAGED, MECH_COMPONENT_DAMAGE_DAMAGED_TOTAL)
 	if(damage_state > prev_state)
@@ -172,12 +174,16 @@
 
 /obj/item/mech_component/proc/take_brute_damage(amt)
 	brute_damage = max(0, brute_damage + amt)
+	if(brute_damage > max_hp - unrepairable_damage - burn_damage)
+		brute_damage = max_hp - unrepairable_damage - burn_damage
 	update_health()
 	if(total_damage == max_hp)
 		take_component_damage(amt,0)
 
 /obj/item/mech_component/proc/take_burn_damage(amt)
 	burn_damage = max(0, burn_damage + amt)
+	if(burn_damage > max_hp - unrepairable_damage - brute_damage)
+		burn_damage = max_hp - unrepairable_damage - brute_damage
 	update_health()
 	if(total_damage == max_hp)
 		take_component_damage(0,amt)
