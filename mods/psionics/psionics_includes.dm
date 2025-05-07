@@ -58,5 +58,6 @@
 #include "code/null/turf_floor.dm"
 #include "code/null/turf_wall.dm"
 #include "code/equipment/psipump.dm"
+#include "code/override.dm"
 
 #endif
