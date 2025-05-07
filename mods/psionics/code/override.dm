@@ -299,3 +299,66 @@
 	"}
 
 	show_browser(usr, body, "window=adminplayeropts;size=550x515")
+
+/datum/job/psychiatrist
+	title = "Counselor"
+	supervisors = "Главному Врачу"
+	department = "Медицинский"
+	department_flag = MED
+
+	minimum_character_age = list(SPECIES_HUMAN = 24)
+	ideal_character_age = 30
+	economic_power = 8
+
+	total_positions = 1
+	spawn_positions = 1
+	alt_titles = list(
+		"Mentalist" = /singleton/hierarchy/outfit/job/sierra/crew/medical/counselor/mentalist,
+		"Psychologist" = /singleton/hierarchy/outfit/job/sierra/crew/medical/counselor/mentalist,
+		"Therapist" = /singleton/hierarchy/outfit/job/sierra/crew/medical/counselor/mentalist,
+		"Psychiatrist" = /singleton/hierarchy/outfit/job/sierra/crew/medical/counselor/mentalist
+	)
+	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/medical/counselor
+	allowed_branches = list(
+		/datum/mil_branch/employee,
+		/datum/mil_branch/civilian,
+		/datum/mil_branch/contractor
+	)
+	allowed_ranks = list(
+		/datum/mil_rank/civ/nt,
+		/datum/mil_rank/civ/contractor,
+		/datum/mil_rank/civ/civ
+	)
+	min_skill = list(
+		SKILL_BUREAUCRACY = SKILL_BASIC,
+		SKILL_MEDICAL = SKILL_BASIC
+	)
+	max_skill = list(
+		SKILL_MEDICAL = SKILL_MAX
+	)
+	access = list(
+		access_medical, access_morgue, access_chapel_office,
+		access_crematorium, access_psychiatrist
+	)
+	software_on_spawn = list(
+		/datum/computer_file/program/suit_sensors,
+		/datum/computer_file/program/camera_monitor
+	)
+	give_psionic_implant_on_join = TRUE
+
+/datum/job/psychiatrist/equip(mob/living/carbon/human/H)
+	if(H.mind.role_alt_title == "Counselor")
+		psi_faculties = list("[PSI_REDACTION]" = PSI_RANK_OPERANT)
+	if(H.mind.role_alt_title == "Mentalist")
+		psi_faculties = list("[PSI_CONSCIOUSNESS]" = PSI_RANK_OPERANT)
+
+	return ..()
+
+/datum/job/psychiatrist/get_description_blurb()
+	return "Вы - друг, наставник, священник... Или обычный психотерапевт. Помимо своих прямых обязанностей в обеспечении \
+	персонала качественной (насколько это возможно) психологической помощью, у вас имеется пси-монитор. \
+	Корпорация хорошо платит вам за то, чтобы вы проводили псионическое обследования членов экипажа на \
+	предмет обладания особыми силами, естественно, с отчетом об этом. Ваша зарплата превышает таковую у \
+	среднестатистческого менталиста из Фонда, и, вероятно, не просто так.<hr>В то время, как Менталист склонен к \
+	исправлению психологических недугов, поиску псионики и даже чтению мыслей, Советник может проводить медицинскую \
+	диагностику и слабое лечение."
