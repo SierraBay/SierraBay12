@@ -1,6 +1,6 @@
 /mob/living/exosuit/proc/material_interaction(obj/item/tool, mob/user)
 	if(!user.skill_check(SKILL_DEVICES, SKILL_TRAINED))
-		to_chat(user, SPAN_BAD("I dont know how work with mechs!"))
+		to_chat(user, SPAN_BAD("Понятия не имею как обслуживать меха."))
 		return
 	var/obj/item/mech_component/choice = show_radial_menu(user, src, parts_list_images, require_near = TRUE, radius = 42, tooltips = TRUE, check_locs = list(src))
 	if(!choice)

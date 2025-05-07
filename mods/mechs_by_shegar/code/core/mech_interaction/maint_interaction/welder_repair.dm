@@ -1,6 +1,6 @@
 /mob/living/exosuit/proc/welder_repair(obj/item/tool, mob/user)
 	if(!user.skill_check(SKILL_DEVICES, SKILL_TRAINED))
-		to_chat(user, SPAN_BAD("I dont know how work with mechs!"))
+		to_chat(user, SPAN_BAD("Понятия не имею как обслуживать меха."))
 		return
 	if (!getBruteLoss())
 		USE_FEEDBACK_FAILURE("\The [src] has no physical damage to repair.")
