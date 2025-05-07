@@ -57,7 +57,6 @@
 
 	var/faction = MOB_FACTION_CREW
 
-
 /datum/job/New()
 
 	if(prob(100-availablity_chance))	//Close positions, blah blah.
@@ -71,6 +70,7 @@
 
 /datum/job/dd_SortValue()
 	return title
+
 
 /datum/job/proc/equip(mob/living/carbon/human/H, alt_title, datum/mil_branch/branch, datum/mil_rank/grade)
 
