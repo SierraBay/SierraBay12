@@ -27,9 +27,6 @@ ID мода: PSIONICS
 
 ### Изменения *кор кода*
 
-- `baystation12.dme`: `#include "code\modules\client\preference_setup\psionics\01_basic.dm"`, `#include "code\modules\client\preference_setup\psionics\02_abilities.dm"`
-- `code/game/jobs/job/job.dm`: `proc/give_psi`, `equip`
-- `code/modules/client/preference_setup/preference_setup.dm`: `/datum/category_group/player_setup_category/psionics_preferences`
 - `test/check-paths.sh` : `+1 к uses of examine()`
 <!--
   Если вы редактировали какие-либо процедуры или переменные в кор коде,
@@ -52,7 +49,8 @@ ID мода: PSIONICS
 ### Дефайны
 
 - `code/__defines/mobs.dm`: `SPECIES_PSI`
-- `code/psi.dm` : `PSI_COERCION`, `PSI_CONSCIOUSNESS`, `PSI_PSYCHOKINESIS`, `PSI_MANIFESTATION`, `PSI_METAKINESIS`, `PSI_ENERGISTICS`, `PSI_REDACTION`, `PSI_RANK_APPRENTICE`, `PSI_RANK_OPERANT`, `PSI_RANK_MASTER`, `PSI_RANK_GRANDMASTER`
+- `code/__defines/~mods/~master_defines.dm` : `PSI_COERCION`, `PSI_CONSCIOUSNESS`, `PSI_PSYCHOKINESIS`, `PSI_MANIFESTATION`, `PSI_METAKINESIS`, `PSI_ENERGISTICS`, `PSI_REDACTION`, `PSI_RANK_BLUNT`, `PSI_RANK_LATENT`, `PSI_RANK_APPRENTICE`, `PSI_RANK_OPERANT`, `PSI_RANK_MASTER`, `PSI_RANK_GRANDMASTER`, `PSI_IMPLANT_AUTOMATIC`, `PSI_IMPLANT_SHOCK`, `PSI_IMPLANT_WARN`, `PSI_IMPLANT_LOG`, `PSI_IMPLANT_DISABLED`
+
 <!--
   Если требовалось добавить какие-либо дефайны, укажи файлы,
   в которые ты их добавил, а также перечисли имена.
@@ -63,7 +61,7 @@ ID мода: PSIONICS
 
 ### Авторы:
 
-Roche Hendson
+Roche Hendson, nasend_
 [final-destination.space](https://github.com/RepoStash/FD-NewBay) - источник
 <!--
   Здесь находится твой никнейм

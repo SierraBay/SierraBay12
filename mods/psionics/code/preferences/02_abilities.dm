@@ -1,4 +1,3 @@
-// [SIERRA-ADD] - PSIONICS
 GLOBAL_LIST_AS(psi_level2cost, list(
 	"Blunt"       = 0,
 	"Latent"      = 2,
@@ -146,4 +145,3 @@ GLOBAL_LIST_AS(psi_threat_level2free_points, list(6, 8, 12, 16))
 		pref.psi_abilities[faculty] = level
 
 	return TOPIC_REFRESH
-// [SIERRA-ADD] - PSIONICS
