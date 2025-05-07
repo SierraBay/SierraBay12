@@ -14,4 +14,4 @@
 #define PSI_RANK_OPERANT       2
 #define PSI_RANK_MASTER        3
 #define PSI_RANK_GRANDMASTER   4
-#define PSI_RANK_PARAMOUNT     5 
+#define PSI_RANK_PARAMOUNT     5
