@@ -2,7 +2,8 @@
 	/obj/item/mech_equipment/ballistic_shield, \
 	/obj/item/mech_equipment/camera, \
 	/obj/item/mech_equipment/clamp, \
-	/obj/item/mech_equipment/light \
+	/obj/item/mech_equipment/light, \
+	/obj/item/mech_equipment/mounted_system/taser/ballistic/grenade_launcher \
 )
 
 /mob/living/exosuit/premade/security
@@ -38,6 +39,7 @@
 	icon_state = "combat_head"
 	name = "old combat sensors array"
 	exosuit_desc_string = "really old combat sensors array"
+	prebuilt_software = list(/obj/item/circuitboard/exosystem/utility, /obj/item/circuitboard/exosystem/weapons)
 	whitelist_equipment_paths = SEC_WHITELIST_EQUIPMENT
 	component_tag = "SECURITY"
 
@@ -73,3 +75,12 @@
 	exosuit_desc_string = "really old combat mech motivator"
 	whitelist_equipment_paths = SEC_WHITELIST_EQUIPMENT
 	component_tag = "SECURITY"
+
+
+//Тоже самое что и СБ мех, но с снаряжением
+/mob/living/exosuit/premade/security/equiped/spawn_mech_equipment()
+	..()
+	install_system(new /obj/item/mech_equipment/ballistic_shield(src), HARDPOINT_RIGHT_HAND)
+	install_system(new /obj/item/mech_equipment/mounted_system/taser/ballistic/grenade_launcher(src), HARDPOINT_LEFT_HAND)
+	install_system(new /obj/item/mech_equipment/camera(src), HARDPOINT_LEFT_SHOULDER)
+	install_system(new /obj/item/mech_equipment/light(src), HARDPOINT_RIGHT_SHOULDER)
