@@ -15,6 +15,7 @@
 	desc = "Some kind of strange alien anomolous detection technology."
 
 /obj/item/clothing/gloves/anomaly_detector/mantid/New()
+	..()
 	switch_toggle()
 
 /obj/item/clothing/gloves/anomaly_detector/mantid/try_found_anomalies(mob/living/user)
