@@ -13,6 +13,18 @@
 	requires_power = 0
 	dynamic_lighting = 0
 
+///Зона реагирует на то что в неё входят
+/area/map_template/anomaly
+	///Зона посещена и более реагировать на вход не нужно
+	var/meeted = FALSE
+	var/points_reward = 50
+
+/area/map_template/anomaly/Entered(A)
+	. = ..()
+	if(ishuman(A) && !meeted)
+		meeted = TRUE
+		SSanom.add_points_to_storyteller(get_z(A), points_reward, "evolution", "Посещение зоны: [name]")
+
 //Штука на которую нажимают призраки и подключаются к игре
 /obj/structute/join_the_playtest
 	name = "ПРИСОЕДИНИТЬСЯ К ПЛЕЙТЕСТУ"

@@ -63,55 +63,59 @@
 
 
 /obj/anomaly/part/labirint_cube/CanPass(atom/movable/mover, turf/target, height, air_group)
+	if(!can_be_activated(mover))
+		return FALSE
 	var/target_to_cube_dir = get_dir(src, mover)
+	var/result = FALSE
 	switch(target_to_cube_dir)
 		//Перс заходит с севера
 		if(NORTH)
 			if(NORTH_STATUS == IN || NORTH_STATUS == FORCE_IN || NORTH_STATUS == BOTH || NORTH_STATUS == FORCE_BOTH)
-				return TRUE
-			else
-				return FALSE
+				result = TRUE
 		if(WEST)
 			if(WEST_STATUS == IN || WEST_STATUS == FORCE_IN || WEST_STATUS == BOTH || WEST_STATUS == FORCE_BOTH)
-				return TRUE
-			else
-				return FALSE
+				result = TRUE
 		if(SOUTH)
 			if(SOUTH_STATUS == IN || SOUTH_STATUS == FORCE_IN || SOUTH_STATUS == BOTH || SOUTH_STATUS == FORCE_BOTH)
-				return TRUE
-			else
-				return FALSE
+				result = TRUE
 		if(EAST)
 			if(EAST_STATUS == IN || EAST_STATUS == FORCE_IN || EAST_STATUS == BOTH || EAST_STATUS == FORCE_BOTH)
-				return TRUE
-			else
-				return FALSE
-
+				result = TRUE
+	if(result)
+		return TRUE
+	else
+		return FALSE
 
 /obj/anomaly/part/labirint_cube/Uncross(atom/O)
+	if(!can_be_activated(O))
+		return FALSE
 	var/target_to_cube_dir = O.dir //Хз как понять направление куда хочет идти игрок, допустим исходя из его dir
+	var/result = FALSE
 	switch(target_to_cube_dir)
 		//Перс заходит с севера
 		if(NORTH)
 			if(NORTH_STATUS == OUT || NORTH_STATUS == FORCE_OUT || NORTH_STATUS == BOTH || NORTH_STATUS == FORCE_BOTH)
-				return TRUE
-			else
-				return FALSE
+				result = TRUE
 		if(WEST)
 			if(WEST_STATUS == OUT || WEST_STATUS == FORCE_OUT || WEST_STATUS == BOTH || WEST_STATUS == FORCE_BOTH)
-				return TRUE
-			else
-				return FALSE
+				result = TRUE
 		if(SOUTH)
 			if(SOUTH_STATUS == OUT || SOUTH_STATUS == FORCE_OUT || SOUTH_STATUS == BOTH || SOUTH_STATUS == FORCE_BOTH)
-				return TRUE
-			else
-				return FALSE
+				result = TRUE
 		if(EAST)
 			if(EAST_STATUS == OUT || EAST_STATUS == FORCE_OUT || EAST_STATUS == BOTH || EAST_STATUS == FORCE_BOTH)
-				return TRUE
-			else
-				return FALSE
+				result = TRUE
+	if(result)
+		return TRUE
+	else
+		return FALSE
+
+/obj/anomaly/part/labirint_cube/Uncrossed(O)
+	if(!can_be_activated(O))
+		return
+	if(!(get_turf(O) in core.anomaly_turfs))
+		core:labirint_leaved()
+
 
 /obj/anomaly/part/labirint_cube/proc/randomise_ways()
 	if(is_path_part) // Кубы на пути статичны
@@ -124,6 +128,14 @@
 		WEST_STATUS = pick(list(IN, OUT, BOTH))
 	if(EAST_STATUS != FORCE_OUT && EAST_STATUS != FORCE_IN && EAST_STATUS != FORCE_BOTH && EAST_STATUS != FORCE_BLOCKED)
 		EAST_STATUS = pick(list(IN, OUT, BOTH))
+	refresh_icon_state()
+
+//Вызывается при выходе с лабиринта
+/obj/anomaly/part/labirint_cube/proc/force_randomise_ways()
+	NORTH_STATUS = pick(list(IN, OUT, BOTH))
+	SOUTH_STATUS = pick(list(IN, OUT, BOTH))
+	WEST_STATUS = pick(list(IN, OUT, BOTH))
+	EAST_STATUS = pick(list(IN, OUT, BOTH))
 	refresh_icon_state()
 
 /obj/anomaly/part/labirint_cube/get_detection_icon(mob/living/viewer)

@@ -1,4 +1,5 @@
 #include "labirint_parts.dm"
+#include "paths.dm"
 #define OUT 1
 #define IN 2
 #define BOTH 3
@@ -23,7 +24,6 @@
 	max_y_size = 10
 	//Лабиринт перестраивает своё состояние
 	cooldown_time = 1 MINUTES
-	var/in_labirint_cooldown = FALSE
 	iniciators = list(
 		/mob/living,
 		/obj/item
@@ -32,10 +32,10 @@
 		/obj/item/artefact/crystal
 	)
 	spawn_artefact_in_center = TRUE
-	detection_skill_req = SKILL_MASTER
+	detection_skill_req = SKILL_BASIC
 	helper_part_path = /obj/anomaly/part/labirint_cube
 	//Количество выходов из аномалии
-	var/exits_ammout = 1
+	var/exits_ammount = 1
 	var/list/exit_parts = list() //Внешние кубы которые являются выходом
 	var/list/border_parts = list() //Крайние кубы которые расположены по краям аномалии
 	var/list/exit_path = list() //Кубы по которым и выходят из аномалии
@@ -43,17 +43,16 @@
 //Кто-то вошёл в аномалию, нам нужно начать обрабатывать нашу ловушку
 /obj/anomaly/labirint/Crossed(atom/movable/O)
 	. = ..()
-	if(isghost(O) || isobserver(O) || in_labirint_cooldown)
+	if(isghost(O) || isobserver(O) || LAZYLEN(exit_path))
 		return
-	setup_borders()
+	setup_borders(O)
+	setup_pathweights()
 	setup_exit_path(O)
 	if(!LAZYLEN(exit_path))
-		//УВИ мы поймали ошибку, надо бы это в рантайм логинг как-то закинуть.
 		full_open_labirint()
-		return
 	process_labirint_trap()
 
-/obj/anomaly/labirint/proc/setup_borders()
+/obj/anomaly/labirint/proc/setup_borders(atom/movable/movable_atom)
 	//Всё довольно просто. Включаются в список тех кто на краю те, что находятся на максимальных/минимальных X и Y
 	var/max_x = 0
 	var/min_x = 10000
@@ -84,91 +83,30 @@
 			border_part.NORTH_STATUS = FORCE_BLOCKED
 		if(border_part.y == min_y)
 			border_part.SOUTH_STATUS = FORCE_BLOCKED
+	setup_exit_cube(movable_atom, max_x, min_x, max_y, min_y)
 
+/obj/anomaly/labirint/proc/setup_pathweights()
+	for(var/obj/anomaly/part/labirint_cube/picked_part in list_of_parts)
+		picked_part.pathweight = rand(1, 5) //Мы выдаём рандомный вес чтоб игра строила более извилистые пути
 
-	//После того как мы нашли все крайние блоки аномалии, нужно определиться какой из них выходной
-	//очень важно чтоб никто не стоял в этом турфе
-	var/i = 0
-	while(exits_ammout > i)
-		var/obj/anomaly/part/labirint_cube/picked = pick(border_parts)
-		if(!locate(/mob/living/carbon/human) in get_turf(picked))
-			if(picked.x == max_x)
-				picked.EAST_STATUS = FORCE_OUT
-			if(picked.x == min_x)
-				picked.WEST_STATUS = FORCE_OUT
-			if(picked.y == max_y)
-				picked.NORTH_STATUS = FORCE_OUT
-			if(picked.y == min_y)
-				picked.SOUTH_STATUS = FORCE_OUT
-			i++
-			LAZYADD(exit_parts, picked)
-
-
-/obj/anomaly/labirint/proc/setup_exit_path(atom/movable/input_movable)
-	var/turf/start = get_turf(input_movable)
-	var/obj/anomaly/part/labirint_cube/exit = get_turf(pick(exit_parts))
-	//Собираем лист турфов
-	var/list/list_of_exit_turfs = AStar(start, exit, TYPE_PROC_REF(/turf, CardinalTurfsWithAccess), TYPE_PROC_REF(/turf, Distance), 0, 50, id = null, exclude = null) //Строим путь через алгоритм АСтар
-	//Теперь собираем кубы на пути
-	for(var/turf/turf in list_of_exit_turfs)
-		for(var/obj/anomaly/part/labirint_cube/cube in turf)
-			LAZYADD(exit_path, cube)
-	//Теперь изменяем кубы в пути
-	for(var/obj/anomaly/part/labirint_cube/cube in exit_path)
-		cube.is_path_part = TRUE
-	// Делаем проходы между кубами пути FORCE_BOTH
-	for(var/i in 1 to (LAZYLEN(exit_path) - 1))
-		var/obj/anomaly/part/labirint_cube/current = exit_path[i]
-		var/obj/anomaly/part/labirint_cube/next = exit_path[i + 1]
-
-		if(!current || !next)  // На всякий случай проверяем
-			continue
-
-		var/dir_to_next = get_dir(current, next)
-
-		// Открываем сторону current в направлении next
-		switch(dir_to_next)
-			if(NORTH)
-				current.NORTH_STATUS = FORCE_BOTH
-			if(SOUTH)
-				current.SOUTH_STATUS = FORCE_BOTH
-			if(EAST)
-				current.EAST_STATUS = FORCE_BOTH
-			if(WEST)
-				current.WEST_STATUS = FORCE_BOTH
-
-		// Открываем сторону next в направлении current (чтобы можно было идти обратно)
-		var/dir_to_prev = turn(dir_to_next, 180)
-		switch(dir_to_prev)
-			if(NORTH)
-				next.NORTH_STATUS = FORCE_BOTH
-			if(SOUTH)
-				next.SOUTH_STATUS = FORCE_BOTH
-			if(EAST)
-				next.EAST_STATUS = FORCE_BOTH
-			if(WEST)
-				next.WEST_STATUS = FORCE_BOTH
-
-		current.refresh_icon_state()
-		next.refresh_icon_state()
+///Из лабиринта вышли, проверим, нам из-за этого засыпать?
+/obj/anomaly/labirint/proc/labirint_leaved()
+	var/result = FALSE
+	for(var/turf/T in anomaly_turfs)
+		for(var/mob/living/carbon/human/human in T)
+			if(human.ckey)
+				result = TRUE
+				break
+	if(!result)
+		go_slep_labirint()
+		return FALSE
+	return TRUE
 
 //Задача функции - обновить состояния своих блоков и проверить, требуется ли оно исходя из того
 //Есть ли в пределах аномалии люди
 /obj/anomaly/labirint/proc/process_labirint_trap()
-	var/somebody_inside = FALSE
-	for(var/turf/T in anomaly_turfs)
-		for(var/mob/living/carbon/somebody_detected in T)
-			somebody_inside = TRUE
-			break
-		if(somebody_inside)
-			break
-	//Лабиринт засыпает
-	if(!somebody_inside)
-		go_slep_labirint()
-		return
 	for(var/obj/anomaly/part/labirint_cube/picked_cube in list_of_parts)
 		picked_cube.randomise_ways()
-	in_labirint_cooldown = TRUE
 	addtimer(new Callback(src, PROC_REF(process_labirint_trap)), cooldown_time)
 
 /obj/anomaly/labirint/proc/full_open_labirint()
@@ -179,13 +117,20 @@
 		cube.SOUTH_STATUS = FORCE_BOTH
 	go_slep_labirint()
 
+///Раскроет все граничные блоки аномалии
+/obj/anomaly/labirint/proc/desetup_borders()
+	for(var/obj/anomaly/part/labirint_cube/border_part in border_parts)
+		border_part.EAST_STATUS = BOTH
+		border_part.WEST_STATUS = BOTH
+		border_part.NORTH_STATUS = BOTH
+		border_part.SOUTH_STATUS = BOTH
+	border_parts = null
 
 /obj/anomaly/labirint/proc/go_slep_labirint()
-	in_labirint_cooldown = FALSE
-	border_parts = null
-	for(var/obj/anomaly/part/labirint_cube/cube in exit_path)
-		cube.is_path_part = FALSE
-	exit_path = null
+	desetup_borders()
+	desetup_exit_path()
+	for(var/obj/anomaly/part/labirint_cube/picked_cube in list_of_parts)
+		picked_cube.force_randomise_ways()
 
 #undef OUT
 #undef IN

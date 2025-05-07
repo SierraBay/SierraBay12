@@ -410,6 +410,8 @@
 #define COMSIG_MOB_CAN_PASS "mob_can_pass"
 	#define COMPONENT_MOB_PASSABLE FLAG(0)
 
+#define COMSIG_MOB_BUMPED "mob_bumped"
+
 ///from base of mob/ranged_attack(): (/atom, modifiers)
 #define COMSIG_MOB_ATTACK_RANGED "mob_attack_ranged"
 ///from base of mob/ranged_attack_secondary(): (/atom, modifiers)

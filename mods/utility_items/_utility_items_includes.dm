@@ -33,7 +33,6 @@
 #include "code/bottom.dm"
 #include "code/top.dm"
 #include "code/skrell-ship.dm"
-#include "code/adherent_armor.dm"
 #include "code/security.dm"
 #include "code/FBP_vox.dm"
 #include "code/rndloadout.dm"
@@ -49,5 +48,5 @@
 #include "code\awaking_tweaks.dm"
 #include "code\ghost_speed.dm"
 #include "code/adrenalin.dm"
-
+#include "code\drone_gas_analyser.dm"
 #endif

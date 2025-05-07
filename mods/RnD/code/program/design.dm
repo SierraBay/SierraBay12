@@ -317,3 +317,6 @@
 	result_type = /obj/structure/plasticflaps
 	req_amount = 5
 	time = 50
+
+/obj/item/device/t_scanner
+	name = "T-ray scanner"
