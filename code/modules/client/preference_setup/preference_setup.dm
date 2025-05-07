@@ -45,12 +45,6 @@ var/global/const/CHARACTER_PREFERENCE_INPUT_TITLE = "Character Preference"
 	sort_order = 8
 	category_item_type = /datum/category_item/player_setup_item/law_pref
 
-/datum/category_group/player_setup_category/psionics_preferences
-	name = "Psionics"
-	sort_order = 9
-	category_item_type = /datum/category_item/player_setup_item/psionics
-
-
 /****************************
 * Category Collection Setup *
 ****************************/
