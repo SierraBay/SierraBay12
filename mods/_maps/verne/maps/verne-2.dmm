@@ -3962,7 +3962,6 @@
 /obj/item/mech_component/chassis/light,
 /obj/item/mech_component/control_module,
 /obj/item/mech_component/manipulators/light,
-/obj/item/mech_component/propulsion/tracks,
 /obj/item/mech_component/sensors/light,
 /obj/item/mech_equipment/clamp,
 /obj/item/mech_equipment/light,
@@ -3982,8 +3981,8 @@
 	},
 /obj/item/robot_parts/robot_component/actuator,
 /obj/item/robot_parts/robot_component/actuator,
-/obj/item/mech_component/propulsion/tracks/right,
 /obj/item/mech_component/manipulators/light/right,
+/obj/item/mech_component/doubled_legs/tracks,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/verne/engineering/workshop)
 "zE" = (
