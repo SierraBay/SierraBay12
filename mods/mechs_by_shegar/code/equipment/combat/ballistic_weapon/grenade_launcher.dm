@@ -3,7 +3,7 @@
 	name = "\improper Mounted \"ZH-MIH\" security grenade launcher"
 	desc = "A huge automatic grenade launcher for mechs. Old, ancient, heavy—its design is way outdated. They don’t make them like this anymore."
 	icon_state = "mech_granatomet"
-	holding_type = /obj/item/gun/launcher/grenade/mech/loaded
+	holding_type = /obj/item/gun/launcher/grenade/mech
 
 /obj/item/mech_equipment/mounted_system/taser/ballistic/grenade_launcher/use_tool(obj/item/item, mob/living/user, list/click_params)
 	SHOULD_CALL_PARENT(FALSE)

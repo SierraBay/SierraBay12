@@ -42,6 +42,8 @@
 	prebuilt_software = list(/obj/item/circuitboard/exosystem/utility, /obj/item/circuitboard/exosystem/weapons)
 	whitelist_equipment_paths = SEC_WHITELIST_EQUIPMENT
 	component_tag = "SECURITY"
+	max_heat = 200
+	heat_cooling = 8
 
 /obj/item/mech_component/chassis/combat/security
 	icon_state = "combat_body"
@@ -56,7 +58,7 @@
 	back_modificator_damage = 1.3
 	front_modificator_damage = 1
 	max_heat = 200
-	heat_cooling = 15
+	heat_cooling = 8
 	emp_heat_generation = 100
 	weight = 300
 	whitelist_equipment_paths = SEC_WHITELIST_EQUIPMENT
@@ -68,6 +70,8 @@
 	exosuit_desc_string = "really old combat mech arm"
 	whitelist_equipment_paths = SEC_WHITELIST_EQUIPMENT
 	component_tag = "SECURITY"
+	max_heat = 200
+	heat_cooling = 8
 
 /obj/item/mech_component/propulsion/powerloader/security
 	icon_state = "combat_leg"
@@ -75,6 +79,8 @@
 	exosuit_desc_string = "really old combat mech motivator"
 	whitelist_equipment_paths = SEC_WHITELIST_EQUIPMENT
 	component_tag = "SECURITY"
+	max_heat = 200
+	heat_cooling = 8
 
 
 //Тоже самое что и СБ мех, но с снаряжением
