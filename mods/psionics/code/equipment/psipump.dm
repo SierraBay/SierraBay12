@@ -29,9 +29,34 @@
 		qdel(src)
 	return ..()
 
-/datum/fabricator_recipe/psipump
-	name = "Psi-pump assembly"
-	path = /obj/item/clothing/head/helmet/psipump
+// RND - PSI-DAMPENER
+/datum/design/item/implant/psidamp
+	name = "Psi dampener implant"
+	id = "psi_damp"
+	req_tech = list(TECH_MATERIAL = 2, TECH_BIO = 3, TECH_BLUESPACE = 3)
+	materials = list(MATERIAL_DIAMOND = 500, MATERIAL_GLASS = 500, MATERIAL_PLASTIC = 500)
+	build_path = /obj/item/implant/psi_control
+	sort_string = "PSDMP"
+
+/datum/technology/bio/psidamp
+	name = "Psionic dampering"
+	desc = "Fabrication of Psi-Pump"
+	id = "psidamp"
+
+	x = 0.2
+	y = 0.7
+	icon = "implant"
+
+	required_technologies = list(/datum/technology/bio/implants)
+	required_tech_levels = list()
+	cost = 1500
+
+	unlocks_designs = list("psi_damp")
+
+// RND - PSI-PUMP
+/datum/design/autolathe/arms_ammo/psipump
+	name = "Psi-pump"
+	build_path = /obj/item/clothing/head/helmet/psipump
 
 // WITH CRYSTAL
 /obj/item/clothing/head/helmet/psipump/active
