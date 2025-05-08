@@ -1,3 +1,5 @@
+#include "render.dm"
+
 /obj/screen/movable/exosuit/advanced_heat/Click(location, control, params)
 	var/modifiers = params2list(params)
 	if(modifiers["shift"])
@@ -17,19 +19,6 @@
 	else
 		to_chat(usr, SPAN_WARNING("The life support panel isn't responding."), VISIBLE_MESSAGE)
 
-/obj/screen/exosuit/overheat
-	icon = 'mods/mechs_by_shegar/icons/mech_heat.dmi'
-	icon_state = "overheat"
-	name = "overheat"
-	vis_flags = VIS_INHERIT_ID
-
-/obj/screen/movable/exosuit/advanced_heat
-	icon = 'mods/mechs_by_shegar/icons/mech_heat.dmi'
-	name = "Heat"
-	icon_state = "heat_0"
-	var/obj/screen/exosuit/overheat/overheat
-	var/tooltip = FALSE
-
 /obj/screen/movable/exosuit/advanced_heat/Click(location, control, params)
 	if(!tooltip)
 		tooltip = TRUE
@@ -38,21 +27,17 @@
 		tooltip = FALSE
 		closeToolTip(usr)
 
-/obj/screen/movable/exosuit/advanced_heat/proc/Update()
-	var/value = (owner.current_heat/owner.max_heat) * 42
-	var/output = floor(value)
-	output = clamp(output, 0, 42)
-	icon_state = "heat_[output]"
-
 /obj/screen/movable/exosuit/advanced_heat/proc/start_overheat()
-	overheat.layer = 2.1
+	overheat.layer = HUD_BASE_LAYER + 0.3
 
 /obj/screen/movable/exosuit/advanced_heat/proc/stop_overheat()
-	overheat.layer = 1.9
+	overheat.layer = HUD_BASE_LAYER - 0.1
 
 /obj/screen/movable/exosuit/advanced_heat/Initialize()
 	. = ..()
-	overheat = new /obj/screen/exosuit/overheat(owner)
-	overheat.layer = 1.9
+	cutter = new /obj/mech_heat_cutter(src)
+	var/obj/spawned_obvodka = new /obj/obvodka(src)
+	overheat = new /obj/overheat(src)
+	vis_contents += cutter
+	vis_contents += spawned_obvodka
 	vis_contents += overheat
-	overheat.pixel_y = 32

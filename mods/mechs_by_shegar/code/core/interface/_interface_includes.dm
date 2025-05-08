@@ -9,7 +9,7 @@
 #include "interface\buttons\eject.dm"
 #include "interface\buttons\hardpoint.dm"
 #include "interface\buttons\hardpoints_menu.dm"
-#include "interface\buttons\heat.dm"
+#include "interface\buttons\heat\heat.dm"
 #include "interface\buttons\mech_integrity.dm"
 #include "interface\buttons\power.dm"
 #include "interface\buttons\guide.dm"
