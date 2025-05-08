@@ -53,4 +53,4 @@
 	return max_grenades
 
 /obj/item/mech_equipment/mounted_system/taser/ballistic/grenade_launcher/get_hardpoint_maptext()
-	return "ИДИ НАХУЙ"
+	return //пока не пофиксил
