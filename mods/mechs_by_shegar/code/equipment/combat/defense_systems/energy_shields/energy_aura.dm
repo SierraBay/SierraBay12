@@ -83,15 +83,8 @@
 //ЭМИ атака по щиту
 /obj/aura/mechshield/proc/emp_attack(severity)
 	if(shields)
-		if(shields.charge)
-			if(severity == 1)
-				var/emp_damage = severity * 125
-				shields.stop_damage(emp_damage)
-			if(severity == 2)
-				var/emp_damage = severity * 75
-				shields.stop_damage(emp_damage)
-			user.visible_message(SPAN_WARNING("\The [shields.owner]'s shilds craks, flashs and covers with sparks and energy strikes."))
-			flick("shield_impact", src)
+		shields.stop_damage(150) //Ваншот щитов
+		user.visible_message(SPAN_WARNING("\The [shields.owner]'s shilds craks, flashs and covers with sparks and energy strikes."))
 
 /obj/aura/mechshield/aura_check_thrown(atom/movable/thrown_atom, datum/thrownthing/thrown_datum)
 	. = ..()

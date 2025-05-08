@@ -4,7 +4,6 @@
 #include "mech_skill.dm"
 #include "mech_uplink.dm"
 #include "mech_wreckage.dm"
-#include "new_prices.dm"
 #include "paint_kit.dm"
 #include "paint_override.dm"
 #include "roboscan.dm"

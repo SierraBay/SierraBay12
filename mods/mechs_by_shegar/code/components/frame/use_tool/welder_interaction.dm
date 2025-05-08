@@ -1,6 +1,6 @@
 /obj/structure/heavy_vehicle_frame/proc/welder_interaction(obj/item/weldingtool/welder, mob/living/user)
 	if(!user.skill_check(SKILL_DEVICES, SKILL_TRAINED))
-		to_chat(user, SPAN_BAD("I dont know how work with mechs!"))
+		to_chat(user, SPAN_BAD("Понятия не имею как обслуживать меха."))
 		return
 	if (!is_reinforced)
 		USE_FEEDBACK_FAILURE("\The [src] has no reinforcements to weld.")

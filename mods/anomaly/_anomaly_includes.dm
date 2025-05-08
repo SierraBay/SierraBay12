@@ -17,7 +17,7 @@
 #include "code\detectors_and_etc\_equipment_includes.dm" //Детекторы и прочее оборудование
 #include "code\spawn_anomalies_protocol\__spawn_protocols_includes.dm" //Размещение аномалий в игре
 #include "code\planets\planet_includes.dm" //Аномальные планеты и всё с ними связанное
-#include "code\storytellers\storytellers_includes.dm" //Рассказчик или же динамическая сложность
+#include "code\storytellers\_core\_storyteller.dm" //Рассказчик или же динамическая сложность
 
 //ETC
 #include "code\functions\locating.dm"

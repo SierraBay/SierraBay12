@@ -58,8 +58,7 @@
 		min_artefacts_ammount = 0,
 		max_artefacts_ammount = 0,
 		source =  "планетарная руина",
-		visible_generation = FALSE,
-		started_in = world.time)
+		visible_generation = FALSE)
 
 	//Очистка и забытие всех спавнеров.
 	for(var/obj/anomaly_spawner/spawner in all_turfs_for_spawn)

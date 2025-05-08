@@ -15,7 +15,6 @@
 	repair_damage = 20
 	hide_pilot = TRUE
 	req_material = MATERIAL_ALUMINIUM
-	have_fast_power_up = TRUE
 	back_modificator_damage = 1.3
 	front_modificator_damage = 1
 	max_heat = 100

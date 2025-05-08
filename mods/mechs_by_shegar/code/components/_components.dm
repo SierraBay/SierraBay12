@@ -4,6 +4,7 @@
 	gender = PLURAL
 	color = COLOR_GUNMETAL
 	atom_flags = ATOM_FLAG_CAN_BE_PAINTED
+	anchored = TRUE //Часть меха нешуточно тяжёлые, кто их вообще сможет утащить?
 
 	var/on_mech_icon = 'mods/mechs_by_shegar/icons/mech_parts.dmi'
 	var/exosuit_desc_string
@@ -49,12 +50,19 @@
 	var/back_additional_damage = 0
 	///Применяется при установки части которая в себе содержит несколько частей (Условно траки или паучьи ноги)
 	var/obj/item/mech_component/doubled_owner
+	///ТЭГ компонента. Применяется если мы не хотим чтоб игроки хитрили, как в случае СБ меха, или части были
+	//Несовместимы.
+	var/component_tag = null
 	///Владелец части
 	var/mob/living/exosuit/owner
+	//Кто-то прям сейчас пытается тащить нашу часть!
+	var/turf/haul_turf
 
 /obj/item/mech_component/attack_hand(mob/user)
 	if(!can_be_pickuped)
-		to_chat(user, SPAN_BAD("Too heavy!"))
+		to_chat(user, SPAN_BAD("Такую тяжесть тащить только с кем-то!"))
+		to_chat(user, SPAN_GOOD("А для этого вам нужно совместно с кем-то перетащить эту часть меха на пол, куда вы потащите часть"))
+		to_chat(user, SPAN_GOOD("Или, воспользоваться тележкой!"))
 		return
 	else
 		.=..()
@@ -65,6 +73,32 @@
 	if(istype(over_atom, /obj/structure/heavy_vehicle_frame))
 		var/obj/structure/heavy_vehicle_frame/input_frame = over_atom
 		input_frame.use_tool(src, usr)
+	if(istype(over_atom, /turf))
+		try_team_hauling(usr, over_atom)
+	.=..()
+
+/obj/item/mech_component/proc/try_team_hauling(mob/living/user, turf/new_turf)
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/human = user
+	if(human.stamina < 60)
+		to_chat(human, SPAN_WARNING("Устал, не могу!"))
+		return FALSE
+	human.adjust_stamina(-50)
+	if(haul_turf && haul_turf == new_turf)
+		haul_turf = null
+		src.Move(new_turf)
+		return TRUE
+	else if(haul_turf && haul_turf != new_turf)
+		haul_turf = null
+		human.adjust_stamina(-100)
+		to_chat(human, SPAN_WARNING("Что-то вы тащите совсем в разные стороны!"))
+		return FALSE
+	haul_turf = new_turf
+	if(do_after(user, 10 SECONDS, src, DO_PUBLIC_UNIQUE))
+		haul_turf = null
+	else
+		haul_turf = null
 
 /obj/item/mech_component/proc/update_component_owner()
 	if(ismech(loc))
@@ -80,7 +114,8 @@
 /obj/item/mech_component/proc/emp_heat(severity, emp_armor, mob/living/exosuit/mech) //Накидываем тепло учитывая армор меха
 	if(emp_armor > 0.8)
 		emp_armor = 0.8
-	mech.add_heat(emp_heat_generation * (1 - emp_armor))
+	if(mech.add_heat(emp_heat_generation * (1 - emp_armor)))
+		return TRUE
 
 /obj/item/mech_component/set_color(new_colour)
 	var/last_colour = color
@@ -118,6 +153,8 @@
 	total_damage = brute_damage + burn_damage
 	if(total_damage > max_hp)
 		total_damage = max_hp
+
+	current_hp = max_hp - total_damage - unrepairable_damage
 	var/prev_state = damage_state
 	damage_state = clamp(round((total_damage/max_hp) * 4), MECH_COMPONENT_DAMAGE_UNDAMAGED, MECH_COMPONENT_DAMAGE_DAMAGED_TOTAL)
 	if(damage_state > prev_state)
@@ -137,12 +174,16 @@
 
 /obj/item/mech_component/proc/take_brute_damage(amt)
 	brute_damage = max(0, brute_damage + amt)
+	if(brute_damage > max_hp - unrepairable_damage - burn_damage)
+		brute_damage = max_hp - unrepairable_damage - burn_damage
 	update_health()
 	if(total_damage == max_hp)
 		take_component_damage(amt,0)
 
 /obj/item/mech_component/proc/take_burn_damage(amt)
 	burn_damage = max(0, burn_damage + amt)
+	if(burn_damage > max_hp - unrepairable_damage - brute_damage)
+		burn_damage = max_hp - unrepairable_damage - brute_damage
 	update_health()
 	if(total_damage == max_hp)
 		take_component_damage(0,amt)
@@ -151,7 +192,8 @@
 	var/list/damageable_components = list()
 	for(var/obj/item/robot_parts/robot_component/RC in contents)
 		damageable_components += RC
-	if(!length(damageable_components)) return
+	if(!LAZYLEN(damageable_components))
+		return
 	var/obj/item/robot_parts/robot_component/RC = pick(damageable_components)
 	if(RC.take_damage(brute, burn))
 		qdel(RC)

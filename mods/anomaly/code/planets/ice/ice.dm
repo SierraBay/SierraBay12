@@ -100,7 +100,7 @@
 
 
 /area/exoplanet/ice
-	ambience = list('sound/effects/wind/tundra0.ogg','sound/effects/wind/tundra1.ogg','mods/anomaly/sounds/electra_planet_wind_2.ogg')
+	forced_ambience = list('mods/anomaly/sounds/electra_planet_wind_2.ogg')
 	base_turf = /turf/simulated/floor/exoplanet/ice/ice_planet
 	can_have_awakening_event = FALSE
 
