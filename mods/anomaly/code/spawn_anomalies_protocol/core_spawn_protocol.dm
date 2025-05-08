@@ -192,7 +192,7 @@ visible_generation - нужно ли рисовать анимацию разм�
 ///Функция генерация артефактов в аномалиях. Спавнит количество артефактов, находящиеся в диапазоне между min_artefacts_ammoun и max_artefacts_ammount
 /proc/generate_artefacts_in_anomalies(list/list_of_anomalies, min_artefacts_ammount, max_artefacts_ammount)
 	var/artefacts_ammount = rand(min_artefacts_ammount, max_artefacts_ammount)
-	var/list/input_list = list_of_anomalies
+	var/list/input_list = list_of_anomalies.Copy()
 	//Санитайз, чтоб не требовали рождение артефактов от тех, кто их рожать не может физически
 	for(var/obj/anomaly/picked_anomaly in input_list)
 		if(!picked_anomaly.can_born_artefacts || !LAZYLEN(picked_anomaly.artefacts))
@@ -200,6 +200,10 @@ visible_generation - нужно ли рисовать анимацию разм�
 	//Санитайз, чтоб артефактов было не слишком много
 	if(artefacts_ammount > LAZYLEN(input_list))
 		artefacts_ammount = LAZYLEN(input_list)
+	//Санитайз от нулей (откуда тут вообще нули?)
+	for(var/i in input_list)
+		if(!istype(i, /obj/anomaly))
+			LAZYREMOVE(input_list, i)
 	var/spawned_artefacts = 0
 	//Пока игра не заспавнит все треуемые артефакты
 	while(artefacts_ammount > spawned_artefacts)
