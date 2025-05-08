@@ -28,10 +28,6 @@
 		check_click_fail(A, user,failed)
 		mech_module_use_attempt(A, user,failed)
 		return
-	//Если цель клика - лестница
-	if(istype(A, /obj/structure/ladder))
-		var/obj/structure/ladder/L = A
-		L.climb(src)
 
 	//В случае если интент стоит на ХАРМ - переходим к попытке атаковать лапой
 	else if(A.Adjacent(src) && user.a_intent == I_HURT)
