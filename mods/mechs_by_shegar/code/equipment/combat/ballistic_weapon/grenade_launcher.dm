@@ -1,7 +1,7 @@
 //Гранатомёт для меха СБ способный заряжать в себя некоторые боеприпасы (гранаты обычные лол)
 /obj/item/mech_equipment/mounted_system/taser/ballistic/grenade_launcher
 	name = "\improper Mounted \"ZH-MIH\" security grenade launcher"
-	desc = "Здоровенный автоматический гранатомёт для мехов. Старый, древний, тяжёлый, его конструкция уже давным давно устарела, больше такие не делают."
+	desc = "A huge automatic grenade launcher for mechs. Old, ancient, heavy—its design is way outdated. They don’t make them like this anymore."
 	icon_state = "mech_granatomet"
 	holding_type = /obj/item/gun/launcher/grenade/mech/loaded
 
