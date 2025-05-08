@@ -19,8 +19,6 @@ GLOBAL_LIST_AS(fortune_cookie_default_fortunes, list(
 	icon_state = "fortune_cookie"
 	filling_color = "#e8e79e"
 	center_of_mass = "x=15;y=14"
-	nutriment_desc = list("fortune cookie" = 2)
-	nutriment_amt = 3
 	bitesize = 2
 
 	/// The paper fortune contained inside the cookie. Set during `Initialize()`.

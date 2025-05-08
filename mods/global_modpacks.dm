@@ -2,6 +2,7 @@
 #include "ai/_ai_includes.dm"
 #include "adherent_discharge/_adherent_discharge_includes.dm"
 #include "body_markings/_body_markings_includes.dm"
+#include "cargo/_cargo_includes.dm"
 #include "client_verbs/_client_verbs_includes.dm"
 #include "colony_fractions/_colony_types_includes.dm"
 // #include "don_loadout/_don_loadout_includes.dm" // Не открывать до Рождества
@@ -56,3 +57,4 @@
 #include "cut_scenes/_cut_scenes_includes.dm"
 #include "TG_signals/_tg_signals_includes.dm"
 #include "infinity_content/_infinity_includes.dm"
+#include "petting_zoo/_petting_zoo_includes.dm"

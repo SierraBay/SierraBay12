@@ -9,7 +9,7 @@
 
 	var/decl/ship_contact_class/class = contact_class
 	. += "<br>Class: [class.class_long], mass [vessel_mass] tons."
-	if(!is_still())
+	if(is_moving())
 		. += "Heading: [get_heading_angle()], speed [get_speed() * 1000]"
 	else
 		. += {"\n\[i\]Vessel was stationary at time of scan.\[/i\]\n"}

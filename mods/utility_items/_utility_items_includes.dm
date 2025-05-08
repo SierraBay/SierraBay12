@@ -33,7 +33,6 @@
 #include "code/bottom.dm"
 #include "code/top.dm"
 #include "code/skrell-ship.dm"
-#include "code/adherent_armor.dm"
 #include "code/security.dm"
 #include "code/FBP_vox.dm"
 #include "code/rndloadout.dm"
