@@ -192,7 +192,8 @@
 	var/list/damageable_components = list()
 	for(var/obj/item/robot_parts/robot_component/RC in contents)
 		damageable_components += RC
-	if(!length(damageable_components)) return
+	if(!LAZYLEN(damageable_components))
+		return
 	var/obj/item/robot_parts/robot_component/RC = pick(damageable_components)
 	if(RC.take_damage(brute, burn))
 		qdel(RC)

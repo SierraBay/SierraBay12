@@ -83,6 +83,9 @@
 /obj/item/mech_component/propulsion/update_components()
 	motivator = locate() in src
 	update_parts_images()
+	if(owner)
+		owner.calculate_max_speed()
+		owner.calculate_acceleration() //Обновился компонент -вероятно нам надавали. Обновимся
 
 /obj/item/mech_component/propulsion/use_tool(obj/item/thing, mob/living/user, list/click_params)
 	if(istype(thing,/obj/item/robot_parts/robot_component/actuator))
@@ -99,6 +102,12 @@
 /obj/item/mech_component/propulsion/prebuild()
 	motivator = new(src)
 	update_parts_images()
+
+//Часть меха рабочая(Актуатор на месте)
+/obj/item/mech_component/propulsion/proc/is_active()
+	if(!motivator)
+		return FALSE
+	return TRUE
 
 /obj/item/mech_component/propulsion/proc/can_move_on(turf/location, turf/target_loc)
 	if(!location) //Unsure on how that'd even work
