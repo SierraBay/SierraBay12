@@ -59,4 +59,3 @@
 #include "infinity_content/_infinity_includes.dm"
 #include "petting_zoo/_petting_zoo_includes.dm"
 #include "psionics/psionics_includes.dm"
-#include "../packs/sierra-tweaks/_pack.dm"
