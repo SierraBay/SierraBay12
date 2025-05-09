@@ -3956,7 +3956,7 @@
 "zA" = (
 /obj/structure/closet/crate/plastic,
 /obj/item/mech_component/chassis/light,
-/obj/item/mech_component/control_module,
+/obj/item/robot_parts/robot_component/control_module,
 /obj/item/mech_component/manipulators/light,
 /obj/item/mech_component/propulsion/tracks,
 /obj/item/mech_component/sensors/light,
