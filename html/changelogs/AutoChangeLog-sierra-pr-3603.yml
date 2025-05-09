@@ -1,0 +1,4 @@
+author: Banditoz
+changes:
+  - {bugfix: Saving logs through goonchat is now functional with a 516 client.}
+delete-after: true
