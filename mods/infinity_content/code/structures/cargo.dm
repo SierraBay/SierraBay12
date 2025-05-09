@@ -181,5 +181,5 @@
 
 	return TRUE
 
-atom/movable/proc/react_at_cargo_cart_loaded()
+/atom/movable/proc/react_at_cargo_cart_loaded()
 	return

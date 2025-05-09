@@ -2918,6 +2918,10 @@
 /obj/structure/stairs/east,
 /turf/simulated/floor/plating,
 /area/verne/stairs/two)
+"rO" = (
+/obj/structure/table/rack,
+/turf/space,
+/area/space)
 "rQ" = (
 /obj/floor_decal/techfloor/orange{
 	dir = 4
@@ -3958,7 +3962,6 @@
 /obj/item/mech_component/chassis/light,
 /obj/item/robot_parts/robot_component/control_module,
 /obj/item/mech_component/manipulators/light,
-/obj/item/mech_component/propulsion/tracks,
 /obj/item/mech_component/sensors/light,
 /obj/item/mech_equipment/clamp,
 /obj/item/mech_equipment/light,
@@ -3976,6 +3979,10 @@
 /obj/floor_decal/techfloor{
 	dir = 10
 	},
+/obj/item/robot_parts/robot_component/actuator,
+/obj/item/robot_parts/robot_component/actuator,
+/obj/item/mech_component/manipulators/light/right,
+/obj/item/mech_component/doubled_legs/tracks,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/verne/engineering/workshop)
 "zE" = (
@@ -4292,6 +4299,16 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/verne/xenosci)
+"BS" = (
+/obj/floor_decal/techfloor/orange,
+/obj/structure/table/rack,
+/obj/item/stock_parts/computer/hard_drive/portable/design/components,
+/obj/item/stock_parts/computer/hard_drive/portable/design/engineering,
+/obj/item/stock_parts/computer/hard_drive/portable/design/general,
+/obj/item/stock_parts/computer/hard_drive/portable/design/medical,
+/obj/item/stock_parts/computer/hard_drive/portable/design/tool,
+/turf/simulated/floor/tiled/techfloor,
+/area/verne/engineering/workshop)
 "BT" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -4549,7 +4566,6 @@
 /area/verne/catfish)
 "DW" = (
 /obj/floor_decal/techfloor/orange,
-/obj/structure/table/steel,
 /obj/item/collector{
 	pixel_x = -6
 	},
@@ -4557,6 +4573,7 @@
 /obj/item/collector{
 	pixel_x = 6
 	},
+/obj/structure/table/rack,
 /turf/simulated/floor/tiled/techfloor,
 /area/verne/engineering/workshop)
 "Ec" = (
@@ -6145,6 +6162,11 @@
 /obj/floor_decal/corner/b_green/diagonal,
 /turf/simulated/floor/tiled/white,
 /area/verne/xenosci/workshop)
+"Sm" = (
+/obj/structure/lattice,
+/obj/structure/table/rack,
+/turf/space,
+/area/space)
 "Sq" = (
 /obj/wallframe_spawn/reinforced_phoron/titanium,
 /obj/paint_stripe/gunmetal,
@@ -13448,8 +13470,8 @@ Ql
 jS
 Ql
 Ql
-Ql
-jS
+rO
+Sm
 Ql
 Ql
 Ql
@@ -14799,7 +14821,7 @@ Qp
 Xv
 aR
 cu
-hH
+BS
 pY
 oJ
 oE

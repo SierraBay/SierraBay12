@@ -103,6 +103,7 @@
 	ideal_character_age = 25
 	alt_titles = list("Junior Guard", "Combat Mech Pilot")
 
+
 	skill_points = 20
 
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/security/officer
