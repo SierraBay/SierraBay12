@@ -1,4 +1,7 @@
 /obj/structure/heavy_vehicle_frame/use_tool(obj/item/tool, mob/user, list/click_params)
+	if(!self_cart_check())
+		to_chat(user, "Сперва сгрузите с тележки.")
+		return
 	if (isCoil(tool))
 		cable_coil_interaction(tool, user)
 	else if (isCrowbar(tool))

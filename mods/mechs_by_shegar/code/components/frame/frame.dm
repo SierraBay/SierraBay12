@@ -22,6 +22,7 @@
 	icon = 'mods/mechs_by_shegar/icons/mech_parts.dmi'
 	icon_state = "backbone"
 	density = TRUE
+	anchored = TRUE
 	pixel_x = -8
 	atom_flags = ATOM_FLAG_CAN_BE_PAINTED
 
