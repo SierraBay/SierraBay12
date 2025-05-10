@@ -76,21 +76,6 @@
 				. = TRUE
 	return ..()
 
-/obj/structure/holoplant/use_tool(obj/item/I, mob/living/user, click_params)
-
-	if(istype(I, /obj/item/psychic_power/psielectro))
-		if(istype(user) && user.psi && !user.psi.suppressed && user.psi.get_rank(PSI_METAKINESIS) >= PSI_RANK_APPRENTICE)
-			if(do_after(user, 30))
-				to_chat(user, "<span class='warning'>Вы аккуратно меняете настройки голо-цветка...</span>")
-				if(!emagged)
-					emag_act()
-					new /obj/temporary(get_turf(src),3, 'icons/effects/effects.dmi', "electricity_constant")
-				else
-					rollback()
-				. = TRUE
-
-	..()
-
 //ATOM related stuff ending here
 
 //ELECTRIC ORB itself
