@@ -193,7 +193,7 @@
 	Основная его задача заключается в снабжении медбея необходимыми препаратами. Так же он может принимать заказы от других членов экипажа, будь то лекарства, чистящие средства, гербициды и прочее."
 
 /datum/job/psychiatrist
-	title = "Mentalist"
+	title = "Counselor"
 	supervisors = "Главному Врачу"
 	department = "Медицинский"
 	department_flag = MED
@@ -205,12 +205,12 @@
 	total_positions = 1
 	spawn_positions = 1
 	alt_titles = list(
-		"Counselor" = /singleton/hierarchy/outfit/job/sierra/crew/medical/counselor,
+		"Mentalist" = /singleton/hierarchy/outfit/job/sierra/crew/medical/counselor/mentalist,
 		"Psychologist" = /singleton/hierarchy/outfit/job/sierra/crew/medical/counselor/mentalist,
 		"Therapist" = /singleton/hierarchy/outfit/job/sierra/crew/medical/counselor/mentalist,
 		"Psychiatrist" = /singleton/hierarchy/outfit/job/sierra/crew/medical/counselor/mentalist
 	)
-	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/medical/counselor/mentalist
+	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/medical/counselor
 	allowed_branches = list(
 		/datum/mil_branch/employee,
 		/datum/mil_branch/civilian,
