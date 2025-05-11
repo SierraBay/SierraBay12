@@ -9,3 +9,5 @@
 //рерайт лежания
 #include "code\laying_and_resting_refactor\lying_set.dm"
 #include "code\laying_and_resting_refactor\overrides.dm"
+//Вылавливание говорения куклой
+#include "code\say.dm"

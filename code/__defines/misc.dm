@@ -410,6 +410,8 @@
 #define COMSIG_MOB_CAN_PASS "mob_can_pass"
 	#define COMPONENT_MOB_PASSABLE FLAG(0)
 
+#define COMSIG_MOB_BUMPED "mob_bumped"
+
 ///from base of mob/ranged_attack(): (/atom, modifiers)
 #define COMSIG_MOB_ATTACK_RANGED "mob_attack_ranged"
 ///from base of mob/ranged_attack_secondary(): (/atom, modifiers)
@@ -419,6 +421,9 @@
 #define COMSIG_MOB_EXAMINING "mob_examining"
 ///from base of proc/examinate(): (/atom)
 #define COMSIG_MOB_EXAMINATE "mob_examinate"
+
+//Кто-то что-то сказал!
+#define COMSIG_MOB_SAYED "mob_sayed"
 
 /// Return this from `/datum/component/Initialize` or `/datum/component/OnTransfer` or `/datum/component/on_source_add` to have the component be deleted if it's applied to an incorrect type.
 /// `parent` must not be modified if this is to be returned.

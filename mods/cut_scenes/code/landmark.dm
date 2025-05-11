@@ -14,3 +14,15 @@
 	my_cut_scene = new my_cut_scene_type(src)
 	my_cut_scene.my_landmark = src
 	my_cut_scene.start_cutscene(get_turf(src))
+
+
+/obj/random_titan_landmark
+	var/list/possible_landmarks = list(
+
+	)
+
+/obj/random_titan_landmark/New(loc, ...)
+	.=..()
+	var/result_spawn_type = pickweight(possible_landmarks)
+	var/turf/my_turf = get_turf(src)
+	new result_spawn_type(my_turf)

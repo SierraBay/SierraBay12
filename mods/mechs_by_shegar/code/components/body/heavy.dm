@@ -13,7 +13,6 @@
 	repair_damage = 30
 	hide_pilot = TRUE
 	req_material = MATERIAL_PLASTEEL
-	have_fast_power_up = TRUE
 	back_modificator_damage = 4
 	front_modificator_damage = 0.5
 	max_heat = 300

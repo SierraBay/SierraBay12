@@ -1,3 +1,43 @@
+#include "cart_check.dm"
+#include "render.dm"
+#include "tags_check.dm"
+#include "use_tool.dm"
+
+#include "use_tool\arms_install.dm"
+#include "use_tool\body_install.dm"
+#include "use_tool\cable_coil.dm"
+#include "use_tool\crowbar.dm"
+#include "use_tool\doubled_leg_instalation.dm"
+#include "use_tool\legs_install.dm"
+#include "use_tool\material_install.dm"
+#include "use_tool\screwdriver_interaction.dm"
+#include "use_tool\sensors_install.dm"
+#include "use_tool\welder_interaction.dm"
+#include "use_tool\wirecutter_interactio.dm"
+#include "use_tool\wrench_interaction.dm"
+
+/obj/structure/heavy_vehicle_frame
+	name = "exosuit frame"
+	desc = "The frame for an exosuit, apparently."
+	icon = 'mods/mechs_by_shegar/icons/mech_parts.dmi'
+	icon_state = "backbone"
+	density = TRUE
+	anchored = TRUE
+	pixel_x = -8
+	atom_flags = ATOM_FLAG_CAN_BE_PAINTED
+
+	// Holders for the final product.
+	var/obj/item/mech_component/sensors/head
+	var/obj/item/mech_component/chassis/body
+	var/obj/item/mech_component/manipulators/L_arm
+	var/obj/item/mech_component/manipulators/R_arm
+	var/obj/item/mech_component/propulsion/L_leg
+	var/obj/item/mech_component/propulsion/R_leg
+	var/is_wired = 0
+	var/is_reinforced = 0
+	var/set_name
+	dir = SOUTH
+
 /obj/item/frame_holder
 	matter = list(MATERIAL_STEEL = 175000, MATERIAL_PLASTIC = 50000, MATERIAL_OSMIUM = 30000)
 
@@ -75,6 +115,7 @@
 		visible_message(SPAN_NOTICE("\The [user] begins installing \the [thing] into \the [src]."))
 		if(!do_after(user, 3 SECONDS * user.skill_delay_mult(SKILL_DEVICES), src, DO_PUBLIC_UNIQUE))
 			return
+	cart_check(thing)
 	thing.forceMove(src)
 	visible_message(SPAN_NOTICE("\The [user] installs \the [thing] into \the [src]."))
 	playsound(user.loc, 'sound/machines/click.ogg', 50, 1)

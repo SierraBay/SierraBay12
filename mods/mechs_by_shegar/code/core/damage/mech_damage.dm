@@ -54,10 +54,6 @@
 		if(body_armor)
 			. += body_armor
 
-/mob/living/exosuit/updatehealth()
-	maxHealth = body ? body.mech_health : 0
-	health = maxHealth-(getFireLoss()+getBruteLoss())
-
 /mob/living/exosuit/adjustFireLoss(amount, obj/item/mech_component/MC = pick(list(head, body, L_arm, R_arm, L_leg, R_leg)))
 	if(MC)
 		MC.take_burn_damage(amount)
@@ -92,20 +88,6 @@
 		return .
 	var/list/after_armor = modify_damage_by_armor(null, ., DAMAGE_RADIATION, DAMAGE_FLAG_DISPERSED, src, 0, TRUE)
 	return after_armor[1]
-
-/mob/living/exosuit/getFireLoss()
-	var/total = 0
-	for(var/obj/item/mech_component/MC in list(head, body, L_arm, R_arm, L_leg, R_leg))
-		if(MC)
-			total += MC.burn_damage
-	return total
-
-/mob/living/exosuit/getBruteLoss()
-	var/total = 0
-	for(var/obj/item/mech_component/MC in list(head, body, L_arm, R_arm, L_leg, R_leg))
-		if(MC)
-			total += MC.brute_damage
-	return total
 
 /mob/living/exosuit/get_bullet_impact_effect_type(def_zone)
 	return BULLET_IMPACT_METAL

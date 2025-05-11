@@ -58,7 +58,7 @@ meteor_act
 			. += .() * organ_rel_size/tally
 		return
 	return ..()
-
+/*[SIERRA-REMOVE] - IPC-MODS убираем потому что оверрайдим а тут наследство стоит, и вызывает другие проки
 /mob/living/carbon/human/get_armors_by_zone(obj/item/organ/external/def_zone, damage_type, damage_flags)
 	if(!def_zone)
 		def_zone = ran_zone()
@@ -83,7 +83,7 @@ meteor_act
 
 	// Add inherent armor to the end of list so that protective equipment is checked first
 	. += ..()
-
+*/
 //this proc returns the Siemens coefficient of electrical resistivity for a particular external organ.
 /mob/living/carbon/human/proc/get_siemens_coefficient_organ(obj/item/organ/external/def_zone)
 	if (!def_zone)

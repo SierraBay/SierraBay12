@@ -71,8 +71,8 @@
 	icon_state = "latkes_full"
 	filling_color = "#e88d17"
 	bitesize = 4
-	nutriment_amt = 24
-	nutriment_desc = list("crispy fried potato" = 24)
+	nutriment_amt = 12
+	nutriment_desc = list("crispy fried potato" = 12)
 	vendingobject = /obj/item/reagent_containers/food/snacks/latke
 	unitname = "latke"
 

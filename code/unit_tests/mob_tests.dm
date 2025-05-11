@@ -452,10 +452,12 @@ var/global/default_mobloc = null
 /datum/unit_test/mob_damage/machine/brute
 	name = "MOB: IPC Brute Damage Check"
 	damagetype = DAMAGE_BRUTE
+	expected_vulnerability = ARMORED
 
 /datum/unit_test/mob_damage/machine/fire
 	name = "MOB: IPC Fire Damage Check"
 	damagetype = DAMAGE_BURN
+	expected_vulnerability = ARMORED
 
 /datum/unit_test/mob_damage/machine/tox
 	name = "MOB: IPC Toxins Damage Check"

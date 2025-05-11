@@ -3,6 +3,7 @@
 //Баллистика
 #include "combat\ballistic_weapon\_main.dm"
 #include "combat\ballistic_weapon\autoshotgun.dm"
+#include "combat\ballistic_weapon\grenade_launcher.dm"
 #include "combat\ballistic_weapon\machinegun.dm"
 #include "combat\ballistic_weapon\smg.dm"
 //Защитные системы

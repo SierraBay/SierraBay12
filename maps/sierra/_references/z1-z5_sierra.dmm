@@ -114511,9 +114511,6 @@
 /obj/structure/table/steel,
 /obj/item/paper_bin,
 /obj/item/pen,
-/obj/item/reagent_containers/food/snacks/slice/xenomeatbread/filled{
-	pixel_x = 17
-	},
 /obj/item/folder/nt{
 	pixel_y = 7;
 	pixel_x = -10

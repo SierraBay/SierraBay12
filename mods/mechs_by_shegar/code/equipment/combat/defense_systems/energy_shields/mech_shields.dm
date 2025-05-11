@@ -5,8 +5,8 @@
 	desc = "The Hephaestus Armature system is a well liked energy deflector system designed to stop any projectile before it has a chance to become a threat."
 	icon_state = "shield_droid"
 	var/obj/aura/mechshield/aura = null
-	var/max_charge = 200
-	var/charge = 200
+	var/max_charge = 150
+	var/charge = 150
 	var/last_recharge = 0
 	var/charging_rate = 7500 * CELLRATE
 	var/cooldown = 4 SECONDS //Time until we can recharge again after a blocked impact
@@ -16,6 +16,7 @@
 	var/last_overheat = 0
 	var/overheat_cooldown = 50 SECONDS //Огромное окно для пробития меха.
 	var/current_mode = NORMAL_MODE
+	can_be_pickuped = TRUE
 	//Содержит в себе список установленных вспомогательных частей щита.
 	var/list/deployed_wide_parts = list()
 

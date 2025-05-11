@@ -1,3 +1,11 @@
+#include "effects\adherant_effect.dm" //Воздействие электры на адхерата
+#include "effects\borg_effect.dm" //Воздействие электра на борга
+#include "effects\human_effect.dm" //Воздействие электры на человека
+#include "effects\mech_effect.dm" //Воздействие электры на меха
+#include "effects\mob_effect.dm" //Воздействие электры на симпл моба
+#include "organs_to_earth.dm" //Алгоритм просчитывания органов до земли
+#include "stun_and_jittery.dm" //Эффект тряски  от электры
+
 /obj/anomaly/electra
 	name = "Lightning strikes"
 	anomaly_tag = "Electra"
@@ -95,21 +103,8 @@
 			return
 	if(istype(target, /mob/living)) //Жертвой удара является моб или его наследник(ребёнок)
 		create_line = TRUE
-		if(istype(target, /mob/living/carbon/human/adherent))
-			electra_adherant_effect(target)
-
-		else if(ishuman(target))
-			electra_human_effect(target)
-			stun_and_jittery_by_electra(target)
-
-		else if(istype(target, /mob/living/silicon/robot )) //Если целью является борг, мы так же наносим ему электроудар
-			electra_borg_effect(target)
-
-		else if(istype(target, /mob/living/exosuit)) //Если целью является мех, мы наносим ему ЭМИ удар
-			electra_mech_effect(target)
-
-		else if(istype(target, /mob/living)) //Если целью является симплмоб, мы его гибаем
-			electra_mob_effect(target)
+		var/mob/living/living = target
+		living.electra_mob_effect()
 
 	else if(isaurora(target))
 		var/obj/structure/aurora/aurora = target

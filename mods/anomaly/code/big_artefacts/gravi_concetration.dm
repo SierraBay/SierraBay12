@@ -1,10 +1,11 @@
 /obj/structure/big_artefact/gravi
 	icon_state = "gravi_anomalies"
-	min_anomalies_ammout = 60
-	max_anomalies_ammout = 120
+	min_anomalies_ammount = 60
+	max_anomalies_ammount = 120
 	range_spawn = 30
 	possible_anomalies = list(
-		/obj/anomaly/tramplin/random = 2,
+		/obj/anomaly/tramplin = 2,
+		/obj/anomaly/tramplin/powerfull = 1,
 		/obj/anomaly/rvach/three_and_three = 1
 		)
 	var/last_gravi_attack

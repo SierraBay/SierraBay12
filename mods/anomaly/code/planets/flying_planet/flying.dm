@@ -16,6 +16,7 @@
 		/datum/exoplanet_theme = 100
 		)
 	planetary_area = /area/exoplanet/flying
+	storyteller_path = /datum/planet_storyteller/gravi_home
 	map_generators = list(/datum/random_map/automata/cave_system/mountains/flying, /datum/random_map/noise/exoplanet/flying)
 	surface_color = "#11420c"
 	water_color = "#ffffff"
@@ -70,7 +71,7 @@
 	mineral_turf =  /turf/simulated/floor/exoplanet/grass
 
 /area/exoplanet/flying
-	ambience = list('sound/effects/wind/tundra0.ogg','mods/anomaly/sounds/gravi_planet_wind_1.ogg')
+	forced_ambience = list('mods/anomaly/sounds/gravi_planet_wind_1.ogg')
 	base_turf = /turf/simulated/floor/exoplanet/clouds
 	can_have_awakening_event = FALSE
 

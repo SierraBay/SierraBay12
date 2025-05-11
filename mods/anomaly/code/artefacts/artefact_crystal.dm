@@ -27,8 +27,9 @@
 	else
 		to_chat(user,SPAN_GOOD("Потреяся обьект вы почувствовали, что при попытке быстро сдвинуть объект ближе к земле, он явно сопротивляется, не давая сдвинуться так быстро и вашим рукам.."))
 
-
-
+/obj/item/artefact/crystal/user_bumped_at_atom(mob/living/user, atom/bump_atom)
+	var/turf/temp_turf = get_turf(bump_atom)
+	current_user.forceMove(temp_turf)
 
 /obj/item/artefact/crystal/bite_interaction(mob/living/carbon/human/user)
 	to_chat(user,SPAN_NOTICE("Твёрдый как алмаз, без вкусов."))
