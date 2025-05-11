@@ -6,17 +6,17 @@
 
 /obj/screen/exosuit/menu_button/hatch/switch_on()
 	if(owner.power == MECH_POWER_OFF)
-		to_chat(usr, SPAN_WARNING("You cant close hatch while mech unpowered."))
+		to_chat(usr, SPAN_WARNING("Кабину нельзя закрыть, пока мех незапитан."))
 		return
 	owner.hatch_closed = TRUE
-	to_chat(usr, SPAN_NOTICE("Hatch is now closed."))
+	to_chat(usr, SPAN_NOTICE("Кабина закрыта."))
 	playsound(src.loc, 'sound/machines/suitstorage_cycledoor.ogg', 50, 1, -6)
 	owner.update_icon()
 	return TRUE
 
 /obj/screen/exosuit/menu_button/hatch/switch_off()
 	if(owner.hatch_locked && owner.hatch_closed)
-		to_chat(usr, SPAN_WARNING("You cannot open the hatch while it is locked."))
+		to_chat(usr, SPAN_WARNING("Нельзя открыть кабину при активном замке (Смотри в меню меха)."))
 		return FALSE
 	owner.open_hatch(usr)
 	playsound(src.loc, 'sound/machines/suitstorage_cycledoor.ogg', 50, 1, -6)
@@ -37,7 +37,7 @@
 	need_update_sensor_effects = TRUE
 	playsound(src.loc, 'sound/machines/suitstorage_cycledoor.ogg', 50, 1, -6)
 	if(user)
-		to_chat(user, SPAN_NOTICE("Hatch is now open."))
+		to_chat(user, SPAN_NOTICE("Кабина открыта."))
 
 /mob/living/exosuit/proc/close_hatch(mob/living/user)
 	hatch_closed = TRUE
@@ -46,4 +46,4 @@
 	need_update_sensor_effects = TRUE
 	playsound(src.loc, 'sound/machines/suitstorage_cycledoor.ogg', 50, 1, -6)
 	if(user)
-		to_chat(usr, SPAN_NOTICE("Hatch is now close."))
+		to_chat(usr, SPAN_NOTICE("Кабина закрыта."))

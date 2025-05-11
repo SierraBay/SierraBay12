@@ -7,7 +7,7 @@
 	var/see_invisible = 0
 	var/obj/item/robot_parts/robot_component/radio/radio
 	var/obj/item/robot_parts/robot_component/camera/camera
-	var/obj/item/mech_component/control_module/computer
+	var/obj/item/robot_parts/robot_component/control_module/computer
 	/// Takes /obj/item/circuitboard/exosystem type paths for what boards get put in for prefabs
 	var/list/prebuilt_software = list()
 	has_hardpoints = list(HARDPOINT_HEAD)
@@ -41,14 +41,15 @@
 	radio = locate() in src
 	camera = locate() in src
 	computer = locate() in src
-	owner.need_update_sensor_effects = TRUE
+	if(owner)
+		owner.need_update_sensor_effects = TRUE
 	update_parts_images()
 
 /obj/item/mech_component/sensors/ready_to_install()
 	return (radio && camera)
 
 /obj/item/mech_component/sensors/use_tool(obj/item/thing, mob/living/user, list/click_params)
-	if(istype(thing, /obj/item/mech_component/control_module))
+	if(istype(thing, /obj/item/robot_parts/robot_component/control_module))
 		if(computer)
 			to_chat(user, SPAN_WARNING("\The [src] already has a control modules installed."))
 			return TRUE

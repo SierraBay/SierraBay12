@@ -89,7 +89,7 @@ garanted_artefacts_ammount - Если нам нужно чёткое колич�
 source - Источник(Причина) генерации аномалий на турфах. Используется для отчёта
 visible_generation - нужно ли рисовать анимацию размещения аномалии, или это не требуется т.к просто некому это видеть?
 */
-/proc/generate_anomalies_in_turfs(list/anomalies_types, list/all_turfs_for_spawn, min_anomalies_ammount, max_anomalies_ammount, min_artefacts_ammount, max_artefacts_ammount, source, visible_generation = FALSE, started_in)
+/proc/generate_anomalies_in_turfs(list/anomalies_types, list/all_turfs_for_spawn, min_anomalies_ammount, max_anomalies_ammount, min_artefacts_ammount, max_artefacts_ammount, source, visible_generation = FALSE)
 	set background = TRUE
 	set waitfor = FALSE
 	//Расчитываем мин и макс количество аномалий
@@ -106,11 +106,10 @@ visible_generation - нужно ли рисовать анимацию разм�
 	//Список успешно размещённых в игре аномалий
 	var/list/spawned_anomalies = list()
 	var/critical_errors_ammount = 0
-	for(var/i = 0, i <= result_anomalies_ammount)
+	for(var/i = 0, i != result_anomalies_ammount)
 		//Перед началом проверим, что наш список просто не опустошил себя до установки всех аномалий
 		if(!LAZYLEN(all_turfs_for_spawn))
 			//Список пуст, сообщаем коду о завершении работы.
-			i = result_anomalies_ammount + 1
 			break
 		var/add = FALSE
 		//Переменная обозначает что в обработке именно этого турфа используется спавнер.
@@ -138,7 +137,6 @@ visible_generation - нужно ли рисовать анимацию разм�
 			critical_errors_ammount++
 			continue
 		if(critical_errors_ammount > 2)
-			i = result_anomalies_ammount + 1
 			log_and_message_admins("Генератор аномалий вышел из цикла с критической ошибкой. ")
 			break
 		//Если каким-то образом спавнер/турф оказался в стене или на этом тайтле уже есть аномалия/её часть
@@ -166,7 +164,7 @@ visible_generation - нужно ли рисовать анимацию разм�
 					add = FALSE
 					failures++
 			else
-				var/obj/anomaly/spawned_anomaly = new anomaly_to_spawn(spawner_turf, visible_generation)
+				var/obj/anomaly/spawned_anomaly = try_spawn_anomaly_without_collision(T = spawner_turf, path_to_spawn = anomaly_to_spawn, visible_generation = visible_generation)
 				LAZYADD(spawned_anomalies, spawned_anomaly)
 				if(!ruin_protocol)
 					LAZYREMOVE(all_turfs_for_spawn, spawner_turf)
@@ -178,24 +176,23 @@ visible_generation - нужно ли рисовать анимацию разм�
 			failures = 0
 		else if(failures > 100)
 			//У нас слишком много неуспешных размещений аномалий, хватит пытаться, нужно выйти из цикла
-			i = result_anomalies_ammount + 1
+			break
 
 
 	//Выбрав количество артов которые мы хотим заспавнить, мы начинаем спавн
 	var/spawned_anomalies_ammount = LAZYLEN(spawned_anomalies)
 	var/spawned_artefacts_ammount = generate_artefacts_in_anomalies(spawned_anomalies.Copy(), min_artefacts_ammount, max_artefacts_ammount)
 
-	var/spended_time = world.realtime - started_in
 	//Отчитаемся
 	if(spawned_anomalies_ammount > 0)
-		report_progress("Создано [spawned_anomalies_ammount] аномалий, создано [spawned_artefacts_ammount] артефактов в них. Источник: [source], затрачено [spended_time] тиков. ")
-		SSanom.AddImportantLog("Создано [spawned_anomalies_ammount] аномалий, создано [spawned_artefacts_ammount] артефактов в них. Источник: [source], затрачено [spended_time] тиков. ")
+		report_progress("Создано [spawned_anomalies_ammount] аномалий, создано [spawned_artefacts_ammount] артефактов в них. Источник: [source].")
+		SSanom.AddImportantLog("Создано [spawned_anomalies_ammount] аномалий, создано [spawned_artefacts_ammount] артефактов в них. Источник: [source].")
 	return spawned_anomalies
 
 ///Функция генерация артефактов в аномалиях. Спавнит количество артефактов, находящиеся в диапазоне между min_artefacts_ammoun и max_artefacts_ammount
 /proc/generate_artefacts_in_anomalies(list/list_of_anomalies, min_artefacts_ammount, max_artefacts_ammount)
 	var/artefacts_ammount = rand(min_artefacts_ammount, max_artefacts_ammount)
-	var/list/input_list = list_of_anomalies
+	var/list/input_list = list_of_anomalies.Copy()
 	//Санитайз, чтоб не требовали рождение артефактов от тех, кто их рожать не может физически
 	for(var/obj/anomaly/picked_anomaly in input_list)
 		if(!picked_anomaly.can_born_artefacts || !LAZYLEN(picked_anomaly.artefacts))
@@ -203,6 +200,10 @@ visible_generation - нужно ли рисовать анимацию разм�
 	//Санитайз, чтоб артефактов было не слишком много
 	if(artefacts_ammount > LAZYLEN(input_list))
 		artefacts_ammount = LAZYLEN(input_list)
+	//Санитайз от нулей (откуда тут вообще нули?)
+	for(var/i in input_list)
+		if(!istype(i, /obj/anomaly))
+			LAZYREMOVE(input_list, i)
 	var/spawned_artefacts = 0
 	//Пока игра не заспавнит все треуемые артефакты
 	while(artefacts_ammount > spawned_artefacts)

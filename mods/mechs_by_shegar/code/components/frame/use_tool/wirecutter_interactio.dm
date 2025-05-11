@@ -1,9 +1,9 @@
 /obj/structure/heavy_vehicle_frame/proc/wirecutter_interaction(obj/item/tool, mob/living/user)
 	if(!user.skill_check(SKILL_DEVICES, SKILL_TRAINED))
-		to_chat(user, SPAN_BAD("I dont know how work with mechs!"))
+		to_chat(user, SPAN_BAD("Понятия не имею как обслуживать меха."))
 		return
 	if (!is_wired)
-		USE_FEEDBACK_FAILURE("\The [src] has no wiring to adjust or remove.")
+		USE_FEEDBACK_FAILURE("Проводка отсутствует")
 		return TRUE
 	var/input
 	var/current_state = is_wired

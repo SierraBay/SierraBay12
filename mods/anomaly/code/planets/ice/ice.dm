@@ -11,7 +11,7 @@
 		)
 	big_artefacts_can_be_close = FALSE
 	big_artefacts_range_spawn = 30
-	weather_manager_type = /datum/weather_manager/snow
+	//weather_manager_type = /datum/weather_manager/snow
 	//
 	possible_themes = list(
 		/datum/exoplanet_theme = 45,
@@ -100,7 +100,7 @@
 
 
 /area/exoplanet/ice
-	ambience = list('sound/effects/wind/tundra0.ogg','sound/effects/wind/tundra1.ogg','mods/anomaly/sounds/electra_planet_wind_2.ogg')
+	forced_ambience = list('mods/anomaly/sounds/electra_planet_wind_2.ogg')
 	base_turf = /turf/simulated/floor/exoplanet/ice/ice_planet
 	can_have_awakening_event = FALSE
 

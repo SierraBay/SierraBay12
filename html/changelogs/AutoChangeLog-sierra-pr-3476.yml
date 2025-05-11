@@ -1,5 +1,0 @@
-author: Banditoz
-changes:
-  - {bugfix: "You can now tag parcels to destinations with special characters in their
-      name, such as: Pathfinder's Office."}
-delete-after: true

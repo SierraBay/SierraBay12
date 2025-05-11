@@ -16,9 +16,12 @@
 		to_chat(user, SPAN_WARNING("С этой стороны, за [src] мне не ухватиться."))
 		return FALSE
 	var/list/options = list(
-		"Левый бок" = mutable_appearance('mods/mechs_by_shegar/icons/radial_menu.dmi', "left shoulder"),
 		"Спина" = mutable_appearance('mods/mechs_by_shegar/icons/radial_menu.dmi', "head"),
+		"Левый бок" = mutable_appearance('mods/mechs_by_shegar/icons/radial_menu.dmi', "left shoulder"),
 		"Правый бок" = mutable_appearance('mods/mechs_by_shegar/icons/radial_menu.dmi', "right shoulder")
 		)
-	var/choosed_place = show_radial_menu(user, user, options, require_near = TRUE, radius = 42, tooltips = TRUE, check_locs = list(src))
+	var/choosed_place = show_radial_menu(user, src, options, require_near = TRUE, radius = 42, tooltips = TRUE, check_locs = list(src))
+	if(!choosed_place)
+		to_chat(user, SPAN_NOTICE("Не, что-то уже не хочу."))
+		return
 	check_passenger(user, choosed_place)

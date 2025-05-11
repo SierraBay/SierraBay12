@@ -213,8 +213,8 @@
 	name = "First Deck - Security - Suits Storage"
 	req_access = list(access_seceva)
 
-/area/security/sierra/breakroom
-	name = "First Deck - Security - Break Room"
+/area/security/sierra/mech_garage
+	name = "First Deck - Security - Mech garage"
 	area_flags = AREA_FLAG_RAD_SHIELDED | AREA_FLAG_ION_SHIELDED
 
 /area/security/sierra/forensic

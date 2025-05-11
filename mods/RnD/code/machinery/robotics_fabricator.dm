@@ -1,4 +1,5 @@
 /obj/machinery/robotics_fabricator
+	materials = list(MATERIAL_STEEL = 0, MATERIAL_PLASTEEL = 0, MATERIAL_TITANIUM = 0, MATERIAL_ALUMINIUM = 0, MATERIAL_PLASTIC = 0, MATERIAL_GLASS = 0, MATERIAL_GOLD = 0, MATERIAL_SILVER = 0, MATERIAL_PHORON = 0, MATERIAL_URANIUM = 0, MATERIAL_DIAMOND = 0)
 	var/fab_status_flags
 	wires = /datum/wires/fabricator/robotics_fabricator
 	var/obj/item/stock_parts/computer/hard_drive/portable/disk

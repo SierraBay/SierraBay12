@@ -149,7 +149,9 @@ PROCESSING_SUBSYSTEM_DEF(anom)
 	HTML += "<br>Заработано каргопоинтов за продажу артефактов: [earned_cargo_points], заработано РНД поинтов за изучение артефактов: [earned_rnd_points]"
 	HTML += "<br>Всего попыток взаимодействия с артефактами: [interactions_with_artefacts_by_players_ammount], из них [good_interactions_with_artefacts_by_players_ammount] принесли пользу, а [bad_interactions_with_artefacts_by_players_ammount] принесли вред."
 	HTML += "<br><br> DAMAGES"
-	HTML += "<br>"
+	HTML += "<br> Люди подверглись влиянию аномалий [humanoids_effected_by_anomaly] раз, а гибнулись [humanoids_gibbed_by_anomaly] раз."
+	HTML += "<br> Симплмобы подверглись влиянию аномалий [simplemobs_effected_by_anomaly] раз, а гибнулись [simplemobs_gibbed_by_anomaly] раз."
+
 
 	// Открываем окно
 	var/window_x = 600
@@ -183,7 +185,7 @@ PROCESSING_SUBSYSTEM_DEF(anom)
 		result_text += "Перед этим он сказал: [user.mind.last_words]"
 	else
 		result_text += "Он пострадал молча."
-
+	add_say_handle(user)
 	last_attacked_message = result_text
 
 /datum/controller/subsystem/processing/anom/proc/add_last_gibbed(mob/living/user, attack_name)
@@ -255,3 +257,11 @@ PROCESSING_SUBSYSTEM_DEF(anom)
 	else if(points_type == "mob")
 		picked_storyteller.add_points(mob = points_ammout)
 	picked_storyteller.log_point_getting(points_ammout, points_type, source)
+
+//Создадим сигнал который перехватит у мобика 1 раз его say() чтоб узнать что он скажет ПОСЛЕ удара аномалии
+/datum/controller/subsystem/processing/anom/proc/add_say_handle(mob/living/user)
+	RegisterSignal(user, COMSIG_MOB_SAYED, PROC_REF(add_after_damage_say))
+
+/datum/controller/subsystem/processing/anom/proc/add_after_damage_say(mob/living/user, message)
+	last_attacked_message += "<br> А после этого сказал: [message]"
+	UnregisterSignal(user, COMSIG_MOB_SAYED)

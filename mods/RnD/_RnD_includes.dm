@@ -29,6 +29,8 @@
 #include "code/SSresearch.dm"
 #include "code/program/sciefolder.dm"
 #include "code/misc.dm"
+
+//Дезайны
 #include "code/designs_autolathe/designs_arms_ammo.dm"
 #include "code/designs_autolathe/designs_cutlery.dm"
 #include "code/designs_autolathe/designs_devices_components.dm"
@@ -38,5 +40,20 @@
 #include "code/designs_autolathe/designs_general.dm"
 #include "code/designs_autolathe/designs_tools.dm"
 #include "code/designs_autolathe/disks.dm"
-
+//Мех дезайны
+#include "code\designs\mechfab\arms\mech_l_arm.dm"
+#include "code\designs\mechfab\arms\mech_r_arm.dm"
+#include "code\designs\mechfab\legs\mech_l_leg.dm"
+#include "code\designs\mechfab\legs\mech_r_leg.dm"
+#include "code\designs\mechfab\mech_equipment\_equipment.dm"
+#include "code\designs\mechfab\mech_equipment\combat.dm"
+#include "code\designs\mechfab\mech_equipment\engi.dm"
+#include "code\designs\mechfab\mech_equipment\medical.dm"
+#include "code\designs\mechfab\mech_equipment\utility.dm"
+#include "code\designs\mechfab\armour_mech.dm"
+#include "code\designs\mechfab\body.dm"
+#include "code\designs\mechfab\doubled_legs.dm"
+#include "code\designs\mechfab\main_mech.dm"
+#include "code\designs\mechfab\sensors.dm"
+#include "code\designs\designs_mechfab.dm"
 #endif

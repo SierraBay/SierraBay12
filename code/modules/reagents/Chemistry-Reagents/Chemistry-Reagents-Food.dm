@@ -80,6 +80,21 @@
 		removed *= 2.25
 	M.adjust_nutrition(nutriment_factor * removed)
 
+/datum/reagent/nutriment/protein/cheese
+	name = "Cheese Protein"
+	taste_description = "cheese"
+	color = "#b7c616"
+
+/datum/reagent/nutriment/protein/fish
+	name = "Fish Protein"
+	taste_description = "fish"
+	color = "#9d9e94"
+
+/datum/reagent/nutriment/protein/shellfish
+	name = "Shellfish Protein"
+	taste_description = "shellfish"
+	color = "#f6db93"
+
 /datum/reagent/nutriment/protein/egg // Also bad for skrell.
 	name = "egg yolk"
 	taste_description = "egg"
@@ -132,8 +147,9 @@
 /datum/reagent/nutriment/batter
 	name = "Batter"
 	description = "A gooey mixture of eggs and flour, a base for turning wheat into food."
-	taste_description = "blandness"
+	taste_description = "bready goodness"
 	reagent_state = LIQUID
+	taste_mult = 0.2
 	nutriment_factor = 3
 	color = "#ffd592"
 	protein_amount = 0.4
@@ -141,6 +157,12 @@
 	condiment_icon_state = "batter"
 	condiment_name = "batter mix"
 	condiment_desc = "A gooey mixture of eggs and flour in a vat. Delicious!"
+
+/datum/reagent/nutriment/batter/soy
+	name = "Soy Batter"
+	description = "A gooey mixture of tofu and flour, a base for turning soy into food."
+	taste_description = "tofu goodness?"
+	protein_amount = 0
 
 /datum/reagent/nutriment/batter/touch_turf(turf/simulated/T)
 	if(!istype(T, /turf/space))
@@ -155,9 +177,17 @@
 	description = "A gooey mixture of eggs, flour and sugar, an important precursor to cake!"
 	taste_description = "sweetness"
 	color = "#ffe992"
+	nutriment_factor = 5
+	taste_mult = 0.3
 	protein_amount = 0.3
-
+	sugar_amount = 0.3
 	condiment_name = "cake batter mix"
+
+/datum/reagent/nutriment/batter/cakebatter/soy
+	name = "Soy Cake Batter"
+	description = "A gooey mixture of soy, flour and honey, an important precursor to cake!"
+	protein_amount = 0
+	sugar_amount = 0.4
 
 /datum/reagent/nutriment/coffee
 	name = "Coffee Powder"

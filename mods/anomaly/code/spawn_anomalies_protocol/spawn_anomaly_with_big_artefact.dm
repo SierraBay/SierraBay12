@@ -55,5 +55,4 @@
 		min_artefacts_ammount = min_artefacts_ammount,
 		max_artefacts_ammount = max_artefacts_ammount,
 		source =  "Большой артефакт Архотека (Ванильный)",
-		visible_generation = FALSE,
-		started_in = world.time)
+		visible_generation = FALSE)

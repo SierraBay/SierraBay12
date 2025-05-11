@@ -25,7 +25,7 @@ var $messages, $subTheme, $subOptions, $subFont, $selectedSub, $contextMenu, $fi
 var opts = {
 	//General
 	'messageCount': 0, //A count...of messages...
-	'messageLimit': 2053, //A limit...for the messages...
+	'messageLimit': (window.navigator.msSaveBlob ? 2053 : 20000), //A limit...for the messages...
 	'scrollSnapTolerance': 10, //If within x pixels of bottom
 	'clickTolerance': 10, //Keep focus if outside x pixels of mousedown position on mouseup
 	'imageRetryDelay': 50, //how long between attempts to reload images (in ms)
@@ -628,6 +628,32 @@ function handleToggleClick($sub, $toggle) {
 	}
 }
 
+function saveBlob(blob, fileName) {
+	if (window.navigator.msSaveBlob) {
+		window.navigator.msSaveBlob(blob, fileName);
+		return;
+	}
+	return window.showSaveFilePicker({
+		types: [{
+			description: 'HTML',
+			accept: {'text/html': ['.html']},
+		}],
+		suggestedName: fileName
+	})
+	.then(function(fileHandle) {
+		return fileHandle.createWritable();
+	})
+	.then(function(writable) {
+		return writable.write(blob)
+			.then(function() {
+				return writable;
+			});
+	})
+	.then(function(writable) {
+		return writable.close();
+	});
+}
+
 /*****************************************
 *
 * DOM READY
@@ -999,7 +1025,7 @@ $(function() {
 				fname += ' ' + (hours < 10 ? '0' : '') + hours + (mins < 10 ? '0' : '') + mins + (secs < 10 ? '0' : '') + secs;
 				fname += '.html';
 
-				window.navigator.msSaveBlob(blob, fname);
+				saveBlob(blob, fname);
 			}
 		});
 	});

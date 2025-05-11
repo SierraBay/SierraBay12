@@ -41,18 +41,15 @@
 /datum/weather_manager/proc/change_stage()
 	set waitfor = FALSE
 	set background = TRUE
+	calculate_change_time()
 	if(activity_blocked_by_safe_protocol || !check_change_safety())
 		return
-	var/need_change = FALSE
 	for(var/mob/living/carbon/human/picked_human in GLOB.living_players)
-		if(get_z(picked_human) == get_z(pick(connected_weather_turfs)))
-			need_change = TRUE
+		if(get_z(picked_human) in my_z)
 			break
-	if(!need_change)
 		return FALSE
 	for(var/obj/weather/connected_weather in connected_weather_turfs)
 		connected_weather.update()
-	calculate_change_time()
 	return TRUE
 
 /datum/weather_manager/proc/start_blowout()

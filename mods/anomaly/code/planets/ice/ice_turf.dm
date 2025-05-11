@@ -50,6 +50,7 @@
 		return
 	busy_by_climber = TRUE
 	if(!do_after(user, (6 SECONDS - (1 SECONDS *user.get_skill_value(SKILL_HAULING)))))
+		busy_by_climber = FALSE
 		return
 	climb_from_wall(user, new_turf)
 
