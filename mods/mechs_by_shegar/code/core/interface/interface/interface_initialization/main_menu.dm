@@ -13,16 +13,25 @@
 		/obj/screen/exosuit/menu_button/medscan,
 		/obj/screen/exosuit/menu_button/id,
 		/obj/screen/exosuit/menu_button/hatch_bolts,
-		/obj/screen/exosuit/menu_button/camera
+		/obj/screen/exosuit/menu_button/camera,
+		/obj/screen/exosuit/menu_button/right_click
 	)
-	var/x_step = 0 //как сильно мы сдвигаемся
+	var/x_step = 1
 	var/y_step = 0.5
-	var/current_x_cord = 2.3
+	var/current_x_cord = 2.8
 	var/current_y_cord = 0
 	for(var/button_type in big_buttons)
 		var/obj/screen/exosuit/menu_button/menu_button = new button_type(src)
 		menu_button.layer = 2.2
 		menu_button.screen_loc = "CENTER-[current_x_cord], CENTER+1.5-[current_y_cord]" //Высставляем положение кнопачки
 		menu_hud_elements |= menu_button //Размещаем кнопушку в меню
+		if(x_step == 1)
+			x_step = -1
+		else if(x_step == -1)
+			x_step = 1
+		if(y_step == 0.5)
+			y_step = 0
+		else if(y_step == 0)
+			y_step = 0.5
 		current_y_cord += y_step //Делаем шаг ниже
 		current_x_cord += x_step

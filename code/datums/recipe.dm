@@ -5,8 +5,11 @@
 	/// A base ds time for how long the recipe waits before completing.
 	var/time = 10 SECONDS
 
-	/// A map? of (/datum/reagent/... = amount). Highest specificity first.
+	/// A map? of (/datum/reagent/... = amount). Highest specificity first. Reagent is transfered to final item.
 	var/list/datum/reagent/required_reagents
+
+	/// A map of (/datum/reagent/... = amount); get consumed and is not transfered to final item.
+	var/list/datum/reagent/consumed_reagents
 
 	/// A list? of (/obj/item/...). Highest specificity first. Multiple entries for multiple same items.
 	var/list/obj/item/required_items
@@ -27,13 +30,22 @@
 	var/mechanics_text
 	var/antag_text
 
-
+///Creates the result and transfers over all reagents (except those in consumed_reagents) and reagents from ingredients EXCEPT nutriment.
+///Nutriment is handled by nutriment_amt at level of the created item; not transferred here.
 /datum/microwave_recipe/proc/CreateResult(obj/machinery/microwave/microwave, ...)
 	var/list/result_args = list(microwave)
 	if (length(args) > 1)
 		result_args += args.Copy(2)
 	var/atom/movable/result = new result_path (arglist(result_args))
-	microwave.reagents.clear_reagents()
+
+	for (var/datum/reagent/reagent as anything in consumed_reagents)
+		microwave.reagents.del_reagent(reagent)
+
+	if (ismob(result))
+		microwave.reagents.trans_to_mob(result, microwave.reagents.total_volume)
+	else
+		microwave.reagents.trans_to_obj(result, microwave.reagents.total_volume)
+
 	if (!length(microwave.ingredients))
 		return result
 	for (var/obj/item/item as anything in microwave.ingredients)
@@ -51,14 +63,17 @@
 		qdel(item)
 	return result
 
-
 /datum/microwave_recipe/proc/CheckReagents(obj/machinery/microwave/microwave)
-	var/required_count = length(required_reagents)
+	var/required_count = length(required_reagents) + length(consumed_reagents)
 	if (!required_count)
 		return TRUE
 	var/datum/reagents/reagents = microwave.reagents
 	if (required_count > length(reagents.reagent_list))
 		return FALSE
+	for (var/datum/reagent/reagent as anything in consumed_reagents)
+		var/amount = reagents.get_reagent_amount(reagent)
+		if (!amount || abs(consumed_reagents[reagent] - amount) > 0.5)
+			return FALSE
 	for (var/datum/reagent/reagent as anything in required_reagents)
 		var/amount = reagents.get_reagent_amount(reagent)
 		if (!amount || abs(required_reagents[reagent] - amount) > 0.5)

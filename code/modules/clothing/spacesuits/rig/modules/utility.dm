@@ -373,21 +373,9 @@
 /obj/item/rig_module/maneuvering_jets/activate()
 	if(!..())
 		return FALSE
-	if(active)
-		return 0
-
-	active = 1
-
-	spawn(1)
-		if(suit_overlay_active)
-			suit_overlay = suit_overlay_active
-		else
-			suit_overlay = null
-		holder.update_icon()
-
 	if(!jets.on)
 		jets.toggle()
-	return 1
+	return TRUE
 
 /obj/item/rig_module/maneuvering_jets/deactivate()
 	if(!..())

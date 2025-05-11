@@ -422,6 +422,9 @@
 ///from base of proc/examinate(): (/atom)
 #define COMSIG_MOB_EXAMINATE "mob_examinate"
 
+//Кто-то что-то сказал!
+#define COMSIG_MOB_SAYED "mob_sayed"
+
 /// Return this from `/datum/component/Initialize` or `/datum/component/OnTransfer` or `/datum/component/on_source_add` to have the component be deleted if it's applied to an incorrect type.
 /// `parent` must not be modified if this is to be returned.
 /// This will be noted in the runtime logs
