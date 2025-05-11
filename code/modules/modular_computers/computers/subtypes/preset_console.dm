@@ -140,6 +140,9 @@
 	)
 
 /obj/machinery/computer/modular/preset/supply_public
+	uncreated_component_parts = list(
+		/obj/item/stock_parts/computer/card_slot
+		)
 	default_software = list(
 		/datum/computer_file/program/supply
 	)
