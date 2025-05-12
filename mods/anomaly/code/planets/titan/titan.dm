@@ -1,5 +1,5 @@
 /obj/overmap/visitable/sector/exoplanet/water
-	name = "water planet"
+	name = "Titan, water exoplanet"
 	desc = "Планета покрытая толстым слоем воды."
 	color = "#ebe3e3"
 	rock_colors = list(COLOR_WHITE)
@@ -41,6 +41,7 @@
 /obj/overmap/visitable/sector/exoplanet/water/New(nloc, max_x, max_y)
 	. = ..()
 	name = "Titan, water exoplanet"
+	planetary_area.name = "Surface of Titan water exoplanet"
 
 /obj/overmap/visitable/sector/exoplanet/water/build_level()
 	. = ..()

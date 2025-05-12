@@ -6,6 +6,7 @@
 	icon_state = ""
 	matter = list(MATERIAL_STEEL = 10000, MATERIAL_PLASTIC = 5000, MATERIAL_OSMIUM = 500)
 	force = 10
+	var/can_be_pickuped = FALSE
 
 	var/list/restricted_hardpoints
 	var/mob/living/exosuit/owner
@@ -22,6 +23,20 @@
 	var/heat_generation = 0
 	///Генерация тепла от модуля при активном состоянии оного
 	var/active_heat_generation = 0
+
+/obj/item/mech_equipment/attack_hand(mob/user)
+	if(!can_be_pickuped)
+		to_chat(user, SPAN_BAD("Я такое не подниму!"))
+		return
+	else
+		.=..()
+
+/obj/item/mech_equipment/MouseDrop(atom/over_atom, atom/source_loc, atom/over_loc, source_control, over_control, list/mouse_params)
+	if(!CanMouseDrop(over_atom, usr))
+		return
+	if(istype(over_atom, /mob/living/exosuit))
+		var/obj/structure/heavy_vehicle_frame/input_frame = over_atom
+		input_frame.use_tool(src, usr)
 
 /obj/item/mech_equipment/proc/need_combat_skill()
 	return FALSE

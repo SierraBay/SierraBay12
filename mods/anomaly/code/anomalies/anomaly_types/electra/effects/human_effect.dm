@@ -3,7 +3,7 @@
 		SSanom.add_last_gibbed(src, "Электра")
 		dust()
 		return
-
+	SSanom.add_last_attack(src, "Электра")
 	if(lying) //Если цель лежит нам не нужно просчитывать путь до земли. Просто делаем удар в любую конечность
 		electoanomaly_damage(50, null)
 	else

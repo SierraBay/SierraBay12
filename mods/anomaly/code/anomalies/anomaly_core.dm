@@ -12,6 +12,8 @@
 	//Позволяет быстро определять для кода какая именно аномалия (electra, Zharka, и прочее)
 	var/anomaly_tag
 	//COULDOWN AND SMTH
+	///На данный момент по каким-то причинам аномалия усыплена
+	var/sleeping = FALSE
 	///Аномалия уходит на КД после срабатывания?
 	var/can_be_discharged = FALSE
 	///Время КД после срабатывания
@@ -52,6 +54,8 @@
 
 ///Аномалия по причине пересечения или ещё какой причине проверяет, может ли она "Взвестить от этого инициатора"
 /obj/anomaly/proc/can_be_activated(atom/movable/target)
+	if(sleeping)
+		return
 	if(weight_sensity && isitem(target))
 		var/obj/item/detected_item = target
 		if(weight_sensity != detected_item.w_class || weight_sensity > detected_item.w_class) //Вес предмета ниже чем чувствительность аномалии.

@@ -107,6 +107,5 @@
 		min_artefacts_ammount = 0,
 		max_artefacts_ammount = 0,
 		source = "разрыв малого артефакта",
-		visible_generation = TRUE,
-		started_in = world.time)
+		visible_generation = TRUE)
 	delete_artefact()

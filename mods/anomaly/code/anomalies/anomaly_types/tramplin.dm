@@ -75,3 +75,25 @@
 
 /obj/anomaly/tramplin/get_detection_icon(mob/living/viewer)
 	return "trampline_detection"
+
+/obj/anomaly/tramplin/activate_anomaly()
+	. = ..()
+	new /obj/effect/warp/small/tramplin(get_turf(src))
+
+
+//VISUAL
+
+/obj/effect/warp/small/tramplin
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "explosion"
+
+/obj/effect/warp/small/tramplin/Initialize()
+	. = ..()
+	do_animation()
+
+/obj/effect/warp/small/tramplin/proc/do_animation()
+	set waitfor = FALSE
+	matrix().Scale(0.3, 0.3)
+	animate(src, alpha = 40, transform = matrix().Scale(2, 2), time = 0.2 SECOND, easing = SINE_EASING)
+	sleep(0.2 SECONDS)
+	Destroy()
