@@ -3,5 +3,6 @@
 
 #include "vision_cone.dm"
 #include "code/vision_cone.dm"
+#include "code/overrides.dm"
 
 #endif

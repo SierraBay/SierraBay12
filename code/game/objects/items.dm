@@ -804,9 +804,6 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 
 	user.client.view = viewsize
 	zoom = 1
-	if(H.vision_cone_overlay)
-		var/mob/living/vision_cone_mob = H
-		vision_cone_mob.hide_cone()
 
 	GLOB.destroyed_event.register(src, src, TYPE_PROC_REF(/obj/item, unzoom))
 	GLOB.moved_event.register(user, src, TYPE_PROC_REF(/obj/item, unzoom))

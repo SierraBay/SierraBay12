@@ -100,11 +100,13 @@
 	var/image/I
 	I = image("split", A)
 	I.override = TRUE
+
 	client.images += I
 	client.hidden_atoms += I
 	if(ismob(A))
 		var/mob/hidden_mob = A
 		client.hidden_mobs += hidden_mob
+		hidden_mob.alpha = 255
 		if(pulling && (pulling == hidden_mob || pulling == hidden_mob.buckled))//If we're pulling them we don't want them to be invisible, too hard to play like that.
 			I.override = FALSE
 			return
@@ -138,7 +140,7 @@
 		return
 
 	if(isnull(vision_cone_overlay))
-		vision_cone_overlay = new /obj/screen/fov()
+		vision_cone_overlay = overlay_fullscreen("combat", /obj/screen/fullscreen/fov)
 	client.screen |= vision_cone_overlay
 
 	if(resting || lying || client.eye != client.mob)

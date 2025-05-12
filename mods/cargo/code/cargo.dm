@@ -205,7 +205,6 @@
 			O.accountnubmer = custom_account
 			O.payer = card_slot.stored_card.registered_name
 
-
 		SSsupply.requestlist += O
 
 		if(can_print() && alert(user, "Would you like to print a confirmation receipt?", "Print receipt?", "Yes", "No") == "Yes")
