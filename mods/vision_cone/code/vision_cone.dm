@@ -92,7 +92,6 @@
 
 		vision_cone_overlay.dir = dir
 		if(vision_cone_overlay.alpha)
-			var/turf/T = get_turf(src)
 			for(var/cone_atom in cone(src, OPPOSITE_DIR(src.dir), view(10, src)))
 				add_to_mobs_hidden_atoms(cone_atom)
 
@@ -100,13 +99,11 @@
 	var/image/I
 	I = image("split", A)
 	I.override = TRUE
-
 	client.images += I
 	client.hidden_atoms += I
 	if(ismob(A))
 		var/mob/hidden_mob = A
 		client.hidden_mobs += hidden_mob
-		hidden_mob.alpha = 255
 		if(pulling && (pulling == hidden_mob || pulling == hidden_mob.buckled))//If we're pulling them we don't want them to be invisible, too hard to play like that.
 			I.override = FALSE
 			return
