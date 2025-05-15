@@ -117,3 +117,10 @@
 #define WATER_OVERLAY 10
 #define istitanwater(A) istype(A, /turf/simulated/floor/exoplanet/titan_water)
 //ANOMALIES
+
+
+// XENOBIO TRANSFORMATIONS
+
+#define SPECIES_MOTH			"Mothman"
+
+// XENOBIO TRANSFORMATIONS - END

@@ -29,6 +29,7 @@
 #include "code/SSresearch.dm"
 #include "code/program/sciefolder.dm"
 #include "code/misc.dm"
+#include "code/xenobiology.dm"
 #include "code/designs_autolathe/designs_arms_ammo.dm"
 #include "code/designs_autolathe/designs_cutlery.dm"
 #include "code/designs_autolathe/designs_devices_components.dm"

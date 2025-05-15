@@ -14,7 +14,7 @@
 	darksight_tint = DARKTINT_GOOD
 	brute_mod = 1.15
 	burn_mod =  1.15
-	flash_mod = 2 //
+	flash_mod = 2 // We have big eyes
 	hunger_factor = DEFAULT_HUNGER_FACTOR * 1.5
 
 	gluttonous = GLUT_TINY
@@ -74,3 +74,66 @@
 	icon_state = "m_moth_antennae_monarch"
 	species_allowed = list(SPECIES_MOTH)
 	icon = 'mods/RnD/icons/mob/moth/moth_antennae.dmi'
+
+
+// How we makes moths. Because of, you know, dependency on one specific entity, this reactions also belongs to RnD mod
+
+/singleton/reaction/slime/mothtoxin
+	name = "Mothman Mutation Toxin"
+	result = /datum/reagent/mothtoxin
+	required_reagents = list(/datum/reagent/blood = 1)
+	result_amount = 1
+	required = /obj/item/slime_extract/green
+
+/* Transformations */
+/datum/reagent/mothtoxin
+	name = "Contaminated Mutation Toxin"
+	description = "A corruptive toxin produced by slimes. This one looks like ."
+	taste_description = "sludge"
+	reagent_state = LIQUID
+	color = "#6ebb91"
+	metabolism = REM * 0.2
+	value = 2
+	should_admin_log = TRUE
+
+/datum/reagent/mothtoxin/affect_blood(mob/living/carbon/human/H, removed)
+	if(!istype(H))
+		return
+	if(H.species.name == SPECIES_MOTH)
+		return
+	H.adjustToxLoss(40 * removed)
+	if(H.chem_doses[type] < 1 || prob(30))
+		return
+	H.chem_doses[type] = 0
+	var/list/meatchunks = list()
+	for(var/limb_tag in list(BP_R_ARM, BP_L_ARM, BP_R_LEG,BP_L_LEG))
+		var/obj/item/organ/external/E = H.get_organ(limb_tag)
+		if(E && !E.is_stump() && !BP_IS_ROBOTIC(E) && E.species.name != SPECIES_MOTH)
+			meatchunks += E
+	if(!length(meatchunks))
+		if(prob(10))
+			to_chat(H, SPAN_DANGER("Your flesh rapidly mutates!"))
+			H.set_species(SPECIES_MOTH)
+			H.shapeshifter_set_colour("#ebeca4")
+		return
+	var/obj/item/organ/external/O = pick(meatchunks)
+	to_chat(H, SPAN_DANGER("Your [O.name]'s flesh mutates rapidly!"))
+	if(!GLOB.mob_ref_to_species_name[any2ref(H)])
+		GLOB.mob_ref_to_species_name[any2ref(H)] = H.species.name
+	meatchunks = list(O) | O.children
+	for(var/obj/item/organ/external/E in meatchunks)
+		E.species = GLOB.species_by_name[SPECIES_MOTH]
+		E.skin_tone = null
+		E.s_col = ReadRGB("#13bc5e")
+		E.s_col_blend = ICON_ADD
+		E.status &= ~ORGAN_BROKEN
+		E.status |= ORGAN_MUTATED
+		E.limb_flags &= ~ORGAN_FLAG_CAN_BREAK
+		E.dislocated = -1
+		E.max_damage = 5
+		E.update_icon(1)
+	O.max_damage = 15
+	if(prob(10))
+		to_chat(H, SPAN_DANGER("Your new [O.name] explodes with a stream of blood and unformed chitin!"))
+		O.droplimb()
+	H.update_body()

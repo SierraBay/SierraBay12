@@ -157,7 +157,8 @@
 		/obj/item/slimesteroid2,
 		/obj/item/slimepotion,
 		/obj/item/slimepotion2,
-		/obj/item/slimepotion3
+		/obj/item/slimepotion3,
+		/obj/item/reagent_containers/food/snacks/monkeycube
 	)
 	allow_quick_gather = TRUE
 	allow_quick_empty = TRUE
