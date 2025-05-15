@@ -5,44 +5,69 @@
 
 	animate_movement = SLIDE_STEPS
 
+	/// Boolean. Whether or not the atom is affected by being submerged in water. If set to `FALSE`, `water_act()` is called when in contact with fluids.
 	var/waterproof = TRUE
-	var/movable_flags
+	/// Bitflag (Any of `MOVABLE_FLAG_*`). Bitflags for movable atoms. See `code\__defines\flags.dm`.
+	var/movable_flags = FLAGS_OFF
 
-	var/last_move = null
+	/// Bitflag (Directionals). Direction of the last movement. Generally passed to `step()` as the `dir` parameter. Set during `Move()`.
+	var/last_move = FLAGS_OFF
+	/// Boolean. Whether or not the atom is considered anchored.
 	var/anchored = FALSE
-	// var/elevation = 2    - not used anywhere
+	/// Integer. The atom's current movement speed, calculated as the difference between `world.time` and `l_move_time`. Set during `Move()`.
 	var/move_speed = 10
+	/// Integer. The `world.time` of the last movement. Set during `Move()`.
 	var/l_move_time = 1
-	var/m_flag = 1
+	/// Instance. Current thrown thing datum linked to this atom. Set during `throw_at()`.
 	var/datum/thrownthing/throwing
+	/// Integer. The speed at which the atom moves when thrown. Used when calling `throw_at()`, and in `momentum_power()` and `momentum_do()`.
 	var/throw_speed = 2
+	/// Integer. Maximum range, in tiles, this atom can be thrown.
 	var/throw_range = 7
-	var/moved_recently = 0
+	/// Boolean. Whether or not this atom has recently (Within the past 50 ticks) been force moved by `/obj/item/device/radio/electropack/receive_signal()`.
+	var/moved_recently = FALSE
+	/// Instance. The mob currently pulling the atom.
 	var/mob/pulledby = null
-	var/item_state = null // Used to specify the item state for the on-mob overlays.
-	var/does_spin = TRUE // Does the atom spin when thrown (of course it does :P)
+	/// String (Icon state). Used to specify the item state for the on-mob overlays. Primarily only used in `/obj/item/get_icon_state()`. Generally, you should only be updating this in `on_update_icon()`.
+	var/item_state = null // TODO: Move this to `/obj/item`?
+	/// Boolean. Does the atom spin when thrown (of course it does :P)
+	var/does_spin = TRUE
 
-	/// The icon width this movable expects to have by default.
+	/// Integer. The icon width this movable expects to have by default.
 	var/icon_width = 32
 
-	/// The icon height this movable expects to have by default.
+	/// Integer. The icon height this movable expects to have by default.
 	var/icon_height = 32
 
-	/// Either [EMISSIVE_BLOCK_NONE], [EMISSIVE_BLOCK_GENERIC], or [EMISSIVE_BLOCK_UNIQUE]
+	/// Integer (One of `EMISSIVE_BLOCK_*`). Whether this atom blocks emissive overlays, and what method is used for blocking. See `code\__defines\emissives.dm`.
 	var/blocks_emissive = EMISSIVE_BLOCK_NONE
-	///Internal holder for emissive blocker object, DO NOT USE DIRECTLY. Use blocks_emissive
+	/// Instance. Internal holder for emissive blocker object, DO NOT USE DIRECTLY. Use blocks_emissive
 	var/mutable_appearance/em_block
 
-	var/inertia_dir = 0
+	/// Bitflag (Directional). Direction the atom is currently travelling for space drift. Set by `space_drift()` and `Bump()`. Used by `momentum_do()` and the `spacedrift` subsystem.
+	var/inertia_dir = FLAGS_OFF
+	/// Instance. The atoms `loc` value during the last space movement. Set by `space_drift()` and the `spacedrift` subsystem.
 	var/atom/inertia_last_loc
-	var/inertia_moving = 0
+	/// Boolean. Whether or not the atom is currently being moved by space drift inertia. Set by the `spacedrift` subsystem and checked during `Move()`.
+	var/inertia_moving = FALSE
+	/// Integer. `world.time` that the next space drift movement should occur. Set by `Move()` and the `spacedrift` subsystem. Used by the `spacedrift` subsystem.
 	var/inertia_next_move = 0
+	/// Integer. Number of ticks to add to the current `world.time` when updating `inertia_next_move`. Used by `Move()` and the `spacedrift` subsystem.
 	var/inertia_move_delay = 5
+	/// Instance. Atom that should be ignored by `/mob/get_spacemove_backup()`. Updated and used by various movement related procs.
 	var/atom/movable/inertia_ignore
 
-//call this proc to start space drifting
+
+/**
+ * Initializes space drifting for the atom and adds it to the `spacedrift` subsystem.
+ *
+ * **Parameters**:
+ * - `direction` (Bitflag - Directional) - The direction to start drifting.
+ *
+ * Returns boolean. If `TRUE`, the atom is now drifting. If `FALSE`, the atom was blocked from drifting.
+ */
 /atom/movable/proc/space_drift(direction)//move this down
-	if(!loc || direction & (UP|DOWN) || Process_Spacemove(0))
+	if(!loc || direction & (UP|DOWN) || Process_Spacemove())
 		inertia_dir = 0
 		inertia_ignore = null
 		return 0
@@ -54,41 +79,64 @@
 	SSspacedrift.processing[src] = src
 	return 1
 
-//return 0 to space drift, 1 to stop, -1 for mobs to handle space slips
-/atom/movable/proc/Process_Spacemove(allow_movement)
+/**
+ * Whether or not the atom is able to start drifting. Includes various relevant checks such as gravity, anchored, whether the atom's movement is already being controlled by something else, etc.
+ *
+ * **Parameters**:
+ * - `allow_movement` (Boolean) - Whether or not this check should allow for manual mob movement.
+ *
+ * Returns boolean. Whether or not space drifting should be blocked/stopped.
+ */
+/atom/movable/proc/Process_Spacemove(allow_movement = FALSE)
 	if(!simulated)
-		return 1
+		return TRUE
 
 	if(has_gravity())
-		return 1
+		return TRUE
 
 	if(pulledby)
-		return 1
+		return TRUE
 
 	if(throwing)
-		return 1
+		return TRUE
 
 	if(anchored)
-		return 1
+		return TRUE
 
 	if(!isturf(loc))
-		return 1
+		return TRUE
 
 	if(locate(/obj/structure/lattice) in range(1, get_turf(src))) //Not realistic but makes pushing things in space easier
-		return -1
+		return TRUE
 
-	return 0
+	return FALSE
 
 /atom/movable/hitby(atom/movable/AM, datum/thrownthing/TT)
 	. = ..()
 	process_momentum(AM,TT)
 
+
+/**
+ *
+ */
 /atom/movable/proc/process_momentum(atom/movable/AM, datum/thrownthing/TT)//physic isn't an exact science
 	. = momentum_power(AM,TT)
 
 	if(.)
 		momentum_do(.,TT,AM)
 
+
+/**
+ * Calculates the amount of momentum force this atom receives when impacted by another atom.
+ *
+ * Called by `process_momentum` as part of the `hitby` chain.
+ *
+ * **Parameters**:
+ * - `AM` - The atom colliding with `src`.
+ * - `TT` - The `/datum/thrownthing` instance handling `AM`.
+ *
+ * Returns float.
+ */
 /atom/movable/proc/momentum_power(atom/movable/AM, datum/thrownthing/TT)
 	if(anchored)
 		return 0
@@ -97,6 +145,18 @@
 	if(has_gravity())
 		. *= 0.5
 
+
+/**
+ * Handled momentum logic when impacted by another atom. Typically this means sending this atom flying.
+ *
+ * Called by `process_momentum` as part of the `hitby` chain.
+ *
+ * **Parameters**:
+ * - `power` (Positive float) - The amount of momentum force as calculated by `/atom/movable/proc/momentum_power()`.
+ * - `TT` - The `/datum/thrownthing` instance handling the atom that hit `src`.
+ *
+ * Has no return value.
+ */
 /atom/movable/proc/momentum_do(power, datum/thrownthing/TT)
 	var/direction = TT.init_dir
 	switch(power)
@@ -124,6 +184,13 @@
 				drift_dir |= inertia_dir & (EAST|WEST)
 			space_drift(drift_dir)
 
+/**
+ * The effective mass of this atom.
+ *
+ * Called by `/atom/movable/proc/momentum_power()` as part of the `hitby()` chain.
+ *
+ * Returns positive float.
+ */
 /atom/movable/proc/get_mass()
 	return 1.5
 
@@ -172,6 +239,20 @@
 	..()
 
 
+/**
+ * Attempts to move the atom to the destination's contents.
+ *
+ * Calls `Entered()` and `Exited()` on the destination and origin, respectively.
+ *
+ * Calls `Entered()` and `Exited()` on the destination and origin's areas, respectively, if the areas are different.
+ *
+ * Calls `Crossed()` and `Uncrossed()` on atoms that are in the destination and origin, respectively, if `destination` is a turf.
+ *
+ * **Paratemers**:
+ * - `destination` - The atom to move `src` into.
+ *
+ * Returns boolean.
+ */
 /atom/movable/proc/forceMove(atom/destination)
 	if((gc_destroyed && gc_destroyed != GC_CURRENTLY_BEING_QDELETED) && !isnull(destination))
 		CRASH("Attempted to forceMove a QDELETED [src] out of nullspace!!!")
@@ -259,7 +340,17 @@
 			L.source_atom.update_light()
 	//[SIERRA-EDIT]
 
-//called when src is thrown into hit_atom
+/**
+ * Handles impacting an atom.
+ *
+ * Called by `/datum/thrownthing/proc/finalize()`.
+ *
+ * **Parameters**:
+ * - `hit_atom` - The atom being impacted. `hitby()` is typically called on this by this proc.
+ * - `TT` - The `/datum/thrownthing` instance calling this proc.
+ *
+ * Has no return value.
+ */
 /atom/movable/proc/throw_impact(atom/hit_atom, datum/thrownthing/TT)
 	if(istype(hit_atom,/mob/living))
 		var/mob/living/M = hit_atom
@@ -275,7 +366,22 @@
 		var/turf/T = hit_atom
 		T.hitby(src,TT)
 
-/atom/movable/proc/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, datum/callback/callback) //If this returns FALSE then callback will not be called.
+/**
+ * Throws the atom at a given target.
+ *
+ * Initializes a `/datum/thrownthing` handling this atom and adds it to `SSthrowing`.
+ *
+ * **Parameters**:
+ * - `target` - The atom to throw this at.
+ * - `range` (Positive integer) - How far this atom is allowed to go before stopping, in tiles.
+ * - `speed` (Positive integer) - How fast the atom should move.
+ * - `thrower` - The mob throwing this atom, if any.
+ * - `spin` (Boolean, default `TRUE`) - If set, the atom spins while flying through the air.
+ * - `callback` - A callback to be invoked once the atom has finished its flight. Not called if this proc returns `FALSE`.
+ *
+ * Returns boolean.
+ */
+/atom/movable/proc/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, datum/callback/callback)
 	. = TRUE
 	if (!target || speed <= 0 || QDELETED(src) || (target.z != src.z))
 		return FALSE
@@ -293,6 +399,13 @@
 	SSthrowing.processing[src] = TT
 
 
+/**
+ * Updates the atom's emissive blocker image and assigns it to `em_block`. If no image is generated, `em_block` is left as it was.
+ *
+ * What this does exactly depends on the value of `blocks_emissive`.
+ *
+ * Returns `/mutable_appearance`. The value of `em_block`.
+ */
 /atom/movable/proc/update_emissive_blocker()
 	switch (blocks_emissive)
 		if (EMISSIVE_BLOCK_GENERIC)
@@ -379,6 +492,13 @@
 	if (master)
 		return master.attack_hand(user)
 
+/**
+ * Handler for when this atom touches the edge of a map or z-level.
+ *
+ * Generally, this handles transitioning to a new z-level if there's a valid connection.
+ *
+ * Has no return value.
+ */
 /atom/movable/proc/touch_map_edge()
 	if(!simulated)
 		return
@@ -417,9 +537,38 @@
 		if(T)
 			forceMove(T)
 
-/atom/movable/proc/get_bullet_impact_effect_type()
+/**
+ * Determines the type of bullet impact effect this atom should use when hit.
+ *
+ * **Parameters**:
+ * - `def_zone` - The body zone the impact effect should be based on. Only used for `/mob` overrides.
+ *
+ * Returns string (One of `BULLET_IMPACT_*`).
+ */
+/atom/movable/proc/get_bullet_impact_effect_type(def_zone)
 	return BULLET_IMPACT_NONE
 
 
+/**
+ * Whether or not user is capable of using this atom based on dexterity. Usually this equates to "Are you a human or silicon mob?"
+ *
+ * **Parameters**:
+ * - `user` - The mob attempting to use the atom.
+ *
+ * Returns boolean.
+ */
 /atom/movable/proc/CheckDexterity(mob/living/user)
 	return TRUE
+
+
+/**
+ * Special handler for post-movement logic. Called by `turf/Entered()` if this atom has the `MOVABLE_FLAG_POSTMOVEMENT` flag set.
+ *
+ * **Parametetrs**:
+ * - `old_turf` - The turf that was moved from.
+ * - `new_turf` - The turf that was moved to.
+ *
+ * Has no return value.
+ */
+/atom/movable/proc/post_movement(turf/old_turf, turf/new_turf)
+	return

@@ -16,6 +16,6 @@
 /obj/item/clothing/glasses/augment
 	name = "corrective lenses"
 	desc = "The most expensive prescription on this side of Sol."
-	body_parts_covered = EMPTY_BITFIELD
+	body_parts_covered = FLAGS_OFF
 	prescription = 7
 	unacidable = TRUE

@@ -7,7 +7,7 @@
 #define INITIALIZE_HINT_LATELOAD 2  //Call LateInitialize
 #define INITIALIZE_HINT_QDEL     3  //Call qdel on the atom
 
-#define ATOM_FLAG_INITIALIZED FLAG(0) // The atom has been initialized. Also see flags.dm
+#define ATOM_FLAG_INITIALIZED FLAG_01
 
 //type and all subtypes should always call Initialize in New()
 #define INITIALIZE_IMMEDIATE(X) ##X/New(loc, ...){\

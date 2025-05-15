@@ -78,7 +78,7 @@
 		spark_system.set_up(5, 0, user)
 		spark_system.start()
 		playsound(loc, "sparks", 25, 1)
-	return EMPTY_BITFIELD
+	return FLAGS_OFF
 
 //ЭМИ атака по щиту
 /obj/aura/mechshield/proc/emp_attack(severity)

@@ -40,7 +40,7 @@
 	forced_ambience = list('packs/infinity/sound/SS2/music/02_elevator.mp3')
 
 //гиб конечностей - отрубание, сжигание и т.д.
-/obj/item/organ/external/droplimb(clean, disintegrate = DROPLIMB_EDGE, ignore_children, silent)
+/obj/item/organ/external/droplimb(clean, disintegrate = DROPLIMB_EDGE, ignore_children, silent, skip_throw)
 	.=..()
 	var/mob/living/carbon/human/victim = owner
 

@@ -32,7 +32,7 @@ They should also be used for when you want to effect the ENTIRE mob, like having
  * Returns bitfield (Any of `AURA_*`). See `code\__defines\mobs.dm`.
  */
 /obj/aura/proc/aura_check_life()
-	return EMPTY_BITFIELD
+	return FLAGS_OFF
 
 /**
  * Called when the associated mob is attacked with a weapon.
@@ -47,7 +47,7 @@ They should also be used for when you want to effect the ENTIRE mob, like having
  * Returns bitfield (Any of `AURA_*`). See `code\__defines\mobs.dm`.
  */
 /obj/aura/proc/aura_check_weapon(obj/item/weapon, mob/attacker, click_params)
-	return EMPTY_BITFIELD
+	return FLAGS_OFF
 
 /**
  * Called when the associated mob is impacted by a projectile.
@@ -61,7 +61,7 @@ They should also be used for when you want to effect the ENTIRE mob, like having
  * Returns bitfield (Any of `AURA_*`). See `code\__defines\mobs.dm`.
  */
 /obj/aura/proc/aura_check_bullet(obj/item/projectile/proj, def_zone)
-	return EMPTY_BITFIELD
+	return FLAGS_OFF
 
 /**
  * Called when the associated mob is hit by a thrown atom.
@@ -75,10 +75,10 @@ They should also be used for when you want to effect the ENTIRE mob, like having
  * Returns bitfield (Any of `AURA_*`). See `code\__defines\mobs.dm`.
  */
 /obj/aura/proc/aura_check_thrown(atom/movable/thrown_atom, datum/thrownthing/thrown_datum)
-	return EMPTY_BITFIELD
+	return FLAGS_OFF
 
 /obj/aura/debug
-	var/returning = EMPTY_BITFIELD
+	var/returning = FLAGS_OFF
 
 /obj/aura/debug/aura_check_weapon(obj/item/weapon, mob/attacker, click_params)
 	log_debug("Aura Check Weapon for \ref[src]: [weapon], [attacker]")

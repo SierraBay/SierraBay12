@@ -6,7 +6,7 @@
 	can_plate = 0
 	can_reinforce = 0
 	flipped = -1
-	obj_flags = EMPTY_BITFIELD // No tabling objects
+	obj_flags = FLAGS_OFF // No tabling objects
 
 /obj/structure/table/rack/New()
 	..()

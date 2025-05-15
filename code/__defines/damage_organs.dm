@@ -19,38 +19,38 @@
 #define  AIR_DAMAGE_MODIFIER 2.025  // More means less damage from hot air scalding lungs, less = more damage. (default 2.025)
 
 // Organ defines.
-#define ORGAN_CUT_AWAY   FLAG(0)  // The organ is in the process of being surgically removed.
-#define ORGAN_BLEEDING   FLAG(1)  // The organ is currently bleeding.
-#define ORGAN_BROKEN     FLAG(2)  // The organ is broken.
-#define ORGAN_DEAD       FLAG(3)  // The organ is necrotic.
-#define ORGAN_MUTATED    FLAG(4)  // The organ is unusable due to genetic damage.
-#define ORGAN_ARTERY_CUT FLAG(6)  // The organ has had its artery cut.
-#define ORGAN_TENDON_CUT FLAG(7)  // The organ has had its tendon cut.
-#define ORGAN_DISFIGURED FLAG(8)  // The organ is scarred/disfigured. Alters whether or not the face can be recognised.
-#define ORGAN_SABOTAGED  FLAG(9)  // The organ will explode if exposed to EMP, if prosthetic.
-#define ORGAN_ASSISTED   FLAG(10) // The organ is partially prosthetic. No mechanical effect.
-#define ORGAN_ROBOTIC    FLAG(11) // The organ is robotic. Changes numerous behaviors, search BP_IS_ROBOTIC for checks.
-#define ORGAN_BRITTLE    FLAG(12) // The organ takes additional blunt damage. If robotic, cannot be repaired through normal means.
-#define ORGAN_CRYSTAL    FLAG(13) // The organ does not suffer laser damage, but shatters on droplimb.
-#define ORGAN_CONFIGURE  FLAG(14) // The organ has an extra configuration step for surgery that it handles itself.
+#define ORGAN_CUT_AWAY   FLAG_01  // The organ is in the process of being surgically removed.
+#define ORGAN_BLEEDING   FLAG_02  // The organ is currently bleeding.
+#define ORGAN_BROKEN     FLAG_03  // The organ is broken.
+#define ORGAN_DEAD       FLAG_04  // The organ is necrotic.
+#define ORGAN_MUTATED    FLAG_05  // The organ is unusable due to genetic damage.
+#define ORGAN_ARTERY_CUT FLAG_07  // The organ has had its artery cut.
+#define ORGAN_TENDON_CUT FLAG_08  // The organ has had its tendon cut.
+#define ORGAN_DISFIGURED FLAG_09  // The organ is scarred/disfigured. Alters whether or not the face can be recognised.
+#define ORGAN_SABOTAGED  FLAG_10  // The organ will explode if exposed to EMP, if prosthetic.
+#define ORGAN_ASSISTED   FLAG_11 // The organ is partially prosthetic. No mechanical effect.
+#define ORGAN_ROBOTIC    FLAG_12 // The organ is robotic. Changes numerous behaviors, search BP_IS_ROBOTIC for checks.
+#define ORGAN_BRITTLE    FLAG_13 // The organ takes additional blunt damage. If robotic, cannot be repaired through normal means.
+#define ORGAN_CRYSTAL    FLAG_14 // The organ does not suffer laser damage, but shatters on droplimb.
+#define ORGAN_CONFIGURE  FLAG_15 // The organ has an extra configuration step for surgery that it handles itself.
 
 // Flags for proc/take_organ_damage
-#define ORGAN_DAMAGE_SHARP       FLAG(0) // Damage should be treated as sharp when applied
-#define ORGAN_DAMAGE_EDGE        FLAG(1) // Damage should be treated as edged when applied
-#define ORGAN_DAMAGE_FLESH_ONLY  FLAG(2) // Damage should not be applied to robotic organs
-#define ORGAN_DAMAGE_ROBOT_ONLY  FLAG(3) // Damage should not be applied to flesh organs
-#define ORGAN_DAMAGE_SILICON_EMP FLAG(4) // Damage should be treated as bypassing armor for silicons
+#define ORGAN_DAMAGE_SHARP       FLAG_01 // Damage should be treated as sharp when applied
+#define ORGAN_DAMAGE_EDGE        FLAG_02 // Damage should be treated as edged when applied
+#define ORGAN_DAMAGE_FLESH_ONLY  FLAG_03 // Damage should not be applied to robotic organs
+#define ORGAN_DAMAGE_ROBOT_ONLY  FLAG_04 // Damage should not be applied to flesh organs
+#define ORGAN_DAMAGE_SILICON_EMP FLAG_05 // Damage should be treated as bypassing armor for silicons
 
 // Organ flag defines.
-#define ORGAN_FLAG_CAN_AMPUTATE   FLAG(0) // The organ can be amputated.
-#define ORGAN_FLAG_CAN_BREAK      FLAG(1) // The organ can be broken.
-#define ORGAN_FLAG_CAN_GRASP      FLAG(2) // The organ contributes to grasping.
-#define ORGAN_FLAG_CAN_STAND      FLAG(3) // The organ contributes to standing.
-#define ORGAN_FLAG_HAS_TENDON     FLAG(4) // The organ can have its tendon cut.
-#define ORGAN_FLAG_FINGERPRINT    FLAG(5) // The organ has a fingerprint.
-#define ORGAN_FLAG_GENDERED_ICON  FLAG(6) // The icon state for this organ appends _m/_f.
-#define ORGAN_FLAG_HEALS_OVERKILL FLAG(7) // The organ heals from overkill damage.
-#define ORGAN_FLAG_DEFORMED       FLAG(8) // The organ is permanently disfigured.
+#define ORGAN_FLAG_CAN_AMPUTATE   FLAG_01 // The organ can be amputated.
+#define ORGAN_FLAG_CAN_BREAK      FLAG_02 // The organ can be broken.
+#define ORGAN_FLAG_CAN_GRASP      FLAG_03 // The organ contributes to grasping.
+#define ORGAN_FLAG_CAN_STAND      FLAG_04 // The organ contributes to standing.
+#define ORGAN_FLAG_HAS_TENDON     FLAG_05 // The organ can have its tendon cut.
+#define ORGAN_FLAG_FINGERPRINT    FLAG_06 // The organ has a fingerprint.
+#define ORGAN_FLAG_GENDERED_ICON  FLAG_07 // The icon state for this organ appends _m/_f.
+#define ORGAN_FLAG_HEALS_OVERKILL FLAG_08 // The organ heals from overkill damage.
+#define ORGAN_FLAG_DEFORMED       FLAG_09 // The organ is permanently disfigured.
 
 // Droplimb types.
 #define DROPLIMB_EDGE 0
