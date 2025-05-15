@@ -117,7 +117,7 @@ PROCESSING_SUBSYSTEM_DEF(anom)
 	anomaly_text += "<br><br><br><b>ANOMALY MOD STATISTIC.</b>"
 	if(!last_attacked_message && !gibbed_last_message && !collected_artefacts_by_player)
 		anomaly_text += "<br>Никто не рискнул ступить на аномальную планету."
-		anomaly_text += "<br><a href='byond://?src=\ref[src];show_anomaly_stats=1'>\[Показать подробную статистику\]</a>"
+		anomaly_text += "<br><a href='byond://?src=\ref[src];output_roundend_data=1'>\[Показать подробную статистику\]</a>"
 		return anomaly_text
 	if(SSanom.spawn_ammount > 0)
 		//Раненные, умершие, гибнутые
@@ -133,30 +133,47 @@ PROCESSING_SUBSYSTEM_DEF(anom)
 		anomaly_text += "<br><a href='byond://?src=\ref[src];show_anomaly_stats=1'>\[Показать подробную статистику\]</a>"
 		return anomaly_text
 
+/datum/controller/subsystem/processing/anom/OnTopic
 
 /datum/controller/subsystem/processing/anom/Topic(href, href_list)
 	..()
-	if(href_list["show_anomaly_stats"])
-		var/mob/user = usr
-		if(!user.client)
-			return
-	var/HTML = "<html><body>"
-	HTML += "<br><br> ANOMALIES"
-	HTML += "<br>Количество аномалий на момент окончания раунда: [anomalies_cores_in_world_amount]. Мод размещал аномалии [spawn_ammount] раз, а удалял [removed_ammount] раз."
-	HTML += "<br>Игра заспавнила [artefacts_spawned_by_game] артефактов, из них [artefacts_deleted_by_game] удалено. Собрано игроками артефактов: [collected_artefacts_by_player]. Всего артефактов на конец раунда: [LAZYLEN(artefacts_list_in_world)]"
-	HTML +=  "<br>Аномалии были взведены [anomalies_activated_times] раз. В целом, игроки подверглись влиянию аномалий [humanoids_effected_by_anomaly] раз, а [humanoids_gibbed_by_anomaly] игроков были гибнуты. [simplemobs_effected_by_anomaly] симплмобов подверглись влиянию аномалий и [simplemobs_gibbed_by_anomaly] было гибнуто."
-	HTML += "<br><br> ARTEFACTS"
-	HTML += "<br>Заработано каргопоинтов за продажу артефактов: [earned_cargo_points], заработано РНД поинтов за изучение артефактов: [earned_rnd_points]"
-	HTML += "<br>Всего попыток взаимодействия с артефактами: [interactions_with_artefacts_by_players_ammount], из них [good_interactions_with_artefacts_by_players_ammount] принесли пользу, а [bad_interactions_with_artefacts_by_players_ammount] принесли вред."
-	HTML += "<br><br> DAMAGES"
-	HTML += "<br> Люди подверглись влиянию аномалий [humanoids_effected_by_anomaly] раз, а гибнулись [humanoids_gibbed_by_anomaly] раз."
-	HTML += "<br> Симплмобы подверглись влиянию аномалий [simplemobs_effected_by_anomaly] раз, а гибнулись [simplemobs_gibbed_by_anomaly] раз."
-
-
-	// Открываем окно
+	var/mob/user = usr
+	var/list/HTML = list()
 	var/window_x = 600
 	var/window_y = 400
-	var/datum/browser/popup = new(usr, "anomaly_stats", "Anomaly Statistics", window_x, window_y)
+	if(!user.client)
+		return
+	if(href_list["delete_object"])
+		var/obj/delete_object = locate(href_list["delete_object"])
+		if(delete_object)
+			delete_object.Destroy()
+			to_chat(user, "Обьект [delete_object] удален.")
+		else
+			to_chat(user, "Похоже, данные устарели.")
+	if(href_list["teleport_to_object"])
+		var/obj/teleport_to_object = locate(href_list["teleport_to_object"])
+		if(teleport_to_object)
+			usr.forceMove(get_turf(teleport_to_object))
+			to_chat(user, "Вы телепортированы к  [teleport_to_object].")
+		else
+			to_chat(user, "Похоже, данные устарели.")
+	if(href_list["show_anom_control_main"])
+		ShowAnomcontrolUI(HTML, user, window_x, window_y)
+	else if(href_list["output_roundend_data"])
+		ShowRoundendUI(HTML, user, window_x, window_y)
+	else if(href_list["Аномалии"])
+		Show_anomalies_UI(HTML, user, window_x, window_y)
+	else if(href_list["Артефакты"])
+		Show_artefacts_UI(HTML, user, window_x, window_y)
+	else if(href_list["Погода"])
+		Show_weather_UI(HTML, user, window_x, window_y)
+	else if(href_list["Рассказчики"])
+		Show_storytellers_UI(HTML, user, window_x, window_y)
+	else
+		ShowAnomcontrolUI(HTML, user, window_x, window_y)
+	HTML = jointext(HTML, "<br>", 2)
+	// Открываем окно
+	var/datum/browser/popup = new(usr, "Anomaly_stuff", "Anomaly Statistics", window_x, window_y)
 	popup.set_content(HTML)
 	popup.open()
 

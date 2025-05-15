@@ -9,6 +9,7 @@
 /obj/anomaly/electra
 	name = "Lightning strikes"
 	anomaly_tag = "Electra"
+	admin_name = "Электроаномалия"
 	with_sound = TRUE
 	sound_type = 'mods/anomaly/sounds/electra_blast.ogg'
 	activation_effect_type = "electra_activation"
