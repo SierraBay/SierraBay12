@@ -13,6 +13,7 @@
 #include "code/machinery/rdconsole.dm"
 #include "code/machinery/rdmachines.dm"
 #include "code/machinery/robotics_fabricator.dm"
+#include "code/machinery/autolathe_disk_cloner.dm"
 #include "code/experiment.dm"
 #include "code/program/itcommand.dm"
 #include "code/tech_branch/tech_biotech.dm"
