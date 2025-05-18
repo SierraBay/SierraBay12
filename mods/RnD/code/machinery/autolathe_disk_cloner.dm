@@ -231,7 +231,7 @@
 
 
 /obj/machinery/disk_cloner/update_icon()
-	overlays.Cut()
+	ClearOverlays()
 
 	if(panel_open)
 		overlays.Add(image(icon, icon_state = "disk_cloner_panel"))
