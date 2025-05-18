@@ -105,11 +105,11 @@
 
 	if(original)
 		data["disk1"] = original.ui_data()
-		data["copyingtotal"] = original.stored_files.len
+		data["copyingtotal"] = LAZYLEN(original.stored_files)
 
 	if(copy)
 		data["disk2"] = copy.ui_data()
-		data["copyingnow"] = copy.stored_files.len
+		data["copyingnow"] = LAZYLEN(copy.stored_files)
 
 	return data
 
@@ -243,13 +243,13 @@
 		if(original)
 			overlays.Add(image(icon, icon_state = "disk_cloner_screen_disk1"))
 
-			if(original.stored_files.len)
+			if(LAZYLEN(original.stored_files))
 				overlays.Add(image(icon, icon_state = "disk_cloner_screen_list1"))
 
 		if(copy)
 			overlays.Add(image(icon, icon_state = "disk_cloner_screen_disk2"))
 
-			if(copy.stored_files.len)
+			if(LAZYLEN(copy.stored_files))
 				overlays.Add(image(icon, icon_state = "disk_cloner_screen_list2"))
 
 		if(copying)
