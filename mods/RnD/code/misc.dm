@@ -19,6 +19,20 @@
 	matter = list(MATERIAL_STEEL = 100, MATERIAL_PLASTIC = 200, MATERIAL_GOLD = 50)
 	var/list/designs = list()
 
+/obj/item/stock_parts/computer/hard_drive/portable/design/printable
+	name = "design disk"
+	desc = "Data disk used to store autolathe designs."
+	icon = 'mods/RnD/icons/discs.dmi'
+
+	max_capacity = 512	// Up to 255 designs, automatically reduced to the nearest power of 2
+
+/obj/item/stock_parts/computer/hard_drive/portable/design/printable/New()
+	. = ..()
+	name = "Data disk"
+	icon_state = pick("yellow", "blue", "green", "red", "purple", "black")
+	max_capacity = 128
+
+
 /obj/item/stock_parts/computer/hard_drive/portable/LateInitialize(mapload)
 	install_default_programs()
 

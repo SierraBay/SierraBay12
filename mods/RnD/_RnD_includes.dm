@@ -30,6 +30,11 @@
 #include "code/SSresearch.dm"
 #include "code/program/sciefolder.dm"
 #include "code/misc.dm"
+#include "code/xenoarch/tesla.dm"
+#include "code/xenoarch/grav.dm"
+#include "code/xenoarch/nature.dm"
+#include "code/xenoarch/swap.dm"
+
 
 //Дезайны
 #include "code/designs_autolathe/designs_arms_ammo.dm"

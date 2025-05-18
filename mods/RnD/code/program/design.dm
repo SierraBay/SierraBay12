@@ -312,6 +312,15 @@
 	build_path = /obj/item/material/sword/katana
 	sort_string = "ZAAAX"
 
+/datum/design/item/data_disk
+	name = "data disk"
+	desc = "A disk used to store data."
+	id = "data_disk"
+	category = list("Misc")
+	req_tech = list(TECH_DATA = 2, TECH_MATERIAL = 2)
+	materials = list(MATERIAL_STEEL = 200, MATERIAL_PLASTIC = 400)
+	build_path = /obj/item/stock_parts/computer/hard_drive/portable/design/printable
+	sort_string = "ZAAAY"
 
 /datum/design/item/optical
 	materials = list(MATERIAL_STEEL = 50, MATERIAL_GLASS = 50)

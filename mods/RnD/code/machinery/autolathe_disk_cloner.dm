@@ -1,6 +1,6 @@
-/obj/machinery/autolathe_disk_cloner
-	name = "Autolathe disk cloner"
-	desc = "Machine used for copying recipes from unprotected autolathe disks."
+/obj/machinery/disk_cloner
+	name = "Disk cloner"
+	desc = "Machine used for copying files from one disk to another disk."
 	icon = 'mods/RnD/icons/disk_cloner.dmi'
 	icon_state = "disk_cloner"
 	density = TRUE
@@ -14,15 +14,24 @@
 
 	var/obj/item/stock_parts/computer/hard_drive/portable/original = null
 	var/obj/item/stock_parts/computer/hard_drive/portable/copy = null
+	base_type = /obj/machinery/disk_cloner
+	construct_state = /singleton/machine_construction/default/panel_closed
+	uncreated_component_parts = list(
+		/obj/item/stock_parts/scanning_module,
+		/obj/item/stock_parts/scanning_module,
+		/obj/item/stock_parts/micro_laser,
+		/obj/item/stock_parts/micro_laser,
+
+	)
 
 	var/copying = FALSE
 
 
-/obj/machinery/autolathe_disk_cloner/Initialize()
+/obj/machinery/disk_cloner/Initialize()
 	. = ..()
 	update_icon()
 
-/obj/machinery/autolathe_disk_cloner/RefreshParts()
+/obj/machinery/disk_cloner/RefreshParts()
 	..()
 	var/laser_rating = 0
 	var/scanner_rating = 0
@@ -40,9 +49,9 @@
 
 	hack_fail_chance = ((scanner_rating+laser_rating) >= 9) ? 20 : 40
 
-/obj/machinery/autolathe_disk_cloner/use_tool(obj/item/I, mob/user)
-	. = ..()
-
+/obj/machinery/disk_cloner/use_tool(obj/item/I, mob/user)
+	if ((. = ..()))
+		return
 	if(panel_open)
 		return
 
@@ -61,7 +70,7 @@
 	update_icon()
 
 
-/obj/machinery/autolathe_disk_cloner/Destroy()
+/obj/machinery/disk_cloner/Destroy()
 	if(original)
 		original.forceMove(src.loc)
 		original = null
@@ -70,17 +79,17 @@
 		copy = null
 	. = ..()
 
-/obj/machinery/autolathe_disk_cloner/Process()
+/obj/machinery/disk_cloner/Process()
 	update_icon()
 
-/obj/machinery/autolathe_disk_cloner/proc/put_disk(obj/item/stock_parts/computer/hard_drive/portable/AD, mob/user)
+/obj/machinery/disk_cloner/proc/put_disk(obj/item/stock_parts/computer/hard_drive/portable/AD, mob/user)
 	ASSERT(istype(AD))
 
 	user.unEquip(AD,src)
 	return AD
 
 
-/obj/machinery/autolathe_disk_cloner/attack_hand(mob/user as mob)
+/obj/machinery/disk_cloner/attack_hand(mob/user as mob)
 	if(..())
 		return TRUE
 
@@ -89,7 +98,7 @@
 	update_icon()
 
 
-/obj/machinery/autolathe_disk_cloner/ui_data()
+/obj/machinery/disk_cloner/ui_data()
 	var/list/data = list(
 		"copying" = copying,
 	)
@@ -105,7 +114,7 @@
 	return data
 
 
-/obj/machinery/autolathe_disk_cloner/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1)
+/obj/machinery/disk_cloner/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1)
 	var/list/data = ui_data()
 
 	ui = SSnano.try_update_ui(user, src, ui_key, ui, data, force_open)
@@ -118,7 +127,7 @@
 		// open the new ui window
 		ui.open()
 
-/obj/machinery/autolathe_disk_cloner/Topic(href, href_list)
+/obj/machinery/disk_cloner/Topic(href, href_list)
 	if(..())
 		return 1
 
@@ -165,7 +174,7 @@
 	update_icon()
 
 
-/obj/machinery/autolathe_disk_cloner/proc/copy()
+/obj/machinery/disk_cloner/proc/copy()
 	copying = TRUE
 	update_use_power(POWER_USE_ACTIVE)
 	SSnano.update_uis(src)
@@ -221,7 +230,7 @@
 	update_icon()
 
 
-/obj/machinery/autolathe_disk_cloner/update_icon()
+/obj/machinery/disk_cloner/update_icon()
 	overlays.Cut()
 
 	if(panel_open)
@@ -245,3 +254,19 @@
 
 		if(copying)
 			overlays.Add(image(icon, icon_state = "disk_cloner_cloning"))
+
+
+/obj/item/stock_parts/circuitboard/disk_cloner/
+	name = "circuit board (disk cloner)"
+	build_path = /obj/machinery/disk_cloner
+	board_type = "machine"
+	origin_tech = list(TECH_DATA = 4)
+	req_components = list(
+							/obj/item/stock_parts/scanning_module = 2,
+							/obj/item/stock_parts/micro_laser = 2
+	)
+	additional_spawn_components = list(
+							/obj/item/stock_parts/console_screen = 1,
+							/obj/item/stock_parts/keyboard = 1,
+							/obj/item/stock_parts/power/apc/buildable = 1
+	)

@@ -28,7 +28,7 @@
 	build_path = /obj/item/mop/advanced
 	category = list("Misc")
 
-/datum/design/blutrash
+/datum/design/item/blutrash
 	name = "Trashbag of Holding"
 	desc = "An advanced trash bag with bluespace properties; capable of holding a plethora of garbage."
 	id = "blutrash"
