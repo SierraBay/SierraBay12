@@ -49,4 +49,5 @@
 #include "code\ghost_speed.dm"
 #include "code/adrenalin.dm"
 #include "code\drone_gas_analyser.dm"
+#include "code/skrell.dm"
 #endif

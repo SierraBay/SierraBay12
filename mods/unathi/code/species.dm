@@ -7,3 +7,10 @@
 
 /singleton/species/unathi
 	inherent_verbs = list()
+
+/singleton/species/unathi/skills_from_age(age)
+	if(age in 0 to 45)
+		. = ..()
+	else if(age)
+		// Если возраст выше 45 лет - один скиллпоинт за каждые 20 лет
+		. = floor((age - 45) / 20) + 8
