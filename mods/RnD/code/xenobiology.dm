@@ -77,6 +77,14 @@
 	facial_hair_style = "Plain Antennae"
 	. = ..(mapload, SPECIES_MOTH)
 
+// A crutch on a crutch and a crutch drives. BLOCKHAIR isn't our friend.
+
+/obj/item/clothing/head/helmet
+	species_restricted = list("exclude", SPECIES_NABBER, SPECIES_ADHERENT, SPECIES_MOTH)
+
+/obj/item/clothing/head/helmet/space
+	species_restricted = list("exclude", SPECIES_NABBER, SPECIES_DIONA, SPECIES_MOTH)
+
 /singleton/emote/audible/moth_scream
 	key = "scream"
 	emote_message_3p = "USER screams."
@@ -100,6 +108,8 @@
 	do_coloration = FALSE
 	icon = 'mods/RnD/icons/mob/moth/facial.dmi'
 
+// Since we're not "true" species and only a gimmic for Xenobio, we use limited amount of wings (only those, which don't need corresponding bodymark). Also wings are our "hair" and not a standalone organ with proper overlays.
+
 /datum/sprite_accessory/hair/moth
 	name = "Plain Wings"
 	icon_state = "plain"
@@ -107,6 +117,22 @@
 	gender = NEUTER
 	do_coloration = FALSE
 	icon = 'mods/RnD/icons/mob/moth/hair.dmi'
+
+/datum/sprite_accessory/hair/moth/monarch
+	name = "Monarch Wings"
+	icon_state = "monarch"
+
+/datum/sprite_accessory/hair/moth/luna
+	name = "Luna Wings"
+	icon_state = "luna"
+
+/datum/sprite_accessory/hair/moth/atlas
+	name = "Atlas Wings"
+	icon_state = "atlas"
+
+/datum/sprite_accessory/hair/moth/ragged
+	name = "Ragged Wings"
+	icon_state = "ragged"
 
 // How we makes moths. Because of, you know, dependency on one specific entity, this reactions also belongs to RnD mod
 
@@ -147,7 +173,7 @@
 			to_chat(H, SPAN_DANGER("Your flesh rapidly mutates!"))
 			H.set_species(SPECIES_MOTH)
 			H.shapeshifter_set_colour("#f7d896")
-			H.shapeshifter_select_hair()
+			H.shapeshifter_select_hair() // Let them choose their wings and antennae
 		return
 	var/obj/item/organ/external/O = pick(meatchunks)
 	to_chat(H, SPAN_DANGER("Your [O.name]'s flesh mutates rapidly!"))
