@@ -43,13 +43,9 @@
 
 
 	default_emotes = list(
-		/singleton/emote/human/swish,
-		/singleton/emote/human/wag,
-		/singleton/emote/human/sway,
-		/singleton/emote/human/qwag,
-		/singleton/emote/human/fastsway,
-		/singleton/emote/human/swag,
-		/singleton/emote/human/stopsway,
+		/singleton/emote/audible/moth_scream,
+		/singleton/emote/audible/moth_cough,
+		/singleton/emote/audible/moth_laugh
 		)
 
 	spawn_flags = SPECIES_IS_RESTRICTED
@@ -94,6 +90,11 @@
 	key = "cough"
 	emote_message_3p = "USER coughs!"
 	emote_sound = 'mods/RnD/sounds/mothcough.ogg'
+
+/singleton/emote/audible/moth_laugh
+	key = "laugh"
+	emote_message_3p = "USER laughs."
+	emote_sound = 'mods/RnD/sounds/mothlaugh.ogg'
 
 /obj/item/organ/internal/eyes/moth
 	icon = 'mods/RnD/icons/mob/moth/eyes.dmi'
