@@ -26,7 +26,7 @@
 
 /datum/keybinding/mob/face_direction/down(client/user)
 	var/mob/living/L = user.mob
-	L.set_face_dir()
+	L.face_direction()
 	return TRUE
 
 /datum/keybinding/living/resist
