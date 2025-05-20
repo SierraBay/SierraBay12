@@ -19,7 +19,7 @@
 	return TRUE
 
 /datum/keybinding/mob/face_direction
-	hotkey_keys = list("]")
+	hotkey_keys = list("F")
 	name = "face_direction"
 	full_name = "Face Direction"
 	description = "Block dir"

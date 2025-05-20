@@ -41,9 +41,34 @@
 	. = ..()
 	update_fov_dir()
 
+
+/mob/set_dir()
+	if(facing_dir)
+		if(!canface() || lying || restrained())
+			facing_dir = null
+		else if(buckled)
+			if(buckled.obj_flags & OBJ_FLAG_ROTATABLE)
+				buckled.set_dir(facing_dir)
+				return ..(facing_dir)
+			else
+				facing_dir = null
+		else if(dir != face_dir_click)
+			return ..(face_dir_click)
+	else
+		return ..()
+
+
 /mob/living/set_dir()
 	. = ..()
 	update_fov_dir()
+
+
+/mob/living/exosuit/set_dir(ndir)
+	if(pilots)
+		for(var/mob/living/thing in pilots)
+			thing.set_dir(ndir)
+	..()
+
 
 /mob/living/UpdateLyingBuckledAndVerbStatus()
 	. = ..()
@@ -56,8 +81,14 @@
 
 /mob/living/proc/check_fov()
 	if(client)
-		if(resting || lying || client.eye != client.mob)
+		var/turf/eyeloc = get_turf(client.eye)	//Trying to make FOV works for Mechs
+		var/turf/mobloc = get_turf(client.mob)	//Trying to make FOV works for Mechs
+		if(resting || lying)
 			client.hide_cone()
+		//Trying to make FOV works for Mechs
+		else if(eyeloc != mobloc)
+			client.hide_cone()
+		//////////
 		else if(client.usefov)
 			client.show_cone()
 		else

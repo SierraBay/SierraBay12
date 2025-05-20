@@ -1092,7 +1092,7 @@
 	else
 		set_dir(dir)
 		facing_dir = dir
-
+/* [SIERRA-REMOVE] - VISION CONE. Кароче это хуйня вызывается, а не должна
 /mob/set_dir()
 	if(facing_dir)
 		if(!canface() || lying || restrained())
@@ -1107,7 +1107,7 @@
 			return ..(facing_dir)
 	else
 		return ..()
-
+*/
 /mob/proc/set_stat(new_stat)
 	. = stat != new_stat
 	stat = new_stat

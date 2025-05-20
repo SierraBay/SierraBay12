@@ -13,8 +13,9 @@
 
 /mob
 	plane = GAME_PLANE_FOV_HIDDEN
+	var/face_dir_click
 
-/obj/item/projectile
+/obj/item/
 	plane = GAME_PLANE_FOV_HIDDEN
 
 //called to launch a projectile
@@ -99,4 +100,31 @@
 	for(var/overlay in H.equipment_overlays)
 		H.client.screen |= overlay
 
+	return 1
+
+
+/mob/face_direction()
+
+	set name = "Face Direction"
+	set category = "IC"
+	set src = usr
+
+	set_face_dir()
+
+	if(!facing_dir)
+		to_chat(usr, "You are now not facing anything.")
+		face_dir_click = null
+	else
+		to_chat(usr, "You are now facing [dir2text(facing_dir)].")
+
+
+/mob/living/facedir(ndir)
+	if(!canface() || moving || (buckled && !buckled.buckle_movable))
+		return 0
+	if(buckled && buckled.buckle_movable)
+		buckled.set_dir(ndir)
+	if(facing_dir)
+		face_dir_click = ndir
+	set_dir(ndir)
+	SetMoveCooldown(movement_delay())
 	return 1
