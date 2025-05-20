@@ -1,7 +1,7 @@
 /obj/structure/heavy_vehicle_frame/proc/crowbar_interaction(tool, mob/living/user)
 // Remove reinforcement
 	if(!user.skill_check(SKILL_DEVICES, SKILL_TRAINED))
-		to_chat(user, SPAN_BAD("I dont know how work with mechs!"))
+		to_chat(user, SPAN_BAD("Понятия не имею как обслуживать меха."))
 		return
 	var/list/options = list(
 		"Отсоединить листы" = mutable_appearance('mods/mechs_by_shegar/icons/radial_menu.dmi', "material"),
@@ -15,7 +15,7 @@
 				SPAN_NOTICE("Вы начали снимать укрепление с  \the [src].")
 			)
 		else
-			to_chat(user, "[src] have no internal reinforces.")
+			to_chat(user, "Внутренняя обшивка отсутствует.")
 		if (!user.do_skilled(4 SECONDS, SKILL_DEVICES, src) || !user.use_sanity_check(src, tool))
 			return TRUE
 		material.place_sheet(loc, 10)

@@ -31,8 +31,7 @@
 		min_artefacts_ammount = min_artefacts_ammount,
 		max_artefacts_ammount = max_artefacts_ammount,
 		source = "Большой аномальный артефакт",
-		visible_generation = FALSE,
-		started_in = world.time)
+		visible_generation = FALSE)
 
 /obj/structure/big_artefact/shuttle_land_on()
 	delete_artefact()

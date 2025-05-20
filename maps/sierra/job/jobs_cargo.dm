@@ -2,6 +2,7 @@
 	title = "Quartermaster"
 	department = "Снабжения"
 	department_flag = SUP
+	head_position = 1
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = "Главе Персонала"

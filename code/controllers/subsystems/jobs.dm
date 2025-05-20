@@ -614,6 +614,7 @@ SUBSYSTEM_DEF(jobs)
 	text = uppertext(text)
 
 	var/obj/effect/T = new()
+	T.icon_state = "nothing"
 	T.maptext_height = 64
 	T.maptext_width = 512
 	T.layer = FLOAT_LAYER

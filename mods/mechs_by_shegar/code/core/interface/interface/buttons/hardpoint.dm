@@ -147,3 +147,16 @@
 			active_arm = L_arm
 		return 1 // The element calling this proc will set its own icon.
 	return 0
+
+//Функция обновляет спрайты у выбранных модулей(спрайты хардпоинтов)
+/mob/living/exosuit/proc/update_selected_hardpoint(do_sound = FALSE, obj/screen/movable/exosuit/hardpoint, obj/screen/movable/exosuit/prev_hardpoint)
+	if(hardpoint == prev_hardpoint)
+		return
+	if(!hardpoint)
+		hardpoint = hardpoint_hud_elements[selected_hardpoint]
+	if(hardpoint)
+		hardpoint.icon_state = "hardpoint_selected"
+	if(prev_hardpoint)
+		prev_hardpoint.icon_state = "hardpoint"
+	if(do_sound)
+		playsound(src, 'mods/mechs_by_shegar/sounds/mech_swap_weapon.ogg', 50, 0)

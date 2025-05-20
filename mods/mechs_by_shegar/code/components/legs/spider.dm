@@ -22,8 +22,8 @@
 	emp_heat_generation = 75
 	heat_generation = 2
 	//Паучьи ноги не страдают от ускорений, их скорость статична
-	max_speed = 26
-	min_speed = 26
+	max_speed = 24
+	min_speed = 24
 	acceleration = 0.5
 	turn_slowdown = 0.75
 	turn_diogonal_slowdown = 0.5

@@ -121,6 +121,7 @@ a.popt {text-decoration: none;}
 	position: fixed;
 	top: 0;
 	right: 0;
+	width: 180px;
 }
 #userBar .subCell {
 	background: #202020;

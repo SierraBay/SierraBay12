@@ -39,24 +39,7 @@
 #include "passenger_compartment\add_passenger.dm"
 #include "passenger_compartment\offering.dm"
 #include "passenger_compartment\remove_passenger.dm"
-
-//Каркас
-#include "frame\_vars.dm"
-#include "frame\frame.dm"
-#include "frame\render.dm"
-#include "frame\use_tool.dm"
-#include "frame\use_tool\arms_install.dm"
-#include "frame\use_tool\body_install.dm"
-#include "frame\use_tool\cable_coil.dm"
-#include "frame\use_tool\crowbar.dm"
-#include "frame\use_tool\doubled_leg_instalation.dm"
-#include "frame\use_tool\legs_install.dm"
-#include "frame\use_tool\material_install.dm"
-#include "frame\use_tool\screwdriver_interaction.dm"
-#include "frame\use_tool\sensors_install.dm"
-#include "frame\use_tool\welder_interaction.dm"
-#include "frame\use_tool\wirecutter_interactio.dm"
-#include "frame\use_tool\wrench_interaction.dm"
+#include "frame\frame.dm" //Каркас
 //Прочее
 #include "software.dm"
 

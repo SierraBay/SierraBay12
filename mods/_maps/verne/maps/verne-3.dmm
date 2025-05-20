@@ -1700,6 +1700,7 @@
 /obj/item/stack/material/aluminium{
 	amount = 3
 	},
+/obj/item/storage/box/microlathe_designs,
 /turf/simulated/floor/tiled/monotile,
 /area/verne/common/kitchen/access)
 "kN" = (

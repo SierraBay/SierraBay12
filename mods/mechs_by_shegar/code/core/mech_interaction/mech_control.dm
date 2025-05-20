@@ -28,10 +28,6 @@
 		check_click_fail(A, user,failed)
 		mech_module_use_attempt(A, user,failed)
 		return
-	//Если цель клика - лестница
-	if(istype(A, /obj/structure/ladder))
-		var/obj/structure/ladder/L = A
-		L.climb(src)
 
 	//В случае если интент стоит на ХАРМ - переходим к попытке атаковать лапой
 	else if(A.Adjacent(src) && user.a_intent == I_HURT)
@@ -80,87 +76,6 @@
 	//Теперь, пройдя все проверки, можем продолжить главный код
 	return TRUE
 
-///Мех атакует обьект/предмет лапой.
-/mob/living/exosuit/proc/attack_with_fists(atom/click_target, mob/living/pilot)
-	setClickCooldown(active_arm ? active_arm.action_delay : 7) // You've already commited to applying fist, don't turn and back out now!
-	playsound(src.loc, L_leg.mech_step_sound, 60, 1)
-	var/arms_local_damage = active_arm.melee_damage
-	src.visible_message(SPAN_DANGER("\The [src] steps back, preparing for a strike!"), blind_message = SPAN_DANGER("You hear the loud hissing of hydraulics!"))
-	if (do_after(src, 1.2 SECONDS, get_turf(src), DO_DEFAULT | DO_USER_UNIQUE_ACT | DO_PUBLIC_PROGRESS) && src)
-		add_heat(active_arm.heat_generation)
-		//Если расстояние между целью оказалось слишком большой (больше 1 тайла) - мы мажем
-		if (get_dist(src, click_target) > 1.5)
-			src.visible_message(SPAN_DANGER(" [src] misses with his attack!"))
-			setClickCooldown(active_arm ? active_arm.action_delay : 7)
-			playsound(src.loc, active_arm.punch_sound, 50, 1)
-			return
-		//Проверяем обьект на момент особых взаимодействий. Если их нет - атакуем.
-		if(!click_target.mech_fist_interaction(src, pilot, arms_local_damage, active_arm))
-			click_target.attack_generic(src, arms_local_damage, "strikes", DAMAGE_BRUTE) //Мех именно атакует своей лапой обьект
-			var/turf/T = get_turf(click_target)
-			if(ismob(click_target))
-				var/mob/target = click_target
-				if(!target.lying && target.mob_size < mob_size)
-					target.throw_at(get_ranged_target_turf(target, get_dir(src, target), 1),1, 1, src, TRUE)
-					target.Weaken(1)
-			do_attack_effect(T, "smash")
-			playsound(src.loc, active_arm.punch_sound, 50, 1)
-			setClickCooldown(active_arm ? active_arm.action_delay : 7)
-
-
-
-
-/*Функция вызываемая, когда обьект атакуется лапами меха
-*TRUE - атаковать не нужно, мех уже как-то повзаимодействовал по особенному. К примеру, открыл шлюз.
-*FALSE - нужно нанести удар, т.к нет особого взаимодействия (Условно нельзя раскрыть шлюз)
-*/
-/atom/proc/mech_fist_interaction(mob/living/exosuit/mech, mob/living/pilot, mech_fist_damage, obj/item/mech_component/manipulators/active_arm)
-	return
-
-//Аир лок
-/obj/machinery/door/firedoor/mech_fist_interaction(mob/living/exosuit/mech, mob/living/pilot, mech_fist_damage, obj/item/mech_component/manipulators/active_arm)
-	if(!blocked)
-		mech.setClickCooldown(mech.active_arm ? mech.active_arm.action_delay : 7)
-		addtimer(new Callback(src, TYPE_PROC_REF(/obj/machinery/door/firedoor, toggle), TRUE), 0)
-		return TRUE
-	return FALSE
-
-//Крепкие бласты(оружейка СБ)
-/obj/machinery/door/blast/regular/mech_fist_interaction(mob/living/exosuit/mech, mob/living/pilot, mech_fist_damage, obj/item/mech_component/manipulators/active_arm)
-	if(inoperable() || !is_powered())
-		mech.setClickCooldown(mech.active_arm ? mech.active_arm.action_delay : 7)
-		addtimer(new Callback(src, TYPE_PROC_REF(/obj/machinery/door/blast, force_toggle), TRUE), 0)
-		return TRUE
-	//Всё равно возвращаем TRUE, чтоб мех не ударял
-	to_chat(pilot, SPAN_NOTICE("This structure too reinforced for being damaged by [src]!"))
-	return TRUE
-
-/obj/machinery/door/blast/mech_fist_interaction(mob/living/exosuit/mech, mob/living/pilot, mech_fist_damage, obj/item/mech_component/manipulators/active_arm)
-	if(inoperable() || !is_powered())
-		mech.setClickCooldown(mech.active_arm ? mech.active_arm.action_delay : 7)
-		addtimer(new Callback(src, TYPE_PROC_REF(/obj/machinery/door/blast, force_toggle), TRUE), 0)
-		return TRUE
-	mech_fist_damage = mech_fist_damage * 2
-	return FALSE
-
-//Обычные бласты(в карго)
-/obj/machinery/door/blast/shutters/mech_fist_interaction(mob/living/exosuit/mech, mob/living/pilot, mech_fist_damage, obj/item/mech_component/manipulators/active_arm)
-	if(inoperable() || !is_powered())
-		mech.setClickCooldown(mech.active_arm ? mech.active_arm.action_delay : 7)
-		addtimer(new Callback(src, TYPE_PROC_REF(/obj/machinery/door/blast/shutters, force_toggle), TRUE), 0)
-		return TRUE
-	mech_fist_damage = mech_fist_damage * 2
-	return FALSE
-
-//Шлюз. Откроет, если выбита/не работает.
-/obj/machinery/door/mech_fist_interaction(mob/living/exosuit/mech, mob/living/pilot, mech_fist_damage, obj/item/mech_component/manipulators/active_arm)
-	if(inoperable() || !is_powered())
-		mech.setClickCooldown(mech.active_arm ? mech.active_arm.action_delay : 7)
-		addtimer(new Callback(src, TYPE_PROC_REF(/obj/machinery/door, toggle), TRUE), 0)
-		return TRUE
-	mech_fist_damage = mech_fist_damage * 2
-	return FALSE
-
 /mob/living/exosuit/proc/handle_click_params(atom/click_target, params, mob/living/pilot)
 	//TRUE - обработали как надо и идти дальше по коду не нужно
 	//FALSE - нужно продолжить обработку кода
@@ -188,7 +103,36 @@
 					click_target.AltClick(pilot)
 					setClickCooldown(3)
 					return TRUE
+	else if(!show_right_click_menu)
+		if(modifiers["right"])
+			handle_right_and_left_click("right")
+		else if(modifiers["left"])
+			handle_right_and_left_click("left")
 	return FALSE
+
+//Задача функции сменить хардпоинт на левый или правый в зависимости от текущего состояния
+/mob/living/exosuit/proc/handle_right_and_left_click(mouse_type)
+	var/obj/screen/movable/exosuit/hardpoint = hardpoint_hud_elements[selected_hardpoint]
+	var/obj/screen/movable/exosuit/hardpoint/previous_hardpoint = hardpoint
+	if(mouse_type == "left")
+		if(!selected_hardpoint)
+			set_hardpoint("left hand")
+		if(selected_hardpoint == "right hand")
+			set_hardpoint("left hand")
+		else if(selected_hardpoint == "right shoulder")
+			if(hardpoints.Find("left shoulder"))
+				set_hardpoint("left shoulder")
+	else if(mouse_type == "right")
+		if(!selected_hardpoint)
+			set_hardpoint("right hand")
+		if(selected_hardpoint == "left hand" )
+			set_hardpoint("right hand")
+		else if(selected_hardpoint == "left shoulder")
+			if(hardpoints.Find("right shoulder"))
+				set_hardpoint("right shoulder")
+	hardpoint = hardpoint_hud_elements[selected_hardpoint]
+	update_selected_hardpoint(do_sound = FALSE, hardpoint = hardpoint, prev_hardpoint = previous_hardpoint)
+
 
 ///Обновит интент меха, взяв оный с последнего пилота.
 /mob/living/exosuit/proc/mech_update_intent(mob/living/pilot)

@@ -47,20 +47,19 @@
 
 	return total_draw
 
-/mob/living/exosuit/proc/fast_toggle_power(mob/user)
-	//Данная функция - "Быстрый старт", тратящий энергию батареи и поднимающий температуру меха.
+//Аварийный запуск меха работает и при перегреве, но если мех перегреется повторно в состоянии перегрева он гибнется
+/mob/living/exosuit/proc/emergency_toggle_power(mob/user)
+	if(!overheat)
+		to_chat(user, "Перегрев не обнаружен, протокол аварийного запуска заблокирован.")
+		return
 	if(power != MECH_POWER_OFF)
 		return
-	if(!body.have_fast_power_up)
-		to_chat(user, SPAN_WARNING("Error: this body dont have fast power up subsystem."))
-		return
 	if(!body.cell.check_charge(50))
-		to_chat(user, SPAN_WARNING("Error: Not enough power for fast power up."))
+		to_chat(user, SPAN_WARNING("Error: Not enough power for emergency power up."))
 		return
 	if(get_cell(TRUE))
 		playsound(src, 'mods/mechs_by_shegar/sounds/mecha_fast_power_up.ogg', 70, 0)
 		turn_on_mech()
-		add_heat(100)
 		var/obj/item/cell/cell = src.get_cell()
 		cell.use(100)
 		body.take_burn_damage(rand(5,15))

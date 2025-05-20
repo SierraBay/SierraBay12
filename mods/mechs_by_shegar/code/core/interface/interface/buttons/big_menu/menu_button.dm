@@ -19,17 +19,20 @@
 
 /obj/screen/exosuit/menu_button/Click(location, control, params)
 	var/modifiers = params2list(params)
+	if(modifiers["right"])
+		right_click(usr)
+		return
 	if(modifiers["shift"])
-		shift_press()
+		shift_press(usr)
 		return
 	else if(modifiers["alt"])
-		alt_press()
+		alt_press(usr)
 		return
 	else if(modifiers["ctrl"])
-		ctrl_press()
+		ctrl_press(usr)
 		return
 	else if(modifiers["middle"])
-		middle_press()
+		middle_press(usr)
 		return
 	toggle_button()
 
@@ -61,6 +64,9 @@
 	press_animation(modificator_press = FALSE)
 
 /obj/screen/exosuit/menu_button/proc/ctrl_press()
+	press_animation(modificator_press = FALSE)
+
+/obj/screen/exosuit/menu_button/proc/right_click()
 	press_animation(modificator_press = FALSE)
 
 /obj/screen/exosuit/menu_button/proc/middle_press()

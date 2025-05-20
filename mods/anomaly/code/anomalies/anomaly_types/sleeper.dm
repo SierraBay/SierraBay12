@@ -15,7 +15,7 @@
 		/mob/living
 	)
 	artefacts = list()
-	chance_to_be_detected = 0
+	chance_to_be_detected = 100
 
 /obj/anomaly/sleeper/activate_anomaly()
 	for(var/turf/T in anomaly_turfs)

@@ -31,6 +31,7 @@
 	var/spawn_second_teleporter = FALSE
 	//Телепортирует ли именно этот телепорт?
 	var/teleport_status = TRUE
+	var/obj/spawned_visual
 
 //Этот заспавнит своего второго брата
 /obj/anomaly/doubled_teleporter/with_second
@@ -54,6 +55,19 @@
 			teleport_status = FALSE
 			membered_second_teleporter.teleport_status = TRUE
 
+/obj/anomaly/doubled_teleporter/do_momentum_animation()
+	spawned_visual = new /obj/effect/warp/teleport(get_turf(src))
+	addtimer(new Callback(src, PROC_REF(hide_momentum_animation)), 1 SECONDS)
+
+/obj/anomaly/doubled_teleporter/hide_momentum_animation()
+	spawned_visual.Destroy()
+
+/obj/effect/warp/teleport
+	icon = 'mods/anomaly/icons/effects.dmi'
+	icon_state = "teleport"
+	pixel_x = 0
+	pixel_y = 0
+
 /obj/anomaly/doubled_teleporter/additional_spawn_action()
 	if(spawn_second_teleporter)
 		place_second_teleporter()
@@ -73,6 +87,12 @@
 			membered_second_teleporter.membered_second_teleporter = src
 			SSanom.AddImportantLog("Doubled_teleporter разместил своего собрата на координате : x: [x], y: [y], z: [z] в [round_duration_in_ticks/600]" )
 			return
+
+/obj/anomaly/doubled_teleporter/spawn_temp_spawn_effects()
+	.=..()
+	if(membered_second_teleporter && !membered_second_teleporter.is_father_teleporter)
+		membered_second_teleporter.spawn_temp_spawn_effects()
+
 
 /obj/anomaly/doubled_teleporter/activate_anomaly()
 	//шпим

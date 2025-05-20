@@ -10,15 +10,10 @@
 //Нам нужен какой угодно атом чтоб определить турф, атомом может быть и турф
 /datum/storyteller_ability/spawn_anomaly/execute(atom/input_atom)
 	var/turf/spawning_center = get_turf(input_atom)
-	var/list/turfs_for_spawn = list()
-	for(var/turf/choosed_turf in RANGE_TURFS(spawning_center, spawning_range))
-		if(!TurfBlocked(choosed_turf) && !TurfBlockedByAnomaly(choosed_turf))
-			LAZYADD(turfs_for_spawn, choosed_turf)
-	for(var/mob/living/carbon/human/human in GLOB.living_players)
-		var/turf/temp_turf = get_turf(human)
-		if(temp_turf in turfs_for_spawn)
-			LAZYREMOVE(turfs_for_spawn, temp_turf)
-	generate_anomalies_in_turfs(
+	var/list/turfs_for_spawn = RANGE_TURFS(spawning_center, spawning_range)
+	clean_unplayable_storyteller_zones(turfs_for_spawn, owner.my_area)
+	clean_from_unplayable_turfs(turfs_for_spawn)
+	var/list/spawned_anomalies = generate_anomalies_in_turfs(
 		anomalies_types = possible_anomalies,
 		all_turfs_for_spawn = turfs_for_spawn,
 		min_anomalies_ammount = 1,
@@ -26,8 +21,9 @@
 		min_artefacts_ammount = 0,
 		max_artefacts_ammount = 0,
 		source = "Действие сторителлера",
-		visible_generation = TRUE,
-		started_in = world.time)
+		visible_generation = TRUE)
+	for(var/obj/anomaly/anom in spawned_anomalies)
+		anom.go_sleep(10 SECONDS)
 	.=..()
 
 /datum/storyteller_ability/spawn_anomaly/electra

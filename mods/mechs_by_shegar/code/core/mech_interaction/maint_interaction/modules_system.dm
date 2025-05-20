@@ -41,7 +41,7 @@
 				var/output_message
 				for(var/i in ME.restricted_software)
 					output_message += i
-				to_chat(user, SPAN_NOTICE("Данное оборудование бесполезно без [ME.restricted_software]"))
+				to_chat(user, SPAN_NOTICE("Данное оборудование бесполезно без [jointext(ME.restricted_software, ",")]"))
 				return FALSE
 	else
 		return FALSE
@@ -53,7 +53,7 @@
 				SPAN_NOTICE("\The [user] begins trying to install \the [system] into \the [src]."),
 				SPAN_NOTICE("You begin trying to install \the [system] into \the [src].")
 			)
-			if(!do_after(user, delay, src, DO_PUBLIC_UNIQUE) || user.get_active_hand() != system || !user.use_sanity_check(src, system, SANITY_CHECK_DEFAULT | SANITY_CHECK_TOOL_UNEQUIP))
+			if(!do_after(user, delay, src, DO_PUBLIC_UNIQUE))
 				return FALSE
 
 			if(hardpoints[system_hardpoint])

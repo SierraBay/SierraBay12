@@ -2,7 +2,7 @@
 	name = "combat mech arm"
 	exosuit_desc_string = "flexible, advanced manipulators"
 	icon_state = "combat_arm"
-	action_delay = 10
+	action_delay = 15
 	power_use = 25
 	max_hp = 90
 	min_damage = 50

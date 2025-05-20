@@ -98,7 +98,7 @@
 
 /obj/item/reagent_containers/food/snacks/shellfish/clam/Initialize()
 	. = ..()
-	reagents.add_reagent(/datum/reagent/nutriment/protein, 5)
+	reagents.add_reagent(/datum/reagent/nutriment/protein/shellfish, 5)
 
 
 /obj/item/reagent_containers/food/snacks/shellfish/mussel
@@ -111,7 +111,7 @@
 
 /obj/item/reagent_containers/food/snacks/shellfish/mussel/Initialize()
 	. = ..()
-	reagents.add_reagent(/datum/reagent/nutriment/protein, 3)
+	reagents.add_reagent(/datum/reagent/nutriment/protein/shellfish, 3)
 
 
 /obj/item/reagent_containers/food/snacks/shellfish/oyster
@@ -124,7 +124,7 @@
 
 /obj/item/reagent_containers/food/snacks/shellfish/oyster/Initialize()
 	. = ..()
-	reagents.add_reagent(/datum/reagent/nutriment/protein, 4)
+	reagents.add_reagent(/datum/reagent/nutriment/protein/shellfish, 4)
 
 
 /obj/item/reagent_containers/food/snacks/shellfish/shrimp
@@ -137,7 +137,7 @@
 
 /obj/item/reagent_containers/food/snacks/shellfish/shrimp/Initialize()
 	. = ..()
-	reagents.add_reagent(/datum/reagent/nutriment/protein, 3)
+	reagents.add_reagent(/datum/reagent/nutriment/protein/shellfish, 3)
 
 
 /obj/item/reagent_containers/food/snacks/shellfish/crab
@@ -151,7 +151,7 @@
 
 /obj/item/reagent_containers/food/snacks/shellfish/crab/Initialize()
 	. = ..()
-	reagents.add_reagent(/datum/reagent/nutriment/protein, 6)
+	reagents.add_reagent(/datum/reagent/nutriment/protein/shellfish, 6)
 
 
 /obj/item/shell

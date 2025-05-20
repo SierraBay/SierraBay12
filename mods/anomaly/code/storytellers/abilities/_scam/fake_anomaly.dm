@@ -6,9 +6,15 @@
 	point_type = "scam"
 	var/list/possible_fake_anomalies = list()
 
-/datum/storyteller_ability/spawn_fake_anomaly/execute(input_turf)
+/datum/storyteller_ability/spawn_fake_anomaly/execute(turf/input_turf)
+	var/area/good_area = owner.my_area
+	var/list/turfs_for_spawn = RANGE_TURFS(input_turf, 10)
+	clean_unplayable_storyteller_zones(turfs_for_spawn, good_area)
+	clean_from_unplayable_turfs(turfs_for_spawn)
+	if(!LAZYLEN(turfs_for_spawn))
+		return FALSE
 	var/fake_anomaly_path = pick(possible_fake_anomalies)
-	new fake_anomaly_path(input_turf)
+	new fake_anomaly_path(pick(turfs_for_spawn))
 	. = ..()
 
 /datum/storyteller_ability/spawn_fake_anomaly/electra_ice
@@ -49,10 +55,6 @@
 	var/turf/my_turf = get_turf(src)
 	var/list/list_of_turfs = RANGE_TURFS(my_turf, multitile_range)
 	LAZYREMOVE(list_of_turfs, my_turf)
-	//Сперва почистим
-	for(var/turf/T in list_of_turfs)
-		if(TurfBlocked(T) && TurfBlockedByAnomaly(T))
-			LAZYREMOVE(list_of_turfs, T)
 	for(var/turf/T in list_of_turfs)
 		var/obj/fake_anomaly/helper/spawned = new multitile_parts_type(T)
 		spawned.fake_core = src
