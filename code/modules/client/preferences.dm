@@ -43,7 +43,6 @@
 
 	var/datum/category_collection/player_setup_collection/player_setup
 	var/datum/browser/panel
-	var/fov_cone_alpha = 255
 
 /datum/preferences/New(client/C)
 	if(istype(C))

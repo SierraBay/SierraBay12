@@ -1,229 +1,173 @@
-/////////////VISION CONE///////////////
-// Vision cone code by Honkertron (for Otuska), Matt and Myazaki.
-// This vision cone code allows for mobs and/or items to be blocked out from a player's field of vision.
-// This code makes use of the "cone of effect" proc created by Lummox, contributed by Jtgibson.
-//
-// More info on that here:
-// http://www.byond.com/forum/?post=195138
-///////////////////////////////////////
-#define OPPOSITE_DIR(D) turn(D, 180)
+/// Field of vision defines.
+#define FOV_90_DEGREES 90
+#define FOV_180_DEGREES 180
+#define FOV_270_DEGREES 270
+
+/mob/var/list/atom/movable/renderer/renderers
+
+/atom/movable/renderer/fov_hidden
+	name = "game world fov hidden plane master"
+	plane = GAME_PLANE_FOV_HIDDEN
+	group = RENDER_GROUP_SCENE
+	renderer_flags = RENDERER_MAIN | RENDERER_SHARED
+
+/atom/movable/renderer/fov_hidden/Initialize()
+	. = ..()
+	filters += filter(type="alpha", render_source = FIELD_OF_VISION_BLOCKER_RENDER_TARGET, flags = MASK_INVERSE)
+
+/atom/movable/renderer/field_of_vision_blocker
+	name = "field of vision blocker plane master"
+	plane = FIELD_OF_VISION_BLOCKER_PLANE
+	render_target_name = FIELD_OF_VISION_BLOCKER_RENDER_TARGET
+	mouse_opacity = MOUSE_OPACITY_UNCLICKABLE
+	renderer_flags = RENDERER_MAIN | RENDERER_SHARED
+	appearance_flags = PLANE_MASTER
+
+
+/atom/movable/renderer/nearsight_blur
+	name = "nearsight blur"
+	plane = DEFAULT_PLANE
+	group = RENDER_GROUP_SCENE
+	renderer_flags = RENDERER_MAIN | RENDERER_SHARED
 
 /client
-	var/list/hidden_atoms = list()
-	var/list/hidden_mobs = list()
+	var/obj/screen/fullscreen/fov_blocker/fov_mask
+	var/obj/screen/fullscreen/fov_shadow/fov_shadow
+	var/usefov = FALSE
+	var/hasmask = FALSE
+	var/fovangle
 
-/proc/cone(turf/center, dir, list/list)
-	. = list()
-	for(var/turf/T in list)
-		if(T.InConeDirection(center, dir))
-			for(var/mob/M in T.contents)
-				if(istype(M, /mob/living))
-					. += M.InCone(center, dir)
+/mob/living/SelfMove(direction)
+	. = ..()
+	update_fov_dir()
 
-/turf/proc/InConeDirection(turf/center, dir)
-	if(get_dist(center, src) == 0 || src == center) return 0
-	var/d = get_dir(center, src)
+/mob/living/set_dir()
+	. = ..()
+	update_fov_dir()
 
-	if(!d || d == dir) return 1
-	if(dir & (dir-1))
-		return (d & ~dir) ? 0 : 1
-	if(!(d & dir)) return 0
-	var/dx = abs(x - center.x)
-	var/dy = abs(y - center.y)
-	if(dx == dy) return 1
-	if(dy > dx)
-		return (dir & (NORTH|SOUTH)) ? 1 : 0
-	return (dir & (EAST|WEST)) ? 1 : 0
-
-/mob/living/proc/toggle_vision_cone()
-	set name = "Toggle Vision Cone"
-	set category = "OOC"
-	set desc = "Toggle the ability to have a vision cone"
-
-	can_have_vision_cone = !can_have_vision_cone
+/mob/living/UpdateLyingBuckledAndVerbStatus()
+	. = ..()
 	check_fov()
 
-// Should return atoms that are in the cone.
-/atom/proc/InCone(turf/center, dir)
-	SHOULD_CALL_PARENT(TRUE)
-	return list()
-
-/mob/dead/InCone(turf/center, dir)
-	. = ..()
-
-/mob/InCone(turf/center, dir)
-	. = ..() | src
-
-/mob/living/InCone(turf/center, dir)
-	. = ..()
-	if(pulling)
-		. += pulling
-
-/mob/proc/update_vision_cone()
-	return
-
-/mob/living/update_vision_cone()
-	if(!can_have_vision_cone)
-		if(vision_cone_overlay)
-			remove_cone()
-		return
-
-	for(var/obj/item/item in src)
-		if(item.zoom)
-			remove_cone()
-			return
-
-	var/delay = 1 SECONDS
-	if(client)
-		var/image/I = null
-		for(I in client.hidden_atoms)
-			I.override = FALSE
-			QDEL_IN(I, delay)
-			delay += 1 SECONDS
-
-		check_fov()
-		client.hidden_atoms.Cut()
-		client.hidden_mobs.Cut()
-
-
-		if(resting || lying)
-			hide_cone()
-			return
-
-		vision_cone_overlay.dir = dir
-		if(vision_cone_overlay.alpha)
-			for(var/cone_atom in cone(src, OPPOSITE_DIR(src.dir), view(10, src)))
-				add_to_mobs_hidden_atoms(cone_atom)
-
-/mob/living/proc/add_to_mobs_hidden_atoms(atom/A)
-	var/image/I
-	I = image("split", A)
-	I.override = TRUE
-	client.images += I
-	client.hidden_atoms += I
-	if(ismob(A))
-		var/mob/hidden_mob = A
-		client.hidden_mobs += hidden_mob
-		if(pulling && (pulling == hidden_mob || pulling == hidden_mob.buckled))//If we're pulling them we don't want them to be invisible, too hard to play like that.
-			I.override = FALSE
-			return
-		for(var/obj/item/grab/G in src)
-			if(A == G.affecting)
-				I.override = FALSE
-				return
-		for(var/obj/item/grab/G in A)
-			if(src == G.affecting)
-				I.override = FALSE
-				return
-
-/mob/living/proc/SetFov(n)
-	if(!can_have_vision_cone)
-		return
-
-	if(!n)
-		hide_cone()
-	else
-		show_cone()
+/mob/living/proc/update_fov_dir()
+	if(client && client.usefov)
+		client.fov_mask.dir = src.dir
+		client.fov_shadow.dir = src.dir
 
 /mob/living/proc/check_fov()
-	if(!can_have_vision_cone)
-		if(client)
-			for(var/hidden in client.hidden_atoms)
-				var/image/I = hidden
-				client.images -= I
-			client.hidden_atoms.Cut()
-			client.hidden_mobs.Cut()
-			remove_cone()
-		return
+	if(client)
+		if(resting || lying || client.eye != client.mob)
+			client.hide_cone()
+		else if(client.usefov)
+			client.show_cone()
+		else
+			client.hide_cone()
 
-	if(isnull(vision_cone_overlay))
-		vision_cone_overlay = overlay_fullscreen("combat", /obj/screen/fullscreen/fov)
-	client.screen |= vision_cone_overlay
+/mob/living/proc/toggle_fov(usefov, fovangle)
+	if(client)
+		client.usefov = usefov
+		client.fovangle = fovangle
+		src.check_fov()
 
-	if(resting || lying || client.eye != client.mob)
-		vision_cone_overlay.alpha = 0
-		return
+// //Making these generic procs so you can call them anywhere.
+/client/proc/show_cone()
+	if(usefov && !hasmask)
+		fov_shadow = mob.overlay_fullscreen("FOV_shadow", /obj/screen/fullscreen/fov_shadow)
+		fov_mask = mob.overlay_fullscreen("FOV_mask", /obj/screen/fullscreen/fov_blocker)
+		hasmask = TRUE
+		fov_shadow.icon_state = "[fovangle]_v"
+		fov_mask.icon_state = "[fovangle]"
+		fov_mask.dir = mob.dir
+		fov_shadow.dir = mob.dir
 
-	else if(vision_cone_overlay)
-		show_cone()
+/client/proc/hide_cone()
+	if(!usefov && hasmask)
+		fov_shadow = mob.clear_fullscreen("FOV_shadow")
+		fov_mask = mob.clear_fullscreen("FOV_mask")
+		hasmask = FALSE
+
+/mob/living/proc/in_fov(atom/observed_atom, ignore_self = FALSE)
+	if(ignore_self && observed_atom == src)
+		return TRUE
+	if(is_blind())
+		return FALSE
+	. = FALSE
+	var/turf/my_turf = get_turf(src) //Because being inside contents of something will cause our x,y to not be updated
+	// If turf doesn't exist, then we wouldn't get a fov check called by `play_fov_effect` or presumably other new stuff that might check this.
+	//  ^ If that case has changed and you need that check, add it.
+	var/rel_x = observed_atom.x - my_turf.x
+	var/rel_y = observed_atom.y - my_turf.y
+	if(client?.fovangle)
+		if(rel_x >= -1 && rel_x <= 1 && rel_y >= -1 && rel_y <= 1) //Cheap way to check inside that 3x3 box around you
+			return TRUE //Also checks if both are 0 to stop division by zero
+
+		// Get the vector length so we can create a good directional vector
+		var/vector_len = sqrt(abs(rel_x) ** 2 + abs(rel_y) ** 2)
+
+		/// Getting a direction vector
+		var/dir_x
+		var/dir_y
+		switch(dir)
+			if(SOUTH)
+				dir_x = 0
+				dir_y = -vector_len
+			if(NORTH)
+				dir_x = 0
+				dir_y = vector_len
+			if(EAST)
+				dir_x = vector_len
+				dir_y = 0
+			if(WEST)
+				dir_x = -vector_len
+				dir_y = 0
+
+		///Calculate angle
+		var/angle = arccos((dir_x * rel_x + dir_y * rel_y) / (sqrt(dir_x**2 + dir_y**2) * sqrt(rel_x**2 + rel_y**2)))
+
+		/// Calculate vision angle and compare
+		var/vision_angle = (360 - client.fovangle) / 2
+		if(angle < vision_angle)
+			. = TRUE
 	else
-		hide_cone()
+		. = TRUE
 
-//Making these generic procs so you can call them anywhere.
-/mob/living/proc/show_cone()
-	if(!can_have_vision_cone)
-		return
+/proc/remove_image_from_client(image/image_to_remove, client/remove_from)
+	remove_from?.images -= image_to_remove
 
-	if(vision_cone_overlay)
-		vision_cone_overlay.alpha = client.prefs.fov_cone_alpha
+/// Plays a visual effect representing a sound cue for people with vision obstructed by FOV or blindness
+/proc/play_fov_effect(atom/center, range, icon_state, dir = SOUTH, ignore_self = FALSE, angle = 0)
+	var/turf/anchor_point = get_turf(center)
+	var/image/fov_image
+	for(var/mob/living/living_mob in view(range, center))
+		var/client/mob_client = living_mob.client
+		if(!mob_client)
+			continue
+		if(living_mob.in_fov(center, ignore_self))
+			continue
+		if(!fov_image) //Make the image once we found one recipient to receive it
+			fov_image = image(icon = 'mods/vision_cone/icons/fov_effects.dmi', icon_state = icon_state, loc = anchor_point)
+			fov_image.plane = FULLSCREEN_PLANE
+			fov_image.layer = 10000
+			fov_image.dir = dir
+			fov_image.appearance_flags = RESET_COLOR | RESET_TRANSFORM
+			if(angle)
+				var/matrix/matrix = new
+				matrix.Turn(angle)
+				fov_image.transform = matrix
+			fov_image.mouse_opacity = MOUSE_OPACITY_UNCLICKABLE
+		mob_client.images += fov_image
+		addtimer(new Callback(GLOBAL_PROC, .proc/remove_image_from_client, fov_image, mob_client), 30)
 
-/mob/living/proc/hide_cone()
-	if(vision_cone_overlay)
-		vision_cone_overlay.alpha = 0
+/obj/screen/fullscreen/fov_blocker
+	icon = 'mods/vision_cone/icons/field_of_view.dmi'
+	icon_state = "90"
+	mouse_opacity = MOUSE_OPACITY_UNCLICKABLE
+	plane = FIELD_OF_VISION_BLOCKER_PLANE
+	scale_to_view = TRUE
 
-/mob/living/proc/remove_cone()
-	if(vision_cone_overlay)
-		client.screen -= vision_cone_overlay
-
-/mob/living/set_dir(new_dir, ignore_facing_dir = FALSE)
-	. = ..()
-	if(.)
-		update_vision_cone()
-
-// Rotates a rectangle around a center turf
-/proc/get_rectangle_in_dir(turf/T, length, dir)
-	var/matrix/M = new
-	var/matrix/N = new
-	M.Turn(dir2angle(dir))
-	N.Turn((dir2angle(dir)+180) % 360)
-	. = block(\
-		locate(T.x + (M.a+M.b) * length + 0.5*(M.a + M.b - 1), T.y + (M.d+M.e) * length + 0.5*(M.d + M.e - 1), T.z),\
-		locate(T.x + N.a * length + 0.5*(M.a + M.b - 1), T.y + N.d * length + 0.5*(M.d + M.e - 1), T.z)\
-		)
-
-#define ALWAYS_FOOTSTEP_DISTANCE 2
-#define MAX_FOOTSTEP_DISTANCE 5
-#define RIPPLE_POSITION_BOUNDS 8
-#define RIPPLE_START_RADIUS 10
-#define RIPPLE_END_RADIUS 2
-#define RIPPLE_START_SIZE 0
-#define RIPPLE_END_SIZE 16
-
-/turf/proc/show_footsteps(mob/viewer, turf/Tviewer, mob/M)
-	var/dist = get_dist(src, Tviewer)
-	if(src == Tviewer)
-		return
-	if(dist > MAX_FOOTSTEP_DISTANCE || prob(100*max(dist-ALWAYS_FOOTSTEP_DISTANCE,0) / MAX_FOOTSTEP_DISTANCE))
-		return
-	if(isdeaf(viewer))
-		return
-	if(viewer.stat || M.stat || M.lying)
-		return
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		if(istype(H.move_intent, /singleton/move_intent/creep)) //We don't make sounds if we're tiptoeing
-			return
-
-	var/image/marker = image(icon, src, icon_state, layer = layer)
-	marker.overlays = overlays.Copy()
-	marker.override = TRUE
-	marker.filters += filter(type = "ripple", x=rand(-RIPPLE_POSITION_BOUNDS, RIPPLE_POSITION_BOUNDS), y=rand(-RIPPLE_POSITION_BOUNDS, RIPPLE_POSITION_BOUNDS), radius = RIPPLE_START_RADIUS, size = RIPPLE_START_SIZE, falloff = 0)
-
-	viewer.client.images += marker
-	animate(marker.filters[marker.filters.len], time = 1.5 SECONDS, radius = RIPPLE_END_RADIUS, size = RIPPLE_END_SIZE)
-
-	var/datum/callback/delete_footsteps = new Callback(src, /turf/.proc/delete_footsteps)
-	addtimer(delete_footsteps(M, marker), 2 SECONDS)
-	QDEL_IN(marker, 2.5 SECONDS)
-
-/turf/proc/delete_footsteps(mob/M, image/marker)
-	M.client.images -= marker
-
-#undef OPPOSITE_DIR
-#undef ALWAYS_FOOTSTEP_DISTANCE
-#undef MAX_FOOTSTEP_DISTANCE
-#undef RIPPLE_POSITION_BOUNDS
-#undef RIPPLE_START_RADIUS
-#undef RIPPLE_END_RADIUS
-#undef RIPPLE_START_SIZE
-#undef RIPPLE_END_SIZE
+/obj/screen/fullscreen/fov_shadow
+	icon = 'mods/vision_cone/icons/field_of_view.dmi'
+	icon_state = "90_v"
+	mouse_opacity = MOUSE_OPACITY_UNCLICKABLE
+	plane = EFFECTS_ABOVE_LIGHTING_PLANE
+	scale_to_view = TRUE

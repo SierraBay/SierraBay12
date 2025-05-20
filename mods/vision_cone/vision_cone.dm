@@ -1,4 +1,4 @@
-/singleton/modpack/example
-	name = "Мод-пример"
-	desc = "Мод, который является примером и ни в коем случае не должен быть использован."
+/singleton/modpack/vision_cone
+	name = "FOV"
+	desc = "Мод, который делает FOV."
 	author = "Lexanx"

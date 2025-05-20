@@ -54,10 +54,6 @@ var/global/list/holder_mob_icon_cache = list()
 			var/atom/movable/mob_container = M
 			mob_container.dropInto(loc)
 			M.reset_view()
-			if(isliving(M))
-				var/mob/living/L = M
-				L.can_have_vision_cone = TRUE
-				L.update_vision_cone()
 		qdel(src)
 	else if(last_holder != loc)
 		for(var/mob/M in contents)

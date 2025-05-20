@@ -1,126 +1,94 @@
-#define FOV_270	1
-#define FOV_180	2
-#define FOV_90	3
-
-/mob
-	var/obj/screen/vision_cone_overlay = null
-	var/can_have_vision_cone = FALSE
-
-/mob/is_invisible_to(mob/viewer)
-	return ..() || (viewer.client && (src in viewer.client.hidden_mobs))
-
-
-/*
-/mob/proc/face_atom(atom/A)
-	if(!A || !x || !y || !A.x || !A.y) return
-	var/dx = A.x - x
-	var/dy = A.y - y
-	if(!dx && !dy) return
-
-	var/direction
-	if(abs(dx) < abs(dy))
-		if(dy > 0)	direction = NORTH
-		else		direction = SOUTH
-	else
-		if(dx > 0)	direction = EAST
-		else		direction = WEST
-	if(direction != dir)
-		facedir(direction, TRUE)
-*/
-
 /datum/hud/human/FinalizeInstantiation(ui_style='icons/mob/screen1_White.dmi', ui_color = "#ffffff", ui_alpha = 255)
 	.=..()
 	var/mob/living/carbon/human/target = mymob
-	var/datum/hud_data/hud_data
-	var/list/hud_elements = list()
-	if(target.can_have_vision_cone)
-		var/mob/living/carbon/human/H = mymob
-		H.vision_cone_overlay = new /obj/screen/fullscreen/fov()
-		hud_elements |= H.vision_cone_overlay
+	if(target.client && target.client.usefov)
+		target.client.fov_mask = new /obj/screen/fullscreen/fov_blocker( target )
+		target.client.fov_shadow = new /obj/screen/fullscreen/fov_shadow( target )
+		target.check_fov()
 
-
-/obj/item/showoff(mob/user)
-	for (var/mob/M in view(user))
-		if(!user.is_invisible_to(M))
-			M.show_message("<b>[user]</b> holds up [src]. <a HREF=?src=\ref[M];lookitem=\ref[src]>Take a closer look.</a>",1)
-
-
-/obj/item/zoom(mob/user, tileoffset = 14,viewsize = 9)
+/atom/movable/do_attack_animation(atom/A, fov_effect = TRUE)
 	.=..()
-	var/mob/living/carbon/human/H = user
-	if(H.vision_cone_overlay)
-		var/mob/living/vision_cone_mob = H
-		vision_cone_mob.hide_cone()
+	if(fov_effect)
+		play_fov_effect(A, 5, "attack")
 
+/mob
+	plane = GAME_PLANE_FOV_HIDDEN
 
-/obj/item/holder/update_state()
-	if(last_holder != loc)
-		for(var/mob/M in contents)
-			unregister_all_movement(last_holder, M)
+/obj/item/projectile
+	plane = GAME_PLANE_FOV_HIDDEN
 
-	if(istype(loc,/turf) || !(length(contents)))
-		for(var/mob/M in contents)
-			var/atom/movable/mob_container = M
-			mob_container.dropInto(loc)
-			M.reset_view()
-			if(isliving(M))
-				var/mob/living/L = M
-				L.can_have_vision_cone = TRUE
-				L.update_vision_cone()
+//called to launch a projectile
+/obj/item/projectile/launch(atom/target, target_zone, x_offset=0, y_offset=0, angle_offset=0)
+	var/turf/curloc = get_turf(src)
+	var/turf/targloc = get_turf(target)
+	if (!istype(targloc) || !istype(curloc))
+		return 1
+
+	if(targloc == curloc) //Shooting something in the same turf
+		target.bullet_act(src, target_zone)
+		on_impact(target)
+		QDEL_NULL_LIST(segments)
 		qdel(src)
-	else if(last_holder != loc)
-		for(var/mob/M in contents)
-			register_all_movement(loc, M)
+		return 0
 
-	last_holder = loc
+	original = target
+	def_zone = target_zone
 
+	addtimer(new Callback(src, PROC_REF(finalize_launch), curloc, targloc, x_offset, y_offset, angle_offset),0)
+	play_fov_effect(starting, 6, "gunfire", dir = NORTH, angle = angle_offset)
+	return 0
 
-/mob/living/Move(a, b, flag)
-	. = ..()
-	// Other viewers only need to update their vision for this moving mob, not their entire cone, as they are stationary
-	for(var/viewer in oviewers(world.view, src))
-		var/mob/living/M = viewer
-		if(M.client && istype(M) && M.can_have_vision_cone)
-			var/turf/T = get_turf(M)
-			var/turf/Ts = get_turf(src)
-			if(Ts.InConeDirection(T, reverse_direction(M.dir)))
-				if(!(src in M.client.hidden_mobs))
-					if(M.InCone(T, M.dir))
-						M.add_to_mobs_hidden_atoms(src)
-				Ts.show_footsteps(M, T, src)
-			else
-				if(src in M.client.hidden_mobs)
-					M.client.hidden_mobs -= src
-					for(var/image in M.client.hidden_atoms)
-						var/image/I = image
-						if(I.loc == src)
-							I.override = FALSE
-							M.client.hidden_atoms -= I
-							M.client.images -= I
-							QDEL_IN(I, 1 SECONDS)
-							break
+/mob/living/carbon/human/handle_footsteps()
+	..()
+	var/turf/simulated/T = get_turf(src)
+	if(istype(T))
+		var/footsound = T.get_footstep_sound(src)
+		if(footsound)
+			play_fov_effect(src.loc, world.view, "footstep", src.dir, ignore_self=TRUE)
 
-	update_vision_cone()
+/singleton/species/handle_vision(mob/living/carbon/human/H)
+	var/list/vision = H.get_accumulated_vision_handlers()
+	H.update_sight()
+	H.set_sight(H.sight|get_vision_flags(H)|H.equipment_vision_flags|vision[1])
+	H.change_light_colour(H.getDarkvisionTint())
 
+	if(H.stat == DEAD)
+		return 1
 
+	if(!H.druggy)
+		H.set_see_in_dark((H.sight == (SEE_TURFS|SEE_MOBS|SEE_OBJS)) ? 8 : min(H.getDarkvisionRange() + H.equipment_darkness_modifier, 8))
+		if(H.equipment_see_invis)
+			H.set_see_invisible(max(min(H.see_invisible, H.equipment_see_invis), vision[2]))
 
-/obj/screen/fullscreen/fov
-	icon = 'mods/vision_cone/icons/vision_cone.dmi'
-	icon_state = "combat"
-	mouse_opacity = 0
-	layer = FULLSCREEN_LAYER
-	scale_to_view = TRUE
+	if(H.equipment_tint_total >= TINT_BLIND)
+		H.eye_blind = max(H.eye_blind, 1)
 
+	if(!H.client)//no client, no screen to update
+		return 1
 
-/obj/item/clothing/head/
-	var/vision_cone = FALSE
+	H.set_fullscreen(H.eye_blind && !H.equipment_prescription, "blind", /obj/screen/fullscreen/blind)
+	H.set_fullscreen(H.stat == UNCONSCIOUS, "blackout", /obj/screen/fullscreen/blackout)
 
-/obj/item/clothing/head/helmet/
-	vision_cone = TRUE
+	if(config.welder_vision)
+		H.set_fullscreen(H.equipment_tint_total, "welder", /obj/screen/fullscreen/impaired, H.equipment_tint_total)
+	var/how_nearsighted = get_how_nearsighted(H)
+	H.set_fullscreen(how_nearsighted, "nearsighted", /obj/screen/fullscreen/oxy, how_nearsighted)
+	H.set_fullscreen(H.eye_blurry, "blurry", /obj/screen/fullscreen/blurry)
+	H.set_fullscreen(H.druggy, "high", /obj/screen/fullscreen/high)
 
-/mob/living/update_sight()
-	. = ..()
-	can_have_vision_cone = FALSE
-	var/obj/item/clothing/head/I = get_equipped_item(slot_head)
-	if(I && I.vision_cone)
-		can_have_vision_cone = TRUE
+	for(var/atom/movable/renderer/nearsight_blur/blur in H.renderers)
+		if(how_nearsighted)
+			blur.filters = list(filter(type="blur", size=2))
+		else
+			blur.filters = list()
+
+	for(var/atom/movable/renderer/fov_hidden/blur in H.renderers)
+		if(how_nearsighted)
+			blur.filters = list(filter(type="blur", size=2), filter(type="alpha", render_source = FIELD_OF_VISION_BLOCKER_RENDER_TARGET, flags = MASK_INVERSE))
+		else
+			blur.filters = list(filter(type="alpha", render_source = FIELD_OF_VISION_BLOCKER_RENDER_TARGET, flags = MASK_INVERSE))
+
+	for(var/overlay in H.equipment_overlays)
+		H.client.screen |= overlay
+
+	return 1

@@ -322,7 +322,7 @@ When the mob faces east the back item icon is shifted 2 pixels down and 12 pixel
 The slots that you can use are found in items_clothing.dm and are the inventory slot string ones, so make sure
 	you use the _str version of the slot.
 */
-	var/have_vision_cone = TRUE //Vision cone.
+
 /singleton/species/New()
 
 	if(!codex_description)

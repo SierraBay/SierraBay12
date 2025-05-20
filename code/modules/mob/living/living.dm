@@ -673,7 +673,6 @@ default behaviour is:
 	else if(istype(H.loc,/obj))
 		to_chat(src, SPAN_WARNING("You struggle free of \the [H.loc]."))
 		H.forceMove(get_turf(H))
-	can_have_vision_cone = initial(can_have_vision_cone)
 
 	if(loc != H)
 		qdel(H)
@@ -704,7 +703,6 @@ default behaviour is:
 	resting = !resting
 	UpdateLyingBuckledAndVerbStatus()
 	to_chat(src, SPAN_NOTICE("You are now [resting ? "resting" : "getting up"]"))
-	update_vision_cone()
 
 //called when the mob receives a bright flash
 /mob/living/flash_eyes(intensity = FLASH_PROTECTION_MODERATE, override_blindness_check = FALSE, affect_silicon = FALSE, visual = FALSE, type = /obj/screen/fullscreen/flash)

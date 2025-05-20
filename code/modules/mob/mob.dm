@@ -125,10 +125,10 @@
 			if(runemessage != -1)
 				M.create_chat_message(src, "[runemessage]", FALSE, list("emote"), audible = FALSE)
 			continue
-		if(is_invisible_to(M))  // Cannot view the invisible, but you can hear it.
-			if(blind_message)
-				M.show_message(blind_message, AUDIBLE_MESSAGE)
-				continue
+
+		if(blind_message)
+			M.show_message(blind_message, AUDIBLE_MESSAGE)
+			continue
 	//Multiz, have shadow do same
 	if(bound_overlay)
 		bound_overlay.visible_message(message, blind_message, range)
@@ -780,24 +780,22 @@
 		regenerate_icons()
 	if( lying != lying_prev )
 		update_icons()
-	update_vision_cone()
 
 /mob/proc/reset_layer()
 	if(lying)
-		plane = DEFAULT_PLANE
+		//plane = DEFAULT_PLANE
 		layer = LYING_MOB_LAYER
 	else
 		reset_plane_and_layer()
 
-/mob/proc/facedir(ndir, ignore_facing_dir = FALSE)
+/mob/proc/facedir(ndir)
 	if(!canface() || moving || (buckled && !buckled.buckle_movable))
 		return 0
-	set_dir(ndir, ignore_facing_dir)
+	set_dir(ndir)
 	if(buckled && buckled.buckle_movable)
-		buckled.set_dir(ndir, ignore_facing_dir)
+		buckled.set_dir(ndir)
 	SetMoveCooldown(movement_delay())
 	return 1
-
 
 /mob/verb/eastface()
 	set hidden = 1
@@ -1095,16 +1093,18 @@
 		set_dir(dir)
 		facing_dir = dir
 
-/mob/set_dir(ndir, ignore_facing_dir = FALSE)
+/mob/set_dir()
 	if(facing_dir)
-		if(ignore_facing_dir && facing_dir != ndir)
-			set_face_dir(ndir)
-			return ..(ndir)
-		else
-			if(!canface() || lying || buckled || restrained())
-				facing_dir = null
-			else if(dir != facing_dir)
+		if(!canface() || lying || restrained())
+			facing_dir = null
+		else if(buckled)
+			if(buckled.obj_flags & OBJ_FLAG_ROTATABLE)
+				buckled.set_dir(facing_dir)
 				return ..(facing_dir)
+			else
+				facing_dir = null
+		else if(dir != facing_dir)
+			return ..(facing_dir)
 	else
 		return ..()
 
