@@ -5,10 +5,10 @@
 	name_plural =      "Mothmans"
 	icobase = 'mods/RnD/icons/mob/moth/body.dmi'
 	deform =  'mods/RnD/icons/mob/moth/body.dmi'
-	tail = "m_moth_wings_monarch"
-	tail_animation = 'mods/RnD/icons/mob/moth/moth_wings.dmi'
-	default_head_hair_style = "Monarch Antennae"
-	unarmed_types = list(/datum/unarmed_attack/stomp, /datum/unarmed_attack/kick, /datum/unarmed_attack/claws, /datum/unarmed_attack/punch, /datum/unarmed_attack/bite/sharp)
+	unarmed_types = list(/datum/unarmed_attack/stomp, /datum/unarmed_attack/kick, /datum/unarmed_attack/punch)
+
+	default_facial_hair_style = "Plain Antennae"
+	default_head_hair_style = "Plain Wings"
 
 	darksight_range = 6
 	darksight_tint = DARKTINT_GOOD
@@ -16,6 +16,9 @@
 	burn_mod =  1.15
 	flash_mod = 2 // We have big eyes
 	hunger_factor = DEFAULT_HUNGER_FACTOR * 1.5
+
+	genders = list(PLURAL)
+	pronouns = list(PRONOUNS_THEY_THEM)
 
 	gluttonous = GLUT_TINY
 	hidden_from_codex = TRUE
@@ -49,15 +52,30 @@
 		/singleton/emote/human/stopsway,
 		)
 
-	spawn_flags = SPECIES_CAN_JOIN | SPECIES_IS_WHITELISTED
-	appearance_flags = SPECIES_APPEARANCE_HAS_HAIR_COLOR | SPECIES_APPEARANCE_HAS_UNDERWEAR | SPECIES_APPEARANCE_HAS_SKIN_COLOR
+	spawn_flags = SPECIES_IS_RESTRICTED
+	appearance_flags = SPECIES_APPEARANCE_HAS_LIPS | SPECIES_APPEARANCE_HAS_UNDERWEAR
 
-	flesh_color = "#afa59e"
+	flesh_color = "#f7d896"
 	base_color = "#333333"
-	blood_color = "#862a51"
-	organs_icon = 'mods/tajara/icons/tajara_body/organs.dmi'
+	blood_color = "#b9ae9c"
+	organs_icon = 'mods/RnD/icons/mob/moth/moth_organs.dmi'
 
 	move_trail = /obj/decal/cleanable/blood/tracks/paw
+
+	has_organ = list(
+		BP_HEART =    /obj/item/organ/internal/heart,
+		BP_LUNGS =    /obj/item/organ/internal/lungs,
+		BP_LIVER =    /obj/item/organ/internal/liver,
+		BP_STOMACH =  /obj/item/organ/internal/stomach,
+		BP_KIDNEYS =  /obj/item/organ/internal/kidneys,
+		BP_BRAIN =    /obj/item/organ/internal/brain,
+		BP_EYES =     /obj/item/organ/internal/eyes/moth
+		)
+
+/mob/living/carbon/human/moth/Initialize(mapload)
+	head_hair_style = "Plain Wings"
+	facial_hair_style = "Plain Antennae"
+	. = ..(mapload, SPECIES_MOTH)
 
 /singleton/emote/audible/moth_scream
 	key = "scream"
@@ -69,12 +87,26 @@
 	emote_message_3p = "USER coughs!"
 	emote_sound = 'mods/RnD/sounds/mothcough.ogg'
 
-/datum/sprite_accessory/hair/moth
-	name = "Monarch Antennae"
-	icon_state = "m_moth_antennae_monarch"
-	species_allowed = list(SPECIES_MOTH)
-	icon = 'mods/RnD/icons/mob/moth/moth_antennae.dmi'
+/obj/item/organ/internal/eyes/moth
+	icon = 'mods/RnD/icons/mob/moth/eyes.dmi'
+	eye_icon = 'mods/RnD/icons/mob/moth/eyes.dmi'
 
+
+/datum/sprite_accessory/facial_hair/moth
+	name = "Plain Antennae"
+	icon_state = "plain"
+	species_allowed = list(SPECIES_MOTH)
+	gender = NEUTER
+	do_coloration = FALSE
+	icon = 'mods/RnD/icons/mob/moth/facial.dmi'
+
+/datum/sprite_accessory/hair/moth
+	name = "Plain Wings"
+	icon_state = "plain"
+	species_allowed = list(SPECIES_MOTH)
+	gender = NEUTER
+	do_coloration = FALSE
+	icon = 'mods/RnD/icons/mob/moth/hair.dmi'
 
 // How we makes moths. Because of, you know, dependency on one specific entity, this reactions also belongs to RnD mod
 
@@ -91,7 +123,7 @@
 	description = "A corruptive toxin produced by slimes. This one looks like ."
 	taste_description = "sludge"
 	reagent_state = LIQUID
-	color = "#6ebb91"
+	color = "#b9ae9c"
 	metabolism = REM * 0.2
 	value = 2
 	should_admin_log = TRUE
@@ -114,7 +146,8 @@
 		if(prob(10))
 			to_chat(H, SPAN_DANGER("Your flesh rapidly mutates!"))
 			H.set_species(SPECIES_MOTH)
-			H.shapeshifter_set_colour("#ebeca4")
+			H.shapeshifter_set_colour("#f7d896")
+			H.shapeshifter_select_hair()
 		return
 	var/obj/item/organ/external/O = pick(meatchunks)
 	to_chat(H, SPAN_DANGER("Your [O.name]'s flesh mutates rapidly!"))
@@ -124,7 +157,7 @@
 	for(var/obj/item/organ/external/E in meatchunks)
 		E.species = GLOB.species_by_name[SPECIES_MOTH]
 		E.skin_tone = null
-		E.s_col = ReadRGB("#13bc5e")
+		E.s_col = ReadRGB("#b9ae9c")
 		E.s_col_blend = ICON_ADD
 		E.status &= ~ORGAN_BROKEN
 		E.status |= ORGAN_MUTATED
