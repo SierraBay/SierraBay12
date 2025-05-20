@@ -38,6 +38,14 @@
 	play_fov_effect(starting, 6, "gunfire", dir = NORTH, angle = angle_offset)
 	return 0
 
+
+/mob/reset_layer()
+	if(lying)
+		layer = LYING_MOB_LAYER
+	else
+		reset_plane_and_layer()
+
+
 /mob/living/carbon/human/handle_footsteps()
 	..()
 	var/turf/simulated/T = get_turf(src)

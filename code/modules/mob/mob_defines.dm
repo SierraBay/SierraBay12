@@ -1,6 +1,6 @@
 /mob
 	density = TRUE
-	plane = GAME_PLANE_FOV_HIDDEN
+	plane = DEFAULT_PLANE
 	layer = MOB_LAYER
 
 	// [SIERRA-EDIT] - SSINPUT

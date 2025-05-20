@@ -86,6 +86,14 @@
 		fov_mask = mob.clear_fullscreen("FOV_mask")
 		hasmask = FALSE
 
+/client/proc/remove_cone()
+	fov_shadow = mob.clear_fullscreen("FOV_shadow")
+	fov_mask = mob.clear_fullscreen("FOV_mask")
+	hasmask = FALSE
+	usefov = FALSE
+	fovangle = 0
+
+
 /mob/living/proc/in_fov(atom/observed_atom, ignore_self = FALSE)
 	if(ignore_self && observed_atom == src)
 		return TRUE
