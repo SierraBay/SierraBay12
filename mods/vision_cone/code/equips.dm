@@ -1,14 +1,14 @@
 /obj/item/clothing/head/helmet
 	var/fov_angle = FOV_90_DEGREES
 
-/obj/item/clothing/head/helmet/New()
+/obj/item/clothing/head/helmet/Initialize()
 	. = ..()
 	if(body_parts_covered == HEAD)
 		fov_angle = FOV_90_DEGREES
 	else if(body_parts_covered == (HEAD | FACE))
 		fov_angle = FOV_180_DEGREES
 	else if(body_parts_covered == (HEAD | FACE | EYES))
-		fov_angle = FOV_270_DEGREES
+		fov_angle = FOV_180_DEGREES
 	else
 		fov_angle = FOV_90_DEGREES
 
