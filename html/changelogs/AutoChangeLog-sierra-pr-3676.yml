@@ -1,0 +1,4 @@
+author: Lexanx
+changes:
+  - {experiment: Замена бьенд ссылки в тестах гитхаб бота}
+delete-after: true
