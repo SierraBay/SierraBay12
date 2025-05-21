@@ -84,7 +84,7 @@
 	max_speed = 1/(4 SECONDS)
 	burn_delay = 1 SECONDS
 	vessel_mass = 1000
-	fore_dir = SOUTH
+	fore_dir = NORTH
 	vessel_size = SHIP_SIZE_TINY
 	skill_needed = SKILL_BASIC
 
