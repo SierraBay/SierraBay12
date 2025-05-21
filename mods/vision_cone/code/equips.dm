@@ -1,16 +1,8 @@
 /obj/item/clothing/head/helmet
 	var/fov_angle = FOV_90_DEGREES
 
-/obj/item/clothing/head/helmet/Initialize()
-	. = ..()
-	if(body_parts_covered == HEAD)
-		fov_angle = FOV_90_DEGREES
-	else if(body_parts_covered == (HEAD | FACE))
-		fov_angle = FOV_180_DEGREES
-	else if(body_parts_covered == (HEAD | FACE | EYES))
-		fov_angle = FOV_180_DEGREES
-	else
-		fov_angle = FOV_90_DEGREES
+/obj/item/clothing/head/helmet/space
+	fov_angle = FOV_180_DEGREES
 
 
 
@@ -37,7 +29,7 @@
 	if(pilots)
 		for(var/mob/living/thing in pilots)
 			SEND_SIGNAL(head, COMSIG_CABINE_OPEN, thing)
-			update_inv_head(thing)
+			thing.update_inv_head()
 	..()
 
 
@@ -56,30 +48,30 @@
 	..()
 	if(head)
 		if(pilots)
-			for(var/mob/living/thing in pilots)
+			for(var/mob/living/carbon/human/thing in pilots)
 				SEND_SIGNAL(head, COMSIG_CABINE_OPEN, thing)
-				update_inv_head(thing)
+				thing.update_inv_head(thing)
 
 /mob/living/exosuit/close_hatch()
 	..()
 	if(head)
 		if(pilots)
-			for(var/mob/living/thing in pilots)
+			for(var/mob/living/carbon/human/thing in pilots)
 				SEND_SIGNAL(head, COMSIG_CABINE_CLOSED, thing)
-				update_inv_head(thing)
+				thing.update_inv_head(thing)
 
 /obj/screen/exosuit/menu_button/hatch/switch_on()
 	.=..()
 	if(owner.head)
 		if(owner.pilots)
-			for(var/mob/living/thing in owner.pilots)
+			for(var/mob/living/carbon/human/thing in owner.pilots)
 				SEND_SIGNAL(owner.head, COMSIG_CABINE_CLOSED, thing)
-				owner.update_inv_head(thing)
+				thing.update_inv_head()
 
 /obj/screen/exosuit/menu_button/hatch/switch_off()
 	.=..()
 	if(owner.head)
 		if(owner.pilots)
-			for(var/mob/living/thing in owner.pilots)
+			for(var/mob/living/carbon/human/thing in owner.pilots)
 				SEND_SIGNAL(owner.head, COMSIG_CABINE_OPEN, thing)
-				owner.update_inv_head(thing)
+				thing.update_inv_head()
