@@ -1,0 +1,5 @@
+author: Lexanx
+changes:
+  - {rscadd: Компы в карго теперь имеют слоты для карты}
+  - {rscadd: 'Добавил часть одежды из лодаута, в карго'}
+delete-after: true
