@@ -28,13 +28,8 @@
 
 
 
-/mob/living/exosuit/Destroy()
-	if(pilots)
-		for(var/mob/living/thing in pilots)
-			SEND_SIGNAL(head, COMSIG_CABINE_OPEN, thing)
-			thing.update_inv_head()
-	..()
 
+//////////////////////////MECH COMPONENT//////////////////////////
 
 /obj/item/mech_component/sensors
 	var/fov_angle = FOV_90_DEGREES
@@ -78,3 +73,10 @@
 			for(var/mob/living/carbon/human/thing in owner.pilots)
 				SEND_SIGNAL(owner.head, COMSIG_CABINE_OPEN, thing)
 				thing.update_inv_head()
+
+/mob/living/exosuit/Destroy()
+	if(pilots)
+		for(var/mob/living/carbon/human/thing in pilots)
+			SEND_SIGNAL(head, COMSIG_CABINE_OPEN, thing)
+			thing.update_inv_head()
+	..()
