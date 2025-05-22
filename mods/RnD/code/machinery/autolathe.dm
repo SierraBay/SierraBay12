@@ -47,7 +47,7 @@
 
 	var/datum/computer_file/binary/design/current_file
 	var/list/queue = list()
-	var/queue_max = 8
+	var/queue_max = 16
 
 	var/storage_capacity = 0
 	var/speed = 1

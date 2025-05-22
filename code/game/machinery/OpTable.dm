@@ -106,8 +106,8 @@
 	if(victim && !suppressing)
 		AddOverlays("table2-warning")
 	if(victim)
-		if(suppressing && victim.sleeping < 3)
-			victim.Sleeping(3 - victim.sleeping)
+		if(suppressing && victim.sleeping < 10)
+			victim.Sleeping(10)
 		return 1
 	return 0
 

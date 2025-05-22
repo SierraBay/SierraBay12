@@ -64,6 +64,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	var/show_link_menu = FALSE
 	var/selected_protolathe_category
 	var/selected_imprinter_category
+	var/searched_disk_design_text
 	var/search_text
 	var/quick_deconstruct = FALSE
 	var/list/diskstored = list()
@@ -222,7 +223,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				to_chat(usr, SPAN_WARNING("Unauthorized access."))
 				return
 		screen = where
-		if(screen == SCREEN_PROTO || screen == SCREEN_IMPRINTER)
+		if(screen == SCREEN_PROTO || screen == SCREEN_IMPRINTER || screen == SCREEN_DISK_DESIGNS)
 			search_text = ""
 	if(href_list["eject_disk"]) // User is ejecting the disk.
 		if(disk)
@@ -287,6 +288,21 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				selected_imprinter_category = null
 			else
 				selected_imprinter_category = "Search Results"
+		if(screen == SCREEN_DISK_DESIGNS)
+			if(!search_text)
+				searched_disk_design_text = null
+			else
+				searched_disk_design_text = "Search Results"
+
+	if(href_list["clear_search"]) // User is clearing the search.
+		if(screen == SCREEN_PROTO)
+			selected_protolathe_category = null
+		if(screen == SCREEN_IMPRINTER)
+			selected_imprinter_category = null
+		if(screen == SCREEN_DISK_DESIGNS)
+			searched_disk_design_text = null
+		search_text = ""
+
 	if(href_list["deconstruct"]) // User is deconstructing an item.
 		if(linked_destroy)
 			if(linked_destroy.deconstruct_item())
@@ -485,17 +501,34 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		if(disk)
 			var/list/disk_designs = list()
 			var/list/disk_design_files = disk.find_files_by_type(/datum/computer_file/binary/design)
-			for(var/f in disk_design_files)
-				var/datum/computer_file/binary/design/d_file = f
-				disk_designs += list(list("name" = d_file.design.name, "id" = "\ref[d_file]"))
-			data["disk_designs"] = disk_designs
 			var/list/known_designs = list()
-			for(var/i in files.known_designs)
-				var/datum/design/D = i
-				if(!(D.starts_unlocked))
-					// doesn't make much sense to copy starting designs around, unless you can use them in lathes
-					known_designs += list(list("name" = D.name, "id" = "\ref[D]"))
-			data["known_designs"] = known_designs
+			data["search_text"] = search_text
+			if(search_text)
+				for(var/f in disk_design_files)
+					var/datum/computer_file/binary/design/d_file = f
+					if(findtext(d_file.design.name, search_text))
+						disk_designs += list(list("name" = d_file.design.name, "id" = "\ref[d_file]"))
+				data["disk_designs"] = disk_designs
+				known_designs = list()
+				for(var/i in files.known_designs)
+					var/datum/design/D = i
+					if(findtext(D.name, search_text))
+						known_designs += list(list("name" = D.name, "id" = "\ref[D]"))
+				data["known_designs"] = known_designs
+			else
+				for(var/f in disk_design_files)
+					var/datum/computer_file/binary/design/d_file = f
+					disk_designs += list(list("name" = d_file.design.name, "id" = "\ref[d_file]"))
+
+				data["disk_designs"] = disk_designs
+				known_designs = list()
+				for(var/i in files.known_designs)
+					var/datum/design/D = i
+					if(!(D.starts_unlocked))
+						// doesn't make much sense to copy starting designs around, unless you can use them in lathes
+						known_designs += list(list("name" = D.name, "id" = "\ref[D]"))
+				data["known_designs"] = known_designs
+
 	if(screen == SCREEN_DISK_TECH)
 		if(disk)
 			var/list/disk_tech_nodes = list()
