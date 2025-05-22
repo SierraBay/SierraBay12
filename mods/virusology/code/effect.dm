@@ -243,7 +243,7 @@
 	multiplier_max = 3
 	badness = VIRUS_COMMON
 /datum/disease2/effect/hiv/activate(mob/living/carbon/human/mob, multiplier)
-	mob.immunity = max(mob.immunity - (5*multiplier), 0)
+	mob.immunity -= 5*multiplier
 
 /datum/disease2/effect/toxins
 	name = "Hyperacidity"
