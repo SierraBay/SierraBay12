@@ -104,6 +104,7 @@
 	var/contraband_icons = icon_states('icons/obj/structures/contraband.dmi')
 	// [SIERRA-ADD] - NYC_POSTERS
 	var/new_year_icons = icon_states('mods/nyc_posters/icons/nyc_posters.dmi')
+	var/custom_posters_icons = icon_states('mods/nyc_posters/icons/custom_posters.dmi')
 	// [/SIERRA-ADD]
 	// [SIERRA-ADD] - TAJARA
 	var/tjposter_icons = icon_states('mods/tajara/icons/posters.dmi')
