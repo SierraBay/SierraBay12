@@ -118,7 +118,7 @@
 		var/singleton/poster/P = GET_SINGLETON(poster_type)
 		// [SIERRA-EDIT] - NYC_POSTERS - TAJARA
 		// if(!(P.icon_state in contraband_icons)) // SIERRA-EDIT - ORIGINAL
-		if(!(P.icon_state in contraband_icons) && !(P.icon_state in new_year_icons) && !(P.icon_state in tjposter_icons))
+		if(!(P.icon_state in contraband_icons) && !(P.icon_state in new_year_icons) && !(P.icon_state in custom_posters_icons) && !(P.icon_state in tjposter_icons))
 		// [/SIERRA-EDIT]
 			invalid_posters += poster_type
 
