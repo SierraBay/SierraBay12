@@ -256,7 +256,7 @@
 			overlays.Add(image(icon, icon_state = "disk_cloner_cloning"))
 
 
-/obj/item/stock_parts/circuitboard/disk_cloner/
+/obj/item/stock_parts/circuitboard/disk_cloner
 	name = "circuit board (disk cloner)"
 	build_path = /obj/machinery/disk_cloner
 	board_type = "machine"
@@ -270,3 +270,10 @@
 							/obj/item/stock_parts/keyboard = 1,
 							/obj/item/stock_parts/power/apc/buildable = 1
 	)
+
+/datum/design/circuit/autolathe
+	name = "disk cloner board"
+	id = "disk_cloner"
+	req_tech = list(TECH_DATA = 4, TECH_ENGINEERING = 3)
+	build_path = /obj/item/stock_parts/circuitboard/disk_cloner
+	sort_string = "HABZZ"
