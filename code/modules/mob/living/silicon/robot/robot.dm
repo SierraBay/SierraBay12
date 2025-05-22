@@ -358,6 +358,14 @@
 		to_chat(src, "You [locked ? "un" : ""]lock your panel.")
 		locked = !locked
 
+/mob/living/silicon/robot/verb/get_radio_channels()
+	set name = "Show Radio Channels"
+	set category = "Silicon Commands"
+
+	var/obj/item/device/radio/borg/borg_radio = silicon_radio
+	if (istype(borg_radio))
+		to_chat(src, borg_radio.radio_desc)
+
 /mob/living/silicon/robot/proc/self_diagnosis()
 	if(!is_component_functioning("diagnosis unit"))
 		return null

@@ -1,0 +1,5 @@
+author: Spookerton
+changes:
+  - {admin: The MC tab now shows the compiler version used to build the server's running
+      assets.}
+delete-after: true

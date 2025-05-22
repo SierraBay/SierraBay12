@@ -63,9 +63,9 @@
 
 	updatehealth()
 
-	if(src.sleeping)
+	if(sleeping)
 		Paralyse(3)
-		src.sleeping--
+		AdjustSleeping(-1)
 
 	if (resting) // Just in case. This breaks things so never allow robots to rest.
 		resting = FALSE

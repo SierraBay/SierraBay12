@@ -987,7 +987,7 @@
 	taste_description = "dental surgery"
 	reagent_state = LIQUID
 	color = COLOR_GRAY80
-	metabolism = 0.05 // So that low dosages have a chance to build up in the body.
+	metabolism = 1
 	var/do_giggle = TRUE
 
 /datum/reagent/nitrous_oxide/xenon
@@ -1000,12 +1000,14 @@
 /datum/reagent/nitrous_oxide/affect_blood(mob/living/carbon/M, removed)
 	if (IS_METABOLICALLY_INERT(M))
 		return
+	if (volume > 2)
+		M.Sleeping(10)
 	var/dosage = M.chem_doses[type]
-	if(dosage >= 1)
-		if(prob(5)) M.Sleeping(3)
+	if(dosage >= 10)
+		if (prob(5)) M.Sleeping(3)
 		M.dizziness =  max(M.dizziness, 3)
 		M.set_confused(3)
-	if(dosage >= 0.3)
+	if(dosage >= 2)
 		if(prob(5)) M.Paralyse(1)
 		M.drowsyness = max(M.drowsyness, 3)
 		M.slurring =   max(M.slurring, 3)
