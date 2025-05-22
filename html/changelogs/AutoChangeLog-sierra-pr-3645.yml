@@ -1,0 +1,5 @@
+author: Banditoz
+changes:
+  - {rscadd: 'Borgs can now click on Show Radio Channels under Silicon Commands to
+      see what channels they have available, a la headsets.'}
+delete-after: true

@@ -418,7 +418,7 @@
 
 		var/datum/computer_file/data/email_message/message = new()
 		message.title = msg_title
-		message.stored_data = msg_body
+		message.stored_data = sanitize(msg_body)
 		message.source = current_account.login
 		message.attachment = msg_attachment
 		if(!current_account.send_mail(msg_recipient, message))
