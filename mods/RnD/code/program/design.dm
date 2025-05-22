@@ -322,6 +322,16 @@
 	build_path = /obj/item/stock_parts/computer/hard_drive/portable/design/printable
 	sort_string = "ZAAAY"
 
+/datum/design/item/blutrash
+	name = "Trashbag of Holding"
+	desc = "An advanced trash bag with bluespace properties; capable of holding a plethora of garbage."
+	id = "blutrash"
+	req_tech = list(TECH_BLUESPACE = 5, TECH_MATERIAL = 6)
+	materials = list(MATERIAL_PLASTIC = 5000, MATERIAL_GOLD = 1500, MATERIAL_URANIUM = 250, MATERIAL_PHORON = 1500)
+	build_path = /obj/item/storage/bag/trash/bluespace
+	category = list("Misc")
+
+
 /datum/design/item/optical
 	materials = list(MATERIAL_STEEL = 50, MATERIAL_GLASS = 50)
 	category = list("Optical")
