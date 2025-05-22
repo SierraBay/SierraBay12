@@ -1,5 +1,5 @@
-#ifndef MODPACK_EXAMPLE
-#define MODPACK_EXAMPLE
+#ifndef MODPACK_FOV
+#define MODPACK_FOV
 
 #include "vision_cone.dm"
 #include "code/vision_cone.dm"

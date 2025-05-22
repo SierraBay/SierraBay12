@@ -117,3 +117,9 @@
 #define WATER_OVERLAY 10
 #define istitanwater(A) istype(A, /turf/simulated/floor/exoplanet/titan_water)
 //ANOMALIES
+
+
+//FOV
+#define FIELD_OF_VISION_BLOCKER_PLANE -199
+#define FIELD_OF_VISION_BLOCKER_RENDER_TARGET "*FIELD_OF_VISION_BLOCKER_RENDER_TARGET"
+//FOV
