@@ -80,14 +80,20 @@
 		client.fov_shadow.dir = src.dir
 
 /mob/living/proc/check_fov()
+	var/mob/eyepath
 	if(client)
-		var/turf/eyeloc = get_turf(client.eye)	//Trying to make FOV works for Mechs
-		var/turf/mobloc = get_turf(client.mob)	//Trying to make FOV works for Mechs
 		if(resting || lying)
 			client.hide_cone()
 		//Trying to make FOV works for Mechs
-		else if(eyeloc != mobloc)
-			client.hide_cone()
+		else if(client.eye != client.mob)
+			eyepath = client.eye
+			if(ispath(eyepath.type, /mob/living/exosuit))
+				if(client.usefov)
+					client.show_cone()
+				else
+					client.hide_cone()
+			else
+				client.hide_cone()
 		//////////
 		else if(client.usefov)
 			client.show_cone()
@@ -116,6 +122,7 @@
 		fov_shadow = mob.clear_fullscreen("FOV_shadow")
 		fov_mask = mob.clear_fullscreen("FOV_mask")
 		hasmask = FALSE
+		usefov = FALSE
 
 /client/proc/remove_cone()
 	fov_shadow = mob.clear_fullscreen("FOV_shadow")

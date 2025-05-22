@@ -34,8 +34,15 @@
 /obj/item/mech_component/sensors
 	var/fov_angle = FOV_90_DEGREES
 
-/obj/item/mech_component/sensors/heavy
+
+/obj/item/mech_component/sensors/light
+	fov_angle = FOV_90_DEGREES
+
+/obj/item/mech_component/sensors/combat
 	fov_angle = FOV_180_DEGREES
+
+/obj/item/mech_component/sensors/heavy
+	fov_angle = FOV_270_DEGREES
 
 /obj/item/mech_component/sensors/Initialize()
 	.=..()
@@ -75,6 +82,13 @@
 				thing.update_inv_head()
 
 /mob/living/exosuit/Destroy()
+	if(pilots)
+		for(var/mob/living/carbon/human/thing in pilots)
+			SEND_SIGNAL(head, COMSIG_CABINE_OPEN, thing)
+			thing.update_inv_head()
+	..()
+
+/mob/living/exosuit/remove_pilot()
 	if(pilots)
 		for(var/mob/living/carbon/human/thing in pilots)
 			SEND_SIGNAL(head, COMSIG_CABINE_OPEN, thing)

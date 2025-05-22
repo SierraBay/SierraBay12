@@ -18,6 +18,18 @@
 /obj/item/
 	plane = GAME_PLANE_FOV_HIDDEN
 
+/obj/structure/bed/chair
+	plane = GAME_PLANE_FOV_HIDDEN
+
+/obj/structure/curtain
+	plane = GAME_PLANE_FOV_HIDDEN
+
+/obj/structure/roller_bed
+	plane = GAME_PLANE_FOV_HIDDEN
+
+/obj/structure/iv_stand
+	plane = GAME_PLANE_FOV_HIDDEN
+
 //called to launch a projectile
 /obj/item/projectile/launch(atom/target, target_zone, x_offset=0, y_offset=0, angle_offset=0)
 	var/turf/curloc = get_turf(src)

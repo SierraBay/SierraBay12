@@ -56,6 +56,7 @@
 	appearance_flags = KEEP_TOGETHER|TILE_BOUND|PIXEL_SCALE
 	mouse_opacity = 0
 	vis_flags = VIS_HIDE
+	plane = GAME_PLANE_FOV_HIDDEN
 	layer = ABOVE_OBJ_LAYER
 	var/alpha_icon = 'mods/_master_files/icons/obj/mirror_mask.dmi'
 	var/alpha_icon_state = "mirror_mask"
