@@ -115,7 +115,7 @@
 
 /singleton/emote/visible/faint/do_extra(mob/user)
 	if(istype(user) && user.sleeping <= 0)
-		user.sleeping += 10
+		user.Sleeping(10)
 
 /singleton/emote/visible/frown
 	key = "frown"

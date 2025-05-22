@@ -19,6 +19,20 @@
 	matter = list(MATERIAL_STEEL = 100, MATERIAL_PLASTIC = 200, MATERIAL_GOLD = 50)
 	var/list/designs = list()
 
+/obj/item/stock_parts/computer/hard_drive/portable/design/printable
+	name = "design disk"
+	desc = "Data disk used to store autolathe designs."
+	icon = 'mods/RnD/icons/discs.dmi'
+
+	max_capacity = 512	// Up to 255 designs, automatically reduced to the nearest power of 2
+
+/obj/item/stock_parts/computer/hard_drive/portable/design/printable/New()
+	. = ..()
+	name = "Data disk"
+	icon_state = pick("yellow", "blue", "green", "red", "purple", "black")
+	max_capacity = 128
+
+
 /obj/item/stock_parts/computer/hard_drive/portable/LateInitialize(mapload)
 	install_default_programs()
 
@@ -144,7 +158,7 @@
 
 /obj/item/storage/xenobio
 	name = "xenobiology satchel"
-	desc = "This insulated bag can be used to store slime extracts."
+	desc = "This insulated bag can be used to store slime extracts and other potentially contaminated materials."
 	icon = 'mods/RnD/icons/biobag.dmi'
 	icon_state = "biobag"
 	slot_flags = SLOT_BELT
@@ -152,7 +166,13 @@
 	max_w_class = ITEM_SIZE_NORMAL
 	w_class = ITEM_SIZE_NORMAL
 	contents_allowed = list(
-		/obj/item/slime_extract
+		/obj/item/slime_extract,
+		/obj/item/slimesteroid,
+		/obj/item/slimesteroid2,
+		/obj/item/slimepotion,
+		/obj/item/slimepotion2,
+		/obj/item/slimepotion3,
+		/obj/item/reagent_containers/food/snacks/monkeycube
 	)
 	allow_quick_gather = TRUE
 	allow_quick_empty = TRUE
