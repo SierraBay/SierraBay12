@@ -271,7 +271,7 @@
 							/obj/item/stock_parts/power/apc/buildable = 1
 	)
 
-/datum/design/circuit/autolathe
+/datum/design/circuit/disk_cloner
 	name = "disk cloner board"
 	id = "disk_cloner"
 	req_tech = list(TECH_DATA = 4, TECH_ENGINEERING = 3)
