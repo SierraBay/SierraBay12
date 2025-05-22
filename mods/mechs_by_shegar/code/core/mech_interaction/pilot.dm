@@ -19,11 +19,12 @@
 	LAZYDISTINCTADD(user.additional_vision_handlers, src)
 	GLOB.destroyed_event.register(user, src, .proc/remove_pilot)
 	sync_access()
+	add_right_click(user)
 	update_pilots()
 	need_update_sensor_effects = TRUE
 	if(LAZYLEN(pilots) >= 0 )
 		process_mech_vision = TRUE
-	to_chat(user,SPAN_NOTICE("<b><font color = green> Нажмите СКМ для быстрой смены текущего модуля. </font></b>"))
+	to_chat(user,SPAN_NOTICE("<b><font color = green> Не понимаешь как управлять мехом? Нажми зелёную кнопочку что находится ниже показателя голода и жажды! </font></b>"))
 	to_chat(user,SPAN_NOTICE("<b><font color = green> Нажмите ПРОБЕЛ для переключения режима стрейфа. </font></b>"))
 
 
@@ -33,7 +34,7 @@
 		return
 	user.RemoveClickHandler(/datum/click_handler/default/mech)
 	if (!QDELETED(user))
-		user.dropInto(loc)
+		user.dropInto(get_turf(src))
 	stop_gps_ui(user)
 	if (user.client)
 		user.client.screen -= hud_elements
@@ -53,6 +54,7 @@
 	sync_access()
 	update_pilots()
 	clear_sensors_effects(user)
+	remove_right_click(user)
 	//Отключаем процессинг зрения меха, если пилотов внутри нет
 	if(LAZYLEN(pilots) <= 0 )
 		process_mech_vision = FALSE
@@ -85,3 +87,11 @@
 
 	remove_pilot(user)
 	return TRUE
+
+/mob/living/exosuit/proc/remove_right_click(mob/user)
+	if(!show_right_click_menu)
+		user.client.show_popup_menus = TRUE
+
+/mob/living/exosuit/proc/add_right_click(mob/user)
+	if(!show_right_click_menu)
+		user.client.show_popup_menus = FALSE

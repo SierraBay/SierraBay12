@@ -93,8 +93,7 @@
 					decal = head.decal
 //Если мех ВЫКЛЮЧЕН - модули имеют другие спрайты
 				if(power == MECH_POWER_ON)
-					if(use_icon_state in GLOB.mech_weapon_overlays)
-						new_overlays += get_mech_image(decal, use_icon_state, 'mods/mechs_by_shegar/icons/mech_weapon_overlays.dmi', color, hardpoint_object.mech_layer )
+					new_overlays += get_mech_image(decal, use_icon_state, 'mods/mechs_by_shegar/icons/mech_weapon_overlays.dmi', color, hardpoint_object.mech_layer )
 				else
 					new_overlays += get_mech_image(decal, use_icon_state, 'mods/mechs_by_shegar/icons/mech_weapon_overlays_off.dmi', color, hardpoint_object.mech_layer )
 	SetOverlays(new_overlays)

@@ -44,7 +44,7 @@
 		to_chat(user,SPAN_DANGER("The design of the legs does not support locking the body position in space."))
 
 
-//Кейбинд на смену орудия
+//Кейбинд на смену орудия. Если у нас активны руки - переключимся на плечи.
 /mob/living/exosuit/proc/swap_hardpoint(mob/living/user)
 	if(next_move >= world.time)
 		return
@@ -54,30 +54,17 @@
 	var/swapped = FALSE
 	var/obj/screen/movable/exosuit/hardpoint = hardpoint_hud_elements[selected_hardpoint]
 	var/obj/screen/movable/exosuit/hardpoint/previous_hardpoint = hardpoint
-	if(selected_hardpoint == "right hand")
+	if(selected_hardpoint == "right hand" || selected_hardpoint == "left hand")
+		swapped = TRUE
+		if(hardpoints.Find("left shoulder"))
+			set_hardpoint("left shoulder")
+		else
+			set_hardpoint("right shoulder")
+	else if(selected_hardpoint == "left shoulder" || selected_hardpoint == "right shoulder")
 		swapped = TRUE
 		set_hardpoint("left hand")
-	else if(selected_hardpoint == "left hand")
-		swapped = TRUE
-		set_hardpoint("right hand")
-	else if(selected_hardpoint == "left shoulder")
-		if(!hardpoints.Find("right shoulder"))
-			return
-		swapped = TRUE
-		set_hardpoint("right shoulder")
-	else if(selected_hardpoint == "right shoulder")
-		if(!hardpoints.Find("left shoulder"))
-			return
-		swapped = TRUE
-		set_hardpoint("left shoulder")
 	if(swapped)
-		hardpoint = hardpoint_hud_elements[selected_hardpoint]
-		previous_hardpoint.icon_state = "hardpoint"
-		hardpoint.icon_state = "hardpoint_selected"
-		previous_hardpoint.update_icon()
-		hardpoint.update_icon()
-		playsound(src, 'mods/mechs_by_shegar/sounds/mech_swap_weapon.ogg', 50, 0)
-
+		update_selected_hardpoint(do_sound = TRUE, hardpoint = hardpoint, prev_hardpoint = previous_hardpoint)
 
 /datum/keybinding/mech/toggle_back_hardpoint
 	hotkey_keys = list("None")

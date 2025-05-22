@@ -55,8 +55,6 @@
 	var/atmos_clear_cooldown = 60 SECONDS
 	///Статус очистки. TRUE - она идёт. FALSE - не идёт
 	var/atmos_clear_status = FALSE
-	///Отвечает за возможность меха быстро стартовать за счёт определённых штрафов
-	var/have_fast_power_up = FALSE
 	///Время перегрева меха
 	var/overheat_time = 10 SECONDS
 	///Куллдаун для обработки тепла.
@@ -246,12 +244,14 @@
 	if(!Adjacent(usr) || !over.Adjacent(usr))
 		return
 
-	if(storage_compartment)
-		if(owner.hatch_locked)
+	if(owner)
+		if(storage_compartment && owner.hatch_locked)
 			to_chat(usr, SPAN_BAD("Storage compartment locked!"))
 			return
 		else
 			return storage_compartment.MouseDrop(over)
+	.=..()
+
 
 /obj/item/mech_component/chassis/return_diagnostics(mob/user)
 	..()

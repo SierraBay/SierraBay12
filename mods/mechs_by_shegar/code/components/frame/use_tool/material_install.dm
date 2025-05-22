@@ -1,9 +1,9 @@
 /obj/structure/heavy_vehicle_frame/proc/material_install(obj/item/stack/material/stack, mob/living/user)
 	if(!user.skill_check(SKILL_DEVICES, SKILL_TRAINED))
-		to_chat(user, SPAN_BAD("I dont know how work with mechs!"))
+		to_chat(user, SPAN_BAD("Понятия не имею как обслуживать меха."))
 		return
 	if (is_reinforced)
-		USE_FEEDBACK_FAILURE("У \The [src] уже есть внутренняя обшивка.")
+		USE_FEEDBACK_FAILURE("Обшивка уже установлена.")
 		return TRUE
 	if (stack.reinf_material) // Current code doesn't account for reinforced materials
 		USE_FEEDBACK_FAILURE("этот Материал не подходит.")
@@ -19,7 +19,7 @@
 	if (!user.do_skilled(3 SECONDS, SKILL_DEVICES, src) || !user.use_sanity_check(src, stack))
 		return TRUE
 	if (is_reinforced)
-		USE_FEEDBACK_FAILURE("\The [src] already has internal reinforcements.")
+		USE_FEEDBACK_FAILURE("Обшивка уже установлена.")
 		return TRUE
 	if (!stack.use(10))
 		USE_FEEDBACK_STACK_NOT_ENOUGH(stack, 10, "to reinforce \the [src].")

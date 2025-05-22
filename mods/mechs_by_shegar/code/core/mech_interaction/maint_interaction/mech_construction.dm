@@ -6,15 +6,17 @@
 	hardpoints.Cut()
 	if(body)
 		frame.body = body
-		body.update_component_owner()
 		body.forceMove(frame)
+		body.update_component_owner()
 		body = null
 	if(head)
 		frame.head = head
-		head.update_component_owner()
 		head.forceMove(frame)
+		head.update_component_owner()
 		head = null
 	if(R_leg && R_leg.doubled_owner && L_leg && L_leg.doubled_owner)
+		R_leg.owner = null
+		L_leg.owner = null
 		frame.R_leg = R_leg
 		frame.L_leg = L_leg
 		R_leg.doubled_owner.forceMove(frame)
@@ -25,21 +27,25 @@
 		R_leg = null
 		L_leg = null
 	if(R_leg && !R_leg.doubled_owner)
+		R_leg.owner = null
 		frame.R_leg = R_leg
 		R_leg.forceMove(frame)
 		R_leg.update_component_owner()
 		R_leg = null
 	if(L_leg && !L_leg.doubled_owner)
+		L_leg.owner = null
 		frame.L_leg = L_leg
 		L_leg.forceMove(frame)
 		L_leg.update_component_owner()
 		L_leg = null
 	if(R_arm)
+		R_arm.owner = null
 		frame.R_arm = R_arm
 		R_arm.forceMove(frame)
 		R_arm.update_component_owner()
 		R_arm = null
 	if(L_arm)
+		L_arm.owner = null
 		frame.L_arm = L_arm
 		L_arm.forceMove(frame)
 		L_arm.update_component_owner()

@@ -12,6 +12,7 @@
 		to_chat(usr, SPAN_NOTICE("А гайда то нет!"))
 		return
 	else if(choice == "Я ничего не хочу")
+		to_chat(usr, SPAN_NOTICE("Нехочун."))
 		return
 
 // ГАЙД
@@ -55,9 +56,9 @@
 /obj/screen/exosuit/guide_teller/Click(location, control, params)
 	var/list/modifiers = params2list(params)
 	if(LAZYACCESS(modifiers, "alt"))  // Проверяем, нажат ли Alt
-		owner.prev_step(usr)  // Переход на предыдущий шаг
+		owner.prev_step(usr)
 	else
-		owner.next_step(usr)  // Переход на следующий шаг
+		owner.next_step(usr)
 
 /datum/mech_guide_data
 	var/current_step = 1
@@ -94,7 +95,19 @@
 		),
 		list(
 			guide_type = /obj/screen/fullscreen/mech_guide/main,
-			text = "Мех может возить на себе до 3 пассажиров, для этого перетащите персонажа с зажатым ЛКМ на закрытого меха. <br> Нажмите на GO для окончания обучения",
+			text = "С стандартными настройками, мех при нажатии Левой кнопки мыши использует левый модуль, а при нажатии Правой кнопки мыши - правый. (В левой руке или правой рукке). <br> Нажмите на GO, чтобы продолжить.",
+			callbacks = list("open_big_menu"),
+			teller_loc = "CENTER, CENTER"
+		),
+		list(
+			guide_type = /obj/screen/fullscreen/mech_guide/main,
+			text = "Кнопка Средняя кнопка мыши позволяет быстро переключиться между Снаряжением в руках и на плечах. Комбинируя оба эти метода, можно очень комфортно управлять снаряжением меха. <br> Нажмите на GO, чтобы продолжить.",
+			callbacks = list("open_big_menu"),
+			teller_loc = "CENTER, CENTER"
+		),
+		list(
+			guide_type = /obj/screen/fullscreen/mech_guide/main,
+			text = "Если вам не нравится такая функция перехватывающая ваши клики мыши - вы всегда можете её отключить в меню меха. <br> Нажмите на GO, чтобы продолжить.",
 			callbacks = list("open_big_menu"),
 			teller_loc = "CENTER, CENTER"
 		),

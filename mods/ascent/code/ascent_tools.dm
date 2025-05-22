@@ -14,6 +14,10 @@
 	name = "mantid anomaly detector"
 	desc = "Some kind of strange alien anomolous detection technology."
 
+/obj/item/clothing/gloves/anomaly_detector/mantid/New()
+	..()
+	switch_toggle()
+
 /obj/item/clothing/gloves/anomaly_detector/mantid/try_found_anomalies(mob/living/user)
 	if((user.r_hand != src && user.l_hand !=src) && (wearer && wearer.gloves != src) )
 		to_chat(user, SPAN_BAD("You cant reach device."))

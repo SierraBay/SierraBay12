@@ -60,7 +60,7 @@
 	taste_description = "piss water"
 	color = "#ffd300"
 	strength = 50
-	nutriment_factor = 1
+	nutriment_factor = 4
 
 	glass_name = "beer"
 	glass_desc = "A freezing container of beer"
@@ -194,7 +194,7 @@
 	..()
 	M.dizziness = max(0, M.dizziness - 5)
 	M.drowsyness = max(0, M.drowsyness - 3)
-	M.sleeping = max(0, M.sleeping - 2)
+	M.AdjustSleeping(-2)
 	if(M.bodytemperature > 310)
 		M.bodytemperature = max(310, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 
@@ -302,7 +302,7 @@
 	taste_description = "jitters and death"
 	color = "#102000"
 	strength = 25
-	nutriment_factor = 1
+	nutriment_factor = 4
 
 	glass_name = "Thirteen Loko"
 	glass_desc = "This is a glass of Thirteen Loko, it appears to be of the highest quality. The drink, not the glass."
@@ -526,7 +526,7 @@
 	name = "Banana Mama"
 	description = "A drink from Clown Heaven."
 	taste_description = "a bad joke"
-	nutriment_factor = 1
+	nutriment_factor = 4
 	color = "#ffff91"
 	strength = 12
 
@@ -575,7 +575,7 @@
 		return
 	var/sleep_chance = M.GetTraitLevel(/singleton/trait/malus/ethanol) || 1
 	if (prob(sleep_chance))
-		M.sleeping = max(M.sleeping, 1)
+		M.Sleeping(5)
 
 /datum/reagent/ethanol/bilk
 	name = "Bilk"
@@ -583,7 +583,7 @@
 	taste_description = "desperation and lactate"
 	color = "#895c4c"
 	strength = 50
-	nutriment_factor = 2
+	nutriment_factor = 5
 	protein_amount = 0.5
 
 	glass_name = "bilk"
@@ -745,7 +745,7 @@
 	name = "Driest Martini"
 	description = "Only for the experienced. You think you see sand floating in the glass."
 	taste_description = "a beach"
-	nutriment_factor = 1
+	nutriment_factor = 4
 	color = "#2e6671"
 	strength = 12
 
@@ -959,7 +959,7 @@
 	taste_description = "smooth, crisp lager"
 	color = "#e0b900"
 	strength = 50
-	nutriment_factor = 1
+	nutriment_factor = 4
 
 	glass_name = "lager"
 	glass_desc = "A dark, musty beer commonly consumed across space."
@@ -1072,7 +1072,7 @@
 	reagent_state = LIQUID
 	color = "#ffbb00"
 	strength = 30
-	nutriment_factor = 1
+	nutriment_factor = 4
 
 	glass_name = "mead"
 	glass_desc = "A Viking's beverage, though a cheap one."
@@ -1259,7 +1259,7 @@
 	description = "A drink from Mime Heaven."
 	taste_description = "a pencil eraser"
 	taste_mult = 1.2
-	nutriment_factor = 1
+	nutriment_factor = 4
 	color = "#ffffff"
 	strength = 12
 

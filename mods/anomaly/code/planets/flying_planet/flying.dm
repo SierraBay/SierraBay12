@@ -71,7 +71,7 @@
 	mineral_turf =  /turf/simulated/floor/exoplanet/grass
 
 /area/exoplanet/flying
-	ambience = list('sound/effects/wind/tundra0.ogg','mods/anomaly/sounds/gravi_planet_wind_1.ogg')
+	forced_ambience = list('mods/anomaly/sounds/gravi_planet_wind_1.ogg')
 	base_turf = /turf/simulated/floor/exoplanet/clouds
 	can_have_awakening_event = FALSE
 

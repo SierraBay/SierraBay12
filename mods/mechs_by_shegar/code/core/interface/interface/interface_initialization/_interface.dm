@@ -23,7 +23,7 @@
 		hud_power.screen_loc = "EAST-1:24,CENTER-4:25"
 		hud_elements |= hud_power
 		advanced_heat_indicator = new /obj/screen/movable/exosuit/advanced_heat(src)
-		advanced_heat_indicator.screen_loc = "EAST-1.1,SOUTH+4.35"
+		advanced_heat_indicator.screen_loc = "EAST-1.1,SOUTH+4.18"
 		hud_elements |= advanced_heat_indicator
 
 	refresh_hud()

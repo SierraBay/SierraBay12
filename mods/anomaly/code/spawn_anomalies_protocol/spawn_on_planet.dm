@@ -67,8 +67,7 @@
 		min_artefacts_ammount = min_artefacts_ammount,
 		max_artefacts_ammount = max_artefacts_ammount,
 		source =  "Планета [name]",
-		visible_generation = FALSE,
-		started_in = world.time)
+		visible_generation = FALSE)
 
 ///Проверяет, что турф находится в играбельной зоне планеты
 /proc/turf_in_playable_place(turf/inputed_turf, x_limit, y_limit)

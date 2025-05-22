@@ -37,3 +37,17 @@
 
 	if(current_speed < min_speed)
 		current_speed = min_speed
+
+/mob/living/exosuit/proc/calculate_max_speed()
+	if(!R_leg.is_active())
+		max_speed = L_leg.max_speed/2
+	else if(!L_leg.is_active())
+		max_speed = R_leg.max_speed/2
+	else
+		max_speed = (L_leg.max_speed + R_leg.max_speed)/2
+
+/mob/living/exosuit/proc/calculate_acceleration()
+	if(!R_leg.is_active() || !L_leg.is_active())
+		total_acceleration = 0 //Мех без одной ноги не может ускоряться
+		return
+	total_acceleration = ((L_leg.acceleration + R_leg.acceleration)/2)  / ( total_weight / 1000)

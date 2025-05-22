@@ -2,6 +2,7 @@
 	title = "Exploration Leader"
 	department = "Экспедиционный"
 	department_flag = EXP
+	head_position = 1
 
 	total_positions = 1
 	spawn_positions = 1

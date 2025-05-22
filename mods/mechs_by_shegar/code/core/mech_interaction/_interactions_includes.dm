@@ -1,6 +1,7 @@
 #include "main_mech_interaction.dm"
 #include "mech_control.dm"
 #include "mech_interaction.dm"
+#include "mech_fists\attack.dm"
 #include "pilot.dm"
 
 //Обычные взаимодействия

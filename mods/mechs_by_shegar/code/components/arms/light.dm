@@ -4,7 +4,7 @@
 	exosuit_desc_string = "lightweight, segmented manipulators"
 	icon_state = "light_arm"
 	punch_sound = 'sound/mecha/mech_punch_fast.ogg'
-	action_delay = 10
+	action_delay = 8
 	power_use = 5
 	allow_passengers = FALSE
 	max_hp = 40

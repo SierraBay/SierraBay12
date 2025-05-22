@@ -26,8 +26,7 @@
 		min_artefacts_ammount = 0,
 		max_artefacts_ammount = 0,
 		source = "Пролив БСД",
-		visible_generation = FALSE,
-		started_in = world.time)
+		visible_generation = FALSE)
 
 /datum/event/bsd_instability/end()
 	.=..()

@@ -62,8 +62,9 @@
 		src.forceMove(turf)
 	if(called_by_generator)
 		spawn_called_by_generator = TRUE
+	LAZYADD(anomaly_turfs, get_turf(src))
 	.=..()
-	if(called_by_generator)
+	if(multitile && called_by_generator)
 		deploy_tiles_of_anomaly(input_x, input_y)
 	if(visible_generation)
 		spawn_temp_spawn_effects()

@@ -33,5 +33,13 @@
 /obj/anomaly/proc/kill_later(time)
 	addtimer(new Callback(src, PROC_REF(call_destroy)), time)
 
+/obj/anomaly/proc/go_sleep(time)
+	sleeping = TRUE
+	if(time)
+		addtimer(new Callback(src, PROC_REF(wake_up)), time)
+
+/obj/anomaly/proc/wake_up()
+	sleeping = FALSE
+
 /obj/anomaly/proc/call_destroy()
 	Destroy()

@@ -41,7 +41,7 @@
 	if(LAZYLEN(pilots))
 		hatch_locked = 0 // So they can get out.
 		for(var/pilot in pilots)
-			eject(pilot, silent=1)
+			remove_pilot(pilot)
 
 	// Salvage moves into the wreck unless we're exploding violently.
 	var/obj/wreck = new wreckage_path(get_turf(src), src, gibbed)
@@ -67,16 +67,13 @@
 
 /mob/living/exosuit/gib()
 	death(1)
-
-
 	// Get a turf to play with.
 	var/turf/T = get_turf(src)
 	if(!T)
 		qdel(src)
 		return
-
 	//Подожгём людей и пилотов рядом
-	for(var/mob/living/detected_living in range(1, get_turf(src)))
+	for(var/mob/living/detected_living in range(1, T))
 		detected_living.fire_stacks = max(2, detected_living.fire_stacks)
 		detected_living.IgniteMob()
 	// Hurl our component pieces about.
@@ -92,5 +89,7 @@
 		thing.forceMove(T)
 		thing.throw_at(get_edge_target_turf(src,pick(GLOB.alldirs)),rand(3,6),40)
 	explosion(T, 2, EX_ACT_LIGHT)
+	var/obj/wreck = new wreckage_path(T, src)
+	wreck.name = "wreckage of \the [name]"
 	qdel(src)
 	return

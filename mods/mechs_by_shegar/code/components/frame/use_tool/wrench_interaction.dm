@@ -1,12 +1,12 @@
 /obj/structure/heavy_vehicle_frame/proc/wrench_interaction(obj/item/tool, mob/living/user)
 	if(!user.skill_check(SKILL_DEVICES, SKILL_TRAINED))
-		to_chat(user, SPAN_BAD("I dont know how work with mechs!"))
+		to_chat(user, SPAN_BAD("Понятия не имею как обслуживать меха."))
 		return
 	if (!is_reinforced)
-		USE_FEEDBACK_FAILURE("\The [src] has no reinforcements to secure or remove.")
+		USE_FEEDBACK_FAILURE("Обшивка отсутствует.")
 		return TRUE
 	if (is_reinforced == FRAME_REINFORCED_WELDED)
-		USE_FEEDBACK_FAILURE("\The [src]'s internal reinforcements are welded in place and can't be removed.")
+		USE_FEEDBACK_FAILURE("Обшивка приварена, толку откручивать.")
 		return TRUE
 	var/current_state = is_reinforced
 	var/input
@@ -17,7 +17,7 @@
 		if (!input || !user.use_sanity_check(src, tool))
 			return TRUE
 		if (current_state != is_reinforced)
-			USE_FEEDBACK_FAILURE("\The [src]'s state has changed.")
+			USE_FEEDBACK_FAILURE("Что-то поменялось.")
 			return TRUE
 	playsound(src, 'sound/items/Ratchet.ogg', 50, TRUE)
 	user.visible_message(
@@ -27,7 +27,7 @@
 	if (!user.do_skilled((tool.toolspeed * 4) SECONDS, SKILL_DEVICES, src) || !user.use_sanity_check(src, tool))
 		return TRUE
 	if (current_state != is_reinforced)
-		USE_FEEDBACK_FAILURE("\The [src]'s state has changed.")
+		USE_FEEDBACK_FAILURE("Что-то поменялось.")
 		return TRUE
 	playsound(src, 'sound/items/Ratchet.ogg', 50, TRUE)
 	is_reinforced = input == "Secure Reinforcements" ? FRAME_REINFORCED_SECURE : FALSE
