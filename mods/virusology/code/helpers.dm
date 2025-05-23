@@ -100,7 +100,7 @@
 	var/list/antibodies_in_common = M.antibodies & disease.antigen
 	if(LAZYLEN(antibodies_in_common))
 		return
-	if(prob(100 * M.reagents.get_reagent_amount(/datum/reagent/spaceacillin) / (REAGENTS_OVERDOSE/2)))
+	if(M.reagents && prob(100 * M.reagents.get_reagent_amount(/datum/reagent/spaceacillin) / (REAGENTS_OVERDOSE/2)))
 		return
 
 	if(!LAZYLEN(disease.affected_species))
