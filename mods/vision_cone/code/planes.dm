@@ -14,13 +14,12 @@
 /obj/decal/point
 	plane = GAME_PLANE_FOV_HIDDEN
 
-/obj/machinery/door/blast
-	plane = GAME_PLANE_ABOVE_FOV
 
-/obj/structure/window
-	plane = GAME_PLANE_ABOVE_FOV
-
-/obj/structure/wall_frame
+/obj/machinery/door/blast/force_open()
+	. = ..()
+	plane = DEFAULT_PLANE
+/obj/machinery/door/blast/force_close()
+	. = ..()
 	plane = GAME_PLANE_ABOVE_FOV
 
 /obj/structure/bed/chair
