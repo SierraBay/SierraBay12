@@ -24,6 +24,9 @@
 /obj/effect/
 	plane = GAME_PLANE_FOV_HIDDEN
 
+/obj/decal/point
+	plane = GAME_PLANE_FOV_HIDDEN
+
 /obj/structure/bed/chair
 	plane = GAME_PLANE_FOV_HIDDEN
 
