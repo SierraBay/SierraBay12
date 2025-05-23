@@ -1,0 +1,6 @@
+author: Lexanx
+changes:
+  - {rscadd: Добавил зомби вирус}
+  - {rscadd: Добавил спид}
+  - {balance: 'Изменены зомби, они стали опаснее'}
+delete-after: true

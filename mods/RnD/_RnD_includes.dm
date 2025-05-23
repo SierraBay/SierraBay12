@@ -13,6 +13,7 @@
 #include "code/machinery/rdconsole.dm"
 #include "code/machinery/rdmachines.dm"
 #include "code/machinery/robotics_fabricator.dm"
+#include "code/machinery/autolathe_disk_cloner.dm"
 #include "code/experiment.dm"
 #include "code/program/itcommand.dm"
 #include "code/tech_branch/tech_biotech.dm"
@@ -29,6 +30,12 @@
 #include "code/SSresearch.dm"
 #include "code/program/sciefolder.dm"
 #include "code/misc.dm"
+#include "code/xenoarch/tesla.dm"
+#include "code/xenoarch/grav.dm"
+#include "code/xenoarch/nature.dm"
+#include "code/xenoarch/swap.dm"
+#include "code/xenobiology.dm"
+
 
 //Дезайны
 #include "code/designs_autolathe/designs_arms_ammo.dm"
