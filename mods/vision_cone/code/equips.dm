@@ -18,15 +18,16 @@
 
 /mob/living/carbon/human/update_inv_head()
 	..()
-	if(head)
-		if(istype(head, /obj/item/clothing/head/helmet))
-			SEND_SIGNAL(head, COMSIG_ITEM_EQUIPPED, src)
-			last_equip_head = head
-	else if(client.eye != client.mob)
-		return
-	else
-		if(last_equip_head)
-			SEND_SIGNAL(last_equip_head, COMSIG_ITEM_DROPPED, src)
+	if(client)
+		if(head)
+			if(istype(head, /obj/item/clothing/head/helmet))
+				SEND_SIGNAL(head, COMSIG_ITEM_EQUIPPED, src)
+				last_equip_head = head
+		else if(client.eye != client.mob)
+			return
+		else
+			if(last_equip_head)
+				SEND_SIGNAL(last_equip_head, COMSIG_ITEM_DROPPED, src)
 
 
 
