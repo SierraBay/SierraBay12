@@ -22,6 +22,8 @@
 		if(istype(head, /obj/item/clothing/head/helmet))
 			SEND_SIGNAL(head, COMSIG_ITEM_EQUIPPED, src)
 			last_equip_head = head
+	else if(client.eye != client.mob)
+		return
 	else
 		if(last_equip_head)
 			SEND_SIGNAL(last_equip_head, COMSIG_ITEM_DROPPED, src)
@@ -65,21 +67,6 @@
 				SEND_SIGNAL(head, COMSIG_CABINE_CLOSED, thing)
 				thing.update_inv_head(thing)
 
-/obj/screen/exosuit/menu_button/hatch/switch_on()
-	.=..()
-	if(owner.head)
-		if(owner.pilots)
-			for(var/mob/living/carbon/human/thing in owner.pilots)
-				SEND_SIGNAL(owner.head, COMSIG_CABINE_CLOSED, thing)
-				thing.update_inv_head()
-
-/obj/screen/exosuit/menu_button/hatch/switch_off()
-	.=..()
-	if(owner.head)
-		if(owner.pilots)
-			for(var/mob/living/carbon/human/thing in owner.pilots)
-				SEND_SIGNAL(owner.head, COMSIG_CABINE_OPEN, thing)
-				thing.update_inv_head()
 
 /mob/living/exosuit/Destroy()
 	if(pilots)

@@ -93,7 +93,7 @@
 				else
 					client.hide_cone()
 			else
-				client.hide_cone()
+				client.hide_mask()
 		//////////
 		else if(client.usefov)
 			client.show_cone()
@@ -130,6 +130,11 @@
 	hasmask = FALSE
 	usefov = FALSE
 	fovangle = 0
+
+/client/proc/hide_mask()
+	fov_shadow = mob.clear_fullscreen("FOV_shadow")
+	fov_mask = mob.clear_fullscreen("FOV_mask")
+	hasmask = FALSE
 
 
 /mob/living/proc/in_fov(atom/observed_atom, ignore_self = FALSE)
