@@ -139,20 +139,21 @@
 	#define BASE_AREA_LAYER             999
 
 #define GAME_PLANE_FOV_HIDDEN 		2	//[SIERRA-ADD] - VISION CONE
-#define OBSERVER_PLANE				3	//[SIERRA-EDIT] - VISION CONE (2 became 3)
+#define GAME_PLANE_ABOVE_FOV		3	//[SIERRA-ADD] - VISION CONE
+#define OBSERVER_PLANE				4	//[SIERRA-EDIT] - VISION CONE (2 became 4)
 
-#define LIGHTING_PLANE             4 // For Lighting. - The highest plane (ignoring all other even higher planes) 	//[SIERRA-EDIT] - VISION CONE (3 became 4)
+#define LIGHTING_PLANE             5 // For Lighting. - The highest plane (ignoring all other even higher planes) 	//[SIERRA-EDIT] - VISION CONE (3 became 5)
 	#define LIGHTBULB_LAYER        0
 	#define LIGHTING_LAYER         1
 	#define ABOVE_LIGHTING_LAYER   2
 
-#define EFFECTS_ABOVE_LIGHTING_PLANE   5 // For glowy eyes, laser beams, etc. that shouldn't be affected by darkness	//[SIERRA-EDIT] - VISION CONE (4 became 5)
+#define EFFECTS_ABOVE_LIGHTING_PLANE   6 // For glowy eyes, laser beams, etc. that shouldn't be affected by darkness	//[SIERRA-EDIT] - VISION CONE (4 became 6)
 	#define EYE_GLOW_LAYER         1
 	#define BEAM_PROJECTILE_LAYER  2
 	#define SUPERMATTER_WALL_LAYER 3
 	#define SPEECH_INDICATOR_LAYER 4
 
-#define FULLSCREEN_PLANE                6 // for fullscreen overlays that do not cover the hud.	//[SIERRA-EDIT] - VISION CONE (5 became 6)
+#define FULLSCREEN_PLANE                7 // for fullscreen overlays that do not cover the hud.	//[SIERRA-EDIT] - VISION CONE (5 became 7)
 
 	#define FULLSCREEN_LAYER    0
 	#define DAMAGE_LAYER        1
@@ -160,14 +161,14 @@
 	#define BLIND_LAYER         3
 	#define CRIT_LAYER          4
 
-#define HUD_PLANE                    7	//[SIERRA-EDIT] - VISION CONE (6 became 7)
+#define HUD_PLANE                    8	//[SIERRA-EDIT] - VISION CONE (6 became 8)
 	#define UNDER_HUD_LAYER              0
 	#define HUD_BASE_LAYER               2
 	#define HUD_ITEM_LAYER               3
 	#define HUD_ABOVE_ITEM_LAYER         4
 	#define HUD_ABOVE_HUD_LAYER          5
 
-#define RUNECHAT_PLANE               8	//[SIERRA-EDIT] - VISION CONE (7 became 8)
+#define RUNECHAT_PLANE               9	//[SIERRA-EDIT] - VISION CONE (7 became 9)
 
 /// This plane masks out lighting, to create an "emissive" effect for e.g glowing screens in otherwise dark areas.
 #define EMISSIVE_PLANE 700

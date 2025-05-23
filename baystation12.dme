@@ -3444,6 +3444,7 @@
 #include "mods\_master_files\code\modules\events\gravity.dm"
 #include "mods\_master_files\code\modules\maps\map_template.dm"
 #include "mods\_master_files\code\modules\mob\living\life.dm"
+#include "mods\_master_files\code\modules\mob\living\carbon\viruses.dm"
 #include "mods\_master_files\code\modules\mob\living\carbon\human\human_helpers.dm"
 #include "mods\_master_files\code\modules\mob\new_player\new_player.dm"
 #include "mods\_master_files\code\modules\multiz\turf.dm"

@@ -8,7 +8,7 @@
 	if(owner.power == MECH_POWER_OFF)
 		to_chat(usr, SPAN_WARNING("Кабину нельзя закрыть, пока мех незапитан."))
 		return
-	owner.hatch_closed = TRUE
+	owner.close_hatch(usr)
 	to_chat(usr, SPAN_NOTICE("Кабина закрыта."))
 	playsound(src.loc, 'sound/machines/suitstorage_cycledoor.ogg', 50, 1, -6)
 	owner.update_icon()
@@ -20,6 +20,7 @@
 		return FALSE
 	owner.open_hatch(usr)
 	playsound(src.loc, 'sound/machines/suitstorage_cycledoor.ogg', 50, 1, -6)
+	owner.update_icon()
 	return TRUE
 
 

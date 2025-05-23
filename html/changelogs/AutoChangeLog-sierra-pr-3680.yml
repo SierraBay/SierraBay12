@@ -1,0 +1,6 @@
+author: Lexanx
+changes:
+  - {bugfix: Фикс разных багов с FOV}
+  - {bugfix: 'Отключил отражение у зеркал, пока не придумается способ фикса'}
+  - {bugfix: Фикс бикеров в автолате}
+delete-after: true

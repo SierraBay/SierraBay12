@@ -45,6 +45,8 @@
 	if(life_tick % 5 && immunity < 15 && chem_effects[CE_ANTIVIRAL] < VIRUS_COMMON && !LAZYLEN(virus2))
 		var/infection_prob = 5 - immunity
 		var/turf/simulated/T = get_turf(src)
+		if(istype(T,/turf/space))
+			return
 		if(istype(T))
 			infection_prob += T.dirt
 		if(T.dirt >= 50)

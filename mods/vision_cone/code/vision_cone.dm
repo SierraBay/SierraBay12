@@ -30,6 +30,13 @@
 	group = RENDER_GROUP_SCENE
 	renderer_flags = RENDERER_MAIN | RENDERER_SHARED
 
+
+/atom/movable/renderer/above_fov
+	name = "above fov"
+	plane = GAME_PLANE_ABOVE_FOV
+	group = RENDER_GROUP_SCENE
+	renderer_flags = RENDERER_MAIN | RENDERER_SHARED
+
 /client
 	var/obj/screen/fullscreen/fov_blocker/fov_mask
 	var/obj/screen/fullscreen/fov_shadow/fov_shadow
@@ -80,14 +87,22 @@
 		client.fov_shadow.dir = src.dir
 
 /mob/living/proc/check_fov()
+	var/mob/eyepath
 	if(client)
-		var/turf/eyeloc = get_turf(client.eye)	//Trying to make FOV works for Mechs
-		var/turf/mobloc = get_turf(client.mob)	//Trying to make FOV works for Mechs
 		if(resting || lying)
 			client.hide_cone()
 		//Trying to make FOV works for Mechs
-		else if(eyeloc != mobloc)
-			client.hide_cone()
+		else if(client.eye != client.mob)
+			eyepath = client.eye
+			if(ispath(eyepath.type, /mob/living/exosuit))
+				if(client.usefov)
+					client.show_cone()
+					client.fov_mask.dir = eyepath.dir
+					client.fov_shadow.dir = eyepath.dir
+				else
+					client.hide_cone()
+			else
+				client.hide_mask()
 		//////////
 		else if(client.usefov)
 			client.show_cone()
@@ -116,6 +131,7 @@
 		fov_shadow = mob.clear_fullscreen("FOV_shadow")
 		fov_mask = mob.clear_fullscreen("FOV_mask")
 		hasmask = FALSE
+		usefov = FALSE
 
 /client/proc/remove_cone()
 	fov_shadow = mob.clear_fullscreen("FOV_shadow")
@@ -123,6 +139,11 @@
 	hasmask = FALSE
 	usefov = FALSE
 	fovangle = 0
+
+/client/proc/hide_mask()
+	fov_shadow = mob.clear_fullscreen("FOV_shadow")
+	fov_mask = mob.clear_fullscreen("FOV_mask")
+	hasmask = FALSE
 
 
 /mob/living/proc/in_fov(atom/observed_atom, ignore_self = FALSE)

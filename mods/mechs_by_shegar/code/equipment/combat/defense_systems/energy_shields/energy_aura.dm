@@ -5,7 +5,7 @@
 	var/active = 0
 	layer = ABOVE_HUMAN_LAYER
 	var/north_layer = MECH_UNDER_LAYER
-	plane = DEFAULT_PLANE
+	plane = GAME_PLANE_FOV_HIDDEN
 	pixel_x = 8
 	pixel_y = 4
 	mouse_opacity = 0
