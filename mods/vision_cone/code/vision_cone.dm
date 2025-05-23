@@ -97,6 +97,8 @@
 			if(ispath(eyepath.type, /mob/living/exosuit))
 				if(client.usefov)
 					client.show_cone()
+					client.fov_mask.dir = eyepath.dir
+					client.fov_shadow.dir = eyepath.dir
 				else
 					client.hide_cone()
 			else
