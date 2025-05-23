@@ -18,6 +18,12 @@
 /obj/item/
 	plane = GAME_PLANE_FOV_HIDDEN
 
+/obj/aura/
+	plane = GAME_PLANE_FOV_HIDDEN
+
+/obj/effect/
+	plane = GAME_PLANE_FOV_HIDDEN
+
 /obj/structure/bed/chair
 	plane = GAME_PLANE_FOV_HIDDEN
 
