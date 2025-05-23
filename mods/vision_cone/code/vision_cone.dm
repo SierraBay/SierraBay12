@@ -30,6 +30,13 @@
 	group = RENDER_GROUP_SCENE
 	renderer_flags = RENDERER_MAIN | RENDERER_SHARED
 
+
+/atom/movable/renderer/above_fov
+	name = "above fov"
+	plane = GAME_PLANE_ABOVE_FOV
+	group = RENDER_GROUP_SCENE
+	renderer_flags = RENDERER_MAIN | RENDERER_SHARED
+
 /client
 	var/obj/screen/fullscreen/fov_blocker/fov_mask
 	var/obj/screen/fullscreen/fov_shadow/fov_shadow
