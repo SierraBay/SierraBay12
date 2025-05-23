@@ -126,10 +126,10 @@
 /datum/disease2/disease/zombie
 
 	infectionchance = 80
-	speed = 6
+	speed = 8
 	spreadtype = "Contact"
 	max_stage = 4
-	affected_species = list(HUMAN_SPECIES,SPECIES_UNATHI,SPECIES_SKRELL,SPECIES_UNATHI,SPECIES_YEOSA,SPECIES_TRITONIAN,SPECIES_RESOMI,SPECIES_MONKEY,SPECIES_ZOMBIE)
+	affected_species = list(HUMAN_SPECIES,SPECIES_TAJARA,SPECIES_RESOMI,SPECIES_MONKEY,SPECIES_SPACER,SPECIES_GRAVWORLDER,SPECIES_VATGROWN,SPECIES_VOX,SPECIES_FARWA,SPECIES_MULE,SPECIES_STOK,SPECIES_SKRELL,SPECIES_UNATHI,SPECIES_YEOSA,SPECIES_TRITONIAN,SPECIES_RESOMI,SPECIES_MONKEY,SPECIES_ZOMBIE)
 
 
 /datum/disease2/disease/zombie/New()
@@ -139,22 +139,22 @@
 	infectionchance = rand(50,100)
 	var/datum/disease2/effect/gunck/E1 = new()
 	E1.stage = 1
-	E1.chance = 2
+	E1.chance = 20
 	effects += E1
 	E1.multiplier = rand(1,E1.multiplier_max)
 	var/datum/disease2/effect/hungry/E2 = new()
 	E2.stage = 2
-	E2.chance = 2
+	E2.chance = 25
 	effects += E2
 	E2.multiplier = rand(1,E2.multiplier_max)
 	var/datum/disease2/effect/hiv/E3 = new()
 	E3.stage = 3
-	E3.chance = 2
+	E3.chance = 50
 	effects += E3
-	E3.multiplier = rand(1,E3.multiplier_max)
+	E3.multiplier = rand(3,E3.multiplier_max)
 	var/datum/disease2/effect/zombie/E4 = new()
 	E4.stage = 4
-	E4.chance = 2
+	E4.chance = 80
 	effects += E4
 	E4.multiplier = rand(1,E4.multiplier_max)
 

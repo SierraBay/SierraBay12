@@ -241,9 +241,16 @@
 	name = "Immunodeficiency"
 	stage = 3
 	multiplier_max = 3
+	chance = 50
+	chance_max = 100
 	badness = VIRUS_COMMON
-/datum/disease2/effect/hiv/activate(mob/living/carbon/human/mob, multiplier)
-	mob.immunity -= 5*multiplier
+/datum/disease2/effect/hiv/activate(mob/living/carbon/human/mob)
+	mob.immunity -= 30
+	mob.immunity_norm -= 15
+
+/datum/disease2/effect/hiv/deactivate(mob/living/carbon/human/mob)
+	mob.immunity_norm = 100
+
 
 /datum/disease2/effect/toxins
 	name = "Hyperacidity"
