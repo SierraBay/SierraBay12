@@ -6,5 +6,6 @@
 #include "code/overrides.dm"
 #include "code/components_signals.dm"
 #include "code/equips.dm"
+#include "code/planes.dm"
 
 #endif
