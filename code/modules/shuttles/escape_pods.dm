@@ -9,6 +9,7 @@ var/global/list/escape_pods_by_name = list()
 	category = /datum/shuttle/autodock/ferry/escape_pod
 	move_time = 100
 	var/need_people	= 0// [SIERRA-ADD]
+	var/obj/controller // [SIERRA-ADD]
 
 /datum/shuttle/autodock/ferry/escape_pod/New()
 	if(name in escape_pods_by_name)
@@ -29,6 +30,7 @@ var/global/list/escape_pods_by_name = list()
 	//find the pod's own controller
 	var/datum/computer/file/embedded_program/docking/simple/prog = SSshuttle.docking_registry[dock_target]
 	var/obj/machinery/embedded_controller/radio/simple_docking_controller/escape_pod/controller_master = prog.master
+	controller = controller_master
 	if(!istype(controller_master))
 		CRASH("Escape pod \"[name]\" could not find it's controller master!")
 
@@ -101,10 +103,32 @@ var/global/list/escape_pods_by_name = list()
 		return 0	//it's a one-way trip.
 	return ..()
 
+/datum/shuttle/autodock/ferry/escape_pod/proc/get_possible_destination()
+	var/obj/shuttle_landmark/ship/landmark
+	var/list/possible_visits
+	var/obj/overmap/visitable/we = map_sectors["[controller.z]"]
+	var/turf/T = get_turf(we)
+	for(var/obj/overmap/visitable/visit in oview(T, 8))
+		if(visit == we)
+			continue
+		if(visit.map_z != we.map_z)
+			if(visit.map_z in possible_visits)
+				continue
+			possible_visits += visit.map_z
+	var/x_destination = pick(rand(40, 160))
+	var/y_destination = pick(rand(40, 160))
+	var/obj/overmap/visitable/z = pick(possible_visits)
+	var/turf/mark = locate(x_destination, y_destination, z)
+	landmark = new (mark, src)
+	waypoint_station = landmark
+	waypoint_offsite = landmark
+	landmark_transition = landmark
+
+
 /datum/shuttle/autodock/ferry/escape_pod/can_force()
 // [SIERRA-ADD]
 	if (arming_controller && arming_controller.master.emagged)	// inf
-		return (next_location && next_location.is_valid(src) && !current_location.cannot_depart(src) && moving_status == SHUTTLE_IDLE && !location && arming_controller && arming_controller.armed)	// inf
+		return (next_location && !current_location.cannot_depart(src) && moving_status == SHUTTLE_IDLE && !location && arming_controller && arming_controller.armed)	// inf
 	// [/SIERRA-ADD]
 	if (arming_controller.eject_time && world.time < arming_controller.eject_time + 50)
 		return 0	//dont allow force launching until 5 seconds after the arming controller has reached it's countdown
@@ -166,6 +190,7 @@ var/global/list/escape_pods_by_name = list()
 			return TOPIC_REFRESH
 
 		if(command == "force_launch")
+			pod.get_possible_destination()
 			if (pod.can_launch())
 				pod.toggle_bds()
 				pod.launch(src)
