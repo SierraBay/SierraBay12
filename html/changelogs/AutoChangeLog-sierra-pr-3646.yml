@@ -1,0 +1,7 @@
+author: SierraKomodo
+changes:
+  - {bugfix: AI controlled mobs no longer attack doors while also trying to open them.}
+  - {rscadd: 'Certain mobs can now "hack" open doors that are powered, and in some
+      cases, even remotely lift door bolts.'}
+  - {rscadd: Added a new legion stealth enemy. Sprites by Azlan. Sounds by Rockton.}
+delete-after: true

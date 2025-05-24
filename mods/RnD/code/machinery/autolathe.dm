@@ -451,7 +451,7 @@
 	to_chat(usr, SPAN_NOTICE("You remove \the [container] from \the [src]."))
 
 	if(istype(user) && Adjacent(user))
-		user.put_in_active_hand(container)
+		user.put_in_hands(container)
 
 	container = null
 

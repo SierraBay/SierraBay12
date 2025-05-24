@@ -52,7 +52,7 @@
 	icon_state = "fake-moustache"
 	item_state = "fake-moustache"
 	flags_inv = HIDEFACE
-	body_parts_covered = EMPTY_BITFIELD
+	body_parts_covered = FLAGS_OFF
 	visible_name = "Scoundrel"
 	w_class = ITEM_SIZE_SMALL
 

@@ -537,7 +537,7 @@ department tags
 	on_rolled_down = ACCESSORY_ROLLED_NONE
 	on_rolled_sleeves = "dept_exped_sleeves"
 	slot = ACCESSORY_SLOT_FLASH
-	accessory_flags = EMPTY_BITFIELD
+	accessory_flags = FLAGS_OFF
 
 /obj/item/clothing/accessory/solgov/department/command
 	name = "command insignia"

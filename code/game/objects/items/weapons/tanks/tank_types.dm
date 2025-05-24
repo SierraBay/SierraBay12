@@ -2,7 +2,7 @@
 	name = "high capacity gas tank"
 	desc = "An unwieldy tank for lots of gas, although not lots of GAS."
 	icon_state = "scrubber"
-	slot_flags = EMPTY_BITFIELD
+	slot_flags = FLAGS_OFF
 	w_class = ITEM_SIZE_HUGE
 	tank_size = TANK_SIZE_HUGE
 	gauge_icon = null

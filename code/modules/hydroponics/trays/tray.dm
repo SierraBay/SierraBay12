@@ -10,7 +10,7 @@
 	construct_state = /singleton/machine_construction/default/panel_closed
 	uncreated_component_parts = null
 	stat_immune = 0
-	init_flags = EMPTY_BITFIELD
+	init_flags = FLAGS_OFF
 
 	machine_name = "hydroponics tray"
 	machine_desc = "These are waist-high trays that can grow a vast variety of plants in a nutrient bath. Also comes with a sealable lid for plants that don't grow in a surrounding atmosphere. A cornerstone of self-sufficient spaceships across the galaxy."

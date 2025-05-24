@@ -359,7 +359,7 @@
 	explosion_resistance = 20
 	secured_wires = TRUE
 	assembly_type = /obj/structure/door_assembly/door_assembly_highsecurity
-	paintable = EMPTY_BITFIELD
+	paintable = FLAGS_OFF
 
 /obj/machinery/door/airlock/highsecurity/bolted
 	locked = 1

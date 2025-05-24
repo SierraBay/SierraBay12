@@ -105,7 +105,7 @@
 	name = "mech_ballistic_shield"
 	var/obj/item/mech_equipment/ballistic_shield/shield = null
 	layer = MECH_UNDER_LAYER
-	plane = DEFAULT_PLANE
+	plane = GAME_PLANE_FOV_HIDDEN
 	mouse_opacity = 0
 
 /obj/aura/mech_ballistic/Initialize(maploading, obj/item/mech_equipment/ballistic_shield/holder)

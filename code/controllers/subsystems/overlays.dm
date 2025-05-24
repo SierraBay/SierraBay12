@@ -1,8 +1,8 @@
 /// SSoverlays. Target the normal overlay cache.
-var/global/const/ATOM_ICON_CACHE_NORMAL = FLAG(0)
+var/global/const/ATOM_ICON_CACHE_NORMAL = FLAG_01
 
 /// SSoverlays. Target the protected overlay cache.
-var/global/const/ATOM_ICON_CACHE_PROTECTED = FLAG(1)
+var/global/const/ATOM_ICON_CACHE_PROTECTED = FLAG_02
 
 /// SSoverlays. Target both normal and protected overlay caches.
 var/global/const/ATOM_ICON_CACHE_ALL = (ATOM_ICON_CACHE_NORMAL | ATOM_ICON_CACHE_PROTECTED)

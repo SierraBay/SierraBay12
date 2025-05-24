@@ -18,7 +18,7 @@
 	var/ambient_light_old_g = 0
 	var/ambient_light_old_b = 0
 
-	var/ambient_bitflag = 0
+	var/ambient_group_flags = FLAGS_OFF
 
 //Done on init if mapload, done post copying corners if changeturf
 /turf/proc/setup_local_ambient()
