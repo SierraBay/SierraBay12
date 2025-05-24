@@ -26,7 +26,7 @@
 
 /datum/shuttle/autodock/overmap/verne
 	name = "SRV Venerable Catfish"
-	move_time = 90
+	move_time = 40
 	shuttle_area = list(
 		/area/verne/catfish,
 		/area/verne/catfish/engineering,
@@ -62,12 +62,8 @@
 	name = "CTI Research Vessel Deck 3 Under Hangar"
 	landmark_tag = "nav_verne_4"
 
-/obj/shuttle_landmark/nav_verne/torch
-	name = "SEV Torch Venerable Catfish Dock"
-	landmark_tag = "nav_verne_5"
-
 /obj/shuttle_landmark/nav_verne/mule
-	name = "CTI Research Vessel FTV Mule Spot"
+	name = "Near Deck 2 Port Airlock"
 	landmark_tag = "nav_verne_mule"
 
 /obj/shuttle_landmark/nav_verne/sierra

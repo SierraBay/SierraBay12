@@ -20,8 +20,8 @@
 	light_power = 1
 	bleed_colour = "#0000ff"
 
-/mob/living/simple_animal/hostile/bluespace/Process_Spacemove()
-	return 1
+/mob/living/simple_animal/hostile/bluespace/Process_Spacemove(allow_movement)
+	return TRUE
 
 /obj/item/natural_weapon/bluespace
 	name = "fractal touch"

@@ -26,7 +26,8 @@
 		"ICGNV Hound" = list("nav_deck4_event_dock"), //maps/event/iccgn_ship/icgnv_hound.dm shuttle,
 		"SNZ-210 Personnel Carrier" = list("nav_deck4_skrellscout"), //maps/random_ruins/exoplanet_ruins/transshipment/transshipment.dm shuttle,
 		"GM Tug" = list("nav_merchant_out"), //maps/random_ruins/exoplanet_ruins/crashed_shuttle/crashed_shuttle.dm shuttle
-		"Petrov" = list("nav_petrov_start")
+		"Petrov" = list("nav_petrov_start"),
+		"SRV Venerable Catfish" = list("nav_deck3_catfish") //mods/_maps/verne/verne.dme shuttle
 	)
 
 	initial_generic_waypoints = list(
