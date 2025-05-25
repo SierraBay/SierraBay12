@@ -286,9 +286,9 @@
 			owner.slurring += 6
 		if (damage > min_broken_damage)
 			if (prob(2))
-				if (prob(15) && owner.sleeping < 1)
+				if (prob(15) && !owner.sleeping)
 					owner.visible_message(SPAN_ITALIC("\The [owner] suddenly halts all activity."))
-					owner.sleeping += 10
+					owner.Sleeping(5)
 				else if (owner.anchored || isspace(get_turf(owner)))
 					owner.visible_message(SPAN_ITALIC("\The [owner] seizes and twitches!"))
 					owner.Stun(2)

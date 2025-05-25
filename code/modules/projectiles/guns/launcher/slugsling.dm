@@ -12,7 +12,7 @@
 	if(break_on_impact)
 		squish()
 	else
-		movable_flags |= MOVABLE_FLAG_PROXMOVE //Dont want it active during the throw... loooots of unneeded checking.
+		SET_FLAGS(movable_flags, MOVABLE_FLAG_PROXMOVE) //Dont want it active during the throw... loooots of unneeded checking.
 	return ..()
 
 /obj/item/slugegg/attack_self(mob/living/user)

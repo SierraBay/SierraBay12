@@ -69,7 +69,7 @@ GLOBAL_TYPED_NEW(sound_player, /singleton/sound_player)
 		sound_tokens_by_sound_id[sound_id] = sound_tokens
 	sound_tokens += sound_token
 
-#define SOUND_STOPPED FLAG(15)
+#define SOUND_STOPPED FLAG_16
 
 /*
 	Outwardly this is a merely a toke/little helper that a user utilize to adjust sounds as desired (and possible).

@@ -183,7 +183,74 @@
 		mob.emote("cough")
 		to_chat(mob, "<span class='warning'>You cough up the [S]!</span>")
 
+
+/datum/disease2/effect/zombie
+	name = "Corruption Syndrome"
+	stage = 4
+	badness = VIRUS_EXOTIC
+	chance_max = 80
+	delay = 20 SECONDS
+	var/first_message_shown = FALSE
+	var/time_of_first_tick = 0
+	var/total_trasformation = 0
+	var/time_to_trasform = 5 MINUTES
+
+
+/datum/disease2/effect/zombie/activate(mob/living/carbon/human/mob, multiplier)
+	if(mob.is_species(SPECIES_ZOMBIE))
+		return
+	if(!first_message_shown)
+		first_message_shown = TRUE
+		time_of_first_tick = world.time
+		total_trasformation = time_of_first_tick + time_to_trasform
+		to_chat(mob, "<span class='notice'>You feel as something hungry is woke up inside you!</span>")
+	if(prob(50))
+		to_chat(mob, "<span class='warning'>You feel uncontrollable rage filling you! Your hunger is killing you! You want to eat!</span>")
+		if (mob.reagents.get_reagent_amount(/datum/reagent/hyperzine) < 10)
+			mob.reagents.add_reagent(/datum/reagent/hyperzine, 4)
+			mob.adjust_nutrition(-50)
+	if(prob(50) && mob.check_has_mouth())//go crazy and bite someone
+		var/list/mouth_status = mob.can_eat_status()
+		if (mouth_status[1] == 1)//if no mouth HUMAN_EATING_NBP_MOUTH
+			to_chat(mob, "<span class='warning'>You angrily attempt to bite someone but you can't without a mouth!</span>")
+			return
+		if (mouth_status[1] == 2)//if something covers mouth HUMAN_EATING_BLOCKED_MOUTH
+			to_chat(mob, "<span class='warning'>You angrily chew \the [mouth_status[2]] covering your mouth!</span>")
+			return
+		var/list/mobs_to_bite = list()
+		for (var/mob/living/carbon/L in range(1))
+			if (L == mob)
+				continue
+			mobs_to_bite += L
+		if (LAZYLEN(mobs_to_bite) < 1)//nobody to bite
+			return
+		var/mob/living/Target = pick(mobs_to_bite)
+		mob.visible_message("<span class='warning'>[mob] violently bites [Target]!</span>")
+		Target.adjustBruteLoss(5)
+		if (prob(50))
+			infect_virus2(Target, src, 1)
+	if(total_trasformation)
+		var/time_left = total_trasformation - world.time
+		var/transform_chance = (time_left/total_trasformation)*100
+		if(prob(100-transform_chance))
+			mob.zombify()
+
 ////////////////////////STAGE 3/////////////////////////////////
+
+/datum/disease2/effect/hiv
+	name = "Immunodeficiency"
+	stage = 3
+	multiplier_max = 3
+	chance = 50
+	chance_max = 100
+	badness = VIRUS_COMMON
+/datum/disease2/effect/hiv/activate(mob/living/carbon/human/mob)
+	mob.immunity -= 30
+	mob.immunity_norm -= 15
+
+/datum/disease2/effect/hiv/deactivate(mob/living/carbon/human/mob)
+	mob.immunity_norm = 100
+
 
 /datum/disease2/effect/toxins
 	name = "Hyperacidity"

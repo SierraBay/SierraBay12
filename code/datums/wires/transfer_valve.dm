@@ -10,11 +10,11 @@
 		new /datum/wire_description(TTV_WIRE_RNG, "This red wire seems to go over every little nook and cranny of the bomb.", "Valve")
 	)
 
-var/global/const/TTV_WIRE_TOGGLEVALVE =  FLAG(0)
-var/global/const/TTV_WIRE_GASRELEASE =   FLAG(1)
-var/global/const/TTV_WIRE_DISARM =       FLAG(2)
-var/global/const/TTV_WIRE_RNG =          FLAG(3)
-var/global/const/TTV_WIRE_DEVICECHANGE = FLAG(4)
+var/global/const/TTV_WIRE_TOGGLEVALVE =  FLAG_01
+var/global/const/TTV_WIRE_GASRELEASE =   FLAG_02
+var/global/const/TTV_WIRE_DISARM =       FLAG_03
+var/global/const/TTV_WIRE_RNG =          FLAG_04
+var/global/const/TTV_WIRE_DEVICECHANGE = FLAG_05
 
 /datum/wires/transfer_valve/UpdatePulsed(index)
 	var/obj/item/device/transfer_valve/T = holder

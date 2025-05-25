@@ -83,6 +83,60 @@
 	result_amount = 10
 	required = /obj/item/slime_extract/oil
 
+//Black
+/singleton/reaction/slime/psimutate
+	name = "Mule Mutation Toxin"
+	result = /datum/reagent/psislimetoxin
+	required_reagents = list(/datum/reagent/blood = 1)
+	result_amount = 1
+	required = /obj/item/slime_extract/black
+
+/singleton/reaction/slime/psimutate/get_reaction_flags(datum/reagents/holder)
+	for(var/datum/reagent/blood/blood in holder.reagent_list)
+		var/weakref/donor_ref = islist(blood.data) && blood.data["donor"]
+		if(istype(donor_ref))
+			var/mob/living/donor = donor_ref.resolve()
+			if(istype(donor) && (donor.psi || (donor.mind && GLOB.wizards.is_antagonist(donor.mind))))
+				return TRUE
+
+// Turning monkeys into mule
+
+/* Transformations */
+/datum/reagent/psislimetoxin
+	name = "Twisted Mutation Toxin"
+	description = "A corruptive toxin produced by slimes. This one looks like vomit."
+	taste_description = "sludge"
+	reagent_state = LIQUID
+	color = "#96c921"
+	metabolism = REM * 0.2
+	value = 2
+	should_admin_log = TRUE
+
+/datum/reagent/psislimetoxin/affect_blood(mob/living/carbon/M, removed)
+	if(HAS_TRANSFORMATION_MOVEMENT_HANDLER(M))
+		return
+	if(M.species.name != SPECIES_MONKEY)
+		return
+	to_chat(M, SPAN_DANGER("Your flesh rapidly mutates!"))
+	ADD_TRANSFORMATION_MOVEMENT_HANDLER(M)
+	M.icon = null
+	M.ClearOverlays()
+	M.set_invisibility(INVISIBILITY_ABSTRACT)
+	for(var/obj/item/W in M)
+		if(istype(W, /obj/item/implant))
+			qdel(W)
+			continue
+		M.drop_from_inventory(W)
+	var/mob/living/carbon/human/new_mob = new /mob/living/carbon/human(M.loc)
+	new_mob.skin_tone = 35
+	new_mob.species = GLOB.species_by_name[SPECIES_MULE]
+	if(M.mind)
+		M.mind.transfer_to(new_mob)
+		new_mob.languages = list(LANGUAGE_HUMAN_EURO)
+	else
+		new_mob.key = M.key
+	qdel(M)
+
 // Turning man into lizards
 
 /singleton/reaction/yeostoxin

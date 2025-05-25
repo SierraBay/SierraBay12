@@ -72,7 +72,7 @@
 	required_tech_levels = list()
 	cost = 750
 
-	unlocks_designs = list("hdd_super", "portadrive_super")
+	unlocks_designs = list("hdd_super", "portadrive_super", "data_disk")
 
 /datum/technology/data/cls_hdd
 	name = "Cluster HDD"

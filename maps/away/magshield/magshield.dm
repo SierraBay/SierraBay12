@@ -101,7 +101,7 @@
 		rods.use(1)
 		visible_message(SPAN_DANGER("\The [src] stops rotating and releases a cloud of sparks. Better get to a safe distance!"))
 		var/datum/effect/spark_spread/sparks = new(src)
-		sparks.set_up(10, EMPTY_BITFIELD, src)
+		sparks.set_up(10, FLAGS_OFF, src)
 		sparks.start()
 		addtimer(new Callback(src, PROC_REF(explode)), 5 SECONDS)
 		return TRUE

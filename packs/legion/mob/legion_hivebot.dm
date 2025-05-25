@@ -18,6 +18,7 @@
 	base_attack_cooldown = max(base_attack_cooldown - 1 SECOND, 1 SECOND)
 	can_escape = TRUE
 	melee_attack_delay = max(melee_attack_delay - 2, 0)
+	GLOB.all_legion_mobs += src
 	if (beacon)
 		linked_beacon = beacon
 
@@ -26,6 +27,8 @@
 	if (linked_beacon)
 		linked_beacon.linked_mobs -= src
 		linked_beacon = null
+	if (is_legion)
+		GLOB.all_legion_mobs -= src
 
 	. = ..()
 
@@ -70,8 +73,12 @@
 
 /obj/spawner/legion/hivebot/Initialize(mapload, ...)
 	. = ..()
+	legion_warp_effect(get_turf(src))
 	base_hivebot = new base_hivebot(loc)
 	base_hivebot.legionify()
+	base_hivebot.visible_message(SPAN_DANGER("\A [base_hivebot] warps in!"))
+	base_hivebot.add_language(LANGUAGE_HUMAN_EURO)
+	base_hivebot.add_language(LANGUAGE_LEGION_GLOBAL)
 	return INITIALIZE_HINT_QDEL
 
 

@@ -10,11 +10,11 @@
 		user.visible_message(SPAN_WARNING("\The [proj] seems to only make \the [user] stronger."))
 		user.adjustBruteLoss(-proj.damage)
 		return AURA_FALSE
-	return EMPTY_BITFIELD
+	return FLAGS_OFF
 
 /obj/aura/starborn/aura_check_weapon(obj/item/weapon, mob/attacker, click_params)
 	if (weapon.damtype == DAMAGE_BURN)
 		user.visible_message(SPAN_WARNING("\The [weapon] seems to only feed into \the [user]'s flames."))
 		user.adjustBruteLoss(-weapon.force)
 		return AURA_FALSE
-	return EMPTY_BITFIELD
+	return FLAGS_OFF

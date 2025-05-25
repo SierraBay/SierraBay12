@@ -36,7 +36,7 @@
 	return ..()
 
 
-/mob/living/proc/general_health_adjustment(damage, damage_type, damage_flags = EMPTY_BITFIELD, def_zone, obj/item/used_weapon = null)
+/mob/living/proc/general_health_adjustment(damage, damage_type, damage_flags = FLAGS_OFF, def_zone, obj/item/used_weapon = null)
 	var/prior_death_state = health_dead()
 	// Convert damage types to types recognized by legacy mob health
 	switch (damage_type)

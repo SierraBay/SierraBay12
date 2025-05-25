@@ -3,6 +3,7 @@
 
 #include "_nyc_posters.dm"
 
+#include "code/custom_posters.dm"
 #include "code/nyc_posters.dm"
 #include "code/singleton.dm"
 

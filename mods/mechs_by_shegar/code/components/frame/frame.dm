@@ -1,3 +1,4 @@
+#include "cart_check.dm"
 #include "render.dm"
 #include "tags_check.dm"
 #include "use_tool.dm"
@@ -21,6 +22,7 @@
 	icon = 'mods/mechs_by_shegar/icons/mech_parts.dmi'
 	icon_state = "backbone"
 	density = TRUE
+	anchored = TRUE
 	pixel_x = -8
 	atom_flags = ATOM_FLAG_CAN_BE_PAINTED
 
@@ -113,6 +115,7 @@
 		visible_message(SPAN_NOTICE("\The [user] begins installing \the [thing] into \the [src]."))
 		if(!do_after(user, 3 SECONDS * user.skill_delay_mult(SKILL_DEVICES), src, DO_PUBLIC_UNIQUE))
 			return
+	cart_check(thing)
 	thing.forceMove(src)
 	visible_message(SPAN_NOTICE("\The [user] installs \the [thing] into \the [src]."))
 	playsound(user.loc, 'sound/machines/click.ogg', 50, 1)

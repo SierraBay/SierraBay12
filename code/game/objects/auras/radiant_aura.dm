@@ -17,4 +17,4 @@
 	if (HAS_FLAGS(proj.damage_flags(), DAMAGE_FLAG_LASER))
 		user.visible_message(SPAN_WARNING("\The [proj] refracts, bending into \the [user]'s aura."))
 		return AURA_FALSE
-	return EMPTY_BITFIELD
+	return FLAGS_OFF

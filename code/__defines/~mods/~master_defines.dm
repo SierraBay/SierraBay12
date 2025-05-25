@@ -117,6 +117,17 @@
 #define istitanwater(A) istype(A, /turf/simulated/floor/exoplanet/titan_water)
 //ANOMALIES
 
+//FOV
+#define FIELD_OF_VISION_BLOCKER_PLANE -199
+#define FIELD_OF_VISION_BLOCKER_RENDER_TARGET "*FIELD_OF_VISION_BLOCKER_RENDER_TARGET"
+//FOV
+
+// XENOBIO TRANSFORMATIONS
+
+#define SPECIES_MOTH			"Mothman"
+
+// XENOBIO TRANSFORMATIONS - END
+
 // PSIONICS - Start
 #define SPECIES_PSI	"Psionics"
 

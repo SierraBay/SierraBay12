@@ -1,8 +1,7 @@
-/atom/movable
-	/// The mimic (if any) that's *directly* copying us.
-	var/atom/movable/openspace/mimic/bound_overlay
-	/// If TRUE, this atom is ignored by Z-Mimic.
-	var/z_flags
+/// The mimic (if any) that's *directly* copying us.
+/atom/movable/var/atom/movable/openspace/mimic/bound_overlay
+/// If TRUE, this atom is ignored by Z-Mimic.
+/atom/movable/var/z_flags
 
 /atom/movable/forceMove(atom/dest)
 	. = ..(dest)

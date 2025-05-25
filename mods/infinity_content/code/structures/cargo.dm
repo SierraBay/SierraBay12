@@ -61,7 +61,7 @@
 /obj/structure/cart/proc/load(atom/movable/cargo)
 	if(ismob(cargo))
 		return FALSE
-	if(!(istype(cargo, /obj/machinery) || istype(cargo, /obj/structure/closet) || istype(cargo, /obj/structure/largecrate) || istype(cargo, /obj/structure/ore_box) || istype(cargo, /obj/item/mech_component) || istype(cargo, /obj/item/mech_equipment)))
+	if(!(istype(cargo, /obj/machinery) || istype(cargo, /obj/structure/closet) || istype(cargo, /obj/structure/largecrate) || istype(cargo, /obj/structure/ore_box) || istype(cargo, /obj/item/mech_component) || istype(cargo, /obj/item/mech_equipment) ||  istype(cargo,/obj/structure/heavy_vehicle_frame)))
 		return FALSE
 
 	//if there are any items you don't want to be able to interact with, add them to this check
@@ -71,7 +71,7 @@
 	if(load)
 		return FALSE
 
-	if(cargo.anchored && !(istype(cargo, /obj/item/mech_component) || istype(cargo, /obj/item/mech_equipment)))
+	if(cargo.anchored && !(istype(cargo, /obj/item/mech_component) || istype(cargo, /obj/item/mech_equipment) || istype(cargo,/obj/structure/heavy_vehicle_frame)))
 		return FALSE
 
 	if(istype(cargo, /obj/machinery))
@@ -89,7 +89,7 @@
 
 		cargo.plane = plane
 		cargo.layer = OBJ_LAYER
-
+		cargo.react_at_cargo_cart_loaded()
 		if(!istype(cargo, /obj/structure/closet/crate))
 			cargo.pixel_y += 6
 			cargo.set_dir(dir)
@@ -180,3 +180,6 @@
 	update_icon()
 
 	return TRUE
+
+/atom/movable/proc/react_at_cargo_cart_loaded()
+	return

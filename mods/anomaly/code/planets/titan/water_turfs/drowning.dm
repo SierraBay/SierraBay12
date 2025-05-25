@@ -23,6 +23,8 @@
 	input.anchored = TRUE
 	if(input.pulledby)
 		input.pulledby.stop_pulling()
+	for(var/mob/living/mobik in input.contents)
+		mobik.forceMove(get_turf(src))
 	visible_message(message = SPAN_BAD("[input] уходит на дно."), range = 7)
 	animate(input, alpha = 0, time = 10, easing = EASE_OUT)
 	sleep(11)

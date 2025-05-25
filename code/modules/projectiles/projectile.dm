@@ -553,5 +553,5 @@
 		SP.desc += " It looks like it was fired from [shot_from]."
 		return SP
 
-/obj/item/projectile/Process_Spacemove()
-	return TRUE	//Bullets don't drift in space
+/obj/item/projectile/Process_Spacemove(allow_movement)
+	return TRUE

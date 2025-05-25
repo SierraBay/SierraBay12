@@ -51,21 +51,21 @@
 	req_tech = list(TECH_MATERIAL = 3)
 	build_path = /obj/item/mech_equipment/ballistic_shield
 
-/datum/design/item/exosuit/weapon/smg
+/datum/design/item/mech/weapon/smg
 	name = "mounted SMG"
 	id = "mech_SMG"
 	req_tech = list(TECH_COMBAT = 5, TECH_MAGNET = 4, TECH_MATERIAL = 5)
 	materials = list(MATERIAL_STEEL = 60000, MATERIAL_URANIUM = 5000, MATERIAL_ALUMINIUM = 20000,MATERIAL_DIAMOND = 10000 )
 	build_path = /obj/item/mech_equipment/mounted_system/taser/ballistic/smg
 
-/datum/design/item/exosuit/weapon/smg_ammo_crate
+/datum/design/item/mech/weapon/smg_ammo_crate
 	name = "SMG ammo box"
 	id = "SMG_ammo"
 	req_tech = list(TECH_COMBAT = 5, TECH_MAGNET = 4, TECH_MATERIAL = 5)
 	materials = list(MATERIAL_STEEL = 40000, MATERIAL_URANIUM = 10000, MATERIAL_ALUMINIUM = 20000)
 	build_path = /obj/item/ammo_magazine/proto_smg/mech
 
-/datum/design/item/exosuit/weapon/grad
+/datum/design/item/mech/weapon/grad
 	name = "mounted GRAD system"
 	id = "mech_GRAD"
 	req_tech = list(TECH_COMBAT = 7, TECH_MAGNET = 7, TECH_MATERIAL = 7)
@@ -73,21 +73,21 @@
 	build_path = /obj/item/mech_equipment/mounted_system/taser/ballistic/launcher
 
 
-/datum/design/item/exosuit/weapon/grad_ammo_crate
+/datum/design/item/mech/weapon/grad_ammo_crate
 	name = "GRAD pepper rockets"
 	id = "mech_GRAD_peper"
 	req_tech = list(TECH_COMBAT = 7, TECH_MAGNET = 7, TECH_MATERIAL = 7)
 	materials = list(MATERIAL_STEEL = 20000, MATERIAL_PHORON = 10000)
 	build_path = /obj/item/ammo_magazine/rockets_casing/pepper
 
-/datum/design/item/exosuit/weapon/flashbang_ammo_crate
+/datum/design/item/mech/weapon/flashbang_ammo_crate
 	name = "GRAD flashbang rockets"
 	id = "mech_GRAD_flashbang"
 	req_tech = list(TECH_COMBAT = 7, TECH_MAGNET = 7, TECH_MATERIAL = 7)
 	materials = list(MATERIAL_STEEL = 20000, MATERIAL_PLASTIC = 10000, MATERIAL_ALUMINIUM = 10000)
 	build_path = /obj/item/ammo_magazine/rockets_casing/flashbang
 
-/datum/design/item/exosuit/weapon/fire_ammo_crate
+/datum/design/item/mech/weapon/fire_ammo_crate
 	name = "GRAD fire rockets"
 	id = "mech_GRAD_fire"
 	req_tech = list(TECH_COMBAT = 7, TECH_MAGNET = 7, TECH_MATERIAL = 7)

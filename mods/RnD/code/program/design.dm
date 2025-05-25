@@ -68,6 +68,12 @@
 	F.uniquekey = uniquekey
 	return F
 
+
+/datum/computer_file/binary/design/corrupted
+	filetype = "CCD" // Corrupted Construction Design
+	filename = "ERROR"
+
+
 ///////////////////////////////// Designs //////////////////////////////////////////////////////////////////////////
 
 /datum/design/item/tool/jetpack
@@ -242,7 +248,6 @@
 	build_path = /obj/item/gun/projectile/pistol/gyropistol
 	sort_string = "ZAAAQ"
 
-
 /datum/design/item/away/battlerifle
 	name = "battle rifle"
 	desc = "The battle rifle hasn't changed much since its inception in the mid 20th century. Built to last in the toughest conditions, the select fire rifle is well reguarded as a dependable weapon."
@@ -292,6 +297,7 @@
 	name = "stun baton"
 	desc = "A baton that can stun a target."
 	id = "stunbaton"
+	category = list("Weapon")
 	req_tech = list(TECH_COMBAT = 2, TECH_MATERIAL = 2)
 	materials = list(MATERIAL_STEEL = 8000, MATERIAL_PLASTIC = 10000)
 	build_path = /obj/item/melee/baton
@@ -305,6 +311,34 @@
 	materials = list(MATERIAL_STEEL = 20000, MATERIAL_SILVER = 10000)
 	build_path = /obj/item/material/sword/katana
 	sort_string = "ZAAAX"
+
+/datum/design/item/data_disk
+	name = "data disk"
+	desc = "A disk used to store data."
+	id = "data_disk"
+	category = list("Misc")
+	req_tech = list(TECH_DATA = 2, TECH_MATERIAL = 2)
+	materials = list(MATERIAL_STEEL = 200, MATERIAL_PLASTIC = 400)
+	build_path = /obj/item/stock_parts/computer/hard_drive/portable/design/printable
+	sort_string = "ZAAAY"
+
+/datum/design/item/blutrash
+	name = "Trashbag of Holding"
+	desc = "An advanced trash bag with bluespace properties; capable of holding a plethora of garbage."
+	id = "blutrash"
+	req_tech = list(TECH_BLUESPACE = 5, TECH_MATERIAL = 6)
+	materials = list(MATERIAL_PLASTIC = 5000, MATERIAL_GOLD = 1500, MATERIAL_URANIUM = 250, MATERIAL_PHORON = 1500)
+	build_path = /obj/item/storage/bag/trash/bluespace
+	category = list("Misc")
+
+
+/datum/design/item/optical
+	materials = list(MATERIAL_STEEL = 50, MATERIAL_GLASS = 50)
+	category = list("Optical")
+
+
+/datum/design/item/weapon/large_grenade
+	category = list("Misc")
 
 //////////////////////////////items/////////////////////////////////////////
 

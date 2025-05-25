@@ -1,0 +1,1 @@
+#define SPECIES_FBP	"Full Body Prosthesis" //SIERRA-ADD XENO WHITELIST
