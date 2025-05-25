@@ -172,7 +172,7 @@
 
 	if(.)
 		var/cn_rank = user.psi.get_rank(PSI_COERCION)
-		to_chat(user, SPAN_DANGER("Вы ментально протыкаете руку [target] иглой.</span>"))
+		to_chat(user, SPAN_DANGER("Вы ментально протыкаете руку [target] иглой."))
 		to_chat(target, SPAN_DANGER("Вы ощущаете, как вашу руку проткнули иглой!"))
 		if(prob(80))
 			target.emote("scream")
