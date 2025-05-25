@@ -127,13 +127,13 @@
 
 	infectionchance = 80
 	speed = 8
-	spreadtype = "Contact"
+	spreadtype = DISEASE_SPREAD_BLOOD
 	max_stage = 4
 	affected_species = list(HUMAN_SPECIES,SPECIES_TAJARA,SPECIES_RESOMI,SPECIES_MONKEY,SPECIES_SPACER,SPECIES_GRAVWORLDER,SPECIES_VATGROWN,SPECIES_VOX,SPECIES_FARWA,SPECIES_MULE,SPECIES_STOK,SPECIES_SKRELL,SPECIES_UNATHI,SPECIES_YEOSA,SPECIES_TRITONIAN,SPECIES_RESOMI,SPECIES_MONKEY,SPECIES_ZOMBIE)
 
 
 /datum/disease2/disease/zombie/New()
-	..()
+	.=..()
 	antigen = list(pick(ALL_ANTIGENS))
 	antigen |= pick(ALL_ANTIGENS)
 	infectionchance = rand(50,100)
@@ -186,6 +186,11 @@
 		addtimer(new Callback(src, PROC_REF(transform_zombie)), 20)
 	else
 		addtimer(new Callback(src, PROC_REF(transform_zombie_smart)), 20)
+
+/mob/living/carbon/human/transform_zombie()
+	.=..()
+	for(var/obj/item/organ/O in src.organs)
+		O.species.species_flags += SPECIES_FLAG_NO_PAIN
 
 
 /singleton/species/zombie/handle_post_spawn(mob/living/carbon/human/H)
