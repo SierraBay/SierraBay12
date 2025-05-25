@@ -192,10 +192,13 @@
 	for(var/obj/item/organ/O in src.organs)
 		O.species.species_flags += SPECIES_FLAG_NO_PAIN
 
+/singleton/species/zombie/
+
+	var/datum/disease2/disease/zombie/zombie = new()
+
 
 /singleton/species/zombie/handle_post_spawn(mob/living/carbon/human/H)
 	. = ..()
-	var/datum/disease2/disease/zombie = new()
 	natural_armour_values = list(
 		melee = ARMOR_MELEE_RESISTANT,
 		bullet = ARMOR_BALLISTIC_SMALL,
@@ -210,7 +213,6 @@
 
 
 /singleton/species/zombie/handle_environment_special(mob/living/carbon/human/H)
-	var/datum/disease2/disease/zombie = new()
 	if (H.stat == CONSCIOUS)
 		if (prob(5))
 			playsound(H.loc, 'sound/hallucinations/far_noise.ogg', 15, 1)
@@ -244,3 +246,17 @@
 			var/vuln = 1 - M.get_blocked_ratio(BP_HEAD, DAMAGE_TOXIN, damage_flags = DAMAGE_FLAG_BIO) // Are they protected by hazmat clothing?
 			if (vuln > 0.10 && prob(8))
 				infect_virus2(H, zombie, 1)
+
+
+/datum/unarmed_attack/bite/sharp/zombie/apply_effects(mob/living/carbon/human/user, mob/living/carbon/human/target, attack_damage, zone)
+	..()
+	admin_attack_log(user, target, "Bit their victim.", "Was bitten.", "bit")
+	if (!istype(target, /mob/living/carbon/human) || !(target.species.name in GLOB.zombie_species) || target.is_species(SPECIES_DIONA) || target.isSynthetic()) //No need to check infection for FBPs
+		return
+
+	target.adjustHalLoss(12) //To help bring down targets in voidsuits
+	var/vuln = 1 - target.get_blocked_ratio(zone, DAMAGE_TOXIN, damage_flags = DAMAGE_FLAG_BIO) //Are they protected from bites?
+	if (vuln > 0.05)
+		if (prob(vuln * 100)) //Protective infection chance
+			if (prob(min(100 - target.get_blocked_ratio(zone, DAMAGE_BRUTE) * 100, 30))) //General infection chance
+				infect_virus2(target, pick(user.virus2), 1) //Infect 'em
