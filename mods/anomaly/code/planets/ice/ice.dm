@@ -11,7 +11,7 @@
 		)
 	big_artefacts_can_be_close = FALSE
 	big_artefacts_range_spawn = 30
-	weather_manager_type = /datum/weather_manager/snow
+	//weather_manager_type = /datum/weather_manager/snow
 	//
 	possible_themes = list(
 		/datum/exoplanet_theme = 45,

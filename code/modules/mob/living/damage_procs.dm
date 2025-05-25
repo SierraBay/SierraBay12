@@ -7,7 +7,7 @@
 	Returns
 	standard 0 if fail
 */
-/mob/living/proc/apply_damage(damage = 0, damagetype = DAMAGE_BRUTE, def_zone = null, damage_flags = EMPTY_BITFIELD, used_weapon, armor_pen, silent = FALSE)
+/mob/living/proc/apply_damage(damage = 0, damagetype = DAMAGE_BRUTE, def_zone = null, damage_flags = FLAGS_OFF, used_weapon, armor_pen, silent = FALSE)
 	if(!damage)
 		return FALSE
 

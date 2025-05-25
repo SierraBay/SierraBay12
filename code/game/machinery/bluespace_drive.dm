@@ -13,13 +13,13 @@
 	health_min_damage = 10
 
 	/// Indicates whether the drive should show effects.
-	var/const/STATE_BROKEN = FLAG(0)
+	var/const/STATE_BROKEN = FLAG_01
 
 	/// Indicates whether the drive should use the unstable core effect.
-	var/const/STATE_UNSTABLE = FLAG(1)
+	var/const/STATE_UNSTABLE = FLAG_02
 
 	/// A field of STATE_* flags related to the drive.
-	var/state = EMPTY_BITFIELD
+	var/state = FLAGS_OFF
 
 	/// The token for the drive's idle loop
 	var/drive_sound

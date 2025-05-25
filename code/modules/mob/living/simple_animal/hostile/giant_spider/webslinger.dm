@@ -128,7 +128,7 @@
 
 	var/body_type = "[M.isSynthetic() ? "chassis" : "body"]"
 	if (istype(M) && M.a_intent == I_HELP)
-		var/do_flags = EMPTY_BITFIELD
+		var/do_flags = FLAGS_OFF
 		if (M == user)
 			user.visible_message(
 			SPAN_WARNING("\The [M] starts tearing at the webbing on their [body_type]!"),

@@ -19,14 +19,14 @@
 	return TRUE
 
 /datum/keybinding/mob/face_direction
-	hotkey_keys = list("]")
+	hotkey_keys = list("F")
 	name = "face_direction"
 	full_name = "Face Direction"
 	description = "Block dir"
 
 /datum/keybinding/mob/face_direction/down(client/user)
 	var/mob/living/L = user.mob
-	L.set_face_dir()
+	L.face_direction()
 	return TRUE
 
 /datum/keybinding/living/resist

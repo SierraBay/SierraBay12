@@ -110,7 +110,7 @@
 	next_symptom -= 1
 	if(next_symptom < 1)
 		var/obj/item/organ/external/organ = target.get_organ(BP_CHEST)
-		organ.take_external_damage(rand(5,10), 0, EMPTY_BITFIELD, "Amaspore Growth")
+		organ.take_external_damage(rand(5,10), 0, FLAGS_OFF, "Amaspore Growth")
 		if(target.get_blood_volume() == 0)
 			return
 		target.remove_blood(rand(20,30))
@@ -346,7 +346,7 @@
 
 /datum/reagent/toxin/cyanide/affect_blood(mob/living/carbon/M, removed)
 	..()
-	M.sleeping += 1
+	M.AdjustSleeping(1)
 
 /datum/reagent/toxin/taxine
 	name = "Taxine"
@@ -648,7 +648,7 @@
 			M.add_chemical_effect(CE_SEDATE, 1)
 		M.drowsyness = max(M.drowsyness, 20)
 	else
-		M.sleeping = max(M.sleeping, 20)
+		M.Sleeping(20)
 		M.drowsyness = max(M.drowsyness, 60)
 		M.add_chemical_effect(CE_SEDATE, 1)
 	M.add_chemical_effect(CE_PULSE, -1)
@@ -679,7 +679,7 @@
 		M.Weaken(30)
 		M.eye_blurry = max(M.eye_blurry, 10)
 	else
-		M.sleeping = max(M.sleeping, 30)
+		M.Sleeping(30)
 
 	if(M.chem_doses[type] > 1 * threshold)
 		M.adjustToxLoss(removed)

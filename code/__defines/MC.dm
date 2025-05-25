@@ -107,28 +107,28 @@ if(Datum.is_processing) {\
 ****/
 
 /// The subsystem's Initialize() will not be called.
-#define SS_NO_INIT FLAG(0)
+#define SS_NO_INIT FLAG_01
 
 /// The subsystem's fire() will not be called. This is preferable to can_fire = FALSE because it will not be added to the MC's list of active systems.
-#define SS_NO_FIRE FLAG(1)
+#define SS_NO_FIRE FLAG_02
 
 /// The subsystem runs on spare CPU time, after all non-background subsystems have run that tick. Priority is considered against other SS_BACKGROUND subsystems.
-#define SS_BACKGROUND FLAG(2)
+#define SS_BACKGROUND FLAG_03
 
 /// The subsystem does not tick check and should not run unless enough time can be guaranteed or it must to stay current.
-#define SS_NO_TICK_CHECK FLAG(3)
+#define SS_NO_TICK_CHECK FLAG_04
 
 /// Treat the value of the subsystem's wait as ticks, not time. Forces it to run in the first tick. Implicitly has all runlevels. Ignores SS_BACKGROUND if set. Intended for systems that act like a mini-MC, like timers.
-#define SS_TICKER FLAG(4)
+#define SS_TICKER FLAG_05
 
 /// Attempt to keep the subsystem's timing real-world regular by adjusting fire timing to be earlier the later it previously ran.
-#define SS_KEEP_TIMING FLAG(5)
+#define SS_KEEP_TIMING FLAG_06
 
 /// Calculate the subsystem's next fire time from when it finished, not when it started.
-#define SS_POST_FIRE_TIMING FLAG(6)
+#define SS_POST_FIRE_TIMING FLAG_07
 
 /// Run Shutdown() on server shutdown so the SS can finalize state.
-#define SS_NEEDS_SHUTDOWN FLAG(7)
+#define SS_NEEDS_SHUTDOWN FLAG_08
 
 
 /****

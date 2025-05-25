@@ -19,7 +19,7 @@
 	var/is_stump
 
 	/// A local override for damage that should reduce the product_max
-	var/const/DAMAGE_FLAG_PRODUCT = FLAG(23)
+	var/const/DAMAGE_FLAG_PRODUCT = FLAG_24
 
 
 /obj/structure/flora/tree/Initialize()

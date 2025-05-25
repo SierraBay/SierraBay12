@@ -1,6 +1,0 @@
-author: Banditoz
-changes:
-  - {tweak: 'If you press "Cancel" while setting ambitions, instead of deleting your
-      ambitions, it will discard any changes instead. To clear your ambitions, remove
-      all the text in the field.'}
-delete-after: true

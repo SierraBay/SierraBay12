@@ -59,7 +59,7 @@
 		trail.start()
 
 
-/mob/living/simple_animal/hostile/retaliate/malf_drone/Process_Spacemove()
+/mob/living/simple_animal/hostile/retaliate/malf_drone/Process_Spacemove(allow_movement)
 	return TRUE
 
 

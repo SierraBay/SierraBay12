@@ -3,10 +3,10 @@ SUBSYSTEM_DEF(atoms)
 	init_order = SS_INIT_ATOMS
 	flags = SS_NO_FIRE | SS_NEEDS_SHUTDOWN
 
-	var/const/BAD_INIT_QDEL_BEFORE = FLAG(0)
-	var/const/BAD_INIT_DIDNT_INIT = FLAG(1)
-	var/const/BAD_INIT_SLEPT = FLAG(2)
-	var/const/BAD_INIT_NO_HINT = FLAG(3)
+	var/const/BAD_INIT_QDEL_BEFORE = FLAG_01
+	var/const/BAD_INIT_DIDNT_INIT = FLAG_02
+	var/const/BAD_INIT_SLEPT = FLAG_03
+	var/const/BAD_INIT_NO_HINT = FLAG_04
 
 	var/static/atom_init_stage = INITIALIZATION_INSSATOMS
 	var/static/old_init_stage

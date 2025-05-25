@@ -69,7 +69,7 @@ LEGACY_RECORD_STRUCTURE(virus_records, virus_record)
 		return
 
 	if(stage <= 1 && clicks == 0) 	// with a certain chance, the mob may become immune to the disease before it starts properly
-		if(prob(mob.virus_immunity() * 0.05))
+		if(prob(mob.virus_immunity() * 0.025))
 			cure(mob, 1)
 			return
 
@@ -88,7 +88,7 @@ LEGACY_RECORD_STRUCTURE(virus_records, virus_record)
 		cure(mob,1)
 	//Waiting out the disease the old way
 	if(stage == max_stage && clicks > max(stage*100, 300))
-		if(prob(mob.virus_immunity() * 0.05 + 100-infectionchance))
+		if(prob(mob.virus_immunity() * 0.5))
 			cure(mob, 1)
 
 	var/top_badness = 1

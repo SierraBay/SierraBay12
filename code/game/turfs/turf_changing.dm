@@ -64,7 +64,7 @@
 		var/turf/simulated/S = src
 		if(S.zone) S.zone.rebuild()
 
-	if(ambient_bitflag) //Should remove everything about current bitflag, let it be recalculated by SS later
+	if(ambient_group_flags) //Should remove everything about current bitflag, let it be recalculated by SS later
 		SSambient_lighting.clean_turf(src)
 
 	// Run the Destroy() chain.
