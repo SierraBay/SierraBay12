@@ -29,7 +29,7 @@
 
 /obj/item/cryokinesis/Destroy()
 	playsound(src, "shatter", 70, 1)
-	src.visible_message("<span class='danger'>[src] рассыпается на тысячи мелких льдинок!</span>")
+	src.visible_message(SPAN_DANGER("[src] рассыпается на тысячи мелких льдинок!</span>"))
 	..()
 
 /obj/item/cryokinesis/dropped(mob/living/user as mob)

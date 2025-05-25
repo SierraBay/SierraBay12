@@ -15,9 +15,6 @@
 	dat += "<hr>"
 
 	if(psi)
-
-		// Hi Warhammer 40k rating system, how are you?
-		// I hope you get along with the Galactic Milieu metapsychics.
 		var/use_rating
 		var/effective_rating = psi.rating
 		if(effective_rating > 1 && psi.suppressed)

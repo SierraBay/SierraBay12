@@ -20,7 +20,7 @@
 	var/explosion_area = 5
 
 /obj/item/projectile/psi/strong/on_hit(atom/target, blocked = 0)
-	explosion(get_turf(target), explosion_area, explosion_power)
+	explosion(get_turf(target), light_impact_range = explosion_power, flash_range = explosion_area)
 	..()
 
 /obj/item/projectile/psi/strong_piercing
@@ -45,21 +45,21 @@
 
 	exploded = TRUE
 	if(istype(A,/obj/shield))
-		explosion(get_turf(A), explosion_area, explosion_power)
+		explosion(get_turf(A), heavy_impact_range = explosion_power, light_impact_range = explosion_area)
 		qdel(src)
 		return
 
 	sleep(delay)
 
 	if(src && !exploded_inwall)
-		explosion(get_turf(src), explosion_area, explosion_power)
+		explosion(get_turf(src), heavy_impact_range = explosion_power, light_impact_range = explosion_area)
 		qdel(src)
 
 /obj/item/projectile/psi/strong_piercing/Destroy()
 	if(src && !exploded_inwall && !istype(loc,/atom/movable))
 		exploded = TRUE
 		exploded_inwall = TRUE
-		explosion(get_turf(src), explosion_area, explosion_power)
+		explosion(get_turf(src), heavy_impact_range = explosion_power, light_impact_range = explosion_area)
 	..()
 
 /obj/item/gun/energy/psigun
@@ -110,7 +110,7 @@
 
 /obj/item/gun/energy/psigun/special_check(mob/user)
 
-	if(!istype(user, /mob/living))
+	if(!isliving(user))
 		return 0
 	if(!user.IsAdvancedToolUser())
 		return 0
@@ -121,12 +121,12 @@
 			toggle_safety()
 			return 1
 	if(MUTATION_FERAL in M.mutations)
-		to_chat(M, "<span class='danger'>Your fingers are much too large for the trigger guard!</span>")
+		to_chat(M, "<span class='danger'>Твои пальцы слишком большие!</span>")
 		return 0
 	if(M.psi)
 		var/hilo_rank = M.psi.get_rank(PSI_ENERGISTICS)
 		if(hilo_rank <= PSI_RANK_LATENT)
-			to_chat(M, "<span class='danger'>Оно не стреляет!</span>")
+			to_chat(M, SPAN_DANGER("Не стреляет!"))
 			return 0
 	if((MUTATION_CLUMSY in M.mutations) && prob(40)) //Clumsy handling
 		var/obj/P = consume_next_projectile()
@@ -151,7 +151,7 @@
 	if(istype(owner))
 		owner.psi.spend_power(maintain_cost)
 	if(!owner || owner.do_psionics_check(maintain_cost, owner) || loc != owner || (owner.l_hand != src && owner.r_hand != src))
-		if(istype(loc,/mob/living))
+		if(isliving(loc))
 			var/mob/living/carbon/human/host = loc
 			if(istype(host))
 				for(var/obj/item/organ/external/organ in host.organs)

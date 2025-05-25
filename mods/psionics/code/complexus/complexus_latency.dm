@@ -11,8 +11,8 @@
 	var/new_rank = rand(2,5)
 	owner.set_psi_rank(faculty, new_rank)
 	var/singleton/psionic_faculty/faculty_singleton = SSpsi.get_faculty(faculty)
-	to_chat(owner, SPAN_DANGER("You scream internally as your [faculty_singleton.name] faculty is forced into operancy by [source]!"))
+	to_chat(owner, SPAN_DANGER("Ты кричишь, не издав ни звука, во время того как дисциплина [faculty_singleton.name] пробуждается в тебе из-за [source]!"))
 	next_latency_trigger = world.time + rand(600, 1800) * new_rank
 	if(!redactive) owner.adjustBrainLoss(rand(trigger_strength * 2, trigger_strength * 4))
-	log_and_message_admins("gained the [faculty_singleton.name] psionic faculty by: [source].", owner)
+	log_and_message_admins("получил псионику [faculty_singleton.name] с помощью: [source].", owner)
 	return TRUE

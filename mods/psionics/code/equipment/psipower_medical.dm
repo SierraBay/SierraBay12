@@ -1,6 +1,3 @@
-//Yeah, that's another bunch of copypasted shit, but i'm not a coder and don't have enough time to do it better
-//Also, no cautery, bone gel and fixOvein until someone will not figure out how to make they effects(mending bones and etc) temp
-
 /obj/item/clothing/gloves/latex/psi
 	name = "psychokinetic gloves"
 
@@ -36,7 +33,7 @@
 		owner.psi.spend_power(maintain_cost)
 	var/mob/living/carbon/human/H = owner
 	if(!H || H.do_psionics_check(maintain_cost, H) || loc != H || (H.l_hand != src && H.r_hand != src && H.gloves != src))
-		if(istype(loc,/mob/living))
+		if(isliving(loc))
 			var/mob/living/carbon/human/host = loc
 			if(istype(host))
 				for(var/obj/item/organ/external/organ in host.organs)

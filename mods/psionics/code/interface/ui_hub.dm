@@ -75,11 +75,11 @@
 		return
 
 	if(owner.psi.suppressed && owner.psi.stun)
-		to_chat(owner, SPAN_WARNING("You are dazed and reeling, and cannot muster enough focus to do that!"))
+		to_chat(owner, SPAN_WARNING("Ты ошеломлен и не можешь сконцентрироваться на своих психических способностях!"))
 		return
 
 	owner.psi.suppressed = !owner.psi.suppressed
-	to_chat(owner, SPAN_NOTICE("You are <b>[owner.psi.suppressed ? "now suppressing" : "no longer suppressing"]</b> your psi-power."))
+	to_chat(owner, SPAN_NOTICE("Ты <b>[owner.psi.suppressed ? "теперь подавляешь" : "больше не подавляешь"]</b> свои способности."))
 	if(owner.psi.suppressed)
 		var/mob/living/carbon/human/A = owner
 		if(A.levitation)

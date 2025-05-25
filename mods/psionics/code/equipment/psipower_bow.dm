@@ -46,21 +46,18 @@
 /obj/item/gun/launcher/crossbow/psibow/master
 	bolt = new/obj/item/psyarrow/master
 	used_bolt = /obj/item/psyarrow/master
-	draw_time = 8
 	maintain_cost = 6
 	draw_time = 30
 
 /obj/item/gun/launcher/crossbow/psibow/master/grand
 	bolt = new/obj/item/psyarrow/master/grand
 	used_bolt = /obj/item/psyarrow/master/grand
-	draw_time = 6
 	maintain_cost = 4
 	draw_time = 20
 
 /obj/item/gun/launcher/crossbow/psibow/master/grand/paramount
 	bolt = new/obj/item/psyarrow/master/grand/paramount
 	used_bolt = /obj/item/psyarrow/master/grand/paramount
-	draw_time = 4
 	maintain_cost = 2
 	draw_time = 10
 

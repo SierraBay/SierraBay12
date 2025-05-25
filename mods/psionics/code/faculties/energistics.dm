@@ -21,7 +21,7 @@
 		return FALSE
 	. = ..()
 	if(.)
-		user.visible_message("<span class='danger'>Глаза [user] загораются ярким светом!</span>")
+		user.visible_message(SPAN_DANGER("Глаза [user] загораются ярким светом!"))
 
 		var/user_rank = user.psi.get_rank(faculty)
 		var/meta_rank = user.psi.get_rank(PSI_METAKINESIS)
@@ -106,24 +106,24 @@
 	. = ..()
 	if(.)
 		if(en_rank == PSI_RANK_GRANDMASTER)
-			var/option = input(user, "Choose something!", "How big should be the empulse?") in list("Concentrated", "Uncontrolled")
+			var/option = input(user, "Выбирай!", "Насколько большой должен быть импульс?") in list("Сконцентрированный", "Бесконтрольный")
 			if (!option)
 				return
 			if(option == "Concentrated")
 				new /obj/temporary(get_turf(target),3, 'icons/effects/effects.dmi', "blue_electricity_constant")
-				target.visible_message("<span class='danger'>[user] переполняет [target] энергией, провоцируя внезапное высвобождение ЭМИ-импульса!</span>")
+				target.visible_message(SPAN_DANGER("[user] переполняет [target] энергией, провоцируя внезапное высвобождение ЭМИ-импульса!"))
 				empulse(target, 0, 1)
 			if(option == "Uncontrolled")
 				new /obj/temporary(get_turf(target),3, 'icons/effects/effects.dmi', "blue_electricity_constant")
-				target.visible_message("<span class='danger'>[user] взмахивает рукой, создавая мощную ЭМИ-волну!</span>")
+				target.visible_message(SPAN_DANGER("[user] взмахивает рукой, создавая мощную ЭМИ-волну!"))
 				empulse(target, 6, 8)
 		if(en_rank <= PSI_RANK_OPERANT)
 			new /obj/temporary(get_turf(target),3, 'icons/effects/effects.dmi', "blue_electricity_constant")
-			target.visible_message("<span class='danger'>[user] взмахивает рукой, создавая мощный ЭМИ-импульс!</span>")
+			target.visible_message(SPAN_DANGER("[user] взмахивает рукой, создавая мощный ЭМИ-импульс!"))
 			empulse(target, rand(2,4) - en_rank, rand(3,6) - en_rank)
 		if(en_rank == PSI_RANK_MASTER)
 			new /obj/temporary(get_turf(target),3, 'icons/effects/effects.dmi', "blue_electricity_constant")
-			target.visible_message("<span class='danger'>[user] взмахивает рукой, создавая мощный ЭМИ-импульс!</span>")
+			target.visible_message(SPAN_DANGER("[user] взмахивает рукой, создавая мощный ЭМИ-импульс!"))
 			empulse(target, 1, 2)
 		return TRUE
 
@@ -161,14 +161,14 @@
 			if (!chosen_option)
 				return
 			psi_shot = chosen_option
-			to_chat(user, "<span class='warning'>Теперь, ты будешь выпускать снаряды типа '[chosen_option]' при использовании данной способности.</span>")
+			to_chat(user, SPAN_WARNING("Теперь, ты будешь выпускать снаряды '[chosen_option]' при использовании данной способности."))
 			return TRUE
 
 		if(user.a_intent != I_HURT)
 			return FALSE
 
 		if(psi_shot == "Standard")
-			user.visible_message("<span class='danger'>[user] изображает пальцами пистолет, делая выстрел!</span>")
+			user.visible_message(SPAN_DANGER("[user] изображает пальцами пистолет, делая выстрел!"))
 			if(user_rank < PSI_RANK_MASTER)
 				pew = new /obj/item/projectile/psi(get_turf(user))
 				pew.name = "small psionic bullet"
@@ -180,7 +180,7 @@
 				pew_sound = 'sound/weapons/guns/ricochet4.ogg'
 
 		if(psi_shot == "Armor Piercing")
-			user.visible_message("<span class='danger'>[user] изображает пальцами пистолет, делая выстрел!</span>")
+			user.visible_message(SPAN_DANGER("[user] изображает пальцами пистолет, делая выстрел!"))
 			if(user_rank == PSI_RANK_APPRENTICE)
 				if(prob(10))
 					pew = new /obj/item/projectile/psi(get_turf(user))
@@ -194,7 +194,7 @@
 					pew = new /obj/item/projectile/psi(get_turf(user))
 					pew.name = "small psionic bullet"
 					pew_sound = 'sound/weapons/guns/ricochet4.ogg'
-					to_chat(user, "<span class='warning'>Ты пытаешься сконцентрировать всю энергию в одном маленьком сгустке, дабы создать пробивной снаряд, но что-то мешает тебе...</span>")
+					to_chat(user, SPAN_WARNING("Ты пытаешься сконцентрировать всю энергию в одном маленьком сгустке, дабы создать пробивной снаряд, но что-то мешает тебе."))
 			if(user_rank == PSI_RANK_OPERANT)
 				pew = new /obj/item/projectile/psi(get_turf(user))
 				pew.name = "piercing psionic bullet"
@@ -214,7 +214,7 @@
 				pew_sound = 'sound/weapons/guns/ricochet4.ogg'
 
 		if(psi_shot == "Explosive")
-			user.visible_message("<span class='danger'>[user] делает резкий выпад рукой, запуская в полёт огромный сгусток энергии!</span>")
+			user.visible_message(SPAN_DANGER("[user] делает резкий выпад рукой, запуская в полёт огромный сгусток энергии!"))
 			if(user_rank < PSI_RANK_OPERANT)
 				if(prob(10))
 					pew = new /obj/item/projectile/psi/strong(get_turf(user))
@@ -222,7 +222,7 @@
 					pew.damage = 10
 					pew_sound = 'sound/weapons/guns/ricochet4.ogg'
 				else
-					to_chat(user, "<span class='danger'>Огромный ком энергии накапливается внутри тебя, готовясь вырваться наружу, но что-то идёт не так...</span>")
+					to_chat(user, SPAN_DANGER("Огромный ком энергии накапливается внутри тебя, готовясь вырваться наружу, но что-то идёт не так."))
 					explosion(get_turf(user), 1, 2)
 			if(user_rank >= PSI_RANK_OPERANT)
 				pew = new /obj/item/projectile/psi/strong(get_turf(user))
@@ -230,7 +230,7 @@
 				pew_sound = 'sound/weapons/guns/ricochet4.ogg'
 
 		if(psi_shot == "Piercing Charges")
-			user.visible_message("<span class='danger'>[user] выставляет перед собой руку, создавая импровизированную трубу и пропускает через неё сжатый сгусток энергии!</span>")
+			user.visible_message(SPAN_WARNING("[user] выставляет перед собой руку и пропускает через неё сжатый сгусток энергии!"))
 			if(user_rank <= PSI_RANK_OPERANT)
 				if(prob(30))
 					pew = new /obj/item/projectile/psi/strong_piercing(get_turf(user))
@@ -246,7 +246,7 @@
 					pew.penetrating = 5
 					pew.penetration_modifier = 1.1
 					pew_sound = 'sound/weapons/guns/ricochet4.ogg'
-					to_chat(user, "<span class='warning'>Ты пытаешься сконцентрировать всю энергию в одном маленьком сгустке, дабы создать пробивной снаряд, но что-то мешает тебе...</span>")
+					to_chat(user, SPAN_WARNING("Ты пытаешься сконцентрировать всю энергию в одном маленьком сгустке, дабы создать пробивной снаряд, но что-то мешает тебе..."))
 					explosion(get_turf(user), 2, 3)
 			if(user_rank == PSI_RANK_MASTER)
 				if(prob(70))
@@ -256,7 +256,7 @@
 					pew.damage = 20
 					pew_sound = 'sound/weapons/guns/ricochet4.ogg'
 				else
-					to_chat(user, "<span class='warning'>Ты пытаешься сконцентрировать всю энергию в одном маленьком сгустке, дабы создать пробивной снаряд, но что-то мешает тебе...</span>")
+					to_chat(user, SPAN_WARNING("Ты пытаешься сконцентрировать всю энергию в одном маленьком сгустке, дабы создать пробивной снаряд, но что-то мешает тебе."))
 					explosion(get_turf(user), 2, 3)
 			if(user_rank == PSI_RANK_GRANDMASTER)
 				pew = new /obj/item/projectile/psi/strong_piercing(get_turf(user))
@@ -299,13 +299,13 @@
 			if (!chosen_option)
 				return
 			psi_shot = chosen_option
-			to_chat(user, "<span class='warning'>Теперь, ты будешь выпускать снаряды типа '[chosen_option]' при использовании данной способности.</span>")
+			to_chat(user, SPAN_DANGER("Теперь, ты будешь выпускать снаряды типа '[chosen_option]' при использовании данной способности."))
 			return TRUE
 
 		if(user.a_intent != I_HURT)
 			return FALSE
 
-		user.visible_message("<span class='danger'>[user] создаёт вокруг себя рой из вращающихся пуль, запуская их в полёт!</span>")
+		user.visible_message(SPAN_DANGER("[user] создаёт вокруг себя рой из вращающихся пуль, запуская их в полёт!"))
 
 		user.psi.set_cooldown(cooldown)
 		sleep(4)
@@ -342,49 +342,35 @@
 	min_rank =        PSI_RANK_OPERANT
 	use_description = "Выберите грудь на зелёном интенте и нажмите по себе, чтобы создать дымовую завесу."
 	admin_log = FALSE
-	var/turf/previousturf = null
-	var/inner_radius = -1 //for all your ring spell needs
-	var/outer_radius = 2
 
-/obj/smoke_wall
-	icon_state = "smoke wall"
-	anchored = TRUE
-	opacity = FALSE
+/datum/effect/smoke_spread/paramount
+	smoke_type = /obj/effect/smoke/paramount
+
+/obj/effect/smoke/paramount
+	name = "foul gas"
+	color = "#3b3b3b"
 	layer = ABOVE_HUMAN_LAYER
-	icon = 'icons/effects/96x96.dmi'
-	icon_state = "smoke"
-	pixel_x = -9
-	pixel_y = -6
-	var/timer = 30
 
-/obj/smoke_wall/New()
+/obj/effect/smoke/paramount/can_affect(mob/living/carbon/M)
 	. = ..()
-	run_timer()
+	if (!.)
+		return
+	if (ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if (H.psi.get_rank(PSI_ENERGISTICS) == PSI_RANK_GRANDMASTER) // Если персонаж Грандмастер по Псионике Энергетики, то он не будет получать урон от дыма.
+			return FALSE
 
-/obj/smoke_wall/proc/run_timer()
-	set waitfor = 0
-	var/T = timer
-	while(T > 0)
-		sleep(1 SECOND)
-		T--
-	src.alpha = 200
-	sleep(2)
-	src.alpha = 150
-	sleep(2)
-	src.alpha = 100
-	sleep(2)
-	src.alpha = 50
-	sleep(2)
-	src.alpha = 20
-	sleep(2)
-	src.alpha = 10
-	qdel(src)
+/obj/effect/smoke/paramount/affect(mob/living/carbon/human/R)
+	R.apply_damage(10, DAMAGE_PSIONIC)
+	if (R.coughedtime != 1)
+		R.coughedtime = 1
+		R.emote("gasp")
+		addtimer(new Callback(R, TYPE_PROC_REF(/mob/living/carbon, clear_coughedtime)), 2 SECONDS)
+	R.updatehealth()
+	return
 
 /singleton/psionic_power/energistics/cloud/invoke(mob/living/user, mob/living/target)
 	var/en_rank_user = user.psi.get_rank(PSI_ENERGISTICS)
-
-	if(en_rank_user == PSI_RANK_GRANDMASTER)
-		outer_radius = 4
 
 	if(user.zone_sel.selecting != BP_CHEST)
 		return FALSE
@@ -396,25 +382,10 @@
 	. = ..()
 
 	if(target == user)
-		var/list/targets = list()
-
-		for(var/turf/point in oview_or_orange(outer_radius, user, "range"))
-			if(!(point in oview_or_orange(inner_radius, user, "range")))
-				if(point.density)
-					continue
-				if(istype(point, /turf/space))
-					continue
-				targets += point
-
-		if(!LAZYLEN(targets))
-			return FALSE
-
-		var/turf/user_turf = get_turf(user)
-		for(var/turf/T in targets)
-			var/obj/smoke_wall/IW = new(T)
-			if(istype(IW))
-				IW.pixel_x = (user_turf.x - T.x) * world.icon_size
-				IW.pixel_y = (user_turf.y - T.y) * world.icon_size
-				animate(IW, pixel_x = 0, pixel_y = 0, time = 3, easing = EASE_OUT)
-
+		var/datum/effect/smoke_spread/smoke = new /datum/effect/smoke_spread()
+		if(en_rank_user == PSI_RANK_GRANDMASTER)
+			smoke = new /datum/effect/smoke_spread/paramount()
+		smoke.set_up(10, 0, user.loc)
+		smoke.attach(user)
+		smoke.start()
 		return TRUE

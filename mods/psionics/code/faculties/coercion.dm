@@ -88,16 +88,16 @@
 			return 0
 		switch(chosen_option)
 			if("Joy")
-				var/funny_option = pick("смеетесь над несмешной шуткой начальства", "стараетесь не обидеть друга", "насмехаетесь над [user]")
+				var/funny_option = pick("смеетесь над несмешной шуткой", "стараетесь не обидеть друга", "насмехаетесь над [user]")
 				to_chat(target, SPAN_WARNING("Внезапно, вы ощущаете принужденный смех. Как будто вы [funny_option]."))
 				var/mob/living/carbon/C = target
 				C.Weaken(5)
 				C.spin(32,2)
 				C.emote("giggle")
-				spawn(3 SECONDS)
-					C.emote("giggle")
-				spawn(6 SECONDS)
-					C.emote("giggle")
+				sleep(3 SECONDS)
+				C.emote("giggle")
+				sleep(6 SECONDS)
+				C.emote("giggle")
 				return 1
 			if("Sadness")
 				var/sad_option = pick("то, как умирают солдаты на войне", "мысль о том, что после смерти ничего нет", "то, что вы никчемны", "воспоминание, как вы опозорились")
@@ -105,10 +105,10 @@
 				var/mob/living/carbon/C = target
 				C.eye_blurry = max(C.eye_blurry, 10)
 				C.emote("whimper")
-				spawn(3 SECONDS)
-					C.emote("whimper")
-				spawn(6 SECONDS)
-					C.emote("whimper")
+				sleep(3 SECONDS)
+				C.emote("whimper")
+				sleep(6 SECONDS)
+				C.emote("whimper")
 				return 1
 			if("Fear")
 				to_chat(target, SPAN_OCCULT("Вы цепенеете, завидев [user]. Холодный пот стекает по вашему лбу."))
@@ -146,7 +146,7 @@
 		return FALSE
 	. = ..()
 	if(.)
-		user.visible_message("<span class='danger'>\ [target] дотрагивается к [user]</span>")
+		user.visible_message(SPAN_DANGER("\ [target] дотрагивается к [user]"))
 		playsound(user.loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
 		var/cn_rank = user.psi.get_rank(PSI_COERCION)
 		new /obj/temporary(get_turf(target),3, 'icons/effects/effects.dmi', "blue_electricity_constant")
@@ -172,14 +172,14 @@
 
 	if(.)
 		var/cn_rank = user.psi.get_rank(PSI_COERCION)
-		to_chat(user, "<span class='danger'>Вы представляете как протыкаете руку [target] иглой.</span>")
-		to_chat(target, "<span class='danger'>Вашу руку словно проткнули!</span>")
+		to_chat(user, SPAN_DANGER("Вы ментально протыкаете руку [target] иглой.</span>"))
+		to_chat(target, SPAN_DANGER("Вы ощущаете, как вашу руку проткнули иглой!"))
 		if(prob(80))
 			target.emote("scream")
 		if(prob(cn_rank * 20) && target.l_hand && target.l_hand.simulated && target.unEquip(target.l_hand))
-			target.visible_message("<span class='danger'>[target] невольно роняет предмет, находившийся в его левой руке!</span>")
+			target.visible_message(SPAN_DANGER("[target] из-за спазма роняет предмет, находившийся в левой руке!"))
 		if(prob(cn_rank * 20) && target.r_hand && target.r_hand.simulated && target.unEquip(target.r_hand))
-			target.visible_message("<span class='danger'>[target] невольно роняет предмет, находившийся в его правой руке!</span>")
+			target.visible_message(SPAN_DANGER("[target] из-за спазма невольно роняет предмет, находившийся в правой руке!"))
 		new /obj/temporary(get_turf(target),3, 'icons/effects/effects.dmi', "white_electricity_constant")
 		return TRUE
 

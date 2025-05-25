@@ -2,20 +2,20 @@
 	startWhen = 60
 	endWhen = 90
 	var/static/list/psi_operancy_messages = list(
-		"There's something in your skull!",
-		"Something is eating your thoughts!",
-		"You can feel your brain being rewritten!",
-		"Something is crawling over your frontal lobe!",
-		"<b>THE SIGNAL THE SIGNAL THE SIGNAL THE SIGNAL THE</b>"
+		"Что-то ползет в твоем черепе!",
+		"Что-то разъедает твои мысли!",
+		"Ты ощущаешь как твой мозг промывается чем-то!",
+		"Ты испытываешь неприятное ощущение, словно через глаз, кто-то дотрагивается к твоему мозгу!",
+		"<b>СИГНАЛ СИГНАЛ СИГНАЛ СИГНАЛ СИГНАЛ СИГНАЛ</b>"
 		)
 
 /datum/event/minispasm/announce()
 	priority_announcement.Announce( \
-		"PRIORITY ALERT: SIGMA-[rand(50,80)] PSIONIC SIGNAL LOCAL TRAMISSION DETECTED (97% MATCH, NONVARIANT) \
-		(SIGNAL SOURCE TRIANGULATED ADJACENT LOCAL SITE): All personnel are advised to avoid \
-		exposure to active audio transmission equipment including radio headsets and intercoms \
-		for the duration of the signal broadcast.", \
-		"Cuchulain Sensor Array Automated Message" \
+		"ПРИОРИТЕТНОЕ ОПОВЕЩЕНИЕ: Ф-[rand(50,80)] ОБНАРУЖЕНА ЛОКАЛЬНАЯ ПЕРЕДАЧА ПСИОНИЧЕСКОГО СИГНАЛА ([rand(70,100)]% СОВПАДЕНИЕ) \
+		(ИСТОЧНИК СИГНАЛА ТРИАНГУЛИРОВАН — СОСЕДНИЙ МЕСТНЫЙ УЧАСТОК): Всем сотрудникам рекомендуется избегать \
+		воздействия активного аудиопередающего оборудования, включая радиогарнитуры и переговорные устройства \
+		на время трансляции сигнала.", \
+		"Автоматическое сообщение массива датчиков Фонда Кухулин" \
 		)
 
 /datum/event/minispasm/start()
@@ -42,12 +42,12 @@
 			victim.disabilities |= pick(disabilities)
 
 	if(victim.psi)
-		to_chat(victim, SPAN_DANGER("A hauntingly familiar sound hisses from [icon2html(source, victim)] \the [source], and your vision flickers!"))
+		to_chat(victim, SPAN_DANGER("Слишком знакомый визг исходит из [icon2html(source, victim)] \the [source]. Твой разум мутнеет!"))
 		victim.psi.backblast(rand(5,15))
 		victim.Paralyse(5)
 		victim.make_jittery(100)
 	else
-		to_chat(victim, SPAN_DANGER("An indescribable, brain-tearing sound hisses from [icon2html(source, victim)] \the [source], and you collapse in a seizure!"))
+		to_chat(victim, SPAN_DANGER("Неописуемый, пронзительный визг исходит из [icon2html(source, victim)] \the [source]. Тебя охватывают судороги!"))
 		victim.seizure()
 		var/new_latencies = rand(2,4)
 		var/list/faculties = list(PSI_COERCION, PSI_REDACTION, PSI_ENERGISTICS, PSI_PSYCHOKINESIS)
@@ -58,10 +58,10 @@
 			sleep(30)
 		victim.psi.update()
 	sleep(45)
-	victim.psi.check_latency_trigger(100, "a psionic scream", redactive = TRUE)
+	victim.psi.check_latency_trigger(100, "психонетический крик", redactive = TRUE)
 
 /datum/event/minispasm/end()
 	priority_announcement.Announce( \
-		"PRIORITY ALERT: SIGNAL BROADCAST HAS CEASED. Personnel are cleared to resume use of non-hardened radio transmission equipment. Have a nice day.", \
-		"Cuchulain Sensor Array Automated Message" \
+		"ПРИОРИТЕТНОЕ ОПОВЕЩЕНИЕ: ТРАНСЛЯЦИЯ СИГНАЛА ПРЕКРАЩЕНА. Персоналу разрешено возобновить использование незащищенного радиопередающего оборудования. Хорошего дня.", \
+		"Автоматическое сообщение массива датчиков Фонда Кухулин" \
 		)

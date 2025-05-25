@@ -246,7 +246,7 @@
 		if(coercion_rank > PSI_RANK_OPERANT)
 			target.AdjustParalysis(-1)
 		target.drowsyness = 0
-		if(istype(target, /mob/living/carbon))
+		if(iscarbon(target))
 			var/mob/living/carbon/M = target
 			M.adjust_hallucination(-30)
 		return TRUE
@@ -338,7 +338,7 @@
 				user.adjustBrainLoss(30)
 				user.psi.spend_power(50)
 		else
-			to_chat(user, SPAN_NOTICE("У [target] нечего брать ."))
+			to_chat(user, SPAN_NOTICE("У [target] нет пробужденного псионического потенциала."))
 			return 0
 
 /singleton/psionic_power/consciousness/invis
@@ -358,13 +358,7 @@
 		sleep(1 SECOND)
 		T--
 	src.visible_message(SPAN_WARNING("[src] внезапно материализуется из воздуха!"))
-	src.alpha = 100
-	spawn(1 SECONDS)
-		src.alpha = 150
-	spawn(2 SECONDS)
-		src.alpha = 200
-	spawn(3 SECONDS)
-		src.alpha = 255
+	animate(src, alpha = 255, time = 3 SECONDS)
 
 /singleton/psionic_power/consciousness/invis/invoke(mob/living/user, mob/living/target)
 	var/con_rank_user = user.psi.get_rank(PSI_CONSCIOUSNESS)
@@ -378,34 +372,14 @@
 	if(istype(target, /mob/living/carbon) && target != user && con_rank_user >= PSI_RANK_MASTER)
 		if(do_after(user, 30))
 			user.visible_message(SPAN_WARNING("[user] касается [target] и тот исчезает на глазах!"))
-			target.alpha = 200
-			spawn(1 SECONDS)
-				target.alpha = 150
-			spawn(2 SECONDS)
-				target.alpha = 100
-			spawn(3 SECONDS)
-				target.alpha = 50
-			spawn(4 SECONDS)
-				target.alpha = 25
-			spawn(5 SECONDS)
-				target.alpha = 1
+			animate(target, alpha = 0, time = 3 SECONDS)
 			target.run_timer_invisibility()
 			return TRUE
 
 	if(target == user)
 		user.visible_message(SPAN_WARNING("[user] исчезает у всех на глазах!"))
-		user.alpha = 200
-		spawn(1 SECONDS)
-			user.alpha = 150
-		spawn(2 SECONDS)
-			user.alpha = 100
-		spawn(3 SECONDS)
-			user.alpha = 50
-		spawn(4 SECONDS)
-			user.alpha = 25
-		spawn(5 SECONDS)
-			user.alpha = 1
-		user.run_timer_invisibility()
+		animate(target, alpha = 0, time = 3 SECONDS)
+		target.run_timer_invisibility()
 		return TRUE
 
 /singleton/psionic_power/consciousness/curse
@@ -496,15 +470,13 @@
 
 /singleton/psionic_power/consciousness/copies/invoke(mob/living/user, mob/living/carbon/human/target)
 	var/con_rank_user = user.psi.get_rank(PSI_CONSCIOUSNESS)
-
-	if(con_rank_user == PSI_RANK_OPERANT)
-		amount = 3
-
-	if(con_rank_user == PSI_RANK_MASTER)
-		amount = 4
-
-	if(con_rank_user == PSI_RANK_GRANDMASTER)
-		amount = 6
+	switch(con_rank_user)
+		if(PSI_RANK_OPERANT)
+			amount = 3
+		if(PSI_RANK_MASTER)
+			amount = 4
+		if(PSI_RANK_GRANDMASTER)
+			amount = 6
 
 	if(user.zone_sel.selecting != BP_MOUTH)
 		return FALSE

@@ -75,20 +75,21 @@
 				aura_image.blend_mode = BLEND_SUBTRACT
 			else
 				aura_image.blend_mode = BLEND_ADD
-				if(highest_faculty == PSI_COERCION)
-					aura_color = "#3333cc"
-				else if(highest_faculty == PSI_PSYCHOKINESIS)
-					aura_color = "#cc3333"
-				else if(highest_faculty == PSI_REDACTION)
-					aura_color = "#33cc33"
-				else if(highest_faculty == PSI_ENERGISTICS)
-					aura_color = "#cc8221"
-				else if(highest_faculty == PSI_CONSCIOUSNESS)
-					aura_color = "#5233cc"
-				else if(highest_faculty == PSI_METAKINESIS)
-					aura_color = "#cccc33"
-				else if(highest_faculty == PSI_MANIFESTATION)
-					aura_color = "#cc8221"
+				switch(highest_faculty)
+					if(PSI_COERCION)
+						aura_color = "#3333cc"
+					if(PSI_PSYCHOKINESIS)
+						aura_color = "#cc3333"
+					if(PSI_REDACTION)
+						aura_color = "#33cc33"
+					if(PSI_ENERGISTICS)
+						aura_color = "#cc8221"
+					if(PSI_CONSCIOUSNESS)
+						aura_color = "#5233cc"
+					if(PSI_METAKINESIS)
+						aura_color = "#cccc33"
+					if(PSI_MANIFESTATION)
+						aura_color = "#cc8221"
 			aura_image.pixel_x = -64 - owner.default_pixel_x
 			aura_image.pixel_y = -64 - owner.default_pixel_y
 
@@ -165,30 +166,31 @@
 	var/mend_prob =     0
 
 	var/use_rank = get_rank(PSI_REDACTION)
-	if(use_rank >= PSI_RANK_GRANDMASTER)
-		heal_general = TRUE
-		heal_poison = TRUE
-		heal_internal = TRUE
-		heal_bleeding = TRUE
-		mend_prob = 50
-		heal_rate = 7
-	else if(use_rank == PSI_RANK_MASTER)
-		heal_poison = TRUE
-		heal_internal = TRUE
-		heal_bleeding = TRUE
-		mend_prob = 20
-		heal_rate = 5
-	else if(use_rank == PSI_RANK_OPERANT)
-		heal_internal = TRUE
-		heal_bleeding = TRUE
-		mend_prob = 10
-		heal_rate = 3
-	else if(use_rank == PSI_RANK_APPRENTICE)
-		heal_bleeding = TRUE
-		mend_prob = 5
-		heal_rate = 1
-	else
-		return
+	switch(use_rank)
+		if(PSI_RANK_GRANDMASTER)
+			heal_general = TRUE
+			heal_poison = TRUE
+			heal_internal = TRUE
+			heal_bleeding = TRUE
+			mend_prob = 50
+			heal_rate = 7
+		if(PSI_RANK_MASTER)
+			heal_poison = TRUE
+			heal_internal = TRUE
+			heal_bleeding = TRUE
+			mend_prob = 20
+			heal_rate = 5
+		if(PSI_RANK_OPERANT)
+			heal_internal = TRUE
+			heal_bleeding = TRUE
+			mend_prob = 10
+			heal_rate = 3
+		if(PSI_RANK_APPRENTICE)
+			heal_bleeding = TRUE
+			mend_prob = 5
+			heal_rate = 1
+		else
+			return
 
 	if(!heal_rate || stamina < heal_rate)
 		return // Don't backblast from trying to heal ourselves thanks.
@@ -222,7 +224,7 @@
 						return
 
 			// Heal broken bones.
-			if(length(H.bad_external_organs))
+			if(LAZYLEN(H.bad_external_organs))
 				for(var/obj/item/organ/external/E in H.bad_external_organs)
 
 					if(BP_IS_ROBOTIC(E))

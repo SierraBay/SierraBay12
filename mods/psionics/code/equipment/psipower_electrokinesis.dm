@@ -30,18 +30,18 @@
 			return FALSE
 
 		if(cooldown > 0)
-			to_chat(user, "<span class='warning'>Ты не можешь использовать плеть настолько часто!</span>")
+			to_chat(user, SPAN_WARNING("Ты не можешь использовать плеть настолько часто!"))
 			return
 
 		if(get_dist(user, target) >= 2)
 
 			if(target == user)
-				to_chat(user, "<span class='warning'>Вы не можете зарядить самого себя!</span>")
+				to_chat(user, SPAN_WARNING("Вы не можете зарядить самого себя!"))
 				return
 			if(target.psi && !target.psi.suppressed)
 				var/el_rank_target = target.psi.get_rank(PSI_METAKINESIS)
 				if(el_rank_target >= el_rank && prob(50))
-					user.visible_message("<span class='danger'>[target] пропускает ток через себя, возвращая его [user] в виде молнии!</span>")
+					user.visible_message(SPAN_DANGER("[target] пропускает ток через себя, возвращая его [user] в виде молнии!"))
 					user.electrocute_act(rand(el_rank_target * 2, el_rank_target * 5), target, 1, target.zone_sel.selecting)
 					new /obj/temporary(get_turf(user),3, 'icons/effects/effects.dmi', "electricity_constant")
 					return TRUE
@@ -56,7 +56,7 @@
 	if(target.psi && !target.psi.suppressed)
 		var/el_rank_target = target.psi.get_rank(PSI_METAKINESIS)
 		if(el_rank_target >= el_rank && prob(50))
-			user.visible_message("<span class='danger'>[target] пропускает ток через себя, возвращая его [user] в виде молнии!</span>")
+			user.visible_message(SPAN_DANGER("[target] пропускает ток через себя, возвращая его [user] в виде молнии!"))
 			user.electrocute_act(rand(el_rank_target * 2, el_rank_target * 5), target, 1, target.zone_sel.selecting)
 			new /obj/temporary(get_turf(user),3, 'icons/effects/effects.dmi', "electricity_constant")
 			..()
