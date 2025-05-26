@@ -193,6 +193,11 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			linked_lathe.stored_material[t] += matter[t] * linked_destroy.decon_mod
 			linked_lathe.stored_material[t] = min(linked_lathe.stored_material[t], linked_lathe.storage_capacity)*/
 
+
+/obj/machinery/computer/rdconsole/proc/handle_design_analysis(obj/item/I)
+	files.check_item_for_tech(I)
+	var/datum/computer_file/binary/design/design = I
+
 /obj/machinery/computer/rdconsole/Topic(href, href_list) // Oh boy here we go.
 	if(..())
 		return 1

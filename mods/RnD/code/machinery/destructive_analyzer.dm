@@ -19,6 +19,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 
 	machine_name = "destructive analyzer"
 	machine_desc = "Breaks down objects into their component parts, gaining new information in the process. Part of an R&D network."
+	var/reconstruct_as_design = FALSE
 
 /obj/machinery/r_n_d/destructive_analyzer/Destroy()
 	if(linked_console)
@@ -91,6 +92,20 @@ Note: Must be placed within 3 tiles of the R&D Console
 	flick("d_analyzer_process", src)
 	addtimer(new Callback(src, PROC_REF(finish_deconstructing)), 2.4 SECONDS)
 	return TRUE
+
+/obj/machinery/r_n_d/destructive_analyzer/proc/analyze_item()
+	if(busy)
+		to_chat(usr, SPAN_WARNING("The destructive analyzer is busy at the moment."))
+		return
+	if(!loaded_item)
+		return
+
+	linked_console.handle_design_analysis(loaded_item)
+	busy = TRUE
+	flick("d_analyzer_process", src)
+	addtimer(new Callback(src, PROC_REF(finish_deconstructing)), 2.4 SECONDS)
+	return TRUE
+
 
 /obj/machinery/r_n_d/destructive_analyzer/proc/finish_deconstructing()
 	busy = FALSE
