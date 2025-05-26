@@ -83,8 +83,9 @@
 
 /mob/living/proc/update_fov_dir()
 	if(client && client.usefov)
-		client.fov_mask.dir = src.dir
-		client.fov_shadow.dir = src.dir
+		if(client.fov_mask && client.fov_shadow)
+			client.fov_mask.dir = src.dir
+			client.fov_shadow.dir = src.dir
 
 /mob/living/proc/check_fov()
 	var/mob/eyepath
@@ -155,6 +156,8 @@
 	var/turf/my_turf = get_turf(src) //Because being inside contents of something will cause our x,y to not be updated
 	// If turf doesn't exist, then we wouldn't get a fov check called by `play_fov_effect` or presumably other new stuff that might check this.
 	//  ^ If that case has changed and you need that check, add it.
+	if(!my_turf || !observed_atom)
+		return
 	var/rel_x = observed_atom.x - my_turf.x
 	var/rel_y = observed_atom.y - my_turf.y
 	if(client?.fovangle)
