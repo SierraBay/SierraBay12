@@ -83,16 +83,12 @@
 
 /mob/proc/update_fov_dir()
 	if(client && client.usefov)
-<<<<<<< Updated upstream
-		client.fov_mask.dir = src.dir
-		client.fov_shadow.dir = src.dir
-=======
 		if(client.fov_mask && client.fov_shadow)
 			client.fov_mask.dir = src.dir
 			client.fov_shadow.dir = src.dir
 		else
 			client.remove_cone()
->>>>>>> Stashed changes
+
 
 /mob/proc/check_fov()
 	var/mob/eyepath
