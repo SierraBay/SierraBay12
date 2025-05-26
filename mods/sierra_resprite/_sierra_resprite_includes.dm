@@ -12,5 +12,6 @@
 #include "code/bbox.dm"
 #include "code/janitor.dm"
 #include "code/other_obj.dm"
+#include "code/labcoat.dm"
 
 #endif
