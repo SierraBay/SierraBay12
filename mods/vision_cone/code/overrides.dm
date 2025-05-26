@@ -2,8 +2,8 @@
 	.=..()
 	var/mob/living/carbon/human/target = mymob
 	if(target.client && target.client.usefov)
-		target.client.fov_mask = new /obj/screen/fullscreen/fov_blocker( target )
-		target.client.fov_shadow = new /obj/screen/fullscreen/fov_shadow( target )
+		target.client.fov_mask = new /obj/screen/fullscreen/fov_blocker
+		target.client.fov_shadow = new /obj/screen/fullscreen/fov_shadow
 		target.check_fov()
 
 /atom/movable/do_attack_animation(atom/A, fov_effect = TRUE)
@@ -121,3 +121,8 @@
 	set_dir(ndir)
 	SetMoveCooldown(movement_delay())
 	return 1
+
+/mob/reload_fullscreen()
+	.=..()
+	if(client)
+		client.reload_fov()

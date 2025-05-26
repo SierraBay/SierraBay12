@@ -81,12 +81,20 @@
 	. = ..()
 	check_fov()
 
-/mob/living/proc/update_fov_dir()
+/mob/proc/update_fov_dir()
 	if(client && client.usefov)
+<<<<<<< Updated upstream
 		client.fov_mask.dir = src.dir
 		client.fov_shadow.dir = src.dir
+=======
+		if(client.fov_mask && client.fov_shadow)
+			client.fov_mask.dir = src.dir
+			client.fov_shadow.dir = src.dir
+		else
+			client.remove_cone()
+>>>>>>> Stashed changes
 
-/mob/living/proc/check_fov()
+/mob/proc/check_fov()
 	var/mob/eyepath
 	if(client)
 		if(resting || lying)
@@ -109,7 +117,7 @@
 		else
 			client.hide_cone()
 
-/mob/living/proc/toggle_fov(usefov, fovangle)
+/mob/proc/toggle_fov(usefov, fovangle)
 	if(client)
 		client.usefov = usefov
 		client.fovangle = fovangle
@@ -144,6 +152,13 @@
 	fov_shadow = mob.clear_fullscreen("FOV_shadow")
 	fov_mask = mob.clear_fullscreen("FOV_mask")
 	hasmask = FALSE
+
+/client/proc/reload_fov()
+	remove_cone()
+	if(istype(mob, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = mob
+		H.update_inv_head()
+
 
 
 /mob/living/proc/in_fov(atom/observed_atom, ignore_self = FALSE)
