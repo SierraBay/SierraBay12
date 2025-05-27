@@ -162,12 +162,22 @@
 	. = ..()
 	if(.)
 
+		var/distance = get_dist(get_turf(user), get_turf(target))
+		if(distance > user.psi.get_rank(PSI_CONSCIOUSNESS))
+			to_chat(user, SPAN_WARNING("Ты не можешь сконцентрироватся настолько далеко."))
+			return FALSE
+
 		if(target.stat == DEAD || (target.status_flags & FAKEDEATH) || !target.client)
 			to_chat(user, SPAN_WARNING("[target] не в состоянии ответить вам."))
 			return FALSE
 
+
+		to_chat(user, SPAN_NOTICE("Ты концентрируешься на сознании [target]"))
+		if(!do_after(user, 40 / user.psi.get_rank(PSI_CONSCIOUSNESS), do_flags = DO_USER_UNIQUE_ACT))
+			return FALSE
+
 		var/question =  input(user, "Что вы хотите сказать?", "Чтение мыслей", "Идеи?") as null|text
-		if(!question || user.incapacitated() || !do_after(user, 40 / user.psi.get_rank(PSI_CONSCIOUSNESS)))
+		if(!question || user.incapacitated())
 			return FALSE
 
 		var/con_rank_user = user.psi.get_rank(PSI_CONSCIOUSNESS)
@@ -182,18 +192,20 @@
 					to_chat(target, SPAN_NOTICE("<b>Вы защитили свой разум от вторжения</b>"))
 					return
 				else
-					target.adjustBrainLoss(25)
+					if (target.getBrainLoss() < 25)
+						target.adjustBrainLoss(25)
 					to_chat(user, SPAN_NOTICE("<b>[target] удаётся предотвратить ваше проникновение, но часть его мозга была повреждена в процессе</b>"))
 					to_chat(target, SPAN_NOTICE("<b>Вам удаётся защитить свои воспоминания. Ваша голова просто раскалывается.</b>"))
 					return
 			else if(!target.psi)
-				target.adjustBrainLoss(25)
+				if (target.getBrainLoss() < 25)
+					target.adjustBrainLoss(25)
 				to_chat(user, SPAN_NOTICE("<b>[target] удаётся предотвратить ваше проникновение, но часть его мозга была повреждена в процессе!</b>"))
 				to_chat(target, SPAN_NOTICE("<b>Вам удаётся защитить свои воспоминания. Ваша голова просто раскалывается.</b>"))
 				return
-		if(option == "Yes")
+		if(option == "Да")
 			to_chat(target, SPAN_NOTICE("<b>Что-то пытается получить ответ на вопрос: <i>[question]</i></b>"))
-		if(option == "No")
+		if(option == "Нет")
 			if(target.psi)
 				var/con_rank_target = target.psi.get_rank(PSI_CONSCIOUSNESS)
 				if(con_rank_target > con_rank_user)
@@ -201,12 +213,14 @@
 					to_chat(target, SPAN_NOTICE("<b>Вы защитили свой разум от вторжения!</b>"))
 					return
 				else
-					target.adjustBrainLoss(25)
+					if (target.getBrainLoss() < 25)
+						target.adjustBrainLoss(25)
 					to_chat(user, SPAN_NOTICE("<b>[target] удаётся предотвратить ваше проникновение, но часть его мозга была повреждена в процессе!</b>"))
 					to_chat(target, SPAN_NOTICE("<b>Вам удаётся защитить свои воспоминания. Ваша голова просто раскалывается.</b>"))
 					return
 			else if(!target.psi)
-				target.adjustBrainLoss(25)
+				if (target.getBrainLoss() < 25)
+					target.adjustBrainLoss(25)
 				to_chat(user, SPAN_NOTICE("<b>[target] удаётся предотвратить ваше проникновение, но часть его мозга была повреждена в процессе!</b>"))
 				to_chat(target, SPAN_NOTICE("<b>Вам удаётся защитить свои воспоминания. Ваша голова просто раскалывается.</b>"))
 				return

@@ -3,7 +3,7 @@
 	desc = "It's got a tip for you - get the point?"
 	icon = 'icons/obj/psychic_powers.dmi'
 	icon_state = "tinker"
-	throwforce = 8
+	throwforce = 5
 	sharp = TRUE
 	var/mob/living/owner
 
@@ -19,10 +19,10 @@
 	qdel(src)
 
 /obj/item/psyarrow/master
-	throwforce = 12
+	throwforce = 8
 
 /obj/item/psyarrow/master/grand
-	throwforce = 14
+	throwforce = 12
 
 /obj/item/psyarrow/master/grand/paramount
 	throwforce = 16
