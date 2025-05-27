@@ -42,18 +42,3 @@
 	if(istype(source, /obj/item/mech_component/sensors))
 		var/fov_angle = source.fov_angle
 		holder.toggle_fov(usefov = TRUE, fovangle = fov_angle)
-
-
-/datum/component/landing
-
-/datum/component/landing/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_POD_LANDED, .proc/explosion_on_collision)
-
-/datum/component/landing/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_POD_LANDED))
-	return ..()
-
-/datum/component/landing/proc/explosion_on_collision(obj/source, list/turfs)
-	SIGNAL_HANDLER
-	for(var/turf/T in turfs)
-		explosion(T, 8)

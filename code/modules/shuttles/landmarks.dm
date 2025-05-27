@@ -67,30 +67,13 @@
 /obj/shuttle_landmark/proc/sector_set(obj/overmap/visitable/O, shuttle_name)
 	shuttle_restricted = shuttle_name
 
-/obj/shuttle_landmark/
-	var/list/explosion_locations
-
-/obj/shuttle_landmark/Initialize()
-	.=..()
-	AddComponent(/datum/component/landing, explosion_locations)
-
 /obj/shuttle_landmark/proc/is_valid(datum/shuttle/shuttle)
 	if(shuttle.current_location == src)
 		return FALSE
 	for(var/area/A in shuttle.shuttle_area)
 		var/list/translation = get_turf_translation(get_turf(shuttle.current_location), get_turf(src), A.contents)
-		if(ispath(A.type, /area/shuttle/escape_pod))
-			if(check_collision(base_area, list_values(translation)))
-				for(var/target_turf in translation)
-					var/turf/target = target_turf
-					if(target.density)
-						var/turf/locsforexplosion = target
-						explosion_locations += locsforexplosion
-			continue // escape pods are allowed to land anywhere
 		if(check_collision(base_area, list_values(translation)))
 			return FALSE
-	if(explosion_locations)
-		SEND_SIGNAL(src, COMSIG_POD_LANDED, explosion_locations)
 	var/conn = GetConnectedZlevels(z)
 	for(var/w in (z - shuttle.multiz) to z)
 		if(!(w in conn))

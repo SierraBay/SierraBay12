@@ -33,10 +33,10 @@
 	docking_controller = "escape_pod_"+ #NUMBER +"_berth"; \
 } \
 /obj/shuttle_landmark/escape_pod/out/pod##NUMBER { \
-	landmark_tag = "escape_pod_"+ #NUMBER +"_internim"; \
+	landmark_tag = "escape_pod_"+ #NUMBER +"_out"; \
 } \
 /obj/shuttle_landmark/escape_pod/transit/pod##NUMBER { \
-	landmark_tag = "escape_pod_"+ #NUMBER +"_out"; \
+	landmark_tag = "escape_pod_"+ #NUMBER +"_internim"; \
 }
 
 SIERRA_ESCAPE_POD(1)
