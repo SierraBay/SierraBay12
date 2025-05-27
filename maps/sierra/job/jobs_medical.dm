@@ -236,19 +236,20 @@
 		/datum/computer_file/program/suit_sensors,
 		/datum/computer_file/program/camera_monitor
 	)
-	give_psionic_implant_on_join = FALSE
+	give_psionic_implant_on_join = TRUE
 
 /datum/job/psychiatrist/equip(mob/living/carbon/human/H)
 	if(H.mind.role_alt_title == "Counselor")
-		psi_faculties = list("[PSI_REDACTION]" = PSI_RANK_OPERANT)
+		psi_faculties = list("[PSI_REDACTION]" = PSI_RANK_MASTER)
 	if(H.mind.role_alt_title == "Mentalist")
-		psi_faculties = list("[PSI_COERCION]" = PSI_RANK_OPERANT)
+		psi_faculties = list("[PSI_CONSCIOUSNESS]" = PSI_RANK_MASTER)
+
 	return ..()
 
 /datum/job/psychiatrist/get_description_blurb()
 	return "Вы - друг, наставник, священник... Или обычный психотерапевт. Помимо своих прямых обязанностей в обеспечении \
-	персонала качественной (насколько это возможно) психологической помощью, у вас имеется особенность - вы псионически \
-	одарены. Корпорация хорошо платит вам за то, чтобы вы проводили псионическое обследования членов экипажа на \
+	персонала качественной (насколько это возможно) психологической помощью, у вас имеется пси-монитор. \
+	Корпорация хорошо платит вам за то, чтобы вы проводили псионическое обследования членов экипажа на \
 	предмет обладания особыми силами, естественно, с отчетом об этом. Ваша зарплата превышает таковую у \
 	среднестатистческого менталиста из Фонда, и, вероятно, не просто так.<hr>В то время, как Менталист склонен к \
 	исправлению психологических недугов, поиску псионики и даже чтению мыслей, Советник может проводить медицинскую \

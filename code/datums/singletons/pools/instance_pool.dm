@@ -2,10 +2,10 @@
 	abstract_type = /singleton/instance_pool
 
 	/// Configurable. A field of the constants below.
-	var/instance_pool_flags = EMPTY_BITFIELD
+	var/instance_pool_flags = FLAGS_OFF
 
-	var/const/CALL_ON_RETURN = FLAG(0)
-	var/const/CALL_ON_GET = FLAG(1)
+	var/const/CALL_ON_RETURN = FLAG_01
+	var/const/CALL_ON_GET = FLAG_02
 
 	/// Configurable. Path. The path of the instances this pool manages.
 	var/datum/instance_path

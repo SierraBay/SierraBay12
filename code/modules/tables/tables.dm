@@ -49,7 +49,7 @@
 		damage_hitsound = material.hitsound
 	set_max_health(new_health)
 
-/obj/structure/table/damage_health(damage, damage_type, damage_flags = EMPTY_BITFIELD, severity, skip_can_damage_check = FALSE)
+/obj/structure/table/damage_health(damage, damage_type, damage_flags = FLAGS_OFF, severity, skip_can_damage_check = FALSE)
 	// If the table is made of a brittle material, and is *not* reinforced with a non-brittle material, damage is multiplied by TABLE_BRITTLE_MATERIAL_MULTIPLIER
 	if (material?.is_brittle())
 		if (reinforced)
@@ -130,7 +130,7 @@
 	// Energy Blade, Psiblade
 	if (istype(weapon, /obj/item/melee/energy/blade) || istype(weapon, /obj/item/psychic_power/psiblade/master/grand/paramount))
 		var/datum/effect/spark_spread/spark_system = new(src)
-		spark_system.set_up(5, EMPTY_BITFIELD, loc)
+		spark_system.set_up(5, FLAGS_OFF, loc)
 		spark_system.start()
 		playsound(loc, 'sound/weapons/blade1.ogg', 50, TRUE)
 		playsound(loc, "sparks", 50, TRUE)

@@ -67,6 +67,11 @@
 	set_dir(dir) //Set dir again so offsets update correctly
 
 
+/obj/machinery/rotating_alarm/start_on/Initialize()
+	. = ..()
+	set_on()
+
+
 /obj/machinery/rotating_alarm/set_dir(ndir) //Due to effect, offsets cannot be part of sprite, so need to set it for each dir
 	. = ..()
 	if(dir == NORTH)

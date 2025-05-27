@@ -32,7 +32,7 @@
 #include "code/misc.dm"
 #include "code/xenoarch/tesla.dm"
 #include "code/xenoarch/grav.dm"
-#include "code/xenoarch/nature.dm"
+//#include "code/xenoarch/nature.dm"
 #include "code/xenoarch/swap.dm"
 #include "code/xenobiology.dm"
 
