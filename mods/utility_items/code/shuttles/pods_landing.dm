@@ -25,6 +25,11 @@
 			explosion(T, rand(8, 16))
 
 ///////////////////////////////////////////////////////
+/area/shuttle/escape_pod
+	name = "Escape Pod"
+
+/obj/shuttle_landmark/escape_pod/out
+	name = "Escape Pod Landing Site"
 
 
 //////////////////////////ESCAPE POD////////////////////////////
