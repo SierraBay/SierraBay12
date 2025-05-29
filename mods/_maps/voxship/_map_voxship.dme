@@ -1,0 +1,7 @@
+#ifndef MODPACK_MAP_VOXSHIP
+#define MODPACK_MAP_VOXSHIP
+
+#include "code/vox-ship.dm"
+#include "code/vox_beacon.dm"
+
+#endif

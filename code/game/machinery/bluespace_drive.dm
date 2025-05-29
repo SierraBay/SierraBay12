@@ -35,6 +35,8 @@
 	var/interlude_min_time = 30 SECONDS
 	var/interlude_max_time = 3 MINUTES
 
+	var/next_zap_time = 0
+
 
 /obj/machinery/bluespacedrive/Destroy()
 	QDEL_NULL(drive_sound)
@@ -44,11 +46,10 @@
 
 /obj/machinery/bluespacedrive/Initialize()
 	. = ..()
-	drive_sound = GLOB.sound_player.PlayLoopingSound(src, "\ref[src]", 'sound/machines/BSD_idle.ogg', 50, 7)
+	drive_sound = GLOB.sound_player.PlayLoopingSound(src, "\ref[src]", 'sound/machines/BSD_idle.ogg', 50, 10)
 	AddParticles(/particles/torus/bluespace)
 	set_light(15, 1, COLOR_CYAN)
 	update_icon()
-
 
 /obj/machinery/bluespacedrive/on_update_icon()
 	ClearOverlays()

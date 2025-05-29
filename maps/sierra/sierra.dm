@@ -191,6 +191,7 @@
 	#include "../../mods/_maps/farfleet/_map_farfleet.dme"
 	#include "../../mods/_maps/general_maps/_map_general_maps.dme"
 	#include "../../mods/_maps/hand/_map_hand.dme"
+	#include "../../mods/_maps/voxship/_map_voxship.dme"
 	#include "../../mods/_maps/verne/_map_verne.dme"
 	#include "../../mods/_maps/mininghome/_map_mininghome.dme"
 	#include "../../mods/_maps/ascent_seedship/_map_ascent_seedship.dme"
