@@ -34,6 +34,7 @@
 #include "code/top.dm"
 #include "code/skrell-ship.dm"
 #include "code/security.dm"
+#include "code/sudoku.dm"
 #include "code/FBP_vox.dm"
 #include "code/rndloadout.dm"
 #include "code/money_resprite.dm"

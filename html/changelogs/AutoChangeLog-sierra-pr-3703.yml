@@ -1,0 +1,4 @@
+author: Lexanx
+changes:
+  - {rscadd: 'Добавлено судоку, в приложения компьютеров'}
+delete-after: true
