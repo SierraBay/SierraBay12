@@ -100,17 +100,17 @@
 
 /obj/structure/voxuplink/vox_ship/use_tool(obj/item/I, mob/user)
 	..()
-	if(istype(I, /obj/item/stack/material/steel/fifty))
-		var/obj/item/stack/material/steel/fifty/H = I
-		favors += 1
+	if(istype(I, /obj/item/stack/material/steel))
+		var/obj/item/stack/material/steel/H = I
+		favors += 0.2
 		qdel(H)
 		user.visible_message(
 			SPAN_NOTICE("\The [user] inserts \a [H] into \the [src]."),
 		)
 		return 1
-	if(istype(I, /obj/item/stack/material/gold/ten))
-		var/obj/item/stack/material/gold/ten/H = I
-		favors += 1
+	if(istype(I, /obj/item/stack/material/gold))
+		var/obj/item/stack/material/gold/H = I
+		favors += 0.5
 		qdel(H)
 		user.visible_message(
 			SPAN_NOTICE("\The [user] inserts \a [H] into \the [src]."),
@@ -156,9 +156,9 @@
 			SPAN_NOTICE("\The [user] inserts \a [H] into \the [src]."),
 		)
 		return 1
-	if(istype(I, /obj/item/spacecash/bundle/c1000))
-		var/obj/item/spacecash/bundle/c1000/H = I
-		favors += 1
+	if(istype(I, /obj/item/spacecash/bundle))
+		var/obj/item/spacecash/bundle/H = I
+		favors += 0.1
 		qdel(H)
 		user.visible_message(
 			SPAN_NOTICE("\The [user] inserts \a [H] into \the [src]."),
