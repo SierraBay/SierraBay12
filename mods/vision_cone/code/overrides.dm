@@ -29,6 +29,7 @@
 	def_zone = target_zone
 
 	addtimer(new Callback(src, PROC_REF(finalize_launch), curloc, targloc, x_offset, y_offset, angle_offset),0)
+	starting = curloc
 	play_fov_effect(starting, 6, "gunfire", dir = NORTH, angle = angle_offset)
 	return 0
 
