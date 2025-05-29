@@ -104,7 +104,7 @@
 		else // non-adjacent click
 			if(W) //Стрелять лёжа плохо
 				if(istype(W, /obj/item/gun) && lying)
-					to_chat(src, "Я не могу вести бой лёжа.")
+					to_chat(src, SPAN_BAD("I can't use weapon in this position"))
 					return
 				W.afterattack(A, src, 0, modifiers) // 0: not Adjacent
 			else
