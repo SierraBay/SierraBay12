@@ -1,22 +1,22 @@
 /mob/UpdateLyingBuckledAndVerbStatus()
 	if(!resting && cannot_stand() && can_stand_overridden())
-		set_lying(new_status = FALSE)
+		set_lying(FALSE)
 	else if(buckled)
 		anchored = TRUE
 		if(istype(buckled))
-			if (isnull(buckled.buckle_stance))
-				set_lying(new_status = incapacitated(INCAPACITATION_KNOCKDOWN))
+			if(isnull(buckled.buckle_stance))
+				// Используем флаг позиции
+				set_lying(incapacitated(INCAPACITATION_POSITION))
 			else
 				lying = buckled.buckle_stance
 			if(buckled.buckle_movable)
 				anchored = FALSE
 	else
-		set_lying(new_status = incapacitated(INCAPACITATION_KNOCKDOWN))
+		// Только проверка физического положения
+		set_lying(incapacitated(INCAPACITATION_POSITION))
 
 	if(lying)
-		set_density(0)
-		for (var/obj/item/item as anything in GetAllHeld())
-			unEquip(item)
+		set_density(FALSE)
 	else
 		set_density(initial(density))
 	reset_layer()

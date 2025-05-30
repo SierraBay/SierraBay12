@@ -79,9 +79,6 @@
 		copy = null
 	. = ..()
 
-/obj/machinery/disk_cloner/Process()
-	update_icon()
-
 /obj/machinery/disk_cloner/proc/put_disk(obj/item/stock_parts/computer/hard_drive/portable/AD, mob/user)
 	ASSERT(istype(AD))
 
