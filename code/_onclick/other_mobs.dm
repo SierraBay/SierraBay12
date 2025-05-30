@@ -12,7 +12,7 @@
  *
  * Returns boolean.
  */
-/atom/proc/attack_generic(mob/user, damage, attack_verb = "hits", wallbreaker = FALSE, damtype = DAMAGE_BRUTE, armorcheck = "melee", dam_flags = EMPTY_BITFIELD)
+/atom/proc/attack_generic(mob/user, damage, attack_verb = "hits", wallbreaker = FALSE, damtype = DAMAGE_BRUTE, armorcheck = "melee", dam_flags = FLAGS_OFF)
 	if (damage && get_max_health())
 		user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
 		user.do_attack_animation(src)
@@ -23,7 +23,7 @@
 				SPAN_WARNING("You bonk \the [src] harmlessly!")
 			)
 			return
-		var/damage_flags = EMPTY_BITFIELD
+		var/damage_flags = FLAGS_OFF
 		if (wallbreaker)
 			SET_FLAGS(damage_flags, DAMAGE_FLAG_TURF_BREAKER)
 		playsound(src, damage_hitsound, 75, TRUE)

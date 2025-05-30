@@ -110,7 +110,7 @@
 	next_symptom -= 1
 	if(next_symptom < 1)
 		var/obj/item/organ/external/organ = target.get_organ(BP_CHEST)
-		organ.take_external_damage(rand(5,10), 0, EMPTY_BITFIELD, "Amaspore Growth")
+		organ.take_external_damage(rand(5,10), 0, FLAGS_OFF, "Amaspore Growth")
 		if(target.get_blood_volume() == 0)
 			return
 		target.remove_blood(rand(20,30))

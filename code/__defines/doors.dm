@@ -9,10 +9,10 @@
 
 // Flags for `/obj/machinery/door/airlock/var/paintable`
 /// The main airlock body is paintable.
-#define AIRLOCK_PAINTABLE_MAIN FLAG(0)
+#define AIRLOCK_PAINTABLE_MAIN FLAG_01
 /// The stripe decal is paintable.
-#define AIRLOCK_PAINTABLE_STRIPE FLAG(1)
+#define AIRLOCK_PAINTABLE_STRIPE FLAG_02
 /// Other detailing is paintable.
-#define AIRLOCK_PAINTABLE_DETAIL FLAG(2)
+#define AIRLOCK_PAINTABLE_DETAIL FLAG_03
 /// The window is paintable.
-#define AIRLOCK_PAINTABLE_WINDOW FLAG(3)
+#define AIRLOCK_PAINTABLE_WINDOW FLAG_04

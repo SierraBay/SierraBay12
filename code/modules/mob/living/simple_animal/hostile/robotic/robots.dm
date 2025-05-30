@@ -37,8 +37,8 @@
 	maxHealth = 100
 	health = 100
 
-/mob/living/simple_animal/hostile/hivebot/ranged_damage/fleet_robot/Process_Spacemove()
-	return 1
+/mob/living/simple_animal/hostile/hivebot/ranged_damage/fleet_robot/Process_Spacemove(allow_movement)
+	return TRUE
 
 /datum/ai_holder/simple_animal/ranged/kiting/threatening/deimos
 	speak_chance = 0
@@ -270,7 +270,7 @@
 		explosion(loc, explosion_radius, explosion_max_power)
 		qdel(src)
 
-/mob/living/simple_animal/hostile/fleet_heavy/Process_Spacemove()
+/mob/living/simple_animal/hostile/fleet_heavy/Process_Spacemove(allow_movement)
 	return TRUE
 
 /obj/aura/mobshield
@@ -322,7 +322,7 @@
 		return AURA_FALSE|AURA_CANCEL
 	visible_message(SPAN_DANGER("\The [src]'s exposed back dents and buckles!"))
 	playsound(user,'sound/items/Welder2.ogg',35,1)
-	return EMPTY_BITFIELD
+	return FLAGS_OFF
 
 /obj/aura/mobshield/aura_check_thrown(atom/movable/thrown_atom, datum/thrownthing/thrown_datum)
 	. = ..()

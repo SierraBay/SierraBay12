@@ -1,262 +1,228 @@
-SUBSYSTEM_DEF(ambient_lighting) //A simple SS that handles updating ambient lights of away sites and such places
+#define MAX_AMBIENT_GROUP_INDEX MAX_FLAG_INDEX
+
+
+SUBSYSTEM_DEF(ambient_lighting)
 	name = "Ambient Lighting"
 	wait = 1
 	priority = SS_PRIORITY_LIGHTING
 	init_order = SS_INIT_AMBIENT_LIGHT
-	runlevels = RUNLEVELS_GAME
+	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_GAME
 
-	/// List of turfs queued for ambient light evaluation
-	var/list/queued = list()
+	/// Bitfield of free ambience group indices / channels
+	var/static/free_group_flags = FLAGS_ON
 
-	/// A bitmap of free ambience group indexes.
-	var/ambient_group_free_bitmap = ~0
-	/// map of ambiient groups
-	var/list/ambient_groups[AMBIENT_GROUP_MAX_BITS]
+	/// Sparse list of ambient group instances
+	var/static/list/datum/ambient_group/groups = new (MAX_AMBIENT_GROUP_INDEX)
+
+	/// The number of ambient groups currently provisioned
+	var/static/group_count = 0
+
+	/// The index of the space ambient group, if one exists
+	var/static/space_group_index = 0
+
+	/// Fifo queue of turfs that require an ambient lighting update
+	var/static/list/turf/queue = list()
+
+
+/datum/controller/subsystem/ambient_lighting/UpdateStat(time)
+	if (PreventUpdateStat(time))
+		return ..()
+	..({"\
+		Queue: [length(queue)] | \
+		Groups: [group_count]/[MAX_AMBIENT_GROUP_INDEX] | \
+		Space: [config.starlight ? (space_group_index < 0 ? "ERROR" : "OK") : "OFF"]\
+	"})
+
+
+/datum/controller/subsystem/ambient_lighting/Recover()
+	queue = list()
+	for (var/turf/turf)
+		CLEAR_FLAGS(turf.turf_flags, TURF_AMBIENT_LIGHT_UPDATE_QUEUED)
+		turf.ambient_active = FALSE
+
+
+/datum/controller/subsystem/ambient_lighting/fire(resumed, no_mc_tick)
+	var/queue_length = length(queue)
+	if (!queue_length)
+		return
+	var/datum/ambient_group/space_group
+	if (config.starlight)
+		if (!space_group_index)
+			space_group_index = create_group(SSskybox.background_color, config.starlight)
+		else if (space_group_index > 0)
+			space_group = groups[space_group_index]
+	for (var/queue_index in 1 to queue_length)
+		var/turf/turf = queue[queue_index]
+		if (QDELETED(turf) || !GET_FLAGS(turf.turf_flags, TURF_AMBIENT_LIGHT_UPDATE_QUEUED))
+			continue
+		FLIP_FLAGS(turf.turf_flags, TURF_AMBIENT_LIGHT_UPDATE_QUEUED)
+		if (turf.is_outside())
+			var/needs_ambience = TURF_IS_DYNAMICALLY_LIT_UNSAFE(turf)
+			if (!needs_ambience)
+				for (var/turf/neighbour as anything in RANGE_TURFS(turf, 1))
+					if (TURF_IS_DYNAMICALLY_LIT_UNSAFE(neighbour))
+						needs_ambience = TRUE
+						break
+			if (needs_ambience)
+				var/obj/overmap/visitable/sector/exoplanet/exoplanet = map_sectors["[turf.z]"]
+				if (!istype(exoplanet))
+					space_group?.add_turf(turf)
+				else if (exoplanet.ambient_group_index)
+					groups[exoplanet.ambient_group_index]?.add_turf(turf)
+		else if (turf.ambient_active && turf.ambient_group_flags)
+			for (var/group_index in 1 to MAX_AMBIENT_GROUP_INDEX)
+				groups[group_index]?.remove_turf(turf)
+				if (!turf.ambient_group_flags)
+					break
+		if (no_mc_tick)
+			if (queue_index % 100)
+				continue
+			CHECK_TICK
+		else if (MC_TICK_CHECK)
+			queue.Cut(1, queue_index + 1)
+			return
+	LIST_RESIZE(queue, 0)
+
+
+/// Set up an ambient group, returning its index or -1 if the pool is exhausted
+/datum/controller/subsystem/ambient_lighting/proc/create_group(color, multiplier)
+	if (free_group_flags)
+		for (var/group_index in 1 to MAX_AMBIENT_GROUP_INDEX)
+			if (!HAS_BIT(free_group_flags, group_index))
+				continue
+			CLEAR_BIT(free_group_flags, group_index)
+			groups[group_index] = new /datum/ambient_group (color, multiplier, group_index)
+			return group_index
+	return -1
+
+
+/// Removes turf from all ambient groups it is part of, if any
+/datum/controller/subsystem/ambient_lighting/proc/clean_turf(turf/turf)
+	if (!turf.ambient_group_flags)
+		return
+	for (var/datum/ambient_group/group as anything in groups)
+		if (GET_FLAGS(turf.ambient_group_flags, group.group_flag))
+			group.remove_turf(turf)
+		if (!turf.ambient_group_flags)
+			return
+
 
 /datum/ambient_group
-	/// Index in SSambient_lighting map
-	var/global_index
+	/// The index of this group in SSambient_lighting.groups
+	var/group_index
+
+	/// The flag at position group_index; for turf.ambient_group_flags
+	var/group_flag
+
+	/** A sparse list(list(turf, ...),...). Inner list positions match world z levels and contain turfs
+	of that z that are members of this group */
 	var/list/member_turfs_by_z = list()
-	/// Color data, do NOT modify manually
+
+	/// Red channel illumination applied by this group. Do not modify directly - use group.set_color()
 	var/apparent_r
+
+	/// Green channel illumination applied by this group. Do not modify directly - use group.set_color()
 	var/apparent_g
+
+	/// Blue channel illumination applied by this group. Do not modify directly - use group.set_color()
 	var/apparent_b
-	/// Prevent modification of member turfs or colour while an operation is taking place
+
+	/// Lock var. Prevents updates to group members while another update is already in progress
 	var/busy = FALSE
 
-/turf
-	/// Whether this turf has been queued for an ambient lighting update.
-	var/ambient_queued = FALSE
-
-#define AMBIENT_LIGHT_QUEUE_TURF(T) \
-	if(!T.ambient_queued) { \
-		T.ambient_queued = TRUE; \
-		SSambient_lighting.queued += T; \
-	}
-
-#define AMBIENT_LIGHT_DEQUEUE_TURF(T) \
-	if(T.ambient_queued) { \
-		T.ambient_queued = FALSE; \
-		SSambient_lighting.queued -= T; \
-	}
-
-/datum/ambient_group/New(ncolor, nmultiplier, nindex)
-	. = ..()
-	set_color(ncolor, nmultiplier)
-	global_index = nindex
 
 /datum/ambient_group/Destroy()
-	SSambient_lighting.ambient_groups[global_index] = null
-	SSambient_lighting.ambient_group_free_bitmap |= FLAG(global_index)
+	SSambient_lighting.groups[group_index] = null
+	SSambient_lighting.free_group_flags |= group_flag
+	--SSambient_lighting.group_count
+	for (var/list/z_turfs in member_turfs_by_z)
+		for (var/turf/turf as anything in z_turfs)
+			CLEAR_FLAGS(turf.ambient_group_flags, group_flag)
+	LAZYCLEARLIST(member_turfs_by_z)
+	busy = FALSE
 	return ..()
+
+
+/datum/ambient_group/New(color, multiplier, index)
+	group_index = index
+	group_flag = RFLAG(index)
+	++SSambient_lighting.group_count
+	set_color(color, multiplier)
+
 
 /datum/ambient_group/proc/set_color(color, multiplier)
 	var/list/new_parts = rgb2num(color)
-	//Calculate delta from current to desired location
-	var/dr = (new_parts[1] / 255) * multiplier - apparent_r
-	var/dg = (new_parts[2] / 255) * multiplier - apparent_g
-	var/db = (new_parts[3] / 255) * multiplier - apparent_b
-
-	if (round(dr/4, LIGHTING_ROUND_VALUE) == 0 && round(dg/4, LIGHTING_ROUND_VALUE) == 0 && round(db/4, LIGHTING_ROUND_VALUE) == 0)
-		// no-op
+	var/delta_r = (new_parts[1] / 255) * multiplier - apparent_r
+	var/delta_g = (new_parts[2] / 255) * multiplier - apparent_g
+	var/delta_b = (new_parts[3] / 255) * multiplier - apparent_b
+	if (delta_r / 4 < LIGHTING_ROUND_VALUE && delta_g / 4 < LIGHTING_ROUND_VALUE && delta_b / 4 < LIGHTING_ROUND_VALUE)
 		return
-
 	busy = TRUE
-
-	// Doing it ordered by zlev should ensure that it looks vaguely coherent mid-update regardless of turf insertion order.
-	for (var/zlev in 1 to length(member_turfs_by_z))
-		for (var/turf/T as anything in member_turfs_by_z[zlev])
-			T.add_ambient_light_raw(dr, dg, db)
+	for (var/list/z_turfs as anything in member_turfs_by_z)
+		for (var/turf/turf as anything in z_turfs)
+			turf.add_ambient_light_raw(delta_r, delta_g, delta_b)
 			CHECK_TICK
-
-	apparent_r += dr
-	apparent_g += dg
-	apparent_b += db
-
+	apparent_r += delta_r
+	apparent_g += delta_g
+	apparent_b += delta_b
 	busy = FALSE
 
-/**
- * Adds group ambient light to a turf
- *
- * **Parameters**:
- * - `T` turf - Turf to modify
- *
- */
-/datum/ambient_group/proc/set_ambient_light(turf/T)
-	set waitfor = FALSE
-	while (busy)
-		stoplag()
-	T.add_ambient_light_raw(apparent_r, apparent_g, apparent_b)
 
-/**
- * Removes group ambient light from turf
- *
- * **Parameters**:
- * - `T` turf - Turf to modify
- *
- */
-/datum/ambient_group/proc/remove_ambient_light(turf/T)
+/// Adds group ambient light amounts to turf
+/datum/ambient_group/proc/set_ambient_light(turf/turf)
 	set waitfor = FALSE
 	while (busy)
 		stoplag()
-	T.add_ambient_light_raw(-apparent_r, -apparent_g, -apparent_b)
-
-/**
- * Adds turf to ambient group, will set bitflags and set current ambient light
- *
- * **Parameters**:
- * - `T` turf - Turf to add and track
- *
- */
-/datum/ambient_group/proc/add_turf(turf/T)
-	set waitfor = FALSE
-	while (busy)
-		stoplag()
-	//Already existing
-	if(T.ambient_bitflag & FLAG(global_index))
+	if (QDELETED(src))
 		return
+	turf.add_ambient_light_raw(apparent_r, apparent_g, apparent_b)
 
-	if (T.z > length(member_turfs_by_z))
-		member_turfs_by_z.len = T.z
 
-	LAZYADD(member_turfs_by_z[T.z], T)
-	T.ambient_bitflag |= FLAG(global_index)
-	set_ambient_light(T)
-
-/**
- * Removes turf from ambient group if it is part of it. Removes group's ambient light and flag from turf
- *
- * **Parameters**:
- * - `T` turf - Turf to remove
- *
- */
-/datum/ambient_group/proc/remove_turf(turf/T)
+/// Removes group ambient light amounts from turf
+/datum/ambient_group/proc/remove_ambient_light(turf/turf)
 	set waitfor = FALSE
 	while (busy)
 		stoplag()
-	if(!(T.ambient_bitflag & FLAG(global_index)))
+	if (QDELETED(src))
 		return
+	turf.add_ambient_light_raw(-apparent_r, -apparent_g, -apparent_b)
 
-	if (T.z > length(member_turfs_by_z))
+
+/// Adds turf to this group if not a member, setting flags and light
+/datum/ambient_group/proc/add_turf(turf/turf)
+	set waitfor = FALSE
+	while (busy)
+		stoplag()
+	if (QDELETED(src))
+		return
+	if (GET_FLAGS(turf.ambient_group_flags, group_flag))
+		return //Already a member
+	var/turf_z = turf.z
+	if (turf_z > length(member_turfs_by_z))
+		LIST_RESIZE(member_turfs_by_z, turf_z)
+	var/list/z_turfs = member_turfs_by_z[turf_z]
+	if (!z_turfs)
+		z_turfs = list()
+		member_turfs_by_z[turf_z] = z_turfs
+	z_turfs |= turf
+	SET_FLAGS(turf.ambient_group_flags, group_flag)
+	set_ambient_light(turf)
+
+
+/// Removes turf from this group if a member, removing flags and light
+/datum/ambient_group/proc/remove_turf(turf/turf)
+	set waitfor = FALSE
+	while (busy)
+		stoplag()
+	if (QDELETED(src))
+		return
+	if (!GET_FLAGS(turf.ambient_group_flags, group_flag))
+		return
+	if (turf.z > length(member_turfs_by_z))
 		CRASH("Attempt to remove member turf with Z greater than local max -- this turf is not a member")
+	remove_ambient_light(turf)
+	CLEAR_FLAGS(turf.ambient_group_flags, group_flag)
+	member_turfs_by_z[turf.z] -= turf
 
-	remove_ambient_light(T)
-	T.ambient_bitflag &= ~FLAG(global_index)
-	member_turfs_by_z[T.z] -= T
 
-/**
- * Find a valid index in the ambient group map for a new group
- *
- * Returns index or -1 if no indices are left
- */
-/datum/controller/subsystem/ambient_lighting/proc/allocate_index()
-	if (ambient_group_free_bitmap == 0)
-		return -1 //Out of indices, no ambient light for you
-
-	// Find the first free index in the bitmap.
-	var/index = 1
-	while (!(ambient_group_free_bitmap & FLAG(index)) && index < AMBIENT_GROUP_MAX_BITS)
-		index += 1
-
-	ambient_group_free_bitmap &= ~FLAG(index)
-
-	return index
-/**
- * Adds the space ambient group if it doesn't currently exist
- *
- */
-/datum/controller/subsystem/ambient_lighting/proc/add_space_ambient_group()
-	var/index = allocate_index() //It will always be 1, but we want to make sure bitmap is in a valid state
-
-	ASSERT(index == SPACE_AMBIENT_GROUP)
-
-	ambient_groups[index] = new /datum/ambient_group(SSskybox.background_color, config.starlight, index )
-
-/**
- * Removes turf from ambient group if it is part of it. Removes group's ambient light and flag from turf
- *
- * **Parameters**:
- * - `color` color - Initial color
- * - `multiplier` float - Initial multiplier of light strength
- *
- * Returns index or -1 if no indices are left
- */
-/datum/controller/subsystem/ambient_lighting/proc/create_ambient_group(color, multiplier)
-
-	if(isnull(ambient_groups[SPACE_AMBIENT_GROUP])) //Something (probably a planet) wants to add an ambient group, add space first
-		add_space_ambient_group()
-
-	// Find the first free index in the bitmap.
-	var/index = allocate_index()
-
-	if(index <= 0)
-		return index
-
-	ambient_groups[index] = new /datum/ambient_group(color, multiplier, index)
-
-	return index
-
-/**
- * Removes turf from all ambient groups it is part of (if any)
- *
- * **Parameters**:
- * - `target` turf - Turf to remove
- */
-/datum/controller/subsystem/ambient_lighting/proc/clean_turf(turf/target)
-	if(target.ambient_bitflag != 0)
-		for(var/datum/ambient_group/A in ambient_groups)
-			if(target.ambient_bitflag & FLAG(A.global_index))
-				A.remove_turf(target)
-			if(!target.ambient_bitflag)
-				return //Return early if flag is already clear
-
-/datum/controller/subsystem/ambient_lighting/Initialize(start_timeofday)
-	//Create space ambient group if nothing created it until now.
-	if(isnull(ambient_groups[SPACE_AMBIENT_GROUP]))
-		add_space_ambient_group()
-
-	fire(FALSE, TRUE)
-	return ..()
-
-/// Go over turfs in queue, add them to space or planet ambient groups if valid, else remove them from all ambient groups
-/datum/controller/subsystem/ambient_lighting/fire(resumed = FALSE, no_mc_tick = FALSE)
-	var/list/curr = queued
-	var/starlight_enabled = config.starlight
-
-	var/needs_ambience
-	while (length(curr))
-		var/turf/target = curr[length(curr)]
-		LIST_DEC(curr)
-
-		target.ambient_queued = FALSE
-
-		if(target && target.is_outside())
-			needs_ambience = TURF_IS_DYNAMICALLY_LIT_UNSAFE(target)
-			if (!needs_ambience)
-				for (var/turf/T in RANGE_TURFS(target, 1))
-					if(TURF_IS_DYNAMICALLY_LIT_UNSAFE(T))
-						needs_ambience = TRUE
-						break
-
-			if (needs_ambience)
-				var/obj/overmap/visitable/sector/exoplanet/E = map_sectors["[target.z]"]
-				if (istype(E))
-					if(E.ambient_group_index > 0)
-						var/datum/ambient_group/A = ambient_groups[E.ambient_group_index]
-						A.add_turf(target)
-				else
-					if (starlight_enabled) //Assume we can light up exterior with space light generally
-						var/datum/ambient_group/A = ambient_groups[SPACE_AMBIENT_GROUP]
-						A.add_turf(target)
-		else if (TURF_IS_AMBIENT_LIT_UNSAFE(target))
-			//Remove from all groups
-			if(target.ambient_bitflag != 0)
-				for(var/datum/ambient_group/A in ambient_groups)
-					A.remove_turf(target)
-					if(!target.ambient_bitflag)
-						break
-
-		if (no_mc_tick)
-			CHECK_TICK
-		else if (MC_TICK_CHECK)
-			return
+#undef MAX_AMBIENT_GROUP_INDEX

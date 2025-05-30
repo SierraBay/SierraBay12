@@ -1,8 +1,8 @@
-var/global/const/MOVEMENT_HANDLED = FLAG(0) // If no further movement handling should occur after this
-var/global/const/MOVEMENT_REMOVE  = FLAG(1)
+var/global/const/MOVEMENT_HANDLED = FLAG_01 // If no further movement handling should occur after this
+var/global/const/MOVEMENT_REMOVE  = FLAG_02
 
-var/global/const/MOVEMENT_PROCEED = FLAG(2)
-var/global/const/MOVEMENT_STOP    = FLAG(3)
+var/global/const/MOVEMENT_PROCEED = FLAG_03
+var/global/const/MOVEMENT_STOP    = FLAG_04
 
 #define INIT_MOVEMENT_HANDLERS \
 if(LAZYLEN(movement_handlers) && ispath(movement_handlers[1])) { \
@@ -15,12 +15,26 @@ if(LAZYLEN(movement_handlers) && ispath(movement_handlers[1])) { \
 	movement_handlers= new_handlers; \
 }
 
+/// Removes `X` from `movement_handlers` then qdel's it.
 #define REMOVE_AND_QDEL(X) LAZYREMOVE(movement_handlers, X); qdel(X);
 
-/atom/movable
-	var/list/movement_handlers
 
-// We don't want to check for subtypes, hence why we don't call is_path_in_list(), etc.
+/**
+ * List (Instances of `/datum/movement`) - List of movement handlers attached to this atom.
+ *
+ * Do not modify or reference directly. See the various procs defined in `code\datums\movement\movement.dm`.
+ */
+/atom/movable/var/list/movement_handlers
+
+
+/**
+ * Checks if the provided movement handler path exists in this atom's `movement_handlers` list. Ignores subtypes, must be an exact match.
+ *
+ * **Parameters**:
+ * - `handler_path` (Path, type of `/datum/movement_handler`) - The movement handler path to search for.
+ *
+ * Returns boolean.
+ */
 /atom/movable/proc/HasMovementHandler(handler_path)
 	if(!LAZYLEN(movement_handlers))
 		return FALSE
@@ -33,6 +47,16 @@ if(LAZYLEN(movement_handlers) && ispath(movement_handlers[1])) { \
 				return TRUE
 	return FALSE
 
+
+/**
+ * Creates a new movement handler instance and attaches it to this atom's `movement_handlers` list.
+ *
+ * **Parameters**:
+ * - `handler_path` (Path, type of `/datum/movement_handler`) - The movement handler to create.
+ * - `handler_path_to_add_before` (Path, type of `/datum/movement_handler`) - If defined, and this path already exists in the atom's movement handlers, the new handler will be added before this. Otherwise, the new handler is added to the beginning of the list.
+ *
+ * Returns instance of `/datum/movement_handler` - The created movement handler.
+ */
 /atom/movable/proc/AddMovementHandler(handler_path, handler_path_to_add_before)
 	INIT_MOVEMENT_HANDLERS
 
@@ -50,6 +74,7 @@ if(LAZYLEN(movement_handlers) && ispath(movement_handlers[1])) { \
 
 	// If no handler_path_to_add_after was given or found, add first
 	LAZYINSERT(movement_handlers, ., 1)
+
 
 /atom/movable/proc/RemoveMovementHandler(handler_path)
 	INIT_MOVEMENT_HANDLERS

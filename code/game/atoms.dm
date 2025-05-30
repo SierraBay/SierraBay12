@@ -14,7 +14,7 @@
 	/// Integer. The `world.time` the atom was last bumped into. Only used by some subtypes to prevent bump spamming.
 	var/last_bumped = 0
 	/// Bitflag (Any of `PASS_FLAG_*`). Flags indicating the types of dense objects this atom is able to pass through/over.
-	var/pass_flags = EMPTY_BITFIELD
+	var/pass_flags = FLAGS_OFF
 	/// Boolean. Whether or not thrown objects can pass through/over the atom.
 	var/throwpass = FALSE
 	/// Integer. The atom's current germ level. The higher the germ level, the more germ on the atom.
@@ -30,7 +30,7 @@
 	/// Float. The multiplier applied to the `do_after()` timer when a mob climbs the atom.
 	var/climb_speed_mult = 1
 	/// Bitflag (Any of `INIT_*`). Flags for special/additional handling of the `Initialize()` chain. See `code\__defines\misc.dm`.
-	var/init_flags = EMPTY_BITFIELD
+	var/init_flags = FLAGS_OFF
 
 	/// This atom's cache of non-protected overlays, used for normal icon additions. Do not manipulate directly- See SSoverlays.
 	var/list/atom_overlay_cache
@@ -498,7 +498,7 @@
 	if (max_health)
 		// No hitsound here to avoid noise spam.
 		// Damage is based on severity and maximum health, with DEVASTATING being guaranteed death without any resistances.
-		var/damage_flags = turf_breaker ? DAMAGE_FLAG_TURF_BREAKER : EMPTY_BITFIELD
+		var/damage_flags = turf_breaker ? DAMAGE_FLAG_TURF_BREAKER : FLAGS_OFF
 		var/damage = 0
 		switch (severity)
 			if (EX_ACT_DEVASTATING)
@@ -581,7 +581,7 @@
 	if (get_max_health())
 		var/damage = 0
 		var/damage_type = DAMAGE_BRUTE
-		var/damage_flags = EMPTY_BITFIELD
+		var/damage_flags = FLAGS_OFF
 		var/damage_hitsound = src.damage_hitsound
 		if (isobj(AM))
 			var/obj/O = AM

@@ -8,7 +8,7 @@
 	status = ORGAN_ROBOTIC | ORGAN_CONFIGURE
 	default_action_type = /datum/action/item_action/organ/augment
 	var/augment_flags = AUGMENT_MECHANICAL | AUGMENT_BIOLOGICAL | AUGMENT_SCANNABLE
-	var/augment_slots = EMPTY_BITFIELD
+	var/augment_slots = FLAGS_OFF
 
 
 #define ORGAN_STYLE ( \

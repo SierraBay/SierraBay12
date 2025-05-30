@@ -52,8 +52,7 @@ var/global/list/all_virtual_listeners = list()
 /***********************
 * Virtual Mob Creation *
 ***********************/
-/atom/movable
-	var/mob/observer/virtual/virtual_mob
+/atom/movable/var/mob/observer/virtual/virtual_mob
 
 /atom/movable/Initialize()
 	. = ..()

@@ -1,0 +1,4 @@
+author: Mucker
+changes:
+  - {rscadd: The BSD now fires lightning at things around it when unstable.}
+delete-after: true

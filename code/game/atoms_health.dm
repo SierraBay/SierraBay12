@@ -5,10 +5,10 @@
 /atom/var/health_max
 
 /// Bitflag (Any of `HEALTH_STATUS_*`). Various health-related status flags for the atom. See `code\__defines\health.dm` for details.
-/atom/var/health_status = EMPTY_BITFIELD
+/atom/var/health_status = FLAGS_OFF
 
 /// Bitflag (Any of `HEALTH_FLAG_*`). Various health-related config flags for the atom. See `code\__defines\health.dm` for details.
-/atom/var/health_flags = EMPTY_BITFIELD
+/atom/var/health_flags = FLAGS_OFF
 
 /**
  * LAZY List of damage type resistance or weakness multipliers, decimal form. Only applied to health reduction. Use `set_damage_resistance()`, `remove_damage_resistance()`, and `get_damage_resistance()` to reference/modify.
@@ -98,7 +98,7 @@
  * Checks if the atom's health can be damaged.
  * Should be called before `damage_health()` in most cases.
  */
-/atom/proc/can_damage_health(damage, damage_type = null, damage_flags = EMPTY_BITFIELD)
+/atom/proc/can_damage_health(damage, damage_type = null, damage_flags = FLAGS_OFF)
 	SHOULD_CALL_PARENT(TRUE)
 	if (!get_max_health())
 		return FALSE
@@ -185,7 +185,7 @@
  * - `severity` should be a passthrough of `severity` from `ex_act()` and `emp_act()` for `DAMAGE_EXPLODE` and `DAMAGE_EMP` types respectively.
  * - `skip_can_damage_check` (boolean) - If `TRUE` skips checking `can_damage_health()`. Intended for cases where this was already checked.
  */
-/atom/proc/damage_health(damage, damage_type, damage_flags = EMPTY_BITFIELD, severity, skip_can_damage_check = FALSE)
+/atom/proc/damage_health(damage, damage_type, damage_flags = FLAGS_OFF, severity, skip_can_damage_check = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 	if (!skip_can_damage_check && !can_damage_health(damage, damage_type, damage_flags))
 		return FALSE

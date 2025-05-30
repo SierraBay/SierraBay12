@@ -81,12 +81,16 @@
 	. = ..()
 	check_fov()
 
-/mob/living/proc/update_fov_dir()
+/mob/proc/update_fov_dir()
 	if(client && client.usefov)
-		client.fov_mask.dir = src.dir
-		client.fov_shadow.dir = src.dir
+		if(client.fov_mask && client.fov_shadow)
+			client.fov_mask.dir = src.dir
+			client.fov_shadow.dir = src.dir
+		else
+			client.remove_cone()
 
-/mob/living/proc/check_fov()
+
+/mob/proc/check_fov()
 	var/mob/eyepath
 	if(client)
 		if(resting || lying)
@@ -109,7 +113,7 @@
 		else
 			client.hide_cone()
 
-/mob/living/proc/toggle_fov(usefov, fovangle)
+/mob/proc/toggle_fov(usefov, fovangle)
 	if(client)
 		client.usefov = usefov
 		client.fovangle = fovangle
@@ -145,6 +149,13 @@
 	fov_mask = mob.clear_fullscreen("FOV_mask")
 	hasmask = FALSE
 
+/client/proc/reload_fov()
+	remove_cone()
+	if(istype(mob, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = mob
+		H.update_inv_head()
+
+
 
 /mob/living/proc/in_fov(atom/observed_atom, ignore_self = FALSE)
 	if(ignore_self && observed_atom == src)
@@ -155,6 +166,8 @@
 	var/turf/my_turf = get_turf(src) //Because being inside contents of something will cause our x,y to not be updated
 	// If turf doesn't exist, then we wouldn't get a fov check called by `play_fov_effect` or presumably other new stuff that might check this.
 	//  ^ If that case has changed and you need that check, add it.
+	if(!my_turf || !observed_atom)
+		return
 	var/rel_x = observed_atom.x - my_turf.x
 	var/rel_y = observed_atom.y - my_turf.y
 	if(client?.fovangle)

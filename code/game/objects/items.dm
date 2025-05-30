@@ -49,7 +49,7 @@
 	*/
 	var/flags_inv = 0
 	///See items_clothing.dm for appropriate bit flags
-	var/body_parts_covered = EMPTY_BITFIELD
+	var/body_parts_covered = FLAGS_OFF
 
 	var/item_flags = 0 //Miscellaneous flags pertaining to equippable objects.
 

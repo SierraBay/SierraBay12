@@ -59,4 +59,4 @@
 #include "TG_signals/_tg_signals_includes.dm"
 #include "infinity_content/_infinity_includes.dm"
 #include "petting_zoo/_petting_zoo_includes.dm"
-
+#include "psionics/psionics_includes.dm"

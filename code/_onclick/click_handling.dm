@@ -23,9 +23,9 @@ if(!click_handlers) { \
 	return ..()
 
 /// Removes this click handler on `/mob/Logout()`.
-var/global/const/CLICK_HANDLER_REMOVE_ON_MOB_LOGOUT = FLAG(0)
+var/global/const/CLICK_HANDLER_REMOVE_ON_MOB_LOGOUT = FLAG_01
 /// Removes and prevents creation of the click handler if it is not the active handler for the mob.
-var/global/const/CLICK_HANDLER_REMOVE_IF_NOT_TOP    = FLAG(1)
+var/global/const/CLICK_HANDLER_REMOVE_IF_NOT_TOP    = FLAG_02
 
 /datum/click_handler
 	/// The mob this click handler is attached to.
@@ -36,7 +36,7 @@ var/global/const/CLICK_HANDLER_REMOVE_IF_NOT_TOP    = FLAG(1)
 	 *
 	 * See `code\_onclick\click_handling.dm` for valid options.
 	 */
-	var/flags = EMPTY_BITFIELD
+	var/flags = FLAGS_OFF
 
 /datum/click_handler/New(mob/user)
 	..()

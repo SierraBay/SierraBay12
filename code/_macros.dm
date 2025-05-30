@@ -229,10 +229,6 @@
 #define TO_HEX_DIGIT(n) ascii2text((n&15) + ((n&15)<10 ? 48 : 87))
 
 
-/// Semantic define for a 0 int intended for use as a bitfield
-#define EMPTY_BITFIELD 0
-
-
 /// Right-shift of INT by BITS
 #define SHIFTR(INT, BITS) ((INT) >> (BITS))
 
@@ -241,12 +237,44 @@
 #define SHIFTL(INT, BITS) ((INT) << (BITS))
 
 
-/// Convenience define for nth-bit flags, 0-indexed
-#define FLAG(BIT) SHIFTL(1, BIT)
+/// Run-time nth-bit flag, 1-indexed
+#define RFLAG(BIT) SHIFTL(1, (BIT-1))
+
+#define MIN_FLAG_INDEX 1
+#define MAX_FLAG_INDEX 24
+
+#define FLAG_01 0x000001
+#define FLAG_02 0x000002
+#define FLAG_03 0x000004
+#define FLAG_04 0x000008
+#define FLAG_05 0x000010
+#define FLAG_06 0x000020
+#define FLAG_07 0x000040
+#define FLAG_08 0x000080
+#define FLAG_09 0x000100
+#define FLAG_10 0x000200
+#define FLAG_11 0x000400
+#define FLAG_12 0x000800
+#define FLAG_13 0x001000
+#define FLAG_14 0x002000
+#define FLAG_15 0x004000
+#define FLAG_16 0x008000
+#define FLAG_17 0x010000
+#define FLAG_18 0x020000
+#define FLAG_19 0x040000
+#define FLAG_20 0x080000
+#define FLAG_21 0x100000
+#define FLAG_22 0x200000
+#define FLAG_23 0x400000
+#define FLAG_24 0x800000
+
+
+#define FLAGS_ON 0xffffff
+#define FLAGS_OFF 0
 
 
 /// Test bit at index BIT is set in FIELD
-#define GET_BIT(FIELD, BIT) ((FIELD) & FLAG(BIT))
+#define GET_BIT(FIELD, BIT) ((FIELD) & RFLAG(BIT))
 
 
 /// Test bit at index BIT is set in FIELD; semantic alias of GET_BIT
@@ -254,15 +282,15 @@
 
 
 /// Set bit at index BIT in FIELD
-#define SET_BIT(FIELD, BIT) ((FIELD) |= FLAG(BIT))
+#define SET_BIT(FIELD, BIT) ((FIELD) |= RFLAG(BIT))
 
 
 /// Unset bit at index BIT in FIELD
-#define CLEAR_BIT(FIELD, BIT) ((FIELD) &= ~FLAG(BIT))
+#define CLEAR_BIT(FIELD, BIT) ((FIELD) &= ~RFLAG(BIT))
 
 
 /// Flip bit at index BIT in FIELD
-#define FLIP_BIT(FIELD, BIT) ((FIELD) ^= FLAG(BIT))
+#define FLIP_BIT(FIELD, BIT) ((FIELD) ^= RFLAG(BIT))
 
 
 /// Test any bits of MASK are set in FIELD

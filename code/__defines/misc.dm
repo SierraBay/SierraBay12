@@ -5,8 +5,8 @@
 #define NONE 0
 //[/SIERRA-ADD]
 // Turf-only flags.
-#define TURF_FLAG_NOJAUNT FLAG(0) // This is used in literally one place, turf.dm, to block ethereal jaunt.
-#define TURF_FLAG_NORUINS FLAG(1)
+#define TURF_FLAG_NOJAUNT FLAG_01 // This is used in literally one place, turf.dm, to block ethereal jaunt.
+#define TURF_FLAG_NORUINS FLAG_02
 
 #define TRANSITIONEDGE 7 // Distance from edge to move to another z-level.
 #define RUIN_MAP_EDGE_PAD 15
@@ -83,22 +83,22 @@
 #define DEFAULT_JOB_TYPE /datum/job/assistant
 
 //Area flags, possibly more to come
-#define AREA_FLAG_RAD_SHIELDED         FLAG(0)  // shielded from radiation, clearly
-#define AREA_FLAG_EXTERNAL             FLAG(1)  // External as in exposed to space, not outside in a nice, green, forest
-#define AREA_FLAG_ION_SHIELDED         FLAG(2)  // shielded from ionospheric anomalies as an FBP / IPC
-#define AREA_FLAG_IS_NOT_PERSISTENT    FLAG(3)  // SSpersistence will not track values from this area.
-#define AREA_FLAG_NO_MODIFY            FLAG(4)  // turf in this area cannot be dismantled.
-#define AREA_FLAG_HIDE_FROM_HOLOMAP    FLAG(5) // if we shouldn't be drawn on station holomaps
+#define AREA_FLAG_RAD_SHIELDED         FLAG_01  // shielded from radiation, clearly
+#define AREA_FLAG_EXTERNAL             FLAG_02  // External as in exposed to space, not outside in a nice, green, forest
+#define AREA_FLAG_ION_SHIELDED         FLAG_03  // shielded from ionospheric anomalies as an FBP / IPC
+#define AREA_FLAG_IS_NOT_PERSISTENT    FLAG_04  // SSpersistence will not track values from this area.
+#define AREA_FLAG_NO_MODIFY            FLAG_05  // turf in this area cannot be dismantled.
+#define AREA_FLAG_HIDE_FROM_HOLOMAP    FLAG_06 // if we shouldn't be drawn on station holomaps
 
 //Map template flags
-#define TEMPLATE_FLAG_ALLOW_DUPLICATES    FLAG(0)  // Lets multiple copies of the template to be spawned
-#define TEMPLATE_FLAG_SPAWN_GUARANTEED    FLAG(1)  // Makes it ignore away site budget and just spawn (only for away sites)
-#define TEMPLATE_FLAG_CLEAR_CONTENTS      FLAG(2)  // if it should destroy objects it spawns on top of
-#define TEMPLATE_FLAG_NO_RUINS            FLAG(3)  // if it should forbid ruins from spawning on top of it
-#define TEMPLATE_FLAG_NO_RADS             FLAG(4)  // Removes all radiation from the template after spawning.
+#define TEMPLATE_FLAG_ALLOW_DUPLICATES    FLAG_01  // Lets multiple copies of the template to be spawned
+#define TEMPLATE_FLAG_SPAWN_GUARANTEED    FLAG_02  // Makes it ignore away site budget and just spawn (only for away sites)
+#define TEMPLATE_FLAG_CLEAR_CONTENTS      FLAG_03  // if it should destroy objects it spawns on top of
+#define TEMPLATE_FLAG_NO_RUINS            FLAG_04  // if it should forbid ruins from spawning on top of it
+#define TEMPLATE_FLAG_NO_RADS             FLAG_05  // Removes all radiation from the template after spawning.
 
 //Ruin map template flags
-#define TEMPLATE_FLAG_RUIN_STARTS_DISALLOWED FLAG(5)  // Ruin is not available during spawning unless another ruin permits it.
+#define TEMPLATE_FLAG_RUIN_STARTS_DISALLOWED FLAG_06  // Ruin is not available during spawning unless another ruin permits it.
 
 // Convoluted setup so defines can be supplied by Bay12 main server compile script.
 // Should still work fine for people jamming the icons into their repo.
@@ -135,12 +135,12 @@
 #define NTNETSPEED_DOS_AMPLIFICATION 5	// Multiplier for Denial of Service program. Resulting load on NTNet relay is this multiplied by NTNETSPEED of the device
 
 // Program bitflags
-#define PROGRAM_CONSOLE       FLAG(0)
-#define PROGRAM_LAPTOP        FLAG(1)
-#define PROGRAM_TABLET        FLAG(2)
-#define PROGRAM_TELESCREEN    FLAG(3)
-#define PROGRAM_PDA           FLAG(4)
-#define PROGRAM_NO_KILL       FLAG(5) //Not included in PROGRAM_ALL
+#define PROGRAM_CONSOLE       FLAG_01
+#define PROGRAM_LAPTOP        FLAG_02
+#define PROGRAM_TABLET        FLAG_03
+#define PROGRAM_TELESCREEN    FLAG_04
+#define PROGRAM_PDA           FLAG_05
+#define PROGRAM_NO_KILL       FLAG_06 //Not included in PROGRAM_ALL
 #define PROGRAM_ALL ( PROGRAM_CONSOLE | PROGRAM_LAPTOP | PROGRAM_TABLET | PROGRAM_TELESCREEN | PROGRAM_PDA )
 
 #define PROGRAM_STATE_KILLED 0
@@ -291,7 +291,7 @@
 
 //-- Masks for /atom/var/init_flags --
 //- machinery
-#define INIT_MACHINERY_START_PROCESSING FLAG(0)
+#define INIT_MACHINERY_START_PROCESSING FLAG_01
 //--
 
 
@@ -331,19 +331,19 @@
 
 // Flags for `use_sanity_check()`
 /// Do not display user feedback messages.
-#define SANITY_CHECK_SILENT FLAG(0)
+#define SANITY_CHECK_SILENT FLAG_01
 /// Verify the tool can be unequipped from user. Ignored if the tool is not an item.
-#define SANITY_CHECK_TOOL_UNEQUIP FLAG(1)
+#define SANITY_CHECK_TOOL_UNEQUIP FLAG_02
 /// Verify the target can be unequipped from user. Includes `target.loc == src` check to allow items the user isn't holding.
-#define SANITY_CHECK_TARGET_UNEQUIP FLAG(2)
+#define SANITY_CHECK_TARGET_UNEQUIP FLAG_03
 /// Verify the target and tool are adjacent to eachother. Ignored if there is no tool or if tool is held by user.
-#define SANITY_CHECK_BOTH_ADJACENT FLAG(3)
+#define SANITY_CHECK_BOTH_ADJACENT FLAG_04
 /// Verify the tool is in the user's active hand. Ignored if the tool is not an item.
-#define SANITY_CHECK_TOOL_IN_HAND FLAG(4)
+#define SANITY_CHECK_TOOL_IN_HAND FLAG_05
 /// Check `CanInteractWith(target, user)`. Only use this for Topic() revalidation. Functionally exclusive with `SANITY_CHECK_TOPIC_PHYSICALLY_INTERACT`.
-#define SANITY_CHECK_TOPIC_INTERACT FLAG(5)
+#define SANITY_CHECK_TOPIC_INTERACT FLAG_06
 /// Check `CanPhysicallyInteractWith(target, user)`. Only use this for Topic() revalidation. Functionally exclusive with `SANITY_CHECK_TOPIC_INTERACT`.
-#define SANITY_CHECK_TOPIC_PHYSICALLY_INTERACT FLAG(6)
+#define SANITY_CHECK_TOPIC_PHYSICALLY_INTERACT FLAG_07
 
 #define SANITY_CHECK_DEFAULT (SANITY_CHECK_TOOL_IN_HAND | SANITY_CHECK_BOTH_ADJACENT)
 
@@ -393,7 +393,7 @@
 
 ///from base of atom/movable/Moved(): (/atom)
 #define COMSIG_MOVABLE_PRE_MOVE "movable_pre_move"
-	#define COMPONENT_MOVABLE_BLOCK_PRE_MOVE FLAG(0)
+	#define COMPONENT_MOVABLE_BLOCK_PRE_MOVE FLAG_01
 
 ///from base of atom/movable/Moved(): (atom/old_loc, forced)
 #define COMSIG_MOVABLE_MOVED "movable_moved"
@@ -408,7 +408,7 @@
 
 /// from mob/CanPass(): (atom/movable/mover, turf/target, height, air_group)
 #define COMSIG_MOB_CAN_PASS "mob_can_pass"
-	#define COMPONENT_MOB_PASSABLE FLAG(0)
+	#define COMPONENT_MOB_PASSABLE FLAG_01
 
 #define COMSIG_MOB_BUMPED "mob_bumped"
 
@@ -440,26 +440,26 @@
 /// Should only be used if you need to perform cleanup not related to the host object.
 /// You do not need this if you are only unregistering signals, for instance.
 /// You would need it if you are doing something like removing the target from a processing list.
-#define ELEMENT_DETACH_ON_HOST_DESTROY FLAG(0)
+#define ELEMENT_DETACH_ON_HOST_DESTROY FLAG_01
 /**
  * Only elements created with the same arguments given after `argument_hash_start_idx` share an element instance
  * The arguments are the same when the text and number values are the same and all other values have the same ref
  */
-#define ELEMENT_BESPOKE FLAG(1)
+#define ELEMENT_BESPOKE FLAG_02
 /// Causes all detach arguments to be passed to detach instead of only being used to identify the element
 /// When this is used your Detach proc should have the same signature as your Attach proc
-#define ELEMENT_COMPLEX_DETACH FLAG(2)
+#define ELEMENT_COMPLEX_DETACH FLAG_03
 /**
  * Elements with this flag will have their datum lists arguments compared as is,
  * without the contents being sorted alpha-numerically first.
  * This is good for those elements where the position of the keys matter, like in the case of color matrices.
  */
-#define ELEMENT_DONT_SORT_LIST_ARGS FLAG(3)
+#define ELEMENT_DONT_SORT_LIST_ARGS FLAG_04
 /**
  * Elements with this flag will be ignored by the dcs_check_list_arguments test.
  * A good example is connect_loc, for which it's pratically undoable unless we force every signal proc to have a different name.
  */
-#define ELEMENT_NO_LIST_UNIT_TEST FLAG(4)
+#define ELEMENT_NO_LIST_UNIT_TEST FLAG_05
 
 // How multiple components of the exact same type are handled in the same datum
 /// old component is deleted (default)
@@ -500,7 +500,7 @@
 #define COMSIG_TOPIC "handle_topic"
 /// handler for vv_do_topic (usr, href_list)
 #define COMSIG_VV_TOPIC "vv_topic"
-	#define COMPONENT_VV_HANDLED FLAG(0)
+	#define COMPONENT_VV_HANDLED FLAG_01
 /// from datum ui_act (usr, action)
 #define COMSIG_UI_ACT "COMSIG_UI_ACT"
 

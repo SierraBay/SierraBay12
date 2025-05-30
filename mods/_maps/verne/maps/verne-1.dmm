@@ -3151,9 +3151,8 @@
 	dir = 4;
 	pixel_x = -24
 	},
-/obj/machinery/atmospherics/binary/pump/high_power{
-	dir = 1;
-	name = "Fuel to Catfish"
+/obj/machinery/atmospherics/valve/digital{
+	name = "Hangar fuel line"
 	},
 /turf/simulated/floor/tiled/techmaint,
 /area/verne/engineering/atmospherics)
