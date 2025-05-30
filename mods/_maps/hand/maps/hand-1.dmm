@@ -1365,6 +1365,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/hand/engineering/starboard)
 "gD" = (
@@ -2463,6 +2466,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/hand/engineering/starboard)
 "mx" = (
@@ -2670,9 +2676,9 @@
 /area/ship/hand/maintenance/atmos/fuel)
 "nM" = (
 /obj/structure/catwalk,
-/obj/structure/ladder/up,
-/obj/structure/lattice,
-/turf/space,
+/turf/simulated/floor/plating{
+	map_airless = 1
+	},
 /area/space)
 "nO" = (
 /obj/floor_decal/techfloor/orange{
@@ -3029,6 +3035,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/ship/hand/engineering/starboard)
 "pB" = (
@@ -3087,6 +3096,7 @@
 /area/ship/hand/shuttle/tug_one)
 "pV" = (
 /obj/machinery/fabricator/hacked,
+/obj/item/storage/box/autolathe_designs,
 /turf/simulated/floor/tiled/techmaint,
 /area/ship/hand/engineering/starboard)
 "pW" = (
@@ -5927,7 +5937,9 @@
 /obj/structure/sign/warning/hot_exhaust{
 	pixel_y = 32
 	},
-/turf/space,
+/turf/simulated/floor/plating{
+	map_airless = 1
+	},
 /area/space)
 "DN" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -6681,7 +6693,9 @@
 "Ho" = (
 /obj/structure/catwalk,
 /obj/structure/ladder/up,
-/turf/space,
+/turf/simulated/floor/plating{
+	map_airless = 1
+	},
 /area/space)
 "Hy" = (
 /obj/machinery/atmospherics/portables_connector{
@@ -8234,6 +8248,9 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/ship/hand/engineering/starboard)
@@ -16449,7 +16466,7 @@ OV
 Iv
 Iv
 Iv
-kR
+nM
 aa
 tb
 tb
@@ -16544,7 +16561,7 @@ aa
 aa
 aa
 aa
-nM
+Ho
 wT
 wT
 Vs
@@ -16571,7 +16588,7 @@ gX
 Iv
 Iv
 Iv
-kR
+nM
 aa
 aa
 tb
@@ -17181,7 +17198,7 @@ vc
 Iv
 Iv
 Ho
-kR
+nM
 aa
 aa
 aa
@@ -17913,7 +17930,7 @@ NQ
 dz
 dz
 Ho
-kR
+nM
 aa
 aa
 aa
@@ -18496,7 +18513,7 @@ aa
 aa
 aa
 aa
-nM
+Ho
 pM
 pM
 Gn
@@ -18523,7 +18540,7 @@ UH
 dz
 dz
 dz
-kR
+nM
 aa
 aa
 tb
@@ -18645,7 +18662,7 @@ Fa
 dz
 dz
 dz
-kR
+nM
 aa
 tb
 tb

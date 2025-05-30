@@ -48,6 +48,11 @@
 	use_power_cost = 0//Already handled by defib, but it's 150 Wh, normal defib takes 100
 	device = /obj/item/shockpaddles/rig
 
+/obj/item/rig_module/device/defib/Initialize()
+	. = ..()
+	var/obj/item/shockpaddles/rig/paddles = device
+	paddles.module = src
+
 /obj/item/rig_module/device/drill
 	name = "hardsuit mounted drill"
 	desc = "A very heavy diamond-tipped drill."
@@ -309,7 +314,7 @@
 	holder.speech = null
 	holder.verbs -= /obj/item/rig/proc/alter_voice
 
-/obj/item/rig_module/voice/engage()
+/obj/item/rig_module/voice/engage(atom/target)
 
 	if(!..())
 		return 0
@@ -359,29 +364,18 @@
 	origin_tech = list(TECH_MATERIAL = 6,  TECH_ENGINEERING = 7)
 	var/obj/item/tank/jetpack/rig/jets
 
-/obj/item/rig_module/maneuvering_jets/engage()
+/obj/item/rig_module/maneuvering_jets/engage(atom/target)
 	if(!..())
 		return 0
 	jets.toggle_rockets()
 	return 1
 
 /obj/item/rig_module/maneuvering_jets/activate()
-
-	if(active)
-		return 0
-
-	active = 1
-
-	spawn(1)
-		if(suit_overlay_active)
-			suit_overlay = suit_overlay_active
-		else
-			suit_overlay = null
-		holder.update_icon()
-
+	if(!..())
+		return FALSE
 	if(!jets.on)
 		jets.toggle()
-	return 1
+	return TRUE
 
 /obj/item/rig_module/maneuvering_jets/deactivate()
 	if(!..())

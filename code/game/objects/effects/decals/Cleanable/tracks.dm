@@ -45,7 +45,7 @@ var/global/list/image/fluidtrack_cache=list()
 	cleanable_scent = null
 
 	/// Bitflag. All directions, both incoming and outgoing, that this track decal has prints traveling in. See `setdirs` for a definition of each flag.
-	var/dirs = EMPTY_BITFIELD
+	var/dirs = FLAGS_OFF
 	/// String. Icon state used for incoming tracks during `update_icon()`.
 	var/coming_state="blood1"
 	/// String. Icon state used for outgoing tracks during `update_icon()`.

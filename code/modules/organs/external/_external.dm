@@ -91,8 +91,8 @@
 	if(get_fingerprint())
 		A.add_partial_print(get_fingerprint())
 
-/obj/item/organ/external/New(mob/living/carbon/holder)
-	..()
+/obj/item/organ/external/Initialize()
+	. = ..()
 	if(isnull(pain_disability_threshold))
 		pain_disability_threshold = (max_damage * 0.75)
 	if(owner)
@@ -843,7 +843,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 					)
 
 //Handles dismemberment
-/obj/item/organ/external/proc/droplimb(clean, disintegrate = DROPLIMB_EDGE, ignore_children, silent)
+/obj/item/organ/external/proc/droplimb(clean, disintegrate = DROPLIMB_EDGE, ignore_children, silent, skip_throw)
 
 	if(!(limb_flags & ORGAN_FLAG_CAN_AMPUTATE) || !owner)
 		return
@@ -904,7 +904,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 			add_blood(victim)
 			SetTransform(rotation = rand(180))
 			forceMove(get_turf(src))
-			if(!clean)
+			if(!clean && !skip_throw)
 				// Throw limb around.
 				if(src && istype(loc,/turf))
 					throw_at(get_edge_target_turf(src,pick(GLOB.alldirs)),rand(1,3),5)
@@ -1090,6 +1090,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		return 1
 	return 0
 
+/* [SIERRA-REMOVE] - IPC_MODS Там тот же прок есть, закомментил, он два раза выполнялся, и это не нужно
 /obj/item/organ/external/robotize(company, skip_prosthetics = 0, keep_organs = 0)
 
 	if(BP_IS_ROBOTIC(src))
@@ -1142,6 +1143,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	CLEAR_FLAGS(status, ORGAN_ARTERY_CUT)
 
 	return 1
+*/
 
 /obj/item/organ/external/proc/get_damage()	//returns total damage
 	return (brute_dam+burn_dam)	//could use max_damage?

@@ -1,0 +1,17 @@
+#ifndef MODPACK_MAP_GEMERAL_MAPS
+#define MODPACK_MAP_GEMERAL_MAPS
+
+#include "_map_general_maps.dm"
+#include "code/blueriver.dm"
+#include "code/derelict.dm"
+#include "code/ert.dm"
+#include "code/heist.dm"
+#include "code/icgnv_hound.dm"
+#include "code/mining.dm"
+#include "code/oldlab2.dm"
+#include "code/scavver_gantry.dm"
+#include "code/sfv_arbiter.dm"
+#include "code/slavers_base.dm"
+#include "code/voxraider.dm"
+
+#endif

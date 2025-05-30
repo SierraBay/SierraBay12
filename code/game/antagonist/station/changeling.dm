@@ -1,4 +1,4 @@
-GLOBAL_DATUM_INIT(changelings, /datum/antagonist/changeling, new)
+GLOBAL_TYPED_NEW(changelings, /datum/antagonist/changeling)
 
 /datum/antagonist/changeling
 	id = MODE_CHANGELING
@@ -10,6 +10,7 @@ GLOBAL_DATUM_INIT(changelings, /datum/antagonist/changeling, new)
 	welcome_text = "Use say \"%LANGUAGE_PREFIX%g message\" to communicate with your fellow changelings. Remember: you get all of their absorbed DNA if you absorb them."
 	flags = ANTAG_SUSPICIOUS | ANTAG_RANDSPAWN | ANTAG_VOTABLE
 	antaghud_indicator = "hudchangeling"
+	skill_setter = /datum/antag_skill_setter/station
 
 	faction = "changeling"
 
@@ -79,7 +80,7 @@ GLOBAL_DATUM_INIT(changelings, /datum/antagonist/changeling, new)
 				return 1
 			else if(isnewplayer(player.current))
 				if(player.current.client && player.current.client.prefs)
-					var/datum/species/S = all_species[player.current.client.prefs.species]
+					var/singleton/species/S = GLOB.species_by_name[player.current.client.prefs.species]
 					if(S?.species_flags & SPECIES_FLAG_NO_SCAN|SPECIES_FLAG_NEED_DIRECT_ABSORB)
 						return 0
 					if(player.current.client.prefs.organ_data[BP_CHEST] == "cyborg") // Full synthetic.

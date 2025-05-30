@@ -6,7 +6,6 @@
 	construct_state = /singleton/machine_construction/default/panel_closed
 	density = TRUE
 	anchored = TRUE
-	waterproof = TRUE
 	volume = 5000
 	use_power = POWER_USE_IDLE
 	idle_power_usage = 100

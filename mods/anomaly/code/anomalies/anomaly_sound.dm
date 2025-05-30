@@ -6,9 +6,8 @@
 	var/sound_type
 	///Мощность аномалии
 	var/effect_power = MOMENTUM_ANOMALY_EFFECT
-	//У аномалии есть статичный звук
-	var/have_static_sound = FALSE
-	//Путь до звука статики
-	var/static_sound_type = 'mods/anomaly/sounds/any_idle.ogg'
-
+	//Путь до луп звука
+	var/static_sound_type
+	///Применяется для размещения ЛУП звука
+	var/static_sound_obj
 	var/preload_sound_type

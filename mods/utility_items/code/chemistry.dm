@@ -40,3 +40,200 @@
 
 	glass_name = "Kompot"
 	glass_desc = "Traditional Terran drink. Grandma would be proud."
+
+
+// SLIME REACTIONS //
+
+// Silver
+
+/singleton/reaction/slime/silver
+	name = "Slime Silver"
+	result = null
+	required_reagents = list(/datum/reagent/blood = 1)
+	result_amount = 1
+	required = /obj/item/slime_extract/silver
+
+/singleton/reaction/slime/silver/on_reaction(datum/reagents/holder)
+	..()
+	var/obj/item/stack/material/silver/S = new (get_turf(holder.my_atom))
+	S.amount = 5
+
+// Glass
+
+/singleton/reaction/slime/glass
+	name = "Slime Glass"
+	result = null
+	required_reagents = list(/datum/reagent/water = 1)
+	result_amount = 1
+	required = /obj/item/slime_extract/metal
+
+/singleton/reaction/slime/glass/on_reaction(datum/reagents/holder)
+	..()
+	var/obj/item/stack/material/glass/G = new (get_turf(holder.my_atom))
+	G.amount = 15
+	var/obj/item/stack/material/glass/reinforced/RG = new (get_turf(holder.my_atom))
+	RG.amount = 5
+
+// Oil
+
+/singleton/reaction/slime/oil
+	name = "Slime Machine Oil"
+	result = /datum/reagent/oil
+	required_reagents = list(/datum/reagent/water = 1)
+	result_amount = 10
+	required = /obj/item/slime_extract/oil
+
+//Black
+/singleton/reaction/slime/psimutate
+	name = "Mule Mutation Toxin"
+	result = /datum/reagent/psislimetoxin
+	required_reagents = list(/datum/reagent/blood = 1)
+	result_amount = 1
+	required = /obj/item/slime_extract/black
+
+/singleton/reaction/slime/psimutate/get_reaction_flags(datum/reagents/holder)
+	for(var/datum/reagent/blood/blood in holder.reagent_list)
+		var/weakref/donor_ref = islist(blood.data) && blood.data["donor"]
+		if(istype(donor_ref))
+			var/mob/living/donor = donor_ref.resolve()
+			if(istype(donor) && (donor.psi || (donor.mind && GLOB.wizards.is_antagonist(donor.mind))))
+				return TRUE
+
+// Turning monkeys into mule
+
+/* Transformations */
+/datum/reagent/psislimetoxin
+	name = "Twisted Mutation Toxin"
+	description = "A corruptive toxin produced by slimes. This one looks like vomit."
+	taste_description = "sludge"
+	reagent_state = LIQUID
+	color = "#96c921"
+	metabolism = REM * 0.2
+	value = 2
+	should_admin_log = TRUE
+
+/datum/reagent/psislimetoxin/affect_blood(mob/living/carbon/M, removed)
+	if(HAS_TRANSFORMATION_MOVEMENT_HANDLER(M))
+		return
+	if(M.species.name != SPECIES_MONKEY)
+		return
+	to_chat(M, SPAN_DANGER("Your flesh rapidly mutates!"))
+	ADD_TRANSFORMATION_MOVEMENT_HANDLER(M)
+	M.icon = null
+	M.ClearOverlays()
+	M.set_invisibility(INVISIBILITY_ABSTRACT)
+	for(var/obj/item/W in M)
+		if(istype(W, /obj/item/implant))
+			qdel(W)
+			continue
+		M.drop_from_inventory(W)
+	var/mob/living/carbon/human/new_mob = new /mob/living/carbon/human(M.loc)
+	new_mob.skin_tone = 35
+	new_mob.species = GLOB.species_by_name[SPECIES_MULE]
+	if(M.mind)
+		M.mind.transfer_to(new_mob)
+		new_mob.languages = list(LANGUAGE_HUMAN_EURO)
+	else
+		new_mob.key = M.key
+	qdel(M)
+
+// Turning man into lizards
+
+/singleton/reaction/yeostoxin
+	name = "Lizard Toxin"
+	result = /datum/reagent/yeostoxin
+	required_reagents = list(/datum/reagent/slimetoxin = 1, /datum/reagent/toxin/yeosvenom = 1)
+	result_amount = 1
+	mix_message = "The mixture becomes cloudy and darkens slightly with a disgusting hissing sound."
+
+/* Transformations */
+/datum/reagent/yeostoxin
+	name = "Envenomed Mutation Toxin"
+	description = "A corruptive toxin produced by slimes. This one is little darker."
+	taste_description = "sludge"
+	reagent_state = LIQUID
+	color = "#13bc5e"
+	metabolism = REM * 0.2
+	value = 2
+	should_admin_log = TRUE
+
+/datum/reagent/yeostoxin/affect_blood(mob/living/carbon/human/H, removed)
+	if(!istype(H))
+		return
+	if(H.species.name == SPECIES_YEOSA)
+		return
+	H.adjustToxLoss(40 * removed)
+	if(H.chem_doses[type] < 1 || prob(30))
+		return
+	H.chem_doses[type] = 0
+	var/list/meatchunks = list()
+	for(var/limb_tag in list(BP_R_ARM, BP_L_ARM, BP_R_LEG,BP_L_LEG))
+		var/obj/item/organ/external/E = H.get_organ(limb_tag)
+		if(E && !E.is_stump() && !BP_IS_ROBOTIC(E) && E.species.name != SPECIES_YEOSA)
+			meatchunks += E
+	if(!length(meatchunks))
+		if(prob(10))
+			to_chat(H, SPAN_DANGER("Your flesh rapidly mutates!"))
+			H.set_species(SPECIES_YEOSA)
+			H.shapeshifter_set_colour("#13bc5e")
+		return
+	var/obj/item/organ/external/O = pick(meatchunks)
+	to_chat(H, SPAN_DANGER("Your [O.name]'s flesh mutates rapidly!"))
+	if(!GLOB.mob_ref_to_species_name[any2ref(H)])
+		GLOB.mob_ref_to_species_name[any2ref(H)] = H.species.name
+	meatchunks = list(O) | O.children
+	for(var/obj/item/organ/external/E in meatchunks)
+		E.species = GLOB.species_by_name[SPECIES_YEOSA]
+		E.skin_tone = null
+		E.s_col = ReadRGB("#13bc5e")
+		E.s_col_blend = ICON_ADD
+		E.status &= ~ORGAN_BROKEN
+		E.status |= ORGAN_MUTATED
+		E.limb_flags &= ~ORGAN_FLAG_CAN_BREAK
+		E.dislocated = -1
+		E.max_damage = 5
+		E.update_icon(1)
+	O.max_damage = 15
+	if(prob(10))
+		to_chat(H, SPAN_DANGER("Your new [O.name] explodes with a stream of blood and unformed muscles!"))
+		O.droplimb()
+	H.update_body()
+
+// Critter
+
+/singleton/reaction/slime/crit
+	possible_mobs = list(
+							/mob/living/simple_animal/passive/cat,
+							/mob/living/simple_animal/passive/cat/kitten,
+							/mob/living/simple_animal/passive/corgi,
+							/mob/living/simple_animal/passive/corgi/puppy,
+							/mob/living/simple_animal/passive/cow,
+							/mob/living/simple_animal/passive/chick,
+							/mob/living/simple_animal/passive/chicken,
+							/mob/living/simple_animal/passive/crab,
+							/mob/living/simple_animal/passive/opossum,
+							/mob/living/simple_animal/passive/snake,
+							/mob/living/simple_animal/passive/thoom,
+							/mob/living/simple_animal/butterfly,
+							/mob/living/simple_animal/friendly/cat/maine_coon,
+							/mob/living/simple_animal/friendly/cat/floppa,
+							/mob/living/simple_animal/friendly/dogs,
+							/mob/living/simple_animal/friendly/dogs/pug,
+							/mob/living/simple_animal/friendly/dogs/shiba_inu,
+							/mob/living/simple_animal/friendly/frog,
+							/mob/living/simple_animal/friendly/rabbit,
+							/mob/living/simple_animal/hostile/retaliate/kangaroo,
+							/mob/living/simple_animal/friendly/lizard/axolotl,
+							/mob/living/simple_animal/friendly/megamoth,
+							/mob/living/simple_animal/penguin,
+							/mob/living/simple_animal/penguin/emperor,
+							/mob/living/simple_animal/penguin/baby,
+							/mob/living/simple_animal/hostile/retaliate/reindeer,
+							/mob/living/simple_animal/pet/sloth,
+							/mob/living/simple_animal/hostile/commanded/dog/german,
+							/mob/living/simple_animal/hostile/commanded/dog/german/black,
+							/mob/living/simple_animal/hostile/commanded/dog/golden_retriever,
+							/mob/living/simple_animal/hostile/commanded/dog/bullterrier,
+							/mob/living/simple_animal/friendly/fox,
+							/mob/living/simple_animal/friendly/koala
+							)

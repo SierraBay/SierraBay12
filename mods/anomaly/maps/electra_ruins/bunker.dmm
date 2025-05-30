@@ -4,61 +4,67 @@
 /obj/structure/aurora/wall_light{
 	dir = 4
 	},
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/bunker)
+/area/map_template/anomaly/bunker)
 "br" = (
 /obj/structure/table/steel_reinforced,
 /obj/structure/aurora/wall_light{
 	dir = 1
 	},
 /obj/random/contraband,
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/bunker)
+/area/map_template/anomaly/bunker)
 "bI" = (
-/obj/machinery/r_n_d/circuit_imprinter,
 /obj/structure/aurora/wall_light{
 	dir = 1
 	},
+/obj/decal/cleanable/dirt,
+/obj/machinery/fabricator/rnd/protolathe,
+/obj/item/storage/box/autolathe_designs,
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/bunker)
+/area/map_template/anomaly/bunker)
 "bX" = (
 /obj/machinery/computer/rdconsole/core/colony{
 	req_access = list();
 	dir = 1
 	},
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/bunker)
+/area/map_template/anomaly/bunker)
 "cb" = (
 /obj/structure/hygiene/toilet{
 	dir = 8
 	},
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/bunker)
+/area/map_template/anomaly/bunker)
 "cg" = (
 /turf/simulated/wall/titanium,
-/area/map_template/bunker)
+/area/map_template/anomaly/bunker)
 "dj" = (
 /obj/structure/rubble/house,
 /obj/random/trash,
 /obj/item/stack/material/rods,
-/obj/floor_decal/snow,
 /turf/simulated/floor/holofloor/tiled,
 /area/template_noop)
 "eb" = (
 /obj/structure/hygiene/sink{
 	pixel_y = -12
 	},
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/bunker)
+/area/map_template/anomaly/bunker)
 "eL" = (
 /obj/structure/closet/emcloset,
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/bunker)
+/area/map_template/anomaly/bunker)
 "fn" = (
 /obj/machinery/vending/tool,
-/obj/floor_decal/snow,
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/bunker)
+/area/map_template/anomaly/bunker)
 "fr" = (
 /obj/random/trash,
 /turf/simulated/floor/exoplanet/snow,
@@ -71,8 +77,9 @@
 	dir = 1
 	},
 /obj/decal/cleanable/generic,
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/bunker)
+/area/map_template/anomaly/bunker)
 "hn" = (
 /obj/structure/aurora/wall_light{
 	dir = 1
@@ -85,24 +92,26 @@
 /area/template_noop)
 "ib" = (
 /obj/machinery/washing_machine,
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/bunker)
+/area/map_template/anomaly/bunker)
 "kt" = (
 /obj/anomaly/electra/three_and_three/tesla_second,
 /turf/simulated/floor/exoplanet/snow,
 /area/template_noop)
 "kM" = (
 /obj/structure/closet/radiation,
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/bunker)
+/area/map_template/anomaly/bunker)
 "lJ" = (
 /obj/structure/bed/chair/comfy/brown,
 /obj/decal/cleanable/generic,
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/bunker)
+/area/map_template/anomaly/bunker)
 "lN" = (
 /obj/machinery/constructable_frame,
-/obj/floor_decal/snow,
 /turf/simulated/floor/holofloor/tiled,
 /area/template_noop)
 "lO" = (
@@ -114,7 +123,6 @@
 /obj/random/loot,
 /obj/random/loot,
 /obj/random/loot,
-/obj/floor_decal/snow,
 /turf/simulated/floor/holofloor/tiled,
 /area/template_noop)
 "lS" = (
@@ -124,10 +132,9 @@
 	icon_state = "railing0-1"
 	},
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/bunker)
+/area/map_template/anomaly/bunker)
 "mb" = (
 /obj/random/trash,
-/obj/floor_decal/snow,
 /turf/simulated/floor/holofloor/tiled,
 /area/template_noop)
 "op" = (
@@ -137,45 +144,60 @@
 /obj/machinery/vending/engineering{
 	req_access = list()
 	},
-/obj/floor_decal/snow,
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/bunker)
+/area/map_template/anomaly/bunker)
 "oS" = (
 /obj/structure/aurora/wall_light,
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/bunker)
+/area/map_template/anomaly/bunker)
+"oX" = (
+/obj/structure/table/steel_reinforced,
+/obj/decal/cleanable/dirt,
+/obj/random/firstaid,
+/turf/simulated/floor/holofloor/tiled,
+/area/map_template/anomaly/bunker)
 "pl" = (
 /obj/structure/reagent_dispensers/watertank,
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/bunker)
+/area/map_template/anomaly/bunker)
 "qc" = (
 /obj/structure/rubble/house,
 /obj/item/stack/material/rods,
+/obj/decal/cleanable/dirt,
+/obj/landmark/no_weather_here,
 /turf/simulated/floor/holofloor/tiled,
 /area/template_noop)
 "qL" = (
-/obj/structure/table/steel_reinforced,
-/obj/random/contraband,
+/obj/decal/cleanable/dirt,
+/obj/structure/table/rack,
+/obj/item/storage/firstaid/combat/bunker,
+/obj/item/storage/firstaid/combat/bunker,
+/obj/item/storage/firstaid/combat/bunker,
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/bunker)
+/area/map_template/anomaly/bunker)
 "qM" = (
 /obj/machinery/anomaly_container{
 	req_access = list()
 	},
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/bunker)
+/area/map_template/anomaly/bunker)
 "ro" = (
 /obj/structure/rubble/house,
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/bunker)
+/area/map_template/anomaly/bunker)
 "tT" = (
 /obj/machinery/r_n_d/destructive_analyzer,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -7;
 	pixel_y = 32
 	},
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/bunker)
+/area/map_template/anomaly/bunker)
 "ua" = (
 /obj/structure/grille/broken,
 /obj/anomaly/electra/three_and_three/tesla_second,
@@ -186,11 +208,13 @@
 /obj/structure/aurora/wall_light{
 	dir = 1
 	},
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/bunker)
+/area/map_template/anomaly/bunker)
 "uX" = (
 /obj/structure/rubble/house,
 /obj/random/trash,
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
 /area/template_noop)
 "vg" = (
@@ -198,21 +222,33 @@
 /obj/structure/aurora/wall_light{
 	dir = 1
 	},
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/bunker)
+/area/map_template/anomaly/bunker)
+"vi" = (
+/obj/decal/cleanable/generic,
+/obj/decal/cleanable/dirt,
+/obj/item/disk/secret_project/science,
+/turf/simulated/floor/holofloor/tiled,
+/area/map_template/anomaly/bunker)
 "vR" = (
-/obj/structure/broken_door,
-/obj/floor_decal/snow,
+/obj/structure/table/steel_reinforced,
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/bunker)
+/area/map_template/anomaly/bunker)
 "vW" = (
-/obj/structure/bed/padded{
-	dir = 1
+/obj/decal/cleanable/dirt,
+/obj/structure/table/steel_reinforced,
+/obj/item/paper/Court{
+	info = "Техника отказала, пишу на эту бумажку. Наш отряд вернулся с полевой экспедиции и обнаружила, что основная научная группа эвакуировалась.  Если кто-то из наших вернётся, мы отправились на местную гору, высота номер 102, попытаемся свзяаться с штабом. Техника сгорела из-за откуда-то взявшейся молнии, чертовщина...";
+	name = "Записка"
 	},
-/obj/item/bedsheet/hop,
-/obj/structure/curtain/open/bed,
+/obj/item/disk/secret_project/science,
+/obj/item/disk/secret_project/science,
+/obj/item/disk/secret_project/science,
+/obj/item/disk/secret_project/science,
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/bunker)
+/area/map_template/anomaly/bunker)
 "wa" = (
 /obj/structure/largecrate,
 /obj/random/loot,
@@ -220,7 +256,6 @@
 /obj/random/loot,
 /obj/random/loot,
 /obj/random/loot,
-/obj/floor_decal/snow,
 /turf/simulated/floor/holofloor/tiled,
 /area/template_noop)
 "wv" = (
@@ -235,11 +270,10 @@
 	dir = 1
 	},
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/bunker)
+/area/map_template/anomaly/bunker)
 "wM" = (
 /obj/structure/rubble/house,
 /obj/random/trash,
-/obj/floor_decal/snow,
 /turf/simulated/floor/holofloor/tiled,
 /area/template_noop)
 "wQ" = (
@@ -254,22 +288,37 @@
 	req_access = list()
 	},
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/bunker)
+/area/map_template/anomaly/bunker)
 "xJ" = (
 /obj/structure/rubble/house,
+/obj/decal/cleanable/dirt,
+/obj/landmark/no_weather_here,
 /turf/simulated/floor/holofloor/tiled,
 /area/template_noop)
+"yx" = (
+/turf/simulated/floor/exoplanet/snow,
+/area/map_template/anomaly/bunker)
 "zk" = (
 /obj/wallframe_spawn/reinforced/titanium,
 /turf/template_noop,
-/area/map_template/bunker)
+/area/map_template/anomaly/bunker)
+"zx" = (
+/obj/decal/cleanable/dirt,
+/obj/structure/table/rack,
+/obj/item/storage/firstaid/combat/special/bunker,
+/obj/item/storage/firstaid/combat/special/bunker,
+/obj/item/storage/firstaid/combat/special/bunker,
+/turf/simulated/floor/holofloor/tiled,
+/area/map_template/anomaly/bunker)
 "zW" = (
 /obj/structure/curtain/open/shower,
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/bunker)
+/area/map_template/anomaly/bunker)
 "AB" = (
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/bunker)
+/area/map_template/anomaly/bunker)
 "By" = (
 /obj/item/stack/material/rods,
 /turf/simulated/floor/exoplanet/snow,
@@ -277,25 +326,22 @@
 "BS" = (
 /obj/structure/aurora/smes,
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/bunker)
+/area/map_template/anomaly/bunker)
 "CI" = (
 /obj/structure/aurora/wall_light{
 	dir = 1
 	},
-/obj/floor_decal/snow,
 /turf/simulated/floor/tiled/techmaint,
-/area/map_template/bunker)
+/area/map_template/anomaly/bunker)
 "Dr" = (
 /obj/structure/rubble/house,
 /obj/decal/cleanable/generic,
-/obj/floor_decal/snow,
 /turf/simulated/floor/holofloor/tiled,
 /area/template_noop)
 "Ek" = (
-/obj/machinery/door/blast/regular,
-/obj/structure/broken_door,
+/obj/structure/aurora/vault_door,
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/bunker)
+/area/map_template/anomaly/bunker)
 "Fi" = (
 /obj/structure/largecrate,
 /obj/random/loot,
@@ -315,42 +361,45 @@
 	icon_state = "railing0-1"
 	},
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/bunker)
+/area/map_template/anomaly/bunker)
 "Gy" = (
 /obj/structure/rubble/house,
 /obj/random/trash,
 /obj/item/stack/material/rods,
-/turf/simulated/floor/holofloor/tiled,
-/area/template_noop)
-"GD" = (
-/obj/structure/bed/padded{
-	dir = 1
-	},
-/obj/item/bedsheet/hop,
-/obj/structure/curtain/open/bed,
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
 /area/template_noop)
 "GF" = (
 /obj/structure/aurora/wall_light{
 	dir = 8
 	},
+/obj/decal/cleanable/dirt,
+/obj/structure/table/steel_reinforced,
+/obj/item/disk/secret_project/science,
+/obj/item/disk/secret_project/science,
+/obj/item/disk/secret_project/science,
+/obj/item/toy/bronze_pig,
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/bunker)
+/area/map_template/anomaly/bunker)
 "Hk" = (
 /obj/structure/rubble/house,
 /obj/decal/cleanable/generic,
+/obj/decal/cleanable/dirt,
+/obj/landmark/no_weather_here,
 /turf/simulated/floor/holofloor/tiled,
 /area/template_noop)
 "HI" = (
 /obj/structure/hygiene/shower{
 	dir = 4
 	},
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/bunker)
+/area/map_template/anomaly/bunker)
 "Ih" = (
 /obj/structure/dispenser/oxygen,
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/bunker)
+/area/map_template/anomaly/bunker)
 "IH" = (
 /obj/random/masks,
 /turf/simulated/floor/exoplanet/snow,
@@ -358,20 +407,24 @@
 "IS" = (
 /obj/machinery/door/airlock,
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/bunker)
+/area/map_template/anomaly/bunker)
 "KT" = (
 /obj/structure/table/steel_reinforced,
 /obj/random/toolbox,
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/bunker)
+/area/map_template/anomaly/bunker)
 "Lx" = (
 /obj/decal/cleanable/generic,
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/bunker)
+/area/map_template/anomaly/bunker)
 "OQ" = (
 /obj/structure/table/steel_reinforced,
+/obj/decal/cleanable/dirt,
+/obj/random/contraband,
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/bunker)
+/area/map_template/anomaly/bunker)
 "Pi" = (
 /obj/machinery/door/blast/regular/open,
 /obj/structure/broken_door,
@@ -380,18 +433,26 @@
 "Pk" = (
 /obj/structure/aurora/old_comp,
 /obj/structure/table/steel_reinforced,
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/bunker)
+/area/map_template/anomaly/bunker)
 "Pl" = (
 /obj/structure/aurora/wall_light{
 	dir = 1
 	},
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/bunker)
+/area/map_template/anomaly/bunker)
+"Sq" = (
+/obj/machinery/door/airlock,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/holofloor/tiled,
+/area/map_template/anomaly/bunker)
 "Tb" = (
-/obj/machinery/r_n_d/protolathe,
+/obj/decal/cleanable/dirt,
+/obj/machinery/fabricator/rnd/imprinter,
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/bunker)
+/area/map_template/anomaly/bunker)
 "Td" = (
 /obj/structure/aurora/wall_light,
 /turf/simulated/floor/exoplanet/snow,
@@ -399,12 +460,10 @@
 "TO" = (
 /obj/machinery/door/blast/regular/open,
 /obj/structure/broken_door,
-/obj/floor_decal/snow,
 /turf/simulated/floor/tiled/techmaint,
-/area/map_template/bunker)
+/area/map_template/anomaly/bunker)
 "Vd" = (
 /obj/structure/rubble/house,
-/obj/floor_decal/snow,
 /turf/simulated/floor/holofloor/tiled,
 /area/template_noop)
 "Vi" = (
@@ -412,15 +471,18 @@
 /obj/structure/aurora/wall_light{
 	dir = 4
 	},
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/bunker)
+/area/map_template/anomaly/bunker)
 "WC" = (
 /obj/machinery/stasis_cage{
 	req_access = list()
 	},
-/obj/floor_decal/snow,
 /turf/simulated/floor/holofloor/tiled,
 /area/template_noop)
+"WQ" = (
+/turf/simulated/wall/titanium/bunker_map,
+/area/map_template/anomaly/bunker)
 "XD" = (
 /obj/structure/grille/broken,
 /turf/simulated/floor/exoplanet/snow,
@@ -434,21 +496,32 @@
 	pixel_y = -12
 	},
 /obj/item/clothing/glasses/science,
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/bunker)
+/area/map_template/anomaly/bunker)
 "Yv" = (
-/obj/floor_decal/snow,
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/bunker)
+/area/map_template/anomaly/bunker)
+"YF" = (
+/obj/structure/table/steel_reinforced,
+/obj/decal/cleanable/dirt,
+/obj/item/integrated_circuit/arithmetic/random,
+/turf/simulated/floor/holofloor/tiled,
+/area/map_template/anomaly/bunker)
 "YK" = (
 /obj/structure/grille/broken,
 /obj/item/stack/material/rods,
 /turf/simulated/floor/exoplanet/snow,
 /area/template_noop)
+"YZ" = (
+/obj/decal/cleanable/dirt,
+/obj/item/disk/secret_project/science,
+/turf/simulated/floor/holofloor/tiled,
+/area/map_template/anomaly/bunker)
 "Zu" = (
 /obj/wallframe_spawn/reinforced/titanium,
 /turf/simulated/wall/titanium,
-/area/map_template/bunker)
+/area/map_template/anomaly/bunker)
 "ZL" = (
 /turf/simulated/floor/exoplanet/snow,
 /area/template_noop)
@@ -1115,17 +1188,17 @@ fH
 cg
 cg
 cg
-cg
-cg
-cg
-cg
+WQ
+WQ
+WQ
+WQ
 XD
 By
 xu
 cg
 cg
 cg
-fH
+cg
 wQ
 wQ
 wQ
@@ -1158,10 +1231,10 @@ xJ
 cg
 BS
 BS
-cg
-GD
+WQ
+vW
 GF
-cg
+WQ
 ZL
 ZL
 ZL
@@ -1169,7 +1242,7 @@ fn
 op
 xG
 cg
-fH
+cg
 wQ
 wQ
 wQ
@@ -1201,19 +1274,19 @@ qc
 cg
 vg
 Lx
-cg
-vW
-AB
-cg
+WQ
+YZ
+YZ
+WQ
 ZL
 hq
 ZL
-ZL
+yx
 Yv
 AB
 cg
 cg
-fH
+cg
 wQ
 wQ
 wQ
@@ -1245,9 +1318,9 @@ IS
 Lx
 ro
 Ek
-Lx
+vi
 AB
-vR
+WQ
 ZL
 Yv
 ZL
@@ -1257,7 +1330,7 @@ AB
 cg
 cg
 cg
-fH
+cg
 wQ
 wQ
 wQ
@@ -1287,10 +1360,10 @@ Gy
 cg
 vg
 Lx
-cg
-AB
-AB
-cg
+WQ
+qL
+zx
+WQ
 Yv
 Yv
 Yv
@@ -1301,7 +1374,7 @@ cg
 cg
 cg
 cg
-fH
+cg
 wQ
 wQ
 wQ
@@ -1330,10 +1403,10 @@ uX
 cg
 cg
 IS
-cg
-cg
-cg
-cg
+WQ
+WQ
+WQ
+WQ
 AB
 AB
 cg
@@ -1344,7 +1417,7 @@ cg
 cg
 cg
 cg
-fH
+cg
 wQ
 wQ
 wQ
@@ -1374,8 +1447,8 @@ cg
 uE
 Lx
 OQ
-qL
-OQ
+AB
+oX
 zk
 AB
 AB
@@ -1387,7 +1460,7 @@ cg
 CI
 hq
 Td
-fH
+cg
 hn
 wQ
 wQ
@@ -1459,9 +1532,9 @@ wM
 cg
 br
 Lx
-OQ
+vR
 Vi
-OQ
+YF
 Zu
 AB
 AB
@@ -1473,7 +1546,7 @@ cg
 hn
 ZL
 Td
-fH
+cg
 hn
 wQ
 wQ
@@ -1516,7 +1589,7 @@ cg
 cg
 cg
 cg
-fH
+cg
 wQ
 wQ
 wQ
@@ -1550,7 +1623,7 @@ AB
 oS
 cg
 cg
-IS
+Sq
 cg
 cg
 ib
@@ -1559,7 +1632,7 @@ cg
 cg
 cg
 cg
-fH
+cg
 wQ
 wQ
 wQ
@@ -1601,7 +1674,7 @@ Lx
 cg
 cg
 cg
-fH
+cg
 wQ
 wQ
 wQ
@@ -1643,7 +1716,7 @@ cg
 zW
 cg
 cg
-fH
+cg
 wQ
 wQ
 wQ
@@ -1685,7 +1758,7 @@ cg
 HI
 cb
 cg
-fH
+cg
 wQ
 wQ
 wQ
@@ -1727,7 +1800,7 @@ cg
 cg
 cg
 cg
-fH
+cg
 wQ
 wQ
 wQ

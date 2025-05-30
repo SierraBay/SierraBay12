@@ -158,21 +158,21 @@
 				for(var/datum/reagent/R in B.reagents.reagent_list)
 					dat += "<br>    [R.volume] units of [R.name], "
 				if(B in mixing)
-					dat += "<A href='?src=\ref[src];stop_mix=[i]'>[SPAN_COLOR("green", "Mixing")]</A> "
+					dat += "<a href='byond://?src=\ref[src];stop_mix=[i]'>[SPAN_COLOR("green", "Mixing")]</A> "
 				else
-					dat += "<A href='?src=\ref[src];mix=[i]'>[SPAN_COLOR("red", "Not mixing")]</A> "
+					dat += "<a href='byond://?src=\ref[src];mix=[i]'>[SPAN_COLOR("red", "Not mixing")]</A> "
 			else
 				dat += "nothing."
-			dat += " \[<A href='?src=\ref[src];eject=[i]'>Eject</A>\]<br>"
+			dat += " \[<a href='byond://?src=\ref[src];eject=[i]'>Eject</A>\]<br>"
 
 	if(ammo_magazine)
 		if(ammo_magazine.stored_ammo && length(ammo_magazine.stored_ammo))
 			dat += "The dart cartridge has [length(ammo_magazine.stored_ammo)] shots remaining."
 		else
 			dat += SPAN_COLOR("red", "The dart cartridge is empty!")
-		dat += " \[<A href='?src=\ref[src];eject_cart=1'>Eject</A>\]<br>"
+		dat += " \[<a href='byond://?src=\ref[src];eject_cart=1'>Eject</A>\]<br>"
 
-	dat += "<br>\[<A href='?src=\ref[src];refresh=1'>Refresh</A>\]"
+	dat += "<br>\[<a href='byond://?src=\ref[src];refresh=1'>Refresh</A>\]"
 
 	var/datum/browser/popup = new(user, "dartgun", "[src] mixing control")
 	popup.set_content(jointext(dat,null))

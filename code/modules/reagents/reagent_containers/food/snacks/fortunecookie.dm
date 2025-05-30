@@ -1,4 +1,4 @@
-GLOBAL_LIST_INIT(fortune_cookie_default_fortunes, list(
+GLOBAL_LIST_AS(fortune_cookie_default_fortunes, list(
 	"Today it's up to you to create the peacefulness you long for.",
 	"If you refuse to accept anything but the best, you very often get it.",
 	"A smile is your passport into the hearts of others.",
@@ -19,8 +19,6 @@ GLOBAL_LIST_INIT(fortune_cookie_default_fortunes, list(
 	icon_state = "fortune_cookie"
 	filling_color = "#e8e79e"
 	center_of_mass = "x=15;y=14"
-	nutriment_desc = list("fortune cookie" = 2)
-	nutriment_amt = 3
 	bitesize = 2
 
 	/// The paper fortune contained inside the cookie. Set during `Initialize()`.

@@ -642,7 +642,7 @@
 	throwforce = 5
 	w_class = ITEM_SIZE_TINY
 	/// The light bulb's status. One of `LIGHT_*`.
-	var/status = EMPTY_BITFIELD
+	var/status = FLAGS_OFF
 	/// Base `icon_state`.
 	var/base_state
 	/// Number of times the light bulb has been switched on. Used to 'burn out' the bulb if switched too often.

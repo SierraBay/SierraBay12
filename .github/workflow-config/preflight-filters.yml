@@ -3,3 +3,5 @@ dm:
   - '**/*.dmm'
   - '**/*.dmf'
   - '**/*.dme'
+  - 'test/check-paths.sh'
+  - 'test/run-test.sh'

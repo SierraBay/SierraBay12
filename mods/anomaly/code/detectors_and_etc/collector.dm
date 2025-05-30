@@ -18,11 +18,10 @@
 	else
 		..()
 
-
 /obj/item/collector/use_tool(obj/item/item, mob/living/user, list/click_params)
 	. = ..()
 	if(closed)
-		to_chat(user,SPAN_NOTICE("\the [src] clossed."))
+		to_chat(user,SPAN_NOTICE("\the [src] закрыт."))
 		return
 	if(istype(item, /obj/item/artefact))
 		try_insert_artefact(user, item)
@@ -30,7 +29,7 @@
 
 /obj/item/collector/proc/try_insert_artefact(mob/living/user, obj/item/item)
 	if(!stored_artefact)
-		to_chat(user,SPAN_NOTICE("You inserted [item] in [src]."))
+		to_chat(user,SPAN_NOTICE("Вы поместили [item] в [src]."))
 		insert_artefact(user, item)
 
 
@@ -45,7 +44,7 @@
 
 /obj/item/collector/proc/try_pop_out_artefact(mob/living/user)
 	if(stored_artefact)
-		to_chat(user,SPAN_NOTICE("You pop-out [stored_artefact] from [src]."))
+		to_chat(user,SPAN_NOTICE("Вы вытащили [stored_artefact] из [src]."))
 		pop_out_artefact(user)
 
 
@@ -94,6 +93,8 @@
 		icon_state = "collector_zjar"
 	else if(istype(stored_artefact, /obj/item/artefact/gravi))
 		icon_state = "collector_gravi"
+	else if(istype(stored_artefact, /obj/item/artefact/flyer))
+		icon_state = "collector_flyer"
 	else if(!stored_artefact)
 		icon_state = "collector_empty"
 
@@ -126,4 +127,3 @@
 	materials = list(MATERIAL_ALUMINIUM = 1000, MATERIAL_STEEL = 5000, MATERIAL_GLASS = 2500, MATERIAL_PLASTEEL = 2500, MATERIAL_PLASTIC = 1000)
 	build_path = /obj/item/collector
 	sort_string = "VAWAB"
-

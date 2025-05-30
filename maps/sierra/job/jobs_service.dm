@@ -2,7 +2,7 @@
 	title = "Chief Steward"
 	department = "Обслуживания"
 	department_flag = SRV
-
+	head_position = 1
 	total_positions = 1
 	spawn_positions = 1
 	minimum_character_age = list(SPECIES_HUMAN = 28)

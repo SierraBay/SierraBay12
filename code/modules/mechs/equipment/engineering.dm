@@ -41,7 +41,7 @@
 	icon_state = "mech_atmoshield_off"
 	name = "exosuit airshield"
 	desc = "An Aether Atmospherics brand 'Zephyros' portable Atmospheric Isolation and Retention Screen. It keeps air where it should be... Most of the time. Press ctrl-click to switch modes"
-	restricted_hardpoints = list(HARDPOINT_LEFT_SHOULDER, HARDPOINT_RIGHT_SHOULDER)
+	restricted_hardpoints = list(HARDPOINT_BACK)
 	restricted_software = list(MECH_SOFTWARE_ENGINEERING)
 	var/list/segments
 	equipment_delay = 0.25 SECONDS
@@ -54,9 +54,6 @@
 			to_chat(user, SPAN_WARNING("You cannot modify the projection mode while the shield is active."))
 		else
 			current_mode = !current_mode
-			//[SIERRA-ADD] - Mechs-by-Shegar
-			owner.add_heat(heat_generation)
-			//[SIERRA-ADD]
 			to_chat(user, SPAN_NOTICE("You set the shields to [current_mode ? "bubble" : "barrier"] mode."))
 		return TRUE
 	return ..()
@@ -104,9 +101,6 @@
 	owner.visible_message(SPAN_WARNING("\The [src] starts glowing as it becomes energized!"), blind_message = SPAN_WARNING("You hear the crackle of electricity"))
 	owner.setClickCooldown(2.5 SECONDS)
 	if (do_after(owner, 0.5 SECONDS, get_turf(owner), DO_DEFAULT | DO_USER_UNIQUE_ACT | DO_PUBLIC_PROGRESS) && owner)
-		//[SIERRA-ADD]
-		owner.add_heat(heat_generation)
-		//[SIERRA-ADD]
 		owner.visible_message(SPAN_WARNING("The air shimmers as energy shields form in front of \the [owner]!"))
 		playsound(src ,'sound/effects/phasein.ogg',35,1)
 		active = TRUE
@@ -141,23 +135,31 @@
 			if(istype(MS))
 				MS.shields = src
 				segments += MS
-				GLOB.moved_event.register(MS, src, PROC_REF(on_moved))
+				GLOB.moved_event.register(MS, src, .proc/on_moved)
 
 		passive_power_use = 0.8 KILOWATTS * length(segments)
-		GLOB.moved_event.register(owner, src, PROC_REF(on_moved))
-		GLOB.dir_set_event.register(owner, src, PROC_REF(on_turned))
+
+		update_icon()
+		owner.update_icon()
+		GLOB.moved_event.register(owner, src, .proc/on_moved)
+		GLOB.dir_set_event.register(owner, src, .proc/on_turned)
+
+/obj/item/mech_equipment/atmos_shields/on_update_icon()
+	icon_state = "mech_atmoshield[active ? "_on" : "_off"]"
 
 /obj/item/mech_equipment/atmos_shields/deactivate()
 	for(var/obj/mech_shield/MS in segments)
 		if(istype(MS))
-			GLOB.moved_event.unregister(MS, src, PROC_REF(on_moved))
+			GLOB.moved_event.unregister(MS, src, .proc/on_moved)
 	if(length(segments))
 		owner.visible_message(SPAN_WARNING("The energy shields in front of \the [owner] disappear!"))
 	QDEL_NULL_LIST(segments)
 	passive_power_use = 0
-	GLOB.moved_event.unregister(owner, src, PROC_REF(on_moved))
-	GLOB.dir_set_event.unregister(owner, src, PROC_REF(on_turned))
+	GLOB.moved_event.unregister(owner, src, .proc/on_moved)
+	GLOB.dir_set_event.unregister(owner, src, .proc/on_turned)
 	. = ..()
+	update_icon()
+	owner.update_icon()
 
 /obj/item/mech_equipment/atmos_shields/attack_self(mob/user)
 	. = ..()

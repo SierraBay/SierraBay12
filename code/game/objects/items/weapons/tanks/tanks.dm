@@ -32,7 +32,7 @@ var/global/list/tank_gauge_cache = list()
 	var/failure_temp = 173 //173 deg C Borate seal (yes it should be 153 F, but that's annoying)
 
 
-	var/tank_flags = EMPTY_BITFIELD
+	var/tank_flags = FLAGS_OFF
 
 	var/list/starting_pressure //list in format 'xgm gas id' = 'desired pressure at start'
 

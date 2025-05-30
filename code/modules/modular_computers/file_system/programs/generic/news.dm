@@ -49,7 +49,7 @@
 			send_rsc(usr, story.img, "tmp_photo.png")
 			var/output = "<html><head><title>photo - [story.author]</title></head>"
 			output += "<body style='overflow:hidden; margin:0; text-align:center'>"
-			output += "<img src='tmp_photo.png' width='192' style='-ms-interpolation-mode:nearest-neighbor' />"
+			output += "<img src='tmp_photo.png' width='192' style='-ms-interpolation-mode:nearest-neighbor;image-rendering:pixelated;' />"
 			output += "</body></html>"
 			show_browser(usr, output, "window=book; size=192x192]")
 		return TRUE
@@ -119,7 +119,7 @@
 				story["timestamp"] = message.time_stamp
 				story["has_photo"] = message.img != null
 				if (user && message.img) // user check here to avoid runtimes
-					var/resource_name = "newscaster_photo_[sanitize(feed.channel_name)]_[i].png"
+					var/resource_name = "newscaster_photo_[feed.channel_id]_[i].png"
 					send_asset(user.client, resource_name)
 					story["photo_dat"] = "<img src='[resource_name]' width='180'><br>"
 				story["story_ref"] = "\ref[message]"

@@ -58,8 +58,15 @@
 /obj/item/storage/lunchbox/nt
 	name = "\improper NanoTrasen brand lunchbox"
 	icon_state = "lunchbox_nanotrasen"
-	item_state = "toolbox_blue"
+	item_state = "toolbox_red"
 	desc = "A little lunchbox. This one is branded with the NanoTrasen logo!"
+
+
+/obj/item/storage/lunchbox/ntmisprint
+	name = "\improper misprinted NanoTrasen brand lunchbox"
+	icon_state = "lunchbox_nanotrasenmisprint"
+	item_state = "toolbox_blue"
+	desc = "A little lunchbox. This one is branded with the NanoTrasen logo! Something looks off about it, though."
 
 
 /obj/item/storage/lunchbox/dais
@@ -125,6 +132,17 @@
 
 
 /obj/item/storage/lunchbox/gcc/filled
+	filled = TRUE
+
+
+/obj/item/storage/lunchbox/scg
+	name = "\improper SCG lunchbox"
+	icon_state = "lunchbox_scg"
+	item_state = "toolbox_blue"
+	desc = "A little lunchbox. This one is branded with the flag of the Solar Assembly!"
+
+
+/obj/item/storage/lunchbox/scg/filled
 	filled = TRUE
 
 

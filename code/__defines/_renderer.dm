@@ -9,29 +9,29 @@
 
 
 /// Main renderers are expected to always be on mobs with clients.
-#define RENDERER_MAIN FLAG(0)
+#define RENDERER_MAIN FLAG_01
 
 /**
  * Shared renderers have a single instance and are added/removed instead of created/deleted.
  * Many renderers can be shared - only ones that depend on the state of the mob seeing them,
  * such as effects with preferences, require an owner.
  */
-#define RENDERER_SHARED FLAG(1)
+#define RENDERER_SHARED FLAG_02
 
 /// Renderers with non-default setup behavior in hook/startup/proc/setup_renderers.
-#define RENDERER_SHARED_CUSTOM FLAG(2)
+#define RENDERER_SHARED_CUSTOM FLAG_03
 
 
 /// The base /renderer definition and defaults.
 /atom/movable/renderer
 	abstract_type = /atom/movable/renderer
 	appearance_flags = DEFAULT_RENDERER_APPEARANCE_FLAGS
-	screen_loc = "CENTER"
+	screen_loc = RENDERER_SCREEN_LOC
 	plane = LOWEST_PLANE
 	blend_mode = BLEND_OVERLAY
 
 	/// A bitfield of RENDERER_* defines.
-	var/renderer_flags = EMPTY_BITFIELD
+	var/renderer_flags = FLAGS_OFF
 
 	/// The compositing renderer this renderer belongs to.
 	var/group = RENDER_GROUP_FINAL
@@ -72,7 +72,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/renderer)
 	else if (render_target_name)
 		render_target = "*[ckey(name)]"
 	relay = new
-	relay.screen_loc = "CENTER"
+	relay.screen_loc = RENDERER_SCREEN_LOC
 	relay.appearance_flags = PASS_MOUSE | NO_CLIENT_COLOR | KEEP_TOGETHER
 	relay.name = "[render_target] relay"
 	relay.mouse_opacity = mouse_opacity

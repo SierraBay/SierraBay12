@@ -192,7 +192,7 @@
 	var/list = !!(chan_stat&FREQ_LISTENING)!=0
 	return {"
 			<B>[chan_name]</B><br>
-			Speaker: <A href='byond://?src=\ref[src];ch_name=[chan_name];listen=[!list]'>[list ? "Engaged" : "Disengaged"]</A><BR>
+			Speaker: <a href='byond://?src=\ref[src];ch_name=[chan_name];listen=[!list]'>[list ? "Engaged" : "Disengaged"]</A><BR>
 			"}
 
 /obj/item/device/radio/proc/reset_frequency()
@@ -220,6 +220,19 @@
 		START_PROCESSING(SSobj, src)
 	else
 		STOP_PROCESSING(SSobj, src)
+
+/obj/item/device/radio/proc/get_channels_as_string()
+	if (!length(channels))
+		return "There are no extra channels available."
+	var/radio_text = "The following channels are available:\n"
+	for(var/i = 1 to length(channels))
+		var/channel = channels[i]
+		var/key = get_radio_key_from_channel(channel)
+		radio_text += "[key] - [channel]"
+		if(i != length(channels))
+			radio_text += ", "
+
+	return radio_text
 
 /obj/item/device/radio/CanUseTopic()
 	if(!on && !get_cell()) // We need to still be able to use the topic if we use power
@@ -690,6 +703,7 @@
 	var/mob/living/silicon/robot/myborg = null // Cyborg which owns this radio. Used for power checks
 	var/obj/item/device/encryptionkey/keyslot = null//Borg radios can handle a single encryption key
 	var/shut_up = 1
+	var/radio_desc = ""
 	icon = 'icons/obj/robot_component.dmi' // Cyborgs radio icons should look like the component.
 	icon_state = "radio"
 	canhear_range = 0
@@ -800,6 +814,7 @@
 			return
 
 		secure_radio_connections[ch_name] = radio_controller.add_object(src, radiochannels[ch_name],  RADIO_CHAT)
+	radio_desc = get_channels_as_string()
 
 /obj/item/device/radio/borg/Topic(href, href_list)
 	if(..())

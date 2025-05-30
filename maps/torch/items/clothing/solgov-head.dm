@@ -373,6 +373,7 @@
 
 /obj/item/clothing/head/helmet/space/void/engineering/alt/sol
 	light_overlay = "helmet_light_alt"
+	head_light_range = 5
 	icon = 'maps/torch/icons/obj/obj_head_solgov.dmi'
 	item_icons = list(slot_head_str = 'maps/torch/icons/mob/onmob_head_solgov.dmi')
 	sprite_sheets = list(
@@ -386,6 +387,7 @@
 
 /obj/item/clothing/head/helmet/space/void/atmos/alt/sol
 	light_overlay = "helmet_light_alt"
+	head_light_range = 5
 	icon = 'maps/torch/icons/obj/obj_head_solgov.dmi'
 	item_icons = list(slot_head_str = 'maps/torch/icons/mob/onmob_head_solgov.dmi')
 	sprite_sheets = list(
@@ -465,6 +467,7 @@
 		rad = ARMOR_RAD_RESISTANT
 		)
 	light_overlay = "helmet_light_dual_alt"
+	head_light_range = 5
 	tinted = FALSE
 	valid_accessory_slots = null
 	restricted_accessory_slots = null

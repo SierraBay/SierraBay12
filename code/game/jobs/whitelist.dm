@@ -50,7 +50,7 @@ var/global/list/alien_whitelist = list()
 	return 1
 
 /proc/is_species_whitelisted(mob/M, species_name)
-	var/datum/species/S = all_species[species_name]
+	var/singleton/species/S = GLOB.species_by_name[species_name]
 	return is_alien_whitelisted(M, S)
 
 //todo: admin aliens
@@ -70,8 +70,8 @@ var/global/list/alien_whitelist = list()
 			return 1
 		return whitelist_lookup(L.name, M.ckey)
 
-	if(istype(species,/datum/species))
-		var/datum/species/S = species
+	if(istype(species,/singleton/species))
+		var/singleton/species/S = species
 		if(!(S.spawn_flags & (SPECIES_IS_WHITELISTED|SPECIES_IS_RESTRICTED)))
 			return 1
 		return whitelist_lookup(S.get_bodytype(S), M.ckey)

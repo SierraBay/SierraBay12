@@ -2759,7 +2759,7 @@
 "avp" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/firstaid/surgery,
-/obj/item/reagent_containers/glass/bottle/stoxin,
+/obj/item/reagent_containers/glass/bottle/soporific,
 /obj/item/reagent_containers/syringe,
 /obj/item/tank/anesthetic,
 /obj/item/clothing/mask/breath/medical,
@@ -6280,7 +6280,7 @@
 /obj/structure/table/woodentable{
 	dir = 5
 	},
-/obj/item/reagent_containers/food/snacks/meatsteak,
+/obj/item/reagent_containers/food/snacks/plainsteak,
 /turf/unsimulated/floor{
 	icon_state = "wood"
 	},

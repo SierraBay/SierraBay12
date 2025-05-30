@@ -1,8 +1,0 @@
-author: SierraKomodo
-changes:
-  - {rscadd: "You can now swing weapons through open air by clicking a turf on harm
-      intent. It has a chance to hit anything that's on the turf or just miss, and
-      a lower chance to hit something invisible. This also means if you miss clicking
-      a mob but click the turf during a fight instead you still have a chance to hit
-      something."}
-delete-after: true

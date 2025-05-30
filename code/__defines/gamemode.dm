@@ -17,17 +17,17 @@
 #define BE_PAI   "BE_PAI"
 
 // Antagonist datum flags.
-#define ANTAG_OVERRIDE_JOB       FLAG(0)  // Assigned job is set to MODE when spawning.
-#define ANTAG_OVERRIDE_MOB       FLAG(1)  // Mob is recreated from datum mob_type var when spawning.
-#define ANTAG_CLEAR_EQUIPMENT    FLAG(2)  // All preexisting equipment is purged.
-#define ANTAG_CHOOSE_NAME        FLAG(3)  // Antagonists are prompted to enter a name.
-#define ANTAG_IMPLANT_IMMUNE     FLAG(4)  // Cannot be loyalty implanted.
-#define ANTAG_SUSPICIOUS         FLAG(5)  // Shows up on roundstart report.
-#define ANTAG_HAS_LEADER         FLAG(6)  // Generates a leader antagonist.
-#define ANTAG_RANDSPAWN          FLAG(7)  // Potentially randomly spawns due to events.
-#define ANTAG_VOTABLE            FLAG(8)  // Can be voted as an additional antagonist before roundstart.
-#define ANTAG_SET_APPEARANCE     FLAG(9)  // Causes antagonists to use an appearance modifier on spawn.
-#define ANTAG_RANDOM_EXCEPTED    FLAG(10) // If a game mode randomly selects antag types, antag types with this flag should be excluded.
+#define ANTAG_OVERRIDE_JOB       FLAG_01  // Assigned job is set to MODE when spawning.
+#define ANTAG_OVERRIDE_MOB       FLAG_02  // Mob is recreated from datum mob_type var when spawning.
+#define ANTAG_CLEAR_EQUIPMENT    FLAG_03  // All preexisting equipment is purged.
+#define ANTAG_CHOOSE_NAME        FLAG_04  // Antagonists are prompted to enter a name.
+#define ANTAG_IMPLANT_IMMUNE     FLAG_05  // Cannot be loyalty implanted.
+#define ANTAG_SUSPICIOUS         FLAG_06  // Shows up on roundstart report.
+#define ANTAG_HAS_LEADER         FLAG_07  // Generates a leader antagonist.
+#define ANTAG_RANDSPAWN          FLAG_08  // Potentially randomly spawns due to events.
+#define ANTAG_VOTABLE            FLAG_09  // Can be voted as an additional antagonist before roundstart.
+#define ANTAG_SET_APPEARANCE     FLAG_10  // Causes antagonists to use an appearance modifier on spawn.
+#define ANTAG_RANDOM_EXCEPTED    FLAG_11 // If a game mode randomly selects antag types, antag types with this flag should be excluded.
 
 // Mode/antag template macros.
 #define MODE_BORER         "borer"
@@ -62,24 +62,24 @@
 /////////////////
 
 /*		WIZARD SPELL FLAGS		*/
-#define GHOSTCAST		FLAG(0)		//can a ghost cast it?
-#define NEEDSCLOTHES	FLAG(1)		//does it need the wizard garb to cast? Nonwizard spells should not have this
-#define NEEDSHUMAN		FLAG(2)		//does it require the caster to be human?
-#define Z2NOCAST		FLAG(3)		//if this is added, the spell can't be cast at centcomm
-#define NO_SOMATIC		FLAG(4)	//spell will go off if the person is incapacitated or stunned
-#define IGNOREPREV		FLAG(5)	//if set, each new target does not overlap with the previous one
+#define GHOSTCAST		FLAG_01		//can a ghost cast it?
+#define NEEDSCLOTHES	FLAG_02		//does it need the wizard garb to cast? Nonwizard spells should not have this
+#define NEEDSHUMAN		FLAG_03		//does it require the caster to be human?
+#define Z2NOCAST		FLAG_04		//if this is added, the spell can't be cast at centcomm
+#define NO_SOMATIC		FLAG_05	//spell will go off if the person is incapacitated or stunned
+#define IGNOREPREV		FLAG_06	//if set, each new target does not overlap with the previous one
 //The following flags only affect different types of spell, and therefore overlap
 //Targeted spells
-#define INCLUDEUSER		FLAG(6)	//does the spell include the caster in its target selection?
-#define SELECTABLE		FLAG(7)	//can you select each target for the spell?
-#define NOFACTION		FLAG(12)  //Don't do the same as our faction
-#define NONONFACTION	FLAG(13)  //Don't do people other than our faction
+#define INCLUDEUSER		FLAG_07	//does the spell include the caster in its target selection?
+#define SELECTABLE		FLAG_08	//can you select each target for the spell?
+#define NOFACTION		FLAG_13  //Don't do the same as our faction
+#define NONONFACTION	FLAG_14  //Don't do people other than our faction
 //AOE spells
-#define IGNOREDENSE		FLAG(6)	//are dense turfs ignored in selection?
-#define IGNORESPACE		FLAG(7)	//are space turfs ignored in selection?
+#define IGNOREDENSE		FLAG_07	//are dense turfs ignored in selection?
+#define IGNORESPACE		FLAG_08	//are space turfs ignored in selection?
 //End split flags
-#define CONSTRUCT_CHECK	FLAG(8)	//used by construct spells - checks for nullrods
-#define NO_BUTTON		FLAG(9)	//spell won't show up in the HUD with this
+#define CONSTRUCT_CHECK	FLAG_09	//used by construct spells - checks for nullrods
+#define NO_BUTTON		FLAG_10	//spell won't show up in the HUD with this
 
 //invocation
 #define SpI_SHOUT	"shout"

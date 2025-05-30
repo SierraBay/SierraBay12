@@ -1,0 +1,15 @@
+//Детекторы
+#include "detector\detector.dm"
+#include "detector\Initializing.dm"
+#include "detector\output_data.dm"
+#include "detector\signals.dm"
+#include "flux_detector.dm"
+#include "gurza_detector.dm"
+#include "artefact_detector.dm"
+#include "rig_detector.dm"
+
+#include "bolt.dm"
+#include "collector.dm"
+#include "deployer.dm"
+#include "research_machine.dm"
+#include "belt.dm"

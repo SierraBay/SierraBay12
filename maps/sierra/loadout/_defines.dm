@@ -22,6 +22,7 @@
 //For jobs that allow for decorative or ceremonial clothing
 #define FORMAL_ROLES list(\
 	/datum/job/iaa, \
+	/datum/job/iso, \
 	/datum/job/rd, \
 	/datum/job/senior_scientist, \
 	/datum/job/scientist, \
@@ -64,7 +65,7 @@
 //For NanoTrasen employees
 #define NANOTRASEN_ROLES list(\
 	/datum/job/captain, /datum/job/hop, /datum/job/rd, /datum/job/cmo, /datum/job/chief_engineer, /datum/job/hos, \
-	/datum/job/iaa, \
+	/datum/job/iaa, /datum/job/iso, \
 	/datum/job/senior_engineer, /datum/job/engineer, /datum/job/infsys, /datum/job/roboticist, /datum/job/engineer_trainee, \
 	/datum/job/officer, /datum/job/warden, /datum/job/detective, /datum/job/security_assistant, \
 	/datum/job/senior_doctor, /datum/job/doctor, /datum/job/doctor_trainee,/datum/job/chemist, \

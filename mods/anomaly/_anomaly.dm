@@ -1,4 +1,4 @@
 /singleton/modpack/anomaly
 	name = "Интерактивные аномалии"
 	desc = "Добавляет в игру полноценные аномалии, вдохновлённые Ашаном, пикником на обочине и сталкером."
-	author = "Shegar(Код), HonkByEmo(Спрайты), AK200(Спрайты)"
+	author = "Shegar(Код), HonkByEmo(Спрайты), AK200(Спрайты), Papa Leroy(Спрайты)"

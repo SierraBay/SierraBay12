@@ -4,30 +4,34 @@
 	icon = 'mods/anomaly/icons/big_artefacts.dmi'
 	density = TRUE
 	waterproof = FALSE
-	var/min_anomalies_ammout = 100
-	var/max_anomalies_ammout = 200
+	var/min_anomalies_ammount = 100
+	var/max_anomalies_ammount = 200
 	var/min_artefacts_ammount = 1
 	var/max_artefacts_ammount = 2
 	var/range_spawn = 30
 	var/list/possible_anomalies = list()
 
-/obj/structure/big_artefact/Initialize()
-	. = ..()
-	born_anomalies()
-
 ///Функция, которая заспавнит вокруг большого артефакта аномалии
-/obj/structure/big_artefact/proc/born_anomalies()
+/obj/structure/big_artefact/proc/born_anomalies(biggest_x, biggest_y)
 	set background = 1
-	var/started_in = world.time
 	var/list/turfs_for_spawn = list()
 	//У нас нет турфа?
 	if(!src.loc)
 		return
-		//Собираем все турфы в определённом радиусе
-	for(var/turf/turfs in RANGE_TURFS(src.loc, range_spawn))
-		if(!TurfBlocked(turfs) || TurfBlockedByAnomaly(turfs))
-			LAZYADD(turfs_for_spawn, turfs)
-	generate_anomalies_in_turfs(possible_anomalies, turfs_for_spawn, min_anomalies_ammout, max_anomalies_ammout, min_artefacts_ammount, max_artefacts_ammount, null, null, "big artefact generation", started_in)
+	//Собираем все турфы в определённом радиусе
+	var/turf/CENTER = get_turf(src)
+	for(var/turf/choosed_turf in RANGE_TURFS(CENTER, range_spawn))
+		if(!TurfBlocked(choosed_turf) && !TurfBlockedByAnomaly(choosed_turf) && turf_in_playable_place(choosed_turf, biggest_x, biggest_y))
+			LAZYADD(turfs_for_spawn, choosed_turf)
+	generate_anomalies_in_turfs(
+		anomalies_types = possible_anomalies,
+		all_turfs_for_spawn = turfs_for_spawn,
+		min_anomalies_ammount = min_anomalies_ammount,
+		max_anomalies_ammount = max_anomalies_ammount,
+		min_artefacts_ammount = min_artefacts_ammount,
+		max_artefacts_ammount = max_artefacts_ammount,
+		source = "Большой аномальный артефакт",
+		visible_generation = FALSE)
 
 /obj/structure/big_artefact/shuttle_land_on()
 	delete_artefact()
@@ -64,3 +68,6 @@
 	else
 		if(get_turf(src) == loc)
 			START_PROCESSING(SSanom, src)
+
+/obj/structure/big_artefact/shuttle_land_on()
+	move_to_safe_turf(src)

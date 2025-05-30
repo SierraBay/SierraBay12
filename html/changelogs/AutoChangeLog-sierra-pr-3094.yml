@@ -1,4 +1,0 @@
-author: Mucker
-changes:
-  - {bugfix: Fixed the bluespace event not teleporting people with the pulse.}
-delete-after: true

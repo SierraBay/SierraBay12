@@ -11,7 +11,7 @@
 	var/base_icon = "bed"
 	var/material_alteration = MATERIAL_ALTERATION_ALL
 	/// Bitflags. Bed/chair specific flags.
-	var/bed_flags = EMPTY_BITFIELD
+	var/bed_flags = FLAGS_OFF
 	/// How many sheets should be given when dismantled, based on their stack_recipe datum
 	var/dismantle_return = 2
 

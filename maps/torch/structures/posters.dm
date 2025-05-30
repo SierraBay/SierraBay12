@@ -1,11 +1,19 @@
 /obj/structure/sign/poster/torch
 	random_poster_base_type = /singleton/poster/torch
 
+/obj/structure/sign/poster/torch/counselor
+	poster_type = /singleton/poster/torch/counselor
+
 /singleton/poster/torch
 	icon_state="poster_ripped"
 	name = "Torch Poster"
 	desc = "You probably shouldn't be seeing this."
 	abstract_type = /singleton/poster/torch
+
+/singleton/poster/torch/counselor
+	icon_state="live_laugh_love"
+	name = "Wholesome Poster"
+	desc = "A wholesome, mass-fabricated poster that states \"Live Laugh Love\". There's tons of small hearts plastered around the text. The dot above the \"i\" has been drawn in the shape of a heart. Supposed to lift your mood... somehow?"
 
 /singleton/poster/torch/event1
 	icon_state="bsposter_event1"

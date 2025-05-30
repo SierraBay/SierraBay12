@@ -1,4 +1,4 @@
-/datum/species/disarm_attackhand(mob/living/carbon/human/attacker, mob/living/carbon/human/target)
+/singleton/species/disarm_attackhand(mob/living/carbon/human/attacker, mob/living/carbon/human/target)
 	attacker.do_attack_animation(target)
 
 	if(target.w_uniform)

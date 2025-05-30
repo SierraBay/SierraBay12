@@ -21,6 +21,14 @@
 [b]Notice[/b]: NanoTrasen Shuttle"}
 	contact_class = /decl/ship_contact_class/nt_sshuttle
 
+/obj/overmap/visitable/ship/landable/petrov
+	scanner_desc = @{"
+<center><img src = bluentlogo.png></center></br><b>Property of NanoTrasen Corporation:</b>
+[i]Registration[/i]: NSS Petrov
+[i]Transponder[/i]: Transmitting (CIV), non-hostile
+[b]Notice[/b]: NanoTrasen Shuttle"}
+	contact_class = /decl/ship_contact_class/nt_sshuttle
+
 /obj/overmap/visitable/ship/landable/guppy
 	scanner_desc = @{"
 <center><img src = bluentlogo.png></center></br><b>Property of NanoTrasen Corporation:</b>

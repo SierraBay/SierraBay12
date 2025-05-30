@@ -1,4 +1,4 @@
-GLOBAL_LIST_INIT(mob_spawners, list())
+GLOBAL_LIST_EMPTY(mob_spawners)
 
 /datum/build_mode/mob_mode
 	name = "Mob Spawning"

@@ -28,7 +28,7 @@
 
 /datum/category_item/player_setup_item/physical/body/content(mob/user)
 	. = ..()
-	. += "<br />[BTN("add_mod_trait", "+ Add trait")]"
+	. += "<br />[BTN("add_mod_trait", "+ Add Race-Specific trait")]"
 	for (var/mod_trait in pref.mod_traits)
 		var/datum/mod_trait/M = GLOB.all_mod_traits[mod_trait]
 
@@ -46,7 +46,7 @@
 		pref.mod_traits.Cut()
 
 	if(href_list["add_mod_trait"])
-		var/datum/species/mob_species = all_species[pref.species]
+		var/singleton/species/mob_species = GLOB.species_by_name[pref.species]
 		var/list/disallowed_mod_traits = list()
 		for (var/M in pref.mod_traits)
 			var/datum/mod_trait/char_mod = GLOB.all_mod_traits[M]
