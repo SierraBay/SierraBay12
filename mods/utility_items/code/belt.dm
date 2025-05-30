@@ -60,7 +60,6 @@
 		/obj/item/clothing/gloves,
 		/obj/item/clothing/head/beret,
 		/obj/item/material/knife/folding,
-		/obj/item/material/hatchet,
 		/obj/item/material/knife)
 
 /obj/item/storage/belt/security
@@ -91,7 +90,6 @@
 		/obj/item/clothing/gloves,
 		/obj/item/clothing/head/beret,
 		/obj/item/material/knife/folding,
-		/obj/item/material/hatchet,
 		/obj/item/material/knife)
 
 /obj/item/storage/belt/forensic
