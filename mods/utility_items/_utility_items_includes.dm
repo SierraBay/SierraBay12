@@ -50,4 +50,6 @@
 #include "code/ghost_speed.dm"
 #include "code/adrenalin.dm"
 #include "code/drone_gas_analyser.dm"
+#include "code/accessory_skrell.dm"
+#include "code/_clothing.dm"
 #endif
