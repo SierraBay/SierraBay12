@@ -40,25 +40,25 @@
 	gear_tweaks += new /datum/gear_tweak/path (options)
 	cost = 3
 
-/datum/gear/eyes/ballisticsmod/sec
+/datum/gear/eyes/ballisticsmodsec
 	display_name = "ballistics googles attachment, Sec HUD"
 	path = /obj/item/clothing/accessory/glassesmod/hud/security
 	allowed_roles = SECURITY_ROLES
 	cost = 1
 
-/datum/gear/eyes/ballisticsmod/med
+/datum/gear/eyes/ballisticsmodmed
 	display_name = "ballistics googles attachment, Med HUD"
 	path = /obj/item/clothing/accessory/glassesmod/hud/medical
 	allowed_roles = list(MEDICAL_ROLES, /datum/job/explorer_medic)
 	cost = 1
 
-/datum/gear/eyes/ballisticsmod/polarized
+/datum/gear/eyes/ballisticsmodpolarized
 	display_name = "ballistics googles attachment, polarized filter"
 	path = /obj/item/clothing/accessory/glassesmod/vision/polarized
 	allowed_roles = SECURITY_ROLES
 	cost = 1
 
-/datum/gear/eyes/ballisticsmod/welding
+/datum/gear/eyes/ballisticsmodwelding
 	display_name = "ballistics googles attachment, welding filter"
 	path = /obj/item/clothing/accessory/glassesmod/vision/welding
 	cost = 1
