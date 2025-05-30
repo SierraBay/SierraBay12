@@ -124,3 +124,47 @@
 		/obj/item/device/flash,
 		/obj/item/evidencebag,
 		/obj/item/bodybag)
+
+/obj/item/storage/belt/general
+	name = "equipment belt"
+	desc = "Can hold general equipment such as tablets, folders, and other office supplies."
+	icon_state = "gearbelt"
+	item_state = "gear"
+	overlay_flags = BELT_OVERLAY_ITEMS
+	contents_allowed = list(
+		/obj/item/device/flash,
+		/obj/item/melee/telebaton,
+		/obj/item/device/taperecorder,
+		/obj/item/folder,
+		/obj/item/paper,
+		/obj/item/material/clipboard,
+		/obj/item/modular_computer/tablet,
+		/obj/item/device/flashlight,
+		/obj/item/modular_computer/pda,
+		/obj/item/device/radio/headset,
+		/obj/item/device/megaphone,
+		/obj/item/taperoll,
+		/obj/item/device/holowarrant,
+		/obj/item/device/radio,
+		/obj/item/device/tape,
+		/obj/item/pen,
+		/obj/item/stamp,
+		/obj/item/stack/package_wrap,
+		/obj/item/device/binoculars,
+		/obj/item/marshalling_wand,
+		/obj/item/device/camera,
+		/obj/item/hand_labeler,
+		/obj/item/device/destTagger,
+		/obj/item/clothing/glasses,
+		/obj/item/clothing/head/soft,
+		/obj/item/hand_labeler,
+		/obj/item/clothing/gloves,
+		/obj/item/crowbar/prybar,
+		/obj/item/tank/oxygen_emergency,
+		/obj/item/tank/nitrogen_emergency,
+		/obj/item/clothing/mask/breath,
+		/obj/item/toy/bosunwhistle,
+		/obj/item/clothing/head/beret,
+		/obj/item/material/knife/folding,
+		/obj/item/device/tape,
+		/obj/item/device/science_tool)
