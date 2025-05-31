@@ -15,6 +15,11 @@
 		// Только проверка физического положения
 		set_lying(incapacitated(INCAPACITATION_POSITION))
 
+	//Не лежит, проверяем если должен упасть
+	if(!lying)
+		//Сделал без сигнала
+		lying = incapacitated(INCAPACITATION_KNOCKDOWN)
+
 	if(lying)
 		set_density(FALSE)
 	else
