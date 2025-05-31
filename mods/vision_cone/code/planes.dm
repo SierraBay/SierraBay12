@@ -22,7 +22,7 @@
 	. = ..()
 	plane = GAME_PLANE_ABOVE_FOV
 
-/obj/structure/bed/chair
+/obj/structure/bed
 	plane = GAME_PLANE_FOV_HIDDEN
 
 /obj/structure/curtain
@@ -32,4 +32,16 @@
 	plane = GAME_PLANE_FOV_HIDDEN
 
 /obj/structure/iv_stand
+	plane = GAME_PLANE_FOV_HIDDEN
+
+/obj/aiming_overlay
+	plane = GAME_PLANE_FOV_HIDDEN
+
+/obj/fluid
+	plane = GAME_PLANE_FOV_HIDDEN
+
+/obj/machinery/light
+	plane = GAME_PLANE_FOV_HIDDEN
+
+/image/hud_overlay
 	plane = GAME_PLANE_FOV_HIDDEN

@@ -18,6 +18,11 @@
 	name = "Escaped"
 
 //Pods
+
+/area/shuttle/escape_pod
+	name = "Escape Pod"
+	base_turf = /turf/simulated/floor/plating
+
 #define SIERRA_ESCAPE_POD(NUMBER) \
 /datum/shuttle/autodock/ferry/escape_pod/sierrapod/escape_pod##NUMBER { \
 	shuttle_area = /area/shuttle/escape_pod/escape_pod##NUMBER/station; \
