@@ -7,6 +7,12 @@
 	integrity = 75
 	sheet_icon_base = "sheet-wood"
 	wall_icon_base = "wood"
+	wall_flags = MATERIAL_PAINTABLE_MAIN|MATERIAL_PAINTABLE_STRIPE|MATERIAL_WALL_HAS_EDGES
+	wall_blend_icons = list(
+		"solid" = TRUE,
+		"stone" = TRUE,
+		"metal" = TRUE
+	)
 	table_icon_base = "wood"
 	explosion_resistance = 2
 	shard_type = SHARD_SPLINTER
