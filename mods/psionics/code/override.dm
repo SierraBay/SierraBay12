@@ -2,10 +2,10 @@
 
 	if(!(H.species.name == SPECIES_HUMAN || H.species.name == SPECIES_VATGROWN || H.species.name == SPECIES_SPACER || H.species.name == SPECIES_GRAVWORLDER || H.species.name == SPECIES_MULE))
 		return
-
+	/*
 	if(H.client.prefs.organ_data[BP_CHEST] == "cyborg")
 		return // No psionics for cyborgs.
-
+	*/
 	if(psi_latency_chance && prob(psi_latency_chance))
 		H.set_psi_rank(pick(PSI_COERCION, PSI_REDACTION, PSI_ENERGISTICS, PSI_PSYCHOKINESIS, PSI_CONSCIOUSNESS, PSI_MANIFESTATION, PSI_METAKINESIS), 1, defer_update = TRUE)
 
