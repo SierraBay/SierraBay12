@@ -1,4 +1,19 @@
 
+/proc/get_turf_target_explosive(turf/src_origin, turf/dst_origin, list/turfs_src)
+	RETURN_TYPE(/list)
+	var/list/target_explosive = list()
+	for(var/turf/source in turfs_src)
+		var/x_pos = (source.x - src_origin.x)
+		var/y_pos = (source.y - src_origin.y)
+		var/z_pos = (source.z - src_origin.z)
+
+		var/turf/target = locate(dst_origin.x + x_pos, dst_origin.y + y_pos, dst_origin.z + z_pos)
+		if(!target)
+			error("Null turf in translation @ ([dst_origin.x + x_pos], [dst_origin.y + y_pos], [dst_origin.z + z_pos])")
+		if(target.density)
+			target_explosive[target] = target
+	return target_explosive
+
 /////////////////////////COMPONENT////////////////////////////
 #define COMSIG_POD_LANDED "landed"
 
@@ -20,13 +35,15 @@
 
 /datum/component/landing/proc/explosion_on_collision(obj/source, list/turfs)
 	SIGNAL_HANDLER
-	for(var/turf/T in turfs)
+	for(var/A in turfs)
+		var/turf/T = get_turf(A)
 		if(prob(50)) // 50% chance to explode
-			explosion(T, rand(8, 16))
+			explosion(T, rand(1, 5))
 
 ///////////////////////////////////////////////////////
 /area/shuttle/escape_pod
 	name = "Escape Pod"
+	base_turf = /turf/simulated/floor/plating
 
 /obj/shuttle_landmark/escape_pod/out
 	name = "Escape Pod Landing Site"
@@ -35,17 +52,16 @@
 //////////////////////////ESCAPE POD////////////////////////////
 
 /obj/shuttle_landmark/is_valid(datum/shuttle/shuttle)
+	explosion_locations = list()
 	if(shuttle.current_location == src)
 		return FALSE
 	for(var/area/A in shuttle.shuttle_area)
 		var/list/translation = get_turf_translation(get_turf(shuttle.current_location), get_turf(src), A.contents)
 		if(ispath(A.type, /area/shuttle/escape_pod))
-			for(var/target_turf in translation)
-				var/turf/target = target_turf
-				if(target.density)
-					var/turf/locsforexplosion = target
-					explosion_locations += locsforexplosion
-			continue // escape pods are allowed to land anywhere
+			var/list/turfs_explosive = get_turf_target_explosive(get_turf(shuttle.current_location), get_turf(src), A.contents)
+			if(LAZYLEN(turfs_explosive))
+				explosion_locations += turfs_explosive
+			continue /// IF its an escape pod area, we don't need to check for collisions
 		if(check_collision(base_area, list_values(translation)))
 			return FALSE
 	var/conn = GetConnectedZlevels(z)
@@ -91,6 +107,6 @@
 	if(istype(shuttle, /datum/shuttle/autodock/ferry/escape_pod))
 		var/datum/shuttle/autodock/ferry/escape_pod/pod = shuttle
 		if(explosion_locations)
-			if(shuttle.current_location == pod.waypoint_offsite)
+			if(shuttle.current_location == pod.escape_pod_landmark)
 				SEND_SIGNAL(src, COMSIG_POD_LANDED, explosion_locations)
 	return
