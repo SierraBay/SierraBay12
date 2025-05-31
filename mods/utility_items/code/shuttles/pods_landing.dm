@@ -19,6 +19,9 @@
 
 /obj/shuttle_landmark/
 	var/list/explosion_locations = list()
+	var/list/pod_areas = list(
+	/area/shuttle/escape_pod
+	)
 
 /obj/shuttle_landmark/Initialize()
 	.=..()
@@ -63,7 +66,7 @@
 		return FALSE
 	for(var/area/A in shuttle.shuttle_area)
 		var/list/translation = get_turf_translation(get_turf(shuttle.current_location), get_turf(src), A.contents)
-		if(ispath(A.type, /area/shuttle/escape_pod))
+		if(A.type in pod_areas)
 			var/list/turfs_explosive = get_turf_target_explosive(get_turf(shuttle.current_location), get_turf(src), A.contents)
 			if(LAZYLEN(turfs_explosive))
 				explosion_locations += turfs_explosive
