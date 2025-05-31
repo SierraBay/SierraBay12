@@ -1,0 +1,7 @@
+author: Cakey
+changes:
+  - {rscadd: Added wall paint layering system. You can now paint walls in two-tones
+      using main and stripe layering via the paint tool.}
+  - {tweak: Torch walls now have a two-tone of gunmetal and a slightly lighter gunmetal.}
+  - {imageadd: Updated wall and wall frame sprites to be better contrasted.}
+delete-after: true

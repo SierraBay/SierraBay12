@@ -27,7 +27,7 @@
 	max_boosted_faculties = 1
 	boosted_rank = PSI_RANK_MASTER
 	unboosted_rank = PSI_RANK_APPRENTICE
-	boosted_psipower = 50
+	boosted_psipower = 100
 
 /obj/item/clothing/head/helmet/space/psi_amp/Initialize()
 	. = ..()
