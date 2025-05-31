@@ -10,6 +10,7 @@
 		/datum/design/autolathe/arms_ammo/hidden,
 		/datum/design/autolathe/arms_ammo/hidden/shotgun,
 		/datum/design/autolathe/arms_ammo/shotgun_flash,
+		/datum/design/autolathe/arms_ammo/psipump,
 		/datum/design/autolathe/arms_ammo/hidden/magazine_smg_rubber,
 		/datum/design/autolathe/arms_ammo/hidden/flamethrower,
 		/datum/design/autolathe/arms_ammo/hidden/speedloader,

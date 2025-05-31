@@ -127,13 +127,13 @@
 
 	infectionchance = 80
 	speed = 8
-	spreadtype = "Contact"
+	spreadtype = DISEASE_SPREAD_BLOOD
 	max_stage = 4
 	affected_species = list(HUMAN_SPECIES,SPECIES_TAJARA,SPECIES_RESOMI,SPECIES_MONKEY,SPECIES_SPACER,SPECIES_GRAVWORLDER,SPECIES_VATGROWN,SPECIES_VOX,SPECIES_FARWA,SPECIES_MULE,SPECIES_STOK,SPECIES_SKRELL,SPECIES_UNATHI,SPECIES_YEOSA,SPECIES_TRITONIAN,SPECIES_RESOMI,SPECIES_MONKEY,SPECIES_ZOMBIE)
 
 
 /datum/disease2/disease/zombie/New()
-	..()
+	.=..()
 	antigen = list(pick(ALL_ANTIGENS))
 	antigen |= pick(ALL_ANTIGENS)
 	infectionchance = rand(50,100)
@@ -187,10 +187,18 @@
 	else
 		addtimer(new Callback(src, PROC_REF(transform_zombie_smart)), 20)
 
+/mob/living/carbon/human/transform_zombie()
+	.=..()
+	for(var/obj/item/organ/O in src.organs)
+		O.species.species_flags += SPECIES_FLAG_NO_PAIN
+
+/singleton/species/zombie/
+
+	var/datum/disease2/disease/zombie/zombie = new()
+
 
 /singleton/species/zombie/handle_post_spawn(mob/living/carbon/human/H)
 	. = ..()
-	var/datum/disease2/disease/zombie = new()
 	natural_armour_values = list(
 		melee = ARMOR_MELEE_RESISTANT,
 		bullet = ARMOR_BALLISTIC_SMALL,
@@ -205,7 +213,6 @@
 
 
 /singleton/species/zombie/handle_environment_special(mob/living/carbon/human/H)
-	var/datum/disease2/disease/zombie = new()
 	if (H.stat == CONSCIOUS)
 		if (prob(5))
 			playsound(H.loc, 'sound/hallucinations/far_noise.ogg', 15, 1)
@@ -239,3 +246,17 @@
 			var/vuln = 1 - M.get_blocked_ratio(BP_HEAD, DAMAGE_TOXIN, damage_flags = DAMAGE_FLAG_BIO) // Are they protected by hazmat clothing?
 			if (vuln > 0.10 && prob(8))
 				infect_virus2(H, zombie, 1)
+
+
+/datum/unarmed_attack/bite/sharp/zombie/apply_effects(mob/living/carbon/human/user, mob/living/carbon/human/target, attack_damage, zone)
+	..()
+	admin_attack_log(user, target, "Bit their victim.", "Was bitten.", "bit")
+	if (!istype(target, /mob/living/carbon/human) || !(target.species.name in GLOB.zombie_species) || target.is_species(SPECIES_DIONA) || target.isSynthetic()) //No need to check infection for FBPs
+		return
+
+	target.adjustHalLoss(12) //To help bring down targets in voidsuits
+	var/vuln = 1 - target.get_blocked_ratio(zone, DAMAGE_TOXIN, damage_flags = DAMAGE_FLAG_BIO) //Are they protected from bites?
+	if (vuln > 0.05)
+		if (prob(vuln * 100)) //Protective infection chance
+			if (prob(min(100 - target.get_blocked_ratio(zone, DAMAGE_BRUTE) * 100, 30))) //General infection chance
+				infect_virus2(target, pick(user.virus2), 1) //Infect 'em
