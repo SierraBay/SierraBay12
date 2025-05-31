@@ -139,6 +139,8 @@
 	pixel_y = 7;
 	dir = 4
 	},
+/obj/structure/reagent_dispensers/watertank,
+/obj/item/reagent_containers/glass/bucket,
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/scavship)
 "av" = (
@@ -898,6 +900,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
+/obj/structure/bed/chair/padded,
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/fore)
 "cw" = (
@@ -1243,6 +1246,9 @@
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 4;
 	level = 2
+	},
+/obj/structure/bed/chair/padded{
+	dir = 8
 	},
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/fore)
@@ -1666,11 +1672,18 @@
 /obj/decal/cleanable/filth,
 /obj/floor_decal/corner_steel_grid/diagonal,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/alarm/vox{
+	dir = 4;
+	pixel_x = -16
+	},
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/fore)
 "dR" = (
 /obj/floor_decal/corner_steel_grid/diagonal,
 /obj/item/tank/nitrogen,
+/obj/machinery/computer/cryopod{
+	pixel_y = 30
+	},
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/fore)
 "dS" = (
@@ -2155,6 +2168,7 @@
 /obj/decal/cleanable/filth,
 /obj/floor_decal/corner_techfloor_gray/diagonal,
 /obj/structure/table/steel,
+/obj/item/storage/box/autolathe_designs,
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/scavship)
 "eW" = (
@@ -2303,11 +2317,8 @@
 	},
 /area/voxship/fore)
 "fn" = (
+/obj/machinery/reagentgrinder,
 /obj/structure/table/reinforced,
-/obj/item/storage/firstaid/adv,
-/obj/item/storage/firstaid/combat,
-/obj/item/storage/box/detergent,
-/obj/item/storage/box/syringes,
 /turf/simulated/floor/tiled/freezer{
 	initial_gas = list("nitrogen"=101.383)
 	},
@@ -2322,10 +2333,14 @@
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/scavship)
 "fp" = (
-/obj/structure/table/reinforced,
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/structure/table/reinforced,
+/obj/item/storage/firstaid/combat,
+/obj/item/storage/firstaid/adv,
+/obj/item/storage/box/syringes,
+/obj/item/storage/box/detergent,
 /turf/simulated/floor/tiled/freezer{
 	initial_gas = list("nitrogen"=101.383)
 	},
@@ -3075,6 +3090,12 @@
 	},
 /turf/simulated/floor/plating/vox,
 /area/voxship/engineering)
+"yp" = (
+/obj/machinery/cryopod{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/techmaint/vox,
+/area/voxship/fore)
 "Dc" = (
 /obj/machinery/telecomms/broadcaster/map_preset/voxship,
 /turf/simulated/floor/plating/vox,
@@ -6744,7 +6765,7 @@ cW
 ar
 ar
 el
-eN
+yp
 fh
 at
 at
@@ -7050,7 +7071,7 @@ Gf
 ar
 dS
 ar
-ar
+eN
 ar
 ar
 ar
