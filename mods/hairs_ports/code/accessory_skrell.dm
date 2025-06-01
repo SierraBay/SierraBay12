@@ -1,6 +1,6 @@
 /datum/sprite_accessory/hair/skr
 	name = "Skrell Male Tentacles"
-	icon = 'mods/utility_items/icons/hair.dmi'
+	icon = 'mods/hairs_ports/icons/hair.dmi'
 	icon_state = "skrell_hair_m"
 	species_allowed = list(SPECIES_SKRELL)
 	gender = MALE
