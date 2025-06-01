@@ -86,7 +86,6 @@
 		"Sleepy pen - 4" = list(4, /obj/item/pen/reagent/sleepy),
 		"NVG - 4" = list(4, /obj/item/clothing/glasses/night),
 		"Raider Suit - 6" = list(6, /obj/item/clothing/head/helmet/space/vox/raider, /obj/item/clothing/suit/space/vox/raider),
-		"Thermals - 6" = list(6, /obj/item/clothing/glasses/thermal/plain/monocle),
 		"Net projector - 6" = list(6, /obj/item/rig_module/fabricator/energy_net),
 		"Energy shield - 8" = list(8, /obj/item/shield/energy),
 		"Arkmade Hardsuit - 8" = list(8, /obj/item/rig/vox),
@@ -94,6 +93,7 @@
 		"Railgun - 8" = list(8, /obj/item/gun/magnetic/railgun),
 		"Flechette gun - 8" = list(8, /obj/item/gun/magnetic/railgun/flechette),
 		"Cutlass - 12" = list(12, /obj/item/melee/energy/sword/pirate),
+		"Thermals - 12" = list(12, /obj/item/clothing/glasses/thermal/plain/monocle),
 		"MIU - 15" = list(15, /obj/item/clothing/mask/ai),
 		"New Body - 30" = list(30, /mob/living/carbon/human/vox)
 	)
