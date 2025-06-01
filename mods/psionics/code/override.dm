@@ -1,8 +1,11 @@
 /datum/job/proc/give_psi(mob/living/carbon/human/H)
 
-	if(!(GLOB.species_by_name[SPECIES_HUMAN]) || !(GLOB.species_by_name[SPECIES_VATGROWN]) || !(GLOB.species_by_name[SPECIES_SPACER]) || !(GLOB.species_by_name[SPECIES_GRAVWORLDER]) || !(GLOB.species_by_name[SPECIES_MULE]))
+	if(!(H.species.name == SPECIES_HUMAN || H.species.name == SPECIES_VATGROWN || H.species.name == SPECIES_SPACER || H.species.name == SPECIES_GRAVWORLDER || H.species.name == SPECIES_MULE))
 		return
-
+	/*
+	if(H.client.prefs.organ_data[BP_CHEST] == "cyborg")
+		return // No psionics for cyborgs.
+	*/
 	if(psi_latency_chance && prob(psi_latency_chance))
 		H.set_psi_rank(pick(PSI_COERCION, PSI_REDACTION, PSI_ENERGISTICS, PSI_PSYCHOKINESIS, PSI_CONSCIOUSNESS, PSI_MANIFESTATION, PSI_METAKINESIS), 1, defer_update = TRUE)
 
