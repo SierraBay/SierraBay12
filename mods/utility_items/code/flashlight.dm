@@ -1,5 +1,5 @@
 /obj/item/device/flashlight
-	var/obj/item/cell/device/standard/suitable_cell
+	var/suitable_cell = /obj/item/cell/device/standard
 	var/obj/item/cell/cell
 	var/power_cost = 0.2
 
@@ -36,7 +36,7 @@
 	return cell
 
 /obj/item/device/flashlight/proc/get_power_cost()
-	return power_cost * flashlight_range / 2
+	return abs(power_cost * flashlight_power / 2)
 
 /obj/item/device/flashlight/Process()
 	if(on && suitable_cell)
@@ -45,7 +45,7 @@
 			if(ismob(loc))
 				to_chat(loc, SPAN_WARNING("\The [src] dies. You are alone now."))
 			turn_off()
-		else if (cell.percent() <= 33)
+		else
 			apply_power_deficiency()
 
 /obj/item/device/flashlight/proc/apply_power_deficiency()
@@ -53,20 +53,34 @@
 	if(!C)
 		return
 	if(flashlight_range > 0)
-		set_light(clamp(flashlight_power / 2 * max(log(rand(4,6), C.percent()), flashlight_power / 8), 0, 1), (flashlight_power * C.percent()) / 100)
+		var/percent = C.percent()
+		var/min_range = 1
+		var/min_power = 0.1
+		var/range_out
+		var/power_out
+		if(percent >= 25)
+			range_out = flashlight_range
+			power_out = flashlight_power
+		else
+			var/k = percent / 25 // от 0 до 1
+			range_out = max(min_range, round(flashlight_range * k))
+			power_out = max(min_power, flashlight_power * k)
+		set_light(range_out, power_out)
 
 /obj/item/device/flashlight/set_flashlight()
-	if(on && cell)
+	if(on && cell && cell.charge > 1)
 		set_light(flashlight_range, flashlight_power)
-		START_PROCESSING(SSobj, src)//inf
+		START_PROCESSING(SSobj, src)
+	else if(on && !suitable_cell)
+		set_light(flashlight_range, flashlight_power)
 	else
-		turn_off()//inf, was:		set_light(0)
-	update_icon()//inf
+		turn_off()
+	update_icon()
 
 /obj/item/device/flashlight/proc/turn_off()
 	on = FALSE
 	set_light(0)
-	STOP_PROCESSING(SSobj, src)//inf
+	STOP_PROCESSING(SSobj, src)
 	update_icon()
 
 /obj/item/device/flashlight/MouseDrop(over_object)
