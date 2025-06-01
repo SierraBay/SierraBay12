@@ -19,9 +19,6 @@
 
 /obj/shuttle_landmark/
 	var/list/explosion_locations = list()
-	var/list/pod_areas = list(
-	/area/shuttle/escape_pod
-	)
 
 /obj/shuttle_landmark/Initialize()
 	.=..()
@@ -53,6 +50,7 @@
 	name = "Escape Pod Landing Site"
 	base_turf = /turf/simulated/floor/plating
 
+
 /obj/shuttle_landmark/escape_pod/out/New()
 	.=..()
 	landmark_tag = "Nav_[name] - [rand(1, 1000)]"
@@ -66,7 +64,7 @@
 		return FALSE
 	for(var/area/A in shuttle.shuttle_area)
 		var/list/translation = get_turf_translation(get_turf(shuttle.current_location), get_turf(src), A.contents)
-		if(A.type in pod_areas)
+		if(istype(A.type, /area/shuttle/escape_pod))
 			var/list/turfs_explosive = get_turf_target_explosive(get_turf(shuttle.current_location), get_turf(src), A.contents)
 			if(LAZYLEN(turfs_explosive))
 				explosion_locations += turfs_explosive
