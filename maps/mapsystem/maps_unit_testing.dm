@@ -60,8 +60,9 @@
 		/area/meatstation,
 		/area/lost_supply_base,
 		/area/magshield,
+		/area/shuttle/escape_pod,
 		)
-		// /area/mine, /area/bluespaceriver, /area/lar_maria, /area/casino, /area/meatstation, /area/lost_supply_base, /area/magshield //[SIERRA-ADD]
+		// /area/mine, /area/bluespaceriver, /area/lar_maria, /area/casino, /area/meatstation, /area/lost_supply_base, /area/magshield, /area/shuttle/escape_pod //[SIERRA-ADD]
 
 	var/list/area_purity_test_exempt_areas = list()
 
