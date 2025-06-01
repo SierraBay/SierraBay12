@@ -16,6 +16,7 @@
 #include "code/vox.dm"
 #include "code/simple.dm"
 #include "code/circuit.dm"
+#include "code/flashlight.dm"
 #include "code/global_hud_sierra.dm"
 #include "code/labcoat.dm"
 #include "code/shuttle_feature.dm"

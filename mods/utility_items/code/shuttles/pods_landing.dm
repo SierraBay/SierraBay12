@@ -190,3 +190,16 @@
 		linked.pod.next_location = linked.pod.escape_pod_landmark
 		linked.pod.destination_chosen = TRUE
 		state("Pod destination set to [destination_pod.name].")
+
+/obj/item/stock_parts/circuitboard/pod_set_destination
+	name = "circuit board (pod destination)"
+	build_path = /obj/machinery/computer/pod_set_destination
+	board_type = "machine"
+	origin_tech = list(TECH_DATA = 2, TECH_ENGINEERING = 1)
+
+/datum/design/circuit/pod_set_destination
+	name = "pod destination"
+	id = "pod_set_destination"
+	req_tech = list(TECH_DATA = 2, TECH_ENGINEERING = 2)
+	build_path = /obj/item/stock_parts/circuitboard/pod_set_destination
+	sort_string = "WAAZZ"
