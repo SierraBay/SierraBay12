@@ -64,7 +64,7 @@
 		return FALSE
 	for(var/area/A in shuttle.shuttle_area)
 		var/list/translation = get_turf_translation(get_turf(shuttle.current_location), get_turf(src), A.contents)
-		if(istype(A.type, /area/shuttle/escape_pod))
+		if(ispath(A.type, /area/shuttle/escape_pod))
 			var/list/turfs_explosive = get_turf_target_explosive(get_turf(shuttle.current_location), get_turf(src), A.contents)
 			if(LAZYLEN(turfs_explosive))
 				explosion_locations += turfs_explosive
@@ -127,28 +127,29 @@
 
 
 
-/obj/machinery/computer/pod_set_destination
+/obj/machinery/pod_set_destination
 	name = "Escape Pod Navigation Computer"
 	desc = "A computer terminal used to set the destination of the escape pod."
+	icon = 'icons/obj/machines/computer.dmi'
 	icon_state = "tele_nav"
 	density = FALSE
 
 	var/list/possible_visits
 	var/obj/machinery/embedded_controller/radio/simple_docking_controller/escape_pod/linked
 
-/obj/machinery/computer/pod_set_destination/New()
+/obj/machinery/pod_set_destination/New()
 	.=..()
 	if(!linked)
 		for(var/obj/machinery/embedded_controller/radio/simple_docking_controller/escape_pod/A in range(2, src))
 			linked = A
 			break
 
-/obj/machinery/computer/pod_set_destination/Destroy()
+/obj/machinery/pod_set_destination/Destroy()
 	if (linked)
 		linked = null
 	. = ..()
 
-/obj/machinery/computer/pod_set_destination/Click()
+/obj/machinery/pod_set_destination/Click()
 	. = ..()
 	if(!linked)
 		for(var/obj/machinery/embedded_controller/radio/simple_docking_controller/escape_pod/A in range(2, src))
@@ -159,7 +160,7 @@
 	else
 		get_possible_destinations()
 
-/obj/machinery/computer/pod_set_destination/proc/get_possible_destinations()
+/obj/machinery/pod_set_destination/proc/get_possible_destinations()
 	if(linked.pod.current_location != linked.pod.waypoint_station)
 		state("Pod is not docked, cannot set destination.")
 		return
@@ -193,8 +194,7 @@
 
 /obj/item/stock_parts/circuitboard/pod_set_destination
 	name = "circuit board (pod destination)"
-	build_path = /obj/machinery/computer/pod_set_destination
-	board_type = "computer"
+	build_path = /obj/machinery/pod_set_destination
 	origin_tech = list(TECH_DATA = 2, TECH_ENGINEERING = 1)
 
 /datum/design/circuit/pod_set_destination
