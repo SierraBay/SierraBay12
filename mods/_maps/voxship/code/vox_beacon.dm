@@ -111,6 +111,30 @@
 			SPAN_NOTICE("\The [user] inserts \a [H] into \the [src]."),
 		)
 		return 1
+	if(istype(I, /obj/item/stack/material/silver))
+		var/obj/item/stack/material/silver/H = I
+		favors += 0.5
+		qdel(H)
+		user.visible_message(
+			SPAN_NOTICE("\The [user] inserts \a [H] into \the [src]."),
+		)
+		return 1
+	if(istype(I, /obj/item/stack/material/diamond))
+		var/obj/item/stack/material/diamond/H = I
+		favors += 0.7
+		qdel(H)
+		user.visible_message(
+			SPAN_NOTICE("\The [user] inserts \a [H] into \the [src]."),
+		)
+		return 1
+	if(istype(I, /obj/item/stack/material/wood))
+		var/obj/item/stack/material/wood/H = I
+		favors += 0.1
+		qdel(H)
+		user.visible_message(
+			SPAN_NOTICE("\The [user] inserts \a [H] into \the [src]."),
+		)
+		return 1
 	if(istype(I, /obj/item/gun/energy/pulse_rifle/skrell))
 		var/obj/item/gun/energy/pulse_rifle/skrell/H = I
 		favors += 3
