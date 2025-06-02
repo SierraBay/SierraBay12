@@ -143,11 +143,3 @@
 			SPAN_NOTICE("\The [user] inserts \a [H] into \the [src]."),
 		)
 		return 1
-	if(istype(I, /obj/item/spacecash/bundle/c1000))
-		var/obj/item/spacecash/bundle/c1000/H = I
-		favors += 0.1
-		qdel(H)
-		user.visible_message(
-			SPAN_NOTICE("\The [user] inserts \a [H] into \the [src]."),
-		)
-		return 1
