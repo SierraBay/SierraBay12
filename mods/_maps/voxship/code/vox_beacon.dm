@@ -87,15 +87,10 @@
 		"NVG - 4" = list(4, /obj/item/clothing/glasses/night),
 		"Raider Suit - 6" = list(6, /obj/item/clothing/head/helmet/space/vox/raider, /obj/item/clothing/suit/space/vox/raider),
 		"Net projector - 6" = list(6, /obj/item/rig_module/fabricator/energy_net),
-		"Energy shield - 8" = list(8, /obj/item/shield/energy),
 		"Arkmade Hardsuit - 8" = list(8, /obj/item/rig/vox),
 		"Emag - 8" = list(8, /obj/item/card/emag),
-		"Railgun - 8" = list(8, /obj/item/gun/magnetic/railgun),
-		"Flechette gun - 8" = list(8, /obj/item/gun/magnetic/railgun/flechette),
-		"Cutlass - 12" = list(12, /obj/item/melee/energy/sword/pirate),
 		"Thermals - 12" = list(12, /obj/item/clothing/glasses/thermal/plain/monocle),
-		"MIU - 15" = list(15, /obj/item/clothing/mask/ai),
-		"New Body - 30" = list(30, /mob/living/carbon/human/vox)
+		"MIU - 15" = list(15, /obj/item/clothing/mask/ai)
 	)
 
 /obj/structure/voxuplink/vox_ship/use_tool(obj/item/I, mob/user)
@@ -111,14 +106,6 @@
 	if(istype(I, /obj/item/stack/material/gold))
 		var/obj/item/stack/material/gold/H = I
 		favors += 0.5
-		qdel(H)
-		user.visible_message(
-			SPAN_NOTICE("\The [user] inserts \a [H] into \the [src]."),
-		)
-		return 1
-	if(istype(I, /obj/item/stock_parts/circuitboard))
-		var/obj/item/stock_parts/circuitboard/H = I
-		favors += 1
 		qdel(H)
 		user.visible_message(
 			SPAN_NOTICE("\The [user] inserts \a [H] into \the [src]."),
@@ -157,7 +144,7 @@
 		)
 		return 1
 	if(istype(I, /obj/item/spacecash/bundle))
-		var/obj/item/spacecash/bundle/H = I
+		var/obj/item/spacecash/bundle/c1000/H = I
 		favors += 0.1
 		qdel(H)
 		user.visible_message(
