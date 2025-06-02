@@ -25,10 +25,10 @@
 		software_data["id"] = S.id
 		if(key in software)
 			software_data["on"] = S.is_active(src)
-			bought_software[++bought_software.len] = software_data
+			bought_software[++LAZYLEN(bought_software)] = software_data
 		else
 			software_data["ram"] = S.ram_cost
-			not_bought_software[++not_bought_software.len] = software_data
+			not_bought_software[++LAZYLEN(not_bought_software)] = software_data
 
 	data["bought"] = bought_software
 	data["not_bought"] = not_bought_software
@@ -44,7 +44,7 @@
 		var/emote[0]
 		emote["name"] = name
 		emote["id"] = pai_emotions[name]
-		emotions[++emotions.len] = emote
+		emotions[++LAZYLEN(emotions)] = emote
 
 	data["emotions"] = emotions
 	data["current_emotion"] = card.current_emotion

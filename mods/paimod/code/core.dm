@@ -11,7 +11,7 @@
 	for(var/obj/item/paimod/PM in contents)
 		mods.Add(PM)
 	var/T = P.special_limit_tag
-	if(mods.len > modlimits["common"]) return 0
+	if(LAZYLEN(mods) > modlimits["common"]) return 0
 	else if(!T) return 1
 	else
 		var/mods_withT = 0
