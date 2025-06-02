@@ -196,6 +196,7 @@
 
 /obj/item/stock_parts/circuitboard/pod_set_destination
 	name = "circuit board (pod destination)"
+	board_type = "machine"
 	build_path = /obj/machinery/pod_set_destination
 	origin_tech = list(TECH_DATA = 2, TECH_ENGINEERING = 1)
 
