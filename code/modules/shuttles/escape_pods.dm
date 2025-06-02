@@ -163,7 +163,6 @@ var/global/list/escape_pods_by_name = list()
 		var/command = href_list["command"]
 		if(command == "manual_arm")
 			pod.arming_controller.arm()
-			pod.get_possible_destination()
 			return TOPIC_REFRESH
 
 		if(command == "force_launch")

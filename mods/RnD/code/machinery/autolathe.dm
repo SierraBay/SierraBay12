@@ -103,6 +103,10 @@
 	update_icon()
 
 /obj/machinery/fabricator/Destroy()
+	for(var/material in stored_material)
+		var/material/M = SSmaterials.get_material_by_name(material)
+		if(stored_material[material] > M.units_per_sheet)
+			M.place_sheet(get_turf(src), round(stored_material[material] / M.units_per_sheet), M.name)
 	QDEL_NULL(wires)
 	return ..()
 

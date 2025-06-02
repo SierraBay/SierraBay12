@@ -206,3 +206,12 @@
 	req_tech = list(TECH_DATA = 2, TECH_ENGINEERING = 2)
 	build_path = /obj/item/stock_parts/circuitboard/pod_set_destination
 	sort_string = "WAAZZ"
+
+
+
+/datum/evacuation_controller/starship/fast/finish_preparing_evac()
+	. = ..()
+	for (var/datum/shuttle/autodock/ferry/escape_pod/pod in escape_pods)
+		if (pod.arming_controller)
+			pod.arming_controller.arm()
+			pod.get_possible_destination()
