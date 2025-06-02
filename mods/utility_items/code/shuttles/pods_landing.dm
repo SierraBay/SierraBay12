@@ -133,6 +133,8 @@
 	icon = 'icons/obj/machines/computer.dmi'
 	icon_state = "tele_nav"
 	density = FALSE
+	anchored = TRUE
+	construct_state = /singleton/machine_construction/default/panel_closed
 
 	var/list/possible_visits
 	var/obj/machinery/embedded_controller/radio/simple_docking_controller/escape_pod/linked
