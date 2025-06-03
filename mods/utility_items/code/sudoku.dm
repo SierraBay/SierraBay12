@@ -1,7 +1,7 @@
 /datum/computer_file/program/sudoku
 	filename = "sudoku"
 	filedesc = "Sudoku"
-	program_icon_state = "generic"
+	program_icon_state = "game"
 	program_menu_icon = "script"
 	extended_desc = "A game of numbers, logic, and deduction. Popular for centuries to keep the mind sharp."
 	size = 5

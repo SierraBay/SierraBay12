@@ -32,6 +32,9 @@
 	icon_state = pick("yellow", "blue", "green", "red", "purple", "black")
 	max_capacity = 128
 
+/obj/item/stock_parts/computer/hard_drive/portable/design/printable/install_default_programs()
+	return
+
 
 /obj/item/stock_parts/computer/hard_drive/portable/LateInitialize(mapload)
 	install_default_programs()

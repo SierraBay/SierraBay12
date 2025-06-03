@@ -67,7 +67,7 @@
 	build_path = /obj/item/ammo_magazine/pistol/double
 
 /datum/design/autolathe/arms_ammo/hidden/magazine_pistol_double_rubber
-	name = "ammunition (pistol doublestack. rubber)"
+	name = "ammunition (pistol doublestack rubber)"
 	build_path = /obj/item/ammo_magazine/pistol/double/rubber
 
 /datum/design/autolathe/arms_ammo/hidden/magazine_small
