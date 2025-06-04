@@ -1,6 +1,7 @@
 var/global/list/teleport_landmarks_list = list()
 
 /obj/landmark/teleport_to_z_level
+	invisibility = 60
 	var/teleport_tag = "TEST"
 	var/map_path
 	var/is_exit = FALSE
@@ -52,8 +53,9 @@ var/global/list/teleport_landmarks_list = list()
 	input_mark.connected_landmark = src
 
 /obj/landmark/teleport_to_z_level/skat
+
 	teleport_tag = "SKAT"
-	map_path = /datum/map_template/ruin/exoplanet/drowned_skat_underwater
+	map_path = /datum/map_template/ruin/exoplanet/drowned_skat_second_deck
 
 /obj/landmark/teleport_to_z_level/skat/exit
 	teleport_tag = "SKAT"
