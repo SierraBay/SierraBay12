@@ -1,0 +1,5 @@
+author: Lexanx
+changes:
+  - {bugfix: Ускорена загрузка темплейтов.}
+  - {bugfix: Фикс урона ИПС при нагреве}
+delete-after: true
