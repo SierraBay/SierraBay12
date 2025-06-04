@@ -21,6 +21,18 @@
 	..()
 	new /obj/item/stack/material/silver(get_turf(holder.my_atom), created_volume)
 
+/singleton/reaction/uranchemy
+	name = "Uranium"
+	result = null
+	required_reagents = list(/datum/reagent/frostoil = 5, /datum/reagent/uranium = 20)
+	catalysts = list(/datum/reagent/crystal=5)
+	result_amount = 1
+	mix_message = "The solution solidifies into a greeny mass."
+
+/singleton/reaction/uranchemy/on_reaction(datum/reagents/holder, created_volume, reaction_flags)
+	..()
+	new /obj/item/stack/material/uranium(get_turf(holder.my_atom), created_volume)
+
 
 
 /singleton/reaction/kompot
