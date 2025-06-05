@@ -1,5 +1,4 @@
-//перенос хуки кальянича сюда
-
+//[SIERRA-ADD: Перенос из packs/infinity/items/obj/hookah.dm основного кода сюда]
 /obj/item/hookah
 	name = "Hookah"
 	icon = 'packs/infinity/icons/obj/items.dmi'
@@ -343,6 +342,7 @@
 			var/datum/effect/smoke_spread/hookah/smoke = new /datum/effect/smoke_spread/hookah()
 			smoke.set_up(1, usr.dir, usr.loc)
 			smoke.start()
+//[/SIERRA-ADD]
 
 /obj/effect/smoke/hookah
 	name = "smoke"
