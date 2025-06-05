@@ -95,75 +95,49 @@
 
 /obj/structure/voxuplink/vox_ship/use_tool(obj/item/I, mob/user)
 	..()
-	if(istype(I, /obj/item/stack/material/steel))
-		var/obj/item/stack/material/steel/H = I
-		favors += 0.2
-		qdel(H)
-		user.visible_message(
-			SPAN_NOTICE("\The [user] inserts \a [H] into \the [src]."),
-		)
-		return 1
-	if(istype(I, /obj/item/stack/material/gold))
-		var/obj/item/stack/material/gold/H = I
-		favors += 0.5
-		qdel(H)
-		user.visible_message(
-			SPAN_NOTICE("\The [user] inserts \a [H] into \the [src]."),
-		)
-		return 1
-	if(istype(I, /obj/item/stack/material/silver))
-		var/obj/item/stack/material/silver/H = I
-		favors += 0.5
-		qdel(H)
-		user.visible_message(
-			SPAN_NOTICE("\The [user] inserts \a [H] into \the [src]."),
-		)
-		return 1
-	if(istype(I, /obj/item/stack/material/diamond))
-		var/obj/item/stack/material/diamond/H = I
-		favors += 0.7
-		qdel(H)
-		user.visible_message(
-			SPAN_NOTICE("\The [user] inserts \a [H] into \the [src]."),
-		)
-		return 1
-	if(istype(I, /obj/item/stack/material/wood))
-		var/obj/item/stack/material/wood/H = I
-		favors += 0.1
-		qdel(H)
-		user.visible_message(
-			SPAN_NOTICE("\The [user] inserts \a [H] into \the [src]."),
-		)
-		return 1
-	if(istype(I, /obj/item/gun/energy/pulse_rifle/skrell))
-		var/obj/item/gun/energy/pulse_rifle/skrell/H = I
-		favors += 3
-		qdel(H)
-		user.visible_message(
-			SPAN_NOTICE("\The [user] inserts \a [H] into \the [src]."),
-		)
-		return 1
-	if(istype(I, /obj/item/gun/projectile/shotgun))
-		var/obj/item/gun/projectile/shotgun/H = I
-		favors += 2
-		qdel(H)
-		user.visible_message(
-			SPAN_NOTICE("\The [user] inserts \a [H] into \the [src]."),
-		)
-		return 1
-	if(istype(I, /obj/item/gun/projectile/pistol))
-		var/obj/item/gun/projectile/pistol/H = I
-		favors += 1
-		qdel(H)
-		user.visible_message(
-			SPAN_NOTICE("\The [user] inserts \a [H] into \the [src]."),
-		)
-		return 1
-	if(istype(I, /obj/item/clothing/suit/armor/pcarrier))
-		var/obj/item/clothing/suit/armor/pcarrier/H = I
-		favors += 1
-		qdel(H)
-		user.visible_message(
-			SPAN_NOTICE("\The [user] inserts \a [H] into \the [src]."),
-		)
-		return 1
+// Продажа только материалов
+	if(istype(I, /obj/item/stack/material))
+		var/price
+		var/obj/item/stack/st = I
+		if(istype(I, /obj/item/stack/material/steel))
+			price = 0.02
+		else if(istype(I, /obj/item/stack/material/gold))
+			price = 0.05
+		else if(istype(I, /obj/item/stack/material/silver))
+			price = 0.01
+		else if(istype(I, /obj/item/stack/material/diamond))
+			price = 0.07
+		else if(istype(I, /obj/item/stack/material/wood))
+			price = 0.01
+		if(!price)
+			to_chat(user, "Это не требуется Апексам")
+			return FALSE
+		favors += price * st.amount
+		to_chat(user, "Вы обменяли материалы на валюту")
+		qdel(I)
+// Продажа только оружия
+	if(istype(I, /obj/item/gun))
+		var/price_weapon
+		if(istype(I, /obj/item/gun/energy/pulse_rifle/skrell))
+			price_weapon = 3
+		else if(istype(I, /obj/item/gun/projectile/shotgun))
+			price_weapon = 2
+		else if(istype(I, /obj/item/gun/projectile/pistol))
+			price_weapon = 1
+		if(!price_weapon)
+			to_chat(user, "Это не требуется Апексам")
+			return FALSE
+		favors += price_weapon
+		to_chat(user, "Вы обменяли оружие на валюту")
+		qdel(I)
+// Продажа только костюмов
+	if(istype(I, /obj/item/clothing/suit))
+		var/price_suit
+		if(istype(I, /obj/item/clothing/suit/armor/pcarrier))
+			price_suit = 1
+		if(!price_suit)
+			to_chat(user, "Это не требуется Апексам")
+			return FALSE
+		favors += price_suit
+		to_chat(user, "Вы обменяли костюм на валюту")
+		qdel(I)
