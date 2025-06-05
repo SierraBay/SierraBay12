@@ -58,6 +58,7 @@
 		/datum/design/autolathe/general/radio_headset,
 		/datum/design/autolathe/general/radio_bounced,
 		/datum/design/autolathe/general/suit_cooler,
+		/datum/design/autolathe/general/suit_cooler_mini,
 		/datum/design/autolathe/general/weldermask,
 		/datum/design/autolathe/general/knife,
 		/datum/design/autolathe/general/taperecorder,
