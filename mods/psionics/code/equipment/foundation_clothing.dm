@@ -77,3 +77,4 @@
 	new /obj/item/ammo_magazine/speedloader/magnum/nullglass(src)
 	new /obj/item/ammo_magazine/smg_sol(src)
 	new /obj/item/ammo_magazine/smg_sol(src)
+	new /obj/item/grenade/nullgasbomb(src)

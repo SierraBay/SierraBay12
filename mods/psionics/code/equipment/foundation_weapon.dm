@@ -89,13 +89,15 @@
 // Psyk-out grenade
 /////////////////////////////////////////////
 
+/datum/effect/smoke_spread/nullgas
+	smoke_type = /obj/effect/smoke/nullgas
 
-/obj/effect/smoke/mustard
+/obj/effect/smoke/nullgas
 	name = "null gas"
 	icon_state = "nullgas"
-	icon = 'mods/psionics/icons/foundation/foundation_obj.dmi'
+	icon = 'mods/psionics/icons/foundation/nullgas.dmi'
 
-/obj/effect/smoke/mustard/can_affect(mob/living/carbon/M)
+/obj/effect/smoke/nullgas/can_affect(mob/living/carbon/M)
 	. = ..()
 	if (!.)
 		return
@@ -104,12 +106,50 @@
 		if (H.wear_suit)
 			return FALSE
 
-/obj/effect/smoke/mustard/affect(mob/living/carbon/human/R)
+/obj/effect/smoke/nullgas/affect(mob/living/carbon/human/R)
 	R.burn_skin(0.75)
 	if (R.coughedtime != 1)
 		R.coughedtime = 1
 		R.emote("gasp")
 		addtimer(new Callback(R, TYPE_PROC_REF(/mob/living/carbon, clear_coughedtime)), 2 SECONDS)
 	R.updatehealth()
-	R.disrupts_psionics()
 	return
+
+/obj/effect/smoke/nullgas/disrupts_psionics()
+	return src
+
+
+/obj/item/grenade/nullgasbomb
+	desc = "It is set to detonate in 2 seconds."
+	name = "nullgas bomb"
+	icon = 'mods/psionics/icons/foundation/nullgas.dmi'
+	icon_state = "nullgrenade"
+	det_time = 20
+	item_state = "nullgrenade"
+	slot_flags = SLOT_BELT
+	var/datum/effect/smoke_spread/nullgas
+	var/smoke_times = 4
+
+/obj/item/grenade/nullgasbomb/Destroy()
+	QDEL_NULL(nullgas)
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/item/grenade/nullgasbomb/detonate(mob/living/user)
+	playsound(src.loc, 'sound/effects/smoke.ogg', 50, 1, -3)
+	nullgas = new /datum/effect/smoke_spread/nullgas
+	nullgas.attach(src)
+	nullgas.set_up(10, 0, get_turf(src))
+	START_PROCESSING(SSobj, src)
+	for(var/obj/blob/B in view(8,src))
+		var/damage = round(30/(get_dist(B,src)+1))
+		B.damage_health(damage, DAMAGE_BURN)
+		B.update_icon()
+	QDEL_IN(src, 8 SECONDS)
+
+/obj/item/grenade/nullgasbomb/Process()
+	if(!QDELETED(nullgas) && (smoke_times > 0))
+		smoke_times--
+		nullgas.start()
+		return
+	return PROCESS_KILL

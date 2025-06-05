@@ -84,7 +84,11 @@
 	desc = "Mars Security Industries MSI-220 'Rapido'. Commonly used by Military Police, Sol Federal Police and other governmental paramilitary structures tied to MSI contracts."
 	icon = 'mods/_maps/phobos/icons/smg_sol.dmi'
 	icon_state = "solsmg"
-	item_state = "c20r"
+	item_state = "solsmg"
+	item_icons = list(
+		slot_r_hand_str = 'mods/_maps/phobos/icons/righthand_guns.dmi',
+		slot_l_hand_str = 'mods/_maps/phobos/icons/lefthand_guns.dmi',
+		)
 	safety_icon = "safety"
 	w_class = ITEM_SIZE_LARGE
 	force = 10
