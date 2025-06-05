@@ -313,12 +313,3 @@
 	.=..()
 	var/old_prev_type = prev_type
 	prev_type = old_prev_type
-
-
-/datum/shuttle/autodock/process_launch()
-	.=..()
-	for(var/i in 1 to LAZYLEN(next_location.image_shadow))
-		var/image/I = next_location.image_shadow[i]
-		var/turf/T = locate(I.loc.x, I.loc.y, I.loc.z)
-		I = image('mods/utility_items/icons/alphacolors.dmi', T, "dither50")
-		T.AddOverlays(I)
