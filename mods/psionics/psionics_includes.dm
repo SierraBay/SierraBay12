@@ -5,6 +5,7 @@
 
 
 #include "code/misc/decoyobj.dm"
+#include "code/misc/foundation_misc.dm"
 #include "code/complexus/complexus_helpers.dm"
 #include "code/complexus/complexus_latency.dm"
 #include "code/complexus/complexus_power_cache.dm"

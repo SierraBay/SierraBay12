@@ -43,6 +43,14 @@
 	accessory_icons = list(slot_w_uniform_str = 'mods/psionics/icons/foundation/foundation_onmob.dmi', slot_wear_suit_str = 'mods/psionics/icons/foundation/foundation_onmob.dmi')
 	icon_state = "foundationband"
 
+/obj/item/clothing/under/color/black/foundation
+	name = "Foundation layered undersuit"
+	desc = "A thick, layered black undersuit lined with power cables filled with psi-disrupting materials."
+	accessories = list(/obj/item/clothing/accessory/armband/foundation)
+
+/obj/item/clothing/under/color/black/foundation/disrupts_psionics()
+	return src
+
 /singleton/hierarchy/outfit/foundation
 	name = "Cuchulain Foundation Agent"
 	glasses =  /obj/item/clothing/glasses/sunglasses
@@ -58,17 +66,23 @@
 	head = /obj/item/clothing/head/helmet/foundation
 	mask = /obj/item/clothing/mask/gas
 	glasses =  /obj/item/clothing/glasses/hud/security/prot/sunglasses
-	uniform =  /obj/item/clothing/under/color/black
+	uniform =  /obj/item/clothing/under/color/black/foundation
 	suit = /obj/item/clothing/suit/armor/pcarrier/troops/heavy/foundation
 	shoes =    /obj/item/clothing/shoes/jackboots
 	l_hand =   null
 	l_ear =    /obj/item/device/radio/headset/foundation
+	l_pocket = /obj/item/device/radio
 	r_hand = /obj/item/gun/projectile/automatic/sol_smg
+	r_pocket = /obj/item/card/emag
 	gloves = /obj/item/clothing/gloves/thick/swat
 	holster =  /obj/item/clothing/accessory/storage/holster/thigh
 	belt = /obj/item/storage/belt/holster/security/foundation
 	back = /obj/item/storage/backpack
 	id_slot =  slot_wear_id
+	backpack_contents = list(
+		/obj/item/storage/box/survival = 1,
+		/obj/item/storage/firstaid/security =1)
+	flags = OUTFIT_HAS_BACKPACK
 
 /obj/item/storage/belt/holster/security/foundation/New()
 	..()
