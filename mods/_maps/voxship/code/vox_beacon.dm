@@ -97,16 +97,11 @@
 	..()
 	if(istype(I, /obj/item/stack/material/steel))
 		var/obj/item/stack/material/steel/H = I
-		if(H.amount == 50)
-			favors += 0.2
-			qdel(H)
-			user.visible_message(
-				SPAN_NOTICE("\The [user] inserts \a [H] into \the [src]."),
-			)
-		else
-			user.visible_message(
-				SPAN_NOTICE("\the [user] trying to invest \a [H] into [src] but nothing works."),
-			)
+		favors += 0.2
+		qdel(H)
+		user.visible_message(
+			SPAN_NOTICE("\The [user] inserts \a [H] into \the [src]."),
+		)
 		return 1
 	if(istype(I, /obj/item/stack/material/gold))
 		var/obj/item/stack/material/gold/H = I
