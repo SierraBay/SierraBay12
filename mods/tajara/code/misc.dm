@@ -1,3 +1,4 @@
+/*[SIERRA-REMOVE: перенесено в mods/utility_items/boozeomat.dm]
 /datum/reagent/drink/tajaran/chai
 	name = "Herbal tincture"
 	description = "Drink similar to tea, but from other herbs. If you brewed hundreds of medicinal herbs from pharmacies - could be something similar."
@@ -60,3 +61,4 @@
 /obj/item/reagent_containers/food/drinks/bottle/kotochai/Initialize()
 	. = ..()
 	reagents.add_reagent(/datum/reagent/drink/tajaran/chai, 100)
+[/SIERRA-REMOVE]*/
