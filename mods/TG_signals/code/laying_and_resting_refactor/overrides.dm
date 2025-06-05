@@ -1,4 +1,6 @@
 /mob/UpdateLyingBuckledAndVerbStatus()
+	var/already_buckled = FALSE
+
 	if(!resting && cannot_stand() && can_stand_overridden())
 		set_lying(FALSE)
 	else if(buckled)
@@ -9,11 +11,17 @@
 				set_lying(incapacitated(INCAPACITATION_POSITION))
 			else
 				lying = buckled.buckle_stance
+				already_buckled = TRUE
 			if(buckled.buckle_movable)
 				anchored = FALSE
 	else
 		// Только проверка физического положения
 		set_lying(incapacitated(INCAPACITATION_POSITION))
+
+	//Не лежит, проверяем если должен упасть
+	if(!lying && !already_buckled)
+		//Сделал без сигнала
+		lying = incapacitated(INCAPACITATION_KNOCKDOWN)
 
 	if(lying)
 		set_density(FALSE)

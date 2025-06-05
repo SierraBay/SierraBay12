@@ -86,81 +86,58 @@
 		"Sleepy pen - 4" = list(4, /obj/item/pen/reagent/sleepy),
 		"NVG - 4" = list(4, /obj/item/clothing/glasses/night),
 		"Raider Suit - 6" = list(6, /obj/item/clothing/head/helmet/space/vox/raider, /obj/item/clothing/suit/space/vox/raider),
-		"Thermals - 6" = list(6, /obj/item/clothing/glasses/thermal/plain/monocle),
 		"Net projector - 6" = list(6, /obj/item/rig_module/fabricator/energy_net),
-		"Energy shield - 8" = list(8, /obj/item/shield/energy),
 		"Arkmade Hardsuit - 8" = list(8, /obj/item/rig/vox),
 		"Emag - 8" = list(8, /obj/item/card/emag),
-		"Railgun - 8" = list(8, /obj/item/gun/magnetic/railgun),
-		"Flechette gun - 8" = list(8, /obj/item/gun/magnetic/railgun/flechette),
-		"Cutlass - 12" = list(12, /obj/item/melee/energy/sword/pirate),
-		"MIU - 15" = list(15, /obj/item/clothing/mask/ai),
-		"New Body - 30" = list(30, /mob/living/carbon/human/vox)
+		"Thermals - 12" = list(12, /obj/item/clothing/glasses/thermal/plain/monocle),
+		"MIU - 15" = list(15, /obj/item/clothing/mask/ai)
 	)
 
 /obj/structure/voxuplink/vox_ship/use_tool(obj/item/I, mob/user)
 	..()
-	if(istype(I, /obj/item/stack/material/steel/fifty))
-		var/obj/item/stack/material/steel/fifty/H = I
-		favors += 1
-		qdel(H)
-		user.visible_message(
-			SPAN_NOTICE("\The [user] inserts \a [H] into \the [src]."),
-		)
-		return 1
-	if(istype(I, /obj/item/stack/material/gold/ten))
-		var/obj/item/stack/material/gold/ten/H = I
-		favors += 1
-		qdel(H)
-		user.visible_message(
-			SPAN_NOTICE("\The [user] inserts \a [H] into \the [src]."),
-		)
-		return 1
-	if(istype(I, /obj/item/stock_parts/circuitboard))
-		var/obj/item/stock_parts/circuitboard/H = I
-		favors += 1
-		qdel(H)
-		user.visible_message(
-			SPAN_NOTICE("\The [user] inserts \a [H] into \the [src]."),
-		)
-		return 1
-	if(istype(I, /obj/item/gun/energy/pulse_rifle/skrell))
-		var/obj/item/gun/energy/pulse_rifle/skrell/H = I
-		favors += 3
-		qdel(H)
-		user.visible_message(
-			SPAN_NOTICE("\The [user] inserts \a [H] into \the [src]."),
-		)
-		return 1
-	if(istype(I, /obj/item/gun/projectile/shotgun))
-		var/obj/item/gun/projectile/shotgun/H = I
-		favors += 2
-		qdel(H)
-		user.visible_message(
-			SPAN_NOTICE("\The [user] inserts \a [H] into \the [src]."),
-		)
-		return 1
-	if(istype(I, /obj/item/gun/projectile/pistol))
-		var/obj/item/gun/projectile/pistol/H = I
-		favors += 1
-		qdel(H)
-		user.visible_message(
-			SPAN_NOTICE("\The [user] inserts \a [H] into \the [src]."),
-		)
-		return 1
-	if(istype(I, /obj/item/clothing/suit/armor/pcarrier))
-		var/obj/item/clothing/suit/armor/pcarrier/H = I
-		favors += 1
-		qdel(H)
-		user.visible_message(
-			SPAN_NOTICE("\The [user] inserts \a [H] into \the [src]."),
-		)
-		return 1
-	if(istype(I, /obj/item/spacecash/bundle/c1000))
-		var/obj/item/spacecash/bundle/c1000/H = I
-		favors += 1
-		qdel(H)
-		user.visible_message(
-			SPAN_NOTICE("\The [user] inserts \a [H] into \the [src]."),
-		)
-		return 1
+// Продажа только материалов
+	if(istype(I, /obj/item/stack/material))
+		var/price
+		var/obj/item/stack/st = I
+		if(istype(I, /obj/item/stack/material/steel))
+			price = 0.02
+		else if(istype(I, /obj/item/stack/material/gold))
+			price = 0.05
+		else if(istype(I, /obj/item/stack/material/silver))
+			price = 0.01
+		else if(istype(I, /obj/item/stack/material/diamond))
+			price = 0.07
+		else if(istype(I, /obj/item/stack/material/wood))
+			price = 0.01
+		if(!price)
+			to_chat(user, "Это не требуется Апексам")
+			return FALSE
+		favors += price * st.amount
+		to_chat(user, "Вы обменяли материалы на валюту")
+		qdel(I)
+// Продажа только оружия
+	if(istype(I, /obj/item/gun))
+		var/price_weapon
+		if(istype(I, /obj/item/gun/energy/pulse_rifle/skrell))
+			price_weapon = 3
+		else if(istype(I, /obj/item/gun/projectile/shotgun))
+			price_weapon = 2
+		else if(istype(I, /obj/item/gun/projectile/pistol))
+			price_weapon = 1
+		if(!price_weapon)
+			to_chat(user, "Это не требуется Апексам")
+			return FALSE
+		favors += price_weapon
+		to_chat(user, "Вы обменяли оружие на валюту")
+		qdel(I)
+// Продажа только костюмов
+	if(istype(I, /obj/item/clothing/suit))
+		var/price_suit
+		if(istype(I, /obj/item/clothing/suit/armor/pcarrier))
+			price_suit = 1
+		if(!price_suit)
+			to_chat(user, "Это не требуется Апексам")
+			return FALSE
+		favors += price_suit
+		to_chat(user, "Вы обменяли костюм на валюту")
+		qdel(I)

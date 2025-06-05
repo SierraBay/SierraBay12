@@ -1,0 +1,6 @@
+author: Teteshnik
+changes:
+  - {bugfix: Пофиксил баг связанный с продажей материалов}
+  - {balance: Занерфил цены с продаж.}
+  - {balance: Вырезан тяжелый арсенал с маяка.}
+delete-after: true
