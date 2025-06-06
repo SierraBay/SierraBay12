@@ -66,7 +66,7 @@
 /singleton/hierarchy/supply_pack/livecargo/reindeer
 	name = "Live - Reindeer"
 	cost = 100
-	containertype = /obj/structure/largecrate/animal/reindeer
+	containertype = /obj/structure/largecrate/animal/zoo/reindeer
 	containername = "reindeer crate"
 	access = access_hydroponics
 
