@@ -34,8 +34,7 @@
 	toggleable = TRUE
 	off_state = "psioff"
 	electric = TRUE
-	nvg = TRUE
-	darkness_view = 4
+	darkness_view = 5
 	tint = TINT_MODERATE
 	activation_sound = 'sound/items/metal_clicking_4.ogg'
 	deactivation_sound = 'sound/items/metal_clicking_4.ogg'

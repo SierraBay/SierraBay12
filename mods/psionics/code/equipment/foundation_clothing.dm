@@ -81,7 +81,7 @@
 	id_slot =  slot_wear_id
 	backpack_contents = list(
 		/obj/item/storage/box/survival = 1,
-		/obj/item/storage/firstaid/security = 1
+		/obj/item/storage/firstaid/sleekstab = 1
 	)
 	flags = OUTFIT_HAS_BACKPACK
 
