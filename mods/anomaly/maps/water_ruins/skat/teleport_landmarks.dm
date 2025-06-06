@@ -2,6 +2,8 @@ var/global/list/teleport_landmarks_list = list()
 
 /obj/landmark/teleport_to_z_level
 	invisibility = 60
+	name = "Телепорт"
+	desc = "А я вижу ты любознательный, да?"
 	var/teleport_tag = "TEST"
 	var/map_path
 	var/is_exit = FALSE
@@ -54,10 +56,12 @@ var/global/list/teleport_landmarks_list = list()
 
 /obj/landmark/teleport_to_z_level/skat
 
+	name = "Спуск на второй этаж СКАТ"
 	teleport_tag = "SKAT"
 	map_path = /datum/map_template/ruin/exoplanet/drowned_skat_second_deck
 
 /obj/landmark/teleport_to_z_level/skat/exit
+	name = "Подьём на первый этаж СКАТ"
 	teleport_tag = "SKAT"
 	map_path = null
 	is_exit = TRUE
@@ -77,10 +81,12 @@ var/global/list/teleport_landmarks_list = list()
 
 
 /obj/landmark/teleport_to_z_level/skat_third_deck
+	name = "Спуск на третий этаж СКАТ"
 	teleport_tag = "SKAT_DEEP"
 	map_path = /datum/map_template/ruin/exoplanet/drowned_skat_third_deck
 
 /obj/landmark/teleport_to_z_level/skat_third_deck/exit
+	name = "Подьём на второй этаж СКАТ"
 	teleport_tag = "SKAT_DEEP"
 	map_path = null
 	is_exit = TRUE

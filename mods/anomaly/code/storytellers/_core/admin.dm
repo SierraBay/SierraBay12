@@ -1,4 +1,4 @@
-/datum/admins/proc/listen_anomaly_storytellers()
+/client/proc/listen_anomaly_storytellers()
 	set category = "Fun"
 	set desc = "Start listen debug message from storyteller"
 	set name = "Switch storyteller debug listening"

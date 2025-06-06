@@ -1,6 +1,4 @@
-/datum/controller/subsystem/processing/anom/proc/ShowRoundendUI(list/input_html, mob/living/user, input_x, input_y)
-	input_x = 600
-	input_y = 400
+/datum/controller/subsystem/processing/anom/proc/ShowRoundendUI(list/input_html, mob/living/user)
 	input_html += "<br><br> ANOMALIES"
 	input_html += "<br>Количество аномалий на момент окончания раунда: [anomalies_cores_in_world_amount]. Мод размещал аномалии [spawn_ammount] раз, а удалял [removed_ammount] раз."
 	input_html += "<br>Игра заспавнила [artefacts_spawned_by_game] артефактов, из них [artefacts_deleted_by_game] удалено. Собрано игроками артефактов: [collected_artefacts_by_player]. Всего артефактов на конец раунда: [LAZYLEN(artefacts_list_in_world)]"

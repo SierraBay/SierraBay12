@@ -17,7 +17,5 @@
 		return
 	SSanom.Topic(href_list = list("show_anom_control_main" = "Начальное меню управления аномалиями"))
 
-/datum/controller/subsystem/processing/anom/proc/ShowAnomcontrolUI(list/input_html, mob/living/user, input_x, input_y)
-	input_x = 1000
-	input_y = 1500
+/datum/controller/subsystem/processing/anom/proc/ShowAnomcontrolUI(list/input_html, mob/living/user)
 	draw_main_buttons(input_html) //Рисуем главные верхние кноки
