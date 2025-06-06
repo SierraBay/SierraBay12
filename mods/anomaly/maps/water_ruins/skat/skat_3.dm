@@ -5,12 +5,12 @@
 	mappaths = list('mods/anomaly/maps/water_ruins/skat/skat-3.dmm')
 	spawn_cost = 100000
 	apc_test_exempt_areas = list(
-		/area/map_template/anomaly/skat_second_deck = NO_SCRUBBER|NO_VENT|NO_APC
+		/area/map_template/anomaly/skat_third_deck = NO_SCRUBBER|NO_VENT|NO_APC
 	)
 	ruin_tags = RUIN_CHUDO_ANOMALIES
 	skip_main_unit_tests = TRUE
 
-/area/map_template/anomaly/skat_second_deck
-	name = "\improper SKAT second deck"
+/area/map_template/anomaly/skat_third_deck
+	name = "\improper SKAT third deck"
 	icon_state = "A"
 	turfs_airless = TRUE

@@ -6,11 +6,11 @@
 	spawn_cost = 100000
 	ruin_tags = RUIN_CHUDO_ANOMALIES
 	apc_test_exempt_areas = list(
-		/area/map_template/anomaly/skat_third_deck = NO_SCRUBBER|NO_VENT|NO_APC
+		/area/map_template/anomaly/skat_second_deck = NO_SCRUBBER|NO_VENT|NO_APC
 	)
 
-/area/map_template/anomaly/skat_third_deck
-	name = "\improper SKAT third deck"
+/area/map_template/anomaly/skat_second_deck
+	name = "\improper SKAT second deck"
 	icon_state = "A"
 	turfs_airless = TRUE
 
