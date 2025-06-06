@@ -14,6 +14,7 @@
 #include "expanded_culture_descriptor/_expanded_culture_descriptor_includes.dm"
 #include "explosions/_explosions_includes.dm"
 #include "gliding/_gliding_includes.dm"
+#include "guns/_guns_includes.dm"
 #include "machinery/_machinery_includes.dm"
 #include "hairs_ports/_hairs_ports_includes.dm"
 #include "hardsuits/_hardsuits_includes.dm"
