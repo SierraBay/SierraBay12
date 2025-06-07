@@ -3,6 +3,7 @@
 
 #include "code/cultures_diona.dm"
 #include "code/station.dm"
+#include "code/datum/language.dm"
 
 #endif
 // BEGIN_INTERNALS

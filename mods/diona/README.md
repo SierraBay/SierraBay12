@@ -40,6 +40,7 @@ ID мода: DIONA
 
 - `mods/diona/code/cultures_diona.dm`
 - `mods/diona/code/station.dm`: `slowdown`, `thirst_factor`
+- `mods/diona/code/datum/language.dm`
 <!--
   Если ты добавлял новый модульный оверрайд, его нужно указать здесь.
   Здесь указываются оверрайды в твоём моде и папке `_master_files`
