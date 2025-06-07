@@ -88,67 +88,104 @@
 // Psyk-out grenade
 /////////////////////////////////////////////
 
-/datum/effect/smoke_spread/nullgas
-	smoke_type = /obj/effect/smoke/nullgas
+/obj/item/grenade/chem_grenade/nullgas
+	name = "tear gas grenade"
+	desc = "Concentrated Capsaicin. Contents under pressure. Use with caution."
+	stage = 2
+	path = 1
 
-/obj/effect/smoke/nullgas
-	name = "null gas"
-	icon_state = "nullgas"
-	icon = 'mods/psionics/icons/foundation/nullgas.dmi'
 
-/obj/effect/smoke/nullgas/can_affect(mob/living/carbon/M)
+/obj/item/grenade/chem_grenade/nullgas/Initialize()
 	. = ..()
-	if (!.)
-		return
-	if (ishuman(M))
+	var/obj/item/reagent_containers/glass/beaker/large/B1 = new(src)
+	var/obj/item/reagent_containers/glass/beaker/large/B2 = new(src)
+	B1.reagents.add_reagent(/datum/reagent/phosphorus, 40)
+	B1.reagents.add_reagent(/datum/reagent/potassium, 40)
+	B1.reagents.add_reagent(/datum/reagent/nullglass, 40)
+	B2.reagents.add_reagent(/datum/reagent/sugar, 40)
+	B2.reagents.add_reagent(/datum/reagent/nullglass, 80)
+	detonator = new/obj/item/device/assembly_holder/timer_igniter(src)
+	beakers += B1
+	beakers += B2
+	icon_state = initial(icon_state) +"_locked"
+
+/datum/reagent/nullglass
+	name = "Grinded nullglass"
+	description = "Grinded down and specially prepaired for use via aerosol, this nullglass are Foundation's last resort against rouge psionics."
+	taste_description = "broken glass"
+	taste_mult = 10
+	reagent_state = SOLID
+	touch_met = 5 // Get rid of it quickly
+	color = "#ff6088"
+
+/datum/reagent/nullglass/affect_touch(mob/living/carbon/M, removed)
+	var/eyes_covered = 0
+	var/mouth_covered = 0
+	var/partial_mouth_covered = 0
+	var/stun_probability = 50
+	var/no_pain = 0
+	var/obj/item/eye_protection = null
+	var/obj/item/face_protection = null
+	var/obj/item/partial_face_protection = null
+
+	var/permeability = GET_TRAIT_LEVEL(M, /singleton/trait/general/permeable_skin)
+	var/effective_strength = 5 + (3 * permeability)
+
+	var/list/protection
+	if(istype(M, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
-		if (H.wear_suit)
-			return FALSE
+		protection = list(H.head, H.glasses, H.wear_mask)
+		if(!H.can_feel_pain())
+			no_pain = 1 //TODO: living-level can_feel_pain() proc
+	else
+		protection = list(M.wear_mask)
+	if(M.psi)
+		M.psi.backblast(rand(15,20))
+	for(var/obj/item/I in protection)
+		if(I)
+			if(I.body_parts_covered & EYES)
+				eyes_covered = 1
+				eye_protection = I.name
+			if((I.body_parts_covered & FACE) && !(I.item_flags & ITEM_FLAG_FLEXIBLEMATERIAL))
+				mouth_covered = 1
+				face_protection = I.name
+			else if(I.body_parts_covered & FACE)
+				partial_mouth_covered = 1
+				partial_face_protection = I.name
 
-/obj/effect/smoke/nullgas/affect(mob/living/carbon/human/R)
-	R.burn_skin(0.75)
-	if (R.coughedtime != 1)
-		R.coughedtime = 1
-		R.emote("gasp")
-		addtimer(new Callback(R, TYPE_PROC_REF(/mob/living/carbon, clear_coughedtime)), 2 SECONDS)
-	R.updatehealth()
-	return
+	if(eyes_covered)
+		if(!mouth_covered)
+			to_chat(M, SPAN_WARNING("Your [eye_protection] protects your eyes from the nullglass dust!"))
+	else
+		to_chat(M, SPAN_WARNING("The nullglass dust gets in your eyes!"))
+		M.mod_confused(2)
+		if(mouth_covered)
+			M.eye_blurry = max(M.eye_blurry, effective_strength * 3)
+			M.eye_blind = max(M.eye_blind, effective_strength)
+		else
+			M.eye_blurry = max(M.eye_blurry, effective_strength * 5)
+			M.eye_blind = max(M.eye_blind, effective_strength * 2)
+			M.apply_damage(2, DAMAGE_BRUTE, BP_EYES)
+	if(mouth_covered)
+		to_chat(M, SPAN_WARNING("Your [face_protection] protects you from the nullglass dust!"))
+	else if(!no_pain)
+		if(partial_mouth_covered)
+			to_chat(M, SPAN_WARNING("Your [partial_face_protection] partially protects you from the nullglass dust!"))
+			stun_probability *= 0.5
+		to_chat(M, SPAN_DANGER("Your lungs starts tearing with thousands of tiny shards!"))
+		M.apply_damage(4, DAMAGE_BRUTE, BP_LUNGS)
+		if(M.stunned > 0  && !M.lying)
+			M.Weaken(4)
+		if(prob(stun_probability))
+			M.custom_emote(2, "[pick("coughs!","coughs hysterically!","splutters!")]")
+			M.Stun(3)
 
-/obj/effect/smoke/nullgas/disrupts_psionics()
-	return src
-
-
-/obj/item/grenade/nullgasbomb
-	desc = "It is set to detonate in 2 seconds."
-	name = "nullgas bomb"
-	icon = 'mods/psionics/icons/foundation/nullgas.dmi'
-	icon_state = "nullgrenade"
-	det_time = 20
-	item_state = "nullgrenade"
-	slot_flags = SLOT_BELT
-	var/datum/effect/smoke_spread/nullgas
-	var/smoke_times = 4
-
-/obj/item/grenade/nullgasbomb/Destroy()
-	QDEL_NULL(nullgas)
-	STOP_PROCESSING(SSobj, src)
-	return ..()
-
-/obj/item/grenade/nullgasbomb/detonate(mob/living/user)
-	playsound(src.loc, 'sound/effects/smoke.ogg', 50, 1, -3)
-	nullgas = new /datum/effect/smoke_spread/nullgas
-	nullgas.attach(src)
-	nullgas.set_up(10, 0, get_turf(src))
-	START_PROCESSING(SSobj, src)
-	for(var/obj/blob/B in view(8,src))
-		var/damage = round(30/(get_dist(B,src)+1))
-		B.damage_health(damage, DAMAGE_BURN)
-		B.update_icon()
-	QDEL_IN(src, 8 SECONDS)
-
-/obj/item/grenade/nullgasbomb/Process()
-	if(!QDELETED(nullgas) && (smoke_times > 0))
-		smoke_times--
-		nullgas.start()
-		return
-	return PROCESS_KILL
+/datum/reagent/nullglass/affect_ingest(mob/living/carbon/M, removed)
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(!H.can_feel_pain())
+			return
+	if(M.chem_doses[type] == metabolism)
+		to_chat(M, SPAN_DANGER("You feel like your insides are teared apart!"))
+	else
+		M.apply_damage(2 * removed, DAMAGE_BRUTE, BP_STOMACH)
