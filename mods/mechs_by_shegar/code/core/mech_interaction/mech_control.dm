@@ -194,8 +194,8 @@
 
 	var/adj = click_target.Adjacent(src)
 	var/resolved
-	//if(adj)
-	resolved = temp_system.resolve_attackby(click_target, src)
+	if(adj)
+		resolved = temp_system.resolve_attackby(click_target, src)
 	if(!resolved && click_target && temp_system)
 		var/mob/ruser = src
 		if(!system_moved) //It's more useful to pass along clicker pilot when logic is fully mechside
