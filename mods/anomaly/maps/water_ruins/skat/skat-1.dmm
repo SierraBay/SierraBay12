@@ -74,6 +74,7 @@
 "bu" = (
 /obj/machinery/atmospherics/unary/cryo_cell,
 /obj/decal/cleanable/dirt,
+/obj/anomaly_blocker,
 /turf/simulated/floor/tiled/white,
 /area/map_template/anomaly/skat)
 "bz" = (
@@ -647,6 +648,7 @@
 "lI" = (
 /obj/decal/cleanable/dirt,
 /mob/living/bot/medbot,
+/obj/anomaly_blocker,
 /turf/simulated/floor/tiled/white,
 /area/map_template/anomaly/skat)
 "mg" = (
@@ -927,6 +929,9 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/dark,
 /area/map_template/anomaly/skat)
+"tc" = (
+/turf/simulated/wall/r_wall/hull,
+/area/template_noop)
 "tj" = (
 /obj/anomaly_blocker,
 /turf/simulated/wall/prepainted,
@@ -1160,6 +1165,12 @@
 /obj/structure/rubble/house,
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/anomaly/skat)
+"xr" = (
+/obj/random/obstruction,
+/obj/decal/cleanable/dirt,
+/obj/anomaly_blocker,
+/turf/simulated/floor/tiled,
+/area/map_template/anomaly/skat)
 "xv" = (
 /obj/item/storage/secure/briefcase,
 /turf/simulated/floor/exoplanet/titan_water/minimal,
@@ -1178,6 +1189,11 @@
 "xM" = (
 /obj/machinery/chem_master,
 /obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/white,
+/area/map_template/anomaly/skat)
+"xN" = (
+/obj/decal/cleanable/dirt,
+/obj/anomaly_blocker,
 /turf/simulated/floor/tiled/white,
 /area/map_template/anomaly/skat)
 "xQ" = (
@@ -1954,6 +1970,11 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/dark,
 /area/map_template/anomaly/skat)
+"SM" = (
+/obj/decal/cleanable/dirt,
+/obj/anomaly_blocker,
+/turf/simulated/floor/tiled,
+/area/map_template/anomaly/skat)
 "SX" = (
 /obj/structure/table/marble,
 /obj/item/reagent_containers/food/drinks/shaker,
@@ -2182,6 +2203,11 @@
 /obj/item/stack/material/rods,
 /turf/simulated/floor/exoplanet/titan_water/minimal,
 /area/map_template/anomaly/skat)
+"YR" = (
+/obj/wallframe_spawn/reinforced/hull,
+/obj/anomaly_blocker,
+/turf/simulated/floor/plating,
+/area/map_template/anomaly/skat)
 "YX" = (
 /obj/structure/table/marble,
 /obj/machinery/cooker/cereal,
@@ -2221,6 +2247,7 @@
 /obj/item/bodybag/cryobag,
 /obj/item/bodybag/cryobag,
 /obj/decal/cleanable/dirt,
+/obj/anomaly_blocker,
 /turf/simulated/floor/tiled/white,
 /area/map_template/anomaly/skat)
 "ZC" = (
@@ -3332,20 +3359,20 @@ Ep
 ol
 ol
 ol
-Qb
-Qb
-Qb
-Qb
-Qb
-Ff
-rp
-Ff
-NK
+ol
+ol
+ol
+ol
+ol
+xr
+SM
+xr
+YR
 Zx
-cH
+xN
 lI
-cH
-cH
+xN
+xN
 bu
 ol
 Ep
@@ -5864,7 +5891,7 @@ AA
 AA
 AA
 Ep
-hO
+tc
 Ep
 Ep
 Ep
@@ -5889,7 +5916,7 @@ Ep
 Ep
 Ep
 Ep
-hO
+tc
 Ep
 AA
 AA
