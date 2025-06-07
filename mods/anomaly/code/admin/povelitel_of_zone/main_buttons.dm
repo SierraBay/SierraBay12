@@ -11,4 +11,4 @@
 	input_list += "<tr><td colspan=3><center>"
 	input_list += "<br />[FCFBTN(SSanom, "Аномалии", "Аномалии", anoms_choosed)]   [FCFBTN(SSanom, "Артефакты", "Артефакты", artefacts_choosed)]   [FCFBTN(SSanom, "Погода", "Погода", weather_choosed)] [FCFBTN(SSanom, "Рассказчики", "Рассказчики", storytellers_choosed)]"
 	input_list += "</center></td></tr>"
-	input_list += "<tr><td colspan=3><center><b>"
+	input_list += "<tr><td colspan=3></center><b>"
