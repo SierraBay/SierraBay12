@@ -113,6 +113,8 @@
 //Задача функции сменить хардпоинт на левый или правый в зависимости от текущего состояния
 /mob/living/exosuit/proc/handle_right_and_left_click(mouse_type)
 	var/obj/screen/movable/exosuit/hardpoint = hardpoint_hud_elements[selected_hardpoint]
+	if(!hardpoint) //Никакой модуль не выбран, тобишь мех хочет использовать лапы
+		return
 	var/obj/screen/movable/exosuit/hardpoint/previous_hardpoint = hardpoint
 	if(mouse_type == "left")
 		if(!selected_hardpoint)
