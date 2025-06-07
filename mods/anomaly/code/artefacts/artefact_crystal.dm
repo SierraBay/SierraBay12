@@ -54,7 +54,7 @@
 	return
 
 /atom/proc/start_crystal_timer()
-	addtimer(new Callback(src, PROC_REF(stop_affect_anomaly_crystal)), 5 MINUTES)
+	addtimer(new Callback(src, PROC_REF(stop_affect_anomaly_crystal)), 2 MINUTES)
 
 
 /obj/structure/affect_anomaly_crystal()
