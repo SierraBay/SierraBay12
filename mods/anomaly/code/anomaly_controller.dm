@@ -224,6 +224,35 @@ PROCESSING_SUBSYSTEM_DEF(anom)
 		href_list["Рассказчики"] = "1"
 
 
+	//Погода
+	if(href_list["start_blowout"])
+		var/datum/weather_manager/weather = locate(href_list["start_blowout"])
+		weather.start_blowout()
+	if(href_list["delete_weather"])
+		var/datum/weather_manager/weather = locate(href_list["delete_weather"])
+		weather.Destroy()
+	if(href_list["change_weather_stage"])
+		var/datum/weather_manager/weather = locate(href_list["change_weather_stage"])
+		if(href_list["Спокойная"])
+			weather.change_visual_weather(force_state = "calm")
+		if(href_list["Лёгкий снег"] || href_list["Дождь"])
+			weather.change_visual_weather(force_state = "midle")
+		if(href_list["Буран"])
+			weather.change_visual_weather(force_state = "storm")
+
+		href_list += "Погода" //Чтоб игра сразу и отрисовала УИ рассказчика по новой
+		href_list["Погода"] = "1"
+	if(href_list["change_power_ups"])
+		var/datum/weather_manager/weather = locate(href_list["change_power_ups"])
+		var/number = 0
+		number = input(usr, "Добавьте количество усилений (Каждое усиление +15 минут до выброса/цунами), чтоб убавить поставьте минус перед цифрой.", "Введи число") as num|null
+		if(!number)
+			to_chat(user, "ERROR: Число не введено или не обработано.")
+		weather.change_powerups_ammout(number)
+
+
+
+
 	//Теперь идёт реагирование на нажатые кнопки УИ
 	if(href_list["show_anom_control_main"])
 		window_x = 1000
