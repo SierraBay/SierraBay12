@@ -133,8 +133,6 @@ PROCESSING_SUBSYSTEM_DEF(anom)
 		anomaly_text += "<br><a href='byond://?src=\ref[src];show_anomaly_stats=1'>\[Показать подробную статистику\]</a>"
 		return anomaly_text
 
-/datum/controller/subsystem/processing/anom/OnTopic
-
 /datum/controller/subsystem/processing/anom/Topic(href, href_list)
 	..()
 	var/mob/user = usr
