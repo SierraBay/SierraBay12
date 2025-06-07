@@ -165,6 +165,7 @@
 	/datum/job/captain, /datum/job/hop, /datum/job/rd, /datum/job/cmo,\
 	/datum/job/chief_engineer, /datum/job/hos, /datum/job/qm,\
 	/datum/job/warden, /datum/job/detective, /datum/job/officer, \
+	/datum/job/doctor \
 )
 
 #define CONTRACT_ROLES list(\
