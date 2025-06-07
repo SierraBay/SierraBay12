@@ -92,7 +92,7 @@
 	var/new_color = UNLINT(gradient(low_color, high_color, space = COLORSPACE_HSV, index=interpolate_weight))
 
 	if(ambient_group_index > 0)
-		var/datum/ambient_group/A = SSambient_lighting.ambient_groups[ambient_group_index]
+		var/datum/ambient_group/A = SSambient_lighting.groups[ambient_group_index]
 		A.set_color(new_color, new_brightness)
 	else
-		ambient_group_index = SSambient_lighting.create_ambient_group(new_color, new_brightness)
+		ambient_group_index = SSambient_lighting.create_group(new_color, new_brightness)

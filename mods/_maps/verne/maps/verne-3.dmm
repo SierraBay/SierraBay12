@@ -4081,6 +4081,7 @@
 /obj/structure/table/standard,
 /obj/floor_decal/corner/b_green/mono,
 /obj/item/storage/box/cola/beastenergy,
+/obj/machinery/recharger,
 /turf/simulated/floor/tiled/monotile,
 /area/verne/common/messseating)
 "Ee" = (
@@ -4272,7 +4273,7 @@
 	dir = 8;
 	pixel_x = 20
 	},
-/obj/structure/closet/hydrant,
+/obj/structure/closet/firecloset,
 /turf/simulated/floor/tiled/monotile,
 /area/verne/stairs)
 "Gd" = (

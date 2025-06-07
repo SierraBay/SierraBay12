@@ -151,7 +151,7 @@ Middle-Click / Ctrl-Click - Jump a placeholder to a point and deselect it
 	requires_contact = TRUE
 	randomize_location = FALSE
 	glide_size = 8
-	appearance_flags = EMPTY_BITFIELD
+	appearance_flags = FLAGS_OFF
 	var/scale = 1
 	var/rotation = 0
 	var/simple_speed = 1

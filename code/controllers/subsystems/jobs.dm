@@ -1,15 +1,15 @@
-var/global/const/ENG = FLAG(0)
-var/global/const/SEC = FLAG(1)
-var/global/const/MED = FLAG(2)
-var/global/const/SCI = FLAG(3)
-var/global/const/CIV = FLAG(4)
-var/global/const/COM = FLAG(5)
-var/global/const/MSC = FLAG(6)
-var/global/const/SRV = FLAG(7)
-var/global/const/SUP = FLAG(8)
-var/global/const/SPT = FLAG(9)
-var/global/const/EXP = FLAG(10)
-var/global/const/ROB = FLAG(11)
+var/global/const/ENG = FLAG_01
+var/global/const/SEC = FLAG_02
+var/global/const/MED = FLAG_03
+var/global/const/SCI = FLAG_04
+var/global/const/CIV = FLAG_05
+var/global/const/COM = FLAG_06
+var/global/const/MSC = FLAG_07
+var/global/const/SRV = FLAG_08
+var/global/const/SUP = FLAG_09
+var/global/const/SPT = FLAG_10
+var/global/const/EXP = FLAG_11
+var/global/const/ROB = FLAG_12
 
 GLOBAL_VAR(antag_code_phrase)
 GLOBAL_VAR(antag_code_response)
@@ -93,11 +93,11 @@ SUBSYSTEM_DEF(jobs)
 			for(var/alt_title in job.alt_titles)
 				titles_to_datums[alt_title] = job
 			if(job.department_flag)
-				for (var/I in 1 to length(GLOB.bitflags))
-					if(job.department_flag & GLOB.bitflags[I])
-						LAZYDISTINCTADD(positions_by_department["[GLOB.bitflags[I]]"], job.title)
+				for (var/I in 1 to length(GLOB.index_to_flag))
+					if(job.department_flag & GLOB.index_to_flag[I])
+						LAZYDISTINCTADD(positions_by_department["[GLOB.index_to_flag[I]]"], job.title)
 						if (length(job.alt_titles))
-							LAZYDISTINCTADD(positions_by_department["[GLOB.bitflags[I]]"], job.alt_titles)
+							LAZYDISTINCTADD(positions_by_department["[GLOB.index_to_flag[I]]"], job.alt_titles)
 
 	// Set up syndicate phrases.
 	GLOB.antag_code_phrase = generate_code_phrase()
@@ -426,7 +426,7 @@ SUBSYSTEM_DEF(jobs)
 					var/facname = faction ? faction.name : "Unset"
 					if(!(facname in G.allowed_factions))
 						permitted = 0
-				
+
 				if(permitted && (!(G.has_donation_tier(H))))
 					permitted = 0
 				// [/SIERRA-ADD]

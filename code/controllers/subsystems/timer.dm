@@ -1,17 +1,17 @@
 /// Looping timers automatically re-queue themselves after firing, assuming they are still valid
-var/global/const/TIMER_LOOP = FLAG(0)
+var/global/const/TIMER_LOOP = FLAG_01
 
 /// Stoppable timers produce a hash that can be given to deltimer() to unqueue them
-var/global/const/TIMER_STOPPABLE = FLAG(1)
+var/global/const/TIMER_STOPPABLE = FLAG_02
 
 /// Two of the same timer signature cannot be queued at once when they are unique
-var/global/const/TIMER_UNIQUE = FLAG(2)
+var/global/const/TIMER_UNIQUE = FLAG_03
 
 /// Attempting to add a unique timer will re-queue the event instead of being ignored
-var/global/const/TIMER_OVERRIDE = FLAG(3)
+var/global/const/TIMER_OVERRIDE = FLAG_04
 
 /// Skips adding the wait to the timer hash, allowing for uniques with variable wait times
-var/global/const/TIMER_NO_HASH_WAIT = FLAG(4)
+var/global/const/TIMER_NO_HASH_WAIT = FLAG_05
 
 
 /datum/timer

@@ -843,7 +843,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 					)
 
 //Handles dismemberment
-/obj/item/organ/external/proc/droplimb(clean, disintegrate = DROPLIMB_EDGE, ignore_children, silent)
+/obj/item/organ/external/proc/droplimb(clean, disintegrate = DROPLIMB_EDGE, ignore_children, silent, skip_throw)
 
 	if(!(limb_flags & ORGAN_FLAG_CAN_AMPUTATE) || !owner)
 		return
@@ -904,7 +904,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 			add_blood(victim)
 			SetTransform(rotation = rand(180))
 			forceMove(get_turf(src))
-			if(!clean)
+			if(!clean && !skip_throw)
 				// Throw limb around.
 				if(src && istype(loc,/turf))
 					throw_at(get_edge_target_turf(src,pick(GLOB.alldirs)),rand(1,3),5)

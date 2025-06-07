@@ -2,8 +2,8 @@ SUBSYSTEM_DEF(misc)
 	name = "Misc Updates"
 	wait = 30 SECONDS
 
-	var/const/STAGE_TRADERS = FLAG(0)
-	var/const/STAGE_SOLARS = FLAG(1)
+	var/const/STAGE_TRADERS = FLAG_01
+	var/const/STAGE_SOLARS = FLAG_02
 
 	var/static/list/queue = list()
 	var/static/stage = STAGE_TRADERS

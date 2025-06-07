@@ -1,6 +1,6 @@
-#define FLASHLIGHT_ALWAYS_ON FLAG(0)
-#define FLASHLIGHT_SINGLE_USE FLAG(1)
-#define FLASHLIGHT_CANNOT_BLIND FLAG(2)
+#define FLASHLIGHT_ALWAYS_ON FLAG_01
+#define FLASHLIGHT_SINGLE_USE FLAG_02
+#define FLASHLIGHT_CANNOT_BLIND FLAG_03
 
 /obj/item/device/flashlight
 	name = "flashlight"
@@ -21,7 +21,7 @@
 	var/flashlight_power = 1 //brightness of light when on
 	var/flashlight_range = 4 //outer range of light when on, can be negative
 	light_wedge = LIGHT_VERY_WIDE
-	var/flashlight_flags = EMPTY_BITFIELD // FLASHLIGHT_ bitflags
+	var/flashlight_flags = FLAGS_OFF // FLASHLIGHT_ bitflags
 
 	var/spawn_dir // a way for mappers to force which way a flashlight faces upon spawning
 

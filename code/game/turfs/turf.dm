@@ -213,15 +213,19 @@ var/global/const/enterloopsanity = 100
 		M.make_floating(0) //we know we're not on solid ground so skip the checks to save a bit of processing
 
 	var/objects = 0
-	if(A && (A.movable_flags & MOVABLE_FLAG_PROXMOVE))
+	if (A && HAS_FLAGS(A.movable_flags, MOVABLE_FLAG_PROXMOVE))
 		for(var/atom/movable/thing in range(1))
 			if(objects > enterloopsanity) break
 			objects++
 			spawn(0)
 				if(A)
 					A.HasProximity(thing)
-					if ((thing && A) && (thing.movable_flags & MOVABLE_FLAG_PROXMOVE))
+					if ((thing && A) && HAS_FLAGS(thing.movable_flags, MOVABLE_FLAG_PROXMOVE))
 						thing.HasProximity(A)
+
+	if (HAS_FLAGS(A.movable_flags, MOVABLE_FLAG_POSTMOVEMENT) && isturf(old_loc))
+		A.post_movement(old_loc, src)
+
 	return
 
 /turf/proc/adjacent_fire_act(turf/simulated/floor/adj_turf, datum/gas_mixture/adj_air, adj_temp, adj_volume)

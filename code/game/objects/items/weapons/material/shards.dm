@@ -62,6 +62,7 @@
 		color = "#ffffff"
 		alpha = 255
 
+
 /obj/item/material/shard/use_tool(obj/item/W, mob/living/user, list/click_params)
 	if(isWelder(W) && material.shard_can_repair)
 		var/obj/item/weldingtool/WT = W
@@ -72,6 +73,7 @@
 		qdel(src)
 		return TRUE
 	return ..()
+
 
 /obj/item/material/shard/Crossed(atom/movable/movable)
 	if (!isliving(movable))
@@ -137,7 +139,7 @@
 /obj/item/material/shard/shrapnel
 	name = "shrapnel"
 	w_class = ITEM_SIZE_TINY
-	item_flags = EMPTY_BITFIELD
+	item_flags = FLAGS_OFF
 	max_force = 4
 	force_multiplier = 0.1
 	thrown_force_multiplier = 0.25
@@ -160,12 +162,13 @@
 /obj/item/material/shard/shrapnel/copper
 	default_material = MATERIAL_COPPER
 
+
 /obj/item/material/shard/caltrop
 	name = "caltrop"
 	desc = "A savage area denial weapon designed to puncture tire and boot alike."
 	icon_state = "caltrop"
 	default_material = MATERIAL_STEEL
-	item_flags = EMPTY_BITFIELD
+	item_flags = FLAGS_OFF
 	max_force = 12
 	thrown_force_multiplier = 0.3
 	step_sound = 'sound/obj/item/material/shard/caltrop.ogg'

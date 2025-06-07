@@ -118,7 +118,7 @@
 		return MOVEMENT_PROCEED
 
 	if(!mob.has_gravity())
-		allow_move = mob.Process_Spacemove(1)
+		allow_move = mob.Process_Spacemove(TRUE)
 		if(!allow_move)
 			return MOVEMENT_STOP
 

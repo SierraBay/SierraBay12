@@ -86,7 +86,7 @@
 	var/list/newargs = args - args[1]
 	for(var/a in auras)
 		var/obj/aura/aura = a
-		var/result = EMPTY_BITFIELD
+		var/result = FLAGS_OFF
 		switch(type)
 			if(AURA_TYPE_WEAPON)
 				result = aura.aura_check_weapon(arglist(newargs))

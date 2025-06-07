@@ -47,7 +47,7 @@
 
 	var/datum/computer_file/binary/design/current_file
 	var/list/queue = list()
-	var/queue_max = 8
+	var/queue_max = 16
 
 	var/storage_capacity = 0
 	var/speed = 1
@@ -103,6 +103,10 @@
 	update_icon()
 
 /obj/machinery/fabricator/Destroy()
+	for(var/material in stored_material)
+		var/material/M = SSmaterials.get_material_by_name(material)
+		if(stored_material[material] > M.units_per_sheet)
+			M.place_sheet(get_turf(src), round(stored_material[material] / M.units_per_sheet), M.name)
 	QDEL_NULL(wires)
 	return ..()
 
@@ -451,7 +455,7 @@
 	to_chat(usr, SPAN_NOTICE("You remove \the [container] from \the [src]."))
 
 	if(istype(user) && Adjacent(user))
-		user.put_in_active_hand(container)
+		user.put_in_hands(container)
 
 	container = null
 
@@ -745,7 +749,7 @@
 /obj/machinery/fabricator/proc/consume_materials(datum/design/design)
 	for(var/material in design.materials)
 		var/material_cost = design.adjust_materials ? SANITIZE_LATHE_COST(design.materials[material]) : design.materials[material]
-		stored_material[material] = max(0, stored_material[material] - material_cost)
+		stored_material[material] = max(0, stored_material[material] - material_cost * mat_efficiency)
 
 	for(var/reagent in design.chemicals)
 		container.reagents.remove_reagent(reagent, design.chemicals[reagent])

@@ -59,7 +59,7 @@
 
 /obj/aura/nanoaura/aura_check_bullet(obj/item/projectile/proj, def_zone)
 	if (!active)
-		return EMPTY_BITFIELD
+		return FLAGS_OFF
 	if (unit.charges > 0)
 		user.visible_message(SPAN_WARNING("The nanomachines harden as a response to physical trauma!"))
 		playsound(user, 'sound/effects/basscannon.ogg',35,1)
@@ -68,7 +68,7 @@
 			to_chat(user, SPAN_DANGER("Warning: Critical damage treshold passed. Shut down unit to avoid further damage"))
 		return AURA_FALSE | AURA_CANCEL
 	unit.catastrophic_failure()
-	return EMPTY_BITFIELD
+	return FLAGS_OFF
 
 
 /obj/aura/nanoaura/Destroy()
