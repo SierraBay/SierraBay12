@@ -59,3 +59,4 @@
 	slot = slot_w_uniform
 	allowed_branches = list(/datum/mil_branch/contractor)
 	allowed_factions = list(FACTION_KMS)
+	flags = null
