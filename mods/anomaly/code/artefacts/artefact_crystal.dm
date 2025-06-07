@@ -29,7 +29,7 @@
 	if(isrobot(user))
 		to_chat(user,SPAN_NOTICE("Вы не регистрируете чего-либо необычного."))
 	else
-		to_chat(user,SPAN_GOOD("Потреяся обьект вы почувствовали, что при попытке быстро сдвинуть объект ближе к земле, он явно сопротивляется, не давая сдвинуться так быстро и вашим рукам.."))
+		to_chat(user,SPAN_GOOD("Ощущение словно внутри что-то есть."))
 
 /obj/item/artefact/crystal/user_bumped_at_atom(mob/living/user, atom/bump_atom)
 	if(!remain_charges)
