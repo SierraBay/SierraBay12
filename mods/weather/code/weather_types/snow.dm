@@ -69,7 +69,6 @@
 		return
 	if(activity_blocked_by_safe_protocol)
 		return
-	change_stage("calm", FALSE, FALSE)
 	sleep(delay_between_message_and_blowout)
 	for(var/mob/living/carbon/human/picked_human in GLOB.living_players)
 		if(get_z(picked_human) == get_z(src))
@@ -108,20 +107,26 @@
 	if(activity_blocked_by_safe_protocol)
 		return
 	report_progress("DEBUG ANOM: Выброс в процессе. Аврора окончена. Начинается перереспавн аномалий и артефактов.")
-	to_world("WARNING: Моду аномалий требуются значительные ресурсы для перереспавна. Ожидайте затупа игры через 10 секунд.")
+	to_world(SPAN_BAD("WARNING: Моду аномалий требуются значительные ресурсы для перереспавна. Ожидайте затупа игры через 10 секунд."))
 	SSanom.announce_to_all_detectors_on_z_level(get_z(pick(connected_weather_turfs)) , "Зафиксирована огромная аномальная активность, показания зашкаливают.")
 	sleep(10 SECONDS)
 	if(activity_blocked_by_safe_protocol)
 		return
-	regenerate_anomalies_on_planet()
+	//regenerate_anomalies_on_planet() //TODO разработать менее ресурсозатратный способ реализации
 	stop_blowout()
 
 /datum/weather_manager/snow/stop_blowout()
+	if(!is_processing)
+		START_PROCESSING(SSweather, src)
 	for(var/obj/weather/weather in connected_weather_turfs)
 		weather.blowout_status = FALSE
 		weather.icon_state = initial(weather.icon_state)
-		report_progress("DEBUG ANOM: Работа выброса окончена.")
-	..()
+	report_progress("DEBUG ANOM: Работа выброса окончена.")
+	calculate_change_time()
+	calculate_power_ups()
+	calculate_next_safe_blowout()
+	calculate_next_safe_change()
+	can_blowout = TRUE
 
 //Эффект снежной вьюги
 /obj/weather/snow
