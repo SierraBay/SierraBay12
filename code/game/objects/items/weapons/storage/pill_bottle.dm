@@ -47,14 +47,20 @@
 			to_chat(user, SPAN_NOTICE("[target] is empty. Can't dissolve a pill."))
 			return TRUE
 
-		var/list/peelz = filter_list(contents,/obj/item/reagent_containers/pill)
-		if (length(peelz))
-			var/obj/item/reagent_containers/pill/P = pick(peelz)
-			remove_from_storage(P)
-			P.use_after(target, user)
+		var/obj/item/reagent_containers/pill/pill = remove_random_pill()
+		if (pill)
+			pill.use_after(target, user)
 			return TRUE
+		return FALSE
 
-	else return FALSE
+
+/obj/item/storage/pill_bottle/proc/remove_random_pill()
+	var/list/peelz = filter_list(contents, /obj/item/reagent_containers/pill)
+	if (!length(peelz))
+		return
+	var/obj/item/reagent_containers/pill/pill = pick(peelz)
+	remove_from_storage(pill)
+	return pill
 
 
 /obj/item/storage/pill_bottle/attack_self(mob/living/user)
