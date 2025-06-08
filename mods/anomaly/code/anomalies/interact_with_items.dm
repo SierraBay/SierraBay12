@@ -6,8 +6,8 @@
 	var/obj/ashes = new /obj/decal/cleanable/ash (to_place)
 	ashes.alpha = 0
 	animate(input_item, alpha = 0, time = 10, easing = EASE_OUT)
-	sleep(10)
 	animate(ashes, alpha = 255, time = 10, easing = EASE_OUT)
+	sleep(10)
 	qdel(input_item)
 
 /proc/anything_in_remains(atom/input_item)

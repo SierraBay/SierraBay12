@@ -67,7 +67,6 @@
 /obj/shuttle_landmark/proc/sector_set(obj/overmap/visitable/O, shuttle_name)
 	shuttle_restricted = shuttle_name
 
-
 /obj/shuttle_landmark/proc/is_valid(datum/shuttle/shuttle)
 	if(shuttle.current_location == src)
 		return FALSE

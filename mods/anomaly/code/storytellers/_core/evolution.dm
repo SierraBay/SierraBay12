@@ -8,7 +8,6 @@
 		LEVEL_IMPOTENT = list(
 			name = "impotent",
 			point_regeneration_time = 5 MINUTES,
-			upgrade_cost = 200,
 			min_points = 0,
 			// Параметры генерации
 			evolution_points = 0.1,
@@ -19,7 +18,6 @@
 		LEVEL_ACTIVE = list(
 			name = "active",
 			point_regeneration_time = 3 MINUTES,
-			upgrade_cost = 500,
 			min_points = 200,
 			// Параметры генерации
 			evolution_points = 2,
@@ -30,7 +28,6 @@
 		LEVEL_ANGRY = list(
 			name = "angry",
 			point_regeneration_time = 1.5 MINUTES,
-			upgrade_cost = null,
 			min_points = 500,
 			// Параметры генерации
 			evolution_points = 0,
@@ -48,8 +45,6 @@
 /// Проверяет и выполняет повышение уровня, учитывая все возможные переходы
 /datum/planet_storyteller/proc/check_level_up()
 	var/max_possible_level = get_max_possible_level()
-	if(current_angry_level >= max_possible_level)
-		return
 
 	// Повышаем уровень и сбрасываем очки
 	current_angry_level = max_possible_level
@@ -59,14 +54,13 @@
 
 /// Возвращает максимальный возможный уровень, который можно получить с текущими очками
 /datum/planet_storyteller/proc/get_max_possible_level()
-	var/max_level = current_angry_level
-	var/points = current_evolution_points
+	var/max_level = 0
 
 	// Проверяем последовательно все уровни выше текущего
-	for(var/i = current_angry_level + 1 to LAZYLEN(rage_levels))
-		var/required_points = rage_levels[i]["min_points"]
-		if(points >= required_points)
-			max_level = i
+	for(var/level = 1 to LAZYLEN(rage_levels))
+		var/required_points = rage_levels[level]["min_points"]
+		if(current_evolution_points >= required_points)
+			max_level = level
 		else
 			break
 

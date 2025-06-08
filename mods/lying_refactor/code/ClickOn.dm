@@ -87,6 +87,9 @@
 	//Atoms on turfs (not on your person)
 	// A is a turf or is on a turf, or in something on a turf (pen in a box); but not something in something on a turf (pen in a box in a backpack)
 	sdepth = A.storage_depth_turf()
+	if(istype(W, /obj/item/gun) && lying)
+		to_chat(src, SPAN_BAD("I can't use weapon in this position"))
+		return
 	if(isturf(A) || isturf(A.loc) || (sdepth != -1 && sdepth <= 1))
 		if(A.Adjacent(src)) // see adjacent.dm
 			if(W)
@@ -103,9 +106,6 @@
 			return
 		else // non-adjacent click
 			if(W) //Стрелять лёжа плохо
-				if(istype(W, /obj/item/gun) && lying)
-					to_chat(src, SPAN_BAD("I can't use weapon in this position"))
-					return
 				W.afterattack(A, src, 0, modifiers) // 0: not Adjacent
 			else
 				RangedAttack(A, modifiers)
