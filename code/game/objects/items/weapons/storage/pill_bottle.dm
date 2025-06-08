@@ -90,6 +90,34 @@
 		AddOverlays(I)
 
 
+/obj/item/storage/pill_bottle/verb/shake()
+	set name = "Shake Pill Bottle"
+	set category = "Object"
+	shake_bottle()
+
+
+/obj/item/storage/pill_bottle/CtrlClick()
+	if (!shake_bottle())
+		return ..()
+	return TRUE
+
+
+/obj/item/storage/pill_bottle/proc/shake_bottle()
+	if (!length(contents) || !(ismob(usr) && usr.IsHolding(src)) || usr.stat || usr.restrained())
+		return FALSE
+	var/list/bottle_contents = contents.Copy()
+	shuffle(bottle_contents, TRUE)
+	contents = bottle_contents
+	usr.visible_message(
+		SPAN_NOTICE("\The [usr] shakes \the [src]."),
+		SPAN_NOTICE("You shake \the [src]."),
+		SPAN_NOTICE("You hear the sound of pills shaking.")
+	)
+	playsound(src, 'sound/items/pill_bottle_shake.ogg', 50, TRUE)
+	prepare_ui()
+	return TRUE
+
+
 /obj/item/storage/pill_bottle/antitox
 	name = "pill bottle (Dylovene)"
 	desc = "Contains pills used to counter toxins."
