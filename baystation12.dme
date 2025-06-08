@@ -944,6 +944,7 @@
 #include "code\game\objects\items.dm"
 #include "code\game\objects\munition.dm"
 #include "code\game\objects\objs.dm"
+#include "code\game\objects\skrell_props.dm"
 #include "code\game\objects\structures.dm"
 #include "code\game\objects\topic.dm"
 #include "code\game\objects\auras\aura.dm"

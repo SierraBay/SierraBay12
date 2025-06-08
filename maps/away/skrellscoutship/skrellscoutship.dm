@@ -49,14 +49,7 @@
 	)
 	call_webhook = WEBHOOK_SUBMAP_LOADED_SKRELL
 
-//Access + Loadout
-
-var/global/const/access_skrellscoutship = "ACCESS_SKRELLSCOUT"
-
-/datum/access/skrellscoutship
-	id = access_skrellscoutship
-	desc = "SSV Crewman"
-	region = ACCESS_REGION_NONE
+//Loadout
 
 /obj/item/card/id/skrellscoutship
 	color = COLOR_GRAY40
@@ -170,25 +163,6 @@ var/global/const/access_skrellscoutship = "ACCESS_SKRELLSCOUT"
 /datum/mil_rank/skrell_fleet
 	name = "NULL"
 
-/obj/machinery/power/apc/skrell
-	req_access = list(access_skrellscoutship)
-
-/obj/machinery/alarm/skrell
-	req_access = list(access_skrellscoutship)
-	target_temperature = T0C+40
-
-/obj/machinery/alarm/skrell/Initialize()
-	. = ..()
-	TLV["pressure"] =		list(ONE_ATMOSPHERE*0.80,ONE_ATMOSPHERE*0.90,ONE_ATMOSPHERE*1.30,ONE_ATMOSPHERE*1.40) /* kpa */
-	TLV["temperature"] =	list(T0C-26, T0C, T0C+80, T0C+90) // K
-
-/obj/machinery/alarm/skrell/server
-	target_temperature = T0C+10
-
-/obj/machinery/alarm/skrell/server/Initialize()
-	. = ..()
-	TLV["temperature"] =	list(T0C-26, T0C, T0C+30, T0C+40) // K
-
 /obj/machinery/power/smes/buildable/preset/skrell
 	uncreated_component_parts = list(
 		/obj/item/stock_parts/smes_coil/advanced = 2
@@ -198,9 +172,6 @@ var/global/const/access_skrellscoutship = "ACCESS_SKRELLSCOUT"
 	_input_on = TRUE
 	_output_on = TRUE
 	_fully_charged = TRUE
-
-/obj/machinery/vending/medical/skrell
-	req_access = list(access_skrellscoutship)
 
 /obj/machinery/power/apc/debug/skrell
 	cell_type = /obj/item/cell/infinite
@@ -241,6 +212,7 @@ var/global/const/access_skrellscoutship = "ACCESS_SKRELLSCOUT"
 		/obj/item/device/binoculars,
 		/obj/item/clothing/gloves,
 		/obj/item/gun/energy/gun/skrell
+<<<<<<< ours
 		)
 
 //Skell Lights
@@ -305,3 +277,6 @@ var/global/const/access_skrellscoutship = "ACCESS_SKRELLSCOUT"
 	name = "thermal induction generator"
 	desc = "Made by Krri'gli Corp using thermal induction technology, this heater is guaranteed not to set anything, or anyone, on fire."
 	set_temperature = T0C+40
+=======
+		)
+>>>>>>> theirs
