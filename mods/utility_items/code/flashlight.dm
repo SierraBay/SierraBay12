@@ -1,14 +1,14 @@
 /obj/item/device/flashlight
 	var/suitable_cell = /obj/item/cell/device/standard
 	var/obj/item/cell/cell
-	var/power_cost = 0.2
+	var/power_cost = 0.1
 
 /obj/item/device/flashlight
 
 /obj/item/device/flashlight/lamp/floodlamp
-	power_cost = 1
+	power_cost = 0.5
 /obj/item/device/flashlight/lamp
-	power_cost = 0.2
+	power_cost = 0.15
 /obj/item/device/flashlight/lamp/lava
 	on = 1
 

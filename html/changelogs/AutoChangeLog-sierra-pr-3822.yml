@@ -1,0 +1,4 @@
+author: Azlan
+changes:
+  - {bugfix: 'Fixes missing icons for EC dress skirts, and EC officer dress skirts.'}
+delete-after: true

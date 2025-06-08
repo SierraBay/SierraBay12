@@ -1,0 +1,5 @@
+author: SierraKomodo
+changes:
+  - {bugfix: Removed an errant pixel from the north-facing sprite for Bun Uniter
+      hairstyles.}
+delete-after: true

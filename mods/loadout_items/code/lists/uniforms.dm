@@ -243,3 +243,15 @@
 /datum/gear/uniform/blackpurple_shirt
 	display_name = "black n purple double tracksuit"
 	path = /obj/item/clothing/under/blackpurple_shirt
+
+/datum/gear/uniform/kms_uniform
+	display_name = "KMS uniform"
+	path = /obj/item/clothing/under/kms_uniform
+	allowed_branches = list(/datum/mil_branch/contractor)
+	allowed_factions = list(FACTION_KMS)
+
+/datum/gear/uniform/kms_utility_uniform
+	display_name = "KMS utility uniform"
+	path = /obj/item/clothing/under/kms_utility_uniform
+	allowed_branches = list(/datum/mil_branch/contractor)
+	allowed_factions = list(FACTION_KMS)

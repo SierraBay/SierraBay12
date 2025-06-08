@@ -1,0 +1,5 @@
+author: Banditoz
+changes:
+  - {admin: Most eligibility checks can now be bypassed when forcing someone to 
+      be an antagonist.}
+delete-after: true

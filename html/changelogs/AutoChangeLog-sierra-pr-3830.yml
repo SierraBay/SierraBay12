@@ -1,0 +1,5 @@
+author: Banditoz
+changes:
+  - {tweak: You can now dissolve pills from the loaded pill bottle into the 
+      ChemMaster's buffer.}
+delete-after: true

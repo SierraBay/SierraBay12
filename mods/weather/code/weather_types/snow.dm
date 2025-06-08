@@ -1,4 +1,5 @@
 /datum/weather_manager/snow
+	weather_name = "Белая мгла"
 	weather_turf_type = /obj/weather/snow
 	stages = list(
 		"calm",
@@ -19,16 +20,19 @@
 /datum/weather_manager/snow/no_blowout
 	can_blowout = FALSE
 
-/datum/weather_manager/snow/change_stage(force_state = FALSE, override_parameters = FALSE, monitor = FALSE, sound = FALSE, blowout_status = FALSE, new_icon_state = "void")
-	.=..()
-	if(!.) //Родитель сказал Баста, смена не нужна
-		return FALSE
+/datum/weather_manager/snow/calculate_power_ups()
+	remain_power_ups = rand(4, 6)
+
+/datum/weather_manager/snow/prepare_to_blowout()
+	change_visual_weather(force_state = "calm")
+
+/datum/weather_manager/snow/change_visual_weather(force_state = FALSE, override_parameters = FALSE, monitor = FALSE, sound = FALSE, blowout_status = FALSE, new_icon_state = "void")
 	var/possible_stages = stages.Copy()
 	LAZYREMOVE(possible_stages, current_stage)
-	if(!force_state)
-		current_stage = pick(possible_stages)
-	else
+	if(force_state)
 		current_stage = force_state
+	else
+		current_stage = pick(possible_stages)
 	if(override_parameters)
 		for(var/obj/weather/weather in connected_weather_turfs)
 			weather.icon_state = new_icon_state
@@ -63,7 +67,8 @@
 	.=..()
 	if(!.) //Родитель сказал Баста, выброс не нужен
 		return
-	change_stage("calm", FALSE, FALSE)
+	if(activity_blocked_by_safe_protocol)
+		return
 	sleep(delay_between_message_and_blowout)
 	for(var/mob/living/carbon/human/picked_human in GLOB.living_players)
 		if(get_z(picked_human) == get_z(src))
@@ -85,29 +90,43 @@
 				weather.blowout_check_turf()
 				LAZYREMOVE(blowout_weather_turfs, weather)
 		sleep(1.5 SECONDS)
+		if(activity_blocked_by_safe_protocol)
+			return
 		start_x++
 	sleep(rand(10 SECONDS,20 SECONDS))
+	if(activity_blocked_by_safe_protocol)
+		return
 	SSanom.announce_to_all_detectors_on_z_level(get_z(pick(connected_weather_turfs)) , "Зафиксировано спадение электромагнитного поля.")
 	report_progress("DEBUG ANOM: Выброс в процессе. Начинается стадия авроры, пробуждаем технику и устройства.")
 	//Перестаёт жечь ЭМИшкой
-	change_stage(force_state = "calm", override_parameters = TRUE, monitor = FALSE, sound = FALSE, blowout_status = FALSE)
+	change_visual_weather(force_state = "calm")
 	for(var/obj/structure/aurora/aurora_structure in SSweather.aurora_sctructures)
 		if(my_area.z == aurora_structure.z)
 			aurora_structure.wake_up(rand(5 MINUTES, 9 MINUTES))
 	sleep(rand(10 MINUTES, 15 MINUTES))
+	if(activity_blocked_by_safe_protocol)
+		return
 	report_progress("DEBUG ANOM: Выброс в процессе. Аврора окончена. Начинается перереспавн аномалий и артефактов.")
-	to_world("WARNING: Моду аномалий требуются значительные ресурсы для перереспавна. Ожидайте затупа игры через 10 секунд.")
+	to_world(SPAN_BAD("WARNING: Моду аномалий требуются значительные ресурсы для перереспавна. Ожидайте затупа игры через 10 секунд."))
 	SSanom.announce_to_all_detectors_on_z_level(get_z(pick(connected_weather_turfs)) , "Зафиксирована огромная аномальная активность, показания зашкаливают.")
 	sleep(10 SECONDS)
-	regenerate_anomalies_on_planet()
+	if(activity_blocked_by_safe_protocol)
+		return
+	//regenerate_anomalies_on_planet() //TODO разработать менее ресурсозатратный способ реализации
 	stop_blowout()
 
 /datum/weather_manager/snow/stop_blowout()
+	if(!is_processing)
+		START_PROCESSING(SSweather, src)
 	for(var/obj/weather/weather in connected_weather_turfs)
 		weather.blowout_status = FALSE
 		weather.icon_state = initial(weather.icon_state)
-		report_progress("DEBUG ANOM: Работа выброса окончена.")
-	..()
+	report_progress("DEBUG ANOM: Работа выброса окончена.")
+	calculate_change_time()
+	calculate_power_ups()
+	calculate_next_safe_blowout()
+	calculate_next_safe_change()
+	can_blowout = TRUE
 
 //Эффект снежной вьюги
 /obj/weather/snow

@@ -3,6 +3,16 @@
 /obj/structure/catwalk,
 /turf/simulated/floor/exoplanet/titan_water/minimal,
 /area/template_noop)
+"bn" = (
+/obj/paint/nt_white/playable_yacht,
+/obj/anomaly_blocker,
+/turf/simulated/wall/r_wall/hull,
+/area/template_noop)
+"bL" = (
+/obj/machinery/door/airlock/external,
+/obj/anomaly_blocker,
+/turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/template_noop)
 "cy" = (
 /obj/machinery/constructable_frame/computerframe{
 	dir = 4
@@ -24,6 +34,7 @@
 /area/template_noop)
 "gq" = (
 /obj/wallframe_spawn/reinforced/hull,
+/obj/anomaly_blocker,
 /turf/simulated/floor/exoplanet/titan_water/minimal,
 /area/template_noop)
 "iO" = (
@@ -74,6 +85,7 @@
 "wJ" = (
 /obj/structure/closet/walllocker/emerglocker/east,
 /obj/random/trash,
+/obj/item/storage/firstaid/combat,
 /turf/simulated/floor/exoplanet/titan_water/minimal,
 /area/template_noop)
 "xs" = (
@@ -93,6 +105,11 @@
 "CS" = (
 /obj/structure/water_drown_structures/paper,
 /turf/simulated/floor/exoplanet/titan_water/minimal,
+/area/template_noop)
+"CW" = (
+/obj/paint/nt_white/playable_yacht,
+/obj/anomaly_blocker,
+/turf/simulated/wall/r_wall/hull/titan_no_opacity,
 /area/template_noop)
 "Fj" = (
 /turf/simulated/floor/exoplanet/titan_water/minimal,
@@ -129,13 +146,13 @@ HY
 lP
 lP
 lP
-lP
-eQ
-eQ
-eQ
-eQ
-eQ
-eQ
+CW
+bn
+bn
+bn
+bn
+bn
+bn
 Bd
 Hu
 "}
@@ -150,7 +167,7 @@ cy
 jO
 mb
 Mq
-eQ
+bn
 eQ
 eQ
 "}
@@ -165,7 +182,7 @@ iO
 uf
 CS
 cH
-sk
+bL
 em
 sk
 "}
@@ -180,7 +197,7 @@ iO
 CS
 Mq
 Fj
-sk
+bL
 aY
 sk
 "}
@@ -195,7 +212,7 @@ tQ
 wJ
 cH
 CS
-eQ
+bn
 eQ
 eQ
 "}
@@ -204,13 +221,13 @@ Px
 lP
 lP
 lP
-lP
-eQ
-eQ
-eQ
-eQ
-eQ
-eQ
+CW
+bn
+bn
+bn
+bn
+bn
+bn
 Bd
 Hu
 "}

@@ -1,0 +1,8 @@
+author: Banditoz
+changes:
+  - {tweak: 'The antag skill selection UI has been reworked. You now press buttons
+      on the skill table, like in the character setup menu, instead of a separate
+      list pop-up.'}
+  - {admin: "In the admin skill selection menu, the selected level's proceeding lesser
+      levels are now filled in with green, like in the character setup menu."}
+delete-after: true

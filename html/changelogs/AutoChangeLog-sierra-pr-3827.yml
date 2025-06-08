@@ -1,0 +1,5 @@
+author: Banditoz
+changes:
+  - {rscadd: 'You can now shake pill bottles to make noise by either control clicking
+      the pill bottle, or through a verb.'}
+delete-after: true

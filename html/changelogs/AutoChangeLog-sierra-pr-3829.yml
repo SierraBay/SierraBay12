@@ -1,0 +1,5 @@
+author: Glloyd
+changes:
+  - {bugfix: 'Lights now respect lighting mode (standard, emergency, etc) as well
+      as bulb color.'}
+delete-after: true

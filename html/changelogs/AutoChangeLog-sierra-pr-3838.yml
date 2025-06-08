@@ -1,0 +1,4 @@
+author: Spookerton
+changes:
+  - {bugfix: Mint oil shows up with the correct name in booze-o-mats.}
+delete-after: true

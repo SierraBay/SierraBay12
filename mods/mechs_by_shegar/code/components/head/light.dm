@@ -13,7 +13,6 @@
 	max_repair = 20
 	repair_damage = 15
 	req_material = MATERIAL_ALUMINIUM
-	back_modificator_damage = 1.3
 	front_modificator_damage = 1
 	max_heat = 100
 	heat_cooling = 12
