@@ -16,7 +16,7 @@
 	)
 	var/need_up_water = FALSE
 	var/time_before_cunami = 0
-	can_blowout = FALSE
+	can_blowout = TRUE
 	var/have_cunami_ang_changes = TRUE
 	var/counting_started = FALSE
 	//Предполагается что на тиане есть подземные уровни, нам нужно учесть это
