@@ -1,5 +1,12 @@
 // Alien clothing.
 
+//
+
+/* /datum/gear/suit/resomi/
+	sort_category = "Xenowear"
+	category = /datum/gear/suit/resomi
+	whitelisted = list(SPECIES_RESOMI) */
+
 // Unathi clothing
 
 /datum/gear/suit/unathi/officer_uniform
