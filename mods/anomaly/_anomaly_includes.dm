@@ -4,13 +4,13 @@
 #include "_anomaly.dm"
 // Далее просто включай свой код
 // #include "code/something.dm"
-#include "code\anomaly_admin.dm" //Админские кнопочки
 #include "code\anomaly_controller.dm" //Контроллер аномалий
 #include "code\anomaly_defines.dm"
 
 
 //Аномалии
 //Типы аномалий
+#include "code\admin\povelitel_of_zone\Control_of_zone.dm" //Админское управление зоной
 #include "code\anomalies\__anomalies_includes.dm"
 #include "code\artefacts\__small_artefacts_includes.dm" //Код артефактов и всё с ними связанное
 #include "code\big_artefacts\_big_artefacts_includes.dm" //Код больших артефактов

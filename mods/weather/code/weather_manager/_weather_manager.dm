@@ -1,6 +1,8 @@
 ///Менеджер/контроллер управляет всей погодой что привязана к нему
 /datum/weather_manager
 	var/weather_turf_type
+	var/weather_name = "Безымянная погода"
+	var/remain_power_ups = 4
 	var/list/connected_weather_turfs = list()
 	//Время смены
 	var/change_time
@@ -22,7 +24,7 @@
 /datum/weather_manager/New(area/input_area)
 	my_area = input_area
 	calculate_change_time()
-	calculate_blowout_time()
+	calculate_power_ups()
 	calculate_next_safe_blowout()
 	calculate_next_safe_change()
 	calculate_affected_z()
@@ -35,8 +37,7 @@
 		return
 	if(world.time >= change_time)
 		change_stage()
-	if(can_blowout && world.time  >= blowout_time)
-		start_blowout()
+
 
 /datum/weather_manager/proc/change_stage()
 	set waitfor = FALSE
@@ -44,12 +45,40 @@
 	calculate_change_time()
 	if(activity_blocked_by_safe_protocol || !check_change_safety())
 		return
+
+	if(!check_have_players_on_z_level())
+		return FALSE
+
+	//Теперь, отнимем усиление
+	change_powerups_ammout(-1)
+
+	change_visual_weather() //Вызывает функцию смену визуала
+	return TRUE
+
+
+/datum/weather_manager/proc/change_powerups_ammout(number)
+	if(!number)
+		return
+	if(!remain_power_ups && can_blowout)
+		start_blowout()
+		return
+	number = clamp(number, -10, 10)
+	number = round(number)
+	remain_power_ups += number
+	remain_power_ups = clamp(remain_power_ups, 0, 30)
+
+
+///Изменяет внешний вид погоды если это требуется кодом.
+/datum/weather_manager/proc/change_visual_weather(force_state = FALSE)
+	return
+
+///TRUE - на Z уровне кто-то есть
+///FALSE - На Z уровне никого нет
+/datum/weather_manager/proc/check_have_players_on_z_level()
 	for(var/mob/living/carbon/human/picked_human in GLOB.living_players)
 		if(get_z(picked_human) in my_z)
 			break
 		return FALSE
-	for(var/obj/weather/connected_weather in connected_weather_turfs)
-		connected_weather.update()
 	return TRUE
 
 /datum/weather_manager/proc/start_blowout()
@@ -57,25 +86,16 @@
 	set background = TRUE
 	if(activity_blocked_by_safe_protocol || !check_blowout_safety()) //Основной и самый надёжный слой защиты от страшного цикла
 		return
-	var/need_blowout = FALSE
 	calculate_blowout_message_delay_time()
 	report_progress("DEBUG ANOM: Начинается выброс. Стадия - подготовка.")
 	can_blowout = FALSE //Первый слой защиты от страшного цикла
 	//Опасайтесь того что ваша команда STOP_PROCESSING просто не выполнится
 	STOP_PROCESSING(SSweather, src) //Второй слой защиты от страшного цикла
-	calculate_blowout_time() //Третий слой защиты от страшного цикла
 	prepare_to_blowout()
-	for(var/mob/living/carbon/human/picked_human in GLOB.living_players)
-		if(get_z(picked_human) == get_z(pick(connected_weather_turfs)))
-			need_blowout = TRUE
-			if(must_message_about_blowout)
+	if(must_message_about_blowout)
+		for(var/mob/living/carbon/human/picked_human in GLOB.living_players)
+			if(get_z(picked_human) == get_z(pick(connected_weather_turfs)))
 				message_about_blowout_prepare(picked_human)
-	if(!need_blowout)
-		report_progress("DEBUG ANOM: Должен был случиться выброс, но нет игроков на Z уровне погоды. Отмена.")
-		calculate_blowout_time()
-		can_blowout = initial(can_blowout) //Откатим состояние переменной до начального уровня
-		START_PROCESSING(SSweather, src)
-		return FALSE
 	return TRUE
 
 /datum/weather_manager/proc/message_about_blowout_prepare(mob/living/input_mob)
@@ -94,7 +114,7 @@
 	if(!is_processing)
 		report_progress("DEBUG: Выброс окончен.")
 		START_PROCESSING(SSweather, src)
-		calculate_blowout_time()
+		calculate_power_ups()
 
 /datum/weather_manager/proc/regenerate_anomalies_on_planet() //Выполняет перереспавн всех аномалий которые были заспавнены стандартным генератором на планете
 	set waitfor = FALSE
@@ -112,10 +132,10 @@
 		my_planet.full_clear_from_anomalies()
 
 /datum/weather_manager/proc/calculate_change_time()
-	change_time = rand(8, 20 MINUTES) + world.time //Вычисляем во сколько будет следущая смена погоды
+	change_time = 15 MINUTES + world.time //Вычисляем во сколько будет следущая смена погоды
 
-/datum/weather_manager/proc/calculate_blowout_time()
-	blowout_time = rand(60 MINUTES, 85 MINUTES) + world.time //Вычисляем во сколько будет следущий выброс.
+/datum/weather_manager/proc/calculate_power_ups()
+	return
 
 /datum/weather_manager/proc/calculate_blowout_message_delay_time()
 	delay_between_message_and_blowout = rand(2 MINUTES, 4 MINUTES)
@@ -129,13 +149,15 @@
 			LAZYREMOVE(possible_turfs,picked_turf)
 	input_obj.forceMove(pick(possible_turfs))
 
-/datum/weather_manager/proc/delete_manager()
+/datum/weather_manager/Destroy()
 	my_area.connected_weather_manager = null
 	if(is_processing)
 		STOP_PROCESSING(SSweather,src)
 	for(var/obj/weather/detected_weather in connected_weather_turfs)
-		detected_weather.delete_weather()
-	qdel(src)
+		detected_weather.Destroy()
+	LAZYREMOVE(SSweather.weather_managers_in_world, src)
+	activity_blocked_by_safe_protocol = TRUE
+	. = ..()
 
 /proc/calculate_smallest_x(list/objects_list)
 	var/smallest_x = 10000

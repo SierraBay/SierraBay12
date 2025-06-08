@@ -98,6 +98,7 @@
 #include "code\__defines\~mods\mobs.dm"
 #include "code\__defines\~mods\rust_g.dm"
 #include "code\__defines\~mods\tg_signals.dm"
+#include "code\__defines\~mods\ui_buttons.dm"
 #include "code\__defines\~mods\~master_defines.dm"
 #include "code\_global_vars\edible.dm"
 #include "code\_global_vars\logging.dm"

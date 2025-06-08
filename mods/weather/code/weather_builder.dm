@@ -49,10 +49,10 @@ Shift + Left Click - Информация о зоне
 		var/confirmation = alert("Вы ТООООЧНООО хотите удалить контроллер в зоне [detected_area]?", "Бэм", "Да", "Не")
 		if(confirmation == "Не")
 			return
-		detected_area.connected_weather_manager.delete_manager()
+		detected_area.connected_weather_manager.Destroy()
 	else if(current_placement_mode == "С погодой")
 		for(var/obj/weather/detected_weather in get_turf(input_atom))
-			detected_weather.delete_weather()
+			detected_weather.Destroy()
 
 /datum/build_mode/weather/proc/switch_placement_mode()
 	var/new_mode = input(usr, "Будем взаимодействовать с контроллерами, или с отдельным квадратом погоды?", "Бэм", null) as null|anything in list("С контроллерами", "С погодой")

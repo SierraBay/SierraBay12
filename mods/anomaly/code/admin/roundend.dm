@@ -1,0 +1,11 @@
+/datum/controller/subsystem/processing/anom/proc/ShowRoundendUI(list/input_html, mob/living/user)
+	input_html += "<br><br> ANOMALIES"
+	input_html += "<br>Количество аномалий на момент окончания раунда: [anomalies_cores_in_world_amount]. Мод размещал аномалии [spawn_ammount] раз, а удалял [removed_ammount] раз."
+	input_html += "<br>Игра заспавнила [artefacts_spawned_by_game] артефактов, из них [artefacts_deleted_by_game] удалено. Собрано игроками артефактов: [collected_artefacts_by_player]. Всего артефактов на конец раунда: [LAZYLEN(artefacts_list_in_world)]"
+	input_html += "<br>Аномалии были взведены [anomalies_activated_times] раз. В целом, игроки подверглись влиянию аномалий [humanoids_effected_by_anomaly] раз, а [humanoids_gibbed_by_anomaly] игроков были гибнуты. [simplemobs_effected_by_anomaly] симплмобов подверглись влиянию аномалий и [simplemobs_gibbed_by_anomaly] было гибнуто."
+	input_html += "<br><br> ARTEFACTS"
+	input_html += "<br>Заработано каргопоинтов за продажу артефактов: [earned_cargo_points], заработано РНД поинтов за изучение артефактов: [earned_rnd_points]"
+	input_html += "<br>Всего попыток взаимодействия с артефактами: [interactions_with_artefacts_by_players_ammount], из них [good_interactions_with_artefacts_by_players_ammount] принесли пользу, а [bad_interactions_with_artefacts_by_players_ammount] принесли вред."
+	input_html += "<br><br> DAMAGES"
+	input_html += "<br> Люди подверглись влиянию аномалий [humanoids_effected_by_anomaly] раз, а гибнулись [humanoids_gibbed_by_anomaly] раз."
+	input_html += "<br> Симплмобы подверглись влиянию аномалий [simplemobs_effected_by_anomaly] раз, а гибнулись [simplemobs_gibbed_by_anomaly] раз."
