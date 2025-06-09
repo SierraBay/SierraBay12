@@ -96,10 +96,6 @@
 		if (DAMAGE_RADIATION)
 			for(var/mob/living/pilot in pilots)
 				pilot.apply_damage(damage, DAMAGE_RADIATION, def_zone, damage_flags, used_weapon)
-
-	if ((damagetype == DAMAGE_BRUTE || damagetype == DAMAGE_BURN) && prob(25+(damage*2)))
-		sparks.set_up(3,0,src)
-		sparks.start()
 	updatehealth()
 
 	return 1
