@@ -13,8 +13,7 @@
 	if(warnings_ammout == critical_warnings_ammout)
 		activity_blocked_by_safe_protocol = TRUE
 		report_progress("WARNING ERROR: Критическая ситуация подтверждена, предпринимаем действия.")
-		delete_manager()
-		QDEL_NULL(src) //Если delete_manager не сработает
+		Destroy()
 		CRASH("WARNING ERROR: Критическая ситуация подтверждена, клапон безопасности сорван.")
 	if(world.time < next_safe_change_time)
 		warnings_ammout++
@@ -30,14 +29,12 @@
 	if(warnings_ammout == critical_warnings_ammout)
 		activity_blocked_by_safe_protocol = TRUE
 		report_progress("WARNING ERROR: Критическая ситуация подтверждена, предпринимаем действия.")
-		delete_manager()
-		QDEL_NULL(src) //Если delete_manager не сработает
+		Destroy()
 		CRASH("WARNING ERROR: Критическая ситуация подтверждена, клапон безопасности сорван.")
 	if(world.time < next_safe_blowout_time)
 		warnings_ammout++
 		report_progress("WARNING ANOM: Слишком малый интервал перед вызовами выброса, вероятно опасная ситуация.")
 		calculate_next_safe_blowout()
-		calculate_blowout_time()
 		return FALSE
 	calculate_next_safe_blowout()
 	return TRUE

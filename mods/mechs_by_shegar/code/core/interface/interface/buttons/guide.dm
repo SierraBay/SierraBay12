@@ -95,26 +95,32 @@
 		),
 		list(
 			guide_type = /obj/screen/fullscreen/mech_guide/main,
-			text = "С стандартными настройками, мех при нажатии Левой кнопки мыши использует левый модуль, а при нажатии Правой кнопки мыши - правый. (В левой руке или правой рукке). <br> Нажмите на GO, чтобы продолжить.",
+			text = "С стандартными настройками, если выбран какой-либо модуль, мех при нажатии Левой кнопки мыши использует левый модуль, а при нажатии Правой кнопки мыши - правый. (В левой руке или правой рукке). <br> Нажмите на GO, чтобы продолжить.",
 			callbacks = list("open_big_menu"),
 			teller_loc = "CENTER, CENTER"
 		),
 		list(
 			guide_type = /obj/screen/fullscreen/mech_guide/main,
 			text = "Кнопка Средняя кнопка мыши позволяет быстро переключиться между Снаряжением в руках и на плечах. Комбинируя оба эти метода, можно очень комфортно управлять снаряжением меха. <br> Нажмите на GO, чтобы продолжить.",
-			callbacks = list("open_big_menu"),
+			callbacks = null,
+			teller_loc = "CENTER, CENTER"
+		),
+		list(
+			guide_type = /obj/screen/fullscreen/mech_guide/main,
+			text = "В случае если никакой модуль не выбран, мех будет использовать свои лапы для атаки. Помните что они могут работать как лом, открывая двери и шлюзы. <br> Нажмите на GO, чтобы продолжить.",
+			callbacks = null,
 			teller_loc = "CENTER, CENTER"
 		),
 		list(
 			guide_type = /obj/screen/fullscreen/mech_guide/main,
 			text = "Если вам не нравится такая функция перехватывающая ваши клики мыши - вы всегда можете её отключить в меню меха. <br> Нажмите на GO, чтобы продолжить.",
-			callbacks = list("open_big_menu"),
+			callbacks = null,
 			teller_loc = "CENTER, CENTER"
 		),
 		list(
 			guide_type = /obj/screen/fullscreen/mech_guide/main,
 			text = "А ещё можно закреплять кнопки в меню меха на главном экране, нажимая по ним СКМ. В целом, это всё. Заводи меха, пилот! <br> Обучение закончено,Нажмите на GO для окончания обучения",
-			callbacks = list("toggle_power"),
+			callbacks = null,
 			teller_loc = "CENTER, CENTER"
 		)
 	)
