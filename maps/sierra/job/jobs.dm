@@ -124,9 +124,9 @@
 		/datum/job/qm, /datum/job/cargo_tech,  /datum/job/cargo_assistant, /datum/job/mining,
 		/datum/job/janitor, /datum/job/cook, /datum/job/bartender, /datum/job/steward, /datum/job/chief_steward,
 		/datum/job/senior_scientist, /datum/job/scientist, /datum/job/roboticist, /datum/job/scientist_assistant,
-		/datum/job/ai, /datum/job/cyborg, /datum/job/assistant,
+		/datum/job/ai, /datum/job/cyborg, /datum/job/assistant, /datum/job/detective, /datum/job/officer,
 		/datum/job/submap/bearcat_captain, /datum/job/submap/bearcat_crewman,
-		/datum/job/submap/scavver_pilot, /datum/job/submap/scavver_doctor, /datum/job/submap/scavver_engineer
+		/datum/job/submap/scavver_pilot, /datum/job/submap/scavver_doctor, /datum/job/submap/scavver_engineer, /datum/job/submap/colonist,
 		)
 
 /singleton/cultural_info/culture/ipc/gen3
@@ -139,7 +139,8 @@
 		/datum/job/qm, /datum/job/cargo_tech,  /datum/job/cargo_assistant, /datum/job/mining,
 		/datum/job/janitor, /datum/job/cook, /datum/job/bartender, /datum/job/steward, /datum/job/chief_steward,
 		/datum/job/senior_scientist, /datum/job/scientist, /datum/job/roboticist, /datum/job/scientist_assistant,
-		/datum/job/ai, /datum/job/cyborg, /datum/job/assistant
+		/datum/job/ai, /datum/job/cyborg, /datum/job/assistant,
+		/datum/job/submap/scavver_pilot, /datum/job/submap/scavver_doctor, /datum/job/submap/scavver_engineer, /datum/job/submap/colonist
 )
 //[/SIERRA-ADD] - [IPC-MODS]
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

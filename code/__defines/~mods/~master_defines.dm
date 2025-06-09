@@ -152,3 +152,6 @@
 #define PSI_RANK_MASTER        4
 #define PSI_RANK_GRANDMASTER   5
 // PSIONICS - End
+
+
+#define MODULAR_CONFIG_REMCON_SETTING "RemoteConnectionPass"

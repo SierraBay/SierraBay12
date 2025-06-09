@@ -21,6 +21,8 @@
 /obj/item/device/flashlight/drone
 	suitable_cell = null
 
+/obj/item/device/flashlight/lantern
+	suitable_cell = null
 /obj/item/device/flashlight/flare
 	suitable_cell = null
 
@@ -36,7 +38,7 @@
 	return cell
 
 /obj/item/device/flashlight/proc/get_power_cost()
-	return abs(power_cost * flashlight_power / 2)
+	return abs(power_cost * flashlight_power / 6)
 
 /obj/item/device/flashlight/Process()
 	if(on && suitable_cell)

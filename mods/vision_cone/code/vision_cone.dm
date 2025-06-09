@@ -43,6 +43,7 @@
 	var/usefov = FALSE
 	var/hasmask = FALSE
 	var/fovangle
+	var/viewoffset = FALSE
 
 /mob/living/SelfMove(direction)
 	. = ..()
@@ -93,8 +94,9 @@
 /mob/proc/check_fov()
 	var/mob/eyepath
 	if(client)
-		if(resting || lying)
-			client.hide_cone()
+		if(resting || lying || client.viewoffset)
+			client.hide_mask()
+			return
 		//Trying to make FOV works for Mechs
 		else if(client.eye != client.mob)
 			eyepath = client.eye

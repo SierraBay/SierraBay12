@@ -1,0 +1,100 @@
+ <style type="text/css">
+    table.borders   {
+        width:95%;
+        margin-left:2.4%;
+        margin-right:2.4%;
+    }
+
+    table.borders, table.borders tr {
+        border: 1px solid White;
+    }
+
+    td.law_index {
+        width: 50px;
+    }
+
+    td.state {
+        width: 63px;
+		text-align:center;
+    }
+
+    td.add {
+        width: 36px;
+    }
+
+    td.edit {
+        width: 36px;
+		text-align:center;
+    }
+
+    td.delete {
+        width: 53px;
+		text-align:center;
+    }
+
+    td.law_type {
+        width: 65px;
+    }
+
+    td.position {
+        width: 37px;
+    }
+</style>
+
+{{if data.has_laws}}
+    <table class='borders'>
+    <tr><td class='law_index'>Index</td><td>Law</td>
+        <td class='edit'>Edit</td>
+        <td class='delete'>Delete</td>
+    </tr>
+    <div class="itemLabelNarrow">
+        Inherent Laws:
+    </div>
+    {{for data.laws}}
+        <tr>
+            <td valign="top">{{:value.index}}.</td>
+            <td>{{:value.law}}</td>
+            {{if data.hitech_experienced}}
+                <td class='edit'>{{:helper.link('Edit', null, {'edit_law': value.ref})}}</td>
+            {{/if}}
+            {{if data.computer_master}}
+                <td class='delete'>{{:helper.link('Delete', null, {'delete_law': value.ref}, null, 'redButton')}}</td>
+            {{/if}}
+        </tr>
+    {{/for}}
+    </table>
+    {{if data.computer_master}}
+        <tr><td>{{:helper.link("Add", 'link', {'add_law' : 1}, null, 'redButton')}}</td><tr>
+    {{/if}}
+{{else}}
+    <span class='notice'>No laws found.</span>
+    {{if data.computer_master}}
+        <td>{{:helper.link("Add", 'link', {'add_law' : 1}, null, 'redButton')}}</td>
+    {{/if}}
+{{/if}}
+
+
+{{if data.has_owner}}
+    <div class="item">
+        <div class="itemLabel">
+            Chassis Idendificator name:
+        </div>
+        <div class="itemContent">
+            {{:data.name}}
+        </div>
+        <div class="itemLabel">
+            Chassis Charge:
+        </div>
+        <div class="itemContent">
+            {{:data.charge}}
+        </div>
+        <div class="itemLabel">
+            Chassis Temperature:
+        </div>
+        <div class="itemContent">
+            {{:data.temperture}}
+        </div>
+    </div>
+{{else}}
+    Stored: <span class='notice'>No posibrain detected.</span>
+{{/if}}

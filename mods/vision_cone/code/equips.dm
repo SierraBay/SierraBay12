@@ -19,7 +19,7 @@
 /mob/living/carbon/human/update_inv_head()
 	..()
 	if(client)
-		if(head)
+		if(head && !is_species(SPECIES_DIONA))
 			if(istype(head, /obj/item/clothing/head/helmet))
 				SEND_SIGNAL(head, COMSIG_ITEM_EQUIPPED, src)
 				last_equip_head = head
