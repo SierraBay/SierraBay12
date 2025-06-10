@@ -8,17 +8,15 @@
 	if(shield_active_KTC)
 		return
 	var/datum/reagent/napalm/napalm_liquid = new /datum/reagent/napalm
-	napalm_liquid.volume = 10 * strength
-	for(var/atom/A in view(range * 1.5, target))
+	napalm_liquid.volume = 100 * strength // примерно в 5 раз больше при максимальной силе, чем в баке огнемета
+	for(var/atom/A in RANGE_TURFS(target, range))
 		if(ismob(A))
 			napalm_liquid.touch_mob(A, 10 * strength)
-		if(isturf(A))
+		if(isturf(A) && !A.density && !istype(A, /turf/space))
 			var/turf/T = A
 			napalm_liquid.touch_turf(T, TRUE)
-			// Воспламеняем все турфы и накидываем им соответствующую температуру
-			var/power = napalm_liquid.accelerant_quality * strength
-			T.IgniteTurf(power, napalm_liquid.fire_colour)
-			T.hotspot_expose((power*3) + 380,500)
+			// Воспламеняем все турфы
+			T.hotspot_expose(1000,500,1) // хотспот как у игнайтера
 
 /obj/structure/ship_munition/disperser_charge/emp/military
 	name = "M850-EM"
