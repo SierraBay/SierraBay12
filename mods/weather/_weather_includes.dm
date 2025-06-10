@@ -1,9 +1,9 @@
 #ifndef MODPACK_WEATHER
 #define MODPACK_WEATHER
 //MANAGER
+#include "code\weather_manager\_weather_manager.dm"
 #include "code\weather_manager\warning_system.dm"
 #include "code\weather_manager\weather_manager_deploy.dm"
-#include "code\weather_manager\weather_manager.dm"
 //Weather
 #include "code\weather_turfs\_weather_core.dm"
 #include "code\weather_turfs\_weather_vars.dm"

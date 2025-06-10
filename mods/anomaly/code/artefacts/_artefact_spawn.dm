@@ -23,15 +23,16 @@
 /obj/anomaly/proc/born_artefact()
 	var/obj/artefact = pickweight(artefacts)
 	if(artefact && !spawn_artefact_in_center)
-		born_artefact_in_random_title(artefact)
+		return born_artefact_in_random_title(artefact)
 	else if(artefact && spawn_artefact_in_center)
-		born_artefact_in_center(artefact)
+		return born_artefact_in_center(artefact)
 
 /obj/anomaly/proc/born_artefact_in_center(artefact)
 	//Размещает артефакт в центре
 	var/obj/item/artefact/spawned_artefact =  new artefact(get_turf(src))
 	spawned_artefact.connected_to_anomaly = TRUE
 	SSanom.artefacts_spawned_by_game++
+	return spawned_artefact
 
 ///Функция проверяет, есть ли на территории аномалии артефакты
 /obj/anomaly/proc/check_artifacts_in_anomaly()
@@ -74,3 +75,4 @@
 		var/obj/item/artefact/spawned_artefact =  new artifact(result)
 		spawned_artefact.connected_to_anomaly = TRUE
 		SSanom.artefacts_spawned_by_game++
+		return spawned_artefact

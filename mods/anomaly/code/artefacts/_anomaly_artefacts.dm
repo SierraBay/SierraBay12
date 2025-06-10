@@ -1,6 +1,7 @@
 /obj/item/artefact
 	name = "Что-то."
 	desc = "Какой-то камень."
+	var/admin_name = "Ноу-нейм артефакт"
 	icon = 'mods/anomaly/icons/artifacts.dmi'
 	///Текущее количество энергии, которое хранит артефакт.
 	var/stored_energy = 1000

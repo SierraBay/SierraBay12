@@ -415,6 +415,7 @@
 		'html/images/leaguelogo.png',
 		'html/images/ouerelogo.png',
 		'html/images/terstenlogo.png',
+		'html/images/kmslogo.png',
 		// [/SIERRA-ADD]
 		'html/images/zhlogo.png'
 		)

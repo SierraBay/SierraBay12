@@ -1,6 +1,7 @@
 /obj/anomaly/vspishka
 	name = "Brightest flash"
 	anomaly_tag = "Vspishka"
+	admin_name = "Вспышка"
 	with_sound = TRUE
 	sound_type = 'mods/anomaly/sounds/vspishka_activated.ogg'
 	idle_effect_type = "vspishka_idle"

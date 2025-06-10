@@ -123,7 +123,6 @@
 
 	if(user)
 		system.forceMove(get_turf(user))
-		user.put_in_hands(system)
 		to_chat(user, SPAN_NOTICE("You remove \the [system] from \the [src]'s [system_hardpoint]."))
 		playsound(user.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 

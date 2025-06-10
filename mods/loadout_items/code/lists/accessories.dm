@@ -109,3 +109,10 @@
 	visor["high-tech retro glasses"] = /obj/item/clothing/glasses/prescription/hitech/retro
 
 	gear_tweaks += new/datum/gear_tweak/path(visor)
+
+// KMS EMT kneepads
+/datum/gear/tactical/kmskneepads
+	display_name = "KMS kneepads"
+	path = /obj/item/clothing/accessory/kms_kneepads
+	allowed_branches = list(/datum/mil_branch/contractor)
+	allowed_factions = list(FACTION_KMS)

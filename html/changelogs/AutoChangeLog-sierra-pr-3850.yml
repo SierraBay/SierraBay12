@@ -1,0 +1,4 @@
+author: Guared1365
+changes:
+  - {bugfix: Вернул возможность нормально кушать печеньки из автоматов.}
+delete-after: true

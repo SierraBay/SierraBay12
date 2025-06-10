@@ -15,7 +15,6 @@
 	repair_damage = 20
 	bump_type = HARD_BUMP
 	bump_safety = FALSE
-	back_modificator_damage = 1.3
 	front_modificator_damage = 1
 	max_heat = 100
 	heat_cooling = 1
