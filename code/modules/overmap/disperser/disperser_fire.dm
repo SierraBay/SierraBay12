@@ -166,9 +166,9 @@
 			var/list/shielded_turfs = list()
 			for(var/turf/gen_turf in shielded_base_turfs)
 				shielded_turfs += trange(S.field_radius, gen_turf)
-			if(S.running == SHIELD_RUNNING && S.check_flag(MODEFLAG_EM) && targetturf in shielded_turfs)
+			if(S.running == SHIELD_RUNNING && S.check_flag(MODEFLAG_EM) && (targetturf in shielded_turfs))
 				shield_active_EM = TRUE
-			if(S.running == SHIELD_RUNNING && S.check_flag(MODEFLAG_HYPERKINETIC) && targetturf in shielded_turfs)
+			if(S.running == SHIELD_RUNNING && S.check_flag(MODEFLAG_HYPERKINETIC) && (targetturf in shielded_turfs))
 				shield_active_KTC = TRUE
 	charge.fire(targetturf, strength, range, shield_active_EM, shield_active_KTC)
 	// [SIERRA-EDIT]
