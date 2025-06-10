@@ -285,6 +285,11 @@
 		ui.open()
 		ui.set_auto_update(1)
 
+
+/obj/item/device/multitool/multimeter/datajack
+	name = "Datajack"
+
+
 /obj/item/organ/internal/shackles/CanUseTopic(mob/user)
 	if(owner)
 		if(user.Adjacent(owner) && user.stat != DEAD)

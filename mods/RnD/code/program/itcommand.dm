@@ -1,3 +1,5 @@
+#define regex_replace(RE, ARGS...) RE.Replace(ARGS)
+
 /// Shows and manipulates programs running on the computer
 /datum/terminal_command/prog
 	man_entry = list(
@@ -194,7 +196,7 @@
 	if(!NC)
 		return "[name]: unable to connect to the remote terminal"
 
-	if(!T?.len) return "[name]: error, not enough arguments."
+	if(!LAZYLEN(T)?.len) return "[name]: error, not enough arguments."
 	if(istype(terminal, /datum/terminal/remote)) return "[name] is not supported on remote terminals."
 
 	var/nid = T[1]
@@ -211,7 +213,7 @@
 	var/datum/computer_file/data/config/cfg_file = HDD.find_file_by_name("config")
 	if(cfg_file)
 		var/list/loginpassword = splittext(cfg_file.get_setting(MODULAR_CONFIG_REMCON_SETTING),"@")
-		if(loginpassword && loginpassword.len >= 2)
+		if(loginpassword && LAZYLEN(loginpassword) >= 2)
 			var/login = loginpassword[1]
 			var/password = loginpassword[2]
 			if(T[2] == login)
@@ -304,3 +306,5 @@
 
 	return "[name]: options not found."
 ///BATCH Compilator
+
+#undef regex_replace(RE, ARGS...) RE.Replace(ARGS)
