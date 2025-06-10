@@ -1,4 +1,6 @@
-// Strike/Expert Team stuff.
+/* FOUNDATION ARMOR AND FLUFF
+ * ========
+ */
 
 /obj/item/clothing/head/helmet/foundation
 	name = "\improper Strike Team helmet"
@@ -51,6 +53,10 @@
 /obj/item/clothing/under/color/black/foundation/disrupts_psionics()
 	return src
 
+/* FOUNDATION OUTFITS
+ * ========
+ */
+
 /singleton/hierarchy/outfit/foundation
 	name = "Cuchulain Foundation Agent"
 	glasses =  /obj/item/clothing/glasses/sunglasses
@@ -93,3 +99,47 @@
 	new /obj/item/ammo_magazine/smg_sol(src)
 	new /obj/item/ammo_magazine/smg_sol(src)
 	new /obj/item/grenade/chem_grenade/nullgas(src)
+
+/* FOUNDATION RIG
+ * ========
+ */
+
+/obj/item/rig/light/ninja/foundation
+	name = "white suit control module"
+	desc = "A light hardsuit with clad-white armor plating. The control panel marks it as a Hexenhammer C-8. It's marked with small pale-blue radiotelescope on side of the panel."
+	suit_type = "corporate"
+	icon_state = "corpo_rig"
+	online_slowdown = -1 ///speedster suit
+	armor = list(
+		melee = ARMOR_MELEE_RESISTANT,
+		bullet = ARMOR_BALLISTIC_RESISTANT,
+		laser = ARMOR_LASER_HANDGUNS,
+		energy = ARMOR_ENERGY_RESISTANT,
+		bomb = ARMOR_BOMB_PADDED,
+		bio = ARMOR_BIO_SHIELDED
+	)
+
+	chest_type = /obj/item/clothing/suit/space/rig/foundation
+	helm_type =  /obj/item/clothing/head/helmet/space/rig/foundation
+	boot_type =  /obj/item/clothing/shoes/magboots/rig/foundation
+	glove_type = /obj/item/clothing/gloves/rig/foundation
+
+	initial_modules = list(
+		/obj/item/rig_module/actuators,
+		/obj/item/rig_module/mounted/arm_blade,
+		/obj/item/rig_module/mounted/energy/ion,
+		/obj/item/rig_module/vision,
+		/obj/item/rig_module/chem_dispenser/ninja,
+		/obj/item/rig_module/voice,
+		/obj/item/rig_module/grenade_launcher/ninja,
+		/obj/item/rig_module/ai_container,
+		/obj/item/rig_module/power_sink,
+		/obj/item/rig_module/datajack,
+		/obj/item/rig_module/self_destruct,
+		/obj/item/rig_module/cooling_unit,
+		/obj/item/rig_module/maneuvering_jets
+		)
+
+// Silly copypaste due to complication of Hardsuit system and their unique helmet parent type
+
+/obj/item/clothing/head/helmet/space/rig/foundation
