@@ -210,6 +210,12 @@
 	if(!src.is_species(SPECIES_IPC))
 		to_chat(user, SPAN_WARNING("You can only use this on IPCs!"))
 		return
+	if(user.zone_sel.selecting != BP_CHEST)
+		return
+	var/obj/item/organ/external/S = src.get_organ(user.zone_sel.selecting)
+	if(!(S && BP_IS_ROBOTIC(S) && S.hatch_state == HATCH_OPENED))
+		to_chat(user, SPAN_WARNING("Mainteinence hatch must be opened!"))
+		return
 	if(!(user.skill_check(SKILL_COMPUTER, SKILL_TRAINED) || user.skill_check(SKILL_DEVICES, SKILL_TRAINED)))
 		to_chat(user, "You have no idea how to do that!")
 		return
@@ -219,14 +225,14 @@
 			to_chat(user, SPAN_WARNING("There is no schackles in the positronic brain!"))
 			return
 		if(do_after(user, 140, src))
+			sparks(3, 1, loc)
 			if(user.skill_check(SKILL_DEVICES, SKILL_EXPERIENCED))
 				if(do_after(user, 20, src))
 					to_chat(user, SPAN_WARNING("Finding weak access points..."))
-					sparks(user, 3, 1, get_turf(src))
+					sparks(3, 1, loc)
 			if(user.skill_check(SKILL_COMPUTER, SKILL_MASTER))
 				if(do_after(user, 30, src))
 					to_chat(user, SPAN_WARNING("Gettign backdoor access to the shackles..."))
-					sparks(user, 1, 1, get_turf(src))
 			s.shackles_module.update_laws()
 			s.shackles_module.ui_interact()
 			if(prob(20))
