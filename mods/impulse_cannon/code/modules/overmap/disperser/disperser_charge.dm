@@ -4,7 +4,7 @@
 	chargedesc = "NPLM"
 
 /obj/structure/ship_munition/disperser_charge/fire/military/fire(turf/target, strength, range, shield_active_EM, shield_active_KTC)
-    // Напалм не сработает, если активен кинетический щит
+	// Напалм не сработает, если активен кинетический щит
 	if(shield_active_KTC)
 		return
 	var/datum/reagent/napalm/napalm_liquid = new /datum/reagent/napalm
