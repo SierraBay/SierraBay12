@@ -1,0 +1,5 @@
+author: Cakey
+changes:
+  - {imageadd: Medals and ribbons can now be stacked on clothing and will offset
+      their sprites accordingly.}
+delete-after: true
