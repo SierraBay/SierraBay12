@@ -17,7 +17,8 @@
 	if(!NC)
 		return "[name]: unable to connect to the remote terminal"
 
-	if(!LAZYLEN(T)?.len) return "[name]: error, not enough arguments."
+	if(!LAZYLEN(T))
+		return "[name]: error, not enough arguments."
 	if(istype(terminal, /datum/terminal/remote)) return "[name] is not supported on remote terminals."
 
 	var/nid = T[1]
