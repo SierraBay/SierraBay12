@@ -9639,7 +9639,8 @@
 "MK" = (
 /obj/machinery/door/airlock/security{
 	name = "Security Lieutenant";
-	dir = 4
+	dir = 4;
+	req_access = list("ACCESS_PHOBOS_ARMORY")
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/phobos/security/detective)
@@ -9689,7 +9690,6 @@
 	dir = 8;
 	icon_state = "tube1"
 	},
-/obj/item/reagent_containers/food/snacks/meatsteak,
 /turf/simulated/floor/tiled/white/monotile,
 /area/ship/phobos/living/mess)
 "MW" = (
