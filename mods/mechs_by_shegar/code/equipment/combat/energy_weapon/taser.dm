@@ -11,9 +11,12 @@
 	use_external_power = TRUE
 	has_safety = FALSE
 	self_recharge = TRUE
-	burst = 3
-	burst_delay = 3
-	dispersion = list(-1.5,1,1.5)
+	burst = 1
+	projectile_type = /obj/item/projectile/beam/stun
+	firemodes = list(
+		list(mode_name="stun", projectile_type= /obj/item/projectile/beam/stun),
+		list(mode_name="shock", projectile_type= /obj/item/projectile/energy/electrode),
+		)
 
 
 /obj/item/mech_equipment/mounted_system/taser/need_combat_skill()
