@@ -93,7 +93,7 @@
 	projectile_type = /obj/item/projectile/bullet/rocket/pepper
 
 
-/obj/item/projectile/bullet/rocket/pepper/on_hit(atom/target)
+/obj/item/projectile/bullet/rocket/pepper/on_impact(atom/A)
 	var/obj/item/grenade/spawned_grenade = new /obj/item/grenade/chem_grenade/teargas(get_turf(src))
 	spawned_grenade.detonate()
 
@@ -112,7 +112,7 @@
 	caliber = CALIBER_ROCKETS
 	projectile_type = /obj/item/projectile/bullet/rocket/flashbang
 
-/obj/item/projectile/bullet/rocket/flashbang/on_hit(atom/target)
+/obj/item/projectile/bullet/rocket/flashbang/on_impact(atom/A)
 	var/obj/item/grenade/spawned_grenade = new /obj/item/grenade/flashbang(get_turf(src))
 	spawned_grenade.detonate()
 
@@ -131,7 +131,7 @@
 	caliber = CALIBER_ROCKETS
 	projectile_type = /obj/item/projectile/bullet/rocket/fire
 
-/obj/item/projectile/bullet/rocket/fire/on_hit(atom/target)
+/obj/item/projectile/bullet/rocket/fire/on_impact(atom/A)
 	for(var/turf/T in get_turfs_in_range(get_turf(src), 1))
 		new /obj/turf_fire/rocket_nalapm (T)
 	playsound(get_turf(src), 'mods/mechs_by_shegar/sounds/mech_grad_fire.ogg', 100, 0)
