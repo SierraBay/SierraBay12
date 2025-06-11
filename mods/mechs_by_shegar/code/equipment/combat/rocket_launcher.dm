@@ -48,7 +48,7 @@
 
 /obj/item/projectile/bullet/rocket/tracer_effect()
 	new /obj/temp_visual/rocket_smoke (get_turf(src))
-	
+
 
 //сам дымок
 /obj/temp_visual/rocket_smoke
@@ -138,3 +138,4 @@
 
 /obj/turf_fire/rocket_nalapm
 	fire_power = 50
+	interact_with_atmos = FALSE
