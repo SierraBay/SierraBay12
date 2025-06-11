@@ -28,10 +28,6 @@ ID мода: IMPULSE_CANNON
 
 - `code/modules/overmap/disperser/disperser_charge.dm`: 
 	`/obj/structure/ship_munition/disperser_charge/proc/fire`, 
-	`/obj/structure/ship_munition/disperser_charge/fire/fire(`,
-	`/obj/structure/ship_munition/disperser_charge/emp/fire`,
-	`/obj/structure/ship_munition/disperser_charge/mining/fire`,
-	`/obj/structure/ship_munition/disperser_charge/explosive/fire`,
 
 - `code/modules/overmap/disperser/disperser_console.dm` :
 	`/obj/machinery/computer/ship/disperser/`
@@ -58,6 +54,10 @@ ID мода: IMPULSE_CANNON
 	`/obj/structure/ship_munition/disperser_charge/emp/military/fire`,
 	`/obj/structure/ship_munition/disperser_charge/explosive/military`,
 	`/obj/structure/ship_munition/disperser_charge/explosive/military/fire`,
+  `/obj/structure/ship_munition/disperser_charge/fire/fire`,
+	`/obj/structure/ship_munition/disperser_charge/emp/fire`,
+	`/obj/structure/ship_munition/disperser_charge/mining/fire`,
+	`/obj/structure/ship_munition/disperser_charge/explosive/fire`,
 
 - `mods/impulse_cannon/code/modules/overmap/disperser/disperser_circuit.dm` : 
 	`/obj/item/stock_parts/circuitboard/disperser/military`
