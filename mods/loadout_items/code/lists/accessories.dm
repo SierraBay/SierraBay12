@@ -115,5 +115,7 @@
 	display_name = "KMS kneepads"
 	path = /obj/item/clothing/accessory/kms_kneepads
 	allowed_roles = list(/datum/job/doctor, /datum/job/doctor_trainee, /datum/job/officer)
-	/* allowed_branches = list(/datum/mil_branch/contractor)
-	allowed_factions = list(FACTION_KMS) */
+	/* 
+	allowed_branches = list(/datum/mil_branch/contractor)
+	allowed_factions = list(FACTION_KMS) 
+	*/
