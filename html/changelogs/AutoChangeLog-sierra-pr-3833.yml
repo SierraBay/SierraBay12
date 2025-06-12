@@ -1,5 +1,0 @@
-author: Cakey
-changes:
-  - {rscadd: Paint sprayers can now select to paint both primary and stripe 
-      layers for walls at the same time.}
-delete-after: true
