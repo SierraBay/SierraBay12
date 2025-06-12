@@ -9,6 +9,7 @@
 /obj/anomaly/electra
 	name = "Lightning strikes"
 	anomaly_tag = "Electra"
+	admin_name = "Электроаномалия"
 	with_sound = TRUE
 	sound_type = 'mods/anomaly/sounds/electra_blast.ogg'
 	activation_effect_type = "electra_activation"
@@ -94,7 +95,7 @@
 		return
 
 	var/create_line = FALSE //Если цель подходит под критерии удара, мы рисуем молнию
-	if(input_electra && !called_by_tesla)
+	if(input_electra && !called_by_tesla && istype(input_electra))
 		if(get_dist(input_electra, target) > 1.5)
 			if(!isliving(target) && !isitem(target) && !istype(target, /obj/structure/mech_wreckage) && !isaurora(target))
 				return

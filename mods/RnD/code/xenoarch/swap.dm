@@ -16,6 +16,8 @@
 
 
 /datum/artifact_effect/swap/proc/swap(mob/user)
+	if(!user)
+		return
 	if(world.time - last_swap > cooldown)
 		last_swap = world.time
 		var/weakness = GetAnomalySusceptibility(user)

@@ -1,6 +1,7 @@
 /obj/anomaly/circus
 	name = "Refractions of light"
 	anomaly_tag = "Circus"
+	admin_name = "Цирк"
 	with_sound = TRUE
 	sound_type = 'mods/anomaly/sounds/rvach_activation.ogg'
 	static_sound_type = 'mods/anomaly/sounds/gravi_idle.ogg'

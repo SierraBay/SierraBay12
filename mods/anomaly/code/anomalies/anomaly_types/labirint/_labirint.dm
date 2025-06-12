@@ -11,6 +11,7 @@
 	name = "Refractions of light"
 	anomaly_tag = "Labirint"
 	idle_effect_type = "labirint"
+	admin_name = "Лабиринт"
 	effect_type = MOMENTUM_ANOMALY_EFFECT
 	multitile = TRUE
 	min_x_size = 5

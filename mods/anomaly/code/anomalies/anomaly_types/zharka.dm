@@ -1,6 +1,7 @@
 /obj/anomaly/zharka
 	name = "Jet of flame"
 	anomaly_tag = "Zharka"
+	admin_name = "Жарка"
 	with_sound = TRUE
 	sound_type = 'mods/anomaly/sounds/zharka.ogg'
 	idle_effect_type = "zharka_idle"

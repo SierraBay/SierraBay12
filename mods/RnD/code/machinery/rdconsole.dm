@@ -481,7 +481,12 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 					))
 
 				// This calculates how much research points we missed because we already researched items with such orig_tech levels
-				var/tech_points_mod = files.experiments.get_object_research_value(linked_destroy.loaded_item) / files.experiments.get_object_research_value(linked_destroy.loaded_item, ignoreRepeat = TRUE)
+				var/denominator = files.experiments.get_object_research_value(linked_destroy.loaded_item, ignoreRepeat = TRUE)
+				var/tech_points_mod
+				if(denominator)
+					tech_points_mod = files.experiments.get_object_research_value(linked_destroy.loaded_item) / denominator
+				else
+					tech_points_mod = 1
 
 				var/list/destroy_list = list(
 					"has_item" =              TRUE,

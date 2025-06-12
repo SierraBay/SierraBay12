@@ -6,6 +6,10 @@
 	wall_icon_base = "solid"
 	door_icon_base = "plastic"
 	wall_icon_reinf = "reinf_over"
+	wall_blend_icons = list(
+		"wood" = TRUE,
+		"stone" = TRUE
+	)
 	icon_colour = COLOR_WHITE
 	hardness = MATERIAL_FLEXIBLE
 	weight = 5
@@ -36,6 +40,11 @@
 	sheet_icon_base = "sheet-card"
 	wall_icon_base = "solid"
 	wall_icon_reinf = "reinf_over"
+	wall_flags = MATERIAL_PAINTABLE_MAIN|MATERIAL_PAINTABLE_STRIPE|MATERIAL_WALL_HAS_EDGES
+	wall_blend_icons = list(
+		"wood" = TRUE,
+		"stone" = TRUE
+	)
 	icon_colour = "#aaaaaa"
 	hardness = MATERIAL_SOFT
 	brute_armor = 1
@@ -64,12 +73,6 @@
 	stack_type = /obj/item/stack/material/cloth
 	hidden_from_codex = TRUE
 	construction_difficulty = MATERIAL_NORMAL_DIY
-	// [SIERRA-ADD]
-	value = 3
-	integrity = 50
-	hardness = MATERIAL_FLEXIBLE
-	weight = 10
-	// [/SIERRA-ADD]
 
 /material/cloth/carpet
 	name = "carpet"
@@ -314,6 +317,14 @@
 	display_name = "organic material"
 	sheet_icon_base = "skin"
 	wall_icon_base = "cult"
+	wall_flags = FLAGS_OFF
+	wall_blend_icons = list(
+		"solid" = TRUE,
+		"wood" = TRUE,
+		"metal" = TRUE,
+		"stone" = TRUE
+	)
+	wall_flags = FLAGS_OFF
 	door_icon_base = "cult"
 	table_icon_base = "cult"
 	wall_icon_reinf = "reinf_cult"

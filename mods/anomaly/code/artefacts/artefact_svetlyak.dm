@@ -2,6 +2,7 @@
 	name = "Something"
 	desc = "Безумно яркий, даже думать о том чтоб посмотреть на него подольше вызываем неприятное чувство."
 	icon_state = "svetlyak"
+	admin_name = "Дух-Светляк"
 	rect_to_interactions = list(
 		"Lick",
 		"Shake",

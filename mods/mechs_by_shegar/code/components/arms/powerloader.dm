@@ -11,7 +11,6 @@
 	max_repair = 30
 	melee_damage = 30
 	repair_damage = 5
-	back_modificator_damage = 1.3
 	front_modificator_damage = 1
 	max_heat = 50
 	heat_cooling = 3.5

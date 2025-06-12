@@ -23,3 +23,7 @@
 	if(airflow_suspended)
 		SSairflow.wake()
 		airflow_suspended = FALSE
+
+
+/area/shuttle/escape_pod
+	name = "Escape Pod"
