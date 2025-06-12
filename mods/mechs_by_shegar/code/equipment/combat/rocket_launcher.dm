@@ -8,6 +8,7 @@
 	restricted_hardpoints = list(HARDPOINT_LEFT_SHOULDER, HARDPOINT_RIGHT_SHOULDER)
 
 /obj/item/gun/projectile/automatic/rocket_launcher
+	name = "GRAD"
 	has_safety = FALSE
 	ammo_type = /obj/item/ammo_casing/rocket/mech
 	magazine_type = /obj/item/ammo_magazine/rockets_casing
@@ -20,7 +21,7 @@
 	mode_name="semi auto",       burst=1, fire_delay=null,    move_delay=null, one_hand_penalty=0, burst_accuracy=null, dispersion=null,
 	)
 
-//Разрывной (ФУГАС)
+//Общий вид ракет
 /obj/item/ammo_magazine/rockets_casing
 	name = "rockets casing"
 	icon = 'mods/mechs_by_shegar/icons/ammo.dmi'
@@ -39,15 +40,45 @@
 	projectile_type = /obj/item/projectile/bullet/rocket
 
 /obj/item/projectile/bullet/rocket
+	name = "GRAD rocket"
 	icon = 'mods/mechs_by_shegar/icons/ammo.dmi'
 	icon_state = "missile"
+	fire_sound = 'mods/mechs_by_shegar/sounds/mech_grad.ogg'
+	damage = 0 //Ракеты не должны дамажить от прямой наводки
 
-	name = "minirocket"
-	fire_sound = 'sound/effects/Explosion1.ogg'
+/obj/item/projectile/bullet/rocket/tracer_effect()
+	new /obj/temp_visual/rocket_smoke (get_turf(src))
+	
 
-/obj/item/projectile/bullet/rocket/on_hit(atom/target)
+//сам дымок
+/obj/temp_visual/rocket_smoke
+	icon = 'mods/mechs_by_shegar/icons/mech_rocket_smoke.dmi'
+	icon_state = "smoke"
+	duration = 1.5 SECONDS
+
+//Фугас
+/obj/item/ammo_magazine/rockets_casing/fugas
+	name = "rockets casing"
+	icon = 'mods/mechs_by_shegar/icons/ammo.dmi'
+	icon_state = "rockets_casing"
+	origin_tech = list(TECH_COMBAT = 4)
+	mag_type = SPEEDLOADER
+	caliber = CALIBER_ROCKETS
+	matter = list(MATERIAL_STEEL = 2000)
+	ammo_type = /obj/item/ammo_casing/rocket/mech
+	max_ammo = 4
+
+
+/obj/item/ammo_casing/rocket/mech/fugas
+	icon = 'mods/mechs_by_shegar/icons/ammo.dmi'
+	icon_state = "rockets"
+	caliber = CALIBER_ROCKETS
+	projectile_type = /obj/item/projectile/bullet/rocket/fugas
+
+/obj/item/projectile/bullet/rocket/fugas/on_hit(atom/target)
 	explosion(src, 3, EX_ACT_LIGHT)
 	..()
+
 
 
 //Перчик
@@ -61,9 +92,14 @@
 	caliber = CALIBER_ROCKETS
 	projectile_type = /obj/item/projectile/bullet/rocket/pepper
 
+
 /obj/item/projectile/bullet/rocket/pepper/on_hit(atom/target)
 	var/obj/item/grenade/spawned_grenade = new /obj/item/grenade/chem_grenade/teargas(get_turf(src))
 	spawned_grenade.detonate()
+
+
+
+
 
 //Вспышка
 /obj/item/ammo_magazine/rockets_casing/flashbang
@@ -81,6 +117,9 @@
 	spawned_grenade.detonate()
 
 
+
+
+
 //Зажигательная
 /obj/item/ammo_magazine/rockets_casing/fire
 	name = "incendiary rockets pack"
@@ -95,6 +134,7 @@
 /obj/item/projectile/bullet/rocket/fire/on_hit(atom/target)
 	for(var/turf/T in get_turfs_in_range(get_turf(src), 1))
 		new /obj/turf_fire/rocket_nalapm (T)
+	playsound(get_turf(src), 'mods/mechs_by_shegar/sounds/mech_grad_fire.ogg', 100, 0)
 
 /obj/turf_fire/rocket_nalapm
 	fire_power = 50

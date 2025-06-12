@@ -11,7 +11,6 @@
 	min_damage = 100
 	max_repair = 60
 	repair_damage = 20
-	back_modificator_damage = 1.3
 	front_modificator_damage = 1
 	max_heat = 200
 	heat_cooling = 8

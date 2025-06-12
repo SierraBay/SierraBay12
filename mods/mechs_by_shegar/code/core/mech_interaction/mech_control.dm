@@ -113,6 +113,9 @@
 //Задача функции сменить хардпоинт на левый или правый в зависимости от текущего состояния
 /mob/living/exosuit/proc/handle_right_and_left_click(mouse_type)
 	var/obj/screen/movable/exosuit/hardpoint = hardpoint_hud_elements[selected_hardpoint]
+	if(!hardpoint) //Никакой модуль не выбран, тобишь мех хочет использовать лапы
+		hardpoint = hardpoint_hud_elements[selected_hardpoint]
+		return
 	var/obj/screen/movable/exosuit/hardpoint/previous_hardpoint = hardpoint
 	if(mouse_type == "left")
 		if(!selected_hardpoint)
@@ -192,13 +195,10 @@
 
 	var/adj = click_target.Adjacent(src)
 	var/resolved
-	//if(adj)
-	resolved = temp_system.resolve_attackby(click_target, src)
+	if(adj)
+		resolved = temp_system.resolve_attackby(click_target, src)
 	if(!resolved && click_target && temp_system)
-		var/mob/ruser = src
-		if(!system_moved) //It's more useful to pass along clicker pilot when logic is fully mechside
-			ruser = pilot
-			temp_system.afterattack(click_target,ruser,adj)
+		temp_system.afterattack(click_target, src, adj)
 	if(system_moved) //We are using a proxy system that may not have logging like mech equipment does
 		admin_attack_log(pilot, click_target, "Attacked using \a [temp_system] (MECH)", "Was attacked with \a [temp_system] (MECH)", "used \a [temp_system] (MECH) to attack")
 	//Mech equipment subtypes can add further click delays

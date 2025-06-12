@@ -27,3 +27,38 @@
 	glasses["monocle"] = /obj/item/clothing/glasses/monocle
 	glasses["scanning goggles"] = /obj/item/clothing/glasses/scanners
 	gear_tweaks += new/datum/gear_tweak/path(glasses)
+
+/datum/gear/eyes/ballisticsreal
+	display_name = "ballistic googles, selection"
+	path = /obj/item/clothing/glasses
+
+/datum/gear/eyes/ballisticsreal/New()
+	..()
+	var/list/options = list()
+	options["ballistic goggles"] = /obj/item/clothing/glasses/ballistic
+	options["ballistic googles, corrective"] = /obj/item/clothing/glasses/ballistic/prescription
+	gear_tweaks += new /datum/gear_tweak/path (options)
+	cost = 3
+
+/datum/gear/eyes/ballisticsmodsec
+	display_name = "ballistics googles attachment, Sec HUD"
+	path = /obj/item/clothing/accessory/glassesmod/hud/security
+	allowed_roles = SECURITY_ROLES
+	cost = 1
+
+/datum/gear/eyes/ballisticsmodmed
+	display_name = "ballistics googles attachment, Med HUD"
+	path = /obj/item/clothing/accessory/glassesmod/hud/medical
+	allowed_roles = list(MEDICAL_ROLES, /datum/job/explorer_medic)
+	cost = 1
+
+/datum/gear/eyes/ballisticsmodpolarized
+	display_name = "ballistics googles attachment, polarized filter"
+	path = /obj/item/clothing/accessory/glassesmod/vision/polarized
+	allowed_roles = SECURITY_ROLES
+	cost = 1
+
+/datum/gear/eyes/ballisticsmodwelding
+	display_name = "ballistics googles attachment, welding filter"
+	path = /obj/item/clothing/accessory/glassesmod/vision/welding
+	cost = 1
