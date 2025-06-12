@@ -9,5 +9,5 @@
 /datum/gear/tactical/kms_pcarrier
 	display_name = "EMT plate carrier"
 	path = /obj/item/clothing/suit/armor/pcarrier/kms
-/* 	allowed_branches = list(/datum/mil_branch/contractor)
-	allowed_factions = list(FACTION_KMS) */
+	allowed_branches = list(/datum/mil_branch/contractor)
+	allowed_factions = list(FACTION_KMS)

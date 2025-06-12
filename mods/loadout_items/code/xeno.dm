@@ -167,7 +167,7 @@
 	item_state = "skrellian_divingsuit_s"
 	worn_state = "skrellian_divingsuit"
 
-/* /obj/item/clothing/under/resomi_kms_uniform
+/obj/item/clothing/under/resomi_kms_uniform
 	name = "KMS utility uniform"
 	desc = "Fitted utility uniform for a few resomi, who have been recruited to the organisation"
 	icon = 'mods/loadout_items/icons/resomi/obj_resomi_under.dmi'
@@ -177,4 +177,4 @@
 	worn_state = "resomi_kms_uniform"
 	species_restricted = list(SPECIES_RESOMI)
 	sprite_sheets = list(SPECIES_RESOMI = 'mods/loadout_items/icons/resomi/onmob_resomi_under.dmi')
-	sprite_sheets_obj = list(SPECIES_RESOMI = 'mods/loadout_items/icons/resomi/onmob_resomi_under.dmi') */
+	sprite_sheets_obj = list(SPECIES_RESOMI = 'mods/loadout_items/icons/resomi/onmob_resomi_under.dmi')
