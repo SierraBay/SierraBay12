@@ -34,7 +34,7 @@
 	if(.)
 
 		var/distance = get_dist(user, target)
-		if(distance > user.psi.get_rank(PSI_PSYCHOKINESIS) + 2)
+		if(distance > user.psi.get_rank(PSI_PSYCHOKINESIS) * 3)
 			to_chat(user, "<span class='warning'>Ваших сил недостаточно, чтобы достать до этого объекта.</span>")
 			return FALSE
 

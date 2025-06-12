@@ -473,6 +473,9 @@
 		sleep(1)
 	previousturf = null
 
+/obj/item/psychic_power/psifire/proc/remove_fuel()
+	return
+
 ///ICE ORB///
 
 //ATOM related things, that cannot be putted in orb itself

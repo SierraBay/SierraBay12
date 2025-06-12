@@ -1,13 +1,14 @@
 /datum/event/minispasm
 	var/alarm_sound = 'packs/infinity/sound/misc/foundation_alarm.ogg'
+	var/end_sound = 'packs/infinity/sound/misc/foundation_restore.ogg'
 
 /datum/event/minispasm/announce()
 	priority_announcement.Announce( \
-		"PRIORITY ALERT: SIGMA-[rand(50,80)] PSIONIC SIGNAL LOCAL TRAMISSION DETECTED (97% MATCH, NONVARIANT) \
-		(SIGNAL SOURCE TRIANGULATED ADJACENT LOCAL SITE): All personnel are advised to avoid \
-		exposure to active audio transmission equipment including radio headsets and intercoms \
-		for the duration of the signal broadcast.", \
-		"Cuchulain Sensor Array Automated Message" \
+		"ПРИОРИТЕТНОЕ ОПОВЕЩЕНИЕ: Ф-[rand(50,80)] ОБНАРУЖЕНА ЛОКАЛЬНАЯ ПЕРЕДАЧА ПСИОНИЧЕСКОГО СИГНАЛА ([rand(70,100)]% СОВПАДЕНИЕ) \
+		(ИСТОЧНИК СИГНАЛА ТРИАНГУЛИРОВАН — СОСЕДНИЙ МЕСТНЫЙ УЧАСТОК): Всем сотрудникам рекомендуется избегать \
+		воздействия активного аудиопередающего оборудования, включая радиогарнитуры и переговорные устройства \
+		на время трансляции сигнала.", \
+		"Автоматическое сообщение массива датчиков Фонда Кухулин" \
 	)
 	sound_to(world, sound(alarm_sound))
 
@@ -25,10 +26,9 @@
 
 /datum/event/minispasm/end()
 	priority_announcement.Announce( \
-		"PRIORITY ALERT: SIGNAL BROADCAST HAS CEASED. Personnel are cleared to resume use of non-hardened radio transmission equipment. Have a nice day.", \
-		"Cuchulain Sensor Array Automated Message")
-	var/new_sound = 'packs/infinity/sound/misc/foundation_restore.ogg'
-	sound_to(world, sound(new_sound))
+		"ПРИОРИТЕТНОЕ ОПОВЕЩЕНИЕ: ТРАНСЛЯЦИЯ СИГНАЛА ПРЕКРАЩЕНА. Персоналу разрешено возобновить использование незащищенного радиопередающего оборудования. Хорошего дня.", \
+		"Автоматическое сообщение массива датчиков Фонда Кухулин" )
+	sound_to(world, sound(end_sound))
 
 /datum/event/minispasm/do_spasm(mob/living/victim, obj/item/device/radio/source)
 	set waitfor = 0
