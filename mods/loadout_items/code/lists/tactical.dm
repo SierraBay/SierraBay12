@@ -3,12 +3,13 @@
 /datum/gear/gloves/kms_gloves
 	display_name = "KMS duty gloves"
 	path = /obj/item/clothing/gloves/kms
-	allowed_branches = list(/datum/mil_branch/contractor)
-	allowed_factions = list(FACTION_KMS)
+	allowed_roles = list(/datum/job/doctor, /datum/job/doctor_trainee, /datum/job/officer)
+	/* allowed_branches = list(/datum/mil_branch/contractor)
+	allowed_factions = list(FACTION_KMS) */
 
 /datum/gear/tactical/kms_pcarrier
 	display_name = "EMT plate carrier"
 	path = /obj/item/clothing/suit/armor/pcarrier/kms
 	allowed_roles = list(/datum/job/doctor, /datum/job/doctor_trainee, /datum/job/officer)
-	/* allowed_branches = list(/datum/mil_branch/contractor)
+/* 	allowed_branches = list(/datum/mil_branch/contractor)
 	allowed_factions = list(FACTION_KMS) */
