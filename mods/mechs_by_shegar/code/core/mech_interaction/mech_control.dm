@@ -195,7 +195,7 @@
 
 	var/adj = click_target.Adjacent(src)
 	var/resolved
-	if(adj)
+	if(adj && !ME.have_specific_melee_attack())
 		resolved = temp_system.resolve_attackby(click_target, src)
 	if(!resolved && click_target && temp_system)
 		temp_system.afterattack(click_target, src, adj)

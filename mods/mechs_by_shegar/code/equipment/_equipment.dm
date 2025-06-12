@@ -38,7 +38,12 @@
 		var/obj/structure/heavy_vehicle_frame/input_frame = over_atom
 		input_frame.use_tool(src, usr)
 
+///Требуется ли скилл БОЕВОЙ ОПЫТ в пилотировании мехов чтоб использовать этот модуль
 /obj/item/mech_equipment/proc/need_combat_skill()
+	return FALSE
+
+///Некоторые модули могут по своему реагировать на ближнюю атаку, например железный щит
+/obj/item/mech_equipment/proc/have_specific_melee_attack()
 	return FALSE
 
 /obj/item/mech_equipment/afterattack(atom/target, mob/living/user, inrange, params)
