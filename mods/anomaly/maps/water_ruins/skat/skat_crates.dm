@@ -13,16 +13,8 @@
 /obj/landmark/titan_crate
 	name = "Random titan crate"
 	icon = 'mods/anomaly/icons/titan_crates.dmi'
-	icon_state = "classic"
-	var/list/possible_crates = list(
-		/obj/structure/titan_largecrate = 1,
-		/obj/structure/titan_largecrate/energizer = 2,
-		/obj/structure/titan_largecrate/medical = 2,
-		/obj/structure/titan_largecrate/materials = 5,
-		/obj/structure/titan_largecrate/food = 6,
-		/obj/structure/titan_largecrate/food/mre = 5,
-		/obj/structure/titan_largecrate/energizer/toolz = 3
-	)
+	icon_state = "weak_crate"
+	var/list/possible_crates = list()
 
 /obj/landmark/titan_crate/Initialize()
 	. = ..()
@@ -43,24 +35,7 @@
 	var/see_throught_after_open = TRUE //Прозрачен после своего раскрытия
 	opacity = TRUE
 	density = TRUE
-	var/list/spawn_contents = list(
-		/obj/item/reagent_containers/food/snacks/candy/shegolad,
-		/obj/item/reagent_containers/food/snacks/candy/shegolad,
-		/obj/item/reagent_containers/food/snacks/candy/shegolad,
-		/obj/item/reagent_containers/food/snacks/candy/shegolad,
-		/obj/item/reagent_containers/food/snacks/candy/shegolad,
-		/obj/item/reagent_containers/food/snacks/candy/shegolad,
-		/obj/item/reagent_containers/food/snacks/candy/shegolad,
-		/obj/item/reagent_containers/food/snacks/candy/shegolad,
-		/obj/item/reagent_containers/food/snacks/candy/shegolad,
-		/obj/item/reagent_containers/food/snacks/candy/shegolad,
-		/obj/item/reagent_containers/food/snacks/candy/shegolad,
-		/obj/item/reagent_containers/food/snacks/candy/shegolad,
-		/obj/item/reagent_containers/food/snacks/candy/shegolad,
-		/obj/item/reagent_containers/food/snacks/candy/shegolad,
-		/obj/item/reagent_containers/food/snacks/candy/shegolad,
-		/obj/item/stack/material/wood/maple
-	)
+	var/list/spawn_contents = list()
 
 /obj/structure/titan_largecrate/Initialize()
 	. = ..()
@@ -88,11 +63,57 @@
 	if(see_throught_after_open)
 		opacity = FALSE
 
+/obj/structure/titan_largecrate/shegolad
+	icon_state = "straped_closed"
+	open_case_sound = 'mods/anomaly/sounds/crates/wood_sound.ogg'
+	spawn_contents = list(
+		/obj/item/reagent_containers/food/snacks/candy/shegolad,
+		/obj/item/reagent_containers/food/snacks/candy/shegolad,
+		/obj/item/reagent_containers/food/snacks/candy/shegolad,
+		/obj/item/reagent_containers/food/snacks/candy/shegolad,
+		/obj/item/reagent_containers/food/snacks/candy/shegolad,
+		/obj/item/reagent_containers/food/snacks/candy/shegolad,
+		/obj/item/reagent_containers/food/snacks/candy/shegolad,
+		/obj/item/reagent_containers/food/snacks/candy/shegolad,
+		/obj/item/reagent_containers/food/snacks/candy/shegolad,
+		/obj/item/reagent_containers/food/snacks/candy/shegolad,
+		/obj/item/reagent_containers/food/snacks/candy/shegolad,
+		/obj/item/reagent_containers/food/snacks/candy/shegolad,
+		/obj/item/reagent_containers/food/snacks/candy/shegolad,
+		/obj/item/reagent_containers/food/snacks/candy/shegolad,
+		/obj/item/reagent_containers/food/snacks/candy/shegolad,
+		/obj/item/stack/material/wood/maple
+	)
 
 /obj/structure/titan_largecrate/energizer
 	icon_state = "power_closed"
 	destroyed_icon_state = "power_open"
 	open_case_sound = 'mods/anomaly/sounds/crates/metal_sound.ogg'
+	spawn_contents = list(
+		/obj/item/cell/standard,
+		/obj/item/cell/standard,
+		/obj/item/cell/standard,
+		/obj/item/cell/standard,
+		/obj/item/cell/standard,
+		/obj/item/cell/high,
+		/obj/item/cell/high,
+		/obj/item/cell/high,
+		/obj/item/cell/high,
+		/obj/item/cell/high
+	)
+
+
+/obj/structure/titan_largecrate/energizer/rich
+	spawn_contents = list(
+		/obj/item/cell/hyper,
+		/obj/item/cell/hyper,
+		/obj/item/cell/hyper,
+		/obj/item/cell/hyper,
+		/obj/item/cell/hyper,
+		/obj/item/cell/hyper
+	)
+
+/obj/structure/titan_largecrate/energizer/mega_rich
 	spawn_contents = list(
 		/obj/item/cell/hyper,
 		/obj/item/cell/hyper,
@@ -115,16 +136,74 @@
 		/obj/item/wrench,
 		/obj/item/wirecutters,
 		/obj/item/wirecutters,
+		/obj/item/weldingtool,
+		/obj/item/weldingtool
+	)
+
+/obj/structure/titan_largecrate/energizer/toolz/rich
+	spawn_contents = list(
+		/obj/item/crowbar,
+		/obj/item/crowbar,
+		/obj/item/screwdriver,
+		/obj/item/screwdriver,
+		/obj/item/wrench,
+		/obj/item/wrench,
+		/obj/item/wirecutters,
+		/obj/item/wirecutters,
 		/obj/item/swapper/power_drill,
 		/obj/item/swapper/power_drill,
 		/obj/item/weldingtool/electric,
-		/obj/item/weldingtool/electric
+		/obj/item/weldingtool/electric,
+		/obj/item/rcd,
+		/obj/item/rcd,
+		/obj/item/rcd_ammo,
+		/obj/item/rcd_ammo
 	)
 
 /obj/structure/titan_largecrate/medical
 	icon_state = "medical_closed"
 	destroyed_icon_state = "medical_open"
 	open_case_sound = 'mods/anomaly/sounds/crates/metal_sound.ogg'
+
+/obj/structure/titan_largecrate/medical/bags
+	spawn_contents = list(
+		/obj/item/bodybag/rescue,
+		/obj/item/bodybag/rescue,
+		/obj/item/bodybag/rescue,
+		/obj/item/bodybag/rescue,
+		/obj/item/bodybag/rescue
+	)
+
+/obj/structure/titan_largecrate/medical/spays
+	spawn_contents = list(
+		/obj/item/stack/medical/ointment,
+		/obj/item/stack/medical/ointment,
+		/obj/item/stack/medical/ointment,
+		/obj/item/stack/medical/ointment,
+		/obj/item/stack/medical/ointment,
+		/obj/item/stack/medical/ointment,
+		/obj/item/stack/medical/ointment,
+		/obj/item/stack/medical/ointment,
+		/obj/item/stack/medical/ointment,
+		/obj/item/stack/medical/ointment
+	)
+
+/obj/structure/titan_largecrate/medical/bandages
+	spawn_contents = list(
+		/obj/item/stack/medical/bruise_pack,
+		/obj/item/stack/medical/bruise_pack,
+		/obj/item/stack/medical/bruise_pack,
+		/obj/item/stack/medical/bruise_pack,
+		/obj/item/stack/medical/bruise_pack,
+		/obj/item/stack/medical/bruise_pack,
+		/obj/item/stack/medical/bruise_pack,
+		/obj/item/stack/medical/bruise_pack,
+		/obj/item/stack/medical/bruise_pack,
+		/obj/item/stack/medical/bruise_pack,
+		/obj/item/stack/medical/bruise_pack
+	)
+
+/obj/structure/titan_largecrate/medical/rich
 	spawn_contents = list(
 		/obj/item/storage/firstaid/combat,
 		/obj/item/storage/firstaid/sleekstab,
@@ -147,6 +226,22 @@
 		/obj/item/stack/material/marble/fifty,
 		/obj/item/stack/material/plasteel/fifty,
 		/obj/item/stack/material/titanium/fifty
+	)
+
+/obj/structure/titan_largecrate/materials/wood
+	spawn_contents = list(
+		/obj/item/stack/material/wood/fifty,
+		/obj/item/stack/material/wood/fifty,
+		/obj/item/stack/material/wood/fifty,
+		/obj/item/stack/material/wood/fifty
+	)
+
+/obj/structure/titan_largecrate/materials/rich
+	spawn_contents = list(
+		/obj/item/stack/material/silver/ten,
+		/obj/item/stack/material/gold/ten,
+		/obj/item/stack/material/diamond/ten,
+		/obj/item/stack/material/phoron/ten
 	)
 
 /obj/structure/titan_largecrate/food
@@ -177,3 +272,28 @@
 		/obj/item/storage/mre/menu9,
 		/obj/item/storage/mre/menu10,
 		/obj/item/stack/material/wood/maple)
+
+//Ящики для 2-го этажа, тобишь слабые
+/obj/landmark/titan_crate/weak_crate
+	icon_state = "weak_crate"
+	possible_crates = list(
+		/obj/structure/titan_largecrate/shegolad = 1,
+		/obj/structure/titan_largecrate/energizer = 1,
+		/obj/structure/titan_largecrate/medical/bags = 1,
+		/obj/structure/titan_largecrate/medical/spays = 1,
+		/obj/structure/titan_largecrate/medical/bandages = 1,
+		/obj/structure/titan_largecrate/materials = 1,
+		/obj/structure/titan_largecrate/materials/wood = 1,
+		/obj/structure/titan_largecrate/food = 1,
+		/obj/structure/titan_largecrate/food/mre = 1,
+		/obj/structure/titan_largecrate/energizer/toolz = 1
+	)
+
+/obj/landmark/titan_crate/rare_crate
+	icon_state = "rare_crate"
+	possible_crates = list(
+		/obj/structure/titan_largecrate/energizer/rich = 1,
+		/obj/structure/titan_largecrate/energizer/mega_rich = 1,
+		/obj/structure/titan_largecrate/materials/rich = 1,
+		/obj/structure/titan_largecrate/energizer/toolz/rich = 1
+	)

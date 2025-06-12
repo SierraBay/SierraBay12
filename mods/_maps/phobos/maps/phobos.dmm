@@ -813,14 +813,12 @@
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/phobos/bridge)
 "ci" = (
-/obj/structure/table/steel_reinforced,
-/obj/item/storage/pill_bottle/assorted,
 /obj/machinery/recharger/wallcharger{
 	pixel_x = 0;
 	pixel_y = 24
 	},
-/obj/item/tableflag,
 /obj/floor_decal/industrial/outline/yellow,
+/obj/machinery/radio_beacon,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/phobos/bridge)
 "cj" = (
@@ -910,17 +908,12 @@
 	icon_state = "comfychair_preview"
 	},
 /obj/floor_decal/corner/blue/diagonal,
-/turf/simulated/floor/tiled/dark,
-/area/ship/phobos/bridge)
-"cs" = (
 /obj/machinery/button/blast_door{
 	desc = "It controls sensors blast doors, remotely.";
 	id_tag = "phobos_sensors_58";
 	name = "Sensor Shroud Control";
-	pixel_x = -5;
-	pixel_y = 28
+	pixel_x = -30
 	},
-/obj/floor_decal/corner/blue/diagonal,
 /turf/simulated/floor/tiled/dark,
 /area/ship/phobos/bridge)
 "ct" = (
@@ -5077,10 +5070,10 @@
 /turf/simulated/floor/tiled,
 /area/ship/phobos/hallway)
 "sG" = (
+/obj/paint/red,
 /obj/machinery/atmospherics/unary/engine{
 	dir = 8
 	},
-/obj/paint/red,
 /turf/simulated/wall/r_wall/hull,
 /area/ship/phobos/engine/thrusterstarboard)
 "sH" = (
@@ -5290,10 +5283,10 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/phobos/ven)
 "tH" = (
+/obj/paint/red,
 /obj/machinery/atmospherics/unary/engine{
 	dir = 8
 	},
-/obj/paint/red,
 /turf/simulated/wall/r_wall/hull,
 /area/ship/phobos/engine/thrusterport)
 "tP" = (
@@ -7796,6 +7789,7 @@
 /obj/item/clothing/accessory/helmet_cover/navy,
 /obj/item/clothing/accessory/solgov/fleet_patch/third,
 /obj/item/storage/belt/utility/full,
+/obj/structure/table/steel_reinforced,
 /turf/simulated/floor/tiled/steel_grid,
 /area/ship/phobos/engine)
 "ED" = (
@@ -7914,6 +7908,7 @@
 /obj/item/clothing/accessory/helmet_cover/navy,
 /obj/item/clothing/accessory/solgov/fleet_patch/third,
 /obj/item/storage/belt/utility/full,
+/obj/structure/table/steel_reinforced,
 /turf/simulated/floor/tiled/steel_grid,
 /area/ship/phobos/engine)
 "Fo" = (
@@ -9447,6 +9442,7 @@
 /obj/item/storage/slide_projector,
 /obj/random/powercell,
 /obj/floor_decal/industrial/outline/yellow,
+/obj/item/tableflag,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/phobos/bridge)
 "Mb" = (
@@ -9689,7 +9685,6 @@
 	dir = 8;
 	icon_state = "tube1"
 	},
-/obj/item/reagent_containers/food/snacks/meatsteak,
 /turf/simulated/floor/tiled/white/monotile,
 /area/ship/phobos/living/mess)
 "MW" = (
@@ -19805,7 +19800,7 @@ bb
 bb
 bb
 ci
-cs
+ct
 jx
 dh
 dG
