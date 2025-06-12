@@ -211,34 +211,6 @@
 						E.droplimb(0,DROPLIMB_BLUNT)
 						new /obj/temporary(get_turf(target),8, 'icons/effects/effects.dmi', "pink_sparkles")
 
-/* КОДЕР ХУЕСОС
-								// Remove all stumps first
-								for(var/O in target.organs_by_name)
-									var/obj/item/organ/external/S = target.organs_by_name[O]
-									if(S.is_stump())
-										target.visible_message(SPAN_WARNING("[S.name] рассыпается, а на его месте начинает формироваться нечто новое..."))
-										qdel(S)
-								var/list/missing_limbs = target.species.has_limbs - target.organs_by_name
-								if(do_after(user, 30))
-									if(!LAZYLEN(missing_limbs))
-										return
-									var/o_type = pick(missing_limbs)
-									new /obj/temporary(get_turf(target),8, 'icons/effects/effects.dmi', "pink_sparkles")
-									missing_limbs -= o_type
-									var/limb_type = target.species.has_limbs[o_type]["path"]
-									var/obj/new_limb = new limb_type(target)
-									target.visible_message(SPAN_DANGER("Место на теле [target], где раньше был лишь обрубок - внезапно начинает формировать новую [new_limb.name]!"))
-									user.visible_message(SPAN_DANGER("[user] выглядит крайне обессиленным."))
-									if(!user.skill_check(SKILL_ANATOMY, SKILL_TRAINED) || !user.skill_check(SKILL_MEDICAL, SKILL_BASIC))
-										if(prob(60))
-											var/limb = pick(BP_L_LEG,BP_R_LEG, BP_L_HAND, BP_R_HAND)
-											to_chat(user, SPAN_WARNING("Ваша некомпетентность привела к тому, что во время восстановления [new_limb.name] вы повредили свою руку!"))
-											user.apply_damage(80,DAMAGE_BRUTE,limb)
-											// limb.mutate() -- придумать
-									user.adjustBruteLoss(rand(30,40))
-									user.psi.spend_power(30)
-*/
-
 		if(option == "Органы")
 			if(red_rank < PSI_RANK_MASTER)
 				to_chat(user, SPAN_WARNING("Ваших сил недостаточно для проведения этой операции!"))
