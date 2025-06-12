@@ -11,6 +11,9 @@
 	origin_tech = list(TECH_MAGNET = 2, TECH_COMBAT = 2)
 	heat_generation = 15
 
+/obj/item/mech_equipment/flash/have_specific_melee_attack()
+	return TRUE
+
 /obj/item/mech_equipment/flash/proc/area_flash()
 	playsound(src.loc, 'sound/weapons/flash.ogg', 100, 1)
 	var/flash_time = (rand(flash_min,flash_max) - 1)
