@@ -5,6 +5,7 @@
 /obj/item/rig/light/ninja/foundation
 	name = "white suit control module"
 	desc = "A light hardsuit with clad-white armor plating. The control panel marks it as a Hexenhammer C-8. It's marked with small pale-blue radiotelescope on side of the panel."
+	icon = 'mods/hardsuits/icons/rigs/rig_modules.dmi'
 	suit_type = "foundation"
 	icon_state = "foundation_rig"
 	online_slowdown = -1 ///speedster suit
@@ -54,3 +55,28 @@
 /obj/item/clothing/suit/space/rig/foundation
 	icon = 'mods/hardsuits/icons/rigs/obj_suit.dmi'
 	item_icons = list(slot_wear_suit_str = 'mods/hardsuits/icons/rigs/onmob_suit.dmi')
+
+/obj/item/rig/light/ninja/foundation/on_update_icon(update_mob_icon)
+
+	ClearOverlays()
+	if(!mob_icon || update_mob_icon)
+		var/species_icon = 'mods/hardsuits/icons/rigs/onmob_rig_back.dmi'
+		if(wearer && sprite_sheets && sprite_sheets[wearer.species.get_bodytype(wearer)])
+			species_icon =  sprite_sheets[wearer.species.get_bodytype(wearer)]
+		mob_icon = image("icon" = species_icon, "icon_state" = "[icon_state]")
+
+	if(equipment_overlay_icon && LAZYLEN(installed_modules))
+		for(var/obj/item/rig_module/module in installed_modules)
+			if(module.suit_overlay)
+				var/overlay = image("icon" = equipment_overlay_icon, "icon_state" = "[module.suit_overlay]", "dir" = SOUTH)
+				chest.AddOverlays(overlay)
+
+	if(wearer)
+		wearer.update_inv_shoes()
+		wearer.update_inv_gloves()
+		wearer.update_inv_head()
+		wearer.update_inv_wear_mask()
+		wearer.update_inv_wear_suit()
+		wearer.update_inv_w_uniform()
+		wearer.update_inv_back()
+	return

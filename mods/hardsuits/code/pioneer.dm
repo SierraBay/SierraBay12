@@ -5,10 +5,10 @@
 /obj/item/clothing/head/helmet/space/void/pioneer
 	name = "pioneer corps voidsuit helmet"
 	desc = "A somewhat old-fashioned helmet in bright colors. On the forehead you can see the inscription PC ICCG. This one has radiation shielding."
-	icon = 'mods/hardsuits/icons/rigs/obj_head.dmi'
+	icon = 'mods/hardsuits/icons/voidsuits/obj_head.dmi'
 	icon_state = "pioneer"
 	item_state = "pioneer"
-	item_icons = list(slot_head_str = 'mods/hardsuits/icons/rigs/onmob_head.dmi')
+	item_icons = list(slot_head_str = 'mods/hardsuits/icons/voidsuits/onmob_head.dmi')
 	armor = list(
 		melee = ARMOR_MELEE_RESISTANT,
 		bullet = ARMOR_BALLISTIC_MINOR,
@@ -23,10 +23,10 @@
 /obj/item/clothing/suit/space/void/pioneer
 	name = "pioneer corps voidsuit"
 	desc = "A somewhat old-fashioned voidsuit in bright colors. On the shoulder you can see the inscription PC ICCG. This one has radiation shielding."
-	icon = 'mods/hardsuits/icons/rigs/obj_suit.dmi'
+	icon = 'mods/hardsuits/icons/voidsuits/obj_suit.dmi'
 	icon_state = "pioneer"
 	item_state = "pioneer"
-	item_icons = list(slot_wear_suit_str = 'mods/hardsuits/icons/rigs/onmob_suit.dmi')
+	item_icons = list(slot_wear_suit_str = 'mods/hardsuits/icons/voidsuits/onmob_suit.dmi')
 	max_pressure_protection = ENG_VOIDSUIT_MAX_PRESSURE
 	siemens_coefficient = 0.3
 	armor = list(

@@ -53,6 +53,21 @@
 /obj/item/clothing/under/color/black/foundation/disrupts_psionics()
 	return src
 
+/obj/item/clothing/mask/gas/foundation
+	name = "tactical mask"
+	desc = "A close-fitting tactical mask whith green visor, that can be connected to an air supply."
+	icon = 'mods/psionics/icons/foundation/foundation_obj.dmi'
+	icon_state = "foundation_gas_mask"
+	item_state = "foundation_gas_mask"
+	item_icons = list(slot_wear_mask_str = 'mods/psionics/icons/foundation/foundation_onmob.dmi')
+	siemens_coefficient = 0.7
+	armor = list(
+		melee = ARMOR_MELEE_SMALL,
+		bullet = ARMOR_BALLISTIC_SMALL,
+		laser = ARMOR_LASER_MINOR,
+		bio = ARMOR_BIO_STRONG
+		)
+
 /* FOUNDATION OUTFITS
  * ========
  */
@@ -70,7 +85,7 @@
 /singleton/hierarchy/outfit/foundation/mtf
 	name = "Cuchulain Foundation Operative"
 	head = /obj/item/clothing/head/helmet/foundation
-	mask = /obj/item/clothing/mask/gas
+	mask = /obj/item/clothing/mask/gas/foundation
 	glasses =  /obj/item/clothing/glasses/hud/security/prot/sunglasses
 	uniform =  /obj/item/clothing/under/color/black/foundation
 	suit = /obj/item/clothing/suit/armor/pcarrier/troops/heavy/foundation
@@ -89,7 +104,7 @@
 		/obj/item/storage/box/survival = 1,
 		/obj/item/storage/firstaid/sleekstab = 1
 	)
-	flags = OUTFIT_HAS_BACKPACK
+	flags = OUTFIT_RESET_EQUIPMENT
 
 /obj/item/storage/belt/holster/security/foundation/New()
 	..()
