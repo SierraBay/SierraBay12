@@ -8733,7 +8733,7 @@
 "qKn" = (/obj/machinery/atmospherics/pipe/simple/hidden/black{dir = 10},/obj/structure/closet/l3closet/scientist,/obj/structure/sign/xenobio_3{pixel_x = 32},/turf/simulated/floor/tiled/techfloor,/area/maintenance/seconddeck/xenobio)
 "qKo" = (/obj/floor_decal/corner/mauve/mono,/obj/machinery/computer/modular/preset/dock,/obj/floor_decal/spline/fancy/black{dir = 1},/turf/simulated/floor/tiled/dark/monotile,/area/bridge/nano)
 "qKv" = (/obj/random/obstruction,/turf/simulated/floor/plating,/area/maintenance/seconddeck/aftport)
-"qKK" = (/obj/machinery/alarm{dir = 4; pixel_x = -24},/obj/machinery/light_switch{pixel_y = 32},/obj/floor_decal/borderfloor{dir = 9},/obj/floor_decal/corner/red/border{dir = 9},/obj/item/storage/toolbox/mechanical,/obj/machinery/atmospherics/unary/vent_pump/on{dir = 4},/obj/structure/table/rack,/turf/simulated/floor/tiled/steel_grid,/area/security/sierra/mech_garage)
+"qKK" = (/obj/machinery/alarm{dir = 4; pixel_x = -24},/obj/machinery/light_switch{pixel_y = 32},/obj/floor_decal/borderfloor{dir = 9},/obj/floor_decal/corner/red/border{dir = 9},/obj/item/storage/toolbox/mechanical,/obj/machinery/atmospherics/unary/vent_pump/on{dir = 4},/obj/structure/table/rack,/obj/item/camera_package,/turf/simulated/floor/tiled/steel_grid,/area/security/sierra/mech_garage)
 "qKZ" = (/obj/floor_decal/spline/plain/black{dir = 1},/turf/simulated/floor/reinforced{map_airless = 1},/area/space)
 "qLg" = (/obj/floor_decal/corner/grey/border,/obj/random/ironing_board_structure,/obj/item/ironing_iron,/turf/simulated/floor/tiled/old_tile,/area/crew_quarters/head)
 "qLi" = (/obj/machinery/atmospherics/pipe/simple/visible/cyan{dir = 9},/turf/simulated/floor/tiled/techfloor,/area/engineering/engine_room)

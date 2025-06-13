@@ -86,12 +86,20 @@
 	heat_cooling = 8
 
 
-//Тоже самое что и СБ мех, но с снаряжением
-/mob/living/exosuit/premade/security/spawn_mech_equipment()
-	..()
-	install_system(new /obj/item/mech_equipment/camera(src), HARDPOINT_LEFT_SHOULDER)
+//Спавнер для камеры, ибо вы не поверите, камера руинит юнит тесты
+/obj/item/camera_package
+	name = "Packaged equipment"
+	desc = "With some reason, this equipment was packaged."
+	icon = 'icons/obj/forensics.dmi'
+	icon_state = "case"
 
 
+/obj/item/camera_package/attack_self(mob/living/user)
+	. = ..()
+	new /obj/item/mech_equipment/camera(get_turf(src))
+	qdel(src)
+
+//Нелетальный ракетомёт
 /obj/item/mech_equipment/mounted_system/taser/ballistic/launcher/security
 	name = "\improper  \"SHAI-TAN\" missle launcher system"
 	desc = "Somewhen, thats was first missle launch system for mechs. Now, thats just a history. Can't support modern combat rockets"
