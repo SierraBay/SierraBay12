@@ -20,6 +20,26 @@
 	firemodes = list(
 	mode_name="semi auto",       burst=1, fire_delay=null,    move_delay=null, one_hand_penalty=0, burst_accuracy=null, dispersion=null,
 	)
+	//Если в списке что-то есть, то будет пускать только те патроны, которые есть в этом списке
+	var/list/white_list_ammo_types = list()
+
+/obj/item/gun/projectile/automatic/rocket_launcher/load_ammo(obj/item/A, mob/user)
+	if(LAZYLEN(white_list_ammo_types))
+		//Ткнули магазином снарядов
+		if(ismagazine(A))
+			for(var/obj/item/bullet in A.contents)
+				if(!(bullet.type in white_list_ammo_types))
+					to_chat(user, SPAN_BAD("Один из снарядов в магазине не совместим."))
+					return
+		//Ткнули сразу снарядом
+		else
+			if(!(A.type in white_list_ammo_types))
+				to_chat(user, SPAN_BAD("Данный снаряд не совместим с этой установкой"))
+				return
+	. = ..()
+
+
+/obj/item/ammo_magazine/rockets_casing/pepper
 
 //Общий вид ракет
 /obj/item/ammo_magazine/rockets_casing
@@ -58,7 +78,7 @@
 
 //Фугас
 /obj/item/ammo_magazine/rockets_casing/fugas
-	name = "rockets casing"
+	name = "explosive rockets casing"
 	icon = 'mods/mechs_by_shegar/icons/ammo.dmi'
 	icon_state = "rockets_casing"
 	origin_tech = list(TECH_COMBAT = 4)
@@ -70,6 +90,7 @@
 
 
 /obj/item/ammo_casing/rocket/mech/fugas
+	name = "explosive rocket"
 	icon = 'mods/mechs_by_shegar/icons/ammo.dmi'
 	icon_state = "rockets"
 	caliber = CALIBER_ROCKETS
@@ -87,6 +108,7 @@
 	ammo_type = /obj/item/ammo_casing/rocket/mech/pepper
 
 /obj/item/ammo_casing/rocket/mech/pepper
+	name = "gas rocket"
 	icon = 'mods/mechs_by_shegar/icons/ammo.dmi'
 	icon_state = "rockets"
 	caliber = CALIBER_ROCKETS
@@ -107,6 +129,7 @@
 	ammo_type = /obj/item/ammo_casing/rocket/mech/flashbang
 
 /obj/item/ammo_casing/rocket/mech/flashbang
+	name = "flashbang rocket"
 	icon = 'mods/mechs_by_shegar/icons/ammo.dmi'
 	icon_state = "rockets"
 	caliber = CALIBER_ROCKETS
