@@ -69,12 +69,12 @@
 
 // ranged interaction telekinesis
 /obj/machinery/button/do_simple_ranged_interaction(mob/user)
-	if(LAZYLEN(req_access) == 0)
+	if(!LAZYLEN(req_access))
 		activate(user)
 		return TRUE
 
 /obj/machinery/access_button/do_simple_ranged_interaction(mob/user)
-	if(LAZYLEN(req_access) == 0)
+	if(!LAZYLEN(req_access))
 		if(radio_connection)
 			var/datum/signal/signal = new
 			signal.transmission_method = 1 //radio signal
@@ -86,7 +86,7 @@
 	return TRUE
 
 /obj/machinery/airlock_sensor/do_simple_ranged_interaction(mob/user)
-	if(LAZYLEN(req_access) == 0)
+	if(!LAZYLEN(req_access))
 		if(radio_connection)
 			var/datum/signal/signal = new
 			signal.transmission_method = 1 //radio signal

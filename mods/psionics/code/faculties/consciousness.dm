@@ -307,7 +307,7 @@
 	. = ..()
 	if(.)
 		if(target == user)
-			to_chat(user, "<span class='warning'>Вы не можете применить эту способность на себе!</span>")
+			to_chat(user, SPAN_WARNING("Вы не можете применить эту способность на себе!"))
 			return 0
 		if(target.psi)
 			var/con_rank_target = target.psi.get_rank(PSI_CONSCIOUSNESS)
