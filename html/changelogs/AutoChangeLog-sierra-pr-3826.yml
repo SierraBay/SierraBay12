@@ -1,4 +1,0 @@
-author: Mucker
-changes:
-  - {admin: Stealthed admins no longer count towards the lobby player count.}
-delete-after: true
