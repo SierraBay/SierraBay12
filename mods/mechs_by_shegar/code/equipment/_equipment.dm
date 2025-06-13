@@ -42,8 +42,15 @@
 /obj/item/mech_equipment/proc/need_combat_skill()
 	return FALSE
 
-///Некоторые модули могут по своему реагировать на ближнюю атаку, например железный щит
+///Некоторые модули могут по своему реагировать на ближнюю атаку, например железный щит или флэш
 /obj/item/mech_equipment/proc/have_specific_melee_attack()
+	return FALSE
+
+///Данный модуль может быть починен. К примеру - железный щит
+/obj/item/mech_equipment/proc/can_be_repaired()
+	return FALSE
+
+/obj/item/mech_equipment/proc/try_repair_module(tool, user)
 	return FALSE
 
 /obj/item/mech_equipment/afterattack(atom/target, mob/living/user, inrange, params)

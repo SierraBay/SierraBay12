@@ -1,7 +1,6 @@
 //Здесь ведь код отвечающий за оборудование меха
 
-/mob/living/exosuit/proc/get_equipment_by_hardpoint(obj/item/mech_equipment/equipment)
-	var/list/found_slots = list()
+/mob/living/exosuit/proc/get_hardpoint_by_equipment(obj/item/mech_equipment/equipment)
 	for(var/hardpoint_name in hardpoints)
 		if(hardpoints[hardpoint_name] == equipment)
 			return hardpoint_name
@@ -98,7 +97,7 @@
 	//Если на вход приходит сразу модуль
 	if(istype(system_hardpoint, /obj/item/mech_equipment))
 		system = system_hardpoint
-		hardpoint = get_equipment_by_hardpoint(system)
+		hardpoint = get_hardpoint_by_equipment(system)
 	//Если на вход приходит лишь слот модуля
 	else
 		system = hardpoints[system_hardpoint]

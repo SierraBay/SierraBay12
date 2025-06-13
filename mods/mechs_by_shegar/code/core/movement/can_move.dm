@@ -2,6 +2,8 @@
 	var/mob/living/exosuit/exosuit = host
 	if((!(mover in exosuit.pilots) && mover != exosuit) || exosuit.incapacitated() || mover.incapacitated())
 		return MOVEMENT_STOP
+	if(LAZYLEN(exosuit.movement_blocked_by_shield))
+		exosuit.undeploy_all_shields()
 	if(!exosuit.L_leg && !exosuit.R_leg)
 		to_chat(mover, SPAN_WARNING("У \The [exosuit] нет ни одной конечности, движение невозможно."))
 		exosuit.SetMoveCooldown(3)
