@@ -42,23 +42,23 @@
 	name = "mech_hit_sparks"
 	width = 500
 	height = 500
-	count = 3000 // Увеличим количество частиц
-	spawning = 15 // Увеличим скорость появления
-	lifespan = 0.4 SECONDS // Укоротим время жизни
-	fade = 0.3 SECONDS // Укоротим время затухания
-	position = generator("circle", -3, 3, NORMAL_RAND) // Увеличим разброс
-	velocity = generator("circle", -12, 12, NORMAL_RAND) // Увеличим скорость
-	friction = 0.25 // Увеличим трение для быстрого затухания
+	count = 3000
+	spawning = 15
+	lifespan = 0.4 SECONDS
+	fade = 0.3 SECONDS
+	position = generator("circle", -3, 3, NORMAL_RAND)
+	velocity = generator("circle", -12, 12, NORMAL_RAND)
+	friction = 0.25
 	gradient = list(
-		0.0, "#FFCC00", // Ярко-желтый
-		0.2, "#FF6600", // Оранжевый
-		0.5, "#FF3300", // Красно-оранжевый
-		1.0, "#FFFFFF"  // Белый (при затухании)
+		0.0, "#ffcc00", // Ярко-желтый
+		0.2, "#ff6600", // Оранжевый
+		0.5, "#ff3300", // Красно-оранжевый
+		1.0, "#fffffFf"  // Белый (при затухании)
 	)
-	color_change = 0.3 // Увеличим скорость изменения цвета
+	color_change = 0.3
 	scale = generator("vector", list(0.1, 0.1), list(0.3, 0.3), NORMAL_RAND) // Разный размер частиц
 	rotation = generator("num", -180, 180) // Вращение частиц
-	grow = -0.05 // Постепенное уменьшение размера
+	grow = -0.05
 
 /obj/particle_emitter/mech_hit
 	plane = 3
@@ -67,6 +67,7 @@
 
 /obj/particle_emitter/mech_hit/New(loc, ...)
 	. = ..()
+	//расположение партиклов немного изменяется для лучшего визуала
 	pixel_x = pick(-12, -8, -4,  0, 4, 8, 12)
 	pixel_y = pick(-12, -8, -4,  0, 4, 8, 12)
 	particles.spawning = 6
