@@ -5,8 +5,8 @@
 	/obj/item/mech_equipment/catapult, \
 	/obj/item/mech_equipment/light, \
 	/obj/item/mech_equipment/mounted_system/taser/ballistic/grenade_launcher, \
-	/obj/item/mech_equipment/mounted_system/taser/ballistic/launcher/security \
-
+	/obj/item/mech_equipment/mounted_system/taser/ballistic/launcher/security, \
+	/obj/item/mech_equipment/mounted_system/taser \
 )
 
 /mob/living/exosuit/premade/security
