@@ -1,6 +1,6 @@
 //Ballistic shield
 /obj/item/mech_equipment/ballistic_shield
-	name = "exosuit ballistic shield"
+	name = "mech ballistic shield"
 	desc = "The Hephaestus Bulwark is a formidable line of defense that sees widespread use in planetary peacekeeping operations and military formations alike."
 	icon_state = "mech_shield" //Rendering is handled by aura due to layering issues: TODO, figure out a better way to do this
 	var/obj/aura/mech_ballistic/aura = null

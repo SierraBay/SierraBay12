@@ -1,5 +1,5 @@
 /obj/item/mech_equipment/flash
-	name = "exosuit flash"
+	name = "mech flash"
 	icon_state = "mech_flash"
 	var/flash_min = 7
 	var/flash_max = 9
