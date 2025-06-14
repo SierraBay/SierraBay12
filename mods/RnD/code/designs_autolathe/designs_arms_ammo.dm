@@ -157,3 +157,11 @@
 /datum/design/autolathe/arms_ammo/hidden/shotgun_flechette
 	name = "ammunition (flechette shotgun)"
 	build_path = /obj/item/ammo_casing/shotgun/flechette
+
+/obj/item/ammo_magazine/smg/rubber
+	labels = list("rubber")
+	ammo_type = /obj/item/ammo_casing/pistol/rubber
+
+/datum/design/autolathe/arms_ammo/hidden/magazine_merc_smg_rubber
+	name = "ammunition (SMG rubber)"
+	build_path = /obj/item/ammo_magazine/smg/rubber

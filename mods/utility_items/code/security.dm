@@ -25,3 +25,8 @@
 
 /obj/item/clothing/suit/armor/pcarrier
 	valid_accessory_slots = list(ACCESSORY_SLOT_INSIGNIA, ACCESSORY_SLOT_ARMOR_CHEST, ACCESSORY_SLOT_ARMOR_ARMS, ACCESSORY_SLOT_ARMOR_LEGS, ACCESSORY_SLOT_ARMOR_STORAGE, ACCESSORY_SLOT_ARMOR_MISC, ACCESSORY_SLOT_OVER)
+
+/obj/structure/closet/secure_closet/guncabinet/sierra_armory/smg/WillContain()
+	return list(/obj/item/gun/projectile/automatic/merc_smg = 2,
+				/obj/item/ammo_magazine/smg/rubber = 4,
+				/obj/item/ammo_magazine/smg = 4)

@@ -23,6 +23,7 @@
 		/datum/design/autolathe/arms_ammo/hidden/magazine_small,
 		/datum/design/autolathe/arms_ammo/hidden/magazine_magnum,
 		/datum/design/autolathe/arms_ammo/hidden/magazine_smg,
+		/datum/design/autolathe/arms_ammo/hidden/magazine_merc_smg_rubber,
 		/datum/design/autolathe/arms_ammo/hidden/magazine_uzi,
 		/datum/design/autolathe/arms_ammo/hidden/magazine_smg_topmounted,
 		/datum/design/autolathe/arms_ammo/hidden/magazine_arifle,
