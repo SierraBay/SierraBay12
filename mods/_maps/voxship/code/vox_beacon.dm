@@ -141,10 +141,9 @@
 		else if(istype(I, /obj/item/clothing/head/helmet/space/void))
 			price = 0.1
 		favors += price
-		to_chat(user, "Вы обменяли костюм на валюту")
 	if(!price)
 		to_chat(user, "Это не требуется Апексам")
 		return FALSE
 	if(price)
-		qdel(I)
 		to_chat(user, "Вы обменяли [I] на валюту")
+		qdel(I)
