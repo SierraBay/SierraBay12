@@ -1,7 +1,3 @@
-///У каждого клиента есть список обьектов которые перехватывают движения мыши.
-/client
-	var/list/mouse_move_handlers = list()
-
 /client/MouseEntered(atom/hoverOn)
 	. = ..()
 
