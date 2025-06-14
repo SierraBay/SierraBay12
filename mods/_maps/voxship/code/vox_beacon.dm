@@ -118,9 +118,6 @@
 			price = 0.03
 		else if(istype(I, /obj/item/stack/material/titanium))
 			price = 0.04
-		if(!price)
-			to_chat(user, "Это не требуется Апексам")
-			return FALSE
 		favors += price * st.amount
 		to_chat(user, "Вы обменяли материалы на валюту")
 		qdel(I)
@@ -136,9 +133,6 @@
 			price = 1
 		else if(istype(I, /obj/item/gun/energy/gun))
 			price = 1
-		if(!price)
-			to_chat(user, "Это не требуется Апексам")
-			return FALSE
 		favors += price
 		to_chat(user, "Вы обменяли оружие на валюту")
 		qdel(I)
@@ -146,13 +140,12 @@
 	else if(istype(I, /obj/item/clothing/suit))
 		if(istype(I, /obj/item/clothing/suit/armor/pcarrier))
 			price = 1
-		if(istype(I, /obj/item/clothing/suit/space/void)) // Да-да за любой войд будет платится 2 очка, а чё вы хотели?
+		else if(istype(I, /obj/item/clothing/suit/space/void)) // Да-да за любой войд будет платится 2 очка, а чё вы хотели?
 			price = 0.5
-		if(istype(I, /obj/item/clothing/head/helmet/space/void))
+		else if(istype(I, /obj/item/clothing/head/helmet/space/void))
 			price = 0.1
-		if(!price)
-			to_chat(user, "Это не требуется Апексам")
-			return FALSE
 		favors += price
 		to_chat(user, "Вы обменяли костюм на валюту")
 		qdel(I)
+	else if(!price)
+		to_chat(user, "Это не требуется Апексам")
