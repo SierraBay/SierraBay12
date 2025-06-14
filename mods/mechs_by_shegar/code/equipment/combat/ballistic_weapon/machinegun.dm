@@ -8,13 +8,9 @@
 /obj/item/mech_equipment/mounted_system/taser/ballistic/need_combat_skill()
 	return TRUE
 
-/*
 /obj/item/mech_equipment/mounted_system/taser/ballistic/attack_hand(mob/user)
-	return
-	if(holding.ammo_magazine != null && src.loc == owner)
-		holding.unload_ammo(user, allow_dump=0)
-		get_hardpoint_maptext()
-*/
+	holding.unload_ammo(user, allow_dump=0)
+	get_hardpoint_maptext()
 
 /obj/item/mech_equipment/mounted_system/taser/ballistic/use_tool(obj/item/item, mob/living/user, list/click_params)
 	if(!holding.ammo_magazine)
@@ -44,9 +40,6 @@
 
 /obj/item/mech_equipment/mounted_system/taser/ballistic/mounted/need_combat_skill()
 	return TRUE
-
-/obj/item/gun/projectile/automatic/assault_rifle/mounted/unload_ammo(mob/user,allow_dump = 1)
-	return
 
 /obj/item/ammo_magazine/rifle/mech_machinegun
 	max_ammo = 200
