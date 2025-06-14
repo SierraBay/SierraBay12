@@ -35,8 +35,6 @@ ID мода: IMPULSE_CANNON
 - `code/modules/overmap/disperser/disperser_fire.dm` : 
 	`/obj/machinery/computer/ship/disperser/proc/fire_at_sector`
 
-- `code\modules\reagents\Chemistry-Reagents\Chemistry-Reagents-Other.dm` : 
-	`/datum/reagent/napalm/touch_turf`
 <!--
   Если вы редактировали какие-либо процедуры или переменные в кор коде,
   они должны быть указаны здесь.
@@ -65,6 +63,9 @@ ID мода: IMPULSE_CANNON
 - `mods/impulse_cannon/code/modules/overmap/disperser/disperser_console.dm` :
 	`/obj/machinery/computer/ship/disperser/military`
 
+
+- `mods/impulse_cannon/code/reagents.dm` : 
+	`/datum/reagent/napalm/touch_turf`
 <!--
   Если ты добавлял новый модульный оверрайд, его нужно указать здесь.
   Здесь указываются оверрайды в твоём моде и папке `_master_files`

@@ -231,15 +231,9 @@
 	touch_met = 50
 	accelerant_quality = 20
 
-// [SIERRA-EDIT] - IMPULSE_CANNON
-// /datum/reagent/napalm/touch_turf(turf/T)
-// 	new /obj/decal/cleanable/liquid_fuel(T, volume)
-// 	remove_self(volume)
-
-/datum/reagent/napalm/touch_turf(turf/T, nologs = FALSE)
-	new /obj/decal/cleanable/liquid_fuel(T, volume, nologs)
+/datum/reagent/napalm/touch_turf(turf/T)
+	new /obj/decal/cleanable/liquid_fuel(T, volume)
 	remove_self(volume)
-// [SIERRA-EDIT]
 
 /datum/reagent/napalm/touch_mob(mob/living/L, amount)
 	if(istype(L))
