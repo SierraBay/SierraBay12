@@ -7,9 +7,18 @@
 	desc = "A helmet with green stripe and radiotelescope emblem on it."
 	icon_state = "helmet_pcrc"
 	accessories = list(/obj/item/clothing/accessory/helmet_cover/foundation, /obj/item/clothing/accessory/glassesmod/psi)
+	armor = list(
+		melee = ARMOR_MELEE_MAJOR,
+		bullet = ARMOR_BALLISTIC_RIFLE,
+		laser = ARMOR_LASER_HANDGUNS,
+		energy = ARMOR_ENERGY_RESISTANT,
+		bomb = ARMOR_BOMB_PADDED
+		)
+	siemens_coefficient = 0.6
+
 
 /obj/item/clothing/suit/armor/pcarrier/troops/heavy/foundation
-	accessories = list(/obj/item/clothing/accessory/armor_plate/medium,
+	accessories = list(/obj/item/clothing/accessory/armor_plate/tactical,
 						/obj/item/clothing/accessory/arm_guards,
 						/obj/item/clothing/accessory/leg_guards,
 						/obj/item/clothing/accessory/storage/pouches,
@@ -68,6 +77,18 @@
 		bio = ARMOR_BIO_STRONG
 		)
 
+/obj/item/card/id/centcom/foundation
+	name = "\improper Cuchulain Foundation PID ID"
+	registered_name = "Physical Impact Department"
+	assignment = "Strike Team Witchsword"
+	color = COLOR_OFF_WHITE
+	detail_color = COLOR_PAKISTAN_GREEN
+	extra_details = list("onegoldstripe")
+
+/obj/item/card/id/centcom/foundation/New()
+	..()
+	access |= get_all_station_access()
+
 /* FOUNDATION OUTFITS
  * ========
  */
@@ -76,10 +97,12 @@
 	name = "Cuchulain Foundation Agent"
 	glasses =  /obj/item/clothing/glasses/sunglasses
 	uniform =  /obj/item/clothing/under/suit_jacket/charcoal
-	shoes =    /obj/item/clothing/shoes/black
+	suit =     /obj/item/clothing/suit/storage/toggle/suit/black
+	shoes =    /obj/item/clothing/shoes/dress
 	l_hand =   /obj/item/storage/briefcase/foundation
 	l_ear =    /obj/item/device/radio/headset/foundation
 	holster =  /obj/item/clothing/accessory/storage/holster/armpit
+	l_pocket = /obj/item/device/flash/advanced
 	id_slot =  slot_wear_id
 
 /singleton/hierarchy/outfit/foundation/mtf
@@ -91,18 +114,19 @@
 	suit = /obj/item/clothing/suit/armor/pcarrier/troops/heavy/foundation
 	shoes =    /obj/item/clothing/shoes/jackboots
 	l_hand =   null
-	l_ear =    /obj/item/device/radio/headset/foundation
-	l_pocket = /obj/item/device/radio
+	l_ear =    /obj/item/device/radio/headset/ert
 	r_hand = /obj/item/gun/projectile/automatic/sol_smg
-	r_pocket = /obj/item/card/emag
+	r_pocket = /obj/item/device/radio
 	gloves = /obj/item/clothing/gloves/thick/swat
-	holster =  /obj/item/clothing/accessory/storage/holster/thigh
+	holster = /obj/item/clothing/accessory/storage/holster/thigh
 	belt = /obj/item/storage/belt/holster/security/foundation
 	back = /obj/item/storage/backpack
-	id_slot =  slot_wear_id
+	id_slot = slot_wear_id
+	id_types = list(/obj/item/card/id/centcom/foundation)
 	backpack_contents = list(
-		/obj/item/storage/box/survival = 1,
-		/obj/item/storage/firstaid/sleekstab = 1
+		/obj/item/storage/firstaid/sleekstab = 1,
+		/obj/item/handcuffs = 2,
+		/obj/item/plastique = 1
 	)
 	flags = OUTFIT_RESET_EQUIPMENT
 
