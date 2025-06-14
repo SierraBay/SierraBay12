@@ -247,7 +247,14 @@
 		else if(target_mob.last_move == get_dir(target_mob,firer))
 			movement_mod *= 0.25
 	miss_modifier -= movement_mod
-	var/hit_zone = get_zone_with_miss_chance(def_zone, target_mob, miss_modifier, ranged_attack=(distance > 1 || original != target_mob)) //if the projectile hits a target we weren't originally aiming at then retain the chance to miss
+	//[SIERRA-EDIT] - Mechs-by-Shegar -
+	// var/hit_zone = get_zone_with_miss_chance(def_zone, target_mob, miss_modifier, ranged_attack=(distance > 1 || original != target_mob)) //if the projectile hits a target we weren't originally aiming at then retain the chance to miss
+	var/hit_zone
+	if(ismech(target_mob))
+		hit_zone = def_zone
+	else
+		hit_zone = get_zone_with_miss_chance(def_zone, target_mob, miss_modifier, ranged_attack=(distance > 1 || original != target_mob)) //if the projectile hits a target we weren't originally aiming at then retain the chance to miss
+	//[SIERRA-ADD]
 
 	var/result = PROJECTILE_FORCE_MISS
 	if(hit_zone)

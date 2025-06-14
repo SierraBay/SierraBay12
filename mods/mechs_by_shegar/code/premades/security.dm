@@ -2,8 +2,11 @@
 	/obj/item/mech_equipment/ballistic_shield, \
 	/obj/item/mech_equipment/camera, \
 	/obj/item/mech_equipment/clamp, \
+	/obj/item/mech_equipment/catapult, \
 	/obj/item/mech_equipment/light, \
-	/obj/item/mech_equipment/mounted_system/taser/ballistic/grenade_launcher \
+	/obj/item/mech_equipment/mounted_system/taser/ballistic/grenade_launcher, \
+	/obj/item/mech_equipment/mounted_system/taser/ballistic/launcher/security, \
+	/obj/item/mech_equipment/mounted_system/taser \
 )
 
 /mob/living/exosuit/premade/security
@@ -83,10 +86,25 @@
 	heat_cooling = 8
 
 
-//Тоже самое что и СБ мех, но с снаряжением
-/mob/living/exosuit/premade/security/equiped/spawn_mech_equipment()
-	..()
-	install_system(new /obj/item/mech_equipment/ballistic_shield(src), HARDPOINT_RIGHT_HAND)
-	install_system(new /obj/item/mech_equipment/mounted_system/taser/ballistic/grenade_launcher(src), HARDPOINT_LEFT_HAND)
-	install_system(new /obj/item/mech_equipment/camera(src), HARDPOINT_LEFT_SHOULDER)
-	install_system(new /obj/item/mech_equipment/light(src), HARDPOINT_RIGHT_SHOULDER)
+//Спавнер для камеры, ибо вы не поверите, камера руинит юнит тесты
+/obj/item/camera_package
+	name = "Packaged equipment"
+	desc = "With some reason, this equipment was packaged."
+	icon = 'icons/obj/forensics.dmi'
+	icon_state = "case"
+
+
+/obj/item/camera_package/attack_self(mob/living/user)
+	. = ..()
+	new /obj/item/mech_equipment/camera(get_turf(src))
+	qdel(src)
+
+//Нелетальный ракетомёт
+/obj/item/mech_equipment/mounted_system/taser/ballistic/launcher/security
+	name = "\improper  \"SHAI-TAN\" missle launcher system"
+	desc = "Somewhen, thats was first missle launch system for mechs. Now, thats just a history. Can't support modern combat rockets"
+	holding_type = /obj/item/gun/projectile/automatic/rocket_launcher/security
+
+/obj/item/gun/projectile/automatic/rocket_launcher/security
+	name = "SHAI-TAN"
+	white_list_ammo_types = list(/obj/item/ammo_casing/rocket/mech/flashbang, /obj/item/ammo_casing/rocket/mech/pepper)

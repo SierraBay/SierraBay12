@@ -103,7 +103,8 @@
 					click_target.AltClick(pilot)
 					setClickCooldown(3)
 					return TRUE
-	else if(!show_right_click_menu)
+	//Если включён режим правого меню и не самоклик по модулю
+	else if(!show_right_click_menu && !istype(click_target, /obj/item/mech_equipment))
 		if(modifiers["right"])
 			handle_right_and_left_click("right")
 		else if(modifiers["left"])
@@ -195,7 +196,7 @@
 
 	var/adj = click_target.Adjacent(src)
 	var/resolved
-	if(adj)
+	if(adj && !ME.have_specific_melee_attack())
 		resolved = temp_system.resolve_attackby(click_target, src)
 	if(!resolved && click_target && temp_system)
 		temp_system.afterattack(click_target, src, adj)

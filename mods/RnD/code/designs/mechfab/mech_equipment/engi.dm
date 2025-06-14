@@ -12,7 +12,7 @@
 	build_path = /obj/item/mech_equipment/mounted_system/extinguisher
 
 /datum/design/item/mech/ionjets
-	name = "exosuit manouvering unit"
+	name = "mech manouvering unit"
 	id = "mech_ionjets"
 	time = 30
 	materials = list(MATERIAL_STEEL = 20000, MATERIAL_ALUMINIUM = 10000, MATERIAL_PHORON = 2500)
@@ -20,7 +20,7 @@
 	build_path = /obj/item/mech_equipment/ionjets
 
 /datum/design/item/mech/mechshields/air
-	name = "exosuit atmospheric shields"
+	name = "mech atmospheric shields"
 	id = "mech_atmoshields"
 	time = 30
 	materials = list(MATERIAL_STEEL = 20000, MATERIAL_ALUMINIUM = 5000, MATERIAL_GLASS = 5000, MATERIAL_PHORON = 2500)
