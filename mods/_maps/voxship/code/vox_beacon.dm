@@ -119,7 +119,6 @@
 		else if(istype(I, /obj/item/stack/material/titanium))
 			price = 0.04
 		favors += price * st.amount
-		to_chat(user, "Вы обменяли материалы на валюту")
 // Продажа только оружия
 	else if(istype(I, /obj/item/gun))
 		if(istype(I, /obj/item/gun/energy/pulse_rifle/skrell))
@@ -133,7 +132,6 @@
 		else if(istype(I, /obj/item/gun/energy/gun))
 			price = 1
 		favors += price
-		to_chat(user, "Вы обменяли оружие на валюту")
 // Продажа только костюмов
 	else if(istype(I, /obj/item/clothing/suit))
 		if(istype(I, /obj/item/clothing/suit/armor/pcarrier))
@@ -149,3 +147,4 @@
 		return FALSE
 	if(price)
 		qdel(I)
+		to_chat(user, "Вы обменяли [I] на валюту")
