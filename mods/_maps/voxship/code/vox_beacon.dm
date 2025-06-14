@@ -149,7 +149,7 @@
 		if(istype(I, /obj/item/clothing/suit/armor/pcarrier))
 			price_suit = 1
 		if(istype(I, /obj/item/clothing/suit/space/void)) // Да-да за любой войд будет платится 2 очка, а чё вы хотели?
-			price_suit = 0.2
+			price_suit = 0.5
 		if(istype(I, /obj/item/clothing/head/helmet/space/void))
 			price_suit = 0.1
 		if(!price_suit)
