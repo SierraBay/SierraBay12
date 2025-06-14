@@ -146,4 +146,4 @@
 		to_chat(user, "Вы обменяли костюм на валюту")
 	else if(!price)
 		to_chat(user, "Это не требуется Апексам")
-	qdel(I)
+		qdel(I)
