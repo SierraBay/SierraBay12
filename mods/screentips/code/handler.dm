@@ -1,3 +1,6 @@
+/client
+	var/list/mouse_move_handlers = list()
+
 /client/MouseEntered(atom/hoverOn)
 	. = ..()
 

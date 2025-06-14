@@ -12,10 +12,6 @@
 
 /client
 	var/obj/skybox/skybox
-	//SIERRA-ADD - перехватчик движения мыши
-	//По каким-то реально отбитым причинам, код не видит обьявление этого списка в screentip
-	var/list/mouse_move_handlers = list()
-	//SIERRA-ADD
 
 /client/proc/update_skybox_offsets()
 	if(!skybox)
