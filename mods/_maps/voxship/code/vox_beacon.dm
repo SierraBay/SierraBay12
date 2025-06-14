@@ -120,7 +120,6 @@
 			price = 0.04
 		favors += price * st.amount
 		to_chat(user, "Вы обменяли материалы на валюту")
-		qdel(I)
 // Продажа только оружия
 	else if(istype(I, /obj/item/gun))
 		if(istype(I, /obj/item/gun/energy/pulse_rifle/skrell))
@@ -135,7 +134,6 @@
 			price = 1
 		favors += price
 		to_chat(user, "Вы обменяли оружие на валюту")
-		qdel(I)
 // Продажа только костюмов
 	else if(istype(I, /obj/item/clothing/suit))
 		if(istype(I, /obj/item/clothing/suit/armor/pcarrier))
@@ -146,6 +144,6 @@
 			price = 0.1
 		favors += price
 		to_chat(user, "Вы обменяли костюм на валюту")
-		qdel(I)
 	else if(!price)
 		to_chat(user, "Это не требуется Апексам")
+	qdel(I)
