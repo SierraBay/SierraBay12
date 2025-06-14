@@ -85,8 +85,8 @@
 /obj/structure/voxuplink/vox_ship/use_tool(obj/item/I, mob/user)
 	..()
 // Продажа только материалов
+	var/price
 	if(istype(I, /obj/item/stack/material))
-		var/price
 		var/obj/item/stack/st = I
 		if(istype(I, /obj/item/stack/material/steel))
 			price = 0.02
@@ -125,36 +125,34 @@
 		to_chat(user, "Вы обменяли материалы на валюту")
 		qdel(I)
 // Продажа только оружия
-	if(istype(I, /obj/item/gun))
-		var/price_weapon
+	else if(istype(I, /obj/item/gun))
 		if(istype(I, /obj/item/gun/energy/pulse_rifle/skrell))
-			price_weapon = 3
+			price = 3
 		else if(istype(I, /obj/item/gun/projectile/shotgun))
-			price_weapon = 2
+			price = 2
 		else if(istype(I, /obj/item/gun/projectile/automatic))
-			price_weapon = 2
+			price = 2
 		else if(istype(I, /obj/item/gun/projectile/pistol))
-			price_weapon = 1
+			price = 1
 		else if(istype(I, /obj/item/gun/energy/gun))
-			price_weapon = 1
-		if(!price_weapon)
+			price = 1
+		if(!price)
 			to_chat(user, "Это не требуется Апексам")
 			return FALSE
-		favors += price_weapon
+		favors += price
 		to_chat(user, "Вы обменяли оружие на валюту")
 		qdel(I)
 // Продажа только костюмов
-	if(istype(I, /obj/item/clothing/suit))
-		var/price_suit
+	else if(istype(I, /obj/item/clothing/suit))
 		if(istype(I, /obj/item/clothing/suit/armor/pcarrier))
-			price_suit = 1
+			price = 1
 		if(istype(I, /obj/item/clothing/suit/space/void)) // Да-да за любой войд будет платится 2 очка, а чё вы хотели?
-			price_suit = 0.5
+			price = 0.5
 		if(istype(I, /obj/item/clothing/head/helmet/space/void))
-			price_suit = 0.1
-		if(!price_suit)
+			price = 0.1
+		if(!price)
 			to_chat(user, "Это не требуется Апексам")
 			return FALSE
-		favors += price_suit
+		favors += price
 		to_chat(user, "Вы обменяли костюм на валюту")
 		qdel(I)
