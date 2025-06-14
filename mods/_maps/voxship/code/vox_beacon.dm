@@ -131,12 +131,12 @@
 			price_weapon = 3
 		else if(istype(I, /obj/item/gun/projectile/shotgun))
 			price_weapon = 2
+		else if(istype(I, /obj/item/gun/projectile/automatic))
+			price_weapon = 2
 		else if(istype(I, /obj/item/gun/projectile/pistol))
 			price_weapon = 1
 		else if(istype(I, /obj/item/gun/energy/gun))
 			price_weapon = 1
-		else if(istype(I, /obj/item/gun/projectile/automatic))
-			price_weapon = 2
 		if(!price_weapon)
 			to_chat(user, "Это не требуется Апексам")
 			return FALSE
@@ -149,7 +149,7 @@
 		if(istype(I, /obj/item/clothing/suit/armor/pcarrier))
 			price_suit = 1
 		if(istype(I, /obj/item/clothing/suit/space/void)) // Да-да за любой войд будет платится 2 очка, а чё вы хотели?
-			price_suit = 2
+			price_suit = 0.2
 		if(istype(I, /obj/item/clothing/head/helmet/space/void))
 			price_suit = 0.1
 		if(!price_suit)
