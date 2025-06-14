@@ -33,17 +33,6 @@
 	new /obj/item/clothing/suit/iccgn/dress_officer(src)
 	new /obj/item/clothing/head/iccgn/service(src)
 
-/obj/structure/closet/crate/vox_wizardry
-	name = "Vox crate"
-	desc = "Fashion box"
-
-/obj/structure/closet/crate/vox_wizardry/New()
-	..()
-	new /obj/item/clothing/suit/wizrobe
-	new /obj/item/clothing/head/wizard
-	new /obj/item/clothing/suit/wizrobe/marisa
-	new /obj/item/clothing/head/wizard/marisa
-
 /obj/structure/closet/crate/vox_scg
 	name = "Vox crate"
 	desc = "Fashion box"
@@ -76,7 +65,7 @@
 		"Carapace Suit - 3" = list(3, /obj/item/clothing/head/helmet/space/vox/carapace, /obj/item/clothing/suit/space/vox/carapace),
 		"Pressure Suit - 3" = list(3, /obj/item/clothing/head/helmet/space/vox/pressure, /obj/item/clothing/suit/space/vox/pressure),
 		"Stealth Suit - 3" = list(3, /obj/item/clothing/head/helmet/space/vox/stealth, /obj/item/clothing/suit/space/vox/stealth),
-		"Biotech Suit" = list(3, /obj/item/clothing/head/helmet/space/vox/medic, /obj/item/clothing/suit/space/vox/medic),
+		"Biotech Suit - 3" = list(3, /obj/item/clothing/head/helmet/space/vox/medic, /obj/item/clothing/suit/space/vox/medic),
 		"Stimpack - 3" = list(3, /obj/item/reagent_containers/hypospray/autoinjector/stimpack),
 		"Combat Stimulant - 3" = list(3, /obj/item/reagent_containers/hypospray/autoinjector/combatstim),
 		"C4 - 3" = list(3, /obj/item/plastique),
@@ -104,11 +93,31 @@
 		else if(istype(I, /obj/item/stack/material/gold))
 			price = 0.05
 		else if(istype(I, /obj/item/stack/material/silver))
-			price = 0.01
+			price = 0.03
 		else if(istype(I, /obj/item/stack/material/diamond))
 			price = 0.07
 		else if(istype(I, /obj/item/stack/material/wood))
 			price = 0.01
+		else if(istype(I, /obj/item/stack/material/uranium))
+			price = 0.05
+		else if(istype(I, /obj/item/stack/material/plastic))
+			price = 0.01
+		else if(istype(I, /obj/item/stack/material/plasteel))
+			price = 0.03
+		else if(istype(I, /obj/item/stack/material/glass))
+			price = 0.01
+		else if(istype(I, /obj/item/stack/material/aluminium))
+			price = 0.01
+		else if(istype(I, /obj/item/stack/material/deuterium))
+			price = 0.03
+		else if(istype(I, /obj/item/stack/material/tritium))
+			price = 0.03
+		else if(istype(I, /obj/item/stack/material/osmium))
+			price = 0.01
+		else if(istype(I, /obj/item/stack/material/ocp))
+			price = 0.03
+		else if(istype(I, /obj/item/stack/material/titanium))
+			price = 0.04
 		if(!price)
 			to_chat(user, "Это не требуется Апексам")
 			return FALSE
@@ -124,6 +133,10 @@
 			price_weapon = 2
 		else if(istype(I, /obj/item/gun/projectile/pistol))
 			price_weapon = 1
+		else if(istype(I, /obj/item/gun/energy/gun))
+			price_weapon = 1
+		else if(istype(I, /obj/item/gun/projectile/automatic))
+			price_weapon = 2
 		if(!price_weapon)
 			to_chat(user, "Это не требуется Апексам")
 			return FALSE
@@ -135,6 +148,10 @@
 		var/price_suit
 		if(istype(I, /obj/item/clothing/suit/armor/pcarrier))
 			price_suit = 1
+		if(istype(I, /obj/item/clothing/suit/space/void)) // Да-да за любой войд будет платится 2 очка, а чё вы хотели?
+			price_suit = 2
+		if(istype(I, /obj/item/clothing/head/helmet/space/void))
+			price_suit = 0.1
 		if(!price_suit)
 			to_chat(user, "Это не требуется Апексам")
 			return FALSE
