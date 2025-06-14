@@ -41,10 +41,14 @@
 	caliber = CALIBER_PISTOL_SMALL
 
 /obj/item/projectile/bullet/pistol/holdout/mech
-	damage = 25
+	damage = 30
 	fire_sound = 'mods/mechs_by_shegar/sounds/mech_smg.ogg'
-	penetrating = 0
-	hitscan = TRUE
+	//Раскоментировать когда будет хитскан
+	// penetrating = 0
+	// damage = 25
+	// hitscan = TRUE
+
+/*
 
 /obj/temporary/bullet_traccer
 	invisibility = 100
@@ -58,3 +62,5 @@
 	.=..()
 	var/obj/traccer = new /obj/temporary/bullet_traccer (targloc, 0.2 SECONDS)
 	startloc.Beam(BeamTarget = traccer, icon_state = "main",icon='mods/mechs_by_shegar/icons/traccer.dmi',time = 0.2 SECONDS)
+
+*/
