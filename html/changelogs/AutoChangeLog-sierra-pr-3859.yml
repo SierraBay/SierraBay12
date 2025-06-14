@@ -1,0 +1,6 @@
+author: Klearch
+changes:
+  - {tweak: 'Убрал требования к бекграунду Komatsu medical services и контрабаса на
+      плитник и наколенники KMS, чтобы игроки могли сделать описание и название шмотки
+      под свой отыгрыш.'}
+delete-after: true

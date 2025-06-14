@@ -34,12 +34,12 @@
 	if(.)
 
 		var/distance = get_dist(user, target)
-		if(distance > user.psi.get_rank(PSI_PSYCHOKINESIS) + 2)
-			to_chat(user, "<span class='warning'>Ваших сил недостаточно, чтобы достать до этого объекта.</span>")
+		if(distance > user.psi.get_rank(PSI_PSYCHOKINESIS) * 3)
+			to_chat(user, SPAN_WARNING("Ваших сил недостаточно, чтобы достать до этого объекта."))
 			return FALSE
 
 		if(istype(target, /obj/structure))
-			user.visible_message("<span class='notice'>[user] вытягивает руку вперёд, чуть сжимая пальцы.</span>")
+			user.visible_message(SPAN_DANGER("[user] вытягивает руку вперёд, чуть сжимая пальцы."))
 			var/obj/O = target
 			O.attack_hand(user)
 			return TRUE
@@ -52,7 +52,7 @@
 			var/obj/item/psychic_power/telekinesis/tk = new(user)
 			if(tk.set_focus(target))
 				tk.sparkle()
-				user.visible_message("<span class='notice'>[user] вытягивает руку вперёд, чуть сжимая пальцы.</span>")
+				user.visible_message(SPAN_DANGER("[user] вытягивает руку вперёд, чуть сжимая пальцы."))
 				return tk
 
 	return FALSE
@@ -325,7 +325,7 @@
 			user.visible_message(SPAN_DANGER("[user] заносит руку назад, совершая резкий удар, буквально разрезающий воздух!"))
 
 			if(istype(target, /obj/structure) || istype(target, /obj/machinery))
-				user.visible_message("<span class='notice'>[user] толкает [target] вперёд!</span>")
+				user.visible_message(SPAN_DANGER("[user] толкает [target] вперёд!"))
 				var/obj/O = target
 				if(O.anchored == TRUE)
 					new /obj/temporary(get_turf(target),3, 'icons/effects/effects.dmi', "smash")
@@ -388,7 +388,7 @@
 			user.visible_message(SPAN_DANGER("[user] заносит руку назад, совершая резкий удар, буквально разрезающий воздух!"))
 
 			if(istype(target, /obj/structure) || istype(target, /obj/machinery))
-				user.visible_message("<span class='notice'>[user] толкает [target] вперёд!</span>")
+				user.visible_message(SPAN_DANGER("[user] толкает [target] вперёд!"))
 				var/obj/O = target
 				if(O.anchored == TRUE)
 					O.anchored = FALSE
@@ -452,7 +452,7 @@
 			user.visible_message(SPAN_DANGER("[user] заносит руку назад, совершая резкий удар, буквально разрезающий воздух!"))
 
 			if(istype(target, /obj/structure) || istype(target, /obj/machinery))
-				user.visible_message("<span class='notice'>[user] толкает [target] вперёд!</span>")
+				user.visible_message(SPAN_DANGER("[user] толкает [target] вперёд!"))
 				var/obj/O = target
 				if(O.anchored == TRUE)
 					O.anchored = FALSE
@@ -537,7 +537,7 @@
 	if(istype(W, /obj/item/pickaxe/diamonddrill))
 		playsound(src.loc, 'sound/weapons/Genhit.ogg', 100, 1)
 		if(do_after(user,reinf_material ? 60 : 40,src))
-			to_chat(user, "<span class='notice'>You drill through the rock!</span>")
+			to_chat(user, SPAN_DANGER("You drill through the rock!"))
 			if(reinf_material)
 				reinf_material.place_dismantled_product(get_turf(src))
 			dismantle()
@@ -569,7 +569,7 @@
 		if(istype(target, /turf/simulated/floor/exoplanet))
 			var/turf/A = target
 			if(do_after(user, 10))
-				user.visible_message("<span class='danger'>[user] возводит каменную стену!</span>")
+				user.visible_message(SPAN_DANGER("[user] возводит каменную стену!"))
 				new /obj/temporary(A, 9, 'mods/psionics/icons/effects/psi_effects.dmi', "earth_pillar_0")
 				spawn(1 SECONDS)
 					new /obj/structure/girder/rock(get_turf(A))
