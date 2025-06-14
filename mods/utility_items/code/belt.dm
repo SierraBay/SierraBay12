@@ -60,8 +60,7 @@
 		/obj/item/clothing/gloves,
 		/obj/item/clothing/head/beret,
 		/obj/item/material/knife/folding,
-		/obj/item/material/knife,
-		/obj/item/storage/firstaid/security)
+		/obj/item/material/knife)
 
 /obj/item/storage/belt/security
 	contents_allowed = list(
@@ -91,8 +90,7 @@
 		/obj/item/clothing/gloves,
 		/obj/item/clothing/head/beret,
 		/obj/item/material/knife/folding,
-		/obj/item/material/knife,
-		/obj/item/storage/firstaid/security)
+		/obj/item/material/knife)
 
 /obj/item/storage/belt/forensic
 	storage_slots = 10
