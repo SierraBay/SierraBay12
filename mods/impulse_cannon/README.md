@@ -63,7 +63,6 @@ ID мода: IMPULSE_CANNON
 - `mods/impulse_cannon/code/modules/overmap/disperser/disperser_console.dm` :
 	`/obj/machinery/computer/ship/disperser/military`
 
-
 - `mods/impulse_cannon/code/reagents.dm` : 
 	`/datum/reagent/napalm/touch_turf`
 <!--
