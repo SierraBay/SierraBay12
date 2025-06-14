@@ -98,13 +98,13 @@
 
 /obj/item/gun/energy/psigun/use_before(mob/living/M, mob/living/user, target_zone)
 	if(M.do_psionics_check(max(force, maintain_cost), user))
-		to_chat(user, "<span class='danger'>\The [src] flickers violently out of phase!</span>")
+		to_chat(user, SPAN_DANGER("\The [src] flickers violently out of phase!"))
 		return 1
 	. = ..()
 
 /obj/item/gun/energy/psigun/afterattack(atom/target, mob/living/user, proximity)
 	if(target.do_psionics_check(max(force, maintain_cost), user))
-		to_chat(user, "<span class='danger'>\The [src] flickers violently out of phase!</span>")
+		to_chat(user, SPAN_DANGER("\The [src] flickers violently out of phase!"))
 		return
 	. = ..(target, user, proximity)
 
@@ -121,7 +121,7 @@
 			toggle_safety()
 			return 1
 	if(MUTATION_FERAL in M.mutations)
-		to_chat(M, "<span class='danger'>Твои пальцы слишком большие!</span>")
+		to_chat(M, SPAN_DANGER("Твои пальцы слишком большие!"))
 		return 0
 	if(M.psi)
 		var/hilo_rank = M.psi.get_rank(PSI_ENERGISTICS)
@@ -134,8 +134,8 @@
 			if(process_projectile(P, user, user, pick(BP_L_FOOT, BP_R_FOOT)))
 				handle_post_fire(user, user)
 				user.visible_message(
-					"<span class='danger'>\The [user] shoots \himself in the foot with \the [src]!</span>",
-					"<span class='danger'>You shoot yourself in the foot with \the [src]!</span>"
+					SPAN_DANGER("\The [user] shoots \himself in the foot with \the [src]!"),
+					SPAN_DANGER("You shoot yourself in the foot with \the [src]!")
 					)
 				M.unequip_item()
 		else

@@ -65,4 +65,58 @@
 
 /datum/job
 
-	give_psionic_implant_on_join = FALSE // If psionic, will be implanted for control.
+	give_psionic_implant_on_join = FALSE // Псиота не имплантируется при заходе. Сделано для ИПиБС
+
+// ranged interaction telekinesis
+/obj/machinery/button/do_simple_ranged_interaction(mob/user)
+	if(!LAZYLEN(req_access))
+		activate(user)
+		return TRUE
+
+/obj/machinery/access_button/do_simple_ranged_interaction(mob/user)
+	if(!LAZYLEN(req_access))
+		if(radio_connection)
+			var/datum/signal/signal = new
+			signal.transmission_method = 1 //radio signal
+			signal.data["tag"] = master_tag
+			signal.data["command"] = command
+
+			radio_connection.post_signal(src, signal, RADIO_AIRLOCK, AIRLOCK_CONTROL_RANGE)
+	flick("access_button_cycle", src)
+	return TRUE
+
+/obj/machinery/airlock_sensor/do_simple_ranged_interaction(mob/user)
+	if(!LAZYLEN(req_access))
+		if(radio_connection)
+			var/datum/signal/signal = new
+			signal.transmission_method = 1 //radio signal
+			signal.data["tag"] = master_tag
+			signal.data["command"] = command
+
+			radio_connection.post_signal(src, signal, RADIO_AIRLOCK, AIRLOCK_CONTROL_RANGE)
+	flick("airlock_sensor_cycle", src)
+	return TRUE
+
+/obj/machinery/disposal/do_simple_ranged_interaction(mob/user)
+	flush()
+	return TRUE
+
+/obj/machinery/floodlight/do_simple_ranged_interaction(mob/user)
+	if(use_power)
+		turn_off(1)
+	else
+		if(!turn_on(1))
+			to_chat(user, "You try to turn on \the [src] but it does not work.")
+			playsound(src.loc, 'sound/effects/flashlight.ogg', 50, 0)
+
+	update_icon()
+	return TRUE
+
+/obj/machinery/light_switch/do_simple_ranged_interaction(mob/user)
+	playsound(src, "switch", 30)
+	set_state(!on)
+	return TRUE
+
+/obj/structure/lift/button/do_simple_ranged_interaction(mob/user)
+	interact()
+	return TRUE

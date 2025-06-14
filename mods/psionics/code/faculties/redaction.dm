@@ -63,13 +63,13 @@
 		if (!option)
 			return
 		if(option == "Травмы")
-			if(red_rank < PSI_RANK_MASTER)
+			if(red_rank < PSI_RANK_GRANDMASTER)
 				to_chat(user, SPAN_WARNING("Ваших сил недостаточно для проведения этой операции!"))
 				return 0
 			if(do_after(user, 20))
 				user.visible_message(SPAN_NOTICE("<i>[user] кладёт руки на плечи [target]...</i>"))
 				to_chat(target, SPAN_NOTICE("Вы ощущаете приятное тепло...ваши раны заживают."))
-				new /obj/temporary(get_turf(target),8, 'icons/effects/effects.dmi', "redaction_healing")
+				new /obj/temporary(get_turf(target),8, 'icons/effects/effects.dmi', "pink_sparkles")
 
 				if(user.skill_check(SKILL_ANATOMY, SKILL_TRAINED) && user.skill_check(SKILL_MEDICAL, SKILL_TRAINED))
 					to_chat(user, SPAN_NOTICE("Благодаря имеющимся навыкам, вам удалось эффективно залечить некоторые раны[target]."))
@@ -100,7 +100,7 @@
 
 			if(E.status & ORGAN_TENDON_CUT)
 				if(do_after(user, 40))
-					new /obj/temporary(get_turf(target),8, 'icons/effects/effects.dmi', "redaction_healing")
+					new /obj/temporary(get_turf(target),8, 'icons/effects/effects.dmi', "pink_sparkles")
 					to_chat(user, SPAN_NOTICE("Вы сплели новое сухожилие на месте повреждённого в [E.name]."))
 					E.status &= ~ORGAN_TENDON_CUT
 					return 1
@@ -120,7 +120,7 @@
 			if(E.status & ORGAN_BROKEN)
 				user.visible_message(SPAN_NOTICE("<i>[user] кладёт руку на [target]'s [E.name]...</i>"))
 				if(do_after(user, 60))
-					new /obj/temporary(get_turf(target),8, 'icons/effects/effects.dmi', "redaction_healing")
+					new /obj/temporary(get_turf(target),8, 'icons/effects/effects.dmi', "pink_sparkles")
 					if(!user.skill_check(SKILL_ANATOMY, SKILL_BASIC))
 						if(prob(30))
 							to_chat(user, SPAN_WARNING("Вы кое-как попытались вновь соединить кости [target], однако сделали своей неопытностью только хуже."))
@@ -150,7 +150,7 @@
 				return 0
 			if(E.status & ORGAN_ARTERY_CUT && red_rank >= PSI_RANK_OPERANT)
 				if(do_after(user, 60))
-					new /obj/temporary(get_turf(target),8, 'icons/effects/effects.dmi', "redaction_healing")
+					new /obj/temporary(get_turf(target),8, 'icons/effects/effects.dmi', "pink_sparkles")
 					if(!user.skill_check(SKILL_ANATOMY, SKILL_BASIC))
 						if(prob(30))
 							to_chat(user, SPAN_WARNING("Ваша попытка связать разорванные артерии в [E.name] закончились ужасным провалом."))
@@ -164,9 +164,9 @@
 				if(W.bleeding())
 					if(W.wound_damage() < 30)
 						if(do_after(user, 30))
-							to_chat(user, SPAN_NOTICE("Вы приказываете крови в [E.name], остановится."))
+							to_chat(user, SPAN_NOTICE("Вы останавливаете кровь в [E.name]."))
 							to_chat(target, SPAN_NOTICE("Вы ощущаете как ваша кожа смыкается в [E.name]..."))
-							new /obj/temporary(get_turf(target),8, 'icons/effects/effects.dmi', "redaction_healing")
+							new /obj/temporary(get_turf(target),8, 'icons/effects/effects.dmi', "pink_sparkles")
 							W.bleed_timer = 0
 							W.clamped = TRUE
 							E.status &= ~ORGAN_BLEEDING
@@ -185,40 +185,31 @@
 			if(red_rank >= PSI_RANK_MASTER)
 
 				if(!E)
+					var/o_type = user.zone_sel.selecting
 					var/what =  alert(user, "Вы уверены, что хотите прибегнуть к трансплантации?", "Обратная связь", "Да", "Нет")
 					switch(what)
 						if("Да")
 							if(do_after(user, 120))
-								// Remove all stumps first
-								for(var/O in target.organs_by_name)
-									var/obj/item/organ/external/S = target.organs_by_name[O]
-									if(S.is_stump())
-										target.visible_message(SPAN_WARNING("[S.name] рассыпается, а на его месте начинает формироваться нечто новое..."))
-										qdel(S)
+								new /obj/temporary(get_turf(target),8, 'icons/effects/effects.dmi', "pink_sparkles")
 								var/list/missing_limbs = target.species.has_limbs - target.organs_by_name
-								if(do_after(user, 30))
-									if(!LAZYLEN(missing_limbs))
-										return
-									var/o_type = pick(missing_limbs)
-									new /obj/temporary(get_turf(target),8, 'icons/effects/effects.dmi', "redaction_healing")
-									missing_limbs -= o_type
-									var/limb_type = target.species.has_limbs[o_type]["path"]
-									var/obj/new_limb = new limb_type(target)
-									target.visible_message(SPAN_DANGER("Место на теле [target], где раньше был лишь обрубок - внезапно начинает формировать новую [new_limb.name]!"))
-									user.visible_message(SPAN_DANGER("[user] выглядит крайне обессиленным."))
-									if(!user.skill_check(SKILL_ANATOMY, SKILL_TRAINED) || !user.skill_check(SKILL_MEDICAL, SKILL_BASIC))
-										if(prob(60))
-											var/limb = pick(BP_L_LEG,BP_R_LEG, BP_L_HAND, BP_R_HAND)
-											to_chat(user, SPAN_WARNING("Ваша некомпетентность привела к тому, что во время восстановления [new_limb.name] вы повредили свою руку!"))
-											user.apply_damage(80,DAMAGE_BRUTE,limb)
-											// limb.mutate() -- придумать
-									user.adjustBruteLoss(rand(30,40))
-									user.psi.spend_power(30)
-
-									target.regenerate_icons()
-
+								missing_limbs -= o_type
+								var/limb_type = target.species.has_limbs[o_type]["path"]
+								var/obj/new_limb = new limb_type(target)
+								target.visible_message(SPAN_DANGER("На теле [target], начала вырастать новая [new_limb.name]!"))
+								E = target.get_organ(o_type)
+								if(!user.skill_check(SKILL_ANATOMY, SKILL_TRAINED) || !user.skill_check(SKILL_MEDICAL, SKILL_BASIC))
+									if(prob(40))
+										to_chat(user, SPAN_WARNING("Ваша некомпетентность привела к тому что Вы неправильно сформировали [new_limb.name]!"))
+										E.mutate()
+								user.apply_damage(20, DAMAGE_BRUTE, o_type)
+								user.psi.spend_power(50)
+								target.regenerate_icons()
 						else
 							return 0
+				if(E.is_stump())
+					if(do_after(user, 120))
+						E.droplimb(0,DROPLIMB_BLUNT)
+						new /obj/temporary(get_turf(target),8, 'icons/effects/effects.dmi', "pink_sparkles")
 
 		if(option == "Органы")
 			if(red_rank < PSI_RANK_MASTER)
@@ -229,7 +220,7 @@
 					if(!BP_IS_ROBOTIC(I) && !BP_IS_CRYSTAL(I) && I.damage > 0)
 						if(do_after(user, 120))
 							to_chat(user, SPAN_NOTICE("Вы вторгаетесь в [target], восстанавливая: [I]."))
-							new /obj/temporary(get_turf(target),8, 'icons/effects/effects.dmi', "redaction_healing")
+							new /obj/temporary(get_turf(target),8, 'icons/effects/effects.dmi', "pink_sparkles")
 							var/heal_rate = red_rank
 							if(!user.skill_check(SKILL_ANATOMY, SKILL_TRAINED) || !user.skill_check(SKILL_MEDICAL, SKILL_BASIC))
 								if(prob(60))
