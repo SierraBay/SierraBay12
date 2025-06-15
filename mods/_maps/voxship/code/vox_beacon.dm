@@ -94,9 +94,9 @@
 			price = 0.02
 		else if(istype(I, /obj/item/stack/material/plastic))
 			price = 0.02
-		else if(istype(I, /obj/item/stack/material/glass))
-			price = 0.01
 		else if(istype(I, /obj/item/stack/material/osmium))
+			price = 0.02
+		else if(istype(I, /obj/item/stack/material/glass))
 			price = 0.01
 		else if(istype(I, /obj/item/stack/material/wood))
 			price = 0.01
