@@ -116,6 +116,8 @@
 			price = 0.04
 		else if(istype(I, /obj/item/stack/material/gold))
 			price = 0.05
+		else if(istype(I, /obj/item/stack/material/platinum))
+			price = 0.05
 		else if(istype(I, /obj/item/stack/material/uranium))
 			price = 0.05
 		else if(istype(I, /obj/item/stack/material/diamond))
