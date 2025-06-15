@@ -1,11 +1,12 @@
 /datum/map/build_exoplanets()
 	//Игра заспавнит 1 обычную планету и 1 аномальную
 	var/list/anomaly_planets_list = list(
-		/obj/overmap/visitable/sector/exoplanet/flying,
-		/obj/overmap/visitable/sector/exoplanet/ice,
-		/obj/overmap/visitable/sector/exoplanet/water
+		/obj/overmap/visitable/sector/exoplanet/flying = 40,
+		/obj/overmap/visitable/sector/exoplanet/ice = 40,
+		/obj/overmap/visitable/sector/exoplanet/water = 20 //Титан более редкая локация в силу своего геймдизайна
 	)
 	//Планеты которые сами по себе никогда не заспавнятся
+	//Отдельный список нужен ибо функция subtypesof() собирает всех наследников /obj/overmap/visitable/sector/exoplanet
 	var/list/shitspawn_planets = list(
 	)
 	var/spawn_only_anomaly_planet = FALSE
@@ -23,7 +24,7 @@
 
 	if(LAZYLEN(anomaly_planets_list))
 		LAZYREMOVE(all_planets_list, anomaly_planets_list)
-		var/anomaly_planet_type = pick(anomaly_planets_list)
+		var/anomaly_planet_type = pickweight(anomaly_planets_list)
 		//Почему тут выставлены world.maxx и world.maxy вместо того чтоб выставить подобные параметры в карте?
 		//Потому что я пытался и игра спавнит планеты некорректно. Хотите исправить - убедитесь что ваш вариант реально
 		//будет работать.
