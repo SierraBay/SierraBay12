@@ -70,6 +70,7 @@
 		"Combat Stimulant - 3" = list(3, /obj/item/reagent_containers/hypospray/autoinjector/combatstim),
 		"C4 - 3" = list(3, /obj/item/plastique),
 		"Flux Cannon - 4" = list(4, /obj/item/gun/energy/darkmatter),
+		"Spike Thrower - 4" = list(4, /obj/item/gun/launcher/alien/spikethrower),
 		"Hack ID - 4" = list(4, /obj/item/card/id/syndicate),
 		"Combat medpack - 4" = list(4, /obj/item/storage/firstaid/combat),
 		"Sleepy pen - 4" = list(4, /obj/item/pen/reagent/sleepy),
@@ -111,8 +112,6 @@
 		else if(istype(I, /obj/item/stack/material/deuterium))
 			price = 0.03
 		else if(istype(I, /obj/item/stack/material/titanium))
-			price = 0.04
-		else if(istype(I, /obj/item/stack/material/platinum))
 			price = 0.04
 		else if(istype(I, /obj/item/stack/material/gold))
 			price = 0.05
