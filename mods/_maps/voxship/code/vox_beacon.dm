@@ -90,34 +90,38 @@
 		var/obj/item/stack/st = I
 		if(istype(I, /obj/item/stack/material/steel))
 			price = 0.02
-		else if(istype(I, /obj/item/stack/material/gold))
-			price = 0.05
-		else if(istype(I, /obj/item/stack/material/silver))
-			price = 0.03
-		else if(istype(I, /obj/item/stack/material/diamond))
-			price = 0.07
-		else if(istype(I, /obj/item/stack/material/wood))
-			price = 0.01
-		else if(istype(I, /obj/item/stack/material/uranium))
-			price = 0.05
+		else if(istype(I, /obj/item/stack/material/aluminium))
+			price = 0.02
 		else if(istype(I, /obj/item/stack/material/plastic))
-			price = 0.01
-		else if(istype(I, /obj/item/stack/material/plasteel))
-			price = 0.03
+			price = 0.02
 		else if(istype(I, /obj/item/stack/material/glass))
 			price = 0.01
-		else if(istype(I, /obj/item/stack/material/aluminium))
+		else if(istype(I, /obj/item/stack/material/osmium))
 			price = 0.01
-		else if(istype(I, /obj/item/stack/material/deuterium))
+		else if(istype(I, /obj/item/stack/material/wood))
+			price = 0.01
+		else if(istype(I, /obj/item/stack/material/silver))
+			price = 0.03
+		else if(istype(I, /obj/item/stack/material/plasteel))
+			price = 0.03
+		else if(istype(I, /obj/item/stack/material/ocp))
 			price = 0.03
 		else if(istype(I, /obj/item/stack/material/tritium))
 			price = 0.03
-		else if(istype(I, /obj/item/stack/material/osmium))
-			price = 0.01
-		else if(istype(I, /obj/item/stack/material/ocp))
+		else if(istype(I, /obj/item/stack/material/deuterium))
 			price = 0.03
 		else if(istype(I, /obj/item/stack/material/titanium))
 			price = 0.04
+		else if(istype(I, /obj/item/stack/material/platinum))
+			price = 0.04
+		else if(istype(I, /obj/item/stack/material/gold))
+			price = 0.05
+		else if(istype(I, /obj/item/stack/material/uranium))
+			price = 0.05
+		else if(istype(I, /obj/item/stack/material/diamond))
+			price = 0.07
+		else if(istype(I, /obj/item/stack/material/phoron))
+			price = 0.07
 		favors += price * st.amount
 // Продажа только оружия
 	else if(istype(I, /obj/item/gun))
