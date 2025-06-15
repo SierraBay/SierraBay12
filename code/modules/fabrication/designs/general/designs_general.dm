@@ -114,13 +114,11 @@
 /datum/fabricator_recipe/toolbox
 	path = /obj/item/storage/toolbox
 
-<<<<<<< ours
+/datum/fabricator_recipe/flatpack_orebox
+	path = /obj/item/flatpack/ore_box
+
 /datum/fabricator_recipe/binoculars
 	path = /obj/item/device/binoculars
 
 /datum/fabricator_recipe/tape_roll
 	path = /obj/item/tape_roll
-=======
-/datum/fabricator_recipe/flatpack_orebox
-	path = /obj/item/flatpack/ore_box
->>>>>>> theirs
