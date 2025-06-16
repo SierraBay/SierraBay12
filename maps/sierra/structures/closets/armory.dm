@@ -7,7 +7,8 @@
 /obj/structure/closet/secure_closet/guncabinet/sierra_armory/smg/WillContain()
 	return list(/obj/item/gun/projectile/automatic/sec_smg/c20a = 2,
 				/obj/item/ammo_magazine/smg_nt/rubber = 4,
-				/obj/item/ammo_magazine/smg_nt/ap = 4)
+				/obj/item/ammo_magazine/smg_nt = 4,
+				/obj/item/ammo_magazine/smg_nt/ap = 2)
 
 /obj/structure/closet/secure_closet/guncabinet/sierra_armory/shotgun
 	name = "shotgun guncabinet"
