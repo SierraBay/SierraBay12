@@ -45,10 +45,18 @@
 	icon = 'mods/guns/icons/obj/boltaction.dmi'
 */
 
+/obj/item/gun/projectile/pistol/sec
+	name = "NT Mk58 pistol"
+
+/obj/item/gun/projectile/pistol/holdout
+	name = "P3 holdout pistol"
+
 /obj/item/gun/projectile/pistol/optimus
+	name = "HelTek Optimus pistol"
 	icon = 'mods/guns/icons/obj/confederate.dmi'
 
 /obj/item/gun/projectile/pistol/magnum_pistol
+	name = "HelTek Magnus heavy pistol"
 	icon = 'mods/guns/icons/obj/magnum_pistol.dmi'
 
 //NT41 from Infinity pack
