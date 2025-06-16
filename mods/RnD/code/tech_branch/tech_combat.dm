@@ -133,7 +133,7 @@
 	required_tech_levels = list()
 	cost = 1500
 
-	unlocks_designs = list("wt550", "ammo_small","pointdefense","pointdefense_control")
+	unlocks_designs = list("c20a", "wt550", "ammo_small","pointdefense","pointdefense_control")  ///// тут "c20a" можешь в другие анлок дизаны попихать если хочешь
 
 /datum/technology/combat/smg
 	name = "SMG"
