@@ -343,3 +343,15 @@
 
 /obj/item/projectile/bullet/pistol/holdout/ap
 	armor_penetration = 15
+
+/obj/item/storage/box/ammo/smg_nt
+	name = "box of 7mm box magazines - lethal"
+	startswith = list(/obj/item/ammo_magazine/smg_nt = 7)
+
+/obj/item/storage/box/ammo/smg_nt/rubber
+	name = "box of 7mm box magazines - rubber"
+	startswith = list(/obj/item/ammo_magazine/smg_nt/rubber = 7)
+
+/obj/item/storage/box/ammo/smg_nt/ap
+	name = "box of 7mm box magazines - armor piercing"
+	startswith = list(/obj/item/ammo_magazine/smg_nt/ap = 4)

@@ -440,10 +440,10 @@
 /area/map_template/rescue_base/base)
 "bf" = (
 /obj/structure/table/rack,
-/obj/item/storage/box/ammo/smg,
-/obj/item/storage/box/ammo/smg,
-/obj/item/storage/box/ammo/smg/rubber,
-/obj/item/storage/box/ammo/smg/rubber,
+/obj/item/storage/box/ammo/smg_nt,
+/obj/item/storage/box/ammo/smg_nt,
+/obj/item/storage/box/ammo/smg_nt/ap,
+/obj/item/storage/box/ammo/smg_nt/rubber,
 /turf/unsimulated/floor{
 	dir = 1;
 	icon_state = "vault"
@@ -1151,10 +1151,10 @@
 /area/map_template/rescue_base/base)
 "cF" = (
 /obj/structure/table/rack,
-/obj/item/gun/projectile/automatic/sec_smg,
-/obj/item/gun/projectile/automatic/sec_smg,
-/obj/item/gun/projectile/automatic/sec_smg,
-/obj/item/gun/projectile/automatic/sec_smg,
+/obj/item/gun/projectile/automatic/sec_smg/c20a,
+/obj/item/gun/projectile/automatic/sec_smg/c20a,
+/obj/item/gun/projectile/automatic/sec_smg/c20a,
+/obj/item/gun/projectile/automatic/sec_smg/c20a,
 /turf/unsimulated/floor{
 	dir = 1;
 	icon_state = "vault"

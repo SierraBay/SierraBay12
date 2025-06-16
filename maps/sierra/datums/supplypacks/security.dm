@@ -66,6 +66,40 @@
 
 */
 
+/singleton/hierarchy/supply_pack/security/c20aammo
+	name = "Ammunition - 7mm carabine"
+	contains = list(/obj/item/storage/box/ammo/smg_nt = 2)
+	cost = 30
+	containertype = /obj/structure/closet/crate/secure/weapon
+	containername = "7mm carabine ammunition crate"
+	access = access_hos
+	security_level = SUPPLY_SECURITY_HIGH
+
+/singleton/hierarchy/supply_pack/security/c20aammorubber
+	name = "Ammunition - 7mm carabine rubber"
+	contains = list(/obj/item/storage/box/ammo/smg_nt/rubber = 2)
+	cost = 20
+	containertype = /obj/structure/closet/crate/secure/weapon
+	containername = "7mm carabine rubber ammunition crate"
+	access = access_armory
+
+/singleton/hierarchy/supply_pack/security/c20aammopractice
+	name = "Ammunition - 7mm carabine practice"
+	contains = list(/obj/item/ammo_magazine/smg_nt/practice = 8)
+	cost = 30
+	containertype = /obj/structure/closet/crate/secure/weapon
+	containername = "7mm carabine practice ammunition crate"
+	access = access_security
+
+/singleton/hierarchy/supply_pack/security/c20aammoap
+	name = "Ammunition - 7mm carabine armor piercing"
+	contains = list(/obj/item/storage/box/ammo/smg_nt/ap = 2)
+	cost = 35
+	containertype = /obj/structure/closet/crate/secure/weapon
+	containername = "7mm carabine AP ammunition crate"
+	access = access_hos
+	security_level = SUPPLY_SECURITY_HIGH
+
 /singleton/hierarchy/supply_pack/security/armory/pdw
 	name = "Weapons - Ballistic NT41"
 	contains = list(/obj/item/gun/projectile/automatic/nt41 = 2)
