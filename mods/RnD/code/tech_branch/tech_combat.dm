@@ -133,7 +133,7 @@
 	required_tech_levels = list()
 	cost = 1500
 
-	unlocks_designs = list("c20a", "wt550", "ammo_small","pointdefense","pointdefense_control")
+	unlocks_designs = list("wt550", "ammo_small","pointdefense","pointdefense_control")
 
 /datum/technology/combat/smg
 	name = "SMG"
@@ -148,7 +148,7 @@
 	required_tech_levels = list()
 	cost = 750
 
-	unlocks_designs = list("smg", "ammo_flechette")
+	unlocks_designs = list("c20a", "smg", "ammo_flechette")
 
 
 
