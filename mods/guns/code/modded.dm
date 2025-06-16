@@ -290,6 +290,8 @@
 	slot_flags = SLOT_BELT|SLOT_BACK
 	magazine_type = /obj/item/ammo_magazine/smg_nt
 	allowed_magazines = /obj/item/ammo_magazine/smg_nt
+	auto_eject = 1
+	auto_eject_sound = 'sound/weapons/smg_empty_alarm.ogg'
 
 /obj/item/gun/projectile/automatic/sec_smg/c20a/on_update_icon()
 	..()
@@ -298,11 +300,10 @@
 	else
 		icon_state = "c20a"
 
-
 /datum/design/item/weapon/c20a
 	id = "c20a"
 	req_tech = list(TECH_COMBAT = 5, TECH_MATERIAL = 2)
-	materials = list(MATERIAL_STEEL = 8000, MATERIAL_SILVER = 3000, MATERIAL_DIAMOND = 1500) ///// напиши тут свои материалы
+	materials = list(MATERIAL_STEEL = 8000, MATERIAL_SILVER = 3000, MATERIAL_DIAMOND = 1500)
 	build_path = /obj/item/gun/projectile/automatic/sec_smg/c20a
 	sort_string = "TAZGA"
 
