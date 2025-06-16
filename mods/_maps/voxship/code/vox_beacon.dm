@@ -82,6 +82,52 @@
 		"Thermals - 12" = list(12, /obj/item/clothing/glasses/thermal/plain/monocle),
 		"MIU - 15" = list(15, /obj/item/clothing/mask/ai)
 	)
+	var/thermal_limit = 1
+	var/raider_suit_limit = 2
+	var/arkmade_hardsuit_limit = 1
+
+/obj/structure/voxuplink/vox_ship/attack_hand(mob/living/carbon/human/user)
+	var/obj/item/organ/internal/voxstack/stack = user.internal_organs_by_name[BP_STACK]
+	if(istype(stack) || ignore_wl)
+		if(!working)
+			var/choice = input(user, "What would you like to request from Apex? You have [favors] favors left!", "Shoal Beacon") as null|anything in rewards
+			if(choice && !working)
+				if(rewards[choice][1] <= favors)
+					if(choice == "Thermals - 12" && thermal_limit <= 0)
+						to_chat(user, SPAN_WARNING("Thermal goggles are no longer available!"))
+						return
+					if(choice == "Raider Suit - 6" && raider_suit_limit <= 0)
+						to_chat(user, SPAN_WARNING("Raider suits are no longer available!"))
+						return
+					if(choice == "Arkmade Hardsuit - 8" && arkmade_hardsuit_limit <= 0)
+						to_chat(user, SPAN_WARNING("Arkmade hardsuits are no longer available!"))
+						return
+
+					working = TRUE
+					on_update_icon()
+					to_chat(user, SPAN_NOTICE("The Apex rewards you with \the [choice]."))
+					sleep(20)
+					working = FALSE
+					on_update_icon()
+
+					if(choice == "Thermals - 12")
+						thermal_limit--
+					if(choice == "Raider Suit - 6")
+						raider_suit_limit--
+					if(choice == "Arkmade Hardsuit - 8")
+						arkmade_hardsuit_limit--
+
+					favors -= rewards[choice][1]
+					for(var/I in rewards[choice])
+						if(!isnum(I))
+							new I(get_turf(src))
+				else
+					to_chat(user, SPAN_WARNING("You aren't worthy of \the [choice]!"))
+		else
+			to_chat(user, SPAN_WARNING("\The [src.name] is still working!"))
+	else
+		to_chat(user, SPAN_WARNING("You don't know what to do with \the [src.name]."))
+	..()
 
 /obj/structure/voxuplink/vox_ship/use_tool(obj/item/I, mob/user)
 	..()
