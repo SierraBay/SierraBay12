@@ -2,24 +2,32 @@
 	icon = 'mods/guns/icons/obj/foundation.dmi'
 
 /obj/item/gun/projectile/automatic
+	name = "prototype SMG"
 	icon = 'mods/guns/icons/obj/prototype_smg.dmi'
 
 /obj/item/gun/projectile/automatic/machine_pistol
+	name = "MP6 machine pistol"
 	icon = 'mods/guns/icons/obj/machine_pistol.dmi'
 
 /obj/item/gun/projectile/automatic/merc_smg
+	name = "C-20r submachine gun"
 	icon = 'mods/guns/icons/obj/merc_smg.dmi'
 
-/*
+/obj/item/gun/projectile/automatic/sec_smg
+	name = "WT-550 submachine gun"
+
 /obj/item/gun/projectile/automatic/assault_rifle
-	icon = 'mods/guns/icons/obj/assault_rifle.dmi'
+	name = "STS-35 assault rifle"
+	// icon = 'mods/guns/icons/obj/assault_rifle.dmi'
 
 /obj/item/gun/projectile/automatic/l6_saw
-	icon = 'mods/guns/icons/obj/saw.dmi'
+	name = "L6 machine gun"
+	// icon = 'mods/guns/icons/obj/saw.dmi'
 
-*/
+
 
 /obj/item/gun/projectile/automatic/bullpup_rifle
+	name = "Z8 carabine"
 	icon = 'mods/guns/icons/obj/bullpup_rifle.dmi'
 
 /obj/item/gun/projectile/automatic/battlerifle

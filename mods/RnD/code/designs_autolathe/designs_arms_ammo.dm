@@ -34,6 +34,10 @@
 	name = "ammunition (shotgun flash)"
 	build_path = /obj/item/ammo_casing/shotgun/flash
 
+/datum/design/autolathe/arms_ammo/hidden/magazine_smg_nt_rubber
+	name = "ammunition (carabine rubber)"
+	build_path = /obj/item/ammo_magazine/smg_nt/rubber
+
 /datum/design/autolathe/arms_ammo/hidden/magazine_smg_rubber
 	name = "ammunition (SMG rubber) top mounted"
 	build_path = /obj/item/ammo_magazine/smg_top/rubber
@@ -82,6 +86,10 @@
 	name = "ammunition (submachine gun)"
 	build_path = /obj/item/ammo_magazine/smg
 
+/datum/design/autolathe/arms_ammo/hidden/magazine_smg_nt
+	name = "ammunition (carabine)"
+	build_path = /obj/item/ammo_magazine/smg_nt
+
 /datum/design/autolathe/arms_ammo/hidden/magazine_uzi
 	name = "ammunition (machine pistol)"
 	build_path = /obj/item/ammo_magazine/machine_pistol
@@ -121,6 +129,10 @@
 /datum/design/autolathe/arms_ammo/hidden/flechette
 	name = "ammunition (flechette rifle)"
 	build_path = /obj/item/magnetic_ammo
+
+/datum/design/autolathe/arms_ammo/hidden/magazine_smg_nt_ap
+	name = "ammunition (carabine AP)"
+	build_path = /obj/item/ammo_magazine/smg_nt/ap
 
 /datum/design/autolathe/arms_ammo/hidden/skrellian_rifle_flechette
 	name = "ammunition (skrellian rifle flechette)"

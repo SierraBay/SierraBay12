@@ -201,7 +201,7 @@
  */
 
 /obj/item/gun/projectile/automatic/sol_smg
-	name = "submachine gun"
+	name = "MSI-220 submachine gun"
 	desc = "Mars Security Industries MSI-220 'Rapido'. Commonly used by Military Police, Sol Federal Police and other governmental paramilitary structures tied to MSI contracts."
 	icon = 'mods/guns/icons/obj/smg_sol.dmi'
 	icon_state = "solsmg"
@@ -266,3 +266,71 @@
 /obj/item/storage/box/ammo/smg_sol
 	name = "box of SOLMAG SMG magazines"
 	startswith = list(/obj/item/ammo_magazine/smg_sol = 6)
+
+/////////////////////////////////
+// Misc guns//
+/////////////////////////////////
+
+/* GUNS
+ * ========
+ */
+ 
+//C-20A
+/obj/item/gun/projectile/automatic/sec_smg/c20a
+	name = "C-20A carabine"
+	desc = "A licensed derivative of the infamous C-20r SMG, the C-20A is a lightweight carabine produced by NanoTrasen. Chambered in 7mm Usurpator rounds, the weapon trades bullet mass for muzzle velocity, thus becoming much more effective at longer ranges."
+	icon_state = "c20a"
+	item_state = "c20a"
+	icon = 'mods/guns/icons/obj/nt_smg.dmi'
+	item_icons = list(
+		slot_r_hand_str = 'mods/guns/icons/mob/righthand_guns.dmi',
+		slot_l_hand_str = 'mods/guns/icons/mob/lefthand_guns.dmi',
+		)
+	safety_icon = "safety"
+	slot_flags = SLOT_BELT|SLOT_BACK
+	magazine_type = /obj/item/ammo_magazine/smg_nt
+	allowed_magazines = /obj/item/ammo_magazine/smg_nt
+
+/obj/item/gun/projectile/automatic/sec_smg/c20a/on_update_icon()
+	..()
+	if(ammo_magazine)
+		icon_state = "c20a-[round(length(ammo_magazine.stored_ammo),4)]"
+	else
+		icon_state = "c20a"
+
+/obj/item/ammo_magazine/smg_nt
+	name = "box magazine"
+	icon_state = "smg"
+	icon = 'mods/guns/icons/obj/nt_smg.dmi'
+	mag_type = MAGAZINE
+	ammo_type = /obj/item/ammo_casing/pistol/small
+	matter = list(MATERIAL_STEEL = 1200)
+	caliber = CALIBER_PISTOL_SMALL
+	max_ammo = 20
+	multiple_sprites = 1
+
+/obj/item/ammo_magazine/smg_nt/empty
+	initial_ammo = 0
+
+/obj/item/ammo_magazine/smg_nt/rubber
+	labels = list("rubber")
+	ammo_type = /obj/item/ammo_casing/pistol/small/rubber
+
+/obj/item/ammo_magazine/smg_nt/practice
+	labels = list("practice")
+	ammo_type = /obj/item/ammo_casing/pistol/small/practice
+
+/obj/item/ammo_magazine/smg_nt/ap
+	labels = list("AP")
+	icon_state = "smg_ap"
+	matter = list(MATERIAL_STEEL = 2000)
+	ammo_type = /obj/item/ammo_casing/pistol/small/ap
+
+/obj/item/ammo_casing/pistol/small/ap
+	desc = "An armor piercing pistol bullet casing."
+	label = "AP"
+	projectile_type = /obj/item/projectile/bullet/pistol/holdout/ap
+	icon_state = "smallcasing_f"
+
+/obj/item/projectile/bullet/pistol/holdout/ap
+	armor_penetration = 15
