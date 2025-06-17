@@ -281,10 +281,11 @@
 	desc = "A licensed derivative of the infamous C-20r SMG, the C-20A is a lightweight carabine produced by NanoTrasen. Chambered in 7mm Usurpator rounds, the weapon trades bullet mass for muzzle velocity, thus becoming much more effective at longer ranges."
 	icon_state = "c20a"
 	item_state = "c20a"
+	wielded_item_state = "c20a"
 	icon = 'mods/guns/icons/obj/nt_smg.dmi'
 	item_icons = list(
-		slot_r_hand_str = 'mods/guns/icons/mob/righthand_guns.dmi',
-		slot_l_hand_str = 'mods/guns/icons/mob/lefthand_guns.dmi',
+		slot_r_hand_str = 'mods/guns/icons/mob/righthand_sec_smg.dmi',
+		slot_l_hand_str = 'mods/guns/icons/mob/lefthand_sec_smg.dmi',
 		)
 	safety_icon = "safety"
 	slot_flags = SLOT_BELT|SLOT_BACK
@@ -297,8 +298,12 @@
 	..()
 	if(ammo_magazine)
 		icon_state = "c20a-[round(length(ammo_magazine.stored_ammo),4)]"
+		item_state = "c20a"
+		wielded_item_state = "c20a"
 	else
 		icon_state = "c20a"
+		item_state = "c20a-empty"
+		wielded_item_state = "c20a-empty"
 
 /obj/item/gun/projectile/automatic/sec_smg/c20a/empty
 	starts_loaded = FALSE

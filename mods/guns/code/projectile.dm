@@ -15,6 +15,25 @@
 
 /obj/item/gun/projectile/automatic/sec_smg
 	name = "WT-550 submachine gun"
+	icon = 'mods/guns/icons/obj/sec_smg.dmi'
+	icon_state = "wt550"
+	item_state = "wt550"
+	wielded_item_state = "wt550-wielded"
+	item_icons = list(
+		slot_r_hand_str = 'mods/guns/icons/mob/righthand_sec_smg.dmi',
+		slot_l_hand_str = 'mods/guns/icons/mob/lefthand_sec_smg.dmi',
+		)
+
+/obj/item/gun/projectile/automatic/sec_smg/on_update_icon()
+	..()
+	if(ammo_magazine)
+		icon_state = "wt550-[round(length(ammo_magazine.stored_ammo),4)]"
+		item_state = "wt550"
+		wielded_item_state = "wt550-wielded"
+	else
+		icon_state = "wt550"
+		item_state = "wt550-empty"
+		wielded_item_state = "wt550-wielded-empty"
 
 /obj/item/gun/projectile/automatic/assault_rifle
 	name = "STS-35 assault rifle"
