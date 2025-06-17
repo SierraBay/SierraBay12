@@ -11,9 +11,9 @@
 	if(!user.incapacitated())
 		var/datum/sprite_accessory/hair/hair_style = GLOB.hair_styles_list[user.head_hair_style]
 		if(hair_style.flags & VERY_SHORT)
-			user.visible_message("<span class='notice'>\The [user] just sort of runs \the [src] over their scalp.</span>")
+			user.visible_message(SPAN_NOTICE("[user] just sort of runs \the [src] over their scalp."))
 		else
-			user.visible_message("<span class='notice'>\The [user] meticulously brushes their hair with \the [src].</span>")
+			user.visible_message(SPAN_NOTICE("[user] meticulously brushes their hair with \the [src]."))
 
 /obj/item/haircomb/brush/use_after(atom/A, mob/living/user as mob)
 	if(brushing)
@@ -33,8 +33,8 @@
 
 		if(do_after(user, 10, H))
 			if(user.a_intent == I_HURT && cover != "skin" && cover != "body")
-				user.visible_message("<span class='warning'>The [user] brushes [H]'s <b>against</b> [cover] with \the [src]!</span>")
+				user.visible_message(SPAN_WARNING("[user] brushes [H]'s <b>against</b> [cover] with \the [src]!"))
 			else
-				user.visible_message("<span class='notice'>The [user] brushes [H]'s [cover] with \the [src].</span>")
+				user.visible_message(SPAN_WARNING("<span class='notice'>[user] brushes [H]'s [cover] with \the [src].</span>"))
 
 	brushing = FALSE

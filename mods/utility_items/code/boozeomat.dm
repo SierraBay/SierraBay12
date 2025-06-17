@@ -155,8 +155,8 @@
 	else if (!IS_METABOLICALLY_INERT(M))
 		M.adjustHalLoss(4)
 		if(prob(5))
-			M.visible_message("<span class='warning'>[M] [pick("dry heaves!","coughs!","splutters!")]</span>", \
-			"<span class='danger'>You can feel LIQUID HELL running down your throat and into your stomach!</span>")
+			M.visible_message(SPAN_DANGER("[M] [pick("dry heaves!","coughs!","splutters!")]"), \
+			SPAN_DANGER("You can feel LIQUID HELL running down your throat and into your stomach!"))
 	if(istype(M, /mob/living/carbon/slime))
 		M.bodytemperature += rand(15, 30)
 	holder.remove_reagent(/datum/reagent/frostoil, 5)
