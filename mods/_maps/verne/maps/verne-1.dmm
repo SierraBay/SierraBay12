@@ -531,6 +531,8 @@
 /obj/structure/closet/radiation,
 /obj/item/device/geiger,
 /obj/item/device/geiger,
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/mask/gas,
 /turf/simulated/floor/tiled/monotile,
 /area/verne/engineering)
 "ct" = (

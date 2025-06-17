@@ -1,6 +1,6 @@
 /obj/item/mech_equipment/mounted_system/taser
-	name = "mounted burst electrolaser carbine"
-	desc = "A dual fire mode burst electrolaser system connected to the exosuit's targetting system."
+	name = "mounted electrolaser carbine"
+	desc = "A dual fire mode electrolaser system connected to the mech targetting system."
 	icon_state = "mech_taser"
 	holding_type = /obj/item/gun/energy/taser/carbine/mounted/mech
 	restricted_hardpoints = list(HARDPOINT_LEFT_HAND, HARDPOINT_RIGHT_HAND)
@@ -11,9 +11,12 @@
 	use_external_power = TRUE
 	has_safety = FALSE
 	self_recharge = TRUE
-	burst = 3
-	burst_delay = 3
-	dispersion = list(-1.5,1,1.5)
+	burst = 1
+	projectile_type = /obj/item/projectile/beam/stun
+	firemodes = list(
+		list(mode_name="stun", projectile_type= /obj/item/projectile/beam/stun),
+		list(mode_name="shock", projectile_type= /obj/item/projectile/energy/electrode),
+		)
 
 
 /obj/item/mech_equipment/mounted_system/taser/need_combat_skill()

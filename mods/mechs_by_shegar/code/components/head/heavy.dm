@@ -11,7 +11,7 @@
 	repair_damage = 30
 	repair_damage = 30
 	req_material = MATERIAL_PLASTEEL
-	back_modificator_damage = 4
+	back_modificator_damage = 3
 	front_modificator_damage = 0.5
 	max_heat = 300
 	heat_cooling = 4

@@ -3,6 +3,7 @@
 	name = "Refractions of light"
 	anomaly_tag = "Doubled teleporter"
 	with_sound = TRUE
+	admin_name = "Телепорт"
 	sound_type = 'mods/anomaly/sounds/vspishka_activated.ogg'
 	idle_effect_type = "rvach_idle"
 	activation_effect_type = "gravy_anomaly_down"

@@ -117,7 +117,7 @@ PROCESSING_SUBSYSTEM_DEF(anom)
 	anomaly_text += "<br><br><br><b>ANOMALY MOD STATISTIC.</b>"
 	if(!last_attacked_message && !gibbed_last_message && !collected_artefacts_by_player)
 		anomaly_text += "<br>Никто не рискнул ступить на аномальную планету."
-		anomaly_text += "<br><a href='byond://?src=\ref[src];show_anomaly_stats=1'>\[Показать подробную статистику\]</a>"
+		anomaly_text += "<br><a href='byond://?src=\ref[src];output_roundend_data=1'>\[Показать подробную статистику\]</a>"
 		return anomaly_text
 	if(SSanom.spawn_ammount > 0)
 		//Раненные, умершие, гибнутые
@@ -133,32 +133,164 @@ PROCESSING_SUBSYSTEM_DEF(anom)
 		anomaly_text += "<br><a href='byond://?src=\ref[src];show_anomaly_stats=1'>\[Показать подробную статистику\]</a>"
 		return anomaly_text
 
-
 /datum/controller/subsystem/processing/anom/Topic(href, href_list)
 	..()
-	if(href_list["show_anomaly_stats"])
-		var/mob/user = usr
-		if(!user.client)
-			return
-	var/HTML = "<html><body>"
-	HTML += "<br><br> ANOMALIES"
-	HTML += "<br>Количество аномалий на момент окончания раунда: [anomalies_cores_in_world_amount]. Мод размещал аномалии [spawn_ammount] раз, а удалял [removed_ammount] раз."
-	HTML += "<br>Игра заспавнила [artefacts_spawned_by_game] артефактов, из них [artefacts_deleted_by_game] удалено. Собрано игроками артефактов: [collected_artefacts_by_player]. Всего артефактов на конец раунда: [LAZYLEN(artefacts_list_in_world)]"
-	HTML +=  "<br>Аномалии были взведены [anomalies_activated_times] раз. В целом, игроки подверглись влиянию аномалий [humanoids_effected_by_anomaly] раз, а [humanoids_gibbed_by_anomaly] игроков были гибнуты. [simplemobs_effected_by_anomaly] симплмобов подверглись влиянию аномалий и [simplemobs_gibbed_by_anomaly] было гибнуто."
-	HTML += "<br><br> ARTEFACTS"
-	HTML += "<br>Заработано каргопоинтов за продажу артефактов: [earned_cargo_points], заработано РНД поинтов за изучение артефактов: [earned_rnd_points]"
-	HTML += "<br>Всего попыток взаимодействия с артефактами: [interactions_with_artefacts_by_players_ammount], из них [good_interactions_with_artefacts_by_players_ammount] принесли пользу, а [bad_interactions_with_artefacts_by_players_ammount] принесли вред."
-	HTML += "<br><br> DAMAGES"
-	HTML += "<br> Люди подверглись влиянию аномалий [humanoids_effected_by_anomaly] раз, а гибнулись [humanoids_gibbed_by_anomaly] раз."
-	HTML += "<br> Симплмобы подверглись влиянию аномалий [simplemobs_effected_by_anomaly] раз, а гибнулись [simplemobs_gibbed_by_anomaly] раз."
-
-
-	// Открываем окно
+	var/mob/user = usr
+	var/list/HTML = list()
 	var/window_x = 600
 	var/window_y = 400
-	var/datum/browser/popup = new(usr, "anomaly_stats", "Anomaly Statistics", window_x, window_y)
+	if(!user.client)
+		return
+
+
+
+
+
+
+	//Сперва идут реакции на нажатия кнопок в отдельных УИ
+	//Общие реакции
+	if(href_list["delete_object"])
+		var/obj/delete_object = locate(href_list["delete_object"])
+		if(delete_object)
+			delete_object.Destroy()
+			to_chat(user, "Обьект [delete_object] удален.")
+		else
+			to_chat(user, "Похоже, данные устарели.")
+	if(href_list["teleport_to_object"])
+		var/obj/teleport_to_object = locate(href_list["teleport_to_object"])
+		if(teleport_to_object)
+			usr.forceMove(get_turf(teleport_to_object))
+			to_chat(user, "Вы телепортированы к  [teleport_to_object].")
+		else
+			to_chat(user, "Похоже, данные устарели.")
+
+
+	//Аномалии
+	if(href_list["born_artefact"])
+		var/obj/anomaly/anomaly_to_born = locate(href_list["born_artefact"])
+		if(!anomaly_to_born)
+			to_chat(user, "ERROR: Аномалия не найдена.")
+		if(!LAZYLEN(anomaly_to_born.artefacts))
+			to_chat(user, "WARNING: Аномалия не умеет создавать артефакты, т.к они не прописаны в списке её артефактов.")
+		var/obj/item/artefact/spawned_artefact = anomaly_to_born.born_artefact()
+		if(!spawned_artefact)
+			to_chat(user, "ERROR: Артефакт не заспавнен.")
+		else
+			to_chat(user, "Создан артефакт [spawned_artefact.name]")
+	if(href_list["activate_anomaly"])
+		var/obj/anomaly/anomaly_to_activate = locate(href_list["activate_anomaly"])
+		if(!anomaly_to_activate)
+			to_chat(user, "ERROR: Аномалия не найдена.")
+		anomaly_to_activate.activate_anomaly()
+
+
+	//Рассказчики
+	if(href_list["change_storyteller_points"])
+		var/datum/planet_storyteller/storyteller = locate(href_list["change_storyteller_points"])
+		if(!storyteller)
+			to_chat(user, "ERROR: Рассказчик не найден.")
+		var/number = 0
+		number = input(usr, "Сколько добавим/убавим? (поставь - перед числом чтоб убавить)", "Введи число") as num|null
+		if(!number)
+			to_chat(user, "ERROR: Число не введено или не обработано.")
+		if(href_list["Эволюция"])
+			storyteller.current_evolution_points += number
+			storyteller.check_level_up()
+		else if(href_list["Аномалии"])
+			storyteller.current_anomaly_points += number
+		else if(href_list["Мобы"])
+			storyteller.current_mob_points += number
+		else if(href_list["Обман"])
+			storyteller.current_scam_points += number
+		href_list += "Рассказчики" //Чтоб игра сразу и отрисовала УИ рассказчика по новой
+		href_list["Рассказчики"] = "1"
+	if(href_list["toggle_storyteller_listen"])
+		usr.client.listen_anomaly_storytellers()
+		href_list += "Рассказчики" //Чтоб игра сразу и отрисовала УИ рассказчика по новой
+		href_list["Рассказчики"] = "1"
+	if(href_list["set_storyteller_activity_time"])
+		var/datum/planet_storyteller/storyteller = locate(href_list["set_storyteller_activity_time"])
+		if(!storyteller)
+			to_chat(user, "ERROR: Рассказчик не найден.")
+		var/number = 0
+		number = input(usr, "Выставьте время между активностью рассказчика (Указывать в секундах)", "Введи число") as num|null
+		if(!number)
+			to_chat(user, "ERROR: Число не введено или не обработано.")
+		number = number SECONDS
+		storyteller.action_delay = number
+		href_list += "Рассказчики" //Чтоб игра сразу и отрисовала УИ рассказчика по новой
+		href_list["Рассказчики"] = "1"
+
+
+	//Погода
+	if(href_list["start_blowout"])
+		var/datum/weather_manager/weather = locate(href_list["start_blowout"])
+		weather.start_blowout()
+	if(href_list["delete_weather"])
+		var/datum/weather_manager/weather = locate(href_list["delete_weather"])
+		weather.Destroy()
+	if(href_list["change_weather_stage"])
+		var/datum/weather_manager/weather = locate(href_list["change_weather_stage"])
+		if(href_list["Спокойная"])
+			weather.change_visual_weather(force_state = "calm")
+		if(href_list["Лёгкий снег"] || href_list["Дождь"])
+			weather.change_visual_weather(force_state = "midle")
+		if(href_list["Буран"])
+			weather.change_visual_weather(force_state = "storm")
+
+		href_list += "Погода" //Чтоб игра сразу и отрисовала УИ рассказчика по новой
+		href_list["Погода"] = "1"
+	if(href_list["change_power_ups"])
+		var/datum/weather_manager/weather = locate(href_list["change_power_ups"])
+		var/number = 0
+		number = input(usr, "Добавьте количество усилений (Каждое усиление +15 минут до выброса/цунами), чтоб убавить поставьте минус перед цифрой.", "Введи число") as num|null
+		if(!number)
+			to_chat(user, "ERROR: Число не введено или не обработано.")
+		weather.change_powerups_ammout(number)
+
+
+
+
+	//Теперь идёт реагирование на нажатые кнопки УИ
+	if(href_list["show_anom_control_main"])
+		window_x = 1000
+		window_y = 800
+		ShowAnomcontrolUI(HTML, user, window_x, window_y)
+	else if(href_list["output_roundend_data"])
+		window_x = 600
+		window_y = 400
+		ShowRoundendUI(HTML, user, window_x, window_y)
+	else if(href_list["Аномалии"] && !href_list["Рассказчики"])
+		window_x = 1000
+		window_y = 800
+		Show_anomalies_UI(HTML, user, window_x, window_y)
+	else if(href_list["Артефакты"])
+		window_x = 1000
+		window_y = 800
+		Show_artefacts_UI(HTML, user, window_x, window_y)
+	else if(href_list["Погода"])
+		window_x = 1000
+		window_y = 800
+		Show_weather_UI(HTML, user, window_x, window_y)
+	else if(href_list["Рассказчики"])
+		window_x = 1000
+		window_y = 800
+		Show_storytellers_UI(HTML, user, window_x, window_y)
+	else
+		window_x = 1000
+		window_y = 800
+		ShowAnomcontrolUI(HTML, user, window_x, window_y)
+	HTML = jointext(HTML, "<br>", 2)
+	// Открываем окно
+	var/datum/browser/popup = new(usr, "Anomaly_stuff", "Anomaly Statistics", window_x, window_y)
 	popup.set_content(HTML)
 	popup.open()
+
+
+
+
+
+
 
 /datum/controller/subsystem/processing/anom/proc/add_last_attack(mob/living/user, attack_name)
 	if(!ishuman(user) && !isrobot(user))

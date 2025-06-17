@@ -1,4 +1,5 @@
 /mob/living/exosuit
+	var/list/movement_blocked_by_shield = list()
 	///Требуется обработка скорости?
 	var/process_move_speed = FALSE
 	///Холдер, содержит время когда был сделан последний шаг

@@ -59,6 +59,11 @@
 /obj/item/artefact/proc/process_artefact_effect_to_user()
 	return
 
+/obj/item/artefact/Destroy()
+	if(is_processing)
+		STOP_PROCESSING(SSanom, src)
+	LAZYREMOVE(SSanom.artefacts_list_in_world, src)
+	. = ..()
 
 //Добавляем и убираем ВЛАДЕЛЬЦЕВ(кто имеем в рюкзаке арт)
 /obj/item/artefact/pickup(mob/living/user)
