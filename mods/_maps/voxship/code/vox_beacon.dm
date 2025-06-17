@@ -103,7 +103,7 @@
 	if(!istype(user, /mob/living/carbon/human/vox))
 		to_chat(user, SPAN_WARNING("You don't know what to do with \the [src.name]."))
 		return
-	else if(istype(user, /mob/living/carbon/human/vox))
+	if(istype(user, /mob/living/carbon/human/vox))
 		if(working)
 			to_chat(user, SPAN_WARNING("\The [src.name] is still working!"))
 			return
