@@ -20,20 +20,20 @@
 	containername = "NanoTrasen light armor crate"
 
 /singleton/hierarchy/supply_pack/security/armory
-	name = "Weapons - Ballistic sidearms"
+	name = "Weapons - NT Mk58 sidearms"
 	containertype = /obj/structure/closet/crate/secure/weapon
 	contains = list(/obj/item/gun/projectile/pistol/sec = 4)
 	cost = 60
 	containername = "ballistic sidearms crate"
 
 /singleton/hierarchy/supply_pack/security/armory/laser
-	name = "Weapons - Laser carbines"
+	name = "Weapons - G40E laser carbines"
 	contains = list(/obj/item/gun/energy/laser/secure = 4)
 	cost = 60
 	containername = "laser carbines crate"
 
 /singleton/hierarchy/supply_pack/security/armory/laser/shady
-	name = "Weapons - Laser carbines (For disposal)"
+	name = "Weapons - G40E laser carbines (For disposal)"
 	contains = list(/obj/item/gun/energy/laser = 4)
 	cost = 80
 	contraband = 1
@@ -65,6 +65,14 @@
 	security_level = SUPPLY_SECURITY_HIGH
 
 */
+
+/singleton/hierarchy/supply_pack/security/armory/c20a
+	name = "Weapons - C20A carabines"
+	contains = list(/obj/item/gun/projectile/automatic/sec_smg/c20a/empty = 2)
+	cost = 40
+	containertype = /obj/structure/closet/crate/secure/weapon
+	containername = "\improper Ballistic PDW crate"
+	security_level = SUPPLY_SECURITY_ELEVATED
 
 /singleton/hierarchy/supply_pack/security/c20aammo
 	name = "Ammunition - 7mm carabine"
@@ -101,7 +109,7 @@
 	security_level = SUPPLY_SECURITY_HIGH
 
 /singleton/hierarchy/supply_pack/security/armory/pdw
-	name = "Weapons - Ballistic NT41"
+	name = "Weapons - NT41 SMGs"
 	contains = list(/obj/item/gun/projectile/automatic/nt41 = 2)
 	cost = 120
 	containername = "\improper Ballistic PDW crate"
