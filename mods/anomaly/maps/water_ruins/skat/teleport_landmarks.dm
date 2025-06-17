@@ -24,16 +24,13 @@ var/global/list/teleport_landmarks_list = list()
 	if(map_path && !spawn_started && !is_exit)
 		spawn_started = TRUE
 		spawned_template = new map_path()
-		var/turf/spawned_turf = spawned_template.load_new_z()
-		var/area/map_area = get_area(spawned_turf)
-		update_landmarks_connection(map_area)
+		spawned_template.load_new_z()
+		update_landmarks_connection()
 
-/obj/landmark/teleport_to_z_level/proc/update_landmarks_connection(area/map_area)
+/obj/landmark/teleport_to_z_level/proc/update_landmarks_connection()
 	for(var/obj/landmark/teleport_to_z_level/landmark in landmarks_list)
-		if(map_area == get_area(landmark))
-			if(landmark.is_exit)
-				if(teleport_tag == landmark.teleport_tag)
-					connect_teleports_landmarks(landmark)
+		if(landmark.is_exit && teleport_tag == landmark.teleport_tag)
+			connect_teleports_landmarks(landmark)
 
 /obj/landmark/teleport_to_z_level/proc/connect_teleports_landmarks(obj/landmark/teleport_to_z_level/input_mark)
 	connected_landmark = input_mark
