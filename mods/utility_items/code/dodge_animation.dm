@@ -1,5 +1,6 @@
 //Анимация уворота для мобиков.
-/mob/proc/dodge_animation(input_animation_time = 1 SECONDS, atom/attacker = null)
+/mob/proc/dodge_animation(input_animation_time = 0.5 SECONDS, atom/attacker = null)
+	set waitfor = FALSE
 	//Выставляем нулевые значения
 	var/x_move = 0
 	var/y_move = 0
@@ -23,7 +24,6 @@
 			x_move = -6
 		if(EAST)
 			x_move = 6
-	animate(src, input_animation_time, TRUE, LINEAR_EASING, pixel_x = x_move, pixel_y = y_move)
-	sleep(input_animation_time)
-	animate(src, time = input_animation_time, easing = LINEAR_EASING, pixel_x = -x_move, pixel_y = -y_move)
-	sleep(input_animation_time)
+	animate(src, time = input_animation_time/2, easing =  QUAD_EASING, pixel_x = x_move, pixel_y = y_move)
+	sleep(input_animation_time/2)
+	animate(src, time = input_animation_time/2, easing =  QUAD_EASING, pixel_x = 0, pixel_y = 0)

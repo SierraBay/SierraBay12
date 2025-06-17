@@ -234,9 +234,9 @@
 			if(show_ssd && ssd_check())
 				M.visible_message(SPAN_NOTICE("[M] shakes [src] trying to wake [P.him] up!"), \
 				SPAN_NOTICE("You shake [src], but they do not respond... Maybe they have S.S.D?"))
-			else if(lying || src.sleeping || player_triggered_sleeping)
-				src.player_triggered_sleeping = 0
-				src.sleeping = max(0,src.sleeping - 5)
+			else if(lying || sleeping || player_triggered_sleeping)
+				player_triggered_sleeping = 0
+				AdjustSleeping(-5)
 				M.visible_message(SPAN_NOTICE("[M] shakes [src] trying to wake [P.him] up!"), \
 									SPAN_NOTICE("You shake [src] trying to wake [P.him] up!"))
 			else

@@ -34,6 +34,7 @@
 #define LANGUAGE_DRONE_GLOBAL      "Drone Talk"
 #define LANGUAGE_CHANGELING_GLOBAL "Changeling"
 #define LANGUAGE_BORER_GLOBAL      "Cortical Link"
+#define LANGUAGE_LEGION_GLOBAL     "Nexus Link"
 
 // Language flags.
 #define WHITELISTED  1   // Language is available if the speaker is whitelisted.

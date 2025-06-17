@@ -17,6 +17,7 @@
 #include "maint_interaction\install_equipment.dm"
 #include "maint_interaction\material_repair.dm"
 #include "maint_interaction\mech_bolts.dm"
+#include "maint_interaction\equipment_repair.dm"
 #include "maint_interaction\paint.dm"
 #include "maint_interaction\start_dismantle_mech.dm"
 #include "maint_interaction\welder_repair.dm"

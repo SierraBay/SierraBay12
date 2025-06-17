@@ -1,5 +1,5 @@
 /obj/item/mech_equipment/flash
-	name = "exosuit flash"
+	name = "mech flash"
 	icon_state = "mech_flash"
 	var/flash_min = 7
 	var/flash_max = 9
@@ -10,6 +10,9 @@
 	var/next_use = 0
 	origin_tech = list(TECH_MAGNET = 2, TECH_COMBAT = 2)
 	heat_generation = 15
+
+/obj/item/mech_equipment/flash/have_specific_melee_attack()
+	return TRUE
 
 /obj/item/mech_equipment/flash/proc/area_flash()
 	playsound(src.loc, 'sound/weapons/flash.ogg', 100, 1)

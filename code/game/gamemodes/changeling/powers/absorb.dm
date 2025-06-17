@@ -131,5 +131,5 @@
 	if(changeling.absorbing_lethally == ABSORB_NONLETHAL)
 		changeling.geneticpoints += 2
 		changeling.max_geneticpoints += 2
-		T.Sleeping(200)
+		T.Sleeping(20)
 	return TRUE

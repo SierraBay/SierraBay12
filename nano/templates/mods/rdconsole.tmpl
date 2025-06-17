@@ -346,20 +346,42 @@
 			<th>Local database</th>
 		</tr>
 		<tr>
+			<th>{{:helper.link("Search", '', {'search' : 1})}}
+			{{if data.search_text}}
+				Searching for '{{:data.search_text}}'
+				{{:helper.link("Clear Search", '', {'clear_search' : 1})}}
+			{{/if}}
+		</tr>
+		<tr>
 		<td valign="top" style="width: 50%">
 		<div class="statusDisplayRecords">
-		Detected designs:
-		{{for data.disk_designs}}
-			<div class="item">
-				{{:value.name}}
-				{{:helper.link("", 'trash', {'delete_disk_file' : value.id}, data.disk_read_only ? 'disabled' : null)}}
-				{{:helper.link("", 'arrowthick-1-e', {'download_disk_design' : value.id})}}
+		{{if data.search_text}}
+			Detected designs:
+			{{for data.disk_designs}}
+				<div class="item">
+					{{:value.name}}
+					{{:helper.link("", 'trash', {'delete_disk_file' : value.id}, data.disk_read_only ? 'disabled' : null)}}
+					{{:helper.link("", 'arrowthick-1-e', {'download_disk_design' : value.id})}}
+				</div>
+			{{empty}}
+				<div class="item">The disk has no accessible design files stored on it.</div>
+			{{/for}}
 			</div>
-		{{empty}}
-			<div class="item">The disk has no accessible design files stored on it.</div>
-		{{/for}}
-		</div>
-		</td>
+			</td>
+		{{else}}
+			Detected designs:
+			{{for data.disk_designs}}
+				<div class="item">
+					{{:value.name}}
+					{{:helper.link("", 'trash', {'delete_disk_file' : value.id}, data.disk_read_only ? 'disabled' : null)}}
+					{{:helper.link("", 'arrowthick-1-e', {'download_disk_design' : value.id})}}
+				</div>
+			{{empty}}
+				<div class="item">The disk has no accessible design files stored on it.</div>
+			{{/for}}
+			</div>
+			</td>
+		{{/if}}
 
 		<td valign="top" style="width: 50%">
 		<div class="statusDisplayRecords">

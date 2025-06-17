@@ -256,8 +256,8 @@
 	QDEL_NULL(boss_theme)
 	. = ..()
 
-/mob/living/simple_animal/hostile/retaliate/goat/king/Process_Spacemove()
-	return 1
+/mob/living/simple_animal/hostile/retaliate/goat/king/Process_Spacemove(allow_movement)
+	return TRUE
 
 /datum/say_list/goat/king
 	emote_hear = list("brays in a booming voice")

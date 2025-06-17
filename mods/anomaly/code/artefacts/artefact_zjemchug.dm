@@ -3,6 +3,7 @@
 	name = "Something"
 	icon_state = "zjemchug"
 	desc = "Абсолютно гладкий шар с максимально правильной формой. Чем дольше смотришь на него, тем больше сознание затмевает туман. Что-то не так."
+	admin_name = "Жемчуг"
 	need_to_process = TRUE
 	rect_to_interactions = list(
 		"Lick",

@@ -36,9 +36,16 @@
 	/// Round time where the next shot can start from
 	var/next_shot = 0
 	/// Time to wait between safe shots in deciseconds
-	var/const/coolinterval = 2 MINUTES
 
-	var/const/cal_count = 4
+	// [SIERRA-EDIT] - IMPULSE_CANNON
+	// var/const/coolinterval = 2 MINUTES
+
+	// var/const/cal_count = 4
+
+	var/coolinterval = 2 MINUTES
+
+	var/cal_count = 4
+	// [SIERRA-EDIT]
 
 /obj/machinery/computer/ship/disperser/Initialize()
 	. = ..()

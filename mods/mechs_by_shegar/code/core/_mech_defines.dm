@@ -1,8 +1,3 @@
-//Здесь будут дополнительные дефайны
-#define ismech(A) istype(A, /mob/living/exosuit)
-
-#define inmech(A) istype(A.loc, /mob/living/exosuit)
-
 //Болты кабины меха
 #define BOLTS_DESTROYED 0 //Болты разрушены, мех больше не может запирать свою кабину
 #define BOLTS_NOMINAL 1 //Всё нормально

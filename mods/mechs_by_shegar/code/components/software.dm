@@ -5,6 +5,7 @@
 	icon = 'icons/mecha/mech_equipment.dmi'
 	gender = NEUTER
 	color = COLOR_WHITE
+	max_dam = 10
 	//Картиночки плат внутри
 	var/list/internal_parts_list_images = list()
 	//Список программ установленных в общей сумме
@@ -13,6 +14,11 @@
 	var/list/installed_circuits = list()
 	var/max_installed_software = 2
 
+/obj/item/robot_parts/robot_component/camera
+	max_dam = 10
+
+/obj/item/robot_parts/robot_component/radio
+	max_dam = 10
 
 /obj/item/robot_parts/robot_component/control_module/examine(mob/user)
 	. = ..()

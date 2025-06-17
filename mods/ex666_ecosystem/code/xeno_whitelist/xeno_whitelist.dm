@@ -8,7 +8,7 @@ var/global/list/admin_verbs_xeno = list(
 	if(holder)
 		if(holder.rights & R_XENO)			verbs += admin_verbs_xeno
 
-#define HOLDER_LIST		list(SPECIES_FBP)
+#define HOLDER_LIST		list(SPECIES_FBP, SPECIES_PSI)
 
 /datum/admins/proc/xeno_whitelist_panel()
 	set name = "Xenos Whitelist Panel"

@@ -199,28 +199,46 @@ var/global/list/asset_datums = list()
 	var/list/uncommon_dirs = list(
 		"nano/templates/"
 	)
-
+//[SIERRA-ADD] - ASSETS
+	var/list/mod_dirs = list(
+		"nano/templates/mods/"
+	)
+//[SIERRA-ADD] - ASSETS
+//[SIERRA-EDIT] - ASSETS
 /datum/asset/nanoui/register()
 	// Crawl the directories to find files.
-	for (var/path in common_dirs)
-		var/list/filenames = flist(path)
+// МОДУЛЬНО АССЕТЫ НЕ РЕГИСТРИРУЕМ, ПРИ ВЫЗОВЕ ПРЕДКА, НАЧНЕТСЯ ПЕРЕРЕГИСТРАЦИЯ.
+// С ОВЕРРАЙДАМИ Я УЖЕ ПОПАДАЛСЯ НА ТО ЧТО ПРОК НЕ ИСПОЛЬЗОВАЛСЯ ПОТОМУ ЧТО МОЙ ОВЕРРАЙД БЫЛ ПЕРЕОПРЕДЕЛЕН В ДРУГОМ МОДУЛЕ.
+// ИЗ-ЗА ЭТОГО Я ПЕРЕПИСАЛ НАШИ В КОРКОД, ЧТОБЫ НЕ БЫЛО ПРОБЛЕМ С ПЕРЕОПРЕДЕЛЕНИЕМ.
+// ПЕРВЫМИ МЫ ЗАГРУЖАЕМ СТИЛИ И СТАТУС ИКОНКИ
+	var/list/filenames
+	for(var/path in common_dirs)
+		filenames = flist(path)
 		for(var/filename in filenames)
 			if(copytext(filename, -1) != "/") // Ignore directories.
 				if(fexists(path + filename))
 					common[filename] = fcopy_rsc(path + filename)
 					register_asset(filename, common[filename])
-	for (var/path in uncommon_dirs)
-		var/list/filenames = flist(path)
+//ЗАГРУЖАЕМ ОБЫЧНЫЕ ТЕМПЛЕЙЛЫ
+	for(var/path in uncommon_dirs)
+		filenames = flist(path)
 		for(var/filename in filenames)
 			if(copytext(filename, -1) != "/") // Ignore directories.
 				if(fexists(path + filename))
 					register_asset(filename, fcopy_rsc(path + filename))
+//ЗАГРУЖАЕМ НАШИ МОДУЛЬНЫЕ ТЕМПЛЕЙЛЫ
+	for(var/path as anything in mod_dirs)
+		filenames = flist(path)
+		for(var/filename as anything in filenames)
+			if(copytext(filename, -1) != "/") // Ignore directories.
+				if(fexists(path + filename))
+					register_asset("mods-[filename]", fcopy_rsc(path + filename))
 
 	var/list/mapnames = list()
 	for(var/z in GLOB.using_map.map_levels)
 		mapnames += map_image_file_name(z)
 
-	var/list/filenames = flist(MAP_IMAGE_PATH)
+	filenames = flist(MAP_IMAGE_PATH)
 	for(var/filename in filenames)
 		if(copytext(filename, -1) != "/") // Ignore directories.
 			var/file_path = MAP_IMAGE_PATH + filename
@@ -228,6 +246,28 @@ var/global/list/asset_datums = list()
 				common[filename] = fcopy_rsc(file_path)
 				register_asset(filename, common[filename])
 
+//ОБЯЗАТЕЛЬНО БЫТЬ В САМОМ КОНЦЕ, ЗАГРУЗКА ИКОНОК ДЛЯ ДИЗАЙНОВ
+	for(var/D in SSresearch.all_designs)
+		var/datum/design/design = D
+		var/filename = sanitizeFileName("[design.build_path].png")
+		var/atom/item = design.build_path
+		var/icon_file = initial(item.icon)
+		var/icon_state
+		if(item in typesof(/obj/item/reagent_containers/food/drinks/glass2))
+			var/obj/item/reagent_containers/food/drinks/glass2/glass = item
+			icon_state = initial(glass.base_icon)
+		else
+			icon_state = initial(item.icon_state)
+		if (!icon_file)
+			icon_file = ""
+
+		var/icon/I = icon(icon_file, icon_state, SOUTH)
+		register_asset(filename, I)
+
+		design.ui_data["icon"] = (sanitizeFileName("[design.build_path].png"))
+
+
+//[//SIERRA-EDIT] - ASSETS
 /datum/asset/nanoui/send(client, uncommon)
 	if(!islist(uncommon))
 		uncommon = list(uncommon)

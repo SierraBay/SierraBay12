@@ -1234,8 +1234,8 @@
 			SPAN_DANGER("A screeching creature bursts out of \the [human]'s chest!"),
 			FONT_HUGE(SPAN_DANGER("Something claws its way out through your [organ]!"))
 		)
-		organ.take_external_damage(50, 0, EMPTY_BITFIELD, "Live animal escaping the body")
-		organ.damage_internal_organs(50, 0, EMPTY_BITFIELD)
+		organ.take_external_damage(50, 0, FLAGS_OFF, "Live animal escaping the body")
+		organ.damage_internal_organs(50, 0, FLAGS_OFF)
 		human.AdjustWeakened(5)
 		human.AdjustStunned(5)
 	else
@@ -1382,8 +1382,8 @@
 		unluckylimb1.fracture()
 		unluckylimb2.add_pain(50)
 		unluckylimb2.fracture()
-		organ.take_external_damage(50, 0, EMPTY_BITFIELD, "Agonizing pain")
-		organ.damage_internal_organs(50, 0, EMPTY_BITFIELD)
+		organ.take_external_damage(50, 0, FLAGS_OFF, "Agonizing pain")
+		organ.damage_internal_organs(50, 0, FLAGS_OFF)
 		human.AdjustWeakened(5)
 		human.AdjustStunned(5)
 

@@ -339,7 +339,7 @@ var/global/last_message_id = 0
 
 /proc/is_relay_online()
 	for(var/obj/machinery/bluespacerelay/M as anything in SSmachines.get_machinery_of_type(/obj/machinery/bluespacerelay))
-		if(M.stat == EMPTY_BITFIELD)
+		if(M.stat == FLAGS_OFF)
 			return 1
 	return 0
 

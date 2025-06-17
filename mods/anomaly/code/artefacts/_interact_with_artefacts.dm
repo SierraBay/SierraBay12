@@ -13,22 +13,23 @@
 		if(AnomaliesAmmountInTurf(get_turf(src)) == 0)
 			artefact_collected_by_player()
 		else
-			for(var/obj/anomaly/anomka in src.loc.contents)
-				if(prob(25 * user.get_skill_value(SKILL_SCIENCE)))
-					to_chat(user, SPAN_GOOD("[desc]"))
-					artefact_collected_by_player()
+			for(var/obj/anomaly/anomka in get_turf(src))
+				if(anomka.is_helper)
+					var/obj/anomaly/part/helper = anomka
+					if(helper.core.isready())
+						helper.core.activate_anomaly()
 				else
-					to_chat(user, SPAN_WARNING("Обьект уплывает из ваших рук"))
-					if(istype(anomka, /obj/anomaly/part))
-						var/obj/anomaly/part/anomka_part = anomka
-						if(anomka_part.core.isready())
-							anomka_part.core.activate_anomaly()
-					else
-						if(anomka.isready())
-							anomka.activate_anomaly()
+					if(anomka.isready())
+						anomka.activate_anomaly()
+				if(!have_anomaly_detector(user))
+					to_chat(user, SPAN_WARNING("Обьект уплывает из ваших рук, кажется, его нужно чем-то сдержать!"))
 					return
+				if(!prob(25 * user.get_skill_value(SKILL_SCIENCE)))
+					to_chat(user, SPAN_WARNING("Обьект уплывает из ваших рук"))
+					return
+				to_chat(user, SPAN_GOOD("[desc]"))
+				artefact_collected_by_player()
 	react_to_touched(user)
-
 	.=..()
 
 

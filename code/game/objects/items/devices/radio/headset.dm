@@ -48,7 +48,6 @@
 	if(distance > 1 || !radio_desc)
 		return
 
-	to_chat(user, "The following channels are available:")
 	to_chat(user, radio_desc)
 
 /obj/item/device/radio/headset/handle_message_mode(mob/living/M as mob, message, channel)
@@ -395,7 +394,7 @@
 		secure_radio_connections[ch_name] = radio_controller.add_object(src, radiochannels[ch_name],  RADIO_CHAT)
 
 	if(setDescription)
-		setupRadioDescription()
+		radio_desc = get_channels_as_string()
 
 /obj/item/device/radio/headset/proc/import_key_data(obj/item/device/encryptionkey/key)
 	if(!key)
@@ -408,14 +407,3 @@
 		src.translate_binary = 1
 	if(key.syndie)
 		src.syndie = 1
-
-/obj/item/device/radio/headset/proc/setupRadioDescription()
-	var/radio_text = ""
-	for(var/i = 1 to length(channels))
-		var/channel = channels[i]
-		var/key = get_radio_key_from_channel(channel)
-		radio_text += "[key] - [channel]"
-		if(i != length(channels))
-			radio_text += ", "
-
-	radio_desc = radio_text
