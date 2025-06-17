@@ -103,28 +103,26 @@
 	if(!istype(user, /mob/living/carbon/human/vox))
 		to_chat(user, SPAN_WARNING("You don't know what to do with \the [src.name]."))
 		return
-	if(istype(user, /mob/living/carbon/human/vox))
-		if(working)
-			to_chat(user, SPAN_WARNING("\The [src.name] is still working!"))
+	if(working)
+		to_chat(user, SPAN_WARNING("\The [src.name] is still working!"))
+		return
+	var/choice = input(user, "What would you like to request from Apex? You have [favors] favors left!", "Shoal Beacon") as null|anything in rewards
+	if(!choice)
+		to_chat(user, SPAN_WARNING("You aren't worthy of \the [choice]!"))
+		return
+	if(rewards[choice][1] <= favors)
+		if(!check_and_handle_limits(user, choice))
 			return
-		var/choice = input(user, "What would you like to request from Apex? You have [favors] favors left!", "Shoal Beacon") as null|anything in rewards
-		if(choice && !working)
-			if(rewards[choice][1] <= favors)
-				if(!check_and_handle_limits(user, choice))
-					return
-				else
-					working = TRUE
-					on_update_icon()
-					to_chat(user, SPAN_NOTICE("The Apex rewards you with \the [choice]."))
-					sleep(20)
-					working = FALSE
-					on_update_icon()
-					favors -= rewards[choice][1]
-					for(var/I in rewards[choice])
-						if(!isnum(I))
-							new I(get_turf(src))
-			else
-				to_chat(user, SPAN_WARNING("You aren't worthy of \the [choice]!"))
+		working = TRUE
+		on_update_icon()
+		to_chat(user, SPAN_NOTICE("The Apex rewards you with \the [choice]."))
+		sleep(2 SECONDS)
+		working = FALSE
+		on_update_icon()
+		favors -= rewards[choice][1]
+		for(var/I in rewards[choice])
+			if(!isnum(I))
+				new I(get_turf(src))
 
 /obj/structure/voxuplink/vox_ship/use_tool(obj/item/I, mob/user)
 	..()
