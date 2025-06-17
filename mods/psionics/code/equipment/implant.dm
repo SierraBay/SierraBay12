@@ -23,12 +23,34 @@
 	var/max_overload = 100
 	var/psi_mode = PSI_IMPLANT_DISABLED
 
+/obj/item/implant/psi_control/get_data()
+	. = {"
+	<b>Технические данные:</b><BR>
+	<b>Название:</b> Псионический подавитель переключатель Фонда Кухулин<BR>
+	<b>Заметки:</b> Не защищен от ЭМИ и перегрева психонетикой<BR>
+	<HR>
+	<b>Детали:</b><BR>
+	<b>Функция:</b> Имплант переключатель дистанционно управляется психонетическим стационарным монитором для переключения режима подавления психонетических способностей. Имеет четыре режима.<BR>
+	<b>Дополнительно:</b> Автоматическое переключение в режим активного подавления при повышении уровня угрозы<BR>"}
+	if(!malfunction)
+		. += {"
+		<HR><B>Режим работы:</B><BR>
+		<a href='byond://?src=\ref[src];mode=1'>[psi_mode ? psi_mode : "NONE SET"]</A><BR>"}
+
 /obj/item/implant/psi_control/islegal()
 	return TRUE
 
 /obj/item/implant/psi_control/Initialize()
 	. = ..()
 	SSpsi.psi_dampeners += src
+
+/obj/item/implant/psi_control/Topic(href, href_list)
+	..()
+	if (href_list["mode"])
+		var/mod = input("Установить режим подавления", "Режим подавления") as null|anything in list(PSI_IMPLANT_DISABLED, PSI_IMPLANT_LOG, PSI_IMPLANT_WARN, PSI_IMPLANT_SHOCK, PSI_IMPLANT_AUTOMATIC)
+		if(mod)
+			psi_mode = mod
+		interact(usr)
 
 /obj/item/implant/psi_control/Destroy()
 	SSpsi.psi_dampeners -= src

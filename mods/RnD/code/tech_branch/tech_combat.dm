@@ -148,7 +148,7 @@
 	required_tech_levels = list()
 	cost = 750
 
-	unlocks_designs = list("smg", "ammo_flechette")
+	unlocks_designs = list("c20a", "smg", "ammo_flechette")
 
 
 

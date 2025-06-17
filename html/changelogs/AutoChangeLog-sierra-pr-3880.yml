@@ -1,0 +1,4 @@
+author: thekekman666
+changes:
+  - {bugfix: вернул пропадающие пули при промахе}
+delete-after: true

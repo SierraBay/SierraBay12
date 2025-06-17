@@ -14,6 +14,7 @@
 #include "expanded_culture_descriptor/_expanded_culture_descriptor_includes.dm"
 #include "explosions/_explosions_includes.dm"
 #include "gliding/_gliding_includes.dm"
+#include "guns/_guns_includes.dm"
 #include "machinery/_machinery_includes.dm"
 #include "hairs_ports/_hairs_ports_includes.dm"
 #include "hardsuits/_hardsuits_includes.dm"
@@ -61,3 +62,4 @@
 #include "petting_zoo/_petting_zoo_includes.dm"
 #include "lying_refactor/lying_refactor_includes.dm"
 #include "psionics/psionics_includes.dm"
+#include "impulse_cannon/_impulse_cannon_includes.dm"

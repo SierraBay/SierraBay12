@@ -1,6 +1,6 @@
 /obj/item/mech_equipment/mounted_system/taser/ion
 	name = "mounted ion rifle"
-	desc = "An exosuit-mounted ion rifle. Handle with care."
+	desc = "An mech-mounted ion rifle. Handle with care."
 	icon_state = "mech_ionrifle"
 	holding_type = /obj/item/gun/energy/ionrifle/mounted/mech
 	heat_generation = 20

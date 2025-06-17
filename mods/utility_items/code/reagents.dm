@@ -658,3 +658,8 @@
 #undef IC_HEATER_MODE_COOL
 #undef IC_REAGENTS_DRAW
 #undef IC_REAGENTS_INJECT
+
+// Отдельный мод для возвращения реагентов в печенье
+/obj/item/reagent_containers/food/snacks/cookie
+	nutriment_amt = 5
+	nutriment_desc = list("sugar" = 5) // Возвращаем реагенты в печеньку

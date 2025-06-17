@@ -1,6 +1,6 @@
 /obj/item/device/kit/mech
-	name = "Mod - Exosuit customization kit"
-	desc = "A kit containing all the needed tools and parts to repaint a exosuit."
+	name = "Mod - Mech customization kit"
+	desc = "A kit containing all the needed tools and parts to repaint a mech."
 	var/removable = null
 	new_icon_file = 'icons/mecha/mech_decals.dmi'
 	var/current_decal = "cammo2" //По умолчанию
@@ -52,4 +52,4 @@
 	name = "Mech castomisation kit"
 	contains = list(/obj/item/device/kit/mech)
 	cost = 50
-	containername = "heavy exosuit modkit crate"
+	containername = "heavy mech modkit crate"

@@ -675,3 +675,26 @@
 	item_icons = list(slot_w_uniform_str = 'mods/loadout_items/icons/onmob_under.dmi')
 	icon_state = "blackpurple_shirt"
 	item_state = "blackpurple_shirt"
+
+/obj/item/clothing/under/kms_uniform
+	name = "KMS uniform"
+	desc = "Unisex! Komatsu Medical Services uniform featuring traditional jukata shirt and hakama pants. Sleeves conveniently tied with blue ribbon"
+	icon = 'mods/loadout_items/icons/obj_under.dmi'
+	item_icons = list(slot_w_uniform_str = 'mods/loadout_items/icons/onmob_under.dmi')
+	icon_state = "kms_uniform"
+	item_state = "kms_uniform"
+	worn_state = "kms_uniform"
+	rolled_down = 0
+	rolled_sleeves = 0
+	gender_icons = 1
+
+/obj/item/clothing/under/kms_utility_uniform
+	name = "KMS utility uniform"
+	desc = "Unisex! Well-designed uniform, provided by Komatsu Medical Services to their employees. Intended to be worn under armor."
+	icon = 'mods/loadout_items/icons/obj_under.dmi'
+	item_icons = list(slot_w_uniform_str = 'mods/loadout_items/icons/onmob_under.dmi')
+	icon_state = "kms_utility_uniform"
+	item_state = "kms_utility_uniform"
+	worn_state = "kms_utility_uniform"
+	rolled_down = 0
+	gender_icons = 1

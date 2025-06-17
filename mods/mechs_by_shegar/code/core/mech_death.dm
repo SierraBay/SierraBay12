@@ -36,60 +36,29 @@
 	. = ..()
 
 
-/mob/living/exosuit/death(gibbed)
-	// Eject the pilot.
+/mob/living/exosuit/death(gibbed = FALSE)
+	// Выкинуть пилотов
 	if(LAZYLEN(pilots))
-		hatch_locked = 0 // So they can get out.
+		hatch_locked = 0
 		for(var/pilot in pilots)
 			remove_pilot(pilot)
 
-	// Salvage moves into the wreck unless we're exploding violently.
+	//Спавним остатки меха
 	var/obj/wreck = new wreckage_path(get_turf(src), src, gibbed)
 	wreck.name = "wreckage of \the [name]"
 
-	// Handle the rest of things.
-	..(gibbed, (gibbed ? "explodes!" : "grinds to a halt before collapsing!"))
-
-	if(!gibbed)
-		if(L_leg.loc != src)
-			L_leg = null
-		if(R_leg.loc != src)
-			R_leg = null
-		if(L_arm.loc != src)
-			L_arm = null
-		if(R_arm.loc != src)
-			R_arm = null
-		if(head.loc != src)
-			head = null
-		if(body.loc != src)
-			body = null
-		qdel(src)
+	//Взрыв и огонь если гибнут
+	if(gibbed)
+		src.visible_message(message = SPAN_BAD("[src] explodes!"), range = 7)
+		var/turf/my_turf = get_turf(src)
+		for(var/mob/living/detected_living in range(1, my_turf))
+			detected_living.fire_stacks = max(2, detected_living.fire_stacks)
+			detected_living.IgniteMob()
+		explosion(my_turf, 2, EX_ACT_LIGHT)
+	else
+		//Иначе просто развалиться
+		src.visible_message(message = SPAN_BAD("[src] grinds to a halt before collapsing!"), range = 7)
+	qdel(src)
 
 /mob/living/exosuit/gib()
-	death(1)
-	// Get a turf to play with.
-	var/turf/T = get_turf(src)
-	if(!T)
-		qdel(src)
-		return
-	//Подожгём людей и пилотов рядом
-	for(var/mob/living/detected_living in range(1, T))
-		detected_living.fire_stacks = max(2, detected_living.fire_stacks)
-		detected_living.IgniteMob()
-	// Hurl our component pieces about.
-	var/list/stuff_to_throw = list()
-	for(var/obj/item/thing in list(head, body, L_arm, R_arm, L_leg, R_leg))
-		if(thing) stuff_to_throw += thing
-	for(var/hardpoint in hardpoints)
-		if(hardpoints[hardpoint])
-			var/obj/item/thing = hardpoints[hardpoint]
-			thing.screen_loc = null
-			stuff_to_throw += thing
-	for(var/obj/item/thing in stuff_to_throw)
-		thing.forceMove(T)
-		thing.throw_at(get_edge_target_turf(src,pick(GLOB.alldirs)),rand(3,6),40)
-	explosion(T, 2, EX_ACT_LIGHT)
-	var/obj/wreck = new wreckage_path(T, src)
-	wreck.name = "wreckage of \the [name]"
-	qdel(src)
-	return
+	death(gibbed = TRUE)

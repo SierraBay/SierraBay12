@@ -36,6 +36,7 @@ if(!singletons_by_name) \
 /// Simple Button.
 #define BTN(key, label) FBTN(key, 1, label, "", "")
 
+
 #define COLOR_PREVIEW(color) \
 "<table style=\"display: inline; font-size: 13px; color: [color]\" bgcolor=\"[color]\"><tr><td>__</td></tr></table>"
 

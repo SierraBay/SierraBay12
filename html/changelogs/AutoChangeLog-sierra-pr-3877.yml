@@ -1,0 +1,7 @@
+author: SierraKomodo
+changes:
+  - {balance: 'Legion laser beams (The dark purple/black ones) now go through legion
+      mobs instead of impacting them in tight spaces (Not hacked bots, just the bespoke
+      ones). Beware the horde.'}
+  - {balance: Increased legion bellator health.}
+delete-after: true
