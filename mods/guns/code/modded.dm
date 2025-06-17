@@ -300,6 +300,9 @@
 	else
 		icon_state = "c20a"
 
+/obj/item/gun/projectile/automatic/sec_smg/c20a/nonlethal
+	magazine_type = /obj/item/ammo_magazine/smg_nt/rubber
+
 /datum/design/item/weapon/c20a
 	id = "c20a"
 	req_tech = list(TECH_COMBAT = 5, TECH_MATERIAL = 2)
