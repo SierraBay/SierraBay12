@@ -63,3 +63,4 @@
 #include "lying_refactor/lying_refactor_includes.dm"
 #include "psionics/psionics_includes.dm"
 #include "impulse_cannon/_impulse_cannon_includes.dm"
+#include "rocket_launchers/_rocket_launchers_includes.dm"

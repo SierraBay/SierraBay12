@@ -1,0 +1,1 @@
+#define CALIBER_ROCKET	"72mmG"
