@@ -98,7 +98,6 @@
 \tCtrl+2 = disarm-intent
 \tCtrl+3 = grab-intent
 \tCtrl+4 = harm-intent
-\tESC = cancel current timed action
 \tF1 = adminhelp
 \tF2 = ooc
 \tF3 = say
@@ -112,6 +111,7 @@
 \tCtrl + Click = drag
 \tShift + Click = examine
 \tAlt + Click = show entities on turf
+\tAlt+x = cancel current timed action
 \tCtrl + Alt + Click = point"})
 
 	var/robot_hotkey_mode = SPAN_COLOR("purple", {"Hotkey-Mode: (hotkey-mode must be on)
@@ -146,7 +146,6 @@
 \tCtrl+2 = activate module 2
 \tCtrl+3 = activate module 3
 \tCtrl+4 = toggle intents
-\tESC = cancel current timed action
 \tF1 = adminhelp
 \tF2 = ooc
 \tF3 = say
@@ -158,6 +157,7 @@
 \tCtrl + Click = drag or bolt doors
 \tShift + Click = examine or open doors
 \tAlt + Click = show entities on turf
+\tAlt+e = cancel current timed action
 \tCtrl + Shift + Click = electrify doors
 \tCtrl + Alt + Click = point"})
 
