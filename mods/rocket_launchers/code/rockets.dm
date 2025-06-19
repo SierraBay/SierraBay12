@@ -82,10 +82,12 @@
 
 		if(ismech(A))
 			var/mob/living/exosuit/mech = A
+
 			for(var/obj/aura/mechshield/aura_shield in mech.auras)
 				if(aura_shield.active)
 					aura_shield.shields?.stop_damage(damage) // stopped by shield
 					blocked = TRUE
+
 			if(!blocked)
 				switch(def_zone)
 					if(BP_HEAD , BP_CHEST, BP_MOUTH, BP_EYES)
@@ -118,8 +120,12 @@
 	var/turf/T = get_turf(src)
 	if(!T) return
 
+	var/dir = get_dir(src.starting, target)
+	var/turf/next_turf = get_step(target, dir)
+
 	if(ismech(target))
 		var/mob/living/exosuit/mech = target
+
 		for(var/obj/aura/mechshield/aura_shield in mech.auras)
 			if(aura_shield.active)
 				aura_shield.emp_attack() // remove shield by first charge
@@ -132,7 +138,6 @@
 					pilot.adjust_fire_stacks(rand(6,8))
 					pilot.IgniteMob()
 
-
 		mech.apply_damage(heat_damage * 4, DAMAGE_BURN, def_zone) // more damage to mech parts
 
 	else if(isliving(target))
@@ -142,7 +147,6 @@
 		M.adjust_fire_stacks(rand(6,8))
 		M.IgniteMob()
 
-
 	else if(isturf(target))
 		for (var/obj/obj in target)
 			obj.damage_health(heat_damage, src.damage_type, src.damage_flags)
@@ -150,9 +154,6 @@
 	else if(isobj(target))
 		var/obj/obj = target
 		obj.damage_health(heat_damage, src.damage_type, src.damage_flags)
-
-	var/dir = get_dir(src.starting, target)
-	var/turf/next_turf = get_step(target, dir)
 
 	jet_process(next_turf, heat_damage / 2, def_zone, dir, 2)
 

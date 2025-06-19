@@ -35,6 +35,9 @@
 
 	. = ..()
 
+/obj/item/gun/projectile/rocket/attack_self(mob/user as mob)
+	toggle_scope(user) // override to use scope
+
 /obj/item/gun/projectile/rocket/handle_post_fire(mob/user, atom/target, pointblank = 0, reflex = 0, obj/projectile)
 	. = ..()
 	var/turf/simulated/T = get_turf(get_step(loc, reverse_direction(get_dir(user, target))))
