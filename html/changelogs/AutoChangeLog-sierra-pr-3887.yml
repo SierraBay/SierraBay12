@@ -1,0 +1,4 @@
+author: Builder13
+changes:
+  - {bugfix: 'Вещи теперь выпадают из рук у моба, если его уронить.'}
+delete-after: true

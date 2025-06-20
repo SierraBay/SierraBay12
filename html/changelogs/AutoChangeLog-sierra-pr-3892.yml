@@ -1,0 +1,5 @@
+author: thekekman666
+changes:
+  - {bugfix: пофиксил невозможность выбрать юго-западное направление в консоли 
+      ОФД}
+delete-after: true

@@ -9635,7 +9635,8 @@
 "MK" = (
 /obj/machinery/door/airlock/security{
 	name = "Security Lieutenant";
-	dir = 4
+	dir = 4;
+	req_access = list("ACCESS_PHOBOS_ARMORY")
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/phobos/security/detective)
