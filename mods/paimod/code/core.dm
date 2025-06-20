@@ -85,6 +85,6 @@
 /obj/item/paimod/use_tool(obj/item/W, mob/user)
 	. = ..()
 	if(W.force)
-		visible_message("<span class='danger'>[user.name] attacks [src.name] with [W]!</span>")
+		visible_message(SPAN_DANGER("[user.name] attacks [src.name] with [W]!"))
 		is_broken ? (mod_integrity = 0) : (mod_integrity -= W.force * 2)
 		update_damage()
