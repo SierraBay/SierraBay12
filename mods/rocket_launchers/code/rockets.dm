@@ -36,15 +36,16 @@
 // exlosion on hit
 /obj/item/projectile/bullet/rpg_rocket/proc/on_explosion(turf/O)
 	if(explosion_size)
-		explosion(O, explosion_size, 0, 0, 0)
+		explosion(O, round(explosion_size), EX_ACT_HEAVY, 0)
 
 // ---------ROCKET PROJECTILES---------
 // FRAG
 /obj/item/projectile/bullet/rpg_rocket/frag
 	name = "RPG frag missile"
-	explosion_size = 2
-	var/list/fragment_types = list(/obj/item/projectile/bullet/pellet/fragment/strong = 1) // makin stronger fragments
-	var/num_fragments = 72
+	// all stats like /obj/item/grenade/frag/high_yield
+	explosion_size = 3
+	var/list/fragment_types = list(/obj/item/projectile/bullet/pellet/fragment=1,/obj/item/projectile/bullet/pellet/fragment/strong=4)
+	var/num_fragments = 144
 	var/spread_range = 7
 
 /obj/item/projectile/bullet/rpg_rocket/frag/proc/detonate()
