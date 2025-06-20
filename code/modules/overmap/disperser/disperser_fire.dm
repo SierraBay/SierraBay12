@@ -154,7 +154,24 @@
 		targetturf = areaturf
 
 	log_and_message_admins("Disperser beam hit sector at [targetturf.loc.name].", location=targetturf)
-	charge.fire(targetturf, strength, range)
+	// [SIERRA-EDIT] - IMPULSE_CANNON
+	// charge.fire(targetturf, strength, range)
+
+	var/shield_active_EM = FALSE
+	var/shield_active_KTC = FALSE
+	// проверяем, под щитом ли находится цель
+	for(var/obj/machinery/power/shield_generator/S in SSmachines.machinery)
+		if(S.z in finaltarget.map_z)
+			var/list/shielded_base_turfs = S.get_base_turfs()
+			var/list/shielded_turfs = list()
+			for(var/turf/gen_turf in shielded_base_turfs)
+				shielded_turfs += trange(S.field_radius, gen_turf)
+			if(S.running == SHIELD_RUNNING && S.check_flag(MODEFLAG_EM) && (targetturf in shielded_turfs))
+				shield_active_EM = TRUE
+			if(S.running == SHIELD_RUNNING && S.check_flag(MODEFLAG_HYPERKINETIC) && (targetturf in shielded_turfs))
+				shield_active_KTC = TRUE
+	charge.fire(targetturf, strength, range, shield_active_EM, shield_active_KTC)
+	// [SIERRA-EDIT]
 	qdel(charge)
 
 /obj/machinery/computer/ship/disperser/proc/handle_beam(turf/start, direction)

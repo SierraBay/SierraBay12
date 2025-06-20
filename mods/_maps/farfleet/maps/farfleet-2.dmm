@@ -4278,7 +4278,9 @@
 /turf/simulated/wall/r_wall,
 /area/ship/farfleet/crew/freezer)
 "Po" = (
-/obj/machinery/psi_monitor,
+/obj/machinery/psi_monitor{
+	req_access = list("ACCESS_ICCGN")
+	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/crew/brig/css)
 "Pr" = (

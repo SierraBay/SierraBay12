@@ -4,6 +4,7 @@
 		/datum/gear/union_card,
 		/datum/gear/suit/labcoat_corp,
 		/datum/gear/suit/medcoat,
+		/datum/gear/uniform/corporate,
 		/datum/gear/uniform/corp_exec,
 		/datum/gear/uniform/corp_overalls,
 		/datum/gear/uniform/corp_flight,

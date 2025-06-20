@@ -3231,6 +3231,18 @@
 	icon_state = "dark"
 	},
 /area/map_template/rescue_base/base)
+"jn" = (
+/obj/structure/table/rack,
+/obj/item/ammo_magazine/pistol/nullglass,
+/obj/item/ammo_magazine/pistol/nullglass,
+/obj/item/ammo_magazine/pistol/nullglass,
+/obj/item/ammo_magazine/pistol/nullglass,
+/obj/item/ammo_magazine/pistol/nullglass,
+/obj/item/ammo_magazine/pistol/nullglass,
+/turf/unsimulated/floor/techfloor{
+	icon_state = "techfloor_grid"
+	},
+/area/map_template/rescue_base/base)
 "jp" = (
 /turf/space,
 /area/map_template/rescue_base/base)
@@ -3377,6 +3389,36 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/map_template/rescue_base/start)
+"BD" = (
+/obj/structure/table/rack,
+/obj/item/gun/projectile/pistol/sec/empty{
+	pixel_y = -8;
+	pixel_x = 5
+	},
+/obj/item/gun/projectile/pistol/sec/empty{
+	pixel_y = -1;
+	pixel_x = 5
+	},
+/obj/item/gun/projectile/pistol/sec/empty{
+	pixel_y = 7;
+	pixel_x = 5
+	},
+/obj/item/gun/projectile/pistol/sec/empty{
+	pixel_y = 7;
+	pixel_x = -4
+	},
+/obj/item/gun/projectile/pistol/sec/empty{
+	pixel_y = -1;
+	pixel_x = -4
+	},
+/obj/item/gun/projectile/pistol/sec/empty{
+	pixel_y = -8;
+	pixel_x = -4
+	},
+/turf/unsimulated/floor/techfloor{
+	icon_state = "techfloor_grid"
+	},
+/area/map_template/rescue_base/base)
 "Cc" = (
 /obj/structure/table/rack,
 /obj/item/rig_module/mounted/energy/taser,
@@ -3489,6 +3531,18 @@
 /obj/item/robot_parts/robot_component/actuator,
 /obj/item/robot_parts/robot_component/actuator,
 /obj/item/robot_parts/robot_component/actuator,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/map_template/rescue_base/base)
+"KX" = (
+/obj/structure/table/reinforced,
+/obj/item/clothing/head/helmet/psipump/active,
+/obj/item/clothing/head/helmet/psipump/active,
+/obj/item/clothing/head/helmet/psipump/active,
+/obj/item/implanter/psi,
+/obj/item/implanter/psi,
+/obj/item/implanter/psi,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -4635,7 +4689,7 @@ dK
 "}
 (18,1,1) = {"
 ad
-cB
+KX
 ao
 ao
 ar
@@ -5740,8 +5794,8 @@ nZ
 nZ
 nZ
 nZ
+jn
 ad
-ew
 ew
 ew
 ew
@@ -5804,8 +5858,8 @@ nZ
 nZ
 nZ
 nZ
+BD
 ad
-ew
 ew
 ew
 ew
@@ -5869,7 +5923,7 @@ cs
 cs
 cs
 ad
-ew
+ad
 ew
 ew
 ew

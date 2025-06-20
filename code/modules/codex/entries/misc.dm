@@ -28,3 +28,8 @@
 	If the message displays something more severe, like being completely comatose or having a full system failure, the player has voluntarily ghosted while still alive - this means that the character won't return back to the round as a player, short of invervention from an admin. For clarity, these cases will also always mention that the player won't be recovering or waking up any time soon.<br><br>\
 	\
 	The server's rules likely have special clauses regarding SSD players. Check the rule list before you touch a player who's disconnected or take any actions on them."
+
+/datum/codex_entry/cards
+	associated_paths = list(/obj/item/deck)
+	display_name = "Deck of Cards"
+	mechanics_text = "You can use harm intent to deal a new card face up while clicking on something, and similarly grab intent to deal a card face down. Both intents let you deal to a hand of cards you can interact with."
