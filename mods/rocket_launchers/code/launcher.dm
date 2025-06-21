@@ -13,7 +13,7 @@
 	ammo_type = /obj/item/ammo_casing/rpg_rocket
 	handle_casings = CLEAR_CASINGS
 	combustion = 1
-	caliber = CALIBER_ROCKET
+	caliber = CALIBER_ROCKET_HEL
 	load_method = SINGLE_CASING
 	accuracy = 4
 	scoped_accuracy = 8
@@ -25,6 +25,17 @@
 	max_shells = 1
 	var/slowdown_held = 2
 	var/slowdown_worn = 1
+
+/obj/item/gun/projectile/rocket/hel
+	name = "MRL-94 \"Vyun\""
+	desc = "The MRL-94 “Vyun” is a fourth-generation reusable rocket launcher developed by HelTek Arms, a major military contractor for the ICCGN. Designed for harsh colonial environments, orbital combat, and anti-tech engagements, it serves as the standard portable anti-armor system among ICCGN ground forces and orbital response units."
+	ammo_type = /obj/item/ammo_casing/rpg_rocket/hel
+
+/obj/item/gun/projectile/rocket/ausec
+	name = "AXR-11 \"Talon\""
+	desc = "The AXR-11 “Talon” is a lightweight, modular recoilless launcher system developed by Aussec Armory for the Sol Central Government’s expeditionary forces. Designed for rapid-deployment squads and orbital infantry, it emphasizes accuracy, low recoil, and tactical versatility."
+	caliber = CALIBER_ROCKET_AUSSEC
+	ammo_type = /obj/item/ammo_casing/rpg_rocket/aussec
 
 /obj/item/gun/projectile/rocket/Initialize()
 	slowdown_per_slot[slot_l_hand] =  slowdown_held

@@ -50,7 +50,7 @@ ID мода: ROCKET_LAUNCHERS
 
 ### Дефайны
 
-- `mods/rocket_launchers/code/__defines.dm`: `CALIBER_ROCKET`
+- `mods/rocket_launchers/code/__defines.dm`
 <!--
   Если требовалось добавить какие-либо дефайны, укажи файлы,
   в которые ты их добавил, а также перечисли имена.
