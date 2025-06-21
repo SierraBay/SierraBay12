@@ -6,10 +6,10 @@
 	icon_state = "heavy_body"
 	power_use = 50
 	has_hardpoints = list(HARDPOINT_BACK)
-	max_hp = 500
-	mech_health = 500
-	max_repair = 150
-	min_damage = 300
+	max_hp = 180
+	mech_health = 180
+	max_repair = 100
+	min_damage = 150
 	repair_damage = 30
 	hide_pilot = TRUE
 	req_material = MATERIAL_PLASTEEL

@@ -17,6 +17,8 @@
 	var/power_use = 0
 	matter = list(MATERIAL_STEEL = 15000, MATERIAL_PLASTIC = 1000, MATERIAL_OSMIUM = 500)
 	dir = SOUTH
+	var/obj/item/mech_external_armor/installed_armor
+
 	///Отвечает за минимальное возможное ХП части меха, ОБЯЗАТЕЛЬНО прописывайте этот пункт. При ремонте повреждений
 	///листом материала максимальное ХП части меха уменьшается, min_damage является минимальным пределом до куда будет
 	///снижаться макс ХП меха.

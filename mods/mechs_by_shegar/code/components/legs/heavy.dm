@@ -8,9 +8,9 @@
 	move_delay = 5
 	turn_delay = 5
 	power_use = 50
-	max_hp = 250
-	min_damage = 150
-	max_repair = 75
+	max_hp = 90
+	min_damage = 70
+	max_repair = 45
 	repair_damage = 10
 	bump_type = HARD_BUMP
 	bump_safety = FALSE

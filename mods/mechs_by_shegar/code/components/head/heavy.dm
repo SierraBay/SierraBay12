@@ -5,9 +5,9 @@
 	icon_state = "heavy_head"
 	prebuilt_software = list(/obj/item/circuitboard/exosystem/weapons)
 	power_use = 0
-	max_hp = 500
-	min_damage = 300
-	max_repair = 150
+	max_hp = 180
+	min_damage = 150
+	max_repair = 100
 	repair_damage = 30
 	repair_damage = 30
 	req_material = MATERIAL_PLASTEEL
