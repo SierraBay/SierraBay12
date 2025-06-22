@@ -49,7 +49,7 @@
 	icon = 'mods/guns/icons/obj/bullpup_rifle.dmi'
 
 /obj/item/gun/projectile/automatic/bullpup_rifle/light
-	name = "Z9 Pitbull assault rifle"
+	name = "Z9 Pitbull carabine"
 
 /obj/item/gun/projectile/automatic/battlerifle
 	icon = 'mods/guns/icons/obj/battlerifle.dmi'
