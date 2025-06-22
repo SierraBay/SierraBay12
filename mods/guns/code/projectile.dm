@@ -64,6 +64,18 @@
 	icon = 'mods/guns/icons/obj/boltaction.dmi'
 */
 
+/obj/item/gun/projectile/shotgun/pump
+	name = "MSI-870 Crawford shotgun"
+
+/obj/item/gun/projectile/shotgun/pump/sawn
+	name = "MSI-870 Bateman riot shotgun"
+
+/obj/item/gun/projectile/shotgun/pump/combat
+	name = "KS-40 shotgun"
+
+/obj/item/gun/projectile/shotgun/magshot
+	name = "CSG-242 assault shotgun"
+
 /obj/item/gun/projectile/pistol/sec
 	name = "NT Mk58 pistol"
 
@@ -77,6 +89,12 @@
 /obj/item/gun/projectile/pistol/magnum_pistol
 	name = "HelTek Magnus heavy pistol"
 	icon = 'mods/guns/icons/obj/magnum_pistol.dmi'
+
+/obj/item/gun/projectile/revolver
+	name = "M&M Magnum Double Action revolver"
+
+/obj/item/gun/projectile/revolver/holdout
+	name = "M&M Partner holdout revolver"
 
 //NT41 from Infinity pack
 /obj/item/gun/projectile/automatic/nt41
