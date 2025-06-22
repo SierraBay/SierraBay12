@@ -93,10 +93,10 @@
 	icon = 'mods/guns/icons/obj/magnum_pistol.dmi'
 
 /obj/item/gun/projectile/revolver
-	name = "M&M Magnum Double Action revolver"
+	name = "A&M Magnum Double Action revolver"
 
 /obj/item/gun/projectile/revolver/holdout
-	name = "M&M Partner holdout revolver"
+	name = "A&M Partner holdout revolver"
 
 //NT41 from Infinity pack
 /obj/item/gun/projectile/automatic/nt41
