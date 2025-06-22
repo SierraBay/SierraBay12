@@ -278,7 +278,7 @@
 //C-20A
 /obj/item/gun/projectile/automatic/sec_smg/c20a
 	name = "C-20A carabine"
-	desc = "A licensed derivative of the infamous C-20r SMG, the C-20A is a lightweight carabine produced by NanoTrasen. Chambered in 7mm Usurpator rounds, the weapon trades bullet mass for muzzle velocity, thus becoming much more effective at longer ranges."
+	desc = "A licensed derivative of the infamous C-20r SMG, the C-20A is a lightweight carabine produced by NanoTrasen. Chambered in 7mm Usurpator rounds, the weapon trades bullet mass for muzzle velocity and superior ergonomics."
 	icon_state = "c20a"
 	item_state = "c20a"
 	wielded_item_state = "c20a"
