@@ -11,7 +11,7 @@
  */
 
 /obj/item/gun/projectile/automatic/assault_rifle/heltek
-	name = "LA-700"
+	name = "LA-700 assault rifle"
 	desc = "HelTek LA-700 is a standart equipment of ICCG Space-assault Forces. Looks very similiar to STS-35."
 	icon = 'mods/guns/icons/obj/iccg_rifle.dmi'
 	icon_state = "iccg_rifle"
@@ -31,7 +31,7 @@
 		wielded_item_state = "arifle-wielded-empty"
 
 /obj/item/gun/projectile/automatic/mr735
-	name = "MR-735"
+	name = "MR-735 assault rifle"
 	desc = "A cheap rifle for close quarters combat, with an auto-firing mode available. HelTek MR-735 is a standard rifle for ICCG Space-assault Forces, designed without a stock for easier storage and combat in closed spaces. Perfect weapon for some ship's crew."
 	icon = 'mods/guns/icons/obj/mr735.dmi'
 	icon_state = "nostockrifle"
@@ -70,7 +70,7 @@
 
 
 /obj/item/gun/projectile/automatic/mbr
-	name = "MBR"
+	name = "MBR carabine"
 	desc = "A shabby bullpup carbine. Despite its size, it looks a little uncomfortable, but it is robust. HelTek MBR is a standart equipment of ICCG Space-assault Forces, designed in a bullpup layout. Possesses autofire and is perfect for the ship's crew."
 	icon = 'mods/guns/icons/obj/mbr_bullpup.dmi'
 	icon_state = "mbr_bullpup"
@@ -110,7 +110,7 @@
  */
 
 /obj/item/gun/energy/laser/bonfire
-	name = "Bonfire Carbine"
+	name = "Bonfire-75 carbine"
 	desc = "Strange construction: laser carbine with underslung grenade launcher and very capable internal battery. HelTek Bonfire-75 is a weapon designed for suppressive fire in close quarters, where usage of ballistic weaponry will be uneffective or simply hazardous."
 	icon = 'mods/guns/icons/obj/bonfire.dmi'
 	icon_state = "bonfire"
