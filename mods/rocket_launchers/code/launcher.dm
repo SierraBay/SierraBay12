@@ -8,7 +8,7 @@
 	slot_flags = SLOT_BACK
 	bulk = GUN_BULK_HEAVY_RIFLE
 	force = 5
-	fire_delay = 20
+	fire_delay = 5 SECONDS
 	origin_tech = list(TECH_COMBAT = 8, TECH_ESOTERIC = 8)
 	ammo_type = /obj/item/ammo_casing/rpg_rocket
 	handle_casings = CLEAR_CASINGS
@@ -66,3 +66,145 @@
 
 		user.stop_pulling()
 		user.Weaken(3)
+
+// Helldivers mechanic
+/mob/living/carbon/human/use_tool(obj/item/tool, mob/user, list/click_params)
+	. = ..()
+	if(istype(tool, /obj/item/ammo_casing/rpg_rocket))
+		if(istype(r_hand, /obj/item/gun/projectile/rocket))
+			var/obj/item/gun/projectile/rocket/launcher = r_hand
+			launcher.load_ammo(tool, user, 1)
+		else if(istype(l_hand, /obj/item/gun/projectile/rocket))
+			var/obj/item/gun/projectile/rocket/launcher = l_hand
+			launcher.load_ammo(tool, user, 1)
+
+#define EXP_TAC_RELOAD 1 SECOND
+#define PROF_TAC_RELOAD 0.5 SECONDS
+#define EXP_SPD_RELOAD 0.5 SECONDS
+#define PROF_SPD_RELOAD 0.25 SECONDS
+
+// Override load ammo proc
+/obj/item/gun/projectile/rocket/load_ammo(obj/item/A, mob/user, delay = 3 SECONDS)
+	if(!can_reload)
+		return
+	if(istype(A, /obj/item/ammo_magazine))
+		. = TRUE
+		var/obj/item/ammo_magazine/AM = A
+		if (((istext(caliber) && caliber != AM.caliber) || (islist(caliber) && !is_type_in_list(AM.caliber, caliber))))
+			return //incompatible
+		else if (load_method == SINGLE_CASING && AM.mag_type == SPEEDLOADER && world.time >= recentload)
+			if (length(AM.stored_ammo))
+				var/C = AM.stored_ammo[1]
+				if (length(loaded) >= max_shells)
+					to_chat(user, SPAN_WARNING("[src] is full!"))
+					return
+				if (!user.unEquip(C, src))
+					return
+				loaded.Insert(1, C) //add to the head of the list
+				AM.stored_ammo -= C
+				user.visible_message("[user] inserts \a [C] into [src].", SPAN_NOTICE("You insert \a [C] into [src]."))
+				playsound(loc, load_sound, 50, 1)
+				recentload = world.time + 0.5 SECONDS
+			AM.update_icon()
+			update_icon()
+			return
+		else if (!(load_method & AM.mag_type))
+			return //incompatible
+
+		switch(AM.mag_type)
+			if(MAGAZINE)
+				if((ispath(allowed_magazines) && !istype(A, allowed_magazines)) || (islist(allowed_magazines) && !is_type_in_list(A, allowed_magazines)) || (ispath(banned_magazines) && istype(A, banned_magazines)) || (islist(banned_magazines) && is_type_in_list(A, banned_magazines)))
+					to_chat(user, SPAN_WARNING("\The [A] won't fit into [src]."))
+					return
+				if(ammo_magazine)
+					if(user.a_intent == I_HELP || user.a_intent == I_DISARM || !user.skill_check(SKILL_WEAPONS, SKILL_EXPERIENCED))
+						to_chat(user, SPAN_WARNING("[src] already has a magazine loaded."))//already a magazine here
+						return
+					else
+						if(user.a_intent == I_GRAB) //Tactical reloading
+							if(!can_special_reload)
+								to_chat(user, SPAN_WARNING("You can't tactically reload this gun!"))
+								return
+							if(!user.unEquip(AM, src))
+								return
+							//Experienced gets a 1 second delay, master gets a 0.5 second delay
+							if(do_after(user, user.get_skill_value(SKILL_WEAPONS) == SKILL_MASTER ? PROF_TAC_RELOAD : EXP_TAC_RELOAD, src, DO_DEFAULT | DO_BOTH_UNIQUE_ACT))
+								if(jam_chance && (!(ammo_magazine.type == magazine_type)))
+									jam_chance -= 20
+								ammo_magazine.update_icon()
+								user.put_in_hands(ammo_magazine)
+								user.visible_message(
+									SPAN_WARNING("\The [user] reloads \the [src] with \the [AM]!"),
+									SPAN_WARNING("You tactically reload \the [src] with \the [AM]!")
+								)
+						else //Speed reloading
+							if(!can_special_reload)
+								to_chat(user, SPAN_WARNING("You can't speed reload with this gun!"))
+								return
+							if(!user.unEquip(AM, src))
+								return
+							//Experienced gets a 0.5 second delay, master gets a 0.25 second delay
+							if(do_after(user, user.get_skill_value(SKILL_WEAPONS) == SKILL_MASTER ? PROF_SPD_RELOAD : EXP_SPD_RELOAD, src, DO_DEFAULT | DO_BOTH_UNIQUE_ACT))
+								if(jam_chance && istype(ammo_magazine, magazine_type))
+									jam_chance -= 10
+								ammo_magazine.update_icon()
+								ammo_magazine.dropInto(user.loc)
+								user.visible_message(
+									SPAN_WARNING("\The [user] reloads \the [src] with \the [AM]!"),
+									SPAN_WARNING("You speed reload \the [src] with \the [AM]!")
+								)
+					ammo_magazine = AM
+					playsound(loc, mag_insert_sound, 75, 1)
+					update_icon()
+					AM.update_icon()
+					if(!istype(AM, magazine_type))
+						jam_chance += 10
+					return
+				ammo_magazine = AM
+				if(!user.unEquip(AM, src))
+					ammo_magazine = null
+					return
+				user.visible_message("[user] inserts [AM] into [src].", SPAN_NOTICE("You insert [AM] into [src]."))
+				playsound(loc, mag_insert_sound, 50, 1)
+				if(!istype(AM, magazine_type))
+					jam_chance += 10
+			if(SPEEDLOADER)
+				if(length(loaded) >= max_shells)
+					to_chat(user, SPAN_WARNING("[src] is full!"))
+					return
+				var/count = 0
+				for(var/obj/item/ammo_casing/C in AM.stored_ammo)
+					if(length(loaded) >= max_shells)
+						break
+					if(C.caliber == caliber)
+						C.forceMove(src)
+						loaded += C
+						AM.stored_ammo -= C //should probably go inside an ammo_magazine proc, but I guess less proc calls this way...
+						count++
+				if(count)
+					user.visible_message("[user] reloads [src].", SPAN_NOTICE("You load [count] round\s into [src]."))
+					playsound(src.loc, 'sound/weapons/empty.ogg', 50, 1)
+		AM.update_icon()
+	else if(istype(A, /obj/item/ammo_casing))
+		. = TRUE
+		var/obj/item/ammo_casing/C = A
+		if(!(load_method & SINGLE_CASING) || caliber != C.caliber)
+			return //incompatible
+		if(length(loaded) >= max_shells)
+			to_chat(user, SPAN_WARNING("[src] is full."))
+			return
+		playsound(loc, load_sound, 50, 1)
+		if(delay)
+			if(!do_after(user, delay * user.skill_delay_mult(SKILL_HAULING) * user.skill_delay_mult(SKILL_WEAPONS), src, DO_PUBLIC_UNIQUE | DO_BAR_OVER_USER))
+				return
+		if(!user.unEquip(C, src))
+			return
+		loaded.Insert(1, C) //add to the head of the list
+		user.visible_message("[user] inserts \a [C] into [src].", SPAN_NOTICE("You insert \a [C] into [src]."))
+
+	update_icon()
+
+#undef EXP_TAC_RELOAD
+#undef PROF_TAC_RELOAD
+#undef EXP_SPD_RELOAD
+#undef PROF_SPD_RELOAD

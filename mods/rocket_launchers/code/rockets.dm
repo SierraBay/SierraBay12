@@ -21,6 +21,8 @@
 	icon_state = "slshell"
 	projectile_type = /obj/item/projectile/bullet/rpg_rocket
 	caliber = CALIBER_ROCKET_HEL
+	slot_flags = 0
+	w_class = ITEM_SIZE_NORMAL
 
 // aussec version with another caliber
 /obj/item/ammo_casing/rpg_rocket/aussec
