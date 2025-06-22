@@ -44,10 +44,12 @@
 	// icon = 'mods/guns/icons/obj/saw.dmi'
 
 
-
 /obj/item/gun/projectile/automatic/bullpup_rifle
 	name = "Z8 carabine"
 	icon = 'mods/guns/icons/obj/bullpup_rifle.dmi'
+
+/obj/item/gun/projectile/automatic/bullpup_rifle/light
+	name = "Z9 Pitbull assault rifle"
 
 /obj/item/gun/projectile/automatic/battlerifle
 	icon = 'mods/guns/icons/obj/battlerifle.dmi'
