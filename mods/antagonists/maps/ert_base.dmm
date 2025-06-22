@@ -3253,6 +3253,34 @@
 	icon_state = "techfloor_grid"
 	},
 /area/map_template/rescue_base/base)
+"lM" = (
+/obj/structure/table/rack,
+/obj/item/ammo_casing/rpg_rocket/aussec/frag{
+	pixel_y = 8
+	},
+/obj/item/ammo_casing/rpg_rocket/aussec/frag{
+	pixel_y = 8
+	},
+/obj/item/ammo_casing/rpg_rocket/aussec/frag{
+	pixel_y = 8
+	},
+/obj/item/ammo_casing/rpg_rocket/aussec/frag{
+	pixel_y = 8
+	},
+/obj/item/ammo_casing/rpg_rocket/aussec/heat,
+/obj/item/ammo_casing/rpg_rocket/aussec/heat,
+/obj/item/ammo_casing/rpg_rocket/aussec/heat,
+/obj/item/ammo_casing/rpg_rocket/aussec/heat,
+/obj/item/ammo_casing/rpg_rocket/aussec/tandem{
+	step_y = -8
+	},
+/obj/item/ammo_casing/rpg_rocket/aussec/tandem{
+	step_y = -8
+	},
+/turf/unsimulated/floor/techfloor{
+	icon_state = "techfloor_grid"
+	},
+/area/map_template/rescue_base/base)
 "nZ" = (
 /turf/unsimulated/floor/techfloor{
 	icon_state = "techfloor_grid"
@@ -3490,6 +3518,13 @@
 "DZ" = (
 /obj/machinery/mech_recharger,
 /mob/living/exosuit/premade/ert,
+/turf/unsimulated/floor/techfloor{
+	icon_state = "techfloor_grid"
+	},
+/area/map_template/rescue_base/base)
+"Eh" = (
+/obj/structure/table/rack,
+/obj/item/gun/projectile/rocket/aussec,
 /turf/unsimulated/floor/techfloor{
 	icon_state = "techfloor_grid"
 	},
@@ -5787,7 +5822,7 @@ ar
 ar
 ar
 ad
-nZ
+Eh
 nZ
 nZ
 nZ
@@ -5851,7 +5886,7 @@ ar
 ar
 ar
 ad
-nZ
+lM
 nZ
 nZ
 nZ
