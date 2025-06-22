@@ -30,3 +30,15 @@
 	sprite_sheets = list(
 		SPECIES_UNATHI = 'mods/hardsuits/icons/rigs/species/onmob_feet_solgov_unathi.dmi'
 	)
+
+/obj/item/clothing/suit/space/rig/unathi
+	allowed = list(
+		/obj/item/gun,
+		/obj/item/ammo_magazine,
+		/obj/item/ammo_casing,
+		/obj/item/handcuffs,
+		/obj/item/device/flashlight,
+		/obj/item/tank,
+		/obj/item/device/suit_cooling_unit,
+		/obj/item/melee/baton
+	)
