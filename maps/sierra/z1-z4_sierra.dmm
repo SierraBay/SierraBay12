@@ -6868,7 +6868,7 @@
 "nhU" = (/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/wall/prepainted,/area/vacant/infirmary)
 "nia" = (/obj/structure/table/woodentable_reinforced,/obj/structure/flora/pottedplant/stoutbush{pixel_y = 10},/turf/simulated/floor/wood,/area/command/chief_steward)
 "nii" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 10},/obj/machinery/firealarm{pixel_y = 24},/obj/floor_decal/spline/fancy/wood/corner{dir = 8},/obj/structure/holoplant,/turf/simulated/floor/wood/walnut,/area/crew_quarters/sauna)
-"nil" = (/obj/structure/table/marble,/obj/item/material/chopping_board,/turf/simulated/floor/tiled/white,/area/crew_quarters/galley)
+"nil" = (/obj/structure/table/marble,/obj/item/reagent_containers/cooking_container/board,/turf/simulated/floor/tiled/white,/area/crew_quarters/galley)
 "niu" = (/obj/machinery/light/small/emergency{dir = 8},/turf/simulated/floor/reinforced,/area/maintenance/fourthdeck/forestarboard)
 "niv" = (/obj/floor_decal/industrial/outline/grey,/obj/machinery/light/spot{dir = 1},/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 1},/obj/structure/table/rack,/obj/item/rig/unathi,/obj/machinery/door/window/brigdoor/eastright{dir = 2},/turf/simulated/floor/tiled/techfloor,/area/security/sierra/armory/lobby)
 "niy" = (/turf/simulated/wall/prepainted,/area/quartermaster/deckofficer)

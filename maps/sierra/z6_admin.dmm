@@ -6901,7 +6901,7 @@
 /area/holodeck/source_cafe)
 "beq" = (
 /obj/structure/table/holo_woodentable,
-/obj/item/tray{
+/obj/item/reagent_containers/cooking_container/tray{
 	holographic = 1
 	},
 /turf/simulated/floor/holofloor/wood,
@@ -17040,7 +17040,7 @@
 "szb" = (
 /obj/floor_decal/spline/fancy/wood,
 /obj/structure/table/woodentable_reinforced/walnut,
-/obj/item/reagent_containers/food/snacks/sliceable/variable/pizza,
+/obj/item/reagent_containers/food/snacks/variable/pizza,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/flooring/carpet.dmi';
 	icon_state = "red";

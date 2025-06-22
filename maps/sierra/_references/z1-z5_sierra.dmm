@@ -99406,7 +99406,7 @@
 /area/space)
 "oGi" = (
 /obj/structure/table/marble,
-/obj/item/material/chopping_board,
+/obj/item/reagent_containers/cooking_container/board,
 /turf/simulated/floor/tiled/white,
 /area/crew_quarters/galley)
 "oGo" = (

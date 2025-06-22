@@ -276,7 +276,7 @@
 /area/playable_yacht/relax_zone)
 "bb" = (
 /obj/structure/table/marble,
-/obj/item/material/chopping_board,
+/obj/item/reagent_containers/cooking_container/board,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
