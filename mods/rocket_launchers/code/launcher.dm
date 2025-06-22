@@ -1,9 +1,14 @@
 /obj/item/gun/projectile/rocket
 	name = "RPG-7"
 	desc = "Old rocket launcher"
-	icon = 'icons/obj/guns/launchers.dmi'
-	icon_state = "rocket"
-	item_state = "rocket"
+	icon = 'mods/rocket_launchers/icons/launchers.dmi'
+	item_icons = list(
+		slot_l_hand_str = 'mods/rocket_launchers/icons/lefthand_guns.dmi',
+		slot_r_hand_str = 'mods/rocket_launchers/icons/righthand_guns.dmi',
+		slot_back_str = 'mods/rocket_launchers/icons/onmob_back.dmi'
+		)
+	icon_state = "rocket-hel"
+	item_state = "rocket-hel"
 	w_class = ITEM_SIZE_HUGE
 	slot_flags = SLOT_BACK
 	bulk = GUN_BULK_HEAVY_RIFLE
@@ -31,11 +36,41 @@
 	desc = "The MRL-94 “Vyun” is a fourth-generation reusable rocket launcher developed by HelTek Arms, a major military contractor for the ICCGN. Designed for harsh colonial environments, orbital combat, and anti-tech engagements, it serves as the standard portable anti-armor system among ICCGN ground forces and orbital response units."
 	ammo_type = /obj/item/ammo_casing/rpg_rocket/hel
 
-/obj/item/gun/projectile/rocket/ausec
+/obj/item/gun/projectile/rocket/hel/update_icon()
+	var/mob/living/M = loc
+	if(loaded.len)
+		for(var/obj/item/ammo_casing/rpg_rocket/hel/rocket in loaded)
+			if(istype(rocket, /obj/item/ammo_casing/rpg_rocket/hel/frag))
+				icon_state = "[initial(icon_state)]-frag"
+				item_state = is_held_twohanded(M) ? "[initial(item_state)]-armed-in" : "[initial(item_state)]-in"
+			else if(istype(rocket, /obj/item/ammo_casing/rpg_rocket/hel/heat))
+				icon_state = "[initial(icon_state)]-heat"
+				item_state = is_held_twohanded(M) ? "[initial(item_state)]-armed-in" : "[initial(item_state)]-in"
+			else if(istype(rocket, /obj/item/ammo_casing/rpg_rocket/hel/tandem))
+				icon_state = "[initial(icon_state)]-tandem"
+				item_state = is_held_twohanded(M) ? "[initial(item_state)]-armed-in" : "[initial(item_state)]-in"
+	else
+		icon_state = initial(icon_state)
+		item_state = initial(item_state)
+
+	. = ..()
+
+/obj/item/gun/projectile/rocket/aussec
 	name = "AXR-11 \"Talon\""
 	desc = "The AXR-11 “Talon” is a lightweight, modular recoilless launcher system developed by Aussec Armory for the Sol Central Government’s expeditionary forces. Designed for rapid-deployment squads and orbital infantry, it emphasizes accuracy, low recoil, and tactical versatility."
+	icon_state = "rocket-aussec"
+	item_state = "rocket-aussec"
 	caliber = CALIBER_ROCKET_AUSSEC
 	ammo_type = /obj/item/ammo_casing/rpg_rocket/aussec
+
+/obj/item/gun/projectile/rocket/aussec/update_icon()
+	var/mob/living/M = loc
+	if(loaded.len && is_held_twohanded(M))
+		item_state = "[initial(item_state)]-armed"
+	else
+		item_state = initial(item_state)
+
+	. = ..()
 
 /obj/item/gun/projectile/rocket/Initialize()
 	slowdown_per_slot[slot_l_hand] =  slowdown_held
@@ -47,7 +82,7 @@
 	. = ..()
 
 /obj/item/gun/projectile/rocket/attack_self(mob/user as mob)
-	toggle_scope(user) // override to use scope
+	toggle_scope(user, 1.5) // override to use scope
 
 /obj/item/gun/projectile/rocket/handle_post_fire(mob/user, atom/target, pointblank = 0, reflex = 0, obj/projectile)
 	. = ..()

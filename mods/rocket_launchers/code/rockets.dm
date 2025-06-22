@@ -1,8 +1,8 @@
 // base projectile
 /obj/item/projectile/bullet/rpg_rocket
 	name = "RPG missile"
-	icon = 'icons/obj/weapons/grenade.dmi'
-	icon_state = "missile"
+	icon = 'mods/rocket_launchers/icons/projectiles.dmi'
+	icon_state = "missile-hel-heat"
 	fire_sound = 'mods/rocket_launchers/sounds/rocket_fire.ogg'
 	damage = 15
 	armor_penetration = 0
@@ -18,7 +18,8 @@
 /obj/item/ammo_casing/rpg_rocket
 	name = "RPG rocket shell"
 	desc = "A high explosive designed to be fired from a launcher."
-	icon_state = "slshell"
+	icon = 'mods/rocket_launchers/icons/ammo.dmi'
+	icon_state = "heat-hel"
 	projectile_type = /obj/item/projectile/bullet/rpg_rocket
 	caliber = CALIBER_ROCKET_HEL
 	slot_flags = 0
@@ -27,6 +28,7 @@
 // aussec version with another caliber
 /obj/item/ammo_casing/rpg_rocket/aussec
 	caliber = CALIBER_ROCKET_AUSSEC
+	icon_state = "missile-aussec-heat"
 
 // tungsten democratic pellets
 /obj/item/projectile/bullet/pellet/fragment/tungsten
@@ -54,6 +56,7 @@
 // FRAG
 /obj/item/projectile/bullet/rpg_rocket/frag
 	name = "RPG frag missile"
+	icon_state = "missile-hel-frag"
 	// all stats like /obj/item/grenade/frag/high_yield
 	explosion_size = 2
 	var/list/fragment_types = list(/obj/item/projectile/bullet/pellet/fragment=1,/obj/item/projectile/bullet/pellet/fragment/strong=4)
@@ -61,6 +64,7 @@
 	var/spread_range = 7
 
 /obj/item/projectile/bullet/rpg_rocket/frag/tungsten
+	icon_state = "missile-aussec-frag"
 	fragment_types = list(/obj/item/projectile/bullet/pellet/fragment/tungsten=1)
 
 /obj/item/projectile/bullet/rpg_rocket/frag/proc/detonate()
@@ -82,7 +86,11 @@
 // HEAT
 /obj/item/projectile/bullet/rpg_rocket/heat
 	name = "RPG heat missile"
+	icon_state = "missile-hel-heat"
 	var/heat_damage = 200
+
+/obj/item/projectile/bullet/rpg_rocket/heat/aussec
+	icon_state = "missile-aussec-heat"
 
 /obj/item/projectile/bullet/rpg_rocket/heat/proc/jet_process(turf/T, damage, def_zone, dir, iterator)
 	if(!iterator) return
@@ -198,6 +206,10 @@
 // TANDEM
 /obj/item/projectile/bullet/rpg_rocket/heat/tandem
 	name = "RPG tandem missile"
+	icon_state = "missile-hel-tandem"
+
+/obj/item/projectile/bullet/rpg_rocket/heat/tandem/aussec
+	icon_state = "missile-aussec-tandem"
 
 /obj/item/projectile/bullet/rpg_rocket/heat/tandem/attack_mob(mob/living/target_mob, distance, miss_modifier)
 	. = ..()
@@ -209,55 +221,52 @@
 /obj/item/ammo_casing/rpg_rocket/frag
 	name = "RPG frag rocket shell"
 	desc = "A FRAG grenade designed to be fired from a launcher."
-	icon_state = "slshell"
 	projectile_type = /obj/item/projectile/bullet/rpg_rocket/frag
 
 /obj/item/ammo_casing/rpg_rocket/hel/frag
 	name = "URS-60-FS \"Groza\""
 	desc = "A multi-purpose high-explosive fragmentation rocket, designed to neutralize infantry, light vehicles, and structural cover. Equipped with a programmable dual-mode fuse (impact/proximity). The warhead casing is lined with nano-fragmenting composites for maximum lethal radius."
-	icon_state = "slshell"
+	icon_state = "frag-hel"
 	projectile_type = /obj/item/projectile/bullet/rpg_rocket/frag
 
 /obj/item/ammo_casing/rpg_rocket/aussec/frag
 	name = "RGM-51-FG \"Shrike\""
 	desc = "Unguided high-explosive fragmentation rocket designed for clearing infantry and light cover. The warhead is packed with tungsten ball bearings, maximizing lethal shrapnel spread on detonation. Equipped with contact or timed fuses."
-	icon_state = "slshell"
+	icon_state = "frag-aussec"
 	projectile_type = /obj/item/projectile/bullet/rpg_rocket/frag/tungsten
 
 // HEAT
 /obj/item/ammo_casing/rpg_rocket/heat
 	name = "RPG HEAT rocket shell"
 	desc = "A HEAT grenade designed to be fired from a launcher."
-	icon_state = "bshell"
 	projectile_type = /obj/item/projectile/bullet/rpg_rocket/heat
 
 /obj/item/ammo_casing/rpg_rocket/hel/heat
 	name = "URS-60-HEAT \"Proboy\""
 	desc = "A shaped-charge anti-armor munition optimized for engaging heavy drones, mechs, and fortified emplacements. Employs an inertial guidance system with optional exosuit-linked fire correction. Designed to pierce modern composite and ceramic armor with precision."
-	icon_state = "bshell"
+	icon_state = "heat-hel"
 	projectile_type = /obj/item/projectile/bullet/rpg_rocket/heat
 
 /obj/item/ammo_casing/rpg_rocket/aussec/heat
 	name = " RGM-51-AP \"Ripper\""
 	desc = "Unguided shaped-charge rocket optimized for penetrating armored vehicles and fortifications. Stable flight ensured by aerodynamic fins."
-	icon_state = "bshell"
-	projectile_type = /obj/item/projectile/bullet/rpg_rocket/heat
+	icon_state = "heat-aussec"
+	projectile_type = /obj/item/projectile/bullet/rpg_rocket/heat/aussec
 
 // TANDEM
 /obj/item/ammo_casing/rpg_rocket/tandem
 	name = "RPG TANDEM rocket shell"
 	desc = "A TANDEM grenade designed to be fired from a launcher."
-	icon_state = "gshell"
 	projectile_type = /obj/item/projectile/bullet/rpg_rocket/heat/tandem
 
 /obj/item/ammo_casing/rpg_rocket/hel/tandem
 	name = "URS-60-HEAT-T \"Igolka\""
 	desc = "Features a dual-stage warhead: an ion pre-charge disables energy shields and active defenses, followed by a HEAT penetrator to breach armor. Designed for use against modern armored vehicles and fortified positions with shield systems."
-	icon_state = "gshell"
+	icon_state = "tandem-hel"
 	projectile_type = /obj/item/projectile/bullet/rpg_rocket/heat/tandem
 
 /obj/item/ammo_casing/rpg_rocket/aussec/tandem
 	name = "RGM-51-ID \"Lancer\""
 	desc = "Tandem warhead with an ion pulse pre-charge to disable energy shields and active defenses, followed by a shaped-charge penetrator for armor breach."
-	icon_state = "gshell"
-	projectile_type = /obj/item/projectile/bullet/rpg_rocket/heat/tandem
+	icon_state = "tandem-aussec"
+	projectile_type = /obj/item/projectile/bullet/rpg_rocket/heat/tandem/aussec
