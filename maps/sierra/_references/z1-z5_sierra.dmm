@@ -5134,7 +5134,7 @@
 /turf/simulated/floor/wood/mahogany,
 /area/crew_quarters/heads/office/rd/cobed)
 "aLi" = (
-/obj/machinery/cooker/oven,
+/obj/machinery/appliance/cooker/oven,
 /turf/simulated/floor/tiled/white,
 /area/crew_quarters/galley)
 "aLo" = (
@@ -22389,7 +22389,7 @@
 /area/maintenance/firstdeck/forestarboard)
 "dnu" = (
 /obj/structure/table/marble,
-/obj/machinery/cooker/cereal,
+/obj/machinery/appliance/mixer/cereal,
 /turf/simulated/floor/tiled/white,
 /area/crew_quarters/galley)
 "dnx" = (
@@ -24566,7 +24566,7 @@
 	},
 /area/engineering/engine_room)
 "dCa" = (
-/obj/machinery/cooker/grill,
+/obj/machinery/appliance/cooker/grill,
 /obj/floor_decal/spline/fancy/black{
 	dir = 1
 	},
@@ -57677,7 +57677,7 @@
 /area/security/sierra/breakroom)
 "iyp" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
-/obj/machinery/cooker/fryer,
+/obj/machinery/appliance/cooker/fryer,
 /obj/machinery/light/spot{
 	dir = 1
 	},
@@ -90432,7 +90432,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/machinery/cooker/grill,
+/obj/machinery/appliance/cooker/grill,
 /obj/floor_decal/corner/red/diagonal,
 /obj/floor_decal/spline/fancy/black{
 	dir = 9
@@ -102431,7 +102431,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/engineering/engine_room)
 "pcH" = (
-/obj/machinery/cooker/grill,
+/obj/machinery/appliance/cooker/grill,
 /turf/simulated/floor/tiled/white,
 /area/crew_quarters/galley)
 "pcP" = (
@@ -121455,7 +121455,7 @@
 /turf/simulated/floor/tiled,
 /area/hallway/primary/seconddeck/aft)
 "rRK" = (
-/obj/machinery/cooker/oven,
+/obj/machinery/appliance/cooker/oven,
 /obj/floor_decal/corner/red/diagonal,
 /obj/floor_decal/spline/fancy/black{
 	dir = 1
@@ -150009,7 +150009,7 @@
 /area/maintenance/substation/bridgedeck)
 "vXT" = (
 /obj/structure/table/marble,
-/obj/machinery/cooker/candy,
+/obj/machinery/appliance/mixer/candy,
 /obj/machinery/light/spot{
 	dir = 4
 	},

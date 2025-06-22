@@ -3155,7 +3155,7 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/interseptor)
 "lw" = (
-/obj/machinery/cooker/oven,
+/obj/machinery/appliance/cooker/oven,
 /turf/simulated/floor/tiled/white/monotile,
 /area/ship/phobos/living/mess)
 "ly" = (

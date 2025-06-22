@@ -56,7 +56,7 @@
 /obj/floor_decal/corner/grey_alt/diagonal{
 	dir = 8
 	},
-/obj/machinery/cooker/oven,
+/obj/machinery/appliance/cooker/oven,
 /obj/machinery/light,
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/crew/kitchen)
@@ -2848,7 +2848,7 @@
 /obj/floor_decal/corner/grey_alt/diagonal{
 	dir = 8
 	},
-/obj/machinery/cooker/grill,
+/obj/machinery/appliance/cooker/grill,
 /obj/machinery/firealarm{
 	dir = 1;
 	pixel_y = -24
@@ -3634,7 +3634,7 @@
 /obj/floor_decal/corner/grey_alt/diagonal{
 	dir = 8
 	},
-/obj/machinery/cooker/fryer,
+/obj/machinery/appliance/cooker/fryer,
 /obj/machinery/alarm{
 	dir = 1;
 	pixel_y = -25;
