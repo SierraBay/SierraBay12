@@ -4439,7 +4439,7 @@
 /area/ship/skrellscoutship/hangar)
 "xF" = (
 /obj/structure/table/standard,
-/obj/machinery/microwave,
+/obj/machinery/appliance/cooker/microwave,
 /obj/item/storage/box/donkpocket_vegetable,
 /turf/simulated/floor/tiled/skrell/white,
 /area/ship/skrellscoutship/crew/rec)

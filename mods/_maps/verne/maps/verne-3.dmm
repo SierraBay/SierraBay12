@@ -2314,7 +2314,7 @@
 /area/verne/common/professor)
 "qt" = (
 /obj/structure/table/standard,
-/obj/machinery/microwave,
+/obj/machinery/appliance/cooker/microwave,
 /obj/machinery/light_switch{
 	dir = 8;
 	pixel_x = 22
@@ -2724,7 +2724,7 @@
 /area/verne/common/room/five)
 "ts" = (
 /obj/structure/table/standard,
-/obj/machinery/microwave,
+/obj/machinery/appliance/cooker/microwave,
 /obj/machinery/firealarm{
 	dir = 2;
 	pixel_y = 24
@@ -6347,7 +6347,7 @@
 /area/verne/medical/surgery)
 "Yj" = (
 /obj/structure/table/standard,
-/obj/machinery/microwave,
+/obj/machinery/appliance/cooker/microwave,
 /obj/floor_decal/corner/b_green/mono,
 /obj/machinery/light_switch{
 	dir = 4;

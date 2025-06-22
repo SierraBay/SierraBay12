@@ -589,7 +589,7 @@
 "bw" = (
 /obj/structure/table/reinforced,
 /obj/floor_decal/corner/blue/diagonal,
-/obj/machinery/microwave,
+/obj/machinery/appliance/cooker/microwave,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},

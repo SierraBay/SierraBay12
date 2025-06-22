@@ -15,7 +15,7 @@
 	icon = 'mods/sierra_resprite/icons/kitchen.dmi'
 	icon_state = "candy_mixer"
 
-/obj/machinery/microwave
+/obj/machinery/appliance/cooker/microwave
 	icon = 'mods/sierra_resprite/icons/kitchen.dmi'
 	icon_state = "mw"
 

@@ -1529,7 +1529,7 @@
 /area/map_template/anomaly/skat)
 "Fx" = (
 /obj/structure/table/marble,
-/obj/machinery/microwave{
+/obj/machinery/appliance/cooker/microwave{
 	pixel_x = -3;
 	pixel_y = 6
 	},

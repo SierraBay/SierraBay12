@@ -3244,7 +3244,7 @@
 /obj/decal/cleanable/dirt,
 /obj/structure/table/standard,
 /obj/floor_decal/techfloor,
-/obj/machinery/microwave,
+/obj/machinery/appliance/cooker/microwave,
 /turf/simulated/floor/tiled,
 /area/slavers_base/dorms)
 "iB" = (

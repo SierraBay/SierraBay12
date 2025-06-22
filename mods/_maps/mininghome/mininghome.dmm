@@ -4927,7 +4927,7 @@
 /area/map_template/mininghome_robotics)
 "Qx" = (
 /obj/structure/table/marble,
-/obj/machinery/microwave{
+/obj/machinery/appliance/cooker/microwave{
 	pixel_y = 9
 	},
 /obj/floor_decal/corner/red{
