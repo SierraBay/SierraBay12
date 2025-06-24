@@ -119,12 +119,11 @@
 			code = replacetext_char(code, "\n", "")
 
 			var/list/code_list = splittext(code, "; ")
-
 			for(var/i in code_list)
 				var/output = terminal.parse(i, user)
-				terminal.history += "<br>[name] << [i]"
-				terminal.history += "terminal >> [output]"
-			return "<font color='00ff00'>[name]: execution complite.</font>"
+				terminal.history += "<br>[name] ⇐ [i]"
+				terminal.history += "terminal ⇒ [output]"
+			return "<font color='00ff00'>[name]: execution complete.</font>"
 
 	return "[name]: options not found."
 ///BATCH Compilator

@@ -82,7 +82,7 @@
 
 
 
-/obj/item/organ/internal/posibrain/ipc/first/update_icon()
+/obj/item/organ/internal/posibrain/ipc/first/on_update_icon()
 	if(src.brainmob && src.brainmob.key)
 		icon_state = "posibrain1-occupied"
 	else
@@ -92,7 +92,7 @@
 	if(shackle || shackles_module)
 		AddOverlays(image('mods/ipc_mods/icons/ipc_icons.dmi', "posibrain-shackles"))
 
-/obj/item/organ/internal/posibrain/ipc/second/update_icon()
+/obj/item/organ/internal/posibrain/ipc/second/on_update_icon()
 	if(src.brainmob && src.brainmob.key)
 		icon_state = "posibrain2-occupied"
 	else
@@ -102,7 +102,7 @@
 	if(shackle || shackles_module)
 		AddOverlays(image('mods/ipc_mods/icons/ipc_icons.dmi', "posibrain-shackles"))
 
-/obj/item/organ/internal/posibrain/ipc/third/update_icon()
+/obj/item/organ/internal/posibrain/ipc/third/on_update_icon()
 	if(src.brainmob && src.brainmob.key)
 		icon_state = "posibrain3-occupied"
 	else
