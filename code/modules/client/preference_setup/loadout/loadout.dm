@@ -1,6 +1,16 @@
 var/global/list/loadout_categories = list()
 var/global/list/gear_datums = list()
 
+/datum/configuration/New()
+	load_config()
+	max_gear_cost = 30
+	load_options()
+	load_map()
+	load_sql()
+	load_hub_entry()
+	motd = file2text("config/motd.txt") || ""
+	event = file2text("config/event.txt") || ""
+
 /datum/preferences
 	var/list/gear_list //Custom/fluff item loadouts.
 	var/gear_slot = 1  //The current gear save slot
