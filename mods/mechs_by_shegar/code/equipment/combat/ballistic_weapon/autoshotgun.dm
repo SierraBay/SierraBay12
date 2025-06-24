@@ -26,9 +26,6 @@
 /obj/item/mech_equipment/mounted_system/taser/ballistic/autoshotgun/need_combat_skill()
 	return TRUE
 
-/obj/item/gun/projectile/automatic/mounted/shotgun/unload_ammo(mob/user,allow_dump = 1)
-	return
-
 /obj/item/ammo_magazine/shotgunmag/mech
 	max_ammo = 50
 	mag_type = SPEEDLOADER

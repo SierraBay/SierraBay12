@@ -1100,3 +1100,72 @@
 /atom/proc/clear_bulletholes()
 	for(var/obj/overlay/bmark/bullet_mark in src)
 		qdel(bullet_mark)
+
+/atom/proc/get_overhead_text_x_offset()
+	return 0
+
+/atom/proc/get_overhead_text_y_offset()
+	return 0
+
+/// Set this atom's color and light to match origin
+/atom/proc/copy_light_and_color(atom/origin)
+	if (istype(origin))
+		color = origin.color
+		set_light(origin.light_range, origin.light_power)
+
+/**
+ * Checks if user can use this object. Set use_flags to customize what checks are done
+ * Returns 0 (FALSE) if they can use it, a value representing why they can't if not
+ * See `code\__DEFINES\misc.dm` for the list of flags and return codes
+ *
+ * * user - The `mob` to check against, if it can perform said use
+ * * use_flags - The flags to modify the check behavior, eg. `USE_ALLOW_NON_ADJACENT`, see `code\__DEFINES\misc.dm` for the list of flags
+ * * show_messages - A boolean, to indicate if a feedback message should be shown, about the reason why someone can't use the atom
+ */
+/atom/proc/use_check(mob/user, use_flags = 0, show_messages = FALSE)
+	. = USE_SUCCESS
+	if(!(use_flags & USE_ALLOW_NONLIVING) && !isliving(user)) // No message for ghosts.
+		return USE_FAIL_NONLIVING
+
+	if(!(use_flags & USE_ALLOW_NON_ADJACENT) && !Adjacent(user))
+		if (show_messages)
+			to_chat(user, SPAN_NOTICE("You're too far away from [src] to do that."))
+		return USE_FAIL_NON_ADJACENT
+
+	if(!(use_flags & USE_ALLOW_DEAD) && user.stat == DEAD)
+		if (show_messages)
+			to_chat(user, SPAN_NOTICE("How do you expect to do that when you're dead?"))
+		return USE_FAIL_DEAD
+
+	if(!(use_flags & USE_ALLOW_INCAPACITATED) && (user.incapacitated()))
+		if (show_messages)
+			to_chat(user, SPAN_NOTICE("You cannot do that in your current state."))
+		return USE_FAIL_INCAPACITATED
+
+	if(!(use_flags & USE_ALLOW_NON_ADV_TOOL_USR) && !user.IsAdvancedToolUser())
+		if (show_messages)
+			to_chat(user, SPAN_NOTICE("You don't know how to operate [src]."))
+		return USE_FAIL_NON_ADV_TOOL_USR
+
+	if((use_flags & USE_DISALLOW_SILICONS) && issilicon(user))
+		if (show_messages)
+			to_chat(user, SPAN_NOTICE("How do you propose doing that without hands?"))
+		return USE_FAIL_IS_SILICON
+
+	if((use_flags & USE_FORCE_SRC_IN_USER) && !(src in user))
+		if (show_messages)
+			to_chat(user, SPAN_NOTICE("You need to be holding [src] to do that."))
+		return USE_FAIL_NOT_IN_USER
+
+/**
+ * Checks if a mob can use an atom, message the user if not with an appropriate reason
+ *
+ * Returns 0 (FALSE) if they can use it, a value representing why they can't if not
+ *
+ * See `code\__DEFINES\misc.dm` for the list of flags and return codes
+ *
+ * * user - The `mob` to check against, if it can perform said use
+ * * use_flags - The flags to modify the check behavior, eg. `USE_ALLOW_NON_ADJACENT`, see `code\__DEFINES\misc.dm` for the list of flags
+ */
+/atom/proc/use_check_and_message(mob/user, use_flags = 0)
+	. = use_check(user, use_flags, TRUE)

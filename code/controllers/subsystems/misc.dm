@@ -44,9 +44,9 @@ SUBSYSTEM_DEF(misc)
 		cost_traders = MC_AVERAGE(cost_traders, (world.tick_usage - timer) * world.tick_lag)
 		if (state != SS_RUNNING)
 			return
-		stage = STAGE_SOLARS
+		stage = GLOB.using_map?.using_sun ? STAGE_TRADERS : STAGE_SOLARS
 		resumed = FALSE
-	if (stage == STAGE_SOLARS)
+	if (stage == STAGE_SOLARS && !GLOB.using_map?.using_sun)
 		timer = world.tick_usage
 		UpdateSolars(resumed, no_mc_tick)
 		cost_solars = MC_AVERAGE(cost_solars, (world.tick_usage - timer) * world.tick_lag)

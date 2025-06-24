@@ -51,7 +51,6 @@
 	#include "game/lockdown.dm"
 
 	// --- ITEMS --- //
-	#include "items/ammo.dm"
 	#include "items/cards_ids.dm"
 	#include "items/documents.dm"
 	#include "items/encryption_keys.dm"
@@ -205,7 +204,6 @@
 	#include "../../mods/antagonists/_antagonists_includes.dm"
 	#include "../../mods/ascent/_ascent_includes.dm"
 	#include "../../mods/fancy_sofas/_fancy_sofas_includes.dm"
-	#include "../../mods/guns/_guns_includes.dm"
 	#include "../../mods/jukebox_tapes/_jukebox_tapes_includes.dm"
 	#include "../../mods/legalese_language/_legalese_includes.dm"
 	#include "../../mods/resomi/_resomi_includes.dm"

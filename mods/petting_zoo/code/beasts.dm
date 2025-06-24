@@ -411,6 +411,16 @@
 	speak = list("gah", "noot noot", "noot!", "noot", "squeee!", "noo!", "GET TO WORK THIS FUCKING INSTANT YOU DARN SLEEPY MAGGOTS!")
 	emote_see = list("shakes its beak.", "flaps it's wings.","preens itself.")
 
+// Turkeys votes against Thanksgiving
+
+/mob/living/simple_animal/passive/chicken/turkey
+	name = "\improper turkey"
+	desc = "Just look at the size of this thing."
+	icon_state = "turkey"
+	icon_living = "turkey"
+	icon_dead = "turkey_dead"
+	icon = 'mods/petting_zoo/icons/leroy_beasts_32x32.dmi'
+
 // I think i little late for X-mas with this code. But anyway, this comments made for easier splitting different types of beasts, isn't it?
 /mob/living/simple_animal/hostile/retaliate/reindeer
 	name = "reindeer"

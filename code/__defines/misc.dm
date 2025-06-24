@@ -532,3 +532,47 @@
 /// A null statement to guard against EmptyBlock lint without necessitating the use of pass()
 /// Used to avoid proc-call overhead. But use sparingly. Probably pointless in most places.
 #define EMPTY_BLOCK_GUARD ;
+
+// /atom/proc/use_check flags.
+#define USE_ALLOW_NONLIVING 		FLAG_01
+#define USE_ALLOW_NON_ADV_TOOL_USR 	FLAG_02
+#define USE_ALLOW_DEAD 				FLAG_03
+#define USE_ALLOW_INCAPACITATED 	FLAG_04
+#define USE_ALLOW_NON_ADJACENT 		FLAG_05
+#define USE_FORCE_SRC_IN_USER 		FLAG_06
+#define USE_DISALLOW_SILICONS 		FLAG_07
+
+#define USE_SUCCESS 				0
+#define USE_FAIL_NON_ADJACENT 		1
+#define USE_FAIL_NONLIVING 			2
+#define USE_FAIL_NON_ADV_TOOL_USR 	3
+#define USE_FAIL_DEAD 				4
+#define USE_FAIL_INCAPACITATED		5
+#define USE_FAIL_NOT_IN_USER 		6
+#define USE_FAIL_IS_SILICON 		7
+#define USE_FAIL_IS_MOB_SPECIAL 	8
+
+// Cooking appliances.
+#define COOKING_APPLIANCE_MIX		FLAG_01
+#define COOKING_APPLIANCE_FRYER		FLAG_02
+#define COOKING_APPLIANCE_OVEN		FLAG_03
+#define COOKING_APPLIANCE_SKILLET	FLAG_04
+#define COOKING_APPLIANCE_SAUCEPAN	FLAG_05
+#define COOKING_APPLIANCE_POT		FLAG_06
+#define COOKING_APPLIANCE_GRILL		FLAG_07
+#define COOKING_APPLIANCE_MICROWAVE	FLAG_08
+
+// Cooking misc.
+// can_insert return values
+#define COOKING_CANNOT_INSERT		0
+#define COOKING_CAN_INSERT			1
+#define COOKING_INSERT_GRABBED		2
+// check_contents return values
+#define COOKING_CONTAINER_EMPTY		0
+#define COOKING_CONTAINER_SINGLE	1
+#define COOKING_CONTAINER_MANY		2
+
+// check_items/check_reagents/check_fruits return values
+#define COOKING_CHECK_FAIL			-1
+#define COOKING_CHECK_EXTRA			0
+#define COOKING_CHECK_EXACT			1

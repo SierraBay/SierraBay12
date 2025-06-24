@@ -44,6 +44,9 @@
 			return
 	return ..()
 
+///Для того чтоб остатки меха не сносило при любом пуке
+/obj/structure/mech_wreckage/ex_act(severity, turf_breaker)
+	return
 
 /obj/structure/mech_wreckage/on_death()
 	. = ..()
@@ -78,7 +81,14 @@
 		if (!prepared)
 			USE_FEEDBACK_FAILURE("\The [src] is too solid to dismantle. Try cutting through it first.")
 			return TRUE
-		new /obj/item/stack/material/steel(loc, rand(5, 10))
+
+		//Дадим от 5 до 10 стали
+		new /obj/item/stack/material/steel(get_turf(src), rand(5, 10))
+
+		//Высыпаем на пол всё что выжило
+		for(var/obj/item/detected_item in contents)
+			detected_item.forceMove(get_turf(src))
+
 		user.visible_message(
 			SPAN_NOTICE("\The [user] finishes dismantling \the [src] with \a [tool]."),
 			SPAN_NOTICE("You finish dismantling \the [src] with \a [tool].")

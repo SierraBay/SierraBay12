@@ -28,7 +28,7 @@
 /area/map_template/syndicate_mothership/raider_base)
 "ah" = (
 /obj/structure/table/reinforced,
-/obj/item/tray{
+/obj/item/reagent_containers/cooking_container/tray{
 	pixel_y = 5
 	},
 /turf/unsimulated/floor{
@@ -78,7 +78,7 @@
 /area/map_template/syndicate_mothership/raider_base)
 "ap" = (
 /obj/structure/table/reinforced,
-/obj/machinery/microwave{
+/obj/machinery/appliance/cooker/microwave{
 	pixel_x = -1;
 	pixel_y = 8
 	},
@@ -731,7 +731,7 @@
 /area/map_template/syndicate_mothership/raider_base)
 "bL" = (
 /obj/structure/table/woodentable,
-/obj/item/tray{
+/obj/item/reagent_containers/cooking_container/tray{
 	pixel_y = 5
 	},
 /obj/random/backpack,
@@ -1313,7 +1313,7 @@
 /turf/simulated/floor/plating,
 /area/map_template/skipjack_station/start)
 "db" = (
-/obj/machinery/microwave{
+/obj/machinery/appliance/cooker/microwave{
 	pixel_x = -1;
 	pixel_y = 8
 	},

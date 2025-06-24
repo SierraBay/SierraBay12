@@ -92,3 +92,8 @@
 
 /proc/cmp_marking_order(list/A, list/B)
 	return A[1] - B[1][1]
+
+/proc/cmp_recipe_complexity_dsc(singleton/cooking_recipe/A, singleton/cooking_recipe/B)
+	var/a_score = LAZYLEN(A.required_items) + LAZYLEN(A.required_reagents)+ LAZYLEN(A.consumed_reagents) + LAZYLEN(A.required_produce)
+	var/b_score = LAZYLEN(B.required_items) + LAZYLEN(B.required_reagents)+ LAZYLEN(B.consumed_reagents) + LAZYLEN(B.required_produce)
+	return b_score - a_score
