@@ -2878,7 +2878,7 @@
 /obj/structure/table/standard{
 	name = "plastic table frame"
 	},
-/obj/machinery/microwave{
+/obj/machinery/appliance/cooker/microwave{
 	pixel_y = 6
 	},
 /turf/simulated/floor/tiled/steel_ridged,
@@ -3414,7 +3414,7 @@
 /area/ship/hand/engineering/port)
 "ro" = (
 /obj/floor_decal/corner/yellow/diagonal,
-/obj/machinery/microwave{
+/obj/machinery/appliance/cooker/microwave{
 	pixel_y = 6
 	},
 /obj/structure/table/standard{
@@ -5318,7 +5318,7 @@
 "Ax" = (
 /obj/structure/table/reinforced,
 /obj/floor_decal/corner/b_green/mono,
-/obj/machinery/microwave,
+/obj/machinery/appliance/cooker/microwave,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/hand/command/bridge)
 "Az" = (
@@ -7798,7 +7798,7 @@
 /area/ship/hand/maintenance/atmos)
 "Nf" = (
 /obj/structure/table/standard,
-/obj/machinery/microwave{
+/obj/machinery/appliance/cooker/microwave{
 	pixel_y = 4
 	},
 /turf/simulated/floor/tiled/steel_ridged,

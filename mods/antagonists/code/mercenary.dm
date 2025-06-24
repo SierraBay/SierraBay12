@@ -148,6 +148,43 @@ Used for quick dress-up. Also comes with several discount
 	antag_roles = list(MODE_MERCENARY)
 	path = /obj/item/storage/dufflebag/heavy/syndie/netrunner
 
+/datum/uplink_item/item/mercenary/specialist
+	name = "Specialist Kit"
+	desc = "This kit is for specialists. It contains: rocket launcher, 1x tandem missile, 3x frag missiles and 3x heat missiles"
+	item_cost = DEFAULT_TELECRYSTAL_AMOUNT * 2.5
+	antag_roles = list(MODE_MERCENARY)
+	path = /obj/item/storage/dufflebag/heavy/syndie/specialist
+
+// Ammo
+/datum/uplink_item/item/ammo/rpgfrag
+	name = "Frag missile"
+	desc = "A 40mm frag missile for MRL-94 \"Vyun\" missile launcher."
+	item_cost = 40
+	path = /obj/item/ammo_casing/rpg_rocket/hel/frag
+	antag_roles = list(MODE_MERCENARY)
+
+/datum/uplink_item/item/ammo/rpgheat
+	name = "HEAT missile"
+	desc = "A 40mm HEAT missile for MRL-94 \"Vyun\" missile launcher."
+	item_cost = 40
+	path = /obj/item/ammo_casing/rpg_rocket/hel/heat
+	antag_roles = list(MODE_MERCENARY)
+
+/datum/uplink_item/item/ammo/rpgtandem
+	name = "Tandem missile"
+	desc = "A 40mm Tandem missile for MRL-94 \"Vyun\" missile launcher."
+	item_cost = 70
+	path = /obj/item/ammo_casing/rpg_rocket/hel/tandem
+	antag_roles = list(MODE_MERCENARY)
+
+// Weapon
+/datum/uplink_item/item/visible_weapons/rpg
+	name = "Missile Launcher"
+	desc = "The MRL-94 \"Vyun\" is a fourth-generation reusable rocket launcher developed by HelTek Arms."
+	item_cost = 120
+	path = /obj/item/gun/projectile/rocket/hel
+	antag_roles = list(MODE_MERCENARY)
+
 // What's inside the box
 
 /singleton/closet_appearance/crate/mercenary
@@ -276,6 +313,15 @@ Used for quick dress-up. Also comes with several discount
 		/obj/item/clothing/mask/ai,
 		/obj/item/device/multitool/hacktool,
 		/obj/item/card/emag = 2
+		)
+
+/obj/item/storage/dufflebag/heavy/syndie/specialist
+
+	startswith = list(
+		/obj/item/gun/projectile/rocket/hel,
+		/obj/item/ammo_casing/rpg_rocket/hel/tandem,
+		/obj/item/ammo_casing/rpg_rocket/hel/heat = 3,
+		/obj/item/ammo_casing/rpg_rocket/hel/frag = 3,
 		)
 // SIERRA EDIT-END
 

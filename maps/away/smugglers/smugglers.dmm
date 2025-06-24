@@ -863,7 +863,7 @@
 	},
 /obj/decal/cleanable/dirt,
 /obj/structure/table/standard,
-/obj/machinery/microwave{
+/obj/machinery/appliance/cooker/microwave{
 	pixel_y = 10
 	},
 /turf/simulated/floor/tiled,

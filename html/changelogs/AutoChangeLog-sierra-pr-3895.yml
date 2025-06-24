@@ -1,6 +1,0 @@
-author: Cakey
-changes:
-  - {rscadd: "Stars will now generate for sectors on the overmap, ranging from supergiants
-      to white dwarves. Distance to stars as well as the star class' luminosity will
-      affect the efficiency solar panels."}
-delete-after: true

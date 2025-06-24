@@ -106,7 +106,7 @@ Middle-Click / Ctrl-Click - Jump a placeholder to a point and deselect it
 		animate(
 			selected,
 			easing = SINE_EASING,
-			time = selected.speed * 5 SECONDS,
+			time = selected.simple_speed * 5 SECONDS, //[SIERRA-EDIT] was: 'time = selected.speed * 5 SECONDS,' | Overmap refactor removed speed, but not in this proc.
 			transform = matrix().Update(
 				scale_x = selected.scale,
 				scale_y = selected.scale,

@@ -20,8 +20,7 @@
 		You call these knives? Can't wait to see your frigates.\
 	"}
 	products = list(
-		/obj/item/reagent_containers/glass/beaker/bowl =2,
-		/obj/item/tray = 8,
+		/obj/item/reagent_containers/cooking_container/tray = 8,
 		/obj/item/material/knife/kitchen = 3,
 		/obj/item/material/rollingpin = 2,
 		/obj/item/serving_bowl = 20,
@@ -31,6 +30,13 @@
 		/obj/item/reagent_containers/food/drinks/glass2/coffeecup/teacup = 8,
 		/obj/item/reagent_containers/food/drinks/glass2/carafe = 2,
 		/obj/item/reagent_containers/food/drinks/glass2/square = 8,
+		/obj/item/reagent_containers/cooking_container/oven = 5,
+		/obj/item/reagent_containers/cooking_container/fryer = 4,
+		/obj/item/reagent_containers/cooking_container/skillet = 4,
+		/obj/item/reagent_containers/cooking_container/saucepan = 4,
+		/obj/item/reagent_containers/cooking_container/pot = 4,
+		/obj/item/reagent_containers/cooking_container/board = 3,
+		/obj/item/reagent_containers/cooking_container/board/bowl = 2,
 		/obj/item/clothing/suit/chef/classic = 2,
 		/obj/item/storage/lunchbox/rainbow = 3,
 		/obj/item/storage/lunchbox/heart = 3,
