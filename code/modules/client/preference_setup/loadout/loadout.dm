@@ -1,6 +1,7 @@
 var/global/list/loadout_categories = list()
 var/global/list/gear_datums = list()
 
+//[SIERRA EDIT]
 /datum/configuration/New()
 	load_config()
 	max_gear_cost = 30
@@ -10,6 +11,7 @@ var/global/list/gear_datums = list()
 	load_hub_entry()
 	motd = file2text("config/motd.txt") || ""
 	event = file2text("config/event.txt") || ""
+//[SIERRA EDIT END]
 
 /datum/preferences
 	var/list/gear_list //Custom/fluff item loadouts.
