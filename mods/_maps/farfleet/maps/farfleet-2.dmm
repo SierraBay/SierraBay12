@@ -56,7 +56,7 @@
 /obj/floor_decal/corner/grey_alt/diagonal{
 	dir = 8
 	},
-/obj/machinery/cooker/oven,
+/obj/machinery/appliance/cooker/oven,
 /obj/machinery/light,
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/crew/kitchen)
@@ -77,6 +77,7 @@
 "aT" = (
 /obj/structure/table/marble,
 /obj/machinery/door/firedoor,
+/obj/item/reagent_containers/cooking_container/tray,
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/crew/kitchen)
 "aW" = (
@@ -497,6 +498,7 @@
 /obj/structure/table/marble,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
+/obj/machinery/appliance/cooker/stove,
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/crew/kitchen)
 "ez" = (
@@ -1848,7 +1850,7 @@
 	dir = 8
 	},
 /obj/structure/table/marble,
-/obj/machinery/microwave{
+/obj/machinery/appliance/cooker/microwave{
 	pixel_y = 6
 	},
 /turf/simulated/floor/tiled/white,
@@ -2848,7 +2850,7 @@
 /obj/floor_decal/corner/grey_alt/diagonal{
 	dir = 8
 	},
-/obj/machinery/cooker/grill,
+/obj/machinery/appliance/cooker/grill,
 /obj/machinery/firealarm{
 	dir = 1;
 	pixel_y = -24
@@ -3634,7 +3636,7 @@
 /obj/floor_decal/corner/grey_alt/diagonal{
 	dir = 8
 	},
-/obj/machinery/cooker/fryer,
+/obj/machinery/appliance/cooker/fryer,
 /obj/machinery/alarm{
 	dir = 1;
 	pixel_y = -25;
@@ -4743,8 +4745,9 @@
 	dir = 8
 	},
 /obj/structure/table/marble,
-/obj/item/material/rollingpin,
 /obj/machinery/atmospherics/unary/vent_pump/on,
+/obj/item/reagent_containers/cooking_container/board,
+/obj/item/material/rollingpin,
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/crew/kitchen)
 "TR" = (

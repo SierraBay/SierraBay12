@@ -1,0 +1,4 @@
+author: Builder13
+changes:
+  - {tweak: Поле Place of birth у паспорта изменен на Residence}
+delete-after: true

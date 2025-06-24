@@ -14,7 +14,7 @@
 	name = "shotgun guncabinet"
 
 /obj/structure/closet/secure_closet/guncabinet/sierra_armory/shotgun/WillContain()
-	return list(/obj/item/gun/projectile/shotgun/pump/combat = 2,
+	return list(/obj/item/gun/projectile/shotgun/pump = 2,
 				/obj/item/clothing/accessory/storage/bandolier = 2,
 				/obj/item/storage/box/ammo/beanbags = 2,
 				/obj/item/storage/box/ammo/practiceshells = 2,

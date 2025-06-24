@@ -60,6 +60,8 @@
 #include "TG_signals/_tg_signals_includes.dm"
 #include "infinity_content/_infinity_includes.dm"
 #include "petting_zoo/_petting_zoo_includes.dm"
+#include "paimod/_paimod_includes.dm"
 #include "lying_refactor/lying_refactor_includes.dm"
 #include "psionics/psionics_includes.dm"
 #include "impulse_cannon/_impulse_cannon_includes.dm"
+#include "rocket_launchers/_rocket_launchers_includes.dm"

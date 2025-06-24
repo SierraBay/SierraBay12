@@ -1776,7 +1776,7 @@
 /area/verne/common)
 "lr" = (
 /obj/structure/table/standard,
-/obj/machinery/cooker/candy,
+/obj/machinery/appliance/mixer/candy,
 /turf/simulated/floor/tiled/freezer,
 /area/verne/common/kitchen)
 "lE" = (
@@ -2314,7 +2314,7 @@
 /area/verne/common/professor)
 "qt" = (
 /obj/structure/table/standard,
-/obj/machinery/microwave,
+/obj/machinery/appliance/cooker/microwave,
 /obj/machinery/light_switch{
 	dir = 8;
 	pixel_x = 22
@@ -2724,7 +2724,7 @@
 /area/verne/common/room/five)
 "ts" = (
 /obj/structure/table/standard,
-/obj/machinery/microwave,
+/obj/machinery/appliance/cooker/microwave,
 /obj/machinery/firealarm{
 	dir = 2;
 	pixel_y = 24
@@ -3862,11 +3862,11 @@
 /area/verne/common/kitchen)
 "Cn" = (
 /obj/structure/table/standard,
-/obj/item/tray,
 /obj/floor_decal/corner/b_green/mono,
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/item/reagent_containers/cooking_container/tray,
 /turf/simulated/floor/tiled/monotile,
 /area/verne/common/kitchen/access)
 "Cq" = (
@@ -4131,8 +4131,9 @@
 /area/verne/medical)
 "EZ" = (
 /obj/structure/table/standard,
-/obj/item/material/rollingpin,
+/obj/item/reagent_containers/cooking_container/board,
 /obj/item/book/manual/chef_recipes,
+/obj/item/material/rollingpin,
 /turf/simulated/floor/tiled/freezer,
 /area/verne/common/kitchen)
 "Fa" = (
@@ -4842,7 +4843,7 @@
 /turf/simulated/floor/tiled,
 /area/verne/common/room/six)
 "KU" = (
-/obj/machinery/cooker/grill,
+/obj/machinery/appliance/cooker/grill,
 /turf/simulated/floor/tiled/freezer,
 /area/verne/common/kitchen)
 "KV" = (
@@ -5767,7 +5768,7 @@
 /turf/simulated/floor/tiled/freezer,
 /area/verne/common/kitchen/fridge)
 "Tb" = (
-/obj/machinery/cooker/oven,
+/obj/machinery/appliance/cooker/oven,
 /turf/simulated/floor/tiled/freezer,
 /area/verne/common/kitchen)
 "Tc" = (
@@ -5853,6 +5854,11 @@
 	},
 /turf/simulated/floor/tiled,
 /area/verne/common/hallway)
+"TG" = (
+/obj/structure/table/standard,
+/obj/machinery/appliance/cooker/stove,
+/turf/simulated/floor/tiled/freezer,
+/area/verne/common/kitchen)
 "TL" = (
 /turf/simulated/floor/tiled,
 /area/verne/common/messseating/small)
@@ -6112,7 +6118,7 @@
 /turf/simulated/floor/tiled/freezer,
 /area/verne/common/kitchen/fridge)
 "Wa" = (
-/obj/machinery/cooker/fryer,
+/obj/machinery/appliance/cooker/fryer,
 /turf/simulated/floor/tiled/freezer,
 /area/verne/common/kitchen)
 "Wf" = (
@@ -6347,7 +6353,7 @@
 /area/verne/medical/surgery)
 "Yj" = (
 /obj/structure/table/standard,
-/obj/machinery/microwave,
+/obj/machinery/appliance/cooker/microwave,
 /obj/floor_decal/corner/b_green/mono,
 /obj/machinery/light_switch{
 	dir = 4;
@@ -6486,7 +6492,7 @@
 /area/verne/common/hallway)
 "Zr" = (
 /obj/structure/table/standard,
-/obj/machinery/cooker/cereal,
+/obj/machinery/appliance/mixer/cereal,
 /turf/simulated/floor/tiled/freezer,
 /area/verne/common/kitchen)
 "Zs" = (
@@ -13328,7 +13334,7 @@ Sv
 kG
 Ci
 ZO
-aw
+TG
 Ci
 KU
 hd

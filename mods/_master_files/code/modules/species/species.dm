@@ -28,6 +28,10 @@
 		playsound(target.loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 		if(armor_check < 100)
 			target.visible_message(SPAN_DANGER("[attacker] has pushed [target]!"))
+			//For lying refactor
+			for(var/obj/item/I in holding)
+				if(I && target.unEquip(I))
+					return
 		else
 			target.visible_message(SPAN_WARNING("[attacker] attempted to push [target]!"))
 		return

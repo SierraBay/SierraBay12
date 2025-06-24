@@ -4724,7 +4724,7 @@
 /area/space)
 "iw" = (
 /obj/structure/table/standard,
-/obj/machinery/microwave{
+/obj/machinery/appliance/cooker/microwave{
 	pixel_y = 4
 	},
 /obj/machinery/light{
@@ -12211,7 +12211,7 @@
 /area/space)
 "vC" = (
 /obj/structure/table/standard,
-/obj/machinery/microwave{
+/obj/machinery/appliance/cooker/microwave{
 	pixel_y = 4
 	},
 /obj/machinery/light{

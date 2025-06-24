@@ -2474,7 +2474,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/oldlab2/powerandatmos)
 "nZ" = (
-/obj/machinery/cooker/grill,
+/obj/machinery/appliance/cooker/grill,
 /obj/floor_decal/corner/grey/diagonal{
 	dir = 4
 	},
@@ -4730,7 +4730,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/oldlab2/hall)
 "zl" = (
-/obj/machinery/cooker/fryer,
+/obj/machinery/appliance/cooker/fryer,
 /obj/floor_decal/corner/grey/diagonal{
 	dir = 4
 	},
@@ -4882,7 +4882,7 @@
 /obj/floor_decal/corner/grey/diagonal{
 	dir = 4
 	},
-/obj/machinery/microwave{
+/obj/machinery/appliance/cooker/microwave{
 	pixel_x = -3;
 	pixel_y = 6
 	},
@@ -5819,7 +5819,7 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/oldlab2/server)
 "Ew" = (
-/obj/machinery/cooker/oven,
+/obj/machinery/appliance/cooker/oven,
 /obj/floor_decal/corner/grey/diagonal{
 	dir = 4
 	},

@@ -29,7 +29,6 @@
 	#include "../../../../maps/sierra/game/languages.dm"
 	#include "../../../../maps/sierra/game/lockdown.dm"
 	// --- ITEMS --- //
-	#include "../../../../maps/sierra/items/ammo.dm"
 	#include "../../../../maps/sierra/items/cards_ids.dm"
 	#include "../../../../maps/sierra/items/documents.dm"
 	#include "../../../../maps/sierra/items/encryption_keys.dm"

@@ -1,0 +1,11 @@
+author: Teteshnik
+changes:
+  - {imageadd: Изменен спрайт "red security cap"}
+  - {imageadd: Изменен спрайт "black security cap"}
+  - {imageadd: Изменен спрайт "black security beret"}
+  - {imageadd: Изменен спрайт "red security beret"}
+  - {imageadd: Изменен спрайт "navy-blue security beret"}
+  - {imageadd: Изменен спрайт "black warden beret"}
+  - {imageadd: Изменен спрайт "navy warden beret"}
+  - {imageadd: Изменен спрайт "Labcoat"}
+delete-after: true
