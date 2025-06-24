@@ -15,6 +15,25 @@
 
 /obj/item/gun/projectile/automatic/sec_smg
 	name = "WT-550 submachine gun"
+	icon = 'mods/guns/icons/obj/sec_smg.dmi'
+	icon_state = "wt550"
+	item_state = "wt550"
+	wielded_item_state = "wt550-wielded"
+	item_icons = list(
+		slot_r_hand_str = 'mods/guns/icons/mob/righthand_sec_smg.dmi',
+		slot_l_hand_str = 'mods/guns/icons/mob/lefthand_sec_smg.dmi',
+		)
+
+/obj/item/gun/projectile/automatic/sec_smg/on_update_icon()
+	..()
+	if(ammo_magazine)
+		icon_state = "wt550-[round(length(ammo_magazine.stored_ammo),4)]"
+		item_state = "wt550"
+		wielded_item_state = "wt550-wielded"
+	else
+		icon_state = "wt550"
+		item_state = "wt550-empty"
+		wielded_item_state = "wt550-wielded-empty"
 
 /obj/item/gun/projectile/automatic/assault_rifle
 	name = "STS-35 assault rifle"
@@ -25,10 +44,12 @@
 	// icon = 'mods/guns/icons/obj/saw.dmi'
 
 
-
 /obj/item/gun/projectile/automatic/bullpup_rifle
 	name = "Z8 carabine"
 	icon = 'mods/guns/icons/obj/bullpup_rifle.dmi'
+
+/obj/item/gun/projectile/automatic/bullpup_rifle/light
+	name = "Z9 Pitbull carabine"
 
 /obj/item/gun/projectile/automatic/battlerifle
 	icon = 'mods/guns/icons/obj/battlerifle.dmi'
@@ -45,6 +66,18 @@
 	icon = 'mods/guns/icons/obj/boltaction.dmi'
 */
 
+/obj/item/gun/projectile/shotgun/pump
+	name = "MSI-870 Crawford shotgun"
+
+/obj/item/gun/projectile/shotgun/pump/sawn
+	name = "MSI-870 Bateman riot shotgun"
+
+/obj/item/gun/projectile/shotgun/pump/combat
+	name = "KS-40 shotgun"
+
+/obj/item/gun/projectile/shotgun/magshot
+	name = "CSG-242 assault shotgun"
+
 /obj/item/gun/projectile/pistol/sec
 	name = "NT Mk58 pistol"
 
@@ -58,6 +91,12 @@
 /obj/item/gun/projectile/pistol/magnum_pistol
 	name = "HelTek Magnus heavy pistol"
 	icon = 'mods/guns/icons/obj/magnum_pistol.dmi'
+
+/obj/item/gun/projectile/revolver
+	name = "A&M Magnum Double Action revolver"
+
+/obj/item/gun/projectile/revolver/holdout
+	name = "A&M Partner holdout revolver"
 
 //NT41 from Infinity pack
 /obj/item/gun/projectile/automatic/nt41

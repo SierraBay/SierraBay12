@@ -115,7 +115,7 @@
 /turf/simulated/floor/tiled/white,
 /area/map_template/anomaly/skat)
 "cx" = (
-/obj/machinery/cooker/grill,
+/obj/machinery/appliance/cooker/grill,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/white,
 /area/map_template/anomaly/skat)
@@ -1095,7 +1095,7 @@
 /area/map_template/anomaly/skat)
 "vL" = (
 /obj/structure/table/marble,
-/obj/item/material/chopping_board/mahogany,
+/obj/item/reagent_containers/cooking_container/board/mahogany,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/white,
 /area/map_template/anomaly/skat)
@@ -1140,7 +1140,7 @@
 /area/map_template/anomaly/skat)
 "wQ" = (
 /obj/structure/table/marble,
-/obj/machinery/cooker/candy,
+/obj/machinery/appliance/mixer/candy,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/white,
 /area/map_template/anomaly/skat)
@@ -1529,7 +1529,7 @@
 /area/map_template/anomaly/skat)
 "Fx" = (
 /obj/structure/table/marble,
-/obj/machinery/microwave{
+/obj/machinery/appliance/cooker/microwave{
 	pixel_x = -3;
 	pixel_y = 6
 	},
@@ -1537,7 +1537,7 @@
 /turf/simulated/floor/tiled/white,
 /area/map_template/anomaly/skat)
 "Ga" = (
-/obj/machinery/cooker/fryer,
+/obj/machinery/appliance/cooker/fryer,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/white,
 /area/map_template/anomaly/skat)
@@ -2210,7 +2210,7 @@
 /area/map_template/anomaly/skat)
 "YX" = (
 /obj/structure/table/marble,
-/obj/machinery/cooker/cereal,
+/obj/machinery/appliance/mixer/cereal,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/white,
 /area/map_template/anomaly/skat)
@@ -2229,7 +2229,7 @@
 /turf/simulated/floor/tiled/white,
 /area/map_template/anomaly/skat)
 "Zk" = (
-/obj/machinery/cooker/oven,
+/obj/machinery/appliance/cooker/oven,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/white,
 /area/map_template/anomaly/skat)

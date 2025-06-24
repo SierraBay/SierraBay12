@@ -28,7 +28,7 @@
 		/obj/item/reagent_containers/glass/beaker
 	)
 	var/list/banned_containers = list(
-		/obj/item/reagent_containers/glass/beaker/bowl,
+		/obj/item/reagent_containers/cooking_container/board/bowl,
 		/obj/item/reagent_containers/glass/beaker/vial
 	)
 	var/grind_time = 6 SECONDS
