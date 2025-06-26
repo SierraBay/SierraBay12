@@ -33,6 +33,10 @@
 #define ui_ai_crew_mon "RIGHT-1:30,TOP:0"
 #define ui_ai_crew_rec "RIGHT-2:30, TOP:0"
 
+// AI: Malf
+#define ui_ai_research "LEFT:6, TOP-2:0"
+#define ui_ai_hardware "LEFT:6, TOP-3:0"
+
 // HUD Code
 
 /mob/living/silicon/ai
@@ -43,7 +47,7 @@
 	if(!isAI(mymob))
 		return
 
-	var/mob/living/silicon/A = mymob
+	var/mob/living/silicon/ai/A = mymob
 
 	adding = list()
 	adding += new /obj/screen/ai_button(null,
@@ -202,9 +206,28 @@
 			/mob/living/silicon/ai/proc/show_crew_records
 			)
 
+	if(A.malfunctioning)
+		adding += new /obj/screen/ai_button(null,
+			ui_ai_research,
+				"Select Research",
+				"ai_research",
+				/mob/living/silicon/ai/proc/ai_select_research
+				)
+
+	if(A.malfunctioning && A.hardware == null)
+		adding += new /obj/screen/ai_button(null,
+			ui_ai_hardware,
+				"Select Hardware",
+				"ai_hardware",
+				/mob/living/silicon/ai/proc/ai_select_hardware
+				)
+
 	A.client.screen = list()
 	A.client.screen.Add(adding)
 
+/mob/living/silicon/ai/update_hud()
+	if(client)
+		client.screen |= contents
 
 // Undef
 #undef ui_ai_core
@@ -233,3 +256,6 @@
 
 #undef ui_ai_crew_mon
 #undef ui_ai_crew_rec
+
+#undef ui_ai_research
+#undef ui_ai_hardware

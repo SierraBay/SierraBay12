@@ -32,6 +32,8 @@ var/global/list/ai_verbs_default = list(
 	/mob/living/silicon/ai/proc/show_crew_records,
 	/mob/living/silicon/ai/proc/show_crew_manifest,
 	/mob/living/silicon/ai/verb/interact_with_machine,
+	/mob/living/silicon/ai/proc/ai_select_research,
+	/mob/living/silicon/ai/proc/ai_select_hardware,
 	// [/SIERRA-ADD] ,
 	/mob/living/silicon/ai/proc/ai_power_override,
 	/mob/living/silicon/ai/proc/ai_shutdown,
