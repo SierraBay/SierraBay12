@@ -57,7 +57,7 @@
 	required_tech_levels = list()
 	cost = 1000
 
-	unlocks_designs = list("mechfab","mech_software_engineering","mech_software_utility","treads","mech_frame", "mech_armour_basic", "mech_control_module", "powerloader_head", "powerloader_body", "right_powerloader_arm", "left_powerloader_arm",  "right_powerloader_leg", "left_powerloader_leg", "quad_legs", "sphere_body","mech_armour_em","mech_armour_radproof" )
+	unlocks_designs = list("mechfab","mech_software_engineering","mech_software_utility","treads","mech_frame", "mech_armour_civil", "mech_control_module", "powerloader_head", "powerloader_body", "right_powerloader_arm", "left_powerloader_arm",  "right_powerloader_leg", "left_powerloader_leg", "quad_legs", "sphere_body","mech_armour_buletproof","mech_armour_laserproof" )
 
 /datum/technology/robo/adv_augments
 	name = "Advanced Augments"

@@ -59,6 +59,15 @@
 	var/mob/living/exosuit/owner
 	//Кто-то прям сейчас пытается тащить нашу часть!
 	var/turf/haul_turf
+	///Максимальное тепло, которое может хранить в себе часть меха.
+	var/max_heat = 100
+	///Количество тепла, которое сбрасывает данная часть
+	var/heat_cooling = 5
+	///Количество тепла, которое вырабатывает данная часть при использовании
+	var/heat_generation = 5
+	///Количество тепла, выделяемое при ЭМИ ударе
+	var/emp_heat_generation = 50
+	var/list/whitelist_equipment_paths = list()
 
 /obj/item/mech_component/attack_hand(mob/user)
 	if(!can_be_pickuped)

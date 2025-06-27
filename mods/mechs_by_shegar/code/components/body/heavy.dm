@@ -6,19 +6,22 @@
 	icon_state = "heavy_body"
 	power_use = 50
 	has_hardpoints = list(HARDPOINT_BACK)
-	max_hp = 180
-	mech_health = 180
-	max_repair = 100
-	min_damage = 150
-	repair_damage = 30
-	hide_pilot = TRUE
-	req_material = MATERIAL_PLASTEEL
+
+	max_hp = 150
+	min_damage = 100
+	max_repair = 40
+	repair_damage = 10
 	back_modificator_damage = 3
 	front_modificator_damage = 0.5
-	max_heat = 300
+
+	hide_pilot = TRUE
+	req_material = MATERIAL_PLASTEEL
+	//Тепло
+	max_heat = 400
 	heat_cooling = 4
-	emp_heat_generation = 100
-	weight = 800
+	emp_heat_generation = 150
+
+	weight = 400
 
 /obj/item/mech_component/chassis/heavy/prebuild()
 	pilot_positions = list(
@@ -48,7 +51,3 @@
 			"[WEST]"  = list("x" = 16, "y" = 16)
 			)
 	. = ..()
-
-/obj/item/mech_component/chassis/heavy/prebuild()
-	. = ..()
-	m_armour = new /obj/item/robot_parts/robot_component/armour/exosuit/combat(src)

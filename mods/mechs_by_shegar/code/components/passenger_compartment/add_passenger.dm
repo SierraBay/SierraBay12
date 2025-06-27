@@ -17,7 +17,6 @@
 			to_chat(user,SPAN_NOTICE("[place] занят."))
 			return
 		user.forceMove(passenger_compartment)
-		user.pinned += src
 		src.visible_message(SPAN_NOTICE(" [user] влез на [src]."))
 		passenger_compartment.count_passengers()
 		update_passengers()

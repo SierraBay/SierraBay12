@@ -1,5 +1,5 @@
 #include "_components.dm"
-#include "armour.dm"
+#include "basic_armour.dm"
 
 //Взаимодействие с частями меха
 #include "components_interactions\material.dm"
@@ -42,5 +42,6 @@
 #include "frame\frame.dm" //Каркас
 //Прочее
 #include "software.dm"
+#include "external_armor\_external_armour.dm" //Внешний армор
 
 #include "id_control.dm" //ID control

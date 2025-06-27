@@ -20,10 +20,11 @@
 	mech_armor_damage = 50 //Абилятивная броня слетит после 6 попаданий
 
 /obj/item/projectile/beam/xray
-	mech_armor_damage = 80 //Игнорирует абилятивку
+	mech_armor_penetration = 80 //Игнорирует абилятивку
 
 /obj/item/projectile/beam/xray/midlaser
-	mech_armor_damage = 80 //Игнорирует абилятивку
+	mech_armor_penetration = 80 //Игнорирует абилятивку
+
 
 /obj/item/projectile/beam/pulse/mid
 	mech_armor_penetration = 20

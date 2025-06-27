@@ -1,6 +1,7 @@
 /mob/living/exosuit/premade/merc
 	name = "Mercenary mech"
 	desc = "A sleek, modern combat mech. Looks like just painted in red paint army mech. Stealed? Maybe."
+	external_armor_type = /obj/item/mech_external_armor/buletproof
 
 /mob/living/exosuit/premade/merc/Initialize()
 	if(!head)
@@ -30,9 +31,7 @@
 /obj/item/mech_component/chassis/combat/merc/prebuild()
 	. = ..()
 	QDEL_NULL(cell)
-	QDEL_NULL(m_armour)
 	cell = new /obj/item/cell/hyper(src)
-	m_armour = new /obj/item/robot_parts/robot_component/armour/exosuit(src)
 	update_parts_images()
 
 /mob/living/exosuit/premade/merc/spawn_mech_equipment()

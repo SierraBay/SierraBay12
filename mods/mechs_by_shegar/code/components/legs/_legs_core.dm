@@ -76,6 +76,8 @@
 /obj/item/mech_component/propulsion/show_missing_parts(mob/user)
 	if(!motivator)
 		to_chat(user, SPAN_WARNING("It is missing an actuator."))
+	if(!installed_armor)
+		to_chat(user, SPAN_WARNING("It is missing mech external armour plating."))
 
 /obj/item/mech_component/propulsion/ready_to_install()
 	return motivator

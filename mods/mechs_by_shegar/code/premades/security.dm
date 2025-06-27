@@ -6,12 +6,14 @@
 	/obj/item/mech_equipment/light, \
 	/obj/item/mech_equipment/mounted_system/taser/ballistic/grenade_launcher, \
 	/obj/item/mech_equipment/mounted_system/taser/ballistic/launcher/security, \
-	/obj/item/mech_equipment/mounted_system/taser \
+	/obj/item/mech_equipment/mounted_system/taser, \
+	/obj/item/mech_equipment/flash \
 )
 
 /mob/living/exosuit/premade/security
 	name = "security mech"
 	desc = "An old battle mech that fought in Sierra's past missions. This mech is now useless—its parts are badly worn, and it can't hold much gear. Do one last thing for it: let it die in battle for good, then build a new one."
+	external_armor_type = /obj/item/mech_external_armor/buletproof
 
 /mob/living/exosuit/premade/security/Initialize()
 	if(!head)
