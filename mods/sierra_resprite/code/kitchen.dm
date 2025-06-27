@@ -82,3 +82,67 @@
 /obj/machinery/reagentgrinder/juicer
 	icon = 'mods/sierra_resprite/icons/kitchen.dmi'
 	icon_state = "juicer"
+
+/obj/machinery/appliance/cooker/stove
+	icon = 'mods/sierra_resprite/icons/kitchen.dmi'
+	icon_state = "stove"
+
+/obj/machinery/appliance/cooker/stove/on_update_icon()
+	..()
+	ClearOverlays()
+	var/list/pans = list()
+	var/pan_number = 0
+	for(var/obj/item/reagent_containers/cooking_container/cooking_container in contents)
+		var/pan_icon_state
+		var/pan_position_number = clamp((pan_number)+1, 1, 4)
+		var/list/positions = pan_positions[pan_position_number]
+		switch(cooking_container.appliancetype)
+			if(COOKING_APPLIANCE_SKILLET)
+				pan_icon_state = "skillet"
+				if(pan_position_number >= 3)
+					pan_icon_state = "skillet_flip"
+			if(COOKING_APPLIANCE_SAUCEPAN)
+				pan_icon_state = "pan"
+				if(pan_position_number >= 3)
+					pan_icon_state = "pan_flip"
+			if(COOKING_APPLIANCE_POT)
+				pan_icon_state = "pot"
+			else
+				continue
+		var/mutable_appearance/pan_overlay = mutable_appearance('mods/sierra_resprite/icons/kitchen.dmi', pan_icon_state)
+		pan_overlay.pixel_x = positions[1]
+		pan_overlay.pixel_y = positions[2]
+		pan_overlay.color = cooking_container.color
+		pans += pan_overlay
+		pan_number = pan_position_number
+		//filling
+		if(cooking_container.reagents.total_volume)
+			var/mutable_appearance/filling_overlay = mutable_appearance('mods/sierra_resprite/icons/kitchen.dmi', "filling_overlay")
+			filling_overlay.pixel_x = positions[1]
+			filling_overlay.pixel_y = positions[2]
+			filling_overlay.color = cooking_container.reagents.get_color()
+			switch(cooking_container.appliancetype)
+				if(COOKING_APPLIANCE_SKILLET)
+					filling_overlay.pixel_y -= 3
+				if(COOKING_APPLIANCE_SAUCEPAN)
+					filling_overlay.pixel_y -= 2
+			pans += filling_overlay
+		// flame overlay
+		if(operating)
+			var/mutable_appearance/flame_overlay = mutable_appearance('mods/sierra_resprite/icons/kitchen.dmi', "stove_flame")
+			flame_overlay.pixel_x = positions[1]
+			flame_overlay.pixel_y = positions[2]
+			flame_overlay.color = "#006eff"
+			pans += flame_overlay
+	if(!length(pans))
+		return
+	AddOverlays(pans)
+
+
+/obj/item/reagent_containers/food/drinks/teapot
+	icon = 'mods/sierra_resprite/icons/kitchen.dmi'
+	icon_state = "teapot"
+	item_state = "teapot"
+
+/obj/item/reagent_containers/food/drinks
+	icon = 'mods/sierra_resprite/icons/kitchen.dmi'
