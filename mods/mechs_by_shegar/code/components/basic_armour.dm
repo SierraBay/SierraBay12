@@ -6,7 +6,8 @@
 		laser = 0,
 		energy = 0,
 		bomb = ARMOR_BOMB_PADDED,
-		bio = ARMOR_BIO_SHIELDED
+		bio = ARMOR_BIO_SHIELDED,
+		rad = ARMOR_RAD_SHIELDED
 		)
 
 /datum/extension/armor/mech
