@@ -20,8 +20,7 @@
 
 	//Не лежит, проверяем если должен упасть
 	if(!lying && !already_buckled)
-		//Сделал без сигнала
-		lying = incapacitated(INCAPACITATION_KNOCKDOWN)
+		set_lying(incapacitated(INCAPACITATION_KNOCKDOWN))
 
 	if(lying)
 		set_density(FALSE)

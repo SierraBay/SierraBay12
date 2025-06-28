@@ -11,7 +11,7 @@
  */
 
 /obj/item/gun/projectile/automatic/assault_rifle/heltek
-	name = "LA-700"
+	name = "LA-700 assault rifle"
 	desc = "HelTek LA-700 is a standart equipment of ICCG Space-assault Forces. Looks very similiar to STS-35."
 	icon = 'mods/guns/icons/obj/iccg_rifle.dmi'
 	icon_state = "iccg_rifle"
@@ -31,7 +31,7 @@
 		wielded_item_state = "arifle-wielded-empty"
 
 /obj/item/gun/projectile/automatic/mr735
-	name = "MR-735"
+	name = "MR-735 assault rifle"
 	desc = "A cheap rifle for close quarters combat, with an auto-firing mode available. HelTek MR-735 is a standard rifle for ICCG Space-assault Forces, designed without a stock for easier storage and combat in closed spaces. Perfect weapon for some ship's crew."
 	icon = 'mods/guns/icons/obj/mr735.dmi'
 	icon_state = "nostockrifle"
@@ -70,7 +70,7 @@
 
 
 /obj/item/gun/projectile/automatic/mbr
-	name = "MBR"
+	name = "MBR carabine"
 	desc = "A shabby bullpup carbine. Despite its size, it looks a little uncomfortable, but it is robust. HelTek MBR is a standart equipment of ICCG Space-assault Forces, designed in a bullpup layout. Possesses autofire and is perfect for the ship's crew."
 	icon = 'mods/guns/icons/obj/mbr_bullpup.dmi'
 	icon_state = "mbr_bullpup"
@@ -110,7 +110,7 @@
  */
 
 /obj/item/gun/energy/laser/bonfire
-	name = "Bonfire Carbine"
+	name = "Bonfire-75 carbine"
 	desc = "Strange construction: laser carbine with underslung grenade launcher and very capable internal battery. HelTek Bonfire-75 is a weapon designed for suppressive fire in close quarters, where usage of ballistic weaponry will be uneffective or simply hazardous."
 	icon = 'mods/guns/icons/obj/bonfire.dmi'
 	icon_state = "bonfire"
@@ -201,7 +201,7 @@
  */
 
 /obj/item/gun/projectile/automatic/sol_smg
-	name = "submachine gun"
+	name = "MSI-220 submachine gun"
 	desc = "Mars Security Industries MSI-220 'Rapido'. Commonly used by Military Police, Sol Federal Police and other governmental paramilitary structures tied to MSI contracts."
 	icon = 'mods/guns/icons/obj/smg_sol.dmi'
 	icon_state = "solsmg"
@@ -266,3 +266,100 @@
 /obj/item/storage/box/ammo/smg_sol
 	name = "box of SOLMAG SMG magazines"
 	startswith = list(/obj/item/ammo_magazine/smg_sol = 6)
+
+/////////////////////////////////
+// Misc guns//
+/////////////////////////////////
+
+/* GUNS
+ * ========
+ */
+
+//C-20A
+/obj/item/gun/projectile/automatic/sec_smg/c20a
+	name = "C-20A carabine"
+	desc = "A licensed derivative of the infamous C-20r SMG, the C-20A is a lightweight carabine produced by NanoTrasen. Chambered in 7mm Usurpator rounds, the weapon trades bullet mass for muzzle velocity and superior ergonomics."
+	icon_state = "c20a"
+	item_state = "c20a"
+	wielded_item_state = "c20a"
+	icon = 'mods/guns/icons/obj/nt_smg.dmi'
+	item_icons = list(
+		slot_r_hand_str = 'mods/guns/icons/mob/righthand_sec_smg.dmi',
+		slot_l_hand_str = 'mods/guns/icons/mob/lefthand_sec_smg.dmi',
+		)
+	safety_icon = "safety"
+	slot_flags = SLOT_BELT|SLOT_BACK
+	magazine_type = /obj/item/ammo_magazine/smg_nt
+	allowed_magazines = /obj/item/ammo_magazine/smg_nt
+	auto_eject = 1
+	auto_eject_sound = 'sound/weapons/smg_empty_alarm.ogg'
+
+/obj/item/gun/projectile/automatic/sec_smg/c20a/on_update_icon()
+	..()
+	if(ammo_magazine)
+		icon_state = "c20a-[round(length(ammo_magazine.stored_ammo),4)]"
+		item_state = "c20a"
+		wielded_item_state = "c20a"
+	else
+		icon_state = "c20a"
+		item_state = "c20a-empty"
+		wielded_item_state = "c20a-empty"
+
+/obj/item/gun/projectile/automatic/sec_smg/c20a/empty
+	starts_loaded = FALSE
+
+/datum/design/item/weapon/c20a
+	id = "c20a"
+	req_tech = list(TECH_COMBAT = 5, TECH_MATERIAL = 2)
+	materials = list(MATERIAL_STEEL = 8000, MATERIAL_SILVER = 3000, MATERIAL_DIAMOND = 1500)
+	build_path = /obj/item/gun/projectile/automatic/sec_smg/c20a
+	sort_string = "TAZGA"
+
+/obj/item/ammo_magazine/smg_nt
+	name = "box magazine"
+	icon_state = "smg"
+	icon = 'mods/guns/icons/obj/nt_smg.dmi'
+	mag_type = MAGAZINE
+	ammo_type = /obj/item/ammo_casing/pistol/small
+	matter = list(MATERIAL_STEEL = 1200)
+	caliber = CALIBER_PISTOL_SMALL
+	max_ammo = 20
+	multiple_sprites = 1
+
+/obj/item/ammo_magazine/smg_nt/empty
+	initial_ammo = 0
+
+/obj/item/ammo_magazine/smg_nt/rubber
+	labels = list("rubber")
+	ammo_type = /obj/item/ammo_casing/pistol/small/rubber
+
+/obj/item/ammo_magazine/smg_nt/practice
+	labels = list("practice")
+	ammo_type = /obj/item/ammo_casing/pistol/small/practice
+
+/obj/item/ammo_magazine/smg_nt/ap
+	labels = list("AP")
+	icon_state = "smg_ap"
+	matter = list(MATERIAL_STEEL = 2000)
+	ammo_type = /obj/item/ammo_casing/pistol/small/ap
+
+/obj/item/ammo_casing/pistol/small/ap
+	desc = "An armor piercing pistol bullet casing."
+	label = "AP"
+	projectile_type = /obj/item/projectile/bullet/pistol/holdout/ap
+	icon_state = "smallcasing_f"
+
+/obj/item/projectile/bullet/pistol/holdout/ap
+	armor_penetration = 15
+
+/obj/item/storage/box/ammo/smg_nt
+	name = "box of 7mm box magazines - lethal"
+	startswith = list(/obj/item/ammo_magazine/smg_nt = 7)
+
+/obj/item/storage/box/ammo/smg_nt/rubber
+	name = "box of 7mm box magazines - rubber"
+	startswith = list(/obj/item/ammo_magazine/smg_nt/rubber = 7)
+
+/obj/item/storage/box/ammo/smg_nt/ap
+	name = "box of 7mm box magazines - armor piercing"
+	startswith = list(/obj/item/ammo_magazine/smg_nt/ap = 4)

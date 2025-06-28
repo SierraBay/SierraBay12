@@ -70,6 +70,7 @@
 		"Combat Stimulant - 3" = list(3, /obj/item/reagent_containers/hypospray/autoinjector/combatstim),
 		"C4 - 3" = list(3, /obj/item/plastique),
 		"Flux Cannon - 4" = list(4, /obj/item/gun/energy/darkmatter),
+		"Spike Thrower - 4" = list(4, /obj/item/gun/launcher/alien/spikethrower),
 		"Hack ID - 4" = list(4, /obj/item/card/id/syndicate),
 		"Combat medpack - 4" = list(4, /obj/item/storage/firstaid/combat),
 		"Sleepy pen - 4" = list(4, /obj/item/pen/reagent/sleepy),
@@ -81,6 +82,43 @@
 		"Thermals - 12" = list(12, /obj/item/clothing/glasses/thermal/plain/monocle),
 		"MIU - 15" = list(15, /obj/item/clothing/mask/ai)
 	)
+	var/list/purchase_limits = list(
+		"Thermals - 12" = 2,
+		"Raider Suit - 6" = 1,
+		"Arkmade Hardsuit - 8" = 1
+	)
+
+/obj/structure/voxuplink/vox_ship/proc/check_and_handle_limits(mob/user, choice)
+	if(!(choice in purchase_limits))
+		return TRUE
+
+	if(purchase_limits[choice] <= 0)
+		to_chat(user, SPAN_WARNING("[choice] are no longer available!"))
+		return FALSE
+
+	purchase_limits[choice]--
+	return TRUE
+
+/obj/structure/voxuplink/vox_ship/attack_hand(mob/living/carbon/human/user)
+	if(!istype(user, /mob/living/carbon/human/vox))
+		to_chat(user, SPAN_WARNING("You don't know what to do with \the [src.name]."))
+		return
+	if(working)
+		to_chat(user, SPAN_WARNING("\The [src.name] is still working!"))
+		return
+	var/choice = input(user, "What would you like to request from Apex? You have [favors] favors left!", "Shoal Beacon") as null|anything in rewards
+	if(rewards[choice][1] > favors || !check_and_handle_limits(user, choice))
+		return
+	working = TRUE
+	on_update_icon()
+	to_chat(user, SPAN_NOTICE("The Apex rewards you with \the [choice]."))
+	sleep(2 SECONDS)
+	working = FALSE
+	on_update_icon()
+	favors -= rewards[choice][1]
+	for(var/I in rewards[choice])
+		if(!isnum(I))
+			new I(get_turf(src))
 
 /obj/structure/voxuplink/vox_ship/use_tool(obj/item/I, mob/user)
 	..()
@@ -111,8 +149,6 @@
 		else if(istype(I, /obj/item/stack/material/deuterium))
 			price = 0.03
 		else if(istype(I, /obj/item/stack/material/titanium))
-			price = 0.04
-		else if(istype(I, /obj/item/stack/material/platinum))
 			price = 0.04
 		else if(istype(I, /obj/item/stack/material/gold))
 			price = 0.05

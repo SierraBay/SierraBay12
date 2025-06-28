@@ -1,3 +1,24 @@
+/* SHOTGUN - 12 GAUGE
+ * ========
+ */
+
+/obj/item/projectile/bullet/shotgun
+	name = "slug"
+	damage = 60
+	armor_penetration = 10
+
+/obj/item/projectile/bullet/pellet/shotgun/flechette
+	name = "flechette"
+	icon_state = "flechette"
+	damage = 30
+	armor_penetration = 35
+	pellets = 3
+	range_step = 3
+	base_spread = 99
+	spread_step = 2
+	penetration_modifier = 0.5
+	hitchance_mod = 5
+
 /*************************
 sierra specific ammo types
 **************************/
@@ -18,7 +39,7 @@ Manstopper Rounds - Shotgun
 /obj/item/ammo_casing/shotgun/manstopper
 	name = "shotgun shell"
 	desc = "A manstopper shell."
-	icon = 'maps/sierra/icons/obj/ammo.dmi'
+	icon = 'mods/guns/icons/obj/ammo.dmi'
 	icon_state = "mnshell"
 	spent_icon = "mnshell-spent"
 	projectile_type = /obj/item/projectile/bullet/shotgun/manstopper
@@ -29,3 +50,4 @@ Manstopper Rounds - Shotgun
 	damage = 50
 	agony = 30
 	armor_penetration = 0
+	penetration_modifier = 0
