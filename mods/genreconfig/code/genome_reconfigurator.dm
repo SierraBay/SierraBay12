@@ -96,8 +96,7 @@
 				var/mob/living/carbon/human/H = target
 				H.custom_pain(SPAN_WARNING("You feel a tiny prick!"), 1, TRUE, H.get_organ(user.zone_sel.selecting))
 
-			spawn(5)
-				is_storing_data = FALSE
+			addtimer(new Callback(src, PROC_REF(set_storing_data_false)), 5)
 
 	else
 		to_chat(user, SPAN_WARNING("Реконфигуратор генома предназначен только для сбора генетического материала у живых существ."))
@@ -130,8 +129,7 @@
 	if(user)
 		to_chat(user, SPAN_NOTICE("Генетический образец собран. Анализ последовательности ДНК..."))
 
-	spawn(60)
-		finish_analysis()
+	addtimer(new Callback(src, PROC_REF(finish_analysis)), 60)
 
 /obj/item/reagent_containers/syringe/genome_reconfigurator/proc/finish_analysis()
 	is_analyzing = FALSE
@@ -146,11 +144,17 @@
 
 	update_icon()
 
-	spawn(5)
-		finish_storage()
+	addtimer(new Callback(src, PROC_REF(finish_storage)), 5)
 
 /obj/item/reagent_containers/syringe/genome_reconfigurator/proc/finish_storage()
 	is_storing_data = FALSE
+
+/obj/item/reagent_containers/syringe/genome_reconfigurator/proc/set_storing_data_false()
+	is_storing_data = FALSE
+
+/obj/item/reagent_containers/syringe/genome_reconfigurator/proc/check_and_clear_donor_data()
+	if(reagents.get_reagent_amount(/datum/reagent/blood) <= 0 && has_donor_data && !used_for_transformation && !is_storing_data && !is_analyzing)
+		clear_donor_data()
 
 /obj/item/reagent_containers/syringe/genome_reconfigurator/proc/clear_donor_data()
 	donor_name = null
@@ -169,9 +173,7 @@
 	. = ..()
 
 	if(reagents.get_reagent_amount(/datum/reagent/blood) <= 0 && has_donor_data && !used_for_transformation && !is_storing_data && !is_analyzing)
-		spawn(3)
-			if(reagents.get_reagent_amount(/datum/reagent/blood) <= 0 && has_donor_data && !used_for_transformation && !is_storing_data && !is_analyzing)
-				clear_donor_data()
+		addtimer(new Callback(src, PROC_REF(check_and_clear_donor_data)), 3)
 
 	// Я сделал спрайт слишком большим и на полу он выглядит нелепо, поэтому я таким образом уменьшаю спрайт когда он лежит где-то.
 /obj/item/reagent_containers/syringe/genome_reconfigurator/on_update_icon()
@@ -321,8 +323,7 @@
 
 		H.sleeping = 20
 
-	spawn(150)
-		complete_transformation(target, user)
+	addtimer(new Callback(src, PROC_REF(complete_transformation), target, user), 150)
 
 /obj/item/reagent_containers/syringe/genome_reconfigurator/proc/get_pain_message(body_part, pain_level)
 	switch(body_part)
