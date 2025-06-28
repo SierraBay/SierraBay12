@@ -33,7 +33,7 @@
 
 /obj/item/projectile/bullet/rifle/military
 	mech_armor_penetration = 40
-	mech_armor_damage = 20 //15 прямых попаданий
+	mech_armor_damage = 30 //10 прямых попаданий
 
 /obj/item/projectile/bullet/rifle/shell
 	mech_armor_penetration = 100 /// Броня меха игнорируется
