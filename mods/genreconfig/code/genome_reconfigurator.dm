@@ -49,7 +49,7 @@
 
 	if(ismob(target))
 		if(reagents.has_reagent(/datum/reagent/blood))
-			to_chat(user, SPAN_NOTICE("В реконфигураторе генома уже есть материал."))
+			to_chat(user, SPAN_WARNING("В реконфигураторе генома уже есть материал."))
 			return
 		if(istype(target, /mob/living/carbon))
 			if(istype(target, /mob/living/carbon/slime))
@@ -79,6 +79,27 @@
 					return
 
 			user.setClickCooldown(DEFAULT_QUICK_COOLDOWN)
+
+			// Поддерживаемые расы
+			var/list/supported_species = list(
+				SPECIES_HUMAN,
+				SPECIES_UNATHI,
+				SPECIES_SKRELL,
+				SPECIES_TAJARA,
+				SPECIES_RESOMI,
+				SPECIES_MONKEY,
+				SPECIES_FARWA,
+				SPECIES_YEOSA,
+				SPECIES_VATGROWN,
+				SPECIES_SPACER,
+				SPECIES_GRAVWORLDER,
+				SPECIES_MULE,
+				SPECIES_TRITONIAN
+			)
+
+			if(!(T.species.name in supported_species))
+				to_chat(user, SPAN_WARNING("Реконфигуратор генома не может работать с этим видом. Попробуйте с другим донором."))
+				return
 
 			reagents.clear_reagents()
 			is_storing_data = TRUE
@@ -129,7 +150,7 @@
 	if(user)
 		to_chat(user, SPAN_NOTICE("Генетический образец собран. Анализ последовательности ДНК..."))
 
-	addtimer(new Callback(src, PROC_REF(finish_analysis)), 60)
+	addtimer(new Callback(src, PROC_REF(finish_analysis)), 600)
 
 /obj/item/reagent_containers/syringe/genome_reconfigurator/proc/finish_analysis()
 	is_analyzing = FALSE
@@ -212,7 +233,7 @@
 			return
 
 		if(!has_donor_data)
-			to_chat(user, SPAN_WARNING("Это устройство не содержит данных донора для трансформации."))
+			to_chat(user, SPAN_WARNING("Геномный реконфигуратор пустой, переключите режим."))
 			return
 
 		var/mob/living/carbon/human/T = target
@@ -226,29 +247,6 @@
 
 		if(MUTATION_HUSK in T.mutations)
 			to_chat(user, SPAN_WARNING("ДНК этого существа испорчена до такой степени, что его невозможно использовать!"))
-			return
-
-		// Я сделал ограничение по расам, можно расширить если хочется
-		var/list/supported_species = list(
-			SPECIES_HUMAN,
-			SPECIES_DIONA,
-			SPECIES_VOX,
-			SPECIES_UNATHI,
-			SPECIES_SKRELL,
-			SPECIES_TAJARA,
-			SPECIES_RESOMI,
-			SPECIES_MONKEY,
-			SPECIES_FARWA,
-			SPECIES_YEOSA,
-			SPECIES_VATGROWN,
-			SPECIES_SPACER,
-			SPECIES_GRAVWORLDER,
-			SPECIES_MULE,
-			SPECIES_TRITONIAN
-		)
-
-		if(!(donor_species in supported_species))
-			to_chat(user, SPAN_WARNING("Реконфигуратор генома не может работать с этим видом. Слейте материал и попробуйте с другим донором."))
 			return
 
 		injectMob(T, user)
@@ -404,10 +402,6 @@
 	switch(donor_species)
 		if(SPECIES_HUMAN)
 			to_chat(target, SPAN_NOTICE("Ты чувствуешь себя... человеком. Твоё тело ощущается знакомым и естественным, как будто ты всегда был таким."))
-		if(SPECIES_DIONA)
-			to_chat(target, SPAN_NOTICE("Ты чувствуешь себя... странно. Будто твоё тело состоит из множества разделённых частей."))
-		if(SPECIES_VOX)
-			to_chat(target, SPAN_NOTICE("Ты чувствуешь... тяжесть в груди. Твоё тело покрылось жесткими пластинами, а на голове появился клюв."))
 		if(SPECIES_UNATHI)
 			to_chat(target, SPAN_NOTICE("Ты чувствуешь... прохладу. Твоё тело покрылось чешуйчатой кожей."))
 		if(SPECIES_SKRELL)
