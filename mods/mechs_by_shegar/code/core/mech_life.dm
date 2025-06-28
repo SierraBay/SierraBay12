@@ -83,7 +83,7 @@
 	return see_invisible
 
 /mob/living/exosuit/updatehealth()
-	maxHealth = (head.current_hp + head.unrepairable_damage) + (body.max_hp + body.unrepairable_damage + material.integrity) + (L_arm.current_hp + L_arm.unrepairable_damage) + (R_arm.current_hp + R_arm.unrepairable_damage)  + (L_leg.current_hp + L_leg.unrepairable_damage) + (R_leg.current_hp + R_leg.unrepairable_damage)
+	maxHealth = (head.current_hp + head.unrepairable_damage) + (body.max_hp + body.unrepairable_damage) + (L_arm.current_hp + L_arm.unrepairable_damage) + (R_arm.current_hp + R_arm.unrepairable_damage)  + (L_leg.current_hp + L_leg.unrepairable_damage) + (R_leg.current_hp + R_leg.unrepairable_damage)
 	health = collect_current_hp()
 	if(health <= 0) //тобишь 0 или меньше
 		death()
