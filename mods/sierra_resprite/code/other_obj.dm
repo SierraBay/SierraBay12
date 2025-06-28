@@ -1,3 +1,4 @@
+
 /obj/machinery/jukebox/old
 	icon = 'mods/sierra_resprite/icons/jukebox.dmi'
 	icon_state = "jukebox2"
@@ -20,3 +21,53 @@
 	item_state = "inflatable"
 	icon = 'mods/sierra_resprite/icons/other.dmi'
 	slot_flags = SLOT_BELT
+
+/obj/structure/flora/pottedplant
+	icon = 'mods/sierra_resprite/icons/plants.dmi'
+
+/obj/item/flora/pottedplantsmall
+	icon = 'mods/sierra_resprite/icons/plants.dmi'
+
+
+/obj/machinery/seed_extractor
+	icon = 'mods/sierra_resprite/icons/hydroponic.dmi'
+	icon_state = "sextractor"
+
+/obj/machinery/biogenerator
+	icon = 'mods/sierra_resprite/icons/hydroponic.dmi'
+	icon_state = "biogen"
+
+
+
+/obj/item/storage/box/donut
+	icon = 'mods/sierra_resprite/icons/donutbox.dmi'
+	icon_state = "donutbox"
+	name = "donut box"
+	contents_allowed = list(/obj/item/reagent_containers/food/snacks/donut)
+	foldable = /obj/item/stack/material/cardboard
+
+	startswith = list(/obj/item/reagent_containers/food/snacks/donut/normal = 6)
+
+/obj/item/storage/box/donut/on_update_icon()
+	ClearOverlays()
+	var/i = 0
+	for(var/obj/item/reagent_containers/food/snacks/donut/D in contents)
+		var/image/I = image('mods/sierra_resprite/icons/donutbox.dmi', "[i][D.overlay_state]")
+		if(D.overlay_state == "box-donut1")
+			I.color = D.filling_color
+		AddOverlays(I)
+		i++
+
+/obj/item/storage/box/donut/empty
+	startswith = null
+
+
+
+/obj/machinery/suit_cycler //не стала пихать в карту сиерры к suitstorage по причине не срать в мапу
+	icon = 'mods/sierra_resprite/icons/suitcycler.dmi'
+	icon_state = "close"
+
+/obj/machinery/photocopier/faxmachine
+	name = "fax machine"
+	icon = 'mods/sierra_resprite/icons/fax_machine.dmi'
+	icon_state = "fax"
