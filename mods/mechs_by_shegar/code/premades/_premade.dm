@@ -59,10 +59,11 @@
 		L_leg.side = LEFT
 		L_leg.setup_side()
 	//Установка динамической брони
-	for(var/obj/item/mech_component/part in list(head, body, R_arm, L_arm, R_leg, L_leg))
-		var/obj/item/mech_external_armor/armour = new external_armor_type(part)
-		part.installed_armor = armour
-		armour.owner = part
+	if(external_armor_type)
+		for(var/obj/item/mech_component/part in list(head, body, R_arm, L_arm, R_leg, L_leg))
+			var/obj/item/mech_external_armor/armour = new external_armor_type(part)
+			part.installed_armor = armour
+			armour.owner = part
 
 	if(!material)
 		material = SSmaterials.get_material_by_name(material_type)
