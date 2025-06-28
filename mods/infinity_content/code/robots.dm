@@ -33,42 +33,11 @@
 		"Motile" = "motile-eng",
 		"Default" = "robotEngi"
 	)
-	equipment = list(
-		/obj/item/borg/sight/meson,
-		/obj/item/extinguisher,
-		/obj/item/weldingtool/hugetank,
-		/obj/item/screwdriver,
-		/obj/item/wrench,
-		/obj/item/crowbar,
-		/obj/item/wirecutters,
-		/obj/item/device/multitool,
-		/obj/item/device/t_scanner,
-		/obj/item/device/scanner/gas,
-		/obj/item/device/geiger,
-		/obj/item/taperoll/engineering,
-		/obj/item/taperoll/atmos,
-		/obj/item/gripper,
-		/obj/item/gripper,
-		/obj/item/gripper/no_use/loader,
-		/obj/item/device/lightreplacer,
-		/obj/item/device/paint_sprayer,
-		/obj/item/inflatable_dispenser/robot,
-		/obj/item/reagent_containers/spray/cleaner/drone,
-		/obj/item/inducer/borg,
-		/obj/item/device/plunger/robot,
-		/obj/item/matter_decompiler,
-		/obj/item/stack/material/cyborg/steel,
-		/obj/item/stack/material/cyborg/aluminium,
-		/obj/item/stack/material/rods/cyborg,
-		/obj/item/stack/tile/floor/cyborg,
-		/obj/item/stack/material/cyborg/wood,
-		/obj/item/stack/tile/wood/cyborg,
-		/obj/item/stack/material/cyborg/glass,
-		/obj/item/stack/material/cyborg/glass/reinforced,
-		/obj/item/stack/cable_coil/cyborg,
-		/obj/item/stack/material/cyborg/plasteel,
-		/obj/item/rpd // infinity
-	)
+
+/obj/item/robot_module/engineering/Initialize()
+	equipment += /obj/item/rpd
+
+	. = ..()
 
 /obj/item/robot_module/janitor
 	name = "janitorial robot module"
@@ -92,7 +61,6 @@
 		"Needles" = "medicalrobot",
 		"Default" = "robotMedi"
 	)
-
 
 /obj/item/robot_module/miner
 	sprites = list(
@@ -153,36 +121,8 @@
 		"Eyebot" = "eyebot-engineering",
 		"Ver 06" = "wer6-Engineering"
 	)
-	equipment = list(
-		/obj/item/borg/sight/meson,
-		/obj/item/extinguisher,
-		/obj/item/weldingtool/largetank,
-		/obj/item/screwdriver,
-		/obj/item/wrench,
-		/obj/item/crowbar,
-		/obj/item/wirecutters,
-		/obj/item/device/multitool,
-		/obj/item/device/t_scanner,
-		/obj/item/device/scanner/gas,
-		/obj/item/device/geiger,
-		/obj/item/taperoll/engineering,
-		/obj/item/taperoll/atmos,
-		/obj/item/gripper,
-		/obj/item/gripper/no_use/loader,
-		/obj/item/device/lightreplacer,
-		/obj/item/device/paint_sprayer,
-		/obj/item/inflatable_dispenser/robot,
-		/obj/item/reagent_containers/spray/cleaner/drone,
-		/obj/item/inducer/borg,
-		/obj/item/device/plunger/robot,
-		/obj/item/matter_decompiler,
-		/obj/item/stack/material/cyborg/steel,
-		/obj/item/stack/material/cyborg/aluminium,
-		/obj/item/stack/material/rods/cyborg,
-		/obj/item/stack/tile/floor/cyborg,
-		/obj/item/stack/material/cyborg/glass,
-		/obj/item/stack/material/cyborg/glass/reinforced,
-		/obj/item/stack/cable_coil/cyborg,
-		/obj/item/stack/material/cyborg/plasteel,
-		/obj/item/rpd // infinity
-	)
+
+/obj/item/robot_module/flying/repair/Initialize()
+	equipment += /obj/item/rpd
+
+	. = ..()
