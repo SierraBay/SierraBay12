@@ -1,6 +1,6 @@
 #### Список PRов:
 
-- https://github.com/SierraBay/SierraBay12/commit/6e1faa61beb50e20cc409b52289735900714f8cb
+- https://github.com/SierraBay/SierraBay12/pull/3928
 <!--
   Ссылки на PRы, связанные с модом:
   - Создание
