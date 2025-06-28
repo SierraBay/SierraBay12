@@ -3,6 +3,9 @@
 		to_chat(user, SPAN_BAD("Понятия не имею как работать с навесной бронёй."))
 		return
 	var/obj/item/mech_component/choosed_part = show_radial_menu(user, src, parts_list_images, require_near = TRUE, radius = 42, tooltips = TRUE, check_locs = list(src))
+	if(!choosed_part.armour_can_be_removed)
+		to_chat(user, SPAN_BAD("У этого типа компонента не существует креплений."))
+		return
 	if(!choosed_part.installed_armor)
 		to_chat(user, SPAN_BAD("Бронеэлемент отсутствует."))
 		return

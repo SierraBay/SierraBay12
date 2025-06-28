@@ -4,6 +4,7 @@
 //Взаимодействие с частями меха
 #include "components_interactions\material.dm"
 #include "components_interactions\screwdriver.dm"
+#include "components_interactions\wrench.dm"
 #include "components_interactions\welder.dm"
 
 //Сенсоры

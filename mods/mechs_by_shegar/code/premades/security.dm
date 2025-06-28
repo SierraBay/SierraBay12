@@ -13,7 +13,7 @@
 /mob/living/exosuit/premade/security
 	name = "security mech"
 	desc = "An old battle mech that fought in Sierra's past missions. This mech is now useless—its parts are badly worn, and it can't hold much gear. Do one last thing for it: let it die in battle for good, then build a new one."
-	external_armor_type = /obj/item/mech_external_armor/buletproof
+	external_armor_type = /obj/item/mech_external_armor/civil
 
 /mob/living/exosuit/premade/security/Initialize()
 	if(!head)
@@ -50,6 +50,8 @@
 	max_heat = 200
 	heat_cooling = 8
 	can_have_external_armour = FALSE
+	armour_can_be_removed = FALSE
+	armour_can_be_installed = FALSE
 
 /obj/item/mech_component/chassis/combat/security
 	icon_state = "combat_body"
@@ -70,6 +72,7 @@
 	whitelist_equipment_paths = SEC_WHITELIST_EQUIPMENT
 	component_tag = "SECURITY"
 	can_have_external_armour = FALSE
+	armour_can_be_removed = FALSE
 
 /obj/item/mech_component/manipulators/powerloader/security
 	icon_state = "combat_arm"
@@ -80,6 +83,7 @@
 	max_heat = 200
 	heat_cooling = 8
 	can_have_external_armour = FALSE
+	armour_can_be_removed = FALSE
 
 /obj/item/mech_component/propulsion/powerloader/security
 	icon_state = "combat_leg"
@@ -90,6 +94,7 @@
 	max_heat = 200
 	heat_cooling = 8
 	can_have_external_armour = FALSE
+	armour_can_be_removed = FALSE
 
 
 //Спавнер для камеры, ибо вы не поверите, камера руинит юнит тесты

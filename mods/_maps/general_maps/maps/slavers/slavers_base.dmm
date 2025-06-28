@@ -5595,7 +5595,6 @@
 "EC" = (
 /obj/structure/table/steel,
 /obj/floor_decal/industrial/outline/yellow,
-/obj/item/robot_parts/robot_component/armour/exosuit/combat,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/slavers_base/powatm)
 "EE" = (

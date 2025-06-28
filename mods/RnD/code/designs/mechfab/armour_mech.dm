@@ -14,7 +14,7 @@
 	build_path = /obj/item/mech_external_armor/laserproof
 	time = 50
 	req_tech = list(TECH_MATERIAL = 4, TECH_COMBAT = 4)
-	materials = list(MATERIAL_STEEL = 10000, MATERIAL_PLASTEEL = 5000, MATERIAL_ALUMINIUM = 5000)
+	materials = list(MATERIAL_STEEL = 10000, MATERIAL_GLASS = 20000)
 
 /datum/design/item/mechfab/mech_armour/buletproof
 	name = "buletproof armor plates"
@@ -22,4 +22,4 @@
 	build_path = /obj/item/mech_external_armor/buletproof
 	time = 50
 	req_tech = list(TECH_MATERIAL = 4, TECH_COMBAT = 4)
-	materials = list(MATERIAL_STEEL = 10000, MATERIAL_GLASS = 20000)
+	materials = list(MATERIAL_STEEL = 10000, MATERIAL_PLASTEEL = 10000, MATERIAL_ALUMINIUM = 10000)

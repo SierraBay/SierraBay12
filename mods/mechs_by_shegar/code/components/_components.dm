@@ -19,6 +19,8 @@
 	dir = SOUTH
 	var/obj/item/mech_external_armor/installed_armor
 	var/can_have_external_armour = TRUE
+	var/armour_can_be_removed = TRUE
+	var/armour_can_be_installed = TRUE
 
 	///Отвечает за минимальное возможное ХП части меха, ОБЯЗАТЕЛЬНО прописывайте этот пункт. При ремонте повреждений
 	///листом материала максимальное ХП части меха уменьшается, min_damage является минимальным пределом до куда будет
@@ -218,11 +220,12 @@
 	if (isWelder(thing))
 		welder_interacion(thing, user)
 		return TRUE
-
+	if (isWrench(thing))
+		wrench_interacion(thing, user)
+		return TRUE
 	if (isCoil(thing))
 		repair_burn_generic(thing, user)
 		return TRUE
-
 	if (istype(thing, /obj/item/device/robotanalyzer))
 		to_chat(user, SPAN_NOTICE("Diagnostic Report for \the [src]:"))
 		return_diagnostics(user)
