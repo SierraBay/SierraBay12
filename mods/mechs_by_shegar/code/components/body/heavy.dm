@@ -23,11 +23,12 @@
 
 	weight = 400
 
-/obj/item/mech_component/chassis/heavy/prebuild()
+
+/obj/item/mech_component/chassis/heavy/Initialize()
 	pilot_positions = list(
 		list(
 			"[NORTH]" = list("x" = 8,  "y" = 8),
-			"[SOUTH]" = list("x" = 9,  "y" = 2),
+			"[SOUTH]" = list("x" = 8,  "y" = 8),
 			"[EAST]"  = list("x" = 4,  "y" = 8),
 			"[WEST]"  = list("x" = 12, "y" = 8)
 		)
