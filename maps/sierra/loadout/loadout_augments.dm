@@ -92,10 +92,11 @@
 
 /datum/gear_tweak/hand/tweak_gear_data(metadata, list/gear_data)
 	var/hand = null
-	if(islist(metadata) && islist(metadata["/datum/gear_tweak/hand"]))
-		hand = metadata["/datum/gear_tweak/hand"]["hand"]
-	else if(islist(metadata) && metadata["hand"])
-		hand = metadata["hand"]
+	if(islist(metadata))
+		if(islist(metadata["/datum/gear_tweak/hand"]) && metadata["/datum/gear_tweak/hand"]["hand"])
+			hand = metadata["/datum/gear_tweak/hand"]["hand"]
+		else if(metadata["hand"])
+			hand = metadata["hand"]
 	gear_data["hand"] = (hand && (hand in valid_hands)) ? hand : valid_hands[1]
 
 /datum/gear/augment/toolset_engineer
