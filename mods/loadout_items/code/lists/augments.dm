@@ -1,3 +1,53 @@
+#define ENGINEERING_ROLES list(\
+	/datum/job/chief_engineer, /datum/job/senior_engineer, /datum/job/engineer, /datum/job/infsys,\
+	/datum/job/roboticist, /datum/job/engineer_trainee, /datum/job/explorer_engineer \
+)
+
+#define TECHNICAL_ROLES list(\
+	/datum/job/senior_engineer, /datum/job/engineer, /datum/job/roboticist, /datum/job/qm,\
+	/datum/job/cargo_tech, /datum/job/cargo_assistant,/datum/job/mining,\
+	/datum/job/scientist_assistant,    /datum/job/rd,\
+	/datum/job/senior_scientist, /datum/job/scientist, /datum/job/chief_engineer, /datum/job/infsys,\
+	/datum/job/engineer_trainee, /datum/job/explorer_engineer \
+)
+
+#define EXPLORATION_ROLES list(\
+	/datum/job/exploration_leader, \
+	/datum/job/explorer, \
+	/datum/job/explorer_pilot, \
+	/datum/job/explorer_medic, \
+	/datum/job/explorer_engineer \
+)
+
+#define COMMAND_ROLES list(\
+	/datum/job/captain, \
+	/datum/job/hop, \
+	/datum/job/rd,\
+	/datum/job/cmo, \
+	/datum/job/chief_engineer,\
+	/datum/job/hos, \
+	/datum/job/adjutant \
+)
+
+#define MEDICAL_ROLES list(\
+	/datum/job/cmo, /datum/job/senior_doctor, /datum/job/doctor,\
+	/datum/job/doctor_trainee, /datum/job/explorer_medic,\
+	/datum/job/psychiatrist, /datum/job/chemist, /datum/job/roboticist \
+)
+
+#define NANOTRASEN_ROLES list(\
+	/datum/job/captain, /datum/job/hop, /datum/job/rd, /datum/job/cmo, /datum/job/chief_engineer, /datum/job/hos, \
+	/datum/job/iaa, /datum/job/iso, \
+	/datum/job/senior_engineer, /datum/job/engineer, /datum/job/infsys, /datum/job/roboticist, /datum/job/engineer_trainee, \
+	/datum/job/officer, /datum/job/warden, /datum/job/detective, /datum/job/security_assistant, \
+	/datum/job/senior_doctor, /datum/job/doctor, /datum/job/doctor_trainee,/datum/job/chemist, \
+	/datum/job/psychiatrist, \
+	/datum/job/qm, /datum/job/cargo_tech, /datum/job/cargo_assistant,\
+	/datum/job/chief_steward, /datum/job/janitor, /datum/job/cook, /datum/job/bartender, /datum/job/steward, \
+	/datum/job/senior_scientist, /datum/job/scientist, /datum/job/mining,\
+	/datum/job/scientist_assistant \
+)
+
 /datum/gear/augment
 	sort_category = "Augments"
 	category = /datum/gear/augment
@@ -231,3 +281,10 @@
 			to_chat(user, SPAN_WARNING("No compatible augment found in [E.name]."))
 			return TRUE
 	return ..()
+
+#undef NANOTRASEN_ROLES
+#undef MEDICAL_ROLES
+#undef COMMAND_ROLES
+#undef EXPLORATION_ROLES
+#undef TECHNICAL_ROLES
+#undef ENGINEERING_ROLES
