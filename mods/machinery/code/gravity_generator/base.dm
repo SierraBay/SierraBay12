@@ -161,7 +161,7 @@
 		if(count <= 3) // Their sprite is the top part of the generator
 			P.density = FALSE
 			P.layer = MOB_LAYER + 0.1
-		if(count in list(2, 5, 7, 9))
+		if(count in list(1, 2, 3, 4, 5, 6, 7, 9))
 			lights += P
 		P.sprite_number = count
 		P.main_part = src
