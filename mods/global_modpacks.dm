@@ -1,4 +1,5 @@
 // SIERRA TODO: GET RID OF IT!!!
+#include "config/_config_includes.dm"
 #include "ai/_ai_includes.dm"
 #include "adherent_discharge/_adherent_discharge_includes.dm"
 #include "body_markings/_body_markings_includes.dm"
@@ -65,4 +66,3 @@
 #include "psionics/psionics_includes.dm"
 #include "impulse_cannon/_impulse_cannon_includes.dm"
 #include "rocket_launchers/_rocket_launchers_includes.dm"
-#include "config/_config_includes.dm"
