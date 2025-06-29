@@ -1,7 +1,3 @@
-#define COMMAND_ROLES list(/datum/job/captain, /datum/job/hop, /datum/job/rd, /datum/job/cmo, /datum/job/chief_engineer, /datum/job/hos, /datum/job/iaa, /datum/job/iso, /datum/job/adjutant)
-#define RESEARCH_ROLES list(/datum/job/rd, /datum/job/scientist, /datum/job/scientist_assistant, /datum/job/senior_scientist, /datum/job/roboticist)
-#define MEDICAL_ROLES list(/datum/job/cmo, /datum/job/senior_doctor, /datum/job/doctor, /datum/job/doctor_trainee, /datum/job/explorer_medic, /datum/job/psychiatrist, /datum/job/chemist, /datum/job/roboticist)
-
 /datum/gear/augment
     sort_category = "Augments"
     category = /datum/gear/augment
@@ -59,7 +55,7 @@
     description = "A flexible composite mesh designed to prevent tearing and puncturing of underlying tissue."
     path = /obj/item/organ/internal/augment/armor
     cost = 8
-    allowed_roles = COMMAND_ROLES
+    allowed_roles = list(/datum/job/captain, /datum/job/hop, /datum/job/rd, /datum/job/cmo, /datum/job/chief_engineer, /datum/job/hos, /datum/job/iaa, /datum/job/iso, /datum/job/adjutant)
 
 /datum/gear/augment/chest_air_system
     display_name = "Internal air system"
@@ -235,7 +231,3 @@
             to_chat(user, SPAN_WARNING("No compatible augment found in [E.name]."))
             return TRUE
     return ..()
-
-#undef COMMAND_ROLES
-#undef RESEARCH_ROLES
-#undef MEDICAL_ROLES
