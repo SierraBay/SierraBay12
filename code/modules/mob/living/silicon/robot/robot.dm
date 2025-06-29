@@ -667,7 +667,7 @@
 		if (!opened)
 			USE_FEEDBACK_FAILURE("\The [src]'s maintenance panel must be opened before you can access the radio.")
 			return TRUE
-		if (tool.resolve_attackby(src, user, click_params))
+		if (tool.resolve_attackby(silicon_radio, user, click_params))
 			return TRUE
 
 	// ID Card - Toggle panel lock

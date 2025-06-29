@@ -1,0 +1,4 @@
+author: SierraKomodo
+changes:
+  - {bugfix: Character length limits for nanoword are once again embiggened.}
+delete-after: true

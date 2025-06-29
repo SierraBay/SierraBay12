@@ -1,0 +1,5 @@
+author: Mucker
+changes:
+  - {bugfix: "Special characters are no longer encoded in the various text apps (example:
+      ' will show as ' and not &#31 or whatever)"}
+delete-after: true
