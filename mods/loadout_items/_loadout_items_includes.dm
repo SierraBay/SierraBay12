@@ -24,6 +24,5 @@
 #include "code/loadout/donations.dm"
 #include "code/loadout/donator.dm"
 #include "code/loadout/preferences.dm"
-#include "code/lists/augments.dm"
 
 #endif
