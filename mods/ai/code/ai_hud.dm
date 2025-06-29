@@ -1,42 +1,3 @@
-// AI button defines
-#define AI_BUTTON_PROC_BELONGS_TO_CALLER 1
-#define AI_BUTTON_INPUT_REQUIRES_SELECTION 2
-
-// AI HUD DEFINES
-#define ui_ai_core "LEFT:6,BOTTOM:5"
-#define ui_ai_announcement "LEFT+1:10,BOTTOM:5"
-#define ui_ai_cam_track "LEFT+2:12,BOTTOM:5"
-#define ui_ai_cam_light "LEFT+3:14,BOTTOM:5"
-#define ui_ai_cam_change_network "LEFT+4:16,BOTTOM:5"
-#define ui_ai_sensor "CENTER-2:18,BOTTOM:5"
-#define ui_ai_crew_manifest "CENTER-1:20,BOTTOM:5"
-#define ui_ai_take_image "CENTER:22,BOTTOM:5"
-#define ui_ai_view_images "CENTER+1:24,BOTTOM:5"
-#define ui_ai_state_laws "CENTER+2:26,BOTTOM:5"
-#define ui_ai_call_shuttle "RIGHT-4:28,BOTTOM:5"
-
-#define ui_ai_up "RIGHT-1:30,BOTTOM+1:5"
-#define ui_ai_down "RIGHT-1:30,BOTTOM:5"
-
-// AI: Customization
-#define ui_ai_holo_change "RIGHT-1:30,BOTTOM+2:5"
-#define ui_ai_color "RIGHT-1:30,BOTTOM+3:5"
-#define ui_ai_core_icon "RIGHT-1:30,BOTTOM+4:5"
-#define ui_ai_status "RIGHT-1:30,BOTTOM+5:5"
-
-// AI: Tools
-#define ui_ai_power_override "LEFT:6,TOP:0"
-#define ui_ai_shutdown "LEFT+1:6,TOP:0"
-#define ui_ai_holo_mov "LEFT:6, TOP-1:0"
-
-// AI: Crew
-#define ui_ai_crew_mon "RIGHT-1:30,TOP:0"
-#define ui_ai_crew_rec "RIGHT-2:30, TOP:0"
-
-// AI: Malf
-#define ui_ai_research "LEFT:6, TOP-2:0"
-#define ui_ai_hardware "LEFT:6, TOP-3:0"
-
 // HUD Code
 
 /mob/living/silicon/ai
@@ -211,7 +172,7 @@
 			ui_ai_research,
 				"Select Research",
 				"ai_research",
-				/mob/living/silicon/ai/proc/ai_select_research
+				/datum/game_mode/malfunction/verb/ai_select_research
 				)
 
 	if(A.malfunctioning && A.hardware == null)
@@ -219,7 +180,31 @@
 			ui_ai_hardware,
 				"Select Hardware",
 				"ai_hardware",
-				/mob/living/silicon/ai/proc/ai_select_hardware
+				/datum/game_mode/malfunction/verb/ai_select_hardware
+				)
+
+	if(A.malfunctioning && A.hardware == /datum/malf_hardware/apu_gen)
+		adding += new /obj/screen/ai_button(null,
+			ui_ai_apu,
+				"Toggle APU Generator",
+				"ai_hardware",
+				/datum/game_mode/malfunction/verb/ai_toggle_apu
+				)
+
+	if(A.malfunctioning && A.hardware == /datum/malf_hardware/core_bomb)
+		adding += new /obj/screen/ai_button(null,
+			ui_ai_self_destruct,
+				"Self-Destruct Explosives",
+				"ai_hardware",
+				/datum/game_mode/malfunction/verb/ai_self_destruct
+				)
+
+	if(A.malfunctioning && A.system_override == 2)
+		adding += new /obj/screen/ai_button(null,
+			ui_ai_destroy,
+				"Destroy Installation",
+				"ai_hardware",
+				/datum/game_mode/malfunction/verb/ai_destroy_station
 				)
 
 	A.client.screen = list()
@@ -228,34 +213,3 @@
 /mob/living/silicon/ai/update_hud()
 	if(client)
 		client.screen |= contents
-
-// Undef
-#undef ui_ai_core
-#undef ui_ai_announcement
-#undef ui_ai_cam_track
-#undef ui_ai_cam_light
-#undef ui_ai_cam_change_network
-#undef ui_ai_sensor
-#undef ui_ai_crew_manifest
-#undef ui_ai_take_image
-#undef ui_ai_view_images
-#undef ui_ai_state_laws
-#undef ui_ai_call_shuttle
-
-#undef ui_ai_up
-#undef ui_ai_down
-
-#undef ui_ai_holo_change
-#undef ui_ai_color
-#undef ui_ai_core_icon
-#undef ui_ai_status
-
-#undef ui_ai_power_override
-#undef ui_ai_shutdown
-#undef ui_ai_holo_mov
-
-#undef ui_ai_crew_mon
-#undef ui_ai_crew_rec
-
-#undef ui_ai_research
-#undef ui_ai_hardware

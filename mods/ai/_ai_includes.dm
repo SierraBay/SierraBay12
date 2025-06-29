@@ -3,6 +3,7 @@
 
 #include "_ai.dm"
 
+#include "code/_defines.dm" //Дефайны для ХУДа
 #include "code/ai.dm"
 #include "code/ai_hud.dm"
 #include "code/ai_screen_objects.dm"
@@ -19,5 +20,4 @@
 #include "code\ai-stuff.dm" //Дополнительные действия и фичи у ИИ
 #include "code\ai_machine_interaction.dm" //Взаимодействие ИИ с машинами
 #include "code\boris.dm" //Модуль B.O.R.I.S. и его логика
-#include "code\malf.dm" //Абилки малфа для УИ
 #endif
