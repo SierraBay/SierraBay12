@@ -24,5 +24,6 @@
 #include "code\spawnpoints.dm"
 #include "code\stat.dm"
 #include "code\unsorted.dm"
+#include "code\robots.dm"
 
 #endif
