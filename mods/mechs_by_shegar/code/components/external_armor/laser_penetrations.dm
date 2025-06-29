@@ -14,6 +14,10 @@
 	mech_armor_penetration = 20
 	mech_armor_damage = 30 //Абилятивная броня слетит после 10 попаданий
 
+/obj/item/projectile/beam/incendiary_laser
+	mech_armor_penetration = 20
+	mech_armor_damage = 20 //Абилятивная броня слетит после 10 попаданий
+
 //Тяжёлая лазерка рнд
 /obj/item/projectile/beam/heavylaser
 	mech_armor_penetration = 20

@@ -40,3 +40,6 @@
 
 /obj/item/projectile/bullet/rifle/shell/apds
 	mech_armor_penetration = 100 /// Броня меха игнорируется
+
+/obj/item/projectile/bullet/magnetic
+	mech_armor_penetration = 100 /// Броня меха игнорируется
