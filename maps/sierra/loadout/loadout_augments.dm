@@ -64,160 +64,174 @@
 	cost = 6
 	allowed_roles = list(/datum/job/chief_engineer, /datum/job/senior_engineer, /datum/job/engineer, /datum/job/infsys, /datum/job/engineer_trainee, /datum/job/explorer_engineer, /datum/job/captain, /datum/job/hop, /datum/job/rd, /datum/job/cmo, /datum/job/chief_engineer, /datum/job/hos, /datum/job/iaa, /datum/job/iso, /datum/job/adjutant)
 
-/datum/gear_tweak/hand
-	var/list/valid_hands
-	var/list/last_metadata = list("hand" = null)
-
-/datum/gear_tweak/hand/New(list/hands)
-	valid_hands = hands
-
-/datum/gear_tweak/hand/get_contents(list/metadata)
-	var/hand = islist(metadata) && metadata["hand"] && (metadata["hand"] in valid_hands) ? metadata["hand"] : valid_hands[1]
-	return "Slot: [hand]"
-
-/datum/gear_tweak/hand/get_metadata(mob/user, metadata, title)
-	var/hand = input(user, "Choose a slot for the augment installation.", title) as null|anything in valid_hands
-	if(!hand)
-		hand = islist(metadata) && metadata["hand"] && (metadata["hand"] in valid_hands) ? metadata["hand"] : valid_hands[1]
-	last_metadata["hand"] = hand
-	if(user?.client?.prefs)
-		var/datum/preferences/P = user.client.prefs
-		if(!P.gear_list[P.gear_slot])
-			P.gear_list[P.gear_slot] = list()
-		if(!P.gear_list[P.gear_slot][title])
-			P.gear_list[P.gear_slot][title] = list()
-		P.gear_list[P.gear_slot][title]["hand"] = hand
-		P.save_preferences()
-	return list("hand" = hand)
-
-/datum/gear_tweak/hand/tweak_gear_data(metadata, list/gear_data)
-	var/hand = null
-	if(islist(metadata))
-		if(islist(metadata["/datum/gear_tweak/hand"]) && metadata["/datum/gear_tweak/hand"]["hand"])
-			hand = metadata["/datum/gear_tweak/hand"]["hand"]
-		else if(metadata["hand"])
-			hand = metadata["hand"]
-	gear_data["hand"] = (hand && (hand in valid_hands)) ? hand : valid_hands[1]
-
 /datum/gear/augment/toolset_engineer
 	display_name = "Integrated engineering toolset (Prosthetic)"
 	description = "A lightweight augmentation for the engineer on-the-go. This one comes with a series of common tools."
-	path = /obj/item/organ/internal/augment/active/polytool/engineer
+	path = /obj/item/organ/internal/augment/active/polytool/engineer/left
 	cost = 6
 	allowed_roles = list(/datum/job/chief_engineer, /datum/job/senior_engineer, /datum/job/engineer, /datum/job/infsys, /datum/job/roboticist, /datum/job/engineer_trainee, /datum/job/explorer_engineer, /datum/job/rd, /datum/job/scientist, /datum/job/scientist_assistant, /datum/job/senior_scientist)
 
 /datum/gear/augment/toolset_engineer/New()
 	..()
-	gear_tweaks += new /datum/gear_tweak/hand(list(BP_L_HAND, BP_R_HAND))
+	var/list/options = list()
+	options["left hand"] = /obj/item/organ/internal/augment/active/polytool/engineer/left
+	options["right hand"] = /obj/item/organ/internal/augment/active/polytool/engineer/right
+	gear_tweaks += new /datum/gear_tweak/path(options)
 
-/datum/gear/augment/toolset_engineer/spawn_item(mob/living/carbon/human/M, metadata)
-	var/list/tweak_data = list()
-	var/default_hand = BP_R_HAND
-	if(!islist(metadata) && M?.client?.prefs)
-		var/list/gear_metadata = M.client.prefs.gear_list[M.client.prefs.gear_slot]?[display_name]
-		if(islist(gear_metadata))
-			metadata = gear_metadata
-		else
-			metadata = list()
-	for(var/datum/gear_tweak/T in gear_tweaks)
-		T.tweak_gear_data(metadata, tweak_data)
-	var/hand = tweak_data["hand"] || default_hand
-	if(!(hand in list(BP_L_HAND, BP_R_HAND)))
-		return FALSE
-	var/obj/item/organ/external/hand_organ = M.get_organ(hand)
-	if(!hand_organ)
-		return FALSE
-	var/list/hand_augment_tags = list("[hand]_eng_aug", "[hand]_surg_aug")
-	for(var/tag in hand_augment_tags)
-		if(M.internal_organs_by_name[tag])
-			return FALSE
-	var/augment_tag = "[hand]_eng_aug"
-	var/obj/item/organ/internal/augment/aug = new path()
-	aug.parent_organ = hand
-	aug.organ_tag = augment_tag
-	if(!aug.replaced(M, hand_organ))
-		M.internal_organs |= aug
-		M.internal_organs_by_name[augment_tag] = aug
-	return TRUE
+/obj/item/organ/internal/augment/active/polytool/engineer/left
+	name = "left hand engineering polytool"
+	parent_organ = BP_L_HAND
+	organ_tag = "l_hand_aug"
+
+/obj/item/organ/internal/augment/active/polytool/engineer/right
+	name = "right hand engineering polytool"
+	parent_organ = BP_R_HAND
+	organ_tag = "r_hand_aug"
 
 /datum/gear/augment/toolset_surgical
 	display_name = "Integrated surgical toolset (Prosthetic)"
 	description = "Part of Zeng-Hu Pharmaceutical's line of biomedical augmentations, this device contains the full set of tools any surgeon would ever need."
-	path = /obj/item/organ/internal/augment/active/polytool/surgical
+	path = /obj/item/organ/internal/augment/active/polytool/surgical/left
 	cost = 6
 	allowed_roles = list(/datum/job/rd, /datum/job/scientist, /datum/job/scientist_assistant, /datum/job/senior_scientist, /datum/job/roboticist, /datum/job/cmo, /datum/job/senior_doctor, /datum/job/doctor, /datum/job/doctor_trainee, /datum/job/explorer_medic)
 
 /datum/gear/augment/toolset_surgical/New()
 	..()
-	gear_tweaks += new /datum/gear_tweak/hand(list(BP_L_HAND, BP_R_HAND))
+	var/list/options = list()
+	options["left hand"] = /obj/item/organ/internal/augment/active/polytool/surgical/left
+	options["right hand"] = /obj/item/organ/internal/augment/active/polytool/surgical/right
+	gear_tweaks += new /datum/gear_tweak/path(options)
 
-/datum/gear/augment/toolset_surgical/spawn_item(mob/living/carbon/human/M, metadata)
-	var/list/tweak_data = list()
-	var/default_hand = BP_L_HAND
-	if(!islist(metadata) && M?.client?.prefs)
-		var/list/gear_metadata = M.client.prefs.gear_list[M.client.prefs.gear_slot]?[display_name]
-		if(islist(gear_metadata))
-			metadata = gear_metadata
-		else
-			metadata = list()
-	for(var/datum/gear_tweak/T in gear_tweaks)
-		T.tweak_gear_data(metadata, tweak_data)
-	var/hand = tweak_data["hand"] || default_hand
-	if(!(hand in list(BP_L_HAND, BP_R_HAND)))
-		return FALSE
-	var/obj/item/organ/external/hand_organ = M.get_organ(hand)
-	if(!hand_organ)
-		return FALSE
-	var/list/hand_augment_tags = list("[hand]_eng_aug", "[hand]_surg_aug")
-	for(var/tag in hand_augment_tags)
-		if(M.internal_organs_by_name[tag])
-			return FALSE
-	var/augment_tag = "[hand]_surg_aug"
-	var/obj/item/organ/internal/augment/aug = new path()
-	aug.parent_organ = hand
-	aug.organ_tag = augment_tag
-	if(!aug.replaced(M, hand_organ))
-		M.internal_organs |= aug
-		M.internal_organs_by_name[augment_tag] = aug
-	return TRUE
+/obj/item/organ/internal/augment/active/polytool/surgical/left
+	name = "left hand surgical polytool"
+	parent_organ = BP_L_HAND
+	organ_tag = "l_hand_aug"
+
+/obj/item/organ/internal/augment/active/polytool/surgical/right
+	name = "right hand surgical polytool"
+	parent_organ = BP_R_HAND
+	organ_tag = "r_hand_aug"
 
 /datum/gear/augment/circuit
 	display_name = "Integrated circuit frame (Prosthetic)"
 	description = "A DIY modular assembly for advanced circuitry, courtesy of Xion Industrial. Circuitry not included."
-	path = /obj/item/organ/internal/augment/active/item/circuit
+	path = /obj/item/organ/internal/augment/active/item/circuit/left
 	cost = 4
 
 /datum/gear/augment/circuit/New()
 	..()
-	gear_tweaks += new /datum/gear_tweak/hand(list(BP_L_ARM, BP_R_ARM))
+	var/list/options = list()
+	options["left arm"] = /obj/item/organ/internal/augment/active/item/circuit/left
+	options["right arm"] = /obj/item/organ/internal/augment/active/item/circuit/right
+	gear_tweaks += new /datum/gear_tweak/path(options)
 
-/datum/gear/augment/circuit/spawn_item(mob/living/carbon/human/M, metadata)
-	var/list/tweak_data = list()
-	var/default_hand = BP_R_ARM
-	if(!islist(metadata) && M?.client?.prefs)
-		var/list/gear_metadata = M.client.prefs.gear_list[M.client.prefs.gear_slot]?[display_name]
-		if(islist(gear_metadata))
-			metadata = gear_metadata
-		else
-			metadata = list()
-	for(var/datum/gear_tweak/T in gear_tweaks)
-		T.tweak_gear_data(metadata, tweak_data)
-	var/hand = tweak_data["hand"] || default_hand
-	if(!(hand in list(BP_L_ARM, BP_R_ARM)))
-		return FALSE
-	var/obj/item/organ/external/arm_organ = M.get_organ(hand)
-	if(!arm_organ || !(arm_organ.status & ORGAN_ROBOTIC))
-		return FALSE
-	var/augment_tag = "[hand]_circ_aug"
-	if(M.internal_organs_by_name[augment_tag])
-		return FALSE
-	var/obj/item/organ/internal/augment/aug = new path()
-	aug.parent_organ = hand
-	aug.organ_tag = augment_tag
-	if(!aug.replaced(M, arm_organ))
-		M.internal_organs |= aug
-		M.internal_organs_by_name[augment_tag] = aug
-	return TRUE
+/obj/item/organ/internal/augment/active/item/circuit/left
+	name = "left arm circuit frame"
+	parent_organ = BP_L_ARM
+	organ_tag = "l_arm_aug"
+
+/obj/item/organ/internal/augment/active/item/circuit/right
+	name = "right arm circuit frame"
+	parent_organ = BP_R_ARM
+	organ_tag = "r_arm_aug"
+
+#define ORGAN_STYLE ( \
+  (organ.status & ORGAN_ROBOTIC) ? 1 \
+: (organ.status & ORGAN_CRYSTAL) ? 2 \
+: 0 \
+)
+
+#define ORGAN_STYLE_OK ( \
+   style == 0 && (augment_flags & AUGMENT_BIOLOGICAL) \
+|| style == 1 && (augment_flags & AUGMENT_MECHANICAL) \
+|| style == 2 && (augment_flags & AUGMENT_CRYSTALINE) \
+)
+
+/obj/item/organ/internal/augment/get_valid_parent_organ(mob/living/carbon/subject)
+	if (!istype(subject))
+		return
+	var/style
+	var/obj/item/organ/external/organ
+	var/list/organs = subject.organs_by_name
+	if ((augment_slots & AUGMENT_CHEST) && !organs["[BP_CHEST]_aug"] && (organ = organs[BP_CHEST]))
+		style = ORGAN_STYLE
+		if (ORGAN_STYLE_OK)
+			return organ
+	if ((augment_slots & AUGMENT_ARMOR) && !organs["[BP_CHEST]_aug_armor"] && (organ = organs[BP_CHEST]))
+		style = ORGAN_STYLE
+		if (ORGAN_STYLE_OK)
+			return organ
+	if ((augment_slots & AUGMENT_GROIN) && !organs["[BP_GROIN]_aug"] && (organ = organs[BP_GROIN]))
+		style = ORGAN_STYLE
+		if (ORGAN_STYLE_OK)
+			return organ
+	if ((augment_slots & AUGMENT_HEAD) && !organs["[BP_HEAD]_aug"] && (organ = organs[BP_HEAD]))
+		style = ORGAN_STYLE
+		if (ORGAN_STYLE_OK)
+			return organ
+	if ((augment_slots & AUGMENT_EYES) && !organs["[BP_HEAD]_aug_eyes"] && (organ = organs[BP_HEAD]))
+		style = ORGAN_STYLE
+		if (ORGAN_STYLE_OK)
+			return organ
+	if ((augment_slots & AUGMENT_FLUFF) && !organs["[BP_HEAD]_aug_fluff"] && (organ = organs[BP_HEAD]))
+		style = ORGAN_STYLE
+		if (ORGAN_STYLE_OK)
+			return organ
+	if (augment_slots & AUGMENT_ARM)
+		if((parent_organ == BP_L_ARM || parent_organ == BP_R_ARM) && !organs["[parent_organ]_aug"] && (organ = organs[parent_organ]))
+			style = ORGAN_STYLE
+			if (ORGAN_STYLE_OK)
+				return organ
+		if (!organs["[BP_L_ARM]_aug"] && (organ = organs[BP_L_ARM]))
+			style = ORGAN_STYLE
+		if (ORGAN_STYLE_OK)
+			return organ
+		if (!organs["[BP_R_ARM]_aug"] && (organ = organs[BP_R_ARM]))
+			style = ORGAN_STYLE
+			if (ORGAN_STYLE_OK)
+				return organ
+	if (augment_slots & AUGMENT_HAND)
+		if((parent_organ == BP_L_HAND || parent_organ == BP_R_HAND) && !organs["[parent_organ]_aug"] && (organ = organs[parent_organ]))
+			style = ORGAN_STYLE
+			if (ORGAN_STYLE_OK)
+				return organ
+		if (!organs["[BP_L_HAND]_aug"] && (organ = organs[BP_L_HAND]))
+			style = ORGAN_STYLE
+			if (ORGAN_STYLE_OK)
+				return organ
+		if (!organs["[BP_R_HAND]_aug"] && (organ = organs[BP_R_HAND]))
+			style = ORGAN_STYLE
+			if (ORGAN_STYLE_OK)
+				return organ
+	if (augment_slots & AUGMENT_LEG)
+		if((parent_organ == BP_L_LEG || parent_organ == BP_R_LEG) && !organs["[parent_organ]_aug"] && (organ = organs[parent_organ]))
+			style = ORGAN_STYLE
+			if (ORGAN_STYLE_OK)
+				return organ
+		if (!organs["[BP_L_LEG]_aug"] && (organ = organs[BP_L_LEG]))
+			style = ORGAN_STYLE
+			if (ORGAN_STYLE_OK)
+				return organ
+		if (!organs["[BP_R_LEG]_aug"] && (organ = organs[BP_R_LEG]))
+			style = ORGAN_STYLE
+			if (ORGAN_STYLE_OK)
+				return organ
+	if (augment_slots & AUGMENT_FOOT)
+		if((parent_organ == BP_L_FOOT || parent_organ == BP_R_FOOT) && !organs["[parent_organ]_aug"] && (organ = organs[parent_organ]))
+			style = ORGAN_STYLE
+			if (ORGAN_STYLE_OK)
+				return organ
+		if (!organs["[BP_L_FOOT]_aug"] && (organ = organs[BP_L_FOOT]))
+			style = ORGAN_STYLE
+			if (ORGAN_STYLE_OK)
+				return organ
+		if (!organs["[BP_R_FOOT]_aug"] && (organ = organs[BP_R_FOOT]))
+			style = ORGAN_STYLE
+			if (ORGAN_STYLE_OK)
+				return organ
+
+#undef ORGAN_STYLE_OK
+#undef ORGAN_STYLE
 
 /obj/item/device/electronic_assembly/augment/afterattack(atom/target, mob/living/user, proximity)
 	if(!proximity)
