@@ -1,3 +1,4 @@
+1
 /datum/gear/augment
     sort_category = "Augments"
     category = /datum/gear/augment
