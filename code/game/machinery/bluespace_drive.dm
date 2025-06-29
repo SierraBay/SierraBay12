@@ -180,7 +180,6 @@
 	///List of mobs that can be swapped around when the pulse hits
 	var/list/mob/living/mobs_to_switch = list()
 	var/obj/machinery/bluespacedrive/parent
-	var/interlude_teleport_chance = 0
 	var/affect_chance = 0
 
 /datum/bubble_effect/bluespace_pulse/New(center_x, center_y, z, initial_radius, delta, parent)
@@ -235,7 +234,13 @@
 
 		//swap places with another mob
 		for (var/mob/living/mob as anything in mobs_to_switch)
+			var/swap_chance = affect_chance
 			if (!(mob.z in zlevels))
+				continue
+			if (istype(mob.loc, /turf/space) || istype(being.loc, /turf/space))
+				swap_chance = 10 //lots of mobs in space can cause the entire ship to get spaced, so lower the chance
+
+			if (prob(swap_chance))
 				continue
 
 			if (mob != being)
