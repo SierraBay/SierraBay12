@@ -167,10 +167,10 @@
 						)))
 				data["usbfiles"] = usbfiles
 	else if(PRG.open_file)
-		data["filedata"] = digitalPencode2html(sanitize(PRG.loaded_data, MAX_TEXTFILE_LENGTH))
+		data["filedata"] = digitalPencode2html(sanitize(PRG.loaded_data, MAX_TEXTFILE_LENGTH, FALSE))
 		data["filename"] = PRG.is_edited ? "[PRG.open_file]*" : PRG.open_file
 	else
-		data["filedata"] = digitalPencode2html(sanitize(PRG.loaded_data, MAX_TEXTFILE_LENGTH))
+		data["filedata"] = digitalPencode2html(sanitize(PRG.loaded_data, MAX_TEXTFILE_LENGTH, FALSE))
 		data["filename"] = "UNNAMED"
 
 	ui = SSnano.try_update_ui(user, src, ui_key, ui, data, force_open)
