@@ -1,4 +1,3 @@
-
 /obj/item/reagent_containers/syringe/genome_reconfigurator
 	name = "genome reconfigurator"
 	desc = "Маленькое устройство с тонким шприцем, тремя лампочками и пространством для жидкости внутри."
@@ -9,7 +8,7 @@
 	amount_per_transfer_from_this = 1
 	possible_transfer_amounts = "1"
 	mode = SYRINGE_DRAW
-	time = 45
+	time = 90
 	visible_name = "a genome reconfigurator"
 	origin_tech = list(TECH_BIO = 5, TECH_ENGINEERING = 5, TECH_ILLEGAL = 5)
 	matter = list(MATERIAL_GLASS = 100, MATERIAL_STEEL = 50, MATERIAL_PLASTIC = 75, MATERIAL_GOLD = 25)
@@ -26,6 +25,9 @@
 	var/used_for_transformation = FALSE
 	var/is_storing_data = FALSE
 	var/is_analyzing = FALSE
+	var/is_injecting = FALSE
+	var/blink_state = FALSE
+	var/suit_injection_time = 120
 
 /obj/item/reagent_containers/syringe/genome_reconfigurator/Initialize(mapload)
 	. = ..()
@@ -147,11 +149,13 @@
 	if(user)
 		to_chat(user, SPAN_NOTICE("Генетический образец собран. Анализ последовательности ДНК..."))
 
-	addtimer(new Callback(src, PROC_REF(finish_analysis)), 600)
+	start_blinking()
+	addtimer(new Callback(src, PROC_REF(finish_analysis)), 320)
 
 /obj/item/reagent_containers/syringe/genome_reconfigurator/proc/finish_analysis()
 	is_analyzing = FALSE
 	has_donor_data = TRUE
+	blink_state = FALSE
 
 	var/mob/living/carbon/human/user = get_holder_of_type(src, /mob/living/carbon/human)
 	if(user)
@@ -186,6 +190,8 @@
 	has_donor_data = FALSE
 	is_storing_data = FALSE
 	is_analyzing = FALSE
+	is_injecting = FALSE
+	blink_state = FALSE
 
 /obj/item/reagent_containers/syringe/genome_reconfigurator/on_reagent_change()
 	. = ..()
@@ -210,7 +216,7 @@
 		return
 
 	if(is_analyzing)
-		icon_state = "GR2"
+		icon_state = blink_state ? "GR5" : "GR2"
 		return
 
 	if(has_donor_data && !is_analyzing)
@@ -219,9 +225,23 @@
 
 	icon_state = "GR1"
 
+/obj/item/reagent_containers/syringe/genome_reconfigurator/proc/start_blinking()
+	if(!is_analyzing)
+		return
+
+	blink_state = !blink_state
+	update_icon()
+
+	if(is_analyzing)
+		addtimer(new Callback(src, PROC_REF(start_blinking)), 5)
+
 /obj/item/reagent_containers/syringe/genome_reconfigurator/injectReagents(atom/target, mob/user)
 	if(used_for_transformation)
 		to_chat(user, SPAN_WARNING("Этот реконфигуратор генома уже использовался для трансформации и больше не функционирует."))
+		return
+
+	if(is_injecting)
+		to_chat(user, SPAN_WARNING("Инъекция уже в процессе."))
 		return
 
 	if(ismob(target))
@@ -246,6 +266,7 @@
 			to_chat(user, SPAN_WARNING("ДНК этого существа испорчена до такой степени, что его невозможно использовать!"))
 			return
 
+		is_injecting = TRUE
 		injectMob(T, user)
 		return
 
@@ -257,6 +278,7 @@
 
 	var/allow = target.can_inject(user, check_zone(user.zone_sel.selecting))
 	if(!allow)
+		is_injecting = FALSE
 		return
 
 	if(allow == INJECTION_PORT)
@@ -265,6 +287,7 @@
 		else
 			to_chat(user, SPAN_NOTICE("You begin hunting for an injection port on your suit."))
 		if(!user.do_skilled(INJECTION_PORT_DELAY, SKILL_MEDICAL, trackTarget, do_flags = DO_MEDICAL))
+			is_injecting = FALSE
 			return
 
 	if(target != user)
@@ -275,10 +298,14 @@
 	user.setClickCooldown(DEFAULT_QUICK_COOLDOWN)
 	user.do_attack_animation(trackTarget)
 
-	if(!user.do_skilled(time, SKILL_MEDICAL, trackTarget, do_flags = DO_MEDICAL))
+	var/injection_time = (allow == INJECTION_PORT) ? suit_injection_time : time
+
+	if(!user.do_skilled(injection_time, SKILL_MEDICAL, trackTarget, do_flags = DO_MEDICAL))
+		is_injecting = FALSE
 		return
 
 	if(target != user && target != trackTarget && target.loc != trackTarget)
+		is_injecting = FALSE
 		return
 
 
@@ -297,6 +324,8 @@
 	if(ishuman(target))
 		var/mob/living/carbon/human/T = target
 		T.custom_pain(SPAN_WARNING("The needle stings a bit."), 2, TRUE, T.get_organ(user.zone_sel.selecting))
+
+	is_injecting = FALSE
 
 /obj/item/reagent_containers/syringe/genome_reconfigurator/proc/perform_transformation(mob/living/carbon/target, mob/user)
 	if(!has_donor_data || !donor_dna)
@@ -433,12 +462,12 @@
 		to_chat(user, SPAN_WARNING("Этот реконфигуратор генома уже использовался для трансформации и опустошил свой запас."))
 		return
 
-	if(!reagents.get_free_space())
-		to_chat(user, SPAN_WARNING("Необходимо переключить режим реконфигуратора генома."))
+	if(is_injecting)
+		to_chat(user, SPAN_WARNING("Инъекция уже в процессе."))
 		return
 
 	if(is_analyzing)
-		to_chat(user, SPAN_WARNING("DNA sequence analysis in progress. Please wait for analysis to complete."))
+		to_chat(user, SPAN_WARNING("Анализ последовательности ДНК в процессе."))
 		return
 
 	if(!target.can_inject(user, check_zone(user.zone_sel.selecting)))
@@ -447,6 +476,11 @@
 
 	if(!target || !target.dna)
 		to_chat(user, SPAN_WARNING("Не удается получить генетический материал."))
+		return
+
+	if(has_donor_data && !is_analyzing)
+		is_injecting = TRUE
+		injectMob(target, user)
 		return
 
 	if(istype(target, /mob/living/carbon/human))
