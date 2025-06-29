@@ -6,7 +6,7 @@
 /datum/gear/augment
     sort_category = "Augments"
     category = /datum/gear/augment
-    cost = 1
+    cost = 2
 
 /datum/gear/augment/muscle_boost
     display_name = "Mechanical muscles"
