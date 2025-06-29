@@ -3,7 +3,6 @@
 
 #include "_ai.dm"
 
-#include "code/_defines.dm" //Дефайны для ХУДа
 #include "code/ai.dm"
 #include "code/ai_hud.dm"
 #include "code/ai_screen_objects.dm"
