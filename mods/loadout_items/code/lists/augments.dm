@@ -24,7 +24,7 @@
 			M.internal_organs |= left_muscle
 			M.internal_organs_by_name[left_muscle.organ_tag] = left_muscle
 			success = TRUE
-		if(right_leg)
+	if(right_leg)
 		var/obj/item/organ/internal/augment/boost/muscle/right_muscle = new path()
 		right_muscle.organ_tag = "muscle_boost_r_leg"
 		right_muscle.parent_organ = BP_R_LEG
