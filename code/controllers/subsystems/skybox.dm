@@ -44,6 +44,7 @@ SUBSYSTEM_DEF(skybox)
 		space.icon_state = "white"
 		space.AddOverlays(dust)
 		space_appearance_cache[index] = space.appearance
+
 	background_color = RANDOM_RGB
 
 
@@ -60,6 +61,14 @@ SUBSYSTEM_DEF(skybox)
 
 /datum/controller/subsystem/skybox/proc/generate_skybox(z)
 	var/image/res = image(skybox_icon)
+
+	if (GLOB.using_map.using_sun && use_overmap_details)
+		var/obj/overmap/visitable/ship/sector = map_sectors["[z]"]
+		for (var/obj/overmap/visitable/star/iterator_star in map_stars)
+			if (get_dist(sector, iterator_star) == 0)
+				background_color = iterator_star.color
+				break
+
 	var/image/base = overlay_image(skybox_icon, background_icon, background_color)
 	if (use_stars)
 		var/image/stars = overlay_image(skybox_icon, star_state, flags = RESET_COLOR)

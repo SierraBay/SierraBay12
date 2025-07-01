@@ -17,6 +17,7 @@
 	var/overheat_heat_generation = 0
 	///Модификатор начисления тепла
 	var/overheat_heat_modificator = 1
+	var/obj/particle_emitter/overheat_effect
 
 /obj/item/mech_component
 	///Максимальное тепло, которое может хранить в себе часть меха.
@@ -54,6 +55,7 @@
 			if(power == MECH_POWER_OFF)
 				fast_toggle_power_garanted()
 		overheat = FALSE
+		undeploy_overheat_effect()
 	else if(current_heat > max_heat || current_heat == max_heat)
 		current_heat = max_heat
 		overheat()
@@ -68,7 +70,16 @@
 	if(power == MECH_POWER_ON)
 		toggle_power()
 	overheat = TRUE
+	deploy_overheat_effect()
 	delayed_power_up()
+
+/mob/living/exosuit/proc/deploy_overheat_effect()
+	overheat_effect = new /obj/particle_emitter/smoke(get_turf(src))
+
+/mob/living/exosuit/proc/undeploy_overheat_effect()
+	if(overheat_effect)
+		qdel(overheat_effect)
+		overheat_effect = null
 
 /mob/living/exosuit/proc/delayed_power_up()
 	set waitfor = 0

@@ -143,6 +143,9 @@ macro "macro"
 		name = "CTRL+Subtract"
 		command = "move-down"
 	elem
+		name = "ESCAPE"
+		command = "Cancel-Current-Action"
+	elem
 		name = "F1"
 		command = "adminhelp"
 	elem

@@ -40,8 +40,8 @@ GLOBAL_LIST_AS(zombie_species, list(\
 	SPECIES_HUMAN, SPECIES_UNATHI, SPECIES_VOX,\
 	SPECIES_SKRELL, SPECIES_PROMETHEAN, SPECIES_ALIEN, SPECIES_YEOSA, SPECIES_VATGROWN,\
 	SPECIES_SPACER, SPECIES_TRITONIAN, SPECIES_GRAVWORLDER, SPECIES_MULE, SPECIES_MONKEY,\
-	SPECIES_FARWA, SPECIES_NEAERA, SPECIES_STOK
-))
+	SPECIES_FARWA, SPECIES_NEAERA, SPECIES_STOK, SPECIES_TAJARA, SPECIES_RESOMI
+)) // [SIERRA-ADD] - VIRUSOLOGY / SPECIES_TAJARA, SPECIES_RESOMI
 
 
 //// Zombie Types
@@ -73,6 +73,7 @@ GLOBAL_LIST_AS(zombie_species, list(\
 	unarmed_types = list(/datum/unarmed_attack/bite/sharp/zombie)
 	move_intents = list(/singleton/move_intent/zombie)
 	var/heal_rate = 0.5 // Regen.
+
 
 /singleton/species/zombie/handle_post_spawn(mob/living/carbon/human/H)
 	H.mutations |= MUTATION_CLUMSY
@@ -326,7 +327,7 @@ GLOBAL_LIST_AS(zombie_species, list(\
 		to_chat(usr, SPAN_WARNING("They don't look very appetizing!"))
 		return FALSE
 	return TRUE
-
+/* [SIERRA-REMOVE] - VIRUSOLOGY
 /datum/unarmed_attack/bite/sharp/zombie/apply_effects(mob/living/carbon/human/user, mob/living/carbon/human/target, attack_damage, zone)
 	..()
 
@@ -340,7 +341,7 @@ GLOBAL_LIST_AS(zombie_species, list(\
 		if (prob(vuln * 100)) //Protective infection chance
 			if (prob(min(100 - target.get_blocked_ratio(zone, DAMAGE_BRUTE) * 100, 30))) //General infection chance
 				target.reagents.add_reagent(/datum/reagent/zombie, 1) //Infect 'em
-
+*/ //[SIERRA-REMOVE] - VIRUSOLOGY
 
 /datum/reagent/zombie
 	name = "Liquid Corruption"

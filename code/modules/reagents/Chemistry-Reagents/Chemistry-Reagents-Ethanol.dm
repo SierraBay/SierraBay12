@@ -194,7 +194,7 @@
 	..()
 	M.dizziness = max(0, M.dizziness - 5)
 	M.drowsyness = max(0, M.drowsyness - 3)
-	M.sleeping = max(0, M.sleeping - 2)
+	M.AdjustSleeping(-2)
 	if(M.bodytemperature > 310)
 		M.bodytemperature = max(310, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 
@@ -575,7 +575,7 @@
 		return
 	var/sleep_chance = M.GetTraitLevel(/singleton/trait/malus/ethanol) || 1
 	if (prob(sleep_chance))
-		M.sleeping = max(M.sleeping, 1)
+		M.Sleeping(5)
 
 /datum/reagent/ethanol/bilk
 	name = "Bilk"

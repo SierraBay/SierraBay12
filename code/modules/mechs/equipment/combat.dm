@@ -204,7 +204,7 @@
 		spark_system.set_up(5, 0, user)
 		spark_system.start()
 		playsound(loc, "sparks", 25, 1)
-	return EMPTY_BITFIELD
+	return FLAGS_OFF
 
 /obj/aura/mechshield/aura_check_thrown(atom/movable/thrown_atom, datum/thrownthing/thrown_datum)
 	. = ..()

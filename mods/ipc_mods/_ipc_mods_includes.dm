@@ -10,6 +10,7 @@
 #include "code/ipc.dm"
 #include "code/uplink.dm"
 #include "code/machine_functions.dm"
+#include "code/handle_enviroment.dm"
 #include "code/pictures.dm"
 #include "code/coolerbelt.dm"
 #include "code/prosthetics.dm"

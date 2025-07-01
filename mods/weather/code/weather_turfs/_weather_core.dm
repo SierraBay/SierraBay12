@@ -97,14 +97,14 @@ GLOBAL_VAR_AS(ambience_channel_weather, GLOB.sound_channels.RequestChannel("AMBI
 
 /obj/weather/proc/update_by_map_templace() //Функция проверяет что
 	if(get_area(get_turf(src)) != start_area)
-		delete_weather()
+		Destroy()
 		return
 	last_check_area = get_area(get_turf(src))
 
 
-/obj/weather/proc/delete_weather()
+/obj/weather/Destroy()
 	LAZYREMOVE(SSweather.weather_turf_in_world, src)
-	qdel(src)
+	.=..()
 
 //Отрисует смену погоды
 /obj/weather/proc/flick_weather_icon(state)

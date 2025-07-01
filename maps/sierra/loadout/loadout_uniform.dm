@@ -36,6 +36,7 @@
 /datum/gear/uniform/si_overalls/New()
 	..()
 	var/overalls = list()
+	overalls["NT beige and green coveralls"]		= /obj/item/clothing/under/rank/ntwork
 	overalls["NT beige and red coveralls"]			= /obj/item/clothing/under/rank/ntwork/nanotrasen
 	overalls["Hephaestus grey and cyan coveralls"]	= /obj/item/clothing/under/rank/ntwork/heph
 	gear_tweaks += new/datum/gear_tweak/path(overalls)

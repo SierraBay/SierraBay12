@@ -243,3 +243,30 @@
 /datum/gear/uniform/blackpurple_shirt
 	display_name = "black n purple double tracksuit"
 	path = /obj/item/clothing/under/blackpurple_shirt
+
+/datum/gear/uniform/corporate_sierra
+	display_name = "corporate uniform selection"
+	path = /obj/item/clothing/under
+
+/datum/gear/uniform/corporate_sierra/New()
+	..()
+	var/corps = list()
+	corps += /obj/item/clothing/under/rank/scientist/nanotrasen
+	corps += /obj/item/clothing/under/rank/scientist/heph
+	corps += /obj/item/clothing/under/rank/scientist/zeng
+	corps += /obj/item/clothing/under/mbill
+	corps += /obj/item/clothing/under/saare
+	corps += /obj/item/clothing/under/aether
+	corps += /obj/item/clothing/under/hephaestus
+	corps += /obj/item/clothing/under/pcrc
+	corps += /obj/item/clothing/under/pcrcsuit
+	corps += /obj/item/clothing/under/wardt
+	corps += /obj/item/clothing/under/grayson
+	corps += /obj/item/clothing/under/focal
+	corps += /obj/item/clothing/under/morpheus
+	corps += /obj/item/clothing/under/skinner
+	corps += /obj/item/clothing/under/dais
+	corps += /obj/item/clothing/under/rank/roboticist/bishop
+	corps += /obj/item/clothing/under/kms_uniform
+	corps += /obj/item/clothing/under/kms_utility_uniform
+	gear_tweaks += new/datum/gear_tweak/path/specified_types_list(corps)

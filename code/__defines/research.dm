@@ -11,7 +11,7 @@
 #define TECH_DATA "programming"
 #define TECH_ESOTERIC "esoteric"
 
-#define IMPRINTER     FLAG(0)  //For circuits. Uses glass/chemicals.
-#define PROTOLATHE    FLAG(1)  //New stuff. Uses glass/metal/chemicals
-#define MECHFAB       FLAG(2)  //Mechfab
-#define CHASSIS       FLAG(3)  //For protolathe, but differently
+#define IMPRINTER     FLAG_01  //For circuits. Uses glass/chemicals.
+#define PROTOLATHE    FLAG_02  //New stuff. Uses glass/metal/chemicals
+#define MECHFAB       FLAG_03  //Mechfab
+#define CHASSIS       FLAG_04  //For protolathe, but differently

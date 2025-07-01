@@ -275,8 +275,8 @@ var/global/datum/controller/master/Master = new
 
 		var/ss_runlevels = SS.runlevels
 		var/added_to_any = FALSE
-		for(var/I in 1 to length(GLOB.bitflags))
-			if(ss_runlevels & GLOB.bitflags[I])
+		for(var/I in 1 to length(GLOB.index_to_flag))
+			if(ss_runlevels & GLOB.index_to_flag[I])
 				while(length(runlevel_sorted_subsystems) < I)
 					runlevel_sorted_subsystems += list(list())
 				runlevel_sorted_subsystems[I] += SS
@@ -606,11 +606,12 @@ var/global/datum/controller/master/Master = new
 		MAP: [round(world.map_cpu, 0.1)]%  \
 		Atoms: [length(world.contents)]\n\
 		Server: [world.byond_version].[world.byond_build]  \
+		Compiler: [DM_VERSION].[DM_BUILD]  \
 		World Size: <[world.maxx],[world.maxy],[world.maxz]>\n\
 		Hub: [config.hub_visible ? "Y" : "N"]  \
 		Reachable: [world.reachable ? "Y" : "N"]  \
 		Address: [world.internet_address]:[world.port]\
-	"}) //515: add 'Compiler: [BYOND_VERSION].[BYOND_BUILD]' after Server
+	"})
 
 
 /datum/controller/master/StartLoadingMap()

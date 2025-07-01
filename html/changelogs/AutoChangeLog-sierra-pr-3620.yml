@@ -1,4 +1,0 @@
-author: Shegar
-changes:
-  - {bugfix: Фабрикатор вновь умеет печатать ГРАД и СМГ}
-delete-after: true

@@ -42,3 +42,14 @@ Armor Patches, covers, ect
 		SPECIES_UNATHI = 'mods/loadout_items/icons/unathi/onmob_accessory_unathi.dmi'
 		)
 
+/obj/item/clothing/suit/armor/pcarrier/kms
+	name = "EMT plate carrier"
+	desc = "A lightweight white-red plate carrier vest. Denotes Komatsu Medical Servies employed EMT"
+	icon = 'mods/loadout_items/icons/obj_suit.dmi'
+	item_icons = list(slot_wear_suit_str = 'mods/loadout_items/icons/onmob_suit.dmi')
+	icon_state = "kms_pcarrier"
+	item_state = "kms_pcarrier"
+	valid_accessory_slots = list(ACCESSORY_SLOT_INSIGNIA, ACCESSORY_SLOT_ARMOR_CHEST, ACCESSORY_SLOT_ARMOR_ARMS, ACCESSORY_SLOT_ARMOR_LEGS, ACCESSORY_SLOT_ARMOR_STORAGE, ACCESSORY_SLOT_ARMOR_MISC)
+	restricted_accessory_slots = list(ACCESSORY_SLOT_ARMOR_CHEST, ACCESSORY_SLOT_ARMOR_ARMS, ACCESSORY_SLOT_ARMOR_LEGS, ACCESSORY_SLOT_ARMOR_STORAGE)
+	blood_overlay_type = "armorblood"
+	flags_inv = 0

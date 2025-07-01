@@ -1,6 +1,7 @@
 /obj/item/artefact/gravi
 	name = "Something"
 	desc = "При подборе вы чувствуете, как тот сопротивляется вашей руке."
+	admin_name = "Грави-Блокер"
 	icon_state = "gravi"
 	need_to_process = TRUE
 	//В артефакте нет энергии/она неограничена

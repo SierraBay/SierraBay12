@@ -224,7 +224,7 @@ GLOBAL_VAR_AS(error_colony_reaction, "Прервать спавн колонии
 
 /obj/random/colony_smg/spawn_choices()
 	if     (GLOB.last_colony_type == "НАНОТРЕЙЗЕН")
-		return list(/obj/item/gun/projectile/automatic/nt41_colony)
+		return list(/obj/item/gun/projectile/automatic/nt41)
 	else if(GLOB.last_colony_type == "ГКК")
 		return list(/obj/item/gun/projectile/automatic/merc_smg)
 	else if(GLOB.last_colony_type == "ЦПСС")
@@ -247,17 +247,17 @@ GLOBAL_VAR_AS(error_colony_reaction, "Прервать спавн колонии
 					)
 	else if(GLOB.last_colony_type == "ГКК")
 		return list(/obj/item/gun/projectile/automatic/assault_rifle,
-					/obj/item/gun/projectile/automatic/assault_rifle/heltek_colony,
-					/obj/item/gun/projectile/automatic/mbr_colony,
-					/obj/item/gun/projectile/automatic/mr735_colony)
+					/obj/item/gun/projectile/automatic/assault_rifle/heltek,
+					/obj/item/gun/projectile/automatic/mbr,
+					/obj/item/gun/projectile/automatic/mr735)
 	else if(GLOB.last_colony_type == "ЦПСС")
 		return list(/obj/item/gun/projectile/automatic/bullpup_rifle,
 					/obj/item/gun/projectile/automatic/bullpup_rifle/light
 					)
 	else if(GLOB.last_colony_type == "НЕЗАВИСИМАЯ")
 		return list(/obj/item/gun/projectile/automatic/assault_rifle,
-					/obj/item/gun/projectile/automatic/assault_rifle/heltek_colony,
-					/obj/item/gun/projectile/automatic/mbr_colony,
+					/obj/item/gun/projectile/automatic/assault_rifle/heltek,
+					/obj/item/gun/projectile/automatic/mbr,
 					/obj/item/gun/projectile/automatic/battlerifle
 					)
 	//стандарт значение

@@ -188,15 +188,17 @@
 // Click on table to unload, click on item to load. Otherwise works identically to a tray.
 // Unlike the base item "tray", robotrays ONLY pick up food, drinks and condiments.
 
-/obj/item/tray/robotray
+/obj/item/reagent_containers/cooking_container/tray/robotray
 	name = "RoboTray"
 	desc = "An autoloading tray specialized for carrying refreshments."
-
-/obj/item/tray/robotray/can_add_item(obj/item/I)
-	return ..() && istype(I, /obj/item/reagent_containers)
-
-
-
+	insertable = list(
+		/obj/item/reagent_containers,
+		/obj/item/holder,
+		/obj/item/paper,
+		/obj/item/stack/material/rods,
+		/obj/item/organ/internal/brain,
+		/obj/item/stack/nanopaste
+	)
 
 // A special pen for service droids. Can be toggled to switch between normal writting mode, and paper rename mode
 // Allows service droids to rename paper items.

@@ -9,6 +9,14 @@
 	if(actually_new)
 		SEND_SIGNAL(src, COMSIG_MOB_LAYING_CHANGED, src)
 	SEND_SIGNAL(src, COMSIG_MOB_LAYING_UPDATED, src)
+	if(lying && ishuman(src))
+		var/mob/living/carbon/human/human = src
+		human.drop_grabs()
+		//Упали не по своей воле, выбрасываем вещи из рук один раз
+		if(actually_new)
+			if(incapacitated(INCAPACITATION_KNOCKDOWN))
+				for (var/obj/item/item as anything in GetAllHeld())
+					unEquip(item)
 
 /mob/living/lay_down()
 	set name = "Rest"

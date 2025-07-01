@@ -74,7 +74,7 @@
 // 	if(istype(M, /mob/living/simple_animal/passive/juvenile_space_whale))
 // 		return FALSE
 
-/mob/living/simple_animal/hostile/retaliate/space_whale/Process_Spacemove()
+/mob/living/simple_animal/hostile/retaliate/space_whale/Process_Spacemove(allow_movement)
 	return TRUE
 
 /datum/say_list/space_whale

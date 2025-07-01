@@ -34,7 +34,7 @@
 		/obj/item/rsf,
 		/obj/item/reagent_containers/dropper/industrial,
 		/obj/item/flame/lighter/zippo,
-		/obj/item/tray/robotray,
+		/obj/item/reagent_containers/cooking_container/tray/robotray,
 		/obj/item/reagent_containers/borghypo/service
 	)
 	emag_gear = list(

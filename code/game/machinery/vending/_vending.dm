@@ -40,10 +40,10 @@
 	/// A field associated with vending machines from the below flags.
 	var/vendor_flags = VENDOR_CATEGORY_NORMAL
 
-	var/const/VENDOR_CATEGORY_NORMAL = FLAG(0)
-	var/const/VENDOR_CATEGORY_HIDDEN = FLAG(1)
-	var/const/VENDOR_CATEGORY_COIN = FLAG(2)
-	var/const/VENDOR_CATEGORY_ANTAG = FLAG(3)
+	var/const/VENDOR_CATEGORY_NORMAL = FLAG_01
+	var/const/VENDOR_CATEGORY_HIDDEN = FLAG_02
+	var/const/VENDOR_CATEGORY_COIN = FLAG_03
+	var/const/VENDOR_CATEGORY_ANTAG = FLAG_04
 
 	var/datum/stored_items/vending_products/currently_vending // What we're requesting payment for right now
 	var/status_message = "" // Status screen messages like "insufficient funds", displayed in NanoUI

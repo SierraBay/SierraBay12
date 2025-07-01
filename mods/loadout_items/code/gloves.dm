@@ -11,3 +11,22 @@
 	color = COLOR_WHITE
 	icon_state = "white"
 	item_state = "lgloves"
+
+/obj/item/clothing/gloves/kms
+	desc = "Your best bet, when you have to pull someone from a flaming wreck."
+	name = "KMS duty gloves"
+	icon = 'mods/loadout_items/icons/obj_hands.dmi'
+	item_icons = list(slot_gloves_str = 'mods/loadout_items/icons/onmob_hands.dmi')
+	icon_state = "kms_gloves"
+	item_state = "kms_gloves"
+	siemens_coefficient = 0.50
+	gas_transfer_coefficient = 0.90
+	permeability_coefficient = 0.50
+	item_flags = ITEM_FLAG_THICKMATERIAL | ITEM_FLAG_WASHER_ALLOWED
+	body_parts_covered = HANDS
+	cold_protection = HANDS
+	heat_protection = HANDS
+	min_cold_protection_temperature = GLOVES_MIN_COLD_PROTECTION_TEMPERATURE
+	heat_protection = HANDS
+	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
+	max_pressure_protection = FIRESUIT_MAX_PRESSURE

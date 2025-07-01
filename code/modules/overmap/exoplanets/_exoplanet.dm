@@ -28,7 +28,7 @@ GLOBAL_VAR(planet_repopulation_disabled)
 	var/sun_brightness_modifier = 0.5
 
 	/// Sun control
-	var/ambient_group_index = -1
+	var/ambient_group_index
 
 	var/maxx
 	var/maxy
@@ -206,41 +206,52 @@ GLOBAL_VAR(planet_repopulation_disabled)
 	var/min = 0
 	var/max = 0
 
+	var/base_color = "#cc3300"
+
+	if (GLOB.using_map.using_sun)
+		var/obj/overmap/visitable/ship/sector = map_sectors["[z]"]
+		var/obj/overmap/visitable/star/closest_star
+		for (var/obj/overmap/visitable/star/iterator_star in map_stars)
+			if (get_dist(sector, iterator_star) == 0)
+				closest_star = iterator_star
+		if (closest_star)
+			base_color = closest_star.color
+
 	//Now, each planet type may want to do its own thing for light, if so move most of this code into its own function and override it.
 	switch(sun_position)
 		if(0 to 0.40) // Night
 			low_brightness = 0.01
-			low_color = "#000066"
+			low_color = BlendRGB("#000066", base_color, 0.25)
 
 			high_brightness = 0.2
-			high_color = "#66004d"
+			high_color = BlendRGB("#000066", base_color, 0.5)
 			min = 0
 			max = 0.4
 
 		if(0.40 to 0.50) // Twilight
 			low_brightness = 0.2
-			low_color = "#66004d"
+			low_color = BlendRGB("#000066", base_color, 0.75)
 
 			high_brightness = 0.5
-			high_color = "#cc3300"
+			high_color = base_color
 			min = 0.40
 			max = 0.50
 
 		if(0.50 to 0.70) // Sunrise/set
 			low_brightness = 0.5
-			low_color = "#cc3300"
+			low_color = base_color
 
 			high_brightness = 0.8
-			high_color = "#ff9933"
+			high_color = BlendRGB("#ffffff", base_color, 0.75)
 			min = 0.50
 			max = 0.70
 
 		if(0.70 to 1.00) // Noon
 			low_brightness = 0.8
-			low_color = "#dddddd"
+			low_color = BlendRGB("#ffffff", base_color, 0.5)
 
 			high_brightness = 1.0
-			high_color = "#ffffff"
+			high_color = BlendRGB("#ffffff", base_color, 0.25)
 			min = 0.70
 			max = 1.0
 
@@ -252,11 +263,11 @@ GLOBAL_VAR(planet_repopulation_disabled)
 	//We do a gradient instead of linear interpolation because linear interpolations of colours are unintuitive
 	var/new_color = UNLINT(gradient(low_color, high_color, space = COLORSPACE_HSV, index=interpolate_weight))
 
-	if(ambient_group_index > 0)
-		var/datum/ambient_group/A = SSambient_lighting.ambient_groups[ambient_group_index]
-		A.set_color(new_color, new_brightness)
-	else
-		ambient_group_index = SSambient_lighting.create_ambient_group(new_color, new_brightness)
+	if (!ambient_group_index)
+		ambient_group_index = SSambient_lighting.create_group(new_color, new_brightness)
+	else if (ambient_group_index > 0)
+		SSambient_lighting.groups[ambient_group_index]?.set_color(new_color, new_brightness)
+
 
 /obj/overmap/visitable/sector/exoplanet/proc/generate_map()
 	var/list/grasscolors = plant_colors.Copy()

@@ -8,6 +8,10 @@ GLOBAL_LIST_EMPTY(mech_image_cache)
 GLOBAL_LIST_EMPTY(mech_icon_cache)
 GLOBAL_LIST_AS(mech_weapon_overlays, icon_states('mods/mechs_by_shegar/icons/mech_weapon_overlays.dmi'))
 
+#define ismech(A) istype(A, /mob/living/exosuit)
+
+#define inmech(A) istype(A.loc, /mob/living/exosuit)
+
 #define HARDPOINT_BACK "back"
 #define HARDPOINT_LEFT_HAND "left hand"
 #define HARDPOINT_RIGHT_HAND "right hand"

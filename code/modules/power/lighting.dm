@@ -299,7 +299,10 @@
 	if(istype(lightbulb, /obj/item/light))
 		if (on)
 			AddOverlays(emissive_appearance(icon, _state))
-		AddOverlays(overlay_image(icon, _state, lightbulb.color))
+		if (current_mode in lightbulb.lighting_modes)
+			AddOverlays(overlay_image(icon, _state, lightbulb.lighting_modes[current_mode]["l_color"]))
+		else
+			AddOverlays(overlay_image(icon, _state, lightbulb.color))
 
 	if(on)
 
@@ -642,7 +645,7 @@
 	throwforce = 5
 	w_class = ITEM_SIZE_TINY
 	/// The light bulb's status. One of `LIGHT_*`.
-	var/status = EMPTY_BITFIELD
+	var/status = FLAGS_OFF
 	/// Base `icon_state`.
 	var/base_state
 	/// Number of times the light bulb has been switched on. Used to 'burn out' the bulb if switched too often.

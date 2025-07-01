@@ -288,7 +288,7 @@ would spawn and follow the beaker, even if it is carried or thrown.
 /obj/effect/smoke/sleepy
 
 /obj/effect/smoke/sleepy/affect(mob/living/carbon/M as mob )
-	M:sleeping += 1
+	M.AdjustSleeping(1)
 	if (M.coughedtime != 1)
 		M.coughedtime = 1
 		M.emote("cough")

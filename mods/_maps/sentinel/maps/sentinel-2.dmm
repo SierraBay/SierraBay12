@@ -2697,7 +2697,7 @@
 /obj/floor_decal/corner/grey/diagonal{
 	dir = 4
 	},
-/obj/machinery/cooker/grill,
+/obj/machinery/appliance/cooker/grill,
 /obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = -24
@@ -2708,7 +2708,7 @@
 /obj/floor_decal/corner/grey/diagonal{
 	dir = 4
 	},
-/obj/machinery/cooker/fryer,
+/obj/machinery/appliance/cooker/fryer,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -3209,8 +3209,9 @@
 /obj/floor_decal/corner/grey/diagonal{
 	dir = 4
 	},
-/obj/item/material/rollingpin,
 /obj/item/material/knife/folding/swiss,
+/obj/item/reagent_containers/cooking_container/board,
+/obj/item/material/rollingpin,
 /turf/simulated/floor/tiled/white,
 /area/ship/patrol/crew/kitchen)
 "fW" = (
@@ -3224,6 +3225,7 @@
 /obj/item/reagent_containers/food/condiment/small/saltshaker{
 	pixel_x = -3
 	},
+/obj/item/reagent_containers/food/snacks/mint,
 /turf/simulated/floor/tiled/white,
 /area/ship/patrol/crew/kitchen)
 "fX" = (
@@ -3231,7 +3233,7 @@
 /obj/floor_decal/corner/grey/diagonal{
 	dir = 4
 	},
-/obj/machinery/microwave{
+/obj/machinery/appliance/cooker/microwave{
 	pixel_x = -3;
 	pixel_y = 6
 	},
@@ -3361,18 +3363,6 @@
 /obj/item/music_tape/custom{
 	pixel_x = -1;
 	pixel_y = -3
-	},
-/turf/simulated/floor/tiled/white,
-/area/ship/patrol/crew/kitchen)
-"gk" = (
-/obj/structure/table/standard,
-/obj/floor_decal/corner/blue/diagonal{
-	dir = 4
-	},
-/obj/item/material/knife/folding/swiss,
-/obj/item/material/kitchen/utensil/spoon{
-	pixel_x = -3;
-	pixel_y = 2
 	},
 /turf/simulated/floor/tiled/white,
 /area/ship/patrol/crew/kitchen)
@@ -3512,7 +3502,7 @@
 /obj/floor_decal/corner/grey/diagonal{
 	dir = 4
 	},
-/obj/item/reagent_containers/food/snacks/mint,
+/obj/machinery/appliance/cooker/stove,
 /turf/simulated/floor/tiled/white,
 /area/ship/patrol/crew/kitchen)
 "gC" = (
@@ -3533,7 +3523,7 @@
 	dir = 4;
 	icon_state = "tube1"
 	},
-/obj/machinery/cooker/cereal,
+/obj/machinery/appliance/mixer/cereal,
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 0;
 	pixel_x = 24;
@@ -3921,44 +3911,12 @@
 /obj/floor_decal/corner/blue/diagonal{
 	dir = 4
 	},
-/obj/item/tray,
-/obj/item/material/kitchen/utensil/fork{
-	pixel_x = 4;
-	pixel_y = 2
-	},
-/obj/item/material/kitchen/utensil/fork{
-	pixel_x = 4;
-	pixel_y = 2
-	},
-/obj/item/material/kitchen/utensil/fork{
-	pixel_x = 4;
-	pixel_y = 2
-	},
-/obj/item/material/kitchen/utensil/spoon{
-	pixel_x = -3;
-	pixel_y = 2
-	},
-/obj/item/material/kitchen/utensil/spoon{
-	pixel_x = -3;
-	pixel_y = 2
-	},
-/obj/item/material/kitchen/utensil/spoon{
-	pixel_x = -3;
-	pixel_y = 2
-	},
 /obj/machinery/power/apc{
 	name = "south bump";
 	pixel_y = -25;
 	req_access = list("ACCESS_CAVALRY")
 	},
 /obj/structure/cable,
-/obj/item/material/kitchen/utensil/spoon{
-	pixel_x = -4
-	},
-/obj/item/material/kitchen/utensil/fork{
-	pixel_x = 4;
-	pixel_y = 2
-	},
 /turf/simulated/floor/tiled/white,
 /area/ship/patrol/crew/kitchen)
 "hq" = (
@@ -4015,6 +3973,7 @@
 	dir = 4
 	},
 /obj/structure/table/marble,
+/obj/item/reagent_containers/cooking_container/tray,
 /turf/simulated/floor/tiled/white,
 /area/ship/patrol/crew/kitchen)
 "hv" = (
@@ -4046,7 +4005,7 @@
 /obj/floor_decal/corner/grey/diagonal{
 	dir = 4
 	},
-/obj/machinery/cooker/oven,
+/obj/machinery/appliance/cooker/oven,
 /turf/simulated/floor/tiled/white,
 /area/ship/patrol/crew/kitchen)
 "hy" = (
@@ -4701,7 +4660,7 @@
 /obj/floor_decal/corner/grey/diagonal{
 	dir = 4
 	},
-/obj/machinery/cooker/candy,
+/obj/machinery/appliance/mixer/candy,
 /turf/simulated/floor/tiled/white,
 /area/ship/patrol/crew/kitchen)
 "wx" = (
@@ -13614,7 +13573,7 @@ Jp
 fe
 ft
 fR
-gk
+uT
 gy
 gM
 gO
