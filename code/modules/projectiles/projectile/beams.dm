@@ -467,6 +467,10 @@
 	tracer_type = /obj/projectile/laser_particle/tracer
 	impact_type = /obj/projectile/laser_particle/impact
 	penetration_modifier = 0.5
+	//[SIERRA-ADD] Mechs-by-Shegar
+	mech_armor_penetration = 30
+	mech_armor_damage = 45
+	//[SIERRA-ADD]
 
 /obj/item/projectile/beam/particle/small
 	name = "particle beam"
@@ -475,7 +479,7 @@
 	penetration_modifier = 0.3
 	//[SIERRA-ADD] Mechs-by-Shegar
 	mech_armor_penetration = 0
-	mech_armor_damage = 0
+	mech_armor_damage = 20
 	//[SIERRA-ADD]
 
 /obj/item/projectile/beam/darkmatter
