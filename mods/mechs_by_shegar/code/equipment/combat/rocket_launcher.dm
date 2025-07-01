@@ -20,6 +20,26 @@
 	firemodes = list(
 	mode_name="semi auto",       burst=1, fire_delay=null,    move_delay=null, one_hand_penalty=0, burst_accuracy=null, dispersion=null,
 	)
+	//Если в списке что-то есть, то будет пускать только те патроны, которые есть в этом списке
+	var/list/white_list_ammo_types = list()
+
+/obj/item/gun/projectile/automatic/rocket_launcher/load_ammo(obj/item/A, mob/user)
+	if(LAZYLEN(white_list_ammo_types))
+		//Ткнули магазином снарядов
+		if(ismagazine(A))
+			for(var/obj/item/bullet in A.contents)
+				if(!(bullet.type in white_list_ammo_types))
+					to_chat(user, SPAN_BAD("Один из снарядов в магазине не совместим."))
+					return
+		//Ткнули сразу снарядом
+		else
+			if(!(A.type in white_list_ammo_types))
+				to_chat(user, SPAN_BAD("Данный снаряд не совместим с этой установкой"))
+				return
+	. = ..()
+
+
+/obj/item/ammo_magazine/rockets_casing/pepper
 
 //Общий вид ракет
 /obj/item/ammo_magazine/rockets_casing
@@ -48,7 +68,7 @@
 
 /obj/item/projectile/bullet/rocket/tracer_effect()
 	new /obj/temp_visual/rocket_smoke (get_turf(src))
-	
+
 
 //сам дымок
 /obj/temp_visual/rocket_smoke
@@ -58,7 +78,7 @@
 
 //Фугас
 /obj/item/ammo_magazine/rockets_casing/fugas
-	name = "rockets casing"
+	name = "explosive rockets casing"
 	icon = 'mods/mechs_by_shegar/icons/ammo.dmi'
 	icon_state = "rockets_casing"
 	origin_tech = list(TECH_COMBAT = 4)
@@ -70,6 +90,7 @@
 
 
 /obj/item/ammo_casing/rocket/mech/fugas
+	name = "explosive rocket"
 	icon = 'mods/mechs_by_shegar/icons/ammo.dmi'
 	icon_state = "rockets"
 	caliber = CALIBER_ROCKETS
@@ -87,13 +108,14 @@
 	ammo_type = /obj/item/ammo_casing/rocket/mech/pepper
 
 /obj/item/ammo_casing/rocket/mech/pepper
+	name = "gas rocket"
 	icon = 'mods/mechs_by_shegar/icons/ammo.dmi'
 	icon_state = "rockets"
 	caliber = CALIBER_ROCKETS
 	projectile_type = /obj/item/projectile/bullet/rocket/pepper
 
 
-/obj/item/projectile/bullet/rocket/pepper/on_hit(atom/target)
+/obj/item/projectile/bullet/rocket/pepper/on_impact(atom/A)
 	var/obj/item/grenade/spawned_grenade = new /obj/item/grenade/chem_grenade/teargas(get_turf(src))
 	spawned_grenade.detonate()
 
@@ -107,12 +129,13 @@
 	ammo_type = /obj/item/ammo_casing/rocket/mech/flashbang
 
 /obj/item/ammo_casing/rocket/mech/flashbang
+	name = "flashbang rocket"
 	icon = 'mods/mechs_by_shegar/icons/ammo.dmi'
 	icon_state = "rockets"
 	caliber = CALIBER_ROCKETS
 	projectile_type = /obj/item/projectile/bullet/rocket/flashbang
 
-/obj/item/projectile/bullet/rocket/flashbang/on_hit(atom/target)
+/obj/item/projectile/bullet/rocket/flashbang/on_impact(atom/A)
 	var/obj/item/grenade/spawned_grenade = new /obj/item/grenade/flashbang(get_turf(src))
 	spawned_grenade.detonate()
 
@@ -131,10 +154,11 @@
 	caliber = CALIBER_ROCKETS
 	projectile_type = /obj/item/projectile/bullet/rocket/fire
 
-/obj/item/projectile/bullet/rocket/fire/on_hit(atom/target)
+/obj/item/projectile/bullet/rocket/fire/on_impact(atom/A)
 	for(var/turf/T in get_turfs_in_range(get_turf(src), 1))
 		new /obj/turf_fire/rocket_nalapm (T)
 	playsound(get_turf(src), 'mods/mechs_by_shegar/sounds/mech_grad_fire.ogg', 100, 0)
 
 /obj/turf_fire/rocket_nalapm
 	fire_power = 50
+	interact_with_atmos = FALSE

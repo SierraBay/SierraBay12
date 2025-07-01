@@ -12,7 +12,7 @@
 	if(failed)
 		moving_dir = pick(GLOB.cardinal - exosuit.dir)
 
-	exosuit.get_cell()?.use(exosuit.L_leg.power_use * CELLRATE)
+	exosuit.spend_power_for_step()
 
 	if(direction & (UP|DOWN))
 		var/txt_dir = direction & UP ? "upwards" : "downwards"
@@ -32,11 +32,20 @@
 
 /mob/living/exosuit/proc/do_mech_step_sound(volume = 40)
 	if(current_leg)
-		playsound(get_turf(src), L_leg.mech_step_sound, volume, 1)
+		playsound(get_turf(src), R_leg.mech_step_sound, volume, 1)
 		current_leg = FALSE
 	else
-		playsound(get_turf(src), R_leg.mech_step_sound, volume, 1)
+		playsound(get_turf(src), L_leg.mech_step_sound, volume, 1)
 		current_leg = TRUE
+
+/mob/living/exosuit/proc/spend_power_for_step()
+	var/obj/item/cell/my_cell = get_cell()
+	if(!my_cell)
+		return FALSE
+	if(current_leg)
+		my_cell.use(R_leg.power_use * CELLRATE)
+	else
+		my_cell.use(L_leg.power_use * CELLRATE)
 
 /mob/living/exosuit/proc/do_mech_turn_sound(volume = 40)
 	playsound(get_turf(src), pick(R_leg.mech_turn_sound, L_leg.mech_turn_sound), volume, 1)

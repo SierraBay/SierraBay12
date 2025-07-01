@@ -1,4 +1,10 @@
 //Здесь ведь код отвечающий за оборудование меха
+
+/mob/living/exosuit/proc/get_hardpoint_by_equipment(obj/item/mech_equipment/equipment)
+	for(var/hardpoint_name in hardpoints)
+		if(hardpoints[hardpoint_name] == equipment)
+			return hardpoint_name
+
 /mob/living/exosuit/proc/forget_module(module_to_forget)
 	//Realistically a module disappearing without being uninstalled is wrong and a bug or adminbus
 	var/target = null
@@ -85,33 +91,46 @@
 	return TRUE
 
 /mob/living/exosuit/proc/remove_system(system_hardpoint, mob/user, force)
+	//Код принимает на вход как прямой прототип обьекта, так и слот который он занимает в мехе
+	var/obj/item/mech_equipment/system
+	var/hardpoint
+	//Если на вход приходит сразу модуль
+	if(istype(system_hardpoint, /obj/item/mech_equipment))
+		system = system_hardpoint
+		hardpoint = get_hardpoint_by_equipment(system)
+	//Если на вход приходит лишь слот модуля
+	else
+		system = hardpoints[system_hardpoint]
+		hardpoint = system_hardpoint
 
-	if(!hardpoints[system_hardpoint])
-		return 0
+	if(!system)
+		return FALSE
 
-	var/obj/item/system = hardpoints[system_hardpoint]
 	if(user)
 		var/delay = 3 SECONDS * user.skill_delay_mult(SKILL_DEVICES)
 		if(delay > 0)
 			user.visible_message(SPAN_NOTICE("\The [user] begins trying to remove \the [system] from \the [src]."))
-			if(!do_after(user, delay, src, DO_PUBLIC_UNIQUE) || hardpoints[system_hardpoint] != system)
+			if(!do_after(user, delay, src, DO_PUBLIC_UNIQUE) || hardpoints[hardpoint] != system)
 				return FALSE
+			to_chat(user, SPAN_NOTICE("You remove \the [system] from \the [src]'s [system_hardpoint]."))
+			playsound(user.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 
-	hardpoints[system_hardpoint] = null
+	hardpoints[hardpoint] = null
 
-	if(system_hardpoint == selected_hardpoint)
+	if(hardpoint == selected_hardpoint)
 		clear_selected_hardpoint()
 
-	var/obj/item/mech_equipment/ME = system
-	if(istype(ME))
-		ME.uninstalled()
+	if(istype(system))
+		system.uninstalled()
 	system.forceMove(get_turf(src))
 	system.screen_loc = null
 	system.layer = initial(system.layer)
 	GLOB.destroyed_event.unregister(system, src, .proc/forget_module)
 
-	var/obj/screen/movable/exosuit/hardpoint/H = hardpoint_hud_elements[system_hardpoint]
+	var/obj/screen/movable/exosuit/hardpoint/H = hardpoint_hud_elements[hardpoint]
 	H.holding = null
+	//Обновим маптекст после удаления модуля
+	H.update_system_info()
 
 	for(var/thing in pilots)
 		var/mob/pilot = thing
@@ -121,9 +140,4 @@
 	refresh_hud()
 	queue_icon_update()
 
-	if(user)
-		system.forceMove(get_turf(user))
-		to_chat(user, SPAN_NOTICE("You remove \the [system] from \the [src]'s [system_hardpoint]."))
-		playsound(user.loc, 'sound/items/Screwdriver.ogg', 100, 1)
-
-	return 1
+	return TRUE

@@ -2471,7 +2471,7 @@
 /turf/simulated/floor/shuttle/red,
 /area/shuttle/administration/centcom)
 "auk" = (
-/obj/machinery/microwave,
+/obj/machinery/appliance/cooker/microwave,
 /obj/structure/table/reinforced,
 /turf/simulated/floor/shuttle/red,
 /area/shuttle/administration/centcom)
@@ -2930,7 +2930,7 @@
 /area/centcom/living)
 "avQ" = (
 /obj/structure/table/standard,
-/obj/machinery/microwave{
+/obj/machinery/appliance/cooker/microwave{
 	pixel_x = -3;
 	pixel_y = 6
 	},
@@ -7020,7 +7020,7 @@
 /area/tdome)
 "aKB" = (
 /obj/structure/table/standard,
-/obj/machinery/microwave,
+/obj/machinery/appliance/cooker/microwave,
 /turf/unsimulated/floor{
 	icon_state = "white"
 	},
@@ -7453,7 +7453,7 @@
 /turf/simulated/floor/tiled,
 /area/acting/stage)
 "aLw" = (
-/obj/machinery/microwave,
+/obj/machinery/appliance/cooker/microwave,
 /turf/unsimulated/floor{
 	icon_state = "plating";
 	name = "plating"
@@ -8337,7 +8337,7 @@
 /turf/space,
 /area/merchant_station)
 "aOx" = (
-/obj/machinery/microwave{
+/obj/machinery/appliance/cooker/microwave{
 	pixel_x = -3;
 	pixel_y = 6
 	},
@@ -12009,7 +12009,7 @@
 /area/holodeck/source_volleyball)
 "xTc" = (
 /obj/structure/table/holo_woodentable,
-/obj/item/tray{
+/obj/item/reagent_containers/cooking_container/tray{
 	holographic = 1
 	},
 /turf/simulated/floor/holofloor/wood,

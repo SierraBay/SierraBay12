@@ -51,7 +51,6 @@
 	#include "game/lockdown.dm"
 
 	// --- ITEMS --- //
-	#include "items/ammo.dm"
 	#include "items/cards_ids.dm"
 	#include "items/documents.dm"
 	#include "items/encryption_keys.dm"
@@ -141,6 +140,7 @@
 	#include "loadout/loadout_pda.dm"
 	#include "loadout/loadout_shoes.dm"
 	#include "loadout/loadout_suit.dm"
+	#include "loadout/loadout_augments.dm"
 	#include "loadout/loadout_tactical.dm"
 	#include "loadout/loadout_uniform.dm"
 	#include "loadout/loadout_xeno.dm"
@@ -175,6 +175,7 @@
 	#include "../away/mininghome/mininghome.dm"
 	#include "../../mods/_maps/scavver/scavver_gantry.dm"
 	#include "../away/abandoned_hotel/abandoned_hotel.dm"
+	#include "../away/spy_station/spy_station.dm"
 	#include "../event/iccgn_ship/icgnv_hound.dm"
 	#include "../event/sfv_arbiter/sfv_arbiter.dm"
 	#include "../event/placeholders/placeholders.dm"
@@ -204,7 +205,6 @@
 	#include "../../mods/antagonists/_antagonists_includes.dm"
 	#include "../../mods/ascent/_ascent_includes.dm"
 	#include "../../mods/fancy_sofas/_fancy_sofas_includes.dm"
-	#include "../../mods/guns/_guns_includes.dm"
 	#include "../../mods/jukebox_tapes/_jukebox_tapes_includes.dm"
 	#include "../../mods/legalese_language/_legalese_includes.dm"
 	#include "../../mods/resomi/_resomi_includes.dm"

@@ -85,6 +85,21 @@
 	drift = generator("vector", list(-0.2, -0.3), list(0.2, 0.3))
 	color = "white"
 
+/particles/cooking_smoke
+	name = "cooking smoke"
+	width = 256
+	height = 256
+	count = 250
+	spawning = 3
+	lifespan = 30
+	fade = 20
+	fadein = 5
+	velocity = generator("box", list(-12, 16, 0), list(12, -4, 50), NORMAL_RAND)
+	gravity = list(0.1, 1)
+	friction = 0.3
+	drift = generator("sphere", 0, 1.5)
+	color = "white"
+
 
 /particles/mist
 	name = "mist"

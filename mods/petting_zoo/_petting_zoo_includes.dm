@@ -3,6 +3,7 @@
 
 #include "_petting_zoo.dm"
 #include "code/beasts.dm"
+#include "code/cargo.dm"
 #include "code/commanded.dm"
 #include "code/datums.dm"
 #include "code/fox.dm"

@@ -3852,7 +3852,7 @@
 /area/errant_pisces/dorms)
 "jt" = (
 /obj/structure/table/marble,
-/obj/machinery/microwave,
+/obj/machinery/appliance/cooker/microwave,
 /turf/simulated/floor/tiled,
 /area/errant_pisces/dorms)
 "ju" = (
@@ -3990,7 +3990,7 @@
 /turf/simulated/floor/tiled,
 /area/errant_pisces/dorms)
 "jN" = (
-/obj/machinery/cooker/oven,
+/obj/machinery/appliance/cooker/oven,
 /turf/simulated/floor/tiled,
 /area/errant_pisces/dorms)
 "jO" = (

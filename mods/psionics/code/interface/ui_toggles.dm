@@ -21,16 +21,18 @@
 		return
 	owner.psi.use_psi_armour = !owner.psi.use_psi_armour
 	if(owner.psi.use_psi_armour)
-		to_chat(owner, SPAN_NOTICE("You will now use your psionics to deflect or block incoming attacks."))
 		var/mob/living/carbon/human/A = owner
-		if(A.psi.get_rank(PSI_PSYCHOKINESIS) > PSI_RANK_APPRENTICE && A.psi.ranks_stat[PSI_PSYCHOKINESIS] && !A.psi.suppressed)
+		if(A.psi.get_rank(PSI_PSYCHOKINESIS) >= PSI_RANK_MASTER && A.psi.ranks_stat[PSI_PSYCHOKINESIS] && !A.psi.suppressed)
 			A.levitation = TRUE
 			A.pass_flags |= PASS_FLAG_TABLE
 			A.pixel_y = 8
 			A.AddOverlays(image('mods/psionics/icons/psi.dmi', "levitation"))
 			A.make_floating(5)
+			to_chat(owner, SPAN_NOTICE("Теперь ты защищаешься от остальных атак с помощью псионики и левитируешь."))
+			return
+		to_chat(owner, SPAN_NOTICE("Теперь ты защищаешься от остальных атак с помощью псионики."))
 	else
-		to_chat(owner, SPAN_NOTICE("You will no longer use your psionics to deflect or block incoming attacks."))
+		to_chat(owner, SPAN_NOTICE("Теперь ты не защищаешься от остальных атак с помощью псионики."))
 		var/mob/living/carbon/human/A = owner
 		if(A.levitation)
 			A.levitation = FALSE

@@ -9,7 +9,7 @@
 	. = ..()
 
 /obj/item/psychic_power/telekinesis/Process()
-	if(!focus || !isturf(focus.loc) || get_dist(get_turf(focus), get_turf(owner)) > owner.psi.get_rank(PSI_PSYCHOKINESIS))
+	if(!focus || !isturf(focus.loc) || get_dist(get_turf(focus), get_turf(owner)) > owner.psi.get_rank(PSI_PSYCHOKINESIS) * 3)
 		owner.drop_from_inventory(src)
 		return
 	. = ..()
@@ -67,7 +67,7 @@
 		return
 
 	var/distance = get_dist(get_turf(user), get_turf(focus ? focus : target))
-	if(distance > user.psi.get_rank(PSI_PSYCHOKINESIS))
+	if(distance > user.psi.get_rank(PSI_PSYCHOKINESIS) * 3)
 		to_chat(user, SPAN_WARNING("Ты не дотягиваешься."))
 		return FALSE
 
@@ -84,9 +84,14 @@
 		else
 			if(!focus.anchored)
 				var/user_rank = owner.psi.get_rank(PSI_PSYCHOKINESIS)
-				focus.throw_at(target, user_rank*2, user_rank*3, owner)
-			sleep(1)
-			sparkle()
+				if(target == user)
+					user.swap_hand()
+					user.throw_mode_on()
+					focus.throw_at(target, user_rank*2, 1, owner)
+				else
+					focus.throw_at(target, user_rank*2, user_rank*3, owner)
+				sleep(1)
+				sparkle()
 		owner.drop_from_inventory(src)
 
 /obj/item/psychic_power/telekinesis/proc/sparkle()

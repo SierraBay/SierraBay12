@@ -32,6 +32,9 @@
 		else
 			software_data["ram"] = S.ram_cost
 			not_bought_software[LIST_PRE_INC(not_bought_software)] = software_data
+		else
+			software_data["ram"] = S.ram_cost
+
 	data["bought"] = bought_software
 	data["not_bought"] = not_bought_software
 	data["available_ram"] = ram
