@@ -17,6 +17,11 @@
 							'sound/weapons/guns/ricochet3.ogg', 'sound/weapons/guns/ricochet4.ogg')
 	impact_sounds = list(BULLET_IMPACT_MEAT = SOUNDS_BULLET_MEAT, BULLET_IMPACT_METAL = SOUNDS_BULLET_METAL)
 
+	//[SIERRA-ADD] - Mechs-by-Shegar
+	mech_armor_penetration = 0
+	mech_armor_damage = 30 //Если вдруг не прокинут родитель
+	//[SIERRA-ADD]
+
 /obj/item/projectile/bullet/on_hit(atom/target, blocked = 0)
 	if (..(target, blocked))
 		var/mob/living/L = target
@@ -69,6 +74,10 @@
 	var/base_spread = 90	//lower means the pellets spread more across body parts. If zero then this is considered a shrapnel explosion instead of a shrapnel cone
 	var/spread_step = 10	//higher means the pellets spread more across body parts with distance
 	is_pellet = TRUE
+	//[SIERRA-ADD] - Mechs-by-Shegar
+	mech_armor_penetration = 0
+	mech_armor_damage =  //30 выстрелов с пистолета чтоб сорвать броню
+	//[SIERRA-ADD]
 
 /obj/item/projectile/bullet/pellet/Bumped()
 	. = ..()
