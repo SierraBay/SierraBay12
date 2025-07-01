@@ -25,7 +25,8 @@
 	)
 	allowed_ranks = list(
 		/datum/mil_rank/civ/nt,
-		/datum/mil_rank/civ/contractor
+		/datum/mil_rank/civ/contractor,
+		/datum/mil_rank/civ/probation
 	)
 	min_skill = list(
 		SKILL_BUREAUCRACY = SKILL_BASIC,
@@ -79,7 +80,8 @@
 	)
 	allowed_ranks = list(
 		/datum/mil_rank/civ/nt,
-		/datum/mil_rank/civ/contractor
+		/datum/mil_rank/civ/contractor,
+		/datum/mil_rank/civ/probation
 	)
 	min_skill = list(
 		SKILL_EVA		=	SKILL_BASIC,
@@ -130,7 +132,8 @@
 	)
 	allowed_ranks = list(
 		/datum/mil_rank/civ/nt,
-		/datum/mil_rank/civ/contractor
+		/datum/mil_rank/civ/contractor,
+		/datum/mil_rank/civ/probation
 	)
 	min_skill = list(
 		SKILL_EVA = SKILL_BASIC,
@@ -173,7 +176,7 @@
 	)
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/medical/doctor/chemist
 	allowed_branches = list(/datum/mil_branch/employee, /datum/mil_branch/contractor)
-	allowed_ranks = list(/datum/mil_rank/civ/nt, /datum/mil_rank/civ/contractor)
+	allowed_ranks = list(/datum/mil_rank/civ/nt, /datum/mil_rank/civ/contractor, /datum/mil_rank/civ/probation)
 	min_skill = list(
 		SKILL_MEDICAL = SKILL_BASIC,
 		SKILL_CHEMISTRY = SKILL_TRAINED
@@ -219,7 +222,8 @@
 	allowed_ranks = list(
 		/datum/mil_rank/civ/nt,
 		/datum/mil_rank/civ/contractor,
-		/datum/mil_rank/civ/civ
+		/datum/mil_rank/civ/civ,
+		/datum/mil_rank/civ/probation
 	)
 	min_skill = list(
 		SKILL_BUREAUCRACY = SKILL_BASIC,
