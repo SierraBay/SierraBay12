@@ -88,3 +88,20 @@
 		visible_message(SPAN_DANGER("[user.name] attacks [src.name] with [W]!"))
 		is_broken ? (mod_integrity = 0) : (mod_integrity -= W.force * 2)
 		update_damage()
+
+//сетап пИИ
+
+/datum/category_item/player_setup_item/player_global/pai/update_pai_preview(mob/user)
+	pai_preview = icon('icons/effects/128x48.dmi', bgstate)
+	var/icon/pai = icon('mods/paimod/icons/pai.dmi', GLOB.possible_chassis[candidate.chassis], NORTH)
+	pai_preview.Scale(48+32, 16+32)
+
+	pai_preview.Blend(pai, ICON_OVERLAY, 25, 22)
+	pai = icon('mods/paimod/icons/pai.dmi', GLOB.possible_chassis[candidate.chassis], WEST)
+	pai_preview.Blend(pai, ICON_OVERLAY, 1, 9)
+	pai = icon('mods/paimod/icons/pai.dmi', GLOB.possible_chassis[candidate.chassis], SOUTH)
+	pai_preview.Blend(pai, ICON_OVERLAY, 49, 5)
+
+	pai_preview.Scale(pai_preview.Width() * 2, pai_preview.Height() * 2)
+
+	send_rsc(user, pai_preview, "pai_preview.png")
