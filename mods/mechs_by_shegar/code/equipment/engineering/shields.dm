@@ -1,5 +1,5 @@
 /obj/item/mech_equipment/atmos_shields
-	name = "exosuit airshield"
+	name = "mech airshield"
 	desc = "An Aether Atmospherics brand 'Zephyros' portable Atmospheric Isolation and Retention Screen. It keeps air where it should be... Most of the time. Press ctrl-click to switch modes"
 	icon_state = "mech_power"
 	heat_generation = 20

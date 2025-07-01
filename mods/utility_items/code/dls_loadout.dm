@@ -8,3 +8,7 @@
 	icon_state = "skirt_long"
 	item_state = "skirt_long"
 	worn_state = "skirt_long"
+
+/obj/item/clothing/accessory/glassesmod/hud/medical/New()
+	. = ..()
+	desc = "An attachable medical HUD for ballistic goggles."

@@ -2,18 +2,19 @@
 	name = "armory guncabinet"
 
 /obj/structure/closet/secure_closet/guncabinet/sierra_armory/smg
-	name = "submachine gun guncabinet"
+	name = "carabine guncabinet"
 
 /obj/structure/closet/secure_closet/guncabinet/sierra_armory/smg/WillContain()
-	return list(/obj/item/gun/projectile/automatic/sec_smg = 2,
-				/obj/item/ammo_magazine/smg_top/rubber = 4,
-				/obj/item/ammo_magazine/smg_top = 4)
+	return list(/obj/item/gun/projectile/automatic/sec_smg/c20a = 2,
+				/obj/item/ammo_magazine/smg_nt/rubber = 4,
+				/obj/item/ammo_magazine/smg_nt = 4,
+				/obj/item/ammo_magazine/smg_nt/ap = 2)
 
 /obj/structure/closet/secure_closet/guncabinet/sierra_armory/shotgun
 	name = "shotgun guncabinet"
 
 /obj/structure/closet/secure_closet/guncabinet/sierra_armory/shotgun/WillContain()
-	return list(/obj/item/gun/projectile/shotgun/pump/combat = 2,
+	return list(/obj/item/gun/projectile/shotgun/pump = 2,
 				/obj/item/clothing/accessory/storage/bandolier = 2,
 				/obj/item/storage/box/ammo/beanbags = 2,
 				/obj/item/storage/box/ammo/practiceshells = 2,

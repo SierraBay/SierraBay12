@@ -194,7 +194,7 @@
 					pew = new /obj/item/projectile/psi(get_turf(user))
 					pew.name = "small psionic bullet"
 					pew_sound = 'sound/weapons/guns/ricochet4.ogg'
-					to_chat(user, SPAN_WARNING("Ты пытаешься сконцентрировать всю энергию в одном маленьком сгустке, дабы создать пробивной снаряд, но что-то мешает тебе."))
+					to_chat(user, SPAN_WARNING("Ты пытаешься сконцентрировать всю энергию в одном маленьком сгустке, чтобы создать пробивной снаряд, но что-то мешает тебе."))
 			if(user_rank == PSI_RANK_OPERANT)
 				pew = new /obj/item/projectile/psi(get_turf(user))
 				pew.name = "piercing psionic bullet"
@@ -246,7 +246,7 @@
 					pew.penetrating = 5
 					pew.penetration_modifier = 1.1
 					pew_sound = 'sound/weapons/guns/ricochet4.ogg'
-					to_chat(user, SPAN_WARNING("Ты пытаешься сконцентрировать всю энергию в одном маленьком сгустке, дабы создать пробивной снаряд, но что-то мешает тебе..."))
+					to_chat(user, SPAN_WARNING("Ты пытаешься сконцентрировать всю энергию в одном маленьком сгустке, чтобы создать пробивной снаряд, но что-то мешает тебе..."))
 					explosion(get_turf(user), 2, 3)
 			if(user_rank == PSI_RANK_MASTER)
 				if(prob(70))
@@ -256,7 +256,7 @@
 					pew.damage = 20
 					pew_sound = 'sound/weapons/guns/ricochet4.ogg'
 				else
-					to_chat(user, SPAN_WARNING("Ты пытаешься сконцентрировать всю энергию в одном маленьком сгустке, дабы создать пробивной снаряд, но что-то мешает тебе."))
+					to_chat(user, SPAN_WARNING("Ты пытаешься сконцентрировать всю энергию в одном маленьком сгустке, чтобы создать пробивной снаряд, но что-то мешает тебе."))
 					explosion(get_turf(user), 2, 3)
 			if(user_rank == PSI_RANK_GRANDMASTER)
 				pew = new /obj/item/projectile/psi/strong_piercing(get_turf(user))

@@ -1,0 +1,4 @@
+author: Builder13
+changes:
+  - {tweak: Миррор с изменениями рендера}
+delete-after: true

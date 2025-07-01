@@ -1,5 +1,5 @@
 /obj/item/mech_equipment/camera
-	name = "exosuit camera"
+	name = "mech camera"
 	desc = "A dedicated visible light spectrum camera for remote feeds. It comes with its own transmitter!"
 	icon_state = "mech_camera"
 	restricted_hardpoints = list(HARDPOINT_LEFT_SHOULDER, HARDPOINT_RIGHT_SHOULDER)

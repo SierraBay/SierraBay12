@@ -70,6 +70,8 @@ ID мода: ANTAGONISTS
 
 - `icons/obj/augment.dmi`
 - `mods/ntnet/code/NTNet-items.dm`
+- `mods/rocket_launchers/code/rockets.dm`
+- `mods/rocket_launchers/code/launcher.dm`
 
 <!--
   Будь то немодульный файл или модульный файл, который не содержится в папке,

@@ -357,3 +357,11 @@ ranks - ec
 	desc = "Dark green glistening glasses for vision corrective."
 	icon_state = "hitech_retro"
 	item_state = "hitech_retro"
+
+// KMS EMT kneepads
+/obj/item/clothing/accessory/kms_kneepads
+	name = "KMS kneepads"
+	desc = "Pair of sturdy polymer kneepads generously provided by Komatsu Medical Services to their employees. Offer no additional protection, though."
+	icon = 'mods/loadout_items/icons/obj_accessory.dmi'
+	accessory_icons = list(slot_w_uniform_str = 'mods/loadout_items/icons/onmob_accessory.dmi')
+	icon_state = "kms_kneepads"

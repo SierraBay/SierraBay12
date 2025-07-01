@@ -6,8 +6,12 @@
 	var/chargetype
 	var/chargedesc
 
-/obj/structure/ship_munition/disperser_charge/proc/fire(turf/target, strength, range)
+// [SIERRA-EDIT] - IMPULSE_CANNON
+//	/obj/structure/ship_munition/disperser_charge/proc/fire(turf/target, strength, range)
+//		CRASH("OFD charge firing logic not set!")
+/obj/structure/ship_munition/disperser_charge/proc/fire(turf/target, strength, range, shield_active_EM, shield_active_KTC)
 	CRASH("OFD charge firing logic not set!")
+// [/SIERRA-EDIT]
 
 /obj/structure/ship_munition/disperser_charge/fire
 	name = "\improper FR1-ENFER charge"
