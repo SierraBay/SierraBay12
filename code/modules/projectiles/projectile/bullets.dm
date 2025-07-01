@@ -224,6 +224,10 @@
 	pellets = 6
 	range_step = 1
 	spread_step = 50
+	//[SIERRA-ADD] - Mechs-by-Shegar
+	mech_armor_penetration = 0
+	mech_armor_damage = 5 //Дробь малоэффективна
+	//[SIERRA-ADD]
 
 /obj/item/projectile/bullet/pellet/shotgun/flechette
 	name = "flechette"
