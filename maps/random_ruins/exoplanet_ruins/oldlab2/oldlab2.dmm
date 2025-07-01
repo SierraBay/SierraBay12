@@ -7,9 +7,9 @@
 	dir = 4
 	},
 /obj/structure/cable/yellow{
+	icon_state = "1-8";
 	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/oldlab2/powerandatmos)
@@ -22,9 +22,9 @@
 	dir = 4
 	},
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/mess)
@@ -39,9 +39,9 @@
 /area/map_template/oldlab2/chem)
 "ak" = (
 /obj/structure/cable/yellow{
+	icon_state = "1-8";
 	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
+	d2 = 8
 	},
 /turf/simulated/wall/titanium,
 /area/map_template/oldlab2/powerandatmos)
@@ -59,9 +59,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/door/firedoor,
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/machinery/door/airlock/civilian{
 	name = "Maintenance"
@@ -92,9 +92,9 @@
 "aL" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 8
@@ -123,11 +123,11 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/external/glass{
+	name = "Lab Interior Airlock";
 	dir = 4;
 	frequency = 1379;
 	id_tag = "oldlab_interior";
-	locked = 1;
-	name = "Lab Interior Airlock"
+	locked = 1
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/oldlab2/Airlock)
@@ -158,9 +158,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/machinery/light/small{
 	dir = 8
@@ -207,9 +207,9 @@
 	dir = 1
 	},
 /obj/structure/cable/yellow{
+	icon_state = "2-4";
 	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
+	d2 = 4
 	},
 /turf/simulated/floor/tiled/dark,
 /area/map_template/oldlab2/fixedsecurity)
@@ -292,9 +292,9 @@
 	dir = 1
 	},
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/test2)
@@ -374,14 +374,14 @@
 	dir = 5
 	},
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/structure/cable/yellow{
+	icon_state = "1-4";
 	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
+	d2 = 4
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/hall)
@@ -402,9 +402,9 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/machinery/door/airlock/civilian,
 /turf/simulated/floor/tiled/techfloor/grid,
@@ -508,9 +508,9 @@
 	dir = 9
 	},
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -545,9 +545,9 @@
 	dir = 10
 	},
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/medical)
@@ -570,9 +570,9 @@
 	dir = 4
 	},
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/oldlab2/engineerhall)
@@ -729,8 +729,8 @@
 	dir = 4
 	},
 /obj/floor_decal/industrial/warning{
-	dir = 1;
-	icon_state = "warning"
+	icon_state = "warning";
+	dir = 1
 	},
 /turf/simulated/floor/tiled/dark,
 /area/map_template/oldlab2/lab)
@@ -739,9 +739,9 @@
 	dir = 10
 	},
 /obj/structure/cable/yellow{
+	icon_state = "2-4";
 	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
+	d2 = 4
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 1
@@ -757,18 +757,18 @@
 	dir = 1
 	},
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/medical)
 "en" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/cable/yellow{
+	icon_state = "2-8";
 	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/oldlab2/server)
@@ -777,9 +777,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/catwalk_plated,
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /turf/simulated/floor/plating,
 /area/map_template/oldlab2/Engineering)
@@ -793,11 +793,11 @@
 /area/map_template/oldlab2/office)
 "er" = (
 /obj/machinery/door/airlock/external/glass{
+	name = "Lab Interior Airlock";
 	dir = 4;
 	frequency = 1379;
 	id_tag = "oldlab_interior";
-	locked = 1;
-	name = "Lab Interior Airlock"
+	locked = 1
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/oldlab2/Airlock)
@@ -836,8 +836,8 @@
 /area/map_template/oldlab2/hall)
 "ey" = (
 /obj/floor_decal/industrial/warning{
-	dir = 1;
-	icon_state = "warning"
+	icon_state = "warning";
+	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 5
@@ -849,12 +849,12 @@
 	dir = 6
 	},
 /obj/structure/cable/yellow{
-	d2 = 2;
-	icon_state = "0-2"
+	icon_state = "0-2";
+	d2 = 2
 	},
 /obj/machinery/power/apc{
-	dir = 1;
 	name = "north bump";
+	dir = 1;
 	pixel_y = 24
 	},
 /turf/simulated/floor/tiled/dark,
@@ -862,9 +862,9 @@
 "eE" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -919,14 +919,14 @@
 	},
 /obj/floor_decal/corner/research,
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/structure/cable/yellow{
+	icon_state = "2-4";
 	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
+	d2 = 4
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/lab)
@@ -992,9 +992,9 @@
 	dir = 6
 	},
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/chem)
@@ -1056,9 +1056,9 @@
 	dir = 1
 	},
 /obj/structure/cable/yellow{
+	icon_state = "1-8";
 	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/mess)
@@ -1071,8 +1071,8 @@
 /area/map_template/oldlab2/medical)
 "fB" = (
 /obj/floor_decal/industrial/warning{
-	dir = 1;
-	icon_state = "warning"
+	icon_state = "warning";
+	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -1093,14 +1093,14 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/structure/cable/yellow{
+	icon_state = "2-4";
 	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
+	d2 = 4
 	},
 /turf/simulated/floor/tiled/dark,
 /area/map_template/oldlab2/recandlockers)
@@ -1118,9 +1118,9 @@
 	dir = 4
 	},
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/dark,
 /area/map_template/oldlab2/living)
@@ -1140,9 +1140,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/door/firedoor,
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/machinery/door/airlock/civilian{
 	name = "Engineering"
@@ -1202,9 +1202,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/door/firedoor,
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/machinery/door/airlock/glass/medical{
 	name = "Infirmary"
@@ -1239,26 +1239,26 @@
 	},
 /obj/floor_decal/corner/research,
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/structure/cable/yellow{
+	icon_state = "1-4";
 	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
+	d2 = 4
 	},
 /obj/structure/cable/yellow{
+	icon_state = "1-8";
 	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/lab)
 "gJ" = (
 /obj/machinery/computer/modular/preset/engineering{
-	dir = 8;
-	icon_state = "console"
+	icon_state = "console";
+	dir = 8
 	},
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 8
@@ -1278,14 +1278,14 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable/yellow{
+	icon_state = "1-4";
 	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
+	d2 = 4
 	},
 /obj/structure/cable/yellow{
+	icon_state = "2-4";
 	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
+	d2 = 4
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/mess)
@@ -1358,9 +1358,9 @@
 	dir = 4
 	},
 /obj/structure/cable/yellow{
+	icon_state = "2-8";
 	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+	d2 = 8
 	},
 /obj/catwalk_plated,
 /turf/simulated/floor/plating,
@@ -1433,13 +1433,13 @@
 "hJ" = (
 /obj/structure/iv_stand,
 /obj/machinery/power/apc{
-	dir = 8;
 	name = "west bump";
+	dir = 8;
 	pixel_x = -24
 	},
 /obj/structure/cable/yellow{
-	d2 = 4;
-	icon_state = "0-4"
+	icon_state = "0-4";
+	d2 = 4
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/medical)
@@ -1483,9 +1483,9 @@
 	name = "Maintenance"
 	},
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/oldlab2/server)
@@ -1590,18 +1590,18 @@
 	dir = 6
 	},
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/medical)
 "iU" = (
 /obj/machinery/door/airlock/external/glass{
+	name = "Lab Exterior Airlock";
 	frequency = 1379;
 	id_tag = "oldlab_exterior";
-	locked = 1;
-	name = "Lab Exterior Airlock"
+	locked = 1
 	},
 /turf/simulated/floor/tiled/techfloor{
 	map_airless = 1
@@ -1620,9 +1620,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/machinery/light/spot{
 	dir = 4
@@ -1679,13 +1679,13 @@
 /area/map_template/oldlab2/Airlock)
 "jD" = (
 /obj/machinery/power/apc{
-	dir = 8;
 	name = "west bump";
+	dir = 8;
 	pixel_x = -24
 	},
 /obj/structure/cable/yellow{
-	d2 = 4;
-	icon_state = "0-4"
+	icon_state = "0-4";
+	d2 = 4
 	},
 /turf/simulated/floor/tiled/dark,
 /area/map_template/oldlab2/lab)
@@ -1792,9 +1792,9 @@
 	dir = 4
 	},
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/mess)
@@ -1802,9 +1802,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable/yellow{
+	icon_state = "2-4";
 	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
+	d2 = 4
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/oldlab2/powerandatmos)
@@ -1813,8 +1813,8 @@
 /area/map_template/oldlab2/test2)
 "ks" = (
 /obj/floor_decal/industrial/warning{
-	dir = 1;
-	icon_state = "warning"
+	icon_state = "warning";
+	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -1829,13 +1829,13 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/machinery/door/blast/regular{
-	dir = 4;
 	icon_state = "pdoor0";
+	dir = 4;
 	id_tag = "securityairlockshutter"
 	},
 /obj/machinery/door/airlock/external/glass{
@@ -1864,9 +1864,9 @@
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /turf/simulated/floor/tiled/dark,
 /area/map_template/oldlab2/recandlockers)
@@ -1876,9 +1876,9 @@
 "kO" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -1896,9 +1896,9 @@
 /area/map_template/oldlab2/engineerhall)
 "kQ" = (
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -1907,9 +1907,9 @@
 /area/map_template/oldlab2/living6)
 "kR" = (
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/oldlab2/server)
@@ -1928,9 +1928,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/floor_decal/corner/research{
 	dir = 6
@@ -2031,8 +2031,8 @@
 	dir = 4
 	},
 /obj/machinery/door/blast/regular{
-	dir = 4;
 	icon_state = "pdoor0";
+	dir = 4;
 	id_tag = "securityairlockshutter"
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
@@ -2070,8 +2070,8 @@
 /area/map_template/oldlab2/recandlockers)
 "lC" = (
 /obj/floor_decal/industrial/warning{
-	dir = 1;
-	icon_state = "warning"
+	icon_state = "warning";
+	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/tiled/white,
@@ -2084,9 +2084,9 @@
 	dir = 4
 	},
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/dark,
 /area/map_template/oldlab2/living4)
@@ -2150,9 +2150,9 @@
 /area/map_template/oldlab2/server)
 "mf" = (
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 8
@@ -2177,9 +2177,9 @@
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /turf/simulated/floor/tiled/dark,
 /area/map_template/oldlab2/recandlockers)
@@ -2192,8 +2192,8 @@
 /area/map_template/oldlab2/living6)
 "mr" = (
 /obj/floor_decal/industrial/warning{
-	dir = 8;
-	icon_state = "warning"
+	icon_state = "warning";
+	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
@@ -2208,13 +2208,13 @@
 	dir = 4
 	},
 /obj/machinery/power/apc{
-	dir = 8;
 	name = "west bump";
+	dir = 8;
 	pixel_x = -24
 	},
 /obj/structure/cable/yellow{
-	d2 = 4;
-	icon_state = "0-4"
+	icon_state = "0-4";
+	d2 = 4
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/mess)
@@ -2223,9 +2223,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/door/firedoor,
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/machinery/door/airlock/civilian{
 	name = "Rec room"
@@ -2275,9 +2275,9 @@
 	},
 /obj/catwalk_plated,
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/simulated/floor/plating,
 /area/map_template/oldlab2/server)
@@ -2312,9 +2312,9 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/machinery/door/airlock/civilian{
 	name = "Office"
@@ -2350,13 +2350,13 @@
 /area/map_template/oldlab2/mess)
 "no" = (
 /obj/machinery/power/apc{
-	dir = 8;
 	name = "west bump";
+	dir = 8;
 	pixel_x = -24
 	},
 /obj/structure/cable/yellow{
-	d2 = 4;
-	icon_state = "0-4"
+	icon_state = "0-4";
+	d2 = 4
 	},
 /obj/machinery/light/small{
 	dir = 8
@@ -2386,9 +2386,9 @@
 	dir = 10
 	},
 /obj/structure/cable/yellow{
+	icon_state = "2-8";
 	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/office)
@@ -2421,9 +2421,9 @@
 	dir = 4
 	},
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/recandlockers)
@@ -2467,14 +2467,14 @@
 	},
 /obj/random/toolbox,
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/oldlab2/powerandatmos)
 "nZ" = (
-/obj/machinery/cooker/grill,
+/obj/machinery/appliance/cooker/grill,
 /obj/floor_decal/corner/grey/diagonal{
 	dir = 4
 	},
@@ -2485,9 +2485,9 @@
 /area/map_template/oldlab2/mess)
 "oa" = (
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -2538,8 +2538,8 @@
 	pixel_y = 5
 	},
 /obj/floor_decal/industrial/warning/corner{
-	dir = 8;
-	icon_state = "warningcorner"
+	icon_state = "warningcorner";
+	dir = 8
 	},
 /obj/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/tiled/techfloor,
@@ -2570,9 +2570,9 @@
 	dir = 6
 	},
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
@@ -2606,9 +2606,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/door/firedoor,
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/machinery/door/airlock/civilian{
 	name = "Engineering"
@@ -2617,8 +2617,8 @@
 /area/map_template/oldlab2/hall)
 "ot" = (
 /obj/floor_decal/industrial/warning{
-	dir = 1;
-	icon_state = "warning"
+	icon_state = "warning";
+	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 4
@@ -2634,9 +2634,9 @@
 	dir = 8
 	},
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/mess)
@@ -2667,9 +2667,9 @@
 	dir = 8
 	},
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/machinery/light/small{
 	dir = 8
@@ -2688,9 +2688,9 @@
 	dir = 10
 	},
 /obj/structure/cable/yellow{
+	icon_state = "2-4";
 	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
+	d2 = 4
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/test2)
@@ -2741,9 +2741,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/mess)
@@ -2773,9 +2773,9 @@
 	dir = 4
 	},
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/dark,
 /area/map_template/oldlab2/living2)
@@ -2820,9 +2820,9 @@
 	dir = 8
 	},
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/test1)
@@ -2837,9 +2837,9 @@
 	pixel_x = 21
 	},
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/machinery/light/spot{
 	dir = 4
@@ -2854,9 +2854,9 @@
 	dir = 4
 	},
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/dark,
 /area/map_template/oldlab2/recandlockers)
@@ -2865,9 +2865,9 @@
 	dir = 10
 	},
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/test2)
@@ -2888,9 +2888,9 @@
 	dir = 1
 	},
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/simulated/floor/plating,
 /area/map_template/oldlab2/server)
@@ -2933,9 +2933,9 @@
 	},
 /obj/catwalk_plated,
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/simulated/floor/plating,
 /area/map_template/oldlab2/engineerhall)
@@ -2990,9 +2990,9 @@
 "qC" = (
 /obj/floor_decal/industrial/warning/corner,
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/dark,
 /area/map_template/oldlab2/lab)
@@ -3056,19 +3056,19 @@
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/structure/cable/yellow{
+	icon_state = "2-8";
 	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+	d2 = 8
 	},
 /obj/structure/cable/yellow{
+	icon_state = "2-4";
 	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
+	d2 = 4
 	},
 /turf/simulated/floor/tiled/dark,
 /area/map_template/oldlab2/recandlockers)
@@ -3146,37 +3146,37 @@
 	dir = 5
 	},
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/structure/cable/yellow{
+	icon_state = "1-4";
 	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
+	d2 = 4
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/hall)
 "rp" = (
 /obj/floor_decal/industrial/warning{
-	dir = 1;
-	icon_state = "warning"
+	icon_state = "warning";
+	dir = 1
 	},
 /obj/machinery/button/blast_door{
-	id_tag = "testlab2";
 	name = "Test Lab 2 Shutters Control";
-	pixel_y = 32
+	pixel_y = 32;
+	id_tag = "testlab2"
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/test1)
 "rs" = (
 /obj/machinery/access_button{
-	command = "cycle_exterior";
-	frequency = 1379;
-	master_tag = "oldlab_airlock";
 	name = "interior access button";
 	pixel_x = 24;
-	pixel_y = -24
+	pixel_y = -24;
+	frequency = 1379;
+	command = "cycle_exterior";
+	master_tag = "oldlab_airlock"
 	},
 /turf/simulated/floor/reinforced{
 	map_airless = 1
@@ -3207,9 +3207,9 @@
 	},
 /obj/machinery/light,
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/test1)
@@ -3239,16 +3239,16 @@
 "rB" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/blast/regular{
-	dir = 4;
 	icon_state = "pdoor0";
+	dir = 4;
 	id_tag = "speciallabblast"
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/oldlab2/test2)
 "rC" = (
 /obj/machinery/power/apc{
-	dir = 1;
 	name = "north bump";
+	dir = 1;
 	pixel_y = 24;
 	req_access = list(list("ACCESS_ENGINE_EQUIP","ACCESS_ATMOS"))
 	},
@@ -3256,8 +3256,8 @@
 	dir = 1
 	},
 /obj/structure/cable/yellow{
-	d2 = 2;
-	icon_state = "0-2"
+	icon_state = "0-2";
+	d2 = 2
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/oldlab2/engineerhall)
@@ -3280,9 +3280,9 @@
 	dir = 4
 	},
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/machinery/firealarm{
 	dir = 1;
@@ -3311,8 +3311,8 @@
 "rL" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/blast/regular{
-	dir = 4;
 	icon_state = "pdoor0";
+	dir = 4;
 	id_tag = "labentrance"
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
@@ -3323,13 +3323,13 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/machinery/door/blast/regular{
-	dir = 4;
 	icon_state = "pdoor0";
+	dir = 4;
 	id_tag = "labentrance"
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
@@ -3355,9 +3355,9 @@
 	},
 /obj/catwalk_plated,
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/simulated/floor/plating,
 /area/map_template/oldlab2/server)
@@ -3376,12 +3376,12 @@
 "sb" = (
 /obj/structure/bed/padded,
 /obj/structure/cable/yellow{
-	d2 = 8;
-	icon_state = "0-8"
+	icon_state = "0-8";
+	d2 = 8
 	},
 /obj/machinery/power/apc{
-	dir = 4;
 	name = "east bump";
+	dir = 4;
 	pixel_x = 24
 	},
 /obj/item/bedsheet/captain,
@@ -3414,9 +3414,9 @@
 	dir = 8
 	},
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /turf/simulated/floor/plating,
 /area/map_template/oldlab2/Engineering)
@@ -3434,9 +3434,9 @@
 	dir = 4
 	},
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/freezer,
 /area/map_template/oldlab2/bathroom)
@@ -3452,16 +3452,16 @@
 	dir = 4
 	},
 /obj/machinery/door/blast/regular{
-	dir = 4;
 	icon_state = "pdoor0";
+	dir = 4;
 	id_tag = "speciallabblast"
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/oldlab2/test2)
 "sw" = (
 /obj/floor_decal/industrial/warning{
-	dir = 1;
-	icon_state = "warning"
+	icon_state = "warning";
+	dir = 1
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/test1)
@@ -3476,9 +3476,9 @@
 	dir = 5
 	},
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
 /turf/simulated/floor/tiled/white,
@@ -3489,9 +3489,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /turf/simulated/floor/tiled/freezer,
 /area/map_template/oldlab2/bathroom)
@@ -3505,9 +3505,9 @@
 	dir = 5
 	},
 /obj/structure/cable/yellow{
+	icon_state = "2-4";
 	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
+	d2 = 4
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/hall)
@@ -3526,18 +3526,18 @@
 	dir = 8
 	},
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/medical)
 "sJ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled/white,
@@ -3554,17 +3554,17 @@
 	},
 /obj/catwalk_plated,
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /turf/simulated/floor/plating,
 /area/map_template/oldlab2/engineerhall)
 "sM" = (
 /obj/machinery/power/apc{
-	dir = 1;
 	name = "north bump";
+	dir = 1;
 	pixel_y = 24;
 	req_access = list(list("ACCESS_ENGINE_EQUIP","ACCESS_ATMOS"))
 	},
@@ -3572,8 +3572,8 @@
 	dir = 1
 	},
 /obj/structure/cable/yellow{
-	d2 = 8;
-	icon_state = "0-8"
+	icon_state = "0-8";
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/dark,
 /area/map_template/oldlab2/recandlockers)
@@ -3581,20 +3581,27 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /turf/simulated/floor/tiled/dark,
 /area/map_template/oldlab2/recandlockers)
+"sV" = (
+/obj/floor_decal/corner/grey/diagonal{
+	dir = 4
+	},
+/obj/machinery/appliance/cooker/stove,
+/turf/simulated/floor/tiled/white,
+/area/map_template/oldlab2/mess)
 "tb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
 /turf/simulated/floor/tiled/white,
@@ -3619,14 +3626,14 @@
 /area/map_template/oldlab2/living2)
 "tk" = (
 /obj/machinery/power/apc{
-	dir = 1;
 	name = "north bump";
+	dir = 1;
 	pixel_y = 24;
 	req_access = list(list("ACCESS_ENGINE_EQUIP","ACCESS_ATMOS"))
 	},
 /obj/structure/cable/yellow{
-	d2 = 8;
-	icon_state = "0-8"
+	icon_state = "0-8";
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/freezer,
 /area/map_template/oldlab2/bathroom)
@@ -3651,9 +3658,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/medical)
@@ -3699,9 +3706,9 @@
 	pixel_y = -26
 	},
 /obj/machinery/button/blast_door{
-	id_tag = "speciallabblast";
 	name = "Special Test Lab Blast Doors";
-	pixel_x = 32
+	pixel_x = 32;
+	id_tag = "speciallabblast"
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/test2)
@@ -3737,23 +3744,23 @@
 	dir = 6
 	},
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/structure/cable/yellow{
+	icon_state = "1-4";
 	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
+	d2 = 4
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/chem)
 "tP" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
 /turf/simulated/floor/tiled/dark,
@@ -3792,8 +3799,8 @@
 "tV" = (
 /obj/wallframe_spawn/reinforced/titanium,
 /obj/machinery/door/blast/regular{
-	dir = 4;
 	icon_state = "pdoor0";
+	dir = 4;
 	id_tag = "securityoutershutters"
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
@@ -3833,9 +3840,9 @@
 	},
 /obj/catwalk_plated,
 /obj/structure/cable/yellow{
+	icon_state = "2-4";
 	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
+	d2 = 4
 	},
 /turf/simulated/floor/plating,
 /area/map_template/oldlab2/engineerhall)
@@ -3859,9 +3866,9 @@
 /area/map_template/oldlab2/engineerhall)
 "ut" = (
 /obj/structure/cable/yellow{
+	icon_state = "2-8";
 	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/oldlab2/server)
@@ -3872,9 +3879,9 @@
 /obj/catwalk_plated,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /turf/simulated/floor/plating,
 /area/map_template/oldlab2/Engineering)
@@ -3884,9 +3891,9 @@
 	},
 /obj/machinery/door/window/eastright,
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/dark,
 /area/map_template/oldlab2/lab)
@@ -3936,14 +3943,14 @@
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
 /obj/catwalk_plated,
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/structure/cable/yellow{
+	icon_state = "1-8";
 	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
+	d2 = 8
 	},
 /turf/simulated/floor/plating,
 /area/map_template/oldlab2/engineerhall)
@@ -4037,9 +4044,9 @@
 	dir = 4
 	},
 /obj/structure/cable/yellow{
+	icon_state = "1-8";
 	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/medical)
@@ -4051,9 +4058,9 @@
 	dir = 4
 	},
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/catwalk_plated,
 /turf/simulated/floor/plating,
@@ -4119,9 +4126,9 @@
 /area/map_template/oldlab2/mess)
 "vI" = (
 /obj/structure/cable/yellow{
+	icon_state = "1-4";
 	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
+	d2 = 4
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 8
@@ -4158,8 +4165,8 @@
 /area/map_template/oldlab2/medical)
 "vN" = (
 /obj/machinery/atmospherics/unary/freezer{
-	dir = 1;
-	icon_state = "freezer"
+	icon_state = "freezer";
+	dir = 1
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/test2)
@@ -4180,9 +4187,9 @@
 /area/map_template/oldlab2/test2)
 "vZ" = (
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
@@ -4204,9 +4211,9 @@
 	dir = 4
 	},
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/simulated/floor/wood/walnut,
 /area/map_template/oldlab2/recandlockers)
@@ -4235,9 +4242,9 @@
 	dir = 5
 	},
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/dark,
 /area/map_template/oldlab2/living3)
@@ -4295,8 +4302,8 @@
 	dir = 1
 	},
 /obj/structure/cable/yellow{
-	d2 = 2;
-	icon_state = "0-2"
+	icon_state = "0-2";
+	d2 = 2
 	},
 /obj/machinery/firealarm{
 	dir = 4;
@@ -4328,13 +4335,13 @@
 /area/map_template/oldlab2/fixedsecurity)
 "wX" = (
 /obj/floor_decal/industrial/warning{
-	dir = 1;
-	icon_state = "warning"
+	icon_state = "warning";
+	dir = 1
 	},
 /obj/machinery/button/blast_door{
-	id_tag = "testlab1";
 	name = "Test Lab 1 Shutters Control";
-	pixel_x = -32
+	pixel_x = -32;
+	id_tag = "testlab1"
 	},
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 4;
@@ -4392,8 +4399,8 @@
 /area/map_template/oldlab2/Airlock)
 "xj" = (
 /obj/machinery/computer/modular/preset/medical{
-	dir = 1;
-	icon_state = "console"
+	icon_state = "console";
+	dir = 1
 	},
 /obj/machinery/light,
 /turf/simulated/floor/tiled/white,
@@ -4419,8 +4426,8 @@
 "xm" = (
 /obj/machinery/atmospherics/binary/pump,
 /obj/floor_decal/industrial/warning{
-	dir = 1;
-	icon_state = "warning"
+	icon_state = "warning";
+	dir = 1
 	},
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 32
@@ -4458,8 +4465,8 @@
 "xy" = (
 /obj/machinery/power/smes/buildable/outpost_substation,
 /obj/structure/cable/yellow{
-	d2 = 8;
-	icon_state = "0-8"
+	icon_state = "0-8";
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/oldlab2/powerandatmos)
@@ -4478,8 +4485,8 @@
 /area/map_template/oldlab2/living3)
 "xC" = (
 /obj/structure/cable/yellow{
-	d2 = 4;
-	icon_state = "0-4"
+	icon_state = "0-4";
+	d2 = 4
 	},
 /obj/machinery/power/debug_items/infinite_generator,
 /turf/simulated/floor/tiled/techfloor,
@@ -4497,9 +4504,9 @@
 /area/map_template/oldlab2/test1)
 "xN" = (
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -4511,9 +4518,9 @@
 /area/map_template/oldlab2/server)
 "xX" = (
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/dark,
 /area/map_template/oldlab2/living6)
@@ -4550,9 +4557,9 @@
 	dir = 5
 	},
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/hall)
@@ -4565,8 +4572,8 @@
 	dir = 9
 	},
 /obj/machinery/computer/modular/preset/security{
-	dir = 4;
-	icon_state = "console"
+	icon_state = "console";
+	dir = 4
 	},
 /turf/simulated/floor/tiled/dark,
 /area/map_template/oldlab2/fixedsecurity)
@@ -4590,9 +4597,9 @@
 	dir = 6
 	},
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/hall)
@@ -4610,9 +4617,9 @@
 	pixel_y = 32
 	},
 /obj/structure/cable/yellow{
+	icon_state = "2-4";
 	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
+	d2 = 4
 	},
 /turf/simulated/floor/tiled/freezer,
 /area/map_template/oldlab2/bathroom)
@@ -4657,9 +4664,9 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/machinery/door/airlock/civilian{
 	name = "Bathroom"
@@ -4672,8 +4679,8 @@
 /area/map_template/oldlab2/Airlock)
 "yY" = (
 /obj/machinery/power/apc{
-	dir = 8;
 	name = "west bump";
+	dir = 8;
 	pixel_x = -24
 	},
 /obj/structure/cable/yellow,
@@ -4692,13 +4699,13 @@
 	dir = 4
 	},
 /obj/floor_decal/industrial/warning{
-	dir = 8;
-	icon_state = "warning"
+	icon_state = "warning";
+	dir = 8
 	},
 /obj/structure/cable/yellow{
+	icon_state = "1-4";
 	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
+	d2 = 4
 	},
 /turf/simulated/floor/tiled/dark,
 /area/map_template/oldlab2/lab)
@@ -4713,12 +4720,12 @@
 /area/map_template/oldlab2/lab)
 "zi" = (
 /obj/structure/cable/yellow{
-	d2 = 8;
-	icon_state = "0-8"
+	icon_state = "0-8";
+	d2 = 8
 	},
 /obj/machinery/power/apc{
-	dir = 4;
 	name = "east bump";
+	dir = 4;
 	pixel_x = 24
 	},
 /turf/simulated/floor/tiled/dark,
@@ -4730,7 +4737,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/oldlab2/hall)
 "zl" = (
-/obj/machinery/cooker/fryer,
+/obj/machinery/appliance/cooker/fryer,
 /obj/floor_decal/corner/grey/diagonal{
 	dir = 4
 	},
@@ -4745,9 +4752,9 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/machinery/door/airlock/civilian,
 /turf/simulated/floor/tiled/techfloor/grid,
@@ -4785,9 +4792,9 @@
 	dir = 6
 	},
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/machinery/light{
 	dir = 4
@@ -4799,13 +4806,13 @@
 /area/map_template/oldlab2/test2)
 "zC" = (
 /obj/machinery/power/apc{
-	dir = 1;
 	name = "north bump";
+	dir = 1;
 	pixel_y = 24
 	},
 /obj/structure/cable/yellow{
-	d2 = 4;
-	icon_state = "0-4"
+	icon_state = "0-4";
+	d2 = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -4816,9 +4823,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable/yellow{
+	icon_state = "1-8";
 	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/oldlab2/powerandatmos)
@@ -4845,9 +4852,9 @@
 	dir = 4
 	},
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/catwalk_plated,
 /obj/machinery/light/small{
@@ -4863,9 +4870,9 @@
 	dir = 8
 	},
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/recandlockers)
@@ -4882,7 +4889,7 @@
 /obj/floor_decal/corner/grey/diagonal{
 	dir = 4
 	},
-/obj/machinery/microwave{
+/obj/machinery/appliance/cooker/microwave{
 	pixel_x = -3;
 	pixel_y = 6
 	},
@@ -4914,14 +4921,14 @@
 	dir = 4
 	},
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/structure/cable/yellow{
+	icon_state = "2-8";
 	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/server)
@@ -4955,9 +4962,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/recandlockers)
@@ -4975,14 +4982,14 @@
 	dir = 8
 	},
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/structure/cable/yellow{
+	icon_state = "1-4";
 	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
+	d2 = 4
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/recandlockers)
@@ -4995,14 +5002,14 @@
 	dir = 6
 	},
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/structure/cable/yellow{
+	icon_state = "1-8";
 	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
+	d2 = 8
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 4
@@ -5067,9 +5074,9 @@
 	dir = 1
 	},
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/simulated/floor/plating,
 /area/map_template/oldlab2/server)
@@ -5082,9 +5089,9 @@
 "AX" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
@@ -5125,9 +5132,9 @@
 	dir = 9
 	},
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 1
@@ -5153,9 +5160,9 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/machinery/door/airlock/civilian,
 /turf/simulated/floor/tiled/techfloor/grid,
@@ -5176,14 +5183,14 @@
 	dir = 5
 	},
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/structure/cable/yellow{
+	icon_state = "2-4";
 	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
+	d2 = 4
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/hall)
@@ -5201,9 +5208,9 @@
 	dir = 4
 	},
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/dark,
 /area/map_template/oldlab2/living5)
@@ -5257,13 +5264,13 @@
 /area/map_template/oldlab2/Airlock)
 "BO" = (
 /obj/machinery/power/apc{
-	dir = 1;
 	name = "north bump";
+	dir = 1;
 	pixel_y = 24
 	},
 /obj/structure/cable/yellow{
-	d2 = 2;
-	icon_state = "0-2"
+	icon_state = "0-2";
+	d2 = 2
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/hall)
@@ -5288,8 +5295,8 @@
 /area/map_template/oldlab2/server)
 "Ca" = (
 /obj/machinery/computer/modular/preset/security{
-	dir = 8;
-	icon_state = "console"
+	icon_state = "console";
+	dir = 8
 	},
 /obj/floor_decal/corner/red{
 	dir = 6
@@ -5366,9 +5373,9 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/machinery/door/airlock/civilian,
 /turf/simulated/floor/tiled/techfloor/grid,
@@ -5379,17 +5386,17 @@
 /area/map_template/oldlab2/mess)
 "CN" = (
 /obj/structure/cable/yellow{
+	icon_state = "1-8";
 	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
+	d2 = 8
 	},
 /obj/catwalk_plated,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/simulated/floor/plating,
 /area/map_template/oldlab2/server)
@@ -5424,9 +5431,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/door/firedoor,
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/machinery/door/airlock/glass/medical{
 	name = "Chemistry"
@@ -5483,14 +5490,14 @@
 	dir = 6
 	},
 /obj/structure/cable/yellow{
+	icon_state = "2-8";
 	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+	d2 = 8
 	},
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/hall)
@@ -5589,9 +5596,9 @@
 	dir = 8
 	},
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/recandlockers)
@@ -5629,9 +5636,9 @@
 	dir = 4
 	},
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/dark,
 /area/map_template/oldlab2/living6)
@@ -5640,9 +5647,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/door/firedoor,
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/machinery/door/airlock/civilian{
 	name = "Mess hall"
@@ -5651,13 +5658,13 @@
 /area/map_template/oldlab2/mess)
 "DP" = (
 /obj/floor_decal/industrial/warning/corner{
-	dir = 8;
-	icon_state = "warningcorner"
+	icon_state = "warningcorner";
+	dir = 8
 	},
 /obj/structure/cable/yellow{
+	icon_state = "2-8";
 	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/dark,
 /area/map_template/oldlab2/lab)
@@ -5697,9 +5704,9 @@
 	dir = 4
 	},
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/machinery/firealarm{
 	dir = 1;
@@ -5721,17 +5728,17 @@
 	dir = 9
 	},
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/hall)
 "DW" = (
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/machinery/light/small{
 	dir = 4
@@ -5765,8 +5772,8 @@
 	dir = 5
 	},
 /obj/machinery/computer/modular/preset/medical{
-	dir = 1;
-	icon_state = "console"
+	icon_state = "console";
+	dir = 1
 	},
 /obj/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/tiled/white,
@@ -5811,15 +5818,15 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/door/firedoor,
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/machinery/door/airlock/civilian,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/oldlab2/server)
 "Ew" = (
-/obj/machinery/cooker/oven,
+/obj/machinery/appliance/cooker/oven,
 /obj/floor_decal/corner/grey/diagonal{
 	dir = 4
 	},
@@ -5842,14 +5849,14 @@
 	dir = 9
 	},
 /obj/structure/cable/yellow{
+	icon_state = "2-4";
 	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
+	d2 = 4
 	},
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/hall)
@@ -5899,9 +5906,9 @@
 	dir = 4
 	},
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/recandlockers)
@@ -5925,9 +5932,9 @@
 	dir = 9
 	},
 /obj/structure/cable/yellow{
+	icon_state = "1-8";
 	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/medical)
@@ -5940,10 +5947,10 @@
 /area/map_template/oldlab2/fixedsecurity)
 "ES" = (
 /obj/machinery/atmospherics/unary/outlet_injector{
-	airflow_process_delay = 2;
-	frequency = 1560;
 	icon_state = "map_injector";
+	frequency = 1560;
 	id = "test_in";
+	airflow_process_delay = 2;
 	use_power = 1
 	},
 /turf/simulated/floor/reinforced,
@@ -5978,9 +5985,9 @@
 	dir = 9
 	},
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/medical)
@@ -5993,14 +6000,14 @@
 	},
 /obj/catwalk_plated,
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/structure/cable/yellow{
+	icon_state = "1-8";
 	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
+	d2 = 8
 	},
 /turf/simulated/floor/plating,
 /area/map_template/oldlab2/engineerhall)
@@ -6061,9 +6068,9 @@
 	dir = 5
 	},
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/dark,
 /area/map_template/oldlab2/living2)
@@ -6073,16 +6080,16 @@
 	dir = 4
 	},
 /obj/machinery/button/blast_door{
-	id_tag = "labentrance";
 	name = "Special Test Lab Entrance Shutters";
 	pixel_x = 32;
-	pixel_y = -1
+	pixel_y = -1;
+	id_tag = "labentrance"
 	},
 /obj/machinery/button/blast_door{
-	id_tag = "testlab3";
 	name = "Test Lab 3 Shutters Control";
 	pixel_x = 32;
-	pixel_y = 7
+	pixel_y = 7;
+	id_tag = "testlab3"
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/test2)
@@ -6111,12 +6118,12 @@
 "FJ" = (
 /obj/machinery/atmospherics/pipe/simple/visible,
 /obj/machinery/access_button{
-	command = "cycle_exterior";
-	frequency = 1379;
-	master_tag = "oldlab_airlock";
 	name = "exterior access button";
 	pixel_x = 24;
-	pixel_y = -24
+	pixel_y = -24;
+	frequency = 1379;
+	command = "cycle_exterior";
+	master_tag = "oldlab_airlock"
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/oldlab2/Airlock)
@@ -6141,9 +6148,9 @@
 	dir = 8
 	},
 /obj/structure/cable/yellow{
+	icon_state = "1-4";
 	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
+	d2 = 4
 	},
 /obj/catwalk_plated,
 /turf/simulated/floor/plating,
@@ -6164,9 +6171,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/door/firedoor,
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/machinery/door/airlock/civilian{
 	name = "Maintenance"
@@ -6188,9 +6195,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/door/firedoor,
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/machinery/door/airlock/civilian{
 	name = "Locker room"
@@ -6217,9 +6224,9 @@
 /area/map_template/oldlab2/medical)
 "Gn" = (
 /obj/structure/cable/yellow{
+	icon_state = "1-4";
 	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
+	d2 = 4
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/oldlab2/server)
@@ -6304,9 +6311,9 @@
 	dir = 4
 	},
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/dark,
 /area/map_template/oldlab2/living3)
@@ -6324,9 +6331,9 @@
 /area/map_template/oldlab2/Engineering)
 "GW" = (
 /obj/machinery/airlock_sensor{
+	pixel_y = -32;
 	frequency = 1380;
-	id_tag = "oldlab_sensor_exterior";
-	pixel_y = -32
+	id_tag = "oldlab_sensor_exterior"
 	},
 /turf/simulated/floor/reinforced{
 	map_airless = 1
@@ -6352,9 +6359,9 @@
 	},
 /obj/machinery/light/spot,
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/mess)
@@ -6365,9 +6372,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/server)
@@ -6448,9 +6455,9 @@
 	dir = 6
 	},
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 4
@@ -6466,9 +6473,9 @@
 /area/map_template/oldlab2/Airlock)
 "HF" = (
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/oldlab2/Airlock)
@@ -6531,9 +6538,9 @@
 "Ic" = (
 /obj/floor_decal/industrial/warning,
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/dark,
 /area/map_template/oldlab2/lab)
@@ -6552,9 +6559,9 @@
 	dir = 9
 	},
 /obj/structure/cable/yellow{
+	icon_state = "1-8";
 	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
+	d2 = 8
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 4
@@ -6595,9 +6602,9 @@
 	dir = 4
 	},
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/machinery/alarm{
 	dir = 1;
@@ -6612,16 +6619,16 @@
 	dir = 9
 	},
 /obj/machinery/power/apc{
-	dir = 8;
 	name = "west bump";
+	dir = 8;
 	pixel_x = -24
 	},
 /obj/structure/cable/yellow,
 /obj/machinery/button/blast_door{
-	id_tag = "speciallabblast";
 	name = "Special Test Lab Blast Doors";
 	pixel_x = -26;
-	pixel_y = -25
+	pixel_y = -25;
+	id_tag = "speciallabblast"
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/test1)
@@ -6679,9 +6686,9 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/machinery/door/airlock/civilian{
 	name = "Mess hall"
@@ -6692,9 +6699,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/machinery/door/airlock/civilian{
 	name = "Security"
@@ -6706,9 +6713,9 @@
 	dir = 4
 	},
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 1
@@ -6720,9 +6727,9 @@
 	dir = 4
 	},
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /turf/simulated/floor/tiled/white,
@@ -6737,9 +6744,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/machinery/firealarm{
 	dir = 4;
@@ -6770,14 +6777,14 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/structure/cable/yellow{
+	icon_state = "2-8";
 	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/mess)
@@ -6792,17 +6799,17 @@
 	dir = 8
 	},
 /obj/structure/cable/yellow{
+	icon_state = "2-8";
 	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/test1)
 "Jv" = (
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
@@ -6861,9 +6868,9 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/machinery/door/airlock/civilian,
 /turf/simulated/floor/tiled/techfloor/grid,
@@ -6900,9 +6907,9 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/machinery/door/airlock/medical,
 /turf/simulated/floor/tiled/techfloor/grid,
@@ -6928,9 +6935,9 @@
 	dir = 1
 	},
 /obj/structure/cable/yellow{
+	icon_state = "2-8";
 	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/cso)
@@ -6958,9 +6965,9 @@
 	dir = 9
 	},
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/hall)
@@ -6970,17 +6977,17 @@
 /area/map_template/oldlab2/living4)
 "KE" = (
 /obj/machinery/power/apc{
-	dir = 8;
 	name = "west bump";
+	dir = 8;
 	pixel_x = -24
 	},
 /obj/structure/cable/yellow{
-	d2 = 4;
-	icon_state = "0-4"
+	icon_state = "0-4";
+	d2 = 4
 	},
 /obj/structure/cable/yellow{
-	d2 = 2;
-	icon_state = "0-2"
+	icon_state = "0-2";
+	d2 = 2
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/oldlab2/powerandatmos)
@@ -6989,9 +6996,9 @@
 	dir = 9
 	},
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/floor_decal/corner/research{
 	dir = 6
@@ -7008,9 +7015,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /turf/simulated/floor/tiled/dark,
 /area/map_template/oldlab2/fixedsecurity)
@@ -7048,9 +7055,9 @@
 	dir = 8
 	},
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 8
@@ -7083,9 +7090,9 @@
 	dir = 8
 	},
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/oldlab2/powerandatmos)
@@ -7103,9 +7110,9 @@
 	dir = 9
 	},
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/dark,
 /area/map_template/oldlab2/living4)
@@ -7196,9 +7203,9 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/scrubbers,
 /obj/structure/cable/yellow{
+	icon_state = "2-8";
 	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+	d2 = 8
 	},
 /turf/simulated/floor/wood/walnut,
 /area/map_template/oldlab2/recandlockers)
@@ -7219,9 +7226,9 @@
 	dir = 5
 	},
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/dark,
 /area/map_template/oldlab2/living)
@@ -7251,9 +7258,9 @@
 /area/map_template/oldlab2/mess)
 "Me" = (
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/dark,
 /area/map_template/oldlab2/living5)
@@ -7295,9 +7302,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/mess)
@@ -7327,9 +7334,9 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/machinery/door/airlock/civilian{
 	name = "Power Room"
@@ -7351,28 +7358,28 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/oldlab2/server)
 "My" = (
-/obj/machinery/mech_recharger,
 /mob/living/exosuit/premade/powerloader/old,
+/obj/machinery/mech_recharger,
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/oldlab2/Airlock)
 "MC" = (
 /obj/machinery/atmospherics/pipe/simple/visible,
 /obj/machinery/airlock_sensor{
-	id_tag = "oldlab_sensor";
 	pixel_x = 25;
-	pixel_y = -6
+	pixel_y = -6;
+	id_tag = "oldlab_sensor"
 	},
 /obj/machinery/embedded_controller/radio/airlock/airlock_controller{
-	anchor_fall = "labport_airlock";
 	dir = 8;
-	id_tag = "oldlab_airlock";
 	pixel_x = 25;
 	pixel_y = 8;
+	id_tag = "oldlab_airlock";
+	tag_exterior_door = "oldlab_exterior";
+	tag_interior_door = "oldlab_interior";
 	tag_airpump = "oldlab_pump";
 	tag_chamber_sensor = "oldlab_sensor";
-	tag_exterior_door = "oldlab_exterior";
 	tag_exterior_sensor = "oldlab_sensor_external";
-	tag_interior_door = "oldlab_interior"
+	anchor_fall = "labport_airlock"
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/oldlab2/Airlock)
@@ -7431,9 +7438,9 @@
 	dir = 4
 	},
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/catwalk_plated,
 /turf/simulated/floor/plating,
@@ -7452,9 +7459,9 @@
 /area/map_template/oldlab2/mess)
 "MX" = (
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/medical)
@@ -7466,14 +7473,14 @@
 	dir = 8
 	},
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/structure/cable/yellow{
+	icon_state = "2-4";
 	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
+	d2 = 4
 	},
 /obj/catwalk_plated,
 /turf/simulated/floor/plating,
@@ -7524,9 +7531,9 @@
 	dir = 9
 	},
 /obj/structure/cable/yellow{
+	icon_state = "1-4";
 	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
+	d2 = 4
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/hall)
@@ -7540,18 +7547,18 @@
 	dir = 9
 	},
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/hall)
 "Nv" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 8
@@ -7566,9 +7573,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/mess)
@@ -7587,8 +7594,8 @@
 "NE" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/power/apc{
-	dir = 4;
 	name = "east bump";
+	dir = 4;
 	pixel_x = 24
 	},
 /obj/structure/cable/yellow,
@@ -7614,12 +7621,12 @@
 "NP" = (
 /obj/structure/table/woodentable,
 /obj/structure/cable/yellow{
-	d2 = 4;
-	icon_state = "0-4"
+	icon_state = "0-4";
+	d2 = 4
 	},
 /obj/machinery/power/apc{
-	dir = 8;
 	name = "west bump";
+	dir = 8;
 	pixel_x = -24
 	},
 /turf/simulated/floor/tiled/dark,
@@ -7635,9 +7642,9 @@
 	dir = 6
 	},
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /turf/simulated/floor/tiled/freezer,
 /area/map_template/oldlab2/bathroom)
@@ -7646,9 +7653,9 @@
 	dir = 9
 	},
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/floor_decal/corner/research{
 	dir = 6
@@ -7679,9 +7686,9 @@
 	dir = 9
 	},
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/floor_decal/corner/research{
 	dir = 6
@@ -7730,9 +7737,9 @@
 	dir = 9
 	},
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/floor_decal/corner/research{
 	dir = 6
@@ -7748,13 +7755,13 @@
 /area/map_template/oldlab2/server)
 "OB" = (
 /obj/machinery/power/apc{
-	dir = 4;
 	name = "east bump";
+	dir = 4;
 	pixel_x = 24
 	},
 /obj/structure/cable/yellow{
-	d2 = 8;
-	icon_state = "0-8"
+	icon_state = "0-8";
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/dark,
 /area/map_template/oldlab2/living6)
@@ -7772,8 +7779,8 @@
 /area/map_template/oldlab2/chem)
 "OM" = (
 /obj/machinery/computer/modular/preset/medical{
-	dir = 1;
-	icon_state = "console"
+	icon_state = "console";
+	dir = 1
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/server)
@@ -7798,9 +7805,9 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/machinery/door/airlock/civilian{
 	name = "Chief Science Officer"
@@ -7809,9 +7816,9 @@
 /area/map_template/oldlab2/cso)
 "OT" = (
 /obj/structure/cable/yellow{
+	icon_state = "2-4";
 	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
+	d2 = 4
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/medical)
@@ -7821,13 +7828,13 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
 /obj/floor_decal/industrial/warning{
-	dir = 8;
-	icon_state = "warning"
+	icon_state = "warning";
+	dir = 8
 	},
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/lab)
@@ -7847,9 +7854,9 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/machinery/door/airlock/civilian{
 	name = "Rec room"
@@ -7871,13 +7878,13 @@
 "Pg" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/machinery/door/blast/regular{
-	dir = 4;
 	icon_state = "pdoor0";
+	dir = 4;
 	id_tag = "labentrance"
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
@@ -7901,9 +7908,9 @@
 	dir = 5
 	},
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/hall)
@@ -7913,9 +7920,9 @@
 /area/map_template/oldlab2/test1)
 "Pq" = (
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -7926,8 +7933,8 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/floor_decal/industrial/warning{
-	dir = 8;
-	icon_state = "warning"
+	icon_state = "warning";
+	dir = 8
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/lab)
@@ -7958,9 +7965,9 @@
 	dir = 4
 	},
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/machinery/light/small{
 	dir = 1
@@ -8083,9 +8090,9 @@
 	dir = 10
 	},
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/lab)
@@ -8097,9 +8104,9 @@
 	dir = 4
 	},
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/office)
@@ -8125,9 +8132,9 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/machinery/door/airlock/civilian,
 /turf/simulated/floor/tiled/techfloor/grid,
@@ -8135,14 +8142,14 @@
 "QF" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/button/blast_door{
-	id_tag = "securityairlockshutter";
 	name = "Interior Shutters Control";
-	pixel_y = -34
+	pixel_y = -34;
+	id_tag = "securityairlockshutter"
 	},
 /obj/machinery/button/blast_door{
-	id_tag = "securityairlockwindows";
 	name = "Window Shutters Control";
-	pixel_y = -26
+	pixel_y = -26;
+	id_tag = "securityairlockwindows"
 	},
 /turf/simulated/floor/tiled/dark,
 /area/map_template/oldlab2/fixedsecurity)
@@ -8180,9 +8187,9 @@
 	dir = 4
 	},
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /turf/simulated/floor/wood/walnut,
 /area/map_template/oldlab2/recandlockers)
@@ -8245,9 +8252,9 @@
 	pixel_y = -22
 	},
 /obj/structure/cable/yellow{
+	icon_state = "1-8";
 	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
+	d2 = 8
 	},
 /obj/machinery/light,
 /turf/simulated/floor/tiled/white,
@@ -8267,9 +8274,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/medical)
@@ -8286,9 +8293,9 @@
 	pixel_x = -32
 	},
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/server)
@@ -8303,9 +8310,9 @@
 	dir = 6
 	},
 /obj/structure/cable/yellow{
+	icon_state = "1-8";
 	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/dark,
 /area/map_template/oldlab2/fixedsecurity)
@@ -8330,9 +8337,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/catwalk_plated,
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /turf/simulated/floor/plating,
 /area/map_template/oldlab2/engineerhall)
@@ -8357,12 +8364,12 @@
 "Sm" = (
 /obj/structure/table/woodentable,
 /obj/structure/cable/yellow{
-	d2 = 4;
-	icon_state = "0-4"
+	icon_state = "0-4";
+	d2 = 4
 	},
 /obj/machinery/power/apc{
-	dir = 8;
 	name = "west bump";
+	dir = 8;
 	pixel_x = -24
 	},
 /turf/simulated/floor/tiled/dark,
@@ -8375,16 +8382,16 @@
 	dir = 8
 	},
 /obj/floor_decal/industrial/warning{
-	dir = 8;
-	icon_state = "warning"
+	icon_state = "warning";
+	dir = 8
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/lab)
 "Sq" = (
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /turf/simulated/wall/titanium,
 /area/map_template/oldlab2/powerandatmos)
@@ -8414,9 +8421,9 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/simulated/floor/wood/walnut,
 /area/map_template/oldlab2/recandlockers)
@@ -8425,9 +8432,9 @@
 	dir = 9
 	},
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
@@ -8460,9 +8467,9 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/machinery/door/airlock/vault{
 	name = "Server Room"
@@ -8529,9 +8536,9 @@
 	dir = 4
 	},
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/oldlab2/server)
@@ -8570,8 +8577,8 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/blast/regular{
-	dir = 4;
 	icon_state = "pdoor0";
+	dir = 4;
 	id_tag = "labentrance"
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
@@ -8580,9 +8587,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/server)
@@ -8594,14 +8601,14 @@
 	dir = 4
 	},
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/structure/cable/yellow{
+	icon_state = "2-8";
 	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+	d2 = 8
 	},
 /obj/catwalk_plated,
 /turf/simulated/floor/plating,
@@ -8651,6 +8658,13 @@
 /obj/item/bedsheet/purple,
 /turf/simulated/floor/tiled/dark,
 /area/map_template/oldlab2/living2)
+"TH" = (
+/obj/floor_decal/corner/grey/diagonal{
+	dir = 4
+	},
+/obj/machinery/appliance/cooker/oven,
+/turf/simulated/floor/tiled/white,
+/area/map_template/oldlab2/mess)
 "TK" = (
 /obj/floor_decal/corner/grey/diagonal{
 	dir = 4
@@ -8667,8 +8681,8 @@
 	dir = 4
 	},
 /obj/floor_decal/industrial/warning{
-	dir = 8;
-	icon_state = "warning"
+	icon_state = "warning";
+	dir = 8
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/lab)
@@ -8686,9 +8700,9 @@
 	dir = 6
 	},
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/hall)
@@ -8703,9 +8717,9 @@
 	dir = 4
 	},
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/chem)
@@ -8713,14 +8727,14 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/structure/cable/yellow{
+	icon_state = "2-8";
 	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/medical)
@@ -8852,9 +8866,9 @@
 "UG" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /turf/simulated/floor/tiled/freezer,
 /area/map_template/oldlab2/bathroom)
@@ -8945,8 +8959,8 @@
 /area/map_template/oldlab2/living5)
 "Vu" = (
 /obj/floor_decal/industrial/warning{
-	dir = 1;
-	icon_state = "warning"
+	icon_state = "warning";
+	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -8982,9 +8996,9 @@
 	dir = 4
 	},
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/cso)
@@ -8993,9 +9007,9 @@
 	dir = 10
 	},
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /turf/simulated/floor/tiled/dark,
@@ -9011,8 +9025,8 @@
 /area/map_template/oldlab2/lab)
 "VM" = (
 /obj/floor_decal/industrial/warning{
-	dir = 1;
-	icon_state = "warning"
+	icon_state = "warning";
+	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -9023,12 +9037,12 @@
 "VO" = (
 /obj/structure/bed/padded,
 /obj/structure/cable/yellow{
-	d2 = 4;
-	icon_state = "0-4"
+	icon_state = "0-4";
+	d2 = 4
 	},
 /obj/machinery/power/apc{
-	dir = 8;
 	name = "west bump";
+	dir = 8;
 	pixel_x = -24
 	},
 /obj/item/bedsheet/hos,
@@ -9036,8 +9050,8 @@
 /area/map_template/oldlab2/living)
 "VP" = (
 /obj/floor_decal/industrial/warning{
-	dir = 8;
-	icon_state = "warning"
+	icon_state = "warning";
+	dir = 8
 	},
 /obj/structure/window/reinforced{
 	dir = 4
@@ -9114,9 +9128,9 @@
 	dir = 10
 	},
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /turf/simulated/floor/tiled/dark,
@@ -9124,9 +9138,9 @@
 "Wu" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -9140,14 +9154,14 @@
 	dir = 4
 	},
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/structure/cable/yellow{
+	icon_state = "2-4";
 	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
+	d2 = 4
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab2/medical)
@@ -9181,15 +9195,15 @@
 /area/map_template/oldlab2/living2)
 "WD" = (
 /obj/machinery/atmospherics/unary/vent_pump/tank{
-	external_pressure_bound = 0;
-	external_pressure_bound_default = 0;
 	icon_state = "map_vent_in";
 	id_tag = "test_out";
-	internal_pressure_bound = 4000;
-	internal_pressure_bound_default = 4000;
-	pressure_checks = 2;
-	pressure_checks_default = 2;
 	pump_direction = 0;
+	external_pressure_bound = 0;
+	internal_pressure_bound = 4000;
+	pressure_checks = 2;
+	external_pressure_bound_default = 0;
+	internal_pressure_bound_default = 4000;
+	pressure_checks_default = 2;
 	use_power = 1
 	},
 /turf/simulated/floor/reinforced,
@@ -9234,9 +9248,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/door/firedoor,
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/machinery/door/airlock/civilian{
 	name = "Engineering Hall"
@@ -9308,9 +9322,9 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/machinery/door/airlock/civilian,
 /turf/simulated/floor/tiled/techfloor/grid,
@@ -9354,10 +9368,10 @@
 /area/map_template/oldlab2/living)
 "XA" = (
 /obj/machinery/button/blast_door{
-	id_tag = "securityoutershutters";
 	name = "Exterior Shutters Control";
 	pixel_x = 32;
-	pixel_y = 6
+	pixel_y = 6;
+	id_tag = "securityoutershutters"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled/dark,
@@ -9414,9 +9428,9 @@
 	dir = 9
 	},
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/floor_decal/corner/research{
 	dir = 6
@@ -9468,8 +9482,8 @@
 /area/map_template/oldlab2/recandlockers)
 "XY" = (
 /obj/floor_decal/industrial/warning{
-	dir = 1;
-	icon_state = "warning"
+	icon_state = "warning";
+	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 10
@@ -9478,13 +9492,13 @@
 /area/map_template/oldlab2/test2)
 "Yb" = (
 /obj/machinery/power/apc{
-	dir = 8;
 	name = "west bump";
+	dir = 8;
 	pixel_x = -24
 	},
 /obj/structure/cable/yellow{
-	d2 = 4;
-	icon_state = "0-4"
+	icon_state = "0-4";
+	d2 = 4
 	},
 /obj/machinery/light/small{
 	dir = 8
@@ -9505,9 +9519,9 @@
 /area/map_template/oldlab2/recandlockers)
 "Yf" = (
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
@@ -9569,9 +9583,9 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/catwalk_plated,
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/simulated/floor/plating,
 /area/map_template/oldlab2/engineerhall)
@@ -9606,21 +9620,21 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/catwalk_plated,
 /obj/structure/cable/yellow{
+	icon_state = "2-8";
 	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+	d2 = 8
 	},
 /obj/structure/cable/yellow{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /turf/simulated/floor/plating,
 /area/map_template/oldlab2/Engineering)
 "YN" = (
 /obj/floor_decal/industrial/warning{
-	dir = 1;
-	icon_state = "warning"
+	icon_state = "warning";
+	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -9629,9 +9643,9 @@
 /area/map_template/oldlab2/test1)
 "YO" = (
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/machinery/light{
 	dir = 1
@@ -9756,9 +9770,9 @@
 	dir = 4
 	},
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/machinery/light/small,
 /turf/simulated/floor/tiled/techfloor/grid,
@@ -9771,9 +9785,9 @@
 	dir = 1
 	},
 /obj/structure/cable/yellow{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/catwalk_plated,
 /turf/simulated/floor/plating,
@@ -9815,8 +9829,8 @@
 /obj/machinery/organ_printer/robot/mapped,
 /obj/floor_decal/industrial/hatch/yellow,
 /obj/floor_decal/industrial/warning{
-	dir = 8;
-	icon_state = "warning"
+	icon_state = "warning";
+	dir = 8
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/oldlab2/lab)
@@ -11342,8 +11356,8 @@ mG
 nZ
 pu
 hQ
-qZ
-qZ
+sV
+TH
 bH
 Yg
 Xv

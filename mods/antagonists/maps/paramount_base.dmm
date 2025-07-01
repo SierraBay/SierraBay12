@@ -1,6 +1,6 @@
 "a" = (/turf/space,/area/space)
 "c" = (/turf/simulated/floor/tiled/steel_grid,/area/space)
-"d" = (/obj/structure/table/marble,/obj/machinery/microwave,/obj/structure/table/marble,/turf/simulated/floor/tiled/white,/area/space)
+"d" = (/obj/structure/table/marble,/obj/machinery/appliance/cooker/microwave,/obj/structure/table/marble,/turf/simulated/floor/tiled/white,/area/space)
 "e" = (/turf/simulated/floor/tiled/monotile,/area/space)
 "g" = (/turf/simulated/floor/tiled/white,/area/space)
 "h" = (/turf/simulated/floor/wood/maple,/area/space)

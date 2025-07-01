@@ -368,7 +368,7 @@
 /area/spy_station/canteen)
 "fH" = (
 /obj/structure/table/marble,
-/obj/machinery/cooker/candy,
+/obj/machinery/appliance/mixer/candy,
 /turf/simulated/floor/tiled/freezer,
 /area/spy_station/canteen)
 "fL" = (
@@ -1624,7 +1624,7 @@
 /area/spy_station/lc)
 "uY" = (
 /obj/random/trash,
-/obj/machinery/cooker/grill,
+/obj/machinery/appliance/cooker/grill,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -24
 	},
@@ -3199,7 +3199,7 @@
 /area/spy_station/lc)
 "Rs" = (
 /obj/structure/table/marble,
-/obj/machinery/microwave,
+/obj/machinery/appliance/cooker/microwave,
 /turf/simulated/floor/tiled/freezer,
 /area/spy_station/canteen)
 "Ru" = (

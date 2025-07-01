@@ -987,7 +987,7 @@
 /turf/simulated/floor,
 /area/scavver/yachtdown/thrusters)
 "qe" = (
-/obj/machinery/microwave,
+/obj/machinery/appliance/cooker/microwave,
 /obj/structure/table/steel_reinforced,
 /turf/simulated/floor/tiled/white{
 	map_airless = 1

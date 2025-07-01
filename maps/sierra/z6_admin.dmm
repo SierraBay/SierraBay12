@@ -1016,7 +1016,7 @@
 /area/shuttle/administration/centcom)
 "agu" = (
 /obj/structure/table/reinforced,
-/obj/machinery/microwave,
+/obj/machinery/appliance/cooker/microwave,
 /obj/floor_decal/corner/red/diagonal,
 /turf/simulated/floor/tiled,
 /area/shuttle/administration/centcom)
@@ -2402,7 +2402,7 @@
 /area/centcom/control)
 "aqI" = (
 /obj/structure/table/steel_reinforced,
-/obj/machinery/microwave{
+/obj/machinery/appliance/cooker/microwave{
 	pixel_y = 4
 	},
 /obj/floor_decal/borderfloorblack{
@@ -3765,7 +3765,7 @@
 /area/tdome/tdomeobserve)
 "awG" = (
 /obj/structure/table/standard,
-/obj/machinery/microwave,
+/obj/machinery/appliance/cooker/microwave,
 /turf/unsimulated/floor{
 	icon_state = "white"
 	},
@@ -5108,7 +5108,7 @@
 /turf/unsimulated/floor/plating,
 /area/acting/backstage)
 "aFW" = (
-/obj/machinery/microwave,
+/obj/machinery/appliance/cooker/microwave,
 /turf/unsimulated/floor/plating,
 /area/acting/backstage)
 "aGi" = (
@@ -6907,7 +6907,7 @@
 /area/holodeck/source_cafe)
 "beq" = (
 /obj/structure/table/holo_woodentable,
-/obj/item/tray{
+/obj/item/reagent_containers/cooking_container/tray{
 	holographic = 1
 	},
 /turf/simulated/floor/holofloor/wood,
@@ -9777,7 +9777,7 @@
 	},
 /area/centcom)
 "fem" = (
-/obj/machinery/cooker/grill,
+/obj/machinery/appliance/cooker/grill,
 /obj/floor_decal/corner/paleblue/diagonal,
 /obj/floor_decal/corner/white/diagonal{
 	dir = 4
@@ -11071,7 +11071,7 @@
 /area/centcom)
 "hNM" = (
 /obj/structure/table/standard,
-/obj/machinery/microwave{
+/obj/machinery/appliance/cooker/microwave{
 	pixel_y = 4
 	},
 /turf/unsimulated/floor/techfloor{
@@ -11093,7 +11093,7 @@
 /area/centcom)
 "hNW" = (
 /obj/structure/table/marble,
-/obj/machinery/microwave{
+/obj/machinery/appliance/cooker/microwave{
 	pixel_y = 4
 	},
 /obj/floor_decal/corner/paleblue/diagonal,
@@ -11373,7 +11373,7 @@
 /area/centcom/living)
 "ifG" = (
 /obj/structure/table/marble,
-/obj/machinery/microwave{
+/obj/machinery/appliance/cooker/microwave{
 	pixel_y = 4
 	},
 /obj/floor_decal/corner/paleblue/diagonal,
@@ -13876,7 +13876,7 @@
 /area/centcom)
 "mSy" = (
 /obj/structure/table/marble,
-/obj/machinery/cooker/candy,
+/obj/machinery/appliance/mixer/candy,
 /obj/floor_decal/corner/paleblue/diagonal,
 /obj/floor_decal/corner/white/diagonal{
 	dir = 4
@@ -14488,7 +14488,7 @@
 	},
 /area/centcom)
 "okY" = (
-/obj/machinery/cooker/oven,
+/obj/machinery/appliance/cooker/oven,
 /obj/floor_decal/corner/paleblue/diagonal,
 /obj/floor_decal/corner/white/diagonal{
 	dir = 4
@@ -14958,7 +14958,7 @@
 	},
 /area/centcom/living)
 "oZh" = (
-/obj/machinery/cooker/fryer,
+/obj/machinery/appliance/cooker/fryer,
 /obj/floor_decal/corner/paleblue/diagonal,
 /obj/floor_decal/corner/white/diagonal{
 	dir = 4
@@ -17046,7 +17046,7 @@
 "szb" = (
 /obj/floor_decal/spline/fancy/wood,
 /obj/structure/table/woodentable_reinforced/walnut,
-/obj/item/reagent_containers/food/snacks/sliceable/variable/pizza,
+/obj/item/reagent_containers/food/snacks/variable/pizza,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/flooring/carpet.dmi';
 	icon_state = "red";
@@ -17724,7 +17724,7 @@
 /area/centcom/holding)
 "tDB" = (
 /obj/structure/table/marble,
-/obj/machinery/cooker/cereal,
+/obj/machinery/appliance/mixer/cereal,
 /obj/floor_decal/corner/paleblue/diagonal,
 /obj/floor_decal/corner/white/diagonal{
 	dir = 4

@@ -1,7 +1,0 @@
-author: Banditoz
-changes:
-  - {tweak: 'Added intent-based actions to card decks. You can use harm intent to
-      deal a new card face up while clicking on something, and similarly grab intent
-      to deal a card face down. Both intents let you deal to a hand of cards you can
-      interact with.'}
-delete-after: true

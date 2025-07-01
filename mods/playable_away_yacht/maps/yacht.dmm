@@ -276,7 +276,7 @@
 /area/playable_yacht/relax_zone)
 "bb" = (
 /obj/structure/table/marble,
-/obj/item/material/chopping_board,
+/obj/item/reagent_containers/cooking_container/board,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
@@ -657,14 +657,14 @@
 	dir = 1;
 	icon_state = "tube_map"
 	},
-/obj/machinery/microwave{
+/obj/machinery/appliance/cooker/microwave{
 	pixel_y = 8;
 	dir = 4
 	},
 /turf/simulated/floor/tiled/white,
 /area/playable_yacht/kitchen)
 "ck" = (
-/obj/machinery/cooker/oven,
+/obj/machinery/appliance/cooker/oven,
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 28
 	},
@@ -675,7 +675,7 @@
 	dir = 1;
 	icon_state = "tube_map"
 	},
-/obj/machinery/cooker/fryer{
+/obj/machinery/appliance/cooker/fryer{
 	dir = 4
 	},
 /turf/simulated/floor/tiled/white,
@@ -702,7 +702,7 @@
 /turf/simulated/floor/tiled/monotile,
 /area/playable_yacht/right_engine)
 "cp" = (
-/obj/machinery/cooker/grill,
+/obj/machinery/appliance/cooker/grill,
 /turf/simulated/floor/tiled/white,
 /area/playable_yacht/kitchen)
 "cq" = (
@@ -774,7 +774,7 @@
 /area/playable_yacht/kitchen)
 "cS" = (
 /obj/structure/table/marble,
-/obj/machinery/cooker/candy,
+/obj/machinery/appliance/mixer/candy,
 /obj/item/reagent_containers/food/condiment/enzyme{
 	pixel_x = -11;
 	pixel_y = 19
@@ -1051,7 +1051,7 @@
 /area/playable_yacht/kitchen)
 "dK" = (
 /obj/structure/table/marble,
-/obj/machinery/cooker/cereal,
+/obj/machinery/appliance/mixer/cereal,
 /turf/simulated/floor/tiled/white,
 /area/playable_yacht/kitchen)
 "dN" = (

@@ -4162,7 +4162,7 @@
 	dir = 8
 	},
 /obj/structure/table/marble,
-/obj/machinery/microwave{
+/obj/machinery/appliance/cooker/microwave{
 	pixel_y = 4
 	},
 /turf/simulated/floor/tiled/techfloor,
@@ -6106,7 +6106,7 @@
 /area/map_template/colony)
 "lq" = (
 /obj/structure/table/marble,
-/obj/machinery/microwave,
+/obj/machinery/appliance/cooker/microwave,
 /turf/simulated/floor/lino,
 /area/map_template/colony/messhall)
 "lr" = (

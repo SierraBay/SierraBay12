@@ -1814,7 +1814,7 @@
 /area/map_template/ninja_dojo/dojo)
 "Lk" = (
 /obj/structure/table/woodentable/walnut,
-/obj/machinery/microwave,
+/obj/machinery/appliance/cooker/microwave,
 /turf/simulated/floor/wood/walnut,
 /area/map_template/ninja_dojo/dojo)
 "LW" = (

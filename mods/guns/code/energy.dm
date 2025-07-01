@@ -76,16 +76,17 @@
 	name = "LAEP90-C Strigoi energy gun"
 
 /obj/item/gun/energy/gun/small/secure
-	name = "LAEP90-CS smartgun"
+	name = "LAEP90-CS Strigoi smartgun"
 
 /obj/item/gun/energy/gun/secure
-	name = "LAEP90 smartgun"
+	name = "LAEP90-S Perun smartgun"
 
 /obj/item/gun/energy/stunrevolver
-	name = "A&M X6 stun revolver"
+	name = "A&M X6 Zeus stun revolver"
 	icon = 'mods/guns/icons/obj/stunrevolver.dmi'
 
 /obj/item/gun/energy/stunrevolver/rifle
+	name = "A&M X10 Thor stun rifle"
 	icon = 'mods/guns/icons/obj/stunrifle.dmi'
 	item_icons = list(
 		slot_r_hand_str = 'mods/guns/icons/mob/righthand_guns.dmi',

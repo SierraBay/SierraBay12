@@ -379,6 +379,22 @@
 	if(volume >= 3)
 		T.wet_floor()
 
+/datum/reagent/nutriment/cornoil/proc/heatdamage(mob/living/carbon/mob, temperature = T20C)
+	var/threshold = 360//Human heatdamage threshold
+	if (mob.species && istype(mob.species))
+		threshold = mob.species.heat_level_1
+
+	//If temperature is too low to burn, return a factor of 0. no damage
+	if (temperature < threshold)
+		return 0
+
+	//Degrees above heat level 1 for 1.0 multiplier
+	var/heat_step = 60
+	if (mob.species && istype(mob.species))
+		heat_step = (mob.species.heat_level_2 - mob.species.heat_level_1) * 1.5
+
+	return min((temperature - threshold) / heat_step, 2.5)
+
 /datum/reagent/nutriment/sprinkles
 	name = "Sprinkles"
 	description = "Multi-colored little bits of sugar, commonly found on donuts. Loved by cops."

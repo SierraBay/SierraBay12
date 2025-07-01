@@ -29,7 +29,6 @@
 	#include "../../../../maps/sierra/game/languages.dm"
 	#include "../../../../maps/sierra/game/lockdown.dm"
 	// --- ITEMS --- //
-	#include "../../../../maps/sierra/items/ammo.dm"
 	#include "../../../../maps/sierra/items/cards_ids.dm"
 	#include "../../../../maps/sierra/items/documents.dm"
 	#include "../../../../maps/sierra/items/encryption_keys.dm"
@@ -110,6 +109,7 @@
 	#include "../../../../maps/sierra/loadout/loadout_gloves.dm"
 	#include "../../../../maps/sierra/loadout/loadout_head.dm"
 	#include "../../../../maps/sierra/loadout/loadout_pda.dm"
+	#include "../../../../maps/sierra/loadout/loadout_augments.dm"
 	#include "../../../../maps/sierra/loadout/loadout_shoes.dm"
 	#include "../../../../maps/sierra/loadout/loadout_suit.dm"
 	#include "../../../../maps/sierra/loadout/loadout_tactical.dm"
