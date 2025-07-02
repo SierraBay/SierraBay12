@@ -27,13 +27,15 @@
 	habitability_weight = HABITABILITY_EXTREME
 	has_trees = FALSE
 	flora_diversity = 0
+	initial_weather_state = null //Можно убрать когда будет под новую подсистему
 
 /obj/overmap/visitable/sector/exoplanet/ice/generate_atmosphere()
-	atmosphere = new
-	atmosphere.temperature = rand(50, 150)
-	atmosphere.update_values()
+	exterior_atmosphere = new
+	exterior_atmosphere.temperature = rand(50, 150)
+	exterior_atmosphere.update_values()
+	exterior_atmosphere.check_tile_graphic()
 	var/good_gas = list(GAS_OXYGEN = MOLES_O2STANDARD, GAS_NITROGEN = MOLES_N2STANDARD)
-	atmosphere.gas = good_gas
+	exterior_atmosphere.gas = good_gas
 
 /obj/overmap/visitable/sector/exoplanet/ice/get_atmosphere_color()
 	var/air_color = ..()
@@ -83,8 +85,9 @@
 
 /obj/overmap/visitable/sector/exoplanet/ice/generate_atmosphere()
 	..()
-	atmosphere.temperature = rand(70, 150)
-	atmosphere.update_values()
+	exterior_atmosphere.temperature = rand(70, 150)
+	exterior_atmosphere.update_values()
+	exterior_atmosphere.check_tile_graphic()
 
 
 /datum/random_map/noise/exoplanet/ice

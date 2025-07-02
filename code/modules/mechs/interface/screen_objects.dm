@@ -349,7 +349,7 @@
 /obj/screen/exosuit/heat/Initialize()
 	. = ..()
 	gauge_needle = new /obj/screen/exosuit/needle(owner)
-	vis_contents += gauge_needle
+	add_vis_contents(gauge_needle)
 
 /obj/screen/exosuit/heat/Destroy()
 	QDEL_NULL(gauge_needle)

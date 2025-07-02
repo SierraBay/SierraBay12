@@ -20,9 +20,10 @@
 
 /obj/overmap/visitable/sector/exoplanet/shrouded/generate_atmosphere()
 	..()
-	if (atmosphere)
-		atmosphere.temperature = rand(T0C, T20C)
-		atmosphere.update_values()
+	if (exterior_atmosphere)
+		exterior_atmosphere.temperature = rand(T0C, T20C)
+		exterior_atmosphere.update_values()
+		exterior_atmosphere.check_tile_graphic()
 
 /obj/overmap/visitable/sector/exoplanet/shrouded/get_atmosphere_color()
 	var/air_color = ..()

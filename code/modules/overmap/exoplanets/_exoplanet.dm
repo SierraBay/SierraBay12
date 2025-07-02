@@ -11,13 +11,12 @@ GLOBAL_VAR(planet_repopulation_disabled)
 	var/list/megafauna_types = list() 	// possibble types of megafauna to spawn
 	var/list/animals = list()
 	var/max_animal_count
-	var/datum/gas_mixture/atmosphere
 	var/list/breathgas = list()	//list of gases animals/plants require to survive
 	var/badgas					//id of gas that is toxic to life here
 
 
 	//DAY/NIGHT CYCLE
-	var/daycycle_range = list(15 MINUTES, 30 MINUTES)
+	var/daycycle_range = list(25 MINUTES, 45 MINUTES)
 	var/daycycle = 0//How often do we change day and night, at first list, to determine min and max day length
 	var/sun_process_interval = 1.5 MINUTES //How often we update planetary sunlight
 	var/sun_last_process = null // world.time
@@ -38,7 +37,7 @@ GLOBAL_VAR(planet_repopulation_disabled)
 	var/list/plant_colors = list("RANDOM")
 	var/grass_color
 	var/surface_color = COLOR_ASTEROID_ROCK
-	var/water_color = "#436499"
+	var/water_color = COLOR_WATER
 	var/image/skybox_image
 
 	var/list/actors = list() //things that appear in engravings on xenoarch finds.
@@ -72,6 +71,10 @@ GLOBAL_VAR(planet_repopulation_disabled)
 
 	//Either a type or a list of types and weights. You must include all types if it's a list
 	var/habitability_weight = HABITABILITY_TYPICAL
+
+	///What weather state to use for this planet initially. If null, will not initialize any weather system. Must be a typepath rather than an instance.
+	var/singleton/state/weather/initial_weather_state = /singleton/state/weather/calm
+	var/list/banned_weather_conditions
 
 /obj/overmap/visitable/sector/exoplanet/New(nloc, max_x, max_y)
 	if (!GLOB.using_map.use_overmap)
@@ -116,10 +119,10 @@ GLOBAL_VAR(planet_repopulation_disabled)
 	generate_atmosphere()
 	for (var/datum/exoplanet_theme/T in themes)
 		T.adjust_atmosphere(src)
-	if (atmosphere)
+	if (exterior_atmosphere)
 		//Set up gases for living things
 		if (!length(breathgas))
-			var/list/goodgases = atmosphere.gas.Copy()
+			var/list/goodgases = exterior_atmosphere.gas.Copy()
 			var/gasnum = min(rand(1,3), length(goodgases))
 			for (var/i = 1 to gasnum)
 				var/gas = pick(goodgases)
@@ -127,7 +130,7 @@ GLOBAL_VAR(planet_repopulation_disabled)
 				goodgases -= gas
 		if (!badgas)
 			var/list/badgases = gas_data.gases.Copy()
-			badgases -= atmosphere.gas
+			badgases -= exterior_atmosphere.gas
 			badgas = pick(badgases)
 	generate_flora()
 	generate_map()
@@ -138,6 +141,8 @@ GLOBAL_VAR(planet_repopulation_disabled)
 	update_biome()
 	generate_daycycle()
 	generate_planet_image()
+	if(ispath(initial_weather_state))
+		generate_weather()
 	START_PROCESSING(SSobj, src)
 
 //attempt at more consistent history generation for xenoarch finds.
@@ -164,27 +169,19 @@ GLOBAL_VAR(planet_repopulation_disabled)
 		if (repopulating && !GLOB.planet_repopulation_disabled)
 			handle_repopulation()
 
-		if (!atmosphere)
-			continue
-
-		var/zone/Z
-		for (var/i = 1 to maxx)
-			var/turf/simulated/T = locate(i, 2, zlevel)
-			if (istype(T) && T.zone && length(T.zone.contents) > (maxx*maxy*0.25)) //if it's a zone quarter of zlevel, good enough odds it's planetary main one
-				Z = T.zone
-				break
-		if (Z && !length(Z.fire_tiles) && !atmosphere.compare(Z.air)) //let fire die out first if there is one
-			var/datum/gas_mixture/daddy = new() //make a fake 'planet' zone gas
-			daddy.copy_from(atmosphere)
-			daddy.group_multiplier = Z.air.group_multiplier
-			Z.air.equalize(daddy)
-
 	if(sun_last_process <= (world.time - sun_process_interval))
 		update_sun()
 
 /obj/overmap/visitable/sector/exoplanet/proc/generate_daycycle()
 	daycycle = rand(daycycle_range[1], daycycle_range[2])
 	update_sun()
+
+///Setup the initial weather state for the planet. Doesn't apply it to our z levels however.
+/obj/overmap/visitable/sector/exoplanet/proc/generate_weather()
+	if(ispath(initial_weather_state))
+		initial_weather_state = GET_SINGLETON(initial_weather_state)
+	//Set weather firs time around
+	SSweather.setup_weather_system(map_z[1], initial_weather_state, banned_weather_conditions)
 
 // This changes the position of the sun on the planet.
 /obj/overmap/visitable/sector/exoplanet/proc/update_sun()
@@ -344,15 +341,15 @@ GLOBAL_VAR(planet_repopulation_disabled)
 /obj/overmap/visitable/sector/exoplanet/get_scan_data(mob/user)
 	. = ..()
 	var/list/extra_data = list()
-	if (atmosphere)
+	if (exterior_atmosphere)
 		if (user.skill_check(SKILL_SCIENCE, SKILL_TRAINED))
 			var/list/gases = list()
-			for (var/g in atmosphere.gas)
-				if (atmosphere.gas[g] > atmosphere.total_moles * 0.05)
+			for (var/g in exterior_atmosphere.gas)
+				if (exterior_atmosphere.gas[g] > exterior_atmosphere.total_moles * 0.05)
 					gases += gas_data.name[g]
 			extra_data += "Atmosphere composition: [english_list(gases)]"
 			var/inaccuracy = rand(8,12)/10
-			extra_data += "Atmosphere pressure [atmosphere.return_pressure()*inaccuracy] kPa, temperature [atmosphere.temperature*inaccuracy] K"
+			extra_data += "Atmosphere pressure [exterior_atmosphere.return_pressure()*inaccuracy] kPa, temperature [exterior_atmosphere.temperature*inaccuracy] K"
 		else if (user.skill_check(SKILL_SCIENCE, SKILL_BASIC))
 			extra_data += "Atmosphere present"
 		extra_data += ""

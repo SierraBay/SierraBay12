@@ -229,4 +229,8 @@
 #define COLOR_MEDICAL_SCARRING "#aa9999"
 #define COLOR_MEDICAL_MISSING "#886666"
 
+//Weather for now
+#define COLOR_WATER "#99f5ff"
+#define COLOR_ICE   "#eef5ff"
+
 #define COLORED_SQUARE(COLOR) "<span style='font-face: fixedsys; font-size: 14px; background-color: [COLOR]; color: [COLOR]'>___</span>"

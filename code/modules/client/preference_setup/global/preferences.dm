@@ -134,6 +134,7 @@ var/global/list/_client_preferences_by_type
 		sound_to(preference_mob, sound(null, channel = GLOB.ambience_channel_vents))
 		sound_to(preference_mob, sound(null, channel = GLOB.ambience_channel_forced))
 		sound_to(preference_mob, sound(null, channel = GLOB.ambience_channel_common))
+		sound_to(preference_mob, sound(null, channel = GLOB.ambience_channel_common))
 
 /datum/client_preference/play_announcement_sfx
 	description = "Play announcement sound effects"

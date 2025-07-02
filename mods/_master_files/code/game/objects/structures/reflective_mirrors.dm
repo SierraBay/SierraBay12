@@ -118,4 +118,5 @@
 
 	filters += filter("type" = "alpha", "icon" = icon(alpha_icon, alpha_icon_state), "x" = 0, "y" = additional_y_offset)
 
-	//vis_contents += get_turf(mirror) ПОКА ЧТО ВЫКЛЮЧИМ ОТРАЖЕНИЯ
+	//add_vis_contents(get_turf(mirror)) ПОКА ЧТО ВЫКЛЮЧИМ ОТРАЖЕНИЯ
+
