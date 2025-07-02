@@ -1,8 +1,3 @@
-#include "bearcat_areas.dm"
-#include "bearcat_jobs.dm"
-#include "bearcat_access.dm"
-#include "bearcat_radio.dm"
-
 /obj/submap_landmark/joinable_submap/bearcat
 	name = "FTV Bearcat"
 	archetype = /singleton/submap_archetype/derelict/bearcat
