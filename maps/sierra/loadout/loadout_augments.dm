@@ -16,7 +16,7 @@
 	cost = 4
 
 /obj/item/organ/internal/augment/boost/muscle/left
-	name = "left mechanical muscle"ы
+	name = "left mechanical muscle"
 	organ_tag = "l_leg_aug"
 	parent_organ = BP_L_LEG
 
