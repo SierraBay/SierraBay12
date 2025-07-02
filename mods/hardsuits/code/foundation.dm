@@ -24,7 +24,7 @@
 	glove_type = /obj/item/clothing/gloves/rig/foundation
 
 	initial_modules = list(
-		/obj/item/rig_module/actuators,
+		/obj/item/rig_module/banshee,
 		/obj/item/rig_module/mounted/arm_blade,
 		/obj/item/rig_module/mounted/energy/ion,
 		/obj/item/rig_module/vision,
@@ -79,4 +79,49 @@
 		wearer.update_inv_wear_suit()
 		wearer.update_inv_w_uniform()
 		wearer.update_inv_back()
+	return
+
+
+/obj/item/rig_module/banshee
+	name = "hardsuit siren module"
+	desc = {"\
+		A set of actuators and a linked "Vaanyari" speedware chip. They allow the suit to be able \
+		to absorb impacts from fatal falls, jump remarkable heights, and move at incredible speeds.\
+	"}
+	icon_state = "banshee"
+	interface_name = "hardsuit mobility module"
+	interface_desc = {"\
+		A set of actuators and a linked \"Vaanyari\" speedware chip that dampen falls and allow you \
+		to absorb impacts from fatal falls, jump remarkable heights, and move at incredible speeds.\
+	"}
+	use_power_cost = 400 KILOWATTS
+	module_cooldown = 30 SECONDS
+	toggleable = TRUE
+	selectable = TRUE
+	usable = FALSE
+	engage_string = "Engage Dash"
+	activate_string = "Engage Fall Dampeners"
+	deactivate_string = "Disable Fall Dampeners"
+
+
+/obj/item/rig_module/banshee/engage(atom/target)
+
+	var/mob/living/H = holder.wearer
+
+	H.visible_message(SPAN_DANGER("[H] закидывает голову назад, издавая пронзительный крик!"))
+	to_chat(H, SPAN_DANGER("Вы издаёте пронзительный крик, оглушая всех вокруг!"))
+	for(var/mob/living/M in range(4))
+		if(M == H)
+			continue
+		if(prob(3 * 20) && iscarbon(M))
+			var/mob/living/carbon/C = M
+			if(C.can_feel_pain())
+				M.emote("scream")
+		to_chat(M, SPAN_DANGER("Ты ощущаешь, как земля уходит у тебя из под ног!"))
+		M.flash_eyes()
+		new /obj/temporary(get_turf(H),6, 'icons/effects/effects.dmi', "summoning")
+		new /obj/temporary(get_turf(M),3, 'icons/effects/effects.dmi', "purple_electricity_constant")
+		M.eye_blind = max(M.eye_blind,3)
+		M.ear_deaf = max(M.ear_deaf,3 * 2)
+		M.mod_confused(3 * rand(1,3))
 	return
