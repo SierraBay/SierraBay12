@@ -16,12 +16,10 @@
 	cost = 4
 
 /obj/item/organ/internal/augment/boost/muscle/left
-	name = "left mechanical muscle"
 	organ_tag = "l_leg_aug"
 	parent_organ = BP_L_LEG
 
 /obj/item/organ/internal/augment/boost/muscle/right
-	name = "right mechanical muscle"
 	organ_tag = "r_leg_aug"
 	parent_organ = BP_R_LEG
 
@@ -66,12 +64,10 @@
 	gear_tweaks += new /datum/gear_tweak/path(options)
 
 /obj/item/organ/internal/augment/active/polytool/engineer/left
-	name = "left engineering polytool"
 	parent_organ = BP_L_HAND
 	organ_tag = "l_hand_aug"
 
 /obj/item/organ/internal/augment/active/polytool/engineer/right
-	name = "right engineering polytool"
 	parent_organ = BP_R_HAND
 	organ_tag = "r_hand_aug"
 
@@ -90,12 +86,10 @@
 	gear_tweaks += new /datum/gear_tweak/path(options)
 
 /obj/item/organ/internal/augment/active/polytool/surgical/left
-	name = "left surgical polytool"
 	parent_organ = BP_L_HAND
 	organ_tag = "l_hand_aug"
 
 /obj/item/organ/internal/augment/active/polytool/surgical/right
-	name = "right surgical polytool"
 	parent_organ = BP_R_HAND
 	organ_tag = "r_hand_aug"
 
@@ -113,12 +107,10 @@
 	gear_tweaks += new /datum/gear_tweak/path(options)
 
 /obj/item/organ/internal/augment/active/item/circuit/left
-	name = "left circuit frame"
 	parent_organ = BP_L_ARM
 	organ_tag = "l_arm_aug"
 
 /obj/item/organ/internal/augment/active/item/circuit/right
-	name = "right circuit frame"
 	parent_organ = BP_R_ARM
 	organ_tag = "r_arm_aug"
 
