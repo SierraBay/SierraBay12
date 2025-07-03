@@ -108,6 +108,7 @@
 
 /area/crew_quarters/heads/office/iaa/high_sec
 	name = "Bridge - Command - IAA's Communication Relay"
+	area_flags = AREA_FLAG_RAD_SHIELDED
 	holomap_color = HOLOMAP_AREACOLOR_COMMAND
 
 /area/crew_quarters/heads/office/hop

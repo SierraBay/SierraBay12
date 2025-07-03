@@ -289,7 +289,7 @@ var/global/list/_client_preferences_by_type
 
 /datum/client_preference/graphics_quality/changed(mob/preference_mob, new_value)
 	if (preference_mob?.client)
-		for (var/atom/movable/renderer/renderer as anything in preference_mob.rdr_to_plane)
+		for (var/atom/movable/renderer/renderer as anything in preference_mob.renderer_plane_map)
 			renderer.GraphicsUpdate()
 
 /datum/client_preference/goonchat
