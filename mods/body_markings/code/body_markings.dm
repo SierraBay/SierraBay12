@@ -48,7 +48,7 @@
 /datum/sprite_accessory/marking/modpack_body_markings/humanlike/burnface_right
 	name = "Burnface (severe, right)"
 	icon_state = "burnface_right"
-	do_coloration = DO_COLORATION_SKIN
+	do_coloration = DO_COLORATION_USER
 	body_parts = list(BP_HEAD)
 	disallows = list(/datum/sprite_accessory/marking/modpack_body_markings/humanlike/burnface_right)
 
@@ -60,7 +60,7 @@
 /datum/sprite_accessory/marking/modpack_body_markings/humanlike/burnface_left
 	name = "Burnface (severe, left)"
 	icon_state = "burnface_left"
-	do_coloration = DO_COLORATION_SKIN
+	do_coloration = DO_COLORATION_USER
 	body_parts = list(BP_HEAD)
 	disallows = list(/datum/sprite_accessory/marking/modpack_body_markings/humanlike/burnface_left)
 
@@ -72,7 +72,7 @@
 /datum/sprite_accessory/marking/modpack_body_markings/humanlike/scar
 	name = "Scar (Large)"
 	icon_state = "scar1"
-	do_coloration = DO_COLORATION_SKIN
+	do_coloration = DO_COLORATION_USER
 	body_parts = list(BP_HEAD)
 	disallows = list(/datum/sprite_accessory/marking/modpack_body_markings/humanlike/scar)
 
@@ -91,7 +91,7 @@
 	name = "Tonage 3 (Masculine)"
 	icon_state = "h_tonage_chest3"
 	do_coloration = DO_COLORATION_USER
-	body_parts = list(BP_CHEST)
+	body_parts = list(BP_CHEST, BP_GROIN, BP_L_ARM, BP_R_ARM)
 	disallows = list(
 		/datum/sprite_accessory/marking/modpack_body_markings/humanlike/tonage_chest,
 		/datum/sprite_accessory/marking/modpack_body_markings/human/tonage_chest3
