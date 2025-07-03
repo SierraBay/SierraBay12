@@ -223,6 +223,7 @@
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 8
 	},
+/obj/item/device/radio/map_preset/phobos,
 /turf/simulated/floor/wood/walnut,
 /area/ship/phobos/bridge/co_office)
 "aP" = (
@@ -324,6 +325,10 @@
 	icon_state = "1-8"
 	},
 /obj/machinery/light,
+/obj/machinery/recharger/wallcharger{
+	dir = 8;
+	pixel_x = 22
+	},
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/interseptor)
 "bf" = (
@@ -2912,6 +2917,7 @@
 /obj/floor_decal/techfloor{
 	dir = 4
 	},
+/obj/item/device/radio/map_preset/phobos,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/phobos/security/lobby)
 "kA" = (
@@ -3438,6 +3444,7 @@
 /obj/floor_decal/corner/paleblue{
 	dir = 5
 	},
+/obj/item/device/radio/map_preset/phobos,
 /turf/simulated/floor/tiled/white,
 /area/ship/phobos/medbay)
 "mo" = (
@@ -5485,6 +5492,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
 	},
+/obj/gas_setup,
 /turf/simulated/floor/tiled/white,
 /area/ship/phobos/medbay)
 "us" = (
@@ -5551,6 +5559,10 @@
 	},
 /obj/machinery/light{
 	dir = 1
+	},
+/obj/machinery/recharger/wallcharger{
+	dir = 8;
+	pixel_x = 22
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/interseptor)
@@ -6970,7 +6982,6 @@
 /turf/simulated/floor/tiled,
 /area/ship/phobos/hallway)
 "AI" = (
-/obj/floor_decal/industrial/warning,
 /obj/floor_decal/corner/paleblue/diagonal,
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 9
@@ -6980,6 +6991,7 @@
 	dir = 1
 	},
 /obj/machinery/light,
+/obj/floor_decal/industrial/warning,
 /turf/simulated/floor/tiled/white,
 /area/ship/phobos/medbay)
 "AL" = (
@@ -7166,9 +7178,6 @@
 /area/ship/phobos/living/mess)
 "By" = (
 /obj/structure/table/standard,
-/obj/floor_decal/industrial/warning{
-	dir = 8
-	},
 /obj/item/storage/box/masks,
 /obj/item/storage/box/freezer,
 /obj/item/storage/box/nitrilegloves,
@@ -7178,6 +7187,9 @@
 	},
 /obj/floor_decal/corner/paleblue/diagonal,
 /obj/machinery/atmospherics/binary/pump/on,
+/obj/floor_decal/industrial/warning{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/white,
 /area/ship/phobos/medbay)
 "BD" = (
@@ -7547,7 +7559,6 @@
 "Dw" = (
 /obj/machinery/alarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24;
 	req_access = list("ACCESS_PHOBOS")
 	},
@@ -7976,6 +7987,7 @@
 /area/ship/phobos/living/mess)
 "FK" = (
 /obj/floor_decal/industrial/outline/blue,
+/obj/floor_decal/sign/or1,
 /turf/simulated/floor/tiled/white/monotile,
 /area/ship/phobos/medbay)
 "FL" = (
@@ -8000,7 +8012,6 @@
 	},
 /obj/machinery/alarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24;
 	req_access = list("ACCESS_PHOBOS")
 	},
@@ -8546,6 +8557,7 @@
 /obj/item/clothing/gloves/thick/duty/solgov/sec,
 /obj/structure/closet/secure_closet/security_phobos,
 /obj/item/gun/energy/gun/small,
+/obj/item/device/radio/map_preset/phobos,
 /turf/simulated/floor/tiled/monotile,
 /area/ship/phobos/security/equipment)
 "Ix" = (
@@ -9494,6 +9506,8 @@
 	dir = 4
 	},
 /obj/structure/closet/secure_closet/brigchief_phobos,
+/obj/item/device/radio/map_preset/phobos,
+/obj/item/storage/belt/holster/security/tactical,
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/phobos/security/detective)
 "Mn" = (
@@ -9984,11 +9998,11 @@
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 9
 	},
+/obj/floor_decal/corner/paleblue/diagonal,
 /obj/floor_decal/industrial/warning{
 	dir = 4;
 	icon_state = "warning"
 	},
-/obj/floor_decal/corner/paleblue/diagonal,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
 	},
@@ -10885,6 +10899,7 @@
 /obj/floor_decal/corner/paleblue{
 	dir = 5
 	},
+/obj/item/device/radio/map_preset/phobos,
 /turf/simulated/floor/tiled/white,
 /area/ship/phobos/medbay)
 "St" = (
@@ -11023,6 +11038,13 @@
 /obj/shuttle_landmark/nav_phobos/nav4,
 /turf/space,
 /area/space)
+"Ta" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/floor_decal/sign/tr,
+/turf/simulated/floor/tiled/white,
+/area/ship/phobos/medbay)
 "Tg" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -11280,6 +11302,7 @@
 	dir = 1
 	},
 /obj/structure/table/reinforced,
+/obj/item/device/radio/map_preset/phobos,
 /turf/simulated/floor/tiled,
 /area/ship/phobos/medbay)
 "Um" = (
@@ -11375,11 +11398,11 @@
 /turf/simulated/floor/tiled/white,
 /area/ship/phobos/medbay/chemistry)
 "UY" = (
+/obj/floor_decal/corner/paleblue/diagonal,
 /obj/floor_decal/industrial/warning{
 	dir = 6;
 	icon_state = "warning"
 	},
-/obj/floor_decal/corner/paleblue/diagonal,
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 1
 	},
@@ -11414,6 +11437,19 @@
 "Vb" = (
 /turf/simulated/floor/tiled/freezer,
 /area/ship/phobos/living)
+"Vc" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/floor_decal/corner/pink{
+	dir = 10
+	},
+/obj/floor_decal/sign/d,
+/turf/simulated/floor/tiled/white,
+/area/ship/phobos/medbay)
 "Vd" = (
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/phobos/security/detective)
@@ -11583,9 +11619,7 @@
 "VE" = (
 /obj/machinery/door/airlock/engineering{
 	icon_state = "closed";
-	locked = 1;
-	name = "Starboard Solar Access";
-	welded = 1
+	name = "Starboard Solar Access"
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -12225,6 +12259,7 @@
 /obj/item/clothing/gloves/thick/duty/solgov/sec,
 /obj/structure/closet/secure_closet/security_phobos,
 /obj/item/gun/energy/gun/small,
+/obj/item/device/radio/map_preset/phobos,
 /turf/simulated/floor/tiled/monotile,
 /area/ship/phobos/security/equipment)
 "Yd" = (
@@ -12621,6 +12656,7 @@
 /obj/item/clothing/gloves/thick/duty/solgov/sec,
 /obj/structure/closet/secure_closet/security_phobos,
 /obj/item/gun/energy/gun/small,
+/obj/item/device/radio/map_preset/phobos,
 /turf/simulated/floor/tiled/monotile,
 /area/ship/phobos/security/equipment)
 "Zr" = (
@@ -12702,10 +12738,6 @@
 /area/ship/phobos/security/equipment)
 "ZR" = (
 /obj/structure/table/standard,
-/obj/floor_decal/industrial/warning{
-	dir = 10;
-	icon_state = "warning"
-	},
 /obj/machinery/cell_charger,
 /obj/item/reagent_containers/glass/beaker/cryoxadone,
 /obj/machinery/light{
@@ -12715,6 +12747,10 @@
 /obj/floor_decal/corner/paleblue/diagonal,
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 5
+	},
+/obj/floor_decal/industrial/warning{
+	dir = 10;
+	icon_state = "warning"
 	},
 /turf/simulated/floor/tiled/white,
 /area/ship/phobos/medbay)
@@ -22395,7 +22431,7 @@ My
 rS
 Ow
 tj
-jC
+Vc
 iC
 wu
 wu
@@ -23000,7 +23036,7 @@ Kd
 dr
 wu
 tm
-rS
+Ta
 CW
 sl
 Yt
