@@ -64,11 +64,12 @@
 
 			var/allow = T.can_inject(user, check_zone(user.zone_sel.selecting))
 			if(!allow)
+				to_chat(user, SPAN_WARNING("Не удалось воткнуть шприц, он отскочил от чего-то."))
 				return
 
 			if(allow == INJECTION_PORT)
 				if(target != user)
-					user.visible_message(SPAN_WARNING("\The [user] begins hunting for an injection port on \the [target]'s suit!"))
+					user.visible_message(SPAN_DANGER("\The [user] begins hunting for an injection port on \the [target]'s suit!"))
 				else
 					to_chat(user, SPAN_NOTICE("You begin hunting for an injection port on your suit."))
 				if(!user.do_skilled(INJECTION_PORT_DELAY, SKILL_MEDICAL, target, do_flags = DO_MEDICAL))
@@ -283,7 +284,7 @@
 
 	if(allow == INJECTION_PORT)
 		if(target != user)
-			user.visible_message(SPAN_WARNING("\The [user] begins hunting for an injection port on \the [target]'s suit!"))
+			user.visible_message(SPAN_DANGER("\The [user] begins hunting for an injection port on \the [target]'s suit!"))
 		else
 			to_chat(user, SPAN_NOTICE("You begin hunting for an injection port on your suit."))
 		if(!user.do_skilled(INJECTION_PORT_DELAY, SKILL_MEDICAL, trackTarget, do_flags = DO_MEDICAL))
@@ -291,7 +292,7 @@
 			return
 
 	if(target != user)
-		user.visible_message(SPAN_WARNING("\The [user] is trying to inject \the [target] with [visible_name]!"))
+		user.visible_message(SPAN_DANGER("\The [user] is trying to inject \the [target] with [visible_name]!"))
 	else
 		to_chat(user, SPAN_NOTICE("You begin injecting yourself with [visible_name]."))
 
@@ -317,7 +318,7 @@
 	update_icon()
 
 	if(target != user)
-		user.visible_message(SPAN_WARNING("\the [user] injects \the [target] with [visible_name]!"), SPAN_NOTICE("You inject \the [target] with [visible_name]."))
+		user.visible_message(SPAN_DANGER("\the [user] injects \the [target] with [visible_name]!"), SPAN_NOTICE("You inject \the [target] with [visible_name]."))
 	else
 		to_chat(user, SPAN_NOTICE("You inject yourself with [visible_name]."))
 
@@ -445,7 +446,7 @@
 		if(SPECIES_VATGROWN)
 			to_chat(target, SPAN_NOTICE("Ты чувствуешь себя... человеком, но странное ощущение искусственности как холодок прошло по тебе."))
 		if(SPECIES_SPACER)
-			to_chat(target, SPAN_NOTICE("Ты чувствуешь себя... человеком, но твоя кожа бледная полупрозрачная."))
+			to_chat(target, SPAN_NOTICE("Ты чувствуешь себя... человеком, но твоя кожа бледная и полупрозрачная."))
 		if(SPECIES_GRAVWORLDER)
 			to_chat(target, SPAN_NOTICE("Ты чувствуешь себя... человеком, но твоё тело будто стало тяжелее и прочнее."))
 		if(SPECIES_MULE)
@@ -521,3 +522,17 @@
 			to_chat(H, "<small><span class='warning'>You feel a tiny prick.</span></small>")
 
 	update_icon()
+
+/obj/item/reagent_containers/syringe/genome_reconfigurator/update_mod_identification()
+	mod_skill_identification = list(
+		"device_info" = list(
+			"success" = SPAN_GOOD("Ваших знаний в области науки, медицины и сложных устройств достаточно, чтобы определить: это устройство для сбора, анализа и внедрения чужого генетического материала при помощи некого мутагенного вещества."),
+			"failure" = SPAN_BAD("Необычное маленькое устройство, с тонким шприцем, лампочками и отсеком для жидкости. Назначение неясно без специальных знаний."),
+			"skillcheck" = list(
+				SKILL_MEDICAL = SKILL_EXPERIENCED,
+				SKILL_DEVICES = SKILL_EXPERIENCED,
+				SKILL_SCIENCE = SKILL_TRAINED
+			),
+			"LOGIC" = "AND"
+		)
+	)
