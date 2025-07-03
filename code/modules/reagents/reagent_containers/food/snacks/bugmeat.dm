@@ -71,21 +71,6 @@
 	center_of_mass = "x=16;y=16"
 	nutriment_desc = list("rubbery meat" = 10)
 
-
-/datum/microwave_recipe/bugmeat_cutlet
-	required_items = list(
-		/obj/item/reagent_containers/food/snacks/rawcutlet/bugmeat
-	)
-	result_path = /obj/item/reagent_containers/food/snacks/cutlet/bugmeat
-
-
-/datum/microwave_recipe/bugmeat_bacon
-	required_items = list(
-		/obj/item/reagent_containers/food/snacks/rawbacon/bugmeat
-	)
-	result_path = /obj/item/reagent_containers/food/snacks/bacon/bugmeat
-
-
 /singleton/hierarchy/supply_pack/galley/bugmeat
 	name = "Perishables - Insect Protein"
 	contains = list(/obj/item/storage/fancy/bugmeat = 2)

@@ -28,6 +28,7 @@
 	var/mod_modifiers = params2list(params)
 	if(mod_modifiers["alt"])
 		owner.emergency_toggle_power(usr)
+		owner.undeploy_overheat_effect()
 		owner.update_icon()
 		return
 	if(owner.overheat && owner.power != MECH_POWER_ON)

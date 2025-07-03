@@ -1110,9 +1110,6 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/item/mech_component/doubled_legs/tracks{
-	pixel_x = -3
-	},
 /turf/simulated/floor/tiled/techfloor,
 /area/verne/engineering/workshop)
 "dY" = (
@@ -2350,13 +2347,13 @@
 /turf/simulated/floor/tiled/white,
 /area/verne/xenosci)
 "nM" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 6
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
 	},
 /obj/floor_decal/corner/b_green/diagonal,
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 1
+	},
 /turf/simulated/floor/tiled/white,
 /area/verne/xenosci/equipment)
 "nN" = (
@@ -2438,7 +2435,6 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/verne/hangar)
 "oE" = (
-/obj/structure/table/steel,
 /obj/machinery/light_switch{
 	dir = 4;
 	pixel_x = -22
@@ -2446,10 +2442,10 @@
 /obj/item/paper_bin,
 /obj/item/pen/retractable,
 /obj/item/folder,
+/obj/structure/table/steel_reinforced,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/verne/engineering/workshop)
 "oJ" = (
-/obj/structure/table/steel,
 /obj/random/powercell,
 /obj/random/powercell,
 /obj/machinery/cell_charger,
@@ -2458,6 +2454,7 @@
 	dir = 8
 	},
 /obj/item/reagent_containers/glass/beaker/sulphuric,
+/obj/structure/table/steel_reinforced,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/verne/engineering/workshop)
 "oN" = (
@@ -2549,7 +2546,6 @@
 /turf/simulated/floor/plating,
 /area/verne/engineering/decktransfer)
 "pY" = (
-/obj/structure/table/steel,
 /obj/item/device/radio/intercom/map_preset/verne{
 	dir = 4;
 	pixel_x = -22
@@ -2562,6 +2558,7 @@
 	pixel_x = 6;
 	pixel_y = 0
 	},
+/obj/structure/table/steel_reinforced,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/verne/engineering/workshop)
 "qa" = (
@@ -3077,6 +3074,7 @@
 	dir = 8;
 	pixel_x = -24
 	},
+/obj/structure/cart,
 /turf/simulated/floor/tiled/techfloor,
 /area/verne/hangar)
 "tn" = (
@@ -3101,13 +3099,20 @@
 /area/verne/xenosci)
 "tw" = (
 /obj/floor_decal/cti,
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/white/monotile,
+/area/verne/xenosci/equipment)
+"tx" = (
+/obj/floor_decal/corner/b_green/diagonal,
+/obj/machinery/atmospherics/unary/vent_scrubber/on{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/white,
 /area/verne/xenosci/equipment)
 "ty" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
@@ -4289,12 +4294,13 @@
 /area/verne/xenosci)
 "BS" = (
 /obj/floor_decal/techfloor/orange,
-/obj/structure/table/rack,
-/obj/item/stock_parts/computer/hard_drive/portable/design/components,
-/obj/item/stock_parts/computer/hard_drive/portable/design/engineering,
-/obj/item/stock_parts/computer/hard_drive/portable/design/general,
-/obj/item/stock_parts/computer/hard_drive/portable/design/medical,
-/obj/item/stock_parts/computer/hard_drive/portable/design/tool,
+/obj/structure/cart{
+	dir = 4
+	},
+/obj/item/mech_component/doubled_legs/tracks{
+	pixel_x = -3;
+	pixel_y = 6
+	},
 /turf/simulated/floor/tiled/techfloor,
 /area/verne/engineering/workshop)
 "BT" = (
@@ -4516,6 +4522,8 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/mask/gas,
 /turf/simulated/floor/plating,
 /area/verne/engineering/decktransfer)
 "DJ" = (
@@ -4552,14 +4560,12 @@
 /area/verne/catfish)
 "DW" = (
 /obj/floor_decal/techfloor/orange,
-/obj/item/collector{
-	pixel_x = -6
-	},
-/obj/item/collector,
-/obj/item/collector{
-	pixel_x = 6
-	},
 /obj/structure/table/rack,
+/obj/item/stock_parts/computer/hard_drive/portable/design/tool,
+/obj/item/stock_parts/computer/hard_drive/portable/design/medical,
+/obj/item/stock_parts/computer/hard_drive/portable/design/general,
+/obj/item/stock_parts/computer/hard_drive/portable/design/engineering,
+/obj/item/stock_parts/computer/hard_drive/portable/design/components,
 /turf/simulated/floor/tiled/techfloor,
 /area/verne/engineering/workshop)
 "Ec" = (
@@ -6053,10 +6059,12 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/unary/vent_scrubber/on{
-	dir = 1
-	},
 /obj/floor_decal/corner/b_green/diagonal,
+/obj/structure/table/rack,
+/obj/item/collector,
+/obj/item/collector,
+/obj/item/collector,
+/obj/item/collector,
 /turf/simulated/floor/tiled/white,
 /area/verne/xenosci/equipment)
 "Rv" = (
@@ -6628,13 +6636,13 @@
 /obj/machinery/power/terminal{
 	dir = 4
 	},
-/obj/machinery/floodlight,
 /obj/machinery/alarm/verne{
 	dir = 1;
 	pixel_y = -24
 	},
 /obj/floor_decal/corner/b_green/mono,
 /obj/structure/cable,
+/obj/machinery/radio_beacon,
 /turf/simulated/floor/tiled/white/monotile,
 /area/verne/catfish)
 "Wf" = (
@@ -14944,7 +14952,7 @@ lT
 qY
 aU
 Gv
-VN
+tx
 Bh
 KW
 Ub

@@ -7,7 +7,12 @@ GLOBAL_LIST_AS(possible_chassis, list(
 		"Mushroom" = "mushroom",
 		"Corgi" = "corgi",
 		"Crow" = "crow",
-		"Humanoid" = "humanoid"
+		"Humanoid" = "humanoid",
+		//[SIERRA-ADD]
+		"Bat" = "bat",
+		"Chicken" = "chick",
+		"Parrot" = "parrot"
+		//[/SIERRA-ADD]
 		))
 
 GLOBAL_LIST_AS(possible_say_verbs, list(

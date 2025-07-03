@@ -1,7 +1,7 @@
 // Defining all of this here so it's centralized.
 // Used by the exosuit HUD to get a 1-10 value representing charge, ammo, etc.
 /obj/item/mech_equipment
-	name = "exosuit hardpoint system"
+	name = "mech hardpoint system"
 	icon = 'mods/mechs_by_shegar/icons/mech_equipment.dmi'
 	icon_state = ""
 	matter = list(MATERIAL_STEEL = 10000, MATERIAL_PLASTIC = 5000, MATERIAL_OSMIUM = 500)
@@ -11,6 +11,7 @@
 	var/list/restricted_hardpoints
 	var/mob/living/exosuit/owner
 	var/list/restricted_software
+
 	var/equipment_delay = 0
 	var/active_power_use = 1 KILOWATTS // How much does it consume to perform and accomplish usage
 	var/passive_power_use = 0          // For gear that for some reason takes up power even if it's supposedly doing nothing (mech will idly consume power)
@@ -25,7 +26,7 @@
 	var/active_heat_generation = 0
 
 /obj/item/mech_equipment/attack_hand(mob/user)
-	if(!can_be_pickuped)
+	if(!can_be_pickuped && !owner)
 		to_chat(user, SPAN_BAD("Я такое не подниму!"))
 		return
 	else
@@ -38,7 +39,19 @@
 		var/obj/structure/heavy_vehicle_frame/input_frame = over_atom
 		input_frame.use_tool(src, usr)
 
+///Требуется ли скилл БОЕВОЙ ОПЫТ в пилотировании мехов чтоб использовать этот модуль
 /obj/item/mech_equipment/proc/need_combat_skill()
+	return FALSE
+
+///Некоторые модули могут по своему реагировать на ближнюю атаку, например железный щит или флэш
+/obj/item/mech_equipment/proc/have_specific_melee_attack()
+	return FALSE
+
+///Данный модуль может быть починен. К примеру - железный щит
+/obj/item/mech_equipment/proc/can_be_repaired()
+	return FALSE
+
+/obj/item/mech_equipment/proc/try_repair_module(tool, user)
 	return FALSE
 
 /obj/item/mech_equipment/afterattack(atom/target, mob/living/user, inrange, params)
@@ -115,9 +128,7 @@
 
 /obj/item/mech_equipment/mounted_system
 	var/holding_type
-	//[SIERRA-REMOVE] - Mechs-by-Shegar
-	//var/obj/item/holding
-	//[SIERRA-REMOVE]
+	var/obj/item/gun/projectile/holding
 
 /obj/item/mech_equipment/mounted_system/attack_self(mob/user)
 	. = ..()

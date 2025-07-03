@@ -3,6 +3,7 @@
 	#include "example_shuttles.dm"
 	#include "example_radio.dm"
 	#include "example_unit_testing.dm"
+	#include "../../mods/screentips/_screentips_includes.dm" //Без этого юнит тест падает
 
 	#include "example-1.dmm"
 	#include "example-2.dmm"

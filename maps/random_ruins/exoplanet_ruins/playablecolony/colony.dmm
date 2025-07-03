@@ -46,8 +46,8 @@
 /obj/item/reagent_containers/syringe/drugs,
 /obj/item/reagent_containers/syringe/drugs,
 /obj/machinery/alarm{
-	locked = 0;
-	pixel_y = 20
+	pixel_y = 20;
+	locked = 0
 	},
 /obj/floor_decal/corner/red{
 	dir = 5
@@ -64,8 +64,8 @@
 "al" = (
 /obj/machinery/power/solar,
 /obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
+	icon_state = "0-4";
+	d2 = 4
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/template_noop)
@@ -119,17 +119,17 @@
 "av" = (
 /obj/structure/table/steel_reinforced,
 /obj/machinery/button/blast_door{
-	id_tag = "colsecarm";
-	name = "Armory Secure Access"
+	name = "Armory Secure Access";
+	id_tag = "colsecarm"
 	},
 /obj/machinery/button/blast_door{
-	id_tag = "colarm";
 	name = "Armory Blast Door Control";
-	pixel_y = 8
+	pixel_y = 8;
+	id_tag = "colarm"
 	},
 /obj/item/card/id/merchant{
-	desc = "this card can be used to access the Colony's telepad to exchange goods.";
-	name = "trade array access card"
+	name = "trade array access card";
+	desc = "this card can be used to access the Colony's telepad to exchange goods."
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/colony/command)
@@ -183,8 +183,8 @@
 /area/map_template/colony/command)
 "aD" = (
 /obj/structure/flora/pottedplant/unusual{
-	desc = "Steve's distant cousin.";
-	name = "Randy"
+	name = "Randy";
+	desc = "Steve's distant cousin."
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/colony/command)
@@ -272,9 +272,9 @@
 "aM" = (
 /obj/structure/catwalk,
 /obj/structure/cable{
+	icon_state = "2-8";
 	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+	d2 = 8
 	},
 /turf/simulated/floor/exoplanet/concrete,
 /area/template_noop)
@@ -344,8 +344,8 @@
 /area/map_template/colony/command)
 "aY" = (
 /obj/machinery/alarm{
-	locked = 0;
-	pixel_y = 20
+	pixel_y = 20;
+	locked = 0
 	},
 /obj/floor_decal/techfloor{
 	dir = 1
@@ -358,14 +358,14 @@
 "aZ" = (
 /obj/structure/catwalk,
 /obj/structure/cable{
+	icon_state = "2-8";
 	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+	d2 = 8
 	},
 /obj/structure/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /turf/simulated/floor/exoplanet/concrete,
 /area/template_noop)
@@ -387,8 +387,8 @@
 "bc" = (
 /obj/machinery/power/tracker,
 /obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
+	icon_state = "0-4";
+	d2 = 4
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/template_noop)
@@ -398,14 +398,14 @@
 "be" = (
 /obj/structure/catwalk,
 /obj/structure/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/structure/cable{
+	icon_state = "2-8";
 	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+	d2 = 8
 	},
 /turf/simulated/floor/exoplanet/concrete,
 /area/template_noop)
@@ -417,9 +417,9 @@
 	dir = 8
 	},
 /obj/structure/cable{
+	icon_state = "2-4";
 	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
+	d2 = 4
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/command)
@@ -428,8 +428,8 @@
 /obj/structure/bed/padded,
 /obj/item/bedsheet/hop,
 /obj/machinery/light/small{
-	dir = 8;
-	icon_state = "bulb1"
+	icon_state = "bulb1";
+	dir = 8
 	},
 /turf/simulated/floor/carpet,
 /area/map_template/colony/command)
@@ -466,9 +466,9 @@
 	dir = 4
 	},
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/command)
@@ -479,9 +479,9 @@
 "bm" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/wallframe_spawn/reinforced_phoron,
 /turf/simulated/floor/plating,
@@ -507,9 +507,9 @@
 	dir = 4
 	},
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/floor_decal/techfloor,
 /obj/machinery/light,
@@ -520,9 +520,9 @@
 	dir = 4
 	},
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/floor_decal/techfloor{
 	dir = 6
@@ -572,15 +572,15 @@
 	pixel_x = 22
 	},
 /obj/machinery/alarm{
-	locked = 0;
-	pixel_y = 20
+	pixel_y = 20;
+	locked = 0
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony)
 "bt" = (
 /obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
+	icon_state = "0-4";
+	d2 = 4
 	},
 /obj/machinery/power/terminal{
 	dir = 8
@@ -598,9 +598,9 @@
 	dir = 4
 	},
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/floor_decal/corner/red{
 	dir = 9
@@ -615,9 +615,9 @@
 	dir = 9
 	},
 /obj/structure/cable{
+	icon_state = "2-8";
 	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/tcomms)
@@ -648,8 +648,8 @@
 "bA" = (
 /obj/machinery/power/smes/buildable/max_cap_in_out,
 /obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2"
+	icon_state = "0-2";
+	d2 = 2
 	},
 /obj/floor_decal/industrial/outline/yellow,
 /obj/machinery/light{
@@ -660,9 +660,9 @@
 "bB" = (
 /obj/structure/catwalk,
 /obj/structure/cable{
+	icon_state = "2-4";
 	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
+	d2 = 4
 	},
 /turf/simulated/floor/exoplanet/concrete,
 /area/template_noop)
@@ -697,13 +697,13 @@
 	dir = 4
 	},
 /obj/machinery/power/apc{
-	locked = 0;
 	name = "south bump";
-	pixel_y = -28
+	pixel_y = -28;
+	locked = 0
 	},
 /obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
+	icon_state = "0-4";
+	d2 = 4
 	},
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 4
@@ -722,9 +722,9 @@
 	dir = 1
 	},
 /obj/machinery/power/apc{
-	locked = 0;
 	name = "south bump";
-	pixel_y = -28
+	pixel_y = -28;
+	locked = 0
 	},
 /obj/structure/cable,
 /obj/machinery/telecomms/bus/map_preset/playablecolony,
@@ -739,14 +739,14 @@
 "bI" = (
 /obj/structure/catwalk,
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/structure/cable{
+	icon_state = "1-4";
 	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
+	d2 = 4
 	},
 /turf/simulated/floor/exoplanet/concrete,
 /area/template_noop)
@@ -776,9 +776,9 @@
 "bM" = (
 /obj/structure/catwalk,
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/simulated/floor/exoplanet/concrete,
 /area/template_noop)
@@ -791,8 +791,8 @@
 	dir = 8
 	},
 /obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
+	icon_state = "0-4";
+	d2 = 4
 	},
 /obj/floor_decal/techfloor{
 	dir = 10
@@ -801,23 +801,23 @@
 /area/map_template/colony/engineering)
 "bP" = (
 /obj/structure/cable{
+	icon_state = "1-8";
 	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
+	d2 = 8
 	},
 /obj/structure/cable{
+	icon_state = "1-4";
 	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
+	d2 = 4
 	},
 /obj/floor_decal/techfloor,
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/engineering)
 "bQ" = (
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/floor_decal/techfloor{
 	dir = 6
@@ -827,14 +827,14 @@
 "bR" = (
 /obj/structure/catwalk,
 /obj/structure/cable{
+	icon_state = "2-8";
 	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+	d2 = 8
 	},
 /obj/structure/cable{
+	icon_state = "2-4";
 	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
+	d2 = 4
 	},
 /turf/simulated/floor/exoplanet/concrete,
 /area/template_noop)
@@ -850,14 +850,14 @@
 "bT" = (
 /obj/structure/catwalk,
 /obj/structure/cable{
+	icon_state = "1-8";
 	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
+	d2 = 8
 	},
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/simulated/floor/exoplanet/concrete,
 /area/template_noop)
@@ -869,14 +869,14 @@
 	dir = 4
 	},
 /obj/structure/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/structure/cable{
+	icon_state = "1-8";
 	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
+	d2 = 8
 	},
 /obj/floor_decal/techfloor,
 /obj/floor_decal/corner/blue{
@@ -890,9 +890,9 @@
 	dir = 8
 	},
 /obj/structure/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/floor_decal/techfloor{
 	dir = 6
@@ -938,13 +938,13 @@
 /area/map_template/colony/surgery)
 "ca" = (
 /obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2"
+	icon_state = "0-2";
+	d2 = 2
 	},
 /obj/floor_decal/industrial/hatch/orange,
 /obj/machinery/alarm{
-	locked = 0;
-	pixel_y = 20
+	pixel_y = 20;
+	locked = 0
 	},
 /obj/machinery/light{
 	dir = 1
@@ -954,8 +954,8 @@
 /area/map_template/colony/engineering)
 "cb" = (
 /obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
+	icon_state = "0-8";
+	d2 = 8
 	},
 /obj/floor_decal/techfloor{
 	dir = 5
@@ -986,14 +986,14 @@
 /area/template_noop)
 "cg" = (
 /obj/structure/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/machinery/power/smes/buildable/max_cap_in_out,
 /obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2"
+	icon_state = "0-2";
+	d2 = 2
 	},
 /obj/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/tiled/techfloor/grid,
@@ -1010,9 +1010,9 @@
 "ci" = (
 /obj/structure/catwalk,
 /obj/structure/cable{
+	icon_state = "1-8";
 	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
+	d2 = 8
 	},
 /turf/simulated/floor/exoplanet/concrete,
 /area/template_noop)
@@ -1049,9 +1049,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/machinery/door/airlock/glass/command,
 /turf/simulated/floor/tiled/techfloor,
@@ -1090,25 +1090,25 @@
 "cq" = (
 /obj/structure/grille,
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
+	icon_state = "0-4";
+	d2 = 4
 	},
 /turf/simulated/floor/exoplanet/concrete,
 /area/template_noop)
 "cr" = (
 /obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2"
+	icon_state = "0-2";
+	d2 = 2
 	},
 /obj/structure/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/structure/grille,
 /turf/simulated/floor/exoplanet/concrete,
@@ -1116,13 +1116,13 @@
 "cs" = (
 /obj/structure/grille,
 /obj/structure/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2"
+	icon_state = "0-2";
+	d2 = 2
 	},
 /turf/simulated/floor/exoplanet/concrete,
 /area/template_noop)
@@ -1217,8 +1217,8 @@
 /area/map_template/colony)
 "cG" = (
 /obj/machinery/light/small{
-	dir = 8;
-	icon_state = "bulb1"
+	icon_state = "bulb1";
+	dir = 8
 	},
 /turf/simulated/floor/carpet,
 /area/map_template/colony/dorms)
@@ -1251,9 +1251,9 @@
 "cK" = (
 /obj/structure/catwalk,
 /obj/structure/cable{
+	icon_state = "1-4";
 	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
+	d2 = 4
 	},
 /turf/simulated/floor/exoplanet/concrete,
 /area/template_noop)
@@ -1283,9 +1283,9 @@
 "cP" = (
 /obj/structure/catwalk,
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/structure/sign/warning/compressed_gas{
 	pixel_y = -28
@@ -1369,9 +1369,9 @@
 	dir = 8
 	},
 /obj/structure/cable{
+	icon_state = "1-4";
 	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
+	d2 = 4
 	},
 /obj/floor_decal/techfloor{
 	dir = 1
@@ -1395,13 +1395,13 @@
 	dir = 8
 	},
 /obj/machinery/alarm{
-	locked = 0;
-	pixel_y = 20
+	pixel_y = 20;
+	locked = 0
 	},
 /obj/structure/cable{
+	icon_state = "2-8";
 	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+	d2 = 8
 	},
 /obj/floor_decal/techfloor{
 	dir = 5
@@ -1483,32 +1483,32 @@
 	dir = 10
 	},
 /obj/structure/cable{
+	icon_state = "1-4";
 	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
+	d2 = 4
 	},
 /turf/simulated/floor/wood,
 /area/map_template/colony/messhall)
 "dl" = (
 /obj/structure/catwalk,
 /obj/structure/cable{
+	icon_state = "1-4";
 	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
+	d2 = 4
 	},
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/simulated/floor/exoplanet/concrete,
 /area/template_noop)
 "dm" = (
 /obj/structure/catwalk,
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/machinery/light/spot,
 /turf/simulated/floor/exoplanet/concrete,
@@ -1592,9 +1592,9 @@
 /area/map_template/colony)
 "dy" = (
 /obj/structure/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/structure/reagent_dispensers/fueltank,
 /obj/machinery/light{
@@ -1632,8 +1632,8 @@
 "dD" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
 /obj/machinery/alarm{
-	locked = 0;
-	pixel_y = 20
+	pixel_y = 20;
+	locked = 0
 	},
 /obj/structure/closet,
 /obj/item/clothing/under/wetsuit,
@@ -1650,9 +1650,9 @@
 "dE" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/floor_decal/techfloor{
 	dir = 4
@@ -1669,19 +1669,19 @@
 /area/map_template/colony/surgery)
 "dG" = (
 /obj/structure/cable{
+	icon_state = "1-8";
 	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
+	d2 = 8
 	},
 /obj/structure/cable{
+	icon_state = "1-4";
 	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
+	d2 = 4
 	},
 /obj/structure/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/floor_decal/techfloor{
 	dir = 1
@@ -1745,9 +1745,9 @@
 /area/map_template/colony/surgery)
 "dO" = (
 /obj/structure/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/floor_decal/techfloor{
 	dir = 4
@@ -1794,11 +1794,11 @@
 	dir = 1
 	},
 /obj/machinery/computer/air_control{
-	input_tag = "cn2n";
 	name = "Nitrogen Supply Control";
+	input_tag = "cn2n";
 	output_tag = "cn2o";
-	sensor_name = "Nitrogen Tank";
-	sensor_tag = "c1"
+	sensor_tag = "c1";
+	sensor_name = "Nitrogen Tank"
 	},
 /obj/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/tiled/techfloor,
@@ -1870,9 +1870,9 @@
 	dir = 4
 	},
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/multi_tile/glass/medical{
@@ -1897,9 +1897,9 @@
 	dir = 4
 	},
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/floor_decal/corner/paleblue{
 	dir = 10
@@ -1914,14 +1914,14 @@
 	dir = 4
 	},
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/structure/cable{
+	icon_state = "2-8";
 	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+	d2 = 8
 	},
 /obj/floor_decal/corner/paleblue{
 	dir = 10
@@ -1936,9 +1936,9 @@
 	dir = 4
 	},
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/floor_decal/corner/paleblue{
 	dir = 10
@@ -1951,9 +1951,9 @@
 /area/map_template/colony/engineering)
 "ej" = (
 /obj/machinery/power/apc{
-	locked = 0;
 	name = "south bump";
-	pixel_y = -28
+	pixel_y = -28;
+	locked = 0
 	},
 /obj/structure/cable,
 /obj/machinery/light{
@@ -1977,14 +1977,14 @@
 "el" = (
 /obj/structure/catwalk,
 /obj/structure/cable{
+	icon_state = "1-4";
 	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
+	d2 = 4
 	},
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/structure/sign/warning/compressed_gas{
 	pixel_y = -28
@@ -2001,18 +2001,18 @@
 "eo" = (
 /obj/structure/catwalk,
 /obj/structure/cable{
+	icon_state = "1-4";
 	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
+	d2 = 4
 	},
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
+	icon_state = "0-4";
+	d2 = 4
 	},
 /turf/simulated/floor/exoplanet/concrete,
 /area/template_noop)
@@ -2026,8 +2026,8 @@
 	level = 2
 	},
 /obj/machinery/light/small{
-	dir = 8;
-	icon_state = "bulb1"
+	icon_state = "bulb1";
+	dir = 8
 	},
 /turf/simulated/floor/wood,
 /area/map_template/colony/dorms)
@@ -2044,8 +2044,8 @@
 /area/map_template/colony/atmospherics)
 "es" = (
 /obj/machinery/atmospherics/binary/pump{
-	dir = 1;
-	name = "waste pump"
+	name = "waste pump";
+	dir = 1
 	},
 /obj/floor_decal/techfloor{
 	dir = 4
@@ -2060,14 +2060,14 @@
 	dir = 4
 	},
 /obj/structure/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/structure/cable{
+	icon_state = "2-4";
 	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
+	d2 = 4
 	},
 /obj/floor_decal/techfloor{
 	dir = 4
@@ -2083,8 +2083,8 @@
 /area/map_template/colony/atmospherics)
 "ew" = (
 /obj/structure/railing/mapped{
-	dir = 1;
-	icon_state = "railing0-1"
+	icon_state = "railing0-1";
+	dir = 1
 	},
 /turf/simulated/floor/exoplanet/concrete,
 /area/template_noop)
@@ -2096,9 +2096,9 @@
 	dir = 4
 	},
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/machinery/door/airlock/medical,
 /obj/machinery/door/firedoor,
@@ -2120,9 +2120,9 @@
 	dir = 1
 	},
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/floor_decal/corner/paleblue{
 	dir = 10
@@ -2153,8 +2153,8 @@
 	dir = 1
 	},
 /obj/machinery/alarm{
-	locked = 0;
-	pixel_y = 20
+	pixel_y = 20;
+	locked = 0
 	},
 /obj/machinery/atmospherics/portables_connector,
 /obj/machinery/light/spot{
@@ -2180,9 +2180,9 @@
 	dir = 4
 	},
 /obj/structure/cable{
+	icon_state = "2-8";
 	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+	d2 = 8
 	},
 /obj/floor_decal/corner/red{
 	dir = 9
@@ -2194,9 +2194,9 @@
 /area/map_template/colony/command)
 "eH" = (
 /obj/structure/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/structure/closet/crate,
 /obj/item/stock_parts/capacitor,
@@ -2241,9 +2241,9 @@
 /area/map_template/colony/atmospherics)
 "eK" = (
 /obj/structure/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/machinery/vending/tool,
 /obj/machinery/light{
@@ -2270,9 +2270,9 @@
 /area/map_template/colony/messhall)
 "eO" = (
 /obj/machinery/power/apc{
-	locked = 0;
 	name = "south bump";
-	pixel_y = -28
+	pixel_y = -28;
+	locked = 0
 	},
 /obj/structure/cable,
 /obj/structure/table/steel_reinforced,
@@ -2295,13 +2295,13 @@
 	dir = 4
 	},
 /obj/machinery/power/apc{
-	locked = 0;
 	name = "south bump";
-	pixel_y = -28
+	pixel_y = -28;
+	locked = 0
 	},
 /obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
+	icon_state = "0-4";
+	d2 = 4
 	},
 /turf/simulated/floor/wood,
 /area/map_template/colony/dorms)
@@ -2332,9 +2332,9 @@
 	dir = 4
 	},
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/simulated/floor/wood,
 /area/map_template/colony/dorms)
@@ -2367,9 +2367,9 @@
 	dir = 4
 	},
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/machinery/door/airlock/civilian{
 	name = "Bunk Room"
@@ -2502,15 +2502,15 @@
 	dir = 1
 	},
 /obj/machinery/light/small{
-	dir = 8;
-	icon_state = "bulb1"
+	icon_state = "bulb1";
+	dir = 8
 	},
 /turf/simulated/floor/wood,
 /area/map_template/colony/dorms)
 "fk" = (
 /obj/machinery/alarm{
-	locked = 0;
-	pixel_y = 20
+	pixel_y = 20;
+	locked = 0
 	},
 /obj/floor_decal/spline/fancy/wood{
 	dir = 9
@@ -2537,11 +2537,11 @@
 	dir = 1
 	},
 /obj/machinery/computer/air_control{
-	input_tag = "co2n";
 	name = "Oxygen Supply Control";
+	input_tag = "co2n";
 	output_tag = "co2o";
-	sensor_name = "Oxygen Tank";
-	sensor_tag = "c2"
+	sensor_tag = "c2";
+	sensor_name = "Oxygen Tank"
 	},
 /obj/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/tiled/techfloor,
@@ -2567,14 +2567,14 @@
 /area/map_template/colony/messhall)
 "fp" = (
 /obj/structure/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/structure/cable{
+	icon_state = "1-4";
 	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
+	d2 = 4
 	},
 /obj/machinery/vending/engineering{
 	req_access = list()
@@ -2596,9 +2596,9 @@
 	dir = 9
 	},
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/engineering)
@@ -2611,9 +2611,9 @@
 	dir = 1
 	},
 /obj/structure/cable{
+	icon_state = "2-8";
 	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/engineering)
@@ -2623,11 +2623,11 @@
 	dir = 1
 	},
 /obj/machinery/computer/air_control{
-	input_tag = "cco2n";
 	name = "Carbon Dioxide Tank Control";
+	input_tag = "cco2n";
 	output_tag = "cco2o";
-	sensor_name = "Carbon Dioxide Tank";
-	sensor_tag = "c3"
+	sensor_tag = "c3";
+	sensor_name = "Carbon Dioxide Tank"
 	},
 /obj/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/tiled/techfloor,
@@ -2656,9 +2656,9 @@
 /area/map_template/colony)
 "fw" = (
 /obj/structure/cable{
+	icon_state = "1-4";
 	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
+	d2 = 4
 	},
 /obj/machinery/vending/engivend{
 	req_access = list()
@@ -2670,9 +2670,9 @@
 	dir = 8
 	},
 /obj/structure/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/floor_decal/techfloor{
 	dir = 4
@@ -2688,9 +2688,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/floor_decal/techfloor,
 /obj/structure/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/engineering)
@@ -2779,9 +2779,9 @@
 "fG" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/machinery/door/airlock/glass/civilian,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -2829,9 +2829,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/machinery/door/airlock/engineering,
 /turf/simulated/floor/tiled/techfloor,
@@ -2874,9 +2874,9 @@
 	dir = 4
 	},
 /obj/structure/cable{
+	icon_state = "2-4";
 	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
+	d2 = 4
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/colony/atmospherics)
@@ -2891,9 +2891,9 @@
 	dir = 4
 	},
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/atmospherics)
@@ -2906,9 +2906,9 @@
 	dir = 4
 	},
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/machinery/door/airlock/atmos,
 /turf/simulated/floor/tiled/techfloor,
@@ -2931,9 +2931,9 @@
 	dir = 4
 	},
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/floor_decal/techfloor{
 	dir = 8
@@ -2942,14 +2942,14 @@
 /area/map_template/colony)
 "fS" = (
 /obj/structure/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/structure/cable{
+	icon_state = "2-8";
 	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+	d2 = 8
 	},
 /obj/floor_decal/techfloor{
 	dir = 4
@@ -2970,14 +2970,14 @@
 /area/map_template/colony)
 "fV" = (
 /obj/structure/cable{
+	icon_state = "1-8";
 	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
+	d2 = 8
 	},
 /obj/structure/cable{
+	icon_state = "2-8";
 	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+	d2 = 8
 	},
 /obj/floor_decal/techfloor{
 	dir = 5
@@ -3015,9 +3015,9 @@
 	dir = 8
 	},
 /obj/structure/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/floor_decal/techfloor{
 	dir = 4
@@ -3035,9 +3035,9 @@
 	dir = 9
 	},
 /obj/structure/cable{
+	icon_state = "2-8";
 	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony)
@@ -3080,27 +3080,27 @@
 	dir = 10
 	},
 /obj/machinery/power/apc{
-	locked = 0;
 	name = "south bump";
-	pixel_y = -28
+	pixel_y = -28;
+	locked = 0
 	},
 /obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
+	icon_state = "0-8";
+	d2 = 8
 	},
 /obj/floor_decal/techfloor/hole/right,
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/engineering)
 "gg" = (
 /obj/structure/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/structure/cable{
+	icon_state = "2-4";
 	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
+	d2 = 4
 	},
 /obj/floor_decal/techfloor{
 	dir = 4
@@ -3121,9 +3121,9 @@
 	dir = 1
 	},
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/floor_decal/techfloor{
 	dir = 8
@@ -3138,9 +3138,9 @@
 	dir = 4
 	},
 /obj/structure/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/colony/atmospherics)
@@ -3155,9 +3155,9 @@
 	dir = 8
 	},
 /obj/structure/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony)
@@ -3192,8 +3192,8 @@
 	dir = 1
 	},
 /obj/machinery/alarm{
-	locked = 0;
-	pixel_y = 20
+	pixel_y = 20;
+	locked = 0
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony)
@@ -3208,9 +3208,9 @@
 	dir = 1
 	},
 /obj/structure/cable{
+	icon_state = "2-4";
 	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
+	d2 = 4
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony)
@@ -3232,9 +3232,9 @@
 	dir = 5
 	},
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony)
@@ -3246,16 +3246,16 @@
 	dir = 4
 	},
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/floor_decal/techfloor{
 	dir = 9
 	},
 /obj/machinery/alarm{
-	locked = 0;
-	pixel_y = 20
+	pixel_y = 20;
+	locked = 0
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony)
@@ -3300,14 +3300,14 @@
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
 /obj/structure/cable{
+	icon_state = "1-8";
 	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
+	d2 = 8
 	},
 /obj/structure/cable{
+	icon_state = "1-4";
 	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
+	d2 = 4
 	},
 /obj/floor_decal/techfloor{
 	dir = 5
@@ -3330,9 +3330,9 @@
 "gy" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/floor_decal/techfloor{
 	dir = 6
@@ -3374,9 +3374,9 @@
 	dir = 4
 	},
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/floor_decal/techfloor{
 	dir = 9
@@ -3438,9 +3438,9 @@
 /area/map_template/colony)
 "gK" = (
 /obj/machinery/power/apc{
-	locked = 0;
 	name = "south bump";
-	dir = 4
+	dir = 4;
+	locked = 0
 	},
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 1
@@ -3452,8 +3452,8 @@
 	dir = 4
 	},
 /obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
+	icon_state = "0-8";
+	d2 = 8
 	},
 /turf/simulated/floor/wood,
 /area/map_template/colony/messhall)
@@ -3506,12 +3506,12 @@
 	pressure_checks = 0
 	},
 /obj/structure/railing/mapped{
-	dir = 8;
-	icon_state = "railing0-1"
+	icon_state = "railing0-1";
+	dir = 8
 	},
 /obj/structure/railing/mapped{
-	dir = 1;
-	icon_state = "railing0-1"
+	icon_state = "railing0-1";
+	dir = 1
 	},
 /obj/floor_decal/industrial/hatch/orange,
 /turf/simulated/floor/tiled/steel_ridged,
@@ -3522,8 +3522,8 @@
 	id_tag = "playablecolonymain_pump_out_external"
 	},
 /obj/structure/railing/mapped{
-	dir = 8;
-	icon_state = "railing0-1"
+	icon_state = "railing0-1";
+	dir = 8
 	},
 /obj/structure/railing/mapped,
 /obj/floor_decal/industrial/hatch/orange,
@@ -3538,11 +3538,11 @@
 /area/map_template/colony/atmospherics)
 "gU" = (
 /obj/machinery/atmospherics/omni/mixer{
-	tag_east = 1;
 	tag_east_con = 0.21;
+	tag_west_con = 0.79;
 	tag_south = 2;
-	tag_west = 1;
-	tag_west_con = 0.79
+	tag_east = 1;
+	tag_west = 1
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/colony/atmospherics)
@@ -3616,9 +3616,9 @@
 	dir = 4
 	},
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/floor_decal/techfloor{
 	dir = 1
@@ -3644,9 +3644,9 @@
 /area/map_template/colony/atmospherics)
 "he" = (
 /obj/structure/cable{
+	icon_state = "1-8";
 	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
+	d2 = 8
 	},
 /obj/item/device/radio/intercom/map_preset/playablecolony{
 	dir = 8;
@@ -3657,9 +3657,9 @@
 "hf" = (
 /obj/floor_decal/techfloor,
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/floor_decal/techfloor/hole/right,
 /obj/machinery/light,
@@ -3673,9 +3673,9 @@
 	dir = 4
 	},
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/floor_decal/techfloor{
 	dir = 1
@@ -3688,9 +3688,9 @@
 "hh" = (
 /obj/floor_decal/techfloor,
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/machinery/light,
 /turf/simulated/floor/tiled/techfloor,
@@ -3712,14 +3712,14 @@
 	dir = 10
 	},
 /obj/structure/cable{
+	icon_state = "1-4";
 	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
+	d2 = 4
 	},
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony)
@@ -3731,18 +3731,18 @@
 /area/map_template/colony/atmospherics)
 "hm" = (
 /obj/machinery/atmospherics/omni/filter{
-	tag_east = 2;
 	tag_north = 4;
-	tag_south = 1
+	tag_south = 1;
+	tag_east = 2
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/colony/atmospherics)
 "hn" = (
 /obj/floor_decal/techfloor,
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/item/device/radio/intercom/map_preset/playablecolony{
 	dir = 1;
@@ -3758,16 +3758,16 @@
 /obj/machinery/door/firedoor,
 /obj/floor_decal/techfloor,
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony)
 "hq" = (
 /obj/structure/railing/mapped{
-	dir = 8;
-	icon_state = "railing0-1"
+	icon_state = "railing0-1";
+	dir = 8
 	},
 /obj/machinery/atmospherics/unary/vent_pump/siphon/on{
 	dir = 4
@@ -3792,14 +3792,14 @@
 "ht" = (
 /obj/floor_decal/techfloor,
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/structure/cable{
+	icon_state = "1-8";
 	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony)
@@ -3813,13 +3813,13 @@
 	dir = 6
 	},
 /obj/machinery/power/apc{
-	locked = 0;
 	name = "south bump";
-	pixel_y = -28
+	pixel_y = -28;
+	locked = 0
 	},
 /obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
+	icon_state = "0-8";
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony)
@@ -3828,9 +3828,9 @@
 	dir = 9
 	},
 /obj/structure/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony)
@@ -3839,9 +3839,9 @@
 	dir = 8
 	},
 /obj/structure/cable{
+	icon_state = "2-8";
 	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+	d2 = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -3939,9 +3939,9 @@
 /area/map_template/colony/atmospherics)
 "hG" = (
 /obj/structure/cable{
+	icon_state = "2-4";
 	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
+	d2 = 4
 	},
 /obj/floor_decal/techfloor{
 	dir = 10
@@ -3971,9 +3971,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/floor_decal/techfloor{
 	dir = 6
@@ -3985,12 +3985,12 @@
 	dir = 10
 	},
 /obj/floor_decal/industrial/warning{
-	dir = 1;
-	icon_state = "warning"
+	icon_state = "warning";
+	dir = 1
 	},
 /obj/machinery/alarm{
-	locked = 0;
-	pixel_y = 20
+	pixel_y = 20;
+	locked = 0
 	},
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/colony/armory)
@@ -4017,9 +4017,9 @@
 /area/map_template/colony)
 "hO" = (
 /obj/structure/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/floor_decal/techfloor{
 	dir = 4
@@ -4085,9 +4085,9 @@
 	dir = 4
 	},
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/machinery/door/airlock/highsecurity,
 /obj/machinery/door/blast/regular{
@@ -4117,9 +4117,9 @@
 	dir = 8
 	},
 /obj/structure/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/floor_decal/techfloor{
 	dir = 4
@@ -4139,9 +4139,9 @@
 /area/map_template/colony)
 "ia" = (
 /obj/structure/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor/tiled/techfloor/grid,
@@ -4162,9 +4162,9 @@
 	dir = 8
 	},
 /obj/structure/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony)
@@ -4192,8 +4192,8 @@
 	dir = 5
 	},
 /obj/machinery/alarm{
-	locked = 0;
-	pixel_y = 20
+	pixel_y = 20;
+	locked = 0
 	},
 /obj/floor_decal/corner/red{
 	dir = 8
@@ -4209,9 +4209,9 @@
 	dir = 4
 	},
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/machinery/door/airlock/freezer,
 /turf/simulated/floor/tiled/techfloor,
@@ -4231,8 +4231,8 @@
 /obj/item/gun/projectile/pistol/holdout,
 /obj/item/gun/projectile/pistol/sec/lethal,
 /obj/floor_decal/industrial/warning{
-	dir = 8;
-	icon_state = "warning"
+	icon_state = "warning";
+	dir = 8
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/map_template/colony/armory)
@@ -4301,9 +4301,9 @@
 "ip" = (
 /obj/floor_decal/borderfloorwhite,
 /obj/machinery/power/apc{
-	locked = 0;
 	name = "south bump";
-	pixel_y = -28
+	pixel_y = -28;
+	locked = 0
 	},
 /obj/structure/cable,
 /turf/simulated/floor/tiled/white,
@@ -4333,9 +4333,9 @@
 	dir = 6
 	},
 /obj/structure/cable{
+	icon_state = "2-4";
 	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
+	d2 = 4
 	},
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/colony/armory)
@@ -4354,8 +4354,8 @@
 	dir = 1
 	},
 /obj/machinery/alarm{
-	locked = 0;
-	pixel_y = 20
+	pixel_y = 20;
+	locked = 0
 	},
 /obj/floor_decal/corner/red{
 	dir = 10
@@ -4399,9 +4399,9 @@
 	dir = 4
 	},
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/machinery/door/airlock/glass/security,
 /turf/simulated/floor/tiled/techfloor,
@@ -4410,8 +4410,8 @@
 /obj/structure/table/rack,
 /obj/item/gun/projectile/shotgun/doublebarrel,
 /obj/floor_decal/industrial/warning{
-	dir = 8;
-	icon_state = "warning"
+	icon_state = "warning";
+	dir = 8
 	},
 /obj/machinery/light{
 	dir = 8
@@ -4457,14 +4457,14 @@
 	dir = 4
 	},
 /obj/structure/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/structure/cable{
+	icon_state = "2-4";
 	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
+	d2 = 4
 	},
 /obj/floor_decal/techfloor{
 	dir = 4
@@ -4493,9 +4493,9 @@
 	dir = 8
 	},
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/floor_decal/corner/red{
 	dir = 6
@@ -4510,14 +4510,14 @@
 	dir = 4
 	},
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/structure/cable{
+	icon_state = "2-4";
 	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
+	d2 = 4
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/jail)
@@ -4529,9 +4529,9 @@
 	dir = 4
 	},
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/jail)
@@ -4543,9 +4543,9 @@
 	dir = 4
 	},
 /obj/structure/cable{
+	icon_state = "2-8";
 	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/jail)
@@ -4555,9 +4555,9 @@
 	},
 /obj/floor_decal/techfloor,
 /obj/machinery/power/apc{
-	locked = 0;
 	name = "south bump";
-	pixel_y = -28
+	pixel_y = -28;
+	locked = 0
 	},
 /obj/structure/cable,
 /obj/floor_decal/corner_techfloor_grid{
@@ -4578,9 +4578,9 @@
 	dir = 8
 	},
 /obj/structure/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony)
@@ -4646,9 +4646,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/colony/armory)
@@ -4663,14 +4663,14 @@
 	dir = 4
 	},
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/structure/cable{
+	icon_state = "2-4";
 	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
+	d2 = 4
 	},
 /obj/floor_decal/corner/red{
 	dir = 9
@@ -4688,9 +4688,9 @@
 	dir = 8
 	},
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/floor_decal/corner/red{
 	dir = 6
@@ -4715,9 +4715,9 @@
 	dir = 4
 	},
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/structure/hygiene/drain,
 /turf/simulated/floor/tiled/techfloor,
@@ -4757,8 +4757,7 @@
 /obj/structure/sign/warning/smoking{
 	pixel_y = -28
 	},
-/obj/structure/table/marble,
-/obj/machinery/chemical_dispenser/bar_soft/full,
+/obj/machinery/appliance/cooker/stove,
 /turf/simulated/floor/tiled/freezer,
 /area/map_template/colony/messhall)
 "jd" = (
@@ -4780,9 +4779,9 @@
 	dir = 4
 	},
 /obj/structure/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/floor_decal/corner/red{
 	dir = 9
@@ -4797,9 +4796,9 @@
 	dir = 8
 	},
 /obj/structure/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony)
@@ -4818,9 +4817,9 @@
 "ji" = (
 /obj/floor_decal/techfloor,
 /obj/machinery/power/apc{
-	locked = 0;
 	name = "south bump";
-	pixel_y = -28
+	pixel_y = -28;
+	locked = 0
 	},
 /obj/structure/cable,
 /obj/structure/closet{
@@ -4856,9 +4855,9 @@
 "jm" = (
 /obj/floor_decal/techfloor,
 /obj/structure/flora/pottedplant{
+	name = "Jamie";
 	desc = "Used to bring the room together...before the accident.";
-	icon_state = "plant-25";
-	name = "Jamie"
+	icon_state = "plant-25"
 	},
 /obj/floor_decal/corner/red{
 	dir = 5
@@ -4874,9 +4873,9 @@
 	dir = 4
 	},
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/machinery/door/airlock/civilian,
 /turf/simulated/floor/tiled/white,
@@ -4901,9 +4900,9 @@
 	dir = 9
 	},
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony)
@@ -4912,9 +4911,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/floor_decal/techfloor,
 /obj/structure/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/floor_decal/corner/red{
 	dir = 5
@@ -4944,14 +4943,16 @@
 /obj/item/storage/box/cola/drgibb,
 /obj/item/reagent_containers/food/drinks/shaker,
 /obj/item/reagent_containers/food/drinks/pitcher,
-/obj/item/reagent_containers/glass/beaker/bowl,
+/obj/item/reagent_containers/cooking_container/board/bowl,
 /obj/item/reagent_containers/food/condiment/salt,
 /obj/item/reagent_containers/food/condiment/enzyme,
 /turf/simulated/floor/tiled/dark,
 /area/map_template/colony/messhall)
 "jt" = (
 /obj/structure/table/marble,
-/obj/machinery/chemical_dispenser/bar_alc/full,
+/obj/machinery/chemical_dispenser/bar_alc/full{
+	pixel_y = 3
+	},
 /turf/simulated/floor/tiled/dark,
 /area/map_template/colony/messhall)
 "ju" = (
@@ -4983,9 +4984,9 @@
 	dir = 4
 	},
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/floor_decal/corner/paleblue{
 	dir = 5
@@ -4996,9 +4997,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable{
+	icon_state = "1-8";
 	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
+	d2 = 8
 	},
 /obj/item/device/radio/intercom/map_preset/playablecolony{
 	dir = 8;
@@ -5033,9 +5034,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/machinery/door/airlock/glass/security,
 /turf/simulated/floor/tiled/techfloor,
@@ -5048,9 +5049,9 @@
 	dir = 10
 	},
 /obj/structure/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/item/device/radio/intercom/map_preset/playablecolony{
 	dir = 4;
@@ -5115,9 +5116,9 @@
 	dir = 4
 	},
 /obj/structure/cable{
+	icon_state = "2-4";
 	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
+	d2 = 4
 	},
 /obj/floor_decal/corner/beige{
 	dir = 5
@@ -5140,9 +5141,9 @@
 	dir = 4
 	},
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/floor_decal/corner/paleblue{
 	dir = 5
@@ -5155,9 +5156,9 @@
 	dir = 1
 	},
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/floor_decal/techfloor{
 	dir = 8
@@ -5169,14 +5170,14 @@
 /area/map_template/colony)
 "jN" = (
 /obj/structure/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/structure/cable{
+	icon_state = "1-8";
 	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
+	d2 = 8
 	},
 /obj/floor_decal/techfloor{
 	dir = 4
@@ -5250,9 +5251,9 @@
 	dir = 4
 	},
 /obj/structure/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 8
@@ -5286,9 +5287,9 @@
 	dir = 4
 	},
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/machinery/door/airlock/glass/civilian,
 /turf/simulated/floor/tiled/techfloor,
@@ -5298,9 +5299,9 @@
 	dir = 4
 	},
 /obj/structure/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/floor_decal/corner/red{
 	dir = 9
@@ -5337,9 +5338,9 @@
 	dir = 4
 	},
 /obj/structure/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/floor_decal/corner/red{
 	dir = 9
@@ -5355,8 +5356,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony)
 "ka" = (
-/obj/structure/table/marble,
-/obj/machinery/microwave,
+/obj/machinery/appliance/cooker/grill,
 /turf/simulated/floor/tiled/freezer,
 /area/map_template/colony/messhall)
 "kb" = (
@@ -5385,9 +5385,9 @@
 /area/map_template/colony/hydroponics)
 "ke" = (
 /obj/structure/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 8
@@ -5452,8 +5452,8 @@
 	dir = 10
 	},
 /obj/machinery/alarm{
-	locked = 0;
-	pixel_y = 20
+	pixel_y = 20;
+	locked = 0
 	},
 /obj/floor_decal/techfloor{
 	dir = 1
@@ -5470,8 +5470,8 @@
 /area/map_template/colony/hydroponics)
 "kn" = (
 /obj/machinery/atmospherics/omni/filter{
-	tag_east = 4;
 	tag_south = 1;
+	tag_east = 4;
 	tag_west = 2
 	},
 /obj/floor_decal/industrial/outline/yellow,
@@ -5489,13 +5489,13 @@
 /obj/structure/table/rack,
 /obj/item/gun/energy/gun,
 /obj/floor_decal/industrial/warning{
-	dir = 8;
-	icon_state = "warning"
+	icon_state = "warning";
+	dir = 8
 	},
 /obj/structure/cable{
+	icon_state = "2-4";
 	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
+	d2 = 4
 	},
 /obj/machinery/light{
 	dir = 8
@@ -5519,13 +5519,13 @@
 	dir = 4
 	},
 /obj/floor_decal/industrial/warning{
-	dir = 10;
-	icon_state = "warning"
+	icon_state = "warning";
+	dir = 10
 	},
 /obj/machinery/power/apc{
-	locked = 0;
 	name = "south bump";
-	pixel_y = -28
+	pixel_y = -28;
+	locked = 0
 	},
 /obj/structure/cable,
 /turf/simulated/floor/tiled/steel_ridged,
@@ -5552,15 +5552,15 @@
 	},
 /obj/floor_decal/industrial/outline/yellow,
 /obj/machinery/alarm{
-	locked = 0;
-	pixel_y = 20
+	pixel_y = 20;
+	locked = 0
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/colony/airlock)
 "ku" = (
 /obj/machinery/alarm{
-	locked = 0;
-	pixel_y = 20
+	pixel_y = 20;
+	locked = 0
 	},
 /obj/structure/reagent_dispensers/beerkeg,
 /obj/floor_decal/techfloor{
@@ -5595,9 +5595,9 @@
 /area/map_template/colony)
 "kw" = (
 /obj/machinery/atmospherics/omni/filter{
-	tag_east = 3;
 	tag_north = 2;
-	tag_south = 1
+	tag_south = 1;
+	tag_east = 3
 	},
 /obj/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/tiled/techfloor/grid,
@@ -5632,8 +5632,8 @@
 /area/map_template/colony)
 "kA" = (
 /obj/machinery/alarm{
-	locked = 0;
-	pixel_y = 20
+	pixel_y = 20;
+	locked = 0
 	},
 /obj/structure/flora/pottedplant/tropical,
 /turf/simulated/floor/lino,
@@ -5655,9 +5655,9 @@
 	dir = 5
 	},
 /obj/structure/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony)
@@ -5689,14 +5689,14 @@
 "kG" = (
 /obj/floor_decal/techfloor/orange,
 /obj/structure/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/machinery/button/alternate/door/bolts{
-	id_tag = "colj";
 	name = "Jail Bolt Control";
-	pixel_x = 28
+	pixel_x = 28;
+	id_tag = "colj"
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/jail)
@@ -5769,9 +5769,9 @@
 /area/map_template/colony/mineralprocessing)
 "kN" = (
 /obj/machinery/button/crematorium{
-	id_tag = 8;
 	pixel_y = 25;
-	req_access = list()
+	req_access = list();
+	id_tag = 8
 	},
 /obj/decal/cleanable/dirt,
 /obj/structure/table/steel_reinforced,
@@ -5814,17 +5814,17 @@
 	dir = 6
 	},
 /obj/structure/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony)
 "kT" = (
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 1
@@ -5837,9 +5837,9 @@
 	dir = 8
 	},
 /obj/structure/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/grass,
@@ -5886,8 +5886,8 @@
 /obj/structure/table/steel_reinforced,
 /obj/decal/cleanable/dirt,
 /obj/structure/railing/mapped{
-	dir = 8;
-	icon_state = "railing0-1"
+	icon_state = "railing0-1";
+	dir = 8
 	},
 /turf/simulated/floor/exoplanet/concrete,
 /area/map_template/colony/mineralprocessing)
@@ -5900,13 +5900,13 @@
 /obj/machinery/door/window/eastright,
 /obj/structure/table/steel_reinforced,
 /obj/machinery/button/blast_door{
-	id_tag = "colmainexit";
-	name = "Exit Blast Doors"
+	name = "Exit Blast Doors";
+	id_tag = "colmainexit"
 	},
 /obj/machinery/button/blast_door{
-	id_tag = "colmainblast";
 	name = "Entry Blast Doors";
-	pixel_y = 8
+	pixel_y = 8;
+	id_tag = "colmainblast"
 	},
 /turf/simulated/floor/lino,
 /area/map_template/colony)
@@ -5921,25 +5921,25 @@
 /turf/simulated/floor/reinforced/nitrogen,
 /area/map_template/colony/atmospherics)
 "le" = (
+/mob/living/simple_animal/passive/cow,
 /obj/structure/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/mob/living/simple_animal/passive/cow,
 /turf/simulated/floor/grass,
 /area/map_template/colony/hydroponics)
 "lf" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable{
+	icon_state = "1-4";
 	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
+	d2 = 4
 	},
 /obj/floor_decal/techfloor{
 	dir = 9
@@ -5964,8 +5964,8 @@
 /area/map_template/colony/airlock)
 "li" = (
 /obj/structure/railing/mapped{
-	dir = 8;
-	icon_state = "railing0-1"
+	icon_state = "railing0-1";
+	dir = 8
 	},
 /obj/machinery/conveyor_switch{
 	id = "colonymine"
@@ -5976,9 +5976,9 @@
 /area/map_template/colony/mineralprocessing)
 "lj" = (
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/floor_decal/techfloor{
 	dir = 1
@@ -5994,9 +5994,9 @@
 /area/map_template/colony)
 "ll" = (
 /obj/structure/cable{
+	icon_state = "1-8";
 	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
+	d2 = 8
 	},
 /obj/floor_decal/techfloor{
 	dir = 1
@@ -6045,13 +6045,13 @@
 /area/map_template/colony/jail)
 "lt" = (
 /obj/machinery/power/apc{
-	locked = 0;
 	name = "south bump";
-	pixel_y = -28
+	pixel_y = -28;
+	locked = 0
 	},
 /obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
+	icon_state = "0-4";
+	d2 = 4
 	},
 /obj/structure/catwalk,
 /obj/floor_decal/industrial/warning/dust{
@@ -6062,9 +6062,9 @@
 /area/map_template/colony/mineralprocessing)
 "lu" = (
 /obj/structure/cable{
+	icon_state = "2-8";
 	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+	d2 = 8
 	},
 /obj/structure/catwalk,
 /obj/floor_decal/industrial/warning/dust{
@@ -6112,8 +6112,8 @@
 /area/map_template/colony/messhall)
 "lz" = (
 /obj/structure/railing/mapped{
-	dir = 8;
-	icon_state = "railing0-1"
+	icon_state = "railing0-1";
+	dir = 8
 	},
 /obj/machinery/computer/mining,
 /obj/structure/table/steel_reinforced,
@@ -6153,9 +6153,9 @@
 /obj/item/stack/material/silver/ten,
 /obj/structure/catwalk,
 /obj/structure/cable{
+	icon_state = "1-4";
 	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
+	d2 = 4
 	},
 /obj/floor_decal/industrial/warning/dust{
 	dir = 4
@@ -6166,9 +6166,9 @@
 "lD" = (
 /obj/structure/catwalk,
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/exoplanet/concrete,
@@ -6215,16 +6215,16 @@
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/dirt,
 /obj/machinery/embedded_controller/radio/airlock/airlock_controller{
-	cycle_to_external_air = 1;
+	pixel_y = 28;
 	frequency = 1380;
 	id_tag = "playablecolonymain";
-	pixel_y = 28;
+	tag_exterior_door = "playablecolonymain_exterior_door";
+	tag_interior_door = "playablecolonymain_interior_door";
 	tag_airpump = "playablecolonymain_pump";
 	tag_chamber_sensor = "playablecolonymain_sensor_chamber";
-	tag_exterior_door = "playablecolonymain_exterior_door";
 	tag_exterior_sensor = "playablecolonymain_sensor_external";
-	tag_interior_door = "playablecolonymain_interior_door";
-	tag_interior_sensor = "playablecolonymain_sensor_interior"
+	tag_interior_sensor = "playablecolonymain_sensor_interior";
+	cycle_to_external_air = 1
 	},
 /obj/machinery/atmospherics/unary/vent_pump/high_volume/external_air{
 	id_tag = "playablecolonymain_pump";
@@ -6234,25 +6234,25 @@
 /area/map_template/colony/airlock)
 "lK" = (
 /obj/machinery/atmospherics/omni/filter{
-	tag_east = 2;
 	tag_north = 3;
+	tag_east = 2;
 	tag_west = 1
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/colony/atmospherics)
 "lL" = (
 /obj/machinery/atmospherics/omni/filter{
-	tag_east = 2;
 	tag_north = 5;
+	tag_east = 2;
 	tag_west = 1
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/colony/atmospherics)
 "lM" = (
 /obj/machinery/airlock_sensor{
+	pixel_x = 22;
 	frequency = 1380;
-	id_tag = "playablecolonymain_sensor_chamber";
-	pixel_x = 22
+	id_tag = "playablecolonymain_sensor_chamber"
 	},
 /obj/floor_decal/industrial/warning{
 	dir = 4
@@ -6267,9 +6267,9 @@
 "lN" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/machinery/door/airlock/glass/security{
 	id_tag = "colj"
@@ -6300,30 +6300,30 @@
 /obj/machinery/portable_atmospherics/canister/air/airlock,
 /obj/machinery/atmospherics/portables_connector,
 /obj/machinery/access_button/airlock_interior{
-	frequency = 1380;
-	master_tag = "playablecolonymain";
 	pixel_x = -22;
-	pixel_y = 5
+	pixel_y = 5;
+	frequency = 1380;
+	master_tag = "playablecolonymain"
 	},
 /obj/floor_decal/corner/yellow{
 	dir = 5
 	},
 /obj/machinery/airlock_sensor/airlock_interior{
+	pixel_x = -22;
 	frequency = 1380;
-	id_tag = "playablecolonymain_sensor_interior";
-	pixel_x = -22
+	id_tag = "playablecolonymain_sensor_interior"
 	},
 /obj/floor_decal/industrial/warning{
-	dir = 8;
-	icon_state = "warning"
+	icon_state = "warning";
+	dir = 8
 	},
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/colony/airlock)
 "lR" = (
 /obj/machinery/alarm{
-	locked = 0;
-	pixel_y = 20
+	pixel_y = 20;
+	locked = 0
 	},
 /obj/floor_decal/corner/yellow{
 	dir = 5
@@ -6417,9 +6417,9 @@
 	},
 /obj/structure/catwalk,
 /obj/structure/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/floor_decal/industrial/warning/dust{
 	dir = 4
@@ -6430,23 +6430,23 @@
 /area/map_template/colony/mineralprocessing)
 "ma" = (
 /obj/machinery/airlock_sensor/airlock_exterior{
+	pixel_x = 22;
 	frequency = 1380;
-	id_tag = "playablecolonymain_sensor_external";
-	pixel_x = 22
+	id_tag = "playablecolonymain_sensor_external"
 	},
 /obj/machinery/access_button/airlock_exterior{
-	frequency = 1380;
-	master_tag = "playablecolonymain";
 	pixel_x = 19;
-	pixel_y = 5
+	pixel_y = 5;
+	frequency = 1380;
+	master_tag = "playablecolonymain"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden,
 /obj/structure/catwalk,
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
 	desc = "A flexible superconducting cable for heavy-duty power transfer. It's been labeled 'chaos reigns'.";
-	icon_state = "2-8"
+	icon_state = "2-8";
+	d1 = 2;
+	d2 = 8
 	},
 /obj/floor_decal/industrial/warning/dust{
 	dir = 4
@@ -6471,26 +6471,26 @@
 "mc" = (
 /obj/structure/grille,
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
+	icon_state = "0-8";
+	d2 = 8
 	},
 /turf/simulated/floor/exoplanet/concrete,
 /area/template_noop)
 "md" = (
 /obj/structure/grille,
 /obj/structure/cable{
+	icon_state = "1-8";
 	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
+	d2 = 8
 	},
 /obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
+	icon_state = "0-8";
+	d2 = 8
 	},
 /turf/simulated/floor/exoplanet/concrete,
 /area/template_noop)
@@ -6500,9 +6500,9 @@
 /area/map_template/colony/engineering)
 "mf" = (
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/structure/bed,
 /obj/floor_decal/corner/red{
@@ -6545,21 +6545,21 @@
 "mj" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/machinery/door/blast/regular/open{
+	name = "Entry Blast Door";
 	icon_state = "pdoor0";
-	id_tag = "colmainblast";
-	name = "Entry Blast Door"
+	id_tag = "colmainblast"
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony)
 "mk" = (
 /obj/structure/railing/mapped{
-	dir = 8;
-	icon_state = "railing0-1"
+	icon_state = "railing0-1";
+	dir = 8
 	},
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/exoplanet/concrete,
@@ -6567,14 +6567,14 @@
 "ml" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
+	icon_state = "2-4";
 	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
+	d2 = 4
 	},
 /obj/wallframe_spawn/reinforced_phoron,
 /obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
+	icon_state = "0-4";
+	d2 = 4
 	},
 /turf/simulated/floor/plating,
 /area/map_template/colony/jail)
@@ -6582,24 +6582,24 @@
 /obj/machinery/door/firedoor,
 /obj/wallframe_spawn/reinforced_phoron,
 /obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
+	icon_state = "0-8";
+	d2 = 8
 	},
 /obj/structure/cable{
+	icon_state = "2-8";
 	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+	d2 = 8
 	},
 /turf/simulated/floor/plating,
 /area/map_template/colony/jail)
 "mn" = (
 /obj/structure/railing/mapped{
-	dir = 8;
-	icon_state = "railing0-1"
+	icon_state = "railing0-1";
+	dir = 8
 	},
 /obj/structure/railing/mapped{
-	dir = 4;
-	icon_state = "railing0-1"
+	icon_state = "railing0-1";
+	dir = 4
 	},
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/dirt,
@@ -6611,9 +6611,9 @@
 	dir = 4
 	},
 /obj/structure/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/machinery/door/blast/regular/open{
 	icon_state = "pdoor0";
@@ -6624,9 +6624,9 @@
 "mp" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/structure/cable,
 /obj/wallframe_spawn/reinforced_phoron,
@@ -6640,8 +6640,8 @@
 "mr" = (
 /obj/machinery/atmospherics/pipe/manifold4w/hidden,
 /obj/floor_decal/industrial/warning{
-	dir = 8;
-	icon_state = "warning"
+	icon_state = "warning";
+	dir = 8
 	},
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/techfloor/grid,
@@ -6665,9 +6665,9 @@
 /area/map_template/colony/jail)
 "mu" = (
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/wallframe_spawn/reinforced_phoron,
 /obj/machinery/door/firedoor,
@@ -6713,9 +6713,9 @@
 	dir = 4
 	},
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/machinery/door/airlock/command,
 /turf/simulated/floor/tiled/techfloor,
@@ -6734,9 +6734,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/door/blast/regular/open{
+	name = "Entry Blast Door";
 	icon_state = "pdoor0";
-	id_tag = "colmainblast";
-	name = "Entry Blast Door"
+	id_tag = "colmainblast"
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony)
@@ -6766,9 +6766,9 @@
 	dir = 9
 	},
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/floor_decal/techfloor{
 	dir = 1
@@ -6781,9 +6781,9 @@
 	level = 2
 	},
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/floor_decal/techfloor{
 	dir = 1
@@ -6798,9 +6798,9 @@
 	dir = 8
 	},
 /obj/structure/cable{
+	icon_state = "2-8";
 	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+	d2 = 8
 	},
 /obj/floor_decal/techfloor{
 	dir = 1
@@ -6830,8 +6830,8 @@
 	dir = 5
 	},
 /obj/floor_decal/industrial/warning{
-	dir = 1;
-	icon_state = "warning"
+	icon_state = "warning";
+	dir = 1
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/map_template/colony/armory)
@@ -6844,8 +6844,8 @@
 	dir = 5
 	},
 /obj/floor_decal/industrial/warning{
-	dir = 1;
-	icon_state = "warning"
+	icon_state = "warning";
+	dir = 1
 	},
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/colony/armory)
@@ -6865,9 +6865,9 @@
 	dir = 6
 	},
 /obj/structure/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/floor_decal/corner/red{
 	dir = 1
@@ -6922,8 +6922,8 @@
 /obj/decal/cleanable/dirt,
 /obj/structure/railing/mapped,
 /obj/structure/railing/mapped{
-	dir = 8;
-	icon_state = "railing0-1"
+	icon_state = "railing0-1";
+	dir = 8
 	},
 /obj/machinery/recharge_station,
 /turf/simulated/floor/exoplanet/concrete,
@@ -6970,9 +6970,9 @@
 /area/map_template/colony)
 "mW" = (
 /obj/structure/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/floor_decal/techfloor{
 	dir = 6
@@ -7014,9 +7014,9 @@
 "na" = (
 /obj/structure/catwalk,
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/hidden{
@@ -7038,13 +7038,13 @@
 	dir = 4
 	},
 /obj/machinery/alarm{
-	locked = 0;
-	pixel_y = 20
+	pixel_y = 20;
+	locked = 0
 	},
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/floor_decal/corner/red{
 	dir = 5
@@ -7057,9 +7057,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/floor_decal/corner/red{
 	dir = 5
@@ -7077,14 +7077,14 @@
 /area/map_template/colony/hydroponics)
 "nf" = (
 /obj/structure/cable{
+	icon_state = "1-4";
 	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
+	d2 = 4
 	},
 /obj/structure/cable{
+	icon_state = "1-8";
 	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
+	d2 = 8
 	},
 /obj/floor_decal/corner/red{
 	dir = 6
@@ -7101,13 +7101,13 @@
 /area/map_template/colony/hydroponics)
 "nh" = (
 /obj/machinery/power/apc{
-	locked = 0;
 	name = "south bump";
-	pixel_y = -28
+	pixel_y = -28;
+	locked = 0
 	},
 /obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
+	icon_state = "0-4";
+	d2 = 4
 	},
 /obj/structure/table/rack,
 /obj/item/clothing/shoes/magboots,
@@ -7141,9 +7141,9 @@
 	dir = 10
 	},
 /obj/structure/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/floor_decal/corner/yellow{
 	dir = 5
@@ -7158,10 +7158,10 @@
 /turf/simulated/floor/lino,
 /area/map_template/colony)
 "nl" = (
+/mob/living/simple_animal/passive/chicken,
 /obj/machinery/light{
 	dir = 8
 	},
-/mob/living/simple_animal/passive/chicken,
 /turf/simulated/floor/grass,
 /area/map_template/colony/hydroponics)
 "nm" = (
@@ -7208,9 +7208,9 @@
 /area/map_template/colony/airlock)
 "ns" = (
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/structure/window/reinforced{
 	dir = 4
@@ -7244,9 +7244,9 @@
 /area/map_template/colony/jail)
 "nw" = (
 /obj/structure/cable{
+	icon_state = "1-8";
 	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
+	d2 = 8
 	},
 /obj/structure/table/rack,
 /obj/item/clothing/shoes/magboots,
@@ -7274,39 +7274,39 @@
 "ny" = (
 /obj/structure/grille,
 /obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
+	icon_state = "0-4";
+	d2 = 4
 	},
 /turf/simulated/floor/exoplanet/concrete,
 /area/map_template/colony/mineralprocessing)
 "nz" = (
 /obj/structure/grille,
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
+	icon_state = "0-4";
+	d2 = 4
 	},
 /turf/simulated/floor/exoplanet/concrete,
 /area/map_template/colony/mineralprocessing)
 "nA" = (
 /obj/structure/grille,
 /obj/structure/cable{
+	icon_state = "1-4";
 	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
+	d2 = 4
 	},
 /obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
+	icon_state = "0-8";
+	d2 = 8
 	},
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/simulated/floor/exoplanet/concrete,
 /area/map_template/colony/mineralprocessing)
@@ -7315,9 +7315,9 @@
 	dir = 5
 	},
 /obj/structure/cable{
+	icon_state = "1-4";
 	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
+	d2 = 4
 	},
 /turf/simulated/floor/grass,
 /area/map_template/colony/hydroponics)
@@ -7342,17 +7342,17 @@
 	dir = 4
 	},
 /obj/structure/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/machinery/light{
 	dir = 4
 	},
 /obj/structure/railing/mapped,
 /obj/structure/railing/mapped{
-	dir = 1;
-	icon_state = "railing0-1"
+	icon_state = "railing0-1";
+	dir = 1
 	},
 /obj/structure/closet/emcloset,
 /obj/item/clothing/suit/space/emergency,
@@ -7417,9 +7417,9 @@
 	},
 /obj/machinery/portable_atmospherics/hydroponics,
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/hydroponics)
@@ -7487,13 +7487,13 @@
 "nP" = (
 /obj/structure/grille,
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
+	icon_state = "0-8";
+	d2 = 8
 	},
 /turf/simulated/floor/exoplanet/concrete,
 /area/map_template/colony/mineralprocessing)
@@ -7513,26 +7513,26 @@
 "nR" = (
 /obj/structure/grille,
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
+	icon_state = "0-8";
+	d2 = 8
 	},
 /obj/structure/cable{
+	icon_state = "2-8";
 	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+	d2 = 8
 	},
 /turf/simulated/floor/exoplanet/concrete,
 /area/map_template/colony/mineralprocessing)
 "nS" = (
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/machinery/light,
 /obj/decal/cleanable/dirt,
@@ -7554,9 +7554,9 @@
 /area/map_template/colony/mineralprocessing)
 "nU" = (
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/floor_decal/industrial/warning{
 	dir = 4
@@ -7578,13 +7578,13 @@
 "nW" = (
 /obj/machinery/atmospherics/pipe/simple/hidden,
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/floor_decal/industrial/warning{
-	dir = 8;
-	icon_state = "warning"
+	icon_state = "warning";
+	dir = 8
 	},
 /obj/decal/cleanable/dirt,
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -7626,9 +7626,9 @@
 	dir = 10
 	},
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/techfloor,
@@ -7641,9 +7641,9 @@
 	dir = 6
 	},
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/techfloor,
@@ -7653,14 +7653,14 @@
 	dir = 1
 	},
 /obj/structure/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/structure/cable{
+	icon_state = "1-8";
 	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
+	d2 = 8
 	},
 /obj/decal/cleanable/dirt,
 /obj/item/device/radio/intercom/map_preset/playablecolony{
@@ -7745,8 +7745,8 @@
 /obj/floor_decal/industrial/warning/dust,
 /obj/structure/table/rack,
 /obj/item/gun/projectile/heavysniper/ant{
-	desc = "A large, unwieldy bolt-action rifle in shoddy condition. Chambered in small caliber, looks far scarier than it is. Vamoos ya varmint!";
-	name = "anti-varmint rifle"
+	name = "anti-varmint rifle";
+	desc = "A large, unwieldy bolt-action rifle in shoddy condition. Chambered in small caliber, looks far scarier than it is. Vamoos ya varmint!"
 	},
 /obj/item/ammo_magazine/pistol/small,
 /obj/item/ammo_magazine/pistol/small,
@@ -7776,21 +7776,21 @@
 	},
 /obj/floor_decal/industrial/outline/yellow,
 /obj/structure/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /turf/simulated/floor/exoplanet/concrete,
 /area/map_template/colony/mineralprocessing)
 "ol" = (
 /obj/structure/railing/mapped{
-	dir = 8;
-	icon_state = "railing0-1"
+	icon_state = "railing0-1";
+	dir = 8
 	},
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/floor_decal/industrial/warning/dust{
 	dir = 9
@@ -7806,9 +7806,9 @@
 /area/map_template/colony/mineralprocessing)
 "om" = (
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/floor_decal/industrial/warning/dust{
 	dir = 1
@@ -7822,13 +7822,13 @@
 /area/map_template/colony/mineralprocessing)
 "on" = (
 /obj/structure/railing/mapped{
-	dir = 4;
-	icon_state = "railing0-1"
+	icon_state = "railing0-1";
+	dir = 4
 	},
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/floor_decal/industrial/warning/dust{
 	dir = 5
@@ -7845,22 +7845,22 @@
 "oo" = (
 /obj/structure/grille,
 /obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
+	icon_state = "0-8";
+	d2 = 8
 	},
 /obj/structure/cable{
+	icon_state = "1-8";
 	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
+	d2 = 8
 	},
 /turf/simulated/floor/exoplanet/concrete,
 /area/map_template/colony/mineralprocessing)
 "op" = (
 /obj/structure/catwalk,
 /obj/structure/cable{
+	icon_state = "1-4";
 	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
+	d2 = 4
 	},
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/exoplanet/concrete,
@@ -7868,18 +7868,18 @@
 "oq" = (
 /obj/structure/catwalk,
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/exoplanet/concrete,
 /area/template_noop)
 "or" = (
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/structure/catwalk,
 /obj/structure/sign/warning/high_voltage{
@@ -7890,9 +7890,9 @@
 /area/template_noop)
 "os" = (
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/structure/catwalk,
 /obj/decal/cleanable/dirt,
@@ -7921,14 +7921,14 @@
 "ov" = (
 /obj/structure/catwalk,
 /obj/structure/cable{
+	icon_state = "2-4";
 	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
+	d2 = 4
 	},
 /obj/structure/cable{
+	icon_state = "1-4";
 	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
+	d2 = 4
 	},
 /obj/floor_decal/industrial/warning/dust{
 	dir = 4
@@ -7942,9 +7942,9 @@
 /area/map_template/colony/mineralprocessing)
 "ow" = (
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/wallframe_spawn/reinforced_phoron,
 /obj/machinery/door/firedoor,
@@ -7955,9 +7955,9 @@
 /area/map_template/colony/airlock)
 "ox" = (
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/floor_decal/industrial/warning/dust{
 	dir = 8
@@ -7975,9 +7975,9 @@
 "oy" = (
 /obj/structure/catwalk,
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/manifold/hidden{
@@ -8019,13 +8019,13 @@
 /area/map_template/colony/mineralprocessing)
 "oD" = (
 /obj/machinery/alarm{
-	locked = 0;
-	pixel_y = 20
+	pixel_y = 20;
+	locked = 0
 	},
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/floor_decal/techfloor{
 	dir = 1
@@ -8072,8 +8072,8 @@
 	dir = 1
 	},
 /obj/machinery/alarm{
-	locked = 0;
-	pixel_y = 20
+	pixel_y = 20;
+	locked = 0
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 1
@@ -8097,21 +8097,28 @@
 /area/map_template/colony)
 "pB" = (
 /obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
+	icon_state = "0-4";
+	d2 = 4
 	},
 /obj/structure/grille,
 /turf/simulated/floor/exoplanet/concrete,
 /area/template_noop)
+"rh" = (
+/obj/machinery/vending/dinnerware{
+	icon_state = "dinnerware";
+	dir = 8
+	},
+/turf/simulated/floor/tiled/freezer,
+/area/map_template/colony/messhall)
 "tl" = (
 /obj/structure/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2"
+	icon_state = "0-2";
+	d2 = 2
 	},
 /obj/structure/grille,
 /turf/simulated/floor/exoplanet/concrete,
@@ -8142,8 +8149,8 @@
 /area/map_template/colony/tcomms)
 "tH" = (
 /obj/machinery/alarm{
-	locked = 0;
-	pixel_y = 20
+	pixel_y = 20;
+	locked = 0
 	},
 /obj/structure/iv_stand,
 /obj/structure/hygiene/sink{
@@ -8164,9 +8171,9 @@
 	dir = 8
 	},
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/hydroponics)
@@ -8182,10 +8189,18 @@
 "uK" = (
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/tcomms)
+"uY" = (
+/obj/structure/table/marble,
+/obj/machinery/chemical_dispenser/bar_soft/full{
+	icon_state = "soda_dispenser";
+	dir = 8
+	},
+/turf/simulated/floor/tiled/freezer,
+/area/map_template/colony/messhall)
 "vk" = (
 /obj/structure/railing/mapped{
-	dir = 8;
-	icon_state = "railing0-1"
+	icon_state = "railing0-1";
+	dir = 8
 	},
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/dirt,
@@ -8225,9 +8240,9 @@
 /area/template_noop)
 "xD" = (
 /obj/structure/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/floor_decal/techfloor{
 	dir = 4
@@ -8258,9 +8273,9 @@
 /area/map_template/colony/hydroponics)
 "yN" = (
 /obj/structure/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/floor_decal/techfloor{
 	dir = 4
@@ -8310,9 +8325,9 @@
 	dir = 8
 	},
 /obj/structure/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /turf/simulated/floor/wood,
 /area/map_template/colony/messhall)
@@ -8345,22 +8360,22 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /turf/simulated/floor/grass,
 /area/map_template/colony/hydroponics)
 "Hy" = (
 /obj/machinery/portable_atmospherics/hydroponics,
 /obj/machinery/power/apc{
-	locked = 0;
 	name = "south bump";
-	pixel_y = -28
+	pixel_y = -28;
+	locked = 0
 	},
 /obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
+	icon_state = "0-8";
+	d2 = 8
 	},
 /obj/machinery/light{
 	dir = 4
@@ -8373,18 +8388,21 @@
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/colony/hydroponics)
+"HU" = (
+/turf/simulated/floor/tiled/freezer,
+/area/map_template/colony/messhall)
 "IA" = (
 /obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
+	icon_state = "0-4";
+	d2 = 4
 	},
 /obj/machinery/power/solar,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/template_noop)
 "JN" = (
 /obj/structure/railing/mapped{
-	dir = 8;
-	icon_state = "railing0-1"
+	icon_state = "railing0-1";
+	dir = 8
 	},
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/dirt,
@@ -8440,6 +8458,15 @@
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/tiled/white,
 /area/map_template/colony/medbay)
+"Lq" = (
+/obj/floor_decal/spline/fancy/wood,
+/obj/structure/cable{
+	icon_state = "4-8";
+	d1 = 4;
+	d2 = 8
+	},
+/turf/simulated/floor/wood,
+/area/map_template/colony/messhall)
 "LQ" = (
 /obj/floor_decal/techfloor{
 	dir = 8
@@ -8453,9 +8480,9 @@
 /area/map_template/colony/hydroponics)
 "LT" = (
 /obj/structure/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -8491,8 +8518,8 @@
 "Og" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/structure/railing/mapped{
-	dir = 8;
-	icon_state = "railing0-1"
+	icon_state = "railing0-1";
+	dir = 8
 	},
 /obj/structure/railing/mapped,
 /turf/simulated/floor/exoplanet/concrete,
@@ -8519,6 +8546,11 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/white,
 /area/map_template/colony/medbay)
+"Pe" = (
+/obj/structure/table/marble,
+/obj/machinery/appliance/cooker/microwave,
+/turf/simulated/floor/wood,
+/area/map_template/colony/messhall)
 "PU" = (
 /obj/structure/table/steel_reinforced,
 /obj/machinery/reagent_temperature,
@@ -8535,22 +8567,22 @@
 /obj/structure/catwalk,
 /obj/decal/cleanable/dirt,
 /obj/machinery/button/blast_door{
-	id_tag = "colsen";
 	name = "Hard Equipment Storage";
-	pixel_y = 28
+	pixel_y = 28;
+	id_tag = "colsen"
 	},
 /turf/simulated/floor/exoplanet/concrete,
 /area/map_template/colony/command)
 "Rs" = (
 /obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2"
+	icon_state = "0-2";
+	d2 = 2
 	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8";
-	dir = 4
+	dir = 4;
+	d1 = 1;
+	d2 = 8
 	},
 /obj/structure/grille,
 /turf/simulated/floor/exoplanet/concrete,
@@ -8559,9 +8591,9 @@
 /obj/item/stool/bar/padded,
 /obj/floor_decal/spline/fancy/wood,
 /obj/structure/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/simulated/floor/wood,
 /area/map_template/colony/messhall)
@@ -8575,6 +8607,10 @@
 /obj/structure/table/marble,
 /turf/simulated/floor/wood,
 /area/map_template/colony/messhall)
+"TD" = (
+/obj/machinery/appliance/cooker/oven,
+/turf/simulated/floor/tiled/freezer,
+/area/map_template/colony/messhall)
 "Ud" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
@@ -8585,9 +8621,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/structure/window/reinforced,
 /obj/machinery/constructable_frame/machine_frame,
@@ -8606,6 +8642,11 @@
 /obj/structure/closet/crate/solar_assembly,
 /turf/simulated/floor/exoplanet/concrete,
 /area/template_noop)
+"WJ" = (
+/obj/machinery/door/firedoor,
+/obj/wallframe_spawn/reinforced_phoron,
+/turf/simulated/floor/plating,
+/area/template_noop)
 "Xh" = (
 /obj/floor_decal/techfloor{
 	dir = 4
@@ -8620,8 +8661,8 @@
 /obj/item/storage/firstaid/adv,
 /obj/item/storage/firstaid/stab,
 /obj/machinery/alarm{
-	locked = 0;
-	pixel_y = 20
+	pixel_y = 20;
+	locked = 0
 	},
 /obj/floor_decal/corner/paleblue{
 	dir = 10
@@ -8651,9 +8692,9 @@
 /area/map_template/colony/hydroponics)
 "ZN" = (
 /obj/machinery/door/blast/shutters{
-	id_tag = "colsen";
 	name = "Hard Storage Shutter";
-	dir = 4
+	dir = 4;
+	id_tag = "colsen"
 	},
 /turf/simulated/floor/plating,
 /area/map_template/colony/command)
@@ -10072,12 +10113,12 @@ AK
 hs
 eN
 fg
-Rt
-Tk
+Lq
+Pe
 aS
 ly
 wR
-vC
+TD
 aI
 Bc
 RR
@@ -10115,10 +10156,10 @@ hH
 fq
 gK
 aK
-aK
-dv
-dv
-aK
+rh
+uY
+HU
+vC
 aK
 ba
 Md
@@ -10156,11 +10197,11 @@ dv
 dv
 aK
 aK
-fc
-fc
-fc
-aj
-aj
+ab
+WJ
+WJ
+ab
+ab
 ba
 lB
 lB
@@ -10198,9 +10239,9 @@ fc
 fc
 jK
 fc
-aa
-aa
-aa
+aj
+aj
+aj
 aj
 aj
 fc

@@ -33,17 +33,6 @@
 	new /obj/item/clothing/suit/iccgn/dress_officer(src)
 	new /obj/item/clothing/head/iccgn/service(src)
 
-/obj/structure/closet/crate/vox_wizardry
-	name = "Vox crate"
-	desc = "Fashion box"
-
-/obj/structure/closet/crate/vox_wizardry/New()
-	..()
-	new /obj/item/clothing/suit/wizrobe
-	new /obj/item/clothing/head/wizard
-	new /obj/item/clothing/suit/wizrobe/marisa
-	new /obj/item/clothing/head/wizard/marisa
-
 /obj/structure/closet/crate/vox_scg
 	name = "Vox crate"
 	desc = "Fashion box"
@@ -76,11 +65,12 @@
 		"Carapace Suit - 3" = list(3, /obj/item/clothing/head/helmet/space/vox/carapace, /obj/item/clothing/suit/space/vox/carapace),
 		"Pressure Suit - 3" = list(3, /obj/item/clothing/head/helmet/space/vox/pressure, /obj/item/clothing/suit/space/vox/pressure),
 		"Stealth Suit - 3" = list(3, /obj/item/clothing/head/helmet/space/vox/stealth, /obj/item/clothing/suit/space/vox/stealth),
-		"Biotech Suit" = list(3, /obj/item/clothing/head/helmet/space/vox/medic, /obj/item/clothing/suit/space/vox/medic),
+		"Biotech Suit - 3" = list(3, /obj/item/clothing/head/helmet/space/vox/medic, /obj/item/clothing/suit/space/vox/medic),
 		"Stimpack - 3" = list(3, /obj/item/reagent_containers/hypospray/autoinjector/stimpack),
 		"Combat Stimulant - 3" = list(3, /obj/item/reagent_containers/hypospray/autoinjector/combatstim),
 		"C4 - 3" = list(3, /obj/item/plastique),
 		"Flux Cannon - 4" = list(4, /obj/item/gun/energy/darkmatter),
+		"Spike Thrower - 4" = list(4, /obj/item/gun/launcher/alien/spikethrower),
 		"Hack ID - 4" = list(4, /obj/item/card/id/syndicate),
 		"Combat medpack - 4" = list(4, /obj/item/storage/firstaid/combat),
 		"Sleepy pen - 4" = list(4, /obj/item/pen/reagent/sleepy),
@@ -92,52 +82,110 @@
 		"Thermals - 12" = list(12, /obj/item/clothing/glasses/thermal/plain/monocle),
 		"MIU - 15" = list(15, /obj/item/clothing/mask/ai)
 	)
+	var/list/purchase_limits = list(
+		"Thermals - 12" = 2,
+		"Raider Suit - 6" = 1,
+		"Arkmade Hardsuit - 8" = 1
+	)
+
+/obj/structure/voxuplink/vox_ship/proc/check_and_handle_limits(mob/user, choice)
+	if(!(choice in purchase_limits))
+		return TRUE
+
+	if(purchase_limits[choice] <= 0)
+		to_chat(user, SPAN_WARNING("[choice] are no longer available!"))
+		return FALSE
+
+	purchase_limits[choice]--
+	return TRUE
+
+/obj/structure/voxuplink/vox_ship/attack_hand(mob/living/carbon/human/user)
+	if(!istype(user, /mob/living/carbon/human/vox))
+		to_chat(user, SPAN_WARNING("You don't know what to do with \the [src.name]."))
+		return
+	if(working)
+		to_chat(user, SPAN_WARNING("\The [src.name] is still working!"))
+		return
+	var/choice = input(user, "What would you like to request from Apex? You have [favors] favors left!", "Shoal Beacon") as null|anything in rewards
+	if(rewards[choice][1] > favors || !check_and_handle_limits(user, choice))
+		return
+	working = TRUE
+	on_update_icon()
+	to_chat(user, SPAN_NOTICE("The Apex rewards you with \the [choice]."))
+	sleep(2 SECONDS)
+	working = FALSE
+	on_update_icon()
+	favors -= rewards[choice][1]
+	for(var/I in rewards[choice])
+		if(!isnum(I))
+			new I(get_turf(src))
 
 /obj/structure/voxuplink/vox_ship/use_tool(obj/item/I, mob/user)
 	..()
 // Продажа только материалов
+	var/price
 	if(istype(I, /obj/item/stack/material))
-		var/price
 		var/obj/item/stack/st = I
 		if(istype(I, /obj/item/stack/material/steel))
 			price = 0.02
-		else if(istype(I, /obj/item/stack/material/gold))
-			price = 0.05
-		else if(istype(I, /obj/item/stack/material/silver))
+		else if(istype(I, /obj/item/stack/material/aluminium))
+			price = 0.02
+		else if(istype(I, /obj/item/stack/material/plastic))
+			price = 0.02
+		else if(istype(I, /obj/item/stack/material/osmium))
+			price = 0.02
+		else if(istype(I, /obj/item/stack/material/glass))
 			price = 0.01
-		else if(istype(I, /obj/item/stack/material/diamond))
-			price = 0.07
 		else if(istype(I, /obj/item/stack/material/wood))
 			price = 0.01
-		if(!price)
-			to_chat(user, "Это не требуется Апексам")
-			return FALSE
+		else if(istype(I, /obj/item/stack/material/silver))
+			price = 0.03
+		else if(istype(I, /obj/item/stack/material/plasteel))
+			price = 0.03
+		else if(istype(I, /obj/item/stack/material/ocp))
+			price = 0.03
+		else if(istype(I, /obj/item/stack/material/tritium))
+			price = 0.03
+		else if(istype(I, /obj/item/stack/material/deuterium))
+			price = 0.03
+		else if(istype(I, /obj/item/stack/material/titanium))
+			price = 0.04
+		else if(istype(I, /obj/item/stack/material/gold))
+			price = 0.05
+		else if(istype(I, /obj/item/stack/material/platinum))
+			price = 0.05
+		else if(istype(I, /obj/item/stack/material/uranium))
+			price = 0.05
+		else if(istype(I, /obj/item/stack/material/diamond))
+			price = 0.07
+		else if(istype(I, /obj/item/stack/material/phoron))
+			price = 0.07
 		favors += price * st.amount
-		to_chat(user, "Вы обменяли материалы на валюту")
-		qdel(I)
 // Продажа только оружия
-	if(istype(I, /obj/item/gun))
-		var/price_weapon
+	else if(istype(I, /obj/item/gun))
 		if(istype(I, /obj/item/gun/energy/pulse_rifle/skrell))
-			price_weapon = 3
+			price = 3
 		else if(istype(I, /obj/item/gun/projectile/shotgun))
-			price_weapon = 2
+			price = 2
+		else if(istype(I, /obj/item/gun/projectile/automatic))
+			price = 2
 		else if(istype(I, /obj/item/gun/projectile/pistol))
-			price_weapon = 1
-		if(!price_weapon)
-			to_chat(user, "Это не требуется Апексам")
-			return FALSE
-		favors += price_weapon
-		to_chat(user, "Вы обменяли оружие на валюту")
-		qdel(I)
+			price = 1
+		else if(istype(I, /obj/item/gun/energy/gun))
+			price = 1
+		favors += price
 // Продажа только костюмов
-	if(istype(I, /obj/item/clothing/suit))
-		var/price_suit
+	else if(istype(I, /obj/item/clothing/suit))
 		if(istype(I, /obj/item/clothing/suit/armor/pcarrier))
-			price_suit = 1
-		if(!price_suit)
-			to_chat(user, "Это не требуется Апексам")
-			return FALSE
-		favors += price_suit
-		to_chat(user, "Вы обменяли костюм на валюту")
+			price = 1
+		else if(istype(I, /obj/item/clothing/suit/space/void))
+			price = 0.5
+		else if(istype(I, /obj/item/clothing/head/helmet/space/void))
+			price = 0.1
+		favors += price
+	if(!price)
+		to_chat(user, "Это не требуется Апексам")
+		return FALSE
+	if(price)
+		to_chat(user, "Вы обменяли [I] на валюту")
 		qdel(I)

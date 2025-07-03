@@ -37,6 +37,7 @@
 	default_law_type = /datum/ai_laws/nanotrasen
 	use_overmap = 1
 	num_exoplanets = 1
+	using_sun = TRUE
 	planet_size = list(129,129)
 
 //	minimum_players = 0 its already 0

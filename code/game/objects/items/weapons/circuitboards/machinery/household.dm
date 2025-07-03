@@ -1,6 +1,6 @@
 /obj/item/stock_parts/circuitboard/microwave
 	name = "circuit board (microwave)"
-	build_path = /obj/machinery/microwave
+	build_path = /obj/machinery/appliance/cooker/microwave
 	board_type = "machine"
 	origin_tech = list(TECH_BIO = 2, TECH_ENGINEERING = 2)
 	req_components = list(
@@ -29,22 +29,17 @@
 
 /obj/item/stock_parts/circuitboard/cooker
 	name = "circuit board (candy machine)"
-	build_path = /obj/machinery/cooker/candy
+	build_path = /obj/machinery/appliance/mixer/candy
 	board_type = "machine"
-	origin_tech = list(TECH_BIO = 1, TECH_MATERIAL = 1)
+	origin_tech = list(TECH_BIO = 2, TECH_ENGINEERING = 2)
 	buildtype_select = TRUE
 	req_components = list(
-		/obj/item/stock_parts/manipulator = 2,
-		/obj/item/stock_parts/matter_bin = 1,
-		/obj/item/stack/cable_coil = 10)
-	additional_spawn_components = list(
-		/obj/item/stock_parts/console_screen = 1,
-		/obj/item/stock_parts/keyboard = 1,
-		/obj/item/stock_parts/power/apc/buildable = 1
-	)
+		/obj/item/stock_parts/capacitor = 3,
+		/obj/item/stock_parts/scanning_module = 1,
+		/obj/item/stock_parts/matter_bin = 2)
 
 /obj/item/stock_parts/circuitboard/cooker/get_buildable_types()
-	return subtypesof(/obj/machinery/cooker)
+	return subtypesof(/obj/machinery/appliance) - /obj/machinery/appliance/cooker/microwave
 
 /obj/item/stock_parts/circuitboard/honey
 	name = "circuit board (honey extractor)"

@@ -247,7 +247,7 @@
 /area/bluespaceriver/ship)
 "aS" = (
 /obj/structure/table/steel,
-/obj/machinery/microwave,
+/obj/machinery/appliance/cooker/microwave,
 /turf/simulated/floor/tiled,
 /area/bluespaceriver/ship)
 "aT" = (
