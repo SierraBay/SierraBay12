@@ -50,7 +50,7 @@
 	allowed_roles = list(/datum/job/chief_engineer, /datum/job/senior_engineer, /datum/job/engineer, /datum/job/infsys, /datum/job/engineer_trainee, /datum/job/explorer_engineer, /datum/job/captain, /datum/job/hop, /datum/job/rd, /datum/job/cmo, /datum/job/chief_engineer, /datum/job/hos, /datum/job/iaa, /datum/job/iso, /datum/job/adjutant)
 
 /datum/gear/augment/toolset_engineer
-	display_name = "Integrated engineering toolset (Prosthetic)"
+	display_name = "Integrated engineering toolset (Prosthetic Only)"
 	description = "A lightweight augmentation for the engineer on-the-go. This one comes with a series of common tools."
 	path = /obj/item/organ/internal/augment/active/polytool/engineer
 	cost = 6
@@ -72,7 +72,7 @@
 	organ_tag = "r_hand_aug"
 
 /datum/gear/augment/toolset_surgical
-	display_name = "Integrated surgical toolset (Prosthetic)"
+	display_name = "Integrated surgical toolset (Prosthetic Only)"
 	description = "Part of Zeng-Hu Pharmaceutical's line of biomedical augmentations, this device contains the full set of tools any surgeon would ever need."
 	path = /obj/item/organ/internal/augment/active/polytool/surgical
 	cost = 6
@@ -94,7 +94,7 @@
 	organ_tag = "r_hand_aug"
 
 /datum/gear/augment/circuit
-	display_name = "Integrated circuit frame (Prosthetic)"
+	display_name = "Integrated circuit frame (Prosthetic Only)"
 	description = "A DIY modular assembly for advanced circuitry, courtesy of Xion Industrial. Circuitry not included."
 	path = /obj/item/organ/internal/augment/active/item/circuit
 	cost = 4
