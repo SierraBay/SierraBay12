@@ -1,4 +1,4 @@
-datum/gear/augment
+/datum/gear/augment
 	sort_category = "Augments"
 	category = /datum/gear/augment
 	cost = 2
