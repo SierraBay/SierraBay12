@@ -125,14 +125,14 @@
 
 	rank_types = list(
 		/datum/mil_rank/civ/contractor,
-		/datum/mil_rank/civ/probation,
+		/datum/mil_rank/civ/probation_contractor,
 		/datum/mil_rank/civ/offduty,
 		/datum/mil_rank/civ/synthetic
 	)
 
 	spawn_rank_types = list(
 		/datum/mil_rank/civ/contractor,
-		/datum/mil_rank/civ/probation,
+		/datum/mil_rank/civ/probation_contractor,
 		/datum/mil_rank/civ/offduty,
 		/datum/mil_rank/civ/synthetic
 	)
@@ -146,7 +146,8 @@
 	rank_types = list(
 		/datum/mil_rank/civ/nt,
 		/datum/mil_rank/civ/acting,
-		/datum/mil_rank/civ/probation,
+		/datum/mil_rank/civ/acting_temp,
+		/datum/mil_rank/civ/probation_employee,
 		/datum/mil_rank/civ/offduty,
 		/datum/mil_rank/civ/synthetic
 	)
@@ -154,7 +155,7 @@
 	spawn_rank_types = list(
 		/datum/mil_rank/civ/nt,
 		/datum/mil_rank/civ/acting,
-		/datum/mil_rank/civ/probation,
+		/datum/mil_rank/civ/probation_employee,
 		/datum/mil_rank/civ/offduty,
 		/datum/mil_rank/civ/synthetic
 	)
@@ -177,18 +178,26 @@
 	name = "Civilian"
 
 /datum/mil_rank/civ/nt
-	name = "NanoTrasen Employee"
+	name = "NT Employee"
 
 /datum/mil_rank/civ/acting
-	name = "NanoTrasen Temporary Acting Officer"
-	name_short = "AO"
+	name = "NT Acting Official"
+	name_short = "Acting"
 
-/datum/mil_rank/civ/probation
-	name = "NanoTrasen Probationary Task Officer"
-	name_short = "PTO"
+/datum/mil_rank/civ/acting_temp
+	name = "NT Temporary Assignment"
+	name_short = "TA"
+
+/datum/mil_rank/civ/probation_employee
+	name = "NT Employee on Probationary Period"
+	name_short = "P.P."
+
+/datum/mil_rank/civ/probation_contractor
+	name = "NT Contractor on Probationary Period"
+	name_short = "P.P."
 
 /datum/mil_rank/civ/contractor
-	name = "NanoTrasen Contractor"
+	name = "NT Contractor"
 
 /datum/mil_rank/civ/offduty
 	name = "Off-Duty Personnel"

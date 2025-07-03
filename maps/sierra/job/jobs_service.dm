@@ -12,7 +12,7 @@
 	supervisors = "Главе Персонала"
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/service/chief_steward
 	allowed_branches = list(/datum/mil_branch/employee)
-	allowed_ranks = list(/datum/mil_rank/civ/nt, /datum/mil_rank/civ/acting, /datum/mil_rank/civ/probation)
+	allowed_ranks = list(/datum/mil_rank/civ/nt, /datum/mil_rank/civ/acting, /datum/mil_rank/civ/probation_employee)
 	min_skill = list(
 		SKILL_BUREAUCRACY = SKILL_TRAINED,
 		SKILL_COOKING = SKILL_TRAINED,
@@ -94,7 +94,8 @@
 		/datum/mil_rank/civ/nt,
 		/datum/mil_rank/civ/contractor,
 		/datum/mil_rank/civ/civ,
-		/datum/mil_rank/civ/probation
+		/datum/mil_rank/civ/probation_employee,
+		/datum/mil_rank/civ/probation_contractor
 	)
 	min_skill = list(SKILL_HAULING = SKILL_BASIC)
 	access = list(access_maint_tunnels, access_emergency_storage, access_janitor)
@@ -124,7 +125,8 @@
 		/datum/mil_rank/civ/nt,
 		/datum/mil_rank/civ/contractor,
 		/datum/mil_rank/civ/civ,
-		/datum/mil_rank/civ/probation
+		/datum/mil_rank/civ/probation_employee,
+		/datum/mil_rank/civ/probation_contractor
 	)
 	min_skill = list(
 		SKILL_COOKING = SKILL_TRAINED,
@@ -154,7 +156,7 @@
 	supervisors = "Главному Стюарду и Главе Персонала"
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/service/cook
 	allowed_branches = list(/datum/mil_branch/employee, /datum/mil_branch/civilian, /datum/mil_branch/contractor)
-	allowed_ranks = list(/datum/mil_rank/civ/nt, /datum/mil_rank/civ/contractor, /datum/mil_rank/civ/civ, /datum/mil_rank/civ/probation)
+	allowed_ranks = list(/datum/mil_rank/civ/nt, /datum/mil_rank/civ/contractor, /datum/mil_rank/civ/civ, /datum/mil_rank/civ/probation_employee, /datum/mil_rank/civ/probation_contractor)
 	min_skill = list(
 		SKILL_COOKING = SKILL_BASIC,
 		SKILL_BOTANY = SKILL_BASIC,
@@ -186,7 +188,8 @@
 		/datum/mil_rank/civ/nt,
 		/datum/mil_rank/civ/contractor,
 		/datum/mil_rank/civ/civ,
-		/datum/mil_rank/civ/probation
+		/datum/mil_rank/civ/probation_employee,
+		/datum/mil_rank/civ/probation_contractor
 	)
 	access = list(access_hydroponics, access_bar, access_commissary)
 	min_skill = list(

@@ -17,7 +17,7 @@
 		)
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/research/senior_scientist
 	allowed_branches = list(/datum/mil_branch/employee)
-	allowed_ranks = list(/datum/mil_rank/civ/nt, /datum/mil_rank/civ/acting, /datum/mil_rank/civ/probation)
+	allowed_ranks = list(/datum/mil_rank/civ/nt, /datum/mil_rank/civ/acting, /datum/mil_rank/civ/probation_employee)
 
 	access = list(
 			access_tox,					access_tox_storage,	access_research,	access_mining,		access_mining_office,
@@ -91,7 +91,8 @@
 	allowed_ranks = list(
 			/datum/mil_rank/civ/nt,
 			/datum/mil_rank/civ/contractor,
-			/datum/mil_rank/civ/probation
+			/datum/mil_rank/civ/probation_employee,
+			/datum/mil_rank/civ/probation_contractor
 		)
 
 	access = list(
@@ -133,7 +134,8 @@
 	allowed_ranks = list(
 			/datum/mil_rank/civ/nt,
 			/datum/mil_rank/civ/contractor,
-			/datum/mil_rank/civ/probation
+			/datum/mil_rank/civ/probation_employee,
+			/datum/mil_rank/civ/probation_contractor
 		)
 	min_skill = list(
 			SKILL_COMPUTER		=	SKILL_TRAINED,
@@ -203,7 +205,8 @@
 	allowed_ranks = list(
 			/datum/mil_rank/civ/nt,
 			/datum/mil_rank/civ/contractor,
-			/datum/mil_rank/civ/probation
+			/datum/mil_rank/civ/probation_employee,
+			/datum/mil_rank/civ/probation_contractor
 		)
 
 	access = list(

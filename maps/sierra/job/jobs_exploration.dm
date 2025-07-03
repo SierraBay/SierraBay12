@@ -18,7 +18,7 @@
 
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/exploration/el
 	allowed_branches = list(/datum/mil_branch/employee)
-	allowed_ranks = list(/datum/mil_rank/civ/nt, /datum/mil_rank/civ/acting, /datum/mil_rank/civ/probation)
+	allowed_ranks = list(/datum/mil_rank/civ/nt, /datum/mil_rank/civ/acting, /datum/mil_rank/civ/probation_employee)
 	min_skill = list(
 		SKILL_BUREAUCRACY = SKILL_BASIC,
 		SKILL_EVA         = SKILL_TRAINED,
@@ -84,7 +84,8 @@
 	allowed_ranks = list(
 		/datum/mil_rank/civ/nt,
 		/datum/mil_rank/civ/contractor,
-		/datum/mil_rank/civ/probation
+		/datum/mil_rank/civ/probation_employee,
+		/datum/mil_rank/civ/probation_contractor
 	)
 	min_skill = list(
 		SKILL_EVA     = SKILL_BASIC,
@@ -141,7 +142,8 @@
 	allowed_ranks = list(
 		/datum/mil_rank/civ/nt,
 		/datum/mil_rank/civ/contractor,
-		/datum/mil_rank/civ/probation
+		/datum/mil_rank/civ/probation_employee,
+		/datum/mil_rank/civ/probation_contractor
 	)
 	min_skill = list(
 		SKILL_EVA     = SKILL_BASIC,
@@ -186,7 +188,7 @@
 	selection_color = "#68099e"
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/exploration/medic
 	allowed_branches = list(/datum/mil_branch/employee, /datum/mil_branch/contractor)
-	allowed_ranks = list(/datum/mil_rank/civ/nt, /datum/mil_rank/civ/contractor, /datum/mil_rank/civ/probation)
+	allowed_ranks = list(/datum/mil_rank/civ/nt, /datum/mil_rank/civ/contractor, /datum/mil_rank/civ/probation_employee, /datum/mil_rank/civ/probation_contractor)
 
 	minimal_player_age = 8
 
@@ -255,7 +257,8 @@
 	allowed_ranks = list(
 		/datum/mil_rank/civ/nt,
 		/datum/mil_rank/civ/contractor,
-		/datum/mil_rank/civ/probation
+		/datum/mil_rank/civ/probation_employee,
+		/datum/mil_rank/civ/probation_contractor
 	)
 	min_skill = list(
 		SKILL_EVA          = SKILL_BASIC,

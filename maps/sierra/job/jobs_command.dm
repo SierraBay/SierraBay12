@@ -20,8 +20,7 @@
 		/datum/mil_branch/employee
 	)
 	allowed_ranks = list(
-		/datum/mil_rank/civ/nt,
-		/datum/mil_rank/civ/acting
+		/datum/mil_rank/civ/nt
 	)
 	min_skill = list(
 		SKILL_BUREAUCRACY = SKILL_TRAINED,
@@ -66,7 +65,8 @@
 	)
 	allowed_ranks = list(
 		/datum/mil_rank/civ/nt,
-		/datum/mil_rank/civ/acting
+		/datum/mil_rank/civ/acting,
+		/datum/mil_rank/civ/acting_temp
 	)
 	min_skill = list(
 		SKILL_BUREAUCRACY = SKILL_TRAINED,
@@ -136,7 +136,8 @@
 	)
 	allowed_ranks = list(
 		/datum/mil_rank/civ/nt,
-		/datum/mil_rank/civ/acting
+		/datum/mil_rank/civ/acting,
+		/datum/mil_rank/civ/acting_temp
 	)
 	min_skill = list(
 		SKILL_BUREAUCRACY	=	SKILL_TRAINED,
@@ -270,7 +271,8 @@
 	)
 	allowed_ranks = list(
 		/datum/mil_rank/civ/nt,
-		/datum/mil_rank/civ/acting
+		/datum/mil_rank/civ/acting,
+		/datum/mil_rank/civ/acting_temp
 	)
 	min_skill = list(
 		SKILL_BUREAUCRACY	=	SKILL_BASIC,
@@ -345,7 +347,7 @@
 	ideal_character_age = 40
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/command/hos
 	allowed_branches = list(/datum/mil_branch/employee)
-	allowed_ranks = list(/datum/mil_rank/civ/nt, /datum/mil_rank/civ/acting)
+	allowed_ranks = list(/datum/mil_rank/civ/nt, /datum/mil_rank/civ/acting, /datum/mil_rank/civ/acting_temp)
 	min_skill = list(
 		SKILL_BUREAUCRACY	=	SKILL_TRAINED,
 		SKILL_EVA			=	SKILL_BASIC,
@@ -519,7 +521,7 @@
 
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/command/adjutant
 	allowed_branches = list(/datum/mil_branch/employee)
-	allowed_ranks = list(/datum/mil_rank/civ/nt, /datum/mil_rank/civ/acting, /datum/mil_rank/civ/probation)
+	allowed_ranks = list(/datum/mil_rank/civ/nt, /datum/mil_rank/civ/probation_employee)
 	min_skill = list(
 		SKILL_BUREAUCRACY	=	SKILL_BASIC,
 		SKILL_PILOT			=	SKILL_TRAINED
