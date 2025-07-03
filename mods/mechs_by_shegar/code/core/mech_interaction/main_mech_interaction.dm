@@ -72,7 +72,15 @@
 
 	// Welding Tool - Repair physical damage
 	else if (isWelder(tool))
-		welder_repair(tool, user)
+		var/list/options = list(
+			"Ремонт оборудования" = mutable_appearance('mods/mechs_by_shegar/icons/radial_menu.dmi', "unequip_equipment"),
+			"Ремонт корпуса" = mutable_appearance('mods/mechs_by_shegar/icons/radial_menu.dmi', "just_mech_image")
+		)
+		var/choose = show_radial_menu(user, user, options, require_near = TRUE, radius = 42, tooltips = TRUE, check_locs = list(src))
+		if(choose == "Ремонт оборудования")
+			equipment_welder_repair(tool, user)
+		else if(choose == "Ремонт корпуса")
+			welder_repair(tool, user)
 
 	// Wrench - Toggle securing bolts
 	else if (isWrench(tool))

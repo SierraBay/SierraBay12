@@ -32,6 +32,7 @@
 /obj/item/implanter/psi/New()
 	..()
 	imp = new /obj/item/implant/psi_control(src)
+	on_update_icon()
 
 #undef PSI_IMPLANT_AUTOMATIC
 #undef PSI_IMPLANT_SHOCK

@@ -9912,7 +9912,7 @@
 /area/security/bo)
 "aIc" = (
 /obj/structure/table/standard,
-/obj/machinery/microwave,
+/obj/machinery/appliance/cooker/microwave,
 /turf/simulated/floor/tiled/monotile,
 /area/security/brig)
 "aIe" = (

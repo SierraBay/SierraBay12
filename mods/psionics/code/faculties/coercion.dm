@@ -137,7 +137,7 @@
 	cooldown =      60
 	use_melee =     TRUE
 	min_rank =      PSI_RANK_APPRENTICE
-	use_description = "Выберите нижнюю часть тела на синем интенте, а затем нажмите по цели вблизи, дабы совершить по ней удар, по силе сравнимый с шоковой дубинкой."
+	use_description = "Выберите нижнюю часть тела на синем интенте, а затем нажмите по цели вблизи, чтобы совершить по ней удар, по силе сравнимый с шоковой дубинкой."
 
 /singleton/psionic_power/coercion/agony/invoke(mob/living/user, mob/living/target)
 	if(!istype(target))
@@ -224,7 +224,7 @@
 	use_ranged =    TRUE
 	use_melee =     TRUE
 	min_rank =      PSI_RANK_OPERANT
-	use_description = "Переключитесь на синий интент, затем выберите голову и нажмите по цели дабы ВРЕМЕННО обратить её в своего верного подчинённого."
+	use_description = "Переключитесь на синий интент, затем выберите голову и нажмите по цели чтобы ВРЕМЕННО обратить её в своего верного подчинённого."
 
 	var/invoking = FALSE
 

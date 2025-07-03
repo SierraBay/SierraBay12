@@ -4412,7 +4412,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/machinery/microwave,
+/obj/machinery/appliance/cooker/microwave,
 /obj/structure/table/reinforced,
 /turf/simulated/floor/tiled/freezer,
 /area/liberia/bar)
