@@ -1,0 +1,4 @@
+author: Guared1365
+changes:
+  - {maptweak: 'Пофикшены кнопки в офисе АВД, отвечающие за работу гермозатворов.'}
+delete-after: true

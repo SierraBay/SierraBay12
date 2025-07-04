@@ -53,4 +53,6 @@
 #include "code/adrenalin.dm"
 #include "code/drone_gas_analyser.dm"
 #include "code/belt.dm"
+#include "code/hairbrush.dm"
+#include "code/boozeomat.dm"
 #endif

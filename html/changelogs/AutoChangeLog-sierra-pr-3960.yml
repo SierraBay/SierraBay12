@@ -1,0 +1,4 @@
+author: Merlin1230
+changes:
+  - {bugfix: All cooking recipes should now be actually cookable.}
+delete-after: true
