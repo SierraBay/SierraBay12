@@ -66,3 +66,4 @@
 #include "impulse_cannon/_impulse_cannon_includes.dm"
 #include "rocket_launchers/_rocket_launchers_includes.dm"
 #include "config/_config_includes.dm"
+#include "_maps\lost_shuttle\_map_lost_ship_includes.dm"
