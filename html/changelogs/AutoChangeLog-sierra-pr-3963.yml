@@ -1,0 +1,5 @@
+author: Zenithstar
+changes:
+  - {bugfix: Changed the metadata of chasing_time.ogg to be in line with the 
+      actual song info.}
+delete-after: true
