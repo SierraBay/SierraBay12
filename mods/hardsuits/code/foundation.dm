@@ -85,23 +85,24 @@
 /obj/item/rig_module/banshee
 	name = "hardsuit siren module"
 	desc = {"\
-		A set of actuators and a linked "Vaanyari" speedware chip. They allow the suit to be able \
-		to absorb impacts from fatal falls, jump remarkable heights, and move at incredible speeds.\
+		A pair of speakers installed in the helmet. In the center of the device is a strange red stone, \
+		enclosed in a cage of conductive elements. Module marked with small pale-blue radiotelescope on side of the panel. \
 	"}
+	icon = 'mods/hardsuits/icons/rigs/rig_modules.dmi'
 	icon_state = "banshee"
-	interface_name = "hardsuit mobility module"
+	interface_name = "sound impact module"
 	interface_desc = {"\
-		A set of actuators and a linked \"Vaanyari\" speedware chip that dampen falls and allow you \
-		to absorb impacts from fatal falls, jump remarkable heights, and move at incredible speeds.\
+		Cuchulain Foundation PID \"Banshee\" sound impact module allows to stun nearby enemies \
+		after engaging of module. Module have a considerable time for recharging and moderate enegry usage.\
 	"}
-	use_power_cost = 400 KILOWATTS
+	use_power_cost = 800 KILOWATTS
 	module_cooldown = 30 SECONDS
 	toggleable = TRUE
 	selectable = TRUE
 	usable = FALSE
-	engage_string = "Engage Dash"
-	activate_string = "Engage Fall Dampeners"
-	deactivate_string = "Disable Fall Dampeners"
+	engage_string = "Engage Vail"
+	activate_string = "Engage Sonic Siren"
+	deactivate_string = "Disable Sonic Siren"
 
 
 /obj/item/rig_module/banshee/engage(atom/target)
@@ -119,8 +120,8 @@
 				M.emote("scream")
 		to_chat(M, SPAN_DANGER("Ты ощущаешь, как земля уходит у тебя из под ног!"))
 		M.flash_eyes()
-		new /obj/temporary(get_turf(H),6, 'icons/effects/effects.dmi', "summoning")
-		new /obj/temporary(get_turf(M),3, 'icons/effects/effects.dmi', "purple_electricity_constant")
+		new /obj/temporary(get_turf(H),6, 'icons/effects/effects.dmi', "sonar_ping")
+		new /obj/temporary(get_turf(M),3, 'icons/effects/effects.dmi', "blue_electricity_constant")
 		M.eye_blind = max(M.eye_blind,3)
 		M.ear_deaf = max(M.ear_deaf,3 * 2)
 		M.mod_confused(3 * rand(1,3))
