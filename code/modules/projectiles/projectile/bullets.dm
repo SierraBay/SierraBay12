@@ -76,7 +76,7 @@
 	is_pellet = TRUE
 	//[SIERRA-ADD] - Mechs-by-Shegar
 	mech_armor_penetration = 0
-	mech_armor_damage =  //30 выстрелов с пистолета чтоб сорвать броню
+	mech_armor_damage =  10 //30 выстрелов с пистолета чтоб сорвать броню
 	//[SIERRA-ADD]
 
 /obj/item/projectile/bullet/pellet/Bumped()
