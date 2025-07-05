@@ -12,10 +12,10 @@
 	var/obj/item/mech_component/target = zoneToComponent(def_zone)
 	var/local_dir = get_dir(src, get_turf(P)) // <- Узнаём направление от меха до снаряда
 
-	if(istype(P, /obj/item/projectile/bullet/rpg_rocket))
+	if(!istype(P, /obj/item/projectile/bullet/rpg_rocket))
 		//Учитываем модификатор урона исходя из того с какой стороны в меха влетает снаряд.
 		modify_projectile_damage(P, target, local_dir)
-		if(target.installed_armor && !istype(P, ))
+		if(target.installed_armor)
 			if(!target.installed_armor.react_at_damage(P))
 				return FALSE //Снаряд схаван бронёй
 
