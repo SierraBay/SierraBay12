@@ -4,6 +4,7 @@
 #include "electra_ruins\ice_cave.dm"
 //Грави
 #include "flying_islands\flying_home.dm"
+#include "flying_islands\pig_farm.dm"
 //Водные
 #include "water_ruins\skat\deep_water.dm"
 #include "water_ruins\skat\skat.dm"

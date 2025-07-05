@@ -1,0 +1,12 @@
+//Данная функция отвечает лишь за отображение, ничего более
+/datum/category_item/player_setup_item/cybernetics/content(mob/user)
+	. = list()
+	if(current_tab == "Протезирование")
+		draw_limbs_content(user, .)
+	else if(current_tab == "Внутренние органы")
+		draw_organs_content(user, .)
+	else if(current_tab == "Импланты тела")
+		draw_implants_content(user, .)
+	else
+		draw_bug_content(user, .)
+	. = jointext(., null)

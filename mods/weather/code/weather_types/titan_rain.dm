@@ -18,7 +18,6 @@
 	var/time_before_cunami = 0
 	can_blowout = FALSE
 	var/have_cunami_ang_changes = TRUE
-	var/counting_started = FALSE
 	//Предполагается что на тиане есть подземные уровни, нам нужно учесть это
 	var/list/seconds_z_list = list()
 
@@ -120,6 +119,7 @@
 				weather.play_sound = TRUE
 				weather.update()
 		return
+
 	for(var/obj/weather/weather in connected_weather_turfs)
 		weather.icon_state = "titan_rain_[rand(1, 2)]"
 		weather.play_monitor_effect = FALSE

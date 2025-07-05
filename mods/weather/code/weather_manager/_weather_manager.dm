@@ -19,7 +19,7 @@
 	var/delay_between_message_and_blowout
 	var/list/blowout_prepare_messages = list()
 	var/list/blowout_messages = list()
-	var/activity_blocked_by_safe_protocol = FALSE
+
 
 /datum/weather_manager/New(area/input_area)
 	my_area = input_area
@@ -31,10 +31,14 @@
 	LAZYADD(SSweather.weather_managers_in_world, src)
 	START_PROCESSING(SSweather, src)
 
+
+
 /datum/weather_manager/Process()
 	..()
 	if(activity_blocked_by_safe_protocol)
 		return
+
+
 	if(world.time >= change_time)
 		change_stage()
 
@@ -149,6 +153,7 @@
 			LAZYREMOVE(possible_turfs,picked_turf)
 	input_obj.forceMove(pick(possible_turfs))
 
+
 /datum/weather_manager/Destroy()
 	my_area.connected_weather_manager = null
 	if(is_processing)
@@ -159,12 +164,14 @@
 	activity_blocked_by_safe_protocol = TRUE
 	. = ..()
 
+
 /proc/calculate_smallest_x(list/objects_list)
 	var/smallest_x = 10000
 	for(var/atom in objects_list)
 		if(get_x(atom) < smallest_x)
 			smallest_x = get_x(atom)
 	return smallest_x
+
 
 /proc/calculate_biggest_x(list/objects_list)
 	var/biggest_x = 0
@@ -173,6 +180,7 @@
 			biggest_x = get_x(atom)
 	return biggest_x
 
+
 /proc/collect_smallest_x_turfs(list/turfs_list)
 	var/smallest_x = calculate_smallest_x(turfs_list)
 	var/list/result_x_turfs = list()
@@ -180,6 +188,7 @@
 		if(get_x(T) == smallest_x)
 			LAZYADD(result_x_turfs, T)
 	return result_x_turfs
+
 
 /datum/weather_manager/proc/calculate_affected_z()
 	LAZYADD(my_z, get_z(pick(my_area.contents)))

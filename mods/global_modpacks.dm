@@ -61,3 +61,4 @@
 #include "petting_zoo/_petting_zoo_includes.dm"
 #include "lying_refactor/lying_refactor_includes.dm"
 #include "psionics/psionics_includes.dm"
+#include "cybernetics/cybernetics_includes.dm"
