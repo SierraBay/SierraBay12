@@ -27,7 +27,7 @@
 	var/datum/computer_file/data/email_account/server = ntnet_global.find_email_by_name(EMAIL_DOCUMENTS)
 	var/datum/computer_file/data/email_message/message = new()
 	message.title = subject
-	message.stored_data = sanitize(body)
+	message.stored_data = sanitize(body, MAX_MESSAGE_LEN, FALSE)
 	message.source = server.login
 	message.attachment = attach_report
 	server.send_mail(recipient, message)

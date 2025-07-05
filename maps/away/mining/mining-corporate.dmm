@@ -2478,7 +2478,7 @@
 /area/outpost/mining/kitchen)
 "fe" = (
 /obj/structure/table/reinforced,
-/obj/machinery/microwave,
+/obj/machinery/appliance/cooker/microwave,
 /turf/simulated/floor/tiled/old_tile,
 /area/outpost/mining/kitchen)
 "ff" = (

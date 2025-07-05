@@ -309,6 +309,7 @@
 // Hangar
 /area/quartermaster/hangar/upper
 	name = "Third Deck - Hangar"
+	req_access = list(access_hangar)
 
 /area/quartermaster/hangar_stairs/upper
 	name = "Third Deck - Hangar - Stairs"

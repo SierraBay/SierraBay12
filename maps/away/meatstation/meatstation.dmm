@@ -2679,7 +2679,7 @@
 /area/meatstation/hydroponics)
 "fV" = (
 /obj/structure/table/marble,
-/obj/machinery/microwave,
+/obj/machinery/appliance/cooker/microwave,
 /obj/floor_decal/corner/lime/diagonal,
 /turf/simulated/floor/tiled/dark,
 /area/meatstation/kitchen)
@@ -2836,7 +2836,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/meatstation/cargo)
 "gr" = (
-/obj/machinery/cooker/fryer,
+/obj/machinery/appliance/cooker/fryer,
 /obj/floor_decal/corner/lime/diagonal,
 /turf/simulated/floor/tiled/dark,
 /area/meatstation/kitchen)
@@ -2930,7 +2930,7 @@
 /area/meatstation/hydroponics)
 "gD" = (
 /obj/structure/table/marble,
-/obj/machinery/cooker/cereal,
+/obj/machinery/appliance/mixer/cereal,
 /obj/floor_decal/corner/lime/diagonal,
 /turf/simulated/floor/tiled/dark,
 /area/meatstation/kitchen)
@@ -3775,13 +3775,13 @@
 /turf/space,
 /area/space)
 "iJ" = (
-/obj/machinery/cooker/grill,
+/obj/machinery/appliance/cooker/grill,
 /obj/floor_decal/corner/lime/diagonal,
 /turf/simulated/floor/ceiling,
 /area/meatstation/kitchen)
 "iK" = (
 /obj/structure/table/marble,
-/obj/machinery/cooker/candy,
+/obj/machinery/appliance/mixer/candy,
 /obj/floor_decal/corner/lime/diagonal,
 /turf/simulated/floor/tiled/dark,
 /area/meatstation/kitchen)
@@ -3819,7 +3819,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/meatstation/kitchen)
 "iP" = (
-/obj/machinery/cooker/oven,
+/obj/machinery/appliance/cooker/oven,
 /obj/random/single/meatstation/meatworm,
 /obj/floor_decal/corner/lime/diagonal,
 /turf/simulated/floor/ceiling,

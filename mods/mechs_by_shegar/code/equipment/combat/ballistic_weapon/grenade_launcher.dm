@@ -27,6 +27,19 @@
 	if(!chambered)
 		pump()
 
+/obj/item/gun/launcher/grenade/mech/proc/unload_ammo(mob/user,allow_dump = FALSE)
+	if(length(grenades))
+		var/obj/item/grenade/G = grenades[length(grenades)]
+		LIST_DEC(grenades)
+		user.put_in_hands(G)
+		user.visible_message("\The [user] removes \a [G] from [src].", SPAN_NOTICE("You remove \a [G] from \the [src]."))
+	else if(chambered)
+		user.visible_message("\The [user] removes \a [chambered] from [src].", SPAN_NOTICE("You remove \a [chambered] from \the [src]."))
+		user.put_in_hands(chambered)
+		chambered = null
+	else
+		to_chat(user, SPAN_WARNING("\The [src] is empty."))
+
 /obj/item/gun/launcher/grenade/mech/loaded/Initialize()
 	. = ..()
 

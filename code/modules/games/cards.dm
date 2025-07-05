@@ -95,6 +95,43 @@
 		return TRUE
 	return ..()
 
+/// Attack handler to deal cards, as an alterantive to the deal/draw verbs
+/obj/item/deck/use_before(atom/target, mob/living/user, click_parameters)
+	if (!(isobj(target)))
+		return FALSE
+	if (!length(cards) && (user.a_intent == I_HELP || user.a_intent == I_DISARM))
+		to_chat(user, SPAN_WARNING("There are no cards in the deck."))
+		return FALSE
+	if (istype(target, /obj/item/deck))
+		var/obj/item/deck/other_deck = target
+		var/datum/playingcard/drawn_card = cards[1]
+		other_deck.cards += drawn_card
+		cards -= drawn_card
+		other_deck.update_icon()
+		visible_message(SPAN_NOTICE("[user] puts a card on top of \the [target]."), SPAN_NOTICE("You put a card on top of \the [target]."))
+		return TRUE
+	else if (istype(target, /obj/item/hand))
+		var/obj/item/hand/target_hand = target
+		var/datum/playingcard/drawn_card = cards[1]
+		target_hand.cards += drawn_card
+		cards -= drawn_card
+		target_hand.update_icon(user.dir)
+		visible_message(SPAN_NOTICE("[user] deals a card face [target_hand.concealed ? "down" : "up"]."), SPAN_NOTICE("You deal a card face [target_hand.concealed ? "down" : "up"]"))
+		return TRUE
+	else if (user.a_intent == I_GRAB || user.a_intent == I_HURT)
+		// target isn't a deck or hand, create a new hand
+		var/obj/item/hand/hand = new(target.loc)
+		var/concealed = user.a_intent != I_HURT
+		hand.cards += cards[1]
+		cards -= cards[1]
+		hand.concealed = concealed
+		hand.pixel_x = text2num(click_parameters["icon-x"]) - 16
+		hand.pixel_y = text2num(click_parameters["icon-y"]) - 16
+		hand.update_icon(user.dir)
+		visible_message(SPAN_NOTICE("[user] deals a card face [concealed ? "down" : "up"]."), SPAN_NOTICE("You deal a card face [concealed ? "down" : "up"]."))
+		return TRUE
+	return FALSE
+
 /obj/item/deck/verb/draw_card()
 
 	set category = "Object"

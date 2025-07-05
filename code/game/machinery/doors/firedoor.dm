@@ -384,6 +384,11 @@
 	if(closing || locked)
 		return
 
+	//SIERRA-ADD - Мехи мешают закрыться пожарным шлюзам
+	for(var/mob/living/detected_mob in get_turf(src))
+		if(ismech(detected_mob))
+			return FALSE
+	//SIERRA-ADD
 	closing = TRUE
 	latetoggle()
 	var/list/people = list()

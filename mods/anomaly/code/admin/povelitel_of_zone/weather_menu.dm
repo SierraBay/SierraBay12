@@ -15,4 +15,3 @@
 				input_html += "Время/стадий до выброса: [weather.remain_power_ups * 15] Минут/ [weather.remain_power_ups] усилений. Следущее усиление через: [(weather.change_time - world.time)/10] секунд"
 			input_html += "[MULTI_BTN("delete_weather", "\ref[weather]", "Погода", "Удалить погоду")] [MULTI_BTN("change_power_ups", "\ref[weather]", "Погода", "Изменить количество усиления")]"
 			input_html += "[MULTI_BTN("change_weather_stage", "\ref[weather]", "Спокойная", "Спокойная погода")] [MULTI_BTN("change_weather_stage", "\ref[weather]", "Лёгкий снег", "Лёгкий снег")] [MULTI_BTN("change_weather_stage", "\ref[weather]", "Буран", "Буран")] [MULTI_BTN("start_blowout", "\ref[weather]", "Погода", "Начать белую мглу")]"
-

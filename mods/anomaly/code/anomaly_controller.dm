@@ -154,6 +154,9 @@ PROCESSING_SUBSYSTEM_DEF(anom)
 		if(delete_object)
 			delete_object.Destroy()
 			to_chat(user, "Обьект [delete_object] удален.")
+
+		else
+			to_chat(user, "Похоже, данные устарели.")
 	if(href_list["teleport_to_object"])
 		var/obj/teleport_to_object = locate(href_list["teleport_to_object"])
 		if(teleport_to_object)

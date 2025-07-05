@@ -13,8 +13,13 @@
 /obj/screen/movable/exosuit/hardpoint/proc/update_system_info()
 
 	// No point drawing it if we have no item to use or nobody to see it.
-	if(!holding || !owner)
-		return
+	if(!owner)
+		return FALSE
+	if(!holding)
+		maptext = null
+		if(LAZYLEN(overlays))
+			ClearOverlays()
+		return FALSE
 
 	var/has_pilot_with_client = owner.client
 	if(!has_pilot_with_client && LAZYLEN(owner.pilots))

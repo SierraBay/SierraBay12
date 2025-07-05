@@ -20,6 +20,10 @@
 	name = "foon aluminium"
 	build_path = /obj/item/material/utensil/foon
 
+/datum/design/autolathe/cutlery/chopsticks
+	name = "chopsticks"
+	build_path = /obj/item/material/utensil/chopsticks
+
 /datum/design/autolathe/cutlery/fork_plastic
 	name = "fork plastic"
 	build_path = /obj/item/material/utensil/fork/plastic
