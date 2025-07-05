@@ -3,52 +3,37 @@
 	category = /datum/gear/augment
 	cost = 2
 
-/datum/gear/augment/muscle_boost
-	display_name = "Mechanical muscles"
-	description = "Nanofiber tendons powered by an array of actuators increase the speed and agility of the user. You may want to install these in pairs to see a result."
-	path = /obj/item/organ/internal/augment/boost/muscle
-	cost = 8
-	flags = GEAR_HAS_NO_CUSTOMIZATION
+/datum/gear/augment/muscle_boost_left
+	display_name = "Mechanical muscles (Left Leg)"
+	description = "Nanofiber tendons powered by actuators boost agility and speed. Obviosly better than the right one. You need two of them, though."
+	path = /obj/item/organ/internal/augment/boost/muscle/left
+	cost = 4
 
-/datum/gear/augment/muscle_boost/spawn_item(mob/living/carbon/human/M, datum/gear_data/gear_data)
-	var/success = FALSE
-	var/obj/item/organ/external/left_leg = M.get_organ(BP_L_LEG)
-	var/obj/item/organ/external/right_leg = M.get_organ(BP_R_LEG)
-	if(left_leg)
-		var/obj/item/organ/internal/augment/boost/muscle/left_muscle = new path()
-		left_muscle.organ_tag = "muscle_boost_l_leg"
-		left_muscle.parent_organ = BP_L_LEG
-		if(left_muscle.replaced(M, left_leg))
-			success = TRUE
-		else
-			M.internal_organs |= left_muscle
-			M.internal_organs_by_name[left_muscle.organ_tag] = left_muscle
-			success = TRUE
-	if(right_leg)
-		var/obj/item/organ/internal/augment/boost/muscle/right_muscle = new path()
-		right_muscle.organ_tag = "muscle_boost_r_leg"
-		right_muscle.parent_organ = BP_R_LEG
-		if(right_muscle.replaced(M, right_leg))
-			success = TRUE
-		else
-			M.internal_organs |= right_muscle
-			M.internal_organs_by_name[right_muscle.organ_tag] = right_muscle
-			success = TRUE
-	return success
+/datum/gear/augment/muscle_boost_right
+	display_name = "Mechanical muscles (Right Leg)"
+	description = "Nanofiber tendons powered by actuators enchance speed and agility. Obviously better than the left one. You need two of them, though."
+	path = /obj/item/organ/internal/augment/boost/muscle/right
+	cost = 4
+
+/obj/item/organ/internal/augment/boost/muscle/left
+	organ_tag = "l_leg_aug"
+	parent_organ = BP_L_LEG
+
+/obj/item/organ/internal/augment/boost/muscle/right
+	organ_tag = "r_leg_aug"
+	parent_organ = BP_R_LEG
 
 /datum/gear/augment/vision
 	display_name = "Adaptive binoculars"
 	description = "Digital glass 'screens' can be deployed over the eyes. At the user's control, their image can be greatly enhanced, providing a view of distant areas."
 	path = /obj/item/organ/internal/augment/active/item/adaptive_binoculars
 	cost = 8
-	flags = GEAR_HAS_NO_CUSTOMIZATION
 
 /datum/gear/augment/head
 	display_name = "Iatric monitor"
 	description = "A small computer system constantly tracks your physiological state and vital signs. A muscle gesture can be used to receive a simple diagnostic report, not unlike that from a handheld scanner."
 	path = /obj/item/organ/internal/augment/active/iatric_monitor
 	cost = 6
-	flags = GEAR_HAS_NO_CUSTOMIZATION
 
 /datum/gear/augment/chest
 	display_name = "Subdermal armour"
@@ -65,7 +50,7 @@
 	allowed_roles = list(/datum/job/chief_engineer, /datum/job/senior_engineer, /datum/job/engineer, /datum/job/infsys, /datum/job/engineer_trainee, /datum/job/explorer_engineer, /datum/job/captain, /datum/job/hop, /datum/job/rd, /datum/job/cmo, /datum/job/chief_engineer, /datum/job/hos, /datum/job/iaa, /datum/job/iso, /datum/job/adjutant)
 
 /datum/gear/augment/toolset_engineer
-	display_name = "Integrated engineering toolset (Prosthetic)"
+	display_name = "Integrated engineering toolset (Prosthetic Only)"
 	description = "A lightweight augmentation for the engineer on-the-go. This one comes with a series of common tools."
 	path = /obj/item/organ/internal/augment/active/polytool/engineer
 	cost = 6
@@ -79,17 +64,15 @@
 	gear_tweaks += new /datum/gear_tweak/path(options)
 
 /obj/item/organ/internal/augment/active/polytool/engineer/left
-	name = "left hand engineering polytool"
 	parent_organ = BP_L_HAND
 	organ_tag = "l_hand_aug"
 
 /obj/item/organ/internal/augment/active/polytool/engineer/right
-	name = "right hand engineering polytool"
 	parent_organ = BP_R_HAND
 	organ_tag = "r_hand_aug"
 
 /datum/gear/augment/toolset_surgical
-	display_name = "Integrated surgical toolset (Prosthetic)"
+	display_name = "Integrated surgical toolset (Prosthetic Only)"
 	description = "Part of Zeng-Hu Pharmaceutical's line of biomedical augmentations, this device contains the full set of tools any surgeon would ever need."
 	path = /obj/item/organ/internal/augment/active/polytool/surgical
 	cost = 6
@@ -103,17 +86,15 @@
 	gear_tweaks += new /datum/gear_tweak/path(options)
 
 /obj/item/organ/internal/augment/active/polytool/surgical/left
-	name = "left hand surgical polytool"
 	parent_organ = BP_L_HAND
 	organ_tag = "l_hand_aug"
 
 /obj/item/organ/internal/augment/active/polytool/surgical/right
-	name = "right hand surgical polytool"
 	parent_organ = BP_R_HAND
 	organ_tag = "r_hand_aug"
 
 /datum/gear/augment/circuit
-	display_name = "Integrated circuit frame (Prosthetic)"
+	display_name = "Integrated circuit frame (Prosthetic Only)"
 	description = "A DIY modular assembly for advanced circuitry, courtesy of Xion Industrial. Circuitry not included."
 	path = /obj/item/organ/internal/augment/active/item/circuit
 	cost = 4
@@ -126,12 +107,10 @@
 	gear_tweaks += new /datum/gear_tweak/path(options)
 
 /obj/item/organ/internal/augment/active/item/circuit/left
-	name = "left arm circuit frame"
 	parent_organ = BP_L_ARM
 	organ_tag = "l_arm_aug"
 
 /obj/item/organ/internal/augment/active/item/circuit/right
-	name = "right arm circuit frame"
 	parent_organ = BP_R_ARM
 	organ_tag = "r_arm_aug"
 

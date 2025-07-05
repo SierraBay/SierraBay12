@@ -235,7 +235,7 @@
 	for (var/singleton/cooking_recipe/candidate as anything in GLOB.microwave_recipes)
 		if(!(appliance & candidate.appliance))
 			continue
-		if((candidate.CheckReagents(obj.reagents) < exact) || (candidate.CheckItems(obj) < exact) || (candidate.CheckProduce(obj) < exact))
+		if((candidate.CheckReagents(obj.reagents) < exact) || (candidate.CheckItems(obj) < exact) || (candidate.CheckProduce(obj.contents) < exact))
 			continue
 		possible_recipes |= candidate
 	if (!length(possible_recipes))

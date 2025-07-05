@@ -1293,6 +1293,7 @@
 #include "code\game\objects\structures\plasticflaps.dm"
 #include "code\game\objects\structures\railing.dm"
 #include "code\game\objects\structures\roller_bed.dm"
+#include "code\game\objects\structures\roller_rack.dm"
 #include "code\game\objects\structures\rubble.dm"
 #include "code\game\objects\structures\safe.dm"
 #include "code\game\objects\structures\seaweed.dm"
