@@ -93,12 +93,6 @@
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/spy_station/dock)
-"cf" = (
-/obj/structure/grille,
-/obj/structure/lattice,
-/obj/structure/lattice,
-/turf/space,
-/area/space)
 "ct" = (
 /obj/machinery/optable,
 /obj/random/trash,
@@ -1847,12 +1841,6 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/spy_station/com)
-"zD" = (
-/obj/structure/lattice,
-/obj/structure/lattice,
-/obj/structure/grille,
-/turf/space,
-/area/space)
 "zG" = (
 /obj/machinery/computer/modular{
 	dir = 8;
@@ -1957,11 +1945,6 @@
 	},
 /turf/simulated/floor,
 /area/spy_station/med)
-"Bd" = (
-/obj/structure/lattice,
-/obj/structure/lattice,
-/turf/space,
-/area/space)
 "Bh" = (
 /obj/item/stack/material/rods/ten,
 /turf/space,
@@ -2154,12 +2137,6 @@
 "Dx" = (
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/spy_station/barrack)
-"Dy" = (
-/obj/structure/grille,
-/obj/structure/grille,
-/obj/structure/lattice,
-/turf/space,
-/area/space)
 "DH" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -2607,12 +2584,6 @@
 /obj/structure/lattice,
 /turf/space,
 /area/spy_station/engin)
-"IO" = (
-/obj/structure/lattice,
-/obj/structure/lattice,
-/obj/structure/grille/broken,
-/turf/space,
-/area/space)
 "IR" = (
 /obj/machinery/light,
 /obj/floor_decal/borderfloorblack,
@@ -7310,7 +7281,7 @@ dC
 dC
 dC
 QZ
-cf
+QZ
 rU
 dC
 dC
@@ -7819,7 +7790,7 @@ dC
 dC
 dC
 dC
-cf
+QZ
 rU
 rU
 Ji
@@ -7952,7 +7923,7 @@ dC
 dC
 rU
 dC
-Dy
+QZ
 QZ
 dC
 dC
@@ -8055,7 +8026,7 @@ dC
 rU
 dC
 dC
-Dy
+QZ
 QZ
 rU
 rU
@@ -9784,7 +9755,7 @@ PR
 VQ
 nv
 JT
-Bd
+rU
 rU
 cc
 cc
@@ -10081,9 +10052,9 @@ dC
 zu
 rU
 rU
-IO
+CZ
 dC
-zD
+cY
 dC
 dC
 JT
@@ -10682,7 +10653,7 @@ Hb
 fs
 SD
 Wz
-Bd
+rU
 rU
 QZ
 dC
@@ -10782,7 +10753,7 @@ rU
 dC
 dC
 fV
-Bd
+rU
 QZ
 QZ
 CZ
@@ -10883,8 +10854,8 @@ cY
 CZ
 QZ
 rU
-Bd
-Bd
+rU
+rU
 QZ
 dC
 Gj
