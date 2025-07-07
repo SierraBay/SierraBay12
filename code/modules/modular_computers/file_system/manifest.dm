@@ -24,6 +24,7 @@
 
 	var/list/isactive = new()
 	var/list/mil_ranks = list() // HTML to prepend to name
+	var/list/mil_ranks_job_prefix = list()
 	var/dat = {"
 	<head><style>
 		.manifest {border-collapse:collapse;width:100%;}
@@ -51,6 +52,9 @@
 
 			if(branch_obj && rank_obj)
 				mil_ranks[name] = "<abbr title=\"[rank_obj.name], [branch_obj.name]\">[rank_obj.name_short]</abbr> "
+				// [SIERRA-ADD]
+				mil_ranks_job_prefix[name] = rank_obj.name_short_job_prefix
+				// [/SIERRA-ADD]
 
 		isactive[name] = status
 
@@ -83,7 +87,13 @@
 			dat += "<tr><th colspan=[columns] style=background-color:[department["color"]]>[department["header"]]</th></tr>"
 			for(var/name in names)
 				var/status_cell = OOC ? "" : "<td>[isactive[name]]</td>"
-				dat += "<tr class='candystripe'><td>[mil_ranks[name]][name]</td><td>[names[name]]</td>[status_cell]</tr>"
+				// [SIERRA-EDIT]
+				// [SIERRA-EDIT] dat += "<tr class='candystripe'><td>[mil_ranks[name]][name]</td><td>[names[name]]</td>[status_cell]</tr>"
+				if (!mil_ranks_job_prefix[name])
+					dat += "<tr class='candystripe'><td>[mil_ranks[name]][name]</td><td>[names[name]]</td>[status_cell]</tr>"
+				else
+					dat += "<tr class='candystripe'><td>[name]</td><td>[mil_ranks[name]][names[name]]</td>[status_cell]</tr>"
+				// [/SIERRA-EDIT]
 
 	dat += "</table>"
 	dat = replacetext(dat, "\n", "") // so it can be placed on paper correctly

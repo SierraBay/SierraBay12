@@ -324,12 +324,25 @@ var/global/const/NO_EMAG_ACT = -50
 
 /obj/item/card/id/proc/get_display_name()
 	. = registered_name
+	//[SIERRA-EDIT]
+	/*
 	if(military_rank && military_rank.name_short)
 		. ="[military_rank.name_short] [.][formal_name_suffix]"
 	else if(formal_name_prefix || formal_name_suffix)
 		. = "[formal_name_prefix][.][formal_name_suffix]"
 	if(assignment)
 		. += ", [assignment]"
+	*/
+	if(military_rank && military_rank.name_short && !military_rank.name_short_job_prefix)
+		. ="[military_rank.name_short] [.][formal_name_suffix]"
+	else if(formal_name_prefix || formal_name_suffix)
+		. = "[formal_name_prefix][.][formal_name_suffix]"
+	if(assignment)
+		if(military_rank.name_short_job_prefix)
+			. += ", [military_rank.name_short] [assignment]"
+		else
+			. += ", [assignment]"
+	//[/SIERRA-EDIT]
 
 /obj/item/card/id/proc/set_id_photo(mob/M)
 	M.ImmediateOverlayUpdate()

@@ -183,18 +183,22 @@
 /datum/mil_rank/civ/acting
 	name = "NT Acting Official"
 	name_short = "Acting"
+	name_short_job_prefix = TRUE
 
 /datum/mil_rank/civ/acting_temp
 	name = "NT Temporary Assignment"
 	name_short = "TA"
+	name_short_job_prefix = TRUE
 
 /datum/mil_rank/civ/probation_employee
 	name = "NT Employee on Probationary Period"
 	name_short = "P.P."
+	name_short_job_prefix = TRUE
 
 /datum/mil_rank/civ/probation_contractor
 	name = "NT Contractor on Probationary Period"
 	name_short = "P.P."
+	name_short_job_prefix = TRUE
 
 /datum/mil_rank/civ/contractor
 	name = "NT Contractor"
