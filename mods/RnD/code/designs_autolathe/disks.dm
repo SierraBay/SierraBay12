@@ -133,6 +133,7 @@
 		/datum/design/autolathe/cutlery/spork_aluminium,
 		/datum/design/autolathe/cutlery/knife_aluminium,
 		/datum/design/autolathe/cutlery/foon_aluminium,
+		/datum/design/autolathe/cutlery/chopsticks,
 		/datum/design/autolathe/cutlery/fork_plastic,
 		/datum/design/autolathe/cutlery/spoon_plastic,
 		/datum/design/autolathe/cutlery/spork_plastic,

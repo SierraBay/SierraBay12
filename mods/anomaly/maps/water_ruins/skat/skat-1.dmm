@@ -1095,7 +1095,6 @@
 /area/map_template/anomaly/skat)
 "vL" = (
 /obj/structure/table/marble,
-/obj/item/reagent_containers/cooking_container/board/mahogany,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/white,
 /area/map_template/anomaly/skat)

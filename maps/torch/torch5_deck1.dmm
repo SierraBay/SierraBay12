@@ -26709,15 +26709,12 @@
 /turf/simulated/floor/tiled/white,
 /area/rnd/research)
 "rPz" = (
-/obj/item/roller_bed{
-	pixel_y = 8
-	},
-/obj/item/roller_bed{
-	pixel_y = 16
-	},
-/obj/item/roller_bed,
 /obj/floor_decal/corner/paleblue/mono,
 /obj/structure/table/reinforced,
+/obj/structure/roller_rack{
+	beds = 3;
+	pixel_y = 4
+	},
 /turf/simulated/floor/tiled/white/monotile,
 /area/medical/staging)
 "rQb" = (
