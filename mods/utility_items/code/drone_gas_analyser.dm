@@ -28,5 +28,7 @@
 		/obj/item/stack/tile/wood/cyborg,
 		/obj/item/stack/material/cyborg/wood,
 		/obj/item/stack/cable_coil/cyborg,
-		/obj/item/stack/material/cyborg/plastic
+		/obj/item/stack/material/cyborg/plastic,
+		/obj/item/taperoll/engineering,
+		/obj/item/taperoll/atmos
 )

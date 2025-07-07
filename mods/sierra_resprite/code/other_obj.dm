@@ -29,15 +29,6 @@
 	icon = 'mods/sierra_resprite/icons/plants.dmi'
 
 
-/obj/machinery/seed_extractor
-	icon = 'mods/sierra_resprite/icons/hydroponic.dmi'
-	icon_state = "sextractor"
-
-/obj/machinery/biogenerator
-	icon = 'mods/sierra_resprite/icons/hydroponic.dmi'
-	icon_state = "biogen"
-
-
 
 /obj/item/storage/box/donut
 	icon = 'mods/sierra_resprite/icons/donutbox.dmi'
@@ -61,13 +52,6 @@
 /obj/item/storage/box/donut/empty
 	startswith = null
 
-
-
-/obj/machinery/suit_cycler //не стала пихать в карту сиерры к suitstorage по причине не срать в мапу
-	icon = 'mods/sierra_resprite/icons/suitcycler.dmi'
-	icon_state = "close"
-
-/obj/machinery/photocopier/faxmachine
-	name = "fax machine"
-	icon = 'mods/sierra_resprite/icons/fax_machine.dmi'
-	icon_state = "fax"
+/obj/structure/bedsheetbin
+	icon = 'mods/sierra_resprite/icons/other.dmi'
+	icon_state = "linenbin-full"
