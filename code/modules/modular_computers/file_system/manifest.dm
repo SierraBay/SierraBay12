@@ -24,7 +24,9 @@
 
 	var/list/isactive = new()
 	var/list/mil_ranks = list() // HTML to prepend to name
+	// [SIERRA-ADD]
 	var/list/mil_ranks_job_prefix = list()
+	// [/SIERRA-ADD]
 	var/dat = {"
 	<head><style>
 		.manifest {border-collapse:collapse;width:100%;}
