@@ -24,7 +24,7 @@
 
 	var/list/isactive = new()
 	var/list/mil_ranks = list() // HTML to prepend to name
-	// [SIERRA-ADD]
+	// [SIERRA-ADD] // var for name_short_job_prefix
 	var/list/mil_ranks_job_prefix = list()
 	// [/SIERRA-ADD]
 	var/dat = {"
@@ -54,7 +54,7 @@
 
 			if(branch_obj && rank_obj)
 				mil_ranks[name] = "<abbr title=\"[rank_obj.name], [branch_obj.name]\">[rank_obj.name_short]</abbr> "
-				// [SIERRA-ADD]
+				// [SIERRA-ADD] // Copies the value of the variable name_short_job_prefix from mil_ranks of CR
 				mil_ranks_job_prefix[name] = rank_obj.name_short_job_prefix
 				// [/SIERRA-ADD]
 
@@ -89,7 +89,7 @@
 			dat += "<tr><th colspan=[columns] style=background-color:[department["color"]]>[department["header"]]</th></tr>"
 			for(var/name in names)
 				var/status_cell = OOC ? "" : "<td>[isactive[name]]</td>"
-				// [SIERRA-EDIT]
+				// [SIERRA-EDIT] // If name_short_job_prefix of mil_rank is TRUE, place name_short before job name, not character
 				// [SIERRA-EDIT] dat += "<tr class='candystripe'><td>[mil_ranks[name]][name]</td><td>[names[name]]</td>[status_cell]</tr>"
 				if (!mil_ranks_job_prefix[name])
 					dat += "<tr class='candystripe'><td>[mil_ranks[name]][name]</td><td>[names[name]]</td>[status_cell]</tr>"
