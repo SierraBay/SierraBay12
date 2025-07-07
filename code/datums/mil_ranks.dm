@@ -181,7 +181,6 @@ GLOBAL_TYPED_NEW(mil_branches, /datum/mil_branches)
 	var/list/accessory		//type of accesory that will be equipped by job code with this rank
 	var/sort_order = 0 // A numerical equivalent of the rank used to indicate its order when compared to other datums: eg e-1 = 1, o-1 = 11
 
-
 /// Returns short designation (yes shorter than name_short), like E1, O3 etc.
 /datum/mil_rank/proc/grade()
 	return sort_order
