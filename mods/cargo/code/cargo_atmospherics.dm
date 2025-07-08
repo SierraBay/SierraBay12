@@ -105,8 +105,8 @@
 
 /obj/machinery/portable_atmospherics/canister/co
 	name = "\improper Canister \[CO\]"
-	icon_state = "yellow"
-	canister_color = "yellow"
+	icon_state = "black"
+	canister_color = "black"
 	can_label = 0
 
 /obj/machinery/portable_atmospherics/canister/co/New()
@@ -117,8 +117,8 @@
 
 /obj/machinery/portable_atmospherics/canister/no2
 	name = "\improper Canister \[NO2\]"
-	icon_state = "yellow"
-	canister_color = "yellow"
+	icon_state = "redws"
+	canister_color = "redws"
 	can_label = 0
 
 /obj/machinery/portable_atmospherics/canister/no2/New()
@@ -129,8 +129,8 @@
 
 /obj/machinery/portable_atmospherics/canister/no
 	name = "\improper Canister \[NO\]"
-	icon_state = "yellow"
-	canister_color = "yellow"
+	icon_state = "redws"
+	canister_color = "redws"
 	can_label = 0
 
 /obj/machinery/portable_atmospherics/canister/no/New()
@@ -141,8 +141,8 @@
 
 /obj/machinery/portable_atmospherics/canister/methane
 	name = "\improper Canister \[Methane\]"
-	icon_state = "yellow"
-	canister_color = "yellow"
+	icon_state = "purple"
+	canister_color = "purple"
 	can_label = 0
 
 /obj/machinery/portable_atmospherics/canister/methane/New()
@@ -153,8 +153,8 @@
 
 /obj/machinery/portable_atmospherics/canister/deuterium
 	name = "\improper Canister \[Deuterium\]"
-	icon_state = "yellow"
-	canister_color = "yellow"
+	icon_state = "purple"
+	canister_color = "purple"
 	can_label = 0
 
 /obj/machinery/portable_atmospherics/canister/deuterium/New()
@@ -165,8 +165,8 @@
 
 /obj/machinery/portable_atmospherics/canister/tritium
 	name = "\improper Canister \[Tritium\]"
-	icon_state = "yellow"
-	canister_color = "yellow"
+	icon_state = "purple"
+	canister_color = "purple"
 	can_label = 0
 
 /obj/machinery/portable_atmospherics/canister/tritium/New()
@@ -224,9 +224,9 @@
 	return 1
 
 /obj/machinery/portable_atmospherics/canister/ammonia
-	name = "\improper Canister \[Ammonia\]"
-	icon_state = "yellow"
-	canister_color = "yellow"
+	name = "\improper Canister \[NH3\]"
+	icon_state = "lightyellow"
+	canister_color = "lightyellow"
 	can_label = 0
 
 /obj/machinery/portable_atmospherics/canister/ammonia/New()
@@ -237,8 +237,8 @@
 
 /obj/machinery/portable_atmospherics/canister/sulfurdioxide
 	name = "\improper Canister \[SO2\]"
-	icon_state = "yellow"
-	canister_color = "yellow"
+	icon_state = "lightyellow"
+	canister_color = "lightyellow"
 	can_label = 0
 
 /obj/machinery/portable_atmospherics/canister/sulfurdioxide/New()
