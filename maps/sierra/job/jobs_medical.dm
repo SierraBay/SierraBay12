@@ -16,7 +16,8 @@
 	alt_titles = list(
 		"Surgical Resident" = /singleton/hierarchy/outfit/job/sierra/crew/medical/senior/surgicalresident,
 		"Xenosurgeon" = /singleton/hierarchy/outfit/job/sierra/crew/medical/senior/xenosurgeon,
-		"Trauma Surgeon" = /singleton/hierarchy/outfit/job/sierra/crew/medical/senior/traumasurgeon
+		"Trauma Surgeon" = /singleton/hierarchy/outfit/job/sierra/crew/medical/senior/traumasurgeon,
+		"Physician" = /singleton/hierarchy/outfit/job/sierra/crew/medical/senior/physican
 	)
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/medical/senior
 	allowed_branches = list(
@@ -56,7 +57,7 @@
 	вкупе с предоперационным лечением пострадавших, спектр активности хирурга является несколько более широким, начиная от обычного лечения медикаментами в случае необходимости и заканчивая проведением сложных хирургических операций."
 
 /datum/job/doctor
-	title = "Physician"
+	title = "Emergency Medical Technician"
 	supervisors = "Главному Врачу"
 	department = "Медицинский"
 	department_flag = MED
@@ -69,10 +70,9 @@
 	skill_points = 22
 
 	alt_titles = list(
-		"Paramedic" = /singleton/hierarchy/outfit/job/sierra/crew/medical/doctor/paramedic,
-		"Medical Doctor" = /singleton/hierarchy/outfit/job/sierra/crew/medical/doctor
+		"Paramedic" = /singleton/hierarchy/outfit/job/sierra/crew/medical/paramedic
 	)
-	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/medical/doctor
+	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/medical/paramedic/emt
 	allowed_branches = list(
 		/datum/mil_branch/employee,
 		/datum/mil_branch/contractor
@@ -103,7 +103,7 @@
 	)
 
 /datum/job/doctor/get_description_blurb()
-	return "В отличии от хирургов, врач, а также парамедик, занимаются лечением обычных ранений и травм. Обычно они не имеют высшего медицинского образования, но они всё равно являются опорой медбея."
+	return "Парамедики и медицинские техники - первые, кто окажется у пациента. Именно они эвакуируют пострадавших в ходе инцидентов, а также оказывают ПМП перед тем, как передать пациента другим специалистам."
 
 /datum/job/doctor_trainee
 	title = "Intern"
