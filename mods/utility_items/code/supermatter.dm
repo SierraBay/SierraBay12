@@ -12,5 +12,5 @@
 	damage_rate_limit = rand(1,8)
 	explosion_power = rand(3,15)
 	gasefficency = Frand(0.18,0.32)
-	var/list/possible_colours = list("#ffa600","#ff2600","#73ff00","#fffb00","#ff00d4","#00d9ffef")
+	var/list/possible_colours = list("#ffa600","#ff2600","#73ff00","#fffb00","#ff00d4","#00d9ff")
 	base_color = pick(possible_colours)
