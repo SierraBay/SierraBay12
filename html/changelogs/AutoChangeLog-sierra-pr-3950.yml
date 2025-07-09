@@ -1,6 +1,0 @@
-author: KandJX
-changes:
-  - {tweak: The ID card modification program can update an ID card's branch and 
-      rank.}
-  - {tweak: Added military branch and rank to the access report printout.}
-delete-after: true

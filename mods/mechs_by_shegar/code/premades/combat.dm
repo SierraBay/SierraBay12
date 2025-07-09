@@ -1,6 +1,7 @@
 /mob/living/exosuit/premade/combat
 	name = "combat mech"
 	desc = "A sleek, modern combat mech."
+	external_armor_type = /obj/item/mech_external_armor/buletproof
 
 /mob/living/exosuit/premade/combat/Initialize()
 	if(!head)
@@ -45,3 +46,6 @@
 	. = ..()
 	for(var/obj/thing in list(head,body, L_arm, R_arm, L_leg, R_leg))
 		thing.color = COLOR_WHITE
+
+/mob/living/exosuit/premade/combat/laserproof
+	external_armor_type = /obj/item/mech_external_armor/laserproof

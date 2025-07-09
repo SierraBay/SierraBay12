@@ -120,7 +120,7 @@
 
 /datum/design/item/mechfab/exosuit/basic_armour
 	name = "basic exosuit armour"
-	id = "mech_armour_basic"
+	id = "mech_armour_civil"
 	build_path = /obj/item/robot_parts/robot_component/armour/exosuit
 	time = 30
 	materials = list(MATERIAL_STEEL = 7500)
