@@ -1,0 +1,5 @@
+author: Spookerton
+changes:
+  - {tweak: "IPCs can de-I from their C's by using the Abilities -> Release Core command,
+      so long as their P isn't completely dead."}
+delete-after: true

@@ -1,0 +1,4 @@
+author: Banditoz
+changes:
+  - {bugfix: Fix consoles jittering on refresh on 516 clients.}
+delete-after: true

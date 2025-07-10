@@ -49,10 +49,7 @@
 
 /mob/living/exosuit/get_armors_by_zone(def_zone, damage_type, damage_flags)
 	. = ..()
-	if(body && body.m_armour)
-		var/body_armor = get_extension(body.m_armour, /datum/extension/armor)
-		if(body_armor)
-			. += body_armor
+	. = get_extension(src, /datum/extension/armor)
 
 /mob/living/exosuit/adjustFireLoss(amount, obj/item/mech_component/MC = pick(list(head, body, L_arm, R_arm, L_leg, R_leg)))
 	if(MC)

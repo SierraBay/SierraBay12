@@ -19,3 +19,15 @@
 		var/mutable_appearance/beaker_overlay
 		beaker_overlay = image('mods/sierra_resprite/icons/chem.dmi', src, "[icon_state]_lil_beaker")
 		AddOverlays(beaker_overlay)
+
+/obj/structure/roller_bed
+	icon = 'mods/sierra_resprite/icons/rollerbed.dmi'
+	icon_state = "down"
+
+/obj/machinery/bodyscanner
+	icon = 'mods/sierra_resprite/icons/bodyscanner.dmi'
+	icon_state = "body_scanner"
+
+/obj/machinery/sleeper
+	icon = 'mods/sierra_resprite/icons/sleeper.dmi'
+	icon_state = "sleeper"

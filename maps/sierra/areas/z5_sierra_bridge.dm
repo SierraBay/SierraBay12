@@ -215,26 +215,27 @@
 	area_flags = AREA_FLAG_RAD_SHIELDED | AREA_FLAG_ION_SHIELDED
 	holomap_color = HOLOMAP_AREACOLOR_CREW
 */
-// Solars
+// Solars - same path for 4 and 5 deck Sierra
 /*
+*/
 /area/maintenance/solar/bridge_port
-	name = "Bridge - Solar - Port"
+	name = "First Deck - Solar - Port"
 	icon_state = "SolarcontrolP"
 	holomap_color = HOLOMAP_AREACOLOR_ENGINEERING
 
 /area/maintenance/solar/bridge_starboard
-	name = "Bridge - Solar - Starboard"
+	name = "First Deck - Solar - Starboard"
 	icon_state = "SolarcontrolS"
 	holomap_color = HOLOMAP_AREACOLOR_ENGINEERING
 
 /area/solar/bridge_starboard
-	name = "Bridge - Solar - Starboard Array"
+	name = "First Deck - Solar - Starboard Array"
 	icon_state = "panelsS"
 
 /area/solar/bridge_port
-	name = "Bridge - Solar - Port Array"
+	name = "First Deck - Solar - Port Array"
 	icon_state = "panelsP"
-
+/*
 /area/engineering/atmos/bridge
 	name = "Bridge - Engineering - Atmospherics Suppliment"
 	icon_state = "atmos_storage"

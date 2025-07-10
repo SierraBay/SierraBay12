@@ -146,3 +146,11 @@
 
 /obj/item/reagent_containers/food/drinks
 	icon = 'mods/sierra_resprite/icons/kitchen.dmi'
+
+/obj/item/material/utensil
+	icon = 'mods/sierra_resprite/icons/kitchen.dmi'
+
+/obj/item/material/utensil/knife
+	icon = 'mods/sierra_resprite/icons/kitchen.dmi'
+	icon_state = "table"
+	item_state = "knife"

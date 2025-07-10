@@ -24,7 +24,6 @@
 	density = TRUE
 	anchored = TRUE
 	pixel_x = -8
-	atom_flags = ATOM_FLAG_CAN_BE_PAINTED
 
 	// Holders for the final product.
 	var/obj/item/mech_component/sensors/head
@@ -140,9 +139,12 @@
 
 /obj/structure/heavy_vehicle_frame/proc/paint_spray_interaction(mob/living/user, color)
 	var/obj/item/mech_component/choice = show_radial_menu(user, src, parts_list_images, require_near = TRUE, radius = 42, tooltips = TRUE, check_locs = list(src))
-	choice.set_color(color)
-	update_icon()
-	return TRUE
+	if(choice)
+		choice.set_color(color)
+		update_icon()
+		update_parts_images()
+		return TRUE
+	return FALSE
 
 /obj/structure/heavy_vehicle_frame/Initialize()
 	. = ..()

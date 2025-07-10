@@ -82,7 +82,7 @@
 
 					if(universal_translate || C.parameters["uspeech"] || C.parameters["intelligible"])
 						dat += "<u>[SPAN_COLOR("#18743e", "Data type")]</u>: [C.input_type]<br>"
-						dat += "<u>[SPAN_COLOR("#18743e", "Source")]</u>: [C.parameters["name"]] (Job: [C.parameters["job"]])<br>"
+						dat += "<u>[SPAN_COLOR("#18743e", "Source")]</u>: [C.parameters["name"]]<br>"
 						dat += "<u>[SPAN_COLOR("#18743e", "Class")]</u>: [race]<br>"
 						dat += "<u>[SPAN_COLOR("#18743e", "Contents")]</u>: \"[C.parameters["message"]]\"<br>"
 						if(language)

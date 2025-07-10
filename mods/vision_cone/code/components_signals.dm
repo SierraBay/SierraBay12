@@ -1,6 +1,3 @@
-#define COMSIG_ITEM_EQUIPPED "item_equipped"
-#define COMSIG_ITEM_DROPPED "item_dropped"
-
 /datum/component/helmets
 
 /datum/component/helmets/RegisterWithParent()
@@ -18,10 +15,6 @@
 /datum/component/helmets/proc/on_equip(obj/item/clothing/head/helmet/source, mob/living/holder)
 	SIGNAL_HANDLER
 	holder.toggle_fov(usefov = TRUE, fovangle = source.fov_angle)
-
-
-#define COMSIG_CABINE_OPEN "cabine_open"
-#define COMSIG_CABINE_CLOSED "cabine_closed"
 
 /datum/component/mech_sensor
 

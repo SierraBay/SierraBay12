@@ -1,0 +1,5 @@
+author: Banditoz
+changes:
+  - {tweak: "516 clients can now use the browser's Ctrl+F find dialog, and F5 refresh,
+      if needed."}
+delete-after: true

@@ -1,0 +1,4 @@
+author: Spookerton
+changes:
+  - {bugfix: 'After seven long years, banana pies go splat when thrown again.'}
+delete-after: true

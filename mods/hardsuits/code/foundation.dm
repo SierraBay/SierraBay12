@@ -24,7 +24,7 @@
 	glove_type = /obj/item/clothing/gloves/rig/foundation
 
 	initial_modules = list(
-		/obj/item/rig_module/actuators,
+		/obj/item/rig_module/banshee,
 		/obj/item/rig_module/mounted/arm_blade,
 		/obj/item/rig_module/mounted/energy/ion,
 		/obj/item/rig_module/vision,
@@ -79,4 +79,50 @@
 		wearer.update_inv_wear_suit()
 		wearer.update_inv_w_uniform()
 		wearer.update_inv_back()
+	return
+
+
+/obj/item/rig_module/banshee
+	name = "hardsuit siren module"
+	desc = {"\
+		A pair of speakers installed in the helmet. In the center of the device is a strange red stone, \
+		enclosed in a cage of conductive elements. Module marked with small pale-blue radiotelescope on side of the panel. \
+	"}
+	icon = 'mods/hardsuits/icons/rigs/rig_modules.dmi'
+	icon_state = "banshee"
+	interface_name = "sound impact module"
+	interface_desc = {"\
+		Cuchulain Foundation PID \"Banshee\" sound impact module allows to stun nearby enemies \
+		after engaging of module. Module have a considerable time for recharging and moderate enegry usage.\
+	"}
+	use_power_cost = 800 KILOWATTS
+	module_cooldown = 30 SECONDS
+	toggleable = TRUE
+	selectable = TRUE
+	usable = FALSE
+	engage_string = "Engage Vail"
+	activate_string = "Engage Sonic Siren"
+	deactivate_string = "Disable Sonic Siren"
+
+
+/obj/item/rig_module/banshee/engage(atom/target)
+
+	var/mob/living/H = holder.wearer
+
+	H.visible_message(SPAN_DANGER("[H] закидывает голову назад, издавая пронзительный крик!"))
+	to_chat(H, SPAN_DANGER("Вы издаёте пронзительный крик, оглушая всех вокруг!"))
+	for(var/mob/living/M in range(4))
+		if(M == H)
+			continue
+		if(prob(3 * 20) && iscarbon(M))
+			var/mob/living/carbon/C = M
+			if(C.can_feel_pain())
+				M.emote("scream")
+		to_chat(M, SPAN_DANGER("Ты ощущаешь, как земля уходит у тебя из под ног!"))
+		M.flash_eyes()
+		new /obj/temporary(get_turf(H),6, 'icons/effects/effects.dmi', "sonar_ping")
+		new /obj/temporary(get_turf(M),3, 'icons/effects/effects.dmi', "blue_electricity_constant")
+		M.eye_blind = max(M.eye_blind,3)
+		M.ear_deaf = max(M.ear_deaf,3 * 2)
+		M.mod_confused(3 * rand(1,3))
 	return
