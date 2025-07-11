@@ -16,6 +16,9 @@
 	var/drink_offset_y = 0
 	var/shaken = FALSE
 
+	var/empty_name = null
+	var/empty_desc = null
+
 /obj/item/reagent_containers/food/drinks/on_reagent_change()
 	update_icon()
 	return
@@ -142,6 +145,12 @@
 
 /obj/item/reagent_containers/food/drinks/on_update_icon()
 	ClearOverlays()
+
+	if (!empty_name)
+		empty_name = name
+	if (!empty_desc)
+		empty_desc = desc
+
 	if(length(reagents.reagent_list) > 0)
 		if(base_name)
 			var/datum/reagent/R = reagents.get_master_reagent()
@@ -152,8 +161,8 @@
 			filling.color = reagents.get_color()
 			AddOverlays(filling)
 	else
-		SetName(initial(name))
-		desc = initial(desc)
+		SetName(empty_name)
+		desc = empty_desc
 
 
 ///////////////////////////////////////////////////////////////////////////////

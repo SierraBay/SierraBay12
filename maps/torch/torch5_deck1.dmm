@@ -6336,7 +6336,7 @@
 	},
 /obj/structure/table/standard,
 /obj/item/reagent_containers/food/drinks/glass2/coffeecup/one{
-	custom_desc = "A white coffee cup, prominently featuring a #1 Gorpsman. Someone has scratched the C into a G."
+	desc = "A white coffee cup, prominently featuring a #1 Gorpsman. Someone has scratched the C into a G."
 	},
 /turf/simulated/floor/tiled/white,
 /area/medical/medicalhallway)
