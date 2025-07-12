@@ -59,7 +59,7 @@
 	вкупе с предоперационным лечением пострадавших, спектр активности хирурга является несколько более широким, начиная от обычного лечения медикаментами в случае необходимости и заканчивая проведением сложных хирургических операций."
 
 /datum/job/doctor
-	title = "Emergency Medical Technician"
+	title = "Paramedic"
 	supervisors = "Главному Врачу"
 	department = "Медицинский"
 	department_flag = MED
@@ -72,9 +72,9 @@
 	skill_points = 22
 
 	alt_titles = list(
-		"Paramedic" = /singleton/hierarchy/outfit/job/sierra/crew/medical/paramedic
+		"Emergency Medical Technician" = /singleton/hierarchy/outfit/job/sierra/crew/medical/paramedic/emt
 	)
-	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/medical/paramedic/emt
+	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/medical/paramedic
 	allowed_branches = list(
 		/datum/mil_branch/employee,
 		/datum/mil_branch/contractor
