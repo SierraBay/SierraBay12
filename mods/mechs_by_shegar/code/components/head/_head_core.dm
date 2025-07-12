@@ -28,6 +28,8 @@
 		to_chat(user, SPAN_WARNING("It is missing a camera."))
 	if(!computer)
 		to_chat(user, SPAN_WARNING("It is missing a software control module."))
+	if(!installed_armor)
+		to_chat(user, SPAN_WARNING("It is missing mech external armour plating."))
 
 /obj/item/mech_component/sensors/prebuild()
 	radio = new(src)

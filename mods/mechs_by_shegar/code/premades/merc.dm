@@ -1,6 +1,7 @@
 /mob/living/exosuit/premade/merc
 	name = "Mercenary mech"
 	desc = "A sleek, modern combat mech. Looks like just painted in red paint army mech. Stealed? Maybe."
+	external_armor_type = null
 
 /mob/living/exosuit/premade/merc/Initialize()
 	if(!head)
@@ -30,15 +31,38 @@
 /obj/item/mech_component/chassis/combat/merc/prebuild()
 	. = ..()
 	QDEL_NULL(cell)
-	QDEL_NULL(m_armour)
 	cell = new /obj/item/cell/hyper(src)
-	m_armour = new /obj/item/robot_parts/robot_component/armour/exosuit(src)
 	update_parts_images()
 
 /mob/living/exosuit/premade/merc/spawn_mech_equipment()
 	..()
-	install_system(new /obj/item/mech_equipment/mounted_system/taser/ballistic/smg(src), HARDPOINT_RIGHT_HAND)
-	install_system(new /obj/item/mech_equipment/mounted_system/taser(src), HARDPOINT_LEFT_HAND)
-	install_system(new /obj/item/mech_equipment/flash(src), HARDPOINT_LEFT_SHOULDER)
+	install_system(new /obj/item/mech_equipment/mounted_system/taser/laser(src), HARDPOINT_LEFT_HAND)
 	install_system(new /obj/item/mech_equipment/light(src), HARDPOINT_RIGHT_SHOULDER)
 	install_system(new /obj/item/mech_equipment/shields(src), HARDPOINT_BACK)
+
+
+/obj/item/mech_equipment/mounted_system/taser/ballistic/smg/high_capacity
+	name = "\improper Mounted \"SH-G\" prototype SMG"
+	desc = "Prototype SMG, created by one of the ships R&D."
+	icon_state = "mech_smg"
+	holding_type = /obj/item/gun/projectile/automatic/mounted/smg/high_capacity
+
+/obj/item/gun/projectile/automatic/mounted/smg/high_capacity
+	max_shells = 600 //Мерк пулемёт очень вместим из-за пулек в 25(XD) урона
+
+/obj/item/ammo_magazine/proto_smg/mech/high_capacity //Вместительный ящик под пули мех смг
+	max_ammo = 600
+
+//Мерк ракетомёт
+/obj/item/mech_equipment/mounted_system/taser/ballistic/launcher/merc
+	name = "\improper  \"GRA-D\" missle launcher system"
+	desc = "Dangerous and load missle launcher system."
+	icon_state = "mech_missilerack"
+	holding_type = /obj/item/gun/projectile/automatic/rocket_launcher/merc
+	restricted_hardpoints = list(HARDPOINT_LEFT_SHOULDER, HARDPOINT_RIGHT_SHOULDER)
+
+/obj/item/gun/projectile/automatic/rocket_launcher/merc
+	max_shells = 9
+
+/obj/item/ammo_magazine/rockets_casing/fire/high_capacity
+	max_ammo = 9

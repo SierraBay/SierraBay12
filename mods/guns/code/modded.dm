@@ -351,6 +351,10 @@
 
 /obj/item/projectile/bullet/pistol/holdout/ap
 	armor_penetration = 15
+	//[SIERRA-ADD] - Mechs-by-Shegar
+	mech_armor_penetration = 0
+	mech_armor_damage = 20 //15 попаданий чтоб сорвать броню
+	//[SIERRA-ADD]
 
 /obj/item/storage/box/ammo/smg_nt
 	name = "box of 7mm box magazines - lethal"

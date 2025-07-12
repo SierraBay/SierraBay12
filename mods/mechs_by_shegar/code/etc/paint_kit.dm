@@ -2,40 +2,30 @@
 	name = "Mod - Mech customization kit"
 	desc = "A kit containing all the needed tools and parts to repaint a mech."
 	var/removable = null
-	new_icon_file = 'icons/mecha/mech_decals.dmi'
 	var/current_decal = "cammo2" //По умолчанию
+	var/list/decals_chooses = list()
 	var/list/mech_decales = list(
+		"clear_decales",
 		"flames_red",
 		"flames_blue",
 		"cammo2",
-		"cammo1",
+		"cammo1"
 	)
 
+/obj/item/device/kit/mech/Initialize()
+	. = ..()
+	for(var/decal in mech_decales)
+		decals_chooses[decal] = mutable_appearance('mods/mechs_by_shegar/icons/mech_decals_32.dmi', decal)
 
 
 /obj/item/device/kit/mech/attack_self(mob/user)//Тыкаем по самому киту дабы вызвать список того, какую декаль хотим на меха
 	choose_decal(user)
 
-
-
-/obj/item/device/kit/mech/examine(mob/user)
-	. = ..()
-	to_chat(user, "This kit will add a '[new_name]' decal to a exosuit'.")
-
-
-
-/obj/item/device/kit/mech/proc/choose_decal(mob/user)
-	set name = "Choose decal"
-	set desc = "Choose mech decal."
-	set category = "Object"
-	set src in usr
-
-	if(usr.incapacitated())
+/obj/item/device/kit/mech/proc/choose_decal(user)
+	var/choice = show_radial_menu(user, src, decals_chooses, require_near = TRUE, radius = 42, tooltips = TRUE, check_locs = list(src))
+	if(!choice)
 		return
-	var/new_decal = input(usr, "Choose a decal.", name, current_decal) as null|anything in mech_decales
-	if (usr.incapacitated())
-		return
-	change_decal(new_decal, usr)
+	change_decal(choice, usr)
 
 
 

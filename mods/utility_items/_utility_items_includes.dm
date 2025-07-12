@@ -56,4 +56,5 @@
 #include "code/chopsticks.dm"
 #include "code/hairbrush.dm"
 #include "code/boozeomat.dm"
+#include "code/cards_ids.dm"
 #endif

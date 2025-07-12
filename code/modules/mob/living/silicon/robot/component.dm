@@ -88,8 +88,10 @@
 	external_type = /obj/item/robot_parts/robot_component/armour/light
 	max_damage = 75
 
+/*SIERRA-EDIT Не совместимо с mechs_by_shegar
 /datum/robot_component/armour/accepts_component(obj/item/thing)
 	. = (!istype(thing, /obj/item/robot_parts/robot_component/armour/exosuit) && ..())
+*/
 
 // ACTUATOR
 // Enables movement.
