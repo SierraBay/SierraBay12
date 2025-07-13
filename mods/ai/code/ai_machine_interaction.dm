@@ -84,3 +84,11 @@
 		//[SIERRA-ADD]
 		return FALSE
 	return TRUE
+
+// Дополнительные интеракции с АПЦ
+
+/obj/machinery/power/apc/AIAltClick() // Ребут АПЦ, если тот пострадал он требует перезагрузки
+	if(usr.incapacitated())
+		return FALSE
+	Topic(src, list("reboot"="1"))
+	return TRUE

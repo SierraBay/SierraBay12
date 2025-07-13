@@ -16,7 +16,8 @@
 	alt_titles = list(
 		"Surgical Resident" = /singleton/hierarchy/outfit/job/sierra/crew/medical/senior/surgicalresident,
 		"Xenosurgeon" = /singleton/hierarchy/outfit/job/sierra/crew/medical/senior/xenosurgeon,
-		"Trauma Surgeon" = /singleton/hierarchy/outfit/job/sierra/crew/medical/senior/traumasurgeon
+		"Trauma Surgeon" = /singleton/hierarchy/outfit/job/sierra/crew/medical/senior/traumasurgeon,
+		"Physician" = /singleton/hierarchy/outfit/job/sierra/crew/medical/senior/physican
 	)
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/medical/senior
 	allowed_branches = list(
@@ -58,23 +59,22 @@
 	вкупе с предоперационным лечением пострадавших, спектр активности хирурга является несколько более широким, начиная от обычного лечения медикаментами в случае необходимости и заканчивая проведением сложных хирургических операций."
 
 /datum/job/doctor
-	title = "Physician"
+	title = "Emergency Medical Technician"
 	supervisors = "Главному Врачу"
 	department = "Медицинский"
 	department_flag = MED
 	total_positions = 3
 	spawn_positions = 3
 
-	minimum_character_age = list(SPECIES_HUMAN = 24)
+	minimum_character_age = list(SPECIES_HUMAN = 19)
 	ideal_character_age = 26
 	economic_power = 7
 	skill_points = 22
 
 	alt_titles = list(
-		"Paramedic" = /singleton/hierarchy/outfit/job/sierra/crew/medical/doctor/paramedic,
-		"Medical Doctor" = /singleton/hierarchy/outfit/job/sierra/crew/medical/doctor
+		"Paramedic" = /singleton/hierarchy/outfit/job/sierra/crew/medical/paramedic
 	)
-	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/medical/doctor
+	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/medical/paramedic/emt
 	allowed_branches = list(
 		/datum/mil_branch/employee,
 		/datum/mil_branch/contractor
@@ -107,15 +107,15 @@
 	)
 
 /datum/job/doctor/get_description_blurb()
-	return "В отличии от хирургов, врач, а также парамедик, занимаются лечением обычных ранений и травм. Обычно они не имеют высшего медицинского образования, но они всё равно являются опорой медбея."
+	return "Парамедики и медицинские техники - первые, кто окажется у пациента. Именно они эвакуируют пострадавших в ходе инцидентов, а также оказывают ПМП перед тем, как передать пациента другим специалистам."
 
 /datum/job/doctor_trainee
-	title = "Intern"
+	title = "Trainee Paramedic"
 	supervisors = "Главному Врачу и остальному медицинскому персоналу"
 	department = "Медицинский"
 	department_flag = MED
 
-	minimum_character_age = list(SPECIES_HUMAN = 20)
+	minimum_character_age = list(SPECIES_HUMAN = 18)
 	ideal_character_age = 21
 	economic_power = 3
 	skill_points = 18
@@ -127,7 +127,7 @@
 		"Orderly" = /singleton/hierarchy/outfit/job/sierra/crew/medical/doctor/orderly,
 		"Nurse" = /singleton/hierarchy/outfit/job/sierra/crew/medical/doctor/nurse
 	)
-	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/medical/doctor
+	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/medical/paramedic
 	allowed_branches = list(
 		/datum/mil_branch/employee,
 		/datum/mil_branch/contractor
@@ -156,7 +156,7 @@
 	)
 
 /datum/job/doctor_trainee/get_description_blurb()
-	return "Интерн является самым младшим членом медицинского персонала, который учится искусству лечения у других врачей.\
+	return "Фельдшер-стажер является самым младшим членом медицинского персонала, который учится искусству лечения у других врачей.\
 	Оказывайте помощь другому медперсоналу, будь то химик или даже консультант - Вы здесь самые младшие. Будьте аккуратны и внимательны, и скоро станете настоящим врачом."
 
 /datum/job/chemist

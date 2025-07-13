@@ -160,6 +160,9 @@
 	GLOB.clients += src
 	GLOB.ckey_directory[ckey] = src
 
+	if(byond_version >= 516)
+		winset(src, null, list("browser-options" = "find,refresh"))
+
 	//Admin Authorisation
 	holder = admin_datums[ckey]
 	if(holder)
