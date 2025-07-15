@@ -56,7 +56,7 @@
 
 /obj/item/clothing/head/beret/kms
 	name = "\improper KMS beret"
-	desc = "A white beret with the emblem of Komatsu Medical Servies, an emergency response corporation. For medical officers that are more inclined towards style than safety."
+	desc = "A white beret denoting KMS employee. For medical officers that are more inclined towards style than safety."
 	icon = 'mods/loadout_items/icons/obj_head.dmi'
 	item_icons = list(
 		slot_head_str = 'mods/loadout_items/icons/onmob_head.dmi'
