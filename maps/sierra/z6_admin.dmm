@@ -7964,10 +7964,6 @@
 /obj/machinery/atmospherics/unary/tank/air{
 	dir = 4
 	},
-/obj/machinery/atmospherics/unary/tank/air{
-	dir = 4;
-	start_pressure = 4559.63
-	},
 /obj/floor_decal/techfloor{
 	dir = 9
 	},
