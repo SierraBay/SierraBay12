@@ -18286,6 +18286,7 @@
 /obj/item/stack/material/aluminium/fifty,
 /obj/item/stack/material/steel/fifty,
 /obj/item/stack/material/steel/fifty,
+/obj/item/storage/box/autolathe_designs,
 /turf/unsimulated/floor{
 	dir = 1;
 	icon_state = "vault"
