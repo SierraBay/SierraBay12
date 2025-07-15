@@ -4,7 +4,6 @@
 #include "_map_general_maps.dm"
 #include "code/blueriver.dm"
 #include "code/derelict.dm"
-#include "code/ert.dm"
 #include "code/heist.dm"
 #include "code/icgnv_hound.dm"
 #include "code/mining.dm"
