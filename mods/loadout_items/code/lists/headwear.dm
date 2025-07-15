@@ -11,3 +11,5 @@
 	path = /obj/item/clothing/head/beret/kms
 	slot = slot_head
 	cost = 1
+	allowed_branches = list(/datum/mil_branch/contractor)
+	allowed_factions = list(FACTION_KMS)
