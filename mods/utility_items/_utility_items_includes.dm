@@ -57,4 +57,5 @@
 #include "code/hairbrush.dm"
 #include "code/boozeomat.dm"
 #include "code/cards_ids.dm"
+#include "code/supermatter.dm"
 #endif

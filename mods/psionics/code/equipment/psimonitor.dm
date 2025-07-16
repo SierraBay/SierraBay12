@@ -91,15 +91,15 @@
 /obj/machinery/psi_monitor/interact(mob/user)
 
 	var/list/dat = list()
-	dat += "<h1>Psi Dampener Monitor</h1>"
+	dat += "<h1>Интерфейс Имплантов Подавителей</h1>"
 	if(authorized)
-		dat += "<b>[authorized]</b> <a href='?src=\ref[src];logout=1'>Logout</a>"
+		dat += "<b>[authorized]</b> <a href='?src=\ref[src];logout=1'>Деавторизация</a>"
 	else
-		dat += "<a href='?src=\ref[src];login=1'>Login</a>"
+		dat += "<a href='?src=\ref[src];login=1'>Авторизация</a>"
 
-	dat += "<h2>Active Psionic Dampeners</h2><hr>"
+	dat += "<h2>Активные Импланты Подавители</h2><hr>"
 	dat += "<center><table>"
-	dat += "<tr><td><b>Operant</b></td><td><b>System load</b></td><td><b>Mode</b></td></tr>"
+	dat += "<tr><td><b>Носитель</b></td><td><b>Стресс</b></td><td><b>Режим работы</b></td></tr>"
 	for(var/thing in SSpsi.psi_dampeners)
 		var/obj/item/implant/psi_control/implant = thing
 		if(!implant.imp_in)
@@ -108,23 +108,23 @@
 			continue
 		dat += "<tr><td>[implant.imp_in.name]</td>"
 		if(implant.malfunction)
-			dat += "<td>ERROR</td><td>ERROR</td>"
+			dat += "<td>ОШИБКА</td><td>ОШИБКА</td>"
 		else
 			dat += "<td>[implant.overload]%</td><td>[authorized ? "<a href='?src=\ref[src];change_mode=\ref[implant]'>[implant.psi_mode]</a>" : "[implant.psi_mode]"]</td>"
 		dat += "</tr>"
 	dat += "</table><hr></center>"
 
 	if(show_violations)
-		dat += "<h2>Psionic Control Violations <a href='?src=\ref[src];show_violations=0'>-</a></h2><hr><center><table>"
+		dat += "<h2>Рапорт инцидентов <a href='?src=\ref[src];show_violations=0'>-</a></h2><hr><center><table>"
 		if(length(psi_violations))
 			for(var/i =  1 to length(psi_violations))
 				var/entry = psi_violations[i]
-				dat += "<tr><td><br>[entry]</td><td>[authorized ? "<a href='?src=\ref[src];remove_violation=[i]'>Remove</a>" : ""]</td></tr>"
+				dat += "<tr><td><br>[entry]</td><td>[authorized ? "<a href='?src=\ref[src];remove_violation=[i]'>Стереть</a>" : ""]</td></tr>"
 		else
-			dat += "<tr><td colspan = 2>None reported.</td></tr>"
+			dat += "<tr><td colspan = 2>Не было зафиксировано.</td></tr>"
 		dat += "</table></center><hr>"
 	else
-		dat += "<h2>Psionic Control Violations <a href='?src=\ref[src];show_violations=1'>+</a></h2><hr>"
+		dat += "<h2>Рапорт инцидентов <a href='?src=\ref[src];show_violations=1'>+</a></h2><hr>"
 
 	var/datum/browser/popup = new(user, "psi_monitor_\ref[src]", "Psi-Monitor")
 	popup.set_content(jointext(dat,null))
@@ -132,10 +132,10 @@
 
 
 /obj/machinery/psi_monitor/proc/report_failure(obj/item/implant/psi_control/implant)
-	psi_violations += SPAN_COLOR("#ff0000", "Critical system failure - [implant.imp_in.name].")
+	psi_violations += SPAN_COLOR("#ff0000", "Неисправность - [implant.imp_in.name].")
 
 /obj/machinery/psi_monitor/proc/report_violation(obj/item/implant/psi_control/implant, stress)
-	psi_violations += "Stress [round(stress/10)] event - [implant.imp_in.name]."
+	psi_violations += "Использование со стрессом [round(stress)] - [implant.imp_in.name]."
 
 #undef PSI_IMPLANT_AUTOMATIC
 #undef PSI_IMPLANT_SHOCK
