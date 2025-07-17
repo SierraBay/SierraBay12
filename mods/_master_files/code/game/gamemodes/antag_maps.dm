@@ -19,6 +19,8 @@
 	shuttles_to_initialise = list()
 	apc_test_exempt_areas = list(/area/map_template/rescue_base = NO_SCRUBBER|NO_VENT|NO_APC)
 
+	skip_main_unit_tests = "Ruin has shuttle landmark."
+
 // Shuttle locations. Due to override we lose them if load with Sierra map
 /datum/shuttle/autodock/multi/antag/rescue
 	defer_initialisation = FALSE
