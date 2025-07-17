@@ -19,7 +19,6 @@
 	shuttles_to_initialise = list(/datum/shuttle/autodock/multi/antag/rescue)
 	apc_test_exempt_areas = list(/area/map_template/rescue_base = NO_SCRUBBER|NO_VENT|NO_APC)
 
-
 // Shuttle locations. Due to override we lose them if load with Sierra map
 /datum/shuttle/autodock/multi/antag/rescue
 	destination_tags = list(
