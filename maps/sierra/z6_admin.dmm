@@ -8538,9 +8538,7 @@
 	},
 /area/map_template/rescue_base/base)
 "cch" = (
-/obj/machinery/door/window/brigdoor/eastright{
-	req_access = list("ACCESS_CENT_SPECOPS")
-	},
+/obj/machinery/door/window/brigdoor/eastright,
 /obj/floor_decal/techfloor{
 	dir = 4
 	},
@@ -20964,6 +20962,17 @@
 	icon_state = "steel"
 	},
 /area/centcom)
+"sEI" = (
+/obj/machinery/embedded_controller/radio/simple_docking_controller{
+	frequency = 1331;
+	id_tag = "rescue_base";
+	pixel_x = 5;
+	pixel_y = -25
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/map_template/rescue_base/base)
 "sFh" = (
 /obj/wallframe_spawn/reinforced/hull,
 /turf/unsimulated/floor/plating,
@@ -58791,7 +58800,7 @@ qPT
 rQc
 rQc
 bgb
-bgb
+sEI
 rQc
 rQc
 rQc
