@@ -294,6 +294,7 @@ SIERRA_ESCAPE_POD(11)
 //NT Rescue Shuttle
 
 /datum/shuttle/autodock/multi/antag/rescue
+	defer_initialisation = FALSE
 	destination_tags = list(
 		"nav_ert_deck1",
 		"nav_ert_deck2",
