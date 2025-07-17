@@ -1,15 +1,9 @@
 /datum/map_template/ruin/antag_spawn/ert
 	name = "ERT Base"
 	suffixes = list("ert/ert_base.dmm")
-//[SIERRA-EDIT] // Юнит тесты для Example Map валятся
-	skip_main_unit_tests = "Ruin has shuttle landmark."
-	shuttles_to_initialise = list()
-//[/SIERRA-EDIT]
 	apc_test_exempt_areas = list(
 		/area/map_template/rescue_base = NO_SCRUBBER|NO_VENT|NO_APC
 	)
-
-
 
 
 /datum/shuttle/autodock/multi/antag/rescue

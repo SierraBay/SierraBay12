@@ -1,7 +1,3 @@
-/datum/antagonist/ert
-
-	base_to_load = null
-
 /obj/item/rig/ert/assetprotection
 	name = "heavy emergency response suit control module"
 	desc = "A heavy, modified version of a common emergency response hardsuit. Has blood red highlights. Armoured and space ready."
