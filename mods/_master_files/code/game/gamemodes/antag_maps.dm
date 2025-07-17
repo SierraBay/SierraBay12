@@ -21,6 +21,7 @@
 
 // Shuttle locations. Due to override we lose them if load with Sierra map
 /datum/shuttle/autodock/multi/antag/rescue
+	defer_initialisation = FALSE
 	destination_tags = list(
 		"nav_ert_deck1",
 		"nav_ert_deck2",
