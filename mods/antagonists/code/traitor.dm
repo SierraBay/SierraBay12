@@ -47,8 +47,8 @@
 
 
 
-/mob/living/proc/get_goals()
-	set name = "Get Goals"
+/mob/living/proc/get_objectives()
+	set name = "Get Objectives"
 	set category = "IC"
 	set src = usr
 
@@ -75,7 +75,7 @@
 
 /datum/antagonist/add_antagonist_mind(datum/mind/player, ignore_role, nonstandard_role_type, nonstandard_role_msg, bypass = FALSE)
 	if (..())
-		player.current.verbs += /mob/living/proc/get_goals
+		player.current.verbs += /mob/living/proc/get_objectives
 		// there is 1 second spawn in parent proc and this text should be displayed right after it
 		addtimer(new Callback(src, .proc/give_objectives_hint, player), 1.1 SECOND)
 		return 1
