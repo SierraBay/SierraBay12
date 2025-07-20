@@ -1,10 +1,51 @@
 //
 //        TRAITOR OPTIONAL OBJECTIVES
 //
+/datum/objective/traitor
+	var/static/possible_items[] = list(
+		"the captain's antique laser gun",
+		"a bluespace rift generator",
+		"an RCD",
+		"a jetpack",
+		"a captain's jumpsuit",
+		"a functional AI",
+		"a pair of magboots",
+		"the [station_name()] blueprints",
+		"a nasa voidsuit",
+		"28 moles of phoron (full tank)",
+		"a sample of slime extract",
+		"a piece of corgi meat",
+		"a chief science officer's jumpsuit",
+		"a chief engineer's jumpsuit",
+		"a chief medical officer's jumpsuit",
+		"a head of security's jumpsuit",
+		"a head of personnel's jumpsuit",
+		"the hypospray",
+		"the captain's pinpointer",
+		"an ablative armor vest",
+	)
+
+/datum/objective/traitor/find_target()
+	var/objective
+	if (rand(0, 1)) // item or human
+		..()
+		if(target && target.current)
+			objective = "[target.current.real_name], the [target.assigned_role]."
+		else
+			objective = "Free Objective"
+	else
+		objective = pick(possible_items)
+	explanation_text = "My goal involves [objective]"
+	return objective
+
+
+
 /datum/antagonist/traitor/create_objectives(datum/mind/traitor)
 	var/datum/objective/survive/survive_objective = new
 	survive_objective.owner = traitor
 	traitor.objectives += survive_objective
+
+
 
 /mob/living/proc/get_goals()
 	set name = "Get Goals"
@@ -13,6 +54,22 @@
 
 	if(!mind)
 		return
+	if(locate(/datum/objective/traitor) in mind.objectives)
+		to_chat(mind.current, "You already have your objectives for today.")
+		return
+
+	for(var/i = 1 to 3)
+		var/datum/objective/traitor/objective = new
+		objective.owner = mind
+		objective.find_target()
+		mind.objectives += objective
+
+
+	var/obj_count = 1
+	to_chat(mind.current, SPAN_NOTICE("Your current objectives:"))
+	for(var/datum/objective/objective in mind.objectives)
+		to_chat(mind.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
+		obj_count++
 
 
 
@@ -26,8 +83,9 @@
 		return 0
 
 /datum/antagonist/proc/give_objectives_hint(datum/mind/player)
-	to_chat(player.current, SPAN_NOTICE("Don't know what goal to pursue? You can get several objectives with the \
-			<b>Get Objectives</b> verb, located in the IC tab."))
+	to_chat(player.current, SPAN_NOTICE("Unsure what goal to pursue? You can acquire several objectives with the \
+			<b>Get Objectives</b> verb, located in the IC tab. These objectives are optional and don't give you \
+			the right to go on a murder spree, you still need to think of an ambition to perform the suggested goals."))
 
 //
 //        DOOR CHARGE
