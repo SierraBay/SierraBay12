@@ -1,4 +1,35 @@
 //
+//        TRAITOR OPTIONAL OBJECTIVES
+//
+/datum/antagonist/traitor/create_objectives(datum/mind/traitor)
+	var/datum/objective/survive/survive_objective = new
+	survive_objective.owner = traitor
+	traitor.objectives += survive_objective
+
+/mob/living/proc/get_goals()
+	set name = "Get Goals"
+	set category = "IC"
+	set src = usr
+
+	if(!mind)
+		return
+
+
+
+/datum/antagonist/add_antagonist_mind(datum/mind/player, ignore_role, nonstandard_role_type, nonstandard_role_msg, bypass = FALSE)
+	if (..())
+		player.current.verbs += /mob/living/proc/get_goals
+		// there is 1 second spawn in parent proc and this text should be displayed right after it
+		addtimer(new Callback(src, .proc/give_objectives_hint, player), 1.1 SECOND)
+		return 1
+	else
+		return 0
+
+/datum/antagonist/proc/give_objectives_hint(datum/mind/player)
+	to_chat(player.current, SPAN_NOTICE("Don't know what goal to pursue? You can get several objectives with the \
+			<b>Get Objectives</b> verb, located in the IC tab."))
+
+//
 //        DOOR CHARGE
 //
 /datum/antagonist/traitor
