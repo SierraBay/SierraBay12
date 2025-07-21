@@ -1,0 +1,5 @@
+author: SierraKomodo
+changes:
+  - {tweak: Spawn lists for legion beacons are now weighted.}
+  - {bugfix: Fixed legion beacons not spawning mobs.}
+delete-after: true
