@@ -26,7 +26,7 @@
 		"captain's HCM",
 		"HoP's HCM",
 		"CMO's HCM",
-		"HoS's HCM",
+		"HoS' HCM",
 		"research command HCM",
 		"heavy exploration HCM",
 		"hazard hardsuit control module",
@@ -37,20 +37,50 @@
 		"RE: Regarding testing supplies envelope",
 	)
 
+// list for loadout items with custom names
+GLOBAL_LIST_EMPTY(custom_items)
+
+/datum/gear_tweak/custom_name/tweak_item(user, obj/item/I, metadata)
+	. = ..()
+	if (metadata)
+		var/new_entry = list(
+			"metadata" = metadata,
+			"owner" = user
+		)
+		GLOB.custom_items += list(new_entry)
+
+
 /datum/objective/traitor/find_target()
 	var/objective
-	if (rand(0, 1)) // item or human
-		..()
-		if(target && target.current)
-			objective = "[target.current.real_name], the [target.assigned_role]."
-		else
-			objective = "Free Objective"
-	else
-		objective = pick(possible_items)
+	switch (rand(1,4))
+		if (1, 2) // human
+			..()
+			if(target && target.current)
+				objective = "[target.current.real_name], the [target.assigned_role]."
+			else
+				objective = "Free Objective"
+		if (3) // static item
+			objective = get_random_objective_item()
+		if (4) // custom item or static item if not found
+			objective = get_random_custom_item() || get_random_objective_item()
 	explanation_text = "My goal involves [objective]"
 	return objective
 
 
+/datum/objective/traitor/proc/get_random_custom_item()
+	if(!length(GLOB.custom_items))
+		return null
+
+	var/list/entry = pick(GLOB.custom_items)
+
+	var/metadata = entry["metadata"]
+	var/mob/itemowner = entry["owner"]
+	if ("[itemowner]" == "[owner.current]")
+		return null
+	return "[metadata] owned by [itemowner]"
+
+/datum/objective/traitor/proc/get_random_objective_item()
+	return pick(possible_items)
 
 /datum/antagonist/traitor/create_objectives(datum/mind/traitor)
 	var/datum/objective/survive/survive_objective = new
@@ -58,17 +88,18 @@
 	traitor.objectives += survive_objective
 
 
-
 /mob/living/proc/get_objectives()
 	set name = "Get Objectives"
 	set category = "IC"
 	set src = usr
+
 
 	if(!mind)
 		return
 	if(locate(/datum/objective/traitor) in mind.objectives)
 		to_chat(mind.current, "You already have your objectives for today.")
 		return
+
 
 	for(var/i = 1 to 3)
 		var/datum/objective/traitor/objective = new
@@ -82,7 +113,6 @@
 	for(var/datum/objective/objective in mind.objectives)
 		to_chat(mind.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 		obj_count++
-
 
 
 /datum/antagonist/add_antagonist_mind(datum/mind/player, ignore_role, nonstandard_role_type, nonstandard_role_msg, bypass = FALSE)

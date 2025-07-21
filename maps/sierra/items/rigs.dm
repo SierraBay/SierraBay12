@@ -195,7 +195,7 @@
 * CHIEF OF SECURITY
 */
 /obj/item/rig/command/hos
-	name = "HoS's HCM"
+	name = "HoS' HCM"
 	suit_type = "security command hardsuit"
 	desc = "A specialized hardsuit rig control module issued to ranking security command staff of the NanoTrasen and their peers."
 	icon = 'maps/sierra/icons/obj/rig_modules.dmi'
