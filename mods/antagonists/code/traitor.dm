@@ -44,7 +44,7 @@ GLOBAL_LIST_EMPTY(custom_items)
 	. = ..()
 	if (metadata)
 		var/new_entry = list(
-			"metadata" = metadata,
+			"item_name" = metadata,
 			"owner" = user
 		)
 		GLOB.custom_items += list(new_entry)
@@ -58,7 +58,7 @@ GLOBAL_LIST_EMPTY(custom_items)
 			if(target && target.current)
 				objective = "[target.current.real_name], the [target.assigned_role]."
 			else
-				objective = "Free Objective"
+				objective = get_random_objective_item()
 		if (3) // static item
 			objective = get_random_objective_item()
 		if (4) // custom item or static item if not found
@@ -73,11 +73,11 @@ GLOBAL_LIST_EMPTY(custom_items)
 
 	var/list/entry = pick(GLOB.custom_items)
 
-	var/metadata = entry["metadata"]
-	var/mob/itemowner = entry["owner"]
-	if ("[itemowner]" == "[owner.current]")
+	var/item_name = entry["item_name"]
+	var/mob/item_owner = entry["owner"]
+	if ("[item_owner]" == "[owner.current]")
 		return null
-	return "[metadata] owned by [itemowner]"
+	return "[item_name] owned by [item_owner]"
 
 /datum/objective/traitor/proc/get_random_objective_item()
 	return pick(possible_items)
@@ -93,26 +93,40 @@ GLOBAL_LIST_EMPTY(custom_items)
 	set category = "IC"
 	set src = usr
 
-
 	if(!mind)
 		return
 	if(locate(/datum/objective/traitor) in mind.objectives)
 		to_chat(mind.current, "You already have your objectives for today.")
 		return
 
-
 	for(var/i = 1 to 3)
 		var/datum/objective/traitor/objective = new
 		objective.owner = mind
-		objective.find_target()
-		mind.objectives += objective
 
+		var/attempts_left = 10 // preventing infinite loop
+
+		while(attempts_left-- > 0)
+			objective.find_target()
+			if(!mind.has_similar_objective(objective))
+				mind.objectives += objective
+				break
+
+		if(attempts_left <= 0)
+			log_and_message_admins(SPAN_WARNING("Objective generation failed! Last attempt: [objective.explanation_text]"), mind.current)
+			qdel(objective)
 
 	var/obj_count = 1
 	to_chat(mind.current, SPAN_NOTICE("Your current objectives:"))
 	for(var/datum/objective/objective in mind.objectives)
 		to_chat(mind.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 		obj_count++
+
+
+/datum/mind/proc/has_similar_objective(datum/objective/traitor/new_obj)
+	for(var/datum/objective/traitor/existing in objectives)
+		if(existing.explanation_text == new_obj.explanation_text)
+			return TRUE
+	return FALSE
 
 
 /datum/antagonist/add_antagonist_mind(datum/mind/player, ignore_role, nonstandard_role_type, nonstandard_role_msg, bypass = FALSE)
