@@ -4,6 +4,7 @@
 #include "_utility_items.dm"
 
 
+#include "code/armor.dm"
 #include "code/colony_random.dm"
 #include "code/multimeter.dm"
 #include "code/living_adv.dm"
