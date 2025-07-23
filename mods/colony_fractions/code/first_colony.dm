@@ -3,9 +3,10 @@ GLOBAL_VAR_AS(choose_colony_type, "СЛУЧАЙНЫЙ") //Педальки вы�
 GLOBAL_VAR_AS(error_colony_reaction, "Прервать спавн колонии")
 
 /singleton/submap_archetype/playablecolony
-	crew_jobs = list(/datum/job/submap/colonist, /datum/job/submap/colonist_leader)
+	crew_jobs = list(/datum/job/submap/colonist, /datum/job/submap/colonyscientist, \
+	/datum/job/submap/colonymedic, /datum/job/submap/colonyengineer, /datum/job/submap/colonist/leader)
 
-/datum/job/submap/colonist_leader
+/datum/job/submap/colonist/leader
 	title = "Colonist Leader"
 	info = "You are a Colonist Leader, living on the rim of explored. Control your colonist, defend the interests of the colony."
 	total_positions = 1
@@ -15,9 +16,64 @@ GLOBAL_VAR_AS(error_colony_reaction, "Прервать спавн колонии
 /datum/job/submap/colonist
 	supervisors = "Colonist Leader"
 	max_skill = list(
-		SKILL_MEDICAL = SKILL_MAX,
-		SKILL_ANATOMY = SKILL_MAX
+		SKILL_PILOT			= SKILL_MAX,
+		SKILL_CONSTRUCTION	= SKILL_MAX,
+		SKILL_ELECTRICAL	= SKILL_MAX,
+		SKILL_ATMOS			= SKILL_MAX,
+		SKILL_ENGINES		= SKILL_MAX,
+		SKILL_CHEMISTRY		= SKILL_MAX,
+		SKILL_SCIENCE		= SKILL_MAX,
+		SKILL_DEVICES		= SKILL_MAX,
+		SKILL_COMBAT		= SKILL_MAX,
+		SKILL_FORENSICS		= SKILL_MAX,
+		SKILL_WEAPONS		= SKILL_MAX
 	)
+
+/datum/job/submap/colonyscientist
+	supervisors = "Colonist Leader"
+	title = "Colony Scientist"
+	max_skill = list(
+		SKILL_SCIENCE	= SKILL_MAX,
+		SKILL_DEVICES	= SKILL_MAX,
+		SKILL_CHEMISTRY	= SKILL_MAX
+	)
+	min_skill = list(
+		SKILL_SCIENCE	= SKILL_TRAINED,
+		SKILL_DEVICES	= SKILL_BASIC
+	)
+
+/datum/job/submap/colonymedic
+	supervisors = "Colonist Leader"
+	title = "Colony Medic"
+	max_skill = list(
+		SKILL_MEDICAL	= SKILL_MAX,
+		SKILL_ANATOMY	= SKILL_MAX,
+		SKILL_CHEMISTRY = SKILL_MAX,
+		SKILL_VIROLOGY	= SKILL_MAX
+	)
+	min_skill = list(
+		SKILL_MEDICAL = SKILL_TRAINED,
+		SKILL_ANATOMY = SKILL_TRAINED
+	)
+
+/datum/job/submap/colonyengineer
+	supervisors = "Colonist Leader"
+	title = "Colony Engineer"
+	min_skill = list(
+		SKILL_COMPUTER		= SKILL_BASIC,
+		SKILL_EVA			= SKILL_BASIC,
+		SKILL_CONSTRUCTION	= SKILL_BASIC,
+		SKILL_ELECTRICAL	= SKILL_BASIC,
+		SKILL_ATMOS			= SKILL_BASIC,
+		SKILL_ENGINES		= SKILL_BASIC
+		)
+
+	max_skill = list(
+		SKILL_CONSTRUCTION	= SKILL_MAX,
+		SKILL_ELECTRICAL	= SKILL_MAX,
+		SKILL_ATMOS			= SKILL_MAX,
+		SKILL_ENGINES		= SKILL_MAX
+		)
 
 /singleton/hierarchy/outfit/job/colonist/leader
 	name = OUTFIT_JOB_NAME("Colonist Leader")
