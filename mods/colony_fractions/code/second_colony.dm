@@ -7,12 +7,16 @@
 	info = "You are a Colonist Leader, living on the rim of explored. Control your colonist, defend the interests of the landed ship."
 
 /datum/job/submap/colonist/ship
+	title = "Ship Colonist"
 	supervisors = "Ship Leader"
 /datum/job/submap/colonyscientist/ship
+	title = "Ship Scientist"
 	supervisors = "Ship Leader"
 /datum/job/submap/colonymedic/ship
+	title = "Ship Medic"
 	supervisors = "Ship Leader"
 /datum/job/submap/colonyengineer/ship
+	title = "Ship Engineer"
 	supervisors = "Ship Leader"
 
 /singleton/hierarchy/outfit/job/colonist/leader
