@@ -1,0 +1,4 @@
+author: Baneuus
+changes:
+  - {maptweak: Скреллы теперь могут печатать синтетику}
+delete-after: true

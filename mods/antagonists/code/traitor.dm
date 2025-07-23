@@ -1,4 +1,149 @@
 //
+//        TRAITOR OPTIONAL OBJECTIVES
+//
+/datum/objective/traitor
+	var/static/possible_items[] = list(
+		"captain's final argument", // antique laser gun is long gone
+		"bluespace rift generator",
+		"RCD",
+		"jetpack",
+		"captain's jumpsuit",
+		"functional AI",
+		"pair of magboots",
+		"[station_name()] blueprints",
+		"28 moles of phoron (full tank)",
+		"sample of slime extract",
+		"piece of corgi meat",
+		"chief science officer's jumpsuit",
+		"chief engineer's jumpsuit",
+		"chief medical officer's jumpsuit",
+		"head of security's jumpsuit",
+		"head of personnel's jumpsuit",
+		"hypospray",
+		"captain's pinpointer",
+		"ablative armor vest",
+		"\improper NT breacher chassis control module",
+		"captain's HCM",
+		"HoP's HCM",
+		"CMO's HCM",
+		"HoS' HCM",
+		"research command HCM",
+		"heavy exploration HCM",
+		"hazard hardsuit control module",
+		"nuclear instructions envelope",
+		"DELTA protocol envelope",
+		"ALPHA Protocol envelope",
+		"UMBRA Protocol envelope",
+		"RE: Regarding testing supplies envelope",
+	)
+
+// list for loadout items with custom names
+GLOBAL_LIST_EMPTY(custom_items)
+
+/datum/gear_tweak/custom_name/tweak_item(user, obj/item/I, metadata)
+	. = ..()
+	if (metadata)
+		var/new_entry = list(
+			"item_name" = metadata,
+			"owner" = user
+		)
+		GLOB.custom_items += list(new_entry)
+
+
+/datum/objective/traitor/find_target()
+	var/objective
+	switch (rand(1,4))
+		if (1, 2) // human
+			..()
+			if(target && target.current)
+				objective = "[target.current.real_name], the [target.assigned_role]."
+			else
+				objective = get_random_objective_item()
+		if (3) // static item
+			objective = get_random_objective_item()
+		if (4) // custom item or static item if not found
+			objective = get_random_custom_item() || get_random_objective_item()
+	explanation_text = "My goal involves [objective]"
+	return objective
+
+
+/datum/objective/traitor/proc/get_random_custom_item()
+	if(!length(GLOB.custom_items))
+		return null
+
+	var/list/entry = pick(GLOB.custom_items)
+
+	var/item_name = entry["item_name"]
+	var/mob/item_owner = entry["owner"]
+	if ("[item_owner]" == "[owner.current]")
+		return null
+	return "[item_name] owned by [item_owner]"
+
+/datum/objective/traitor/proc/get_random_objective_item()
+	return pick(possible_items)
+
+/datum/antagonist/traitor/create_objectives(datum/mind/traitor)
+	var/datum/objective/survive/survive_objective = new
+	survive_objective.owner = traitor
+	traitor.objectives += survive_objective
+
+
+/mob/living/proc/get_objectives()
+	set name = "Get Objectives"
+	set category = "IC"
+	set src = usr
+
+	if(!mind)
+		return
+	if(locate(/datum/objective/traitor) in mind.objectives)
+		to_chat(mind.current, "You already have your objectives for today.")
+		return
+
+	for(var/i = 1 to 3)
+		var/datum/objective/traitor/objective = new
+		objective.owner = mind
+
+		var/attempts_left = 10 // preventing infinite loop
+
+		while(attempts_left-- > 0)
+			objective.find_target()
+			if(!mind.has_similar_objective(objective))
+				mind.objectives += objective
+				break
+
+		if(attempts_left <= 0)
+			log_and_message_admins(SPAN_WARNING("Objective generation failed! Last attempt: [objective.explanation_text]"), mind.current)
+			qdel(objective)
+
+	var/obj_count = 1
+	to_chat(mind.current, SPAN_NOTICE("Your current objectives:"))
+	for(var/datum/objective/objective in mind.objectives)
+		to_chat(mind.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
+		obj_count++
+
+
+/datum/mind/proc/has_similar_objective(datum/objective/traitor/new_obj)
+	for(var/datum/objective/traitor/existing in objectives)
+		if(existing.explanation_text == new_obj.explanation_text)
+			return TRUE
+	return FALSE
+
+
+/datum/antagonist/add_antagonist_mind(datum/mind/player, ignore_role, nonstandard_role_type, nonstandard_role_msg, bypass = FALSE)
+	if (..())
+		player.current.verbs += /mob/living/proc/get_objectives
+		// there is 1 second spawn in parent proc and this text should be displayed right after it
+		addtimer(new Callback(src, .proc/give_objectives_hint, player), 1.1 SECOND)
+		return 1
+	else
+		return 0
+
+/datum/antagonist/proc/give_objectives_hint(datum/mind/player)
+	to_chat(player.current, SPAN_NOTICE("Unsure what goal to pursue? You can acquire several objectives with the \
+			<b>Get Objectives</b> verb, located in the IC tab. These objectives are optional and don't give you \
+			the right to go on a murder spree, you still need to think of an ambition to perform the suggested goals."))
+
+//
 //        DOOR CHARGE
 //
 /datum/antagonist/traitor
