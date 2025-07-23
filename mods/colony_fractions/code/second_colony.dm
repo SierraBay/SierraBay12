@@ -1,22 +1,22 @@
 /singleton/submap_archetype/playablecolony2
-	crew_jobs = list(/datum/job/submap/colonist/ship, /datum/job/submap/colonyscientist/ship, \
-	/datum/job/submap/colonymedic/ship, /datum/job/submap/colonyengineer/ship, /datum/job/submap/colonist/leader/ship)
+	crew_jobs = list(/datum/job/submap/colonist/ship, /datum/job/submap/colonist/scientist/ship, \
+	/datum/job/submap/colonist/medic/ship, /datum/job/submap/colonist/engineer/ship, /datum/job/submap/colonist/leader/ship)
 
 /datum/job/submap/colonist/leader/ship
-	title = "Ship Leader"
+	title = "Colony Ship Leader"
 	info = "You are a Colonist Leader, living on the rim of explored. Control your colonist, defend the interests of the landed ship."
 
 /datum/job/submap/colonist/ship
-	title = "Ship Colonist"
+	title = "Colony Ship Colonist"
 	supervisors = "Ship Leader"
-/datum/job/submap/colonyscientist/ship
-	title = "Ship Scientist"
+/datum/job/submap/colonist/scientist/ship
+	title = "Colony Ship Scientist"
 	supervisors = "Ship Leader"
-/datum/job/submap/colonymedic/ship
-	title = "Ship Medic"
+/datum/job/submap/colonist/medic/ship
+	title = "Colony Ship Medic"
 	supervisors = "Ship Leader"
-/datum/job/submap/colonyengineer/ship
-	title = "Ship Engineer"
+/datum/job/submap/colonist/engineer/ship
+	title = "Colony Ship Engineer"
 	supervisors = "Ship Leader"
 
 /singleton/hierarchy/outfit/job/colonist/leader

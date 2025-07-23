@@ -3,14 +3,29 @@ GLOBAL_VAR_AS(choose_colony_type, "СЛУЧАЙНЫЙ") //Педальки вы�
 GLOBAL_VAR_AS(error_colony_reaction, "Прервать спавн колонии")
 
 /singleton/submap_archetype/playablecolony
-	crew_jobs = list(/datum/job/submap/colonist, /datum/job/submap/colonyscientist, \
-	/datum/job/submap/colonymedic, /datum/job/submap/colonyengineer, /datum/job/submap/colonist/leader)
+	crew_jobs = list(/datum/job/submap/colonist, /datum/job/submap/colonist/scientist, \
+	/datum/job/submap/colonist/medic, /datum/job/submap/colonist/engineer, /datum/job/submap/colonist/leader)
 
 /datum/job/submap/colonist/leader
 	title = "Colonist Leader"
+	supervisors = null
 	info = "You are a Colonist Leader, living on the rim of explored. Control your colonist, defend the interests of the colony."
 	total_positions = 1
 	outfit_type = /singleton/hierarchy/outfit/job/colonist
+
+// костыль для вывода принадлжености колонии в supervisors
+/datum/job/submap/colonist/leader/handle_variant_join(mob/living/carbon/human/H, alt_title)
+	supervisors = give_supervisors()
+	. = ..()
+
+/datum/job/submap/colonist/leader/proc/give_supervisors()
+	if (GLOB.last_colony_type == "НАНОТРЕЙЗЕН")
+		return "NanoTransen Officials"
+	else if(GLOB.last_colony_type == "ГКК")
+		return "ICCG Authorities"
+	else if(GLOB.last_colony_type == "ЦПСС")
+		return "SCG Authorities"
+	return "no one"
 
 
 /datum/job/submap/colonist
@@ -29,9 +44,9 @@ GLOBAL_VAR_AS(error_colony_reaction, "Прервать спавн колонии
 		SKILL_WEAPONS		= SKILL_MAX
 	)
 
-/datum/job/submap/colonyscientist
-	supervisors = "Colonist Leader"
+/datum/job/submap/colonist/scientist
 	title = "Colony Scientist"
+	supervisors = "Colonist Leader"
 	max_skill = list(
 		SKILL_SCIENCE	= SKILL_MAX,
 		SKILL_DEVICES	= SKILL_MAX,
@@ -42,9 +57,9 @@ GLOBAL_VAR_AS(error_colony_reaction, "Прервать спавн колонии
 		SKILL_DEVICES	= SKILL_BASIC
 	)
 
-/datum/job/submap/colonymedic
-	supervisors = "Colonist Leader"
+/datum/job/submap/colonist/medic
 	title = "Colony Medic"
+	supervisors = "Colonist Leader"
 	max_skill = list(
 		SKILL_MEDICAL	= SKILL_MAX,
 		SKILL_ANATOMY	= SKILL_MAX,
@@ -56,9 +71,9 @@ GLOBAL_VAR_AS(error_colony_reaction, "Прервать спавн колонии
 		SKILL_ANATOMY = SKILL_TRAINED
 	)
 
-/datum/job/submap/colonyengineer
-	supervisors = "Colonist Leader"
+/datum/job/submap/colonist/engineer
 	title = "Colony Engineer"
+	supervisors = "Colonist Leader"
 	min_skill = list(
 		SKILL_COMPUTER		= SKILL_BASIC,
 		SKILL_EVA			= SKILL_BASIC,
