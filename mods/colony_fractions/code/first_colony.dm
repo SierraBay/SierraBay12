@@ -9,7 +9,7 @@ GLOBAL_VAR_AS(error_colony_reaction, "Прервать спавн колонии
 /datum/job/submap/colonist/leader
 	title = "Colonist Leader"
 	supervisors = null
-	info = "You are a Colonist Leader, living on the rim of explored. Control your colonist, defend the interests of the colony."
+	info = "You are a Colonist Leader, living on the rim of the explored space. Control your colony and defend its interests."
 	total_positions = 1
 	outfit_type = /singleton/hierarchy/outfit/job/colonist
 
@@ -89,6 +89,18 @@ GLOBAL_VAR_AS(error_colony_reaction, "Прервать спавн колонии
 		SKILL_ATMOS			= SKILL_MAX,
 		SKILL_ENGINES		= SKILL_MAX
 		)
+
+/obj/submap_landmark/spawnpoint/colonist_leader_spawn
+	name = "Colonist Leader"
+
+/obj/submap_landmark/spawnpoint/colonist_scientist_spawn
+	name = "Colony Scientist"
+
+/obj/submap_landmark/spawnpoint/colonist_medic_spawn
+	name = "Colony Medic"
+
+/obj/submap_landmark/spawnpoint/colonist_engineer_spawn
+	name = "Colony Engineer"
 
 /singleton/hierarchy/outfit/job/colonist/leader
 	name = OUTFIT_JOB_NAME("Colonist Leader")

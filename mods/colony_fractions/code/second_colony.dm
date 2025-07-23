@@ -4,7 +4,7 @@
 
 /datum/job/submap/colonist/leader/ship
 	title = "Colony Ship Leader"
-	info = "You are a Colonist Leader, living on the rim of explored. Control your colonist, defend the interests of the landed ship."
+	info = "You are a Colonist Leader, living on the rim of the explored space. Control your landed colony ship and defend its interests."
 
 /datum/job/submap/colonist/ship
 	title = "Colony Ship Colonist"
@@ -18,6 +18,21 @@
 /datum/job/submap/colonist/engineer/ship
 	title = "Colony Ship Engineer"
 	supervisors = "Ship Leader"
+
+/obj/submap_landmark/spawnpoint/ship_leader_spawn
+	name = "Colony Ship Leader"
+
+/obj/submap_landmark/spawnpoint/colonist_spawn2
+	name = "Colony Ship Colonist"
+
+/obj/submap_landmark/spawnpoint/colonist_scientist_spawn2
+	name = "Colony Ship Scientist"
+
+/obj/submap_landmark/spawnpoint/colonist_medic_spawn2
+	name = "Colony Ship Medic"
+
+/obj/submap_landmark/spawnpoint/colonist_engineer_spawn2
+	name = "Colony Ship Engineer"
 
 /singleton/hierarchy/outfit/job/colonist/leader
 	name = OUTFIT_JOB_NAME("Colonist Leader")
