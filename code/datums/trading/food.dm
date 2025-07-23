@@ -157,5 +157,5 @@
 								/obj/item/reagent_containers/food/snacks/sliceable/pizza                 = TRADER_BLACKLIST_ALL,
 								/obj/item/reagent_containers/food/snacks/sliceable/flatdough             = TRADER_BLACKLIST,
 								/obj/item/reagent_containers/food/snacks/sliceable/braincake             = TRADER_BLACKLIST,
-								/obj/item/reagent_containers/food/snacks/pie                             = TRADER_THIS_TYPE,
+								/obj/item/reagent_containers/food/snacks/bananapie                             = TRADER_THIS_TYPE,
 								/obj/item/reagent_containers/food/snacks/applepie                        = TRADER_THIS_TYPE)

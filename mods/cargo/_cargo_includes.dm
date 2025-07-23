@@ -7,5 +7,6 @@
 #include "code/cargo_price.dm"
 #include "code/cargo_computery.dm"
 #include "code/cargo_clothes.dm"
+#include "code/cargo_atmospherics.dm"
 
 #endif

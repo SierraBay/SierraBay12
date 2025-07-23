@@ -271,9 +271,11 @@
 /* MEDBAY AREAS
  * ============
  */
+/*
 /area/medical/equipstorage
-	name = "First Deck - Infirmary - Storage"
+	name = "Second Deck - Infirmary - Storage"
 	icon_state = "medbay4"
+*/
 
 /area/hallway/infirmary
 	name = "First Deck - Infirmary - Hallway"
