@@ -68,7 +68,7 @@ GLOBAL_LIST_EMPTY(custom_items)
 
 
 /datum/objective/traitor/proc/get_random_custom_item()
-	if(!GLOB.custom_items)
+	if(!LAZYLEN(GLOB.custom_items))
 		return
 
 	var/list/entry = pick(GLOB.custom_items)
