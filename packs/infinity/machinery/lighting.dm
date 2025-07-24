@@ -67,3 +67,26 @@
 /obj/item/storage/box/lights/led_neon
 	name = "box of neon leds"
 	startswith = list(/obj/item/light/led_neon/small = 7)
+
+// Colored section
+
+/obj/machinery/light/led/small/green
+	light_type = /obj/item/light/led_neon/small/green
+
+/obj/item/light/led_neon/small/green
+	color = "#2d862d"
+	b_colour = "#2d862d"
+
+/obj/machinery/light/led/small/blue
+	light_type = /obj/item/light/led_neon/small/blue
+
+/obj/item/light/led_neon/small/blue
+	color = "#3333ff"
+	b_colour = "#3333ff"
+
+/obj/machinery/light/led/small/darkpurple
+	light_type = /obj/item/light/led_neon/small/darkpurple
+
+/obj/item/light/led_neon/small/darkpurple
+	color = "#cc0099"
+	b_colour = "#cc0099"
