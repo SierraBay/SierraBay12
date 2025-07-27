@@ -109,7 +109,7 @@ var/global/const/access_away_iccgn_captain = "ACCESS_ICCGN_CAPTAIN"
 	is_semi_antagonist = TRUE
 	info = "Вы просыпаетесь и выходите из криосна, ощущая прохладный воздух на своём лице, а также лёгкую тошноту. \
 	Являясь одним из членов экипажа разведывательного корабля Пионерского Корпуса ГКК, вы - член прикоммандированного к нему отряда Космодесантных войск ГКК. \
-	По данным бортового компьютера, в данном регионе могут потенциально находиться цели вашей разведывательной экседиции.\
+	По данным бортового компьютера, в данном регионе могут потенциально находиться цели вашей разведывательной экспедиции.\
 	\
 	 Вам крайне нежелательно приближаться к кораблям и станциям с опозновательными знаками, или вступать в огневой контакт с кораблями или войсками ЦПСС без разрешения от командования группировкой. \
 	 Исключением являются те ситуации, когда вы атакованы противником, терпите бедствие или на вашем судне аварийная ситуация."
@@ -135,7 +135,7 @@ var/global/const/access_away_iccgn_captain = "ACCESS_ICCGN_CAPTAIN"
 	is_semi_antagonist = TRUE
 	info = "Вы просыпаетесь и выходите из криосна, ощущая прохладный воздух на своём лице, а также лёгкую тошноту. \
 	Являясь одним из членов экипажа разведывательного корабля Пионерского Корпуса ГКК, вы - командир прикоммандированного к нему отряда Космодесантных войск ГКК. \
-	По данным бортового компьютера, в данном регионе могут потенциально находиться цели вашей разведывательной экседиции.\
+	По данным бортового компьютера, в данном регионе могут потенциально находиться цели вашей разведывательной экспедиции.\
 	\
 	 Вам крайне нежелательно приближаться к кораблям и станциям с опозновательными знаками, или вступать в огневой контакт с кораблями или войсками ЦПСС без разрешения от командования группировкой. \
 	 Исключением являются те ситуации, когда вы атакованы противником, терпите бедствие или на вашем судне аварийная ситуация."
@@ -166,7 +166,7 @@ var/global/const/access_away_iccgn_captain = "ACCESS_ICCGN_CAPTAIN"
 	is_semi_antagonist = TRUE
 	info = "Вы просыпаетесь и выходите из криосна, ощущая прохладный воздух на своём лице, а также лёгкую тошноту. \
 	Будучи одним из членов экипажа разведывательного корабля Пионерского Корпуса ГКК, вы - капитан разведывательного корабля. \
-	По данным бортового компьютера, в данном регионе могут потенциально находиться цели вашей разведывательной экседиции.\
+	По данным бортового компьютера, в данном регионе могут потенциально находиться цели вашей разведывательной экспедиции.\
 	\
 	 Вам крайне нежелательно приближаться к кораблям и станциям с опозновательными знаками, или вступать в огневой контакт с кораблями или войсками ЦПСС без разрешения от командования группировкой. \
 	 Исключением являются те ситуации, когда вы атакованы противником, терпите бедствие или на вашем судне аварийная ситуация."
@@ -224,7 +224,7 @@ var/global/const/access_away_iccgn_captain = "ACCESS_ICCGN_CAPTAIN"
 	supervisors = "captain"
 	loadout_allowed = TRUE
 	info = "Вы просыпаетесь и выходите из криосна, ощущая прохладный воздух на своём лице, а также лёгкую тошноту. \
-	Являясь одним из членов экипажа разведывательного корабля Пионерского Корпуса ГКК, ваша задача состоит в ведении огня из ракетных установок, пилотирования корабля, поддержании работоспособности судна и экипировки экипажа. \
+	Являясь одним из членов экипажа разведывательного корабля Пионерского Корпуса ГКК, ваша задача состоит в ведении огня из корабельного орудия, пилотирования корабля, поддержании работоспособности судна и экипировки экипажа. \
 	\
 	 Вам крайне нежелательно приближаться к кораблям и станциям с опозновательными знаками, или вступать в огневой контакт с кораблями или войсками ЦПСС без разрешения от командования группировкой. \
 	 Исключением являются те ситуации, когда вы атакованы противником,  терпите бедствие или на вашем судне аварийная ситуация."
@@ -256,7 +256,7 @@ var/global/const/access_away_iccgn_captain = "ACCESS_ICCGN_CAPTAIN"
 	loadout_allowed = TRUE
 	info = "Вы просыпаетесь и выходите из криосна, ощущая прохладный воздух на своём лице, а также лёгкую тошноту. \
 	Вы - сотрдник отдела 'П' Конфедеративной Службы Безопасности, приписанный к кораблю Пионерского Корпуса. \
-	По данным бортового компьютера, в данном регионе могут потенциально находиться цели вашей разведывательной экседиции.\
+	По данным бортового компьютера, в данном регионе могут потенциально находиться цели вашей разведывательной экспедиции.\
 	\
 	 Вашей первичной задачей является сбор разведданных об активности корпоративных судов, судов ЦПСС, а также иной активности, которая покажется вам подозрительной. \
 	 У вас нет права подниматься на борт судов NanoTrasen или ЦПСС. Помните об этом и не провоцируйте ненужные Конфедерации конфликты. \
@@ -300,7 +300,8 @@ var/global/const/access_away_iccgn_captain = "ACCESS_ICCGN_CAPTAIN"
 /singleton/hierarchy/outfit/job/iccgn/iccgn_droptroops
 	name = ICCGN_OUTFIT_JOB_NAME("Droptrooper")
 	head = /obj/item/clothing/head/iccgn/beret
-	uniform = /obj/item/clothing/under/iccgn/pt
+	uniform = /obj/item/clothing/under/iccgn/utility
+	suit = /obj/item/clothing/suit/iccgn/utility
 	id_types = list(/obj/item/card/id/awayiccgn/droptroops)
 	belt = /obj/item/storage/belt/holster/security/tactical/farfleet
 	gloves = /obj/item/clothing/gloves/thick/combat
@@ -308,7 +309,8 @@ var/global/const/access_away_iccgn_captain = "ACCESS_ICCGN_CAPTAIN"
 /singleton/hierarchy/outfit/job/iccgn/iccgn_sergeant
 	name = ICCGN_OUTFIT_JOB_NAME("Droptroops Sergeant")
 	head = /obj/item/clothing/head/iccgn/beret
-	uniform = /obj/item/clothing/under/iccgn/pt
+	uniform = /obj/item/clothing/under/iccgn/utility
+	suit = /obj/item/clothing/suit/iccgn/utility
 	id_types = list(/obj/item/card/id/awayiccgn/droptroops/sergeant)
 	belt = /obj/item/storage/belt/holster/security/tactical/farfleet
 	gloves = /obj/item/clothing/gloves/thick/combat
@@ -316,14 +318,16 @@ var/global/const/access_away_iccgn_captain = "ACCESS_ICCGN_CAPTAIN"
 /singleton/hierarchy/outfit/job/iccgn/iccgn_gunner
 	name = ICCGN_OUTFIT_JOB_NAME("Senior Technican")
 	head = /obj/item/clothing/head/iccgn/service
-	uniform = /obj/item/clothing/under/iccgn/utility
+	uniform = /obj/item/clothing/under/iccgn/service
+	suit = /obj/item/clothing/suit/iccgn/service_officer
 	belt = /obj/item/storage/belt/utility/full
 	gloves = /obj/item/clothing/gloves/insulated //black
 
 /singleton/hierarchy/outfit/job/iccgn/iccgn_medic
 	name = ICCGN_OUTFIT_JOB_NAME("Pioneer Corpsman")
 	head = /obj/item/clothing/head/iccgn/service
-	uniform = /obj/item/clothing/under/iccgn/utility
+	uniform = /obj/item/clothing/under/iccgn/service
+	suit = /obj/item/clothing/suit/iccgn/service_officer
 	belt = /obj/item/storage/belt/medical/emt
 	gloves = /obj/item/clothing/gloves/latex/nitrile
 

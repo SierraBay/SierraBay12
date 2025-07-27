@@ -1,0 +1,6 @@
+author: Mucker
+changes:
+  - {bugfix: Fixed the BSD flush triggering on the moderate level event.}
+  - {tweak: Reduced the likelihood of being swapped with mobs in space (so that 
+      carp swarms don't space all the crew).}
+delete-after: true

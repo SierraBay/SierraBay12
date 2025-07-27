@@ -203,6 +203,7 @@
 					continue
 				AM.shuttle_land_on()
 	var/list/powernets = list()
+	var/list/beacons = list()
 	for(var/area/A in shuttle_area)
 		// if there was a zlevel above our origin, erase our ceiling now we're leaving
 		if(HasAbove(current_location.z))
@@ -225,6 +226,8 @@
 
 		for(var/obj/structure/cable/C in A)
 			powernets |= C.powernet
+		for (var/obj/machinery/radio_beacon/beacon in A)
+			beacons |= beacon
 	if(logging_home_tag)
 		var/datum/shuttle_log/s_log = SSshuttle.shuttle_logs[src]
 		s_log.handle_move(current_location, destination)
@@ -254,6 +257,14 @@
 			var/datum/powernet/NewPN = new()
 			NewPN.add_cable(C)
 			propagate_network(C,C.powernet)
+
+	// Move any active radio beacon signals to follow the correct overmap object.
+	for (var/obj/machinery/radio_beacon/beacon as anything in beacons)
+		var/obj/overmap/visitable/visitable = map_sectors["[get_z(beacon)]"]
+		if (!visitable)
+			continue
+		beacon.signal?.set_origin(visitable)
+		beacon.emergency_signal?.set_origin(visitable)
 
 	if(mothershuttle)
 		var/datum/shuttle/mothership = SSshuttle.shuttles[mothershuttle]
