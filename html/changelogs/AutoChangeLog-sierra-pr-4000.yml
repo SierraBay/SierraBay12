@@ -1,0 +1,5 @@
+author: Aigamuxa
+changes:
+  - {rscadd: Добавил в лодаут берет KMS}
+  - {imageadd: Иконки для KMS берета}
+delete-after: true
