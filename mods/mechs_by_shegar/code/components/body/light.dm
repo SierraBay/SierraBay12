@@ -9,17 +9,21 @@
 	power_use = 5
 	pilot_coverage = 100
 	climb_time = 15
-	max_hp = 80
-	min_damage = 50
-	max_repair = 40
-	repair_damage = 20
+
+	max_hp = 75
+	min_damage = 30
+	max_repair = 50
+	repair_damage = 15
+	front_modificator_damage = 1
+
 	hide_pilot = TRUE
 	req_material = MATERIAL_ALUMINIUM
-	front_modificator_damage = 1
+	//Тепло
 	max_heat = 100
 	heat_cooling = 12
-	emp_heat_generation = 80
-	weight = 200
+	emp_heat_generation = 110
+
+	weight = 100
 
 /obj/item/mech_component/chassis/light/Initialize()
 	pilot_positions = list(
@@ -49,7 +53,3 @@
 			"[WEST]"  = list("x" = 16, "y" = 16)
 			)
 	. = ..()
-
-/obj/item/mech_component/chassis/light/prebuild()
-	. = ..()
-	m_armour = new /obj/item/robot_parts/robot_component/armour/exosuit/radproof(src)

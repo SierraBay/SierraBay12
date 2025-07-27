@@ -9,7 +9,7 @@
 	name = "game world fov hidden plane master"
 	plane = GAME_PLANE_FOV_HIDDEN
 	group = RENDER_GROUP_SCENE
-	renderer_flags = RENDERER_MAIN | RENDERER_SHARED
+	renderer_flags = RENDERER_FLAG_AUTO
 
 /atom/movable/renderer/fov_hidden/Initialize()
 	. = ..()
@@ -20,7 +20,7 @@
 	plane = FIELD_OF_VISION_BLOCKER_PLANE
 	render_target_name = FIELD_OF_VISION_BLOCKER_RENDER_TARGET
 	mouse_opacity = MOUSE_OPACITY_UNCLICKABLE
-	renderer_flags = RENDERER_MAIN | RENDERER_SHARED
+	renderer_flags = RENDERER_FLAG_AUTO
 	appearance_flags = PLANE_MASTER
 
 
@@ -28,14 +28,14 @@
 	name = "nearsight blur"
 	plane = DEFAULT_PLANE
 	group = RENDER_GROUP_SCENE
-	renderer_flags = RENDERER_MAIN | RENDERER_SHARED
+	renderer_flags = RENDERER_FLAG_AUTO
 
 
 /atom/movable/renderer/above_fov
 	name = "above fov"
 	plane = GAME_PLANE_ABOVE_FOV
 	group = RENDER_GROUP_SCENE
-	renderer_flags = RENDERER_MAIN | RENDERER_SHARED
+	renderer_flags = RENDERER_FLAG_AUTO
 
 /client
 	var/obj/screen/fullscreen/fov_blocker/fov_mask

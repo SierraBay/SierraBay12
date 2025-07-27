@@ -159,6 +159,7 @@
 //For jobs that spawn with weapons in their lockers
 #define ARMED_ROLES list(\
 	/datum/job/captain, /datum/job/hop, /datum/job/hos,\
+	/datum/job/rd, /datum/job/cmo, /datum/job/chief_engineer,\
 	/datum/job/officer, /datum/job/iso, /datum/job/warden, /datum/job/detective, /datum/job/security_assistant \
 )
 

@@ -720,10 +720,15 @@
 	nutriment_amt = 3
 	bitesize = 3
 
-/obj/item/reagent_containers/food/snacks/pie/throw_impact(atom/hit_atom)
+/obj/item/reagent_containers/food/snacks/bananapie/throw_impact(atom/hit_atom)
+	var/turf/turf = get_turf(src)
+	if (turf)
+		new /obj/decal/cleanable/pie_smudge (turf)
+	visible_message(
+		SPAN_DANGER("\The [src] splats."),
+		SPAN_DANGER("You hear a splat.")
+	)
 	..()
-	new/obj/decal/cleanable/pie_smudge(src.loc)
-	src.visible_message(SPAN_DANGER("\The [src.name] splats."),SPAN_DANGER("You hear a splat."))
 	qdel(src)
 
 /obj/item/reagent_containers/food/snacks/berryclafoutis

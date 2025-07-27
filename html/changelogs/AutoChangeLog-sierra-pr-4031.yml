@@ -1,0 +1,4 @@
+author: KOJlECO
+changes:
+  - {bugfix: Пофиксил подствольник Костру}
+delete-after: true

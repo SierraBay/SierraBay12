@@ -1,0 +1,6 @@
+author: SierraKomodo
+changes:
+  - {rscadd: Legion harvesters may flee if they're in danger.}
+  - {rscadd: Legion harvesters that are currently harvesting from a mob can be 
+      interrupted if you hit them enough.}
+delete-after: true

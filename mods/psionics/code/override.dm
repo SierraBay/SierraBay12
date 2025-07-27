@@ -43,6 +43,11 @@
 	if(affected)
 		affected.implants += imp
 		imp.part = affected
+		switch(H.mind.assigned_job.department)
+			if("Охранный")
+				if(H.mind.assigned_job.title == "Criminal Investigator" || H.mind.assigned_job.title == "Forensic Technician")
+					return
+				imp.psi_mode = "Issue Reprimand"
 	to_chat(H, SPAN_DANGER("As a registered psionic, you are fitted with a psi-dampening control implant. Using psi-power while the implant is active will result in neural shocks and your violation being reported."))
 
 /datum/job/equip(mob/living/carbon/human/H, alt_title, datum/mil_branch/branch, datum/mil_rank/grade)

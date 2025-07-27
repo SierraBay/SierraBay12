@@ -4,7 +4,7 @@
 	if(user.mob_size > MOB_MEDIUM)
 		to_chat(user,SPAN_NOTICE("Не залезу."))
 		return
-	if(user.r_hand != null || user.l_hand != null)
+	if(user.r_hand != null && user.l_hand != null)
 		to_chat(user,SPAN_NOTICE("Мне нужна хотя бы одна свободная рука."))
 		return
 	var/local_dir = get_dir(src, user)

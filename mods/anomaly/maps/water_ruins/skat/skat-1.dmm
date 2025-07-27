@@ -1095,7 +1095,6 @@
 /area/map_template/anomaly/skat)
 "vL" = (
 /obj/structure/table/marble,
-/obj/item/reagent_containers/cooking_container/board/mahogany,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/white,
 /area/map_template/anomaly/skat)
@@ -1345,7 +1344,7 @@
 /turf/simulated/floor/exoplanet/titan_water/minimal,
 /area/map_template/anomaly/skat)
 "zI" = (
-/obj/item/reagent_containers/food/drinks/glass2/coffeecup/custom,
+/obj/item/reagent_containers/food/drinks/glass2/coffeecup,
 /turf/simulated/floor/exoplanet/titan_water/minimal,
 /area/map_template/anomaly/skat)
 "zQ" = (

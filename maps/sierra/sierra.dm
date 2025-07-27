@@ -140,6 +140,7 @@
 	#include "loadout/loadout_pda.dm"
 	#include "loadout/loadout_shoes.dm"
 	#include "loadout/loadout_suit.dm"
+	#include "loadout/loadout_augments.dm"
 	#include "loadout/loadout_tactical.dm"
 	#include "loadout/loadout_uniform.dm"
 	#include "loadout/loadout_xeno.dm"
@@ -156,7 +157,7 @@
 		// ~AWAY SITES~ //
 	#include "../away/mining/mining.dm"
 	#include "../away/derelict/derelict.dm"
-	#include "../away/bearcat/bearcat.dm"
+	//#include "../away/bearcat/bearcat.dm" коммент как решение ошибки "duplicate definition" при добавлении мода "bearcat revived"
 	#include "../away/lost_supply_base/lost_supply_base.dm"
 	#include "../away/smugglers/smugglers.dm"
 	#include "../away/magshield/magshield.dm"
@@ -186,6 +187,7 @@
 	// USED MODS
 	// Keep them in ascending alphabetical order, please
 
+	#include "../../mods/_maps/bearcat_revived/_map_bearcat_revived.dme"
 	#include "../../mods/_maps/liberia/_map_liberia.dme"
 	#include "../../mods/_maps/sentinel/_map_sentinel.dme"
 	#include "../../mods/_maps/farfleet/_map_farfleet.dme"

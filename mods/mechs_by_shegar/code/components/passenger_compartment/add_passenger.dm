@@ -4,7 +4,7 @@
 	if(do_after(user, 2 SECONDS, get_turf(src),DO_SHOW_PROGRESS|DO_FAIL_FEEDBACK|DO_USER_CAN_TURN| DO_USER_UNIQUE_ACT | DO_PUBLIC_PROGRESS))
 		if(!user.Adjacent(src)) // <- Мех рядом?
 			return FALSE
-		if(user.r_hand != null || user.l_hand != null)
+		if(user.r_hand != null && user.l_hand != null)
 			to_chat(user,SPAN_WARNING("Мне нужна хотя бы одна свободная рука."))
 			return
 		if(place == "Левый бок" && !passenger_compartment.left_back_passenger)
@@ -17,7 +17,6 @@
 			to_chat(user,SPAN_NOTICE("[place] занят."))
 			return
 		user.forceMove(passenger_compartment)
-		user.pinned += src
 		src.visible_message(SPAN_NOTICE(" [user] влез на [src]."))
 		passenger_compartment.count_passengers()
 		update_passengers()

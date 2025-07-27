@@ -1,3 +1,6 @@
+/mob/living/silicon/pai/paiInterface()
+	ui_interact(src)
+
 /mob/living/silicon/pai/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1)
 	if(user != src)
 		if(ui) ui.set_status(STATUS_CLOSE, 0)
@@ -25,10 +28,10 @@
 		software_data["id"] = S.id
 		if(key in software)
 			software_data["on"] = S.is_active(src)
-			bought_software[++LAZYLEN(bought_software)] = software_data
+			bought_software[LIST_PRE_INC(bought_software)] = software_data
 		else
 			software_data["ram"] = S.ram_cost
-			not_bought_software[++LAZYLEN(not_bought_software)] = software_data
+			not_bought_software[LIST_PRE_INC(not_bought_software)] = software_data
 
 	data["bought"] = bought_software
 	data["not_bought"] = not_bought_software
@@ -36,13 +39,14 @@
 	data["holoproj"] = is_advanced_holo
 	data["hackcover"] = is_hack_covered
 	data["hackspeed"] = hack_speed
+
 	// Emotions
 	var/emotions[0]
 	for(var/name in pai_emotions)
 		var/emote[0]
 		emote["name"] = name
 		emote["id"] = pai_emotions[name]
-		emotions[++LAZYLEN(emotions)] = emote
+		emotions[LIST_PRE_INC(emotions)] = emote
 
 	data["emotions"] = emotions
 	data["current_emotion"] = card.current_emotion

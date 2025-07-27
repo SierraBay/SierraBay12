@@ -6,10 +6,13 @@
 #include "merc.dm"
 #include "powerloader.dm"
 #include "security.dm"
+#include "test.dm"
 
 /mob/living/exosuit/premade
 	name = "impossible mech"
 	desc = "Убейте меня"
+	var/external_armor_type = /obj/item/mech_external_armor/civil
+	var/material_type = MATERIAL_STEEL
 	var/decal
 
 /mob/living/exosuit/premade/Initialize()
@@ -55,9 +58,15 @@
 		L_leg.prebuild()
 		L_leg.side = LEFT
 		L_leg.setup_side()
+	//Установка динамической брони
+	if(external_armor_type)
+		for(var/obj/item/mech_component/part in list(head, body, R_arm, L_arm, R_leg, L_leg))
+			var/obj/item/mech_external_armor/armour = new external_armor_type(part)
+			part.installed_armor = armour
+			armour.owner = part
 
 	if(!material)
-		material = SSmaterials.get_material_by_name(MATERIAL_STEEL)
+		material = SSmaterials.get_material_by_name(material_type)
 	. = ..()
 
 	spawn_mech_equipment()
