@@ -7,3 +7,9 @@
 //ITEMS
 #define COMSIG_ITEM_PICKUPED "item_pickuped" //Данный предмет подобрали
 #define COMSIG_MOVABLE_LOC_CHANGED "movable_loc_changed" //переменная loc обьекта изменилась. Перс сделал шаг, предмет убрали из кармана в сумку - чё угодно
+//VISION CONE
+#define COMSIG_ITEM_EQUIPPED "item_equipped"
+#define COMSIG_ITEM_DROPPED "item_dropped"
+
+#define COMSIG_CABINE_OPEN "cabine_open"
+#define COMSIG_CABINE_CLOSED "cabine_closed"

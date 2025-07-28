@@ -106,8 +106,8 @@
 /////////////////////////////////////////////
 
 /obj/item/grenade/chem_grenade/nullgas
-	name = "tear gas grenade"
-	desc = "Concentrated Capsaicin. Contents under pressure. Use with caution."
+	name = "null gas grenade"
+	desc = "Powdered nullglass. Use with face protection only!"
 	stage = 2
 	path = 1
 

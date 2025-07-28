@@ -5,15 +5,19 @@
 	exosuit_desc_string = "an industrial rollcage"
 	power_use = 0
 	climb_time = 6
-	max_hp = 80
-	min_damage = 75
-	max_repair = 50
-	repair_damage = 25
+	//Хп
+	max_hp = 40
+	min_damage = 25
+	max_repair = 15
+	repair_damage = 10
 	front_modificator_damage = 1
-	max_heat = 200
-	heat_cooling = 15
-	emp_heat_generation = 100
-	weight = 300
+
+
+	max_heat = 100
+	heat_cooling = 7
+	emp_heat_generation = 50
+
+	weight = 150
 
 /obj/item/mech_component/chassis/powerloader/Initialize()
 	pilot_positions = list(
@@ -49,8 +53,3 @@
 			"[WEST]"  = list("x" = 16, "y" = 16)
 			)
 	. = ..()
-
-/obj/item/mech_component/chassis/powerloader/prebuild()
-	. = ..()
-	m_armour = new /obj/item/robot_parts/robot_component/armour/exosuit(src)
-	update_parts_images()

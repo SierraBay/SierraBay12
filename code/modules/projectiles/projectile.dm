@@ -80,6 +80,13 @@
 	var/matrix/effect_transform			// matrix to rotate and scale projectile effects - putting it here so it doesn't
 										//  have to be recreated multiple times
 
+	//[SIERRA-ADD] - Mechs_by_Shegar
+	///Бронепробитие брони меха
+	var/mech_armor_penetration = 0
+	///Урон по броне меха если не пробил
+	var/mech_armor_damage = 0
+	//[SIERRA-ADD]
+
 /obj/item/projectile/Initialize()
 	damtype = damage_type //TODO unify these vars properly
 	if(!hitscan)

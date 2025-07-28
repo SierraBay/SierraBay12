@@ -7,15 +7,18 @@
 	icon_state = "pod_body"
 	has_hardpoints = list(HARDPOINT_BACK)
 	power_use = 5
-	max_hp = 210
-	max_repair = 50
-	min_damage = 110
-	repair_damage = 30
+
+	max_hp = 100
+	max_repair = 80
+	min_damage = 30
+	repair_damage = 20
 	front_modificator_damage = 1
+
 	max_heat = 200
 	heat_cooling = 5
 	emp_heat_generation = 100
-	weight = 400
+
+	weight = 200
 
 /obj/item/mech_component/chassis/pod/Initialize()
 	pilot_positions = list(
@@ -51,7 +54,3 @@
 			"[WEST]"  = list("x" = 16, "y" = 16)
 			)
 	. = ..()
-
-/obj/item/mech_component/chassis/pod/prebuild()
-	. = ..()
-	m_armour = new /obj/item/robot_parts/robot_component/armour/exosuit/radproof(src)

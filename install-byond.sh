@@ -8,7 +8,7 @@ else
   mkdir -p ~/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}
   cd ~/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}
   echo "Installing DreamMaker to $PWD"
-  curl "https://indm.dev/byond/${BYOND_MAJOR}/${BYOND_MAJOR}.${BYOND_MINOR}_byond_linux.zip" -o byond.zip
+  curl "https://dl.dropboxusercontent.com/scl/fi/mqxujy1cdgas24wtddnq7/516.1658_byond_linux.zip?rlkey=hxqo9ny8mb5kdtu0es091gseg&st=qdi1lp2c&dl=0" -o byond.zip
   unzip -o byond.zip
   cd byond
   make here

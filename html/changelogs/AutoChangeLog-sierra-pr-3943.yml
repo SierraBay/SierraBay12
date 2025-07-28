@@ -1,5 +1,0 @@
-author: Vipo24
-changes:
-  - {bugfix: пИИ можно снова открывать Software Interface}
-  - {bugfix: Новые иконки пИИ корректно отображаются в сетапе}
-delete-after: true

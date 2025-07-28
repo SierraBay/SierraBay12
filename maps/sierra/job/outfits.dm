@@ -264,6 +264,10 @@ Keeping them simple for now, just spawning with basic EC uniforms, and pretty mu
 	name = OUTFIT_JOB_NAME("Surgical Resident")
 	uniform = /obj/item/clothing/under/rank/medical/scrubs
 
+/singleton/hierarchy/outfit/job/sierra/crew/medical/senior/physican
+	name = OUTFIT_JOB_NAME("Physican")
+	uniform = /obj/item/clothing/under/rank/medical
+
 /singleton/hierarchy/outfit/job/sierra/crew/medical/doctor
 	name = OUTFIT_JOB_NAME("Doctor")
 	uniform = /obj/item/clothing/under/rank/medical
@@ -273,18 +277,19 @@ Keeping them simple for now, just spawning with basic EC uniforms, and pretty mu
 	name = OUTFIT_JOB_NAME("Orderly")
 	uniform = /obj/item/clothing/under/rank/orderly
 
-/singleton/hierarchy/outfit/job/sierra/crew/medical/doctor/mortus
-	name = OUTFIT_JOB_NAME("Mortician")
-	uniform = /obj/item/clothing/under/rank/medical/scrubs/black
-
-/singleton/hierarchy/outfit/job/sierra/crew/medical/doctor/paramedic
+/singleton/hierarchy/outfit/job/sierra/crew/medical/paramedic
 	name = OUTFIT_JOB_NAME("Paramedic - Sierra")
 	uniform = /obj/item/clothing/under/rank/medical
 	suit = /obj/item/clothing/suit/storage/toggle/fr_jacket
 	shoes = /obj/item/clothing/shoes/jackboots
 	l_hand = /obj/item/storage/firstaid/adv
 	belt = /obj/item/storage/belt/medical/emt
+	id_types = list(/obj/item/card/id/sierra/crew/medical)
 	flags = OUTFIT_FLAGS_JOB_DEFAULT | OUTFIT_EXTENDED_SURVIVAL
+
+/singleton/hierarchy/outfit/job/sierra/crew/medical/paramedic/emt
+	name = OUTFIT_JOB_NAME("Emergency Medical Technician - Sierra")
+	uniform = /obj/item/clothing/under/rank/medical/paramedic
 
 /singleton/hierarchy/outfit/job/sierra/crew/medical/doctor/nurse
 	name = OUTFIT_JOB_NAME("Nurse - Sierra")
@@ -313,7 +318,6 @@ Keeping them simple for now, just spawning with basic EC uniforms, and pretty mu
 	..()
 	BACKPACK_OVERRIDE_CHEMISTRY
 
-//[SIERRA-ADD] VIROLOGY
 /singleton/hierarchy/outfit/job/sierra/crew/medical/doctor/chemist/virologist
 	name = OUTFIT_JOB_NAME("Virologist - Sierra")
 	uniform = /obj/item/clothing/under/rank/virologist
@@ -322,7 +326,6 @@ Keeping them simple for now, just spawning with basic EC uniforms, and pretty mu
 /singleton/hierarchy/outfit/job/sierra/crew/medical/doctor/chemist/virologist/New()
 	..()
 	BACKPACK_OVERRIDE_CHEMISTRY
-//[/SIERRA-ADD] VIROLOGY
 
 /singleton/hierarchy/outfit/job/sierra/crew/medical/counselor
 	name = OUTFIT_JOB_NAME("Counselor - Sierra")

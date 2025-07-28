@@ -1,5 +1,18 @@
 ///Ninja equipment loadouts. Placed here because author overrided them using Torch files. Now we overriding this again for some QoL stuff.
 
+/obj/item/selection/ninja
+	name = "loadout selection kit"
+	desc = "A secure box containing standard operation kit for special forces operatives."
+	selection_options = list(
+		"Solar Special Operations" = /obj/structure/closet/crate/ninja/sol,
+		"Gilgameshi Commando" = /obj/structure/closet/crate/ninja/gcc,
+		"Syndicate Mercenary" = /obj/structure/closet/crate/ninja/merc,
+		"Corporate Operative" = /obj/structure/closet/crate/ninja/corpo,
+		"Spider-Clan Ninja" = /obj/structure/closet/crate/ninja/reborn,
+		// "Foundation Hound" = /obj/structure/closet/crate/ninja/foundation
+
+	)
+
 /obj/structure/closet/crate/ninja/sol
 	name = "sol equipment crate"
 	desc = "A tactical equipment crate."
@@ -62,4 +75,21 @@
 	new /obj/item/storage/backpack/dufflebag/syndie_kit/plastique(src)
 	new /obj/item/storage/box/anti_photons(src)
 	new /obj/item/device/encryptionkey/syndie_full(src)
+	new /obj/item/card/emag(src)
+
+/obj/structure/closet/crate/ninja/foundation
+	name = "foundation equipment crate"
+	desc = "A classified equipment crate."
+
+/obj/structure/closet/crate/ninja/foundation/New()
+	..()
+	new /obj/item/rig/light/ninja/foundation(src)
+	new /obj/item/gun/projectile/revolver/foundation(src)
+	new /obj/item/ammo_magazine/speedloader/magnum/nullglass(src)
+	new /obj/item/ammo_magazine/speedloader/magnum/nullglass(src)
+	new /obj/item/clothing/under/color/black/foundation(src)
+	new /obj/item/clothing/shoes/swat(src)
+	new /obj/item/clothing/mask/gas/foundation(src)
+	new /obj/item/grenade/chem_grenade/nullgas(src)
+	new /obj/item/grenade/chem_grenade/nullgas(src)
 	new /obj/item/card/emag(src)

@@ -1,28 +1,28 @@
 /*
-*	// B B B
-*	// U M U  ↓ (Направление меха, смотрит на ЮГ)
-*	// F F F
-*	// M - Мех, F - Атака пришла в лицо, B - Атака пришла в спину N - Ничего
+	// B B B
+	// N M N  ↓ (Направление меха, смотрит на ЮГ)
+	// F F F
+	// M - Мех, F - Атака пришла в лицо, B - Атака пришла в спину N - Ничего(Без модификаторов)
 */
 /mob/living/exosuit/bullet_act(obj/item/projectile/P, def_zone, used_weapon)
 
 	if (status_flags & GODMODE)
 		return PROJECTILE_FORCE_MISS
+
 	var/obj/item/mech_component/target = zoneToComponent(def_zone)
+	var/local_dir = get_dir(src, get_turf(P)) // <- Узнаём направление от меха до снаряда
+
+	if(!istype(P, /obj/item/projectile/bullet/rpg_rocket))
+		//Учитываем модификатор урона исходя из того с какой стороны в меха влетает снаряд.
+		modify_projectile_damage(P, target, local_dir)
+		if(target.installed_armor)
+			if(!target.installed_armor.react_at_damage(P))
+				return FALSE //Снаряд схаван бронёй
+
 	P.damage_type = DAMAGE_BRUTE //Каким образом можно починить ПРОВОДАМИ прожжёную обшивку?
 	//Проверяем, с какого направления прилетает атака!
-	var/local_dir = get_dir(src, get_turf(P)) // <- Узнаём направление от меха до снаряда
 	//Делаем эффект попадания по меху, ииискрыы
 	deploy_mech_hit_effect()
-	//Попадание с фронта
-	if(local_dir == turn(dir, -45) || local_dir == turn(dir, 0) || local_dir == turn(dir, 45))
-		P.damage = ( P.damage * target.front_modificator_damage ) + target.front_additional_damage
-	//Попадание с тыла
-	else if(local_dir == turn(dir, 180) || local_dir == turn(dir, -135) || local_dir == turn(dir, 135))
-		//В случае если у нас есть пилоты скинем их при атаке по спине.
-		if(passengers_ammount > 0)
-			external_leaving_passenger(mode = MECH_DROP_ALL_PASSENGERS)
-		P.damage = ( P.damage * target.back_modificator_damage ) + target.back_additional_damage
 
 	//В случае если атака приходит в голову/лицо/глаза/пузо - снаряд может напрямую ранить пилота при условии
 	//что кабина меха открыта
@@ -33,6 +33,38 @@
 				return pilot.bullet_act(P, def_zone, used_weapon)
 	..()
 
+
+/mob/living/exosuit/proc/modify_projectile_damage(obj/item/projectile/P, obj/item/mech_component/mech_part, attack_dir)
+
+	var/result_mod
+	var/resul_add
+	//Попадание с лица
+	if(attack_dir == turn(dir, -45) || attack_dir == turn(dir, 0) || attack_dir == turn(dir, 45))
+		result_mod = mech_part.front_modificator_damage
+		resul_add = mech_part.front_additional_damage
+	//Попадание с тыла
+	else if(attack_dir == turn(dir, 180) || attack_dir == turn(dir, -135) || attack_dir == turn(dir, 135))
+		//В случае если у нас есть пассажиры скинем их при атаке по спине.
+		if(passengers_ammount > 0)
+			external_leaving_passenger(mode = MECH_DROP_ALL_PASSENGERS)
+		result_mod =  mech_part.back_modificator_damage
+		resul_add = mech_part.back_additional_damage
+
+	if(result_mod)
+		P.damage *= result_mod
+		P.mech_armor_damage *= result_mod
+	if(resul_add)
+		P.damage += resul_add
+		P.mech_armor_damage += resul_add
+
+
+
+
+
+
+
+
+//Визуал попадания
 /mob/living/exosuit/proc/deploy_mech_hit_effect()
 	set waitfor = FALSE
 	new /obj/particle_emitter/mech_hit (get_turf(src))
