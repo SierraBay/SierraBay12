@@ -1,0 +1,82 @@
+#include "limbs.dm"
+#include "augments.dm"
+#include "implants.dm"
+#include "organs.dm"
+
+/singleton/cyber_choose
+	var/augment_name = "Название кибернетики."
+	var/aug_description = "Описание кибернетики, выводимое при наведении на него мышкой.Много не срать."
+	//Для изменения описания кибернетики трогать нужно только 3 списка внизу и НИЧЕГО более сука
+	var/list/good_sides = list(
+		"Хорошая черта",
+		"ОЧЕНЬ ОЧЕНЬ ОЧЕНЬ ОЧЕНЬОЧЕНЬ ОЧЕНЬ ОЧЕНЬ ОЧЕНЬ ОЧЕНЬ ОЧЕНЬ ОЧЕНЬ ОЧЕНЬ ОЧЕНЬ ОЧЕНЬ ОЧЕНЬ ОЧЕНЬОЧЕНЬ ОЧЕНЬ ОЧЕНЬ ОЧЕНЬОЧЕНЬ ОЧЕНЬ ОЧЕНЬ ОЧЕНЬОЧЕНЬ ОЧЕНЬ ОЧЕНЬ ОЧЕНЬ хорошая черта",
+		"Лан пох"
+	)
+	var/list/neutral_sides = list()
+	var/list/bad_sides = list()
+	//В результате каких-то умнейших действий, список внизу соберётся из 3 списков сверху
+	var/aug_description_long
+	//Цена установки кибернетики в очках лодаута
+	var/price = 2
+	var/list/avaible_hardpoints = list()
+
+/singleton/cyber_choose/proc/setup_description(max_line_length = 60)
+	var/list/description_lines = list()
+
+	// Добавляем положительные черты
+	if(LAZYLEN(good_sides))
+		description_lines += "<span class='good'> </span>" //Костыль чтоб первая строка тоже красилась, пофиксите за меня хз
+		description_lines += format_list_items(good_sides, max_line_length, "good")
+
+	// Добавляем нейтральные черты
+	if(LAZYLEN(neutral_sides))
+		description_lines += format_list_items(neutral_sides, max_line_length, "neutral")
+
+	// Добавляем отрицательные черты
+	if(LAZYLEN(bad_sides))
+		description_lines += format_list_items(bad_sides, max_line_length, "bad")
+
+	// Собираем все в одну строку
+	aug_description_long = description_lines.Join("<br>")
+
+/singleton/cyber_choose/proc/format_list_items(list/strings, max_length, class_name)
+	var/list/formatted_items = list()
+
+	for(var/item in strings)
+		// Разбиваем длинные строки на несколько
+		var/list/chunks = split_text_by_length(item, max_length)
+		for(var/chunk in chunks)
+			formatted_items += "<span class='[class_name]'> [chunk] </span>"
+
+	return formatted_items
+
+/singleton/cyber_choose/proc/split_text_by_length(text, max_length)
+	var/list/chunks = list()
+	var/current_pos = 1
+	var/text_length = LAZYLEN(text)
+
+	while(current_pos <= text_length)
+		var/chunk_end = min(current_pos + max_length - 1, text_length)
+		// Не разбиваем слова посередине
+		if(chunk_end < text_length && text[chunk_end+1] != " ")
+			var/last_space = findlasttext(text, " ", chunk_end)
+			if(last_space > current_pos)
+				chunk_end = last_space - 1
+
+		chunks += copytext(text, current_pos, chunk_end + 1)
+		current_pos = chunk_end + 1
+
+	return chunks
+
+/singleton/cyber_choose/Initialize()
+	setup_description(100)
+	..()
+
+// subtypesof(/datum/augment_choose)
+
+/datum/controller/subsystem/character_setup/Initialize(start_uptime)
+	.=..()
+	var/list/augs = subtypesof(/singleton/cyber_choose)
+	for(var/aug_type in augs)
+		var/singleton/cyber_choose/spawned_aug_data = new aug_type
+		spawned_aug_data.Initialize()

@@ -203,6 +203,7 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 	if (length(pref.body_markings))
 		. += "<br />"
 
+	/* [SIERRA-REMOVE] - CYBER-MENU Вырезано
 	. += "<br />[TBTN("reset_limbs", "Reset", "Body Parts")] [BTN("limbs", "Adjust Limbs")] [BTN("organs", "Adjust Organs")]"
 	var/list/alt_organs = list()
 	for (var/name in pref.organ_data)
@@ -247,7 +248,7 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 		alt_organs += "(No differences from baseline)"
 	. += "<br />[alt_organs.Join(", ")]"
 	. = jointext(., null)
-
+	*/
 	. += "<br />[TBTN("res_trait", "Reset Traits", "Traits")] [BTN("add_trait", "Add Trait")]"
 	var/list/alt_traits = list()
 	for (var/picked_type as anything in pref.picked_traits)

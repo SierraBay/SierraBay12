@@ -1,0 +1,14 @@
+//Рисует УИ верхних кнопок (С выбором подменю)
+/datum/category_item/player_setup_item/cybernetics/proc/draw_main_buttons(list/input_list)
+	input_list += "<table align='center' width='100%'>"
+	input_list += "<tr><td colspan=3><center>"
+	input_list += "<br />\
+	[CFBTNU("limbs", "Протезы конечностей", current_tab == "Протезирование")]\
+	&nbsp;&nbsp;&nbsp;&nbsp;\
+	[CFBTNU("organs", "Внутренние органы", current_tab == "Внутренние органы")]\
+	&nbsp;&nbsp;&nbsp;&nbsp;\
+	[CFBTNU("augments", "Аугменты", current_tab == "Аугменты")]\
+	&nbsp;&nbsp;&nbsp;&nbsp;\
+	[CFBTNU("implants", "Импланты тела", current_tab == "Импланты тела")]"
+	input_list += "</center></td></tr>"
+	input_list += "<tr><td colspan=3><center><b>"
