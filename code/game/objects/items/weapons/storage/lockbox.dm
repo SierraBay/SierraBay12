@@ -72,7 +72,7 @@
 
 /obj/item/storage/lockbox/loyalty
 	name = "lockbox of loyalty implants"
-	req_access = list(access_security)
+	req_access = list(access_brig)
 	startswith = list(
 		/obj/item/implantcase/loyalty = 3,
 		/obj/item/implanter/loyalty = 1
@@ -82,7 +82,7 @@
 /obj/item/storage/lockbox/clusterbang
 	name = "lockbox of clusterbangs"
 	desc = "You have a bad feeling about opening this."
-	req_access = list(access_security)
+	req_access = list(access_brig)
 	startswith = list(
 		/obj/item/grenade/flashbang/clusterbang = 1
 	)

@@ -52,7 +52,7 @@ GLOBAL_LIST_EMPTY(custom_items)
 
 /datum/objective/traitor/find_target()
 	var/objective
-	switch (rand(1,4))
+	switch (rand(1, 4))
 		if (1, 2) // human
 			..()
 			if(target && target.current)
@@ -68,15 +68,15 @@ GLOBAL_LIST_EMPTY(custom_items)
 
 
 /datum/objective/traitor/proc/get_random_custom_item()
-	if(!length(GLOB.custom_items))
-		return null
+	if(!LAZYLEN(GLOB.custom_items))
+		return
 
 	var/list/entry = pick(GLOB.custom_items)
 
 	var/item_name = entry["item_name"]
 	var/mob/item_owner = entry["owner"]
 	if ("[item_owner]" == "[owner.current]")
-		return null
+		return
 	return "[item_name] owned by [item_owner]"
 
 /datum/objective/traitor/proc/get_random_objective_item()
@@ -129,7 +129,7 @@ GLOBAL_LIST_EMPTY(custom_items)
 	return FALSE
 
 
-/datum/antagonist/add_antagonist_mind(datum/mind/player, ignore_role, nonstandard_role_type, nonstandard_role_msg, bypass = FALSE)
+/datum/antagonist/traitor/add_antagonist_mind(datum/mind/player, ignore_role, nonstandard_role_type, nonstandard_role_msg, bypass = FALSE)
 	if (..())
 		player.current.verbs += /mob/living/proc/get_objectives
 		// there is 1 second spawn in parent proc and this text should be displayed right after it

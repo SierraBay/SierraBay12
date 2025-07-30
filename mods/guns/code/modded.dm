@@ -165,6 +165,11 @@
 	else
 		..()
 
+/obj/item/gun/energy/laser/bonfire/toggle_safety(mob/user)
+	..()
+	if(launcher)
+		launcher.safety_state = safety_state //Set the launcher's safety to be equivalent to the bullpup's.
+
 /obj/item/gun/energy/ionrifle/small/stupor
 	name = "Stupor ion pistol"
 	desc = "The HelTek Stupor-45 is a compact anti-drone weapon. Due to their small output of EMP, you need be marksman to disable human-sized synthetic. But it's still better, than nothing."
@@ -350,6 +355,7 @@
 	icon_state = "smallcasing_f"
 
 /obj/item/projectile/bullet/pistol/holdout/ap
+	damage = 30
 	armor_penetration = 15
 	//[SIERRA-ADD] - Mechs-by-Shegar
 	mech_armor_penetration = 0
