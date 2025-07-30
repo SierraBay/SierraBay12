@@ -39,8 +39,11 @@
 	id_slot = slot_wear_id
 	id_types = list(/obj/item/card/id/merchant/colony_leader)
 
-/datum/map_template/ruin/exoplanet/playablecolony2
+// changing after New() proc because original playablecolony2 has suffixes which load before override
+/datum/map_template/ruin/exoplanet/playablecolony2/New()
+	. = ..()
 	mappaths = list('mods/colony_fractions/maps/colony_ship.dmm')
+
 
 /datum/map_template/ruin/exoplanet/playablecolony2/load(turf/T, centered=FALSE)
 	if(!GLOB.choose_colony_type)
