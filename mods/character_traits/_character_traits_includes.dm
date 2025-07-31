@@ -6,5 +6,6 @@
 #include "code/all.dm"
 #include "code/unathi.dm"
 #include "code/glob_character_traits.dm"
+#include "code/colorblindwires.dm"
 
 #endif
