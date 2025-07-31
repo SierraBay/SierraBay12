@@ -13,7 +13,7 @@ var/global/list/deuteranopia_replacements = list(
 	"red" = "red",
 	"green" = "red",
 	"yellow" = "brown",
-	"brown" = "darkred"
+	"brown" = "darkred",
 	"gold" = "brown"
 )
 var/global/list/tritanopia_replacements = list(
@@ -23,7 +23,7 @@ var/global/list/tritanopia_replacements = list(
 	"pink" = "purple",
 	"purple" = "purple",
 	"cyan" = "gray",
-	"navy" = "purple"
+	"navy" = "purple",
 	"gold" = "yellow"
 )
 
