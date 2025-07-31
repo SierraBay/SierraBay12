@@ -20,7 +20,7 @@
 				if (allowed(owner))
 					process_med_hud(owner, 1)
 			if (HUD_SECURITY)
-				req_access = list(access_security)
+				req_access = list(access_brig)
 				if (allowed(owner))
 					process_sec_hud(owner, 1)
 			if (HUD_JANITOR)

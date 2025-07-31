@@ -355,6 +355,7 @@
 	icon_state = "smallcasing_f"
 
 /obj/item/projectile/bullet/pistol/holdout/ap
+	damage = 30
 	armor_penetration = 15
 	//[SIERRA-ADD] - Mechs-by-Shegar
 	mech_armor_penetration = 0
