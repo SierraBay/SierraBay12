@@ -40,8 +40,6 @@
 		/mob/living/carbon/human/nabber/verb/bug_buzz,
 		/mob/living/carbon/human/nabber/verb/bug_chitter
 	)
-	if(!inherent_verbs)
-		inherent_verbs = list()
 	LAZYADD(inherent_verbs, nabber_verbs)
 
 /singleton/species/nabber/New()
