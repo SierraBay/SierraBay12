@@ -13,8 +13,6 @@
 		/mob/living/carbon/human/skrell/verb/skrell_warble2,
 		/mob/living/carbon/human/skrell/verb/skrell_warble3
 	)
-	if(!inherent_verbs)
-		inherent_verbs = list()
 	LAZYADD(inherent_verbs, skrell_verbs)
 
 /singleton/species/skrell/New()
