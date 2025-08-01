@@ -2,8 +2,6 @@
 	var/list/vox_verbs = list(
 		/mob/living/carbon/human/vox/verb/vox_shriek
 	)
-	if(!inherent_verbs)
-		inherent_verbs = list()
 	LAZYADD(inherent_verbs, vox_verbs)
 
 /singleton/species/vox/New()
@@ -20,8 +18,6 @@
 		/mob/living/carbon/human/adherent/verb/adherent_ding,
 		/mob/living/carbon/human/adherent/verb/adherent_chime
 	)
-	if(!inherent_verbs)
-		inherent_verbs = list()
 	LAZYADD(inherent_verbs, adherent_verbs)
 
 /singleton/species/adherent/New()
@@ -72,8 +68,6 @@
 		/mob/living/carbon/human/diona/verb/chirp,
 		/mob/living/carbon/human/diona/verb/multichirp
 	)
-	if(!inherent_verbs)
-		inherent_verbs = list()
 	LAZYADD(inherent_verbs, diona_verbs)
 
 /singleton/species/diona/New()
@@ -97,8 +91,6 @@
 		/mob/living/carbon/human/machine/verb/confirm,
 		/mob/living/carbon/human/machine/verb/deny
 	)
-	if(!inherent_verbs)
-		inherent_verbs = list()
 	LAZYADD(inherent_verbs, machine_verbs)
 
 /singleton/species/machine/New()
