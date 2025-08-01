@@ -9,8 +9,6 @@
 		/mob/living/carbon/human/tajaran/verb/cat_purrlong,
 		/mob/living/carbon/human/tajaran/verb/cat_purrstrong
 	)
-	if(!inherent_verbs)
-		inherent_verbs = list()
 	LAZYADD(inherent_verbs, tajaran_verbs)
 
 /singleton/species/tajaran/New()
