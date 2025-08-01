@@ -15,7 +15,7 @@
 	)
 	if(!inherent_verbs)
 		inherent_verbs = list()
-	inherent_verbs += skrell_verbs
+	LAZYADD(inherent_verbs, skrell_verbs)
 
 /singleton/species/skrell/New()
 	. = ..()

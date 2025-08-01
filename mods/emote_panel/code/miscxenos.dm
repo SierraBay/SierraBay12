@@ -4,7 +4,7 @@
 	)
 	if(!inherent_verbs)
 		inherent_verbs = list()
-	inherent_verbs += vox_verbs
+	LAZYADD(inherent_verbs, vox_verbs)
 
 /singleton/species/vox/New()
 	. = ..()
@@ -22,7 +22,7 @@
 	)
 	if(!inherent_verbs)
 		inherent_verbs = list()
-	inherent_verbs += adherent_verbs
+	LAZYADD(inherent_verbs, adherent_verbs)
 
 /singleton/species/adherent/New()
 	. = ..()
@@ -46,7 +46,7 @@
 	)
 	if(!inherent_verbs)
 		inherent_verbs = list()
-	inherent_verbs += nabber_verbs
+	LAZYADD(inherent_verbs, nabber_verbs)
 
 /singleton/species/nabber/New()
 	. = ..()
@@ -74,7 +74,7 @@
 	)
 	if(!inherent_verbs)
 		inherent_verbs = list()
-	inherent_verbs += diona_verbs
+	LAZYADD(inherent_verbs, diona_verbs)
 
 /singleton/species/diona/New()
 	. = ..()
@@ -99,7 +99,7 @@
 	)
 	if(!inherent_verbs)
 		inherent_verbs = list()
-	inherent_verbs += machine_verbs
+	LAZYADD(inherent_verbs, machine_verbs)
 
 /singleton/species/machine/New()
 	. = ..()

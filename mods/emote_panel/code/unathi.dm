@@ -90,7 +90,7 @@
 	)
 	if(!inherent_verbs)
 		inherent_verbs = list()
-	inherent_verbs += unathi_verbs
+	LAZYADD(inherent_verbs, unathi_verbs)
 
 /singleton/species/unathi/New()
 	. = ..()

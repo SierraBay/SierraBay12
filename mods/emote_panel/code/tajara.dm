@@ -11,7 +11,7 @@
 	)
 	if(!inherent_verbs)
 		inherent_verbs = list()
-	inherent_verbs += tajaran_verbs
+	LAZYADD(inherent_verbs, tajaran_verbs)
 
 /singleton/species/tajaran/New()
 	. = ..()

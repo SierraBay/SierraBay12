@@ -1,6 +1,6 @@
 /datum/mod_trait/all/gas
 	name = SPECIES_NABBER + " - Vision"
-	description = "Позволяет приблизиться к восприятию мира подобному ГБСьему, акцентируя внимания на оранжевых оттенках огня и приглушая растительные-зелёные."
+	description = "Позволяет приблизиться к восприятию мира подобному ГБС, акцентируя внимание на оранжевых оттенках огня и приглушая растительные зелёные."
 	species_allowed = list(SPECIES_NABBER)
 
 /datum/mod_trait/all/gas/apply_trait(mob/living/carbon/human/H)
