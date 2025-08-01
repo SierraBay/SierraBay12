@@ -88,8 +88,6 @@
 		/mob/living/carbon/human/unathi/verb/lizard_rumble,
 		/mob/living/carbon/human/unathi/verb/lizard_threat
 	)
-	if(!inherent_verbs)
-		inherent_verbs = list()
 	LAZYADD(inherent_verbs, unathi_verbs)
 
 /singleton/species/unathi/New()
