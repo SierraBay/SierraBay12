@@ -11,7 +11,7 @@ border: none;\
 transition: all 0.3s ease;\
 border-radius: 3px;\
 text-decoration: none;\
-background: [selected ? "#00AA00" : "#40628a"];\
+background: [selected ? "#00aa00" : "#40628a"];\
 color: white !important;\
 ' \
 href='?src=\ref[src];[key]=[value]' \
