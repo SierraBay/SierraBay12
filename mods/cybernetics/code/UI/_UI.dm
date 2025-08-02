@@ -114,14 +114,14 @@
 	W.write("limbs_list", pref.limb_list)
 	W.write("organs_list", pref.organ_list)
 	W.write("augments_list", pref.augments_list)
-	W.write("implants_list", pref.implants_list)
+	// W.write("implants_list", pref.implants_list)Задел на будущее
 
 //Подгрузка выбранной кибернетики
 /datum/category_item/player_setup_item/cybernetics/load_character(datum/pref_record_reader/R)
 	pref.limb_list = R.read("limbs_list")
 	pref.organ_list = R.read("organs_list")
 	pref.augments_list = R.read("augments_list")
-	pref.implants_list = R.read("implants_list")
+	// pref.implants_list = R.read("implants_list") Задел на будущее
 	//Исправление ошибок
 	if(!LAZYLEN(pref.organ_list) || LAZYLEN(pref.organ_list) > 6)
 		if(pref.client)
@@ -217,4 +217,6 @@
 		BP_L_FOOT = "Пусто"
 	)
 	to_chat(pref.client, SPAN_GOOD("Аугменты сброшены до стандартных."))
+	pref.implants_list = list()
+	to_chat(pref.client, SPAN_GOOD("Импланты сброшены до стандартных."))
 	to_chat(pref.client, SPAN_GOOD("Сброс закончен, но не сохранён. Сохраните или откатите отброс путём загрузки сохранения."))
