@@ -8798,7 +8798,7 @@
 	pixel_y = 6;
 	pixel_x = 8
 	},
-/obj/item/reagent_containers/food/drinks/glass2/coffeecup/custom{
+/obj/item/reagent_containers/food/drinks/glass2/coffeecup{
 	pixel_x = 8
 	},
 /obj/item/reagent_containers/food/drinks/glass2/coffeecup/dais{
