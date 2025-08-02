@@ -1,24 +1,49 @@
 /singleton/submap_archetype/playablecolony2
-	crew_jobs = list(/datum/job/submap/colonist, /datum/job/submap/ship_leader)
+	crew_jobs = list(/datum/job/submap/colonist/ship, /datum/job/submap/colonist/scientist/ship, \
+	/datum/job/submap/colonist/medic/ship, /datum/job/submap/colonist/engineer/ship, /datum/job/submap/colonist/leader/ship)
 
-/datum/job/submap/ship_leader
-	title = "Ship Leader"
-	info = "You are a Colonist Leader, living on the rim of explored. Control your colonist, defend the interests of the landed ship."
-	total_positions = 1
-	outfit_type = /singleton/hierarchy/outfit/job/colonist
+/datum/job/submap/colonist/leader/ship
+	title = "Colony Ship Leader"
+	info = "You are a Colonist Leader, living on the rim of the explored space. Control your landed colony ship and defend its interests."
 
+/datum/job/submap/colonist/ship
+	title = "Colony Ship Colonist"
+	supervisors = "Ship Leader"
+/datum/job/submap/colonist/scientist/ship
+	title = "Colony Ship Scientist"
+	supervisors = "Ship Leader"
+/datum/job/submap/colonist/medic/ship
+	title = "Colony Ship Medic"
+	supervisors = "Ship Leader"
+/datum/job/submap/colonist/engineer/ship
+	title = "Colony Ship Engineer"
+	supervisors = "Ship Leader"
 
-/datum/job/submap/colonist2
-	supervisors = "Colonist Leader"
+/obj/submap_landmark/spawnpoint/ship_leader_spawn
+	name = "Colony Ship Leader"
 
+/obj/submap_landmark/spawnpoint/colonist_spawn2
+	name = "Colony Ship Colonist"
+
+/obj/submap_landmark/spawnpoint/colonist_scientist_spawn2
+	name = "Colony Ship Scientist"
+
+/obj/submap_landmark/spawnpoint/colonist_medic_spawn2
+	name = "Colony Ship Medic"
+
+/obj/submap_landmark/spawnpoint/colonist_engineer_spawn2
+	name = "Colony Ship Engineer"
 
 /singleton/hierarchy/outfit/job/colonist/leader
 	name = OUTFIT_JOB_NAME("Colonist Leader")
 	id_slot = slot_wear_id
 	id_types = list(/obj/item/card/id/merchant/colony_leader)
 
-/datum/map_template/ruin/exoplanet/playablecolony2
+// changing after New() proc because original playablecolony2 has suffixes which load before override
+/datum/map_template/ruin/exoplanet/playablecolony2/New()
+	. = ..()
 	mappaths = list('mods/colony_fractions/maps/colony_ship.dmm')
+
 
 /datum/map_template/ruin/exoplanet/playablecolony2/load(turf/T, centered=FALSE)
 	if(!GLOB.choose_colony_type)
