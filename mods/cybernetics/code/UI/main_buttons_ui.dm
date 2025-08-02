@@ -7,10 +7,10 @@
 	&nbsp;&nbsp;&nbsp;&nbsp;\
 	[CFBTNU("organs", "Внутренние органы", current_tab == "Внутренние органы")]\
 	&nbsp;&nbsp;&nbsp;&nbsp;\
-    [CFBTNU("augments", "Аугменты", current_tab == "Аугменты")]\
-    &nbsp;&nbsp;&nbsp;&nbsp;\
-    [CFBTNU("implants", "Импланты тела", current_tab == "Импланты тела")]\
-    &nbsp;&nbsp;&nbsp;&nbsp;\
-    [CFBTNU("СБРОС", "Полный сброс", FALSE)]"
-    input_list += "</td></tr>"
-    input_list += "<tr><td colspan=3>"
+	[CFBTNU("augments", "Аугменты", current_tab == "Аугменты")]\
+	&nbsp;&nbsp;&nbsp;&nbsp;\
+	[CFBTNU("implants", "Импланты тела", current_tab == "Импланты тела")]\
+	&nbsp;&nbsp;&nbsp;&nbsp;\
+	[CFBTNU("СБРОС", "Полный сброс", FALSE)]"
+	input_list += "</td></tr>"
+	input_list += "<tr><td colspan=3>"
