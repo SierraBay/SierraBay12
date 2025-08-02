@@ -85,8 +85,10 @@
 		min_broken_damage = min_broken_damage +  R.addmin_broken_damage
 		set_extension(src, /datum/extension/armor, armor)
 
+	/*SIERRA-REMOVE - CYBERNETIC - Пендос гений
 	for(var/obj/item/organ/external/T in children)
 		T.robotize(company, 1)
+	*/
 
 	if(owner)
 

@@ -8,6 +8,8 @@
 	else
 		if(pref.choosed_implant_prototype && pref.choosed_implant_prototype.aug_description_long)
 			result_text = pref.choosed_implant_prototype.aug_description_long
+		else if(!pref.choosed_implant_prototype.check_avaibility(pref)) //Протез/аугмент/имплант недоступен
+			result_text = pref.choosed_implant_prototype.get_reason_for_avaibility(pref)
 		else
 			result_text = "<span class='bad'> КОНДУКТОР, У НАС ПРОБЛЕМЫ!!! Код выкинул неожиданный для своей работы результат и не знает что с вами делать. Сообщите о ошибке разработчику или в #фича-репорт </span>"
 

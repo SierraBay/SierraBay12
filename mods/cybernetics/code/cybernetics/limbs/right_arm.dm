@@ -3,6 +3,14 @@
 	aug_description = "Это правая рука."
 	avaible_hardpoints = list(BP_R_ARM)
 
+/singleton/cyber_choose/limb/right_arm/check_avaibility(datum/preferences/input_pref)
+	if(input_pref.limb_list[BP_R_HAND] == "Пусто")
+		return FALSE
+	return TRUE
+
+/singleton/cyber_choose/limb/right_arm/get_reason_for_avaibility(datum/preferences/input_pref)
+	return SPAN_BAD("Нельзя выбрать протез вместо руки, но оставить кисть мясной.")
+
 // =================
 // BISHOP CYBERNETICS
 // =================

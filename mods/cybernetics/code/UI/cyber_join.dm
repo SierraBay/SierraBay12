@@ -1,42 +1,58 @@
-/mob/living/carbon/human/update_body(update_icons=1)
+/client/proc/check_cybernetic_avability()
+	//Аугменты
+	for(var/augment in prefs.augments_list)
+		var/aug_singl_type = prefs.augments_list[augment]
+		if(aug_singl_type == "Пусто")
+			continue
+		var/singleton/cyber_choose/augment/augment_choose_prototype = GET_SINGLETON(text2path(aug_singl_type))
+		if(!augment_choose_prototype)
+			continue
 
-	//Update all limbs and visible organs one by one
-	var/list/needs_update = list()
-	var/limb_count_update = FALSE
-	var/list/missing_bodyparts = list()
+		if(!augment_choose_prototype.check_avaibility(prefs)) //Протез/аугмент/имплант недоступен
+			to_chat(src, SPAN_BAD("ВНИМАНИЕ, ошибка загрузки аугментов персонажа. Обратитесь в меню cybernetics в лодауте и проверьте, чтоб все выбранные вами аугменты не были окрашены в красный цвет."))
+			return FALSE
 
-	for(var/organ_tag in species.has_limbs)
-		var/obj/item/organ/external/limb = organs_by_name[organ_tag]
-		if(!isnull(limb))
-			var/old_key = icon_render_keys?[organ_tag] //Checks the mob's icon render key list for the bodypart
-			var/new_key = json_encode(limb.get_icon_key()) //Generates a key for the current bodypart
-			icon_render_keys[organ_tag] = new_key
 
-			if(icon_render_keys[organ_tag] != old_key) //If the keys match, that means the limb doesn't need to be redrawn
-				needs_update += limb
-		else
-			//Limb is missing?
-			missing_bodyparts += organ_tag
-			limb_count_update = TRUE
+	//Конечности
+	for(var/limb_name in prefs.limb_list)
+		var/limb_type = prefs.limb_list[limb_name]
+		if(limb_type == "Пусто")
+			continue
 
-	for(var/missing_limb in missing_bodyparts)
-		icon_render_keys -= missing_limb
+		var/singleton/cyber_choose/limb/data = GET_SINGLETON(text2path(limb_type))
+		if(!data.check_avaibility(prefs)) //Протез/аугмент/имплант недоступен
+			to_chat(src, SPAN_BAD("ВНИМАНИЕ, ошибка загрузки конечность персонажа. Обратитесь в меню cybernetics в лодауте и проверьте, чтоб все выбранные вами конечности не были окрашены в красный цвет."))
+			return FALSE
 
-	if(length(needs_update) || limb_count_update)
-		//GENERATE NEW LIMBS
-		var/list/new_limbs = list()
-		for(var/obj/item/organ/external/limb in organs)
-			if(limb in needs_update)
-				var/list/limb_overlays = limb.get_overlays()
-				GLOB.limb_overlays_cache[icon_render_keys[limb.organ_tag]] = limb_overlays
-				new_limbs += limb_overlays
-			else
-				new_limbs += GLOB.limb_overlays_cache[icon_render_keys[limb.organ_tag]]
+	//Органы
+	for(var/organ_name in prefs.organ_list)
+		var/organ_type = prefs.organ_list[organ_name]
+		if(organ_type == "Пусто")
+			continue
 
-		if(length(new_limbs))
-			overlays_standing[HO_BODY_LAYER] = new_limbs
+		var/singleton/cyber_choose/organ/organ_data = GET_SINGLETON(text2path(organ_type))
+		if(!organ_data.check_avaibility(prefs)) //Протез/аугмент/имплант недоступен
+			to_chat(src, SPAN_BAD("ВНИМАНИЕ, ошибка загрузки органов персонажа. Обратитесь в меню cybernetics в лодауте и проверьте, чтоб все выбранные вами органы не были окрашены в красный цвет."))
+			return FALSE
+	return TRUE
 
-	update_tail_showing(0)
+/client/proc/join_avaible_by_loadout()
+	if(!config || config.max_gear_cost == INFINITY)
+		return TRUE
+	var/total_price = 0
+	for(var/gear_name in prefs.gear_list[prefs.gear_slot])
+		var/datum/gear/G = gear_datums[gear_name]
+		if(istype(G))
+			total_price += G.cost
 
-	if(update_icons)
-		queue_icon_update()
+	for(var/aug_type in prefs.augments_list)
+		var/singleton/cyber_choose/augment/aug = GET_SINGLETON(text2path(prefs.augments_list[aug_type]))
+		if(!aug)
+			continue
+		total_price += aug.loadout_price
+
+	if(total_price > config.max_gear_cost)
+		to_chat(usr, SPAN_BAD("Количество очков лодаута больше, чем вы можете себе позволить. Уберите лишние аугменты или вещи."))
+		return FALSE
+
+	return TRUE

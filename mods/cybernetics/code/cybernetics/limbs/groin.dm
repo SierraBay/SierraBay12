@@ -3,6 +3,21 @@
 	aug_description = "Это брюхо."
 	avaible_hardpoints = list(BP_GROIN)
 
+/singleton/cyber_choose/limb/groin/check_avaibility(datum/preferences/input_pref)
+	if(!whitelist_lookup(SPECIES_FBP, input_pref.client) && !whitelist_lookup(SPECIES_IPC, input_pref.client))
+		return FALSE
+	for(var/hardpoint in list(BP_HEAD, BP_CHEST, BP_GROIN, BP_R_ARM, BP_L_ARM, BP_R_HAND, BP_L_HAND, BP_R_LEG, BP_L_LEG, BP_R_FOOT, BP_L_FOOT))
+		if(input_pref.limb_list[hardpoint] == "Пусто")
+			return FALSE
+	return TRUE
+
+/singleton/cyber_choose/limb/groin/get_reason_for_avaibility(datum/preferences/input_pref)
+	if(!whitelist_lookup(SPECIES_FBP, input_pref.client) && !whitelist_lookup(SPECIES_IPC, input_pref.client))
+		return SPAN_BAD("Вас нет в вайтлисте ППТ или ИПС. Обратитесь в #sierra-chat к @xeno-moderator")
+	for(var/hardpoint in list(BP_HEAD, BP_CHEST, BP_GROIN, BP_R_ARM, BP_L_ARM, BP_R_HAND, BP_L_HAND, BP_R_LEG, BP_L_LEG, BP_R_FOOT, BP_L_FOOT))
+		if(input_pref.limb_list[hardpoint] == "Пусто")
+			return SPAN_BAD("Для установки протеза брюха, все остальные части тела должны быть протезом.")
+
 // =================
 // BISHOP CYBERNETICS
 // =================

@@ -23,6 +23,12 @@
 "dSB" = (
 /turf/simulated/floor/exoplanet/titan_water/minimal,
 /area/centcom)
+"ejX" = (
+/obj/landmark{
+	name = "JoinLateCryo"
+	},
+/turf/simulated/floor/exoplanet/concrete/reinforced/road,
+/area/centcom)
 "eDA" = (
 /obj/random/biggun,
 /turf/simulated/floor/exoplanet/concrete/reinforced/road,
@@ -67,6 +73,10 @@
 /obj/item/gun/projectile/automatic/bullpup_rifle,
 /turf/simulated/floor/exoplanet/concrete/reinforced/road,
 /area/centcom)
+"ntZ" = (
+/obj/machinery/bodyscanner,
+/turf/simulated/floor/exoplanet/concrete/reinforced/road,
+/area/centcom)
 "nuF" = (
 /obj/item/gun/projectile/automatic/l6_saw,
 /turf/simulated/floor/exoplanet/concrete/reinforced/road,
@@ -81,6 +91,9 @@
 "ooX" = (
 /obj/landmark/no_weather_here{
 	layer = 2
+	},
+/obj/landmark{
+	name = "JoinLateCryo"
 	},
 /turf/unsimulated/floor/grass,
 /area/centcom)
@@ -100,7 +113,12 @@
 /obj/landmark{
 	name = "JoinLateCryo"
 	},
+/obj/landmark/start,
 /turf/unsimulated/floor/grass,
+/area/centcom)
+"pWr" = (
+/obj/machinery/cryopod,
+/turf/simulated/floor/exoplanet/concrete/reinforced/road,
 /area/centcom)
 "qMW" = (
 /obj/item/gun/projectile/pistol/m19,
@@ -133,6 +151,10 @@
 /obj/item/clothing/suit/space/void/atmos,
 /turf/simulated/floor/exoplanet/concrete/reinforced/road,
 /area/liberia/atmos)
+"vkc" = (
+/obj/machinery/body_scanconsole,
+/turf/simulated/floor/exoplanet/concrete/reinforced/road,
+/area/centcom)
 "vuz" = (
 /turf/simulated/floor/exoplanet/titan_water/maximum,
 /area/centcom)
@@ -142,6 +164,13 @@
 /area/centcom)
 "vPX" = (
 /obj/item/gun/energy/mindflayer,
+/turf/simulated/floor/exoplanet/concrete/reinforced/road,
+/area/centcom)
+"vVw" = (
+/obj/landmark{
+	name = "JoinLateCryo"
+	},
+/obj/item/device/robotanalyzer,
 /turf/simulated/floor/exoplanet/concrete/reinforced/road,
 /area/centcom)
 "wVg" = (
@@ -330,13 +359,13 @@ djw
 vuz
 djw
 dSB
-cpC
+ejX
 ooX
 ooX
 ooX
-cpC
-cpC
-cpC
+ejX
+ejX
+ejX
 uzJ
 "}
 (8,1,1) = {"
@@ -361,8 +390,8 @@ ooX
 ooX
 ooX
 ooX
-cpC
-cpC
+ejX
+ejX
 uzJ
 "}
 (9,1,1) = {"
@@ -387,8 +416,8 @@ ooX
 pSk
 ooX
 ooX
-cpC
-cpC
+vVw
+pWr
 uzJ
 "}
 (10,1,1) = {"
@@ -413,8 +442,8 @@ ooX
 ooX
 ooX
 ooX
-cpC
-cpC
+ejX
+ejX
 uzJ
 "}
 (11,1,1) = {"
@@ -434,13 +463,13 @@ cpC
 cpC
 cpC
 cpC
-cpC
+ejX
 ooX
 ooX
 ooX
-cpC
-cpC
-cpC
+ejX
+ejX
+ejX
 uzJ
 "}
 (12,1,1) = {"
@@ -463,8 +492,8 @@ cpC
 cpC
 cpC
 cpC
-cpC
-cpC
+vkc
+ntZ
 cpC
 cpC
 uzJ

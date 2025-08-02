@@ -8,7 +8,7 @@
 	else if(current_tab == "Импланты тела")
 		draw_implants_content(user, .)
 	else if(current_tab == "Аугменты")
-		draw_augemnts_content(user, .)
+		draw_augments_content(user, .)
 	else
 		draw_bug_content(user, .)
 	. = jointext(., null)

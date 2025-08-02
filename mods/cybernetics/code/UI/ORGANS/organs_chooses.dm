@@ -16,7 +16,7 @@
 			position: absolute;
 			width: 420px;
 			height: 500px;
-			left: 1000px;
+			left: 1080px;
 			top: 200px;
 			overflow-y: auto;
 			border-radius: 5px;
@@ -52,6 +52,13 @@
 		.organ-choose_button.selected:hover {
 			background: #00CC00;
 		}
+		.organ-choose_button.unavailable {
+			background: #AA0000;
+			box-shadow: 0 0 8px rgba(170, 0, 0, 0.7);
+		}
+		.organ-choose_button.unavailable:hover {
+			background: #CC0000;
+		}
 		.organ-choose_button-text {
 			pointer-events: none;
 			text-shadow: 1px 1px 2px black;
@@ -60,7 +67,6 @@
 			overflow: hidden;
 			text-overflow: ellipsis;
 		}
-		/* Стилизация скроллбара */
 		.organ-scroll-container::-webkit-scrollbar {
 			width: 10px;
 		}
@@ -96,7 +102,12 @@
 			continue
 
 		var/is_selected = (current_organ_in_slot_type == "[organ]")
-		output += "<a class='organ-choose_button[is_selected ? " selected" : ""]' "
+		var/is_available = choose_prototype.check_avaibility(pref)
+		var/button_class = is_selected ? " selected" : ""
+		if(!is_available)
+			button_class += " unavailable"
+
+		output += "<a class='organ-choose_button[button_class]' "
 		output += "href='?src=\ref[src];select_organ=[choose_prototype.type]' "
 		output += "title='[html_encode(choose_prototype.aug_description)]'>"
 		output += "<span class='organ-choose_button-text'>[html_encode(choose_prototype.augment_name)]</span>"

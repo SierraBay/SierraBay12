@@ -299,6 +299,8 @@
 			O = new limb_path(character)
 
 	// Destroy/cyborgize organs and limbs. The order is important for preserving low-level choices for robolimb sprites being overridden.
+
+	/*SIERRA-REMOVE - CYBERNETICS - Перехвачено модом
 	for(var/name in BP_BY_DEPTH)
 		var/status = organ_data[name]
 		var/obj/item/organ/external/O = character.organs_by_name[name]
@@ -324,6 +326,7 @@
 			O.force_icon = initial(O.force_icon)
 			O.SetName(initial(O.name))
 			O.desc = initial(O.desc)
+	*/
 
 	//For species that don't care about your silly prefs
 	character.species.handle_limbs_setup(character)

@@ -12,7 +12,7 @@
 			position: absolute;
 			width: 420px;
 			height: 500px;
-			left: 1000px;
+			left: 1080px;
 			top: 200px;
 			overflow-y: auto;
 			border-radius: 5px;

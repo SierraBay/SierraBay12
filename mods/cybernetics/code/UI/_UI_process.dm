@@ -16,26 +16,42 @@
 	else if(href_list["augments"])
 		current_tab = "Аугменты"
 		return TOPIC_REFRESH_UPDATE_PREVIEW
+	else if(href_list["СБРОС"])
+		var/answer = input(usr, "Ты уверен? Сброшено будет вообще всё, протезы, аугменты, органы и импланты. Для подтверждения, введи имя своего персонажа: [pref.real_name])")
+		if(answer == pref.real_name)
+			wipe_all()
+		return TOPIC_REFRESH_UPDATE_PREVIEW
 
-	//отдельные кнопки для каждого меню
 	else if(href_list["organ"])
 		organ_button_pressed(user, href_list)
 		return TOPIC_REFRESH_UPDATE_PREVIEW
 	else if(href_list["select_organ"])
 		organ_select_button_pressed(user, href_list)
 		return TOPIC_REFRESH_UPDATE_PREVIEW
+
 	else if(href_list["limb"])
 		limbs_button_pressed(user, href_list)
 		return TOPIC_REFRESH_UPDATE_PREVIEW
 	else if(href_list["select_limb"])
 		limb_select_button_pressed(user, href_list)
 		return TOPIC_REFRESH_UPDATE_PREVIEW
+	else if(href_list["set_limbs_corporation"])
+		limb_set_corporation(user, href_list)
+		return TOPIC_REFRESH_UPDATE_PREVIEW
+
 	else if(href_list["augment"])
 		augment_button_pressed(user, href_list)
 		return TOPIC_REFRESH_UPDATE_PREVIEW
 	else if(href_list["select_augment"])
 		augment_select_button_pressed(user, href_list)
 		return TOPIC_REFRESH_UPDATE_PREVIEW
+	else if(href_list["set_augment_name"])
+		augment_set_name(user, href_list)
+		return TOPIC_REFRESH_UPDATE_PREVIEW
+	else if(href_list["set_augment_desc"])
+		augment_set_desc(user, href_list)
+		return TOPIC_REFRESH_UPDATE_PREVIEW
+	
 	else if(href_list["implant"])
 		implant_button_pressed(user, href_list)
 		return TOPIC_REFRESH_UPDATE_PREVIEW

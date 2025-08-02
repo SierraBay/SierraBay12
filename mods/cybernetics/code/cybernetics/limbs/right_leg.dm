@@ -3,6 +3,15 @@
 	aug_description = "Это правая нога."
 	avaible_hardpoints = list(BP_R_LEG)
 
+/singleton/cyber_choose/limb/right_leg/check_avaibility(datum/preferences/input_pref)
+	if(input_pref.limb_list[BP_R_FOOT] == "Пусто")
+		return FALSE
+	return TRUE
+
+/singleton/cyber_choose/limb/right_leg/get_reason_for_avaibility(datum/preferences/input_pref)
+	return SPAN_BAD("Нельзя выбрать протез вместо ноги, но оставить стопу мясной.")
+
+
 // =================
 // BISHOP CYBERNETICS
 // =================

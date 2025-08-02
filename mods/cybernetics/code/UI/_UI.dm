@@ -23,9 +23,18 @@
 	var/choosed_limb_slot = BP_HEAD
 	var/choosed_organ_slot = BP_EYES
 	var/choosed_augment_slot = BP_HEAD
+	var/list/corps_list = list()
+
+/datum/category_item/player_setup_item/cybernetics/New()
+	. = ..()
+	for(var/robolimb_type in subtypesof(/datum/robolimb))
+		var/datum/robolimb/temp = new robolimb_type()
+		var/corp_name = temp.company
+		corps_list[corp_name] = robolimb_type
+		qdel(temp)
 
 /datum/preferences
-	///Все те протезы, что выбрал пользователь (Почему rlimb? Да мнеж откуда знать, это название пендосов, оставил для совместимости)
+	///Все те протезы, что выбрал пользователь
 	var/list/limb_list = list(
 		BP_HEAD = "Пусто",
 		BP_CHEST = "Пусто",
@@ -39,17 +48,17 @@
 		BP_L_LEG = "Пусто",
 		BP_L_FOOT = "Пусто"
 	)
-	var/singleton/cyber_choose/choosed_limb_prototype
+	var/singleton/cyber_choose/limb/choosed_limb_prototype
 	///Все те органы, что выбрал пользователь
 	var/list/organ_list = list(
-			BP_EYES = "Пусто",
-			BP_HEART = "Пусто",
-			BP_LUNGS = "Пусто",
-			BP_LIVER = "Пусто",
-			BP_KIDNEYS = "Пусто",
-			BP_STOMACH = "Пусто"
-		)
-	var/singleton/cyber_choose/choosed_organ_prototype
+		BP_EYES = "Пусто",
+		BP_HEART = "Пусто",
+		BP_LUNGS = "Пусто",
+		BP_LIVER = "Пусто",
+		BP_KIDNEYS = "Пусто",
+		BP_STOMACH = "Пусто"
+	)
+	var/singleton/cyber_choose/organ/choosed_organ_prototype
 	///Все те аугменты, что выбрал пользователь. Не трогать, значения подсосутся сами.
 	var/list/augments_list = list(
 		BP_HEAD = "Пусто",
@@ -64,21 +73,51 @@
 		BP_L_LEG = "Пусто",
 		BP_L_FOOT = "Пусто"
 	)
-	var/singleton/cyber_choose/choosed_augment_prototype
+	//Кастомные названия аугментов
+	var/list/augments_names = list(
+		BP_HEAD = "Пусто",
+		BP_CHEST = "Пусто",
+		BP_GROIN = "Пусто",
+		BP_R_ARM = "Пусто",
+		BP_R_HAND = "Пусто",
+		BP_L_ARM = "Пусто",
+		BP_L_HAND = "Пусто",
+		BP_R_LEG = "Пусто",
+		BP_R_FOOT = "Пусто",
+		BP_L_LEG = "Пусто",
+		BP_L_FOOT = "Пусто"
+	)
+	//Кастомные описания аугментов
+	var/list/augments_descs = list(
+		BP_HEAD = "Пусто",
+		BP_CHEST = "Пусто",
+		BP_GROIN = "Пусто",
+		BP_R_ARM = "Пусто",
+		BP_R_HAND = "Пусто",
+		BP_L_ARM = "Пусто",
+		BP_L_HAND = "Пусто",
+		BP_R_LEG = "Пусто",
+		BP_R_FOOT = "Пусто",
+		BP_L_LEG = "Пусто",
+		BP_L_FOOT = "Пусто"
+	)
+	var/singleton/cyber_choose/augment/choosed_augment_prototype
 	///Все те импланты, что выбрал пользователь. В отличии от всех трёх выше листов, у нас пишется
 	///Путь импланта и после всё остальное, а не место установки и путь импланта. Тобишь, у импланта нет места установки
 	var/list/implants_list = list()
-	var/singleton/cyber_choose/choosed_implant_prototype
+	var/singleton/cyber_choose/implant/choosed_implant_prototype
 
 
-//Сохранение выбранных настроек
-/datum/category_item/player_setup_item/cybernetics/save_preferences(datum/pref_record_writer/W)
+//Сохранение выбранной кибернетики
+/datum/category_item/player_setup_item/cybernetics/save_character(datum/pref_record_writer/W)
+	. = ..()
 	W.write("limbs_list", pref.limb_list)
 	W.write("organs_list", pref.organ_list)
 	W.write("augments_list", pref.augments_list)
 	W.write("implants_list", pref.implants_list)
 
-/datum/category_item/player_setup_item/cybernetics/load_preferences(datum/pref_record_reader/R)
+//Подгрузка выбранной кибернетики
+/datum/category_item/player_setup_item/cybernetics/load_character(datum/pref_record_reader/R)
 	pref.limb_list = R.read("limbs_list")
 	pref.organ_list = R.read("organs_list")
 	pref.augments_list = R.read("augments_list")
@@ -139,3 +178,43 @@
 		pref.rlimb_data = null
 		if(pref.client)
 			to_chat(pref.client, SPAN_BAD("В вашем сохранении обнаружены устаревшие данные с киберконечностями. Теперь они неактуальны, собирайтесь по новой."))
+
+/datum/category_item/player_setup_item/cybernetics/proc/wipe_all()
+	pref.limb_list = list(
+		BP_HEAD = "Пусто",
+		BP_CHEST = "Пусто",
+		BP_GROIN = "Пусто",
+		BP_R_ARM = "Пусто",
+		BP_R_HAND = "Пусто",
+		BP_L_ARM = "Пусто",
+		BP_L_HAND = "Пусто",
+		BP_R_LEG = "Пусто",
+		BP_R_FOOT = "Пусто",
+		BP_L_LEG = "Пусто",
+		BP_L_FOOT = "Пусто"
+	)
+	to_chat(pref.client, SPAN_GOOD("Конечности сброшены до стандартных."))
+	pref.organ_list = list(
+			BP_EYES = "Пусто",
+			BP_HEART = "Пусто",
+			BP_LUNGS = "Пусто",
+			BP_LIVER = "Пусто",
+			BP_KIDNEYS = "Пусто",
+			BP_STOMACH = "Пусто"
+		)
+	to_chat(pref.client, SPAN_GOOD("Органы сброшены до стандартных."))
+	pref.augments_list = list(
+		BP_HEAD = "Пусто",
+		BP_CHEST = "Пусто",
+		BP_GROIN = "Пусто",
+		BP_R_ARM = "Пусто",
+		BP_R_HAND = "Пусто",
+		BP_L_ARM = "Пусто",
+		BP_L_HAND = "Пусто",
+		BP_R_LEG = "Пусто",
+		BP_R_FOOT = "Пусто",
+		BP_L_LEG = "Пусто",
+		BP_L_FOOT = "Пусто"
+	)
+	to_chat(pref.client, SPAN_GOOD("Аугменты сброшены до стандартных."))
+	to_chat(pref.client, SPAN_GOOD("Сброс закончен, но не сохранён. Сохраните или откатите отброс путём загрузки сохранения."))

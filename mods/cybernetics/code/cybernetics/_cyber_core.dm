@@ -25,19 +25,27 @@
 
 	// Добавляем положительные черты
 	if(LAZYLEN(good_sides))
-		description_lines += "<span class='good'> </span>" //Костыль чтоб первая строка тоже красилась, пофиксите за меня хз
+		description_lines += "<hr class='good'>"
+		description_lines += "<div class='good' style='margin: 2px 0;'>"
 		description_lines += format_list_items(good_sides, max_line_length, "good")
+		description_lines += "</div>"
 
 	// Добавляем нейтральные черты
 	if(LAZYLEN(neutral_sides))
-		description_lines += format_list_items(neutral_sides, max_line_length, "neutral")
+		description_lines += "<hr class='info'>"
+		description_lines += "<div class='neutral' style='margin: 2px 0;'>"
+		description_lines += format_list_items(neutral_sides, max_line_length, "info")
+		description_lines += "</div>"
 
 	// Добавляем отрицательные черты
 	if(LAZYLEN(bad_sides))
+		description_lines += "<hr class='bad'>"
+		description_lines += "<div class='bad' style='margin: 2px 0;'>"
 		description_lines += format_list_items(bad_sides, max_line_length, "bad")
+		description_lines += "</div>"
 
 	// Собираем все в одну строку
-	aug_description_long = description_lines.Join("<br>")
+	aug_description_long = description_lines.Join("")
 
 /singleton/cyber_choose/proc/format_list_items(list/strings, max_length, class_name)
 	var/list/formatted_items = list()
@@ -73,6 +81,12 @@
 	..()
 
 // subtypesof(/datum/augment_choose)
+
+/singleton/cyber_choose/proc/check_avaibility(datum/preferences/input_pref)
+	return TRUE
+
+/singleton/cyber_choose/proc/get_reason_for_avaibility(datum/preferences/input_pref)
+	return SPAN_BAD("Какая-то непонятная причина, обратись к разработчику.")
 
 /datum/controller/subsystem/character_setup/Initialize(start_uptime)
 	.=..()

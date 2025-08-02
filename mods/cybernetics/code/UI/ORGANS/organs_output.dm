@@ -42,48 +42,42 @@
 			opacity: 0.9;
 			transform: scale(1.1);
 		}
+		.limb-button.unavailable {
+			background: #AA0000;
+			opacity: 0.7;
+		}
+		.limb-button.unavailable:hover {
+			background: #CC0000;
+		}
 	</style>
 	<div class='limb-container'>
 		<img class='limb-image' src='organs.png' width='400' height='640'
-			style='left: -550px; top: 20px;' </a>
-
-		<!-- ГЛАЗА -->
-		<a class='limb-button[choosed_organ_slot == "[BP_EYES]" ? " selected" : ""]'
-			href='?src=\ref[src];organ=[BP_EYES]'
-			style='left: -480px; top: 75px;'
-			title='Глаза'></a>
-
-		<!-- ЛЁГКИЕ -->
-		<a class='limb-button[choosed_organ_slot == "[BP_LUNGS]" ? " selected" : ""]'
-			href='?src=\ref[src];organ=[BP_LUNGS]'
-			style='left: -210px; top: 127px;'
-			title='Лёгкие'></a>
-
-		<!-- СЕРДЦЕ -->
-		<a class='limb-button[choosed_organ_slot == "[BP_HEART]" ? " selected" : ""]'
-			href='?src=\ref[src];organ=[BP_HEART]'
-			style='left: -180px; top: 160px;'
-			title='Сердце'></a>
-
-		<!-- Почки -->
-		<a class='limb-button[choosed_organ_slot == "[BP_KIDNEYS]" ? " selected" : ""]'
-			href='?src=\ref[src];organ=[BP_KIDNEYS]'
-			style='left: -150px; top: 193px;'
-			title='Почки'></a>
-
-		<!-- ПЕЧЕНЬ -->
-		<a class='limb-button[choosed_organ_slot == "[BP_LIVER]" ? " selected" : ""]'
-			href='?src=\ref[src];organ=[BP_LIVER]'
-			style='left: -230px; top: 260px;'
-			title='Печень'></a>
-
-		<!-- ЖЕЛУДОК -->
-		<a class='limb-button[choosed_organ_slot == "[BP_STOMACH]" ? " selected" : ""]'
-			href='?src=\ref[src];organ=[BP_STOMACH]'
-			style='left: -500px; top: 260px;'
-			title='Желудок'></a>
-	</div>
+			style='left: -550px; top: 20px;'>
 	"}
+
+	var/list/organs = list(
+		BP_EYES =	list("x" = -480, "y" = 75,  "title" = "Глаза"),
+		BP_LUNGS =   list("x" = -210, "y" = 127, "title" = "Лёгкие"),
+		BP_HEART =   list("x" = -180, "y" = 160, "title" = "Сердце"),
+		BP_KIDNEYS = list("x" = -150, "y" = 193, "title" = "Почки"),
+		BP_LIVER =   list("x" = -230, "y" = 260, "title" = "Печень"),
+		BP_STOMACH = list("x" = -500, "y" = 260, "title" = "Желудок")
+	)
+
+	for(var/organ in organs)
+		var/is_selected = (choosed_organ_slot == organ)
+		var/organ_choose_type = pref.organ_list[organ]
+		var/singleton/cyber_choose/choose_prototype = GET_SINGLETON(text2path(organ_choose_type))
+		var/is_available = choose_prototype? choose_prototype.check_avaibility(pref) : FALSE
+		if(organ_choose_type == "Пусто")
+			is_available = TRUE
+		var/extra_class = !is_available ? "unavailable" : ""
+
+		input_list += "<a class='limb-button[is_selected ? " selected" : ""] [extra_class]' \
+					 href='?src=\ref[src];organ=[organ]' \
+					 style='left: [organs[organ]["x"]]px; top: [organs[organ]["y"]]px;'></a>"
+
+	input_list += "</div>"
 	draw_choosed_organ_desc(user, input_list)
 	draw_organ_chooses(user, input_list)
 
