@@ -1,0 +1,7 @@
+author: chichmuch
+changes:
+  - {bugfix: 'пофиксил [Background restricted] на ролях которые на самом деле доступны
+      ИПС'}
+  - {tweak: добавил роль vagabond (безбелетник) для ИПС первого и второго 
+      поколения}
+delete-after: true

@@ -3489,6 +3489,7 @@
 #include "mods\_master_files\code\modules\mob\living\carbon\viruses.dm"
 #include "mods\_master_files\code\modules\mob\living\carbon\human\human_helpers.dm"
 #include "mods\_master_files\code\modules\mob\new_player\new_player.dm"
+#include "mods\_master_files\code\modules\modular_computers\computers\subtypes\dev_laptop.dm"
 #include "mods\_master_files\code\modules\multiz\turf.dm"
 #include "mods\_master_files\code\modules\overmap\distress.dm"
 #include "mods\_master_files\code\modules\overmap\panicbutton.dm"
