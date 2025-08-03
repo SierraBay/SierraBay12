@@ -24,11 +24,6 @@
 /obj/random/colony2_paper
 	name = "Colony instructions paper"
 
-/obj/submap_landmark/spawnpoint/ship_leader_spawn
-	name = "Ship Leader"
-
-/obj/submap_landmark/spawnpoint/colonist_leader_spawn
-	name = "Colonist Leader"
 
 /obj/structure/sign/iccg_colony
 	name = "\improper ICCG Colonial Seal"

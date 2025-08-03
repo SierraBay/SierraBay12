@@ -119,20 +119,24 @@
 	set category = "Emote"
 	emote("threat")
 
+
 /mob/living/carbon/human/unathi/verb/swish()
 	set name = "X - Взмахнуть хвостом"
 	set category = "Emote"
 	emote("swish")
+
 
 /mob/living/carbon/human/unathi/verb/wag()
 	set name = "X - Вилять хвостом"
 	set category = "Emote"
 	emote("wag")
 
+
 /mob/living/carbon/human/unathi/verb/qwag()
 	set name = "X - Быстро вилять хвостом"
 	set category = "Emote"
 	emote("qwag")
+
 
 /mob/living/carbon/human/unathi/verb/swag()
 	set name = "X - Остановить хвост"

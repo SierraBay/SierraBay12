@@ -34,7 +34,7 @@
 	set name = "X - Сильно мурчать"
 	set category = "Emote"
 	emote("purrs")
-
+  
 /mob/living/carbon/human/tajaran/verb/swish()
 	set name = "X - Взмахнуть хвостом"
 	set category = "Emote"
@@ -52,5 +52,3 @@
 
 /mob/living/carbon/human/tajaran/verb/swag()
 	set name = "X - Остановить хвост"
-	set category = "Emote"
-	emote("swag")
