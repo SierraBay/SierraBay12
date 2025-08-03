@@ -1,3 +1,9 @@
+/datum/gear/augment
+	sort_category = "Augments"
+	category = /datum/gear/augment
+	cost = 2
+
+
 /datum/gear/augment/armor_minor
 	display_name = "Armor Augments (Minor)"
 	description = "Armor flavor augments with little or no in-game effects."
