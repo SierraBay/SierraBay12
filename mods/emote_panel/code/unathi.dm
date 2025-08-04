@@ -78,10 +78,10 @@
 
 /singleton/species/unathi/proc/add_unathi_verbs()
 	var/list/unathi_verbs = list(
-		/mob/living/carbon/human/verb/swish,
-		/mob/living/carbon/human/verb/wag,
-		/mob/living/carbon/human/verb/qwag,
-		/mob/living/carbon/human/verb/swag,
+		/mob/living/carbon/human/unathi/verb/swish,
+		/mob/living/carbon/human/unathi/verb/wag,
+		/mob/living/carbon/human/unathi/verb/qwag,
+		/mob/living/carbon/human/unathi/verb/swag,
 		/mob/living/carbon/human/unathi/verb/lizard_bellow,
 		/mob/living/carbon/human/unathi/verb/lizard_squeal,
 		/mob/living/carbon/human/unathi/verb/lizard_roar,
@@ -119,22 +119,26 @@
 	set category = "Emote"
 	emote("threat")
 
-/mob/living/carbon/human/verb/swish()
+
+/mob/living/carbon/human/unathi/verb/swish()
 	set name = "X - Взмахнуть хвостом"
 	set category = "Emote"
 	emote("swish")
 
-/mob/living/carbon/human/verb/wag()
+
+/mob/living/carbon/human/unathi/verb/wag()
 	set name = "X - Вилять хвостом"
 	set category = "Emote"
 	emote("wag")
 
-/mob/living/carbon/human/verb/qwag()
+
+/mob/living/carbon/human/unathi/verb/qwag()
 	set name = "X - Быстро вилять хвостом"
 	set category = "Emote"
 	emote("qwag")
 
-/mob/living/carbon/human/verb/swag()
+
+/mob/living/carbon/human/unathi/verb/swag()
 	set name = "X - Остановить хвост"
 	set category = "Emote"
 	emote("swag")
