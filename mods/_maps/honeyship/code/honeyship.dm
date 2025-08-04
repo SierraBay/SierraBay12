@@ -1,3 +1,40 @@
+/obj/overmap/visitable/ship/honeyship
+	name = "passenger liner"
+	desc = "Sensors detect an undamaged vessel without any signs of activity."
+	color = "#bd6100"
+	vessel_mass = 5000
+	max_speed = 1/(2 SECONDS)
+	burn_delay = 1 SECOND
+	initial_generic_waypoints = list(
+		"nav_casino_1",
+		"nav_casino_2",
+		"nav_casino_3",
+		"nav_casino_4",
+		"nav_casino_antag",
+		"nav_casino_hangar",
+	)
+	initial_restricted_waypoints = list(
+		"Casino Cutter" = list("nav_casino_hangar"),
+	)
+
+/obj/overmap/visitable/ship/honeyship/New(nloc, max_x, max_y)
+	name = "IPV [pick("Fortuna","Gold Rush","Ebisu","Lucky Paw","Four Leaves")], \a [name]"
+	..()
+
+/datum/map_template/ruin/away_site/honeyship
+	name = "Casino"
+	id = "awaysite_casino"
+	description = "A casino ship!"
+	suffixes = list("casino/casino.dmm")
+	spawn_cost = 1
+	area_usage_test_exempted_root_areas = list(/area/honeyship)
+	apc_test_exempt_areas = list(
+		/area/casino/casino_hangar = NO_SCRUBBER,
+		/area/casino/casino_cutter = NO_SCRUBBER|NO_VENT,
+		/area/casino/casino_solar_control = NO_SCRUBBER,
+		/area/casino/casino_maintenance = NO_SCRUBBER|NO_VENT
+	)
+
 /obj/item/paper/honeyship
 	name = "calligraphically written note"
 	language = LANGUAGE_HUMAN_CHINESE
@@ -44,3 +81,29 @@
 /obj/item/paper/honeyship/cabins
 	name = "occupied cabins"
 	info = "Цзань, я решил вопрос с вместимостью. Аугусто и Жанна будут проживать в зелёном номере. И допиши в список, что взяли ещё двух золотых мальчиков с Венеры. Гарри Кастав и Джиро Ито. Заселим их в синий, займут и свободных кукол и девочек из жёлтого. Допиши их в список, считайте их тоже ВИПами, чтобы ни поцарапали даже."
+
+/obj/turbolift_map_holder/honeyship
+	name = "Farfleet turbolift map placeholder"
+	icon = 'icons/obj/structures/turbolift_preview_2x2.dmi'
+	depth = 2
+	lift_size_x = 3
+	lift_size_y = 3
+
+	areas_to_use = list(
+		/area/turbolift/farfleet_first,
+		/area/turbolift/farfleet_second
+	)
+
+/area/turbolift/honeyship_second
+	name = "lift (upper deck)"
+	lift_floor_label = "Deck 1"
+	lift_floor_name = "Upper Deck"
+	lift_announce_str = "Arriving at Upper Deck: Медицинский отсек. Столовая. Мостик. Спасательные капсулы."
+	base_turf = /turf/simulated/floor
+
+/area/turbolift/honeyship_first
+	name = "lift (lower deck)"
+	lift_floor_label = "Deck 2"
+	lift_floor_name = "Lower Deck"
+	lift_announce_str = "Arriving at Lower Deck: Доки. Гостевые каюты. Бар. Инженерный отсек."
+	base_turf = /turf/simulated/floor
