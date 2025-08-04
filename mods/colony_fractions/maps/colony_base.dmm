@@ -2609,9 +2609,7 @@
 	dir = 1;
 	icon_state = "warning"
 	},
-/obj/machinery/robotics_fabricator{
-	req_access = list()
-	},
+/obj/machinery/robotics_fabricator/colony,
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/colony/science)
 "fe" = (

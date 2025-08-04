@@ -71,7 +71,7 @@ GLOBAL_VAR_AS(error_colony_reaction, "Прервать спавн колонии
 	min_skill = list(
 		SKILL_MEDICAL = SKILL_TRAINED,
 		SKILL_CHEMISTRY = SKILL_BASIC,
-		SKILL_ANATOMY = SKILL_TRAINED
+		SKILL_ANATOMY = SKILL_EXPERIENCED
 	)
 
 /datum/job/submap/colonist/engineer
@@ -468,3 +468,7 @@ GLOBAL_VAR_AS(error_colony_reaction, "Прервать спавн колонии
 
 /obj/machinery/smartfridge/secure/medbay/colony
 	req_access = list()
+
+/obj/machinery/robotics_fabricator/colony
+	req_access = list()
+	fab_status_flags = FAB_HACKED
