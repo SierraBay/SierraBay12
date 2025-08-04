@@ -465,3 +465,6 @@ GLOBAL_VAR_AS(error_colony_reaction, "Прервать спавн колонии
 
 /obj/machinery/vending/medical/colony
 	req_access = list()
+
+/obj/machinery/smartfridge/secure/medbay/colony
+	req_access = list()

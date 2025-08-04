@@ -1998,12 +1998,10 @@
 /turf/simulated/floor/tiled/white,
 /area/map_template/colony/medbay)
 "dW" = (
-/obj/machinery/smartfridge/secure/medbay{
-	req_access = list(list("ACCESS_CHEMISTRY","ACCESS_MEDICAL_EQUIP"))
-	},
 /obj/floor_decal/corner/blue{
 	dir = 10
 	},
+/obj/machinery/smartfridge/secure/medbay/colony,
 /turf/simulated/floor/tiled/white,
 /area/map_template/colony/medbay)
 "dX" = (
