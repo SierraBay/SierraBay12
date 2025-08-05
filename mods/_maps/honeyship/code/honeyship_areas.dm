@@ -131,26 +131,18 @@
 	name = "Dry Garden"
 	icon_state = "observatory"
 
-/area/honeyship/maintenance
-	name = "Maintencnce - "
-	icon_state = " "
+/area/honeyship/maintenance_port
+	name = "Maintencnce - Port"
+	icon_state = "pmaint"
 
-/area/honeyship/maintenance
-	name = "Maintencnce - "
-	icon_state = " "
+/area/honeyship/maintenance_starboard
+	name = "Maintencnce - Starboard"
+	icon_state = "smaint"
 
-/area/honeyship/maintenance
-	name = "Maintencnce - "
-	icon_state = " "
+/area/honeyship/maintenance_upper_port
+	name = "Upper Maintencnce - Port"
+	icon_state = "pmaint"
 
-/area/honeyship/maintenance
-	name = "Maintencnce - "
-	icon_state = " "
-
-/area/honeyship/maintenance
-	name = "Maintencnce - "
-	icon_state = " "
-
-/area/honeyship/maintenance
-	name = "Maintencnce - "
-	icon_state = " "
+/area/honeyship/maintenance_upper_starboard
+	name = "Upper Maintencnce - Starboard"
+	icon_state = "smaint"
