@@ -139,8 +139,10 @@
 		/datum/job/submap/merchant_leader, /datum/job/submap/merchant,
 		/datum/job/submap/away_iccgn_farfleet, /datum/job/submap/away_iccgn_farfleet/iccgn_medic, /datum/job/submap/away_iccgn_farfleet/iccgn_gunner,
 		/datum/job/submap/pod,
-		/datum/job/submap/colonist_leader, /datum/job/submap/colonist,
-		/datum/job/submap/ship_leader
+		/datum/job/submap/colonist/leader, /datum/job/submap/colonist, /datum/job/submap/colonist/scientist,
+		/datum/job/submap/colonist/medic, /datum/job/submap/colonist/engineer,
+		/datum/job/submap/colonist/leader/ship, /datum/job/submap/colonist/ship, /datum/job/submap/colonist/scientist/ship,
+		/datum/job/submap/colonist/medic/ship, /datum/job/submap/colonist/engineer/ship
 	)
 
 /singleton/cultural_info/culture/ipc/gen3
@@ -158,8 +160,10 @@
 		/datum/job/submap/CTI_pilot, /datum/job/submap/CTI_engineer,
 		/datum/job/submap/merchant_leader, /datum/job/submap/merchant,
 		/datum/job/submap/pod,
-		/datum/job/submap/colonist_leader, /datum/job/submap/colonist,
-		/datum/job/submap/ship_leader
+		/datum/job/submap/colonist/leader, /datum/job/submap/colonist, /datum/job/submap/colonist/scientist,
+		/datum/job/submap/colonist/medic, /datum/job/submap/colonist/engineer,
+		/datum/job/submap/colonist/leader/ship, /datum/job/submap/colonist/ship, /datum/job/submap/colonist/scientist/ship,
+		/datum/job/submap/colonist/medic/ship, /datum/job/submap/colonist/engineer/ship
 	)
 //[/SIERRA-ADD] - [IPC-MODS]
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
