@@ -72,6 +72,7 @@
 	#include "../../../../maps/sierra/job/jobs_research.dm"
 	#include "../../../../maps/sierra/job/jobs_security.dm"
 	#include "../../../../maps/sierra/job/jobs_service.dm"
+	#include "../../../../mods/_maps/verne/code/verne_jobs.dm"
 //Машины
 	#include "../../../../maps/sierra/machinery/alarm.dm"
 	#include "../../../../maps/sierra/machinery/doors.dm"
@@ -152,6 +153,10 @@
 	#include "../../../../mods/contraband_vending/_contraband_vending_includes.dm"
 	#include "../../../../mods/telecomms/_telecomms_includes.dm"
 	#include "../../../../mods/modernUI/_modernUI_includes.dm"
+	#include "../../../../mods/_maps/verne/code/verne.dm"
+	#include "../../../../mods/_maps/verne/code/verne_radio.dm"
+	#include "../../../../mods/_maps/verne/code/verne_shuttles.dm"
+	#include "../../../../mods/_maps/verne/code/verne_areas.dm"
 
 	// UNUSED MODS
 	// Keep them in ascending alphabetical order too, please
