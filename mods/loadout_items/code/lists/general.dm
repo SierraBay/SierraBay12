@@ -24,7 +24,7 @@
 
 /datum/gear/cigarettes
 	display_name = "pack of cigarettes selection"
-	path = /obj/item/storage/fancy/smokable/transstellar
+	path = /obj/item/storage/fancy/smokable
 
 /datum/gear/cigarettes/New()
 	var/cigarettes = list()
