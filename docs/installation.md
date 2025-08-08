@@ -10,7 +10,11 @@
 - [Обновление](#обновление)
 - [База данных](#установка-базы-данных)
 
+<<<<<<< ours
 </details>
+=======
+The more complicated and easier to update method is using git. You'll need to download git or some client from [here](http://git-scm.com/). When that's installed, right click in any folder and click on "Git Bash". When that opens, type in:
+>>>>>>> theirs
 
 ### Скачивание кода
 
@@ -26,6 +30,7 @@ git clone https://github.com/SierraBay/SierraBay12.git
 
 (Подсказка: чтобы вставить в git bash можно нажать ПКМ по окну, или использовать <kbd>Ctrl</kbd>+<kbd>Insert</kbd>)
 
+<<<<<<< ours
 Загрузка займет некоторое время, но обновлять билд будет проще.
 
 ---
@@ -33,6 +38,16 @@ git clone https://github.com/SierraBay/SierraBay12.git
 ### Установка
 
 Первая установка должна быть довольно простой. Во-первых, тебе надо установить BYOND. Его можно скачать [здесь](http://www.byond.com/).
+=======
+First-time installation should be fairly straightforward. First, you'll need BYOND installed. You can get it from [here](http://www.byond.com/).
+
+This is a source-only release, so the next step is to compile the server files. Open `baystation12.dme` by double-clicking it, open the Build menu, and click compile. This will take a little while, and if everything's done right you'll get a message like this:
+
+    saving baystation12.dmb (DEBUG mode)
+    baystation12.dmb - 0 errors, 0 warnings
+
+If you see any errors or warnings, something has gone wrong - possibly a corrupt download or the files extracted wrong, or a code issue on the main repo. Ask on IRC or discord.
+>>>>>>> theirs
 
 Ты скачал только исходный код, поэтому его нужно скомпилировать. Открой `baystation12.dme` двойным кликом, слева сверху выбери вкладку `Build` и там нажми `Compile`. Не пугайся того что почти ничего в консоли долго не происходит, просто жди, это нормально. Это займёт время, но по итогу внизу ты должен увидеть такое сообщение:
 ```
@@ -43,14 +58,21 @@ baystation12.dmb - 0 errors, 0 warnings
 
 Если ты видишь какие-то ошибки или предупреждения - что-то однозанчно пошло не по плану. Скорее всего либо повреждена загрузка, либо файлы извлечены неправильно, либо мы допустили ошибку в коде. Спросить можно в дискорде, указанном в [`README`](/README.md)
 
+<<<<<<< ours
 ---
 
 ### Конфигурация
 
 Копируй всё из папки `/config/examples` в папку `/config`. Теперь ты работаешь со всем, что содержится внутри `/config`.
+=======
+Edit `config.txt` to set the probabilities for different gamemodes in Secret and to set your server location so that all your players don't get disconnected at the end of each round. It's recommended you don't turn on the gamemodes with probability 0, as they have various issues and aren't currently being tested, they may have unknown and bizarre bugs.
+
+Edit `admins.txt` to remove the default admins and add your own. "Game Master" is the highest level of access, and the other recommended admin levels for now are "Game Admin" and "Moderator". The format is:
+>>>>>>> theirs
 
 Отредактируй `config.txt`, чтобы установить вероятности для различных режимов игры в режиме "Secret" или указать адрес вашего сервера таким образом, чтобы все ваши игроки не отключались в конце каждого раунда. Не рекомендуется включать игровые режимы с вероятностью 0, ибо в них могут быть различные проблемы и эти режимы в настоящее время не тестируются - повсюду могут быть неизвестные и неестественные ошибки.
 
+<<<<<<< ours
 Отредактируй `admins.txt` чтобы удалить администраторов по умолчанию и добавить своих собственных. "Game Master" это самый высокий уровень доступа. Также, рекомендуемые уровни администратора - "Game Admin" и "Moderator".  Формат ввода:
 ```
 byondkey - Rank
@@ -58,6 +80,11 @@ byondkey - Rank
 Сикей должен быть в нижнем регистре, а в ранге администратора заглавные буквы должны быть правильно указаны. Есть еще несколько рангов администратора, но этих двух должно быть достаточно для большинства серверов, при условии, что у тебя есть заслуживающие доверия администраторы.
 
 Чтобы запустить сервер, запусти Dream Daemon и введи путь к твоему скомпилированному `baystation12.dmb` файлу.  Убедись, что ты выставил порт, который указан в `config.txt`, а также установи в ячейке "Security" значение 'Trusted', чтобы не приходилось подтверждать доступ к каждому отдельному файлу конфигурации и данных сервера. Затем просто жми GO, и сервер должен запуститься, готовым к подключению.
+=======
+where the BYOND key must be in lowercase and the admin rank must be properly capitalised. There are a bunch more admin ranks, but these two should be enough for most servers, assuming you have trustworthy admins.
+
+To start the server, run Dream Daemon and enter the path to your compiled `baystation12.dmb` file. Make sure to set the port to the one you specified in the `config.txt`, and set the Security box to 'Trusted' so you don't have to confirm access to every single configuration and storage file for the server. Then press GO and the server should start up and be ready to join.
+>>>>>>> theirs
 
 ---
 
@@ -94,6 +121,13 @@ git pull
 
 ---
 
+<<<<<<< ours
 ### Установка базы данных
 
 Серверная часть для SQL `/library/stats` и банов требуют наличие MySQL сервера. Конфигурация сведений о сервере находится в `/config/dbconfig.txt`.
+=======
+### SQL Setup
+
+Although there are fallbacks, Baystation is intended to be run with a MySQL or MariaDB database when hosting.
+You will need to apply the `/sql/schema.sql` file to a new database and set appropriate credentials to read/write it in the `/config/dbconfig.txt` file.
+>>>>>>> theirs
