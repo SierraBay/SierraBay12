@@ -145,8 +145,8 @@
 	lift_size_y = 3
 
 	areas_to_use = list(
-		/area/turbolift/farfleet_first,
-		/area/turbolift/farfleet_second
+		/area/turbolift/honeyship_first,
+		/area/turbolift/honeyship_second
 	)
 
 /area/turbolift/honeyship_second
