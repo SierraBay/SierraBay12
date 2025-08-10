@@ -201,9 +201,9 @@
 	var/max_dam = 30
 
 /obj/item/robot_parts/robot_component/proc/take_damage(brute_amt, burn_amt)
-	brute += brute_amt
-	burn += burn_amt
-	total_dam = brute+burn
+	brute = max(brute + brute_amt, 0)
+	burn = max(burn + burn_amt, 0)
+	total_dam = max(brute + burn, 0, max_dam)
 	if(total_dam >= max_dam)
 		var/obj/item/stock_parts/circuitboard/broken/broken_device = new (get_turf(src))
 		if(icon_state_broken != "broken")
