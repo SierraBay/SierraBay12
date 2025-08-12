@@ -142,6 +142,7 @@ SIERRA_ESCAPE_POD(11)
 		"nav_bearcat_antag",
 		"nav_magshield_antag",
 		"nav_casino_antag",
+		"nav_honeyship_antag",
 		"nav_yacht_antag",
 		"nav_slavers_base_antag",
 		"nav_mining_antag",
@@ -266,6 +267,7 @@ SIERRA_ESCAPE_POD(11)
 		"nav_smugglers_antag",
 		"nav_magshield_antag",
 		"nav_casino_antag",
+		"nav_honeyship_antag",
 		"nav_yacht_antag",
 		"nav_slavers_base_antag",
 		"nav_mining_antag"
@@ -310,6 +312,7 @@ SIERRA_ESCAPE_POD(11)
 		"nav_smugglers_antag",
 		"nav_magshield_antag",
 		"nav_casino_antag",
+		"nav_honeyship_antag",
 		"nav_yacht_antag",
 		"nav_slavers_base_antag",
 		"nav_mining_antag"

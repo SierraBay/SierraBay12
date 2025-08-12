@@ -2,16 +2,16 @@
 	name = "passenger liner"
 	desc = "Sensors detect an undamaged vessel without any signs of activity."
 	color = "#bd6100"
+	fore_dir = SOUTH
 	vessel_mass = 5000
 	max_speed = 1/(2 SECONDS)
 	burn_delay = 1 SECOND
 	initial_generic_waypoints = list(
-		"nav_casino_1",
-		"nav_casino_2",
-		"nav_casino_3",
-		"nav_casino_4",
-		"nav_casino_antag",
-		"nav_casino_hangar",
+		"nav_honeyship_1",
+		"nav_honeyship_2",
+		"nav_honeyship_3",
+		"nav_honeyship_4",
+		"nav_honeyship_antag"
 	)
 
 /obj/overmap/visitable/ship/honeyship/New(nloc, max_x, max_y)
@@ -19,7 +19,7 @@
 	..()
 
 /datum/map_template/ruin/away_site/honeyship
-	name = "Casino"
+	name = "Venerian Liner"
 	id = "awaysite_honeyship"
 	prefix = "mods/_maps/honeyship/maps/"
 	suffixes = list("honeyship.dmm")
@@ -31,6 +31,26 @@
 		/area/honeyship/maintenance_upper_port = NO_SCRUBBER|NO_VENT,
 		/area/honeyship/maintenance_upper_starboard = NO_SCRUBBER|NO_VENT
 	)
+
+/obj/shuttle_landmark/nav_honeyship/nav1
+	name = "Venerian Liner Fore"
+	landmark_tag = "nav_honeyship_1"
+
+/obj/shuttle_landmark/nav_honeyship/nav2
+	name = "Venerian Liner Aft"
+	landmark_tag = "nav_honeyship_2"
+
+/obj/shuttle_landmark/nav_honeyship/nav3
+	name = "Venerian Liner Port"
+	landmark_tag = "nav_honeyship_3"
+
+/obj/shuttle_landmark/nav_honeyship/nav4
+	name = "Venerian Liner Starboard"
+	landmark_tag = "nav_honeyship_4"
+
+/obj/shuttle_landmark/nav_honeyship/nav_antag
+	name = "Venerian Liner Starboard"
+	landmark_tag = "nav_honeyship_antag"
 
 /obj/item/paper/honeyship
 	name = "calligraphically written note"
@@ -138,7 +158,7 @@
 			\[CPT LOG\]: D-N N:N Судно было затянуто в блюспейс поток. Хронометр сходит с ума, оборудование едва работает. Здесь есть что-то кроме нас.<br>"
 
 /obj/turbolift_map_holder/honeyship
-	name = "Farfleet turbolift map placeholder"
+	name = "honeyship turbolift map placeholder"
 	icon = 'icons/obj/structures/turbolift_preview_2x2.dmi'
 	depth = 2
 	lift_size_x = 3
