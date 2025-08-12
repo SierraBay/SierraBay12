@@ -47,6 +47,7 @@ GLOBAL_VAR_AS(error_colony_reaction, "Прервать спавн колонии
 /datum/job/submap/colonist/scientist
 	title = "Colony Scientist"
 	supervisors = "Colonist Leader"
+	total_positions = 1
 	max_skill = list(
 		SKILL_SCIENCE	= SKILL_MAX,
 		SKILL_DEVICES	= SKILL_MAX,
@@ -60,6 +61,7 @@ GLOBAL_VAR_AS(error_colony_reaction, "Прервать спавн колонии
 /datum/job/submap/colonist/medic
 	title = "Colony Medic"
 	supervisors = "Colonist Leader"
+	total_positions = 1
 	max_skill = list(
 		SKILL_MEDICAL	= SKILL_MAX,
 		SKILL_ANATOMY	= SKILL_MAX,
@@ -68,12 +70,14 @@ GLOBAL_VAR_AS(error_colony_reaction, "Прервать спавн колонии
 	)
 	min_skill = list(
 		SKILL_MEDICAL = SKILL_TRAINED,
-		SKILL_ANATOMY = SKILL_TRAINED
+		SKILL_CHEMISTRY = SKILL_BASIC,
+		SKILL_ANATOMY = SKILL_EXPERIENCED
 	)
 
 /datum/job/submap/colonist/engineer
 	title = "Colony Engineer"
 	supervisors = "Colonist Leader"
+	total_positions = 1
 	min_skill = list(
 		SKILL_COMPUTER		= SKILL_BASIC,
 		SKILL_EVA			= SKILL_BASIC,
@@ -461,3 +465,10 @@ GLOBAL_VAR_AS(error_colony_reaction, "Прервать спавн колонии
 
 /obj/machinery/vending/medical/colony
 	req_access = list()
+
+/obj/machinery/smartfridge/secure/medbay/colony
+	req_access = list()
+
+/obj/machinery/robotics_fabricator/colony
+	req_access = list()
+	fab_status_flags = FAB_HACKED
