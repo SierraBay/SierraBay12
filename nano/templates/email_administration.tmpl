@@ -27,6 +27,12 @@
 			{{:data.msg_source}}&nbsp
 		</div>
 		<div class="itemLabel">
+			Recipient:
+		</div>
+		<div class="itemContent">
+			{{:data.msg_recipient}}
+		</div>
+		<div class="itemLabel">
 			Received at:
 		</div>
 		<div class="itemContent">
@@ -71,6 +77,7 @@
 		<table>
 			<tr>
 				<th>Source</th>
+				<th>Recipient</th>
 				<th>Title</th>
 				<th>Received at</th>
 				<th>Actions</th>
@@ -78,6 +85,7 @@
 			{{for data.messages}}
 				<tr>
 					<td>{{:value.source}}&nbsp</td>
+					<td>{{:value.recipient}}</td>
 					<td>{{:value.title}}&nbsp</td>
 					<td>{{:value.timestamp}}&nbsp</td>
 					<td>

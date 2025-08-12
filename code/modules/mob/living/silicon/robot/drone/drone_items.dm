@@ -119,6 +119,7 @@
 	can_hold = list(
 		/obj/item/reagent_containers/glass,
 		/obj/item/reagent_containers/food,
+		/obj/item/reagent_containers/cooking_container,
 		/obj/item/seeds,
 		/obj/item/glass_extra,
 		/obj/item/clothing/mask/smokable,
