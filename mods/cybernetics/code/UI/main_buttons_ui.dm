@@ -13,4 +13,4 @@
 	&nbsp;&nbsp;&nbsp;&nbsp;\
 	[CFBTNU("СБРОС", "Полный сброс", FALSE)]"
 	input_list += "</td></tr>"
-	input_list += "<tr><td colspan='3' style='text-align:center;'><b>"
+	input_list += "<tr><td colspan='3' style='text-align:center;'>"

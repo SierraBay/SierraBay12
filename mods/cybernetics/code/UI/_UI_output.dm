@@ -1,6 +1,7 @@
 //Данная функция отвечает лишь за отображение, ничего более
 /datum/category_item/player_setup_item/cybernetics/content(mob/user)
 	. = list()
+	LAZYADD(., "<b>")
 	if(current_tab == "Протезирование")
 		draw_limbs_content(user, .)
 	else if(current_tab == "Внутренние органы")
@@ -11,4 +12,5 @@
 		draw_augments_content(user, .)
 	else
 		draw_bug_content(user, .)
+	LAZYADD(., "</b>")
 	. = jointext(., null)
