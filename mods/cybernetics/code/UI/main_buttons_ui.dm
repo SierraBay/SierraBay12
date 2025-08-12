@@ -1,7 +1,7 @@
 //Рисует УИ верхних кнопок (С выбором подменю)
 /datum/category_item/player_setup_item/cybernetics/proc/draw_main_buttons(list/input_list)
-	input_list += "<table align='center' width='100%'>"
-	input_list += "<tr><td colspan=3>"
+	input_list += "<table style='width:100%; text-align:center;'>"
+	input_list += "<tr><td colspan='3'>"
 	input_list += "<br />\
 	[CFBTNU("limbs", "Протезы конечностей", current_tab == "Протезирование")]\
 	&nbsp;&nbsp;&nbsp;&nbsp;\
@@ -13,4 +13,4 @@
 	&nbsp;&nbsp;&nbsp;&nbsp;\
 	[CFBTNU("СБРОС", "Полный сброс", FALSE)]"
 	input_list += "</td></tr>"
-	input_list += "<tr><td colspan=3>"
+	input_list += "<tr><td colspan='3' style='text-align:center;'><b>"
