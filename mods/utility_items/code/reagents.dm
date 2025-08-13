@@ -663,3 +663,10 @@
 /obj/item/reagent_containers/food/snacks/cookie
 	nutriment_amt = 5
 	nutriment_desc = list("sugar" = 5) // Возвращаем реагенты в печеньку
+
+// Отдельный мод-костыль для нормального приготовления ванильного торта
+/singleton/cooking_recipe/cake
+	required_reagents = list(
+		/datum/reagent/nutriment/batter/cakebatter = 60,
+		/datum/reagent/drink/syrup_vanilla = 30 // Добавляем дополнительный реагент для нормальной работы рецепта
+	)
