@@ -53,6 +53,11 @@
 
 	var/static/list/spinning_lights_cache = list()
 
+	/// Reference to the sound player looping sound instance.
+	var/sound_loop
+	/// Sound file to loop when turned on.
+	var/sound_file
+
 
 /obj/machinery/rotating_alarm/Initialize()
 	. = ..()
@@ -67,8 +72,15 @@
 	set_dir(dir) //Set dir again so offsets update correctly
 
 
+/obj/machinery/rotating_alarm/Destroy()
+	set_off()
+	return ..()
+
+
 /obj/machinery/rotating_alarm/start_on/Initialize()
 	. = ..()
+	if (. == INITIALIZE_HINT_QDEL)
+		return
 	set_on()
 
 
@@ -86,7 +98,7 @@
 
 /obj/machinery/rotating_alarm/set_color(color)
 	if (on)
-		vis_contents -= spin_effect
+		remove_vis_contents(spin_effect)
 	if (isnull(spinning_lights_cache["[color]"]))
 		spinning_lights_cache["[color]"] = new /obj/spinning_light()
 	spin_effect = spinning_lights_cache["[color]"]
@@ -96,16 +108,9 @@
 	alarm_light_color = RGB
 	spin_effect.set_color(color)
 	if (on)
-		vis_contents += spin_effect
+		add_vis_contents(spin_effect)
 
 
-<<<<<<< ours
-/obj/machinery/rotating_alarm/proc/set_on()
-	vis_contents += spin_effect
-	set_light(2, 0.5, alarm_light_color)
-	on = TRUE
-	low_alarm = FALSE
-=======
 /obj/machinery/rotating_alarm/proc/set_alarm_sound(new_sound)
 	if (new_sound == sound_file)
 		return
@@ -126,7 +131,6 @@
 		50,
 		7
 	)
->>>>>>> theirs
 
 
 /obj/machinery/rotating_alarm/proc/set_on()
@@ -140,11 +144,10 @@
 
 
 /obj/machinery/rotating_alarm/proc/set_off()
-	vis_contents -= spin_effect
+	if (!on)
+		return
+	remove_vis_contents(spin_effect)
 	set_light(0)
 	on = FALSE
 	low_alarm = FALSE
-<<<<<<< ours
-=======
 	QDEL_NULL(sound_loop)
->>>>>>> theirs
