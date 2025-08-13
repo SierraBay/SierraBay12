@@ -550,7 +550,7 @@ Keeping them simple for now, just spawning with basic EC uniforms, and pretty mu
 	uniform = /obj/item/clothing/under/color/grey
 	head = /obj/item/clothing/head/beret/centcom/officer
 	gloves = /obj/item/clothing/gloves/thick/combat
-	id_types = list(/obj/item/card/id/centcom/ERT)
+	id_types = list(/obj/item/card/id/centcom/station/ert)
 //	pda_type = /obj/item/modular_computer/pda/ert
 	l_ear = /obj/item/device/radio/headset/ert
 	shoes = /obj/item/clothing/shoes/combat
