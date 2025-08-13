@@ -244,12 +244,13 @@
 
 			if(message_source)
 				data["folder"] = folder
+				data["source_label"] = folder == "Sent" ? "Recipient" : "Source"
 				var/list/all_messages = list()
 				for(var/datum/computer_file/data/email_message/message in message_source)
 					all_messages.Add(list(list(
 						"title" = message.title,
 						"body" = digitalPencode2html(message.stored_data),
-						"source" = message.source,
+						"source" = folder == "Sent" ? message.recipient : message.source,
 						"timestamp" = message.timestamp,
 						"uid" = message.uid
 					)))
@@ -420,6 +421,7 @@
 		message.title = msg_title
 		message.stored_data = sanitize(msg_body, MAX_MESSAGE_LEN, FALSE)
 		message.source = current_account.login
+		message.recipient = msg_recipient
 		message.attachment = msg_attachment
 		if(!current_account.send_mail(msg_recipient, message))
 			error = "Error sending email: this address doesn't exist."

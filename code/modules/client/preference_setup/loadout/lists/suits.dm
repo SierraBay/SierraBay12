@@ -67,9 +67,9 @@
 /datum/gear/suit/chest_rig/New()
 	..()
 	var/chest_rigs = list()
-	chest_rigs += /obj/item/clothing/suit/storage/engineering_chest_rig
-	chest_rigs += /obj/item/clothing/suit/storage/security_chest_rig
-	chest_rigs += /obj/item/clothing/suit/storage/medical_chest_rig
+	chest_rigs += /obj/item/clothing/suit/storage/chest_rig/engineering
+	chest_rigs += /obj/item/clothing/suit/storage/chest_rig/security
+	chest_rigs += /obj/item/clothing/suit/storage/chest_rig/medical
 	gear_tweaks += new/datum/gear_tweak/path/specified_types_list(chest_rigs)
 
 /datum/gear/suit/highvis

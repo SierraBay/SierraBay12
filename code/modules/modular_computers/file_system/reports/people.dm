@@ -29,6 +29,7 @@
 	message.title = subject
 	message.stored_data = sanitize(body, MAX_MESSAGE_LEN, FALSE)
 	message.source = server.login
+	message.recipient = recipient
 	message.attachment = attach_report
 	server.send_mail(recipient, message)
 

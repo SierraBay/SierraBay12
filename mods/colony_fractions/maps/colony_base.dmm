@@ -1998,12 +1998,10 @@
 /turf/simulated/floor/tiled/white,
 /area/map_template/colony/medbay)
 "dW" = (
-/obj/machinery/smartfridge/secure/medbay{
-	req_access = list(list("ACCESS_CHEMISTRY","ACCESS_MEDICAL_EQUIP"))
-	},
 /obj/floor_decal/corner/blue{
 	dir = 10
 	},
+/obj/machinery/smartfridge/secure/medbay/colony,
 /turf/simulated/floor/tiled/white,
 /area/map_template/colony/medbay)
 "dX" = (
@@ -2611,9 +2609,7 @@
 	dir = 1;
 	icon_state = "warning"
 	},
-/obj/machinery/robotics_fabricator{
-	req_access = list()
-	},
+/obj/machinery/robotics_fabricator/colony,
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/colony/science)
 "fe" = (
@@ -8609,6 +8605,7 @@
 /obj/structure/bed/chair/comfy/brown{
 	dir = 1
 	},
+/obj/submap_landmark/spawnpoint/colonist_scientist_spawn,
 /turf/simulated/floor/wood/walnut,
 /area/map_template/colony/dorms)
 "yN" = (
@@ -8798,7 +8795,7 @@
 	pixel_y = 6;
 	pixel_x = 8
 	},
-/obj/item/reagent_containers/food/drinks/glass2/coffeecup/custom{
+/obj/item/reagent_containers/food/drinks/glass2/coffeecup{
 	pixel_x = 8
 	},
 /obj/item/reagent_containers/food/drinks/glass2/coffeecup/dais{
@@ -9469,6 +9466,13 @@
 "Ui" = (
 /turf/simulated/floor/tiled/white,
 /area/map_template/colony/medbay)
+"UQ" = (
+/obj/structure/bed/chair/comfy/brown{
+	dir = 1
+	},
+/obj/submap_landmark/spawnpoint/colonist_medic_spawn,
+/turf/simulated/floor/wood/walnut,
+/area/map_template/colony/dorms)
 "Vk" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -9517,6 +9521,7 @@
 /obj/structure/bed/chair/comfy/brown{
 	dir = 1
 	},
+/obj/submap_landmark/spawnpoint/colonist_engineer_spawn,
 /turf/simulated/floor/wood/walnut,
 /area/map_template/colony/dorms)
 "Wb" = (
@@ -10577,7 +10582,7 @@ OU
 vf
 Ek
 bl
-Wa
+UQ
 az
 gp
 hv
