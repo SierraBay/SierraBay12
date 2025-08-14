@@ -676,18 +676,19 @@
 /turf/simulated/floor,
 /area/scavver/gantry/up2)
 "fV" = (
-/obj/machinery/power/solar,
-/obj/structure/cable,
-/obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
 /obj/machinery/light/spot{
 	dir = 4
 	},
 /obj/structure/railing/mapped{
 	dir = 8
 	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/cable,
+/obj/machinery/power/solar,
 /turf/simulated/floor{
 	map_airless = 1
 	},
@@ -2656,14 +2657,19 @@
 /turf/simulated/floor/tiled/white,
 /area/scavver/escapepod)
 "uU" = (
-/obj/structure/cable,
-/obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
 	},
 /obj/machinery/power/tracker,
 /turf/simulated/floor,
@@ -3242,15 +3248,16 @@
 /turf/space,
 /area/scavver/yachtup)
 "Af" = (
-/obj/machinery/power/solar,
-/obj/structure/cable,
-/obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
 /obj/structure/railing/mapped{
 	dir = 8
 	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/cable,
+/obj/machinery/power/solar,
 /turf/simulated/floor{
 	map_airless = 1
 	},
@@ -4848,11 +4855,11 @@
 /turf/simulated/floor,
 /area/scavver/escapepod)
 "Qd" = (
-/obj/structure/cable,
-/obj/machinery/power/tracker,
 /obj/structure/railing/mapped{
 	dir = 8
 	},
+/obj/structure/cable,
+/obj/machinery/power/tracker,
 /turf/simulated/floor{
 	map_airless = 1
 	},
