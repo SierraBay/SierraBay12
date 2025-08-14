@@ -14,6 +14,7 @@
 #include "code/complexus/complexus.dm"
 #include "code/equipment/cerebro_enhancers.dm"
 #include "code/equipment/foundation_clothing.dm"
+#include "code/equipment/foundation_exosuit.dm"
 #include "code/equipment/foundation_implanter.dm"
 #include "code/equipment/foundation_weapon.dm"
 #include "code/equipment/implant.dm"
