@@ -2541,11 +2541,11 @@
 /area/assembly/robotics)
 "eS" = (
 /obj/structure/table/rack,
-/obj/item/defibrillator/compact,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 24
 	},
+/obj/item/defibrillator/compact/loaded,
 /turf/simulated/floor/tiled/techfloor,
 /area/storage/medical)
 "eT" = (
