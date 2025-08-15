@@ -29652,14 +29652,7 @@
 /obj/structure/table/rack{
 	dir = 8
 	},
-/obj/item/cane{
-	pixel_x = -3;
-	pixel_y = 2
-	},
-/obj/item/cane{
-	pixel_x = -3;
-	pixel_y = 2
-	},
+/obj/item/storage/box/large/crutches,
 /obj/item/cane{
 	pixel_x = -3;
 	pixel_y = 2
