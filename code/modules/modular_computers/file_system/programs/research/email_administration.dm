@@ -132,7 +132,7 @@
 		if(!current_account)
 			return TOPIC_HANDLED
 
-		for(var/datum/computer_file/data/email_message/received_message in (current_account.inbox | current_account.spam | current_account.deleted))
+		for(var/datum/computer_file/data/email_message/received_message in (current_account.inbox | current_account.outbox| current_account.spam | current_account.deleted))
 			if(received_message.uid == text2num(href_list["viewmail"]))
 				current_message = received_message
 				break
