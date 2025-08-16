@@ -145,7 +145,7 @@
 	name = "Cuchulain Foundation - Hostile"
 	head = /obj/item/clothing/head/helmet/foundation
 	mask = /obj/item/clothing/mask/gas/foundation
-	glasses =  null
+	glasses = /obj/item/clothing/glasses/sunglasses
 	uniform =  /obj/item/clothing/under/color/black/foundation
 	suit = /obj/item/clothing/suit/armor/pcarrier/troops/heavy/foundation
 	shoes =    /obj/item/clothing/shoes/jackboots

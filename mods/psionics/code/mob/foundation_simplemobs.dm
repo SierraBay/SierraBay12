@@ -42,8 +42,9 @@
 	var/weapon2
 	unsuitable_atmos_damage = 15
 	environment_smash = 1
-	faction = "roguefleet"
+	faction = "hearershand"
 	status_flags = CANPUSH
+	flash_vulnerability = 0
 
 	ai_holder = /datum/ai_holder/simple_animal/humanoid/hostile/foundation
 	say_list_type = /datum/say_list/foundation/traitor
@@ -176,7 +177,7 @@
 	weapon1 = /obj/item/crowbar
 	ai_holder = /datum/ai_holder/simple_animal/humanoid/hostile/foundation/pilot
 	say_list_type = /datum/say_list/foundation/pilot
-
+	status_flags = FLAGS_OFF
 	corpse = /obj/landmark/corpse/foundation/pilot
 
 /mob/living/simple_animal/hostile/human/foundation/space/pilot/neutral

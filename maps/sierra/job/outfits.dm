@@ -558,6 +558,7 @@ Keeping them simple for now, just spawning with basic EC uniforms, and pretty mu
 /singleton/hierarchy/outfit/job/sierra/ert/leader
 	name = OUTFIT_JOB_NAME("ERT Leader - Sierra")
 	head = /obj/item/clothing/head/beret/centcom/captain
+	id_types = list(/obj/item/card/id/centcom/station/ert/leader)
 
 /singleton/hierarchy/outfit/job/sierra/passenger/vagabond
 	name = OUTFIT_JOB_NAME("Vagabond - Sierra")
