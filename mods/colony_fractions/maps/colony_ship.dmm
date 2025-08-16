@@ -656,6 +656,7 @@
 /obj/floor_decal/corner_steel_grid/diagonal{
 	dir = 4
 	},
+/obj/submap_landmark/spawnpoint/colonist_scientist_spawn2,
 /turf/simulated/floor/tiled/techmaint,
 /area/map_template/colony2/ship)
 "ke" = (
@@ -1183,6 +1184,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/submap_landmark/spawnpoint/colonist_medic_spawn2,
 /turf/simulated/floor/tiled/techmaint,
 /area/map_template/colony2/ship)
 "xv" = (
@@ -2331,6 +2333,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
 	},
+/obj/submap_landmark/spawnpoint/colonist_engineer_spawn2,
 /turf/simulated/floor/tiled/techmaint,
 /area/map_template/colony2/ship)
 "Qt" = (

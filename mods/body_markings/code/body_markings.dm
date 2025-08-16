@@ -131,3 +131,22 @@
 	icon_state = "eyeshadow"
 	do_coloration = DO_COLORATION_USER
 	body_parts = list(BP_HEAD)
+
+/datum/sprite_accessory/marking/modpack_body_markings/human/under_eyes
+	name = "Under eyes"
+	icon_state = "under_eyes"
+	do_coloration = DO_COLORATION_USER
+	body_parts = list(BP_HEAD)
+
+/datum/sprite_accessory/marking/modpack_body_markings/human/lipstick
+	name = "Lipstick"
+	icon_state = "lipstick"
+	do_coloration = DO_COLORATION_USER
+	body_parts = list(BP_HEAD)
+
+/datum/sprite_accessory/marking/modpack_body_markings/human/underhair_headband
+	name = "Under hair headband"
+	icon_state = "headband"
+	do_coloration = DO_COLORATION_USER
+	body_parts = list(BP_HEAD)
+	draw_order = 50

@@ -157,7 +157,7 @@
 	//if someone wants to implement inspecting robot eyes here would be the place to do it.
 
 /obj/item/device/flashlight/upgraded
-	name = "\improper LED flashlight"
+	name = "high power flashlight"
 	desc = "An energy efficient flashlight."
 	icon_state = "biglight"
 	item_state = "biglight"

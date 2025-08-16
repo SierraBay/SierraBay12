@@ -1203,15 +1203,7 @@
 /turf/simulated/floor/tiled/skrell/white,
 /area/ship/skrellscoutship/crew/medbay)
 "ec" = (
-/obj/structure/table/glass,
-/obj/item/storage/firstaid/adv{
-	pixel_x = -6;
-	pixel_y = 6
-	},
-/obj/item/storage/box/nitrilegloves{
-	pixel_x = 7;
-	pixel_y = -3
-	},
+/obj/machinery/organ_printer/robot/mapped,
 /turf/simulated/floor/tiled/skrell/white,
 /area/ship/skrellscoutship/crew/medbay)
 "ed" = (
@@ -3715,6 +3707,14 @@
 	},
 /turf/simulated/floor/tiled/skrell,
 /area/ship/skrellscoutshuttle)
+"mH" = (
+/obj/structure/table/glass,
+/obj/item/reagent_containers/spray/cleaner{
+	pixel_x = -5
+	},
+/obj/item/reagent_containers/spray/sterilizine,
+/turf/simulated/floor/tiled/skrell/white,
+/area/ship/skrellscoutship/crew/medbay)
 "mI" = (
 /obj/paint/black,
 /turf/simulated/wall/r_wall,
@@ -6159,14 +6159,18 @@
 /area/ship/skrellscoutship/dock)
 "VA" = (
 /obj/structure/table/glass,
-/obj/item/reagent_containers/spray/sterilizine,
-/obj/item/reagent_containers/spray/cleaner{
-	pixel_x = -5
-	},
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 1
 	},
 /obj/machinery/light/skrell,
+/obj/item/storage/box/nitrilegloves{
+	pixel_x = 7;
+	pixel_y = -3
+	},
+/obj/item/storage/firstaid/adv{
+	pixel_x = -6;
+	pixel_y = 6
+	},
 /turf/simulated/floor/tiled/skrell/white,
 /area/ship/skrellscoutship/crew/medbay)
 "VD" = (
@@ -11020,7 +11024,7 @@ kq
 kt
 uk
 cX
-ds
+mH
 dK
 VA
 uk
