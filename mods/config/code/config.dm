@@ -11,6 +11,7 @@
 	probabilities["thething"] = 1
 	probabilities["traitorling"] = 1
 	probabilities["operative"] = 1
+	probabilities["alien"] = 1
 	load_options()
 	load_map()
 	load_sql()

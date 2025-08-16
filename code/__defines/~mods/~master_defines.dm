@@ -20,6 +20,13 @@
 #define SPECIES_MONARCH_QUEEN	"Monarch Serpentid Queen"
 // ASCENT - End
 
+// ALIEN - Start
+#define MODE_ALIEN				"alien"
+#define SPECIES_XENO			"Alien"
+#define LANGUAGE_XENO			"Xenomorph Talk"
+#define isalien(A) istype(A, /mob/living/carbon/human/alien)
+// ALIEN - End
+
 // LEGALESE - Start
 #define LANGUAGE_LEGALESE		"Legalese"
 // LEGALESE - End

@@ -1,5 +1,6 @@
 // SIERRA TODO: GET RID OF IT!!!
 #include "ai/_ai_includes.dm"
+#include "alien/_alien_includes.dm"
 #include "adherent_discharge/_adherent_discharge_includes.dm"
 #include "body_markings/_body_markings_includes.dm"
 #include "cargo/_cargo_includes.dm"
