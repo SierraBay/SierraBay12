@@ -60,7 +60,7 @@
 
 	initial_modules = list(
 		/obj/item/rig_module/banshee,
-		/obj/item/rig_module/mounted/arm_blade,
+		/obj/item/rig_module/mounted/wolverine,
 		/obj/item/rig_module/mounted/energy/ion,
 		/obj/item/rig_module/vision,
 		/obj/item/rig_module/chem_dispenser/ninja,
@@ -130,17 +130,20 @@
 		Cuchulain Foundation PID \"Banshee\" sound impact module allows to stun nearby enemies \
 		after engaging of module. Module have a considerable time for recharging and moderate enegry usage.\
 	"}
-	use_power_cost = 800 KILOWATTS
-	module_cooldown = 30 SECONDS
-	toggleable = TRUE
-	selectable = TRUE
-	usable = FALSE
-	engage_string = "Engage Vail"
-	activate_string = "Engage Sonic Siren"
-	deactivate_string = "Disable Sonic Siren"
 
+	use_power_cost = 600 KILOWATTS
+	module_cooldown = 30 SECONDS
+	toggleable = FALSE
+	selectable = TRUE
+	usable = TRUE
+	engage_string = "Engage Sonic Vail"
+
+// Claws
 
 /obj/item/rig_module/banshee/engage(atom/target)
+
+	if(!..())
+		return 0
 
 	var/mob/living/H = holder.wearer
 
@@ -160,4 +163,62 @@
 		M.eye_blind = max(M.eye_blind,3)
 		M.ear_deaf = max(M.ear_deaf,3 * 2)
 		M.mod_confused(3 * rand(1,3))
-	return
+
+	return 1
+
+/obj/item/rig_module/mounted/wolverine
+
+	name = "hand-mounted wolverine claws"
+	desc = "An array of laser claws to be mounted onto a hardsuit."
+	icon = 'icons/obj/augment.dmi'
+	icon_state = "wolverine"
+
+	suit_overlay_active = null
+
+	activate_string = "Extend Claws"
+	deactivate_string = "Retract Claws"
+
+	interface_name = "forearm-mounted blade"
+	interface_desc = "A pair of laser armblades built into each forearm of your hardsuit."
+
+	usable = 0
+	selectable = 0
+	toggleable = 1
+	use_power_cost = 10 KILOWATTS
+	active_power_cost = 0.5 KILOWATTS
+	passive_power_cost = 0
+
+/obj/item/rig_module/mounted/wolverine/Process()
+
+	if(holder && holder.wearer)
+		if(!(locate(/obj/item/material/armblade/claws) in holder.wearer))
+			deactivate()
+			return 0
+
+	return ..()
+
+/obj/item/rig_module/mounted/wolverine/activate()
+	var/mob/living/M = holder.wearer
+
+	if (!M.HasFreeHand())
+		to_chat(M, SPAN_DANGER("Your hands are full."))
+		deactivate()
+		return
+
+	var/obj/item/material/armblade/claws/blade = new(M)
+	M.put_in_hands(blade)
+
+	if(!..())
+		return 0
+
+/obj/item/rig_module/mounted/wolverine/deactivate()
+
+	..()
+
+	var/mob/living/M = holder.wearer
+
+	if(!M)
+		return
+
+	for(var/obj/item/material/armblade/claws/blade in M.contents)
+		qdel(blade)
