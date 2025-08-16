@@ -8,7 +8,7 @@
 	corpse_outfits = list(/singleton/hierarchy/outfit/foundation/hostile/pilot)
 
 /obj/landmark/corpse/foundation/space
-	name = "Foundation Pilot"
+	name = "Foundation Assault Operative"
 	corpse_outfits = list(/singleton/hierarchy/outfit/foundation/hostile/voidsuit)
 
 /mob/living/simple_animal/hostile/human/foundation
