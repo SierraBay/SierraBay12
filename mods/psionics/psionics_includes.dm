@@ -50,6 +50,7 @@
 #include "code/interface/ui.dm"
 #include "code/mob/mob_assay.dm"
 #include "code/mob/mob_interactions.dm"
+#include "code/mob/foundation_simplemobs.dm"
 #include "code/mob/mob.dm"
 #include "code/null/_null.dm"
 #include "code/null/~null.dm"

@@ -56,22 +56,6 @@
 /obj/machinery/light/spot,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/ert/ship/briefing)
-"aH" = (
-/obj/structure/table/rack,
-/obj/item/mech_external_armor/buletproof,
-/obj/item/mech_external_armor/buletproof,
-/obj/item/mech_external_armor/buletproof,
-/obj/item/mech_external_armor/buletproof,
-/obj/item/mech_external_armor/buletproof,
-/obj/item/mech_external_armor/buletproof,
-/obj/item/mech_external_armor/buletproof,
-/obj/item/mech_external_armor/buletproof,
-/obj/item/mech_external_armor/buletproof,
-/obj/item/mech_external_armor/buletproof,
-/turf/unsimulated/floor/techfloor{
-	icon_state = "techfloor_grid"
-	},
-/area/space)
 "aQ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -104,6 +88,10 @@
 /area/map_template/ert/shuttle/airlock)
 "aU" = (
 /obj/structure/closet/crate,
+/obj/item/mech_external_armor/laserproof,
+/obj/item/mech_external_armor/laserproof,
+/obj/item/mech_external_armor/laserproof,
+/obj/item/mech_external_armor/laserproof,
 /turf/simulated/floor/tiled/techmaint,
 /area/map_template/ert/ship/hangar)
 "aW" = (
@@ -339,6 +327,12 @@
 	pixel_y = 24
 	},
 /obj/structure/table/steel_reinforced,
+/obj/item/mech_equipment/catapult{
+	pixel_y = -6
+	},
+/obj/item/mech_equipment/clamp{
+	pixel_y = 8
+	},
 /turf/simulated/floor/tiled/techmaint,
 /area/map_template/ert/ship/hangar)
 "bT" = (
@@ -694,22 +688,6 @@
 /obj/paint/fleet,
 /turf/simulated/wall/r_wall,
 /area/map_template/ert/shuttle/medbay)
-"dZ" = (
-/obj/structure/table/rack,
-/obj/item/mech_external_armor/laserproof,
-/obj/item/mech_external_armor/laserproof,
-/obj/item/mech_external_armor/laserproof,
-/obj/item/mech_external_armor/laserproof,
-/obj/item/mech_external_armor/laserproof,
-/obj/item/mech_external_armor/laserproof,
-/obj/item/mech_external_armor/laserproof,
-/obj/item/mech_external_armor/laserproof,
-/obj/item/mech_external_armor/laserproof,
-/obj/item/mech_external_armor/laserproof,
-/turf/unsimulated/floor/techfloor{
-	icon_state = "techfloor_grid"
-	},
-/area/space)
 "ea" = (
 /obj/structure/reagent_dispensers/fueltank,
 /obj/structure/sign/warning/nosmoking_1{
@@ -1123,25 +1101,6 @@
 /obj/floor_decal/industrial/warning/fulltile,
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/ert/ship/hangar)
-"gP" = (
-/obj/structure/table/rack,
-/obj/item/mech_equipment/mounted_system/extinguisher{
-	pixel_y = -2
-	},
-/obj/item/mech_equipment/mounted_system/rcd{
-	pixel_y = 11
-	},
-/turf/unsimulated/floor{
-	icon_state = "dark"
-	},
-/area/space)
-"gQ" = (
-/obj/structure/table/rack,
-/obj/item/mech_equipment/sleeper,
-/turf/unsimulated/floor{
-	icon_state = "dark"
-	},
-/area/space)
 "gS" = (
 /obj/machinery/door/firedoor/ert,
 /obj/machinery/door/airlock/highsecurity{
@@ -1381,17 +1340,6 @@
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/ert/shuttle/airlock)
-"it" = (
-/obj/machinery/mech_recharger,
-/mob/living/exosuit/premade/powerloader,
-/obj/item/device/radio/intercom/specops{
-	dir = 2;
-	pixel_y = 22
-	},
-/turf/unsimulated/floor{
-	icon_state = "dark"
-	},
-/area/space)
 "iu" = (
 /obj/floor_decal/industrial/outline/grey,
 /obj/structure/closet/crate/radiation_gear,
@@ -2006,11 +1954,6 @@
 /obj/item/storage/secure/briefcase/nukedisk,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/ert/ship/armory)
-"lW" = (
-/turf/unsimulated/floor{
-	icon_state = "dark"
-	},
-/area/space)
 "lY" = (
 /obj/structure/table/rack,
 /obj/item/clothing/accessory/helmet_cover/saare,
@@ -2166,12 +2109,21 @@
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/ert/ship/prepwing)
 "mR" = (
-/mob/living/exosuit/premade/ert,
-/obj/machinery/mech_recharger,
-/turf/unsimulated/floor/techfloor{
-	icon_state = "techfloor_grid"
-	},
-/area/space)
+/obj/structure/table/steel_reinforced,
+/obj/item/ammo_magazine/proto_smg/mech,
+/obj/item/ammo_magazine/proto_smg/mech,
+/obj/item/ammo_magazine/proto_smg/mech,
+/obj/item/ammo_magazine/proto_smg/mech,
+/obj/item/ammo_magazine/shotgunmag/mech,
+/obj/item/ammo_magazine/shotgunmag/mech,
+/obj/item/ammo_magazine/shotgunmag/mech,
+/obj/item/ammo_magazine/shotgunmag/mech,
+/obj/item/ammo_magazine/shotgunmag/mech,
+/obj/item/ammo_magazine/shotgunmag/mech,
+/obj/item/ammo_magazine/shotgunmag/mech,
+/obj/item/ammo_magazine/shotgunmag/mech,
+/turf/simulated/floor/tiled/techmaint,
+/area/map_template/ert/ship/hangar)
 "mV" = (
 /obj/machinery/alarm/ert{
 	pixel_y = -28;
@@ -2335,13 +2287,6 @@
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/ert/ship/hangar)
-"nT" = (
-/mob/living/exosuit/premade/heavy,
-/obj/machinery/mech_recharger,
-/turf/unsimulated/floor/techfloor{
-	icon_state = "techfloor_grid"
-	},
-/area/space)
 "nX" = (
 /obj/machinery/light/spot,
 /obj/machinery/mech_recharger,
@@ -2993,12 +2938,6 @@
 /obj/floor_decal/techfloor,
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/ert/shuttle/central)
-"qV" = (
-/obj/structure/cart,
-/turf/unsimulated/floor{
-	icon_state = "dark"
-	},
-/area/space)
 "qW" = (
 /obj/structure/table/rack,
 /obj/item/ammo_casing/rpg_rocket/aussec/frag,
@@ -3045,11 +2984,6 @@
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/ert/shuttle/armory)
-"rE" = (
-/turf/unsimulated/floor/techfloor{
-	icon_state = "techfloor_grid"
-	},
-/area/space)
 "rF" = (
 /turf/simulated/floor/carpet/blue2,
 /area/map_template/ert/ship/officer)
@@ -3642,13 +3576,6 @@
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/ert/ship/armory)
-"uS" = (
-/mob/living/exosuit/premade/light,
-/obj/machinery/mech_recharger,
-/turf/unsimulated/floor{
-	icon_state = "dark"
-	},
-/area/space)
 "uW" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/floor_decal/techfloor{
@@ -3670,11 +3597,11 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/floor_decal/industrial/shutoff,
 /obj/floor_decal/techfloor{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/universal,
+/obj/floor_decal/industrial/shutoff,
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/ert/shuttle/airlock)
 "vg" = (
@@ -3769,16 +3696,6 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/ert/shuttle/medbay)
-"vH" = (
-/obj/structure/table/rack,
-/obj/item/robot_parts/robot_component/actuator,
-/obj/item/robot_parts/robot_component/actuator,
-/obj/item/robot_parts/robot_component/actuator,
-/obj/item/robot_parts/robot_component/actuator,
-/turf/unsimulated/floor{
-	icon_state = "dark"
-	},
-/area/space)
 "vI" = (
 /obj/floor_decal/corner/blue/half,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -4040,6 +3957,7 @@
 /obj/item/device/radio/intercom/specops{
 	pixel_y = 22
 	},
+/obj/item/mech_equipment/mounted_system/taser/ballistic/smg,
 /turf/simulated/floor/tiled/techmaint,
 /area/map_template/ert/ship/hangar)
 "xZ" = (
@@ -4122,6 +4040,11 @@
 /obj/structure/closet/secure_closet/guncabinet{
 	req_access = list("ACCESS_ERT_RESPONDER")
 	},
+/obj/item/melee/baton/loaded,
+/obj/item/melee/baton/loaded,
+/obj/item/melee/baton/loaded,
+/obj/item/melee/baton/loaded,
+/obj/item/melee/baton/loaded,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/ert/shuttle/armory)
 "yG" = (
@@ -4851,13 +4774,6 @@
 /obj/item/stack/material/nullglass/fifty,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/ert/ship/armory)
-"CF" = (
-/obj/structure/table/rack,
-/obj/item/mech_equipment/mounted_system/taser/ballistic/smg,
-/turf/unsimulated/floor/techfloor{
-	icon_state = "techfloor_grid"
-	},
-/area/space)
 "CG" = (
 /obj/floor_decal/techfloor{
 	dir = 1
@@ -5144,17 +5060,11 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/ert/shuttle/central)
 "En" = (
-/obj/structure/table/rack,
-/obj/item/mech_equipment/clamp{
-	pixel_y = 8
-	},
-/obj/item/mech_equipment/catapult{
-	pixel_y = -6
-	},
-/turf/unsimulated/floor{
-	icon_state = "dark"
-	},
-/area/space)
+/obj/structure/table/steel_reinforced,
+/obj/item/mech_equipment/ballistic_shield,
+/obj/item/mech_equipment/mounted_system/melee/mechete,
+/turf/simulated/floor/tiled/techmaint,
+/area/map_template/ert/ship/hangar)
 "Ep" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -5853,6 +5763,7 @@
 /area/map_template/ert/ship/armory)
 "Im" = (
 /obj/machinery/rotating_alarm/start_on/ert,
+/obj/structure/cart,
 /turf/simulated/floor/tiled/techmaint,
 /area/map_template/ert/ship/hangar)
 "Ir" = (
@@ -6169,6 +6080,15 @@
 /area/map_template/ert/shuttle/central)
 "KB" = (
 /obj/machinery/light/spot,
+/obj/item/robot_parts/robot_component/actuator,
+/obj/item/robot_parts/robot_component/actuator,
+/obj/item/robot_parts/robot_component/actuator,
+/obj/item/robot_parts/robot_component/actuator,
+/obj/structure/closet/crate,
+/obj/item/robot_parts/robot_component/actuator,
+/obj/item/robot_parts/robot_component/actuator,
+/obj/item/robot_parts/robot_component/actuator,
+/obj/item/robot_parts/robot_component/actuator,
 /turf/simulated/floor/tiled/techmaint,
 /area/map_template/ert/ship/hangar)
 "KC" = (
@@ -6416,9 +6336,6 @@
 /obj/paint/fleet/sfv_rook,
 /turf/simulated/wall/r_wall,
 /area/map_template/ert/shuttle/cockpit)
-"Mg" = (
-/turf/unsimulated/wall,
-/area/space)
 "Mi" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled/techfloor/grid,
@@ -6709,24 +6626,10 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/ert/ship/hangar)
 "NA" = (
-/obj/structure/table/rack,
-/obj/item/ammo_magazine/proto_smg/mech,
-/obj/item/ammo_magazine/proto_smg/mech,
-/obj/item/ammo_magazine/proto_smg/mech,
-/obj/item/ammo_magazine/proto_smg/mech,
-/obj/item/ammo_magazine/shotgunmag/mech,
-/obj/item/ammo_magazine/shotgunmag/mech,
-/obj/item/ammo_magazine/shotgunmag/mech,
-/obj/item/ammo_magazine/shotgunmag/mech,
-/obj/item/ammo_magazine/shotgunmag/mech,
-/obj/item/ammo_magazine/shotgunmag/mech,
-/obj/item/ammo_magazine/shotgunmag/mech,
-/obj/item/ammo_magazine/shotgunmag/mech,
-/obj/item/ammo_magazine/shotgunmag/mech,
-/turf/unsimulated/floor/techfloor{
-	icon_state = "techfloor_grid"
-	},
-/area/space)
+/obj/structure/table/steel_reinforced,
+/obj/item/mech_equipment/sleeper,
+/turf/simulated/floor/tiled/techmaint,
+/area/map_template/ert/ship/hangar)
 "ND" = (
 /obj/machinery/atmospherics/unary/tank/air,
 /turf/simulated/floor/plating,
@@ -6806,14 +6709,6 @@
 /obj/catwalk_plated,
 /turf/simulated/floor/plating,
 /area/map_template/ert/shuttle/engines)
-"Op" = (
-/obj/structure/table/rack,
-/obj/item/mech_equipment/ballistic_shield,
-/obj/item/mech_equipment/mounted_system/melee/mechete,
-/turf/unsimulated/floor/techfloor{
-	icon_state = "techfloor_grid"
-	},
-/area/space)
 "Oq" = (
 /obj/structure/closet/secure_closet/ert/empty,
 /turf/simulated/floor/tiled/techfloor/grid,
@@ -7996,7 +7891,10 @@
 /area/map_template/ert/shuttle/armory)
 "Wd" = (
 /obj/structure/closet/crate,
-/obj/item/mech_equipment/mounted_system/taser/ballistic/smg,
+/obj/item/mech_external_armor/buletproof,
+/obj/item/mech_external_armor/buletproof,
+/obj/item/mech_external_armor/buletproof,
+/obj/item/mech_external_armor/buletproof,
 /turf/simulated/floor/tiled/techmaint,
 /area/map_template/ert/ship/hangar)
 "Wf" = (
@@ -8423,16 +8321,15 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/ert/ship/hangar)
 "YQ" = (
-/obj/machinery/door/blast/regular{
-	id_tag = "heavyrescue";
-	name = "Combat Exosuit";
-	dir = 4;
-	health_max = 100000
+/obj/structure/table/steel_reinforced,
+/obj/item/mech_equipment/mounted_system/extinguisher{
+	pixel_y = -2
 	},
-/turf/unsimulated/floor/techfloor{
-	icon_state = "techfloor_grid"
+/obj/item/mech_equipment/mounted_system/rcd{
+	pixel_y = 11
 	},
-/area/space)
+/turf/simulated/floor/tiled/techmaint,
+/area/map_template/ert/ship/hangar)
 "YS" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -9081,9 +8978,9 @@ Bo
 Bo
 Bo
 Bo
-vH
-lW
-vH
+Bo
+Bo
+Bo
 Bo
 Bo
 Bo
@@ -9138,9 +9035,9 @@ Bo
 Bo
 Bo
 Bo
-it
-lW
-uS
+Bo
+Bo
+Bo
 Bo
 Bo
 Bo
@@ -9195,9 +9092,9 @@ Bo
 Bo
 Bo
 Bo
-En
-lW
-gQ
+Bo
+Bo
+Bo
 Bo
 Bo
 Bo
@@ -9252,9 +9149,9 @@ Bo
 Bo
 Bo
 Bo
-gP
-lW
-qV
+Bo
+Bo
+Bo
 Bo
 Bo
 Bo
@@ -9308,10 +9205,10 @@ Bo
 Bo
 Bo
 Bo
-Mg
-YQ
-YQ
-Mg
+Bo
+Bo
+Bo
+Bo
 Bo
 Bo
 Bo
@@ -9365,10 +9262,10 @@ Bo
 Bo
 Bo
 Bo
-CF
-rE
-rE
-dZ
+Bo
+Bo
+Bo
+Bo
 Bo
 Bo
 Bo
@@ -9422,10 +9319,10 @@ Bo
 Bo
 Bo
 Bo
-Op
-rE
-rE
-aH
+Bo
+Bo
+Bo
+Bo
 Bo
 Bo
 Bo
@@ -9479,10 +9376,10 @@ Bo
 Bo
 Bo
 Bo
-Mg
-mR
-NA
-nT
+Bo
+Bo
+Bo
+Bo
 Bo
 Bo
 Bo
@@ -11114,7 +11011,7 @@ br
 br
 br
 oK
-hC
+YQ
 Lg
 Lg
 hC
@@ -11175,7 +11072,7 @@ li
 Lg
 Lg
 OA
-hC
+NA
 dN
 "}
 (45,1,1) = {"
@@ -11399,10 +11296,10 @@ dj
 oe
 br
 qo
-hC
+En
 Wd
 aU
-hC
+mR
 qo
 dN
 "}

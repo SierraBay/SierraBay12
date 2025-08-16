@@ -1,6 +1,41 @@
-/* FOUNDATION RIG
+/* FOUNDATION RIG AND VOIDSUIT
  * ========
  */
+
+/obj/item/clothing/head/helmet/space/void/foundation
+	name = "foundation voidsuit helmet"
+	desc = "A pitch-black voidsuit helmet with light armor. Notable only for the green colors of the Cuchulain Foundation."
+	icon = 'mods/hardsuits/icons/voidsuits/obj_head.dmi'
+	icon_state = "foundation"
+	item_state = "foundation"
+	item_icons = list(slot_head_str = 'mods/hardsuits/icons/voidsuits/onmob_head.dmi')
+	light_overlay = "helmet_light_dual_green"
+	armor = list(
+		melee = ARMOR_MELEE_VERY_HIGH,
+		bullet = ARMOR_BALLISTIC_SMALL,
+		laser = ARMOR_LASER_SMALL,
+		bomb = ARMOR_BOMB_PADDED,
+		bio = ARMOR_BIO_SHIELDED,
+		rad = ARMOR_RAD_MINOR)
+
+	max_pressure_protection = VOIDSUIT_MAX_PRESSURE
+
+/obj/item/clothing/suit/space/void/foundation
+	name = "foundation voidsuit"
+	desc = "A pitch-black voidsuit with light armor. Notable only for the green colors of the Cuchulain Foundation."
+	icon = 'mods/hardsuits/icons/voidsuits/obj_suit.dmi'
+	icon_state = "foundation"
+	item_state = "foundation"
+	item_icons = list(slot_wear_suit_str = 'mods/hardsuits/icons/voidsuits/onmob_suit.dmi')
+	max_pressure_protection = VOIDSUIT_MAX_PRESSURE
+	armor = list(
+		melee = ARMOR_MELEE_VERY_HIGH,
+		bullet = ARMOR_BALLISTIC_SMALL,
+		laser = ARMOR_LASER_SMALL,
+		bomb = ARMOR_BOMB_PADDED,
+		bio = ARMOR_BIO_SHIELDED,
+		rad = ARMOR_RAD_MINOR)
+	allowed = list(/obj/item/gun,/obj/item/device/flashlight,/obj/item/tank,/obj/item/device/suit_cooling_unit,/obj/item/melee/baton)
 
 /obj/item/rig/light/ninja/foundation
 	name = "white suit control module"
