@@ -1,5 +1,6 @@
 /mob/living/carbon/human/alien
 	var/cloaked = 0
+	var/list/abilities = list()
 
 /mob/living/carbon/human/alien/Initialize(mapload)
 	head_hair_style = "Bald"

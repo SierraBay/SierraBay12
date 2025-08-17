@@ -26,6 +26,4 @@ GLOBAL_TYPED_NEW(aliens, /datum/antagonist/alien)
 
 /datum/antagonist/alien/update_antag_mob(datum/mind/player)
 	..()
-	player.current.add_language(LANGUAGE_XENO)
-	player.current.add_language(LANGUAGE_SPACER)
-	player.current.add_language(LANGUAGE_HUMAN_EURO)
+	player.current.make_alien()
