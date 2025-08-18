@@ -2450,7 +2450,8 @@
 /area/map_template/colony)
 "eN" = (
 /obj/structure/table/marble,
-/obj/machinery/reagent_temperature,
+/obj/item/reagent_containers/food/condiment/enzyme,
+/obj/item/reagent_containers/food/drinks/shaker,
 /turf/simulated/floor/lino,
 /area/map_template/colony/messhall)
 "eO" = (
@@ -2464,10 +2465,6 @@
 /obj/floor_decal/industrial/outline/blue,
 /turf/simulated/floor/tiled/white,
 /area/map_template/colony/medbay)
-"eP" = (
-/obj/item/stool/bar/padded,
-/turf/simulated/floor/lino,
-/area/map_template/colony/messhall)
 "eR" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 8
@@ -2746,12 +2743,13 @@
 /area/map_template/colony/medbay)
 "fo" = (
 /obj/structure/table/marble,
-/obj/random/drinkbottle,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/machinery/reagent_temperature,
+/obj/item/reagent_containers/food/drinks/pitcher,
 /turf/simulated/floor/lino,
 /area/map_template/colony/messhall)
 "fp" = (
@@ -3219,8 +3217,7 @@
 /turf/simulated/floor/reinforced/nitrogen,
 /area/map_template/colony/atmospherics)
 "gd" = (
-/obj/structure/table/marble,
-/obj/item/reagent_containers/food/drinks/shaker,
+/obj/machinery/appliance/cooker/oven,
 /turf/simulated/floor/lino,
 /area/map_template/colony/messhall)
 "ge" = (
@@ -4000,8 +3997,7 @@
 /turf/simulated/floor/wood,
 /area/map_template/colony/messhall)
 "hy" = (
-/obj/structure/table/marble,
-/obj/item/reagent_containers/food/condiment/enzyme,
+/obj/machinery/appliance/cooker/stove,
 /turf/simulated/floor/lino,
 /area/map_template/colony/messhall)
 "hz" = (
@@ -4102,7 +4098,8 @@
 /area/map_template/colony/messhall)
 "hI" = (
 /obj/structure/table/marble,
-/obj/item/reagent_containers/food/drinks/pitcher,
+/obj/item/reagent_containers/cooking_container/board,
+/obj/item/reagent_containers/cooking_container/board/bowl,
 /turf/simulated/floor/lino,
 /area/map_template/colony/messhall)
 "hJ" = (
@@ -10992,9 +10989,9 @@ nR
 aI
 ev
 hK
-eP
-eP
-eP
+jj
+jj
+jj
 jj
 jj
 jj
