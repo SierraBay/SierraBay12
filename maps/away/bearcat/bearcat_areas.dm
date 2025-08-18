@@ -171,6 +171,11 @@
 	ambience = list('sound/ambience/ambigen3.ogg','sound/ambience/ambigen4.ogg','sound/ambience/signal.ogg','sound/ambience/sonar.ogg')
 
 /area/ship/scrap/shuttle/lift
-  name = "Cargo Lift"
-  icon_state = "shuttle3"
-  base_turf = /turf/simulated/open
+	name = "Cargo Lift"
+	icon_state = "shuttle3"
+	base_turf = /turf/simulated/open
+
+/area/ship/scrap/shuttle/cubkitten
+	name = "\improper FTV Cubkitten"
+	icon_state = "shuttle3"
+	area_flags = AREA_FLAG_RAD_SHIELDED
