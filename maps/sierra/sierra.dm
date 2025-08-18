@@ -214,7 +214,6 @@
 	#include "../../mods/sauna_props/_sauna_props_includes.dm"
 	#include "../../mods/wyccbay_optimization/_wyccbay_optimization_includes.dm"
 	#include "../../mods/contraband_vending/_contraband_vending_includes.dm"
-	#include "../../mods/telecomms/_telecomms_includes.dm"
 	#include "../../mods/modernUI/_modernUI_includes.dm"
 
 	// UNUSED MODS
