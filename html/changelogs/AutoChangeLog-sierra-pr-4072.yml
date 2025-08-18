@@ -1,0 +1,5 @@
+author: Builder13
+changes:
+  - {bugfix: Позитронные мозги теперь можно активировать.}
+  - {bugfix: Фикс руны призыва фамильяра у мага.}
+delete-after: true

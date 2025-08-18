@@ -1,0 +1,5 @@
+author: Builder13
+changes:
+  - {bugfix: Equip delay of loadout items no longer delays character setup 
+      window.}
+delete-after: true

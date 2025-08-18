@@ -8265,8 +8265,8 @@
 /turf/simulated/floor/tiled/dark/monotile,
 /area/command/armoury/access)
 "azV" = (
-/obj/shuttle_landmark/ert/deck2{
-	name = "1st Deck, Fore Port"
+/obj/shuttle_landmark/ert/deck1{
+	name = "Deck 1, Fore Port"
 	},
 /turf/space,
 /area/space)
@@ -29652,14 +29652,7 @@
 /obj/structure/table/rack{
 	dir = 8
 	},
-/obj/item/cane{
-	pixel_x = -3;
-	pixel_y = 2
-	},
-/obj/item/cane{
-	pixel_x = -3;
-	pixel_y = 2
-	},
+/obj/item/storage/box/large/crutches,
 /obj/item/cane{
 	pixel_x = -3;
 	pixel_y = 2
@@ -37971,7 +37964,7 @@ aaa
 aaa
 aaa
 aaa
-azV
+aaa
 aaa
 aaa
 aaa
@@ -41399,7 +41392,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+azV
 aaa
 aaa
 aaa

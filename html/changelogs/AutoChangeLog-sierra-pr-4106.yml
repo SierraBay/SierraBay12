@@ -1,0 +1,4 @@
+author: Sbotkin
+changes:
+  - {tweak: PoB in the passport is changed to Residence.}
+delete-after: true
