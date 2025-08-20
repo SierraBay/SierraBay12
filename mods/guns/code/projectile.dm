@@ -133,3 +133,7 @@
 /obj/item/gun/projectile/automatic/nt41/on_update_icon()
 	..()
 	icon_state = (ammo_magazine)? "nt41" : "nt41-e"
+
+/obj/item/storage/box/ammo/nt41
+	name = "box of NT41 5.7x28 box magazines"
+	startswith = list(/obj/item/ammo_magazine/n10mm = 7)

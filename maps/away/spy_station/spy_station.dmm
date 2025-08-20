@@ -93,12 +93,6 @@
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/spy_station/dock)
-"cf" = (
-/obj/structure/grille,
-/obj/structure/lattice,
-/obj/structure/lattice,
-/turf/space,
-/area/space)
 "ct" = (
 /obj/machinery/optable,
 /obj/random/trash,
@@ -548,9 +542,9 @@
 	},
 /obj/structure/catwalk,
 /obj/machinery/embedded_controller/radio/airlock/docking_port{
-	pixel_y = 25;
+	display_name = "Dock";
 	id_tag = "spy";
-	display_name = "Dock"
+	pixel_y = 25
 	},
 /obj/random/trash,
 /turf/simulated/floor,
@@ -726,7 +720,6 @@
 "jY" = (
 /obj/machinery/atmospherics/unary/outlet_injector{
 	dir = 4;
-	icon_state = "map_injector";
 	use_power = 1
 	},
 /turf/simulated/floor,
@@ -926,9 +919,7 @@
 	},
 /obj/structure/hygiene/sink{
 	dir = 4;
-	icon_state = "sink";
-	pixel_x = 11;
-	pixel_y = 0
+	pixel_x = 11
 	},
 /turf/simulated/floor/tiled/white,
 /area/spy_station/med)
@@ -1179,8 +1170,8 @@
 /obj/structure/cable/yellow{
 	d1 = 2;
 	d2 = 4;
-	icon_state = "2-4";
-	dir = 1
+	dir = 1;
+	icon_state = "2-4"
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -1417,8 +1408,8 @@
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	dir = 4
+	dir = 4;
+	icon_state = "4-8"
 	},
 /obj/floor_decal/techfloor{
 	dir = 1
@@ -1448,9 +1439,9 @@
 	name = "External Airlock"
 	},
 /obj/machinery/access_button/airlock_interior{
-	pixel_y = -7;
+	master_tag = "spy_s";
 	pixel_x = -25;
-	master_tag = "spy_s"
+	pixel_y = -7
 	},
 /turf/simulated/floor/airless,
 /area/spy_station/engin)
@@ -1517,8 +1508,8 @@
 /obj/structure/cable/yellow{
 	d1 = 2;
 	d2 = 4;
-	icon_state = "2-4";
-	dir = 1
+	dir = 1;
+	icon_state = "2-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden,
 /turf/simulated/floor/tiled/techfloor/grid,
@@ -2073,8 +2064,8 @@
 	id_tag = 67
 	},
 /obj/machinery/door/airlock/multi_tile/glass/sol{
-	name = "Bridge";
-	dir = 8
+	dir = 8;
+	name = "Bridge"
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/spy_station/engin)
@@ -2330,15 +2321,15 @@
 	id_tag = "spy_s_pump"
 	},
 /obj/machinery/embedded_controller/radio/airlock/docking_port{
-	id_tag = "spy_s";
-	display_name = "Dock";
 	dir = 8;
+	display_name = "Dock";
+	id_tag = "spy_s";
 	pixel_x = 23
 	},
 /obj/machinery/airlock_sensor/airlock_exterior{
-	pixel_x = -24;
+	id_tag = "spy_s_sensor";
 	master_tag = "spy_s";
-	id_tag = "spy_s_sensor"
+	pixel_x = -24
 	},
 /obj/structure/catwalk,
 /turf/simulated/floor/airless,
@@ -2346,14 +2337,14 @@
 "Fo" = (
 /obj/structure/catwalk,
 /obj/machinery/door/airlock/external/glass/bolted/cycling{
-	name = "Air Dock";
 	dir = 4;
-	id_tag = "spy_outer"
+	id_tag = "spy_outer";
+	name = "Air Dock"
 	},
 /obj/machinery/access_button/airlock_exterior{
-	pixel_y = -30;
+	master_tag = "spy";
 	pixel_x = 9;
-	master_tag = "spy"
+	pixel_y = -30
 	},
 /turf/simulated/floor,
 /area/spy_station/dock)
@@ -2607,12 +2598,6 @@
 /obj/structure/lattice,
 /turf/space,
 /area/spy_station/engin)
-"IO" = (
-/obj/structure/lattice,
-/obj/structure/lattice,
-/obj/structure/grille/broken,
-/turf/space,
-/area/space)
 "IR" = (
 /obj/machinery/light,
 /obj/floor_decal/borderfloorblack,
@@ -2745,8 +2730,8 @@
 	id_tag = 67
 	},
 /obj/machinery/door/airlock/multi_tile/glass/sol{
-	name = "Bridge";
-	dir = 8
+	dir = 8;
+	name = "Bridge"
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/spy_station/canteen)
@@ -2786,7 +2771,6 @@
 	icon_state = "0-2"
 	},
 /obj/structure/extinguisher_cabinet{
-	pixel_y = 0;
 	pixel_x = 24
 	},
 /turf/simulated/floor/lino,
@@ -3056,9 +3040,9 @@
 	id_tag = "spy_pump"
 	},
 /obj/machinery/airlock_sensor/airlock_exterior{
-	pixel_y = 28;
+	id_tag = "spy_sensor";
 	master_tag = "spy";
-	id_tag = "spy_sensor"
+	pixel_y = 28
 	},
 /obj/structure/catwalk,
 /turf/simulated/floor,
@@ -3191,7 +3175,6 @@
 /obj/machinery/alarm{
 	dir = 8;
 	pixel_x = 25;
-	pixel_y = 0;
 	req_access = list(list("ACCESS_ENGINE_EQUIP","ACCESS_ATMOS"))
 	},
 /obj/random/drinkbottle,
@@ -3327,8 +3310,8 @@
 /obj/structure/cable/yellow{
 	d1 = 2;
 	d2 = 4;
-	icon_state = "2-4";
-	dir = 1
+	dir = 1;
+	icon_state = "2-4"
 	},
 /turf/simulated/floor/airless,
 /area/spy_station/solar)
@@ -3357,14 +3340,14 @@
 	},
 /obj/structure/catwalk,
 /obj/machinery/door/airlock/external/glass/bolted/cycling{
+	dir = 4;
 	id_tag = "spy_inner";
-	name = "Air Dock";
-	dir = 4
+	name = "Air Dock"
 	},
 /obj/machinery/access_button/airlock_interior{
+	master_tag = "spy";
 	pixel_x = -8;
-	pixel_y = -31;
-	master_tag = "spy"
+	pixel_y = -31
 	},
 /turf/simulated/floor,
 /area/spy_station/dock)
@@ -3537,7 +3520,6 @@
 /area/spy_station/com)
 "UU" = (
 /obj/machinery/door/blast/regular/open{
-	icon_state = "pdoor1";
 	id_tag = "window sp";
 	name = "Protective Shutters"
 	},
@@ -3695,8 +3677,8 @@
 /obj/structure/cable/yellow{
 	d1 = 2;
 	d2 = 4;
-	icon_state = "2-4";
-	dir = 1
+	dir = 1;
+	icon_state = "2-4"
 	},
 /obj/structure/catwalk,
 /turf/simulated/floor/airless,
@@ -3869,7 +3851,6 @@
 /area/spy_station/canteen)
 "ZJ" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_y = 0;
 	pixel_x = 24
 	},
 /obj/decal/cleanable/blood/oil,
@@ -7310,7 +7291,7 @@ dC
 dC
 dC
 QZ
-cf
+QZ
 rU
 dC
 dC
@@ -7819,7 +7800,7 @@ dC
 dC
 dC
 dC
-cf
+QZ
 rU
 rU
 Ji
@@ -10081,7 +10062,7 @@ dC
 zu
 rU
 rU
-IO
+CZ
 dC
 zD
 dC
@@ -10782,7 +10763,7 @@ rU
 dC
 dC
 fV
-Bd
+rU
 QZ
 QZ
 CZ
@@ -10883,8 +10864,8 @@ cY
 CZ
 QZ
 rU
-Bd
-Bd
+rU
+rU
 QZ
 dC
 Gj

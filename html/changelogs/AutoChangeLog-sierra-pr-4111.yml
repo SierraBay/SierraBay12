@@ -1,0 +1,6 @@
+author: Sbotkin
+changes:
+  - {tweak: 'Wearing boxing gloves allows for all sorts of CQC moves, including grabs
+      etc. Harm intent required for actually punching people.'}
+  - {bugfix: Non-holo boxing gloves also allow harmless boxing.}
+delete-after: true

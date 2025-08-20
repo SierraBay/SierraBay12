@@ -82,3 +82,15 @@
 	item_cost = 60
 	antag_roles = list(MODE_MERCENARY)
 	path = /obj/item/storage/box/supermatters
+
+/datum/uplink_item/item/grenades/visceratorgrenade
+	name = "1x Viscerator Grenade"
+	desc = "A grenade containing viscerators. Watch out!"
+	item_cost = 35
+	path = /obj/item/grenade/spawnergrenade/viscerator/uplink
+
+/datum/uplink_item/item/grenades/carpgrenade
+	name = "1x Carp Grenade"
+	desc = "A grenade containing space carp. Watch out!"
+	item_cost = 25
+	path = /obj/item/grenade/spawnergrenade/spesscarp

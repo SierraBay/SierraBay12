@@ -34,8 +34,11 @@
 
 /obj/item/organ/internal/posibrain/Initialize()
 	. = ..()
-	if(!brainmob && iscarbon(loc))
-		init(loc)
+	if(!brainmob)
+		if(iscarbon(loc))
+			init(loc)
+		else
+			brainmob = new(src)
 // [SIERRA-REMOVE] - IPC_MODS
 /*
 	unshackle()
@@ -164,7 +167,7 @@
 	if (brainmob.mind && brainmob.mind.special_role)
 		return
 	var/datum/ghosttrap/T = get_ghost_trap("positronic brain")
-	if (!T.assess_candidate(user))
+	if (!T.assess_candidate(user, brainmob))
 		return
 	var/possess = alert(user, "Do you wish to become \the [src]?", "Become [src]?", "Yes", "No")
 	if (possess != "Yes")

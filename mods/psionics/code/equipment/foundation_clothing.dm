@@ -138,3 +138,56 @@
 	new /obj/item/ammo_magazine/smg_sol(src)
 	new /obj/item/ammo_magazine/smg_sol(src)
 	new /obj/item/grenade/chem_grenade/nullgas(src)
+
+// Simplemobs outfits
+
+/singleton/hierarchy/outfit/foundation/hostile
+	name = "Cuchulain Foundation - Hostile"
+	head = /obj/item/clothing/head/helmet/foundation
+	mask = /obj/item/clothing/mask/gas/foundation
+	glasses = /obj/item/clothing/glasses/sunglasses
+	uniform =  /obj/item/clothing/under/color/black/foundation
+	suit = /obj/item/clothing/suit/armor/pcarrier/troops/heavy/foundation
+	shoes =    /obj/item/clothing/shoes/jackboots
+	l_hand =   null
+	l_ear =    null
+	r_hand =   null
+	l_pocket = null
+	r_pocket = null
+	gloves = /obj/item/clothing/gloves/thick/swat
+	holster =  null
+	belt =     null
+
+/singleton/hierarchy/outfit/foundation/hostile/pilot
+	name = "Cuchulain Foundation - Hostile Pilot"
+	mask = /obj/item/clothing/mask/gas/foundation
+	glasses =  null
+	uniform =  /obj/item/clothing/under/color/black/foundation
+	back = /obj/item/rig/zero
+	gloves =   null
+	suit =     null
+	head =     null
+	l_hand =   null
+	l_ear =    null
+	r_hand =   null
+	l_pocket = /obj/item/tank/oxygen_emergency_extended
+	r_pocket = /obj/item/device/multitool
+	holster =  null
+	belt = /obj/item/storage/belt/utility/full
+
+/singleton/hierarchy/outfit/foundation/hostile/voidsuit
+	name = "Cuchulain Foundation - Hostile Voidsuit"
+	mask = /obj/item/clothing/mask/gas/foundation
+	glasses =  null
+	uniform =  /obj/item/clothing/under/color/black/foundation
+	back = /obj/item/tank/jetpack/carbondioxide
+	gloves = /obj/item/clothing/gloves/thick/swat
+	suit = /obj/item/clothing/suit/space/void/foundation
+	head = /obj/item/clothing/head/helmet/space/void/foundation
+	l_hand =   null
+	l_ear =    null
+	r_hand =   null
+	l_pocket = /obj/item/tank/oxygen_emergency_extended
+	r_pocket = null
+	holster =  null
+	belt =     null
