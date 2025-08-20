@@ -1,148 +1,148 @@
 /area/honeyship
-	name = "Exterior"
+	name = "Pleasure boat - Exterior"
 
 /area/honeyship/dock
-	name = "Main Dock"
+	name = "Pleasure boat - Main Dock"
 	icon_state = "shuttle"
 
 /area/honeyship/office
-	name = "Office"
+	name = "Pleasure boat - Office"
 	icon_state = "shuttle3"
 
 /area/honeyship/armory
-	name = "Security Armory"
+	name = "Pleasure boat - Security Armory"
 	icon_state = "armory"
 
 /area/honeyship/sec_eva
-	name = "Security EVA"
+	name = "Pleasure boat - Security EVA"
 	icon_state = "security"
 
 /area/honeyship/eva
-	name = "EVA"
+	name = "Pleasure boat - EVA"
 	icon_state = "eva"
 
 /area/honeyship/atmos
-	name = "Atmospherics Compartment"
+	name = "Pleasure boat - Atmospherics Compartment"
 	icon_state = "atmos"
 
 /area/honeyship/fuel
-	name = "Fuel Bay"
+	name = "Pleasure boat - Fuel Bay"
 	icon_state = "auxstorage"
 
 /area/honeyship/engine
-	name = "Power Compartment"
+	name = "Pleasure boat - Power Compartment"
 	icon_state = "engine"
 
 /area/honeyship/dorm
-	name = "Staff Dormintory"
+	name = "Pleasure boat - Staff Dormintory"
 	icon_state = "crew_quarters"
 
 /area/honeyship/captain
-	name = "SEO Cabin"
+	name = "Pleasure boat - SEO Cabin"
 	icon_state = "captain"
 
 /area/honeyship/warehouse
-	name = "Warehouse"
+	name = "Pleasure boat - Warehouse"
 	icon_state = "primarystorage"
 
 /area/honeyship/storage
-	name = "Tech Storage"
+	name = "Pleasure boat - Tech Storage"
 	icon_state = "storage"
 
 /area/honeyship/corridor
-	name = "Main Corridor"
+	name = "Pleasure boat - Main Corridor"
 	icon_state = "hallF"
 
 
 /area/honeyship/dock_starboard
-	name = "Starboard Dock"
+	name = "Pleasure boat - Starboard Dock"
 	icon_state = "shuttlered"
 
 
 /area/honeyship/dock_port
-	name = "Port Dock"
+	name = "Pleasure boat - Port Dock"
 	icon_state = "shuttlered"
 
 /area/honeyship/dorms_starboard
-	name = "Guest Rooms - Starboard"
+	name = "Pleasure boat - Guest Rooms - Starboard"
 	icon_state = "Sleep"
 
 /area/honeyship/dorms_port
-	name = "Guest Rooms - Port"
+	name = "Pleasure boat - Guest Rooms - Port"
 	icon_state = "Sleep"
 
 /area/honeyship/bar
-	name = "Bar - Main"
+	name = "Pleasure boat - Bar - Main"
 	icon_state = "bar"
 
 /area/honeyship/bar_upper
-	name = "Bar - Balcony"
+	name = "Pleasure boat - Bar - Balcony"
 	icon_state = "exit"
 
 /area/honeyship/staff
-	name = "Staff Room"
+	name = "Pleasure boat - Staff Room"
 	icon_state = "LP"
 
 /area/honeyship/medbay
-	name = "Medbay"
+	name = "Pleasure boat - Medbay"
 	icon_state = "medbay"
 
 /area/honeyship/surgery
-	name = "Surgery"
+	name = "Pleasure boat - Surgery"
 	icon_state = "medbay2"
 
 /area/honeyship/cold
-	name = "Cold Storage"
+	name = "Pleasure boat - Cold Storage"
 	icon_state = "medbay4"
 
 /area/honeyship/med_storage
-	name = "Medical Storage"
+	name = "Pleasure boat - Medical Storage"
 	icon_state = "medbay3"
 
 /area/honeyship/corridor_upper
-	name = "Upper Corridor"
+	name = "Pleasure boat - Upper Corridor"
 	icon_state = "hallS"
 
 /area/honeyship/dining
-	name = "Dining Room"
+	name = "Pleasure boat - Dining Room"
 	icon_state = "cafeteria"
 
 /area/honeyship/kitchen
-	name = "Kitchen"
+	name = "Pleasure boat - Kitchen"
 	icon_state = "kitchen"
 
 /area/honeyship/freezer
-	name = "Freezer"
+	name = "Pleasure boat - Freezer"
 	icon_state = "shuttle3"
 
 /area/honeyship/bridge
-	name = "Bridge"
+	name = "Pleasure boat - Bridge"
 	icon_state = "bridge"
 
 /area/honeyship/pod_one
-	name = "Escape Pod - One"
+	name = "Pleasure boat - Escape Pod - One"
 	icon_state = "shuttlegrn"
 
 /area/honeyship/pod_two
-	name = "Escape Pod - Two"
+	name = "Pleasure boat - Escape Pod - Two"
 	icon_state = "shuttlegrn"
 
 /area/honeyship/dry_garden
-	name = "Dry Garden"
+	name = "Pleasure boat - Dry Garden"
 	icon_state = "observatory"
 
 /area/honeyship/maintenance_port
-	name = "Maintencnce - Port"
+	name = "Pleasure boat - Maintencnce - Port"
 	icon_state = "pmaint"
 
 /area/honeyship/maintenance_starboard
-	name = "Maintencnce - Starboard"
+	name = "Pleasure boat - Maintencnce - Starboard"
 	icon_state = "smaint"
 
 /area/honeyship/maintenance_upper_port
-	name = "Upper Maintencnce - Port"
+	name = "Pleasure boat - Upper Maintencnce - Port"
 	icon_state = "pmaint"
 
 /area/honeyship/maintenance_upper_starboard
-	name = "Upper Maintencnce - Starboard"
+	name = "Pleasure boat - Upper Maintencnce - Starboard"
 	icon_state = "smaint"

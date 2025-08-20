@@ -25,6 +25,10 @@
 	suffixes = list("honeyship.dmm")
 	spawn_cost = 1
 	area_usage_test_exempted_root_areas = list(/area/honeyship)
+	area_usage_test_exempted_areas = list(
+		/area/turbolift/honeyship_first,
+		/area/turbolift/honeyship_second
+	)
 	apc_test_exempt_areas = list(
 		/area/honeyship/maintenance_port = NO_SCRUBBER|NO_VENT,
 		/area/honeyship/maintenance_starboard = NO_SCRUBBER|NO_VENT,
@@ -125,16 +129,24 @@
 			\[Система\]: 'СВЯЗЬ С ПРОСЛУШИВАЮЩИМ УСТРОЙСТВОМ ПОТЕРЯНА'.<br>"
 
 /obj/item/paper/honeyship/wistblow_orange
-	name = "Sound record - Blue"
+	name = "Sound record - Orange"
 	language = LANGUAGE_HUMAN_EURO
-	info = "\[Мужской голос-1\]: Молодец, нечего сказать.<br>\
-			\[Мужской голос-2\]: Ну, осечки бывают, сам знаешь.<br>\
-			\[Мужской голос-1\]: Осечки, тоже мне. Пить нужно меньше, тогда будешь попадать своим маленьким прибором в нужное отверстие. Это я про декодер если что, мужик.<br>\
-			\[Мужской голос-2\]: Ну, у нас будет ещё шанс.<br>\
-			\[Мужской голос-1\]: Через день будем уже на Могесе, а там он высаживается. Я не хочу шуметь, понимае...<br>\
-			\[Женский голос-2\]: Тихо.<br>\
-			\[Окружение\]: 'Раздаётся механический писк, по нарастающей'<br>\
-			\[Система\]: 'СВЯЗЬ С ПРОСЛУШИВАЮЩИМ УСТРОЙСТВОМ ПОТЕРЯНА'.<br>"
+	info = "\[Женский голос\]: У нас труп.<br>\
+			\[Мужской голос-3\]: Кто?<br>\
+			\[Мужской голос-1\]: Не наш клиент?<br>\
+			\[Женский голос\]: Нет, инженер. Я подключилась к отчётам сканеров, его накачали трамом.<br>\
+			\[Мужской голос-2\]: Сука, как же всё вовремя-то.<br>\
+			\[Мужской голос-3\]: Просто совпадение?<br>\
+			\[Женский голос\]: Не похоже. Чёрт. Датчик движения у оружейной сработал. Охрана вооружается.<br>\
+			\[Мужской голос-2\]: А я тебе говорил, что пить перед взломом не нужно было.<br>\
+			\[Мужской голос-1\]: Помолчи, а? Наши действия какие?<br>\
+			\[Мужской голос-3\]: Мы будем на Могесе меньше чем через два часа. Дальше клиент летит один. И мы его там не нагоним.<br>\
+			\[Женский голос\]: Эй-эй-эй, у меня всё ещё нет стабильной расшифровки оттуда. Можно конечно понадеяться, что местные тоже всё пишут, но это нужно...<br>\
+			\[Окружение\]: 'Быстрый металлический лязг на протяжении двадцати секунд, завершающийся узнаваемым звуком передёргивания затвора'<br>\
+			\[Мужской голос-2\]: Норматив. Я готовый.<br>\
+			\[Мужской голос-1\]: Готов.<br>\
+			\[Женский голос\]: Охрана говорит у себя что-то... о киберпсихе? Но здесь же только ИПСы.<br>\
+			\[Мужской голос-3\]: Значит не только. Заходим в номер к цели, нейтрализуем всех в номере. Раннер, капсула по правому борту - твоя.<br>"
 
 /obj/item/paper/honeyship/ship_log
 	name = "Flight Log"
@@ -182,3 +194,61 @@
 	lift_floor_name = "Lower Deck"
 	lift_announce_str = "Arriving at Lower Deck: Доки. Гостевые каюты. Бар. Инженерный отсек."
 	base_turf = /turf/simulated/floor
+
+// Зона трупов
+
+/obj/landmark/corpse/honeyship
+	name = "Cruise Liner Personnel"
+	corpse_outfits = list(/singleton/hierarchy/outfit/fleet/ert/hostile)
+
+/obj/landmark/corpse/honeyship/medic
+	name = "KMS Contractor"
+	corpse_outfits = list(/singleton/hierarchy/outfit/honeyship/medic)
+
+/obj/landmark/corpse/honeyship/guard
+	name = "KMS Contractor"
+	corpse_outfits = list(/singleton/hierarchy/outfit/fleet/ert/hostile)
+
+/obj/landmark/corpse/honeyship/doll
+	name = "Doll"
+	species = list(SPECIES_IPC)
+	corpse_outfits = list(/singleton/hierarchy/outfit/honeyship/doll)
+
+/obj/landmark/corpse/honeyship/vip
+	name = "Augusto Geroni"
+	corpse_outfits = list(/singleton/hierarchy/outfit/fleet/ert/hostile)
+	spawn_flags = ~CORPSE_SPAWNER_RANDOM_NAME
+
+/obj/landmark/corpse/honeyship/vip2
+	name = "Joahn Bright"
+	corpse_outfits = list(/singleton/hierarchy/outfit/fleet/ert/hostile)
+	spawn_flags = ~CORPSE_SPAWNER_RANDOM_NAME
+
+/obj/landmark/corpse/honeyship/captain
+	name = "Wu"
+	corpse_outfits = list(/singleton/hierarchy/outfit/marooned_officer)
+	spawn_flags = ~CORPSE_SPAWNER_RANDOM_NAME
+
+/singleton/hierarchy/outfit/honeyship/medic
+	name = "KMS Tactical Outfit"
+	uniform = /obj/item/clothing/under/kms_utility_uniform
+	suit = /obj/item/clothing/suit/armor/pcarrier/kms
+	shoes = /obj/item/clothing/shoes/jackboots
+	gloves = /obj/item/clothing/gloves/kms
+	head = /obj/item/clothing/head/beret
+
+/singleton/hierarchy/outfit/honeyship/guard
+	name = "Komatsu Medical Services Outfit"
+	uniform = /obj/item/clothing/under/kms_utility_uniform
+	suit = /obj/item/clothing/suit/armor/pcarrier/kms
+	shoes = /obj/item/clothing/shoes/jackboots
+	gloves = /obj/item/clothing/gloves/kms
+	head = /obj/item/clothing/head/beret
+
+/singleton/hierarchy/outfit/honeyship/doll
+	name = "KMS Tactical Outfit"
+	uniform = /obj/item/clothing/under/kms_utility_uniform
+	suit = /obj/item/clothing/suit/armor/pcarrier/kms
+	shoes = /obj/item/clothing/shoes/jackboots
+	gloves = /obj/item/clothing/gloves/kms
+	head = /obj/item/clothing/head/beret
