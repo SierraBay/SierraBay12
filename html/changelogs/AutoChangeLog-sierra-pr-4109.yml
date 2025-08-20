@@ -1,0 +1,4 @@
+author: Sbotkin
+changes:
+  - {tweak: Fleet undershirt sprites are up to their fullsized PT counterpart.}
+delete-after: true

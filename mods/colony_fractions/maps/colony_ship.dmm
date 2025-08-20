@@ -1994,12 +1994,7 @@
 /area/map_template/colony2/atmospherics)
 "JN" = (
 /obj/floor_decal/corner/paleblue/mono,
-/obj/structure/table/steel_reinforced,
-/obj/machinery/fabricator/micro,
-/obj/item/storage/box/microlathe_designs,
-/obj/item/stack/material/aluminium/ten,
-/obj/item/stack/material/glass/ten,
-/obj/item/stack/material/steel/ten,
+/obj/machinery/appliance/cooker/oven,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/colony2/commons)
 "Kg" = (
@@ -2023,9 +2018,14 @@
 	},
 /area/map_template/colony2/external)
 "Kz" = (
-/obj/structure/table/steel_reinforced,
 /obj/machinery/light,
 /obj/floor_decal/corner/paleblue/mono,
+/obj/structure/table/steel_reinforced,
+/obj/machinery/fabricator/micro,
+/obj/item/storage/box/microlathe_designs,
+/obj/item/stack/material/aluminium/ten,
+/obj/item/stack/material/glass/ten,
+/obj/item/stack/material/steel/ten,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/colony2/commons)
 "KA" = (
