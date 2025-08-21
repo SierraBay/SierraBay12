@@ -76,7 +76,6 @@
 /obj/item/mech_component/chassis/Destroy()
 	QDEL_NULL(cell)
 	QDEL_NULL(diagnostics)
-	QDEL_NULL(m_armour)
 	QDEL_NULL(air_supply)
 	QDEL_NULL(storage_compartment)
 	. = ..()
@@ -84,7 +83,6 @@
 /obj/item/mech_component/chassis/update_components()
 	diagnostics = locate() in src
 	cell =        locate() in src
-	m_armour =    locate() in src
 	air_supply =  locate() in src
 	storage_compartment = locate() in src
 	update_parts_images()
@@ -94,8 +92,8 @@
 		to_chat(user, SPAN_WARNING("It is missing a power cell."))
 	if(!diagnostics)
 		to_chat(user, SPAN_WARNING("It is missing a diagnostics unit."))
-	if(!m_armour)
-		to_chat(user, SPAN_WARNING("It is missing exosuit armour plating."))
+	if(!installed_armor)
+		to_chat(user, SPAN_WARNING("It is missing mech external armour plating."))
 
 /obj/item/mech_component/chassis/Initialize()
 	. = ..()
@@ -176,7 +174,7 @@
 
 
 /obj/item/mech_component/chassis/ready_to_install()
-	return (cell && diagnostics && m_armour)
+	return (cell && diagnostics)
 
 /obj/item/mech_component/chassis/prebuild()
 	diagnostics = new(src)
@@ -200,15 +198,6 @@
 			return TRUE
 		if(install_component(thing,user))
 			cell = thing
-			update_parts_images()
-			return TRUE
-
-	else if(istype(thing, /obj/item/robot_parts/robot_component/armour/exosuit))
-		if(m_armour)
-			to_chat(user, SPAN_WARNING("\The [src] already has armour installed."))
-			return TRUE
-		if(install_component(thing, user))
-			m_armour = thing
 			update_parts_images()
 			return TRUE
 
@@ -259,10 +248,6 @@
 		to_chat(user, SPAN_NOTICE(" Diagnostics Unit Integrity: <b>[round((((diagnostics.max_dam - diagnostics.total_dam) / diagnostics.max_dam)) * 100)]%</b>"))
 	else
 		to_chat(user, SPAN_WARNING(" Diagnostics Unit Missing or Non-functional."))
-	if(m_armour)
-		to_chat(user, SPAN_NOTICE(" Armor Integrity: <b>[round((((m_armour.max_dam - m_armour.total_dam) / m_armour.max_dam)) * 100)]%</b>"))
-	else
-		to_chat(user, SPAN_WARNING(" Armor Missing or Non-functional."))
 
 /obj/item/mech_component/chassis/update_parts_images()
 	var/list/parts_to_show = list()
@@ -272,6 +257,4 @@
 		parts_to_show += air_supply
 	if(diagnostics)
 		parts_to_show += diagnostics
-	if(m_armour)
-		parts_to_show += m_armour
 	internal_parts_list_images = make_item_radial_menu_choices(parts_to_show)

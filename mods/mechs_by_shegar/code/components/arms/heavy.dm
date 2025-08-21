@@ -7,18 +7,22 @@
 	action_delay = 20
 	power_use = 30
 	melee_damage = 40
-	max_repair = 75
-	max_hp = 250
-	min_damage = 150
-	repair_damage = 15
-	req_material = MATERIAL_PLASTEEL
+
+	max_hp = 150
+	min_damage = 100
+	max_repair = 40
+	repair_damage = 10
 	back_modificator_damage = 3
 	front_modificator_damage = 0.5
-	max_heat = 150
-	heat_cooling = 2
-	emp_heat_generation = 50
+
+	req_material = MATERIAL_PLASTEEL
+	//Тепло
+	max_heat = 400
+	heat_cooling = 4
+	emp_heat_generation = 150
 	heat_generation = 7.5
-	weight = 200
+
+	weight = 225
 
 /obj/item/mech_component/manipulators/heavy/right
 	side = RIGHT

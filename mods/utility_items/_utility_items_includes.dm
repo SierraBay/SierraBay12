@@ -4,6 +4,7 @@
 #include "_utility_items.dm"
 
 
+#include "code/armor.dm"
 #include "code/colony_random.dm"
 #include "code/multimeter.dm"
 #include "code/living_adv.dm"
@@ -53,4 +54,10 @@
 #include "code/adrenalin.dm"
 #include "code/drone_gas_analyser.dm"
 #include "code/belt.dm"
+#include "code/chopsticks.dm"
+#include "code/hairbrush.dm"
+#include "code/boozeomat.dm"
+#include "code/cards_ids.dm"
+#include "code/supermatter.dm"
+#include "code/stealthbundlerework.dm"
 #endif

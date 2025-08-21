@@ -14,7 +14,7 @@
 
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/engineering/senior_engineer
 	allowed_branches = list(/datum/mil_branch/employee)
-	allowed_ranks = list(/datum/mil_rank/civ/nt)
+	allowed_ranks = list(/datum/mil_rank/civ/nt, /datum/mil_rank/civ/acting, /datum/mil_rank/civ/probation_employee)
 
 	skill_points = 24
 	min_skill = list(   SKILL_COMPUTER     = SKILL_BASIC,
@@ -74,7 +74,7 @@
 
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/engineering/engineer
 	allowed_branches = list(/datum/mil_branch/employee, /datum/mil_branch/contractor)
-	allowed_ranks = list(/datum/mil_rank/civ/nt, /datum/mil_rank/civ/contractor)
+	allowed_ranks = list(/datum/mil_rank/civ/nt, /datum/mil_rank/civ/contractor, /datum/mil_rank/civ/probation_employee, /datum/mil_rank/civ/probation_contractor)
 
 	skill_points = 20
 	min_skill = list(   SKILL_COMPUTER     = SKILL_BASIC,
@@ -124,7 +124,7 @@
 
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/engineering/engineer/trainee
 	allowed_branches = list(/datum/mil_branch/employee, /datum/mil_branch/contractor)
-	allowed_ranks = list(/datum/mil_rank/civ/nt, /datum/mil_rank/civ/contractor)
+	allowed_ranks = list(/datum/mil_rank/civ/nt, /datum/mil_rank/civ/contractor, /datum/mil_rank/civ/probation_employee, /datum/mil_rank/civ/probation_contractor)
 
 	no_skill_buffs = TRUE
 	skill_points = 16
@@ -174,7 +174,7 @@
 
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/engineering/engineer/tcomms
 	allowed_branches = list(/datum/mil_branch/employee, /datum/mil_branch/contractor)
-	allowed_ranks = list(/datum/mil_rank/civ/nt, /datum/mil_rank/civ/contractor)
+	allowed_ranks = list(/datum/mil_rank/civ/nt, /datum/mil_rank/civ/contractor, /datum/mil_rank/civ/probation_employee, /datum/mil_rank/civ/probation_contractor)
 
 	skill_points = 12
 	min_skill = list(   SKILL_COMPUTER     = SKILL_TRAINED,

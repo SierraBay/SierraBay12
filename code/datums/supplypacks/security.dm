@@ -26,7 +26,7 @@
 	cost = 20
 	containertype = /obj/structure/closet/crate/secure
 	containername = "armor crate"
-	access = access_security
+	access = access_armory
 
 /singleton/hierarchy/supply_pack/security/tacticalarmor
 	name = "Armor - Tactical"
@@ -126,7 +126,7 @@
 	cost = 30
 	containertype = /obj/structure/closet/crate/secure/weapon
 	containername = "weapons crate"
-	access = access_security
+	access = access_armory
 
 /singleton/hierarchy/supply_pack/security/tasers
 	name = "Weapons - Disposable tasers"
@@ -134,7 +134,7 @@
 	cost = 30
 	containertype = /obj/structure/closet/crate/secure/weapon
 	containername = "weapons crate"
-	access = access_security
+	access = access_armory
 
 /singleton/hierarchy/supply_pack/security/egun
 	name = "Weapons - Energy sidearms"
@@ -177,7 +177,7 @@
 	cost = 30
 	containertype = /obj/structure/closet/crate/secure/weapon
 	containername = "flashbang crate"
-	access = access_security
+	access = access_armory
 
 /singleton/hierarchy/supply_pack/security/teargas
 	name = "Weapons - Tear gas grenades"
@@ -185,7 +185,7 @@
 	cost = 30
 	containertype = /obj/structure/closet/crate/secure/weapon
 	containername = "tear gas grenades crate"
-	access = access_security
+	access = access_armory
 
 /singleton/hierarchy/supply_pack/security/shotgunammo
 	name = "Ammunition - Lethal shells"
@@ -228,7 +228,7 @@
 	cost = 30
 	containertype = /obj/structure/closet/crate/secure/weapon
 	containername = "SMG practice ammunition crate"
-	access = access_security
+	access = access_armory
 
 /singleton/hierarchy/supply_pack/security/bullpupammo
 	name = "Ammunition - heavy bullpup rifle"
@@ -245,7 +245,7 @@
 	cost = 30
 	containertype = /obj/structure/closet/crate/secure/weapon
 	containername = "heavy bullpup practice ammunition crate"
-	access = access_security
+	access = access_armory
 
 /singleton/hierarchy/supply_pack/security/lightbullpupammo
 	name = "Ammunition - light bullpup rifle"
@@ -262,7 +262,7 @@
 	cost = 20
 	containertype = /obj/structure/closet/crate/secure/weapon
 	containername = "light bullpup practice ammunition crate"
-	access = access_security
+	access = access_armory
 
 /singleton/hierarchy/supply_pack/security/forensics //Not access-restricted so PIs can use it.
 	name = "Forensics - Auxiliary tools"
@@ -300,7 +300,7 @@
 	cost = 20
 	containertype = /obj/structure/closet/crate/secure/large
 	containername = "security barrier crate"
-	access = access_security
+	access = access_brig
 
 /singleton/hierarchy/supply_pack/security/securitybarriers
 	name = "Equipment - Wall shield Generators"
@@ -320,7 +320,7 @@
 	cost = 30
 	containertype = /obj/structure/closet/crate/secure
 	containername = "security biohazard gear crate"
-	access = access_security
+	access = access_brig
 
 /singleton/hierarchy/supply_pack/security/voidsuit_security
 	name = "EVA - Security (armored) voidsuit"

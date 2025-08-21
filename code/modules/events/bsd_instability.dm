@@ -109,7 +109,7 @@
 				next_zap = world.time + rand(5, 20) SECONDS
 	if (activeFor != (endWhen - 30))
 		return
-	if (flush_running)
+	if (flush_running || severity <= EVENT_LEVEL_MODERATE)
 		return
 	flush_running = TRUE
 	command_announcement.Announce(

@@ -9,24 +9,30 @@
 	move_delay = 4
 	turn_delay = 1
 	power_use = 12.5
+	//ХП, меньше лёгких
 	max_hp = 50
-	min_damage = 50
+	min_damage = 20
 	max_repair = 30
-	repair_damage = 25
+	repair_damage = 30
+
 	bump_type = MEDIUM_BUMP
 	can_strafe = TRUE
 	front_modificator_damage = 1
-	max_heat = 112.5
-	heat_cooling = 4
-	emp_heat_generation = 75
-	heat_generation = 2
-	//Паучьи ноги не страдают от ускорений, их скорость статична
-	max_speed = 24
-	min_speed = 24
+
+	//Тепло
+	max_heat = 100
+	heat_cooling = 6
+	emp_heat_generation = 110
+	heat_generation = 4
+
+	max_speed = 26
+	min_speed = 23
 	acceleration = 0.5
 	turn_slowdown = 0.75
 	turn_diogonal_slowdown = 0.5
+
 	weight = 150
+	
 	should_have_doubled_owner = TRUE
 	doubled_owner_type = /obj/item/mech_component/doubled_legs/spider
 

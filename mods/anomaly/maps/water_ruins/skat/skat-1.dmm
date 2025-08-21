@@ -1344,7 +1344,7 @@
 /turf/simulated/floor/exoplanet/titan_water/minimal,
 /area/map_template/anomaly/skat)
 "zI" = (
-/obj/item/reagent_containers/food/drinks/glass2/coffeecup/custom,
+/obj/item/reagent_containers/food/drinks/glass2/coffeecup,
 /turf/simulated/floor/exoplanet/titan_water/minimal,
 /area/map_template/anomaly/skat)
 "zQ" = (

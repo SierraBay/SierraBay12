@@ -36,7 +36,7 @@
 	..()
 	remove_cloaking_source(species)
 
-	if (istype(H.gloves, /obj/item/clothing/gloves/boxing/hologlove))
+	if (istype(H.gloves, /obj/item/clothing/gloves/boxing) && H.a_intent == I_HURT)
 		H.do_attack_animation(src)
 		var/damage = rand(0, 9)
 		var/hit_zone = resolve_hand_attack(damage, H, H.zone_sel.selecting)
