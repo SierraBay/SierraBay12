@@ -89,7 +89,7 @@
 
 /datum/mod_trait/all/asthma
 	name = "Asthma"
-	description = "Causes periodic suffocation episodes depending on pulse, stamina, and timed triggers."
+	description = "Нагрузки будут вызывать у вас нехватку воздуха. Дексалин может помочь с этим."
 
 /datum/mod_trait/all/asthma/apply_trait(mob/living/carbon/human/H)
 	H.add_asthma()
@@ -175,14 +175,14 @@
 				livedata_check_active = FALSE
 				livedata_window_time = world.time + rand(15 MINUTES, 30 MINUTES)
 			else
-				livedata_next_poll_time = world.time + 5 SECONDS
+				livedata_next_poll_time = world.time + 3 SECONDS
 		else
-			livedata_next_poll_time = world.time + 5 SECONDS
+			livedata_next_poll_time = world.time + 3 SECONDS
 
 	if(!livedata_check_active && world.time >= livedata_window_time)
 		livedata_check_active = TRUE
 		stamina_trigger_threshold = rand(20, 50)
-		livedata_next_poll_time = world.time + 5 SECONDS
+		livedata_next_poll_time = world.time + 3 SECONDS
 
 	var/next_wake = max(1, min(
 		attack_active ? attack_next_tick_time : next_random_attack_time,
@@ -228,7 +228,7 @@
 	if(!pain_active && world.time >= next_pain)
 		pain_active = TRUE
 		pain_end_time = world.time + rand(30 SECONDS, 60 SECONDS)
-		to_chat(owner, SPAN_WARNING("Резкая боль пронзает вашу голову!"))
+		to_chat(owner, SPAN_WARNING("Резкая боль пронзает голову!"))
 
 	if(pain_active)
 		owner.apply_damage(rand(5, 10), DAMAGE_PAIN, BP_HEAD)
