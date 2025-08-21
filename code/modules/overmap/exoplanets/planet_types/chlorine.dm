@@ -22,14 +22,15 @@
 
 /obj/overmap/visitable/sector/exoplanet/chlorine/generate_atmosphere()
 	..()
-	var/chlor_moles = (rand(1, 6) / 10) * (atmosphere.total_moles)
-	atmosphere = atmosphere.remove(chlor_moles )
-	atmosphere.adjust_gas(GAS_CHLORINE, chlor_moles )
+	var/chlor_moles = (rand(1, 6) / 10) * (exterior_atmosphere.total_moles)
+	exterior_atmosphere = exterior_atmosphere.remove(chlor_moles )
+	exterior_atmosphere.adjust_gas(GAS_CHLORINE, chlor_moles )
 
 	var/singleton/species/H = GLOB.species_by_name[SPECIES_HUMAN]
 	var/generator/new_temp = generator("num", H.cold_level_1 + 40, H.heat_level_1 + 10, UNIFORM_RAND)
-	atmosphere.temperature = new_temp.Rand()
-	atmosphere.update_values()
+	exterior_atmosphere.temperature = new_temp.Rand()
+	exterior_atmosphere.update_values()
+	exterior_atmosphere.check_tile_graphic()
 
 /datum/random_map/noise/exoplanet/chlorine
 	descriptor = "chlorine exoplanet"

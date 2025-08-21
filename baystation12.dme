@@ -995,6 +995,7 @@
 #include "code\game\objects\effects\decals\posters\bs12.dm"
 #include "code\game\objects\effects\decals\posters\posters.dm"
 #include "code\game\objects\effects\fire\fire.dm"
+#include "code\game\objects\effects\map\exterior_marker.dm"
 #include "code\game\objects\effects\map\map_effects.dm"
 #include "code\game\objects\effects\map\portal.dm"
 #include "code\game\objects\effects\particles\particles.dm"
