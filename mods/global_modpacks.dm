@@ -5,6 +5,7 @@
 #include "client_verbs/_client_verbs.dme"
 #include "colony_fractions/_colony_types.dme"
 // #include "don_loadout/_don_loadout.dme" // Не открывать до Рождества
+#include "_events\battlefield_event\_battlefield_event_includes.dm" // Одноразовый ивент. Не думаю, что стоит оставлять, надо будет удалить после проведения
 #include "eris_announcer/_eris_announcer.dme"
 #include "emote_panel/_emote_panel.dme"
 #include "ex666_ecosystem/_ex666_ecosystem.dme"
