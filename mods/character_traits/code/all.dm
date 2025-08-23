@@ -92,4 +92,8 @@
 	description = "Нагрузки будут вызывать у вас нехватку воздуха. Дексалин может помочь с этим."
 
 /datum/mod_trait/all/asthma/apply_trait(mob/living/carbon/human/H)
+	if(H.species && H.species.name == SPECIES_FBP)
+		return
+	if(H.client?.prefs?.organ_data && (H.client.prefs.organ_data[BP_CHEST] == "cyborg"))
+		return
 	H.add_asthma()
