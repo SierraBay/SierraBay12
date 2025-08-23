@@ -7,6 +7,7 @@
 #include "colony_fractions/_colony_types_includes.dm"
 // #include "don_loadout/_don_loadout_includes.dm" // Не открывать до Рождества
 #include "220_cult/_220_cult_includes.dm"
+#include "_events\battlefield_event\_battlefield_event_includes.dm" // Одноразовый ивент. Скорее всего нужно удалить после отыгровки
 #include "eris_announcer/_eris_announcer_includes.dm"
 #include "emote_panel/_emote_panel_includes.dm"
 #include "ex666_ecosystem/_ex666_ecosystem_includes.dm"
