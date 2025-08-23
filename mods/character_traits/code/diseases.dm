@@ -37,7 +37,7 @@
 /datum/asthma_controller/New(mob/living/carbon/human/H)
 	..()
 	owner = H
-	next_random_attack_time = world.time + rand(30 MINUTES, 60 MINUTES)
+	next_random_attack_time = world.time + rand(60 MINUTES, 80 MINUTES)
 	livedata_window_time = world.time + rand(15 MINUTES, 30 MINUTES)
 
 /datum/asthma_controller/proc/Start()
@@ -63,7 +63,7 @@
 
 	if(!attack_active && world.time >= next_random_attack_time)
 		StartAttack("Что-то давит в горле. Дышать тяжело...")
-		next_random_attack_time = world.time + rand(15 MINUTES, 30 MINUTES)
+		next_random_attack_time = world.time + rand(60 MINUTES, 80 MINUTES)
 
 	if(livedata_check_active && world.time >= livedata_next_poll_time)
 		var/pulse_bpm = owner.get_pulse_as_number()
@@ -102,7 +102,6 @@
 	to_chat(owner, SPAN_DANGER("[reason]"))
 	livedata_check_active = FALSE
 
-
 // МИГРЕНИ
 /datum/headache_controller
 	var/mob/living/carbon/human/owner
@@ -139,11 +138,11 @@
 		if(world.time >= pain_end_time)
 			pain_active = FALSE
 			residual_active = TRUE
-			residual_end_time = world.time + rand(3 MINUTES, 10 MINUTES)
+			residual_end_time = world.time + rand(3 MINUTES, 6 MINUTES)
 			next_pain = world.time + rand(20 MINUTES, 60 MINUTES)
 
 	if(residual_active)
-		owner.apply_damage(rand(2, 5), DAMAGE_PAIN, BP_HEAD)
+		owner.apply_damage(rand(2, 4), DAMAGE_PAIN, BP_HEAD)
 		if(world.time >= residual_end_time)
 			residual_active = FALSE
 
