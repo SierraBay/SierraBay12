@@ -828,7 +828,7 @@
 	dir = 4
 	},
 /turf/unsimulated/beach/sand,
-/area/battlefield/surface)
+/area/battlefield/ship)
 "ji" = (
 /obj/floor_decal/corner/darkblue/border{
 	dir = 9
@@ -897,12 +897,6 @@
 /obj/structure/iv_stand,
 /turf/simulated/floor/tiled,
 /area/battlefield/camp)
-"nm" = (
-/obj/machinery/floodlight{
-	dir = 8
-	},
-/turf/simulated/floor/asteroid,
-/area/battlefield/surface)
 "nq" = (
 /obj/floor_decal/corner/lightgrey/border{
 	dir = 10
@@ -1777,7 +1771,7 @@
 	dir = 8
 	},
 /turf/unsimulated/beach/sand,
-/area/battlefield/surface)
+/area/battlefield/ship)
 "vA" = (
 /turf/simulated/floor/tiled/techfloor,
 /area/battlefield/ship)
@@ -4587,12 +4581,6 @@
 /obj/structure/plasticflaps,
 /turf/simulated/floor/asteroid,
 /area/battlefield/surface)
-"Pv" = (
-/obj/machinery/floodlight{
-	dir = 4
-	},
-/turf/simulated/floor/steel_dirty,
-/area/battlefield/surface)
 "PB" = (
 /obj/floor_decal/beach/corner{
 	dir = 1
@@ -4717,7 +4705,7 @@
 "Qa" = (
 /obj/structure/shuttle/engine/propulsion,
 /turf/unsimulated/beach/sand,
-/area/battlefield/surface)
+/area/battlefield/ship)
 "Qb" = (
 /obj/floor_decal/beach{
 	dir = 4
@@ -6240,6 +6228,7 @@
 /obj/floor_decal/beach{
 	dir = 8
 	},
+/obj/structure/aurora/smes,
 /turf/simulated/floor/tiled/techfloor,
 /area/battlefield/surface)
 "ZT" = (
@@ -11990,7 +11979,7 @@ Qu
 Qu
 Le
 Le
-nm
+Qu
 xX
 Qu
 sR
@@ -12203,7 +12192,7 @@ Qu
 uZ
 uZ
 uZ
-Pv
+wq
 wq
 qk
 Hh
