@@ -1,9 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "ac" = (
 /obj/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/simple/hidden/universal{
-	dir = 1
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/universal,
 /obj/floor_decal/beach{
 	dir = 8
 	},
@@ -30,9 +28,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 1
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/floor_decal/beach/corner{
 	dir = 4
 	},
@@ -72,7 +68,7 @@
 	dir = 1
 	},
 /obj/item/ammo_casing/shell,
-/turf/unsimulated/floor/steeldirty,
+/turf/simulated/floor/steel_dirty,
 /area/battlefield/surface)
 "aP" = (
 /obj/item/storage/firstaid/empty,
@@ -117,9 +113,7 @@
 /area/battlefield/surface)
 "bl" = (
 /obj/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/simple/hidden{
-	dir = 4
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden,
 /turf/simulated/floor,
 /area/battlefield/ship)
 "br" = (
@@ -135,9 +129,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/battlefield/ship)
 "bs" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 1
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 8;
@@ -156,7 +148,7 @@
 /area/battlefield/surface)
 "bx" = (
 /obj/floor_decal/iccglogo,
-/turf/space,
+/turf/simulated/floor/tiled/dark,
 /area/battlefield/ship)
 "by" = (
 /obj/item/device/radio/intercom/broadcasting{
@@ -219,7 +211,7 @@
 /turf/simulated/floor,
 /area/battlefield/ship)
 "bR" = (
-/turf/simulated/wall/iron,
+/turf/simulated/wall/prepainted,
 /area/battlefield/energy)
 "bS" = (
 /obj/structure/cable/yellow{
@@ -308,9 +300,7 @@
 /obj/floor_decal/corner/brown/bordercorner{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 1
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/tiled/dark,
 /area/battlefield/ship)
 "cp" = (
@@ -381,7 +371,7 @@
 /area/battlefield/camp)
 "cH" = (
 /obj/machinery/portable_atmospherics/hydroponics/soil/invisible,
-/turf/simulated/wall/iron,
+/turf/simulated/wall/prepainted,
 /area/battlefield/surface)
 "cI" = (
 /obj/floor_decal/corner/research/bordercorner{
@@ -476,7 +466,7 @@
 	icon_state = "1-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 8
+	dir = 4
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/battlefield/ship)
@@ -602,7 +592,7 @@
 /turf/simulated/mineral,
 /area/battlefield/surface)
 "eJ" = (
-/turf/simulated/wall/iron,
+/turf/simulated/wall/prepainted,
 /area/battlefield/camp)
 "eK" = (
 /obj/decal/cleanable/dirt,
@@ -611,9 +601,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 1
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled/dark,
 /area/battlefield/ship)
@@ -629,10 +617,10 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 8
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 8
+	dir = 4
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -869,7 +857,7 @@
 /area/battlefield/surface)
 "lk" = (
 /obj/floor_decal/iccglogo/bottom_center,
-/turf/space,
+/turf/simulated/floor/tiled/dark,
 /area/battlefield/ship)
 "lB" = (
 /obj/machinery/constructable_frame/machine_frame{
@@ -948,9 +936,7 @@
 /obj/floor_decal/beach{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden{
-	dir = 1
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden,
 /turf/simulated/floor/tiled/dark,
 /area/battlefield/ship)
 "oF" = (
@@ -1178,7 +1164,7 @@
 /obj/decal/cleanable/dirt,
 /obj/floor_decal/corner/darkblue/bordercorner,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 8
+	dir = 4
 	},
 /turf/simulated/floor/tiled/dark,
 /area/battlefield/ship)
@@ -1577,9 +1563,7 @@
 /obj/floor_decal/beach{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 1
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/cable{
 	d1 = 1;
@@ -1589,9 +1573,6 @@
 /turf/simulated/floor/tiled/dark,
 /area/battlefield/ship)
 "ud" = (
-/obj/machinery/door/airlock/terran{
-	dir = 4
-	},
 /obj/floor_decal/corner/red/bordercee{
 	dir = 8
 	},
@@ -1601,10 +1582,13 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 8
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 8
+	dir = 4
+	},
+/obj/machinery/door/airlock/terran{
+	dir = 4
 	},
 /turf/simulated/floor/tiled/dark,
 /area/battlefield/ship)
@@ -1770,19 +1754,14 @@
 /turf/simulated/floor/tiled/dark,
 /area/battlefield/ship)
 "vt" = (
-/obj/machinery/embedded_controller/radio/airlock/docking_port{
-	cycle_to_external_air = 1;
-	frequency = 1331;
-	id_tag = "calypso_shuttle";
-	req_access = list("ACCESS_EXPEDITION_SHUTTLE");
-	tag_exterior_sensor = "calypso_shuttle_exterior_sensor";
-	pixel_y = 24
-	},
 /obj/floor_decal/industrial/warning/full,
 /obj/machinery/atmospherics/unary/vent_pump/high_volume/shuttle{
 	id_tag = "calypso_shuttle_pump_out_internal"
 	},
 /obj/structure/catwalk,
+/obj/machinery/embedded_controller/radio/airlock/access_controller{
+	pixel_y = 21
+	},
 /turf/unsimulated/floor/reinforced,
 /area/battlefield/ship)
 "vx" = (
@@ -1899,7 +1878,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 8
+	dir = 4
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/battlefield/ship)
@@ -1920,9 +1899,7 @@
 /area/battlefield/surface)
 "wk" = (
 /obj/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 1
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/tiled/dark,
 /area/battlefield/ship)
 "wq" = (
@@ -1965,7 +1942,7 @@
 /obj/floor_decal/beach{
 	dir = 1
 	},
-/turf/unsimulated/floor/steeldirty,
+/turf/simulated/floor/steel_dirty,
 /area/battlefield/surface)
 "wH" = (
 /obj/floor_decal/beach{
@@ -2062,9 +2039,7 @@
 /obj/floor_decal/beach{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden{
-	dir = 1
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden,
 /obj/floor_decal/beach,
 /turf/simulated/floor/tiled/dark,
 /area/battlefield/ship)
@@ -2302,7 +2277,7 @@
 /area/battlefield/energy)
 "zh" = (
 /obj/floor_decal/beach,
-/turf/unsimulated/floor/steeldirty,
+/turf/simulated/floor/steel_dirty,
 /area/battlefield/surface)
 "zn" = (
 /obj/decal/cleanable/dirt,
@@ -2412,7 +2387,7 @@
 /area/battlefield/ship)
 "zZ" = (
 /obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 8
+	dir = 4
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/battlefield/ship)
@@ -2671,9 +2646,7 @@
 /obj/floor_decal/beach{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden{
-	dir = 1
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden,
 /turf/simulated/floor/tiled/dark,
 /area/battlefield/ship)
 "BS" = (
@@ -2749,14 +2722,7 @@
 /turf/simulated/floor/steel_dirty,
 /area/battlefield/surface)
 "CA" = (
-/obj/floor_decal/beach{
-	dir = 8
-	},
-/obj/floor_decal/beach{
-	dir = 4
-	},
-/obj/floor_decal/beach,
-/turf/unsimulated/floor/steeldirty,
+/turf/simulated/wall/prepainted,
 /area/battlefield/surface)
 "CB" = (
 /obj/floor_decal/asteroid{
@@ -2845,9 +2811,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 1
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/scrubbers,
 /turf/simulated/floor/tiled/dark,
 /area/battlefield/ship)
@@ -2905,9 +2869,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/battlefield/ship)
 "DC" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 1
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
 	},
@@ -2947,7 +2909,7 @@
 "DT" = (
 /obj/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 8
+	dir = 4
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/battlefield/ship)
@@ -2997,13 +2959,6 @@
 	},
 /turf/simulated/floor,
 /area/battlefield/surface)
-"Eo" = (
-/obj/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/simple/hidden{
-	dir = 1
-	},
-/turf/simulated/floor/tiled/dark,
-/area/battlefield/ship)
 "Eq" = (
 /obj/decal/cleanable/dirt,
 /obj/structure/cable{
@@ -3052,12 +3007,12 @@
 /area/battlefield/surface)
 "Ey" = (
 /obj/structure/sign/bluecross_2,
-/turf/simulated/wall/iron,
+/turf/simulated/wall/prepainted,
 /area/battlefield/camp)
 "Ez" = (
 /obj/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 8
+	dir = 4
 	},
 /turf/simulated/floor/tiled/dark,
 /area/battlefield/ship)
@@ -3117,13 +3072,13 @@
 /turf/unsimulated/beach/sand,
 /area/battlefield/surface)
 "Fb" = (
-/obj/machinery/vending/medical{
-	dir = 8
-	},
 /obj/floor_decal/corner/blue/border{
 	dir = 4
 	},
 /obj/floor_decal/beach/corner{
+	dir = 8
+	},
+/obj/machinery/vending/medical/sierra{
 	dir = 8
 	},
 /turf/simulated/floor/tiled/white,
@@ -3188,9 +3143,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 1
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled/dark,
 /area/battlefield/ship)
@@ -3378,9 +3331,7 @@
 	dir = 8
 	},
 /obj/floor_decal/beach,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 1
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -3477,9 +3428,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 1
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled/dark,
 /area/battlefield/ship)
@@ -3536,7 +3485,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/wall/iron,
+/turf/simulated/wall/prepainted,
 /area/battlefield/energy)
 "Ig" = (
 /obj/machinery/door/airlock/sol,
@@ -3557,7 +3506,7 @@
 /obj/item/ammo_casing/shell{
 	dir = 4
 	},
-/turf/unsimulated/floor/steeldirty,
+/turf/simulated/floor/steel_dirty,
 /area/battlefield/surface)
 "Ik" = (
 /obj/floor_decal/asteroid{
@@ -3662,10 +3611,8 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/tiled/dark,
 /area/battlefield/ship)
 "ID" = (
@@ -3689,7 +3636,7 @@
 /obj/floor_decal/beach{
 	dir = 1
 	},
-/turf/unsimulated/floor/steeldirty,
+/turf/simulated/floor/steel_dirty,
 /area/battlefield/surface)
 "IN" = (
 /obj/floor_decal/asteroid{
@@ -3736,7 +3683,7 @@
 /area/battlefield/energy)
 "Jb" = (
 /obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 8
+	dir = 4
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/battlefield/ship)
@@ -3770,7 +3717,7 @@
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 8
+	dir = 4
 	},
 /turf/simulated/floor/tiled/dark,
 /area/battlefield/ship)
@@ -3782,14 +3729,7 @@
 /obj/floor_decal/beach{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 1
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -3900,10 +3840,10 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 8
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 8
+	dir = 4
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -4093,15 +4033,18 @@
 /area/battlefield/ship)
 "LK" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 8
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 8
+	dir = 4
 	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/terran{
+	dir = 4
 	},
 /turf/simulated/floor/tiled/dark,
 /area/battlefield/ship)
@@ -4193,9 +4136,7 @@
 "Mz" = (
 /obj/decal/cleanable/dirt,
 /obj/floor_decal/beach/corner,
-/obj/machinery/atmospherics/pipe/simple/hidden{
-	dir = 1
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden,
 /turf/simulated/floor/tiled/dark,
 /area/battlefield/ship)
 "MA" = (
@@ -4243,14 +4184,8 @@
 /turf/simulated/floor/tiled,
 /area/battlefield/energy)
 "MG" = (
-/obj/structure/wall_frame/titanium,
-/obj/structure/grille,
-/obj/structure/window/reinforced/full,
-/obj/machinery/door/blast/regular{
-	dir = 2
-	},
-/turf/space,
-/area/battlefield/ship)
+/turf/simulated/wall,
+/area/battlefield/surface)
 "MH" = (
 /obj/machinery/power/apc{
 	dir = 8;
@@ -4322,9 +4257,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 1
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled/dark,
 /area/battlefield/ship)
@@ -4495,9 +4428,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 1
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled/dark,
 /area/battlefield/ship)
@@ -4636,7 +4567,7 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 8
+	dir = 4
 	},
 /turf/simulated/floor/tiled/dark,
 /area/battlefield/ship)
@@ -4661,7 +4592,7 @@
 "Ps" = (
 /obj/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 8
+	dir = 4
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/battlefield/ship)
@@ -4689,7 +4620,7 @@
 /obj/floor_decal/beach/corner{
 	dir = 4
 	},
-/turf/unsimulated/floor/steeldirty,
+/turf/simulated/floor/steel_dirty,
 /area/battlefield/surface)
 "PG" = (
 /obj/floor_decal/asteroid{
@@ -4780,10 +4711,10 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 8
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 8
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/battlefield/ship)
@@ -4813,9 +4744,7 @@
 /obj/floor_decal/beach{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden{
-	dir = 1
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden,
 /turf/simulated/floor/tiled/dark,
 /area/battlefield/ship)
 "Qh" = (
@@ -4832,10 +4761,10 @@
 	icon_state = "1-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 8
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 8
+	dir = 4
 	},
 /turf/simulated/floor/tiled/dark,
 /area/battlefield/ship)
@@ -4936,11 +4865,10 @@
 /turf/simulated/floor/tiled,
 /area/battlefield/energy)
 "QV" = (
-/obj/floor_decal/beach{
-	dir = 8
+/obj/structure/barrier{
+	dir = 4
 	},
-/obj/floor_decal/beach,
-/turf/unsimulated/floor/steeldirty,
+/turf/simulated/wall/prepainted,
 /area/battlefield/surface)
 "Ra" = (
 /obj/floor_decal/corner/beige/diagonal{
@@ -4973,7 +4901,7 @@
 /obj/floor_decal/beach/corner{
 	dir = 4
 	},
-/turf/unsimulated/floor/steeldirty,
+/turf/simulated/floor/steel_dirty,
 /area/battlefield/surface)
 "Ri" = (
 /obj/floor_decal/beach/corner{
@@ -4984,17 +4912,13 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 1
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled/dark,
 /area/battlefield/ship)
 "Rj" = (
 /obj/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 1
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/tiled/white,
 /area/battlefield/ship)
 "Rl" = (
@@ -5066,7 +4990,7 @@
 /obj/floor_decal/beach/corner{
 	dir = 4
 	},
-/turf/unsimulated/floor/steeldirty,
+/turf/simulated/floor/steel_dirty,
 /area/battlefield/surface)
 "RC" = (
 /obj/decal/cleanable/dirt,
@@ -5079,10 +5003,10 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 8
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 8
+	dir = 4
 	},
 /turf/simulated/floor/tiled/dark,
 /area/battlefield/ship)
@@ -5191,19 +5115,17 @@
 /area/battlefield/surface)
 "Sc" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 8
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 8
+	dir = 4
 	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden{
-	dir = 1
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden,
 /turf/simulated/floor/tiled/dark,
 /area/battlefield/ship)
 "Sf" = (
@@ -5233,17 +5155,12 @@
 	dir = 8
 	},
 /obj/floor_decal/beach,
-/turf/unsimulated/floor/steeldirty,
+/turf/simulated/floor/steel_dirty,
 /area/battlefield/surface)
 "Sm" = (
 /obj/machinery/power/tracker,
 /obj/structure/cable/yellow,
 /obj/floor_decal/solarpanel,
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /turf/simulated/floor/exoplanet/desert,
 /area/battlefield/energy)
 "Sn" = (
@@ -5287,10 +5204,10 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 8
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 8
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden,
 /turf/simulated/floor/tiled/dark,
@@ -5392,11 +5309,11 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 8
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 8
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
 	},
 /turf/simulated/floor/tiled/dark,
 /area/battlefield/ship)
@@ -5532,9 +5449,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 1
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled/dark,
 /area/battlefield/ship)
@@ -5688,7 +5603,7 @@
 /obj/floor_decal/beach{
 	dir = 8
 	},
-/turf/unsimulated/floor/steeldirty,
+/turf/simulated/floor/steel_dirty,
 /area/battlefield/surface)
 "Vo" = (
 /obj/structure/mine,
@@ -5700,7 +5615,7 @@
 	dir = 8
 	},
 /obj/floor_decal/beach,
-/turf/unsimulated/floor/steeldirty,
+/turf/simulated/floor/steel_dirty,
 /area/battlefield/surface)
 "Vz" = (
 /obj/structure/roller_bed,
@@ -5709,7 +5624,7 @@
 /area/battlefield/surface)
 "VF" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 8
+	dir = 4
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/battlefield/ship)
@@ -5842,7 +5757,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 8
+	dir = 4
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/battlefield/ship)
@@ -5945,9 +5860,7 @@
 /obj/floor_decal/beach{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 1
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/cable{
 	d1 = 1;
@@ -6017,7 +5930,7 @@
 "XE" = (
 /obj/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 8
+	dir = 4
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/battlefield/ship)
@@ -6053,10 +5966,10 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 8
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 8
+	dir = 4
 	},
 /turf/simulated/floor/tiled/dark,
 /area/battlefield/ship)
@@ -6111,7 +6024,7 @@
 /obj/item/ammo_casing/shell{
 	dir = 6
 	},
-/turf/unsimulated/floor/steeldirty,
+/turf/simulated/floor/steel_dirty,
 /area/battlefield/surface)
 "Yo" = (
 /obj/item/clothing/head/iccgn/service{
@@ -6148,9 +6061,7 @@
 /area/battlefield/surface)
 "Yu" = (
 /obj/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/simple/hidden/universal{
-	dir = 1
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/universal,
 /turf/simulated/floor/tiled/dark,
 /area/battlefield/ship)
 "Yy" = (
@@ -6204,9 +6115,7 @@
 /turf/simulated/floor/asteroid,
 /area/battlefield/surface)
 "YN" = (
-/obj/machinery/atmospherics/pipe/simple/hidden{
-	dir = 1
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden,
 /turf/simulated/floor/tiled/dark,
 /area/battlefield/ship)
 "YO" = (
@@ -9386,7 +9295,7 @@ Xs
 Xs
 Ou
 UG
-qF
+MG
 BY
 Xs
 Xs
@@ -9579,10 +9488,10 @@ Xs
 Xs
 Xs
 Xs
-qF
+CA
 Nz
 Nz
-qF
+CA
 Xs
 Xs
 Xs
@@ -10192,20 +10101,20 @@ di
 di
 di
 di
-qF
-qF
+CA
+CA
 Xs
 ed
-qF
+CA
 Xs
 Xs
 Xs
 Xs
 Xs
-qF
+CA
+QV
 Nz
-Nz
-qF
+CA
 Xs
 Xs
 Xs
@@ -10299,7 +10208,7 @@ Ii
 Xs
 Xs
 zh
-qF
+CA
 Xs
 Xs
 Xs
@@ -10401,7 +10310,7 @@ IM
 Xs
 Xs
 zh
-qF
+CA
 Xs
 Xs
 Xs
@@ -10503,7 +10412,7 @@ IM
 UH
 Xs
 zh
-qF
+CA
 Xs
 Xs
 Xs
@@ -10605,7 +10514,7 @@ IM
 Xs
 Xs
 zh
-qF
+CA
 Xs
 Xs
 Xs
@@ -10707,7 +10616,7 @@ aL
 Xs
 AE
 Ym
-qF
+CA
 Xs
 Xs
 Xs
@@ -11007,7 +10916,7 @@ uZ
 Xs
 Xs
 Xs
-qF
+CA
 UF
 Xs
 Xs
@@ -11112,7 +11021,7 @@ Xs
 Xs
 Xs
 Xs
-qF
+CA
 Xs
 Xs
 Xs
@@ -13536,7 +13445,7 @@ Xs
 Xs
 UF
 Xs
-CA
+ZO
 Rh
 wG
 ER
@@ -13639,7 +13548,7 @@ UF
 UF
 Xs
 Xs
-QV
+wL
 PF
 wG
 ER
@@ -15045,7 +14954,7 @@ WD
 Xs
 Xs
 AE
-MG
+sr
 ZZ
 RQ
 OG
@@ -15060,7 +14969,7 @@ ty
 XY
 vn
 Yu
-Eo
+SW
 YN
 YN
 Mz
@@ -15147,7 +15056,7 @@ Ck
 Xs
 Xs
 MI
-MG
+sr
 um
 Ef
 bx
