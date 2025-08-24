@@ -21,8 +21,3 @@
 	display_name = "zippo (decorated)"
 	path = /obj/item/flame/lighter/zippo/fancy
 	flags = GEAR_HAS_TYPE_SELECTION
-
-/datum/gear/dexalin_pen
-	display_name = "Asthma Autoinjector"
-	path = /obj/item/reagent_containers/hypospray/autoinjector/pouch_auto/dexalin
-	cost = 1
