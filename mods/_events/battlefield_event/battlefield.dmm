@@ -369,10 +369,6 @@
 	},
 /turf/simulated/floor/tiled,
 /area/battlefield/camp)
-"cH" = (
-/obj/machinery/portable_atmospherics/hydroponics/soil/invisible,
-/turf/simulated/wall/prepainted,
-/area/battlefield/surface)
 "cI" = (
 /obj/floor_decal/corner/research/bordercorner{
 	dir = 1
@@ -423,7 +419,7 @@
 	desc = "The barrel of a low-charge system provides the ability to fire a limited number of pre-loaded projectiles."
 	},
 /turf/simulated/floor,
-/area/space)
+/area/battlefield/surface)
 "dg" = (
 /obj/structure/pit/closed/grave,
 /obj/structure/gravemarker/cross{
@@ -518,10 +514,6 @@
 /turf/simulated/floor/exoplanet/desert,
 /area/battlefield/surface)
 "dZ" = (
-/obj/item/mech_equipment/camera{
-	pixel_x = 14;
-	pixel_y = -20
-	},
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/exoplanet/desert,
 /area/battlefield/surface)
@@ -669,7 +661,6 @@
 /turf/unsimulated/floor/reinforced,
 /area/battlefield/ship)
 "ff" = (
-/obj/machinery/portable_atmospherics/hydroponics/soil/invisible,
 /obj/decal/cleanable/dirt,
 /obj/floor_decal/beach{
 	dir = 1
@@ -897,6 +888,12 @@
 /obj/structure/iv_stand,
 /turf/simulated/floor/tiled,
 /area/battlefield/camp)
+"nm" = (
+/obj/machinery/floodlight{
+	dir = 8
+	},
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
 "nq" = (
 /obj/floor_decal/corner/lightgrey/border{
 	dir = 10
@@ -1287,10 +1284,6 @@
 	dir = 8
 	},
 /turf/unsimulated/beach/sand,
-/area/battlefield/surface)
-"sc" = (
-/obj/machinery/portable_atmospherics/hydroponics/soil/invisible,
-/turf/simulated/mineral,
 /area/battlefield/surface)
 "sf" = (
 /obj/structure/cable/yellow{
@@ -2809,9 +2802,6 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/battlefield/ship)
-"Di" = (
-/turf/simulated/floor,
-/area/space)
 "Dq" = (
 /obj/floor_decal/corner/brown/border,
 /obj/decal/cleanable/dirt,
@@ -4581,6 +4571,12 @@
 /obj/structure/plasticflaps,
 /turf/simulated/floor/asteroid,
 /area/battlefield/surface)
+"Pv" = (
+/obj/machinery/floodlight{
+	dir = 4
+	},
+/turf/simulated/floor/steel_dirty,
+/area/battlefield/surface)
 "PB" = (
 /obj/floor_decal/beach/corner{
 	dir = 1
@@ -5882,11 +5878,6 @@
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/battlefield/ship)
-"Xy" = (
-/obj/machinery/portable_atmospherics/hydroponics/soil/invisible,
-/obj/structure/grille/broken,
-/turf/simulated/floor/exoplanet/desert,
-/area/battlefield/surface)
 "XB" = (
 /obj/floor_decal/industrial/warning/full,
 /obj/machinery/atmospherics/unary/vent_pump/high_volume/shuttle{
@@ -6230,13 +6221,6 @@
 	},
 /obj/structure/aurora/smes,
 /turf/simulated/floor/tiled/techfloor,
-/area/battlefield/surface)
-"ZT" = (
-/obj/machinery/portable_atmospherics/hydroponics/soil/invisible,
-/obj/floor_decal/beach/corner{
-	dir = 8
-	},
-/turf/simulated/floor/asteroid,
 /area/battlefield/surface)
 "ZY" = (
 /obj/floor_decal/beach/corner{
@@ -7638,7 +7622,7 @@ Xs
 EQ
 Mj
 Qu
-ZT
+WN
 UP
 Xs
 Xs
@@ -8850,7 +8834,7 @@ Xs
 uZ
 uZ
 uZ
-sc
+uZ
 uZ
 uZ
 uZ
@@ -10696,7 +10680,7 @@ Xs
 Xs
 Xs
 ed
-cH
+CA
 Xs
 Xs
 Xs
@@ -11979,7 +11963,7 @@ Qu
 Qu
 Le
 Le
-Qu
+nm
 xX
 Qu
 sR
@@ -12192,7 +12176,7 @@ Qu
 uZ
 uZ
 uZ
-wq
+Pv
 wq
 qk
 Hh
@@ -12514,7 +12498,7 @@ Nb
 Xs
 Xs
 Xs
-Xy
+ed
 Xs
 Xs
 Xs
@@ -14432,13 +14416,13 @@ Xs
 Xs
 Xs
 xa
-ER
-ER
-ER
-ER
-ER
-ER
-ER
+ts
+ts
+ts
+ts
+ts
+ts
+ts
 Mr
 yv
 yv
@@ -15547,7 +15531,7 @@ Xs
 Xs
 yb
 sP
-Di
+tH
 ts
 ID
 ID
@@ -15734,7 +15718,7 @@ Xs
 Xs
 Xs
 uZ
-sc
+uZ
 uZ
 uZ
 uZ
@@ -15836,7 +15820,7 @@ Xs
 Xs
 Os
 Xs
-sc
+uZ
 uZ
 uZ
 uZ
