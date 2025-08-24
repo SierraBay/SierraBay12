@@ -6234,7 +6234,6 @@
 /area/battlefield/surface)
 "ZR" = (
 /obj/decal/cleanable/dirt,
-/obj/structure/aurora/smes,
 /obj/floor_decal/beach/corner{
 	dir = 8
 	},
@@ -10171,9 +10170,9 @@ Xs
 Xs
 Xs
 Xs
-HD
-HD
-HD
+Xs
+Xs
+Xs
 Xs
 Xs
 Xs
