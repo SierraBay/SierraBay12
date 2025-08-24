@@ -42,3 +42,5 @@
 /obj/shuttle_landmark/battlefield/nav1
 	name = "Ravine landing zone"
 	landmark_tag = "nav_battlefield_1"
+	base_area = /area/battlefield/surface
+	base_turf = /turf/simulated/floor/exoplanet/desert

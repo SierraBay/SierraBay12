@@ -456,7 +456,7 @@
 /area/battlefield/camp)
 "dm" = (
 /obj/shuttle_landmark/battlefield/nav1,
-/turf/simulated/floor/asteroid,
+/turf/simulated/floor/exoplanet/desert,
 /area/battlefield/surface)
 "do" = (
 /obj/decal/cleanable/dirt,
@@ -681,10 +681,6 @@
 /obj/structure/cable/green{
 	d2 = 4;
 	icon_state = "0-4"
-	},
-/obj/machinery/power/apc{
-	dir = 8;
-	pixel_x = -29
 	},
 /obj/floor_decal/corner/lightgrey/border{
 	dir = 8
@@ -2526,11 +2522,12 @@
 /turf/simulated/floor/exoplanet,
 /area/battlefield/surface)
 "AS" = (
-/obj/machinery/computer{
-	dir = 8
-	},
 /obj/floor_decal/corner/research/border{
 	dir = 5
+	},
+/obj/machinery/computer/telecomms/traffic{
+	dir = 8;
+	pixel_x = 5
 	},
 /turf/simulated/floor/tiled,
 /area/battlefield/camp)
@@ -4187,10 +4184,6 @@
 /turf/simulated/wall,
 /area/battlefield/surface)
 "MH" = (
-/obj/machinery/power/apc{
-	dir = 8;
-	pixel_x = -29
-	},
 /obj/floor_decal/corner/lime/border{
 	dir = 8
 	},
@@ -4683,6 +4676,9 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/machinery/power/apc{
+	pixel_y = -29
 	},
 /turf/simulated/floor/tiled,
 /area/battlefield/energy)
