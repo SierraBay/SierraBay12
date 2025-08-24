@@ -1135,9 +1135,10 @@
 /obj/structure/barrier{
 	dir = 4
 	},
-/mob/living/carbon/human/blank{
-	pixel_y = 10;
-	flavor_text = "Лежащее на баррикадах иссохшее тело человека. Униформа армии ЦПСС. Не тронута но запачкана кровью преимущественно у шеи."
+/mob/living/carbon/human{
+	pixel_y = 6;
+	desc = "Лежащее на баррикадах иссохшее тело человека. Униформа армии ЦПСС. Не тронута но запачкана кровью преимущественно у шеи.";
+	pixel_x = 10
 	},
 /turf/simulated/floor/exoplanet/desert,
 /area/battlefield/surface)
@@ -2088,9 +2089,9 @@
 "xN" = (
 /obj/decal/cleanable/dirt,
 /obj/floor_decal/beach,
-/mob/living/carbon/human/blank{
+/mob/living/carbon/human{
 	pixel_y = 10;
-	flavor_text = "Сидящее иссохшее тело человека с опущенной вниз головой. На униформе виднеются знаки отличия ЦПСС. В бронежилете виднеется несколько пулевых отверстий. Одно из них значительно больше других."
+	desc = "Сидящее иссохшее тело человека с опущенной вниз головой. На униформе виднеются знаки отличия ЦПСС. В бронежилете виднеется несколько пулевых отверстий. Одно из них значительно больше других."
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/battlefield/surface)
@@ -2578,9 +2579,9 @@
 /area/battlefield/ship)
 "Bf" = (
 /obj/structure/roller_bed,
-/mob/living/carbon/human/blank{
+/mob/living/carbon/human{
 	pixel_y = 10;
-	flavor_text = "Иссохшее тело человека униформе флота НККГ с малой потускневшей блондинистой косой. Виднеется сквозная дыра, идущая со лба к затылку."
+	desc = "Иссохшее тело человека униформе флота НККГ с малой потускневшей блондинистой косой. Виднеется сквозная дыра, идущая со лба к затылку."
 	},
 /turf/simulated/floor/steel_dirty,
 /area/battlefield/surface)
@@ -3399,8 +3400,9 @@
 /turf/simulated/floor/exoplanet/desert,
 /area/battlefield/surface)
 "HE" = (
-/mob/living/carbon/human/blank{
-	pixel_y = 10
+/mob/living/carbon/human{
+	pixel_y = 10;
+	desc = "Мертвец с засохшей окровавленной формой ЦПСС. В бронежилете виднеется одна широкая дыра."
 	},
 /turf/simulated/floor/exoplanet/desert,
 /area/battlefield/camp)
@@ -5280,17 +5282,17 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/mob/living/carbon/human/blank{
-	pixel_y = 16;
-	pixel_x = 12;
-	flavor_text = "Иссохшее тело человека лежащее близь старых серверов. Униформа Армии ЦПСС и видимые знаки отличия на снаряжении. Большая часть костей раздроблена. В бронежилете виднеется чёткое широкое отверстие."
-	},
 /obj/decal/cleanable/blood,
 /obj/floor_decal/corner/research/bordercorner{
 	dir = 1
 	},
 /obj/floor_decal/corner/research/bordercorner{
 	dir = 8
+	},
+/mob/living/carbon/human{
+	pixel_y = 18;
+	desc = "Иссохшее тело человека, лежащее близь старых серверов. Униформа Армии ЦПСС и видимые знаки отличия на снаряжении. Большая часть костей раздроблена. В бронежилете виднеется чёткое широкое отверстие.";
+	pixel_x = 8
 	},
 /turf/simulated/floor/tiled,
 /area/battlefield/camp)
@@ -5328,14 +5330,14 @@
 /turf/simulated/floor/exoplanet/desert,
 /area/battlefield/surface)
 "TD" = (
-/mob/living/carbon/human/blank{
-	pixel_y = 10;
-	flavor_text = "Иссохшее тело человека униформе флота НККГ. Сзади виднеется несколько чёткий отверстий в рюкзаке мертвеца."
-	},
 /obj/item/ammo_casing/rifle/used{
 	pixel_x = -7;
 	pixel_y = -8;
 	dir = 9
+	},
+/mob/living/carbon/human{
+	pixel_y = 10;
+	desc = "Иссохшее тело человека униформе флота НККГ. Сзади виднеется несколько чёткий отверстий в рюкзаке мертвеца."
 	},
 /turf/simulated/floor/exoplanet/desert,
 /area/battlefield/surface)
@@ -5401,9 +5403,9 @@
 /turf/unsimulated/beach/sand,
 /area/battlefield/surface)
 "Ue" = (
-/mob/living/carbon/human/blank{
+/mob/living/carbon/human{
 	pixel_y = 10;
-	flavor_text = "Лежащее глубоко в пропасти тело человека. Образовавшаяся темнота и глубина пропасти не позволяют рассмотреть чётких деталей."
+	desc = "Лежащее глубоко в пропасти тело человека. Образовавшаяся темнота и глубина пропасти не позволяют рассмотреть чётких деталей."
 	},
 /turf/simulated/floor/asteroid{
 	name = "precipice"
