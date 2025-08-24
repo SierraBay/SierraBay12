@@ -144,7 +144,6 @@ var/global/can_call_ert
 		can_call_ert = 0 // Only one call per round, ladies.
 		return
 
-	evacuation_controller.add_can_call_predicate(new/datum/evacuation_predicate/ert())
 	can_call_ert = 0 // Only one call per round, gentleman.
 	send_emergency_team = 1
 
@@ -157,19 +156,3 @@ var/global/can_call_ert
 		close_ert()
 
 	GLOB.ert.reason = reason //Set it even if it's blank to clear a reason from a previous ERT
-
-/datum/evacuation_predicate/ert
-	var/prevent_until
-
-/datum/evacuation_predicate/ert/New()
-	..()
-	prevent_until = world.time + 30 MINUTES
-
-/datum/evacuation_predicate/ert/is_valid()
-	return world.time < prevent_until
-
-/datum/evacuation_predicate/ert/can_call(user)
-	if(world.time >= prevent_until)
-		return TRUE
-	to_chat(user, SPAN_WARNING("Unable to execute task due to interference in the proximity of your vessel. Running diagnostics...\nPlease try again at [duration2stationtime(prevent_until - world.time)]."))
-	return FALSE
