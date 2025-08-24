@@ -269,7 +269,7 @@ var/global/list/gear_datums = list()
 			entry += "[english_list(trait_checks)]</i>"
 
 		// [SIERRA-ADD] - CHARACTER-TRAITS
-		if (allowed && G.allowed_mod_traits && G.allowed_mod_traits.len)
+		if (allowed && LAZYLEN(G.allowed_mod_traits))
 			var/list/trait_checks_mod = list()
 			entry += "<br><i>"
 			for (var/trait_path in G.allowed_mod_traits)
@@ -457,7 +457,7 @@ var/global/list/gear_datums = list()
 
 /datum/gear/proc/spawn_item(user, location, metadata)
 	// [SIERRA-ADD] - CHARACTER-TRAITS
-	if(allowed_mod_traits && length(allowed_mod_traits))
+	if(LAZYLEN(allowed_mod_traits))
 		var/mob/M = user
 		var/list/mod_traits = null
 		if(istype(M))
