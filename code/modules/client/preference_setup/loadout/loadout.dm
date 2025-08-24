@@ -457,7 +457,7 @@ var/global/list/gear_datums = list()
 
 /datum/gear/proc/spawn_item(user, location, metadata)
 	// [SIERRA-ADD] - CHARACTER-TRAITS
-	if(allowed_mod_traits && allowed_mod_traits.len)
+	if(allowed_mod_traits && length(allowed_mod_traits))
 		var/mob/M = user
 		var/list/mod_traits = null
 		if(istype(M))
@@ -473,7 +473,7 @@ var/global/list/gear_datums = list()
 
 		if(!ok)
 			if(istype(M))
-				to_chat(M, SPAN_WARNING("У тебя нет требуемого мод-трейта для [display_name]."))
+				to_chat(M, SPAN_WARNING("У вас нет необходимого трейта для [display_name]."))
 			return null
 	// [/SIERRA-ADD]
 	var/datum/gear_data/gd = new(path, location)
