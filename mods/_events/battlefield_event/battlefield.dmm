@@ -491,6 +491,12 @@
 	},
 /turf/simulated/floor/asteroid,
 /area/battlefield/surface)
+"dE" = (
+/obj/floor_decal/corner/brown/border{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
 "dS" = (
 /obj/floor_decal/industrial/danger{
 	dir = 4
@@ -651,6 +657,12 @@
 	},
 /turf/simulated/floor/exoplanet/desert,
 /area/battlefield/surface)
+"eX" = (
+/obj/floor_decal/corner/brown/border{
+	dir = 5
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
 "eZ" = (
 /obj/decal/cleanable/dirt,
 /obj/structure/girder,
@@ -941,6 +953,15 @@
 	},
 /obj/machinery/computer/ship/engines{
 	dir = 8
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"oJ" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 5
 	},
 /turf/simulated/floor/tiled/dark,
 /area/battlefield/ship)
@@ -2372,10 +2393,6 @@
 	},
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/dirt,
-/obj/machinery/power/apc{
-	dir = 8;
-	pixel_x = -28
-	},
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -2668,10 +2685,6 @@
 /turf/unsimulated/floor/steeldirty,
 /area/battlefield/surface)
 "Cd" = (
-/obj/machinery/power/apc{
-	dir = 8;
-	pixel_x = -28
-	},
 /obj/floor_decal/corner/darkblue/border{
 	dir = 10
 	},
@@ -2957,6 +2970,12 @@
 	},
 /turf/simulated/floor,
 /area/battlefield/surface)
+"En" = (
+/obj/floor_decal/corner/brown/border{
+	dir = 10
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
 "Eq" = (
 /obj/decal/cleanable/dirt,
 /obj/structure/cable{
@@ -4231,6 +4250,12 @@
 	},
 /turf/simulated/floor/tiled,
 /area/battlefield/camp)
+"MU" = (
+/obj/floor_decal/corner/brown/border{
+	dir = 9
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
 "MW" = (
 /obj/floor_decal/beach/corner,
 /obj/floor_decal/asteroid{
@@ -4707,6 +4732,12 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -5783,6 +5814,19 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/battlefield/surface)
+"WJ" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/floor_decal/corner/brown/bordercorner,
+/obj/floor_decal/corner/brown/bordercorner{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
 "WN" = (
 /obj/floor_decal/beach/corner{
 	dir = 8
@@ -5974,11 +6018,6 @@
 "Yb" = (
 /obj/decal/cleanable/dirt,
 /obj/structure/table/steel,
-/obj/machinery/power/apc{
-	dir = 4;
-	pixel_x = 27;
-	pixel_y = 1
-	},
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -14568,11 +14607,11 @@ Xs
 Xs
 Xs
 UF
-ty
+MU
 Gf
 Bq
 Mo
-ty
+En
 ts
 Xp
 Xp
@@ -14672,7 +14711,7 @@ ro
 OV
 We
 wk
-ty
+oJ
 bZ
 Dq
 ts
@@ -14772,10 +14811,10 @@ XR
 Fp
 MB
 eZ
-ty
+eX
 dh
-ty
-ty
+WJ
+dE
 XD
 ts
 DT
