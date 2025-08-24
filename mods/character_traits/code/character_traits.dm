@@ -75,9 +75,17 @@
 				return TOPIC_REFRESH_UPDATE_PREVIEW
 
 	else if(href_list["remove_mod_trait"])
-		var/M = text2path(href_list["remove_mod_trait"])
-		if(M)
-			pref.mod_traits -= M
+		var/varval = href_list["remove_mod_trait"]
+
+		var/real_key = null
+		for (var/trait_key in pref.mod_traits)
+			if("[trait_key]" == varval)
+				real_key = trait_key
+				break
+
+		if(real_key)
+			pref.mod_traits -= real_key
+
 		return TOPIC_REFRESH_UPDATE_PREVIEW
 
 /datum/job/post_equip_rank(mob/person, alt_title)
