@@ -1,6 +1,5 @@
 var/global/list/loadout_categories = list()
 var/global/list/gear_datums = list()
-var/global/list/augment_chooses = list()
 
 /datum/preferences
 	var/list/gear_list //Custom/fluff item loadouts.
@@ -111,13 +110,6 @@ var/global/list/augment_chooses = list()
 						gears -= gear_name
 					else
 						total_cost += G.cost
-			//SIERRA-ADD - CYBERNETICS - Учёт стоймости лодаут
-			for(var/aug_type in pref.augments_list)
-				var/singleton/cyber_choose/augment/aug = GET_SINGLETON(text2path(pref.augments_list[aug_type]))
-				if(!aug)
-					continue
-				total_cost += aug.loadout_price
-			//SIERRA-ADD
 		else
 			pref.gear_list[index] = list()
 
@@ -129,13 +121,6 @@ var/global/list/augment_chooses = list()
 		var/datum/gear/G = gear_datums[gears[i]]
 		if(G)
 			total_cost += G.cost
-	//SIERRA-ADD - CYBERNETICS - Учёт стоймости лодаут
-	for(var/aug_type in pref.augments_list)
-		var/singleton/cyber_choose/augment/aug = GET_SINGLETON(text2path(pref.augments_list[aug_type]))
-		if(!aug)
-			continue
-		total_cost += aug.loadout_price
-	//SIERRA-ADD
 
 	var/fcolor =  "#3366cc"
 	if(total_cost < config.max_gear_cost)
@@ -351,13 +336,6 @@ var/global/list/augment_chooses = list()
 			for(var/gear_name in pref.gear_list[pref.gear_slot])
 				var/datum/gear/G = gear_datums[gear_name]
 				if(istype(G)) total_cost += G.cost
-			//SIERRA-ADD - CYBERNETICS - Учёт стоймости кибернетик аугментов
-			for(var/aug_type in pref.augments_list)
-				var/singleton/cyber_choose/augment/aug = GET_SINGLETON(text2path(pref.augments_list[aug_type]))
-				if(!aug)
-					continue
-				total_cost += aug.loadout_price
-			//SIERRA-ADD
 			if((total_cost+TG.cost) <= config.max_gear_cost)
 				pref.gear_list[pref.gear_slot] += TG.display_name
 		return TOPIC_REFRESH_UPDATE_PREVIEW

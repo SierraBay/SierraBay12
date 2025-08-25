@@ -2,24 +2,6 @@
 #define CFBTN(key, value, selected) \
 "<a class='[selected ? "linkOn" : ""]' href='?src=\ref[src];[key]=[value]'>[value]</a>"
 
-//А вот этот мало того что выбирается, но ещё и увеличивается при наведении мышкой
-#define CFBTNU(key, value, selected) "\
-<a class='[selected ? "linkOn" : ""]' \
-style='\
-display: inline-block;\
-border: none;\
-transition: all 0.3s ease;\
-border-radius: 3px;\
-text-decoration: none;\
-background: [selected ? "#00aa00" : "#40628a"];\
-color: white !important;\
-' \
-href='?src=\ref[src];[key]=[value]' \
-onmouseover='this.style.transform=\"scale(1.2)\"; this.style.zIndex=\"100\"; [selected ? "this.style.background=\"#00CC00\"" : "this.style.background=\"#5080B0\""]' \
-onmouseout='this.style.transform=\"scale(1)\"; this.style.zIndex=\"1\"; [selected ? "this.style.background=\"#00AA00\"" : "this.style.background=\"#40628a\""]'>\
-[value]\
-</a>"
-
 /// Симпл баттон, но с состоянием выбранности и с возможностью выбрать "отца"
 #define FCFBTN(father, key, value, selected) \
 "<a class='[selected ? "linkOn" : ""]' href='?src=\ref[father];[key]=[value]'>[value]</a>"

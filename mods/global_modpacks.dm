@@ -65,6 +65,5 @@
 #include "psionics/psionics_includes.dm"
 #include "impulse_cannon/_impulse_cannon_includes.dm"
 #include "rocket_launchers/_rocket_launchers_includes.dm"
-#include "config/_config_includes.dm"
 #include "genreconfig/_genreconfig_includes.dm"
-#include "cybernetics/cybernetics_includes.dm"
+#include "config/_config_includes.dm"

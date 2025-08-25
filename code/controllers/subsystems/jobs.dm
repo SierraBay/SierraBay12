@@ -552,12 +552,6 @@ SUBSYSTEM_DEF(jobs)
 	if(spawn_in_storage)
 		for(var/datum/gear/G in spawn_in_storage)
 			G.spawn_in_storage_or_drop(H, H.client.prefs.Gear()[G.display_name])
-	//SIERRA-ADD - CYBERNETICS
-	H.process_spawn_limbs()
-	H.process_spawn_augments(H.client.prefs)
-	H.process_spawn_organs()
-	H.process_spawn_implants()
-	//SIERRA-ADD
 
 	if(istype(H)) //give humans wheelchairs, if they need them.
 		var/obj/item/organ/external/l_foot = H.get_organ(BP_L_FOOT)

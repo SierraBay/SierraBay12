@@ -27,9 +27,6 @@
 	// 	return
 	// [/SIERRA-ADD]
 	var/update_icon = FALSE
-	//SIERRA-ADD - CYBERNETICS - Эта штука отрисует на маникене все протезы
-	mannequin.process_spawn_limbs(src)
-	//SIERRA-ADD
 	copy_to(mannequin, TRUE)
 	var/datum/job/previewJob
 	if (preview_job || preview_gear)

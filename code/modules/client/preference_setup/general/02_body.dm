@@ -203,7 +203,6 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 	if (length(pref.body_markings))
 		. += "<br />"
 
-	/* [SIERRA-REMOVE] - CYBERNETICS - Вырезано модом
 	. += "<br />[TBTN("reset_limbs", "Reset", "Body Parts")] [BTN("limbs", "Adjust Limbs")] [BTN("organs", "Adjust Organs")]"
 	var/list/alt_organs = list()
 	for (var/name in pref.organ_data)
@@ -248,7 +247,7 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 		alt_organs += "(No differences from baseline)"
 	. += "<br />[alt_organs.Join(", ")]"
 	. = jointext(., null)
-	*/
+
 	. += "<br />[TBTN("res_trait", "Reset Traits", "Traits")] [BTN("add_trait", "Add Trait")]"
 	var/list/alt_traits = list()
 	for (var/picked_type as anything in pref.picked_traits)
@@ -508,8 +507,6 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 			pref.body_markings[M] = "[mark_color]"
 			return TOPIC_REFRESH_UPDATE_PREVIEW
 
-	/*SIERRA-REMOVE - CYBERNETICS - мусорный код, уже никогда не сработает
-
 	else if(href_list["reset_limbs"])
 		reset_limbs()
 		return TOPIC_REFRESH_UPDATE_PREVIEW
@@ -684,8 +681,6 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 
 		sanitize_organs()
 		return TOPIC_REFRESH
-
-	*/
 
 	else if(href_list["disabilities"])
 		var/disability_flag = text2num(href_list["disabilities"])

@@ -236,11 +236,11 @@
 		if(!check_species_allowed(S))
 			return 0
 
-		//[SIERRA-ADD] - CYBERNETICS
-		if(!client.join_avaible_by_loadout())
-			return FALSE
-		if(!client.check_cybernetic_avability())
-			return FALSE
+		//[SIERRA-ADD] - XENO WHITELIST
+		if(client.prefs.organ_data[BP_CHEST] == "cyborg")
+			if(!whitelist_lookup(SPECIES_FBP, client.ckey) && client.prefs.species != SPECIES_IPC)
+				to_chat(usr, "Нельзя зайти за ППТ без вайтлиста.")
+				return FALSE
 		//[/SIERRA-ADD]
 
 		AttemptLateSpawn(job, client.prefs.spawnpoint)
@@ -300,10 +300,6 @@
 		return 0
 
 	character = SSjobs.equip_rank(character, job.title, 1)					//equips the human
-	//SIERRA-ADD - CYBERNETICS
-	if(!character)
-		return FALSE
-	//SIERRA-ADD
 	SScustomitems.equip_custom_items(character)
 
 	// AIs don't need a spawnpoint, they must spawn at an empty core

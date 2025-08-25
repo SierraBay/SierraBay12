@@ -110,6 +110,7 @@
 	#include "../../../../maps/sierra/loadout/loadout_gloves.dm"
 	#include "../../../../maps/sierra/loadout/loadout_head.dm"
 	#include "../../../../maps/sierra/loadout/loadout_pda.dm"
+	#include "../../../../maps/sierra/loadout/loadout_augments.dm"
 	#include "../../../../maps/sierra/loadout/loadout_shoes.dm"
 	#include "../../../../maps/sierra/loadout/loadout_suit.dm"
 	#include "../../../../maps/sierra/loadout/loadout_tactical.dm"
