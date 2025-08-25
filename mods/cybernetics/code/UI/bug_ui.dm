@@ -1,6 +1,6 @@
 /datum/category_item/player_setup_item/cybernetics/proc/draw_bug_content(user, list/input_list)
 	draw_main_buttons(input_list)
-	input_list += "По каким-то воистину волшебным причинам, ваш интерфейс не отобразился. Передайте разработчику алгоритм действий и попробуйте перезайти."
+	input_list += "Критическая ошибка. Интерфейс не отображается. Обратитесь к разработчикам"
 	var/icon/bug_icon = icon('mods/cybernetics/icons/critical_bug.jpg', "no name")
 	send_rsc(user, bug_icon, "bug.png")
 	input_list += {"

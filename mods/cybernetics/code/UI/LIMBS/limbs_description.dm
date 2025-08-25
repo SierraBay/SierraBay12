@@ -3,7 +3,7 @@
 	var/result_text
 	var/limb_type = pref.limb_list[choosed_limb_slot]
 	if(limb_type == "Пусто")
-		result_text = "<br><span class='bad'>Конечность останется стандартной.</span>"
+		result_text = "<br><span class='bad'>Конечность останется органической.</span>"
 	else
 		pref.choosed_limb_prototype = GET_SINGLETON(text2path(limb_type))
 		if(!pref.choosed_limb_prototype.check_avaibility(pref)) //Протез/аугмент/имплант недоступен

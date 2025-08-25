@@ -27,4 +27,4 @@
 /singleton/cyber_choose/augment/setup_description(max_line_length)
 	. = ..()
 	if(loadout_price > 0)
-		aug_description_long += SPAN_BAD("Цена аугмента: [loadout_price] лодаут-поинтов.")
+		aug_description_long += SPAN_BAD("Цена аугмента: [loadout_price] очков снаряжения.")

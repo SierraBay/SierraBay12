@@ -3,7 +3,7 @@
 	var/result_text
 	var/organ_type = pref.organ_list[choosed_organ_slot]
 	if(organ_type == "Пусто")
-		result_text = "<br> <span class='bad'> Кибернетический орган не выбран, будет выбран самый обычный биологический. </span>"
+		result_text = "<br> <span class='bad'> Кибернетический орган не выбран, будет выбрана стандартная органика. </span>"
 	else
 		pref.choosed_organ_prototype = GET_SINGLETON(text2path(organ_type))
 		if(!pref.choosed_organ_prototype.check_avaibility(pref)) //Протез/аугмент/имплант недоступен

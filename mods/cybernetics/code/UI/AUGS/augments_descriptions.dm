@@ -7,13 +7,13 @@
 	else
 		pref.choosed_augment_prototype = GET_SINGLETON(text2path(aug_type))
 		if(pref.augments_names[choosed_augment_slot] != "Пусто")
-			result_text += SPAN_CLASS("highlight", "Кастомное название: [pref.augments_names[choosed_augment_slot]]")
+			result_text += SPAN_CLASS("highlight", "Уникальное название: [pref.augments_names[choosed_augment_slot]]")
 		else
 			result_text += SPAN_CLASS("highlight", "[pref.choosed_augment_prototype.augment_name]")
 
 
 		if(pref.augments_descs[choosed_augment_slot] != "Пусто")
-			result_text += SPAN_CLASS("highlight", " <br> Кастомное описание: [pref.augments_descs[choosed_augment_slot]]")
+			result_text += SPAN_CLASS("highlight", " <br> Уникальное описание: [pref.augments_descs[choosed_augment_slot]]")
 
 		if(pref.choosed_augment_prototype && pref.choosed_augment_prototype.aug_description_long)
 			result_text += pref.choosed_augment_prototype.aug_description_long
@@ -27,8 +27,8 @@
 			<a href='?src=\ref[src];set_augment_name=1'
 				class='augment-button'
 				style='display: inline-block; width: 200px; left: 110px'
-				title='Позволяет выставить кастомное название аугменту'>
-				Кастомное название
+				title='Позволяет выставить уникальное название аугменту'>
+				Уникальное название
 			</a>
 			"}
 
@@ -37,8 +37,8 @@
 			<a href='?src=\ref[src];set_augment_desc=1'
 				class='augment-button'
 				style='display: inline-block; width: 200px;'
-				title='Позволяет выставить кастомное описание аугменту'>
-				Кастомное описание
+				title='Позволяет выставить уникальное описание аугменту'>
+				Уникальное описание
 			</a>
 			"}
 
@@ -53,14 +53,14 @@
 	"}
 
 /datum/category_item/player_setup_item/cybernetics/proc/augment_set_name(mob/user)
-	var/input_name = input(user, "Введите кастомное название (Если оставить пустым, название сотрётся):", "Название аугмента") as text|null
+	var/input_name = input(user, "Введите уникальное название (Если оставить пустым, название сотрётся):", "Название аугмента") as text|null
 	if(input_name)
 		pref.augments_names[choosed_augment_slot] = input_name
 	else
 		pref.augments_names[choosed_augment_slot] = "Пусто"
 
 /datum/category_item/player_setup_item/cybernetics/proc/augment_set_desc(mob/user)
-	var/input_desc = input(user, "Введите кастомное описание (Если оставить пустым, описание сотрётся):", "Описание аугмента") as message|null
+	var/input_desc = input(user, "Введите уникальное описание (Если оставить пустым, описание сотрётся):", "Описание аугмента") as message|null
 	if(input_desc)
 		pref.augments_descs[choosed_augment_slot] = input_desc
 	else

@@ -1,18 +1,20 @@
 /singleton/cyber_choose/augment/internal_armor
 	augment_name = "Подкожная броня"
-	aug_description = "Подкожная броня умело установленная под кожу человека. Не способно оказать существенного влияния на заброневое воздействие."
+	aug_description = "Подкожная броня, дополнительно снижающая урон от атак"
 	good_sides = list(
-		"Модификатор физического урона 0.7. Слабоэффективно против тяжёлых калибров или атак.",
-		"Может принять урон по органам вместо себя.")
+		"Модификатор физического урона 0.7",
+		"Имеет шанс компенсировать урон по органам")
+	neutral_sides = list("Малоэффективна против крупнокалиберного оружия")
 	avaible_hardpoints = list(BP_CHEST)
 	instal_aug_type = /obj/item/organ/internal/augment/armor
 	price = 8
 
 
 /singleton/cyber_choose/augment/internal_air
-	augment_name = "Внутренний воздушный резерв"
-	aug_description = "Является внутренним хранилищем кислорода, для активации - нажмите на кнопку подачи воздуха."
-	good_sides = list("Сам автоматически заполняется воздухом при необходимости")
+	augment_name = "Внутренний воздушный мешок"
+	aug_description = "Внутреннее хранилище кислорода, используемая в экстренных случаях"
+	good_sides = list("Автоматически заполняется в нормальной кислородной среде")
+	neutral_sides = list("Активация происходит путём нажатия на кнопку активации кислородного баллона")
 	avaible_hardpoints = list(BP_CHEST)
 	instal_aug_type = /obj/item/organ/internal/augment/active/internal_air_system
 	price = 6
@@ -23,12 +25,13 @@
 	return TRUE
 
 /singleton/cyber_choose/augment/internal_air/get_reason_for_avaibility(datum/preferences/input_pref)
-	return "Данный аугмент можно установить только в плоть."
+	return "Данный аугмент можно установить только в органическую часть тела."
 
 /singleton/cyber_choose/augment/emergency_battery
-	augment_name = "Резервный запас питания"
-	aug_description = "Запасное питание, если основное отказало."
-	good_sides = list("Запаса энергии не хватит для обеспечения работы всего тела, но хватит для обеспечения работы внутренних вычислительных систем.")
+	augment_name = "Резервная батарея"
+	aug_description = "Резервный элемент питания внутренних аугментов"
+	good_sides = list("Имплант поддерживает ММИ или искусственное сердце в случае отказа основных систем")
+	neutral_sides = list("Игромеханически не оказывает влияния на функциональность систем и является гиммиком")
 	bad_sides = list()
 	avaible_hardpoints = list(BP_CHEST)
 	instal_aug_type = /obj/item/organ/internal/augment/emergency_battery
@@ -44,10 +47,10 @@
 
 
 /singleton/cyber_choose/augment/leukocyte_breeder
-	augment_name = "Хранилище лейкоцитов"
-	aug_description = "Помогает иммунитету в трудную минуту."
-	good_sides = list("Усиливает и восстанавливает ваш иммунитет в трудную минуту.")
-	bad_sides = list("Ваше тело становится зависимым от данного устройства, в случае его отключения или уничтожения ЭМИ ударом, ваше тело сильно потеряет в иммунитете.")
+	augment_name = "Селекционер лейкоцитов"
+	aug_description = "Аугмент, стимулирующий иммунную систему."
+	good_sides = list("Усиливает выработку лейкоцитов в организме и помогает эффективней бороться с болезнями и сепсисом")
+	bad_sides = list("Восприимчивость к ЭМИ. При повреждении аугмента уровень иммунитета серьёзно падает")
 	avaible_hardpoints = list(BP_CHEST)
 	instal_aug_type = /obj/item/organ/internal/augment/active/leukocyte_breeder
 	loadout_price = 4
@@ -59,20 +62,22 @@
 	return TRUE
 
 /singleton/cyber_choose/augment/leukocyte_breeder/get_reason_for_avaibility(datum/preferences/input_pref)
-	return "Данный аугмент можно установить только в плоть."
+	return "Данный аугмент можно установить только в органическую часть тела."
 
 /singleton/cyber_choose/augment/skeletal_bracing
-	augment_name = "Укрепление скелета"
-	aug_description = "Титановые укрепления скелета, увеличивающие вашу грузоподьёмность и помогающие в случае болезни костей."
-	good_sides = list("Не имеет внутриигрового влияния.")
+	augment_name = "Усиленный скелет"
+	aug_description = "Дополнительное усиление скелета титаном для компенсации его хрупкости"
+	good_sides = list("Поддерживает секелет при нормальной или высокой гравитации")
+	neutral_sides = list("Игромеханически не оказывает влияния на прочность костей и шанс перелома")
 	bad_sides = list()
 	avaible_hardpoints = list(BP_CHEST)
 	instal_aug_type = /obj/item/organ/internal/augment/skeletal_bracing
 
 /singleton/cyber_choose/augment/ultraviolet_shielding
-	augment_name = "Кожная защита от ультрафиолета"
-	aug_description = "Ваш эпидермис был заменён на материал, устойчивый к радиации и ультрофиолету. К сожалению, не спасёт от полноценной солнечной вспышки."
-	good_sides = list("Не имеет внутриигрового влияния.")
+	augment_name = "УФ-экранирование"
+	aug_description = "Интегрированная в эпидермис защита от ультрафиолетового излучения"
+	good_sides = list("Защищает от последствий длительного пребывания под прямыми УФ-лучами")
+	neutral_sides = list("Игромеханически не защищает от сильных солнечных вспышек")
 	bad_sides = list()
 	avaible_hardpoints = list(BP_CHEST)
 	instal_aug_type = /obj/item/organ/internal/augment/ultraviolet_shielding

@@ -1,6 +1,6 @@
 /singleton/cyber_choose/implant
-	augment_name = "Затычка"
-	aug_description = "Привет."
-	good_sides = list("В игре ещё не существует имплантов как таковых, но место для них уже подготовлено.")
-	bad_sides = list("Када импланты()")
+	augment_name = "Плейсхолдер"
+	aug_description = "На данный момент импланты, доступные для установки, отсутствуют"
+	good_sides = list("N/A")
+	bad_sides = list("N/A")
 	avaible_hardpoints = list()

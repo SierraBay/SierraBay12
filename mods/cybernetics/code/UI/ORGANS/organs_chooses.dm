@@ -91,7 +91,7 @@
 	var/nothing_selected = (current_organ_in_slot_type == "Пусто")
 	output += "<a class='organ-choose_button[nothing_selected ? " selected" : ""]' "
 	output += "href='?src=\ref[src];select_organ=Пусто' "
-	output += "title='Орган останется мясным'>"
+	output += "title='Орган останется органическим'>"
 	output += "<span class='organ-choose_button-text'>Пустота</span>"
 	output += "</a>"
 
