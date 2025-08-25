@@ -1,0 +1,4 @@
+author: SierraKomodo
+changes:
+  - {bugfix: 'Legion mobs are now properly immune to atmosphere, as intended.'}
+delete-after: true

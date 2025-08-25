@@ -8265,8 +8265,8 @@
 /turf/simulated/floor/tiled/dark/monotile,
 /area/command/armoury/access)
 "azV" = (
-/obj/shuttle_landmark/ert/deck2{
-	name = "1st Deck, Fore Port"
+/obj/shuttle_landmark/ert/deck1{
+	name = "Deck 1, Fore Port"
 	},
 /turf/space,
 /area/space)
@@ -28655,8 +28655,6 @@
 	pixel_y = 28;
 	pixel_z = 3
 	},
-/obj/item/storage/box/detergent,
-/obj/item/soap,
 /obj/machinery/light/small{
 	dir = 4;
 	icon_state = "bulb1"
@@ -28664,12 +28662,16 @@
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 8
 	},
-/obj/random/ironing_board_item,
-/obj/item/ironing_iron,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 26
 	},
+/obj/item/storage/box/detergent,
+/obj/item/soap,
+/obj/item/mop,
+/obj/item/reagent_containers/glass/bucket,
+/obj/random/ironing_board_item,
+/obj/item/ironing_iron,
 /turf/simulated/floor/tiled/freezer,
 /area/medical/washroom)
 "ugg" = (
@@ -29652,14 +29654,7 @@
 /obj/structure/table/rack{
 	dir = 8
 	},
-/obj/item/cane{
-	pixel_x = -3;
-	pixel_y = 2
-	},
-/obj/item/cane{
-	pixel_x = -3;
-	pixel_y = 2
-	},
+/obj/item/storage/box/large/crutches,
 /obj/item/cane{
 	pixel_x = -3;
 	pixel_y = 2
@@ -37971,7 +37966,7 @@ aaa
 aaa
 aaa
 aaa
-azV
+aaa
 aaa
 aaa
 aaa
@@ -41399,7 +41394,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+azV
 aaa
 aaa
 aaa

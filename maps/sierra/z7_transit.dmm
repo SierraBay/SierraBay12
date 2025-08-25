@@ -311,7 +311,7 @@
 /turf/space,
 /area/space)
 "er" = (
-/obj/shuttle_landmark/ert/internim,
+/obj/shuttle_landmark/ert/transit,
 /turf/space,
 /area/space)
 "qc" = (

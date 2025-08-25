@@ -1,0 +1,5 @@
+author: SierraKomodo
+changes:
+  - {rscdel: Calling ERT no longer blocks the round from ending or server from 
+      restarting (Why was this even a thing?)}
+delete-after: true
