@@ -212,15 +212,16 @@
 #undef ORGAN_STYLE
 
 /obj/item/device/electronic_assembly/augment/afterattack(atom/target, mob/living/user, proximity)
-	if(!proximity)
-		return
 	if(istype(target, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = target
 		var/obj/item/organ/external/E = H.get_organ(user.zone_sel.selecting)
 		if(E && (E.organ_tag in list(BP_L_ARM, BP_R_ARM)))
-			for(var/obj/item/organ/internal/augment/active/item/circuit/A in E.internal_organs)
-				if(A.use_tool(src, user, list()))
-					return TRUE
-			to_chat(user, SPAN_WARNING("No compatible augment found in [E.name]."))
-			return TRUE
+			if(proximity)
+				for(var/obj/item/organ/internal/augment/active/item/circuit/A in E.internal_organs)
+					if(A.use_tool(src, user, list()))
+						return TRUE
+				to_chat(user, SPAN_WARNING("No compatible augment found in [E.name]."))
+				return TRUE
+			else
+				return ..()
 	return ..()
