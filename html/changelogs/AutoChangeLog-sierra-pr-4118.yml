@@ -1,4 +1,0 @@
-author: Baneuus
-changes:
-  - {bugfix: Теперь интегралка-ауг нормально работает на расстоянии.}
-delete-after: true
