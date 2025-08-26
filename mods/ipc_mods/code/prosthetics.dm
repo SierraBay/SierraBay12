@@ -127,7 +127,7 @@
 		bio = ARMOR_BIO_SHIELDED,
 		rad = ARMOR_RAD_SMALL
 	)
-	speed_modifier = - 1
+	speed_modifier = - 0.3
 	coolingefficiency = 0.3
 	expensive = TRUE
 
@@ -146,7 +146,7 @@
 		bio = ARMOR_BIO_SHIELDED,
 		rad = ARMOR_RAD_SMALL
 	)
-	speed_modifier = - 0.7
+	speed_modifier = - 0.2
 	coolingefficiency = 0.4
 
 /datum/robolimb/bishop/alt
@@ -177,7 +177,6 @@
 		bio = ARMOR_BIO_SHIELDED,
 		rad = ARMOR_RAD_RESISTANT
 	)
-	speed_modifier = 0.5
 	coolingefficiency = 0.8
 
 /datum/robolimb/hephaestus/alt
@@ -202,7 +201,7 @@
 		rad = ARMOR_RAD_RESISTANT
 	)
 	expensive = TRUE
-	speed_modifier = 1.2
+	speed_modifier = 0.5
 	coolingefficiency = 1
 
 /datum/robolimb/hephaestus/alt/monitor

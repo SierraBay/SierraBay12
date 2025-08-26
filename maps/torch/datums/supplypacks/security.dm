@@ -17,7 +17,7 @@
 	cost = 20
 	containertype = /obj/structure/closet/crate/secure
 	containername = "security armor crate"
-	access = access_security
+	access = access_brig
 
 /singleton/hierarchy/supply_pack/security/comarmor
 	name = "Armor - Command"
@@ -126,7 +126,7 @@
 	cost = 20
 	containertype = /obj/structure/closet/crate/secure/weapon
 	containername = "pistol rubber ammunition crate"
-	access = access_security
+	access = access_brig
 
 /singleton/hierarchy/supply_pack/security/pistolammopractice
 	name = "Ammunition - pistol practice ammo"
@@ -137,7 +137,7 @@
 	cost = 20
 	containertype = /obj/structure/closet/crate/secure/weapon
 	containername = "pistol practice ammunition crate"
-	access = access_security
+	access = access_brig
 
 /singleton/hierarchy/supply_pack/security/holster
 	name = "Gear - Holster crate"
@@ -169,7 +169,7 @@
 	cost = 60
 	containertype = /obj/structure/closet/crate/secure
 	containername = "\improper Master at Arms equipment crate"
-	access = access_security
+	access = access_brig
 
 /singleton/hierarchy/supply_pack/security/cosextragear
 	name = "Gear - Chief of Security equipment"

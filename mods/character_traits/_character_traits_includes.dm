@@ -6,5 +6,8 @@
 #include "code/all.dm"
 #include "code/unathi.dm"
 #include "code/glob_character_traits.dm"
+#include "code/colorblindwires.dm"
+#include "code/skrell.dm"
+#include "code/gas.dm"
 
 #endif

@@ -9,5 +9,8 @@
 #include "code/silicon.dm"
 #include "code\species.dm"
 #include "code/unathi.dm"
+#include "code/tajara.dm"
+#include "code/skrell.dm"
+#include "code/miscxenos.dm"
 
 #endif

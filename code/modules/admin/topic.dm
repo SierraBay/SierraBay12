@@ -2148,6 +2148,11 @@
 				alt_title = M.mind.role_alt_title
 
 			M.delete_inventory(TRUE)
+
+			for (var/obj/item/organ/internal/augment/custom_augment in M.contents)
+				custom_augment.removed(M)
+				qdel(custom_augment)
+
 			job.equip(M, M.mind ? M.mind.role_alt_title : "", M.char_branch, M.char_rank)
 			spawn_in_storage = SSjobs.equip_custom_loadout(M, job)
 

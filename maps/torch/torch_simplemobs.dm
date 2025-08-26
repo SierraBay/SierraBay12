@@ -1,15 +1,15 @@
 /obj/landmark/corpse/fleet
 	name = "Fleet Armsman"
-	corpse_outfits = list(/singleton/hierarchy/outfit/job/torch/ert/hostile)
+	corpse_outfits = list(/singleton/hierarchy/outfit/fleet/ert/hostile)
 	spawn_flags = CORPSE_SPAWNER_RANDOM_NAMELESS | CORPSE_SPAWNER_ALL_SKIPS
 
 /obj/landmark/corpse/fleet/leader
 	name = "Fleet Team Leader"
-	corpse_outfits = list(/singleton/hierarchy/outfit/job/torch/ert/hostile/leader)
+	corpse_outfits = list(/singleton/hierarchy/outfit/fleet/ert/hostile/leader)
 
 /obj/landmark/corpse/fleet/space
 	name = "Fleet Assault Armsman"
-	corpse_outfits = list(/singleton/hierarchy/outfit/job/torch/ert/hostile/suit)
+	corpse_outfits = list(/singleton/hierarchy/outfit/fleet/ert/hostile/suit)
 
 /obj/item/clothing/suit/armor/bulletproof/armsman
 	valid_accessory_slots = list(ACCESSORY_SLOT_INSIGNIA, ACCESSORY_SLOT_ARMOR_ARMS, ACCESSORY_SLOT_ARMOR_LEGS, ACCESSORY_SLOT_ARMOR_STORAGE)
@@ -169,7 +169,7 @@
 	deactivated = TRUE
 	visible_message(SPAN_MFAUNA("\The [src]'s rigsuit flashes hastily, locking into place!"))
 	update_icon()
-	addtimer(new Callback(src, TYPE_PROC_REF(reactivate)), 6 SECONDS)
+	addtimer(new Callback(src, PROC_REF(reactivate)), 6 SECONDS)
 
 /mob/living/simple_animal/hostile/human/fleet/space/proc/reactivate()
 	set_AI_busy(FALSE)

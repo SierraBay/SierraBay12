@@ -382,11 +382,11 @@
 				for (var/i = 1 to rand(1,3))
 					new /obj/item/material/shard(get_turf(affecting), MATERIAL_STEEL)
 				affecting.take_external_damage(rand(20,40), 0)
-			if(prob(30))
-				if (!M.isSynthetic())
-					M.emote("scream")
-					M.Weaken(2)
-				affecting.status |= ORGAN_BRITTLE // 30% chance to brittle your limb/organ, and if you're organic, you get weakened.
+		if(prob(30))
+			if (!M.isSynthetic())
+				M.emote("scream")
+				M.Weaken(2)
+			affecting.status |= ORGAN_BRITTLE // 30% chance to brittle your limb/organ, and if you're organic, you get weakened.
 		affecting.heal_damage(heal_brute, heal_burn, robo_repair = TRUE)
 		user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
 		return TRUE

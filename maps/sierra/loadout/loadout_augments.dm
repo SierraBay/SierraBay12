@@ -47,7 +47,6 @@
 	description = "A flexible air sac, made from a complex, bio-compatible polymer, is installed into the respiratory system. It gradually replenishes itself with breathable gas from the surrounding environment as you breathe, and you can later use it as a source of internals."
 	path = /obj/item/organ/internal/augment/active/internal_air_system
 	cost = 6
-	allowed_roles = list(/datum/job/chief_engineer, /datum/job/senior_engineer, /datum/job/engineer, /datum/job/infsys, /datum/job/engineer_trainee, /datum/job/explorer_engineer, /datum/job/captain, /datum/job/hop, /datum/job/rd, /datum/job/cmo, /datum/job/chief_engineer, /datum/job/hos, /datum/job/iaa, /datum/job/iso, /datum/job/adjutant)
 
 /datum/gear/augment/toolset_engineer
 	display_name = "Integrated engineering toolset (Prosthetic Only)"
@@ -213,15 +212,16 @@
 #undef ORGAN_STYLE
 
 /obj/item/device/electronic_assembly/augment/afterattack(atom/target, mob/living/user, proximity)
-	if(!proximity)
-		return
 	if(istype(target, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = target
 		var/obj/item/organ/external/E = H.get_organ(user.zone_sel.selecting)
 		if(E && (E.organ_tag in list(BP_L_ARM, BP_R_ARM)))
-			for(var/obj/item/organ/internal/augment/active/item/circuit/A in E.internal_organs)
-				if(A.use_tool(src, user, list()))
-					return TRUE
-			to_chat(user, SPAN_WARNING("No compatible augment found in [E.name]."))
-			return TRUE
+			if(proximity)
+				for(var/obj/item/organ/internal/augment/active/item/circuit/A in E.internal_organs)
+					if(A.use_tool(src, user, list()))
+						return TRUE
+				to_chat(user, SPAN_WARNING("No compatible augment found in [E.name]."))
+				return TRUE
+			else
+				return ..()
 	return ..()
