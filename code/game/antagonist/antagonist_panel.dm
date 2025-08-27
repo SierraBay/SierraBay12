@@ -31,11 +31,7 @@
 			if(!M.client)      dat += " <i>(logged out)</i>"
 			if(M.stat == DEAD) dat += " <b>[SPAN_COLOR("red", "(DEAD)")]</b>"
 			dat += "</td>"
-<<<<<<< ours
-			dat += "<td>\[<a href='byond://?src=\ref[caller];priv_msg=\ref[M]'>PM</A>\]\[<a href='byond://?src=\ref[caller];traitor=\ref[M]'>TP</A>\]</td>"
-=======
 			dat += "<td>\[<A href='byond://?src=\ref[calling_admin];priv_msg=\ref[M]'>PM</A>\]\[<A href='byond://?src=\ref[calling_admin];traitor=\ref[M]'>TP</A>\]</td>"
->>>>>>> theirs
 		else
 			dat += "<td><i>Mob not found/([player.key])!</i></td>"
 		dat += "</tr>"
