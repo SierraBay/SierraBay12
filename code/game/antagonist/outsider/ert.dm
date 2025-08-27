@@ -12,7 +12,7 @@ GLOBAL_TYPED_NEW(ert, /datum/antagonist/ert)
 
 	valid_species = list(SPECIES_HUMAN,SPECIES_VATGROWN,SPECIES_SPACER,SPECIES_GRAVWORLDER,SPECIES_TRITONIAN,SPECIES_IPC) // https://baystation.xyz/index.php?title=Sol_Central_Government_Fleet#Recruitment
 	flags = ANTAG_OVERRIDE_JOB | ANTAG_OVERRIDE_MOB | ANTAG_SET_APPEARANCE | ANTAG_HAS_LEADER | ANTAG_CHOOSE_NAME | ANTAG_RANDOM_EXCEPTED
-	antaghud_indicator = "hudloyalist"
+	antaghud_indicator = "hud_ert"
 
 	hard_cap = 5
 	hard_cap_round = 5
