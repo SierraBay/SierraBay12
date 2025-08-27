@@ -45,6 +45,29 @@
 	/// Reference to the turf fire on the turf
 	var/obj/turf_fire/turf_fire
 
+	// Some quick notes on the vars below: is_outside should be left set to OUTSIDE_AREA unless you
+	// EXPLICITLY NEED a turf to have a different outside state to its area (ie. you have used a
+	// roofing tile). By default, it will ask the area for the state to use, and will update on
+	// area change. When dealing with weather, it will check the entire z-column for interruptions
+	// that will prevent it from using its own state, so a floor above a level will generally
+	// override both area is_outside, and turf is_outside. The only time the base value will be used
+	// by itself is if you are dealing with a non-multiz level, or the top level of a multiz chunk.
+
+	// Weather relies on is_outside to determine if it should apply to a turf or not and will be
+	// automatically updated on ChangeTurf set_outside etc. Don't bother setting it manually, it will
+	// get overridden almost immediately.
+
+	// TL;DR: just leave these vars alone.
+	//var/obj/abstract/weather_system/weather
+	var/is_outside = OUTSIDE_AREA
+	var/last_outside_check = OUTSIDE_UNCERTAIN
+
+	//In practice only used by simulated turfs but I would like to get rid of unsimmed ones some day
+	/// Will participate in ZAS, join zones, etc.
+	var/zone_membership_candidate = FALSE
+	/// Will participate in external atmosphere simulation if the turf is outside and no zone is set.
+	var/external_atmosphere_participation = TRUE
+
 /turf/Initialize(mapload, ...)
 	. = ..()
 	if(dynamic_lighting)
@@ -377,6 +400,125 @@ var/global/const/enterloopsanity = 100
 /turf/proc/is_floor()
 	return FALSE
 
+/*/turf/proc/update_weather(obj/abstract/weather_system/new_weather, force_update_below = FALSE)
+
+	if(isnull(new_weather))
+		new_weather = LAZYACCESS(SSweather.weather_by_z, z)
+
+	// We have a weather system and we are exposed to it; update our vis contents.
+	if(istype(new_weather) && is_outside())
+		if(weather != new_weather)
+			weather = new_weather
+			. = TRUE
+
+	// We are indoors or there is no local weather system, clear our vis contents.
+	else if(weather)
+		weather = null
+		. = TRUE
+
+	if(.)
+		refresh_vis_contents()
+
+	// Propagate our weather downwards if we permit it.
+	if(force_update_below || (is_open() && .))
+		var/turf/below = GetBelow(src)
+		if(below)
+			below.update_weather(new_weather)*/
+
+/// Updates turf participation in ZAS according to outside status and atmosphere participation bools. Must be called whenever any of those values may change.
+/turf/simulated/proc/update_external_atmos_participation()
+	var/old_outside = last_outside_check
+	last_outside_check = OUTSIDE_UNCERTAIN
+	if(is_outside())
+		if(zone && external_atmosphere_participation)
+			if(can_safely_remove_from_zone())
+				zone.remove(src)
+			else
+				zone.rebuild()
+	else if(!zone && zone_membership_candidate && old_outside == OUTSIDE_YES)
+		// Set the turf's air to the external atmosphere to add to its new zone.
+		air = get_external_air(FALSE)
+
+	SSair.mark_for_update(src)
+
+/turf/is_outside()
+	//Determine if a turf is considered external for purpose of light and weather
+
+	// Can't rain inside or through solid walls.
+	// TODO: dense structures like full windows should probably also block weather.
+	if(density)
+		return OUTSIDE_NO
+
+	if(last_outside_check != OUTSIDE_UNCERTAIN)
+		return last_outside_check
+
+	// What is our local outside value?
+	// Some turfs can be roofed irrespective of the turf above them in multiz.
+	// I have the feeling this is redundat as a roofed turf below max z will
+	// have a floor above it, but ah well.
+	. = is_outside
+	if(. == OUTSIDE_AREA)
+		var/area/A = get_area(src)
+		. = A ? A.area_flags & AREA_FLAG_EXTERNAL : OUTSIDE_NO
+
+	// If we are in a multiz volume and not already inside, we return
+	// the outside value of the highest unenclosed turf in the stack.
+	if(HasAbove(z))
+		. =  OUTSIDE_YES // assume for the moment we're unroofed until we learn otherwise.
+		var/turf/top_of_stack = src
+		while(HasAbove(top_of_stack.z))
+			var/turf/next_turf = GetAbove(top_of_stack)
+			if(!next_turf.is_open())
+				return OUTSIDE_NO
+			top_of_stack = next_turf
+		// If we hit the top of the stack without finding a roof, we ask the upmost turf if we're outside.
+		. = top_of_stack.is_outside()
+	if(. == OUTSIDE_YES || . == OUTSIDE_NO) //[SIERRA-ADD] - prevents magical memory leaks
+		last_outside_check = . // Cache this for later calls.
+
+/turf/proc/set_outside(new_outside, skip_weather_update = FALSE)
+	if(is_outside == new_outside)
+		return FALSE
+
+	is_outside = new_outside
+	var/turf/simulated/W = src
+	if (istype(W))
+		W.update_external_atmos_participation()
+	AMBIENT_LIGHT_QUEUE_TURF(src)
+
+	//if(!skip_weather_update)
+		//update_weather()
+
+	if(!HasBelow(z))
+		return TRUE
+
+	// Invalidate the outside check cache for turfs below us.
+	var/turf/checking = src
+	while(HasBelow(checking.z))
+		checking = GetBelow(checking)
+		if(!isturf(checking))
+			break
+		var/turf/simulated/checksim = checking
+		if (istype(checksim))
+			checksim.update_external_atmos_participation()
+		if(!checking.is_open())
+			break
+	return TRUE
+
+/turf/proc/get_air_graphic()
+	return
+
+/turf/get_vis_contents_to_add()
+	var/air_graphic = get_air_graphic()
+	if(length(air_graphic))
+		LAZYDISTINCTADD(., air_graphic)
+	/*if(length(weather?.vis_contents_additions))
+		LAZYADD(., weather.vis_contents_additions)
+		. += pick(weather.particle_sources)*/ // we know . is never null here
+
+/*/turf/get_affecting_weather()
+	return weather*/
+
 /turf/proc/get_obstruction()
 	if (density)
 		LAZYADD(., src)
@@ -456,16 +598,3 @@ var/global/const/enterloopsanity = 100
 
 /turf/proc/IgniteTurf(power, fire_colour)
 	return
-
-//Maybe we want to make this stateful at some point
-/turf/proc/is_outside()
-
-	//For the purposes of light, dense turfs should not be considered to be outside
-	if(density)
-		return FALSE
-
-	var/area/A = get_area(src)
-	if(A.area_flags & AREA_FLAG_EXTERNAL)
-		return TRUE
-
-	//TODO: CitRP has some concept of outside based on turfs above. We don't really have any use cases right now, revisit this function if this changes

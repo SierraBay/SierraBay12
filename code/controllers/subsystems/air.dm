@@ -134,6 +134,9 @@ SUBSYSTEM_DEF(air)
 	report_progress("Processing Geometry...")
 	var/simulated_turf_count = 0
 	for(var/turf/simulated/S)
+		// Although update_air_properties can be called on non-ZAS participating turfs for convenience, it is unnecessary on roundstart/reboot.
+		if (!SHOULD_PARTICIPATE_IN_ZONES(S))
+			continue
 		simulated_turf_count++
 		S.update_air_properties()
 		CHECK_TICK
@@ -326,11 +329,14 @@ Geometry processing completed in [(uptime() - start_uptime)/10] seconds!
 	ASSERT(A != B)
 	#endif
 
+	if(!SHOULD_PARTICIPATE_IN_ZONES(A))
+		return
+
 	var/block = air_blocked(A,B)
 	if(block & AIR_BLOCKED) return
 
 	var/direct = !(block & ZONE_BLOCKED)
-	var/space = !istype(B)
+	var/space = !SHOULD_PARTICIPATE_IN_ZONES(B)
 
 	if(!space)
 		if(min(length(A.zone.contents), length(B.zone.contents)) < ZONE_MIN_SIZE || (direct && (equivalent_pressure(A.zone,B.zone) || times_fired == 0)))
