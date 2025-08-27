@@ -11,13 +11,12 @@ GLOBAL_VAR(planet_repopulation_disabled)
 	var/list/megafauna_types = list() 	// possibble types of megafauna to spawn
 	var/list/animals = list()
 	var/max_animal_count
-	var/datum/gas_mixture/atmosphere
 	var/list/breathgas = list()	//list of gases animals/plants require to survive
 	var/badgas					//id of gas that is toxic to life here
 
 
 	//DAY/NIGHT CYCLE
-	var/daycycle_range = list(15 MINUTES, 30 MINUTES)
+	var/daycycle_range = list(25 MINUTES, 45 MINUTES)
 	var/daycycle = 0//How often do we change day and night, at first list, to determine min and max day length
 	var/sun_process_interval = 1.5 MINUTES //How often we update planetary sunlight
 	var/sun_last_process = null // world.time
@@ -116,10 +115,10 @@ GLOBAL_VAR(planet_repopulation_disabled)
 	generate_atmosphere()
 	for (var/datum/exoplanet_theme/T in themes)
 		T.adjust_atmosphere(src)
-	if (atmosphere)
+	if (exterior_atmosphere)
 		//Set up gases for living things
 		if (!length(breathgas))
-			var/list/goodgases = atmosphere.gas.Copy()
+			var/list/goodgases = exterior_atmosphere.gas.Copy()
 			var/gasnum = min(rand(1,3), length(goodgases))
 			for (var/i = 1 to gasnum)
 				var/gas = pick(goodgases)
@@ -127,7 +126,7 @@ GLOBAL_VAR(planet_repopulation_disabled)
 				goodgases -= gas
 		if (!badgas)
 			var/list/badgases = gas_data.gases.Copy()
-			badgases -= atmosphere.gas
+			badgases -= exterior_atmosphere.gas
 			badgas = pick(badgases)
 	generate_flora()
 	generate_map()
@@ -164,21 +163,6 @@ GLOBAL_VAR(planet_repopulation_disabled)
 		if (repopulating && !GLOB.planet_repopulation_disabled)
 			handle_repopulation()
 
-		if (!atmosphere)
-			continue
-
-		var/zone/Z
-		for (var/i = 1 to maxx)
-			var/turf/simulated/T = locate(i, 2, zlevel)
-			if (istype(T) && T.zone && length(T.zone.contents) > (maxx*maxy*0.25)) //if it's a zone quarter of zlevel, good enough odds it's planetary main one
-				Z = T.zone
-				break
-		if (Z && !length(Z.fire_tiles) && !atmosphere.compare(Z.air)) //let fire die out first if there is one
-			var/datum/gas_mixture/daddy = new() //make a fake 'planet' zone gas
-			daddy.copy_from(atmosphere)
-			daddy.group_multiplier = Z.air.group_multiplier
-			Z.air.equalize(daddy)
-
 	if(sun_last_process <= (world.time - sun_process_interval))
 		update_sun()
 
@@ -206,41 +190,52 @@ GLOBAL_VAR(planet_repopulation_disabled)
 	var/min = 0
 	var/max = 0
 
+	var/base_color = "#cc3300"
+
+	if (GLOB.using_map.using_sun)
+		var/obj/overmap/visitable/ship/sector = map_sectors["[z]"]
+		var/obj/overmap/visitable/star/closest_star
+		for (var/obj/overmap/visitable/star/iterator_star in map_stars)
+			if (get_dist(sector, iterator_star) == 0)
+				closest_star = iterator_star
+		if (closest_star)
+			base_color = closest_star.color
+
 	//Now, each planet type may want to do its own thing for light, if so move most of this code into its own function and override it.
 	switch(sun_position)
 		if(0 to 0.40) // Night
 			low_brightness = 0.01
-			low_color = "#000066"
+			low_color = BlendRGB("#000066", base_color, 0.25)
 
 			high_brightness = 0.2
-			high_color = "#66004d"
+			high_color = BlendRGB("#000066", base_color, 0.5)
 			min = 0
 			max = 0.4
 
 		if(0.40 to 0.50) // Twilight
 			low_brightness = 0.2
-			low_color = "#66004d"
+			low_color = BlendRGB("#000066", base_color, 0.75)
 
 			high_brightness = 0.5
-			high_color = "#cc3300"
+			high_color = base_color
 			min = 0.40
 			max = 0.50
 
 		if(0.50 to 0.70) // Sunrise/set
 			low_brightness = 0.5
-			low_color = "#cc3300"
+			low_color = base_color
 
 			high_brightness = 0.8
-			high_color = "#ff9933"
+			high_color = BlendRGB("#ffffff", base_color, 0.75)
 			min = 0.50
 			max = 0.70
 
 		if(0.70 to 1.00) // Noon
 			low_brightness = 0.8
-			low_color = "#dddddd"
+			low_color = BlendRGB("#ffffff", base_color, 0.5)
 
 			high_brightness = 1.0
-			high_color = "#ffffff"
+			high_color = BlendRGB("#ffffff", base_color, 0.25)
 			min = 0.70
 			max = 1.0
 
@@ -333,15 +328,15 @@ GLOBAL_VAR(planet_repopulation_disabled)
 /obj/overmap/visitable/sector/exoplanet/get_scan_data(mob/user)
 	. = ..()
 	var/list/extra_data = list()
-	if (atmosphere)
+	if (exterior_atmosphere)
 		if (user.skill_check(SKILL_SCIENCE, SKILL_TRAINED))
 			var/list/gases = list()
-			for (var/g in atmosphere.gas)
-				if (atmosphere.gas[g] > atmosphere.total_moles * 0.05)
+			for (var/g in exterior_atmosphere.gas)
+				if (exterior_atmosphere.gas[g] > exterior_atmosphere.total_moles * 0.05)
 					gases += gas_data.name[g]
 			extra_data += "Atmosphere composition: [english_list(gases)]"
 			var/inaccuracy = rand(8,12)/10
-			extra_data += "Atmosphere pressure [atmosphere.return_pressure()*inaccuracy] kPa, temperature [atmosphere.temperature*inaccuracy] K"
+			extra_data += "Atmosphere pressure [exterior_atmosphere.return_pressure()*inaccuracy] kPa, temperature [exterior_atmosphere.temperature*inaccuracy] K"
 		else if (user.skill_check(SKILL_SCIENCE, SKILL_BASIC))
 			extra_data += "Atmosphere present"
 		extra_data += ""

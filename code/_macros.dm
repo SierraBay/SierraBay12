@@ -162,6 +162,8 @@
 
 #define QDEL_IN(item, time) addtimer(new Callback(item, TYPE_PROC_REF(/datum, qdel_self)), time, TIMER_STOPPABLE)
 
+#define QDEL_CONTENTS for (var/entry in contents) qdel(entry);
+
 #define DROP_NULL(x) if(x) { x.dropInto(loc); x = null; }
 
 #define DROP_NULL_LIST(x) if(x) { for(var/atom/movable/y in x) { y.dropInto(loc) }}; x.Cut(); x = null;

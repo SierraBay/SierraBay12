@@ -10,22 +10,27 @@
 	move_delay = 2
 	turn_delay = 3
 	power_use = 2.5
-	max_hp = 40
-	min_damage = 25
-	max_repair = 10
-	repair_damage = 7.5
-	bump_type = MEDIUM_BUMP
-	req_material = MATERIAL_ALUMINIUM
+
+	max_hp = 75
+	min_damage = 30
+	max_repair = 50
+	repair_damage = 15
 	front_modificator_damage = 1
-	max_heat = 50
-	heat_cooling = 6
-	emp_heat_generation = 35
+
+	req_material = MATERIAL_ALUMINIUM
+	//Тепло
+	max_heat = 100
+	heat_cooling = 12
+	emp_heat_generation = 110
 	heat_generation = 1.5
+	//Скорости
 	max_speed = 29
 	min_speed = 26
 	acceleration = 1
 	turn_slowdown = 1.5
 	turn_diogonal_slowdown = 1
+	bump_type = MEDIUM_BUMP
+	
 	weight = 50
 
 /obj/item/mech_component/propulsion/light/right

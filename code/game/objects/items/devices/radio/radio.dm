@@ -510,11 +510,9 @@
 
 	  //#### Sending the signal to all subspace receivers ####//
 
-		for(var/obj/machinery/telecomms/receiver/R in telecomms_list)
-			R.receive_signal(signal)
-
-		// Allinone can act as receivers.
-		for(var/obj/machinery/telecomms/allinone/R in telecomms_list)
+		for(var/obj/machinery/telecomms/R as anything in telecomms_list)
+			if (!istype(R, /obj/machinery/telecomms/receiver) && !istype(R, /obj/machinery/telecomms/allinone))
+				continue
 			R.receive_signal(signal)
 
 		// Receiving code can be located in Telecommunications.dm
@@ -573,7 +571,9 @@
 	var/obj/item/cell/has_cell = get_cell()
 	if(has_cell && has_cell.percent() < 20)
 		signal.data["compression"] = max(0, 80 - has_cell.percent()*3)
-	for(var/obj/machinery/telecomms/receiver/R in telecomms_list)
+	for(var/obj/machinery/telecomms/R as anything in telecomms_list)
+		if (!istype(R, /obj/machinery/telecomms/receiver) && !istype(R, /obj/machinery/telecomms/allinone))
+			continue
 		R.receive_signal(signal)
 
 	sleep(rand(10,25)) // wait a little...
@@ -944,6 +944,9 @@
 
 /obj/item/device/radio/announcer/subspace
 	subspace_transmission = 1
+
+/obj/item/device/radio/announcer/subspace/ert
+	channels = list("ERT" = 1, "Special Ops" = 1, "Hailing" = 1)
 
 /obj/item/device/radio/phone
 	broadcasting = 0

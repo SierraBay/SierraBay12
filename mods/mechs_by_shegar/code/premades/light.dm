@@ -1,6 +1,7 @@
 /mob/living/exosuit/premade/light
 	name = "light mech"
 	desc = "A light and agile mech."
+	external_armor_type = /obj/item/mech_external_armor/civil
 
 /mob/living/exosuit/premade/light/Initialize()
 	if(!head)

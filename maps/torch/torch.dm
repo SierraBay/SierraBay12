@@ -9,6 +9,7 @@
 	#include "../../packs/factions/iccgn/_pack.dm"
 	#include "../../packs/factions/scga/_pack.dm"
 	#include "../../packs/factions/scgec/_pack.dm"
+	#include "../../packs/factions/scgf/_pack.dm"
 
 	#include "torch_announcements.dm"
 	#include "torch_antagonism.dm"
@@ -145,6 +146,7 @@
 
 	#include "loadout/_defines.dm"
 	#include "loadout/loadout_accessories.dm"
+	#include "loadout/loadout_awards.dm"
 	#include "loadout/loadout_ec_skillbadges.dm"
 	#include "loadout/loadout_eyes.dm"
 	#include "loadout/loadout_gloves.dm"

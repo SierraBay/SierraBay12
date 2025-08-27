@@ -6336,7 +6336,7 @@
 	},
 /obj/structure/table/standard,
 /obj/item/reagent_containers/food/drinks/glass2/coffeecup/one{
-	custom_desc = "A white coffee cup, prominently featuring a #1 Gorpsman. Someone has scratched the C into a G."
+	desc = "A white coffee cup, prominently featuring a #1 Gorpsman. Someone has scratched the C into a G."
 	},
 /turf/simulated/floor/tiled/white,
 /area/medical/medicalhallway)
@@ -8265,8 +8265,8 @@
 /turf/simulated/floor/tiled/dark/monotile,
 /area/command/armoury/access)
 "azV" = (
-/obj/shuttle_landmark/ert/deck2{
-	name = "1st Deck, Fore Port"
+/obj/shuttle_landmark/ert/deck1{
+	name = "Deck 1, Fore Port"
 	},
 /turf/space,
 /area/space)
@@ -9912,7 +9912,7 @@
 /area/security/bo)
 "aIc" = (
 /obj/structure/table/standard,
-/obj/machinery/microwave,
+/obj/machinery/appliance/cooker/microwave,
 /turf/simulated/floor/tiled/monotile,
 /area/security/brig)
 "aIe" = (
@@ -26709,15 +26709,12 @@
 /turf/simulated/floor/tiled/white,
 /area/rnd/research)
 "rPz" = (
-/obj/item/roller_bed{
-	pixel_y = 8
-	},
-/obj/item/roller_bed{
-	pixel_y = 16
-	},
-/obj/item/roller_bed,
 /obj/floor_decal/corner/paleblue/mono,
 /obj/structure/table/reinforced,
+/obj/structure/roller_rack{
+	beds = 3;
+	pixel_y = 4
+	},
 /turf/simulated/floor/tiled/white/monotile,
 /area/medical/staging)
 "rQb" = (
@@ -28658,8 +28655,6 @@
 	pixel_y = 28;
 	pixel_z = 3
 	},
-/obj/item/storage/box/detergent,
-/obj/item/soap,
 /obj/machinery/light/small{
 	dir = 4;
 	icon_state = "bulb1"
@@ -28667,12 +28662,16 @@
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 8
 	},
-/obj/random/ironing_board_item,
-/obj/item/ironing_iron,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 26
 	},
+/obj/item/storage/box/detergent,
+/obj/item/soap,
+/obj/item/mop,
+/obj/item/reagent_containers/glass/bucket,
+/obj/random/ironing_board_item,
+/obj/item/ironing_iron,
 /turf/simulated/floor/tiled/freezer,
 /area/medical/washroom)
 "ugg" = (
@@ -29655,14 +29654,7 @@
 /obj/structure/table/rack{
 	dir = 8
 	},
-/obj/item/cane{
-	pixel_x = -3;
-	pixel_y = 2
-	},
-/obj/item/cane{
-	pixel_x = -3;
-	pixel_y = 2
-	},
+/obj/item/storage/box/large/crutches,
 /obj/item/cane{
 	pixel_x = -3;
 	pixel_y = 2
@@ -37974,7 +37966,7 @@ aaa
 aaa
 aaa
 aaa
-azV
+aaa
 aaa
 aaa
 aaa
@@ -41402,7 +41394,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+azV
 aaa
 aaa
 aaa

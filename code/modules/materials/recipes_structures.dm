@@ -24,3 +24,11 @@
 	time = 50
 	on_floor = 1
 	difficulty = 2
+
+/datum/stack_recipe/roller_rack
+	title = "roller bed rack"
+	result_type = /obj/structure/roller_rack
+	req_amount = 2
+	time = 40
+	difficulty = 2
+	send_material_data = 1

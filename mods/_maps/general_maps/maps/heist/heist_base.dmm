@@ -78,7 +78,7 @@
 /area/map_template/syndicate_mothership/raider_base)
 "ap" = (
 /obj/structure/table/reinforced,
-/obj/machinery/microwave{
+/obj/machinery/appliance/cooker/microwave{
 	pixel_x = -1;
 	pixel_y = 8
 	},
@@ -1313,7 +1313,7 @@
 /turf/simulated/floor/plating,
 /area/map_template/skipjack_station/start)
 "db" = (
-/obj/machinery/microwave{
+/obj/machinery/appliance/cooker/microwave{
 	pixel_x = -1;
 	pixel_y = 8
 	},

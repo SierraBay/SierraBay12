@@ -18,10 +18,10 @@
 	generate_atmosphere()
 	for (var/datum/exoplanet_theme/T in themes)
 		T.adjust_atmosphere(src)
-	if (atmosphere)
+	if (exterior_atmosphere)
 		//Set up gases for living things
 		if (!length(breathgas))
-			var/list/goodgases = atmosphere.gas.Copy()
+			var/list/goodgases = exterior_atmosphere.gas.Copy()
 			var/gasnum = min(rand(1,3), length(goodgases))
 			for (var/i = 1 to gasnum)
 				var/gas = pick(goodgases)
@@ -29,7 +29,7 @@
 				goodgases -= gas
 		if (!badgas)
 			var/list/badgases = gas_data.gases.Copy()
-			badgases -= atmosphere.gas
+			badgases -= exterior_atmosphere.gas
 			badgas = pick(badgases)
 	generate_flora()
 	generate_map()

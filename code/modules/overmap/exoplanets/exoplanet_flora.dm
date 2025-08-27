@@ -1,8 +1,8 @@
 /obj/overmap/visitable/sector/exoplanet/proc/generate_flora()
 	for (var/i = 1 to flora_diversity)
 		var/datum/seed/S = new()
-		if (atmosphere?.gas)
-			S.randomize(atmosphere.gas.Copy())
+		if (exterior_atmosphere?.gas)
+			S.randomize(exterior_atmosphere.gas.Copy())
 		else
 			S.randomize()
 		var/planticon = "alien[rand(1,4)]"
@@ -37,16 +37,16 @@
 			big_flora_types += S
 
 /obj/overmap/visitable/sector/exoplanet/proc/adapt_seed(datum/seed/S)
-	S.set_trait(TRAIT_IDEAL_HEAT,          atmosphere.temperature + rand(-5,5),800,70)
+	S.set_trait(TRAIT_IDEAL_HEAT,          exterior_atmosphere.temperature + rand(-5,5),800,70)
 	S.set_trait(TRAIT_HEAT_TOLERANCE,      S.get_trait(TRAIT_HEAT_TOLERANCE) + rand(-5,5),800,70)
-	S.set_trait(TRAIT_LOWKPA_TOLERANCE,    atmosphere.return_pressure() + rand(-5,-50),80,0)
-	S.set_trait(TRAIT_HIGHKPA_TOLERANCE,   atmosphere.return_pressure() + rand(5,50),500,110)
-	if (atmosphere)
-		for (var/g in atmosphere.gas)
+	S.set_trait(TRAIT_LOWKPA_TOLERANCE,    exterior_atmosphere.return_pressure() + rand(-5,-50),80,0)
+	S.set_trait(TRAIT_HIGHKPA_TOLERANCE,   exterior_atmosphere.return_pressure() + rand(5,50),500,110)
+	if (exterior_atmosphere)
+		for (var/g in exterior_atmosphere.gas)
 			if (gas_data.flags[g] & XGM_GAS_CONTAMINANT)
 				S.set_trait(TRAIT_TOXINS_TOLERANCE, rand(10,15))
 	if (prob(50))
-		var/chem_type = SSchemistry.get_random_chem(TRUE, atmosphere ? atmosphere.temperature : T0C)
+		var/chem_type = SSchemistry.get_random_chem(TRUE, exterior_atmosphere ? exterior_atmosphere.temperature : T0C)
 		if (chem_type)
 			var/nutriment = S.chems[/datum/reagent/nutriment]
 			S.chems.Cut()

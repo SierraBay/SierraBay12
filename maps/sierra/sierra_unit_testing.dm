@@ -1,6 +1,7 @@
 /datum/map/sierra
 	// Unit test exemptions
 	apc_test_exempt_areas = list(
+		/area/overmap = NO_SCRUBBER|NO_VENT|NO_APC,
 		/area/space = NO_SCRUBBER|NO_VENT|NO_APC,
 		/area/exoplanet = NO_SCRUBBER|NO_VENT|NO_APC,
 		/area/engineering/auxpower = NO_SCRUBBER|NO_VENT,

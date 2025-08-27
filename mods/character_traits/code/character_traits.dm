@@ -32,7 +32,7 @@
 	for (var/mod_trait in pref.mod_traits)
 		var/datum/mod_trait/M = GLOB.all_mod_traits[mod_trait]
 
-		. += "<br />[VTBTN("remove_mod_trait", mod_trait, "-", mod_trait)] "
+		. += "<br />[VTBTN("remove_mod_trait", mod_trait, "-", M.name)] "
 
 		if(M.description)
 			. += M.description
@@ -51,6 +51,7 @@
 		for (var/M in pref.mod_traits)
 			var/datum/mod_trait/char_mod = GLOB.all_mod_traits[M]
 			disallowed_mod_traits |= char_mod.incompatible_traits
+
 		var/list/usable_char_mods = pref.mod_traits.Copy() ^ GLOB.all_mod_traits.Copy()
 		for(var/M in usable_char_mods)
 			var/datum/mod_trait/S = usable_char_mods[M]
@@ -59,14 +60,32 @@
 
 		if(!usable_char_mods || length(usable_char_mods) == 0)
 			to_chat(user, SPAN_WARNING("Отсутствуют черты персонажа для выбора."))
-		var/new_char_mod = input(user, "Choose a character modification:", CHARACTER_PREFERENCE_INPUT_TITLE)  as null|anything in usable_char_mods
-		if(new_char_mod && CanUseTopic(user))
-			pref.mod_traits[new_char_mod] = TRUE
-			return TOPIC_REFRESH_UPDATE_PREVIEW
+
+		var/list/choice_map = list()
+		for (var/M in usable_char_mods)
+			var/datum/mod_trait/S = usable_char_mods[M]
+			if (!S) continue
+			choice_map[S.name] = M
+
+		var/new_choice = input(user, "Choose a character modification:", CHARACTER_PREFERENCE_INPUT_TITLE) as null|anything in choice_map
+		if(new_choice && CanUseTopic(user))
+			var/selected_path = choice_map[new_choice]
+			if (selected_path)
+				pref.mod_traits[selected_path] = TRUE
+				return TOPIC_REFRESH_UPDATE_PREVIEW
 
 	else if(href_list["remove_mod_trait"])
-		var/M = href_list["remove_mod_trait"]
-		pref.mod_traits -= M
+		var/varval = href_list["remove_mod_trait"]
+
+		var/real_key = null
+		for (var/trait_key in pref.mod_traits)
+			if("[trait_key]" == varval)
+				real_key = trait_key
+				break
+
+		if(real_key)
+			pref.mod_traits -= real_key
+
 		return TOPIC_REFRESH_UPDATE_PREVIEW
 
 /datum/job/post_equip_rank(mob/person, alt_title)

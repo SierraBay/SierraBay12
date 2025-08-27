@@ -14,9 +14,8 @@
 
 	minbodytemp = 0
 	maxbodytemp = INFINITY
-	min_oxy = 0
-	max_tox = 0
-	max_co2 = 0
+	min_gas = null
+	max_gas = null
 
 	meat_type = null
 	meat_amount = 0
@@ -54,6 +53,13 @@
 	clear_beacon()
 	GLOB.all_legion_mobs -= src
 	return ..()
+
+
+/mob/living/simple_animal/hostile/legion/bullet_act(obj/item/projectile/Proj)
+	if (istype(Proj, /obj/item/projectile/beam/legion))
+		return PROJECTILE_FORCE_MISS
+
+	. = ..()
 
 
 /mob/living/simple_animal/hostile/legion/get_bullet_impact_effect_type(def_zone)

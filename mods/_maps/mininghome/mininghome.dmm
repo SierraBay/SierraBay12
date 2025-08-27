@@ -58,7 +58,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/mininghome_power)
 "an" = (
-/obj/machinery/cooker/grill,
+/obj/machinery/appliance/cooker/grill,
 /obj/floor_decal/corner/red{
 	dir = 1
 	},
@@ -4927,7 +4927,7 @@
 /area/map_template/mininghome_robotics)
 "Qx" = (
 /obj/structure/table/marble,
-/obj/machinery/microwave{
+/obj/machinery/appliance/cooker/microwave{
 	pixel_y = 9
 	},
 /obj/floor_decal/corner/red{
@@ -5188,7 +5188,7 @@
 /turf/simulated/floor/steel_dirty,
 /area/map_template/mininghome_power)
 "Sa" = (
-/obj/machinery/cooker/oven,
+/obj/machinery/appliance/cooker/oven,
 /obj/machinery/light{
 	dir = 1
 	},

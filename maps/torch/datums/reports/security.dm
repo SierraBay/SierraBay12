@@ -4,7 +4,7 @@
 
 /datum/computer_file/report/recipient/sec/New()
 	..()
-	set_access(access_security)
+	set_access(access_brig)
 	set_access(access_heads, override = 0)
 
 /datum/computer_file/report/recipient/sec/incident
@@ -28,7 +28,7 @@
 	add_field(/datum/report_field/pencode_text, "Description of Items/Property")
 	add_field(/datum/report_field/pencode_text, "Narrative")
 	add_field(/datum/report_field/signature, "Reporting Security Personnel's signature")
-	set_access(access_edit = access_security)
+	set_access(access_edit = access_brig)
 
 /datum/computer_file/report/recipient/sec/investigation
 	form_name = "SCG-SEC-02"
@@ -46,7 +46,7 @@
 	add_field(/datum/report_field/pencode_text, "Summary")
 	add_field(/datum/report_field/pencode_text, "Observations")
 	add_field(/datum/report_field/signature, "Signature")
-	set_access(access_edit = access_security)
+	set_access(access_edit = access_brig)
 
 /datum/computer_file/report/recipient/sec/evidence
 	form_name = "SCG-SEC-02b"
@@ -61,11 +61,11 @@
 	add_field(/datum/report_field/time, "Time")
 	add_field(/datum/report_field/people/from_manifest, "Confiscated from")
 	add_field(/datum/report_field/pencode_text, "List of items in custody/evidence lockup")
-	set_access(access_edit = access_security)
+	set_access(access_edit = access_brig)
 	temp_field = add_field(/datum/report_field/signature, "Brig Chief's signature")
-	temp_field.set_access(access_edit = list(access_security, access_armory))
+	temp_field.set_access(access_edit = list(access_brig, access_armory))
 	temp_field = add_field(/datum/report_field/signature, "Forensic Technician's signature")
-	temp_field.set_access(access_edit = list(access_security, access_forensics_lockers))
+	temp_field.set_access(access_edit = list(access_brig, access_forensics_lockers))
 
 /datum/computer_file/report/recipient/sec/statement
 	form_name = "SCG-SEC-02c"
@@ -88,7 +88,7 @@
 	add_field(/datum/report_field/pencode_text, "Narrative")
 	add_field(/datum/report_field/text_label/instruction, "By submitting this form, I understand this is considered a formal security report. I understand that all information written above is truthful and accurate. I understand that intentionally filing a fraudulent security report is a criminal offense that will be prosecuted to the fullest extent of the law.  As this is a binding legal document, I understand that by filing this form that any intentionally false information may warrant disciplinary action against myself. This statement was given on my own volition to assist with documenting the above summarized incident.")
 	add_field(/datum/report_field/signature, "Signature")
-	set_access(access_edit = access_security)
+	set_access(access_edit = access_brig)
 
 /datum/computer_file/report/recipient/sec/arrest
 	form_name = "SCG-SEC-03"
@@ -120,7 +120,7 @@
 	add_field(/datum/report_field/simple_text, "IF YES, what injuries are pre-existing?")
 	add_field(/datum/report_field/text_label/instruction, "This document MUST be submitted to, and reviewed by, the Chief of Security or Brig Chief.")
 	add_field(/datum/report_field/signature, "Reporting Security Personnel's signature")
-	set_access(access_edit = access_security)
+	set_access(access_edit = access_brig)
 
 /datum/computer_file/report/recipient/sec/restraining
 	form_name = "SCG-SEC-04"

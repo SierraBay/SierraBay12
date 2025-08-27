@@ -42,7 +42,7 @@
 	required_tech_levels = list()
 	cost = 250
 
-	unlocks_designs = list("hdd_micro", "hdd_small")
+	unlocks_designs = list("hdd_micro", "hdd_small", "pai_memstd", "pai_holo", "pai_holoskin_woman")
 
 /datum/technology/data/adv_hdd
 	name = "Advanced HDD"
@@ -57,7 +57,7 @@
 	required_tech_levels = list()
 	cost = 500
 
-	unlocks_designs = list("hdd_advanced", "portadrive_advanced")
+	unlocks_designs = list("hdd_advanced", "portadrive_advanced", "pai_memadv")
 
 /datum/technology/data/sup_hdd
 	name = "Super HDD"
@@ -87,7 +87,7 @@
 	required_tech_levels = list()
 	cost = 1250
 
-	unlocks_designs = list("hdd_cluster")
+	unlocks_designs = list("hdd_cluster", "pai_memlambda")
 
 /datum/technology/data/netcard_w
 	name = "Wired Netcard"
@@ -117,7 +117,7 @@
 	required_tech_levels = list()
 	cost = 1250
 
-	unlocks_designs = list("netcard_advanced")
+	unlocks_designs = list("netcard_advanced", "pai_camo")
 
 /datum/technology/data/cpu_small
 	name = "Computer Microprocessor Unit"
@@ -147,7 +147,7 @@
 	required_tech_levels = list()
 	cost = 500
 
-	unlocks_designs = list("pcpu_small")
+	unlocks_designs = list("pcpu_small", "pai_hackstd")
 
 /datum/technology/data/pcpu_normal
 	name = "Computer Photonic Processor Unit"
@@ -162,7 +162,7 @@
 	required_tech_levels = list()
 	cost = 1200
 
-	unlocks_designs = list("pcpu_normal")
+	unlocks_designs = list("pcpu_normal", "pai_hackadv")
 
 /datum/technology/data/modular_bat_micro
 	name = "Small Battery Module's"

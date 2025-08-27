@@ -7,7 +7,7 @@
 	dir = 1
 	},
 /obj/structure/table/glass,
-/obj/machinery/microwave,
+/obj/machinery/appliance/cooker/microwave,
 /turf/simulated/floor/lino,
 /area/shuttle/petrov/security)
 "aag" = (
@@ -872,7 +872,7 @@
 "aga" = (
 /obj/structure/table/marble,
 /obj/structure/window/reinforced,
-/obj/machinery/microwave{
+/obj/machinery/appliance/cooker/microwave{
 	pixel_y = 4
 	},
 /obj/floor_decal/corner/red/diagonal,
@@ -5134,7 +5134,7 @@
 /turf/simulated/floor/wood/mahogany,
 /area/crew_quarters/heads/office/rd/cobed)
 "aLi" = (
-/obj/machinery/cooker/oven,
+/obj/machinery/appliance/cooker/oven,
 /turf/simulated/floor/tiled/white,
 /area/crew_quarters/galley)
 "aLo" = (
@@ -15519,7 +15519,7 @@
 /area/crew_quarters/sauna)
 "cpv" = (
 /obj/structure/table/standard,
-/obj/machinery/microwave{
+/obj/machinery/appliance/cooker/microwave{
 	pixel_y = 4
 	},
 /obj/floor_decal/industrial/outline/yellow,
@@ -22389,7 +22389,7 @@
 /area/maintenance/firstdeck/forestarboard)
 "dnu" = (
 /obj/structure/table/marble,
-/obj/machinery/cooker/cereal,
+/obj/machinery/appliance/mixer/cereal,
 /turf/simulated/floor/tiled/white,
 /area/crew_quarters/galley)
 "dnx" = (
@@ -24566,7 +24566,7 @@
 	},
 /area/engineering/engine_room)
 "dCa" = (
-/obj/machinery/cooker/grill,
+/obj/machinery/appliance/cooker/grill,
 /obj/floor_decal/spline/fancy/black{
 	dir = 1
 	},
@@ -27695,7 +27695,7 @@
 /area/crew_quarters/sauna)
 "dZF" = (
 /obj/structure/table/standard,
-/obj/machinery/microwave{
+/obj/machinery/appliance/cooker/microwave{
 	pixel_y = 4
 	},
 /obj/floor_decal/spline/fancy/black{
@@ -36502,7 +36502,7 @@
 "fok" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/table/woodentable/walnut,
-/obj/machinery/microwave,
+/obj/machinery/appliance/cooker/microwave,
 /obj/machinery/light_construct{
 	dir = 8
 	},
@@ -47497,7 +47497,7 @@
 /area/crew_quarters/dungeon_master_lounge)
 "gUY" = (
 /obj/structure/table/marble,
-/obj/machinery/microwave{
+/obj/machinery/appliance/cooker/microwave{
 	pixel_y = 4
 	},
 /turf/simulated/floor/tiled/white,
@@ -57677,7 +57677,7 @@
 /area/security/sierra/breakroom)
 "iyp" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
-/obj/machinery/cooker/fryer,
+/obj/machinery/appliance/cooker/fryer,
 /obj/machinery/light/spot{
 	dir = 1
 	},
@@ -90432,7 +90432,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/machinery/cooker/grill,
+/obj/machinery/appliance/cooker/grill,
 /obj/floor_decal/corner/red/diagonal,
 /obj/floor_decal/spline/fancy/black{
 	dir = 9
@@ -91597,7 +91597,7 @@
 "nwk" = (
 /obj/floor_decal/corner/grey/diagonal,
 /obj/structure/table/steel_reinforced,
-/obj/machinery/microwave{
+/obj/machinery/appliance/cooker/microwave{
 	pixel_y = 5
 	},
 /turf/simulated/floor/tiled,
@@ -92197,7 +92197,7 @@
 /area/rnd/xenobiology/level1)
 "nBj" = (
 /obj/structure/table/woodentable,
-/obj/machinery/microwave{
+/obj/machinery/appliance/cooker/microwave{
 	pixel_y = 12
 	},
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
@@ -94053,7 +94053,7 @@
 /area/thruster/d3port)
 "nRf" = (
 /obj/structure/table/standard,
-/obj/machinery/microwave{
+/obj/machinery/appliance/cooker/microwave{
 	pixel_y = 4
 	},
 /obj/floor_decal/corner/grey/diagonal,
@@ -99406,7 +99406,7 @@
 /area/space)
 "oGi" = (
 /obj/structure/table/marble,
-/obj/item/material/chopping_board,
+/obj/item/reagent_containers/cooking_container/board,
 /turf/simulated/floor/tiled/white,
 /area/crew_quarters/galley)
 "oGo" = (
@@ -101819,7 +101819,7 @@
 	dir = 1
 	},
 /obj/structure/table/woodentable/walnut,
-/obj/machinery/microwave,
+/obj/machinery/appliance/cooker/microwave,
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 8
 	},
@@ -102431,7 +102431,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/engineering/engine_room)
 "pcH" = (
-/obj/machinery/cooker/grill,
+/obj/machinery/appliance/cooker/grill,
 /turf/simulated/floor/tiled/white,
 /area/crew_quarters/galley)
 "pcP" = (
@@ -114868,7 +114868,7 @@
 /area/maintenance/seconddeck/aftstarboard)
 "qTi" = (
 /obj/structure/table/standard,
-/obj/machinery/microwave{
+/obj/machinery/appliance/cooker/microwave{
 	pixel_y = 4
 	},
 /obj/machinery/firealarm{
@@ -115731,7 +115731,7 @@
 "qZk" = (
 /obj/floor_decal/corner/red,
 /obj/structure/table/steel,
-/obj/machinery/microwave,
+/obj/machinery/appliance/cooker/microwave,
 /turf/simulated/floor/tiled/steel_grid,
 /area/quartermaster/hangar_stairs)
 "qZm" = (
@@ -121455,7 +121455,7 @@
 /turf/simulated/floor/tiled,
 /area/hallway/primary/seconddeck/aft)
 "rRK" = (
-/obj/machinery/cooker/oven,
+/obj/machinery/appliance/cooker/oven,
 /obj/floor_decal/corner/red/diagonal,
 /obj/floor_decal/spline/fancy/black{
 	dir = 1
@@ -125559,7 +125559,7 @@
 	pixel_x = -24
 	},
 /obj/structure/table/marble,
-/obj/machinery/microwave{
+/obj/machinery/appliance/cooker/microwave{
 	pixel_y = 4
 	},
 /obj/structure/cable/green{
@@ -141731,7 +141731,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/machinery/microwave,
+/obj/machinery/appliance/cooker/microwave,
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
@@ -142514,7 +142514,7 @@
 /area/crew_quarters/garden_room)
 "uVb" = (
 /obj/structure/table/marble,
-/obj/machinery/microwave,
+/obj/machinery/appliance/cooker/microwave,
 /obj/floor_decal/corner/red/diagonal,
 /turf/simulated/floor/tiled/dark,
 /area/vacant/mess)
@@ -150009,7 +150009,7 @@
 /area/maintenance/substation/bridgedeck)
 "vXT" = (
 /obj/structure/table/marble,
-/obj/machinery/cooker/candy,
+/obj/machinery/appliance/mixer/candy,
 /obj/machinery/light/spot{
 	dir = 4
 	},
