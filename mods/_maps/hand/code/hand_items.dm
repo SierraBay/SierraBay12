@@ -75,6 +75,22 @@
 	item_icons = list(slot_head_str = 'mods/_maps/hand/icons/mob/onmob_hand.dmi')
 	icon_state = "lethal_helm"
 
+// Chems
+
+/obj/item/reagent_containers/glass/beaker/vial/hand
+	name = "Impedrezene vial"
+	desc = "Inscription on the label: Property of the Cuchulainn Foundation. For authorized medical use only."
+
+/obj/item/reagent_containers/glass/beaker/vial/hand/New()
+	..()
+	reagents.add_reagent(/datum/reagent/impedrezene, 15)
+	update_icon()
+
+/obj/item/storage/lockbox/vials/hand
+	desc = "The container has a laser engraving in the shape of a radiotelescope."
+	req_access = list(access_away_hand_med)
+	startswith = list(/obj/item/reagent_containers/glass/beaker/vial/hand = 6)
+
 // Fluff
 
 /obj/item/paper/hand/pods

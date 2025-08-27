@@ -1,4 +1,4 @@
-GLOBAL_LIST_INIT(exo_event_mob_count,list())// a list of all mobs currently spawned
+GLOBAL_LIST_EMPTY(exo_event_mob_count)// a list of all mobs currently spawned
 
 /datum/event/exo_awakening
 	announceWhen	= 45

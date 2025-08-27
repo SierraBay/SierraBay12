@@ -3,7 +3,7 @@
 	desc = "A small implantable heads-up display."
 	icon_state = "eye"
 	action_button_name = "Toggle HUD"
-	augment_slots = AUGMENT_HEAD
+	augment_slots = AUGMENT_EYES
 	var/list/hud_type = list(HUD_MEDICAL, HUD_SECURITY)
 	var/active = FALSE
 
@@ -20,7 +20,10 @@
 				if (allowed(owner))
 					process_med_hud(owner, 1)
 			if (HUD_SECURITY)
+				//SIERRA-EDIT
+				//req_access = list(access_brig)
 				req_access = list(access_security)
+				//SIERRA-EDIT
 				if (allowed(owner))
 					process_sec_hud(owner, 1)
 			if (HUD_JANITOR)

@@ -1,7 +1,7 @@
 /mob/living/carbon
 	gender = MALE
 	pronouns = PRONOUNS_THEY_THEM
-	var/datum/species/species //Contains icon generation and language information, set during New().
+	var/singleton/species/species //Contains icon generation and language information, set during New().
 
 	var/life_tick = 0      // The amount of life ticks that have processed on this mob.
 	var/obj/item/handcuffed = null //Whether or not the mob is handcuffed
@@ -40,3 +40,5 @@
 	var/stasis_value
 
 	var/player_triggered_sleeping = 0
+	///Reagents towards which there is an active allergy.
+	var/list/active_allergies = list()

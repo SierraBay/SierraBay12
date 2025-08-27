@@ -8,7 +8,7 @@
 //			/old_stat: Status before the change.
 //			/new_stat: Status after the change.
 
-GLOBAL_DATUM_INIT(stat_set_event, /singleton/observ/stat_set, new)
+GLOBAL_TYPED_NEW(stat_set_event, /singleton/observ/stat_set)
 
 /singleton/observ/stat_set
 	name = "Stat Set"

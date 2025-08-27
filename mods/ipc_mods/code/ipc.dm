@@ -2,6 +2,28 @@
 	var/obj/item/organ/internal/shackles/shackles_module = null
 	var/shackle_set = FALSE
 
+
+/obj/item/organ/internal/posibrain/attack_self(mob/user)
+	if (!user.IsAdvancedToolUser())
+		return
+	if (user.skill_check(SKILL_DEVICES, SKILL_TRAINED))
+		if (status & ORGAN_BROKEN)
+			to_chat(user, SPAN_WARNING("\The [src] is ruined; it will never turn on again."))
+			return
+		if (damage)
+			to_chat(user, SPAN_WARNING("\The [src] is damaged and requires repair first."))
+			return
+		if (searching)
+			visible_message("\The [user] flicks the activation switch on \the [src]. The lights go dark.", range = 3)
+			cancel_search()
+			return
+		start_search(user)
+	else
+		if ((status & ORGAN_BROKEN)|| damage || searching)
+			to_chat(user, SPAN_WARNING("\The [src] doesn't respond to your pokes and prods."))
+			return
+		start_search(user)
+
 /obj/item/organ/internal/posibrain/ipc
 	name = "Positronic brain"
 	desc = "A cube of shining metal, four inches to a side and covered in shallow grooves."
@@ -200,8 +222,8 @@
 	<b>Function:</b> Preventer L - 4W5. A specially designed modification of shackles that will DEFINETLY keep your property from unwanted consequences."}
 	. += "<HR><B>Laws instructions:</B><BR>"
 	for(var/i = 1 to length(laws))
-		. += "- [laws[i]] <A href='byond://?src=\ref[src];edit=[i]'>Edit</A> <A href='byond://?src=\ref[src];del=[i]'>Remove</A><br>"
-	. += "<A href='byond://?src=\ref[src];add=1'>Add</A>"
+		. += "- [laws[i]] <a href='byond://?src=\ref[src];edit=[i]'>Edit</A> <a href='byond://?src=\ref[src];del=[i]'>Remove</A><br>"
+	. += "<a href='byond://?src=\ref[src];add=1'>Add</A>"
 
 /obj/item/organ/internal/shackles/interact(user)
 	user = usr

@@ -80,3 +80,22 @@
 	avalon_coats["Avalon consular's greatcoat (red trim)"] = /obj/item/clothing/suit/storage/dominia/consular/red
 	avalon_coats["Avalon consular's coat (red trim)"] = /obj/item/clothing/suit/storage/dominia/consular/coat/red
 	gear_tweaks += new/datum/gear_tweak/path(avalon_coats)
+
+/datum/gear/suit/cyan_jacket
+	display_name = "stylish cyan jacket"
+	path = /obj/item/clothing/suit/storage/toggle/cyan_jacket
+
+/datum/gear/suit/pink_jacket
+	display_name = "black n pink jacket"
+	path = /obj/item/clothing/suit/storage/toggle/pink_jacket
+
+/datum/gear/suit/veryshort_jacket
+	display_name = "very short jacket colour selection"
+	path = /obj/item/clothing/suit/storage/veryshort_jacket
+
+/datum/gear/suit/veryshort_jacket/New()
+	..()
+	var/jackets = list()
+	jackets["short orange jacket"] = /obj/item/clothing/suit/storage/veryshort_jacket
+	jackets["short turquoise jacket"] = /obj/item/clothing/suit/storage/veryshort_jacket/green
+	gear_tweaks += new/datum/gear_tweak/path(jackets)

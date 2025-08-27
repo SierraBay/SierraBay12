@@ -42,7 +42,6 @@
 	possible_trading_items = list(/obj/item/reagent_containers/food/snacks/meatkabob    	       = TRADER_THIS_TYPE,
 							/obj/item/reagent_containers/food/snacks/monkeysdelight             = TRADER_THIS_TYPE,
 							/obj/item/reagent_containers/food/snacks/ricepudding                = TRADER_THIS_TYPE,
-							/obj/item/reagent_containers/food/snacks/slice/xenomeatbread/filled = TRADER_THIS_TYPE,
 							/obj/item/reagent_containers/food/snacks/soydope                    = TRADER_THIS_TYPE,
 							/obj/item/reagent_containers/food/snacks/stewedsoymeat              = TRADER_THIS_TYPE,
 							/obj/item/reagent_containers/food/drinks/dry_ramen                  = TRADER_THIS_TYPE
@@ -81,12 +80,8 @@
 /datum/trader/ship/chinese/trade_quantity(quantity, list/offers, num, turf/location)
 	. = ..()
 	quantity = 1
-	if(.)
-		var/obj/item/reagent_containers/food/snacks/fortunecookie/cookie = new(location)
-		var/obj/item/paper/paper = new(cookie)
-		cookie.trash = paper
-		paper.SetName("Fortune")
-		paper.info = pick(fortunes)
+	if (.)
+		new /obj/item/reagent_containers/food/snacks/fortunecookie (location)
 
 /datum/trader/grocery
 	name = "Grocer"
@@ -160,8 +155,7 @@
 								/obj/item/reagent_containers/food/snacks/slice/bananabread/filled        = TRADER_THIS_TYPE,
 								/obj/item/reagent_containers/food/snacks/sliceable                       = TRADER_SUBTYPES_ONLY,
 								/obj/item/reagent_containers/food/snacks/sliceable/pizza                 = TRADER_BLACKLIST_ALL,
-								/obj/item/reagent_containers/food/snacks/sliceable/xenomeatbread         = TRADER_BLACKLIST,
 								/obj/item/reagent_containers/food/snacks/sliceable/flatdough             = TRADER_BLACKLIST,
 								/obj/item/reagent_containers/food/snacks/sliceable/braincake             = TRADER_BLACKLIST,
-								/obj/item/reagent_containers/food/snacks/pie                             = TRADER_THIS_TYPE,
+								/obj/item/reagent_containers/food/snacks/bananapie                             = TRADER_THIS_TYPE,
 								/obj/item/reagent_containers/food/snacks/applepie                        = TRADER_THIS_TYPE)

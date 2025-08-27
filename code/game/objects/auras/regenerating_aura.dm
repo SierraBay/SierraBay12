@@ -8,7 +8,7 @@
 	user.adjustBruteLoss(-brute_mult)
 	user.adjustFireLoss(-fire_mult)
 	user.adjustToxLoss(-tox_mult)
-	return EMPTY_BITFIELD
+	return FLAGS_OFF
 
 /obj/aura/regenerating/human
 	var/nutrition_damage_mult = 1 //How much nutrition it takes to heal regular damage
@@ -30,10 +30,10 @@
 	if(!istype(H))
 		CRASH("Someone gave [user.type] a [src.type] aura. This is invalid.")
 	if(!innate_heal || H.InStasis() || H.stat == DEAD)
-		return EMPTY_BITFIELD
+		return FLAGS_OFF
 	if(H.nutrition < nutrition_damage_mult)
 		low_nut_warning()
-		return EMPTY_BITFIELD
+		return FLAGS_OFF
 
 	if(brute_mult && H.getBruteLoss())
 		H.adjustBruteLoss(-brute_mult * config.organ_regeneration_multiplier)
@@ -125,15 +125,15 @@
 // Default return; we're just logging.
 /obj/aura/regenerating/human/unathi/aura_check_weapon(obj/item/weapon, mob/attacker, click_params)
 	toggle_blocked_until = max(world.time + 1 MINUTE, toggle_blocked_until)
-	return EMPTY_BITFIELD
+	return FLAGS_OFF
 
 /obj/aura/regenerating/human/unathi/aura_check_thrown(atom/movable/thrown_atom, datum/thrownthing/thrown_datum)
 	toggle_blocked_until = max(world.time + 1 MINUTE, toggle_blocked_until)
-	return EMPTY_BITFIELD
+	return FLAGS_OFF
 
 /obj/aura/regenerating/human/unathi/aura_check_bullet(obj/item/projectile/proj, def_zone)
 	toggle_blocked_until = max(world.time + 1 MINUTE, toggle_blocked_until)
-	return EMPTY_BITFIELD
+	return FLAGS_OFF
 
 /obj/aura/regenerating/human/unathi/aura_check_life()
 	var/mob/living/carbon/human/H = user

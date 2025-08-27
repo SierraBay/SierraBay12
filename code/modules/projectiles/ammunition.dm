@@ -1,3 +1,38 @@
+/**
+ * Determines the full descriptive name for an ammo casing.
+ *
+ * Global proc so it also functions with uninitialized type paths.
+ *
+ * **Parameters**:
+ * - `ammo_casing` (Object or path).
+ * - `spent` (Boolean, default `FALSE`). Only used if `ammo_casing` is a path. Whether the casing is considered spent or not. Otherwise, this is defined based on the presence of `ammo_casing.BB`.
+ *
+ * Returns string.
+ */
+/proc/_get_ammo_casing_name(obj/item/ammo_casing/ammo_casing, spent = FALSE)
+	if (!ammo_casing)
+		return
+	var/name
+	var/caliber
+	var/label
+	if (ispath(ammo_casing))
+		name = initial(ammo_casing.name)
+		caliber = initial(ammo_casing.caliber)
+		label = initial(ammo_casing.label)
+	else
+		name = ammo_casing.name
+		caliber = ammo_casing.caliber
+		spent = !ammo_casing.BB
+		label = ammo_casing.label
+
+	. = "[caliber] [name]"
+	if (spent)
+		. = "spent [.]"
+	if (label)
+		. = "[.] ([label])"
+
+
+
 /obj/item/ammo_casing
 	name = "bullet casing"
 	desc = "A bullet casing."
@@ -11,15 +46,19 @@
 
 	var/leaves_residue = TRUE
 	var/caliber = ""					//Which kind of guns it can be loaded into
+	/// String. Additional label used for `_get_ammo_casing_name()`. Should be things like 'practice', 'blank', 'AP', 'FMJ', etc.
+	var/label
 	var/projectile_type					//The bullet type to create when New() is called
 	var/obj/item/projectile/BB = null	//The loaded bullet - make it so that the projectiles are created only when needed?
 	var/spent_icon = "pistolcasing-spent"
 	var/fall_sounds = list('sound/weapons/guns/casingfall1.ogg','sound/weapons/guns/casingfall2.ogg','sound/weapons/guns/casingfall3.ogg')
 
 
-/obj/item/ammo_casing/Initialize()
-	if(ispath(projectile_type))
+/obj/item/ammo_casing/Initialize(mapload, spawn_empty = FALSE)
+	if (ispath(projectile_type) && !spawn_empty)
 		BB = new projectile_type(src)
+	if (spawn_empty)
+		update_icon()
 	if(randpixel)
 		pixel_x = rand(-randpixel, randpixel)
 		pixel_y = rand(-randpixel, randpixel)
@@ -97,6 +136,10 @@
 		to_chat(user, "This one is spent.")
 
 
+/obj/item/ammo_casing/proc/get_ammo_casing_name()
+	return _get_ammo_casing_name(src)
+
+
 //An item that holds casings and can be used to put them inside guns
 /obj/item/ammo_magazine
 	name = "magazine"
@@ -149,49 +192,260 @@
 	update_icon()
 
 
-/obj/item/ammo_magazine/use_tool(obj/item/W, mob/living/user, list/click_params)
-	if(istype(W, /obj/item/ammo_casing))
-		var/obj/item/ammo_casing/C = W
-		if(C.caliber != caliber)
-			to_chat(user, SPAN_WARNING("\The [C] does not fit into \the [src]."))
+/obj/item/ammo_magazine/use_tool(obj/item/tool, mob/living/user, list/click_params)
+	if (istype(tool, /obj/item/ammo_casing))
+		if (!do_after(user, 0.25 SECONDS, src, DO_PUBLIC_UNIQUE) || !user.use_sanity_check(src, tool) || !load_casing(tool, user, TRUE))
 			return TRUE
-		if(length(stored_ammo) >= max_ammo)
-			to_chat(user, SPAN_WARNING("\The [src] is full!"))
-			return TRUE
-		if(!user.unEquip(C, src))
-			FEEDBACK_UNEQUIP_FAILURE(user, C)
-			return TRUE
-		stored_ammo.Add(C)
-		update_icon()
+		user.visible_message(
+			SPAN_NOTICE("\The [user] loads \a [tool] into \a [src]."),
+			SPAN_NOTICE("You load \the [tool] into \the [src].")
+		)
 		return TRUE
+
+
+	if (istype(tool, /obj/item/ammo_magazine))
+		if (length(stored_ammo) >= max_ammo)
+			USE_FEEDBACK_FAILURE("\The [src] is full.")
+			return TRUE
+		var/obj/item/ammo_magazine/donor_magazine = tool
+		if (length(donor_magazine.stored_ammo) <= 0)
+			USE_FEEDBACK_FAILURE("\The [donor_magazine] is empty.")
+			return TRUE
+		if (donor_magazine.caliber != caliber)
+			USE_FEEDBACK_FAILURE("\The [donor_magazine]'s ammunition does not fit \the [src].")
+			return TRUE
+
+		user.visible_message(
+			SPAN_NOTICE("\The [user] starts transferring bullets from \a [tool] to \a [src]."),
+			SPAN_NOTICE("You start transferring bullets from \the [tool] to \the [src].")
+		)
+		var/partial = FALSE
+		var/count = 0
+		while (length(donor_magazine.stored_ammo))
+			if (!do_after(user, 0.5 SECONDS, src, DO_PUBLIC_UNIQUE) || !user.use_sanity_check(src, tool))
+				partial = TRUE
+				break
+			if (length(donor_magazine.stored_ammo) <= 0)
+				USE_FEEDBACK_FAILURE("\The [donor_magazine] is empty.")
+				partial = TRUE
+				break
+			var/obj/item/ammo_casing/ammo_casing = donor_magazine.stored_ammo[length(donor_magazine.stored_ammo)]
+			if (!load_casing(ammo_casing))
+				partial = TRUE
+				break
+			donor_magazine.stored_ammo -= ammo_casing
+			donor_magazine.update_icon()
+			count++
+
+		if (!count)
+			user.visible_message(
+				SPAN_NOTICE("\The [user] fails to transfer any bullets from \a [tool] to \a [src]."),
+				SPAN_NOTICE("Your fail to transfer any bullets from \the [tool] to \the [src].")
+			)
+			return TRUE
+		user.visible_message(
+			SPAN_NOTICE("\The [user] [partial ? "partially " : null]transfers bullets from \a [tool] to \a [src]."),
+			SPAN_NOTICE("You [partial ? "partially " : null]transfer bullets from \the [tool] to \the [src].")
+		)
+		update_icon()
+		donor_magazine.update_icon()
+		return TRUE
+
+
 	return ..()
 
 
-/obj/item/ammo_magazine/attack_self(mob/user)
-	if(!length(stored_ammo))
-		to_chat(user, SPAN_NOTICE("[src] is already empty!"))
-		return
-	to_chat(user, SPAN_NOTICE("You empty [src]."))
-	for(var/obj/item/ammo_casing/C in stored_ammo)
-		C.forceMove(user.loc)
-		C.set_dir(pick(GLOB.alldirs))
+/obj/item/ammo_magazine/use_after(atom/target, mob/living/user, click_parameters)
+	// Try to scoop bullets up
+	var/turf/target_turf
+	if (isturf(target))
+		target_turf = target
+	else if (istype(target, /obj/item/ammo_casing) && isturf(target.loc))
+		target_turf = target.loc
+	if (!target_turf)
+		return ..()
+
+	var/list/candidates = list()
+	for (var/obj/item/ammo_casing/ammo_casing in target_turf)
+		if (ammo_casing.caliber != caliber)
+			continue
+		candidates += ammo_casing
+
+	if (!length(candidates))
+		USE_FEEDBACK_FAILURE("There are no bullets \the [src] can hold here.")
+		return TRUE
+	if (length(stored_ammo) >= max_ammo)
+		USE_FEEDBACK_FAILURE("\The [src] is full.")
+		return TRUE
+
+	user.visible_message(
+		SPAN_NOTICE("\The [user] starts loading \a [src] with loose bullets."),
+		SPAN_NOTICE("You start loading \the [src] with loose bullets.")
+	)
+	var/count = 0
+	for (var/obj/item/ammo_casing/ammo_casing as anything in candidates)
+		if (!do_after(user, 0.25 SECONDS, src, DO_PUBLIC_UNIQUE) || !user.use_sanity_check(src, ammo_casing, SANITY_CHECK_DEFAULT & ~SANITY_CHECK_TOOL_IN_HAND))
+			break
+		if (!load_casing(ammo_casing, user))
+			break
+		count++
+
+	if (!count)
+		user.visible_message(
+			SPAN_NOTICE("\The [user] fails to load \a [src] with loose bullets."),
+			SPAN_WARNING("You fail to load \the [src] with loose bullets.")
+		)
+		return TRUE
+	user.visible_message(
+		SPAN_NOTICE("\The [user] loads \a [src] with loose bullets."),
+		SPAN_NOTICE("You load \the [src] with loose bullets.")
+	)
+	return TRUE
+
+
+
+/**
+ * Checks if the casing can be loaded into this magazine. Provides user feedback messages on failure.
+ *
+ * Does not include unequip checks by default, as this is intended to be usable in cases those checks would be invalid.
+ *
+ * **Parameters**:
+ * - `ammo_casing` - The ammo casing to check.
+ * - `user` - The mob performing the action. If not set, feedback messages are skipped.
+ *
+ * Returns boolean.
+ */
+/obj/item/ammo_magazine/proc/can_load_casing(obj/item/ammo_casing/ammo_casing, mob/living/user)
+	if (!istype(ammo_casing) || ammo_casing.caliber != caliber)
+		if (user)
+			USE_FEEDBACK_FAILURE("\The [ammo_casing] does not fit in \the [src].")
+		return FALSE
+
+	if (length(stored_ammo) >= max_ammo)
+		if (user)
+			USE_FEEDBACK_FAILURE("\The [src] is full.")
+		return FALSE
+
+	return TRUE
+
+
+/**
+ * Attempts to load the ammo casing into this magazine. Provides user feedback on failure.
+ *
+ * Checks `can_load_casing()`.
+ *
+* **Parameters**:
+ * - `ammo_casing` - The ammo casing to load.
+ * - `user` - The mob performing the action. If not set, feedback messages are skipped.
+ * - `unequip_check` (Boolean, default `FALSE`) - If set, includes a `user.unEquip(ammo_casing, src)` check.
+ *
+ * Returns boolean. Indicates whether the casing was loaded or not.
+ */
+/obj/item/ammo_magazine/proc/load_casing(obj/item/ammo_casing/ammo_casing, mob/living/user, unequip_check = FALSE)
+	if (!can_load_casing(ammo_casing, user, unequip_check))
+		return FALSE
+
+	if (unequip_check && !user?.unEquip(ammo_casing, src))
+		FEEDBACK_UNEQUIP_FAILURE(user, ammo_casing)
+		return FALSE
+
+	playsound(src, 'sound/weapons/guns/interaction/shotgun_instert.ogg', 10, TRUE)
+	ammo_casing.forceMove(src)
+	stored_ammo += ammo_casing
+	update_icon()
+	return TRUE
+
+
+/**
+ * Removes the last casing from the magazine. Provides user feedback on failure.
+ *
+ * Either `user` or `target` can be provided, the proc will function either way.
+ *
+ * **Parameters**:
+ * - `user` - The mob performing the action.
+ * - `target` (Default `user`, if set) - The target atom to move the casing to. If a mob, attempts to place it in hands.
+ *
+ * Returns the removed casing.
+ */
+/obj/item/ammo_magazine/proc/remove_casing(mob/living/user, atom/target = user)
+	if (!user && !target)
+		crash_with("`remove_casing()` requires either user or target, or both, to be provided. Neither were provided.")
+		return FALSE
+
+	if (!length(stored_ammo))
+		if (user)
+			USE_FEEDBACK_FAILURE("\The [src] is empty.")
+		return FALSE
+
+	var/obj/item/ammo_casing/ammo_casing = stored_ammo[length(stored_ammo)]
+	stored_ammo -= ammo_casing
+	update_icon()
+
+	if (ismob(target))
+		var/mob/target_mob = target
+		target_mob.put_in_hands(ammo_casing)
+	else
+		ammo_casing.forceMove(target)
+	playsound(src, 'sound/weapons/guns/interaction/bullet_insert.ogg', 10, TRUE)
+
+	return ammo_casing
+
+
+/**
+ * Attempts to dump all casings into `target`. Provides user feedback on failure.
+ *
+ * **Parameters**:
+ * - `user` - The mob performing the action.
+ * - `target` (Default `get_turf(src)`) - The target atom to move the casings to.
+ *
+ * Returns a list of the removed casings, or `FALSE`.
+ */
+/obj/item/ammo_magazine/proc/dump_all_casings(mob/living/user, atom/target = get_turf(src))
+	RETURN_TYPE(/list)
+	if (!length(stored_ammo))
+		if (user)
+			USE_FEEDBACK_FAILURE("\The [src] is empty.")
+		return FALSE
+
+	var/list/removed = list()
+	for (var/obj/item/ammo_casing/ammo_casing in stored_ammo)
+		playsound(src, pick(ammo_casing.fall_sounds), 10, TRUE)
+		ammo_casing.forceMove(target)
+		ammo_casing.set_dir(pick(GLOB.alldirs))
+		removed += ammo_casing
+
 	stored_ammo.Cut()
 	update_icon()
 
+	return removed
+
+
+/obj/item/ammo_magazine/attack_self(mob/user)
+	if (!dump_all_casings(user, user.loc))
+		return
+	user.visible_message(
+		SPAN_WARNING("\The [user] ejects \a [src]'s contents on the ground."),
+		SPAN_WARNING("You eject \the [src]'s contents on the ground.")
+	)
+
 
 /obj/item/ammo_magazine/attack_hand(mob/user)
-	if(user.get_inactive_hand() == src)
-		if(!length(stored_ammo))
-			to_chat(user, SPAN_NOTICE("[src] is already empty!"))
-		else
-			var/obj/item/ammo_casing/C = stored_ammo[length(stored_ammo)]
-			stored_ammo-=C
-			user.put_in_hands(C)
-			user.visible_message("\The [user] removes \a [C] from [src].", SPAN_NOTICE("You remove \a [C] from [src]."))
-			update_icon()
-	else
-		..()
+	if (user.get_inactive_hand() == src)
+		if (!length(stored_ammo))
+			USE_FEEDBACK_FAILURE("\The [src] is empty.")
+			return TRUE
+		if (!do_after(user, 0.25 SECONDS, src, DO_PUBLIC_UNIQUE) || !user.use_sanity_check(src))
+			return TRUE
+		var/atom/removed_casing = remove_casing(user)
+		if (!removed_casing)
+			return
+		user.visible_message(
+			SPAN_NOTICE("\The [user] removes \a [removed_casing] from \a [src]."),
+			SPAN_NOTICE("You remove \a [removed_casing] from \the [src].")
+		)
 		return
+
+	..()
 
 
 /obj/item/ammo_magazine/on_update_icon()

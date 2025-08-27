@@ -64,7 +64,7 @@
 	extra_details = list("onegoldstripe")
 
 /obj/item/card/id/sierra/crew/security
-	desc = "An identification card issued to asset protection depatment's personnel aboard the NSV Sierra."
+	desc = "An identification card issued to the asset protection department personnel aboard the NSV Sierra."
 	job_access_type = /datum/job/officer
 	detail_color = "#e00000"
 
@@ -197,6 +197,9 @@
 	color = COLOR_GRAY40
 	detail_color = COLOR_COMMAND_BLUE
 	extra_details = list("onegoldstripe")
+
+/obj/item/card/id/sierra/crew/liaison/iso
+	detail_color = "#570b03"
 
 /obj/item/card/id/sierra/crew/adjutant
 	desc = "A card issued to command's support personnel aboard the NSV Sierra."

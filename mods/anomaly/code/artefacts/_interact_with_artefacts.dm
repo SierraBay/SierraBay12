@@ -5,37 +5,31 @@
 	var/turf/prev_loc
 
 //Подбор артефакта
-
-/obj/item/artefact/Initialize()
-	. = ..()
-	prev_loc = get_turf(src)
-
 /obj/item/artefact/attack_hand(mob/user as mob)
-	if(inmech_sec(user))
+	if(inmech(user))
 		to_chat(user, SPAN_WARNING("Вы недотягиваетесь."))
 		return
 	else if(connected_to_anomaly)
 		if(AnomaliesAmmountInTurf(get_turf(src)) == 0)
-			connected_to_anomaly = FALSE
-			SSanom.collected_artefacts_by_player++
+			artefact_collected_by_player()
 		else
-			for(var/obj/anomaly/anomka in src.loc.contents)
-				if(prob(25 * user.get_skill_value(SKILL_SCIENCE)))
-					to_chat(user, SPAN_GOOD("[desc]"))
-					connected_to_anomaly = FALSE
-					SSanom.collected_artefacts_by_player++
+			for(var/obj/anomaly/anomka in get_turf(src))
+				if(anomka.is_helper)
+					var/obj/anomaly/part/helper = anomka
+					if(helper.core.isready())
+						helper.core.activate_anomaly()
 				else
-					to_chat(user, SPAN_WARNING("Обьект уплывает из ваших рук"))
-					if(istype(anomka, /obj/anomaly/part))
-						var/obj/anomaly/part/anomka_part = anomka
-						if(anomka_part.core.isready())
-							anomka_part.core.activate_anomaly()
-					else
-						if(anomka.isready())
-							anomka.activate_anomaly()
+					if(anomka.isready())
+						anomka.activate_anomaly()
+				if(!have_anomaly_detector(user))
+					to_chat(user, SPAN_WARNING("Обьект уплывает из ваших рук, кажется, его нужно чем-то сдержать!"))
 					return
+				if(!prob(25 * user.get_skill_value(SKILL_SCIENCE)))
+					to_chat(user, SPAN_WARNING("Обьект уплывает из ваших рук"))
+					return
+				to_chat(user, SPAN_GOOD("[desc]"))
+				artefact_collected_by_player()
 	react_to_touched(user)
-
 	.=..()
 
 
@@ -127,6 +121,8 @@
 /obj/item/artefact/proc/rub_interaction(mob/living/user)
 	return
 
+/obj/item/artefact/proc/rvach_destroy_effect()
+	delete_artefact()
 
 ///ВЗАИМОДЕЙСТВИЯ ОТ МАШИНЫ ДЛЯ ИЗУЧЕНИЙ И АНАЛИЗА
 /obj/item/artefact/proc/urm_radiation(mob/living/user)

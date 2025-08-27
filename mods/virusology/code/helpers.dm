@@ -94,13 +94,13 @@
 		return
 	if ("[disease.uniqueID]" in M.virus2)
 		return
-	if(LAZYLEN(M.virus2) >= 3) // cap the number of viruses a mob can have to 3
+	if(LAZYLEN(M.virus2) >= 2) // cap the number of viruses a mob can have to 2
 		return
 	// if one of the antibodies in the mob's body matches one of the disease's antigens, don't infect
 	var/list/antibodies_in_common = M.antibodies & disease.antigen
 	if(LAZYLEN(antibodies_in_common))
 		return
-	if(prob(100 * M.reagents.get_reagent_amount(/datum/reagent/spaceacillin) / (REAGENTS_OVERDOSE/2)))
+	if(M.reagents && prob(100 * M.reagents.get_reagent_amount(/datum/reagent/spaceacillin) / (REAGENTS_OVERDOSE/2)))
 		return
 
 	if(!LAZYLEN(disease.affected_species))
@@ -116,8 +116,6 @@
 	var/mob_infection_prob = infection_chance(M, disease.spreadtype) * M.immunity_weakness()
 	if(forced || (prob(disease.infectionchance) && prob(mob_infection_prob)))
 		var/datum/disease2/disease/D = disease.getcopy()
-		if(rand(1, 50) == 1)
-			D.minormutate()
 //		log_debug("Adding virus")
 		M.virus2["[D.uniqueID]"] = D
 		SET_BIT(M.hud_updateflag, STATUS_HUD)

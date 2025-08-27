@@ -1,3 +1,14 @@
+/*
+	Everything is encoded as strings because apparently that's how Byond rolls.
+
+	"1,1" is the bottom left square of the user's screen.  This aligns perfectly with the turf grid.
+	"1:2,3:4" is the square (1,3) with pixel offsets (+2, +4); slightly right and slightly above the turf grid.
+	Pixel offsets are used so you don't perfectly hide the turf under them, that would be crappy.
+
+	The size of the user's screen is defined by client.view (indirectly by world.view), in our case "15x15".
+	Therefore, the top right corner (except during admin shenanigans) is at "15,15"
+*/
+
 // AI button defines
 #define AI_BUTTON_PROC_BELONGS_TO_CALLER 1
 #define AI_BUTTON_INPUT_REQUIRES_SELECTION 2
@@ -33,6 +44,15 @@
 #define ui_ai_crew_mon "RIGHT-1:30,TOP:0"
 #define ui_ai_crew_rec "RIGHT-2:30, TOP:0"
 
+// AI: Malf
+#define ui_ai_research "LEFT:6, TOP-2:0"
+#define ui_ai_hardware "LEFT:6, TOP-3:0"
+#define ui_ai_apu "LEFT:6, TOP-3:0"
+#define ui_ai_self_destruct "LEFT:6, TOP-3:0"
+
+#define ui_ai_destroy "RIGHT-1:30, TOP-1:0"
+
+
 // HUD Code
 
 /mob/living/silicon/ai
@@ -43,9 +63,11 @@
 	if(!isAI(mymob))
 		return
 
-	var/mob/living/silicon/A = mymob
+	var/mob/living/silicon/ai/A = mymob
 
-	adding = list()
+	src.adding = list()
+	src.other = list()
+
 	adding += new /obj/screen/ai_button(null,
 			ui_ai_core,
 			"AI Core",
@@ -202,9 +224,20 @@
 			/mob/living/silicon/ai/proc/show_crew_records
 			)
 
-	A.client.screen = list()
-	A.client.screen.Add(adding)
+	if(A.malfunctioning)
+		adding += new /obj/screen/ai_button(null,
+			ui_ai_research,
+				"Select Research",
+				"ai_research",
+				/datum/game_mode/malfunction/verb/ai_select_research
+				)
 
+	A.client.screen = list()
+	A.client.screen += src.adding + src.other
+
+/mob/living/silicon/ai/update_hud()
+	if(client)
+		client.screen |= contents
 
 // Undef
 #undef ui_ai_core
@@ -233,3 +266,9 @@
 
 #undef ui_ai_crew_mon
 #undef ui_ai_crew_rec
+
+#undef ui_ai_research
+#undef ui_ai_hardware
+#undef ui_ai_apu
+
+#undef ui_ai_destroy

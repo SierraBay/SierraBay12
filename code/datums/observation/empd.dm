@@ -7,7 +7,7 @@
 //			/atom/empd_instance: The instance that was EMPd.
 //			severity: The EMP severity
 
-GLOBAL_DATUM_INIT(empd_event, /singleton/observ/empd, new)
+GLOBAL_TYPED_NEW(empd_event, /singleton/observ/empd)
 
 /singleton/observ/empd
 	name = "EMPd"

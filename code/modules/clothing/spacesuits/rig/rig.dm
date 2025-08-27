@@ -734,9 +734,6 @@
 		SPAN_ITALIC("You can hear metal clicking and fabric rustling."),
 		range = 5
 	)
-	wearer = user
-	wearer.wearing_rig = src
-	update_icon()
 
 /obj/item/rig/space/equip_delay_after(mob/user, slot, equip_flags)
 	user.visible_message(
@@ -744,6 +741,11 @@
 		SPAN_NOTICE("You finish putting on \the [src]."),
 		range = 5
 	)
+
+/obj/item/rig/post_equip_item(mob/user, slot, equip_flags)
+	wearer = user
+	wearer.wearing_rig = src
+	update_icon()
 
 /obj/item/rig/proc/toggle_piece(piece, mob/initiator, deploy_mode)
 

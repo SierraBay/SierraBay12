@@ -3,7 +3,7 @@
 /obj/overmap/visitable/sector/arcticplanet
 	name = "arctic dwarf planet"
 	desc = "Sensor array detects an arctic planet with a small vessel on the planet's surface. Scans further indicate strange energy emissions from below the planet's surface."
-	sector_flags = EMPTY_BITFIELD
+	sector_flags = FLAGS_OFF
 	icon_state = "globe"
 	initial_generic_waypoints = list(
 		"nav_blueriv_1",

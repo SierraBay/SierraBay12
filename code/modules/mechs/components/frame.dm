@@ -255,8 +255,8 @@
 		var/current_state = is_reinforced
 		playsound(src, 'sound/items/Welder.ogg', 50, TRUE)
 		user.visible_message(
-			SPAN_NOTICE("\The [user] starts [is_reinforced == FRAME_REINFORCED_WELDED ? "un" : null]welding \the [src]'s internal reinforcements with \a [tool]."),
-			SPAN_NOTICE("You start [is_reinforced == FRAME_REINFORCED_WELDED ? "un" : null]welding \the [src]'s internal reinforcements with \the [tool]."),
+			SPAN_NOTICE("\The [user] starts [current_state == FRAME_REINFORCED_WELDED ? "un" : null]welding \the [src]'s internal reinforcements with \a [tool]."),
+			SPAN_NOTICE("You start [current_state == FRAME_REINFORCED_WELDED ? "un" : null]welding \the [src]'s internal reinforcements with \the [tool]."),
 			SPAN_ITALIC("You hear welding.")
 		)
 		if (!user.do_skilled((tool.toolspeed * 2) SECONDS, SKILL_DEVICES, src) || !user.use_sanity_check(src, tool))
@@ -276,8 +276,8 @@
 		update_icon()
 		playsound(src, 'sound/items/Welder.ogg', 50, TRUE)
 		user.visible_message(
-			SPAN_NOTICE("\The [user] [is_reinforced == FRAME_REINFORCED_WELDED ? "un" : null]welds \the [src]'s internal reinforcements with \a [tool]."),
-			SPAN_NOTICE("You [is_reinforced == FRAME_REINFORCED_WELDED ? "un" : null]weld \the [src]'s internal reinforcements with \the [tool]."),
+			SPAN_NOTICE("\The [user] [current_state == FRAME_REINFORCED_WELDED ? "un" : null]welds \the [src]'s internal reinforcements with \a [tool]."),
+			SPAN_NOTICE("You [current_state == FRAME_REINFORCED_WELDED ? "un" : null]weld \the [src]'s internal reinforcements with \the [tool]."),
 		)
 		return TRUE
 

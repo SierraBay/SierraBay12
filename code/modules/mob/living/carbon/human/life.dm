@@ -427,6 +427,10 @@
 		for(var/obj/item/organ/external/O in parts)
 			if(QDELETED(O) || !(O.owner == src))
 				continue
+			//[SIERRA-ADD] - IPC_MODS
+			if(BP_IS_ROBOTIC(O))
+				continue
+			//[/SIERRA-ADD] - IPC_MODS
 			if(O.damage + (LOW_PRESSURE_DAMAGE) < O.min_broken_damage) //vacuum does not break bones
 				O.take_external_damage(brute = LOW_PRESSURE_DAMAGE, used_weapon = "Low Pressure")
 		if(getOxyLoss() < 55) // 11 OxyLoss per 4 ticks when wearing internals;    unconsciousness in 16 ticks, roughly half a minute

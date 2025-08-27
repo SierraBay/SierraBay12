@@ -352,6 +352,18 @@
 	item_icons = list(slot_head_str = 'maps/torch/icons/mob/onmob_head_solgov.dmi')
 	accessories = null
 
+/obj/item/clothing/head/helmet/solgov/defense_forces
+	name = "\improper SCGDF helmet"
+	desc = "A robust helmet utilized by Sol Central Government Defense Forces."
+	accessories = null
+	armor = list(
+		melee = ARMOR_MELEE_MAJOR,
+		bullet = ARMOR_BALLISTIC_RESISTANT,
+		laser = ARMOR_LASER_MAJOR,
+		energy = ARMOR_ENERGY_RESISTANT,
+		bomb = ARMOR_BOMB_PADDED
+		)
+
 /obj/item/clothing/head/helmet/solgov/pilot
 	name = "pilot's helmet"
 	desc = "A pilot's helmet for operating the cockpit in style. For when you want to protect your noggin AND look stylish."
@@ -373,6 +385,7 @@
 
 /obj/item/clothing/head/helmet/space/void/engineering/alt/sol
 	light_overlay = "helmet_light_alt"
+	head_light_range = 5
 	icon = 'maps/torch/icons/obj/obj_head_solgov.dmi'
 	item_icons = list(slot_head_str = 'maps/torch/icons/mob/onmob_head_solgov.dmi')
 	sprite_sheets = list(
@@ -386,6 +399,7 @@
 
 /obj/item/clothing/head/helmet/space/void/atmos/alt/sol
 	light_overlay = "helmet_light_alt"
+	head_light_range = 5
 	icon = 'maps/torch/icons/obj/obj_head_solgov.dmi'
 	item_icons = list(slot_head_str = 'maps/torch/icons/mob/onmob_head_solgov.dmi')
 	sprite_sheets = list(
@@ -465,6 +479,7 @@
 		rad = ARMOR_RAD_RESISTANT
 		)
 	light_overlay = "helmet_light_dual_alt"
+	head_light_range = 5
 	tinted = FALSE
 	valid_accessory_slots = null
 	restricted_accessory_slots = null

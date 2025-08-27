@@ -18,7 +18,7 @@ SUBSYSTEM_DEF(init_misc_late)
 	init_recipes()
 
 
-GLOBAL_VAR_INIT(microwave_maximum_item_storage, 0)
+GLOBAL_VAR_AS(microwave_maximum_item_storage, 0)
 GLOBAL_LIST_EMPTY(microwave_recipes)
 GLOBAL_LIST_EMPTY(microwave_accepts_reagents)
 GLOBAL_LIST_EMPTY(microwave_accepts_items)
@@ -29,18 +29,20 @@ GLOBAL_LIST_EMPTY(microwave_accepts_items)
 		/obj/item/holder = TRUE,
 		/obj/item/reagent_containers/food/snacks/grown = TRUE
 	)
-	for (var/datum/microwave_recipe/recipe as anything in subtypesof(/datum/microwave_recipe))
+	for (var/singleton/cooking_recipe/recipe as anything in subtypesof(/singleton/cooking_recipe))
 		recipe = new recipe
 		recipe.produce_amount = 0
 		for (var/tag in recipe.required_produce)
 			recipe.produce_amount += recipe.required_produce[tag]
 		var/objects_amount = recipe.produce_amount + length(recipe.required_items)
-		recipe.weight = objects_amount + length(recipe.required_reagents)
+		recipe.weight = objects_amount + length(recipe.required_reagents) + length(recipe.consumed_reagents)
 		if (!recipe.result_path || !recipe.weight)
 			log_error("Recipe [recipe.type] has invalid results or requirements.")
 			continue
 		GLOB.microwave_recipes += recipe
 		for (var/type in recipe.required_reagents)
+			reagents[type] = TRUE
+		for (var/type in recipe.consumed_reagents)
 			reagents[type] = TRUE
 		for (var/type in recipe.required_items)
 			items[type] = TRUE
@@ -51,5 +53,5 @@ GLOBAL_LIST_EMPTY(microwave_accepts_items)
 		GLOB.microwave_accepts_items += type
 	sortTim(GLOB.microwave_recipes, GLOBAL_PROC_REF(cmp_microwave_recipes_by_weight_dsc))
 
-/proc/cmp_microwave_recipes_by_weight_dsc(datum/microwave_recipe/a, datum/microwave_recipe/b)
+/proc/cmp_microwave_recipes_by_weight_dsc(singleton/cooking_recipe/a, singleton/cooking_recipe/b)
 	return a.weight - b.weight

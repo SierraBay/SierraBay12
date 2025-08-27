@@ -33,9 +33,9 @@ SUBSYSTEM_DEF(supply)
 		"virology_dishes" = "From exported virus dishes",
 //SIERRA-ADD
 		"animal" = "From captured exotic alien fauna",
-		//[SIERRA-ADD] - ANOMALY - Добавляем категорию "Артефакты"
+//[SIERRA-ADD] - ANOMALY - Добавляем категорию "Артефакты"
 		"artefacts" = "From artefacts",
-		//[SIERRA-ADD]
+//[SIERRA-ADD]
 		"total" = "Total" // If you're adding additional point sources, add it here in a new line. Don't forget to put a comma after the old last line.
 	)
 

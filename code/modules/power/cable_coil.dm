@@ -1,5 +1,5 @@
 /// Associative list of colors. Default colors that a cable coil or length of cable can be. Used for multitool interactions.
-GLOBAL_LIST_INIT(cable_default_colors, list(
+GLOBAL_LIST_AS(cable_default_colors, list(
 	"Black"  = CABLE_COLOR_BLACK,
 	"Blue"   = CABLE_COLOR_BLUE,
 	"Cyan"   = CABLE_COLOR_CYAN,
@@ -220,6 +220,10 @@ GLOBAL_LIST_INIT(cable_default_colors, list(
 	if (istype(target, /turf/simulated/open) && !locate(/obj/structure/lattice, target))
 		if (!can_use(2))
 			to_chat(user, SPAN_WARNING("You don't have enough cable to hang a wire down."))
+			return
+		var/turf/below = GetBelow(target)
+		if (!below.is_plating())
+			USE_FEEDBACK_FAILURE("\The [below] below needs to have its tiling removed before you can lay a cable.")
 			return
 		to_dir = DOWN
 	var/from_dir = user.dir

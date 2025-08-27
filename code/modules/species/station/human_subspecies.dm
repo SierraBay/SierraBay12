@@ -1,4 +1,4 @@
-/datum/species/human/gravworlder
+/singleton/species/human/gravworlder
 	name = SPECIES_GRAVWORLDER
 	name_plural = "Grav-Adapted Humans"
 	description = "Heavier and stronger than a baseline human, gravity-adapted people have \
@@ -25,12 +25,12 @@
 
 	appearance_flags = SPECIES_APPEARANCE_HAS_HAIR_COLOR | SPECIES_APPEARANCE_HAS_SKIN_TONE_GRAV | SPECIES_APPEARANCE_HAS_LIPS | SPECIES_APPEARANCE_HAS_UNDERWEAR | SPECIES_APPEARANCE_HAS_EYE_COLOR
 
-/datum/species/human/gravworlder/can_float(mob/living/carbon/human/H)
+/singleton/species/human/gravworlder/can_float(mob/living/carbon/human/H)
 	. = ..()
 	if(.)
 		return H.skill_check(SKILL_HAULING, SKILL_EXPERIENCED) //Hard for them to swim
 
-/datum/species/human/spacer
+/singleton/species/human/spacer
 	name = SPECIES_SPACER
 	name_plural = "Space-Adapted Humans"
 	description = "Lithe and frail, these sickly folk were engineered for work in environments that \
@@ -61,7 +61,7 @@
 	warning_low_pressure = WARNING_LOW_PRESSURE * 0.8            // Low pressure warning.
 	hazard_low_pressure = HAZARD_LOW_PRESSURE * 0.8              // Dangerously low pressure.
 
-/datum/species/human/vatgrown
+/singleton/species/human/vatgrown
 	name = SPECIES_VATGROWN
 	name_plural = "Vat-Grown Humans"
 	description = "With cloning technology having become commercially viable in the late 21st century, \
@@ -95,7 +95,7 @@
 		TAG_CULTURE = CULTURE_HUMAN_VATGROWN
 	)
 
-/datum/species/human/tritonian
+/singleton/species/human/tritonian
 	name = SPECIES_TRITONIAN
 	name_plural = "Tritonians"
 	description = "Of all human gene-adapts, the Tritonian genotype is probably the most wildly divergent from \
@@ -137,13 +137,13 @@
 
 	appearance_flags = SPECIES_APPEARANCE_HAS_HAIR_COLOR | SPECIES_APPEARANCE_HAS_SKIN_TONE_TRITON | SPECIES_APPEARANCE_HAS_LIPS | SPECIES_APPEARANCE_HAS_UNDERWEAR | SPECIES_APPEARANCE_HAS_EYE_COLOR
 
-/datum/species/human/tritonian/can_float(mob/living/carbon/human/H)
+/singleton/species/human/tritonian/can_float(mob/living/carbon/human/H)
 	if(!H.is_physically_disabled())
 		if(H.encumbrance() < 2)
 			return TRUE
 	return FALSE
 
-/datum/species/human/mule
+/singleton/species/human/mule
 	name = SPECIES_MULE
 	name_plural = "Mules"
 	description = "Psionics are a relatively new phenomenon, theorized to be linked to long-term exposure to deep, \
@@ -164,7 +164,7 @@
 	min_age =       18
 	max_age =       45
 
-/datum/species/human/mule/handle_post_spawn(mob/living/carbon/human/H)
+/singleton/species/human/mule/handle_post_spawn(mob/living/carbon/human/H)
 	if(!H.psi)
 		H.psi = new(H)
 		var/list/faculties = list("[PSI_COERCION]", "[PSI_REDACTION]", "[PSI_ENERGISTICS]", "[PSI_PSYCHOKINESIS]")

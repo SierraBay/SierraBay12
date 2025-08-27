@@ -97,6 +97,15 @@ ranks - ec
 	badge_string = "Internal Investigations"
 	slot_flags = SLOT_TIE | SLOT_BELT
 
+/obj/item/clothing/accessory/badge/iso
+	name = "\improper Internal Security badge"
+	desc = "This badge, depicting the infamous crimson shield logo of the NanoTrasen Internal Security, marks the holder as an internal security operative."
+	icon = 'mods/loadout_items/icons/obj_accessory.dmi'
+	accessory_icons = list(slot_w_uniform_str = 'mods/loadout_items/icons/onmob_accessory.dmi', slot_wear_suit_str = 'mods/loadout_items/icons/onmob_accessory.dmi')
+	icon_state = "isobadge"
+	badge_string = "Internal Security"
+	slot_flags = SLOT_TIE | SLOT_BELT
+
 /*
 --- Kinky stuff
 */
@@ -275,19 +284,19 @@ ranks - ec
 		return
 	user.set_machine(src)
 	var/dat = {"<TT>
-			<A href='?src=\ref[src];power=1'>Turn [on ? "Off" : "On"]</A><BR>
+			<a href='byond://?src=\ref[src];power=1'>Turn [on ? "Off" : "On"]</A><BR>
 			<B>Frequency/Code</B> for collar:<BR>
 			Frequency:
-			<A href='byond://?src=\ref[src];freq=-10'>-</A>
-			<A href='byond://?src=\ref[src];freq=-2'>-</A> [format_frequency(frequency)]
-			<A href='byond://?src=\ref[src];freq=2'>+</A>
-			<A href='byond://?src=\ref[src];freq=10'>+</A><BR>
+			<a href='byond://?src=\ref[src];freq=-10'>-</A>
+			<a href='byond://?src=\ref[src];freq=-2'>-</A> [format_frequency(frequency)]
+			<a href='byond://?src=\ref[src];freq=2'>+</A>
+			<a href='byond://?src=\ref[src];freq=10'>+</A><BR>
 
 			Code:
-			<A href='byond://?src=\ref[src];code=-5'>-</A>
-			<A href='byond://?src=\ref[src];code=-1'>-</A> [code]
-			<A href='byond://?src=\ref[src];code=1'>+</A>
-			<A href='byond://?src=\ref[src];code=5'>+</A><BR>
+			<a href='byond://?src=\ref[src];code=-5'>-</A>
+			<a href='byond://?src=\ref[src];code=-1'>-</A> [code]
+			<a href='byond://?src=\ref[src];code=1'>+</A>
+			<a href='byond://?src=\ref[src];code=5'>+</A><BR>
 			</TT>"}
 	show_browser(user, dat, "window=radio")
 	onclose(user, "radio")
@@ -304,3 +313,55 @@ ranks - ec
 	item_icons = list(
 		slot_wear_mask_str = 'mods/loadout_items/icons/onmob_accessory.dmi'
 	)
+
+/obj/item/clothing/glasses/prescription/hitech
+	name = "high-tech blue visor"
+	desc = "Blue glistening visor for vision corrective."
+	item_icons = list(slot_glasses_str = 'mods/loadout_items/icons/onmob_accessory.dmi')
+	icon = 'mods/loadout_items/icons/obj_accessory.dmi'
+	icon_state = "hitech_blue"
+	item_state = "hitech_blue"
+	body_parts_covered = EYES
+	prescription = 7
+
+/obj/item/clothing/glasses/prescription/hitech
+	name = "high-tech blue visor"
+	desc = "Blue glistening visor for vision corrective."
+	item_icons = list(slot_glasses_str = 'mods/loadout_items/icons/onmob_accessory.dmi')
+	icon = 'mods/loadout_items/icons/obj_accessory.dmi'
+	icon_state = "hitech_blue"
+	item_state = "hitech_blue"
+	body_parts_covered = EYES
+	prescription = 7
+
+/obj/item/clothing/glasses/prescription/hitech/red
+	name = "high-tech red visor"
+	desc = "Red glistening visor for vision corrective."
+	icon_state = "hitech_red"
+	item_state = "hitech_red"
+
+/obj/item/clothing/glasses/prescription/hitech/green
+	name = "high-tech green glasses"
+	desc = "Green glistening glasses for vision corrective."
+	icon_state = "hitech_green"
+	item_state = "hitech_green"
+
+/obj/item/clothing/glasses/prescription/hitech/purple
+	name = "high-tech purple visor"
+	desc = "Purple glistening visor for vision corrective."
+	icon_state = "hitech_purple"
+	item_state = "hitech_purple"
+
+/obj/item/clothing/glasses/prescription/hitech/retro
+	name = "high-tech retro glasses"
+	desc = "Dark green glistening glasses for vision corrective."
+	icon_state = "hitech_retro"
+	item_state = "hitech_retro"
+
+// KMS EMT kneepads
+/obj/item/clothing/accessory/kms_kneepads
+	name = "KMS kneepads"
+	desc = "Pair of sturdy polymer kneepads generously provided by Komatsu Medical Services to their employees. Offer no additional protection, though."
+	icon = 'mods/loadout_items/icons/obj_accessory.dmi'
+	accessory_icons = list(slot_w_uniform_str = 'mods/loadout_items/icons/onmob_accessory.dmi')
+	icon_state = "kms_kneepads"

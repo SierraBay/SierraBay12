@@ -23,7 +23,7 @@
 	var/chance			//probality to fire every tick
 	var/chance_max = 50
 	var/multiplier = 1	//effect magnitude multiplier
-	var/multiplier_max = 1
+	var/multiplier_max = 5
 	var/stage = 4		//minimal stage
 	var/badness = VIRUS_MILD	//Used in random generation to limit how bad result should come out.
 	var/data = null 	//For semi-procedural effects; this should be generated in generate() if used
@@ -70,6 +70,31 @@
 	name = "Waiting Syndrome"
 	stage = 1
 
+/datum/disease2/effect/gibbingtons
+	name = "Gibbingtons Syndrome"
+	stage = 4
+	badness = VIRUS_EXOTIC
+
+/datum/disease2/effect/gibbingtons/activate(mob/living/carbon/human/mob, multiplier)
+	mob.adjustBruteLoss(10*multiplier)
+	var/obj/item/organ/external/O = pick(mob.organs)
+	if(prob(25))
+		to_chat(mob, "<span class='warning'>Your [O.name] feels as if it might burst!</span>")
+	if(prob(10))
+		if(O)
+			O.droplimb(0,DROPLIMB_BLUNT)
+
+
+/datum/disease2/effect/radian
+	name = "Radian's Syndrome"
+	stage = 4
+	multiplier_max = 3
+	badness = VIRUS_COMMON
+
+/datum/disease2/effect/radian/activate(mob/living/carbon/human/mob,multiplier)
+		mob.apply_damage(2*multiplier, DAMAGE_RADIATION, armor_pen = 100)
+
+
 /datum/disease2/effect/killertoxins
 	name = "Toxification Syndrome"
 	stage = 4
@@ -102,11 +127,12 @@
 	mob.adjustToxLoss(15*multiplier)
 
 /datum/disease2/effect/organs/deactivate(mob/living/carbon/human/mob, multiplier)
-	for (var/obj/item/organ/external/E in mob.organs)
-		E.status &= ~ORGAN_DEAD
-		for (var/obj/item/organ/external/C in E.children)
-			C.status &= ~ORGAN_DEAD
-	mob.update_body(1)
+	if(mob)
+		for (var/obj/item/organ/external/E in mob.organs)
+			E.status &= ~ORGAN_DEAD
+			for (var/obj/item/organ/external/C in E.children)
+				C.status &= ~ORGAN_DEAD
+		mob.update_body(1)
 
 /datum/disease2/effect/immortal
 	name = "Longevity Syndrome"
@@ -146,7 +172,88 @@
 	for (var/obj/item/organ/external/E in mob.organs)
 		E.min_broken_damage = initial(E.min_broken_damage)
 
+/datum/disease2/effect/spiderfication
+	name = "Hatching Syndrome"
+	stage = 4
+	badness = VIRUS_ENGINEERED
+	chance_max = 30
+	delay = 60 SECONDS
+
+/datum/disease2/effect/spiderfication/activate(mob/living/carbon/human/mob, multiplier)
+		var/obj/spider/spiderling/S = new /obj/spider/spiderling(get_turf(mob))
+		mob.emote("cough")
+		to_chat(mob, "<span class='warning'>You cough up the [S]!</span>")
+
+
+/datum/disease2/effect/zombie
+	name = "Corruption Syndrome"
+	stage = 4
+	badness = VIRUS_EXOTIC
+	chance_max = 80
+	delay = 20 SECONDS
+	var/first_message_shown = FALSE
+	var/time_of_first_tick = 0
+	var/total_trasformation = 0
+	var/time_to_trasform = 5 MINUTES
+
+
+/datum/disease2/effect/zombie/activate(mob/living/carbon/human/mob, multiplier)
+	if(mob.is_species(SPECIES_ZOMBIE))
+		return
+	if(!first_message_shown)
+		first_message_shown = TRUE
+		time_of_first_tick = world.time
+		total_trasformation = time_of_first_tick + time_to_trasform
+		to_chat(mob, "<span class='notice'>You feel as something hungry is woke up inside you!</span>")
+	if(prob(50))
+		to_chat(mob, "<span class='warning'>You feel uncontrollable rage filling you! Your hunger is killing you! You want to eat!</span>")
+		if (mob.reagents.get_reagent_amount(/datum/reagent/hyperzine) < 10)
+			mob.reagents.add_reagent(/datum/reagent/hyperzine, 4)
+			mob.adjust_nutrition(-50)
+	if(prob(50) && mob.check_has_mouth())//go crazy and bite someone
+		var/list/mouth_status = mob.can_eat_status()
+		if (mouth_status[1] == 1)//if no mouth HUMAN_EATING_NBP_MOUTH
+			to_chat(mob, "<span class='warning'>You angrily attempt to bite someone but you can't without a mouth!</span>")
+			return
+		if (mouth_status[1] == 2)//if something covers mouth HUMAN_EATING_BLOCKED_MOUTH
+			to_chat(mob, "<span class='warning'>You angrily chew \the [mouth_status[2]] covering your mouth!</span>")
+			return
+		var/list/mobs_to_bite = list()
+		for (var/mob/living/carbon/L in range(1))
+			if (L == mob)
+				continue
+			mobs_to_bite += L
+		if (LAZYLEN(mobs_to_bite) < 1)//nobody to bite
+			return
+		var/mob/living/Target = pick(mobs_to_bite)
+		mob.visible_message("<span class='warning'>[mob] violently bites [Target]!</span>")
+		Target.adjustBruteLoss(5)
+		if (prob(50))
+			infect_virus2(Target, src, 1)
+	if(total_trasformation)
+		var/time_left = total_trasformation - world.time
+		var/transform_chance = (time_left/total_trasformation)*100
+		if(prob(100-transform_chance))
+			mob.zombify()
+
 ////////////////////////STAGE 3/////////////////////////////////
+
+/datum/disease2/effect/hiv
+	name = "Immunodeficiency"
+	stage = 3
+	multiplier_max = 3
+	chance = 50
+	chance_max = 100
+	badness = VIRUS_COMMON
+/datum/disease2/effect/hiv/activate(mob/living/carbon/human/mob)
+	if(mob)
+		mob.immunity -= 30
+		mob.immunity_norm -= 15
+
+/datum/disease2/effect/hiv/deactivate(mob/living/carbon/human/mob)
+	if(mob)
+		mob.immunity_norm = 100
+
 
 /datum/disease2/effect/toxins
 	name = "Hyperacidity"
@@ -277,6 +384,17 @@
 	if (prob(30))
 		mob.jitteriness = min(mob.jitteriness + 10, 500)
 
+/datum/disease2/effect/hair
+	name = "Hair Loss"
+	stage = 2
+	badness = VIRUS_COMMON
+
+/datum/disease2/effect/hair/activate(mob/living/carbon/human/mob, multiplier)
+	if(mob.species.name == SPECIES_HUMAN && !(mob.head_hair_style == "Bald") && !(mob.head_hair_style == "Balding Hair"))
+		to_chat(mob, "<span class='danger'>Your hair starts to fall out in clumps...</span>")
+		mob.head_hair_style = "Balding Hair"
+		mob.update_hair()
+
 ////////////////////////STAGE 1/////////////////////////////////
 
 /datum/disease2/effect/sneeze
@@ -339,3 +457,10 @@
 	delay = 25 SECONDS
 /datum/disease2/effect/stomach/activate(mob/living/carbon/human/mob, multiplier)
 	to_chat(mob, "<span class='warning'>Your stomach feels heavy.</span>")
+
+/datum/disease2/effect/stealth
+	name = "Silent Death Syndrome"
+	stage = 1
+	badness = VIRUS_EXOTIC
+	chance_max = 0
+	allow_multiple = 1

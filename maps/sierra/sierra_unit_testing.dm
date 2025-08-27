@@ -1,6 +1,7 @@
 /datum/map/sierra
 	// Unit test exemptions
 	apc_test_exempt_areas = list(
+		/area/overmap = NO_SCRUBBER|NO_VENT|NO_APC,
 		/area/space = NO_SCRUBBER|NO_VENT|NO_APC,
 		/area/exoplanet = NO_SCRUBBER|NO_VENT|NO_APC,
 		/area/engineering/auxpower = NO_SCRUBBER|NO_VENT,
@@ -11,8 +12,8 @@
 		/area/maintenance/compactor = 0,
 		/area/maintenance/cistern = 0,
 		/area/turret_protected/ai_cyborg_station = 0,
-		/area/turret_protected/ai = NO_SCRUBBER|NO_VENT,
-		/area/turret_protected/ai_maint = NO_SCRUBBER|NO_VENT,
+		//area/turret_protected/ai = NO_SCRUBBER|NO_VENT,
+		//area/turret_protected/ai_maint = NO_SCRUBBER|NO_VENT,
 		/area/maintenance/fourthdeck/aft = 0,
 		/area/maintenance/waterstore = 0,
 		/area/maintenance/abandoned_hydroponics = 0,
@@ -25,7 +26,7 @@
 		/area/maintenance/seconddeck/hangar = 0,
 		/area/maintenance/seconddeck/aftstarboard = 0,
 		/area/maintenance/substation/seconddeck = 0,
-		/area/maintenance/substation/bridgedeck = 0,
+		//area/maintenance/substation/bridgedeck = 0,
 		/area/maintenance/firstdeck/foreport = 0,
 		/area/maintenance/firstdeck/centralport = 0,
 		/area/maintenance/firstdeck/forestarboard = 0,
@@ -106,11 +107,11 @@
 	name = "ZAS: Supply Shuttle (CentComm)"
 	area_path = /area/supply/dock
 
-/*
+
 /datum/unit_test/zas_area_test/virology
 	name = "ZAS: Virology"
 	area_path = /area/medical/virology
-*/
+
 
 /datum/unit_test/zas_area_test/xenobio
 	name = "ZAS: Xenobiology"

@@ -5,7 +5,7 @@
 	icon = 'mods/guns/icons/obj/skrell_carbine.dmi'
 
 /obj/item/gun/magnetic/railgun/flechette/skrell
-	icon = 'icons/obj/guns/skrell_rifle.dmi'
+	icon = 'mods/guns/icons/obj/skrell_rifle.dmi'
 
 // VOX BOX
 

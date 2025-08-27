@@ -1,4 +1,4 @@
-GLOBAL_DATUM_INIT(loyalists, /datum/antagonist/loyalists, new)
+GLOBAL_TYPED_NEW(loyalists, /datum/antagonist/loyalists)
 
 /datum/antagonist/loyalists
 	id = MODE_LOYALIST
@@ -23,7 +23,7 @@ GLOBAL_DATUM_INIT(loyalists, /datum/antagonist/loyalists, new)
 	faction_descriptor = "COMPANY"
 	faction_verb = /mob/living/proc/convert_to_loyalist
 	faction_indicator = "hud_loyal"
-	faction_invisible = 1
+	//faction_invisible = 1
 	blacklisted_jobs = list(/datum/job/ai, /datum/job/cyborg, /datum/job/submap)
 	skill_setter = /datum/antag_skill_setter/station
 

@@ -20,9 +20,9 @@
 					/obj/item/storage/firstaid/o2,
 					/obj/item/storage/firstaid/adv,
 					/obj/item/storage/firstaid/stab,
-					/obj/item/reagent_containers/glass/bottle/antitoxin,
+					/obj/item/reagent_containers/glass/bottle/dylovene,
 					/obj/item/reagent_containers/glass/bottle/inaprovaline,
-					/obj/item/reagent_containers/glass/bottle/stoxin,
+					/obj/item/reagent_containers/glass/bottle/soporific,
 					/obj/item/storage/box/syringes,
 					/obj/item/storage/box/autoinjectors)
 	cost = 70

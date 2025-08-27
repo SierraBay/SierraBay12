@@ -27,7 +27,7 @@
 
 /datum/category_item/player_setup_item/physical/flavor/content(mob/user)
 	. = ..()
-	. += "<a href='?src=\ref[src];metadata=1'>Set OOC notes</a><br/>"
+	. += "<a href='byond://?src=\ref[src];metadata=1'>Set OOC notes</a><br/>"
 
 /datum/category_item/player_setup_item/physical/flavor/OnTopic(href,list/href_list, mob/user)
 	if(href_list["metadata"])

@@ -1,0 +1,5 @@
+/*
+#undef PSI_IMPLANT_SHOCK
+#undef PSI_IMPLANT_WARN
+#undef PSI_IMPLANT_DISABLED
+*/

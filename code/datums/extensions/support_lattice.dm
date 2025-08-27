@@ -37,12 +37,7 @@
 
 	if(isCoil(C))
 		var/obj/item/stack/cable_coil/coil = C
-		var/obj/structure/lattice/L = locate(/obj/structure/lattice, T)
-		if(L)
-			coil.PlaceCableOnTurf(T, user)
-			return TRUE
-		else
-			to_chat(user, SPAN_WARNING("The cable needs something to be secured to."))
-			return TRUE
+		coil.PlaceCableOnTurf(T, user)
+		return TRUE
 
 	return FALSE

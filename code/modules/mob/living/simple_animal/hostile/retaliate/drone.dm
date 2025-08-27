@@ -30,6 +30,7 @@
 	max_gas = null
 	minbodytemp = 0
 	faction = "malf_drone"
+	bleed_colour = SYNTH_BLOOD_COLOUR
 
 	var/datum/effect/trail = /datum/effect/trail/ion
 	var/malfunctioning = TRUE
@@ -58,7 +59,7 @@
 		trail.start()
 
 
-/mob/living/simple_animal/hostile/retaliate/malf_drone/Process_Spacemove()
+/mob/living/simple_animal/hostile/retaliate/malf_drone/Process_Spacemove(allow_movement)
 	return TRUE
 
 

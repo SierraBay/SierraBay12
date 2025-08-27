@@ -1,4 +1,4 @@
-/datum/species/disarm_attackhand(mob/living/carbon/human/attacker, mob/living/carbon/human/target)
+/singleton/species/disarm_attackhand(mob/living/carbon/human/attacker, mob/living/carbon/human/target)
 	attacker.do_attack_animation(target)
 
 	if(target.w_uniform)
@@ -28,6 +28,10 @@
 		playsound(target.loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 		if(armor_check < 100)
 			target.visible_message(SPAN_DANGER("[attacker] has pushed [target]!"))
+			//For lying refactor
+			for(var/obj/item/I in holding)
+				if(I && target.unEquip(I))
+					return
 		else
 			target.visible_message(SPAN_WARNING("[attacker] attempted to push [target]!"))
 		return

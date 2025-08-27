@@ -7,10 +7,10 @@
 	holder_type = /obj/machinery/power/apc
 	wire_count = 4
 	descriptions = list(
-		new /datum/wire_description(APC_WIRE_IDSCAN, "This wire is connected to the ID scanning panel.", SKILL_EXPERIENCED),
-		new /datum/wire_description(APC_WIRE_MAIN_POWER1, "This wire seems to be carrying a heavy current."),
-		new /datum/wire_description(APC_WIRE_MAIN_POWER2, "This wire seems to be carrying a heavy current."),
-		new /datum/wire_description(APC_WIRE_AI_CONTROL, "This wire connects to automated control systems.")
+		new /datum/wire_description(APC_WIRE_IDSCAN, "This wire is connected to the ID scanning panel.", "ID", SKILL_EXPERIENCED),
+		new /datum/wire_description(APC_WIRE_MAIN_POWER1, "This wire seems to be carrying a heavy current.", "Main Power"),
+		new /datum/wire_description(APC_WIRE_MAIN_POWER2, "This wire seems to be carrying a heavy current.", "Main Power"),
+		new /datum/wire_description(APC_WIRE_AI_CONTROL, "This wire connects to automated control systems.", "AI")
 	)
 
 /datum/wires/apc/GetInteractWindow(mob/user)

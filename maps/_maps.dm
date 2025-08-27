@@ -11,10 +11,10 @@
 
 #include "using.dm"
 
-GLOBAL_DATUM_INIT(using_map, /datum/map, new using_map_DATUM)
+GLOBAL_TYPED_AS(using_map, /datum/map, new using_map_DATUM)
 
 #include "antag_spawn\antag_spawn_bases.dm"
-#include "antag_spawn\ert\ert.dm"
+#include "antag_spawn\ert\_ert.dm"
 #include "antag_spawn\heist\heist.dm"
 #include "antag_spawn\mercenary\mercenary.dm"
 #include "antag_spawn\ninja\ninja.dm"

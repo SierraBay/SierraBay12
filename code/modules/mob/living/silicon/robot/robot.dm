@@ -284,6 +284,20 @@
 	recalculate_synth_capacities()
 	if(module)
 		notify_ai(ROBOT_NOTIFICATION_NEW_MODULE, module.name)
+		addtimer(new Callback(src, .proc/announce_module_change), 2 SECONDS)
+
+/mob/living/silicon/robot/proc/announce_module_change()
+	var/singleton/security_state/security_state = GET_SINGLETON(GLOB.using_map.security_state)
+
+	if(!src || !(src.z in GLOB.using_map.station_levels))
+		return // don't announce offmap borgs
+
+	var/channel
+	if(length(module.channels) >= 1 && !security_state.current_security_level_is_same_or_higher_than(security_state.high_security_level))
+		channel = module.channels[1]
+	else
+		channel = "Common" // common if code red or no radio channels, replicates behavior that crew have
+	GLOB.global_announcer.autosay("[name] has loaded the [module.name].", "Robotic Module Oversight", channel)
 
 /mob/living/silicon/robot/get_cell()
 	return cell
@@ -343,6 +357,14 @@
 	if(!opened && has_power && do_after(usr, 6 SECONDS, do_flags = DO_DEFAULT | DO_USER_UNIQUE_ACT) && !opened && has_power)
 		to_chat(src, "You [locked ? "un" : ""]lock your panel.")
 		locked = !locked
+
+/mob/living/silicon/robot/verb/get_radio_channels()
+	set name = "Show Radio Channels"
+	set category = "Silicon Commands"
+
+	var/obj/item/device/radio/borg/borg_radio = silicon_radio
+	if (istype(borg_radio))
+		to_chat(src, borg_radio.radio_desc)
 
 /mob/living/silicon/robot/proc/self_diagnosis()
 	if(!is_component_functioning("diagnosis unit"))
@@ -645,7 +667,7 @@
 		if (!opened)
 			USE_FEEDBACK_FAILURE("\The [src]'s maintenance panel must be opened before you can access the radio.")
 			return TRUE
-		if (tool.resolve_attackby(src, user, click_params))
+		if (tool.resolve_attackby(silicon_radio, user, click_params))
 			return TRUE
 
 	// ID Card - Toggle panel lock

@@ -8,11 +8,13 @@
 
 /obj/item/ammo_casing/pistol/rubber
 	desc = "A rubber pistol bullet casing."
+	label = "rubber"
 	projectile_type = /obj/item/projectile/bullet/pistol/rubber
 	icon_state = "pistolcasing_r"
 
 /obj/item/ammo_casing/pistol/practice
 	desc = "A practice pistol bullet casing."
+	label = "practice"
 	projectile_type = /obj/item/projectile/bullet/pistol/practice
 	icon_state = "pistolcasing_p"
 
@@ -25,11 +27,13 @@
 
 /obj/item/ammo_casing/pistol/small/rubber
 	desc = "A small pistol rubber bullet casing."
+	label = "rubber"
 	projectile_type = /obj/item/projectile/bullet/pistol/rubber/holdout
 	icon_state = "smallcasing_r"
 
 /obj/item/ammo_casing/pistol/small/practice
 	desc = "A small pistol practice bullet casing."
+	label = "practice"
 	projectile_type = /obj/item/projectile/bullet/pistol/practice
 	icon_state = "smallcasing_p"
 
@@ -85,6 +89,7 @@
 	desc = "A blank shell."
 	icon_state = "blshell"
 	spent_icon = "blshell-spent"
+	label = "blank"
 	projectile_type = /obj/item/projectile/bullet/blank
 	matter = list(MATERIAL_STEEL = 60)
 
@@ -93,6 +98,7 @@
 	desc = "A practice shell."
 	icon_state = "pshell"
 	spent_icon = "pshell-spent"
+	label = "practice"
 	projectile_type = /obj/item/projectile/bullet/shotgun/practice
 	matter = list(MATERIAL_STEEL = 60)
 
@@ -138,6 +144,7 @@
 
 /obj/item/ammo_casing/rifle/practice
 	desc = "A rifle practice bullet casing."
+	label = "practice"
 	projectile_type = /obj/item/projectile/bullet/rifle/practice
 	icon_state = "riflecasing_p"
 
@@ -163,10 +170,12 @@
 
 /obj/item/ammo_casing/rifle/military/light
 	desc = "A low-power military rifle bullet casing."
+	label = "low-power"
 	projectile_type = /obj/item/projectile/bullet/rifle/military
 
 /obj/item/ammo_casing/rifle/military/practice
 	desc = "A military rifle practice bullet casing."
+	label = "practice"
 	projectile_type = /obj/item/projectile/bullet/rifle/military/practice
 	icon_state = "rifle_mil_p"
 

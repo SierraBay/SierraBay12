@@ -1,6 +1,6 @@
 // Init optimization.
 
-GLOBAL_LIST_INIT(machine_path_to_circuit_type, cache_circuits_by_build_path())
+GLOBAL_LIST_AS(machine_path_to_circuit_type, cache_circuits_by_build_path())
 
 /proc/cache_circuits_by_build_path()
 	RETURN_TYPE(/list)
@@ -415,3 +415,17 @@ Standard helpers for users interacting with machinery parts.
 			var/present = number_of_components(required_type)
 			if(present < needed)
 				LAZYSET(., required_type, needed - present)
+
+/obj/machinery/proc/get_all_components_of_type(part_type, strict = FALSE)
+	var/list/results
+	for(var/obj/component as anything in component_parts)
+		if(istype(component, part_type))
+			LAZYADD(results, component)
+	for(var/path in uncreated_component_parts)
+		if(!ispath(path, part_type))
+			continue
+		var/obj/component = force_init_component(path)
+		while(component)
+			LAZYADD(results, component)
+			component = force_init_component(path)
+	return results

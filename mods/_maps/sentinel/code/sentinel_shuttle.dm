@@ -37,7 +37,6 @@
 	landmark_tag = "nav_hangar_reaper"
 	base_area = /area/ship/patrol/command/hangar
 	base_turf = /turf/simulated/floor/plating
-	movable_flags = MOVABLE_FLAG_EFFECTMOVE
 
 /obj/shuttle_landmark/reaper/altdock
 	name = "Docking Port"

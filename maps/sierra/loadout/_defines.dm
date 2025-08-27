@@ -4,6 +4,7 @@
 		/datum/gear/union_card,
 		/datum/gear/suit/labcoat_corp,
 		/datum/gear/suit/medcoat,
+		/datum/gear/uniform/corporate,
 		/datum/gear/uniform/corp_exec,
 		/datum/gear/uniform/corp_overalls,
 		/datum/gear/uniform/corp_flight,
@@ -22,6 +23,7 @@
 //For jobs that allow for decorative or ceremonial clothing
 #define FORMAL_ROLES list(\
 	/datum/job/iaa, \
+	/datum/job/iso, \
 	/datum/job/rd, \
 	/datum/job/senior_scientist, \
 	/datum/job/scientist, \
@@ -64,7 +66,7 @@
 //For NanoTrasen employees
 #define NANOTRASEN_ROLES list(\
 	/datum/job/captain, /datum/job/hop, /datum/job/rd, /datum/job/cmo, /datum/job/chief_engineer, /datum/job/hos, \
-	/datum/job/iaa, \
+	/datum/job/iaa, /datum/job/iso, \
 	/datum/job/senior_engineer, /datum/job/engineer, /datum/job/infsys, /datum/job/roboticist, /datum/job/engineer_trainee, \
 	/datum/job/officer, /datum/job/warden, /datum/job/detective, /datum/job/security_assistant, \
 	/datum/job/senior_doctor, /datum/job/doctor, /datum/job/doctor_trainee,/datum/job/chemist, \
@@ -127,6 +129,7 @@
 	/datum/job/warden, \
 	/datum/job/detective, \
 	/datum/job/officer, \
+	/datum/job/iso, \
 	/datum/job/security_assistant \
 )
 
@@ -156,14 +159,16 @@
 //For jobs that spawn with weapons in their lockers
 #define ARMED_ROLES list(\
 	/datum/job/captain, /datum/job/hop, /datum/job/hos,\
-	/datum/job/officer, /datum/job/warden, /datum/job/detective, /datum/job/security_assistant \
+	/datum/job/rd, /datum/job/cmo, /datum/job/chief_engineer,\
+	/datum/job/officer, /datum/job/iso, /datum/job/warden, /datum/job/detective, /datum/job/security_assistant \
 )
 
 //For jobs that spawn with armor in their lockers
 #define ARMORED_ROLES list(\
 	/datum/job/captain, /datum/job/hop, /datum/job/rd, /datum/job/cmo,\
 	/datum/job/chief_engineer, /datum/job/hos, /datum/job/qm,\
-	/datum/job/warden, /datum/job/detective, /datum/job/officer, \
+	/datum/job/warden, /datum/job/detective, /datum/job/officer, /datum/job/iso, \
+	/datum/job/doctor \
 )
 
 #define CONTRACT_ROLES list(\

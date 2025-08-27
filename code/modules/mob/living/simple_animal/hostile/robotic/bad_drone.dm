@@ -13,6 +13,7 @@
 	minbodytemp = 0
 	speed = 4
 	mob_size = MOB_TINY
+	bleed_colour = SYNTH_BLOOD_COLOUR
 	var/corpse = /obj/decal/cleanable/blood/gibs/robot
 
 	ai_holder = /datum/ai_holder/simple_animal/rogue_drone
@@ -28,8 +29,8 @@
 		new corpse (loc)
 	qdel(src)
 
-/mob/living/simple_animal/hostile/rogue_drone/Process_Spacemove()
-	return 1
+/mob/living/simple_animal/hostile/rogue_drone/Process_Spacemove(allow_movement)
+	return TRUE
 
 /datum/ai_holder/simple_animal/rogue_drone
 	speak_chance = 1

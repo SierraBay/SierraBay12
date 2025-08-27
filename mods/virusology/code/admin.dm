@@ -75,9 +75,9 @@
 	for(var/i = 1 to 4)
 		var/datum/disease2/effect/Eff = s[i]
 		H += {"
-				<a href='?src=\ref[src];what=effect;stage=[i];effect=1'>[initial(Eff.name)]</a>
-				Chance: <a href='?src=\ref[src];what=effect;stage=[i];chance=1'>[s_chance[i]]</a>
-				Multiplier: <a href='?src=\ref[src];what=effect;stage=[i];multiplier=1'>[s_multiplier[i]]</a>
+				<a href='byond://?src=\ref[src];what=effect;stage=[i];effect=1'>[initial(Eff.name)]</a>
+				Chance: <a href='byond://?src=\ref[src];what=effect;stage=[i];chance=1'>[s_chance[i]]</a>
+				Multiplier: <a href='byond://?src=\ref[src];what=effect;stage=[i];multiplier=1'>[s_multiplier[i]]</a>
 				<br />
 			"}
 	H += {"
@@ -85,13 +85,13 @@
 	<b>Infectable Species:</b><br />
 	"}
 	var/f = 1
-	for(var/k in all_species)
-		var/datum/species/S = all_species[k]
+	for(var/k in GLOB.species_by_name)
+		var/singleton/species/S = GLOB.species_by_name[k]
 		if(S.get_virus_immune())
 			continue
 		if(!f) H += " | "
 		else f = 0
-		H += "<a href='?src=\ref[src];what=species;toggle=[k]' style='color:[(k in species) ? "#006600" : "#ff0000"]'>[k]</a>"
+		H += "<a href='byond://?src=\ref[src];what=species;toggle=[k]' style='color:[(k in species) ? "#006600" : "#ff0000"]'>[k]</a>"
 	H += {"
 	<a href="?src=\ref[src];what=species;reset=1" style="color:#0000aa">Reset</a>
 	<br />
@@ -104,7 +104,7 @@
 	for(var/k in ALL_ANTIGENS)
 		if(!f) H += " | "
 		else f = 0
-		H += "<a href='?src=\ref[src];what=antigen;toggle=[k]' style='color:[(k in antigens) ? "#006600" : "#ff0000"]'>[k]</a>"
+		H += "<a href='byond://?src=\ref[src];what=antigen;toggle=[k]' style='color:[(k in antigens) ? "#006600" : "#ff0000"]'>[k]</a>"
 	H += {"
 	<a href="?src=\ref[src];what=antigen;reset=1" style="color:#0000aa">Reset</a>
 	<br />
@@ -113,7 +113,10 @@
 	<a href="?src=\ref[src];what=go" style="color:#ff0000">RELEASE</a>
 	"}
 
+	show_browser(usr, H, "window=admin2;size=540x600")
+
 /datum/virus2_editor/Topic(href, href_list)
+	..()
 	switch(href_list["what"])
 		if("effect")
 			var/stage = text2num(href_list["stage"])
@@ -161,7 +164,7 @@
 		if("antigen")
 			if(href_list["toggle"])
 				var/T = href_list["toggle"]
-				if(length(T) != 1) return
+				if(length(T) != 2) return
 				if(T in antigens)
 					antigens -= T
 				else
@@ -206,7 +209,7 @@
 
 			spawned_viruses += D
 
-			message_admins("<span class='danger'>[key_name_admin(usr)] infected [key_name_admin(infectee)] with a virus (<a href='?src=\ref[D];info=1'>Info</a>)</span>")
+			message_admins("<span class='danger'>[key_name_admin(usr)] infected [key_name_admin(infectee)] with a virus (<a href='byond://?src=\ref[D];info=1'>Info</a>)</span>")
 			log_admin("[key_name_admin(usr)] infected [key_name_admin(infectee)] with a virus!")
 			infect_virus2(infectee, D, forced=1)
 
@@ -214,8 +217,8 @@
 
 
 /client/proc/give_disease2(mob/T as mob in SSmobs.mob_list) // -- Giacom
+	set name = "Gives Disease"
 	set category = "Fun"
-	set name = "Give Disease"
 	set desc = "Gives a Disease to a mob."
 
 	var/datum/disease2/disease/D = new /datum/disease2/disease()

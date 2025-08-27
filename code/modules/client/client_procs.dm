@@ -160,6 +160,9 @@
 	GLOB.clients += src
 	GLOB.ckey_directory[ckey] = src
 
+	if(byond_version >= 516)
+		winset(src, null, list("browser-options" = "find,refresh"))
+
 	//Admin Authorisation
 	holder = admin_datums[ckey]
 	if(holder)
@@ -230,6 +233,7 @@
 	// This turns out to be a touch too much when a bunch of people are connecting at once from a restart during init.
 	if (GAME_STATE & RUNLEVELS_DEFAULT)
 		spawn()
+		log_and_message_staff(SPAN_NOTICE("[key_name_admin(src)] has connected to the server."))
 		if (!check_rights(R_MOD, FALSE, src))
 			// Check connections
 			var/list/connections = fetch_connections()
@@ -414,6 +418,7 @@
 		'html/images/leaguelogo.png',
 		'html/images/ouerelogo.png',
 		'html/images/terstenlogo.png',
+		'html/images/kmslogo.png',
 		// [/SIERRA-ADD]
 		'html/images/zhlogo.png'
 		)
@@ -440,6 +445,16 @@
 	set category = "OOC"
 	if(prefs)
 		prefs.open_setup_window(usr)
+
+/client/verb/character_priorities()
+	set name = "Character Priorities"
+	set category = "OOC"
+	if(!prefs)
+		return
+	if(config.maximum_queued_characters > 1)
+		prefs.open_prefs_ordering_panel(usr)
+	else
+		to_chat(usr, SPAN_WARNING("The character priority queue is currently disabled"))
 
 
 /client/MouseDrag(src_object, over_object, src_location, over_location, src_control, over_control, params)

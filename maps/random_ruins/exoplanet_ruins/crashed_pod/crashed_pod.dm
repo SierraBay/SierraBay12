@@ -1,4 +1,4 @@
-GLOBAL_LIST_INIT(crashed_pod_areas, new)
+GLOBAL_LIST_EMPTY(crashed_pod_areas)
 
 /datum/map_template/ruin/exoplanet/crashed_pod
 	name = "crashed survival pod"

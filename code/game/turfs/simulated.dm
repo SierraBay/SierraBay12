@@ -15,6 +15,8 @@
 
 	var/timer_id
 
+	zone_membership_candidate = TRUE
+
 // This is not great.
 /turf/simulated/proc/wet_floor(wet_val = 1, overwrite = FALSE)
 	if(wet_val < wet && !overwrite)
@@ -84,10 +86,10 @@
 				var/obj/item/clothing/shoes/S = H.shoes
 				if(istype(S))
 					S.handle_movement(src, MOVING_QUICKLY(H))
-					if(S.track_blood && S.blood_DNA)
+					if(S.blood_transfer_amount && S.blood_DNA)
 						bloodDNA = S.blood_DNA
 						bloodcolor = S.blood_color
-						S.track_blood--
+						S.blood_transfer_amount--
 			else
 				if(H.track_blood && H.feet_blood_DNA)
 					bloodDNA = H.feet_blood_DNA

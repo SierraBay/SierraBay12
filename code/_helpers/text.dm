@@ -450,6 +450,7 @@
 	t = replacetext(t, "\[leaguelogo\]", "<img src = leaguelogo.png>")
 	t = replacetext(t, "\[ouerelogo\]", "<img src = ouerelogo.png>")
 	t = replacetext(t, "\[terstenlogo\]", "<img src = terstenlogo.png>")
+	t = replacetext(t, "\[kmslogo\]", "<img src = kmslogo.png>")
 	// [/SIERRA-ADD]
 	t = replacetext(t, "\[zhlogo\]", "<img src = zhlogo.png>")
 	t = replacetext(t, "\[editorbr\]", "")
@@ -699,6 +700,18 @@
 			return "Northwest"
 		if(337)
 			return "North-Northwest"
+
+
+/// Returns random hex of char length nibbles
+/proc/randhex(nibbles)
+	var/static/list/chars = list(
+		"0", "1", "2", "3", "4", "5", "6", "7",
+		"8", "9", "a", "b", "c", "d", "e", "f"
+	)
+	var/list/result = new (nibbles)
+	for (var/i = 1 to nibbles)
+		result[i] = chars[rand(1, 16)]
+	return jointext(result, "")
 
 
 /// Check if thing is an SUID. If other is supplied, check if other matches thing.

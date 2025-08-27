@@ -1,11 +1,11 @@
 GLOBAL_LIST_EMPTY(all_mod_traits)
 
-/hook/global_init/makeDatumRefLists()
+/world/New()
 	. = ..()
-	var/paths = typesof(/datum/mod_trait) - /datum/mod_trait
-	for(var/path in paths)
-		var/datum/mod_trait/M = path
-		if (!initial(M.name))
-			continue
-		M = new path()
-		GLOB.all_mod_traits[M.name] = M
+	InitializeModTraits()
+
+/proc/InitializeModTraits()
+	GLOB.all_mod_traits = list()
+	for (var/T in subtypesof(/datum/mod_trait))
+		var/datum/mod_trait/M = new T()
+		GLOB.all_mod_traits[T] = M

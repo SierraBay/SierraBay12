@@ -18,7 +18,7 @@
 
 	//better laser, increased brightness & power consumption
 	var/l_power = 2.5 //brightness of light when on, can be negative
-	var/l_range = 7 //outer range of light when on, can be negative
+	var/l_range = 8 //outer range of light when on, can be negative
 
 /obj/machinery/floodlight/on_update_icon()
 	icon_state = "flood[panel_open ? "o" : ""][panel_open && get_cell() ? "b" : ""]0[use_power == POWER_USE_ACTIVE]"
@@ -33,17 +33,17 @@
 
 	// If the cell is almost empty rarely "flicker" the light. Aesthetic only.
 	if(prob(30))
-		set_light(l_range, l_power / 2, angle = LIGHT_WIDE)
+		set_light(l_range, l_power / 2, angle = LIGHT_VERY_WIDE)
 		spawn(20)
 			if(use_power)
-				set_light(l_range, l_power, angle = LIGHT_WIDE)
+				set_light(l_range, l_power, angle = LIGHT_VERY_WIDE)
 
 // Returns 0 on failure and 1 on success
 /obj/machinery/floodlight/proc/turn_on(loud = 0)
 	if(!is_powered())
 		return 0
 
-	set_light(l_range, l_power / 2, angle = LIGHT_WIDE)
+	set_light(l_range, l_power / 2, angle = LIGHT_VERY_WIDE)
 	update_use_power(POWER_USE_ACTIVE)
 	use_power_oneoff(active_power_usage)//so we drain cell if they keep trying to use it
 	update_icon()
@@ -80,4 +80,4 @@
 	l_range = light_mod*1.5 + initial(l_range)
 	change_power_consumption(initial(active_power_usage) * light_mod , POWER_USE_ACTIVE)
 	if(use_power)
-		set_light(l_range, l_power, angle = LIGHT_WIDE)
+		set_light(l_range, l_power, angle = LIGHT_VERY_WIDE)

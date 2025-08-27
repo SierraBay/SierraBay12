@@ -52,7 +52,9 @@
 		/obj/item/clothing/accessory/buddy_tag,
 		/obj/item/storage/firstaid/light,
 		/obj/item/storage/backpack/dufflebag,
-		/obj/item/device/flashlight/flare
+		/obj/item/device/flashlight/flare,
+		/obj/item/crowbar/prybar,
+		/obj/item/extinguisher/mini
 	)
 
 /obj/structure/closet/secure_closet/explorer
@@ -77,7 +79,9 @@
 		/obj/item/material/knife/folding/swiss/explorer,
 		/obj/item/device/camera,
 		/obj/item/storage/backpack/dufflebag,
-		/obj/item/device/flashlight/flare
+		/obj/item/device/flashlight/flare,
+		/obj/item/crowbar/prybar,
+		/obj/item/extinguisher/mini
 	)
 
 /obj/structure/closet/secure_closet/pilot

@@ -39,6 +39,8 @@
 #define COLOR_PURPLE_GRAY      "#a2819e"
 #define COLOR_BLUE_LIGHT       "#33ccff"
 #define COLOR_RED_LIGHT        "#ff3333"
+#define COLOR_GREEN_LIGHT      "#33ff33"
+#define COLOR_ORANGE_LIGHT     "#ffcc33"
 #define COLOR_BEIGE            "#ceb689"
 #define COLOR_BABY_BLUE        "#89cff0"
 #define COLOR_PALE_GREEN_GRAY  "#aed18b"

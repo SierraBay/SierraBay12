@@ -108,8 +108,9 @@
 	color = "#404030"
 	alpha = 180
 	touch_met = 5
-	var/nutriment_factor = 0
-	var/hydration_factor = 0
+	sugar_amount = 0.5
+	var/nutriment_factor = 3 //Baseline nutriment is 10; empty calories with no real nutritious value.
+	var/hydration_factor = 3 //Water is 10.
 	var/strength = 10 // This is, essentially, units between stages - the lower, the stronger. Less fine tuning, more clarity.
 	var/toxicity = 1
 

@@ -17,7 +17,7 @@ var/global/list/department_radio_keys = list(
 	  ":p" = "AI Private",	".p" = "AI Private",
 	  ":z" = "Entertainment",".z" = "Entertainment",
 	  ":y" = "Exploration",		".y" = "Exploration",
-	  ":o" = "Response Team",".o" = "Response Team", //ERT
+	  ":f" = "ERT",".f" = "ERT", //ERT
 	  ":j" = "Hailing", ".j" = "Hailing",
 
 	  ":R" = "right ear",	".R" = "right ear",
@@ -37,7 +37,7 @@ var/global/list/department_radio_keys = list(
 	  ":P" = "AI Private",	".P" = "AI Private",
 	  ":Z" = "Entertainment",".Z" = "Entertainment",
 	  ":Y" = "Exploration",		".Y" = "Exploration",
-	  ":O" = "Response Team", ".O" = "Response Team",
+	  ":F" = "ERT", ".F" = "ERT",
 	  ":J" = "Hailing", ".J" = "Hailing",
 
 	  //kinda localization -- rastaf0
@@ -59,7 +59,7 @@ var/global/list/department_radio_keys = list(
 	  ":з" = "AI Private",	".з" = "AI Private",
 	  ":я" = "Entertainment",".я" = "Entertainment",
 	  ":н" = "Exploration",		".н" = "Exploration",
-	  ":щ" = "Response Team",".щ" = "Response Team",
+	  ":щ" = "ERT",".щ" = "ERT",
 	  ":о" = "Hailing", ".о" = "Hailing",
 
 	  ":К" = "right ear",	".К" = "right ear",
@@ -79,7 +79,7 @@ var/global/list/department_radio_keys = list(
 	  ":З" = "AI Private",	".З" = "AI Private",
 	  ":Я" = "Entertainment",".Я" = "Entertainment",
 	  ":Н" = "Exploration",		".Н" = "Exploration",
-	  ":Щ" = "Response Team",".Щ" = "Response Team",
+	  ":а" = "ERT",".а" = "ERT",
 	  ":О" = "Hailing", ".О" = "Hailing",
 )
 
@@ -321,7 +321,16 @@ var/global/list/channel_to_radio_key = new
 		eavesdroping_obj -= listening_obj
 		for(var/mob/M in eavesdroping)
 			if(M)
-				M.hear_say(stars(message), verb, speaking, alt_name, italics, src, speech_sound, sound_vol)
+				//[SIERRA-ADD] - RESOMI
+				var/mob/living/carbon/human/H
+				var/temp
+				if(ishuman(M))
+					H = M
+					temp = (H.get_species() == SPECIES_RESOMI ? message : stars(message))
+				else
+					temp = stars(message)
+				M.hear_say(temp, verb, speaking, alt_name, italics, src, speech_sound, sound_vol)
+				//[/SIERRA-ADD]
 				if(M.client)
 					speech_bubble_recipients |= M.client
 

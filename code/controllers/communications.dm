@@ -158,7 +158,7 @@ var/global/list/radiochannels = list(
 	"Medical"		= MED_FREQ,
 	"Engineering"	= ENG_FREQ,
 	"Security" 		= SEC_FREQ,
-	"Response Team" = ERT_FREQ,
+	"ERT"           = ERT_FREQ,
 	"Special Ops" 	= DTH_FREQ,
 	"Mercenary" 	= SYND_FREQ,
 	"Raider"		= RAID_FREQ,
@@ -285,7 +285,7 @@ var/global/const/RADIO_MULEBOT = "radio_mulebot"
 var/global/const/RADIO_MAGNETS = "radio_magnet"
 
 // These are exposed to players, by name.
-GLOBAL_LIST_INIT(all_selectable_radio_filters, list(
+GLOBAL_LIST_AS(all_selectable_radio_filters, list(
 	RADIO_DEFAULT,
 	RADIO_TO_AIRALARM,
 	RADIO_FROM_AIRALARM,
