@@ -442,11 +442,35 @@
 		error = null
 		new_message = TRUE
 		msg_recipient = M.source
-		msg_title = "Re: [M.title]"
+		msg_title = M.title
+		if (copytext_char(msg_title, 1, 4) != "Re:")
+			msg_title = "Re: [msg_title]"
 		var/atom/movable/AM = host
 		if(istype(AM))
 			if(ismob(AM.loc))
 				ui_interact(AM.loc)
+		return TOPIC_HANDLED
+
+	if (href_list["forward"])
+		var/datum/computer_file/data/email_message/message = find_message_by_fuid(href_list["forward"])
+		if (!istype(message))
+			return TOPIC_HANDLED
+		error = null
+		new_message = TRUE
+		msg_recipient = null
+		msg_title = message.title
+		if (copytext_char(msg_title, 1, 4) != "Fw:")
+			msg_title = "Fw: [msg_title]"
+		msg_body = "---\n\[b]FORWARDED MESSAGE:\[/b]\n"
+		msg_body += "\[b]SUBJECT\[b]: [message.title]\n"
+		msg_body += "\[b]FROM\[b]: [message.source]\n"
+		msg_body += "\[b]TO\[b]: [message.recipient]\n"
+		msg_body += "---\n"
+		for (var/line in splittext(message.stored_data, "\n"))
+			msg_body += "> [line]\n"
+		var/atom/movable/movable = host
+		if (istype(movable) && ismob(movable.loc))
+			ui_interact(movable.loc)
 		return TOPIC_HANDLED
 
 	if(href_list["view"])

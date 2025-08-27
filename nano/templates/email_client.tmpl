@@ -134,6 +134,7 @@
 			</div>
 			<div class="itemContent">
 				{{:helper.link('Reply', null, {'reply' : data.cur_uid})}}
+				{{:helper.link('Forward', null, {'forward' : data.cur_uid})}}
 				{{:helper.link('Delete', null, {'delete' : data.cur_uid})}}
 				{{:helper.link('Close', null, {'cancel' : data.cur_uid})}}
 				{{:helper.link('Save to Disk', null, {'save' : data.cur_uid})}}
@@ -154,7 +155,7 @@
 					<th>{{:data.source_label}}</th>
 					<th>Title</th>
 					<th>Received at</th>
-					<th></th>
+					<th style="width: 68px;"></th>
 				</tr>
 				{{for data.messages}}
 					<tr class="candystripe">
@@ -162,9 +163,10 @@
 						<td>{{:value.title}}&nbsp</td>
 						<td>{{:value.timestamp}}&nbsp</td>
 						<td>
-							{{:helper.link('', 'trash', {'delete' : value.uid})}}
-							{{:helper.link('', 'arrowreturnthick-1-w', {'reply' :  value.uid})}}
-							{{:helper.link('', 'search', {'view' :  value.uid})}}
+							<abbr title="Delete Message">{{:helper.link('', 'trash', {'delete' : value.uid})}}</abbr>
+							<abbr title="Reply To Sender">{{:helper.link('', 'arrowreturnthick-1-w', {'reply' :  value.uid})}}</abbr>
+							<abbr title="Forward Message">{{:helper.link('', 'arrowreturnthick-1-e', {'forward' : value.uid})}}</abbr>
+							<abbr title="Open Message">{{:helper.link('', 'search', {'view' :  value.uid})}}</abbr>
 						</td>
 					</tr>
 				{{/for}}
