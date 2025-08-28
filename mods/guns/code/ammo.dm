@@ -105,9 +105,3 @@ Dragon's Breath Rounds - Shotgun
 	if(isliving(target))
 		var/mob/living/L = target
 		L.IgniteMob()
-
-/*
-/obj/item/projectile/bullet/pellet/shotgun/dragon/on_impact(atom/A)
-	for(var/turf/T in get_turfs_in_range(get_turf(src), 0))
-		new /obj/turf_fire/small (T)
-*/
