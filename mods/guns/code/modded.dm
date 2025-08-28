@@ -373,3 +373,8 @@
 /obj/item/storage/box/ammo/smg_nt/ap
 	name = "box of 7mm box magazines - armor piercing"
 	startswith = list(/obj/item/ammo_magazine/smg_nt/ap = 4)
+
+// Ammo Box
+
+/obj/item/ammobox/pistol/small_ap
+	ammo_type = /obj/item/ammo_casing/pistol/small/ap
