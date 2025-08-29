@@ -3460,6 +3460,8 @@
 #include "mods\_master_files\code\game\objects\structures\reflective_mirrors.dm"
 #include "mods\_master_files\code\game\objects\structures\signs.dm"
 #include "mods\_master_files\code\game\objects\structures\crates_lockers\closets\_closet_appearance_definitions.dm"
+#include "mods\_master_files\code\modules\admin\admin_verbs.dm"
+#include "mods\_master_files\code\modules\admin\topic.dm"
 #include "mods\_master_files\code\modules\client\preferences_persist.dm"
 #include "mods\_master_files\code\modules\clothing\spacesuits\spacesuits.dm"
 #include "mods\_master_files\code\modules\clothing\under\accessories\armor_plate.dm"
