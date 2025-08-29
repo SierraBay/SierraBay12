@@ -115,6 +115,7 @@
 /obj/machinery/shieldgen/proc/collapse_shields()
 	for(var/obj/machinery/shield/shield_tile in deployed_shields)
 		qdel(shield_tile)
+	deployed_shields.Cut()
 
 /obj/machinery/shieldgen/power_change()
 	. = ..()
