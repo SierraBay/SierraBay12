@@ -134,7 +134,8 @@ var/global/list/admin_verbs_fun = list(
 	/datum/admins/proc/ai_hologram_set,
 	/client/proc/bombard_zlevel,
 	/client/proc/rename_shuttle,
-	/client/proc/give_disease2 // [/SIERRA-ADD] - CLIENT_VERBS
+	/client/proc/give_disease2, // [/SIERRA-ADD] - CLIENT_VERBS,
+	/datum/admins/proc/mp_panel // [/SIERRA-ADD]
 	)
 
 var/global/list/admin_verbs_spawn = list(

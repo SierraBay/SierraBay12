@@ -1,0 +1,5 @@
+author: Aigamuxa
+changes:
+  - {tweak: Скреллы теперь могут брать lipstick в бодимарках}
+  - {tweak: Таяры теперь могут брать undereyes в бодимарках}
+delete-after: true

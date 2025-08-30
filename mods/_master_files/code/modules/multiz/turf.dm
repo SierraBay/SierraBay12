@@ -1,5 +1,6 @@
 /turf/simulated/open/space
 	//same behaviour as regular space turfs
+	initial_gas = null
 	zone_membership_candidate = FALSE
 	external_atmosphere_participation = TRUE
 

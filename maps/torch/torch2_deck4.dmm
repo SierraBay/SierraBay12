@@ -15308,6 +15308,10 @@
 /obj/structure/catwalk,
 /turf/simulated/floor/plating,
 /area/maintenance/fourthdeck/forestarboard)
+"Xu" = (
+/obj/shuttle_landmark/cubkitten/torch,
+/turf/space,
+/area/space)
 "Xv" = (
 /obj/floor_decal/corner/brown{
 	dir = 10
@@ -23859,7 +23863,7 @@ aa
 aa
 aa
 aa
-aa
+Xu
 aa
 aa
 aa

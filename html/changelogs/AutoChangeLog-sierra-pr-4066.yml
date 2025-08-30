@@ -1,0 +1,5 @@
+author: Aigamuxa
+changes:
+  - {bugfix: Госты теперь могут смотреть ООС нотесы}
+  - {tweak: Теперь в ООС нотесы можно ставить переносы строки}
+delete-after: true
