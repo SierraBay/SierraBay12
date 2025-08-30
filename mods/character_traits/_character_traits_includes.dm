@@ -9,5 +9,8 @@
 #include "code/colorblindwires.dm"
 #include "code/skrell.dm"
 #include "code/gas.dm"
+#include "code/mule.dm"
+#include "code/diseases.dm"
+#include "code/loadouttraits.dm"
 
 #endif

@@ -14,12 +14,12 @@
 	if(GLOB.using_map.use_overmap)
 		var/obj/overmap/visitable/sector/exoplanet/E = map_sectors["[z]"]
 		if(istype(E))
-			if(E.atmosphere)
-				initial_gas = E.atmosphere.gas.Copy()
-				temperature = E.atmosphere.temperature
-			else
-				initial_gas = list()
-				temperature = T0C
+			// if(E.atmosphere)
+			// 	initial_gas = E.atmosphere.gas.Copy()
+			// 	temperature = E.atmosphere.temperature
+			// else
+			// 	initial_gas = list()
+			// 	temperature = T0C
 
 			if(E.planetary_area && istype(loc, world.area))
 				ChangeArea(src, E.planetary_area)

@@ -15,6 +15,8 @@
 
 	var/timer_id
 
+	zone_membership_candidate = TRUE
+
 // This is not great.
 /turf/simulated/proc/wet_floor(wet_val = 1, overwrite = FALSE)
 	if(wet_val < wet && !overwrite)
