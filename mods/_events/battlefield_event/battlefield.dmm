@@ -5335,8 +5335,8 @@
 	pixel_x = -12
 	},
 /obj/item/clothing/head/scga/utility{
-	pixel_x = -13;
-	pixel_y = 12
+	pixel_x = -14;
+	pixel_y = 14
 	},
 /turf/simulated/floor/exoplanet/desert,
 /area/battlefield/camp)
