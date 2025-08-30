@@ -72,9 +72,95 @@
 
 	.=..()
 
+// --- FA: навпоинт (лендмарк) ---
+/obj/shuttle_landmark/nav_facolony
+	name = "Landing Site"
+	landmark_tag = "nav_facolony_1"
+	flags = SLANDMARK_FLAG_AUTOSET
+	base_turf = /turf/simulated/floor/plating
+	// base_area НЕ задаём руками — AUTOSET сам возьмёт инстанс area
+
+// --- playablecolony2: ставим иконку 'Unknown' ровно на тайл планеты в overmap ---
 /datum/map_template/ruin/exoplanet/playablecolony2/after_load()
-	.=..()
+	. = ..()
 	colony_inform()
+
+	// найти (или создать) лендмарк посадки
+	var/obj/shuttle_landmark/L = null
+	for (var/obj/shuttle_landmark/S in world)
+		if (S.landmark_tag == "nav_facolony_1")
+			L = S
+			break
+	if (!L)
+		var/area/A = locate(/area/map_template/colony2/FA/landing)
+		if (A)
+			for (var/turf/T in A)
+				L = new /obj/shuttle_landmark/nav_facolony(T)
+				break
+	if (!L)
+		log_and_message_admins("FA: nav_facolony_1 landmark not found after load.")
+		return
+
+	// базовый сектор overmap, соответствующий физическому Z колонии
+	var/obj/overmap/visitable/base_sector = map_sectors["[L.z]"]
+	if (!istype(base_sector))
+		log_and_message_admins("FA: map_sectors for z=[L.z] is null; cannot place overmap marker.")
+		return
+
+	// найти планету на том же overmap-Z, СВЯЗАННУЮ с этим z
+	var/obj/overmap/visitable/sector/exoplanet/target_planet = null
+	for (var/obj/overmap/visitable/sector/exoplanet/P in world)
+		if (P.z != base_sector.z) continue
+		var/list/links = null
+		if ("planetary_z_levels" in P.vars) links = P.vars["planetary_z_levels"]
+		else if ("z_levels" in P.vars)       links = P.vars["z_levels"]
+		if (islist(links) && (L.z in links))
+			target_planet = P
+			break
+
+	// запасной путь — ближайшая планета на этом overmap-Z
+	if (!target_planet)
+		var/turf/base_turf = get_turf(base_sector)
+		var/min_d = 1.0e9
+		for (var/obj/overmap/visitable/sector/exoplanet/P in world)
+			if (P.z != base_sector.z) continue
+			var/d = get_dist(get_turf(P), base_turf)
+			if (d < min_d)
+				min_d = d
+				target_planet = P
+
+	if (!target_planet)
+		log_and_message_admins("FA: no exoplanet icon found on overmap z=[base_sector.z].")
+		return
+
+	var/turf/planet_turf = get_turf(target_planet)
+	if (!planet_turf) return
+
+	// удалить старые дубликаты "Unknown" на самой планете (если вдруг были)
+	for (var/obj/overmap/visitable/sector/facolony/E in planet_turf)
+		qdel(E)
+
+	// ВАЖНО: создаём БЕЗ локации, отключаем автоплейсмент, а затем переносим на след. тик
+	var/obj/overmap/visitable/sector/facolony/sec = new
+
+	// попробовать задушить любые механизмы рандом-расположения, если есть такие поля
+	for (var/V in list("place_near_main", "autoplace", "place_randomly", "random_spread", "starts_randomized"))
+		if (V in sec.vars)
+			sec.vars[V] = null
+
+	if ("anchored" in sec.vars)
+		sec.anchored = TRUE
+
+	// переносим СТРОГО на тайл планеты ПОСЛЕ Initialize()
+	spawn(1)
+		if (QDELETED(sec)) return
+		sec.forceMove(planet_turf)
+		// слой чуть выше, чтобы квадрат не прятался под кружком планеты
+		sec.layer = target_planet.layer + 0.01
+		log_and_message_admins("FA: overmap marker placed at [planet_turf.x],[planet_turf.y],[planet_turf.z] over [target_planet.name].")
+
+	// пере-регистрируем навпоинт у текущего сектора через стандартную логику
+	L.forceMove(get_turf(L))
 
 /datum/map_template/ruin/exoplanet/playablecolony2/proc/colony_inform()
 	//Информирует мир о типе колонии
@@ -124,3 +210,132 @@
 /obj/item/paper/colony2_ind
 	name = "Colonization plans"
 	info = "<i>Документ содержит весьма исчерпывающий план по колонизации данной экзопланеты, включающий перечень необходимого инвентаря, финансирования и инструкции для колонистов. В глаза бросаются многочисленные упоминания договоров о финансировании с теми или иными корпорациями и некой организации, именуемой \"Альянсом Фронтира\".</i>"
+
+// Frontier Alliance extention by Garry Flint //
+
+/obj/overmap/visitable/sector/facolony
+	name = "Unknown"
+	desc = "Unidentified structures emit a weak signal."
+	icon_state = "object"
+	initial_generic_waypoints = list("nav_facolony_1")
+  
+var/global/const/access_facolony = "ACCESS_FACOLONY"
+/datum/access/facolony
+	id = access_facolony
+	desc = "Crew card"
+
+/obj/item/card/id/facolony
+	name = "Crew card"
+	desc = "Old worn-out access card."
+	access = list(access_facolony)
+	color = COLOR_OFF_WHITE
+	detail_color = COLOR_CIVIE_GREEN
+
+/obj/floor_decal/falogo
+	icon = 'mods/colony_fractions/icons/colony.dmi'
+	icon_state = "falogo"
+
+/obj/structure/sign/double/faflag/left
+	icon = 'mods/colony_fractions/icons/colony.dmi'
+	icon_state = "faflag_l"
+
+/obj/structure/sign/double/faflag/right
+	icon = 'mods/colony_fractions/icons/colony.dmi'
+	icon_state = "faflag_r"
+
+/area/map_template/colony2/FA/
+	req_access = list(access_facolony)
+
+/area/map_template/colony2/FA/command
+	name = "\improper IPV Celeste Hauler - Bridge"
+	icon_state = "A"
+
+/area/map_template/colony2/FA/landing
+	name = "\improper Landing Site"
+	icon_state = "B"
+
+/area/map_template/colony2/FA/airlock
+	name = "\improper Base Primary External Airlock"
+	icon_state = "A"
+
+/area/map_template/colony2/FA/airlock2
+	name = "\improper Trade Zone External Airlock"
+	icon_state = "A"
+
+/area/map_template/colony2/FA/armory
+	name = "\improper Ship Armory"
+	icon_state = "A"
+
+/area/map_template/colony2/FA/bathroom
+	name = "\improper Base Lavatory"
+	icon_state = "A"
+
+/area/map_template/colony2/FA/dorms
+	name = "\improper Base Dormitories"
+	icon_state = "A"
+
+/area/map_template/colony2/FA/engineering
+	name = "\improper Ship Engineering"
+	icon_state = "processing"
+
+/area/map_template/colony2/FA/atmospherics
+	name = "\improper Ship Atmospherics"
+	icon_state = "shipping"
+
+/area/map_template/colony2/FA/atmospherics2
+	name = "\improper Base Atmospherics"
+	icon_state = "shipping"
+
+/area/map_template/colony2/FA/cargo
+	name = "\improper Ship Mid Cargo Area"
+	icon_state = "A"
+
+/area/map_template/colony2/FA/cargo2
+	name = "\improper Ship Aft Cargo Area"
+	icon_state = "A"
+
+/area/map_template/colony2/FA/cargohatch
+	name = "\improper Ship Cargo Hatch"
+	icon_state = "B"
+
+/area/map_template/colony2/FA/unspecified
+	name = "\improper Unspecified Compartment"
+	icon_state = "A"
+
+/area/map_template/colony2/FA/tcomms
+	name = "\improper Base Telecommunications"
+	icon_state = "B2"
+
+/area/map_template/colony2/FA/medbay
+	name = "\improper Ship Infirmary"
+	icon_state = "A"
+
+/area/map_template/colony2/FA/surgery
+	name = "\improper Ship Operating Theatre"
+	icon_state = "A"
+
+/area/map_template/colony2/FA/messhall
+	name = "\improper Ship Mess Hall"
+	icon_state = "B"
+
+/area/map_template/colony2/FA/mineralprocessing
+	name = "\improper Base Mining Site"
+	icon_state = "A"
+
+/area/map_template/colony2/FA/science
+	name = "\improper Base R&D"
+	icon_state = "A"
+
+/area/map_template/colony2/FA/warehouse
+	name = "\improper Base warehouse"
+	icon_state = "shipping"
+
+/area/map_template/colony2/FA/outsidewarehouse
+	name = "\improper Trade Zone warehouse"
+	icon_state = "shipping"
+
+/area/map_template/colony2/FA/tradezone
+	name = "\improper Trade Zone"
+	icon_state = "shipping"
+
+
