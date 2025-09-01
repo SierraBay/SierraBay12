@@ -115,6 +115,7 @@
 			return
 
 		switch_to_camera(usr, C)
+		apply_visual(usr)
 		return 1
 
 	else if(href_list["switch_network"])

@@ -1,5 +1,3 @@
-#define EXPENSIVE_ROBOLIMB_SELF_REPAIR_CAP 20
-
 /obj/item/stack/cable_coil/use_after(mob/living/carbon/human/target, mob/living/user)
 	if (!istype(target))
 		return FALSE
@@ -17,7 +15,7 @@
 	if (!can_use(use_amount))
 		to_chat(user, SPAN_WARNING("You don't have enough of \the [src] left to repair \the [target]'s [organ.name]."))
 		return TRUE
-	if(organ.expensive && organ.damage >= EXPENSIVE_ROBOLIMB_SELF_REPAIR_CAP)
+	if(organ.expensive)
 		to_chat(user, SPAN_WARNING("\The [target]'s [organ.name] cannot be repaired with such simple tools - \the [src] cannot repair it."))
 		return TRUE
 	if(organ.robo_repair(3 * use_amount, DAMAGE_BURN, "some damaged wiring", src, user))
@@ -35,7 +33,7 @@
 	if (!S || !BP_IS_ROBOTIC(S) || user.a_intent != I_HELP)
 		return FALSE
 
-	if(S.expensive && S.damage >= EXPENSIVE_ROBOLIMB_SELF_REPAIR_CAP)
+	if(S.expensive)
 		to_chat(user, SPAN_WARNING("\The [target]'s [S.name] cannot be repaired with such simple tools - \the [src] cannot repair it."))
 		return TRUE
 
@@ -118,9 +116,9 @@
 
 /singleton/surgery_step/robotics/repair_brute_manipulator/success_chance(mob/living/user, mob/living/carbon/human/target, obj/item/tool)
 	. = ..()
-	if(user.skill_check(SKILL_CONSTRUCTION, SKILL_BASIC))
-		. += 5
 	if(user.skill_check(SKILL_CONSTRUCTION, SKILL_TRAINED))
+		. += 5
+	if(user.skill_check(SKILL_CONSTRUCTION, SKILL_EXPERIENCED))
 		. += 10
 	if(!user.skill_check(SKILL_DEVICES, SKILL_EXPERIENCED))
 		. -= 10
@@ -153,9 +151,11 @@
 	var/obj/item/organ/external/affected = target.get_organ(target_zone)
 	user.visible_message(SPAN_NOTICE("[user] finishes install new [tool.name] to [target]'s [affected.name]"), \
 	SPAN_NOTICE("You finish install new [tool.name] to [target]'s [affected.name]"))
-	affected.heal_damage(rand(30,50),0,1,1)
-	affected.status &= ~ORGAN_DISFIGURED
-	qdel(tool)
+	if(istype(tool, /obj/item/stock_parts/manipulator))
+		var/obj/item/stock_parts/manipulator = tool
+		affected.heal_damage((15*manipulator.rating),0,1,1)
+		affected.status &= ~ORGAN_DISFIGURED
+		qdel(tool)
 
 /singleton/surgery_step/robotics/repair_brute_manipulator/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/affected = target.get_organ(target_zone)
@@ -208,9 +208,11 @@
 	var/obj/item/organ/external/affected = target.get_organ(target_zone)
 	user.visible_message(SPAN_NOTICE("[user] finishes install new [tool.name] into [target]'s [affected.name]."), \
 	SPAN_NOTICE("You finishes install new [tool.name] into [target]'s [affected.name]."))
-	affected.heal_damage(0,rand(30,50),1,1)
-	affected.status &= ~ORGAN_DISFIGURED
-	qdel(tool)
+	if(istype(tool, /obj/item/stock_parts/capacitor))
+		var/obj/item/stock_parts/capacitor = tool
+		affected.heal_damage(0,(15*capacitor.rating),1,1)
+		affected.status &= ~ORGAN_DISFIGURED
+		qdel(tool)
 
 /singleton/surgery_step/robotics/repair_burn_capacitor/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/affected = target.get_organ(target_zone)
@@ -241,8 +243,8 @@
 		to_chat(user, SPAN_DANGER("The damage is far too severe to patch over externally."))
 		return 0
 
-	else if(damage_amount >= EXPENSIVE_ROBOLIMB_SELF_REPAIR_CAP && src.expensive)
-		to_chat(user, SPAN_DANGER("The damage is far too severe to patch over externally."))
+	else if(src.expensive)
+		to_chat(user, SPAN_DANGER("Those kind of repairs require some advanced tools."))
 		return 0
 
 	else if(user == src.owner)

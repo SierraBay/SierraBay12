@@ -157,8 +157,6 @@
 		var/mob/living/carbon/human/H = mob
 		H.update_inv_head()
 
-
-
 /mob/living/proc/in_fov(atom/observed_atom, ignore_self = FALSE)
 	if(ignore_self && observed_atom == src)
 		return TRUE
