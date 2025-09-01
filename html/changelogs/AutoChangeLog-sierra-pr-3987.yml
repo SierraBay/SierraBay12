@@ -1,6 +1,0 @@
-author: Zenithstar
-changes:
-  - {bugfix: 'Coffee cups, flasks and vacuum flasks selected from the loadout retain
-      custom names and descriptions.'}
-  - {rscdel: Unhooked drinking glasses from the old custom item subsystem.}
-delete-after: true

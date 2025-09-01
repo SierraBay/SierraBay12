@@ -1,4 +1,0 @@
-author: Aigamuxa
-changes:
-  - {bugfix: Теперь цели предателя вновь могут быть только у предателя}
-delete-after: true

@@ -355,6 +355,7 @@
 	icon_state = "smallcasing_f"
 
 /obj/item/projectile/bullet/pistol/holdout/ap
+	damage = 30
 	armor_penetration = 15
 	//[SIERRA-ADD] - Mechs-by-Shegar
 	mech_armor_penetration = 0
@@ -372,3 +373,8 @@
 /obj/item/storage/box/ammo/smg_nt/ap
 	name = "box of 7mm box magazines - armor piercing"
 	startswith = list(/obj/item/ammo_magazine/smg_nt/ap = 4)
+
+// Ammo Box
+
+/obj/item/ammobox/pistol/small_ap
+	ammo_type = /obj/item/ammo_casing/pistol/small/ap

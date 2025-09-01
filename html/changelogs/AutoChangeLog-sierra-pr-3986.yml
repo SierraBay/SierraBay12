@@ -1,5 +1,0 @@
-author: Zenithstar
-changes:
-  - {bugfix: Signals from radio beacons now follow shuttles on the overmap after
-      they undock.}
-delete-after: true

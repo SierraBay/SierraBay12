@@ -46,7 +46,7 @@ ID мода: ANTAGONISTS
     - `var/suffixes`
     - `var/shuttles_to_initialise`
     - `var/apc_test_exempt_areas`
-  - `/datum/shuttle/autodock/multi/antag/rescue/var/destination_tags`
+  - `/datum/shuttle/autodock/multi/antag/ert/var/destination_tags`
   - `/area/map_template/rescue_base/start/var/base_turf`
 <!--
   Если ты добавлял новый модульный оверрайд, его нужно указать здесь.

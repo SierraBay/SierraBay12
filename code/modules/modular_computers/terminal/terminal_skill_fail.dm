@@ -97,6 +97,7 @@ GLOBAL_LIST_AS(terminal_fails, init_subtypes(/datum/terminal_skill_fail))
 	M.title = "!SENSITIVE! - NTNet System log backup"
 	M.stored_data = jointext(ntnet_global.logs, "<br>")
 	M.source = S.login
+	M.recipient = EMAIL_BROADCAST
 	if(!S.send_mail(EMAIL_BROADCAST, M))
 		return list()
 	terminal.computer.add_log("Network log sent to: all")
