@@ -8,6 +8,9 @@
 	penetration_modifier = 1.1
 	fire_sound = 'sound/weapons/railgun.ogg'
 	distance_falloff = 1
+	//[SIERRA-ADD] - Mechs_by_Shegar
+	mech_armor_penetration = 100 //Броня меха игнорируется
+	//[SIERRA-ADD]
 
 /obj/item/projectile/bullet/magnetic/slug
 	name = "slug"

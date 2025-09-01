@@ -199,6 +199,10 @@ var/global/list/debug_verbs = list (
 		to_chat(src, SPAN_WARNING("This debug tool can only be used while on a simulated turf."))
 		return
 
+	if(!location?.zone)
+		to_chat(src, SPAN_WARNING("The turf you are standing on does not have a zone."))
+		return
+
 	if(!usedZAScolors)
 		to_chat(src, "ZAS Test Colors")
 		to_chat(src, "Green = Zone you are standing in")

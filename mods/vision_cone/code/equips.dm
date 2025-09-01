@@ -51,24 +51,6 @@
 	.=..()
 	AddComponent(/datum/component/mech_sensor, fov_angle)
 
-
-/mob/living/exosuit/open_hatch()
-	..()
-	if(head)
-		if(pilots)
-			for(var/mob/living/carbon/human/thing in pilots)
-				SEND_SIGNAL(head, COMSIG_CABINE_OPEN, thing)
-				thing.update_inv_head(thing)
-
-/mob/living/exosuit/close_hatch()
-	..()
-	if(head)
-		if(pilots)
-			for(var/mob/living/carbon/human/thing in pilots)
-				SEND_SIGNAL(head, COMSIG_CABINE_CLOSED, thing)
-				thing.update_inv_head(thing)
-
-
 /mob/living/exosuit/Destroy()
 	if(pilots)
 		for(var/mob/living/carbon/human/thing in pilots)

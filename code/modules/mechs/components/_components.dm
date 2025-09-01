@@ -52,8 +52,7 @@
 		return 1
 
 /obj/item/mech_component/proc/update_health()
-	total_damage = brute_damage + burn_damage
-	if(total_damage > max_damage) total_damage = max_damage
+	total_damage = clamp(brute_damage + burn_damage, 0, max_damage)
 	var/prev_state = damage_state
 	damage_state = clamp(round((total_damage/max_damage) * 4), MECH_COMPONENT_DAMAGE_UNDAMAGED, MECH_COMPONENT_DAMAGE_DAMAGED_TOTAL)
 	if(damage_state > prev_state)

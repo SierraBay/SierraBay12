@@ -71,7 +71,7 @@
 
 /obj/item/rig_module/vision/multi
 
-	name = "hardsuit optical package"
+	name = "advanced hardsuit optical package"
 	desc = "A complete visor system of optical scanners and vision modes."
 	icon_state = "fulloptics"
 
@@ -82,6 +82,15 @@
 	vision_modes = list(/datum/rig_vision/meson,
 						/datum/rig_vision/nvg,
 						/datum/rig_vision/thermal,
+						/datum/rig_vision/sechud,
+						/datum/rig_vision/medhud)
+
+/obj/item/rig_module/vision/multi/cheap
+	name = "hardsuit optical package"
+	icon_state = "optics"
+	desc = "An advanced visor system of HUD connected optical scanners and night vision mode."
+	vision_modes = list(/datum/rig_vision/meson,
+						/datum/rig_vision/nvg,
 						/datum/rig_vision/sechud,
 						/datum/rig_vision/medhud)
 

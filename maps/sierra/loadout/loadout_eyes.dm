@@ -48,14 +48,14 @@
 
 /datum/gear/eyes/ballisticsmodmed
 	display_name = "ballistics googles attachment, Med HUD"
+	description = "An attachable medical HUD for ballistic goggles."
 	path = /obj/item/clothing/accessory/glassesmod/hud/medical
-	allowed_roles = list(MEDICAL_ROLES, /datum/job/explorer_medic)
+	allowed_roles = MEDICAL_ROLES
 	cost = 1
 
 /datum/gear/eyes/ballisticsmodpolarized
 	display_name = "ballistics googles attachment, polarized filter"
 	path = /obj/item/clothing/accessory/glassesmod/vision/polarized
-	allowed_roles = SECURITY_ROLES
 	cost = 1
 
 /datum/gear/eyes/ballisticsmodwelding

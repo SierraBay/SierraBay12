@@ -87,3 +87,9 @@
 	name = "chicken crate"
 	held_count = 5
 	held_type = /mob/living/simple_animal/passive/chick
+
+/obj/structure/largecrate/animal/drones
+	name = "maintenance drone crate (CAUTION)"
+	desc = "A hefty wooden crate. Warning labels denote the contents are malfunctioning maintenance drones intended for scrapping."
+	held_count = 3
+	held_type = /mob/living/simple_animal/hostile/rogue_drone

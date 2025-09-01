@@ -16,7 +16,7 @@
 	caliber = CALIBER_PISTOL_SMALL
 	one_hand_penalty= 0
 	load_method = SINGLE_CASING|SPEEDLOADER
-	max_shells = 100
+	max_shells = 250
 	ammo_type = /obj/item/ammo_casing/pistol/small/mech
 	magazine_type = /obj/item/ammo_magazine/proto_smg/mech
 	allowed_magazines = /obj/item/ammo_magazine/proto_smg/mech
@@ -27,9 +27,6 @@
 
 /obj/item/mech_equipment/mounted_system/taser/ballistic/smg/need_combat_skill()
 	return TRUE
-
-/obj/item/gun/projectile/automatic/mounted/smg/unload_ammo(mob/user,allow_dump = 1)
-	return
 
 /obj/item/ammo_magazine/proto_smg/mech
 	max_ammo = 100
@@ -44,6 +41,21 @@
 	caliber = CALIBER_PISTOL_SMALL
 
 /obj/item/projectile/bullet/pistol/holdout/mech
-	damage = 30
+	damage = 25
+	penetrating = 0
 	fire_sound = 'mods/mechs_by_shegar/sounds/mech_smg.ogg'
-	penetrating = 1
+	mech_armor_damage = 30 //10 попаданий по любой
+	hitscan = TRUE
+
+/obj/temporary/bullet_traccer
+	invisibility = 100
+
+/obj/temporary/bullet_traccer/Initialize(mapload, duration, _icon, _state)
+	. = ..()
+	pixel_y = pick(-12, 0, 12)
+	pixel_x = pick(-12, 0, 12)
+
+/obj/item/projectile/bullet/pistol/holdout/mech/setup_trajectory(turf/startloc, turf/targloc, x_offset, y_offset)
+	.=..()
+	var/obj/traccer = new /obj/temporary/bullet_traccer (targloc, 0.2 SECONDS)
+	startloc.Beam(BeamTarget = traccer, icon_state = "main",icon='mods/mechs_by_shegar/icons/traccer.dmi',time = 0.2 SECONDS)

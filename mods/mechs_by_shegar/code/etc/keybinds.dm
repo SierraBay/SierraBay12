@@ -40,6 +40,7 @@
 			to_chat(user,SPAN_GOOD( "The position of the body in space is successfully locked."))
 		else
 			to_chat(user,SPAN_GOOD( "Successfully disabled locking  body position in space."))
+		sub_speed(100)
 	else
 		to_chat(user,SPAN_DANGER("The design of the legs does not support locking the body position in space."))
 

@@ -5,6 +5,7 @@
 
 
 #include "code/misc/decoyobj.dm"
+#include "code/misc/foundation_misc.dm"
 #include "code/complexus/complexus_helpers.dm"
 #include "code/complexus/complexus_latency.dm"
 #include "code/complexus/complexus_power_cache.dm"
@@ -12,6 +13,8 @@
 #include "code/complexus/complexus_topic.dm"
 #include "code/complexus/complexus.dm"
 #include "code/equipment/cerebro_enhancers.dm"
+#include "code/equipment/foundation_clothing.dm"
+#include "code/equipment/foundation_exosuit.dm"
 #include "code/equipment/foundation_implanter.dm"
 #include "code/equipment/foundation_weapon.dm"
 #include "code/equipment/implant.dm"
@@ -47,6 +50,7 @@
 #include "code/interface/ui.dm"
 #include "code/mob/mob_assay.dm"
 #include "code/mob/mob_interactions.dm"
+#include "code/mob/foundation_simplemobs.dm"
 #include "code/mob/mob.dm"
 #include "code/null/_null.dm"
 #include "code/null/~null.dm"

@@ -1,0 +1,16441 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ac" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/hidden/universal,
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"ad" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/obj/floor_decal/beach{
+	dir = 3
+	},
+/turf/simulated/floor/tiled/techfloor/grid,
+/area/battlefield/surface)
+"af" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/floor_decal/beach/corner{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"ak" = (
+/obj/floor_decal/corner/lightgrey/bordercorner,
+/turf/simulated/floor/tiled,
+/area/battlefield/camp)
+"ao" = (
+/obj/machinery/power/solar_control,
+/obj/structure/cable/yellow{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/energy)
+"av" = (
+/obj/structure/inflatable/wall,
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"az" = (
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/obj/floor_decal/beach,
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"aB" = (
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"aL" = (
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/obj/item/ammo_casing/shell,
+/turf/simulated/floor/steel_dirty,
+/area/battlefield/surface)
+"aP" = (
+/obj/item/storage/firstaid/empty,
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"aV" = (
+/obj/structure/closet/crate/secure,
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"aW" = (
+/obj/item/ammo_casing/rifle/used{
+	pixel_x = 3;
+	pixel_y = -9;
+	dir = 9
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/energy)
+"aY" = (
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/beach,
+/turf/simulated/floor/tiled/techfloor/grid,
+/area/battlefield/ship)
+"bc" = (
+/obj/decal/cleanable/dirt,
+/obj/item/ammo_casing/rifle/military/light{
+	dir = 4;
+	pixel_x = -25;
+	pixel_y = -10
+	},
+/turf/simulated/floor/steel_dirty,
+/area/battlefield/surface)
+"bg" = (
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/obj/structure/rubble/war,
+/turf/simulated/floor/tiled/techfloor,
+/area/battlefield/surface)
+"bl" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/hidden,
+/turf/simulated/floor,
+/area/battlefield/ship)
+"br" = (
+/obj/structure/table/steel,
+/obj/floor_decal/corner/darkblue/border{
+	dir = 5
+	},
+/obj/item/clothing/accessory/iccgn_patch/gilgamesh{
+	desc = "The sign of the Gilgamesh First Fleet. The first to strike, the first to be trapped.";
+	anchored = 1;
+	pixel_y = 31
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"bs" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/turf/simulated/floor/tiled/techfloor,
+/area/battlefield/ship)
+"bt" = (
+/obj/floor_decal/corner/beige{
+	dir = 7
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"bx" = (
+/obj/floor_decal/iccglogo,
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"by" = (
+/obj/item/device/radio/intercom/broadcasting{
+	dir = 8;
+	pixel_x = 23
+	},
+/turf/simulated/floor/tiled/techfloor/grid,
+/area/battlefield/ship)
+"bz" = (
+/obj/structure/table/steel,
+/obj/floor_decal/corner/darkblue/border{
+	dir = 8
+	},
+/obj/machinery/alarm{
+	dir = 4;
+	pixel_x = -24
+	},
+/obj/item/documents/scg/red{
+	desc = "Military documents related to the advance of the First Gilgamesh Fleet of the ICCG Colonial Fleet. Provided here are plans for the rapid occupation of a large number of SCG systems. This vessel was to head straight to battle the SCG First Fleet. Towards the end of the document, you notice the date: 2292-09-03."
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"bB" = (
+/obj/structure/inflatable/door,
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"bH" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/hidden/cyan{
+	dir = 9
+	},
+/turf/simulated/floor/tiled/techfloor,
+/area/battlefield/ship)
+"bK" = (
+/obj/floor_decal/industrial/outline/red,
+/obj/structure/closet/secure_closet/guncabinet/farfleet,
+/obj/item/clothing/mask/gas,
+/obj/item/ammo_magazine/rifle,
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"bL" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/beach{
+	dir = 3
+	},
+/obj/floor_decal/beach/corner,
+/turf/simulated/floor/tiled/techfloor/grid,
+/area/battlefield/surface)
+"bM" = (
+/obj/structure/cable/green{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/tiled,
+/area/battlefield/camp)
+"bQ" = (
+/obj/machinery/door/blast/regular,
+/turf/simulated/floor,
+/area/battlefield/ship)
+"bR" = (
+/turf/simulated/wall/prepainted,
+/area/battlefield/energy)
+"bS" = (
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/energy)
+"bT" = (
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/obj/floor_decal/asteroid{
+	icon_state = "asteroid5";
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"bV" = (
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/turf/unsimulated/beach/sand,
+/area/battlefield/surface)
+"bX" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/obj/floor_decal/beach{
+	dir = 3
+	},
+/turf/simulated/floor/tiled/techfloor/grid,
+/area/battlefield/surface)
+"bZ" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"ca" = (
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 10
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"cd" = (
+/obj/machinery/pointdefense_control,
+/obj/floor_decal/corner/darkblue/border{
+	dir = 6
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"ci" = (
+/obj/floor_decal/corner/beige/diagonal{
+	dir = 4
+	},
+/obj/structure/cable/green{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/camp)
+"ck" = (
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/techfloor,
+/area/battlefield/surface)
+"cn" = (
+/obj/floor_decal/corner/brown/bordercorner{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"cp" = (
+/obj/floor_decal/corner/brown/border{
+	dir = 9
+	},
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/industrial/outline/red,
+/obj/structure/closet/secure_closet/guncabinet/farfleet,
+/obj/item/cell/super,
+/obj/item/storage/box/ammo/sniperammo,
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"cs" = (
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/turf/simulated/wall/iron,
+/area/battlefield/surface)
+"cu" = (
+/obj/floor_decal/corner/beige/diagonal,
+/obj/structure/cable/green{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/cable/green{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/camp)
+"cv" = (
+/obj/structure/girder,
+/obj/item/pickaxe/xeno/hand,
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"cy" = (
+/obj/structure/bed,
+/obj/floor_decal/corner/lime/border{
+	dir = 9
+	},
+/turf/simulated/floor/tiled,
+/area/battlefield/camp)
+"cC" = (
+/obj/item/ammo_casing/rifle/used{
+	pixel_x = -7;
+	pixel_y = -3;
+	dir = 5
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"cD" = (
+/obj/floor_decal/corner/beige/three_quarters,
+/obj/structure/cable/green{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/camp)
+"cE" = (
+/obj/floor_decal/corner/lightgrey/bordercorner{
+	dir = 1
+	},
+/turf/simulated/floor/tiled,
+/area/battlefield/camp)
+"cI" = (
+/obj/floor_decal/corner/research/bordercorner{
+	dir = 1
+	},
+/turf/simulated/floor/tiled,
+/area/battlefield/camp)
+"cO" = (
+/obj/floor_decal/corner/lime/border{
+	dir = 6
+	},
+/obj/structure/reagent_dispensers/watertank,
+/turf/simulated/floor/tiled,
+/area/battlefield/camp)
+"cP" = (
+/obj/item/clothing/head/iccgn/beret{
+	pixel_x = -16;
+	pixel_y = 15
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"cU" = (
+/obj/floor_decal/beach,
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"cX" = (
+/obj/structure/cable/green{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/floor_decal/corner/lime/bordercorner{
+	dir = 8
+	},
+/obj/floor_decal/corner/lime/bordercorner{
+	dir = 1
+	},
+/turf/simulated/floor/tiled,
+/area/battlefield/camp)
+"db" = (
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"df" = (
+/obj/structure/disposalconstruct/machine/outlet{
+	pixel_y = -3;
+	desc = "The barrel of a low-charge system provides the ability to fire a limited number of pre-loaded projectiles."
+	},
+/turf/simulated/floor,
+/area/battlefield/surface)
+"dg" = (
+/obj/structure/pit/closed/grave,
+/obj/structure/gravemarker/cross{
+	desc = "A wooden cross marking a burial site. Someone has carved into one of the planks:";
+	message = "Cheslav Markevich, 2262-2292"
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"dh" = (
+/obj/structure/railing/mapped,
+/obj/structure/closet/crate/plastic_smug_ammo,
+/obj/floor_decal/corner/brown/border{
+	dir = 4
+	},
+/obj/floor_decal/industrial/outline/yellow,
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"di" = (
+/obj/catwalk_plated,
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"dj" = (
+/obj/structure/cable/green{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled,
+/area/battlefield/camp)
+"dm" = (
+/obj/shuttle_landmark/battlefield/nav1,
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"do" = (
+/obj/decal/cleanable/dirt,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/techfloor,
+/area/battlefield/ship)
+"dr" = (
+/obj/floor_decal/corner/lime/bordercee{
+	dir = 8
+	},
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/sol{
+	dir = 4
+	},
+/turf/simulated/floor/tiled,
+/area/battlefield/energy)
+"dD" = (
+/obj/floor_decal/beach/corner,
+/obj/floor_decal/beach/corner{
+	dir = 4
+	},
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"dE" = (
+/obj/floor_decal/corner/brown/border{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"dS" = (
+/obj/floor_decal/industrial/danger{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/visible,
+/turf/unsimulated/floor/reinforced,
+/area/battlefield/ship)
+"dT" = (
+/obj/item/clothing/head/iccgn/beret{
+	pixel_x = -18;
+	pixel_y = 15
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"dY" = (
+/obj/floor_decal/corner/beige{
+	dir = 9
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"dZ" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"ea" = (
+/obj/floor_decal/iccglogo/corner{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"eb" = (
+/obj/structure/closet/crate/plastic,
+/obj/item/ammo_casing/shell,
+/obj/item/ammo_casing/shell,
+/obj/item/ammo_casing/shell,
+/obj/item/ammo_casing/shell,
+/obj/item/ammo_casing/shell,
+/obj/item/ammo_casing/shell/apds,
+/obj/item/ammo_casing/shell/apds,
+/obj/item/gun/projectile/sniper/panther,
+/turf/simulated/floor/exoplanet,
+/area/battlefield/surface)
+"ed" = (
+/obj/structure/grille/broken,
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"ee" = (
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/obj/floor_decal/beach/corner{
+	dir = 8
+	},
+/obj/floor_decal/beach,
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"ej" = (
+/obj/floor_decal/corner/lightgrey/border{
+	dir = 1
+	},
+/turf/simulated/floor/tiled,
+/area/battlefield/camp)
+"ek" = (
+/obj/floor_decal/beach/corner,
+/obj/floor_decal/beach/corner{
+	dir = 4
+	},
+/turf/unsimulated/beach/sand,
+/area/battlefield/surface)
+"el" = (
+/obj/floor_decal/corner/darkblue/bordercorner{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"eD" = (
+/obj/floor_decal/corner/lime/bordercorner,
+/obj/floor_decal/corner/lime/bordercorner{
+	dir = 8
+	},
+/obj/decal/cleanable/dirt,
+/obj/structure/cable/green{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/tiled,
+/area/battlefield/camp)
+"eF" = (
+/obj/floor_decal/asteroid{
+	icon_state = "asteroid9";
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/turf/simulated/mineral,
+/area/battlefield/surface)
+"eJ" = (
+/turf/simulated/wall/prepainted,
+/area/battlefield/camp)
+"eK" = (
+/obj/decal/cleanable/dirt,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"eM" = (
+/obj/floor_decal/corner/blue/bordercorner{
+	dir = 1
+	},
+/obj/floor_decal/corner/blue/bordercorner{
+	dir = 8
+	},
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/tiled/white,
+/area/battlefield/ship)
+"eO" = (
+/obj/floor_decal/corner/blue/border{
+	dir = 8
+	},
+/obj/machinery/constructable_frame/machine_frame,
+/obj/machinery/alarm{
+	dir = 4;
+	pixel_x = -24
+	},
+/turf/simulated/floor/tiled/white,
+/area/battlefield/ship)
+"eW" = (
+/obj/floor_decal/asteroid{
+	icon_state = "asteroid5";
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/obj/floor_decal/beach/corner{
+	dir = 4
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"eX" = (
+/obj/floor_decal/corner/brown/border{
+	dir = 5
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"eZ" = (
+/obj/decal/cleanable/dirt,
+/obj/structure/girder,
+/turf/unsimulated/floor/reinforced,
+/area/battlefield/ship)
+"ff" = (
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/turf/unsimulated/floor/reinforced,
+/area/battlefield/surface)
+"fh" = (
+/obj/structure/reagent_dispensers/watertank,
+/obj/floor_decal/beach/corner{
+	dir = 1
+	},
+/obj/floor_decal/beach/corner{
+	dir = 8
+	},
+/turf/simulated/floor/steel_dirty,
+/area/battlefield/surface)
+"fi" = (
+/obj/structure/cable/green{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/floor_decal/corner/lightgrey/border{
+	dir = 8
+	},
+/turf/simulated/floor/tiled,
+/area/battlefield/camp)
+"fk" = (
+/obj/floor_decal/corner/red/border{
+	dir = 8
+	},
+/obj/decal/cleanable/dirt,
+/obj/item/device/radio/intercom/broadcasting{
+	dir = 4;
+	pixel_x = -25
+	},
+/obj/floor_decal/corner/red/bordercorner{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"ft" = (
+/obj/floor_decal/asteroid{
+	icon_state = "asteroid1";
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/turf/unsimulated/beach/sand,
+/area/battlefield/surface)
+"fu" = (
+/obj/structure/droppod_door,
+/turf/simulated/floor/reinforced,
+/area/battlefield/surface)
+"fw" = (
+/obj/structure/inflatable/wall,
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/surface)
+"fV" = (
+/obj/machinery/atmospherics/pipe/manifold4w/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"fZ" = (
+/obj/item/gun/launcher/rocket,
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"gI" = (
+/obj/item/beartrap,
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"gO" = (
+/obj/forcefield/blocker,
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"hc" = (
+/obj/structure/railing/mapped{
+	dir = 8
+	},
+/obj/floor_decal/beach/corner{
+	dir = 8
+	},
+/turf/unsimulated/beach/sand,
+/area/battlefield/surface)
+"hq" = (
+/obj/floor_decal/beach/corner{
+	dir = 1
+	},
+/obj/floor_decal/beach/corner{
+	dir = 4
+	},
+/turf/simulated/floor/steel_dirty,
+/area/battlefield/surface)
+"ht" = (
+/obj/structure/cable/yellow{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/energy)
+"hO" = (
+/obj/structure/reagent_dispensers/watertank,
+/obj/floor_decal/beach/corner{
+	dir = 4
+	},
+/turf/simulated/floor/steel_dirty,
+/area/battlefield/surface)
+"iB" = (
+/obj/floor_decal/beach,
+/obj/floor_decal/beach/corner{
+	dir = 8
+	},
+/turf/unsimulated/beach/sand,
+/area/battlefield/surface)
+"iF" = (
+/obj/floor_decal/corner/research/border{
+	dir = 4
+	},
+/turf/simulated/floor/tiled,
+/area/battlefield/camp)
+"iY" = (
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/turf/simulated/floor/steel_dirty,
+/area/battlefield/surface)
+"jg" = (
+/obj/structure/shuttle/engine/propulsion,
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/turf/unsimulated/beach/sand,
+/area/battlefield/ship)
+"ji" = (
+/obj/floor_decal/corner/darkblue/border{
+	dir = 9
+	},
+/obj/machinery/computer/ship/navigation{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"jq" = (
+/obj/floor_decal/beach/corner{
+	dir = 1
+	},
+/turf/simulated/floor/steel_dirty,
+/area/battlefield/surface)
+"kG" = (
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/turf/simulated/floor/steel_dirty,
+/area/battlefield/surface)
+"kX" = (
+/obj/catwalk_plated,
+/obj/structure/railing/mapped{
+	dir = 4
+	},
+/turf/simulated/ocean/non_flooded,
+/area/battlefield/surface)
+"lk" = (
+/obj/floor_decal/iccglogo/bottom_center,
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"lB" = (
+/obj/machinery/constructable_frame/machine_frame{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"lY" = (
+/obj/floor_decal/beach,
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"mf" = (
+/obj/forcefield/blocker,
+/turf/simulated/ocean/non_flooded,
+/area/battlefield/surface)
+"mC" = (
+/obj/structure/rubble/war,
+/obj/structure/rubble/war,
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"mD" = (
+/obj/floor_decal/corner/lightgrey/border{
+	dir = 6
+	},
+/obj/structure/roller_bed,
+/obj/structure/iv_stand,
+/turf/simulated/floor/tiled,
+/area/battlefield/camp)
+"nm" = (
+/obj/machinery/floodlight{
+	dir = 8
+	},
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"nq" = (
+/obj/floor_decal/corner/lightgrey/border{
+	dir = 10
+	},
+/turf/simulated/floor/tiled,
+/area/battlefield/camp)
+"nJ" = (
+/obj/floor_decal/corner/lime/bordercorner{
+	dir = 1
+	},
+/turf/simulated/floor/tiled,
+/area/battlefield/camp)
+"nM" = (
+/obj/structure/cable/green{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/floor_decal/corner/beige{
+	dir = 9
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/camp)
+"nV" = (
+/obj/floor_decal/corner/research/border{
+	dir = 6
+	},
+/turf/simulated/floor/tiled,
+/area/battlefield/camp)
+"nZ" = (
+/obj/structure/pit/closed/grave,
+/obj/structure/gravemarker/cross{
+	desc = "A wooden cross marking a burial site. Someone has carved into one of the planks:";
+	message = "Tomash Sauther, 2271-2292"
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"ow" = (
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden,
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"oF" = (
+/obj/floor_decal/corner/darkblue/border{
+	dir = 6
+	},
+/obj/machinery/computer/ship/engines{
+	dir = 8
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"oJ" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 5
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"oM" = (
+/obj/floor_decal/corner/darkblue/border{
+	dir = 10
+	},
+/obj/structure/table/steel,
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"oS" = (
+/obj/structure/girder{
+	pixel_x = -7
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"oW" = (
+/obj/structure/cable/green{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/sol{
+	dir = 4
+	},
+/obj/floor_decal/corner/lime/bordercee{
+	dir = 4
+	},
+/turf/simulated/floor/tiled,
+/area/battlefield/camp)
+"pr" = (
+/obj/structure/sign/double/iccgflag/right{
+	dir = 4;
+	pixel_x = -10
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"pW" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"pY" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 10
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"qh" = (
+/obj/decal/cleanable/dirt,
+/obj/structure/cable/green{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/tiled,
+/area/battlefield/camp)
+"qk" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/box/freezer,
+/turf/simulated/floor/steel_dirty,
+/area/battlefield/surface)
+"qm" = (
+/obj/item/roller_bed{
+	pixel_x = 8;
+	pixel_y = 7
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"qn" = (
+/obj/floor_decal/corner/beige{
+	dir = 6
+	},
+/obj/structure/cable/green{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/camp)
+"qs" = (
+/obj/item/ammo_casing/rifle/used{
+	pixel_x = 8;
+	pixel_y = 31;
+	dir = 10
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"qu" = (
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/battlefield/surface)
+"qv" = (
+/obj/floor_decal/beach/corner,
+/obj/floor_decal/beach/corner{
+	dir = 4
+	},
+/turf/simulated/floor/steel_dirty,
+/area/battlefield/surface)
+"qx" = (
+/obj/floor_decal/corner/beige/three_quarters{
+	dir = 8
+	},
+/obj/structure/cable/green{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/camp)
+"qy" = (
+/obj/floor_decal/corner/blue/border{
+	dir = 1
+	},
+/obj/structure/closet/medical_wall{
+	pixel_y = 32
+	},
+/obj/machinery/atmospherics/unary/vent_pump/on,
+/turf/simulated/floor/tiled/white,
+/area/battlefield/ship)
+"qz" = (
+/obj/item/ammo_casing/pistol/used{
+	dir = 8;
+	pixel_y = 10;
+	pixel_x = 10
+	},
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"qD" = (
+/obj/structure/barrier{
+	dir = 1
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"qF" = (
+/turf/simulated/wall/iron,
+/area/battlefield/surface)
+"qG" = (
+/obj/structure/table/steel,
+/turf/simulated/floor/steel_dirty,
+/area/battlefield/surface)
+"qH" = (
+/obj/decal/cleanable/dirt,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"qI" = (
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/beach/corner{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/techfloor,
+/area/battlefield/surface)
+"qN" = (
+/obj/decal/cleanable/liquid_fuel,
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"qO" = (
+/turf/simulated/floor/holofloor/beach/sand,
+/area/battlefield/surface)
+"qT" = (
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/iccglogo/center_right,
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"qY" = (
+/obj/machinery/computer/air_control{
+	dir = 8
+	},
+/obj/floor_decal/corner/darkblue/border{
+	dir = 5
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"rf" = (
+/obj/item/ladder_mobile,
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"rj" = (
+/obj/machinery/door/airlock/sol{
+	dir = 4
+	},
+/obj/structure/cable/green{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/battlefield/camp)
+"rm" = (
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/corner/darkblue/bordercorner,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"ro" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/obj/machinery/atmospherics/unary/vent_pump/high_volume/shuttle{
+	id_tag = "calypso_shuttle_pump_out_internal";
+	dir = 1
+	},
+/obj/structure/catwalk,
+/obj/floor_decal/industrial/warning{
+	dir = 4
+	},
+/turf/unsimulated/floor/reinforced,
+/area/battlefield/ship)
+"rq" = (
+/obj/structure/closet/crate,
+/turf/simulated/floor/reinforced,
+/area/battlefield/surface)
+"rs" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/beach/corner,
+/turf/unsimulated/floor/reinforced,
+/area/battlefield/surface)
+"rt" = (
+/obj/structure/girder,
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/turf/simulated/floor/steel_dirty,
+/area/battlefield/surface)
+"rx" = (
+/obj/machinery/atmospherics/unary/vent_pump/high_volume/shuttle{
+	dir = 1;
+	id_tag = "calypso_shuttle_pump_out_internal"
+	},
+/obj/floor_decal/industrial/warning/full,
+/obj/structure/catwalk,
+/turf/simulated/floor,
+/area/battlefield/ship)
+"rz" = (
+/obj/structure/closet/crate,
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"rB" = (
+/obj/floor_decal/beach/corner{
+	dir = 4
+	},
+/obj/floor_decal/beach/corner,
+/turf/simulated/floor/steel_dirty,
+/area/battlefield/surface)
+"rF" = (
+/obj/structure/barricade,
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"rG" = (
+/obj/structure/grille/broken,
+/obj/forcefield/blocker,
+/turf/simulated/ocean/non_flooded,
+/area/battlefield/surface)
+"rH" = (
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/obj/floor_decal/beach{
+	dir = 3
+	},
+/turf/simulated/floor,
+/area/battlefield/surface)
+"rK" = (
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/turf/unsimulated/floor/reinforced,
+/area/battlefield/ship)
+"rQ" = (
+/obj/floor_decal/corner/beige,
+/obj/structure/cable/green{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/camp)
+"rU" = (
+/obj/floor_decal/asteroid{
+	pixel_y = -7;
+	pixel_x = 3;
+	icon_state = "asteroid1"
+	},
+/obj/forcefield/blocker,
+/turf/simulated/ocean/non_flooded,
+/area/battlefield/surface)
+"rW" = (
+/obj/item/ore/iron,
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"rX" = (
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/obj/floor_decal/beach,
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/turf/unsimulated/beach/sand,
+/area/battlefield/surface)
+"sf" = (
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/energy)
+"so" = (
+/obj/catwalk_plated,
+/obj/structure/railing/mapped{
+	dir = 4
+	},
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"sp" = (
+/obj/floor_decal/asteroid{
+	icon_state = "asteroid4";
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"sr" = (
+/obj/structure/wall_frame/titanium,
+/obj/structure/grille,
+/obj/structure/window/reinforced/full,
+/obj/machinery/door/blast/regular{
+	dir = 2
+	},
+/turf/simulated/floor,
+/area/battlefield/ship)
+"st" = (
+/obj/structure/flora/pottedplant/dead,
+/obj/floor_decal/corner/darkblue/border{
+	dir = 5
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"sw" = (
+/obj/machinery/telecomms/bus/map_preset/phobos,
+/obj/floor_decal/corner/research/border{
+	dir = 1
+	},
+/obj/item/clothing/accessory/solgov/fleet_patch/fourth{
+	pixel_y = 30;
+	anchored = 1;
+	desc = "The sign of the SCG Fourth Fleet. The first to take the strike, the first to sacrifice themselves."
+	},
+/turf/simulated/floor/tiled,
+/area/battlefield/camp)
+"sC" = (
+/obj/floor_decal/beach/corner{
+	dir = 4
+	},
+/obj/structure/railing/mapped{
+	dir = 4
+	},
+/turf/unsimulated/beach/sand,
+/area/battlefield/surface)
+"sG" = (
+/obj/structure/bed/chair/shuttle/white{
+	dir = 8;
+	pixel_y = 20;
+	pixel_x = -4
+	},
+/obj/decal/cleanable/dirt,
+/obj/structure/cable/green{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/tiled,
+/area/battlefield/energy)
+"sH" = (
+/obj/structure/handrail{
+	dir = 4
+	},
+/obj/floor_decal/industrial/hatch/red,
+/obj/machinery/atmospherics/unary/vent_pump/high_volume/shuttle{
+	dir = 1;
+	id_tag = "calypso_shuttle_pump_out_internal"
+	},
+/obj/structure/catwalk,
+/turf/unsimulated/floor/reinforced,
+/area/battlefield/ship)
+"sM" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/atmospherics/portables_connector{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/techfloor/grid,
+/area/battlefield/ship)
+"sN" = (
+/obj/structure/closet/crate/med_crate,
+/turf/simulated/floor/steel_dirty,
+/area/battlefield/surface)
+"sP" = (
+/obj/floor_decal/asteroid{
+	icon_state = "asteroid2";
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"sQ" = (
+/obj/floor_decal/solarpanel,
+/obj/machinery/power/solar{
+	id = "auxsolarsport";
+	name = "Aft Port Solar Array"
+	},
+/obj/structure/cable/yellow{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/airless,
+/area/battlefield/energy)
+"sR" = (
+/obj/structure/barricade,
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"sY" = (
+/obj/floor_decal/beach{
+	dir = 3
+	},
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/obj/structure/ship_munition/ap_slug,
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/battlefield/surface)
+"sZ" = (
+/obj/structure/girder,
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/obj/floor_decal/beach,
+/turf/simulated/floor/steel_dirty,
+/area/battlefield/surface)
+"tb" = (
+/obj/floor_decal/asteroid{
+	icon_state = "asteroid1";
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/camp)
+"tc" = (
+/turf/simulated/floor/tiled/techfloor,
+/area/battlefield/surface)
+"td" = (
+/obj/floor_decal/corner/beige{
+	dir = 10
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"ti" = (
+/obj/structure/table/standard,
+/obj/item/storage/backpack/weldpack{
+	pixel_x = -5;
+	pixel_y = 14
+	},
+/obj/item/weldingtool{
+	pixel_x = -7;
+	pixel_y = -5
+	},
+/obj/item/welder_tank{
+	pixel_x = 7;
+	pixel_y = 13
+	},
+/obj/floor_decal/corner/lime/border{
+	dir = 9
+	},
+/turf/simulated/floor/tiled,
+/area/battlefield/energy)
+"tm" = (
+/obj/floor_decal/corner/beige{
+	dir = 8
+	},
+/obj/structure/cable/green{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/camp)
+"tq" = (
+/obj/floor_decal/iccglogo/corner{
+	dir = 8
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"ts" = (
+/turf/simulated/wall/r_titanium,
+/area/battlefield/ship)
+"tv" = (
+/turf/simulated/floor/tiled,
+/area/battlefield/camp)
+"ty" = (
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"tB" = (
+/obj/floor_decal/industrial/danger{
+	dir = 4
+	},
+/obj/machinery/airlock_sensor{
+	frequency = 1331;
+	id_tag = "calypso_shuttle_sensor";
+	master_tag = "calypso_shuttle";
+	pixel_y = 28
+	},
+/obj/floor_decal/industrial/warning/full,
+/obj/machinery/atmospherics/unary/vent_pump/high_volume/shuttle{
+	id_tag = "calypso_shuttle_pump_out_internal"
+	},
+/obj/structure/catwalk,
+/turf/unsimulated/floor/reinforced,
+/area/battlefield/ship)
+"tH" = (
+/turf/simulated/floor,
+/area/battlefield/surface)
+"tK" = (
+/obj/structure/table/rack/dark,
+/obj/machinery/door/window/brigdoor/southright,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/item/plastique,
+/obj/item/plastique,
+/obj/item/plastique,
+/obj/item/clothing/accessory/iccgn_patch/gilgamesh{
+	desc = "The sign of the Gilgamesh First Fleet. The first to strike, the first to be trapped.";
+	anchored = 1;
+	pixel_y = 31
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"tL" = (
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/item/ammo_casing/rifle/military/light,
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/energy)
+"tR" = (
+/obj/machinery/atmospherics/pipe/simple/visible,
+/turf/unsimulated/floor/reinforced,
+/area/battlefield/ship)
+"ub" = (
+/obj/floor_decal/asteroid{
+	icon_state = "asteroid5";
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/camp)
+"uc" = (
+/obj/floor_decal/beach,
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"ud" = (
+/obj/floor_decal/corner/red/bordercee{
+	dir = 8
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/door/airlock/terran{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"ui" = (
+/obj/floor_decal/solarpanel,
+/obj/machinery/power/solar{
+	id = "auxsolarsport";
+	name = "Aft Port Solar Array"
+	},
+/obj/structure/cable/yellow{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/airless,
+/area/battlefield/energy)
+"um" = (
+/obj/floor_decal/corner/darkblue/border{
+	dir = 1
+	},
+/obj/floor_decal/iccglogo/corner,
+/obj/machinery/computer/shuttle_control,
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"uo" = (
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/obj/floor_decal/asteroid{
+	icon_state = "asteroid1";
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"up" = (
+/obj/floor_decal/corner/beige{
+	dir = 8
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"us" = (
+/obj/floor_decal/asteroid{
+	icon_state = "asteroid6";
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/obj/structure/girder,
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"ut" = (
+/obj/structure/girder,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"uv" = (
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/obj/floor_decal/beach,
+/turf/simulated/floor/steel_dirty,
+/area/battlefield/surface)
+"uA" = (
+/obj/machinery/disperser/back,
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"uB" = (
+/obj/item/ammo_casing/rifle/used{
+	pixel_x = 5;
+	pixel_y = -3;
+	dir = 5
+	},
+/obj/item/ammo_casing/rifle/used{
+	pixel_x = -5;
+	pixel_y = -10;
+	dir = 8
+	},
+/obj/item/ammo_casing/rifle/used{
+	dir = 4;
+	pixel_y = 5
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"uC" = (
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/turf/unsimulated/beach/sand,
+/area/battlefield/surface)
+"uD" = (
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/industrial/danger{
+	dir = 8
+	},
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/techfloor,
+/area/battlefield/surface)
+"uO" = (
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/turf/simulated/floor/tiled/techfloor,
+/area/battlefield/surface)
+"uU" = (
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/obj/floor_decal/asteroid{
+	icon_state = "asteroid5";
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/obj/floor_decal/beach/corner{
+	dir = 4
+	},
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"uZ" = (
+/turf/simulated/mineral,
+/area/battlefield/surface)
+"vg" = (
+/obj/floor_decal/corner/lime/border{
+	dir = 9
+	},
+/turf/simulated/floor/tiled,
+/area/battlefield/camp)
+"vn" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 6
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"vp" = (
+/obj/machinery/door/airlock/external{
+	dir = 4
+	},
+/obj/machinery/door/blast/regular{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/techfloor,
+/area/battlefield/ship)
+"vr" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/hidden,
+/obj/floor_decal/beach/corner{
+	dir = 8
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"vt" = (
+/obj/floor_decal/industrial/warning/full,
+/obj/machinery/atmospherics/unary/vent_pump/high_volume/shuttle{
+	id_tag = "calypso_shuttle_pump_out_internal"
+	},
+/obj/structure/catwalk,
+/obj/machinery/embedded_controller/radio/airlock/access_controller{
+	pixel_y = 21
+	},
+/turf/unsimulated/floor/reinforced,
+/area/battlefield/ship)
+"vx" = (
+/obj/structure/shuttle/engine/propulsion,
+/obj/floor_decal/beach/corner{
+	dir = 8
+	},
+/turf/unsimulated/beach/sand,
+/area/battlefield/ship)
+"vA" = (
+/turf/simulated/floor/tiled/techfloor,
+/area/battlefield/ship)
+"vB" = (
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/iccglogo/top_right,
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"vD" = (
+/obj/forcefield/blocker,
+/obj/floor_decal/asteroid{
+	icon_state = "asteroid2";
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"vE" = (
+/obj/structure/grille,
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"vM" = (
+/obj/machinery/recharge_station,
+/obj/floor_decal/corner/lime/border{
+	dir = 1
+	},
+/obj/item/clothing/accessory/solgov/fleet_patch/fourth{
+	pixel_y = 30;
+	anchored = 1;
+	desc = "The sign of the SCG Fourth Fleet. The first to take the strike, the first to sacrifice themselves."
+	},
+/turf/simulated/floor/tiled,
+/area/battlefield/energy)
+"vN" = (
+/obj/decal/cleanable/dirt,
+/obj/structure/cable/green{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/tiled,
+/area/battlefield/camp)
+"vQ" = (
+/obj/floor_decal/corner/brown/border{
+	dir = 5
+	},
+/obj/decal/cleanable/dirt,
+/obj/structure/table/rack/dark,
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 24;
+	dir = 8
+	},
+/obj/item/material/coin/challenge/gcc/navy_old,
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"vR" = (
+/obj/floor_decal/corner/lime/bordercorner{
+	dir = 8
+	},
+/obj/structure/cable/green{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/tiled,
+/area/battlefield/energy)
+"vU" = (
+/obj/structure/backup_server,
+/obj/floor_decal/corner/research/border{
+	dir = 10
+	},
+/turf/simulated/floor/tiled,
+/area/battlefield/camp)
+"vW" = (
+/obj/decal/cleanable/dirt,
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 24;
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden,
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"vX" = (
+/obj/floor_decal/beach,
+/obj/floor_decal/beach/corner,
+/turf/unsimulated/beach/sand,
+/area/battlefield/surface)
+"wc" = (
+/obj/floor_decal/asteroid{
+	icon_state = "asteroid6";
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/obj/decal/cleanable/blood/gibs/core{
+	basecolor = "#520000"
+	},
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"wd" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/dirt,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/techfloor,
+/area/battlefield/ship)
+"wf" = (
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/beach,
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/turf/simulated/floor/tiled/white,
+/area/battlefield/surface)
+"wi" = (
+/obj/structure/inflatable/door,
+/turf/simulated/floor/steel_dirty,
+/area/battlefield/surface)
+"wk" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"wq" = (
+/turf/simulated/floor/steel_dirty,
+/area/battlefield/surface)
+"ww" = (
+/obj/floor_decal/corner/darkblue/border,
+/obj/machinery/atmospherics/unary/vent_scrubber/on{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"wy" = (
+/obj/floor_decal/beach/corner{
+	dir = 4
+	},
+/turf/unsimulated/beach/sand,
+/area/battlefield/surface)
+"wA" = (
+/obj/floor_decal/beach/corner{
+	dir = 8
+	},
+/obj/floor_decal/beach/corner,
+/turf/simulated/floor/steel_dirty,
+/area/battlefield/surface)
+"wF" = (
+/obj/floor_decal/corner/beige,
+/obj/structure/cable/green{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/camp)
+"wG" = (
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/turf/simulated/floor/steel_dirty,
+/area/battlefield/surface)
+"wH" = (
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/turf/simulated/floor/steel_dirty,
+/area/battlefield/surface)
+"wJ" = (
+/obj/catwalk_plated,
+/obj/structure/railing/mapped{
+	dir = 8
+	},
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"wL" = (
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/obj/floor_decal/beach,
+/turf/simulated/floor/steel_dirty,
+/area/battlefield/surface)
+"wM" = (
+/obj/floor_decal/beach,
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/turf/unsimulated/beach/sand,
+/area/battlefield/surface)
+"wW" = (
+/obj/structure/roller_bed,
+/turf/simulated/floor/steel_dirty,
+/area/battlefield/surface)
+"xa" = (
+/obj/machinery/porta_turret_construct,
+/turf/simulated/floor,
+/area/battlefield/surface)
+"xf" = (
+/obj/structure/largecrate,
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/obj/floor_decal/beach,
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"xi" = (
+/obj/floor_decal/asteroid{
+	icon_state = "asteroid6";
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/turf/unsimulated/beach/sand,
+/area/battlefield/surface)
+"xj" = (
+/obj/floor_decal/corner/lime/bordercorner{
+	dir = 8
+	},
+/turf/simulated/floor/tiled,
+/area/battlefield/camp)
+"xn" = (
+/obj/floor_decal/asteroid{
+	icon_state = "asteroid3";
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/obj/item/ammo_casing/rifle/used{
+	dir = 1;
+	pixel_x = -7;
+	pixel_y = -7
+	},
+/obj/item/ammo_casing/rifle/used{
+	dir = 5;
+	pixel_x = 5;
+	pixel_y = 2
+	},
+/obj/item/ammo_casing/rifle/used{
+	pixel_x = -10;
+	pixel_y = 13
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"xt" = (
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden,
+/obj/floor_decal/beach,
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"xy" = (
+/obj/floor_decal/corner/brown/border{
+	dir = 10
+	},
+/obj/floor_decal/industrial/outline/red,
+/obj/structure/closet/secure_closet/guncabinet/farfleet,
+/obj/item/clothing/mask/gas,
+/obj/item/grenade/flashbang,
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"xB" = (
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/beach/corner{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden,
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"xC" = (
+/obj/floor_decal/corner/darkblue/bordercorner,
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"xD" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/obj/floor_decal/beach{
+	dir = 3
+	},
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/techfloor/grid,
+/area/battlefield/surface)
+"xI" = (
+/obj/structure/bed/chair/shuttle/white{
+	dir = 4
+	},
+/obj/floor_decal/corner/red/border{
+	dir = 10
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"xN" = (
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/beach,
+/turf/simulated/floor/tiled/techfloor/grid,
+/area/battlefield/surface)
+"xR" = (
+/obj/structure/table/rack/dark,
+/turf/simulated/floor/steel_dirty,
+/area/battlefield/surface)
+"xS" = (
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"xX" = (
+/obj/decal/cleanable/blood/drip{
+	basecolor = "#520000"
+	},
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"yb" = (
+/obj/floor_decal/asteroid{
+	icon_state = "asteroid6";
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"yg" = (
+/obj/catwalk_plated,
+/turf/simulated/ocean/non_flooded,
+/area/battlefield/surface)
+"yh" = (
+/obj/machinery/atmospherics/pipe/manifold/visible{
+	dir = 4
+	},
+/turf/unsimulated/floor/reinforced,
+/area/battlefield/ship)
+"yj" = (
+/obj/structure/grille/broken,
+/obj/forcefield/blocker,
+/turf/simulated/floor/asteroid{
+	name = "precipice"
+	},
+/area/battlefield/surface)
+"yk" = (
+/obj/floor_decal/corner/lime/bordercorner{
+	dir = 4
+	},
+/obj/structure/cable/green{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/tiled,
+/area/battlefield/energy)
+"yr" = (
+/obj/floor_decal/asteroid{
+	pixel_y = -7;
+	pixel_x = 3;
+	icon_state = "asteroid9"
+	},
+/obj/forcefield/blocker,
+/obj/forcefield/blocker,
+/turf/simulated/ocean/non_flooded,
+/area/battlefield/surface)
+"yv" = (
+/turf/simulated/floor/exoplanet,
+/area/battlefield/surface)
+"yA" = (
+/obj/floor_decal/corner/darkblue/border,
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"yC" = (
+/obj/machinery/mech_recharger,
+/obj/floor_decal/corner/lime/border{
+	dir = 5
+	},
+/turf/simulated/floor/tiled,
+/area/battlefield/energy)
+"yD" = (
+/obj/floor_decal/corner/brown/border{
+	dir = 8
+	},
+/obj/floor_decal/industrial/outline/red,
+/obj/structure/closet/secure_closet/guncabinet/farfleet,
+/obj/item/clothing/mask/gas,
+/obj/item/ammo_magazine/pistol/double,
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"yE" = (
+/obj/structure/cable/green{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/floor_decal/corner/lime/border{
+	dir = 10
+	},
+/turf/simulated/floor/tiled,
+/area/battlefield/energy)
+"yG" = (
+/turf/unsimulated/mineral,
+/area/battlefield/surface)
+"yK" = (
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/obj/floor_decal/beach,
+/turf/unsimulated/beach/sand,
+/area/battlefield/surface)
+"yN" = (
+/obj/floor_decal/corner/blue/border{
+	dir = 10
+	},
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/obj/structure/iv_stand,
+/turf/simulated/floor/tiled/white,
+/area/battlefield/surface)
+"yO" = (
+/obj/random/junk,
+/obj/decal/cleanable/liquid_fuel,
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"yP" = (
+/obj/structure/mech_wreckage,
+/obj/item/mech_equipment/ballistic_shield{
+	pixel_x = -10;
+	pixel_y = -10
+	},
+/obj/item/mech_equipment/mounted_system/taser/laser{
+	pixel_x = 20;
+	pixel_y = -6
+	},
+/obj/decal/cleanable/dirt,
+/obj/item/remains/xeno/charred{
+	pixel_y = 9;
+	desc = "Charred human remains with jaws wide open. A horrific sight."
+	},
+/turf/unsimulated/beach/sand,
+/area/battlefield/surface)
+"yV" = (
+/obj/structure/girder,
+/turf/simulated/ocean/non_flooded,
+/area/battlefield/surface)
+"yY" = (
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/iccglogo/corner{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"zb" = (
+/obj/machinery/computer/ship/disperser{
+	dir = 4
+	},
+/obj/floor_decal/corner/darkblue/border{
+	dir = 8
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"ze" = (
+/obj/structure/closet/secure_closet/patrol,
+/obj/floor_decal/corner/lime/border{
+	dir = 9
+	},
+/turf/simulated/floor/tiled,
+/area/battlefield/energy)
+"zh" = (
+/obj/floor_decal/beach,
+/turf/simulated/floor/steel_dirty,
+/area/battlefield/surface)
+"zn" = (
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/obj/structure/rubble/war,
+/obj/floor_decal/beach/corner{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/techfloor,
+/area/battlefield/surface)
+"zo" = (
+/turf/simulated/mineral/random,
+/area/battlefield/camp)
+"zt" = (
+/obj/structure/cable/green{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/floor_decal/corner/beige,
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/camp)
+"zF" = (
+/obj/machinery/disperser/front,
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"zH" = (
+/obj/structure/table/standard,
+/obj/floor_decal/corner/lime/border{
+	dir = 1
+	},
+/obj/item/clothing/accessory/solgov/fleet_patch/fourth{
+	pixel_y = 30;
+	anchored = 1;
+	desc = "The sign of the SCG Fourth Fleet. The first to take the strike, the first to sacrifice themselves."
+	},
+/turf/simulated/floor/tiled,
+/area/battlefield/camp)
+"zK" = (
+/obj/floor_decal/corner/beige/diagonal,
+/obj/structure/cable/green{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/energy)
+"zM" = (
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden,
+/turf/unsimulated/floor/reinforced,
+/area/battlefield/ship)
+"zN" = (
+/obj/floor_decal/asteroid{
+	icon_state = "asteroid4";
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/turf/simulated/mineral,
+/area/battlefield/surface)
+"zR" = (
+/obj/floor_decal/corner/beige{
+	dir = 10
+	},
+/obj/structure/cable/green{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/cable/green{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/energy)
+"zS" = (
+/obj/floor_decal/corner/lime/bordercorner{
+	dir = 4
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled,
+/area/battlefield/camp)
+"zV" = (
+/obj/floor_decal/corner/brown/border{
+	dir = 8
+	},
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/dirt,
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"zZ" = (
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/techfloor,
+/area/battlefield/ship)
+"Aa" = (
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/obj/floor_decal/beach/corner,
+/turf/unsimulated/beach/sand,
+/area/battlefield/surface)
+"Ab" = (
+/turf/simulated/floor/tiled/techfloor/grid,
+/area/battlefield/ship)
+"Ac" = (
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"Ai" = (
+/obj/structure/closet/crate/secure/gear,
+/turf/simulated/floor/steel_dirty,
+/area/battlefield/surface)
+"Am" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/wall/sandstone,
+/area/battlefield/surface)
+"An" = (
+/obj/floor_decal/asteroid{
+	icon_state = "asteroid3";
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/camp)
+"Ao" = (
+/obj/floor_decal/asteroid{
+	icon_state = "asteroid8";
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"Ar" = (
+/obj/floor_decal/asteroid{
+	pixel_y = -4;
+	pixel_x = 3;
+	icon_state = "asteroid3"
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"Au" = (
+/obj/structure/closet/secure_closet/patrol,
+/obj/floor_decal/corner/lime/border{
+	dir = 5
+	},
+/turf/simulated/floor/tiled,
+/area/battlefield/camp)
+"Aw" = (
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"AC" = (
+/obj/structure/table/steel,
+/obj/floor_decal/corner/red/border{
+	dir = 4
+	},
+/obj/decal/cleanable/dirt,
+/obj/machinery/atmospherics/unary/vent_pump/on{
+	dir = 8
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"AE" = (
+/obj/floor_decal/asteroid{
+	icon_state = "asteroid5";
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"AF" = (
+/obj/floor_decal/beach/corner,
+/obj/floor_decal/beach/corner{
+	dir = 8
+	},
+/obj/floor_decal/asteroid{
+	icon_state = "asteroid5";
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"AI" = (
+/obj/structure/largecrate,
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"AN" = (
+/obj/floor_decal/corner/blue/border{
+	dir = 6
+	},
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/beach,
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/obj/structure/rubble/war,
+/turf/simulated/floor/tiled/white,
+/area/battlefield/surface)
+"AP" = (
+/obj/floor_decal/beach{
+	dir = 3
+	},
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/obj/floor_decal/beach/corner{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/battlefield/surface)
+"AQ" = (
+/obj/floor_decal/asteroid{
+	icon_state = "asteroid1";
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/turf/simulated/floor/exoplanet,
+/area/battlefield/surface)
+"AS" = (
+/obj/floor_decal/corner/research/border{
+	dir = 5
+	},
+/obj/machinery/computer/telecomms/traffic{
+	dir = 8;
+	pixel_x = 5
+	},
+/turf/simulated/floor/tiled,
+/area/battlefield/camp)
+"AU" = (
+/obj/floor_decal/beach,
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"AV" = (
+/obj/structure/railing/mapped{
+	dir = 4
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"AZ" = (
+/obj/machinery/atmospherics/pipe/simple/hidden,
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"Bb" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/hidden,
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"Bc" = (
+/obj/floor_decal/asteroid{
+	icon_state = "asteroid9";
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"Be" = (
+/obj/structure/sign/warning/nosmoking_burned,
+/obj/machinery/atmospherics/pipe/simple/hidden,
+/turf/simulated/wall/r_titanium,
+/area/battlefield/ship)
+"Bq" = (
+/obj/structure/railing/mapped,
+/obj/floor_decal/corner/brown/border{
+	dir = 8
+	},
+/obj/decal/cleanable/dirt,
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -28;
+	dir = 4
+	},
+/obj/floor_decal/industrial/outline/yellow,
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"BB" = (
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/obj/floor_decal/beach,
+/turf/simulated/floor/tiled/techfloor/grid,
+/area/battlefield/surface)
+"BC" = (
+/obj/machinery/disperser/middle{
+	desc = "The part of the machine that transfers the material in a level position for subsequent feeding into the accelerator compartment.<br>It says: <i>EXPLOSION HAZARD! DO NOT OVERHEAT!</i>"
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"BD" = (
+/obj/item/stack/cable_coil/orange,
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"BI" = (
+/obj/floor_decal/corner/beige/diagonal,
+/obj/structure/cable/green{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/camp)
+"BM" = (
+/obj/floor_decal/corner/lime/border{
+	dir = 5
+	},
+/obj/structure/cable/green{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/tiled,
+/area/battlefield/energy)
+"BN" = (
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden,
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"BS" = (
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/ship)
+"BY" = (
+/obj/structure/rubble/war,
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/obj/floor_decal/beach/corner,
+/obj/floor_decal/beach/corner{
+	dir = 4
+	},
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/turf/unsimulated/floor/steeldirty,
+/area/battlefield/surface)
+"Cd" = (
+/obj/floor_decal/corner/darkblue/border{
+	dir = 10
+	},
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"Cj" = (
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/iccglogo/bottom_right,
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"Ck" = (
+/obj/floor_decal/asteroid{
+	icon_state = "asteroid8";
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"Ct" = (
+/obj/structure/table/standard,
+/obj/item/storage/toolbox/mechanical{
+	pixel_y = -3
+	},
+/obj/item/storage/toolbox/electrical{
+	pixel_y = 10
+	},
+/obj/item/device/radio/intercom/map_preset/phobos{
+	dir = 4;
+	pixel_x = -26
+	},
+/obj/floor_decal/corner/lime/border{
+	dir = 8
+	},
+/turf/simulated/floor/tiled,
+/area/battlefield/energy)
+"Cw" = (
+/obj/structure/iv_stand,
+/obj/item/reagent_containers/ivbag{
+	pixel_x = -10;
+	pixel_y = 5
+	},
+/turf/simulated/floor/steel_dirty,
+/area/battlefield/surface)
+"CA" = (
+/turf/simulated/wall/prepainted,
+/area/battlefield/surface)
+"CB" = (
+/obj/floor_decal/asteroid{
+	icon_state = "asteroid8";
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/obj/structure/girder,
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"CD" = (
+/obj/structure/flora/pottedplant/dead,
+/obj/floor_decal/corner/darkblue/border{
+	dir = 9
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"CE" = (
+/obj/floor_decal/corner/beige/three_quarters,
+/obj/structure/cable/green{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/energy)
+"CI" = (
+/obj/floor_decal/corner/lightgrey/border{
+	dir = 6
+	},
+/turf/simulated/floor/tiled,
+/area/battlefield/camp)
+"CJ" = (
+/obj/decal/cleanable/blood/gibs/robot{
+	pixel_y = -10
+	},
+/obj/decal/cleanable/ash{
+	pixel_y = -10;
+	pixel_x = 6
+	},
+/obj/decal/cleanable/dirt,
+/turf/unsimulated/beach/sand,
+/area/battlefield/surface)
+"CO" = (
+/obj/item/ammo_casing/rifle/military/light{
+	dir = 10;
+	pixel_x = -9;
+	pixel_y = 8
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"CS" = (
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/obj/structure/rubble/war,
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"CT" = (
+/turf/simulated/wall/sandstone,
+/area/battlefield/surface)
+"Db" = (
+/obj/structure/rubble/war,
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/obj/floor_decal/beach,
+/turf/unsimulated/floor/steeldirty,
+/area/battlefield/surface)
+"De" = (
+/obj/structure/girder{
+	pixel_x = 7
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"Dg" = (
+/obj/decal/cleanable/dirt,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/manifold4w/hidden/scrubbers,
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"Dh" = (
+/obj/structure/table/steel,
+/obj/floor_decal/corner/red/border{
+	dir = 8
+	},
+/obj/decal/cleanable/dirt,
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -28;
+	dir = 4
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"Dq" = (
+/obj/floor_decal/corner/brown/border,
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/obj/machinery/alarm{
+	dir = 1;
+	pixel_y = -27
+	},
+/obj/machinery/atmospherics/unary/vent_scrubber/on{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"Dv" = (
+/obj/floor_decal/corner/lightgrey/bordercorner,
+/obj/floor_decal/corner/lightgrey/bordercorner{
+	dir = 8
+	},
+/obj/decal/cleanable/dirt,
+/obj/structure/cable/green{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/tiled,
+/area/battlefield/camp)
+"DA" = (
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"DB" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"DC" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 6
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"DE" = (
+/obj/structure/sign/double/iccgflag/right{
+	pixel_y = -10
+	},
+/turf/simulated/mineral,
+/area/battlefield/surface)
+"DH" = (
+/obj/floor_decal/asteroid{
+	icon_state = "asteroid4";
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/turf/simulated/ocean/non_flooded,
+/area/battlefield/surface)
+"DL" = (
+/obj/catwalk_plated,
+/obj/structure/railing/mapped{
+	dir = 8
+	},
+/turf/simulated/ocean/non_flooded,
+/area/battlefield/surface)
+"DP" = (
+/obj/floor_decal/corner/beige/border,
+/obj/floor_decal/corner/beige/half,
+/obj/structure/cable/green{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/camp)
+"DT" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/techfloor/grid,
+/area/battlefield/ship)
+"DV" = (
+/obj/floor_decal/corner/darkblue/bordercorner{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"DW" = (
+/obj/floor_decal/asteroid{
+	icon_state = "asteroid1";
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"Ed" = (
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/obj/floor_decal/beach,
+/obj/floor_decal/beach/corner{
+	dir = 8
+	},
+/turf/unsimulated/beach/sand,
+/area/battlefield/surface)
+"Ef" = (
+/obj/structure/bed/chair/shuttle/black{
+	dir = 1
+	},
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/iccglogo/top_center,
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"Eg" = (
+/obj/floor_decal/corner/lime/border{
+	dir = 10
+	},
+/turf/simulated/floor/tiled,
+/area/battlefield/energy)
+"Em" = (
+/obj/floor_decal/asteroid{
+	icon_state = "asteroid5";
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/turf/simulated/floor,
+/area/battlefield/surface)
+"En" = (
+/obj/floor_decal/corner/brown/border{
+	dir = 10
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"Eq" = (
+/obj/decal/cleanable/dirt,
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
+/obj/machinery/atmospherics/pipe/manifold4w/hidden/scrubbers,
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"Eu" = (
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/obj/floor_decal/asteroid{
+	icon_state = "asteroid8";
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"Ev" = (
+/obj/structure/backup_server,
+/obj/floor_decal/corner/research/border{
+	dir = 9
+	},
+/turf/simulated/floor,
+/area/battlefield/camp)
+"Ex" = (
+/obj/structure/sign/double/iccgflag/left{
+	dir = 4;
+	pixel_x = -10
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"Ey" = (
+/obj/structure/sign/bluecross_2,
+/turf/simulated/wall/prepainted,
+/area/battlefield/camp)
+"Ez" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"EF" = (
+/obj/item/ammo_casing/rifle/military/light{
+	pixel_y = 11;
+	pixel_x = -10;
+	dir = 8
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/camp)
+"EL" = (
+/obj/item/clothing/accessory/solgov/skillstripe/medical,
+/obj/decal/cleanable/blood/drip{
+	basecolor = "#520000"
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"EN" = (
+/obj/item/ammo_casing/pistol/used,
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"EO" = (
+/obj/structure/girder,
+/turf/simulated/floor,
+/area/battlefield/ship)
+"EQ" = (
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/obj/floor_decal/beach,
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"ER" = (
+/turf/simulated/wall/r_titanium,
+/area/battlefield/surface)
+"ES" = (
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/obj/floor_decal/asteroid{
+	icon_state = "asteroid1";
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/obj/floor_decal/beach,
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"EW" = (
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/obj/floor_decal/beach,
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/turf/unsimulated/beach/sand,
+/area/battlefield/surface)
+"Fb" = (
+/obj/floor_decal/corner/blue/border{
+	dir = 4
+	},
+/obj/floor_decal/beach/corner{
+	dir = 8
+	},
+/turf/simulated/floor/tiled/white,
+/area/battlefield/ship)
+"Fe" = (
+/obj/structure/bed,
+/obj/floor_decal/corner/lime/border{
+	dir = 6
+	},
+/turf/simulated/floor/tiled,
+/area/battlefield/camp)
+"Ff" = (
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"Fi" = (
+/obj/structure/cable/green{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/tiled,
+/area/battlefield/camp)
+"Fk" = (
+/obj/machinery/shipsensors,
+/turf/simulated/floor,
+/area/battlefield/ship)
+"Fp" = (
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/industrial/hatch/red,
+/obj/floor_decal/beach/corner{
+	dir = 3
+	},
+/turf/unsimulated/floor/reinforced,
+/area/battlefield/ship)
+"Fu" = (
+/obj/floor_decal/corner/lightgrey/bordercorner{
+	dir = 8
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled,
+/area/battlefield/camp)
+"Fv" = (
+/obj/structure/closet/secure_closet/patrol,
+/obj/floor_decal/corner/lime/border{
+	dir = 9
+	},
+/turf/simulated/floor/tiled,
+/area/battlefield/camp)
+"Fw" = (
+/obj/structure/broken_door,
+/obj/floor_decal/corner/darkblue/bordercee{
+	dir = 1
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"FD" = (
+/obj/structure/closet/crate/secure/gear,
+/obj/item/storage/box/ammo/sniperammo,
+/obj/item/storage/box/ammo/sniperammo,
+/obj/item/grenade/empgrenade,
+/obj/item/clothing/accessory/scga_badge/enlisted,
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"FH" = (
+/obj/floor_decal/corner/lime/bordercorner,
+/turf/simulated/floor/tiled,
+/area/battlefield/camp)
+"FQ" = (
+/obj/floor_decal/corner/beige/diagonal{
+	dir = 4
+	},
+/obj/structure/cable/green{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/camp)
+"FR" = (
+/obj/machinery/atmospherics/unary/vent_pump/on{
+	dir = 8
+	},
+/obj/floor_decal/corner/darkblue/border{
+	dir = 6
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"FS" = (
+/obj/floor_decal/asteroid{
+	icon_state = "asteroid7";
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/camp)
+"FT" = (
+/obj/floor_decal/asteroid{
+	icon_state = "asteroid3";
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/turf/unsimulated/beach/sand,
+/area/battlefield/surface)
+"FX" = (
+/obj/floor_decal/beach/corner{
+	dir = 8
+	},
+/obj/floor_decal/beach/corner{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/battlefield/surface)
+"Gf" = (
+/obj/structure/railing/mapped,
+/obj/structure/closet/crate,
+/obj/floor_decal/beach/corner,
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/corner/brown/border{
+	dir = 8
+	},
+/obj/floor_decal/beach/corner,
+/obj/floor_decal/industrial/outline/yellow,
+/turf/simulated/floor/tiled/dark,
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"Gg" = (
+/obj/machinery/atmospherics/pipe/manifold/visible{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/battlefield/ship)
+"Gl" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/hidden/universal{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/techfloor,
+/area/battlefield/ship)
+"Go" = (
+/obj/floor_decal/corner/red/border{
+	dir = 4
+	},
+/obj/decal/cleanable/dirt,
+/obj/structure/bed/chair/shuttle/black{
+	dir = 8
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"Gp" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled,
+/area/battlefield/camp)
+"Gq" = (
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/obj/floor_decal/asteroid{
+	icon_state = "asteroid3";
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"Gz" = (
+/obj/floor_decal/corner/beige/three_quarters,
+/obj/structure/cable/green{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/energy)
+"GA" = (
+/obj/floor_decal/corner/darkblue/border{
+	dir = 1
+	},
+/obj/machinery/computer/ship/helm,
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"GN" = (
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/techfloor/grid,
+/area/battlefield/surface)
+"GO" = (
+/obj/machinery/door/airlock/external{
+	pixel_x = 0;
+	pixel_y = 0;
+	dir = 4
+	},
+/obj/machinery/door/blast/regular{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/techfloor,
+/area/battlefield/ship)
+"GU" = (
+/obj/floor_decal/asteroid{
+	icon_state = "asteroid5";
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/energy)
+"GV" = (
+/obj/floor_decal/corner/blue/border{
+	dir = 8
+	},
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/beach,
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/white,
+/area/battlefield/surface)
+"GY" = (
+/obj/machinery/airlock_sensor{
+	frequency = 1331;
+	id_tag = "calypso_shuttle_sensor";
+	master_tag = "calypso_shuttle";
+	pixel_x = -25;
+	pixel_y = -4
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"Hf" = (
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/obj/floor_decal/beach,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/tiled/techfloor/grid,
+/area/battlefield/ship)
+"Hh" = (
+/obj/structure/inflatable/wall,
+/turf/simulated/floor/steel_dirty,
+/area/battlefield/surface)
+"Hi" = (
+/obj/floor_decal/corner/brown/border{
+	dir = 6
+	},
+/obj/structure/table/rack/dark,
+/obj/item/clothing/head/beret/mininghome_iccg,
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"Hj" = (
+/obj/floor_decal/beach/corner{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/techfloor/grid,
+/area/battlefield/ship)
+"Hp" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 5
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"Ht" = (
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/obj/floor_decal/beach,
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"Hw" = (
+/obj/structure/girder{
+	pixel_x = -7
+	},
+/obj/item/integrated_circuit/output/screen/medium{
+	pixel_x = -6;
+	pixel_y = 6
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"HA" = (
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"HD" = (
+/obj/machinery/disperser/middle,
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"HG" = (
+/obj/floor_decal/corner/blue/border,
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/obj/floor_decal/beach/corner{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/white,
+/area/battlefield/surface)
+"HI" = (
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"HJ" = (
+/obj/machinery/telecomms/processor/map_preset/phobos,
+/obj/floor_decal/corner/research/border{
+	dir = 9
+	},
+/turf/simulated/floor/tiled,
+/area/battlefield/camp)
+"HM" = (
+/turf/simulated/floor/tiled,
+/area/battlefield/energy)
+"HR" = (
+/obj/structure/roller_bed,
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/obj/floor_decal/corner/blue/border{
+	dir = 4
+	},
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/white,
+/area/battlefield/ship)
+"HW" = (
+/obj/floor_decal/beach/corner,
+/obj/floor_decal/beach/corner{
+	dir = 8
+	},
+/turf/simulated/floor/steel_dirty,
+/area/battlefield/surface)
+"HY" = (
+/obj/floor_decal/corner/brown/border,
+/obj/decal/cleanable/dirt,
+/obj/machinery/atmospherics/unary/vent_scrubber/on{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"Id" = (
+/obj/floor_decal/asteroid{
+	icon_state = "asteroid6";
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/obj/item/pickaxe,
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"Ie" = (
+/obj/structure/cable/green{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/wall/prepainted,
+/area/battlefield/energy)
+"Ig" = (
+/obj/machinery/door/airlock/sol,
+/obj/floor_decal/corner/lime/bordercee{
+	dir = 1
+	},
+/obj/structure/cable/green{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/tiled,
+/area/battlefield/camp)
+"Ii" = (
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/obj/item/ammo_casing/shell{
+	dir = 4
+	},
+/turf/simulated/floor/steel_dirty,
+/area/battlefield/surface)
+"Ik" = (
+/obj/floor_decal/asteroid{
+	icon_state = "asteroid2";
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/obj/floor_decal/beach/corner{
+	dir = 4
+	},
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"In" = (
+/obj/floor_decal/corner/beige{
+	dir = 9
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/energy)
+"Io" = (
+/obj/floor_decal/beach{
+	dir = 3
+	},
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/obj/structure/ship_munition/disperser_charge/explosive/military,
+/turf/simulated/floor,
+/area/battlefield/surface)
+"Iq" = (
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/beach/corner,
+/obj/floor_decal/beach/corner{
+	dir = 8
+	},
+/turf/simulated/floor/tiled/techfloor/grid,
+/area/battlefield/surface)
+"Is" = (
+/obj/structure/bed/chair/shuttle/white{
+	dir = 8
+	},
+/obj/floor_decal/corner/red/border{
+	dir = 5
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"It" = (
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/obj/floor_decal/beach/corner{
+	dir = 1
+	},
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"Iv" = (
+/obj/floor_decal/asteroid{
+	icon_state = "asteroid9";
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"Iw" = (
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/beach,
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/turf/unsimulated/floor/reinforced,
+/area/battlefield/surface)
+"Ix" = (
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/obj/floor_decal/beach/corner{
+	dir = 4
+	},
+/turf/unsimulated/beach/sand,
+/area/battlefield/surface)
+"Iz" = (
+/obj/structure/ship_munition/ap_slug{
+	dir = 4;
+	desc = "A shell with the sign \"RADIOACTIVE\" engraved on it."
+	},
+/turf/simulated/floor/reinforced,
+/area/battlefield/surface)
+"IB" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/corner/darkblue/bordercorner{
+	dir = 8
+	},
+/obj/floor_decal/corner/darkblue/bordercorner,
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"ID" = (
+/obj/structure/wall_frame/titanium,
+/obj/structure/grille,
+/obj/structure/window/reinforced/full,
+/obj/machinery/door/blast/regular{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/battlefield/ship)
+"IF" = (
+/obj/structure/rubble/war,
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"II" = (
+/obj/catwalk_plated,
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"IM" = (
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/turf/simulated/floor/steel_dirty,
+/area/battlefield/surface)
+"IN" = (
+/obj/floor_decal/asteroid{
+	icon_state = "asteroid3";
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"IR" = (
+/obj/structure/cable/green{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/floor_decal/corner/beige/diagonal,
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/camp)
+"IU" = (
+/obj/structure/pit/closed/grave,
+/obj/structure/gravemarker/cross{
+	desc = "A wooden cross marking a burial site. Someone has carved into one of the planks:";
+	message = "Rian Murphy, 2268-2292"
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"IW" = (
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/energy)
+"Jb" = (
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/techfloor/grid,
+/area/battlefield/ship)
+"Jc" = (
+/obj/structure/barricade/spike{
+	dir = 4
+	},
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"Jd" = (
+/obj/floor_decal/asteroid{
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"Je" = (
+/obj/structure/reagent_dispensers/fueltank,
+/turf/simulated/floor/tiled/techfloor/grid,
+/area/battlefield/ship)
+"Jj" = (
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/turf/unsimulated/beach/sand,
+/area/battlefield/surface)
+"Jn" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"Js" = (
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"Jv" = (
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/obj/floor_decal/beach,
+/turf/simulated/floor/tiled/techfloor/grid,
+/area/battlefield/ship)
+"Jw" = (
+/obj/floor_decal/corner/blue/border{
+	dir = 5
+	},
+/obj/machinery/constructable_frame/machine_frame,
+/turf/simulated/floor/tiled/white,
+/area/battlefield/ship)
+"JD" = (
+/obj/floor_decal/corner/beige/diagonal,
+/obj/structure/cable/green{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/energy)
+"JF" = (
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/obj/floor_decal/beach,
+/turf/unsimulated/beach/sand,
+/area/battlefield/surface)
+"JG" = (
+/obj/structure/cable/yellow{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/energy)
+"JI" = (
+/obj/floor_decal/asteroid{
+	icon_state = "asteroid7";
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/obj/floor_decal/beach/corner{
+	dir = 8
+	},
+/turf/unsimulated/beach/sand,
+/area/battlefield/surface)
+"JL" = (
+/obj/floor_decal/corner/lightgrey/bordercorner{
+	dir = 4
+	},
+/turf/simulated/floor/tiled,
+/area/battlefield/camp)
+"JM" = (
+/obj/floor_decal/corner/research/bordercorner{
+	dir = 8
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled,
+/area/battlefield/camp)
+"JP" = (
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/turf/simulated/floor/tiled/techfloor,
+/area/battlefield/surface)
+"JT" = (
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/turf/unsimulated/beach/sand,
+/area/battlefield/surface)
+"Kb" = (
+/obj/structure/cable/green{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/energy)
+"Kc" = (
+/obj/machinery/door/airlock/terran{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"Kd" = (
+/obj/floor_decal/beach/corner{
+	dir = 4
+	},
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"Kf" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor,
+/area/battlefield/ship)
+"Kh" = (
+/obj/floor_decal/asteroid{
+	icon_state = "asteroid4";
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"Kl" = (
+/obj/machinery/atmospherics/unary/tank/air{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/techfloor/grid,
+/area/battlefield/ship)
+"Kp" = (
+/obj/floor_decal/industrial/danger{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/visible{
+	dir = 8
+	},
+/turf/unsimulated/floor/reinforced,
+/area/battlefield/ship)
+"Kr" = (
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/cable/yellow{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/energy)
+"Ky" = (
+/obj/floor_decal/beach/corner,
+/turf/unsimulated/beach/sand,
+/area/battlefield/surface)
+"KD" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/steel_dirty,
+/area/battlefield/surface)
+"KG" = (
+/obj/structure/grille/broken,
+/obj/structure/rubble/war,
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"KJ" = (
+/obj/machinery/power/terminal,
+/obj/structure/cable/yellow{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/corner/lime/bordercorner,
+/turf/simulated/floor/tiled,
+/area/battlefield/energy)
+"KN" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 10
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"KQ" = (
+/obj/structure/pit/closed/grave,
+/obj/structure/gravemarker/cross{
+	desc = "A wooden cross marking a burial site. Someone has carved into one of the planks:";
+	message = "Maitland McTavish, 2270-2292"
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"KU" = (
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 10
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/tiled/white,
+/area/battlefield/ship)
+"KX" = (
+/obj/item/ammo_casing/rifle/used{
+	pixel_x = 4;
+	pixel_y = 13;
+	dir = 1
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"Le" = (
+/obj/structure/table/steel,
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"Lf" = (
+/turf/simulated/mineral/random,
+/area/battlefield/surface)
+"Lg" = (
+/obj/structure/bed/chair/shuttle/white{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"Li" = (
+/obj/structure/rubble/war,
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/obj/floor_decal/beach,
+/turf/unsimulated/floor/steeldirty,
+/area/battlefield/surface)
+"Lq" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"Ly" = (
+/obj/floor_decal/corner/darkblue/border{
+	dir = 9
+	},
+/obj/structure/table/steel,
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"LB" = (
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/industrial/danger{
+	dir = 8
+	},
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/obj/floor_decal/beach/corner{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/techfloor,
+/area/battlefield/surface)
+"LG" = (
+/obj/structure/handrail{
+	dir = 4
+	},
+/obj/floor_decal/industrial/hatch/red,
+/obj/machinery/atmospherics/unary/vent_pump/high_volume/shuttle{
+	id_tag = "calypso_shuttle_pump_out_internal"
+	},
+/obj/structure/catwalk,
+/turf/unsimulated/floor/reinforced,
+/area/battlefield/ship)
+"LK" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/terran{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"LN" = (
+/obj/structure/cable/yellow{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/energy)
+"LP" = (
+/obj/floor_decal/iccglogo/bottom_left,
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"LS" = (
+/obj/floor_decal/asteroid{
+	icon_state = "asteroid7";
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/obj/machinery/porta_turret_construct,
+/turf/simulated/floor,
+/area/battlefield/surface)
+"Mj" = (
+/obj/floor_decal/beach/corner{
+	dir = 1
+	},
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"Mk" = (
+/obj/floor_decal/asteroid{
+	icon_state = "asteroid8";
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/obj/floor_decal/beach,
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"Mo" = (
+/obj/structure/railing/mapped,
+/obj/structure/largecrate,
+/obj/floor_decal/corner/brown/border{
+	dir = 8
+	},
+/obj/floor_decal/industrial/outline/yellow,
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"Mp" = (
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/obj/floor_decal/beach,
+/turf/simulated/floor/steel_dirty,
+/area/battlefield/surface)
+"Mr" = (
+/obj/structure/girder,
+/turf/simulated/floor,
+/area/battlefield/surface)
+"Mu" = (
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/obj/floor_decal/beach/corner{
+	dir = 8
+	},
+/turf/unsimulated/beach/sand,
+/area/battlefield/surface)
+"Mx" = (
+/obj/floor_decal/asteroid{
+	icon_state = "asteroid3";
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"Mz" = (
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/beach/corner,
+/obj/machinery/atmospherics/pipe/simple/hidden,
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"MA" = (
+/obj/floor_decal/asteroid{
+	icon_state = "asteroid2";
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/obj/decal/cleanable/blood/drip{
+	basecolor = "#520000"
+	},
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"MB" = (
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/industrial/hatch/red,
+/obj/machinery/atmospherics/unary/vent_pump/high_volume/shuttle{
+	id_tag = "calypso_shuttle_pump_out_internal";
+	dir = 1
+	},
+/obj/structure/catwalk,
+/turf/unsimulated/floor/reinforced,
+/area/battlefield/ship)
+"ME" = (
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/obj/floor_decal/asteroid{
+	icon_state = "asteroid5";
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/obj/floor_decal/beach,
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"MF" = (
+/obj/machinery/power/smes/buildable/preset/on_full,
+/obj/floor_decal/corner/lime/border{
+	dir = 6
+	},
+/obj/structure/cable/green{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/tiled,
+/area/battlefield/energy)
+"MG" = (
+/turf/simulated/wall,
+/area/battlefield/surface)
+"MH" = (
+/obj/floor_decal/corner/lime/border{
+	dir = 8
+	},
+/obj/decal/cleanable/dirt,
+/obj/structure/cable/green{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/tiled,
+/area/battlefield/camp)
+"MI" = (
+/obj/floor_decal/asteroid{
+	icon_state = "asteroid3";
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"ML" = (
+/obj/floor_decal/industrial/danger{
+	dir = 4
+	},
+/obj/floor_decal/industrial/warning/full,
+/obj/machinery/atmospherics/unary/vent_pump/high_volume/shuttle{
+	dir = 1;
+	id_tag = "calypso_shuttle_pump_out_internal"
+	},
+/obj/structure/catwalk,
+/turf/unsimulated/floor/reinforced,
+/area/battlefield/ship)
+"MR" = (
+/obj/machinery/atmospherics/unary/vent_pump/high_volume/shuttle{
+	id_tag = "calypso_shuttle_pump_out_internal"
+	},
+/obj/floor_decal/industrial/warning/full,
+/obj/structure/catwalk,
+/turf/simulated/floor,
+/area/battlefield/ship)
+"MT" = (
+/obj/structure/closet/secure_closet/patrol,
+/obj/floor_decal/corner/lime/border{
+	dir = 6
+	},
+/turf/simulated/floor/tiled,
+/area/battlefield/camp)
+"MU" = (
+/obj/floor_decal/corner/brown/border{
+	dir = 9
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"MW" = (
+/obj/floor_decal/beach/corner,
+/obj/floor_decal/asteroid{
+	icon_state = "asteroid3";
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"MX" = (
+/obj/item/pickaxe/xeno/hand,
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"MY" = (
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/beach/corner,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"MZ" = (
+/obj/decal/cleanable/dirt,
+/turf/unsimulated/beach/sand,
+/area/battlefield/camp)
+"Nb" = (
+/obj/item/ammo_casing/rifle/used{
+	pixel_x = -10;
+	pixel_y = 13;
+	dir = 5
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"Nm" = (
+/obj/floor_decal/asteroid{
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"Nx" = (
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/obj/floor_decal/asteroid{
+	icon_state = "asteroid8";
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/obj/floor_decal/beach,
+/obj/floor_decal/beach/corner,
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"Ny" = (
+/obj/structure/pit/closed/grave,
+/obj/structure/gravemarker/cross{
+	desc = "A wooden cross marking a burial site. Someone has carved into one of the planks:";
+	message = "Yo Con Tai, 2271-2292"
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"Nz" = (
+/obj/structure/barrier{
+	dir = 4
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"NA" = (
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/obj/floor_decal/beach,
+/turf/simulated/floor/steel_dirty,
+/area/battlefield/surface)
+"NC" = (
+/obj/floor_decal/corner/beige/three_quarters,
+/obj/structure/cable/green{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/camp)
+"ND" = (
+/obj/floor_decal/corner/beige/diagonal{
+	dir = 4
+	},
+/obj/structure/cable/green{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/camp)
+"NE" = (
+/obj/structure/mine{
+	alpha = 55
+	},
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"NG" = (
+/obj/floor_decal/asteroid{
+	icon_state = "asteroid6";
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/turf/simulated/floor/asteroid{
+	name = "precipice"
+	},
+/area/battlefield/surface)
+"NH" = (
+/obj/item/ammo_casing/rifle/military/light{
+	dir = 10;
+	pixel_x = -9;
+	pixel_y = 8
+	},
+/obj/item/ammo_casing/rifle/military/light{
+	dir = 9;
+	pixel_x = -3;
+	pixel_y = -5
+	},
+/obj/item/ammo_casing/rifle/military/light{
+	dir = 1;
+	pixel_x = -25;
+	pixel_y = -10
+	},
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"NI" = (
+/obj/structure/bed/chair/shuttle/white{
+	dir = 8
+	},
+/obj/floor_decal/corner/red/border{
+	dir = 6
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"NQ" = (
+/obj/machinery/sleeper/survival_pod{
+	dir = 4
+	},
+/obj/floor_decal/corner/blue/border{
+	dir = 9
+	},
+/turf/simulated/floor/tiled/white,
+/area/battlefield/ship)
+"NU" = (
+/obj/item/ammo_casing/rifle/military/light{
+	dir = 10;
+	pixel_y = 12
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/camp)
+"NV" = (
+/obj/structure/barrier{
+	dir = 4
+	},
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"Oa" = (
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/corner/darkblue/border,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"Od" = (
+/obj/decal/cleanable/dirt,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"Of" = (
+/obj/structure/table/standard,
+/obj/floor_decal/corner/lime/border{
+	dir = 4
+	},
+/turf/simulated/floor/tiled,
+/area/battlefield/camp)
+"Oh" = (
+/obj/structure/closet/crate/freezer,
+/obj/floor_decal/corner/lightgrey/border{
+	dir = 5
+	},
+/turf/simulated/floor/tiled,
+/area/battlefield/camp)
+"Ol" = (
+/obj/floor_decal/asteroid{
+	icon_state = "asteroid5";
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"Om" = (
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/industrial/danger{
+	dir = 8
+	},
+/obj/floor_decal/beach,
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/obj/item/laserframe,
+/turf/simulated/floor/tiled/techfloor,
+/area/battlefield/surface)
+"On" = (
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/obj/floor_decal/industrial/danger{
+	dir = 8
+	},
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/techfloor,
+/area/battlefield/surface)
+"Os" = (
+/obj/item/beartrap,
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"Ou" = (
+/obj/structure/rubble/war,
+/obj/floor_decal/beach,
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/turf/unsimulated/floor/steeldirty,
+/area/battlefield/surface)
+"Ow" = (
+/obj/structure/table/standard,
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"OA" = (
+/obj/structure/girder,
+/obj/floor_decal/industrial/hatch/red,
+/obj/machinery/atmospherics/unary/vent_pump/high_volume/shuttle{
+	id_tag = "calypso_shuttle_pump_out_internal"
+	},
+/obj/structure/catwalk,
+/turf/unsimulated/floor/reinforced,
+/area/battlefield/ship)
+"OC" = (
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/turf/unsimulated/beach/sand,
+/area/battlefield/surface)
+"OG" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/iccglogo/center_left,
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"OK" = (
+/obj/structure/disposalpipe/broken{
+	dir = 1;
+	desc = "A broken piece of air defense system."
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"ON" = (
+/obj/structure/roller_bed,
+/obj/structure/iv_stand,
+/obj/floor_decal/corner/lightgrey/border{
+	dir = 10
+	},
+/turf/simulated/floor/tiled,
+/area/battlefield/camp)
+"OV" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/beach/corner{
+	dir = 3
+	},
+/obj/structure/girder,
+/turf/unsimulated/floor/reinforced,
+/area/battlefield/ship)
+"Pa" = (
+/obj/item/storage/med_pouch{
+	pixel_y = 9;
+	pixel_x = -9
+	},
+/obj/decal/cleanable/blood/drip{
+	basecolor = "#520000"
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"Ph" = (
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/corner/darkblue/bordercorner{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"Pj" = (
+/obj/structure/cable/green{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/tiled,
+/area/battlefield/camp)
+"Pl" = (
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/obj/structure/ship_munition/disperser_charge/emp/military,
+/turf/simulated/floor,
+/area/battlefield/surface)
+"Ps" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/techfloor/grid,
+/area/battlefield/ship)
+"Pu" = (
+/obj/structure/plasticflaps,
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"Pv" = (
+/obj/machinery/floodlight{
+	dir = 4
+	},
+/turf/simulated/floor/steel_dirty,
+/area/battlefield/surface)
+"PB" = (
+/obj/floor_decal/beach/corner{
+	dir = 1
+	},
+/obj/floor_decal/beach/corner{
+	dir = 8
+	},
+/turf/unsimulated/beach/sand,
+/area/battlefield/surface)
+"PF" = (
+/obj/structure/girder,
+/obj/floor_decal/beach/corner{
+	dir = 4
+	},
+/turf/simulated/floor/steel_dirty,
+/area/battlefield/surface)
+"PG" = (
+/obj/floor_decal/asteroid{
+	icon_state = "asteroid6";
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"PI" = (
+/obj/item/ammo_casing/rifle/military/light{
+	pixel_x = -7;
+	pixel_y = -5;
+	dir = 9
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/camp)
+"PJ" = (
+/obj/floor_decal/beach,
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/turf/unsimulated/beach/sand,
+/area/battlefield/surface)
+"PM" = (
+/obj/floor_decal/asteroid{
+	icon_state = "asteroid2";
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/turf/simulated/floor/exoplanet,
+/area/battlefield/surface)
+"PN" = (
+/obj/structure/bed/chair/shuttle/white{
+	dir = 4
+	},
+/obj/floor_decal/corner/red/border{
+	dir = 8
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"PO" = (
+/obj/floor_decal/beach/corner{
+	dir = 8
+	},
+/turf/simulated/floor/steel_dirty,
+/area/battlefield/surface)
+"PR" = (
+/obj/structure/shuttle/engine/propulsion,
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/ship)
+"PS" = (
+/obj/floor_decal/corner/lime/border,
+/obj/decal/cleanable/dirt,
+/obj/structure/cable/green{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/power/apc{
+	pixel_y = -29
+	},
+/turf/simulated/floor/tiled,
+/area/battlefield/energy)
+"PU" = (
+/obj/floor_decal/corner/brown/border{
+	dir = 5
+	},
+/obj/decal/cleanable/dirt,
+/obj/item/device/radio/intercom/broadcasting{
+	dir = 8;
+	pixel_x = 26
+	},
+/obj/machinery/atmospherics/unary/vent_pump/on,
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"PX" = (
+/obj/machinery/door/airlock/terran{
+	dir = 4
+	},
+/obj/floor_decal/corner/brown/bordercee{
+	dir = 8
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/battlefield/ship)
+"Qa" = (
+/obj/structure/shuttle/engine/propulsion,
+/turf/unsimulated/beach/sand,
+/area/battlefield/ship)
+"Qb" = (
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"Qe" = (
+/obj/machinery/disperser/back{
+	desc = "The loading hatch of an obsolete anti-aircraft system. <br>It says: <i>STAY AWAY FROM LIVING MATERIALS!</i>"
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"Qg" = (
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden,
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"Qh" = (
+/obj/floor_decal/corner/brown/bordercorner{
+	dir = 8
+	},
+/obj/floor_decal/corner/brown/bordercorner{
+	dir = 1
+	},
+/obj/decal/cleanable/dirt,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"Qi" = (
+/obj/decal/cleanable/blood/gibs{
+	dir = 6;
+	basecolor = "#520000"
+	},
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"Qq" = (
+/obj/floor_decal/corner/lightgrey/border{
+	dir = 9
+	},
+/obj/structure/closet/crate/freezer,
+/turf/simulated/floor/tiled,
+/area/battlefield/camp)
+"Qs" = (
+/obj/floor_decal/beach/corner{
+	dir = 4
+	},
+/obj/floor_decal/asteroid{
+	icon_state = "asteroid5";
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"Qt" = (
+/turf/simulated/floor/reinforced,
+/area/battlefield/surface)
+"Qu" = (
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"Qw" = (
+/obj/machinery/door/airlock/sol,
+/obj/floor_decal/corner/lightgrey/bordercee{
+	dir = 1
+	},
+/obj/structure/cable/green{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/battlefield/camp)
+"Qx" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/techfloor/grid,
+/area/battlefield/ship)
+"Qz" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"QA" = (
+/obj/structure/cable/green{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/floor_decal/corner/lime/bordercorner{
+	dir = 1
+	},
+/turf/simulated/floor/tiled,
+/area/battlefield/energy)
+"QB" = (
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/obj/floor_decal/beach,
+/turf/unsimulated/beach/sand,
+/area/battlefield/surface)
+"QE" = (
+/obj/structure/droppod_door{
+	dir = 4
+	},
+/turf/simulated/floor/reinforced,
+/area/battlefield/surface)
+"QF" = (
+/obj/structure/railing/mapped{
+	dir = 8
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"QL" = (
+/obj/item/ammo_casing/rifle/used{
+	pixel_x = -10;
+	pixel_y = 13
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"QU" = (
+/obj/structure/cable/green{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/tiled,
+/area/battlefield/energy)
+"QV" = (
+/obj/structure/barrier{
+	dir = 4
+	},
+/turf/simulated/wall/prepainted,
+/area/battlefield/surface)
+"Ra" = (
+/obj/floor_decal/corner/beige/diagonal{
+	dir = 4
+	},
+/obj/structure/cable/green{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/camp)
+"Rf" = (
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/turf/unsimulated/beach/sand,
+/area/battlefield/surface)
+"Rg" = (
+/obj/floor_decal/corner/lime/border{
+	dir = 10
+	},
+/turf/simulated/floor/tiled,
+/area/battlefield/camp)
+"Rh" = (
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/obj/floor_decal/beach/corner{
+	dir = 4
+	},
+/turf/simulated/floor/steel_dirty,
+/area/battlefield/surface)
+"Ri" = (
+/obj/floor_decal/beach/corner{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"Rj" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/turf/simulated/floor/tiled/white,
+/area/battlefield/ship)
+"Rl" = (
+/obj/structure/ship_munition/ap_slug{
+	dir = 1;
+	desc = "A shell with the sign \"RADIOACTIVE\" engraved on it."
+	},
+/turf/simulated/floor/reinforced,
+/area/battlefield/surface)
+"Ro" = (
+/obj/floor_decal/asteroid{
+	icon_state = "asteroid2";
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/turf/unsimulated/beach/sand,
+/area/battlefield/surface)
+"Rs" = (
+/obj/floor_decal/asteroid{
+	icon_state = "asteroid6";
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/turf/simulated/mineral,
+/area/battlefield/surface)
+"Rt" = (
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/turf/simulated/floor/tiled/techfloor/grid,
+/area/battlefield/surface)
+"Ru" = (
+/obj/machinery/body_scanconsole{
+	dir = 1
+	},
+/obj/floor_decal/corner/blue/border{
+	dir = 4
+	},
+/obj/decal/cleanable/dirt,
+/obj/item/device/radio/intercom/broadcasting{
+	dir = 8;
+	pixel_x = 26
+	},
+/turf/simulated/floor/tiled/white,
+/area/battlefield/ship)
+"Rw" = (
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/corner/darkblue/bordercorner{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"Rx" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/obj/floor_decal/beach/corner{
+	dir = 4
+	},
+/turf/simulated/floor/steel_dirty,
+/area/battlefield/surface)
+"RC" = (
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/beach/corner{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"RD" = (
+/obj/floor_decal/corner/beige/three_quarters,
+/obj/structure/cable/yellow{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/energy)
+"RI" = (
+/obj/decal/cleanable/blood{
+	basecolor = "#520000"
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"RJ" = (
+/obj/machinery/radio_beacon,
+/obj/floor_decal/corner/darkblue/border{
+	dir = 6
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"RL" = (
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/turf/unsimulated/beach/sand,
+/area/battlefield/surface)
+"RP" = (
+/obj/floor_decal/corner/lime/border{
+	dir = 6
+	},
+/turf/simulated/floor/tiled,
+/area/battlefield/camp)
+"RQ" = (
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/iccglogo/top_left,
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"RR" = (
+/obj/floor_decal/corner/lime/border{
+	dir = 9
+	},
+/obj/item/clothing/accessory/solgov/fleet_patch/fourth{
+	pixel_y = 30;
+	anchored = 1;
+	desc = "The sign of the SCG Fourth Fleet. The first to take the strike, the first to sacrifice themselves."
+	},
+/turf/simulated/floor/tiled,
+/area/battlefield/camp)
+"RT" = (
+/obj/floor_decal/corner/brown/border{
+	dir = 8
+	},
+/obj/decal/cleanable/dirt,
+/obj/machinery/alarm{
+	dir = 4;
+	pixel_x = -24
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"RU" = (
+/obj/floor_decal/industrial/danger{
+	dir = 8
+	},
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/turf/simulated/floor/tiled/techfloor,
+/area/battlefield/surface)
+"Sa" = (
+/obj/floor_decal/asteroid,
+/obj/floor_decal/asteroid{
+	icon_state = "asteroid7"
+	},
+/obj/floor_decal/asteroid{
+	icon_state = "asteroid8"
+	},
+/obj/floor_decal/asteroid{
+	icon_state = "asteroid3";
+	pixel_y = -10
+	},
+/obj/floor_decal/asteroid{
+	icon_state = "asteroid4";
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/obj/floor_decal/asteroid{
+	pixel_y = -7;
+	pixel_x = 3;
+	icon_state = "asteroid1"
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"Sc" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden,
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"Sf" = (
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/turf/unsimulated/beach/sand,
+/area/battlefield/surface)
+"Sh" = (
+/obj/structure/railing/mapped{
+	dir = 8
+	},
+/turf/unsimulated/beach/sand,
+/area/battlefield/surface)
+"Sj" = (
+/obj/floor_decal/corner/research/bordercorner,
+/turf/simulated/floor/tiled,
+/area/battlefield/camp)
+"Sl" = (
+/obj/decal/cleanable/dirt{
+	dir = 1
+	},
+/obj/floor_decal/beach/corner{
+	dir = 8
+	},
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/obj/floor_decal/beach,
+/turf/simulated/floor/steel_dirty,
+/area/battlefield/surface)
+"Sm" = (
+/obj/machinery/power/tracker,
+/obj/structure/cable/yellow,
+/obj/floor_decal/solarpanel,
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/energy)
+"Sn" = (
+/obj/structure/roller_bed,
+/obj/structure/iv_stand,
+/obj/floor_decal/corner/lightgrey/border{
+	dir = 9
+	},
+/turf/simulated/floor/tiled,
+/area/battlefield/camp)
+"So" = (
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/turf/unsimulated/beach/sand,
+/area/battlefield/surface)
+"Sq" = (
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/energy)
+"Sx" = (
+/obj/decal/cleanable/dirt,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden,
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"SF" = (
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/industrial/danger{
+	dir = 8
+	},
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/obj/structure/rubble/war,
+/turf/simulated/floor/tiled/techfloor,
+/area/battlefield/surface)
+"SH" = (
+/obj/floor_decal/corner/brown/border{
+	dir = 4
+	},
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/industrial/outline/red,
+/obj/structure/closet/secure_closet/guncabinet/farfleet,
+/obj/item/clothing/mask/gas,
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"SK" = (
+/obj/machinery/power/apc{
+	dir = 1;
+	pixel_y = 18
+	},
+/obj/floor_decal/corner/lime/border{
+	dir = 1
+	},
+/obj/decal/cleanable/dirt,
+/obj/structure/cable/green{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/tiled,
+/area/battlefield/camp)
+"SM" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/dirt,
+/obj/structure/cable/green{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/tiled,
+/area/battlefield/camp)
+"SO" = (
+/obj/floor_decal/asteroid{
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/turf/simulated/mineral,
+/area/battlefield/surface)
+"SS" = (
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/energy)
+"SW" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/hidden,
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"SX" = (
+/obj/structure/iv_stand,
+/turf/simulated/floor/steel_dirty,
+/area/battlefield/surface)
+"Tc" = (
+/obj/structure/cable/green{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/decal/cleanable/blood,
+/obj/floor_decal/corner/research/bordercorner{
+	dir = 1
+	},
+/obj/floor_decal/corner/research/bordercorner{
+	dir = 8
+	},
+/turf/simulated/floor/tiled,
+/area/battlefield/camp)
+"Tn" = (
+/obj/floor_decal/corner/red/bordercorner,
+/obj/floor_decal/corner/red/bordercorner{
+	dir = 4
+	},
+/obj/decal/cleanable/dirt,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"Tr" = (
+/obj/floor_decal/beach{
+	dir = 5
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"Ts" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled,
+/area/battlefield/camp)
+"Ty" = (
+/obj/structure/scrap_cube,
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"TD" = (
+/obj/item/ammo_casing/rifle/used{
+	pixel_x = -7;
+	pixel_y = -8;
+	dir = 9
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"TF" = (
+/obj/floor_decal/asteroid{
+	icon_state = "asteroid7";
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"TH" = (
+/obj/structure/table/standard,
+/obj/item/gun/energy/plasmacutter/mounted/mech,
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"TI" = (
+/obj/structure/pit/closed/grave,
+/obj/structure/gravemarker/cross{
+	desc = "A wooden cross marking a burial site. Someone has carved into one of the planks:";
+	message = "Lloyd Way, 2268-2292";
+	pixel_x = -12
+	},
+/obj/item/clothing/head/scga/utility{
+	pixel_x = -14;
+	pixel_y = 14
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/camp)
+"TL" = (
+/obj/machinery/door/airlock/external{
+	dir = 4
+	},
+/obj/machinery/door/blast/regular{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/techfloor,
+/area/battlefield/ship)
+"TS" = (
+/obj/machinery/power/apc{
+	dir = 1;
+	pixel_y = 18
+	},
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"TX" = (
+/obj/floor_decal/asteroid{
+	icon_state = "asteroid2";
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/obj/structure/grille,
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"TY" = (
+/obj/floor_decal/beach/corner{
+	dir = 1
+	},
+/turf/unsimulated/beach/sand,
+/area/battlefield/surface)
+"Ue" = (
+/turf/simulated/floor/asteroid{
+	name = "precipice"
+	},
+/area/battlefield/surface)
+"Ug" = (
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/industrial/danger{
+	dir = 8
+	},
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/obj/floor_decal/beach/corner,
+/obj/floor_decal/beach/corner,
+/turf/simulated/floor/tiled/techfloor,
+/area/battlefield/surface)
+"Ui" = (
+/obj/decal/cleanable/blood,
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"Uj" = (
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/turf/unsimulated/floor/reinforced,
+/area/battlefield/surface)
+"Uk" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/techfloor,
+/area/battlefield/ship)
+"Un" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"Up" = (
+/turf/unsimulated/floor/reinforced,
+/area/battlefield/ship)
+"Uq" = (
+/obj/decal/cleanable/blood/drip{
+	basecolor = "#520000"
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"Uu" = (
+/obj/structure/handrail{
+	dir = 4
+	},
+/obj/floor_decal/industrial/hatch/red,
+/obj/machinery/atmospherics/pipe/manifold/visible{
+	dir = 8
+	},
+/turf/unsimulated/floor/reinforced,
+/area/battlefield/ship)
+"Uy" = (
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/beach,
+/obj/floor_decal/beach/corner,
+/obj/item/ammo_casing/rifle/used,
+/turf/simulated/floor/tiled/techfloor/grid,
+/area/battlefield/surface)
+"Uz" = (
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/obj/floor_decal/beach/corner{
+	dir = 4
+	},
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/battlefield/surface)
+"UC" = (
+/obj/floor_decal/corner/research/border{
+	dir = 10
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled,
+/area/battlefield/camp)
+"UF" = (
+/obj/structure/girder,
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"UG" = (
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/obj/floor_decal/beach/corner{
+	dir = 4
+	},
+/obj/floor_decal/beach/corner,
+/turf/unsimulated/floor/steeldirty,
+/area/battlefield/surface)
+"UH" = (
+/obj/item/ammo_casing/shell{
+	dir = 9
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"UJ" = (
+/obj/floor_decal/beach,
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"UL" = (
+/obj/floor_decal/corner/beige/border,
+/obj/floor_decal/corner/beige/half{
+	dir = 1
+	},
+/obj/structure/cable/green{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/camp)
+"UP" = (
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"UZ" = (
+/obj/floor_decal/beach/corner{
+	dir = 8
+	},
+/turf/unsimulated/beach/sand,
+/area/battlefield/surface)
+"Vd" = (
+/obj/structure/rubble/war,
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/obj/floor_decal/beach,
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/turf/unsimulated/floor/steeldirty,
+/area/battlefield/surface)
+"Vj" = (
+/obj/structure/table/steel,
+/obj/item/device/radio/intercom/broadcasting{
+	dir = 8;
+	pixel_x = 26
+	},
+/obj/floor_decal/corner/darkblue/border{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"Vk" = (
+/obj/floor_decal/asteroid{
+	icon_state = "asteroid1";
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/obj/floor_decal/beach/corner,
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"Vl" = (
+/obj/overmap/visitable/sector/battlefield{
+	color = "#beac77"
+	},
+/turf/unsimulated/mineral,
+/area/battlefield/surface)
+"Vm" = (
+/obj/floor_decal/corner/research/border{
+	dir = 5
+	},
+/turf/simulated/floor/tiled,
+/area/battlefield/camp)
+"Vn" = (
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/turf/simulated/floor/steel_dirty,
+/area/battlefield/surface)
+"Vo" = (
+/obj/structure/mine,
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"Vw" = (
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/obj/floor_decal/beach,
+/turf/simulated/floor/steel_dirty,
+/area/battlefield/surface)
+"Vz" = (
+/obj/structure/roller_bed,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/steel_dirty,
+/area/battlefield/surface)
+"VF" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/techfloor,
+/area/battlefield/ship)
+"VG" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/backpack/dufflebag/med,
+/turf/simulated/floor/steel_dirty,
+/area/battlefield/surface)
+"VI" = (
+/obj/item/ammo_casing/rifle/military/light{
+	pixel_x = 9;
+	pixel_y = 4;
+	dir = 9
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/camp)
+"VT" = (
+/obj/structure/sign/double/iccgflag/left{
+	pixel_y = -10
+	},
+/turf/simulated/mineral,
+/area/battlefield/surface)
+"VW" = (
+/obj/floor_decal/beach,
+/turf/simulated/floor/tiled/techfloor,
+/area/battlefield/ship)
+"Wb" = (
+/obj/floor_decal/corner/beige/diagonal,
+/obj/structure/cable/green{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/camp)
+"Wd" = (
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/floor_decal/corner/lime/border{
+	dir = 6
+	},
+/turf/simulated/floor/tiled,
+/area/battlefield/energy)
+"We" = (
+/obj/floor_decal/corner/brown/border{
+	dir = 1
+	},
+/obj/machinery/atmospherics/unary/vent_pump/on,
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"Wf" = (
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"Wj" = (
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/obj/floor_decal/beach/corner{
+	dir = 4
+	},
+/turf/unsimulated/beach/sand,
+/area/battlefield/surface)
+"Wk" = (
+/obj/floor_decal/asteroid{
+	icon_state = "asteroid2";
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"Ws" = (
+/obj/floor_decal/asteroid{
+	icon_state = "asteroid3";
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/obj/floor_decal/asteroid{
+	icon_state = "asteroid2";
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/obj/structure/disposalpipe/broken{
+	dir = 2;
+	pixel_y = -6;
+	desc = "A broken piece of a barrel."
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"Wu" = (
+/obj/item/ammo_casing/rifle/military/light{
+	dir = 4;
+	pixel_y = -7;
+	pixel_x = -13
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/camp)
+"Wv" = (
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/obj/floor_decal/beach/corner{
+	dir = 1
+	},
+/turf/unsimulated/beach/sand,
+/area/battlefield/surface)
+"Wz" = (
+/obj/structure/reagent_dispensers/watertank,
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/turf/simulated/floor/steel_dirty,
+/area/battlefield/surface)
+"WA" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/dirt,
+/obj/item/frame/apc{
+	pixel_y = 30
+	},
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/techfloor/grid,
+/area/battlefield/ship)
+"WB" = (
+/obj/floor_decal/asteroid{
+	icon_state = "asteroid6";
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/obj/forcefield/blocker,
+/turf/simulated/ocean/non_flooded,
+/area/battlefield/surface)
+"WD" = (
+/obj/floor_decal/asteroid{
+	icon_state = "asteroid7";
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"WG" = (
+/obj/floor_decal/beach{
+	dir = 3
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/techfloor/grid,
+/area/battlefield/surface)
+"WJ" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/floor_decal/corner/brown/bordercorner,
+/obj/floor_decal/corner/brown/bordercorner{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"WN" = (
+/obj/floor_decal/beach/corner{
+	dir = 8
+	},
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"WS" = (
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/obj/floor_decal/beach,
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/turf/unsimulated/beach/sand,
+/area/battlefield/surface)
+"WT" = (
+/obj/floor_decal/asteroid{
+	icon_state = "asteroid6";
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/obj/catwalk_plated,
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"Xd" = (
+/obj/structure/cable/yellow{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/corner/lime/bordercorner,
+/turf/simulated/floor/tiled,
+/area/battlefield/energy)
+"Xk" = (
+/obj/structure/reagent_dispensers/watertank,
+/turf/simulated/floor/steel_dirty,
+/area/battlefield/surface)
+"Xl" = (
+/obj/structure/bed/chair/shuttle/white{
+	dir = 8
+	},
+/obj/floor_decal/corner/red/border{
+	dir = 4
+	},
+/obj/decal/cleanable/dirt,
+/obj/machinery/alarm{
+	dir = 8;
+	pixel_x = 24
+	},
+/obj/machinery/atmospherics/unary/vent_scrubber/on{
+	dir = 8
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"Xp" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/atmospherics/portables_connector{
+	dir = 4
+	},
+/obj/machinery/portable_atmospherics/canister/air,
+/turf/simulated/floor/tiled/techfloor/grid,
+/area/battlefield/ship)
+"Xq" = (
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"Xr" = (
+/obj/item/ammo_casing/rifle/used{
+	dir = 9;
+	pixel_x = 7
+	},
+/obj/item/ammo_casing/rifle/used{
+	dir = 4;
+	pixel_x = -5;
+	pixel_y = -7
+	},
+/obj/item/ammo_casing/rifle/used{
+	dir = 1;
+	pixel_x = -4;
+	pixel_y = 5
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"Xs" = (
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"Xt" = (
+/obj/floor_decal/beach/corner{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 9
+	},
+/turf/simulated/floor/tiled/techfloor/grid,
+/area/battlefield/ship)
+"XB" = (
+/obj/floor_decal/industrial/warning/full,
+/obj/machinery/atmospherics/unary/vent_pump/high_volume/shuttle{
+	dir = 1;
+	id_tag = "calypso_shuttle_pump_out_internal"
+	},
+/obj/structure/catwalk,
+/turf/unsimulated/floor/reinforced,
+/area/battlefield/ship)
+"XC" = (
+/obj/structure/table/steel,
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"XD" = (
+/obj/floor_decal/corner/brown/border{
+	dir = 6
+	},
+/obj/structure/largecrate,
+/obj/floor_decal/industrial/outline/yellow,
+/obj/floor_decal/beach/corner{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"XE" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/techfloor,
+/area/battlefield/ship)
+"XJ" = (
+/obj/item/device/radio/intercom/map_preset/phobos{
+	dir = 1;
+	pixel_y = -34
+	},
+/obj/floor_decal/corner/lime/border,
+/turf/simulated/floor/tiled,
+/area/battlefield/camp)
+"XQ" = (
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/camp)
+"XR" = (
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden{
+	dir = 8
+	},
+/turf/unsimulated/floor/reinforced,
+/area/battlefield/ship)
+"XS" = (
+/obj/floor_decal/beach/corner,
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"XY" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"Yb" = (
+/obj/decal/cleanable/dirt,
+/obj/structure/table/steel,
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"Ye" = (
+/turf/simulated/floor,
+/area/battlefield/ship)
+"Yg" = (
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/turf/unsimulated/beach/sand,
+/area/battlefield/surface)
+"Yk" = (
+/obj/structure/largecrate,
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/obj/floor_decal/beach/corner{
+	dir = 4
+	},
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"Yl" = (
+/obj/structure/bed,
+/obj/floor_decal/corner/lime/border{
+	dir = 5
+	},
+/turf/simulated/floor/tiled,
+/area/battlefield/camp)
+"Ym" = (
+/obj/floor_decal/beach,
+/obj/item/ammo_casing/shell{
+	dir = 6
+	},
+/turf/simulated/floor/steel_dirty,
+/area/battlefield/surface)
+"Yo" = (
+/obj/item/clothing/head/iccgn/service{
+	pixel_x = -16;
+	pixel_y = 15
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"Yq" = (
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"Yr" = (
+/obj/structure/disposalpipe/broken{
+	dir = 1;
+	desc = "A broken piece of air defense system."
+	},
+/obj/structure/disposalpipe/broken{
+	dir = 2;
+	desc = "A broken piece of air defense system."
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"Ys" = (
+/turf/unsimulated/beach/sand,
+/area/battlefield/surface)
+"Yu" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/hidden/universal,
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"Yy" = (
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/energy)
+"YB" = (
+/obj/floor_decal/corner/lime/border{
+	dir = 4
+	},
+/turf/simulated/floor/tiled,
+/area/battlefield/camp)
+"YD" = (
+/obj/item/ammo_casing/rifle/used{
+	pixel_x = -4
+	},
+/obj/item/ammo_casing/rifle/used{
+	pixel_x = -8;
+	pixel_y = 10;
+	dir = 5
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"YH" = (
+/obj/floor_decal/asteroid{
+	icon_state = "asteroid4";
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/obj/decal/cleanable/blood,
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"YJ" = (
+/obj/floor_decal/beach{
+	dir = 3
+	},
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/battlefield/surface)
+"YK" = (
+/obj/structure/grille,
+/turf/simulated/floor/asteroid,
+/area/battlefield/surface)
+"YN" = (
+/obj/machinery/atmospherics/pipe/simple/hidden,
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"YO" = (
+/obj/structure/rubble/war,
+/turf/simulated/floor,
+/area/battlefield/ship)
+"YR" = (
+/obj/floor_decal/corner/brown/border{
+	dir = 4
+	},
+/obj/floor_decal/industrial/outline/red,
+/obj/structure/closet/secure_closet/guncabinet/farfleet,
+/obj/item/clothing/mask/gas,
+/obj/item/ammo_magazine/pistol/double,
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"YT" = (
+/obj/floor_decal/corner/red/bordercorner{
+	dir = 1
+	},
+/obj/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 6
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"Zc" = (
+/obj/floor_decal/beach/corner,
+/turf/simulated/floor/steel_dirty,
+/area/battlefield/surface)
+"Zg" = (
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/obj/floor_decal/beach{
+	dir = 1
+	},
+/obj/floor_decal/beach,
+/turf/simulated/floor/steel_dirty,
+/area/battlefield/surface)
+"Zh" = (
+/obj/item/device/radio/intercom/map_preset/phobos{
+	dir = 8;
+	pixel_x = 26
+	},
+/obj/floor_decal/corner/lightgrey/border{
+	dir = 4
+	},
+/turf/simulated/floor/tiled,
+/area/battlefield/camp)
+"Zk" = (
+/obj/structure/inflatable/wall,
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/surface)
+"Zs" = (
+/obj/floor_decal/corner/brown/border{
+	dir = 8
+	},
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/industrial/outline/red,
+/obj/structure/closet/secure_closet/guncabinet/farfleet,
+/obj/item/clothing/mask/gas,
+/obj/item/ammo_magazine/rifle,
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+"Zu" = (
+/obj/machinery/atmospherics/pipe/simple/visible,
+/turf/simulated/floor,
+/area/battlefield/ship)
+"ZF" = (
+/obj/structure/cable/green{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/structure/cable/green{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/floor_decal/corner/beige{
+	dir = 9
+	},
+/turf/simulated/floor/exoplanet/desert,
+/area/battlefield/camp)
+"ZH" = (
+/obj/floor_decal/corner/research/bordercorner{
+	dir = 4
+	},
+/turf/simulated/floor/tiled,
+/area/battlefield/camp)
+"ZJ" = (
+/obj/structure/roller_bed,
+/obj/structure/iv_stand,
+/obj/floor_decal/corner/lightgrey/border{
+	dir = 5
+	},
+/turf/simulated/floor/tiled,
+/area/battlefield/camp)
+"ZK" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/atmospherics/unary/tank/air{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/techfloor/grid,
+/area/battlefield/ship)
+"ZO" = (
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/obj/floor_decal/beach{
+	dir = 4
+	},
+/obj/floor_decal/beach,
+/turf/simulated/floor/steel_dirty,
+/area/battlefield/surface)
+"ZQ" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/beach/corner{
+	dir = 4
+	},
+/turf/unsimulated/floor/reinforced,
+/area/battlefield/surface)
+"ZR" = (
+/obj/decal/cleanable/dirt,
+/obj/floor_decal/beach/corner{
+	dir = 8
+	},
+/obj/floor_decal/beach{
+	dir = 8
+	},
+/obj/structure/aurora/smes,
+/turf/simulated/floor/tiled/techfloor,
+/area/battlefield/surface)
+"ZY" = (
+/obj/floor_decal/beach/corner{
+	dir = 8
+	},
+/obj/floor_decal/beach/corner{
+	dir = 1
+	},
+/turf/simulated/floor/steel_dirty,
+/area/battlefield/surface)
+"ZZ" = (
+/obj/machinery/computer/ship/sensors,
+/obj/floor_decal/corner/darkblue/border{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/dark,
+/area/battlefield/ship)
+
+(1,1,1) = {"
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+"}
+(2,1,1) = {"
+yG
+yG
+yG
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+yG
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+yG
+"}
+(3,1,1) = {"
+yG
+yG
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+yG
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+yG
+"}
+(4,1,1) = {"
+yG
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+uZ
+Xs
+yb
+Xs
+Xs
+uZ
+uZ
+Xs
+Xs
+Xs
+Xs
+Xs
+MI
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+yG
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+Qu
+Qu
+Qu
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+yG
+"}
+(5,1,1) = {"
+yG
+uZ
+uZ
+uZ
+XQ
+XQ
+XQ
+XQ
+XQ
+XQ
+XQ
+XQ
+XQ
+XQ
+XQ
+XQ
+XQ
+XQ
+XQ
+XQ
+XQ
+XQ
+XQ
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+uZ
+uZ
+yG
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+Qu
+Qu
+Qu
+Qu
+Qu
+sp
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+yG
+"}
+(6,1,1) = {"
+yG
+uZ
+uZ
+uZ
+XQ
+eJ
+eJ
+eJ
+eJ
+eJ
+XQ
+XQ
+XQ
+XQ
+XQ
+XQ
+XQ
+XQ
+tb
+TI
+XQ
+XQ
+XQ
+SS
+SS
+bR
+bR
+bR
+bR
+bR
+SS
+SS
+SS
+SS
+SS
+SS
+SS
+SS
+SS
+SS
+SS
+SS
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+WD
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+uZ
+yG
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+sp
+Qu
+Qu
+uZ
+uZ
+uZ
+uZ
+uZ
+yG
+"}
+(7,1,1) = {"
+yG
+uZ
+uZ
+uZ
+eJ
+eJ
+Sn
+fi
+ON
+eJ
+eJ
+XQ
+XQ
+XQ
+XQ
+XQ
+XQ
+XQ
+XQ
+XQ
+XQ
+XQ
+XQ
+SS
+bR
+bR
+ti
+Ct
+Eg
+bR
+bR
+SS
+SS
+sQ
+ui
+sQ
+SS
+sQ
+ui
+sQ
+SS
+SS
+Xs
+AE
+qO
+Xs
+Xs
+ER
+Xs
+ER
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+ER
+Xs
+ER
+Xs
+Xs
+uZ
+uZ
+uZ
+yG
+Qu
+Qu
+Qu
+sp
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+uZ
+uZ
+uZ
+uZ
+yG
+"}
+(8,1,1) = {"
+yG
+uZ
+uZ
+uZ
+eJ
+Qq
+cE
+Pj
+Fu
+nq
+eJ
+XQ
+XQ
+XQ
+XQ
+XQ
+XQ
+XQ
+XQ
+XQ
+XQ
+XQ
+XQ
+SS
+bR
+ze
+QA
+sG
+vR
+yE
+bR
+SS
+LN
+IW
+IW
+IW
+Yy
+IW
+IW
+Sq
+SS
+SS
+Xs
+Xs
+Xs
+Xs
+ER
+ER
+QE
+ER
+ER
+Xs
+Xs
+yb
+Xs
+Xs
+Xs
+Xs
+ER
+ER
+QE
+ER
+ER
+Xs
+uZ
+uZ
+uZ
+yG
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+sp
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+sp
+uZ
+uZ
+uZ
+yG
+"}
+(9,1,1) = {"
+yG
+uZ
+uZ
+uZ
+Ey
+ej
+tv
+vN
+bM
+Dv
+Qw
+qx
+cu
+IR
+rQ
+IR
+ND
+qn
+rQ
+nM
+zt
+rQ
+NC
+SS
+bR
+vM
+QU
+HM
+HM
+PS
+bR
+SS
+sf
+ui
+ui
+ui
+SS
+ui
+ui
+ui
+SS
+SS
+Xs
+Xs
+Xs
+ER
+ER
+Iz
+Qt
+Qt
+ER
+ER
+Xs
+Xs
+Xs
+Xs
+Xs
+ER
+ER
+rq
+Qt
+Qt
+ER
+ER
+uZ
+uZ
+yG
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+uZ
+uZ
+uZ
+yG
+"}
+(10,1,1) = {"
+yG
+uZ
+uZ
+uZ
+eJ
+Oh
+JL
+tv
+ak
+CI
+eJ
+XQ
+Ra
+XQ
+XQ
+XQ
+XQ
+XQ
+XQ
+XQ
+XQ
+XQ
+wF
+SS
+bR
+yC
+yk
+HM
+KJ
+MF
+bR
+SS
+sf
+SS
+SS
+SS
+SS
+SS
+SS
+SS
+SS
+SS
+Xs
+Xs
+Xs
+Xs
+fu
+Qt
+Qt
+Qt
+fu
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+fu
+Qt
+Qt
+Qt
+fu
+Xs
+uZ
+uZ
+yG
+Qu
+Qu
+sp
+Qu
+Qu
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+uZ
+uZ
+uZ
+yG
+"}
+(11,1,1) = {"
+yG
+uZ
+uZ
+uZ
+eJ
+eJ
+ZJ
+Zh
+mD
+eJ
+eJ
+XQ
+DP
+XQ
+XQ
+eJ
+eJ
+eJ
+eJ
+eJ
+XQ
+XQ
+Wb
+SS
+bR
+bR
+BM
+Xd
+Wd
+bR
+bR
+SS
+Kr
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Sm
+Xs
+Xs
+Xs
+ER
+ER
+Qt
+Qt
+Rl
+ER
+ER
+Xs
+Xs
+Xs
+Xs
+Xs
+ER
+ER
+rq
+Qt
+rq
+ER
+ER
+uZ
+uZ
+yG
+Qu
+Qu
+Qu
+Qu
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Qu
+Qu
+Qu
+Qu
+uZ
+uZ
+uZ
+yG
+"}
+(12,1,1) = {"
+yG
+uZ
+uZ
+uZ
+XQ
+eJ
+eJ
+eJ
+eJ
+eJ
+XQ
+XQ
+wF
+XQ
+eJ
+eJ
+Fv
+MH
+Rg
+eJ
+eJ
+XQ
+Ra
+SS
+SS
+bR
+Ie
+dr
+bR
+bR
+ao
+Yy
+bS
+SS
+SS
+SS
+SS
+SS
+SS
+SS
+SS
+SS
+Xs
+Xs
+Xs
+Xs
+ER
+ER
+QE
+ER
+ER
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+ER
+ER
+QE
+ER
+ER
+Xs
+uZ
+uZ
+yG
+Qu
+Qu
+Qu
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Qu
+Qu
+uZ
+uZ
+uZ
+yG
+"}
+(13,1,1) = {"
+yG
+uZ
+uZ
+uZ
+XQ
+XQ
+XQ
+XQ
+XQ
+XQ
+XQ
+XQ
+cD
+XQ
+eJ
+cy
+nJ
+Pj
+xj
+Rg
+eJ
+XQ
+tm
+SS
+SS
+SS
+Kb
+RD
+Yy
+Yy
+tL
+Yy
+bS
+sQ
+ui
+sQ
+SS
+sQ
+ui
+sQ
+SS
+SS
+Xs
+Xs
+Xs
+Xs
+Xs
+ER
+Xs
+ER
+Xs
+Xs
+Xs
+Xs
+EQ
+bT
+UP
+Xs
+Xs
+ER
+Xs
+ER
+Xs
+Xs
+uZ
+uZ
+yG
+Qu
+Qu
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Qu
+uZ
+uZ
+uZ
+yG
+"}
+(14,1,1) = {"
+yG
+uZ
+uZ
+uZ
+XQ
+An
+XQ
+XQ
+XQ
+FQ
+qn
+UL
+ci
+XQ
+eJ
+zH
+Gp
+SM
+qh
+eD
+Ig
+BI
+ZF
+JD
+Gz
+zR
+CE
+In
+SS
+SS
+SS
+SS
+JG
+IW
+IW
+IW
+Yy
+IW
+IW
+Sq
+SS
+SS
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+MI
+Xs
+Xs
+Xs
+Xs
+EQ
+Mj
+Qu
+WN
+UP
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+yG
+Qu
+Qu
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+yG
+"}
+(15,1,1) = {"
+yG
+uZ
+uZ
+uZ
+XQ
+XQ
+XQ
+XQ
+XQ
+cD
+XQ
+XQ
+XQ
+XQ
+eJ
+Yl
+zS
+Ts
+FH
+RP
+eJ
+XQ
+XQ
+SS
+SS
+zK
+SS
+SS
+SS
+SS
+SS
+SS
+sf
+ui
+ui
+ui
+SS
+ui
+ui
+ui
+SS
+SS
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+lY
+Mj
+Qu
+Qu
+Qu
+WN
+Qb
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+yG
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+yG
+"}
+(16,1,1) = {"
+yG
+uZ
+uZ
+uZ
+XQ
+ub
+XQ
+eJ
+eJ
+rj
+eJ
+eJ
+XQ
+XQ
+eJ
+eJ
+Au
+YB
+cO
+eJ
+eJ
+XQ
+XQ
+XQ
+XQ
+cD
+XQ
+XQ
+XQ
+XQ
+XQ
+XQ
+sf
+SS
+SS
+SS
+SS
+SS
+SS
+SS
+SS
+SS
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+yv
+uZ
+uZ
+Pu
+Pu
+Pu
+uZ
+uZ
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+yG
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+yG
+"}
+(17,1,1) = {"
+yG
+uZ
+uZ
+uZ
+XQ
+XQ
+eJ
+eJ
+Ev
+Tc
+vU
+eJ
+eJ
+MZ
+XQ
+eJ
+eJ
+eJ
+eJ
+eJ
+XQ
+VI
+XQ
+eJ
+eJ
+oW
+eJ
+eJ
+XQ
+XQ
+XQ
+XQ
+sf
+sQ
+ui
+sQ
+SS
+sQ
+ui
+sQ
+SS
+SS
+Xs
+Xs
+Xs
+Xs
+sP
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+Vo
+Qu
+DW
+uZ
+uZ
+uZ
+Xs
+uZ
+uZ
+uZ
+uZ
+uZ
+yG
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+yG
+"}
+(18,1,1) = {"
+yG
+uZ
+uZ
+uZ
+XQ
+zo
+eJ
+HJ
+cI
+Pj
+JM
+UC
+MZ
+MZ
+XQ
+XQ
+XQ
+XQ
+XQ
+XQ
+XQ
+Wu
+eJ
+eJ
+vg
+cX
+Rg
+eJ
+eJ
+XQ
+NU
+XQ
+Kr
+IW
+IW
+IW
+Yy
+IW
+IW
+Sq
+SS
+SS
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+uZ
+uZ
+Wk
+Qu
+Qu
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+yG
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+yG
+"}
+(19,1,1) = {"
+yG
+uZ
+uZ
+uZ
+XQ
+XQ
+eJ
+sw
+tv
+Fi
+Ts
+MZ
+MZ
+XQ
+XQ
+XQ
+XQ
+XQ
+XQ
+XQ
+XQ
+XQ
+eJ
+RR
+nJ
+Pj
+xj
+Rg
+eJ
+PI
+EF
+XQ
+sf
+ui
+ui
+ui
+SS
+ui
+ui
+ui
+SS
+SS
+Xs
+Xs
+MI
+Xs
+Xs
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+Qu
+Qu
+Qu
+Qu
+Vo
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+yG
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+yG
+"}
+(20,1,1) = {"
+yG
+uZ
+uZ
+uZ
+XQ
+XQ
+eJ
+Vm
+ZH
+Ts
+Sj
+MZ
+MZ
+XQ
+XQ
+XQ
+XQ
+FS
+XQ
+XQ
+XQ
+XQ
+eJ
+SK
+qh
+dj
+Ts
+XJ
+eJ
+XQ
+XQ
+XQ
+sf
+SS
+SS
+SS
+SS
+SS
+SS
+SS
+SS
+SS
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+IN
+Qu
+Qu
+Qu
+Qu
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+yG
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+dm
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+yG
+"}
+(21,1,1) = {"
+yG
+uZ
+uZ
+uZ
+XQ
+XQ
+eJ
+eJ
+AS
+iF
+nV
+MZ
+MZ
+XQ
+XQ
+XQ
+XQ
+XQ
+XQ
+XQ
+XQ
+XQ
+eJ
+Au
+zS
+Ts
+FH
+MT
+eJ
+XQ
+XQ
+XQ
+sf
+sQ
+ui
+sQ
+SS
+sQ
+ui
+sQ
+SS
+GU
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+uZ
+Xs
+uZ
+uZ
+uZ
+uZ
+Qu
+Qu
+Qu
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+yG
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+yG
+"}
+(22,1,1) = {"
+yG
+uZ
+uZ
+uZ
+uZ
+XQ
+XQ
+eJ
+eJ
+eJ
+eJ
+eJ
+MZ
+MZ
+XQ
+XQ
+XQ
+XQ
+XQ
+XQ
+XQ
+XQ
+eJ
+eJ
+Yl
+Of
+Fe
+eJ
+eJ
+XQ
+XQ
+XQ
+ht
+IW
+IW
+IW
+Yy
+IW
+IW
+Sq
+SS
+SS
+Xs
+Xs
+uZ
+uZ
+uZ
+uZ
+Xs
+Xs
+Xs
+ES
+zN
+uZ
+Qu
+Vo
+Qu
+uZ
+uZ
+uZ
+uZ
+Xs
+uZ
+uZ
+uZ
+uZ
+yG
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+yG
+"}
+(23,1,1) = {"
+yG
+uZ
+uZ
+uZ
+uZ
+uZ
+XQ
+XQ
+XQ
+XQ
+XQ
+XQ
+XQ
+XQ
+XQ
+XQ
+XQ
+XQ
+XQ
+XQ
+XQ
+XQ
+XQ
+eJ
+eJ
+eJ
+eJ
+eJ
+XQ
+XQ
+XQ
+XQ
+SS
+ui
+ui
+ui
+SS
+ui
+ui
+ui
+SS
+aW
+Xs
+uZ
+uZ
+uZ
+uZ
+Xs
+Xs
+Xs
+Xs
+az
+Qs
+uZ
+Pu
+Pu
+Pu
+uZ
+uZ
+Nx
+Yq
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+yG
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+yG
+"}
+(24,1,1) = {"
+yG
+uZ
+uZ
+uZ
+Qu
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+Xs
+Jd
+Xs
+Xs
+az
+Eu
+DA
+Ik
+Qu
+uZ
+AF
+It
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+yG
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+yG
+"}
+(25,1,1) = {"
+yG
+uZ
+uZ
+Qu
+Qu
+Qu
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+Qb
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+MI
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Kh
+Xs
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+Xs
+Xs
+Xs
+Xs
+az
+DA
+Gq
+Aw
+Xs
+Xs
+Xs
+Xs
+Xs
+WD
+uZ
+uZ
+yG
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+yG
+"}
+(26,1,1) = {"
+yG
+uZ
+uZ
+Qu
+Qu
+Qu
+Qu
+Qu
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+WN
+NV
+Nz
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+IF
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+yG
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+yG
+"}
+(27,1,1) = {"
+yG
+uZ
+uZ
+Qu
+Qu
+Qu
+Qu
+Qu
+FD
+uZ
+uZ
+uZ
+uZ
+uZ
+Qu
+WN
+Wf
+Wf
+Qb
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+yb
+Xs
+Xs
+uZ
+uZ
+uZ
+uZ
+uZ
+eF
+uZ
+uZ
+uZ
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+UF
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+AE
+uZ
+yG
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+yG
+"}
+(28,1,1) = {"
+yG
+uZ
+uZ
+uZ
+Qu
+Qu
+Qu
+Qu
+uZ
+uZ
+uZ
+uZ
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+WN
+Qb
+Xs
+Xs
+Xs
+Xs
+De
+Xs
+De
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+IF
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+yG
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+yG
+"}
+(29,1,1) = {"
+yG
+uZ
+uZ
+uZ
+Qu
+Qu
+Qu
+uZ
+uZ
+uZ
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+sp
+Qu
+Qu
+WN
+Qb
+Xs
+MI
+Xs
+Qe
+BC
+uA
+HD
+zF
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+AE
+Xs
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+yb
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+IF
+Db
+IF
+Xs
+Xs
+IF
+Xs
+uZ
+uZ
+yG
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+yG
+"}
+(30,1,1) = {"
+yG
+uZ
+uZ
+Qu
+gI
+uZ
+uZ
+uZ
+uZ
+Qu
+Qu
+Qu
+Qu
+Qu
+NE
+Qu
+Qu
+Qu
+Qu
+Qu
+Ac
+Xs
+Xs
+CO
+Hw
+Xs
+oS
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+uZ
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Ou
+UG
+MG
+BY
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+yG
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+yG
+"}
+(31,1,1) = {"
+yG
+Lf
+Qu
+Qu
+uZ
+uZ
+uZ
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Ac
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+uZ
+cU
+Xs
+db
+Xs
+Xs
+Xs
+rF
+Xs
+Xs
+Xs
+Xs
+rF
+Xs
+Xs
+Xs
+Xs
+Ty
+Vd
+IF
+Li
+Xs
+Xs
+Xs
+Xs
+MI
+uZ
+yG
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+yG
+"}
+(32,1,1) = {"
+yG
+uZ
+uZ
+Qu
+Qu
+uZ
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+XS
+DA
+Kd
+DW
+Qu
+Qu
+Ac
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+EQ
+uo
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+ME
+UP
+Xs
+Xs
+Xs
+Xs
+CA
+Nz
+Nz
+CA
+Xs
+Xs
+Xs
+Xs
+IF
+Xs
+Xs
+IF
+Xs
+Xs
+IF
+Xs
+Xs
+Xs
+uZ
+uZ
+yG
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+yG
+"}
+(33,1,1) = {"
+yG
+uZ
+uZ
+uZ
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+uZ
+uZ
+az
+DA
+Kd
+Qu
+Ac
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+UF
+Xs
+Xs
+Xs
+Xs
+EQ
+Mj
+uZ
+uZ
+uZ
+Qu
+IN
+uZ
+uZ
+uZ
+WN
+UP
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+yG
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+yG
+"}
+(34,1,1) = {"
+yG
+uZ
+uZ
+uZ
+Qu
+DW
+Qu
+Qu
+NE
+Qu
+Qu
+qz
+IN
+Qu
+uZ
+uZ
+uZ
+uZ
+az
+dD
+HA
+Xs
+Xs
+Xs
+De
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+UJ
+Nm
+Pu
+Qu
+Qu
+Vo
+Qu
+Qu
+Qu
+Pu
+Qu
+Ac
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Uq
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+yG
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+yG
+"}
+(35,1,1) = {"
+yG
+uZ
+uZ
+uZ
+uZ
+Qu
+Qu
+Qu
+Qu
+Qu
+EN
+Qu
+Qu
+Qu
+Qu
+Qu
+uZ
+uZ
+uZ
+AU
+Xs
+Xs
+Xs
+Xs
+Qe
+BC
+Yr
+HD
+OK
+Xs
+Xs
+Xs
+Xs
+Xs
+az
+Kd
+Pu
+Qu
+Wk
+Qu
+Qu
+Qu
+Vo
+Pu
+Qu
+Ac
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+yG
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+yG
+"}
+(36,1,1) = {"
+yG
+uZ
+uZ
+uZ
+uZ
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+NE
+Qu
+Qu
+uZ
+uZ
+uZ
+Xs
+MI
+Xs
+Xs
+Xs
+Hw
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+UJ
+Pu
+Vo
+Qu
+Qu
+Qu
+Qu
+Qu
+Pu
+Qu
+Ac
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+yb
+uZ
+uZ
+yG
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+yG
+"}
+(37,1,1) = {"
+yG
+uZ
+uZ
+uZ
+uZ
+Qu
+Qu
+Qu
+Qu
+Qu
+Nm
+Wk
+Qu
+Qu
+Qu
+Qu
+uZ
+uZ
+uZ
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+UF
+Xs
+AE
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+UJ
+uZ
+uZ
+uZ
+TF
+Qu
+uZ
+uZ
+uZ
+MW
+HA
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+rF
+Xs
+Xs
+Xs
+Xs
+rF
+Xs
+Xs
+Xs
+AE
+Jd
+uZ
+uZ
+yG
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+yG
+"}
+(38,1,1) = {"
+yG
+uZ
+uZ
+uZ
+uZ
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+uZ
+uZ
+uZ
+uZ
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Tr
+az
+uU
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+DA
+HA
+di
+di
+di
+di
+di
+CA
+CA
+Xs
+ed
+CA
+Xs
+Xs
+Xs
+Xs
+Xs
+CA
+QV
+Nz
+CA
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+yG
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+yG
+"}
+(39,1,1) = {"
+yG
+uZ
+uZ
+uZ
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+uZ
+uZ
+uZ
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+ee
+Ff
+Yk
+uZ
+uZ
+uZ
+WD
+Xs
+di
+Xs
+Xs
+Xs
+di
+Xs
+UF
+Ii
+Xs
+Xs
+zh
+CA
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Bc
+uZ
+yG
+yG
+yG
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+yG
+"}
+(40,1,1) = {"
+yG
+uZ
+uZ
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+uZ
+uZ
+uZ
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+xf
+uZ
+uZ
+uZ
+uZ
+Xs
+Xs
+di
+Xs
+di
+Xs
+Xs
+UF
+IM
+Xs
+Xs
+zh
+CA
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Uq
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+yG
+"}
+(41,1,1) = {"
+yG
+uZ
+uZ
+Qu
+Qu
+Qu
+wc
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+uZ
+uZ
+uZ
+uZ
+uZ
+Xs
+Xs
+Xs
+Xs
+sP
+Lf
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+yb
+Xs
+uZ
+uZ
+uZ
+uZ
+Xs
+Xs
+Xs
+di
+Xs
+Xs
+Xs
+Xs
+IM
+UH
+Xs
+zh
+CA
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+yG
+"}
+(42,1,1) = {"
+yG
+uZ
+uZ
+Qu
+Qu
+TF
+Qi
+Qu
+Qu
+Qu
+NE
+Qu
+Qu
+Qu
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+Xs
+AI
+Xs
+Xs
+MX
+Xs
+Ck
+Xs
+Xs
+Xs
+Xs
+Nz
+Nz
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+uZ
+Xs
+Xs
+di
+Xs
+di
+Xs
+Xs
+UF
+IM
+Xs
+Xs
+zh
+CA
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Mp
+Xs
+Xs
+Uq
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+yG
+"}
+(43,1,1) = {"
+yG
+uZ
+uZ
+Qu
+Qu
+Qu
+Qu
+Qi
+Qu
+Qu
+Qu
+Qu
+Qu
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+BD
+Xs
+Kh
+Xs
+WD
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+AI
+WD
+AE
+Xs
+Xs
+uZ
+uZ
+uZ
+uZ
+uZ
+WT
+Xs
+Xs
+Xs
+di
+Xs
+UF
+aL
+Xs
+AE
+Ym
+CA
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uv
+fh
+wH
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+yG
+yG
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+yG
+"}
+(44,1,1) = {"
+yG
+uZ
+uZ
+Qu
+Qu
+NE
+Qu
+Qi
+Qu
+Qu
+Qu
+Qu
+Qu
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+rf
+BD
+uZ
+uZ
+yb
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+qD
+Xs
+MI
+Xs
+AE
+AI
+uZ
+uZ
+uZ
+uZ
+Xs
+di
+di
+di
+di
+di
+Xs
+Xs
+Xs
+ed
+CA
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+sZ
+jq
+wq
+PO
+wH
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+Xs
+yG
+yG
+yG
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+yG
+"}
+(45,1,1) = {"
+yG
+uZ
+uZ
+uZ
+Qu
+Qu
+Qu
+Qu
+Qi
+Qu
+Qu
+Qu
+Qu
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+Xs
+Xs
+Xs
+Kh
+Xs
+Xs
+qD
+Xs
+Kh
+Xs
+Xs
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+ZO
+hq
+wq
+Xk
+wq
+HW
+rt
+Xs
+Uq
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+yG
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+yG
+"}
+(46,1,1) = {"
+yG
+uZ
+uZ
+uZ
+Qu
+Qu
+Qu
+Qu
+Qi
+sp
+Qu
+Qu
+Qu
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+Ow
+TH
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+Xs
+Xs
+Xs
+CA
+UF
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+wL
+hO
+wq
+Zc
+Wz
+Xs
+Xs
+Uq
+Uq
+Xs
+Xs
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+yG
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+yG
+yG
+yG
+"}
+(47,1,1) = {"
+yG
+uZ
+uZ
+uZ
+Qu
+Qu
+Qu
+Qu
+Qu
+Qi
+Qu
+Qu
+Qu
+Qu
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+mf
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+CA
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+wL
+rB
+iY
+Xs
+Xs
+Xs
+Xs
+Uq
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+yG
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+yG
+uZ
+uZ
+yG
+"}
+(48,1,1) = {"
+yG
+uZ
+uZ
+uZ
+uZ
+Qu
+Qu
+Qu
+Qu
+Qi
+Qu
+Qu
+Qu
+Qu
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+NG
+mf
+mf
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Zg
+Xs
+Xs
+Xs
+Xs
+Xs
+Uq
+Uq
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+yG
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+yG
+uZ
+uZ
+uZ
+yG
+"}
+(49,1,1) = {"
+yG
+uZ
+uZ
+uZ
+uZ
+SO
+Qu
+Qu
+Qu
+Qu
+Qi
+Qu
+Qu
+NE
+Qu
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+Qu
+Qu
+Qu
+mf
+mf
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Ck
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+UF
+qm
+Uq
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+uZ
+uZ
+yG
+yG
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+yG
+uZ
+uZ
+uZ
+yG
+"}
+(50,1,1) = {"
+yG
+uZ
+uZ
+uZ
+uZ
+uZ
+Qu
+Qu
+Qu
+DW
+Qi
+Qu
+Wk
+Qu
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+wq
+uZ
+uZ
+uZ
+pr
+Ex
+Xs
+Jd
+Xs
+uZ
+uZ
+uZ
+uZ
+Xs
+DH
+mf
+Qu
+Qu
+Qu
+Qu
+Qu
+mf
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Uq
+EL
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+uZ
+yG
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+yG
+uZ
+uZ
+uZ
+yG
+"}
+(51,1,1) = {"
+yG
+uZ
+uZ
+uZ
+uZ
+Qu
+Qu
+IN
+Qu
+Qu
+Qu
+Qi
+Qu
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+Lf
+SX
+wW
+wq
+wq
+wq
+wW
+Zk
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Jd
+vE
+Xs
+Xs
+mf
+mf
+Qu
+Wk
+Qu
+Qu
+mf
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+YH
+uZ
+uZ
+uZ
+uZ
+uZ
+Xs
+MI
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+UF
+aP
+Uq
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+yG
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+yG
+uZ
+uZ
+uZ
+uZ
+yG
+"}
+(52,1,1) = {"
+yG
+uZ
+uZ
+uZ
+Qu
+Qu
+Qu
+Qu
+NE
+Qu
+sp
+Qi
+Qu
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+wq
+wq
+wq
+wq
+wq
+wq
+SX
+Zk
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+ed
+Xs
+Xs
+Xs
+Xs
+mf
+Qu
+Qu
+Qu
+Ol
+mf
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+Jd
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+us
+UF
+Pa
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+yG
+yG
+uZ
+uZ
+uZ
+uZ
+uZ
+yG
+"}
+(53,1,1) = {"
+yG
+uZ
+uZ
+uZ
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+xX
+Qu
+Qu
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+sN
+wq
+wq
+wq
+wq
+wq
+wq
+Zk
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+ed
+Xs
+Xs
+Xs
+Xs
+mf
+IN
+Qu
+Qu
+Qu
+mf
+mf
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+RI
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+yG
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+yG
+"}
+(54,1,1) = {"
+yG
+uZ
+uZ
+uZ
+uZ
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+xX
+Qu
+Qu
+Qu
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+wq
+wq
+KD
+bc
+wq
+Zk
+Zk
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+UF
+Xs
+Xs
+ed
+Xs
+Xs
+Xs
+Xs
+mf
+Qu
+Qu
+Qu
+Qu
+Qu
+mf
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+IF
+IF
+Am
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+yG
+yG
+uZ
+uZ
+uZ
+uZ
+Xs
+uZ
+uZ
+uZ
+yG
+"}
+(55,1,1) = {"
+yG
+uZ
+uZ
+uZ
+uZ
+uZ
+Qu
+Qu
+Qu
+Qu
+Qu
+xX
+Qu
+Qu
+Qu
+Qu
+uZ
+uZ
+uZ
+uZ
+wW
+wq
+wq
+wq
+wq
+Zk
+Ui
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+ed
+Xs
+Xs
+Xs
+Xs
+Xs
+mf
+Qu
+Qu
+Qu
+Qu
+Qu
+yr
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+Xs
+Bc
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Am
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+yG
+uZ
+uZ
+uZ
+uZ
+uZ
+Xs
+Xs
+uZ
+uZ
+uZ
+yG
+"}
+(56,1,1) = {"
+yG
+uZ
+uZ
+uZ
+uZ
+uZ
+Qu
+Jc
+Jc
+Qu
+Qu
+xX
+Jc
+Jc
+Qu
+Qu
+uZ
+uZ
+uZ
+uZ
+wq
+wq
+wq
+wq
+Hh
+Xs
+Xs
+Xs
+Xs
+Xs
+cv
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+yV
+gO
+Qu
+sp
+Qu
+Qu
+rG
+DL
+QF
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+uZ
+Xs
+sP
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+IF
+ER
+GN
+Xs
+rz
+Xs
+Xs
+Xs
+UF
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+yG
+uZ
+uZ
+uZ
+Xs
+Xs
+Xs
+AE
+Xs
+uZ
+uZ
+uZ
+yG
+"}
+(57,1,1) = {"
+yG
+uZ
+uZ
+uZ
+uZ
+sR
+sR
+Qu
+Qu
+Le
+Le
+nm
+xX
+Qu
+sR
+sR
+uZ
+uZ
+uZ
+uZ
+wq
+wq
+wq
+wq
+wi
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+dZ
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+QF
+DL
+gO
+Qu
+Qu
+yj
+II
+yg
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+WD
+Xs
+Xs
+MI
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+CT
+ER
+ER
+qI
+Iq
+Rt
+ER
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+sP
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+yG
+"}
+(58,1,1) = {"
+yG
+uZ
+uZ
+uZ
+uZ
+aV
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+xX
+Qu
+Qu
+uZ
+uZ
+uZ
+uZ
+Hh
+wi
+Hh
+Hh
+Hh
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+CJ
+yP
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+yg
+II
+gO
+Qu
+Qu
+yj
+kX
+AV
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+CT
+CT
+Xs
+ER
+xN
+tc
+ck
+ut
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+MI
+Xs
+Xs
+Xs
+WD
+Xs
+uZ
+uZ
+uZ
+yG
+"}
+(59,1,1) = {"
+yG
+uZ
+uZ
+uZ
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+MA
+Qu
+Qu
+uZ
+uZ
+uZ
+Pv
+wq
+qk
+Hh
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+AV
+kX
+gO
+Qu
+Qu
+Qu
+Qu
+mf
+yV
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+bt
+td
+Uy
+uO
+JP
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+UF
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+yG
+"}
+(60,1,1) = {"
+yG
+uZ
+uZ
+Qu
+Qu
+Qu
+DW
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+xX
+Qu
+Qu
+uZ
+uZ
+uZ
+wW
+wq
+VG
+Hh
+Xs
+Xs
+Xs
+Xs
+Xs
+Kh
+Xs
+Xs
+Xs
+UF
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+UF
+mf
+Qu
+Qu
+Ue
+Qu
+PG
+mf
+mf
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+dY
+BB
+ER
+ER
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+yG
+"}
+(61,1,1) = {"
+yG
+uZ
+uZ
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+xX
+Qu
+uZ
+uZ
+uZ
+uZ
+Cw
+Hh
+Xs
+Xs
+Xs
+Xs
+UF
+Xs
+Xs
+Xs
+KX
+qs
+Xs
+Xs
+Xs
+ed
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+mf
+Qu
+TF
+fZ
+Qu
+Qu
+Qu
+mf
+mf
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+up
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+IF
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+yG
+"}
+(62,1,1) = {"
+yG
+uZ
+uZ
+Qu
+sp
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+uZ
+IN
+Qu
+Qu
+xX
+Qu
+Qu
+uZ
+uZ
+uZ
+fw
+Hh
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+TD
+Nb
+Xs
+Xs
+Xs
+ed
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+mf
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+mf
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+UF
+IF
+Xs
+IF
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+yG
+"}
+(63,1,1) = {"
+yG
+uZ
+uZ
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+uZ
+uZ
+uZ
+Qu
+Qu
+Qu
+xX
+Qu
+Qu
+uZ
+uZ
+Hh
+Mx
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+cC
+QL
+wi
+Xs
+Xs
+Xs
+ed
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+mf
+gO
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+mf
+Xs
+Xs
+AE
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+UF
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+IF
+UF
+UF
+ER
+ad
+Xs
+UF
+IF
+Xs
+Xs
+Xs
+AE
+uZ
+uZ
+uZ
+yG
+"}
+(64,1,1) = {"
+yG
+uZ
+uZ
+uZ
+Qu
+Qu
+Qu
+Qu
+Ol
+Qu
+Qu
+Rs
+Qu
+Qu
+Qu
+Qu
+xX
+Qu
+Qu
+Qu
+uZ
+uZ
+WN
+UP
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Hh
+Hh
+wq
+Hh
+Hh
+Xs
+Xs
+vE
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+mf
+Qu
+Qu
+Qu
+Qu
+Qu
+Ao
+mf
+Xs
+Xs
+Xs
+UF
+Om
+LB
+SF
+uD
+Ug
+On
+RU
+Xs
+Xs
+Xs
+Xs
+Xs
+UF
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Bc
+Xs
+UF
+Xs
+GV
+yN
+ER
+WG
+bg
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+yG
+"}
+(65,1,1) = {"
+yG
+uZ
+uZ
+uZ
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Nm
+Qu
+xX
+DW
+Qu
+av
+Wk
+Qu
+WN
+UP
+Xs
+Xs
+Xs
+Xs
+Hh
+wq
+wq
+wq
+wq
+wq
+Hh
+Xs
+Xs
+ed
+Xs
+Xs
+Xs
+Xs
+Xs
+mf
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+mf
+Xs
+Xs
+Xs
+ER
+Xs
+Iw
+ZQ
+rs
+ff
+Xs
+ER
+Xs
+Xs
+Xs
+AE
+Xs
+ER
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+wf
+HG
+ER
+bL
+ZR
+zn
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+yG
+"}
+(66,1,1) = {"
+yG
+uZ
+uZ
+uZ
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+xX
+Qu
+Qu
+av
+Qu
+Qu
+Qu
+Ac
+Xs
+Xs
+Xs
+Hh
+wq
+wq
+KD
+wq
+wq
+wq
+wq
+Hh
+Xs
+vE
+Xs
+Xs
+Xs
+Xs
+Xs
+mf
+Qu
+Iv
+Qu
+Qu
+Qu
+Qu
+mf
+mf
+Xs
+Xs
+KG
+Xs
+Xs
+Iw
+Uj
+Xs
+Xs
+mC
+Xs
+Xs
+Xs
+Xs
+UF
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+AN
+ER
+xD
+UF
+bX
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+yG
+"}
+(67,1,1) = {"
+yG
+uZ
+uZ
+uZ
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+xX
+av
+Qu
+NH
+Qu
+Qu
+Ac
+Xs
+Xs
+Xs
+Hh
+wq
+wq
+wq
+wq
+wq
+wq
+wq
+Hh
+Xs
+vE
+Xs
+Xs
+Xs
+Xs
+Xs
+mf
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+mf
+Xs
+Xs
+KG
+Xs
+Xs
+Xs
+Xs
+IF
+IF
+IF
+Xs
+Xs
+Xs
+Xs
+Xs
+ER
+qN
+qN
+qN
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+IF
+Xs
+Xs
+IF
+UF
+IF
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+yG
+"}
+(68,1,1) = {"
+yG
+uZ
+uZ
+uZ
+YK
+YK
+Qu
+Qu
+TF
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+xX
+bB
+Qu
+Qu
+Qu
+XS
+HA
+Xs
+Xs
+Hh
+qG
+wq
+wq
+wq
+xR
+wq
+wq
+wq
+qG
+Hh
+ed
+Xs
+Xs
+Xs
+Xs
+Xs
+mf
+gO
+Qu
+Qu
+Nm
+Qu
+Qu
+Qu
+mf
+Xs
+Xs
+ed
+IF
+IF
+IF
+Xs
+Xs
+IF
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+yO
+yO
+yO
+yO
+yO
+yO
+CT
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+UF
+Xs
+IF
+IF
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+yG
+"}
+(69,1,1) = {"
+yG
+uZ
+uZ
+uZ
+wq
+wq
+YK
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+av
+Qu
+Qu
+XS
+HA
+Xs
+Xs
+Xs
+Hh
+Vz
+wq
+wq
+wq
+xR
+wq
+wq
+wq
+Vz
+Hh
+ed
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+mf
+Qu
+Qu
+Qu
+Qu
+DW
+Qu
+mf
+Xs
+Xs
+Xs
+IF
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+qN
+qN
+qN
+qN
+CT
+UF
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Ck
+uZ
+uZ
+yG
+"}
+(70,1,1) = {"
+yG
+uZ
+uZ
+uZ
+wq
+wq
+wq
+YK
+Qu
+Qu
+Qu
+Qu
+IN
+YK
+TX
+YK
+YK
+Qu
+av
+Qu
+Qu
+XS
+HA
+Xs
+Xs
+Xs
+Xs
+ER
+ER
+ER
+ER
+ER
+ER
+ER
+ER
+ER
+ER
+ER
+vE
+vE
+Xs
+Xs
+Xs
+Xs
+Xs
+mf
+Qu
+Wk
+Qu
+Qu
+Qu
+Qu
+mf
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+UF
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+yG
+"}
+(71,1,1) = {"
+yG
+uZ
+uZ
+uZ
+wq
+wq
+wq
+Qu
+Qu
+Qu
+Qu
+Qu
+YK
+wq
+wq
+qG
+uZ
+uZ
+uZ
+Qu
+Vk
+HA
+Xs
+Xs
+Xs
+Xs
+UF
+Xs
+ZO
+Rh
+wG
+ER
+ER
+ER
+ER
+ER
+ER
+ER
+Xs
+ed
+ed
+Xs
+Xs
+Xs
+Xs
+mf
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+mf
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+UF
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+yG
+"}
+(72,1,1) = {"
+yG
+uZ
+uZ
+uZ
+wW
+wq
+wq
+Qu
+Qu
+Qu
+Qu
+Qu
+wq
+wq
+wq
+uZ
+uZ
+VT
+IN
+XS
+HA
+Xs
+Xs
+Xs
+Xs
+UF
+UF
+Xs
+Xs
+wL
+PF
+wG
+ER
+ER
+ER
+ER
+ER
+Xs
+Xs
+Xs
+vE
+vE
+Xs
+Xs
+Xs
+mf
+gO
+Qu
+Qu
+Qu
+Qu
+Qu
+mf
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+WD
+Xs
+Ck
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Kh
+Xs
+Xs
+Xs
+sP
+Xs
+Kh
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+uZ
+yG
+"}
+(73,1,1) = {"
+yG
+uZ
+uZ
+uZ
+uZ
+xR
+wq
+Qu
+Qu
+Qu
+Qu
+sp
+wq
+wq
+xR
+uZ
+uZ
+DE
+XS
+HA
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Vw
+Rx
+ER
+ER
+ER
+ER
+Xs
+Xs
+Xs
+Xs
+Xs
+ed
+Xs
+Xs
+Xs
+Xs
+mf
+Qu
+Qu
+Qu
+Qu
+Qu
+mf
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+AE
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+uZ
+Xs
+Ar
+uZ
+uZ
+uZ
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+uZ
+uZ
+yG
+"}
+(74,1,1) = {"
+yG
+uZ
+uZ
+uZ
+uZ
+wq
+wq
+Qu
+Nm
+Qu
+Qu
+Qu
+wq
+wW
+uZ
+uZ
+uZ
+Mk
+HA
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Sl
+Vn
+ER
+ER
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+ed
+Xs
+Xs
+Xs
+Xs
+mf
+Qu
+Qu
+Qu
+Qu
+IN
+mf
+Xs
+Xs
+Xs
+Xs
+Xs
+AE
+uZ
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+Xr
+Xs
+Xs
+Xs
+MI
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+Jd
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+uZ
+uZ
+yG
+"}
+(75,1,1) = {"
+yG
+uZ
+uZ
+uZ
+uZ
+qG
+wq
+Qu
+Qu
+Qu
+Qu
+uZ
+uZ
+uZ
+uZ
+uZ
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+UF
+ER
+ER
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+vE
+vE
+Xs
+Xs
+Xs
+mf
+Qu
+Qu
+Qu
+Qu
+Qu
+mf
+mf
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+MI
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+uZ
+yb
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+Bc
+uZ
+uZ
+uZ
+uZ
+uZ
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+uZ
+uZ
+yG
+"}
+(76,1,1) = {"
+yG
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+UF
+Xs
+Xs
+Xs
+yb
+Xs
+UF
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+UF
+Xs
+Xs
+Xs
+ed
+Xs
+Xs
+Xs
+mf
+sp
+Qu
+Qu
+Qu
+Qu
+Qu
+mf
+Xs
+Kh
+uZ
+uZ
+uZ
+uZ
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+xn
+uZ
+uZ
+AE
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+YD
+Kh
+Xs
+Xs
+yb
+uZ
+uZ
+AE
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+AE
+Xs
+uZ
+uZ
+uZ
+uZ
+yG
+"}
+(77,1,1) = {"
+yG
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+Xs
+Xs
+Xs
+AE
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+vE
+Xs
+Xs
+Xs
+mf
+Qu
+Qu
+Qu
+Qu
+Qu
+Ol
+WB
+uZ
+uZ
+uZ
+uZ
+Jd
+uB
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+yG
+"}
+(78,1,1) = {"
+yG
+uZ
+uZ
+uZ
+uZ
+uZ
+Xs
+Xs
+Xs
+Jd
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+UF
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+ed
+Xs
+Xs
+Xs
+mf
+Qu
+Qu
+Qu
+Qu
+Qu
+rU
+uZ
+uZ
+uZ
+uZ
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+WD
+Xs
+AE
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Lf
+Lf
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+yG
+"}
+(79,1,1) = {"
+yG
+uZ
+uZ
+uZ
+uZ
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+UF
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+UF
+Xs
+Xs
+Xs
+UF
+Xs
+Xs
+Xs
+Xs
+Xs
+vE
+Xs
+Xs
+Xs
+mf
+Qu
+Qu
+PG
+Qu
+Qu
+mf
+Xs
+PJ
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+ed
+vE
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Lf
+Lf
+Xs
+Xs
+yb
+Xs
+uZ
+uZ
+uZ
+yG
+"}
+(80,1,1) = {"
+yG
+uZ
+uZ
+uZ
+sP
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+UF
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+UF
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+vE
+Xs
+Xs
+Xs
+mf
+Qu
+Qu
+Qu
+Qu
+Qu
+mf
+Xs
+iB
+RL
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+JF
+FT
+Rf
+Rf
+ft
+Xs
+Xs
+Xs
+uZ
+uZ
+Xs
+Xs
+Xs
+vE
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Lf
+Lf
+Lf
+Lf
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+yG
+"}
+(81,1,1) = {"
+yG
+uZ
+uZ
+uZ
+MI
+Xs
+Xs
+Xs
+Xs
+AE
+MI
+Xs
+Xs
+Xs
+Xs
+xa
+ts
+ts
+ts
+ts
+ts
+ts
+ts
+Mr
+yv
+yv
+yv
+yv
+yv
+yv
+yv
+EO
+ts
+ts
+ts
+ts
+ts
+ts
+ts
+ts
+ts
+ts
+ts
+jg
+uC
+Xs
+mf
+Qu
+Qu
+Qu
+Qu
+TF
+mf
+wM
+TY
+UZ
+Rf
+Rf
+Rf
+Rf
+Rf
+RL
+Xs
+Xs
+JF
+Rf
+Rf
+TY
+Ys
+Ys
+uZ
+uZ
+AE
+Xs
+Xs
+uZ
+JF
+Ro
+RL
+Xs
+AE
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+yG
+"}
+(82,1,1) = {"
+yG
+uZ
+uZ
+uZ
+Kh
+Xs
+yb
+Ck
+Ws
+df
+ts
+ID
+ID
+ID
+ts
+ts
+ts
+Lg
+XC
+PN
+PN
+Dh
+xI
+YO
+rK
+Xs
+Xs
+Xs
+Xs
+Xs
+UF
+MU
+Gf
+Bq
+Mo
+En
+ts
+Xp
+Xp
+sM
+ZK
+Kl
+Ab
+ts
+vx
+Rf
+mf
+Qu
+Qu
+Qu
+Qu
+Qu
+mf
+TY
+Ys
+Ys
+Ys
+Ys
+Ky
+bV
+bV
+Mu
+Wj
+Rf
+TY
+Ys
+Ys
+Ys
+uZ
+uZ
+uZ
+JI
+Rf
+Rf
+Rf
+Rf
+TY
+Ys
+UZ
+Rf
+RL
+yb
+PJ
+Xs
+Xs
+Xs
+Xs
+Jd
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+yG
+"}
+(83,1,1) = {"
+yG
+uZ
+uZ
+yb
+AE
+Xs
+AE
+LS
+ts
+ts
+ts
+ji
+zb
+oM
+ts
+lB
+fk
+YT
+DC
+Hp
+Lq
+qH
+DB
+YO
+Up
+rK
+Xs
+Xs
+Up
+ro
+OV
+We
+wk
+oJ
+bZ
+Dq
+ts
+Jb
+XE
+zZ
+vA
+bH
+Qx
+ts
+Qa
+Ys
+mf
+Ao
+Qu
+Qu
+Qu
+Qu
+mf
+Ys
+Ky
+bV
+bV
+bV
+Jj
+Xs
+Xs
+Xs
+QB
+bV
+bV
+bV
+bV
+bV
+bV
+bV
+bV
+bV
+bV
+bV
+wy
+Ys
+Ys
+Ys
+Ys
+Ys
+UZ
+Rf
+PB
+Aa
+JT
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+yG
+"}
+(84,1,1) = {"
+yG
+uZ
+uZ
+AE
+Xs
+Xs
+Kh
+ts
+ts
+Ly
+bz
+Rw
+ty
+ww
+ts
+ts
+Is
+AC
+Xl
+Tn
+Go
+Yb
+NI
+EO
+OA
+Up
+zM
+XR
+Fp
+MB
+eZ
+eX
+dh
+WJ
+dE
+XD
+ts
+DT
+XE
+Gl
+Uk
+Qx
+Ab
+ts
+Qa
+Ys
+mf
+Qu
+Qu
+Qu
+Qu
+Qu
+mf
+Ys
+Sf
+Sa
+Sa
+Sa
+Sa
+Sa
+Xs
+Xs
+Sa
+Sa
+Sa
+Sa
+Sa
+Xs
+Xs
+Sa
+Sa
+Sa
+Sa
+Sa
+vX
+bV
+bV
+bV
+bV
+bV
+bV
+bV
+bV
+xi
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+MI
+Xs
+uZ
+uZ
+uZ
+yG
+"}
+(85,1,1) = {"
+yG
+uZ
+uZ
+Kh
+Xs
+Xs
+MI
+sr
+CD
+el
+tq
+ty
+DB
+Ph
+Cd
+ts
+ts
+ts
+ts
+ud
+ts
+ts
+ts
+ts
+EO
+EO
+Kf
+bl
+Kf
+Kf
+YO
+ts
+ts
+PX
+ts
+ts
+ts
+WA
+do
+VF
+vA
+by
+Ab
+ts
+Qa
+Ys
+mf
+Qu
+Qu
+Qu
+Iv
+Qu
+mf
+Ys
+Sf
+Xs
+db
+Xs
+Xs
+Sa
+Xs
+Xs
+Sa
+Xs
+Xs
+Xs
+Sa
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Sa
+EW
+eW
+Xs
+Xs
+WD
+Xs
+Mp
+Xs
+Kh
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Ck
+Kh
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+yG
+"}
+(86,1,1) = {"
+yG
+uZ
+uZ
+WD
+Xs
+Xs
+AE
+sr
+ZZ
+RQ
+OG
+LP
+ty
+Ez
+Oa
+ts
+TS
+pW
+ty
+XY
+vn
+Yu
+SW
+YN
+YN
+Mz
+BN
+xS
+xB
+Bb
+SW
+SW
+SW
+Sx
+vr
+AZ
+Be
+Hj
+wd
+Ps
+Qx
+ts
+ts
+Qa
+Ys
+Ys
+mf
+Qu
+Qu
+Qu
+Qu
+Qu
+mf
+Ys
+UZ
+Rf
+So
+Xs
+Xs
+Sa
+Xs
+Xs
+Sa
+Xs
+Xs
+Xs
+Sa
+Xs
+Xs
+uZ
+uZ
+uZ
+Xs
+Sa
+Xs
+Xs
+Xs
+Xs
+Xs
+NA
+ZY
+wH
+Xs
+AE
+MI
+Xs
+Xs
+AE
+Bc
+Xs
+Xs
+ER
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+yG
+"}
+(87,1,1) = {"
+yG
+uZ
+uZ
+Ck
+Xs
+Xs
+MI
+sr
+um
+Ef
+bx
+lk
+yY
+KN
+IB
+Fw
+Ri
+Od
+eK
+Eq
+Dg
+Un
+eK
+MY
+HI
+Js
+BS
+BS
+uc
+HI
+af
+eK
+eK
+fV
+MY
+Xq
+Xs
+Hf
+bs
+Xt
+ts
+Fk
+bQ
+Ys
+Ys
+Ys
+mf
+Qu
+Qu
+Qu
+Qu
+Qu
+mf
+Ys
+Ky
+Jj
+Xs
+Xs
+Xs
+Sa
+Xs
+Xs
+Sa
+Xs
+uZ
+Xs
+Sa
+Xs
+uZ
+Xs
+Xs
+Xs
+Xs
+Sa
+Xs
+Yg
+JT
+Xs
+ZO
+hq
+Ai
+wA
+kG
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+YJ
+FX
+Pl
+ER
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+yG
+"}
+(88,1,1) = {"
+yG
+uZ
+uZ
+AE
+Xs
+Xs
+Ck
+sr
+GA
+vB
+qT
+Cj
+DB
+Jn
+yA
+ts
+Ht
+aB
+aB
+RC
+ca
+ac
+ow
+Qg
+BS
+BS
+BS
+BS
+BS
+BS
+xt
+xB
+vW
+Sc
+CS
+Xs
+Xs
+Xs
+Xs
+Jv
+Hj
+ts
+ts
+Qa
+Ys
+Ys
+mf
+Qu
+Nm
+Qu
+Qu
+Qu
+mf
+Ys
+Sf
+Sa
+Sa
+Sa
+Sa
+Sa
+Xs
+uZ
+Sa
+Xs
+uZ
+Xs
+Sa
+Xs
+Xs
+Sa
+Sa
+Sa
+Sa
+Sa
+Xs
+sP
+Xs
+Xs
+Xs
+wL
+qv
+iY
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+sY
+Xs
+rH
+qu
+CB
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+yG
+"}
+(89,1,1) = {"
+yG
+uZ
+uZ
+Kh
+Xs
+Xs
+WD
+sr
+st
+DV
+ea
+ty
+DB
+rm
+cd
+ts
+ts
+ts
+ts
+LK
+ts
+ts
+ts
+ts
+ts
+ts
+Ye
+Ye
+ts
+ts
+ts
+ts
+ts
+Kc
+ts
+Xs
+Xs
+Xs
+Xs
+Xs
+aY
+Ab
+Ab
+ts
+Qa
+Ys
+mf
+Qu
+Qu
+Qu
+Qu
+Qu
+mf
+mf
+Sf
+Sa
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+Sa
+Xs
+uZ
+uZ
+Sa
+Xs
+Xs
+Sa
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Zg
+Xs
+Xs
+Xs
+Xs
+Xs
+Ck
+Xs
+AP
+Uz
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+yG
+"}
+(90,1,1) = {"
+yG
+uZ
+uZ
+MI
+Xs
+Xs
+MI
+ts
+ts
+br
+Vj
+DV
+xC
+FR
+ts
+ts
+cp
+Zs
+zV
+Qh
+RT
+yD
+xy
+ts
+LG
+Uu
+tR
+yh
+Uu
+sH
+ts
+NQ
+eO
+eM
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+VW
+Qx
+Qx
+ts
+PR
+Ys
+mf
+Qu
+Qu
+Qu
+Qu
+Qu
+Qu
+mf
+Sf
+Sa
+Xs
+Xs
+Xs
+Xs
+uZ
+Xs
+Sa
+Xs
+Xs
+uZ
+Sa
+Xs
+Xs
+Sa
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Io
+WD
+Xs
+Xs
+Xs
+Xs
+yb
+uZ
+uZ
+uZ
+yG
+"}
+(91,1,1) = {"
+yG
+uZ
+uZ
+AE
+MI
+Xs
+Kh
+Em
+ts
+ts
+ts
+qY
+oF
+RJ
+ts
+tK
+PU
+cn
+wk
+pY
+bZ
+Qz
+HY
+ts
+vt
+yh
+tR
+tR
+yh
+XB
+ts
+qy
+Rj
+KU
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+VW
+vA
+Ab
+ts
+PR
+Ys
+mf
+mf
+Qu
+Qu
+Qu
+DW
+Qu
+mf
+Sf
+Sa
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Sa
+Xs
+Xs
+Xs
+Sa
+Xs
+Xs
+Sa
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+AE
+Jd
+Xs
+JF
+Rf
+Rf
+Rf
+Rf
+uC
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+yG
+"}
+(92,1,1) = {"
+yG
+uZ
+uZ
+uZ
+Kh
+Xs
+Xs
+yb
+sP
+tH
+ts
+ID
+ID
+ID
+ts
+ts
+ts
+vQ
+YR
+SH
+SH
+bK
+Hi
+ts
+tB
+Kp
+dS
+dS
+Kp
+ML
+ts
+Jw
+Ru
+Fb
+HR
+Xs
+Xs
+Xs
+Xs
+Xs
+aY
+Ab
+Je
+ts
+PR
+Ys
+qF
+mf
+gO
+gO
+gO
+gO
+gO
+mf
+cs
+Sa
+Sa
+Sa
+Sa
+Sa
+Xs
+Xs
+Sa
+Sa
+Sa
+Sa
+Sa
+Xs
+Xs
+Sa
+Sa
+Sa
+Sa
+Sa
+rX
+Wj
+Rf
+Rf
+Rf
+Aa
+Wv
+bV
+bV
+bV
+bV
+Mu
+So
+Xs
+Kh
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+uZ
+yG
+"}
+(93,1,1) = {"
+yG
+uZ
+uZ
+uZ
+Xs
+Xs
+Xs
+Xs
+Xs
+Jd
+Xs
+Xs
+Xs
+Xs
+Xs
+xa
+ts
+ts
+ts
+ts
+ts
+ts
+ts
+ts
+TL
+vp
+GO
+GO
+vp
+TL
+ts
+ts
+ts
+ts
+ts
+tH
+Xs
+Xs
+IF
+ts
+ts
+ts
+ts
+PR
+Ys
+Ys
+Sh
+DL
+wJ
+wJ
+wJ
+wJ
+wJ
+DL
+hc
+uC
+Xs
+Xs
+Xs
+Xs
+Xs
+rX
+Yg
+Wj
+Aa
+Yg
+Yg
+Yg
+Yg
+Wj
+Rf
+Rf
+Rf
+uC
+cU
+QB
+bV
+bV
+bV
+Jj
+AE
+Xs
+Xs
+uZ
+uZ
+uZ
+MI
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+yG
+"}
+(94,1,1) = {"
+yG
+uZ
+uZ
+uZ
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+GY
+tH
+MR
+Gg
+Zu
+Zu
+Gg
+rx
+tH
+Xs
+Xs
+Xs
+tH
+Xs
+Xs
+Xs
+Xs
+tH
+Xs
+Xs
+vE
+QB
+bV
+Ys
+Ys
+yg
+II
+II
+II
+II
+II
+yg
+bV
+Mu
+OC
+OC
+OC
+So
+uZ
+uZ
+uZ
+QB
+Jj
+Xs
+Xs
+Xs
+Xs
+QB
+ek
+bV
+bV
+Ix
+WD
+rW
+Xs
+Xs
+Xs
+rW
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+Xs
+Xs
+Xs
+Xs
+Xs
+Os
+Xs
+uZ
+uZ
+uZ
+uZ
+uZ
+yG
+"}
+(95,1,1) = {"
+yG
+uZ
+uZ
+uZ
+uZ
+Xs
+Xs
+dg
+Xs
+Ny
+Xs
+IU
+Xs
+KQ
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+nZ
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+IF
+tH
+Xs
+vE
+Xs
+Xs
+QB
+sC
+kX
+so
+so
+so
+so
+so
+mf
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+Xs
+Xs
+Xs
+Xs
+AE
+Xs
+yK
+Rs
+uZ
+Ed
+So
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+rW
+rW
+Xs
+Xs
+Xs
+WD
+Xs
+Xs
+Xs
+yb
+Xs
+Xs
+Xs
+Xs
+Xs
+yv
+uZ
+uZ
+yG
+"}
+(96,1,1) = {"
+yG
+uZ
+uZ
+uZ
+uZ
+Xs
+Xs
+Yo
+Xs
+cP
+Xs
+cP
+Xs
+dT
+Xs
+Xs
+uZ
+uZ
+Kh
+Xs
+dT
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+MI
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+vE
+Xs
+Xs
+Xs
+qF
+mf
+gO
+gO
+vD
+gO
+gO
+mf
+qF
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+MI
+Xs
+Xs
+Xs
+Xs
+yb
+Xs
+WS
+Xs
+uZ
+uZ
+uZ
+Xs
+Bc
+WD
+Xs
+rW
+Id
+Xs
+rW
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+uZ
+yv
+PM
+Xs
+AQ
+eb
+uZ
+yG
+"}
+(97,1,1) = {"
+yG
+uZ
+uZ
+uZ
+uZ
+uZ
+Xs
+Xs
+Jd
+Xs
+Xs
+sP
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+uZ
+uZ
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+Kh
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+Jd
+vE
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+Qu
+mf
+Xs
+Kh
+Xs
+Xs
+uZ
+uZ
+uZ
+uZ
+Xs
+Xs
+Xs
+Xs
+Xs
+Xs
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+Xs
+Xs
+Xs
+rW
+Xs
+Xs
+rW
+Xs
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+yv
+yv
+yv
+yv
+uZ
+yG
+"}
+(98,1,1) = {"
+yG
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+Xs
+Xs
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+Xs
+vE
+Xs
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+Kh
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+yG
+"}
+(99,1,1) = {"
+yG
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+uZ
+yG
+"}
+(100,1,1) = {"
+Vl
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+yG
+"}

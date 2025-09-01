@@ -113,8 +113,16 @@
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ IPC JOBS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 /singleton/cultural_info/culture/ipc
-	valid_jobs = list(/datum/job/engineer_trainee, /datum/job/doctor_trainee, /datum/job/cargo_tech, /datum/job/cargo_assistant, /datum/job/mining,
-	/datum/job/janitor, /datum/job/cook, /datum/job/scientist_assistant, /datum/job/assistant, /datum/job/steward, /datum/job/ai, /datum/job/cyborg)
+	valid_jobs = list(
+		/datum/job/engineer_trainee, /datum/job/doctor_trainee, /datum/job/cargo_tech, /datum/job/cargo_assistant,
+		/datum/job/mining, /datum/job/janitor, /datum/job/cook, /datum/job/scientist_assistant, /datum/job/assistant, /datum/job/steward,
+		/datum/job/ai, /datum/job/cyborg, /datum/job/vagabond,
+		/datum/job/submap/scavver_pilot, /datum/job/submap/scavver_doctor, /datum/job/submap/scavver_engineer,
+		/datum/job/submap/bearcat_crewman,
+		/datum/job/submap/merchant,
+		/datum/job/submap/pod,
+		/datum/job/submap/colonist
+	)
 
 /singleton/cultural_info/culture/ipc/gen2
 	valid_jobs = list(/datum/job/adjutant,
@@ -124,10 +132,18 @@
 		/datum/job/qm, /datum/job/cargo_tech,  /datum/job/cargo_assistant, /datum/job/mining,
 		/datum/job/janitor, /datum/job/cook, /datum/job/bartender, /datum/job/steward, /datum/job/chief_steward,
 		/datum/job/senior_scientist, /datum/job/scientist, /datum/job/roboticist, /datum/job/scientist_assistant,
-		/datum/job/ai, /datum/job/cyborg, /datum/job/assistant,
+		/datum/job/ai, /datum/job/cyborg, /datum/job/assistant, /datum/job/vagabond,
+		/datum/job/submap/scavver_pilot, /datum/job/submap/scavver_doctor, /datum/job/submap/scavver_engineer,
 		/datum/job/submap/bearcat_captain, /datum/job/submap/bearcat_crewman,
-		/datum/job/submap/scavver_pilot, /datum/job/submap/scavver_doctor, /datum/job/submap/scavver_engineer
-		)
+		/datum/job/submap/CTI_pilot, /datum/job/submap/CTI_engineer,
+		/datum/job/submap/merchant_leader, /datum/job/submap/merchant,
+		/datum/job/submap/away_iccgn_farfleet, /datum/job/submap/away_iccgn_farfleet/iccgn_medic, /datum/job/submap/away_iccgn_farfleet/iccgn_gunner,
+		/datum/job/submap/pod,
+		/datum/job/submap/colonist/leader, /datum/job/submap/colonist, /datum/job/submap/colonist/scientist,
+		/datum/job/submap/colonist/medic, /datum/job/submap/colonist/engineer,
+		/datum/job/submap/colonist/leader/ship, /datum/job/submap/colonist/ship, /datum/job/submap/colonist/scientist/ship,
+		/datum/job/submap/colonist/medic/ship, /datum/job/submap/colonist/engineer/ship
+	)
 
 /singleton/cultural_info/culture/ipc/gen3
 	valid_jobs = list(/datum/job/hop, /datum/job/rd, /datum/job/cmo, /datum/job/chief_engineer,
@@ -139,8 +155,16 @@
 		/datum/job/qm, /datum/job/cargo_tech,  /datum/job/cargo_assistant, /datum/job/mining,
 		/datum/job/janitor, /datum/job/cook, /datum/job/bartender, /datum/job/steward, /datum/job/chief_steward,
 		/datum/job/senior_scientist, /datum/job/scientist, /datum/job/roboticist, /datum/job/scientist_assistant,
-		/datum/job/ai, /datum/job/cyborg, /datum/job/assistant
-)
+		/datum/job/ai, /datum/job/cyborg, /datum/job/assistant,
+		/datum/job/submap/bearcat_captain, /datum/job/submap/bearcat_crewman,
+		/datum/job/submap/CTI_pilot, /datum/job/submap/CTI_engineer,
+		/datum/job/submap/merchant_leader, /datum/job/submap/merchant,
+		/datum/job/submap/pod,
+		/datum/job/submap/colonist/leader, /datum/job/submap/colonist, /datum/job/submap/colonist/scientist,
+		/datum/job/submap/colonist/medic, /datum/job/submap/colonist/engineer,
+		/datum/job/submap/colonist/leader/ship, /datum/job/submap/colonist/ship, /datum/job/submap/colonist/scientist/ship,
+		/datum/job/submap/colonist/medic/ship, /datum/job/submap/colonist/engineer/ship
+	)
 //[/SIERRA-ADD] - [IPC-MODS]
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

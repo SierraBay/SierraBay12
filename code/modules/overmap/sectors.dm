@@ -29,10 +29,16 @@ GLOBAL_LIST_EMPTY(known_overmap_sectors)
 
 	var/blob_count = 0
 
+	// Gas mixture datum returned to exterior return_air. Set to assoc list of material to moles to initialize the gas datum.
+	//This will be returned in case external turfs are associated with this overmap object
+	var/datum/gas_mixture/exterior_atmosphere
+
 /obj/overmap/visitable/Initialize()
 	. = ..()
 	if(. == INITIALIZE_HINT_QDEL)
 		return
+
+	setup_exterior_atmosphere() //Planets do their own thing, but set exterior atmos to a valid value here first. (empty is valid)
 
 	find_z_levels()     // This populates map_z and assigns z levels to the ship.
 	register_z_levels() // This makes external calls to update global z level information.
@@ -82,7 +88,9 @@ GLOBAL_LIST_EMPTY(known_overmap_sectors)
 /obj/overmap/visitable/proc/populate_sector_objects()
 
 /obj/overmap/visitable/proc/get_areas()
-	return get_filtered_areas(list(GLOBAL_PROC_REF(area_belongs_to_zlevels) = map_z))
+	return get_filtered_areas(list(
+		GLOBAL_PROC_REF(area_belongs_to_zlevels) = map_z
+	))
 
 /obj/overmap/visitable/proc/find_z_levels()
 	map_z = GetConnectedZlevels(z)
@@ -198,5 +206,38 @@ GLOBAL_LIST_EMPTY(known_overmap_sectors)
 
 	GLOB.using_map.sealed_levels |= GLOB.using_map.overmap_z
 
+	if(GLOB.using_map.using_sun)
+		var/centre = ceil(GLOB.using_map.overmap_size / 2)
+		var/turf/sun_turf = locate(centre, centre, GLOB.using_map.overmap_z)
+		var/obj/overmap/visitable/star/new_star = new /obj/overmap/visitable/star(sun_turf)
+		LAZYADD(map_stars, new_star)
+		LAZYADD(GLOB.known_overmap_sectors, new_star)
+		for(var/obj/machinery/computer/ship/helm/H as anything in GLOB.overmap_helm_computers)
+			H.add_known_sector(new_star)
+
 	testing("Overmap build complete.")
 	return 1
+
+/obj/overmap/visitable/proc/setup_exterior_atmosphere()
+	//Skip setup if we've been set to a ref already
+	if(istype(exterior_atmosphere))
+		exterior_atmosphere.update_values() //Might as well update
+		exterior_atmosphere.check_tile_graphic()
+		return
+	var/list/exterior_atmos_composition = exterior_atmosphere
+	exterior_atmosphere = new
+	if(islist(exterior_atmos_composition))
+		for(var/gas in exterior_atmos_composition)
+			exterior_atmosphere.adjust_gas(gas, exterior_atmos_composition[gas], FALSE)
+		//revisit
+		//exterior_atmosphere.temperature = exterior_atmos_temp
+		exterior_atmosphere.update_values()
+		exterior_atmosphere.check_tile_graphic()
+
+/obj/overmap/visitable/proc/get_exterior_atmosphere()
+	if(exterior_atmosphere && !istype(exterior_atmosphere))
+		CRASH("Attempting to retrieve exterior atmosphere before it is set up!")
+	//copy gas over and return, in practice external atmos is an infinite source
+	var/datum/gas_mixture/gas = new
+	gas.copy_from(exterior_atmosphere)
+	return gas

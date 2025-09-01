@@ -5128,7 +5128,7 @@
 /area/scavver/hab)
 "TY" = (
 /obj/structure/table/reinforced,
-/obj/machinery/microwave,
+/obj/machinery/appliance/cooker/microwave,
 /turf/simulated/floor/wood/yew,
 /area/scavver/hab)
 "Ub" = (
