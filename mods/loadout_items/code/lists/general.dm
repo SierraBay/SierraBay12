@@ -21,3 +21,22 @@
 	display_name = "zippo (decorated)"
 	path = /obj/item/flame/lighter/zippo/fancy
 	flags = GEAR_HAS_TYPE_SELECTION
+
+/datum/gear/cigarettes
+	display_name = "pack of cigarettes selection"
+	path = /obj/item/storage/fancy/smokable
+
+/datum/gear/cigarettes/New()
+	var/cigarettes = list()
+	cigarettes["Trans-Stellar"] = /obj/item/storage/fancy/smokable/transstellar
+	cigarettes["Dromedary Co."] = /obj/item/storage/fancy/smokable/dromedaryco
+	cigarettes["Acme Co."] = /obj/item/storage/fancy/smokable/killthroat
+	cigarettes["Lucky Stars"] = /obj/item/storage/fancy/smokable/luckystars
+	cigarettes["Jerichos"] = /obj/item/storage/fancy/smokable/jerichos
+	cigarettes["Temperamento Menthols"] = /obj/item/storage/fancy/smokable/menthols
+	cigarettes["Carcinoma Angels"] = /obj/item/storage/fancy/smokable/carcinomas
+	cigarettes["Professional 120s"] = /obj/item/storage/fancy/smokable/professionals
+	cigarettes["Trident Original"] = /obj/item/storage/fancy/smokable/trident
+	cigarettes["Trident Fruit"] = /obj/item/storage/fancy/smokable/trident_fruit
+	cigarettes["Trident Menthol"] = /obj/item/storage/fancy/smokable/trident_mint
+	gear_tweaks += new/datum/gear_tweak/path(cigarettes)

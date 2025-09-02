@@ -188,6 +188,7 @@
 	// Keep them in ascending alphabetical order, please
 
 	#include "../../mods/_maps/bearcat_revived/_map_bearcat_revived.dme"
+	#include "../../mods/_events/battlefield_event/_battlefield_event_includes.dme" // Одноразовый ивент.
 	#include "../../mods/_maps/liberia/_map_liberia.dme"
 	#include "../../mods/_maps/sentinel/_map_sentinel.dme"
 	#include "../../mods/_maps/farfleet/_map_farfleet.dme"
@@ -212,7 +213,6 @@
 	#include "../../mods/screentips/_screentips_includes.dm"
 	#include "../../mods/tajara/_tajara_includes.dm"
 	#include "../../mods/sauna_props/_sauna_props_includes.dm"
-	#include "../../mods/wyccbay_optimization/_wyccbay_optimization_includes.dm"
 	#include "../../mods/contraband_vending/_contraband_vending_includes.dm"
 	#include "../../mods/telecomms/_telecomms_includes.dm"
 	#include "../../mods/modernUI/_modernUI_includes.dm"
@@ -222,6 +222,7 @@
 
 	// #include "../../mods/atmos_ret_field/_atm_ret_field.dme"
 	// #include "../../mods/bluespace_kitty/_bluespace_kitty.dme"
+	// #include "../../mods/wyccbay_optimization/_wyccbay_optimization_includes.dm"
 
 	// Почему UNUSED MODS стоит хранить?
 	// Потому что никто не проверяет использование тех или иных файлов
@@ -231,6 +232,7 @@
 
 	#include "../../packs/factions/iccgn/_pack.dm"
 	#include "../../packs/factions/scga/_pack.dm"
+	#include "../../packs/factions/scgf/_pack.dm"
 	#include "../../packs/factions/fa/_pack.dm"
 	#include "../../packs/infinity/_pack.dm"
 	#include "../../packs/deepmaint/_pack.dm"

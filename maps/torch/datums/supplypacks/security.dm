@@ -105,40 +105,6 @@
 	access = access_emergency_armory
 	security_level = SUPPLY_SECURITY_HIGH
 
-/singleton/hierarchy/supply_pack/security/pistolammo
-	name = "Ammunition - pistol magazines"
-	contains = list(
-		/obj/item/storage/box/ammo/pistol = 3,
-		/obj/item/storage/box/ammo/doublestack = 3
-	)
-	cost = 30
-	containertype = /obj/structure/closet/crate/secure/weapon
-	containername = "pistol ammunition crate"
-	access = access_hos
-	security_level = SUPPLY_SECURITY_ELEVATED
-
-/singleton/hierarchy/supply_pack/security/pistolammorubber
-	name = "Ammunition - pistol rubber"
-	contains = list(
-		/obj/item/storage/box/ammo/pistol/rubber = 4,
-		/obj/item/storage/box/ammo/doublestack/rubber = 2
-	)
-	cost = 20
-	containertype = /obj/structure/closet/crate/secure/weapon
-	containername = "pistol rubber ammunition crate"
-	access = access_brig
-
-/singleton/hierarchy/supply_pack/security/pistolammopractice
-	name = "Ammunition - pistol practice ammo"
-	contains = list(
-		/obj/item/ammo_magazine/pistol/double/practice = 4,
-		/obj/item/ammo_magazine/pistol/practice = 4
-	)
-	cost = 20
-	containertype = /obj/structure/closet/crate/secure/weapon
-	containername = "pistol practice ammunition crate"
-	access = access_brig
-
 /singleton/hierarchy/supply_pack/security/holster
 	name = "Gear - Holster crate"
 	contains = list(/obj/item/clothing/accessory/storage/holster/hip = 4)

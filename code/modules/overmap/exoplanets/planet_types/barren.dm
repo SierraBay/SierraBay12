@@ -13,7 +13,7 @@
 	has_trees = FALSE
 
 /obj/overmap/visitable/sector/exoplanet/barren/generate_atmosphere()
-	atmosphere = new
+	exterior_atmosphere = new
 
 /obj/overmap/visitable/sector/exoplanet/barren/generate_flora()
 	return

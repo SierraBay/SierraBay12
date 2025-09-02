@@ -14,9 +14,8 @@
 
 	minbodytemp = 0
 	maxbodytemp = INFINITY
-	min_oxy = 0
-	max_tox = 0
-	max_co2 = 0
+	min_gas = null
+	max_gas = null
 
 	meat_type = null
 	meat_amount = 0
