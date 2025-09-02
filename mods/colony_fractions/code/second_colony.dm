@@ -72,14 +72,6 @@
 
 	.=..()
 
-// --- FA: навпоинт (лендмарк) ---
-/obj/shuttle_landmark/nav_facolony
-	name = "Landing Site"
-	landmark_tag = "nav_facolony_1"
-	flags = SLANDMARK_FLAG_AUTOSET
-	base_turf = /turf/simulated/floor/plating
-	// base_area НЕ задаём руками — AUTOSET сам возьмёт инстанс area
-
 // --- playablecolony2: ставим иконку 'Unknown' ровно на тайл планеты в overmap ---
 /datum/map_template/ruin/exoplanet/playablecolony2/after_load()
 	. = ..()
@@ -216,8 +208,15 @@
 /obj/overmap/visitable/sector/facolony
 	name = "Unknown"
 	desc = "Unidentified structures emit a weak signal."
-	icon_state = "object"
+	icon_state = "event"
 	initial_generic_waypoints = list("nav_facolony_1")
+
+/obj/shuttle_landmark/nav_facolony
+	name = "Landing Site"
+	landmark_tag = "nav_facolony_1"
+	flags = SLANDMARK_FLAG_AUTOSET
+	base_turf = /turf/simulated/floor/plating
+	// base_area НЕ задаём руками — AUTOSET сам возьмёт инстанс area
   
 var/global/const/access_facolony = "ACCESS_FACOLONY"
 /datum/access/facolony
@@ -337,5 +336,3 @@ var/global/const/access_facolony = "ACCESS_FACOLONY"
 /area/map_template/colony2/FA/tradezone
 	name = "\improper Trade Zone"
 	icon_state = "shipping"
-
-
