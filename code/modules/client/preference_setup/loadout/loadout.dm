@@ -277,7 +277,7 @@ var/global/list/gear_datums = list()
 				if (!T)
 					continue
 				var/trait_entry = "[T.name]"
-				if (T.name in pref.mod_traits)
+				if (LAZYISIN(pref.mod_traits, T.name))
 					trait_entry = SPAN_COLOR("#55cc55", "[trait_entry]")
 				else
 					trait_entry = SPAN_COLOR("#cc5555", "[trait_entry]")
@@ -467,7 +467,7 @@ var/global/list/gear_datums = list()
 		var/ok = TRUE
 		for(var/trait_name in allowed_mod_traits)
 			var/datum/mod_trait/T = GLOB.all_mod_traits[trait_name]
-			if(!mod_traits || !(T.name in mod_traits))
+			if(!mod_traits || !LAZYISIN(mod_traits, T.name))
 				ok = FALSE
 				break
 		if(!ok)
