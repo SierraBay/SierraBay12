@@ -134,3 +134,9 @@
 	.=..()
 	if(client)
 		client.reload_fov()
+
+/mob/living/carbon/human/reset_view(atom/A)
+	..()
+	if(machine_visual && machine_visual != A)
+		machine_visual.remove_visual(src)
+		src.check_fov()

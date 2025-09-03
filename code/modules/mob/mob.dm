@@ -323,7 +323,6 @@
 			else
 				client.perspective = EYE_PERSPECTIVE
 				client.eye = loc
-		client.reload_fov() //[SIERRA-ADD] - FOV fix for cameras
 	return
 
 

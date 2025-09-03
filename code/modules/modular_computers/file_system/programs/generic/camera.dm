@@ -115,7 +115,7 @@
 			return
 
 		switch_to_camera(usr, C)
-		apply_visual(usr)
+		apply_visual(usr) //[SIERRA-ADD] - missing visuals
 		return 1
 
 	else if(href_list["switch_network"])
@@ -128,6 +128,7 @@
 
 	else if(href_list["reset"])
 		reset_current()
+		remove_visual(usr) //[SIERRA-ADD] - missing visuals
 		usr.reset_view(current_camera)
 		return 1
 
@@ -213,3 +214,4 @@
 /datum/nano_module/camera_monitor/remove_visual(mob/M)
 	if(current_camera)
 		current_camera.remove_visual(M)
+	usr.client.reload_fov()
