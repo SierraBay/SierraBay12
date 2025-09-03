@@ -315,13 +315,16 @@ var/global/const/access_facolony = "ACCESS_FACOLONY"
 	icon_state = "falogo"
 
 /obj/structure/sign/double/faflag/left
+	name = "Frontier Aliance flag"
 	icon = 'mods/colony_fractions/icons/colony.dmi'
 	icon_state = "faflag_l"
 
 /obj/structure/sign/double/faflag/right
+	name = "Frontier Aliance flag"
 	icon = 'mods/colony_fractions/icons/colony.dmi'
 	icon_state = "faflag_r"
 
 /obj/structure/sign/double/falogo/
+	name = "Frontier Aliance logo"
 	icon = 'mods/colony_fractions/icons/colony.dmi'
 	icon_state = "falogo"
