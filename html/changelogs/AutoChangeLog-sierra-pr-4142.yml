@@ -1,0 +1,5 @@
+author: Podszywacz
+changes:
+  - {bugfix: 'Removed one of spaghetti & meatballs recipe, which caused an alternative
+      recipe not to work.'}
+delete-after: true
