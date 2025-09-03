@@ -18,4 +18,4 @@
 	display_name = "Asthma Autoinjector"
 	path = /obj/item/reagent_containers/hypospray/autoinjector/pouch_auto/dexalin
 	cost = 1
-	allowed_mod_traits = list(/datum/mod_trait/all/asthma)
+	allowed_mod_traits = list("Disease - Asthma")

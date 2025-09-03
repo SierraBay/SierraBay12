@@ -188,6 +188,7 @@
 	// Keep them in ascending alphabetical order, please
 
 	#include "../../mods/_maps/bearcat_revived/_map_bearcat_revived.dme"
+	#include "../../mods/_events/battlefield_event/_battlefield_event_includes.dme" // Одноразовый ивент.
 	#include "../../mods/_maps/liberia/_map_liberia.dme"
 	#include "../../mods/_maps/sentinel/_map_sentinel.dme"
 	#include "../../mods/_maps/farfleet/_map_farfleet.dme"
