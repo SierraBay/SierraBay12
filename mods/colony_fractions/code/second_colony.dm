@@ -304,7 +304,7 @@ var/global/const/access_facolony = "ACCESS_FACOLONY"
 	info = "<i>Документ содержит весьма исчерпывающий план по колонизации данной экзопланеты, включающий перечень необходимого инвентаря, финансирования и инструкции для колонистов. В глаза бросаются многочисленные упоминания договоров о финансировании с теми или иными корпорациями и некой организации, именуемой \"Альянсом Фронтира\".</i>"
 
 /obj/item/card/id/facolony
-	name = "Crew card"
+	name = "Crew access card"
 	desc = "Old worn-out access card."
 	access = list(access_facolony)
 	color = COLOR_OFF_WHITE
@@ -315,16 +315,16 @@ var/global/const/access_facolony = "ACCESS_FACOLONY"
 	icon_state = "falogo"
 
 /obj/structure/sign/double/faflag/left
-	name = "Frontier Aliance flag"
+	name = "Frontier Alliance flag"
 	icon = 'mods/colony_fractions/icons/colony.dmi'
 	icon_state = "faflag_l"
 
 /obj/structure/sign/double/faflag/right
-	name = "Frontier Aliance flag"
+	name = "Frontier Alliance flag"
 	icon = 'mods/colony_fractions/icons/colony.dmi'
 	icon_state = "faflag_r"
 
 /obj/structure/sign/double/falogo/
-	name = "Frontier Aliance logo"
+	name = "Frontier Alliance logo"
 	icon = 'mods/colony_fractions/icons/colony.dmi'
 	icon_state = "falogo"
