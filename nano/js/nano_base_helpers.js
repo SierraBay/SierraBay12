@@ -20,6 +20,28 @@ NanoBaseHelpers = function () {
       $('#uiTitleFluff').css("background-repeat", "no-repeat")
       return ''
     },
+			//[SIERRA-ADD] - DAIS
+			DAISMode: function()
+			{
+				$('body').css("background-color","#382d1c");
+				$('body').css("background-image","url('_inf.uiBackground-DAIS.png')");
+				$('body').css("background-position","50% 0");
+				$('body').css("background-repeat","repeat-x");
+
+				$('#uiTitleFluff').css("background-image","url('_inf.uiTitleFluffDAIS.png')");
+				$('#uiTitleFluff').css("background-position","50% 50%");
+				$('#uiTitleFluff').css("background-repeat", "no-repeat");
+				return '';
+			},
+			TechMode: function(){
+				$('body').css("background-color","#111");
+				$('body').css("background-image","url('_inf.uiBackground-Tech.png')");
+				$('body').css("background-repeat","repeat");
+
+				$('#uiTitleFluff').css("background-image","none");
+				return '';
+			},
+			////[/SIERRA-ADD] - DAIS
     link: function (text, icon, parameters, status, elementClass, elementId) {
       var iconHtml = ''
       var iconClass = 'noIcon'

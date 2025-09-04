@@ -1,7 +1,7 @@
 /obj/structure/diona_gestalt/verb/shape_gestalt()
 
 	set name = "Call Gestalt Vote"
-	set category = "IC"
+	set category = "Abilities" //[SIERRA-EDIT] IC - to Abilities
 	set src = usr.loc
 
 	if(!is_alien_whitelisted(usr, GLOB.species_by_name[SPECIES_DIONA]))
