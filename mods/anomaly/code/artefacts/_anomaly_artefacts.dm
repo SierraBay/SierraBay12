@@ -1,6 +1,7 @@
 /obj/item/artefact
 	name = "Что-то."
 	desc = "Какой-то камень."
+	var/admin_name = "Ноу-нейм артефакт"
 	icon = 'mods/anomaly/icons/artifacts.dmi'
 	///Текущее количество энергии, которое хранит артефакт.
 	var/stored_energy = 1000
@@ -10,6 +11,7 @@
 	var/rnd_points = 2000
 	var/obj/machinery/urm/stored_in_urm
 	var/mob/living/carbon/human/current_user
+	w_class = ITEM_SIZE_SMALL
 
 /obj/item/artefact/use_tool(obj/item/item, mob/living/user, list/click_params)
 	. = ..()
@@ -20,7 +22,7 @@
 	return TRUE
 
 /obj/item/artefact/proc/collector_interaction(obj/item/collector, mob/living/user)
-	if(inmech_sec(user))
+	if(inmech(user))
 		to_chat(user, SPAN_WARNING("Вы недотягиваетесь."))
 		return
 	var/obj/item/collector/input_collector = collector
@@ -29,15 +31,13 @@
 		return
 	else if(connected_to_anomaly)
 		if(AnomaliesAmmountInTurf(get_turf(src)) == 0)
-			connected_to_anomaly = FALSE
+			artefact_collected_by_player()
 			input_collector.try_insert_artefact(user, src)
-			SSanom.collected_artefacts_by_player++
 		else
 			for(var/obj/anomaly/anomka in src.loc.contents)
 				if(prob(25 * user.get_skill_value(SKILL_SCIENCE)))
 					to_chat(user, SPAN_GOOD("Вы аккуратно, при помощи специальных щупов, помещаете обьект в контейнер."))
-					connected_to_anomaly = FALSE
-					SSanom.collected_artefacts_by_player++
+					artefact_collected_by_player()
 					input_collector.try_insert_artefact(user, src)
 				else
 					to_chat(user, SPAN_WARNING("Обьект уплывает из хвата щупов"))

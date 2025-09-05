@@ -1,0 +1,2 @@
+#define CALIBER_ROCKET_HEL	"40mmG"
+#define CALIBER_ROCKET_AUSSEC	"85mmG"

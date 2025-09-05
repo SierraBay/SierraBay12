@@ -393,7 +393,7 @@ This function restores all organs.
 /mob/living/carbon/human/proc/get_organ(zone)
 	return organs_by_name[check_zone(zone)]
 
-/mob/living/carbon/human/apply_damage(damage = 0, damagetype = DAMAGE_BRUTE, def_zone, damage_flags = EMPTY_BITFIELD, obj/used_weapon, armor_pen, silent = FALSE, obj/item/organ/external/given_organ)
+/mob/living/carbon/human/apply_damage(damage = 0, damagetype = DAMAGE_BRUTE, def_zone, damage_flags = FLAGS_OFF, obj/used_weapon, armor_pen, silent = FALSE, obj/item/organ/external/given_organ)
 
 	var/obj/item/organ/external/organ = given_organ
 	if(!organ)

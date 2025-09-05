@@ -172,7 +172,7 @@
 	return list(/obj/random/medical/lite = 21,
 				/obj/item/bodybag = 2,
 				/obj/item/reagent_containers/glass/bottle/inaprovaline = 2,
-				/obj/item/reagent_containers/glass/bottle/antitoxin = 2,
+				/obj/item/reagent_containers/glass/bottle/dylovene = 2,
 				/obj/item/storage/pill_bottle = 2,
 				/obj/item/storage/pill_bottle/tramadol = 1,
 				/obj/item/storage/pill_bottle/citalopram = 2,
@@ -885,7 +885,7 @@
 				/obj/item/clothing/suit/storage/toggle/labcoat = 4,
 				/obj/item/clothing/suit/space/emergency = 1,
 				/obj/item/clothing/suit/armor/vest = 4,
-				/obj/item/clothing/suit/storage/security_chest_rig = 4,
+				/obj/item/clothing/suit/storage/chest_rig/security = 4,
 				/obj/item/clothing/suit/storage/vest/tactical = 1,
 				/obj/item/clothing/suit/storage/vest = 3,
 				/obj/item/clothing/suit/storage/toggle/bomber = 3,
@@ -939,7 +939,7 @@
 				/obj/item/clothing/accessory/glassesmod/nvg = 1
 				)
 
-GLOBAL_LIST_INIT(random_backpacks, list(
+GLOBAL_LIST_AS(random_backpacks, list(
 	/obj/item/storage/backpack/cultpack,
 	/obj/item/storage/backpack/clown,
 	/obj/item/storage/backpack/medic,
@@ -1027,7 +1027,6 @@ something, make sure it's not in one of the other lists.*/
 				/obj/random/tank = 20,
 				/obj/random/soap = 5,
 				/obj/random/drinkbottle = 5,
-				/obj/random/loot = 1,
 				/obj/random/advdevice = 50,
 				/obj/random/smokes = 30,
 				/obj/random/masks = 10,

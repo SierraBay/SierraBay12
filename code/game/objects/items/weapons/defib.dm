@@ -533,6 +533,33 @@
 	safety = 0
 	wielded = 1
 
+	/// The defib module these paddles provide behavior for
+	var/obj/item/rig_module/device/defib/module
+
+/obj/item/shockpaddles/rig/Destroy()
+	if (module)
+		module.device = null
+		module = null
+	return ..()
+
+/obj/item/shockpaddles/rig/update_twohanding()
+	return
+
+/obj/item/shockpaddles/rig/can_use(mob/living/user, mob/living/carbon/human/target)
+	. = ..()
+	if (!.)
+		return
+	var/mob/living/carbon/human/wearer = module?.holder?.wearer
+	if (!wearer)
+		return FALSE
+	if (!wearer.HandsEmpty())
+		if (wearer == user)
+			to_chat(user, SPAN_WARNING("You need two hands free to do that."))
+		else
+			to_chat(user, SPAN_WARNING("\The [wearer] needs two hands free to do that."))
+		return FALSE
+	return TRUE
+
 /obj/item/shockpaddles/rig/check_charge(charge_amt)
 	if(istype(src.loc, /obj/item/rig_module/device/defib))
 		var/obj/item/rig_module/device/defib/module = src.loc
@@ -553,9 +580,12 @@
 */
 /obj/item/shockpaddles/linked
 	var/obj/item/defibrillator/base_unit
+	icon_state = "defibpaddles0"
 
 /obj/item/shockpaddles/linked/New(newloc, obj/item/defibrillator/defib)
 	base_unit = defib
+	if(base_unit.bcell)
+		icon_state = "defibpaddles1"
 	..(newloc)
 
 /obj/item/shockpaddles/linked/Destroy()

@@ -109,7 +109,7 @@
 	. = ..()
 	LAZYSET(sprite_sheets, SPECIES_TAJARA, 'mods/tajara/icons/sprite_sheets/hands.dmi')
 
-
+/*
 /obj/item/clothing/head/helmet/space/void/engineering/alt/Initialize()
 	. = ..()
 	LAZYSET(sprite_sheets, SPECIES_TAJARA, 'mods/tajara/icons/sprite_sheets/helmet.dmi')
@@ -126,18 +126,16 @@
 /obj/item/clothing/suit/space/void/security/alt/Initialize()
 	. = ..()
 	LAZYSET(sprite_sheets, SPECIES_TAJARA, 'mods/tajara/icons/sprite_sheets/suit.dmi')
-
+*/
 /obj/item/clothing/head/helmet/space/void/Initialize()
 	. = ..()
 	LAZYSET(sprite_sheets, SPECIES_TAJARA, 'mods/tajara/icons/sprite_sheets/helmet.dmi')
 	LAZYSET(sprite_sheets_obj, SPECIES_TAJARA, 'mods/tajara/icons/sprite_sheets/obj/hats.dmi')
-	LAZYADD(species_restricted, list(SPECIES_TAJARA))
 
 /obj/item/clothing/suit/space/void/Initialize()
 	. = ..()
 	LAZYSET(sprite_sheets, SPECIES_TAJARA, 'mods/tajara/icons/sprite_sheets/suit.dmi')
 	LAZYSET(sprite_sheets_obj, SPECIES_TAJARA, 'mods/tajara/icons/sprite_sheets/obj/suits.dmi')
-	LAZYADD(species_restricted, list(SPECIES_TAJARA))
 
 /obj/item/clothing/suit/space/rig/Initialize()
 	. = ..()

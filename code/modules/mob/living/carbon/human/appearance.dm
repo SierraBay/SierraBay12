@@ -9,7 +9,7 @@
 	if(species == new_species)
 		return
 
-	if(!(new_species in all_species))
+	if(!(new_species in GLOB.species_by_name))
 		return
 
 	set_species(new_species)
@@ -165,16 +165,26 @@
 
 /mob/living/carbon/human/proc/generate_valid_species(appearance_flags, list/allow, list/deny)
 	var/list/result = list()
-	for (var/name in all_species)
+	for (var/name in GLOB.species_by_name)
 		if (name in deny)
 			continue
+		if (is_special_character(mind))
+			var/species_invalid = FALSE
+			for (var/datum/antagonist/antag) // Identify which antag type the player is and identify if the species is allowed for this antagonist
+				if (!antag.is_antagonist(mind) || !length(antag.valid_species))
+					continue
+				if (!(name in antag.valid_species))
+					species_invalid = TRUE
+					break
+			if (species_invalid)
+				continue
 		if (!appearance_flags)
 			result += name
 			continue
 		if (name in allow)
 			result += name
 			continue
-		var/datum/species/species = all_species[name]
+		var/singleton/species/species = GLOB.species_by_name[name]
 		if (!(appearance_flags & APPEARANCE_SKIP_RESTRICTED_CHECK))
 			if (species.spawn_flags & SPECIES_IS_RESTRICTED)
 				continue

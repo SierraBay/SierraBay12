@@ -14,14 +14,14 @@
 	HTML += "<table border='1' style='undefined;table-layout: fixed; width: 80%'>"
 
 	if((istype(src, /obj/item/integrated_circuit/manipulation/weapon_firing) && src.vars["installed_gun"] != null) || (istype(src, /obj/item/integrated_circuit/manipulation/ai) && src.vars["controlling"] != null) || (istype(src, /obj/item/integrated_circuit/manipulation/grenade) && src.vars["attached_grenade"] != null))
-		HTML += "<a href='?src=\ref[src];iremove=1'>\[Remove item\]</a>  |  "
+		HTML += "<a href='byond://?src=\ref[src];iremove=1'>\[Remove item\]</a>  |  "
 	if(assembly)
-		HTML += "<a href='?src=\ref[src];return=1'>\[Return to Assembly\]</a><br>"
-	HTML += "<a href='?src=\ref[src];refresh=1'>\[Refresh\]</a>  |  "
-	HTML += "<a href='?src=\ref[src];rename=1'>\[Rename\]</a>  |  "
-	HTML += "<a href='?src=\ref[src];scan=1'>\[Copy Ref\]</a>"
+		HTML += "<a href='byond://?src=\ref[src];return=1'>\[Return to Assembly\]</a><br>"
+	HTML += "<a href='byond://?src=\ref[src];refresh=1'>\[Refresh\]</a>  |  "
+	HTML += "<a href='byond://?src=\ref[src];rename=1'>\[Rename\]</a>  |  "
+	HTML += "<a href='byond://?src=\ref[src];scan=1'>\[Copy Ref\]</a>"
 	if(assembly && removable)
-		HTML += "  |  <a href='?src=\ref[assembly];component=\ref[src];remove=1'>\[Remove\]</a>"
+		HTML += "  |  <a href='byond://?src=\ref[assembly];component=\ref[src];remove=1'>\[Remove\]</a>"
 	HTML += "<br>"
 
 	HTML += "<colgroup>"
@@ -43,13 +43,13 @@
 				if(1)
 					io = get_pin_ref(IC_INPUT, i)
 					if(io)
-						words += "<b><a href='?src=\ref[src];act=wire;pin=\ref[io]'>[io.display_pin_type()] [io.name]</a> \
-						<a href='?src=\ref[src];act=data;pin=\ref[io]'>[io.display_data(io.data)]</a></b><br>"
+						words += "<b><a href='byond://?src=\ref[src];act=wire;pin=\ref[io]'>[io.display_pin_type()] [io.name]</a> \
+						<a href='byond://?src=\ref[src];act=data;pin=\ref[io]'>[io.display_data(io.data)]</a></b><br>"
 						if(length(io.linked))
 							for(var/k in 1 to length(io.linked))
 								var/datum/integrated_io/linked = io.linked[k]
-								words += "<a href='?src=\ref[src];act=unwire;pin=\ref[io];link=\ref[linked]'>[linked]</a> \
-								@ <a href='?src=\ref[linked.holder]'>[linked.holder.displayed_name]</a><br>"
+								words += "<a href='byond://?src=\ref[src];act=unwire;pin=\ref[io];link=\ref[linked]'>[linked]</a> \
+								@ <a href='byond://?src=\ref[linked.holder]'>[linked.holder.displayed_name]</a><br>"
 
 						if(LAZYLEN(outputs) > LAZYLEN(inputs))
 							height = 1
@@ -62,13 +62,13 @@
 				if(3)
 					io = get_pin_ref(IC_OUTPUT, i)
 					if(io)
-						words += "<b><a href='?src=\ref[src];act=wire;pin=\ref[io]'>[io.display_pin_type()] [io.name]</a> \
-						<a href='?src=\ref[src];act=data;pin=\ref[io]'>[io.display_data(io.data)]</a></b><br>"
+						words += "<b><a href='byond://?src=\ref[src];act=wire;pin=\ref[io]'>[io.display_pin_type()] [io.name]</a> \
+						<a href='byond://?src=\ref[src];act=data;pin=\ref[io]'>[io.display_data(io.data)]</a></b><br>"
 						if(length(io.linked))
 							for(var/k in 1 to length(io.linked))
 								var/datum/integrated_io/linked = io.linked[k]
-								words += "<a href='?src=\ref[src];act=unwire;pin=\ref[io];link=\ref[linked]'>[linked]</a> \
-								@ <a href='?src=\ref[linked.holder]'>[linked.holder.displayed_name]</a><br>"
+								words += "<a href='byond://?src=\ref[src];act=unwire;pin=\ref[io];link=\ref[linked]'>[linked]</a> \
+								@ <a href='byond://?src=\ref[linked.holder]'>[linked.holder.displayed_name]</a><br>"
 
 						if(LAZYLEN(inputs) > LAZYLEN(outputs))
 							height = 1
@@ -79,13 +79,13 @@
 		var/datum/integrated_io/io = activators[i]
 		var/words = list()
 
-		words += "<b><a href='?src=\ref[src];act=wire;pin=\ref[io]'>[SPAN_COLOR("#ff0000", io)]</a> "
-		words += "<a href='?src=\ref[src];act=data;pin=\ref[io]'>[SPAN_COLOR("#ff0000", io.data ? "\<PULSE OUT\>" : "\<PULSE IN\>")]</a></b><br>"
+		words += "<b><a href='byond://?src=\ref[src];act=wire;pin=\ref[io]'>[SPAN_COLOR("#ff0000", io)]</a> "
+		words += "<a href='byond://?src=\ref[src];act=data;pin=\ref[io]'>[SPAN_COLOR("#ff0000", io.data ? "\<PULSE OUT\>" : "\<PULSE IN\>")]</a></b><br>"
 		if(length(io.linked))
 			for(var/k in 1 to length(io.linked))
 				var/datum/integrated_io/linked = io.linked[k]
-				words += "<a href='?src=\ref[src];act=unwire;pin=\ref[io];link=\ref[linked]'>[SPAN_COLOR("#ff0000", linked)]</a> \
-				@ <a href='?src=\ref[linked.holder]'>[SPAN_COLOR("#ff0000", linked.holder.displayed_name)]</a><br>"
+				words += "<a href='byond://?src=\ref[src];act=unwire;pin=\ref[io];link=\ref[linked]'>[SPAN_COLOR("#ff0000", linked)]</a> \
+				@ <a href='byond://?src=\ref[linked.holder]'>[SPAN_COLOR("#ff0000", linked.holder.displayed_name)]</a><br>"
 
 		HTML += "<tr>"
 		HTML += "<td colspan='3' align='center'>[jointext(words, null)]</td>"

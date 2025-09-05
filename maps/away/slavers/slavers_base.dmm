@@ -3244,7 +3244,7 @@
 /obj/decal/cleanable/dirt,
 /obj/structure/table/standard,
 /obj/floor_decal/techfloor,
-/obj/machinery/microwave,
+/obj/machinery/appliance/cooker/microwave,
 /turf/simulated/floor/tiled,
 /area/slavers_base/dorms)
 "iB" = (
@@ -4690,7 +4690,7 @@
 /turf/simulated/floor/tiled,
 /area/slavers_base/dorms)
 "sX" = (
-/obj/machinery/r_n_d/circuit_imprinter,
+/obj/machinery/fabricator/rnd/imprinter,
 /turf/simulated/floor/tiled/techfloor,
 /area/slavers_base/powatm)
 "sZ" = (
@@ -6794,7 +6794,7 @@
 /turf/simulated/floor/tiled/white,
 /area/slavers_base/med)
 "TQ" = (
-/obj/machinery/cooker/oven,
+/obj/machinery/appliance/cooker/oven,
 /obj/floor_decal/corner/blue/diagonal,
 /turf/simulated/floor/tiled/white,
 /area/slavers_base/dorms)
@@ -6804,6 +6804,7 @@
 /area/slavers_base/demo)
 "Uc" = (
 /obj/machinery/fabricator,
+/obj/item/storage/box/autolathe_designs,
 /turf/simulated/floor/tiled/techfloor,
 /area/slavers_base/powatm)
 "Uo" = (

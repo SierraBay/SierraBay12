@@ -3,6 +3,7 @@
 	stored_data = ""
 	var/title = ""
 	var/source = ""
+	var/recipient = ""
 	var/spam = FALSE
 	var/timestamp = ""
 	var/datum/computer_file/attachment = null
@@ -11,6 +12,7 @@
 	var/datum/computer_file/data/email_message/temp = ..()
 	temp.title = title
 	temp.source = source
+	temp.recipient = recipient
 	temp.spam = spam
 	temp.timestamp = timestamp
 	if(attachment)

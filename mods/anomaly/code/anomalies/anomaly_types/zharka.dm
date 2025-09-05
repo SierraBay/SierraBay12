@@ -1,6 +1,7 @@
 /obj/anomaly/zharka
 	name = "Jet of flame"
 	anomaly_tag = "Zharka"
+	admin_name = "Жарка"
 	with_sound = TRUE
 	sound_type = 'mods/anomaly/sounds/zharka.ogg'
 	idle_effect_type = "zharka_idle"
@@ -61,7 +62,7 @@
 	if(istype(target, /mob/living))
 		SSanom.add_last_attack(target, "Жарка")
 		var/mob/living/victim = target
-		if(inmech_sec(victim))
+		if(inmech(victim))
 			return
 		if(victim.health == 0)
 			SSanom.add_last_gibbed(target, "Жарка")
@@ -82,7 +83,7 @@
 	var/turf/T = get_turf(src)
 	get_mobs_and_objs_in_view_fast(T, effect_range, victims, objs)
 	for(var/atom/movable/atoms in victims)
-		if(inmech_sec(atoms))
+		if(inmech(atoms))
 			continue
 		get_effect_by_anomaly(atoms)
 	for(var/atom/movable/atoms in objs)
@@ -99,7 +100,7 @@
 	return
 
 
-/obj/anomaly/zharka/get_detection_icon()
+/obj/anomaly/zharka/get_detection_icon(mob/living/viewer)
 	if(effect_range == 1 || effect_range == 0)
 		return "zharka_detection"
 	else if(effect_range == 2)

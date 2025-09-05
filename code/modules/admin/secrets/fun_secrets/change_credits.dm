@@ -1,5 +1,5 @@
-GLOBAL_VAR_INIT(end_credits_song, null)
-GLOBAL_VAR_INIT(end_credits_title, null)
+GLOBAL_VAR(end_credits_song)
+GLOBAL_VAR(end_credits_title)
 
 /datum/admin_secret_item/fun_secret/change_credits_song
 	name = "Change End Credits Song"

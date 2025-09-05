@@ -197,6 +197,9 @@
 	matter = list(MATERIAL_STEEL = 1050)
 	max_ammo = 15
 
+/obj/item/ammo_magazine/pistol/double/empty
+	initial_ammo = 0
+
 /obj/item/ammo_magazine/pistol/double/rubber
 	labels = list("rubber")
 	ammo_type = /obj/item/ammo_casing/pistol/rubber

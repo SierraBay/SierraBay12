@@ -777,7 +777,7 @@
 	name = "potato"
 	seed_name = "potato"
 	display_name = "potato plant"
-	chems = list(/datum/reagent/nutriment = list(1,10), /datum/reagent/drink/juice/potato = list(10,10))
+	chems = list(/datum/reagent/nutriment = list(1,10), /datum/reagent/drink/juice/potato = list(3,6))
 	kitchen_tag = "potato"
 
 /datum/seed/potato/New()
@@ -796,7 +796,7 @@
 	name = "garlic"
 	seed_name = "garlic"
 	display_name = "garlic plant"
-	chems = list(/datum/reagent/nutriment = list(1,10), /datum/reagent/drink/juice/garlic = list(10,10))
+	chems = list(/datum/reagent/nutriment = list(1,10), /datum/reagent/drink/juice/garlic = list(3,6))
 	kitchen_tag = "garlic"
 
 /datum/seed/garlic/New()
@@ -814,7 +814,7 @@
 	name = "onion"
 	seed_name = "onion"
 	display_name = "onion plant"
-	chems = list(/datum/reagent/nutriment = list(1,10), /datum/reagent/drink/juice/onion = list(10,10))
+	chems = list(/datum/reagent/nutriment = list(1,10), /datum/reagent/drink/juice/onion = list(3,6))
 	kitchen_tag = "onion"
 
 /datum/seed/onion/New()

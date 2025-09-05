@@ -17,11 +17,6 @@
 	var/ammo_max = 100
 
 
-/obj/item/ammobox/pistol
-	ammo_type = /obj/item/ammo_casing/pistol
-	ammo_count = 100
-
-
 /obj/item/ammobox/Initialize(mapload)
 	. = ..()
 	if (. == INITIALIZE_HINT_QDEL || QDELETED(src))
@@ -226,69 +221,62 @@
 
 
 	// Try to scoop bullets up
-	var/obj/item/ammo_casing/clicked
 	var/turf/target_turf
-	var/obj/item/ammo_casing/target_type
-	var/target_spent = FALSE
+
 	if (isturf(target))
 		target_turf = target
-	else if (istype(target, /obj/item/ammo_casing) && isturf(target.loc))
-		clicked = target
+
+	else if (istype(target, /obj/item/ammo_casing))
+		if (!can_insert_casing(target, user))
+			return TRUE
+		if (!isturf(target.loc))
+			if (!do_after(user, 0.5 SECONDS, target, DO_PUBLIC_UNIQUE) || !user.use_sanity_check(target, src))
+				return TRUE
+			if (!insert_casing(target, user))
+				return TRUE
+			var/obj/item/ammo_casing/ammo_casing = target
+			user.visible_message(
+				SPAN_NOTICE("\The [user] adds \a [target] to \a [src]."),
+				SPAN_NOTICE("You add \a [ammo_casing.get_ammo_casing_name()] to \the [src]. It now holds [ammo_count] round\s.")
+			)
+			return TRUE
 		target_turf = target.loc
-		target_type = target.type
-		target_spent = !clicked.BB
-	else
+
+	if (!target_turf)
 		return ..()
 
-	if (ammo_count >= ammo_max)
-		USE_FEEDBACK_FAILURE("\The [src] is full.")
-		return TRUE
-
-	if (ammo_count && target_type)
-		if (target_type != ammo_type || ammo_spent != !clicked.BB)
-			USE_FEEDBACK_FAILURE("The [clicked.get_ammo_casing_name()] can't be mixed with the rounds already in \the [src].")
-			return TRUE
+	// Mass load bullets if loading from a turf.
+	// If empty, use the first found casing.
+	if (!ammo_count)
+		var/obj/item/ammo_casing/ammo_casing = locate() in target_turf
+		set_ammo_type(ammo_casing, !ammo_casing.BB)
 
 	var/list/candidates = list()
 	for (var/obj/item/ammo_casing/ammo_casing in target_turf)
-		if (!ammo_count)
-			target_type = ammo_casing.type
-			target_spent = !ammo_casing.BB
-		else if (ammo_count && (ammo_casing.type != target_type || target_spent != !ammo_casing.BB))
+		if (!can_insert_casing(ammo_casing, casing_spent = !ammo_casing.BB))
 			continue
 		candidates += ammo_casing
-
 	if (!length(candidates))
-		USE_FEEDBACK_FAILURE("There are no bullets \the [src] can hold here.")
+		USE_FEEDBACK_FAILURE("\The [target_turf] has no casings that fit in \the [src].")
 		return TRUE
 
 	user.visible_message(
-		SPAN_NOTICE("\The [user] starts loading \a [src] with loose rounds."),
-		SPAN_NOTICE("You start loading \the [src] with loose rounds.")
+		SPAN_NOTICE("\The [user] starts scooping casings from \the [target_turf] into \a [src]."),
+		SPAN_NOTICE("You start scooping casings from \the [target_turf] into \the [src].")
 	)
-	var/count = 0
 	for (var/obj/item/ammo_casing/ammo_casing as anything in candidates)
-		if (ammo_casing.loc != target_turf)
-			continue
-		if (ammo_count && (ammo_casing.type != ammo_type || ammo_spent != ammo_casing.BB))
-			continue
-		if (!do_after(user, 0.25 SECONDS, src, DO_PUBLIC_UNIQUE) || !user.use_sanity_check(src, ammo_casing, SANITY_CHECK_DEFAULT & ~SANITY_CHECK_TOOL_IN_HAND))
+		if (!do_after(user, 0.5 SECONDS, ammo_casing, DO_PUBLIC_UNIQUE) || !user.use_sanity_check(ammo_casing, src))
+			update_name()
+			return TRUE
+		if (!insert_casing(ammo_casing))
 			break
-		if (!insert_casing(ammo_casing, user))
-			break
-		count++
-
-	if (!count)
-		user.visible_message(
-			SPAN_NOTICE("\The [user] fails to load \a [src] with loose rounds."),
-			SPAN_WARNING("You fail to load \the [src] with loose rounds.")
-		)
-		return TRUE
+	update_name()
 	user.visible_message(
-		SPAN_NOTICE("\The [user] loads \a [src] with loose rounds."),
-		SPAN_NOTICE("You load \the [src] with loose rounds.")
+		SPAN_NOTICE("\The [user] finishes scooping casings into \a [src]."),
+		SPAN_NOTICE("You finish scooping casings into \the [src]. It now holds [ammo_count] round\s.")
 	)
 	return TRUE
+
 
 
 /obj/item/ammobox/get_mechanics_info()

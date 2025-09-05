@@ -1,4 +1,4 @@
-GLOBAL_LIST_INIT(secure_weapons, list())
+GLOBAL_LIST_EMPTY(secure_weapons)
 
 /obj/item/gun
 	var/list/authorized_modes = list(ALWAYS_AUTHORIZED) // index of this list should line up with firemodes, unincluded firemodes at the end will use default

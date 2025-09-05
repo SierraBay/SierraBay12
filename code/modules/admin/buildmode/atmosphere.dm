@@ -213,8 +213,10 @@
 		//exoplanets will slowly reset their atmosphere to default if we don't update it
 		var/obj/overmap/visitable/sector/exoplanet/E = map_sectors["[env_area.z]"]
 		if (istype(E))
-			E.atmosphere.gas = enviroment.gas.Copy()
-			E.atmosphere.temperature = enviroment.temperature
+			E.exterior_atmosphere.gas = enviroment.gas.Copy()
+			E.exterior_atmosphere.temperature = enviroment.temperature
+			E.exterior_atmosphere.update_values()
+			E.exterior_atmosphere.check_tile_graphic()
 
 /datum/build_mode/atmosphere/OnClick(atom/object, list/pa)
 	selected_object = object

@@ -53,3 +53,13 @@
 /obj/item/clothing/head/soft/on_update_icon()
 	. = ..()
 	item_state = initial(item_state) + (flipped ? "_flipped" : "")
+
+/obj/item/clothing/head/beret/kms
+	name = "\improper KMS beret"
+	desc = "A white beret denoting KMS employee."
+	icon = 'mods/loadout_items/icons/obj_head.dmi'
+	item_icons = list(
+		slot_head_str = 'mods/loadout_items/icons/onmob_head.dmi'
+	)
+	icon_state = "kmsberet"
+	item_state = "kmsberet"

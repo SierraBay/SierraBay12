@@ -28,14 +28,21 @@
 	var/time = (1 SECONDS) / 1.9
 	var/single_use = TRUE // autoinjectors are not refillable (overriden for hypospray)
 
-/obj/item/reagent_containers/hypospray/use_before(mob/living/M, mob/user)
-	. = FALSE
-	if (!istype(M))
-		return FALSE
+/obj/item/reagent_containers/hypospray/proc/inject_body_bag(obj/structure/closet/body_bag/bag, mob/user)
+	if(bag.opened)
+		to_chat(user, SPAN_NOTICE("\The [bag] is open."))
+		return TRUE
 	if (!reagents.total_volume)
 		to_chat(user, SPAN_WARNING("[src] is empty."))
+		return FALSE
+	if(!bag.contains_body)
+		to_chat(user, SPAN_NOTICE("\The [bag] is empty."))
 		return TRUE
+	var/mob/living/L = locate() in bag
+	if(L)
+		return inject_mob(L, user)
 
+/obj/item/reagent_containers/hypospray/proc/inject_mob(mob/living/M, mob/user)
 	var/allow = M.can_inject(user, check_zone(user.zone_sel.selecting))
 	if (!allow)
 		return TRUE
@@ -76,6 +83,16 @@
 			admin_inject_log(user, M, src, contained, trans)
 		to_chat(user, SPAN_NOTICE("[trans] units injected. [reagents.total_volume] units remaining in \the [src]."))
 	return TRUE
+
+/obj/item/reagent_containers/hypospray/use_before(target, mob/user)
+	if(istype(target, /obj/structure/closet/body_bag))
+		return inject_body_bag(target, user)
+	if (istype(target, /mob/living))
+		if (!reagents.total_volume)
+			to_chat(user, SPAN_WARNING("[src] is empty."))
+			return FALSE
+		return inject_mob(target, user)
+	return FALSE
 
 /obj/item/reagent_containers/hypospray/vial
 	name = "hypospray"
@@ -142,7 +159,10 @@
 		return TRUE
 	return ..()
 
-/obj/item/reagent_containers/hypospray/vial/use_after(obj/target, mob/living/user, click_parameters) // hyposprays can be dumped into, why not out? uses standard_pour_into helper checks.
+/obj/item/reagent_containers/hypospray/vial/use_after(obj/target, mob/living/user, click_parameters) // // hyposprays can be dumped into, why not out? uses standard_pour_into helper checks. Hyposprays can also inject through bags
+	if (istype(target, /obj/structure/closet/body_bag))
+		return ..()
+
 	if (!reagents.total_volume && istype(target, /obj/item/reagent_containers/glass))
 		var/good_target = is_type_in_list(target, list(
 			/obj/item/reagent_containers/glass/beaker,

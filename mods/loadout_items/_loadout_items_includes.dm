@@ -15,6 +15,8 @@
 #include "code/lists/cloaks.dm"
 #include "code/lists/general.dm"
 #include "code/lists/uniforms.dm"
+#include "code/xeno.dm"
+#include "code/lists/tactical.dm"
 #include "code/lists/suits.dm"
 #include "code/lists/xenowear.dm"
 #include "code/lists/headwear.dm"

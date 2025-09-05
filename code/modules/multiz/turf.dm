@@ -76,7 +76,7 @@
 
 /turf/simulated/open/attack_hand(mob/user)
 	for(var/atom/movable/M in below)
-		if(M.movable_flags & MOVABLE_FLAG_Z_INTERACT)
+		if (HAS_FLAGS(M.movable_flags, MOVABLE_FLAG_Z_INTERACT))
 			return M.attack_hand(user)
 
 //Most things use is_plating to test if there is a cover tile on top (like regular floors)

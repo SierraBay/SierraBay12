@@ -1,6 +1,7 @@
 /datum/extension/holster
 	base_type = /datum/extension/holster
 	var/atom/atom_holder
+	var/empty_name = null
 	var/obj/item/storage/storage
 	var/sound_in = 'sound/effects/holster/holsterin.ogg'
 	var/sound_out = 'sound/effects/holster/holsterout.ogg'
@@ -10,6 +11,7 @@
 /datum/extension/holster/New(holder, storage, sound_in, sound_out, can_holster)
 	..()
 	atom_holder = holder
+	empty_name = atom_holder.name
 	src.storage = storage
 	src.sound_in = sound_in || src.sound_in
 	src.sound_out = sound_out || src.sound_out
@@ -49,7 +51,7 @@
 		holstered.add_fingerprint(user)
 		storage.w_class = max(storage.w_class, holstered.w_class)
 		user.visible_message(SPAN_NOTICE("\The [user] holsters \the [holstered]."), SPAN_NOTICE("You holster \the [holstered]."))
-		atom_holder.SetName("occupied [initial(atom_holder.name)]")
+		atom_holder.SetName("occupied [empty_name]")
 		atom_holder.update_icon()
 		GLOB.moved_event.register(holstered, src, PROC_REF(check_holster))
 		GLOB.destroyed_event.register(holstered, src, PROC_REF(clear_holster))
@@ -60,7 +62,7 @@
 	GLOB.moved_event.unregister(holstered, src, PROC_REF(check_holster))
 	GLOB.destroyed_event.unregister(holstered, src, PROC_REF(clear_holster))
 	holstered = null
-	atom_holder.SetName(initial(atom_holder.name))
+	atom_holder.SetName(empty_name)
 
 /datum/extension/holster/proc/unholster(mob/user as mob, avoid_intent = FALSE)
 	if(!holstered)

@@ -11,20 +11,9 @@
 		/mob/living
 	)
 	artefacts = list()
-	/*
-	min_artefact_spawn_chance = 1
-	max_spawn_chance = 5
-	*/
 	chance_to_be_detected = 120
 	time_between_effects = 0.5 SECOND
-
-
-/obj/anomaly/cooler/Initialize()
-	. = ..()
-	for(var/obj/anomaly/part/choosed_part in list_of_parts)
-		LAZYADD(effected_turfs, get_turf(choosed_part))
-	LAZYADD(effected_turfs, get_turf(src))
-
+	var/list/all_spawned_visuals = list()
 
 //Хитер начинает долгую обработку
 /obj/anomaly/cooler/process_long_effect()
@@ -33,10 +22,26 @@
 
 
 /obj/anomaly/cooler/proc/heat_everybody_around()
-	for(var/turf/turfs in effected_turfs)
+	for(var/turf/turfs in anomaly_turfs)
 		for(var/mob/living/victim in turfs)
-			victim.bodytemperature -= 2
+			if(victim.bodytemperature > 200)
+				victim.bodytemperature -= 30
 
+/obj/anomaly/cooler/start_long_visual_effect()
+	for(var/turf/T in anomaly_turfs)
+		var/obj/spawned_effect = new /obj/effect/warp/cold_effect(T)
+		LAZYADD(all_spawned_visuals, spawned_effect)
+
+/obj/anomaly/cooler/stop_long_visual_effect()
+	for(var/obj/effect in all_spawned_visuals)
+		effect.Destroy()
+	LAZYCLEARLIST(all_spawned_visuals)
+
+/obj/effect/warp/cold_effect
+	icon = 'mods/anomaly/icons/effects.dmi'
+	icon_state = "colding"
+	pixel_x = 0
+	pixel_y = 0
 
 /obj/anomaly/cooler/Crossed(atom/movable/O)
 	if(currently_active)

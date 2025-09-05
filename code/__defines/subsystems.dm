@@ -1,12 +1,12 @@
 // Subsystem runlevels
 
-#define RUNLEVEL_INIT EMPTY_BITFIELD
-#define RUNLEVEL_LOBBY FLAG(0)
-#define RUNLEVEL_SETUP FLAG(1)
-#define RUNLEVEL_GAME FLAG(2)
-#define RUNLEVEL_POSTGAME FLAG(3)
+#define RUNLEVEL_INIT FLAGS_OFF
+#define RUNLEVEL_LOBBY FLAG_01
+#define RUNLEVEL_SETUP FLAG_02
+#define RUNLEVEL_GAME FLAG_03
+#define RUNLEVEL_POSTGAME FLAG_04
 
-#define RUNLEVELS_ALL (~EMPTY_BITFIELD)
+#define RUNLEVELS_ALL FLAGS_ON
 #define RUNLEVELS_DEFAULT (RUNLEVEL_SETUP | RUNLEVEL_GAME | RUNLEVEL_POSTGAME)
 #define RUNLEVELS_GAME (RUNLEVEL_GAME | RUNLEVEL_POSTGAME)
 #define RUNLEVELS_PREGAME (RUNLEVEL_LOBBY | RUNLEVEL_SETUP)
@@ -27,6 +27,7 @@
 #define SS_INIT_SKYBOX           10
 #define SS_INIT_MAPPING          9
 #define SS_INIT_JOBS             8
+#define SS_INIT_AMBIENT_LIGHT    8
 #define SS_INIT_CHAR_SETUP       7
 // [SIERRA-ADD] - SSINPUT - Input must be after char setup
 #define SS_INIT_INPUT            6
@@ -45,7 +46,6 @@
 #define SS_INIT_SHUTTLE         -5
 #define SS_INIT_GOALS           -5
 #define SS_INIT_LIGHTING        -6
-#define SS_INIT_AMBIENT_LIGHT   -7
 #define SS_INIT_ZCOPY           -8
 #define SS_INIT_HOLOMAP         -9
 #define SS_INIT_OVERLAYS        -10

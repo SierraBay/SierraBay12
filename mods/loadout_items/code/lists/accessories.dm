@@ -94,3 +94,28 @@
 	scarf["zebra scarf"] = /obj/item/clothing/accessory/scarf/fancy/zebra
 	scarf["christmas scarf"] = /obj/item/clothing/accessory/scarf/fancy/christmas
 	gear_tweaks += new/datum/gear_tweak/path(scarf)
+
+/datum/gear/eyes/hitech
+	display_name = "high-tech visors selection"
+	path = /obj/item/clothing/glasses/prescription/hitech
+
+/datum/gear/eyes/hitech/New()
+	..()
+	var/visor = list()
+	visor["high-tech blue visor"] = /obj/item/clothing/glasses/prescription/hitech
+	visor["high-tech red visor"] = /obj/item/clothing/glasses/prescription/hitech/red
+	visor["high-tech green glasses"] = /obj/item/clothing/glasses/prescription/hitech/green
+	visor["high-tech purple visor"] = /obj/item/clothing/glasses/prescription/hitech/purple
+	visor["high-tech retro glasses"] = /obj/item/clothing/glasses/prescription/hitech/retro
+
+	gear_tweaks += new/datum/gear_tweak/path(visor)
+
+// KMS EMT kneepads
+/datum/gear/tactical/kmskneepads
+	display_name = "KMS kneepads"
+	path = /obj/item/clothing/accessory/kms_kneepads
+	allowed_roles = list(/datum/job/doctor, /datum/job/officer)
+	/* 
+	allowed_branches = list(/datum/mil_branch/contractor)
+	allowed_factions = list(FACTION_KMS) 
+	*/

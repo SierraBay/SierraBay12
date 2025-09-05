@@ -76,10 +76,10 @@
 		dat = "Memory scan completed. <br>Writing the tune from scan of [customer.name] mind... Please, stand still."
 
 	if(disk && !writing)
-		dat = "<A href='?src=\ref[src];write=1'>Write ([disk.rewrites_left] times left)</A>"
+		dat = "<a href='byond://?src=\ref[src];write=1'>Write ([disk.rewrites_left] times left)</A>"
 
 	if(disk && !writing)
-		dat += "<br><a href='?src=\ref[src];eject=1'>Eject Disk</a>"
+		dat += "<br><a href='byond://?src=\ref[src];eject=1'>Eject Disk</a>"
 
 	if(cooldown)
 		dat = "[src] is recalibrating its systems for a new rewrite. Please, wait [cooldown/10] seconds."
@@ -98,7 +98,7 @@
 		if(!writing && !customer && disk && cooldown == 0)
 			if(disk.rewrites_left > 0)
 				if(write_disk(usr))
-					message_admins("[customer.real_name]([customer.ckey]) uploaded new sound <A HREF='?_src_=holder;listensound=\ref[disk.track.source]'>(preview)</A> in <a href='?_src_=holder;adminplayerobservefollow=\ref[src]'>the cassette</a> named as \"[disk.track.title]\". <A HREF='?_src_=holder;wipedata=\ref[disk]'>Wipe</A> data.")
+					message_admins("[customer.real_name]([customer.ckey]) uploaded new sound <a href='byond://?_src_=holder;listensound=\ref[disk.track.source]'>(preview)</A> in <a href='byond://?_src_=holder;adminplayerobservefollow=\ref[src]'>the cassette</a> named as \"[disk.track.title]\". <a href='byond://?_src_=holder;wipedata=\ref[disk]'>Wipe</A> data.")
 					cooldown += 3 MINUTES
 					sleep(4 SECONDS)
 

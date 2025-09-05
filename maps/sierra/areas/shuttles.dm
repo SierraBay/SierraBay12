@@ -112,6 +112,7 @@
 	icon_state = "shuttlered"
 /area/shuttle/petrov/airlock
 	name = "Shuttle - Petrov - Airlock"
+	req_access = list(list(access_petrov, access_security))
 	icon_state = "shuttlered"
 /area/shuttle/petrov/equipment
 	name = "Shuttle - Petrov - Equipment"
@@ -121,6 +122,7 @@
 	icon_state = "shuttlered"
 /area/shuttle/petrov/security
 	name = "Shuttle - Petrov - Security Room"
+	req_access = list(list(access_petrov, access_security))
 	icon_state = "shuttlered"
 /area/shuttle/petrov/scan
 	name = "Shuttle - Petrov - Scan Room"
@@ -225,13 +227,13 @@
 	dynamic_lighting = 1
 	area_flags = AREA_FLAG_ION_SHIELDED
 	req_access = list(access_maint_tunnels)
-
+/*
 /area/turbolift/sierra_top
 	name = "Elevator - Bridge"
 	lift_floor_label = "Мостик"
 	lift_floor_name = "Командование судна"
 	lift_announce_str = "Мостик - Командование судна."
-
+*/
 /area/turbolift/sierra_d1
 	name = "Elevator - First Deck"
 	lift_floor_label = "1 Палуба"

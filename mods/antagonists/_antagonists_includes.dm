@@ -5,10 +5,12 @@
 
 #include "code/_gamemodes.dm"
 #include "code/blackout.dm"
+#include "code/cult.dm"
 #include "code/ert.dm"
 #include "code/mercenary.dm"
 #include "code/renegade.dm"
 #include "code/revolutionary.dm"
+#include "code/rouge_ai.dm"
 #include "code/operative.dm"
 #include "code/traitor.dm"
 #include "code/uplink.dm"

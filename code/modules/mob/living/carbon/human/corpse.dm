@@ -4,23 +4,23 @@
 
 //To do: Allow corpses to appear mangled, bloody, etc. Allow customizing the bodies appearance (they're all bald and white right now).
 
-#define CORPSE_SPAWNER_RANDOM_NAME         FLAG(0)
-#define CORPSE_SPAWNER_CUT_SURVIVAL        FLAG(1)
+#define CORPSE_SPAWNER_RANDOM_NAME         FLAG_01
+#define CORPSE_SPAWNER_CUT_SURVIVAL        FLAG_02
 #define CORPSE_SPAWNER_CUT_ID_PDA          (CORPSE_SPAWNER_RANDOM_NAME | CORPSE_SPAWNER_CUT_SURVIVAL)
-#define CORPSE_SPAWNER_PLAIN_HEADSET       FLAG(2)
-#define CORPSE_SPAWNER_SKIP_POST_EQUIP     FLAG(10)
-#define CORPSE_SPAWNER_SKIP_BACKPACK       FLAG(11)
+#define CORPSE_SPAWNER_PLAIN_HEADSET       FLAG_03
+#define CORPSE_SPAWNER_SKIP_POST_EQUIP     FLAG_11
+#define CORPSE_SPAWNER_SKIP_BACKPACK       FLAG_12
 
 #define CORPSE_SPAWNER_ALL_SKIPS           (CORPSE_SPAWNER_SKIP_POST_EQUIP|CORPSE_SPAWNER_CUT_ID_PDA|CORPSE_SPAWNER_SKIP_BACKPACK)
 
-#define CORPSE_SPAWNER_RANDOM_SKIN_TONE    FLAG(3)
-#define CORPSE_SPAWNER_RANDOM_SKIN_COLOR   FLAG(4)
-#define CORPSE_SPAWNER_RANDOM_HAIR_COLOR   FLAG(5)
-#define CORPSE_SPAWNER_RANDOM_HAIR_STYLE   FLAG(6)
-#define CORPSE_SPAWNER_RANDOM_FACIAL_STYLE FLAG(7)
-#define CORPSE_SPAWNER_RANDOM_EYE_COLOR    FLAG(8)
-#define CORPSE_SPAWNER_RANDOM_GENDER       FLAG(9)
-#define CORPSE_SPAWNER_RANDOM_PRONOUNS     FLAG(10)
+#define CORPSE_SPAWNER_RANDOM_SKIN_TONE    FLAG_04
+#define CORPSE_SPAWNER_RANDOM_SKIN_COLOR   FLAG_05
+#define CORPSE_SPAWNER_RANDOM_HAIR_COLOR   FLAG_06
+#define CORPSE_SPAWNER_RANDOM_HAIR_STYLE   FLAG_07
+#define CORPSE_SPAWNER_RANDOM_FACIAL_STYLE FLAG_08
+#define CORPSE_SPAWNER_RANDOM_EYE_COLOR    FLAG_09
+#define CORPSE_SPAWNER_RANDOM_GENDER       FLAG_10
+#define CORPSE_SPAWNER_RANDOM_PRONOUNS     FLAG_11
 
 #define CORPSE_SPAWNER_RANDOM_NAMELESS    ~(CORPSE_SPAWNER_RANDOM_HAIR_STYLE|CORPSE_SPAWNER_RANDOM_FACIAL_STYLE)
 #define CORPSE_SPAWNER_NO_RANDOMIZATION   ~(CORPSE_SPAWNER_RANDOM_NAME|CORPSE_SPAWNER_RANDOM_SKIN_TONE|CORPSE_SPAWNER_RANDOM_SKIN_COLOR|CORPSE_SPAWNER_RANDOM_HAIR_COLOR|CORPSE_SPAWNER_RANDOM_HAIR_STYLE|CORPSE_SPAWNER_RANDOM_FACIAL_STYLE|CORPSE_SPAWNER_RANDOM_EYE_COLOR|CORPSE_SPAWNER_RANDOM_PRONOUNS)
@@ -30,7 +30,7 @@
 	name = "Unknown"
 	var/species = list(SPECIES_HUMAN)                 		// List of species to pick from.
 	var/corpse_outfits = list(/singleton/hierarchy/outfit) 	// List of outfits to pick from. Uses pickweight()
-	var/spawn_flags = (~0)
+	var/spawn_flags = FLAGS_ON
 
 	var/skin_colors_per_species   = list()					// Custom skin colors, per species -type-, if any. For example if you want dead Skrell to always have blue headtails, or similar
 	var/skin_tones_per_species    = list()					// Custom skin tones, per species -type-, if any. See above as to why.

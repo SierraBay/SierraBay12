@@ -252,9 +252,12 @@ var/global/const/access_away_cavalry_commander = "ACCESS_CAVALRY_COMMANDER"
 	name_short = "SCGF"
 	email_domain = "fleet.mil"
 	rank_types = list(
+		/datum/mil_rank/fleet/e3,
 		/datum/mil_rank/fleet/e4,
 		/datum/mil_rank/fleet/e5,
 		/datum/mil_rank/fleet/e6,
+		/datum/mil_rank/fleet/e7,
+		/datum/mil_rank/fleet/e8,
 		/datum/mil_rank/fleet/o1,
 		/datum/mil_rank/fleet/o2,
 		/datum/mil_rank/fleet/o3,
@@ -265,9 +268,12 @@ var/global/const/access_away_cavalry_commander = "ACCESS_CAVALRY_COMMANDER"
 		/datum/mil_rank/fleet/o8
 	)
 	spawn_rank_types = list(
+		/datum/mil_rank/fleet/e3,
 		/datum/mil_rank/fleet/e4,
 		/datum/mil_rank/fleet/e5,
 		/datum/mil_rank/fleet/e6,
+		/datum/mil_rank/fleet/e7,
+		/datum/mil_rank/fleet/e8,
 		/datum/mil_rank/fleet/o1,
 		/datum/mil_rank/fleet/o2,
 		/datum/mil_rank/fleet/o3,
@@ -286,6 +292,12 @@ var/global/const/access_away_cavalry_commander = "ACCESS_CAVALRY_COMMANDER"
 		return "E[sort_order]"
 	return "O[sort_order - 10]"
 
+/datum/mil_rank/fleet/e3
+	name = "Crewman"
+	name_short = "CN"
+	accessory = list(/obj/item/clothing/accessory/solgov/rank/fleet/enlisted/e3, /obj/item/clothing/accessory/solgov/specialty/enlisted)
+	sort_order = 30
+
 /datum/mil_rank/fleet/e4
 	name = "Petty Officer Third Class"
 	name_short = "PO3"
@@ -303,6 +315,18 @@ var/global/const/access_away_cavalry_commander = "ACCESS_CAVALRY_COMMANDER"
 	name_short = "PO1"
 	accessory = list(/obj/item/clothing/accessory/solgov/rank/fleet/enlisted/e6, /obj/item/clothing/accessory/solgov/specialty/enlisted)
 	sort_order = 6
+
+/datum/mil_rank/fleet/e7
+	name = "Chief Petty Officer"
+	name_short = "CPO"
+	accessory = list(/obj/item/clothing/accessory/solgov/rank/fleet/enlisted/e7, /obj/item/clothing/accessory/solgov/specialty/enlisted)
+	sort_order = 70
+
+/datum/mil_rank/fleet/e8
+	name = "Senior Chief Petty Officer"
+	name_short = "SCPO"
+	accessory = list(/obj/item/clothing/accessory/solgov/rank/fleet/enlisted/e8, /obj/item/clothing/accessory/solgov/specialty/enlisted)
+	sort_order = 80
 
 /datum/mil_rank/fleet/o1
 	name = "Ensign"
