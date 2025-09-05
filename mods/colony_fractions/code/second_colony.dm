@@ -71,6 +71,7 @@
 
 	.=..()
 
+// Frontier Alliance extension by Garry Flint
 /obj/overmap/visitable/sector/facolony
 	name = "Unknown"
 	desc = "Faint signal detected, originating from the human-made structures on the site's surface."
@@ -97,7 +98,6 @@
 var/global/const/access_facolony = "ACCESS_FACOLONY"
 /datum/access/facolony
 	id = access_facolony
-	desc = "Crew card"
 
 /area/map_template/colony2/FA/
 	req_access = list(access_facolony)
@@ -112,10 +112,6 @@ var/global/const/access_facolony = "ACCESS_FACOLONY"
 
 /area/map_template/colony2/FA/airlock
 	name = "\improper Base Primary External Airlock"
-	icon_state = "A"
-
-/area/map_template/colony2/FA/airlock2
-	name = "\improper Trade Zone External Airlock"
 	icon_state = "A"
 
 /area/map_template/colony2/FA/armory
@@ -308,7 +304,7 @@ var/global/const/access_facolony = "ACCESS_FACOLONY"
 	desc = "Old worn-out access card."
 	access = list(access_facolony)
 	color = COLOR_OFF_WHITE
-	detail_color = COLOR_CIVIE_GREEN
+	detail_color = "#000000"
 
 /obj/floor_decal/falogo
 	icon = 'mods/colony_fractions/icons/colony.dmi'
