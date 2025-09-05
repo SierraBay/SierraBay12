@@ -12,7 +12,7 @@ GLOBAL_TYPED_NEW(aliens, /datum/antagonist/alien)
 	faction = "alien"
 
 	no_prior_faction = TRUE
-	landmark_id = "xeno"
+	landmark_id = "xeno_spawn"
 	mob_path = /mob/living/carbon/human/alien
 
 	spawn_announcement_title = "Lifesign Alert"
