@@ -29,7 +29,6 @@
 	#include "../../../../maps/sierra/game/languages.dm"
 	#include "../../../../maps/sierra/game/lockdown.dm"
 	// --- ITEMS --- //
-	#include "../../../../maps/sierra/items/ammo.dm"
 	#include "../../../../maps/sierra/items/cards_ids.dm"
 	#include "../../../../maps/sierra/items/documents.dm"
 	#include "../../../../maps/sierra/items/encryption_keys.dm"
@@ -54,6 +53,7 @@
 	#include "../../../../maps/sierra/items/datajack.dm"
 	#include "../../../../maps/sierra/items/clothing/clothing.dm"
 	#include "../../../../maps/sierra/items/clothing/exploration.dm"
+	#include "../../../../maps\sierra\items\clothing\new_uniform.dm"
 	#include "../../../../maps/sierra/items/clothing/override.dm"
 	#include "../../../../maps/sierra/items/clothing/storages.dm"
 	#include "../../../../maps/sierra/items/clothing/security.dm"
@@ -72,6 +72,7 @@
 	#include "../../../../maps/sierra/job/jobs_research.dm"
 	#include "../../../../maps/sierra/job/jobs_security.dm"
 	#include "../../../../maps/sierra/job/jobs_service.dm"
+	#include "../../../../mods/_maps/verne/code/verne_jobs.dm"
 //Машины
 	#include "../../../../maps/sierra/machinery/alarm.dm"
 	#include "../../../../maps/sierra/machinery/doors.dm"
@@ -109,6 +110,7 @@
 	#include "../../../../maps/sierra/loadout/loadout_gloves.dm"
 	#include "../../../../maps/sierra/loadout/loadout_head.dm"
 	#include "../../../../maps/sierra/loadout/loadout_pda.dm"
+	#include "../../../../maps/sierra/loadout/loadout_augments.dm"
 	#include "../../../../maps/sierra/loadout/loadout_shoes.dm"
 	#include "../../../../maps/sierra/loadout/loadout_suit.dm"
 	#include "../../../../maps/sierra/loadout/loadout_tactical.dm"
@@ -147,16 +149,20 @@
 	#include "../../../../mods/screentips/_screentips_includes.dm"
 	#include "../../../../mods/tajara/_tajara_includes.dm"
 	#include "../../../../mods/sauna_props/_sauna_props_includes.dm"
-	#include "../../../../mods/wyccbay_optimization/_wyccbay_optimization_includes.dm"
 	#include "../../../../mods/contraband_vending/_contraband_vending_includes.dm"
 	#include "../../../../mods/telecomms/_telecomms_includes.dm"
 	#include "../../../../mods/modernUI/_modernUI_includes.dm"
+	#include "../../../../mods/_maps/verne/code/verne.dm"
+	#include "../../../../mods/_maps/verne/code/verne_radio.dm"
+	#include "../../../../mods/_maps/verne/code/verne_shuttles.dm"
+	#include "../../../../mods/_maps/verne/code/verne_areas.dm"
 
 	// UNUSED MODS
 	// Keep them in ascending alphabetical order too, please
 
 	// #include "../../mods/atmos_ret_field/_atm_ret_field.dme"
 	// #include "../../mods/bluespace_kitty/_bluespace_kitty.dme"
+	// #include "../../../../mods/wyccbay_optimization/_wyccbay_optimization_includes.dm"
 
 	// Почему UNUSED MODS стоит хранить?
 	// Потому что никто не проверяет использование тех или иных файлов
@@ -166,6 +172,7 @@
 
 	#include "../../../../packs/factions/iccgn/_pack.dm"
 	#include "../../../../packs/factions/scga/_pack.dm"
+	#include "../../../../packs/factions/scgf/_pack.dm"
 	#include "../../../../packs/factions/fa/_pack.dm"
 	#include "../../../../packs/infinity/_pack.dm"
 	#include "../../../../packs/deepmaint/_pack.dm"
@@ -189,7 +196,7 @@
 	#include "../../../../maps/away/meatstation/meatstation.dm"
 	#include "../../../../maps/away/miningstation/miningstation.dm"
 	#include "../../../../maps/away/mininghome/mininghome.dm"
-	#include "../../../../maps/away/scavver/scavver_gantry.dm"
+	#include "../../../_maps/scavver/scavver_gantry.dm"
 	#include "../../../../maps/away/abandoned_hotel/abandoned_hotel.dm"
 	#include "../../../../maps/event/iccgn_ship/icgnv_hound.dm"
 	#include "../../../../maps/event/sfv_arbiter/sfv_arbiter.dm"

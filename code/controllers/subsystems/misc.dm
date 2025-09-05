@@ -2,8 +2,8 @@ SUBSYSTEM_DEF(misc)
 	name = "Misc Updates"
 	wait = 30 SECONDS
 
-	var/const/STAGE_TRADERS = FLAG(0)
-	var/const/STAGE_SOLARS = FLAG(1)
+	var/const/STAGE_TRADERS = FLAG_01
+	var/const/STAGE_SOLARS = FLAG_02
 
 	var/static/list/queue = list()
 	var/static/stage = STAGE_TRADERS
@@ -44,9 +44,9 @@ SUBSYSTEM_DEF(misc)
 		cost_traders = MC_AVERAGE(cost_traders, (world.tick_usage - timer) * world.tick_lag)
 		if (state != SS_RUNNING)
 			return
-		stage = STAGE_SOLARS
+		stage = GLOB.using_map?.using_sun ? STAGE_TRADERS : STAGE_SOLARS
 		resumed = FALSE
-	if (stage == STAGE_SOLARS)
+	if (stage == STAGE_SOLARS && !GLOB.using_map?.using_sun)
 		timer = world.tick_usage
 		UpdateSolars(resumed, no_mc_tick)
 		cost_solars = MC_AVERAGE(cost_solars, (world.tick_usage - timer) * world.tick_lag)
@@ -57,12 +57,12 @@ SUBSYSTEM_DEF(misc)
 
 GLOBAL_LIST_EMPTY(traders)
 GLOBAL_LIST_EMPTY(trader_types)
-GLOBAL_VAR_INIT(trader_max, 10)
-GLOBAL_VAR_INIT(trader_station_count, 3)
-GLOBAL_VAR_INIT(trader_unique_chance, 5)
-GLOBAL_LIST_INIT(trader_stations, subtypesof(/datum/trader) - typesof(/datum/trader/ship))
-GLOBAL_LIST_INIT(trader_ships, subtypesof(/datum/trader/ship) - typesof(/datum/trader/ship/unique))
-GLOBAL_LIST_INIT(trader_uniques, subtypesof(/datum/trader/ship/unique))
+GLOBAL_VAR_AS(trader_max, 10)
+GLOBAL_VAR_AS(trader_station_count, 3)
+GLOBAL_VAR_AS(trader_unique_chance, 5)
+GLOBAL_LIST_AS(trader_stations, subtypesof(/datum/trader) - typesof(/datum/trader/ship))
+GLOBAL_LIST_AS(trader_ships, subtypesof(/datum/trader/ship) - typesof(/datum/trader/ship/unique))
+GLOBAL_LIST_AS(trader_uniques, subtypesof(/datum/trader/ship/unique))
 
 
 /datum/controller/subsystem/misc/proc/UpdateTraders(resumed, no_mc_tick, generate_stations = 0)
@@ -108,10 +108,10 @@ GLOBAL_LIST_INIT(trader_uniques, subtypesof(/datum/trader/ship/unique))
 			return
 
 
-GLOBAL_VAR_INIT(sun_dx, 0)
-GLOBAL_VAR_INIT(sun_dy, 0)
-GLOBAL_VAR_INIT(sun_angle, rand(0, 359))
-GLOBAL_VAR_INIT(sun_rate, (rand(0, 1) || -1) * rand(50, 200) * 0.01 * 18)
+GLOBAL_VAR_AS(sun_dx, 0)
+GLOBAL_VAR_AS(sun_dy, 0)
+GLOBAL_VAR_AS(sun_angle, rand(0, 359))
+GLOBAL_VAR_AS(sun_rate, (rand(0, 1) || -1) * rand(50, 200) * 0.01 * 18)
 GLOBAL_LIST_EMPTY(solar_controllers)
 
 

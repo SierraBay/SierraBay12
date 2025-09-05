@@ -9,10 +9,12 @@
 	var/was_bloodied = FALSE
 	/// Color. The color of the blood overlay effect, if present.
 	var/blood_color
+	/// The amount of times blood will transfer to other atoms.
+	var/blood_transfer_amount = 0
 	/// Integer. The `world.time` the atom was last bumped into. Only used by some subtypes to prevent bump spamming.
 	var/last_bumped = 0
 	/// Bitflag (Any of `PASS_FLAG_*`). Flags indicating the types of dense objects this atom is able to pass through/over.
-	var/pass_flags = EMPTY_BITFIELD
+	var/pass_flags = FLAGS_OFF
 	/// Boolean. Whether or not thrown objects can pass through/over the atom.
 	var/throwpass = FALSE
 	/// Integer. The atom's current germ level. The higher the germ level, the more germ on the atom.
@@ -28,7 +30,7 @@
 	/// Float. The multiplier applied to the `do_after()` timer when a mob climbs the atom.
 	var/climb_speed_mult = 1
 	/// Bitflag (Any of `INIT_*`). Flags for special/additional handling of the `Initialize()` chain. See `code\__defines\misc.dm`.
-	var/init_flags = EMPTY_BITFIELD
+	var/init_flags = FLAGS_OFF
 
 	/// This atom's cache of non-protected overlays, used for normal icon additions. Do not manipulate directly- See SSoverlays.
 	var/list/atom_overlay_cache
@@ -496,7 +498,7 @@
 	if (max_health)
 		// No hitsound here to avoid noise spam.
 		// Damage is based on severity and maximum health, with DEVASTATING being guaranteed death without any resistances.
-		var/damage_flags = turf_breaker ? DAMAGE_FLAG_TURF_BREAKER : EMPTY_BITFIELD
+		var/damage_flags = turf_breaker ? DAMAGE_FLAG_TURF_BREAKER : FLAGS_OFF
 		var/damage = 0
 		switch (severity)
 			if (EX_ACT_DEVASTATING)
@@ -579,7 +581,7 @@
 	if (get_max_health())
 		var/damage = 0
 		var/damage_type = DAMAGE_BRUTE
-		var/damage_flags = EMPTY_BITFIELD
+		var/damage_flags = FLAGS_OFF
 		var/damage_hitsound = src.damage_hitsound
 		if (isobj(AM))
 			var/obj/O = AM
@@ -609,6 +611,25 @@
  * Returns boolean - `TRUE` if the atom was bloodied, `FALSE` otherwise.
  */
 /atom/proc/add_blood(mob/living/carbon/human/M as mob)
+	if(!istype(M))
+		return 0
+	if (!istype(M.dna, /datum/dna))
+		M.dna = new /datum/dna(null)
+		M.dna.real_name = M.real_name
+	M.check_dna()
+	return add_blood_custom(M.species.get_blood_colour(M), 3, list(M.dna))
+
+/**
+ * Adds custom blood effects and DNA to the atom.
+ *
+ * **Parameters**:
+ * - `colour` - The blood colour to apply.
+ * - `colour` - The blood colour to apply.
+ * - `colour` - The blood colour to apply.
+ *
+ * Returns boolean - `TRUE` if the atom was bloodied, `FALSE` otherwise.
+ */
+/atom/proc/add_blood_custom(source_blood_color = COLOR_BLOOD_HUMAN, amount = 1, list/source_blood_DNA = list())
 	if(atom_flags & ATOM_FLAG_NO_BLOOD)
 		return 0
 
@@ -616,14 +637,37 @@
 		blood_DNA = list()
 
 	was_bloodied = 1
-	blood_color = COLOR_BLOOD_HUMAN
-	if(istype(M))
-		if (!istype(M.dna, /datum/dna))
-			M.dna = new /datum/dna(null)
-			M.dna.real_name = M.real_name
-		M.check_dna()
-		blood_color = M.species.get_blood_colour(M)
+	blood_color = source_blood_color
+	blood_DNA |= source_blood_DNA.Copy()
+	blood_transfer_amount = max(amount, blood_transfer_amount)
 	. = 1
+	return 1
+
+/**
+ * Transfers existing blood effects to the target.
+ *
+ * **Parameters**:
+ * - `target` - The target mob to transfer to.
+ * - `target_zone` - Optional target zone for humanoid mobs to apply to a specific part of the body.
+ *
+ * Returns boolean - `TRUE` if the atom was bloodied, `FALSE` otherwise.
+ */
+/atom/proc/transfer_blood(mob/living/carbon/human/target, target_zone)
+	if (!ishuman(target))
+		return 0
+	var/taken = rand(min(1, blood_transfer_amount), blood_transfer_amount)
+	if(!taken)
+		return 0
+	var/obj/item/clothing/equipped_item = target.get_covering_equipped_item_by_zone(target_zone)
+	if(istype(equipped_item))
+		equipped_item.add_blood_custom(blood_color, taken, blood_DNA)
+	else
+		switch(target_zone)
+			if(BP_L_HAND , BP_R_HAND)
+				target.bloody_hands_custom(blood_color, 3, blood_DNA)
+			if(BP_CHEST, BP_GROIN, BP_L_ARM , BP_R_ARM, BP_L_LEG , BP_R_LEG)
+				target.bloody_body_custom(blood_color, taken, blood_DNA)
+	blood_transfer_amount -= taken
 	return 1
 
 /mob/living/proc/handle_additional_vomit_reagents(obj/decal/cleanable/vomit/vomit)
@@ -1056,3 +1100,79 @@
 /atom/proc/clear_bulletholes()
 	for(var/obj/overlay/bmark/bullet_mark in src)
 		qdel(bullet_mark)
+
+/atom/proc/get_overhead_text_x_offset()
+	return 0
+
+/atom/proc/get_overhead_text_y_offset()
+	return 0
+
+/atom/proc/get_affecting_weather()
+	return
+
+/atom/proc/is_outside()
+	var/turf/turf = get_turf(src)
+	return istype(turf) ? turf.is_outside() : OUTSIDE_UNCERTAIN
+
+/// Set this atom's color and light to match origin
+/atom/proc/copy_light_and_color(atom/origin)
+	if (istype(origin))
+		color = origin.color
+		set_light(origin.light_range, origin.light_power)
+
+/**
+ * Checks if user can use this object. Set use_flags to customize what checks are done
+ * Returns 0 (FALSE) if they can use it, a value representing why they can't if not
+ * See `code\__DEFINES\misc.dm` for the list of flags and return codes
+ *
+ * * user - The `mob` to check against, if it can perform said use
+ * * use_flags - The flags to modify the check behavior, eg. `USE_ALLOW_NON_ADJACENT`, see `code\__DEFINES\misc.dm` for the list of flags
+ * * show_messages - A boolean, to indicate if a feedback message should be shown, about the reason why someone can't use the atom
+ */
+/atom/proc/use_check(mob/user, use_flags = 0, show_messages = FALSE)
+	. = USE_SUCCESS
+	if(!(use_flags & USE_ALLOW_NONLIVING) && !isliving(user)) // No message for ghosts.
+		return USE_FAIL_NONLIVING
+
+	if(!(use_flags & USE_ALLOW_NON_ADJACENT) && !Adjacent(user))
+		if (show_messages)
+			to_chat(user, SPAN_NOTICE("You're too far away from [src] to do that."))
+		return USE_FAIL_NON_ADJACENT
+
+	if(!(use_flags & USE_ALLOW_DEAD) && user.stat == DEAD)
+		if (show_messages)
+			to_chat(user, SPAN_NOTICE("How do you expect to do that when you're dead?"))
+		return USE_FAIL_DEAD
+
+	if(!(use_flags & USE_ALLOW_INCAPACITATED) && (user.incapacitated()))
+		if (show_messages)
+			to_chat(user, SPAN_NOTICE("You cannot do that in your current state."))
+		return USE_FAIL_INCAPACITATED
+
+	if(!(use_flags & USE_ALLOW_NON_ADV_TOOL_USR) && !user.IsAdvancedToolUser())
+		if (show_messages)
+			to_chat(user, SPAN_NOTICE("You don't know how to operate [src]."))
+		return USE_FAIL_NON_ADV_TOOL_USR
+
+	if((use_flags & USE_DISALLOW_SILICONS) && issilicon(user))
+		if (show_messages)
+			to_chat(user, SPAN_NOTICE("How do you propose doing that without hands?"))
+		return USE_FAIL_IS_SILICON
+
+	if((use_flags & USE_FORCE_SRC_IN_USER) && !(src in user))
+		if (show_messages)
+			to_chat(user, SPAN_NOTICE("You need to be holding [src] to do that."))
+		return USE_FAIL_NOT_IN_USER
+
+/**
+ * Checks if a mob can use an atom, message the user if not with an appropriate reason
+ *
+ * Returns 0 (FALSE) if they can use it, a value representing why they can't if not
+ *
+ * See `code\__DEFINES\misc.dm` for the list of flags and return codes
+ *
+ * * user - The `mob` to check against, if it can perform said use
+ * * use_flags - The flags to modify the check behavior, eg. `USE_ALLOW_NON_ADJACENT`, see `code\__DEFINES\misc.dm` for the list of flags
+ */
+/atom/proc/use_check_and_message(mob/user, use_flags = 0)
+	. = use_check(user, use_flags, TRUE)

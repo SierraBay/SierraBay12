@@ -14,7 +14,7 @@
 	. = ..()
 	if (. == INITIALIZE_HINT_QDEL)
 		return
-	reagents.add_reagent(/datum/reagent/nutriment/protein, 6)
+	reagents.add_reagent(/datum/reagent/nutriment/protein/fish, 6)
 	name = "[fish_type] fillet"
 
 

@@ -1,8 +1,8 @@
 /obj/overmap/visitable/sector/exoplanet/proc/generate_atmosphere()
-	atmosphere = new
+	exterior_atmosphere = new
 	if (habitability_weight == HABITABILITY_LOCKED)
-		atmosphere.adjust_gas(GAS_OXYGEN, MOLES_O2STANDARD, 0)
-		atmosphere.adjust_gas(GAS_NITROGEN, MOLES_N2STANDARD)
+		exterior_atmosphere.adjust_gas(GAS_OXYGEN, MOLES_O2STANDARD, 0)
+		exterior_atmosphere.adjust_gas(GAS_NITROGEN, MOLES_N2STANDARD)
 	else //let the fuckery commence
 		var/habitability
 		var/list/newgases = gas_data.gases.Copy()
@@ -51,15 +51,16 @@
 			if (i == gasnum || !length(newgases)) //if it's last gas, let it have all remaining moles
 				part = total_moles
 
-			atmosphere.gas[ng] += part
+			exterior_atmosphere.gas[ng] += part
 			total_moles = max(total_moles - part, 0)
 			i++
-	atmosphere.update_values()
+	exterior_atmosphere.update_values()
+	exterior_atmosphere.check_tile_graphic()
 
 
 /obj/overmap/visitable/sector/exoplanet/proc/get_atmosphere_color()
 	var/list/colors = list()
-	for (var/g in atmosphere.gas)
+	for (var/g in exterior_atmosphere.gas)
 		if (gas_data.tile_overlay_color[g])
 			colors += gas_data.tile_overlay_color[g]
 	if (length(colors))

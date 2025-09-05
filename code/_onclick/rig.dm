@@ -37,7 +37,7 @@
 /mob/living/silicon/pai/can_use_rig()
 	return loc == card
 
-/mob/living/proc/HardsuitClickOn(atom/A, alert_ai = 0)
+/mob/living/proc/HardsuitClickOn(atom/A)
 	if(!can_use_rig() || !canClick())
 		return 0
 	var/obj/item/rig/rig = get_rig()
@@ -47,7 +47,7 @@
 				log_and_message_admins("is trying to force \the [key_name_admin(rig.wearer, include_name = 1)] to use a hardsuit module.", src)
 			else
 				return 0
-		rig.selected_module.engage(A, alert_ai)
+		rig.selected_module.engage(A)
 		if(ismob(A)) // No instant mob attacking - though modules have their own cooldowns
 			setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
 		return 1

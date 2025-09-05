@@ -11,7 +11,7 @@
 
 /obj/overmap/visitable/sector/exoplanet/proc/generate_big_anomaly_artefacts()
 	set background = 1
-	var/started_in = world.time
+	var/started_in = world.realtime
 	var/result_big_artefacts_amount = calculate_result_big_artefacts()
 
 	if(result_big_artefacts_amount <= 0)
@@ -62,7 +62,7 @@
 
 		i++
 
-	report_progress("Создано [spawned_big_artefacts]  больших аномальных артефактов (Требовали создать [result_big_artefacts_amount]) для аномальной планеты. Затрачено [world.time - started_in] тиков. ")
+	report_progress("Создано [spawned_big_artefacts]  больших аномальных артефактов (Требовали создать [result_big_artefacts_amount]) для аномальной планеты. Затрачено [world.realtime - started_in] тиков. ")
 
 
 /obj/overmap/visitable/sector/exoplanet/proc/collect_good_turfs()

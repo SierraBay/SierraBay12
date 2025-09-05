@@ -5,6 +5,7 @@
 	icon = 'mods/ai/icons/screen_ai.dmi'
 	var/list/template_icon = list(null, "template")
 
+
 /obj/screen/ai_button/Click()
 	if(!isAI(usr))
 		return TRUE

@@ -235,7 +235,7 @@
 
 /obj/structure/closet/secure_closet/wall
 	name = "wall locker"
-	req_access = list(access_security)
+	req_access = list(access_brig)
 	closet_appearance = /singleton/closet_appearance/wall
 
 	//too small to put a man in

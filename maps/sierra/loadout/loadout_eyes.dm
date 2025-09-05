@@ -6,8 +6,8 @@
 	allowed_roles = SECURITY_ROLES
 
 /datum/gear/eyes/medical/New()
-  allowed_roles = MEDICAL_ROLES + /datum/job/explorer_medic
-  ..()
+	allowed_roles = MEDICAL_ROLES + /datum/job/explorer_medic
+	..()
 
 /datum/gear/eyes/meson
 	allowed_roles = list(/datum/job/senior_engineer, /datum/job/engineer, /datum/job/mining, /datum/job/scientist_assistant,   /datum/job/rd,/datum/job/senior_scientist, /datum/job/scientist, /datum/job/chief_engineer,/datum/job/engineer_trainee,/datum/job/exploration_leader, /datum/job/explorer, /datum/job/explorer_pilot,/datum/job/explorer_medic, /datum/job/explorer_engineer, /datum/job/qm)
@@ -27,3 +27,38 @@
 	glasses["monocle"] = /obj/item/clothing/glasses/monocle
 	glasses["scanning goggles"] = /obj/item/clothing/glasses/scanners
 	gear_tweaks += new/datum/gear_tweak/path(glasses)
+
+/datum/gear/eyes/ballisticsreal
+	display_name = "ballistic googles, selection"
+	path = /obj/item/clothing/glasses
+
+/datum/gear/eyes/ballisticsreal/New()
+	..()
+	var/list/options = list()
+	options["ballistic goggles"] = /obj/item/clothing/glasses/ballistic
+	options["ballistic googles, corrective"] = /obj/item/clothing/glasses/ballistic/prescription
+	gear_tweaks += new /datum/gear_tweak/path (options)
+	cost = 3
+
+/datum/gear/eyes/ballisticsmodsec
+	display_name = "ballistics googles attachment, Sec HUD"
+	path = /obj/item/clothing/accessory/glassesmod/hud/security
+	allowed_roles = SECURITY_ROLES
+	cost = 1
+
+/datum/gear/eyes/ballisticsmodmed
+	display_name = "ballistics googles attachment, Med HUD"
+	description = "An attachable medical HUD for ballistic goggles."
+	path = /obj/item/clothing/accessory/glassesmod/hud/medical
+	allowed_roles = MEDICAL_ROLES
+	cost = 1
+
+/datum/gear/eyes/ballisticsmodpolarized
+	display_name = "ballistics googles attachment, polarized filter"
+	path = /obj/item/clothing/accessory/glassesmod/vision/polarized
+	cost = 1
+
+/datum/gear/eyes/ballisticsmodwelding
+	display_name = "ballistics googles attachment, welding filter"
+	path = /obj/item/clothing/accessory/glassesmod/vision/welding
+	cost = 1

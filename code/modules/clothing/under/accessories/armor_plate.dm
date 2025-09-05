@@ -47,7 +47,7 @@
 	desc = "A ceramics-reinforced synthetic armor plate, providing state of of the art protection. Attaches to a plate carrier."
 	icon_state = "armor_merc"
 	armor = list(
-		melee = ARMOR_MELEE_RESISTANT,
+		melee = ARMOR_MELEE_MAJOR,
 		bullet = ARMOR_BALLISTIC_RIFLE,
 		laser = ARMOR_LASER_MAJOR,
 		energy = ARMOR_ENERGY_RESISTANT,
@@ -65,7 +65,7 @@
 	slot_flags = SLOT_OCLOTHING //can wear in suit slot as well
 	slot = ACCESSORY_SLOT_UTILITY
 	w_class = ITEM_SIZE_NORMAL
-	blood_overlay_type = "armor"
+	blood_overlay_type = "armorblood"
 	icon_state = "undervest"
 
 

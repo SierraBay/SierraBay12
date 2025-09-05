@@ -12,7 +12,7 @@
 	gloves = /obj/item/clothing/gloves/thick/combat
 
 	id_slot = slot_wear_id
-	id_types = list(/obj/item/card/id/centcom/ERT)
+	id_types = list(/obj/item/card/id/centcom/station/ert)
 	id_desc = "Special operations ID."
 	id_pda_assignment = "Special Operations Officer"
 
@@ -35,7 +35,7 @@
 	back = /obj/item/storage/backpack/satchel
 
 	id_slot = slot_wear_id
-	id_types = list(/obj/item/card/id/centcom/ERT)
+	id_types = list(/obj/item/card/id/centcom/station/ert)
 
 /singleton/hierarchy/outfit/death_command
 	name = "Spec Ops - Death commando"
@@ -56,7 +56,7 @@
 	uniform = /obj/item/clothing/under/syndicate
 	shoes = /obj/item/clothing/shoes/combat
 	l_ear = /obj/item/device/radio/headset/syndicate/alt
-	belt = /obj/item/storage/belt/holster/security
+	belt = /obj/item/storage/belt/holster/security/tactical
 	glasses = /obj/item/clothing/glasses/sunglasses
 	gloves = /obj/item/clothing/gloves/thick/swat
 	l_pocket = /obj/item/reagent_containers/pill/cyanide

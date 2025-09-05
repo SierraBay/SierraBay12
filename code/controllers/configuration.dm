@@ -1,6 +1,4 @@
 /datum/configuration
-	var/static/atom/movable/clickable_stat/statLine
-
 	/// server name (for world name / status)
 	var/static/server_name = "Space Station 13"
 
@@ -165,6 +163,8 @@
 
 	var/static/minimum_player_age = 0
 
+	var/static/maximum_queued_characters = 3
+
 	/// Allows ghosts to write in blood in cult rounds...
 	var/static/cult_ghostwriter = TRUE
 
@@ -301,9 +301,9 @@
 	/// Clients with these byond versions will be banned. "512.1234;513.2345" etc.
 	var/static/list/forbidden_versions = list()
 
-	var/static/minimum_byond_version = 514
+	var/static/minimum_byond_version = 516
 
-	var/static/minimum_byond_build = 1568
+	var/static/minimum_byond_build = 1658
 
 	var/static/login_export_addr
 
@@ -902,6 +902,8 @@
 				disallowed_modes += value
 			if ("minimum_player_age")
 				minimum_player_age = text2num(value)
+			if ("maximum_queued_characters")
+				maximum_queued_characters = text2num(value)
 			if ("max_explosion_range")
 				max_explosion_range = text2num_or_default(value, max_explosion_range)
 			if ("game_version")
@@ -1088,10 +1090,3 @@
 	if (entry_size > 255)
 		log_debug("The generated hub entry was [entry_size] bytes long! It will be truncated by the hub to 255.")
 	return entry
-
-
-/datum/configuration/proc/UpdateStat()
-	if (!statLine)
-		statLine = new (null, src)
-		statLine.name = "Edit"
-	stat("Config", statLine)

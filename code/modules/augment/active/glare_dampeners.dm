@@ -1,6 +1,6 @@
 /obj/item/organ/internal/augment/active/item/glare_dampeners
 	name = "glare dampeners"
-	augment_slots = AUGMENT_HEAD
+	augment_slots = AUGMENT_EYES
 	icon_state = "glare_dampeners"
 	desc = "Thick, tinted lenses installed in your head can deploy over your eyes, providing protection from bright lights."
 	action_button_name = "Deploy dampeners"

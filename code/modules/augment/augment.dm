@@ -8,7 +8,7 @@
 	status = ORGAN_ROBOTIC | ORGAN_CONFIGURE
 	default_action_type = /datum/action/item_action/organ/augment
 	var/augment_flags = AUGMENT_MECHANICAL | AUGMENT_BIOLOGICAL | AUGMENT_SCANNABLE
-	var/augment_slots = EMPTY_BITFIELD
+	var/augment_slots = FLAGS_OFF
 
 
 #define ORGAN_STYLE ( \
@@ -42,6 +42,10 @@
 		if (ORGAN_STYLE_OK)
 			return organ
 	if ((augment_slots & AUGMENT_HEAD) && !organs["[BP_HEAD]_aug"] && (organ = organs[BP_HEAD]))
+		style = ORGAN_STYLE
+		if (ORGAN_STYLE_OK)
+			return organ
+	if ((augment_slots & AUGMENT_EYES) && !organs["[BP_HEAD]_aug_eyes"] && (organ = organs[BP_HEAD]))
 		style = ORGAN_STYLE
 		if (ORGAN_STYLE_OK)
 			return organ
@@ -108,7 +112,7 @@
 		if (BP_GROIN)
 			found = augment_slots & AUGMENT_GROIN
 		if (BP_HEAD)
-			found = augment_slots & (AUGMENT_HEAD | AUGMENT_FLUFF)
+			found = augment_slots & (AUGMENT_HEAD | AUGMENT_EYES | AUGMENT_FLUFF)
 	if (!found)
 		to_chat(user, SPAN_WARNING("\The [src] can't be installed in \the [parent]."))
 		parent_organ = null
@@ -175,7 +179,7 @@
 		attach_parts += "chests"
 	if (augment_slots & AUGMENT_GROIN)
 		attach_parts += "lower bodies"
-	if (augment_slots & (AUGMENT_HEAD|AUGMENT_FLUFF))
+	if (augment_slots & (AUGMENT_HEAD|AUGMENT_EYES|AUGMENT_FLUFF))
 		attach_parts += "heads"
 	if (augment_slots & AUGMENT_ARM)
 		attach_parts += "arms"

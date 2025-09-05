@@ -25,7 +25,7 @@
 /datum/gear/accessory/armband_hydro
 	allowed_roles = list(/datum/job/rd, /datum/job/senior_scientist, /datum/job/scientist, /datum/job/scientist_assistant, /datum/job/assistant)
 
-/datum/gear/accessory/ntaward
+/datum/gear/award/ntaward
 	allowed_roles = NANOTRASEN_ROLES
 	allowed_branches = list(/datum/mil_branch/employee)
 
@@ -69,7 +69,7 @@
 	cost = 0
 
 /datum/gear/utility/holster_belt
-	display_name = "holser belt"
+	display_name = "holster belt"
 	path = /obj/item/storage/belt/holster/general
 	allowed_roles = list(/datum/job/captain, /datum/job/hop, /datum/job/rd, /datum/job/cmo, /datum/job/chief_engineer, /datum/job/hos, /datum/job/iaa, /datum/job/iso, /datum/job/adjutant)
 

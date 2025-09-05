@@ -36,7 +36,7 @@
 	cost = 50
 	containertype = /obj/structure/closet/crate/secure
 	containername = "\improper Spiderling crate"
-	contraband = 1
+	contraband = TRUE
 	security_level = null
 
 
@@ -84,3 +84,10 @@
 	containertype = /obj/structure/largecrate/animal/chick
 	containername = "chicken crate"
 	access = access_hydroponics
+
+/singleton/hierarchy/supply_pack/livecargo/drones
+	name = "Live - Malfunctioning Maintenance Drones"
+	cost = 50
+	containertype = /obj/structure/largecrate/animal/drones
+	containername = "maintenance drone crate (CAUTION)"
+	contraband = TRUE

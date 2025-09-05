@@ -52,7 +52,7 @@
 	var/text = get_start_text()
 
 	log_vote(text)
-	to_world(SPAN_COLOR("purple", "<b>[text]</b>\nType <b>vote</b> or click <a href='?src=\ref[SSvote];vote_panel=1'>here</a> to place your votes.\nYou have [config.vote_period/10] seconds to vote."))
+	to_world(SPAN_COLOR("purple", "<b>[text]</b>\nType <b>vote</b> or click <a href='byond://?src=\ref[SSvote];vote_panel=1'>here</a> to place your votes.\nYou have [config.vote_period/10] seconds to vote."))
 	sound_to(world, sound('sound/ui/vote-notify.ogg', repeat = 0, wait = 0, volume = 33, channel = GLOB.vote_sound_channel))
 
 /datum/vote/proc/get_start_text()
@@ -212,7 +212,7 @@
 		var/choice = choices[i]
 		var/voted_for = votes[user.ckey] && (i in votes[user.ckey])
 
-		. += "<tr><td><a href='?src=\ref[src];choice=[i]'[voted_for ? " style='font-weight: bold'" : ""]>"
+		. += "<tr><td><a href='byond://?src=\ref[src];choice=[i]'[voted_for ? " style='font-weight: bold'" : ""]>"
 		. += "[display_choices[choice]]"
 		. += "</a></td>"
 

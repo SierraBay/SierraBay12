@@ -15,6 +15,12 @@
 	slot = slot_belt
 	allowed_roles = ARMED_ROLES
 
+/datum/gear/tactical/forensic_belt
+	display_name = "forensic belt"
+	path = /obj/item/storage/belt/forensic
+	slot = slot_belt
+	allowed_roles = list(/datum/job/detective)
+
 /datum/gear/tactical/holster/New()
 	allowed_roles = ARMED_ROLES
 	allowed_roles += /datum/job/iaa

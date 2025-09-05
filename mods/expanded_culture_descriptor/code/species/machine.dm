@@ -1,4 +1,4 @@
-/datum/species/machine
+/singleton/species/machine
 	extended_cultural_info = list(
 		TAG_HOMEWORLD = list(
 			HOME_SYSTEM_ROOT,
@@ -11,5 +11,6 @@
 			FACTION_SAARE,
 			FACTION_DAIS,
 			FACTION_HEPHAESTUS,
+			FACTION_KMS
 		)
 	)

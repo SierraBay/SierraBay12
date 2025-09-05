@@ -1,9 +1,10 @@
-/*///////////////Circuit Imprinter (By Darem)////////////////////////
+
+/*///////////////Circuit Imprinter (By Darem)//////////////////////// [SIERRA-REMOVE] - MODPACK_RND
 	Used to print new circuit boards (for computers and similar systems) and AI modules. Each circuit board pattern are stored in
 a /datum/desgin on the linked R&D console. You can then print them out in a fasion similar to a regular lathe. However, instead of
 using metal and glass, it uses glass and reagents (usually sulphuric acid).
 */
-
+/*
 /obj/machinery/r_n_d/circuit_imprinter
 	name = "circuit imprinter"
 	desc = "Accessed by a connected core fabricator console, it produces circuits from various materials and sulphuric acid."
@@ -13,6 +14,7 @@ using metal and glass, it uses glass and reagents (usually sulphuric acid).
 	base_type = /obj/machinery/r_n_d/circuit_imprinter
 	construct_state = /singleton/machine_construction/default/panel_closed
 
+	var/list/datum/design/queue = list()
 	var/progress = 0
 
 	var/max_material_storage = 100000
@@ -21,54 +23,40 @@ using metal and glass, it uses glass and reagents (usually sulphuric acid).
 
 	idle_power_usage = 30
 	active_power_usage = 2500
+
 	machine_name = "circuit imprinter"
 	machine_desc = "Creates circuit boards by etching raw sheets of material with sulphuric acid. Part of an R&D network."
-	//[SIERRA-EDIT] - MODPACK_RND
-	var/list/queue = list()
 
 /obj/machinery/r_n_d/circuit_imprinter/New()
-	..()
 	materials = default_material_composition.Copy()
+
+	..()
 
 /obj/machinery/r_n_d/circuit_imprinter/Process()
 	..()
 	if(inoperable())
 		update_icon()
 		return
-	if(LAZYLEN(queue) == 0)
-		busy = FALSE
+	if(length(queue) == 0)
+		busy = 0
 		update_icon()
 		return
-	var/datum/rnd_queue_design/RNDD = queue[1]
-	var/datum/design/D = RNDD.design
-	if(canBuild(RNDD))
-		if(progress == 0)
-			print_pre(D)
-		busy = TRUE
+	var/datum/design/D = queue[1]
+	if(canBuild(D))
+		busy = 1
 		progress += speed
-		if(progress >= D.time * RNDD.amount)
-			build(RNDD)
+		if(progress >= D.time)
+			build(D)
 			progress = 0
-			queue -= RNDD
+			removeFromQueue(1)
 			if(linked_console)
-				SSnano.update_uis(linked_console)
-			print_post(D)
+				linked_console.updateUsrDialog()
 		update_icon()
 	else
 		if(busy)
-			visible_message(SPAN_NOTICE("\icon[src]\The [src] flashes: insufficient materials."))
-			busy = FALSE
-			progress = 0
+			visible_message(SPAN_NOTICE("[icon2html(src, viewers(get_turf(src)))] [src] flashes: insufficient materials: [getLackingMaterials(D)]."))
+			busy = 0
 			update_icon()
-
-
-
-/obj/machinery/r_n_d/circuit_imprinter/proc/TotalMaterials() //returns the total of all the stored materials. Makes code neater.
-	var/t = 0
-	for(var/f in materials)
-		t += materials[f]
-	return t
-
 
 /obj/machinery/r_n_d/circuit_imprinter/RefreshParts()
 	var/T = 0
@@ -155,60 +143,39 @@ using metal and glass, it uses glass and reagents (usually sulphuric acid).
 	updateUsrDialog()
 	return TRUE
 
-/obj/machinery/r_n_d/circuit_imprinter/proc/queue_design(datum/design/D, amount = 1)
-	var/datum/rnd_queue_design/RNDD = new /datum/rnd_queue_design(D, amount)
-	queue += RNDD
+/obj/machinery/r_n_d/circuit_imprinter/proc/addToQueue(datum/design/D)
+	queue += D
+	return
 
 /obj/machinery/r_n_d/circuit_imprinter/proc/removeFromQueue(index)
 	if(!is_valid_index(index, queue))
 		return
 	queue.Cut(index, index + 1)
 
-/obj/machinery/r_n_d/circuit_imprinter/proc/canBuild(datum/rnd_queue_design/RNDD)
-	var/datum/design/D = RNDD.design
+/obj/machinery/r_n_d/circuit_imprinter/proc/canBuild(datum/design/D)
 	for(var/M in D.materials)
-	//[SIERRA-EDIT] - MODPACK_RND
-		if(materials[M] < (D.materials[M] * RNDD.amount)*mat_efficiency)
-			return FALSE
+		if(materials[M] < D.materials[M] * mat_efficiency)
+			return 0
 	for(var/C in D.chemicals)
-		if(!reagents.has_reagent(C, (D.chemicals[C] * RNDD.amount)*mat_efficiency))
-	//[/SIERRA-EDIT] - MODPACK_RND
-			return FALSE
-	return TRUE
+		if(!reagents.has_reagent(C, D.chemicals[C] * mat_efficiency))
+			return 0
+	return 1
 
-/obj/machinery/r_n_d/circuit_imprinter/proc/build(datum/rnd_queue_design/RNDD)
-	var/datum/design/D = RNDD.design
+/obj/machinery/r_n_d/circuit_imprinter/proc/build(datum/design/D)
 	var/power = active_power_usage
 	for(var/M in D.materials)
-		power += round(D.materials[M] / 5) * RNDD.amount
+		power += round(D.materials[M] / 5)
 	power = max(active_power_usage, power)
 	use_power_oneoff(power)
 	for(var/M in D.materials)
-		materials[M] = max(0, materials[M] - ((D.materials[M] * RNDD.amount)*mat_efficiency))
+		materials[M] = max(0, materials[M] - D.materials[M] * mat_efficiency)
 	for(var/C in D.chemicals)
-		reagents.remove_reagent(C, ((D.chemicals[C] * RNDD.amount)*mat_efficiency))
-	for(var/i in 1 to RNDD.amount)
-		D.Fabricate(get_turf(src), 1, src)
+		reagents.remove_reagent(C, D.chemicals[C] * mat_efficiency)
 
-/obj/machinery/r_n_d/circuit_imprinter/proc/clear_queue()
-	queue = list()
-
-/obj/machinery/r_n_d/circuit_imprinter/proc/eject(material, amount)
-	if(!(material in materials))
-		return
-	var/material/mat = SSmaterials.get_material_by_name(material)
-	var/eject = clamp(round(materials[material] / mat.units_per_sheet), 0, amount)
-	if(eject > 0)
-		mat.place_sheet(loc, eject)
-		materials[material] -= eject * mat.units_per_sheet
-
-/obj/machinery/r_n_d/circuit_imprinter/proc/print_pre(datum/design/D)
-	return
-
-/obj/machinery/r_n_d/circuit_imprinter/proc/print_post(datum/design/D)
-	visible_message("\icon[src]\The [src] flashes, indicating that \the [D] is complete.", range = 3)
-	if(!LAZYLEN(queue))
-		playsound(src.loc, 'sound/machines/ping.ogg', 50, 1 -3)
-		visible_message("\icon[src]\The [src] pings indicating that queue is complete.")
-	return
-//[/SIERRA-EDIT] - MODPACK_RND
+	if(D.build_path)
+		var/obj/new_item = D.Fabricate(loc, src)
+		if(mat_efficiency != 1) // No matter out of nowhere
+			if(new_item.matter && length(new_item.matter) > 0)
+				for(var/i in new_item.matter)
+					new_item.matter[i] = new_item.matter[i] * mat_efficiency
+*/

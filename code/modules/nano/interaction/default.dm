@@ -1,4 +1,4 @@
-GLOBAL_DATUM_INIT(default_state, /datum/topic_state/default, new)
+GLOBAL_TYPED_NEW(default_state, /datum/topic_state/default)
 
 /datum/topic_state/default/href_list(mob/user)
 	return list()

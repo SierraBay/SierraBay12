@@ -119,6 +119,10 @@
 /// An aproximate, fairly granular random normal real number in 0..1
 #define Nrand Drand(4, 6, TRUE)
 
+///Returns a random value in a given range divided by precision
+/proc/prand(min, max, precision = 3)
+	var/d = 10 ** precision
+	return rand(min * d, max * d) / d
 
 /// A circular random coordinate pair from 0, unit by default, scaled by radius, then rounded if round.
 /proc/CircularRandomCoordinate(radius = 1, round)

@@ -21,3 +21,7 @@
 		)
 	siemens_coefficient = 0.6
 	flags_inv = null
+
+
+/obj/item/clothing/suit/armor/pcarrier
+	valid_accessory_slots = list(ACCESSORY_SLOT_INSIGNIA, ACCESSORY_SLOT_ARMOR_CHEST, ACCESSORY_SLOT_ARMOR_ARMS, ACCESSORY_SLOT_ARMOR_LEGS, ACCESSORY_SLOT_ARMOR_STORAGE, ACCESSORY_SLOT_ARMOR_MISC, ACCESSORY_SLOT_OVER)

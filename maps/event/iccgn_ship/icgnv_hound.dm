@@ -4,7 +4,7 @@
 	name = "ICGNV Hound"
 	id = "icgnv_hound"
 	description = "A standard ALFA-pattern, armed ICCGN transport shuttle. The transponder reads on open channels as ICCG and is broadcasting the designation 'ICGNV Hound' in Zurich Accord Common."
-	suffixes = list("maps/event/iccgn_ship/icgnv_hound.dmm")
+	suffixes = null //SIERRA-EDIT list("maps/event/iccgn_ship/icgnv_hound.dmm")
 	shuttles_to_initialise = list(/datum/shuttle/autodock/overmap/icgnv_hound)
 	skip_main_unit_tests = "Ruin has shuttle landmark."
 
@@ -20,7 +20,6 @@
 	desc = "A standard ALFA-pattern, armed ICCGN transport shuttle. The transponder reads on open channels as ICCG and is broadcasting the designation 'ICGNV Hound' in Zurich Accord Common."
 	shuttle = "ICGNV Hound"
 	icon_state = "ship"
-	moving_state = "ship_moving"
 	fore_dir = NORTH
 	vessel_size = SHIP_SIZE_SMALL
 	vessel_mass = 1000

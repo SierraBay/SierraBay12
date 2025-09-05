@@ -49,7 +49,7 @@
 			send_rsc(usr, story.img, "tmp_photo.png")
 			var/output = "<html><head><title>photo - [story.author]</title></head>"
 			output += "<body style='overflow:hidden; margin:0; text-align:center'>"
-			output += "<img src='tmp_photo.png' width='192' style='-ms-interpolation-mode:nearest-neighbor' />"
+			output += "<img src='tmp_photo.png' width='192' style='-ms-interpolation-mode:nearest-neighbor;image-rendering:pixelated;' />"
 			output += "</body></html>"
 			show_browser(usr, output, "window=book; size=192x192]")
 		return TRUE

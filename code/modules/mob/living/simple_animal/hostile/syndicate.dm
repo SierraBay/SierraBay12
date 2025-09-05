@@ -102,8 +102,8 @@
 	corpse = /obj/landmark/corpse/syndicate
 	speed = 0
 
-/mob/living/simple_animal/hostile/human/syndicate/melee/space/Process_Spacemove()
-	return 1
+/mob/living/simple_animal/hostile/human/syndicate/melee/space/Process_Spacemove(allow_movement)
+	return TRUE
 
 /mob/living/simple_animal/hostile/human/syndicate/ranged
 	ranged = 1
@@ -126,8 +126,8 @@
 	corpse = /obj/landmark/corpse/syndicate/commando
 	speed = 0
 
-/mob/living/simple_animal/hostile/human/syndicate/ranged/space/Process_Spacemove()
-	return 1
+/mob/living/simple_animal/hostile/human/syndicate/ranged/space/Process_Spacemove(allow_movement)
+	return TRUE
 
 /mob/living/simple_animal/hostile/viscerator
 	name = "viscerator"

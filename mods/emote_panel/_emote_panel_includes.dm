@@ -5,9 +5,12 @@
 #include "code/audible.dm"
 #include "code/emotes.dm"
 #include "code/overrides.dm"
-// #include "code/pain.dm" // SIERRA TODO: Use it
+#include "code/pain.dm"
 #include "code/silicon.dm"
 #include "code\species.dm"
 #include "code/unathi.dm"
+#include "code/tajara.dm"
+#include "code/skrell.dm"
+#include "code/miscxenos.dm"
 
 #endif

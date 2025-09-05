@@ -2419,11 +2419,17 @@
 /obj/structure/table/glass,
 /obj/item/book/manual/solgov_law,
 /obj/item/book/manual/sol_sop,
+/obj/item/reagent_containers/glass/bottle/inaprovaline,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/bridge)
 "ew" = (
 /obj/structure/table/glass,
 /obj/floor_decal/corner/blue/mono,
+/obj/item/reagent_containers/glass/bottle/inaprovaline,
+/obj/item/reagent_containers/glass/bottle/inaprovaline{
+	pixel_x = 4;
+	pixel_y = 5
+	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/bridge)
 "ex" = (
@@ -6261,7 +6267,7 @@
 /obj/structure/table/standard{
 	name = "plastic table frame"
 	},
-/obj/machinery/microwave,
+/obj/machinery/appliance/cooker/microwave,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/aquila/storage)
 "py" = (
@@ -10232,8 +10238,8 @@
 /turf/simulated/floor/tiled/monotile,
 /area/crew_quarters/heads/office/ce)
 "Bc" = (
-/obj/item/reagent_containers/glass/bottle/stoxin,
-/obj/item/reagent_containers/glass/bottle/stoxin,
+/obj/item/reagent_containers/glass/bottle/soporific,
+/obj/item/reagent_containers/glass/bottle/soporific,
 /obj/item/reagent_containers/syringe,
 /obj/item/clothing/mask/surgical,
 /obj/item/clothing/gloves/latex,
@@ -12228,6 +12234,12 @@
 /obj/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/plating,
 /area/maintenance/bridge/forestarboard)
+"Jr" = (
+/obj/shuttle_landmark/ert/bridge/secondary{
+	name = "B-Deck, Starboard"
+	},
+/turf/space,
+/area/space)
 "Jt" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -13738,6 +13750,7 @@
 /obj/random_multi/single_item/memo_engineering,
 /obj/random_multi/single_item/memo_research,
 /obj/random_multi/single_item/memo_exploration,
+/obj/item/reagent_containers/glass/bottle/inaprovaline,
 /turf/simulated/floor/tiled/dark,
 /area/bridge)
 "Qz" = (
@@ -14770,12 +14783,6 @@
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/hallway/primary/bridge/fore)
-"UU" = (
-/obj/shuttle_landmark/ert/deck1{
-	name = "B-Deck, Fore"
-	},
-/turf/space,
-/area/space)
 "UW" = (
 /obj/paint/red,
 /obj/machinery/atmospherics/pipe/simple/hidden/fuel{
@@ -15579,6 +15586,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/hallway/primary/bridge/aft)
+"YT" = (
+/obj/shuttle_landmark/ert/bridge{
+	name = "B-Deck, Fore Port"
+	},
+/turf/space,
+/area/space)
 "YW" = (
 /obj/floor_decal/industrial/warning{
 	dir = 8;
@@ -19140,7 +19153,7 @@ aa
 aa
 aa
 aa
-UU
+aa
 aa
 aa
 aa
@@ -22843,7 +22856,7 @@ aa
 aa
 aa
 aa
-aa
+YT
 aa
 aa
 aa
@@ -32645,7 +32658,7 @@ aa
 aa
 aa
 aa
-aa
+Jr
 aa
 aa
 aa

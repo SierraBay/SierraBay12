@@ -64,7 +64,9 @@
 		/datum/mil_branch/employee
 	)
 	allowed_ranks = list(
-		/datum/mil_rank/civ/nt
+		/datum/mil_rank/civ/nt,
+		/datum/mil_rank/civ/acting,
+		/datum/mil_rank/civ/acting_temp
 	)
 	min_skill = list(
 		SKILL_BUREAUCRACY = SKILL_TRAINED,
@@ -133,7 +135,9 @@
 		/datum/mil_branch/employee
 	)
 	allowed_ranks = list(
-		/datum/mil_rank/civ/nt
+		/datum/mil_rank/civ/nt,
+		/datum/mil_rank/civ/acting,
+		/datum/mil_rank/civ/acting_temp
 	)
 	min_skill = list(
 		SKILL_BUREAUCRACY	=	SKILL_TRAINED,
@@ -266,7 +270,9 @@
 		/datum/mil_branch/employee
 	)
 	allowed_ranks = list(
-		/datum/mil_rank/civ/nt
+		/datum/mil_rank/civ/nt,
+		/datum/mil_rank/civ/acting,
+		/datum/mil_rank/civ/acting_temp
 	)
 	min_skill = list(
 		SKILL_BUREAUCRACY	=	SKILL_BASIC,
@@ -341,7 +347,7 @@
 	ideal_character_age = 40
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/command/hos
 	allowed_branches = list(/datum/mil_branch/employee)
-	allowed_ranks = list(/datum/mil_rank/civ/nt)
+	allowed_ranks = list(/datum/mil_rank/civ/nt, /datum/mil_rank/civ/acting, /datum/mil_rank/civ/acting_temp)
 	min_skill = list(
 		SKILL_BUREAUCRACY	=	SKILL_TRAINED,
 		SKILL_EVA			=	SKILL_BASIC,
@@ -421,7 +427,9 @@
 		access_security, access_sec_doors, access_medical,
 		access_iaa, access_research, access_xenoarch,
 		access_heads, access_bridge, access_hangar,
-		access_petrov, access_commissary, access_maint_tunnels
+		access_petrov, access_commissary, access_maint_tunnels,
+		access_tox, access_tox_storage, access_xenobiology, access_research_storage, access_robotics,
+		access_morgue, access_senmed, access_surgery, access_medical_equip
 	)
 
 
@@ -491,7 +499,7 @@
 	// SIERRA TODO: need_exp_to_play
 	// need_exp_to_play = 2
 
-/datum/job/iaa/get_description_blurb()
+/datum/job/iso/get_description_blurb()
 	return "Оперативник Внутренней Безопасности, неофициально известный как Багровый Щит — сотрудник силовой ветви Департамента Внутренних Дел Центрального Командования NanoTrasen.\
 	На борту Сьерры он выступает в качестве телохранителя и правой руки Агента Внутренних Дел, действуя там, где слова и бумаги оказываются недостаточно эффективны."
 
@@ -513,7 +521,7 @@
 
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/command/adjutant
 	allowed_branches = list(/datum/mil_branch/employee)
-	allowed_ranks = list(/datum/mil_rank/civ/nt)
+	allowed_ranks = list(/datum/mil_rank/civ/nt, /datum/mil_rank/civ/probation_employee)
 	min_skill = list(
 		SKILL_BUREAUCRACY	=	SKILL_BASIC,
 		SKILL_PILOT			=	SKILL_TRAINED

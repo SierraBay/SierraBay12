@@ -1,6 +1,7 @@
 /obj/anomaly/tramplin
 	name = "Refractions of light"
 	anomaly_tag = "Tramp"
+	admin_name = "Трамплин"
 	with_sound = TRUE
 	sound_type = 'mods/anomaly/sounds/tramplin.ogg'
 	idle_effect_type = "trampline_idle"
@@ -28,12 +29,13 @@
 
 /obj/anomaly/tramplin/Initialize()
 	. = ..()
-	range_of_throw = rand(2,5)
+	if(ranzomize_with_initialize)
+		range_of_throw = rand(2,5)
 
 /obj/anomaly/tramplin/activate_anomaly()
-	for(var/obj/item/target in src.loc)
+	for(var/obj/item/target in get_turf(src))
 		get_effect_by_anomaly(target)
-	for(var/mob/living/targetbam in src.loc)
+	for(var/mob/living/targetbam in get_turf(src))
 		get_effect_by_anomaly(targetbam)
 	.=..()
 
@@ -72,5 +74,27 @@
 	else
 		victim.throw_at(target_turf, local_range_of_throw, speed_of_throw)
 
-/obj/anomaly/tramplin/get_detection_icon()
+/obj/anomaly/tramplin/get_detection_icon(mob/living/viewer)
 	return "trampline_detection"
+
+/obj/anomaly/tramplin/activate_anomaly()
+	. = ..()
+	new /obj/effect/warp/small/tramplin(get_turf(src))
+
+
+//VISUAL
+
+/obj/effect/warp/small/tramplin
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "explosion"
+
+/obj/effect/warp/small/tramplin/Initialize()
+	. = ..()
+	do_animation()
+
+/obj/effect/warp/small/tramplin/proc/do_animation()
+	set waitfor = FALSE
+	matrix().Scale(0.3, 0.3)
+	animate(src, alpha = 40, transform = matrix().Scale(2, 2), time = 0.2 SECOND, easing = SINE_EASING)
+	sleep(0.2 SECONDS)
+	Destroy()

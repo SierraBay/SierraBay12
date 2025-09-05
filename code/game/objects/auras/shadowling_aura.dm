@@ -19,4 +19,4 @@
 		proj.damage *= 2
 	if (proj.agony)
 		proj.agony *= 2
-	return EMPTY_BITFIELD
+	return FLAGS_OFF
