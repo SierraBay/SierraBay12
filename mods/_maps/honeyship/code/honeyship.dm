@@ -206,8 +206,8 @@
 	corpse_outfits = list(/singleton/hierarchy/outfit/honeyship/medic)
 
 /obj/landmark/corpse/honeyship/guard
-	name = "KMS Contractor"
-	corpse_outfits = list(/singleton/hierarchy/outfit/fleet/ert/hostile)
+	name = "Security Guard"
+	corpse_outfits = list(/singleton/hierarchy/outfit/honeyship/guard)
 
 /obj/landmark/corpse/honeyship/doll
 	name = "Doll"
@@ -239,16 +239,16 @@
 
 /singleton/hierarchy/outfit/honeyship/guard
 	name = "Komatsu Medical Services Outfit"
-	uniform = /obj/item/clothing/under/kms_utility_uniform
-	suit = /obj/item/clothing/suit/armor/pcarrier/kms
+	uniform = /obj/item/clothing/under/blackorange_shirt
+	suit = /obj/item/clothing/suit/space/void/security/alt
 	shoes = /obj/item/clothing/shoes/jackboots
-	gloves = /obj/item/clothing/gloves/kms
-	head = /obj/item/clothing/head/beret
+	gloves = /obj/item/clothing/gloves/thick
+	head = /obj/item/clothing/head/helmet/space/void/security/alt
 
 /singleton/hierarchy/outfit/honeyship/doll
 	name = "KMS Tactical Outfit"
-	uniform = /obj/item/clothing/under/kms_utility_uniform
-	suit = /obj/item/clothing/suit/armor/pcarrier/kms
-	shoes = /obj/item/clothing/shoes/jackboots
-	gloves = /obj/item/clothing/gloves/kms
-	head = /obj/item/clothing/head/beret
+	uniform = /obj/item/clothing/under/dress/dress_purple
+	suit = null
+	shoes = /obj/item/clothing/shoes/heels/black
+	gloves = null
+	head = null

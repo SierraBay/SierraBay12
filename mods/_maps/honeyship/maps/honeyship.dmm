@@ -655,7 +655,7 @@
 "yC" = (/obj/floor_decal/industrial/hatch,/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/door/airlock/freezer,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/tiled/freezer,/area/honeyship/freezer)
 "yD" = (/obj/structure/catwalk,/mob/living/simple_animal/hostile/vagrant,/turf/simulated/floor,/area/honeyship/maintenance_upper_starboard)
 "yG" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/machinery/light/led/small{dir = 1},/turf/simulated/floor/tiled/techfloor,/area/honeyship/corridor)
-"yK" = (/obj/decal/cleanable/blood,/turf/simulated/floor/tiled/techfloor/grid,/area/honeyship/pod_one)
+"yK" = (/obj/decal/cleanable/blood,/obj/landmark/corpse/honeyship/guard,/turf/simulated/floor/tiled/techfloor/grid,/area/honeyship/pod_one)
 "yM" = (/obj/machinery/atmospherics/unary/vent_pump/on{dir = 4},/turf/simulated/floor/tiled/steel_grid,/area/honeyship/sec_eva)
 "yN" = (/obj/structure/table/woodentable/mahogany,/obj/item/device/flashlight/lamp/lava/orange,/obj/machinery/atmospherics/unary/vent_scrubber/on{dir = 4},/turf/simulated/floor/wood/ebony,/area/honeyship/dorms_starboard)
 "yT" = (/obj/machinery/firealarm{dir = 1; pixel_y = -24},/turf/simulated/floor/tiled/techmaint,/area/honeyship/storage)
@@ -686,6 +686,7 @@
 "zV" = (/obj/machinery/cryopod{dir = 4},/turf/simulated/floor/tiled/dark,/area/honeyship/staff)
 "zW" = (/obj/machinery/atmospherics/unary/tank/carbon_dioxide{start_pressure = 8000; dir = 8},/obj/machinery/light{dir = 4},/turf/simulated/floor/tiled/techmaint,/area/honeyship/fuel)
 "zY" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0},/obj/machinery/door/airlock/corporate,/obj/floor_decal/industrial/hatch/yellow,/turf/simulated/floor/tiled/dark/monotile,/area/honeyship/captain)
+"zZ" = (/obj/floor_decal/techfloor{dir = 8},/obj/landmark/corpse/honeyship/doll,/turf/simulated/floor/tiled/skrell/green,/area/honeyship/bar_upper)
 "Ab" = (/obj/machinery/atmospherics/unary/vent_pump/on{dir = 4},/obj/machinery/vending/cigarette{dir = 4},/turf/simulated/floor/tiled/dark,/area/honeyship/bar_upper)
 "Ac" = (/obj/machinery/atmospherics/pipe/simple/hidden/fuel{dir = 9},/turf/simulated/wall/r_wall/prepainted,/area/honeyship/dorm)
 "Ad" = (/obj/structure/closet/fridge,/obj/machinery/atmospherics/unary/vent_pump/on{dir = 8},/turf/simulated/floor/tiled/freezer,/area/honeyship/freezer)
@@ -1631,7 +1632,7 @@ kYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkY
 kYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYhMewewewcDYSvuzbteteAvVfRkayVWVWhnvyMmAvtetezbijgyJLAYAYAYhMkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkY
 kYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYhMhMewewcDYSURzbteAvAvVfWOJlqQqQAmwEMmAvAvtezbURgyJLAYAYhMhMkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkY
 kYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYhMewewCFYSURzbteAvAvVfdPpefKvgMWRnMmAvAvtezbURgySWAYAYhMkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkY
-kYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYhMewewcDddklCLteMgMgoiOrpefKfKMWhFgPMgMgtehBiCgrJLAYAYhMkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkY
+kYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYhMewewcDddklCLteMgMgoiOrzZfKfKMWhFgPMgMgtehBiCgrJLAYAYhMkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkY
 kYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYhMhMewcDddFKmJrBIKtvHstgnNQNjSWBJjHsHsRPrBeuTbgrJLAYhMhMkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkY
 kYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYhMewcDYBIJeuWtTXGBGBAPjNIrIrjNTXGBGBAPWteuTbbjJLAYhMkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkY
 kYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYhMewewewMteuohuRuRuRuRuRuRuRuRuRuRuRuRoheuwQAYAYAYhMkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkYkY
