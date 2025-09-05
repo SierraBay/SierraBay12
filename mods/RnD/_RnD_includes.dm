@@ -27,6 +27,8 @@
 #include "code/program/binary.dm"
 #include "code/program/design.dm"
 #include "code/program/camera.dm"
+#include "code/program/filetypes.dm"
+#include "code/program/codeprocessor.dm"
 #include "code/SSresearch.dm"
 #include "code/program/sciefolder.dm"
 #include "code/misc.dm"

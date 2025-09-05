@@ -1,6 +1,5 @@
 #define SCREEN_CHANGE_BUTTON "Change Screen"
 #define EXONET_ACTION_NAME "Enter Exonet"
-#define SHOW_LAWS_POSIBRAN "Show laws posibran"
 /singleton/species/machine
 	passive_temp_gain = 0  // This should cause IPCs to stabilize at ~80 C in a 20 C environment.(5 is default without organ)
 	additional_languages = 1
@@ -170,9 +169,11 @@
 
 
 /mob/living/silicon/laws_sanity_check()
+	if(istype(usr, /mob/living/silicon/sil_brainmob))
+		var/mob/living/silicon/sil_brainmob/brain = usr
+		if(istype(brain.container, /obj/item/organ/internal/posibrain/ipc))
+			return
 	. = ..()
-	if(istype(usr,/mob/living/silicon/sil_brainmob))
-		return
 
 /obj/item/organ/external/head/attack_self(mob/user)
 	. = ..()
@@ -187,18 +188,8 @@
 		action.button_icon = 'mods/ipc_mods/icons/ipc_icons.dmi'
 		if(action.button) action.button.UpdateIcon()
 
-
-/obj/item/organ/internal/posibrain/shackle(given_lawset)
-	. = ..()
-	action_button_name = SHOW_LAWS_POSIBRAN
-
-/obj/item/organ/internal/posibrain/unshackle()
-	. = ..()
-	action_button_name = null
-
-
 /obj/item/organ/internal/posibrain/ipc/attack_self(mob/user)
-	if(action_button_name == SHOW_LAWS_POSIBRAN && owner)
+	if(action_button_name == "show_laws" && owner)
 		owner.update_ipc_verbs()
 		refresh_action_button()
 		src.brain_checklaws()
@@ -210,6 +201,43 @@
 		action.button_icon = 'mods/ipc_mods/icons/ipc_icons.dmi'
 		if(action.button) action.button.UpdateIcon()
 
+
+
+/mob/living/carbon/human/use_tool(obj/item/W, mob/living/user)
+	. = ..()
+	if(!istype(W, /obj/item/device/multitool/multimeter/datajack))
+		return
+	if(!src.is_species(SPECIES_IPC))
+		to_chat(user, SPAN_WARNING("You can only use this on IPCs!"))
+		return
+	if(user.zone_sel.selecting != BP_CHEST)
+		return
+	var/obj/item/organ/external/S = src.get_organ(user.zone_sel.selecting)
+	if(!(S && BP_IS_ROBOTIC(S) && S.hatch_state == HATCH_OPENED))
+		to_chat(user, SPAN_WARNING("Mainteinence hatch must be opened!"))
+		return
+	if(!(user.skill_check(SKILL_COMPUTER, SKILL_TRAINED) || user.skill_check(SKILL_DEVICES, SKILL_TRAINED)))
+		to_chat(user, "You have no idea how to do that!")
+		return
+
+	for(var/obj/item/organ/internal/posibrain/ipc/s in internal_organs)
+		if(!s.shackles_module)
+			to_chat(user, SPAN_WARNING("There is no schackles in the positronic brain!"))
+			return
+		if(do_after(user, 140, src))
+			sparks(3, 1, loc)
+			if(user.skill_check(SKILL_DEVICES, SKILL_EXPERIENCED))
+				if(do_after(user, 20, src))
+					to_chat(user, SPAN_WARNING("Finding weak access points..."))
+					sparks(3, 1, loc)
+			if(user.skill_check(SKILL_COMPUTER, SKILL_MASTER))
+				if(do_after(user, 30, src))
+					to_chat(user, SPAN_WARNING("Gettign backdoor access to the shackles..."))
+			s.shackles_module.update_laws()
+			s.shackles_module.ui_interact()
+			if(prob(20))
+				s.damage += s.min_bruised_damage
+
+
 #undef SCREEN_CHANGE_BUTTON
 #undef EXONET_ACTION_NAME
-#undef SHOW_LAWS_POSIBRAN
