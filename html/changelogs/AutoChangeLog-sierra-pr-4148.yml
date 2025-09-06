@@ -1,0 +1,4 @@
+author: Builder13
+changes:
+  - {bugfix: Фикс оверлея камер}
+delete-after: true

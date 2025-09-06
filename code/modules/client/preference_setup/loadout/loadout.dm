@@ -272,12 +272,12 @@ var/global/list/gear_datums = list()
 		if (allowed && LAZYLEN(G.allowed_mod_traits))
 			var/list/trait_checks_mod = list()
 			entry += "<br><i>"
-			for (var/trait_path in G.allowed_mod_traits)
-				var/datum/mod_trait/T = GLOB.all_mod_traits[trait_path]
+			for (var/trait_name in G.allowed_mod_traits)
+				var/datum/mod_trait/T = GLOB.all_mod_traits[trait_name]
 				if (!T)
 					continue
 				var/trait_entry = "[T.name]"
-				if (LAZYISIN(pref.mod_traits, trait_path))
+				if (LAZYISIN(pref.mod_traits, T.name))
 					trait_entry = SPAN_COLOR("#55cc55", "[trait_entry]")
 				else
 					trait_entry = SPAN_COLOR("#cc5555", "[trait_entry]")
@@ -464,13 +464,12 @@ var/global/list/gear_datums = list()
 			var/client/C = M.client
 			if(C && C.prefs)
 				mod_traits = C.prefs.mod_traits
-
 		var/ok = TRUE
-		for(var/trait_path in allowed_mod_traits)
-			if(!mod_traits || !LAZYISIN(mod_traits, trait_path))
+		for(var/trait_name in allowed_mod_traits)
+			var/datum/mod_trait/T = GLOB.all_mod_traits[trait_name]
+			if(!mod_traits || !LAZYISIN(mod_traits, T.name))
 				ok = FALSE
 				break
-
 		if(!ok)
 			if(istype(M))
 				to_chat(M, SPAN_WARNING("У вас нет необходимого трейта для [display_name]."))

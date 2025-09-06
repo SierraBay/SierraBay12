@@ -12,7 +12,7 @@
 	force = 15
 	sharp = TRUE
 	edge = TRUE
-	maintain_cost = 6
+	maintain_cost = 4
 
 	item_icons = list(
 		slot_l_hand_str = 'mods/psionics/icons/psi_fd/lefthand.dmi',
@@ -31,11 +31,11 @@
 */
 /obj/item/psychic_power/psiblade/master
 	force = 25
-	maintain_cost = 5
+	maintain_cost = 4
 
 /obj/item/psychic_power/psiblade/master/grand
 	force = 35
-	maintain_cost = 4
+	maintain_cost = 3
 
 	item_icons = list(
 		slot_l_hand_str = 'mods/psionics/icons/psi_fd/lefthand.dmi',
@@ -53,7 +53,7 @@
 */
 /obj/item/psychic_power/psiblade/master/grand/paramount // Silly typechecks because rewriting old interaction code is outside of scope.
 	force = 50
-	maintain_cost = 3
+	maintain_cost = 2
 	icon_state = "psiblade_long"
 	item_state = "psiblade_long"
 
@@ -80,7 +80,7 @@
 	force = 25
 	sharp = TRUE
 	edge = TRUE
-	maintain_cost = 8
+	maintain_cost = 5
 
 	item_icons = list(
 		slot_l_hand_str = 'mods/psionics/icons/psi_fd/lefthand.dmi',
@@ -100,7 +100,7 @@
 */
 /obj/item/psychic_power/psiaxe/master
 	force = 35
-	maintain_cost = 6
+	maintain_cost = 5
 
 /obj/item/psychic_power/psiaxe/master/grand
 	force = 45
@@ -108,7 +108,7 @@
 
 /obj/item/psychic_power/psiaxe/master/grand/paramount
 	force = 60
-	maintain_cost = 2
+	maintain_cost = 3
 
 
 
@@ -116,7 +116,7 @@
 	name = "psychokinetic club"
 	force = 10
 	edge = TRUE
-	maintain_cost = 5
+	maintain_cost = 3
 
 	item_icons = list(
 		slot_l_hand_str = 'mods/psionics/icons/psi_fd/lefthand.dmi',
@@ -135,15 +135,15 @@
 */
 /obj/item/psychic_power/psiclub/master
 	force = 20
-	maintain_cost = 4
+	maintain_cost = 2
 
 /obj/item/psychic_power/psiclub/master/grand
 	force = 30
-	maintain_cost = 3
+	maintain_cost = 2
 
 /obj/item/psychic_power/psiclub/master/grand/paramount
 	force = 45
-	maintain_cost = 2
+	maintain_cost = 3
 
 
 
@@ -152,7 +152,7 @@
 	force = 20
 	sharp = TRUE
 	edge = TRUE
-	maintain_cost = 6
+	maintain_cost = 4
 
 	item_icons = list(
 		slot_l_hand_str = 'mods/psionics/icons/psi_fd/lefthand.dmi',
@@ -172,11 +172,11 @@
 */
 /obj/item/psychic_power/psispear/master
 	force = 30
-	maintain_cost = 5
+	maintain_cost = 4
 
 /obj/item/psychic_power/psispear/master/grand
 	force = 40
-	maintain_cost = 4
+	maintain_cost = 3
 
 /obj/item/psychic_power/psispear/master/grand/paramount
 	force = 50
