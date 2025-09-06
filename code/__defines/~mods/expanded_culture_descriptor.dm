@@ -17,6 +17,8 @@
 #define FACTION_SEPTENERGO      "SeptEnergo"
 #define FACTION_SIBI            "Solar Investigation Bureau Inc."
 #define FACTION_KMS             "Komatsu Medical Services Inc."
+#define FACTION_FOUNDATION      "Cuchulain Foundation"
+#define FACTION_ASSAMBLEE      	"Assamblee of Abnormal Activities on Frontier"
 
 #define CULTURE_HUMAN_PLUTO    "Plutonian"
 #define CULTURE_HUMAN_LORRIMAN "Lorrimanian"

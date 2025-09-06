@@ -71,7 +71,7 @@
 /singleton/vv_set_handler/ghost_appearance_handler
 	handled_type = /mob/observer/ghost
 	handled_vars = list("appearance" = TYPE_PROC_REF(/mob/observer/ghost, set_appearance))
-	predicates = list(GLOBAL_PROC_REF(is_atom_predicate))
+	predicates = list(GLOBAL_PROC_REF(is_tom_predicate))
 
 /singleton/vv_set_handler/virtual_ability_handler
 	handled_type = /mob/observer/virtual
