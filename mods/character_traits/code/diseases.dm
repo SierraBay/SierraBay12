@@ -195,7 +195,7 @@
 			next_pain = world.time + rand(20 MINUTES, 60 MINUTES)
 
 	if(residual_active)
-		owner.apply_damage(rand(2, 3), DAMAGE_PAIN, BP_HEAD)
+		owner.apply_damage(rand(1, 2), DAMAGE_PAIN, BP_HEAD)
 		if(world.time >= residual_end_time)
 			residual_active = FALSE
 
