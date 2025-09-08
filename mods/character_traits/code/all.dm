@@ -74,7 +74,7 @@
 	H.add_headache()
 
 /datum/mod_trait/all/hallucinations
-	name = "Disease - Hallucinatons"
+	name = "Disease - Hallucinations"
 	description = "Периодически, вас будут одолевать галлюцинации."
 
 /datum/mod_trait/all/hallucinations/apply_trait(mob/living/carbon/human/H)
