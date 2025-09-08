@@ -33,7 +33,37 @@
 	var/livedata_next_poll_time = 0
 	var/stamina_trigger_threshold = 0
 	var/running = FALSE
-
+	var/oxygenated_check_time = 0
+	var/list/asthma_pulse_phrases = list(
+		"Сердце колотится, дыхание с трудом удерживается...",
+		"Воздуха не хватает, сердце вот-вот выпрыгнет из груди!",
+		"Сердце быстро бьётся, дыхание выходит из-под контроля!",
+		"Я не могу выровнять дыхание, начинаю задыхаться!"
+	)
+	var/list/asthma_stamina_phrases = list(
+		"Воздуха не хватает, не могу отдышаться...",
+		"Я так устал, мне хватает воздуха...",
+		"Тяжело вдохнуть, усталость берёт своё...",
+		"Слабость давит на грудь, дыхание учащается..."
+	)
+	var/list/asthma_random_phrases = list(
+		"Что-то давит в горле. Дышать тяжело...",
+		"Горло перехватило - мне тяжело выдохнуть!",
+		"Кажется, воздуха не хватает...",
+		"Сложно выдохнуть, грудь стягивает."
+	)
+	var/list/asthma_timer_end_phrases = list(
+		"Дышать становится легче...",
+		"Приступ постепенно проходит...",
+		"Кажется, приступ проходит...",
+		"Лёгкие начинают справляться. Дыхание выравнивается..."
+	)
+	var/list/asthma_oxygen_end_phrases = list(
+		"Лёгкие насыщаются кислородом, дыхание выравнивается.",
+		"Лекарство помогает, воздух идёт легко.",
+		"Приходит облегчение, дышать вновь просто...",
+		"Ощущаю лекарство - лёгкие расслабляются."
+	)
 /datum/asthma_controller/New(mob/living/carbon/human/H)
 	..()
 	owner = H
@@ -56,26 +86,42 @@
 		if(prob(50))
 			owner.emote("gasp")
 		attack_next_tick_time = world.time + 2 SECONDS
-		if(world.time >= attack_end_time || owner.chem_effects[CE_OXYGENATED])
+		if(world.time >= attack_end_time)
 			attack_active = FALSE
-			to_chat(owner, SPAN_NOTICE("Дышать становится легче..."))
+			to_chat(owner, SPAN_NOTICE(pick(asthma_timer_end_phrases)))
 			livedata_window_time = world.time + rand(15 MINUTES, 30 MINUTES)
+	if(attack_active)
+		if(owner.chem_effects[CE_OXYGENATED])
+			if(!oxygenated_check_time)
+				oxygenated_check_time = world.time + 5 SECONDS
+		else
+			oxygenated_check_time = 0
+
+		if(oxygenated_check_time && world.time >= oxygenated_check_time)
+			if(owner.chem_effects[CE_OXYGENATED])
+				attack_active = FALSE
+				to_chat(owner, SPAN_NOTICE(pick(asthma_oxygen_end_phrases)))
+				livedata_window_time = world.time + rand(15 MINUTES, 30 MINUTES)
+			oxygenated_check_time = 0
 
 	if(!attack_active && world.time >= next_random_attack_time)
-		StartAttack("Что-то давит в горле. Дышать тяжело...")
-		next_random_attack_time = world.time + rand(60 MINUTES, 80 MINUTES)
+		StartAttack()
+		to_chat(owner, SPAN_DANGER(pick(asthma_random_phrases)))
+		next_random_attack_time = world.time + rand(40 MINUTES, 80 MINUTES)
 
 	if(livedata_check_active && world.time >= livedata_next_poll_time)
 		var/pulse_bpm = owner.get_pulse_as_number()
 		if(pulse_bpm >= 100 && pulse_bpm != 150)
 			var/chance = (pulse_bpm >= 140) ? 80 : 30
 			if(prob(chance))
-				StartAttack("Дыхание выходит из-под контроля. Не хватает воздуха...")
+				StartAttack()
+				to_chat(owner, SPAN_DANGER(pick(asthma_pulse_phrases)))
 				livedata_check_active = FALSE
 				livedata_window_time = world.time + rand(15 MINUTES, 30 MINUTES)
 		if(owner.stamina < stamina_trigger_threshold)
 			if(prob(60))
-				StartAttack("Не хватает воздуха. Тяжело дышать...")
+				StartAttack()
+				to_chat(owner, SPAN_DANGER(pick(asthma_stamina_phrases)))
 				livedata_check_active = FALSE
 				livedata_window_time = world.time + rand(15 MINUTES, 30 MINUTES)
 			else
@@ -90,32 +136,39 @@
 
 	var/next_wake = max(1, min(
 		attack_active ? attack_next_tick_time : next_random_attack_time,
-		livedata_check_active ? livedata_next_poll_time : livedata_window_time
+		livedata_check_active ? livedata_next_poll_time : livedata_window_time,
+		oxygenated_check_time ? oxygenated_check_time : INFINITY
 	))
 	addtimer(new Callback(src, .proc/ProcessAsthma), max(1, next_wake - world.time))
 
-/datum/asthma_controller/proc/StartAttack(reason)
+/datum/asthma_controller/proc/StartAttack()
 	if(attack_active || !owner || owner.stat == DEAD) return
 	attack_active = TRUE
 	attack_end_time = world.time + rand(1 MINUTE, 3 MINUTES)
 	attack_next_tick_time = world.time
-	to_chat(owner, SPAN_DANGER("[reason]"))
 	livedata_check_active = FALSE
+	oxygenated_check_time = 0
 
 // МИГРЕНИ
 /datum/headache_controller
 	var/mob/living/carbon/human/owner
 	var/pain_active = FALSE
-	var/next_pain = 0
-	var/pain_end_time = 0
-	var/running = FALSE
-	var/residual_end_time = 0
 	var/residual_active = FALSE
+	var/running = FALSE
+	var/pain_end_time = 0
+	var/residual_end_time = 0
+	var/next_pain = 0
+	var/list/headache_start_phrases = list(
+		"Резкая боль пронзает голову!",
+		"В висках пульсирует. Голова начинает болеть...",
+		"Давление в голове растёт.",
+		"Висок тянет и пульсирует, появляется сильная боль."
+	)
 
 /datum/headache_controller/New(mob/living/carbon/human/H)
 	..()
 	owner = H
-	next_pain = world.time + rand(20 MINUTES, 60 MINUTES)
+	next_pain = world.time + rand(20 MINUTES, 40 MINUTES)
 
 /datum/headache_controller/proc/Start()
 	if(running || !owner) return
@@ -131,10 +184,10 @@
 	if(!pain_active && world.time >= next_pain)
 		pain_active = TRUE
 		pain_end_time = world.time + rand(30 SECONDS, 60 SECONDS)
-		to_chat(owner, SPAN_WARNING("Резкая боль пронзает голову!"))
+		to_chat(owner, SPAN_WARNING(pick(headache_start_phrases)))
 
 	if(pain_active)
-		owner.apply_damage(rand(5, 10), DAMAGE_PAIN, BP_HEAD)
+		owner.apply_damage(rand(6, 10), DAMAGE_PAIN, BP_HEAD)
 		if(world.time >= pain_end_time)
 			pain_active = FALSE
 			residual_active = TRUE
@@ -142,15 +195,17 @@
 			next_pain = world.time + rand(20 MINUTES, 60 MINUTES)
 
 	if(residual_active)
-		owner.apply_damage(rand(2, 4), DAMAGE_PAIN, BP_HEAD)
+		owner.apply_damage(rand(1, 2), DAMAGE_PAIN, BP_HEAD)
 		if(world.time >= residual_end_time)
 			residual_active = FALSE
 
-	var/next_wake = max(1, min(
-		pain_active ? pain_end_time : next_pain,
-		residual_active ? residual_end_time : next_pain
-	))
-	addtimer(new Callback(src, .proc/ProcessHeadache), max(1, next_wake - world.time, 15))
+	var/next_delay
+	if(pain_active || residual_active)
+		next_delay = 50
+	else
+		next_delay = max(1, next_pain - world.time)
+
+	addtimer(new Callback(src, .proc/ProcessHeadache), next_delay)
 
 
 // ГАЛЛЮЦИНАЦИИ
@@ -162,7 +217,7 @@
 /datum/hallucinations_controller/New(mob/living/carbon/human/H)
 	..()
 	owner = H
-	next_hallucination = world.time + rand(30 MINUTES, 60 MINUTES)
+	next_hallucination = world.time + rand(15 MINUTES, 30 MINUTES)
 
 /datum/hallucinations_controller/proc/Start()
 	if(running || !owner) return
@@ -176,8 +231,8 @@
 	if(!running || !owner || owner.stat == DEAD) return
 
 	if(world.time >= next_hallucination)
-		owner.hallucination(rand(50, 500), rand(50, 500))
-		next_hallucination = world.time + rand(30 MINUTES, 60 MINUTES)
+		owner.hallucination(rand(200, 500), pick(20, 30, 40, 50))
+		next_hallucination = world.time + rand(20 MINUTES, 40 MINUTES)
 
 	var/next_wake = max(1, next_hallucination - world.time)
 	addtimer(new Callback(src, .proc/ProcessHallucinations), next_wake)
@@ -207,7 +262,7 @@
 
 	if(world.time >= next_seizure)
 		owner.seizure()
-		next_seizure = world.time + rand(20 MINUTES, 60 MINUTES)
+		next_seizure = world.time + rand(20 MINUTES, 40 MINUTES)
 
 	var/next_wake = max(1, next_seizure - world.time)
 	addtimer(new Callback(src, .proc/ProcessSeizures), next_wake)
