@@ -44,23 +44,23 @@ Shift + Right Click - Select point B
 	M.color = colors.get(T.loc)
 
 /datum/build_mode/areas/OnClick(atom/A, list/parameters)
-	if (parameters["right"] && !parameters["shift"])
+	if (parameters[MOUSE_2] && !parameters[MOUSE_SHIFT])
 		Configurate()
 		return
 	var/turf/T = get_turf(A)
 	var/area/R = T?.loc
 	if ((!T) || (!R))
 		return
-	if (parameters["ctrl"] || parameters["middle"])
+	if (parameters[MOUSE_CTRL] || parameters[MOUSE_3])
 		selected_area = R
 		to_chat(user, "Picked area [selected_area.name]")
 	else if (selected_area)
 
-		if (parameters["left"] && parameters["shift"])
+		if (parameters[MOUSE_1] && parameters[MOUSE_SHIFT])
 			coordinate_A = get_turf(A)
 			to_chat(user, SPAN_NOTICE("Defined [coordinate_A] ([coordinate_A.type]) as point A."))
 
-		if (parameters["right"] && parameters["shift"])
+		if (parameters[MOUSE_2] && parameters[MOUSE_SHIFT])
 			coordinate_B = get_turf(A)
 			to_chat(user, SPAN_NOTICE("Defined [coordinate_B] ([coordinate_B.type]) as point B."))
 

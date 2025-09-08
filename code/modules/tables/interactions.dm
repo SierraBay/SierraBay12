@@ -86,12 +86,12 @@ Note: This proc can be overwritten to allow for different types of auto-alignmen
 		W.pixel_z = 0
 		return
 
-	if (!length(click_params) || !click_params["icon-x"] || !click_params["icon-y"])
+	if (!length(click_params) || !click_params[MOUSE_ICON_X] || !click_params[MOUSE_ICON_Y])
 		return
 
 	// Calculation to apply new pixelshift.
-	var/mouse_x = text2num(click_params["icon-x"])-1 // Ranging from 0 to 31
-	var/mouse_y = text2num(click_params["icon-y"])-1
+	var/mouse_x = text2num(click_params[MOUSE_ICON_X])-1 // Ranging from 0 to 31
+	var/mouse_y = text2num(click_params[MOUSE_ICON_Y])-1
 
 	var/cell_x = clamp(round(mouse_x/CELLSIZE), 0, CELLS-1) // Ranging from 0 to CELLS-1
 	var/cell_y = clamp(round(mouse_y/CELLSIZE), 0, CELLS-1)

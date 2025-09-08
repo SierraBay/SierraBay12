@@ -171,8 +171,8 @@ GLOBAL_LIST_AS(rpd_pipe_selection_skilled, list(
 		return TRUE
 
 /obj/item/rpd/proc/get_placement_rotation(mob/user, placement_mode, click_parameters)
-	var/mouse_x = text2num(click_parameters["icon-x"])
-	var/mouse_y = text2num(click_parameters["icon-y"])
+	var/mouse_x = text2num(click_parameters[MOUSE_ICON_X])
+	var/mouse_y = text2num(click_parameters[MOUSE_ICON_Y])
 	switch (placement_mode)
 		if (PIPE_PLACEMENT_SIMPLE)
 			// Zero rotations as we use the default direction of the pipe

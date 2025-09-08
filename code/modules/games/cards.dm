@@ -128,8 +128,8 @@
 		hand.cards += cards[1]
 		cards -= cards[1]
 		hand.concealed = concealed
-		hand.pixel_x = text2num(click_parameters["icon-x"]) - 16
-		hand.pixel_y = text2num(click_parameters["icon-y"]) - 16
+		hand.pixel_x = text2num(click_parameters[MOUSE_ICON_X]) - 16
+		hand.pixel_y = text2num(click_parameters[MOUSE_ICON_Y]) - 16
 		hand.update_icon(user.dir)
 		visible_message(SPAN_NOTICE("[user] deals a card face [concealed ? "down" : "up"]."), SPAN_NOTICE("You deal a card face [concealed ? "down" : "up"]."))
 		return TRUE

@@ -18,7 +18,7 @@
 
 /atom/Click(location, control, params) // This is their reaction to being clicked on (standard proc)
 	var/list/L = params2list(params)
-	var/dragged = L["drag"]
+	var/dragged = L[MOUSE_DRAG]
 	if(dragged && !L[dragged])
 		return
 
@@ -66,28 +66,28 @@
 	next_click = world.time + 1
 
 	var/list/modifiers = params2list(params)
-	if (modifiers["ctrl"] && modifiers["alt"] && modifiers["shift"])
+	if (modifiers[MOUSE_CTRL] && modifiers[MOUSE_ALT] && modifiers[MOUSE_SHIFT])
 		if (CtrlAltShiftClickOn(A))
 			return
-	else if (modifiers["shift"] && modifiers["ctrl"])
+	else if (modifiers[MOUSE_SHIFT] && modifiers[MOUSE_CTRL])
 		if (CtrlShiftClickOn(A))
 			return
-	else if (modifiers["ctrl"] && modifiers["alt"])
+	else if (modifiers[MOUSE_CTRL] && modifiers[MOUSE_ALT])
 		if (CtrlAltClickOn(A))
 			return
-	else if (modifiers["shift"] && modifiers["alt"])
+	else if (modifiers[MOUSE_SHIFT] && modifiers[MOUSE_ALT])
 		if (AltShiftClickOn(A))
 			return
-	else if (modifiers["middle"])
+	else if (modifiers[MOUSE_3])
 		if (MiddleClickOn(A))
 			return
-	else if (modifiers["shift"])
+	else if (modifiers[MOUSE_SHIFT])
 		if (ShiftClickOn(A))
 			return
-	else if (modifiers["alt"])
+	else if (modifiers[MOUSE_ALT])
 		if (AltClickOn(A))
 			return
-	else if (modifiers["ctrl"])
+	else if (modifiers[MOUSE_CTRL])
 		if (CtrlClickOn(A))
 			return
 
@@ -519,7 +519,7 @@ GLOBAL_LIST_INIT(click_catchers)
 
 /obj/screen/click_catcher/Click(location, control, params)
 	var/list/modifiers = params2list(params)
-	if(modifiers["middle"] && istype(usr, /mob/living/carbon))
+	if(modifiers[MOUSE_3] && istype(usr, /mob/living/carbon))
 		var/mob/living/carbon/C = usr
 		C.swap_hand()
 	else
