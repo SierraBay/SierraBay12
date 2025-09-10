@@ -893,7 +893,7 @@
 "di" = (
 /obj/paint/brown,
 /obj/paint_stripe/gunmetal,
-/turf/simulated/wall/r_wall,
+/turf/simulated/wall/r_titanium,
 /area/map_template/colony2/FA/cargo2)
 "dj" = (
 /obj/floor_decal/industrial/outline/green,
@@ -907,11 +907,6 @@
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/colony2/FA/tradezone)
-"dl" = (
-/obj/paint/brown,
-/obj/paint_stripe/gunmetal,
-/turf/simulated/wall/r_wall,
-/area/map_template/colony2/FA/atmospherics)
 "dm" = (
 /obj/catwalk_plated,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -946,7 +941,6 @@
 	pixel_y = 2;
 	pixel_x = -7
 	},
-/obj/random/projectile,
 /turf/simulated/floor/tiled/dark,
 /area/map_template/colony2/FA/unspecified)
 "dt" = (
@@ -1130,7 +1124,7 @@
 "et" = (
 /obj/paint/brown,
 /obj/paint_stripe/gunmetal,
-/turf/simulated/wall/r_wall,
+/turf/simulated/wall/r_titanium,
 /area/map_template/colony2/FA/messhall)
 "ew" = (
 /obj/floor_decal/corner/yellow/border{
@@ -2214,7 +2208,7 @@
 /area/map_template/colony2/FA/medbay)
 "jp" = (
 /obj/paint/black,
-/turf/simulated/wall/r_wall,
+/turf/simulated/wall/r_titanium,
 /area/map_template/colony2/FA/engineering)
 "jq" = (
 /obj/structure/closet/crate/med_crate/trauma,
@@ -3636,7 +3630,7 @@
 "pt" = (
 /obj/paint/brown,
 /obj/paint_stripe/gunmetal,
-/turf/simulated/wall,
+/turf/simulated/wall/r_titanium,
 /area/map_template/colony2/FA/cargo)
 "pu" = (
 /obj/floor_decal/industrial/warning/dust{
@@ -4070,9 +4064,6 @@
 /turf/simulated/wall/r_wall,
 /area/map_template/colony2/FA/science)
 "rm" = (
-/obj/machinery/robotics_fabricator{
-	req_access = list()
-	},
 /obj/floor_decal/corner/yellow/border{
 	dir = 4
 	},
@@ -4081,6 +4072,8 @@
 /obj/machinery/light/spot{
 	dir = 4
 	},
+/obj/machinery/constructable_frame/machine_frame/deconstruct,
+/obj/item/stock_parts/circuitboard/circuit_imprinter,
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/colony2/FA/science)
 "ro" = (
@@ -4088,8 +4081,6 @@
 /area/map_template/colony2/FA/dorms)
 "rp" = (
 /obj/floor_decal/corner/yellow/border,
-/obj/floor_decal/industrial/outline/yellow,
-/obj/machinery/mech_recharger,
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/steel_grid,
@@ -4366,11 +4357,6 @@
 /obj/landmark/clear,
 /turf/template_noop,
 /area/map_template/colony2/FA/command)
-"sL" = (
-/obj/paint/brown,
-/obj/paint_stripe/gunmetal,
-/turf/simulated/wall,
-/area/map_template/colony2/FA/messhall)
 "sM" = (
 /obj/structure/table/woodentable_reinforced,
 /obj/item/reagent_containers/food/drinks/shaker{
@@ -6272,10 +6258,9 @@
 /area/map_template/colony2/FA/cargohatch)
 "AT" = (
 /obj/floor_decal/industrial/outline/yellow,
-/obj/machinery/computer/rdconsole/core/colony{
-	req_access = list();
-	id = 5;
-	dir = 4
+/obj/machinery/computer/rdconsole{
+	dir = 4;
+	req_access = list()
 	},
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/colony2/FA/science)
@@ -6970,7 +6955,7 @@
 "DT" = (
 /obj/paint/brown,
 /obj/paint_stripe/gunmetal,
-/turf/simulated/wall,
+/turf/simulated/wall/r_titanium,
 /area/map_template/colony2/FA/medbay)
 "DV" = (
 /obj/machinery/light/small{
@@ -7087,7 +7072,7 @@
 "EI" = (
 /obj/paint/brown,
 /obj/paint_stripe/gunmetal,
-/turf/simulated/wall,
+/turf/simulated/wall/r_titanium,
 /area/map_template/colony2/FA/engineering)
 "EN" = (
 /obj/structure/catwalk,
@@ -7542,7 +7527,7 @@
 "GV" = (
 /obj/paint/brown,
 /obj/paint_stripe/gunmetal,
-/turf/simulated/wall/r_wall,
+/turf/simulated/wall/r_titanium,
 /area/map_template/colony2/FA/surgery)
 "GY" = (
 /obj/machinery/mining/brace{
@@ -8131,7 +8116,6 @@
 	dir = 1
 	},
 /obj/item/gun/energy/gun,
-/obj/random/colony_smg,
 /obj/machinery/light/spot{
 	dir = 4
 	},
@@ -8182,8 +8166,8 @@
 "Kc" = (
 /obj/structure/table/rack,
 /obj/floor_decal/corner/black/half,
-/obj/random/biggun,
-/obj/random/energy,
+/obj/item/gun/energy/gun,
+/obj/item/gun/projectile/automatic/assault_rifle,
 /turf/simulated/floor/tiled/dark,
 /area/map_template/colony2/FA/unspecified)
 "Kh" = (
@@ -8330,11 +8314,6 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/away,
 /area/template_noop)
-"KH" = (
-/obj/paint/brown,
-/obj/paint_stripe/gunmetal,
-/turf/simulated/wall/r_wall,
-/area/map_template/colony2/FA/medbay)
 "KI" = (
 /obj/floor_decal/industrial/warning/dust,
 /obj/decal/cleanable/dirt,
@@ -8440,11 +8419,6 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/colony2/FA/cargo)
-"Lf" = (
-/obj/paint/brown,
-/obj/paint_stripe/gunmetal,
-/turf/simulated/wall,
-/area/map_template/colony2/FA/cargo2)
 "Lj" = (
 /obj/floor_decal/corner/b_green/bordercorner{
 	dir = 4
@@ -8741,7 +8715,7 @@
 /area/map_template/colony2/FA/tradezone)
 "MJ" = (
 /obj/paint/black,
-/turf/simulated/wall/r_wall,
+/turf/simulated/wall/r_titanium,
 /area/map_template/colony2/FA/cargo2)
 "MM" = (
 /obj/machinery/vending/tool,
@@ -8928,13 +8902,11 @@
 /obj/floor_decal/corner/yellow/border{
 	dir = 4
 	},
-/obj/floor_decal/industrial/outline/yellow,
 /obj/structure/reagent_dispensers/acid{
 	density = 0;
 	pixel_x = 32
 	},
-/obj/machinery/constructable_frame/machine_frame/deconstruct,
-/obj/item/stock_parts/circuitboard/circuit_imprinter,
+/obj/structure/table/steel,
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/colony2/FA/science)
 "NT" = (
@@ -9513,7 +9485,7 @@
 "Qn" = (
 /obj/paint/brown,
 /obj/paint_stripe/gunmetal,
-/turf/simulated/wall,
+/turf/simulated/wall/r_titanium,
 /area/map_template/colony2/FA/atmospherics)
 "Qq" = (
 /obj/floor_decal/industrial/warning/dust{
@@ -9774,7 +9746,7 @@
 "Rq" = (
 /obj/paint/hull,
 /obj/paint_stripe/gunmetal,
-/turf/simulated/wall/r_wall,
+/turf/simulated/wall/r_titanium,
 /area/map_template/colony2/FA/armory)
 "Rr" = (
 /obj/floor_decal/corner/b_green/mono,
@@ -10093,7 +10065,7 @@
 "Sw" = (
 /obj/paint/hull,
 /obj/paint_stripe/gunmetal,
-/turf/simulated/wall/r_wall,
+/turf/simulated/wall/r_titanium,
 /area/map_template/colony2/FA/surgery)
 "Sz" = (
 /obj/paint/fleet/sfv_rook,
@@ -10391,11 +10363,6 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/map_template/colony2/FA/science)
-"TQ" = (
-/obj/paint/brown,
-/obj/paint_stripe/gunmetal,
-/turf/simulated/wall/r_wall,
-/area/map_template/colony2/FA/cargo)
 "TT" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -10405,8 +10372,6 @@
 /obj/item/gun/projectile/shotgun/doublebarrel{
 	pixel_y = -12
 	},
-/obj/random/colony_rifle,
-/obj/random/colony_rifle,
 /obj/item/gun/projectile/sniper/garand,
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/colony2/FA/armory)
@@ -11301,7 +11266,7 @@
 "Xx" = (
 /obj/paint/hull,
 /obj/paint_stripe/gunmetal,
-/turf/simulated/wall/r_wall,
+/turf/simulated/wall/r_titanium,
 /area/map_template/colony2/FA/command)
 "XA" = (
 /obj/floor_decal/corner/b_green/half,
@@ -13049,7 +13014,7 @@ Em
 aM
 kO
 mT
-dl
+Qn
 wl
 Yq
 jI
@@ -13092,14 +13057,14 @@ iC
 NE
 rT
 cb
-dl
-dl
-dl
+Qn
+Qn
+Qn
 UN
 UN
 UN
-dl
-XO
+Qn
+EI
 HY
 Fa
 jI
@@ -13135,19 +13100,19 @@ CY
 vK
 co
 ig
-dl
+Qn
 qp
 TV
 OC
 OC
 OC
 dX
-XO
-XO
-XO
-XO
-XO
-XO
+EI
+EI
+EI
+EI
+EI
+EI
 jp
 Bn
 pk
@@ -13273,11 +13238,11 @@ Oh
 dM
 XT
 iN
-XO
-XO
-XO
-XO
-XO
+EI
+EI
+EI
+EI
+EI
 jp
 Xf
 pk
@@ -13300,7 +13265,7 @@ uN
 zL
 uk
 ky
-sL
+et
 gf
 Ps
 Gn
@@ -13343,7 +13308,7 @@ CQ
 jb
 CM
 Rv
-sL
+et
 XB
 md
 Wc
@@ -13486,7 +13451,7 @@ MC
 MC
 RL
 Np
-Lf
+di
 sm
 cJ
 GI
@@ -13529,7 +13494,7 @@ OV
 eS
 nJ
 iO
-Lf
+di
 HO
 BY
 GY
@@ -13572,7 +13537,7 @@ fH
 fH
 fs
 nF
-Lf
+di
 zQ
 XX
 tb
@@ -13615,7 +13580,7 @@ OF
 zX
 GP
 jn
-Lf
+di
 Wx
 fY
 rr
@@ -13658,7 +13623,7 @@ rx
 fE
 fH
 Xs
-Lf
+di
 Ww
 Ww
 YX
@@ -13687,14 +13652,14 @@ UB
 aI
 FW
 HJ
-KH
+DT
 XQ
 vW
 AS
 Xv
 pq
 bV
-TQ
+pt
 oK
 fL
 Ci
@@ -13725,25 +13690,25 @@ gH
 wy
 lo
 GV
-KH
+DT
 Vl
 Vl
 YP
-KH
-KH
+DT
+DT
 Gm
 Gm
 kg
 rz
 iX
 kz
-TQ
-TQ
-TQ
+pt
+pt
+pt
 de
 de
 de
-TQ
+pt
 di
 yK
 wy
@@ -13773,14 +13738,14 @@ gH
 gH
 hB
 xR
-KH
+DT
 vp
 Ij
 cg
 df
 Zy
 nj
-TQ
+pt
 jM
 ao
 gH
