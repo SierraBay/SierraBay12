@@ -87,6 +87,11 @@
 
 /obj/item/organ/internal/augment/active/vampire/proc/draw_from_container(mob/owner)
 	var/obj/item/reagent_containers/target = usr.get_active_hand()
+
+	if(owner.wear_mask.item_flags & ITEM_FLAG_AIRTIGHT)
+		to_chat(owner, SPAN_WARNING("The material covering your mouth is too thick to draw liquids through it!"))
+		return
+
 	if(!istype(target))
 		to_chat(owner, SPAN_NOTICE("You need to hold container in your hands to draw reagents from it."))
 		return
@@ -113,6 +118,10 @@
 	var/obj/item/reagent_containers/C = usr.get_active_hand()
 	var/obj/item/grab/G = owner.get_active_hand()
 
+	if(owner.wear_mask.item_flags & ITEM_FLAG_AIRTIGHT)
+		to_chat(owner, SPAN_WARNING("The material covering your mouth is too thick to inject liquids through it!"))
+		return
+
 	if(owner.pulling && iscarbon(owner.pulling))
 		target = owner.pulling
 
@@ -123,7 +132,7 @@
 		target = G
 
 	if(!target)
-		to_chat(owner, SPAN_NOTICE("You need to hold container in your hands or grab victim to inject chems into them."))
+		to_chat(owner, SPAN_NOTICE("You need to hold container in your hands or grab victim to inject liquids into them."))
 		return
 
 	if(istype(target, /obj/item/implantcase/chem))
@@ -147,7 +156,17 @@
 
 /obj/item/organ/internal/augment/active/vampire/proc/attack_target(mob/owner)
 	var/target
+	var/obj/item/clothing/mask/M
 	var/obj/item/grab/G = owner.get_active_hand()
+
+	if(owner.wear_mask && istype(M, /obj/item/clothing/mask/muzzle/tape) && istype(M, /obj/item/clothing/mask/surgical))
+		to_chat(owner, SPAN_WARNING("You pierce \The [M] covering your mouth with your sharp fangs, chewing it!"))
+		visible_message(SPAN_DANGER("Large fangs extracts from [owner]'s mouth and tears \The [M],  apart."))
+		qdel(owner.wear_mask)
+
+	if(owner.wear_mask.item_flags & ITEM_FLAG_AIRTIGHT)
+		to_chat(owner, SPAN_WARNING("The material covering your mouth is too thick to bite through it!"))
+		return
 
 	if(owner.pulling && iscarbon(owner.pulling))
 		target = owner.pulling
@@ -159,8 +178,20 @@
 		to_chat(owner, SPAN_NOTICE("You need to pull or grab someone to bite them!"))
 		return
 
+	if(istype(target, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = target
+
+		var/target_zone = check_zone(owner.zone_sel.selecting)
+		var/obj/item/organ/external/affecting = H.get_organ(target_zone)
+
+		if (!affecting || affecting.is_stump())
+			to_chat(owner, SPAN_DANGER("They are missing that limb!"))
+			return
+
+		var/hit_area = affecting.name
+
 		owner.visible_message(SPAN_DANGER("[owner] wildly bites [target] in \the [hit_area] with his razor-sharp fangs!"))
-		target.apply_damage(15, DAMAGE_BRUTE, target_zone, damage_flags=DAMAGE_FLAG_SHARP)
+		H.apply_damage(15, DAMAGE_BRUTE, target_zone, damage_flags=DAMAGE_FLAG_SHARP)
 	admin_attack_log(owner, target, "Has bited", "Has been bitten", "bitten")
 
 /*
@@ -270,6 +301,8 @@
 	if (should_admin_log)
 		var/contained_reagents = reagents.get_reagents()
 		admin_inject_log(owner, target, src, contained_reagents, trans, violent=1)
+
+// Traitor section
 
 /obj/item/device/augment_implanter/vampire
 	augment = /obj/item/organ/internal/augment/active/vampire
