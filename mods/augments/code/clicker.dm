@@ -32,16 +32,15 @@
 
 
 /obj/item/organ/internal/augment/active/clicker/bale_eye/activate()
-	var/mob/living/carbon/human/H = src
 	if(!ready_to_fire)
 		ready_to_fire = TRUE
-		to_chat(H, SPAN_WARNING("Augment target matrix active and ready to fire."))
-		to_chat(H, SPAN_GOOD("Matrix online, use ctrl+click on target to perform shooting attack on target outside your point-blank range."))
+		to_chat(owner, SPAN_WARNING("Augment target matrix active and ready to fire."))
+		to_chat(owner, SPAN_GOOD("Matrix online, use ctrl+click on target to perform shooting attack on target outside your point-blank range."))
 		playsound(owner, 'sound/weapons/flash.ogg', 35, 1)
 		return
 
 	ready_to_fire = FALSE
-	H.visible_message(SPAN_WARNING("You have deactivated your target matrix."))
+	to_chat(owner, SPAN_WARNING("You have deactivated your target matrix."))
 
 /obj/item/organ/internal/augment/active/clicker/bale_eye/Process()
 	var/mob/living/carbon/human/H = src

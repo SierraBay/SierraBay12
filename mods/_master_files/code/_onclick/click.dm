@@ -86,6 +86,5 @@
 								pew.launch(target, src.zone_sel.selecting, (target.x-src.x), (target.y-src.y))
 							matrix.charges -= 1
 							next_click = world.time + 2 SECONDS
-							///	to_chat(src, SPAN_WARNING("Target lock failed. Designate suitable organic or silicon target."))
 							return
 					return ..()

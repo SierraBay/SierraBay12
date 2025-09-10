@@ -4,6 +4,7 @@
 #include "_augments.dm"
 #include "code/active.dm"
 #include "code/clicker.dm"
+#include "code/vampire.dm"
 
 // Далее просто включай свой код
 // #include "code/something.dm"

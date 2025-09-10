@@ -21,7 +21,7 @@
 	icon = 'mods/augments/icons/augment.dmi'
 	icon_state = "knuckles"
 	item_state = "knuckles"
-	name = "integrated knuckles"
+	name = "cyberknuckles"
 	desc = "Not brass, but knuckles."
 	max_force = 15
 	force_multiplier = 0.2
@@ -65,28 +65,14 @@
 	origin_tech = list(TECH_BIO = 3)
 	augment_flags = AUGMENT_MECHANICAL | AUGMENT_SCANNABLE
 
-/// Snake
-/obj/item/organ/internal/augment/active/item/cybersnake
-	name = "cybersnake implant"
-	desc = "A dubious augmentation from any point of view. Cybernetic snake, installed directly in the stomach. Crawls out of the mouth and is used as a deadly weapon."
-	action_button_name = "Extract snake"
-	icon_state = "popout_shotgun"
-	augment_slots = AUGMENT_GROIN
-	item = /obj/item/clothing/mask/cybersnake
-	origin_tech = list(TECH_MATERIAL = 3, TECH_COMBAT = 3, TECH_ESOTERIC = 4)
-	deploy_sound = 'sound/weapons/guns/interaction/rifle_boltback.ogg'
-	retract_sound = 'sound/weapons/guns/interaction/rifle_boltforward.ogg'
-	augment_flags = AUGMENT_MECHANICAL | AUGMENT_BIOLOGICAL
+/// IT HUD
 
-/obj/item/clothing/mask/cybersnake
-	name = "cybersnake"
-	desc = "Cybernetic snake, emerging from mouth. Looks both disgusting and disturbing, moving like real, organic snake, ready to bite."
-	icon_state = "cybersnake"
-	item_state = "cybersnake"
-	icon = 'mods/augments/icons/augments_obj.dmi'
-	attack_verb = list("bited")
-	force = 1
-	w_class = 3
-	item_flags = null
-	slot_flags = SLOT_HEAD | SLOT_MASK
-	matter = list("steel" = 5000)
+/obj/item/organ/internal/augment/active/hud/it
+	name = "integrated IT HUD"
+	desc = "The DAIS Net-Q is an implantable HUD, designed to interface with the user's optic nerve and display information about surrounding devices."
+	icon = 'mods/augments/icons/augment.dmi'
+	icon_state = "eye_it"
+	hud_type = HUD_IT
+
+/obj/item/device/augment_implanter/it_hud
+	augment = /obj/item/organ/internal/augment/active/hud/it
