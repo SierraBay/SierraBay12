@@ -1,0 +1,4 @@
+author: chichmuch
+changes:
+  - {tweak: Добавлена настройка цвета рубашки из undershirt}
+delete-after: true
