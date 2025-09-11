@@ -270,3 +270,25 @@
 	corps += /obj/item/clothing/under/kms_uniform
 	corps += /obj/item/clothing/under/kms_utility_uniform
 	gear_tweaks += new/datum/gear_tweak/path/specified_types_list(corps)
+
+/datum/gear/uniform/facloth
+	display_name = "frontier uniform selection"
+	path = /obj/item/clothing/under
+
+/datum/gear/uniform/facloth/New()
+	..()
+	var/fa = list()
+	fa += /obj/item/clothing/under/thermoactive
+	fa += /obj/item/clothing/under/facloth
+	gear_tweaks += new/datum/gear_tweak/path/specified_types_list(fa)
+
+/datum/gear/uniform/westernpants
+	display_name = "leather pants selection"
+	path = /obj/item/clothing/under/westernpants
+
+/datum/gear/uniform/westernpants/New()
+	..()
+	var/pants = list()
+	pants += /obj/item/clothing/under/westernpants
+	pants += /obj/item/clothing/under/westernpants/black
+	gear_tweaks += new/datum/gear_tweak/path/specified_types_list(pants)

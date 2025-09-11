@@ -63,3 +63,38 @@
 	)
 	icon_state = "kmsberet"
 	item_state = "kmsberet"
+
+/obj/item/clothing/head/bighat
+	name = "brown wide hat"
+	desc = "A brown hat with a wide brim and low crown. Yeehaw!"
+	icon = 'mods/loadout_items/icons/obj_head.dmi'
+	item_icons = list(
+		slot_head_str = 'mods/loadout_items/icons/onmob_head.dmi'
+	)
+
+	icon_state = "cowboy_wide"
+	item_state = "cowboy_wide"
+
+/obj/item/clothing/head/bighat/kgbhat
+	name = "black-red hat"
+	desc = "A black hat with a wide brim and low crown with red additions"
+	icon_state = "kgbhat"
+	item_state = "kgbhat"
+
+/obj/item/clothing/head/bighat/gunfighter
+	name = "white stetson hat"
+	desc = "A white hat with a slightly wide brim and high crown"
+	icon_state = "gunfighter"
+	item_state = "gunfighter"
+
+/obj/item/clothing/head/bighat/lawdog
+	name = "black stetson hat"
+	desc = "A black hat with a slightly wide brim and high crown"
+	icon_state = "lawdog"
+	item_state = "lawdog"
+
+/obj/item/clothing/head/bighat/black
+	name = "black wide hat"
+	desc = "A black hat with a wide brim and low crown."
+	icon_state = "blackhat"
+	item_state = "blackhat"

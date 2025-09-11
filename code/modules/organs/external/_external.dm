@@ -1370,19 +1370,11 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 //Adds autopsy data for used_weapon.
 /obj/item/organ/external/proc/add_autopsy_data(used_weapon, damage)
-	var/weapon_name
-
-	if(isatom(used_weapon))
-		var/atom/weapon = used_weapon
-		weapon_name = initial(weapon.name)
-	else
-		weapon_name = used_weapon
-
-	var/datum/autopsy_data/W = autopsy_data[weapon_name]
+	var/datum/autopsy_data/W = autopsy_data[used_weapon]
 	if(!W)
 		W = new()
-		W.weapon = weapon_name
-		autopsy_data[weapon_name] = W
+		W.weapon = used_weapon
+		autopsy_data[used_weapon] = W
 
 	W.hits += 1
 	W.damage += damage

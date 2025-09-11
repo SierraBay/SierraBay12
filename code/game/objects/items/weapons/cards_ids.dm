@@ -81,7 +81,7 @@
 	desc = "A card showing membership in the Order of Solarian Nations."
 	icon_state = "party_rig"
 	slot_flags = SLOT_ID
-
+/* [SIERRA-REMOVE] - PSI - (Перенесено в mods\psionics\code\override.dm)
 /obj/item/card/operant_card
 	name = "operant registration card"
 	icon_state = "warrantcard_civ"
@@ -122,8 +122,6 @@
 		Fingerprint: [human.dna?.uni_identity ? md5(human.dna.uni_identity) : "N/A"]\n\
 		Assessed Potential: [potential]\
 	"}
-
-
 /obj/item/card/operant_card/attack_self(mob/living/user)
 	user.visible_message(
 		SPAN_ITALIC("\The [user] examines \a [src]."),
@@ -131,6 +129,7 @@
 		3
 	)
 	to_chat(user, info || SPAN_WARNING("\The [src] is completely blank!"))
+*/
 
 /obj/item/card/data
 	name = "data card"

@@ -40,3 +40,10 @@
 	cigarettes["Trident Fruit"] = /obj/item/storage/fancy/smokable/trident_fruit
 	cigarettes["Trident Menthol"] = /obj/item/storage/fancy/smokable/trident_mint
 	gear_tweaks += new/datum/gear_tweak/path(cigarettes)
+
+/datum/gear/asamblee_card
+	display_name = "assamblee membership card"
+	path = /obj/item/card/assamblee_card
+	allowed_factions = list(FACTION_ASSAMBLEE)
+	custom_setup_proc = /obj/item/card/assamblee_card/proc/set_info
+	slot = slot_in_backpack

@@ -30,3 +30,17 @@
 	heat_protection = HANDS
 	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	max_pressure_protection = FIRESUIT_MAX_PRESSURE
+
+/obj/item/clothing/gloves/driving_gloves
+	name = "leather driving gloves"
+	desc = "A pair of leather gloves with a cutout on the back of the hand, designed for driving. They are made of synthetic leather and have a label that says they were made in Iolaus."
+	icon = 'mods/loadout_items/icons/obj_hands.dmi'
+	item_icons = list(slot_gloves_str = 'mods/loadout_items/icons/onmob_hands.dmi')
+	icon_state = "leather_gloves"
+	item_state = "leather_gloves"
+
+/obj/item/clothing/gloves/driving_gloves/gray
+	name = "gray driving gloves"
+	desc = "A pair of gray leather gloves with a cutout on the back of the hand, designed for driving. They are made of synthetic leather and have a label that says they were made in Iolaus."
+	icon_state = "grayleather_gloves"
+	item_state = "grayleather_gloves"

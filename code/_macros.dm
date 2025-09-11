@@ -36,7 +36,7 @@
 
 #define isairlock(A) istype(A, /obj/machinery/door/airlock)
 
-#define isatom(A) (isloc(A) && !isarea(A))
+#define istom(A) (isloc(A) && !isarea(A))
 
 #define isprojectile(A) istype(A, /obj/item/projectile)
 
