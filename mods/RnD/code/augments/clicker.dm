@@ -4,7 +4,7 @@
 /obj/item/organ/internal/augment/active/clicker
 	name = "integrated dartgun"
 	desc = "A small implantable dartgun, coming with two toxin-covered flechettes inside augment. Can't be recharged."
-	icon = 'mods/augments/icons/augment.dmi'
+	icon = 'mods/RnD/icons/augment.dmi'
 	icon_state = "dartgun"
 	action_button_name = "Activate target matrix"
 	augment_slots = AUGMENT_EYES
@@ -27,7 +27,7 @@
 /obj/item/organ/internal/augment/active/clicker/bale_eye
 	name = "integrated laser"
 	desc = "A small laser projector integrated into mechanical eyes lens system. Can recharge itself without a large increase in overall power consumption, but this comes at the cost of much longer recharge time. "
-	icon = 'mods/augments/icons/augment.dmi'
+	icon = 'mods/RnD/icons/augment.dmi'
 	icon_state = "bale_eye"
 	action_button_name = "Activate target matrix"
 	augment_slots = AUGMENT_EYES

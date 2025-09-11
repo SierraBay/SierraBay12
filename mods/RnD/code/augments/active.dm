@@ -1,14 +1,14 @@
 /// Overrides
 
 /datum/action/item_action/organ/augment
-	button_icon = 'mods/augments/icons/augment.dmi'
+	button_icon = 'mods/RnD/icons/augment.dmi'
 
 /// Knuckles
 /obj/item/organ/internal/augment/active/item/knuckles
 	name = "cybernetic knuckles"
 	desc = "Reinforced frame of the prosthetic hand, which can be used to deliver powerful and fast blows."
 	action_button_name = "Deploy knuckles"
-	icon = 'mods/augments/icons/augment.dmi'
+	icon = 'mods/RnD/icons/augment.dmi'
 	icon_state = "knuckles"
 	augment_slots = AUGMENT_HAND
 	item = /obj/item/material/armblade/knuckles
@@ -18,7 +18,7 @@
 	augment_flags = AUGMENT_MECHANICAL | AUGMENT_SCANNABLE | AUGMENT_INSPECTABLE
 
 /obj/item/material/armblade/knuckles
-	icon = 'mods/augments/icons/augment.dmi'
+	icon = 'mods/RnD/icons/augment.dmi'
 	icon_state = "knuckles"
 	item_state = "knuckles"
 	name = "cyberknuckles"
@@ -34,7 +34,7 @@
 	name = "energy shield projector"
 	desc = "Energy shield projector integrated into cybernetic augment. Last argument when negotiations going not your way."
 	action_button_name = "Deploy energy shield"
-	icon = 'mods/augments/icons/augment.dmi'
+	icon = 'mods/RnD/icons/augment.dmi'
 	icon_state = "eshield"
 	augment_slots = AUGMENT_ARM
 	item = /obj/item/shield/energy
@@ -58,7 +58,7 @@
 	name = "integrated health scanner"
 	desc = "Health scanner which can be intergated into arm. For cases when their insurance deserves it."
 	action_button_name = "Deploy health scanner"
-	icon = 'mods/augments/icons/augment.dmi'
+	icon = 'mods/RnD/icons/augment.dmi'
 	icon_state = "scanner"
 	augment_slots = AUGMENT_ARM
 	item = /obj/item/device/scanner/health
@@ -70,7 +70,7 @@
 /obj/item/organ/internal/augment/active/hud/it
 	name = "integrated IT HUD"
 	desc = "The DAIS Net-Q is an implantable HUD, designed to interface with the user's optic nerve and display information about surrounding devices."
-	icon = 'mods/augments/icons/augment.dmi'
+	icon = 'mods/RnD/icons/augment.dmi'
 	icon_state = "eye_it"
 	hud_type = HUD_IT
 

@@ -1,7 +1,7 @@
 /obj/item/organ/internal/augment/active/vampire
 	name = "vampire"
 	augment_slots = AUGMENT_HEAD
-	icon = 'mods/augments/icons/augment.dmi'
+	icon = 'mods/RnD/icons/augment.dmi'
 	icon_state = "vampire"
 	desc = "A pair of cybernetic fangs, installing into organic mouth, which can be used as some sort of robust hypospray. Make sure you can survive stake to heart."
 	augment_flags = AUGMENT_BIOLOGICAL
@@ -22,10 +22,10 @@
 		return
 
 	var/list/choices = list(
-		"Draw" = mutable_appearance('mods/augments/icons/augment.dmi', "vampire-draw"),
-		"Inject" = mutable_appearance('mods/augments/icons/augment.dmi', "vampire-inject"),
-		"Bite" = mutable_appearance('mods/augments/icons/augment.dmi', "vampire-bite"),
-		"Gulp" = mutable_appearance('mods/augments/icons/augment.dmi', "vampire-gulp")
+		"Draw" = mutable_appearance('mods/RnD/icons/augment.dmi', "vampire-draw"),
+		"Inject" = mutable_appearance('mods/RnD/icons/augment.dmi', "vampire-inject"),
+		"Bite" = mutable_appearance('mods/RnD/icons/augment.dmi', "vampire-bite"),
+		"Gulp" = mutable_appearance('mods/RnD/icons/augment.dmi', "vampire-gulp")
 	)
 
 	var/choice = show_radial_menu(usr, usr, choices, radius = 42, require_near = TRUE, tooltips = TRUE, check_locs = list(src))
