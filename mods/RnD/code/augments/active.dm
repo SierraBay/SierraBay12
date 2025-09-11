@@ -23,10 +23,12 @@
 	item_state = "knuckles"
 	name = "cyberknuckles"
 	desc = "Not brass, but knuckles."
-	max_force = 15
+	max_force = 16
 	force_multiplier = 0.2
 	base_parry_chance = 15
 	attack_cooldown_modifier = -1
+	sharp = FALSE
+	edge = FALSE
 
 
 /// Shield
