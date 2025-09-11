@@ -3,58 +3,13 @@
 	augment_slots = AUGMENT_HEAD
 	icon = 'mods/augments/icons/augment.dmi'
 	icon_state = "vampire"
-	desc = "A small computer system constantly tracks your physiological state and vital signs. A muscle gesture can be used to receive a simple diagnostic report, not unlike that from a handheld scanner."
+	desc = "A pair of cybernetic fangs, installing into organic mouth, which can be used as some sort of robust hypospray. Make sure you can survive stake to heart."
 	augment_flags = AUGMENT_BIOLOGICAL
 	origin_tech = list(TECH_DATA = 3, TECH_BIO = 4)
 	var/amount_per_transfer_from_this = 5
 	var/fangs = 0
 	var/max_reagents = 5
 
-/*
-/obj/item/organ/internal/augment/active/vampire/activate()
-	var/mob/living/carbon/human/H = src
-	var/obj/item/grab/G = H.get_active_hand()
-	if (!istype(G))
-		to_chat(H, SPAN_WARNING( "You must be grabbing a victim in your active hand to use your augmentations."))
-		return
-
-	if(!G.can_absorb())
-		to_chat(H, SPAN_WARNING( "You must have a tighter grip on victim to drain their blood."))
-		return
-
-	var/mob/living/carbon/human/T = G.affecting
-	if (!istype(T) || T.isSynthetic() || T.species.species_flags & SPECIES_FLAG_NO_PAIN)
-		to_chat(H, SPAN_WARNING( "[T] is not a creature you can transfer blood from."))
-		return
-
-	if(T.head && (T.head.item_flags & ITEM_FLAG_AIRTIGHT))
-		to_chat(H, SPAN_WARNING( "[T]'s headgear is blocking the way to the neck."))
-		return
-
-	var/obj/item/blocked = H.check_mouth_coverage()
-	if(blocked)
-		to_chat(H, SPAN_WARNING( "\The [blocked] is in the way of your fangs!"))
-		return
-
-	if(fangs)
-		to_chat(H, SPAN_WARNING( "Your fangs are already sunk into a victim's neck!"))
-		return
-
-	var/blood = 0
-	var/blood_total = 0
-	var/blood_usable = 0
-	var/blood_drained = 0
-
-	H.visible_message(SPAN("danger", "[H] bites [T]'s neck!"),\
-						   SPAN("danger", "You bite [T]'s neck and begin to drain their blood."),\
-						   SPAN("danger", "You hear a soft puncture and a wet sucking noise"))
-
-	var/endsuckmsg = "You extract your fangs from [T.name]'s neck and stop draining them of blood."
-	H.visible_message(SPAN("danger", "[H] stops biting [T.name]'s neck!"),\
-						   SPAN("notice", "[endsuckmsg]"))
-*/
-
-// Зона вайбкода
 
 /obj/item/organ/internal/augment/active/vampire/Initialize()
 	. = ..()
@@ -69,8 +24,8 @@
 	var/list/choices = list(
 		"Draw" = mutable_appearance('mods/augments/icons/augment.dmi', "vampire-draw"),
 		"Inject" = mutable_appearance('mods/augments/icons/augment.dmi', "vampire-inject"),
-		"Attack" = mutable_appearance('mods/augments/icons/augment.dmi', "vampire-bite"),
-	//	"Drain" = mutable_appearance('mods/augments/icons/augment.dmi', "vampire-drain")
+		"Bite" = mutable_appearance('mods/augments/icons/augment.dmi', "vampire-bite"),
+		"Gulp" = mutable_appearance('mods/augments/icons/augment.dmi', "vampire-gulp")
 	)
 
 	var/choice = show_radial_menu(usr, usr, choices, radius = 42, require_near = TRUE, tooltips = TRUE, check_locs = list(src))
@@ -80,10 +35,11 @@
 			draw_from_container(owner)
 		if("Inject")
 			inject(owner)
-		if("Attack")
+		if("Bite")
 			attack_target(owner)
-//		if("Drain")
-//			vampire_drain(owner)
+		if("Gulp")
+			gulp(owner)
+
 
 /obj/item/organ/internal/augment/active/vampire/proc/draw_from_container(mob/owner)
 	var/target
@@ -199,74 +155,24 @@
 		playsound(loc, 'sound/weapons/bite.ogg', 25, 1)
 	admin_attack_log(owner, target, "Has bited", "Has been bitten", "bitten")
 
-/*
+/obj/item/organ/internal/augment/active/vampire/proc/gulp(mob/owner)
+	var/should_admin_log = reagents.should_admin_log()
 
-/obj/item/organ/internal/augment/active/vampire/proc/drain_blood(mob/owner)
-	var/source
-	var/is_mob = FALSE
-	if(owner.pulling && iscarbon(owner.pulling))
-		source = owner.pulling
-		is_mob = TRUE
-		var/obj/item/reagent_containers/ivbag/held = owner.held_item()
-		if(istype(held))
-			source = held
-		else
-			to_chat(H, SPAN_WARNING("No blood source! Grab a living carbon or hold a blood pack."))
+	if (should_admin_log)
+		var/proceed = alert(owner, "Reagents in your fangs are potentially harmful. Are you sure?", "Safety Alert", "I am!", "No.")
+		if (proceed != "I am!")
 			return
-	if(reagents.total_volume >= reagents.maximum_volume)
-		to_chat(H, SPAN_WARNING("The implant is full!"))
+
+	if(!src.reagents.total_volume)
+		to_chat(owner, SPAN_NOTICE("Your fangs are empty."))
 		return
 
-	var/datum/reagent/blood/blood_reagent
-	var/drain_amount = min(10, reagents.maximum_volume - reagents.total_volume)
-	var/blood_data
+	var/trans = reagents.trans_to_mob(owner, 5, CHEM_BLOOD)
+	to_chat(owner, SPAN_NOTICE("You lower the barrier between your fangs casing and your bloodstream. \The [src] now contains [src.reagents.total_volume] units."))
+	if (should_admin_log)
+		var/contained_reagents = reagents.get_reagents()
+		admin_inject_log(owner, src, contained_reagents, trans, violent=0)
 
-	if(is_mob)
-		var/mob/living/carbon/target = source
-		if(target.stat == DEAD || target.blood_volume < 1)
-			to_chat(H, SPAN_WARNING("No blood to drain!"))
-			return
-
-		blood_data = target.get_blood_data()
-		if(!blood_data || !(owner.dna.b_type in blood_data.receiver))
-			to_chat(H, SPAN_WARNING("The blood is incompatible with you!"))
-			return
-
-		drain_amount = min(drain_amount, target.blood_volume)
-		if(drain_amount <= 0)
-			return
-
-		target.blood_volume -= drain_amount
-		blood_reagent = new /datum/reagent/blood(drain_amount)
-		blood_reagent.data = blood_data
-		reagents.add_reagent(/datum/reagent/blood, drain_amount, data = blood_data)
-
-		var/obj/item/reagent_containers/ivbag/bag = source
-		var/current_blood = bag.reagents.get_reagent_amount(/datum/reagent/blood)
-		if(current_blood < 1)
-			to_chat(H, SPAN_WARNING("No blood in the pack!"))
-			return
-
-		blood_reagent = bag.reagents.get_reagent(/datum/reagent/blood)
-		blood_data = blood_reagent?.data
-		if(!blood_data || !(owner.dna.b_type in blood_data.receiver))
-			to_chat(H, SPAN_WARNING("The blood is incompatible with you!"))
-			return
-
-		drain_amount = min(drain_amount, current_blood)
-		if(drain_amount <= 0)
-			return
-
-		bag.reagents.trans_to(src, drain_amount, transfered_by = owner)
-
-	to_chat(H, SPAN_DANGER("You drain [drain_amount] units of blood."))
-	if(is_mob)
-		var/mob/living/carbon/target = source
-		to_chat(target, SPAN_DANGER("[owner] drains your blood!"))
-		if(target.blood_volume <= BLOOD_VOLUME_BAD)
-	bag.update_icon()
-	return
-*/
 
 // Morale support (reckless copypaste from syringes.dm) section
 
@@ -341,7 +247,6 @@
 		target.apply_damage(3, DAMAGE_BRUTE)
 		playsound(loc, 'sound/weapons/bite.ogg', 25, 1)
 
-	var/trans = reagents.trans_to(target, amount_per_transfer_from_this)
 	var/amount = min(reagents.get_free_space(), amount_per_transfer_from_this)
 	to_chat(owner, SPAN_NOTICE("You fill your fangs with [target] blood."))
 	target.take_blood(src, amount)

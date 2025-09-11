@@ -1,7 +1,11 @@
+
+//we're plaseholder for now, gonna finish this later
+
 /obj/item/organ/internal/augment/active/clicker
 	name = "integrated dartgun"
 	desc = "A small implantable dartgun, coming with two toxin-covered flechettes inside augment. Can't be recharged."
-	icon_state = "eye"
+	icon = 'mods/augments/icons/augment.dmi'
+	icon_state = "dartgun"
 	action_button_name = "Activate target matrix"
 	augment_slots = AUGMENT_EYES
 	var/ready_to_fire = FALSE
@@ -17,6 +21,8 @@
 		if (ready_to_fire)
 			ready_to_fire = FALSE
 	..()
+
+// Real augment
 
 /obj/item/organ/internal/augment/active/clicker/bale_eye
 	name = "integrated laser"
