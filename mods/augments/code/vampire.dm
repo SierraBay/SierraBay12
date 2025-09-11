@@ -83,53 +83,61 @@
 		if("Attack")
 			attack_target(owner)
 //		if("Drain")
-//			drain_blood(H)
+//			vampire_drain(owner)
 
 /obj/item/organ/internal/augment/active/vampire/proc/draw_from_container(mob/owner)
-	var/obj/item/reagent_containers/target = usr.get_active_hand()
-
-	if(owner.wear_mask.item_flags & ITEM_FLAG_AIRTIGHT)
-		to_chat(owner, SPAN_WARNING("The material covering your mouth is too thick to draw liquids through it!"))
-		return
-
-	if(!istype(target))
-		to_chat(owner, SPAN_NOTICE("You need to hold container in your hands to draw reagents from it."))
-		return
-
-	if(!target.reagents.total_volume)
-		to_chat(owner, SPAN_NOTICE("[target] is empty."))
-		return
-
-	if(!target.is_open_container() && !istype(target, /obj/structure/reagent_dispensers) && !istype(target, /obj/item/slime_extract))
-		to_chat(owner, SPAN_NOTICE("You cannot directly remove reagents from this object."))
-		return
-
-	if(reagents.total_volume >= max_reagents)
-		to_chat(owner, SPAN_NOTICE("Your fangs is full. Сlean them from reagents first."))
-		return
-
-	var/trans = target.reagents.trans_to_obj(src, amount_per_transfer_from_this)
-	to_chat(owner, SPAN_NOTICE("You fill your fangs with [trans] units of the solution."))
-
-	update_icon()
-
-/obj/item/organ/internal/augment/active/vampire/proc/inject(mob/owner)
 	var/target
 	var/obj/item/reagent_containers/C = usr.get_active_hand()
-	var/obj/item/grab/G = owner.get_active_hand()
 
-	if(owner.wear_mask.item_flags & ITEM_FLAG_AIRTIGHT)
-		to_chat(owner, SPAN_WARNING("The material covering your mouth is too thick to inject liquids through it!"))
+	if(owner.wear_mask && owner.wear_mask.item_flags & ITEM_FLAG_AIRTIGHT)
+		to_chat(owner, SPAN_WARNING("The material covering your mouth is too thick to draw liquids through it!"))
 		return
-
-	if(owner.pulling && iscarbon(owner.pulling))
-		target = owner.pulling
 
 	if(istype(C))
 		target = C
 
-	if(istype(G))
-		target = G
+	if(owner.pulling && iscarbon(owner.pulling))
+		target = owner.pulling
+
+	if(!target)
+		to_chat(owner, SPAN_NOTICE("You need to hold container in your hands to draw reagents from it."))
+		return
+
+	if(isliving(target))
+		vampire_sample(target, owner)
+		return
+
+	if(!isliving(target) && !C.reagents.total_volume)
+		to_chat(owner, SPAN_NOTICE("[target] is empty."))
+		return
+
+	if(!isliving(target) && !C.is_open_container() && !istype(target, /obj/structure/reagent_dispensers) && !istype(target, /obj/item/slime_extract))
+		to_chat(owner, SPAN_NOTICE("You cannot directly remove reagents from this object."))
+		return
+
+	if(!isliving(target) && reagents.total_volume >= max_reagents)
+		to_chat(owner, SPAN_NOTICE("Your fangs is full. Сlean them from reagents first."))
+		return
+
+	var/trans = C.reagents.trans_to_obj(src, amount_per_transfer_from_this)
+	to_chat(owner, SPAN_NOTICE("You fill your fangs with [trans] units of the solution."))
+
+	update_icon()
+
+
+/obj/item/organ/internal/augment/active/vampire/proc/inject(mob/owner)
+	var/target
+	var/obj/item/reagent_containers/C = usr.get_active_hand()
+
+	if(owner.wear_mask && owner.wear_mask.item_flags & ITEM_FLAG_AIRTIGHT)
+		to_chat(owner, SPAN_WARNING("The material covering your mouth is too thick to inject liquids through it!"))
+		return
+
+	if(istype(C))
+		target = C
+
+	if(owner.pulling && iscarbon(owner.pulling))
+		target = owner.pulling
 
 	if(!target)
 		to_chat(owner, SPAN_NOTICE("You need to hold container in your hands or grab victim to inject liquids into them."))
@@ -138,15 +146,16 @@
 	if(istype(target, /obj/item/implantcase/chem))
 		return
 
-	if(C && !C.is_open_container() && !ismob(target) && !istype(target, /obj/item/reagent_containers/food) && !istype(target, /obj/item/slime_extract) && !istype(target, /obj/item/clothing/mask/smokable/cigarette) && !istype(target, /obj/item/storage/fancy/smokable))
+	if(!isliving(target) && !C.is_open_container() && !ismob(target) && !istype(target, /obj/item/reagent_containers/food) && !istype(target, /obj/item/slime_extract) && !istype(target, /obj/item/clothing/mask/smokable/cigarette) && !istype(target, /obj/item/storage/fancy/smokable))
 		to_chat(owner, SPAN_NOTICE("You cannot directly fill this object."))
 		return
-	if(C && !C.reagents.get_free_space())
+
+	if(!isliving(target) && !C.reagents.get_free_space())
 		to_chat(owner, SPAN_NOTICE("[target] is full."))
 		return
 
 	if(isliving(target))
-		vampirestab(target, owner)
+		vampire_stab(target, owner)
 		return
 
 	var/trans = reagents.trans_to(target, amount_per_transfer_from_this)
@@ -156,26 +165,17 @@
 
 /obj/item/organ/internal/augment/active/vampire/proc/attack_target(mob/owner)
 	var/target
-	var/obj/item/clothing/mask/M
-	var/obj/item/grab/G = owner.get_active_hand()
 
-	if(owner.wear_mask && istype(M, /obj/item/clothing/mask/muzzle/tape) && istype(M, /obj/item/clothing/mask/surgical))
-		to_chat(owner, SPAN_WARNING("You pierce \The [M] covering your mouth with your sharp fangs, chewing it!"))
-		visible_message(SPAN_DANGER("Large fangs extracts from [owner]'s mouth and tears \The [M],  apart."))
-		qdel(owner.wear_mask)
 
-	if(owner.wear_mask.item_flags & ITEM_FLAG_AIRTIGHT)
+	if(owner.wear_mask && owner.wear_mask.item_flags & ITEM_FLAG_AIRTIGHT)
 		to_chat(owner, SPAN_WARNING("The material covering your mouth is too thick to bite through it!"))
 		return
 
 	if(owner.pulling && iscarbon(owner.pulling))
 		target = owner.pulling
 
-	if(istype(G))
-		target = G
-
 	if(!target)
-		to_chat(owner, SPAN_NOTICE("You need to pull or grab someone to bite them!"))
+		to_chat(owner, SPAN_NOTICE("You need to pull someone to bite them!"))
 		return
 
 	if(istype(target, /mob/living/carbon/human))
@@ -184,14 +184,19 @@
 		var/target_zone = check_zone(owner.zone_sel.selecting)
 		var/obj/item/organ/external/affecting = H.get_organ(target_zone)
 
+
 		if (!affecting || affecting.is_stump())
 			to_chat(owner, SPAN_DANGER("They are missing that limb!"))
 			return
 
+
 		var/hit_area = affecting.name
+
+
 
 		owner.visible_message(SPAN_DANGER("[owner] wildly bites [target] in \the [hit_area] with his razor-sharp fangs!"))
 		H.apply_damage(15, DAMAGE_BRUTE, target_zone, damage_flags=DAMAGE_FLAG_SHARP)
+		playsound(loc, 'sound/weapons/bite.ogg', 25, 1)
 	admin_attack_log(owner, target, "Has bited", "Has been bitten", "bitten")
 
 /*
@@ -265,7 +270,7 @@
 
 // Morale support (reckless copypaste from syringes.dm) section
 
-/obj/item/organ/internal/augment/active/vampire/proc/vampirestab(mob/living/carbon/target, mob/living/carbon/owner)
+/obj/item/organ/internal/augment/active/vampire/proc/vampire_stab(mob/living/carbon/target, mob/living/carbon/owner)
 	var/should_admin_log = reagents.should_admin_log()
 	if(istype(target, /mob/living/carbon/human))
 
@@ -292,9 +297,10 @@
 
 		owner.visible_message(SPAN_DANGER("[owner] deeply bites [target] in \the [hit_area] with his razor-sharp fangs!"))
 		target.apply_damage(3, DAMAGE_BRUTE, target_zone, damage_flags=DAMAGE_FLAG_SHARP)
+		playsound(loc, 'sound/weapons/bite.ogg', 25, 1)
 
 	else
-		owner.visible_message(SPAN_DANGER("[owner] stabs [target] with [src.name]!"))
+		owner.visible_message(SPAN_DANGER("[owner] deeply bites [target] with their razor-sharp fangs!"))
 		target.apply_damage(3, DAMAGE_BRUTE)
 
 	var/trans = reagents.trans_to_mob(target, 5, CHEM_BLOOD)
@@ -302,7 +308,53 @@
 		var/contained_reagents = reagents.get_reagents()
 		admin_inject_log(owner, target, src, contained_reagents, trans, violent=1)
 
+
+/obj/item/organ/internal/augment/active/vampire/proc/vampire_sample(mob/living/carbon/target, mob/living/carbon/owner)
+	if(istype(target, /mob/living/carbon/human))
+
+		var/mob/living/carbon/human/H = target
+
+		var/target_zone = check_zone(owner.zone_sel.selecting)
+		var/obj/item/organ/external/affecting = H.get_organ(target_zone)
+
+		if (!affecting || affecting.is_stump())
+			to_chat(owner, SPAN_DANGER("They are missing that limb!"))
+			return
+
+		var/hit_area = affecting.name
+
+		if((owner != target) && H.check_shields(7, src, owner, "\the [src]"))
+			return
+
+		if (target != owner && H.get_blocked_ratio(target_zone, DAMAGE_BRUTE, damage_flags=DAMAGE_FLAG_SHARP) > 0.1 && prob(50))
+			for(var/mob/O in viewers(world.view, owner))
+				O.show_message(text(SPAN_DANGER("[owner] tries to bite [target] in \the [hit_area] with [src.name], but the attack is deflected by armor!")), 1)
+
+			admin_attack_log(owner, target, "Attacked using \a [src]", "Was attacked with \a [src]", "used \a [src] to attack")
+			return
+
+		owner.visible_message(SPAN_DANGER("[owner] deeply bites [target] in \the [hit_area] with their razor-sharp fangs!"))
+		target.apply_damage(3, DAMAGE_BRUTE, target_zone, damage_flags=DAMAGE_FLAG_SHARP)
+		playsound(loc, 'sound/weapons/bite.ogg', 25, 1)
+	else
+		owner.visible_message(SPAN_DANGER("[owner] bites [target] with their razor-sharp fangs!"))
+		target.apply_damage(3, DAMAGE_BRUTE)
+		playsound(loc, 'sound/weapons/bite.ogg', 25, 1)
+
+	var/trans = reagents.trans_to(target, amount_per_transfer_from_this)
+	var/amount = min(reagents.get_free_space(), amount_per_transfer_from_this)
+	to_chat(owner, SPAN_NOTICE("You fill your fangs with [target] blood."))
+	target.take_blood(src, amount)
+
+
 // Traitor section
 
 /obj/item/device/augment_implanter/vampire
 	augment = /obj/item/organ/internal/augment/active/vampire
+
+/datum/uplink_item/item/augment/aug_vampire
+	name = "Vampire Augment (head)"
+	desc = "An augment that adds two sharp fangs to your mouth. It can store chemicals and inject them into vessels or people. \
+	It can be easily concealed, but usage of augment is fairly dramatic. It requires ORGANIC head."
+	item_cost = 32
+	path = /obj/item/device/augment_implanter/vampire
