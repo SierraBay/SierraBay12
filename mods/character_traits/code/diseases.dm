@@ -1,5 +1,20 @@
 /mob/living/carbon/human
 	var/list/health_controllers = list()
+	var/trait_eye_protection = FALSE
+	var/trait_ear_protection = FALSE
+
+/mob/living/carbon/human/eyecheck()
+	var/base = ..()
+	if(src.trait_eye_protection)
+		return max(base, 2)
+	return base
+
+/mob/living/carbon/human/get_sound_volume_multiplier()
+	var/base = ..()
+	if(src.trait_ear_protection)
+		return 0.0
+	return base
+
 
 /mob/living/carbon/human/proc/add_asthma()
 	var/datum/asthma_controller/H = new /datum/asthma_controller(src)
@@ -18,6 +33,21 @@
 
 /mob/living/carbon/human/proc/add_seizures()
 	var/datum/seizures_controller/H = new /datum/seizures_controller(src)
+	health_controllers += H
+	H.Start()
+
+/mob/living/carbon/human/proc/add_blindness()
+	var/datum/blindness_controller/H = new /datum/blindness_controller(src)
+	health_controllers += H
+	H.Start()
+
+/mob/living/carbon/human/proc/add_deafness()
+	var/datum/deafness_controller/H = new /datum/deafness_controller(src)
+	health_controllers += H
+	H.Start()
+
+/mob/living/carbon/human/proc/add_muteness()
+	var/datum/muteness_controller/H = new /datum/muteness_controller(src)
 	health_controllers += H
 	H.Start()
 
@@ -42,7 +72,7 @@
 	)
 	var/list/asthma_stamina_phrases = list(
 		"Воздуха не хватает, не могу отдышаться...",
-		"Я так устал, мне хватает воздуха...",
+		"Я так устал, мне не хватает воздуха...",
 		"Тяжело вдохнуть, усталость берёт своё...",
 		"Слабость давит на грудь, дыхание учащается..."
 	)
@@ -62,7 +92,7 @@
 		"Лёгкие насыщаются кислородом, дыхание выравнивается.",
 		"Лекарство помогает, воздух идёт легко.",
 		"Приходит облегчение, дышать вновь просто...",
-		"Ощущаю лекарство - лёгкие расслабляются."
+		"Ощущаю лекарство, лёгкие расслабляются."
 	)
 /datum/asthma_controller/New(mob/living/carbon/human/H)
 	..()
@@ -266,3 +296,89 @@
 
 	var/next_wake = max(1, next_seizure - world.time)
 	addtimer(new Callback(src, .proc/ProcessSeizures), next_wake)
+
+//ГЛУХОТА
+/datum/deafness_controller
+	var/mob/living/carbon/human/owner
+	var/running = FALSE
+
+/datum/deafness_controller/New(mob/living/carbon/human/H)
+	..()
+	owner = H
+
+/datum/deafness_controller/proc/Start()
+	if(running || !owner || owner.stat == DEAD)
+		return
+	running = TRUE
+	owner.ear_deaf = INFINITY
+	owner.trait_ear_protection = TRUE
+	Enforce()
+
+/datum/deafness_controller/proc/Stop()
+	running = FALSE
+	owner.ear_deaf = 0
+
+/datum/deafness_controller/proc/Enforce()
+	if(!running || !owner || owner.stat == DEAD)
+		return
+	if(owner.ear_deaf != INFINITY)
+		owner.ear_deaf = INFINITY
+	owner.set_sdisability(DEAFENED)
+	addtimer(new Callback(src, .proc/Enforce), 20)
+
+//НЕМOТА
+/datum/muteness_controller
+	var/mob/living/carbon/human/owner
+	var/running = FALSE
+
+/datum/muteness_controller/New(mob/living/carbon/human/H)
+	..()
+	owner = H
+
+/datum/muteness_controller/proc/Start()
+	if(running || !owner || owner.stat == DEAD)
+		return
+	running = TRUE
+	owner.silent = INFINITY
+	Enforce()
+
+/datum/muteness_controller/proc/Stop()
+	running = FALSE
+	owner.silent = 0
+
+/datum/muteness_controller/proc/Enforce()
+	if(!running || !owner || owner.stat == DEAD)
+		return
+	if(owner.silent != INFINITY)
+		owner.silent = INFINITY
+	addtimer(new Callback(src, .proc/Enforce), 20)
+
+//СЛЕПОТА
+/datum/blindness_controller
+	var/mob/living/carbon/human/owner
+	var/running = FALSE
+
+/datum/blindness_controller/New(mob/living/carbon/human/H)
+	..()
+	owner = H
+
+/datum/blindness_controller/proc/Start()
+	if(running || !owner || owner.stat == DEAD)
+		return
+	running = TRUE
+	owner.eye_blind = INFINITY
+	owner.trait_eye_protection = TRUE
+	owner.monochromevision()
+	Enforce()
+
+/datum/blindness_controller/proc/Stop()
+	running = FALSE
+	owner.eye_blind = 0
+
+/datum/blindness_controller/proc/Enforce()
+	if(!running || !owner || owner.stat == DEAD)
+		return
+	if(owner.eye_blind != INFINITY)
+		owner.eye_blind = INFINITY
+	owner.set_sdisability(BLINDED)
+	addtimer(new Callback(src, .proc/Enforce), 20)

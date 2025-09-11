@@ -97,3 +97,25 @@
 	if(H.client?.prefs?.organ_data && (H.client.prefs.organ_data[BP_CHEST] == "cyborg"))
 		return
 	H.add_asthma()
+
+/datum/mod_trait/all/blindness
+	name = "Disease - Blindness"
+	description = "Полная слепота. Поле зрения ограничено до полутора клеток вокруг."
+	incompatible_traits = list(/datum/mod_trait/all/tritanopia, /datum/mod_trait/all/protanopia, /datum/mod_trait/all/deuteranopia, /datum/mod_trait/all/monochrome)
+
+/datum/mod_trait/all/blindness/apply_trait(mob/living/carbon/human/H)
+	H.add_blindness()
+
+/datum/mod_trait/all/muteness
+	name = "Disease - Muteness"
+	description = "Немота, неспособность к речи аудиальными языками."
+
+/datum/mod_trait/all/muteness/apply_trait(mob/living/carbon/human/H)
+	H.add_muteness()
+
+/datum/mod_trait/all/deafness
+	name = "Disease - Deafness"
+	description = "Глухота. Неспособность слышать звуки."
+
+/datum/mod_trait/all/deafness/apply_trait(mob/living/carbon/human/H)
+	H.add_deafness()
