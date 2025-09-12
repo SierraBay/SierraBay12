@@ -21,6 +21,10 @@
 	icon = 'mods/RnD/icons/augment.dmi'
 	icon_state = "knuckles"
 	item_state = "knuckles"
+	item_icons = list(
+		slot_r_hand_str = 'mods/RnD/icons/mob/righthand.dmi',
+		slot_l_hand_str = 'mods/RnD/icons/mob/lefthand.dmi',
+		)
 	name = "cyberknuckles"
 	desc = "Not brass, but knuckles."
 	max_force = 16
