@@ -215,7 +215,7 @@
 /datum/robolimb/zenghu
 	company = "Zeng-Hu"
 	desc = "This limb has a rubbery fleshtone covering with visible seams."
-	icon = 'icons/mob/human_races/cyberlimbs/zenghu/zenghu_main.dmi'
+	// icon = 'icons/mob/human_races/cyberlimbs/zenghu/zenghu_main.dmi'    resprite -> mods/sierra_resprite/code/robolimbs.dm
 	can_eat = 1
 	unavailable_at_fab = 1
 	allowed_bodytypes = list(SPECIES_HUMAN,SPECIES_IPC)
