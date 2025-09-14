@@ -1,10 +1,6 @@
 /obj/item/device/camera/tvcamera
 	name = "press camera drone"
 	desc = "A Ward-Takahashi EyeBuddy livestreaming press camera drone. Weapon of choice for war correspondents and reality show cameramen. It does not appear to have any internal memory storage."
-	// SIERRA-EDIT
-	// Фиксит иконку дроны-камеры, тем самым возвращая её в нормальное состояние.
-	icon = 'icons/obj/tools/photography.dmi'
-	// SIERRA-EDIT
 	icon_state = "camcorder"
 	item_state = "camcorder"
 	w_class = ITEM_SIZE_LARGE
