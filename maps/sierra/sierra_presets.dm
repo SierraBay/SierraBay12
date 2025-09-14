@@ -53,10 +53,7 @@ var/global/const/NETWORK_ENGINEERING_OUTPOST = "Engineering Outpost"
 		NETWORK_CALYPSO,
 		NETWORK_PETROV,
 		NETWORK_POD,
-		// SIERRA EDIT
-		// Добавление сети под камеры на шлемах некоторых скафандров прямиком с оффов.
 		NETWORK_HELMETS,
-		// SIERRA-EDIT
 		NETWORK_ALARM_ATMOS,
 		NETWORK_ALARM_CAMERA,
 		NETWORK_ALARM_FIRE,
