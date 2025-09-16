@@ -198,7 +198,7 @@
 /datum/headache_controller/New(mob/living/carbon/human/H)
 	..()
 	owner = H
-	next_pain = world.time + rand(20 MINUTES, 40 MINUTES)
+	next_pain = world.time + rand(15 MINUTES, 30 MINUTES)
 
 /datum/headache_controller/proc/Start()
 	if(running || !owner) return
@@ -213,11 +213,11 @@
 
 	if(!pain_active && world.time >= next_pain)
 		pain_active = TRUE
-		pain_end_time = world.time + rand(30 SECONDS, 60 SECONDS)
+		pain_end_time = world.time + rand(10 SECONDS, 20 SECONDS)
 		to_chat(owner, SPAN_WARNING(pick(headache_start_phrases)))
 
 	if(pain_active)
-		owner.apply_damage(rand(6, 10), DAMAGE_PAIN, BP_HEAD)
+		owner.apply_damage(rand(10, 15), DAMAGE_PAIN, BP_HEAD)
 		if(world.time >= pain_end_time)
 			pain_active = FALSE
 			residual_active = TRUE
@@ -225,7 +225,7 @@
 			next_pain = world.time + rand(20 MINUTES, 60 MINUTES)
 
 	if(residual_active)
-		owner.apply_damage(rand(1, 2), DAMAGE_PAIN, BP_HEAD)
+		owner.apply_damage(rand(2, 3), DAMAGE_PAIN, BP_HEAD)
 		if(world.time >= residual_end_time)
 			residual_active = FALSE
 
