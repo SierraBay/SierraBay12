@@ -417,3 +417,8 @@ GLOBAL_LIST_EMPTY(custom_items)
 	if (isobserver(user) || (user.mind && user.mind.special_role != null) || user.skill_check(SKILL_DEVICES, SKILL_MASTER) || user.skill_check(SKILL_MEDICAL, SKILL_MASTER))
 		to_chat(user, "The scanner contacts do not look as they should. ")
 		return
+
+// Bugs
+
+/obj/item/device/spy_bug
+	on_turf_icon = 'mods/antagonists/icons/obj/bug_on_turf.dmi'
