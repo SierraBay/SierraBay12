@@ -34,6 +34,8 @@
 	sharp = FALSE
 	edge = FALSE
 
+/obj/item/device/augment_implanter/knuckles
+	augment = /obj/item/organ/internal/augment/active/item/knuckles
 
 /// Shield
 /obj/item/organ/internal/augment/active/item/shield
@@ -79,6 +81,20 @@
 	icon = 'mods/RnD/icons/augment.dmi'
 	icon_state = "eye_it"
 	hud_type = HUD_IT
+
+/obj/item/organ/internal/augment/active/hud/it/loadout
+	name = "integrated IT HUD"
+	desc = "Corporate issued Net-Q implantable HUD. This implant has a pre-installed access reading system."
+
+/obj/item/organ/internal/augment/active/hud/it/loadout/activate()
+	req_access = list(access_tcomsat)
+	if (!can_activate())
+		return
+	if (!allowed(owner))
+		to_chat(owner, SPAN_NOTICE("Your access is not sufficient to activate your HUD."))
+		return
+	active = !active
+	to_chat(owner, SPAN_NOTICE("You [active ? "enable" : "disable"] \the [src]."))
 
 /obj/item/device/augment_implanter/it_hud
 	augment = /obj/item/organ/internal/augment/active/hud/it
