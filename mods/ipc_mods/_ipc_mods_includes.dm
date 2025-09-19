@@ -2,6 +2,7 @@
 #define MODPACK_IPC_MODS
 
 #include "_ipc_mods.dm"
+#include "code/accessory_ipc.dm"
 #include "code/cooling_system.dm"
 #include "code/external_cooling_device.dm"
 #include "code/machine.dm"
