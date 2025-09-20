@@ -29,6 +29,7 @@ ID мода: UTILITY_ITEMS
 
 - `code/modules/mining/abandonedcrates.dm` `/obj/structure/closet/crate/secure/loot/var/codelen`
 - `code/modules/clothing/masks/smokable.dm` `/obj/item/clothing/mask/smokable/proc/smoke`
+- `code/modules/modular_computers/file_system/reports/crew_record.dm`
 <!--
   Если вы редактировали какие-либо процедуры или переменные в кор коде,
   они должны быть указаны здесь.
