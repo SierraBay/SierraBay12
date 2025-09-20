@@ -42,7 +42,7 @@
 		SKILL_ANATOMY     = SKILL_MAX
 	)
 	access = list(
-		access_medical, access_morgue, access_virology,
+		access_medical, access_morgue, access_virology, access_medical_records,
 		access_maint_tunnels, access_emergency_storage, access_crematorium,
 		access_surgery, access_eva, access_external_airlocks,
 		access_medical_equip, access_senmed, access_hangar,
@@ -96,7 +96,7 @@
 		SKILL_VIROLOGY	=	SKILL_MAX
 	)
 	access = list(
-		access_medical, access_morgue, access_virology,
+		access_medical, access_morgue, access_virology, access_medical_records,
 		access_maint_tunnels, access_external_airlocks, access_emergency_storage,
 		access_eva, access_surgery, access_medical_equip,
 		access_hangar
@@ -146,7 +146,7 @@
 		SKILL_MEDICAL = SKILL_MAX
 	)
 	access = list(
-		access_medical, access_morgue, access_surgery,
+		access_medical, access_morgue, access_surgery, access_medical_records,
 		access_medical_equip, access_maint_tunnels, access_emergency_storage,
 		access_external_airlocks, access_hangar
 	)
@@ -190,7 +190,7 @@
 	)
 	access = list(
 		access_medical, access_maint_tunnels, access_emergency_storage,
-		access_medical_equip, access_chemistry, access_virology
+		access_medical_equip, access_chemistry, access_virology, access_medical_records
 	)
 
 
@@ -238,7 +238,7 @@
 	)
 	access = list(
 		access_medical, access_morgue, access_chapel_office,
-		access_crematorium, access_psychiatrist
+		access_crematorium, access_psychiatrist, access_medical_records
 	)
 	software_on_spawn = list(
 		/datum/computer_file/program/suit_sensors,

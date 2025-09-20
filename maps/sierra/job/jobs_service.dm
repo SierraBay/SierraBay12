@@ -33,7 +33,8 @@
 		access_hydroponics,
 		access_kitchen,
 		access_commissary,
-		access_RC_announce
+		access_RC_announce,
+		access_employment_records
 	)
 
 /datum/job/chief_steward/get_description_blurb()

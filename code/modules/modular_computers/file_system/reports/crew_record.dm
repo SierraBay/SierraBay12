@@ -219,31 +219,56 @@ FIELD_SHORT("Formal Name", formal_name, null, access_change_ids)
 FIELD_SHORT("Job", job, null, access_change_ids)
 FIELD_LIST("Pronouns", sex, record_pronouns(), null, access_change_ids)
 FIELD_NUM("Age", age, null, access_change_ids)
-FIELD_LIST_EDIT("Status", status, GLOB.physical_statuses, null, access_medical)
+// [SIERRA-EDIT] - RECORDS ACCESS
+// FIELD_LIST_EDIT("Status", status, GLOB.physical_statuses, null, access_medical) // SIERRA-EDIT - ORIGINAL
+FIELD_LIST_EDIT("Status", status, GLOB.physical_statuses, null, access_medical_records)
+// [SIERRA-EDIT]
 
 FIELD_SHORT("Species",species, null, access_change_ids)
 FIELD_LIST("Branch", branch, record_branches(), null, access_change_ids)
 FIELD_LIST("Rank", rank, record_ranks(), null, access_change_ids)
 FIELD_SHORT("Religion", religion, access_chapel_office, access_change_ids)
 
-FIELD_LONG("General Notes (Public)", public_record, null, access_bridge)
+// [SIERRA-EDIT] - RECORDS ACCESS
+// FIELD_LONG("General Notes (Public)", public_record, null, access_bridge) // SIERRA-EDIT - ORIGINAL
+FIELD_LONG("General Notes (Public)", public_record, null, access_employment_records)
+// [SIERRA-EDIT]
+
+// [SIERRA-EDIT] - RECORDS ACCESS
+// // MEDICAL RECORDS
+// FIELD_LIST("Blood Type", bloodtype, GLOB.blood_types, access_medical, access_medical)
+// FIELD_LONG("Medical Record", medRecord, access_medical, access_medical)
+// FIELD_LONG("Known Implants", implants, access_medical, access_medical)
+// FIELD_LONG("Allergies", allergies, access_medical, access_medical)
+
+// // SECURITY RECORDS
+// FIELD_LIST("Criminal Status", criminalStatus, GLOB.security_statuses, access_security, access_brig)
+// FIELD_LONG("Security Record", secRecord, access_security, access_brig)
+// FIELD_SHORT("DNA", dna, access_security, access_brig)
+// FIELD_SHORT("Fingerprint", fingerprint, access_security, access_brig)
+
+// // EMPLOYMENT RECORDS
+// FIELD_LONG("Employment Record", emplRecord, access_bridge, access_bridge)
+// FIELD_SHORT("Home System", homeSystem, access_bridge, access_change_ids)
+// FIELD_LONG("Qualifications", skillset, access_bridge, access_bridge)
 
 // MEDICAL RECORDS
-FIELD_LIST("Blood Type", bloodtype, GLOB.blood_types, access_medical, access_medical)
-FIELD_LONG("Medical Record", medRecord, access_medical, access_medical)
-FIELD_LONG("Known Implants", implants, access_medical, access_medical)
-FIELD_LONG("Allergies", allergies, access_medical, access_medical)
+FIELD_LIST("Blood Type", bloodtype, GLOB.blood_types, access_medical_records, access_medical_records)
+FIELD_LONG("Medical Record", medRecord, access_medical_records, access_medical_records)
+FIELD_LONG("Known Implants", implants, access_medical_records, access_medical_records)
+FIELD_LONG("Allergies", allergies, access_medical_records, access_medical_records)
 
 // SECURITY RECORDS
-FIELD_LIST("Criminal Status", criminalStatus, GLOB.security_statuses, access_security, access_brig)
-FIELD_LONG("Security Record", secRecord, access_security, access_brig)
-FIELD_SHORT("DNA", dna, access_security, access_brig)
-FIELD_SHORT("Fingerprint", fingerprint, access_security, access_brig)
+FIELD_LIST("Criminal Status", criminalStatus, GLOB.security_statuses, access_security_records, access_brig)
+FIELD_LONG("Security Record", secRecord, access_security_records, access_brig)
+FIELD_SHORT("DNA", dna, access_security_records, access_brig)
+FIELD_SHORT("Fingerprint", fingerprint, access_security_records, access_brig)
 
 // EMPLOYMENT RECORDS
-FIELD_LONG("Employment Record", emplRecord, access_bridge, access_bridge)
-FIELD_SHORT("Home System", homeSystem, access_bridge, access_change_ids)
-FIELD_LONG("Qualifications", skillset, access_bridge, access_bridge)
+FIELD_LONG("Employment Record", emplRecord, access_employment_records, access_employment_records)
+FIELD_SHORT("Home System", homeSystem, access_employment_records, access_change_ids)
+FIELD_LONG("Qualifications", skillset, access_employment_records, access_employment_records)
+// [SIERRA-EDIT]
 
 // ANTAG RECORDS
 FIELD_SHORT("Faction", faction, access_syndicate, access_syndicate)
