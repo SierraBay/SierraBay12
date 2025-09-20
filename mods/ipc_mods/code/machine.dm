@@ -3,6 +3,8 @@
 /singleton/species/machine
 	passive_temp_gain = 0  // This should cause IPCs to stabilize at ~80 C in a 20 C environment.(5 is default without organ)
 	additional_languages = 1
+	genders = list(MALE, FEMALE, PLURAL)
+	appearance_flags = SPECIES_APPEARANCE_HAS_UNDERWEAR | SPECIES_APPEARANCE_HAS_EYE_COLOR | SPECIES_APPEARANCE_HAS_SKIN_TONE_NORMAL
 
 /singleton/species/machine/skills_from_age(age)
 	if(age)

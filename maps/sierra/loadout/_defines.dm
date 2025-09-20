@@ -9,6 +9,7 @@
 		/datum/gear/uniform/corp_overalls,
 		/datum/gear/uniform/corp_flight,
 		/datum/gear/uniform/corp_exec_jacket,
+		/datum/gear/augment/head_vision
 	)
 
 //For all exploration crew
