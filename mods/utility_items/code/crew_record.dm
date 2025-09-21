@@ -67,3 +67,11 @@ FIELD_LONG("Qualifications", skillset, access_employment_records, access_employm
 // ANTAG RECORDS
 FIELD_SHORT("Faction", faction, access_syndicate, access_syndicate)
 FIELD_LONG("Exploitable Information", antagRecord, access_syndicate, access_syndicate)
+
+#undef GETTER_SETTER
+#undef SETUP_FIELD
+#undef FIELD_SHORT
+#undef FIELD_LONG
+#undef FIELD_NUM
+#undef FIELD_LIST
+#undef FIELD_LIST_EDIT
