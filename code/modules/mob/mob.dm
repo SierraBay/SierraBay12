@@ -589,6 +589,7 @@
 
 	src.pulling = AM
 	AM.pulledby = src
+	AM.add_hiddenprint(src)
 
 	if(pullin)
 		pullin.icon_state = "pull1"

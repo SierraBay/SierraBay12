@@ -334,12 +334,8 @@ Keeping them simple for now, just spawning with basic EC uniforms, and pretty mu
 
 /singleton/hierarchy/outfit/job/sierra/crew/medical/counselor/equip_ids(mob/living/carbon/human/H, rank, assignment, equip_adjustments)
 	. = ..()
-	var/obj/item/card/id/foundation_civilian/regis_card = new
-	if(rank)
-		regis_card.rank = rank
-	if(assignment)
-		regis_card.assignment = assignment
-	H.set_id_info(regis_card)
+	var/obj/item/card/operant_card/regis_card = new
+	regis_card.set_info(H)
 	H.equip_to_slot_or_store_or_drop(regis_card)
 
 /singleton/hierarchy/outfit/job/sierra/crew/medical/counselor/mentalist

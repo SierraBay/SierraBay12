@@ -71,8 +71,8 @@
 
 			var/image/aura_image = get_aura_image()
 			if(rating >= PSI_RANK_GRANDMASTER) // spooky boosters
-				aura_color = "#aaffaa"
-				aura_image.blend_mode = BLEND_SUBTRACT
+				aura_color = "#000000"
+				aura_image.blend_mode = BLEND_ADD
 			else
 				aura_image.blend_mode = BLEND_ADD
 				switch(highest_faculty)
@@ -135,8 +135,11 @@
 			else if(owner.stat == UNCONSCIOUS)
 				stamina = min(max_stamina, stamina + rand(3,5))
 
-		if(!owner.nervous_system_failure() && owner.stat == CONSCIOUS && stamina && !suppressed && get_rank(PSI_REDACTION) >= PSI_RANK_APPRENTICE)
-			attempt_regeneration()
+		if(!owner.nervous_system_failure() && stamina && !suppressed && get_rank(PSI_REDACTION) >= PSI_RANK_APPRENTICE)
+			if(owner.stat == UNCONSCIOUS && get_rank(PSI_REDACTION) < PSI_RANK_MASTER)
+				attempt_regeneration()
+			else if(get_rank(PSI_REDACTION) >= PSI_RANK_MASTER)
+				attempt_regeneration()
 
 	var/next_aura_size = max(0.1,((stamina/max_stamina)*min(3,rating))/5)
 	var/next_aura_alpha = round(((suppressed ? max(0,rating - 2) : rating)/5)*255)
