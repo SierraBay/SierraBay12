@@ -27,6 +27,7 @@
 	habitability_weight = HABITABILITY_EXTREME
 	has_trees = FALSE
 	flora_diversity = 0
+	initial_weather_state = null //Можно убрать когда будет под новую подсистему
 
 /obj/overmap/visitable/sector/exoplanet/ice/generate_atmosphere()
 	exterior_atmosphere = new

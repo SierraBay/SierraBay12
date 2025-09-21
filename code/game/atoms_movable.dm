@@ -572,3 +572,12 @@
  */
 /atom/movable/proc/post_movement(turf/old_turf, turf/new_turf)
 	return
+
+/atom/movable/get_affecting_weather()
+	var/turf/my_turf = get_turf(src)
+	if(!istype(my_turf))
+		return
+
+	. = my_turf.weather
+	if(!.) // If we're under or inside shelter, use the z-level rain (for ambience)
+		. = LAZYACCESS(SSweather.weather_by_z, my_turf.z)

@@ -210,7 +210,7 @@
 		. = TOPIC_HANDLED
 
 	if (mode == MODE_AREA && env_area.planetary_surface)
-		//exoplanets will slowly reset their atmosphere to default if we don't update it
+		//Set exoplanet atmosphere else this won't work
 		var/obj/overmap/visitable/sector/exoplanet/E = map_sectors["[env_area.z]"]
 		if (istype(E))
 			E.exterior_atmosphere.gas = enviroment.gas.Copy()
