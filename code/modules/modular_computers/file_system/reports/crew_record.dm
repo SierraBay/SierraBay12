@@ -198,59 +198,59 @@ GLOBAL_VAR_AS(arrest_security_status, "Arrest")
 	return H.mind.assigned_role
 
 // [SIERRA-REMOVE] - RECORDS ACCESS - (гитхаб жалуется, перемещено в mods/utility_items/code/crew_record.dm)
+/*
+#define GETTER_SETTER(PATH, KEY) /datum/computer_file/report/crew_record/proc/get_##KEY(){var/datum/report_field/F = locate(/datum/report_field/##PATH/##KEY) in fields; if(F) return F.get_value()} \
+/datum/computer_file/report/crew_record/proc/set_##KEY(given_value){var/datum/report_field/F = locate(/datum/report_field/##PATH/##KEY) in fields; if(F) F.set_value(given_value)}
+#define SETUP_FIELD(NAME, KEY, PATH, ACCESS, ACCESS_EDIT) GETTER_SETTER(PATH, KEY); /datum/report_field/##PATH/##KEY;\
+/datum/computer_file/report/crew_record/generate_fields(){..(); var/datum/report_field/##KEY = add_field(/datum/report_field/##PATH/##KEY, ##NAME);\
+KEY.set_access(ACCESS, ACCESS_EDIT || ACCESS || access_bridge)}
 
-// #define GETTER_SETTER(PATH, KEY) /datum/computer_file/report/crew_record/proc/get_##KEY(){var/datum/report_field/F = locate(/datum/report_field/##PATH/##KEY) in fields; if(F) return F.get_value()} \
-// /datum/computer_file/report/crew_record/proc/set_##KEY(given_value){var/datum/report_field/F = locate(/datum/report_field/##PATH/##KEY) in fields; if(F) F.set_value(given_value)}
-// #define SETUP_FIELD(NAME, KEY, PATH, ACCESS, ACCESS_EDIT) GETTER_SETTER(PATH, KEY); /datum/report_field/##PATH/##KEY;\
-// /datum/computer_file/report/crew_record/generate_fields(){..(); var/datum/report_field/##KEY = add_field(/datum/report_field/##PATH/##KEY, ##NAME);\
-// KEY.set_access(ACCESS, ACCESS_EDIT || ACCESS || access_bridge)}
+// Fear not the preprocessor, for it is a friend. To add a field, use one of these, depending on value type and if you need special access to see it.
+// It will also create getter/setter procs for record datum, named like /get_[key here]() /set_[key_here](value) e.g. get_name() set_name(value)
+// Use getter setters to avoid errors caused by typoing the string key.
+#define FIELD_SHORT(NAME, KEY, ACCESS, ACCESS_EDIT) SETUP_FIELD(NAME, KEY, simple_text/crew_record, ACCESS, ACCESS_EDIT)
+#define FIELD_LONG(NAME, KEY, ACCESS, ACCESS_EDIT) SETUP_FIELD(NAME, KEY, pencode_text/crew_record, ACCESS, ACCESS_EDIT)
+#define FIELD_NUM(NAME, KEY, ACCESS, ACCESS_EDIT) SETUP_FIELD(NAME, KEY, number/crew_record, ACCESS, ACCESS_EDIT)
+#define FIELD_LIST(NAME, KEY, OPTIONS, ACCESS, ACCESS_EDIT) FIELD_LIST_EDIT(NAME, KEY, OPTIONS, ACCESS, ACCESS_EDIT)
+#define FIELD_LIST_EDIT(NAME, KEY, OPTIONS, ACCESS, ACCESS_EDIT) SETUP_FIELD(NAME, KEY, options/crew_record, ACCESS, ACCESS_EDIT);\
+/datum/report_field/options/crew_record/##KEY/get_options(){return OPTIONS}
 
-// // Fear not the preprocessor, for it is a friend. To add a field, use one of these, depending on value type and if you need special access to see it.
-// // It will also create getter/setter procs for record datum, named like /get_[key here]() /set_[key_here](value) e.g. get_name() set_name(value)
-// // Use getter setters to avoid errors caused by typoing the string key.
-// #define FIELD_SHORT(NAME, KEY, ACCESS, ACCESS_EDIT) SETUP_FIELD(NAME, KEY, simple_text/crew_record, ACCESS, ACCESS_EDIT)
-// #define FIELD_LONG(NAME, KEY, ACCESS, ACCESS_EDIT) SETUP_FIELD(NAME, KEY, pencode_text/crew_record, ACCESS, ACCESS_EDIT)
-// #define FIELD_NUM(NAME, KEY, ACCESS, ACCESS_EDIT) SETUP_FIELD(NAME, KEY, number/crew_record, ACCESS, ACCESS_EDIT)
-// #define FIELD_LIST(NAME, KEY, OPTIONS, ACCESS, ACCESS_EDIT) FIELD_LIST_EDIT(NAME, KEY, OPTIONS, ACCESS, ACCESS_EDIT)
-// #define FIELD_LIST_EDIT(NAME, KEY, OPTIONS, ACCESS, ACCESS_EDIT) SETUP_FIELD(NAME, KEY, options/crew_record, ACCESS, ACCESS_EDIT);\
-// /datum/report_field/options/crew_record/##KEY/get_options(){return OPTIONS}
+// GENERIC RECORDS
+FIELD_SHORT("Name", name, null, access_change_ids)
+FIELD_SHORT("Formal Name", formal_name, null, access_change_ids)
+FIELD_SHORT("Job", job, null, access_change_ids)
+FIELD_LIST("Pronouns", sex, record_pronouns(), null, access_change_ids)
+FIELD_NUM("Age", age, null, access_change_ids)
+FIELD_LIST_EDIT("Status", status, GLOB.physical_statuses, null, access_medical)
 
-// // GENERIC RECORDS
-// FIELD_SHORT("Name", name, null, access_change_ids)
-// FIELD_SHORT("Formal Name", formal_name, null, access_change_ids)
-// FIELD_SHORT("Job", job, null, access_change_ids)
-// FIELD_LIST("Pronouns", sex, record_pronouns(), null, access_change_ids)
-// FIELD_NUM("Age", age, null, access_change_ids)
-// FIELD_LIST_EDIT("Status", status, GLOB.physical_statuses, null, access_medical)
+FIELD_SHORT("Species",species, null, access_change_ids)
+FIELD_LIST("Branch", branch, record_branches(), null, access_change_ids)
+FIELD_LIST("Rank", rank, record_ranks(), null, access_change_ids)
+FIELD_SHORT("Religion", religion, access_chapel_office, access_change_ids)
 
-// FIELD_SHORT("Species",species, null, access_change_ids)
-// FIELD_LIST("Branch", branch, record_branches(), null, access_change_ids)
-// FIELD_LIST("Rank", rank, record_ranks(), null, access_change_ids)
-// FIELD_SHORT("Religion", religion, access_chapel_office, access_change_ids)
+FIELD_LONG("General Notes (Public)", public_record, null, access_bridge)
 
-// FIELD_LONG("General Notes (Public)", public_record, null, access_bridge)
+// MEDICAL RECORDS
+FIELD_LIST("Blood Type", bloodtype, GLOB.blood_types, access_medical, access_medical)
+FIELD_LONG("Medical Record", medRecord, access_medical, access_medical)
+FIELD_LONG("Known Implants", implants, access_medical, access_medical)
+FIELD_LONG("Allergies", allergies, access_medical, access_medical)
 
-// // MEDICAL RECORDS
-// FIELD_LIST("Blood Type", bloodtype, GLOB.blood_types, access_medical, access_medical)
-// FIELD_LONG("Medical Record", medRecord, access_medical, access_medical)
-// FIELD_LONG("Known Implants", implants, access_medical, access_medical)
-// FIELD_LONG("Allergies", allergies, access_medical, access_medical)
+// SECURITY RECORDS
+FIELD_LIST("Criminal Status", criminalStatus, GLOB.security_statuses, access_security, access_brig)
+FIELD_LONG("Security Record", secRecord, access_security, access_brig)
+FIELD_SHORT("DNA", dna, access_security, access_brig)
+FIELD_SHORT("Fingerprint", fingerprint, access_security, access_brig)
 
-// // SECURITY RECORDS
-// FIELD_LIST("Criminal Status", criminalStatus, GLOB.security_statuses, access_security, access_brig)
-// FIELD_LONG("Security Record", secRecord, access_security, access_brig)
-// FIELD_SHORT("DNA", dna, access_security, access_brig)
-// FIELD_SHORT("Fingerprint", fingerprint, access_security, access_brig)
+// EMPLOYMENT RECORDS
+FIELD_LONG("Employment Record", emplRecord, access_bridge, access_bridge)
+FIELD_SHORT("Home System", homeSystem, access_bridge, access_change_ids)
+FIELD_LONG("Qualifications", skillset, access_bridge, access_bridge)
 
-// // EMPLOYMENT RECORDS
-// FIELD_LONG("Employment Record", emplRecord, access_bridge, access_bridge)
-// FIELD_SHORT("Home System", homeSystem, access_bridge, access_change_ids)
-// FIELD_LONG("Qualifications", skillset, access_bridge, access_bridge)
-
-// // ANTAG RECORDS
-// FIELD_SHORT("Faction", faction, access_syndicate, access_syndicate)
-// FIELD_LONG("Exploitable Information", antagRecord, access_syndicate, access_syndicate)
-
+// ANTAG RECORDS
+FIELD_SHORT("Faction", faction, access_syndicate, access_syndicate)
+FIELD_LONG("Exploitable Information", antagRecord, access_syndicate, access_syndicate)
+*/
 // [/SIERRA-REMOVE]
 
 //Options builderes
