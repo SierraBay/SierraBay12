@@ -57,7 +57,7 @@
 	return 1
 
 /obj/machinery/camera/apply_visual(mob/living/carbon/human/M)
-	if(!M.client)
+	if(!iscarbon(M) || !M.client) // [SIERRA-EDIT] was: if(!M.client)
 		return
 	M.overlay_fullscreen("fishbed",/obj/screen/fullscreen/fishbed)
 	M.overlay_fullscreen("scanlines",/obj/screen/fullscreen/scanline)
@@ -66,7 +66,7 @@
 	return 1
 
 /obj/machinery/camera/remove_visual(mob/living/carbon/human/M)
-	if(!M.client)
+	if(!iscarbon(M) || !M.client) // [SIERRA-EDIT] was: if(!M.client)
 		return
 	M.clear_fullscreen("fishbed",0)
 	M.clear_fullscreen("scanlines")

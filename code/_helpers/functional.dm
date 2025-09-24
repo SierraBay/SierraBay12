@@ -32,10 +32,15 @@
 #undef PREPARE_ARGUMENTS
 #undef PREPARE_INPUT
 
-/proc/is_atom_predicate(value, feedback_receiver)
-	. = isatom(value)
+/proc/is_loc_predicate(value, feedback_receiver)
+	. = isloc(value)
 	if(!. && feedback_receiver)
 		to_chat(feedback_receiver, SPAN_WARNING("Value must be an atom."))
+
+/proc/is_tom_predicate(value, feedback_receiver)
+	. = istom(value)
+	if(!. && feedback_receiver)
+		to_chat(feedback_receiver, SPAN_WARNING("Value must be a turf or movable."))
 
 /proc/is_num_predicate(value, feedback_receiver)
 	. = isnum(value)
