@@ -251,3 +251,28 @@
 	overlay_state = rolled ? new_state : initial_state
 	update_icon()
 	update_clothing_icon()
+
+
+/obj/item/clothing/accessory/cape_avalon
+	name = "black avalon mantle"
+	desc = "A heavy cape, typically worn by Avalon's high-ranking nobles."
+	icon = 'mods/loadout_items/icons/obj_accessory.dmi'
+	accessory_icons = list(
+		slot_w_uniform_str = 'mods/loadout_items/icons/onmob_accessory.dmi', \
+		slot_tie_str = 'mods/loadout_items/icons/onmob_accessory.dmi', \
+		slot_wear_suit_str = 'mods/loadout_items/icons/onmob_accessory.dmi')
+	item_icons = list(
+		slot_wear_suit_str = 'mods/loadout_items/icons/onmob_accessory.dmi')
+	icon_state = "A_cape_b"
+
+/obj/item/clothing/accessory/cape_avalon_w
+	name = "white avalon mantle"
+	desc = "A heavy cape, typically worn by Avalon's high-ranking nobles."
+	icon = 'mods/loadout_items/icons/obj_accessory.dmi'
+	accessory_icons = list(
+		slot_w_uniform_str = 'mods/loadout_items/icons/onmob_accessory.dmi', \
+		slot_tie_str = 'mods/loadout_items/icons/onmob_accessory.dmi', \
+		slot_wear_suit_str = 'mods/loadout_items/icons/onmob_accessory.dmi')
+	item_icons = list(
+		slot_wear_suit_str = 'mods/loadout_items/icons/onmob_accessory.dmi')
+	icon_state = "A_cape_w"

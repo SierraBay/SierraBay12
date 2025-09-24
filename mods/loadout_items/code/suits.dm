@@ -252,6 +252,18 @@
 	icon_state = "dominia_consular_coat_red"
 	item_state = "dominia_consular_coat_red"
 
+/obj/item/clothing/suit/storage/dominia/avalon_priest_big
+	name = "grand suit"
+	desc = "A finely crafted Avalonian suit, marked with elegant patterns and house insignia."
+	icon_state = "A_priest_big"
+	item_state = "A_priest_big"
+
+/obj/item/clothing/suit/storage/dominia/avalon_priest_small
+	name = "petite suit"
+	desc = "A carefully tailored Avalonian suit, adorned with subtle patterns and the house emblem."
+	icon_state = "A_priest_small"
+	item_state = "A_priest_small"
+
 // failu's jackets
 
 /obj/item/clothing/suit/storage/toggle/cyan_jacket

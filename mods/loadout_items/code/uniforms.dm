@@ -183,6 +183,71 @@
 	icon_state = "noble"
 	item_state = "noble"
 
+/obj/item/clothing/under/avalon_noble_b
+	name = "black noble suit"
+	desc = "A classic Avalonian noble uniform, finely crafted and well-kept."
+	icon = 'mods/loadout_items/icons/obj_under.dmi'
+	item_icons = list(slot_w_uniform_str = 'mods/loadout_items/icons/onmob_under.dmi')
+	icon_state = "A_black"
+	worn_state = "A_black"
+
+/obj/item/clothing/under/avalon_noble_w
+	name = "white noble suit"
+	desc = "A pristine Avalonian noble uniform, tailored with care."
+	icon = 'mods/loadout_items/icons/obj_under.dmi'
+	item_icons = list(slot_w_uniform_str = 'mods/loadout_items/icons/onmob_under.dmi')
+	icon_state = "A_white"
+	worn_state = "A_white"
+
+/obj/item/clothing/under/avalon_noble_fem
+	name = "black noble dress"
+	desc = "A finely crafted Avalonian dress favored by the upper class."
+	icon = 'mods/loadout_items/icons/obj_under.dmi'
+	item_icons = list(slot_w_uniform_str = 'mods/loadout_items/icons/onmob_under.dmi')
+	icon_state = "A_black_fem"
+	worn_state = "A_black_fem"
+
+/obj/item/clothing/under/avalon_noble_fem_w
+	name = "white noble dress"
+	desc = "A carefully tailored Avalonian dress, elegant and timeless."
+	icon = 'mods/loadout_items/icons/obj_under.dmi'
+	item_icons = list(slot_w_uniform_str = 'mods/loadout_items/icons/onmob_under.dmi')
+	icon_state = "A_white_fem"
+	worn_state = "A_white_fem"
+
+/obj/item/clothing/under/avalon_butler_red
+	name = "red butler uniform"
+	desc = "A sharply tailored Avalonian butler uniform, polished and professional."
+	icon = 'mods/loadout_items/icons/obj_under.dmi'
+	item_icons = list(slot_w_uniform_str = 'mods/loadout_items/icons/onmob_under.dmi')
+	icon_state = "A_butler_red"
+	worn_state = "A_butler_red"
+
+/obj/item/clothing/under/avalon_butler_b
+	name = "black butler uniform"
+	desc = "A traditional Avalonian butler uniform, neat and precise."
+	icon = 'mods/loadout_items/icons/obj_under.dmi'
+	item_icons = list(slot_w_uniform_str = 'mods/loadout_items/icons/onmob_under.dmi')
+	icon_state = "A_butler_b"
+	worn_state = "A_butler_b"
+
+/obj/item/clothing/under/avalon_butler_dress_red
+	name = "red butler dress"
+	desc = "A stylish Avalonian butler dress, crafted for formal service."
+	icon = 'mods/loadout_items/icons/obj_under.dmi'
+	item_icons = list(slot_w_uniform_str = 'mods/loadout_items/icons/onmob_under.dmi')
+	icon_state = "A_butlerD_red"
+	worn_state = "A_butlerD_red"
+
+
+/obj/item/clothing/under/avalon_butler_dress_b
+	name = "black butler dress"
+	desc = "A neat Avalonian butler dress, designed for elegance and order."
+	icon = 'mods/loadout_items/icons/obj_under.dmi'
+	item_icons = list(slot_w_uniform_str = 'mods/loadout_items/icons/onmob_under.dmi')
+	icon_state = "A_butlerD_b"
+	worn_state = "A_butlerD_b"
+
 // Expencive
 
 /* SIERRA TODO: Переспрайтить и сделать отдельный розовый жакет + шлем Для костюма Джекета то же самое

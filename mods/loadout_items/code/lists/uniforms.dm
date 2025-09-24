@@ -34,15 +34,33 @@
 	gear_tweaks += new/datum/gear_tweak/path/specified_types_list(scg)
 
 /datum/gear/uniform/avalon
-	display_name = "avalon outfit selection"
-	path = /obj/item/clothing/under/avalon
+    display_name = "avalon outfit selection"
+    path = /obj/item/clothing/under
 
 /datum/gear/uniform/avalon/New()
 	..()
 	var/avalon = list()
-	avalon["avalon skirt"] = /obj/item/clothing/under/avalon
-	avalon["avalon noble suit"] = /obj/item/clothing/under/avalon/noble
-	gear_tweaks += new/datum/gear_tweak/path(avalon)
+	avalon["Avalon skirt"] = /obj/item/clothing/under/avalon
+	avalon["Avalon noble suit"] = /obj/item/clothing/under/avalon/noble
+	avalon["Avalon noble suit (black)"] = /obj/item/clothing/under/avalon_noble_b
+	avalon["Avalon noble suit (white)"] = /obj/item/clothing/under/avalon_noble_w
+	avalon["Avalon noble dress (black)"] = /obj/item/clothing/under/avalon_noble_fem
+	avalon["Avalon noble dress (white)"] = /obj/item/clothing/under/avalon_noble_fem_w
+	gear_tweaks += new /datum/gear_tweak/path(avalon)
+
+
+/datum/gear/uniform/butler_avalon
+	display_name = "avalon butler selection"
+	path = /obj/item/clothing/under
+
+/datum/gear/uniform/butler_avalon/New()
+	..()
+	var/butler = list()
+	butler["red butler uniform"] = /obj/item/clothing/under/avalon_butler_red
+	butler["black butler uniform"] = /obj/item/clothing/under/avalon_butler_b
+	butler["red butler dress"] = /obj/item/clothing/under/avalon_butler_dress_red
+	butler["black butler dress"] = /obj/item/clothing/under/avalon_butler_dress_b
+	gear_tweaks += new/datum/gear_tweak/path(butler)
 
 /datum/gear/uniform/sport
 	display_name = "sportive outfit selection"

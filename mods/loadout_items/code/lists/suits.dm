@@ -72,6 +72,8 @@
 /datum/gear/suit/avalon_coats/New()
 	..()
 	var/avalon_coats = list()
+	avalon_coats["Avalon greatcoat (grand)"] = /obj/item/clothing/suit/storage/dominia/avalon_priest_big
+	avalon_coats["Avalon greatcoat (petite)"] = /obj/item/clothing/suit/storage/dominia/avalon_priest_small
 	avalon_coats["Avalon greatcoat"] = /obj/item/clothing/suit/storage/dominia
 	avalon_coats["Avalon greatcoat (golden trim)"] = /obj/item/clothing/suit/storage/dominia/gold
 	avalon_coats["Avalon greatcoat (black trim)"] = /obj/item/clothing/suit/storage/dominia/black

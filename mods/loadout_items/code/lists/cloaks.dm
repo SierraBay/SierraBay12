@@ -91,8 +91,16 @@
 	allowed_factions = list(FACTION_ZPCI)
 
 //Aurora stuff
-/datum/gear/clothing/cloak_avalon
-	display_name = "mantle, Avalon"
-	path = /obj/item/clothing/accessory/cloak/dominia/red
 
+/datum/gear/clothing/cape_mantle
+	display_name = "mantle selection, avalon"
+	path = /obj/item/clothing/accessory/cape_avalon
+
+/datum/gear/clothing/mantle_avalon/New()
+	..()
+	var/avalon_mantle = list()
+	avalon_mantle["black avalon mantle"] = /obj/item/clothing/accessory/cape_avalon
+	avalon_mantle["white avalon mantle"] = /obj/item/clothing/accessory/cape_avalon_w
+	avalon_mantle["red avalon mantle"] = /obj/item/clothing/accessory/cloak/dominia/red
+	gear_tweaks += new/datum/gear_tweak/path(avalon_mantle)
 //Misc cloaks
