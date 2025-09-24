@@ -34,8 +34,8 @@
 	gear_tweaks += new/datum/gear_tweak/path/specified_types_list(scg)
 
 /datum/gear/uniform/avalon
-    display_name = "avalon outfit selection"
-    path = /obj/item/clothing/under
+	display_name = "avalon outfit selection"
+	path = /obj/item/clothing/under
 
 /datum/gear/uniform/avalon/New()
 	..()
