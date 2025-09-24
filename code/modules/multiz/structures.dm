@@ -307,13 +307,13 @@
 
 
 /obj/structure/stairs/CheckExit(atom/movable/mover as mob|obj, turf/target as turf)
+	if(destroyed)
+		return TRUE
 	if(get_dir(loc, target) == dir && upperStep(mover.loc))
 		return FALSE
 	return ..()
 
 /obj/structure/stairs/Bumped(atom/movable/A)
-	if(destroyed)
-		return
 	var/turf/above = GetAbove(A)
 	if (above)
 		var/turf/target = get_step(above, dir)
