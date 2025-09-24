@@ -305,13 +305,13 @@
 						update_icon()
 
 
-
+//[SIERRA-REMOVE] - mods\utility_items\code\stairs.dm
+/*
 /obj/structure/stairs/CheckExit(atom/movable/mover as mob|obj, turf/target as turf)
-	if(destroyed)
-		return TRUE
 	if(get_dir(loc, target) == dir && upperStep(mover.loc))
 		return FALSE
 	return ..()
+*///[/SIERRA-REMOVE]
 
 /obj/structure/stairs/Bumped(atom/movable/A)
 	var/turf/above = GetAbove(A)
