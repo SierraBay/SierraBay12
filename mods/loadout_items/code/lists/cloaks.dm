@@ -92,9 +92,11 @@
 
 //Aurora stuff
 
-/datum/gear/clothing/cape_mantle
-	display_name = "mantle selection, avalon"
-	path = /obj/item/clothing/accessory/cape_avalon
+/datum/gear/clothing/mantle_avalon
+    display_name = "Avalon Mantle"
+    cost = 2
+    path = /obj/item/clothing/accessory/cape_avalon
+
 
 /datum/gear/clothing/mantle_avalon/New()
 	..()
