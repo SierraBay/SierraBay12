@@ -219,6 +219,13 @@
 	req_tech = list(TECH_ESOTERIC = 4, TECH_COMBAT = 5, TECH_BIO = 3)
 	id = "augment_wristblade"
 
+/datum/design/item/mechfab/augment/armblade/knuckles
+	name = "Cyberknuckles"
+	build_path = /obj/item/organ/internal/augment/active/item/knuckles
+	materials = list(MATERIAL_STEEL = 2000, MATERIAL_GLASS = 750)
+	req_tech = list(TECH_MAGNET = 3, TECH_COMBAT = 2, TECH_MATERIAL = 4, TECH_BIO = 3)
+	id = "augment_knuckles"
+
 /datum/design/item/mechfab/augment/powerfist
 	name = "Pneumatic Powerfist"
 	build_path = /obj/item/organ/internal/augment/active/item/powerfist
@@ -342,6 +349,13 @@
 	req_tech = list(TECH_BIO = 1, TECH_MAGNET = 3)
 	id= "augment_sci_hud"
 
+/datum/design/item/mechfab/augment/hud/it
+	name = "Implantable IT HUD"
+	build_path = /obj/item/organ/internal/augment/active/hud/it
+	materials = list(MATERIAL_STEEL = 250, MATERIAL_GLASS = 250)
+	req_tech = list(TECH_BIO = 1, TECH_MAGNET = 3)
+	id= "augment_it_hud"
+
 /datum/design/item/mechfab/augment/nanounit
 	name = "Nanite MCU"
 	build_path = /obj/item/organ/internal/augment/active/nanounit
@@ -354,6 +368,12 @@
 	build_path = /obj/item/organ/internal/augment/active/item/circuit
 	materials = list(MATERIAL_STEEL = 3000)
 	id = "augment_circuitry"
+
+/datum/design/item/mechfab/augment/scanner
+	name = "Integrated health scanner"
+	build_path = /obj/item/organ/internal/augment/active/item/scanner
+	materials = list(MATERIAL_STEEL = 2000)
+	id = "augment_scanner"
 
 //BigRigs
 /datum/design/item/mechfab/rig

@@ -12,7 +12,7 @@
 /singleton/psionic_power/metakinesis/element
 	name =            "Manifest element"
 	cost =            5
-	cooldown =        50
+	cooldown =        10
 	min_rank =        PSI_RANK_APPRENTICE
 	use_description = "Нажмите по пустой руке на жёлтом интенте, чтобы воспользоваться одним из трёх стихийных элементов."
 	admin_log = FALSE

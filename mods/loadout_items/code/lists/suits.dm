@@ -30,6 +30,9 @@
 	fancy_coats += /obj/item/clothing/suit/storage/long_coat
 	fancy_coats += /obj/item/clothing/suit/storage/gentlecoat
 	fancy_coats += /obj/item/clothing/suit/storage/tailcoat
+	fancy_coats += /obj/item/clothing/suit/storage/furcoat
+	fancy_coats += /obj/item/clothing/suit/storage/furcoat/brown
+	fancy_coats += /obj/item/clothing/suit/storage/piratecoat
 	fancy_coats += /obj/item/clothing/suit/storage/jensencoat
 	gear_tweaks += new/datum/gear_tweak/path/specified_types_list(fancy_coats)
 
@@ -99,3 +102,25 @@
 	jackets["short orange jacket"] = /obj/item/clothing/suit/storage/veryshort_jacket
 	jackets["short turquoise jacket"] = /obj/item/clothing/suit/storage/veryshort_jacket/green
 	gear_tweaks += new/datum/gear_tweak/path(jackets)
+
+// Assamblee robes
+
+/datum/gear/suit/asambleerobes
+	display_name = "Robes selection"
+	path = /obj/item/clothing/suit/storage/hooded/asamblee
+	allowed_factions = list(FACTION_ASSAMBLEE)
+
+/datum/gear/suit/asambleerobes/New()
+	..()
+	var/asarobes = list()
+	asarobes += /obj/item/clothing/suit/storage/hooded/asamblee
+	asarobes += /obj/item/clothing/suit/storage/hooded/asamblee/blackc
+	asarobes += /obj/item/clothing/suit/storage/hooded/asamblee/blackr
+	asarobes += /obj/item/clothing/suit/storage/hooded/asamblee/stargazer
+	asarobes += /obj/item/clothing/suit/storage/hooded/asamblee/red
+	asarobes += /obj/item/clothing/suit/storage/hooded/asamblee/gold
+	asarobes += /obj/item/clothing/suit/storage/hooded/asamblee/silver
+	asarobes += /obj/item/clothing/suit/storage/hooded/asamblee/gray
+	asarobes += /obj/item/clothing/suit/storage/hooded/asamblee/darkr
+	asarobes += /obj/item/clothing/suit/storage/hooded/asamblee/femine
+	gear_tweaks += new/datum/gear_tweak/path/specified_types_list(asarobes)

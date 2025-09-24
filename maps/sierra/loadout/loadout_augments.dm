@@ -29,6 +29,25 @@
 	path = /obj/item/organ/internal/augment/active/item/adaptive_binoculars
 	cost = 8
 
+/datum/gear/augment/si_head_vision
+	display_name = "Head Augments (Vision)"
+	description = "Head augments with vision effects."
+	path = /obj/item/organ/internal/augment
+	flags = GEAR_HAS_NO_CUSTOMIZATION
+
+
+/datum/gear/augment/si_head_vision/New()
+	..()
+	var/list/options = list()
+	options["corrective lenses"] = /obj/item/organ/internal/augment/active/item/corrective_lenses
+	options["glare dampeners"] = /obj/item/organ/internal/augment/active/item/glare_dampeners
+	options["integrated health HUD"] = /obj/item/organ/internal/augment/active/hud/health
+	options["integrated security HUD"] = /obj/item/organ/internal/augment/active/hud/security
+	options["integrated filth HUD"] = /obj/item/organ/internal/augment/active/hud/janitor
+	options["integrated sciHUD"] = /obj/item/organ/internal/augment/active/hud/science
+	options["integrated IT HUD"] = /obj/item/organ/internal/augment/active/hud/it/loadout
+	gear_tweaks += new /datum/gear_tweak/path (options)
+
 /datum/gear/augment/head
 	display_name = "Iatric monitor"
 	description = "A small computer system constantly tracks your physiological state and vital signs. A muscle gesture can be used to receive a simple diagnostic report, not unlike that from a handheld scanner."
@@ -110,6 +129,28 @@
 	organ_tag = "l_arm_aug"
 
 /obj/item/organ/internal/augment/active/item/circuit/right
+	parent_organ = BP_R_ARM
+	organ_tag = "r_arm_aug"
+
+/datum/gear/augment/scanner
+	display_name = "Integrated medical scanner (Prosthetic Only)"
+	description = "Integrated medical scanner. Always with you, always ready."
+	path = /obj/item/organ/internal/augment/active/item/scanner
+	cost = 4
+	allowed_roles = list(/datum/job/rd, /datum/job/scientist, /datum/job/scientist_assistant, /datum/job/senior_scientist, /datum/job/roboticist, /datum/job/cmo, /datum/job/senior_doctor, /datum/job/doctor, /datum/job/doctor_trainee, /datum/job/explorer_medic)
+
+/datum/gear/augment/scanner/New()
+	..()
+	var/list/options = list()
+	options["left arm"] = /obj/item/organ/internal/augment/active/item/scanner/left
+	options["right arm"] = /obj/item/organ/internal/augment/active/item/scanner/right
+	gear_tweaks += new /datum/gear_tweak/path(options)
+
+/obj/item/organ/internal/augment/active/item/scanner/left
+	parent_organ = BP_L_ARM
+	organ_tag = "l_arm_aug"
+
+/obj/item/organ/internal/augment/active/item/scanner/right
 	parent_organ = BP_R_ARM
 	organ_tag = "r_arm_aug"
 

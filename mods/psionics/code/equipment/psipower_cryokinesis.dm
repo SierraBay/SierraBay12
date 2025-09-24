@@ -12,16 +12,13 @@
 	var/delete_on_drop = 0 //should we delete this item, if it isn't in our inventory?
 	var/uses = 5 //amount of time we can use this item before it shutters, similar to glass spear
 
-/obj/item/cryokinesis/New()
-	START_PROCESSING(SSprocessing, src)
-	..()
-
-/obj/item/cryokinesis/Process()
-	if(uses <= 0)
-		Destroy()
-
 /obj/item/cryokinesis/apply_hit_effect(mob/living/target, mob/living/user, hit_zone)
 	uses -= 1
+	if(uses <= 0)
+		to_chat(user, SPAN_WARNING("Your [src] has shattered!"))
+		playsound(src, "shatter", 70, 1)
+		src.visible_message(SPAN_DANGER("[src] рассыпается на тысячи мелких льдинок!"))
+		qdel(src)
 	..()
 
 /obj/item/cryokinesis/afterattack(atom/A as mob|obj|turf|area, mob/living/user as mob)

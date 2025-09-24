@@ -145,6 +145,7 @@
 		/datum/job/submap/colonist/medic/ship, /datum/job/submap/colonist/engineer/ship
 	)
 
+
 /singleton/cultural_info/culture/ipc/gen3
 	valid_jobs = list(/datum/job/hop, /datum/job/rd, /datum/job/cmo, /datum/job/chief_engineer,
 		/datum/job/iaa, /datum/job/iso, /datum/job/adjutant,
@@ -165,6 +166,7 @@
 		/datum/job/submap/colonist/leader/ship, /datum/job/submap/colonist/ship, /datum/job/submap/colonist/scientist/ship,
 		/datum/job/submap/colonist/medic/ship, /datum/job/submap/colonist/engineer/ship
 	)
+
 //[/SIERRA-ADD] - [IPC-MODS]
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

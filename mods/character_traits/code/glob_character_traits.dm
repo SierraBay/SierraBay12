@@ -8,4 +8,5 @@ GLOBAL_LIST_EMPTY(all_mod_traits)
 	GLOB.all_mod_traits = list()
 	for (var/T in subtypesof(/datum/mod_trait))
 		var/datum/mod_trait/M = new T()
-		GLOB.all_mod_traits[T] = M
+		if(M.name)
+			GLOB.all_mod_traits[M.name] = M

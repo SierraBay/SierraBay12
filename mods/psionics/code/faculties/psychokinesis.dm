@@ -38,12 +38,7 @@
 			to_chat(user, SPAN_WARNING("Ваших сил недостаточно, чтобы достать до этого объекта."))
 			return FALSE
 
-		if(istype(target, /obj/structure))
-			user.visible_message(SPAN_DANGER("[user] вытягивает руку вперёд, чуть сжимая пальцы."))
-			var/obj/O = target
-			O.attack_hand(user)
-			return TRUE
-		else if(istype(target, /obj/machinery))
+		if(istype(target, /obj/machinery))
 			for(var/mtype in valid_machine_types)
 				if(istype(target, mtype))
 					var/obj/machinery/machine = target
@@ -60,7 +55,7 @@
 /singleton/psionic_power/psychokinesis/gravigeddon
 	name =           "Repulse"
 	cost =           30
-	cooldown =       150
+	cooldown =       100
 	use_ranged =     TRUE
 	use_melee =      TRUE
 	min_rank =       PSI_RANK_OPERANT
@@ -72,7 +67,7 @@
 	. = ..()
 	if(.)
 		user.visible_message(SPAN_DANGER("[user] размахивает руками, крича!"))
-		to_chat(user, SPAN_DANGER("Вы выпускаете мощную псионическую волну, разметая всё вокруг!"))
+		to_chat(user, SPAN_DANGER("Вы выпускаете мощную волну, разметая всё вокруг!"))
 		var/pk_rank = user.psi.get_rank(PSI_PSYCHOKINESIS)
 		new /obj/temporary(get_turf(user),9, 'icons/effects/effects.dmi', "summoning")
 		var/list/mobs = GLOB.alive_mobs + GLOB.dead_mobs
@@ -90,196 +85,6 @@
 				new /obj/temporary(get_turf(M),4, 'icons/effects/effects.dmi', "smash")
 				M.throw_at(get_edge_target_turf(M, get_dir(user, M)), pk_rank*2, pk_rank*2, user)
 		return TRUE
-
-///WHAT CAN'T BE PUCNED///
-
-/obj
-	var/can_be_telepunched = 1
-
-/obj/structure/shuttle
-	can_be_telepunched = 0
-
-/obj/structure/sign
-	can_be_telepunched = 0
-
-/obj/structure/railing
-	can_be_telepunched = 0
-
-/obj/structure/pit
-	can_be_telepunched = 0
-
-/obj/structure/stairs
-	can_be_telepunched = 0
-
-/obj/structure/net
-	can_be_telepunched = 0
-
-/obj/structure/net
-	can_be_telepunched = 0
-
-/obj/structure/m_tray
-	can_be_telepunched = 0
-
-/obj/structure/lattice
-	can_be_telepunched = 0
-
-/obj/structure/ladder
-	can_be_telepunched = 0
-
-/obj/structure/hygiene/drain
-	can_be_telepunched = 0
-
-/obj/structure/holosign
-	can_be_telepunched = 0
-
-/obj/structure/holonet
-	can_be_telepunched = 0
-
-/obj/structure/holohoop
-	can_be_telepunched = 0
-
-/obj/structure/handrail
-	can_be_telepunched = 0
-
-/obj/structure/fuel_port
-	can_be_telepunched = 0
-
-/obj/structure/fountain
-	can_be_telepunched = 0
-
-/obj/structure/flora
-	can_be_telepunched = 0
-/obj/structure/flora/pottedplant
-	can_be_telepunched = 1
-
-/obj/structure/fireaxecabinet
-	can_be_telepunched = 0
-
-/obj/structure/catwalk
-	can_be_telepunched = 0
-
-/obj/structure/extinguisher_cabinet
-	can_be_telepunched = 0
-
-/obj/structure/disposalpipe
-	can_be_telepunched = 0
-
-/obj/structure/chorus
-	can_be_telepunched = 0
-
-/obj/structure/cable
-	can_be_telepunched = 0
-
-///
-
-/obj/machinery/wish_granter
-	can_be_telepunched = 0
-
-/obj/machinery/bluespacedrive
-	can_be_telepunched = 0
-
-/obj/machinery/shield_diffuser
-	can_be_telepunched = 0
-
-/obj/machinery/self_destruct
-	can_be_telepunched = 0
-
-/obj/machinery/requests_console
-	can_be_telepunched = 0
-
-/obj/machinery/readybutton
-	can_be_telepunched = 0
-
-/obj/machinery/power
-	can_be_telepunched = 0
-
-/obj/machinery/pager
-	can_be_telepunched = 0
-
-/obj/machinery/newscaster
-	can_be_telepunched = 0
-
-/obj/machinery/navbeacon
-	can_be_telepunched = 0
-
-/obj/machinery/meter
-	can_be_telepunched = 0
-
-/obj/machinery/mech_recharger
-	can_be_telepunched = 0
-
-/obj/machinery/mass_driver
-	can_be_telepunched = 0
-
-/obj/machinery/magnetic_accelerator
-	can_be_telepunched = 0
-
-/obj/machinery/light_switch
-	can_be_telepunched = 0
-
-/obj/machinery/light_construct
-	can_be_telepunched = 0
-
-/obj/machinery/light
-	can_be_telepunched = 0
-
-/obj/machinery/keycard_auth
-	can_be_telepunched = 0
-
-/obj/machinery/igniter
-	can_be_telepunched = 0
-
-/obj/machinery/holosign
-	can_be_telepunched = 0
-
-/obj/machinery/hologram
-	can_be_telepunched = 0
-
-/obj/machinery/firealarm
-	can_be_telepunched = 0
-/obj/machinery/alarm
-	can_be_telepunched = 0
-
-/obj/machinery/door_timer
-	can_be_telepunched = 0
-
-/obj/machinery/disposal_switch
-	can_be_telepunched = 0
-
-/obj/machinery/conveyor_switch
-	can_be_telepunched = 0
-
-/obj/machinery/containment_field
-	can_be_telepunched = 0
-
-/obj/machinery/clamp
-	can_be_telepunched = 0
-
-/obj/machinery/button
-	can_be_telepunched = 0
-
-/obj/machinery/body_scanconsole
-	can_be_telepunched = 0
-/obj/machinery/body_scan_display
-	can_be_telepunched = 0
-
-/obj/machinery/atmospherics
-	can_be_telepunched = 0
-
-/obj/machinery/atm
-	can_be_telepunched = 0
-
-/obj/machinery/airlock_sensor
-	can_be_telepunched = 0
-/obj/machinery/air_sensor
-	can_be_telepunched = 0
-/obj/machinery/access_button
-	can_be_telepunched = 0
-
-/obj/machinery/ai_status_display
-	can_be_telepunched = 0
-
-/// ///
 
 /singleton/psionic_power/psychokinesis/tele_punch
 	name =           "Telekinetic Punch"
@@ -310,13 +115,6 @@
 	if(user.a_intent != I_HURT)
 		return FALSE
 
-//OBJ RELATED CHECKS START//
-
-	if(istype(target, /obj/structure) || istype(target, /obj/machinery))
-		var/obj/OBJ = target
-		if(!OBJ.can_be_telepunched)
-			return FALSE
-
 //OBJ RELATED CHECKS END//
 
 	. = ..()
@@ -331,7 +129,9 @@
 					user.apply_damage(rand(5,15), DAMAGE_BRUTE, pick(BP_L_HAND, BP_R_HAND))
 					return TRUE
 				new /obj/temporary(get_turf(target),3, 'icons/effects/effects.dmi', "smash")
-				user.visible_message(SPAN_DANGER("[user] толкает [target] вперёд!"))
+				user.visible_message(SPAN_DANGER("[user] бьет по [target], отправляя в полёт!"))
+				O.damage_health(15, DAMAGE_BRUTE)
+				user.apply_damage(rand(5,15), DAMAGE_BRUTE, pick(BP_L_HAND, BP_R_HAND))
 				O.throw_at(get_edge_target_turf(O, get_dir(user, O)), 4, 2, user)
 				return TRUE
 			user.visible_message(SPAN_DANGER("[user] заносит руку назад и наносит удар с неестественной скоростью!"))
@@ -396,7 +196,9 @@
 					user.apply_damage(rand(5,15), DAMAGE_BRUTE, pick(BP_L_HAND, BP_R_HAND))
 					return TRUE
 				new /obj/temporary(get_turf(target),3, 'icons/effects/effects.dmi', "smash")
-				user.visible_message(SPAN_DANGER("[user] толкает [target] вперёд!"))
+				user.visible_message(SPAN_DANGER("[user] бьет по [target], отправляя в полёт!"))
+				O.damage_health(40, DAMAGE_BRUTE)
+				user.apply_damage(rand(5,15), DAMAGE_BRUTE, pick(BP_L_HAND, BP_R_HAND))
 				O.throw_at(get_edge_target_turf(O, get_dir(user, O)), 6, 2, user)
 				return TRUE
 			user.visible_message(SPAN_DANGER("[user] заносит руку назад и наносит удар с неестественной скоростью!"))
@@ -464,7 +266,9 @@
 					user.apply_damage(rand(5,15), DAMAGE_BRUTE, pick(BP_L_HAND, BP_R_HAND))
 					return TRUE
 				new /obj/temporary(get_turf(target),3, 'icons/effects/effects.dmi', "smash")
-				user.visible_message(SPAN_DANGER("[user] толкает [target] вперёд!"))
+				user.visible_message(SPAN_DANGER("[user] бьет по [target], отправляя в полёт!"))
+				O.damage_health(40, DAMAGE_BRUTE)
+				user.apply_damage(rand(5,15), DAMAGE_BRUTE, pick(BP_L_HAND, BP_R_HAND))
 				O.throw_at(get_edge_target_turf(O, get_dir(user, O)), 8, 4, user)
 				return TRUE
 			user.visible_message(SPAN_DANGER("[user] заносит руку назад и наносит удар с сверхзвуковой скоростью!"))
@@ -528,60 +332,22 @@
 
 			return TRUE
 
-/obj/structure/girder/rock
-	icon_state = "ground rock"
-	anchored = TRUE
-	density = TRUE
-	layer = ABOVE_HUMAN_LAYER
-	w_class = ITEM_SIZE_NO_CONTAINER
-	health_max = 200
-	icon = 'mods/psionics/icons/effects/psi_effects.dmi'
-	icon_state = "earth_pillar_2"
-
-/obj/structure/girder/rock/use_tool(obj/item/W, mob/user)
-	if (user.a_intent == I_HURT)
-		..()
-		return
-
-	if(istype(W, /obj/item/pickaxe/diamonddrill))
-		playsound(src.loc, 'sound/weapons/Genhit.ogg', 100, 1)
-		if(do_after(user,reinf_material ? 60 : 40,src))
-			to_chat(user, SPAN_DANGER("You drill through the rock!"))
-			if(reinf_material)
-				reinf_material.place_dismantled_product(get_turf(src))
-			dismantle()
-		return
-
-/obj/structure/girder/rock/dismantle()
-	qdel(src)
-
-/singleton/psionic_power/psychokinesis/rock_shield
-	name =           "Ground Shield"
-	cost =           10
-	cooldown =       30
-	use_melee =      TRUE
+/singleton/psionic_power/psychokinesis/propel
+	name =           "Propel"
+	cost =           20
+	cooldown =       40
 	use_ranged =     TRUE
-	min_rank =       PSI_RANK_OPERANT
+	min_rank =       PSI_RANK_APPRENTICE
+	use_description = "Выберите любую ногу или пятку на жёлтом интенте, чтобы отправится в полёт."
 
-	use_description = "Выберите любую ногу или пятку на жёлтом интенте, а затем нажмите по ближайшему куску земли, чтобы поднять его вверх."
-
-/singleton/psionic_power/psychokinesis/rock_shield/invoke(mob/living/carbon/user, turf/simulated/target)
+/singleton/psionic_power/psychokinesis/propel/invoke(mob/living/carbon/user, turf/simulated/target)
 	if(!(user.zone_sel.selecting in list(BP_L_LEG, BP_R_LEG, BP_L_FOOT, BP_R_FOOT)))
 		return FALSE
 
 	if(!target)
-		to_chat(user, SPAN_NOTICE("Данный материал слабо подойдёт для тех задач, для которых вы хотите использовать его!"))
 		return FALSE
 
 	. = ..()
 	if(.)
-		if(istype(target, /turf/simulated/floor/exoplanet))
-			var/turf/A = target
-			if(do_after(user, 10))
-				user.visible_message(SPAN_DANGER("[user] возводит каменную стену!"))
-				new /obj/temporary(A, 9, 'mods/psionics/icons/effects/psi_effects.dmi', "earth_pillar_0")
-				spawn(1 SECONDS)
-					new /obj/structure/girder/rock(get_turf(A))
-				return TRUE
-		else
-			return FALSE
+		var/user_rank = user.psi.get_rank(PSI_PSYCHOKINESIS)
+		user.throw_at(target, user_rank, user_rank, user)

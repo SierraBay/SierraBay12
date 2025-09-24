@@ -69,8 +69,7 @@
 		H.last_faction = faction
 
 /datum/job
-
-	give_psionic_implant_on_join = FALSE // Псиота не имплантируется при заходе. Сделано для ИПиБС
+	give_psionic_implant_on_join = TRUE // Все псионики теперь имплантируются, за некоторыми исключениями.
 
 // ranged interaction telekinesis
 /obj/machinery/button/do_simple_ranged_interaction(mob/user)
@@ -125,3 +124,54 @@
 /obj/structure/lift/button/do_simple_ranged_interaction(mob/user)
 	interact()
 	return TRUE
+
+// w_class
+/obj/structure/closet
+	w_class = ITEM_SIZE_LARGE
+
+/obj/item/card/operant_card
+	name = "operant registration card"
+	icon_state = "warrantcard_civ"
+	desc = "A registration card in a faux-leather case. It marks the named individual as a registered, law-abiding psionic."
+	w_class = ITEM_SIZE_SMALL
+	attack_verb = list("whipped")
+	hitsound = 'sound/weapons/towelwhip.ogg'
+	var/info
+	var/use_rating
+
+
+/obj/item/card/operant_card/proc/set_info(mob/living/carbon/human/human)
+	if(!istype(human))
+		return
+	switch(human.psi?.rating)
+		if(0)
+			use_rating = "[human.psi.rating]-Omicron"
+		if(1)
+			use_rating = "[human.psi.rating]-Omicron"
+		if(2)
+			use_rating = "[human.psi.rating]-Omega"
+		if(3)
+			use_rating = "[human.psi.rating]-Lamed"
+		if(4)
+			use_rating = "[human.psi.rating]-Gimmel"
+		if(5)
+			use_rating = "[human.psi.rating]-Aleph"
+		if (6 to INFINITY)
+			use_rating = "[human.psi.rating]-Post Aleph"
+		else
+			use_rating = "Non-Psionic"
+
+	info = {"\
+		Name: [human.real_name]\n\
+		Species: [human.get_species()]\n\
+		Fingerprint: [human.dna?.uni_identity ? md5(human.dna.uni_identity) : "N/A"]\n\
+		Assessed Potential: [use_rating]\
+	"}
+
+/obj/item/card/operant_card/attack_self(mob/living/user)
+	user.visible_message(
+		SPAN_ITALIC("\The [user] examines \a [src]."),
+		SPAN_ITALIC("You examine \the [src]."),
+		3
+	)
+	to_chat(user, info || SPAN_WARNING("\The [src] is completely blank!"))

@@ -13,6 +13,8 @@
 #include "code/complexus/complexus_topic.dm"
 #include "code/complexus/complexus.dm"
 #include "code/equipment/cerebro_enhancers.dm"
+#include "code/equipment/asamblee_clothing.dm"
+#include "code/misc/background.dm"
 #include "code/equipment/foundation_clothing.dm"
 #include "code/equipment/foundation_exosuit.dm"
 #include "code/equipment/foundation_implanter.dm"
