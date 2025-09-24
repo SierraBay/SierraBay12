@@ -244,10 +244,6 @@
 	/// Chance of a user being displaced to a random set of stairs while its bluespace affected.
 	var/displacement_chance = 15
 
-	var/steel_added = FALSE
-	var/welded = FALSE
-	var/destroyed = FALSE
-
 /obj/structure/stairs/Initialize()
 	for(var/turf/turf in locs)
 		var/turf/simulated/open/above = GetAbove(turf)
