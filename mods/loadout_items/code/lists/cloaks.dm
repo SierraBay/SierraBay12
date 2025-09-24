@@ -93,16 +93,16 @@
 //Aurora stuff
 
 /datum/gear/clothing/mantle_avalon
-    display_name = "Avalon Mantle"
-    cost = 2
-    path = /obj/item/clothing/accessory/cape_avalon
+	display_name = "Avalon Mantle"
+	cost = 2
+	path = /obj/item/clothing/accessory/cloak/dominia
 
 
 /datum/gear/clothing/mantle_avalon/New()
 	..()
 	var/avalon_mantle = list()
-	avalon_mantle["black avalon mantle"] = /obj/item/clothing/accessory/cape_avalon
-	avalon_mantle["white avalon mantle"] = /obj/item/clothing/accessory/cape_avalon_w
+	avalon_mantle["black avalon mantle"] = /obj/item/clothing/accessory/cloak/dominia/black
+	avalon_mantle["white avalon mantle"] = /obj/item/clothing/accessory/cloak/dominia/white
 	avalon_mantle["red avalon mantle"] = /obj/item/clothing/accessory/cloak/dominia/red
 	gear_tweaks += new/datum/gear_tweak/path(avalon_mantle)
 //Misc cloaks
