@@ -67,3 +67,4 @@
 #include "rocket_launchers/_rocket_launchers_includes.dm"
 #include "genreconfig/_genreconfig_includes.dm"
 #include "config/_config_includes.dm"
+#include "chich_overmap_content/_chich_overmap_content_includes.dm"

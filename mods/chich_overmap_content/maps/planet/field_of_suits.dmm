@@ -1,0 +1,29 @@
+"a" = (/obj/landmark/clear,/turf/template_noop,/area/space)
+"e" = (/obj/item/clothing/head/helmet/space/void/excavation/field_of_suits,/obj/landmark/clear,/turf/template_noop,/area/space)
+"i" = (/obj/landmark/corpse/field_of_suits_poor_fellow,/obj/random/firstaid,/obj/landmark/clear,/turf/template_noop,/area/space)
+"k" = (/obj/landmark/corpse/field_of_suits_poor_fellow,/obj/landmark/clear,/turf/template_noop,/area/space)
+"m" = (/obj/item/device/radio,/obj/landmark/clear,/turf/template_noop,/area/space)
+"n" = (/obj/item/clothing/suit/space/void/excavation/field_of_suits,/obj/item/clothing/head/helmet/space/void/excavation/field_of_suits,/obj/landmark/clear,/turf/template_noop,/area/space)
+"t" = (/obj/random/tool,/obj/landmark/clear,/turf/template_noop,/area/space)
+"u" = (/turf/template_noop,/area/space)
+"C" = (/obj/item/clothing/suit/space/void/iccgn/prepared,/obj/landmark/clear,/turf/template_noop,/area/space)
+"E" = (/obj/random/tank,/obj/landmark/clear,/turf/template_noop,/area/space)
+"F" = (/obj/random/trash,/obj/landmark/clear,/turf/template_noop,/area/space)
+"K" = (/obj/random/masks,/obj/landmark/clear,/turf/template_noop,/area/space)
+"Q" = (/obj/random/powercell,/obj/landmark/clear,/turf/template_noop,/area/space)
+"S" = (/obj/item/clothing/suit/space/void/excavation/field_of_suits,/obj/landmark/clear,/turf/template_noop,/area/space)
+"Y" = (/obj/item/clothing/suit/space/void/excavation/field_of_suits,/obj/decal/cleanable/remains,/obj/landmark/clear,/turf/template_noop,/area/space)
+"Z" = (/obj/item/device/binoculars,/obj/landmark/clear,/turf/template_noop,/area/space)
+
+(1,1,1) = {"
+uuuuuuaQauuaa
+aauEauaaauaFa
+aaaaaaaaaaaaa
+auaSFeaSakaaa
+uaaataaaaaaua
+aFaiaCFnaSaat
+aaaaZaaeamaaa
+uaaeaYaaanaau
+aKaaaakaaFaau
+uaauFaaauuauu
+"}
