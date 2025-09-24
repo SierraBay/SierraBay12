@@ -48,19 +48,6 @@
 	cooked_scent = /datum/extension/scent/food/pasta
 
 /singleton/cooking_recipe/meatballspagettiboiled
-	appliance = COOKING_APPLIANCE_POT | COOKING_APPLIANCE_SAUCEPAN | COOKING_APPLIANCE_MICROWAVE
-	consumed_reagents = list(
-		/datum/reagent/water = 10
-	)
-	required_items = list(
-		/obj/item/reagent_containers/food/snacks/boiledspagetti,
-		/obj/item/reagent_containers/food/snacks/meatball,
-		/obj/item/reagent_containers/food/snacks/meatball
-	)
-	result_path = /obj/item/reagent_containers/food/snacks/meatballspagetti
-	cooked_scent = /datum/extension/scent/food/pasta
-
-/singleton/cooking_recipe/meatballspagettiboiled
 	appliance = COOKING_APPLIANCE_POT | COOKING_APPLIANCE_SAUCEPAN
 	required_items = list(
 		/obj/item/reagent_containers/food/snacks/boiledspagetti,

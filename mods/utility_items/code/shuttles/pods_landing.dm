@@ -40,8 +40,8 @@
 		if(istype(T, /turf/simulated/wall))
 			if(prob(70))
 				T.damage_health(rand(100, 300), DAMAGE_BRUTE) // 70% chance to damage wall on collision
-		if(prob(40)) // 40% chance to explode
-			explosion(T, rand(1, 4))
+		if(prob(30)) // 30% chance to explode
+			explosion(T, 1)
 
 
 ///////////////////////////////////////////////////////

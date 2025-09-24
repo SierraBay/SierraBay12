@@ -1,6 +1,6 @@
 /obj/item/psychic_power/telekinesis
 	name = "telekinetic grip"
-	maintain_cost = 6
+	maintain_cost = 3
 	icon_state = "telekinesis"
 	var/atom/movable/focus
 
@@ -29,7 +29,7 @@
 	else
 		return FALSE
 
-	if(_focus.anchored || (check_paramount && owner.psi.get_rank(PSI_PSYCHOKINESIS) < PSI_RANK_GRANDMASTER))
+	if(check_paramount && owner.psi.get_rank(PSI_PSYCHOKINESIS) < PSI_RANK_GRANDMASTER)
 		focus = _focus
 		. = attack_self(owner)
 		if(!.)
@@ -47,14 +47,17 @@
 /obj/item/psychic_power/telekinesis/attack_self(mob/user)
 	user.visible_message(SPAN_NOTICE("\The [user] показывает странный жест."))
 	sparkle()
-	return focus.do_simple_ranged_interaction(user)
+	if (focus.do_simple_ranged_interaction(user))
+		return focus.do_simple_ranged_interaction(user)
+	else
+		focus.attack_hand(user)
 
 /obj/item/psychic_power/telekinesis/afterattack(atom/target, mob/living/user, proximity)
 
 	if(!target || !user || (isobj(target) && !isturf(target.loc)) || !user.psi || !user.psi.can_use() || !user.psi.spend_power(8))
 		return
 
-	user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN * 2)
+	//user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
 	user.psi.set_cooldown(8)
 
 	var/user_psi_leech = user.do_psionics_check(5, user)

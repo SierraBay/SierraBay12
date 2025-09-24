@@ -801,6 +801,7 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 
 	user.client.view = viewsize
 	zoom = 1
+	user.client.viewoffset = TRUE //[SIERRA-ADD] - FOV
 
 	GLOB.destroyed_event.register(src, src, TYPE_PROC_REF(/obj/item, unzoom))
 	GLOB.moved_event.register(user, src, TYPE_PROC_REF(/obj/item, unzoom))
@@ -814,6 +815,7 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 /mob/living/proc/unzoom(obj/item/I)
 	if(I)
 		I.unzoom(src)
+		client.viewoffset = FALSE //[SIERRA-ADD] - FOV
 
 /obj/item/proc/unzoom(mob/user)
 	if(!zoom)
@@ -846,6 +848,8 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 	if(istype(H))
 		H.handle_vision()
 	user.visible_message("[zoomdevicename ? "\The [user] looks up from [src]" : "\The [user] lowers [src]"].")
+	user.client.viewoffset = FALSE //[SIERRA-ADD] - FOV
+	user.client.reload_fov() //[SIERRA-ADD] - FOV
 
 /obj/item/proc/pwr_drain()
 	return 0 // Process Kill

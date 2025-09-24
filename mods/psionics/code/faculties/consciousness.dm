@@ -183,7 +183,6 @@
 			return FALSE
 
 		var/con_rank_user = user.psi.get_rank(PSI_CONSCIOUSNESS)
-		var/started_mindread = world.time
 		to_chat(user, SPAN_NOTICE("<b>Вы погружаетесь в глубины сознания [target], выискивая ответ на вопрос: <i>[question]</i></b>"))
 		var/option = alert(target, "Кто-то пытается проникнуть в ваше сознание! Вы позволите этому случиться?", "Выбирай!", "Да", "Нет")
 		if (!option)
@@ -194,14 +193,14 @@
 					to_chat(target, SPAN_NOTICE("<b>Вы защитили свой разум от вторжения</b>"))
 					return
 				else
-					if (target.getBrainLoss() < 25)
-						target.adjustBrainLoss(25)
+					if (target.getBrainLoss() < 5)
+						target.adjustBrainLoss(5)
 					to_chat(user, SPAN_NOTICE("<b>[target] удаётся предотвратить ваше проникновение, но часть его мозга была повреждена в процессе</b>"))
 					to_chat(target, SPAN_NOTICE("<b>Вам удаётся защитить свои воспоминания. Ваша голова просто раскалывается.</b>"))
 					return
 			else if(!target.psi)
-				if (target.getBrainLoss() < 25)
-					target.adjustBrainLoss(25)
+				if (target.getBrainLoss() < 5)
+					target.adjustBrainLoss(5)
 				to_chat(user, SPAN_NOTICE("<b>[target] удаётся предотвратить ваше проникновение, но часть его мозга была повреждена в процессе!</b>"))
 				to_chat(target, SPAN_NOTICE("<b>Вам удаётся защитить свои воспоминания. Ваша голова просто раскалывается.</b>"))
 				return
@@ -215,21 +214,21 @@
 					to_chat(target, SPAN_NOTICE("<b>Вы защитили свой разум от вторжения!</b>"))
 					return
 				else
-					if (target.getBrainLoss() < 25)
-						target.adjustBrainLoss(25)
+					if (target.getBrainLoss() < 5)
+						target.adjustBrainLoss(5)
 					to_chat(user, SPAN_NOTICE("<b>[target] удаётся предотвратить ваше проникновение, но часть его мозга была повреждена в процессе!</b>"))
 					to_chat(target, SPAN_NOTICE("<b>Вам удаётся защитить свои воспоминания. Ваша голова просто раскалывается.</b>"))
 					return
 			else if(!target.psi)
-				if (target.getBrainLoss() < 25)
-					target.adjustBrainLoss(25)
+				if (target.getBrainLoss() < 5)
+					target.adjustBrainLoss(5)
 				to_chat(user, SPAN_NOTICE("<b>[target] удаётся предотвратить ваше проникновение, но часть его мозга была повреждена в процессе!</b>"))
 				to_chat(target, SPAN_NOTICE("<b>Вам удаётся защитить свои воспоминания. Ваша голова просто раскалывается.</b>"))
 				return
 
 
 		var/answer =  input(target, question, "Чтение мыслей") as null|text
-		if(!answer || world.time > started_mindread + 60 SECONDS || user.stat != CONSCIOUS || target.stat == DEAD)
+		if(!answer || user.stat != CONSCIOUS || target.stat == DEAD)
 			to_chat(user, SPAN_NOTICE("<b>Вам не удалось добиться чего-либо полезного от [target].</b>"))
 		else
 			to_chat(user, SPAN_NOTICE("<b>В разуме [target], вы находите: <i>[answer]</i></b>"))
@@ -518,6 +517,7 @@
 
 /mob/living/simple_animal/hostile/mirror_shade
 
+	name = "Mirror Shade"
 	turns_per_move = 2
 	response_help = "pokes"
 	response_disarm = "shoves"
@@ -537,6 +537,7 @@
 	if(set_owner)
 		owner = set_owner
 		friends += owner
+		name = owner.name
 	QDEL_IN(src, 30 SECONDS)
 
 /mob/living/simple_animal/hostile/mirror_shade/examine(mob/user)
