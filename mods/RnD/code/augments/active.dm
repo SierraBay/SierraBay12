@@ -107,7 +107,7 @@
 	desc = "A concealed sheath made from bio-compatible cloth, shaped for a thin blade."
 	action_button_name = "Deploy blade"
 	icon_state = "monowire"
-	augment_slots = AUGMENT_ARM
+	augment_slots = AUGMENT_HAND
 	item = /obj/item/material/monowire
 	origin_tech = list(TECH_COMBAT = 3, TECH_ESOTERIC = 4)
 	deploy_sound = 'sound/effects/holster/sheathout.ogg'
@@ -123,20 +123,20 @@
 		slot_l_hand_str = 'mods/RnD/icons/mob/lefthand.dmi',
 		)
 	name = "monowire"
-	desc = "Slice it, dice it. "
-	max_force = 16
+	desc = "Slice it, dice it. Monofilament razorwire can easily dismemper victim or restrain them. (Use monowire with grab intent on your victim to perform it)"
+	max_force = 15
 	base_parry_chance = 0 // How you parry with flexible razorwire?
 	force_multiplier = 0.2
 	attack_cooldown_modifier = -1
 	default_material = MATERIAL_PLASTEEL
 	applies_material_colour = FALSE
+	applies_material_name = FALSE
 	unbreakable = TRUE
 	unacidable = TRUE
-	attack_verb = list("whipped", "sliced", "lashed")
+	attack_verb = list("whipped", "sliced", "lashed", "diced")
 
-	/// SMALL prevents dismembering limbs - only hands & feet - same as traitor armblade
-	w_class = ITEM_SIZE_SMALL
-
+	/// Changeling's copypaste area
+	var/last_grab = null
 	var/cooldown = 5 SECONDS
 
 /obj/item/material/monowire/add_blood(mob/living/carbon/human/M)
@@ -149,7 +149,7 @@
 
 	if(user.a_intent == I_GRAB)
 		if ((last_grab + cooldown > world.time))
-			to_chat(user, SPAN_WARNING("I need time to recover from the last grab attack."))
+			to_chat(user, SPAN_WARNING("I can't restrain someone with monowire that fast!"))
 			return
 		if(istype(M,/mob/living/carbon))
 			var/mob/living/carbon/human/H = user
@@ -160,3 +160,13 @@
 				if(istype(holding,/obj/item/grab))
 					holding.upgrade(bypass_cooldown = TRUE)
 					last_grab = world.time
+
+/obj/item/device/augment_implanter/monowire
+	augment = /obj/item/organ/internal/augment/active/item/monowire
+
+/datum/uplink_item/item/augment/aug_monowire
+	name = "Concealed Monowire (hand)"
+	desc = "An augment that slots consealed monofilament razorwire, capable of fast restraining targets. \
+	Developed especially for concealment, its presence will not be revealed by body scanners."
+	item_cost = 32
+	path = /obj/item/device/augment_implanter/monowire
