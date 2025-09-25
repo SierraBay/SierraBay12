@@ -209,7 +209,6 @@
 	#include "../../mods/fancy_sofas/_fancy_sofas_includes.dm"
 	#include "../../mods/jukebox_tapes/_jukebox_tapes_includes.dm"
 	#include "../../mods/legalese_language/_legalese_includes.dm"
-	#include "../../mods/resomi/_resomi_includes.dm"
 	#include "../../mods/screentips/_screentips_includes.dm"
 	#include "../../mods/tajara/_tajara_includes.dm"
 	#include "../../mods/sauna_props/_sauna_props_includes.dm"
