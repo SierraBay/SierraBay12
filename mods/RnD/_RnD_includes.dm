@@ -12,6 +12,7 @@
 #include "code/research.dm"
 #include "code/augments/active.dm"
 #include "code/augments/clicker.dm"
+#include "code/augments/sonar.dm"
 #include "code/augments/vampire.dm"
 #include "code/machinery/rdconsole.dm"
 #include "code/machinery/rdmachines.dm"
