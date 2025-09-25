@@ -10,7 +10,7 @@
 	origin_tech = list(TECH_DATA = 4, TECH_MAGNET = 4, TECH_BIO = 4)
 
 /obj/item/organ/internal/augment/active/sonar/activate()
-	owner.resomi_sonar_ping()
+	owner.sonar_ping()
 
 /obj/item/organ/internal/augment/active/sonar/emp_act(severity)
 	if (istype(src.loc, /mob/living/carbon/human))
