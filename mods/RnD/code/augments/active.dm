@@ -104,7 +104,7 @@
 
 /obj/item/organ/internal/augment/active/item/monowire
 	name = "concealed monowire"
-	desc = "A concealed sheath made from bio-compatible cloth, shaped for a thin blade."
+	desc = "A concealed sheath made from bio-compatible cloth, shaped for a monowire coil."
 	action_button_name = "Deploy blade"
 	icon_state = "monowire"
 	augment_slots = AUGMENT_HAND
