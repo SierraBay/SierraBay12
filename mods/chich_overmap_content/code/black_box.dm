@@ -1,6 +1,6 @@
 /obj/item/paper/black_box_site
-	name = ""
-	icon = ''
+	// name = ""
+	// icon = ''
 	icon_state = ""
 	language = LANGUAGE_HUMAN_EURO
 

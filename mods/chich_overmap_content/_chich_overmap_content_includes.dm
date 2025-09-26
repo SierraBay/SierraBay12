@@ -2,6 +2,8 @@
 #define MODPACK_CHICH_OVERMAP_CONTENT
 
 #include "_chich_overmap_content.dm"
+#include "code/black_box.dm"
 #include "code/field_of_suits.dm"
+#include "code/lost_truck.dm"
 
 #endif
