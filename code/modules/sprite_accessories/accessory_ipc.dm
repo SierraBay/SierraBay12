@@ -54,11 +54,9 @@
 	name = "Xion Colored Monitor"
 	icon_state = "xion_monitor"
 
-/*[SIERRA-REMOVE] - IPC-MODS
 /datum/sprite_accessory/marking/ipc/head/xion_eyes
 	name = "Xion Alt. Optics"
 	icon_state = "xion_alt_optics"
-*/
 
 /datum/sprite_accessory/marking/ipc/torso/xion
 	name = "Xion Colored Torso"
@@ -102,11 +100,9 @@
 	name = "Ward-Takahashi GMB Colored Monitor"
 	icon_state = "wt_monitor"
 
-/*[SIERRA-REMOVE] - IPC-MODS
 /datum/sprite_accessory/marking/ipc/head/wt_eyes
 	name = "Ward Takahashi Alt. Optics"
 	icon_state = "wardtakahashi_alt_optics"
-*/
 
 /datum/sprite_accessory/marking/ipc/torso/wt
 	name = "Ward-Takahashi GMB Colored Torso"
@@ -121,11 +117,9 @@
 	icon_state = "wt"
 
 //BISHOP
-/*[SIERRA-REMOVE] - IPC-MODS
 /datum/sprite_accessory/marking/ipc/head/bishop_eyes
 	name = "Bishop Alt. Optics"
 	icon_state = "bishop_alt_optics"
-*/
 
 /datum/sprite_accessory/marking/ipc/head/bishop
 	name = "Bishop Head Color Accents"
@@ -177,11 +171,9 @@
 	name = "Hephaestus Colored Monitor"
 	icon_state = "hephaestus_monitor"
 
-/*[SIERRA-REMOVE] - IPC-MODS
 /datum/sprite_accessory/marking/ipc/head/hephaestus_eyes
 	name = "Hephaestus Alt. Optics"
 	icon_state = "hephaestus_alt_optics"
-*/
 
 /datum/sprite_accessory/marking/ipc/torso/hephaestus
 	name = "Hephaestus Colored Torso"
@@ -213,7 +205,6 @@
 	icon_state = "titan"
 
 //MORPHEUS
-/*[SIERRA-REMOVE] - IPC-MODS
 /datum/sprite_accessory/marking/ipc/head/morpheus_eyes
 	name = "Morpheus Optics"
 	icon_state = "morpheus_optics"
@@ -229,7 +220,6 @@
 /datum/sprite_accessory/marking/ipc/head/prime_optics
 	name = "Morpheus Prime Optics"
 	icon_state = "prime_optics"
-*/
 
 //ZENG-HU SPIRIT
 /datum/sprite_accessory/marking/ipc/head/zenghu
