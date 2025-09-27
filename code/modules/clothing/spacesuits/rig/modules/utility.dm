@@ -210,6 +210,7 @@
 		to_chat(user, SPAN_DANGER("None of the reagents seem suitable."))
 	return 1
 
+/*[SIERRA-REMOVE] - HARDSUITS
 /obj/item/rig_module/chem_dispenser/engage(atom/target)
 
 	if(!..())
@@ -252,6 +253,8 @@
 
 	return 1
 
+[SIERRA-REMOVE] - HARDSUITS
+*/
 /obj/item/rig_module/chem_dispenser/combat
 
 	name = "combat chemical dispenser"
@@ -511,6 +514,7 @@
 	var/charge_consumption = 0.5 KILOWATTS
 	var/max_cooling = 12
 	var/thermostat = T20C
+	show_toggle_button = TRUE
 
 /obj/item/rig_module/cooling_unit/Process()
 	if(!active)
