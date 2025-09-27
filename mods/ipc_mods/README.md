@@ -29,7 +29,7 @@ ID мода: IPC_MODS
 ### Изменения *кор кода*
 - `code/modules/mob/living/silicon/posi_brainmob.dm` `/mob/living/silicon/sil_brainmob/show_laws(mob/M)` убрана проверка `src.laws_sanity_check()` 
 - `code/modules/organs/internal/species/ipc.dm` `/obj/item/organ/internal/posibrain/New(mob/living/carbon/H)` убрано `unshackle()`
-- `code/modules/surgery/organs_internal.dm` `/singleton/surgery_step/internal/replace_organ/pre_surgery_step` Добавлена проверка по базовому мозгу, во изюежание установки мозга боргов в ИПС
+- `code/modules/surgery/organs_internal.dm` `/singleton/surgery_step/internal/replace_organ/pre_surgery_step` Добавлена проверка по базовому мозгу, во избежание установки мозга боргов в ИПС
 
 <!--
   Если вы редактировали какие-либо процедуры или переменные в кор коде,
@@ -51,6 +51,7 @@ ID мода: IPC_MODS
  - `/datum/species/machine/check_background(datum/job/job, datum/preferences/prefs)`
  - `code/modules/mob/living/carbon/human/update_icons.dm`
  - `code/modules/mob/living/carbon/human/life.dm`
+ - `code/modules/sprite_accessories/accessory_ipc.dm`
 
 
 
