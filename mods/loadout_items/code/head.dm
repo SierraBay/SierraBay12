@@ -102,8 +102,8 @@
 /obj/item/clothing/head/wig
 	name = "wig"
 	desc = "A stylish hairstyle, in case you don't have your own hair."
-	icon = 'icons/obj/clothing/obj_head.dmi'
-	icon_state = "philosopher_wig"
+	icon = 'mods/loadout_items/icons/obj_head.dmi'
+	icon_state = "wig"
 	item_state_slots = list(
 		slot_l_hand_str = "pwig",
 		slot_r_hand_str = "pwig",
@@ -143,6 +143,7 @@
 /obj/item/clothing/head/wig/proc/loadout_setup(mob/living/carbon/human/H)
 	var/singleton/species/human_species = GLOB.species_by_name[SPECIES_HUMAN]
 	var/list/valid_hairstyles = human_species.get_hair_styles()
+	valid_hairstyles -= "Bald"
 	var/loadout_hairstyle = valid_hairstyles[desc]
 	if (loadout_hairstyle)
 		hairstyle = loadout_hairstyle
