@@ -139,6 +139,8 @@
 		if (!hairstyle)
 			hairstyle = GLOB.hair_styles_list["Bedhead"]
 		update_clothing_icon()
+		return TRUE
+	return ..()
 
 /obj/item/clothing/head/wig/proc/loadout_setup(mob/living/carbon/human/H)
 	var/singleton/species/human_species = GLOB.species_by_name[SPECIES_HUMAN]
