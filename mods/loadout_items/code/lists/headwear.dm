@@ -59,6 +59,6 @@
 	display_name = "wig"
 	path = /obj/item/clothing/head/wig
 	flags = GEAR_HAS_COLOR_SELECTION
-	description = "A stylish hairstyle, in case you don't have your own hair. OOC Guide: Write the exact name of the hairstyle in the description (don't forget the spaces and capital letters, and don't write anything other than the name of the hairstyle) or use a comb."
+	description = "A stylish hairstyle, in case you don't have your own hair. OOC Guide: Either enter the exact name of the hairstyle in the description (match spacing and capitalization exactly, do not include anything else), or use a comb."
 	custom_setup_proc = /obj/item/clothing/head/wig/proc/loadout_setup
 	whitelisted = list(SPECIES_HUMAN, SPECIES_VATGROWN, SPECIES_SPACER, SPECIES_TRITONIAN, SPECIES_GRAVWORLDER, SPECIES_MULE, SPECIES_IPC)
