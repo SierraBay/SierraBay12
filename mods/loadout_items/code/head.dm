@@ -110,7 +110,7 @@
 		)
 	sprite_sheets = null
 	flags_inv = BLOCKHEADHAIR
-	color = "#FFFFFF"
+	color = "#ffffff"
 	var/datum/sprite_accessory/hair/hairstyle
 
 /obj/item/clothing/head/wig/Initialize()
