@@ -44,6 +44,21 @@
 	Prosthetics can now feel, eat, and drink! What's especially awesome are the combat implants! \
 	Have you seen the latest version of the MANTIS IMPLANT?! It's absolutely INSANE!!!"
 
+/singleton/poster/custom/pcrc_saare
+	icon_state = "pcrc_saare"
+	name = "Shield Program"
+	desc = "What do you see on the poster? Correct! This is the Iron Shield program! For MONEY (quite a lot) you get almost impenetrable protection of your object. \
+	While the corporation RCRC with its information investigators form a protective network at the object, and the operatives effectively solve incoming problems, \
+	the PMC SAARE acts as Emergency Groups and solve problems where there is a BIG threat to the object. \
+	For PCRC - 'Professionalism. Efficiency. Mastery.' - And for SAARE - 'Never again - Massacre in Thea' (and anywhere else)."
+
+/singleton/poster/custom/miss_security
+	icon_state = "miss_security"
+	name = "Miss Secutiry"
+	desc = "Miss Security 2311 - Beauty is not vulnerability. is not a podium, but a training ground. Here they appreciate not only impeccable style, but also cold calculation, speed of reaction and nerves of steel. \
+	The participants are the elite of security: cyber agents, physical defense experts, specialists in operational threat analysis. \
+	Their weapon is intelligence. Their armor is professionalism. 'You either protect or leave.' "
+
 /obj/structure/sign/poster/custom
 	icon = 'mods/nyc_posters/icons/custom_posters.dmi'
 	random_poster_base_type = /singleton/poster/custom
@@ -67,3 +82,11 @@
 /obj/structure/sign/poster/custom/chromego
 	icon_state = "chromego"
 	poster_type = /singleton/poster/custom/chromego
+
+/obj/structure/sign/poster/custom/pcrc_saare
+	icon_state = "pcrc_saare"
+	poster_type = /singleton/poster/custom/pcrc_saare
+
+/obj/structure/sign/poster/custom/miss_security
+	icon_state = "miss_security"
+	poster_type = /singleton/poster/custom/miss_security
