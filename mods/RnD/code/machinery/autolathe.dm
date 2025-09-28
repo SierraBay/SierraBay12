@@ -921,12 +921,12 @@
 	..()
 	// Just VIS_INHERIT_ICON isn't enough: flick_light() needs an actual icon to be set
 	icon = loc.icon
-	loc.vis_contents += src
+	loc.add_vis_contents(src)
 
 /obj/effect/flick_light_overlay/Destroy()
 	if(istype(loc, /atom/movable))
 		var/atom/movable/A = loc
-		A.vis_contents -= src
+		A.remove_vis_contents(src)
 	return ..()
 
 /obj/machinery/fabricator/hacked

@@ -37,6 +37,7 @@
 
 	min_anomalies_ammount = 500
 	max_anomalies_ammount = 700
+	initial_weather_state = null //Можно убрать когда будет под новую подсистему
 
 /obj/overmap/visitable/sector/exoplanet/water/New(nloc, max_x, max_y)
 	. = ..()
