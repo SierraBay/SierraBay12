@@ -217,7 +217,7 @@
 	. = 0
 	if(isturf(loc))
 		var/turf/turf = loc
-		. += turf.movement_delay
+		. += turf.get_terrain_movement_delay()
 	if (drowsyness > 0)
 		. += 6
 	if(lying) //Crawling, it's slower

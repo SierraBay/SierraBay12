@@ -1,0 +1,4 @@
+author: Builder13
+changes:
+  - {rscadd: Полностью портирован миррор погоды с оффов}
+delete-after: true
