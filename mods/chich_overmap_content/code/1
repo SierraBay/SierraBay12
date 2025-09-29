@@ -1,0 +1,180 @@
+[center][b]CARGO TRANSFER MANIFEST[/b]
+[b][large]ICCG POSTAL SERVICE[/large][/b][/center]
+[b]Document Type:[/b] Medical Supply Waybill
+[b]Reference ID:[/b] 42-77-IX-0031
+
+[b]1. ORIGIN[/b]
+[b]Facility:[/b] ICCG Postal Service Orbital Logistics Hub 7
+[b]System:[/b] Tyanani
+[b]Departure Timestamp:[/b] 2286-09-07 22:40 GBST
+
+[b]2. DESTINATION[/b]
+[b]Consignee:[/b] Colonial Medical Authority – Outpost "Crnjanski"
+[b]System:[/b] Sirim
+[b]ETA:[/b] 2286-10-01 22:40:00 GBST
+
+[b]3. CARGO DETAILS[/b]
+[b]Container ID:[/b] 860907-10352-MED
+[b]Contents:[/b]Medicines, Medical equipment or First aid supplies (for civilian use)
+[b]Net Mass:[/b] 5,143 kg
+[b]Volume:[/b] 112.2 m³
+
+[b]4. SECURITY & HANDLING[/b]
+Special Handling Instructions:
+[list][*]Do not expose to radiation fields >6.5IU[/list]
+[b]5. TRANSPORT VESSEL[/b]
+[b]Registry:[/b] PS-TR-4427
+[b]Crew Complement:[/b] 1
+
+[b]6. CERTIFICATION[/b]
+I hereby certify that this cargo is accurately described above and is in proper condition for interstellar transport in accordance with the provisions of 47.8(b) of the Interstellar Trade Code of Confederative Systems of Lordania.
+
+[b]Authorized Signatory:[/b]
+E. Kavanagh
+ICCG Postal Service Logistics Officer, Hub 7
+
+
+
+
+
+
+[center][b]CARGO TRANSFER MANIFEST[/b]
+[b][large]ICCG POSTAL SERVICE[/large][/b][/center]
+[b]Document Type:[/b] Industrial Ordnance Waybill
+[b]Reference ID:[/b] 42-88-IX-0147
+
+[b]1. ORIGIN[/b]
+[b]Facility:[/b] ICCG Postal Service Orbital Logistics Hub 7
+[b]System:[/b] Tyanani
+[b]Departure Timestamp:[/b] 2286-09-08 19:17 GBST
+
+[b]2. DESTINATION[/b]
+[b]Consignee:[/b] Colonial Mining Directorate – Remote Extraction Outpost "Derringer-12"
+[b]System:[/b] Sirim
+[b]ETA:[/b] 2286-10-06 18:15:00 GBST
+
+[b]3. CARGO DETAILS[/b]
+[b]Container ID:[/b] 860908-20984-MIN
+[b]Contents:[/b] MN3-BERGBAU Mining Charges (50 units, certified for asteroid fracturing & sub-surface excavation)
+[b]Net Mass:[/b] 8,476 kg
+[b]Volume:[/b] 96.5 m³
+
+[b]4. SECURITY & HANDLING[/b]
+Special Handling Instructions:
+[list][*]Stow in armored containment bay.
+[*]Keep below 142°C.
+[*]Do not expose to EM interference.
+[*]Transport under Level-2 hazard classification (Industrial Explosives).[/list]
+
+[b]5. TRANSPORT VESSEL[/b]
+[b]Registry:[/b] PS-TR-4427
+[b]Crew Complement:[/b] 1
+
+[b]6. CERTIFICATION[/b]
+I hereby certify that this cargo is accurately described above and is in proper condition for interstellar transport in accordance with the provisions of 47.8(b) of the Interstellar Trade Code of Confederative Systems of Lordania.
+
+[b]Authorized Signatory:[/b]
+M. Ortega
+ICCG Postal Service Logistics Officer, Hub 7
+
+
+
+[center][b]CARGO TRANSFER MANIFEST[/b]
+[b][large]ICCG POSTAL SERVICE[/large][/b][/center]
+[b]Document Type:[/b] Industrial Equipment Waybill
+[b]Reference ID:[/b] 77-21-IX-0147
+
+[b]1. ORIGIN[/b]
+[b]Facility:[/b] ICCG Postal Service Orbital Logistics Hub 9
+[b]System:[/b] Tyanani
+[b]Departure Timestamp:[/b] 2286-09-08 04:15:00 GBST
+
+[b]2. DESTINATION[/b]
+[b]Consignee:[/b] Colonial Mining Directorate – Station "Arden’s Hollow"
+[b]System:[/b] Sirim
+[b]ETA:[/b] 2286-10-03 09:30:00 GBST
+
+[b]3. CARGO DETAILS[/b]
+[b]Container ID:[/b] 860908-20388-IND
+[b]Contents:[/b] 15x Industrial Mech Units, Model: R7 "Krtica" (for mining operations)
+[b]Net Mass:[/b] 4,650 kg
+[b]Volume:[/b] 70.3 m³
+
+[b]4. SECURITY & HANDLING[/b]
+Special Handling Instructions:
+[list][*]Secure magnetic locks
+[*]Do not operate within cargo bay; ignition lockout engaged  [/list]
+[b]5. TRANSPORT VESSEL[/b]
+[b]Registry:[/b] PS-CR-5581
+[b]Crew Complement:[/b] 1
+
+[b]6. CERTIFICATION[/b]
+I hereby certify that this cargo is accurately described above and is in proper condition for interstellar transport in accordance with the provisions of 47.8(b) of the Interstellar Trade Code of Confederative Systems of Lordania.
+
+[b]Authorized Signatory:[/b]
+R. Salcedo
+ICCG Postal Service Logistics Officer, Hub 9
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---------------
+
+
+
+
+
+
+
+
+
+
+
+[center][b]CARGO TRANSFER MANIFEST[/b]
+[b][large]ICCG POSTAL SERVICE[/large][/b][/center]
+
+[b]Document Type:[/b] Raw Ore Freight Waybill
+[b]Reference ID:[/b] 42-88-IX-0176
+
+[b]1. ORIGIN[/b]
+[b]Facility:[/b] ICCG Postal Service Orbital Mining Dock 3
+[b]System:[/b] Neryth
+[b]Departure Timestamp:[/b] 2286-09-15 14:22:00 GBST
+
+[b]2. DESTINATION[/b]
+[b]Consignee:[/b] Colonial Resource Authority – Settlement "Aegir’s Claim"
+[b]System:[/b] Deyra
+[b]ETA:[/b] 2286-10-09 03:50:00 GBST
+
+[b]3. CARGO DETAILS[/b]
+[b]Container ID:[/b] 860915-77841-ORE
+[b]Contents:[/b] Unsorted ore (ferrous and non-ferrous aggregates, trace volatiles possible)
+[b]Net Mass:[/b] 42,587 kg
+[b]Volume:[/b] 186.7 m³
+
+[b]4. SECURITY & HANDLING[/b]
+Special Handling Instructions:
+[list][]Stabilize container temperature between -35°C and +15°C
+[]Avoid depressurization events >15 sec.
+[*]Do not breach container prior to delivery — risk of particulate contamination[/list]
+
+[b]5. TRANSPORT VESSEL[/b]
+[b]Registry:[/b] PS-TR-5562
+[b]Crew Complement:[/b] 2
+
+[b]6. CERTIFICATION[/b]
+I hereby certify that this cargo is accurately described above and is in proper condition for interstellar transport in accordance with the provisions of 47.8(b) of the Interstellar Trade Code of Confederative Systems of Lordania.
+
+[b]Authorized Signatory:[/b]
+T. Halberg
+ICCG Postal Service Logistics Officer, Dock 3
