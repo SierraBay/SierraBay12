@@ -1,0 +1,4 @@
+author: Builder13
+changes:
+  - {rscadd: 'Портирует с инфинити костюм капитана: darkblue captains uniform'}
+delete-after: true

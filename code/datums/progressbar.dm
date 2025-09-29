@@ -59,7 +59,7 @@
 
 /datum/progressbar/public/Destroy()
 	if (actor && bar)
-		actor.vis_contents -= bar
+		actor.remove_vis_contents(bar)
 	actor = null
 	actee = null
 	qdel(bar)
@@ -79,7 +79,7 @@
 	bar.icon_state = "pub_prog_bar_0"
 	calculate_position()
 	bar.layer = ABOVE_HUMAN_LAYER
-	actor.vis_contents += bar
+	actor.add_vis_contents(bar)
 
 /datum/progressbar/public/update(progress)
 	if (!actor || !actee)

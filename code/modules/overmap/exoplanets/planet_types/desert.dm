@@ -11,6 +11,7 @@
 	has_trees = FALSE
 	fauna_types = list(/mob/living/simple_animal/thinbug, /mob/living/simple_animal/tindalos, /mob/living/simple_animal/hostile/voxslug, /mob/living/simple_animal/hostile/retaliate/beast/antlion)
 	megafauna_types = list(/mob/living/simple_animal/hostile/retaliate/beast/antlion/mega)
+	banned_weather_conditions = list(/singleton/state/weather/snow, /singleton/state/weather/rain)
 
 /obj/overmap/visitable/sector/exoplanet/desert/generate_map()
 	if(prob(70))

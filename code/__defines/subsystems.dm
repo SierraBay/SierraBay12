@@ -51,6 +51,7 @@
 #define SS_INIT_OVERLAYS        -10
 #define SS_INIT_XENOARCH        -11
 #define SS_INIT_BAY_LEGACY      -12
+#define SS_INIT_WEATHER         -8
 #define SS_INIT_TICKER          -20
 #define SS_INIT_AI              -21
 #define SS_INIT_AIFAST          -22

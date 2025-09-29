@@ -58,7 +58,7 @@
 	// get overridden almost immediately.
 
 	// TL;DR: just leave these vars alone.
-	//var/obj/abstract/weather_system/weather
+	var/obj/abstract/weather_system/weather
 	var/is_outside = OUTSIDE_AREA
 	var/last_outside_check = OUTSIDE_UNCERTAIN
 
@@ -67,6 +67,11 @@
 	var/zone_membership_candidate = FALSE
 	/// Will participate in external atmosphere simulation if the turf is outside and no zone is set.
 	var/external_atmosphere_participation = TRUE
+
+/turf/examine(mob/user, distance, infix, suffix)
+	. = ..()
+	if(user && weather)
+		weather.examine(user)
 
 /turf/Initialize(mapload, ...)
 	. = ..()
@@ -77,6 +82,9 @@
 
 	if (light_power && light_range)
 		update_light()
+
+	if (!mapload)
+		update_weather(force_update_below = TRUE)
 
 	if (is_outside())
 		AMBIENT_LIGHT_QUEUE_TURF(src)
@@ -123,6 +131,10 @@
 	if (mimic_proxy)
 		QDEL_NULL(mimic_proxy)
 
+	if(weather)
+		remove_vis_contents(src,  weather.vis_contents_additions)
+		weather = null
+
 	..()
 	return QDEL_HINT_LETMELIVE
 
@@ -137,6 +149,17 @@
 
 /turf/proc/is_solid_structure()
 	return 1
+
+/turf/proc/get_base_movement_delay(travel_dir, mob/mover)
+	return movement_delay
+
+/turf/proc/get_terrain_movement_delay(travel_dir, mob/mover)
+	. = get_base_movement_delay(travel_dir, mover)
+	if(weather)
+		. += weather.get_movement_delay(return_air(), travel_dir)
+	// TODO: check user species webbed feet, wearing swimming gear (In general full swimming should slow us down less)
+	if(get_fluid_depth() > FLUID_SHALLOW)
+		. += 3
 
 /turf/attack_hand(mob/user)
 	user.setClickCooldown(DEFAULT_QUICK_COOLDOWN)
@@ -400,7 +423,7 @@ var/global/const/enterloopsanity = 100
 /turf/proc/is_floor()
 	return FALSE
 
-/*/turf/proc/update_weather(obj/abstract/weather_system/new_weather, force_update_below = FALSE)
+/turf/proc/update_weather(obj/abstract/weather_system/new_weather, force_update_below = FALSE)
 
 	if(isnull(new_weather))
 		new_weather = LAZYACCESS(SSweather.weather_by_z, z)
@@ -423,7 +446,7 @@ var/global/const/enterloopsanity = 100
 	if(force_update_below || (is_open() && .))
 		var/turf/below = GetBelow(src)
 		if(below)
-			below.update_weather(new_weather)*/
+			below.update_weather(new_weather)
 
 /// Updates turf participation in ZAS according to outside status and atmosphere participation bools. Must be called whenever any of those values may change.
 /turf/simulated/proc/update_external_atmos_participation()
@@ -486,8 +509,8 @@ var/global/const/enterloopsanity = 100
 		W.update_external_atmos_participation()
 	AMBIENT_LIGHT_QUEUE_TURF(src)
 
-	//if(!skip_weather_update)
-		//update_weather()
+	if(!skip_weather_update)
+		update_weather()
 
 	if(!HasBelow(z))
 		return TRUE
@@ -512,12 +535,12 @@ var/global/const/enterloopsanity = 100
 	var/air_graphic = get_air_graphic()
 	if(length(air_graphic))
 		LAZYDISTINCTADD(., air_graphic)
-	/*if(length(weather?.vis_contents_additions))
+	if(length(weather?.vis_contents_additions))
 		LAZYADD(., weather.vis_contents_additions)
-		. += pick(weather.particle_sources)*/ // we know . is never null here
+		. += pick(weather.particle_sources) // we know . is never null here
 
-/*/turf/get_affecting_weather()
-	return weather*/
+/turf/get_affecting_weather()
+	return weather
 
 /turf/proc/get_obstruction()
 	if (density)

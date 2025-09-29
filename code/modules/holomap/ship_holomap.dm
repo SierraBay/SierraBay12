@@ -400,7 +400,7 @@
 		station_map.AddOverlays(cursor)
 
 	station_map.AddOverlays(levels["[z_levels[displayed_level]]"])
-	station_map.vis_contents += maptexts["[z_levels[displayed_level]]"]
+	station_map.add_vis_contents(maptexts["[z_levels[displayed_level]]"])
 
 	//Fix legend position
 	var/pixel_y = HOLOMAP_LEGEND_Y
@@ -410,13 +410,13 @@
 		element.Setup(z_levels[displayed_level])
 		if(element.has_areas)
 			pixel_y -= 10
-			station_map.vis_contents += element
+			station_map.add_vis_contents(element)
 
 	if(displayed_level > 1)
-		station_map.vis_contents += lbuttons[1]
+		station_map.add_vis_contents(lbuttons[1])
 
 	if(displayed_level < length(z_levels))
-		station_map.vis_contents += lbuttons[2]
+		station_map.add_vis_contents(lbuttons[2])
 
 /datum/station_holomap/proc/legend_select(obj/screen/legend/L)
 	legend_deselect()
