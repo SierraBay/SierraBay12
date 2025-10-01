@@ -47,5 +47,7 @@
 	update_biome()
 	generate_daycycle()
 	generate_planet_image()
+	if(ispath(initial_weather_state))
+		generate_weather()
 	START_PROCESSING(SSobj, src)
 	generate_anomalies()

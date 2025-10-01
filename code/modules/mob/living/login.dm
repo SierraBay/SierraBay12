@@ -11,3 +11,12 @@
 	if (my_client && get_preference_value(/datum/client_preference/show_statusbar) == GLOB.PREF_SHOW)
 		winset(my_client, "mapwindow.statusbar", "is-visible=true")
 	// [/SIERRA-ADD]
+
+	// Clear our cosmetic/sound weather cooldowns.
+	var/obj/abstract/weather_system/weather = get_affecting_weather()
+
+	var/mob_ref = weakref(src)
+	if(istype(weather))
+		weather.mob_shown_weather -= mob_ref
+		weather.mob_shown_wind    -= mob_ref
+	global.current_mob_ambience   -= mob_ref

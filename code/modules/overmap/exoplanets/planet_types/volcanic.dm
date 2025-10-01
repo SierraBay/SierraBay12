@@ -14,6 +14,7 @@
 	flora_diversity = 3
 	fauna_types = list(/mob/living/simple_animal/thinbug, /mob/living/simple_animal/hostile/retaliate/beast/shantak/lava, /mob/living/simple_animal/hostile/retaliate/beast/charbaby)
 	megafauna_types = list(/mob/living/simple_animal/hostile/drake)
+	banned_weather_conditions = list(/singleton/state/weather/snow)
 
 /obj/overmap/visitable/sector/exoplanet/volcanic/get_atmosphere_color()
 	var/air_color = ..()

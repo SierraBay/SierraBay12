@@ -21,7 +21,7 @@ GLOBAL_VAR_AS(ambience_channel_weather, GLOB.sound_channels.RequestChannel("AMBI
 
 /obj/weather/Initialize()
 	.=..()
-	LAZYADD(SSweather.weather_turf_in_world, src)
+	LAZYADD(SSweatherold.weather_turf_in_world, src)
 	start_area = get_area(src)
 
 /obj/weather/proc/update(mob/living/input_mob)
@@ -49,10 +49,10 @@ GLOBAL_VAR_AS(ambience_channel_weather, GLOB.sound_channels.RequestChannel("AMBI
 		remove_monitor_effect(input_mob)
 
 /obj/weather/proc/add_monitor_effect(mob/living/input_mob)
-	LAZYADD(SSweather.mobs_effected_by_weather, input_mob)
+	LAZYADD(SSweatherold.mobs_effected_by_weather, input_mob)
 
 /obj/weather/proc/remove_monitor_effect(mob/living/input_mob)
-	LAZYREMOVE(SSweather.mobs_effected_by_weather, input_mob)
+	LAZYREMOVE(SSweatherold.mobs_effected_by_weather, input_mob)
 
 /obj/weather/proc/react_at_enter_monitor(atom/movable/atom)
 	if(!must_react_at_enter)
@@ -61,7 +61,7 @@ GLOBAL_VAR_AS(ambience_channel_weather, GLOB.sound_channels.RequestChannel("AMBI
 		react_at_enter_in_blowout(atom)
 		return
 	//Незачем накладывать эффект тому, кто уже с этим эффектом
-	if(atom in SSweather.mobs_effected_by_weather)
+	if(atom in SSweatherold.mobs_effected_by_weather)
 		return
 	if(isliving(atom))
 		var/mob/living/detected_mob = atom
@@ -69,7 +69,7 @@ GLOBAL_VAR_AS(ambience_channel_weather, GLOB.sound_channels.RequestChannel("AMBI
 		if(detected_mob.client)
 			update_sound(detected_mob)
 			update_visual(detected_mob)
-			LAZYADD(SSweather.mobs_effected_by_weather, atom)
+			LAZYADD(SSweatherold.mobs_effected_by_weather, atom)
 
 /obj/weather/proc/react_at_leave_monitor(atom/movable/atom)
 	if(!must_react_at_enter)
@@ -79,8 +79,8 @@ GLOBAL_VAR_AS(ambience_channel_weather, GLOB.sound_channels.RequestChannel("AMBI
 		return
 	var/mob/detected_mob = atom
 	if(!isweatherhere(get_turf(atom)))
-		if(atom in SSweather.mobs_effected_by_weather)
-			LAZYREMOVE(SSweather.mobs_effected_by_weather, atom)
+		if(atom in SSweatherold.mobs_effected_by_weather)
+			LAZYREMOVE(SSweatherold.mobs_effected_by_weather, atom)
 			remove_monitor_effect(detected_mob)
 			if(LAZYLEN(sound_type))
 				sound_to(detected_mob, sound(null, channel = GLOB.ambience_channel_weather))
@@ -103,7 +103,7 @@ GLOBAL_VAR_AS(ambience_channel_weather, GLOB.sound_channels.RequestChannel("AMBI
 
 
 /obj/weather/Destroy()
-	LAZYREMOVE(SSweather.weather_turf_in_world, src)
+	LAZYREMOVE(SSweatherold.weather_turf_in_world, src)
 	.=..()
 
 //Отрисует смену погоды

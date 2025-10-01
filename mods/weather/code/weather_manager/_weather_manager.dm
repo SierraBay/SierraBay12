@@ -28,8 +28,8 @@
 	calculate_next_safe_blowout()
 	calculate_next_safe_change()
 	calculate_affected_z()
-	LAZYADD(SSweather.weather_managers_in_world, src)
-	START_PROCESSING(SSweather, src)
+	LAZYADD(SSweatherold.weather_managers_in_world, src)
+	START_PROCESSING(SSweatherold, src)
 
 /datum/weather_manager/Process()
 	..()
@@ -90,7 +90,7 @@
 	report_progress("DEBUG ANOM: Начинается выброс. Стадия - подготовка.")
 	can_blowout = FALSE //Первый слой защиты от страшного цикла
 	//Опасайтесь того что ваша команда STOP_PROCESSING просто не выполнится
-	STOP_PROCESSING(SSweather, src) //Второй слой защиты от страшного цикла
+	STOP_PROCESSING(SSweatherold, src) //Второй слой защиты от страшного цикла
 	prepare_to_blowout()
 	if(must_message_about_blowout)
 		for(var/mob/living/carbon/human/picked_human in GLOB.living_players)
@@ -113,7 +113,7 @@
 /datum/weather_manager/proc/stop_blowout()
 	if(!is_processing)
 		report_progress("DEBUG: Выброс окончен.")
-		START_PROCESSING(SSweather, src)
+		START_PROCESSING(SSweatherold, src)
 		calculate_power_ups()
 
 /datum/weather_manager/proc/regenerate_anomalies_on_planet() //Выполняет перереспавн всех аномалий которые были заспавнены стандартным генератором на планете
@@ -152,10 +152,10 @@
 /datum/weather_manager/Destroy()
 	my_area.connected_weather_manager = null
 	if(is_processing)
-		STOP_PROCESSING(SSweather,src)
+		STOP_PROCESSING(SSweatherold,src)
 	for(var/obj/weather/detected_weather in connected_weather_turfs)
 		detected_weather.Destroy()
-	LAZYREMOVE(SSweather.weather_managers_in_world, src)
+	LAZYREMOVE(SSweatherold.weather_managers_in_world, src)
 	activity_blocked_by_safe_protocol = TRUE
 	. = ..()
 
