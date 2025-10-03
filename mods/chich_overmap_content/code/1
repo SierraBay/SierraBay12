@@ -5,7 +5,7 @@
 
 [b]1. ORIGIN[/b]
 [b]Facility:[/b] ICCG Postal Service Orbital Logistics Hub 7
-[b]System:[/b] Tyanani
+[b]System:[/b] Tyannani
 [b]Departure Timestamp:[/b] 2286-09-07 22:40 GBST
 
 [b]2. DESTINATION[/b]
@@ -21,8 +21,7 @@
 
 [b]4. SECURITY & HANDLING[/b]
 Special Handling Instructions:
-[list][*]Do not expose to radiation fields >6.5IU[/list]
-[b]5. TRANSPORT VESSEL[/b]
+[list][*]Do not expose to radiation fields >6.5IU[/list][b]5. TRANSPORT VESSEL[/b]
 [b]Registry:[/b] PS-TR-4427
 [b]Crew Complement:[/b] 1
 
@@ -45,13 +44,13 @@ ICCG Postal Service Logistics Officer, Hub 7
 
 [b]1. ORIGIN[/b]
 [b]Facility:[/b] ICCG Postal Service Orbital Logistics Hub 7
-[b]System:[/b] Tyanani
+[b]System:[/b] Tyannani
 [b]Departure Timestamp:[/b] 2286-09-08 19:17 GBST
 
 [b]2. DESTINATION[/b]
 [b]Consignee:[/b] Colonial Mining Directorate – Remote Extraction Outpost "Derringer-12"
 [b]System:[/b] Sirim
-[b]ETA:[/b] 2286-10-06 18:15:00 GBST
+[b]ETA:[/b] 2286-10-06 18:15 GBST
 
 [b]3. CARGO DETAILS[/b]
 [b]Container ID:[/b] 860908-20984-MIN
@@ -64,9 +63,7 @@ Special Handling Instructions:
 [list][*]Stow in armored containment bay.
 [*]Keep below 142°C.
 [*]Do not expose to EM interference.
-[*]Transport under Level-2 hazard classification (Industrial Explosives).[/list]
-
-[b]5. TRANSPORT VESSEL[/b]
+[*]Transport under Level-2 hazard classification (Industrial Explosives).[/list][b]5. TRANSPORT VESSEL[/b]
 [b]Registry:[/b] PS-TR-4427
 [b]Crew Complement:[/b] 1
 
@@ -79,6 +76,9 @@ ICCG Postal Service Logistics Officer, Hub 7
 
 
 
+
+
+
 [center][b]CARGO TRANSFER MANIFEST[/b]
 [b][large]ICCG POSTAL SERVICE[/large][/b][/center]
 [b]Document Type:[/b] Industrial Equipment Waybill
@@ -86,13 +86,13 @@ ICCG Postal Service Logistics Officer, Hub 7
 
 [b]1. ORIGIN[/b]
 [b]Facility:[/b] ICCG Postal Service Orbital Logistics Hub 9
-[b]System:[/b] Tyanani
-[b]Departure Timestamp:[/b] 2286-09-08 04:15:00 GBST
+[b]System:[/b] Tyannani
+[b]Departure Timestamp:[/b] 2286-09-08 04:15 GBST
 
 [b]2. DESTINATION[/b]
-[b]Consignee:[/b] Colonial Mining Directorate – Station "Arden’s Hollow"
+[b]Consignee:[/b] Colonial Mining Directorate – Station "Arden"
 [b]System:[/b] Sirim
-[b]ETA:[/b] 2286-10-03 09:30:00 GBST
+[b]ETA:[/b] 2286-10-03 09:30 GBST
 
 [b]3. CARGO DETAILS[/b]
 [b]Container ID:[/b] 860908-20388-IND
@@ -103,9 +103,8 @@ ICCG Postal Service Logistics Officer, Hub 7
 [b]4. SECURITY & HANDLING[/b]
 Special Handling Instructions:
 [list][*]Secure magnetic locks
-[*]Do not operate within cargo bay; ignition lockout engaged  [/list]
-[b]5. TRANSPORT VESSEL[/b]
-[b]Registry:[/b] PS-CR-5581
+[*]Do not operate within cargo bay; ignition lockout engaged[/list][b]5. TRANSPORT VESSEL[/b]
+[b]Registry:[/b] PS-TR-4427
 [b]Crew Complement:[/b] 1
 
 [b]6. CERTIFICATION[/b]
@@ -124,57 +123,89 @@ ICCG Postal Service Logistics Officer, Hub 9
 
 
 
-
-
-
-
----------------
-
-
-
-
-
-
-
-
-
-
-
 [center][b]CARGO TRANSFER MANIFEST[/b]
 [b][large]ICCG POSTAL SERVICE[/large][/b][/center]
-
 [b]Document Type:[/b] Raw Ore Freight Waybill
-[b]Reference ID:[/b] 42-88-IX-0176
+[b]Reference ID:[/b] 71-93-IX-0156
 
 [b]1. ORIGIN[/b]
-[b]Facility:[/b] ICCG Postal Service Orbital Mining Dock 3
-[b]System:[/b] Neryth
-[b]Departure Timestamp:[/b] 2286-09-15 14:22:00 GBST
+[b]Facility:[/b] ICCG Postal Service Orbital Dry Bulk Hub Dock 3 (C)
+[b]System:[/b] Tyannani
+[b]Departure Timestamp:[/b] 2286-09-08 14:22 GBST
 
 [b]2. DESTINATION[/b]
 [b]Consignee:[/b] Colonial Resource Authority – Settlement "Aegir’s Claim"
-[b]System:[/b] Deyra
-[b]ETA:[/b] 2286-10-09 03:50:00 GBST
+[b]System:[/b] Sirim
+[b]ETA:[/b] 2286-10-09 03:50 GBST
 
 [b]3. CARGO DETAILS[/b]
-[b]Container ID:[/b] 860915-77841-ORE
+[b]Container ID:[/b] 860908-77841-ORE
 [b]Contents:[/b] Unsorted ore (ferrous and non-ferrous aggregates, trace volatiles possible)
-[b]Net Mass:[/b] 42,587 kg
+[b]Net Mass:[/b] 12,587 kg
 [b]Volume:[/b] 186.7 m³
 
 [b]4. SECURITY & HANDLING[/b]
 Special Handling Instructions:
-[list][]Stabilize container temperature between -35°C and +15°C
-[]Avoid depressurization events >15 sec.
-[*]Do not breach container prior to delivery — risk of particulate contamination[/list]
-
-[b]5. TRANSPORT VESSEL[/b]
-[b]Registry:[/b] PS-TR-5562
-[b]Crew Complement:[/b] 2
+[list][*]Stabilize container temperature between -35°C and +15°C
+[*]Avoid depressurization events >15 sec.
+[*]Do not breach container prior to delivery - risk of particulate contamination[/list][b]5. TRANSPORT VESSEL[/b]
+[b]Registry:[/b] PS-TR-4427
+[b]Crew Complement:[/b] 1
 
 [b]6. CERTIFICATION[/b]
 I hereby certify that this cargo is accurately described above and is in proper condition for interstellar transport in accordance with the provisions of 47.8(b) of the Interstellar Trade Code of Confederative Systems of Lordania.
 
 [b]Authorized Signatory:[/b]
 T. Halberg
-ICCG Postal Service Logistics Officer, Dock 3
+ICCG Postal Service Orbital Dry Bulk Hub
+
+
+
+
+
+[center][b]CARGO TRANSFER MANIFEST[/b]
+[b][large]ICCG POSTAL SERVICE
+MINISTRY OF COLONIAL DEVELOPMENT AND DEEP SPACE EXPLORATION[/large][/b][/center]
+[b]Document Type:[/b] Restricted Waybill - Quarantined Cargo
+[b]Reference ID:[/b] 91-RX-TAU-7741
+
+[b]1. ORIGIN[/b]
+[b]Facility:[/b] ICCG Postal Service Orbital Containment Facility 1
+[b]System:[/b] Vega
+[b]Departure Timestamp:[/b] 2286-07-15 03:12 GBST
+
+[b]2. DESTINATION[/b]
+[b]Consignee:[/b] Frontier Life Sciences Liaison - Outpost "Crnjanski"
+[b]System:[/b] Sirim
+[b]ETA:[/b] 2286-10-01 22:52 GBST
+
+[b]3. CARGO DETAILS[/b]
+[b]Container ID:[/b] 860715-00009-MCD
+[b]Contents:[/b] Sealed biocontainment module(s). Designation: "Research Payload - Restricted Access". Not for diagnostic or clinical use. No
+personnel handling without Level-Authority Clearance.
+[b]Declared Hazard Classification:[/b] Bio-Containment - Xeno-Class, High Risk (internal classification).
+[b]Net Mass:[/b] 1,872 kg
+[b]Volume:[/b] 8.6 m³
+
+[b]4. SECURITY & HANDLING[/b]
+Special Handling Instructions:
+[list][*]Do not breach, unseal, or otherwise access inner containment chambers under any circumstances.
+[*]Maintain sealed transport envelope; do not subject to open-air transfer or routine cargo transloading.
+[*]Only designated quarantine teams with written ICCG MinColDev Authorization may initiate integrity checks; all checks must be performec
+remotely or via approved isolation interface.
+[*]In the event of anomalous telemetry or containment alarm, activate Containment Alert Protocol; follow established quarantine escalation
+- do not attempt on-site mitigation.
+[*]No external sampling, biological assays, or improvisational sterilization procedures permitted.
+[*]Container equipped with passive stabilization and internal inerting; do not apply manual agitation, high-energy fields, or thermal shock.[/list][b]5. TRANSPORT VESSEL[/b]
+[b]Registry:[/b] PS-TR-4427
+[b]Crew Complement:[/b] 1
+
+[b]6. CERTIFICATION[/b]
+I hereby certify that this shipment is accurately described above and is in proper condition for interstellar transport in accordance with
+provisions 82, 103.10, and 106.2 of the Interstellar Transport Code of the Ministry of Transportation of the Independent Colonial Confederatio
+of Gilgamesh.
+The recipient has been notified of the quarantine status and arrival procedures.
+
+[b]Authorized Signatory:[/b]
+M. Armitage
+ICCG Postal Service - Containment Operations Supervisor, Facility 1
