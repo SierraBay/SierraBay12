@@ -12,6 +12,7 @@
 "bS" = (/obj/machinery/atmospherics/pipe/manifold/hidden/blue{dir = 8},/turf/simulated/floor/airless,/area/ship/lost_truck/exterior)
 "cf" = (/obj/machinery/atmospherics/pipe/simple/hidden/fuel,/obj/decal/cleanable/dirt,/turf/simulated/floor/airless,/area/ship/lost_truck/exterior)
 "ck" = (/mob/living/simple_animal/hostile/carp/pike,/turf/space,/area/space)
+"cn" = (/obj/decal/cleanable/dirt,/obj/structure/catwalk,/obj/machinery/atmospherics/pipe/simple/visible/red,/turf/simulated/floor/airless,/area/space)
 "cA" = (/obj/machinery/atmospherics/pipe/manifold/hidden/blue{dir = 4},/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/structure/catwalk,/turf/simulated/floor/airless,/area/ship/lost_truck/exterior)
 "cJ" = (/obj/structure/mech_wreckage,/obj/decal/cleanable/dirt,/obj/structure/catwalk,/turf/simulated/floor/airless,/area/space)
 "cM" = (/obj/item/ore/rutile,/obj/structure/lattice,/turf/space,/area/space)
@@ -25,7 +26,7 @@
 "dP" = (/obj/machinery/atmospherics/pipe/manifold/hidden/fuel{dir = 1},/obj/machinery/meter,/obj/floor_decal/industrial/warning/dust,/obj/structure/railing/mapped,/turf/simulated/floor/airless,/area/ship/lost_truck/exterior)
 "ea" = (/obj/structure/sign/warning/biohazard{pixel_x = -28; pixel_y = 4},/turf/space,/area/space)
 "eb" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/structure/catwalk,/obj/machinery/light/small,/obj/decal/cleanable/dirt,/turf/simulated/floor/plating,/area/ship/lost_truck)
-"ek" = (/obj/decal/cleanable/dirt,/obj/decal/cleanable/filth,/obj/item/ammo_casing/rifle/military/used,/obj/structure/catwalk,/turf/simulated/floor/airless,/area/space)
+"ek" = (/obj/decal/cleanable/dirt,/obj/decal/cleanable/filth,/obj/item/ammo_casing/rifle/military/used,/obj/structure/catwalk,/obj/machinery/atmospherics/portables_connector{dir = 2},/turf/simulated/floor/airless,/area/space)
 "el" = (/obj/machinery/atmospherics/pipe/simple/hidden/black{dir = 10},/obj/machinery/atmospherics/pipe/simple/hidden/blue{dir = 5},/obj/structure/railing/mapped{dir = 8},/turf/simulated/floor/airless,/area/ship/lost_truck/exterior)
 "er" = (/obj/floor_decal/industrial/warning/fulltile,/obj/machinery/door/blast/regular/open{dir = 4},/obj/decal/cleanable/dirt,/turf/simulated/floor/airless,/area/space)
 "eA" = (/obj/machinery/atmospherics/pipe/simple/heat_exchanging{dir = 5},/obj/machinery/sparker{id_tag = "lost_truck_chamber_ign"; pixel_x = -20},/turf/simulated/floor/airless,/area/ship/lost_truck/exterior)
@@ -72,7 +73,7 @@
 "lB" = (/obj/machinery/light/led/small{dir = 1},/obj/machinery/computer/ship/helm,/turf/simulated/floor/tiled/dark/monotile,/area/ship/lost_truck)
 "lC" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/floor_decal/industrial/warning/fulltile,/obj/machinery/door/airlock/hatch,/turf/simulated/floor/tiled/techfloor/grid,/area/ship/lost_truck)
 "lN" = (/obj/floor_decal/industrial/warning/dust/corner{dir = 1},/obj/decal/cleanable/dirt,/turf/simulated/floor/airless,/area/ship/lost_truck/exterior)
-"lP" = (/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/obj/item/ammo_casing/rifle/military/used,/obj/structure/catwalk,/turf/simulated/floor/airless,/area/space)
+"lP" = (/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/obj/item/ammo_casing/rifle/military/used,/obj/structure/catwalk,/obj/machinery/door/blast/regular/open{dir = 4},/turf/simulated/floor/airless,/area/space)
 "ma" = (/obj/machinery/atmospherics/pipe/simple/hidden/black{dir = 4},/obj/paint/silver,/obj/paint_stripe/red,/turf/simulated/wall/r_wall/prepainted,/area/ship/lost_truck/exterior)
 "mb" = (/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/obj/item/ammo_casing/rifle/military/used,/obj/item/ammo_casing/rifle/military/used,/obj/item/ammo_casing/rifle/military/used,/obj/item/ammo_casing/rifle/military/used,/obj/structure/catwalk,/turf/simulated/floor/airless,/area/space)
 "mc" = (/obj/decal/cleanable/dirt,/obj/item/ore/strangerock,/obj/structure/catwalk,/turf/simulated/floor/airless,/area/space)
@@ -102,7 +103,7 @@
 "oR" = (/obj/structure/ship_munition/disperser_charge/mining{pixel_y = 7},/obj/structure/catwalk,/turf/simulated/floor/airless,/area/space)
 "py" = (/obj/machinery/atmospherics/pipe/simple/hidden/black{dir = 4},/obj/structure/catwalk,/obj/structure/railing/mapped{dir = 8},/turf/simulated/floor/airless,/area/ship/lost_truck/exterior)
 "pG" = (/obj/structure/sign/warning/hot_exhaust{dir = 2; pixel_y = 24},/turf/space,/area/space)
-"pQ" = (/obj/paint/sun,/obj/paint_stripe/gunmetal,/turf/simulated/wall/r_titanium,/area/space)
+"pQ" = (/obj/machinery/atmospherics/pipe/simple/visible/red{dir = 4},/obj/decal/cleanable/dirt,/obj/decal/cleanable/blood/xeno,/turf/simulated/floor/tiled/steel_grid,/area/space)
 "pR" = (/obj/item/mech_equipment/light,/turf/space,/area/space)
 "qw" = (/obj/machinery/atmospherics/unary/outlet_injector{dir = 4; frequency = 1441; id = "lt_o2_in"; use_power = 1},/turf/simulated/floor/reinforced/oxygen,/area/ship/lost_truck/exterior)
 "qG" = (/obj/structure/catwalk,/obj/decal/cleanable/dirt,/obj/structure/titan_largecrate/medical/bandages,/turf/simulated/floor/airless,/area/space)
@@ -118,7 +119,7 @@
 "sL" = (/obj/structure/catwalk,/obj/structure/table/steel_reinforced,/obj/machinery/button/ignition{id_tag = "lost_truck_chamber_ign"; pixel_x = -6},/obj/machinery/button/blast_door{id_tag = "lost-truck-vent"; name = "Reactor Blast Door"; pixel_x = 5},/turf/simulated/floor/airless,/area/ship/lost_truck/exterior)
 "sS" = (/obj/machinery/atmospherics/pipe/simple/heat_exchanging{dir = 10},/turf/simulated/floor/airless,/area/ship/lost_truck/exterior)
 "sT" = (/obj/structure/catwalk,/obj/decal/cleanable/dirt,/obj/structure/closet/body_bag/cryobag,/turf/simulated/floor/airless,/area/space)
-"sX" = (/obj/structure/sign/warning/toxic_material{pixel_y = 32},/turf/space,/area/space)
+"sX" = (/obj/decal/cleanable/dirt,/obj/item/ammo_casing/rifle/military/used,/obj/structure/catwalk,/obj/machinery/atmospherics/unary/freezer,/turf/simulated/floor/airless,/area/space)
 "tc" = (/obj/machinery/alarm{dir = 4; pixel_x = -25},/obj/structure/table/standard,/obj/item/device/flashlight/lamp,/obj/decal/cleanable/dirt,/obj/item/trash/cigbutt,/obj/item/trash/cigbutt,/obj/item/trash/cigbutt,/turf/simulated/floor/tiled/dark,/area/ship/lost_truck)
 "te" = (/obj/machinery/atmospherics/pipe/cap/hidden/fuel{dir = 4},/obj/paint/red,/obj/paint_stripe/red,/turf/simulated/wall/r_wall/prepainted,/area/ship/lost_truck/exterior)
 "tw" = (/obj/wallframe_spawn/reinforced,/obj/paint/dark_gunmetal,/obj/machinery/door/blast/regular/open{id_tag = "lost-truck-bridge"},/turf/simulated/floor/plating,/area/ship/lost_truck)
@@ -132,12 +133,13 @@
 "vD" = (/obj/machinery/atmospherics/pipe/simple/hidden/fuel{dir = 4},/obj/paint/silver,/obj/paint_stripe/red,/turf/simulated/wall/r_wall/prepainted,/area/ship/lost_truck/exterior)
 "vE" = (/obj/structure/closet/fridge/meat,/obj/decal/cleanable/dirt,/obj/item/reagent_containers/food/snacks/fish/space_carp,/obj/item/reagent_containers/food/snacks/fish/space_carp,/turf/simulated/floor/tiled/dark/monotile,/area/ship/lost_truck)
 "vF" = (/obj/machinery/atmospherics/binary/pump,/obj/structure/railing/mapped{dir = 4},/obj/floor_decal/industrial/outline/orange,/turf/simulated/floor/airless,/area/ship/lost_truck/exterior)
+"vR" = (/obj/floor_decal/industrial/warning/dust{dir = 4},/obj/floor_decal/industrial/shutoff,/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled/steel_grid,/area/space)
 "vS" = (/obj/item/ammo_casing/rifle/military/used,/obj/structure/lattice,/turf/space,/area/space)
-"wa" = (/obj/structure/reagent_dispensers/coolanttank,/obj/structure/catwalk,/turf/simulated/floor/airless,/area/space)
+"wa" = (/obj/decal/cleanable/dirt,/obj/structure/catwalk,/obj/item/device/scanner/xenobio,/obj/machinery/door/blast/regular/open{dir = 4},/turf/simulated/floor/airless,/area/space)
 "wd" = (/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/obj/item/ore/aluminium,/obj/item/ore/aluminium,/obj/structure/catwalk,/turf/simulated/floor/airless,/area/space)
 "wl" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/structure/catwalk,/turf/simulated/floor/airless,/area/ship/lost_truck/exterior)
 "wm" = (/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/obj/structure/catwalk,/turf/simulated/floor/airless,/area/space)
-"wp" = (/obj/decal/cleanable/dirt,/obj/item/stack/telecrystal,/obj/structure/catwalk,/turf/simulated/floor/airless,/area/space)
+"wp" = (/obj/item/stack/telecrystal,/obj/floor_decal/industrial/loading,/obj/decal/cleanable/dirt,/obj/decal/cleanable/blood/oil,/turf/simulated/floor/tiled/steel_grid,/area/space)
 "wt" = (/obj/machinery/atmospherics/binary/pump{dir = 1},/obj/floor_decal/industrial/outline/blue,/turf/simulated/floor/airless,/area/ship/lost_truck/exterior)
 "wQ" = (/obj/machinery/atmospherics/portables_connector{dir = 2},/obj/structure/cable/green{d2 = 4; icon_state = "0-4"},/obj/machinery/power/terminal{dir = 1},/obj/machinery/light/small,/obj/machinery/portable_atmospherics/canister/air/airlock,/obj/floor_decal/techfloor{dir = 6},/turf/simulated/floor/tiled/techfloor,/area/ship/lost_truck)
 "xd" = (/obj/machinery/appliance/cooker/microwave,/obj/structure/table/standard,/obj/structure/noticeboard{pixel_y = 32},/obj/machinery/light/small{dir = 8},/obj/decal/cleanable/cobweb,/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled/dark/monotile,/area/ship/lost_truck)
@@ -147,14 +149,14 @@
 "xz" = (/obj/structure/catwalk,/obj/decal/cleanable/dirt,/obj/random/firstaid,/obj/random/firstaid,/turf/simulated/floor/airless,/area/space)
 "xA" = (/obj/decal/cleanable/dirt,/obj/item/ore/rutile,/obj/structure/catwalk,/turf/simulated/floor/airless,/area/space)
 "xJ" = (/obj/decal/cleanable/dirt,/obj/item/ore/iron,/obj/structure/catwalk,/turf/simulated/floor/airless,/area/space)
-"xU" = (/obj/structure/sign/warning/toxic_material{pixel_x = -32},/turf/space,/area/space)
+"xU" = (/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled/steel_grid,/area/space)
 "xX" = (/obj/random/medical/lite,/turf/space,/area/space)
 "yd" = (/obj/structure/railing/mapped{dir = 1},/obj/floor_decal/industrial/warning/dust,/obj/decal/cleanable/dirt,/turf/simulated/floor/airless,/area/ship/lost_truck/exterior)
 "yg" = (/obj/floor_decal/industrial/warning/dust,/obj/structure/railing/mapped{dir = 1},/turf/simulated/floor/airless,/area/ship/lost_truck/exterior)
 "yh" = (/obj/structure/catwalk,/obj/machinery/light/spot{dir = 1},/turf/simulated/floor/airless,/area/ship/lost_truck/exterior)
 "yl" = (/obj/structure/sign/warning/bomb_range{pixel_x = -32},/turf/space,/area/space)
 "yD" = (/obj/machinery/atmospherics/pipe/simple/hidden/fuel{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/yellow,/obj/wallframe_spawn/reinforced_phoron,/turf/simulated/floor/airless,/area/ship/lost_truck/exterior)
-"yE" = (/obj/machinery/power/port_gen/pacman/super/potato,/obj/structure/cable/green{d2 = 8; icon_state = "0-8"},/obj/structure/catwalk,/obj/machinery/light/small{dir = 1},/turf/simulated/floor/plating,/area/ship/lost_truck)
+"yE" = (/obj/machinery/power/port_gen/pacman/super/potato,/obj/structure/cable/green{d2 = 8; icon_state = "0-8"},/obj/structure/catwalk,/obj/machinery/light/small{dir = 1},/obj/structure/window/boron_reinforced,/obj/structure/window/boron_reinforced{dir = 4},/obj/structure/window/boron_reinforced{dir = 1},/obj/machinery/door/window/brigdoor/eastleft{dir = 8},/turf/simulated/floor/plating,/area/ship/lost_truck)
 "yI" = (/obj/structure/ship_munition/disperser_charge/mining{pixel_y = -7},/obj/structure/catwalk,/turf/simulated/floor/airless,/area/space)
 "yN" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 6},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/obj/structure/catwalk,/obj/structure/cable{d1 = 2; d2 = 4; icon_state = "2-4"},/obj/machinery/light_switch{pixel_x = -1; pixel_y = 24},/obj/decal/cleanable/dirt,/obj/machinery/access_button/airlock_exterior{master_tag = "lost_truck"; name = "exterior access button"; pixel_x = 7; pixel_y = 23},/turf/simulated/floor/airless,/area/ship/lost_truck/exterior)
 "yQ" = (/obj/item/ore/silver,/turf/space,/area/space)
@@ -164,11 +166,13 @@
 "zp" = (/obj/structure/railing/mapped{dir = 2},/obj/structure/railing/mapped{dir = 4},/turf/space,/area/space)
 "zr" = (/obj/structure/lattice,/obj/machinery/nav_light/port,/turf/space,/area/space)
 "zu" = (/obj/structure/ship_munition/disperser_charge/mining{pixel_y = -7},/obj/structure/ship_munition/disperser_charge/mining{pixel_y = 7},/obj/structure/catwalk,/turf/simulated/floor/airless,/area/space)
+"zT" = (/obj/decal/cleanable/dirt,/obj/item/ammo_casing/rifle/military/used,/obj/item/ammo_casing/rifle/military/used,/obj/structure/catwalk,/obj/machinery/constructable_frame,/turf/simulated/floor/airless,/area/space)
 "zY" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/structure/catwalk,/obj/decal/cleanable/dirt,/obj/item/trash/cigbutt,/turf/simulated/floor/plating,/area/ship/lost_truck)
 "Ay" = (/obj/structure/railing/mapped{dir = 1},/turf/simulated/floor/airless,/area/ship/lost_truck/exterior)
 "Bm" = (/obj/machinery/atmospherics/unary/vent_scrubber/on{dir = 4},/obj/machinery/light/small,/obj/floor_decal/borderfloor{dir = 8},/obj/structure/closet/secure_closet/personal/empty{opened = 1},/obj/random/clothing,/obj/random/clothing,/obj/random/accessory,/obj/random/shoes,/obj/random/shoes,/turf/simulated/floor/tiled/steel_grid,/area/ship/lost_truck)
 "Bx" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/floor_decal/industrial/warning/fulltile,/obj/machinery/door/airlock/hatch,/turf/simulated/floor/tiled/techfloor/grid,/area/ship/lost_truck)
 "BA" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/obj/structure/catwalk,/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/turf/simulated/floor/plating,/area/ship/lost_truck)
+"BH" = (/obj/decal/cleanable/dirt,/obj/item/ammo_casing/rifle/military/used,/obj/structure/catwalk,/obj/item/device/geiger,/turf/simulated/floor/airless,/area/space)
 "Ch" = (/turf/space,/area/space)
 "Cj" = (/obj/structure/railing/mapped{dir = 8},/obj/structure/sign/warning/biohazard{pixel_x = 28; pixel_y = 5},/turf/space,/area/space)
 "CU" = (/obj/item/ammo_casing/rifle/military/used,/turf/space,/area/space)
@@ -198,11 +202,12 @@
 "FW" = (/obj/machinery/atmospherics/unary/vent_pump/on{dir = 8},/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled/freezer,/area/ship/lost_truck)
 "Ga" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 6},/obj/structure/catwalk,/obj/decal/cleanable/dirt,/turf/simulated/floor/airless,/area/ship/lost_truck/exterior)
 "Ge" = (/obj/machinery/atmospherics/pipe/simple/heat_exchanging{dir = 6},/obj/machinery/atmospherics/unary/outlet_injector{dir = 1; frequency = 1441; id = "lt_chamber_in"; use_power = 1},/turf/simulated/floor/airless,/area/ship/lost_truck/exterior)
+"Gf" = (/obj/decal/cleanable/dirt,/obj/item/ammo_casing/rifle/military/used,/obj/structure/catwalk,/obj/machinery/meter,/obj/machinery/anomaly_container,/turf/simulated/floor/airless,/area/space)
 "Gu" = (/obj/floor_decal/industrial/warning/dust/corner{dir = 8},/turf/simulated/floor/airless,/area/ship/lost_truck/exterior)
 "GF" = (/obj/machinery/atmospherics/pipe/simple/hidden/black{dir = 4},/obj/structure/catwalk,/obj/machinery/portable_atmospherics/canister/air,/turf/simulated/floor/airless,/area/ship/lost_truck/exterior)
 "GG" = (/obj/structure/sign/warning/bomb_range{pixel_y = -32},/turf/space,/area/space)
 "GJ" = (/obj/structure/catwalk,/obj/machinery/computer/air_control{dir = 1; input_tag = "lt_n2_in"; name = "Nitrogen Tank Control"; output_tag = "lt_n2_out"; sensor_name = "Tank"; sensor_tag = "lt_n2_sensor"},/turf/simulated/floor/airless,/area/ship/lost_truck/exterior)
-"HC" = (/obj/decal/cleanable/dirt,/obj/decal/cleanable/filth,/obj/structure/catwalk,/turf/simulated/floor/airless,/area/space)
+"HC" = (/obj/floor_decal/industrial/warning/dust{dir = 4},/obj/decal/cleanable/filth,/obj/machinery/constructable_frame,/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled/steel_grid,/area/space)
 "HI" = (/obj/machinery/atmospherics/pipe/simple/hidden/green{dir = 4},/obj/paint/silver,/obj/paint_stripe/red,/turf/simulated/wall/r_wall/prepainted,/area/ship/lost_truck/exterior)
 "HW" = (/obj/structure/reagent_dispensers/fueltank,/obj/structure/cable{d2 = 4; icon_state = "0-4"},/obj/floor_decal/techfloor{dir = 10},/obj/decal/cleanable/dirt,/obj/machinery/power/apc/high/inactive{dir = 8; cell_type = /obj/item/cell/high/empty},/turf/simulated/floor/tiled/techfloor,/area/ship/lost_truck)
 "Ig" = (/obj/structure/sign/bluecross_1{pixel_y = 32},/turf/space,/area/space)
@@ -218,7 +223,7 @@
 "JI" = (/obj/machinery/door/blast/regular{dir = 4},/obj/floor_decal/industrial/warning/fulltile,/turf/simulated/floor/airless,/area/space)
 "JP" = (/obj/structure/cable{d2 = 8; icon_state = "0-8"},/obj/structure/catwalk,/obj/machinery/power/apc/high/inactive{dir = 1; cell_type = /obj/item/cell/high/empty},/turf/simulated/floor/airless,/area/ship/lost_truck/exterior)
 "JT" = (/obj/machinery/door/blast/regular/open{id_tag = "lost-truck-vent"; name = "Vent"; dir = 2},/turf/simulated/floor/airless,/area/ship/lost_truck/exterior)
-"Kc" = (/obj/structure/railing/mapped{dir = 8},/obj/structure/sign/warning/toxic_material{pixel_x = 32},/turf/space,/area/space)
+"Kc" = (/obj/item/ammo_casing/rifle/military/used,/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled/steel_grid,/area/space)
 "Kx" = (/obj/paint/red,/obj/paint_stripe/red,/turf/simulated/wall/r_wall/prepainted,/area/ship/lost_truck/exterior)
 "KG" = (/obj/structure/lattice,/obj/item/ammo_casing/rifle/military/used,/turf/space,/area/space)
 "KJ" = (/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/paint/dark_gunmetal,/turf/simulated/wall/r_wall/prepainted,/area/ship/lost_truck)
@@ -234,9 +239,10 @@
 "MO" = (/obj/structure/railing/mapped{dir = 8},/obj/structure/sign/warning/bomb_range{pixel_x = 32},/turf/space,/area/space)
 "Nc" = (/obj/structure/sign/warning/biohazard{pixel_y = -23},/turf/space,/area/space)
 "Nl" = (/obj/machinery/atmospherics/unary/engine{dir = 1},/turf/simulated/floor/airless,/area/ship/lost_truck/exterior)
-"No" = (/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/obj/decal/cleanable/blood/xeno,/obj/structure/catwalk,/turf/simulated/floor/airless,/area/space)
+"No" = (/obj/decal/cleanable/dirt,/obj/floor_decal/industrial/warning/dust{dir = 4},/obj/decal/cleanable/blood/xeno,/obj/decal/cleanable/dirt,/turf/simulated/floor/tiled/steel_grid,/area/space)
 "NT" = (/obj/structure/railing/mapped{dir = 8},/obj/structure/lattice,/turf/space,/area/space)
 "OI" = (/obj/structure/flora/pottedplant/large{pixel_y = 16; pixel_x = 5},/obj/floor_decal/borderfloor{dir = 4},/obj/item/clothing/shoes/sandal,/turf/simulated/floor/tiled/steel_grid,/area/ship/lost_truck)
+"OJ" = (/obj/decal/cleanable/dirt,/obj/item/ammo_casing/rifle/military/used,/obj/structure/catwalk,/obj/machinery/atmospherics/pipe/simple/visible/red{dir = 10},/turf/simulated/floor/airless,/area/space)
 "OW" = (/obj/machinery/atmospherics/pipe/simple/hidden/fuel{dir = 4},/obj/wallframe_spawn/reinforced_phoron,/turf/simulated/floor/airless,/area/ship/lost_truck/exterior)
 "Pn" = (/obj/floor_decal/industrial/warning/dust,/obj/floor_decal/industrial/outline/yellow,/obj/decal/cleanable/dirt,/obj/machinery/atmospherics/omni/mixer{tag_north = 1; tag_north_con = 0.64; tag_south = 2; tag_west = 1; tag_west_con = 0.36},/turf/simulated/floor/airless,/area/ship/lost_truck/exterior)
 "Pp" = (/obj/structure/catwalk,/obj/decal/cleanable/dirt,/obj/random/medical/lite,/turf/simulated/floor/airless,/area/space)
@@ -246,6 +252,7 @@
 "PX" = (/obj/structure/catwalk,/obj/decal/cleanable/dirt,/obj/random/medical,/turf/simulated/floor/airless,/area/space)
 "PZ" = (/obj/structure/catwalk,/obj/machinery/portable_atmospherics/canister/oxygen,/turf/simulated/floor/airless,/area/ship/lost_truck/exterior)
 "Qq" = (/obj/machinery/atmospherics/binary/pump{dir = 1},/obj/floor_decal/industrial/outline/blue,/obj/decal/cleanable/dirt,/turf/simulated/floor/airless,/area/ship/lost_truck/exterior)
+"QB" = (/obj/decal/cleanable/dirt,/obj/item/ammo_casing/rifle/military/used,/obj/structure/catwalk,/obj/machinery/door/blast/regular/open{dir = 4},/turf/simulated/floor/airless,/area/space)
 "QF" = (/obj/structure/railing/mapped{dir = 2},/obj/structure/railing/mapped{dir = 8},/turf/space,/area/space)
 "QO" = (/obj/structure/railing/mapped{dir = 4},/obj/structure/lattice,/turf/space,/area/space)
 "QX" = (/obj/machinery/atmospherics/pipe/simple/heat_exchanging{dir = 4},/turf/simulated/floor/airless,/area/ship/lost_truck/exterior)
@@ -255,7 +262,7 @@
 "Ry" = (/obj/machinery/light_switch{pixel_x = -8; pixel_y = 24; dir = 2},/obj/structure/catwalk,/turf/simulated/floor/airless,/area/ship/lost_truck/exterior)
 "RB" = (/obj/machinery/atmospherics/pipe/manifold/hidden/blue,/obj/machinery/meter,/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/structure/catwalk,/turf/simulated/floor/airless,/area/ship/lost_truck/exterior)
 "RC" = (/obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction{dir = 4},/turf/simulated/floor/airless,/area/ship/lost_truck/exterior)
-"RQ" = (/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/obj/decal/cleanable/filth,/obj/structure/catwalk,/turf/simulated/floor/airless,/area/space)
+"RQ" = (/obj/floor_decal/industrial/hatch/yellow,/obj/decal/cleanable/dirt,/obj/decal/cleanable/blood/xeno,/turf/simulated/floor/tiled/steel_grid,/area/space)
 "RX" = (/obj/structure/extinguisher_cabinet{pixel_y = -24; dir = 1},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/obj/structure/catwalk,/obj/machinery/alarm{pixel_y = 24},/turf/simulated/floor/plating,/area/ship/lost_truck)
 "Sq" = (/obj/structure/bed/padded,/obj/item/bedsheet/blue,/obj/floor_decal/borderfloor{dir = 8},/obj/decal/cleanable/dirt,/obj/random/plushie,/turf/simulated/floor/tiled/steel_grid,/area/ship/lost_truck)
 "SD" = (/obj/structure/lattice,/turf/space,/area/space)
@@ -282,7 +289,7 @@
 "Wh" = (/obj/machinery/atmospherics/omni/filter{tag_south = 1; tag_north = 2; tag_west = 4},/obj/floor_decal/industrial/warning/dust{dir = 8},/obj/floor_decal/industrial/outline/yellow,/obj/structure/sign/warning/compressed_gas{dir = 4; pixel_x = -32},/turf/simulated/floor/airless,/area/ship/lost_truck/exterior)
 "Wo" = (/obj/random/firstaid,/turf/space,/area/space)
 "Wy" = (/obj/machinery/atmospherics/pipe/simple/hidden/black,/obj/machinery/atmospherics/binary/pump{dir = 4},/obj/floor_decal/industrial/warning/dust{dir = 8},/obj/floor_decal/industrial/outline/blue,/obj/decal/cleanable/dirt,/turf/simulated/floor/airless,/area/ship/lost_truck/exterior)
-"WG" = (/obj/structure/sign/warning/toxic_material{pixel_y = -32},/obj/structure/sign/warning/biohazard{pixel_y = 32},/turf/space,/area/space)
+"WG" = (/obj/structure/sign/warning/biohazard{pixel_y = 32},/turf/space,/area/space)
 "WS" = (/obj/structure/railing/mapped{dir = 8},/obj/structure/sign/warning/biohazard{pixel_x = 28; pixel_y = 4},/turf/space,/area/space)
 "WW" = (/obj/machinery/atmospherics/pipe/simple/hidden/fuel{dir = 6},/obj/floor_decal/industrial/warning/dust,/obj/decal/cleanable/dirt,/obj/structure/railing/mapped,/turf/simulated/floor/airless,/area/ship/lost_truck/exterior)
 "Xd" = (/obj/decal/cleanable/dirt,/obj/structure/catwalk,/turf/simulated/floor/airless,/area/space)
@@ -402,17 +409,17 @@ ChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChCh
 ChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChanChdsVjFvjujujujujujujujujujujuChSDChChgDChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChCh
 ChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChanChdsVjFvChSDChSDChNcChSDChSDChChSDCUChgDChChChCUChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChCh
 ChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChanChdsVjWSESESESESESESESESESESESeaSDChChanChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChCh
-ChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChanChdsVjFvESwpwmNolPSWMgSWekXiqMyYSDChChanChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChCh
-ChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChzrSDSDSDVjSDESRQlPXdXdXdSWMgFombqMKGSDSDSDvSEeChChChChChChChCUChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChCh
-ChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChanChdsVjFvESXdwmHCSWSWcSwmSWSWFjCUSDChChanChChChChCUChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChCh
+ChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChanChdsVjFvESwpxUNolPOJzTsXekXiqMyYSDChChanChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChCh
+ChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChzrSDSDSDVjSDESRQKcvRwacnSWMgFombqMKGSDSDSDvSEeChChChChChChChCUChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChCh
+ChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChanChdsVjFvESxUpQHCQBGfcSwmBHSWFjCUSDChChanChChChChCUChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChCh
 ChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChanChdsVjCjESESESESESESESESESESESUxSDChCUanChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChCh
 ChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChanChdsVjFvChSDChSDChWGChSDChSDChChSDChChanChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChCh
-ChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChanChdsVjKcpQpQpQpQpQpQpQpQpQpQpQxUSDChChanChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChCh
-ChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChanChdsVjFvpQwawawawawawaEmEmEmJIChSDChChanChChChChChChChCUChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChCh
-ChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChanChChVjSDpQwawawawawawawawaEmJISDSDChChanChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChCh
-ChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChanChdsVjFvpQwawawawawawawaEmEmJIChSDChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChCh
-ChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChanChdsVjKcpQpQpQpQpQpQpQpQpQpQpQxUSDCUChChChCUChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChCh
-ChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChanChdsVjFvChSDChSDChsXChSDChSDChChSDChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChCh
+ChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChanChdsVjFvChSDChSDChChChSDChSDChChSDChChanChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChCh
+ChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChanChdsVjFvChSDChSDChChChSDChSDChChSDChChanChChChChChChChCUChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChCh
+ChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChanChChVjSDSDSDSDSDSDSDSDSDSDSDSDSDSDChChanChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChCh
+ChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChanChdsVjFvChSDChSDChChChSDChSDChChSDChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChCh
+ChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChanChdsVjFvChSDChSDChChChSDChSDChChSDCUChChChCUChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChCh
+ChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChanChdsVjFvChSDChSDChChChSDChSDChChSDChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChCh
 ChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChanChdsVjFveReReReReReReReReReReRChSDChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChCh
 ChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChanChdsVjNTeRlshJPVSqOIPVXvUHjAeRSDSDChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChCh
 ChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChanChChVjCheRmhuAPVBmzfPVtRSFFWeRChSDeRtwtwtweRChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChChCh

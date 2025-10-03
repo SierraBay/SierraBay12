@@ -1,0 +1,517 @@
+"aj" = (/obj/structure/hygiene/toilet{dir = 8},/obj/item/taperoll/bog{pixel_x = -12; pixel_y = -10},/turf/simulated/floor/tiled/freezer,/area/abandoned_hotel/rooms)
+"al" = (/obj/structure/catwalk,/obj/structure/lattice,/turf/space,/area/space)
+"az" = (/obj/structure/cable/green{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/structure/catwalk,/turf/simulated/floor/plating,/area/assembly/robotics)
+"aB" = (/obj/structure/cable/yellow{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/structure/catwalk,/turf/simulated/floor/plating,/area/bridge)
+"aJ" = (/obj/machinery/atmospherics/pipe/simple/visible/yellow{dir = 9},/obj/machinery/atmospherics/pipe/simple/visible/black{dir = 6},/turf/simulated/floor/tiled/techfloor,/area/abandoned_hotel/solar)
+"aK" = (/obj/structure/cable/green{d1 = 2; d2 = 8; icon_state = "2-8"},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 10},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 10},/obj/structure/catwalk,/turf/simulated/floor/plating,/area/abandoned_hotel/buffet)
+"aV" = (/obj/structure/table/rack,/turf/simulated/floor/tiled/techfloor,/area/acting)
+"aX" = (/obj/structure/cable/green{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/structure/cable/green{d1 = 1; d2 = 8; icon_state = "1-8"},/obj/machinery/atmospherics/pipe/manifold/hidden/supply,/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,/obj/structure/catwalk,/turf/simulated/floor/plating,/area/bridge)
+"bh" = (/obj/floor_decal/solarpanel,/obj/machinery/power/solar{id = "auxsolarstarboard"; name = "Aft Starboard Solar Array"},/obj/structure/cable/yellow,/turf/simulated/floor/plating,/area/space)
+"bk" = (/obj/machinery/door/airlock/hatch,/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/turf/simulated/floor/tiled/techfloor/grid,/area/assembly/chargebay)
+"bl" = (/obj/machinery/atmospherics/unary/vent_pump/on{dir = 4},/turf/simulated/floor/tiled/techfloor,/area/assembly/chargebay)
+"br" = (/obj/structure/window/reinforced{dir = 4},/obj/structure/hygiene/urinal{pixel_y = 28},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 6},/turf/simulated/floor/tiled/freezer,/area/abandoned_hotel/rooms)
+"by" = (/obj/machinery/nav_light,/turf/space,/area/space)
+"bE" = (/obj/machinery/atmospherics/pipe/manifold/visible/yellow{dir = 8},/turf/simulated/floor/tiled/techfloor,/area/abandoned_hotel/solar)
+"bN" = (/obj/structure/table/rack,/obj/machinery/atmospherics/unary/vent_scrubber/on{dir = 8},/turf/simulated/floor/tiled/techfloor,/area/assembly)
+"bQ" = (/turf/space,/area/space)
+"bY" = (/obj/machinery/alarm{dir = 4; pixel_x = -24; req_access = list(); locked = 0},/obj/machinery/atmospherics/unary/vent_pump/on{dir = 4},/turf/simulated/floor/tiled,/area/abandoned_hotel/atmos)
+"ca" = (/obj/structure/table/reinforced,/obj/item/device/radio/intercom{pixel_y = 26},/turf/simulated/floor/tiled/techfloor,/area/acting/stage)
+"ce" = (/obj/machinery/atmospherics/pipe/manifold4w/visible/yellow,/turf/simulated/floor/tiled/techfloor,/area/abandoned_hotel/solar)
+"co" = (/obj/structure/cable/green{d1 = 1; d2 = 4; icon_state = "1-4"},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 9},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 5},/turf/simulated/floor/tiled,/area/abandoned_hotel/atmos)
+"ct" = (/obj/structure/table/rack,/obj/machinery/atmospherics/unary/vent_pump/on{dir = 8},/turf/simulated/floor/tiled/techfloor,/area/assembly)
+"cN" = (/obj/structure/table/standard,/obj/item/device/radio/intercom{dir = 8; pixel_x = 24},/turf/simulated/floor/tiled/dark,/area/abandoned_hotel/evac)
+"cP" = (/obj/machinery/door/airlock/multi_tile,/turf/simulated/floor/tiled/techfloor/grid,/area/beach)
+"cS" = (/turf/simulated/wall/r_wall/prepainted,/area/abandoned_hotel/kitchen)
+"cU" = (/obj/structure/cable/green{d1 = 2; d2 = 4; icon_state = "2-4"},/obj/structure/catwalk,/turf/simulated/floor/plating,/area/abandoned_hotel/solar)
+"cX" = (/obj/floor_decal/solarpanel,/obj/machinery/power/solar{id = "auxsolarstarboard"; name = "Aft Starboard Solar Array"},/turf/simulated/floor/plating,/area/space)
+"dU" = (/turf/simulated/floor/tiled/techfloor,/area/beach)
+"dV" = (/obj/structure/hygiene/sink{pixel_y = -12},/turf/simulated/floor/tiled/freezer,/area/abandoned_hotel/rooms)
+"dW" = (/obj/structure/cable/green{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/structure/cable/green{d1 = 2; d2 = 8; icon_state = "2-8"},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/obj/structure/catwalk,/turf/simulated/floor/plating,/area/bridge)
+"dX" = (/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/structure/catwalk,/turf/simulated/floor/plating,/area/abandoned_hotel/solar)
+"ea" = (/turf/simulated/floor/tiled/techfloor/grid,/area/bridge/adjutants)
+"ef" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 6},/turf/simulated/floor/tiled/techfloor,/area/acting/stage)
+"eh" = (/obj/machinery/atmospherics/unary/vent_pump/on{dir = 2},/obj/item/device/radio/intercom{pixel_y = 26},/turf/simulated/floor/tiled/techfloor,/area/bridge)
+"em" = (/obj/machinery/power/apc{dir = 4; req_access = list()},/obj/structure/cable/green{d2 = 2; icon_state = "0-2"},/turf/simulated/floor/tiled/techfloor,/area/acting/backstage)
+"ep" = (/obj/machinery/power/apc{dir = 2; req_access = list()},/obj/structure/cable/green{d2 = 4; icon_state = "0-4"},/obj/structure/cable/green{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/obj/structure/catwalk,/turf/simulated/floor/plating,/area/abandoned_hotel/buffet)
+"es" = (/obj/machinery/computer{dir = 2},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 6},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 10},/turf/simulated/floor/tiled/dark,/area/abandoned_hotel/evac)
+"eB" = (/obj/machinery/alarm{dir = 1; pixel_y = -22},/turf/simulated/floor/tiled/techfloor,/area/bridge)
+"eE" = (/turf/simulated/floor/tiled/techfloor,/area/abandoned_hotel/buffet)
+"eN" = (/obj/machinery/power/apc{dir = 4; req_access = list()},/obj/structure/cable/green{d2 = 8; icon_state = "0-8"},/turf/simulated/floor/tiled/techfloor,/area/acting)
+"eV" = (/obj/machinery/atmospherics/unary/vent_scrubber/on{dir = 2},/turf/simulated/floor/tiled/techfloor,/area/abandoned_hotel/buffet)
+"eZ" = (/obj/machinery/atmospherics/unary/vent_scrubber/on{dir = 1},/turf/simulated/floor/tiled/techfloor,/area/bridge)
+"fd" = (/obj/machinery/atmospherics/unary/vent_pump/on{dir = 8},/turf/simulated/floor/tiled/techfloor,/area/acting)
+"fg" = (/obj/machinery/door/airlock/hatch,/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/turf/simulated/floor/tiled/techfloor/grid,/area/acting/backstage)
+"fp" = (/obj/machinery/alarm{dir = 4; pixel_x = -24; req_access = list(); locked = 0},/obj/machinery/atmospherics/unary/vent_pump/on{dir = 4},/turf/simulated/floor/tiled,/area/abandoned_hotel)
+"fF" = (/obj/machinery/atmospherics/unary/vent_scrubber/on{dir = 8},/turf/simulated/floor/tiled/techfloor,/area/bridge/adjutants)
+"fG" = (/obj/machinery/computer{dir = 2},/obj/machinery/atmospherics/unary/vent_scrubber/on{dir = 4},/turf/simulated/floor/tiled/dark,/area/abandoned_hotel/evac)
+"fN" = (/obj/structure/cable/green{d1 = 2; d2 = 4; icon_state = "2-4"},/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/turf/simulated/floor/tiled/white,/area/abandoned_hotel/kitchen)
+"fO" = (/turf/simulated/floor/tiled/techfloor,/area/assembly/chargebay)
+"fR" = (/obj/machinery/alarm{dir = 8; pixel_x = 24; locked = 0; req_access = list()},/turf/simulated/floor/tiled/techfloor,/area/assembly)
+"fX" = (/obj/floor_decal/solarpanel,/obj/machinery/power/solar{id = "auxsolarstarboard"; name = "Aft Starboard Solar Array"},/obj/structure/cable/yellow{d2 = 2; icon_state = "0-2"},/turf/simulated/floor/plating,/area/space)
+"gb" = (/obj/machinery/recharger/wallcharger{dir = 8; pixel_x = 22},/turf/simulated/floor/tiled/techfloor,/area/acting/backstage)
+"gd" = (/turf/simulated/floor/tiled/techfloor,/area/bridge)
+"gj" = (/obj/machinery/door/airlock/hatch,/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/turf/simulated/floor/tiled/monotile,/area/abandoned_hotel)
+"gl" = (/obj/machinery/door/airlock/hatch,/obj/structure/cable/green{d1 = 4; d2 = 8; icon_state = "4-8"},/turf/simulated/floor/tiled/techfloor/grid,/area/acting/backstage)
+"gq" = (/obj/machinery/atmospherics/unary/vent_scrubber/on{dir = 4},/turf/simulated/floor/tiled/techfloor,/area/assembly/chargebay)
+"gs" = (/obj/machinery/atmospherics/unary/vent_scrubber/on{dir = 4},/turf/simulated/floor/tiled/techfloor,/area/assembly/robotics)
+"gx" = (/obj/machinery/disposal/small{dir = 4},/turf/simulated/floor/tiled/techfloor,/area/acting/stage)
+"gR" = (/obj/structure/ironing_board,/turf/simulated/floor/tiled/techfloor,/area/abandoned_hotel/reception)
+"gV" = (/obj/structure/cable/green{d1 = 2; d2 = 4; icon_state = "2-4"},/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/turf/simulated/floor/tiled/dark,/area/abandoned_hotel/evac)
+"gX" = (/obj/structure/cable/green{d1 = 2; d2 = 8; icon_state = "2-8"},/obj/machinery/atmospherics/pipe/manifold/hidden/supply{dir = 1},/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{dir = 4},/obj/structure/catwalk,/turf/simulated/floor/plating,/area/bridge/adjutants)
+"ha" = (/obj/machinery/power/apc{dir = 8; req_access = list()},/obj/structure/cable/green{d2 = 2; icon_state = "0-2"},/turf/simulated/floor/tiled/techfloor,/area/beach)
+"hb" = (/obj/structure/cable/yellow{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/atmospherics/unary/vent_scrubber/on{dir = 8},/obj/structure/catwalk,/turf/simulated/floor/plating,/area/abandoned_hotel/solar)
+"hc" = (/obj/structure/cable/yellow{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/plating,/area/space)
+"hf" = (/obj/structure/cable/green{d1 = 1; d2 = 8; icon_state = "1-8"},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 5},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/turf/simulated/floor/tiled/techfloor,/area/assembly)
+"hj" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 6},/obj/structure/catwalk,/turf/simulated/floor/plating,/area/bridge/adjutants)
+"hm" = (/obj/machinery/atmospherics/omni/filter{tag_east = 4; tag_north = 3; tag_south = 2; tag_west = 1},/obj/structure/window/reinforced{dir = 4},/turf/simulated/floor/tiled/techfloor,/area/abandoned_hotel/solar)
+"hn" = (/obj/structure/cable/green{d1 = 1; d2 = 4; icon_state = "1-4"},/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/structure/catwalk,/turf/simulated/floor/plating,/area/assembly/robotics)
+"hH" = (/obj/structure/cable/green{d1 = 2; d2 = 4; icon_state = "2-4"},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/turf/simulated/floor/tiled/freezer,/area/abandoned_hotel/rooms)
+"hJ" = (/obj/structure/cable/yellow{d1 = 1; d2 = 4; icon_state = "1-4"},/obj/structure/cable/yellow{d1 = 2; d2 = 4; icon_state = "2-4"},/turf/simulated/floor/plating,/area/space)
+"hM" = (/turf/simulated/floor/plating,/area/space)
+"hQ" = (/turf/simulated/floor/tiled/freezer,/area/abandoned_hotel/rooms)
+"hZ" = (/obj/structure/bed/chair/comfy/brown{dir = 8},/turf/simulated/floor/tiled/techfloor,/area/abandoned_hotel/buffet)
+"ib" = (/obj/structure/table/standard,/turf/simulated/floor/tiled/techfloor,/area/acting/backstage)
+"ig" = (/obj/machinery/alarm{locked = 0; pixel_y = 20; req_access = list()},/obj/machinery/alarm{dir = 4; pixel_x = -24; req_access = list(); locked = 0},/obj/machinery/alarm{dir = 8; pixel_x = 24; locked = 0; req_access = list()},/obj/machinery/alarm{dir = 1; pixel_y = -22},/turf/space,/area/space)
+"ih" = (/turf/simulated/wall/r_wall/prepainted,/area/abandoned_hotel)
+"in" = (/obj/machinery/alarm{dir = 4; pixel_x = -24; req_access = list(); locked = 0},/turf/simulated/floor/tiled/dark,/area/abandoned_hotel/evac)
+"it" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 6},/obj/structure/window/reinforced{dir = 4},/turf/simulated/floor/tiled/techfloor,/area/abandoned_hotel/solar)
+"iC" = (/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/structure/cable/green{d1 = 2; d2 = 4; icon_state = "2-4"},/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/structure/catwalk,/turf/simulated/floor/plating,/area/abandoned_hotel/solar)
+"iI" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 10},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 6},/turf/simulated/floor/tiled/white,/area/abandoned_hotel/kitchen)
+"iN" = (/obj/machinery/alarm{dir = 4; pixel_x = -24; req_access = list(); locked = 0},/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/structure/catwalk,/turf/simulated/floor/plating,/area/assembly/robotics)
+"iS" = (/turf/simulated/wall/prepainted,/area/assembly)
+"iU" = (/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/tiled/techfloor,/area/bridge)
+"iW" = (/obj/machinery/power/apc{dir = 4; req_access = list()},/obj/structure/cable/yellow{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/structure/cable/green{d2 = 8; icon_state = "0-8"},/obj/structure/catwalk,/turf/simulated/floor/plating,/area/abandoned_hotel/solar)
+"jp" = (/obj/structure/cable/green{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/structure/cable/green{d1 = 2; d2 = 8; icon_state = "2-8"},/obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,/obj/machinery/atmospherics/pipe/manifold4w/hidden/scrubbers,/obj/structure/catwalk,/turf/simulated/floor/plating,/area/bridge)
+"jx" = (/turf/simulated/wall/prepainted,/area/bridge/adjutants)
+"jI" = (/obj/structure/railing,/turf/simulated/floor/tiled/dark,/area/abandoned_hotel/evac)
+"jS" = (/obj/machinery/computer{dir = 4},/obj/structure/noticeboard{pixel_y = 30},/turf/simulated/floor/tiled/dark,/area/abandoned_hotel/evac)
+"jW" = (/obj/structure/cable/green{d1 = 2; d2 = 4; icon_state = "2-4"},/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/atmospherics/pipe/manifold/hidden/supply{dir = 1},/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{dir = 1},/obj/structure/catwalk,/turf/simulated/floor/plating,/area/assembly/robotics)
+"ks" = (/obj/machinery/mech_recharger,/turf/simulated/floor/tiled/techfloor,/area/space)
+"kw" = (/turf/simulated/wall/r_wall/prepainted,/area/space)
+"kB" = (/obj/structure/cable/green{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/obj/structure/catwalk,/turf/simulated/floor/plating,/area/bridge/adjutants)
+"kF" = (/turf/simulated/floor/tiled/techfloor,/area/acting/stage)
+"kH" = (/obj/structure/cable/green{d1 = 2; d2 = 8; icon_state = "2-8"},/turf/simulated/floor/tiled/techfloor,/area/assembly/robotics)
+"kL" = (/obj/structure/catwalk,/obj/structure/cable/yellow{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/structure/cable/yellow{d1 = 1; d2 = 4; icon_state = "1-4"},/turf/simulated/floor/plating,/area/space)
+"lg" = (/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/structure/catwalk,/turf/simulated/floor/plating,/area/abandoned_hotel/solar)
+"lo" = (/obj/machinery/power/apc{dir = 2; req_access = list()},/obj/structure/cable/green{d2 = 8; icon_state = "0-8"},/turf/simulated/floor/tiled/white,/area/abandoned_hotel/kitchen)
+"lq" = (/obj/structure/hygiene/toilet,/turf/space,/area/space)
+"lr" = (/turf/simulated/floor/tiled/techfloor,/area/acting/backstage)
+"lu" = (/obj/machinery/power/apc{dir = 8; req_access = list()},/turf/space,/area/space)
+"lG" = (/obj/structure/table/standard,/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 6},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/turf/simulated/floor/tiled/techfloor,/area/acting/backstage)
+"mg" = (/obj/machinery/sleeper/survival_pod/colony{dir = 8},/turf/simulated/floor/tiled/white,/area/abandoned_hotel/kitchen)
+"mi" = (/obj/structure/cable/yellow{d1 = 2; d2 = 8; icon_state = "2-8"},/obj/structure/cable/green{d1 = 1; d2 = 4; icon_state = "1-4"},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 5},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 5},/obj/structure/catwalk,/turf/simulated/floor/plating,/area/bridge)
+"mw" = (/obj/machinery/disposal/small{dir = 1; pixel_y = 28},/obj/structure/cable/green{d1 = 2; d2 = 8; icon_state = "2-8"},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 10},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 10},/obj/structure/catwalk,/turf/simulated/floor/plating,/area/bridge)
+"mz" = (/obj/machinery/power/apc{dir = 4; req_access = list()},/obj/structure/cable/green{d2 = 2; icon_state = "0-2"},/turf/simulated/floor/tiled/techfloor,/area/abandoned_hotel/reception)
+"mB" = (/obj/item/storage/toolbox/mechanical,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 9},/turf/simulated/floor/tiled/techfloor,/area/acting/stage)
+"mC" = (/obj/structure/catwalk,/obj/structure/cable/yellow{d1 = 2; d2 = 8; icon_state = "2-8"},/turf/simulated/floor/plating,/area/space)
+"mG" = (/turf/simulated/wall/prepainted,/area/assembly/chargebay)
+"mK" = (/obj/structure/cable/green{d1 = 1; d2 = 4; icon_state = "1-4"},/turf/simulated/floor/tiled/techfloor,/area/acting/backstage)
+"mU" = (/turf/simulated/floor/tiled/techfloor,/area/space)
+"nk" = (/obj/item/device/radio/intercom{dir = 8; pixel_x = 24},/turf/simulated/floor/tiled/techfloor,/area/abandoned_hotel/buffet)
+"nG" = (/obj/structure/cable/green{d1 = 1; d2 = 4; icon_state = "1-4"},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 5},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 5},/obj/structure/catwalk,/turf/simulated/floor/plating,/area/beach)
+"nP" = (/obj/item/device/radio/intercom{dir = 1; pixel_y = -29},/turf/simulated/floor/tiled/white,/area/abandoned_hotel/kitchen)
+"nV" = (/obj/structure/lattice,/turf/space,/area/space)
+"nY" = (/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/structure/cable/green{d1 = 2; d2 = 8; icon_state = "2-8"},/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/structure/catwalk,/turf/simulated/floor/plating,/area/assembly/robotics)
+"oj" = (/obj/machinery/alarm{dir = 4; pixel_x = -24; req_access = list(); locked = 0},/turf/simulated/floor/tiled/techfloor,/area/acting/backstage)
+"ov" = (/turf/simulated/wall/prepainted,/area/abandoned_hotel)
+"oS" = (/turf/simulated/floor/tiled/techfloor,/area/abandoned_hotel/solar)
+"oT" = (/obj/machinery/atmospherics/unary/tank/nitrogen,/turf/simulated/floor/tiled/techfloor,/area/abandoned_hotel/solar)
+"oY" = (/obj/wallframe_spawn/reinforced/hull,/turf/simulated/floor/plating,/area/abandoned_hotel/evac)
+"oZ" = (/obj/structure/grille,/obj/structure/lattice,/turf/space,/area/space)
+"pa" = (/obj/structure/cable/green{d1 = 1; d2 = 8; icon_state = "1-8"},/obj/structure/catwalk,/turf/simulated/floor/plating,/area/abandoned_hotel/solar)
+"pD" = (/turf/simulated/wall/r_wall/prepainted,/area/acting)
+"pM" = (/obj/item/device/radio/intercom{dir = 4; pixel_x = -24},/obj/item/device/radio/intercom{dir = 8; pixel_x = 24},/obj/item/device/radio/intercom{pixel_y = 26},/obj/item/device/radio/intercom{dir = 1; pixel_y = -29},/turf/space,/area/space)
+"pY" = (/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/turf/simulated/floor/tiled/techfloor/grid,/area/assembly/robotics)
+"qc" = (/obj/machinery/atmospherics/unary/vent_pump/on{dir = 8},/turf/simulated/floor/tiled/techfloor,/area/bridge/adjutants)
+"qj" = (/obj/machinery/atmospherics/unary/engine,/turf/simulated/wall/r_wall/prepainted,/area/space)
+"qG" = (/obj/machinery/recharge_station,/turf/simulated/floor/tiled/techfloor,/area/space)
+"qH" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/turf/simulated/floor/tiled/techfloor,/area/acting/stage)
+"qQ" = (/obj/structure/railing{dir = 8},/turf/simulated/floor/tiled/dark,/area/abandoned_hotel/evac)
+"qZ" = (/obj/structure/cable/green{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/obj/structure/catwalk,/turf/simulated/floor/plating,/area/abandoned_hotel/buffet)
+"re" = (/obj/machinery/atmospherics/pipe/simple/visible/cyan{dir = 6},/turf/simulated/floor/tiled/techfloor,/area/abandoned_hotel/solar)
+"rl" = (/turf/simulated/wall/r_wall/prepainted,/area/acting/stage)
+"rC" = (/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/structure/cable/green{d1 = 2; d2 = 8; icon_state = "2-8"},/obj/machinery/atmospherics/pipe/manifold/hidden/supply{dir = 4},/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{dir = 4},/obj/structure/catwalk,/turf/simulated/floor/plating,/area/beach)
+"sd" = (/obj/machinery/atmospherics/unary/vent_pump/on{dir = 1},/turf/simulated/floor/tiled/techfloor,/area/bridge)
+"se" = (/obj/structure/extinguisher_cabinet{pixel_x = 24; dir = 8},/obj/structure/cable/yellow{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/structure/catwalk,/turf/simulated/floor/plating,/area/abandoned_hotel/solar)
+"sf" = (/obj/structure/cable/green{d1 = 1; d2 = 8; icon_state = "1-8"},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 9},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 9},/obj/structure/catwalk,/turf/simulated/floor/plating,/area/beach)
+"sh" = (/obj/machinery/alarm{dir = 4; pixel_x = -24; req_access = list(); locked = 0},/turf/simulated/floor/tiled/freezer,/area/abandoned_hotel/rooms)
+"sk" = (/obj/structure/roller_bed,/turf/simulated/floor/tiled/white,/area/abandoned_hotel/kitchen)
+"sr" = (/obj/machinery/power/apc{dir = 1; req_access = list()},/obj/structure/cable/green{d2 = 4; icon_state = "0-4"},/turf/simulated/floor/tiled/techfloor,/area/assembly)
+"sy" = (/obj/machinery/atmospherics/unary/vent_pump/on{dir = 8},/turf/simulated/floor/tiled/techfloor,/area/assembly/robotics)
+"sF" = (/obj/structure/table/reinforced,/obj/machinery/atmospherics/unary/vent_scrubber/on{dir = 2},/turf/simulated/floor/tiled/techfloor,/area/acting/stage)
+"sK" = (/obj/machinery/disposal/small{dir = 4},/turf/simulated/floor/tiled/techfloor,/area/abandoned_hotel/buffet)
+"sM" = (/obj/structure/cable/yellow{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/plating,/area/bridge)
+"sQ" = (/obj/machinery/atmospherics/omni/mixer{active_power_usage = 7500; tag_north_con = 0.21; tag_south = 1; tag_south_con = 0.79; tag_west = 2; tag_north = 1},/turf/simulated/floor/tiled/techfloor,/area/abandoned_hotel/solar)
+"sW" = (/obj/structure/cable/yellow{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/structure/catwalk,/turf/simulated/floor/plating,/area/bridge)
+"sX" = (/obj/structure/cable/green{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/structure/cable/green{d1 = 2; d2 = 8; icon_state = "2-8"},/obj/structure/cable/green{d1 = 1; d2 = 8; icon_state = "1-8"},/obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,/obj/machinery/atmospherics/pipe/manifold4w/hidden/scrubbers,/obj/structure/catwalk,/turf/simulated/floor/plating,/area/bridge)
+"sZ" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/turf/simulated/floor/tiled/white,/area/abandoned_hotel/kitchen)
+"tb" = (/obj/structure/ore_box,/turf/space,/area/space)
+"tn" = (/turf/simulated/floor/tiled,/area/abandoned_hotel)
+"tv" = (/obj/structure/cable/yellow{d1 = 2; d2 = 4; icon_state = "2-4"},/obj/structure/catwalk,/turf/simulated/floor/plating,/area/bridge)
+"tA" = (/obj/machinery/hologram/holopad/longrange,/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/turf/simulated/floor/tiled/dark,/area/abandoned_hotel/evac)
+"tE" = (/turf/simulated/wall/r_wall/prepainted,/area/abandoned_hotel/solar)
+"tL" = (/obj/structure/table/standard,/turf/simulated/floor/tiled/dark,/area/abandoned_hotel/evac)
+"tZ" = (/obj/machinery/atmospherics/pipe/simple/visible/universal,/obj/machinery/meter,/obj/structure/window/reinforced{dir = 4},/turf/simulated/floor/tiled/techfloor,/area/abandoned_hotel/solar)
+"ub" = (/obj/machinery/atmospherics/unary/tank/air,/turf/simulated/floor/tiled/techfloor,/area/abandoned_hotel/solar)
+"ui" = (/turf/simulated/wall/r_wall/prepainted,/area/assembly/robotics)
+"uo" = (/obj/machinery/door/airlock/hatch,/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/turf/simulated/floor/tiled/dark/monotile,/area/abandoned_hotel/evac)
+"uu" = (/obj/structure/table/rack,/turf/simulated/floor/tiled/techfloor,/area/assembly)
+"uE" = (/obj/machinery/door/airlock/hatch,/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/turf/simulated/floor/tiled/techfloor/grid,/area/abandoned_hotel/reception)
+"uF" = (/obj/machinery/power/apc{dir = 1; req_access = list()},/turf/space,/area/space)
+"uP" = (/obj/machinery/atmospherics/unary/vent_scrubber/on{dir = 1},/turf/simulated/floor/tiled/techfloor,/area/beach)
+"uU" = (/obj/structure/bed/chair/comfy/brown{dir = 4},/turf/simulated/floor/tiled/techfloor,/area/acting/backstage)
+"uX" = (/turf/simulated/wall/prepainted,/area/abandoned_hotel/evac)
+"uZ" = (/obj/structure/reagent_dispensers/watertank,/turf/space,/area/space)
+"vb" = (/turf/simulated/floor/tiled/techfloor,/area/assembly/robotics)
+"vd" = (/obj/structure/hygiene/drain{pixel_y = 6; pixel_x = 8},/turf/simulated/floor/tiled/freezer,/area/abandoned_hotel/rooms)
+"vf" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/turf/simulated/floor/tiled/techfloor,/area/abandoned_hotel/reception)
+"vh" = (/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/structure/catwalk,/turf/simulated/floor/plating,/area/beach)
+"vl" = (/obj/structure/cable/green{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/machinery/atmospherics/pipe/manifold/hidden/supply{dir = 1},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/obj/structure/catwalk,/turf/simulated/floor/plating,/area/beach)
+"vt" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/turf/simulated/floor/tiled/techfloor,/area/assembly)
+"vB" = (/obj/structure/shuttle/engine/propulsion{dir = 1},/turf/simulated/floor/tiled/techfloor,/area/space)
+"vJ" = (/turf/simulated/wall/r_wall/prepainted,/area/abandoned_hotel/atmos)
+"vM" = (/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/structure/catwalk,/turf/simulated/floor/plating,/area/abandoned_hotel/solar)
+"vN" = (/obj/machinery/alarm{dir = 1; pixel_y = -22},/turf/simulated/floor/tiled/techfloor,/area/acting/stage)
+"vZ" = (/obj/structure/cable/yellow{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/structure/cable/yellow{d1 = 1; d2 = 4; icon_state = "1-4"},/obj/structure/cable/yellow{d1 = 2; d2 = 4; icon_state = "2-4"},/turf/simulated/floor/plating,/area/space)
+"wg" = (/obj/machinery/mech_recharger,/turf/simulated/floor/tiled/techfloor,/area/acting/stage)
+"wk" = (/obj/machinery/suit_storage_unit,/turf/simulated/floor/tiled/techfloor,/area/assembly)
+"wE" = (/obj/machinery/door/airlock/multi_tile,/turf/simulated/floor/tiled/techfloor/grid,/area/assembly/robotics)
+"wT" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 5},/turf/simulated/floor/tiled/techfloor,/area/assembly)
+"wU" = (/obj/machinery/door/airlock/external,/obj/structure/cable/yellow{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/plating,/area/bridge)
+"wZ" = (/obj/machinery/atmospherics/unary/engine,/turf/simulated/floor/tiled/techfloor,/area/space)
+"xa" = (/obj/structure/bed/sofa/l/black{dir = 4},/turf/simulated/floor/tiled/dark,/area/abandoned_hotel/evac)
+"xe" = (/obj/structure/table/standard,/turf/simulated/floor/tiled/techfloor,/area/abandoned_hotel/buffet)
+"xg" = (/obj/machinery/atmospherics/unary/vent_scrubber/on{dir = 2},/turf/simulated/floor/tiled/techfloor,/area/bridge)
+"xi" = (/obj/structure/cable/yellow{d1 = 4; d2 = 8; icon_state = "4-8"},/turf/simulated/floor/plating,/area/space)
+"xo" = (/obj/machinery/power/apc{dir = 8; req_access = list()},/obj/structure/cable/green{d2 = 2; icon_state = "0-2"},/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/structure/catwalk,/turf/simulated/floor/plating,/area/assembly/robotics)
+"xt" = (/obj/machinery/atmospherics/pipe/manifold4w/visible/cyan,/turf/simulated/floor/tiled/techfloor,/area/abandoned_hotel/solar)
+"xC" = (/obj/structure/reagent_dispensers/beerkeg,/obj/machinery/alarm{dir = 8; pixel_x = 24; locked = 0; req_access = list()},/turf/simulated/floor/tiled/techfloor,/area/acting)
+"xD" = (/obj/machinery/door/airlock/multi_tile,/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/turf/simulated/floor/tiled/techfloor/grid,/area/abandoned_hotel/buffet)
+"xT" = (/turf/simulated/floor/tiled/dark,/area/abandoned_hotel/evac)
+"xZ" = (/turf/simulated/floor/tiled/techfloor,/area/acting)
+"yi" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/structure/catwalk,/turf/simulated/floor/plating,/area/assembly/chargebay)
+"yo" = (/obj/machinery/power/apc{dir = 4; req_access = list()},/obj/structure/cable/green,/turf/simulated/floor/tiled/freezer,/area/abandoned_hotel/rooms)
+"yx" = (/obj/structure/cable/green{d1 = 2; d2 = 4; icon_state = "2-4"},/obj/structure/cable/green{d1 = 1; d2 = 4; icon_state = "1-4"},/obj/machinery/atmospherics/pipe/manifold/hidden/supply{dir = 8},/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{dir = 8},/obj/structure/catwalk,/turf/simulated/floor/plating,/area/abandoned_hotel/buffet)
+"yy" = (/obj/structure/cable/yellow{d1 = 1; d2 = 8; icon_state = "1-8"},/obj/structure/cable/yellow{d1 = 1; d2 = 4; icon_state = "1-4"},/turf/simulated/floor/plating,/area/space)
+"yG" = (/obj/structure/cable/green{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/obj/structure/catwalk,/turf/simulated/floor/plating,/area/beach)
+"yJ" = (/turf/simulated/wall/prepainted,/area/acting/backstage)
+"yR" = (/obj/structure/cable/green{d1 = 1; d2 = 4; icon_state = "1-4"},/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/turf/simulated/floor/plating,/area/acting)
+"yS" = (/obj/structure/table/reinforced,/obj/machinery/atmospherics/unary/vent_pump/on{dir = 2},/turf/simulated/floor/tiled/techfloor,/area/acting/stage)
+"yX" = (/obj/structure/cable/green{d1 = 1; d2 = 4; icon_state = "1-4"},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 5},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 5},/obj/structure/catwalk,/turf/simulated/floor/plating,/area/bridge)
+"za" = (/obj/structure/cable/green{d1 = 1; d2 = 8; icon_state = "1-8"},/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/structure/catwalk,/turf/simulated/floor/plating,/area/assembly/chargebay)
+"zb" = (/obj/machinery/door/airlock/multi_tile{dir = 8},/obj/structure/cable/green{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/turf/simulated/floor/tiled/techfloor/grid,/area/bridge/adjutants)
+"zc" = (/obj/item/device/radio/intercom{dir = 8; pixel_x = 24},/turf/simulated/floor/tiled/techfloor,/area/assembly/robotics)
+"zf" = (/obj/machinery/jukebox/custom_tape/old{pixel_y = 22; density = 0},/turf/simulated/floor/tiled/techfloor,/area/acting/backstage)
+"zh" = (/obj/structure/cable/green{d1 = 1; d2 = 4; icon_state = "1-4"},/obj/structure/catwalk,/turf/simulated/floor/plating,/area/abandoned_hotel/solar)
+"zl" = (/obj/machinery/door/airlock/hatch,/turf/simulated/floor/tiled/dark/monotile,/area/abandoned_hotel/evac)
+"zE" = (/obj/machinery/atmospherics/binary/pump,/obj/structure/window/reinforced{dir = 4},/turf/simulated/floor/tiled/techfloor,/area/abandoned_hotel/solar)
+"zN" = (/obj/machinery/door/airlock/multi_tile,/turf/simulated/floor/tiled/techfloor/grid,/area/abandoned_hotel/buffet)
+"zY" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/turf/simulated/floor/plating,/area/acting)
+"Ac" = (/obj/machinery/atmospherics/pipe/simple/visible/yellow{dir = 9},/obj/machinery/door/window/brigdoor/northleft{dir = 2},/turf/simulated/floor/tiled/techfloor,/area/abandoned_hotel/solar)
+"Af" = (/turf/simulated/floor/tiled/techfloor,/area/assembly)
+"Am" = (/turf/simulated/floor/tiled/techfloor,/area/abandoned_hotel/reception)
+"Ar" = (/obj/machinery/atmospherics/pipe/simple/visible/yellow{dir = 10},/turf/simulated/floor/tiled/techfloor,/area/abandoned_hotel/solar)
+"Ax" = (/obj/machinery/computer/ship/navigation/telescreen{pixel_y = -30},/turf/simulated/floor/tiled/techfloor,/area/acting/backstage)
+"AA" = (/obj/shuttle_landmark/corporate,/turf/space,/area/space)
+"AS" = (/obj/machinery/alarm{dir = 8; pixel_x = 24; locked = 0; req_access = list()},/obj/structure/cable/yellow{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/structure/catwalk,/turf/simulated/floor/plating,/area/abandoned_hotel/solar)
+"Bb" = (/obj/structure/catwalk,/obj/structure/cable/yellow{d1 = 4; d2 = 8; icon_state = "4-8"},/turf/simulated/floor/plating,/area/space)
+"Bn" = (/obj/machinery/disposal/small{dir = 1; pixel_y = 28},/obj/machinery/fabricator/micro{pixel_y = -1; pixel_x = 28; density = 0},/turf/simulated/floor/tiled/techfloor,/area/acting/backstage)
+"Bv" = (/obj/machinery/door/airlock/hatch,/turf/simulated/floor/tiled/techfloor/grid,/area/acting/backstage)
+"Bx" = (/obj/structure/catwalk,/obj/structure/cable/yellow{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/plating,/area/space)
+"BJ" = (/obj/machinery/door/airlock/hatch,/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/turf/simulated/floor/tiled/white/monotile,/area/abandoned_hotel/kitchen)
+"BN" = (/obj/machinery/atmospherics/pipe/simple/visible/universal{dir = 4},/obj/machinery/meter,/obj/machinery/alarm{locked = 0; pixel_y = 20; req_access = list()},/turf/simulated/floor/tiled/techfloor,/area/abandoned_hotel/solar)
+"BO" = (/obj/machinery/power/apc{dir = 2; req_access = list()},/obj/structure/cable/green{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/structure/cable/green{d2 = 8; icon_state = "0-8"},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/obj/structure/catwalk,/turf/simulated/floor/plating,/area/bridge/adjutants)
+"Cd" = (/turf/simulated/wall/prepainted,/area/abandoned_hotel/atmos)
+"Cj" = (/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 10},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 10},/turf/simulated/floor/tiled/techfloor,/area/abandoned_hotel/reception)
+"CD" = (/obj/machinery/power/apc{dir = 4; req_access = list()},/obj/structure/cable/green{d2 = 8; icon_state = "0-8"},/obj/machinery/atmospherics/unary/vent_scrubber/on{dir = 8},/turf/simulated/floor/tiled,/area/abandoned_hotel)
+"CF" = (/obj/machinery/mining/drill,/turf/simulated/floor/tiled/techfloor,/area/space)
+"CG" = (/obj/structure/bed/chair/comfy/brown{dir = 4},/turf/simulated/floor/tiled/techfloor,/area/abandoned_hotel/buffet)
+"CP" = (/obj/machinery/door/airlock/external{dir = 8},/turf/simulated/floor/tiled/techfloor,/area/space)
+"Dc" = (/obj/machinery/power/apc{dir = 4; req_access = list()},/turf/space,/area/space)
+"Di" = (/obj/machinery/power/terminal,/obj/structure/cable/yellow{d2 = 4; icon_state = "0-4"},/obj/structure/catwalk,/turf/simulated/floor/plating,/area/abandoned_hotel/solar)
+"Dv" = (/obj/item/storage/firstaid/o2,/turf/space,/area/space)
+"DY" = (/obj/structure/bed/chair/comfy/brown{dir = 8},/turf/simulated/floor/tiled/techfloor,/area/acting/backstage)
+"Ec" = (/obj/machinery/mineral/processing_unit,/turf/simulated/floor/tiled/techfloor,/area/assembly/chargebay)
+"En" = (/obj/structure/cable/green{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/obj/structure/catwalk,/obj/item/device/radio/intercom{pixel_y = 26},/turf/simulated/floor/plating,/area/bridge)
+"EA" = (/obj/wallframe_spawn/reinforced/hull,/turf/simulated/floor/plating,/area/abandoned_hotel)
+"EB" = (/obj/machinery/door/airlock/external,/turf/simulated/floor/tiled/techfloor/grid,/area/bridge/adjutants)
+"EK" = (/obj/machinery/atmospherics/unary/vent_pump/on{dir = 2},/turf/simulated/floor/tiled/techfloor,/area/abandoned_hotel/buffet)
+"EM" = (/obj/structure/cable/yellow{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/structure/cable/yellow{d1 = 1; d2 = 8; icon_state = "1-8"},/obj/structure/catwalk,/turf/simulated/floor/plating,/area/abandoned_hotel/solar)
+"EX" = (/obj/machinery/firealarm{dir = 4; pixel_x = 24},/obj/machinery/firealarm{dir = 1; pixel_y = -24},/obj/machinery/firealarm{dir = 8; pixel_x = -24},/obj/machinery/firealarm{pixel_y = 20},/turf/space,/area/space)
+"Fe" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/machinery/door/window/brigdoor/northleft{dir = 4},/turf/simulated/floor/tiled/techfloor,/area/abandoned_hotel/solar)
+"Fg" = (/obj/structure/bed/sofa/r/black{dir = 4},/turf/simulated/floor/tiled/dark,/area/abandoned_hotel/evac)
+"Fh" = (/obj/structure/hygiene/toilet{dir = 4},/obj/item/taperoll/bog{pixel_x = 7; pixel_y = -10},/turf/simulated/floor/tiled/freezer,/area/abandoned_hotel/rooms)
+"Fu" = (/obj/machinery/atmospherics/portables_connector{dir = 1},/obj/structure/window/reinforced,/turf/simulated/floor/tiled/techfloor,/area/abandoned_hotel/solar)
+"Fv" = (/obj/machinery/atmospherics/unary/vent_pump/on{dir = 1},/turf/simulated/floor/tiled/freezer,/area/abandoned_hotel/rooms)
+"FF" = (/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 5},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/structure/catwalk,/turf/simulated/floor/plating,/area/abandoned_hotel/solar)
+"FS" = (/obj/structure/cable/green{d1 = 2; d2 = 4; icon_state = "2-4"},/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/turf/simulated/floor/tiled/techfloor,/area/acting/stage)
+"FV" = (/obj/structure/plasticflaps/airtight,/turf/simulated/floor/plating,/area/assembly)
+"Gc" = (/obj/machinery/door/airlock/hatch,/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/turf/simulated/floor/tiled/techfloor/grid,/area/acting/stage)
+"Gn" = (/obj/item/storage/toolbox/mechanical,/turf/space,/area/space)
+"Go" = (/turf/simulated/floor/tiled/techfloor/grid,/area/abandoned_hotel/buffet)
+"Gu" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 9},/obj/structure/catwalk,/turf/simulated/floor/plating,/area/assembly/chargebay)
+"GW" = (/obj/machinery/appliance/cooker/microwave{pixel_y = 27; density = 0},/turf/simulated/floor/tiled/techfloor,/area/acting/backstage)
+"Ho" = (/obj/structure/cable/green{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/machinery/atmospherics/pipe/manifold/hidden/supply{dir = 1},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/obj/structure/catwalk,/turf/simulated/floor/plating,/area/bridge)
+"Hp" = (/obj/machinery/mineral/unloading_machine,/turf/simulated/floor/tiled/techfloor,/area/assembly/chargebay)
+"Hw" = (/obj/structure/bed/chair/comfy/brown{dir = 1},/turf/simulated/floor/tiled/techfloor,/area/acting/backstage)
+"Hy" = (/obj/structure/catwalk,/obj/structure/cable/yellow{d1 = 1; d2 = 4; icon_state = "1-4"},/turf/simulated/floor/plating,/area/space)
+"HF" = (/obj/structure/window/reinforced{dir = 4},/obj/structure/hygiene/urinal{pixel_y = 28},/turf/simulated/floor/tiled/freezer,/area/abandoned_hotel/rooms)
+"HI" = (/obj/structure/catwalk,/turf/space,/area/space)
+"HR" = (/obj/structure/bed/chair/comfy/brown,/turf/simulated/floor/tiled/techfloor,/area/acting/backstage)
+"HW" = (/obj/structure/cable/yellow{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/structure/cable/yellow{d1 = 1; d2 = 8; icon_state = "1-8"},/obj/structure/cable/yellow{d1 = 2; d2 = 8; icon_state = "2-8"},/turf/simulated/floor/plating,/area/space)
+"HY" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/structure/catwalk,/turf/simulated/floor/plating,/area/acting/backstage)
+"In" = (/obj/machinery/atmospherics/unary/vent_pump/on{dir = 1},/turf/simulated/floor/tiled/techfloor,/area/beach)
+"Iz" = (/obj/machinery/cryopod{dir = 2; pixel_y = 4},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 6},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/turf/simulated/floor/tiled/freezer,/area/abandoned_hotel/rooms)
+"IG" = (/obj/machinery/door/airlock/hatch,/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/turf/simulated/floor/tiled/monotile,/area/abandoned_hotel/atmos)
+"IK" = (/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/structure/catwalk,/turf/simulated/floor/plating,/area/assembly/robotics)
+"Jp" = (/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 5},/obj/structure/catwalk,/turf/simulated/floor/plating,/area/abandoned_hotel/solar)
+"Js" = (/obj/structure/bedsheetbin,/turf/simulated/floor/tiled/techfloor,/area/abandoned_hotel/reception)
+"Ju" = (/obj/machinery/mining/brace,/turf/simulated/floor/tiled/techfloor,/area/space)
+"JA" = (/obj/structure/table/rack,/turf/space,/area/space)
+"JS" = (/obj/structure/cable/green{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{dir = 1},/obj/structure/catwalk,/turf/simulated/floor/plating,/area/beach)
+"Ka" = (/turf/simulated/wall/r_wall/prepainted,/area/beach)
+"Kb" = (/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/atmospherics/pipe/manifold/hidden/supply{dir = 8},/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{dir = 4},/obj/structure/catwalk,/turf/simulated/floor/plating,/area/assembly/robotics)
+"Ke" = (/turf/simulated/wall/prepainted,/area/acting/stage)
+"Kg" = (/obj/structure/fuel_port,/turf/simulated/floor/tiled/techfloor,/area/space)
+"Kh" = (/obj/structure/reagent_dispensers/water_cooler{density = 0; pixel_x = 12; dir = 8},/turf/simulated/floor/tiled/techfloor,/area/acting/backstage)
+"Ki" = (/obj/structure/cable/green{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,/obj/structure/catwalk,/turf/simulated/floor/plating,/area/bridge)
+"Ks" = (/obj/machinery/atmospherics/portables_connector{dir = 1},/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 4},/turf/simulated/floor/tiled/techfloor,/area/abandoned_hotel/solar)
+"Ky" = (/obj/machinery/hologram/holopad/longrange,/turf/space,/area/space)
+"KB" = (/obj/machinery/fabricator,/turf/simulated/floor/tiled/techfloor,/area/acting/stage)
+"KC" = (/obj/structure/cable/green{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/obj/structure/catwalk,/obj/item/device/radio/intercom{pixel_y = 26},/turf/simulated/floor/plating,/area/beach)
+"KN" = (/obj/structure/cable/green{d1 = 1; d2 = 8; icon_state = "1-8"},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 9},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 9},/obj/structure/catwalk,/turf/simulated/floor/plating,/area/assembly/robotics)
+"KO" = (/turf/simulated/wall/prepainted,/area/acting)
+"KR" = (/obj/machinery/power/apc{dir = 2; req_access = list()},/turf/space,/area/space)
+"KZ" = (/obj/machinery/atmospherics/binary/pump{dir = 1},/turf/simulated/floor/tiled/techfloor,/area/abandoned_hotel/solar)
+"Ld" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 9},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/structure/catwalk,/turf/simulated/floor/plating,/area/assembly/chargebay)
+"Le" = (/obj/wallframe_spawn/reinforced/hull,/turf/simulated/floor/plating,/area/abandoned_hotel/buffet)
+"Li" = (/obj/machinery/media/music_writer{pixel_y = 28},/turf/simulated/floor/tiled/techfloor,/area/acting/backstage)
+"Ln" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 5},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/turf/simulated/floor/plating,/area/acting)
+"Lw" = (/turf/simulated/floor/plating,/area/bridge/adjutants)
+"LS" = (/obj/machinery/mech_recharger,/turf/simulated/floor/tiled/techfloor,/area/assembly/chargebay)
+"LX" = (/obj/machinery/door/airlock/hatch,/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/turf/simulated/floor/tiled/techfloor/grid,/area/assembly)
+"LZ" = (/obj/machinery/floodlight,/turf/simulated/floor/tiled/techfloor,/area/space)
+"Mc" = (/obj/structure/cable/green{d1 = 1; d2 = 4; icon_state = "1-4"},/obj/structure/cable/green{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/machinery/atmospherics/pipe/manifold/hidden/supply,/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,/obj/structure/catwalk,/turf/simulated/floor/plating,/area/abandoned_hotel/buffet)
+"Mi" = (/turf/simulated/floor/plating,/area/assembly)
+"Mj" = (/obj/wallframe_spawn/reinforced/hull,/turf/simulated/floor/plating,/area/assembly/robotics)
+"Ml" = (/obj/structure/cable/green{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/obj/structure/catwalk,/turf/simulated/floor/plating,/area/assembly/robotics)
+"MH" = (/obj/structure/extinguisher_cabinet{pixel_y = -24; dir = 1},/obj/structure/extinguisher_cabinet{pixel_y = -24; dir = 1; pixel_x = 8},/obj/structure/extinguisher_cabinet{pixel_y = -24; dir = 1; pixel_x = -8},/obj/machinery/atmospherics/unary/vent_pump/on{dir = 4},/turf/simulated/floor/tiled/techfloor,/area/abandoned_hotel/reception)
+"MN" = (/obj/machinery/door/airlock/hatch,/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/turf/simulated/floor/tiled/techfloor/grid,/area/acting)
+"MT" = (/obj/structure/bed/chair/comfy/brown{dir = 8},/obj/structure/filingcabinet/wallcabinet{pixel_y = 28; pixel_x = 10},/obj/structure/filingcabinet/wallcabinet{pixel_y = 28; pixel_x = -10},/obj/structure/filingcabinet/wallcabinet{pixel_y = 28},/turf/simulated/floor/tiled/dark,/area/abandoned_hotel/evac)
+"MV" = (/obj/machinery/atmospherics/unary/vent_pump/on{dir = 4},/turf/simulated/floor/tiled/white,/area/abandoned_hotel/kitchen)
+"MW" = (/obj/structure/extinguisher_cabinet{pixel_y = 28},/obj/structure/cable/green{d1 = 2; d2 = 4; icon_state = "2-4"},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 6},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 6},/obj/structure/catwalk,/turf/simulated/floor/plating,/area/bridge)
+"Nc" = (/turf/simulated/floor/tiled/techfloor,/area/bridge/adjutants)
+"NJ" = (/obj/structure/bed/chair/comfy/brown{dir = 1},/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/structure/catwalk,/turf/simulated/floor/plating,/area/acting/backstage)
+"Om" = (/turf/simulated/wall/prepainted,/area/abandoned_hotel/kitchen)
+"Op" = (/turf/simulated/wall/r_wall/prepainted,/area/assembly/chargebay)
+"Ou" = (/obj/structure/table/standard,/turf/space,/area/space)
+"Oy" = (/obj/machinery/bodyscanner,/turf/simulated/floor/tiled/white,/area/abandoned_hotel/kitchen)
+"OM" = (/obj/machinery/computer{dir = 2},/obj/machinery/atmospherics/unary/vent_pump/on{dir = 8},/turf/simulated/floor/tiled/dark,/area/abandoned_hotel/evac)
+"OO" = (/obj/floor_decal/industrial/outline/yellow,/obj/structure/reagent_dispensers/fueltank,/turf/simulated/floor/tiled/techfloor,/area/assembly)
+"OP" = (/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/turf/simulated/floor/tiled/techfloor/grid,/area/abandoned_hotel/buffet)
+"OS" = (/obj/wallframe_spawn/reinforced/hull,/turf/simulated/floor/plating,/area/space)
+"OU" = (/obj/machinery/door/airlock/external,/turf/simulated/floor/plating,/area/bridge/adjutants)
+"Pe" = (/turf/simulated/wall/r_wall/prepainted,/area/abandoned_hotel/buffet)
+"Py" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/door/airlock/multi_tile,/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/turf/simulated/floor/tiled/techfloor/grid,/area/abandoned_hotel/solar)
+"Pz" = (/obj/structure/cable/yellow{d1 = 1; d2 = 8; icon_state = "1-8"},/obj/structure/cable/yellow{d1 = 2; d2 = 8; icon_state = "2-8"},/turf/simulated/floor/plating,/area/space)
+"PC" = (/obj/machinery/door/airlock/hatch,/turf/simulated/floor/tiled/freezer,/area/abandoned_hotel/rooms)
+"PI" = (/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/structure/catwalk,/turf/simulated/floor/plating,/area/abandoned_hotel/buffet)
+"PM" = (/turf/simulated/wall/r_wall/prepainted,/area/bridge)
+"Qu" = (/obj/machinery/power/apc{dir = 4; req_access = list()},/obj/structure/cable/green{d2 = 8; icon_state = "0-8"},/obj/machinery/atmospherics/unary/vent_scrubber/on{dir = 8},/turf/simulated/floor/tiled,/area/abandoned_hotel/atmos)
+"Qv" = (/obj/structure/bed/padded,/obj/structure/bed/padded{pixel_y = 12},/turf/simulated/floor/tiled,/area/abandoned_hotel/atmos)
+"Qy" = (/obj/structure/cable/yellow{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/structure/catwalk,/turf/simulated/floor/plating,/area/abandoned_hotel/solar)
+"QD" = (/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/turf/simulated/floor/plating,/area/acting)
+"QP" = (/obj/structure/table/reinforced,/obj/machinery/recharger,/turf/simulated/floor/tiled/techfloor,/area/acting/stage)
+"QU" = (/obj/machinery/atmospherics/unary/tank/oxygen,/turf/simulated/floor/tiled/techfloor,/area/abandoned_hotel/solar)
+"QY" = (/obj/structure/railing{dir = 4},/turf/simulated/floor/tiled/dark,/area/abandoned_hotel/evac)
+"RC" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/structure/catwalk,/turf/simulated/floor/plating,/area/bridge/adjutants)
+"RE" = (/obj/structure/cable/green{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{dir = 1},/obj/structure/catwalk,/turf/simulated/floor/plating,/area/bridge)
+"RK" = (/obj/machinery/photocopier,/turf/simulated/floor/tiled/dark,/area/abandoned_hotel/evac)
+"RT" = (/obj/machinery/power/smes,/obj/structure/cable/green{d2 = 8; icon_state = "0-8"},/obj/structure/catwalk,/turf/simulated/floor/plating,/area/abandoned_hotel/solar)
+"RU" = (/obj/machinery/atmospherics/unary/vent_scrubber/on{dir = 1},/turf/simulated/floor/tiled/freezer,/area/abandoned_hotel/rooms)
+"RY" = (/obj/machinery/power/apc{dir = 2; req_access = list()},/obj/structure/cable/green{d2 = 8; icon_state = "0-8"},/turf/simulated/floor/tiled/techfloor,/area/acting/stage)
+"Sc" = (/obj/machinery/alarm{dir = 1; pixel_y = -22},/obj/machinery/atmospherics/unary/vent_scrubber/on{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/turf/simulated/floor/tiled/techfloor,/area/abandoned_hotel/reception)
+"Sv" = (/obj/structure/cable/green{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/machinery/atmospherics/pipe/manifold/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/obj/structure/catwalk,/turf/simulated/floor/plating,/area/bridge)
+"Sw" = (/turf/simulated/floor/tiled/white,/area/abandoned_hotel/kitchen)
+"SD" = (/obj/machinery/power/tracker,/obj/structure/cable/yellow{d2 = 8; icon_state = "0-8"},/turf/simulated/floor/plating,/area/space)
+"SJ" = (/obj/structure/hygiene/shower{dir = 1},/turf/simulated/floor/tiled/freezer,/area/abandoned_hotel/rooms)
+"SL" = (/obj/structure/extinguisher_cabinet{pixel_y = -24; dir = 1},/obj/structure/extinguisher_cabinet{pixel_x = 24; dir = 8},/obj/structure/extinguisher_cabinet{dir = 4; pixel_x = -24},/obj/structure/extinguisher_cabinet{pixel_y = 28},/turf/space,/area/space)
+"Tb" = (/obj/structure/extinguisher_cabinet{pixel_y = 28},/turf/simulated/floor/tiled/techfloor,/area/bridge)
+"Tf" = (/obj/machinery/alarm{dir = 4; pixel_x = -24; req_access = list(); locked = 0},/turf/simulated/floor/tiled/techfloor,/area/beach)
+"Tp" = (/obj/structure/table/standard,/obj/machinery/atmospherics/unary/vent_pump/on{dir = 8},/turf/simulated/floor/tiled/techfloor,/area/acting/backstage)
+"TA" = (/obj/structure/cable/green{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,/obj/structure/catwalk,/turf/simulated/floor/plating,/area/abandoned_hotel/buffet)
+"TV" = (/obj/machinery/alarm{dir = 1; pixel_y = -22},/obj/structure/cable/green{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/machinery/atmospherics/pipe/manifold/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/obj/structure/catwalk,/turf/simulated/floor/plating,/area/abandoned_hotel/buffet)
+"Uk" = (/obj/machinery/alarm{dir = 4; pixel_x = -24; req_access = list(); locked = 0},/turf/simulated/floor/tiled/techfloor,/area/assembly/chargebay)
+"Uu" = (/obj/floor_decal/industrial/outline/yellow,/turf/simulated/floor/tiled/techfloor,/area/assembly)
+"Uw" = (/turf/simulated/wall/r_wall/prepainted,/area/abandoned_hotel/rooms)
+"Uz" = (/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/atmospherics/pipe/manifold/hidden/supply{dir = 4},/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{dir = 4},/obj/structure/catwalk,/turf/simulated/floor/plating,/area/abandoned_hotel/solar)
+"UB" = (/obj/structure/cable/yellow{d1 = 1; d2 = 8; icon_state = "1-8"},/obj/structure/cable/yellow{d1 = 1; d2 = 4; icon_state = "1-4"},/obj/structure/cable/yellow{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/plating,/area/space)
+"UG" = (/turf/simulated/wall/r_wall/prepainted,/area/assembly)
+"US" = (/obj/structure/disposaloutlet,/turf/simulated/floor/plating,/area/assembly)
+"Vm" = (/obj/structure/cable/green{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/obj/structure/catwalk,/turf/simulated/floor/plating,/area/bridge)
+"VG" = (/obj/machinery/power/apc{dir = 4; req_access = list()},/obj/structure/cable/green{d2 = 8; icon_state = "0-8"},/turf/simulated/floor/tiled/dark,/area/abandoned_hotel/evac)
+"VX" = (/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/turf/simulated/floor/tiled/techfloor/grid,/area/beach)
+"Wk" = (/obj/structure/ore_box,/turf/simulated/floor/tiled/techfloor,/area/assembly/chargebay)
+"Wn" = (/obj/machinery/atmospherics/unary/vent_scrubber/on{dir = 8},/turf/simulated/floor/tiled/techfloor,/area/acting)
+"Wo" = (/obj/machinery/atmospherics/pipe/simple/visible/yellow{dir = 9},/turf/simulated/floor/tiled/techfloor,/area/abandoned_hotel/solar)
+"Wt" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 5},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 5},/obj/structure/catwalk,/turf/simulated/floor/plating,/area/assembly/robotics)
+"Ww" = (/turf/simulated/wall/prepainted,/area/abandoned_hotel/rooms)
+"Wy" = (/obj/machinery/alarm{dir = 1; pixel_y = -22},/obj/structure/cable/green{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/obj/structure/catwalk,/turf/simulated/floor/plating,/area/bridge/adjutants)
+"WE" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/structure/catwalk,/turf/simulated/floor/plating,/area/assembly/chargebay)
+"WH" = (/obj/machinery/power/apc{dir = 2; req_access = list()},/obj/structure/cable/green,/turf/simulated/floor/tiled/techfloor,/area/bridge)
+"WI" = (/obj/structure/handrail,/turf/simulated/floor/tiled/techfloor,/area/space)
+"WJ" = (/obj/structure/table/standard,/obj/machinery/atmospherics/unary/vent_scrubber/on{dir = 2},/turf/simulated/floor/tiled/techfloor,/area/acting/backstage)
+"WK" = (/obj/machinery/atmospherics/unary/vent_scrubber/on{dir = 8},/turf/simulated/floor/tiled/white,/area/abandoned_hotel/kitchen)
+"WT" = (/obj/structure/cable/yellow{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/atmospherics/unary/vent_pump/on{dir = 8},/obj/structure/catwalk,/turf/simulated/floor/plating,/area/abandoned_hotel/solar)
+"WX" = (/obj/machinery/power/solar_control{id = "auxsolarstarboard"; name = "Starboard Solar Control"; dir = 1},/obj/structure/cable/yellow,/obj/structure/catwalk,/turf/simulated/floor/plating,/area/abandoned_hotel/solar)
+"Xf" = (/obj/machinery/atmospherics/pipe/manifold/visible/yellow{dir = 1},/turf/simulated/floor/tiled/techfloor,/area/abandoned_hotel/solar)
+"Xl" = (/obj/machinery/portable_atmospherics/powered/pump/filled,/turf/space,/area/space)
+"Xr" = (/turf/simulated/wall/r_wall/prepainted,/area/abandoned_hotel/reception)
+"Xt" = (/obj/machinery/power/apc{dir = 8; req_access = list()},/obj/structure/cable/green{d2 = 4; icon_state = "0-4"},/turf/simulated/floor/tiled/techfloor,/area/assembly/chargebay)
+"Xu" = (/obj/structure/bed/padded,/turf/space,/area/space)
+"XE" = (/obj/structure/grille,/turf/space,/area/space)
+"XK" = (/turf/simulated/floor/tiled,/area/abandoned_hotel/atmos)
+"XL" = (/turf/simulated/wall/r_wall/prepainted,/area/bridge/adjutants)
+"XN" = (/obj/structure/hygiene/shower,/turf/simulated/floor/tiled/freezer,/area/abandoned_hotel/rooms)
+"XQ" = (/obj/machinery/portable_atmospherics/canister/air/airlock,/turf/simulated/floor/tiled/techfloor,/area/bridge/adjutants)
+"Ym" = (/obj/machinery/recharge_station,/turf/simulated/floor/tiled/techfloor,/area/beach)
+"Yn" = (/obj/machinery/door/airlock/hatch,/obj/structure/cable/green{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/turf/simulated/floor/tiled/freezer,/area/abandoned_hotel/rooms)
+"Yt" = (/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/structure/catwalk,/turf/simulated/floor/plating,/area/bridge)
+"Yw" = (/obj/structure/cable/green{d1 = 1; d2 = 4; icon_state = "1-4"},/obj/structure/cable/green{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/obj/structure/catwalk,/turf/simulated/floor/plating,/area/beach)
+"YE" = (/obj/structure/bed/padded,/obj/structure/bed/padded{pixel_y = 12},/turf/simulated/floor/tiled,/area/abandoned_hotel)
+"YI" = (/obj/item/reagent_containers/food/snacks/stew,/turf/space,/area/space)
+"YW" = (/obj/structure/cable/yellow{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/tiled/techfloor/grid,/area/abandoned_hotel/solar)
+"YZ" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 5},/turf/simulated/floor/plating,/area/acting)
+"Zc" = (/obj/machinery/body_scanconsole{dir = 8; pixel_x = -7; pixel_y = 9},/turf/simulated/floor/tiled/white,/area/abandoned_hotel/kitchen)
+"Ze" = (/obj/structure/reagent_dispensers/watertank,/turf/simulated/floor/tiled/techfloor,/area/abandoned_hotel/reception)
+"Zr" = (/obj/structure/cable/green{d1 = 2; d2 = 8; icon_state = "2-8"},/obj/structure/cable/green{d1 = 2; d2 = 4; icon_state = "2-4"},/obj/machinery/atmospherics/pipe/manifold/hidden/supply{dir = 1},/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{dir = 1},/obj/structure/catwalk,/turf/simulated/floor/plating,/area/beach)
+"Zt" = (/obj/machinery/atmospherics/pipe/simple/visible/yellow,/obj/machinery/atmospherics/pipe/simple/visible/yellow{dir = 4},/turf/simulated/floor/tiled/techfloor,/area/abandoned_hotel/solar)
+"Zu" = (/obj/wallframe_spawn/reinforced/hull,/turf/simulated/floor/plating,/area/bridge/adjutants)
+"Zv" = (/obj/structure/cable/green{d1 = 2; d2 = 4; icon_state = "2-4"},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 10},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 6},/turf/simulated/floor/tiled,/area/abandoned_hotel)
+"Zw" = (/obj/machinery/disposal/small{dir = 4},/turf/simulated/floor/tiled/white,/area/abandoned_hotel/kitchen)
+"ZB" = (/obj/machinery/atmospherics/unary/engine,/turf/space,/area/space)
+"ZO" = (/obj/machinery/atmospherics/unary/tank/nitrogen,/obj/structure/window/reinforced,/turf/simulated/floor/tiled/techfloor,/area/abandoned_hotel/solar)
+"ZX" = (/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/structure/cable/green{d1 = 2; d2 = 8; icon_state = "2-8"},/obj/machinery/atmospherics/pipe/manifold/hidden/supply{dir = 4},/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{dir = 4},/obj/structure/catwalk,/turf/simulated/floor/plating,/area/bridge)
+
+(1,1,1) = {"
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQkwkwkwkwkwkwkwkwbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQkwkwkwkwkwkwkwkwkwkwbQkwbQbQbQbQbQbQkwbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQkwbQbQbQbQbQbQbQbQbQkwbQkwbQbQbQbQbQbQkwbQbQbQbQbQkwkwkwkwkwkwbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQkwbQbQbQbQbQbQbQbQbQkwbQkwbQbQKybQbQbQkwbQbQbQbQbQkwkwkwkwkwkwbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQkwbQbQbQbQbQbQbQbQbQkwbQkwbQbQbQbQbQbQkwbQbQbQbQbQkwkwkwkwkwkwbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQkwbQbQbQbQXubQbQbQbQkwbQkwbQbQbQbQbQbQkwbQbQbQbQbQkwkwkwkwkwkwbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQkwkwbQbQbQbQbQbQbQbQbQkwbQkwbQbQbQbQbQbQkwbQbQbQbQbQkwkwkwkwkwkwbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQXubQbQbQbQkwkwbQkwbQbQbQbQbQbQbQbQkwbQkwkwkwkwkwkwkwkwkwkwkwkwbQkwkwkwqjkwkwbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQlqbQbQbQbQkwbQbQkwbQbQbQbQbQbQbQbQkwbQbQbQbQbQbQbQbQkwbQbQbQkwbQkwkwkwkwkwkwbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQOubQbQbQbQkwbQbQkwbQbQbQbQbQbQbQbQkwkwkwkwkwkwkwkwbQkwbQbQbQkwbQkwkwkwkwkwkwbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQkwbQbQkwkwkwkwkwkwkwkwkwkwbQbQbQbQbQbQkwbQkwbQGnbQkwbQkwkwkwkwkwkwbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQKybQbQbQbQkwbQlqbQbQbQbQbQbQkwbQbQkwbQbQbQbQbQbQkwbQkwbQbQbQkwbQkwkwkwkwkwkwbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQGnbQbQbQbQkwbQbQbQbQbQbQbQbQkwbQbQkwbQbQOubQbQbQkwbQkwbQbQbQkwbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQJAbQbQbQbQkwbQbQbQbQbQbQbQbQkwbQbQkwbQbQbQbQbQbQkwbQkwkwkwkwkwkwkwkwkwkwkwkwbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQkwkwkwkwkwkwkwkwkwkwkwkwkwbQkwbQbQbQbQbQbQkwbQbQbQbQbQbQkwbQbQbQbQbQkwkwkwkwkwkwkwkwkwkwbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQAAbQbQkwbQbQbQbQkwbQbQbQbQbQbQkwbQkwbQbQbQbQbQbQkwbQbQbQbQbQbQkwbQbQbQAAbQkwbQbQbQbQbQbQbQbQkwbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQZBbQbQkwbQbQuZbQkwbQbQbQbQbQbQkwbQkwkwkwkwkwkwkwkwbQbQbQbQbQbQkwbQbQbQbQbQkwkwkwkwkwkwkwkwkwkwbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQkwbQbQbQbQkwbQbQbQDvbQbQkwbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQkwbQbQbQbQbQkwbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQuZbQbQkwbQbQbQbQkwbQbQbQbQbQbQkwbQkwkwkwkwkwkwkwkwkwkwkwkwkwkwkwkwkwkwkwkwkwbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQXlbQbQkwbQbQbQbQkwbQbQbQbQbQbQkwbQkwbQbQbQbQbQbQkwbQbQbQbQbQbQbQbQbQbQbQbQkwbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQDvbQbQkwbQbQkwkwkwkwkwkwkwkwkwkwbQkwbQbQbQbQbQbQkwbQbQbQbQbQbQbQbQbQbQbQbQkwbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQkwkwkwkwbQbQbQbQbQbQbQbQkwbQkwbQbQbQJAbQbQkwbQbQbQbQbQbQbQbQbQbQbQbQkwbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQtbbQbQbQbQbQkwbQbQbQbQbQbQbQbQkwbQkwbQbQbQbQbQbQkwbQbQbQbQbQbQbQbQbQbQbQbQkwbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQYIbQbQbQbQbQkwbQbQbQbQbQbQbQbQkwbQkwbQbQbQbQbQbQkwbQbQbQbQbQtbbQbQbQbQbQbQkwbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQkwbQbQbQbQbQbQbQbQkwbQkwbQbQbQbQbQbQkwbQbQbQbQbQbQbQbQbQbQbQbQkwbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQkwbQbQbQbQXlbQbQbQkwbQkwkwkwkwkwkwkwkwbQbQbQbQbQbQbQbQbQbQbQbQkwbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQkwbQbQbQbQbQbQbQbQkwbQbQkwbQbQbQbQbQkwbQbQbQbQbQbQbQbQbQbQbQbQkwbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQkwbQbQbQbQbQbQbQbQkwbQbQkwbQbQbQbQbQkwbQbQbQbQbQbQbQbQbQbQbQbQkwbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQkwbQbQbQbQbQbQbQbQkwbQbQkwbQbQbQbQbQkwbQbQbQbQbQbQbQbQbQbQbQbQkwbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQkwbQbQbQbQbQbQbQbQkwbQbQkwbQbQbQbQbQkwbQbQbQbQbQbQbQbQbQbQbQbQkwbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQkwkwkwkwkwkwkwkwkwkwbQbQkwbQbQYIbQbQkwkwkwkwkwkwkwkwkwkwkwkwkwkwbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQkwbQbQbQbQbQkwbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQkwbQbQbQbQbQkwbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQkwbQbQbQbQbQkwbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQuFbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQkwbQbQbQbQbQkwbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQigbQlubQDcbQSLbQbQpMbQbQEXbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQkwbQbQbQbQbQkwbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQKRbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQkwkwkwkwkwkwkwbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQXEXEXEXEXEXEXEXEXEXEXEXEXEXEXEXEXEXEXEXEXEXEXEbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQXEbQbQbQnVbQnVbQbQbQbQbQbQnVbQbQbQnVbQbQbQbQXEbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQXEbQHIHIalHIalHIHIHIHIHIHIalHIHIHIalHIHIHIbQXEbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQXEbQHIbQnVbQnVbQbQbQbQcScScScScScScScScSHIbQXEbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQXEbQHIihihEAihihbQbQbQcSSwSwSwSwskSwSwcSalnVXEbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQXEbQHIihYEtnYEihbQbQbQcSSwOyZcSwSwSwmgcSHIbQXEXEXEXEXEXEXEXEXEXEbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQXEbQHIihtntntnihLeLeLecSSwMViIsZsZWKmgcSHIbQbQbQbQbQbQbQbQbQbQXEbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQXEXEXEXEXEXEXEXEXEXEXEXEbQHIihfpZvCDovCGxehZOmZwSwfNlonPSwSwcSHIbQbQbQbQbQbQbQbQbQbQXEbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQXEbQbQbQbQbQbQnVbQnVbQbQbQHIihovgjovovsKeEnkOmOmOmBJOmOmOmOmcSHIbQbQbQbQbQbQbQbQbQbQXEbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQXEbQbQbQHIHIHIalHIalHIHIHIHIbQLeyxqZqZqZaKeEEKeEeEPIeVeEeEeEPeHIbQmUmUmUkwwZvBkwbQbQXEbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQXEbQbQbQHIXrXrXrXrXrXrXrbQbQvJCdIGCdCdeEyxqZTVepqZMcTAqZaKeEPeHIbQmUmUmUkwkwkwkwbQbQXEbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQXEbQbQbQHIXrgRZeZeZeJsXrKaKavJbYcoQuCdeEPIuXuXuXuXuXuXuXPIeEPeHIbQmUmUmUCPmUmUkwbQbQXEbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQXEnVnVnValXrAmAmAmAmmzXrdUYmCdXKXKXKCdzNOPuXFgQYjSMTtLuXxDGoPeHIbQmUWImUCPmUmUkwbQbQXEbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQXEbQbQbQHIXrAmMHvfScCjXrTfdUCdQvXKQvCddUvhuXxaQYRKxTcNuXIKvbuiHIbQmUKgmUOSmUmUOSbQbQXEbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQXEbQbQbQHIXrXrXrXrXruEXrhadUCdCdCdCdCddUvhzlxTjIjIjIxTzlIKvbMjHIbQmUmUmUkwOSOSkwbQbQXEbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQXEbQbQbQHIbQbQbQKadUnGvlYwyGyGZrKCyGJSyGsfoYQYfGesOMqQoYIKvbMjHIbQmUksmUmUmUmUmUbQbQXEbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQXEbQHIHIHIbQbQbQKadUdUIndUdUdUvhdUdUuPdUdUuXxTxTtAxTxTuXxovbMjHIbQmUJuCFLZqGmUmUbQbQXEbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQXEbQHIUwUwUwUwUwUwWwWwWwWwWwdUvhdUyJyJBvyJyJyJingVVGuXuXiNzcuiHIbQmUmUmUmUmUmUmUbQbQXEbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQXEnValUwXNXNXNXNWwHFbrIzhHYnyGrCyJyJzflrLiBnyJyJuouXuXgsKbsyuiHIbQmUmUmUmUmUmUmUbQbQXEbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQXEbQHIUwhQhQvdhQPChQRUFvyoWwdUvhyJGWlrHRHRlrgbyJhnkHvbvbIKvbuiHIbQbQbQbQbQbQbQbQbQbQXEbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQXEnValUwSJSJSJSJWwshhQdVdVWwdUvhyJojuUWJibDYemyJWtjWMlMlKNvbuiHIHIHIHIHIHIHIbQbQbQbQXEbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQXEbQHIUwUwUwWwWwWwhQWwWwWwWwdUvhBvlruUlGTpDYmKglaznYKeKeKeKerlrlrlOUOUOUXLHIbQbQbQbQXEbQbQbQbybQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQXEbQHIbQbQUwFhhQPChQPChQajWwdUvhyJlrlrNJHwlrKhyJvbIKKeKByScasFQPrlLwLwLwXLHIHIHIHIbQXEbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQXEbQHIbQbQUwUwUwUwUwUwWwWwWwcPVXyJyJlrHYAxlryJyJwEpYKekFefqHmBkFrlLwLwLwXLZuZuXLHIbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQXEbQHIHIHIHIHIHIbQbQPMgdgdMWVmaXmwyJyJfgyJyJyJgdgdYtKegxFSRYvNwgrlOUOUOUXLNcNcXLHIHIHIHIHIHIbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQXEbQbQbQbQbQbQHIbQbQPMgdgdYttvaBmiHoEnjpVmREVmdWVmZXKeKeGcKeKeKerlNcNcNchjfFNcXLXLXLZuZuZuXLXLXLbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQXEXEXEXEXEXEbQHItEtEtEtEtEPyYWtEsWsdgdYtgdeZgdiUgdYtgdxgYtehTbgdeaNcNcNcRCNcNcEBNcNcNcNcNcNcNcEBbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQXEbQHItEoSreBNitUzQytEsWKOKOMNKOKOgdWHeByXVmKisXSvVmVmzbkBBOWygXqcNcXLXLXLZuZuZuXLXLXLbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQXEbQHItEoSKZoSFevMAStEwUKOaVQDxCKOgdiSiSiSiSiSLXiSiSiSXLNcjxmGbkmGmGOpHIHIHIHIHIHIbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQXEnValtEubxtubtZiCiWtEsMKOaVyReNKOPMiSuuuuuusrhfctuuuuXLXQjxXtzafOLSOpHIbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQXEbQHItEoSsQArzEFFWTtEwUKOaVLnfdKObQiSAfAfAfAfvtAfAffRXLjxjxUkWEfOLSOpHIbQXEbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQXEbQHItEQUceZthmdXQytEBxpDaVzYxZpDbQiSOOUuAfAfwTbNuuuuOpHpfOblLdfOLSOpHIbQXEbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQXEbQHItEQUWobEhmdXsetEBxpDaVYZWnpDbQUGUSAfAfAfAfAfAfAfOpfOfOfOyifOWkOpHIbQXEbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQXEbQHItEoTXfaJhmJphbtEBxpDaVxZxZpDbQUGFVAfAfAfUuUuUuUuOpEcfOgqGufOWkOpalnVXEbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQXEbQHItEZOAcFuKslgQytEBxpDaVxZxZpDbQUGMiAfAfAfwkwkwkwkOpWkWkfOfOfOWkOpHIbQXEbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQXEbQHItEoSoSoSoSlgQytEBxpDpDpDpDpDbQUGUGUGUGUGUGUGUGUGOpWkWkfOfOfOWkOpHIbQXEbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQXEnValtEoSoSoScUpaQytEBxbQbQbQnVbQbQHIHIHIHIalHIHIHIbQOpWkWkfOfOfOWkOpalnVXEbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQXEbQHItEoSoSoSlgDiEMtEBxHIHIHIalHIHIHIbQbQbQnVbQbQHIbQOpWkWkfOfOfOWkOpHIbQXEbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQXEbQHItEoSoSoSzhRTWXtEBxbQbQbQnVbQbQbQbQbQbQnVbQbQHIbQOpWkWkfOfOfOWkOpHIbQXEbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQXEbQHItEtEtEtEtEtEtEtEBxbQXEXEoZXEXEXEXEXEXEoZXEXEHIbQOpOpOpOpOpOpOpOpHIbQXEbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQXEbQHIbQbQnVbQbQnVbQbQBxbQXEbQnVbQbQbQbQbQbQnVbQXEHIHIHIalHIHIHIHIalHIHIbQXEbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQXEbQHIHIHIalHIHIalHIHIHyBbBbBbmCHIHIHIHIHIHIalHIHIHIbQbQnVbQbQbQbQnVbQbQbQXEbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQXEXEXEXEXEXEXEXEXEXEXEXEXEXEbQkLxiSDbQbQbQbQalbQXEXEXEXEXEXEXEXEXEXEXEXEXEXEbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQXEbQbQbQbQbQbQbQbQbQbQbQbQbQBxbQbQbQbQbQbQalbQbQbQbQbQbQbQbQbQbQbQbQbQXEbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQXEbQfXfXfXfXfXfXfXfXfXfXfXfXhccXcXcXcXcXcXhMcXcXcXcXcXcXcXcXcXcXcXcXbQXEbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQXEbQhJvZvZvZvZvZvZvZvZvZvZvZUBHWHWHWHWHWHWxiHWHWHWHWHWHWHWHWHWHWHWPzbQXEbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQXEbQbhbhbhbhbhbhbhbhbhbhbhbhhccXcXcXcXcXcXhMcXcXcXcXcXcXcXcXcXcXcXcXbQXEbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQXEbQbQbQbQbQbQbQbQbQbQbQbQbQhcbQbQbQbQbQbQhMbQbQbQbQbQbQbQbQbQbQbQbQbQXEbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQXEbQfXfXfXfXfXfXfXfXfXfXfXfXhccXcXcXcXcXcXhMcXcXcXcXcXcXcXcXcXcXcXcXbQXEbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQXEbQhJvZvZvZvZvZvZvZvZvZvZvZyyHWHWHWHWHWHWxiHWHWHWHWHWHWHWHWHWHWHWPzbQXEbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQXEbQbhbhbhbhbhbhbhbhbhbhbhbhbQcXcXcXcXcXcXhMcXcXcXcXcXcXcXcXcXcXcXcXbQXEbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQXEbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQXEbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQXEXEXEXEXEXEXEXEXEXEXEXEXEXEXEXEXEXEXEXEXEXEXEXEXEXEXEXEXEXEXEXEXEXEXEXEbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+bQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQ
+"}
