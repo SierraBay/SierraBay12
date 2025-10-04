@@ -1,16 +1,107 @@
+/datum/map_template/ruin/exoplanet/statues
+	name = "statues site"
+	id = "statues"
+	description = ""
+	prefix = "mods/chich_overmap_content/maps/insidiae/"
+	suffixes = list("statues_site.dmm")
+	spawn_cost = 0.5
+	template_flags = TEMPLATE_FLAG_CLEAR_CONTENTS | TEMPLATE_FLAG_NO_RUINS
+	ruin_tags = RUIN_HUMAN
+
+/obj/landmark/map_load_mark/statues
+	name = "random statues site"
+	templates = list(/datum/map_template/statues/pit, /datum/map_template/statues/anomaly, /datum/map_template/statues/fountain, /datum/map_template/statues/monolith)
+
+/datum/map_template/statues/pit
+	name = "random statues site #1 (pit)"
+	id = "statues_1"
+	mappaths = list("mods/chich_overmap_content/maps/insidiae/statues1.dmm")
+
+/datum/map_template/statues/anomaly
+	name = "random statues site #2 (anomaly)"
+	id = "statues_2"
+	mappaths = list("mods/chich_overmap_content/maps/insidiae/statues2.dmm")
+
+/datum/map_template/statues/fountain
+	name = "random statues site #3 (fountain)"
+	id = "statues_3"
+	mappaths = list("mods/chich_overmap_content/maps/insidiae/statues3.dmm")
+
+/datum/map_template/statues/monolith
+	name = "random statues site #4 (monolith)"
+	id = "statues_4"
+	mappaths = list("mods/chich_overmap_content/maps/insidiae/statues4.dmm")
+
+
+
+
+
+
+
 /obj/structure/human_statue
 	name = "statue"
 	desc = "Suspiciously realistic, as if alive, the statue is made of a rough, colorless material resembling concrete. Pieces of decayed clothing cling to the dirt covering its surface. "
 	icon = 'mods/chich_overmap_content/icons/insidiae/statues.dmi'
-	icon_state = "statue1"
+	icon_state = "statue"
+	var/standing_icon = "statue"
 	layer = BASE_HUMAN_LAYER
 	density = TRUE
 	anchored = FALSE
+	var/is_standing = TRUE
 
+
+/obj/structure/human_statue/Move()
+	. = ..()
+
+	if(!is_standing)
+		return
+
+	is_standing = FALSE
+	icon_state = "[standing_icon]_f"
+	src.visible_message(SPAN_WARNING("\The [src] loses its balance and falls!"))
+	name = "fallen statue"
+
+	var/sound = pick(list(
+		'sound/effects/footstep/asteroid1.ogg',
+		'sound/effects/footstep/asteroid2.ogg',
+		'sound/effects/footstep/asteroid3.ogg',
+		'sound/effects/footstep/asteroid4.ogg',
+		'sound/effects/footstep/asteroid5.ogg',
+		))
+	playsound(src, sound, 70)
+
+
+/obj/structure/human_statue/attack_hand(mob/user)
+	if(!istype(user))
+		return FALSE
+
+	if(is_standing)
+		return FALSE
+
+	if(user.stat || user.restrained() || !Adjacent(user))
+		return FALSE
+
+	src.visible_message(SPAN_NOTICE("\The [user] is trying to put \the [src] in an upright position, as it should stand."))
+	if(do_after(user, 3 SECONDS, src, DO_DEFAULT | DO_TARGET_UNIQUE_ACT | DO_PUBLIC_PROGRESS))
+		is_standing = TRUE
+		icon_state = standing_icon
+		name = "statue"
+
+		var/sound = pick(list(
+			'sound/effects/footstep/floor1.ogg',
+			'sound/effects/footstep/floor2.ogg',
+			'sound/effects/footstep/floor3.ogg',
+			'sound/effects/footstep/floor4.ogg',
+			'sound/effects/footstep/floor5.ogg',
+			))
+		playsound(src, sound, 70)
+
+	return ..()
 
 
 /obj/structure/human_statue/fullsuit
 	icon_state = "fullsuit"
+	standing_icon = "fullsuit"
 
 /obj/structure/human_statue/fullsuit/Initialize()
 	. = ..()
@@ -23,6 +114,7 @@
 
 /obj/structure/human_statue/suit
 	icon_state = "suit"
+	standing_icon = "suit"
 
 /obj/structure/human_statue/suit/Initialize()
 	. = ..()
@@ -37,6 +129,7 @@
 
 /obj/structure/human_statue/male
 	icon_state = "male"
+	standing_icon = "male"
 
 /obj/structure/human_statue/male/Initialize()
 	. = ..()
@@ -50,6 +143,7 @@
 
 /obj/structure/human_statue/female
 	icon_state = "female"
+	standing_icon = "female"
 
 /obj/structure/human_statue/female/Initialize()
 	. = ..()
@@ -63,6 +157,7 @@
 
 /obj/structure/human_statue/spaceadapt
 	icon_state = "spaceadapt"
+	standing_icon = "spaceadapt"
 
 /obj/structure/human_statue/spaceadapt/Initialize()
 	. = ..()
@@ -75,6 +170,7 @@
 
 /obj/structure/human_statue/skrell
 	icon_state = "skrell"
+	standing_icon = "skrell"
 
 /obj/structure/human_statue/skrell/Initialize()
 	. = ..()
@@ -84,3 +180,21 @@
 		"It holds both hands cupped at chest height, fingers curved gently as if cradling something fragile. The face hangs slack, jaw loose, gaze unfocused. A shallow hollow is carved into the palms as part of the statue.",
 		"It twists at the torso, head turned over the left shoulder, mouth stretched wide in a silent scream, eyes glazed. The right hand is clenched tight, tendons strained. A scorched implement continues seamlessly from the forearm.",
 	)
+
+
+/obj/random/human_statue
+	name = "random statue"
+	desc = "This is random statue."
+	icon = 'mods/chich_overmap_content/icons/insidiae/statues.dmi'
+	icon_state = "fullsuit"
+	spawn_nothing_percentage = 40
+
+/obj/random/human_statue/spawn_choices()
+	return list(
+		/obj/structure/human_statue/fullsuit = 5,
+		/obj/structure/human_statue/suit = 4,
+		/obj/structure/human_statue/male = 3,
+		/obj/structure/human_statue/female = 3,
+		/obj/structure/human_statue/spaceadapt = 2,
+		/obj/structure/human_statue/skrell = 1
+		)
