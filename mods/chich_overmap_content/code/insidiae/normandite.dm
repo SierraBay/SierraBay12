@@ -1,0 +1,383 @@
+/obj/submap_landmark/joinable_submap/normandite
+	name = "GTMS Normandite"
+	archetype = /singleton/submap_archetype/away_normandite
+
+/singleton/submap_archetype/away_normandite
+	descriptor = "mining station"
+	map = "Normandite"
+	crew_jobs = list(
+		/datum/job/submap/normandite,
+		/datum/job/submap/normandite/leader
+	)
+
+/obj/overmap/visitable/ship/normandite
+	name = "mining station"
+	desc = ""
+	color = COLOR_BROWN_ORANGE
+	vessel_mass = 23000
+	known_ships = list(/obj/overmap/visitable/ship/landable/utyug)
+	vessel_size = SHIP_SIZE_SMALL
+
+	initial_restricted_waypoints = list("Mule" = list("nav_normandite_merchant"), "Utyug" = list("nav_utyug_start"))
+
+	initial_generic_waypoints = list(
+		"nav_normandite_north",
+		"nav_normandite_east",
+		"nav_normandite_south",
+		"nav_normandite_west"
+	)
+
+
+/obj/overmap/visitable/ship/normandite/New()
+	name = "GTMS Normandite-[rand(3,19)]"
+	..()
+
+/datum/map_template/ruin/away_site/normandite
+	name = "Normandite"
+	id = "awaysite_normandite"
+	description = ""
+	prefix = "mods/chich_overmap_content/maps/insidiae/"
+	suffixes = list("normandite.dmm")
+	spawn_cost = 1
+	player_cost = 4
+	spawn_weight = 0.3
+	shuttles_to_initialise = list(/datum/shuttle/autodock/overmap/utyug)
+	apc_test_exempt_areas = list(
+		/area/normandite/exterior = NO_SCRUBBER|NO_VENT
+	)
+
+// utyug
+
+/obj/overmap/visitable/ship/landable/utyug
+	shuttle = "Utyug"
+	name = "Utyug"
+	desc = ""
+	max_speed = 1/(2 SECONDS)
+	burn_delay = 3 SECONDS
+	vessel_mass = 7000
+	fore_dir = NORTH
+	skill_needed = SKILL_BASIC
+	vessel_size = SHIP_SIZE_SMALL
+
+/datum/shuttle/autodock/overmap/utyug
+	name = "Utyug"
+	warmup_time = 10
+	current_location = "nav_utyug_start"
+	range = 1
+	shuttle_area = list(/area/normandite/utyug)
+	defer_initialisation = TRUE
+	flags = SHUTTLE_FLAGS_PROCESS
+	skill_needed = SKILL_BASIC
+	ceiling_type = /turf/simulated/floor/shuttle_ceiling
+	fuel_consumption = 5
+
+/obj/machinery/computer/shuttle_control/explore/utyug
+	name = "shuttle control console"
+	shuttle_tag = "Utyug"
+
+/obj/shuttle_landmark/utyug
+	name = "Utyug Dock"
+	landmark_tag = "nav_utyug_start"
+	base_area = /area/space
+	movable_flags = MOVABLE_FLAG_EFFECTMOVE
+
+// jobs
+
+/datum/job/submap/normandite
+	title = "GT Miner"
+	info = ""
+	total_positions = 3
+	spawn_positions = 3
+	supervisors = "Бригадиром"
+	selection_color = COLOR_DARK_ORANGE
+	ideal_character_age = 30
+	minimal_player_age = 0
+	create_record = FALSE
+	whitelisted_species = list(SPECIES_HUMAN, SPECIES_IPC, SPECIES_TRITONIAN, SPECIES_SPACER, SPECIES_VATGROWN, SPECIES_GRAVWORLDER)
+	outfit_type = /singleton/hierarchy/outfit/job/normandite
+	latejoin_at_spawnpoints = TRUE
+	access = list(
+		access_normandite
+	)
+	announced = FALSE
+	min_skill = list(
+		SKILL_EVA = SKILL_BASIC,
+		SKILL_HAULING = SKILL_BASIC,
+		SKILL_CONSTRUCTION = SKILL_BASIC
+	)
+	max_skill = list(
+		SKILL_BUREAUCRACY = SKILL_EXPERIENCED,
+		SKILL_FINANCE = SKILL_EXPERIENCED,
+		SKILL_EVA = SKILL_MAX,
+		SKILL_MECH = SKILL_MAX,
+		SKILL_PILOT = SKILL_EXPERIENCED,
+		SKILL_HAULING = SKILL_MAX,
+		SKILL_COMPUTER = SKILL_EXPERIENCED,
+		SKILL_BOTANY = SKILL_EXPERIENCED,
+		SKILL_COOKING = SKILL_EXPERIENCED,
+		SKILL_COMBAT = SKILL_TRAINED,
+		SKILL_WEAPONS = SKILL_EXPERIENCED,
+		SKILL_FORENSICS = SKILL_EXPERIENCED,
+		SKILL_CONSTRUCTION = SKILL_EXPERIENCED,
+		SKILL_ELECTRICAL = SKILL_EXPERIENCED,
+		SKILL_ATMOS = SKILL_EXPERIENCED,
+		SKILL_ENGINES = SKILL_EXPERIENCED,
+		SKILL_DEVICES = SKILL_EXPERIENCED,
+		SKILL_SCIENCE = SKILL_EXPERIENCED,
+		SKILL_MEDICAL = SKILL_TRAINED,
+		SKILL_ANATOMY = SKILL_TRAINED,
+		SKILL_CHEMISTRY = SKILL_TRAINED
+	)
+	economic_power = 2
+	skill_points = 20
+
+/datum/job/submap/normandite/leader
+	title = "GT Brigadir"
+	info = ""
+	total_positions = 1
+	spawn_positions = 1
+	supervisors = ""
+	ideal_character_age = 45
+
+// spawnpoint
+
+/obj/submap_landmark/spawnpoint/normandite
+	name = "GT Miner"
+
+/obj/submap_landmark/spawnpoint/normandite/leader
+	name = "GT Brigadir"
+
+// outfit
+
+/singleton/hierarchy/outfit/job/normandite
+	name = OUTFIT_JOB_NAME("Miner")
+	uniform = /obj/item/clothing/under/grayson
+	shoes = /obj/item/clothing/shoes/workboots
+	gloves = /obj/item/clothing/gloves/thick/duty
+	id_types = list(/obj/item/card/id/normandite)
+
+/obj/item/card/id/normandite
+	desc = "An identification card issued to Grayson Terra employees."
+	job_access_type = /datum/job/submap/normandite
+	color = COLOR_DARK_GREEN_GRAY
+	detail_color = COLOR_PALE_ORANGE
+
+var/global/const/access_normandite = "ACCESS_NORMANDITE"
+/datum/access/normandite
+	id = access_normandite
+	desc = "FTU Crewman"
+	region = ACCESS_REGION_NONE
+
+// nav points
+
+/obj/shuttle_landmark/nav_normandite/north
+	name = "Normandite North"
+	landmark_tag = "nav_normandite_north"
+
+/obj/shuttle_landmark/nav_normandite/east
+	name = "Normandite East"
+	landmark_tag = "nav_normandite_east"
+
+/obj/shuttle_landmark/nav_normandite/south
+	name = "Normandite South"
+	landmark_tag = "nav_normandite_south"
+
+/obj/shuttle_landmark/nav_normandite/west
+	name = "Normandite West"
+	landmark_tag = "nav_normandite_west"
+
+/obj/shuttle_landmark/nav_normandite/merchant
+	name = "Docking Bay"
+	landmark_tag = "nav_normandite_merchant"
+	docking_controller = "merchant_shuttle_normandite"
+
+// mechs
+
+/mob/living/exosuit/premade/normandite
+	name = "jerry-rigged exosuit"
+	desc = "An ancient, but well-liked cargo handling exosuit. The paint is starting to flake. Perhaps some maintenance is in order?"
+
+/mob/living/exosuit/premade/normandite/Initialize()
+	var/c = pick(COLOR_BROWN_ORANGE, COLOR_DARK_ORANGE, COLOR_YELLOW_GRAY, COLOR_PALE_YELLOW, COLOR_WARM_YELLOW, COLOR_RED_GRAY, COLOR_BROWN, COLOR_DARK_GREEN_GRAY, COLOR_BOTTLE_GREEN, COLOR_DARK_GUNMETAL, COLOR_ASTEROID_ROCK)
+
+	if(!head)
+		var/headtype = pick(/obj/item/mech_component/sensors/light/salvage, /obj/item/mech_component/sensors/powerloader)
+		head = new headtype(src)
+		head.color = c
+
+	if(!body)
+		var/bodytype = pick(/obj/item/mech_component/chassis/light, /obj/item/mech_component/chassis/pod, /obj/item/mech_component/chassis/powerloader)
+		body = new bodytype(src)
+		body.color = c
+
+	if(!R_arm)
+		var/rarmtype = pick(/obj/item/mech_component/manipulators/light, /obj/item/mech_component/manipulators/powerloader)
+		R_arm = new rarmtype(src)
+		R_arm.color = c
+		R_arm.side = RIGHT
+		R_arm.setup_side()
+	if(!L_arm)
+		var/larmtype = pick(/obj/item/mech_component/manipulators/light, /obj/item/mech_component/manipulators/powerloader)
+		L_arm = new larmtype(src)
+		L_arm.color = c
+		L_arm.side = LEFT
+		L_arm.setup_side()
+
+	var/legstype = pick(/obj/item/mech_component/propulsion/light, /obj/item/mech_component/propulsion/powerloader, /obj/item/mech_component/propulsion/spider, /obj/item/mech_component/propulsion/tracks)
+	if(!R_leg)
+		R_leg = new legstype(src)
+		R_leg.color = c
+		R_leg.side = RIGHT
+		R_leg.setup_side()
+	if(!L_leg)
+		L_leg = new legstype(src)
+		L_leg.color = c
+		L_leg.side = LEFT
+		L_leg.setup_side()
+	. = ..()
+
+/mob/living/exosuit/premade/normandite/spawn_mech_equipment()
+	install_system(new /obj/item/mech_equipment/light(src), HARDPOINT_HEAD)
+	install_system(new /obj/item/mech_equipment/clamp(src), HARDPOINT_LEFT_HAND)
+	switch(rand(1,2))
+		if(1)
+			install_system(new /obj/item/mech_equipment/mounted_system/taser/plasma(src), HARDPOINT_RIGHT_HAND)
+		if(2)
+			install_system(new /obj/item/mech_equipment/drill/steel(src), HARDPOINT_RIGHT_HAND)
+	var/r = rand(1,3)
+	if(r == 1)
+		install_system(new /obj/item/mech_equipment/ionjets(src), HARDPOINT_BACK)
+
+
+
+// /datum/map/sierra/send_welcome()
+
+// 	var/welcome_text = "<center><img src = ntlogo.png /><br /><font size = 3><b>NSV Sierra</b> Показания Сенсоров:</font><hr />"
+// 	welcome_text += "Отчет сгенерирован [stationdate2text()] в [stationtime2text()]</center><br /><br />"
+// 	welcome_text += "Текущая система: <b>[system_name]</b><br />"
+// 	welcome_text += "Следующая система для прыжка: <b>[generate_system_name()]</b><br />"
+// 	welcome_text += "Дней до Солнечной Системы: <b>[rand(15,45)]</b><br />"
+// 	welcome_text += "Дней с последнего визита в порт: <b>[rand(60,180)]</b><br />"
+// 	welcome_text += "Результаты сканирования показали следующие потенциальные объекты для исследования:<br />"
+
+// 	var/list/space_things = list()
+// 	var/obj/overmap/sierra = map_sectors["1"]
+// 	for(var/zlevel in map_sectors)
+// 		var/obj/overmap/visitable/O = map_sectors[zlevel]
+// 		if(O.name == sierra.name)
+// 			continue
+// 		if(istype(O, /obj/overmap/visitable/ship/landable)) //Don't show shuttles
+// 			continue
+// 		if(O.hide_from_reports)
+// 			continue
+// 		space_things |= O
+
+// 	var/list/distress_calls
+// 	for(var/obj/overmap/visitable/O in space_things)
+// 		var/location_desc = " на текущем квадрате."
+// 		if(O.loc != sierra.loc)
+// 			var/bearing = get_bearing(sierra, O) //fucking triangles how do they work
+// 			location_desc = ", по азимуту [bearing]."
+// 		welcome_text += "<li>\A <b>[O.name]</b>[location_desc]</li>"
+
+// 	if(LAZYLEN(distress_calls))
+// 		welcome_text += "<br><b>Обнаружены сигналы бедствия:</b><br>[jointext(distress_calls, "<br>")]<br>"
+// 	else
+// 		welcome_text += "<br>Сигналов бедствия не обнаружено.<br />"
+
+// 	welcome_text += "<hr>"
+
+// 	post_comm_message("NSV Sierra Sensor Readings", welcome_text)
+// 	minor_announcement.Announce(message = "Сканирование сектора завершено. Информация передана в базу данных консолей связи.")
+// 	sleep(2 SECONDS)
+// 	minor_announcement.Announce(message = "Текущая система: [system_name]. Приятной смены на борту [station_name].", new_sound = 'sound/misc/notice2.ogg')
+
+
+// areas
+
+/area/normandite
+	req_access = list(access_normandite)
+
+/area/normandite/exterior
+	name = "GTMS Normandite - Exterior"
+	icon_state = "away1"
+
+/area/normandite/center
+	name = "GTMS Normandite - Control Room"
+	icon_state = "bridge"
+
+/area/normandite/dining
+	name = "GTMS Normandite - Dining Room"
+
+/area/normandite/bathroom
+	name = "GTMS Normandite - Bathroom"
+	icon_state = "dk_yellow"
+
+/area/normandite/water
+	name = "GTMS Normandite - Water Storage"
+	icon_state = "purple"
+
+/area/normandite/cabin_a
+	name = "GTMS Normandite - Cabin A"
+	icon_state = "crew_quarters"
+
+/area/normandite/cabin_b
+	name = "GTMS Normandite - Cabin B"
+	icon_state = "crew_quarters"
+
+/area/normandite/medbay
+	name = "GTMS Normandite - Medbay"
+	icon_state = "medbay"
+
+/area/normandite/workshop
+	name = "GTMS Normandite - Workshop"
+	icon_state = "engineering_workshop"
+
+/area/normandite/storage
+	name = "GTMS Normandite - Storage"
+	icon_state = "primarystorage"
+
+/area/normandite/food_storage
+	name = "GTMS Normandite - Food Warehouse"
+	icon_state = "emergencystorage"
+
+/area/normandite/ore_storage
+	name = "GTMS Normandite - Ore Warehouse"
+	icon_state = "storage"
+
+/area/normandite/engineering
+	name = "GTMS Normandite - Engineering"
+	icon_state = "engine"
+
+/area/normandite/dock
+	name = "GTMS Normandite - Dock"
+	icon_state = "entry_1"
+
+/area/normandite/hallway_fore
+	name = "GTMS Normandite - HallWay"
+	icon_state = "hallC1"
+
+/area/normandite/hallway_aft
+	name = "GTMS Normandite - HallWay"
+	icon_state = "hallC1"
+
+/area/normandite/hallway_starboard
+	name = "GTMS Normandite - HallWay"
+	icon_state = "hallC1"
+
+/area/normandite/hallway_port
+	name = "GTMS Normandite - HallWay"
+	icon_state = "hallC1"
+
+/area/normandite/utyug
+	name = "Utyug"
+	icon_state = "shuttle"
+	area_flags = AREA_FLAG_RAD_SHIELDED
+
+// paint
+
+/obj/paint/normandite/a
+	color = COLOR_BRONZE
+
+/obj/paint/normandite/b
+	color = COLOR_DARK_BROWN

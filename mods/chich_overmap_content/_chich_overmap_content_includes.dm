@@ -3,7 +3,7 @@
 
 #include "_chich_overmap_content.dm"
 
-#include "code/insidiae/mining_station_away.dm"
+#include "code/insidiae/normandite.dm"
 
 #include "code/insidiae/black_box.dm"
 #include "code/insidiae/bottled_message.dm"
