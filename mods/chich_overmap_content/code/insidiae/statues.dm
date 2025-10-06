@@ -34,10 +34,6 @@
 
 
 
-
-
-
-
 /obj/structure/human_statue
 	name = "statue"
 	desc = "Suspiciously realistic, as if alive, the statue is made of a rough, colorless material resembling concrete. Pieces of decayed clothing cling to the dirt covering its surface. "
@@ -99,6 +95,7 @@
 	return ..()
 
 
+
 /obj/structure/human_statue/fullsuit
 	icon_state = "fullsuit"
 	standing_icon = "fullsuit"
@@ -125,7 +122,6 @@
 		"It stands with both arms crossed over the chest as if cradling something precious; the face is locked in rapt focus, eyes soft and unfocused, lips faintly upturned yet still. A wrapped specimen bundle is fused into the arms as a single mass.",
 		"It kneels on one knee, elbow braced against the raised leg, chin cupped in one hand; the gaze lifted upward, eyes wide and mouth set in a faint, uncertain smile. A pair of binoculars grows from the brow and hands, indistinguishable from the statue’s substance.",
 	)
-
 
 /obj/structure/human_statue/male
 	icon_state = "male"
@@ -180,6 +176,7 @@
 		"It holds both hands cupped at chest height, fingers curved gently as if cradling something fragile. The face hangs slack, jaw loose, gaze unfocused. A shallow hollow is carved into the palms as part of the statue.",
 		"It twists at the torso, head turned over the left shoulder, mouth stretched wide in a silent scream, eyes glazed. The right hand is clenched tight, tendons strained. A scorched implement continues seamlessly from the forearm.",
 	)
+
 
 
 /obj/random/human_statue
