@@ -388,6 +388,26 @@ var/global/const/access_pilot = "ACCESS_PILOT"
 	desc = "Pilot"
 	region = ACCESS_REGION_GENERAL
 
+// [SIERRA-ADD] - CREW_RECORDS_ACCESS
+var/global/const/access_employment_records = "ACCESS_EMPLOYMENT_RECORDS"
+/datum/access/employment_records
+	id = access_employment_records
+	desc = "Employment Records"
+	region = ACCESS_REGION_COMMAND
+
+var/global/const/access_medical_records = "ACCESS_MEDICAL_RECORDS"
+/datum/access/medical_records
+	id = access_medical_records
+	desc = "Medical Records"
+	region = ACCESS_REGION_MEDBAY
+
+var/global/const/access_security_records = "ACCESS_SECURITY_RECORDS"
+/datum/access/security_records
+	id = access_security_records
+	desc = "Security Records"
+	region = ACCESS_REGION_SECURITY
+// [/SIERRA-ADD]
+
 /******************
 * Central Command *
 ******************/
