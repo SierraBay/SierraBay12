@@ -3,7 +3,7 @@
 	archetype = /singleton/submap_archetype/away_normandite
 
 /singleton/submap_archetype/away_normandite
-	descriptor = "mining station"
+	descriptor = "Grayson Terra Mining station"
 	map = "Normandite"
 	crew_jobs = list(
 		/datum/job/submap/normandite,
@@ -12,13 +12,13 @@
 
 /obj/overmap/visitable/ship/normandite
 	name = "mining station"
-	desc = ""
+	desc = "A stationary space object with wide of 79.5 meters, length of 72 meters and high near 12.7 meters."
 	color = COLOR_BROWN_ORANGE
 	vessel_mass = 23000
 	known_ships = list(/obj/overmap/visitable/ship/landable/utyug)
 	vessel_size = SHIP_SIZE_SMALL
-
 	initial_restricted_waypoints = list("Mule" = list("nav_normandite_merchant"), "Utyug" = list("nav_utyug_start"))
+	contact_class = /decl/ship_contact_class/normandite
 
 	initial_generic_waypoints = list(
 		"nav_normandite_north",
@@ -27,9 +27,18 @@
 		"nav_normandite_west"
 	)
 
+/decl/ship_contact_class/normandite
+	class_short = "DLC"
+	class_long = "Dolomite-class small deep-space ore extraction facility"
+	max_ship_mass = 26000
 
 /obj/overmap/visitable/ship/normandite/New()
 	name = "GTMS Normandite-[rand(3,19)]"
+	scanner_desc = {"
+<B>Property of Grayson Manufactories:</B>\
+<I>Registration</I>: [name]\
+<I>Transponder</I>: Transmitting (IND), Grayson Terra\
+<B>Notice</B>: A space object with wide of 79.5 meters, length of 72 meters and high near 12.7 meters. A Self Indentification Signal classifices the target as Grayson Terra Mining Station, a property of Grayson Manufactories."}
 	..()
 
 /datum/map_template/ruin/away_site/normandite
@@ -50,14 +59,19 @@
 
 /obj/overmap/visitable/ship/landable/utyug
 	shuttle = "Utyug"
-	name = "Utyug"
-	desc = ""
+	name = "GTSS Utyug"
+	scanner_desc = {"
+<B>Property of Grayson Manufactories:</B>\
+<I>Registration</I>: GTSS Utyug\
+<I>Transponder</I>: Transmitting (IND), Grayson Terra\
+<B>Notice</B>: A Self Indentification Signal classifices the target as Grayson Terra Small Shuttle"}
 	max_speed = 1/(2 SECONDS)
 	burn_delay = 3 SECONDS
 	vessel_mass = 7000
 	fore_dir = NORTH
 	skill_needed = SKILL_BASIC
 	vessel_size = SHIP_SIZE_SMALL
+	contact_class = /decl/ship_contact_class/shuttle
 
 /datum/shuttle/autodock/overmap/utyug
 	name = "Utyug"
@@ -84,21 +98,25 @@
 // jobs
 
 /datum/job/submap/normandite
-	title = "GT Miner"
-	info = ""
+	title = "Normandite Miner"
+	info = "Вы шахтёр на мелкой добывающей станции в глубоком не осовенном космосе. \
+	Вы целыми днями копаетесь в астероидах для терранского подразделения Grayson Manufactories. \
+	Из-за нахватки рабочих рук и разбитой астероидом второй каюты вам приходиться работать за двоих, как бы трудно это не было. \
+	До прибытия баржи которая привезет следующую смену и заберет вас с рудой на большую землю осталось семь недель. \
+	Копайте руду, не разбейте Утюг, не спивайтесь, не делайте из нескольких экзокостюмов один большой, не ищите неизвестные науке формы жизни."
 	total_positions = 3
 	spawn_positions = 3
-	supervisors = "Бригадиром"
-	selection_color = COLOR_DARK_ORANGE
+	supervisors = "авторитетом Бригадира"
+	selection_color = "#47361d"
 	ideal_character_age = 30
 	minimal_player_age = 0
 	create_record = FALSE
 	whitelisted_species = list(SPECIES_HUMAN, SPECIES_IPC, SPECIES_TRITONIAN, SPECIES_SPACER, SPECIES_VATGROWN, SPECIES_GRAVWORLDER)
 	outfit_type = /singleton/hierarchy/outfit/job/normandite
 	latejoin_at_spawnpoints = TRUE
-	access = list(
-		access_normandite
-	)
+	required_language = list(LANGUAGE_HUMAN_RUSSIAN)
+	loadout_allowed = TRUE
+	access = list(access_normandite)
 	announced = FALSE
 	min_skill = list(
 		SKILL_EVA = SKILL_BASIC,
@@ -132,25 +150,31 @@
 	skill_points = 20
 
 /datum/job/submap/normandite/leader
-	title = "GT Brigadir"
-	info = ""
+	title = "Normandite Brigadir"
+	info = "Вы главный среди шахтёров на мелкой добывающей станции в глубоком не осовенном космосе. \
+	Вы целыми днями копаетесь в астероидах для терранского подразделения Grayson Manufactories. \
+	Из-за нахватки рабочих рук и разбитой астероидом второй каюты вам всем приходиться работать за двоих, как бы трудно это не было. \
+	До прибытия баржи которая привезет следующую смену и заберет вас с рудой на большую землю осталось семь недель. \
+	Следите что бы шахтёры копали руду, не разбили Утюг, не спивались, не делали из нескольких экзокостюмов один большой, не нашли неизвестные науке формы жизни."
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = ""
+	supervisors = "поставленным планом"
 	ideal_character_age = 45
 
 // spawnpoint
 
 /obj/submap_landmark/spawnpoint/normandite
-	name = "GT Miner"
+	name = "Normandite Miner"
 
 /obj/submap_landmark/spawnpoint/normandite/leader
-	name = "GT Brigadir"
+	name = "Normandite Brigadir"
 
 // outfit
 
 /singleton/hierarchy/outfit/job/normandite
 	name = OUTFIT_JOB_NAME("Miner")
+	l_ear = null
+	l_pocket = /obj/item/device/radio
 	uniform = /obj/item/clothing/under/grayson
 	shoes = /obj/item/clothing/shoes/workboots
 	gloves = /obj/item/clothing/gloves/thick/duty
@@ -159,13 +183,13 @@
 /obj/item/card/id/normandite
 	desc = "An identification card issued to Grayson Terra employees."
 	job_access_type = /datum/job/submap/normandite
-	color = COLOR_DARK_GREEN_GRAY
-	detail_color = COLOR_PALE_ORANGE
+	color = COLOR_BRONZE
+	detail_color = COLOR_BROWN
 
 var/global/const/access_normandite = "ACCESS_NORMANDITE"
 /datum/access/normandite
 	id = access_normandite
-	desc = "FTU Crewman"
+	desc = "GTMS Employee"
 	region = ACCESS_REGION_NONE
 
 // nav points
@@ -195,7 +219,7 @@ var/global/const/access_normandite = "ACCESS_NORMANDITE"
 
 /mob/living/exosuit/premade/normandite
 	name = "jerry-rigged exosuit"
-	desc = "An ancient, but well-liked cargo handling exosuit. The paint is starting to flake. Perhaps some maintenance is in order?"
+	desc = "An old jerry-rigged exosuit for asteroid mining."
 
 /mob/living/exosuit/premade/normandite/Initialize()
 	var/c = pick(COLOR_BROWN_ORANGE, COLOR_DARK_ORANGE, COLOR_YELLOW_GRAY, COLOR_PALE_YELLOW, COLOR_WARM_YELLOW, COLOR_RED_GRAY, COLOR_BROWN, COLOR_DARK_GREEN_GRAY, COLOR_BOTTLE_GREEN, COLOR_DARK_GUNMETAL, COLOR_ASTEROID_ROCK)
@@ -301,6 +325,9 @@ var/global/const/access_normandite = "ACCESS_NORMANDITE"
 /area/normandite/exterior
 	name = "GTMS Normandite - Exterior"
 	icon_state = "away1"
+	has_gravity = 0
+	area_flags = AREA_FLAG_EXTERNAL
+	ambience = list('sound/ambience/ambispace1.ogg','sound/ambience/ambispace2.ogg','sound/ambience/ambispace3.ogg','sound/ambience/ambispace4.ogg','sound/ambience/ambispace5.ogg')
 
 /area/normandite/center
 	name = "GTMS Normandite - Control Room"
@@ -354,19 +381,19 @@ var/global/const/access_normandite = "ACCESS_NORMANDITE"
 	icon_state = "entry_1"
 
 /area/normandite/hallway_fore
-	name = "GTMS Normandite - HallWay"
+	name = "GTMS Normandite - Fore Hallway"
 	icon_state = "hallC1"
 
 /area/normandite/hallway_aft
-	name = "GTMS Normandite - HallWay"
+	name = "GTMS Normandite - Aft Hallway"
 	icon_state = "hallC1"
 
 /area/normandite/hallway_starboard
-	name = "GTMS Normandite - HallWay"
+	name = "GTMS Normandite - Stardord Hallway"
 	icon_state = "hallC1"
 
 /area/normandite/hallway_port
-	name = "GTMS Normandite - HallWay"
+	name = "GTMS Normandite - Port Hallway"
 	icon_state = "hallC1"
 
 /area/normandite/utyug
