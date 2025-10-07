@@ -36,7 +36,7 @@
 	if(isid(W))
 		var/obj/item/card/id/current_id = W
 		var/singleton/security_state/security_state = GET_SINGLETON(GLOB.using_map.security_state)
-		if(has_access(list(access_iaa), current_id.access))
+		if(has_access(list("ACCESS_IAA"), current_id.access))
 			if(locked)
 				if(security_state.current_security_level.name == "code red")
 					ClearOverlays()
