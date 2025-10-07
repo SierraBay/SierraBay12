@@ -1,6 +1,7 @@
 /obj/item/artefact/gravi
 	name = "Something"
 	desc = "При подборе вы чувствуете, как тот сопротивляется вашей руке."
+	admin_name = "Грави-Блокер"
 	icon_state = "gravi"
 	need_to_process = TRUE
 	//В артефакте нет энергии/она неограничена
@@ -16,7 +17,6 @@
 	max_energy = 0
 	cargo_price = 800
 	rnd_points = 5000
-	need_to_process = TRUE
 
 /obj/item/artefact/gravi/lick_interaction(mob/living/carbon/human/user)
 	to_chat(user,SPAN_NOTICE("На вкус как камень."))

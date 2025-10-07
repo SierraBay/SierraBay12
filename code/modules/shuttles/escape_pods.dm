@@ -104,7 +104,7 @@ var/global/list/escape_pods_by_name = list()
 /datum/shuttle/autodock/ferry/escape_pod/can_force()
 // [SIERRA-ADD]
 	if (arming_controller && arming_controller.master.emagged)	// inf
-		return (next_location && next_location.is_valid(src) && !current_location.cannot_depart(src) && moving_status == SHUTTLE_IDLE && !location && arming_controller && arming_controller.armed)	// inf
+		return (next_location && !current_location.cannot_depart(src) && moving_status == SHUTTLE_IDLE && !location && arming_controller && arming_controller.armed)	// inf
 	// [/SIERRA-ADD]
 	if (arming_controller.eject_time && world.time < arming_controller.eject_time + 50)
 		return 0	//dont allow force launching until 5 seconds after the arming controller has reached it's countdown

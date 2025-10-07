@@ -56,7 +56,7 @@
 /obj/floor_decal/corner/grey_alt/diagonal{
 	dir = 8
 	},
-/obj/machinery/cooker/oven,
+/obj/machinery/appliance/cooker/oven,
 /obj/machinery/light,
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/crew/kitchen)
@@ -77,6 +77,7 @@
 "aT" = (
 /obj/structure/table/marble,
 /obj/machinery/door/firedoor,
+/obj/item/reagent_containers/cooking_container/tray,
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/crew/kitchen)
 "aW" = (
@@ -497,6 +498,7 @@
 /obj/structure/table/marble,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
+/obj/machinery/appliance/cooker/stove,
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/crew/kitchen)
 "ez" = (
@@ -557,10 +559,10 @@
 /area/ship/farfleet/barracks)
 "ff" = (
 /obj/structure/table/steel_reinforced,
-/obj/item/modular_computer/laptop,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
 	},
+/obj/item/modular_computer/laptop/preset/custom_loadout/advanced,
 /turf/simulated/floor/carpet/purple,
 /area/ship/farfleet/crew/brig/css)
 "fi" = (
@@ -569,6 +571,9 @@
 /area/ship/farfleet/command/hangar_canisters)
 "fr" = (
 /obj/structure/bed/chair/comfy/red,
+/obj/structure/filingcabinet/wallcabinet{
+	pixel_y = -30
+	},
 /turf/simulated/floor/carpet/purple,
 /area/ship/farfleet/crew/brig/css)
 "fu" = (
@@ -818,9 +823,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 9
-	},
 /obj/structure/railing/mapped{
 	dir = 1;
 	icon_state = "railing0-1"
@@ -864,13 +866,13 @@
 /obj/machinery/door/airlock{
 	name = "Head"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled/freezer,
 /area/ship/farfleet/crew/toilet)
 "im" = (
@@ -902,6 +904,9 @@
 "iv" = (
 /obj/structure/closet/secure_closet/farfleet/css,
 /obj/floor_decal/industrial/outline/grey,
+/obj/item/folder/blue,
+/obj/item/folder/red,
+/obj/item/material/clipboard/plastic,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/crew/brig/css)
 "iG" = (
@@ -1072,7 +1077,6 @@
 /area/ship/farfleet/command/snz_hangar)
 "kJ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/cable/green{
 	d1 = 4;
 	d2 = 8;
@@ -1846,7 +1850,7 @@
 	dir = 8
 	},
 /obj/structure/table/marble,
-/obj/machinery/microwave{
+/obj/machinery/appliance/cooker/microwave{
 	pixel_y = 6
 	},
 /turf/simulated/floor/tiled/white,
@@ -1882,7 +1886,7 @@
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hydroponics)
 "sa" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/universal,
 /obj/structure/railing/mapped,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/snz)
@@ -2078,6 +2082,12 @@
 /obj/paint/dark_gunmetal,
 /turf/simulated/wall/r_wall,
 /area/ship/farfleet/crew/cryo)
+"ug" = (
+/obj/structure/filingcabinet/wallcabinet{
+	pixel_x = -30
+	},
+/turf/simulated/floor/tiled/dark,
+/area/ship/farfleet/barracks)
 "ui" = (
 /obj/machinery/pointdefense{
 	initial_id_tag = "snz_pd"
@@ -2629,6 +2639,11 @@
 /obj/item/reagent_containers/glass/bucket,
 /turf/simulated/floor/tiled/techmaint,
 /area/ship/farfleet/maintenance/anomaly)
+"yG" = (
+/obj/structure/table/reinforced,
+/obj/item/material/clipboard/plastic,
+/turf/simulated/floor/tiled/dark,
+/area/ship/farfleet/barracks)
 "yK" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/floor_decal/corner_steel_grid/diagonal,
@@ -2835,7 +2850,7 @@
 /obj/floor_decal/corner/grey_alt/diagonal{
 	dir = 8
 	},
-/obj/machinery/cooker/grill,
+/obj/machinery/appliance/cooker/grill,
 /obj/machinery/firealarm{
 	dir = 1;
 	pixel_y = -24
@@ -2867,6 +2882,15 @@
 /obj/floor_decal/corner_steel_grid/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hallway/upper)
+"AP" = (
+/obj/paint/dark_gunmetal,
+/obj/structure/cable/green{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/wall/r_titanium,
+/area/ship/snz)
 "AW" = (
 /obj/structure/cable/green{
 	d1 = 1;
@@ -3588,7 +3612,7 @@
 /obj/machinery/atmospherics/binary/pump/high_power{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/red,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/snz)
 "HT" = (
@@ -3612,7 +3636,7 @@
 /obj/floor_decal/corner/grey_alt/diagonal{
 	dir = 8
 	},
-/obj/machinery/cooker/fryer,
+/obj/machinery/appliance/cooker/fryer,
 /obj/machinery/alarm{
 	dir = 1;
 	pixel_y = -25;
@@ -4256,7 +4280,9 @@
 /turf/simulated/wall/r_wall,
 /area/ship/farfleet/crew/freezer)
 "Po" = (
-/obj/machinery/psi_monitor,
+/obj/machinery/psi_monitor{
+	req_access = list("ACCESS_ICCGN")
+	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/crew/brig/css)
 "Pr" = (
@@ -4719,8 +4745,9 @@
 	dir = 8
 	},
 /obj/structure/table/marble,
-/obj/item/material/rollingpin,
 /obj/machinery/atmospherics/unary/vent_pump/on,
+/obj/item/reagent_containers/cooking_container/board,
+/obj/item/material/rollingpin,
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/crew/kitchen)
 "TR" = (
@@ -5174,10 +5201,6 @@
 	},
 /area/space)
 "WK" = (
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
-	icon_state = "map-scrubbers";
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
 	},
@@ -5190,6 +5213,9 @@
 /obj/item/shuttle_beacon,
 /obj/item/stack/flag/yellow,
 /obj/item/stack/flag/red,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 9
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/snz)
 "WY" = (
@@ -5435,6 +5461,11 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
 /obj/floor_decal/corner_steel_grid/diagonal,
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hallway/upper)
 "Zw" = (
@@ -13879,7 +13910,7 @@ zW
 MC
 Vg
 pL
-Jt
+AP
 VE
 ns
 ME
@@ -14232,7 +14263,7 @@ wb
 Ab
 Ll
 Ll
-Uu
+ug
 Nd
 wi
 Db
@@ -14477,7 +14508,7 @@ CZ
 gL
 lp
 rg
-uA
+yG
 mQ
 qx
 Ll

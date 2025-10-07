@@ -843,7 +843,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 					)
 
 //Handles dismemberment
-/obj/item/organ/external/proc/droplimb(clean, disintegrate = DROPLIMB_EDGE, ignore_children, silent)
+/obj/item/organ/external/proc/droplimb(clean, disintegrate = DROPLIMB_EDGE, ignore_children, silent, skip_throw)
 
 	if(!(limb_flags & ORGAN_FLAG_CAN_AMPUTATE) || !owner)
 		return
@@ -904,7 +904,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 			add_blood(victim)
 			SetTransform(rotation = rand(180))
 			forceMove(get_turf(src))
-			if(!clean)
+			if(!clean && !skip_throw)
 				// Throw limb around.
 				if(src && istype(loc,/turf))
 					throw_at(get_edge_target_turf(src,pick(GLOB.alldirs)),rand(1,3),5)
@@ -1090,6 +1090,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		return 1
 	return 0
 
+/* [SIERRA-REMOVE] - IPC_MODS Там тот же прок есть, закомментил, он два раза выполнялся, и это не нужно
 /obj/item/organ/external/robotize(company, skip_prosthetics = 0, keep_organs = 0)
 
 	if(BP_IS_ROBOTIC(src))
@@ -1142,6 +1143,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	CLEAR_FLAGS(status, ORGAN_ARTERY_CUT)
 
 	return 1
+*/
 
 /obj/item/organ/external/proc/get_damage()	//returns total damage
 	return (brute_dam+burn_dam)	//could use max_damage?
@@ -1368,19 +1370,11 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 //Adds autopsy data for used_weapon.
 /obj/item/organ/external/proc/add_autopsy_data(used_weapon, damage)
-	var/weapon_name
-
-	if(isatom(used_weapon))
-		var/atom/weapon = used_weapon
-		weapon_name = initial(weapon.name)
-	else
-		weapon_name = used_weapon
-
-	var/datum/autopsy_data/W = autopsy_data[weapon_name]
+	var/datum/autopsy_data/W = autopsy_data[used_weapon]
 	if(!W)
 		W = new()
-		W.weapon = weapon_name
-		autopsy_data[weapon_name] = W
+		W.weapon = used_weapon
+		autopsy_data[used_weapon] = W
 
 	W.hits += 1
 	W.damage += damage

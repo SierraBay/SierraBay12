@@ -1,6 +1,7 @@
 /datum/design/autolathe/drinkingglass
 	build_path = /obj/item/reagent_containers/food/drinks/glass2/square
 	category = list("Drinking Glasses")
+	time = 3
 
 /datum/design/autolathe/drinkingglass/rocks
 	build_path = /obj/item/reagent_containers/food/drinks/glass2/rocks

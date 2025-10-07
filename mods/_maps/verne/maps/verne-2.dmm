@@ -167,6 +167,9 @@
 /obj/machinery/conveyor{
 	id = "verne_isolation"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
+	dir = 6
+	},
 /turf/simulated/floor/plating,
 /area/verne/hangar)
 "aG" = (
@@ -1195,6 +1198,7 @@
 /obj/structure/railing/mapped{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel,
 /turf/simulated/floor/plating,
 /area/verne/hangar)
 "et" = (
@@ -1625,6 +1629,13 @@
 /area/verne/engineering/smresearch/access)
 "hH" = (
 /obj/floor_decal/techfloor/orange,
+/obj/item/mech_component/chassis/light{
+	pixel_x = -10
+	},
+/obj/item/mech_component/manipulators/light{
+	pixel_y = 0;
+	pixel_x = -6
+	},
 /turf/simulated/floor/tiled/techfloor,
 /area/verne/engineering/workshop)
 "hK" = (
@@ -1843,9 +1854,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/verne/hangar)
 "jq" = (
-/turf/simulated/floor/reinforced{
-	map_airless = 1
-	},
+/turf/simulated/open,
 /area/verne/engineering/smresearch/control)
 "jB" = (
 /obj/floor_decal/industrial/outline/yellow,
@@ -2006,15 +2015,14 @@
 /turf/simulated/floor/tiled/white,
 /area/verne/xenosci/equipment)
 "lD" = (
-/obj/structure/table/rack,
-/obj/item/pickaxe,
-/obj/item/clothing/glasses/meson,
-/obj/item/device/scanner/mining,
-/obj/item/shovel,
-/obj/floor_decal/industrial/outline/yellow,
 /obj/machinery/light_switch{
 	dir = 8;
 	pixel_x = 22
+	},
+/obj/floor_decal/industrial/outline/orange,
+/obj/machinery/portable_atmospherics/canister/carbon_dioxide/engine_setup,
+/obj/machinery/atmospherics/portables_connector{
+	dir = 8
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/verne/hangar)
@@ -2157,7 +2165,7 @@
 	dir = 1
 	},
 /obj/structure/handrail,
-/obj/machinery/anomaly_container,
+/obj/machinery/anomaly_container/verne,
 /obj/structure/handrail,
 /turf/simulated/floor/plating,
 /area/verne/catfish/engineering)
@@ -2184,6 +2192,14 @@
 	icon_state = "1-4"
 	},
 /obj/catwalk_plated/dark,
+/obj/machinery/power/apc/verne{
+	dir = 8;
+	pixel_x = -24
+	},
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
 /turf/simulated/floor/plating,
 /area/verne/hangar)
 "mB" = (
@@ -2192,7 +2208,7 @@
 /area/verne/xenosci)
 "mE" = (
 /obj/floor_decal/industrial/outline/grey,
-/obj/machinery/anomaly_container,
+/obj/machinery/anomaly_container/verne,
 /turf/simulated/floor/reinforced{
 	map_airless = 1
 	},
@@ -2331,13 +2347,13 @@
 /turf/simulated/floor/tiled/white,
 /area/verne/xenosci)
 "nM" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 6
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
 	},
 /obj/floor_decal/corner/b_green/diagonal,
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 1
+	},
 /turf/simulated/floor/tiled/white,
 /area/verne/xenosci/equipment)
 "nN" = (
@@ -2419,16 +2435,17 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/verne/hangar)
 "oE" = (
-/obj/structure/table/steel,
-/obj/machinery/recharger,
 /obj/machinery/light_switch{
 	dir = 4;
 	pixel_x = -22
 	},
+/obj/item/paper_bin,
+/obj/item/pen/retractable,
+/obj/item/folder,
+/obj/structure/table/steel_reinforced,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/verne/engineering/workshop)
 "oJ" = (
-/obj/structure/table/steel,
 /obj/random/powercell,
 /obj/random/powercell,
 /obj/machinery/cell_charger,
@@ -2436,6 +2453,8 @@
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/item/reagent_containers/glass/beaker/sulphuric,
+/obj/structure/table/steel_reinforced,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/verne/engineering/workshop)
 "oN" = (
@@ -2476,6 +2495,12 @@
 /obj/structure/railing/mapped{
 	dir = 1
 	},
+/obj/floor_decal/industrial/outline/yellow,
+/obj/structure/table/rack,
+/obj/item/clothing/glasses/meson,
+/obj/item/pickaxe,
+/obj/item/device/scanner/mining,
+/obj/item/shovel,
 /turf/simulated/floor/tiled/techfloor,
 /area/verne/hangar)
 "pp" = (
@@ -2521,15 +2546,19 @@
 /turf/simulated/floor/plating,
 /area/verne/engineering/decktransfer)
 "pY" = (
-/obj/structure/table/steel,
-/obj/item/paper_bin,
-/obj/item/folder,
-/obj/item/pen/retractable,
-/obj/random/clipboard,
 /obj/item/device/radio/intercom/map_preset/verne{
 	dir = 4;
 	pixel_x = -22
 	},
+/obj/item/mech_component/sensors/light{
+	pixel_y = -24;
+	pixel_x = 4
+	},
+/obj/item/mech_component/manipulators/light/right{
+	pixel_x = 6;
+	pixel_y = 0
+	},
+/obj/structure/table/steel_reinforced,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/verne/engineering/workshop)
 "qa" = (
@@ -2769,7 +2798,7 @@
 	icon_state = "handrail"
 	},
 /obj/catwalk_plated/dark,
-/obj/machinery/stasis_cage,
+/obj/machinery/stasis_cage/verne,
 /turf/simulated/floor/plating,
 /area/verne/catfish/engineering)
 "rh" = (
@@ -2861,7 +2890,7 @@
 /area/verne/catfish/engineering)
 "rv" = (
 /obj/floor_decal/industrial/outline/grey,
-/obj/machinery/stasis_cage,
+/obj/machinery/stasis_cage/verne,
 /turf/simulated/floor/reinforced{
 	map_airless = 1
 	},
@@ -3045,6 +3074,7 @@
 	dir = 8;
 	pixel_x = -24
 	},
+/obj/structure/cart,
 /turf/simulated/floor/tiled/techfloor,
 /area/verne/hangar)
 "tn" = (
@@ -3069,13 +3099,20 @@
 /area/verne/xenosci)
 "tw" = (
 /obj/floor_decal/cti,
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/white/monotile,
+/area/verne/xenosci/equipment)
+"tx" = (
+/obj/floor_decal/corner/b_green/diagonal,
+/obj/machinery/atmospherics/unary/vent_scrubber/on{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/white,
 /area/verne/xenosci/equipment)
 "ty" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
@@ -3271,6 +3308,9 @@
 	id = "verne_isolation2"
 	},
 /obj/structure/closet/crate/hydroponics/prespawned,
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
+	dir = 9
+	},
 /turf/simulated/floor/plating,
 /area/verne/hangar)
 "vd" = (
@@ -3514,6 +3554,9 @@
 /obj/machinery/conveyor{
 	id = "verne_isolation"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
+	dir = 5
+	},
 /turf/simulated/floor/plating,
 /area/verne/hangar)
 "wy" = (
@@ -3560,8 +3603,8 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/machinery/r_n_d/circuit_imprinter,
 /obj/floor_decal/industrial/outline/yellow,
+/obj/machinery/fabricator/rnd/imprinter,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/verne/engineering/workshop)
 "wQ" = (
@@ -3875,11 +3918,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
@@ -3902,6 +3940,9 @@
 /obj/machinery/conveyor{
 	id = "verne_isolation"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
+	dir = 6
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/verne/hangar)
 "zt" = (
@@ -3916,11 +3957,7 @@
 /area/verne/stairs/two)
 "zA" = (
 /obj/structure/closet/crate/plastic,
-/obj/item/mech_component/chassis/light,
-/obj/item/mech_component/control_module,
-/obj/item/mech_component/manipulators/light,
-/obj/item/mech_component/propulsion/tracks,
-/obj/item/mech_component/sensors/light,
+/obj/item/robot_parts/robot_component/control_module,
 /obj/item/mech_equipment/clamp,
 /obj/item/mech_equipment/light,
 /obj/item/mech_equipment/drill,
@@ -3937,6 +3974,8 @@
 /obj/floor_decal/techfloor{
 	dir = 10
 	},
+/obj/item/robot_parts/robot_component/actuator,
+/obj/item/robot_parts/robot_component/actuator,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/verne/engineering/workshop)
 "zE" = (
@@ -4239,6 +4278,7 @@
 	id_tag = "verneconveyordoor";
 	name = "Verne Hangar Conveyor"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/verne/hangar)
 "BP" = (
@@ -4252,6 +4292,17 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/verne/xenosci)
+"BS" = (
+/obj/floor_decal/techfloor/orange,
+/obj/structure/cart{
+	dir = 4
+	},
+/obj/item/mech_component/doubled_legs/tracks{
+	pixel_x = -3;
+	pixel_y = 6
+	},
+/turf/simulated/floor/tiled/techfloor,
+/area/verne/engineering/workshop)
 "BT" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -4455,6 +4506,7 @@
 	d2 = 2;
 	icon_state = "32-2"
 	},
+/obj/machinery/atmospherics/pipe/zpipe/down/fuel,
 /turf/simulated/open,
 /area/verne/hangar)
 "DD" = (
@@ -4470,6 +4522,8 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/mask/gas,
 /turf/simulated/floor/plating,
 /area/verne/engineering/decktransfer)
 "DJ" = (
@@ -4489,6 +4543,7 @@
 "DP" = (
 /obj/machinery/light,
 /obj/structure/table/steel,
+/obj/random/clipboard,
 /obj/item/paper/verne/science,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/verne/engineering/workshop)
@@ -4505,14 +4560,12 @@
 /area/verne/catfish)
 "DW" = (
 /obj/floor_decal/techfloor/orange,
-/obj/structure/table/steel,
-/obj/item/collector{
-	pixel_x = -6
-	},
-/obj/item/collector,
-/obj/item/collector{
-	pixel_x = 6
-	},
+/obj/structure/table/rack,
+/obj/item/stock_parts/computer/hard_drive/portable/design/tool,
+/obj/item/stock_parts/computer/hard_drive/portable/design/medical,
+/obj/item/stock_parts/computer/hard_drive/portable/design/general,
+/obj/item/stock_parts/computer/hard_drive/portable/design/engineering,
+/obj/item/stock_parts/computer/hard_drive/portable/design/components,
 /turf/simulated/floor/tiled/techfloor,
 /area/verne/engineering/workshop)
 "Ec" = (
@@ -4910,8 +4963,8 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/verne/engineering/storage)
 "HI" = (
-/obj/machinery/r_n_d/protolathe,
 /obj/floor_decal/industrial/outline/yellow,
+/obj/machinery/fabricator/rnd/protolathe,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/verne/engineering/workshop)
 "HQ" = (
@@ -5143,6 +5196,9 @@
 	},
 /obj/catwalk_plated/dark,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/verne/hangar)
 "Jy" = (
@@ -5696,6 +5752,12 @@
 /obj/floor_decal/industrial/hatch/yellow,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/verne/xenosci/workshop)
+"Oe" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/techfloor,
+/area/verne/hangar)
 "Oh" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/cable/cyan{
@@ -5794,7 +5856,7 @@
 /area/verne/catfish)
 "PL" = (
 /obj/floor_decal/industrial/outline/grey,
-/obj/machinery/stasis_cage,
+/obj/machinery/stasis_cage/verne,
 /turf/simulated/floor/reinforced,
 /area/verne/xenosci)
 "PX" = (
@@ -5862,7 +5924,7 @@
 /area/verne/xenosci/equipment)
 "Qx" = (
 /obj/floor_decal/industrial/outline/grey,
-/obj/machinery/stasis_cage,
+/obj/machinery/stasis_cage/verne,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -5958,16 +6020,15 @@
 /turf/simulated/floor/plating,
 /area/verne/catfish/engineering)
 "Ra" = (
-/obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/machinery/power/apc/verne{
-	pixel_y = -24
-	},
 /obj/floor_decal/industrial/outline/yellow,
 /obj/machinery/conveyor_switch/oneway{
 	id = "verne_isolation"
+	},
+/obj/floor_decal/industrial/shutoff{
+	dir = 4
+	},
+/obj/machinery/atmospherics/valve/shutoff/fuel{
+	dir = 4
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/verne/hangar)
@@ -5998,10 +6059,12 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/unary/vent_scrubber/on{
-	dir = 1
-	},
 /obj/floor_decal/corner/b_green/diagonal,
+/obj/structure/table/rack,
+/obj/item/collector,
+/obj/item/collector,
+/obj/item/collector,
+/obj/item/collector,
 /turf/simulated/floor/tiled/white,
 /area/verne/xenosci/equipment)
 "Rv" = (
@@ -6019,11 +6082,10 @@
 /turf/simulated/floor/plating,
 /area/verne/engineering/decktransfer)
 "RP" = (
-/obj/machinery/stasis_cage,
 /obj/machinery/conveyor{
 	id = "verne_isolation2"
 	},
-/mob/living/simple_animal/hostile/retaliate/goose/doctor,
+/obj/machinery/stasis_cage/verne/goose,
 /turf/simulated/floor/plating,
 /area/verne/hangar)
 "RQ" = (
@@ -6092,7 +6154,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/stasis_cage,
+/obj/machinery/stasis_cage/verne,
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 1
 	},
@@ -6438,8 +6500,16 @@
 	},
 /turf/simulated/floor/tiled/white/monotile,
 /area/verne/xenosci/equipment)
+"UN" = (
+/obj/machinery/door/firedoor,
+/obj/wallframe_spawn/reinforced/hull/verne,
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/verne/stairs/two)
 "UP" = (
-/obj/machinery/anomaly_container,
+/obj/machinery/anomaly_container/verne,
 /obj/floor_decal/industrial/outline/grey,
 /turf/simulated/floor/reinforced,
 /area/verne/xenosci)
@@ -6483,7 +6553,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/machinery/anomaly_container,
+/obj/machinery/anomaly_container/verne,
 /obj/machinery/atmospherics/pipe/manifold/visible,
 /turf/simulated/floor/tiled/white/monotile,
 /area/verne/catfish)
@@ -6566,13 +6636,13 @@
 /obj/machinery/power/terminal{
 	dir = 4
 	},
-/obj/machinery/floodlight,
 /obj/machinery/alarm/verne{
 	dir = 1;
 	pixel_y = -24
 	},
 /obj/floor_decal/corner/b_green/mono,
 /obj/structure/cable,
+/obj/machinery/radio_beacon,
 /turf/simulated/floor/tiled/white/monotile,
 /area/verne/catfish)
 "Wf" = (
@@ -6981,6 +7051,9 @@
 	icon_state = "1-8"
 	},
 /obj/structure/railing/mapped,
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
+	dir = 9
+	},
 /turf/simulated/floor/plating,
 /area/verne/hangar)
 "Zv" = (
@@ -14119,7 +14192,7 @@ lT
 qY
 tX
 cp
-OQ
+Oe
 eE
 xh
 tj
@@ -14272,7 +14345,7 @@ qY
 Ky
 bA
 lD
-eE
+UN
 wF
 PX
 GF
@@ -14699,7 +14772,7 @@ Qp
 Xv
 aR
 cu
-hH
+BS
 pY
 oJ
 oE
@@ -14879,7 +14952,7 @@ lT
 qY
 aU
 Gv
-VN
+tx
 Bh
 KW
 Ub

@@ -214,7 +214,7 @@
 			return TRUE
 		var/transfer_value = min(min(container.get_reagent_amount(liquid_type), container_obj.amount_per_transfer_from_this), max_liquid_level-liquid_level)
 		if(transfer_value<=0)
-			to_chat(user, SPAN_WARNING("You can't pour any more water in the hpokah."))
+			to_chat(user, SPAN_WARNING("You can't pour any more water in the hookah."))
 			return TRUE
 		container.remove_reagent(liquid_type, transfer_value)
 		liquid_level += transfer_value
@@ -338,6 +338,30 @@
 			environment.remove_by_flag(XGM_GAS_OXIDIZER, parent.gas_consumption)
 			environment.adjust_gas(GAS_CO2, 0.5*parent.gas_consumption, 0)
 			environment.adjust_gas(GAS_STEAM, 0.5*parent.gas_consumption, 0)
-			var/datum/effect/steam_spread/steam = new /datum/effect/steam_spread()
-			steam.set_up(3, usr.dir, usr.loc)
-			steam.start()
+			var/datum/effect/smoke_spread/hookah/smoke = new /datum/effect/smoke_spread/hookah()
+			smoke.set_up(1, usr.dir, usr.loc)
+			smoke.start()
+
+/obj/effect/smoke/hookah
+	name = "smoke"
+	icon_state = "smoke"
+	icon = 'mods/utility_items/icons/smoke_hookah.dmi'
+	opacity = 0
+	anchored = FALSE
+	mouse_opacity = 0
+	amount = 4.0
+	time_to_live = 40
+	pixel_x = 0
+	pixel_y = 0
+
+/datum/effect/smoke_spread/hookah
+	smoke_type = /obj/effect/smoke/hookah
+
+/singleton/hierarchy/supply_pack/galley/hookah
+	name = "Bar - Hookah"
+	contains = list(
+		/obj/item/hookah,
+		/obj/item/storage/box/large/coal = 2
+	)
+	cost = 20
+	containername = "Hookah crate"

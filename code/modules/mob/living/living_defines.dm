@@ -72,4 +72,6 @@
 	var/trait_flags
 
 	/// Some combination of HAZARD_FLAG_*. When set, the flagged hazard types will not damage the mob.
-	var/ignore_hazard_flags = EMPTY_BITFIELD
+	var/ignore_hazard_flags = FLAGS_OFF
+	/// Should this mob subscribe to the weather system for periodic weather effects?
+	var/weather_sensitive = FALSE

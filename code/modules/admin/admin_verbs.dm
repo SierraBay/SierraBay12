@@ -4,7 +4,7 @@ var/global/list/admin_verbs_default = list(
 	/client/proc/getserverlog,
 	// [/SIERRA-ADD],
 	/datum/admins/proc/show_player_panel, //shows an interface for individual players, with various links (links require additional flags), right-click player panel,
-	/client/proc/player_panel,
+	/client/proc/player_list,
 	/client/proc/secrets,
 	/client/proc/deadmin_self,			//destroys our own admin datum so we can play as a regular player,
 	/client/proc/hide_verbs,			//hides all our adminverbs,
@@ -35,7 +35,6 @@ var/global/list/admin_verbs_admin = list(
 	/client/proc/jumptocoord,			//we ghost and jump to a coordinate,
 	/client/proc/Getmob,				//teleports a mob to our location,
 	/client/proc/Getkey,				//teleports a mob with a certain ckey to our location,
-//	/client/proc/sendmob,				//sends a mob somewhere, -Removed due to it needing two sorting procs to work, which were executed every time an admin right-clicked. ~Errorage,
 	/client/proc/Jump,
 	/client/proc/jumptokey,				//allows us to jump to the location of a mob with a certain ckey,
 	/client/proc/jumptomob,				//allows us to jump to a specific mob,
@@ -135,7 +134,8 @@ var/global/list/admin_verbs_fun = list(
 	/datum/admins/proc/ai_hologram_set,
 	/client/proc/bombard_zlevel,
 	/client/proc/rename_shuttle,
-	/client/proc/give_disease2 // [/SIERRA-ADD] - CLIENT_VERBS
+	/client/proc/give_disease2, // [/SIERRA-ADD] - CLIENT_VERBS,
+	/datum/admins/proc/mp_panel // [/SIERRA-ADD]
 	)
 
 var/global/list/admin_verbs_spawn = list(
@@ -193,6 +193,7 @@ var/global/list/admin_verbs_debug = list(
 	/datum/admins/proc/map_template_load_new_z,
 	//[SIERRA-ADD] - Colony-types,
 	/datum/admins/proc/map_template_colony_spawn_settings,
+	/datum/admins/proc/anomaly_control,
 	//[SIERRA-ADD],
 	/datum/admins/proc/map_template_upload,
 	/client/proc/enable_debug_verbs,
@@ -218,7 +219,10 @@ var/global/list/admin_verbs_debug = list(
 	/client/proc/toggle_planet_repopulating,
 	/client/proc/spawn_exoplanet,
 	/client/proc/profiler_init_verb,
-	/datum/admins/proc/EnableDevtools
+	/datum/admins/proc/EnableDevtools,
+	/datum/admins/proc/force_initialize_weather,
+	/datum/admins/proc/force_weather_state,
+	/datum/admins/proc/force_kill_weather
 	)
 
 var/global/list/admin_verbs_paranoid_debug = list(
@@ -437,11 +441,11 @@ var/global/list/admin_verbs_mod = list(
 			mob.alpha = max(mob.alpha - 100, 0)
 
 
-/client/proc/player_panel()
-	set name = "Player Panel"
+/client/proc/player_list()
+	set name = "Player List"
 	set category = "Admin"
 	if(holder)
-		holder.player_panel()
+		holder.player_list()
 	return
 
 /client/proc/check_antagonists()

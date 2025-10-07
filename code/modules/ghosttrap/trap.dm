@@ -37,22 +37,23 @@ var/global/list/ghost_traps
 	..()
 
 // Check for bans, proper atom types, etc.
-/datum/ghosttrap/proc/assess_candidate(mob/observer/ghost/candidate, mob/target, feedback = TRUE)
-	if (!target)
-		to_chat(candidate, "This occupation request is no longer valid.")
-		return FALSE
+/datum/ghosttrap/proc/assess_candidate(mob/observer/ghost/candidate, mob/target, feedback = TRUE, no_target = FALSE)
+	if(!no_target)
+		if (!target)
+			to_chat(candidate, "This occupation request is no longer valid.")
+			return FALSE
+
+		if(request_timeouts[target] && world.time > request_timeouts[target])
+			if (feedback)
+				to_chat(candidate, "This occupation request is no longer valid.")
+			return FALSE
+
+		if(target.key)
+			if (feedback)
+				to_chat(candidate, "The target is already occupied.")
+			return FALSE
 
 	if(!candidate.MayRespawn(feedback, minutes_since_death))
-		return FALSE
-
-	if(request_timeouts[target] && world.time > request_timeouts[target])
-		if (feedback)
-			to_chat(candidate, "This occupation request is no longer valid.")
-		return FALSE
-
-	if(target.key)
-		if (feedback)
-			to_chat(candidate, "The target is already occupied.")
 		return FALSE
 
 	if(islist(ban_checks))
@@ -91,7 +92,7 @@ var/global/list/ghost_traps
 		if(!assess_candidate(O, target, FALSE))
 			continue
 		if(O.client)
-			to_chat(O, SPAN_BOLD(FONT_LARGE("[request_string] <a href='?src=\ref[src];candidate=\ref[O];target=\ref[target]'>(Occupy)</a> ([ghost_follow_link(target, O)])")))
+			to_chat(O, SPAN_BOLD(FONT_LARGE("[request_string] <a href='byond://?src=\ref[src];candidate=\ref[O];target=\ref[target]'>(Occupy)</a> ([ghost_follow_link(target, O)])")))
 			sound_to(O, 'sound/effects/ding2.ogg')
 
 /datum/ghosttrap/proc/unregister_target(target)

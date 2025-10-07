@@ -31,7 +31,7 @@
 /obj/machinery/suit_cycler/security
 	name = "security suit cycler"
 	model_text = "Security"
-	req_access = list(access_security)
+	req_access = list(access_brig)
 	available_modifications = list(/singleton/item_modifier/space_suit/security)
 	 // [SIERRA-EDIT] - HARDSUITS - Костюмы со спрайтами Инфинити
 	 // available_modifications = list(/singleton/item_modifier/space_suit/security) // SIERRA-EDIT - ORIGINAL

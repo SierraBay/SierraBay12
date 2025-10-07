@@ -1,4 +1,4 @@
-GLOBAL_LIST_INIT(mimic_protected, list(
+GLOBAL_LIST_AS(mimic_protected, list(
 	/obj/machinery,
 	/obj/structure/table,
 	/obj/structure/cable,

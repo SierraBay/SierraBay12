@@ -18,6 +18,11 @@
 	name = "Escaped"
 
 //Pods
+
+/area/shuttle/escape_pod
+	name = "Escape Pod"
+	base_turf = /turf/simulated/floor/plating
+
 #define SIERRA_ESCAPE_POD(NUMBER) \
 /datum/shuttle/autodock/ferry/escape_pod/sierrapod/escape_pod##NUMBER { \
 	shuttle_area = /area/shuttle/escape_pod/escape_pod##NUMBER/station; \
@@ -33,10 +38,10 @@
 	docking_controller = "escape_pod_"+ #NUMBER +"_berth"; \
 } \
 /obj/shuttle_landmark/escape_pod/out/pod##NUMBER { \
-	landmark_tag = "escape_pod_"+ #NUMBER +"_internim"; \
+	landmark_tag = "escape_pod_"+ #NUMBER +"_out"; \
 } \
 /obj/shuttle_landmark/escape_pod/transit/pod##NUMBER { \
-	landmark_tag = "escape_pod_"+ #NUMBER +"_out"; \
+	landmark_tag = "escape_pod_"+ #NUMBER +"_internim"; \
 }
 
 SIERRA_ESCAPE_POD(1)
@@ -76,6 +81,7 @@ SIERRA_ESCAPE_POD(11)
 	logging_home_tag = "nav_petrov_start"
 	sound_takeoff = 'sound/effects/rocket.ogg'
 	sound_landing = 'sound/effects/rocket_backwards.ogg'
+	logging_access = access_petrov_helm
 	range = 1
 	fuel_consumption = 6
 	warmup_time = 10
@@ -287,7 +293,7 @@ SIERRA_ESCAPE_POD(11)
 
 //NT Rescue Shuttle
 
-/datum/shuttle/autodock/multi/antag/rescue
+/datum/shuttle/autodock/multi/antag/ert
 	destination_tags = list(
 		"nav_ert_deck1",
 		"nav_ert_deck2",
@@ -392,15 +398,15 @@ SIERRA_ESCAPE_POD(11)
 	ceiling_type = /turf/simulated/floor/shuttle_ceiling/sierra
 	warmup_time = 7
 
-/datum/shuttle/autodock/overmap/exploration_shuttle/refresh_fuel_ports_list()	// Setting access onto APC and air alarms
+/datum/shuttle/autodock/overmap/exploration_shuttle/refresh_fuel_ports_list()	// Setting access onto APC and air alarms. "Overrides code. Overrides map. WHY?!" - LordNest
 	..()
 	for(var/area/A in shuttle_area)
 		for(var/obj/machinery/alarm/alarm in A)
 			if(alarm.req_access)
-				alarm.req_access = list(list(access_engine, access_field_eng))  // engineering OR field eng
+				alarm.req_access = list(list(access_engine, access_field_eng, access_expedition_shuttle_helm))  // engineering OR field eng
 		for(var/obj/machinery/power/apc/apc in A)
 			if(apc.req_access)
-				apc.req_access = list(list(access_engine, access_field_eng))  // engineering OR field eng
+				apc.req_access = list(list(access_engine, access_field_eng, access_expedition_shuttle_helm))  // engineering OR field eng
 
 /obj/shuttle_landmark/sierra/hangar/exploration_shuttle
 	name = "Charon Hangar"

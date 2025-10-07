@@ -8,6 +8,7 @@
 - https://github.com/SierraBay/SierraBay12/pull/1856
 - https://github.com/SierraBay/SierraBay12/pull/2230
 - https://github.com/SierraBay/SierraBay12/pull/2262
+- https://github.com/SierraBay/SierraBay12/pull/4175
 <!--
   Ссылки на PRы, связанные с модом:
   - Создание
@@ -88,6 +89,7 @@ ID мода: LOADOUT_ITEMS
 - UEDHighCommand
 - BrunoSamoyed (новый спрайт плаща)
 - Часть предметов портирована с билда Aurora
+- chichmuch (парик)
 <!--
   Здесь находится твой никнейм
   Если работал совместно - никнеймы тех, кто помогал.

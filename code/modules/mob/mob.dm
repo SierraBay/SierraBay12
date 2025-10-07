@@ -217,7 +217,7 @@
 	. = 0
 	if(isturf(loc))
 		var/turf/turf = loc
-		. += turf.movement_delay
+		. += turf.get_terrain_movement_delay()
 	if (drowsyness > 0)
 		. += 6
 	if(lying) //Crawling, it's slower
@@ -589,6 +589,7 @@
 
 	src.pulling = AM
 	AM.pulledby = src
+	AM.add_hiddenprint(src)
 
 	if(pullin)
 		pullin.icon_state = "pull1"
@@ -693,7 +694,7 @@
 			stat("Map CPU:","[world.map_cpu]")
 			stat("Instances:","[length(world.contents)]")
 			stat(null)
-			var/time = Uptime()
+			var/time = uptime()
 			if(Master)
 				Master.UpdateStat(time)
 			else
@@ -706,9 +707,18 @@
 				stat("Failsafe Controller:", "ERROR")
 			if(Master)
 				stat(null)
-				config.UpdateStat()
-				GLOB.UpdateStat()
-				GLOB.debug_real_globals.UpdateStat()
+				var/static/stat_created
+				var/static/obj/clickable_stat/config_stat
+				var/static/obj/clickable_stat/glob_stat
+				var/static/obj/clickable_stat/bare_stat
+				if (!stat_created)
+					stat_created = TRUE
+					config_stat = new (null, config, "Edit")
+					glob_stat = new (null, GLOB, "Edit")
+					bare_stat = new (null, GLOB.debug_real_globals, "Edit")
+				stat("Config", config_stat)
+				stat("Managed Globals", glob_stat)
+				stat("Real Globals", bare_stat)
 				stat(null)
 				for (var/datum/controller/subsystem/subsystem as anything in Master.subsystems)
 					subsystem.UpdateStat(time)
@@ -768,12 +778,8 @@
 	//Temporarily moved here from the various life() procs
 	//I'm fixing stuff incrementally so this will likely find a better home.
 	//It just makes sense for now. ~Carn
-	//[SIERRA-ADD]
-	if(update_icon)	//forces a full overlay update
-		update_icon = FALSE
-	////[SIERRA-ADD]
 		regenerate_icons()
-	else if( lying != lying_prev )
+	if( lying != lying_prev )
 		update_icons()
 
 /mob/proc/reset_layer()
@@ -791,7 +797,6 @@
 		buckled.set_dir(ndir)
 	SetMoveCooldown(movement_delay())
 	return 1
-
 
 /mob/verb/eastface()
 	set hidden = 1
@@ -1088,7 +1093,7 @@
 	else
 		set_dir(dir)
 		facing_dir = dir
-
+/* [SIERRA-REMOVE] - VISION CONE. Кароче это хуйня вызывается, а не должна
 /mob/set_dir()
 	if(facing_dir)
 		if(!canface() || lying || restrained())
@@ -1103,7 +1108,7 @@
 			return ..(facing_dir)
 	else
 		return ..()
-
+*/
 /mob/proc/set_stat(new_stat)
 	. = stat != new_stat
 	stat = new_stat

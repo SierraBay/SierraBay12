@@ -328,6 +328,7 @@
 	return !failed_last_breath
 
 /mob/living/carbon/human/handle_environment(datum/gas_mixture/environment)
+	. = ..()
 	if(!environment || (MUTATION_SPACERES in mutations))
 		return
 
@@ -1140,12 +1141,12 @@
 	..()
 	adjust_stamina(100)
 	UpdateAppearance()
-
+/* Ушло в оверрайд //[SIERRA-REMOVE] fix FOV for consoles
 /mob/living/carbon/human/reset_view(atom/A)
 	..()
 	if(machine_visual && machine_visual != A)
 		machine_visual.remove_visual(src)
-
+*/
 /mob/living/carbon/human/handle_vision()
 	if(client)
 		client.screen.Remove(GLOB.global_hud.nvg, GLOB.global_hud.thermal, GLOB.global_hud.meson, GLOB.global_hud.science)

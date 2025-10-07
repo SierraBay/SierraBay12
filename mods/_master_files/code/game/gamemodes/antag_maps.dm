@@ -14,13 +14,18 @@
 	)
 
 /datum/map_template/ruin/antag_spawn/ert
+	name = "NDV Icarus"
 	prefix = "mods/antagonists/maps/"
-	suffixes = list("ert_base.dmm")
-	shuttles_to_initialise = list(/datum/shuttle/autodock/multi/antag/rescue)
-	apc_test_exempt_areas = list(/area/map_template/rescue_base = NO_SCRUBBER|NO_VENT|NO_APC)
+	suffixes = list("ert_ship.dmm")
+	shuttles_to_initialise = list(/datum/shuttle/autodock/multi/antag/ert)
 
-// Shuttle locations. Due to override we lose them if load with Sierra map
-/datum/shuttle/autodock/multi/antag/rescue
+/obj/overmap/visitable/sector/ert_ship
+	name = "NDV Icarus"
+	desc = "An Orca-Class Escort Carrier, broadcasting NanoTrasen codes.\n<span class='bad'>Its weapons and shielding systems appears to be active.</span>"
+	color = COLOR_NT_RED
+
+/datum/shuttle/autodock/multi/antag/ert
+
 	destination_tags = list(
 		"nav_ert_deck1",
 		"nav_ert_deck2",
@@ -42,7 +47,59 @@
 		"nav_mining_antag"
 		)
 
+/obj/shuttle_landmark/ert/start
+	name = "NDV Icarus, Hangar Bay"
+	landmark_tag = "nav_ert_start"
+
+/obj/shuttle_landmark/ert/dock
+	name = "Docking Port"
+	landmark_tag = "nav_ert_dock"
+	docking_controller = "rescue_shuttle_dock_airlock"
+
 // Areas
 
-/area/map_template/rescue_base/start
-	base_turf = /turf/unsimulated/floor/techfloor
+/area/map_template/ert/ship
+	name = "NDV Icarus"
+
+/area/map_template/ert/ship/prepwing
+	name = "NDV Icarus - ERT Preparation Wing"
+
+/area/map_template/ert/ship/briefing
+	name = "NDV Icarus - Briefing Room"
+
+/area/map_template/ert/ship/armory
+	name = "NDV Icarus - Armory"
+
+/area/map_template/ert/ship/hangar
+	name = "NDV Icarus - Hangar 5"
+
+/area/map_template/ert/ship/officer
+	name = "NDV Icarus - Commanding Officer"
+
+// Shuttle
+
+/area/map_template/ert/shuttle
+	name = "NDV Interdictor"
+
+/area/map_template/ert/shuttle/cockpit
+	req_access = list(access_ert_responder)
+
+/area/map_template/ert/shuttle/engines
+	name = "NDV Interdictor - Engineering Compartment"
+
+/area/map_template/ert/shuttle/medbay
+	name = "NDV Interdictor - Medical Compartment"
+	req_access = list(access_cent_medical)
+
+/area/map_template/ert/shuttle/armory
+	name = "NDV Interdictor - Armory"
+	req_access = list(access_ert_responder)
+
+/area/map_template/ert/shuttle/storage
+	name = "NDV Interdictor - Storage"
+
+/area/map_template/ert/shuttle/central
+	name = "NDV Interdictor - Crew Compartment"
+
+/area/map_template/ert/shuttle/airlock
+	name = "NDV Interdictor - Aft Crew Compartment"

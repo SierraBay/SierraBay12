@@ -55,7 +55,7 @@
 			adjustHalLoss(-3)
 			if (mind)
 				if(mind.active && client != null)
-					sleeping = max(sleeping-1, 0)
+					AdjustSleeping(-1)
 			blinded = 1
 			set_stat(UNCONSCIOUS)
 		else if(resting)
@@ -121,6 +121,7 @@
 	return 1
 
 /mob/living/carbon/alien/handle_environment(datum/gas_mixture/environment)
+	..()
 	// Both alien subtypes survive in vaccum and suffer in high temperatures,
 	// so I'll just define this once, for both (see radiation comment above)
 	if(!environment) return

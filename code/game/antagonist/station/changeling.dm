@@ -1,4 +1,4 @@
-GLOBAL_DATUM_INIT(changelings, /datum/antagonist/changeling, new)
+GLOBAL_TYPED_NEW(changelings, /datum/antagonist/changeling)
 
 /datum/antagonist/changeling
 	id = MODE_CHANGELING

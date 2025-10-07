@@ -49,7 +49,7 @@
 	*/
 	var/flags_inv = 0
 	///See items_clothing.dm for appropriate bit flags
-	var/body_parts_covered = EMPTY_BITFIELD
+	var/body_parts_covered = FLAGS_OFF
 
 	var/item_flags = 0 //Miscellaneous flags pertaining to equippable objects.
 
@@ -477,8 +477,6 @@ var/global/list/slot_flags_enumeration = list(
 					to_chat(H, SPAN_WARNING("You need a suit before you can attach this [name]."))
 				return 0
 			if(!H.wear_suit.allowed)
-				if(!disable_warning)
-					to_chat(usr, SPAN_WARNING("You somehow have a suit with no defined allowed items for suit storage, stop that."))
 				return 0
 			if( !(istype(src, /obj/item/modular_computer/pda) || istype(src, /obj/item/pen) || is_type_in_list(src, H.wear_suit.allowed)) )
 				return 0
@@ -803,6 +801,7 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 
 	user.client.view = viewsize
 	zoom = 1
+	user.client.viewoffset = TRUE //[SIERRA-ADD] - FOV
 
 	GLOB.destroyed_event.register(src, src, TYPE_PROC_REF(/obj/item, unzoom))
 	GLOB.moved_event.register(user, src, TYPE_PROC_REF(/obj/item, unzoom))
@@ -816,6 +815,7 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 /mob/living/proc/unzoom(obj/item/I)
 	if(I)
 		I.unzoom(src)
+		client.viewoffset = FALSE //[SIERRA-ADD] - FOV
 
 /obj/item/proc/unzoom(mob/user)
 	if(!zoom)
@@ -848,6 +848,8 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 	if(istype(H))
 		H.handle_vision()
 	user.visible_message("[zoomdevicename ? "\The [user] looks up from [src]" : "\The [user] lowers [src]"].")
+	user.client.viewoffset = FALSE //[SIERRA-ADD] - FOV
+	user.client.reload_fov() //[SIERRA-ADD] - FOV
 
 /obj/item/proc/pwr_drain()
 	return 0 // Process Kill
@@ -914,9 +916,9 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 		. = "[icon2html(src, viewers(get_turf(src)))] \a [src]"
 	var/ID = GetIdCard()
 	if(ID)
-		. += "  <a href='?src=\ref[ID];look_at_id=1'>\[Look at ID\]</a>"
+		. += "  <a href='byond://?src=\ref[ID];look_at_id=1'>\[Look at ID\]</a>"
 	else
-		. += "  <a href='?src=\ref[src];examine=1'>\[?\]</a>"
+		. += "  <a href='byond://?src=\ref[src];examine=1'>\[?\]</a>"
 
 /obj/item/proc/on_active_hand(mob/M)
 

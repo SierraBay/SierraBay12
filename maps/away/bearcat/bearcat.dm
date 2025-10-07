@@ -2,6 +2,7 @@
 #include "bearcat_jobs.dm"
 #include "bearcat_access.dm"
 #include "bearcat_radio.dm"
+#include "bearcat_shuttles.dm"
 
 /obj/submap_landmark/joinable_submap/bearcat
 	name = "FTV Bearcat"
@@ -21,6 +22,9 @@
 	vessel_mass = 20000
 	max_speed = 1/(10 SECONDS)
 	burn_delay = 10 SECONDS
+	initial_restricted_waypoints = list(
+		"FTV Cubkitten" = list("nav_hangar_cubkitten")
+	)
 
 /obj/overmap/visitable/ship/bearcat/New()
 	name = "[pick("FTV","ITV","IEV")] [pick("Bearcat", "Firebug", "Defiant", "Unsinkable","Horizon","Vagrant")]"
@@ -37,7 +41,10 @@
 	suffixes = list("bearcat/bearcat-1.dmm", "bearcat/bearcat-2.dmm")
 	spawn_cost = 1
 	player_cost = 4
-	shuttles_to_initialise = list(/datum/shuttle/autodock/ferry/lift)
+	shuttles_to_initialise = list(
+		/datum/shuttle/autodock/ferry/lift,
+		/datum/shuttle/autodock/overmap/cubkitten
+	)
 	area_usage_test_exempted_root_areas = list(/area/ship)
 	apc_test_exempt_areas = list(
 		/area/ship/scrap/maintenance/engine/port = NO_SCRUBBER|NO_VENT,
@@ -50,7 +57,8 @@
 		/area/ship/scrap/escape_port = NO_SCRUBBER|NO_VENT,
 		/area/ship/scrap/escape_star = NO_SCRUBBER|NO_VENT,
 		/area/ship/scrap/shuttle/lift = NO_SCRUBBER|NO_VENT|NO_APC,
-		/area/ship/scrap/command/hallway = NO_SCRUBBER|NO_VENT
+		/area/ship/scrap/command/hallway = NO_SCRUBBER|NO_VENT,
+		/area/ship/scrap/shuttle/cubkitten = NO_SCRUBBER
 	)
 	spawn_weight = 0.67
 

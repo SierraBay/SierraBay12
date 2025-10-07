@@ -13,6 +13,7 @@
 ///Тоже самое что и pickup, но loc изменился
 /obj/item/proc/pickuped(user)
 	update_onturf_icon_status()
+	SEND_SIGNAL(src, COMSIG_ITEM_PICKUPED)
 
 /obj/item/on_enter_storage(obj/item/storage/S)
 	. = ..()

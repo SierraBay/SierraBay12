@@ -167,10 +167,10 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 			if(priority > 1)
 				playsound(Console.loc, 'sound/machines/chime.ogg', 80, 1)
 				Console.audible_message("[icon2html(Console, viewers(get_turf(Console)))][SPAN_WARNING("\The [Console] announces: 'High priority message received from [sender]!'")]", hearing_distance = 8)
-				Console.message_log += "[SPAN_COLOR("red", "High Priority message from <A href='?src=\ref[Console];write=[sender]'>[sender]</A>")]<BR>[authmsg]"
+				Console.message_log += "[SPAN_COLOR("red", "High Priority message from <a href='byond://?src=\ref[Console];write=[sender]'>[sender]</A>")]<BR>[authmsg]"
 			else
 				if(!Console.silent)
 					playsound(Console.loc, 'sound/machines/twobeep.ogg', 50, 1)
 					Console.audible_message("[icon2html(Console, viewers(get_turf(Console)))][SPAN_NOTICE("\The [Console] announces: 'Message received from [sender].'")]", hearing_distance = 5)
-				Console.message_log += "<B>Message from <A href='?src=\ref[Console];write=[sender]'>[sender]</A></B><BR>[authmsg]"
+				Console.message_log += "<B>Message from <a href='byond://?src=\ref[Console];write=[sender]'>[sender]</A></B><BR>[authmsg]"
 			Console.set_light(2, 0.5)

@@ -284,7 +284,7 @@
 	)
 	var/count = 0
 	for (var/obj/item/ammo_casing/ammo_casing as anything in candidates)
-		if (!do_after(user, 0.25 SECONDS, src, DO_PUBLIC_UNIQUE) || !user.use_sanity_check(src, ammo_casing, SANITY_CHECK_DEFAULT & ~SANITY_CHECK_TOOL_IN_HAND))
+		if (!do_after(user, 0.5 SECONDS, src, DO_PUBLIC_UNIQUE) || !user.use_sanity_check(src, ammo_casing, SANITY_CHECK_DEFAULT & ~SANITY_CHECK_TOOL_IN_HAND))
 			break
 		if (!load_casing(ammo_casing, user))
 			break

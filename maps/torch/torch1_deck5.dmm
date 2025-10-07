@@ -7248,6 +7248,7 @@
 /obj/item/pickaxe,
 /obj/item/shovel,
 /obj/item/pickaxe,
+/obj/item/flatpack/ore_box,
 /turf/simulated/floor/tiled/monotile,
 /area/quartermaster/expedition)
 "qh" = (
@@ -13055,12 +13056,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/fifthdeck/aftport)
-"IW" = (
-/obj/shuttle_landmark/ert/hanger{
-	name = "5th Deck, Aft Port"
-	},
-/turf/space,
-/area/space)
 "IY" = (
 /obj/machinery/atmospherics/portables_connector,
 /obj/machinery/newscaster{
@@ -42619,7 +42614,7 @@ aa
 aa
 aa
 aa
-IW
+aa
 aa
 aa
 aa

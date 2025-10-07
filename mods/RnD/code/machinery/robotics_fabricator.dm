@@ -1,4 +1,5 @@
 /obj/machinery/robotics_fabricator
+	materials = list(MATERIAL_STEEL = 0, MATERIAL_PLASTEEL = 0, MATERIAL_TITANIUM = 0, MATERIAL_ALUMINIUM = 0, MATERIAL_PLASTIC = 0, MATERIAL_GLASS = 0, MATERIAL_GOLD = 0, MATERIAL_SILVER = 0, MATERIAL_PHORON = 0, MATERIAL_URANIUM = 0, MATERIAL_DIAMOND = 0)
 	var/fab_status_flags
 	wires = /datum/wires/fabricator/robotics_fabricator
 	var/obj/item/stock_parts/computer/hard_drive/portable/disk
@@ -179,7 +180,15 @@
 	var/material = stack.material.name
 	var/stack_singular = "[stack.material.use_name] [stack.material.sheet_singular_name]" // eg "steel sheet", "wood plank"
 	var/stack_plural = "[stack.material.use_name] [stack.material.sheet_plural_name]" // eg "steel sheets", "wood planks"
-	var/amnt = stack.perunit
+	var/amnt = 0
+	var/list/_matter = stack.matter
+	if(_matter)
+		for(var/mat in _matter)
+			if(istype(stack, /obj/item/stack/material/rods))
+				var/amount_material_in_one = _matter[mat]/stack.amount
+				amnt = amount_material_in_one
+			else
+				amnt = stack.perunit
 
 	if(stack.uses_charge)
 		return
@@ -191,12 +200,12 @@
 	if(materials[material] + amnt <= res_max_amount)
 		if(stack && stack.can_use(1))
 			var/count = 0
-			var/viewing
+			var/list/viewing = list()
 			for (var/mob/M in view(6,src))
 				if (M.client)
-					viewing += M.client
-			var/image/orderimage = image('icons/obj/machines/fabricators/robotics_fabricator.dmi', src, "fab-load-metal")
-			flick_overlay(orderimage, viewing, 8)
+					viewing |= M.client
+			res_load(stack.material)
+
 			while(materials[material] + amnt <= res_max_amount && stack.amount >= 1)
 				materials[material] += amnt
 				stack.use(1)
@@ -208,6 +217,16 @@
 		to_chat(user, "The fabricator cannot hold more [stack_plural].")// use the plural form even if the given sheet is singular
 
 	return TRUE
+
+/obj/machinery/robotics_fabricator/proc/res_load(material/material)
+	var/list/viewing = list()
+	for (var/mob/M in view(6,src))
+		if (M.client)
+			viewing |= M.client
+	var/image/orderimage = image('mods/RnD/icons/robotics_fabricator.dmi', src, "fab-load-blank")
+	orderimage.color = material.icon_colour
+	flick_overlay(orderimage, viewing, 8)
+
 
 /obj/machinery/robotics_fabricator/update_categories()
 	categories = list()

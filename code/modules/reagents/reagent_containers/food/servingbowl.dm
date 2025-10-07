@@ -63,7 +63,7 @@
 	set category = "Object"
 	if (renamed)
 		return
-	var/response = sanitizeSafe(input(usr, "Enter a new name for \the [src]."), 32)
+	var/response = sanitizeSafe(input(usr, "Enter a new name for \the [src]."), MAX_LNAME_LEN)
 	if (!response)
 		return
 	to_chat(usr, SPAN_ITALIC("You rename \the [src] to \"[response]\"."))

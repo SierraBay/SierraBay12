@@ -21,8 +21,9 @@
 	..()
 	var/singleton/species/H = GLOB.species_by_name[SPECIES_HUMAN]
 	var/generator/new_temp = generator("num", T0C, H.heat_level_1 - 10, UNIFORM_RAND)
-	atmosphere.temperature = new_temp.Rand()
-	atmosphere.update_values()
+	exterior_atmosphere.temperature = new_temp.Rand()
+	exterior_atmosphere.update_values()
+	exterior_atmosphere.check_tile_graphic()
 
 /obj/overmap/visitable/sector/exoplanet/grass/get_surface_color()
 	return grass_color
@@ -108,8 +109,9 @@
 	..()
 	var/singleton/species/H = GLOB.species_by_name[SPECIES_HUMAN]
 	var/generator/new_temp = generator("num", T20C, H.heat_level_1 - 15)
-	atmosphere.temperature = new_temp.Rand()
-	atmosphere.update_values()
+	exterior_atmosphere.temperature = new_temp.Rand()
+	exterior_atmosphere.update_values()
+	exterior_atmosphere.check_tile_graphic()
 
 /datum/random_map/noise/exoplanet/grass/terraformed
 	descriptor = "terraformed grass exoplanet"

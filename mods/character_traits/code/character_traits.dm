@@ -20,7 +20,12 @@
 
 /datum/category_item/player_setup_item/physical/body/load_character(datum/pref_record_reader/R)
 	. = ..()
-	pref.mod_traits = R.read("mod_traits")
+	var/list/saved = R.read("mod_traits") || list()
+	pref.mod_traits = list()
+	for (var/name in saved)
+		if (name in GLOB.all_mod_traits)
+			pref.mod_traits += name
+
 
 /datum/category_item/player_setup_item/physical/body/save_character(datum/pref_record_writer/W)
 	. = ..()
@@ -29,10 +34,11 @@
 /datum/category_item/player_setup_item/physical/body/content(mob/user)
 	. = ..()
 	. += "<br />[BTN("add_mod_trait", "+ Add Race-Specific trait")]"
-	for (var/mod_trait in pref.mod_traits)
-		var/datum/mod_trait/M = GLOB.all_mod_traits[mod_trait]
+	for (var/name in pref.mod_traits)
+		var/datum/mod_trait/M = GLOB.all_mod_traits[name]
 
-		. += "<br />[VTBTN("remove_mod_trait", mod_trait, "-", mod_trait)] "
+
+		. += "<br />[VTBTN("remove_mod_trait", name, "-", M.name)] "
 
 		if(M.description)
 			. += M.description
@@ -51,6 +57,7 @@
 		for (var/M in pref.mod_traits)
 			var/datum/mod_trait/char_mod = GLOB.all_mod_traits[M]
 			disallowed_mod_traits |= char_mod.incompatible_traits
+
 		var/list/usable_char_mods = pref.mod_traits.Copy() ^ GLOB.all_mod_traits.Copy()
 		for(var/M in usable_char_mods)
 			var/datum/mod_trait/S = usable_char_mods[M]
@@ -59,20 +66,31 @@
 
 		if(!usable_char_mods || length(usable_char_mods) == 0)
 			to_chat(user, SPAN_WARNING("Отсутствуют черты персонажа для выбора."))
-		var/new_char_mod = input(user, "Choose a character modification:", CHARACTER_PREFERENCE_INPUT_TITLE)  as null|anything in usable_char_mods
-		if(new_char_mod && CanUseTopic(user))
-			pref.mod_traits[new_char_mod] = TRUE
-			return TOPIC_REFRESH_UPDATE_PREVIEW
+
+		var/list/choice_map = list()
+		for (var/M in usable_char_mods)
+			var/datum/mod_trait/S = usable_char_mods[M]
+			if (!S) continue
+			choice_map[S.name] = M
+
+		var/new_choice = input(user, "Choose a character modification:", CHARACTER_PREFERENCE_INPUT_TITLE) as null|anything in choice_map
+		if(new_choice && CanUseTopic(user))
+			var/selected_path = choice_map[new_choice]
+			if (selected_path)
+				var/datum/mod_trait/M = GLOB.all_mod_traits[selected_path]
+				if (M)
+					pref.mod_traits += M.name
+				return TOPIC_REFRESH_UPDATE_PREVIEW
 
 	else if(href_list["remove_mod_trait"])
-		var/M = href_list["remove_mod_trait"]
-		pref.mod_traits -= M
+		var/varval = href_list["remove_mod_trait"]
+		pref.mod_traits -= varval
 		return TOPIC_REFRESH_UPDATE_PREVIEW
 
 /datum/job/post_equip_rank(mob/person, alt_title)
 	. = ..()
 	if(istype(person, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = person
-		for(var/char_mod in person.client.prefs.mod_traits)
-			var/datum/mod_trait/M = GLOB.all_mod_traits[char_mod]
+		for(var/name in person.client.prefs.mod_traits)
+			var/datum/mod_trait/M = GLOB.all_mod_traits[name]
 			M.apply_trait(H)

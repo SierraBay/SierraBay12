@@ -17,6 +17,11 @@
 							'sound/weapons/guns/ricochet3.ogg', 'sound/weapons/guns/ricochet4.ogg')
 	impact_sounds = list(BULLET_IMPACT_MEAT = SOUNDS_BULLET_MEAT, BULLET_IMPACT_METAL = SOUNDS_BULLET_METAL)
 
+	//[SIERRA-ADD] - Mechs-by-Shegar
+	mech_armor_penetration = 0
+	mech_armor_damage = 30 //Если вдруг не прокинут родитель
+	//[SIERRA-ADD]
+
 /obj/item/projectile/bullet/on_hit(atom/target, blocked = 0)
 	if (..(target, blocked))
 		var/mob/living/L = target
@@ -69,6 +74,10 @@
 	var/base_spread = 90	//lower means the pellets spread more across body parts. If zero then this is considered a shrapnel explosion instead of a shrapnel cone
 	var/spread_step = 10	//higher means the pellets spread more across body parts with distance
 	is_pellet = TRUE
+	//[SIERRA-ADD] - Mechs-by-Shegar
+	mech_armor_penetration = 0
+	mech_armor_damage =  10 //30 выстрелов с пистолета чтоб сорвать броню
+	//[SIERRA-ADD]
 
 /obj/item/projectile/bullet/pellet/Bumped()
 	. = ..()
@@ -127,17 +136,29 @@
 /obj/item/projectile/bullet/pistol
 	damage = 45
 	distance_falloff = 3
+	//[SIERRA-ADD] - Mechs-by-Shegar
+	mech_armor_penetration = 0
+	mech_armor_damage = 10 //30 выстрелов с пистолета чтоб сорвать броню
+	//[SIERRA-ADD]
 
 /obj/item/projectile/bullet/pistol/holdout
 	damage = 40
 	penetration_modifier = 1.2
 	distance_falloff = 4
+	//[SIERRA-ADD] - Mechs-by-Shegar
+	mech_armor_penetration = 0
+	mech_armor_damage = 10 //30 выстрелов с пистолета чтоб сорвать броню
+	//[SIERRA-ADD]
 
 /obj/item/projectile/bullet/pistol/strong
 	damage = 50
 	penetration_modifier = 0.8
 	distance_falloff = 2.5
 	armor_penetration = 15
+	//[SIERRA-ADD] - Mechs-by-Shegar
+	mech_armor_penetration = 30 //Магнум прошьёт противолазерную
+	mech_armor_damage = 50
+	//[SIERRA-ADD]
 
 /obj/item/projectile/bullet/pistol/rubber //"rubber" bullets
 	name = "rubber bullet"
@@ -145,10 +166,18 @@
 	damage = 15
 	agony = 15
 	embed = FALSE
+	//[SIERRA-ADD] - Mechs-by-Shegar
+	mech_armor_penetration = 0 //Резина
+	mech_armor_damage = 0
+	//[SIERRA-ADD]
 
 /obj/item/projectile/bullet/pistol/rubber/holdout
 	agony = 10
 	damage = 10
+	//[SIERRA-ADD] - Mechs-by-Shegar
+	mech_armor_penetration = 0 //Резина
+	mech_armor_damage = 0
+	//[SIERRA-ADD]
 
 //4mm. Tiny, very low damage, does not embed, but has very high penetration. Only to be used for the experimental SMG.
 /obj/item/projectile/bullet/flechette
@@ -157,6 +186,10 @@
 	armor_penetration = 40
 	embed = FALSE
 	distance_falloff = 2
+	//[SIERRA-ADD] - Mechs-by-Shegar
+	mech_armor_penetration = 85 //прошивает любую броню
+	mech_armor_damage = 20
+	//[SIERRA-ADD]
 
 /* shotgun projectiles */
 
@@ -164,6 +197,10 @@
 	name = "slug"
 	damage = 65
 	armor_penetration = 10
+	//[SIERRA-ADD] - Mechs-by-Shegar
+	mech_armor_penetration = 40
+	mech_armor_damage = 50
+	//[SIERRA-ADD]
 
 /obj/item/projectile/bullet/shotgun/beanbag		//because beanbags are not bullets
 	name = "beanbag"
@@ -173,6 +210,10 @@
 	embed = FALSE
 	armor_penetration = 0
 	distance_falloff = 3
+	//[SIERRA-ADD] - Mechs-by-Shegar
+	mech_armor_penetration = 0
+	mech_armor_damage = 10 //Горох на меха очевидно малоэффективен
+	//[SIERRA-ADD]
 
 //Should do about 180 damage at 1 tile distance (adjacent), and 120 damage at 3 tiles distance.
 //Overall less damage than slugs in exchange for more damage at very close range and more embedding
@@ -183,6 +224,10 @@
 	pellets = 6
 	range_step = 1
 	spread_step = 50
+	//[SIERRA-ADD] - Mechs-by-Shegar
+	mech_armor_penetration = 0
+	mech_armor_damage = 5 //Дробь малоэффективна
+	//[SIERRA-ADD]
 
 /obj/item/projectile/bullet/pellet/shotgun/flechette
 	name = "flechette"
@@ -195,6 +240,10 @@
 	spread_step = 2
 	penetration_modifier = 0.5
 	hitchance_mod = 5
+	//[SIERRA-ADD] - Mechs-by-Shegar
+	mech_armor_penetration = 40
+	mech_armor_damage = 50
+	//[SIERRA-ADD]
 
 /* "Rifle" rounds */
 
@@ -203,10 +252,18 @@
 	armor_penetration = 25
 	penetrating = 1
 	distance_falloff = 1
+	//[SIERRA-ADD] - Mechs-by-Shegar
+	mech_armor_penetration = 40
+	mech_armor_damage = 20 //15 прямых попаданий
+	//[SIERRA-ADD]
 
 /obj/item/projectile/bullet/rifle/military
 	damage = 40
 	armor_penetration = 35
+	//[SIERRA-ADD] - Mechs-by-Shegar
+	mech_armor_penetration = 40
+	mech_armor_damage = 30 //10 прямых попаданий
+	//[SIERRA-ADD]
 
 /obj/item/projectile/bullet/rifle/shell
 	fire_sound = 'sound/weapons/gunshot/sniper.ogg'
@@ -217,12 +274,20 @@
 	armor_penetration = 70
 	penetration_modifier = 1.2
 	distance_falloff = 0.5
+	//[SIERRA-ADD] - Mechs-by-Shegar
+	mech_armor_penetration = 100
+	mech_armor_damage = 0
+	//[SIERRA-ADD]
 
 /obj/item/projectile/bullet/rifle/shell/apds
 	damage = 70
 	penetrating = 5
 	armor_penetration = 80
 	penetration_modifier = 1.5
+	//[SIERRA-ADD] - Mechs-by-Shegar
+	mech_armor_penetration = 100
+	mech_armor_damage = 0
+	//[SIERRA-ADD]
 
 /* Miscellaneous */
 /obj/item/projectile/bullet/gyro
@@ -240,21 +305,41 @@
 	invisibility = INVISIBILITY_ABSTRACT
 	damage = 1
 	embed = FALSE
+	//[SIERRA-ADD] - Mechs-by-Shegar
+	mech_armor_penetration = 0
+	mech_armor_damage = 0
+	//[SIERRA-ADD]
 
 /* Practice */
 
 /obj/item/projectile/bullet/pistol/practice
 	damage = 5
+	//[SIERRA-ADD] - Mechs-by-Shegar
+	mech_armor_penetration = 0
+	mech_armor_damage = 0
+	//[SIERRA-ADD]
 
 /obj/item/projectile/bullet/rifle/practice
 	damage = 5
+	//[SIERRA-ADD] - Mechs-by-Shegar
+	mech_armor_penetration = 0
+	mech_armor_damage = 0
+	//[SIERRA-ADD]
 
 /obj/item/projectile/bullet/rifle/military/practice
 	damage = 5
+	//[SIERRA-ADD] - Mechs-by-Shegar
+	mech_armor_penetration = 0
+	mech_armor_damage = 0
+	//[SIERRA-ADD]
 
 /obj/item/projectile/bullet/shotgun/practice
 	name = "practice"
 	damage = 5
+	//[SIERRA-ADD] - Mechs-by-Shegar
+	mech_armor_penetration = 0
+	mech_armor_damage = 0
+	//[SIERRA-ADD]
 
 /obj/item/projectile/bullet/pistol/cap
 	name = "cap"
@@ -265,6 +350,10 @@
 	damage = 0
 	nodamage = TRUE
 	embed = FALSE
+	//[SIERRA-ADD] - Mechs-by-Shegar
+	mech_armor_penetration = 0
+	mech_armor_damage = 0
+	//[SIERRA-ADD]
 
 /obj/item/projectile/bullet/pistol/cap/Process()
 	qdel(src)
@@ -277,6 +366,10 @@
 	armor_penetration = 25
 	life_span = 255
 	distance_falloff = 0
+	//[SIERRA-ADD] - Mechs-by-Shegar
+	mech_armor_penetration = 25
+	mech_armor_damage = 50
+	//[SIERRA-ADD]
 
 /obj/item/projectile/bullet/rock/New()
 	icon_state = "rock[rand(1,3)]"
@@ -289,3 +382,7 @@
 	damage = 45 //4.6x30 mm, 5.7x28 mm
 	armor_penetration = 7.5
 	distance_falloff = 2
+	//[SIERRA-ADD] - Mechs-by-Shegar
+	mech_armor_penetration = 0
+	mech_armor_damage = 15
+	//[SIERRA-ADD]

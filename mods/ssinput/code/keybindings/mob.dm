@@ -7,7 +7,7 @@
 
 
 /datum/keybinding/mob/cycle_intent_right
-	hotkey_keys = list("G", "Insert")
+	hotkey_keys = list("}")
 	name = "cycle_intent_right"
 	full_name = "Сycle Intent: Right"
 	description = ""
@@ -20,7 +20,7 @@
 
 
 /datum/keybinding/mob/cycle_intent_left
-	hotkey_keys = list("F")
+	hotkey_keys = list("{")
 	name = "cycle_intent_left"
 	full_name = "Сycle Intent: Left"
 	description = ""

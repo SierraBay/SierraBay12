@@ -19,7 +19,7 @@
 
 /datum/jukebox/New(atom/_owner, _template, _ui_title, _ui_width, _ui_height)
 	. = ..()
-	if (QDELETED(_owner) || !isatom(_owner))
+	if (QDELETED(_owner) || !istom(_owner))
 		qdel(src)
 		return
 	owner = _owner
@@ -160,7 +160,7 @@
 
 
 
-GLOBAL_LIST_INIT(jukebox_tracks, list(
+GLOBAL_LIST_AS(jukebox_tracks, list(
 	/singleton/audio/track/absconditus,
 	/singleton/audio/track/ambispace,
 	/singleton/audio/track/asfarasitgets,

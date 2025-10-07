@@ -60,7 +60,11 @@
 		/singleton/emote/human/qwag,
 		/singleton/emote/human/fastsway,
 		/singleton/emote/human/swag,
-		/singleton/emote/human/stopsway
+		/singleton/emote/human/stopsway,
+		/singleton/emote/audible/cat_purr,
+		/singleton/emote/audible/cat_purr/long,
+		/singleton/emote/audible/cat_purr/strong,
+		/singleton/emote/audible/hiss
 		)
 
 	spawn_flags = SPECIES_CAN_JOIN | SPECIES_IS_WHITELISTED

@@ -1,6 +1,7 @@
 /datum/design/autolathe/engineering
 	build_path = /obj/item/airlock_electronics
 	category = list("Engineering")
+	time = 7
 
 /datum/design/autolathe/engineering/airalarm
 	build_path = /obj/item/airalarm_electronics

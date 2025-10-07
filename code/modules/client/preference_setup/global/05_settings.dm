@@ -10,12 +10,23 @@
 	pref.default_slot = R.read("default_slot")
 	pref.slot_names = R.read("slot_names")
 	pref.preference_values = R.read("preference_values")
+	pref.use_slot_priority_list = R.read("use_preference_slots")
+	var/list/slot_data = R.read("preference_slots")
+	for(var/slot_id in slot_data)
+		var/datum/preferences_slot/new_slot = new()
+		new_slot.slot = text2num(slot_id)
+		pref.slot_priority_list.Add(new_slot)
 
 /datum/category_item/player_setup_item/player_global/settings/save_preferences(datum/pref_record_writer/W)
 	W.write("lastchangelog", pref.lastchangelog)
 	W.write("default_slot", pref.default_slot)
 	W.write("slot_names", pref.slot_names)
 	W.write("preference_values", pref.preference_values)
+	W.write("use_preference_slots", pref.use_slot_priority_list)
+	var/list/slot_data = list()
+	for(var/datum/preferences_slot/slot in pref.slot_priority_list)
+		slot_data.Add("[slot.slot]")
+	W.write("preference_slots", slot_data)
 
 /datum/category_item/player_setup_item/player_global/settings/sanitize_preferences()
 	// Ensure our preferences are lists.
@@ -40,6 +51,22 @@
 	for(var/key in pref.preference_values)
 		if(!(key in client_preference_keys))
 			pref.preference_values -= key
+
+	for(var/i = length(pref.slot_priority_list), i>=1, i--)
+		var/datum/preferences_slot/slot = pref.slot_priority_list[i]
+		if(!istype(slot, /datum/preferences_slot) || !slot.slot)
+			pref.slot_priority_list.Remove(slot)
+
+	if(length(pref.slot_priority_list) > config.maximum_queued_characters)
+		pref.slot_priority_list.Cut(config.maximum_queued_characters + 1, length(pref.slot_priority_list))
+
+	if(!length(pref.slot_priority_list))
+		var/datum/preferences_slot/slot = new()
+		slot.slot = pref.default_slot
+		pref.slot_priority_list.Add(slot)
+		pref.load_slot(slot)
+
+	pref.use_slot_priority_list = config.maximum_queued_characters > 1 ? pref.use_slot_priority_list : FALSE
 
 	pref.lastchangelog	= sanitize_text(pref.lastchangelog, initial(pref.lastchangelog))
 	pref.default_slot	= sanitize_integer(pref.default_slot, 1, config.character_slots, initial(pref.default_slot))

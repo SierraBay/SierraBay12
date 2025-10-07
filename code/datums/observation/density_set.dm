@@ -8,7 +8,7 @@
 //			/old_density: The density before the change.
 //			/new_density: The density after the change.
 
-GLOBAL_DATUM_INIT(density_set_event, /singleton/observ/density_set, new)
+GLOBAL_TYPED_NEW(density_set_event, /singleton/observ/density_set)
 
 /singleton/observ/density_set
 	name = "Density Set"

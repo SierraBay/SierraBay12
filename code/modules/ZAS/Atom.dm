@@ -69,5 +69,5 @@
 	. = 0
 	ATMOS_CANPASS_TURF(., src, other)
 
-/atom/movable
-	var/atmos_canpass = CANPASS_ALWAYS
+/// Integer (One of `CANPASS_*`). Whether air can pass through this atom, and on what conditions. See `code\__defines\ZAS.dm`.
+/atom/movable/var/atmos_canpass = CANPASS_ALWAYS

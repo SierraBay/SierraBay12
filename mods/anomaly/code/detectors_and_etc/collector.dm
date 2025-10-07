@@ -18,7 +18,6 @@
 	else
 		..()
 
-
 /obj/item/collector/use_tool(obj/item/item, mob/living/user, list/click_params)
 	. = ..()
 	if(closed)

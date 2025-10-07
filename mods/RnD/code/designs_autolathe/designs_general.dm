@@ -1,6 +1,7 @@
 /datum/design/autolathe/general
 	build_path = /obj/item/reagent_containers/glass/bucket
 	category = list("General")
+	time = 6
 
 /datum/design/autolathe/general/datacrystal
 	build_path = /obj/item/stock_parts/computer/hard_drive/portable
@@ -28,6 +29,9 @@
 
 /datum/design/autolathe/general/suit_cooler
 	build_path = /obj/item/device/suit_cooling_unit
+
+/datum/design/autolathe/general/suit_cooler_mini
+	build_path = /obj/item/device/suit_cooling_unit/miniature
 
 /datum/design/autolathe/general/weldermask
 	build_path = /obj/item/clothing/head/welding

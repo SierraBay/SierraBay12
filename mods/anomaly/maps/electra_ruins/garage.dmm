@@ -3,19 +3,19 @@
 /obj/structure/railing,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/exoplanet/concrete,
-/area/map_template/garage)
+/area/template_noop)
 "aF" = (
 /obj/structure/aurora/informative/wall_computer/garage{
 	pixel_y = 32
 	},
 /obj/floor_decal/snow,
 /turf/simulated/floor/exoplanet/concrete,
-/area/map_template/garage)
+/area/map_template/anomaly/garage)
 "bi" = (
 /obj/floor_decal/industrial/warning/dust/corner,
 /obj/floor_decal/snow,
 /turf/simulated/floor/exoplanet/concrete,
-/area/map_template/garage)
+/area/template_noop)
 "br" = (
 /obj/anomaly/electra/three_and_three/tesla,
 /obj/structure/aurora/old_comp,
@@ -24,8 +24,9 @@
 "bI" = (
 /obj/structure/aurora/old_comp,
 /obj/floor_decal/snow,
+/obj/landmark/no_weather_here,
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/garage/first_home)
+/area/template_noop)
 "bX" = (
 /obj/structure/ice_rock,
 /obj/structure/railing/mapped{
@@ -36,27 +37,33 @@
 "cb" = (
 /obj/floor_decal/snow,
 /obj/structure/table/rack/dark,
+/obj/landmark/no_weather_here,
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/garage/first_home)
+/area/template_noop)
 "cc" = (
 /turf/simulated/wall/titanium,
-/area/map_template/garage)
+/area/map_template/anomaly/garage)
 "cg" = (
 /obj/floor_decal/snow,
 /obj/forcefield/blocker,
 /turf/simulated/floor/exoplanet/concrete/reinforced,
-/area/map_template/garage)
+/area/map_template/anomaly/garage)
 "cm" = (
 /obj/floor_decal/industrial/warning/dust{
 	dir = 8
 	},
 /obj/floor_decal/snow,
 /turf/simulated/floor/exoplanet/concrete,
-/area/map_template/garage)
+/area/map_template/anomaly/garage)
+"cP" = (
+/obj/floor_decal/industrial/warning/dust,
+/obj/floor_decal/snow,
+/turf/simulated/floor/exoplanet/concrete,
+/area/template_noop)
 "dk" = (
 /obj/floor_decal/snow,
 /turf/simulated/floor/exoplanet/concrete/reinforced,
-/area/map_template/garage)
+/area/map_template/anomaly/garage)
 "eb" = (
 /obj/structure/grille/broken,
 /turf/simulated/floor/exoplanet/ice,
@@ -66,20 +73,20 @@
 /obj/item/device/flashlight/lamp,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/exoplanet/concrete,
-/area/map_template/garage)
+/area/map_template/anomaly/garage)
 "fa" = (
 /obj/structure/table/steel_reinforced,
 /obj/item/stock_parts/computer/scanner/paper,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/exoplanet/concrete,
-/area/map_template/garage)
+/area/map_template/anomaly/garage)
 "fi" = (
 /obj/floor_decal/industrial/warning/dust{
 	dir = 8
 	},
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/exoplanet/concrete,
-/area/map_template/garage)
+/area/map_template/anomaly/garage)
 "fn" = (
 /obj/floor_decal/snow,
 /obj/structure/aurora/wall_light{
@@ -87,7 +94,7 @@
 	},
 /obj/item/clothing/under/rank/miner,
 /turf/simulated/floor/exoplanet/concrete,
-/area/map_template/garage)
+/area/map_template/anomaly/garage)
 "fr" = (
 /turf/simulated/floor/exoplanet/ice,
 /area/template_noop)
@@ -97,7 +104,7 @@
 	},
 /obj/floor_decal/industrial/warning/fulltile,
 /turf/simulated/floor/exoplanet/concrete/reinforced,
-/area/map_template/garage)
+/area/map_template/anomaly/garage)
 "fH" = (
 /obj/structure/ice_rock,
 /obj/structure/railing/mapped,
@@ -125,13 +132,14 @@
 /obj/structure/aurora/wall_light{
 	dir = 8
 	},
+/obj/landmark/no_weather_here,
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/garage/second_home)
+/area/template_noop)
 "iu" = (
 /obj/floor_decal/industrial/warning/dust,
 /obj/floor_decal/snow,
 /turf/simulated/floor/exoplanet/concrete,
-/area/map_template/garage)
+/area/map_template/anomaly/garage)
 "kt" = (
 /obj/anomaly/electra/three_and_three/tesla_second,
 /turf/simulated/floor/exoplanet/snow,
@@ -142,13 +150,14 @@
 /obj/structure/aurora/wall_light{
 	dir = 4
 	},
+/obj/landmark/no_weather_here,
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/garage/second_home)
+/area/template_noop)
 "lJ" = (
 /obj/floor_decal/snow,
 /obj/floor_decal/snow,
 /turf/simulated/floor/exoplanet/concrete/reinforced,
-/area/map_template/garage)
+/area/map_template/anomaly/garage)
 "lN" = (
 /obj/structure/aurora/cable_angle{
 	dir = 1
@@ -159,8 +168,9 @@
 /obj/floor_decal/snow,
 /obj/decal/cleanable/ash,
 /obj/structure/aurora/wall_light,
+/obj/landmark/no_weather_here,
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/garage/first_home)
+/area/template_noop)
 "lS" = (
 /turf/simulated/floor/exoplanet/concrete,
 /area/template_noop)
@@ -173,8 +183,9 @@
 	dir = 1
 	},
 /obj/structure/aurora/smes,
+/obj/anomaly/electra/three_and_three/tesla_second,
 /turf/simulated/floor/exoplanet/concrete,
-/area/map_template/garage)
+/area/template_noop)
 "nN" = (
 /obj/decal/cleanable/ash,
 /obj/decal/cleanable/dirt,
@@ -183,12 +194,7 @@
 "op" = (
 /obj/floor_decal/snow,
 /turf/simulated/floor/exoplanet/concrete,
-/area/map_template/garage)
-"os" = (
-/obj/structure/pit/closed,
-/obj/landmark/corpse/miningstation/deadmineroveralls,
-/turf/simulated/floor/exoplanet/snow,
-/area/template_noop)
+/area/map_template/anomaly/garage)
 "oS" = (
 /turf/simulated/mineral/ice,
 /area/template_noop)
@@ -196,9 +202,22 @@
 /obj/floor_decal/snow,
 /obj/structure/aurora/smes,
 /turf/simulated/floor/exoplanet/concrete,
-/area/map_template/garage)
+/area/template_noop)
+"pV" = (
+/obj/decal/cleanable/dirt,
+/obj/structure/table/rack/dark,
+/obj/structure/rubble/house,
+/obj/random/cash,
+/turf/simulated/floor/holofloor/tiled,
+/area/template_noop)
 "qc" = (
 /obj/structure/ice_rock,
+/turf/simulated/floor/exoplanet/ice,
+/area/template_noop)
+"qr" = (
+/obj/structure/aurora/cable{
+	dir = 4
+	},
 /turf/simulated/floor/exoplanet/ice,
 /area/template_noop)
 "qL" = (
@@ -207,25 +226,20 @@
 	},
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/exoplanet/concrete/reinforced,
-/area/map_template/garage)
+/area/map_template/anomaly/garage)
 "qM" = (
 /obj/floor_decal/snow,
 /obj/structure/broken_cryo{
 	dir = 4
 	},
+/obj/landmark/no_weather_here,
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/garage/first_home)
+/area/template_noop)
 "rg" = (
 /obj/floor_decal/industrial/loading,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/exoplanet/concrete/reinforced,
-/area/map_template/garage)
-"rp" = (
-/obj/structure/closet/secure_closet/miner,
-/obj/floor_decal/industrial/outline/red,
-/obj/floor_decal/snow,
-/turf/simulated/floor/holofloor/tiled,
-/area/map_template/garage/second_home)
+/area/map_template/anomaly/garage)
 "tM" = (
 /obj/random/junk,
 /obj/floor_decal/industrial/warning/dust{
@@ -233,7 +247,7 @@
 	},
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/exoplanet/concrete,
-/area/map_template/garage)
+/area/map_template/anomaly/garage)
 "tT" = (
 /obj/structure/aurora/smes,
 /turf/simulated/floor/exoplanet/snow,
@@ -246,6 +260,7 @@
 /area/template_noop)
 "uE" = (
 /obj/structure/aurora/old_comp,
+/obj/landmark/no_weather_here,
 /turf/simulated/floor/exoplanet/snow,
 /area/template_noop)
 "uM" = (
@@ -257,7 +272,7 @@
 	},
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/exoplanet/concrete,
-/area/map_template/garage)
+/area/map_template/anomaly/garage)
 "uX" = (
 /obj/structure/sign/science_2{
 	pixel_y = -32
@@ -267,8 +282,16 @@
 "vg" = (
 /obj/floor_decal/snow,
 /obj/structure/aurora/old_comp,
+/obj/landmark/no_weather_here,
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/garage/first_home)
+/area/template_noop)
+"vB" = (
+/obj/decal/cleanable/dirt,
+/obj/item/disk/secret_project/science,
+/obj/structure/rubble/house,
+/obj/item/stack/material/rods,
+/turf/simulated/floor/holofloor/tiled,
+/area/template_noop)
 "vR" = (
 /obj/structure/aurora/cable{
 	dir = 1
@@ -284,22 +307,23 @@
 	},
 /obj/floor_decal/snow,
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/garage/first_home)
+/area/template_noop)
 "wn" = (
 /obj/random/junk,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/exoplanet/concrete/reinforced,
-/area/map_template/garage)
+/area/map_template/anomaly/garage)
 "wr" = (
 /obj/decal/cleanable/blood/oil,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/exoplanet/concrete/reinforced,
-/area/map_template/garage)
+/area/map_template/anomaly/garage)
 "wv" = (
 /obj/floor_decal/snow,
 /obj/structure/aurora/smes,
+/obj/landmark/no_weather_here,
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/garage/second_home)
+/area/template_noop)
 "wQ" = (
 /turf/template_noop,
 /area/template_noop)
@@ -308,25 +332,30 @@
 /obj/floor_decal/corner/yellow/mono,
 /turf/simulated/floor/exoplanet/concrete,
 /area/template_noop)
-"xz" = (
-/obj/structure/pit,
-/obj/landmark/corpse/miningstation/deadminerf,
-/turf/simulated/floor/exoplanet/snow,
+"xE" = (
+/obj/structure/aurora/vault_door/id_door,
+/turf/simulated/floor/holofloor/tiled,
 /area/template_noop)
 "xG" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/exoplanet/concrete,
-/area/map_template/garage)
+/area/map_template/anomaly/garage)
 "xJ" = (
 /turf/simulated/wall/titanium,
-/area/map_template/garage/second_home)
+/area/template_noop)
+"xV" = (
+/obj/decal/cleanable/dirt,
+/obj/structure/rubble/house,
+/obj/item/stack/material/rods,
+/turf/simulated/floor/holofloor/tiled,
+/area/template_noop)
 "ys" = (
 /obj/floor_decal/industrial/warning{
 	dir = 9
 	},
 /obj/structure/reagent_dispensers/fueltank,
 /turf/simulated/floor/exoplanet/concrete,
-/area/map_template/garage)
+/area/map_template/anomaly/garage)
 "yE" = (
 /obj/floor_decal/industrial/warning/dust{
 	dir = 4
@@ -336,11 +365,11 @@
 	dir = 8
 	},
 /turf/simulated/floor/exoplanet/concrete,
-/area/map_template/garage)
+/area/map_template/anomaly/garage)
 "zc" = (
 /obj/floor_decal/snow,
-/turf/simulated/floor/holofloor/tiled,
-/area/map_template/garage/second_home)
+/turf/simulated/floor/exoplanet/snow,
+/area/template_noop)
 "zk" = (
 /obj/item/material/shard/shrapnel/aluminium,
 /turf/simulated/floor/exoplanet/ice,
@@ -376,7 +405,7 @@
 	pixel_x = -13
 	},
 /turf/simulated/floor/exoplanet/concrete/reinforced,
-/area/map_template/garage)
+/area/map_template/anomaly/garage)
 "By" = (
 /obj/structure/grille,
 /turf/simulated/floor/exoplanet/ice,
@@ -386,14 +415,10 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/exoplanet/concrete,
 /area/template_noop)
-"CI" = (
-/obj/floor_decal/snow,
-/obj/structure/aurora/old_comp,
-/turf/simulated/floor/holofloor/tiled,
-/area/map_template/garage/second_home)
-"Ek" = (
-/turf/simulated/wall/titanium,
-/area/map_template/garage/first_home)
+"Ct" = (
+/obj/landmark/no_weather_here,
+/turf/simulated/wall/titanium/bunker_map,
+/area/template_noop)
 "Eo" = (
 /obj/structure/ice_rock,
 /obj/structure/grille/broken,
@@ -402,16 +427,15 @@
 "Ew" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/exoplanet/concrete/reinforced,
-/area/map_template/garage)
+/area/map_template/anomaly/garage)
 "EQ" = (
-/obj/structure/table/rack/dark,
-/obj/item/pickaxe/drill,
+/obj/landmark/no_weather_here,
 /turf/simulated/floor/exoplanet/snow,
 /area/template_noop)
 "Fi" = (
 /obj/structure/aurora/smes,
 /turf/simulated/floor/exoplanet/concrete,
-/area/map_template/garage)
+/area/template_noop)
 "Fn" = (
 /obj/decal/cleanable/ash,
 /turf/simulated/floor/exoplanet/snow,
@@ -420,12 +444,12 @@
 /obj/floor_decal/snow,
 /obj/random/junk,
 /turf/simulated/floor/exoplanet/concrete,
-/area/map_template/garage)
+/area/map_template/anomaly/garage)
 "FZ" = (
-/obj/floor_decal/snow,
-/obj/item/archaeological_find/remains/xeno,
-/turf/simulated/floor/exoplanet/concrete,
-/area/map_template/garage)
+/obj/decal/cleanable/dirt,
+/obj/structure/rubble/house,
+/turf/simulated/floor/holofloor/tiled,
+/area/template_noop)
 "Gy" = (
 /obj/structure/disposalpipe/broken,
 /turf/template_noop,
@@ -435,14 +459,22 @@
 /obj/floor_decal/industrial/warning/fulltile,
 /obj/floor_decal/snow,
 /turf/unsimulated/floor/tile,
-/area/map_template/garage/second_home)
+/area/template_noop)
 "GF" = (
 /obj/structure/table/rack/dark,
 /obj/structure/aurora/wall_light{
 	dir = 8
 	},
 /turf/simulated/floor/exoplanet/concrete,
-/area/map_template/garage)
+/area/map_template/anomaly/garage)
+"GW" = (
+/obj/decal/cleanable/dirt,
+/obj/structure/table/rack/dark,
+/obj/structure/rubble/house,
+/obj/random/biggun,
+/obj/random/cash,
+/turf/simulated/floor/holofloor/tiled,
+/area/template_noop)
 "Hd" = (
 /obj/structure/aurora/cable_angle,
 /turf/simulated/floor/exoplanet/ice,
@@ -453,7 +485,7 @@
 	},
 /obj/floor_decal/snow,
 /turf/simulated/floor/exoplanet/concrete,
-/area/map_template/garage)
+/area/map_template/anomaly/garage)
 "HI" = (
 /obj/structure/aurora/wall_light{
 	dir = 4
@@ -465,7 +497,7 @@
 /obj/random/junk,
 /obj/forcefield/blocker,
 /turf/simulated/floor/exoplanet/concrete/reinforced,
-/area/map_template/garage)
+/area/map_template/anomaly/garage)
 "IH" = (
 /obj/item/weldingtool/electric,
 /obj/floor_decal/industrial/warning/dust{
@@ -473,27 +505,41 @@
 	},
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/exoplanet/concrete,
-/area/map_template/garage)
+/area/map_template/anomaly/garage)
 "IS" = (
 /obj/floor_decal/snow,
 /obj/item/remains/human,
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/garage/first_home)
+/area/template_noop)
 "Jo" = (
 /obj/floor_decal/snow,
 /obj/random/junk,
 /obj/decal/cleanable/blood/oil,
 /turf/simulated/floor/exoplanet/concrete/reinforced,
-/area/map_template/garage)
+/area/map_template/anomaly/garage)
 "Kc" = (
 /obj/random/junk,
 /obj/floor_decal/snow,
 /turf/simulated/floor/exoplanet/concrete/reinforced,
-/area/map_template/garage)
+/area/template_noop)
+"KQ" = (
+/obj/decal/cleanable/dirt,
+/obj/structure/table/rack/dark,
+/obj/structure/rubble/house,
+/obj/item/stack/material/rods,
+/obj/random/cash,
+/turf/simulated/floor/holofloor/tiled,
+/area/template_noop)
 "KT" = (
 /obj/floor_decal/snow,
+/obj/landmark/no_weather_here,
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/garage/first_home)
+/area/template_noop)
+"Lb" = (
+/obj/structure/aurora/smes,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/exoplanet/concrete,
+/area/template_noop)
 "Ls" = (
 /obj/floor_decal/snow,
 /turf/simulated/floor/exoplanet/concrete,
@@ -508,7 +554,7 @@
 	},
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/exoplanet/concrete,
-/area/map_template/garage)
+/area/map_template/anomaly/garage)
 "MW" = (
 /obj/floor_decal/industrial/warning/dust{
 	dir = 4
@@ -518,7 +564,7 @@
 	},
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/exoplanet/concrete,
-/area/map_template/garage)
+/area/map_template/anomaly/garage)
 "Nc" = (
 /obj/structure/table/steel_reinforced,
 /obj/structure/aurora/wall_light{
@@ -526,14 +572,14 @@
 	},
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/exoplanet/concrete,
-/area/map_template/garage)
+/area/map_template/anomaly/garage)
 "Nd" = (
 /obj/machinery/door/blast/regular/open{
 	dir = 4
 	},
 /obj/floor_decal/industrial/warning/fulltile,
 /turf/simulated/floor/exoplanet/concrete,
-/area/map_template/garage)
+/area/map_template/anomaly/garage)
 "Nl" = (
 /obj/floor_decal/industrial/warning/dust{
 	dir = 8
@@ -545,19 +591,14 @@
 	},
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/exoplanet/concrete,
-/area/map_template/garage)
+/area/map_template/anomaly/garage)
 "OP" = (
 /obj/floor_decal/industrial/warning{
 	dir = 1
 	},
 /obj/structure/reagent_dispensers/fueltank,
 /turf/simulated/floor/exoplanet/concrete,
-/area/map_template/garage)
-"OQ" = (
-/obj/floor_decal/snow,
-/obj/decal/cleanable/ash,
-/turf/simulated/floor/holofloor/tiled,
-/area/map_template/garage/first_home)
+/area/map_template/anomaly/garage)
 "OR" = (
 /obj/floor_decal/industrial/outline/orange,
 /obj/structure/railing{
@@ -566,7 +607,7 @@
 /obj/structure/reagent_dispensers/water_cooler,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/exoplanet/concrete,
-/area/map_template/garage)
+/area/map_template/anomaly/garage)
 "Pi" = (
 /obj/machinery/door/blast/shutters,
 /turf/simulated/floor/exoplanet/snow,
@@ -580,22 +621,15 @@
 	},
 /obj/floor_decal/snow,
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/garage/first_home)
+/area/template_noop)
 "Pl" = (
 /obj/decal/cleanable/ash,
 /turf/simulated/floor/exoplanet/concrete,
-/area/template_noop)
-"PP" = (
-/obj/machinery/mining/brace,
-/turf/simulated/floor/exoplanet/snow,
 /area/template_noop)
 "Qa" = (
 /obj/structure/aurora/wall_light{
 	dir = 8
 	},
-/obj/item/material/drill_head/steel,
-/obj/item/material/drill_head/steel,
-/obj/structure/table/rack/dark,
 /turf/simulated/floor/exoplanet/snow,
 /area/template_noop)
 "QQ" = (
@@ -608,21 +642,17 @@
 /obj/floor_decal/industrial/outline/orange,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/exoplanet/concrete,
-/area/map_template/garage)
+/area/map_template/anomaly/garage)
 "QU" = (
 /obj/machinery/power/port_gen/pacman/mrs,
+/obj/landmark/no_weather_here,
 /turf/simulated/floor/exoplanet/snow,
 /area/template_noop)
 "Rg" = (
 /obj/floor_decal/industrial/outline/orange,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/exoplanet/concrete,
-/area/map_template/garage)
-"Ry" = (
-/obj/structure/pit,
-/obj/landmark/corpse/miningstation/deadminersuit,
-/turf/simulated/floor/exoplanet/snow,
-/area/template_noop)
+/area/map_template/anomaly/garage)
 "SN" = (
 /obj/random/junk,
 /obj/structure/aurora/wall_light{
@@ -630,18 +660,12 @@
 	},
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/exoplanet/concrete,
-/area/map_template/garage)
+/area/map_template/anomaly/garage)
 "Tb" = (
 /obj/structure/broken_cryo{
 	dir = 4
 	},
 /turf/simulated/floor/exoplanet/snow,
-/area/template_noop)
-"Td" = (
-/obj/structure/sign/science_2{
-	pixel_y = 32
-	},
-/turf/template_noop,
 /area/template_noop)
 "TO" = (
 /obj/structure/ice_rock,
@@ -653,14 +677,15 @@
 "TX" = (
 /obj/floor_decal/snow,
 /obj/decal/cleanable/ash,
+/obj/landmark/no_weather_here,
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/garage/second_home)
+/area/template_noop)
 "UL" = (
 /obj/structure/closet/toolcloset,
 /obj/floor_decal/industrial/outline/orange,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/exoplanet/concrete,
-/area/map_template/garage)
+/area/map_template/anomaly/garage)
 "Vi" = (
 /obj/structure/broken_door,
 /obj/floor_decal/industrial/warning/fulltile,
@@ -668,11 +693,11 @@
 /turf/simulated/floor/exoplanet/snow,
 /area/template_noop)
 "VA" = (
-/obj/machinery/mining/drill,
 /obj/floor_decal/industrial/outline/yellow,
 /obj/floor_decal/snow,
+/obj/landmark/no_weather_here,
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/garage/second_home)
+/area/template_noop)
 "Wm" = (
 /obj/structure/aurora/wall_light{
 	dir = 4
@@ -681,8 +706,9 @@
 /obj/machinery/constructable_frame,
 /obj/floor_decal/industrial/outline/yellow,
 /obj/floor_decal/snow,
+/obj/landmark/no_weather_here,
 /turf/simulated/floor/holofloor/tiled,
-/area/map_template/garage/second_home)
+/area/template_noop)
 "WC" = (
 /obj/structure/grille/broken,
 /obj/structure/ice_rock,
@@ -692,20 +718,21 @@
 /obj/floor_decal/snow,
 /obj/decal/cleanable/blood/oil,
 /turf/simulated/floor/exoplanet/concrete/reinforced,
-/area/map_template/garage)
+/area/map_template/anomaly/garage)
 "XD" = (
 /obj/structure/grille/broken,
 /turf/simulated/floor/exoplanet/snow,
 /area/template_noop)
 "XN" = (
 /obj/structure/table/rack/dark,
+/obj/landmark/no_weather_here,
 /turf/simulated/floor/exoplanet/snow,
 /area/template_noop)
 "Yr" = (
 /obj/structure/table/rack/dark,
 /obj/item/storage/toolbox/mechanical,
 /turf/simulated/floor/exoplanet/concrete,
-/area/map_template/garage)
+/area/map_template/anomaly/garage)
 "YK" = (
 /obj/structure/railing/mapped,
 /turf/simulated/floor/exoplanet/ice,
@@ -714,7 +741,7 @@
 /obj/machinery/door/blast/regular,
 /obj/floor_decal/industrial/warning/fulltile,
 /turf/simulated/floor/exoplanet/concrete/reinforced,
-/area/map_template/garage)
+/area/map_template/anomaly/garage)
 "ZL" = (
 /turf/simulated/floor/exoplanet/snow,
 /area/template_noop)
@@ -727,8 +754,11 @@ wQ
 wQ
 wQ
 wQ
-cc
-cc
+wQ
+wQ
+wQ
+xJ
+xJ
 cc
 cc
 cc
@@ -751,8 +781,11 @@ wQ
 wQ
 wQ
 wQ
-cc
-Fi
+wQ
+wQ
+wQ
+wQ
+Lb
 ar
 GF
 Yr
@@ -775,7 +808,10 @@ wQ
 wQ
 wQ
 wQ
-cc
+wQ
+wQ
+wQ
+wQ
 ng
 bi
 yE
@@ -793,15 +829,18 @@ wQ
 "}
 (4,1,1) = {"
 wQ
+Ct
+Ct
+Ct
+Ct
+Ct
 wQ
 wQ
 wQ
 wQ
 wQ
-uX
-cc
 Fi
-iu
+cP
 Kc
 dk
 wr
@@ -817,13 +856,16 @@ wQ
 "}
 (5,1,1) = {"
 wQ
+Ct
+FZ
+FZ
+vB
+Ct
 wQ
 wQ
 wQ
 wQ
-wQ
-wQ
-cc
+xJ
 pl
 iu
 Xh
@@ -841,8 +883,11 @@ wQ
 "}
 (6,1,1) = {"
 wQ
-wQ
-wQ
+Ct
+KQ
+FZ
+GW
+Ct
 wQ
 wQ
 wQ
@@ -865,8 +910,11 @@ wQ
 "}
 (7,1,1) = {"
 wQ
-wQ
-wQ
+Ct
+GW
+FZ
+pV
+Ct
 wQ
 wQ
 wQ
@@ -889,8 +937,11 @@ wQ
 "}
 (8,1,1) = {"
 wQ
-wQ
-wQ
+Ct
+KQ
+vB
+GW
+Ct
 wQ
 wQ
 wQ
@@ -913,8 +964,11 @@ wQ
 "}
 (9,1,1) = {"
 wQ
-wQ
-wQ
+Ct
+FZ
+FZ
+xV
+Ct
 wQ
 wQ
 wQ
@@ -937,11 +991,14 @@ wQ
 "}
 (10,1,1) = {"
 wQ
+Ct
+Ct
+xE
+Ct
+Ct
 wQ
 wQ
-wQ
-wQ
-wQ
+fr
 oS
 oS
 oS
@@ -949,7 +1006,7 @@ oS
 oS
 oS
 fn
-FZ
+op
 xG
 xG
 SN
@@ -961,11 +1018,14 @@ wQ
 "}
 (11,1,1) = {"
 wQ
-wQ
-wQ
-wQ
-wQ
-wQ
+qr
+fr
+fr
+fr
+fr
+fr
+fr
+fr
 oS
 oS
 oS
@@ -985,12 +1045,15 @@ wQ
 "}
 (12,1,1) = {"
 wQ
-wQ
-Ek
-Ek
-Ek
-Ek
-Ek
+Hd
+vR
+vR
+vR
+xJ
+xJ
+xJ
+xJ
+xJ
 oS
 vR
 vR
@@ -1009,12 +1072,15 @@ oS
 "}
 (13,1,1) = {"
 wQ
+wQ
+wQ
+wQ
 Gy
-Ek
+xJ
 vg
 KT
 QU
-Ek
+xJ
 fr
 fr
 zk
@@ -1033,12 +1099,15 @@ wQ
 "}
 (14,1,1) = {"
 wQ
+wQ
+wQ
+wQ
 uX
-Ek
+xJ
 qM
 KT
 cb
-Ek
+xJ
 fr
 fH
 gP
@@ -1058,11 +1127,14 @@ wQ
 (15,1,1) = {"
 wQ
 wQ
-Ek
+wQ
+wQ
+wQ
+xJ
 uE
-ZL
-ZL
-Ek
+EQ
+EQ
+xJ
 fr
 zk
 ZL
@@ -1082,11 +1154,14 @@ wQ
 (16,1,1) = {"
 wQ
 wQ
-Ek
+wQ
+wQ
+wQ
+xJ
 Pk
 IS
 lO
-Ek
+xJ
 hq
 fr
 zV
@@ -1105,11 +1180,14 @@ wQ
 "}
 (17,1,1) = {"
 wQ
+wQ
+wQ
+wQ
 ZL
 ZL
 br
 Lx
-OQ
+TX
 Vi
 Ls
 oS
@@ -1128,13 +1206,16 @@ wQ
 wQ
 "}
 (18,1,1) = {"
+wQ
+wQ
+wQ
 ZL
 ZL
-Ek
+xJ
 wa
 IS
 lO
-Ek
+xJ
 oS
 oS
 ZL
@@ -1153,12 +1234,15 @@ wQ
 "}
 (19,1,1) = {"
 wQ
+wQ
+wQ
+wQ
 ZL
-Ek
+xJ
 bI
 KT
 XN
-Ek
+xJ
 oS
 oS
 lS
@@ -1178,11 +1262,14 @@ wQ
 (20,1,1) = {"
 wQ
 wQ
+wQ
+wQ
+wQ
 WC
 Tb
 ZL
 KT
-Ek
+xJ
 fr
 YK
 BS
@@ -1201,12 +1288,15 @@ oS
 "}
 (21,1,1) = {"
 wQ
+wQ
+wQ
+wQ
 ZL
 XD
 tT
 ZL
 Lx
-Ek
+xJ
 fr
 fr
 AB
@@ -1226,11 +1316,14 @@ oS
 (22,1,1) = {"
 wQ
 wQ
+wQ
+wQ
+wQ
 WC
 XD
 XD
-Ek
-Ek
+xJ
+xJ
 fr
 oS
 oS
@@ -1248,6 +1341,9 @@ oS
 oS
 "}
 (23,1,1) = {"
+wQ
+wQ
+wQ
 wQ
 fr
 fr
@@ -1275,6 +1371,9 @@ wQ
 wQ
 wQ
 wQ
+wQ
+wQ
+wQ
 fr
 fr
 fr
@@ -1287,15 +1386,18 @@ wv
 ib
 ZL
 ZL
-PP
+ZL
 Qa
-EQ
-rp
-xJ
-wQ
+ZL
+ZL
+ZL
+ZL
 wQ
 "}
 (25,1,1) = {"
+wQ
+wQ
+wQ
 wQ
 oS
 oS
@@ -1306,8 +1408,8 @@ oS
 oS
 oS
 xJ
-zc
-zc
+KT
+KT
 ZL
 Lx
 ZL
@@ -1315,11 +1417,14 @@ ZL
 Ba
 TX
 zc
-xJ
-wQ
+ZL
+ZL
 wQ
 "}
 (26,1,1) = {"
+wQ
+wQ
+wQ
 wQ
 oS
 oS
@@ -1330,7 +1435,7 @@ ZL
 ZL
 oS
 xJ
-CI
+vg
 kM
 oS
 mb
@@ -1339,18 +1444,21 @@ ZL
 Fn
 Wm
 VA
-xJ
-Td
+ZL
+wQ
 wQ
 "}
 (27,1,1) = {"
+wQ
+wQ
+wQ
 wQ
 wQ
 oS
 oS
 oS
 ZL
-Ry
+ZL
 ZL
 ZL
 xJ
@@ -1371,12 +1479,15 @@ wQ
 wQ
 wQ
 wQ
+wQ
+wQ
+wQ
 oS
 ZL
 ZL
 ZL
 ZL
-xz
+ZL
 ZL
 ZL
 oS
@@ -1397,7 +1508,10 @@ wQ
 wQ
 wQ
 wQ
-os
+wQ
+wQ
+wQ
+wQ
 ZL
 ZL
 ZL
@@ -1427,6 +1541,9 @@ wQ
 wQ
 wQ
 wQ
+wQ
+wQ
+wQ
 oS
 oS
 oS
@@ -1440,6 +1557,9 @@ wQ
 wQ
 "}
 (31,1,1) = {"
+wQ
+wQ
+wQ
 wQ
 wQ
 wQ

@@ -175,7 +175,9 @@
 /obj/machinery/recharger/wallcharger{
 	pixel_x = -26
 	},
-/obj/machinery/anomaly_container,
+/obj/machinery/anomaly_container{
+	req_access = list("ACCESS_SKRELLSCOUT")
+	},
 /turf/simulated/floor/tiled/skrell,
 /area/ship/skrellscoutshuttle)
 "aO" = (
@@ -1201,15 +1203,7 @@
 /turf/simulated/floor/tiled/skrell/white,
 /area/ship/skrellscoutship/crew/medbay)
 "ec" = (
-/obj/structure/table/glass,
-/obj/item/storage/firstaid/adv{
-	pixel_x = -6;
-	pixel_y = 6
-	},
-/obj/item/storage/box/nitrilegloves{
-	pixel_x = 7;
-	pixel_y = -3
-	},
+/obj/machinery/organ_printer/robot/mapped,
 /turf/simulated/floor/tiled/skrell/white,
 /area/ship/skrellscoutship/crew/medbay)
 "ed" = (
@@ -1661,7 +1655,9 @@
 /area/ship/skrellscoutship/robotics)
 "fy" = (
 /obj/floor_decal/industrial/outline/red,
-/obj/machinery/stasis_cage,
+/obj/machinery/stasis_cage{
+	req_access = list("ACCESS_SKRELLSCOUT")
+	},
 /turf/simulated/floor/tiled/skrell/green,
 /area/ship/skrellscoutship/robotics)
 "fA" = (
@@ -2348,7 +2344,7 @@
 /turf/simulated/floor/tiled/skrell/blue,
 /area/ship/skrellscoutship/crew/rec)
 "ho" = (
-/obj/machinery/cooker/oven,
+/obj/machinery/appliance/cooker/oven,
 /turf/simulated/floor/tiled/skrell/white,
 /area/ship/skrellscoutship/crew/rec)
 "hp" = (
@@ -2396,7 +2392,9 @@
 /turf/simulated/floor/tiled/skrell/red,
 /area/ship/skrellscoutship/crew/labs)
 "hs" = (
-/obj/machinery/anomaly_container,
+/obj/machinery/anomaly_container{
+	req_access = list("ACCESS_SKRELLSCOUT")
+	},
 /obj/floor_decal/industrial/hatch/red,
 /turf/simulated/floor/tiled/skrell/red,
 /area/ship/skrellscoutship/crew/labs)
@@ -2457,6 +2455,14 @@
 /obj/item/storage/box/glasses/mug{
 	pixel_x = 4
 	},
+/obj/item/material/utensil/fork/titanium,
+/obj/item/material/utensil/fork/titanium,
+/obj/item/material/utensil/fork/titanium,
+/obj/item/material/utensil/fork/titanium,
+/obj/item/material/utensil/spoon/titanium,
+/obj/item/material/utensil/spoon/titanium,
+/obj/item/material/utensil/spoon/titanium,
+/obj/item/material/utensil/spoon/titanium,
 /turf/simulated/floor/tiled/skrell/white,
 /area/ship/skrellscoutship/crew/rec)
 "hJ" = (
@@ -3701,6 +3707,14 @@
 	},
 /turf/simulated/floor/tiled/skrell,
 /area/ship/skrellscoutshuttle)
+"mH" = (
+/obj/structure/table/glass,
+/obj/item/reagent_containers/spray/cleaner{
+	pixel_x = -5
+	},
+/obj/item/reagent_containers/spray/sterilizine,
+/turf/simulated/floor/tiled/skrell/white,
+/area/ship/skrellscoutship/crew/medbay)
 "mI" = (
 /obj/paint/black,
 /turf/simulated/wall/r_wall,
@@ -4425,7 +4439,7 @@
 /area/ship/skrellscoutship/hangar)
 "xF" = (
 /obj/structure/table/standard,
-/obj/machinery/microwave,
+/obj/machinery/appliance/cooker/microwave,
 /obj/item/storage/box/donkpocket_vegetable,
 /turf/simulated/floor/tiled/skrell/white,
 /area/ship/skrellscoutship/crew/rec)
@@ -5901,7 +5915,9 @@
 /area/ship/skrellscoutship/crew/labs)
 "SY" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/anomaly_container,
+/obj/machinery/anomaly_container{
+	req_access = list("ACCESS_SKRELLSCOUT")
+	},
 /turf/simulated/floor/tiled/skrell,
 /area/ship/skrellscoutshuttle)
 "Tb" = (
@@ -5974,7 +5990,7 @@
 /turf/simulated/wall/r_wall,
 /area/ship/skrellscoutshuttle)
 "TZ" = (
-/obj/machinery/cooker/grill,
+/obj/machinery/appliance/cooker/grill,
 /turf/simulated/floor/tiled/skrell/white,
 /area/ship/skrellscoutship/crew/rec)
 "Uf" = (
@@ -6143,14 +6159,18 @@
 /area/ship/skrellscoutship/dock)
 "VA" = (
 /obj/structure/table/glass,
-/obj/item/reagent_containers/spray/sterilizine,
-/obj/item/reagent_containers/spray/cleaner{
-	pixel_x = -5
-	},
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 1
 	},
 /obj/machinery/light/skrell,
+/obj/item/storage/box/nitrilegloves{
+	pixel_x = 7;
+	pixel_y = -3
+	},
+/obj/item/storage/firstaid/adv{
+	pixel_x = -6;
+	pixel_y = 6
+	},
 /turf/simulated/floor/tiled/skrell/white,
 /area/ship/skrellscoutship/crew/medbay)
 "VD" = (
@@ -11004,7 +11024,7 @@ kq
 kt
 uk
 cX
-ds
+mH
 dK
 VA
 uk

@@ -30,6 +30,15 @@
 	id = "[random_id(/obj/machinery/computer/teleporter, 1000, 9999)]"
 	update_refs()
 
+/obj/machinery/computer/teleporter/examine(mob/user, distance)
+	. = ..()
+	var/adjacent = distance <= 2 || isobserver(user)
+	if (!adjacent || GET_FLAGS(stat, MACHINE_STAT_NOSCREEN))
+		return
+	if (id)
+		to_chat(user, SPAN_NOTICE("The console screen displays:") + " ID: [id]")
+	else
+		to_chat(user, SPAN_NOTICE("The console screen displays:") + " ID: " + SPAN_WARNING("<i>UNDEFINED</i>"))
 
 /obj/machinery/computer/teleporter/proc/update_refs()
 	for (var/dir in GLOB.cardinal)
@@ -182,9 +191,10 @@
 		if (QDELETED(T) || !T.implanted || !ismob(T.loc))
 			continue
 		var/mob/M = T.loc
+		var/turf/TT = get_turf(M)
 		if (M.stat == DEAD && world.time > M.timeofdeath + 15 MINUTES)
 			continue
-		if (!isPlayerLevel(M.z))
+		if (!isPlayerLevel(TT.z))
 			continue
 		result["[M.name] \[[++ids[M.name]]\]"] = T
 	return result

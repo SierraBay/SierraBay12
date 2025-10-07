@@ -95,7 +95,7 @@
 				/obj/item/circular_saw,
 				/obj/item/scalpel/laser,
 				/obj/item/melee/baton/loaded,
-				/obj/item/material/knife/folding/tacticool)
+				/obj/item/material/knife/folding/combat/balisong)
 
 /obj/random/renegade/augment
 	name = "Random Renegade Augmentation"
@@ -106,4 +106,5 @@
 /obj/random/renegade/augment/spawn_choices()
 	return list(/obj/item/device/augment_implanter/popout_shotgun,
 				/obj/item/device/augment_implanter/powerfist,
+				/obj/item/device/augment_implanter/knuckles,
 				/obj/item/device/augment_implanter/wrist_blade)

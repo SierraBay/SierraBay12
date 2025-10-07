@@ -6,7 +6,7 @@
 	. = ..()
 	var/desc = "A round of **[SSticker.mode ? SSticker.mode.name : "Unknown"]** has ended.\n"
 	if(data)
-
+		var/dead_count = GLOB.crew_death_count
 		if(data["surviving_total"] > 0)
 
 			var/s_was =      "was"
@@ -16,9 +16,9 @@
 				s_was = "were"
 				s_survivor = "survivors"
 
-			desc += "There [s_was] **[data["surviving_total"]] [s_survivor] ([data["escaped_total"]] escaped)** and **[data["ghosts"]] ghosts.**"
+			desc += "There [s_was] **[data["surviving_total"]] [s_survivor], [dead_count] dead ([data["escaped_total"]] escaped)** and **[data["ghosts"]] ghosts.**"
 		else
-			desc += "There were **no survivors** ([data["ghosts"]] ghosts)."
+			desc += "There were **no survivors** ([dead_count] dead and [data["ghosts"]] ghosts)."
 
 	.["embeds"] = list(list(
 		"title" = "Round [game_id] is ending.",

@@ -5,7 +5,7 @@
 	icon_deny = "sec-deny"
 	icon_vend = "sec-vend"
 	base_type = /obj/machinery/vending/security
-	req_access = list(access_security)
+	req_access = list(access_brig)
 	product_ads = {"\
 		Crack recidivist skulls!;\
 		Beat some heads in!;\

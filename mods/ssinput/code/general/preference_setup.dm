@@ -10,7 +10,10 @@
 	sort_order = 9
 	category_item_type = /datum/category_item/player_setup_item/controls
 
-
+/datum/category_group/player_setup_category/psionics_preferences
+	name = "Psionics"
+	sort_order = 10
+	category_item_type = /datum/category_item/player_setup_item/psionics
 
 /datum/category_item/player_setup_item/controls/keybindings
 	name = "Keybindings"

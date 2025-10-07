@@ -1,4 +1,4 @@
-GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
+GLOBAL_TYPED_NEW(dview_mob, /mob/dview)
 
 
 /mob/dview
@@ -21,7 +21,7 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 
 
 // Version of view() which ignores darkness
-/proc/dview(range = world.view, center, invis_flags = EMPTY_BITFIELD)
+/proc/dview(range = world.view, center, invis_flags = FLAGS_OFF)
 	RETURN_TYPE(/list)
 	if (!center)
 		return

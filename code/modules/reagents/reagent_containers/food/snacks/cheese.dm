@@ -10,12 +10,6 @@
 	nutriment_amt = 10
 	bitesize = 2
 
-
-/obj/item/reagent_containers/food/snacks/sliceable/cheesewheel/Initialize()
-	. = ..()
-	reagents.add_reagent(/datum/reagent/nutriment/protein, 10)
-
-
 /obj/item/reagent_containers/food/snacks/cheesewedge
 	abstract_type = /obj/item/reagent_containers/food/snacks/cheesewedge
 	name = "parent cheese wedge"
@@ -24,15 +18,7 @@
 	filling_color = "#fff700"
 	bitesize = 2
 	center_of_mass = "x=16;y=10"
-
-
-/obj/item/reagent_containers/food/snacks/cheesewedge/Initialize()
-	. = ..()
-	if (!reagents.has_reagent(/datum/reagent/nutriment))
-		reagents.add_reagent(/datum/reagent/nutriment, 2, nutriment_desc)
-	if (!reagents.has_reagent(/datum/reagent/nutriment/protein))
-		reagents.add_reagent(/datum/reagent/nutriment/protein, 2)
-
+	nutriment_amt = 2
 
 /obj/item/reagent_containers/food/snacks/sliceable/cheesewheel/fresh
 	name = "fresh cheese wheel"
@@ -42,6 +28,9 @@
 	nutriment_desc = list("mild cheese" = 10)
 	slice_path = /obj/item/reagent_containers/food/snacks/cheesewedge/fresh
 
+/obj/item/reagent_containers/food/snacks/sliceable/cheesewheel/fresh/Initialize()
+	. = ..()
+	reagents.add_reagent(/datum/reagent/nutriment/protein/cheese, 10)
 
 /obj/item/reagent_containers/food/snacks/cheesewedge/fresh
 	name = "fresh cheese wedge"
@@ -80,28 +69,6 @@
 	range = 2
 
 
-/datum/microwave_recipe/cheesewheel_aged
-	required_reagents = list(
-		/datum/reagent/enzyme = 5,
-		/datum/reagent/sodiumchloride = 10
-	)
-	required_items = list(
-		/obj/item/reagent_containers/food/snacks/sliceable/cheesewheel
-	)
-	result_path = /obj/item/reagent_containers/food/snacks/sliceable/cheesewheel/aged
-
-
-/datum/microwave_recipe/cheesewedge_aged
-	required_reagents = list(
-		/datum/reagent/enzyme = 1,
-		/datum/reagent/sodiumchloride = 2
-	)
-	required_items = list(
-		/obj/item/reagent_containers/food/snacks/cheesewedge
-	)
-	result_path = /obj/item/reagent_containers/food/snacks/cheesewedge/aged
-
-
 /obj/item/reagent_containers/food/snacks/sliceable/cheesewheel/blue
 	name = "blue cheese wheel"
 	desc = "A wheel of intense blue cheese."
@@ -126,27 +93,3 @@
 	intensity = /singleton/scent_intensity/strong
 	descriptor = SCENT_DESC_ODOR
 	range = 3
-
-
-/datum/microwave_recipe/cheesewheel_blue
-	required_reagents = list(
-		/datum/reagent/enzyme = 5,
-		/datum/reagent/sodiumchloride = 5,
-		/datum/reagent/drink/kefir = 5
-	)
-	required_items = list(
-		/obj/item/reagent_containers/food/snacks/sliceable/cheesewheel
-	)
-	result_path = /obj/item/reagent_containers/food/snacks/sliceable/cheesewheel/blue
-
-
-/datum/microwave_recipe/cheesewedge_blue
-	required_reagents = list(
-		/datum/reagent/enzyme = 1,
-		/datum/reagent/sodiumchloride = 1,
-		/datum/reagent/drink/kefir = 1
-	)
-	required_items = list(
-		/obj/item/reagent_containers/food/snacks/cheesewedge
-	)
-	result_path = /obj/item/reagent_containers/food/snacks/cheesewedge/blue

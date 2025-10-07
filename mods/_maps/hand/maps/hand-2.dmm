@@ -261,7 +261,7 @@
 /turf/simulated/floor/tiled/techmaint,
 /area/ship/hand/crew/hallway/upper/fore)
 "co" = (
-/obj/machinery/cooker/fryer,
+/obj/machinery/appliance/cooker/fryer,
 /obj/floor_decal/industrial/outline/yellow,
 /obj/machinery/light{
 	dir = 4
@@ -648,7 +648,7 @@
 /area/ship/hand/cargo)
 "fx" = (
 /obj/structure/table/marble,
-/obj/machinery/microwave{
+/obj/machinery/appliance/cooker/microwave{
 	pixel_y = 6
 	},
 /obj/machinery/light{
@@ -1333,7 +1333,7 @@
 /area/ship/hand/medbay)
 "nm" = (
 /obj/structure/table/marble,
-/obj/machinery/cooker/cereal{
+/obj/machinery/appliance/mixer/cereal{
 	pixel_y = 8
 	},
 /turf/simulated/floor/tiled/white,
@@ -2531,7 +2531,7 @@
 /turf/simulated/floor/tiled/techmaint,
 /area/ship/hand/crew/hallway/upper/aft)
 "Ae" = (
-/obj/machinery/cooker/oven,
+/obj/machinery/appliance/cooker/oven,
 /obj/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/tiled/white,
 /area/ship/hand/crew/kitchen)
@@ -2975,7 +2975,7 @@
 /area/ship/hand/crew/hydro)
 "Dt" = (
 /obj/structure/table/marble,
-/obj/machinery/cooker/candy{
+/obj/machinery/appliance/mixer/candy{
 	pixel_y = 14
 	},
 /turf/simulated/floor/tiled/white,
@@ -3362,7 +3362,7 @@
 /area/ship/hand/medbay/storage)
 "IX" = (
 /obj/structure/table/marble,
-/obj/machinery/microwave{
+/obj/machinery/appliance/cooker/microwave{
 	pixel_y = 6
 	},
 /turf/simulated/floor/tiled/white,
@@ -4658,7 +4658,7 @@
 /turf/simulated/floor/plating,
 /area/ship/hand/airlock)
 "XU" = (
-/obj/machinery/cooker/grill,
+/obj/machinery/appliance/cooker/grill,
 /obj/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/tiled/white,
 /area/ship/hand/crew/kitchen)

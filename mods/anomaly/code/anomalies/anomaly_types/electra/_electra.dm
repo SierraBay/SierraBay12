@@ -1,6 +1,15 @@
+#include "effects\adherant_effect.dm" //Воздействие электры на адхерата
+#include "effects\borg_effect.dm" //Воздействие электра на борга
+#include "effects\human_effect.dm" //Воздействие электры на человека
+#include "effects\mech_effect.dm" //Воздействие электры на меха
+#include "effects\mob_effect.dm" //Воздействие электры на симпл моба
+#include "organs_to_earth.dm" //Алгоритм просчитывания органов до земли
+#include "stun_and_jittery.dm" //Эффект тряски  от электры
+
 /obj/anomaly/electra
 	name = "Lightning strikes"
 	anomaly_tag = "Electra"
+	admin_name = "Электроаномалия"
 	with_sound = TRUE
 	sound_type = 'mods/anomaly/sounds/electra_blast.ogg'
 	activation_effect_type = "electra_activation"
@@ -50,7 +59,7 @@
 	var/turf/T = get_turf(src)
 	get_mobs_and_objs_in_view_fast(T, effect_range, victims, objs)
 	for(var/atom/movable/atoms in victims)
-		if(inmech_sec(atoms))
+		if(inmech(atoms))
 			continue
 		get_effect_by_anomaly(atoms)
 	for(var/atom/movable/atoms in objs)
@@ -86,7 +95,7 @@
 		return
 
 	var/create_line = FALSE //Если цель подходит под критерии удара, мы рисуем молнию
-	if(input_electra && !called_by_tesla)
+	if(input_electra && !called_by_tesla && istype(input_electra))
 		if(get_dist(input_electra, target) > 1.5)
 			if(!isliving(target) && !isitem(target) && !istype(target, /obj/structure/mech_wreckage) && !isaurora(target))
 				return
@@ -95,21 +104,8 @@
 			return
 	if(istype(target, /mob/living)) //Жертвой удара является моб или его наследник(ребёнок)
 		create_line = TRUE
-		if(istype(target, /mob/living/carbon/human/adherent))
-			electra_adherant_effect(target)
-
-		else if(ishuman(target))
-			electra_human_effect(target)
-			stun_and_jittery_by_electra(target)
-
-		else if(istype(target, /mob/living/silicon/robot )) //Если целью является борг, мы так же наносим ему электроудар
-			electra_borg_effect(target)
-
-		else if(istype(target, /mob/living/exosuit)) //Если целью является мех, мы наносим ему ЭМИ удар
-			electra_mech_effect(target)
-
-		else if(istype(target, /mob/living)) //Если целью является симплмоб, мы его гибаем
-			electra_mob_effect(target)
+		var/mob/living/living = target
+		living.electra_mob_effect()
 
 	else if(isaurora(target))
 		var/obj/structure/aurora/aurora = target
@@ -186,7 +182,7 @@
 		SPAN_WARNING("You hear a heavy electrical crack.") \
 		)
 
-/obj/anomaly/electra/get_detection_icon()
+/obj/anomaly/electra/get_detection_icon(mob/living/viewer)
 	if(effect_range == 1)
 		return "electra_detection"
 	else if(effect_range == 2)

@@ -3,6 +3,7 @@
 	build_path = /obj/item/syringe_cartridge
 	category = list("Arms and Ammunition")
 	access = list(access_security)
+	time = 5
 
 
 /datum/design/autolathe/arms_ammo/net_shell
@@ -32,6 +33,10 @@
 /datum/design/autolathe/arms_ammo/shotgun_flash
 	name = "ammunition (shotgun flash)"
 	build_path = /obj/item/ammo_casing/shotgun/flash
+
+/datum/design/autolathe/arms_ammo/hidden/magazine_smg_nt_rubber
+	name = "ammunition (7mm carabine rubber)"
+	build_path = /obj/item/ammo_magazine/smg_nt/rubber
 
 /datum/design/autolathe/arms_ammo/hidden/magazine_smg_rubber
 	name = "ammunition (SMG rubber) top mounted"
@@ -66,7 +71,7 @@
 	build_path = /obj/item/ammo_magazine/pistol/double
 
 /datum/design/autolathe/arms_ammo/hidden/magazine_pistol_double_rubber
-	name = "ammunition (pistol doublestack. rubber)"
+	name = "ammunition (pistol doublestack rubber)"
 	build_path = /obj/item/ammo_magazine/pistol/double/rubber
 
 /datum/design/autolathe/arms_ammo/hidden/magazine_small
@@ -78,8 +83,12 @@
 	build_path = /obj/item/ammo_magazine/magnum
 
 /datum/design/autolathe/arms_ammo/hidden/magazine_smg
-	name = "ammunition (submachine gun)"
+	name = "ammunition (10mm submachine gun)"
 	build_path = /obj/item/ammo_magazine/smg
+
+/datum/design/autolathe/arms_ammo/hidden/magazine_smg_nt
+	name = "ammunition (7mm carabine)"
+	build_path = /obj/item/ammo_magazine/smg_nt
 
 /datum/design/autolathe/arms_ammo/hidden/magazine_uzi
 	name = "ammunition (machine pistol)"
@@ -120,6 +129,10 @@
 /datum/design/autolathe/arms_ammo/hidden/flechette
 	name = "ammunition (flechette rifle)"
 	build_path = /obj/item/magnetic_ammo
+
+/datum/design/autolathe/arms_ammo/hidden/magazine_smg_nt_ap
+	name = "ammunition (7mm carabine AP)"
+	build_path = /obj/item/ammo_magazine/smg_nt/ap
 
 /datum/design/autolathe/arms_ammo/hidden/skrellian_rifle_flechette
 	name = "ammunition (skrellian rifle flechette)"
