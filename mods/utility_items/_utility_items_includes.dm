@@ -60,4 +60,5 @@
 #include "code/cards_ids.dm"
 #include "code/supermatter.dm"
 #include "code/stealthbundlerework.dm"
+#include "code/iaasafe.dm"
 #endif
