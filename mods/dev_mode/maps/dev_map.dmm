@@ -126,10 +126,6 @@
 /obj/structure/table/steel,
 /turf/simulated/floor/exoplanet/concrete/reinforced/road,
 /area/centcom)
-"tcc" = (
-/obj/item/storage/secure/safe/iaa,
-/turf/simulated/floor/exoplanet/concrete/reinforced/road,
-/area/centcom)
 "uzJ" = (
 /turf/unsimulated/wall,
 /area/centcom)
@@ -310,7 +306,7 @@ djw
 dSB
 cpC
 cpC
-tcc
+cpC
 cpC
 cpC
 cpC

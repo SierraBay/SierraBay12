@@ -155,7 +155,7 @@
 #undef BULLETHOLE_RANDOM_OFFSET
 
 /obj/item/storage/secure/safe/iaa
-	icon = 'mods/utility_items/icons/isosafe.dmi'
+	icon = 'maps/sierra/icons/obj/isosafe.dmi'
 	startswith = list(
 		/obj/item/gun/projectile/automatic/iso = 1,
 		/obj/item/ammo_magazine/proto_smg = 2,
