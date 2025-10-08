@@ -2,7 +2,7 @@
 	name = "recursive lake"
 	id = "recursive_lake"
 	description = ""
-	prefix = "mods/chich_overmap_content/maps/insidiae/"
+	prefix = "mods/chichcontent/maps/insidiae/"
 	suffixes = list("recursive_lake_site.dmm")
 	spawn_cost = 0.5
 	template_flags = TEMPLATE_FLAG_CLEAR_CONTENTS | TEMPLATE_FLAG_NO_RUINS
@@ -15,14 +15,14 @@
 /datum/map_template/recursive_lake/a
 	name = "random recursive lake #1"
 	id = "recursive_lake_1"
-	mappaths = list("mods/chich_overmap_content/maps/insidiae/recursive_lake1.dmm")
+	mappaths = list("mods/chichcontent/maps/insidiae/recursive_lake1.dmm")
 
 /datum/map_template/recursive_lake/b
 	name = "random recursive lake #2"
 	id = "recursive_lake_2"
-	mappaths = list("mods/chich_overmap_content/maps/insidiae/recursive_lake2.dmm")
+	mappaths = list("mods/chichcontent/maps/insidiae/recursive_lake2.dmm")
 
 /datum/map_template/recursive_lake/c
 	name = "random recursive lake #3 (tar)"
 	id = "recursive_lake_3"
-	mappaths = list("mods/chich_overmap_content/maps/insidiae/recursive_lake3.dmm")
+	mappaths = list("mods/chichcontent/maps/insidiae/recursive_lake3.dmm")

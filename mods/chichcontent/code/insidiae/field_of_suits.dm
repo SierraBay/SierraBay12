@@ -2,7 +2,7 @@
 	name = "Field of suits"
 	id = "field_of_suits"
 	description = "a field of old spacesuits and mysterious circumstances"
-	prefix = "mods/chich_overmap_content/maps/insidiae/"
+	prefix = "mods/chichcontent/maps/insidiae/"
 	suffixes = list("field_of_suits.dmm")
 	spawn_cost = 0.5
 	template_flags = TEMPLATE_FLAG_CLEAR_CONTENTS|TEMPLATE_FLAG_NO_RUINS

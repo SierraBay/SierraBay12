@@ -32,7 +32,7 @@
 	name = "Lost Truck"
 	id = "awaysite_lost_truck"
 	description = "A looted old freighter."
-	prefix = "mods/chich_overmap_content/maps/insidiae/"
+	prefix = "mods/chichcontent/maps/insidiae/"
 	suffixes = list("lost_truck.dmm")
 	spawn_cost = 1
 	area_usage_test_exempted_root_areas = list(/area/ship)

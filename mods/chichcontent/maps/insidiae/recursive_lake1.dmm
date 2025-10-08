@@ -11,7 +11,7 @@
 "B" = (/obj/structure/flora/ausbushes/ppflowers,/turf/template_noop,/area/template_noop)
 "C" = (/obj/structure/flora/ausbushes/sparsegrass,/turf/simulated/floor/exoplanet/grass,/area/template_noop)
 "K" = (/obj/structure/flora/ausbushes/leafybush,/turf/template_noop,/area/template_noop)
-"P" = (/obj/structure/flora/ausbushes/palebush,/turf/simulated/floor/exoplanet/grass,/area/template_noop)
+"P" = (/obj/structure/hygiene/sink/puddle,/obj/item/ore/slag,/turf/simulated/floor/exoplanet/grass,/area/template_noop)
 "W" = (/obj/structure/flora/ausbushes/fullgrass,/turf/simulated/floor/exoplanet/grass,/area/template_noop)
 
 (1,1,1) = {"

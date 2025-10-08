@@ -7,6 +7,7 @@
 "l" = (/turf/simulated/floor/exoplanet/grass,/area/template_noop)
 "q" = (/obj/structure/flora/ausbushes/ppflowers,/turf/simulated/floor/exoplanet/grass,/area/template_noop)
 "u" = (/obj/structure/flora/ausbushes/fullgrass,/turf/simulated/floor/exoplanet/grass,/area/template_noop)
+"E" = (/obj/structure/hygiene/sink/puddle,/obj/item/ore/slag,/turf/simulated/floor/exoplanet/grass,/area/template_noop)
 "I" = (/turf/simulated/floor/exoplanet/water/shallow,/area/template_noop)
 "P" = (/obj/structure/flora/ausbushes/leafybush,/turf/simulated/floor/exoplanet/grass,/area/template_noop)
 "R" = (/obj/structure/flora/ausbushes/leafybush,/turf/template_noop,/area/template_noop)
@@ -18,7 +19,7 @@ bbIIIaIbb
 RIIluPIIc
 IajlallII
 IIqIIIqIa
-IUlITaulI
+IUlIEaulI
 IlPIIIleI
 aIlTUllII
 bIIIITIaI

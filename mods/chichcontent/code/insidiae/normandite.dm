@@ -45,7 +45,7 @@
 	name = "Normandite"
 	id = "awaysite_normandite"
 	description = ""
-	prefix = "mods/chich_overmap_content/maps/insidiae/"
+	prefix = "mods/chichcontent/maps/insidiae/"
 	suffixes = list("normandite.dmm")
 	spawn_cost = 1
 	player_cost = 4
@@ -271,51 +271,6 @@ var/global/const/access_normandite = "ACCESS_NORMANDITE"
 	var/r = rand(1,3)
 	if(r == 1)
 		install_system(new /obj/item/mech_equipment/ionjets(src), HARDPOINT_BACK)
-
-
-
-// /datum/map/sierra/send_welcome()
-
-// 	var/welcome_text = "<center><img src = ntlogo.png /><br /><font size = 3><b>NSV Sierra</b> Показания Сенсоров:</font><hr />"
-// 	welcome_text += "Отчет сгенерирован [stationdate2text()] в [stationtime2text()]</center><br /><br />"
-// 	welcome_text += "Текущая система: <b>[system_name]</b><br />"
-// 	welcome_text += "Следующая система для прыжка: <b>[generate_system_name()]</b><br />"
-// 	welcome_text += "Дней до Солнечной Системы: <b>[rand(15,45)]</b><br />"
-// 	welcome_text += "Дней с последнего визита в порт: <b>[rand(60,180)]</b><br />"
-// 	welcome_text += "Результаты сканирования показали следующие потенциальные объекты для исследования:<br />"
-
-// 	var/list/space_things = list()
-// 	var/obj/overmap/sierra = map_sectors["1"]
-// 	for(var/zlevel in map_sectors)
-// 		var/obj/overmap/visitable/O = map_sectors[zlevel]
-// 		if(O.name == sierra.name)
-// 			continue
-// 		if(istype(O, /obj/overmap/visitable/ship/landable)) //Don't show shuttles
-// 			continue
-// 		if(O.hide_from_reports)
-// 			continue
-// 		space_things |= O
-
-// 	var/list/distress_calls
-// 	for(var/obj/overmap/visitable/O in space_things)
-// 		var/location_desc = " на текущем квадрате."
-// 		if(O.loc != sierra.loc)
-// 			var/bearing = get_bearing(sierra, O) //fucking triangles how do they work
-// 			location_desc = ", по азимуту [bearing]."
-// 		welcome_text += "<li>\A <b>[O.name]</b>[location_desc]</li>"
-
-// 	if(LAZYLEN(distress_calls))
-// 		welcome_text += "<br><b>Обнаружены сигналы бедствия:</b><br>[jointext(distress_calls, "<br>")]<br>"
-// 	else
-// 		welcome_text += "<br>Сигналов бедствия не обнаружено.<br />"
-
-// 	welcome_text += "<hr>"
-
-// 	post_comm_message("NSV Sierra Sensor Readings", welcome_text)
-// 	minor_announcement.Announce(message = "Сканирование сектора завершено. Информация передана в базу данных консолей связи.")
-// 	sleep(2 SECONDS)
-// 	minor_announcement.Announce(message = "Текущая система: [system_name]. Приятной смены на борту [station_name].", new_sound = 'sound/misc/notice2.ogg')
-
 
 // areas
 

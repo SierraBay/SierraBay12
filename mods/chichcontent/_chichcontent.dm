@@ -1,4 +1,4 @@
-/singleton/modpack/chich_overmap_content
+/singleton/modpack/chichcontent
 	name = "Дереликты"
 	desc = ""
 	author = "сhichmuch"

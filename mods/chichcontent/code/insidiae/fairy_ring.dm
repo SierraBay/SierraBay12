@@ -2,7 +2,7 @@
 	name = "fairy ring"
 	id = "fairy_ring"
 	description = "A tiny patch of life in a vast desert."
-	prefix = "mods/chich_overmap_content/maps/insidiae/"
+	prefix = "mods/chichcontent/maps/insidiae/"
 	suffixes = list("fairy_ring.dmm")
 	spawn_cost = 0.5
 	template_flags = TEMPLATE_FLAG_CLEAR_CONTENTS|TEMPLATE_FLAG_NO_RUINS
