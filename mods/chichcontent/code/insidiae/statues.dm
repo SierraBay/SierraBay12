@@ -1,9 +1,9 @@
 /datum/map_template/ruin/exoplanet/statues
 	name = "statues site"
 	id = "statues"
-	description = ""
+	description = "Statues, they look like they are alive."
 	prefix = "mods/chichcontent/maps/insidiae/"
-	suffixes = list("statues_site.dmm")
+	suffixes = list("statues_base.dmm")
 	spawn_cost = 0.5
 	template_flags = TEMPLATE_FLAG_CLEAR_CONTENTS | TEMPLATE_FLAG_NO_RUINS
 	ruin_tags = RUIN_HUMAN

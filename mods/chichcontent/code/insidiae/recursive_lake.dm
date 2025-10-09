@@ -1,9 +1,9 @@
 /datum/map_template/ruin/exoplanet/recursive_lake
 	name = "recursive lake"
 	id = "recursive_lake"
-	description = ""
+	description = "An island in the middle of a lake in the middle of an island in the middle of a lake."
 	prefix = "mods/chichcontent/maps/insidiae/"
-	suffixes = list("recursive_lake_site.dmm")
+	suffixes = list("recursive_lake_base.dmm")
 	spawn_cost = 0.5
 	template_flags = TEMPLATE_FLAG_CLEAR_CONTENTS | TEMPLATE_FLAG_NO_RUINS
 	ruin_tags = RUIN_NATURAL|RUIN_WATER

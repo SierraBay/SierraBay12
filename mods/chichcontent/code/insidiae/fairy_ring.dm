@@ -1,12 +1,38 @@
 /datum/map_template/ruin/exoplanet/fairy_ring
 	name = "fairy ring"
 	id = "fairy_ring"
-	description = "A tiny patch of life in a vast desert."
+	description = "A circle dance of fairies, from which only death or four men with a rope can lead you out."
 	prefix = "mods/chichcontent/maps/insidiae/"
-	suffixes = list("fairy_ring.dmm")
+	suffixes = list("fairy_ring_base.dmm")
 	spawn_cost = 0.5
 	template_flags = TEMPLATE_FLAG_CLEAR_CONTENTS|TEMPLATE_FLAG_NO_RUINS
 	ruin_tags = RUIN_NATURAL
+
+/obj/landmark/map_load_mark/fairy_ring
+	name = "random fairy ring site"
+	templates = list(/datum/map_template/fairy_ring/a, /datum/map_template/fairy_ring/b, /datum/map_template/fairy_ring/c, /datum/map_template/fairy_ring/d)
+
+/datum/map_template/fairy_ring/a
+	name = "random fairy ring site #1"
+	id = "fairy_ring_1"
+	mappaths = list("mods/chichcontent/maps/insidiae/fairy_ring1.dmm")
+
+/datum/map_template/fairy_ring/b
+	name = "random fairy ring site #2"
+	id = "fairy_ring_2"
+	mappaths = list("mods/chichcontent/maps/insidiae/fairy_ring2.dmm")
+
+/datum/map_template/fairy_ring/c
+	name = "random fairy ring site #3"
+	id = "fairy_ring_3"
+	mappaths = list("mods/chichcontent/maps/insidiae/fairy_ring3.dmm")
+
+/datum/map_template/fairy_ring/d
+	name = "random fairy ring site #4"
+	id = "fairy_ring_4"
+	mappaths = list("mods/chichcontent/maps/insidiae/fairy_ring4.dmm")
+
+
 
 /obj/fairy_ring_portal
 	name = "entrance"
