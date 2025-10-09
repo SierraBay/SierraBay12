@@ -11,7 +11,7 @@
 	desc = "strange wires"
 	icon = 'mods/hivemind/icons/hivemind.dmi'
 	icon_state = "wires"
-	layer = DECAL_LAYER
+	layer = CATWALK_LAYER
 	health_max = 80 //we are a little bit durable
 
 	density = FALSE
@@ -79,10 +79,18 @@
 			child.forceMove(T)
 			for(var/obj/wireweed/neighbor in range(1, child))
 				neighbor.update_neighbors()
-// DIVERTER
 
-
-
+/obj/wireweed/proc/pulse(forceLeft, list/dirs)
+	sleep(4)
+	var/pushDir = pick(dirs)
+	var/turf/T = get_step(src, pushDir)
+	var/obj/wireweed/W = (locate() in T)
+	if(!W)
+		if(prob(get_current_health()))
+			expand(T)
+		return
+	if(forceLeft)
+		W.pulse(forceLeft - 1, dirs)
 
 
 /obj/wireweed/proc/update_neighbors(location = loc)
@@ -134,13 +142,12 @@
 	if(hive_mind_ai && master_node)
 		try_to_assimilate()
 		chem_handler()
-/*
 	else
 		//slow vanishing after node death
 		health_current -= 10
 		alpha = 255 * health_current/health_max
 		get_current_health()
-*/
+
 
 /obj/wireweed/update_icon()
 	overlays.Cut()
@@ -328,25 +335,13 @@
 				kill_health()
 				return
 
-/obj/wireweed/proc/pulse(forceLeft, list/dirs)
-	sleep(4)
-	var/pushDir = pick(dirs)
-	var/turf/T = get_step(src, pushDir)
-	var/obj/wireweed/W = (locate() in T)
-	if(!W)
-		if(prob(get_current_health()))
-			expand(T)
-		return
-	if(forceLeft)
-		W.pulse(forceLeft - 1, dirs)
-
 // Master wireweed node. Because we don't wanna mess with machinery
 
 /obj/wireweed/master
 	var/growth_range = 20 // Maximal distance for new wireweed pieces from this core.
 	var/blob_may_process = 1
 	var/reported_low_damage = FALSE
-	var/times_to_pulse = 2
+	var/times_to_pulse = 1 // Because we not THAT dangerous as blob tiles
 
 /obj/wireweed/master/Process()
 	for(var/I in 1 to times_to_pulse)

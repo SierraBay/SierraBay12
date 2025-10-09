@@ -217,7 +217,6 @@
 	if(!founded_wire)
 		var/obj/wireweed/master/wire = new(loc)
 		add_wireweed(wire)
-		wire.Process()
 	else
 		for(var/obj/wireweed/W in range(6, src))
 			if(W.master_node)

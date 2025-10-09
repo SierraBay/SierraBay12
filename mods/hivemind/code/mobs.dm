@@ -177,22 +177,18 @@
 	mob_size = victim.mob_size
 	pass_flags = victim.pass_flags
 
-/* TO DO - Исправить
+
 /datum/say_list/resurrected
 
-	//corrupted speak imitation
-	var/phrase_amount = 0
-		for (var/i = 1 to x)
-			phrase_amount += rand(2, 5)
-		for(count = 1 in phrase_amount)
-			var/first_word =  list("You", "I", "They", "Hive", "Corpses", "We", "Your friend", "This ship", "Your mind", "These guys")
-			var/second_word = list("kill", "stop", "transform", "connect", "rebuild", "fix", "hug", "hit", "told", "help", "rework", "burn")
-			var/third_word =  list("them", "me", "you", "your soul", "us", "hive", "system", "this ship", "your head", "your brain")
-			var/end_symbol =  list("...", ".", "?", "!")
-			var/phrase = "[pick[first_word] [second_word] [third_word][end_symbol]]"
+	speak = list(
+		"Помогите! П-пожалуйста!",
+		"Они соединят нас... Всех...",
+		"Всё так горит. Боль-н-н-о...",
+		"Не уходи! Не уходи пожалуйста.",
+		"Это всё из-за тебя! Это всё ты! Ты! Ты виноват!",
+		"Это - благо. Подойди. Мы будем едины."
+	)
 
-	speak = list("[phrase]")
-*/
 
 /mob/living/simple_animal/hostile/hivemind/resurrected/death()
 	..()
